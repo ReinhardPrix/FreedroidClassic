@@ -104,94 +104,6 @@ freedroid-discussion@lists.sourceforge.net. (You can expect approval of your mes
 ";
 
 /* ----------------------------------------------------------------------
- * 
- *
- * ---------------------------------------------------------------------- */
-int
-AssemblePointerListForItemShow ( item** ItemPointerListPointer , int PlayerNum )
-{
-  int i;
-  item** CurrentItemPointer;
-  int NumberOfItems = 0 ;
-
-  //--------------------
-  // First we clean out the new Show_Pointer_List
-  //
-  CurrentItemPointer = ItemPointerListPointer ;
-  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
-    {
-      *CurrentItemPointer = NULL;
-      CurrentItemPointer++;
-    }
-
-  //--------------------
-  // Now we start to fill the Show_Pointer_List with the items
-  // currently equipped
-  //
-  CurrentItemPointer = ItemPointerListPointer;
-  if ( Me [ PlayerNum ] .weapon_item.type != ( -1 ) )
-    {
-      *CurrentItemPointer = & ( Me [ PlayerNum ] .weapon_item );
-      CurrentItemPointer ++;
-      NumberOfItems ++;
-    }
-  if ( Me [ PlayerNum ] .drive_item.type != ( -1 ) )
-    {
-      *CurrentItemPointer = & ( Me [ PlayerNum ] .drive_item );
-      CurrentItemPointer ++;
-      NumberOfItems ++;
-    }
-  if ( Me [ PlayerNum ] .armour_item.type != ( -1 ) )
-    {
-      *CurrentItemPointer = & ( Me [ PlayerNum ] .armour_item );
-      CurrentItemPointer ++;
-      NumberOfItems ++;
-    }
-  if ( Me [ PlayerNum ] .shield_item.type != ( -1 ) )
-    {
-      *CurrentItemPointer = & ( Me [ PlayerNum ] .shield_item );
-      CurrentItemPointer ++;
-      NumberOfItems ++;
-    }
-  if ( Me [ PlayerNum ] .special_item.type != ( -1 ) )
-    {
-      *CurrentItemPointer = & ( Me [ PlayerNum ] .special_item );
-      CurrentItemPointer ++;
-      NumberOfItems ++;
-    }
-  if ( Me [ PlayerNum ] .aux1_item.type != ( -1 ) )
-    {
-      *CurrentItemPointer = & ( Me [ PlayerNum ] .aux1_item );
-      CurrentItemPointer ++;
-      NumberOfItems ++;
-    }
-  if ( Me [ PlayerNum ] .aux2_item.type != ( -1 ) )
-    {
-      *CurrentItemPointer = & ( Me [ PlayerNum ] .aux2_item );
-      CurrentItemPointer ++;
-      NumberOfItems ++;
-    }
-  
-  //--------------------
-  // Now we start to fill the Show_Pointer_List with the items in the
-  // pure unequipped inventory
-  //
-  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
-    {
-      if ( Me [ PlayerNum ] .Inventory [ i ].type == (-1) ) continue;
-      else
-	{
-	  *CurrentItemPointer = & ( Me [ PlayerNum ] .Inventory[ i ] );
-	  CurrentItemPointer ++;
-	  NumberOfItems ++;
-	}
-    }
-
-  return ( NumberOfItems );
-
-}; // void AssemblePointerListForItemShow ( .. )
-
-/* ----------------------------------------------------------------------
  *
  *
  * ---------------------------------------------------------------------- */
@@ -327,7 +239,7 @@ EnterConsole (void)
 	      break;
 	    case 3:
 	      ClearGraphMem();
-	      NumberOfItems = AssemblePointerListForItemShow ( &(ShowPointerList[0]), 0 );
+	      NumberOfItems = AssemblePointerListForItemShow ( &(ShowPointerList[0]), TRUE , 0 );
 	      GreatItemShow ( NumberOfItems , ShowPointerList );
 	      break;
 	    default:
@@ -1023,20 +935,28 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , char* Backg
     ClassString = "Wristband" ; 
   else ClassString = "Miscellaneous" ; 
 
-  sprintf( InfoText, "Item: %s \nClass: %s\n\
-Duration: %d / %d\n\
-Required Str: %d\n\
+  sprintf( InfoText, "Item: %s \nClass: %s\n" ,
+	   ItemMap [ ShowItem->type ] . item_name, 
+	   ClassString );
+
+  strcat ( InfoText , "Duration: " );
+  if ( ShowItem->max_duration >= 0 )
+    sprintf( TextChunk, "%d / %d\n" , 
+	     (int)ShowItem->current_duration, 
+	     ShowItem->max_duration );
+  else
+    sprintf( TextChunk, "Indestructible\n" );
+  strcat ( InfoText , TextChunk );
+
+  sprintf( TextChunk, "Required Str: %d\n\
 Required Dex: %d\n\
 Required Mag: %d\n\
 Base list price: %d\n", 
-	   ItemMap [ ShowItem->type ] . item_name, 
-	   ClassString,
-	   (int)ShowItem->current_duration, 
-	   ShowItem->max_duration ,
 	   ItemMap [ ShowItem->type ] . item_require_strength,
 	   ItemMap [ ShowItem->type ] . item_require_dexterity,
 	   ItemMap [ ShowItem->type ] . item_require_magic,
 	   ItemMap [ ShowItem->type ] . base_list_price );
+  strcat ( InfoText , TextChunk );
 
   sprintf( TextChunk, "Damage: %d - %d\n\
 Recharge time: %f\n\

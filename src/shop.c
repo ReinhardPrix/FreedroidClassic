@@ -50,29 +50,141 @@
 
 #define SHOP_ROW_LENGTH 8
 
-SDL_Rect ItemRowRect;
+SDL_Rect ShopItemRowRect;
+SDL_Rect TuxItemRowRect;
 
+/* ----------------------------------------------------------------------
+ * At some points in the game, like when at the shop interface or at the
+ * items browser at the console, we wish to show a list of the items 
+ * currently in inventory.  This function assembles this list.  It lets
+ * the caller decide on whether to include worn items in the list or not
+ * and it will return the number of items finally filled into that list.
+ * ---------------------------------------------------------------------- */
+int
+AssemblePointerListForItemShow ( item** ItemPointerListPointer , int IncludeWornItems, int PlayerNum )
+{
+  int i;
+  item** CurrentItemPointer;
+  int NumberOfItems = 0 ;
+
+  //--------------------
+  // First we clean out the new Show_Pointer_List
+  //
+  CurrentItemPointer = ItemPointerListPointer ;
+  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+    {
+      *CurrentItemPointer = NULL;
+      CurrentItemPointer++;
+    }
+
+  //--------------------
+  // Now we start to fill the Show_Pointer_List with the items
+  // currently equipped, if that is what is desired by parameters...
+  //
+  CurrentItemPointer = ItemPointerListPointer;
+  if ( IncludeWornItems )
+    {
+      if ( Me [ PlayerNum ] .weapon_item.type != ( -1 ) )
+	{
+	  *CurrentItemPointer = & ( Me [ PlayerNum ] .weapon_item );
+	  CurrentItemPointer ++;
+	  NumberOfItems ++;
+	}
+      if ( Me [ PlayerNum ] .drive_item.type != ( -1 ) )
+	{
+	  *CurrentItemPointer = & ( Me [ PlayerNum ] .drive_item );
+	  CurrentItemPointer ++;
+	  NumberOfItems ++;
+	}
+      if ( Me [ PlayerNum ] .armour_item.type != ( -1 ) )
+	{
+	  *CurrentItemPointer = & ( Me [ PlayerNum ] .armour_item );
+	  CurrentItemPointer ++;
+	  NumberOfItems ++;
+	}
+      if ( Me [ PlayerNum ] .shield_item.type != ( -1 ) )
+	{
+	  *CurrentItemPointer = & ( Me [ PlayerNum ] .shield_item );
+	  CurrentItemPointer ++;
+	  NumberOfItems ++;
+	}
+      if ( Me [ PlayerNum ] .special_item.type != ( -1 ) )
+	{
+	  *CurrentItemPointer = & ( Me [ PlayerNum ] .special_item );
+	  CurrentItemPointer ++;
+	  NumberOfItems ++;
+	}
+      if ( Me [ PlayerNum ] .aux1_item.type != ( -1 ) )
+	{
+	  *CurrentItemPointer = & ( Me [ PlayerNum ] .aux1_item );
+	  CurrentItemPointer ++;
+	  NumberOfItems ++;
+	}
+      if ( Me [ PlayerNum ] .aux2_item.type != ( -1 ) )
+	{
+	  *CurrentItemPointer = & ( Me [ PlayerNum ] .aux2_item );
+	  CurrentItemPointer ++;
+	  NumberOfItems ++;
+	}
+    }
+  
+  //--------------------
+  // Now we start to fill the Show_Pointer_List with the items in the
+  // pure unequipped inventory
+  //
+  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+    {
+      if ( Me [ PlayerNum ] .Inventory [ i ].type == (-1) ) continue;
+      else
+	{
+	  *CurrentItemPointer = & ( Me [ PlayerNum ] .Inventory[ i ] );
+	  CurrentItemPointer ++;
+	  NumberOfItems ++;
+	}
+    }
+  
+  return ( NumberOfItems );
+  
+}; // void AssemblePointerListForItemShow ( .. )
+  
 /* ----------------------------------------------------------------------
  * Maybe the user has clicked right onto the item overview row.  Then of
  * course we must find out and return the index of the item clicked on.
  * If no item was clicked on, then a -1 will be returned as index.
  * ---------------------------------------------------------------------- */
 int
-ClickWasOntoItemRowPosition ( int x , int y )
+ClickWasOntoItemRowPosition ( int x , int y , int TuxItemRow )
 {
-  if ( y < ItemRowRect . y ) return (-1) ;
-  if ( y > ItemRowRect . y + ItemRowRect.h ) return (-1) ;
-  if ( x < ItemRowRect . x ) return (-1) ;
-  if ( x > ItemRowRect . x + ItemRowRect.w ) return (-1) ;
 
-  //--------------------
-  // Now at this point we know, that the click really was in the item
-  // overview row.  Therefore we just need to find out the index and
-  // can return;
-  //
-  return ( ( x - ItemRowRect . x ) / INITIAL_BLOCK_WIDTH );
-
-};
+  if ( !TuxItemRow )
+    {
+      if ( y < ShopItemRowRect . y ) return (-1) ;
+      if ( y > ShopItemRowRect . y + ShopItemRowRect.h ) return (-1) ;
+      if ( x < ShopItemRowRect . x ) return (-1) ;
+      if ( x > ShopItemRowRect . x + ShopItemRowRect.w ) return (-1) ;
+      
+      //--------------------
+      // Now at this point we know, that the click really was in the item
+      // overview row.  Therefore we just need to find out the index and
+      // can return;
+      //
+      return ( ( x - ShopItemRowRect . x ) / INITIAL_BLOCK_WIDTH );
+    }
+  else
+    {
+      if ( y < ShopItemRowRect . y ) return (-1) ;
+      if ( y > ShopItemRowRect . y + ShopItemRowRect.h ) return (-1) ;
+      if ( x < ShopItemRowRect . x ) return (-1) ;
+      if ( x > ShopItemRowRect . x + ShopItemRowRect.w ) return (-1) ;
+      
+      //--------------------
+      // Now at this point we know, that the click really was in the item
+      // overview row.  Therefore we just need to find out the index and
+      // can return;
+      //
+      return ( ( x - ShopItemRowRect . x ) / INITIAL_BLOCK_WIDTH );
+    }
+}; // int ClickWasOntoItemRowPosition ( int x , int y , int TuxItemRow )
 
 /* ----------------------------------------------------------------------
  * The item row in the shop interface (or whereever we're going to use it)
@@ -83,20 +195,33 @@ ClickWasOntoItemRowPosition ( int x , int y )
  * the correct size to fit perfectly into the overview item row.
  * ---------------------------------------------------------------------- */
 void
-ShowRescaledItem ( int position , item* ShowItem )
+ShowRescaledItem ( int position , int TuxItemRow , item* ShowItem )
 {
   int PictureIndex;
   SDL_Surface* RescaledSurface;
   float RescaleFactor;
   SDL_Rect TargetRectangle;
 
-  ItemRowRect . x = 50 ;
-  ItemRowRect . y = 410;
-  ItemRowRect . h = INITIAL_BLOCK_HEIGHT;
-  ItemRowRect . w = INITIAL_BLOCK_WIDTH * SHOP_ROW_LENGTH ;
+  ShopItemRowRect . x = 50 ;
+  ShopItemRowRect . y = 410;
+  ShopItemRowRect . h = INITIAL_BLOCK_HEIGHT;
+  ShopItemRowRect . w = INITIAL_BLOCK_WIDTH * SHOP_ROW_LENGTH ;
 
-  TargetRectangle . x = ItemRowRect . x + position * INITIAL_BLOCK_WIDTH ;
-  TargetRectangle . y = ItemRowRect . y ;
+  TuxItemRowRect . x = 50 ;
+  TuxItemRowRect . y = 10;
+  TuxItemRowRect . h = INITIAL_BLOCK_HEIGHT;
+  TuxItemRowRect . w = INITIAL_BLOCK_WIDTH * SHOP_ROW_LENGTH ;
+
+  if ( TuxItemRow )
+    {
+      TargetRectangle . x = TuxItemRowRect . x + position * INITIAL_BLOCK_WIDTH ;
+      TargetRectangle . y = TuxItemRowRect . y ;
+    }
+  else
+    {
+      TargetRectangle . x = ShopItemRowRect . x + position * INITIAL_BLOCK_WIDTH ;
+      TargetRectangle . y = ShopItemRowRect . y ;
+    }
 
   PictureIndex = ItemMap [ ShowItem->type ] . picture_number ;
 
@@ -126,25 +251,35 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
   int Displacement=0;
   bool finished = FALSE;
   static int WasPressed = FALSE ;
-  // item* ShowPointerList[ MAX_ITEMS_IN_INVENTORY ];
+  item* TuxItemsList[ MAX_ITEMS_IN_INVENTORY ];
   // int NumberOfItems;
-  static int ItemIndex=0;
   int PasswordIndex = (-1) ;
   // int ClearanceIndex = (-1) ;
   int IdentifyAllowed = FALSE ;
   char* MenuTexts[ 10 ];
   int i;
-  
+  int ClickTarget;
   static int RowStart=0;
+  static int TuxRowStart=0;
+  static int ItemIndex=0;
+  static int TuxItemIndex=0;
   int RowLength=SHOP_ROW_LENGTH;
+  int TuxRowLength=SHOP_ROW_LENGTH;
+  int NumberOfItemsInTuxRow=0;
+
+  NumberOfItemsInTuxRow = AssemblePointerListForItemShow ( &( TuxItemsList[0]), FALSE, 0 );
 
   //--------------------
   // We add some secutiry against indexing beyond the
   // range of items given in the list.
   //
+  if ( RowLength > NumberOfItems ) RowLength = NumberOfItems;
   while ( ItemIndex >= NumberOfItems ) ItemIndex -- ;
   if ( RowStart + RowLength > NumberOfItems ) RowStart = 0 ;
 
+  if ( TuxRowLength > NumberOfItemsInTuxRow ) TuxRowLength = NumberOfItemsInTuxRow;
+  while ( TuxItemIndex >= NumberOfItemsInTuxRow ) TuxItemIndex -- ;
+  if ( TuxRowStart + TuxRowLength > NumberOfItemsInTuxRow ) TuxRowStart = 0 ;
 
   //--------------------
   // We initialize the text rectangle
@@ -182,11 +317,19 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 
       for ( i = 0 ; i < RowLength ; i++ )
 	{
-	  ShowRescaledItem ( i , ShowPointerList [ i + RowStart ] );
+	  ShowRescaledItem ( i , FALSE , ShowPointerList [ i + RowStart ] );
+	}
+
+      for ( i = 0 ; i < TuxRowLength ; i++ )
+	{
+	  ShowRescaledItem ( i , TRUE , TuxItemsList [ i + TuxRowStart ] );
 	}
 
       ShowGenericButtonFromList ( LEFT_SHOP_BUTTON );
       ShowGenericButtonFromList ( RIGHT_SHOP_BUTTON );
+
+      ShowGenericButtonFromList ( LEFT_TUX_SHOP_BUTTON );
+      ShowGenericButtonFromList ( RIGHT_TUX_SHOP_BUTTON );
 
       ShowGenericButtonFromList ( BUY_BUTTON );
       if ( ItemMap [ ShowPointerList [ ItemIndex ] -> type ] . item_group_together_in_inventory )
@@ -200,7 +343,6 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
       //--------------------
       // Now we see if identification of the current item is allowed
       // or not.
-
       //
       IdentifyAllowed = FALSE ;
       if ( PasswordIndex >= 0 )
@@ -241,7 +383,6 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	  else if ( CursorIsOnButton( DOWN_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
 	    {
 	      MoveMenuPositionSound();
-	      // if (page > 0) page --;
 	      Displacement -= FontHeight ( GetCurrentFont () );
 	    }
 	  else if ( CursorIsOnButton( ITEM_BROWSER_EXIT_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
@@ -261,9 +402,22 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	      MoveMenuPositionSound();
 	      while (SpacePressed() ||EscapePressed());
 	    }
-	  else if ( ( ClickWasOntoItemRowPosition ( GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) >= 0 )&& axis_is_active && !WasPressed )
+	  else if ( CursorIsOnButton( LEFT_TUX_SHOP_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
 	    {
-	      ItemIndex = RowStart + ClickWasOntoItemRowPosition ( GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) ;
+	      if ( 0 < TuxRowStart ) TuxRowStart --;
+	      MoveMenuPositionSound();
+	      while (SpacePressed() ||EscapePressed());
+	    }
+	  else if ( CursorIsOnButton( RIGHT_TUX_SHOP_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
+	    {
+	      if ( TuxRowStart + TuxRowLength < NumberOfItemsInTuxRow ) TuxRowStart ++;
+	      MoveMenuPositionSound();
+	      while (SpacePressed() ||EscapePressed());
+	    }
+	  else if ( ( ( ClickTarget = ClickWasOntoItemRowPosition ( GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 , FALSE ) ) >= 0 ) && axis_is_active && !WasPressed )
+	    {
+	      if ( ClickTarget < NumberOfItems )
+		ItemIndex = RowStart + ClickTarget ;
 	    }
 	  else if ( CursorIsOnButton( BUY_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
 	    {
@@ -279,8 +433,6 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	      ShowPointerList [ ItemIndex ] -> multiplicity = 100 ;
 	      return ( ItemIndex );
 	    }
-
-
 	}
 
       WasPressed = axis_is_active;
@@ -988,7 +1140,8 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
 {
 
 #define FIXED_SHOP_INVENTORY TRUE
-#define NUMBER_OF_ITEMS_IN_SHOP 17
+  // #define NUMBER_OF_ITEMS_IN_SHOP 17
+#define NUMBER_OF_ITEMS_IN_SHOP 4
 
   item SalesList[ MAX_ITEMS_IN_INVENTORY ];
   item* Buy_Pointer_List[ MAX_ITEMS_IN_INVENTORY ];
@@ -996,7 +1149,8 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
   char DescriptionText[5000];
   int ItemSelected=0;
 
-  int StandardShopInventory[ NUMBER_OF_ITEMS_IN_SHOP ] = 
+  /*
+  int LargeShopInventory[ NUMBER_OF_ITEMS_IN_SHOP ] = 
     { 
       ITEM_SMALL_HEALTH_POTION,
       ITEM_SMALL_MANA_POTION,
@@ -1020,8 +1174,16 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
 
       ITEM_CAP,
       ITEM_SMALL_HELM,
-
       
+    };
+  */
+
+  int StandardShopInventory [ NUMBER_OF_ITEMS_IN_SHOP ] =
+    {
+      ITEM_SMALL_HEALTH_POTION,
+      ITEM_SMALL_MANA_POTION,
+      ITEM_MEDIUM_HEALTH_POTION,
+      ITEM_MEDIUM_MANA_POTION
     };
 
   //--------------------
@@ -1063,7 +1225,6 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
       else SalesList[ i ].suffix_code = ( -1 );
 
       FillInItemProperties( & ( SalesList[ i ] ) , TRUE , 0 );
-      // if ( SalesList[ i ] . type == ITEM_LASER_AMMUNITION ) SalesList [ i ] . multiplicity = 100 ;
       SalesList[ i ].is_identified = TRUE;
 
       Buy_Pointer_List [ i ] = & ( SalesList[ i ] ) ;
@@ -1083,9 +1244,6 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
   while ( ItemSelected != (-1) )
     {
       sprintf( DescriptionText , " I HAVE THESE ITEMS FOR SALE         YOUR GOLD:  %4ld" , Me[0].Gold );
-      // ItemSelected = DoEquippmentListSelection( DescriptionText , Buy_Pointer_List , PRICING_FOR_BUY );
-      // ItemSelected = DoEquippmentShowSelection ( DescriptionText , Buy_Pointer_List , PRICING_FOR_BUY );
-      // ItemSelected = GreatItemShow ( NUMBER_OF_ITEMS_IN_SHOP , Buy_Pointer_List );
       ItemSelected = GreatShopInterface ( NUMBER_OF_ITEMS_IN_SHOP , Buy_Pointer_List );
       if ( ItemSelected != (-1) ) TryToBuyItem( Buy_Pointer_List[ ItemSelected ] , FALSE ) ;
 
@@ -1102,7 +1260,6 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
 	      SalesList[ i ].prefix_code = ( -1 );
 	      SalesList[ i ].suffix_code = ( -1 );
 	      FillInItemProperties( & ( SalesList[ i ] ) , TRUE , 0 );
-	      // if ( SalesList[ i ] . type == ITEM_LASER_AMMUNITION ) SalesList [ i ] . multiplicity = 100 ;
 	      Buy_Pointer_List [ i ] = & ( SalesList[ i ] ) ;
 	    }
 	  Buy_Pointer_List [ i ] = NULL ; 
@@ -1324,14 +1481,6 @@ Sell_Items( int ForHealer )
   MenuTexts[0]="Yes";
   MenuTexts[1]="No";
   MenuTexts[2]="";
-  MenuTexts[3]="";
-  MenuTexts[4]="";
-  MenuTexts[5]="";
-  MenuTexts[8]="";
-  MenuTexts[6]="";
-  MenuTexts[7]="";
-  MenuTexts[9]="";
-
 
   //--------------------
   // First we clean out the new Sell_Pointer_List

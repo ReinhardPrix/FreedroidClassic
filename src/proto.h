@@ -550,6 +550,7 @@ EXTERN void DisplayBanner (const char* left, const char* right, int flags );
 #else
 #define EXTERN extern
 #endif
+EXTERN int AssemblePointerListForItemShow ( item** ItemPointerListPointer , int IncludeWornItems, int PlayerNum );
 EXTERN void Buy_Basic_Items( int ForHealer , int ForceMagic );
 EXTERN void Sell_Items( int ForHealer );
 EXTERN void Repair_Items( void );
