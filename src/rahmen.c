@@ -388,10 +388,33 @@ exist really (i.e. has a type = (-1) ).",
  * string.
  * ---------------------------------------------------------------------- */
 void 
-GiveDroidDescription ( char* DroidDescText , enemy* CurEnemy )
+create_and_blit_droid_description ( int enemy_num )
 {
-  char linebuf[1000];
-  
+  int text_length;
+  SDL_Rect temp_fill_rect;
+  Enemy cur_enemy = & AllEnemys [ enemy_num ] ;
+  BFont_Info* BFont_to_use = Blue_BFont ;
+
+  text_length = TextWidthFont ( BFont_to_use , AllEnemys [ enemy_num ] . short_description_text );
+  // strcpy( ItemDescText , AllEnemys [ index_of_droid_below_mouse_cursor ] . short_description_text );
+  temp_fill_rect . y = 50 ;
+  temp_fill_rect . h = FontHeight ( BFont_to_use ) ;
+  temp_fill_rect . w = ( text_length * cur_enemy -> energy ) / Druidmap [ cur_enemy -> type ] . maxenergy ;
+  temp_fill_rect . x = UserCenter_x - text_length / 2 ;
+
+  if ( ! cur_enemy -> is_friendly ) 
+    {
+      SDL_FillRect ( Screen , & ( temp_fill_rect ) , SDL_MapRGB ( Screen->format , 0x099 , 0x000 , 0x000 ) );
+      temp_fill_rect . x = temp_fill_rect . x + temp_fill_rect . w ;
+      temp_fill_rect . w = text_length - temp_fill_rect . w ;
+      SDL_FillRect ( Screen , & ( temp_fill_rect ) , SDL_MapRGB ( Screen->format , 0x000 , 0x000 , 0x000 ) );
+      temp_fill_rect . x = UserCenter_x - text_length / 2 ;
+    }
+
+  PutStringFont ( Screen , BFont_to_use , temp_fill_rect . x , temp_fill_rect . y , 
+		  AllEnemys [ enemy_num ] . short_description_text );
+
+  /*
   // --------------------
   // First we print out the droid name.  That's simple.
   //
@@ -405,6 +428,7 @@ GiveDroidDescription ( char* DroidDescText , enemy* CurEnemy )
       sprintf( linebuf , " Total Kills : %d " , Me[0].KillRecord[ CurEnemy->type ] );
       strcat ( DroidDescText , linebuf );
     }
+  */
 
 }; // void GiveDroidDescription ( char* ItemDescText , item* CurItem )
 
@@ -800,7 +824,8 @@ ShowCurrentTextWindow ( void )
       //
       if ( index_of_droid_below_mouse_cursor != (-1) )
 	{
-	  strcpy( ItemDescText , AllEnemys [ index_of_droid_below_mouse_cursor ] . short_description_text );
+	  create_and_blit_droid_description ( index_of_droid_below_mouse_cursor ) ;
+	  return;
 	}
     }
 

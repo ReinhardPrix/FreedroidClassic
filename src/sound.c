@@ -238,7 +238,8 @@ PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting)
       while ( ( SDL_GetTicks() - simulated_playback_starting_time < 7 * 1000 ) && 
 	      !EscapePressed() && !SpacePressed() );
       
-      while ( EscapePressed() || SpacePressed() );
+      if ( EscapePressed() ) while ( EscapePressed() );
+      if ( SpacePressed() ) while ( SpacePressed() );
     }
 
   return;
@@ -264,8 +265,9 @@ PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting)
 	  while ( ( SDL_GetTicks() - simulated_playback_starting_time < 7 * 1000 ) && 
 		  !EscapePressed() && !SpacePressed() );
 	  
+	  if ( EscapePressed() ) while ( EscapePressed() );
+	  if ( SpacePressed() ) while ( SpacePressed() );
 	}
-      while ( EscapePressed() || SpacePressed() );
 
       //--------------------
       // Since sound is disabled otherwise we MUST return here and not

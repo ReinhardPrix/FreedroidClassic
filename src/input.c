@@ -1524,6 +1524,13 @@ keyboard_update(void)
 	      axis_is_active = TRUE;
 	      CurrentlyMouseLeftPressed = TRUE;
 	      // DebugPrintf ( 0 , "\nLeft button press registered..." );
+
+	      //--------------------
+	      // It is possible to completely freeze freedroidRPG by holding down the left
+	      // mouse button continuously while striking again (the second time).  Therefore
+	      // we must terminate out of this right here.
+	      //
+	      return ( 0 ) ; 
 	    }
 
 	  if ( event.button.button == SDL_BUTTON_RIGHT )	   
@@ -1548,7 +1555,6 @@ keyboard_update(void)
 	      DebugPrintf( 1 , "\n\nMOUSE WHEEL ACTION DOWN DETECTED!!!");
 	    }
 #endif
-	  
 	  break;
 
         case SDL_MOUSEBUTTONUP:
