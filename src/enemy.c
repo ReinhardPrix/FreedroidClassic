@@ -1406,7 +1406,7 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 	      // should also be some kind of scream of the Tux?
 	      //
 	      Me [ 0 ] . energy -= Druidmap [ ThisRobot -> type ] . physical_damage ;
-	      Influencer_Scream_Sound ( );
+	      if ( MyRandom ( 100 ) <= 20 ) Influencer_Scream_Sound ( );
 	    }
 	  else
 	    {
