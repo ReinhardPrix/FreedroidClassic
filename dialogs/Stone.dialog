@@ -74,7 +74,7 @@ Subtitle="Now most of the security settings have been globally disabled. Some of
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Real weapons are in general available.  If you're looking for real weapons, I'm afraid you won't find them here."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="The guards have some supperior stuff, but still real weapons are beyond them."
+Subtitle="The guards have some superior stuff, but still real weapons are beyond them."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 ChangeOption=3 ChangeToValue=1
@@ -82,7 +82,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText="Where did the guards get their supperior stuff from?"
+New Option Nr=3  OptionText="Where did the guards get their superior stuff from?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=254  PositionY=420  
 Subtitle="They try to keep this a secret, but I think they broke into the museum of the fire brigade."
