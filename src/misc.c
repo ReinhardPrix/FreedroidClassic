@@ -111,8 +111,8 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
 
     { NULL , "mouse_buttons/buy_button.png"                   , { 199 ,  98 ,  47 ,  47 } } ,
     { NULL , "mouse_buttons/sell_button.png"                  , { 199 , 153 ,  47 ,  47 } } ,
-    { NULL , "mouse_buttons/get_button.png"                   , { 193 , 102 ,  60 ,  60 } } ,
-    { NULL , "mouse_buttons/put_button.png"                   , { 193 , 185 ,  60 ,  60 } } ,
+    { NULL , "mouse_buttons/get_button.png"                   , { 192 , 98 ,  60 ,  60 } } ,
+    { NULL , "mouse_buttons/put_button.png"                   , { 192 , 153 ,  60 ,  60 } } ,
     { NULL , "mouse_buttons/repair_button.png"                , { 199 , 225 ,  47 ,  47 } } ,
     { NULL , "mouse_buttons/identify_button.png"              , { 199 , 275 ,  47 ,  47 } } ,
 
@@ -130,7 +130,6 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "mouse_buttons/LevelEditorNewObstacleLabelButton.png" , { 90 , 90 , 0 ,  0 } } ,
     { NULL , "mouse_buttons/LevelEditorNewMapLabelButton.png" , { 120 , 90 , 0 ,  0 } } ,
     { NULL , "mouse_buttons/LevelEditorNewItemButton.png"     , { 150 , 90 , 0 ,  0 } } ,
- //   { NULL , "mouse_buttons/LevelEditorMODEButton.png"        , { 0 , 90 , 0 ,  0 } } ,
     { NULL , "mouse_buttons/LevelEditorESCButton.png"         , { 430 , 90 , 0 ,  0 } } ,
     { NULL , "mouse_buttons/LevelEditorResizeLevelButton.png" , { 460 , 90 , 0 ,  0 } } ,
     { NULL , "mouse_buttons/LevelEditorKeymapButton.png"      , { 640-120 , 90 , 0 ,  0 } } ,
