@@ -279,7 +279,7 @@ EnterElevator (void)
   ClearGraphMem (RealScreen);
   DisplayRahmen (RealScreen);
 
-  // UnfadeLevel ();
+  UnfadeLevel ();
 
   /* Wenn Level leer: grau faerben */
   if (CurLevel->empty)

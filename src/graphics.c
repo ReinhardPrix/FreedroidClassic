@@ -598,8 +598,9 @@ UnfadeLevel (void)
 	      LevelColorArray[(i - 3) + (Color * 3 * FARBENPROLEVEL)])
 	    CMAPBuffer[i]++;
 	}
-      SetColors (1, FARBENPROLEVEL, CMAPBuffer + 3);
+      //SetColors (1, FARBENPROLEVEL, CMAPBuffer + 3);
     }
+  SetColors (1, FARBENPROLEVEL, CMAPBuffer + 3);
   free (CMAPBuffer);
 }				// void UnfadeLevel(void)
 
