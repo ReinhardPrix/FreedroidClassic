@@ -1,41 +1,22 @@
 #-*- mode: text -*-
 Bugs
 ----
-- (rp): Invincible mode sollte auch Burn-out ueberleben, und ueberhaupt:Schuesse!!
+- (rp): Farbpalette nach Cheatmenu verstellt
+- in cheatmenu: nach Rueckkehr von RAW->Normal keyboard mode mit
+  keyboard_close()) ist Tastatur-echo weg (moeglicherweise svgalib-bug?!)
+- (jp?,rp): Spielfenster zu weit oben 
+- (rp): Takeover graphic zu weit oben...
+- (rp): Invincible mode sollte auch Burn-out ueberleben
 
-- funktioniert Energy-charger? (rp)?   JA, aber regeneriert wird nur
-  Schuss- und Kollisionsschaden. (jp)
-
+- funktioniert Energy-charger??
 - Druidmap.notes sollten besser von file eingelesen werden oder
   zumindest in paravars.h (statt direkt in InitParaplus())
 - PORT: use vga_screenoff/on() anstatt MonitorSignalUnterbrechung...?
-
-DONE RECENTLY- (jp) Sound support: Sound effects and background music and
-  simultaneously please!
-
-- (jp) Calculate all movement (where movement is to be understood in an abstract
-  sense including movement of energy and such) framerate-dependant
-
-- (rp/jp?) Ship-console endlich ordentlich machen, haufenweise
-  Robo-graphics noetig
-
-- (jp) .lbm files in was lesbares umwandeln und entsprechende
-  Lade-routinen schreiben
-
-- (?) find more open and free sounds be can use legally
+- small errors in maps (wrong corners etc..)
+- (rp): Armageddon() muss gl_printf() verwenden
 
 Missing features
 -----------------
-- use multitasking (fork()) for background processes... (update
-  counters etc)
-
+- use multitasking (fork()) for background processes... (update counters etc)
 - mouse-support (should be good with touchstick on laptop!)
-
-- (rp): PORT the map-editor 'maped'  
-
-- use GNU-type configure scripts
-
-- "Encapsulate" all graphic-function/keyboard/mouse calls, 
-  so that porting to X becomes easier?!
-
-
+- (rp): PORT maped 
