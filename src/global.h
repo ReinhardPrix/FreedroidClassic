@@ -131,6 +131,7 @@ EXTERN int mouse_control;       /* allow for mouse control */
 
 EXTERN item AllItems[ MAX_ITEMS_PER_LEVEL ];
 EXTERN itemspec ItemMap[ ALL_ITEMS ];
+EXTERN SDL_Surface* ItemSurfaceList[ NUMBER_OF_ITEM_PICTURES ];
 
 EXTERN double Conveyor_Belt_Speed;
 EXTERN long Total_Frames_Passed_In_Mission;
