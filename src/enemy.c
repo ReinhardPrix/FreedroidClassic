@@ -1640,6 +1640,8 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
     if ( ( ThisRobot -> animation_type != WALK_ANIMATION ) && 
 	 ( ThisRobot -> animation_type != STAND_ANIMATION ) ) return ;
     
+    DebugPrintf ( -4 , "\n%s(): START: firewait is now: %f." , __FUNCTION__ , ThisRobot -> firewait );
+
     //--------------------
     // find a bullet entry, that isn't currently used... 
     //
@@ -1859,6 +1861,8 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 	Fire_Bullet_Sound ( guntype );
     }
     
+    DebugPrintf ( -4 , "\n%s(): END: firewait is now: %f." , __FUNCTION__ , ThisRobot -> firewait );
+
 }; // void RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 
 /* ----------------------------------------------------------------------

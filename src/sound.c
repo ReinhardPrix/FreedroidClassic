@@ -300,19 +300,10 @@ PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting , int no
 	//
 	if ( strcmp ( SoundSampleFileName , "Sorry_No_Voice_Sample_Yet_0.wav" ) )
 	{
-	    fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
+	    fprintf( stderr, "\n\nSoundSampleFileName: '%s'" , SoundSampleFileName );
 	    GiveStandardErrorMessage ( __FUNCTION__  , "\
-The SDL MIXER WAS UNABLE TO LOAD A CERTAIN SOUND FILE INTO MEMORY.\n\
-The reason for this is as follows:  Speech files are stored in wav format\n\
-for technical reasons in conjunction with the SDL and the background music.\n\
-This tends to use up much space on disk, i.e. several megabytes which would\n\
-make the archive a bit large for download via 56K modem.  Therefore not all\n\
-sound samples featuring dialog speeches are in the freedroid repository.\n\
-\n\
-But to ensure smooth gameplay even with missing sound files, there is an option\n\
-to have freedroid either ignore the missing dialog sound samples or to terminate\n\
-on encountering a missing sound sample.  According to this option, Freedroid will\n\
-either terminate or continue running now.",
+There seems to be a sound file missing or corrupt.  The SDL MIXER\n\
+was unable to it.",
 				       NO_NEED_TO_INFORM, GameConfig.terminate_on_missing_speech_sample );
 	}
 	
@@ -432,55 +423,6 @@ The SDL MIXER WAS UNABLE TO PLAY A CERTAIN FILE LOADED INTO MEMORY FOR PLAYING O
 #endif // HAVE_LIBSDL_MIXER
     
 }; // void PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting) 
-
-/* ----------------------------------------------------------------------
- *
- *
- * ---------------------------------------------------------------------- */
-void
-LoadAllStaticModFiles( void )
-{
-#ifndef HAVE_LIBSDL_MIXER  
-  return;
-#else
-  char *fpath;
-  int i;
-  char Temp_Filename[5000];
-
-  if ( !sound_on ) return;
-
-  Loaded_MOD_Files[0]=NULL;
-  for (i = 1; i < ALL_MOD_MUSICS; i++)
-    {
-      strcpy ( Temp_Filename , "music/" );
-      strcat ( Temp_Filename , MOD_Music_SampleFilenames[ i ] );
-      fpath = find_file ( Temp_Filename , SOUND_DIR, FALSE);
-      Loaded_MOD_Files [ i ] = Mix_LoadMUS( fpath );
-      if ( Loaded_MOD_Files[ i ] == NULL )
-	{
-	  fprintf (stderr, "\n\nfpath: '%s' Mix_GetError(): %s.\n" , fpath , Mix_GetError() );
-	  GiveStandardErrorMessage ( __FUNCTION__  , "\
-The SDL MIXER WAS UNABLE TO LOAD A CERTAIN MOD FILE INTO MEMORY.\n\
-\n\
-Please check that the file is present within your Freedroid installation.\n\
-\n\
-If you for some reason cannot get sound output ready, \n\
-you can choose to play without sound.\n\
-\n\
-If you want this, use the appropriate command line option and Freedroid will \n\
-not complain any more.",
-				     NO_NEED_TO_INFORM, IS_FATAL );
-	} // if ( !Loaded_MOD...
-      else
-	{
-	  DebugPrintf ( 1 , "\nSuccessfully loaded file %s.", MOD_Music_SampleFilenames[ i ]);
-	}
-
-    } // for (i=1, ... MOD_FILES...
-
-#endif // HAVE_SDL_MIXER
-
-}; // void LoadAllStaticModFiles( void )
 
 // ----------------------------------------------------------------------
 // This function shall initialize the SDL Audio subsystem.  It is called

@@ -2105,10 +2105,6 @@ I will not be able to load or save games or configurations\n\
     
     InitAudio ();
     
-    ShowStartupPercentage ( 4 ) ; 
-  
-    LoadAllStaticModFiles();
-    
     ShowStartupPercentage ( 8 ) ; 
     
     //--------------------
