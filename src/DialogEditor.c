@@ -3072,6 +3072,8 @@ gint
 dialog_option_insert_new ( GtkWidget *widget, GdkEvent  *event, gpointer   data )
 {
     int i;
+    static char new_option_text[] = "NEWLY INSERTED DIALOG OPTION" ;
+    static char new_option_sample[] = "Sorry_No_Voice_Sample_Yet_0.wav" ;
     
     //--------------------
     // We say, that we're here...
@@ -3092,9 +3094,14 @@ dialog_option_insert_new ( GtkWidget *widget, GdkEvent  *event, gpointer   data 
     // and just return...
     //
     if ( i >= MAX_DIALOGUE_OPTIONS_IN_ROSTER ) return ( FALSE );
-    
-    ChatRoster [ i ] . option_text = "NEWLY INSERTED DIALOG OPTION" ;
-    ChatRoster [ i ] . option_sample_file_name = "Sorry_No_Voice_Sample_Yet_0.wav" ;
+
+    // delete_one_dialog_option will free these non-empty string, so we had
+    // better do malloc.
+    ChatRoster [ i ] . option_text = malloc ( strlen ( new_option_text ) ) ;
+    ChatRoster [ i ] . option_sample_file_name = malloc ( strlen ( new_option_sample ) ) ;
+    strcpy ( ChatRoster [ i ] . option_text , new_option_text ) ;
+    strcpy ( ChatRoster [ i ] . option_sample_file_name , new_option_sample ) ;
+
     ChatRoster [ i ] . position_x = 550 ;
     ChatRoster [ i ] . position_y = 35 ;
     
