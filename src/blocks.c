@@ -652,7 +652,7 @@ void
 LoadAndPrepareEnemyRotationModelNr ( int ModelNr )
 {
   char ConstructedFileName[5000];
-  int i;
+  int i, j;
   char *fpath;
   static int FirstCallEver = TRUE ;
   static int EnemyFullyPrepared [ ENEMY_ROTATION_MODELS_AVAILABLE ] ;
@@ -701,11 +701,26 @@ Freedroid received a rotation model number that does not exist!",
   //
   for ( i=0 ; i < ROTATION_ANGLES_PER_ROTATION_MODEL ; i++ )
     {
-      sprintf ( ConstructedFileName , "droids/%s/ingame_%04d.png" , PrefixToFilename [ ModelNr ] ,
-		( ModelMultiplier [ ModelNr ] * i ) + 1 );
-      DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
-      fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
-      get_iso_image_from_file_and_path ( fpath , & ( enemy_iso_images [ ModelNr ] [ i ] [ 0 ] ) ) ;
+      if ( phases_in_enemy_animation [ ModelNr ] == 1 )
+	{
+	  sprintf ( ConstructedFileName , "droids/%s/ingame_%04d.png" , PrefixToFilename [ ModelNr ] ,
+		    ( ModelMultiplier [ ModelNr ] * i ) + 1 );
+	  DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
+	  fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
+	  get_iso_image_from_file_and_path ( fpath , & ( enemy_iso_images [ ModelNr ] [ i ] [ 0 ] ) ) ;
+	}
+      else
+	{
+	  for ( j = 0 ; j < phases_in_enemy_animation [ ModelNr ] ; j ++ )
+	    {
+	      sprintf ( ConstructedFileName , "droids/%s/ingame_%02d_%04d.png" , PrefixToFilename [ ModelNr ] ,
+			( ModelMultiplier [ ModelNr ] * i ) * 2 , j+1 );
+	      DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
+	      fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
+	      get_iso_image_from_file_and_path ( fpath , & ( enemy_iso_images [ ModelNr ] [ i ] [ j ] ) ) ;
+	    }
+	}
+
     }    
 
 }; // void LoadAndPrepareEnemyRotationModelNr ( int j )
@@ -918,62 +933,91 @@ Load_Enemy_Surfaces( void )
   //
   i=0;
   PrefixToFilename [ i ] = "001" ; // 0
+  phases_in_enemy_animation [ i ] = 1 ;
   ModelMultiplier  [ i ] = 1 ; i++;
   PrefixToFilename [ i ] = "123" ; // 1
+  phases_in_enemy_animation [ i ] = 1 ;
   ModelMultiplier  [ i ] = 1 ; i++;
   PrefixToFilename [ i ] = "139" ; // 2
+  phases_in_enemy_animation [ i ] = 1 ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "247" ; // 3 
+  phases_in_enemy_animation [ i ] = 1 ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "249" ; // 4
+  phases_in_enemy_animation [ i ] = 1 ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "296" ; // 5
+  phases_in_enemy_animation [ i ] = 1 ;
   ModelMultiplier  [ i ] = 1 ;i++; 
   PrefixToFilename [ i ] = "302" ; // 6
+  phases_in_enemy_animation [ i ] = 15 ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "329" ; // 7
+  phases_in_enemy_animation [ i ] = 1 ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "420" ; // 8 
+  phases_in_enemy_animation [ i ] = 1 ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "476" ; // 9 
+  phases_in_enemy_animation [ i ] = 1 ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "493" ; // 10
+  phases_in_enemy_animation [ i ] = 1 ;
   ModelMultiplier  [ i ] = 1 ;i++; 
   PrefixToFilename [ i ] = "516" ; // 11
+  phases_in_enemy_animation [ i ] = 1 ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "571" ; // 12
+  phases_in_enemy_animation [ i ] = 1 ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "598" ; // 13
+  phases_in_enemy_animation [ i ] = 1 ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "614" ; // 14
+  phases_in_enemy_animation [ i ] = 1 ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "615" ; // 15
+  phases_in_enemy_animation [ i ] = 1 ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "629" ; // 16
+  phases_in_enemy_animation [ i ] = 1 ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "711" ; // 17
+  phases_in_enemy_animation [ i ] = 1 ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "742" ; // 18
+  phases_in_enemy_animation [ i ] = 1 ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "751" ; // 19
+  phases_in_enemy_animation [ i ] = 1 ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "821" ; // 20
+  phases_in_enemy_animation [ i ] = 1 ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "834" ; // 21
+  phases_in_enemy_animation [ i ] = 1 ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "883" ; // 22
+  phases_in_enemy_animation [ i ] = 1 ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "999" ; // 23
+  phases_in_enemy_animation [ i ] = 1 ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "professor" ; // 24
+  phases_in_enemy_animation [ i ] = 1 ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "red_guard" ; // 25
+  phases_in_enemy_animation [ i ] = 1 ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "brown_worker" ; // 26
+  phases_in_enemy_animation [ i ] = 1 ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "blue_guard" ; // 27
+  phases_in_enemy_animation [ i ] = 1 ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "green_guard" ; // 28
+  phases_in_enemy_animation [ i ] = 1 ;
   ModelMultiplier  [ i ] = 1 ;i++;
 
 }; // void LoadEnemySurfaces( void )

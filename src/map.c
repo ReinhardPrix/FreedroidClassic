@@ -2494,6 +2494,7 @@ ReviveAllDroidsOnShip ( void )
       AllEnemys[i].has_greeted_influencer = FALSE ;
       AllEnemys[i].combat_state = MOVE_ALONG_RANDOM_WAYPOINTS ;
       AllEnemys[i].state_timeout = 0 ;
+      AllEnemys[i].animation_phase = 0 ;
     }
 }; // void ReviveAllDroidsOnShip ( void )
 

@@ -212,7 +212,7 @@ EXTERN iso_image enemy_iso_images [ ENEMY_ROTATION_MODELS_AVAILABLE ] [ ROTATION
 EXTERN SDL_Surface *BlueEnemyRotationSurfacePointer[ ENEMY_ROTATION_MODELS_AVAILABLE ] [ ROTATION_ANGLES_PER_ROTATION_MODEL ]; 
 EXTERN SDL_Surface *RedEnemyRotationSurfacePointer[ ENEMY_ROTATION_MODELS_AVAILABLE ] [ ROTATION_ANGLES_PER_ROTATION_MODEL  ];  
 EXTERN SDL_Surface *GreenEnemyRotationSurfacePointer[ ENEMY_ROTATION_MODELS_AVAILABLE ] [ ROTATION_ANGLES_PER_ROTATION_MODEL ]; 
-
+EXTERN int phases_in_enemy_animation [ ENEMY_ROTATION_MODELS_AVAILABLE ];
 
                                                // influencer in different phases of rotation
 EXTERN SDL_Surface *TuxWorkingCopy [ MAX_PLAYERS ] [ TUX_BREATHE_PHASES + TUX_SWING_PHASES + TUX_GOT_HIT_PHASES ] [ MAX_TUX_DIRECTIONS ] ;   // A pointer to the surfaces containing the tux

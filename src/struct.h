@@ -643,6 +643,7 @@ typedef struct
   finepoint speed;		// current speed  
   double energy;		// current energy of this droid
   double phase;	                // current phase of rotation of this droid
+  float animation_phase;        // the current animation frame for this enemy (starting at 0 of course...)
 
   int nextwaypoint;		// the next waypoint target
   int lastwaypoint;		// the waypoint from whence this robot just came

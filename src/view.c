@@ -1990,7 +1990,6 @@ There was a rotation model type given, that exceeds the number of rotation model
 	  TargetRectangle.y -= ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface -> h ) / 2 ;
 	  TargetRectangle.w = enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface -> w;
 	  TargetRectangle.h = enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface -> h;
-	  // }
 	}
 
       
@@ -2023,7 +2022,17 @@ There was a rotation model type given, that exceeds the number of rotation model
 	      if ( mask & ZOOM_OUT )
 		blit_zoomed_iso_image_to_map_position ( & ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] ) , AllEnemys [ Enum ] . pos . x , AllEnemys [ Enum ] . pos . y );
 	      else
-		blit_iso_image_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , AllEnemys [ Enum ] . pos . x , AllEnemys [ Enum ] . pos . y );
+		{
+		  if ( phases_in_enemy_animation [ RotationModel ] == 1 )
+		    {
+		      blit_iso_image_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , AllEnemys [ Enum ] . pos . x , AllEnemys [ Enum ] . pos . y );
+		    }
+		  else
+		    {
+		      // blit_iso_image_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ ( SDL_GetTicks() / 100 ) % phases_in_enemy_animation [ RotationModel ] ] , AllEnemys [ Enum ] . pos . x , AllEnemys [ Enum ] . pos . y );
+		      blit_iso_image_to_map_position ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) AllEnemys [ Enum ] . animation_phase ] , AllEnemys [ Enum ] . pos . x , AllEnemys [ Enum ] . pos . y );
+		    }
+		}
 
 	      TargetRectangle . x = 
 		translate_map_point_to_screen_pixel ( AllEnemys[Enum].pos.x , AllEnemys[Enum].pos.y , TRUE );

@@ -1170,6 +1170,11 @@ MoveEnemys ( void )
 	 continue;
   
        //--------------------
+       // Ignore robots, that are in the middle of their attack movement
+       //
+       if ( ThisRobot -> animation_phase > 0 ) continue ;
+
+       //--------------------
        // Now we do the movement, either to the next waypoint OR if one
        // is set, we persue the given course, which allows complete control
        // of the bot moves (via the state machine for example)...
@@ -1193,6 +1198,9 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
   int j;
   float OffsetFactor;
   bullet* NewBullet=NULL;
+  int bullet_index = 0 ;
+
+  if ( ThisRobot -> animation_phase > 0 ) return ;
 
   Fire_Bullet_Sound ( guntype );
   
@@ -1202,6 +1210,7 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
       if (AllBullets[ j ].type == OUT)
 	{
 	  NewBullet = & ( AllBullets[j] );
+	  bullet_index = j ;
 	  break;
 	}
     }
@@ -1302,6 +1311,14 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
   // wait for as long as is usual for this weapon type until making the next shot
   ThisRobot->firewait = ItemMap [ Druidmap[ThisRobot->type].weapon_item.type ].item_gun_recharging_time ;
   
+  
+  if ( ( phases_in_enemy_animation [ ThisRobot -> type ] > 1 ) && ( ThisRobot -> animation_phase == 0 ) )
+    {
+      ThisRobot -> animation_phase = 0.1 ;
+      DeleteBullet ( bullet_index , FALSE );
+      ThisRobot -> current_angle = - ( - 90 + 180 * atan2 ( ydist ,  xdist ) / M_PI );  
+    }
+
 }; // void RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 
 /* ----------------------------------------------------------------------
@@ -2264,39 +2281,50 @@ void
 AnimateEnemys (void)
 {
   int i;
+  enemy* our_enemy;
 
   // for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
   for (i = 0; i < Number_Of_Droids_On_Ship ; i++)
     {
+      
+      our_enemy = & ( AllEnemys [ i ] ) ;
+
       /* ignore enemys that are dead or on other levels or dummys */
       // if (AllEnemys[i].type == DEBUG_ENEMY) continue;
       // if (AllEnemys[i].pos.z != CurLevel->levelnum)
-      if ( AllEnemys[i].pos.z != Me [ 0 ] . pos . z )
+      if ( our_enemy -> pos . z != Me [ 0 ] . pos . z )
 	continue;
 
-      if (AllEnemys[i].Status == OUT)
+      if ( our_enemy -> Status == OUT)
 	{
-	  AllEnemys[i].phase = DROID_PHASES ;
+	  our_enemy -> phase = DROID_PHASES ;
 	  continue;
 	}
 
-      if ( AllEnemys[i].energy <= 0 ) 
+      if ( our_enemy -> energy <= 0 ) 
 	{
 	  DebugPrintf( 1 , "\nAnimateEnemys: WARNING: Enemy with negative energy encountered.  Phase correction forced..." );
-	  AllEnemys[i].phase = 0 ;
+	  our_enemy -> phase = 0 ;
 	}
       else
 	{
-	  // AllEnemys[i].feindrehcode+=AllEnemys[i].energy;
-	  AllEnemys[i].phase +=
-	    (AllEnemys[i].energy / Druidmap[AllEnemys[i].type].maxenergy) *
+	  our_enemy -> phase +=
+	    ( our_enemy -> energy / Druidmap [ our_enemy -> type ] . maxenergy ) *
 	    Frame_Time () * DROID_PHASES * 2.5;
 	}
 
-      if (AllEnemys[i].phase >= DROID_PHASES)
+      if ( our_enemy -> phase >= DROID_PHASES)
 	{
-	  AllEnemys[i].phase = 0;
+	  our_enemy -> phase = 0;
 	}
+
+      if ( our_enemy -> animation_phase > 0 )
+	{
+	  our_enemy -> animation_phase += Frame_Time() * 15 ;
+	  if ( our_enemy -> animation_phase >= phases_in_enemy_animation [ our_enemy -> type ] )
+	    our_enemy -> animation_phase = 0 ;
+	}
+
     }
 }; // void AnimateEnemys ( void )
 
