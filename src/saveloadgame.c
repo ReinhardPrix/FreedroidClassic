@@ -349,12 +349,14 @@ SaveGame( void )
 
   //--------------------
   // get home-directory to save in
+  //
   if ( ( homedir = getenv("HOME")) == NULL ) 
     {
-      DebugPrintf ( 0 , "ERROR: Environment does not contain HOME variable... \n\
-I need to know that for saving. Abort.\n");
-      Terminate( ERR );
+      DebugPrintf ( -1000 , "ERROR: Environment does not contain HOME variable... \n\
+Heh, what strange operating system is this?  -->  will try c:/temp instead...");
+      // Terminate( ERR );
       // return (ERR);
+      homedir = "C:/temp" ;
     }
 
   sprintf ( Saved_Games_Dir , "%s/.freedroid_rpg" , homedir );
@@ -363,7 +365,7 @@ I need to know that for saving. Abort.\n");
   // First we save the full ship information, same as with the level editor
   //
   sprintf( filename , "%s/%s%s", Saved_Games_Dir, Me[0].character_name, SHIP_EXT );
-  if ( SaveShip( filename ) != OK )
+  if ( SaveShip ( filename ) != OK )
     {
       GiveStandardErrorMessage ( "SaveGame(...)" , "\
 The SAVING OF THE SHIP DATA FOR THE SAVED GAME FAILED!\n\
@@ -580,13 +582,6 @@ LoadGame( void )
   //
   Activate_Conservative_Frame_Computation();
 
-  //--------------------
-  // Maybe someone just lost in the game and has then pressed the load
-  // button.  Then a new game is loaded and the game-over status has
-  // to be restored as well of course.
-  //
-  GameOver = FALSE; 
-
   ShowSaveLoadGameProgressMeter( 0 , FALSE )  ;
 
   //--------------------
@@ -598,13 +593,11 @@ LoadGame( void )
   // get home-directory to load from
   if ( ( homedir = getenv("HOME")) == NULL ) 
     {
-      DebugPrintf (0, "\n----------------------------------------------------------------------\n\
-ERROR: Environment does not contain HOME variable... \n\
-I need to know that for loading.  Giving up loading of games....\n\
-Freedroid will not be terminated now, but continue running.\n\
-The game however could NOT be saved.\n\
-----------------------------------------------------------------------\n");
-      return (ERR);
+      DebugPrintf ( -1000 , "ERROR: Environment does not contain HOME variable... \n\
+Heh, what strange operating system is this?  -->  will try c:/temp instead...");
+      // Terminate( ERR );
+      // return (ERR);
+      homedir = "C:/temp" ;
     }
 
   //--------------------
@@ -761,6 +754,13 @@ This indicates a serious bug in this installation of Freedroid.",
   SwitchBackgroundMusicTo( curShip.AllLevels[ Me[0].pos.z ]->Background_Song_Name );
 
   free ( LoadGameData );
+
+  //--------------------
+  // Maybe someone just lost in the game and has then pressed the load
+  // button.  Then a new game is loaded and the game-over status has
+  // to be restored as well of course.
+  //
+  GameOver = FALSE; 
 
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): end of function reached.");
 

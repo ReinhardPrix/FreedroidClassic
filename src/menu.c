@@ -1418,8 +1418,8 @@ enum
 	  Weiter = TRUE;  
 	  break;
 	case LOAD_GAME_POSITION:
-	  LoadGame( );
-	  Weiter = TRUE;
+	  LoadGame ( ) ;
+	  Weiter = TRUE ;
 	  break;
 	case NEW_GAME_POSITION:
 	  Me [ 0 ] . energy = 100 ;
@@ -2391,7 +2391,7 @@ I need to know that for saving. Abort.\n");
 	  // LoadShip ( find_file ( "Asteroid.maps" , MAP_DIR, FALSE) ) ;
 	  // PrepareStartOfNewCharacter ( NEW_MISSION );
 	  strcpy( Me[0].character_name , MenuTexts[ MenuPosition -1 ] );
-	  if ( LoadGame( ) == OK )
+	  if ( LoadGame ( ) == OK )
 	    {
 	      GetEventsAndEventTriggers ( "EventsAndEventTriggers" );
 	      Item_Held_In_Hand = ( -1 );
