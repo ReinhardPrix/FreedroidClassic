@@ -104,6 +104,27 @@ DropItemAt( int ItemType , float x , float y , int prefix , int suffix )
   // of course (and also don't produce a SEGFAULT or something...)
   //
   if ( ItemType == ( -1 ) ) return;
+  if ( ItemType >= Number_Of_Item_Types ) 
+    {
+      fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+There was an item code for an item to drop given to the function \n\
+DropItemAt( ... ), which is pointing beyond the scope of the known\n\
+item types.  This indicates a severe bug in Freedroid.\n\
+\n\
+The given item type was : %d.\n\
+\n\
+Please inform the Freedroid developers about the problem.\n\
+For now Freedroid will terminate to draw attention \n\
+to the item problem it could not resolve.\n\
+Sorry if that stops a major game of yours....\n\
+----------------------------------------------------------------------\n\
+\n" , ItemType );
+      Terminate(ERR);
+      return;
+    }
 
   //--------------------
   // At first we must find a free item index on this level,
@@ -147,29 +168,97 @@ DropItemAt( int ItemType , float x , float y , int prefix , int suffix )
  *
  * ---------------------------------------------------------------------- */
 void
-DropRandomItem( float x , float y )
+DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical )
 {
   int Rand;
+  int Suf; int Pre;
 
-
+  //--------------------
+  // First we determine if there is something dropped at all or not,
+  // cause in the later case, we can return immediately
+  //
   Rand = MyRandom( 1000 );
-
-  if ( Rand < 500 )
-    {
-      return;
-    }
   if ( Rand < 800 )
     {
-      DropItemAt( ITEM_MONEY , x , y , -1 , -1 );
       return;
     }
-  if ( Rand < 950 )
-    {
-      DropItemAt( ITEM_HEALTH_POTION , x , y , -1 , -1 );
-      return;
-    }
-  DropItemAt( MyRandom( Number_Of_Item_Types -2 ) + 1 , x , y , -1 , -1 );
 
+  Pre = ( -1 ) ;
+  if ( ForceMagical )
+    {
+      Suf = MyRandom(4);
+    }
+  else
+    {
+      Suf = ( -1 );
+    }
+
+
+  switch ( MyRandom ( TreasureChestRange ) )
+    {
+    case 0:
+      switch ( MyRandom ( 7 ) )
+	{
+	case 0:
+	  DropItemAt( ITEM_MONEY , x , y , -1 , -1 );
+	  break;
+	case 1:
+	  DropItemAt( ITEM_MONEY , x , y , -1 , -1 );
+	  break;
+	case 2:
+	  DropItemAt( ITEM_SMALL_HEALTH_POTION , x , y , -1 , -1 );
+	  break;
+	case 3:
+	  DropItemAt( ITEM_SMALL_MANA_POTION , x , y , -1 , -1 );
+	  break;
+	case 4:
+	  DropItemAt( ITEM_BUCKLER , x , y , Pre , Suf );
+	  break;
+	case 5:
+	  DropItemAt( ITEM_SHORT_SWORD , x , y , Pre , Suf );
+	  break;
+	case 6:
+	  DropItemAt( ITEM_SHORT_BOW , x , y , Pre , Suf );
+	  break;
+	case 7:
+	  DropItemAt( ITEM_ANTIGRAV_ALPHA , x , y , Pre , Suf );
+	  break;
+	}
+      break;
+    case 1:
+      switch ( MyRandom ( 7 ) )
+	{
+	case 0:
+	  DropItemAt( ITEM_MONEY , x , y , -1 , -1 );
+	  break;
+	case 1:
+	  DropItemAt( ITEM_MONEY , x , y , -1 , -1 );
+	  break;
+	case 2:
+	  DropItemAt( ITEM_FULL_HEALTH_POTION , x , y , -1 , -1 );
+	  break;
+	case 3:
+	  DropItemAt( ITEM_FULL_MANA_POTION , x , y , -1 , -1 );
+	  break;
+	case 4:
+	  DropItemAt( ITEM_SMALL_SHIELD , x , y , Pre , Suf );
+	  break;
+	case 5:
+	  DropItemAt( ITEM_SCIMITAR , x , y , Pre , Suf );
+	  break;
+	case 6:
+	  DropItemAt( ITEM_HUNTERS_BOW , x , y , Pre , Suf );
+	  break;
+	case 7:
+	  DropItemAt( ITEM_ANTIGRAV_BETA , x , y , Pre , Suf );
+	  break;
+	}
+      break;
+    default:
+      DebugPrintf( 0 , "\n\nERRROR!!! UNHANDLED TREASURE CHEST ENCOUNTERED!!! TERMINATING...\n\n" );
+      Terminate ( ERR );
+      break;
+    }
 
 }; // void DropRandomItem( int x , int y )
 
@@ -398,6 +487,10 @@ MoveItem( item* SourceItem , item* DestItem )
 
 }; // void MoveItem( item* SourceItem , item* DestItem )
 
+/* ----------------------------------------------------------------------
+ * This function applies a given item (to the influencer) and maybe 
+ * eliminates the item after that, if it's an item that gets used up.
+ * ---------------------------------------------------------------------- */
 void
 ApplyItem( item* CurItem )
 {
@@ -418,20 +511,27 @@ ApplyItem( item* CurItem )
   // and therefore all we need to do from here on is execute the item effect
   // upon the influencer or his environment.
   //
-#define MINOR_ENERGY_CAPSULE_ITEM 1
-#define MAJOR_ENERGY_CAPSULE_ITEM 2
-  if ( CurItem->type == MINOR_ENERGY_CAPSULE_ITEM )
+  if ( CurItem->type == ITEM_SMALL_HEALTH_POTION )
     {
       Me.health += 25;
       Me.energy += 25;
     }
-  else if ( CurItem->type == MAJOR_ENERGY_CAPSULE_ITEM )
+  else if ( CurItem->type == ITEM_FULL_HEALTH_POTION )
     {
       Me.health += Druidmap [ Me.type ].maxenergy;
       Me.energy += Druidmap [ Me.type ].maxenergy;
     }
+  else if ( CurItem->type == ITEM_SMALL_MANA_POTION )
+    {
+      Me.mana += 25;
+    }
+  else if ( CurItem->type == ITEM_FULL_MANA_POTION )
+    {
+      Me.mana += Druidmap [ Me.type ].maxmana;
+    }
 
   if ( Me.energy > Druidmap [ Me.type ].maxenergy ) Me.energy = Druidmap [ Me.type ].maxenergy ;
+  if ( Me.mana > Druidmap [ Me.type ].maxmana ) Me.mana = Druidmap [ Me.type ].maxmana ;
 
   PlayItemSound( ItemMap[ CurItem->type ].sound_number );
 

@@ -173,6 +173,7 @@ MoveInfluence (void)
 	}
     }
 
+  
   // Time passed before entering Transfermode ??
   if ( TransferCounter >= WAIT_TRANSFERMODE )
     {
@@ -212,9 +213,11 @@ MoveInfluence (void)
       TransferCounter = 0;
     }
 
+  HandleCurrentlyActivatedSkill();
+  /*
   if (MouseRightPressed() == 1)
     Me.status = TRANSFERMODE;
-    
+  */
 
   if ( (SpacePressed ()) && (NoDirectionPressed ()) &&
        (Me.status != WEAPON) && (Me.status != TRANSFERMODE) )
@@ -829,7 +832,7 @@ FireBullet (void)
 
   // To prevent influ from hitting himself with his own bullets,
   // move them a bit..
-  if ( CurBullet->angle_change_rate == 0 ) OffsetFactor = 0; else OffsetFactor = 1;
+  if ( CurBullet->angle_change_rate == 0 ) OffsetFactor = 0.5; else OffsetFactor = 1;
   CurBullet->pos.x += OffsetFactor * (CurBullet->speed.x/BulletSpeed);
   CurBullet->pos.y += OffsetFactor * (CurBullet->speed.y/BulletSpeed);
   // CurBullet->pos.x += 0.5 ;

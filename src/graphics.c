@@ -343,6 +343,11 @@ ReInitPictures (void)
       SDL_FreeSurface( EnemyDigitSurfacePointer[j] ); 
     }
 
+  for ( j=0 ; j < NUMBER_OF_ITEM_PICTURES ; j++ )
+    {
+      SDL_FreeSurface( ItemImageList[j].Surface ); 
+    }
+
   for ( j=0 ; j < ALLBLASTTYPES ; j++ )
     {
       for ( i = 0 ; i < Blastmap[j].phases ; i++ )
@@ -359,25 +364,25 @@ ReInitPictures (void)
 	}
     }
 
+  SDL_FreeSurface ( banner_pic );
+  SDL_FreeSurface ( console_pic );
+  SDL_FreeSurface ( static_blocks );
 
   // return ( OK );
   return (InitPictures());
 } // int ReInitPictures(void)
 
 
-/*----------------------------------------------------------------------
+/* ----------------------------------------------------------------------
  * This function resizes all blocks and structures involved in assembling
  * the combat picture to a new scale.  The new scale is relative to the
  * standard scale with means 64x64 tile size.
- *
- ----------------------------------------------------------------------*/
+ * ---------------------------------------------------------------------- */
 void 
 SetCombatScaleTo(float ResizeFactor)
 {
   int i, j;
   SDL_Surface *tmp;
-
-  // CenteredPutString   ( Screen ,  User_Rect.y+User_Rect.h-FontHeight(Menu_BFont), "Rescaling...");
 
   // just to be sure, reset the size of the graphics
   ReInitPictures();
@@ -386,9 +391,18 @@ SetCombatScaleTo(float ResizeFactor)
     {
       for ( i = 0 ; i < NUM_MAP_BLOCKS ; i++ )
 	{
+	  //--------------------
+	  // Now we resize the map blocks to fullfill the requirements of the
+	  // currently set ResizeFactor.
+	  //
 	  tmp = MapBlockSurfacePointer[j][i]; // store the surface pointer for freeing it soon
 	  MapBlockSurfacePointer[j][i]=zoomSurface( MapBlockSurfacePointer[j][i] , ResizeFactor , ResizeFactor , 0 );
 	  SDL_FreeSurface( tmp ); // free the old surface
+
+	  //--------------------
+	  // Now we convert all the new map blocks to the current display format,
+	  // so that blitting and game performance is normal afterwards.
+	  //
 	  tmp = MapBlockSurfacePointer[j][i]; // store the surface pointer for freeing it soon
 	  MapBlockSurfacePointer[j][i]=SDL_DisplayFormat( MapBlockSurfacePointer[j][i] );
 	  SDL_FreeSurface( tmp ); // free the old surface
@@ -504,6 +518,7 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
 #define DIGIT_THREE_POSITION_X_STRING "Third digit x :"
 #define DIGIT_THREE_POSITION_Y_STRING "Third digit y :"
 
+  /*
   ReadValueFromString( Data , DIGIT_ONE_POSITION_X_STRING , "%d" , 
 		       &First_Digit_Pos_X , EndOfThemesDigitData );
   ReadValueFromString( Data , DIGIT_ONE_POSITION_Y_STRING , "%d" , 
@@ -518,6 +533,22 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
 		       &Third_Digit_Pos_X , EndOfThemesDigitData );
   ReadValueFromString( Data , DIGIT_THREE_POSITION_Y_STRING , "%d" , 
 		       &Third_Digit_Pos_Y , EndOfThemesDigitData );
+  */
+
+  ReadValueFromString( Data , DIGIT_ONE_POSITION_X_STRING , "%d" , 
+		       & ( Digit_Pos[0].x ) , EndOfThemesDigitData );
+  ReadValueFromString( Data , DIGIT_ONE_POSITION_Y_STRING , "%d" , 
+		       & ( Digit_Pos[0].y ) , EndOfThemesDigitData );
+
+  ReadValueFromString( Data , DIGIT_TWO_POSITION_X_STRING , "%d" , 
+		       & ( Digit_Pos[1].x ) , EndOfThemesDigitData );
+  ReadValueFromString( Data , DIGIT_TWO_POSITION_Y_STRING , "%d" , 
+		       & ( Digit_Pos[1].y ) , EndOfThemesDigitData );
+
+  ReadValueFromString( Data , DIGIT_THREE_POSITION_X_STRING , "%d" , 
+		       & ( Digit_Pos[2].x ) , EndOfThemesDigitData );
+  ReadValueFromString( Data , DIGIT_THREE_POSITION_Y_STRING , "%d" , 
+		       & ( Digit_Pos[2].y ) , EndOfThemesDigitData );
 
 }; // void LoadThemeConfigurationFile ( void )
 
@@ -554,10 +585,10 @@ InitPictures (void)
   SDL_SetCursor( init_system_cursor( arrow ) );
 
 
-  /* 
-     create the internal storage for all our blocks 
-  */
 
+  //--------------------
+  // Now we create the internal storage for all our blocks 
+  //
   tmp = SDL_CreateRGBSurface(0, SCREENLEN, SCREENHEIGHT, vid_bpp, 0, 0, 0, 0);
   if (tmp == NULL) 
     {
@@ -571,7 +602,6 @@ InitPictures (void)
       DebugPrintf (1, "\nSDL_DisplayFormat() has failed: %s\n", SDL_GetError());
       return (FALSE);
     }
-
   if (SDL_SetColorKey(static_blocks, SDL_SRCCOLORKEY, transp_key) == -1 )
     {
       fprintf (stderr, "Transp setting by SDL_SetColorKey() failed: %s \n",
@@ -579,10 +609,9 @@ InitPictures (void)
       return (FALSE);
     }
 
-  /* 
-   * and now read in the blocks from various files 
-   */
-
+  //--------------------
+  // And now we read in the blocks from various files 
+  //
   Load_MapBlock_Surfaces();
 
   DebugPrintf( 2 , "\nvoid InitPictures(void): preparing to load droids." );
@@ -603,6 +632,10 @@ InitPictures (void)
 
   Load_Item_Surfaces();
 
+  DebugPrintf( 2 , "\nvoid InitPictures(void): preparing to load skill icon image file." );
+
+  Load_SkillIcon_Surfaces();
+
   DebugPrintf( 2 , "\nvoid InitPictures(void): preparing to load blast image file." );
 
   Load_Digit_Surfaces();
@@ -621,7 +654,7 @@ InitPictures (void)
   GetTakeoverGraphics();
   
   return (TRUE);
-}  // InitPictures
+}  // int InitPictures ( void )
 
 void PlusDrawEnergyBar (void);
 
@@ -767,6 +800,27 @@ Sorry...\n\
       Terminate(ERR);
     } else
       DebugPrintf(1, "\nSDL Red Font initialisation successful.\n");
+
+  fpath = find_file ( BLUE_FONT_FILE, GRAPHICS_DIR, FALSE);
+  if ( ( Blue_BFont = LoadFont (fpath) ) == NULL )
+    {
+      fprintf (stderr,
+	     "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+A font file named %s it wanted to load was not found.\n\
+\n\
+Please check that the file is present and not corrupted\n\
+in your distribution of Freedroid.\n\
+\n\
+Freedroid will terminate now to point at the error.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , BLUE_FONT_FILE );
+      Terminate(ERR);
+    } else
+      DebugPrintf(1, "\nSDL Blue Font initialisation successful.\n");
 
   //  SetCurrentFont(Menu_BFont);
 

@@ -85,10 +85,10 @@ Load_Blast_Surfaces( void )
 	  Target.h=Block_Height;
 	  SDL_BlitSurface ( Whole_Image , &Source , Blastmap[i].SurfacePointer[j] , &Target );
 	  SDL_SetAlpha( Blastmap[i].SurfacePointer[j] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+	  SDL_FreeSurface( tmp_surf );
 	}
     }
-
-  SDL_FreeSurface( tmp_surf );
+  SDL_FreeSurface( Whole_Image );
 
 }; // void Load_Blast_Surfaces( void )
 
@@ -189,11 +189,9 @@ Load_Item_Surfaces( void )
       // Now we can copy the image Information
       SDL_BlitSurface ( Whole_Image , &Source , ItemImageList[ j ].Surface , &Target );
       SDL_SetAlpha( ItemImageList[ j ].Surface , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+      SDL_FreeSurface( tmp_surf );
     }
-
-  SDL_FreeSurface( tmp_surf );
-
-
+  SDL_FreeSurface( Whole_Image );
 }; // void Load_Item_Surfaces( void )
 
 /* ----------------------------------------------------------------------
@@ -225,13 +223,11 @@ Load_Bullet_Surfaces( void )
   BulletImageHeightTable[  9 ] = Block_Height;
   BulletImageHeightTable[ 10 ] = Block_Height;
 
-
   fpath = find_file (NE_BULLET_BLOCK_FILE, GRAPHICS_DIR, TRUE);
 
   Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
   SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
 
-  
   for ( i=0 ; i < Number_Of_Bullet_Types ; i++ )
     {
       for ( j=0 ; j < Bulletmap[i].phases ; j++ )
@@ -252,19 +248,61 @@ Load_Bullet_Surfaces( void )
 	  Target.h = 0; // Block_Height;
 	  SDL_BlitSurface ( Whole_Image , &Source , Bulletmap[i].SurfacePointer[j] , &Target );
 	  SDL_SetAlpha( Bulletmap[i].SurfacePointer[j] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+	  SDL_FreeSurface( tmp_surf );
 	}
       RowTop += BulletImageHeightTable[ i ] + 2;
     }
-
-  SDL_FreeSurface( tmp_surf );
-
+  SDL_FreeSurface( Whole_Image );
 }; // void Load_Bullet_Surfaces( void )
 
 
-/* 
-----------------------------------------------------------------------
-----------------------------------------------------------------------
-*/
+/* ----------------------------------------------------------------------
+ * This function creates all the surfaces, that are nescessary to blit the
+ * skill icons somewhere on the screen, so that you know what skill is
+ * currently set to active.
+ * ---------------------------------------------------------------------- */
+void 
+Load_SkillIcon_Surfaces( void )
+{
+  SDL_Surface* Whole_Image;
+  SDL_Surface* tmp_surf;
+  SDL_Rect Source;
+  SDL_Rect Target;
+  int i;
+  char *fpath;
+
+  fpath = find_file ( NE_SKILL_ICON_FILE , GRAPHICS_DIR, TRUE);
+
+  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
+
+  for ( i=0 ; i < NUMBER_OF_SKILL_ICONS ; i++ )
+    {
+      tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, vid_bpp, 0, 0, 0, 0);
+      SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
+      SkillIconSurfacePointer[i] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
+      SDL_SetColorKey( SkillIconSurfacePointer[i] , 0 , 0 ); // this should clear any color key in the dest surface
+      // Now we can copy the image Information
+      Source.x=i*(Block_Height+2);
+      Source.y=0*(Block_Width+2);
+      Source.w=Block_Width;
+      Source.h=Block_Height;
+      Target.x=0;
+      Target.y=0;
+      Target.w=Block_Width;
+      Target.h=Block_Height;
+      SDL_BlitSurface ( Whole_Image , &Source , SkillIconSurfacePointer[i] , &Target );
+      SDL_SetAlpha( SkillIconSurfacePointer[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+      SDL_FreeSurface( tmp_surf );
+    }
+  SDL_FreeSurface( Whole_Image );
+}; // void Load_SkillIcon_Surfaces( void )
+
+
+/* ----------------------------------------------------------------------
+ * This function creates all the surfaces, that are nescessary to blit the
+ * 'head' and 'shoes' of an enemy.  The numbers are not dealt with here.
+ * ---------------------------------------------------------------------- */
 void 
 Load_Enemy_Surfaces( void )
 {
@@ -297,10 +335,9 @@ Load_Enemy_Surfaces( void )
       Target.h=Block_Height;
       SDL_BlitSurface ( Whole_Image , &Source , EnemySurfacePointer[i] , &Target );
       SDL_SetAlpha( EnemySurfacePointer[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+      SDL_FreeSurface( tmp_surf );
     }
-
-  SDL_FreeSurface( tmp_surf );
-
+  SDL_FreeSurface( Whole_Image );
 }; // void LoadEnemySurfaces( void )
 
 
@@ -340,16 +377,15 @@ Load_Influencer_Surfaces( void )
       Target.h=Block_Height;
       SDL_BlitSurface ( Whole_Image , &Source , InfluencerSurfacePointer[i] , &Target );
       SDL_SetAlpha( InfluencerSurfacePointer[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+      SDL_FreeSurface( tmp_surf );
     }
-
-  SDL_FreeSurface( tmp_surf );
-
+  SDL_FreeSurface( Whole_Image );
 }; // void Load_Influencer_Surfaces( void )
 
-/* 
-----------------------------------------------------------------------
-----------------------------------------------------------------------
-*/
+/* ----------------------------------------------------------------------
+ * This function creates all the surfaces, that are nescessary to blit a
+ * digit.
+ * ---------------------------------------------------------------------- */
 void 
 Load_Digit_Surfaces( void )
 {
@@ -388,8 +424,8 @@ Load_Digit_Surfaces( void )
 		   SDL_GetError());
 	  Terminate( ERR );
 	}
+      SDL_FreeSurface( tmp_surf );
     }
-  SDL_FreeSurface( tmp_surf );
 
   for ( i=0 ; i < DIGITNUMBER ; i++ )
     {
@@ -414,15 +450,15 @@ Load_Digit_Surfaces( void )
 		   SDL_GetError());
 	  Terminate( ERR );
 	}
+      SDL_FreeSurface( tmp_surf );
     }
-  SDL_FreeSurface( tmp_surf );
-
+  SDL_FreeSurface( Whole_Image );
 }; // void Load_Digit_Surfaces( void )
 
-/* 
-----------------------------------------------------------------------
-----------------------------------------------------------------------
-*/
+/* ----------------------------------------------------------------------
+ * This function creates all the surfaces, that are nescessary to blit
+ * some map tiles of any color.
+ * ---------------------------------------------------------------------- */
 void 
 Load_MapBlock_Surfaces( void )
 {
@@ -473,8 +509,9 @@ Load_MapBlock_Surfaces( void )
 	  Target.h=Block_Height;
 	  SDL_BlitSurface ( Whole_Image , &Source , MapBlockSurfacePointer[ color ][i] , &Target );
 	  SDL_SetAlpha( MapBlockSurfacePointer[ color ][i] , 0 , 0 );
+	  SDL_FreeSurface( tmp_surf );
 	}
-      SDL_FreeSurface( tmp_surf );
+      SDL_FreeSurface( Whole_Image );
     }
 }; // void Load_MapBlock_Surfaces( void )
 

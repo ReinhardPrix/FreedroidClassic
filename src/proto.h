@@ -123,6 +123,7 @@ EXTERN void ShowInventoryScreen ( void );
 #endif
 
 EXTERN void Load_Item_Surfaces (void);
+EXTERN void Load_SkillIcon_Surfaces (void);
 EXTERN void Load_MapBlock_Surfaces (void);
 EXTERN void Load_Enemy_Surfaces (void);
 EXTERN void Load_Influencer_Surfaces (void);
@@ -273,7 +274,7 @@ EXTERN void ManageInventoryScreen ( void );
 EXTERN void AddFloorItemDirectlyToInventory( item* ItemPointer );
 EXTERN void CopyItem( item* SourceItem , item* DestItem , int MakeSound );
 EXTERN void DeleteItem( item* Item );
-EXTERN void DropRandomItem( float x , float y );
+EXTERN void DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical );
 
 // character.c
 #undef EXTERN
@@ -286,7 +287,15 @@ EXTERN void DisplayButtons( void );
 EXTERN void UpdateAllCharacterStats ( void );
 EXTERN void ShowCharacterScreen ( void );
 
-
+// skills.c
+#undef EXTERN
+#ifdef _skills_c
+#define EXTERN
+#else
+#define EXTERN extern
+#endif
+EXTERN void ShowSkillsScreen ( void );
+EXTERN void HandleCurrentlyActivatedSkill( void );
 
 /* input.c */
 #undef EXTERN

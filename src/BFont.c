@@ -4,9 +4,14 @@
 /*                                                         */
 /***********************************************************/
 
-#include "BFont.h"
+// #include "BFont.h"
 #include "system.h"
-
+#include "defs.h"
+#include "struct.h"
+#include "proto.h"
+#include "global.h"
+#include "text.h"
+#include "SDL_rotozoom.h"
 
 /* Current font */
 BFont_Info *CurrentFont;
@@ -269,6 +274,16 @@ PutStringFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y,
   int i = 0;
   while (text[i] != '\0')
     {
+      //--------------------
+      // Here I've added some hack to allow to give a font switching
+      // directive with a text through various menus and therefore
+      // switch the font even multiple times in one big text.
+      //                                          jp, 27.7.2002
+      //
+      if ( text[i] == 1 ) Font = Red_BFont;
+      if ( text[i] == 2 ) Font = Blue_BFont;
+      if ( text[i] == 3 ) Font = FPS_Display_BFont;
+
       x += PutCharFont (Surface, Font, x, y, text[i]);
       i++;
     }
