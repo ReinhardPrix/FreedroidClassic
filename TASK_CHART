@@ -31,8 +31,18 @@ rp
 --
 - cvs archive mangagement
 - Takeover game
+- Lift & ship view
 - map-editor (maped)
 - Automake/configure/Makefile 
+- cheatmenu
+
+more detailed list of planned activities:
+
+1. correct bugs in autoconf/automake/configure (esp. path to SDL includes!!)
+2. consider putting compression into cvs as suggested by  Frode Haugsgjerd
+3. put proper timing in takeover game
+4. chase SegFault bug that might come from my new getchar_raw() or GetString()
+   functions, and happens mostly after Highscore-entry (func. Debriefing())
 
 
 limo
