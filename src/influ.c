@@ -51,7 +51,7 @@ void PermanentLoseEnergy (void);	/* influ permanently loses energy */
 int NoInfluBulletOnWay (void);
 
 #define max(x,y) ((x) < (y) ? (y) : (x) ) 
-
+#define MAXIMAL_STEP_SIZE ( 7.0/20 )
 
 /*@Function============================================================
 @Desc: Fires Bullets automatically
@@ -301,20 +301,22 @@ MoveInfluence (void)
   // So what do we do?  We allow a maximum step of exactly that, what the 302 (with a speed
   // of 7) could get when the framerate is as low as 20 FPS.  This should be sufficient to
   // prevent the influencer from *ever* leaving the ship.  I hope this really does work.
+  // The definition of that speed is made in MAXIMAL_STEP_SIZE at the top of this file.
   //
   // And on machines with FPS << 20, it will certainly alter the game behaviour, so people
   // should really start using a pentium or better machine.
   //
   // NOTE:  PLEASE LEAVE THE .0 in the code or gcc will round it down to 0 like an integer.
+  //
   planned_step_x = Me.speed.x * Frame_Time ();
   planned_step_y = Me.speed.y * Frame_Time ();
-  if ( fabsf(planned_step_x) >= 7.0/20 )
+  if ( fabsf(planned_step_x) >= MAXIMAL_STEP_SIZE )
     {
-      planned_step_x = copysignf( 7.0/20 , planned_step_x );
+      planned_step_x = copysignf( MAXIMAL_STEP_SIZE , planned_step_x );
     }
-  if ( fabsf(planned_step_y) >= 7.0/20 )
+  if ( fabsf(planned_step_y) >= MAXIMAL_STEP_SIZE )
     {
-      planned_step_y = copysignf( 7.0/20 , planned_step_y );
+      planned_step_y = copysignf( MAXIMAL_STEP_SIZE , planned_step_y );
     }
   Me.pos.x += planned_step_x;
   Me.pos.y += planned_step_y;
@@ -791,6 +793,7 @@ CheckInfluenceEnemyCollision (void)
   float xdist;
   float ydist;
   float dist2;
+  float max_step_size;
   int swap;
   int first_collision = TRUE;	/* marker */
 
@@ -812,8 +815,8 @@ CheckInfluenceEnemyCollision (void)
       if (abs (ydist) > 1)
 	continue;
 
-      dist2 = sqrt( xdist *xdist + ydist * ydist );
-      if (dist2 > 2 * Druid_Radius_X )
+      dist2 = sqrt( (xdist * xdist) + (ydist * ydist) );
+      if ( dist2 > 2 * Druid_Radius_X )
 	continue;
 
 
@@ -839,8 +842,9 @@ CheckInfluenceEnemyCollision (void)
 		Me.speed.y = COLLISION_PUSHSPEED * (ydist / fabsf (ydist));
 
 	      // move the influencer a little bit out of the enemy AND the enemy a little bit out of the influ
-	      Me.pos.x += copysignf( Frame_Time() , Me.pos.x - AllEnemys[i].pos.x ) ;
-	      Me.pos.y += copysignf( Frame_Time() , Me.pos.y - AllEnemys[i].pos.y ) ;
+	      max_step_size = ((Frame_Time()) < ( MAXIMAL_STEP_SIZE ) ? (Frame_Time()) : ( MAXIMAL_STEP_SIZE )) ; 
+	      Me.pos.x += copysignf( max_step_size , Me.pos.x - AllEnemys[i].pos.x ) ;
+	      Me.pos.y += copysignf( max_step_size , Me.pos.y - AllEnemys[i].pos.y ) ;
 	      AllEnemys[i].pos.x -= copysignf( Frame_Time() , Me.pos.x - AllEnemys[i].pos.x ) ;
 	      AllEnemys[i].pos.y -= copysignf( Frame_Time() , Me.pos.y - AllEnemys[i].pos.y ) ;
 	      // Me.pos.x += Me.speed.x * Frame_Time ();
