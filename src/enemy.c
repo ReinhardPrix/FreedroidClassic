@@ -1337,9 +1337,13 @@ ConsideredMoveIsFeasible ( Enemy ThisRobot , moderately_finepoint StepVector , i
  * MoveThisRobotThowardsHisWaypoint or so, cause what this function does
  * is setting some new course parameters, NOT really alter the position
  * of this robot directly.
+ *
+ * Also in some cases, the robot will want to move farther away from the
+ * melee combat range.  In this case sign (-1) will do the trick, while
+ * otherwise sign (+1) must be given.
  * ---------------------------------------------------------------------- */
 void
-MoveInCloserForMeleeCombat ( Enemy ThisRobot , int TargetPlayer , int enemynum )
+MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int TargetPlayer , int enemynum , int DirectionSign )
 {
   float StepSize;
   finepoint VictimPosition;
@@ -1381,8 +1385,8 @@ MoveInCloserForMeleeCombat ( Enemy ThisRobot , int TargetPlayer , int enemynum )
   StepVector . y = VictimPosition . y - CurrentPosition . y ;
   StepVectorLen = sqrt ( ( StepVector . x ) * ( StepVector . x ) + ( StepVector . y ) * ( StepVector . y ) );
 
-  StepVector . x /= ( 2 * StepVectorLen ) ;
-  StepVector . y /= ( 2 * StepVectorLen ) ;
+  StepVector . x /= ( DirectionSign * 2 * StepVectorLen ) ;
+  StepVector . y /= ( DirectionSign * 2 * StepVectorLen ) ;
 
   //--------------------
   // Now we have assembled the simplest of ideas:  Try to move directly
@@ -1439,8 +1443,6 @@ AttackInfluence (int enemynum)
   moderately_finepoint vect_to_target;
   float dist2;
   Enemy ThisRobot = & AllEnemys[ enemynum ] ;
-  float StepSize;
-  float TargetRange;
   int TargetPlayer;
 
   //--------------------
@@ -1531,104 +1533,14 @@ AttackInfluence (int enemynum)
   if ( ItemMap [ Druidmap [ ThisRobot -> type ] . weapon_item . type ] . item_gun_angle_change != 0 )
     {
 
-      MoveInCloserForMeleeCombat ( ThisRobot , TargetPlayer , enemynum );
+      MoveInCloserForOrAwayFromMeleeCombat ( ThisRobot , TargetPlayer , enemynum , (+1) );
 
     } // if a melee weapon is given.
   else if (dist2 < 1.5)
     {
-      //--------------------
-      // Even if no melee weapon is used by this droid, there might still
-      // be some reason to move (regardless of waypoints):  This is the case
-      // if the influencer/tux gets too close.  Then the droid should try to
-      // take advantage of his greater range and back of somewhat, so that
-      // the tux does not just need to kill the sitting duck.  This shall be
-      // accomplished here.
-      //
-      
-      //--------------------
-      // If the distance is not yet right, we find a new location to move to.  We
-      // do this WITHOUT consulting the waypoints, so that the robots become more
-      // 'intelligent' in their movement.
-      //
-      // ThisRobot->TextVisibleTime = 0 ;
-      // ThisRobot->TextToBeDisplayed = "Seeking to farther away from target...";
-      //
-      ThisRobot -> persuing_given_course = TRUE;
-      ThisRobot -> PrivatePathway [ 0 ] . x = ThisRobot -> pos.x ;
-      ThisRobot -> PrivatePathway [ 0 ] . y = ThisRobot -> pos.y ;
-      
-      //--------------------
-      // Now we check if it's perhaps time to make a step to the left/right in 
-      // order to get close enough to the target tux for a successful melee weapon
-      // swing.
-      //
-      TargetRange = 1.5;
-      StepSize = -1.0;
-      if ( fabsf ( Me [ TargetPlayer ] . pos . x - ThisRobot -> pos . x ) < TargetRange )
-	{
-	  if ( ( Me [ TargetPlayer ] . pos . x - ThisRobot -> pos . x ) > 0 )
-	    {
-	      if ( ( DirectLineWalkable ( ThisRobot -> PrivatePathway [ 0 ] . x + StepSize , 
-					  ThisRobot -> PrivatePathway [ 0 ] . y ,
-					  ThisRobot -> PrivatePathway [ 0 ] . x , 
-					  ThisRobot -> PrivatePathway [ 0 ] . y ,
-					  ThisRobot -> pos.z ) == TRUE ) &&
-		   ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
-						ThisRobot->PrivatePathway[ 0 ].x + StepSize , ThisRobot->PrivatePathway[ 0 ].y,
-						ThisRobot->pos.z , enemynum ) ) )
-		{
-		  ThisRobot->PrivatePathway[ 0 ].x = ThisRobot->pos.x + StepSize ;
-		}
-	    }
-	  else
-	    {
-	      if ( ( DirectLineWalkable( ThisRobot->PrivatePathway[ 0 ].x - StepSize , 
-					 ThisRobot->PrivatePathway[ 0 ].y ,
-					 ThisRobot->PrivatePathway[ 0 ].x , 
-					 ThisRobot->PrivatePathway[ 0 ].y ,
-					 ThisRobot->pos.z ) == TRUE ) &&
-		   ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
-						ThisRobot->PrivatePathway [ 0 ] . x - StepSize , ThisRobot->PrivatePathway[ 0 ].y,
-						ThisRobot->pos.z , enemynum ) ) )
-		{
-		  ThisRobot->PrivatePathway [ 0 ] . x = ThisRobot->pos.x - StepSize;
-		}
-	    }
-	}
-      
-      //--------------------
-      // Now we check if it's perhaps time to make a step up/down in order to
-      // get close enough for a successful melee weapon swing at a tux.
-      //
-      if ( fabsf ( Me [ TargetPlayer ] . pos . y - ThisRobot -> pos . y ) < TargetRange )
-	{
-	  if ( ( Me [ TargetPlayer ] . pos . y - ThisRobot -> pos . y ) > 0 )
-	    {
-	      if ( ( DirectLineWalkable ( ThisRobot->PrivatePathway[ 0 ].x , 
-					  ThisRobot->PrivatePathway[ 0 ].y + StepSize ,
-					  ThisRobot->PrivatePathway[ 0 ].x , 
-					  ThisRobot->PrivatePathway[ 0 ].y ,
-					  ThisRobot->pos.z ) == TRUE ) &&
-		   ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
-						ThisRobot->PrivatePathway[ 0 ].x , ThisRobot->PrivatePathway[ 0 ].y + StepSize ,
-						ThisRobot->pos.z , enemynum ) ) )
-		ThisRobot->PrivatePathway[ 0 ].y = ThisRobot->pos.y + StepSize ;
-	    }
-	  else
-	    {
-	      if ( ( DirectLineWalkable ( ThisRobot->PrivatePathway[ 0 ].x , 
-					  ThisRobot->PrivatePathway[ 0 ].y - StepSize ,
-					  ThisRobot->PrivatePathway[ 0 ].x , 
-					  ThisRobot->PrivatePathway[ 0 ].y ,
-					  ThisRobot->pos.z ) == TRUE ) &&
-		   ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
-						ThisRobot->PrivatePathway[ 0 ].x , ThisRobot->PrivatePathway[ 0 ].y - StepSize ,
-						ThisRobot->pos.z , enemynum ) ) )
-		{
-		  ThisRobot->PrivatePathway[ 0 ].y = ThisRobot->pos.y - StepSize;
-		}
-	    }
-	} // the case, that with no melee weapon distance is very short
+
+      MoveInCloserForOrAwayFromMeleeCombat ( ThisRobot , TargetPlayer , enemynum , (-1) );
+
     } // else the case, that no melee weapon 
 
   //--------------------

@@ -1093,6 +1093,30 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle )
   if ( ! AllEnemys[Enum].is_friendly ) 
     {
       //--------------------
+      // The phase now depends upon the direction this robot
+      // is heading.
+      //
+      // We calsulate the angle of the vector
+      //
+      if ( ( fabsf ( AllEnemys[Enum].speed.y ) > 1 ) || ( fabsf ( AllEnemys[Enum].speed.x ) > 1 ) )
+	{
+	  angle = - ( atan2 ( AllEnemys[Enum].speed.y,  AllEnemys[Enum].speed.x) * 180 / M_PI + 90 );
+	  AllEnemys[Enum].previous_angle = angle ;
+	}
+      else
+	{
+	  angle = AllEnemys[Enum].previous_angle ;
+	}
+      //
+      // 3. We make a phase out of the current angle
+      //
+      RotationIndex = ( angle * ROTATION_ANGLES_PER_ROTATION_MODEL / 360 ) ;
+      while ( RotationIndex < 0  ) RotationIndex += ROTATION_ANGLES_PER_ROTATION_MODEL ; // just to make sure... a modulo ROTATION_ANGLES_PER_ROTATION_MODEL operation can't hurt
+      while ( RotationIndex >= ROTATION_ANGLES_PER_ROTATION_MODEL ) RotationIndex -= ROTATION_ANGLES_PER_ROTATION_MODEL ; // just to make sure... a modulo ROTATION_ANGLES_PER_ROTATION_MODEL operation can't hurt
+      // DebugPrintf ( 0 , "\nCurrent angle: %f Current RotationIndex: %d. " , angle, RotationIndex );
+      RotationModel = Druidmap [ AllEnemys [ Enum ] . type ] . individual_shape_nr ;
+
+      //--------------------
       // First we check if the robot is still alive.  If it isn't, 
       // then we can use the explosion dust from the classic ball-shaped
       // version.
@@ -1101,48 +1125,20 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle )
 	{
 	  if ( AllEnemys[Enum].paralysation_duration_left != 0 ) 
 	    {
-	      SDL_BlitSurface( RedEnemySurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
+	      SDL_BlitSurface( RedEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] , NULL , Screen, &TargetRectangle);
 	    }
 	  else if ( AllEnemys[Enum].poison_duration_left != 0 ) 
 	    {
-	      SDL_BlitSurface( GreenEnemySurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
+	      SDL_BlitSurface( GreenEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] , NULL , Screen, &TargetRectangle);
 	    }
 	  else if ( AllEnemys[Enum].frozen != 0 ) 
 	    {
-	      SDL_BlitSurface( BlueEnemySurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
+	      SDL_BlitSurface( BlueEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] , NULL , Screen, &TargetRectangle);
 	    }
 	  else
 	    {
-	      //--------------------
-	      // The phase now depends upon the direction this robot
-	      // is heading.
-	      //
-	      // 1. We protect ourselves against division by zero.
-	      //
-	      // if ( fabsf ( AllEnemys[Enum].speed.y ) < 0.1 ) AllEnemys[Enum].speed.y = 0.1 ;
-	      //
-	      // 2. We calsulate the angle of the vector
-	      //
-	      if ( ( fabsf ( AllEnemys[Enum].speed.y ) > 1 ) || ( fabsf ( AllEnemys[Enum].speed.x ) > 1 ) )
-		{
-		  angle = - ( atan2 ( AllEnemys[Enum].speed.y,  AllEnemys[Enum].speed.x) * 180 / M_PI + 90 );
-		  AllEnemys[Enum].previous_angle = angle ;
-		}
-	      else
-		{
-		  angle = AllEnemys[Enum].previous_angle ;
-		}
-	      //
-	      // 3. We make a phase out of the current angle
-	      //
-	      RotationIndex = ( angle * 40 / 360 ) ;
-	      while ( RotationIndex < 0  ) RotationIndex += 40; // just to make sure... a modulo 40 operation can't hurt
-	      while ( RotationIndex > 39 ) RotationIndex -= 40; // just to make sure... a modulo 40 operation can't hurt
-	      // DebugPrintf ( 0 , "\nCurrent angle: %f Current RotationIndex: %d. " , angle, RotationIndex );
-	      RotationModel = Druidmap [ AllEnemys [ Enum ] . type ] . individual_shape_nr ;
 	      SDL_BlitSurface( EnemyRotationSurfacePointer[ RotationModel ] [ RotationIndex ] , NULL , Screen, &TargetRectangle);
 	    }
-
 	}
       else
 	{

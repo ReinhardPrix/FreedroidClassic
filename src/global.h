@@ -217,12 +217,18 @@ EXTERN SDL_Surface *Screen;   /* the graphics display */
 EXTERN SDL_Surface *SkillIconSurfacePointer[ NUMBER_OF_SKILLS ]; // A pointer all skill icon surfaces
 EXTERN SDL_Surface *EnemySurfacePointer[ DROID_PHASES + DEAD_DROID_PHASES ];   // A pointer to the surfaces containing the pictures of the
                                                // enemys in different phases of rotation
-EXTERN SDL_Surface *EnemyRotationSurfacePointer[ ENEMY_ROTATION_MODELS_AVAILABLE ] [ 40 ];   // A pointer to the surfaces containing the pictures of the
-                                               // enemys in different anles of rotation
 EXTERN SDL_Surface *BlueEnemySurfacePointer[ DROID_PHASES + DEAD_DROID_PHASES ];   // A pointer to the surfaces containing the pictures of the
 EXTERN SDL_Surface *GreenEnemySurfacePointer[ DROID_PHASES + DEAD_DROID_PHASES ];   // A pointer to the surfaces containing the pictures of the
 EXTERN SDL_Surface *RedEnemySurfacePointer[ DROID_PHASES + DEAD_DROID_PHASES ];   // A pointer to the surfaces containing the pictures of the
 EXTERN SDL_Surface *InfluencerSurfacePointer[ DROID_PHASES + DEAD_DROID_PHASES ];   // A pointer to the surfaces containing the pictures of the
+EXTERN SDL_Surface *EnemyRotationSurfacePointer[ ENEMY_ROTATION_MODELS_AVAILABLE ] [ ROTATION_ANGLES_PER_ROTATION_MODEL ];   // A pointer to the surfaces containing the pictures of the
+                                               // enemys in different anles of rotation
+EXTERN SDL_Surface *BlueEnemyRotationSurfacePointer[ ENEMY_ROTATION_MODELS_AVAILABLE ] [ ROTATION_ANGLES_PER_ROTATION_MODEL ];   // A pointer to the surfaces containing the pictures of the
+                                               // enemys in different anles of rotation
+EXTERN SDL_Surface *RedEnemyRotationSurfacePointer[ ENEMY_ROTATION_MODELS_AVAILABLE ] [ ROTATION_ANGLES_PER_ROTATION_MODEL  ];   // A pointer to the surfaces containing the pictures of the
+                                               // enemys in different anles of rotation
+EXTERN SDL_Surface *GreenEnemyRotationSurfacePointer[ ENEMY_ROTATION_MODELS_AVAILABLE ] [ ROTATION_ANGLES_PER_ROTATION_MODEL ];   // A pointer to the surfaces containing the pictures of the
+                                               // enemys in different anles of rotation
                                                // influencer in different phases of rotation
 EXTERN SDL_Surface *TuxWorkingCopy [ MAX_PLAYERS ][ TUX_BREATHE_PHASES + TUX_SWING_PHASES + TUX_GOT_HIT_PHASES ];   // A pointer to the surfaces containing the tux
 EXTERN SDL_Surface *TuxMotionArchetypes[ TUX_MODELS ][ TUX_BREATHE_PHASES + TUX_SWING_PHASES + TUX_GOT_HIT_PHASES ];   // A pointer to the surfaces containing the tux
@@ -244,14 +250,6 @@ EXTERN int Block_Height;
 EXTERN int Digit_Length;
 EXTERN int Digit_Height;
 EXTERN point Digit_Pos[3];
-/*
-EXTERN int First_Digit_Pos_X;
-EXTERN int First_Digit_Pos_Y;
-EXTERN int Second_Digit_Pos_X;
-EXTERN int Second_Digit_Pos_Y;
-EXTERN int Third_Digit_Pos_X;
-EXTERN int Third_Digit_Pos_Y;
-*/
 EXTERN const SDL_VideoInfo *vid_info;/* info about current video mode */
 EXTERN color transp_rgb;             /* RGB of transparent color */
 EXTERN int vid_bpp; 			/* bits per pixel */

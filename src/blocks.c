@@ -410,7 +410,7 @@ Load_Enemy_Surfaces( void )
       // we can start doing something new:  Let's try to use some pre-rotated
       // enemy surfaces for a change.  That might work out to be cool.
       //
-      for ( i=0 ; i < 40 ; i++ )
+      for ( i=0 ; i < ROTATION_ANGLES_PER_ROTATION_MODEL ; i++ )
 	{
 	  sprintf ( ConstructedFileName , "rotation_models/anim_%02d_%04d.png" , j , i + 1 );
 	  DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
@@ -449,6 +449,18 @@ Sorry...\n\
 	  SDL_FreeSurface( Whole_Image );
 	  
 	}
+
+      //--------------------
+      // Now that we have our enemy surfaces ready, we can create some modified
+      // copies of those surfaces but this a color filter applied to them...
+      //
+      for ( i=0 ; i < ROTATION_ANGLES_PER_ROTATION_MODEL ; i++ )
+	{
+	  BlueEnemyRotationSurfacePointer [ j ] [ i ] = CreateColorFilteredSurface ( EnemyRotationSurfacePointer [ j ] [ i ] , FILTER_BLUE );
+	  GreenEnemyRotationSurfacePointer [ j ] [ i ] = CreateColorFilteredSurface ( EnemyRotationSurfacePointer [ j ] [ i ] , FILTER_GREEN );
+	  RedEnemyRotationSurfacePointer [ j ] [ i ] = CreateColorFilteredSurface ( EnemyRotationSurfacePointer [ j ] [ i ] , FILTER_RED );
+	}
+
     }
 
 }; // void LoadEnemySurfaces( void )
