@@ -711,7 +711,7 @@ int
 smash_obstacles_only_on_tile ( float x , float y , int map_x , int map_y )
 {
   Level BoxLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
-  int i , j ;
+  int i ;
   Obstacle target_obstacle;
   int smashed_something = FALSE ;
   moderately_finepoint blast_start_pos;

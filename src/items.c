@@ -219,7 +219,6 @@ HomeMadeItemRepair ( Item RepairItem )
 Item
 FindPointerToPositionCode ( int SlotCode , int PlayerNum ) 
 {
-
   DebugPrintf ( 0 , "\nSlotCode received : %d . Player Number : %d. " , SlotCode , PlayerNum ) ;
   switch ( SlotCode )
     {
@@ -272,6 +271,7 @@ FindPointerToPositionCode ( int SlotCode , int PlayerNum )
    }
 
   return NULL ;
+
 }; // Item FindPointerToPositionCode ( PositionCode , PlayerNum ) 
 
 /* ----------------------------------------------------------------------
@@ -581,6 +581,64 @@ item types.  This indicates a severe bug in Freedroid.",
 }; // void DropChestItemAt( int ItemType , int x , int y , int prefix , int suffix , int TreasureChestRange )
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+int
+item_type_cannot_be_equipped ( int drop_item_type )
+{
+
+  if ( ItemMap [ drop_item_type ] . item_can_be_installed_in_weapon_slot ) return ( FALSE ) ;
+  if ( ItemMap [ drop_item_type ] . item_can_be_installed_in_drive_slot ) return ( FALSE ) ;
+  if ( ItemMap [ drop_item_type ] . item_can_be_installed_in_armour_slot ) return ( FALSE ) ;
+  if ( ItemMap [ drop_item_type ] . item_can_be_installed_in_shield_slot ) return ( FALSE ) ;
+  if ( ItemMap [ drop_item_type ] . item_can_be_installed_in_special_slot ) return ( FALSE ) ;
+  if ( ItemMap [ drop_item_type ] . item_can_be_installed_in_aux_slot ) return ( FALSE ) ;
+
+  return ( TRUE ) ;
+}; // int item_type_cannot_be_equipped ( int drop_item_type )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ----------------------------------------------------------------------- */
+int 
+find_suitable_suffix_for_item ( int drop_item_type , int TreasureChestRange )
+{
+  //--------------------
+  // First we catch the case of non-equipable items being magical.
+  // This does not make sense and therefore is caught.
+  //
+  if ( item_type_cannot_be_equipped ( drop_item_type ) )
+    return ( -1 );
+
+  //--------------------
+  // Now we find a suitable modifier
+  //
+  return ( MyRandom ( 4 * TreasureChestRange ) ) ;
+}; // int find_suitable_suffix_for_item ( int drop_item_type , int TreasureChestRange )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ----------------------------------------------------------------------- */
+int 
+find_suitable_prefix_for_item ( int drop_item_type , int TreasureChestRange )
+{
+  //--------------------
+  // First we catch the case of non-equipable items being magical.
+  // This does not make sense and therefore is caught.
+  //
+  if ( item_type_cannot_be_equipped ( drop_item_type ) )
+    return ( -1 );
+
+  //--------------------
+  // Now we find a suitable modifier
+  //
+  return ( MyRandom ( 4 * TreasureChestRange ) ) ;
+}; // int find_suitable_suffix_for_item ( int drop_item_type , int TreasureChestRange )
+
+/* ----------------------------------------------------------------------
  * This function drops a random item to the floor of the current level
  * at position ( x , y ).
  *
@@ -593,6 +651,8 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
 {
   int Suf; int Pre;
   int DropDecision;
+  int drop_item_type = 1 ;
+  int drop_item_multiplicity = 1 ;
 
   //--------------------
   // First we determine if there is something dropped at all or not,
@@ -643,194 +703,240 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
       return;
     }
 
-  //--------------------
-  // So at this point we know, that an item will be dropped...
-  //
-  // Since there are no prefixes set up yet, we just need to consider
-  // the suffixes.  In case 
-  //
-  if ( ForceMagical )
-    {
-      Suf = MyRandom( 4 * TreasureChestRange );
-      Pre = MyRandom( 4 * TreasureChestRange );
-    }
-  else
-    {
-      Suf = ( -1 );
-      Pre = ( -1 ) ;
-    }
-
-
   switch ( MyRandom ( TreasureChestRange ) )
     {
     case 0:
       switch ( MyRandom ( 11 ) )
 	{
 	case 0:
-	  DropItemAt( ITEM_TRACKS , x , y , Pre , Suf , TreasureChestRange , 1 );
+	  drop_item_type = ITEM_TRACKS ;
+	  drop_item_multiplicity =  1 ;
 	  break;
 	case 1:
-	  DropItemAt( ITEM_SHORT_BOW , x , y , Pre , Suf , TreasureChestRange , 1 );
+	  drop_item_type = ITEM_SHORT_BOW ;
+	  drop_item_multiplicity =  1 ;
 	  break;
 	case 2:
-	  DropItemAt( ITEM_SMALL_HEALTH_POTION , x , y , -1 , -1 , TreasureChestRange , 1 );
+	  drop_item_type = ITEM_SMALL_HEALTH_POTION ;
+	  drop_item_multiplicity =  1 ;
 	  break;
 	case 3:
-	  DropItemAt( ITEM_SMALL_MANA_POTION , x , y , -1 , -1 , TreasureChestRange , 1 );
+	  drop_item_type = ITEM_SMALL_MANA_POTION ;
+	  drop_item_multiplicity =  1 ;
 	  break;
 	case 4:
-	  DropItemAt( ITEM_BUCKLER , x , y , Pre , Suf , TreasureChestRange , 1 );
+	  drop_item_type = ITEM_BUCKLER ;
+	  drop_item_multiplicity =  1 ;
 	  break;
 	case 5:
-	  DropItemAt( ITEM_SHORT_SWORD , x , y , Pre , Suf , TreasureChestRange , 1 );
+	  drop_item_type = ITEM_SHORT_SWORD ;
+	  drop_item_multiplicity =  1 ;
 	  break;
 	case 6:
-	  DropItemAt( ITEM_DAGGER , x , y , Pre , Suf , TreasureChestRange , 1 );
+	  drop_item_type = ITEM_DAGGER ;
+	  drop_item_multiplicity =  1 ;
 	  break;
 	case 7:
-	  DropItemAt( ITEM_CAP , x , y , Pre , Suf , TreasureChestRange , 1 );
+	  drop_item_type = ITEM_CAP ;
+	  drop_item_multiplicity =  1 ;
 	  break;
 	case 8:
-	  DropItemAt( ITEM_STAFF , x , y , Pre , Suf , TreasureChestRange , 1 );
+	  drop_item_type = ITEM_STAFF ;
+	  drop_item_multiplicity =  1 ;
 	  break;
 	case 9:
-	  DropItemAt( ITEM_CLOAK , x , y , Pre , Suf , TreasureChestRange , 1 );
+	  drop_item_type = ITEM_CLOAK ;
+	  drop_item_multiplicity =  1 ;
 	  break;
 	case 10:
-	  DropItemAt( ITEM_PLASMA_AMMUNITION , x , y , Pre , Suf , TreasureChestRange , 3 + MyRandom ( 9 ) );
+	  drop_item_type = ITEM_PLASMA_AMMUNITION ;
+	  drop_item_multiplicity =  2 + MyRandom ( 9 ) ;
 	  break;
 	case 11:
-	  DropItemAt( ITEM_LASER_AMMUNITION , x , y , Pre , Suf , TreasureChestRange , 3 + MyRandom ( 9 ) );
+	  drop_item_type = ITEM_LASER_AMMUNITION ;
+	  drop_item_multiplicity =  2 + MyRandom ( 9 ) ;
 	  break;
-#define ITEM_EXTERMINATOR_AMMUNITION 68
-
-	}
+	} // inner switch
       break;
     case 1:
       switch ( MyRandom ( 10 ) )
 	{
 	case 0:
-	  DropItemAt( ITEM_WHEELS , x , y , Pre , Suf , TreasureChestRange , 1 );
+	  drop_item_type = ITEM_WHEELS ;
+	  drop_item_multiplicity = 1 ;
 	  break;
 	case 1:
-	  DropItemAt( ITEM_HUNTERS_BOW , x , y , Pre , Suf , TreasureChestRange , 1 );
+	  drop_item_type = ITEM_HUNTERS_BOW ;
+	  drop_item_multiplicity =  1 ;
 	  break;
 	case 2:
-	  DropItemAt( ITEM_MEDIUM_HEALTH_POTION , x , y , -1 , -1 , TreasureChestRange , 1 );
+	  drop_item_type = ITEM_MEDIUM_HEALTH_POTION ;
+	  drop_item_multiplicity =  1 ;
 	  break;
 	case 3:
-	  DropItemAt( ITEM_MEDIUM_MANA_POTION , x , y , -1 , -1 , TreasureChestRange , 1 );
+	  drop_item_type = ITEM_MEDIUM_MANA_POTION ;
+	  drop_item_multiplicity =  1 ;
 	  break;
 	case 4:
-	  DropItemAt( ITEM_SMALL_SHIELD , x , y , Pre , Suf , TreasureChestRange , 1 );
+	  drop_item_type = ITEM_SMALL_SHIELD ;
+	  drop_item_multiplicity =  1 ;
 	  break;
 	case 5:
-	  DropItemAt( ITEM_SCIMITAR , x , y , Pre , Suf , TreasureChestRange , 1 );
+	  drop_item_type = ITEM_SCIMITAR ;
+	  drop_item_multiplicity =  1 ;
 	  break;
 	case 6:
-	  DropItemAt( ITEM_SMALL_HELM , x , y , Pre , Suf , TreasureChestRange , 1 );
+	  drop_item_type = ITEM_SMALL_HELM ;
+	  drop_item_multiplicity =  1 ;
 	  break;
 	case 7:
-	  DropItemAt( ITEM_ROBE , x , y , Pre , Suf , TreasureChestRange , 1 );
+	  drop_item_type = ITEM_ROBE ;
+	  drop_item_multiplicity =  1 ;
 	  break;
 	case 8:
-	  DropItemAt( ITEM_PLASMA_AMMUNITION , x , y , Pre , Suf , TreasureChestRange , 10 + MyRandom ( 9 ) );
+	  drop_item_type = ITEM_PLASMA_AMMUNITION ;
+	  drop_item_multiplicity =  10 + MyRandom ( 9 ) ;
 	  break;
-	case 9:
-	  DropItemAt( ITEM_LASER_AMMUNITION , x , y , Pre , Suf , TreasureChestRange , 10 + MyRandom ( 9 ) );
+	 case 9:
+	  drop_item_type = ITEM_LASER_AMMUNITION ;
+	  drop_item_multiplicity =  10 + MyRandom ( 9 ) ;
 	  break;
 	case 10:
-	  DropItemAt( ITEM_EXTERMINATOR_AMMUNITION , x , y , Pre , Suf , TreasureChestRange , 10 + MyRandom ( 9 ) );
+	  drop_item_type = ITEM_EXTERMINATOR_AMMUNITION ;
+	  drop_item_multiplicity =  10 + MyRandom ( 9 ) ;
 	  break;
-	}
+	} // inner switch
       break;
     case 2:
       switch ( MyRandom ( 11 ) )
 	{
 	case 0:
-	  DropItemAt( ITEM_TRIPEDAL , x , y , Pre , Suf , TreasureChestRange , 1 );
+	  drop_item_type = ITEM_TRIPEDAL ;
+	  drop_item_multiplicity =  1 ;
 	  break;
 	case 1:
-	  DropItemAt( ITEM_LONG_BOW , x , y , Pre , Suf , TreasureChestRange , 1 );
+	  drop_item_type = ITEM_LONG_BOW ;
+	  drop_item_multiplicity =  1 ;
 	  break;
 	case 2:
-	  DropItemAt( ITEM_FULL_HEALTH_POTION , x , y , -1 , -1 , TreasureChestRange , 1 );
+	  drop_item_type = ITEM_FULL_HEALTH_POTION ;
+	  drop_item_multiplicity =  1 ;
 	  break;
 	case 3:
-	  DropItemAt( ITEM_FULL_MANA_POTION , x , y , -1 , -1 , TreasureChestRange , 1 );
+	  drop_item_type = ITEM_FULL_MANA_POTION ;
+	  drop_item_multiplicity =  1 ;
 	  break;
 	case 4:
-	  DropItemAt( ITEM_SMALL_SHIELD , x , y , Pre , Suf , TreasureChestRange , 1 );
+	  drop_item_type = ITEM_SMALL_SHIELD ;
+	  drop_item_multiplicity =  1 ;
 	  break;
 	case 5:
-	  DropItemAt( ITEM_SABER , x , y , Pre , Suf , TreasureChestRange , 1 );
+	  drop_item_type = ITEM_SABER ;
+	  drop_item_multiplicity =  1 ;
 	  break;
 	case 6:
-	  DropItemAt( ITEM_IRON_HAT , x , y , Pre , Suf , TreasureChestRange , 1 );
+	  drop_item_type = ITEM_IRON_HAT ;
+	  drop_item_multiplicity =  1 ;
 	  break;
 	case 7:
-	  DropItemAt( ITEM_QUILTED_ARMOUR , x , y , Pre , Suf , TreasureChestRange , 1 );
+	  drop_item_type = ITEM_QUILTED_ARMOUR ;
+	  drop_item_multiplicity =  1 ;
 	  break;
 	case 8:
-	  DropItemAt( ITEM_STANDARD_SHIELD , x , y , Pre , Suf , TreasureChestRange , 1 );
+	  drop_item_type = ITEM_STANDARD_SHIELD ;
+	  drop_item_multiplicity =  1 ;
 	  break;
 	case 9:
-	  DropItemAt( ITEM_PLASMA_AMMUNITION , x , y , Pre , Suf , TreasureChestRange , 20 + MyRandom ( 9 ) );
+	  drop_item_type = ITEM_PLASMA_AMMUNITION ;
+	  drop_item_multiplicity =  20 + MyRandom ( 9 );
 	  break;
 	case 10:
-	  DropItemAt( ITEM_LASER_AMMUNITION , x , y , Pre , Suf , TreasureChestRange , 20 + MyRandom ( 9 ) );
+	  drop_item_type = ITEM_LASER_AMMUNITION ;
+	  drop_item_multiplicity =  20 + MyRandom ( 9 ) ;
 	  break;
 	case 11:
-	  DropItemAt( ITEM_EXTERMINATOR_AMMUNITION , x , y , Pre , Suf , TreasureChestRange , 20 + MyRandom ( 9 ) );
+	  drop_item_type = ITEM_EXTERMINATOR_AMMUNITION ;
+	  drop_item_multiplicity =  20 + MyRandom ( 9 ) ;
 	  break;
-	}
+	} // inner switch
       break;
     case 3:
       switch ( MyRandom ( 11 ) )
 	{
 	case 0:
-	  DropItemAt( ITEM_COMPOSITE_BOW , x , y , Pre , Suf , TreasureChestRange , 1 );
+	  drop_item_type = ITEM_COMPOSITE_BOW ;
+	  drop_item_multiplicity =  1 ;
 	  break;
 	case 1:
-	  DropItemAt( ITEM_ANTIGRAV_BETA , x , y , Pre , Suf , TreasureChestRange , 1 );
+	  drop_item_type = ITEM_ANTIGRAV_BETA ;
+	  drop_item_multiplicity =  1 ;
 	  break;
 	case 2:
-	  DropItemAt( ITEM_FULL_HEALTH_POTION , x , y , -1 , -1 , TreasureChestRange , 1 );
+	  drop_item_type = ITEM_FULL_HEALTH_POTION ;
+	  drop_item_multiplicity =  1 ;
 	  break;
 	case 3:
-	  DropItemAt( ITEM_FULL_MANA_POTION , x , y , -1 , -1 , TreasureChestRange , 1 );
+	  drop_item_type = ITEM_FULL_MANA_POTION ;
+	  drop_item_multiplicity =  1 ;
 	  break;
 	case 4:
-	  DropItemAt( ITEM_SMALL_SHIELD , x , y , Pre , Suf , TreasureChestRange , 1 );
+	  drop_item_type = ITEM_SMALL_SHIELD ;
+	  drop_item_multiplicity =  1 ;
 	  break;
 	case 5:
-	  DropItemAt( ITEM_FALCHION , x , y , Pre , Suf , TreasureChestRange , 1 );
+	  drop_item_type = ITEM_FALCHION ;
+	  drop_item_multiplicity =  1 ;
 	  break;
 	case 6:
-	  DropItemAt( ITEM_IRON_HELM , x , y , Pre , Suf , TreasureChestRange , 1 );
+	  drop_item_type = ITEM_IRON_HELM ;
+	  drop_item_multiplicity =  1 ;
 	  break;
 	case 7:
-	  DropItemAt( ITEM_LEATHER_ARMOUR , x , y , Pre , Suf , TreasureChestRange , 1 );
+	  drop_item_type = ITEM_LEATHER_ARMOUR ;
+	  drop_item_multiplicity =  1 ;
 	  break;
 	case 8:
-	  DropItemAt( ITEM_MEDIUM_SHIELD , x , y , Pre , Suf , TreasureChestRange , 1 );
+	  drop_item_type = ITEM_MEDIUM_SHIELD ;
+	  drop_item_multiplicity =  1 ;
 	  break;
 	case 9:
-	  DropItemAt( ITEM_PLASMA_AMMUNITION , x , y , Pre , Suf , TreasureChestRange , 30 + MyRandom ( 9 ) );
+	  drop_item_type = ITEM_PLASMA_AMMUNITION ;
+	  drop_item_multiplicity = 30 + MyRandom ( 9 ) ;
 	  break;
 	case 10:
-	  DropItemAt( ITEM_LASER_AMMUNITION , x , y , Pre , Suf , TreasureChestRange , 30 + MyRandom ( 9 ) );
+	  drop_item_type = ITEM_LASER_AMMUNITION ;
+	  drop_item_multiplicity = 30 + MyRandom ( 9 ) ;
 	  break;
 	case 11:
-	  DropItemAt( ITEM_EXTERMINATOR_AMMUNITION , x , y , Pre , Suf , TreasureChestRange , 30 + MyRandom ( 9 ) );
+	  drop_item_type = ITEM_EXTERMINATOR_AMMUNITION ;
+	  drop_item_multiplicity = 30 + MyRandom ( 9 ) ;
 	  break;
-	}
+	} // inner switch
       break;
     default:
       DebugPrintf( 0 , "\n\nERRROR!!! UNHANDLED TREASURE CHEST ENCOUNTERED!!! TERMINATING...\n\n" );
       Terminate ( ERR );
       break;
+    } // switch
+
+  //--------------------
+  // So at this point we know, that an item will be dropped...
+  //
+  // Since there are no prefixes set up yet, we just need to consider
+  // the suffixes.  In case 
+  //
+  Suf = ( -1 );
+  Pre = ( -1 ) ;
+  if ( ForceMagical || ( MyRandom ( 14 ) <= 2 ) )
+    {
+      Suf = find_suitable_suffix_for_item ( drop_item_type , TreasureChestRange );
     }
+  if ( ForceMagical || ( MyRandom ( 14 ) <= 2 ) )
+    {
+      Pre = find_suitable_prefix_for_item ( drop_item_type , TreasureChestRange );
+    }
+
+  DropItemAt( drop_item_type , x , y , Pre , Suf , TreasureChestRange , drop_item_multiplicity );
 
 }; // void DropRandomItem( int x , int y )
 

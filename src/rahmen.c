@@ -48,9 +48,6 @@ void
 GiveItemDescription ( char* ItemDescText , item* CurItem , int ForShop )
 {
   char linebuf[5000];
-  char font_switchto_red [ 2 ] = { 1 , 0 };
-  char font_switchto_blue [ 2 ] = { 2 , 0 };
-  char font_switchto_neon [ 2 ] = { 3 , 0 };
   char AppendToLine = 0 ; // if we should write the next bonus with a comma as separator or with a newline
 
   //--------------------
@@ -72,32 +69,11 @@ exist really (i.e. has a type = (-1) ).",
       return;
     }
 
-  // --------------------
-  // First clear the string and the we print out the item name.  That's simple.
-  // we also add the extension of the name, the 'suffix' to it.
-  //
-  if ( ( CurItem->suffix_code != (-1) ) || ( CurItem->prefix_code != (-1) ) )
-    {
-      strcat ( ItemDescText , font_switchto_blue );
-    }
-  else
-    {
-      strcat ( ItemDescText , font_switchto_neon );
-    }
-
-  if ( CurItem->type == ITEM_MONEY ) sprintf( ItemDescText , "%d " , CurItem->gold_amount );
-
   //--------------------
-  // If the item is is magical, we give the prefix name of course.
-  // In any case we'll give the suffix name and then, if the item
-  // is identified we'll also append any suffix to the description
-  // string.
+  // we get the pure item name, also with font changes enabled.
   //
-  if ( ( CurItem->prefix_code != (-1) ) && ( CurItem->is_identified ) )
-    strcat( ItemDescText , PrefixList[ CurItem->prefix_code ].bonus_name );
-  strcat( ItemDescText , ItemMap[ CurItem->type ].item_name );
-  if ( ( CurItem->suffix_code != (-1) ) && ( CurItem->is_identified ) )
-    strcat( ItemDescText , SuffixList[ CurItem->suffix_code ].bonus_name );
+  write_full_item_name_into_string ( CurItem , linebuf ) ;
+  strcat( ItemDescText , linebuf );
 
   if ( ForShop )
     {

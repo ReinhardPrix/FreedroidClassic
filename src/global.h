@@ -64,6 +64,9 @@ EXTERN char *AllSkillTexts[];
 EXTERN char *SkillName[];
 EXTERN char *Brainnames[];
 EXTERN int ThisMessageTime;
+EXTERN char font_switchto_red [ 2 ] ;
+EXTERN char font_switchto_blue [ 2 ] ;
+EXTERN char font_switchto_neon [ 2 ] ;
 
 EXTERN int ManaCostTable [ NUMBER_OF_SKILLS ] [ NUMBER_OF_SKILL_LEVELS ] ;
 EXTERN int SpellHitPercentageTable [  ] ;

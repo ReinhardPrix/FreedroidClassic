@@ -580,6 +580,7 @@ EXTERN void ClearUserFenster (void);
 void GreatDruidShow (void);
 void ShowDroidInfo (int droidtype, int page , char ShowArrows );
 void PaintConsoleMenu (int menu_pos);
+EXTERN void write_full_item_name_into_string ( item* ShowItem , char* full_item_name ) ;
 
 // text.c 
 #undef EXTERN

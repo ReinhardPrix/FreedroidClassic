@@ -869,10 +869,62 @@ This error indicates some installation problem with freedroid.",
 
 }; // void ShowDroidPicture ( ... )
 
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+write_full_item_name_into_string ( item* ShowItem , char* full_item_name ) 
+{
+  strcpy ( full_item_name , "" );
+
+  // --------------------
+  // First clear the string and the we print out the item name.  That's simple.
+  // we also add the extension of the name, the 'suffix' to it.
+  //
+  if ( ( ShowItem->suffix_code != (-1) ) || ( ShowItem->prefix_code != (-1) ) )
+    {
+      strcat ( full_item_name , font_switchto_blue );
+    }
+  else
+    {
+      strcat ( full_item_name , font_switchto_neon );
+    }
+
+  if ( ShowItem->type == ITEM_MONEY ) sprintf( full_item_name , "%d " , ShowItem->gold_amount );
+
+  //--------------------
+  // If the item is is magical, we give the prefix name of course.
+  // In any case we'll give the suffix name and then, if the item
+  // is identified we'll also append any suffix to the description
+  // string.
+  //
+  if ( ( ShowItem->prefix_code != (-1) ) && ( ShowItem->is_identified ) )
+    strcat( full_item_name , PrefixList[ ShowItem->prefix_code ].bonus_name );
+  strcat( full_item_name , ItemMap[ ShowItem->type ].item_name );
+  if ( ( ShowItem->suffix_code != (-1) ) && ( ShowItem->is_identified ) )
+    strcat( full_item_name , SuffixList[ ShowItem->suffix_code ].bonus_name );
+
+  //--------------------
+  // If the item is magical but not identified, we might add the word
+  // in parentheses and red font afterwards...
+  //
+  if ( ( ( ShowItem -> suffix_code != (-1) ) || ( ShowItem -> prefix_code != (-1) ) ) && ( ! ShowItem -> is_identified ) )
+    {
+      strcat ( full_item_name , font_switchto_red );
+      strcat ( full_item_name , " (Unidentified)" );
+    }
+
+  //--------------------
+  // Now that the item name is out, we can switch back to the standard font color...
+  //
+  strcat ( full_item_name , font_switchto_neon );
+
+}; // void write_full_item_name_into_string ( item* ShowItem , char* full_item_name ) 
 
 /* ------------------------------------------------------------
- * display infopage page of droidtype
- * does update the screen, no our_SDL_flip_wrapper() necesary !
+ * This function displays information about one item on a
+ * Paradroid-console like display.
  * ------------------------------------------------------------ */
 void 
 ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , int background_code , int title_text_flag )
@@ -920,9 +972,8 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , int backgro
     ClassString = "Wristband/Collar" ; 
   else ClassString = "Miscellaneous" ; 
 
-  sprintf( InfoText, "Item: %s \nClass: %s\n" ,
-	   ItemMap [ ShowItem->type ] . item_name, 
-	   ClassString );
+  write_full_item_name_into_string ( ShowItem , TextChunk ) ;
+  sprintf( InfoText, "Item: %s \nClass: %s\n" , TextChunk , ClassString );
 
 
   if ( ItemMap [ ShowItem->type ] . item_group_together_in_inventory )
@@ -970,20 +1021,27 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , int backgro
       strcat ( InfoText , "\n" );
     }
 
+  //--------------------
+  // Now we give some pricing information, the base list price for the item,
+  // the repair price and the sell value
   sprintf( TextChunk, "Base list price: %d\n", 
 	   ItemMap [ ShowItem->type ] . base_list_price );
   strcat ( InfoText , TextChunk );
-
+  sprintf( TextChunk, "Sell value: %ld\n", 
+	   CalculateItemPrice ( ShowItem , FALSE ) ) ;
+  strcat ( InfoText , TextChunk );
   if ( ShowItem->current_duration == ShowItem->max_duration ||
        ShowItem->max_duration == ( -1 ) )
     repairPrice = 0;
   else
     repairPrice = CalculateItemPrice( ShowItem, TRUE );
-
-  sprintf( TextChunk, "Repair price: %d\n", 
+  sprintf( TextChunk, "Repair cost: %d\n", 
 	   repairPrice );
   strcat ( InfoText , TextChunk );
 
+  //--------------------
+  // If the item is a weapon, then we print out some weapon stats...
+  //
   if ( ItemMap [ ShowItem->type ] . base_item_gun_damage + ItemMap [ ShowItem->type ] . item_gun_damage_modifier > 0 )
     {
       sprintf( TextChunk, "Damage: %d - %d\n" , 
@@ -995,7 +1053,7 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , int backgro
 
   if ( ItemMap [ ShowItem->type ] . item_gun_recharging_time > 0 )
     {
-      sprintf( TextChunk, "Recharge time: %f\n" , 
+      sprintf( TextChunk, "Recharge time: %3.2f\n" , 
 	       ItemMap [ ShowItem->type ] . item_gun_recharging_time );
       strcat ( InfoText , TextChunk );
     }

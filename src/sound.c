@@ -1500,18 +1500,18 @@ play_melee_weapon_missed_sound ( void )
     }
 }; // void play_melee_weapon_missed_sound ( void )
 
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function should generate the sound that belongs to a certain
+ * (ranged) weapon.  This does not include the Tux swinging/swinging_and_hit
+ * sounds, when Tux is using melee weapons, but it does include ranged
+ * weapons and the non-animated bot weapons too.
+ * ---------------------------------------------------------------------- */
 void
 Fire_Bullet_Sound (int BulletType)
 {
   if (!sound_on) return;
 
-  DebugPrintf ( -10, "\nFireBulletSound called..." );
+  DebugPrintf ( 1, "\nFireBulletSound called..." );
 
   switch (BulletType)
     {
