@@ -7,6 +7,7 @@ Release TODO
 - update INSTALL instructions
 - produce the .tar.gz archive and test it
 - playtest on all possible machines
+- ? make a small man-page ?
 - ? produce binary .tgz, rpm's and .deb packages? (later)
 
 
@@ -17,22 +18,19 @@ Preparing "final" release 1.0.0:
 
 Outstanding release-critical bugs (priority: high) 
 --------------------------------------------------
-- make sure droid shuffling is randon enough, also concerning the 
-  waypoints used (seems a a bit predictable right now...)
+- decrease CPU usage in menu and maybe console(?)
 
+- acoustic "countdown" in takeover game might be useful!
+  --> implemented now, but need better sounds and allow
+  turning it off...
+  
 - load all droid pics at startup, to avoid delays in DroidShow
-
-- more mouse-support in Konsole, lift + menu
-  (done?!)
 
 - force "release key" instead of waiting for it
   (is it worth it?)
 
 -  Collision with robo can still kick you out of level.. ??
    --> (rp) check on slow machine if this is still an issue...
-
-- missing 711 ...
-  (bastian is back!)
            
 Outstanding normal bugs (priority: normal)
 ------------------------------------------
@@ -297,4 +295,16 @@ Resolved bugs
   ThouArtDefeated() ==> huge Frame_Time() in first step of new game!
   
 - mouse-cursor visible/invisible should be done in input.c !
+  (done)
+
+
+- more mouse-support in Konsole, lift + menu
+  (done?!)
+
+
+- missing 711 ...
+  (done)
+
+- make sure droid shuffling is randon enough, also concerning the 
+  waypoints used (seems a a bit predictable right now...)
   (done)
