@@ -10,6 +10,10 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.13  1997/06/09 13:42:17  jprix
+ * Bullets work now completle adjusted to the framerate.  That looks smooth. fine.
+ * Modified makefile to depend also on the important paravars.h .
+ *
  * Revision 1.12  1997/06/09 13:01:29  jprix
  * Bullet position and speed now also as float.  Program still functionin. Heeyooh! Great!
  *
@@ -52,6 +56,11 @@ void BounceLoseEnergy(int enemynum); /* influ can lose energy on coll. */
 void PermanentLoseEnergy(void);		/* influ permanently loses energy */
 int NoInfluBulletOnWay(void);
 long MyAbs(long);
+
+int isignf(float Wert){
+  if (Wert == 0) return 0;
+  return (Wert/fabsf(Wert));
+} // int sign
 
 /*@Function============================================================
 @Desc: 
@@ -687,11 +696,15 @@ void FireBullet(void){
 
   /* Um Selbstabschuss zu verhindern Bullet weiterbewegen */
 	
-  CurBullet->pos.x += CurBullet->speed.x;
-  CurBullet->pos.y += CurBullet->speed.y;
-  if ((abs(BulletSpeedX) < 13) && (abs(BulletSpeedY) < 13)) {
-    CurBullet->pos.x+=CurBullet->speed.x;
-    CurBullet->pos.y+=CurBullet->speed.y;
+  CurBullet->pos.x += isignf(CurBullet->speed.x)*BLOCKBREITE/2;
+  CurBullet->pos.y += isignf(CurBullet->speed.y)*BLOCKHOEHE/2;
+
+  //  CurBullet->pos.x += Me.speed.x * Frame_Time();
+  //  CurBullet->pos.y += Me.speed.y * Frame_Time();
+
+  if ((fabsf(BulletSpeedX) < 13) && (fabsf(BulletSpeedY) < 13)) {
+    CurBullet->pos.x+=isignf(CurBullet->speed.x)*BLOCKBREITE/3;
+    CurBullet->pos.y+=isignf(CurBullet->speed.y)*BLOCKHOEHE/3;
   }
 		
   /*

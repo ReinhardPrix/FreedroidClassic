@@ -185,12 +185,14 @@ name maxspeed cl. accel. energy lose_health gun vneut. aggr.  firewait fl.imm. s
 
 bulletspec Bulletmap[ALLBULLETTYPES]={
 	
-/*  speed damage	salve	phases	blast			pic.	oneshotonly
------------------------------------------------------------- */
-	{ 10,	 	25, 		1,  4, 	BULLETBLAST,	NULL ,	FALSE, 34},	/* 01: PULSE */
-	{ 10,		40,		1,	 4,	BULLETBLAST,	NULL ,	FALSE, 34},	/* single_pulse */
-	{ 10,		55,		1,	 4,	BULLETBLAST,	NULL ,	FALSE, 34},  /* military */
-	{ 10,		30,		1,	 3,	BULLETBLAST,	NULL ,	FALSE, 44}   /* flash */  
+/*  
+speed     salve         blast                 oneshotonly
+     damage 	phases	                pic.	
+------------------------------------------------------------*/
+{ 10*25,  25,    1,  4, 	BULLETBLAST,	NULL ,	FALSE, 34},	/* 01: PULSE */
+{ 10*25,  40,    1,  4,	BULLETBLAST,	NULL ,	FALSE, 34},	/* single_pulse */
+{ 10*25,  55,    1,  4,	BULLETBLAST,	NULL ,	FALSE, 34},     /* military */
+{ 10*25,  30,    1,  3,	BULLETBLAST,	NULL ,	FALSE, 44}      /* flash */  
 };
 
 blastspec Blastmap[ALLBLASTTYPES]={

@@ -346,10 +346,12 @@ void AttackInfluence(int enemynum)
       AllBullets[j].pos.y=Feindesliste[enemynum].pos.y;
       
       /* Bullets so abfeuern, dass sie nicht den Schuetzen treffen */
-      AllBullets[j].pos.x+=AllBullets[j].speed.x;
-      AllBullets[j].pos.y+=AllBullets[j].speed.y;
-      AllBullets[j].pos.x+=Feindesliste[enemynum].speed.x;
-      AllBullets[j].pos.y+=Feindesliste[enemynum].speed.y;
+      AllBullets[j].pos.x+=isignf(AllBullets[j].speed.x)*BLOCKBREITE/2;
+      AllBullets[j].pos.y+=isignf(AllBullets[j].speed.y)*BLOCKHOEHE/2;
+
+      // The following lines could be improved: Use not the sign, but only the fraction of the maxspeed times constant!
+      AllBullets[j].pos.x+=isignf(Feindesliste[enemynum].speed.x)*BLOCKBREITE/2;      
+      AllBullets[j].pos.y+=isignf(Feindesliste[enemynum].speed.y)*BLOCKHOEHE/2;
       
       /* Dem Bullettype entsprechend lange warten vor naechstem Schuss */
       

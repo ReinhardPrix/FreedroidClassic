@@ -10,6 +10,10 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.9  1997/06/09 13:42:17  jprix
+ * Bullets work now completle adjusted to the framerate.  That looks smooth. fine.
+ * Modified makefile to depend also on the important paravars.h .
+ *
  * Revision 1.8  1997/06/09 13:01:29  jprix
  * Bullet position and speed now also as float.  Program still functionin. Heeyooh! Great!
  *
@@ -55,36 +59,41 @@
 
 
 /*@Function============================================================
-@Desc: Diese Funktion bewegt alle Bullets gemaess ihrer Geschwindigkeit.
+@Desc: this function moves all the bullets according to their speeds.
+
+NEW: this function also takes into accoung the current framerate.
+
 @Ret: keiner
+
 @Int: keiner
 * $Function----------------------------------------------------------*/
+
 void MoveBullets(void)
 {
 
-/* lokale Variablen der Funktion: */
-	int i;
-	Bullet CurBullet;
+  /* lokale Variablen der Funktion: */
+  int i;
+  Bullet CurBullet;
 
-	/* Bewegung der Bullets */
-	for(CurBullet=AllBullets, i=0;i<MAXBULLETS;CurBullet++, i++) {
-		if (CurBullet->type == OUT) continue;
+  /* Bewegung der Bullets */
+  for(CurBullet=AllBullets, i=0;i<MAXBULLETS;CurBullet++, i++) {
+    if (CurBullet->type == OUT) continue;
+    
+    CurBullet->pos.x += CurBullet->speed.x * Frame_Time();
+    CurBullet->pos.y += CurBullet->speed.y * Frame_Time();
+    
+    CurBullet->time++;
+
+    /*
+      UM ZU VERHINDERN, DASS DIE BULLETS, DIE ETWAS TREFFEN, NICHT MEHR
+      DARGESTELLT WERDEN, PASSIERT DIE BULLETKOLLISIONSABFRAGE ERST NACH
+      DER ZUSAMMENSTELLUNG DES INTERNFENSTERS. jp, 23.5.94 */
 		
-		CurBullet->pos.x += CurBullet->speed.x;
-		CurBullet->pos.y += CurBullet->speed.y;
+    /* Kollisionen mit Mauern und Druids checken UND behandeln */
+    //		CheckBulletCollisions(i);
 
-		CurBullet->time++;
-
-/*
-	UM ZU VERHINDERN, DASS DIE BULLETS, DIE ETWAS TREFFEN, NICHT MEHR
-	DARGESTELLT WERDEN, PASSIERT DIE BULLETKOLLISIONSABFRAGE ERST NACH
-	DER ZUSAMMENSTELLUNG DES INTERNFENSTERS. jp, 23.5.94 */
-		
-		/* Kollisionen mit Mauern und Druids checken UND behandeln */
-//		CheckBulletCollisions(i);
-
-	} /* for */
-} /* MoveBullets */
+  } /* for */
+} // void MoveBullets(void)
 
 
 /*@Function============================================================

@@ -40,6 +40,7 @@ EXTERN void InitNewGame(void);
 #else
 #define EXTERN extern
 #endif
+EXTERN int isignf(float);
 EXTERN void MoveInfluence(void);
 EXTERN void AdjustSpeed(void);
 EXTERN void BounceInfluencer(void);

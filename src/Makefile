@@ -4,7 +4,7 @@ STDLIBS = -lvgagl -lvga -lm
 SOUNDLIBS = -lasound -lY2
 
 CC = gcc
-HFILES = Makefile defs.h proto.h global.h struct.h
+HFILES = Makefile defs.h proto.h global.h struct.h paravars.h
 OBJ = para.o graphics.o view.o blocks.o sound.o map.o misc.o enemy.o influ.o bullet.o ship.o takeover.o rahmen.o paratext.o keyboard.o parainit.o
 
 para: $(OBJ)
