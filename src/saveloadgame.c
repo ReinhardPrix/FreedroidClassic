@@ -42,12 +42,12 @@
 #include "SDL_rotozoom.h"
 #include "sys/stat.h"
 
-#define INFLUENCER_STRUCTURE_RAW_DATA_STRING "\nNow the raw data of the influencer structure:\n"
-#define ALLENEMYS_RAW_DATA_STRING "\nNow the raw AllEnemys data:\n"
-#define ALLBULLETS_RAW_DATA_STRING "\nNow the raw AllBullets data:\n"
-#define DROID001_RAW_DATA_STRING "\nNow the raw DROID001 data:\n"
-#define END_OF_SAVEDGAME_DATA_STRING "\nEnd of saved game data file.\n"
-#define LEVELNUM_EXPL_STRING "\nExplicit number of the level the influ currently is in="
+#define INFLUENCER_STRUCTURE_RAW_DATA_STRING "Now the raw data of the influencer structure:"
+#define ALLENEMYS_RAW_DATA_STRING "Now the raw AllEnemys data:"
+#define ALLBULLETS_RAW_DATA_STRING "Now the raw AllBullets data:"
+#define DROID001_RAW_DATA_STRING "Now the raw DROID001 data:"
+#define END_OF_SAVEDGAME_DATA_STRING "End of saved game data file."
+#define LEVELNUM_EXPL_STRING "Explicit number of the level the influ currently is in="
 
 #define SAVEDGAME_EXT ".savegame"
 #define SAVE_GAME_THUMBNAIL_EXT ".thumbnail.bmp"
@@ -265,8 +265,7 @@ SaveGame( void )
   FILE *SaveGameFile;  // to this file we will save all the ship data...
   char filename[1000];
   char linebuf[10000];
-  char* MenuTexts[10]={ "Back" , "" , "" , "" , "" ,
-			"" , "" , "" , "" , "" };
+  char* MenuTexts[10]={ "Back" , "" , "" , "" , "" , "" , "" , "" , "" , "" };
 
   if (!ConfigDir)
     return (OK);
@@ -341,7 +340,7 @@ or file permissions of ~/.freedroid_rpg are somehow not right.",
   //--------------------
   // Now that we know which filename to use, we can open the save file for writing
   //
-  if( ( SaveGameFile = fopen(filename, "w")) == NULL) {
+  if( ( SaveGameFile = fopen(filename, "wb")) == NULL) {
     printf("\n\nError opening save game file for writing...\n\nTerminating...\n\n");
     Terminate(ERR);
     // return ERR;
@@ -531,7 +530,7 @@ LoadGame( void )
   // Maybe there isn't any saved game by that name.  This case must be checked for
   // and handled...
   //
-  if ((DataFile = fopen ( filename , "r")) == NULL )
+  if ((DataFile = fopen ( filename , "rb")) == NULL )
     {
       GiveMouseAlertWindow ( "\nW A R N I N G !\n\nFreedroidRPG was unable to locate the saved game file you requested to load.\nThis might mean that it really isn't there cause you tried to load a game without ever having saved the game before.  \nThe other explanation of this error might be a severe error in FreedroidRPG.\nNothing will be done about it." );
       /*

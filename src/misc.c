@@ -415,7 +415,7 @@ This is indicates a severe bug in Freedroid.",  PLEASE_INFORM, IS_FATAL );
 
       strcat (File_Path, fname);
       
-      if ( (fp = fopen (File_Path, "r")) != NULL)  /* found it? */
+      if ( (fp = fopen (File_Path, "rb")) != NULL)  /* found it? */
 	{
 	  fclose (fp);
 	  break;
@@ -515,7 +515,7 @@ This is indicates a severe bug in Freedroid.",
 
       strcat (File_Path, fname);
       
-      if ( (fp = fopen (File_Path, "r")) != NULL)  /* found it? */
+      if ( (fp = fopen (File_Path, "rb")) != NULL)  /* found it? */
 	{
 	  fclose (fp);
 	  break;
@@ -1204,7 +1204,7 @@ LoadGameConfig (void)
     }
 
   sprintf (fname, "%s/config", ConfigDir);
-  if( (config = fopen (fname, "r")) == NULL)
+  if( (config = fopen (fname, "rb")) == NULL)
     {
       DebugPrintf (0, "WARNING: failed to open config-file: %s\n");
       return (ERR);
@@ -1276,7 +1276,7 @@ SaveGameConfig (void)
     return (ERR);
   
   sprintf (fname, "%s/config", ConfigDir);
-  if( (config = fopen (fname, "w")) == NULL)
+  if( (config = fopen (fname, "wb")) == NULL)
     {
       DebugPrintf (0, "WARNING: failed to create config-file: %s\n");
       return (ERR);
@@ -1675,7 +1675,5 @@ char
   
   return string;	
 }
-
-
 
 #undef _misc_c

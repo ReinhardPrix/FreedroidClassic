@@ -786,9 +786,9 @@ get_offset_for_iso_image_from_file_and_path ( char* fpath , iso_image* our_iso_i
   //--------------------
   // Let's see if we can find an offset file...
   //
-  if ( ( OffsetFile = fopen ( offset_file_name , "r") ) == NULL )
+  if ( ( OffsetFile = fopen ( offset_file_name , "rb") ) == NULL )
     {
-      DebugPrintf ( -1000 , "\nObtaining offset failed with file name '%s'." , offset_file_name );
+      fprintf (stderr, "\nObtaining offset failed with file name '%s'." , offset_file_name );
       GiveStandardErrorMessage ( "get_offset_for_iso_image_from_file_and_path(...)" , "\
 Freedroid was unable to open a given offset file for an isometric image.\n\
 Since the offset could not be obtained from the offset file, some default\n\
@@ -830,7 +830,7 @@ Freedroid was unable to close an offset file.\nThis is a very strange occasion!"
   ReadValueFromString( offset_data ,  OFFSET_FILE_OFFSETY_STRING , "%d" , 
 		       & ( our_iso_image -> offset_y ) , offset_data + 1000 );
   free ( offset_data );
-  
+
 }; // void get_offset_for_iso_image_from_file_and_path ( fpath , our_iso_image )
 
 /* ----------------------------------------------------------------------

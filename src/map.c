@@ -1809,7 +1809,7 @@ SaveShip(char *filename)
   //--------------------
   // We open the shipo file 
   //
-  if ( ( ShipFile = fopen ( filename , "w" ) ) == NULL ) 
+  if ( ( ShipFile = fopen ( filename , "wb" ) ) == NULL ) 
     {
       GiveStandardErrorMessage ( "SaveShip(...)" , "Error opening ship file." ,
 				 PLEASE_INFORM, IS_FATAL );

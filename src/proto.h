@@ -639,6 +639,7 @@ EXTERN void Get_Item_Data ( char* DataPointer );
 EXTERN void DebugPrintf (int db_level, char *fmt, ...);
 EXTERN void *MyMalloc (long);
 EXTERN void PrepareMultipleChoiceDialog ( Enemy ChatDroid );
+EXTERN int FS_filelength (FILE *f);
 
 // rahmen.c 
 #undef EXTERN

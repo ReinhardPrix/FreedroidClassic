@@ -33,6 +33,7 @@
 
 #include "defs.h"
 #include "struct.h"
+#include "proto.h"
 
 #include "DialogEditor.h"
 
@@ -65,30 +66,29 @@ MyMalloc (long Mamount)
   return Mptr;
 }				// void* MyMalloc(long Mamount)
 
-/* ----------------------------------------------------------------------
- * This function is used for debugging purposes.  It writes the
- * given string either into a file, on the screen, or simply does
- * nothing according to currently set debug level.
- * ---------------------------------------------------------------------- */
+/*@Function============================================================
+@Desc: This function is used for debugging purposes.  It writes the
+       given string either into a file, on the screen, or simply does
+       nothing according to currently set debug level.
+
+@Ret: none
+* $Function----------------------------------------------------------*/
 void
 DebugPrintf (int db_level, char *fmt, ...)
 {
   va_list args;
-  char *tmp;
+  static char buffer[5000+1];
   va_start (args, fmt);
 
   if (db_level <= debug_level)
     {
-      tmp = (char *) MyMalloc (1000000 + 1);
-      vsprintf (tmp, fmt, args);
-      fprintf (stderr, tmp);
-      fflush ( stderr );
-
-      free (tmp);
+      vsnprintf (buffer, 5000, fmt, args);
+      fprintf (stderr, buffer);
+      fflush (stderr);
     }
 
   va_end (args);
-}; // void DebugPrintf (int db_level, char *fmt, ...)
+}
 
 /* ----------------------------------------------------------------------
  * This function should help to simplify and standardize the many error
@@ -159,6 +159,8 @@ MyMemmem ( unsigned char *haystack, size_t haystacklen, unsigned char *needle, s
   void* MatchPointer;
   size_t SearchPos=0;
 
+  DebugPrintf (3, "MyMemmem(): haystack = %d, len = %d, needle=%s\n", haystack, haystacklen, needle);
+
   while ( haystacklen - SearchPos > 0 )
     {
       //--------------------
@@ -175,7 +177,10 @@ MyMemmem ( unsigned char *haystack, size_t haystacklen, unsigned char *needle, s
       // Otherwise we see, if also the rest of the strings match this time ASSUMING THEY ARE STRINGS!
       // In case of a match, we can return immediately
       //
+      DebugPrintf (3, "calling strstr()..");
       MatchPointer = strstr( NextFoundPointer , needle );
+      if( MatchPointer) DebugPrintf (3, "..survived. MatchPointer = %d\n", MatchPointer);
+      else DebugPrintf (3, "survived, but nothing found\n");
       if ( MatchPointer != NULL ) return ( MatchPointer );
 
       //--------------------
@@ -268,7 +273,6 @@ CountStringOccurences ( char* SearchString , char* TargetString )
 char* 
 ReadAndMallocAndTerminateFile( char* filename , char* File_End_String ) 
 {
-  struct stat stbuf;
   FILE *DataFile;
   char *Data;
   char *ReadPointer;
@@ -277,7 +281,7 @@ ReadAndMallocAndTerminateFile( char* filename , char* File_End_String )
   DebugPrintf ( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : The filename is: %s" , filename );
 
   // Read the whole theme data to memory 
-  if ((DataFile = fopen ( filename , "r")) == NULL)
+  if ((DataFile = fopen ( filename , "rb")) == NULL)
     {
       fprintf( stderr, "\n\nfilename: '%s'\n" , filename );
       
@@ -292,26 +296,27 @@ This indicates a serious bug in this installation of Freedroid.",
       DebugPrintf ( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : Opening file succeeded...");
     }
 
-  if (fstat (fileno (DataFile), &stbuf) == EOF)
-    {
-      fprintf( stderr, "\n\nfilename: '%s'\n" , filename );
-      GiveStandardErrorMessage ( "ReadAndMallocAndTerminateFile(...)" , "\
-Freedroid was unable to fstat a given text file, that should be there and\n\
-should be accessible.\n\
-This indicates a strange bug in this installation of Freedroid, that is\n\
-very likely a problem with the file/directory permissions of the files\n\
-belonging to Freedroid.",
-				 PLEASE_INFORM, IS_FATAL );
-    }
-  else
-    {
-      DebugPrintf ( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : fstating file succeeded...");
-    }
+  // RP:Don't use fstat() any more, as it might cause problems of portability (->win32)
+/*   if (fstat (fileno (DataFile), &stbuf) == EOF) */
+/*     { */
+/*       fprintf( stderr, "\n\nfilename: '%s'\n" , filename ); */
+/*       GiveStandardErrorMessage ( "ReadAndMallocAndTerminateFile(...)" , "\ */
+/* Freedroid was unable to fstat a given text file, that should be there and\n\ */
+/* should be accessible.\n\ */
+/* This indicates a strange bug in this installation of Freedroid, that is\n\ */
+/* very likely a problem with the file/directory permissions of the files\n\ */
+/* belonging to Freedroid.", */
+/* 				 PLEASE_INFORM, IS_FATAL ); */
+/*     } */
+/*   else */
+/*     { */
+/*       DebugPrintf ( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : fstating file succeeded..."); */
+/*     } */
 
-  MemoryAmount = stbuf.st_size + 64*2 + 10000;
+  MemoryAmount = FS_filelength( DataFile )  + 64*2 + 10000;
   Data = (char *) MyMalloc ( MemoryAmount );
 
-  fread ( Data, (size_t) 64, (size_t) (stbuf.st_size / 64 +1 ), DataFile);
+  fread ( Data, MemoryAmount, 1, DataFile);
 
   DebugPrintf ( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : Reading file succeeded...");
 
@@ -328,24 +333,21 @@ belonging to Freedroid.",
     }
   else
     {
-      DebugPrintf( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : file closed successfully...");
+      DebugPrintf( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : file closed successfully...\n");
     }
-
-  DebugPrintf ( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : Adding a 0 at the end of read data....");
 
   // NOTE: Since we do not assume to always have pure text files here, we switched to
   // MyMemmem, so that we can handle 0 entries in the middle of the file content as well
   //
   // if ( (ReadPointer = strstr( Data , File_End_String ) ) == NULL )
-  if ( ( ReadPointer = MyMemmem ( Data , (size_t) MemoryAmount , File_End_String , (size_t) strlen( File_End_String ) ) ) == NULL )
+  if ( (ReadPointer=MyMemmem( Data, (size_t)MemoryAmount, File_End_String, (size_t)strlen( File_End_String ))) == NULL)
     {
-      fprintf( stderr, "\n\nfilename: '%s'\n" , filename );
-      fprintf( stderr, "File_End_String: '%s'\n" , File_End_String );
+      DebugPrintf( 0, "\n\nfilename: '%s'\n" , filename );
+      DebugPrintf( 0, "File_End_String: '%s'\n" , File_End_String );
       GiveStandardErrorMessage ( "ReadAndMallocAndTerminateFile(...)" , "\
 Freedroid was unable to find the string, that should indicate the end of\n\
 the given text file within this file.\n\
-This indicates a corrupt or outdated data or saved game file.",
-				 PLEASE_INFORM, IS_FATAL );
+This indicates a corrupt or outdated data or saved game file.", PLEASE_INFORM, IS_FATAL );
     }
   else
     {
@@ -380,11 +382,7 @@ The string that was supposed to be in the text data file could not be found.\n\
 This indicates a corrupted or seriously outdated game data or saved game file.",
 				 PLEASE_INFORM, IS_FATAL );
     }
-  else
-    {
-      DebugPrintf( 2 , "\nchar* LocateStringInDate ( char* SearchBeginText , char* SearchTextPointer ) : String %s successfully located within data. " , SearchTextPointer );
-    }
-  
+
   return ( temp );
 
 }; // char* LocateStringInData ( ... )
@@ -420,13 +418,10 @@ sscanf using a certain format string failed!\n\
 This indicates a corrupted or seriously outdated game data or saved game file.",
 				 PLEASE_INFORM, IS_FATAL );
     }
-  else
-    {
-      DebugPrintf( 2 , "\nvoid ReadValueFromString ( .... ) : value read in successfully.");
-    }
 
   // Now that we are done, we restore the given SearchArea to former glory
   EndOfSearchSectionPointer[0]=OldTerminaterCharValue;
+
 }; // void ReadValueFromString( ... )
 
 
@@ -448,7 +443,7 @@ save_dialog_roster_to_file ( char* filename )
   //--------------------
   // Now that we know which filename to use, we can open the save file for writing
   //
-  if( ( SaveGameFile = fopen(filename, "w")) == NULL) 
+  if( ( SaveGameFile = fopen(filename, "wb")) == NULL) 
     {
       DebugPrintf( 0 , "\n\nError opening save game file for writing...\n\nTerminating...\n\n");
       Terminate(ERR);
@@ -1607,7 +1602,7 @@ save_item_roster_to_file ( char* filename )
   //--------------------
   // Now that we know which filename to use, we can open the save file for writing
   //
-  if( ( SaveGameFile = fopen(filename, "w")) == NULL) 
+  if( ( SaveGameFile = fopen(filename, "wb")) == NULL) 
     {
       DebugPrintf( 0 , "\n\nError opening save game file for writing...\n\nTerminating...\n\n");
       Terminate(ERR);
@@ -1993,6 +1988,27 @@ Common factor for all melee weapons damage values: 1.0\n\n\n" ) ;
 
 }; // void save_item_roster_to_file ( char* filename )
 
+
+
+/*----------------------------------------------------------------------
+ * Copyright (C) 1997-2001 Id Software, Inc., under GPL
+ *
+ * FS_filelength().. (taken from quake2)
+ * 		contrary to stat() this fct is nice and portable, 
+ *----------------------------------------------------------------------*/
+int
+FS_filelength (FILE *f)
+{
+  int		pos;
+  int		end;
+
+  pos = ftell (f);
+  fseek (f, 0, SEEK_END);
+  end = ftell (f);
+  fseek (f, pos, SEEK_SET);
+  
+  return end;
+}
 
 
 #undef _text_public_c

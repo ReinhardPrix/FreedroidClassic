@@ -2257,8 +2257,9 @@ GetString ( int MaxLen, int echo , int background_code , char* text_for_overhead
 	  input[curpos] = 0;
 	  finished = TRUE;
 	}
-      else if (isprint (key) && (curpos < MaxLen) )  
+      else if ((key < SDLK_DELETE) && isprint (key) && (curpos < MaxLen) )  
 	{
+	  DebugPrintf (3, "isprint() true for keycode: %d ('%c')\n", key, (char)key);
 	  /* printable characters are entered in string */
 	  input[curpos] = (char) key;   
 	  curpos ++;

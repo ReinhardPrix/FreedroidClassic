@@ -1707,6 +1707,7 @@ getchar_raw (void)
 	   */
 	  Returnkey = (int) event.key.keysym.sym;
 	  if ( event.key.keysym.mod & KMOD_SHIFT ) Returnkey = toupper( (int)event.key.keysym.sym );
+	  DebugPrintf (3, "getchar_raw() returns key-code: %d\n", Returnkey);
 	  return ( Returnkey );
 	}
       else if (event.type == SDL_KEYUP)
