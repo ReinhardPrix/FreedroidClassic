@@ -42,7 +42,9 @@
 //NORMALISATION #define MORE		4
 #define MORE		(4/64.0)
 //NORMALISATION #define DRUIDHITDIST2		(DRUIDRADIUSX+MORE)*(DRUIDRADIUSY+MORE)
-#define DRUIDHITDIST2		0
+// #define DRUIDHITDIST2		0
+#define DRUIDHITDIST2		(DRUIDRADIUSX+MORE)*(DRUIDRADIUSY+MORE)
+// #define DRUIDHITDIST2		0
 
 
 /*@Function============================================================
@@ -224,7 +226,7 @@ CheckBulletCollisions (int num)
 {
   int i;
   int level = CurLevel->levelnum;
-  long xdist, ydist;
+  double xdist, ydist;
   Bullet CurBullet = &AllBullets[num];
   static int FBTZaehler = 0;
 

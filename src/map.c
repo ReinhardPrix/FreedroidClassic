@@ -87,28 +87,28 @@ GetMapBrick (Level deck, float x, float y)
   if (((int) rintf (y))  >= deck->ylen)
     {
       printf
-	("\nunsigned char GetMapBrick(Level deck, float x, float y): Fehler1! Terminiere...");
+	("\n----------------------------------------------------------------------\nunsigned char GetMapBrick(Level deck, float x, float y): Error:\n BlockPosition from outside requested: y>ylen\n----------------------------------------------------------------------\n");
       return VOID;
       Terminate (-1);
     }
   if (((int) rintf (x))  >= deck->xlen)
     {
       printf
-	("\nunsigned char GetMapBrick(Level deck, float x, float y): Fehler2! Terminiere...");
+	("\n----------------------------------------------------------------------\nunsigned char GetMapBrick(Level deck, float x, float y): Error:\n BlockPosition from outside requested: x>xlen\n----------------------------------------------------------------------\n");
       return VOID;
       Terminate (-1);
     }
   if (((int) rintf (y))  < 0)
     {
       printf
-	("\nunsigned char GetMapBrick(Level deck, float x, float y): Fehler3! Terminiere...");
+	("\n----------------------------------------------------------------------\nunsigned char GetMapBrick(Level deck, float x, float y): Error:\n BlockPosition from outside requested: y<0\n----------------------------------------------------------------------\n");
       return VOID;
       Terminate (-1);
     }
   if (((int) rintf (x))  < 0)
     {
       printf
-	("\nunsigned char GetMapBrick(Level deck, float x, float y): Fehler4! Terminiere...");
+	("\n----------------------------------------------------------------------\nunsigned char GetMapBrick(Level deck, float x, float y): Error:\n BlockPosition from outside requested: x<0\n----------------------------------------------------------------------\n");
       return VOID;
       Terminate (-1);
     }
@@ -1145,8 +1145,19 @@ IsPassable (float x, float y, int Checkpos)
 
   //NORMALISATION  fx = x % Block_Width;
   //NORMALISATION  fy = y % Block_Height;
-  fx = x - floor(x);
-  fy = y - floor(y);
+  // fx = x - rintf(x);
+  // fy = y - rintf(y);
+
+  // ATTENTION!  
+  // With the new coodinates, the position of the Influencer is an integer,
+  // if and only if it is at the CENTER of a square brick.
+  // the fx and fy is designed to be the offset from THE TOP LEFT CORNER
+  // of the square.  This is from the old code.
+  // Therefore we have to do a short correction here:
+  fx = (x-0.5) - floor(x-0.5);
+  fy = (y-0.5) - floor(y-0.5);
+
+  // From here on, the old code can be left unchanged.
 
   switch (MapBrick)
     {

@@ -109,9 +109,12 @@ enum
 #define MENUITEMMEM 		(MENUITEMLENGTH * MENUITEMHEIGHT)
 
 /* Dimensionen der Druids (fuer NotPassable() and CheckEnemyCollsion() ) */
-#define DRUIDRADIUSX		((10*2)/64.0)
-#define DRUIDRADIUSY		((10*2)/64.0)
-#define DRUIDRADIUSXY	        ((7*2)/64.0)
+//NORMALISATION #define DRUIDRADIUSX		((10*2)/64.0)
+#define DRUIDRADIUSX		(20/64.0)
+//NORMALISATION #define DRUIDRADIUSY		((10*2)/64.0)
+#define DRUIDRADIUSY		(20/64.0)
+// #define DRUIDRADIUSXY	        ((7*2)/64.0)
+#define DRUIDRADIUSXY	        (7*2/64.0)
 #define BULLET_BULLET_COLLISION_DIST (10/64.0)
 
 /* Dimension eines Blasts */
@@ -325,7 +328,7 @@ enum _directions
 
 /* Wegstossgeschw. von Tueren u.ae. */
 // NORMALISATION #define PUSHSPEED 2
-#define PUSHSPEED 0
+#define PUSHSPEED 2
 
 /* Schusstypen */
 enum _bullets

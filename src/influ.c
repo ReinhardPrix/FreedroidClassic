@@ -459,6 +459,9 @@ BounceInfluencer (void)
   lastpos.x = Me.pos.x - SX;
   lastpos.y = Me.pos.y - SY;
 
+  // lastpos.x = Me.Position_History[0].x;
+  // lastpos.y = Me.Position_History[0].y;
+
   res = DruidPassable (Me.pos.x, Me.pos.y);
 
 #define NEW_BOUNCE_CHECK
@@ -481,7 +484,6 @@ BounceInfluencer (void)
 	}
       else
 	{
-	  printf("\nNorth-south-Axis seems NOT to be free.");
 	  NorthSouthAxisBlocked = TRUE;
 	}
 
@@ -493,16 +495,17 @@ BounceInfluencer (void)
 	}
       else 
 	{
-	  printf("\nEast-west-Axis seems NOT to be free.");
 	  EastWestAxisBlocked = TRUE;
 	}
 
-
+      //--------------------
+      // Now we try to handle the sitution:
+      //
 
       if ( NorthSouthAxisBlocked )
 	{
 	  printf("\nNS-Axis seems NOT to be free.");
-	  printf("\nCorrection movement and position in this direction...");
+	  // printf("\nCorrection movement and position in this direction...");
 
 	  // NorthSouthCorrectionDone=TRUE;
 	  Me.pos.y = lastpos.y;
@@ -514,8 +517,8 @@ BounceInfluencer (void)
 
       if ( EastWestAxisBlocked )
 	{
-	  printf("\nEast-west-Axis seems NOT to be free.");
-	  printf("\nCorrection movement and position in this direction...");
+	  printf("\nEW-Axis seems NOT to be free.");
+	  // printf("\nCorrection movement and position in this direction...");
 
 	  // EastWestCorrectionDone=TRUE;
 	  Me.pos.x = lastpos.x;
@@ -523,11 +526,36 @@ BounceInfluencer (void)
 
 	  // if its an open door, we also correct the east-west position, in the
 	  // sense that we move thowards the middle
-	  if ( (GetMapBrick(CurLevel, Me.pos.x +1 , Me.pos.y) == V_GANZTUERE ) || 
-	       (GetMapBrick(CurLevel, Me.pos.x -1 , Me.pos.y) == V_GANZTUERE ) )
-	    Me.pos.y += copysignf (1 * Frame_Time() , ( rintf(Me.pos.y) - Me.pos.y ));
+	  if ( (GetMapBrick(CurLevel, Me.pos.x +0.5 , Me.pos.y) == V_GANZTUERE ) || 
+	       (GetMapBrick(CurLevel, Me.pos.x -0.5 , Me.pos.y) == V_GANZTUERE ) )
+	    Me.pos.y += copysignf (PUSHSPEED * Frame_Time() , ( rintf(Me.pos.y) - Me.pos.y ));
 	}
+
+      if ( EastWestAxisBlocked && NorthSouthAxisBlocked )
+	{
+	  printf("\nBOTH AXES BLOCKED... Corner handling activated...");
+	}
+
+
     }
+
+  // Here I introduce some extra security as a fallback:  Obviously
+  // if the influencer is blocked FOR THE SECOND TIME, then the throw-back-algorithm
+  // above HAS FAILED.  The absolutely fool-proof and secure handling is now done by
+  // simply reverting to the last influ coordinated, where influ was NOT BLOCKED.
+  // For this reason, a history of influ-coordinates has been introduced.  This will all
+  // be done here and now:
+
+  if ( (DruidPassable (Me.pos.x, Me.pos.y) != CENTER) && 
+       (DruidPassable (Me.Position_History[0].x, Me.Position_History[0].y) != CENTER) &&
+       (DruidPassable (Me.Position_History[1].x, Me.Position_History[1].y) != CENTER) )
+    {
+      Me.pos.x=Me.Position_History[2].x;
+      Me.pos.y=Me.Position_History[2].y;
+      printf("\nATTENTION! BounceInflu FALLBACK ACTIVATED!!");
+    }
+
+
 
   return;
 
@@ -998,9 +1026,9 @@ FireBullet (void)
   // move them a bit..
 
   //NORMALISATION CurBullet->pos.x += isignf (CurBullet->speed.x) * Block_Width / 2;
-  CurBullet->pos.x += isignf (CurBullet->speed.x) / 2;
+  CurBullet->pos.x += isignf (CurBullet->speed.x) * 0.5;
   //NORMALISATION CurBullet->pos.y += isignf (CurBullet->speed.y) * Block_Height / 2;
-  CurBullet->pos.y += isignf (CurBullet->speed.y) / 2;
+  CurBullet->pos.y += isignf (CurBullet->speed.y) * 0.5;
 
   //  CurBullet->pos.x += Me.speed.x * Frame_Time();
   //  CurBullet->pos.y += Me.speed.y * Frame_Time();
@@ -1009,9 +1037,9 @@ FireBullet (void)
   if ((fabsf (BulletSpeedX) < (26/64.0)) && (fabsf (BulletSpeedY) < (26/64.0)) )
     {
       //NORMALISATION CurBullet->pos.x += isignf (CurBullet->speed.x) * Block_Width / 3;
-      CurBullet->pos.x += isignf (CurBullet->speed.x)  / 3;
+      CurBullet->pos.x += isignf (CurBullet->speed.x)  / 3.0;
       //NORMALISATION CurBullet->pos.y += isignf (CurBullet->speed.y) * Block_Height / 3;
-      CurBullet->pos.y += isignf (CurBullet->speed.y)  / 3;
+      CurBullet->pos.y += isignf (CurBullet->speed.y)  / 3.0;
     }
 
   /*
