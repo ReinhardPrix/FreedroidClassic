@@ -547,7 +547,6 @@ typedef struct
   int base_magic;     // character Magic value = 
   int base_dexterity; // character Dexterity value = 'power redistribution speed'
   int Vitality;  // character Vitality value = 'cloaking field maximum strength'
-  long Experience; // character Experience = 'spare droid elements found'
   int points_to_distribute; // these are the points that are available to distribute upon the character stats
   float base_damage; // the current damage the influencer does
   float damage_modifier; // the modifier to the damage the influencer currently does
@@ -561,8 +560,11 @@ typedef struct
   int freezing_melee_targets; // does this Tux freeze melee targets upon hit?
   int double_ranged_damage;   // does this Tux do double ranged weapon damage?
 
+  long Experience; // character Experience = 'spare droid elements found'
   int exp_level;       // which 'experience level' is the influencer currenly at?
   long ExpRequired;    // how much experience required for the next level?
+  long ExpRequired_previously;    // how was required for the previous level?
+
   long Gold;
   char character_name[ MAX_CHARACTER_NAME_LENGTH ];
   mission AllMissions[ MAX_MISSIONS_IN_GAME ];         // What must be done to fullfill this mission?

@@ -646,6 +646,76 @@ blit_energy_o_meter( void )
  *
  * ---------------------------------------------------------------------- */
 void
+blit_experience_countdown_bars ( void )
+{
+  SDL_Rect experience_countdown_rect;
+  SDL_Rect un_experience_countdown_rect;
+  static Uint32 experience_countdown_rect_color = 0 ;
+  static Uint32 un_experience_countdown_rect_color = 0 ;
+  int exp_range = Me [ 0 ] . ExpRequired - Me [ 0 ] . ExpRequired_previously ;
+  int exp_achieved = Me [ 0 ] . Experience - Me [ 0 ] . ExpRequired_previously ;
+
+  //--------------------
+  // At game startup, it might be that an uninitialized Tux (with 0 in the
+  // max running power entry) is still in the data structure and when the
+  // title displayes, this causes division by zero... 
+  //
+  if ( Me [ 0 ] . ExpRequired <= 1 ) return ;
+  if ( ( Me [ 0 ] . Experience > Me [ 0 ] . ExpRequired ) ||
+       ( exp_range <= 1 ) ||
+       ( exp_achieved < 0 ) )
+    {
+      GiveStandardErrorMessage ( "blit_experience_countdown_bars(...)" , "\
+The current experience of the Tux is higher than the next level while trying\n\
+to blit the 'experience countdown' bar.  Graphics will be suppressed for now...",
+				 NO_NEED_TO_INFORM, IS_WARNING_ONLY );
+      return ;
+    }
+
+  //--------------------
+  // Upon the very first function call, the health and force colors are not yet
+  // set.  Therefore we set these colors once and for the rest of the game.
+  //
+  if ( experience_countdown_rect_color == 0 )
+    {
+      un_experience_countdown_rect_color = SDL_MapRGBA( Screen->format , 50 , 50 , 50 , 80 );
+      experience_countdown_rect_color = SDL_MapRGBA( Screen->format , 255 , 255 , 120 , 80 );
+    }
+
+
+  //--------------------
+  // We set the 'full' bar or the experience rect...
+  //
+  experience_countdown_rect . x = WHOLE_EXPERIENCE_COUNTDOWN_RECT_X ;
+  experience_countdown_rect . y = WHOLE_EXPERIENCE_COUNTDOWN_RECT_Y ;
+  // +  ( ( WHOLE_EXPERIENCE_COUNTDOWN_RECT_H * ( Me [ 0 ] . max_experience_countdown - Me [ 0 ] . experience_countdown ) ) / Me [ 0 ] . max_experience_countdown ) ;
+  experience_countdown_rect . w = ( WHOLE_EXPERIENCE_COUNTDOWN_RECT_W * exp_achieved ) / exp_range ;
+  if ( exp_achieved < 0 ) experience_countdown_rect . w = 0;
+  experience_countdown_rect . h = WHOLE_EXPERIENCE_COUNTDOWN_RECT_H ;
+
+  //--------------------
+  // We set the 'empty' part of the experience rect...
+  //
+  un_experience_countdown_rect . x = experience_countdown_rect . x + experience_countdown_rect . w ;
+  un_experience_countdown_rect . y = experience_countdown_rect . y ;
+  un_experience_countdown_rect . w = ( WHOLE_EXPERIENCE_COUNTDOWN_RECT_W * ( exp_range - exp_achieved ) ) / exp_range ;
+  un_experience_countdown_rect . h = WHOLE_EXPERIENCE_COUNTDOWN_RECT_H ;
+
+  //--------------------
+  // Now wthat all our rects are set up, we can start to display the current
+  // running power status on screen...
+  //
+  SDL_SetClipRect( Screen , NULL );
+  our_SDL_fill_rect_wrapper( Screen , & ( experience_countdown_rect ) , experience_countdown_rect_color );
+  our_SDL_fill_rect_wrapper( Screen , & ( un_experience_countdown_rect ) , un_experience_countdown_rect_color );
+
+}; // void blit_experience_countdown_bars ( void )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
 blit_running_power_bars ( void )
 {
   SDL_Rect running_power_rect;
@@ -806,6 +876,8 @@ ShowCurrentHealthAndForceLevel( void )
     blit_energy_o_meter();
 
   blit_running_power_bars ( );
+
+  blit_experience_countdown_bars ( ) ;
 
 }; // void ShowCurrentHealthAndForceLevel( void )
 

@@ -429,12 +429,22 @@ UpdateAllCharacterStats ( int PlayerNum )
   // Maybe the influencer has reached a new experience level?
   // Let's check this.
   // 
-  Me [ PlayerNum ] .ExpRequired = BaseExpRequired * ( exp ( ( Me [ PlayerNum ] .exp_level - 1 ) * log ( 2 ) ) ) ;
+  Me [ PlayerNum ] . ExpRequired = BaseExpRequired * ( exp ( ( Me [ PlayerNum ] .exp_level - 1 ) * log ( 2 ) ) ) ;
+
+  //--------------------
+  // For display reasons in the experience graph, we also state the experience 
+  // needed for the previous level inside the tux struct.  Therefore all exp/level
+  // calculations are found in this function.
+  //
+  if ( Me [ PlayerNum ] . exp_level > 1 )
+    Me [ PlayerNum ] . ExpRequired_previously = BaseExpRequired * ( exp ( ( Me [ PlayerNum ] .exp_level - 2 ) * log ( 2 ) ) ) ;
+  else
+    Me [ PlayerNum ] . ExpRequired_previously = 0 ;
 
   if ( Me [ PlayerNum ] . Experience > Me [ PlayerNum ] . ExpRequired ) 
     {
-      Me [ PlayerNum ] .exp_level ++ ;
-      Me [ PlayerNum ] .points_to_distribute += 5;
+      Me [ PlayerNum ] . exp_level ++ ;
+      Me [ PlayerNum ] . points_to_distribute += 5;
 
       //--------------------
       // Like in the Gothic 1 game, maximum life force will now automatically
