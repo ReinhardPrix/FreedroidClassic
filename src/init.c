@@ -1723,6 +1723,7 @@ InitNewMissionList ( char *MissionName )
   Me.speed.x = 0;
   Me.speed.y = 0;
   Me.energy = Druidmap[DRUID001].maxenergy;
+  Me.mana = Druidmap[DRUID001].maxenergy;
   printf("\n Me.energy : %f . " , Me.energy );
   Me.health = Me.energy;	/* start with max. health */
   Me.autofire = FALSE;
