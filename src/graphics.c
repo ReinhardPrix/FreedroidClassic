@@ -1274,14 +1274,6 @@ InitPictures (void)
   DebugPrintf( 1 , "\nvoid InitPictures(void): Number_Of_Bullet_Types : %d." , Number_Of_Bullet_Types );
   Load_Bullet_Surfaces();
 
-  ShowStartupPercentage ( 84 ) ; 
-
-  ShowStartupPercentage ( 86 ) ; 
-
-  ShowStartupPercentage ( 88 ) ; 
-
-  ShowStartupPercentage ( 90 ) ; 
-
   ShowStartupPercentage ( 92 ) ; 
   
   return (TRUE);

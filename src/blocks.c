@@ -1019,12 +1019,89 @@ Load_Digit_Surfaces( void )
 }; // void Load_Digit_Surfaces( void )
 
 /* ----------------------------------------------------------------------
+ * In a more sophisticated approach to map block loading, not everything
+ * will be loaded right at game startup but rather if and only if the
+ * map block is required somewhere and no sooner than that.  (Except 
+ * perhaps for level editor purposes maybe...)
+ * So this function should do exactly, that:  Load the desired map block
+ * from the disk and into memory for immediate usage, but only that.  No
+ * separate copy for the level editor will be created here.  This has to
+ * be done somewhere else at the appropriate time...
+ * ---------------------------------------------------------------------- */
+void
+LoadOneMapTileIfNotYetLoaded( int BlockNr , int Color )
+{
+  SDL_Surface* Whole_Image;
+  char *fpath;
+  char ConstructedFileName[2000];
+  char NumberBuffer[1000];
+
+  //--------------------
+  // At first we construct the file name of the single tile file we are about to load...
+  //
+  strcpy ( ConstructedFileName , "single_map_tiles/map_tile_" );
+  strcat ( ConstructedFileName , "red_" );
+  sprintf ( NumberBuffer , "%d" , BlockNr );
+  strcat ( ConstructedFileName , NumberBuffer );
+  strcat ( ConstructedFileName , ".png" );
+  fpath = find_file ( ConstructedFileName , GRAPHICS_DIR , TRUE );
+
+  //--------------------
+  // Now we load the single tile image file and check for errors while loading...
+  //
+  Whole_Image = IMG_Load( fpath );
+
+  //--------------------
+  // Now we convert this to display format and set alpha and colorkey
+  // properties right...
+  //
+  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
+  MapBlockSurfacePointer [ Color ] [ BlockNr ] = SDL_DisplayFormat( Whole_Image );
+  SDL_SetColorKey( MapBlockSurfacePointer [ Color ] [ BlockNr ] , 0 , 0 );
+  SDL_SetAlpha( MapBlockSurfacePointer [ Color ] [ BlockNr ] , 0 , 0 );
+
+  //--------------------
+  // Now that this is all done, we can mark the map tile as loaded (later)
+  // and free the small image we have loaded from the disk.
+  //
+  SDL_FreeSurface( Whole_Image );
+  
+}; // void LoadOneMapTileIfNotYetLoaded( int BlockNr , int Color )
+
+/* ---------------------------------------------------------------------- 
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+LoadAllMapTilesThatAreNotYetLoaded( void )
+{
+  int i;
+  int color;
+
+  for ( color = 0 ; color < NUM_COLORS ; color ++ )
+    {
+      for ( i=0 ; i < NUM_MAP_BLOCKS ; i++ )
+	{
+	  LoadOneMapTileIfNotYetLoaded( i , color );
+	}
+    }
+
+}; // void LoadAllMapTilesThatAreNotYetLoaded( void )
+
+/* ----------------------------------------------------------------------
  * This function creates all the surfaces, that are nescessary to blit
  * some map tiles of any color.
  * ---------------------------------------------------------------------- */
 void 
 Load_MapBlock_Surfaces( void )
 {
+
+  Block_Width=INITIAL_BLOCK_WIDTH;
+  Block_Height=INITIAL_BLOCK_HEIGHT;
+
+  LoadAllMapTilesThatAreNotYetLoaded( );
+
+  /*
   SDL_Surface* Whole_Image;
   SDL_Surface* tmp_surf;
   SDL_Rect Source;
@@ -1067,6 +1144,7 @@ Load_MapBlock_Surfaces( void )
     }
 
   SDL_FreeSurface( tmp_surf );
+  */
 
 }; // void Load_MapBlock_Surfaces( void )
 
