@@ -69,8 +69,20 @@ MoveBullets (void)
       CurBullet->pos.x += CurBullet->speed.x * Frame_Time ();
       CurBullet->pos.y += CurBullet->speed.y * Frame_Time ();
 
+      //--------------------
+      // Maybe the bullet has a limited lifetime.  In that case we check if the
+      // bullet has expired yet or not.
+      //
+      if ( ( CurBullet->bullet_lifetime != (-1) ) && 
+	   ( CurBullet->time_in_seconds > CurBullet->bullet_lifetime ) )
+	{
+	  DeleteBullet( i , FALSE );
+	  continue;
+	}
       CurBullet->time_in_frames++;
       CurBullet->time_in_seconds += Frame_Time();
+
+
 
       map_x= (int) rintf( CurBullet->pos.x );
       map_y= (int) rintf( CurBullet->pos.y );

@@ -240,6 +240,7 @@ typedef struct
   int item_gun_blast;			/* which blast does this bullet create */
   int item_gun_oneshotonly;	        /* if this is set, there is only 1 shot */
   int item_gun_bullet_image_type;       // which type of image to use for displaying this bullet
+  double item_gun_bullet_lifetime;      // how long does a 'bullet' from this gun type live?
 
   // how good is the item as armour???
   double item_armour_ac_bonus;
@@ -409,6 +410,7 @@ typedef struct
   int damage; // damage done by this particular bullet 
   int time_in_frames;    // how long does the bullet exist, measured in number of frames
   double time_in_seconds; // how long does the bullet exist in seconds
+  double bullet_lifetime; // how long can this bullet exist at most
   signed char mine;
   int owner;
   double angle;

@@ -584,12 +584,13 @@ Sorry...\n\
       ReadValueFromString( ItemPointer ,  "Item as gun: bullet_image_type=" , "%d" , 
 			   &ItemMap[ItemIndex].item_gun_bullet_image_type , EndOfItemData );
 
+      // Now we read in the image type that should be generated for this bullet
+      ReadValueFromString( ItemPointer ,  "Item as gun: bullet_lifetime=" , "%lf" , 
+			   &ItemMap[ItemIndex].item_gun_bullet_lifetime , EndOfItemData );
+
       // Now we read in the armour value of this item as armour
       ReadValueFromString( ItemPointer ,  "Item as armour: ac_bonus=" , "%lf" , 
 			   &ItemMap[ItemIndex].item_armour_ac_bonus , EndOfItemData );
-
-
-
 
       // Now we read in the number of the picture to be used for this item
       ReadValueFromString( ItemPointer ,  "Picture number=" , "%d" , 
