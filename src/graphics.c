@@ -1259,9 +1259,9 @@ void
 InitVideo (void)
 {
   const SDL_VideoInfo *vid_info;
-  SDL_Rect **vid_modes;
+  //  SDL_Rect **vid_modes;
   char vid_driver[81];
-  Uint32 flags;  // flags for SDL video mode 
+  Uint32 flags = 0;  // flags for SDL video mode 
   char *fpath;
 
   /* Initialize the SDL library */
@@ -1291,11 +1291,8 @@ InitVideo (void)
 
   vid_info = SDL_GetVideoInfo (); /* just curious */
   SDL_VideoDriverName (vid_driver, 80);
-  
-  flags = SDL_SWSURFACE | SDL_HWPALETTE ;
-  if (fullscreen_on) flags |= SDL_FULLSCREEN;
 
-  vid_modes = SDL_ListModes (NULL, SDL_SWSURFACE);
+  //  vid_modes = SDL_ListModes (NULL, SDL_SWSURFACE);
 
   if (vid_info->wm_available)  /* if there's a window-manager */
     {
@@ -1311,7 +1308,15 @@ InitVideo (void)
    * once this is up and running, we'll provide others modes
    * as well.
    */
-  vid_bpp = 16; /* start with the simplest */
+
+  vid_bpp = 16; 
+
+  
+  // RP: let's try without those
+  //  flags = SDL_SWSURFACE | SDL_HWPALETTE ;
+
+  if (fullscreen_on) flags |= SDL_FULLSCREEN;
+
 
   #define SCALE_FACTOR 2
 
