@@ -864,6 +864,8 @@ Teleport (int LNum, int X, int Y, int PlayerNum )
 
       ShuffleEnemys ( array_num );
 
+      ClearDetectedItemList( PlayerNum );
+
       Me [ PlayerNum ] . pos . x = X;
       Me [ PlayerNum ] . pos . y = Y;
       Me [ PlayerNum ] . pos . z = array_num; 

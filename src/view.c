@@ -88,6 +88,8 @@ ShowAutomapData( void )
   int TuxColor = SDL_MapRGB( Screen->format, 0 , 0 , 255 ); 
   int FriendColor = SDL_MapRGB( Screen->format, 0 , 255 , 0 ); 
   int BoogyColor = SDL_MapRGB( Screen->format, 255 , 0 , 0 ); 
+  // int ItemColor = SDL_MapRGB( Screen->format, 255 , 0 , 255 );  pink
+  int ItemColor = SDL_MapRGB( Screen->format, 255 , 255 , 0 ); 
   Level AutomapLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
   int level = Me [ 0 ] . pos . z ;
 
@@ -127,6 +129,30 @@ ShowAutomapData( void )
 	      putpixel ( Screen , 3*x+0 , 3*y+2 , AUTOMAP_COLOR );
 	      putpixel ( Screen , 3*x+1 , 3*y+2 , AUTOMAP_COLOR );
 	      putpixel ( Screen , 3*x+2 , 3*y+2 , AUTOMAP_COLOR );
+	    }
+	}
+    }
+
+  //--------------------
+  // Now that the pure map data has been drawn, we add yellow dots for 
+  // the items, that have been detected on this level.
+  //
+  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+    {
+      //--------------------
+      // This would be the most accurate information, but this is not granted
+      // without casting a spell and then only a copy is made and only updated
+      // once, so the player must really get on with much less information.
+      //
+      // if ( AutomapLevel -> ItemList [ i ] . type == (-1) ) continue;
+      if ( Me [ 0 ] . DetectedItemList [ i ] . x == 0 ) continue;
+
+      for ( x = 0 ; x < AUTOMAP_SQUARE_SIZE ; x ++ )
+	{
+	  for ( y = 0 ; y < AUTOMAP_SQUARE_SIZE ; y ++ )
+	    {
+	      putpixel ( Screen , AUTOMAP_SQUARE_SIZE * AutomapLevel -> ItemList [ i ].pos.x + x , 
+			 AUTOMAP_SQUARE_SIZE * AutomapLevel -> ItemList [ i ].pos.y + y , ItemColor );
 	    }
 	}
     }

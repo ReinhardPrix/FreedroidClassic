@@ -1770,6 +1770,11 @@ InitNewMissionList ( char *MissionName )
   Me[0].ExpRequired = 1500;
   for ( i = 0 ; i < 1000 ; i ++ ) Me[0].KillRecord[ i ] = 0;
   for ( i = 0 ; i < MAX_LEVELS ; i ++ ) Me[0].HaveBeenToLevel [ i ] = FALSE ;
+  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ ) 
+    {
+      Me[0].DetectedItemList[i].x = 0 ;
+      Me[0].DetectedItemList[i].y = 0 ;
+    }
   Me[0].exp_level = 1;
   Me[0].Gold = 100;
 

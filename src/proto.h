@@ -319,6 +319,7 @@ EXTERN void ShowCharacterScreen ( void );
 #else
 #define EXTERN extern
 #endif
+EXTERN void ClearDetectedItemList( int PlayerNum );
 EXTERN void ShowSkillsScreen ( void );
 EXTERN void HandleCurrentlyActivatedSkill( void );
 

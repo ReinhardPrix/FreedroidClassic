@@ -552,7 +552,7 @@ Press Fire to play
 * New Mission Briefing Text Subsection *
 Controls
 
-The game is best controlled via mouse input:  Left click onto the locations where you want to move to.  Holding left button down will keep moving in that direction.  Right click to use special powers, spells and skills.
+The game is best controlled via mouse input:  Left click onto the locations where you want to move to.  Holding left button down will keep moving in that direction.  Right click to use special powers, spells and skills.  Left click an enemy to launch an attack or left click a friend to initiate friendly communication.
 
 Additional Keys:
 
@@ -571,6 +571,7 @@ Space ... Closes all opened screens.
 
 Spells&Skills:
 Takeover/Chat skill:  To chat with a friendly droid, it's enough to click on that one.  To take over a hostile bot, select the takeover/chat skill from the skills screen (level 1), then left click on the bot to mark it as target and then press the right mouse button to initiate takeover once you are close engough.  But be warned:  Other bots getting too close to you while takeover is initiated might accidentially become your takeover target.
+For the takeover game, you can use the mouse wheel if you have one, otherwise you must use the cursor keys, sorry :(
 
 Home teleport spell:  Select the skill and right click somewhere to teleport home.  Once home, the northernmost teleporter will take you back to exactly the location where you came from.
 

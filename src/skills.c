@@ -89,6 +89,59 @@
 SDL_Rect SkillScreenRect;
 
 /* ----------------------------------------------------------------------
+ * This function clears the list of detected items for one player.  
+ * Useful after level changes and when detecting items again.
+ * ---------------------------------------------------------------------- */
+void
+ClearDetectedItemList( int PlayerNum )
+{
+  int i;
+
+  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+    {
+      Me [ PlayerNum ] . DetectedItemList [ i ] . x = 0;
+      Me [ PlayerNum ] . DetectedItemList [ i ] . y = 0;
+    }
+}; // void ClearDetectedItemList( int PlayerNum )
+
+/* ----------------------------------------------------------------------
+ * This function detects all items on this level.
+ * ---------------------------------------------------------------------- */
+void
+DetectItemsSpell ( void )
+{
+  int SpellCost = ManaCostTable [ 6 ][ Me[ 0 ].SkillLevel [ 6 ] ] ;
+  Level AutomapLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
+  int i;
+
+  if ( Me [ 0 ] . mana >= SpellCost )
+    {
+      Me[0].mana -= SpellCost;
+
+      ClearDetectedItemList( 0 ); // 0 is the playernum
+
+      // FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , WHITE_BULLET, TRUE , 0 , 0 , 0 , 7 ) ;
+      for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+	{
+	  if ( AutomapLevel->ItemList[i].type != (-1) )
+	    {
+	      Me[0].DetectedItemList[i].x = AutomapLevel->ItemList[i].pos.x ;
+	      Me[0].DetectedItemList[i].y = AutomapLevel->ItemList[i].pos.y ;
+	    }
+	}
+
+      Play_Spell_ForceToEnergy_Sound( );
+
+    }
+  else
+    {
+      Me[0].TextVisibleTime = 0;
+      Me[0].TextToBeDisplayed = "Not enough force left within me.";
+      Not_Enough_Mana_Sound(  );
+    }
+}; // void DetectItemsSpell ( void )
+
+/* ----------------------------------------------------------------------
  * This function creates a teleporter portal to the home location.
  * ---------------------------------------------------------------------- */
 void
@@ -436,6 +489,16 @@ HandleCurrentlyActivatedSkill( void )
 	      TargetPoint . x = Me [ 0 ] . pos . x + ( GetMousePos_x() + 16 ) / Block_Width ;
 	      TargetPoint . y = Me [ 0 ] . pos . y + ( GetMousePos_y() + 16 ) / Block_Height ; 
 	      ParalyzeBoltSpell ( Me [ 0 ] . pos , TargetPoint );
+	    }
+	}
+    }
+  else if ( Me[0].readied_skill == 10 )
+    {
+      if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
+	{
+	  if ( CursorIsInUserRect ( GetMousePos_x() + 16 , GetMousePos_y() + 16) )
+	    {
+	      DetectItemsSpell (  ) ;
 	    }
 	}
     }
