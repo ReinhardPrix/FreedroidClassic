@@ -1677,10 +1677,20 @@ Empty part string received!",
 void
 iso_put_tux_torso ( int x , int y , int player_num , int rotation_index )
 {
-  if ( Me [ player_num ] . armour_item . type == (-1) )
-    iso_put_tux_part ( PART_GROUP_TORSO , "iso_torso" , x , y , player_num , rotation_index );
-  else
-    iso_put_tux_part ( PART_GROUP_TORSO , "iso_armour1" , x , y , player_num , rotation_index );
+  switch ( Me [ player_num ] . armour_item . type )
+    {
+    case -1 :
+      iso_put_tux_part ( PART_GROUP_TORSO , "iso_torso" , x , y , player_num , rotation_index );
+      break;
+    case 29:
+    case 30:
+    case 31:
+      iso_put_tux_part ( PART_GROUP_TORSO , "iso_robe" , x , y , player_num , rotation_index );
+      break;
+    default:
+      iso_put_tux_part ( PART_GROUP_TORSO , "iso_armour1" , x , y , player_num , rotation_index );
+      break;
+    }
 
 }; // void iso_put_tux_head ( int x , int y , int player_num , int rotation_index )
 
