@@ -1577,8 +1577,9 @@ display_current_game_message_window ( void )
     // narrow subtitle window of a format like this:
     //
     // { 65 , 410 , 500 , 70 }       
-    Subtitle_Window . x = ( ( 65 + 20 ) * GameConfig . screen_width ) / 640 ;
-    Subtitle_Window . y = ( ( 410 + 10 ) * GameConfig . screen_height ) / 480 ;
+    
+    Subtitle_Window . x = ( ( 90 + 20 ) * GameConfig . screen_width ) / 640 ;
+    Subtitle_Window . y = ( ( 380 + 10 ) * GameConfig . screen_height ) / 480 ;
     Subtitle_Window . w = ( ( 500 - 20 - 20 ) * GameConfig . screen_width ) / 640 ;
     Subtitle_Window . h = ( 70 * GameConfig . screen_height ) / 480 ;
 
@@ -1620,8 +1621,8 @@ display_current_game_message_window ( void )
     //
     SDL_SetClipRect( Screen, NULL );
     // { 65 , 410 , 500 , 70 }       
-    Subtitle_Window . x = ( ( 65 + 20 ) * GameConfig . screen_width ) / 640 ;
-    Subtitle_Window . y = ( ( 410 + 10 ) * GameConfig . screen_height ) / 480 ;
+    Subtitle_Window . x = ( ( 90 + 20 ) * GameConfig . screen_width ) / 640 ;
+    Subtitle_Window . y = ( ( 380 + 10 ) * GameConfig . screen_height ) / 480 ;
     Subtitle_Window . w = ( ( 500 - 20 - 20 ) * GameConfig . screen_width ) / 640 ;
     Subtitle_Window . h = ( ( 70 - 10 - 10 ) * GameConfig . screen_height ) / 480 ;
     SetCurrentFont ( Message_BFont );
