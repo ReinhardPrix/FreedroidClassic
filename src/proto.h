@@ -382,6 +382,7 @@ EXTERN void ShowCharacterScreen ( void );
 #define EXTERN extern
 #endif
 EXTERN void create_new_obstacle_on_level ( Level EditLevel , int our_obstacle_type , float pos_x , float pos_y );
+EXTERN void show_button_tooltip ( char* tooltip_text );
 
 // skills.c
 #undef EXTERN

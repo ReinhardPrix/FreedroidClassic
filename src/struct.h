@@ -498,6 +498,7 @@ typedef struct
   Sint8 type;			/* what kind of druid is this ? */
   Sint8 character_class;          // is this unit a FIGHTER=WAR_BOT, or MAGE=MIND_BOT or ROGUE=SNIPER_BOT character
   Sint8 status;			/* attacking, defense, dead, ... */
+  char freedroid_version_string[100]; // a string to identify games from older freedroid versions
   finepoint speed;		/* the current speed of the druid */
   gps pos;		        /* current position in the whole ship */
   gps teleport_anchor;          // where from have you last teleported home

@@ -474,8 +474,6 @@ ShowCurrentSkill( void )
   if ( use_open_gl )
     {
       blit_open_gl_texture_to_screen_position ( SpellSkillMap [ Me[0].readied_skill ] . spell_skill_icon_surface , Target_Rect . x , Target_Rect . y , TRUE ) ;
-
-      glDisable( GL_TEXTURE_2D );
     }
   else
     our_SDL_blit_surface_wrapper ( SpellSkillMap [ Me[0].readied_skill ] . spell_skill_icon_surface . surface , NULL , Screen , &Target_Rect );

@@ -326,6 +326,12 @@ SaveGame( void )
   ShowSaveLoadGameProgressMeter( 0 , TRUE ) ;
 
   //--------------------
+  // We must make sure the version string in the Me struct is set 
+  // correctly for later loading...
+  //
+  strcpy ( Me [ 0 ] . freedroid_version_string, VERSION );
+
+  //--------------------
   // get home-directory to save in
   if ( ( homedir = getenv("HOME")) == NULL ) 
     {
@@ -692,6 +698,24 @@ This indicates a serious bug in this installation of Freedroid.",
       if ( AllBullets[ i ].angle_change_rate != 0 ) DeleteBullet( i , FALSE );
     }
   
+  //--------------------
+  // Now we check if the loaded game is from a compatible version of FreedroidRPG, or
+  // if we maybe have a saved game from a different version, which would mean trouble
+  //
+  // NOTE:  WE MUST DO THIS BEFORE ANY REFERENCE TO THE LOADED GAME IS MADE, EVEN IF
+  //        THAT REFERENCE IS SO SMALL AS TO JUST SET BACKGROUND MUSIC ACCORDING TO
+  //        CURRENT TUX POSITION IN THE MAPS AS FOUND BELOW
+  //
+  if ( strcmp ( Me [ 0 ] . freedroid_version_string , VERSION ) != 0 )
+    {
+      show_button_tooltip ( "\n\nERROR!  This game is from a different version of FreedroidRPG.\n\nI refuse to load it!" );
+      our_SDL_flip_wrapper( Screen );
+      while ( SpacePressed() ) usleep ( 3 );
+      while ( !SpacePressed() ) usleep ( 3 );
+      while ( SpacePressed() ) usleep ( 3 );
+      return ( ERR ) ;
+    }
+
   //--------------------
   // Now that we have loaded the game, we must count and initialize the number
   // of droids used in this ship.  Otherwise we might ignore some robots.
