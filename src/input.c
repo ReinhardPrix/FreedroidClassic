@@ -288,7 +288,7 @@ void
 check_for_cheat_keys( void )
 {
     int i, j ;
-    tux_t Zwisch_Me;
+    // tux_t Zwisch_Me;
 
     //--------------------
     // This is a convenient way of dropping some random treasure...
@@ -403,28 +403,6 @@ check_for_cheat_keys( void )
 	    Me [ 0 ] . AllMissions [ 1 ] . MissionWasAssigned = TRUE ;
 	    Me [ 0 ] . AllMissions [ 1 ] . MissionIsComplete = TRUE ;
 	}
-
-	//--------------------
-	// For debugging the multiplayer and networking mode, there is
-	// also some way to swap players 0 and 1, but currently, this won't
-	// be needed much, since network play is currently not really under
-	// active development.
-	//
-	if ( Shift_Was_Pressed () )
-	{
-	    memcpy ( & ( Zwisch_Me ) , & ( Me [ 0 ] ) , sizeof ( Me[ 0 ] ) );
-	    memcpy ( & ( Me [ 0 ] ) , & ( Me [ 1 ] ) , sizeof ( Me[ 0 ] ) );
-	    memcpy ( & ( Me [ 1 ] ) , & ( Zwisch_Me ) , sizeof ( Me[ 0 ] ) );
-	    while ( Number1Pressed() );
-	    Activate_Conservative_Frame_Computation ( );
-	    
-	    //--------------------
-	    // When switching between players, we must of course also reset the 
-	    // current level...
-	    //
-	    // CurLevel = curShip.AllLevels[ Me[ 0 ].levelnum ];
-	    // Teleport ( 
-	}
     }
     if ( Number2Pressed() )
     {
@@ -459,22 +437,6 @@ check_for_cheat_keys( void )
 	}
     }
 
-    if ( Number1Pressed() && Shift_Was_Pressed () )
-    {
-	memcpy ( & ( Zwisch_Me ) , & ( Me [ 0 ] ) , sizeof ( Me[ 0 ] ) );
-	memcpy ( & ( Me [ 0 ] ) , & ( Me [ 1 ] ) , sizeof ( Me[ 0 ] ) );
-	memcpy ( & ( Me [ 1 ] ) , & ( Zwisch_Me ) , sizeof ( Me[ 0 ] ) );
-	while ( Number1Pressed() );
-	Activate_Conservative_Frame_Computation ( );
-	
-	//--------------------
-	// When switching between players, we must of course also reset the 
-	// current level...
-	//
-	// CurLevel = curShip.AllLevels[ Me[ 0 ].levelnum ];
-	// Teleport ( 
-    }
-    
     //--------------------
     // For debugging purposes, we introduce a key, that causes several 
     // floor values around the Tux to be printed out.

@@ -1126,7 +1126,7 @@ TextConditionIsTrue ( char* ConditionString )
 
       for ( i = 0 ; i < MAX_COOKIES ; i ++ )
       {
-	  DebugPrintf ( -4 , "\nCookie entry to compare to: %s." , Me [ 0 ] . cookie_list [ i ] );
+	  DebugPrintf ( 1 , "\nCookie entry to compare to: %s." , Me [ 0 ] . cookie_list [ i ] );
 	  if ( ! strlen ( Me [ 0 ] . cookie_list [ i ] ) ) continue;
 	  if ( ! strcmp ( Me [ 0 ] . cookie_list [ i ] , CookieText ) ) 
 	      return ( TRUE );
