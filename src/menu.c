@@ -2790,6 +2790,7 @@ Credits_Menu (void)
    VOICES:\n\n\
                                       Tiina Heinonen\n\n\
                                       Doris Stubenrauch\n\n\
+                                      Andrew A. Gill\n\n\
                                       Johannes Prix\n\n\
                                       Mbrola\n\
                                        text-to-speech-system\n\n\n\

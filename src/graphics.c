@@ -1433,7 +1433,7 @@ Unable to set SDL_GL_DOUBLEBUFFER attribute!",
   // SDL for creating the initial output window...
   //
   video_flags  = SDL_OPENGL;          /* Enable OpenGL in SDL */
-  // video_flags |= SDL_GL_DOUBLEBUFFER; /* Enable double buffering */
+  video_flags |= SDL_GL_DOUBLEBUFFER; /* Enable double buffering */
   // video_flags |= SDL_HWPALETTE;       /* Store the palette in hardware */
   video_flags |= SDL_RESIZABLE;       /* Enable window resizing */
   if (fullscreen_on) video_flags |= SDL_FULLSCREEN;
