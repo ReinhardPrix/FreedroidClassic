@@ -128,7 +128,7 @@ main (int argc, char *const argv[])
 	  // Assemble_Combat_Picture ( DO_SCREEN_UPDATE ); 
 	  Assemble_Combat_Picture ( 0 ); 
 
-	  MoveBullets ();   // please leave this in front of graphics output, so that time_in_frames always starts with 1
+	  if ( !ClientMode ) MoveBullets ();   // please leave this in front of graphics output, so that time_in_frames always starts with 1
 
 	  DisplayBanner (NULL, NULL,  0 ); // this is a pure client issue
 
