@@ -91,7 +91,8 @@ GiveStandardErrorMessage ( char* FunctionName , char* ProblemDescription, int In
 {
   fprintf (stderr, "\n----------------------------------------------------------------------\n\
 Freedroid has encountered a problem:\n" );
-  fprintf (stderr, "In Function: %s.\n\n" , FunctionName );
+  fprintf (stderr, "In Function: %s.\n" , FunctionName );
+  fprintf (stderr, "FreedroidRPG package and version number: %s %s.\n" , PACKAGE , VERSION );
   fprintf (stderr, "Problem Description: %s.\n\n" , ProblemDescription );
 
   if ( InformDevelopers )

@@ -902,6 +902,10 @@ show_obstacles_around_tux ( void )
   LineEnd = Me [ 0 ] . pos . y + 7 ;
   ColStart = Me [ 0 ] . pos . x - 7 ;
   ColEnd = Me [ 0 ] . pos . x + 7 ;
+  if ( LineStart < 0 ) LineStart = 0 ;
+  if ( ColStart < 0 ) ColStart = 0 ;
+  if ( LineEnd >= obstacle_level -> ylen ) LineEnd = obstacle_level -> ylen - 1 ;
+  if ( ColEnd >= obstacle_level -> xlen ) ColEnd = obstacle_level -> xlen - 1 ;
 
   for (line = LineStart; line < LineEnd; line++)
     {
