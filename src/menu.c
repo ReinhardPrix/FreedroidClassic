@@ -1491,7 +1491,7 @@ Get_New_Character_Name ( void )
   char* Temp;
   InitiateMenu( NE_TITLE_PIC_FILE );
 
-  DisplayText ( "\n     Enter the name for the new hero:\n\n\n      " , 
+  DisplayText ( "\n     Enter the name\n     for the new hero:\n   > " ,
 		50 , 50 , NULL );
 
   Temp = GetString( 20 , FALSE );
