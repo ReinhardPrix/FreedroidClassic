@@ -47,6 +47,9 @@
 
 
 int NoKeyPressed (void);
+void GreatItemShow (void);
+void show_item_info ( item* ShowItem , int page , char ShowArrows );
+
 
 // EXTERN SDL_Surface *console_pic;
 SDL_Surface *console_pic = NULL ;
@@ -612,10 +615,11 @@ EnterConsole (void)
 	      break;
 	    case 3:
 	      ClearGraphMem();
-	      ShowLifts (CurLevel->levelnum, -1);
+	      // ShowLifts (CurLevel->levelnum, -1);
 	      // getchar_raw();
-	      while ( !SpacePressed() );
-	      while ( SpacePressed() );
+	      GreatItemShow ();
+	      // while ( !SpacePressed() );
+	      // while ( SpacePressed() );
 	      break;
 	    default:
 	      DebugPrintf(0,"\nError in Console: menu-pos out of bounds \n");
@@ -847,6 +851,220 @@ GreatDruidShow (void)
   return;
 }; // void GreatDroidShow( void ) 
 
+/* ----------------------------------------------------------------------
+ * This function does the item show when the user has selected item
+ * show from the console menu.
+ * ---------------------------------------------------------------------- */
+void
+GreatItemShow (void)
+{
+  int ItemType;
+  int page;
+  bool finished = FALSE;
+  bool key_pressed = FALSE;
+  static int WasPressed = FALSE ;
+  // int ClearanceIndex = 0;
+  // int NumberOfClearances = 0;
+  int i;
+  item* Show_Pointer_List[ MAX_ITEMS_IN_INVENTORY ];
+  int Pointer_Index=0;
+  int NumberOfItems=0;
+  int ItemIndex=0;
+  char* MenuTexts[ 10 ];
+  MenuTexts[0]="Yes";
+  MenuTexts[1]="No";
+  MenuTexts[2]="";
+  MenuTexts[3]="";
+  MenuTexts[4]="";
+  MenuTexts[5]="";
+  MenuTexts[8]="";
+  MenuTexts[6]="";
+  MenuTexts[7]="";
+  MenuTexts[9]="";
+
+  //--------------------
+  // First we clean out the new Show_Pointer_List
+  //
+  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+    {
+      Show_Pointer_List[ i ] = NULL;
+    }
+
+  //--------------------
+  // Now we start to fill the Show_Pointer_List with the items
+  // currently equipped
+  //
+  if ( Me[0].weapon_item.type != ( -1 ) )
+    {
+      Show_Pointer_List [ Pointer_Index ] = & ( Me[0].weapon_item );
+      Pointer_Index ++;
+    }
+  if ( Me[0].drive_item.type != ( -1 ) )
+    {
+      Show_Pointer_List [ Pointer_Index ] = & ( Me[0].drive_item );
+      Pointer_Index ++;
+    }
+  if ( Me[0].armour_item.type != ( -1 ) )
+    {
+      Show_Pointer_List [ Pointer_Index ] = & ( Me[0].armour_item );
+      Pointer_Index ++;
+    }
+  if ( Me[0].shield_item.type != ( -1 ) )
+    {
+      Show_Pointer_List [ Pointer_Index ] = & ( Me[0].shield_item );
+      Pointer_Index ++;
+    }
+  if ( Me[0].special_item.type != ( -1 ) )
+    {
+      Show_Pointer_List [ Pointer_Index ] = & ( Me[0].special_item );
+      Pointer_Index ++;
+    }
+  if ( Me[0].aux1_item.type != ( -1 ) )
+    {
+      Show_Pointer_List [ Pointer_Index ] = & ( Me[0].aux1_item );
+      Pointer_Index ++;
+    }
+  if ( Me[0].aux2_item.type != ( -1 ) )
+    {
+      Show_Pointer_List [ Pointer_Index ] = & ( Me[0].aux2_item );
+      Pointer_Index ++;
+    }
+
+
+
+  //--------------------
+  // Now we start to fill the Show_Pointer_List with the items in the
+  // pure unequipped inventory
+  //
+  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+    {
+      if ( Me[0].Inventory [ i ].type == (-1) ) continue;
+      else
+	{
+	  //--------------------
+	  // Now depending on whether we sell to the healer or to
+	  // the weaponsmith, we can either sell one thing or the
+	  // other
+	  //
+	  // if ( ( ForHealer ) &&  ! ItemMap [ Me[0].Inventory[ i ].type ].item_can_be_applied_in_combat ) continue;
+	  // if ( ! ( ForHealer ) &&  ItemMap [ Me[0].Inventory[ i ].type ].item_can_be_applied_in_combat ) continue;
+	  Show_Pointer_List [ Pointer_Index ] = & ( Me[0].Inventory[ i ] );
+	  Pointer_Index ++;
+	}
+    }
+
+  if ( Pointer_Index == 0 )
+    {
+      // PlayOnceNeededSoundSample ( "STO_Sorry_But_You_0.wav" , FALSE );
+      MenuTexts[0]=" BACK ";
+      MenuTexts[1]="";
+      DoMenuSelection ( " YOU DONT HAVE ANYTHING IN INVENTORY, THAT COULD BE VIEWED. " , 
+			MenuTexts, 1 , NULL , NULL );
+      return;
+    }
+
+  NumberOfItems = Pointer_Index ;
+
+  // ItemType = Me[0].type;
+  ItemType = Show_Pointer_List [ ItemIndex ] -> type ;
+
+  page = 0;
+
+  show_item_info ( Show_Pointer_List [ ItemIndex ] , page , TRUE );
+
+  while (!finished)
+    {
+      usleep ( 2 );
+
+      ItemType = Show_Pointer_List [ ItemIndex ] -> type ;
+      // ItemType = Me [ 0 ] . clearance_list [ ClearanceIndex ] ;
+
+      if (key_pressed)
+	{
+	  show_item_info ( Show_Pointer_List [ ItemIndex ] , page , TRUE );
+	  key_pressed = FALSE;
+	}
+
+      if (SpacePressed() || EscapePressed() || axis_is_active )
+	{
+	  if ( CursorIsOnButton( UP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
+	    {
+	      if ( ItemIndex < NumberOfItems -1 ) 
+		{
+		  ItemIndex ++;	    
+		  MoveMenuPositionSound();
+		}
+	      key_pressed = TRUE;
+	    }
+	  else if ( CursorIsOnButton( DOWN_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
+	    {
+	      if ( ItemIndex > 0) 
+		{
+		  ItemIndex --;	      
+		  MoveMenuPositionSound();
+		}
+	      key_pressed = TRUE;
+	    }
+	  else if ( CursorIsOnButton( RIGHT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
+	    {
+	      MoveMenuPositionSound();
+	      if (page < 2) page ++;
+	      key_pressed = TRUE;
+	    }
+	  else if ( CursorIsOnButton( LEFT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
+	    {
+	      MoveMenuPositionSound();
+	      if (page > 0) page --;
+	      key_pressed = TRUE;
+	    }
+
+	  if ( ! CursorIsOnButton( UP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) &&
+	       ! CursorIsOnButton( DOWN_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) &&
+	       ! CursorIsOnButton( LEFT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) &&
+	       ! CursorIsOnButton( RIGHT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+	    {
+	      finished = TRUE;
+	      while (SpacePressed() ||EscapePressed());
+	    }
+
+	}
+
+      WasPressed = axis_is_active;
+
+      if (UpPressed() || MouseWheelUpPressed())
+	{
+	  MoveMenuPositionSound();
+	  while (UpPressed());
+	  if ( ItemType < Me[0].type) ItemType ++;
+	  key_pressed = TRUE;
+	}
+      if (DownPressed() || MouseWheelDownPressed())
+	{
+	  MoveMenuPositionSound();
+	  while (DownPressed());
+	  if (ItemType > 0) ItemType --;
+	  key_pressed = TRUE;
+	}
+      if (RightPressed() )
+	{
+	  MoveMenuPositionSound();
+	  while (RightPressed());
+	  if (page < 2) page ++;
+	  key_pressed = TRUE;
+	}
+      if (LeftPressed() )
+	{
+	  MoveMenuPositionSound();
+	  while (LeftPressed());
+	  if (page > 0) page --;
+	  key_pressed = TRUE;
+	}
+
+    } /* while !finished */
+
+  return;
+}; // void GreatItemShow( void ) 
+
 /* ------------------------------------------------------------
  * display infopage page of droidtype
  * does update the screen, no SDL_Flip() necesary !
@@ -914,6 +1132,175 @@ Notes: %s", Druidmap[droidtype].druidname , Classname[Druidmap[droidtype].class]
   SDL_Flip (Screen);
 
 } /* show_droid_info */
+
+
+/* ----------------------------------------------------------------------
+ * This function displays an item picture. 
+ * ---------------------------------------------------------------------- */
+void
+ShowItemPicture (int PosX, int PosY, int Number )
+{
+  SDL_Surface *tmp;
+  SDL_Rect target;
+  // char *fpath;
+  // char fname[500];
+
+  DebugPrintf (2, "\nvoid ShowItemPicture(...): Function call confirmed.");
+
+  // strcpy( fname, Druidmap[Number].druidname );
+
+  /*
+  strcpy( fname, "droids/" );
+  strcat( fname, Druidmap[Number].portrait_filename_without_ext );
+  strcat( fname , ".png" );
+
+  fpath = find_file (fname, GRAPHICS_DIR, FALSE);
+
+  if ( (tmp=IMG_Load (fpath)) == NULL )
+    {
+      fprintf (stderr,
+	     "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+The image file named %s could not be read by SDL.\n\
+\n\
+The error reason as specified by SDL is : %s.\n\
+\n\
+Please check that the file is present and not corrupted\n\
+in your distribution of Freedroid.\n\
+\n\
+Freedroid will terminate now to point at the error.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , fpath , SDL_GetError() );
+      Terminate (ERR);
+    }
+  */
+
+  tmp = ItemImageList[ ItemMap[ Number ].picture_number ].Surface ;
+
+
+
+  SDL_SetClipRect( Screen , NULL );
+  Set_Rect ( target, PosX, PosY, SCREEN_WIDTH, SCREEN_HEIGHT);
+  SDL_BlitSurface( tmp , NULL, Screen , &target);
+
+  // SDL_FreeSurface(tmp);
+
+  DebugPrintf (2, "\nvoid ShowItemPicture(...): Usual end of function reached.");
+}; // void ShowItemPicture ( ... )
+
+
+/* ------------------------------------------------------------
+ * display infopage page of droidtype
+ * does update the screen, no SDL_Flip() necesary !
+ * ------------------------------------------------------------ */
+void 
+show_item_info ( item* ShowItem , int page , char ShowArrows )
+{
+  char InfoText[1000];
+  // char None[20] = "none";
+  // char *item_name;
+  // int type;
+  SDL_SetClipRect ( Screen , NULL );
+  DisplayImage ( find_file( NE_CONSOLE_BG_PIC2_FILE , GRAPHICS_DIR, FALSE) );
+  // DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
+
+  ShowItemPicture (Cons_Menu_Rect.x, Cons_Menu_Rect.y, ShowItem->type );
+
+  switch (page)
+    {
+    case 0:
+      /*
+      sprintf( InfoText, "\
+Unit type %s - %s\n\
+Entry : %d\n\
+Class : %s\n\
+Height : %f\n\
+Weight: %f \n\
+Drive : %s \n\
+Brain : %s", ItemMap [ ShowItem->type ] . item_name, Classname[Druidmap[ droidtype ].class],
+	       droidtype+1, Classes[Druidmap[droidtype].class],
+	       Druidmap[droidtype].height, Druidmap[droidtype].weight,
+	       ItemMap [ Druidmap[ droidtype ].drive_item.type ].item_name,
+	       Brainnames[ Druidmap[droidtype].brain ]);
+      */
+      sprintf( InfoText, "Item: %s \nClass: %s\n\
+Duration: %d / %d\n\
+Required Str: %d\n\
+Required Dex: %d\n\
+Required Mag: %d\n\
+Base list price: %d\n", 
+	       ItemMap [ ShowItem->type ] . item_name, 
+	       ItemMap [ ShowItem->type ] . item_class,
+	       (int)ShowItem->current_duration, 
+	       ShowItem->max_duration ,
+	       ItemMap [ ShowItem->type ] . item_require_strength,
+	       ItemMap [ ShowItem->type ] . item_require_dexterity,
+	       ItemMap [ ShowItem->type ] . item_require_magic,
+	       ItemMap [ ShowItem->type ] . base_list_price );
+
+      break;
+    case 1:
+      /*
+      if ( (type = Druidmap[droidtype].weapon_item.type) >= 0) 
+	item_name = ItemMap[type].item_name;                   
+      else 
+	item_name = None;
+
+      sprintf( InfoText , "\
+Unit type %s - %s\n\
+Armamant : %s\n\
+Sensors  1: %s\n          2: %s\n          3: %s", Druidmap[droidtype].druidname,
+	       Classname[Druidmap[droidtype].class],
+	       item_name,
+	       Sensornames[ Druidmap[droidtype].sensor1 ],
+	       Sensornames[ Druidmap[droidtype].sensor2 ],
+	       Sensornames[ Druidmap[droidtype].sensor3 ]);
+*/
+      //--------------------
+      // On this page we show the weapon properties (in case of a weapon)
+      //
+      sprintf( InfoText, "Item: %s \nClass: %s\n\
+Damage: %d - %d\n\
+Recharge time: %f\n\
+Defence bonus: %d\n\
+Speed / Acceleration: %d / %d \n", 
+	       ItemMap [ ShowItem->type ] . item_name, 
+	       ItemMap [ ShowItem->type ] . item_class,
+	       ItemMap [ ShowItem->type ] . base_item_gun_damage,
+	       ItemMap [ ShowItem->type ] . base_item_gun_damage +
+	       ItemMap [ ShowItem->type ] . item_gun_damage_modifier,
+	       ItemMap [ ShowItem->type ] . item_gun_recharging_time,
+	       ShowItem->ac_bonus,
+	       (int)ItemMap [ ShowItem->type ] . item_drive_maxspeed,
+	       (int)ItemMap [ ShowItem->type ] . item_drive_accel );
+
+
+
+
+      break;
+    case 2:
+      /*
+      sprintf (InfoText, "Unit type %s - %s\n\
+Notes: %s", Druidmap[droidtype].druidname , Classname[Druidmap[droidtype].class],
+	       Druidmap[droidtype].notes);
+      break;
+    default:
+      */
+      sprintf (InfoText, "ERROR: Page not implemented!! \nPlease report bug!");
+      break;
+    } // switch (page) 
+
+  SetCurrentFont( Para_BFont );
+  DisplayText (InfoText, Cons_Text_Rect.x, Cons_Text_Rect.y, &Cons_Text_Rect);
+
+  if ( ShowArrows ) ShowLeftRightDroidshowButtons (  );
+
+  SDL_Flip (Screen);
+
+} /* show_item_info */
 
 
 enum 
