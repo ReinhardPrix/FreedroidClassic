@@ -834,6 +834,7 @@ show_droid_portrait (SDL_Rect dst, int droid_type, float cycle_time, int flags)
 	  droid_pics = SDL_DisplayFormatAlpha (tmp);
 	}
       SDL_FreeSurface (tmp);
+      SDL_RWseek (packed_portraits[droid_type], 0, SEEK_SET);
 
       last_droid_type = droid_type;
     }
