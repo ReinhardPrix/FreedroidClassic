@@ -1153,7 +1153,7 @@ Level_Editor(void)
 	  BlockY=(int)(floor(Me.pos.y/BLOCKHOEHE));
 	  
 	  GetView();
-	  GetInternFenster( SHOW_MAP );
+	  Assemble_Combat_Picture ( SHOW_MAP );
 	  Highlight_Current_Block();
 	  PutInternFenster( FALSE );
 	  PrepareScaledSurface( FALSE );

@@ -274,6 +274,7 @@ GetView (void)
 	}			/* for col */
     }				/* for line */
 
+  DebugPrintf ("\nvoid GetView(void): end of function reached.\n ");
   return;
 }				/* GetView() */
 
@@ -311,6 +312,7 @@ DisplayView (void)
  *
  * @Ret: none
  *-----------------------------------------------------------------*/
+#ifdef NEW_ENGINE
 void
 Assemble_Combat_Picture (int mask)
 {
@@ -318,13 +320,10 @@ Assemble_Combat_Picture (int mask)
   int MapBrick;
   int line, col;
   int i, j;
+  SDL_Rect TargetRectangle;
 
-  unsigned char *source;	/* the current block to copy */
-  unsigned char *target;
+  DebugPrintf ("\nvoid Assemble_Combat_Picture(...): Real function call confirmed.");
 
-  target = InternWindow;
-
-  memset (target, 1, INTERNHOEHE * INTERNBREITE * BLOCKMEM);
 
   if (Conceptview)
     {
@@ -332,31 +331,26 @@ Assemble_Combat_Picture (int mask)
       return;
     }
 
+
+  
   for (line = 0; line < (INTERNHOEHE); line++)
     {
       for (col = 0; col < (INTERNBREITE); col++)
 	{
 	  if ((MapBrick = View[line][col]) != INVISIBLE_BRICK)
 	    {
-	      source = MapBlocks + MapBrick * BLOCKMEM;
-	      for (i = 0; i < BLOCKHOEHE; i++)
-		{
-		  memcpy (target, source, BLOCKBREITE);
-		  target += INTERNBREITE * BLOCKBREITE;
-		  source += BLOCKBREITE;
-		}
-	    }			/* if !INVISIBLE_BRICK */
-	  else
-	    {
-	      target += INTERNBREITE * BLOCKMEM;
-	    }
-	  if (col < INTERNBREITE - 1)
-	    target -= INTERNBREITE * BLOCKMEM - BLOCKBREITE;
-	}			/* for(col) */
-      target -= (INTERNBREITE - 1) * BLOCKBREITE;
-    }				/* for(line) */
+	      TargetRectangle.x=USERFENSTERPOSX+col*BLOCKBREITE;
+	      TargetRectangle.y=USERFENSTERPOSY+line*BLOCKHOEHE;
+	      SDL_BlitSurface(ne_blocks, ne_map_block+MapBrick, ne_screen, &TargetRectangle);
+	    }			// if !INVISIBLE_BRICK 
+	}			// for(col) 
+    }				// for(line) 
 
-  if (mask == SHOW_MAP)		/* we want only the map, nothing else */
+  SDL_Flip ( ne_screen );
+
+  return;  // for now
+
+  if (mask == SHOW_MAP)		// we want only the map, nothing else 
     return;
 
 
@@ -397,9 +391,105 @@ Assemble_Combat_Picture (int mask)
       CurBlast++;
     }				/* for */
 
+  DebugPrintf ("\nvoid Assemble_Combat_Picture(...): end of function reached.");
+
   return;
 
-}				// void GetInternFenster(void) 
+} // void Assemble_Combat_Picture(...)
+#else
+void
+Assemble_Combat_Picture (int mask)
+{
+  Blast CurBlast = &(AllBlasts[0]);
+  int MapBrick;
+  int line, col;
+  int i, j;
+
+  unsigned char *source;	/* the current block to copy */
+  unsigned char *target;
+
+  target = InternWindow;
+
+  memset (target, 1, INTERNHOEHE * INTERNBREITE * BLOCKMEM);
+
+  if (Conceptview)
+    {
+      GetConceptInternFenster ();
+      return;
+    }
+
+  for (line = 0; line < (INTERNHOEHE); line++)
+    {
+      for (col = 0; col < (INTERNBREITE); col++)
+	{
+	  if ((MapBrick = View[line][col]) != INVISIBLE_BRICK)
+	    {
+	      source = MapBlocks + MapBrick * BLOCKMEM;
+	      for (i = 0; i < BLOCKHOEHE; i++)
+		{
+		  memcpy (target, source, BLOCKBREITE);
+		  target += INTERNBREITE * BLOCKBREITE;
+		  source += BLOCKBREITE;
+		}
+	    }			// if !INVISIBLE_BRICK 
+	  else
+	    {
+	      target += INTERNBREITE * BLOCKMEM;
+	    }
+	  if (col < INTERNBREITE - 1)
+	    target -= INTERNBREITE * BLOCKMEM - BLOCKBREITE;
+	}			// for(col) 
+      target -= (INTERNBREITE - 1) * BLOCKBREITE;
+    }				// for(line) 
+
+
+  if (mask == SHOW_MAP)		// we want only the map, nothing else 
+    return;
+
+
+  for (i = 0; i < NumEnemys; i++)
+    PutEnemy (i);
+
+  if (Me.energy > 0)
+    PutInfluence ();
+
+  for (i = 0; i < (MAXBULLETS); i++)
+    if (AllBullets[i].type != OUT)
+      PutBullet (i);
+
+
+  for (i = 0; i < (MAXBLASTS); i++)
+    if (AllBlasts[i].type != OUT)
+      PutBlast (i);
+
+  // Sofortiger Check auf Bullet-Blast-Kollisionen
+  for (j = 0; j < MAXBLASTS; j++)
+    {
+      /* check Blast-Bullet Collisions and kill hit Bullets */
+      for (i = 0; i < MAXBULLETS; i++)
+	{
+	  if (AllBullets[i].type == OUT)
+	    continue;
+	  if (CurBlast->phase > 4)
+	    break;
+
+	  if (abs (AllBullets[i].pos.x - CurBlast->PX) < BLASTRADIUS)
+	    if (abs (AllBullets[i].pos.y - CurBlast->PY) < BLASTRADIUS)
+	      {
+		/* KILL Bullet silently */
+		AllBullets[i].type = OUT;
+		AllBullets[i].mine = FALSE;
+	      }
+	}			/* for */
+      CurBlast++;
+    }				/* for */
+
+  DebugPrintf ("\nvoid Assemble_Combat_Picture(...): end of function reached.");
+
+  return;
+
+} // void Assemble_Combat_Picture(...)
+#endif
 
 /*@Function============================================================
 @Desc: GetConceptInternFenster(): analoge Funktion zu GetInternFenster()
@@ -796,6 +886,10 @@ PutInternFenster (int also_update_scaled_surface)
   int i;
   unsigned char *source;
   unsigned char *target;
+
+#ifdef NEW_ENGINE
+  return;
+#endif
 
   /*
     In case the Conceptview switch is set, only a small map is drawn, like in 
