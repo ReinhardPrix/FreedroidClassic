@@ -1651,7 +1651,7 @@ PrepareStartOfNewCharacter ( void )
   //
   GetQuestList ( "QuestList" );
 
-  SwitchBackgroundMusicTo ( curShip.AllLevels [ Me [ 0 ] . pos . z ] ->Background_Song_Name );
+  SwitchBackgroundMusicTo ( curShip.AllLevels [ Me [ 0 ] . pos . z ] -> Background_Song_Name );
 
   InitHarmlessTuxStatusVariables( 0 );
 

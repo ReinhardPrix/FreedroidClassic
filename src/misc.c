@@ -180,8 +180,8 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "mouse_buttons/AttributePlusButton.png"                   , { CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X  , DEX_Y  , 38 , 22 } } ,
     { NULL , "mouse_buttons/AttributePlusButton.png"                   , { CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X  , VIT_Y  , 38 , 22 } } ,
 
-    { NULL , "mouse_buttons/arrow_up_for_scroll_text.png"     , { 575 , 10 , 73 , 98 } } ,
-    { NULL , "mouse_buttons/arrow_down_for_scroll_text.png"   , { 575 , SCREEN_HEIGHT-10-98 , 73 , 98 } } ,
+    { NULL , "mouse_buttons/arrow_up_for_scroll_text.png"     , { SCREEN_WIDTH - 65 , 10 , 73 , 98 } } ,
+    { NULL , "mouse_buttons/arrow_down_for_scroll_text.png"   , { SCREEN_WIDTH - 65 , SCREEN_HEIGHT-10-98 , 73 , 98 } } ,
 
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 607 , 99 , 26 , 26 } } ,
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 607 , 347 , 26 , 26 } } ,
