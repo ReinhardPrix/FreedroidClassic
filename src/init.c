@@ -907,6 +907,12 @@ InitNewMission ( char *MissionName )
       // Maybe the triggered event consists of ??????
     }
 
+  // For Testing purposes we now define an event "by hand", just for test:
+  //
+  AllEventTriggers[0].Influ_Must_Be_At_Point.x=6;
+  AllEventTriggers[0].Influ_Must_Be_At_Point.y=2;
+  AllEventTriggers[0].EventNumber=0;
+
   /* Delete all bullets and blasts */
   for (i = 0; i < MAXBULLETS; i++)
     {

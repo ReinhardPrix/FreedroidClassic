@@ -787,7 +787,30 @@ MyMalloc (long Mamount)
 void 
 CheckForTriggeredEvents ( void )
 {
+  int i;
 
+  for ( i=0 ; i<MAX_EVENT_TRIGGERS ; i++ )
+    {
+      if ( AllEventTriggers[i].EventNumber == (-1) ) continue;  // thats a sure sign this event doesn't need attention
+
+      // --------------------
+      // So at this point we know, that the event trigger is somehow meaningful. 
+      // Fine, so lets check the details, if the event is triggered now
+      //
+
+      if ( AllEventTriggers[i].Influ_Must_Be_At_Point.x != (-1) )
+	{
+	  if ( rintf( AllEventTriggers[i].Influ_Must_Be_At_Point.x ) != rintf( Me.pos.x ) ) continue;
+	}
+
+      if ( AllEventTriggers[i].Influ_Must_Be_At_Point.y != (-1) )
+	{
+	  if ( rintf( AllEventTriggers[i].Influ_Must_Be_At_Point.y ) != rintf( Me.pos.y ) ) continue;
+	}
+
+      printf("\nWARNING!! INFLU NOW IS AT SOME TRIGGER POINT OF SOME LOCATION-TRIGGERED EVENT!!!");
+
+    }
 
 }; // CheckForTriggeredEvents (void )
 
