@@ -48,6 +48,7 @@
 #define FRICTION_CONSTANT (0.02)
 
 #define BEST_MELEE_DISTANCE_IN_SQUARES (0.8)
+#define DISTANCE_TOLERANCE (0.2)
 
 #define REFRESH_ENERGY		3
 #define COLLISION_PUSHSPEED	7
@@ -326,7 +327,7 @@ MoveInfluence ( int PlayerNum )
 	  // but also if we have been thrown onto a different level, we cancel our current
 	  // mouse move target...
 	  //
-	  if ( ( ( fabsf ( RemainingWay.y ) <= 0.1 ) && ( fabsf ( RemainingWay.x ) <= 0.1 ) ) ||
+	  if ( ( ( fabsf ( RemainingWay.y ) <= DISTANCE_TOLERANCE ) && ( fabsf ( RemainingWay.x ) <= DISTANCE_TOLERANCE ) ) ||
 	       ( Me [ PlayerNum ] . mouse_move_target . z != Me [ PlayerNum ] . pos . z ) )
 	    {
 	      Me [ PlayerNum ] . mouse_move_target . x = ( -1 ) ;
@@ -988,6 +989,8 @@ GetLivingDroidBelowMouseCursor ( int PlayerNum )
 {
   int i;
   float Mouse_Blocks_X, Mouse_Blocks_Y;
+  int TargetFound = (-1);
+  float DistanceFound = 1000;
 
   Mouse_Blocks_X = (float)ServerThinksInputAxisX ( PlayerNum ) / (float)Block_Width ;
   Mouse_Blocks_Y = (float)ServerThinksInputAxisY ( PlayerNum ) / (float)Block_Height ;
@@ -1003,19 +1006,33 @@ GetLivingDroidBelowMouseCursor ( int PlayerNum )
 	continue;
       if ( fabsf (AllEnemys[i].pos.y - ( Me[ PlayerNum ] . pos . y + Mouse_Blocks_Y ) ) >= 0.5 )
 	continue;
-      
+
+
+      if (  ( fabsf (AllEnemys[i].pos.x - ( Me[ PlayerNum ] . pos . x + Mouse_Blocks_X ) ) ) *
+	    ( fabsf (AllEnemys[i].pos.x - ( Me[ PlayerNum ] . pos . x + Mouse_Blocks_X ) ) ) +
+	    ( fabsf (AllEnemys[i].pos.y - ( Me[ PlayerNum ] . pos . y + Mouse_Blocks_Y ) ) ) *
+	    ( fabsf (AllEnemys[i].pos.y - ( Me[ PlayerNum ] . pos . y + Mouse_Blocks_Y ) ) )  
+	    < DistanceFound )
+	{
+	  DistanceFound = ( fabsf (AllEnemys[i].pos.x - ( Me[ PlayerNum ] . pos . x + Mouse_Blocks_X ) ) ) *
+	    ( fabsf (AllEnemys[i].pos.x - ( Me[ PlayerNum ] . pos . x + Mouse_Blocks_X ) ) ) +
+	    ( fabsf (AllEnemys[i].pos.y - ( Me[ PlayerNum ] . pos . y + Mouse_Blocks_Y ) ) ) *
+	    ( fabsf (AllEnemys[i].pos.y - ( Me[ PlayerNum ] . pos . y + Mouse_Blocks_Y ) ) ) ;
+	  TargetFound = i;
+	}      
+
       //--------------------
       // So this must be a possible target for the next weapon swing.  Yes, there
       // is some living droid beneath the mouse cursor.
       //
-      return ( i );
+      // return ( i );
     }
 
   //--------------------
   // It seems that we were unable to locate a living droid under the mouse 
   // cursor.  So we return, giving this very same message.
   //
-  return ( -1 );
+  return ( TargetFound );
 
 }; // int GetLivingDroidBelowMouseCursor ( int PlayerNum )
 
