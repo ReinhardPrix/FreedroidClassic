@@ -94,6 +94,44 @@ enum
   };
 
 /* ----------------------------------------------------------------------
+ * When new lines are inserted into the map, the map inserts south of this
+ * line must move too with the rest of the map.  This function sees to it.
+ * ---------------------------------------------------------------------- */
+void
+MoveBigMapInsertsSouthOf ( int FromWhere , int ByWhat , Level EditLevel )
+{
+  int i;
+
+  for ( i = 0 ; i < MAX_MAP_INSERTS_PER_LEVEL ; i ++ )
+    {
+      if ( EditLevel -> MapInsertList [ i ] . type == ( -1 ) ) continue;
+      
+      if ( EditLevel -> MapInsertList [ i ] . pos . y >= FromWhere )
+	EditLevel -> MapInsertList [ i ] . pos . y += ByWhat;
+    }
+  
+}; // void MoveBigMapInsertsSouthOf ( int FromWhere , int ByWhat )
+
+/* ----------------------------------------------------------------------
+ * When new lines are inserted into the map, the map inserts east of this
+ * line must move too with the rest of the map.  This function sees to it.
+ * ---------------------------------------------------------------------- */
+void
+MoveBigMapInsertsEastOf ( int FromWhere , int ByWhat , Level EditLevel )
+{
+  int i;
+
+  for ( i = 0 ; i < MAX_MAP_INSERTS_PER_LEVEL ; i ++ )
+    {
+      if ( EditLevel -> MapInsertList [ i ] . type == ( -1 ) ) continue;
+      
+      if ( EditLevel -> MapInsertList [ i ] . pos . x >= FromWhere )
+	EditLevel -> MapInsertList [ i ] . pos . x += ByWhat;
+    }
+  
+}; // void MoveBigMapInsertsEastOf ( int FromWhere , int ByWhat )
+
+/* ----------------------------------------------------------------------
  * When new lines are inserted into the map, the waypoints south of this
  * line must move too with the rest of the map.  This function sees to it.
  * ---------------------------------------------------------------------- */
@@ -113,7 +151,7 @@ MoveWaypointsSouthOf ( int FromWhere , int ByWhat , Level EditLevel )
 }; // void MoveWaypointsSouthOf ( int FromWhere , int ByWhat )
 
 /* ----------------------------------------------------------------------
- * When new lines are inserted into the map, the waypoints south of this
+ * When new lines are inserted into the map, the waypoints east of this
  * line must move too with the rest of the map.  This function sees to it.
  * ---------------------------------------------------------------------- */
 void
@@ -213,6 +251,7 @@ InsertColumnEasternInterface( Level EditLevel )
     }
 
   MoveWaypointsEastOf ( EditLevel->xlen - EditLevel->jump_threshold_east - 1 , +1 , EditLevel ) ;
+  MoveBigMapInsertsEastOf ( EditLevel->xlen - EditLevel->jump_threshold_east - 1 , +1 , EditLevel ) ;
 
 }; // void InsertColumnEasternInterface( EditLevel );
 
@@ -249,6 +288,7 @@ RemoveColumnEasternInterface( Level EditLevel )
   EditLevel -> xlen --;
 
   MoveWaypointsEastOf ( EditLevel->xlen - EditLevel->jump_threshold_east + 1 , -1 , EditLevel ) ;
+  MoveBigMapInsertsEastOf ( EditLevel->xlen - EditLevel->jump_threshold_east + 1 , -1 , EditLevel ) ;
 
 }; // void InsertColumnEasternInterface( EditLevel );
 
@@ -308,6 +348,46 @@ RemoveColumnWesternInterface( Level EditLevel )
  * Self-Explanatory.
  * ---------------------------------------------------------------------- */
 void
+InsertColumnVeryWest ( Level EditLevel )
+{
+  int OldEasternInterface;
+
+  //--------------------
+  // We shortly change the eastern interface to reuse the code for there
+  //
+  OldEasternInterface = EditLevel -> jump_threshold_south;
+
+  EditLevel -> jump_threshold_east = EditLevel -> xlen - 0 ;
+  InsertColumnEasternInterface ( EditLevel );
+
+  EditLevel -> jump_threshold_east = OldEasternInterface ;
+
+}; // void InsertColumnVeryWest ( EditLevel )
+
+/* ----------------------------------------------------------------------
+ * Self-Explanatory.
+ * ---------------------------------------------------------------------- */
+void
+RemoveColumnVeryWest ( Level EditLevel )
+{
+  int OldEasternInterface;
+
+  //--------------------
+  // We shortly change the eastern interface to reuse the code for there
+  //
+  OldEasternInterface = EditLevel -> jump_threshold_east;
+
+  EditLevel -> jump_threshold_east = EditLevel -> xlen - 1 ;
+  RemoveColumnEasternInterface ( EditLevel );
+
+  EditLevel -> jump_threshold_east = OldEasternInterface ;
+
+}; // void RemoveColumnVeryEast ( Level EditLevel )
+
+/* ----------------------------------------------------------------------
+ * Self-Explanatory.
+ * ---------------------------------------------------------------------- */
+void
 InsertLineSouthernInterface ( Level EditLevel )
 {
   char* temp;
@@ -338,8 +418,8 @@ InsertLineSouthernInterface ( Level EditLevel )
   //--------------------
   // Now we have the waypoints moved as well
   //
-  MoveWaypointsSouthOf ( EditLevel -> ylen - 1 - EditLevel -> jump_threshold_south ,
-			 +1 , EditLevel ) ;
+  MoveWaypointsSouthOf ( EditLevel -> ylen - 1 - EditLevel -> jump_threshold_south , +1 , EditLevel ) ;
+  MoveBigMapInsertsSouthOf ( EditLevel -> ylen - 1 - EditLevel -> jump_threshold_south , +1 , EditLevel ) ;
 
 }; // void InsertLineSouthernInterface ( EditLevel )
 
@@ -369,8 +449,8 @@ RemoveLineSouthernInterface ( Level EditLevel )
   //--------------------
   // Now we have the waypoints moved as well
   //
-  MoveWaypointsSouthOf ( EditLevel -> ylen - 0 - EditLevel -> jump_threshold_south ,
-			 -1 , EditLevel ) ;
+  MoveWaypointsSouthOf ( EditLevel -> ylen - 0 - EditLevel -> jump_threshold_south , -1 , EditLevel ) ;
+  MoveBigMapInsertsSouthOf ( EditLevel -> ylen - 0 - EditLevel -> jump_threshold_south , -1 , EditLevel ) ;
 
 }; // void RemoveLineSouthernInterface ( EditLevel )
 
@@ -549,6 +629,19 @@ EditLevelDimensions ( void )
 	    }
 	  break;
 	  
+	case INSERTREMOVE_COLUMN_VERY_WEST:
+	  if ( RightPressed() )
+	    {
+	      InsertColumnVeryWest ( EditLevel );
+	      while (RightPressed());
+	    }
+	  if ( LeftPressed() )
+	    {
+	      RemoveColumnVeryWest ( EditLevel );
+	      while (LeftPressed());
+	    }
+	  break;
+
 	case INSERTREMOVE_LINE_VERY_SOUTH:
 	  if ( RightPressed() )
 	    {
@@ -1054,6 +1147,7 @@ ExportLevelInterface ( int LevelNum )
       GetDoors ( curShip . AllLevels [ TargetLevel ] );
       GetRefreshes ( curShip . AllLevels [ TargetLevel ] );
       GetTeleports ( curShip . AllLevels [ TargetLevel ] );
+      GetAutoguns ( curShip . AllLevels [ TargetLevel ] );
     }
 
   //--------------------
@@ -1089,6 +1183,7 @@ ExportLevelInterface ( int LevelNum )
       GetDoors ( curShip . AllLevels [ TargetLevel ] );
       GetRefreshes ( curShip . AllLevels [ TargetLevel ] );
       GetTeleports ( curShip . AllLevels [ TargetLevel ] );
+      GetAutoguns ( curShip . AllLevels [ TargetLevel ] );
     }
 
   //--------------------
@@ -1125,6 +1220,7 @@ ExportLevelInterface ( int LevelNum )
       GetDoors ( curShip . AllLevels [ TargetLevel ] );
       GetRefreshes ( curShip . AllLevels [ TargetLevel ] );
       GetTeleports ( curShip . AllLevels [ TargetLevel ] );
+      GetAutoguns ( curShip . AllLevels [ TargetLevel ] );
     }
 
   //--------------------
@@ -1161,6 +1257,7 @@ ExportLevelInterface ( int LevelNum )
       GetDoors ( curShip . AllLevels [ TargetLevel ] );
       GetRefreshes ( curShip . AllLevels [ TargetLevel ] );
       GetTeleports ( curShip . AllLevels [ TargetLevel ] );
+      GetAutoguns ( curShip . AllLevels [ TargetLevel ] );
     }
 
 }; // void SynchronizeLevelInterfaces ( void )
@@ -2123,6 +2220,12 @@ LevelEditor(void)
 	  BlockX=rintf(Me[0].pos.x);
 	  BlockY=rintf(Me[0].pos.y);
 	  
+	  EditLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;	  
+	  GetDoors ( EditLevel );
+	  GetTeleports ( EditLevel );
+	  GetRefreshes ( EditLevel );
+	  GetAutoguns ( EditLevel );
+
 	  VanishingMessageDisplayTime += ( SDL_GetTicks ( ) - OldTicks ) / 1000.0 ;
 	  OldTicks = SDL_GetTicks ( ) ;
 
@@ -2388,12 +2491,5 @@ LevelEditor(void)
     } // while (!Done)
 
 }; // void LevelEditor ( void )
-
-
-
-
-
-
-
 
 #undef _leveleditor_c
