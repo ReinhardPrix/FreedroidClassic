@@ -173,8 +173,8 @@ CursorIsInUserRect( int x , int y )
 }; // int CursorIsInUserRect( int x , int y )
 
 /* ----------------------------------------------------------------------
- * This function checks if a given screen position lies within the user
- * i.e. combat rectangle or not.
+ * This function checks if a given screen position lies within the small
+ * rectangle defining the weapon slot in the inventory screen.
  * ---------------------------------------------------------------------- */
 int 
 CursorIsInWeaponRect( int x , int y )
@@ -197,6 +197,32 @@ CursorIsInWeaponRect( int x , int y )
     }
   return( FALSE );
 }; // int CursorIsInWeaponRect( int x , int y )
+
+/* ----------------------------------------------------------------------
+ * This function checks if a given screen position lies within the small
+ * rectangle defining the drive slot in the inventory screen.
+ * ---------------------------------------------------------------------- */
+int 
+CursorIsInDriveRect( int x , int y )
+{
+  point CurPos;
+  CurPos.x = x ;
+  CurPos.y = y ;
+#define DRIVE_RECT_WIDTH 64
+#define DRIVE_RECT_HEIGHT 64
+
+  if ( ( CurPos.x >= 240 ) && ( CurPos.x <= 240 + DRIVE_RECT_WIDTH ) )
+    {
+      DebugPrintf( 0 , "\nMight be grabbing in weapon rectangle, as far as x is concerned.");
+      if ( ( CurPos.y >= User_Rect.y + 93 ) && 
+	   ( CurPos.y <= User_Rect.y + 93 + DRIVE_RECT_HEIGHT ) )
+	{
+	  DebugPrintf( 0 , "\nMight be grabbing in weapon rectangle, as far as y is concerned.");
+	  return( TRUE );
+	}
+    }
+  return( FALSE );
+}; // int CursorIsInDriveRect( int x , int y )
 
 /* ----------------------------------------------------------------------
  * This function checks if a given screen position lies within the grid
@@ -361,6 +387,22 @@ DropHeldItemToWeaponSlot ( void )
   Me.Inventory[ InvPos ].currently_held_in_hand = FALSE;
 
 }; // void DropHeldItemToWeaponSlot ( void )
+
+void
+DropHeldItemToDriveSlot ( void )
+{
+  int InvPos;
+
+  InvPos = GetHeldItemInventoryIndex( );
+
+  // Now the item is installed into the weapon slot of the influencer
+  Druidmap[ DRUID001 ].drive_item = Me.Inventory[ InvPos ].type;
+
+  // Now the item is removed from inventory and no longer held in hand as well...
+  Me.Inventory[ InvPos ].type = ( -1 );
+  Me.Inventory[ InvPos ].currently_held_in_hand = FALSE;
+
+}; // void DropHeldItemToDriveSlot ( void )
 
 void 
 DropHeldItemToInventory( void )

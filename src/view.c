@@ -430,6 +430,26 @@ ShowInventoryMessages( void )
 	      // If the item can't be used as a weapon, we don't do anything
 	    }
 	}
+
+      //--------------------
+      // If the cursor is in the drive rect, i.e. the small box to the right, then
+      // the item should be dropped onto the players current weapon slot
+      //
+      if ( CursorIsInDriveRect ( CurPos.x , CurPos.y ) )
+	{
+	  DebugPrintf( 0 , "\nItem dropped onto the drive rectangle!" );
+	  DebugPrintf( 0 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
+	  if ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_drive_slot )
+	    {
+	      DropHeldItemToDriveSlot ( );
+	      Item_Held_In_Hand = ( -1 );
+	    }
+	  else
+	    {
+	      // If the item can't be used as a weapon, we don't do anything
+	    }
+	}
+
     } // if release things...
 
  NoMoreReleasing:
