@@ -179,6 +179,7 @@ S**pecialForce: Type=821 X=16 Y=33 Fixed=1 Marker=2 AdvancedCommand=2 Parameter1
 S**pecialForce: Type=821 X=14 Y=33 Fixed=1 Marker=2 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="StoneStartGameSquare"
 S**pecialForce: Type=420 X=15 Y=32.5 Fixed=1 Marker=2 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="StoneStartGameSquare"
 SpecialForce: Type=FRA X=10 Y=3 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="FrancisStartGameSquare" RushTux="yes"
+SpecialForce: Type=ERN X=10 Y=3 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="ErnieStartGameSquare" RushTux="yes"
 
 ** End of this levels droid data **
 

@@ -641,7 +641,7 @@ GiveSubtitleNSample( char* SubtitleText , char* SampleFilename )
  *
  * ---------------------------------------------------------------------- */
 void
-ExecuteChatExtra ( char* ExtraCommandString )
+ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
 {
   int TempValue;
   char WorkString[5000];
@@ -666,6 +666,10 @@ ExecuteChatExtra ( char* ExtraCommandString )
   else if ( ! strcmp ( ExtraCommandString , "Buy_Magical_Items" ) )
     {
       Buy_Basic_Items( FALSE , TRUE );      
+    }
+  else if ( ! strcmp ( ExtraCommandString , "BreakOffAndBecomeHostile" ) )
+    {
+      ChatDroid -> is_friendly = FALSE ;
     }
   else if ( ! strcmp ( ExtraCommandString , "IncreaseMeleeWeaponSkill" ) )
     {
@@ -1071,7 +1075,13 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , Enemy ChatDroid 
 	  DebugPrintf ( CHAT_DEBUG_LEVEL , "\nWARNING!  Starting to invoke extra.  Text is: %s." ,
 			ChatRoster [ MenuSelection ] . extra_list[i] );
 
-	  ExecuteChatExtra ( ChatRoster [ MenuSelection ] . extra_list[i] );
+	  ExecuteChatExtra ( ChatRoster [ MenuSelection ] . extra_list[i] , ChatDroid );
+
+	  //--------------------
+	  // Maybe the chat extra has annoyed the chat partner and he is now
+	  // suddenly hostile and breaks off the chat.  This is handled here.
+	  //
+	  if ( ! ChatDroid -> is_friendly ) return ;
 
 	  //--------------------
 	  // It can't hurt to have the overall background redrawn after each extra command
@@ -1213,6 +1223,11 @@ ChatWithFriendlyDroid( Enemy ChatDroid )
 
       LoadChatRosterWithChatSequence ( "FRA" );
       DoChatFromChatRosterData( 0 , PERSON_FRA , ChatDroid );
+    }
+  else if ( strcmp ( Druidmap[ ChatDroid -> type ].druidname , "ERN" ) == 0 )
+    {
+      LoadChatRosterWithChatSequence ( "ERN" );
+      DoChatFromChatRosterData( 0 , PERSON_ERN , ChatDroid );
     }
   else if ( strcmp ( Druidmap[ ChatDroid -> type ].druidname , "HEA" ) == 0 )
     {

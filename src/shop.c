@@ -422,7 +422,6 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
   int Displacement=0;
   bool finished = FALSE;
   static int WasPressed = FALSE ;
-  char* MenuTexts[ 10 ];
   int i;
   int ClickTarget;
   static int RowStart=0;
@@ -468,6 +467,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
   Cons_Text_Rect . w = 346 ;
   Cons_Text_Rect . h = 282 ;
 
+  /*
   if ( ( ShowPointerList[0] == NULL ) && ( TuxItemsList[0] == NULL ) )
     {
       MenuTexts[0]=" BACK ";
@@ -478,6 +478,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
       ShopOrder -> shop_command = DO_NOTHING ;
       return (-1) ;
     }
+  */
 
   // ItemType = ShowPointerList [ ItemIndex ] -> type ;
 

@@ -1524,34 +1524,12 @@ Get_New_Character_Name ( void )
 }; // void Get_New_Character_Name ( void )
 
 /* ----------------------------------------------------------------------
- * This function does the selection of the hero class...
+ * This function prepares a new hero for adventure...
  * ---------------------------------------------------------------------- */
 int
-Select_Hero_Class_Menu (void)
+PrepareNewHero (void)
 {
-  int Weiter = 0;
-  int MenuPosition=1;
-  char* MenuTexts[10];
   int i;
-
-enum
-  { 
-    WAR_BOT_POSITION=1, 
-    SNIPER_BOT_POSITION, 
-    MIND_BOT_POSITION,
-    BACK_POSITION
-  };
-
-  MenuTexts[0]="War Tux";
-  MenuTexts[1]="Sniper Tux";
-  MenuTexts[2]="Hacker Tux";
-  MenuTexts[3]="Back";
-  MenuTexts[4]="";
-  MenuTexts[5]="";
-  MenuTexts[6]="";
-  MenuTexts[7]="";
-  MenuTexts[8]="";
-  MenuTexts[9]="";
 
   //--------------------
   // At first we clear the inventory of the new character
@@ -1564,8 +1542,7 @@ enum
       Me[0].Inventory[ i ].suffix_code = (-1);
       Me[0].Inventory[ i ].currently_held_in_hand = FALSE;
     }
-  DebugPrintf ( 1 , "\nSelect_Hero...( ... ): Inventory has been emptied...");
-
+  DebugPrintf ( 1 , "\nPrepareNewHero...( ... ): Inventory has been emptied...");
 
   //--------------------
   // Now we add some safety, against 'none present' items
@@ -1594,138 +1571,16 @@ enum
   Me[0].aux2_item.suffix_code = ( -1 ) ;
   Me[0].special_item.suffix_code = ( -1 ) ;
 
-  while (!Weiter)
-    {
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NE_TITLE_PIC_FILE , NULL );
+  Me[0].character_class = WAR_BOT;
+  Me[0].base_vitality = 10;
+  Me[0].base_strength = 10;
+  Me[0].base_dexterity = 10;
+  Me[0].base_magic = 10;
 
-      //--------------------
-      // Now let's see what the user has pressed...
-      //
-      switch (MenuPosition) 
-	{
-	case (-1):
-	  Weiter=!Weiter;
-	  break;
-	case WAR_BOT_POSITION:
-	  while (EnterPressed() || SpacePressed() ) ;
+  Get_New_Character_Name( );
+  return ( TRUE );
 
-	  Me[0].character_class = WAR_BOT;
-	  Me[0].base_vitality = 25;
-	  Me[0].base_strength = 30;
-	  Me[0].base_dexterity = 25;
-	  Me[0].base_magic = 10;
-
-	  // Me[0].weapon_item.type = ITEM_SHORT_SWORD;
-	  Me[0].drive_item.type = ITEM_ANTIGRAV_BETA;
-
-	  Me[0].Inventory[ 0 ].type = ITEM_SHORT_SWORD;
-	  Me[0].Inventory[ 0 ].inventory_position.x = 0;
-	  Me[0].Inventory[ 0 ].inventory_position.y = 0;
-	  FillInItemProperties ( & Me[0].Inventory[ 0 ] , TRUE , 0 );
-
-	  Me[0].Inventory[ 1 ].type = ITEM_BUCKLER;
-	  Me[0].Inventory[ 1 ].inventory_position.x = 2;
-	  Me[0].Inventory[ 1 ].inventory_position.y = 0;
-	  FillInItemProperties ( & Me[0].Inventory[ 1 ] , TRUE , 0 );
-
-	  Me[0].Inventory[ 2 ].type = ITEM_MEDIUM_HEALTH_POTION;
-	  Me[0].Inventory[ 2 ].inventory_position.x = 0;
-	  Me[0].Inventory[ 2 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
-	  FillInItemProperties ( & Me[0].Inventory[ 2 ] , TRUE , 0 );
-	  Me[0].Inventory[ 2 ].multiplicity = 4 ;
-
-	  Me[0].Inventory[ 4 ].type = ITEM_START_PLUGIN_WARRIOR;
-	  Me[0].Inventory[ 4 ].inventory_position.x = 5;
-	  Me[0].Inventory[ 4 ].inventory_position.y = 0;
-	  FillInItemProperties ( & Me[0].Inventory[ 4 ] , TRUE , 0 );
-
-	  Get_New_Character_Name( );
-	  return ( TRUE );
-	  break;
-	case SNIPER_BOT_POSITION: 
-	  while (EnterPressed() || SpacePressed() ) ;
-
-	  Me[0].character_class = SNIPER_BOT;
-	  Me[0].base_vitality = 20;
-	  Me[0].base_strength = 25;
-	  Me[0].base_dexterity = 35;
-	  Me[0].base_magic = 20;
-	  
-	  Me[0].drive_item.type = ITEM_ANTIGRAV_BETA;
-
-	  Me[0].Inventory[ 0 ].type = ITEM_SHORT_BOW;
-	  Me[0].Inventory[ 0 ].inventory_position.x = 0;
-	  Me[0].Inventory[ 0 ].inventory_position.y = 0;
-	  FillInItemProperties ( & Me[0].Inventory[ 0 ] , TRUE , 0 );
-
-	  Me[0].Inventory[ 1 ].type = ITEM_SMALL_HEALTH_POTION;
-	  Me[0].Inventory[ 1 ].inventory_position.x = 0;
-	  Me[0].Inventory[ 1 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
-	  FillInItemProperties ( & Me[0].Inventory[ 1 ] , TRUE , 0 );
-	  Me[0].Inventory[ 1 ].multiplicity = 3 ;
-	  
-	  Me[0].Inventory[ 2 ].type = ITEM_LASER_AMMUNITION;
-	  Me[0].Inventory[ 2 ].inventory_position.x = 1;
-	  Me[0].Inventory[ 2 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
-	  FillInItemProperties ( & Me[0].Inventory[ 2 ] , TRUE , 0 );
-	  Me[0].Inventory[ 2 ].multiplicity = 100 ;
-
-	  Me[0].Inventory[ 4 ].type = ITEM_START_PLUGIN_SNIPER;
-	  Me[0].Inventory[ 4 ].inventory_position.x = 5;
-	  Me[0].Inventory[ 4 ].inventory_position.y = 0;
-	  FillInItemProperties ( & Me[0].Inventory[ 4 ] , TRUE , 0 );
-
-	  
-
-	  Get_New_Character_Name( );
-	  return ( TRUE );
-	  break;
-	case MIND_BOT_POSITION: 
-	  while (EnterPressed() || SpacePressed() ) ;
-
-	  Me[0].character_class = MIND_BOT;
-	  Me[0].base_vitality = 15;
-	  Me[0].base_strength = 15;
-	  Me[0].base_dexterity = 20;
-	  Me[0].base_magic = 35;
-	  Me[0].drive_item.type = ITEM_ANTIGRAV_ALPHA;
-
-	  Me[0].Inventory[ 0 ].type = ITEM_STAFF;
-	  Me[0].Inventory[ 0 ].inventory_position.x = 0;
-	  Me[0].Inventory[ 0 ].inventory_position.y = 0;
-	  FillInItemProperties ( & Me[0].Inventory[ 0 ] , TRUE , 0 );
-
-	  Me[0].Inventory[ 1 ].type = ITEM_SMALL_MANA_POTION;
-	  Me[0].Inventory[ 1 ].inventory_position.x = 0;
-	  Me[0].Inventory[ 1 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
-	  FillInItemProperties ( & Me[0].Inventory[ 1 ] , TRUE , 0 );
-	  Me[0].Inventory[ 1 ].multiplicity = 5 ;
-
-	  Me[0].Inventory[ 2 ].type = ITEM_SMALL_HEALTH_POTION;
-	  Me[0].Inventory[ 2 ].inventory_position.x = 1;
-	  Me[0].Inventory[ 2 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
-	  FillInItemProperties ( & Me[0].Inventory[ 2 ] , TRUE , 0 );
-	  Me[0].Inventory[ 2 ].multiplicity = 2 ;
-
-	  Me[0].Inventory[ 4 ].type = ITEM_START_PLUGIN_HACKER;
-	  Me[0].Inventory[ 4 ].inventory_position.x = 5;
-	  Me[0].Inventory[ 4 ].inventory_position.y = 0;
-	  FillInItemProperties ( & Me[0].Inventory[ 4 ] , TRUE , 0 );
-
-	  Get_New_Character_Name( );
-	  return ( TRUE );
-	  break;
-	case BACK_POSITION:
-	  while (EnterPressed() || SpacePressed() ) ;
-	  Weiter=!Weiter;
-	  return ( FALSE );
-	  break;
-	default: 
-	  break;
-	}
-    }
-  return ( FALSE );
-}; // int Select_Hero_Class_Menu ( void );
+}; // int SelectHeroClassMenu ( void );
 
 /* ----------------------------------------------------------------------
  * This function does the selection of the hero class...
@@ -2113,12 +1968,13 @@ enum
 	case NEW_HERO_POSITION:
 	  while (EnterPressed() || SpacePressed() ) ;
 
-	  if ( Select_Hero_Class_Menu ( ) )
-	    {
-	      InitNewMissionList ( NEW_MISSION );
-	      Weiter=TRUE;
-	      return ( TRUE );
-	    }
+	  // if ( Select_Hero_Class_Menu ( ) )
+	  // {
+	  PrepareNewHero ();
+	  InitNewMissionList ( NEW_MISSION );
+	  Weiter=TRUE;
+	  return ( TRUE );
+	  //}
 	  break;
 
 	case LOAD_EXISTING_HERO_POSITION: 
