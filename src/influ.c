@@ -1533,6 +1533,7 @@ void
 move_tux_thowards_intermediate_point ( int player_num )
 {
   int i;
+  Level PlayerLevel;
 
   //--------------------
   // If there is no intermediate course, we don't need to do anything
@@ -1562,6 +1563,21 @@ move_tux_thowards_intermediate_point ( int player_num )
 	  check_for_barrels_to_smash ( player_num , Me [ player_num ] . mouse_move_target_combo_action_parameter ) ;
 	  break;
 	case COMBO_ACTION_PICK_UP_ITEM:
+	  DebugPrintf ( -4 , "\nNOW WE'VE REACHED A CASE OF PICKUP COMBO ACTION!!!" );
+	  //--------------------
+	  // We check if the item is still there (cause it could have
+	  // been picked up in the meantime or maybe another player
+	  // could have picked it up).
+	  //
+	  PlayerLevel = curShip . AllLevels [ Me [ player_num ] . pos. z ] ;
+	  if ( PlayerLevel -> ItemList [ Me [ player_num ] . mouse_move_target_combo_action_parameter ] . type != (-1) )
+	    {
+	      DebugPrintf ( -4 , "\nITEM FOR COMBO SEEMS TO BE STILL THERE!" );
+	      silently_unhold_all_items( );
+	      AddFloorItemDirectlyToInventory ( & PlayerLevel -> ItemList [ Me [ player_num ] . mouse_move_target_combo_action_parameter ] );
+	    }
+	  DebugPrintf ( -4 , "\nCOMBO ACTION NOW UNSET..." );
+	  Me [ player_num ] . mouse_move_target_combo_action_type = NO_COMBO_ACTION_SET ;
 	  break;
 	default:
 	  GiveStandardErrorMessage ( "move_tux_thowards_intermediate_point(...)" , 
@@ -2900,6 +2916,8 @@ AnalyzePlayersMouseClick ( int player_num )
   check_for_chests_to_open ( player_num , closed_chest_below_mouse_cursor ( player_num ) ) ;
 
   check_for_barrels_to_smash ( player_num , smashable_barred_below_mouse_cursor ( player_num ) ) ;
+
+  // get_floor_item_index_under_mouse_cursor ( 0 );
 
   check_for_droids_to_attack_or_talk_with ( player_num ) ;
 

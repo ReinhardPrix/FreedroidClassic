@@ -2422,7 +2422,9 @@ ManageInventoryScreen ( void )
 	  MapPositionOfMouse . y = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , 
 								     ServerThinksInputAxisY ( 0 ) , FALSE ) ;
 
-	  // We only take items, when they are close enough 
+	  //--------------------
+	  // We only take items directly, when they are close enough ...
+	  //
 	  if ( ( fabsf( MapPositionOfMouse . x - Me [ 0 ] . pos . x ) < ITEM_TAKE_DIST ) &&
 	       ( fabsf( MapPositionOfMouse . y - Me [ 0 ] . pos . y ) < ITEM_TAKE_DIST ) )
 	    {
@@ -2438,6 +2440,35 @@ ManageInventoryScreen ( void )
 		  return;
 		}
 
+	    }
+	  //--------------------
+	  // If the item isn't close enough, we start a combined move_and_do
+	  // procedure to go to the item and then pick it up once the Tux is
+	  // there...
+	  //
+	  else
+	    {
+	      index_of_item_under_mouse_cursor = get_floor_item_index_under_mouse_cursor ( 0 );
+
+	      if ( index_of_item_under_mouse_cursor != (-1) )
+		{
+		  //--------------------
+		  // We set course to the item in question, directly to it's location,
+		  // not somewhere remote, just for simplicity (for now)...
+		  //
+		  Me [ 0 ] . mouse_move_target . x = 
+		    PlayerLevel -> ItemList [ index_of_item_under_mouse_cursor ] . pos . x ;
+		  Me [ 0 ] . mouse_move_target . y = 
+		    PlayerLevel -> ItemList [ index_of_item_under_mouse_cursor ] . pos . y ;
+		  set_up_intermediate_course_for_tux ( 0 ) ;
+		  
+		  //--------------------
+		  // We set up the combo_action, so that the barrel can be smashed later...
+		  //
+		  Me [ 0 ] . mouse_move_target_is_enemy = ( -1 ) ;
+		  Me [ 0 ] . mouse_move_target_combo_action_type = COMBO_ACTION_PICK_UP_ITEM ;
+		  Me [ 0 ] . mouse_move_target_combo_action_parameter = index_of_item_under_mouse_cursor ;
+		}
 	    }
 	}
 
@@ -2610,36 +2641,6 @@ ManageInventoryScreen ( void )
 		  // break;
 		}
 	    }
-
-	  /*
-	  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i++ )
-	    {
-	      if ( PlayerLevel->ItemList[ i ].type == (-1) ) continue;
-	      
-	      if ( ( fabsf( MapPositionOfMouse.x - PlayerLevel -> ItemList [ i ] . pos . x ) < 0.5 ) &&
-		   ( fabsf( MapPositionOfMouse.y - PlayerLevel -> ItemList [ i ] . pos . y ) < 0.5 ) )
-		{
-		  //--------------------
-		  // We've found some item to grab!!! How wonderful!!!
-		  // 
-		  // But of course we only really take the item into our 'hand' if it's
-		  // something else than money, cause money need not be put anywhere...
-		  //
-		  if ( PlayerLevel -> ItemList [ i ] . type == ITEM_MONEY ) 		      
-		    {
-		      AddFloorItemDirectlyToInventory( &( PlayerLevel->ItemList[ i ] ) );
-		      return;
-		    }
-		  else
-		    {
-		      Item_Held_In_Hand = PlayerLevel -> ItemList [ i ] . type ;
-		      PlayerLevel -> ItemList [ i ] . currently_held_in_hand = TRUE;
-		      break;
-		    }
-		}
-	    }
-	  */
-
 	}
       else
 	{
@@ -3228,7 +3229,7 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
     {
       // PlayItemSound( ItemMap[ ItemPointer->type ].sound_number );
       play_item_sound( ItemPointer -> type );
-      Me[0].Gold += ItemPointer->gold_amount;
+      Me [ 0 ] . Gold += ItemPointer->gold_amount;
       DeleteItem( ItemPointer );
       return;
     }

@@ -88,6 +88,7 @@ EXTERN float translate_pixel_to_zoomed_map_location ( int player_num , float axi
 EXTERN void blit_zoomed_iso_image_to_map_position ( iso_image* our_iso_image , float pos_x , float pos_y );
 EXTERN int tux_can_walk_this_line ( int player_num , float x1, float y1 , float x2 , float y2 );
 EXTERN void clear_out_intermediate_points ( int player_num );
+EXTERN void set_up_intermediate_course_for_tux ( int player_num );
 
 // bullet.c 
 #undef EXTERN
