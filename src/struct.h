@@ -201,21 +201,16 @@ typedef struct {
  * $Author$
  *
  * $Log$
- * Revision 1.6  1993/09/30 17:57:20  prix
- * Fri Aug 06 14:56:25 1993: added first version of ship-struct
- * Fri Aug 06 15:29:06 1993: removed levelname from level-struct
- * Sat Aug 07 15:53:45 1993: made location more "plain"
- * Sat Aug 07 16:03:52 1993: changed elevator struct
- * Sun Aug 08 17:58:49 1993: little change in  ship-struct
- * Sun Aug 08 20:53:11 1993: added struct waypoint and changed enemy - struct
- * Mon Aug 09 20:00:15 1993: added emty to level-struct
- * Mon Aug 09 20:01:37 1993: added color to level-struct
- * Mon Aug 09 21:10:50 1993: changes in bulletspec: time and in bullet: timecounter
- * Tue Aug 10 14:52:11 1993: removed timecounter from bulletstruct
- * Sat Aug 14 09:38:26 1993: firewait now in druidspec
- * Sat Aug 21 19:50:22 1993: added refreshes array to level-struct
- * Tue Aug 24 17:29:30 1993: lose_health and health added
- * Thu Sep 30 13:56:59 1993: No picpointer in Druidspec !!
+ * Revision 1.7  1994/06/19 16:41:38  prix
+ * Thu Sep 30 13:57:49 1993: Header moved to end of file
+ * Sun Oct 03 09:07:38 1993: enemy-struct hat "onscreen" dazubekommen
+ * Sun Oct 03 09:16:34 1993: "flashimmune" added to druidspec
+ * Sun Oct 03 09:23:53 1993: "time" added to bullet
+ * Mon Oct 04 15:30:32 1993: reduced sizes of structs wherever possible
+ * Sun Oct 17 09:02:30 1993: vneutral added to druidspec
+ * Mon Oct 25 14:23:04 1993: enemy-struct um (byte passable) erweitert
+ * Tue Jun 14 10:47:50 1994: added structure for bar
+ * Wed Jun 15 20:06:11 1994: Shield[4] added to enemy
  *
  * Revision 1.6  1993/09/30  17:57:20  prix
  * Fri Aug 06 14:56:25 1993: added first version of ship-struct
