@@ -2994,8 +2994,34 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
       
       if ( mask & ZOOM_OUT )
 	{
-	  blit_zoomed_iso_image_to_map_position ( & ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] ) , ThisRobot -> pos . x , ThisRobot -> pos . y );
-	  
+	  if ( use_open_gl )
+	    {
+	      if ( AllEnemys[Enum].paralysation_duration_left != 0 ) 
+		{
+		  blit_zoomed_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y , 1.0 , 0.2 , 0.2 , highlight ) ;
+		}
+	      else if ( AllEnemys[Enum].poison_duration_left != 0 ) 
+		{
+		  blit_zoomed_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y , 0.2 , 1.0 , 0.2 , highlight ) ;
+		}
+	      else if ( AllEnemys[Enum].frozen != 0 ) 
+		{
+		  blit_zoomed_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y , 0.2 , 0.2 , 1.0 , highlight ) ;
+		}
+	      else
+		{
+		  blit_zoomed_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y , 1.0 , 1.0 , 1.0 , highlight ) ;
+		}
+	    }
+	  else
+	    {
+	      //--------------------
+	      // When no OpenGL is used, we need to proceed with SDL for
+	      // blitting the small enemies...
+	      //
+	      blit_zoomed_iso_image_to_map_position ( & ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] ) , 
+						      ThisRobot -> pos . x , ThisRobot -> pos . y );
+	    }
 	}
       else
 	{
