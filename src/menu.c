@@ -453,6 +453,10 @@ enum
 	  if ( MenuPosition < NEW_MISSION_POSITION ) MenuPosition++;
 	  MoveMenuPositionSound();
 	}
+      if ( key == SDLK_ESCAPE )
+	{
+	  Terminate( OK );
+	}
     }
 
   ClearGraphMem();

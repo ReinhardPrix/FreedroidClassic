@@ -1227,8 +1227,8 @@ Title ( char *MissionBriefingPointer )
   TitlePictureName = ReadAndMallocStringFromData ( MissionBriefingPointer, BRIEFING_TITLE_PICTURE_STRING , "\n" ) ;
 
   SDL_SetClipRect ( ne_screen, NULL );
-  DisplayImage ( find_file(TitlePictureName, GRAPHICS_DIR, FALSE) );
-  SDL_Flip (ne_screen);
+  // DisplayImage ( find_file(TitlePictureName, GRAPHICS_DIR, FALSE) );
+  // SDL_Flip (ne_screen);
 
   Me.status=BRIEFING;
 

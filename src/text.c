@@ -92,13 +92,14 @@ ChatWithFriendlyDroid( int Enum )
   while (1)
     {
       DisplayTextWithScrolling ( 
-				"\n\nWhat is your request? [type quit to cancel communication]\n" ,
+				"\nWhat do you say? " ,
 				-1 , -1 , NULL , Background );
       DisplayTextWithScrolling ( ">" , -1 , -1 , NULL , Background );
 
       SDL_Flip ( ne_screen );
       RequestString = GetString( 20 , FALSE );
-      printf_SDL( ne_screen, -1 , -1 , "\n" ); // without this, we would write text over the entered string
+      // printf_SDL( ne_screen, -1 , -1 , "\n" ); // without this, we would write text over the entered string
+      DisplayTextWithScrolling ( "\n    " , -1 , -1 , NULL , Background ); // without this, we would write text over the entered string
 
       //--------------------
       // Cause we do not want to deal with upper and lower case difficulties, we simpy convert 
@@ -120,13 +121,18 @@ ChatWithFriendlyDroid( int Enum )
       //
       if ( !strcmp ( RequestString , "help" ) ) 
 	{
-	  DisplayTextWithScrolling( 
-"You have opend a communication channel to a friendly droid by touching it while in transfer mode.\n\
-You can enter command phrases to make the droid perform some action.\n\
-Or you can ask the droid for valuable information by entering the keywords you request information about.\n\
-Most useful command phrases are: follow stay\n\
-Often useful information requests are: job name status MS\n\
-Type quit to cancel communication.\n" , MyCursorX , MyCursorY , NULL , Background );
+	  // DisplayTextWithScrolling("You have opend a communication channel to a friendly droid 
+	  // by touching it while in transfer mode.\n\
+	  // You can enter command phrases to make the droid perform some action.\n\
+	  // Or you can ask the droid for valuable information by entering the keywords you request information about.\n\
+	  // Most useful command phrases are: follow stay\n\
+	  // Often useful information requests are: job name status MS\n\
+	  // Type quit to cancel communication." , MyCursorX , MyCursorY , NULL , Background );
+	  DisplayTextWithScrolling("You can enter command phrases or ask about some keyword.\n\
+Most useful command phrases are: FOLLOW STAY STATUS \n\
+Often useful information requests are: JOB NAME MS HELLO \n\
+Of course you can ask the droid about anything else it has told you or about what you have heard somewhere else." , 
+				   MyCursorX , MyCursorY , NULL , Background );
 	  continue;
 	}
       
@@ -141,7 +147,7 @@ Type quit to cancel communication.\n" , MyCursorX , MyCursorY , NULL , Backgroun
       if ( !strcmp ( RequestString , "follow" ) ) 
 	{
 	  DisplayText( 
-		      "Ok.  I'm on your tail.  I hope you know where you're going.  I'll do my best to keep up.\n" , 
+		      "Ok.  I'm on your tail.  I hope you know where you're going.  I'll do my best to keep up." , 
 		      MyCursorX , MyCursorY , NULL );
 	  continue;
 	}
@@ -149,7 +155,7 @@ Type quit to cancel communication.\n" , MyCursorX , MyCursorY , NULL , Backgroun
 	{
 	  DisplayText( 
 		      "Ok.  I'll stay here and wait for further instructions from you.  \n\
-I hope you know what you're doing.\n" , 
+I hope you know what you're doing." , 
 		      MyCursorX , MyCursorY , NULL );
 	  continue;
 	}
@@ -167,7 +173,21 @@ I hope you know what you're doing.\n" ,
 	    {
 	      DisplayTextWithScrolling ( AllEnemys[ Enum ].QuestionResponseList[ i * 2 + 1 ] , 
 					 -1 , -1 , NULL , Background );
+	      break;
 	    }
+	}
+
+
+      //--------------------
+      // In case non of the default keywords was said and also none of the
+      // special keywords this droid would understand were said, then the
+      // droid obviously hasn't understood the message and should also say
+      // so.
+      //
+      if ( i == MAX_CHAT_KEYWORDS_PER_DROID )
+	{
+	  DisplayTextWithScrolling ( "Sorry, but of that I know entirely nothing." , 
+				     -1 , -1 , NULL , Background );
 	}
     }
 }; // void ChatWithFriendlyDroid( int Enum );
@@ -384,6 +404,7 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
       usleep (30000);
 
       DisplayImage ( find_file(TitlePictureName,GRAPHICS_DIR, FALSE) );
+      MakeGridOnScreen();
       // ClearUserFenster(); 
 
       if (!DisplayText (Text, startx, InsertLine, &User_Rect))
@@ -471,7 +492,7 @@ DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *cl
 	  // before we clean the screen and restart displaying text from the top
 	  // of the given Clipping rectangle
 	  //
-	  if ( abs( MyCursorY - ( clip->h ) ) <= FontHeight(GetCurrentFont()) * TEXT_STRETCH )
+	  if ( ( clip->h + clip->y - MyCursorY ) <= 2 * FontHeight ( GetCurrentFont() ) * TEXT_STRETCH )
 	    {
 	      DisplayText( "--- more --- more --- more --- more ---\n" , MyCursorX , MyCursorY , clip );
 	      SDL_Flip( ne_screen );

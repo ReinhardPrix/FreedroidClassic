@@ -279,7 +279,7 @@ MakeGridOnScreen(void)
  * and that.
  *
  ----------------------------------------------------------------------*/
-void DisplayImage(char *datafile)
+void DisplayImage( char *datafile )
 {
   SDL_Surface *image;
   
@@ -381,45 +381,10 @@ SetCombatScaleTo(float ResizeFactor)
   int i, j;
   SDL_Surface *tmp;
 
-  // return;
-
-  CenteredPutString   ( ne_screen ,  User_Rect.y+User_Rect.h-FontHeight(Menu_BFont), "Rescaling...");
+  // CenteredPutString   ( ne_screen ,  User_Rect.y+User_Rect.h-FontHeight(Menu_BFont), "Rescaling...");
 
   // just to be sure, reset the size of the graphics
   ReInitPictures();
-
-  //--------------------
-  // now to the resizing of all combat elements
-  // and the corresponding rectangle entries...
-
-  // SDL_SetColorKey( ne_blocks , 0 , 0 );
-
-  /*
-  if (SDL_SetColorKey(ne_blocks, SDL_SRCCOLORKEY, 0x00000100 ) == -1 )
-    {
-      fprintf (stderr, "Transp setting by SDL_SetColorKey() failed: %s \n",
-	       SDL_GetError());
-      Terminate(ERR);
-    }
-
-  tmp=zoomSurface( ne_blocks , ResizeFactor , ResizeFactor , 0 );
-  SDL_FreeSurface( ne_blocks );
-  ne_blocks = SDL_DisplayFormat(tmp);  // the surface is copied !
-  if (ne_blocks == NULL) 
-    {
-      DebugPrintf (1, "\nSDL_DisplayFormat() has failed: %s\n", SDL_GetError());
-      Terminate(ERR);
-    }
-  SDL_FreeSurface( tmp );
-  // set the transparent color 
-
-  if (SDL_SetColorKey(ne_blocks, SDL_SRCCOLORKEY, ne_transp_key) == -1 )
-    {
-      fprintf (stderr, "Transp setting by SDL_SetColorKey() failed: %s \n",
-	       SDL_GetError());
-      Terminate(ERR);
-    }
-*/
 
   for ( j=0 ; j < NUM_COLORS ; j++ )
     {
