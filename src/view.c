@@ -390,6 +390,7 @@ Assemble_Combat_Picture (int mask)
   int PlayerNum;
   int minutes;
   int seconds;
+  int MapInsertNr;
   static float TimeSinceLastFPSUpdate=10;
   static int FPS_Displayed=1;
   SDL_Rect TargetRectangle;
@@ -430,6 +431,21 @@ Assemble_Combat_Picture (int mask)
 	    }			// if !INVISIBLE_BRICK 
 	}			// for(col) 
     }				// for(line) 
+
+  //--------------------
+  // Now we draw the list of big graphics inserts for this level
+  //
+  for ( MapInsertNr = 0 ; MapInsertNr < MAX_MAP_INSERTS_PER_LEVEL ; MapInsertNr ++ )
+    {
+      if ( DisplayLevel->MapInsertList [ MapInsertNr ] . type == ( -1 ) ) continue;
+      TargetRectangle.x = UserCenter_x 
+	+ ( - Me [ 0 ] . pos . x + DisplayLevel->MapInsertList [ MapInsertNr ] . pos . x - 0.5 ) * Block_Width;
+      TargetRectangle.y = UserCenter_y
+	+ ( - Me [ 0 ] . pos . y + DisplayLevel->MapInsertList [ MapInsertNr ] . pos . y - 0.5 ) * Block_Height;
+      SDL_BlitSurface( AllMapInserts [ DisplayLevel->MapInsertList [ MapInsertNr ] . type ] . insert_surface , NULL ,
+		       Screen, &TargetRectangle);
+    }
+
 
   if (mask & ONLY_SHOW_MAP) 
     {

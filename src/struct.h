@@ -146,6 +146,13 @@ typedef struct
 }
 map_insert_spec, *Map_Insert_Spec;
 
+typedef struct
+{
+  int type;
+  grob_point pos; // how many blocks does this big map insert cover?
+}
+map_insert, *Map_Insert;
+
 
 typedef struct
 {
@@ -744,6 +751,7 @@ typedef struct
   char *Level_Enter_Comment;
   map_statement StatementList[ MAX_STATEMENTS_PER_LEVEL ];
   codepanel CodepanelList[ MAX_CODEPANELS_PER_LEVEL ];
+  map_insert MapInsertList[ MAX_MAP_INSERTS_PER_LEVEL ] ;
   int xlen;		/* X dimension */
   int ylen;
   int color;
