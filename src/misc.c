@@ -1639,7 +1639,7 @@ CheckForTriggeredEventsAndStatements ( int PlayerNum )
   //--------------------
   // Now we check if some event trigger is fullfilled.
   //
-  for ( i=0 ; i<MAX_EVENT_TRIGGERS ; i++ )
+  for ( i = 0 ; i < MAX_EVENT_TRIGGERS ; i++ )
     {
       // if ( AllEventTriggers[i].EventNumber == (-1) ) continue;  // thats a sure sign this event doesn't need attention
       if ( strcmp (AllEventTriggers[i].TargetActionLabel , "none" ) == 0 ) continue;  // thats a sure sign this event doesn't need attention

@@ -780,7 +780,6 @@ ShowCurrentTextWindow ( void )
   // we merely need to draw this items description into the description field and
   // that's it OR WE MUST SAY THAT THE requirements for this item are not met
   //
-  // if ( GetHeldItemCode() != (-1) )
   if ( GetHeldItemPointer( ) != NULL )
     {
       if ( ItemUsageRequirementsMet( GetHeldItemPointer( ) , FALSE ) )
@@ -898,6 +897,19 @@ ShowCurrentTextWindow ( void )
       if ( smashable_barred_below_mouse_cursor ( 0 ) != (-1) )
 	{
 	  strcpy ( ItemDescText , "  B  A  R  R  E  L  ! ! ! " ); 
+	}
+
+      //--------------------
+      // Maybe there is a teleporter event connected to the square where the mouse
+      // cursor is currently hovering.  In this case we should create a message about
+      // where the teleporter connection would bring the Tux...
+      //
+      if ( teleporter_square_below_mouse_cursor ( 0 , ItemDescText ) )
+	{
+	  //--------------------
+	  // Do nothing here, 'cause the function above has filled in the proper
+	  // text already...
+	  //
 	}
 
       //--------------------
