@@ -789,6 +789,44 @@ generate_wallobstacles_from_level_map ( int level_num )
 	      obstacle_counter ++ ;
 	      break;
 
+	    case CAVE_V_WALL:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_CAVE_WALL_V ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
+	      obstacle_counter ++ ;
+	      break;
+	    case CAVE_H_WALL:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_CAVE_WALL_H ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
+	      obstacle_counter ++ ;
+	      break;
+
+	    case CAVE_CORNER_RD:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_CAVE_CORNER_SE ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
+	      obstacle_counter ++ ;
+	      break;
+	    case CAVE_CORNER_RU:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_CAVE_CORNER_NE ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
+	      obstacle_counter ++ ;
+	      break;
+	    case CAVE_CORNER_LU:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_CAVE_CORNER_NW ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
+	      obstacle_counter ++ ;
+	      break;
+	    case CAVE_CORNER_LD:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_CAVE_CORNER_SW ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
+	      obstacle_counter ++ ;
+	      break;
+
 	    default:
 	      if ( IsWallBlock ( loadlevel -> map [ y ] [ x ]  . floor_value ) ) 
 		{
