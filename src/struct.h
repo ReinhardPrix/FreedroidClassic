@@ -424,6 +424,7 @@ typedef struct
   finepoint speed;		/* the current speed of the druid */
   gps pos;		        /* current position in the whole ship */
   gps teleport_anchor;          // where from have you last teleported home
+  gps mouse_move_target;        // where the tux is going automatically by virtue of mouse move 
   double health;		/* the max. possible energy in the moment */
   double energy;		/* current energy level */
   double mana;                  // current mana level 

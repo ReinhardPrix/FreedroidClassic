@@ -176,6 +176,7 @@ MoveInfluence ( int PlayerNum )
   float planned_step_x;
   float planned_step_y;
   static float TransferCounter = 0;
+  moderately_finepoint RemainingWay;
 
   //--------------------
   // We do not move any players, who's statuses are 'OUT'.
@@ -215,14 +216,74 @@ MoveInfluence ( int PlayerNum )
   //
   if ( Me [ PlayerNum ] . drive_item . type != (-1) )
     {
-      if ( ServerThinksUpPressed ( PlayerNum ) )
-	Me [ PlayerNum ] .speed.y -= accel;
-      if ( ServerThinksDownPressed ( PlayerNum ) )
-	Me [ PlayerNum ] .speed.y += accel;
-      if ( ServerThinksLeftPressed ( PlayerNum ) )
-	Me [ PlayerNum ] .speed.x -= accel;
-      if ( ServerThinksRightPressed ( PlayerNum ) )
-	Me [ PlayerNum ] .speed.x += accel;
+      
+      //--------------------
+      // Now maybe there isn't any mouse move target present or mouse move
+      // is somehow disabled.  Then we can just adapt the current speed 
+      // according to the acceleration possible with the current drive unit.
+      //
+      if ( Me [ PlayerNum ] . mouse_move_target . x == ( -1 ) )
+	{
+	  if ( ServerThinksUpPressed ( PlayerNum ) )
+	    Me [ PlayerNum ] .speed.y -= accel;
+	  if ( ServerThinksDownPressed ( PlayerNum ) )
+	    Me [ PlayerNum ] .speed.y += accel;
+	  if ( ServerThinksLeftPressed ( PlayerNum ) )
+	    Me [ PlayerNum ] .speed.x -= accel;
+	  if ( ServerThinksRightPressed ( PlayerNum ) )
+	    Me [ PlayerNum ] .speed.x += accel;
+	}
+      else
+      //--------------------
+      // But in case of some mouse move target present, we proceed to move
+      // thowards this mouse move target.
+      //
+	{
+	  RemainingWay.x = Me [ PlayerNum ] . pos . x - Me [ PlayerNum ] . mouse_move_target . x ;
+	  RemainingWay.y = Me [ PlayerNum ] . pos . y - Me [ PlayerNum ] . mouse_move_target . y ;
+
+	  //--------------------
+	  // In case we are close to the target already, we delete our current speed, so
+	  // that previous accelerations do not fire us far beyond our intended target.
+	  //
+	  if ( ( fabsf ( RemainingWay.y ) <= 1.0 ) && ( fabsf ( RemainingWay.x ) <= 1.0 ) )
+	    {
+	      // Me [ PlayerNum ] . speed . x = 0 ;
+	      // Me [ PlayerNum ] . speed . y = 0 ;
+	      InfluenceFrictionWithAir ( PlayerNum ) ; 
+	      InfluenceFrictionWithAir ( PlayerNum ) ; 
+	      // InfluenceFrictionWithAir ( PlayerNum ) ; 
+	    }
+
+	  //--------------------
+	  // If we are not there already, we might add some extra speed in the
+	  // right directions..
+	  //
+	  if ( fabsf ( RemainingWay.x ) > 0.1 ) 
+	    {
+	      if ( RemainingWay.x > 0 ) Me [ PlayerNum ] .speed.x -= accel;
+	      else Me [ PlayerNum ] .speed.x += accel;
+	    }
+	  if ( fabsf ( RemainingWay.y ) > 0.1 ) 
+	    {
+	      if ( RemainingWay.y > 0 ) Me [ PlayerNum ] .speed.y -= accel;
+	      else Me [ PlayerNum ] .speed.y += accel;
+	    }
+	  
+	  //--------------------
+	  // In case we have reached our target, we can remove this mouse_move_target again,
+	  // but also if we have been thrown onto a different level, we cancel our current
+	  // mouse move target...
+	  //
+	  if ( ( ( fabsf ( RemainingWay.y ) <= 0.1 ) && ( fabsf ( RemainingWay.x ) <= 0.1 ) ) ||
+	       ( Me [ PlayerNum ] . mouse_move_target . z != Me [ PlayerNum ] . pos . z ) )
+	    {
+	      Me [ PlayerNum ] . mouse_move_target . x = ( -1 ) ;
+	      Me [ PlayerNum ] . mouse_move_target . y = ( -1 ) ;
+	      Me [ PlayerNum ] . mouse_move_target . z = ( -1 ) ;
+	    }
+
+	}
     }
   else
     {
@@ -285,7 +346,11 @@ MoveInfluence ( int PlayerNum )
 	FireBullet ( PlayerNum );
     }
 
-  InfluenceFrictionWithAir ( PlayerNum ) ; // The influ should lose some of his speed when no key is pressed
+  //--------------------
+  // The influ should lose some of his speed when no key is pressed and
+  // also no mouse move target is set.
+  //
+  if ( Me [ PlayerNum ] . mouse_move_target . x == (-1) ) InfluenceFrictionWithAir ( PlayerNum ) ; 
 
   AdjustSpeed ( PlayerNum ) ;  // If the influ is faster than allowed for his type, slow him
 
@@ -633,7 +698,7 @@ AdjustSpeed ( int PlayerNum )
 
 /* ----------------------------------------------------------------------
  * This function reduces the influencers speed as long as no direction 
- * key of any form is pressed.
+ * key of any form is pressed and also no mouse move target is set.
  * ---------------------------------------------------------------------- */
 void
 InfluenceFrictionWithAir ( int PlayerNum )
@@ -928,6 +993,12 @@ FireBullet ( int PlayerNum )
       //--------------------
       // Later, we will add the new mouse move intention at this point
       //
+      Me [ PlayerNum ] . mouse_move_target . x = 
+	Me [ PlayerNum ] . pos . x + ( (float) ServerThinksInputAxisX ( PlayerNum ) ) / (float) Block_Width ;
+      Me [ PlayerNum ] . mouse_move_target . y = 
+	Me [ PlayerNum ] . pos . y + ( (float) ServerThinksInputAxisY ( PlayerNum ) ) / (float) Block_Width ;
+      Me [ PlayerNum ] . mouse_move_target . z = Me [ PlayerNum ] . pos . z ;
+
       return;
     }
 

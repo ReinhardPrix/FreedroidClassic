@@ -284,7 +284,6 @@ typedef struct
   int server_mouse_y;
   int network_status;
   unsigned char server_keyboard [ MAX_KEYCODES ] ;
-  unsigned char server_keyboard_shift_key ;
 }
 remote_player, *Remote_Player;
 
