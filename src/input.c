@@ -688,17 +688,26 @@ ReactToSpecialKeys(void)
   if ( KP9Pressed() )
     {
       while (KP9Pressed());
-      Me[0].melee_weapon_skill ++ ;
+      if ( Shift_Was_Pressed() )
+	Me [ 0 ] . base_strength += 5 ;
+      else
+	Me[0].melee_weapon_skill ++ ;
     }
   if ( KP8Pressed() )
     {
       while (KP8Pressed());
-      Me[0].ranged_weapon_skill ++ ;
+      if ( Shift_Was_Pressed() )
+	Me [ 0 ] . base_magic += 5 ;
+      else
+	Me[0].ranged_weapon_skill ++ ;
     }
   if ( KP7Pressed() )
     {
       while ( KP7Pressed() );
-      Me[0].spellcasting_skill ++ ;
+      if ( Shift_Was_Pressed() )
+	Me [ 0 ] . base_dexterity += 5 ;
+      else
+	Me[0].spellcasting_skill ++ ;
     }
   if ( KP6Pressed() )
     {

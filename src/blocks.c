@@ -333,90 +333,6 @@ Load_Skill_Level_Button_Surfaces( void )
 }; // void Load_Skill_Level_Button_Surfaces( void )
 
 /* ----------------------------------------------------------------------
- * This function loads the Bullet image and decodes it into the multiple
- * small Blast surfaces.
- * ---------------------------------------------------------------------- */
-/*
-void 
-Load_Bullet_Surfaces( void )
-{
-  SDL_Surface* Whole_Image;
-  SDL_Surface* tmp_surf;
-  SDL_Rect Source;
-  SDL_Rect Target;
-  int i;
-  int j;
-  int RowTop=0;
-  char *fpath;
-  int BulletImageHeightTable[30];
-  
-  BulletImageHeightTable[  0 ] = Block_Height;
-  BulletImageHeightTable[  1 ] = Block_Height;
-  BulletImageHeightTable[  2 ] = Block_Height;
-  BulletImageHeightTable[  3 ] = Block_Height;
-  BulletImageHeightTable[  4 ] = Block_Height;
-  BulletImageHeightTable[  5 ] = Block_Height;
-  BulletImageHeightTable[  6 ] = Block_Height;
-  BulletImageHeightTable[  7 ] = Block_Height;
-  BulletImageHeightTable[  8 ] = Block_Height * 2 ;
-  BulletImageHeightTable[  9 ] = Block_Height;
-  BulletImageHeightTable[ 10 ] = Block_Height;
-  BulletImageHeightTable[ 11 ] = Block_Height;
-  BulletImageHeightTable[ 12 ] = Block_Height;
-  BulletImageHeightTable[ 13 ] = Block_Height;
-  BulletImageHeightTable[ 14 ] = Block_Height;
-  BulletImageHeightTable[ 15 ] = Block_Height;
-  BulletImageHeightTable[ 16 ] = Block_Height;
-  BulletImageHeightTable[ 17 ] = Block_Height;
-  BulletImageHeightTable[ 18 ] = Block_Height;
-  BulletImageHeightTable[ 19 ] = Block_Height;
-  BulletImageHeightTable[ 20 ] = Block_Height;
-
-  fpath = find_file (NE_BULLET_BLOCK_FILE, GRAPHICS_DIR, TRUE);
-
-  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
-  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
-
-  for ( i=0 ; i < Number_Of_Bullet_Types ; i++ )
-    {
-      tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, BulletImageHeightTable[ i ], vid_bpp, 0, 0, 0, 0);
-      SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
-
-      for ( j=0 ; j < Bulletmap [ i ] . phases ; j++ )
-	{
-	  Bulletmap [ i ] . image [ 0 ] [ j ] . surface = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
-	  SDL_SetColorKey( Bulletmap [ i ] . image [ 0 ] [ j ] . surface , 0 , 0 ); // this should clear any color key in the dest surface
-	  // Now we can copy the image Information
-	  Source.x = j*(Block_Width+2);
-	  // Source.y = i*(Block_Height+2);
-	  Source.y = RowTop ;
-	  Source.w = Block_Width;
-	  Source.h = BulletImageHeightTable[ i ]; // Block_Height;
-	  Target.x = 0;
-	  Target.y = 0;
-	  Target.w = 0; // Block_Width;
-	  Target.h = 0; // Block_Height;
-	  // SDL_BlitSurface ( Whole_Image , &Source , Bulletmap[i].SurfacePointer[j] , &Target );
-	  SDL_BlitSurface ( Whole_Image , &Source , Bulletmap [ i ] . image [ 0 ] [ j ] . surface , NULL );
-	  SDL_SetAlpha( Bulletmap [ i ] . image [ 0 ] [ j ] . surface , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-
-	  //--------------------
-	  // Now we add proper offset in here, so that we can later conveniently use
-	  // the standard iso_object blitting functions refering to map locations.
-	  //
-	  Bulletmap [ i ] . image [ 0 ] [ j ] . offset_x = - Bulletmap [ i ] . image [ 0 ] [ j ] . surface -> w / 2 ;
-	  Bulletmap [ i ] . image [ 0 ] [ j ] . offset_y = - Bulletmap [ i ] . image [ 0 ] [ j ] . surface -> h / 2 ;
-	}
-      RowTop += BulletImageHeightTable[ i ] + 2;
-      SDL_FreeSurface( tmp_surf );
-    }
-
-  SDL_FreeSurface( Whole_Image );
-
-}; // void Load_Bullet_Surfaces( void )
-*/
-
-/* ----------------------------------------------------------------------
  *
  *
  * ---------------------------------------------------------------------- */
@@ -426,48 +342,53 @@ iso_load_bullet_surfaces ( void )
   int i , j , k ;
   char *fpath;
   char constructed_filename[ 5000 ];
+  char* bullet_identifiers[] =
+    {
+      "pulse"        , // 0 "pluse" or "classic 001"
+      "single"       , // 1 "single" or "classic 476"
+      "military"     , // 2 "military" or "classic 821"
+      "flash_dummy"  , // 3 dummy:  "classic flash", will be left out
+      "exterminator" , // 4 "exterminator" , same as in classic
+      "laser_rifle"  , // 5 "laser rifle" , same as in classic
+      "half_pulse"   , // 6 "just one half of the two classic 001"
+      "plasma_white" , // 7 small round white plasma ball
+      "laser_sword"  , // 8
+      "laser_axe"    , // 9
+      "single"       , // 10 repetition of the single
+      "half_green"   , // 11 that's the poison
+      "half_blue"    , // 12 that's the cold
+      "half_magenta" , // 13 that's the ??
+      "half_white"   , // 14 that's the stone
+      "ERROR:  UNHANDLED BULLET IMAGE TYPE" , // 15 error-code
+      "ERROR:  UNHANDLED BULLET IMAGE TYPE" , // 16 error-code
+      "ERROR:  UNHANDLED BULLET IMAGE TYPE" , // 17 error-code
+      "ERROR:  UNHANDLED BULLET IMAGE TYPE" , // 18 error-code
+      "ERROR:  UNHANDLED BULLET IMAGE TYPE" , // 19 error-code
+    };
+
+  DebugPrintf ( 0 , "Number_Of_Bullet_Types: %d." , Number_Of_Bullet_Types );
 
   for ( i=0 ; i < Number_Of_Bullet_Types ; i++ )
     {
-      // tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, BulletImageHeightTable[ i ], vid_bpp, 0, 0, 0, 0);
-      // SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
+      //--------------------
+      // Flash is not something we would have to load.
+      //
+      if ( strlen ( bullet_identifiers [ i ] ) && !strcmp( bullet_identifiers [ i ] , "flash_dummy" ) ) 
+	continue;
+      if ( strlen ( bullet_identifiers [ i ] ) && !strcmp( bullet_identifiers [ i ] , "ERROR:  UNHANDLED BULLET IMAGE TYPE" ) ) 
+	continue;
 
       for ( j=0 ; j < Bulletmap [ i ] . phases ; j++ )
 	{
-	
 	  for ( k = 0 ; k < BULLET_DIRECTIONS ; k ++ )
 	    {
 	      //--------------------
 	      // We construct the file name
 	      //
-	      sprintf ( constructed_filename , "iso_bullet_%03d_%02d_%04d.png" , 1 , k , j + 1 );
-	      fpath = find_file ( constructed_filename , GRAPHICS_DIR , TRUE );
+	      sprintf ( constructed_filename , "bullets/iso_bullet_%s_%02d_%04d.png" , bullet_identifiers [ i ] , k , j + 1 );
+	      fpath = find_file ( constructed_filename , GRAPHICS_DIR , FALSE );
 
 	      get_iso_image_from_file_and_path ( fpath , & ( Bulletmap [ i ] . image [ k ] [ j ] ) ) ;
-
-	      /*
-	      //--------------------
-	      // We load the image and check that this operation has been successful
-	      //
-	      Whole_Image = IMG_Load( fpath ); 
-	      if ( Whole_Image == NULL )
-		{
-		  fprintf ( stderr , "\nfpath: %s." , fpath );
-		  GiveStandardErrorMessage ( "iso_load_bullet_surfaces(...)" , "\
-Unable to open file.",
-					     PLEASE_INFORM, IS_FATAL );
-		}
-	      SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
-
-	      //--------------------
-	      // Now we convert the loaded file and free the old surface again.
-	      //
-	      Bulletmap [ i ] . image [ k ] [ j ] . surface = SDL_DisplayFormatAlpha( Whole_Image );
-	      SDL_SetColorKey( Bulletmap [ i ] . image [ k ] [ j ] . surface , 0 , 0 );
-	      SDL_SetAlpha( Bulletmap [ i ] . image [ k ] [ j ] . surface , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-
-	      SDL_FreeSurface ( Whole_Image );
-	      */
 
 	    }
 

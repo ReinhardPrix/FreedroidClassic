@@ -56,6 +56,8 @@ char usage_string[] =
                     [-n|--nographicsoutput] (default!)\n\
                     [-g|--graphicsoutput] \n\
                     [-d|--debug=LEVEL]\n\
+                    [-x|--offset_x=OFFSET_X]\n\
+                    [-y|--offset_y=OFFSET_Y]\n\
 \n\
 EXAMPLE:  croppy -i my_test_file.png\n\
 \n\
@@ -65,6 +67,9 @@ Thanks a lot in advance, the Freedroid dev team.\n\n";
 
 int debug_level = 0 ;
 int vid_bpp;
+
+int offset_x_override = -30000; // something completely unlikely
+int offset_y_override = -30000; // something completely unlikely
 
 /* ----------------------------------------------------------------------
  * This function gives the alpha component of a pixel, using a value of
@@ -193,6 +198,8 @@ ParseCommandLine (int argc, char *const argv[])
       { "help",             0, 0,  'h' },
       { "nographicsoutput", 0, 0,  'n' },
       { "graphicsoutput",   0, 0,  'g' },
+      { "offset_x",         2, 0,  'x' },
+      { "offset_y",         2, 0,  'y' },
       { "input_file",       required_argument , 0,  'i' },
       { "debug",            2, 0,  'd' },
       {  0,                 0, 0,   0  }
@@ -209,7 +216,7 @@ ParseCommandLine (int argc, char *const argv[])
 	  // version statement -v or --version
 	  // following gnu-coding standards for command line interfaces 
 	case 'v':
-	  DebugPrintf ( 0 , "\nFreedroid Croppy Tool, Version 1.0.\n" );
+	  DebugPrintf ( 0 , "\nFreedroid Croppy Tool, Version 1.1.\n" );
 	  DebugPrintf ( 0 , copyright );
 	  exit (0);
 	  break;
@@ -233,6 +240,32 @@ ParseCommandLine (int argc, char *const argv[])
 	  else
 	    {
 	      printf ("\nERROR! -i specified, but no input file given... Exiting.\n\n" );
+	      exit ( 0 );
+	    }
+	  break;
+
+	case 'x':
+	  if ( optarg )
+	    {
+	      sscanf ( optarg , "%d" , &offset_x_override );
+	      DebugPrintf ( 0 , "\nOffset in x overridden: now set to %d. " , offset_x_override );
+	    }
+	  else
+	    {
+	      printf ("\nERROR! -x specified, but no offset x argument given... Exiting.\n\n" );
+	      exit ( 0 );
+	    }
+	  break;
+
+	case 'y':
+	  if ( optarg )
+	    {
+	      sscanf ( optarg , "%d" , &offset_y_override );
+	      DebugPrintf ( 0 , "\nOffset in y overridden: now set to %d. " , offset_y_override );
+	    }
+	  else
+	    {
+	      printf ("\nERROR! -y specified, but no offset y argument given... Exiting.\n\n" );
 	      exit ( 0 );
 	    }
 	  break;
@@ -502,12 +535,93 @@ write_offset_file ( )
   //
   // int default_center_x = 359;
   // int default_center_y = 436;
-  int default_center_x = 98;
-  int default_center_y = 167;
+  // int default_center_x = 98;
+  // int default_center_y = 167;
+  int default_center_x = 99;
+  int default_center_y = 162;
 
   FILE *OffsetFile;  // to this file we will save all the ship data...
 
 #define OFFSET_EXPLANATION_STRING "\n\nFreedroidRPG uses isometric viewpoint and at the same time images of various sizes for objects within the game.  To determine the correct location for each of these images in the main game screen, FreedroidRPG must somehow know where the 'origin' of the object in question is within the given graphics file.  This is what these offset files are for:  They describe how much and in which direction the top left corner of the visible object is shifted away from the 'origin' or rather 'feet point' of the object in the image displayed.\n\n"
+
+  //--------------------
+  // If the given image has some special size, we use different
+  // default offset values
+  //
+  if ( ( input_surface -> w == 60 ) &&
+       ( input_surface -> h == 60 ) )
+    {
+      default_center_x = 30 ;
+      default_center_y = 45 ;
+      DebugPrintf ( 0 , "\nImage size 60x60 recognized.  Using %d/%d default origin." ,
+		    default_center_x , default_center_y );
+    }
+  if ( ( input_surface -> w == 64 ) &&
+       ( input_surface -> h == 64 ) )
+    {
+      default_center_x = 32 ;
+      default_center_y = 37 ;
+      DebugPrintf ( 0 , "\nImage size 64x64 recognized.  Using %d/%d default origin." ,
+		    default_center_x , default_center_y );
+    }
+  if ( ( input_surface -> w == 80 ) &&
+       ( input_surface -> h == 80 ) )
+    {
+      default_center_x = 40 ;
+      default_center_y = 40 ;
+      DebugPrintf ( 0 , "\nImage size 80x80 recognized.  Using %d/%d default origin." ,
+		    default_center_x , default_center_y );
+    }
+  if ( ( input_surface -> w == 100 ) &&
+       ( input_surface -> h == 100 ) )
+    {
+      default_center_x = 50 ;
+      default_center_y = 71 ;
+      DebugPrintf ( 0 , "\nImage size 100x100 recognized.  Using %d/%d default origin." ,
+		    default_center_x , default_center_y );
+    }
+  if ( ( input_surface -> w == 120 ) &&
+       ( input_surface -> h == 120 ) )
+    {
+      default_center_x = 60 ;
+      default_center_y = 100 ;
+      DebugPrintf ( 0 , "\nImage size 120x120 recognized.  Using %d/%d default origin." ,
+		    default_center_x , default_center_y );
+    }
+  if ( ( input_surface -> w == 128 ) &&
+       ( input_surface -> h == 128 ) )
+    {
+      default_center_x = 64 ;
+      default_center_y = 100 ;
+      DebugPrintf ( 0 , "\nImage size 128x128 recognized.  Using %d/%d default origin." ,
+		    default_center_x , default_center_y );
+    }
+  if ( ( input_surface -> w == 200 ) &&
+       ( input_surface -> h == 240 ) )
+    {
+      default_center_x = 99 ;
+      default_center_y = 162 ;
+      DebugPrintf ( 0 , "\nImage size 200x240 (typical smaller tux part rendering).  Using %d/%d default origin." ,
+		    default_center_x , default_center_y );
+    }
+  if ( ( input_surface -> w == 400 ) &&
+       ( input_surface -> h == 480 ) )
+    {
+      default_center_x = 199 ;
+      default_center_y = 323 ;
+      DebugPrintf ( 0 , "\nImage size 200x240 (typical larger tux part rendering).  Using %d/%d default origin." ,
+		    default_center_x , default_center_y );
+    }
+
+  //--------------------
+  // Maybe some extra information was passed via the command line, which overrides
+  // the default origin settings for this image.  We take that possibility into
+  // account here.
+  //
+  if ( offset_x_override != -30000 )
+    default_center_x = offset_x_override ;
+  if ( offset_y_override != -30000 )
+    default_center_y = offset_y_override ;
 
   //--------------------
   // Now we must determine the output filename

@@ -1373,6 +1373,18 @@ iso_put_tux_feet ( int x , int y , int PlayerNum , int rotation_index )
  *
  * ---------------------------------------------------------------------- */
 void
+iso_put_tux_weapon ( int x , int y , int PlayerNum , int rotation_index )
+{
+  if ( Me [ PlayerNum ] . weapon_item . type != (-1) )
+    iso_put_tux_part ( "mace" , x , y , PlayerNum , rotation_index );
+
+}; // void iso_put_tux_weapon ( int x , int y , int PlayerNum , int rotation_index )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
 iso_put_all_tux_parts_in_direction ( int x , int y , int PlayerNum , int rotation_index )
 {
 
@@ -1387,7 +1399,7 @@ iso_put_all_tux_parts_in_direction ( int x , int y , int PlayerNum , int rotatio
       iso_put_tux_head ( x , y , PlayerNum , rotation_index );
       iso_put_tux_part ( "weaponarm" , x , y , PlayerNum , rotation_index );
       iso_put_tux_shieldarm ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_part ( "mace" , x , y , PlayerNum , rotation_index );
+      iso_put_tux_weapon ( x , y , PlayerNum , rotation_index );
       break;
 
     case 9:
@@ -1399,7 +1411,7 @@ iso_put_all_tux_parts_in_direction ( int x , int y , int PlayerNum , int rotatio
     case 15:
       iso_put_tux_feet ( x , y , PlayerNum , rotation_index );
       iso_put_tux_part ( "weaponarm" , x , y , PlayerNum , rotation_index );
-      iso_put_tux_part ( "mace" , x , y , PlayerNum , rotation_index );
+      iso_put_tux_weapon ( x , y , PlayerNum , rotation_index );
       iso_put_tux_torso ( x , y , PlayerNum , rotation_index );
       iso_put_tux_shieldarm ( x , y , PlayerNum , rotation_index );
       iso_put_tux_head ( x , y , PlayerNum , rotation_index );
@@ -1416,14 +1428,14 @@ iso_put_all_tux_parts_in_direction ( int x , int y , int PlayerNum , int rotatio
       iso_put_tux_shieldarm ( x , y , PlayerNum , rotation_index );
       iso_put_tux_torso ( x , y , PlayerNum , rotation_index );
       iso_put_tux_part ( "weaponarm" , x , y , PlayerNum , rotation_index );
-      iso_put_tux_part ( "mace" , x , y , PlayerNum , rotation_index );
+      iso_put_tux_weapon ( x , y , PlayerNum , rotation_index );
       iso_put_tux_head ( x , y , PlayerNum , rotation_index );
       break;
 
     default:
       iso_put_tux_feet ( x , y , PlayerNum , rotation_index );
       iso_put_tux_torso ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_part ( "weaponarm" , x , y , PlayerNum , rotation_index );
+      iso_put_tux_weapon ( x , y , PlayerNum , rotation_index );
       iso_put_tux_shieldarm ( x , y , PlayerNum , rotation_index );
       iso_put_tux_part ( "mace" , x , y , PlayerNum , rotation_index );
       iso_put_tux_head ( x , y , PlayerNum , rotation_index );
