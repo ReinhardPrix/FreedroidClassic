@@ -100,14 +100,14 @@ AutoFireBullet (void)
   // Nummer der Schu"szieles herausfinden
   for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
     {
-      if (Feindesliste[i].Status == OUT)
+      if (AllEnemys[i].Status == OUT)
 	continue;
-      if (Feindesliste[i].levelnum != CurLevel->levelnum)
+      if (AllEnemys[i].levelnum != CurLevel->levelnum)
 	continue;
-      if (!IsVisible (&Feindesliste[i].pos))
+      if (!IsVisible (&AllEnemys[i].pos))
 	continue;
-      LXDist = (Feindesliste[i].pos.x - Me.pos.x);
-      LYDist = (Feindesliste[i].pos.y - Me.pos.y);
+      LXDist = (AllEnemys[i].pos.x - Me.pos.x);
+      LYDist = (AllEnemys[i].pos.y - Me.pos.y);
       LDist = LXDist * LXDist + LYDist * LYDist;
       if (LDist <= 0)
 	{
@@ -134,8 +134,8 @@ AutoFireBullet (void)
 
   Fire_Bullet_Sound ( guntype );
 
-  xdist = Feindesliste[TargetNum].pos.x - Me.pos.x;
-  ydist = Feindesliste[TargetNum].pos.y - Me.pos.y;
+  xdist = AllEnemys[TargetNum].pos.x - Me.pos.x;
+  ydist = AllEnemys[TargetNum].pos.y - Me.pos.y;
 
   // Sicherheit gegen Divisionen durch Null !!!!
   if (xdist == 0)
@@ -858,17 +858,17 @@ CheckInfluenceEnemyCollision (void)
   for (i = 0; i < NumEnemys; i++)
     {
       /* ignore debug-enemys */
-      if (Feindesliste[i].type == DEBUG_ENEMY)
+      if (AllEnemys[i].type == DEBUG_ENEMY)
 	continue;
 
       /* ignore enemy that are not on this level or dead */
-      if (Feindesliste[i].levelnum != CurLevel->levelnum)
+      if (AllEnemys[i].levelnum != CurLevel->levelnum)
 	continue;
-      if (Feindesliste[i].Status == OUT)
+      if (AllEnemys[i].Status == OUT)
 	continue;
 
-      xdist = Me.pos.x - Feindesliste[i].pos.x;
-      ydist = Me.pos.y - Feindesliste[i].pos.y;
+      xdist = Me.pos.x - AllEnemys[i].pos.x;
+      ydist = Me.pos.y - AllEnemys[i].pos.y;
 
       if (abs (xdist) > 1)
 	continue;
@@ -915,12 +915,12 @@ CheckInfluenceEnemyCollision (void)
 	    }			/* if first_collision */
 
 	  /* Den Feind kurz stoppen und dann umdrehen */
-	  if (!Feindesliste[i].warten)
+	  if (!AllEnemys[i].warten)
 	    {
-	      Feindesliste[i].warten = WAIT_COLLISION;
-	      swap = Feindesliste[i].nextwaypoint;
-	      Feindesliste[i].nextwaypoint = Feindesliste[i].lastwaypoint;
-	      Feindesliste[i].lastwaypoint = swap;
+	      AllEnemys[i].warten = WAIT_COLLISION;
+	      swap = AllEnemys[i].nextwaypoint;
+	      AllEnemys[i].nextwaypoint = AllEnemys[i].lastwaypoint;
+	      AllEnemys[i].lastwaypoint = swap;
 	    }
 	  BounceLoseEnergy (i);	/* someone loses energy ! */
 
@@ -1143,7 +1143,7 @@ RefreshInfluencer (void)
 void
 BounceLoseEnergy (int enemynum)
 {
-  int enemytype = Feindesliste[enemynum].type;
+  int enemytype = AllEnemys[enemynum].type;
 
   if (Me.type <= enemytype)
     {
@@ -1154,11 +1154,11 @@ BounceLoseEnergy (int enemynum)
 	 Druidmap[Me.type].class) * BOUNCE_LOSE_FACT;
     }
   else
-    Feindesliste[enemynum].energy -=
+    AllEnemys[enemynum].energy -=
       (Druidmap[Me.type].class -
        Druidmap[enemytype].class) * BOUNCE_LOSE_FACT;
 
-  //    else Feindesliste[enemynum].energy -= BOUNCE_LOSE_ENERGY;
+  //    else AllEnemys[enemynum].energy -= BOUNCE_LOSE_ENERGY;
 
   return;
 }				// void BounceLoseEnergy(int enemynum)

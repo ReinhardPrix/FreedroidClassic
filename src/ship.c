@@ -193,7 +193,7 @@ EnterElevator (void)
 
   LeaveElevatorSound ();
   ClearGraphMem ( );
-  DisplayRahmen ( RAHMEN_FORCE_UPDATE );
+  DisplayBanner ( RAHMEN_FORCE_UPDATE );
 
   UnfadeLevel ();
 
@@ -230,7 +230,7 @@ ShowElevators (void)
   ClearGraphMem();
   // fill the user fenster with some color
   SetUserfenster ( EL_BG_COLOR );
-  DisplayRahmen ( RAHMEN_FORCE_UPDATE );      
+  DisplayBanner ( RAHMEN_FORCE_UPDATE );      
   // SetInfoline (NULL, NULL);
 
   tmp=SDL_LoadBMP( NE_ELEVATOR_PIC_FILE );
@@ -350,7 +350,7 @@ EnterKonsole (void)
 
   Me.status = MOBILE;
   /* Die Textfarben wieder setzen wie sie vorher waren */
-  SetTextColor (FONT_WHITE, FONT_RED);	/* BG: Rahmenwei"s FG: FONT_RED */
+  SetTextColor (FONT_WHITE, FONT_RED);	/* BG: Bannerwei"s FG: FONT_RED */
 
   while (SpacePressed ());
 
@@ -380,7 +380,7 @@ PaintConsoleMenu (void)
 
   ClearGraphMem ();
 
-  DisplayRahmen ( RAHMEN_FORCE_UPDATE );
+  DisplayBanner ( RAHMEN_FORCE_UPDATE );
   // SetInfoline (NULL, NULL);
 
   /* Userfenster faerben */
@@ -434,6 +434,7 @@ GreatDruidShow (void)
   char InfoText[10000];
   int Infodroid;
   char PassOn = 0;
+  SDL_Rect Droid_Text_Rect;
 
   DebugPrintf ("\nvoid GreadDruidShow(void): Function call confirmed.");
 
@@ -456,11 +457,16 @@ GreatDruidShow (void)
 	  strcat (InfoText, " - ");
 	  strcat (InfoText, Classname[Druidmap[Infodroid].class]);
 
+	  Droid_Text_Rect.x=User_Rect.x;
+	  Droid_Text_Rect.y=User_Rect.y;
+	  Droid_Text_Rect.w=User_Rect.w-20;  // keep away from the right border
+	  Droid_Text_Rect.h=User_Rect.h;
+
 	  /*	  SetTextBorder (USERFENSTERPOSX , USERFENSTERPOSY , USERFENSTERPOSX + 
 			 USERFENSTERBREITE-2*FONTBREITE ,
 			 USERFENSTERPOSY + USERFENSTERHOEHE , 36 );
 	  */
-	  DisplayText (InfoText, USERFENSTERPOSX, USERFENSTERPOSY, &User_Rect);
+	  DisplayText (InfoText, USERFENSTERPOSX, USERFENSTERPOSY, &Droid_Text_Rect);
 
 	  ShowRobotPicture (USERFENSTERPOSX, USERFENSTERPOSY + 2 * FONTHOEHE,
 			    Infodroid);
@@ -508,7 +514,7 @@ GreatDruidShow (void)
        */
 
       //      ClearGraphMem( Outline320x200 );
-      //      DisplayRahmen( Outline320x200 );
+      //      DisplayBanner( Outline320x200 );
       ClearUserFenster( );
       SetTextColor (208, RAHMEN_VIOLETT );	// RED // YELLOW
       // ClearUserFenster ();
@@ -572,7 +578,7 @@ GreatDruidShow (void)
 
       // ClearUserFenster ();
       // ClearGraphMem( Outline320x200 );
-      // DisplayRahmen( Outline320x200 );
+      // DisplayBanner( Outline320x200 );
       ClearUserFenster( );
       SetTextColor (208, RAHMEN_VIOLETT );	// BLACK and VIOLETT
       strcpy (InfoText, "Unit type ");
@@ -623,7 +629,7 @@ GreatDruidShow (void)
        */
 
       //      ClearGraphMem( Outline320x200 );
-      //      DisplayRahmen( Outline320x200 );
+      //      DisplayBanner( Outline320x200 );
       ClearUserFenster( );
       SetTextColor (208, RAHMEN_VIOLETT );	// RED // YELLOW
       // ClearUserFenster ();
@@ -776,8 +782,8 @@ LevelEmpty (void)
 
   for (i = 0; i < NumEnemys; i++)
     {
-      if ((Feindesliste[i].Status != OUT)
-	  && (Feindesliste[i].levelnum == levelnum))
+      if ((AllEnemys[i].Status != OUT)
+	  && (AllEnemys[i].levelnum == levelnum))
 	return FALSE;
     }
 

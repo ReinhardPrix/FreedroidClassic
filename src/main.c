@@ -75,10 +75,8 @@ main (int argc, char *const argv[])
    */
   parse_command_line (argc, argv);
 
-  /* Initialisieren der globalen Variablen und Arrays */
-  InitFreedroid ();
 
-  // NONSENSE FROM THE OLD ENGINE RedrawInfluenceNumber ();
+  InitFreedroid ();   // Initialisation of global variables and arrays
 
   while (!QuitProgram)
     {
@@ -102,9 +100,9 @@ main (int argc, char *const argv[])
 
 	  MoveBullets ();   
 
-	  ExplodeBlasts ();	/* Blasts in der Explosionsphase weiterbewegen */
+	  ExplodeBlasts ();	// move blasts to the right current "phase" of the blast
 
-	  DisplayRahmen( 0 );
+	  DisplayBanner( 0 );
 
 	  Assemble_Combat_Picture ( DO_SCREEN_UPDATE ); 
 
@@ -127,7 +125,7 @@ main (int argc, char *const argv[])
 	  AllRobotsDead=TRUE;
 	  for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
 	    {
-	      if (Feindesliste[Robot_Counter].energy) AllRobotsDead=FALSE;
+	      if (AllEnemys[Robot_Counter].energy) AllRobotsDead=FALSE;
 	    }
 	  if (AllRobotsDead) 
 	    {
@@ -200,15 +198,15 @@ UpdateCountersForThisFrame (void)
 
   for (i = 0; i < NumEnemys; i++)
     {
-      if (Feindesliste[i].warten > 0) 
+      if (AllEnemys[i].warten > 0) 
 	{
-	  Feindesliste[i].warten -= Frame_Time() ;
-	  if (Feindesliste[i].warten < 0) Feindesliste[i].warten = 0;
+	  AllEnemys[i].warten -= Frame_Time() ;
+	  if (AllEnemys[i].warten < 0) AllEnemys[i].warten = 0;
 	}
-      if (Feindesliste[i].firewait > 0) 
+      if (AllEnemys[i].firewait > 0) 
 	{
-	  Feindesliste[i].firewait -= Frame_Time() ;
-	  if (Feindesliste[i].firewait <= 0) Feindesliste[i].firewait=0;
+	  AllEnemys[i].firewait -= Frame_Time() ;
+	  if (AllEnemys[i].firewait <= 0) AllEnemys[i].firewait=0;
 	}
     } // for (i=0;...
 

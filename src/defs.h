@@ -49,7 +49,7 @@
 #define MAX_HIGHSCORES  10     /* only keep Top10 */
 #define DATE_LEN	20     /* reserved for the date-string */
 
-// The flags for DisplayRahmen are:
+// The flags for DisplayBanner are:
 enum
   { RAHMEN_FORCE_UPDATE=1 , RAHMEN_DONT_TOUCH_TEXT=2 , RAHMEN_NO_SDL_UPDATE=4 };
 
@@ -139,7 +139,7 @@ enum
 #define RAHMENBREITE		SCREENBREITE
 #define RAHMENHOEHE		INITIAL_BLOCK_HEIGHT
 
-/* Startpos + lens of Rahmen-Texts */
+/* Startpos + lens of Banner-Texts */
 #define LEFT_INFO_X 	(12*2)
 #define LEFT_INFO_Y	(8*2)
 #define RIGHT_INFO_X	(242*2)

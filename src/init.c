@@ -300,9 +300,9 @@ InitNewGame (void)
   SetPalCol (INFLUENCEFARBWERT, Mobilecolor.rot, Mobilecolor.gruen,
 	       Mobilecolor.blau);
 
-  /* Den Rahmen fuer das Spiel anzeigen */
+  /* Den Banner fuer das Spiel anzeigen */
   ClearGraphMem();
-  DisplayRahmen ( RAHMEN_FORCE_UPDATE );
+  DisplayBanner ( RAHMEN_FORCE_UPDATE );
 
   SetTextColor (FONT_WHITE, FONT_RED);
   InitBars = TRUE;
@@ -516,7 +516,7 @@ Title (void)
   Me.status=BRIEFING;
 
   // ClearGraphMem ();
-  // DisplayRahmen( RAHMEN_FORCE_UPDATE ); 
+  // DisplayBanner( RAHMEN_FORCE_UPDATE ); 
 
   // SetTextColor (FONT_BLACK, FONT_RED);
 
@@ -528,7 +528,7 @@ Title (void)
   ScrollText (TitleText4, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
 
   ClearGraphMem ();
-  DisplayRahmen( RAHMEN_FORCE_UPDATE ); 
+  DisplayBanner( RAHMEN_FORCE_UPDATE ); 
   SDL_Flip( ne_screen );
 
   return;
@@ -552,7 +552,7 @@ EndTitle (void)
 
   Switch_Background_Music_To (CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC);
 
-  DisplayRahmen( RAHMEN_FORCE_UPDATE );
+  DisplayBanner( RAHMEN_FORCE_UPDATE );
 
   SetTextColor (FONT_BLACK, FONT_RED);
 
@@ -585,7 +585,7 @@ ThouArtDefeated (void)
   while ( SDL_GetTicks()-now < 1000 * WAIT_AFTER_KILLED )
     {
       Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
-      DisplayRahmen( 0 );
+      DisplayBanner( 0 );
       ExplodeBlasts ();
       MoveBullets ();
       MoveEnemys ();

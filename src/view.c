@@ -47,14 +47,9 @@
 #include "SDL_rotozoom.h"
 
 
-/* locale Schalter zu DEBUG-Zwecken */
-#define INFLUENCEOFF  	0
+// local switches for conditional compilation for debugging purposes
 #define BULLETOFF			0
 #define BLASTOFF			0
-
-//#define SHOWSTATS
-
-
 
 void FlashWindow (int Flashcolor);
 void RecFlashFill (int LX, int LY, int Color, unsigned char *Parameter_Screen,
@@ -170,6 +165,10 @@ Assemble_Combat_Picture (int mask)
   // * INTERNHOEHE IS NO LONGER NEEDED IN HERE
   // * THE COMBATSCREENSIZE COULD *EASYLY* BE CHANGED WITHOUT HAVING TO CHANGE THE CODE!!!
   // 
+  // Recently there were complaints about garbage outside the ship.  This was because
+  // outside the ship, nothing was blittet.  Now the blitting starts at -5 tiles outside
+  // the ship and ends +5 tiles outside the other end of the ship.  That should do it.
+  //
 
   SDL_SetColorKey (ne_screen, 0, 0);
   SDL_SetClipRect (ne_screen , &User_Rect);
@@ -262,20 +261,23 @@ Assemble_Combat_Picture (int mask)
 
 } // void Assemble_Combat_Picture(...)
 
-/*-----------------------------------------------------------------
- * Desc: Diese Funktion malt den Influencer an die Position die
- *    das Zentrum des angezeigten Bildausschnittes sein wird.
- * 
- * Param: die momentane Phase der Drehung des 001 : Darstellphase
- *
- *-----------------------------------------------------------------*/
+/*
+-----------------------------------------------------------------
+@Desc: This function draws the influencer to the screen, either
+to the center of the combat window if (-1,-1) was specified, or
+to the specified coordinates anywhere on the screen, useful e.g.
+for using the influencer as a cursor in the menus.
+
+@Ret: none
+-----------------------------------------------------------------
+*/
 
 void
 PutInfluence ( int x, int y)
 {
   SDL_Rect TargetRectangle;
 
-  DebugPrintf ("\nvoid PutInfluence(void): REAL function called.");
+  DebugPrintf ("\nvoid PutInfluence(void): real function call confirmed.");
 
   if ( x == -1 ) 
     {
@@ -336,16 +338,17 @@ PutInfluence ( int x, int y)
     }
   SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Me.type].druidname[2]-'1'+1) , ne_screen, &TargetRectangle );
 
-  DebugPrintf ("\nvoid PutInfluence(void): REAL function ended.");
+  DebugPrintf ("\nvoid PutInfluence(void): enf of function reached.");
 
 } /* PutInfluence() */
 
 
 /*@Function============================================================
-@Desc: PutEnemy: setzt Enemy der Nummer Enum ins InternWindow
-                 dazu wird dir Function PutObject verwendet
+@Desc: PutEnemy: This function draws an enemy into the combat window.
+       The only parameter given is the number of the enemy within the
+       AllEnemys array. Everything else is computed in here.
+
 @Ret: void
-@Int:
 * $Function----------------------------------------------------------*/
 
 void
@@ -359,23 +362,23 @@ PutEnemy (int Enum)
     ("\nvoid PutEnemy(int Enum): real function call confirmed...\n");
 
   /* if enemy is on other level, return */
-  if (Feindesliste[Enum].levelnum != CurLevel->levelnum)
+  if (AllEnemys[Enum].levelnum != CurLevel->levelnum)
     {
       DebugPrintf
 	("\nvoid PutEnemy(int Enum): DIFFERENT LEVEL-->usual end of function reached.\n");
       return;
     }
 
-  /* wenn dieser Feind abgeschossen ist kann sofort zurueckgekehrt werden */
-  if (Feindesliste[Enum].Status == OUT)
+  // if this enemy is dead, we need not do anything more here
+  if (AllEnemys[Enum].Status == OUT)
     {
       DebugPrintf
 	("\nvoid PutEnemy(int Enum): STATUS==OUT --> usual end of function reached.\n");
       return;
     }
 
-  /* Wenn Feind nicht sichtbar: weiter */
-  if (!IsVisible (&Feindesliste[Enum].pos))
+  // if the enemy is out of signt, we need not do anything more here
+  if (!IsVisible (&AllEnemys[Enum].pos))
     {
       DebugPrintf
 	("\nvoid PutEnemy(int Enum): ONSCREEN=FALSE --> usual end of function reached.\n");
@@ -385,25 +388,36 @@ PutEnemy (int Enum)
   DebugPrintf
     ("\nvoid PutEnemy(int Enum): it seems that we must draw this one on the screen....\n");
 
-  // Den Druidtyp nochmals mit einer Sicherheitsabfrage ueberpruefen:
-  if ( Feindesliste[Enum].type >= ALLDRUIDTYPES )
+  // We check for incorrect droid types, which sometimes might occor, especially after
+  // heavy editing of the crew initialisation functions ;)
+  if ( AllEnemys[Enum].type >= ALLDRUIDTYPES )
     {
-      DebugPrintf("\nvoid PutEnemy(int Enum): ERROR!  IMPOSSIBLE DRUIDTYPE ENCOUNTERED!  EMERGENCY WORKAROUND DONE!!");
-      DebugPrintf("\nvoid PutEnemy(int Enum): NOTE THAT THIS PROBLEM REMAINS!  PLEASE FOLLOW THIS BUG AND CORRECT IT!!");
-      Feindesliste[Enum].type = 0;
+      fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+There was a droid type on this level, that does not really exist.\n\
+\n\
+We might use a fallback to shortly work around this problem.  That would\n\
+not be difficult.  But for now Freedroid will terminate to draw attention \n\
+to the sound problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" );
+      AllEnemys[Enum].type = 0;
       Terminate(ERR);
     }
 
   // First blit just the enemy hat and shoes.
   // The number will be blittet later
 
-  druidname = Druidmap[Feindesliste[Enum].type].druidname;
-  phase = Feindesliste[Enum].feindphase;
+  druidname = Druidmap[AllEnemys[Enum].type].druidname;
+  phase = AllEnemys[Enum].feindphase;
 
   TargetRectangle.x=USER_FENSTER_CENTER_X+ 
-    ( (-Me.pos.x+Feindesliste[Enum].pos.x ) ) * Block_Width  -Block_Width/2;
+    ( (-Me.pos.x+AllEnemys[Enum].pos.x ) ) * Block_Width  -Block_Width/2;
   TargetRectangle.y=USER_FENSTER_CENTER_Y+ 
-    ( (-Me.pos.y+Feindesliste[Enum].pos.y ) ) * Block_Height -Block_Height/2;
+    ( (-Me.pos.y+AllEnemys[Enum].pos.y ) ) * Block_Height -Block_Height/2;
   // TargetRectangle.w=Block_Width;
   // TargetRectangle.h=Block_Height;
 
@@ -412,22 +426,22 @@ PutEnemy (int Enum)
   // Now the numbers should be blittet.
 
   TargetRectangle.x=USER_FENSTER_CENTER_X - 
-    (Me.pos.x-Feindesliste[Enum].pos.x) * Block_Width + Digit_Pos_X  - Block_Width/2; 
+    (Me.pos.x-AllEnemys[Enum].pos.x) * Block_Width + Digit_Pos_X  - Block_Width/2; 
   TargetRectangle.y=USER_FENSTER_CENTER_Y - 
-    (Me.pos.y-Feindesliste[Enum].pos.y) * Block_Height + Digit_Pos_Y - Block_Height/2;
-  SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Feindesliste[Enum].type].druidname[0]-'1'+11) , 
+    (Me.pos.y-AllEnemys[Enum].pos.y) * Block_Height + Digit_Pos_Y - Block_Height/2;
+  SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[AllEnemys[Enum].type].druidname[0]-'1'+11) , 
 		   ne_screen, &TargetRectangle );
 
   TargetRectangle.x=USER_FENSTER_CENTER_X - 
-    (Me.pos.x-Feindesliste[Enum].pos.x)*Block_Height + Digit_Pos_X + Digit_Length-1 - Block_Width/2;
+    (Me.pos.x-AllEnemys[Enum].pos.x)*Block_Height + Digit_Pos_X + Digit_Length-1 - Block_Width/2;
   TargetRectangle.y=USER_FENSTER_CENTER_Y - 
-    (Me.pos.y-Feindesliste[Enum].pos.y)*Block_Height + Digit_Pos_Y - Block_Height/2 ;
-  SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Feindesliste[Enum].type].druidname[1]-'1'+11) , 
+    (Me.pos.y-AllEnemys[Enum].pos.y)*Block_Height + Digit_Pos_Y - Block_Height/2 ;
+  SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[AllEnemys[Enum].type].druidname[1]-'1'+11) , 
 		   ne_screen, &TargetRectangle );
 
-  TargetRectangle.x=USER_FENSTER_CENTER_X - (Me.pos.x-Feindesliste[Enum].pos.x)*Block_Width - Block_Width/2 + Digit_Pos_X + 2*(Digit_Length-1);
-  TargetRectangle.y=USER_FENSTER_CENTER_Y - (Me.pos.y-Feindesliste[Enum].pos.y)*Block_Width - Block_Height/2 + Digit_Pos_Y;
-  SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Feindesliste[Enum].type].druidname[2]-'1'+11) , 
+  TargetRectangle.x=USER_FENSTER_CENTER_X - (Me.pos.x-AllEnemys[Enum].pos.x)*Block_Width - Block_Width/2 + Digit_Pos_X + 2*(Digit_Length-1);
+  TargetRectangle.y=USER_FENSTER_CENTER_Y - (Me.pos.y-AllEnemys[Enum].pos.y)*Block_Width - Block_Height/2 + Digit_Pos_Y;
+  SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[AllEnemys[Enum].type].druidname[2]-'1'+11) , 
 		   ne_screen, &TargetRectangle );
 
   DebugPrintf ("\nvoid PutEnemy(int Enum): ENEMY HAS BEEN PUT --> usual end of function reached.\n");
@@ -435,12 +449,12 @@ PutEnemy (int Enum)
 }	// void PutEnemy(int Enum) 
 
 /*@Function============================================================
-@Desc: PutBullet: setzt das Bullet BulletNummer ins InternWindow
-						dazu wird PutObject verwendet
-@Ret: void
-@Int:
-* $Function----------------------------------------------------------*/
+@Desc: PutBullet: draws a Bullet into the combat window.  The only 
+       parameter given is the number of the bullet in the AllBullets 
+       array. Everything else is computed in here.
 
+@Ret: void
+* $Function----------------------------------------------------------*/
 void
 PutBullet (int BulletNummer)
 {
@@ -458,10 +472,11 @@ PutBullet (int BulletNummer)
   bulletpic = Bulletmap[CurBullet->type].picpointer +
     CurBullet->phase * BLOCKMEM;
 
-  /*
-   * Wenn ein FLASH gestartet ist, wird einfach der ganze Screen
-   * zuerst schwarz, dann weiss geschaltet
-   */
+  //--------------------
+  // in case our bullet is of the type "FLASH", we only
+  // draw a big white or black rectangle right over the 
+  // combat window, white for even frames and black for 
+  // odd frames.
   if (CurBullet->type == FLASH)
     {
       // Now the whole window will be filled with either white
@@ -479,22 +494,13 @@ PutBullet (int BulletNummer)
 	}
     } // if type == FLASH
 
-
-  /*
-  if (PutObject (CurBullet->pos.x, CurBullet->pos.y, bulletpic, TRUE) == TRUE)
-    {
-      // Bullet-Bullet Collision: Bullet loeschen 
-      CurBullet->type = OUT;
-      CurBullet->mine = FALSE;
-
-      // Druid-Blast dort erzeugen: killt zweites Bullet 
-      StartBlast (CurBullet->pos.x, CurBullet->pos.y, DRUIDBLAST);
-    }	// if 
-  */
+  // In the old code, collision checking of bullets with bullets was
+  // done graphically and in here.  This is no longer the case:  Now
+  // we do the collision check "mathematically" and in a more appropriate
+  // place than the a graphics output function.
 
   TargetRectangle.x=USER_FENSTER_CENTER_X-(Me.pos.x-CurBullet->pos.x)*Block_Width-Block_Width/2;
   TargetRectangle.y=USER_FENSTER_CENTER_Y-(Me.pos.y-CurBullet->pos.y)*Block_Width-Block_Height/2;
-
   SDL_BlitSurface( ne_blocks , Bulletmap[CurBullet->type].block + CurBullet->phase, ne_screen , &TargetRectangle );
 
   DebugPrintf
@@ -503,13 +509,12 @@ PutBullet (int BulletNummer)
 }	/* PutBullet */
 
 /*@Function============================================================
-@Desc:  PutBlast: setzt das Blast BlastNummer ins InternWindow
-							dazu wird PutObject verwendet
+@Desc:  PutBlast: This function draws a blast into the combat window.
+        The only given parameter is the number of the blast within
+	the AllBlasts array.
 
 @Ret: void
-@Int:
 * $Function----------------------------------------------------------*/
-
 void
 PutBlast (int BlastNummer)
 {
@@ -520,20 +525,23 @@ PutBlast (int BlastNummer)
   return;
 #endif
 
-  /* Wenn Blast OUT ist sofort naechsten bearbeiten */
+  // If the blast is already long deat, we need not do anything else here
   if (CurBlast->type == OUT)
     return;
 
+  
   TargetRectangle.x=USER_FENSTER_CENTER_X - (Me.pos.x - CurBlast->PX)*Block_Width  -Block_Width/2;
   TargetRectangle.y=USER_FENSTER_CENTER_Y - (Me.pos.y - CurBlast->PY)*Block_Height -Block_Height/2;
   SDL_BlitSurface( ne_blocks, 
 		   Blastmap[CurBlast->type].block + ((int) rintf(CurBlast->phase)), ne_screen , &TargetRectangle);
 
-  return;
 }  // void PutBlast(int BlastNummer)
 
 
 /*-----------------------------------------------------------------
+
+WARNING!! OBSOLETE FUNCTION ONLY USED IN TAKEOVER GAME ANY MORE!!
+
  * @Desc: PutObject: Puts object with center-coordinates x/y and the
  *	imagepointer to the InternWindow
  *
@@ -606,28 +614,20 @@ PutObject (int x, int y, unsigned char *pic, int check)
 
 
 /*@Function============================================================
-@Desc: Diese Funktion setzt die Schu"sfarbe um einen Wert weiter
+@Desc: This function was there in the old graphics engine to do rotation
+       of the bullet color, which produced the glowing effect for 
+       bullet pictures.  Now this function could either be rewritten or
+       even better new bullets using more than one color and more than
+       one picture for every frame could be designed.
 
-@Ret: 
-@Int:
+       But currently this function does absolutely nothing.
+
+@Ret: none
 * $Function----------------------------------------------------------*/
 void
 RotateBulletColor (void)
 {
-  static int BulColNum;
-  static color BulletColors[MAXBULCOL] =
-    { BULLETCOLOR1, BULLETCOLOR2, BULLETCOLOR3, BULLETCOLOR4, BULLETCOLOR5 };
 
-  return;
-
-  BulColNum++;
-  BulColNum = MyRandom (MAXBULCOL);
-
-  if (BulColNum > (MAXBULCOL - 1))
-    BulColNum = 0;
-
-  SetPalCol (BULLETCOLOR, BulletColors[BulColNum].rot,
-	     BulletColors[BulColNum].gruen, BulletColors[BulColNum].blau);
 } /* void RotateBulletColor(void) */
 
 
@@ -643,11 +643,13 @@ FlashWindow (int Flashcolor)
   SetUserfenster( Flashcolor );
 }				// void FlashWindow(int Flashcolor)
 
-/*-----------------------------------------------------------------
- * @Desc: Setzt die Hintergrundfarbe fuer das Userfenster using SDL
- * @Ret: void
- *
- *-----------------------------------------------------------------*/
+/*@Function============================================================
+@Desc: This function fills the whole combat window with the one color
+       given as the only parameter to the function.  For this purpose
+       a fast SDL basic function is used.
+
+@Ret: none
+* $Function----------------------------------------------------------*/
 void
 SetUserfenster (int color)
 {
@@ -662,15 +664,17 @@ SetUserfenster (int color)
   return;
 }				/* SetUserFenster() */
 
-/* **********************************************************************
-   Diese Funktion zeigt einen Robotter an
-   Dazu mu"s zuerst InitRobotPictures einmal aufgerufen worden sein.
-   Wenn InitRobotPictures auf effizientere Methoden umsteigt, so mu"s
-   diese Funktion nat"urlich auch entsprechend angepa"st werden.
-**********************************************************************/
+/*@Function============================================================
+@Desc: This function displays a robot picture.  This does NOT mean a
+       robot picture like in combat but this means a finely renderd
+       artwork by bastian, that is displayed in the console if info
+       about a robot is requested.  The only parameters to this 
+       function are the position on the screen where to blit the 
+       picture and the number of the robot in the Druidmap *NOT*
+       in AllEnemys!!
 
-#define ROBOTBILDHOEHE SCREENHOEHE/3
-#define ROBOTBILDBREITE SCREENBREITE/8
+@Ret: none
+* $Function----------------------------------------------------------*/
 
 void
 ShowRobotPicture (int PosX, int PosY, int Number )

@@ -94,7 +94,7 @@ EXTERN long ShowScore;
 
 EXTERN Hall_entry highscores;
 
-EXTERN enemy Feindesliste[MAX_ENEMYS_ON_SHIP];
+EXTERN enemy AllEnemys[MAX_ENEMYS_ON_SHIP];
 
 EXTERN int NumEnemys;
 EXTERN int GameAdapterPresent;
@@ -164,7 +164,7 @@ EXTERN float Current_Sound_FX_Volume;
 #else
 #define EXTERN extern
 #endif
-EXTERN int RahmenIsDestroyed;
+EXTERN int BannerIsDestroyed;
 EXTERN unsigned char *LevelColorArray;
 EXTERN int *CRTC;
 EXTERN unsigned char *Data70Pointer;
@@ -197,7 +197,7 @@ EXTERN SDL_Surface *ne_console_surface;
 #else
 #define EXTERN extern
 #endif
-EXTERN unsigned char *RahmenPicture;
+EXTERN unsigned char *BannerPicture;
 EXTERN unsigned char *Enemypointer;
 EXTERN unsigned char *Influencepointer;
 EXTERN unsigned char *MapBlocks;

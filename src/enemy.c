@@ -65,15 +65,15 @@ PermanentHealRobots (void)
 
   for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
     {
-      if (Feindesliste[i].Status == OUT)
+      if (AllEnemys[i].Status == OUT)
 	continue;
-      if (Feindesliste[i].energy < Druidmap[Feindesliste[i].type].maxenergy)
-	Feindesliste[i].energy += Druidmap[Feindesliste[i].type].lose_health * Frame_Time();
+      if (AllEnemys[i].energy < Druidmap[AllEnemys[i].type].maxenergy)
+	AllEnemys[i].energy += Druidmap[AllEnemys[i].type].lose_health * Frame_Time();
     }
 } // void PermanentHealRobots(void)
 
 /*-----------------------------------------------------------------
- * @Desc: initialisiert Feindesliste vollstaendig
+ * @Desc: initialisiert AllEnemys vollstaendig
  * 
  *
  *-----------------------------------------------------------------*/
@@ -85,8 +85,8 @@ InitEnemys (void)
 
   for (i = 0; i < NumEnemys; i++)
     {
-      type = Feindesliste[i].type;
-      Feindesliste[i].energy = Druidmap[type].maxenergy;
+      type = AllEnemys[i].type;
+      AllEnemys[i].energy = Druidmap[type].maxenergy;
     }
 
   /* und gut umruehren */
@@ -97,7 +97,7 @@ InitEnemys (void)
 } /* InitEnemys */
 
 /*-----------------------------------------------------------------
- * @Desc: setzt Feindesliste - Array auf 0
+ * @Desc: setzt AllEnemys - Array auf 0
  *
  *
  *-----------------------------------------------------------------*/
@@ -108,12 +108,12 @@ ClearEnemys (void)
 
   for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
     {
-      Feindesliste[i].type = -1;
-      Feindesliste[i].levelnum = Feindesliste[i].energy = 0;
-      Feindesliste[i].feindphase = 0;
-      Feindesliste[i].nextwaypoint = Feindesliste[i].lastwaypoint = 0;
-      Feindesliste[i].Status = OUT;
-      Feindesliste[i].warten = Feindesliste[i].firewait = 0;
+      AllEnemys[i].type = -1;
+      AllEnemys[i].levelnum = AllEnemys[i].energy = 0;
+      AllEnemys[i].feindphase = 0;
+      AllEnemys[i].nextwaypoint = AllEnemys[i].lastwaypoint = 0;
+      AllEnemys[i].Status = OUT;
+      AllEnemys[i].warten = AllEnemys[i].firewait = 0;
     }
 
   return;
@@ -144,8 +144,8 @@ ShuffleEnemys (void)
   nth_enemy = 0;
   for (i = 0; i < NumEnemys; i++)
     {
-      if (Feindesliste[i].Status == OUT
-	  || Feindesliste[i].levelnum != curlevel)
+      if (AllEnemys[i].Status == OUT
+	  || AllEnemys[i].levelnum != curlevel)
 	continue;		/* dont handle dead enemys or on other level */
 
       nth_enemy++;
@@ -157,13 +157,13 @@ ShuffleEnemys (void)
 	  Terminate (-1);
 	}
 
-      // NORMALISATION Feindesliste[i].pos.x = Grob2Fein (CurLevel->AllWaypoints[wp].x);
-      // NORMALISATION Feindesliste[i].pos.y = Grob2Fein (CurLevel->AllWaypoints[wp].y);
-      Feindesliste[i].pos.x = CurLevel->AllWaypoints[wp].x;
-      Feindesliste[i].pos.y = CurLevel->AllWaypoints[wp].y;
+      // NORMALISATION AllEnemys[i].pos.x = Grob2Fein (CurLevel->AllWaypoints[wp].x);
+      // NORMALISATION AllEnemys[i].pos.y = Grob2Fein (CurLevel->AllWaypoints[wp].y);
+      AllEnemys[i].pos.x = CurLevel->AllWaypoints[wp].x;
+      AllEnemys[i].pos.y = CurLevel->AllWaypoints[wp].y;
 
-      Feindesliste[i].lastwaypoint = wp;
-      Feindesliste[i].nextwaypoint = wp;
+      AllEnemys[i].lastwaypoint = wp;
+      AllEnemys[i].nextwaypoint = wp;
 
     }/* for(NumEnemys) */
 
@@ -208,24 +208,24 @@ MoveEnemys (void)
        /* 
 	* what the heck is this ?? (rp) 
 	*/
-       if (Feindesliste[i].nextwaypoint == 100)
+       if (AllEnemys[i].nextwaypoint == 100)
 	 continue;
 
        /* ignore robots on other levels */
-       if (Feindesliste[i].levelnum != CurLevel->levelnum)
+       if (AllEnemys[i].levelnum != CurLevel->levelnum)
 	 continue;
 
        // ignore dead robots as well...
-       if (Feindesliste[i].Status == OUT)
+       if (AllEnemys[i].Status == OUT)
 	 continue;
 
        // if the robot just got killed, initiate the
        // explosion and all that...
-       if (Feindesliste[i].energy <= 0)
+       if (AllEnemys[i].energy <= 0)
 	 {
-	   Feindesliste[i].Status = OUT;
-	   RealScore += Druidmap[Feindesliste[i].type].score;
-	   StartBlast (Feindesliste[i].pos.x, Feindesliste[i].pos.y,
+	   AllEnemys[i].Status = OUT;
+	   RealScore += Druidmap[AllEnemys[i].type].score;
+	   StartBlast (AllEnemys[i].pos.x, AllEnemys[i].pos.y,
 		       DRUIDBLAST);
 	   if (LevelEmpty ())
 	     CurLevel->empty = WAIT_LEVELEMPTY;
@@ -233,12 +233,12 @@ MoveEnemys (void)
 	 }
 
        // If its a combat droid, then if might attack...
-       if (Druidmap[Feindesliste[i].type].aggression)
+       if (Druidmap[AllEnemys[i].type].aggression)
 	 AttackInfluence (i);
 
        // robots that still have to wait also do not need to
        // be processed...
-       if (Feindesliste[i].warten > 0)
+       if (AllEnemys[i].warten > 0)
 	 continue;
 
        // Now check for collisions of this enemy with his colleagues
@@ -246,14 +246,14 @@ MoveEnemys (void)
 
        /* Ermittlung des Restweges zum naechsten Ziel */
        WpList = CurLevel->AllWaypoints;
-       nextwp = Feindesliste[i].nextwaypoint;
+       nextwp = AllEnemys[i].nextwaypoint;
        // NORMALISATION nextwp_pos.x = Grob2Fein (WpList[nextwp].x);
        // NORMALISATION nextwp_pos.y = Grob2Fein (WpList[nextwp].y);
        nextwp_pos.x = WpList[nextwp].x;
        nextwp_pos.y = WpList[nextwp].y;
 
-       Restweg.x = nextwp_pos.x - Feindesliste[i].pos.x;
-       Restweg.y = nextwp_pos.y - Feindesliste[i].pos.y;
+       Restweg.x = nextwp_pos.x - AllEnemys[i].pos.x;
+       Restweg.y = nextwp_pos.y - AllEnemys[i].pos.y;
 
        // printf("\n Restweg.x: %g Restweg.y: %g ", Restweg.x, Restweg.y );
        // printf("\n NextWP.x: %g NextWP.y: %g ", nextwp_pos.x , nextwp_pos.y );
@@ -265,18 +265,18 @@ MoveEnemys (void)
 
        if (( fabsf (Restweg.x * Block_Width) >= 1) )
 	 {
-	   Feindesliste[i].speed.x =
+	   AllEnemys[i].speed.x =
 	     (Restweg.x / fabsf (Restweg.x)) *
-	     Druidmap[Feindesliste[i].type].maxspeed;
-	   Feindesliste[i].pos.x += Feindesliste[i].speed.x * Frame_Time ();
+	     Druidmap[AllEnemys[i].type].maxspeed;
+	   AllEnemys[i].pos.x += AllEnemys[i].speed.x * Frame_Time ();
 	 }
 
        if (( fabsf (Restweg.y * Block_Height ) >= 1) )
 	 {
-	   Feindesliste[i].speed.y =
+	   AllEnemys[i].speed.y =
 	     (Restweg.y / fabsf (Restweg.y)) *
-	     Druidmap[Feindesliste[i].type].maxspeed;
-	   Feindesliste[i].pos.y += Feindesliste[i].speed.y * Frame_Time ();
+	     Druidmap[AllEnemys[i].type].maxspeed;
+	   AllEnemys[i].pos.y += AllEnemys[i].speed.y * Frame_Time ();
 	 }
 
        // --------------------
@@ -285,23 +285,23 @@ MoveEnemys (void)
 
        if ( fabsf(Restweg.x * Block_Width ) < 1 )
 	 {
-	   Feindesliste[i].pos.x = nextwp_pos.x;
-	   Feindesliste[i].speed.x = 0;
+	   AllEnemys[i].pos.x = nextwp_pos.x;
+	   AllEnemys[i].speed.x = 0;
 	   // printf("\n Final Destination in x reached.");
 	 }
 
        if ( fabsf(Restweg.y * Block_Height ) < 1 )
 	 {
-	   Feindesliste[i].pos.y = nextwp_pos.y;
-	   Feindesliste[i].speed.y = 0;
+	   AllEnemys[i].pos.y = nextwp_pos.y;
+	   AllEnemys[i].speed.y = 0;
 	   // printf("\n Final Destination in y reached.");
 	 }
 
 
        if ((Restweg.x == 0) && (Restweg.y == 0))
 	 {
-	   Feindesliste[i].lastwaypoint = Feindesliste[i].nextwaypoint;
-	   Feindesliste[i].warten = MyRandom (ENEMYMAXWAIT);
+	   AllEnemys[i].lastwaypoint = AllEnemys[i].nextwaypoint;
+	   AllEnemys[i].warten = MyRandom (ENEMYMAXWAIT);
 
 	   /* suche moegliche Verbindung von hier */
 	   DebugPrintf ("/* suche moegliche Verbindung von hier */\n");
@@ -319,7 +319,7 @@ MoveEnemys (void)
 	     }
 
 	  /* setze neuen Waypoint */
-	  Feindesliste[i].nextwaypoint = trywp;
+	  AllEnemys[i].nextwaypoint = trywp;
 	}			/* if */
     }	/* for (NumEnemeys) */
 
@@ -341,8 +341,8 @@ AttackInfluence (int enemynum)
   float dist2;
 
   /* Ermittlung des Abstandsvektors zum Influencer */
-  xdist = Me.pos.x - Feindesliste[enemynum].pos.x;
-  ydist = Me.pos.y - Feindesliste[enemynum].pos.y;
+  xdist = Me.pos.x - AllEnemys[enemynum].pos.x;
+  ydist = Me.pos.y - AllEnemys[enemynum].pos.y;
 
   if (xdist == 0) xdist = 0.01;
   if (ydist == 0) ydist = 0.01;
@@ -354,21 +354,21 @@ AttackInfluence (int enemynum)
   //    ydist = 2;
 
   /* wenn die Vorzeichen gut sind einen Schuss auf den 001 abgeben */
-  guntype = Druidmap[Feindesliste[enemynum].type].gun;
+  guntype = Druidmap[AllEnemys[enemynum].type].gun;
 
   dist2 = sqrt(xdist * xdist + ydist * ydist);
 
   /* Only fire, if the influencer is in range.... */
   if ((dist2 < FIREDIST2) &&
-      (!Feindesliste[enemynum].firewait) &&
-      IsVisible (&Feindesliste[enemynum].pos))
+      (!AllEnemys[enemynum].firewait) &&
+      IsVisible (&AllEnemys[enemynum].pos))
     {
       if ( MyRandom (AGGRESSIONMAX)  >=
- 	  Druidmap[Feindesliste[enemynum].type].aggression )
+ 	  Druidmap[AllEnemys[enemynum].type].aggression )
 	{
 	  /* Diesmal nicht schiessen */
-	  Feindesliste[enemynum].firewait =
-	    MyRandom (Druidmap[Feindesliste[enemynum].type].firewait);
+	  AllEnemys[enemynum].firewait =
+	    MyRandom (Druidmap[AllEnemys[enemynum].type].firewait);
 	  return;
 	}
 
@@ -425,8 +425,8 @@ AttackInfluence (int enemynum)
 	}
 
       /* Bullets im Zentrum des Schuetzen starten */
-      AllBullets[j].pos.x = Feindesliste[enemynum].pos.x;
-      AllBullets[j].pos.y = Feindesliste[enemynum].pos.y;
+      AllBullets[j].pos.x = AllEnemys[enemynum].pos.x;
+      AllBullets[j].pos.y = AllEnemys[enemynum].pos.y;
 
       /* Bullets so abfeuern, dass sie nicht den Schuetzen treffen */
       AllBullets[j].pos.x +=
@@ -438,13 +438,13 @@ AttackInfluence (int enemynum)
       // the fraction of the maxspeed times constant!
       // SINCE WE CAN ASSUME HIGH FRAMERATE DISABLE THIS CRAP! Within one */
       // frame, the robot cant move into its own bullet.
-      // AllBullets[j].pos.x+=isignf(Feindesliste[enemynum].speed.x)*Block_Width/2;      
-      // AllBullets[j].pos.y+=isignf(Feindesliste[enemynum].speed.y)*Block_Height/2;
+      // AllBullets[j].pos.x+=isignf(AllEnemys[enemynum].speed.x)*Block_Width/2;      
+      // AllBullets[j].pos.y+=isignf(AllEnemys[enemynum].speed.y)*Block_Height/2;
 
       /* Dem Bullettype entsprechend lange warten vor naechstem Schuss */
 
-      Feindesliste[enemynum].firewait =
-	MyRandom ( Druidmap[Feindesliste[enemynum].type].firewait ) ;
+      AllEnemys[enemynum].firewait =
+	MyRandom ( Druidmap[AllEnemys[enemynum].type].firewait ) ;
 
       /* Bullettype gemaes dem ueblichen guntype fuer den robottyp setzen */
       AllBullets[j].type = guntype;
@@ -470,21 +470,21 @@ CheckEnemyEnemyCollision (int enemynum)
   float dist2;
   float speed_x, speed_y;
 
-  check_x = Feindesliste[enemynum].pos.x;
-  check_y = Feindesliste[enemynum].pos.y;
+  check_x = AllEnemys[enemynum].pos.x;
+  check_y = AllEnemys[enemynum].pos.y;
 
   for (i = 0; i < NumEnemys; i++)
     {
       // check only collisions of LIVING enemys on this level
-      if (Feindesliste[i].Status == OUT || Feindesliste[i].levelnum != curlev)
+      if (AllEnemys[i].Status == OUT || AllEnemys[i].levelnum != curlev)
 	continue;
       // dont check yourself...
       if (i == enemynum)
 	continue;
 
       /* get distance between enemy i and enemynum */
-      xdist = check_x - Feindesliste[i].pos.x;
-      ydist = check_y - Feindesliste[i].pos.y;
+      xdist = check_x - AllEnemys[i].pos.x;
+      ydist = check_y - AllEnemys[i].pos.y;
 
       dist2 = sqrt(xdist * xdist + ydist * ydist);
 
@@ -493,36 +493,36 @@ CheckEnemyEnemyCollision (int enemynum)
 	{
 
 	  // am I waiting already?  If so, keep waiting... 
-	  if (Feindesliste[enemynum].warten)
+	  if (AllEnemys[enemynum].warten)
 	    {
 	      /* weiter warten */
-	      Feindesliste[enemynum].warten = WAIT_COLLISION;
+	      AllEnemys[enemynum].warten = WAIT_COLLISION;
 	      continue;
 	    }
 
 	  /* Sonst: Feind stoppen und selbst umdrehen */
-	  Feindesliste[i].warten = WAIT_COLLISION;
+	  AllEnemys[i].warten = WAIT_COLLISION;
 
 	  /* gestoppten gegner ein wenig zurueckstossen */
 	  if (xdist)
-	    Feindesliste[i].pos.x -= xdist / fabsf (xdist) * Frame_Time();
+	    AllEnemys[i].pos.x -= xdist / fabsf (xdist) * Frame_Time();
 	  if (ydist)
-	    Feindesliste[i].pos.y -= ydist / fabsf (ydist) * Frame_Time();
+	    AllEnemys[i].pos.y -= ydist / fabsf (ydist) * Frame_Time();
 
-	  swap = Feindesliste[enemynum].nextwaypoint;
-	  Feindesliste[enemynum].nextwaypoint =
-	    Feindesliste[enemynum].lastwaypoint;
-	  Feindesliste[enemynum].lastwaypoint = swap;
+	  swap = AllEnemys[enemynum].nextwaypoint;
+	  AllEnemys[enemynum].nextwaypoint =
+	    AllEnemys[enemynum].lastwaypoint;
+	  AllEnemys[enemynum].lastwaypoint = swap;
 
 	  /* Etwas aus Gegner herausbewegen !! */
-	  speed_x = Feindesliste[enemynum].speed.x;
-	  speed_y = Feindesliste[enemynum].speed.y;
+	  speed_x = AllEnemys[enemynum].speed.x;
+	  speed_y = AllEnemys[enemynum].speed.y;
 
 	  if (speed_x)
-	    Feindesliste[enemynum].pos.x -=
+	    AllEnemys[enemynum].pos.x -=
 	      Frame_Time() * COL_SPEED * (speed_x) / fabsf (speed_x);
 	  if (speed_y)
-	    Feindesliste[enemynum].pos.y -=
+	    AllEnemys[enemynum].pos.y -=
 	      Frame_Time() * COL_SPEED * (speed_y) / fabsf (speed_y);
 
 	  return TRUE;
@@ -548,38 +548,38 @@ AnimateEnemys (void)
 
   for (i = 0; i < NumEnemys; i++)
     {
-      if (Feindesliste[i].type == DRUID598)
+      if (AllEnemys[i].type == DRUID598)
 	{
 	  //   printf(" \n Feindrehcode : %d \n maxenergy: %d \n nowenergy: %d \n phase: %d ! ",
-	  //   Feindesliste[i].feindrehcode,
-	  //   Druidmap[Feindesliste[i].type].maxenergy,
-	  //   Feindesliste[i].energy,
-	  //  Feindesliste[i].feindphase);
+	  //   AllEnemys[i].feindrehcode,
+	  //   Druidmap[AllEnemys[i].type].maxenergy,
+	  //   AllEnemys[i].energy,
+	  //  AllEnemys[i].feindphase);
 	}
 
       /* ignore enemys that are dead or on other levels or dummys */
-      if (Feindesliste[i].type == DEBUG_ENEMY)
+      if (AllEnemys[i].type == DEBUG_ENEMY)
 	continue;
-      if (Feindesliste[i].levelnum != CurLevel->levelnum)
+      if (AllEnemys[i].levelnum != CurLevel->levelnum)
 	continue;
-      if (Feindesliste[i].Status == OUT)
+      if (AllEnemys[i].Status == OUT)
 	continue;
 
-      // Feindesliste[i].feindrehcode+=Feindesliste[i].energy;
-      Feindesliste[i].feindphase +=
-	(Feindesliste[i].energy / Druidmap[Feindesliste[i].type].maxenergy) *
+      // AllEnemys[i].feindrehcode+=AllEnemys[i].energy;
+      AllEnemys[i].feindphase +=
+	(AllEnemys[i].energy / Druidmap[AllEnemys[i].type].maxenergy) *
 	Frame_Time () * ENEMYPHASES * 2.5;
 
-      if (Feindesliste[i].feindphase >= ENEMYPHASES)
+      if (AllEnemys[i].feindphase >= ENEMYPHASES)
 	{
 #ifdef ENEMYPHASEDEBUG
-	  if (Feindesliste[i].type == DRUID598)
+	  if (AllEnemys[i].type == DRUID598)
 	    {
-	      printf (" Broke at: %d ", Feindesliste[i].feindphase);
+	      printf (" Broke at: %d ", AllEnemys[i].feindphase);
 	      getchar ();
 	    }
 #endif
-	  Feindesliste[i].feindphase = 0;
+	  AllEnemys[i].feindphase = 0;
 	}
     }
 }				// void AnimateEnemys(void)

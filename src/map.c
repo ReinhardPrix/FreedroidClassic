@@ -914,7 +914,7 @@ GetElevatorConnections (char *shipname)
 }				// int GetElevatorConnections(char *shipname)
 
 /*-----------------------------------------------------------------
- * @Desc: intialisiert Feindesliste
+ * @Desc: intialisiert AllEnemys
  *
  * @Ret: OK or ERR
  * 
@@ -971,9 +971,9 @@ GetCrew (char *shipname)
 
       while (this_limit--)
 	{
-	  Feindesliste[enemy_nr].type = types[MyRandom (type_anz-1)];
-	  Feindesliste[enemy_nr].levelnum = level_num;
-	  Feindesliste[enemy_nr].Status = 0;
+	  AllEnemys[enemy_nr].type = types[MyRandom (type_anz-1)];
+	  AllEnemys[enemy_nr].levelnum = level_num;
+	  AllEnemys[enemy_nr].Status = 0;
 	  enemy_nr++;
 	} /* while (enemy-limit of this level not reached) */
 
@@ -1041,14 +1041,14 @@ MoveLevelDoors (void)
 	  for (j = 0; j < NumEnemys; j++)
 	    {
 	      /* ignore druids that are dead or on other levels */
-	      if (Feindesliste[j].Status == OUT ||
-		  Feindesliste[j].levelnum != CurLevel->levelnum)
+	      if (AllEnemys[j].Status == OUT ||
+		  AllEnemys[j].levelnum != CurLevel->levelnum)
 		continue;
 
-	      xdist = abs (Feindesliste[j].pos.x - doorx);
+	      xdist = abs (AllEnemys[j].pos.x - doorx);
 	      if (xdist < Block_Width)
 		{
-		  ydist = abs (Feindesliste[j].pos.y - doory);
+		  ydist = abs (AllEnemys[j].pos.y - doory);
 		  if (ydist < Block_Height)
 		    {
 		      dist2 = xdist * xdist + ydist * ydist;

@@ -667,8 +667,8 @@ ClearGraphMem ( void )
 {
   // One this function is done, the rahmen at the
   // top of the screen surely is destroyed.  We inform the
-  // DisplayRahmen function of the matter...
-  RahmenIsDestroyed=TRUE;
+  // DisplayBanner function of the matter...
+  BannerIsDestroyed=TRUE;
 
   // 
   SDL_SetClipRect( ne_screen, NULL );

@@ -185,7 +185,7 @@ Takeover (int enemynum)
      for use as background in transparent version of Takeover-game */
   //  GetInternFenster (SHOW_MAP);
 
-  DisplayRahmen ( RAHMEN_FORCE_UPDATE );
+  DisplayBanner ( RAHMEN_FORCE_UPDATE );
   SetUserfenster ( TO_BG_COLOR );  /* set takeover color */
 
   Me.status = MOBILE; /* the new status _after_ the takeover game */
@@ -209,7 +209,7 @@ Takeover (int enemynum)
       CapsuleCurRow[GELB] = 0;
       CapsuleCurRow[VIOLETT] = 0;
 
-      OpponentType = Feindesliste[enemynum].type;
+      OpponentType = AllEnemys[enemynum].type;
       NumCapsules[YOU] = 3 + ClassOfDruid (Me.type);
       NumCapsules[ENEMY] = 4 + ClassOfDruid (OpponentType);
 
@@ -232,10 +232,10 @@ Takeover (int enemynum)
 	      PreTakeEnergy = Me.energy;
 	    }
 
-	  Me.energy = Feindesliste[enemynum].energy;
+	  Me.energy = AllEnemys[enemynum].energy;
 	  Me.health = Druidmap[OpponentType].maxenergy;
 
-	  Me.type = Feindesliste[enemynum].type;
+	  Me.type = AllEnemys[enemynum].type;
 	  RealScore += Druidmap[OpponentType].score;
 	  if (LeaderColor != YourColor)	/* only won because of InvincibleMode */
 	    message = "You cheat";
@@ -272,7 +272,7 @@ Takeover (int enemynum)
       /* don't display enemy if we're finished */
       if (FinishTakeover) 
 	{
-	  Feindesliste[enemynum].Status = OUT;
+	  AllEnemys[enemynum].Status = OUT;
 	  OpponentType = -1;	/* dont display enemy any more */
 	}
 

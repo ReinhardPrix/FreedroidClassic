@@ -262,10 +262,10 @@ CheckBulletCollisions (int num)
       
       for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
 	{
-	  if ( IsVisible (&Feindesliste[i].pos) &
-	       (!Druidmap[Feindesliste[i].type].flashimmune) )
+	  if ( IsVisible (&AllEnemys[i].pos) &
+	       (!Druidmap[AllEnemys[i].type].flashimmune) )
 	    {
-	      Feindesliste[i].energy -= Bulletmap[FLASH].damage / 2;
+	      AllEnemys[i].energy -= Bulletmap[FLASH].damage / 2;
 	    }
 	}
       
@@ -312,15 +312,15 @@ CheckBulletCollisions (int num)
       // check for collision with enemys
       for (i = 0; i < NumEnemys; i++)
 	{
-	  if (Feindesliste[i].Status == OUT || Feindesliste[i].levelnum != level)
+	  if (AllEnemys[i].Status == OUT || AllEnemys[i].levelnum != level)
 	    continue;
 	  
-	  xdist = CurBullet->pos.x - Feindesliste[i].pos.x;
-	  ydist = CurBullet->pos.y - Feindesliste[i].pos.y;
+	  xdist = CurBullet->pos.x - AllEnemys[i].pos.x;
+	  ydist = CurBullet->pos.y - AllEnemys[i].pos.y;
 	  
 	  if ((xdist * xdist + ydist * ydist) < DRUIDHITDIST2)
 	    {
-	      Feindesliste[i].energy -= Bulletmap[CurBullet->type].damage;
+	      AllEnemys[i].energy -= Bulletmap[CurBullet->type].damage;
 	      if (!CurBullet->mine)
 		{
 		  FBTZaehler++;
@@ -330,7 +330,7 @@ CheckBulletCollisions (int num)
 	      // break;		/* Schleife beenden */
 	      return;
 	    }			/* if getroffen */
-	}  /* for Feindesliste */
+	}  /* for AllEnemys */
 
       // check for collisions with other bullets
       for (i = 0; i < MAXBULLETS; i++)
@@ -392,22 +392,22 @@ CheckBlastCollisions (int num)
   /* Check Blast-Enemy Collisions and smash energy of hit enemy */
   for (i = 0; i < NumEnemys; i++)
     {
-      if ((Feindesliste[i].Status == OUT)
-	  || (Feindesliste[i].levelnum != level))
+      if ((AllEnemys[i].Status == OUT)
+	  || (AllEnemys[i].levelnum != level))
 	continue;
 
-      if (abs (Feindesliste[i].pos.x - CurBlast->PX) <
+      if (abs (AllEnemys[i].pos.x - CurBlast->PX) <
 	  BLASTRADIUS + DRUIDRADIUSX)
-	if (abs (Feindesliste[i].pos.y - CurBlast->PY) <
+	if (abs (AllEnemys[i].pos.y - CurBlast->PY) <
 	    BLASTRADIUS + DRUIDRADIUSY)
 	  {
 	    /* drag energy of enemy */
-	    Feindesliste[i].energy -= BLASTDAMAGE * Frame_Time ();
+	    AllEnemys[i].energy -= BLASTDAMAGE * Frame_Time ();
 	    // printf (" Robot hit by Blast %d.\n", RHBZaehler++);
 	  }
 
-      if (Feindesliste[i].energy < 0)
-	Feindesliste[i].energy = 0;
+      if (AllEnemys[i].energy < 0)
+	AllEnemys[i].energy = 0;
 
     }				/* for */
 

@@ -4,12 +4,12 @@
 # Lets see if this works...
 #
 BEGIN { print "WARNING!  Starting Replacement! Please pay attention! " }
-! /BLOCKHOEHE/ { print $0 >> FILENAME ".modif" }
-/BLOCKHOEHE/ { print "Line with target string encountered..."
+! /Rahmen/ { print $0 >> FILENAME ".modif" }
+/Rahmen/ { print "Line with target string encountered..."
 	     print "It looks like this:" 
 	     print $0 
              print "Now I'll do something to it, hehehe...."
-             gsub(/BLOCKHOEHE/ , "Block_Height" )
+             gsub(/Rahmen/ , "Banner" )
 	     print "Now the line looks like this: "
              print $0 
 	     print "I hope that matches our needs..." 

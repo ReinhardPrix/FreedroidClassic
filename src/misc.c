@@ -118,13 +118,13 @@ Pause (void)
       AnimateRefresh ();
       RotateBulletColor ();
       AnimateEnemys ();
-      DisplayRahmen(0);
+      DisplayBanner(0);
       Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
       
       if (CPressed ())
 	{
 	  Me.status = CHEESE;
-	  DisplayRahmen( 0 );
+	  DisplayBanner( 0 );
 	  Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
 
 	  while (!SpacePressed ()); /* stay CHEESE until Space pressed */
@@ -310,7 +310,7 @@ Activate_Conservative_Frame_Computation(void)
   // Now we are in some form of pause.  It can't
   // hurt to have the top status bar redrawn after that,
   // so we set this variable...
-  RahmenIsDestroyed=TRUE;
+  BannerIsDestroyed=TRUE;
 
 } // void Activate_Conservative_Frame_Computation(void)
 
@@ -335,7 +335,7 @@ InitiateMenu( void )
       //write on it further down.
       SDL_SetClipRect( ne_screen, NULL );
       ClearGraphMem();
-      DisplayRahmen( RAHMEN_NO_SDL_UPDATE | RAHMEN_FORCE_UPDATE );
+      DisplayBanner( RAHMEN_NO_SDL_UPDATE | RAHMEN_FORCE_UPDATE );
       Assemble_Combat_Picture ( 0 );
       SDL_SetClipRect( ne_screen, NULL );
       MakeGridOnScreen();
@@ -487,8 +487,8 @@ Armageddon (void)
   else
     for (i = 0; i < NumEnemys; i++)
       {
-	Feindesliste[i].energy = 0;
-	Feindesliste[i].Status = OUT;
+	AllEnemys[i].energy = 0;
+	AllEnemys[i].Status = OUT;
       }
 } // void Armageddon(void)
 
@@ -619,7 +619,7 @@ Cheatmenu (void)
 	  l = 0; /* line counter for enemy output */
 	  for (i = 0; i < NumEnemys; i++)
 	    {
-	      if (Feindesliste[i].levelnum == CurLevel->levelnum) 
+	      if (AllEnemys[i].levelnum == CurLevel->levelnum) 
 		{
 		  if (l && !(l%20)) 
 		    {
@@ -636,11 +636,11 @@ Cheatmenu (void)
 		  
 		  l ++;
 		  printf ("%d.\t%s\t%f\t%f\t%d\t%g.\n", i,
-			  Druidmap[Feindesliste[i].type].druidname,
-			  Feindesliste[i].pos.x,
-			  Feindesliste[i].pos.y,
-			  (int)Feindesliste[i].energy,
-			  Feindesliste[i].speed.x);
+			  Druidmap[AllEnemys[i].type].druidname,
+			  AllEnemys[i].pos.x,
+			  AllEnemys[i].pos.y,
+			  (int)AllEnemys[i].energy,
+			  AllEnemys[i].speed.x);
 		} /* if (enemy on current level)  */
 	    } /* for (i<NumEnemys) */
 
@@ -665,10 +665,10 @@ Cheatmenu (void)
 		}
 	      
 	      printf ("%d\t%d\t%s\t%d\t%g\n",
-		      i, Feindesliste[i].levelnum,
-		      Druidmap[Feindesliste[i].type].druidname,
-		      (int)Feindesliste[i].energy,
-		      Feindesliste[i].speed.x);
+		      i, AllEnemys[i].levelnum,
+		      Druidmap[AllEnemys[i].type].druidname,
+		      (int)AllEnemys[i].energy,
+		      AllEnemys[i].speed.x);
 	    } /* for (i<NumEnemys) */
 
 	  printf (" --- END --- \n");
@@ -679,8 +679,8 @@ Cheatmenu (void)
 	case 'd': /* destroy all robots on this level */
 	  for (i = 0; i < NumEnemys; i++)
 	    {
-	      if (Feindesliste[i].levelnum == CurLevel->levelnum)
-		Feindesliste[i].energy = -100;
+	      if (AllEnemys[i].levelnum == CurLevel->levelnum)
+		AllEnemys[i].energy = -100;
 	    }
 	  printf ("\n\nAll robots on this deck killed! \n");
 	  getchar_raw ();
@@ -947,7 +947,7 @@ enum
   ClearGraphMem();
   // Since we've faded out the whole scren, it can't hurt
   // to have the top status bar redrawn...
-  RahmenIsDestroyed=TRUE;
+  BannerIsDestroyed=TRUE;
   Me.status=MOBILE;
 
   return;
@@ -986,7 +986,7 @@ enum
 
       SDL_SetClipRect( ne_screen, NULL );
       ClearGraphMem();
-      DisplayRahmen( RAHMEN_NO_SDL_UPDATE | RAHMEN_FORCE_UPDATE );
+      DisplayBanner( RAHMEN_NO_SDL_UPDATE | RAHMEN_FORCE_UPDATE );
       Assemble_Combat_Picture ( 0 );
       SDL_SetClipRect( ne_screen, NULL );
       MakeGridOnScreen();
@@ -1124,7 +1124,7 @@ enum
 
   ClearGraphMem ();
   Update_SDL_Screen();
-  DisplayRahmen ( RAHMEN_FORCE_UPDATE );
+  DisplayBanner ( RAHMEN_FORCE_UPDATE );
   InitBars = TRUE;
 
   return;
@@ -1266,7 +1266,7 @@ Show_Highscore_Menu (void)
   while ( EscapePressed() || EnterPressed() || SpacePressed() );
 
   ClearGraphMem ( );
-  DisplayRahmen ( RAHMEN_FORCE_UPDATE );
+  DisplayBanner ( RAHMEN_FORCE_UPDATE );
   InitBars = TRUE;
 
   */ 

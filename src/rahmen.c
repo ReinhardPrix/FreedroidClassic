@@ -130,7 +130,7 @@ You can however force update if you say so with a flag.
 
 RAHMEN_FORCE_UPDATE=1: Forces the redrawing of the title bar
 
-RAHMEN_DONT_TOUCH_TEXT=2: Prevents DisplayRahmen from touching the
+RAHMEN_DONT_TOUCH_TEXT=2: Prevents DisplayBanner from touching the
 text, i.e. calling SetInfoline            
 
 RAHMEN_NO_SDL_UPDATE=4: Prevents any SDL_Update calls.
@@ -141,7 +141,7 @@ as well use the function SetInfoline.
 -----------------------------------------------------------------
 */
 void
-DisplayRahmen ( int flags )
+DisplayBanner ( int flags )
 {
   SDL_Rect TargetRectangle;
   char dummy[80];
@@ -190,7 +190,7 @@ DisplayRahmen ( int flags )
   // --------------------
   // No we see if the screen need an update...
 
-  if ( RahmenIsDestroyed || 
+  if ( BannerIsDestroyed || 
        (flags & RAHMEN_FORCE_UPDATE ) || 
        (strcmp( left_box , previous_left_box )) || 
        (strcmp( right_box , previous_right_box )) )
@@ -217,15 +217,15 @@ DisplayRahmen ( int flags )
       // finally update the whole top status box
       // printf("\nHad to update whole top status line box...");
       if ( !(flags & RAHMEN_NO_SDL_UPDATE ) )SDL_UpdateRect( ne_screen, 0, 0, RAHMENBREITE, RAHMENHOEHE );
-      RahmenIsDestroyed=FALSE;
+      BannerIsDestroyed=FALSE;
       return;
     }
 
-} /* DisplayRahmen() */
+} /* DisplayBanner() */
 
 
 /*-----------------------------------------------------------------
- * @Desc: setzt Infos im Rahmen neu BUT does NOT update screen!!
+ * @Desc: setzt Infos im Banner neu BUT does NOT update screen!!
  * 
  *  *left, *right: pointer to strings to display left and right
  *                 ! strings longer than LEFT/RIGHT_TEXT_LEN get cut
@@ -287,7 +287,7 @@ SetInfoline (const char *left, const char *right , int flags )
        ( flags & RAHMEN_FORCE_UPDATE ) )
     {
       SetCurrentFont(Para_BFont);
-      DisplayRahmen( RAHMEN_FORCE_UPDATE | RAHMEN_DONT_TOUCH_TEXT );
+      DisplayBanner( RAHMEN_FORCE_UPDATE | RAHMEN_DONT_TOUCH_TEXT );
       PrintStringFont ( ne_screen , Para_BFont, LEFT_INFO_X , LEFT_INFO_Y , left_box );
       // SDL_UpdateRect( ne_screen, LEFT_INFO_X, LEFT_INFO_Y, FontHeight(Menu_BFont)*8, FontHeight(Menu_BFont) );
       strcpy( previous_left_box , left_box );
