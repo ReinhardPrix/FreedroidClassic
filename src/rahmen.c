@@ -1519,8 +1519,9 @@ DisplayBanner ( void )
     //
     if ( ! GameConfig . CharacterScreen_Visible )
     {
-	sprintf ( level_name_and_time , "%s  %02d:%02d " , 
+	sprintf ( level_name_and_time , "%s day %d %02d:%02d " , 
 		  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> Levelname , 
+		  get_days_of_game_duration ( Me [ 0 ] . current_game_date ) ,
 		  get_hours_of_game_duration ( Me [ 0 ] . current_game_date ) ,
 		  get_minutes_of_game_duration ( Me [ 0 ] . current_game_date ) );
 	RightPutStringFont ( Screen , FPS_Display_BFont , 2 , level_name_and_time );

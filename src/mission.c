@@ -189,7 +189,6 @@ void
 quest_browser_show_mission_info ( int mis_num )
 {
     char temp_text[10000];
-    int quest_text_index;
     int mission_diary_index;
 
     if ( ( mis_num < 0 ) || ( mis_num >= MAX_MISSIONS_IN_GAME ) )
@@ -219,7 +218,7 @@ There was an illegal mission number received.",
     {
 	if ( Me [ 0 ] . AllMissions [ mis_num ] . mission_description_visible [ mission_diary_index ] )
 	{
-	    sprintf ( temp_text , "[%d %02d:%02d] " , 
+	    sprintf ( temp_text , "[day %d %02d:%02d] " , 
 		      get_days_of_game_duration ( Me [ 0 ] . AllMissions [ mis_num ] . mission_description_time [ mission_diary_index ] ) , 
 		      get_hours_of_game_duration ( Me [ 0 ] . AllMissions [ mis_num ] . mission_description_time [ mission_diary_index ] ) , 
 		      get_minutes_of_game_duration ( Me [ 0 ] . AllMissions [ mis_num ] . mission_description_time [ mission_diary_index ] ) ) ;
@@ -286,7 +285,6 @@ void
 quest_browser_interface ( void )
 {
     int back_to_game = FALSE;
-    int mis_num ;
 
     //--------------------
     // This might take some time, so we need to be careful here,
