@@ -54,7 +54,7 @@ That will not cause any problems.
 
 Energy-Loss-factor for Collisions of Influ with hostile robots=1.0
 
-Radius of explosions (as far as damage is concerned) in multiples of tiles=0.3
+Radius of explosions (as far as damage is concerned) in multiples of tiles=0.5
 Amount of damage done by contact to a blast per second of time=45.0
 
 Droid radius: 0.3
@@ -270,7 +270,7 @@ Notes concerning this droid : cheaper version of the anti-grav servant robot.
 
 ** Start of new Robot: ** 
 Droidname: 296
-Maximum speed of this droid: 2.1
+Maximum speed of this droid: 3.1
 Class of this droid: 2
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 40.1
@@ -316,7 +316,7 @@ Notes concerning this droid : common device for moving small packages. Clamp is 
 
 ** Start of new Robot: ** 
 Droidname: 329
-Maximum speed of this droid: 1.1
+Maximum speed of this droid: 3.1
 Class of this droid: 3
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 40.1
@@ -339,7 +339,7 @@ Notes concerning this droid : early type messenger robot. Large wheels impede mo
 
 ** Start of new Robot: ** 
 Droidname: 420
-Maximum speed of this droid: 2.1
+Maximum speed of this droid: 3.1
 Class of this droid: 4
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 60.1
@@ -368,7 +368,7 @@ Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 70.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 1
-Aggression rate of this droid: 25
+Aggression rate of this droid: 30
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 100
 Height of this droid : 1.32
@@ -523,7 +523,7 @@ Notes concerning this droid : sophisticated sentinel droid. Only 2000 built by t
 
 ** Start of new Robot: ** 
 Droidname: 629
-Maximum speed of this droid: 2.1
+Maximum speed of this droid: 3.1
 Class of this droid: 6
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 100.1
@@ -638,13 +638,13 @@ Notes concerning this droid : a very reliable anti-grav unit is fitted into this
 
 ** Start of new Robot: ** 
 Droidname: 834
-Maximum speed of this droid: 7.1
+Maximum speed of this droid: 8.1
 Class of this droid: 8
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 140.1
 Rate of energyloss under influence control: 4.1
 Weapon type this droid uses: 1
-Aggression rate of this droid: 55
+Aggression rate of this droid: 70
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 200
 Height of this droid : 1.10
@@ -703,214 +703,7 @@ Sensor 3 of this droid : 3
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
-
-** Start of new Robot: ** 
-Droidname: 998
-Maximum speed of this droid: 6.1
-Class of this droid: 9
-Maximum acceleration of this droid: 2.1
-Maximum energy of this droid: 100.1
-Rate of energyloss under influence control: 15.1
-Weapon type this droid uses: 2
-Aggression rate of this droid: 60
-Is this droid immune to disruptor blasts? 1
-Score gained for destroying one of this type: 225
-Height of this droid : 1.87
-Weight of this droid : 162
-Drive of this droid : 2
-Brain of this droid : 2
-Sensor 1 of this droid : 2
-Sensor 2 of this droid : 5
-Sensor 3 of this droid : 3
-Armament of this droid : 1
-Advanced Fighting present in this droid : 1
-Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
-
-** Start of new Robot: ** 
-Droidname: 997
-Maximum speed of this droid: 6.1
-Class of this droid: 9
-Maximum acceleration of this droid: 2.1
-Maximum energy of this droid: 100.1
-Rate of energyloss under influence control: 15.1
-Weapon type this droid uses: 2
-Aggression rate of this droid: 60
-Is this droid immune to disruptor blasts? 1
-Score gained for destroying one of this type: 225
-Height of this droid : 1.87
-Weight of this droid : 162
-Drive of this droid : 2
-Brain of this droid : 2
-Sensor 1 of this droid : 2
-Sensor 2 of this droid : 5
-Sensor 3 of this droid : 3
-Armament of this droid : 1
-Advanced Fighting present in this droid : 1
-Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
-
-** Start of new Robot: ** 
-Droidname: 996
-Maximum speed of this droid: 6.1
-Class of this droid: 9
-Maximum acceleration of this droid: 2.1
-Maximum energy of this droid: 100.1
-Rate of energyloss under influence control: 15.1
-Weapon type this droid uses: 2
-Aggression rate of this droid: 60
-Is this droid immune to disruptor blasts? 1
-Score gained for destroying one of this type: 225
-Height of this droid : 1.87
-Weight of this droid : 162
-Drive of this droid : 2
-Brain of this droid : 2
-Sensor 1 of this droid : 2
-Sensor 2 of this droid : 5
-Sensor 3 of this droid : 3
-Armament of this droid : 1
-Advanced Fighting present in this droid : 1
-Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
-
-** Start of new Robot: ** 
-Droidname: 995
-Maximum speed of this droid: 6.1
-Class of this droid: 9
-Maximum acceleration of this droid: 2.1
-Maximum energy of this droid: 100.1
-Rate of energyloss under influence control: 15.1
-Weapon type this droid uses: 2
-Aggression rate of this droid: 60
-Is this droid immune to disruptor blasts? 1
-Score gained for destroying one of this type: 225
-Height of this droid : 1.87
-Weight of this droid : 162
-Drive of this droid : 2
-Brain of this droid : 2
-Sensor 1 of this droid : 2
-Sensor 2 of this droid : 5
-Sensor 3 of this droid : 3
-Armament of this droid : 1
-Advanced Fighting present in this droid : 1
-Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
-
-** Start of new Robot: ** 
-Droidname: 994
-Maximum speed of this droid: 6.1
-Class of this droid: 9
-Maximum acceleration of this droid: 2.1
-Maximum energy of this droid: 100.1
-Rate of energyloss under influence control: 15.1
-Weapon type this droid uses: 2
-Aggression rate of this droid: 60
-Is this droid immune to disruptor blasts? 1
-Score gained for destroying one of this type: 225
-Height of this droid : 1.87
-Weight of this droid : 162
-Drive of this droid : 2
-Brain of this droid : 2
-Sensor 1 of this droid : 2
-Sensor 2 of this droid : 5
-Sensor 3 of this droid : 3
-Armament of this droid : 1
-Advanced Fighting present in this droid : 1
-Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
-
-** Start of new Robot: ** 
-Droidname: 993
-Maximum speed of this droid: 6.1
-Class of this droid: 9
-Maximum acceleration of this droid: 2.1
-Maximum energy of this droid: 100.1
-Rate of energyloss under influence control: 15.1
-Weapon type this droid uses: 2
-Aggression rate of this droid: 60
-Is this droid immune to disruptor blasts? 1
-Score gained for destroying one of this type: 225
-Height of this droid : 1.87
-Weight of this droid : 162
-Drive of this droid : 2
-Brain of this droid : 2
-Sensor 1 of this droid : 2
-Sensor 2 of this droid : 5
-Sensor 3 of this droid : 3
-Armament of this droid : 1
-Advanced Fighting present in this droid : 1
-Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
-
-** Start of new Robot: ** 
-Droidname: 992
-Maximum speed of this droid: 6.1
-Class of this droid: 9
-Maximum acceleration of this droid: 2.1
-Maximum energy of this droid: 100.1
-Rate of energyloss under influence control: 15.1
-Weapon type this droid uses: 2
-Aggression rate of this droid: 60
-Is this droid immune to disruptor blasts? 1
-Score gained for destroying one of this type: 225
-Height of this droid : 1.87
-Weight of this droid : 162
-Drive of this droid : 2
-Brain of this droid : 2
-Sensor 1 of this droid : 2
-Sensor 2 of this droid : 5
-Sensor 3 of this droid : 3
-Armament of this droid : 1
-Advanced Fighting present in this droid : 1
-Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
-
-** Start of new Robot: ** 
-Droidname: 991
-Maximum speed of this droid: 6.1
-Class of this droid: 9
-Maximum acceleration of this droid: 2.1
-Maximum energy of this droid: 100.1
-Rate of energyloss under influence control: 15.1
-Weapon type this droid uses: 2
-Aggression rate of this droid: 60
-Is this droid immune to disruptor blasts? 1
-Score gained for destroying one of this type: 225
-Height of this droid : 1.87
-Weight of this droid : 162
-Drive of this droid : 2
-Brain of this droid : 2
-Sensor 1 of this droid : 2
-Sensor 2 of this droid : 5
-Sensor 3 of this droid : 3
-Armament of this droid : 1
-Advanced Fighting present in this droid : 1
-Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
-
-** Start of new Robot: ** 
-Droidname: 990
-Maximum speed of this droid: 6.1
-Class of this droid: 9
-Maximum acceleration of this droid: 2.1
-Maximum energy of this droid: 100.1
-Rate of energyloss under influence control: 15.1
-Weapon type this droid uses: 2
-Aggression rate of this droid: 60
-Is this droid immune to disruptor blasts? 1
-Score gained for destroying one of this type: 225
-Height of this droid : 1.87
-Weight of this droid : 162
-Drive of this droid : 2
-Brain of this droid : 2
-Sensor 1 of this droid : 2
-Sensor 2 of this droid : 5
-Sensor 3 of this droid : 3
-Armament of this droid : 1
-Advanced Fighting present in this droid : 1
-Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
+Notes concerning this droid : experimental command cyborg. Fitted with a new type of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
 
 *** End of Robot Data Section: ***
 

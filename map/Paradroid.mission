@@ -94,30 +94,17 @@ Control is via keyboard, mouse or joystick.
 
 Keyboard control:
 
-Use cursor keys to move around.  The speed you can go depends on the druid you currently control.
+Use cursor keys (or a,s,d,w) to move around.  The speed you can go depends on the druid you currently control.
+The 'fire'-key is the space bar, or left mouse button, or the first button on the joystick.
+If you press fire in addition to a direction this fires a shot in that direction. Mouse firing uses the crosshair instead.
 
-If you press space or fire in -addition- to a cursor key, this fires the weapon of the druid you currently control. 
-
-
-If you space or fire while NOT pressing a cursor key, this will enter transfer mode.  You will notice your robot to take on a flashy red colour.  Now if you touch some other druid, this will initiate the takeover process in which you have to win a small game of logical circuits within the given time.
+If you press fire while NOT pressing a cursor key, this will enter transfer mode.  You will notice your robot to take on a flashy red colour.  Now if you touch some other druid, this will initiate the takeover process in which you have to win a small game of logical circuits within the given time.
 If you succeed, you thereafter can control this new droid and for game purposes, it is as if you were him.
 If you loose, you either are destroyed if you didn't control an enemy druid at that time, or the host you controlled is destroyed together with the unit you wished to control.
 
 The P key causes the game to pause.
 The S key causes a screenshot to be taken.
 The Escape key causes the menu to pop up.
-
-Keyboard and mouse control:
-
-At any point in the game, you can use the mouse to fire at a target,
-This is somewhat more convenient than using keyboard only since it allows
-you to fire at any angle, an advantage otherwise only had with joystick
-input.
-
-Joystick control:
-
-Rather self explanatory.  Use fire keys to fire or switch to transfer mode 
-similar with keyboard or mouse control.
 
 Watch out for energy refreshing fields and elevators.
 
@@ -159,7 +146,7 @@ You have made it!
 We hope you have enjoyed this piece of C64 nostalgia. 
 Watch out for further FreeDroid based games: 
 FreeDroidRPG for the role-play fans, and 
-FreeDroidWorld for a multi-player arkade version.
+FreeDroidWorld for a multi-player arcade version.
 
 See http://freedroid.sourceforge.net for further details.
 
