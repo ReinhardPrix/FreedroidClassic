@@ -2505,6 +2505,8 @@ Credits_Menu (void)
                                       Reinhard Prix\n\n\n\
    ADDITIONAL PROGRAMMING:\n\n\
                                       Leslie Viljonen\n\n\n\
+   PROFILING AND TESTING:\n\n\
+                                      Ryan 'simcop2387' Voots\n\n\n\
    ARTWORK:\n\n\
                                       Bastian Salmela\n\n\n\
    ADDITIONAL ARTWORK:\n\n\

@@ -3285,6 +3285,8 @@ A droid portrait failed to load.",
 void
 draw_inventory_occupied_rectangle ( SDL_Rect TargetRect )
 {
+#define INVENTORY_SQUARE_OCCUPIED_FILE "backgrounds/TransparentPlate.png"
+
   static SDL_Surface *TransparentPlateImage = NULL;
   SDL_Surface *tmp;
   char *fpath;
