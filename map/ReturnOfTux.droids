@@ -704,6 +704,36 @@ SpecialForce: Type=711 X=38 Y=11 Fixed=0 Marker=4 AdvancedCommand=2 Parameter1=0
 
 ** End of this levels droid data **
 
+** Beginning of new Level **
+Level=31
+Maximum number of Random Droids=0
+Minimum number of Random Droids=0
+Allowed Type of Random Droid for this level: 751
+
+
+** End of this levels droid data **
+
+
+** Beginning of new Level **
+Level=32
+Maximum number of Random Droids=0
+Minimum number of Random Droids=0
+Allowed Type of Random Droid for this level: 751
+
+
+** End of this levels droid data **
+
+
+** Beginning of new Level **
+Level=33
+Maximum number of Random Droids=0
+Minimum number of Random Droids=0
+Allowed Type of Random Droid for this level: 751
+
+
+** End of this levels droid data **
+
+
 
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
