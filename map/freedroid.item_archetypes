@@ -22,15 +22,15 @@
  *
 ----------------------------------------------------------------------
 
-This file was generated using the FreedroidRPG dialog editor.
+This file was generated using the FreedroidRPG items editor.
 If you have questions concerning FreedroidRPG, please send mail to:
 
 freedroid-discussion@lists.sourceforge.net
 
 BEGIN OF AUTORS NOTES
 
-You can use this text field to make some notes on anything.  These otes will get saved with the dialog.
-This is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.
+You can use this text field to make some notes on anything.  These otes will get saved with the items file.
+This is intended purely for the author's reference when using the items editor, while the engine of the game itself will ignore this entry.
 
 END OF AUTORS NOTES
 
@@ -627,7 +627,7 @@ Position_Y=180
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
-Item uses rotation series with prefix="NONE_AVAILABLE_YET"
+Item uses rotation series with prefix="exterminator_simple"
 Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
@@ -635,10 +635,10 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
-Picture number=14
+Picture number=12
 Sound number=7
 Base list price=1200
-Item description text="Use the high power shots in this weapon to wipe out a decent amount of enemies."
+Item description text="While this weapon is capable of firing quite powerful shots, beware of the exceptionally long loading times.  (Don't get swarmed by enemies with this weapon unless you got powerful armour!)"
 ----- the following part is only relevant for weapons -----
 Item drive maxspeed=0.000000
 Item drive acceleration=0.000000
