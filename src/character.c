@@ -75,7 +75,7 @@
 
 #define ENERGY_GAIN_PER_VIT_POINT 2
 #define MANA_GAIN_PER_MAGIC_POINT 2
-#define DAMAGE_GAIN_PER_STR_POINT 2
+// #define DAMAGE_GAIN_PER_STR_POINT 2
 #define AC_GAIN_PER_DEX_POINT 1
 #define RECHARGE_SPEED_PERCENT_PER_DEX_POINT 0
 #define TOHIT_PERCENT_PER_DEX_POINT (0.5)
@@ -287,12 +287,28 @@ UpdateAllCharacterStats ( void )
   //--------------------
   // Now we compute the damage the influecer can do
   //
-  if ( Druidmap[ DRUID001 ].weapon_item.type != (-1) )
+  if ( Me.weapon_item.type != (-1) )
     {
-      Me.Base_Damage = Druidmap[ DRUID001 ].weapon_item.damage + 
+      /*
+      Me.Base_Damage = Me.weapon_item.damage + 
 	(Me.Strength - 15) * DAMAGE_GAIN_PER_STR_POINT;
-      Me.Damage_Modifier = Druidmap[ DRUID001 ].weapon_item.damage_modifier + 
+      Me.Damage_Modifier = Me.weapon_item.damage_modifier + 
 	(Me.Strength - 15) * DAMAGE_GAIN_PER_STR_POINT;
+      */
+      if ( ItemMap[ Me.weapon_item.type ].item_gun_angle_change != 0 )
+	{
+	  Me.Base_Damage = Me.weapon_item.damage * 
+	    ( Me.Strength + 100.0) / 100.0 ;
+	  Me.Damage_Modifier = Me.weapon_item.damage_modifier * 
+	    ( Me.Strength + 100.0) / 100.0 ;
+	}
+      else
+	{
+	  Me.Base_Damage = Me.weapon_item.damage * 
+	    ( Me.Dexterity + 100.0) / 100.0 ;
+	  Me.Damage_Modifier = Me.weapon_item.damage_modifier * 
+	    ( Me.Dexterity + 100.0) / 100.0 ;
+	}
     }
   else
     {
@@ -303,33 +319,25 @@ UpdateAllCharacterStats ( void )
   // Now we compute the armour class of the influecer
   //
   Me.AC = ( Me.Dexterity - 15 ) * AC_GAIN_PER_DEX_POINT;
-  if ( Druidmap[ DRUID001 ].armour_item.type != (-1) )
+  if ( Me.armour_item.type != (-1) )
     {
-      // DebugPrintf( 2 , "\nAn armour is beeing used!!!, type = %d" , Druidmap[ Me.type ].armour_item.type);
-      // DebugPrintf( 2 , "\nAC bonus = %f" , ItemMap[ Druidmap[ Me.type ].armour_item.type ].item_armour_ac_bonus );
-      // Me.AC += ItemMap[ Druidmap[ Me.type ].armour_item.type ].item_armour_ac_bonus;
-      Me.AC += Druidmap[ DRUID001 ].armour_item.ac_bonus;
+      // DebugPrintf( 2 , "\nAn armour is beeing used!!!, type = %d" , Me.armour_item.type);
+      // DebugPrintf( 2 , "\nAC bonus = %f" , ItemMap[ Me.armour_item.type ].item_armour_ac_bonus );
+      // Me.AC += ItemMap[ Me.armour_item.type ].item_armour_ac_bonus;
+      Me.AC += Me.armour_item.ac_bonus;
     }
-  if ( Druidmap[ DRUID001 ].shield_item.type != (-1) )
+  if ( Me.shield_item.type != (-1) )
     {
-      // DebugPrintf( 0 , "\nA shield is beeing used!!!, type = %d" , Druidmap[ Me.type ].armour_item.type);
-      // DebugPrintf( 0 , "\nAC bonus = %f" , ItemMap[ Druidmap[ Me.type ].shield_item.type ].item_armour_ac_bonus );
-      // Me.AC += ItemMap[ Druidmap[ Me.type ].shield_item.type ].item_shield_ac_bonus;
-      Me.AC += Druidmap[ DRUID001 ].shield_item.ac_bonus;
+      // DebugPrintf( 0 , "\nA shield is beeing used!!!, type = %d" , Me.shield_item.type);
+      // DebugPrintf( 0 , "\nAC bonus = %f" , ItemMap[ Me.shield_item.type ].item_shield_ac_bonus );
+      // Me.AC += ItemMap[ Me.shield_item.type ].item_shield_ac_bonus;
+      Me.AC += Me.shield_item.ac_bonus;
     }
 
-  //--------------------
-  // Now we compute the current recharging time for the weapon for each shot
-  // And also the current recharge time modifier to be applied.
-  // 
-  // Me.RechargeTimeModifier = 100 - ( Me.Dexterity - 15 ) * RECHARGE_SPEED_PERCENT_PER_DEX_POINT;
-  // Me.RechargeTime = ItemMap[ Druidmap[ DRUID001 ].weapon_item.type ].item_gun_recharging_time * 
-  // 0.01 * Me.RechargeTimeModifier;
   //--------------------
   // Now we compute the current to-hit chance of the influencer
   // 
   Me.to_hit = 60 + ( Me.Dexterity - 15 ) * TOHIT_PERCENT_PER_DEX_POINT;
-
 
 }; // void UpdateAllCharacterStats ( void )
 

@@ -133,7 +133,7 @@ void
 MoveInfluence (void)
 {
   // float accel = Druidmap[Me.type].accel;
-  float accel = ItemMap[ Druidmap[Me.type].drive_item.type ].item_drive_accel;
+  float accel = ItemMap[ Me.drive_item.type ].item_drive_accel;
   float planned_step_x;
   float planned_step_y;
   static float TransferCounter = 0;
@@ -186,7 +186,7 @@ MoveInfluence (void)
   // drive unit present!!!  Otherwise only a comment will be
   // printed out!!
   //
-  if ( Druidmap[ Me.type ].drive_item.type != (-1) )
+  if ( Me.drive_item.type != (-1) )
     {
       if (UpPressed ())
 	Me.speed.y -= accel;
@@ -319,7 +319,7 @@ NoInfluBulletOnWay (void)
 {
   int i;
 
-  if ( ! ItemMap[ Druidmap[Me.type].weapon_item.type ].item_gun_oneshotonly )
+  if ( ! ItemMap[ Me.weapon_item.type ].item_gun_oneshotonly )
     return TRUE;
 
   for (i = 0; i < MAXBULLETS; i++)
@@ -376,7 +376,7 @@ CheckInfluenceWallCollisions (void)
   int NorthSouthAxisBlocked=FALSE;
   int EastWestAxisBlocked=FALSE;
   int H_Door_Sliding_Active = FALSE;
-  double maxspeed = ItemMap [ Druidmap[Me.type].drive_item.type ].item_drive_maxspeed ;
+  double maxspeed = ItemMap [ Me.drive_item.type ].item_drive_maxspeed ;
 
   lastpos.x = Me.pos.x - SX;
   lastpos.y = Me.pos.y - SY;
@@ -490,7 +490,7 @@ CheckInfluenceWallCollisions (void)
 void
 AdjustSpeed (void)
 {
-  double maxspeed = ItemMap [ Druidmap[Me.type].drive_item.type ].item_drive_maxspeed ;
+  double maxspeed = ItemMap [ Me.drive_item.type ].item_drive_maxspeed ;
   if (Me.speed.x > maxspeed)
     Me.speed.x = maxspeed;
   if (Me.speed.x < (-maxspeed))
@@ -706,15 +706,15 @@ FireBullet (void)
 {
   int i = 0;
   Bullet CurBullet = NULL;  // the bullet we're currentl dealing with
-  int guntype = ItemMap[ Druidmap[Me.type].weapon_item.type ].item_gun_bullet_image_type;   // which gun do we have ? 
-  double BulletSpeed = ItemMap[ Druidmap[ Me.type ].weapon_item.type ].item_gun_speed;
+  int guntype = ItemMap[ Me.weapon_item.type ].item_gun_bullet_image_type;   // which gun do we have ? 
+  double BulletSpeed = ItemMap[ Me.weapon_item.type ].item_gun_speed;
   double speed_norm;
   finepoint speed;
   int max_val;
   float OffsetFactor;
 
   // If the current overtaken droid doesn't have a weapon at all, just return
-  if ( Druidmap [ Me.type ].weapon_item.type == (-1) ) return;
+  if ( Me.weapon_item.type == (-1) ) return;
 
   // If the influencer is holding something from the invenotry
   // menu via the mouse, also just return
@@ -755,7 +755,6 @@ FireBullet (void)
   CurBullet->pos.y = Me.pos.y;
   CurBullet->type = guntype;
 
-  // CurBullet->damage = ItemMap[ Druidmap[ Me.type].weapon_item.type ].item_gun_damage;
   //--------------------
   // Previously, we had the damage done only dependant upon the weapon used.  Now
   // the damage value is taken directly from the character stats, and the UpdateAll...stats
@@ -763,10 +762,10 @@ FireBullet (void)
   CurBullet->damage = Me.Base_Damage + MyRandom( Me.Damage_Modifier);
   CurBullet->mine = TRUE;
   CurBullet->owner = -1;
-  CurBullet->bullet_lifetime = ItemMap[ Druidmap[ Me.type].weapon_item.type ].item_gun_bullet_lifetime;
-  CurBullet->angle_change_rate = ItemMap[ Druidmap[ Me.type].weapon_item.type ].item_gun_angle_change;
-  CurBullet->fixed_offset = ItemMap[ Druidmap[ Me.type].weapon_item.type ].item_gun_fixed_offset;
-  CurBullet->ignore_wall_collisions = ItemMap[ Druidmap[ Me.type].weapon_item.type ].item_gun_bullet_ignore_wall_collisions;
+  CurBullet->bullet_lifetime = ItemMap[ Me.weapon_item.type ].item_gun_bullet_lifetime;
+  CurBullet->angle_change_rate = ItemMap[ Me.weapon_item.type ].item_gun_angle_change;
+  CurBullet->fixed_offset = ItemMap[ Me.weapon_item.type ].item_gun_fixed_offset;
+  CurBullet->ignore_wall_collisions = ItemMap[ Me.weapon_item.type ].item_gun_bullet_ignore_wall_collisions;
   CurBullet->owner_pos = & ( Me.pos );
   CurBullet->time_in_frames = 0;
   CurBullet->time_in_seconds = 0;
@@ -774,9 +773,7 @@ FireBullet (void)
   CurBullet->miss_hit_influencer = UNCHECKED ;
   memset( CurBullet->total_miss_hit , UNCHECKED , MAX_ENEMYS_ON_SHIP );
   CurBullet->to_hit = Me.to_hit;
-  // Me.firewait = ItemMap[ Druidmap[ Me.type ].weapon_item.type ].item_gun_recharging_time * Me.RechargeTimeModifier;
-  // Me.firewait = Me.RechargeTime;
-  Me.firewait = ItemMap[ Druidmap[ Me.type ].weapon_item.type ].item_gun_recharging_time;
+  Me.firewait = ItemMap[ Me.weapon_item.type ].item_gun_recharging_time;
 
   speed.x = 0.0;
   speed.y = 0.0;
@@ -804,7 +801,7 @@ FireBullet (void)
   // and not start in this direction, but rather somewhat 'before' it,
   // so that the rotation will hit the target later.
   //
-  RotateVectorByAngle ( & speed , ItemMap[ Druidmap[ Me.type].weapon_item.type ].item_gun_start_angle_modifier );
+  RotateVectorByAngle ( & speed , ItemMap[ Me.weapon_item.type ].item_gun_start_angle_modifier );
 
   speed_norm = sqrt (speed.x * speed.x + speed.y * speed.y);
   CurBullet->speed.x = (speed.x/speed_norm);

@@ -312,19 +312,12 @@ typedef struct
   int sensor1;
   int sensor2;
   int sensor3;
-  // int drive_item;
   item drive_item;
-  // int weapon_item;
   item weapon_item;
-  // int armour_item;
   item armour_item;
-  // int shield_item;
   item shield_item;
-  // int special_item;
   item special_item;
-  // int aux1_item;
   item aux1_item;
-  // int aux2_item;
   item aux2_item;
   int Greeting_Sound_Type; // which sample to play in order to 'greet' the influencer?
   int to_hit; // chance that this droid hits an unarmoured target
@@ -383,6 +376,12 @@ typedef struct
 
   item Inventory[ MAX_ITEMS_IN_INVENTORY ];
   item weapon_item;
+  item drive_item;
+  item armour_item;
+  item shield_item;
+  item special_item;
+  item aux1_item;
+  item aux2_item;
 
   int KillRecord[ 1000 ];      // how many ( of the first 1000 monster types) have been killed yet?
 }
