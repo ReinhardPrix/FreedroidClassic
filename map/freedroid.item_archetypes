@@ -1898,7 +1898,7 @@ Base item duration=-1 plus duration modifier=0
 Picture number=54
 Rotation model number=0
 Sound number=4
-Base list price=10
+Base list price=1
 Item description text="This is the most common ammunition for modern plasma weapons."
 ** End of new item specification subsection **
 
@@ -1920,7 +1920,7 @@ Base item duration=-1 plus duration modifier=0
 Picture number=53
 Rotation model number=0
 Sound number=4
-Base list price=10
+Base list price=2
 Item description text="This is standard ammunition for most modern laser rifles."
 ** End of new item specification subsection **
 
@@ -1942,7 +1942,7 @@ Base item duration=-1 plus duration modifier=0
 Picture number=55
 Rotation model number=0
 Sound number=4
-Base list price=10
+Base list price=5
 Item description text="Exterminators need this kind of ammunition.  It can cause skin irritations due to leaking extermination radiation when carried close to the body for long time."
 ** End of new item specification subsection **
 

@@ -99,7 +99,11 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , {  94 ,  94 ,  54 ,  54 } } ,
 
     { NULL , "mouse_buttons/LeftShopButton.png"               , {  10 , 420 ,  40 ,  40 } } ,
-    { NULL , "mouse_buttons/RightShopButton.png"              , { 600 , 420 ,  40 ,  40 } } 
+    { NULL , "mouse_buttons/RightShopButton.png"              , { 600 , 420 ,  40 ,  40 } } ,
+
+    { NULL , "mouse_buttons/BuyButton.png"                    , { 233 , 375 , 120 ,  37 } } ,
+    { NULL , "mouse_buttons/Buy10Button.png"                  , { 360 , 375 , 120 ,  37 } } ,
+    { NULL , "mouse_buttons/Buy100Button.png"                 , { 467 , 375 , 120 ,  37 } } 
 
   }; // AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] 
 

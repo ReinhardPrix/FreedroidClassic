@@ -248,6 +248,7 @@ CalculateItemPrice ( item* BuyItem , int ForRepair )
 {
   float PrefixMultiplier = 1;
   float SuffixMultiplier = 1;
+  float Multiplicity = BuyItem->multiplicity ;
 
   //--------------------
   // Maybe the item is magical in one way or the other.  Then we have to
@@ -267,12 +268,12 @@ CalculateItemPrice ( item* BuyItem , int ForRepair )
     {
       if ( BuyItem->max_duration != (-1 ) )
 	{
-	  return ( ItemMap [ BuyItem->type ].base_list_price * SuffixMultiplier * PrefixMultiplier *
+	  return ( Multiplicity * ItemMap [ BuyItem->type ].base_list_price * SuffixMultiplier * PrefixMultiplier *
 		   ( BuyItem->current_duration ) / BuyItem->max_duration ); 
 	}
       else
 	{
-	  return ( ItemMap [ BuyItem->type ].base_list_price * SuffixMultiplier * PrefixMultiplier );
+	  return ( Multiplicity * ItemMap [ BuyItem->type ].base_list_price * SuffixMultiplier * PrefixMultiplier );
 	}
     }
 
@@ -282,7 +283,7 @@ CalculateItemPrice ( item* BuyItem , int ForRepair )
   //
   if ( BuyItem->max_duration != (-1 ) )
     {
-      return ( ItemMap [ BuyItem->type ].base_list_price * SuffixMultiplier * PrefixMultiplier *
+      return ( Multiplicity * ItemMap [ BuyItem->type ].base_list_price * SuffixMultiplier * PrefixMultiplier *
 	       ( BuyItem->max_duration - BuyItem->current_duration ) / BuyItem->max_duration ); 
     }
   else

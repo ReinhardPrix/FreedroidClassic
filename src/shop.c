@@ -183,8 +183,12 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
       ShowGenericButtonFromList ( LEFT_SHOP_BUTTON );
       ShowGenericButtonFromList ( RIGHT_SHOP_BUTTON );
 
-      // PutPasswordButtonsAndPassword ( PasswordIndex );
-      // PutSecurityButtonsAndClearance ( ClearanceIndex );
+      ShowGenericButtonFromList ( BUY_BUTTON );
+      if ( ItemMap [ ShowPointerList [ ItemIndex ] -> type ] . item_group_together_in_inventory )
+	{
+	  ShowGenericButtonFromList ( BUY_10_BUTTON );
+	  ShowGenericButtonFromList ( BUY_100_BUTTON );
+	}
 
       SDL_Flip( Screen );
 
@@ -256,6 +260,20 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	    {
 	      ItemIndex = RowStart + ClickWasOntoItemRowPosition ( GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) ;
 	    }
+	  else if ( CursorIsOnButton( BUY_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
+	    {
+	      return ( ItemIndex );
+	    }
+	  else if ( CursorIsOnButton( BUY_10_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
+	    {
+	      ShowPointerList [ ItemIndex ] -> multiplicity = 10 ;
+	      return ( ItemIndex );
+	    }
+	  else if ( CursorIsOnButton( BUY_100_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
+	    {
+	      ShowPointerList [ ItemIndex ] -> multiplicity = 100 ;
+	      return ( ItemIndex );
+	    }
 
 
 	}
@@ -295,7 +313,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 
     } // while !finished 
 
-  return ( ItemIndex ) ;  // Currently equippment selection is not yet possible...
+  return ( -1 ) ;  // Currently equippment selection is not yet possible...
 
 }; // int GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVENTORY ] )
 
@@ -798,6 +816,7 @@ TryToBuyItem( item* BuyItem )
   int MenuPosition;
   int FreeIndex;
   char linebuf[1000];
+  int i;
 
 #define ANSWER_YES 1
 #define ANSWER_NO 2
@@ -830,6 +849,51 @@ TryToBuyItem( item* BuyItem )
       DoMenuSelection( linebuf , MenuTexts , 1 , NULL , NULL );
       return;
     }
+
+  //--------------------
+  // At first we try to see if we can just add the multiplicity of the item in question
+  // to the existing multiplicity of an item of the same type
+  //
+  if ( ItemMap [ BuyItem->type ] . item_group_together_in_inventory )
+    {
+      for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+	{
+	  if ( Me [ 0 ] . Inventory [ i ] . type == BuyItem->type )
+	    {
+	      while ( 1 )
+		{
+		  GiveItemDescription( linebuf , BuyItem , TRUE );
+		  strcat ( linebuf , "\n\n    Are you sure you wish to purchase this item?" );
+		  MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 , NULL , NULL );
+		  switch (MenuPosition) 
+		    {
+		    case (-1):
+		      return;
+		      break;
+		    case ANSWER_YES:
+		      while (EnterPressed() || SpacePressed() );
+		      Me [ 0 ] . Inventory [ i ] . multiplicity += BuyItem -> multiplicity ;
+		      Me[0].Gold -= CalculateItemPrice ( BuyItem , FALSE );
+		      Play_Shop_ItemBoughtSound( );
+		      //--------------------
+		      // This is new.  I hope it's not dangerous.
+		      DeleteItem ( BuyItem );
+		      return;
+		      break;
+		    case ANSWER_NO:
+		      while (EnterPressed() || SpacePressed() );
+		      return;
+		      break;
+		    }
+		}
+	    }
+	}
+    }
+
+  //--------------------
+  // Now we must find out if there is an inventory position where we can put the
+  // item in question.
+  //
 
   for ( x = 0 ; x < INVENTORY_GRID_WIDTH ; x ++ )
     {
@@ -967,7 +1031,7 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
       else SalesList[ i ].suffix_code = ( -1 );
 
       FillInItemProperties( & ( SalesList[ i ] ) , TRUE , 0 );
-      if ( SalesList[ i ] . type == ITEM_LASER_AMMUNITION ) SalesList [ i ] . multiplicity = 100 ;
+      // if ( SalesList[ i ] . type == ITEM_LASER_AMMUNITION ) SalesList [ i ] . multiplicity = 100 ;
       SalesList[ i ].is_identified = TRUE;
 
       Buy_Pointer_List [ i ] = & ( SalesList[ i ] ) ;
@@ -1006,7 +1070,7 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
 	      SalesList[ i ].prefix_code = ( -1 );
 	      SalesList[ i ].suffix_code = ( -1 );
 	      FillInItemProperties( & ( SalesList[ i ] ) , TRUE , 0 );
-	      if ( SalesList[ i ] . type == ITEM_LASER_AMMUNITION ) SalesList [ i ] . multiplicity = 100 ;
+	      // if ( SalesList[ i ] . type == ITEM_LASER_AMMUNITION ) SalesList [ i ] . multiplicity = 100 ;
 	      Buy_Pointer_List [ i ] = & ( SalesList[ i ] ) ;
 	    }
 	  Buy_Pointer_List [ i ] = NULL ; 
