@@ -183,6 +183,8 @@ typedef struct
   int Friendly;                 // is this a friendly droid or is it a MS controlled one?
   float TextVisibleTime;
   char* TextToBeDisplayed;
+  int NumberOfPeriodicSpecialStatements;
+  char **PeriodicSpecialStatements;
 }
 enemy, *Enemy;
 
