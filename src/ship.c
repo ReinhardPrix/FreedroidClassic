@@ -1,9 +1,3 @@
-/*----------------------------------------------------------------------
- *
- * Desc: the konsole- and lift functions
- *
- *----------------------------------------------------------------------*/
-
 /* 
  *
  *   Copyright (c) 1994, 2002 Johannes Prix
@@ -28,6 +22,11 @@
  *  MA  02111-1307  USA
  *
  */
+
+/* ----------------------------------------------------------------------
+ * This file contains all the console and lift functions (mostly)
+ * ---------------------------------------------------------------------- */
+
 #define _ship_c
 
 #include "system.h"
@@ -44,8 +43,7 @@ int NoKeyPressed (void);
 
 
 /*-----------------------------------------------------------------
- * @Desc: does all the work when we enter a lift
- * 
+ * This function does all the work when we enter a lift
  *-----------------------------------------------------------------*/
 void
 EnterLift (void)
@@ -56,12 +54,15 @@ EnterLift (void)
 
   DebugPrintf (2, "\nvoid EnterLiftator(void): Function call confirmed.");
 
-  /* Prevent distortion of framerate by the delay coming from 
-   * the time spend in the menu. */
+  //--------------------
+  // Prevent distortion of framerate by the delay coming from 
+  // the time spend in the menu. 
+  //
   Activate_Conservative_Frame_Computation();
 
-  /* Prevent the influ from coming out of the lift in transfer mode
-   * by turning off transfer mode as soon as the influ enters the lift */
+  //--------------------
+  // Prevent the influ from coming out of the lift in transfer mode
+  // by turning off transfer mode as soon as the influ enters the lift 
   Me.status= ELEVATOR;
 
   curLevel = CurLevel->levelnum;
@@ -81,15 +82,14 @@ EnterLift (void)
 
   ShowLifts (curLevel, liftrow);
 
-  /* Warten, bis User Feuer auslaesst */
-  while (SpacePressed ()) ;
+  while (SpacePressed ()) ; // wait, so the loop afterwards is not exited immediately
 
 
   while (!SpacePressed ())
     {
       if (UpPressed () && !DownPressed ())
 	if (upLift != -1)
-	  {			/* gibt es noch einen Lift hoeher ? */
+	  {			// see if there is still a way up...
 	    if (curShip.AllLifts[upLift].x == 99)
 	      {
 		printf ("Out of order, so sorry ..");
@@ -103,16 +103,15 @@ EnterLift (void)
 
 		ShowLifts (curLevel, liftrow);
 
-		/* Warten, bis user Taste auslaesst */
+		
 		MoveLiftSound ();
-		while (UpPressed ()) ;
+		while (UpPressed ()) ; 
 	      }
-	  }			/* if uplevel */
-
+	  }   // if uplevel 
 
       if (DownPressed () && !UpPressed ())
 	if (downLift != -1)
-	  {			/* gibt es noch einen Lift tiefer ? */
+	  {			// see if there is still a way down...
 	    if (curShip.AllLifts[downLift].x == 99)
 	      {
 		printf ("Out of order, so sorry ..");
@@ -126,12 +125,11 @@ EnterLift (void)
 
 		ShowLifts (curLevel, liftrow);
 
-		/* Warten, bis User Taste auslaesst */
 		MoveLiftSound ();
 		while (DownPressed ()) ;
 	      }
-	  }			/* if downlevel */
-    }				/* while !SpaceReleased */
+	  } // if downlevel 
+    }	// while !SpaceReleased 
 
   //--------------------
   // It might happen, that the influencer enters the elevator, but then decides to
@@ -141,11 +139,11 @@ EnterLift (void)
   // we set the new level and set new position and initiate timers and all that...
   //
   if (curLevel != CurLevel->levelnum)
-    {				/* wirklich neu ??? */
+    {				// see if we really changed the level or not...
       int array_num = 0;
       Level tmp;
 
-      /* Aktuellen Level setzen */
+      // set the current level
       while ((tmp = curShip.AllLevels[array_num]) != NULL)
 	{
 	  if (tmp->levelnum == curLevel)
@@ -207,16 +205,16 @@ EnterLift (void)
   Me.TextToBeDisplayed=CurLevel->Level_Enter_Comment;
 
   DebugPrintf (2, "\nvoid EnterLift(void): Usual end of function reached.");
-}	/* EnterLift */
+}; // void EnterLift( void )
 
-/*-----------------------------------------------------------------
- * @Desc: show side-view of the ship, and hightlight the current 
- *        level + lift
+/* -----------------------------------------------------------------
+ * This function should show a side-view of the ship, and hightlight 
+ * the current level and lift
  *
  *  if level==-1: don't highlight any level
  *  if liftrow==-1: dont' highlight any liftrows
  *
- *-----------------------------------------------------------------*/
+ * ----------------------------------------------------------------- */
 void
 ShowLifts (int level, int liftrow)
 {
@@ -269,7 +267,7 @@ ShowLifts (int level, int liftrow)
 
   return;
 
-} /* ShowLifts() */
+}; // void ShowLifts( ... ) 
 
 /* ----------------------------------------------------------------------
  * This function does all the codepanel duties, like bring up the 
@@ -480,22 +478,17 @@ EnterCodepanel (void)
 				-1 , -1 , &Chat_Window , Background );
 
     }
-      
-
-  // while ( !SpacePressed() );
 
 }; // void EnterCodepanel (void)
 
-/*@Function============================================================
-@Desc: EnterKonsole(): does all konsole- duties
-This function runs the consoles. This means the following duties:
-	2	* Show a small-scale plan of the current deck
-	3	* Show a side-elevation on the ship
-	1	* Give all available data on lower druid types
-	0	* Reenter the game without squashing the colortable
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function does all console duties.
+ * This means the following:
+ * 	2	* Show a small-scale plan of the current deck
+ *	3	* Show a side-elevation on the ship
+ *	1	* Give all available data on lower druid types
+ *	0	* Reenter the game without squashing the colortable
+ * ---------------------------------------------------------------------- */
 void
 EnterKonsole (void)
 {
@@ -582,16 +575,14 @@ EnterKonsole (void)
 
 } // void EnterKonsole(void)
 
-/*-----------------------------------------------------------------
- * @Desc: diese Funktion zeigt die m"oglichen Auswahlpunkte des Menus
- *    Sie soll die Schriftfarben nicht ver"andern
+/* -----------------------------------------------------------------
+ * This function shows the selectable menu items.
  *
  *  NOTE: this function does not actually _display_ anything yet,
  *        it just prepares the display, so you need
  *        to call SDL_Flip() to display the result!
  *
- *
- *-----------------------------------------------------------------*/
+ * ----------------------------------------------------------------- */
 void
 PaintConsoleMenu (int menu_pos)
 {
@@ -627,13 +618,12 @@ PaintConsoleMenu (int menu_pos)
   SDL_BlitSurface( console_pic , &SourceRectangle , Screen , &TargetRectangle );
 
   return;
-}	// PaintConsoleMenu ()
+}; // void PaintConsoleMenu ( int MenuPos )
 
-/*@Function============================================================
-@Desc: Allows viewing of all droid specs for droids <= your current droid
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function does the robot show when the user has selected robot
+ * show from the console menu.
+ * ---------------------------------------------------------------------- */
 void
 GreatDruidShow (void)
 {
@@ -675,7 +665,7 @@ GreatDruidShow (void)
     } /* while !finished */
 
   return;
-} /* GreatDroidShow() */
+}; // void GreatDroidShow( void ) 
 
 /*------------------------------------------------------------
  * display infopage page of droidtype
@@ -772,14 +762,13 @@ ShowDeckMap (Level deck)
   Me.pos.x=tmp.x;
   Me.pos.y=tmp.y;
 
-} /* ShowDeckMap() */
+}; // void ShowDeckMap( ... )
 
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/* ---------------------------------------------------------------------- 
+ * This function checks if a given level is already empty.  If this is 
+ * the case, it will be changed to the 'lights off' tileset, cause in
+ * the original game the lights went off when a level was cleared.
+ * ---------------------------------------------------------------------- */
 int
 LevelEmpty (void)
 {
@@ -806,13 +795,10 @@ LevelEmpty (void)
   return TRUE;
 }
 
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-
+/* ----------------------------------------------------------------------
+ * This function checks if the current ship is empty, cause in this case
+ * in the old paradroid game, you had won.
+ * ---------------------------------------------------------------------- */
 int
 ShipEmpty (void)
 {
@@ -827,38 +813,11 @@ ShipEmpty (void)
 	return (FALSE);
     }
   return (TRUE);
-}
+}; // int ShipEmpty (void)
 
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-int
-NoKeyPressed (void)
-{
-  if (SpacePressed ())
-    return (FALSE);
-  if (LeftPressed ())
-    return (FALSE);
-  if (RightPressed ())
-    return (FALSE);
-  if (UpPressed ())
-    return (FALSE);
-  if (DownPressed ())
-    return (FALSE);
-  return (TRUE);
-}				// int NoKeyPressed(void)
-
-
-/*@Function============================================================
-@Desc: l"oscht das Userfenster
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function fills the whole User_Rect with color 0 = black.
+ * ---------------------------------------------------------------------- */
 void
 ClearUserFenster (void)
 {
@@ -867,8 +826,7 @@ ClearUserFenster (void)
   Copy_Rect (User_Rect, tmp)
 
   SDL_FillRect( Screen , &tmp, 0 );
-  return;
 
-} // void ClearUserFenster(void)
+}; // void ClearUserFenster( void )
 
 #undef _ship_c
