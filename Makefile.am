@@ -23,3 +23,21 @@ uninstall-local:
 	echo "Removing data-files ..."
 	rm -rf $(DESTDIR)$(pkgdatadir)
 	echo "...done."
+
+
+
+## Win32 specific stuff follows here
+
+win_txts = COPYING AUTHORS README Releasetext freedroidRPG-man
+win_dir = freedroidRPG-$(VERSION)-win32
+dist-win32: src/freedroidRPG.exe
+	mkdir -p $(win_dir)
+	cp -r graphics map sound dialogs $(win_dir)
+	cp src/freedroidRPG.exe $(win_dir)
+	nroff -man freedroidRPG.6 > freedroidRPG-man
+	for i in $(win_txts); do \
+	   cp $$i $(win_dir)/$$i.txt; \
+	   emacs -batch -q -l unix2dos.el --visit=$(win_dir)/$$i.txt -f unix2dos;\
+	done
+	zip -r $(win_dir).zip $(win_dir)
+
