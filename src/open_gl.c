@@ -1253,7 +1253,8 @@ PutPixel_open_gl ( int x, int y, Uint32 pixel)
 
 #ifdef HAVE_LIBGL
   glRasterPos2i( x , y ) ;
-  glDrawPixels( 1 , 1, GL_RGBA , GL_UNSIGNED_BYTE , & pixel );
+  // glDrawPixels( 1 , 1, GL_RGBA , GL_UNSIGNED_BYTE , & pixel );
+  glDrawPixels( 1 , 1, GL_RGB , GL_UNSIGNED_BYTE , & pixel );
 #endif
 
 }; // void PutPixel_open_gl ( x , y , pixel ) ;

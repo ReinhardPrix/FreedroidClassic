@@ -171,7 +171,13 @@ ShowAutomapData( void )
 
   //--------------------
   // At first, we only blit the known data about the pure wall-type
-  // obstacles on this level
+  // obstacles on this level.
+  //
+  // Currently we handle this via putpixel, but later there should be some
+  // small images instead of the pixels and some larger surface made out of
+  // the smaller pixels..., and then there should be OpenGL-textures to 
+  // show the larger surface, updated again and again.  Well, this will
+  // have to wait for the 0.9.10 release to be implemented.
   //
   for ( y = 0 ; y < automap_level->ylen ; y ++ )
     {
