@@ -1946,9 +1946,9 @@ enum
     BACK_POSITION
   };
 
-  MenuTexts[0]="War Bot";
-  MenuTexts[1]="Sniper Bot";
-  MenuTexts[2]="Mind Bot";
+  MenuTexts[0]="War Tux";
+  MenuTexts[1]="Sniper Tux";
+  MenuTexts[2]="Hacker Tux";
   MenuTexts[3]="Back";
   MenuTexts[4]="";
   MenuTexts[5]="";

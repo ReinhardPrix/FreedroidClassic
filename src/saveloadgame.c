@@ -58,6 +58,8 @@ SaveGame( void )
   char filename[1000];
   char linebuf[10000];
   char *homedir;
+  char* MenuTexts[10]={ "Back" , "" , "" , "" , "" ,
+			"" , "" , "" , "" , "" };
 
   //--------------------
   // Saving might take a while, therefore we activate the conservative
@@ -68,6 +70,19 @@ SaveGame( void )
 
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint SaveGame( void ): real function call confirmed.");
 
+  //--------------------
+  // Now we add a security question to prevent the player from (accidentially)
+  // saving a game where his character is already dead
+  //
+  if ( Me.energy <= 0 )
+    {
+      DoMenuSelection( "\n\n    Surely you do not really want do save a game \n\n    where your tux is dead, do you?" , 
+		       MenuTexts , 1 , NULL );
+      return ( OK );
+    }
+
+
+  //--------------------
   // get home-directory to save in
   if ( (homedir = getenv("HOME")) == NULL ) 
     {
