@@ -908,6 +908,7 @@ PrepareMultipleChoiceDialog ( Enemy ChatDroid , int with_flip )
     //
     SetCurrentFont( FPS_Display_BFont );
     
+    AssembleCombatPicture ( 0 ) ;
     blit_special_background ( CHAT_DIALOG_BACKGROUND_PICTURE_CODE );
     our_SDL_blit_surface_wrapper ( chat_portrait_of_droid [ ChatDroid -> type ] . surface , NULL , 
 				   Screen , &Droid_Image_Window );
