@@ -399,40 +399,17 @@ DisplayBlock (int x, int y,
   unsigned char *screenpos;
   unsigned char *source = block;
 
-
-  /*
-   * THIS IS NEW FROM AFTER THE PORT, BECAUSE 'REALSCREEN' IS NO LONGER
-   * DIRECTLY ACCESSIBLE 
-   */
-
-  
-
   if (Parameter_screen == RealScreen) 
     {
 
       screenpos = Outline320x200 + y * SCREENLEN + x;
       
       for (i = 0; i < height; i++)
-
-#ifdef DRAW_TO_SCREEN_VARIABLE
-
-      Lock_SDL_Screen();
-
-	for (j = 0; j < len; j++)
-	  {
-	    // SDL vga_setcolor (*source);
-	    putpixel ( screen, j + x, i + y, *source );
-	    source++;
-	  }			/* for j */
-
-      Unlock_SDL_Screen();
-
-#else
-      memcpy (screenpos, source, len);
-      screenpos += SCREENLEN;
-      source += len;
-#endif
-
+	{
+	  memcpy (screenpos, source, len);
+	  screenpos += SCREENLEN;
+	  source += len;
+	}
     }
   else
     {

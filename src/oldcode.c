@@ -131,3 +131,70 @@ ClearVGAScreen (void)
 
 } // void ClearVGAScreen(void)
 
+/*-----------------------------------------------------------------
+ * @Desc: gibt Block *block (len*height) an angegebener
+ * Bildschirmposition x/y aus auf screen
+ *						
+ * @Ret: void
+ *
+ *-----------------------------------------------------------------*/
+void
+DisplayBlock (int x, int y,
+	      unsigned char *block,
+	      int len, int height, unsigned char *Parameter_screen)
+{
+  int row, i, j;
+  unsigned char *screenpos;
+  unsigned char *source = block;
+
+
+  /*
+   * THIS IS NEW FROM AFTER THE PORT, BECAUSE 'REALSCREEN' IS NO LONGER
+   * DIRECTLY ACCESSIBLE 
+   */
+
+  
+
+  if (Parameter_screen == RealScreen) 
+    {
+
+      screenpos = Outline320x200 + y * SCREENLEN + x;
+      
+      for (i = 0; i < height; i++)
+
+#ifdef DRAW_TO_SCREEN_VARIABLE
+
+      Lock_SDL_Screen();
+
+	for (j = 0; j < len; j++)
+	  {
+	    // SDL vga_setcolor (*source);
+	    putpixel ( screen, j + x, i + y, *source );
+	    source++;
+	  }			/* for j */
+
+      Unlock_SDL_Screen();
+
+#else
+      memcpy (screenpos, source, len);
+      screenpos += SCREENLEN;
+      source += len;
+#endif
+
+    }
+  else
+    {
+      screenpos = Parameter_screen + y * SCREENLEN + x;
+
+      for (row = 0; row < height; row++)
+	{
+	  memcpy (screenpos, source, len);
+	  screenpos += SCREENLEN;
+	  source += len;
+	}			/* for row */
+    }				/* else */
+
+  return;
+
+}				/* DisplayBlock */
+

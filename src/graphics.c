@@ -323,6 +323,7 @@ void
 ClearVGAScreen (void)
 {
 
+
   memset( Outline320x200, 0, SCREENBREITE * SCREENHOEHE );
 
 } // void ClearVGAScreen(void)
