@@ -2302,57 +2302,69 @@ init_obstacle_data( void )
   obstacle_map [ ISO_V_WALL ] . block_area_parm_1 = standard_wall_thickness ;
   obstacle_map [ ISO_V_WALL ] . block_area_parm_2 = 1.2 ;
   obstacle_map [ ISO_V_WALL ] . filename = "iso_walls_0001.png" ;
-  obstacle_map [ ISO_V_WALL ] . transparent = TRUE ;
+  obstacle_map [ ISO_V_WALL ] . transparent = TRANSPARENCY_FOR_WALLS ;
   obstacle_map [ ISO_H_WALL ] . block_area_parm_1 = 1.2 ;
   obstacle_map [ ISO_H_WALL ] . block_area_parm_2 = standard_wall_thickness ;
   obstacle_map [ ISO_H_WALL ] . filename = "iso_walls_0002.png" ;
-  obstacle_map [ ISO_H_WALL ] . transparent = TRUE;
+  obstacle_map [ ISO_H_WALL ] . transparent = TRANSPARENCY_FOR_WALLS;
   
   obstacle_map [ ISO_V_WALL_WITH_DOT ] . block_area_parm_1 = standard_wall_thickness ;
   obstacle_map [ ISO_V_WALL_WITH_DOT ] . block_area_parm_2 = 1.2 ;
   obstacle_map [ ISO_V_WALL_WITH_DOT ] . filename = "iso_walls_0003.png"; 
-  obstacle_map [ ISO_V_WALL_WITH_DOT ] . transparent = TRUE ;
+  obstacle_map [ ISO_V_WALL_WITH_DOT ] . transparent = TRANSPARENCY_FOR_WALLS ;
   
   obstacle_map [ ISO_H_WALL_WITH_DOT ] . block_area_parm_1 = standard_wall_thickness ;
   obstacle_map [ ISO_H_WALL_WITH_DOT ] . block_area_parm_2 = 1.2 ;
   obstacle_map [ ISO_H_WALL_WITH_DOT ] . filename = "iso_walls_0004.png" ;
-  obstacle_map [ ISO_H_WALL_WITH_DOT ] . transparent = TRUE ;
+  obstacle_map [ ISO_H_WALL_WITH_DOT ] . transparent = TRANSPARENCY_FOR_WALLS ;
 
   obstacle_map [ ISO_V_DOOR_000_OPEN ] . block_area_parm_1 = standard_wall_thickness ;
   obstacle_map [ ISO_V_DOOR_000_OPEN ] . block_area_parm_2 = 1.2 ;
   obstacle_map [ ISO_V_DOOR_000_OPEN ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_V_DOOR_000_OPEN ] . filename = "iso_doors_0006.png" ;
+  obstacle_map [ ISO_V_DOOR_000_OPEN ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS ;
   obstacle_map [ ISO_V_DOOR_025_OPEN ] . is_smashable = FALSE ;
   obstacle_map [ ISO_V_DOOR_025_OPEN ] . filename = "iso_doors_0007.png" ;
+  obstacle_map [ ISO_V_DOOR_025_OPEN ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS ;
   obstacle_map [ ISO_V_DOOR_050_OPEN ] . is_smashable = FALSE ;
   obstacle_map [ ISO_V_DOOR_050_OPEN ] . filename = "iso_doors_0008.png" ;
+  obstacle_map [ ISO_V_DOOR_050_OPEN ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS ;
   obstacle_map [ ISO_V_DOOR_075_OPEN ] . is_smashable = FALSE ;
   obstacle_map [ ISO_V_DOOR_075_OPEN ] . filename = "iso_doors_0009.png" ;
+  obstacle_map [ ISO_V_DOOR_075_OPEN ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS ;
   obstacle_map [ ISO_V_DOOR_100_OPEN ] . is_smashable = FALSE ;
   obstacle_map [ ISO_V_DOOR_100_OPEN ] . filename = "iso_doors_0010.png" ;
   obstacle_map [ ISO_V_DOOR_100_OPEN ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_V_DOOR_100_OPEN ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS ;
 
   obstacle_map [ ISO_V_DOOR_LOCKED ] . block_area_parm_1 = standard_wall_thickness ;
   obstacle_map [ ISO_V_DOOR_LOCKED ] . block_area_parm_2 = 1.2 ;
   obstacle_map [ ISO_V_DOOR_LOCKED ] . filename = "iso_doors_0012.png" ;
   obstacle_map [ ISO_V_DOOR_LOCKED ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_V_DOOR_LOCKED ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS ;
 
   obstacle_map [ ISO_H_DOOR_LOCKED ] . filename = "iso_doors_0011.png" ;
   obstacle_map [ ISO_H_DOOR_LOCKED ] . block_area_parm_1 = 1.2 ;
   obstacle_map [ ISO_H_DOOR_LOCKED ] . block_area_parm_2 = standard_wall_thickness ;
   obstacle_map [ ISO_H_DOOR_LOCKED ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_H_DOOR_LOCKED ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS ;
 
   obstacle_map [ ISO_H_DOOR_000_OPEN ] . is_smashable = FALSE ;
   obstacle_map [ ISO_H_DOOR_000_OPEN ] . filename = "iso_doors_0001.png" ;
+  obstacle_map [ ISO_H_DOOR_000_OPEN ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS ;
   obstacle_map [ ISO_H_DOOR_025_OPEN ] . is_smashable = FALSE ;
   obstacle_map [ ISO_H_DOOR_025_OPEN ] . filename = "iso_doors_0002.png" ;
+  obstacle_map [ ISO_H_DOOR_025_OPEN ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS ;
   obstacle_map [ ISO_H_DOOR_050_OPEN ] . is_smashable = FALSE ;
   obstacle_map [ ISO_H_DOOR_050_OPEN ] . filename = "iso_doors_0003.png" ;
+  obstacle_map [ ISO_H_DOOR_050_OPEN ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS ;
   obstacle_map [ ISO_H_DOOR_075_OPEN ] . is_smashable = FALSE ;
   obstacle_map [ ISO_H_DOOR_075_OPEN ] . filename = "iso_doors_0004.png" ;
+  obstacle_map [ ISO_H_DOOR_075_OPEN ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS ;
   obstacle_map [ ISO_H_DOOR_100_OPEN ] . is_smashable = FALSE ;
   obstacle_map [ ISO_H_DOOR_100_OPEN ] . filename = "iso_doors_0005.png" ;
   obstacle_map [ ISO_H_DOOR_100_OPEN ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_H_DOOR_100_OPEN ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS ;
 
   
   obstacle_map [ ISO_BLOCK_1 ] . block_area_parm_1 = 0.6 ;
@@ -2379,15 +2391,19 @@ init_obstacle_data( void )
   obstacle_map [ ISO_ENHANCER_LD ] . block_area_parm_1 = 0.8 ;
   obstacle_map [ ISO_ENHANCER_LD ] . block_area_parm_2 = 0.8 ;
   obstacle_map [ ISO_ENHANCER_LD ] . filename = "iso_machinery_0005.png" ;
+  obstacle_map [ ISO_ENHANCER_LD ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS ;
   obstacle_map [ ISO_ENHANCER_LU ] . block_area_parm_1 = 0.8 ;
   obstacle_map [ ISO_ENHANCER_LU ] . block_area_parm_2 = 0.8 ;
   obstacle_map [ ISO_ENHANCER_LU ] . filename = "iso_machinery_0006.png" ;
+  obstacle_map [ ISO_ENHANCER_LU ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS ;
   obstacle_map [ ISO_ENHANCER_RU ] . block_area_parm_1 = 0.8 ;
   obstacle_map [ ISO_ENHANCER_RU ] . block_area_parm_2 = 0.8 ;
   obstacle_map [ ISO_ENHANCER_RU ] . filename = "iso_machinery_0007.png" ;
+  obstacle_map [ ISO_ENHANCER_RU ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS; 
   obstacle_map [ ISO_ENHANCER_RD ] . block_area_parm_1 = 0.8 ;
   obstacle_map [ ISO_ENHANCER_RD ] . block_area_parm_2 = 0.8 ;
   obstacle_map [ ISO_ENHANCER_RD ] . filename = "iso_machinery_0008.png" ;
+  obstacle_map [ ISO_ENHANCER_RD ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS ;
   obstacle_map [ ISO_REFRESH_1 ] . block_area_type = COLLISION_TYPE_NONE ;
   obstacle_map [ ISO_REFRESH_1 ] . is_smashable = FALSE ;
   obstacle_map [ ISO_REFRESH_1 ] . needs_pre_put = TRUE ;
@@ -2412,18 +2428,23 @@ init_obstacle_data( void )
   obstacle_map [ ISO_TELEPORTER_1 ] . block_area_type = COLLISION_TYPE_NONE ;
   obstacle_map [ ISO_TELEPORTER_1 ] . is_smashable = FALSE ;
   obstacle_map [ ISO_TELEPORTER_1 ] . emitted_light_strength = 10 ;
+  obstacle_map [ ISO_TELEPORTER_1 ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS ;
   obstacle_map [ ISO_TELEPORTER_2 ] . block_area_type = COLLISION_TYPE_NONE ;
   obstacle_map [ ISO_TELEPORTER_2 ] . is_smashable = FALSE ;
   obstacle_map [ ISO_TELEPORTER_2 ] . emitted_light_strength = 9 ;
+  obstacle_map [ ISO_TELEPORTER_2 ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS ;
   obstacle_map [ ISO_TELEPORTER_3 ] . block_area_type = COLLISION_TYPE_NONE ;
   obstacle_map [ ISO_TELEPORTER_3 ] . is_smashable = FALSE ;
   obstacle_map [ ISO_TELEPORTER_3 ] . emitted_light_strength = 8 ;
+  obstacle_map [ ISO_TELEPORTER_3 ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS ;
   obstacle_map [ ISO_TELEPORTER_4 ] . block_area_type = COLLISION_TYPE_NONE ;
   obstacle_map [ ISO_TELEPORTER_4 ] . is_smashable = FALSE ;
   obstacle_map [ ISO_TELEPORTER_4 ] . emitted_light_strength = 9 ;
+  obstacle_map [ ISO_TELEPORTER_4 ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS ;
   obstacle_map [ ISO_TELEPORTER_5 ] . block_area_type = COLLISION_TYPE_NONE ;
   obstacle_map [ ISO_TELEPORTER_5 ] . is_smashable = FALSE ;
   obstacle_map [ ISO_TELEPORTER_5 ] . emitted_light_strength = 10 ;
+  obstacle_map [ ISO_TELEPORTER_5 ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS ;
 
   obstacle_map [ ISO_V_CHEST_OPEN ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_V_CHEST_OPEN ] . block_area_parm_1 = standard_wall_thickness ;
@@ -2496,6 +2517,7 @@ init_obstacle_data( void )
   obstacle_map [ ISO_COOKING_POT ] . block_area_parm_2 = 0.5 ;
   obstacle_map [ ISO_COOKING_POT ] . is_smashable = TRUE ;
   obstacle_map [ ISO_COOKING_POT ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_COOKING_POT ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS ;
 
   obstacle_map [ ISO_CONSOLE_N ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_CONSOLE_N ] . block_area_parm_1 = 0.8 ;
@@ -2842,7 +2864,7 @@ init_obstacle_data( void )
   obstacle_map [ ISO_TREE_5 ] . filename = "iso_tree_0001.png" ;
 
   for( i = ISO_THICK_WALL_H ; i <= ISO_THICK_WALL_T_W ; i++) {
-    obstacle_map [ i ] . transparent = TRUE ;
+    obstacle_map [ i ] . transparent = TRANSPARENCY_FOR_WALLS ;
   }
 
   obstacle_map [ ISO_THICK_WALL_H ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
@@ -2905,7 +2927,7 @@ init_obstacle_data( void )
   obstacle_map [ ISO_CAVE_WALL_END_S ] . filename = "iso_cave_wall_0010.png" ;
 
   for( i = ISO_GREY_WALL_END_W ; i <= ISO_GREY_WALL_END_S ; i++) {
-    obstacle_map [ i ] . transparent = TRUE ;
+    obstacle_map [ i ] . transparent = TRANSPARENCY_FOR_WALLS ;
   }
   obstacle_map [ ISO_GREY_WALL_END_W ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_GREY_WALL_END_W ] . block_area_parm_1 = 1.0 ;
@@ -2925,7 +2947,7 @@ init_obstacle_data( void )
   obstacle_map [ ISO_GREY_WALL_END_S ] . filename = "iso_walls_0008.png" ;
 
   for( i = ISO_LIGHT_GREEN_WALL_1 ; i <= ISO_FUNKY_WALL_4 ; i++) {
-    obstacle_map [ i ] . transparent = TRUE ;
+    obstacle_map [ i ] . transparent = TRANSPARENCY_FOR_WALLS ;
   }
 
   obstacle_map [ ISO_LIGHT_GREEN_WALL_1 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
@@ -2959,7 +2981,7 @@ init_obstacle_data( void )
   obstacle_map [ ISO_FUNKY_WALL_4 ] . filename = "iso_walls_0015.png" ;
 
   for( i = ISO_BRICK_WALL_H ; i <= ISO_BRICK_WALL_CORNER_4 ; i++) {
-    obstacle_map [ i ] . transparent = TRUE ;
+    obstacle_map [ i ] . transparent = TRANSPARENCY_FOR_WALLS ;
   }
 
   //--------------------
@@ -3007,7 +3029,7 @@ init_obstacle_data( void )
   obstacle_map [ ISO_BRICK_WALL_CORNER_4 ] . filename = "iso_brick_wall_0007.png" ;
   
   for( i = ISO_BRICK_WALL_JUNCTION_1 ; i <= ISO_BRICK_WALL_RUBBLE_2  ; i++) {
-    obstacle_map [ i ] . transparent = TRUE ;
+    obstacle_map [ i ] . transparent = TRANSPARENCY_FOR_WALLS ;
   }
 
   obstacle_map [ ISO_BRICK_WALL_JUNCTION_1 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
@@ -3164,7 +3186,7 @@ init_obstacle_data( void )
   obstacle_map [ ISO_ROCKS_N_PLANTS_8 ] . emitted_light_strength = -8 ;
   
   for( i = ISO_ROOM_WALL_V_RED ; i <= ISO_ROOM_WALL_H_GREEN ; i++) {
-    obstacle_map [ i ] . transparent = TRUE ;
+    obstacle_map [ i ] . transparent = TRANSPARENCY_FOR_WALLS ;
   }
 
   obstacle_map [ ISO_ROOM_WALL_V_RED ]  . block_area_parm_1 = standard_wall_thickness ;
@@ -3220,7 +3242,7 @@ init_obstacle_data( void )
 
 
   for( i = ISO_OUTER_WALL_N1 ; i <= ISO_OUTER_WALL_CORNER_4 ; i++) {
-    obstacle_map [ i ] . transparent = TRUE ;
+    obstacle_map [ i ] . transparent = TRANSPARENCY_FOR_WALLS ;
   }
 
   obstacle_map [ ISO_OUTER_WALL_N1 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;

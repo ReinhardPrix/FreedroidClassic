@@ -830,6 +830,11 @@ enum
     MOUSE_CURSOR_CROSSHAIR_SHAPE = -401 ,
     MOUSE_CURSOR_ARROW_SHAPE = -402
 }; 
+enum
+{
+    TRANSPARENCY_FOR_WALLS = -501 ,
+    TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS = -502
+}; 
 
 
 //--------------------

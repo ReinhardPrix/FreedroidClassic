@@ -582,8 +582,22 @@ There was an obstacle type given, that exceeds the number of\n\
 	    darkness = 2.0 - 2.0 * ( ( (float) get_light_strength ( our_obstacle -> pos ) ) / ( (float) NUMBER_OF_SHADOW_IMAGES ) ) ;
 	    if ( darkness > 1 ) darkness = 1.0 ;
 	    if ( darkness < 0 ) darkness = 0 ;
-	    blit_open_gl_texture_to_map_position ( obstacle_map [ our_obstacle -> type ] . image , 
-						   our_obstacle -> pos . x , our_obstacle -> pos . y , darkness , darkness, darkness , FALSE, obstacle_map[our_obstacle->type].transparent ) ;
+	    if ( FALSE )
+	    {
+		blit_open_gl_texture_to_map_position ( 
+		    obstacle_map [ our_obstacle -> type ] . image , 
+		    our_obstacle -> pos . x , our_obstacle -> pos . y , 
+		    darkness , darkness, darkness , FALSE, 
+		    obstacle_map [ our_obstacle -> type ] . transparent ) ;
+	    }
+	    else
+	    {
+		blit_open_gl_texture_to_map_position ( 
+		    obstacle_map [ our_obstacle -> type ] . image , 
+		    our_obstacle -> pos . x , our_obstacle -> pos . y , 
+		    darkness , darkness, darkness , FALSE, 
+		    obstacle_map [ our_obstacle -> type ] . transparent ) ;
+	    }
 	}
 	else
 	{

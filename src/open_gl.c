@@ -874,11 +874,23 @@ blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image ,
     // But alpha check functions ARE a bit faster, even on my hardware, so
     // let's stick with that possibility for now, especially with the floor.
     //
-    if ( blend && GameConfig . transparency ) 
+    if ( ( blend == TRANSPARENCY_FOR_WALLS ) && GameConfig . transparency ) 
     {
 	glEnable ( GL_BLEND ) ;
 	glBlendFunc( GL_SRC_ALPHA , GL_DST_ALPHA);
     }
+    else if ( blend == TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS ) 
+    {
+	//--------------------
+	// Sometimes some obstacles are partly transparent.  In that case
+	// alpha test is not the right thing but rather true blending is
+	// to be used...
+	//
+	glEnable ( GL_BLEND ) ;
+	glDisable( GL_ALPHA_TEST );  
+	// glBlendFunc( GL_SRC_ALPHA , GL_DST_ALPHA);
+    }
+
     //
     // glEnable( GL_ALPHA_TEST );  
     // glAlphaFunc ( GL_GREATER , 0.5 ) ;
