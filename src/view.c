@@ -433,7 +433,8 @@ local_update_of_automap_texture ( void )
     // but rather only ever second second :)
     //
     automap_update_counter += Frame_Time();
-    if ( automap_update_counter < 1.5 ) return ;
+    if ( automap_update_counter < 1.0 ) return ;
+    automap_update_counter = 0 ;
 
     //--------------------
     // We prepare the area around the Tux, where the map should be
@@ -2685,7 +2686,7 @@ grab_enemy_images_from_archive ( int enemy_model_nr )
     //--------------------
     // A short message for debug purposes
     //
-    DebugPrintf ( -4 , "\n%s:  grabbing new image series..." , __FUNCTION__ );
+    DebugPrintf ( 1 , "\n%s:  grabbing new image series..." , __FUNCTION__ );
 
     //--------------------
     // We need a file name!
@@ -3354,59 +3355,59 @@ Suspicious rotation index encountered!",
 void
 iso_put_tux ( int x , int y , int player_num )
 {
-  int rotation_index;
-  float angle;
-
-  //--------------------
-  // In case there is no weapon swing going on, we can select the direction
-  // of facing by examining the current speed.
-  //
-  if ( ( Me [ player_num ] . phase > 0 ) && ( Me [ player_num ] . phase <= TUX_SWING_PHASES ) )
+    int rotation_index;
+    float angle;
+    
+    //--------------------
+    // In case there is no weapon swing going on, we can select the direction
+    // of facing by examining the current speed.
+    //
+    if ( ( Me [ player_num ] . phase > 0 ) && ( Me [ player_num ] . phase <= TUX_SWING_PHASES ) )
     {
-      //--------------------
-      // Don't touch the direction of heading here, cause it's set correctly
-      // within the raw tux attack function anyway.
-      //
-      angle = Me [ player_num ] . angle ;
+	//--------------------
+	// Don't touch the direction of heading here, cause it's set correctly
+	// within the raw tux attack function anyway.
+	//
+	angle = Me [ player_num ] . angle ;
     }
-  else
+    else
     {
-      //--------------------
-      // We make the angle dependent upon direction of movement, but only if there really is
-      // at least some movement.
-      //
-      if ( fabsf ( Me [ player_num ] . speed . x ) + fabsf ( Me [ player_num ] . speed . y ) > 0.1 )
+	//--------------------
+	// We make the angle dependent upon direction of movement, but only if there really is
+	// at least some movement.
+	//
+	if ( fabsf ( Me [ player_num ] . speed . x ) + fabsf ( Me [ player_num ] . speed . y ) > 0.1 )
 	{
-	  angle = - ( atan2 (Me [ player_num ].speed.y,  Me [ player_num ].speed.x) * 180 / M_PI - 45 -180 );
-	  angle += 360 / ( 2 * MAX_TUX_DIRECTIONS );
-	  while ( angle < 0 ) angle += 360;
-	  Me [ player_num ] . angle = angle ;
+	    angle = - ( atan2 (Me [ player_num ].speed.y,  Me [ player_num ].speed.x) * 180 / M_PI - 45 -180 );
+	    angle += 360 / ( 2 * MAX_TUX_DIRECTIONS );
+	    while ( angle < 0 ) angle += 360;
+	    Me [ player_num ] . angle = angle ;
 	}
-      else
+	else
 	{ 
-	  angle = Me [ player_num ] . angle ;
+	    angle = Me [ player_num ] . angle ;
 	}
     }
-
-  //--------------------
-  // From the angle we can compute the index to use...
-  //
-  rotation_index = ( angle * MAX_TUX_DIRECTIONS ) / 360.0 + ( MAX_TUX_DIRECTIONS / 2 )  ;
-  while ( rotation_index >= MAX_TUX_DIRECTIONS ) rotation_index -= MAX_TUX_DIRECTIONS;
-  while ( rotation_index < 0 ) rotation_index += MAX_TUX_DIRECTIONS;
-
-  if ( Me [ player_num ] . weapon_item . type == (-1) )
+    
+    //--------------------
+    // From the angle we can compute the index to use...
+    //
+    rotation_index = ( angle * MAX_TUX_DIRECTIONS ) / 360.0 + ( MAX_TUX_DIRECTIONS / 2 )  ;
+    while ( rotation_index >= MAX_TUX_DIRECTIONS ) rotation_index -= MAX_TUX_DIRECTIONS;
+    while ( rotation_index < 0 ) rotation_index += MAX_TUX_DIRECTIONS;
+    
+    if ( Me [ player_num ] . weapon_item . type == (-1) )
     {
-      iso_put_all_tux_parts_for_sword_motion ( x , y , player_num , rotation_index );
-    }
-  else
-    {
-      if ( ItemMap [ Me [ player_num ] . weapon_item . type ] . item_gun_angle_change > 0 )
 	iso_put_all_tux_parts_for_sword_motion ( x , y , player_num , rotation_index );
-      else
-	iso_put_all_tux_parts_for_gun_motion ( x , y , player_num , rotation_index );
     }
-
+    else
+    {
+	if ( ItemMap [ Me [ player_num ] . weapon_item . type ] . item_gun_angle_change > 0 )
+	    iso_put_all_tux_parts_for_sword_motion ( x , y , player_num , rotation_index );
+	else
+	    iso_put_all_tux_parts_for_gun_motion ( x , y , player_num , rotation_index );
+    }
+    
 }; // void iso_put_tux ( int x , int y , int player_num )
 
 /* -----------------------------------------------------------------
@@ -3421,111 +3422,111 @@ iso_put_tux ( int x , int y , int player_num )
 void
 blit_tux ( int x , int y , int player_num )
 {
-  SDL_Rect TargetRectangle;
-  SDL_Rect Text_Rect;
-  int alpha_value;
-  point UpperLeftBlitCorner;
-
-  Text_Rect . x = UserCenter_x + 21 ;
-  Text_Rect . y = UserCenter_y  - 32 ;
-  Text_Rect . w = ( User_Rect . w / 2 ) - 21 ;
-  Text_Rect . h = ( User_Rect . h / 2 );
-
-  DebugPrintf ( 2 , "\nvoid blit_tux(void): real function call confirmed." ) ;
-
-  if ( x == -1 ) 
+    SDL_Rect TargetRectangle;
+    SDL_Rect Text_Rect;
+    int alpha_value;
+    point UpperLeftBlitCorner;
+    
+    Text_Rect . x = UserCenter_x + 21 ;
+    Text_Rect . y = UserCenter_y  - 32 ;
+    Text_Rect . w = ( User_Rect . w / 2 ) - 21 ;
+    Text_Rect . h = ( User_Rect . h / 2 );
+    
+    DebugPrintf ( 2 , "\nvoid blit_tux(void): real function call confirmed." ) ;
+    
+    if ( x == -1 ) 
     {
-      //--------------------
-      // The (-1) parameter indicates, that the tux should be drawn right 
-      // into the game field at it's apropriate location.
-      //
-      // Well, for game purposes, we do not need to blit anything if the
-      // tux is out, so we'll query for that first, as well as for the case
-      // of other players that are not on this level.
-      //
-      if ( Me [ player_num ] . status == OUT ) return;
-      if ( Me [ player_num ] . pos . z != Me [ 0 ] . pos . z ) return;
-      
-      UpperLeftBlitCorner.x = UserCenter_x - 32 ;
-      UpperLeftBlitCorner.y = UserCenter_y - 32 ;
-
+	//--------------------
+	// The (-1) parameter indicates, that the tux should be drawn right 
+	// into the game field at it's apropriate location.
+	//
+	// Well, for game purposes, we do not need to blit anything if the
+	// tux is out, so we'll query for that first, as well as for the case
+	// of other players that are not on this level.
+	//
+	if ( Me [ player_num ] . status == OUT ) return;
+	if ( Me [ player_num ] . pos . z != Me [ 0 ] . pos . z ) return;
+	
+	UpperLeftBlitCorner.x = UserCenter_x - 32 ;
+	UpperLeftBlitCorner.y = UserCenter_y - 32 ;
+	
     }
-  else
+    else
     {
-      //--------------------
-      // The not (-1) parameter indicates, that the tux should be drawn 
-      // for cursor purposes.  This will be done anyway, regardless of
-      // whether the tux is currently out or not.
-      //
-      UpperLeftBlitCorner.x=x ;
-      UpperLeftBlitCorner.y=y ;
+	//--------------------
+	// The not (-1) parameter indicates, that the tux should be drawn 
+	// for cursor purposes.  This will be done anyway, regardless of
+	// whether the tux is currently out or not.
+	//
+	UpperLeftBlitCorner.x=x ;
+	UpperLeftBlitCorner.y=y ;
     }
-
-  TargetRectangle.x = UpperLeftBlitCorner.x ;
-  TargetRectangle.y = UpperLeftBlitCorner.y ;
-
-
-  //--------------------
-  // Maybe the influencer is fading due to low energy?
-  // to achive this, is might be nescessary to add some 
-  // alpha to the surface, that will later be
-  // removed again.  We do this here:
-  //
-  
+    
+    TargetRectangle.x = UpperLeftBlitCorner.x ;
+    TargetRectangle.y = UpperLeftBlitCorner.y ;
+    
+    
+    //--------------------
+    // Maybe the influencer is fading due to low energy?
+    // to achive this, is might be nescessary to add some 
+    // alpha to the surface, that will later be
+    // removed again.  We do this here:
+    //
+    
 #define alpha_offset 80
-  if ( ( ( Me [ player_num ].energy * 100 / Me [ player_num ].maxenergy ) <= BLINKENERGY ) && ( x == (-1) ) ) 
+    if ( ( ( Me [ player_num ].energy * 100 / Me [ player_num ].maxenergy ) <= BLINKENERGY ) && ( x == (-1) ) ) 
     {
-
-      // In case of low energy, do the fading effect...
-      alpha_value = (int) ( ( 256 - alpha_offset ) * 
-			    fabsf( 0.5 * Me [ player_num ].MissionTimeElapsed - floor( 0.5 * Me [ player_num ].MissionTimeElapsed ) - 0.5 ) + 
-			    ( alpha_offset ) );
-
-      // ... and also maybe start a new cry-sound
-
-      if ( Me [ player_num ].LastCrysoundTime > CRY_SOUND_INTERVAL )
+	
+	// In case of low energy, do the fading effect...
+	alpha_value = (int) ( ( 256 - alpha_offset ) * 
+			      fabsf( 0.5 * Me [ player_num ].MissionTimeElapsed - floor( 0.5 * Me [ player_num ].MissionTimeElapsed ) - 0.5 ) + 
+			      ( alpha_offset ) );
+	
+	// ... and also maybe start a new cry-sound
+	
+	if ( Me [ player_num ].LastCrysoundTime > CRY_SOUND_INTERVAL )
 	{
-	  Me [ player_num ].LastCrysoundTime = 0;
-	  CrySound();
+	    Me [ player_num ].LastCrysoundTime = 0;
+	    CrySound();
 	}
     }
-
-  //--------------------
-  // In case of transfer mode, we produce the transfer mode sound
-  // but of course only in some periodic intervall...
-
-  if ( Me [ player_num ].status == TRANSFERMODE )
+    
+    //--------------------
+    // In case of transfer mode, we produce the transfer mode sound
+    // but of course only in some periodic intervall...
+    
+    if ( Me [ player_num ].status == TRANSFERMODE )
     {
-      if ( Me [ player_num ].LastTransferSoundTime > TRANSFER_SOUND_INTERVAL )
+	if ( Me [ player_num ].LastTransferSoundTime > TRANSFER_SOUND_INTERVAL )
 	{
-	  Me [ player_num ].LastTransferSoundTime = 0;
-	  TransferSound();
+	    Me [ player_num ].LastTransferSoundTime = 0;
+	    TransferSound();
 	}
     }
-
-  //--------------------
-  // Either we draw the classical influencer or we draw the more modern
-  // tux, a descendant of the influencer :)
-  //
-  iso_put_tux ( x , y , player_num );
-
-  //--------------------
-  // Now that all fading effects are done, we can restore the blocks surface to OPAQUE,
-  // which is the oposite of TRANSPARENT :)
-  //
-
-  //--------------------
-  // Maybe the influencer has something to say :)
-  // so let him say it..
-  //
-  if ( ( x == (-1) ) && ( Me [ player_num ].TextVisibleTime < GameConfig.WantedTextVisibleTime ) && GameConfig.All_Texts_Switch )
+    
+    //--------------------
+    // Either we draw the classical influencer or we draw the more modern
+    // tux, a descendant of the influencer :)
+    //
+    iso_put_tux ( x , y , player_num );
+    
+    //--------------------
+    // Now that all fading effects are done, we can restore the blocks surface to OPAQUE,
+    // which is the oposite of TRANSPARENT :)
+    //
+    
+    //--------------------
+    // Maybe the influencer has something to say :)
+    // so let him say it..
+    //
+    if ( ( x == (-1) ) && ( Me [ player_num ].TextVisibleTime < GameConfig.WantedTextVisibleTime ) && GameConfig.All_Texts_Switch )
     {
-      SetCurrentFont( FPS_Display_BFont );
-      DisplayText( Me [ player_num ] . TextToBeDisplayed , UserCenter_x + 21 ,
-		   UserCenter_y - 32 , &Text_Rect );
+	SetCurrentFont( FPS_Display_BFont );
+	DisplayText( Me [ player_num ] . TextToBeDisplayed , UserCenter_x + 21 ,
+		     UserCenter_y - 32 , &Text_Rect );
     }
-
-  DebugPrintf (2, "\nvoid blit_tux(void): enf of function reached.");
+    
+    DebugPrintf (2, "\nvoid blit_tux(void): enf of function reached.");
 
 }; // void blit_tux( int x , int y )
 
@@ -3808,6 +3809,11 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 	 ( last_death_animation_image [ ThisRobot -> type ] - first_walk_animation_image [ ThisRobot -> type ] <= 0 ) )
 	return;
     
+    //--------------------
+    // Some extra security against strange or undefined animation phases
+    //
+    
+
     //--------------------
     // Maybe the rotation model we're going to use now isn't yet loaded. 
     // Now in this case, we must load it immediately, or a segfault may

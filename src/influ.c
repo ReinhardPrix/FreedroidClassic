@@ -310,31 +310,31 @@ tux_wants_to_attack_now ( int player_num )
 	
 	return; 
     }
-  
-  //--------------------
-  // If the Tux has a weapon and this weapon requires some ammunition, then
-  // we have to check for enough ammunition first...
-  //
-  if ( Me [ 0 ] . weapon_item . type >= 0 )
+    
+    //--------------------
+    // If the Tux has a weapon and this weapon requires some ammunition, then
+    // we have to check for enough ammunition first...
+    //
+    if ( Me [ 0 ] . weapon_item . type >= 0 )
     {
-      if ( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_use_ammunition )
+	if ( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_use_ammunition )
 	{
-	  if ( ! CountItemtypeInInventory ( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_use_ammunition , 
-					   0 ) )
+	    if ( ! CountItemtypeInInventory ( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_use_ammunition , 
+					      0 ) )
 	    {
-	      No_Ammo_Sound( );
-
-	      //--------------------
-	      // So no ammunition... We should say so and return...
-	      //
-	      return ;
+		No_Ammo_Sound( );
+		
+		//--------------------
+		// So no ammunition... We should say so and return...
+		//
+		return ;
 	    }
-	  else
-	    DeleteOneInventoryItemsOfType( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_use_ammunition , 0 );
+	    else
+		DeleteOneInventoryItemsOfType( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_use_ammunition , 0 );
 	}
     }
-  
-  PerformTuxAttackRaw ( 0 ) ;      
+    
+    PerformTuxAttackRaw ( 0 ) ;      
 
 }; // void tux_wants_to_attack_now ( int player_num ) 
 
@@ -2550,165 +2550,201 @@ ButtonPressWasNotMeantAsFire( player_num )
 void
 PerformTuxAttackRaw ( int player_num ) 
 {
-  int guntype = ItemMap[ Me [ player_num ] . weapon_item.type ].item_gun_bullet_image_type;   // which gun do we have ? 
-  float angle;
-  moderately_finepoint Weapon_Target_Vector;
-  int i;
-  int melee_weapon_hit_something = FALSE ;
-
+    int guntype = ItemMap[ Me [ player_num ] . weapon_item . type ] . item_gun_bullet_image_type ;
+    float angle;
+    moderately_finepoint Weapon_Target_Vector;
+    int i;
+    int melee_weapon_hit_something = FALSE ;
+    int droid_under_melee_attack_cursor; 
+    int do_melee_strike ;
+    finepoint MapPositionOfMouse;
 #define PERFORM_TUX_ATTACK_RAW_DEBUG 1
 
-  //--------------------
-  // We should always make the sound of a fired bullet (or weapon swing)
-  // and then of course also subtract a certain fee from the remaining weapon
-  // duration in the course of the swing/hit
-  //
-  DebugPrintf ( PERFORM_TUX_ATTACK_RAW_DEBUG , "\nWeapon_item: %d guntype: %d . " ,  Me [ player_num ] . weapon_item . type , guntype );
+    //--------------------
+    // We should always make the sound of a fired bullet (or weapon swing)
+    // and then of course also subtract a certain fee from the remaining weapon
+    // duration in the course of the swing/hit
+    //
+    DebugPrintf ( PERFORM_TUX_ATTACK_RAW_DEBUG , "\nWeapon_item: %d guntype: %d . " ,  Me [ player_num ] . weapon_item . type , guntype );
 
-  //--------------------
-  // The weapon was used and therefore looses some of it's durability
-  //
-  DamageItem ( & ( Me [ player_num ] . weapon_item  ) );
+    //--------------------
+    // The weapon was used and therefore looses some of it's durability
+    //
+    DamageItem ( & ( Me [ player_num ] . weapon_item  ) );
+    
+    //--------------------
+    // We always start the weapon application cycle, i.e. change of Tux
+    // motion phases
+    //
+    Me [ player_num ] . weapon_swing_time = 0;
 
-  //--------------------
-  // We always start the weapon application cycle, i.e. change of Tux
-  // motion phases
-  //
-  Me [ player_num ] . weapon_swing_time = 0;
-
-  //--------------------
-  // Now that an attack is being made, the Tux must turn thowards the direction
-  // of the attack, no matter what.
-  //
-  Me [ player_num ] . angle = - ( atan2 ( ServerThinksInputAxisY ( player_num ) + 16 ,  
-					 ServerThinksInputAxisX ( player_num ) + 16 ) * 180 / M_PI + 90 );
-  Me [ player_num ] . speed . x = 0 ;
-  Me [ player_num ] . speed . y = 0 ;
-  Me [ player_num ] . mouse_move_target . x = Me [ player_num ] . pos . x ;
-  Me [ player_num ] . mouse_move_target . y = Me [ player_num ] . pos . y ;
-  Me [ player_num ] . mouse_move_target . z = Me [ player_num ] . pos . z; 
-  Me [ player_num ] . mouse_move_target_is_enemy = -1 ;
-
-  //--------------------
-  // But if the currently used weapon is a melee weapon, the tux no longer
-  // generates a bullet, but rather does his weapon swinging motion and
-  // only the damage is done to the robots in the area of effect
-  //
-  if ( ( ItemMap [ Me [ player_num ] . weapon_item . type ] . item_gun_angle_change != 0 ) ||
-       ( Me [ player_num ] . weapon_item . type == (-1) ) )
+    //--------------------
+    // Now that an attack is being made, the Tux must turn thowards the direction
+    // of the attack, no matter what.
+    //
+    Me [ player_num ] . angle = - ( atan2 ( ServerThinksInputAxisY ( player_num ) + 16 ,  
+					    ServerThinksInputAxisX ( player_num ) + 16 ) * 180 / M_PI + 90 );
+    Me [ player_num ] . speed . x = 0 ;
+    Me [ player_num ] . speed . y = 0 ;
+    Me [ player_num ] . mouse_move_target . x = Me [ player_num ] . pos . x ;
+    Me [ player_num ] . mouse_move_target . y = Me [ player_num ] . pos . y ;
+    Me [ player_num ] . mouse_move_target . z = Me [ player_num ] . pos . z; 
+    Me [ player_num ] . mouse_move_target_is_enemy = -1 ;
+    
+    //--------------------
+    // But if the currently used weapon is a melee weapon, the tux no longer
+    // generates a bullet, but rather does his weapon swinging motion and
+    // only the damage is done to the robots in the area of effect
+    //
+    do_melee_strike = FALSE ;
+    if ( Me [ player_num ] . weapon_item . type == (-1) )
+	do_melee_strike = TRUE ;
+    else if ( ItemMap [ Me [ player_num ] . weapon_item . type ] . item_gun_angle_change != 0 )
+	do_melee_strike = TRUE ;
+    if ( do_melee_strike )
     {
-      //--------------------
-      // Since a melee weapon is swung, which may be only influencers fists,
-      // we calculate where the point
-      // of the weapon should be finally hitting and do some damage
-      // to all the enemys in that area.
-      //
-      angle = - ( atan2 ( ServerThinksInputAxisY ( player_num ) + 16 ,  
-			  ServerThinksInputAxisX ( player_num ) + 16 ) * 180 / M_PI + 90 - 45 );
-      DebugPrintf( PERFORM_TUX_ATTACK_RAW_DEBUG , "\n===> Fire Bullet: angle=%f. " , angle ) ;
-      DebugPrintf( PERFORM_TUX_ATTACK_RAW_DEBUG , "\n===> Fire Bullet: InpAxis: X=%d Y=%d . " , 
-		   ServerThinksInputAxisX ( player_num ) , 
-		   ServerThinksInputAxisY ( player_num ) ) ;
-      Weapon_Target_Vector.x = 0 ;
-      Weapon_Target_Vector.y = - 0.8 ;
-      RotateVectorByAngle ( & Weapon_Target_Vector , angle );
-      Weapon_Target_Vector.x += Me [ player_num ] . pos . x;
-      Weapon_Target_Vector.y += Me [ player_num ] . pos . y;
-      DebugPrintf( PERFORM_TUX_ATTACK_RAW_DEBUG , "\n===> Fire Bullet target: x=%f, y=%f. " , Weapon_Target_Vector.x , Weapon_Target_Vector.y ) ;
-      
-      for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i ++ )
+	//--------------------
+	// Since a melee weapon is swung, which may be only influencers fists,
+	// we calculate where the point
+	// of the weapon should be finally hitting and do some damage
+	// to all the enemys in that area.
+	//
+	// However, simply using the pixel-to-map-location code with the current
+	// mouse pointer is not the way, since the droid (e.g. 302) might be high
+	// above the floor and the click right on it might point to a floor spot
+	// right behind the Tux actual position, so care is advised in that case...
+	//
+	droid_under_melee_attack_cursor = GetLivingDroidBelowMouseCursor ( player_num ) ;
+	if ( ( droid_under_melee_attack_cursor != (-1) )
+	     && ( !APressed() ) )
 	{
-	  if ( AllEnemys [ i ] . Status == OUT ) continue;
-	  if ( AllEnemys [ i ] . pos . z != Me [ player_num ] . pos . z ) continue;
-	  if ( fabsf ( AllEnemys [ i ] . pos . x - Weapon_Target_Vector.x ) > 0.5 ) continue;
-	  if ( fabsf ( AllEnemys [ i ] . pos . y - Weapon_Target_Vector.y ) > 0.5 ) continue;
-
-	  //--------------------
-	  // So here we know, that the Tux weapon swing might actually hit something
-	  // as far as only 'area of attack' and position of possible target is 
-	  // concerned.  So now we check, whether this weapon swing really is a 'hit'
-	  // in the sense of AD&D games, that something can either hit or miss.
-	  //
-	  if ( MyRandom ( 100 ) > Me [ player_num ] . to_hit ) continue ; 
-
-	  AllEnemys [ i ] . energy -= Me [ player_num ] . base_damage + MyRandom ( Me [ player_num ] . damage_modifier );
-	  enemy_spray_blood ( & ( AllEnemys [ i ] ) ) ;
-
-	  melee_weapon_hit_something = TRUE;
-
-	  start_gethit_animation_if_applicable ( & ( AllEnemys [ i ] ) ) ; 
-
-	  // AllEnemys[ i ] . is_friendly = 0 ;
-	  // AllEnemys[ i ] . combat_state = MAKE_ATTACK_RUN ;
-	  robot_group_turn_hostile ( i );
-	  SetRestOfGroupToState ( & ( AllEnemys[i] ) , MAKE_ATTACK_RUN );
-
-	  //--------------------
-	  // We'll launch the attack cry of this bot...
-	  //
-	  if ( Druidmap[ AllEnemys[ i ] . type ].greeting_sound_type != (-1) )
-	    {
-	      play_enter_attack_run_state_sound ( Druidmap[ AllEnemys[ i ] . type ].greeting_sound_type );
-	    }
-
-	  //--------------------
-	  // War tux freezes enemys with the appropriate plugin...
-	  AllEnemys[ i ] . frozen += Me [ player_num ] . freezing_melee_targets ; 
-
-	  AllEnemys[ i ] . firewait = 
-	    1 * ItemMap [ Druidmap [ AllEnemys [ i ] . type ] . weapon_item.type ] . item_gun_recharging_time ;
-	    // 2 * ItemMap [ Druidmap [ AllEnemys [ i ] . type ] . weapon_item.type ] . item_gun_recharging_time ;
-
-	  //--------------------
-	  // Only if the Tux didn't kill the poor bot, we'll play the 'got-hit-sound' of
-	  // that enemy, otherwise the InitaiteDeathOfThisEnemy function will play the 
-	  // death sound for this enemy anyway.
-	  //
-	  if ( AllEnemys[ i ] . energy > 0 )
-	    PlayEnemyGotHitSound ( Druidmap [ AllEnemys [ i ] . type ] . got_hit_sound_type );
-
-	  DebugPrintf( PERFORM_TUX_ATTACK_RAW_DEBUG , "\n===> Fire Bullet hit something.... melee ... " ) ;
+	    angle = - ( atan2 ( Me [ player_num ] . pos . y - AllEnemys [ droid_under_melee_attack_cursor ] . pos . y ,
+				Me [ player_num ] . pos . x - AllEnemys [ droid_under_melee_attack_cursor ] . pos . x ) * 180 / M_PI - 90 + 22.5 );
+	    DebugPrintf ( 1 , "\nUsing droid under mouse cursor for attack positioning..." );
 	}
+	else
+	{
+	    MapPositionOfMouse . x = translate_pixel_to_map_location ( 
+		player_num , 
+		(float) ServerThinksInputAxisX ( player_num ) , 
+		(float) ServerThinksInputAxisY ( player_num ) , TRUE ) ;
+	    MapPositionOfMouse . y = translate_pixel_to_map_location ( 
+		player_num , 
+		(float) ServerThinksInputAxisX ( player_num ) , 
+		(float) ServerThinksInputAxisY ( player_num ) , FALSE ) ;
+	    angle = - ( atan2 ( Me [ player_num ] . pos . y - MapPositionOfMouse . y ,
+				Me [ player_num ] . pos . x - MapPositionOfMouse . x ) * 180 / M_PI - 90 + 22.5 );
+	}
+	//--------------------
+	// We need to write this back into the Tux struct, because the
+	// value from there is used in the blitting code.
+	//
+	Me [ player_num ] . angle = angle ;
 
-      //--------------------
-      // Also, we should check if there was perhaps a chest or box
-      // or something that can be smashed up, cause in this case, we
-      // must open pendoras box now.
-      //
-      // SmashBox ( Weapon_Target_Vector.x , Weapon_Target_Vector.y );
-      if ( smash_obstacle ( Weapon_Target_Vector.x , Weapon_Target_Vector.y ) )
-	melee_weapon_hit_something = TRUE;
-      
-      //--------------------
-      // Finally we add a new wait-counter, so that bullets or swings
-      // cannot be started in too rapid succession.  
-      // 
-      // And then we can return, for real bullet generation in the sense that
-      // we would have to enter something into the AllBullets array or that
-      // isn't required in our case here.
-      //
-      if ( Me [ player_num ] . weapon_item . type != ( -1 ) )
-	Me [ player_num ] . firewait = ItemMap [ Me [ player_num ] . weapon_item.type ] . item_gun_recharging_time;
-      else
-	Me [ player_num ] . firewait = 0.5;
+	DebugPrintf( PERFORM_TUX_ATTACK_RAW_DEBUG , "\n===> Fire Bullet: angle=%f. " , angle ) ;
+	DebugPrintf( PERFORM_TUX_ATTACK_RAW_DEBUG , "\n===> Fire Bullet: InpAxis: X=%d Y=%d . " , 
+		     ServerThinksInputAxisX ( player_num ) , 
+		     ServerThinksInputAxisY ( player_num ) ) ;
+	Weapon_Target_Vector.x = 0 ;
+	Weapon_Target_Vector.y = - 0.8 ;
+	RotateVectorByAngle ( & Weapon_Target_Vector , angle );
+	Weapon_Target_Vector.x += Me [ player_num ] . pos . x;
+	Weapon_Target_Vector.y += Me [ player_num ] . pos . y;
+	DebugPrintf( PERFORM_TUX_ATTACK_RAW_DEBUG , "\n===> Fire Bullet target: x=%f, y=%f. " , Weapon_Target_Vector.x , Weapon_Target_Vector.y ) ;
+	
+	for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i ++ )
+	{
+	    if ( AllEnemys [ i ] . Status == OUT ) continue;
+	    if ( AllEnemys [ i ] . pos . z != Me [ player_num ] . pos . z ) continue;
+	    if ( fabsf ( AllEnemys [ i ] . pos . x - Weapon_Target_Vector.x ) > 0.5 ) continue;
+	    if ( fabsf ( AllEnemys [ i ] . pos . y - Weapon_Target_Vector.y ) > 0.5 ) continue;
+	    
+	    //--------------------
+	    // So here we know, that the Tux weapon swing might actually hit something
+	    // as far as only 'area of attack' and position of possible target is 
+	    // concerned.  So now we check, whether this weapon swing really is a 'hit'
+	    // in the sense of AD&D games, that something can either hit or miss.
+	    //
+	    if ( MyRandom ( 100 ) > Me [ player_num ] . to_hit ) continue ; 
+	    
+	    AllEnemys [ i ] . energy -= Me [ player_num ] . base_damage + MyRandom ( Me [ player_num ] . damage_modifier );
+	    enemy_spray_blood ( & ( AllEnemys [ i ] ) ) ;
+	    
+	    melee_weapon_hit_something = TRUE;
+	    
+	    start_gethit_animation_if_applicable ( & ( AllEnemys [ i ] ) ) ; 
+	    
+	    // AllEnemys[ i ] . is_friendly = 0 ;
+	    // AllEnemys[ i ] . combat_state = MAKE_ATTACK_RUN ;
+	    robot_group_turn_hostile ( i );
+	    SetRestOfGroupToState ( & ( AllEnemys[i] ) , MAKE_ATTACK_RUN );
+	    
+	    //--------------------
+	    // We'll launch the attack cry of this bot...
+	    //
+	    if ( Druidmap[ AllEnemys[ i ] . type ].greeting_sound_type != (-1) )
+	    {
+		play_enter_attack_run_state_sound ( Druidmap[ AllEnemys[ i ] . type ].greeting_sound_type );
+	    }
+	    
+	    //--------------------
+	    // War tux freezes enemys with the appropriate plugin...
+	    AllEnemys[ i ] . frozen += Me [ player_num ] . freezing_melee_targets ; 
+	    
+	    AllEnemys[ i ] . firewait = 
+		1 * ItemMap [ Druidmap [ AllEnemys [ i ] . type ] . weapon_item.type ] . item_gun_recharging_time ;
+	    // 2 * ItemMap [ Druidmap [ AllEnemys [ i ] . type ] . weapon_item.type ] . item_gun_recharging_time ;
+	    
+	    //--------------------
+	    // Only if the Tux didn't kill the poor bot, we'll play the 'got-hit-sound' of
+	    // that enemy, otherwise the InitaiteDeathOfThisEnemy function will play the 
+	    // death sound for this enemy anyway.
+	    //
+	    if ( AllEnemys[ i ] . energy > 0 )
+		PlayEnemyGotHitSound ( Druidmap [ AllEnemys [ i ] . type ] . got_hit_sound_type );
+	    
+	    DebugPrintf( PERFORM_TUX_ATTACK_RAW_DEBUG , "\n===> Fire Bullet hit something.... melee ... " ) ;
+	}
+	
+	//--------------------
+	// Also, we should check if there was perhaps a chest or box
+	// or something that can be smashed up, cause in this case, we
+	// must open pendoras box now.
+	//
+	// SmashBox ( Weapon_Target_Vector.x , Weapon_Target_Vector.y );
+	if ( smash_obstacle ( Weapon_Target_Vector.x , Weapon_Target_Vector.y ) )
+	    melee_weapon_hit_something = TRUE;
+	
+	//--------------------
+	// Finally we add a new wait-counter, so that bullets or swings
+	// cannot be started in too rapid succession.  
+	// 
+	// And then we can return, for real bullet generation in the sense that
+	// we would have to enter something into the AllBullets array or that
+	// isn't required in our case here.
+	//
+	if ( Me [ player_num ] . weapon_item . type != ( -1 ) )
+	    Me [ player_num ] . firewait = ItemMap [ Me [ player_num ] . weapon_item.type ] . item_gun_recharging_time;
+	else
+	    Me [ player_num ] . firewait = 0.5;
+	
+	// Now we modify for melee weapon skill...
+	Me [ player_num ] . firewait *= 
+	    MeleeRechargeMultiplierTable [ Me [ player_num ] . melee_weapon_skill ] ;
 
-      // Now we modify for melee weapon skill...
-      Me [ player_num ] . firewait *= MeleeRechargeMultiplierTable [ Me [ player_num ] . melee_weapon_skill ] ;
-
-
-      if ( melee_weapon_hit_something ) play_melee_weapon_hit_something_sound();
-      else play_melee_weapon_missed_sound();
-
+	if ( melee_weapon_hit_something ) play_melee_weapon_hit_something_sound();
+	else play_melee_weapon_missed_sound();
+	
       return;
     }
 
-  //--------------------
-  //
-  if ( Me [ player_num ] . weapon_item . type != (-1) ) Fire_Bullet_Sound ( guntype );
-  else Fire_Bullet_Sound ( LASER_SWORD_1 );
-
-  FireTuxRangedWeaponRaw ( player_num , Me [ player_num ] . weapon_item . type , guntype, FALSE , 0 , 0 , 0 , 0 , -1 ) ;
-
+    //--------------------
+    //
+    if ( Me [ player_num ] . weapon_item . type != (-1) ) Fire_Bullet_Sound ( guntype );
+    else Fire_Bullet_Sound ( LASER_SWORD_1 );
+    
+    FireTuxRangedWeaponRaw ( player_num , Me [ player_num ] . weapon_item . type , guntype, FALSE , 0 , 0 , 0 , 0 , -1 ) ;
+    
 }; // void PerformTuxAttackRaw ( int player_num ) ;
 
 /* ----------------------------------------------------------------------

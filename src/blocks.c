@@ -1400,49 +1400,79 @@ Freedroid received a rotation model number that does not exist!",
 void 
 Load_Enemy_Surfaces( void )
 {
-  int i;
-  int j;
-
-  //--------------------
-  // We clean out the rotated enemy surface pointers, so that later we
-  // can judge securely which of them have been initialized (non-Null)
-  // and which of them have not.
-  //
-  for ( j = 0 ; j < ENEMY_ROTATION_MODELS_AVAILABLE ; j ++ )
+    int i;
+    int j;
+    
+    //--------------------
+    // We clean out the rotated enemy surface pointers, so that later we
+    // can judge securely which of them have been initialized (non-Null)
+    // and which of them have not.
+    //
+    for ( j = 0 ; j < ENEMY_ROTATION_MODELS_AVAILABLE ; j ++ )
     {
-      for ( i=0 ; i < ROTATION_ANGLES_PER_ROTATION_MODEL ; i++ )
+	for ( i=0 ; i < ROTATION_ANGLES_PER_ROTATION_MODEL ; i++ )
 	{
-	  enemy_iso_images [ j ] [ i ] [ 0 ] . surface = NULL ;
+	    enemy_iso_images [ j ] [ i ] [ 0 ] . surface = NULL ;
 	}
     }
 
-  //--------------------
-  // This needs to be initialized once, and this just seems a good place
-  // to do this, so we can use the i++ syntax.
-  //
-  i=0;
-  PrefixToFilename [ i ] = "001" ; // 0
-  first_walk_animation_image [ i ] = 1 ;
-  last_walk_animation_image [ i ] = 1 ;
-  first_attack_animation_image [ i ] = 1 ;
-  last_attack_animation_image [ i ] = 1 ;
-  first_gethit_animation_image [ i ] = 1 ;
-  last_gethit_animation_image [ i ] = 1 ;
-  first_death_animation_image [ i ] = 1 ;
-  last_death_animation_image [ i ] = 1 ;
-  first_stand_animation_image [ i ] = 1 ;
-  last_stand_animation_image [ i ] = 1 ;
-  use_default_attack_image [ i ] = TRUE ;
-  use_default_gethit_image [ i ] = TRUE ;
-  use_default_death_image [ i ] = TRUE ;
-  use_default_stand_image [ i ] = TRUE ;
-  Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
-  droid_walk_animation_speed_factor [ i ] = 5 ;
-  droid_attack_animation_speed_factor [ i ] = 5 ;
-  droid_gethit_animation_speed_factor [ i ] = 5 ;
-  droid_death_animation_speed_factor [ i ] = 5 ;
-  droid_stand_animation_speed_factor [ i ] = 5 ;
-  ModelMultiplier  [ i ] = 1 ; i++;
+    //--------------------
+    // When using the new tux image collection files, the animation cycle
+    // lengthes for droids will be taken from the image collection file itself.
+    // That is good, because it's so dynamic.  However, it also means, that
+    // the real animation phase lengthes and that will in general not be known
+    // until the graphics for that bot has been loaded.  But on the other hand
+    // it might happen that some phase computation is done before the first
+    // blit already.  In that case, uninitialized data structs might cause 
+    // severe harm.  Therefore we initialize some sane default values, that should
+    // protect against certain cases of wrong phase counts.
+    //
+    for ( i = 0 ; i < ENEMY_ROTATION_MODELS_AVAILABLE ; i ++ )
+    {
+	first_walk_animation_image [ i ] = 1 ;
+	last_walk_animation_image [ i ] = 1 ;
+	first_attack_animation_image [ i ] = 1 ;
+	last_attack_animation_image [ i ] = 1 ;
+	first_gethit_animation_image [ i ] = 1 ;
+	last_gethit_animation_image [ i ] = 1 ;
+	first_death_animation_image [ i ] = 1 ;
+	last_death_animation_image [ i ] = 1 ;
+	first_stand_animation_image [ i ] = 1 ;
+	last_stand_animation_image [ i ] = 1 ;
+	use_default_attack_image [ i ] = TRUE ;
+	use_default_gethit_image [ i ] = TRUE ;
+	use_default_death_image [ i ] = TRUE ;
+	use_default_stand_image [ i ] = TRUE ;
+    }
+
+    //--------------------
+    // This needs to be initialized once, and this just seems a good place
+    // to do this, so we can use the i++ syntax.
+    //
+    i = 0 ;
+    PrefixToFilename [ i ] = "001" ; // 0
+    first_walk_animation_image [ i ] = 1 ;
+    last_walk_animation_image [ i ] = 1 ;
+    first_attack_animation_image [ i ] = 1 ;
+    last_attack_animation_image [ i ] = 1 ;
+    first_gethit_animation_image [ i ] = 1 ;
+    last_gethit_animation_image [ i ] = 1 ;
+    first_death_animation_image [ i ] = 1 ;
+    last_death_animation_image [ i ] = 1 ;
+    first_stand_animation_image [ i ] = 1 ;
+    last_stand_animation_image [ i ] = 1 ;
+    use_default_attack_image [ i ] = TRUE ;
+    use_default_gethit_image [ i ] = TRUE ;
+    use_default_death_image [ i ] = TRUE ;
+    use_default_stand_image [ i ] = TRUE ;
+    Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
+    droid_walk_animation_speed_factor [ i ] = 5 ;
+    droid_attack_animation_speed_factor [ i ] = 5 ;
+    droid_gethit_animation_speed_factor [ i ] = 5 ;
+    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_stand_animation_speed_factor [ i ] = 5 ;
+    ModelMultiplier  [ i ] = 1 ; i++;
+
   PrefixToFilename [ i ] = "123" ; // 1
   //--------------------
   // As the 123 now uses an image collection file, the information
