@@ -36,6 +36,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 // #include <vga.h>
 // #include <vgagl.h>
 // #include <vgakeyboard.h>
@@ -90,6 +91,12 @@ Init_SDL_Keyboard(void)
 int 
 keyboard_update(void)
 {
+  static int Number_Of_Screenshot=0;
+  char *Screenshoot_Filename;
+
+  // Screenshoot_Filename=malloc(100);
+  //="This is a dummy string, that should be sufficiently long ";
+
   while( SDL_PollEvent( &event ) )
     {
       switch( event.type )
@@ -171,6 +178,15 @@ keyboard_update(void)
 	      break;
 	    case SDLK_p:
 	      CurrentlyPPressed=TRUE;
+
+	      Screenshoot_Filename=malloc(100);
+	      printf("\n\nScreenshoot function called.\n\n");
+	      sprintf( Screenshoot_Filename , "Screenshot_%d.bmp", Number_Of_Screenshot );
+	      printf("\n\nScreenshoot function: The Filename is: %s.\n\n" , Screenshoot_Filename );
+	      SDL_SaveBMP( ScaledSurface , Screenshoot_Filename );
+	      Number_Of_Screenshot++;
+	      free(Screenshoot_Filename);
+
 	      break;
 	    case SDLK_q:
 	      CurrentlyQPressed=TRUE;
