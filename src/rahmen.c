@@ -474,7 +474,7 @@ ShowCurrentTextWindow ( void )
   SDL_SetClipRect( Screen , NULL );  // this unsets the clipping rectangle
   if ( strlen( ItemDescText ) > 1 )
     {
-      SDL_FillRect( Screen , &Banner_Text_Rect , BANNER_TEXT_REC_BACKGROUNDCOLOR );
+      // SDL_FillRect( Screen , &Banner_Text_Rect , BANNER_TEXT_REC_BACKGROUNDCOLOR );
     }
   SetCurrentFont( FPS_Display_BFont );
   // SetCurrentFont( Red_BFont );
