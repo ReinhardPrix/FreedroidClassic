@@ -87,6 +87,7 @@ enum
 #define NE_BULLET_BLOCK_FILE 	"ne_bullet.png"
 #define NE_BLAST_BLOCK_FILE 	"ne_blast.png"
 #define NE_DIGIT_BLOCK_FILE     "ne_digits.gif"
+#define NE_ITEMS_BLOCK_FILE     "ne_items.png"
 
 #define NE_CONSOLEN_PIC_FILE    "ne_cons.png" 
 #define NE_BANNER_BLOCK_FILE    "ne_rahmen.png"
@@ -312,6 +313,8 @@ enum _directions
 #define MAX_MISSION_TRIGGERED_ACTIONS 10
 #define MAX_STATEMENTS_PER_LEVEL 30
 #define MAX_CODEPANELS_PER_LEVEL 30
+#define MAX_ITEMS_PER_LEVEL 30
+#define ALL_ITEMS 4
 
 #define MAX_LIFTS	 	50  	/* actually the entries to the lifts */
 #define MAX_LEVELS		29   	/* don't change this easily */

@@ -198,6 +198,18 @@ typedef struct
 
 typedef struct
 {
+  char* ItemName;
+  SDL_Surface* SurfacePointer;
+} itemspec , *Itemspec;
+
+typedef struct
+{
+  finepoint pos;
+  int type;
+} item, *Item;
+
+typedef struct
+{
   char *druidname;
   double maxspeed;		/* the maximum of speed it can go */
   int class;

@@ -242,15 +242,6 @@ Assemble_Combat_Picture (int mask)
 	}			// for(col) 
     }				// for(line) 
 
-  /*
-  if (SDL_SetColorKey(ne_blocks, SDL_SRCCOLORKEY, ne_transp_key) == -1 )
-    {
-      fprintf (stderr, "Transp setting by SDL_SetColorKey() failed: %s \n",
-	       SDL_GetError());
-      Terminate(ERR);
-    }
-  */
-
   if (mask & ONLY_SHOW_MAP) 
     {
       // in case we only draw the map, we are done here.  But
@@ -262,6 +253,11 @@ Assemble_Combat_Picture (int mask)
 
   // At this point we know that now only the map is to be drawn.
   // so we start drawing the rest of the INTERIOR of the combat window:
+
+  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+    {
+      PutItem( i );
+    }
 
   for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
     PutEnemy (i , -1 , -1 );
@@ -828,20 +824,43 @@ PutBullet (int BulletNummer)
 
 }; // void PutBullet (int Bulletnumber )
 
-/*@Function============================================================
-@Desc:  PutBlast: This function draws a blast into the combat window.
-        The only given parameter is the number of the blast within
-	the AllBlasts array.
+/* ----------------------------------------------------------------------
+ * This function draws an item into the combat window.
+ * The only given parameter is the number of the item within
+ * the AllItems array.
+ * ---------------------------------------------------------------------- */
+void
+PutItem( int ItemNumber )
+{
+  Item CurItem = &AllItems[ ItemNumber ];
+  SDL_Rect TargetRectangle;
+  
+  ItemNumber=0;
+  CurItem->pos.x = 1;
+  CurItem->pos.y = 1;
+  CurItem->type = 0 ;
 
-@Ret: void
-* $Function----------------------------------------------------------*/
+  // TargetRectangle.x=USER_FENSTER_CENTER_X - (Me.pos.x - CurBlast->PX)*Block_Width  -Block_Width/2;
+  // TargetRectangle.y=USER_FENSTER_CENTER_Y - (Me.pos.y - CurBlast->PY)*Block_Height -Block_Height/2;
+  TargetRectangle.x=USER_FENSTER_CENTER_X - (Me.pos.x - CurItem->pos.x)*Block_Width  -Block_Width/2;
+  TargetRectangle.y=USER_FENSTER_CENTER_Y - (Me.pos.y - CurItem->pos.y)*Block_Height -Block_Height/2;
+  // SDL_BlitSurface( ne_blocks, 
+  // Blastmap[CurBlast->type].block + ((int) floorf(CurBlast->phase)), ne_screen , &TargetRectangle);
+  SDL_BlitSurface( ItemMap[ CurItem->type].SurfacePointer , NULL , ne_screen , &TargetRectangle);
+}; // void PutItem( int ItemNumber );
+
+/* ----------------------------------------------------------------------
+ * This function draws a blast into the combat window.
+ * The only given parameter is the number of the blast within
+ * the AllBlasts array.
+ * ---------------------------------------------------------------------- */
 void
 PutBlast (int BlastNummer)
 {
   Blast CurBlast = &AllBlasts[BlastNummer];
   SDL_Rect TargetRectangle;
 
-  // If the blast is already long deat, we need not do anything else here
+  // If the blast is already long dead, we need not do anything else here
   if (CurBlast->type == OUT)
     return;
 
