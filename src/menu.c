@@ -2452,23 +2452,17 @@ Credits_Menu (void)
                                       \"The Beginning\"\n\
                                         by 4t thieves\n\
                                         of kahvi collective\n\
+                                      (www.kahvi.org)\n\n\
+                                      \"Daybreak\"\n\
+                                        by realsmokers\n\
+                                        of kahvi collective\n\
+                                      (www.realsmokers.de)\n\
                                       (www.kahvi.org)\n\n\n\
    MOD COMPOSERS:\n\n\
-                                      speedball (Ace-II)\n\n\
-                                      knert&cosmos (Your World)\n\n\
                                       freeman/lard design\n\
                                        (The Great Bath)\n\n\
                                       radix/solitude (Nowhere)\n\n\
-                                      jester of sanity (elysium)\n\n\
-                                      Arachno/fadeout (Nostalgia)\n\n\
-                                      mantronix+tip of phenomena\n\
-                                       (Princess)\n\n\
-                                      b.i.t./eon (Style Blend)\n\n\
-                                      4-mat/anarchy (The Last V8 ,\n\
-                                      Hardcore Theme,\n\
-                                      Psychospugs, Starworx)\n\n\
-                                      ???   (bladerunner,\n\
-                                      delta2, slow)\n\n\n\
+                                      )\n\n\n\
    VOICES:\n\n\
                                       Tiina Heinonen\n\n\
                                       Doris Stubenrauch\n\n\

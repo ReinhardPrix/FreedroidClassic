@@ -225,6 +225,21 @@ exist really (i.e. has a type = (-1) ).",
 	  strcat( ItemDescText , linebuf );
 	  break;
 
+	case ITEM_STRENGTH_PILL:
+	  sprintf( linebuf , "Permanently gain +1 strength\n" );
+	  strcat( ItemDescText , linebuf );
+	  break;
+
+	case ITEM_DEXTERITY_PILL:
+	  sprintf( linebuf , "Permanently gain +1 dexterity\n" );
+	  strcat( ItemDescText , linebuf );
+	  break;
+
+	case ITEM_MAGIC_PILL:
+	  sprintf( linebuf , "Permanently gain +1 magic\n" );
+	  strcat( ItemDescText , linebuf );
+	  break;
+
 	default:
 	  sprintf( linebuf , "USE UNDESCRIBED YET\n" );
 	  strcat( ItemDescText , linebuf );

@@ -346,9 +346,9 @@ enum
 // The order of appearance here should match the order of appearance 
 // in the SoundSampleFilenames definition located in sound.c!
 //
-#define TAKEOVER_BACKGROUND_MUSIC_SOUND "Intro-Music.mod"
-#define CONSOLE_BACKGROUND_MUSIC_SOUND "ARDA.MOD"
-#define CREDITS_BACKGROUND_MUSIC_SOUND "NOWHERE.MOD"
+#define TAKEOVER_BACKGROUND_MUSIC_SOUND "TheBeginning.ogg"
+#define CONSOLE_BACKGROUND_MUSIC_SOUND "TheBeginning.ogg"
+#define CREDITS_BACKGROUND_MUSIC_SOUND "TheBeginning.ogg"
 #define SILENCE (NULL)
 enum _sounds
 {

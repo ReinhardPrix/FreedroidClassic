@@ -113,10 +113,9 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
 Mix_Chunk *Loaded_WAV_Files[ALL_SOUNDS];
 #endif
 
-#define ALL_MOD_MUSICS 2
+#define ALL_MOD_MUSICS 1
 char *MOD_Music_SampleFilenames[ALL_MOD_MUSICS] = {
-  "ERRORSOUND_NILL.NOMOD",
-  "A_City_at_Night.mod"
+  "ERRORSOUND_NILL.NOMOD"
 };
 
 #define MAX_SOUND_CHANNELS 5000
@@ -126,7 +125,6 @@ char SoundChannelList[ MAX_SOUND_CHANNELS ];
 Mix_Chunk* List_Of_Sustained_Release_WAV_Files[ MAX_SOUND_CHANNELS ];
 Mix_Music *Loaded_MOD_Files[ALL_MOD_MUSICS] =
 {
-  NULL,
   NULL
 };
 #endif
