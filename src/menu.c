@@ -847,7 +847,7 @@ enum
 	      while (EnterPressed() || SpacePressed() );
 	      if (User_Rect.x == 0) 
 		{
-		  User_Rect.x=USERFENSTERPOSX;
+		  User_Rect.x=User_Rect.x;
 		  User_Rect.w=USERFENSTERBREITE;
 		  ClearGraphMem();
 		  DisplayBanner( NULL , NULL , BANNER_FORCE_UPDATE );

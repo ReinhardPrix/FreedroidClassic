@@ -1713,7 +1713,7 @@ InitFreedroid (void)
 void
 Title ( char *MissionBriefingPointer )
 {
-  int ScrollEndLine = USERFENSTERPOSY;	/* Endpunkt des Scrollens */
+  int ScrollEndLine = User_Rect.y;	/* Endpunkt des Scrollens */
   char* NextSubsectionStartPointer;
   char* PreparedBriefingText;
   char* TerminationPointer;
@@ -1793,7 +1793,7 @@ Title ( char *MissionBriefingPointer )
 void
 EndTitle (void)
 {
-  int ScrollEndLine = USERFENSTERPOSY;	/* Endpunkt des Scrollens */
+  int ScrollEndLine = User_Rect.y;	/* Endpunkt des Scrollens */
 
   DebugPrintf (2, "\nvoid EndTitle(void): real function call confirmed...:");
 

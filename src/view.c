@@ -1036,8 +1036,8 @@ Sorry...\n\
     }
   else 
     {
-      TargetRectangle.x=USERFENSTERPOSX;
-      TargetRectangle.y=USERFENSTERPOSY + TEXT_STRETCH * FontHeight(Menu_BFont) ;
+      TargetRectangle.x=User_Rect.x;
+      TargetRectangle.y=User_Rect.y + TEXT_STRETCH * FontHeight(Menu_BFont) ;
       SourceRectangle.h=USERFENSTERHOEHE;
     }
 
