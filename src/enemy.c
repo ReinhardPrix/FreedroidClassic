@@ -106,6 +106,7 @@ DirectLineWalkable( float x1 , float y1 , float x2 , float y2 , int z )
   static int step_multiplier = -1 ; // something completely absurd...
   int steps_for_this_obstacle;
   static int key_obstacle_type = -1 ;
+
   //--------------------
   // On the very first call of this function, we find out how much of
   // a stepsize will be possible for the purpose of finding out, if any
@@ -2060,6 +2061,7 @@ ProcessAttackStateMachine ( int enemynum )
     {
       TeleportToClosestWaypoint ( ThisRobot );
       ThisRobot->AdvancedCommand = 0;
+
     }
 
   if ( ThisRobot -> will_rush_tux ) 
@@ -2079,8 +2081,21 @@ ProcessAttackStateMachine ( int enemynum )
   //
   TargetIsEnemy = DetermineVectorToShotTarget ( ThisRobot , & vect_to_target ) ;
 
+  //--------------------
+  // A friendly bot *MIGHT* help the tux in combat.  But this state must
+  // not be entered too easily, as it might break some other things...
+  //
   if ( ThisRobot -> is_friendly && TargetIsEnemy && ( sqrt ( vect_to_target . x * vect_to_target.x + vect_to_target . y * vect_to_target . y  ) < Druidmap [ ThisRobot -> type ] . minimal_range_hostile_bots_are_ignored ) )
-    ThisRobot -> combat_state = FIGHT_ON_TUX_SIDE ;
+    {
+      if ( DirectLineWalkable ( ThisRobot -> pos . x , ThisRobot -> pos . y , ThisRobot -> pos . x + vect_to_target . x ,
+				ThisRobot -> pos . y + vect_to_target . y , ThisRobot -> pos . z ) &&
+	   ThisRobot -> combat_state != RUSH_TUX_ON_SIGHT_AND_OPEN_TALK )
+      {
+	if ( ThisRobot -> combat_state != FIGHT_ON_TUX_SIDE )
+	  DebugPrintf ( -1000, "\nFriendly bot of type (%d) now switched to FIGHT_ON_TUX_SIDE." , ThisRobot -> type );
+	ThisRobot -> combat_state = FIGHT_ON_TUX_SIDE ;
+      }
+    }
 
   dist2 = sqrt( vect_to_target . x * vect_to_target . x + vect_to_target . y * vect_to_target . y );
 
