@@ -2057,6 +2057,7 @@ Credits_Menu (void)
                                       delta2, slow)\n\n\n\
    VOICES:\n\n\
                                       Tiina\n\n\
+                                      Doris Stubenrauch\n\n\
                                       Johannes Prix\n\n\
                                       Mbrola\n\
                                        text-to-speech-system\n\n\n\n\n";
@@ -2067,74 +2068,8 @@ Credits_Menu (void)
 
   Switch_Background_Music_To ( CREDITS_BACKGROUND_MUSIC_SOUND );
 
-  /*      
-  DisplayImage ( find_file(NE_CREDITS_PIC_FILE,GRAPHICS_DIR,FALSE) );
-  MakeGridOnScreen ( NULL );
-
-  CenteredPutString ( Screen , 1*FontHeight(Menu_BFont), "CREDITS" );
-  LeftPutString ( Screen , 3*FontHeight(Menu_BFont), "   PROGRAMMING:");
-  RightPutString ( Screen , 4*FontHeight(Menu_BFont), "Johannes Prix   ");
-  RightPutString ( Screen , 5*FontHeight(Menu_BFont), "Reinhard Prix   ");
-  LeftPutString ( Screen , 7*FontHeight(Menu_BFont), "   ARTWORK:");
-  RightPutString ( Screen , 8*FontHeight(Menu_BFont), "Bastian Salmela   ");
-  RightPutString ( Screen , 9*FontHeight(Menu_BFont), "Lanzz   ");
-  */
-
-  /*
-
-  SetCurrentFont ( Credits_BFont );
-
-  i = 2 ;
-  CenteredPutString ( Screen , i*FontHeight(Credits_BFont), "CREDITS" );
-  i += 2;
-  LeftPutString ( Screen , i*FontHeight(Credits_BFont), "   PROGRAMMING:");
-  RightPutString ( Screen , i*FontHeight(Credits_BFont), "Johannes Prix   "); 
-  i++;
-  RightPutString ( Screen , i*FontHeight(Credits_BFont), "Reinhard Prix   ");
-
-  i+=2;
-  LeftPutString ( Screen , i*FontHeight(Credits_BFont), "   ARTWORK:");
-  RightPutString ( Screen , i*FontHeight(Credits_BFont), "Bastian Salmela   ");
-  i++;
-  RightPutString ( Screen , i*FontHeight(Credits_BFont), "Lanzz   ");
-
-  i+=2;
-  LeftPutString ( Screen , i*FontHeight(Credits_BFont), "   MOD COMPOSERS:");
-  i++;
-  RightPutString ( Screen , i*FontHeight(Credits_BFont), "speedball (Ace-II)" );
-  LeftPutString ( Screen , i*FontHeight(Credits_BFont), "knert&cosmos (Your World)");
-  i++;
-  RightPutString ( Screen , i*FontHeight(Credits_BFont), "freeman/lard design (The Great Bath)" );
-  // i++;
-  LeftPutString ( Screen , i*FontHeight(Credits_BFont), "radix/solitude (Nowhere)" );
-  i++;
-  LeftPutString ( Screen , i*FontHeight(Credits_BFont), "jester of sanity (elysium)");
-  RightPutString ( Screen , i*FontHeight(Credits_BFont), "Arachno/fadeout (Nostalgia)");
-  i++;
-  RightPutString ( Screen , i*FontHeight(Credits_BFont), "mantronix+tip of phenomena (Princess)");
-  // i++;
-  LeftPutString ( Screen , i*FontHeight(Credits_BFont), "b.i.t./eon (Style Blend)");
-  i++;
-  LeftPutString ( Screen , i*FontHeight(Credits_BFont), "4-mat/anarchy (The Last V8 , Hardcore Theme, Psychospugs, Starworx" );
-  i++;
-  //   RightPutString ( Screen , i*FontHeight(Credits_BFont), ", Starworxx)");
-  // i++;
-  LeftPutString ( Screen , i*FontHeight(Credits_BFont), "??? (alfa , bladerunner, delta2, slow)" );
-
-  i += 2;
-  LeftPutString ( Screen , i*FontHeight(Credits_BFont), "   VOICES:");
-  i++;
-  RightPutString ( Screen , i*FontHeight(Credits_BFont), "Tiina");
-
-  SDL_Flip( Screen );
-*/
-
   ScrollText ( CreditsText , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NE_CREDITS_PIC_FILE );
 
-
-  // Wait until the user does SOMETHING
-  // getchar_raw();
-  // while ( !SpacePressed() && !EscapePressed() );
   while( SpacePressed() || EscapePressed() ) ; /* wait for key release */
 
 }; // void Credits_Menu(void)

@@ -61,12 +61,13 @@ Load_Blast_Surfaces( void )
   Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
   SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
 
+  tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, vid_bpp, 0, 0, 0, 0);
+  SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
+
   for ( i=0 ; i < ALLBLASTTYPES ; i++ )
     {
       for ( j=0 ; j < Blastmap[i].phases ; j++ )
 	{
-	  tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, vid_bpp, 0, 0, 0, 0);
-	  SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
 	  Blastmap[i].SurfacePointer[j] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
 	  SDL_SetColorKey( Blastmap[i].SurfacePointer[j] , 0 , 0 ); // this should clear any color key in the dest surface
 	  // Now we can copy the image Information
@@ -80,9 +81,10 @@ Load_Blast_Surfaces( void )
 	  Target.h=Block_Height;
 	  SDL_BlitSurface ( Whole_Image , &Source , Blastmap[i].SurfacePointer[j] , &Target );
 	  SDL_SetAlpha( Blastmap[i].SurfacePointer[j] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-	  SDL_FreeSurface( tmp_surf );
 	}
     }
+
+  SDL_FreeSurface( tmp_surf );
   SDL_FreeSurface( Whole_Image );
 
 }; // void Load_Blast_Surfaces( void )
@@ -118,8 +120,10 @@ Load_Item_Surfaces( void )
       Target.y = 0;
       Target.w = Source.w;
       Target.h = Source.h;
+
       tmp_surf = SDL_CreateRGBSurface( 0 , Source.w , Source.h , vid_bpp , 0 , 0 , 0 , 0 );
       SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
+
       ItemImageList[ j ].Surface = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
       SDL_SetColorKey( ItemImageList[ j ].Surface , 0 , 0 ); // this should clear any color key in the dest surface
       // Now we can copy the image Information
@@ -150,6 +154,9 @@ Load_Mouse_Move_Cursor_Surfaces( void )
   Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
   SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
 
+  tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width , Block_Height , vid_bpp , 0 , 0 , 0 , 0 );
+  SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
+
   for ( j=0 ; j < NUMBER_OF_MOUSE_CURSOR_PICTURES ; j++ )
     {
       Source.x = j * ( Block_Height + 2 );
@@ -160,16 +167,17 @@ Load_Mouse_Move_Cursor_Surfaces( void )
       Target.y = 0;
       Target.w = Source.w;
       Target.h = Source.h;
-      tmp_surf = SDL_CreateRGBSurface( 0 , Source.w , Source.h , vid_bpp , 0 , 0 , 0 , 0 );
-      SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
+
       MouseCursorImageList[ j ] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
       SDL_SetColorKey( MouseCursorImageList[ j ] , 0 , 0 ); // this should clear any color key in the dest surface
       // Now we can copy the image Information
       SDL_BlitSurface ( Whole_Image , &Source , MouseCursorImageList[ j ] , &Target );
       SDL_SetAlpha( MouseCursorImageList[ j ] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-      SDL_FreeSurface( tmp_surf );
     }
+
+  SDL_FreeSurface( tmp_surf );
   SDL_FreeSurface( Whole_Image );
+
 }; // void Load_Mouse_Move_Cursor_Surfaces( void )
 
 /* ----------------------------------------------------------------------
@@ -192,6 +200,10 @@ Load_Skill_Level_Button_Surfaces( void )
   Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
   SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
 
+  tmp_surf = SDL_CreateRGBSurface( 0 , SKILL_LEVEL_BUTTON_WIDTH , SKILL_LEVEL_BUTTON_HEIGHT , 
+				   vid_bpp , 0 , 0 , 0 , 0 );
+  SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
+
   for ( j=0 ; j < NUMBER_OF_SKILL_LEVELS ; j++ )
     {
       Source.x = j * ( SKILL_LEVEL_BUTTON_WIDTH );
@@ -202,16 +214,17 @@ Load_Skill_Level_Button_Surfaces( void )
       Target.y = 0;
       Target.w = Source.w;
       Target.h = Source.h;
-      tmp_surf = SDL_CreateRGBSurface( 0 , Source.w , Source.h , vid_bpp , 0 , 0 , 0 , 0 );
-      SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
+
       SpellLevelButtonImageList[ j ] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
       SDL_SetColorKey( SpellLevelButtonImageList[ j ] , 0 , 0 ); // this should clear any color key in the dest surface
       // Now we can copy the image Information
       SDL_BlitSurface ( Whole_Image , &Source , SpellLevelButtonImageList[ j ] , &Target );
       SDL_SetAlpha( SpellLevelButtonImageList[ j ] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-      SDL_FreeSurface( tmp_surf );
     }
+
+  SDL_FreeSurface( tmp_surf );
   SDL_FreeSurface( Whole_Image );
+
 }; // void Load_Skill_Level_Button_Surfaces( void )
 
 /* ----------------------------------------------------------------------
@@ -309,10 +322,11 @@ Load_SkillIcon_Surfaces( void )
   Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
   SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
 
+  tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, vid_bpp, 0, 0, 0, 0);
+  SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
+
   for ( i=0 ; i < NUMBER_OF_SKILLS ; i++ )
     {
-      tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, vid_bpp, 0, 0, 0, 0);
-      SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
       SkillIconSurfacePointer[i] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
       SDL_SetColorKey( SkillIconSurfacePointer[i] , 0 , 0 ); // this should clear any color key in the dest surface
       // Now we can copy the image Information
@@ -326,9 +340,11 @@ Load_SkillIcon_Surfaces( void )
       Target.h=Block_Height;
       SDL_BlitSurface ( Whole_Image , &Source , SkillIconSurfacePointer[i] , &Target );
       SDL_SetAlpha( SkillIconSurfacePointer[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-      SDL_FreeSurface( tmp_surf );
     }
+
   SDL_FreeSurface( Whole_Image );
+  SDL_FreeSurface( tmp_surf );
+
 }; // void Load_SkillIcon_Surfaces( void )
 
 
@@ -351,10 +367,11 @@ Load_Enemy_Surfaces( void )
   Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
   SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
 
+  tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, vid_bpp, 0, 0, 0, 0);
+  SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
+
   for ( i=0 ; i < DROID_PHASES + DEAD_DROID_PHASES ; i++ )
     {
-      tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, vid_bpp, 0, 0, 0, 0);
-      SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
       EnemySurfacePointer[i] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
       SDL_SetColorKey( EnemySurfacePointer[i] , 0 , 0 ); // this should clear any color key in the dest surface
       // Now we can copy the image Information
@@ -368,9 +385,10 @@ Load_Enemy_Surfaces( void )
       Target.h=Block_Height;
       SDL_BlitSurface ( Whole_Image , &Source , EnemySurfacePointer[i] , &Target );
       SDL_SetAlpha( EnemySurfacePointer[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-      SDL_FreeSurface( tmp_surf );
     }
+
   SDL_FreeSurface( Whole_Image );
+  SDL_FreeSurface( tmp_surf );
 
   //--------------------
   // Now that we have our enemy surfaces ready, we can create some modified
@@ -405,10 +423,11 @@ Load_Influencer_Surfaces( void )
   Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
   SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
 
+  tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, vid_bpp, 0, 0, 0, 0);
+  SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
+
   for ( i=0 ; i < DROID_PHASES + DEAD_DROID_PHASES ; i++ )
     {
-      tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, vid_bpp, 0, 0, 0, 0);
-      SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
       InfluencerSurfacePointer[i] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
       DebugPrintf( 1 , "\nInfluencerSurfacePonter[%d] is now initialized..." , i );
       SDL_SetColorKey( InfluencerSurfacePointer[i] , 0 , 0 ); // this should clear any color key in the dest surface
@@ -423,11 +442,11 @@ Load_Influencer_Surfaces( void )
       Target.h=Block_Height;
       SDL_BlitSurface ( Whole_Image , &Source , InfluencerSurfacePointer[i] , &Target );
       SDL_SetAlpha( InfluencerSurfacePointer[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-      SDL_FreeSurface( tmp_surf );
     }
 
-
   SDL_FreeSurface( Whole_Image );
+  SDL_FreeSurface( tmp_surf );
+
 }; // void Load_Influencer_Surfaces( void )
 
 /* ----------------------------------------------------------------------
@@ -608,6 +627,9 @@ Load_Tux_Surfaces( void )
   SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE ); // this should 
   SDL_SetColorKey( Whole_Image , 0 , 0 ); // this should clear any color key in the source surface
 
+  tmp_surf = SDL_CreateRGBSurface( 0 , TUX_WIDTH , TUX_HEIGHT , vid_bpp , 0 , 0 , 0 , 0 );
+  SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
+
   for ( j = 0 ; j < TUX_MODELS ; j ++ )
     {
 
@@ -615,8 +637,6 @@ Load_Tux_Surfaces( void )
 
       for ( i=0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i++ )
 	{
-	  tmp_surf = SDL_CreateRGBSurface( 0 , TUX_WIDTH , TUX_HEIGHT , vid_bpp , 0 , 0 , 0 , 0 );
-	  SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
 	  TuxMotionArchetypes[j][i] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
 
 	  SDL_SetColorKey ( TuxMotionArchetypes[j][i] , SDL_SRCCOLORKEY, 
@@ -632,7 +652,6 @@ Load_Tux_Surfaces( void )
 	  Target.h=Block_Height;
 	  SDL_BlitSurface ( Whole_Image , &Source , TuxMotionArchetypes[j][i] , &Target );
 	  SDL_SetAlpha( TuxMotionArchetypes[j][i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-	  SDL_FreeSurface( tmp_surf );
 
 	  //--------------------
 	  // And at this point, we also initialize the Tux working copys, so we
@@ -647,8 +666,9 @@ Load_Tux_Surfaces( void )
 	}
     }
 
-
   SDL_FreeSurface( Whole_Image );
+  SDL_FreeSurface( tmp_surf );
+
 }; // void Load_Tux_Surfaces( void )
 
 /* ----------------------------------------------------------------------
@@ -753,10 +773,11 @@ Load_Digit_Surfaces( void )
   Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
   SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
 
+  tmp_surf = SDL_CreateRGBSurface( 0 , INITIAL_DIGIT_LENGTH , INITIAL_DIGIT_HEIGHT, vid_bpp, 0, 0, 0, 0);
+  SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
+
   for ( i=0 ; i < DIGITNUMBER ; i++ )
     {
-      tmp_surf = SDL_CreateRGBSurface( 0 , INITIAL_DIGIT_LENGTH , INITIAL_DIGIT_HEIGHT, vid_bpp, 0, 0, 0, 0);
-      SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
       InfluDigitSurfacePointer[i] = SDL_DisplayFormat( tmp_surf ); // now we have an alpha-surf of right size
       // SDL_SetColorKey( InfluDigitSurfacePointer[i] , 0 , 0 ); // this should clear any color key in the dest surface
       // Now we can copy the image Information
@@ -776,13 +797,13 @@ Load_Digit_Surfaces( void )
 		   SDL_GetError());
 	  Terminate( ERR );
 	}
-      SDL_FreeSurface( tmp_surf );
     }
+  SDL_FreeSurface( tmp_surf );
 
+  tmp_surf = SDL_CreateRGBSurface( 0 , INITIAL_DIGIT_LENGTH , INITIAL_DIGIT_HEIGHT, vid_bpp, 0, 0, 0, 0);
+  SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
   for ( i=0 ; i < DIGITNUMBER ; i++ )
     {
-      tmp_surf = SDL_CreateRGBSurface( 0 , INITIAL_DIGIT_LENGTH , INITIAL_DIGIT_HEIGHT, vid_bpp, 0, 0, 0, 0);
-      SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
       EnemyDigitSurfacePointer[i] = SDL_DisplayFormat( tmp_surf ); // now we have an alpha-surf of right size
       // SDL_SetColorKey( EnemyDigitSurfacePointer[i] , 0 , 0 ); // this should clear any color key in the dest surface
       // Now we can copy the image Information
@@ -802,9 +823,11 @@ Load_Digit_Surfaces( void )
 		   SDL_GetError());
 	  Terminate( ERR );
 	}
-      SDL_FreeSurface( tmp_surf );
     }
+
   SDL_FreeSurface( Whole_Image );
+  SDL_FreeSurface( tmp_surf );
+
 }; // void Load_Digit_Surfaces( void )
 
 /* ----------------------------------------------------------------------
@@ -827,6 +850,9 @@ Load_MapBlock_Surfaces( void )
   Block_Width=INITIAL_BLOCK_WIDTH;
   Block_Height=INITIAL_BLOCK_HEIGHT;
   
+  tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, vid_bpp, 0, 0, 0, 0);
+  SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
+
   fpath = find_file ( fname, GRAPHICS_DIR, TRUE);
   for ( color = 0 ; color < NUM_COLORS ; color ++ )
     {
@@ -835,8 +861,6 @@ Load_MapBlock_Surfaces( void )
       
       for ( i=0 ; i < NUM_MAP_BLOCKS ; i++ )
 	{
-	  tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, vid_bpp, 0, 0, 0, 0);
-	  SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
 	  MapBlockSurfacePointer[ color ][i] = SDL_DisplayFormat( tmp_surf ); // now we have an alpha-surf of right size
 	  SDL_SetColorKey( MapBlockSurfacePointer[ color ][i] , 0 , 0 ); // this should clear any color key in the dest surface
 	  // Now we can copy the image Information
@@ -850,10 +874,12 @@ Load_MapBlock_Surfaces( void )
 	  Target.h=Block_Height;
 	  SDL_BlitSurface ( Whole_Image , &Source , MapBlockSurfacePointer[ color ][i] , &Target );
 	  SDL_SetAlpha( MapBlockSurfacePointer[ color ][i] , 0 , 0 );
-	  SDL_FreeSurface( tmp_surf );
 	}
       SDL_FreeSurface( Whole_Image );
     }
+
+  SDL_FreeSurface( tmp_surf );
+
 }; // void Load_MapBlock_Surfaces( void )
 
 #undef _blocks_c

@@ -656,7 +656,7 @@ ChatWithFriendlyDroid( int Enum )
       PrepareMultipleChoiceDialog( Enum );
 
       DialogMenuTexts [ 0 ] = " Hi!  I'm new here. " ;
-      DialogMenuTexts [ 1 ] = " I would like to by some equippment." ; 
+      DialogMenuTexts [ 1 ] = " I would like to buy some equippment." ; 
       DialogMenuTexts [ 2 ] = " I would like to get rid of some stuff. " ;
       DialogMenuTexts [ 3 ] = " Can you identify some of the items I found?" ;
       DialogMenuTexts [ 4 ] = " Some of my things could need repair." ;
@@ -711,6 +711,7 @@ ChatWithFriendlyDroid( int Enum )
 	    case (-1):
 	    default:
 	      PlayOnceNeededSoundSample( "Tux_See_You_Later_0.wav" , TRUE );
+	      PlayOnceNeededSoundSample( "SOR_Goodbye_Love_0.wav" , TRUE );
 	      return;
 	      break;
 	    }
@@ -1452,7 +1453,7 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
     DisplayImage ( find_file( TitlePictureName , GRAPHICS_DIR, FALSE) );
 
   MakeGridOnScreen( (SDL_Rect*) &Full_Screen_Rect );
-  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE ); 
+  // DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE ); 
   Background = SDL_DisplayFormat( Screen );
 
   SetCurrentFont( Para_BFont );
