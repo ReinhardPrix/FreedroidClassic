@@ -201,14 +201,41 @@ ReactToSpecialKeys(void)
   if ( DPressed() )
     Me.energy = 0;
 
+  if ( Number0Pressed() )
+    ApplyItemFromInventory( 0 );
+
   if ( Number1Pressed() )
     ApplyItemFromInventory( 1 );
+
+  if ( Number2Pressed() )
+    ApplyItemFromInventory( 2 );
+
+  if ( Number3Pressed() )
+    ApplyItemFromInventory( 3 );
+
+  if ( Number4Pressed() )
+    ApplyItemFromInventory( 4 );
+
+  if ( Number5Pressed() )
+    ApplyItemFromInventory( 5 );
+
+  if ( Number6Pressed() )
+    ApplyItemFromInventory( 6 );
+
+  if ( Number7Pressed() )
+    ApplyItemFromInventory( 7 );
+
+  if ( Number8Pressed() )
+    ApplyItemFromInventory( 8 );
+
+  if ( Number9Pressed() )
+    ApplyItemFromInventory( 9 );
 
   if ( MPressed() )
     {
       for ( i=0 ; i < MAX_STATEMENTS_PER_LEVEL ; i ++ )
 	{
-	  DebugPrintf( 0 , "\nPosX: %d PosY: %d Statement: %s" , CurLevel->StatementList[ i ].x ,
+	  DebugPrintf( 1 , "\nPosX: %d PosY: %d Statement: %s" , CurLevel->StatementList[ i ].x ,
 		       CurLevel->StatementList[ i ].x , CurLevel->StatementList[ i ].Statement_Text );
 	}
       while ( MPressed() );
@@ -231,8 +258,8 @@ ReactToSpecialKeys(void)
       for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i++ )
 	{
 	  if ( AllItems[ i ].type == (-1) ) continue;
-	  if ( ( fabsf( Me.pos.x - AllItems[ i ].pos.x ) < 0.5 ) &&
-	       ( fabsf( Me.pos.x - AllItems[ i ].pos.x ) < 0.5 ) )
+	  if ( ( fabsf( Me.pos.x - AllItems[ i ].pos.x ) < 0.25 ) &&
+	       ( fabsf( Me.pos.y - AllItems[ i ].pos.y ) < 0.25 ) )
 	    break;
 	}
       //--------------------

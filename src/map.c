@@ -851,7 +851,7 @@ Decode_Loaded_Leveldata (char *data)
   Preserved_Letter=StatementSectionEnd[0];
   StatementSectionEnd[0]=0;
   NumberOfStatementsInThisLevel = CountStringOccurences ( StatementSectionBegin , STATEMENT_ITSELF_ANNOUNCE_STRING ) ;
-  DebugPrintf( 0 , "\nNumber of statements found in this level : %d." , NumberOfStatementsInThisLevel );
+  DebugPrintf( 1 , "\nNumber of statements found in this level : %d." , NumberOfStatementsInThisLevel );
 
   
 
@@ -893,7 +893,7 @@ Decode_Loaded_Leveldata (char *data)
   Preserved_Letter=CodepanelSectionEnd[0];
   CodepanelSectionEnd[0]=0;
   NumberOfCodepanelsInThisLevel = CountStringOccurences ( CodepanelSectionBegin , CODEPANEL_CODE_ANNOUNCE_STRING ) ;
-  DebugPrintf( 0 , "\nNumber of codepanels found in this level : %d." , NumberOfCodepanelsInThisLevel );
+  DebugPrintf( 1 , "\nNumber of codepanels found in this level : %d." , NumberOfCodepanelsInThisLevel );
 
   
   // Now we decode all the codepanel information
