@@ -3014,6 +3014,18 @@ init_obstacle_data( void )
   obstacle_map [ ISO_SHOP_FURNITURE_6 ] . block_area_parm_2 = 2.3 ;
   obstacle_map [ ISO_SHOP_FURNITURE_6 ] . filename = "iso_shop_furniture_0006.png" ;
 
+
+
+  obstacle_map [ ISO_LIBRARY_FURNITURE_1 ] . block_area_parm_1 = 3.5 ;
+  obstacle_map [ ISO_LIBRARY_FURNITURE_1 ] . block_area_parm_2 = 1.5 ;
+  obstacle_map [ ISO_LIBRARY_FURNITURE_1 ] . filename = "iso_library_furniture_0001.png" ;
+  obstacle_map [ ISO_LIBRARY_FURNITURE_1 ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_LIBRARY_FURNITURE_2 ] . block_area_parm_1 = 1.5 ;
+  obstacle_map [ ISO_LIBRARY_FURNITURE_2 ] . block_area_parm_2 = 3.5 ;
+  obstacle_map [ ISO_LIBRARY_FURNITURE_2 ] . filename = "iso_library_furniture_0002.png" ;
+  obstacle_map [ ISO_LIBRARY_FURNITURE_2 ] . block_vision_too = FALSE ;
+
+
   for( i = ISO_OUTER_WALL_N1 ; i <= ISO_OUTER_WALL_CORNER_4 ; i++) {
     obstacle_map [ i ] . transparent = TRUE ;
   }
@@ -3306,6 +3318,48 @@ init_obstacle_data( void )
   obstacle_map [ ISO_SIGN_3 ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_SIGN_3 ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_SIGN_3 ] . filename = "iso_signs_0002.png" ;
+
+  obstacle_map[ ISO_COUNTER_MIDDLE_1 ] . block_area_parm_1 = 1.1;
+  obstacle_map[ ISO_COUNTER_MIDDLE_1 ] . block_area_parm_2 = 2.3;
+  obstacle_map[ ISO_COUNTER_MIDDLE_1 ] . filename = "iso_counter_0001.png";
+  obstacle_map[ ISO_COUNTER_MIDDLE_2 ] . block_area_parm_1 = 1.1;
+  obstacle_map[ ISO_COUNTER_MIDDLE_2 ] . block_area_parm_2 = 2.3;
+  obstacle_map[ ISO_COUNTER_MIDDLE_2 ] . filename = "iso_counter_0002.png";
+  obstacle_map[ ISO_COUNTER_MIDDLE_3 ] . block_area_parm_1 = 1.1;
+  obstacle_map[ ISO_COUNTER_MIDDLE_3 ] . block_area_parm_2 = 2.3;
+  obstacle_map[ ISO_COUNTER_MIDDLE_3 ] . filename = "iso_counter_0003.png";
+  obstacle_map[ ISO_COUNTER_MIDDLE_4 ] . block_area_parm_1 = 1.1;
+  obstacle_map[ ISO_COUNTER_MIDDLE_4 ] . block_area_parm_2 = 2.3;
+  obstacle_map[ ISO_COUNTER_MIDDLE_4 ] . filename = "iso_counter_0004.png";
+
+  obstacle_map[ ISO_COUNTER_CORNER_ROUND_1 ] . block_area_parm_1 = 1.1;
+  obstacle_map[ ISO_COUNTER_CORNER_ROUND_1 ] . block_area_parm_2 = 2.3;
+  obstacle_map[ ISO_COUNTER_CORNER_ROUND_1 ] . filename = "iso_counter_0005.png";
+  obstacle_map[ ISO_COUNTER_CORNER_ROUND_2 ] . block_area_parm_1 = 1.1;
+  obstacle_map[ ISO_COUNTER_CORNER_ROUND_2 ] . block_area_parm_2 = 2.3;
+  obstacle_map[ ISO_COUNTER_CORNER_ROUND_2 ] . filename = "iso_counter_0006.png";
+  obstacle_map[ ISO_COUNTER_CORNER_ROUND_3 ] . block_area_parm_1 = 1.1;
+  obstacle_map[ ISO_COUNTER_CORNER_ROUND_3 ] . block_area_parm_2 = 2.3;
+  obstacle_map[ ISO_COUNTER_CORNER_ROUND_3 ] . filename = "iso_counter_0007.png";
+  obstacle_map[ ISO_COUNTER_CORNER_ROUND_4 ] . block_area_parm_1 = 1.1;
+  obstacle_map[ ISO_COUNTER_CORNER_ROUND_4 ] . block_area_parm_2 = 2.3;
+  obstacle_map[ ISO_COUNTER_CORNER_ROUND_4 ] . filename = "iso_counter_0008.png";
+   
+  obstacle_map[ ISO_COUNTER_CORNER_SHARP_1 ] . block_area_parm_1 = 1.1;
+  obstacle_map[ ISO_COUNTER_CORNER_SHARP_1 ] . block_area_parm_2 = 2.3;
+  obstacle_map[ ISO_COUNTER_CORNER_SHARP_1 ] . filename = "iso_counter_0009.png";
+  obstacle_map[ ISO_COUNTER_CORNER_SHARP_2 ] . block_area_parm_1 = 1.1;
+  obstacle_map[ ISO_COUNTER_CORNER_SHARP_2 ] . block_area_parm_2 = 2.3;
+  obstacle_map[ ISO_COUNTER_CORNER_SHARP_2 ] . filename = "iso_counter_0010.png";
+  obstacle_map[ ISO_COUNTER_CORNER_SHARP_3 ] . block_area_parm_1 = 1.1;
+  obstacle_map[ ISO_COUNTER_CORNER_SHARP_3 ] . block_area_parm_2 = 2.3;
+  obstacle_map[ ISO_COUNTER_CORNER_SHARP_3 ] . filename = "iso_counter_0011.png";
+  obstacle_map[ ISO_COUNTER_CORNER_SHARP_4 ] . block_area_parm_1 = 1.1;
+  obstacle_map[ ISO_COUNTER_CORNER_SHARP_4 ] . block_area_parm_2 = 2.3;
+  obstacle_map[ ISO_COUNTER_CORNER_SHARP_4 ] . filename = "iso_counter_0012.png";
+  
+ 
+ 
 
   //--------------------
   // Now that we have defined the block area paramters, it's time to do some
