@@ -47,7 +47,8 @@
 
 #define COL_SPEED		3	/* wegstossen bei enemy-enemy collision */
 
-#define FIREDIST2	(INTERNBREITE*Block_Width/2)*(INTERNBREITE*Block_Width/2)+(INTERNHOEHE*Block_Height/2)*(INTERNHOEHE*Block_Height/2)
+#define FIREDIST2	8 // according to the intro, the laser can be "focused on any target
+                          // within a range of eight metres"
 
 // void PermanentHealRobots (void);
 
@@ -336,26 +337,29 @@ AttackInfluence (int enemynum)
 {
   int j;
   int guntype;
-  int xdist, ydist;
-  long dist2;
+  float xdist, ydist;
+  float dist2;
 
   /* Ermittlung des Abstandsvektors zum Influencer */
   xdist = Me.pos.x - Feindesliste[enemynum].pos.x;
   ydist = Me.pos.y - Feindesliste[enemynum].pos.y;
 
+  if (xdist == 0) xdist = 0.01;
+  if (ydist == 0) ydist = 0.01;
+
   /* Sicherheit gegen Division durch 0 */
-  if (abs (xdist) < 2)
-    xdist = 2;
-  if (abs (ydist) < 2)
-    ydist = 2;
+  //  if (fabsf (xdist) < 2)
+  //    xdist = 2;
+  //  if (abs (ydist) < 2)
+  //    ydist = 2;
 
   /* wenn die Vorzeichen gut sind einen Schuss auf den 001 abgeben */
   guntype = Druidmap[Feindesliste[enemynum].type].gun;
 
-  dist2 = (xdist * xdist + ydist * ydist);
+  dist2 = sqrt(xdist * xdist + ydist * ydist);
 
   /* Only fire, if the influencer is in range.... */
-  if ((dist2 < (long) FIREDIST2) &&
+  if ((dist2 < FIREDIST2) &&
       (!Feindesliste[enemynum].firewait) &&
       IsVisible (&Feindesliste[enemynum].pos))
     {
@@ -384,7 +388,7 @@ AttackInfluence (int enemynum)
 	}
 
       /* Schussrichtung festlegen */
-      if (abs (xdist) > abs (ydist))
+      if (fabsf (xdist) > fabsf (ydist))
 	{
 	  AllBullets[j].speed.x = Bulletmap[guntype].speed;
 	  AllBullets[j].speed.y = ydist * AllBullets[j].speed.x / xdist;
@@ -395,7 +399,7 @@ AttackInfluence (int enemynum)
 	    }
 	}
 
-      if (abs (xdist) < abs (ydist))
+      if (fabsf (xdist) < fabsf (ydist))
 	{
 	  AllBullets[j].speed.y = Bulletmap[guntype].speed;
 	  AllBullets[j].speed.x = xdist * AllBullets[j].speed.y / ydist;
@@ -408,9 +412,9 @@ AttackInfluence (int enemynum)
 
       /* Schussphase festlegen ( ->phase=Schussbild ) */
       AllBullets[j].phase = NOSTRAIGHTDIR;
-      if ((abs (xdist) * 2 / 3) / abs (ydist))
+      if ( fabsf (xdist) / fabsf (ydist) > (3/2.0) )
 	AllBullets[j].phase = RECHTS;
-      if ((abs (ydist) * 2 / 3) / abs (xdist))
+      if ( fabsf (ydist) / fabsf (xdist) > (3/2.0) )
 	AllBullets[j].phase = OBEN;
       if (AllBullets[j].phase == NOSTRAIGHTDIR)
 	{
@@ -426,11 +430,9 @@ AttackInfluence (int enemynum)
 
       /* Bullets so abfeuern, dass sie nicht den Schuetzen treffen */
       AllBullets[j].pos.x +=
-	(AllBullets[j].speed.x) / abs (Bulletmap[guntype].speed) *
-	Block_Width / 2;
+	(AllBullets[j].speed.x) / fabsf (Bulletmap[guntype].speed) * 0.5;
       AllBullets[j].pos.y +=
-	(AllBullets[j].speed.y) / abs (Bulletmap[guntype].speed) *
-	Block_Height / 2;
+	(AllBullets[j].speed.y) / fabsf (Bulletmap[guntype].speed) * 0.5;
 
       // The following lines could be improved: Use not the sign, but only */
       // the fraction of the maxspeed times constant!
