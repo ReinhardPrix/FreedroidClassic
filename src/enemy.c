@@ -428,7 +428,7 @@ CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLe
   DebugPrintf( 2, "\nint CheckIfWayIsFreeOfDroids (...) : Checking from %d-%d to %d-%d.", (int) x1, (int) y1 , (int) x2, (int) y2 );
   fflush(stdout);
 
-  if ( abs(x1-x2) > abs (y1-y2) ) LargerDistance=fabsf(x1-x2);
+  if ( fabsf(x1-x2) > fabsf (y1-y2) ) LargerDistance=fabsf(x1-x2);
   else LargerDistance=fabsf(y1-y2);
 
   Steps=LargerDistance * 4 ;   // We check four times on each map tile...
@@ -1391,10 +1391,13 @@ MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int TargetPlayer , int 
 {
   float StepSize;
   finepoint VictimPosition;
-  finepoint ConsideredGoodPosition;
   finepoint CurrentPosition;
   moderately_finepoint StepVector;
+  moderately_finepoint RotatedStepVector;
   float StepVectorLen;
+  int i;
+#define ANGLES_TO_TRY 7
+  float RotationAngleTryList[ ANGLES_TO_TRY ] = { 0 , 30 , 360-30 , 60, 360-60, 90, 360-90 };
 
   //--------------------
   // If the distance is not yet right, we find a new location to move to.  We
@@ -1438,8 +1441,34 @@ MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int TargetPlayer , int 
   // sense to move there.  Otherwise we can still consider some variations
   // to the left or right.
   //
-  ConsideredGoodPosition . x = CurrentPosition . x + StepVector . x ;
-  ConsideredGoodPosition . y = CurrentPosition . y + StepVector . y ;
+  for ( i = 0 ; i < ANGLES_TO_TRY ; i ++ )
+    {
+      RotatedStepVector.x = StepVector.x ;
+      RotatedStepVector.y = StepVector.y ;
+      RotateVectorByAngle ( & RotatedStepVector , RotationAngleTryList [ i ] ) ;
+
+      //--------------------
+      // Maybe we've found a solution, then we can take it and quit
+      // trying around...
+      //
+      if ( ConsideredMoveIsFeasible ( ThisRobot , RotatedStepVector , enemynum ) )
+	{
+	  ThisRobot -> PrivatePathway [ 0 ] . x = ThisRobot -> pos.x + RotatedStepVector . x ;
+	  ThisRobot -> PrivatePathway [ 0 ] . y = ThisRobot -> pos.y + RotatedStepVector . y ;
+	  break;
+	}
+    }
+
+  //--------------------
+  // But if we didn't find anything, we'll just consider making a step back, and FORCED!!
+  //
+  if ( i >= ANGLES_TO_TRY ) 
+    {
+      ThisRobot -> PrivatePathway [ 0 ] . x = ThisRobot -> pos.x - StepVector.x;
+      ThisRobot -> PrivatePathway [ 0 ] . y = ThisRobot -> pos.y - StepVector.y;
+    }
+
+  /*
 
   if ( ConsideredMoveIsFeasible ( ThisRobot , StepVector , enemynum ) )
     {
@@ -1450,9 +1479,9 @@ MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int TargetPlayer , int 
     {
       //--------------------
       // If we didn't have any luck with the direct vector, we may have
-      // more luck with a 45 degree rotated vector.  So let's try that.
+      // more luck with a 30 degree rotated vector.  So let's try that.
       //
-      RotateVectorByAngle ( & StepVector , 45 ) ;
+      RotateVectorByAngle ( & StepVector , 30 ) ;
       if ( ConsideredMoveIsFeasible ( ThisRobot , StepVector , enemynum ) )
 	{
 	  ThisRobot -> PrivatePathway [ 0 ] . x = ThisRobot -> pos.x + StepVector . x ;
@@ -1462,10 +1491,10 @@ MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int TargetPlayer , int 
 	{
 	  //--------------------
 	  // And if all else has failed, we could still try rotating (the meanwhile
-	  // 45 degree rotated vector) into the other direction, which is the same
-	  // as rotating is again by (360-90) degrees.
+	  // 60 degree rotated vector) into the other direction, which is the same
+	  // as rotating is again by (360 - 2*30) degrees.
 	  //
-	  RotateVectorByAngle ( & StepVector , 360 - 90 ) ;
+	  RotateVectorByAngle ( & StepVector , 360 - 2 * 30 ) ;
 	  if ( ConsideredMoveIsFeasible ( ThisRobot , StepVector , enemynum ) )
 	    {
 	      ThisRobot -> PrivatePathway [ 0 ] . x = ThisRobot -> pos.x + StepVector . x ;
@@ -1473,6 +1502,7 @@ MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int TargetPlayer , int 
 	    }
 	}
     }
+  */
 
 }; // void MoveInCloserForMeleeCombat ( Enemy ThisRobot , int TargetPlayer , int enemynum )
 
