@@ -1392,7 +1392,7 @@ blit_classic_SDL_light_radius( void )
 	{
 	  sprintf ( constructed_file_name , "light_radius_chunks/iso_light_radius_darkness_%04d.png" , i + 1 );
 	  fpath = find_file ( constructed_file_name , GRAPHICS_DIR , FALSE );
-	  get_iso_image_from_file_and_path ( fpath , & ( light_radius_chunk [ i ] ) ) ;
+	  get_iso_image_from_file_and_path ( fpath , & ( light_radius_chunk [ i ] ) , TRUE ) ;
 	  tmp = light_radius_chunk [ i ] . surface ;
 	  light_radius_chunk [ i ] . surface = SDL_DisplayFormatAlpha ( light_radius_chunk [ i ] . surface ) ; 
 	  SDL_FreeSurface ( tmp ) ;
@@ -1772,7 +1772,7 @@ make_sure_tux_image_is_loaded ( int tux_part_group , int our_phase , int rotatio
       //
       sprintf ( constructed_filename , "tux_motion_parts/%s/%s%s_%02d_%04d.png" , motion_class_string[motion_class] , part_group_strings [ tux_part_group ] , part_string , rotation_index , our_phase + 1 );
       fpath = find_file ( constructed_filename , GRAPHICS_DIR, FALSE );
-      get_iso_image_from_file_and_path ( fpath , & ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] ) ) ;
+      get_iso_image_from_file_and_path ( fpath , & ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] ) , TRUE ) ;
       strcpy ( previously_used_part_strings [ tux_part_group ] , part_string );
     }
 

@@ -1175,7 +1175,7 @@ blit_open_gl_light_radius ( void )
 	{
 	  sprintf ( constructed_file_name , "light_radius_chunks/iso_light_radius_darkness_%04d.png" , i + 1 );
 	  fpath = find_file ( constructed_file_name , GRAPHICS_DIR , FALSE );
-	  get_iso_image_from_file_and_path ( fpath , & ( light_radius_chunk [ i ] ) ) ;
+	  get_iso_image_from_file_and_path ( fpath , & ( light_radius_chunk [ i ] ) , TRUE ) ;
 	  tmp = light_radius_chunk [ i ] . surface ;
 	  light_radius_chunk [ i ] . surface = SDL_DisplayFormatAlpha ( light_radius_chunk [ i ] . surface ) ; 
 	  SDL_FreeSurface ( tmp ) ;
@@ -1394,7 +1394,7 @@ blit_special_background ( int background_code )
 	{
 
 	  fpath = find_file ( background_filenames [ i ] , GRAPHICS_DIR , FALSE );
-	  get_iso_image_from_file_and_path ( fpath , & ( our_backgrounds [ i ] ) ) ;
+	  get_iso_image_from_file_and_path ( fpath , & ( our_backgrounds [ i ] ) , FALSE ) ;
 
 	  if ( use_open_gl )
 	    {

@@ -42,8 +42,6 @@
 #include "proto.h"
 #include "SDL_rotozoom.h"
 
-void get_iso_image_from_file_and_path ( char* fpath , iso_image* our_iso_image );
-
 char *PrefixToFilename[ ENEMY_ROTATION_MODELS_AVAILABLE ];
 int ModelMultiplier[ ENEMY_ROTATION_MODELS_AVAILABLE ];
 
@@ -80,14 +78,14 @@ Load_Blast_Surfaces( void )
     {
       sprintf ( constructed_filename , "blasts/iso_blast_bullet_%04d.png" , j + 1 );
       fpath = find_file ( constructed_filename , GRAPHICS_DIR , FALSE );
-      get_iso_image_from_file_and_path ( fpath , & ( Blastmap [ 0 ] . image [ j ] ) ) ;
+      get_iso_image_from_file_and_path ( fpath , & ( Blastmap [ 0 ] . image [ j ] ) , TRUE ) ;
     }
 
   for ( j = 0 ; j < PHASES_OF_EACH_BLAST ; j ++ )
     {
       sprintf ( constructed_filename , "blasts/iso_blast_droid_%04d.png" , j + 1 );
       fpath = find_file ( constructed_filename , GRAPHICS_DIR , FALSE );
-      get_iso_image_from_file_and_path ( fpath , & ( Blastmap [ 1 ] . image [ j ] ) ) ;
+      get_iso_image_from_file_and_path ( fpath , & ( Blastmap [ 1 ] . image [ j ] ) , TRUE ) ;
     }
 
 }; // void Load_Blast_Surfaces( void )
@@ -216,13 +214,9 @@ item surface will be used as a substitute for now.",
 	our_SDL_display_format_wrapperAlpha( Whole_Image ); // now we have an alpha-surf of right size
       SDL_SetColorKey( ItemImageList [ ItemMap [ item_type ] . picture_number ] . ingame_surface , 0 , 0 ); // this should clear any color key in the dest surface
       */
-      get_iso_image_from_file_and_path ( fpath , & ( ItemImageList [ ItemMap [ item_type ] . picture_number ] . ingame_iso_image ) );
-
+      get_iso_image_from_file_and_path ( fpath , & ( ItemImageList [ ItemMap [ item_type ] . picture_number ] . ingame_iso_image ) , TRUE );
       SDL_FreeSurface( Whole_Image );
-
-
     }
-
 
 }; // void try_to_load_ingame_item_surface ( int item_number )
 
@@ -389,16 +383,9 @@ iso_load_bullet_surfaces ( void )
 	      sprintf ( constructed_filename , "bullets/iso_bullet_%s_%02d_%04d.png" , bullet_identifiers [ i ] , k , j + 1 );
 	      fpath = find_file ( constructed_filename , GRAPHICS_DIR , FALSE );
 
-	      get_iso_image_from_file_and_path ( fpath , & ( Bulletmap [ i ] . image [ k ] [ j ] ) ) ;
+	      get_iso_image_from_file_and_path ( fpath , & ( Bulletmap [ i ] . image [ k ] [ j ] ) , TRUE ) ;
 
 	    }
-
-	  //--------------------
-	  // Now we add proper offset in here, so that we can later conveniently use
-	  // the standard iso_object blitting functions refering to map locations.
-	  //
-	  // Bulletmap [ i ] . image [ 0 ] [ j ] . offset_x = - Bulletmap [ i ] . image [ 0 ] [ j ] . surface -> w / 2 ;
-	  // Bulletmap [ i ] . image [ 0 ] [ j ] . offset_y = - Bulletmap [ i ] . image [ 0 ] [ j ] . surface -> h / 2 ;
 	}
     }
 
@@ -580,7 +567,7 @@ get_offset_for_iso_image_from_file_and_path ( char* fpath , iso_image* our_iso_i
   //
   if ( ( OffsetFile = fopen ( offset_file_name , "r") ) == NULL )
     {
-      DebugPrintf ( 1 , "\nSeeking to gain offset from file names '%s'." , offset_file_name );
+      DebugPrintf ( -1000 , "\nObtaining offset failed with file name '%s'." , offset_file_name );
       GiveStandardErrorMessage ( "get_offset_for_iso_image_from_file_and_path(...)" , "\
 Freedroid was unable to open a given offset file for an isometric image.\n\
 Since the offset could not be obtained from the offset file, some default\n\
@@ -630,7 +617,7 @@ Freedroid was unable to close an offset file.\nThis is a very strange occasion!"
  *
  * ---------------------------------------------------------------------- */
 void
-get_iso_image_from_file_and_path ( char* fpath , iso_image* our_iso_image ) 
+get_iso_image_from_file_and_path ( char* fpath , iso_image* our_iso_image , int use_offset_file ) 
 {
   SDL_Surface* Whole_Image;
 
@@ -643,8 +630,8 @@ get_iso_image_from_file_and_path ( char* fpath , iso_image* our_iso_image )
   if ( Whole_Image == NULL )
     {
       fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
-      GiveStandardErrorMessage ( "get_iso_image_from_file_and_path (...)" , 
-va("Could not load image: %s \n",fpath), PLEASE_INFORM, IS_FATAL );
+      GiveStandardErrorMessage ( "get_iso_image_from_file_and_path (...)" ,  
+				 va ( "Could not load image: %s \n" , fpath ) , PLEASE_INFORM, IS_FATAL );
     }
 
   //--------------------
@@ -673,7 +660,16 @@ va("Could not load image: %s \n",fpath), PLEASE_INFORM, IS_FATAL );
   // Now that we have loaded the image, it's time to get the proper
   // offset information for it.
   //
-  get_offset_for_iso_image_from_file_and_path ( fpath , our_iso_image );
+  if ( use_offset_file ) 
+    get_offset_for_iso_image_from_file_and_path ( fpath , our_iso_image );
+  else
+    {
+      //--------------------
+      // We _silently_ assume there is no offset file...
+      //
+      our_iso_image -> offset_x = - INITIAL_BLOCK_WIDTH/2 ;
+      our_iso_image -> offset_y = - INITIAL_BLOCK_HEIGHT/2 ;
+    }
 
 }; // void get_iso_image_from_file_and_path ( char* fpath , iso_image* our_iso_image ) 
 
@@ -818,7 +814,7 @@ Freedroid received a rotation model number that does not exist!",
 		    ( ModelMultiplier [ ModelNr ] * i ) + 1 );
 	  DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
 	  fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
-	  get_iso_image_from_file_and_path ( fpath , & ( enemy_iso_images [ ModelNr ] [ i ] [ 0 ] ) ) ;
+	  get_iso_image_from_file_and_path ( fpath , & ( enemy_iso_images [ ModelNr ] [ i ] [ 0 ] ) , TRUE ) ;
 	}
       //--------------------
       // But if we have an animation, maybe not complete animation but at least walkcycle 
@@ -917,7 +913,7 @@ Freedroid received a rotation model number that does not exist!",
 	      
 	      DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
 	      fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
-	      get_iso_image_from_file_and_path ( fpath , & ( enemy_iso_images [ ModelNr ] [ i ] [ j ] ) ) ;
+	      get_iso_image_from_file_and_path ( fpath , & ( enemy_iso_images [ ModelNr ] [ i ] [ j ] ) , TRUE ) ;
 	    }
 	}
     }    
@@ -2290,7 +2286,7 @@ load_all_obstacles ( void )
 
       if ( use_open_gl )
 	{
-	  get_iso_image_from_file_and_path ( fpath , & ( obstacle_map [ i ] . image ) ); 
+	  get_iso_image_from_file_and_path ( fpath , & ( obstacle_map [ i ] . image ) , TRUE ); 
 	  make_texture_out_of_surface ( & ( obstacle_map [ i ] . image ) ) ;
 	}
       else
@@ -2319,7 +2315,7 @@ load_one_isometric_floor_tile ( int tile_type )
 
   if ( use_open_gl )
     {
-      get_iso_image_from_file_and_path ( fpath , & ( floor_iso_images [ tile_type ] ) ) ;
+      get_iso_image_from_file_and_path ( fpath , & ( floor_iso_images [ tile_type ] ) , TRUE ) ;
       make_texture_out_of_surface ( & ( floor_iso_images [ tile_type ] ) ) ;
     }
   else

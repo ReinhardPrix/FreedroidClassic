@@ -1353,13 +1353,13 @@ InitVideo (void)
   //  SDL_Rect **vid_modes;
   char vid_driver[81];
   Uint32 video_flags = 0 ;  // flags for SDL video mode 
-
+  int video_mode_ok_check_result ;
   char *fpath;
 
   //--------------------
   // Initialize the SDL library 
   //
-  if ( SDL_Init (SDL_INIT_VIDEO) == -1 ) 
+  if ( SDL_Init ( SDL_INIT_VIDEO ) == -1 ) 
     {
       fprintf(stderr, "Couldn't initialize SDL: %s\n",SDL_GetError());
       Terminate(ERR);
@@ -1439,17 +1439,58 @@ InitVideo (void)
 	video_flags |= SDL_HWACCEL;
       
       /* Sets up OpenGL double buffering */
-      SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
-      
-      /* get a SDL surface */
+      if ( SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 ) )
+	{
+	  GiveStandardErrorMessage ( "InitVideo(...)" , "\
+Unable to set SDL_GL_DOUBLEBUFFER attribute!",
+				     PLEASE_INFORM, IS_FATAL );
+	}
+
+      //--------------------
+      // First we check to see if the mode we wish to set is really supported.  If it
+      // isn't supported, then we cancel the whole operation...
+      //
+      video_mode_ok_check_result = SDL_VideoModeOK( SCREEN_WIDTH, SCREEN_HEIGHT, vid_bpp , video_flags );
+      switch ( video_mode_ok_check_result )
+	{
+	case 0:
+	  GiveStandardErrorMessage ( "InitVideo(...)" , "\
+SDL reported, that the video mode mentioned above is not supported UNDER ANY BIT COLOR DEPTH!\nBreaking off...",
+				     PLEASE_INFORM, IS_FATAL );
+	  break;
+	default:
+	  if ( video_mode_ok_check_result == vid_bpp )
+	    {
+	      DebugPrintf ( -4 , "\nVideo mode requested seems to be available in this color depth..." );
+	    }
+	  else
+	    {
+	      DebugPrintf ( -4 , "\nTesting if color depth %d bits is available... " , vid_bpp );
+	      DebugPrintf ( -4 , "\nThe closest we will get is %d bits per pixel." , video_mode_ok_check_result );
+	      GiveStandardErrorMessage ( "InitVideo(...)" , "\
+SDL reported, that the video mode mentioned \nabove is not supported UNDER THE COLOR DEPTH MENTIONED ABOVE!\n\
+We'll be using the alternate color depth given above instead...",
+					 PLEASE_INFORM, IS_WARNING_ONLY );
+	      vid_bpp = video_mode_ok_check_result ;
+	    }
+	}
+
+      //--------------------
+      // Now that we know which mode to go for, we can give it a try and get the
+      // output surface we want.  Of course, some extra checking will be done, so
+      // that we know that the surface we're expecting is really there...
+      //
       Screen = SDL_SetVideoMode( SCREEN_WIDTH, SCREEN_HEIGHT, vid_bpp , video_flags );
-      /* Verify there is a surface */
       if ( !Screen )
 	{
 	  fprintf( stderr,  "Video mode set failed: %s\n", SDL_GetError( ) );
 	  Terminate ( ERR ) ;
 	}
       
+      //--------------------
+      // Since we want to use openGl, it might be good to check the OpenGL vendor string
+      // provided by the graphics driver.  Let's see...
+      //
       fprintf( stderr , "\nUse of OpenGL for graphics output has been requested.\nYour GL_VENDOR string seems to be: %s\n", glGetString( GL_VENDOR ) );
 
       /* initialize OpenGL */

@@ -2268,7 +2268,7 @@ Highlight_Current_Block(void)
   if ( level_editor_cursor . surface == NULL )
     {
       fpath = find_file ( "level_editor_floor_cursor.png" , GRAPHICS_DIR, FALSE );
-      get_iso_image_from_file_and_path ( fpath , & ( level_editor_cursor ) ) ;
+      get_iso_image_from_file_and_path ( fpath , & ( level_editor_cursor ) , TRUE ) ;
       if ( level_editor_cursor . surface == NULL )
 	{
 	  GiveStandardErrorMessage ( "Highlight_Current_Block (...)" , "\
@@ -2304,7 +2304,7 @@ draw_connection_between_tiles ( float x1 , float y1 , float x2 , float y2 )
   if ( level_editor_dot_cursor . surface == NULL )
     {
       fpath = find_file ( "level_editor_waypoint_dot.png" , GRAPHICS_DIR, FALSE );
-      get_iso_image_from_file_and_path ( fpath , & ( level_editor_dot_cursor ) ) ;
+      get_iso_image_from_file_and_path ( fpath , & ( level_editor_dot_cursor ) , TRUE ) ;
       if ( level_editor_dot_cursor . surface == NULL )
 	{
 	  GiveStandardErrorMessage ( "draw_connection_between_tiles (...)" , "\
@@ -2363,7 +2363,7 @@ ShowWaypoints( int PrintConnectionList , int mask )
   if ( level_editor_waypoint_cursor . surface == NULL )
     {
       fpath = find_file ( "level_editor_waypoint_cursor.png" , GRAPHICS_DIR, FALSE );
-      get_iso_image_from_file_and_path ( fpath , & ( level_editor_waypoint_cursor ) ) ;
+      get_iso_image_from_file_and_path ( fpath , & ( level_editor_waypoint_cursor ) , TRUE ) ;
       if ( level_editor_waypoint_cursor . surface == NULL )
 	{
 	  GiveStandardErrorMessage ( "ShowWaypoints( int PrintConnectionList )" , "\
@@ -2456,7 +2456,7 @@ ShowMapLabels( int mask )
     {
       first_function_call = FALSE;
       fpath = find_file ( "level_editor_map_label_indicator.png" , GRAPHICS_DIR, FALSE);
-      get_iso_image_from_file_and_path ( fpath , & ( map_label_indicator ) );
+      get_iso_image_from_file_and_path ( fpath , & ( map_label_indicator ) , TRUE );
     }
   
   //--------------------
