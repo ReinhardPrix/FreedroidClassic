@@ -877,6 +877,8 @@ void
 KillTastaturPuffer (void)
 {
   //PORT: nix tun hier!
+  printf ("\nOBSOLETE function KillTastaturPuffer() called: deprecated !\n");
+  return;
 }
 
 
