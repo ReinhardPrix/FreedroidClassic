@@ -237,6 +237,7 @@ typedef struct
   int bonus_to_resist_fire;  // this is a percentage
   int bonus_to_resist_electricity; // this is a percentage
   int bonus_to_resist_force; // this is a percentage
+  int affix_level; // the level of this affix (i.e. to which level items it can be attached or not)
   float price_factor;
 } item_bonus , *Item_bonus;
 
