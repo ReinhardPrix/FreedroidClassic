@@ -553,10 +553,10 @@ void
 HandleCurrentlyActivatedSkill( int player_num )
 {
     static int RightPressedPreviousFrame = 0;
-    int i;
-    float xdist, ydist, dist2;
-    Level ChestLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
-    moderately_finepoint loc_pos ;
+    // int i;
+    // float xdist, ydist, dist2;
+    // Level ChestLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
+    // moderately_finepoint loc_pos ;
     int index_of_droid_below_mouse_cursor = ( -1 ) ;
     int SpellCost;
 
@@ -990,6 +990,12 @@ ShowSkillsExplanationScreen( void )
     // This should draw the background...
     //
     blit_special_background ( SKILL_SCREEN_EXPLANATION_BACKGROUND_CODE ) ;
+
+    //--------------------
+    // We will use the FPS display font, cause the small one isn't 
+    // very well readable on the silver background
+    //
+    SetCurrentFont ( FPS_Display_BFont );
     
     TargetSkillRect.x = 15;
     TargetSkillRect.y = 15;
@@ -1104,14 +1110,6 @@ ShowSkillsScreen ( void )
     int SkillSubsetMap [ NUMBER_OF_SKILLS ] ;
     int SkillOfThisSlot;
     point SkillRectLocations [ NUMBER_OF_SKILLS_PER_SKILL_PAGE ] ;
-/*
-    point SkillRectLocations [ NUMBER_OF_SKILLS_PER_SKILL_PAGE ] =
-	{ { SkillScreenRect.x + 17 , SkillScreenRect.y + FIRST_SKILLRECT_Y + 0 * ( 64 + INTER_SKILLRECT_DIST ) + 3 } , 
-	  { SkillScreenRect.x + 17 , SkillScreenRect.y + FIRST_SKILLRECT_Y + 1 * ( 64 + INTER_SKILLRECT_DIST ) + 3 } , 
-	  { SkillScreenRect.x + 17 , SkillScreenRect.y + FIRST_SKILLRECT_Y + 2 * ( 64 + INTER_SKILLRECT_DIST ) + 2 } , 
-	  { SkillScreenRect.x + 17 , SkillScreenRect.y + FIRST_SKILLRECT_Y + 3 * ( 64 + INTER_SKILLRECT_DIST ) + 0 } , 
-	  { SkillScreenRect.x + 17 , SkillScreenRect.y + FIRST_SKILLRECT_Y + 4 * ( 64 + INTER_SKILLRECT_DIST ) + 0 } };
-*/
   
     DebugPrintf ( 2 , "\n%s(): Function call confirmed." , __FUNCTION__ );
     
@@ -1132,6 +1130,12 @@ ShowSkillsScreen ( void )
     // back to normal and to return...
     //
     if ( GameConfig . SkillScreen_Visible == FALSE ) return;
+
+    //--------------------
+    // We will use the FPS display font, cause the small one isn't 
+    // very well readable on the silver background
+    //
+    SetCurrentFont ( FPS_Display_BFont );
     
     //--------------------
     // Maybe the skill circle images for clicking between different spell circles

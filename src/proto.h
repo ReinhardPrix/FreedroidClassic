@@ -727,6 +727,7 @@ EXTERN int get_days_of_game_duration ( float current_game_date );
 EXTERN int get_hours_of_game_duration ( float current_game_date );
 EXTERN int get_minutes_of_game_duration ( float current_game_date );
 EXTERN void append_new_game_message ( char* game_message_text );
+EXTERN void display_current_game_message_window ( void );
 
 // shop.c 
 #undef EXTERN

@@ -1534,7 +1534,7 @@ append_new_game_message ( char* game_message_text )
  * We display a window with the current text messages.
  * ---------------------------------------------------------------------- */
 void
-display_current_game_messages ( void )
+display_current_game_message_window ( void )
 {
     SDL_Rect Subtitle_Window;
     int lines_needed ;
@@ -1619,7 +1619,7 @@ display_current_game_messages ( void )
     */
     // if ( with_update ) our_SDL_update_rect_wrapper ( Screen , Subtitle_Window.x , Subtitle_Window.y , Subtitle_Window.w , Subtitle_Window.h );
     
-}; // void display_current_game_messages ( int background_picture_code , int with_update )
+}; // void display_current_game_message_window ( int background_picture_code , int with_update )
 
 /* ----------------------------------------------------------------------
  * We need a window with the current text messages.  Since the window 
@@ -1663,8 +1663,6 @@ DisplayBanner ( void )
     
     ShowCurrentTextWindow ( );
     ShowCurrentSkill ( );
-
-    display_current_game_messages ( ) ;
 
     //--------------------
     // We display the name of the current level and the current time inside

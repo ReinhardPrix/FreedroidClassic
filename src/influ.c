@@ -2149,6 +2149,9 @@ adapt_global_mode_for_player ( int player_num )
     // If the cursor is not in the user rectangle, then the mode must
     // be reset to normal.
     //
+    // Also if the cursor is inside the skill rectangle or the skill
+    // explanation screen, it only seems just to do that.
+    //
     if ( !MouseCursorIsInRect ( &User_Rect , GetMousePos_x() , GetMousePos_y() ) )
     {
 	global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;

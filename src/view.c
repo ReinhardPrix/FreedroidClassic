@@ -2169,12 +2169,13 @@ AssembleCombatPicture ( int mask )
     {
 	ShowItemAlarm();
 	ShowQuickInventory ();
-	if ( ! GameOver )
-	    DisplayBanner ( );
+	display_current_game_message_window ( ) ;
 	ShowCharacterScreen ( );
 	ShowSkillsScreen ( );
-	DisplayButtons( );
 	ManageInventoryScreen ( );
+	DisplayButtons( );
+	if ( ! GameOver )
+	    DisplayBanner ( );
     }
     
     if ( ServerMode )

@@ -502,6 +502,221 @@ check_for_cheat_keys( void )
 
 }; // void check_for_cheat_keys( void )
  
+
+/* ----------------------------------------------------------------------
+ * This function takes care of any keypresses to toggle the visibility
+ * of the automap.  By default, the tab key will be used to toggle the
+ * automap on/off.
+ * ---------------------------------------------------------------------- */
+void
+automap_toggle_on_off ( void )
+{
+    static int TabPressed_LastFrame;
+
+    //--------------------
+    // We assign the Tab key to turn on/off the auto map
+    //
+    if ( TabPressed() )
+    {
+	if ( !TabPressed_LastFrame ) 
+	{
+	    GameConfig.Automap_Visible = !GameConfig.Automap_Visible;
+	    
+	    //--------------------
+	    // We reset the map position whenever the map is switched off
+	    // and back on again.  That way it should be made certain, that
+	    // even if the map has slided off so some edge of the screen.
+	    //
+	    if ( GameConfig.Automap_Visible )
+	    {
+		GameConfig . automap_manual_shift_x = 0 ;
+		GameConfig . automap_manual_shift_y = 0 ; 
+	    }
+	}
+	
+	TabPressed_LastFrame = TRUE;
+    }
+    else
+    {
+	TabPressed_LastFrame = FALSE;
+    }
+    
+}; // void automap_toggle_on_off ( void )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+handle_quick_appy_inventory_keys( void )
+{
+    static int Number1PressedLastFrame;
+    static int Number2PressedLastFrame;
+    static int Number3PressedLastFrame;
+    static int Number4PressedLastFrame;
+    static int Number5PressedLastFrame;
+    static int Number6PressedLastFrame;
+    static int Number7PressedLastFrame;
+    static int Number8PressedLastFrame;
+    static int Number9PressedLastFrame;
+    
+    //--------------------
+    // To quick-apply the items in the very lowest row of the
+    // inventory screen, the number keys 1-9 can be used.
+    //
+    if ( Number1Pressed() )
+    {
+	if ( !Number1PressedLastFrame ) Quick_ApplyItem ( 1 );
+	Number1PressedLastFrame = TRUE;
+    }
+    else 
+    {
+	Number1PressedLastFrame = FALSE;
+    }
+    if ( Number2Pressed() )
+    {
+	if ( !Number2PressedLastFrame ) Quick_ApplyItem ( 2 );
+	Number2PressedLastFrame = TRUE;
+    }
+    else
+    {
+	Number2PressedLastFrame = FALSE;
+    }
+    if ( Number3Pressed() )
+    {
+	if ( !Number3PressedLastFrame ) Quick_ApplyItem ( 3 );
+	Number3PressedLastFrame = TRUE;
+    }
+    else
+    {
+	Number3PressedLastFrame = FALSE;
+    }
+    if ( Number4Pressed() )
+    {
+	if ( !Number4PressedLastFrame ) Quick_ApplyItem ( 4 );
+	Number4PressedLastFrame = TRUE;
+    }
+    else
+    {
+	Number4PressedLastFrame = FALSE;
+    }
+    if ( Number5Pressed() )
+    {
+	if ( !Number5PressedLastFrame ) Quick_ApplyItem ( 5 );
+	Number5PressedLastFrame = TRUE;
+    }
+    else
+    {
+	Number5PressedLastFrame = FALSE;
+    }
+    if ( Number6Pressed() )
+    {
+	if ( !Number6PressedLastFrame ) Quick_ApplyItem ( 6 );
+	Number6PressedLastFrame = TRUE;
+    }
+    else
+    {
+	Number6PressedLastFrame = FALSE;
+    }
+    if ( Number7Pressed() )
+    {
+	if ( !Number7PressedLastFrame ) Quick_ApplyItem ( 7 );
+	Number7PressedLastFrame = TRUE;
+    }
+    else
+    {
+	Number7PressedLastFrame = FALSE;
+    }
+    if ( Number8Pressed() )
+    {
+	if ( !Number8PressedLastFrame ) Quick_ApplyItem ( 8 );
+	Number8PressedLastFrame = TRUE ;
+    }
+    else
+    {
+	Number8PressedLastFrame = FALSE;
+    }
+    if ( Number9Pressed() )
+    {
+	if ( !Number9PressedLastFrame ) Quick_ApplyItem ( 9 );
+	Number9PressedLastFrame = TRUE;
+    }
+    else
+    {
+	Number9PressedLastFrame = FALSE;
+    }
+    
+}; // void handle_quick_appy_inventory_keys( void )
+
+/* ----------------------------------------------------------------------
+ * The I S and C keys can be used to open/close the inventory, skills and
+ * the character screens.  This function takes care of any keyboard 
+ * toggling the user might want to do.
+ * ---------------------------------------------------------------------- */
+void
+handle_cha_ski_inv_screen_on_off_keys ( void )
+{
+    static int IPressed_LastFrame;
+    static int CPressed_LastFrame;
+    static int SPressed_LastFrame;
+
+    //--------------------
+    // We assign the S key to turning on/off the skill screen
+    //
+    if ( SPressed() )
+    {
+	if ( !SPressed_LastFrame ) 
+	{
+	    GameConfig.SkillScreen_Visible_Time = 0;
+	    GameConfig.SkillScreen_Visible = !GameConfig.SkillScreen_Visible;
+	    if ( GameConfig.SkillScreen_Visible ) GameConfig.CharacterScreen_Visible = FALSE ;
+	}
+	
+	SPressed_LastFrame = TRUE;
+    }
+    else
+    {
+	SPressed_LastFrame = FALSE;
+    }
+    
+    //--------------------
+    // We assign the I key to turn on/off the inventory screen.
+    //
+    if ( IPressed() )
+    {
+	if ( !IPressed_LastFrame ) 
+	{
+	    GameConfig.Inventory_Visible_Time = 0;
+	    GameConfig.Inventory_Visible = !GameConfig.Inventory_Visible;
+	}
+	IPressed_LastFrame = TRUE;
+    }
+    else
+    {
+	IPressed_LastFrame = FALSE;
+    }
+    
+    //--------------------
+    // We assign the C key to turn on/off the character screen
+    //
+    if ( CPressed() )
+    {
+	if ( !CPressed_LastFrame ) 
+	{
+	    GameConfig.CharacterScreen_Visible_Time = 0;
+	    GameConfig.CharacterScreen_Visible = !GameConfig.CharacterScreen_Visible;
+	    if ( GameConfig.CharacterScreen_Visible ) GameConfig.SkillScreen_Visible = FALSE ;
+	}
+	
+	CPressed_LastFrame = TRUE;
+    }
+    else
+    {
+	CPressed_LastFrame = FALSE;
+    }
+    
+}; // void handle_cha_ski_inv_screen_on_off_keys ( void )
+
 /* ----------------------------------------------------------------------
  * This function does the reactions to keypresses of the player other
  * than pressing cursor keys.
@@ -510,21 +725,8 @@ void
 ReactToSpecialKeys(void)
 {
   int i;
-  static int IPressed_LastFrame;
-  static int CPressed_LastFrame;
-  static int SPressed_LastFrame;
   static int TPressed_LastFrame;
   static int LPressed_LastFrame;
-  static int TabPressed_LastFrame;
-  static int Number1PressedLastFrame;
-  static int Number2PressedLastFrame;
-  static int Number3PressedLastFrame;
-  static int Number4PressedLastFrame;
-  static int Number5PressedLastFrame;
-  static int Number6PressedLastFrame;
-  static int Number7PressedLastFrame;
-  static int Number8PressedLastFrame;
-  static int Number9PressedLastFrame;
 
   //--------------------
   // Some QUIT key and some self-destruct keys can stay in
@@ -561,92 +763,8 @@ ReactToSpecialKeys(void)
   if ( F9Pressed()  ) activate_nth_aquired_skill ( 8 );
   if ( F10Pressed() ) activate_nth_aquired_skill ( 9 );
 
-  //--------------------
-  // To quick-apply the items in the very lowest row of the
-  // inventory screen, the number keys 1-9 can be used.
-  //
-  if ( Number1Pressed() )
-  {
-      if ( !Number1PressedLastFrame ) Quick_ApplyItem ( 1 );
-      Number1PressedLastFrame = TRUE;
-  }
-  else 
-  {
-      Number1PressedLastFrame = FALSE;
-  }
-  if ( Number2Pressed() )
-  {
-      if ( !Number2PressedLastFrame ) Quick_ApplyItem ( 2 );
-      Number2PressedLastFrame = TRUE;
-  }
-  else
-  {
-      Number2PressedLastFrame = FALSE;
-  }
-  if ( Number3Pressed() )
-  {
-      if ( !Number3PressedLastFrame ) Quick_ApplyItem ( 3 );
-      Number3PressedLastFrame = TRUE;
-  }
-  else
-  {
-      Number3PressedLastFrame = FALSE;
-  }
-  if ( Number4Pressed() )
-  {
-      if ( !Number4PressedLastFrame ) Quick_ApplyItem ( 4 );
-      Number4PressedLastFrame = TRUE;
-  }
-  else
-  {
-      Number4PressedLastFrame = FALSE;
-  }
-  if ( Number5Pressed() )
-  {
-      if ( !Number5PressedLastFrame ) Quick_ApplyItem ( 5 );
-      Number5PressedLastFrame = TRUE;
-  }
-  else
-  {
-      Number5PressedLastFrame = FALSE;
-  }
-  if ( Number6Pressed() )
-  {
-      if ( !Number6PressedLastFrame ) Quick_ApplyItem ( 6 );
-      Number6PressedLastFrame = TRUE;
-  }
-  else
-  {
-      Number6PressedLastFrame = FALSE;
-  }
-  if ( Number7Pressed() )
-  {
-      if ( !Number7PressedLastFrame ) Quick_ApplyItem ( 7 );
-      Number7PressedLastFrame = TRUE;
-  }
-  else
-  {
-      Number7PressedLastFrame = FALSE;
-  }
-  if ( Number8Pressed() )
-  {
-      if ( !Number8PressedLastFrame ) Quick_ApplyItem ( 8 );
-      Number8PressedLastFrame = TRUE ;
-  }
-  else
-  {
-      Number8PressedLastFrame = FALSE;
-  }
-  if ( Number9Pressed() )
-  {
-      if ( !Number9PressedLastFrame ) Quick_ApplyItem ( 9 );
-      Number9PressedLastFrame = TRUE;
-  }
-  else
-  {
-      Number9PressedLastFrame = FALSE;
-  }
-  
+  handle_quick_appy_inventory_keys();
+
   //--------------------
   // For debugging purposes, we introduce a key, that causes several 
   // values to be printed out.  This MUST be removed for the next release.
@@ -732,98 +850,18 @@ ReactToSpecialKeys(void)
   //
   if ( ( SpacePressed( ) && !axis_is_active ) ||
        ( Me[0].energy <= 0 ) )
-    {
+  {
       GameConfig.Mission_Log_Visible = FALSE ; 
       GameConfig.SkillScreen_Visible = FALSE ;
       GameConfig.CharacterScreen_Visible = FALSE ;
       GameConfig.Inventory_Visible = FALSE ;
-    }
-
-  //--------------------
-  // We assign the S key to turning on/off the skill screen
-  //
-  if ( SPressed() )
-    {
-      if ( !SPressed_LastFrame ) 
-	{
-	  GameConfig.SkillScreen_Visible_Time = 0;
-	  GameConfig.SkillScreen_Visible = !GameConfig.SkillScreen_Visible;
-	  if ( GameConfig.SkillScreen_Visible ) GameConfig.CharacterScreen_Visible = FALSE ;
-	}
-
-      SPressed_LastFrame = TRUE;
-    }
-  else
-    {
-      SPressed_LastFrame = FALSE;
-    }
-
-  //--------------------
-  // We assign the I key to turn on/off the inventory screen.
-  //
-  // CHEAT:  Shift in addition to I will identify all items in
-  //         current inventory.  Very handy...
-  //
-  if ( IPressed() )
-    {
-      if ( !IPressed_LastFrame ) 
-	{
-	  GameConfig.Inventory_Visible_Time = 0;
-	  GameConfig.Inventory_Visible = !GameConfig.Inventory_Visible;
-	}
-      IPressed_LastFrame = TRUE;
-    }
-  else
-    {
-      IPressed_LastFrame = FALSE;
-    }
-
-  //--------------------
-  // We assign the C key to turn on/off the character screen
-  //
-  if ( CPressed() )
-    {
-      if ( !CPressed_LastFrame ) 
-	{
-	  GameConfig.CharacterScreen_Visible_Time = 0;
-	  GameConfig.CharacterScreen_Visible = !GameConfig.CharacterScreen_Visible;
-	  if ( GameConfig.CharacterScreen_Visible ) GameConfig.SkillScreen_Visible = FALSE ;
-	}
-
-      CPressed_LastFrame = TRUE;
-    }
-  else
-    {
-      CPressed_LastFrame = FALSE;
-    }
-
-  //--------------------
-  // We assign the Tab key to turn on/off the auto map
-  //
-  if ( TabPressed() )
-  {
-      if ( !TabPressed_LastFrame ) 
-      {
-	  GameConfig.Automap_Visible = !GameConfig.Automap_Visible;
-
-	  //--------------------
-	  // We reset the map position whenever the map is switched off
-	  // and back on again.  That way it should be made certain, that
-	  // even if the map has slided off so some edge of the screen.
-	  //
-	  if ( GameConfig.Automap_Visible )
-	  {
-	      GameConfig . automap_manual_shift_x = 0 ;
-	      GameConfig . automap_manual_shift_y = 0 ; 
-	  }
-      }
-      
-      TabPressed_LastFrame = TRUE;
   }
-  else
-  {
-      TabPressed_LastFrame = FALSE;
-  }
+
+  
+  handle_cha_ski_inv_screen_on_off_keys();
+
+
+  automap_toggle_on_off();
 
   //--------------------
   // We assign the G key to send greetings either to the server

@@ -115,6 +115,12 @@ typedef struct
     int StandardInfluencerMessages_On_Off;
     int Mouse_Input_Permitted;
     char Theme_SubPath[2000];
+
+    //--------------------
+    // Now we add all the variables for the current screen/hud
+    // configuration:  Is inventory screen or character screen
+    // or something like that currently visible or not.
+    //
     int Mission_Log_Visible;
     float Mission_Log_Visible_Time;
     float Mission_Log_Visible_Max_Time;
@@ -129,6 +135,7 @@ typedef struct
     float SkillScreen_Visible_Max_Time;
     int Automap_Visible;
     int spell_level_visible;
+
     int terminate_on_missing_speech_sample;
     int show_subtitles_in_dialogs;
     char freedroid_version_string[500];
