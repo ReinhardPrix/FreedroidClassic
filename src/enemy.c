@@ -816,8 +816,30 @@ MoveThisEnemy( int EnemyNum )
 		       ! ( MyRandom ( 6 ) ) , FALSE ) ;
       for ( i = 0 ; i < Druidmap [ ThisRobot->type ].forced_magic_items ; i ++ )
 	{
-	  DropRandomItem ( ThisRobot->pos.x + MyRandom(10) * 0.07 , ThisRobot->pos.y + MyRandom(10) * 0.07 , Druidmap [ ThisRobot->type ].monster_level , 
-			   TRUE , TRUE ) ;
+	  switch ( i )
+	    {
+	    case 0:
+	      DropRandomItem ( ThisRobot->pos.x , ThisRobot->pos.y + 0.5 , 
+			       Druidmap [ ThisRobot->type ].monster_level , TRUE , TRUE ) ;
+	      break;
+	    case 1:
+	      DropRandomItem ( ThisRobot->pos.x , ThisRobot->pos.y - 0.5 , 
+			       Druidmap [ ThisRobot->type ].monster_level , TRUE , TRUE ) ;
+	      break;
+	    case 2:
+	      DropRandomItem ( ThisRobot->pos.x + 0.5 , ThisRobot->pos.y , 
+			       Druidmap [ ThisRobot->type ].monster_level , TRUE , TRUE ) ;
+	      break;
+	    case 3:
+	      DropRandomItem ( ThisRobot->pos.x - 0.5 , ThisRobot->pos.y , 
+			       Druidmap [ ThisRobot->type ].monster_level , TRUE , TRUE ) ;
+	      break;
+	    default:
+	      DropRandomItem ( ThisRobot->pos.x -0.7 + 0.07 * MyRandom(20) , 
+			       ThisRobot->pos.y -0.7 + 0.07 * MyRandom(20) , 
+			       Druidmap [ ThisRobot->type ].monster_level , TRUE , TRUE ) ;
+	      break;
+	    }
 	}
 
       if (LevelEmpty ())
