@@ -41,14 +41,12 @@ void Level_Editor(void);
 
 EXTERN char Previous_Mission_Name[1000];
 
-/*@Function============================================================
-@Desc: This function is used by the Level Editor integrated into 
-       freedroid.  It highlights the map position that is currently 
-       edited or would be edited, if the user pressed something.  I.e. 
-       it provides a "cursor" for the Level Editor.
-
-@Ret:  none
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function is used by the Level Editor integrated into 
+ * freedroid.  It highlights the map position that is currently 
+ * edited or would be edited, if the user pressed something.  I.e. 
+ * it provides a "cursor" for the Level Editor.
+ * ---------------------------------------------------------------------- */
 void 
 Highlight_Current_Block(void)
 {
@@ -119,12 +117,10 @@ Highlight_Current_Block(void)
     }
 } // void Highlight_Current_Block(void)
 
-/*@Function============================================================
-@Desc: This function is used by the Level Editor integrated into 
-       freedroid.  It marks all waypoints with a cross.
-
-@Ret:  none
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function is used by the Level Editor integrated into 
+ * freedroid.  It marks all waypoints with a cross.
+ * ---------------------------------------------------------------------- */
 void 
 Show_Waypoints(void)
 {
@@ -218,18 +214,13 @@ Show_Waypoints(void)
 
 } // void Show_Waypoints(void);
 
-/*@Function============================================================
-@Desc: This function is provides the Level Editor integrated into 
-       freedroid.  Actually this function is a submenu of the big
-       Escape Menu.  In here you can edit the level and upon pressing
-       escape enter a further submenu where you can save the level,
-       change level name and quit from level editing.
-
-       NOTE: SAVING CURRENTLY DOES NOT WORK!  DONT WORK TOO MUCH WITH
-             THIS IF YOU CANT SAVE YOUR LEVELS LATER!!!
-
-@Ret:  none
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function is provides the Level Editor integrated into 
+ * freedroid.  Actually this function is a submenu of the big
+ * Escape Menu.  In here you can edit the level and, upon pressing
+ * escape, you can enter a new submenu where you can save the level,
+ * change level name and quit from level editing.
+ * ---------------------------------------------------------------------- */
 void 
 Level_Editor(void)
 {
@@ -566,8 +557,23 @@ Level_Editor(void)
 	      fflush(stdout);
 	    }
 
+	  //----------------------------------------------------------------------
 	  // If the person using the level editor pressed some editing keys, insert the
-	  // corresponding map tile.  This is done here:
+	  // corresponding map tile.  This is done in the following large chunk of code:
+	  //----------------------------------------------------------------------
+
+	  //--------------------
+	  // Pressing the 'T' key will insert a teleporter field...
+	  //
+	  if ( TPressed()) 
+	    {
+	      CurLevel -> map [ BlockY ] [ BlockX ] = TELE_1 ;
+	    }
+
+	  //--------------------
+	  // Pressing the '1' to '5' keys will insert either classic 'block'
+	  // fixed map tiles or decructible 'box' map blocks.
+	  //
 	  if (Number1Pressed()) 
 	    {
 	      if ( Shift_Was_Pressed() )
