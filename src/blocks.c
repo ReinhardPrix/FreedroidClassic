@@ -372,6 +372,7 @@ Load_Influencer_Surfaces( void )
       tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, vid_bpp, 0, 0, 0, 0);
       SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
       InfluencerSurfacePointer[i] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
+      DebugPrintf( 1 , "\nInfluencerSurfacePonter[%d] is now initialized..." , i );
       SDL_SetColorKey( InfluencerSurfacePointer[i] , 0 , 0 ); // this should clear any color key in the dest surface
       // Now we can copy the image Information
       Source.x=i*(Block_Height+2);

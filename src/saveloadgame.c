@@ -60,7 +60,7 @@ SaveGame( void )
   char *SaveGameHeaderString;
   FILE *SaveGameFile;  // to this file we will save all the ship data...
   char filename[1000];
-  char linebuf[100000];
+  char linebuf[10000];
   char *homedir;
   char* MenuTexts[10]={ "Back" , "" , "" , "" , "" ,
 			"" , "" , "" , "" , "" };
@@ -93,7 +93,7 @@ SaveGame( void )
       DebugPrintf ( 0 , "ERROR: Environment does not contain HOME variable... \n\
 I need to know that for saving. Abort.\n");
       Terminate( ERR );
-      return (ERR);
+      // return (ERR);
     }
 
   //--------------------
@@ -135,7 +135,7 @@ Sorry...\n\
   if( ( SaveGameFile = fopen(filename, "w")) == NULL) {
     printf("\n\nError opening save game file for writing...\n\nTerminating...\n\n");
     Terminate(ERR);
-    return ERR;
+    // return ERR;
   }
   
   //--------------------
@@ -225,7 +225,7 @@ freedroid-discussion@lists.sourceforge.net\n\
     {
       printf("\n\nClosing of ship file failed in SaveGame...\n\nTerminating\n\n");
       Terminate(ERR);
-      return ERR;
+      // return ERR;
     }
   
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint SaveGame( void ): end of function reached.");
@@ -337,7 +337,7 @@ I need to know that for loading. Abort.\n");
   // We assume, that our target strings will be found, so we give 10000000 as the search area
   // length, since we do not know it exactly
   //
-  BulletRawDataPointer = MyMemmem( LoadGameData , 10000000 , ALLBULLETS_RAW_DATA_STRING , 
+  BulletRawDataPointer = MyMemmem( LoadGameData , 30000000 , ALLBULLETS_RAW_DATA_STRING , 
 				   strlen ( ALLBULLETS_RAW_DATA_STRING ) );
   BulletRawDataPointer += strlen ( ALLBULLETS_RAW_DATA_STRING ) ;
   memcpy( &(AllBullets) , BulletRawDataPointer , sizeof ( bullet ) * MAXBULLETS );
