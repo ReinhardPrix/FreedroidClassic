@@ -201,6 +201,10 @@ typedef struct
   int ChangeMapTo;
   int ChangeMapLevel;
 
+  // Maybe the triggered action will change some obstacle on some level...
+  char* modify_obstacle_with_label;
+  int modify_obstacle_to_type;
+
   // Maybe the triggered event teleports the influencer somewhere
   point TeleportTarget;
   int TeleportTargetLevel;

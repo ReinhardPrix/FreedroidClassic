@@ -2015,8 +2015,8 @@ PrintMapLabelInformationOfThisSquare ( Level EditLevel )
 
   for ( MapLabelIndex = 0 ; MapLabelIndex < MAX_MAP_LABELS_PER_LEVEL ; MapLabelIndex ++ )
     {
-      if ( ( ( (int) rintf( Me[0].pos.x ) ) == EditLevel -> labels [ MapLabelIndex ] . pos . x ) && 
-	   ( ( (int) rintf( Me[0].pos.y ) ) == EditLevel -> labels [ MapLabelIndex ] . pos . y ) )
+      if ( ( fabsf ( Me [ 0 ] . pos . x - ( EditLevel -> labels [ MapLabelIndex ] . pos . x + 0.5 ) ) <= 0.5 ) && 
+	   ( fabsf ( Me [ 0 ] . pos . y - ( EditLevel -> labels [ MapLabelIndex ] . pos . y + 0.5 ) ) <= 0.5 ) )
 	break;
     }
   
@@ -2225,84 +2225,38 @@ Unable to load the level editor waypoint cursor.",
  * freedroid.  It marks all places that have a label attached to them.
  * ---------------------------------------------------------------------- */
 void 
-ShowMapLabels( void )
+ShowMapLabels( int mask )
 {
   int LabelNr;
-  int i , x , y;
-  int BlockX, BlockY;
   Level EditLevel;
-
+  static iso_image map_label_indicator;
+  static int first_function_call = TRUE ;
+  char* fpath;
   EditLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
 
-  // #define LABEL_COLOR 0x0FFFFFFFF
-
-  BlockX = rintf (Me[0].pos.x);
-  BlockY = rintf (Me[0].pos.y);
-	  
-  SDL_LockSurface( Screen );
-
+  //--------------------
+  // On the first function call to this function, we must load the map label indicator
+  // iso image from the disk to memory and keep it there as static.  That should be
+  // it for here.
+  //
+  if ( first_function_call )
+    {
+      first_function_call = FALSE;
+      fpath = find_file ( "level_editor_map_label_indicator.png" , GRAPHICS_DIR, FALSE);
+      get_iso_image_from_file_and_path ( fpath , & ( map_label_indicator ) );
+    }
+  
+  //--------------------
+  // Now we can draw a fine indicator at all the position nescessary...
+  //
   for (LabelNr=0; LabelNr<MAXWAYPOINTS; LabelNr++)
     {
-
       if ( EditLevel->labels[LabelNr].pos.x == (-1) ) continue;
-
-      //--------------------
-      // Draw the cross in the middle of the middle of the tile
-      //
-      for (i= Block_Width/4; i<3 * Block_Width / 4; i++)
-	{
-	  // This draws the left border of our square marker
-	  x = Block_Width/4 + User_Rect.x+(User_Rect.w/2)- (( Me[0].pos.x)-EditLevel->labels[LabelNr].pos.x + 0.5) * Block_Width;
-	  y = i + User_Rect.y+User_Rect.h/2 - (( Me[0].pos.y)-EditLevel->labels[LabelNr].pos.y + 0.5) * Block_Height;
-	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
-	  putpixel( Screen , x , y , HIGHLIGHTCOLOR );
-
-		    
-	  x = Block_Width/4 + User_Rect.x + (User_Rect.w/2) - (( Me[0].pos.x )-EditLevel->labels[LabelNr].pos.x + 0.5) * Block_Width + 1 ;
-	  y = i + User_Rect.y + User_Rect.h/2- (( Me[0].pos.y)-EditLevel->labels[LabelNr].pos.y + 0.5) * Block_Height ;
-	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
-	  putpixel( Screen , x , y , HIGHLIGHTCOLOR );
-	  
-	  // This draws the right border of our square marker
-	  x = 3*Block_Width/4 + User_Rect.x + (User_Rect.w/2) - (( Me[0].pos.x)-EditLevel->labels[LabelNr].pos.x + 0.5) * Block_Width;
-	  y = -i + User_Rect.y + User_Rect.h/2 - (( Me[0].pos.y )-EditLevel->labels[LabelNr].pos.y - 0.5 ) * Block_Height -1;
-	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
-	  putpixel( Screen , x , y , HIGHLIGHTCOLOR );
-
-	  x = 3*Block_Width/4 + User_Rect.x + (User_Rect.w/2) - (( Me[0].pos.x)-EditLevel->labels[LabelNr].pos.x + 0.5) * Block_Width + 1 ;
-	  y = -i + User_Rect.y + User_Rect.h/2 - ((Me[0].pos.y)-EditLevel->labels[LabelNr].pos.y - 0.5 ) * Block_Height ;
-	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
-	  putpixel( Screen , x , y , HIGHLIGHTCOLOR );
-	  
-	  // This draws the upper border of our square marker
-	  x = i + User_Rect.x+(User_Rect.w/2)- (( Me[0].pos.x)-EditLevel->labels[LabelNr].pos.x + 0.5) * Block_Width;
-	  y = Block_Height/4 + User_Rect.y+User_Rect.h/2 - (( Me[0].pos.y)-EditLevel->labels[LabelNr].pos.y + 0.5) * Block_Height;
-	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
-	  putpixel( Screen , x , y , HIGHLIGHTCOLOR );
-		    
-	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me[0].pos.x )-EditLevel->labels[LabelNr].pos.x + 0.5) * Block_Width;
-	  y = Block_Height/4 + User_Rect.y + User_Rect.h/2- (( Me[0].pos.y)-EditLevel->labels[LabelNr].pos.y + 0.5) * Block_Height + 1;
-	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
-	  putpixel( Screen , x , y , HIGHLIGHTCOLOR );
-	  
-	  // This draws the lower border of our square marker
-	  x = i + User_Rect.x+(User_Rect.w/2)- (( Me[0].pos.x)-EditLevel->labels[LabelNr].pos.x + 0.5) * Block_Width;
-	  y = 3*Block_Height/4 + User_Rect.y+User_Rect.h/2 - (( Me[0].pos.y)-EditLevel->labels[LabelNr].pos.y + 0.5) * Block_Height;
-	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
-	  putpixel( Screen , x , y , HIGHLIGHTCOLOR );
-		    
-	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me[0].pos.x )-EditLevel->labels[LabelNr].pos.x + 0.5) * Block_Width;
-	  y = 3*Block_Height/4 + User_Rect.y + User_Rect.h/2- (( Me[0].pos.y)-EditLevel->labels[LabelNr].pos.y + 0.5) * Block_Height + 1;
-	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
-	  putpixel( Screen , x , y , HIGHLIGHTCOLOR );
-	  
-	}
-	      
+      blit_iso_image_to_map_position ( map_label_indicator , EditLevel -> labels [ LabelNr ] . pos . x + 0.5 , 
+				       EditLevel -> labels [ LabelNr ] . pos . y + 0.5 );
     }
 
-  SDL_UnlockSurface( Screen );
-
-} // void ShowMapLabels( void );
+}; // void ShowMapLabels( void );
 
 /* ----------------------------------------------------------------------
  *
@@ -2761,8 +2715,8 @@ EditMapLabelData ( Level EditLevel )
   //
   for ( i = 0 ; i < MAX_MAP_LABELS_PER_LEVEL ; i ++ )
     {
-      if ( ( EditLevel -> labels [ i ] . pos . x == (int)rintf( Me[0].pos.x) ) &&
-	   ( EditLevel -> labels [ i ] . pos . y == (int)rintf( Me[0].pos.y) ) ) 
+      if ( ( fabsf ( EditLevel -> labels [ i ] . pos . x + 0.5 - Me[0].pos.x ) < 0.5 ) &&
+	   ( fabsf ( EditLevel -> labels [ i ] . pos . y + 0.5 - Me[0].pos.y ) ) ) 
 	{
 	  break;
 	}
@@ -2807,8 +2761,8 @@ EditMapLabelData ( Level EditLevel )
   if ( strlen ( NewCommentOnThisSquare ) )
     {
       EditLevel -> labels [ i ] . label_name = NewCommentOnThisSquare;
-      EditLevel -> labels [ i ] . pos . x = rintf( Me[0].pos.x );
-      EditLevel -> labels [ i ] . pos . y = rintf( Me[0].pos.y );
+      EditLevel -> labels [ i ] . pos . x = rintf( Me[0].pos.x - 0.5 );
+      EditLevel -> labels [ i ] . pos . y = rintf( Me[0].pos.y - 0.5 );
     }
   else
     {
@@ -3304,12 +3258,12 @@ LevelEditor(void)
 	  OldTicks = SDL_GetTicks ( ) ;
 
 	  ClearUserFenster();
-	  AssembleCombatPicture ( ONLY_SHOW_MAP_AND_TEXT | SHOW_GRID | SHOW_ITEMS | GameConfig.omit_tux_in_level_editor * OMIT_TUX | GameConfig.omit_obstacles_in_level_editor * OMIT_OBSTACLES | GameConfig.omit_enemies_in_level_editor * OMIT_ENEMIES | SHOW_OBSTACLE_NAMES | ZOOM_OUT * GameConfig . zoom_is_on );
+	  AssembleCombatPicture ( ONLY_SHOW_MAP_AND_TEXT | SHOW_GRID | SHOW_ITEMS | GameConfig.omit_tux_in_level_editor * OMIT_TUX | GameConfig.omit_obstacles_in_level_editor * OMIT_OBSTACLES | GameConfig.omit_enemies_in_level_editor * OMIT_ENEMIES | SHOW_OBSTACLE_NAMES | ZOOM_OUT * GameConfig . zoom_is_on | OMIT_BLASTS );
 
 	  Highlight_Current_Block();
 
 	  ShowWaypoints( FALSE );
-	  ShowMapLabels( );
+	  ShowMapLabels( ZOOM_OUT * GameConfig . zoom_is_on );
 	  
 	  SetCurrentFont ( FPS_Display_BFont ) ;
 

@@ -34,18 +34,6 @@
 ** Start of Mission Event Section **
 
 //--------------------
-// the following trigger opens the barrier, so that the influencer can
-// leave the retreatment bunker of the scientists.
-
-// This is a pure location trigger.  Copy and adapt is as you feel like it.
-* S**tart of an Event Trigger Subsection *
-Influencer must be at X=2 Y=7 Lev=2
-Use map location from map label="NO_LABEL_DEFINED_YET"
-Event Action to be triggered by this trigger="open_barrier"
-Delete the event trigger after it has been triggered=-1
-* End of this Event Trigger Subsection *
-
-//--------------------
 // the following trigger teleports the influencer into the main area,
 // or out of it again
 
@@ -275,7 +263,7 @@ Delete the event trigger after it has been triggered=-1
 
 * Start of an Event Action Subsection *
 Action label for this action="open_novice_arena_exit_door"
-Mapchange at X=4 Y=7 Lev=2 to new value=27
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
 Use map label for map change location="NoviceArenaExitDoor"
 Teleport to TelX=-1 TelY=-1 TelLev=-1
 Use map label for teleport target="NO_LABEL_DEFINED_YET"
@@ -285,32 +273,11 @@ Action is mission assignment=-1
 
 * Start of an Event Action Subsection *
 Action label for this action="open_master_arena_exit_door"
-Mapchange at X=4 Y=7 Lev=2 to new value=27
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
 Use map label for map change location="MasterArenaExitDoor"
 Teleport to TelX=-1 TelY=-1 TelLev=-1
 Use map label for teleport target="NO_LABEL_DEFINED_YET"
 Action is Influencer say="Thanks for unlocking the door!"
-Action is mission assignment=-1
-* End of this Event Action Subsection *
-
-* Start of an Event Action Subsection *
-Action label for this action="open_barrier"
-Mapchange at X=4 Y=7 Lev=2 to new value=27
-Use map label for map change location="NO_LABEL_DEFINED_YET"
-Teleport to TelX=-1 TelY=-1 TelLev=-1
-Use map label for teleport target="NO_LABEL_DEFINED_YET"
-Action is Influencer say="Thanks for unlocking the door!"
-Action is mission assignment=-1
-* End of this Event Action Subsection *
-
-
-* Start of an Event Action Subsection *
-Action label for this action="close_barrier"
-Mapchange at X=4 Y=7 Lev=2 to new value=23
-Use map label for map change location="NO_LABEL_DEFINED_YET"
-Teleport to TelX=-1 TelY=-1 TelLev=-1
-Use map label for teleport target="NO_LABEL_DEFINED_YET"
-Action is Influencer say=""
 Action is mission assignment=-1
 * End of this Event Action Subsection *
 
