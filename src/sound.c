@@ -79,10 +79,15 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
 Mix_Chunk *Loaded_WAV_Files[ALL_SOUNDS];
 #endif
 
-#define ALL_MOD_MUSICS 2
+#define ALL_MOD_MUSICS 7
 
 char *MOD_Music_SampleFilenames[ALL_MOD_MUSICS] = {
    "ERRORSOUND_NILL.NOMOD",
+   "A_City_at_Night.mod",
+   "AnarchyMenu1.mod",
+   "Beachhead_2.mod",
+   "Agony-Highlands2.mod",
+   "AnarchyMenu10.mod",
    "The_Last_V8.mod"
 };
 
@@ -216,13 +221,16 @@ Sorry...\n\
     } // for (i=0; ...
 
 
-
-  fpath = find_file ( MOD_Music_SampleFilenames [ 1 ], SOUND_DIR, FALSE);
-  Loaded_MOD_Files [ 1 ] = Mix_LoadMUS( fpath );
-  if ( Loaded_MOD_Files[ 1 ] == NULL )
+  
+  Loaded_MOD_Files[0]=NULL;
+  for (i = 1; i < ALL_MOD_MUSICS; i++)
     {
-      fprintf (stderr,
-	       "\n\
+      fpath = find_file ( MOD_Music_SampleFilenames [ i ], SOUND_DIR, FALSE);
+      Loaded_MOD_Files [ i ] = Mix_LoadMUS( fpath );
+      if ( Loaded_MOD_Files[ i ] == NULL )
+	{
+	  fprintf (stderr,
+		   "\n\
 \n\
 ----------------------------------------------------------------------\n\
 Freedroid has encountered a problem:\n\
@@ -241,15 +249,15 @@ not complain any more.  But for now Freedroid will terminate to draw attention \
 to the sound problem it could not resolve.\n\
 Sorry...\n\
 ----------------------------------------------------------------------\n\
-\n" , MOD_Music_SampleFilenames[ 1 ]);
+\n" , MOD_Music_SampleFilenames[ i ]);
 	  Terminate (ERR);
 	} // if ( !Loaded_WAV...
-  else
-    {
-      DebugPrintf ( 1 , "\nSuccessfully loaded file %s.", MOD_Music_SampleFilenames[ 1 ]);
-    }
+      else
+	{
+	  DebugPrintf ( 1 , "\nSuccessfully loaded file %s.", MOD_Music_SampleFilenames[ i ]);
+	}
 
-
+    } // for (i=1, ... MOD_FILES...
 
   // DebugPrintf (1, "done.");
   // fflush(stdout);
@@ -361,15 +369,50 @@ Technical details:
 void
 Switch_Background_Music_To (int Tune)
 {
+  static int Background_Music_Channel = -1;
+  static int MOD_Music_Channel = -1;
+
 #ifndef HAVE_LIBSDL_MIXER
   return;
 #else
 
-  static int Background_Music_Channel = -1;
+  if ( Tune == SILENCE ) // SILENCE is defined as -1 I think
+    {
+      //printf("\nOld Background music channel has been halted.");
+      // fflush(stdout);
+      Mix_HaltMusic( ); // this REALLY is a VOID-argument function!!
+      MOD_Music_Channel = -1;
+      return;
+    }
 
-  static int MOD_Music_Channel = -1;
 
-  MOD_Music_Channel = Mix_PlayMusic ( Loaded_MOD_Files[ 1 ] , -1 );
+  if ( Tune >= ALL_MOD_MUSICS )
+    {
+      fprintf (stderr,
+	       "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+The background music it wanted to switch to is larger than the number of\n\
+all background musics loaded.  This cannot lead to any sensible result.\n\
+\n\
+The number given to index the background music was: %d \n\
+\n\
+The most likely cause for the problem is, that a wrong and old instruction\n\
+for a new background music is somewhere in the code.\n\
+Freedroid will therefore terminate now to draw attention to this error.\n\
+Sorry if that interupts a major game of yours...\n\
+\n\
+In the meantime you can choose to play without sound.\n\
+\n\
+If you want this, use the appropriate command line option and Freedroid will \n\
+not complain any more. \n\
+----------------------------------------------------------------------\n\
+\n" , Tune );
+      Terminate (ERR);
+    }
+
+  MOD_Music_Channel = Mix_PlayMusic ( Loaded_MOD_Files[ Tune ] , -1 );
 
   /*
   if ( !sound_on ) return;
