@@ -272,7 +272,7 @@ LoadShip (char *filename)
   char *endpt;				/* Pointer to end-strings */
   char *LevelStart[MAX_LEVELS];		/* Pointer to a level-start */
   int level_anz;
-  int i, j;
+  int i;
 
   /* Read the whole ship-data to memory */
   if ((ShipFile = fopen (filename, "r")) == NULL)
@@ -406,23 +406,6 @@ LoadShip (char *filename)
   /* level 15 */
   Set_Rect (curShip.Level_Rects[15][0],276,162,  48, 2*16 );
   curShip.num_level_rects[15] = 1;
-  
-  /* 
-   * these rectangles are relative to the ship-picture 
-   * therefore offset them with the User-Rectangle 
-   */	   
-  for (i=0; i<MAX_LIFT_ROWS; i++)
-    {
-      curShip.LiftRow_Rect[i].x += User_Rect.x;
-      curShip.LiftRow_Rect[i].y += User_Rect.y;
-    }
-  for (i=0; i<MAX_LEVELS; i++)
-    for (j=0; j<MAX_LEVEL_RECTS; j++)
-      {
-	curShip.Level_Rects[i][j].x += User_Rect.x;
-	curShip.Level_Rects[i][j].y += User_Rect.y;
-      }
-
 
   return OK;
 

@@ -202,28 +202,41 @@ EnterLift (void)
 void
 ShowLifts (int level, int liftrow)
 {
-  SDL_Rect dst;
-
+  SDL_Rect src, dst;
+  int i;
   // clear the whole screen
   //  ClearGraphMem();
   // fill the user fenster with some color
   SetUserfenster ( EL_BG_COLOR );
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );      
 
-  /* First show ship "lights off" */
+  /* First blit ship "lights off" */
   Copy_Rect (User_Rect, dst);
   SDL_BlitSurface (ship_off_pic, NULL, ne_screen, &dst);
-  SDL_Flip (ne_screen);
   
-  /* Now superpose ship "lights on" and update selectively */
-  SDL_BlitSurface (ship_on_pic, NULL, ne_screen, &dst);
+  /* Now superpose current level & lift "lights on"  */
+  //  SDL_BlitSurface (ship_on_pic, NULL, ne_screen, &dst);
 
   if (level >= 0)
-    SDL_UpdateRects
-      (ne_screen, curShip.num_level_rects[level],curShip.Level_Rects[level]);
+    for (i=0; i<curShip.num_level_rects[level]; i++)
+      {
+	Copy_Rect (curShip.Level_Rects[level][i], src);
+	Copy_Rect (src, dst);
+	dst.x += User_Rect.x;   /* offset respective to User-Rectangle */
+	dst.y += User_Rect.y; 
+	SDL_BlitSurface (ship_on_pic, &src, ne_screen, &dst);
+      }
 
   if (liftrow >=0)
-    SDL_UpdateRects (ne_screen, 1, &curShip.LiftRow_Rect[liftrow]);
+    {
+      Copy_Rect (curShip.LiftRow_Rect[liftrow], src);
+      Copy_Rect (src, dst);
+      dst.x += User_Rect.x;   /* offset respective to User-Rectangle */
+      dst.y += User_Rect.y; 
+      SDL_BlitSurface (ship_on_pic, &src, ne_screen, &dst);
+    }
+
+  SDL_Flip (ne_screen);
 
   return;
 
