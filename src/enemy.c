@@ -816,11 +816,9 @@ SelectNextWaypointAdvanced ( int EnemyNum )
 	  // Now that we know, there is some way out of this, we can test around
 	  // and around randomly until we finally find some solution.
 	  //
-	  ThisRobot->nextwaypoint = WpList [ nextwp ] . connections [ i ] ;
-	  DebugPrintf ( 0 , "\nSelectNextWaypointAdvanced:  A new waypoint has been set." );
- 
-	  /*
-	  SolutionFound=FALSE;
+	  // ThisRobot->nextwaypoint = WpList [ nextwp ] . connections [ i ] ;
+	  // 
+ 	  SolutionFound=FALSE;
 	  while ( !SolutionFound )
 	    {
 	      TestConnection = MyRandom (MAX_WP_CONNECTIONS - 1);
@@ -831,7 +829,6 @@ SelectNextWaypointAdvanced ( int EnemyNum )
 	      trywp = WpList[nextwp].connections[ TestConnection ];
 	      SolutionFound = TRUE;
 	    }
-	  */
 
 	}
       else
@@ -843,7 +840,9 @@ This is an error in the waypoint structure of this level.",
 	}
       
       // set new waypoint...
-      // ThisRobot->nextwaypoint = tryw;p
+      ThisRobot->nextwaypoint = trywp;
+      DebugPrintf ( 0 , "\nSelectNextWaypointAdvanced:  A new waypoint has been set." );
+
     } // if
 }; // void SelectNextWaypointAdvanced ( int EnemyNum )
 
