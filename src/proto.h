@@ -247,6 +247,7 @@ EXTERN void DropHeldItemToInventory( void );
 EXTERN void DropHeldItemToTheFloor ( void );
 EXTERN void ManageInventoryScreen ( void );
 EXTERN void ShowCharacterScreen ( void );
+EXTERN void AddFloorItemDirectlyToInventory( item* ItemPointer );
 
 /* input.c */
 #undef EXTERN
