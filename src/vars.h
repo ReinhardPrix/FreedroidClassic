@@ -40,6 +40,8 @@ const SDL_Rect Full_User_Rect = {0, BANNER_HEIGHT, 640, 480 - BANNER_HEIGHT};
 
 const SDL_Rect Full_Screen_Rect = { 0, 0, SCREENLEN, SCREENHEIGHT };
 
+const SDL_Rect Droid_Pic_Rect = {0, 0, 132, 180};  // for droid-pic display in console
+
 int ShipEmptyCounter = 0;	/* counter to Message: you have won(this ship */
 
 influence_t Me = {

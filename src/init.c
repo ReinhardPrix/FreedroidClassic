@@ -1094,7 +1094,7 @@ ThouArtDefeated (void)
   Assemble_Combat_Picture (DO_SCREEN_UPDATE);
   MakeGridOnScreen (&User_Rect);
 
-  ShowRobotPicture (UserCenter_x -70, UserCenter_y - 80, DRUID999);
+  ShowRobotPicture (UserCenter_x -70, UserCenter_y - 80, DRUID999, 0);
   ThouArtDefeatedSound ();
 
   SetCurrentFont (Para_BFont);

@@ -35,6 +35,11 @@
 
 #define JOY_MAX_VAL 32767     // maximal amplitude of joystick axis values
 
+#define RESET 0x01
+#define UPDATE 0x02
+#define DROID_ROTATION_TIME 2.5
+
+
 #define UserCenter_x (User_Rect.x + User_Rect.w/2)
 #define UserCenter_y (User_Rect.y + User_Rect.h/2)
 

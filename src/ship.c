@@ -46,7 +46,6 @@ extern bool show_cursor;
 
 #define UPDATE_ONLY 0x01
 
-
 //--------------------
 // Definitions for the menu inside the in-game console
 //
@@ -61,10 +60,10 @@ extern bool show_cursor;
 #define MENUTEXT_X	(132 + USERFENSTERPOSX + 5 )
 
 
-SDL_Rect Cons_Header_Rect = {120, BANNER_HEIGHT+40, 0.8*SCREENLEN, 160};
-SDL_Rect Cons_Droid_Rect = {32, 180, 100, 256};
+SDL_Rect Cons_Header_Rect = {75, BANNER_HEIGHT+40, SCREENLEN - 80, 135 - BANNER_HEIGHT};
+SDL_Rect Cons_Droid_Rect = {32, 180, 132, 180};
 SDL_Rect Cons_Menu_Rect = {60, 180, 100, 256};
-SDL_Rect Cons_Text_Rect = {180, 180, SCREENLEN-175, 305}; 
+SDL_Rect Cons_Text_Rect = {180, 180, SCREENLEN-185, SCREENHEIGHT - 185}; 
 
 SDL_Rect Cons_Menu_Rects[4] = {
   {60, 180 + 0*64, 100, 62},
@@ -562,90 +561,78 @@ GreatDruidShow (void)
   droidtype = Me.type;
   page = 0;
 
-  show_droid_info (droidtype, page);
+  show_droid_info (droidtype, page, 0);
+  show_droid_animated (Cons_Droid_Rect, droidtype, 1.0, UPDATE);
+
   SpacePressedR();
   MouseLeftPressedR();
 
   while (!finished)
     {
+      show_droid_animated (Cons_Droid_Rect, droidtype, DROID_ROTATION_TIME, 0);
       usleep(50);
       if (show_cursor) SDL_ShowCursor (SDL_ENABLE);
       else SDL_ShowCursor (SDL_DISABLE);
 
       if (key)
 	{
-	  show_droid_info (droidtype, page);
+	  show_droid_info (droidtype, page, UPDATE_ONLY);
+	  show_droid_animated (Cons_Droid_Rect, droidtype, DROID_ROTATION_TIME, UPDATE);
 	  key = FALSE;
 	}
 
       if (MouseLeftPressedR ())
 	{
-	  if ( CursorIsOnRect (&left_rect) )
+	  if ( CursorIsOnRect (&left_rect) && (page > 0) )
 	    {
-	      if (page > 0) {
-		page --;
-		MoveMenuPositionSound();
-	      }
+	      page --;
+	      MoveMenuPositionSound();
 	      key = TRUE;
 	    }
-	  else if (CursorIsOnRect (&right_rect))
+	  else if (CursorIsOnRect (&right_rect) && (page < 2) )
 	    {
-	      if (page < 2) {
-		page ++;
-		MoveMenuPositionSound();
-	      }
+	      page ++;
+	      MoveMenuPositionSound();
 	      key = TRUE;
 	    }
-	  else if (CursorIsOnRect (&up_rect))
+	  else if (CursorIsOnRect (&up_rect) && (droidtype < Me.type) )
 	    {
-	      if (droidtype < Me.type) {
-		droidtype ++;
-		MoveMenuPositionSound();
-	      }
+	      droidtype ++;
+	      MoveMenuPositionSound();
 	      key = TRUE;
 	    }
-	  else if (CursorIsOnRect (&down_rect))
+	  else if (CursorIsOnRect (&down_rect) && (droidtype > 0))
 	    {
-	      if (droidtype > 0) {
-		droidtype --;
-		MoveMenuPositionSound();
-	      }
+	      droidtype --;
+	      MoveMenuPositionSound();
 	      key = TRUE;
 	    }
 	}
       if (SpacePressedR() || EscapePressedR() || MouseRightPressedR())
 	finished = TRUE;
 
-      if (UpPressedR() || WheelUpPressed())
+      if ( (UpPressedR()||WheelUpPressed()) && (droidtype < Me.type) )
 	{
-	  if (droidtype < Me.type) {
-	    droidtype ++;
-	    MoveMenuPositionSound();
-	  }
+	  droidtype ++;
+	  MoveMenuPositionSound();
 	  key = TRUE;
 	}
-      if (DownPressedR() || WheelDownPressed())
+      if ( (DownPressedR()||WheelDownPressed()) && (droidtype > 0) )
 	{
-	  if (droidtype > 0) {
-	    droidtype --;
-	    MoveMenuPositionSound();
-	  }
+	  droidtype --;
+	  MoveMenuPositionSound();
 	  key = TRUE;
 	}
-      if (RightPressedR() )
+      if (RightPressedR() && (page < 2) )
 	{
-	  if (page < 2) {
-	    page ++;
-	    MoveMenuPositionSound();
-	  }
+	  page ++;
+	  MoveMenuPositionSound();
 	  key = TRUE;
 	}
-      if (LeftPressedR() )
+      if (LeftPressedR() && (page > 0) )
 	{
-	  if (page > 0) {
-	    page --;
-	    MoveMenuPositionSound();
-	  }
+	  page --;
+	  MoveMenuPositionSound();
 	  key = TRUE;
 	}
 
@@ -657,36 +644,37 @@ GreatDruidShow (void)
 /*------------------------------------------------------------
  * display infopage page of droidtype
  *
- *  does update the screen, no SDL_Flip() necesary !
+ * if flags == UPDATE_ONLY : don't blit a new background&banner,
+ *                           only  update the text-regions
+ *
+ *  does update the screen: all if flags=0, text-rect if flags=UPDATE_ONLY
  *
  *------------------------------------------------------------*/
 void 
-show_droid_info (int droidtype, int page)
+show_droid_info (int droidtype, int page, int flags)
 {
   char InfoText[1000];
   char DroidName[80];
   bool show_title = FALSE;
   bool show_arrows = FALSE;
-  int lineskip;
-
+  int lineskip, lastline;
+  
   SDL_SetClipRect ( ne_screen , NULL );
   SetCurrentFont( Para_BFont );
 
   lineskip = FontHeight (GetCurrentFont()) * TEXT_STRETCH;
+  lastline = Cons_Header_Rect.y + Cons_Header_Rect.h;
+  Set_Rect(up_rect,   Cons_Header_Rect.x, lastline - 1.0*lineskip, 25, 13);
+  Set_Rect(down_rect, Cons_Header_Rect.x, lastline - 0.5*lineskip, 25, 13);
+  Set_Rect(left_rect, Cons_Header_Rect.x + Cons_Header_Rect.w - 1.5*lineskip, lastline - 0.9*lineskip,13,25);
+  Set_Rect(right_rect,Cons_Header_Rect.x + Cons_Header_Rect.w - 1.0*lineskip, lastline - 0.9*lineskip,13,25);
 
-  Set_Rect (up_rect, Cons_Droid_Rect.x + Cons_Droid_Rect.w/2, Cons_Droid_Rect.y - 1.2*lineskip, 25, 13);
-  Set_Rect (down_rect, Cons_Droid_Rect.x + Cons_Droid_Rect.w /2, Cons_Droid_Rect.y -0.7*lineskip, 25, 13);
-  Set_Rect (left_rect, Cons_Text_Rect.x+Cons_Text_Rect.w-1.5*lineskip, Cons_Droid_Rect.y - 1.0*lineskip, 13, 25);
-  Set_Rect (right_rect, Cons_Text_Rect.x + Cons_Text_Rect.w-1.0*lineskip,Cons_Droid_Rect.y - 1.0*lineskip,13,25);
+  //  Fill_Rect (Cons_Header_Rect, Black);  // for debugging menu-rects...
 
-  SDL_BlitSurface (console_bg_pic2, NULL, ne_screen, NULL);
-  DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
-
-  sprintf (DroidName, "  Unit type %s - %s", 
-	   Druidmap[droidtype].druidname, 
+  sprintf (DroidName, "  Unit type %s - %s", Druidmap[droidtype].druidname, 
 	   Classname[Druidmap[droidtype].class]);
 
-  ShowRobotPicture (Cons_Droid_Rect.x, Cons_Droid_Rect.y,  droidtype);
+  //  ShowRobotPicture (Cons_Droid_Rect.x, Cons_Droid_Rect.y, droidtype, 0);
 
   switch (page)
     {
@@ -737,12 +725,27 @@ Sensors  1: %s\n\
       break;
     } /* switch (page) */
 
-  if (show_title)
-    CenteredPutString (ne_screen, Cons_Menu_Rect.y - 2.5*lineskip, "Droid info");
+
+
+  // if UPDATE_ONLY then the background has not been cleared, so we have do it
+  // it for each menu-rect:
+  if (flags & UPDATE_ONLY)
+    {
+      SDL_SetClipRect (ne_screen, &Cons_Text_Rect);
+      SDL_BlitSurface (console_bg_pic2, NULL, ne_screen, NULL);
+      SDL_SetClipRect (ne_screen, &Cons_Header_Rect);
+      SDL_BlitSurface (console_bg_pic2, NULL, ne_screen, NULL);
+      SDL_SetClipRect (ne_screen, NULL);
+    }
+  else // otherwise we just redraw the whole screen
+    {
+      SDL_BlitSurface (console_bg_pic2, NULL, ne_screen, NULL);
+      DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
+    }
 
   DisplayText (InfoText, Cons_Text_Rect.x, Cons_Text_Rect.y, &Cons_Text_Rect);
 
-  DisplayText (DroidName, Cons_Droid_Rect.x + 0.75*Cons_Menu_Rect.w, Cons_Menu_Rect.y - lineskip, NULL);
+  DisplayText (DroidName, Cons_Header_Rect.x + lineskip , lastline - 0.9*lineskip, NULL);
 
   if (show_arrows)
     {
@@ -759,11 +762,89 @@ Sensors  1: %s\n\
 	SDL_BlitSurface ( arrow_right, NULL, ne_screen, &right_rect);
     }
 
-  SDL_Flip (ne_screen);
+  if (flags & UPDATE_ONLY)
+    {
+      SDL_UpdateRects (ne_screen, 1, &Cons_Header_Rect);
+      SDL_UpdateRects (ne_screen, 1, &Cons_Text_Rect);
+    }
+  else
+    SDL_Flip (ne_screen);
 
   return;
 
 } /* show_droid_info */
+
+
+//----------------------------------------------------------------------
+// show a an animated droid-pic: automatically counts frames and frametimes
+// stored internally, so you just have to keep calling this function to get 
+// an animation. The target-rect dst is only updated when a new frame is set
+// if flags & RESET: to restart a fresh animation at frame 0 
+// if flags & UPDATE: force a blit of droid-pic
+// cycle_time is the time in seconds for a full animation-cycle
+//----------------------------------------------------------------------
+void
+show_droid_animated (SDL_Rect dst, int droid_type, float cycle_time, int flags)
+{
+  static SDL_Surface *background = NULL;  
+  static int frame_num = 0;
+  static Uint32 last_frame_time = 0;
+  static SDL_Rect frame_rect;
+  SDL_Surface *tmp;
+  Uint32 frame_duration;
+  bool need_new_frame = FALSE;
+  int num_frames;
+
+  num_frames = droid_pics[droid_type].num_frames;
+  // sanity check
+  if ( num_frames == 0)
+    {
+      DebugPrintf (0, "ERROR: droid %s has zero frames in rotation!!\n",
+		   Druidmap[droid_type].druidname);
+      // continue and hope for the best
+      return;
+    }
+
+  if (!background || (flags&RESET))
+    {
+      tmp = SDL_CreateRGBSurface (0, dst.w, dst.h, screen_bpp, 0, 0, 0, 0);
+      background = SDL_DisplayFormat (tmp);
+      SDL_FreeSurface (tmp);
+      SDL_BlitSurface (ne_screen, &dst, background, NULL);
+      Copy_Rect (Droid_Pic_Rect, frame_rect);
+    }
+
+
+  SDL_SetClipRect (ne_screen, &dst);
+
+  frame_duration = SDL_GetTicks() - last_frame_time;
+  if(frame_duration >= 1000.0*cycle_time/droid_pics[droid_type].num_frames ) 
+    {
+      need_new_frame = TRUE;
+      last_frame_time += frame_duration;
+      frame_num ++;
+    }
+
+  if (frame_num >= num_frames)
+    frame_num = 0;
+
+
+  if ( (flags & (RESET|UPDATE)) || need_new_frame)
+    {
+      frame_rect.x = frame_num*Droid_Pic_Rect.w;
+      
+      SDL_BlitSurface (background, NULL, ne_screen, &dst);
+      SDL_BlitSurface (droid_pics[droid_type].pics, &frame_rect, ne_screen, &dst);
+
+      SDL_UpdateRects (ne_screen, 1, &dst);
+    }
+
+  SDL_SetClipRect (ne_screen, NULL);
+     
+  return;
+
+} // show_droid_animated
+
 
 
 

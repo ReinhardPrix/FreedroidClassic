@@ -160,7 +160,7 @@ UpdateHighscores (void)
 
   Assemble_Combat_Picture ( 0);
   MakeGridOnScreen (&User_Rect);
-  ShowRobotPicture (UserCenter_x -70, UserCenter_y - 80, DRUID999);
+  ShowRobotPicture (UserCenter_x -70, UserCenter_y - 80, DRUID999, 0);
   DisplayText ("Great Score !",  UserCenter_x -90, UserCenter_y - 100, &User_Rect);
   DisplayText ("Enter your name: ",  UserCenter_x -160, UserCenter_y + 100, &User_Rect);
   SDL_Flip (ne_screen);

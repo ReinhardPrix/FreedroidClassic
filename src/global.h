@@ -42,6 +42,7 @@ EXTERN const SDL_Rect Full_User_Rect;
 
 EXTERN const SDL_Rect Full_Screen_Rect;
 EXTERN const SDL_Rect Menu_Rect;
+EXTERN const SDL_Rect Droid_Pic_Rect;
 
 EXTERN float LastRefreshSound;
 EXTERN float LastGotIntoBlastSound;
@@ -74,6 +75,7 @@ EXTERN Bulletspec Bulletmap;
 EXTERN blastspec Blastmap[ALLBLASTTYPES];
 #endif
 
+EXTERN const SDL_Rect Cons_Droid_Rect;
 EXTERN int Number_Of_Droid_Types;
 EXTERN int PreTakeEnergy;
 EXTERN int QuitProgram;
@@ -172,7 +174,7 @@ EXTERN const SDL_VideoInfo *ne_vid_info;/* info about current video mode */
 EXTERN int screen_bpp; 			/* bits per pixel */
 
 EXTERN SDL_Surface *banner_pic;      /* the banner pic */
-EXTERN SDL_Surface *droid_pic[NUM_DROIDS];
+EXTERN droid_anim_t droid_pics[NUM_DROIDS];
 
 EXTERN SDL_Surface *console_pic;
 EXTERN SDL_Surface *console_bg_pic1;

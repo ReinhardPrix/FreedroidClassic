@@ -43,6 +43,13 @@ typedef char bool;
 
 typedef struct
 {
+  SDL_Surface *pics;
+  int num_frames;
+}
+droid_anim_t;
+
+typedef struct
+{
   char name[MAX_NAME_LEN+5];
   long score;                  /* use -1 for an empty entry */
   char date[DATE_LEN+5];

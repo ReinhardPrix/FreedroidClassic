@@ -574,6 +574,7 @@ InitPictures (void)
   SDL_Rect StdBlock, DigitBlock;
   SDL_Surface *tmp_surf;
   char fname[500];
+  Uint32 start_time;
 
   // Loading all these pictures might take a while...
   // and we do not want do deal with huge frametimes, which
@@ -695,14 +696,34 @@ InitPictures (void)
       //---------- get Droid images ----------
       for (i=0; i<NUM_DROIDS; i++)
 	{
+	  // first check if we find a file with rotation-frames: first try .png
 	  strcpy( fname, Druidmap[i].druidname );
-	  strcat( fname , ".png" );
-	  if ( (fpath = find_file (fname, GRAPHICS_DIR, NO_THEME, CRITICAL)) == NULL)
+	  strcat( fname , "_rot.png" );
+	  fpath = find_file (fname, GRAPHICS_DIR, NO_THEME, IGNORE);
+	  // then try with .jpg
+	  if (!fpath)
 	    {
-	      DebugPrintf (0, "ERROR: Droid pic %s not found!\n", fname);
-	      Terminate (ERR);
+	      strcpy( fname, Druidmap[i].druidname );
+	      strcat( fname , "_rot.jpg" );
+	      fpath = find_file (fname, GRAPHICS_DIR, NO_THEME, IGNORE);
 	    }
-	  droid_pic[i] = Load_Block (fpath, 0, 0, NULL);
+	  // if no rotations found, fall back to simple front-view, only .png
+	  if (!fpath)
+	    {
+	      strcpy( fname, Druidmap[i].druidname );
+	      strcat( fname , ".png" );
+	      DebugPrintf (2, "No rotation-frames file found for droid %s. Fallback to single pic\n",fname);
+	      fpath = find_file (fname, GRAPHICS_DIR, NO_THEME, CRITICAL);
+	    }
+	  else
+	    DebugPrintf (0, "Found rotation-frames file for droid %s!\n", fname);
+
+	  start_time = SDL_GetTicks();
+	  droid_pics[i].pics = Load_Block (fpath, 0, 0, NULL);
+	  DebugPrintf (0, "Loading of %s rotation-pics took %dl ms\n", fname, (SDL_GetTicks()-start_time) );
+	  DebugPrintf (0, "Estimated Memory consumption: %.2f kB\n", 
+		       1.0*(droid_pics[i].pics->pitch*droid_pics[i].pics->h)/1024.0);
+	  droid_pics[i].num_frames = droid_pics[i].pics->w / Droid_Pic_Rect.w;
 	}
     }
   
