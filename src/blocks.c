@@ -2741,6 +2741,39 @@ init_obstacle_data( void )
   obstacle_map [ ISO_GREY_WALL_END_S ] . block_area_parm_2 = 1.0 ;
   obstacle_map [ ISO_GREY_WALL_END_S ] . filename = "iso_walls_0008.png" ;
 
+  
+  obstacle_map [ ISO_LIGHT_GREEN_WALL_1 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_LIGHT_GREEN_WALL_1 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_LIGHT_GREEN_WALL_1 ] . block_area_parm_2 = 1.1 ;
+  obstacle_map [ ISO_LIGHT_GREEN_WALL_1 ] . filename = "iso_walls_0010.png"; 
+
+  obstacle_map [ ISO_LIGHT_GREEN_WALL_2 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_LIGHT_GREEN_WALL_2 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_LIGHT_GREEN_WALL_2 ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_LIGHT_GREEN_WALL_2 ] . filename = "iso_walls_0011.png" ;
+
+  obstacle_map [ ISO_FUNKY_WALL_1 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_FUNKY_WALL_1 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_FUNKY_WALL_1 ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_FUNKY_WALL_1 ] . filename = "iso_walls_0012.png" ;
+
+  obstacle_map [ ISO_FUNKY_WALL_2 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_FUNKY_WALL_2 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_FUNKY_WALL_2 ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_FUNKY_WALL_2 ] . filename = "iso_walls_0013.png" ;
+
+  obstacle_map [ ISO_FUNKY_WALL_3 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_FUNKY_WALL_3 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_FUNKY_WALL_3 ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_FUNKY_WALL_3 ] . filename = "iso_walls_0014.png" ;
+
+  obstacle_map [ ISO_FUNKY_WALL_4 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_FUNKY_WALL_4 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_FUNKY_WALL_4 ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_FUNKY_WALL_4 ] . filename = "iso_walls_0015.png" ;
+
+    
+
 
 
 
@@ -2809,7 +2842,7 @@ init_obstacle_data( void )
   obstacle_map [ ISO_BRICK_WALL_RUBBLE_2 ] . block_area_parm_2 = 1.2 ;
   obstacle_map [ ISO_BRICK_WALL_RUBBLE_2 ] . filename = "iso_brick_wall_0015.png" ;
 
-
+  
 
 
   obstacle_map [ ISO_BLOOD_1 ] . block_area_type = COLLISION_TYPE_NONE ;
