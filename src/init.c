@@ -1828,7 +1828,7 @@ ResetGameConfigToDefaultValues ( void )
     GameConfig . transparency = FALSE ;
 
     GameConfig . automap_manual_shift_x = 0 ;
-    GameConfig . automap_manual_shift_y = 0 ;
+    GameConfig . automap_manual_shift_y = - ( AUTOMAP_TEXTURE_HEIGHT / 2 ) ;
     
 }; // void Reset_GameConfig_To_Default_Values ( void )
 
