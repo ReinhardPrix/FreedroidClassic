@@ -283,7 +283,7 @@ ShuffleEnemys (void)
   int BestWaypoint;
   finepoint influ_coord;
 
-  /* Anzahl der Waypoints auf CurLevel abzaehlen */
+  // count the number of waypoints on CurLevel
   wp_num = 0;
 
   for ( i=0 ; i<MAXWAYPOINTS ; i++ )
@@ -297,6 +297,9 @@ ShuffleEnemys (void)
       if (AllEnemys[i].Status == OUT
 	  || AllEnemys[i].levelnum != curlevel)
 	continue;		/* dont handle dead enemys or on other level */
+
+      AllEnemys[ i ].persuing_given_course = FALSE; // since position is now completely mixed up,
+                                                    // the robot needs to forget about any previous given course.
 
       if (AllEnemys[i].CompletelyFixed) continue;
 
@@ -791,6 +794,8 @@ MoveThisEnemy( int EnemyNum )
       Me.Experience += Druidmap[ ThisRobot->type ].score;
       StartBlast ( ThisRobot->pos.x, ThisRobot->pos.y,
 		   DRUIDBLAST);
+      Me.KillRecord[ ThisRobot->type ] ++;
+      
 
       //--------------------
       // Maybe that robot did have something with him?  The item should then
@@ -1097,8 +1102,8 @@ AttackInfluence (int enemynum)
 	  ThisRobot->TextToBeDisplayed = "Seeking to get closer to target...";
 
 	  ThisRobot->persuing_given_course = TRUE;
-	  ThisRobot->PrivatePathway[ 0 ].x = ThisRobot->pos.x;
-	  ThisRobot->PrivatePathway[ 0 ].y = ThisRobot->pos.y;
+	  ThisRobot->PrivatePathway[ 0 ].x = rintf ( ThisRobot->pos.x );
+	  ThisRobot->PrivatePathway[ 0 ].y = rintf ( ThisRobot->pos.y );
 	  
 	  //--------------------
 	  // Now we check if it's perhaps time to make a step to the left/right
@@ -1107,13 +1112,13 @@ AttackInfluence (int enemynum)
 	    {
 	      if ( ( Me.pos.x - ThisRobot->pos.x ) > 0 )
 		{
-		  if ( DruidPassable ( ( (int) ThisRobot->pos.x ) + 1 , ThisRobot->PrivatePathway[ 0 ].y ) == CENTER )
-		    ThisRobot->PrivatePathway[ 0 ].x = ( (int) ThisRobot->pos.x ) + 1;
+		  if ( DruidPassable ( rintf ( ThisRobot->pos.x ) + 1 , ThisRobot->PrivatePathway[ 0 ].y ) == CENTER )
+		    ThisRobot->PrivatePathway[ 0 ].x = rintf ( ThisRobot->pos.x ) + 1;
 		}
 	      else
 		{
-		  if ( DruidPassable ( ( (int) ThisRobot->pos.x ) - 1 , ThisRobot->PrivatePathway[ 0 ].y ) == CENTER )
-		    ThisRobot->PrivatePathway[ 0 ].x = ( (int) ThisRobot->pos.x ) - 1;
+		  if ( DruidPassable ( rintf ( ThisRobot->pos.x ) - 1 , ThisRobot->PrivatePathway[ 0 ].y ) == CENTER )
+		    ThisRobot->PrivatePathway[ 0 ].x = rintf ( ThisRobot->pos.x ) - 1;
 		}
 	    }
 	  //--------------------
@@ -1123,15 +1128,15 @@ AttackInfluence (int enemynum)
 	    {
 	      if ( ( Me.pos.y - ThisRobot->pos.y ) > 0 )
 		{
-		  if ( DruidPassable ( ( (int) ThisRobot->pos.x ) , 
-				       ( (int) ThisRobot->PrivatePathway[ 0 ].y ) + 1 ) == CENTER )
-		    ThisRobot->PrivatePathway[ 0 ].y = ( (int) ThisRobot->pos.y ) + 1;
+		  if ( DruidPassable ( rintf ( ThisRobot->pos.x ) , 
+				       rintf ( ThisRobot->PrivatePathway[ 0 ].y ) + 1 ) == CENTER )
+		    ThisRobot->PrivatePathway[ 0 ].y = rintf ( ThisRobot->pos.y ) + 1;
 		}
 	      else
 		{
-		  if ( DruidPassable ( ( (int) ThisRobot->pos.x ) , 
-				       ( (int) ThisRobot->PrivatePathway[ 0 ].y ) - 1 ) == CENTER )
-		    ThisRobot->PrivatePathway[ 0 ].y = ( (int) ThisRobot->pos.y ) - 1;
+		  if ( DruidPassable ( rintf ( ThisRobot->pos.x ) , 
+				       rintf ( ThisRobot->PrivatePathway[ 0 ].y ) - 1 ) == CENTER )
+		    ThisRobot->PrivatePathway[ 0 ].y = rintf ( ThisRobot->pos.y ) - 1;
 		}
 	    }
 	}

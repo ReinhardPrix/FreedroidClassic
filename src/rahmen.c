@@ -233,7 +233,7 @@ GiveItemDescription ( char* ItemDescText , item* CurItem , int ForShop )
 void 
 GiveDroidDescription ( char* DroidDescText , enemy* CurEnemy )
 {
-  // char linebuf[1000];
+  char linebuf[1000];
   
 
   // --------------------
@@ -246,6 +246,7 @@ GiveDroidDescription ( char* DroidDescText , enemy* CurEnemy )
 
   // --------------------
   // 
+  /*
   if ( Druidmap[ CurEnemy->type ].weapon_item.type != (-1) )
     {
       strcat( DroidDescText , " WARNING!  ARMED!" );
@@ -254,6 +255,13 @@ GiveDroidDescription ( char* DroidDescText , enemy* CurEnemy )
     {
       strcat( DroidDescText , " Unarmed!" );
     }
+  */
+  if ( CurEnemy->Friendly == FALSE )
+    {
+      sprintf( linebuf , " Total Kills : %d " , Me.KillRecord[ CurEnemy->type ] );
+      strcat ( DroidDescText , linebuf );
+    }
+
   // strcat( DroidDescText , ItemMap [ Druidmap[ CurEnemy->type ].weapon_item.type ].ItemName );
   // strcat( DroidDescText , "\n" );
 

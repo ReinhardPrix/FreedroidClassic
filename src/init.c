@@ -1790,6 +1790,7 @@ InitNewMissionList ( char *MissionName )
   Me.Magic = 15;
   Me.PointsToDistribute = 15;
   Me.ExpRequired = 1500;
+  for ( i = 0 ; i < 1000 ; i ++ ) Me.KillRecord[ i ] = 0;
   Me.exp_level = 1;
   Me.Gold = 100;
   // strcpy ( Me.character_name , "R2D2 v.0.8.5." );

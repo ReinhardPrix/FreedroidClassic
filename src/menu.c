@@ -43,12 +43,13 @@ void Multi_Player_Menu (void);
 void Credits_Menu (void);
 void Options_Menu (void);
 void Show_Mission_Log_Menu (void);
+int DoMenuSelection( char* InitialText , char* MenuTexts[10] );
 EXTERN void Level_Editor(void);
 
 EXTERN char Previous_Mission_Name[1000];
 
 #define FIRST_MENU_ITEM_POS_X (2*Block_Width)
-#define FIRST_MENU_ITEM_POS_Y (BANNER_HEIGHT + FontHeight(Menu_BFont))
+#define FIRST_MENU_ITEM_POS_Y (BANNER_HEIGHT + FontHeight(Menu_BFont) * 3 )
 
 /* ----------------------------------------------------------------------
  * This function tries to buy the item given as parameter.  Currently
@@ -59,12 +60,29 @@ void
 TryToBuyItem( item* BuyItem )
 {
   int x, y;
+  int MenuPosition;
   int FreeIndex;
+  char* MenuTexts[ 10 ];
+
+#define ANSWER_YES 1
+#define ANSWER_NO 2
+
+  MenuTexts[0]="Yes";
+  MenuTexts[1]="No";
+  MenuTexts[2]="";
+  MenuTexts[3]="";
+  MenuTexts[4]="";
+  MenuTexts[5]="";
+  MenuTexts[8]="";
+  MenuTexts[6]="";
+  MenuTexts[7]="";
+  MenuTexts[9]="";
 
   FreeIndex = GetFreeInventoryIndex(  );
 
-  if ( CalculateItemPrice ( BuyItem ) > Me.Gold ) return;
+  while ( SpacePressed() || EnterPressed() );
 
+  if ( CalculateItemPrice ( BuyItem ) > Me.Gold ) return;
 
   for ( x = 0 ; x < INVENTORY_GRID_WIDTH ; x ++ )
     {
@@ -72,12 +90,29 @@ TryToBuyItem( item* BuyItem )
 	{
 	  if ( ItemCanBeDroppedInInv ( BuyItem->type , x , y ) )
 	    {
-	      CopyItem( BuyItem , & ( Me.Inventory[ FreeIndex ] ) , TRUE );
-	      Me.Inventory[ FreeIndex ].currently_held_in_hand = FALSE;
-	      Me.Inventory[ FreeIndex ].inventory_position.x = x;
-	      Me.Inventory[ FreeIndex ].inventory_position.y = y;
-	      Me.Gold -= CalculateItemPrice ( BuyItem );
-	      return;
+	      while ( 1 )
+		{
+		  MenuPosition = DoMenuSelection( " Wanna buy? " , MenuTexts );
+		  switch (MenuPosition) 
+		    {
+		    case (-1):
+		      return;
+		      break;
+		    case ANSWER_YES:
+		      while (EnterPressed() || SpacePressed() );
+		      CopyItem( BuyItem , & ( Me.Inventory[ FreeIndex ] ) , TRUE );
+		      Me.Inventory[ FreeIndex ].currently_held_in_hand = FALSE;
+		      Me.Inventory[ FreeIndex ].inventory_position.x = x;
+		      Me.Inventory[ FreeIndex ].inventory_position.y = y;
+		      Me.Gold -= CalculateItemPrice ( BuyItem );
+		      return;
+		      break;
+		    case ANSWER_NO:
+		      while (EnterPressed() || SpacePressed() );
+		      return;
+		      break;
+		    }
+		}
 	    }
 	}
     }
@@ -176,12 +211,13 @@ Buy_Basic_Items( void )
  *
  * ---------------------------------------------------------------------- */
 int
-DoMenuSelection( char* MenuTexts[10] )
+DoMenuSelection( char* InitialText , char* MenuTexts[10] )
 {
   int h = FontHeight (GetCurrentFont());
   int i;
   static int MenuPosition = 1;
   int NumberOfOptionsGiven;
+  int first_menu_item_pos_y;
 
   //--------------------
   // First thing we do is find out how may options we have
@@ -194,24 +230,32 @@ DoMenuSelection( char* MenuTexts[10] )
   NumberOfOptionsGiven = i;
 
 
+  first_menu_item_pos_y = ( SCREENHEIGHT - NumberOfOptionsGiven * h ) / 2 ;
+
+  if ( strlen( InitialText ) > 0 ) 
+    DisplayText ( InitialText , 50 , 50 , NULL );
+
+  SetCurrentFont ( Menu_BFont );
+  h = FontHeight ( GetCurrentFont() );
+
+
+
   while ( 1 )
     {
 
       InitiateMenu();
-      SetCurrentFont ( Menu_BFont );
-      h = FontHeight (GetCurrentFont());
 
       //--------------------
       // we highlight the currently selected option with an 
       // influencer to the left before it
       PutInfluence( FIRST_MENU_ITEM_POS_X , 
-		    FIRST_MENU_ITEM_POS_Y +
+		    first_menu_item_pos_y +
 		    ( MenuPosition - 1.5 ) * h );
 
       for ( i = 0 ; i < 10 ; i ++ )
 	{
 	  if ( strlen( MenuTexts[ i ] ) == 0 ) continue;
-	  CenteredPutString ( Screen ,  FIRST_MENU_ITEM_POS_Y + i * h , MenuTexts[ i ] );
+	  CenteredPutString ( Screen ,  first_menu_item_pos_y + i * h , MenuTexts[ i ] );
 	}
 
       SDL_Flip( Screen );
@@ -248,7 +292,7 @@ DoMenuSelection( char* MenuTexts[10] )
     }
 
   return ( -1 );
-}; // int DoMenuSelection( char* MenuTexts[10] )
+}; // int DoMenuSelection( char* InitialText , char* MenuTexts[10] )
 
 /* ----------------------------------------------------------------------
  * This function does all the buying/selling interaction with the 
@@ -301,7 +345,7 @@ enum
       MenuTexts[7]="";
       MenuTexts[9]="";
 
-      MenuPosition = DoMenuSelection( MenuTexts );
+      MenuPosition = DoMenuSelection( "" , MenuTexts );
 
       switch (MenuPosition) 
 	{
@@ -835,7 +879,7 @@ enum
       MenuTexts[7]="Save Game";
       MenuTexts[9]="";
 
-      MenuPosition = DoMenuSelection( MenuTexts );
+      MenuPosition = DoMenuSelection( "" , MenuTexts );
 
       switch (MenuPosition) 
 	{
@@ -1157,7 +1201,7 @@ On_Screen_Display_Options_Menu (void)
       MenuTexts[2]=Options2;
       MenuTexts[3]="Back";
 
-      MenuPosition = DoMenuSelection( MenuTexts );
+      MenuPosition = DoMenuSelection( "" , MenuTexts );
 
       switch (MenuPosition) 
 	{
@@ -1242,7 +1286,7 @@ Droid_Talk_Options_Menu (void)
       MenuTexts[5]=Options5;
       MenuTexts[6]="Back";
 
-      MenuPosition = DoMenuSelection( MenuTexts );
+      MenuPosition = DoMenuSelection( "" , MenuTexts );
 
       switch (MenuPosition) 
 	{
@@ -1328,7 +1372,7 @@ enum
 
   while ( !Weiter )
     {
-      MenuPosition = DoMenuSelection( MenuTexts );
+      MenuPosition = DoMenuSelection( "" , MenuTexts );
 
       switch (MenuPosition) 
 	{
@@ -1395,7 +1439,7 @@ Single_Player_Menu (void)
 
   while (!Weiter)
     {
-      MenuPosition = DoMenuSelection( MenuTexts );
+      MenuPosition = DoMenuSelection( "" , MenuTexts );
 
       switch (MenuPosition) 
 	{
