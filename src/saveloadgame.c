@@ -125,7 +125,8 @@ LoadAndShowStats ( char* CoreFilename )
     char InfoString[5000];
     struct tm *LocalTimeSplitup;
     long int FileSize;
-    
+    char* month_names[] = { "Jan" , "Feb" , "Mar" , "Apr" , "May" , "Jun" , "Jul" , "Aug" , "Sep" , "Oct" , "Nov" , "Dec" };
+
     if ( ! our_config_dir )
 	return;
     
@@ -149,10 +150,9 @@ or file permissions of ~/.freedroid_rpg are somehow not right.",
     };
     
     LocalTimeSplitup = localtime ( & ( FileInfoBuffer.st_mtime ) ) ;
-    
-    sprintf( InfoString , "%d/%02d/%02d %02d:%02d" , 
+    sprintf( InfoString , "%d %s %02d %02d:%02d" , 
 	     1900 + LocalTimeSplitup->tm_year ,
-	     LocalTimeSplitup->tm_mon ,
+	     month_names [ LocalTimeSplitup->tm_mon ] ,
 	     LocalTimeSplitup->tm_mday ,
 	     LocalTimeSplitup->tm_hour ,
 	     LocalTimeSplitup->tm_min );
@@ -168,7 +168,7 @@ or file permissions of ~/.freedroid_rpg are somehow not right.",
     
     //--------------------
     // The saved ship must exist.  On not, it's a sever error!
-    //
+    //    
     sprintf( filename , "%s/%s%s", our_config_dir , CoreFilename , ".shp" );
     if ( stat ( filename , & ( FileInfoBuffer) ) )
     {
