@@ -827,6 +827,7 @@ typedef struct
   waypoint AllWaypoints[MAXWAYPOINTS];
   item    ItemList [ MAX_ITEMS_PER_LEVEL ] ;
   item OldItemList [ MAX_ITEMS_PER_LEVEL ] ;
+  item ChestItemList [ MAX_ITEMS_PER_LEVEL ] ;
   point autoguns[MAX_AUTOGUNS_ON_LEVEL];
 }
 level, *Level;
