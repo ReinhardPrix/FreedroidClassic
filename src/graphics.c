@@ -352,8 +352,8 @@ Error loading flag image.",
     }
     else
     {
-	blit_iso_image_to_map_position ( mouse_cursors [ 0 ] , 
-					 GetMousePos_x () , GetMousePos_x () );
+	blit_iso_image_to_screen_position ( mouse_cursors [ 0 ] , 
+					    GetMousePos_x () , GetMousePos_y () );
     }
 
 }; // void blit_our_own_mouse_cursor ( void )

@@ -701,12 +701,14 @@ blit_outline_of_iso_image_to_map_position ( iso_image our_iso_image , float pos_
 void
 blit_iso_image_to_screen_position ( iso_image our_iso_image , float pos_x , float pos_y )
 {
-  SDL_Rect target_rectangle;
-
-  target_rectangle . x = pos_x + our_iso_image . offset_x ;
-  target_rectangle . y = pos_y + our_iso_image . offset_y ;
-
-  our_SDL_blit_surface_wrapper( our_iso_image . surface , NULL , Screen, &target_rectangle );
+    SDL_Rect target_rectangle;
+    
+    // target_rectangle . x = pos_x + our_iso_image . offset_x ;
+    // target_rectangle . y = pos_y + our_iso_image . offset_y ;
+    target_rectangle . x = pos_x ;
+    target_rectangle . y = pos_y ;
+    
+    our_SDL_blit_surface_wrapper( our_iso_image . surface , NULL , Screen, &target_rectangle );
 
 }; // void blit_iso_image_to_screen_position ( iso_image our_iso_image , float pos_x , float pos_y )
 
