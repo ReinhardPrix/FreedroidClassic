@@ -273,6 +273,7 @@ typedef struct
   float block_area_parm_1;
   float block_area_parm_2;
   int is_smashable;
+  int drop_random_treasure;
 }
 obstacle_spec, *Obstacle_spec;
 

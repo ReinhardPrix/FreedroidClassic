@@ -1446,6 +1446,13 @@ smash_obstacles_only_on_tile ( float x , float y , int map_x , int map_y )
 		    target_obstacle -> pos . x , target_obstacle -> pos . y ,
 		    x , y );
 
+      //--------------------
+      // Before we destroy the obstacle (and lose the obstacle type) we see if we
+      // should maybe drop some item.
+      //
+      if ( obstacle_map [ target_obstacle -> type ] . drop_random_treasure )
+	DropRandomItem( target_obstacle -> pos . x , target_obstacle -> pos . y , 1 , FALSE , FALSE , FALSE );
+
       target_obstacle -> type = ( -1 ) ;
       BoxLevel -> map [ map_y ] [ map_x ] . obstacles_glued_to_here [ i ] = (-1) ;
       //--------------------
@@ -1463,8 +1470,6 @@ smash_obstacles_only_on_tile ( float x , float y , int map_x , int map_y )
 	}
 
       StartBlast( target_obstacle -> pos . x , target_obstacle -> pos . y , BoxLevel->levelnum , DRUIDBLAST );
-      // DropRandomItem( map_x , map_y , 1 , FALSE , FALSE );
-
     }
 }; // void smash_obstacles_only_on_tile ( float x , float y , int map_x , int map_y )
 

@@ -1580,7 +1580,8 @@ load_all_obstacles ( void )
       obstacle_map [ i ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
       obstacle_map [ i ] . block_area_parm_1 = 1.2 ;
       obstacle_map [ i ] . block_area_parm_2 = 0.25 ;
-      obstacle_map [ i ] . is_smashable = TRUE ;
+      obstacle_map [ i ] . is_smashable = FALSE ;
+      obstacle_map [ i ] . drop_random_treasure = FALSE ;
     }
 
   obstacle_map [ ISO_V_WALL ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
@@ -1686,22 +1687,36 @@ load_all_obstacles ( void )
   obstacle_map [ ISO_COOKING_POT ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_COOKING_POT ] . block_area_parm_1 = 0.5 ;
   obstacle_map [ ISO_COOKING_POT ] . block_area_parm_2 = 0.5 ;
+  obstacle_map [ ISO_COOKING_POT ] . is_smashable = TRUE ;
 
   obstacle_map [ ISO_CONSOLE_N ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_CONSOLE_N ] . block_area_parm_1 = 0.8 ;
   obstacle_map [ ISO_CONSOLE_N ] . block_area_parm_2 = 0.25 ;
+  obstacle_map [ ISO_CONSOLE_N ] . is_smashable = TRUE ;
 
   obstacle_map [ ISO_CONSOLE_S ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_CONSOLE_S ] . block_area_parm_1 = 0.8 ;
   obstacle_map [ ISO_CONSOLE_S ] . block_area_parm_2 = 0.25 ;
+  obstacle_map [ ISO_CONSOLE_S ] . is_smashable = TRUE ;
 
   obstacle_map [ ISO_CONSOLE_E ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_CONSOLE_E ] . block_area_parm_1 = 0.25 ;
   obstacle_map [ ISO_CONSOLE_E ] . block_area_parm_2 = 0.8 ;
+  obstacle_map [ ISO_CONSOLE_E ] . is_smashable = TRUE ;
 
   obstacle_map [ ISO_CONSOLE_W ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_CONSOLE_W ] . block_area_parm_1 = 0.25 ;
   obstacle_map [ ISO_CONSOLE_W ] . block_area_parm_2 = 0.8 ;
+  obstacle_map [ ISO_CONSOLE_W ] . is_smashable = TRUE ;
+
+  obstacle_map [ ISO_BARREL_1 ] . drop_random_treasure = TRUE ;
+  obstacle_map [ ISO_BARREL_1 ] . is_smashable = TRUE ;
+  obstacle_map [ ISO_BARREL_2 ] . drop_random_treasure = TRUE ;
+  obstacle_map [ ISO_BARREL_2 ] . is_smashable = TRUE ;
+  obstacle_map [ ISO_BARREL_3 ] . drop_random_treasure = TRUE ;
+  obstacle_map [ ISO_BARREL_3 ] . is_smashable = TRUE ;
+  obstacle_map [ ISO_BARREL_4 ] . drop_random_treasure = TRUE ;
+  obstacle_map [ ISO_BARREL_4 ] . is_smashable = TRUE ;
 
 }; // void LoadAllMapTilesThatAreNotYetLoaded( void )
 

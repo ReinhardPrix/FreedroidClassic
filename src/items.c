@@ -584,7 +584,7 @@ item types.  This indicates a severe bug in Freedroid.",
  *
  * ---------------------------------------------------------------------- */
 void
-DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , int ForceDrop )
+DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , int ForceDrop , int ChestItem )
 {
   int Suf; int Pre;
   int DropDecision;
@@ -605,7 +605,7 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
   // Since we don't drop real treasure any more, we just 
   // drop some minimal stuff
   //
-  if ( !ForceDrop ) 
+  if ( ChestItem ) 
     {
       switch ( MyRandom ( 4 ) )
 	{
