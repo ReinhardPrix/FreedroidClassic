@@ -37,19 +37,9 @@
 #include "global.h"
 #include "proto.h"
 
-#undef DIAGONAL_KEYS_AUS
 
-#define MESPOSX 0
-#define MESPOSY 64
-#define MESHOEHE 8
-#define MESBARBREITE 320
-
-#define MAX_MESSAGE_LEN 100
-#define MESBAR_MEM	MESBARBREITE*MESHOEHE+1000
-
-// Die Definition f"ur eine Message kann ruhig lokal hier stehen, da sie
-// nur innerhalb des Moduls gebraucht wird.
-
+// The definition of the message structure can stay here,
+// because its only needed in this module.
 typedef struct
 {
   void *NextMessage;
@@ -57,6 +47,14 @@ typedef struct
   char *MessageText;
 }
 message, Message;
+#define MESPOSX 0
+#define MESPOSY 64
+#define MESHOEHE 8
+#define MESBARBREITE 320
+#define MAX_MESSAGE_LEN 100
+#define MESBAR_MEM	MESBARBREITE*MESHOEHE+1000
+
+
 
 void CreateMessageBar (char *MText);
 void CleanMessageLine (void);
@@ -79,7 +77,6 @@ struct timeval now, oneframetimestamp, tenframetimestamp,
 long oneframedelay = 0;
 long tenframedelay = 0;
 long onehundredframedelay = 0;
-// float oneframedelay, tenframedelay, onehundredframedelay;
 float FPSover1 = 10;
 float FPSover10 = 10;
 float FPSover100 = 10;
@@ -89,18 +86,15 @@ Uint32 Ten_Frame_SDL_Ticks;
 Uint32 Onehundred_Frame_SDL_Ticks;
 int framenr = 0;
 
-
-
-/*-----------------------------------------------------------------
- * Desc: realise Pause-Mode: the game process is halted,
- * 	while the graphics and animations are not.  This mode 
- *	can further be toggled from PAUSE to CHEESE, which is
- * 	a feature from the original program that should probably
- * 	allow for better screenshots.
- *
- *      We have incorporated the "CHEESE" feature for completeness.
- *
- *-----------------------------------------------------------------*/
+/*@Function============================================================
+@Desc: realise Pause-Mode: the game process is halted,
+       while the graphics and animations are not.  This mode 
+       can further be toggled from PAUSE to CHEESE, which is
+       a feature from the original program that should probably
+       allow for better screenshots.
+       
+@Ret: 
+* $Function----------------------------------------------------------*/
 void
 Pause (void)
 {
@@ -146,6 +140,16 @@ Pause (void)
 } /* Pause () */
 
 
+/*@Function============================================================
+@Desc: This function starts the time-taking process.  Later the results
+       of this function will be used to calculate the current framerate
+
+       Two methods of time-taking are available.  One uses the SDL 
+       ticks.  This seems LESS ACCURATE.  The other one uses the
+       standard ansi c gettimeofday functions and are MORE ACCURATE
+       but less convenient to use.
+@Ret: 
+* $Function----------------------------------------------------------*/
 void 
 StartTakingTimeForFPSCalculation(void)
 {
@@ -182,6 +186,20 @@ StartTakingTimeForFPSCalculation(void)
 } // void StartTakingTimeForFPSCalculation(void)
 
 
+/*@Function============================================================
+@Desc: This function computes the framerate that has been experienced
+       in this frame.  It will be used to correctly calibrate all 
+       movements of game objects.
+
+       NOTE:  To query the actual framerate a DIFFERENT function must
+       be used, namely Frame_Time().
+
+       Two methods of time-taking are available.  One uses the SDL 
+       ticks.  This seems LESS ACCURATE.  The other one uses the
+       standard ansi c gettimeofday functions and are MORE ACCURATE
+       but less convenient to use.
+@Ret: 
+* $Function----------------------------------------------------------*/
 void 
 ComputeFPSForThisFrame(void)
 {
@@ -314,18 +332,16 @@ Activate_Conservative_Frame_Computation(void)
 
 } // void Activate_Conservative_Frame_Computation(void)
 
-/*
-----------------------------------------------------------------------
-@Desc: This function prepares the screen for the big Escape menu and its
-submenus.  This means usual content of the screen, i.e. the combat screen
-and top status bar, is "faded out", the rest of the screen is cleared.
-This function resolves some redundance that occured since there are so
-many submenus needing this.
 
-@Ret: 
-@Int:
-----------------------------------------------------------------------
-*/
+/*@Function============================================================
+@Desc: This function prepares the screen for the big Escape menu and 
+       its submenus.  This means usual content of the screen, i.e. the 
+       combat screen and top status bar, is "faded out", the rest of 
+       the screen is cleared.  This function resolves some redundance 
+       that occured since there are so many submenus needing this.
+
+@Ret: none
+* $Function----------------------------------------------------------*/
 void 
 InitiateMenu( void )
 {
@@ -341,6 +357,13 @@ InitiateMenu( void )
       MakeGridOnScreen();
 } // void InitiateMenu(void)
 
+/*@Function============================================================
+@Desc: This function is used for debugging purposes.  It writes the
+       given string either into a file, on the screen, or simply does
+       nothing according to currently set debug level.
+
+@Ret: none
+* $Function----------------------------------------------------------*/
 void
 DebugPrintf (char *Print_String)
 {
@@ -361,6 +384,13 @@ DebugPrintf (char *Print_String)
   fclose (debugfile);
 };
 
+/*@Function============================================================
+@Desc: This function is used for debugging purposes.  It writes the
+       given float either into a file, on the screen, or simply does
+       nothing according to currently set debug level.
+
+@Ret: none
+* $Function----------------------------------------------------------*/
 void
 DebugPrintfFloat (float Print_Float)
 {
@@ -374,6 +404,13 @@ DebugPrintfFloat (float Print_Float)
   fclose (debugfile);
 };
 
+/*@Function============================================================
+@Desc: This function is used for debugging purposes.  It writes the
+       given int either into a file, on the screen, or simply does
+       nothing according to currently set debug level.
+
+@Ret: none
+* $Function----------------------------------------------------------*/
 void
 DebugPrintfInt (int Print_Int)
 {
@@ -387,33 +424,38 @@ DebugPrintfInt (int Print_Int)
   fclose (debugfile);
 };
 
-// This Function is for the PORT!!!!
-// Replacing all MyRandom-calls with MyMyRandom-calls
+/*@Function============================================================
+@Desc: This function is used to generate an integer in range of all
+       numbers from 0 to UpperBound.
 
-/*-----------------------------------------------------------------
- * Desc: return an integer-random number in the range [0,Obergrenze]
- * 
- *-----------------------------------------------------------------*/
+@Ret:  the generated integer
+* $Function----------------------------------------------------------*/
 int
-MyRandom (int Obergrenze)
+MyRandom (int UpperBound)
 {
-  float Zwisch;
-  int ReinerZufall;
+  float tmp;
+  int PureRandom;
   int dice_val;    /* the result in [0, Obergrenze] */
 
-  ReinerZufall = rand ();
-  Zwisch = 1.0*ReinerZufall/RAND_MAX; /* random number in [0;1] */
+  PureRandom = rand ();
+  tmp = 1.0*PureRandom/RAND_MAX; /* random number in [0;1] */
 
   /* 
    * we always round OFF for the resulting int, therefore
    * we first add 0.99999 to make sure that Obergrenze has
    * roughly the same probablity as the other numbers 
    */
-  dice_val = (int)( Zwisch * (1.0 * Obergrenze + 0.99999) );
+  dice_val = (int)( tmp * (1.0 * UpperBound + 0.99999) );
   return (dice_val);
 } /* MyRandom () */
 
 
+/*@Function============================================================
+@Desc: This function is used to revers the order of the chars in a
+       given string.
+
+@Ret:  none
+* $Function----------------------------------------------------------*/
 void
 reverse (char s[])
 {
@@ -427,6 +469,12 @@ reverse (char s[])
 }/* void reverse(char s[]) siehe Kernighan&Ritchie! */
 
 
+/*@Function============================================================
+@Desc: This function is used to transform an integer into an ascii
+       string that can then be written to a file.
+
+@Ret:  the given pointer to the string.
+* $Function----------------------------------------------------------*/
 char *
 itoa (int n, char s[], int Dummy)
 {
@@ -447,9 +495,12 @@ itoa (int n, char s[], int Dummy)
   return s;
 }// void itoa(int n, char s[]) siehe Kernighan&Ritchie!
 
-// This Function is for the PORT!!!!
-// Replacing all MyRandom-calls with MyMyRandom-calls
+/*@Function============================================================
+@Desc: This function is used to transform a long into an ascii
+       string that can then be written to a file.
 
+@Ret:  the given pointer to the string.
+* $Function----------------------------------------------------------*/
 char *
 ltoa (long n, char s[], int Dummy)
 {
@@ -470,9 +521,12 @@ ltoa (long n, char s[], int Dummy)
   return s;
 } // void ltoa(long n, char s[]) angelehnt an itoa!
 
-/* **********************************************************************
-   Diese Funktion l"oscht alle Roboter auf dem momentanen Level
-**********************************************************************/
+/*@Function============================================================
+@Desc: This function is kills all enemy robots on the whole ship.
+       It querys the user once for safety.
+
+@Ret:  none
+* $Function----------------------------------------------------------*/
 void
 Armageddon (void)
 {
@@ -492,12 +546,12 @@ Armageddon (void)
       }
 } // void Armageddon(void)
 
-/* **********************************************************************
- *	Diese Funktion teleportiert an einen beliebigen Ort im Schiff.
- *	Es werden Levelnummer und Grobkoordinaten "ubergeben.
- *
- **********************************************************************/
+/*@Function============================================================
+@Desc: This function teleports the influencer to a new position on the
+       ship.  THIS CAN BE A POSITION ON A DIFFERENT LEVEL.
 
+@Ret:  none
+* $Function----------------------------------------------------------*/
 void
 Teleport (int LNum, int X, int Y)
 {
@@ -506,11 +560,13 @@ Teleport (int LNum, int X, int Y)
   Level tmp;
   int i;
 
-  /* Neuen Level und Position setzen */
-
   if (curLevel != CurLevel->levelnum)
-    {				/* wirklich neu ??? */
-      /* Aktuellen Level setzen */
+    {	
+
+      //--------------------
+      // In case a real level change has happend,
+      // we need to do a lot of work:
+
       while ((tmp = curShip.AllLevels[array_num]) != NULL)
 	{
 	  if (tmp->levelnum == curLevel)
@@ -521,14 +577,12 @@ Teleport (int LNum, int X, int Y)
 
       CurLevel = curShip.AllLevels[array_num];
 
-      /* Enemys gut verteilen: */
       ShuffleEnemys ();
 
-      /* Position des Influencer richtig setzen */
-      Me.pos.x = Grob2Fein(X);   /* Macro to convert from grob to fein */
-      Me.pos.y = Grob2Fein(Y);
+      Me.pos.x = X;
+      Me.pos.y = Y;
 
-      /* Alle Blasts und Bullets loeschen */
+      // turn off all blasts and bullets from the old level
       for (i = 0; i < MAXBLASTS; i++)
 	AllBlasts[i].type = OUT;
       for (i = 0; i < MAXBULLETS; i++)
@@ -539,8 +593,12 @@ Teleport (int LNum, int X, int Y)
     }
   else
     {
-      Me.pos.x = Grob2Fein(X);
-      Me.pos.y = Grob2Fein(Y);
+      //--------------------
+      // If no real level change has occured, everything
+      // is simple and we just need to set the new coordinates, haha
+      //
+      Me.pos.x = X;
+      Me.pos.y = Y;
     }
 
   LeaveElevatorSound ();
@@ -550,10 +608,13 @@ Teleport (int LNum, int X, int Y)
 } /* Teleport() */
 
 
-/* **********************************************************************
- *  Diese Funktion stellt ein praktisches Cheatmenu zur Verf"ugung
- *
- ***********************************************************************/
+/*@Function============================================================
+@Desc: This function provides a convenient cheat menu, so that any 
+       tester does not have to play all through the game again and again
+       to see if a bug in a certain position has been removed or not.
+
+@Ret:  none
+* $Function----------------------------------------------------------*/
 extern int CurrentlyCPressed; 	/* the key that brought as in here */
 				/* we need to make sure it is set as released */
 				/* before we leave ...*/
@@ -676,7 +737,7 @@ Cheatmenu (void)
 	  break;
 
 
-	case 'd': /* destroy all robots on this level */
+	case 'd': /* destroy all robots on this level, haha */
 	  for (i = 0; i < NumEnemys; i++)
 	    {
 	      if (AllEnemys[i].levelnum == CurLevel->levelnum)
@@ -717,7 +778,6 @@ Cheatmenu (void)
 	      Me.health = Me.energy;
 	      printf ("\nYou are now a %s. Have fun!\n", input);
 	      getchar_raw ();
-	      // NONSENSE FROM THE OLD ENGINE RedrawInfluenceNumber ();
 	    }
 	  free (input);
 	  break;
@@ -818,8 +878,12 @@ Cheatmenu (void)
   return;
 } /* Cheatmenu() */
 
-/* -----------------------------------------------------------------
- *-----------------------------------------------------------------*/
+/*@Function============================================================
+@Desc: This function provides a the big escape menu from where you can
+       get into different submenus.
+
+@Ret:  none
+* $Function----------------------------------------------------------*/
 void
 EscapeMenu (void)
 {
@@ -954,10 +1018,14 @@ enum
 
 } // EscapeMenu
 
-/* 
------------------------------------------------------------------
------------------------------------------------------------------
-*/
+/*@Function============================================================
+@Desc: This function provides a the options menu.  This menu is a 
+       submenu of the big EscapeMenu.  Here you can change sound vol.,
+       gamma correction, fullscreen mode, display of FPS and such
+       things.
+
+@Ret:  none
+* $Function----------------------------------------------------------*/
 void
 Options_Menu (void)
 {
@@ -1131,10 +1199,14 @@ enum
 
 } // Options_Menu
 
-/* -----------------------------------------------------------------
-  This function prints the actual highscore list.
-  It is called from the single player submenu of the escape menu.
-  ------------------------------------------------------------------*/
+/*@Function============================================================
+@Desc: This function provides the single player menu.  This menu is a 
+       submenu of the big EscapeMenu.  Here you can restart a new game,
+       see the highscore list, see mission instructions and such 
+       things.
+
+@Ret:  none
+* $Function----------------------------------------------------------*/
 void
 Single_Player_Menu (void)
 {
@@ -1216,11 +1288,16 @@ Single_Player_Menu (void)
 	  while (DownPressed());
 	}
     }
-
 } // Single_Player_Menu
 
-/*-----------------------------------------------------------------
- *-----------------------------------------------------------------*/
+/*@Function============================================================
+@Desc: This function displayes the high scores of the single player
+       game.  This function is actually a submenu of the big 
+       EscapeMenu.  The function is currently disabled, since rp is
+       rewriting the high score administration routines.
+
+@Ret:  none
+* $Function----------------------------------------------------------*/
 void
 Show_Highscore_Menu (void)
 {
@@ -1275,8 +1352,14 @@ Show_Highscore_Menu (void)
 
 } // Show_Highscore_Menu
 
-/*-----------------------------------------------------------------
- *-----------------------------------------------------------------*/
+/*@Function============================================================
+@Desc: This function provides the multi player menu.  It is a submenu
+       of the big EscapeMenu.  Instead of connecting to a server or 
+       something it simply displayes the nonchalant message, that 
+       nothing is implemented yet, but sooner or later it will be.
+
+@Ret:  none
+* $Function----------------------------------------------------------*/
 void
 Multi_Player_Menu (void)
 {
@@ -1313,11 +1396,13 @@ Multi_Player_Menu (void)
 
 } // Multi_Player_Menu
 
-/*
-----------------------------------------------------------------------
-----------------------------------------------------------------------
-*/
+/*@Function============================================================
+@Desc: This function provides the credits screen.  It is a submenu of
+       the big EscapeMenu.  Here you can see who helped developing the
+       game, currently jp, rp and bastian.
 
+@Ret:  none
+* $Function----------------------------------------------------------*/
 void
 Credits_Menu (void)
 {
@@ -1354,7 +1439,12 @@ Credits_Menu (void)
 
 } // Credits_Menu
 
+/*@Function============================================================
+@Desc: This function provides the mission instructions.  It is a 
+       submenu of the single player menu.
 
+@Ret:  none
+* $Function----------------------------------------------------------*/
 void
 Show_Mission_Instructions_Menu (void)
 {
@@ -1391,17 +1481,14 @@ Show_Mission_Instructions_Menu (void)
 
 } // ShowMissionInstructionsMenu
 
-/*
-----------------------------------------------------------------------
+/*@Function============================================================
 @Desc: This function is used by the Level Editor integrated into 
-Freedroid.  It highlights the map position that is currently edited
-or would be edited, if the user pressed something.  I.e. its a "cursor"
-for the Level Editor.
+       freedroid.  It highlights the map position that is currently 
+       edited or would be edited, if the user pressed something.  I.e. 
+       it provides a "cursor" for the Level Editor.
 
-@Ret: 
-@Int:
-----------------------------------------------------------------------
-*/
+@Ret:  none
+* $Function----------------------------------------------------------*/
 void 
 Highlight_Current_Block(void)
 {
@@ -1431,14 +1518,24 @@ Highlight_Current_Block(void)
     }
 
   SDL_UnlockSurface( ne_screen );
-    } // void Highlight_Current_Block(void)
+} // void Highlight_Current_Block(void)
 
+
+/*@Function============================================================
+@Desc: This function is provides the Level Editor integrated into 
+       freedroid.  Actually this function is a submenu of the big
+       Escape Menu.  In here you can edit the level and upon pressing
+       escape enter a further submenu where you can save the level,
+       change level name and quit from level editing.
+
+       NOTE: SAVING CURRENTLY DOES NOT WORK!  DONT WORK TOO MUCH WITH
+             THIS IF YOU CANT SAVE YOUR LEVELS LATER!!!
+
+@Ret:  none
+* $Function----------------------------------------------------------*/
 void 
 Level_Editor(void)
 {
-  // #ifdef NEW_ENGINE
-  // return;
-  // #else
   int BlockX=rintf(Me.pos.x);
   int BlockY=rintf(Me.pos.y);
   int Done=FALSE;
@@ -1564,8 +1661,6 @@ Level_Editor(void)
 	{
 
 	  InitiateMenu();
-	  // AssembleCombatWindow( 0 );
-	  // MakeGridOnScreen(  );
 
 	  // Highlight currently selected option with an influencer before it
 	  PutInfluence( SINGLE_PLAYER_MENU_POINTER_POS_X, (MenuPosition+3) * (FontHeight(Menu_BFont)) - Block_Width/4 );
@@ -1639,11 +1734,10 @@ Level_Editor(void)
       
     } // while (!Done)
 
-  // #endif // !NEW_ENGINE
 } // void Level_Editor(void)
 
 /*@Function============================================================
-@Desc: Testfunktion fuer InsertMessage()
+@Desc: This is a test function for InsertMessage()
 
 @Ret: 
 @Int:
@@ -1666,12 +1760,10 @@ InsertNewMessage (void)
 }				// void InsertNewMessage(void)
 
 /*@Function============================================================
-@Desc: 	Diese Funktion beendet das Programm und setzt alle notwendigen Dinge
-	auf ihre Ausgangswerte zur"uck.
-	Wenn ein ExitCode != 0 angegeben wurde wartet er noch auf eine Taste.
+@Desc: 	This function is used for terminating freedroid.  It will close
+        the SDL submodules and exit.
 
 @Ret: 
-@Int:
 * $Function----------------------------------------------------------*/
 void
 Terminate (int ExitCode)
@@ -1690,14 +1782,14 @@ Terminate (int ExitCode)
   SDL_Quit();
   exit (ExitCode);
   return;
-}				// void Terminate(int ExitCode)
+}  // void Terminate(int ExitCode)
 
 
 /*@Function============================================================
-@Desc: 
+@Desc: This function empties the message queue of messages to be
+       displayed in a moving font on screen.
 
-@Ret: 
-@Int:
+@Ret: none
 * $Function----------------------------------------------------------*/
 void
 KillQueue (void)
@@ -1707,10 +1799,10 @@ KillQueue (void)
 }
 
 /*@Function============================================================
-@Desc: AdvanceQueue(): rueckt in der Queue eins vor und loescht Vorgaenger.
+@Desc: This functin deletes the currently displayed message and
+       advances to the next message.
 
-@Ret:
-@Int:
+@Ret: none
 * $Function----------------------------------------------------------*/
 void
 AdvanceQueue (void)
@@ -1732,21 +1824,23 @@ AdvanceQueue (void)
 
   DebugPrintf
     ("\nvoid AdvanceQueue(void): Funktion hat ihr natuerliches Ende erfolgreich erreicht....");
-}				// void AdvanceQueue(void)
+} // void AdvanceQueue(void)
 
 
 /*@Function============================================================
-@Desc: Handles all Screenmessages
+@Desc: This function should put a message from the queue to the scren.
+       It surely does not work now and it also needs not work now, 
+       since this is a feature not incorporated into the original game
+       from the C64 and therefore has less priority.
 
 @Ret: 
-@Int:
 * $Function----------------------------------------------------------*/
 void
 PutMessages (void)
 {
-  static int MesPos = 0;	/* X-Position der Message-Bar */
-  static int Working = FALSE;	/* wird gerade eine Message bearbeitet ?? */
-  message *LQueue;		/* Bewegl. Queue-Pointer */
+  static int MesPos = 0;	// X-position of the message bar 
+  static int Working = FALSE;	// is a message beeing processed? 
+  message *LQueue;		// mobile queue pointer
   int i;
 
   if (!PlusExtentionsOn)
@@ -1755,13 +1849,13 @@ PutMessages (void)
   DebugPrintf ("\nvoid PutMessages(void): Funktion wurde echt aufgerufen.");
 
   if (!Queue)
-    return;			/* nichts liegt an */
+    return;			// nothing to be done
   if (!Working)
-    ThisMessageTime = 0;	/* inaktiv, aber Queue->reset time */
+    ThisMessageTime = 0;	// inactive, but Queue->reset time
 
   printf ("Time: %d", ThisMessageTime);
 
-// Ausgabe der momentanen Liste:
+// display the current list:
 
   LQueue = Queue;
   i = 0;
@@ -1781,18 +1875,18 @@ PutMessages (void)
     }
   DebugPrintf (" NULL reached !\n");
 
-  // Wenn die Nachricht schon sehr alt ist, wird sie gel"oscht. 
+  // if the message is very old, it can be deleted...
   if (Working && (ThisMessageTime > MaxMessageTime))
     {
       AdvanceQueue ();
       CleanMessageLine ();
-      Working = FALSE;		// inaktiv
+      Working = FALSE;		// inactive
       ThisMessageTime = 0;	// Counter init.
       return;
     }
 
 
-  /* Alte Mes. hat MinTime gelebt, neue wartet */
+  // old message has lived for MinTime, new one is waiting
   if ((ThisMessageTime > MinMessageTime) && (Queue->NextMessage))
     {
       AdvanceQueue ();		/* Queue weiterbewegen */
@@ -1801,30 +1895,29 @@ PutMessages (void)
       return;
     }
 
-  // Modul inaktiv und neue Message da --> aktivieren
+  // function currenlty inactive and new message waiting --> activate it
   if ((!Working) && Queue)
     {
 
-      // Wenn die neue Nachricht noch nicht erzeugt ist, dann erzeuge sie
+      // if message not yet generated, generate it
       if (!Queue->MessageCreated)
 	{
 	  CreateMessageBar (Queue->MessageText);
 	  Queue->MessageCreated = TRUE;
 	}
 
-      ThisMessageTime = 0;	/* counter init. */
-      CleanMessageLine ();	/* Zeile loeschen */
-      Working = TRUE;		/* aktiviert */
+      ThisMessageTime = 0;	/* initialize counter  */
+      CleanMessageLine ();	/* delete line */
+      Working = TRUE;		/* activated */
     }
 
-
-  // Modul ist gerade aktiv --> bewegen und anzeigen
+  // function currently inactive --> move and display
   if (Working && Queue)
     {
 
-      MesPos = 10 * ThisMessageTime;	/* zeitl. synchronisierte Bewegung */
+      MesPos = 10 * ThisMessageTime;	/* move synchronized this time */
 
-      /* nicht ueber linken Rand fahren !! */
+      /* don't go beyond the left border!! */
       if (MesPos > (MESBARBREITE - 2))
 	MesPos = MESBARBREITE - 2;
 
@@ -1844,14 +1937,13 @@ PutMessages (void)
       //
       for (i = 0; i < MESHOEHE; i++)
 	{
-	  // PORT REINHARDS NEUE ENGINE vga_drawscansegment (MessageBar + i * MESBARBREITE, MESPOSX - MesPos, MESPOSY + i, MesPos);
+	  // PORT REINHARDS NEW GRAPHICS ENGINE vga_drawscansegment (MessageBar + i * MESBARBREITE, MESPOSX - MesPos, MESPOSY + i, MesPos);
 	}
-    }				/* if aktiv + Message da */
-
-}				/* Put Messages */
+    }	/* if aktiv + Message there */
+}	/* Put Messages */
 
 /*@Function============================================================
-@Desc: CleanMessageLine: l"oscht die Nachrichtenzeile am Bildschrim
+@Desc: CleanMessageLine: deleted the message line on screen
 
 @Ret: 
 @Int:
@@ -1863,10 +1955,10 @@ CleanMessageLine (void)
 }
 
 /*@Function============================================================
-@Desc: 
+@Desc: This function prepares the graphics for the next message to
+       be displayed
 
 @Ret: 
-@Int:
 * $Function----------------------------------------------------------*/
 void
 CreateMessageBar (char *MText)
@@ -1875,9 +1967,9 @@ CreateMessageBar (char *MText)
   int i, j;
 
   DebugPrintf
-    ("\nvoid CreateMessageBar(char* MText): Funktion echt aufgerufen.");
+    ("\nvoid CreateMessageBar(char* MText): real function call confirmed.");
 
-  // "Uberl"angen checken
+  // check for too long message
   if (strlen (MText) > 40)
     {
       DebugPrintf
@@ -1886,7 +1978,7 @@ CreateMessageBar (char *MText)
       Terminate (ERR);
     }
 
-  // Speicher anfordern, wenn noch keiner da
+  // allocate memory if this hasn't happened yet
   if (MessageBar == NULL)
     if ((MessageBar = MyMalloc (MESBAR_MEM)) == NULL)
       {
@@ -1896,12 +1988,12 @@ CreateMessageBar (char *MText)
 	Terminate (ERR);
       }
 
-  // Message auf 40 Zeichen erg"anzen
+  // fill in spaces to get 40 chars as message length
   strcpy (Worktext, MText);
   while (strlen (Worktext) < 40)
     strcat (Worktext, " ");
 
-  // Im internen Screen die Nachricht anzeigen und dann ausschneiden
+  // display the current message to the internal screen and then cut it out from there
   for (i = 0; i < 40; i++)
     {
       for (j = 0; j < 8; j++)
@@ -1911,17 +2003,18 @@ CreateMessageBar (char *MText)
 	}
     }
 
-// Am unteren Rand die Nachricht anzeigen und dann ausschneiden
+// display the message at the lower border and then cut it
 //      gotoxy(1,4);
 //      printf("%s",MText);
 //      memcpy(MessageBar,RealScreen+3*8*SCREENBREITE,8*SCREENBREITE);
 
   DebugPrintf
-    ("\nvoid CreateMessageBar(char* MText): Funktion hat ihr natuerliches Ende erreicht.");
-}				// void CreateMessageBar(char* MText)
+    ("\nvoid CreateMessageBar(char* MText): end of function reached.");
+} // void CreateMessageBar(char* MText)
 
 /*@Function============================================================
-@Desc: 
+@Desc: This function insers a new message for the user to be 
+       displayed into the message queue
 
 @Ret: 
 @Int:
@@ -1936,7 +2029,7 @@ InsertMessage (char *MText)
 
   if (LQueue)
     {
-      // Bis vor die n"achste freie Position vorr"ucken
+      // move to the next free position in the message queue
       while (LQueue->NextMessage != NULL)
 	LQueue = LQueue->NextMessage;
       LQueue->NextMessage = MyMalloc (sizeof (message) + 1);
@@ -1952,18 +2045,15 @@ InsertMessage (char *MText)
   strcpy (LQueue->MessageText, MText);
   LQueue->NextMessage = NULL;
   LQueue->MessageCreated = FALSE;
+} // void InsertMessage(char* MText)
 
-  // printf ("\nvoid InsertMessage(char* MText): A message has been added:%s", MText);
+/*@Function============================================================
+@Desc: This function works a malloc, except that it also checks for
+       success and terminates in case of "out of memory", so we dont
+       need to do this always in the code.
 
-}				// void InsertMessage(char* MText)
-
-/* **********************************************************************
- *	Diese Funktion erledigt ein normales Malloc, trifft
- *      zuerst aber ein paar Sicherheitsvorkehrungen.
- * 
- *   NOTE: this exits on error, so we don't need to check success!
- * 
- **********************************************************************/
+@Ret: 
+* $Function----------------------------------------------------------*/
 void *
 MyMalloc (long Mamount)
 {
@@ -1977,132 +2067,5 @@ MyMalloc (long Mamount)
 
   return Mptr;
 }				// void* MyMalloc(long Mamount)
-
-/*@Function============================================================
-@Desc: DirToVect
-			int direction: a number representing a direction
-			Vect vector: 	a pointer to a vector for the result
-								(must be already allocated !)
-
-@Ret: void
-@Int:
-* $Function----------------------------------------------------------*/
-void
-DirToVect (int dir, Vect vector)
-{
-
-  switch (dir)
-    {
-    case OBEN:
-      vector->x = 0;
-      vector->y = -1;
-      break;
-
-    case RECHTSOBEN:
-      vector->x = 1;
-      vector->y = -1;
-      break;
-
-    case RECHTS:
-      vector->x = 1;
-      vector->y = 0;
-      break;
-
-    case RECHTSUNTEN:
-      vector->x = 1;
-      vector->y = 1;
-      break;
-
-    case UNTEN:
-      vector->x = 0;
-      vector->y = 1;
-      break;
-
-    case LINKSUNTEN:
-      vector->x = -1;
-      vector->y = 1;
-      break;
-
-    case LINKS:
-      vector->x = -1;
-      vector->y = 0;
-      break;
-
-    case LINKSOBEN:
-      vector->x = -1;
-      vector->y = -1;
-      break;
-
-
-    default:
-      DebugPrintf ("illegal direction in VectToDir() !");
-      vector->x = vector->y = 0;
-      return;
-    }				/* switch */
-
-}				/* DirToVect */
-
-/*@Function============================================================
-@Desc: my_sqrt:		Quadrat-Wurzel
-
-@Ret: int
-@Int:
-* $Function----------------------------------------------------------*/
-long
-my_sqrt (long wert)
-{
-  long base = (long) wert - 1;
-  long x;
-  long res;
-  long tmp = wert;
-  int prec = 0;			/* Groessenordnung der Zahl */
-  long verschiebung = 1;	/* Verschiebung zur Erhoehung der Genauigkeit */
-  int counter;
-
-  if (wert < 1)
-    return (long) 1;
-
-  while (tmp /= 10)
-    prec++;
-  prec = 4 - prec;		/* verschiebe auf mind. 4 stellen */
-  if (prec < 0)
-    prec = 0;
-
-  counter = prec;
-  while (counter--)
-    verschiebung *= 10;
-
-  x = base;
-  x *= verschiebung;
-
-  res = verschiebung + x / 2;
-  x *= base;
-  res -= x / 8;
-  x *= base;
-  res += x / 16;
-
-  while (counter--)
-    {
-      if ((counter == 0) && ((res % 10) >= 5))
-	res += 10;
-      res /= 10;
-    }
-
-
-  return res;
-}
-
-/*@Function============================================================
-@Desc: my_abs
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-int
-my_abs (int wert)
-{
-  return (wert < 0) ? -wert : wert;
-
-}
 
 #undef _misc_c

@@ -356,11 +356,6 @@ EXTERN void KillQueue (void);
 EXTERN void PutMessages (void);
 EXTERN void InsertMessage (char *MText);
 EXTERN void *MyMalloc (long);
-EXTERN void DirToVect (int dir, Vect vector);
-
-EXTERN long my_sqrt (long);
-EXTERN int my_abs (int);
-
 EXTERN void ShowDebugInfos (void);
 
 /* enemy.c */
