@@ -183,7 +183,11 @@ obstacle_spec obstacle_map [ NUMBER_OF_OBSTACLE_TYPES ] =
     { { NULL , 0 , 0 , NULL } , COLLISION_TYPE_RECTANGLE , 1.2 , 0.25 , FALSE , FALSE , FALSE , "iso_obstacle_0118.png" },
     { { NULL , 0 , 0 , NULL } , COLLISION_TYPE_RECTANGLE , 1.2 , 0.25 , FALSE , FALSE , FALSE , "iso_obstacle_0119.png" },
     { { NULL , 0 , 0 , NULL } , COLLISION_TYPE_RECTANGLE , 1.2 , 0.25 , FALSE , FALSE , FALSE , "iso_obstacle_0120.png" },
-    { { NULL , 0 , 0 , NULL } , COLLISION_TYPE_RECTANGLE , 1.2 , 0.25 , FALSE , FALSE , FALSE , "iso_obstacle_0121.png" }
+    { { NULL , 0 , 0 , NULL } , COLLISION_TYPE_RECTANGLE , 1.2 , 0.25 , FALSE , FALSE , FALSE , "iso_obstacle_0120.png" },
+    { { NULL , 0 , 0 , NULL } , COLLISION_TYPE_RECTANGLE , 1.2 , 0.25 , FALSE , FALSE , FALSE , "iso_obstacle_0121.png" },
+    { { NULL , 0 , 0 , NULL } , COLLISION_TYPE_RECTANGLE , 1.2 , 0.25 , FALSE , FALSE , FALSE , "iso_obstacle_0122.png" },
+    { { NULL , 0 , 0 , NULL } , COLLISION_TYPE_RECTANGLE , 1.2 , 0.25 , FALSE , FALSE , FALSE , "iso_obstacle_0123.png" },
+    { { NULL , 0 , 0 , NULL } , COLLISION_TYPE_RECTANGLE , 1.2 , 0.25 , FALSE , FALSE , FALSE , "iso_obstacle_0124.png" }
   };
 
 
