@@ -365,8 +365,8 @@ typedef struct
   int item_group_together_in_inventory;
 
   // How good is the item as drive???
-  double item_drive_maxspeed;	// how fast can this item go used as the drive of the droid
-  double item_drive_accel;	// as drive, how fast can you accelerate with this item
+  // double item_drive_maxspeed;	// how fast can this item go used as the drive of the droid
+  // double item_drive_accel;	// as drive, how fast can you accelerate with this item
 
   // How good is the item as weapon???
   int    item_gun_is_motion_class;	 // if this is set, then you can't use a shield together with the weapon

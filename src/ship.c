@@ -1006,14 +1006,6 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , int backgro
       strcat ( InfoText , TextChunk );
     }
 
-  if ( ItemMap [ ShowItem->type ] . item_can_be_installed_in_drive_slot )
-    {
-      sprintf ( TextChunk, "Speed / Acceleration: %d / %d \n", 
-		(int)ItemMap [ ShowItem->type ] . item_drive_maxspeed,
-		(int)ItemMap [ ShowItem->type ] . item_drive_accel );
-      strcat ( InfoText , TextChunk );
-    }
-
   sprintf ( TextChunk, "Notes: %s", 
 	    ItemMap [ ShowItem->type ] . item_description );
   strcat ( InfoText, TextChunk );

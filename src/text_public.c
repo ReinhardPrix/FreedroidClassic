@@ -1164,7 +1164,6 @@ Get_Item_Data ( char* DataPointer )
 #define ITEM_SPEED_BEGIN_STRING "Flying speed of this bullet type :"
 #define ITEM_DAMAGE_BEGIN_STRING "Damage cause by a hit of this bullet type :"
 #define ITEM_ONE_SHOT_ONLY_AT_A_TIME "Cannot fire until previous bullet has been deleted : "
-#define ITEM_BLAST_TYPE_CAUSED_BEGIN_STRING "Type of blast this bullet causes when crashing e.g. against a wall :"
 
 #define ITEM_SPEED_CALIBRATOR_STRING "Common factor for all bullet's speed values: "
 #define ITEM_DAMAGE_CALIBRATOR_STRING "Common factor for all bullet's damage values: "
@@ -1340,25 +1339,6 @@ answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
 			   &ItemMap[ItemIndex].item_require_dexterity , EndOfItemData );
       ReadValueFromString( ItemPointer , "Magic minimum required to wear/wield this item=" , "%d" , 
 			   &ItemMap[ItemIndex].item_require_magic , EndOfItemData );
-
-      //--------------------
-      // If the item is a drive, we read in the drive specification...
-      // If the item isn't a drive, then we set the default values, just to be sure..
-      //
-      if ( ItemMap[ItemIndex].item_can_be_installed_in_drive_slot == TRUE )
-	{
-	  // Now we read in the maxspeed you can go with this item as drive
-	  ReadValueFromString( ItemPointer ,  "Item drive maxspeed=" , "%lf" , 
-			       &ItemMap[ItemIndex].item_drive_maxspeed , EndOfItemData );
-	  // Now we read in the acceleration you will have with this item as drive
-	  ReadValueFromString( ItemPointer ,  "Item drive acceleration=" , "%lf" , 
-			       &ItemMap[ItemIndex].item_drive_accel , EndOfItemData );
-	}
-      else
-	{
-	  ItemMap[ItemIndex].item_drive_maxspeed = 0 ;
-	  ItemMap[ItemIndex].item_drive_accel = 0 ;
-	}
 
       //--------------------
       // If the item is a gun, we read in the weapon specification...
@@ -1602,8 +1582,7 @@ save_item_roster_to_file ( char* filename )
   strcpy ( linebuf , "\n\
 ----------------------------------------------------------------------\n\
  *\n\
- *   Copyright (c) 1994, 2002 Johannes Prix\n\
- *   Copyright (c) 1994, 2002 Reinhard Prix\n\
+ *   Copyright (c) 2003 Johannes Prix\n\
  *\n\
  *\n\
  *  This file is part of Freedroid\n\
@@ -1625,7 +1604,7 @@ save_item_roster_to_file ( char* filename )
  *\n\
 ----------------------------------------------------------------------\n\
 \n\
-This file was generated using the FreedroidRPG dialog editor.\n\
+This file was generated using the FreedroidRPG item editor.\n\
 If you have questions concerning FreedroidRPG, please send mail to:\n\
 \n\
 freedroid-discussion@lists.sourceforge.net\n\
@@ -1774,6 +1753,16 @@ Common factor for all melee weapons damage values: 1.0\n\n\n" ) ;
       fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
 
       //--------------------
+      // We write out the sound sample file name to use for this item
+      //
+      sprintf ( linebuf , ITEM_DROP_SOUND_FILE_NAME ) ;
+      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+      sprintf ( linebuf , ItemMap [ i ] . item_drop_sound_file_name );
+      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+      sprintf ( linebuf , "\"\n" );
+      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+
+      //--------------------
       // We write out base list price....
       //
       sprintf ( linebuf , "Base list price=%d\n" , ItemMap [ i ] . base_list_price ) ;
@@ -1783,30 +1772,6 @@ Common factor for all melee weapons damage values: 1.0\n\n\n" ) ;
       // We write out item description text....
       //
       sprintf ( linebuf , "Item description text=\"%s\"\n" , ItemMap [ i ] . item_description ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // We write out start of 'drive' part...
-      //
-      sprintf ( linebuf , "----- the following part is only relevant for weapons -----\n" ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // We write out drive maxspeed....
-      //
-      sprintf ( linebuf , "Item drive maxspeed=%f\n" , ItemMap [ i ] . item_drive_maxspeed ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // We write out acceleration....
-      //
-      sprintf ( linebuf , "Item drive acceleration=%f\n" , ItemMap [ i ] . item_drive_accel ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // We write out end of 'drive' part...
-      //
-      sprintf ( linebuf , "----- end of part that is only relevant for weapons -----\n" ) ;
       fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
 
       //--------------------

@@ -130,23 +130,6 @@ exist really (i.e. has a type = (-1) ).",
     }
 
   // --------------------
-  // If it's a drive, then we give out the maxspeed and accel values as well
-  //
-  if ( ItemMap[ CurItem->type ].item_can_be_installed_in_drive_slot )
-    {
-      if ( ForShop )
-	sprintf( linebuf , "Speed: %2.1f Accel: %2.1f" , 
-		 ItemMap[ CurItem->type ].item_drive_maxspeed ,
-		 ItemMap[ CurItem->type ].item_drive_accel );
-      else
-	sprintf( linebuf , "Maximum Speed: %2.1f \n Maximum Acceleration: %2.1f \n " , 
-		 ItemMap[ CurItem->type ].item_drive_maxspeed ,
-		 ItemMap[ CurItem->type ].item_drive_accel );
-
-      strcat( ItemDescText , linebuf );
-    }
-
-  // --------------------
   // If this item gives some armour bonus, we say so
   //
   if ( CurItem->ac_bonus )

@@ -705,7 +705,6 @@ RawSetNewRandomWaypoint ( Enemy ThisRobot )
   waypoint *this_wp;
   int num_conn;
   int trywp = 0 ;
-  float maxspeed;
   int FreeWays[ MAX_WP_CONNECTIONS ];
   int SolutionFound;
   int TestConnection;
@@ -718,7 +717,6 @@ RawSetNewRandomWaypoint ( Enemy ThisRobot )
   //
   WpList = WaypointLevel->AllWaypoints;
   nextwp = ThisRobot->nextwaypoint;
-  maxspeed = ItemMap[ Druidmap[ ThisRobot->type ].drive_item.type ].item_drive_maxspeed;
   nextwp_pos.x = WpList[nextwp].x + 0.5 ;
   nextwp_pos.y = WpList[nextwp].y + 0.5 ;
 
@@ -829,7 +827,6 @@ RemainingDistanceToNextWaypoint ( Enemy ThisRobot )
   Waypoint WpList;		/* Pointer to waypoint-liste */
   int nextwp;
   finepoint nextwp_pos;
-  float maxspeed;
   Level WaypointLevel = curShip.AllLevels[ ThisRobot -> pos.z ];
   finepoint Restweg;
 
@@ -847,8 +844,6 @@ RemainingDistanceToNextWaypoint ( Enemy ThisRobot )
   //
   WpList = WaypointLevel->AllWaypoints;
   nextwp = ThisRobot->nextwaypoint;
-  // maxspeed = Druidmap[ ThisRobot->type ].maxspeed;
-  maxspeed = ItemMap[ Druidmap[ ThisRobot->type ].drive_item.type ].item_drive_maxspeed;
   nextwp_pos.x = WpList[nextwp].x + 0.5 ;
   nextwp_pos.y = WpList[nextwp].y + 0.5 ;
 
