@@ -76,7 +76,10 @@ enum _sounds
   GOT_HIT_SOUND,
   TAKEOVER_SET_CAPSULE_SOUND,
   MENU_ITEM_SELECTED_SOUND,
-  MOVE_MENU_POSITION_SOUND
+  MOVE_MENU_POSITION_SOUND,
+  TAKEOVER_GAME_WON_SOUND,
+  TAKEOVER_GAME_DEADLOCK_SOUND,
+  TAKEOVER_GAME_LOST_SOUND
 };
 
 // **********************************************************************
@@ -217,7 +220,7 @@ enum _sounds
 #define WAIT_LEVELEMPTY		18	/* warte bevor Graufaerben */
 #define WAIT_AFTER_KILLED	45	/* warte, bevor Spiel aus */
 #define WAIT_SHIPEMPTY		20
-#define WAIT_TRANSFERMODE	1	/* this is a "float" indicating the number of seconds the influence 
+#define WAIT_TRANSFERMODE	0.3	/* this is a "float" indicating the number of seconds the influence 
 					   stand still with space pressed, before switching into transfermode */
 
 /* Soundblasterkonstanten */

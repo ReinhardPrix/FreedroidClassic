@@ -1,7 +1,8 @@
 #-*- mode: text -*-
 Bugs
 ----
-- Game crashes now before the title-screen when I allow sound, works ok with --nosound 
+- (DONE)  (rp) Game crashes now before the title-screen when I allow sound, works ok with --nosound 	
+  	  This bug does not really exists, ah, what a relief...
 
 - (rp) The waypoints seem to have gone awry!  On the command bridge (red level) and
   on the gray level especially robots like to pass through walls and out of the map
@@ -51,6 +52,10 @@ Bugs
   verschiedene Schuesse sollten auch verschiedene Ger\"ausche Produzieren...
   Eventuell waere auch gut fuer jeden Level (oder jede Levelfarbe) eine eigene Hintergrundmusik
   zu verwenden.
+  Different sounds for different bullettypes.
+  Win-Takeover-Sound
+  Lose-Takeover-Sound
+  Deadlock-Sound
 
 - (DONE)   correct the too fast refresh movement and effect
 	   Refreshes sollten jetzt ordentlich arbeiten.  Etwas kalibrieren koennte man
@@ -74,9 +79,14 @@ Missing features
   freedroid@....
 
 - save highscores to disk
+
 - Options menu, wo man etwa: 1.) Die Lautstaerke der Hintergrundmusik bequem einstellen kann 
+  (Under construction:  Menu exists at least, accessible via ESCAPE key)
+
 - (rp?) mouse-support (should be good with touchstick on laptop!)
+
 - (rp?) joystick/gamepad support waere toll!
+
 - (rp): PORT the map-editor 'maped' ?
 
 - (rp+jp) use GNU coding standards (see doc file 'gnu-standards')

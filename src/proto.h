@@ -253,6 +253,9 @@ EXTERN void BounceSound (void);
 EXTERN void DruidBlastSound (void);
 EXTERN void ThouArtDefeatedSound (void);
 EXTERN void Takeover_Set_Capsule_Sound (void);
+EXTERN void Takeover_Game_Won_Sound (void);
+EXTERN void Takeover_Game_Deadlock_Sound (void);
+EXTERN void Takeover_Game_Lost_Sound (void);
 
 /* keyboard.c */
 #undef EXTERN

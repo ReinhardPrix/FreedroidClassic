@@ -244,6 +244,7 @@ Takeover (int enemynum)
       /* Ausgang beurteilen und returnen */
       if (InvincibleMode || (LeaderColor == YourColor))
 	{
+	  Takeover_Game_Won_Sound();
 	  if (Me.type == DRUID001)
 	    {
 	      RejectEnergy = Me.energy;
@@ -264,6 +265,7 @@ Takeover (int enemynum)
 	}			/* LeaderColor == YourColor */
       else if (LeaderColor == OpponentColor)
 	{
+	  Takeover_Game_Lost_Sound();
 	  if (Me.type != DRUID001)
 	    {
 	      message = "Rejected";
@@ -279,6 +281,7 @@ Takeover (int enemynum)
 	}			/* LeadColor == OpponentColor */
       else
 	{
+	  Takeover_Game_Deadlock_Sound();
 	  message = "Deadlock";
 	}			/* LeadColor == REMIS */
 

@@ -81,7 +81,7 @@ int rate = 8000;
 // The order of appearance here should match the order of appearance 
 // in the enum-Environment located in defs.h!
 
-#define ALL_SOUNDS 18
+#define ALL_SOUNDS 21
 char *SoundSampleFilenames[ALL_SOUNDS] = {
   "/../sound/ERRORSOUND_NILL",
   "/../sound/Combat_Background_Music.wav",
@@ -100,7 +100,10 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
   "/../sound/Got_Hit_Sound_1.wav",
   "/../sound/TakeoverSetCapsuleSound.wav",
   "/../sound/Menu_Item_Selected_Sound_0.wav",
-  "/../sound/Move_Menu_Position_Sound_0.wav"
+  "/../sound/Move_Menu_Position_Sound_0.wav",
+  "/../sound/Takeover_Game_Won_Sound_0.wav",
+  "/../sound/Takeover_Game_Deadlock_Sound_0.wav",
+  "/../sound/Takeover_Game_Lost_Sound_0.wav"
 };
 
 char *ExpandedSoundSampleFilenames[ALL_SOUNDS];
@@ -656,6 +659,48 @@ Takeover_Set_Capsule_Sound (void)
   if (!sound_on) return;
 
   Play_YIFF_Server_Sound (TAKEOVER_SET_CAPSULE_SOUND);
+}				// void FireBulletSound(void)
+
+/*@Function============================================================
+@Desc: 
+
+@Ret: 
+@Int:
+* $Function----------------------------------------------------------*/
+void
+Takeover_Game_Won_Sound (void)
+{
+  if (!sound_on) return;
+
+  Play_YIFF_Server_Sound ( TAKEOVER_GAME_WON_SOUND );
+}				// void FireBulletSound(void)
+
+/*@Function============================================================
+@Desc: 
+
+@Ret: 
+@Int:
+* $Function----------------------------------------------------------*/
+void
+Takeover_Game_Deadlock_Sound (void)
+{
+  if (!sound_on) return;
+
+  Play_YIFF_Server_Sound ( TAKEOVER_GAME_DEADLOCK_SOUND );
+}				// void FireBulletSound(void)
+
+/*@Function============================================================
+@Desc: 
+
+@Ret: 
+@Int:
+* $Function----------------------------------------------------------*/
+void
+Takeover_Game_Lost_Sound (void)
+{
+  if (!sound_on) return;
+
+  Play_YIFF_Server_Sound ( TAKEOVER_GAME_LOST_SOUND );
 }				// void FireBulletSound(void)
 
 
