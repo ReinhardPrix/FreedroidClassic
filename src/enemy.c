@@ -59,7 +59,7 @@ DirectLineWalkable( float x1 , float y1 , float x2 , float y2 )
 {
   float LargerDistance;
   int Steps;
-  int i, j;
+  int i;
   finepoint step;
   finepoint CheckPosition;
 
@@ -553,17 +553,12 @@ MoveThisRobotThowardsHisWaypoint ( int EnemyNum )
 void 
 Persue_Given_Course ( int EnemyNum )
 {
-  int i,j;
   finepoint Restweg;
   Waypoint WpList;		/* Pointer to waypoint-liste */
   int nextwp;
   finepoint nextwp_pos;
-  int trywp;
   float maxspeed;
   Enemy ThisRobot=&AllEnemys[ EnemyNum ];
-  int FreeWays[ MAX_WP_CONNECTIONS ];
-  int SolutionFound;
-  int TestConnection;
 
   DebugPrintf( 2 , "\n void MoveThisRobotAdvanced ( int EnemyNum ) : real function call confirmed. ");
 

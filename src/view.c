@@ -517,7 +517,8 @@ Sorry...\n\
 
   if ( AllEnemys[Enum].Friendly == 0 ) 
     {
-      SDL_BlitSurface(ne_blocks , ne_droid_block+phase, ne_screen, &TargetRectangle);
+      // SDL_BlitSurface(ne_blocks , ne_droid_block+phase, ne_screen, &TargetRectangle);
+      SDL_BlitSurface( EnemySurfacePointer[ phase ] , NULL , ne_screen, &TargetRectangle);
     }
   else
     {
