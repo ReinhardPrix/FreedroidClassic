@@ -1404,7 +1404,8 @@ update_light_list ( int player_num )
 
 
     //--------------------
-    // Now we can fill in the remaining light sources of this level
+    // Now we can fill in the remaining light sources of this level.
+    // First we do all the obstacles:
     //
     map_x_start = Me [ player_num ] . pos . x - 12 ;
     map_y_start = Me [ player_num ] . pos . y - 12 ;
@@ -1439,22 +1440,32 @@ update_light_list ( int player_num )
 		light_sources [ next_light_emitter_index ] . y = emitter -> pos . y ;
 		light_source_strengthes [ next_light_emitter_index ] = 
 		    obstacle_map [ emitter -> type ] . emitted_light_strength ;
-		
+		next_light_emitter_index ++ ;
 	    }
 	}
     }
     
-/*
-    for ( i = 1 ; i < MAX_NUMBER_OF_LIGHT_SOURCES ; i ++ )
+    //--------------------
+    // Now we can proceed with the enemies:  They should give light too,
+    // even if only in small amounts...
+    //
+    occasionally_update_first_and_last_bot_indices ( ) ;
+    for ( i = first_index_of_bot_on_level [ Me [ player_num ] . pos . z ] ; 
+	  i <  last_index_of_bot_on_level [ Me [ player_num ] . pos . z ] ; i ++ )
     {
-	if ( light_level -> teleporter_obstacle_indices [ i-1 ] != (-1) )
-	{
-	    light_sources [ i ] . x = light_level -> obstacle_list [ light_level -> teleporter_obstacle_indices [ i-1 ] ] . pos . x ;
-	    light_sources [ i ] . y = light_level -> obstacle_list [ light_level -> teleporter_obstacle_indices [ i-1 ] ] . pos . y ;
-	    light_source_strengthes [ i ] = 10 ;
-	}
+	if ( AllEnemys [ i ] . Status == OUT ) continue;
+
+	if ( fabsf ( Me [ 0 ] . pos . x - AllEnemys [ i ] . pos . x ) >= 12 ) continue ;
+	if ( fabsf ( Me [ 0 ] . pos . y - AllEnemys [ i ] . pos . y ) >= 12 ) continue ;
+
+	//--------------------
+	// Now we know that this one needs to be inserted!
+	//
+	light_sources [ next_light_emitter_index ] . x = AllEnemys [ i ] . pos . x ;
+	light_sources [ next_light_emitter_index ] . y = AllEnemys [ i ] . pos . y ;
+	light_source_strengthes [ next_light_emitter_index ] = 1 ;
+	next_light_emitter_index ++ ;
     }
-*/
     
 }; // void update_light_list ( int player_num )
 
