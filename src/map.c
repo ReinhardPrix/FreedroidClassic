@@ -388,16 +388,16 @@ char *StructToMem(Level Lev)
   strcat(LevelMem, WP_BEGIN_STRING);
   strcat(LevelMem, "\n");
   
-  //   for(i=0; i< MAXWAYPOINTS ; i++) {
-  for(i=0; i< 100 ; i++) 
+  for(i=0; i< MAXWAYPOINTS ; i++)
+  // for(i=0; i< 100 ; i++) THIS LINE IS FOR FORMAT CHANGES IN LEVEL FILE.  VERY HANDY.
     {
       // if ( Lev->AllWaypoints[i].x == 0 ) continue;
 
       if (i>=MAXWAYPOINTS) sprintf(linebuf, "Nr.=%2d \t x=%4d \t y=%4d", i, 0 , 0 );
       else sprintf(linebuf, "Nr.=%2d \t x=%4d \t y=%4d", i, Lev->AllWaypoints[i].x , Lev->AllWaypoints[i].y );
       strcat( LevelMem, linebuf );
-      // for( j=0; j<MAX_WP_CONNECTIONS; j++) 
-      for( j=0; j< 12 ; j++) 
+      for( j=0; j<MAX_WP_CONNECTIONS; j++) 
+      // for( j=0; j< 12 ; j++)  THIS LINE IS FOR FORMAT CHANGES IN LEVEL FILE.  VERY HANDY.
 	{
 	  if ( (i>=MAXWAYPOINTS) || (j >= MAX_WP_CONNECTIONS ) ) sprintf(linebuf, "con=%3d \t ", -1 );
 	  else sprintf(linebuf, "con=%3d \t ", Lev->AllWaypoints[i].connections[j]);
@@ -596,14 +596,14 @@ Starting to process information for another level:\n");
       sscanf( WaypointPointer , "%4d" , &x );
       WaypointPointer = strstr ( WaypointPointer , "y=" ) +2;
       sscanf( WaypointPointer , "%4d" , &y );
-      printf("\n Values: nr=%d, x=%d, y=%d" , nr , x , y );
+      // printf("\n Values: nr=%d, x=%d, y=%d" , nr , x , y );
 
       for ( k=0 ; k<MAX_WP_CONNECTIONS ; k++ )
 	{
 	  WaypointPointer = strstr ( WaypointPointer , "con=" ) +4;
 	  sscanf( WaypointPointer , "%4d" , &connection );
 	  
-	  printf(", con=%d" , connection );
+	  // printf(", con=%d" , connection );
 	  loadlevel->AllWaypoints[i].x=x;
 	  loadlevel->AllWaypoints[i].y=y;
 	  loadlevel->AllWaypoints[i].connections[k]=connection;
@@ -685,52 +685,6 @@ GetDoors (Level Lev)
 }				/* GetDoors */
 
 /*@Function============================================================
- * @Desc: GetWaypoints: initialisiert Waypoint-Koordinaten des
- *	Waypoint-arrays der uebergebenen Level-struct
- *	ACHTUNG: Map-daten muessen schon in struct stehen 
- *
- * @Ret: Anz. der Waypoints || ERR
- * @Int:
-* $Function----------------------------------------------------------*/
-int
-GetWaypoints (Level Lev)
-{
-  int i;
-  // int j;
-  int xlen, ylen;
-  int curwp = 0;
-  // char* WaypointPointer=(char*)Lev;
-
-  xlen = Lev->xlen;
-  ylen = Lev->ylen;
-
-  /* Init Wp-array to 0 */
-  for (i = 0; i < MAXWAYPOINTS; i++)
-    {
-      Lev->AllWaypoints[i].x = 0;
-      Lev->AllWaypoints[i].y = 0;
-    }
-
-  /* Now find the waypoints */
-  /*
-  for (line = 0; line < ylen; line++)
-    for (col = 0; col < xlen; col++)
-      if (Lev->map[line][col] == WAYPOINT_CHAR)
-	{
-	  Lev->AllWaypoints[curwp].x = col;
-	  Lev->AllWaypoints[curwp].y = line;
-	  curwp ++;
-
-	  if (curwp > MAXWAYPOINTS)
-	    return ERR;
-	} // if (WAYPOINT_CHAR) 
-  */
-
-  return curwp;  /* return number of waypoints found */
-
-} /* GetWaypoints() */
-
-/*@Function============================================================
 @Desc: int GetRefreshes(Level Lev): legt array der refr. positionen an
 
 @Ret: Number of found refreshes or ERR
@@ -796,6 +750,11 @@ IsWallBlock (int block)
     }				// switch
 }				// IsWallBlock()
 
+/*----------------------------------------------------------------------
+ * This function translates map data into human readable map code, that
+ * can later be written to the map file on disk.
+ *
+ ----------------------------------------------------------------------*/
 void
 TranslateToHumanReadable ( char* HumanReadable , unsigned char* MapInfo, int LineLength , Level Lev , int CurrentLine)
 {
@@ -864,12 +823,15 @@ TranslateToHumanReadable ( char* HumanReadable , unsigned char* MapInfo, int Lin
   // this must happen via 'x' entries in the map for every waypoint.  So
   // we just add the nescessary x's and we are done
 
+  /*
   for (i=0; i<MAXWAYPOINTS; i++)
     {
       if ( Lev->AllWaypoints[i].y != CurrentLine ) continue;
       if ( Lev->AllWaypoints[i].y == 0 ) continue;  // this means an unused waypoint field
       HumanReadable[ Lev->AllWaypoints[i].x ] = 'x';
     }
+  */
+
 
   /*
   // Scan the waypoint- connections

@@ -1181,26 +1181,6 @@ Level_Editor(void)
 		  for ( k = 0; k < MAX_WP_CONNECTIONS ; k++ ) 
 		    CurLevel->AllWaypoints[i].connections[k] = (-1) ;
 
-		  /*
-		  // add standard connections to visible other waypoints
-		  for ( k = 0; k < MAX_WP_CONNECTIONS ; k++ ) 
-		    {
-		      for ( j = 0 ; j < MAXWAYPOINTS ; j++ )
-			{
-			  if ( j==i ) continue; // a connection to yourself is not wanted
-
-			  TargetCandidate.x=CurLevel->AllWaypoints[j].x;
-			  TargetCandidate.y=CurLevel->AllWaypoints[j].y;
-			  if ( IsVisible( & TargetCandidate ) )
-			    {
-			      CurLevel->AllWaypoints[i].connections[k] = j;
-			      break;
-			    }
-			}
-		    }
-		  */
-
-
 		}
 
 	      printf("\n\n  i is now: %d ", i ); fflush(stdout);
@@ -1299,7 +1279,7 @@ Level_Editor(void)
 	    }
 	  if (KP7Pressed()) 
 	    {
-	      CurLevel->map[BlockY][BlockX]=ECK_RO;
+	      CurLevel->map[BlockY][BlockX]=ECK_LO;
 	    }
 	  if (KP8Pressed()) 
 	    {

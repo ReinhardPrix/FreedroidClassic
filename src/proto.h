@@ -220,7 +220,6 @@ EXTERN int LoadShip (char *shipname);
 EXTERN int SaveShip(char *shipname);
 EXTERN Level LevelToStruct (char *data);
 EXTERN int GetDoors (Level Lev);
-EXTERN int GetWaypoints (Level Lev);
 EXTERN int GetRefreshes (Level Lev);
 EXTERN int GetElevatorConnections (char *shipname);
 EXTERN int GetCrew (char *shipname);
