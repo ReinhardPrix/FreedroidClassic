@@ -256,6 +256,7 @@ ReactToSpecialKeys(void)
   int i;
   int InvPos;
   static int IPressed_LastFrame;
+  static int CPressed_LastFrame;
   char TempText[1000];
   grob_point Inv_Loc;
   int item_width;
@@ -470,6 +471,26 @@ ReactToSpecialKeys(void)
     {
       IPressed_LastFrame = FALSE;
     }
+
+  //--------------------
+  // We assign the C key to turn on/off the character screen
+  //
+  if ( CPressed() )
+    {
+      if ( !CPressed_LastFrame ) 
+	{
+	  GameConfig.CharacterScreen_Visible_Time = 0;
+	  GameConfig.CharacterScreen_Visible = !GameConfig.CharacterScreen_Visible;
+	}
+
+      CPressed_LastFrame = TRUE;
+    }
+  else
+    {
+      CPressed_LastFrame = FALSE;
+    }
+
+
 
   if ( GPressed () )
     {
