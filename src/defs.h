@@ -456,7 +456,7 @@ enum _non_player_characters
 #define MAX_ANSWERS_PER_PERSON 40
 #define END_ANSWER (MAX_ANSWERS_PER_PERSON-1)
 
-#define MAX_MAP_INSERTS         3
+#define MAX_MAP_INSERTS         6
 #define MAX_MAP_INSERTS_PER_LEVEL 20
 
 #define EL_BLOCK_LEN		8

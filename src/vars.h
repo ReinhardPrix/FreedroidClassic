@@ -93,7 +93,10 @@ network_influence_t NetworkMe[ MAX_PLAYERS ];
 map_insert_spec AllMapInserts[ MAX_MAP_INSERTS ] = {
   { "BigSquare" , "map_inserts/BigSquare.png" , { 4 , 4 } , NULL } , 
   { "LongLine" , "map_inserts/LongLine.png" , { 4 , 1 } , NULL } ,
-  { "TelemetryAnnouncement" , "map_inserts/TelemetryAnnouncement.png" , { 4 , 4 } , NULL } 
+  { "TelemetryAnnouncement" , "map_inserts/TelemetryAnnouncement.png" , { 4 , 4 } , NULL } , 
+  { "LongRangeTeleporter_Left" , "map_inserts/LongRangeTeleporter_Left.png" , { 3 , 3 } , NULL } ,
+  { "LongRangeTeleporter_Right" , "map_inserts/LongRangeTeleporter_Right.png" , { 3 , 3 } , NULL } , 
+  { "MaintainanceSquare1x1" , "map_inserts/MaintainanceSquare1x1.png" , { 1 , 1 } , NULL } , 
 };
 
 /*
