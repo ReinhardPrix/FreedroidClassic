@@ -1521,12 +1521,13 @@ InitNewMissionList ( char *MissionName )
   PlusExtentionsOn = FALSE;
   ThisMessageTime = 0;
   LevelDoorsNotMovedTime = 0.0;
-  // GameConfig.Draw_Framerate=TRUE;
-  GameConfig.Draw_Framerate=FALSE;
+  GameConfig.Draw_Framerate=TRUE;
+  // GameConfig.Draw_Framerate=FALSE;
   GameConfig.Draw_Energy=FALSE;
   // GameConfig.Draw_Energy=TRUE;
   // GameConfig.Draw_Position=TRUE;
   GameConfig.Draw_Position=FALSE;
+  GameConfig.All_Texts_Switch = FALSE;
 
   Me.Experience = 0; // This should be done at the end of the highscore list procedure
   ShowScore = 0; // This should be done at the end of the highscore list procedure
@@ -1761,8 +1762,8 @@ InitNewMissionList ( char *MissionName )
   Me.aux1_item.currently_held_in_hand = FALSE;
   Me.aux2_item.currently_held_in_hand = FALSE;
 
-  FillInItemProperties ( & ( Me.weapon_item ) , TRUE );
-  FillInItemProperties ( & ( Me.drive_item ) , TRUE );
+  FillInItemProperties ( & ( Me.weapon_item ) , TRUE , 0 );
+  FillInItemProperties ( & ( Me.drive_item ) , TRUE , 0 );
 
 
   Item_Held_In_Hand = ( -1 );
@@ -2019,14 +2020,14 @@ ThouArtDefeated (void)
   // Now that the influencer is dead, all this precious items
   // spring off of him...
   //
-  DropItemAt ( Me.weapon_item.type , Me.pos.x - 0.5 , Me.pos.y - 0.5 , -1 , -1 );
-  DropItemAt ( Me.drive_item.type  , Me.pos.x + 0.5 , Me.pos.y - 0.5 , -1 , -1 );
-  DropItemAt ( Me.shield_item.type , Me.pos.x + 0.5 , Me.pos.y + 0.5 , -1 , -1 );
-  DropItemAt ( Me.armour_item.type , Me.pos.x - 0.5 , Me.pos.y + 0.5 , -1 , -1 );
-  DropItemAt ( Me.special_item.type , Me.pos.x - 0.5 , Me.pos.y , -1 , -1 );
-  DropItemAt ( Me.aux1_item.type , Me.pos.x + 0.5 , Me.pos.y , -1 , -1 );
-  DropItemAt ( Me.aux2_item.type , Me.pos.x , Me.pos.y - 0.5 , -1 , -1 );
-  DropItemAt ( ITEM_MONEY , Me.pos.x , Me.pos.y , -1 , -1 );
+  DropItemAt ( Me.weapon_item.type , Me.pos.x - 0.5 , Me.pos.y - 0.5 , -1 , -1 , 0 );
+  DropItemAt ( Me.drive_item.type  , Me.pos.x + 0.5 , Me.pos.y - 0.5 , -1 , -1 , 0 );
+  DropItemAt ( Me.shield_item.type , Me.pos.x + 0.5 , Me.pos.y + 0.5 , -1 , -1 , 0 );
+  DropItemAt ( Me.armour_item.type , Me.pos.x - 0.5 , Me.pos.y + 0.5 , -1 , -1 , 0 );
+  DropItemAt ( Me.special_item.type , Me.pos.x - 0.5 , Me.pos.y , -1 , -1 , 0 );
+  DropItemAt ( Me.aux1_item.type , Me.pos.x + 0.5 , Me.pos.y , -1 , -1 , 0 );
+  DropItemAt ( Me.aux2_item.type , Me.pos.x , Me.pos.y - 0.5 , -1 , -1 , 0 );
+  DropItemAt ( ITEM_MONEY , Me.pos.x , Me.pos.y , -1 , -1 , 0 );
 
   GameOver = TRUE;
 

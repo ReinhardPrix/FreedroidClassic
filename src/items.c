@@ -91,7 +91,7 @@ CalculateItemPrice ( item* BuyItem , int ForRepair )
  *
  * ---------------------------------------------------------------------- */
 void
-FillInItemProperties( item* ThisItem , int FullDuration )
+FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange )
 {
 
   ThisItem->damage = ItemMap[ ThisItem->type ].base_item_gun_damage;
@@ -104,7 +104,7 @@ FillInItemProperties( item* ThisItem , int FullDuration )
   //
   if ( ThisItem->type == ITEM_MONEY )
     {
-      ThisItem->gold_amount = MyRandom( 20 ) + 1;
+      ThisItem->gold_amount = 20 * TreasureChestRange + MyRandom( 20 ) + 1;
     }
 
   //--------------------
@@ -124,14 +124,14 @@ FillInItemProperties( item* ThisItem , int FullDuration )
       ThisItem->max_duration = ( -1 );
       ThisItem->current_duration = 1 ;
     }
-}; // void FillInItemProperties( item* ThisItem , int FullDuration )
+}; // void FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange )
 
 /* ----------------------------------------------------------------------
  * This function drops an item at a given place, assigning it the given
  * suffix and prefix code.
  * ---------------------------------------------------------------------- */
 void
-DropItemAt( int ItemType , float x , float y , int prefix , int suffix )
+DropItemAt( int ItemType , float x , float y , int prefix , int suffix , int TreasureChestRange )
 {
   int i;
 
@@ -188,12 +188,12 @@ Sorry if that stops a major game of yours....\n\
   CurLevel->ItemList[ i ].prefix_code = prefix;
   CurLevel->ItemList[ i ].suffix_code = suffix;
 
-  FillInItemProperties ( & ( CurLevel->ItemList[ i ] ) , FALSE );
+  FillInItemProperties ( & ( CurLevel->ItemList[ i ] ) , FALSE , TreasureChestRange );
 
 
   PlayItemSound( ItemMap[ ItemType ].sound_number );
 
-}; // void DropItemAt( int ItemType , int x , int y , int prefix , int suffix )
+}; // void DropItemAt( int ItemType , int x , int y , int prefix , int suffix , int TreasureChestRange )
 
 /* ----------------------------------------------------------------------
  * This function drops a random item to the floor of the current level
@@ -227,7 +227,7 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
   //
   if ( ( !ForceDrop ) && ( DropDecision < 100 - ITEM_DROP_PERCENTAGE ) )
     {
-      DropItemAt( ITEM_MONEY , x , y , -1 , -1 );
+      DropItemAt( ITEM_MONEY , x , y , -1 , -1 , TreasureChestRange );
       return;
     }
 
@@ -254,25 +254,25 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
       switch ( MyRandom ( 6 ) )
 	{
 	case 0:
-	  DropItemAt( ITEM_ANTIGRAV_ALPHA , x , y , Pre , Suf );
+	  DropItemAt( ITEM_ANTIGRAV_ALPHA , x , y , Pre , Suf , TreasureChestRange );
 	  break;
 	case 1:
-	  DropItemAt( ITEM_SHORT_BOW , x , y , Pre , Suf );
+	  DropItemAt( ITEM_SHORT_BOW , x , y , Pre , Suf , TreasureChestRange );
 	  break;
 	case 2:
-	  DropItemAt( ITEM_SMALL_HEALTH_POTION , x , y , -1 , -1 );
+	  DropItemAt( ITEM_SMALL_HEALTH_POTION , x , y , -1 , -1 , TreasureChestRange );
 	  break;
 	case 3:
-	  DropItemAt( ITEM_SMALL_MANA_POTION , x , y , -1 , -1 );
+	  DropItemAt( ITEM_SMALL_MANA_POTION , x , y , -1 , -1 , TreasureChestRange );
 	  break;
 	case 4:
-	  DropItemAt( ITEM_BUCKLER , x , y , Pre , Suf );
+	  DropItemAt( ITEM_BUCKLER , x , y , Pre , Suf , TreasureChestRange );
 	  break;
 	case 5:
-	  DropItemAt( ITEM_SHORT_SWORD , x , y , Pre , Suf );
+	  DropItemAt( ITEM_SHORT_SWORD , x , y , Pre , Suf , TreasureChestRange );
 	  break;
 	case 6:
-	  DropItemAt( ITEM_CAP , x , y , Pre , Suf );
+	  DropItemAt( ITEM_CAP , x , y , Pre , Suf , TreasureChestRange );
 	  break;
 	}
       break;
@@ -280,22 +280,22 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
       switch ( MyRandom ( 5 ) )
 	{
 	case 0:
-	  DropItemAt( ITEM_WHEELS , x , y , Pre , Suf );
+	  DropItemAt( ITEM_WHEELS , x , y , Pre , Suf , TreasureChestRange );
 	  break;
 	case 1:
-	  DropItemAt( ITEM_HUNTERS_BOW , x , y , Pre , Suf );
+	  DropItemAt( ITEM_HUNTERS_BOW , x , y , Pre , Suf , TreasureChestRange );
 	  break;
 	case 2:
-	  DropItemAt( ITEM_FULL_HEALTH_POTION , x , y , -1 , -1 );
+	  DropItemAt( ITEM_FULL_HEALTH_POTION , x , y , -1 , -1 , TreasureChestRange );
 	  break;
 	case 3:
-	  DropItemAt( ITEM_FULL_MANA_POTION , x , y , -1 , -1 );
+	  DropItemAt( ITEM_FULL_MANA_POTION , x , y , -1 , -1 , TreasureChestRange );
 	  break;
 	case 4:
-	  DropItemAt( ITEM_SMALL_SHIELD , x , y , Pre , Suf );
+	  DropItemAt( ITEM_SMALL_SHIELD , x , y , Pre , Suf , TreasureChestRange );
 	  break;
 	case 5:
-	  DropItemAt( ITEM_SCIMITAR , x , y , Pre , Suf );
+	  DropItemAt( ITEM_SCIMITAR , x , y , Pre , Suf , TreasureChestRange );
 	  break;
 	}
       break;
@@ -303,22 +303,22 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
       switch ( MyRandom ( 5 ) )
 	{
 	case 0:
-	  DropItemAt( ITEM_ANTIGRAV_BETA , x , y , Pre , Suf );
+	  DropItemAt( ITEM_ANTIGRAV_BETA , x , y , Pre , Suf , TreasureChestRange );
 	  break;
 	case 1:
-	  DropItemAt( ITEM_HUNTERS_BOW , x , y , Pre , Suf );
+	  DropItemAt( ITEM_HUNTERS_BOW , x , y , Pre , Suf , TreasureChestRange );
 	  break;
 	case 2:
-	  DropItemAt( ITEM_FULL_HEALTH_POTION , x , y , -1 , -1 );
+	  DropItemAt( ITEM_FULL_HEALTH_POTION , x , y , -1 , -1 , TreasureChestRange );
 	  break;
 	case 3:
-	  DropItemAt( ITEM_FULL_MANA_POTION , x , y , -1 , -1 );
+	  DropItemAt( ITEM_FULL_MANA_POTION , x , y , -1 , -1 , TreasureChestRange );
 	  break;
 	case 4:
-	  DropItemAt( ITEM_SMALL_SHIELD , x , y , Pre , Suf );
+	  DropItemAt( ITEM_SMALL_SHIELD , x , y , Pre , Suf , TreasureChestRange );
 	  break;
 	case 5:
-	  DropItemAt( ITEM_SCIMITAR , x , y , Pre , Suf );
+	  DropItemAt( ITEM_SCIMITAR , x , y , Pre , Suf , TreasureChestRange );
 	  break;
 	}
       break;
@@ -326,22 +326,22 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
       switch ( MyRandom ( 7 ) )
 	{
 	case 0:
-	  DropItemAt( ITEM_HUNTERS_BOW , x , y , Pre , Suf );
+	  DropItemAt( ITEM_HUNTERS_BOW , x , y , Pre , Suf , TreasureChestRange );
 	  break;
 	case 1:
-	  DropItemAt( ITEM_ANTIGRAV_BETA , x , y , Pre , Suf );
+	  DropItemAt( ITEM_ANTIGRAV_BETA , x , y , Pre , Suf , TreasureChestRange );
 	  break;
 	case 2:
-	  DropItemAt( ITEM_FULL_HEALTH_POTION , x , y , -1 , -1 );
+	  DropItemAt( ITEM_FULL_HEALTH_POTION , x , y , -1 , -1 , TreasureChestRange );
 	  break;
 	case 3:
-	  DropItemAt( ITEM_FULL_MANA_POTION , x , y , -1 , -1 );
+	  DropItemAt( ITEM_FULL_MANA_POTION , x , y , -1 , -1 , TreasureChestRange );
 	  break;
 	case 4:
-	  DropItemAt( ITEM_SMALL_SHIELD , x , y , Pre , Suf );
+	  DropItemAt( ITEM_SMALL_SHIELD , x , y , Pre , Suf , TreasureChestRange );
 	  break;
 	case 5:
-	  DropItemAt( ITEM_SCIMITAR , x , y , Pre , Suf );
+	  DropItemAt( ITEM_SCIMITAR , x , y , Pre , Suf , TreasureChestRange );
 	  break;
 	}
       break;

@@ -804,7 +804,6 @@ MoveThisEnemy( int EnemyNum )
       StartBlast ( ThisRobot->pos.x, ThisRobot->pos.y,
 		   DRUIDBLAST);
       Me.KillRecord[ ThisRobot->type ] ++;
-      SwapThisRobotToFrontPosition ( ThisRobot );
 
       //--------------------
       // Maybe that robot did have something with him?  The item should then
@@ -823,6 +822,9 @@ MoveThisEnemy( int EnemyNum )
 
       if (LevelEmpty ())
 	CurLevel->empty = WAIT_LEVELEMPTY;
+
+      SwapThisRobotToFrontPosition ( ThisRobot );
+
       return;	// this one's down, so we can move on to the next
     }
   

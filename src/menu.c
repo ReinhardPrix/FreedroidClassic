@@ -277,7 +277,7 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
       SalesList[ i ].prefix_code = ( -1 );
       if ( ForceMagic ) SalesList[ i ].suffix_code = ( MyRandom(10) );
       else SalesList[ i ].suffix_code = ( -1 );
-      FillInItemProperties( & ( SalesList[ i ] ) , TRUE );
+      FillInItemProperties( & ( SalesList[ i ] ) , TRUE , 0 );
     }
 
   while ( !SpacePressed() && !EscapePressed() )
