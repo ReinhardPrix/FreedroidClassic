@@ -175,7 +175,7 @@ better than nothing.  Thanks anyway for you interest in FreedroidRPG.\n\
 	    
 	    if ( ! GameOver ) 
 	    {
-		AssembleCombatPicture ( SHOW_ITEMS ); 
+		AssembleCombatPicture ( SHOW_ITEMS | USE_OWN_MOUSE_CURSOR ); 
 		our_SDL_flip_wrapper ( Screen );
 	    }
 	    

@@ -2000,7 +2000,7 @@ update_item_text_slot_positions ( void )
  *
  * ----------------------------------------------------------------- */
 void
-AssembleCombatPicture (int mask)
+AssembleCombatPicture ( int mask )
 {
     int i;
     int item_under_cursor = get_floor_item_index_under_mouse_cursor ( 0 );
@@ -2009,7 +2009,10 @@ AssembleCombatPicture (int mask)
     
     clear_screen() ;
     
-    make_sure_system_mouse_cursor_is_turned_off();
+    if ( mask & USE_OWN_MOUSE_CURSOR )
+	make_sure_system_mouse_cursor_is_turned_off();
+    else
+	make_sure_system_mouse_cursor_is_turned_on();
 
     //--------------------
     // We generate a list of obstacles (and other stuff) that might
@@ -2131,7 +2134,8 @@ AssembleCombatPicture (int mask)
 	User_Rect.w = GameConfig . screen_width;
     }
 
-    blit_our_own_mouse_cursor();
+    if ( mask & USE_OWN_MOUSE_CURSOR )
+	blit_our_own_mouse_cursor();
     
     //--------------------
     // At this point we are done with the drawing procedure

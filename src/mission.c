@@ -46,7 +46,7 @@
 
 int currently_selected_mission = (-1) ;
 SDL_Rect mission_list_rect = { 20 , 280 , 280 , 180 } ; 
-SDL_Rect mission_description_rect = { 300 , 30 , 320 , 420 } ; 
+SDL_Rect mission_description_rect = { 290 , 30 , 335 , 420 } ; 
 
 /* ----------------------------------------------------------------------
  * This function is responsible for making a new quest diary entry 
