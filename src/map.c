@@ -2273,6 +2273,7 @@ GetAllAnimatedMapTiles ( Level Lev )
   //
   for ( obstacle_index = 0 ; obstacle_index < MAX_OBSTACLES_ON_MAP ; obstacle_index ++ )
     {
+      /*
       //--------------------
       // Maybe we're done with the obstacles now...
       //
@@ -2281,6 +2282,7 @@ GetAllAnimatedMapTiles ( Level Lev )
 	  Lev -> door_obstacle_indices [ curdoor ] = ( -1 ) ;
 	  break;
 	}
+      */
 
       switch ( Lev -> obstacle_list [ obstacle_index ] . type )
 	{

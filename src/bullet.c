@@ -613,22 +613,76 @@ check_bullet_background_collisions ( bullet* CurBullet , int num )
  *
  * ---------------------------------------------------------------------- */
 void
+apply_bullet_damage_to_player ( int player_num , int damage ) 
+{
+  float real_damage = damage;
+
+  UpdateAllCharacterStats( player_num );
+
+  real_damage -= Me [ player_num ] . AC ;
+  if ( real_damage < 1.0 ) real_damage = 1.0 ;
+
+  //--------------------
+  // NEW RULE:  Even when the bullet hits, there's still a chance that
+  // the armour will compensate the shot
+  //
+  if ( MyRandom( 100 ) < Me [ player_num ] . AC )
+    {
+      Me [ player_num ] . TextVisibleTime = 0 ;
+      Me [ player_num ] . TextToBeDisplayed = "That one went into the armour." ;
+      BulletReflectedSound ( ) ;
+    }
+  else
+    {
+      
+      Me [ player_num ] . TextVisibleTime = 0 ;
+      Me [ player_num ] . TextToBeDisplayed = "Ouch!" ;
+      Me [ player_num ] . energy -= real_damage ;	// loose some energy
+      
+      //--------------------
+      // A hit of what form so ever should make the Tux stop
+      // dead in his tracks.
+      //
+      // Me [ player_num ] . speed . x = 0;
+      // Me [ player_num ] . speed . y = 0; 
+      
+      //--------------------
+      // As the new rule, the influencer after getting hit, must completely
+      // start anew to recover his weapon from the previous shot
+      //
+      // Me [ player_num ] . firewait = ItemMap[ Me [ player_num ] . weapon_item . type ] . item_gun_recharging_time;
+      // Me [ player_num ] . got_hit_time = 0;
+      
+      // GotHitSound ();
+      Influencer_Scream_Sound ( );
+    }
+  //--------------------
+  // NEW RULE:  All items equipped suffer damage when the influencer gets hit
+  //
+  DamageAllEquipment ( player_num ) ;
+}; // void 
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
 check_bullet_player_collsisions ( bullet* CurBullet , int num )
 {
-  int PlayerNum;
+  int player_num;
   double xdist, ydist;
 
   //--------------------
   // Now we check for collisions with one of the players.
   //
-  for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ )
+  for ( player_num = 0 ; player_num < MAX_PLAYERS ; player_num ++ )
     {
       //--------------------
       // Of course only active players and players on the same level
       // may be checked!
       //
-      if ( Me [ PlayerNum ] . status == OUT ) continue;
-      if ( Me [ PlayerNum ] . pos . z != CurBullet -> pos . z ) continue;
+      if ( Me [ player_num ] . status == OUT ) continue;
+      if ( Me [ player_num ] . pos . z != CurBullet -> pos . z ) continue;
       
       //--------------------
       // A player is supposed not to hit himself with his bullets, so we may
@@ -640,12 +694,13 @@ check_bullet_player_collsisions ( bullet* CurBullet , int num )
       // Now we see if the distance to the bullet is as low as hitting
       // distance or not.
       //
-      xdist = Me [ PlayerNum ] . pos . x - CurBullet -> pos . x ;
-      ydist = Me [ PlayerNum ] . pos . y - CurBullet -> pos . y ;
+      xdist = Me [ player_num ] . pos . x - CurBullet -> pos . x ;
+      ydist = Me [ player_num ] . pos . y - CurBullet -> pos . y ;
       if ((xdist * xdist + ydist * ydist) < DRUIDHITDIST2)
 	{
 	  if (!InvincibleMode) 
 	    {
+
 #ifdef USE_MISS_HIT_ARRAYS
 	      if ( CurBullet->miss_hit_influencer == UNCHECKED ) 
 		{
@@ -653,44 +708,9 @@ check_bullet_player_collsisions ( bullet* CurBullet , int num )
 		    {
 		      CurBullet->miss_hit_influencer = HIT ;
 #endif			  
-		      //--------------------
-		      // NEW RULE:  Even when the bullet hits, there's still a chance that
-		      // the armour will compensate the shot
-		      //
-		      if ( MyRandom( 100 ) < Me [ PlayerNum ] . AC )
-			{
-			  Me [ PlayerNum ] . TextVisibleTime = 0 ;
-			  Me [ PlayerNum ] . TextToBeDisplayed = "That one went into the armour." ;
-			  BulletReflectedSound ( ) ;
-			}
-		      else
-			{
-			  
-			  Me [ PlayerNum ] . TextVisibleTime = 0 ;
-			  Me [ PlayerNum ] . TextToBeDisplayed = "Ouch!" ;
-			  Me [ PlayerNum ] . energy -= CurBullet -> damage ;	// loose some energy
-			  
-			  //--------------------
-			  // A hit of what form so ever should make the Tux stop
-			  // dead in his tracks.
-			  //
-			  // Me [ PlayerNum ] . speed . x = 0;
-			  // Me [ PlayerNum ] . speed . y = 0; 
-			  
-			  //--------------------
-			  // As the new rule, the influencer after getting hit, must completely
-			  // start anew to recover his weapon from the previous shot
-			  //
-			  // Me [ PlayerNum ] . firewait = ItemMap[ Me [ PlayerNum ] . weapon_item . type ] . item_gun_recharging_time;
-			  // Me [ PlayerNum ] . got_hit_time = 0;
-			  
-			  // GotHitSound ();
-			  Influencer_Scream_Sound ( );
-			}
-		      //--------------------
-		      // NEW RULE:  All items equipped suffer damage when the influencer gets hit
-		      //
-		      DamageAllEquipment ( PlayerNum ) ;
+
+		      apply_bullet_damage_to_player ( player_num , CurBullet-> damage ) ;
+
 		      DeleteBullet ( num , TRUE ) ; // we want a bullet-explosion
 		      return;  // This bullet was deleted and does not need to be processed any further...
 #ifdef USE_MISS_HIT_ARRAYS

@@ -3144,7 +3144,7 @@ Unable to find the obstacle in question within the obstacle list!",
   //--------------------
   // Maybe filling out the gap isn't so desireable after all.  Might that cause
   // problems with keeping track of the indices when obstacles are named?  Should
-  // we do away with this?  But then we also need to go over -1 entried in the
+  // we do away with this?  But then we also need to go over -1 entries in the
   // loops coursing throught he whole list in other places...  So it will stay for
   // now I guess...
   //
