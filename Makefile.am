@@ -1,4 +1,4 @@
-SUBDIRS = src croppy win32
+SUBDIRS = src item_editor croppy win32
 
 man_MANS = freedroidRPG.6
 

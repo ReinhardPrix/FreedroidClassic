@@ -109,12 +109,10 @@ AC_TYPE_SIGNAL
 AC_CHECK_FUNCS([alarm getcwd gettimeofday memset sqrt strstr strtok usleep])
 
 ## Check gtk libs
-AM_PATH_GTK(1.2.0, 
-		   AC_SUBST([DIALOG_EDITOR], [DialogEditor]),
-		   AC_MSG_WARN([
+AM_PATH_GTK(1.2.0, [ found_gtk=true ], AC_MSG_WARN([
 --------------------------------------------------
 WARNING: You need libgtk-dev >= 1.20 in order to 
-be able to build the DialogEditor!
+be able to build the DialogEditor and ItemEditor!
 
 If you only want to play Freedroid you can ignore this!
 --------------------------------------------------]))
@@ -135,6 +133,9 @@ esac
 dnl send a signal to automake if we're compiling for win32
 AM_CONDITIONAL(WIN32, test x$win32 = xtrue)
 
-AC_CONFIG_FILES([Makefile src/Makefile croppy/Makefile win32/Makefile])
+dnl send a signal to automake wether gtk was found or not
+AM_CONDITIONAL(FOUND_GTK, test x$found_gtk = xtrue)
+
+AC_CONFIG_FILES([Makefile src/Makefile item_editor/Makefile croppy/Makefile win32/Makefile])
 
 AC_OUTPUT
