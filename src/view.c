@@ -159,8 +159,8 @@ FeindZusammenstellen (const char *FZahl, int FPhase)
   DebugPrintf
     ("\nunsigned char * FeindZusammenstellen(...): real function call confirmed.\n");
 
-  printf( "\n Zuletzt berichtete Phase in FeindZusammenstellen(...) is: %d." , FPhase );
-  printf( "\n Zuletzt berichtete Zahl is: %s.\n\n" , FZahl );
+  //  printf( "\n Zuletzt berichtete Phase in FeindZusammenstellen(...) is: %d." , FPhase );
+  //  printf( "\n Zuletzt berichtete Zahl is: %s.\n\n" , FZahl );
 
   for (i = 0; i < 3; i++)
     {
@@ -674,6 +674,14 @@ PutEnemy (int Enum)
   DebugPrintf
     ("\nvoid PutEnemy(int Enum): it seems that we must draw this one on the screen....\n");
 
+  // Den Druidtyp nochmals mit einer Sicherheitsabfrage ueberpruefen:
+  if ( Feindesliste[Enum].type >= ALLDRUIDTYPES )
+    {
+      DebugPrintf("\nvoid PutEnemy(int Enum): ERROR!  IMPOSSIBLE DRUIDTYPE ENCOUNTERED!  EMERGENCY WORKAROUND DONE!!");
+      DebugPrintf("\nvoid PutEnemy(int Enum): NOTE THAT THIS PROBLEM REMAINS!  PLEASE FOLLOW THIS BUG AND CORRECT IT!!");
+      Feindesliste[Enum].type = 0;
+    }
+
   /* Bild des Feindes mit richtiger Nummer in der richtigen Phase darstellen */
   druidname = Druidmap[Feindesliste[Enum].type].druidname;
   phase = Feindesliste[Enum].feindphase;
@@ -998,7 +1006,7 @@ DrawDigit (unsigned char *Src, unsigned char *Dst)
 
   for (i = 0; i < DIGITHEIGHT; i++)
     {
-      for (j = 0; j < DIGITLENGTH; j++)
+      for (j = 0; j < DIGITLENGTH-1; j++)
 	{
 	  *(Dst + i * BLOCKBREITE + j) = *(Src + i * 9 + j);
 	}
