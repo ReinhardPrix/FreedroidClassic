@@ -31,11 +31,6 @@
  * message line!
  * ---------------------------------------------------------------------- */
 
-/*
- * This file has been checked for remnants of german comments and shouldn't be
- * containing any of these any more.  If you still find any, please let me know. jp.
- */
-
 #define _text_c
 
 #include "system.h"
@@ -125,7 +120,6 @@ GetChatWindowInput( SDL_Surface* Background , SDL_Rect* Chat_Window_Pointer )
   return ( RequestString );
 }; // char* GetChatWindowInput( void )
 
-
 /* ----------------------------------------------------------------------
  * This function does the communication routine when the influencer in
  * transfer mode touched a friendly droid.
@@ -147,7 +141,26 @@ ChatWithFriendlyDroid( int Enum )
   char* Chandra_Text;
   char* Sorenson_Text;
   char* RMS_Text;
-  
+  int MenuSelection = (-1) ;
+  char* ChatMenuTexts[ MAX_ANSWERS_PER_PERSON ];
+
+  //--------------------
+  // First we empty the array of possible answers in the
+  // chat interface.
+  //
+  for ( i = 0 ; i < MAX_ANSWERS_PER_PERSON ; i ++ )
+    {
+      ChatMenuTexts [ i ] = "" ;
+    }
+  ChatMenuTexts[0]="Yes";
+  ChatMenuTexts[1]="No";
+
+  //--------------------
+  // Now we define the texts that the various NPCs will say in case
+  // the old monologuous interaction system is used...
+  // 
+  // I hope this can go out sooner or later...
+  //
   Chandra_Text = "Tux!  At last you have returned!\n\
 \n\
 Alas, this is an hour of dire need. \n\
@@ -193,10 +206,123 @@ the things soul may finally rest.\n\
   
   if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "CHA" ) == 0 )
     {
-      Switch_Background_Music_To ( "../speeches/Chandra01.ogg" );
-      ScrollText ( Chandra_Text , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NULL );
-      Switch_Background_Music_To ( CurLevel->Background_Song_Name );
-      return;
+
+      /* 
+	 // *******************************************************
+	 // *** This was the old non-dialog but monolog code... ***
+	 // *******************************************************
+	 Switch_Background_Music_To ( "../speeches/Chandra01.ogg" );
+	 ScrollText ( Chandra_Text , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NULL );
+	 Switch_Background_Music_To ( CurLevel->Background_Song_Name );
+      */
+
+      //--------------------
+      // Now we do the dialog with Dr. Chandra...
+      //
+      
+      // We define our input and image windows...
+      Chat_Window.x=242; Chat_Window.y=100; Chat_Window.w=380; Chat_Window.h=314;
+      Droid_Image_Window.x=15; Droid_Image_Window.y=82; Droid_Image_Window.w=215; Droid_Image_Window.h=330;
+      
+      Activate_Conservative_Frame_Computation( );
+
+      //--------------------
+      // Next we prepare the whole background for all later text operations
+      //
+      Background = IMG_Load( find_file ( "backgrounds/chat_test.jpg" , GRAPHICS_DIR, FALSE ) );
+      if ( Background == NULL )
+	{
+	  printf("\n\nChatWithFriendlyDroid: ERROR LOADING FILE!!!!  Error code: %s " , SDL_GetError() );
+	  Terminate(ERR);
+	}
+      strcpy( fname, Druidmap[ AllEnemys[Enum].type ].druidname );
+      strcat( fname , ".png" );
+      fpath = find_file (fname, GRAPHICS_DIR, FALSE);
+      Small_Droid = IMG_Load (fpath) ;
+      Large_Droid = zoomSurface( Small_Droid , 1.8 , 1.8 , 0 );
+      SDL_BlitSurface( Large_Droid , NULL , Background , &Droid_Image_Window );
+      SDL_BlitSurface( Background , NULL , Screen , NULL );
+      SDL_Flip( Screen );
+      
+      // All droid chat should be done in the paradroid font I would say...
+      SetCurrentFont( Para_BFont );
+      
+      // We print out a little greeting message...
+      // DisplayTextWithScrolling ( 
+      // "Transfer channel protocol set up for text transfer...\n\n" , 
+      // Chat_Window.x , Chat_Window.y , &Chat_Window , Background );
+      
+      ChatMenuTexts [ 0 ] = " Who are you? " ;
+      ChatMenuTexts [ 1 ] = " What can you tell me about this place? " ;
+      ChatMenuTexts [ 2 ] = " Where can I get better equippment? " ;
+      ChatMenuTexts [ 3 ] = " I have problems with my controls. " ;
+
+      ChatMenuTexts [ 4 ] = " What can you tell me about the MS? " ;
+      ChatMenuTexts [ 5 ] = " " ;
+      ChatMenuTexts [ 6 ] = " " ;
+      ChatMenuTexts [ 7 ] = " END ";
+      
+      Me [ 0 ] . Chandra_Chat_Flags[ 0 ] = 1 ;
+      Me [ 0 ] . Chandra_Chat_Flags[ 1 ] = 1 ;
+      Me [ 0 ] . Chandra_Chat_Flags[ 2 ] = 1 ;
+      Me [ 0 ] . Chandra_Chat_Flags[ 3 ] = 1 ;
+      Me [ 0 ] . Chandra_Chat_Flags[ 4 ] = 0 ;
+      Me [ 0 ] . Chandra_Chat_Flags[ 5 ] = 0 ;
+      Me [ 0 ] . Chandra_Chat_Flags[ 6 ] = 0 ;
+      Me [ 0 ] . Chandra_Chat_Flags[ 7 ] = 1 ;
+      
+      PlayOnceNeededSoundSample( "Chandra_Welcome_Traveller_0.wav" , TRUE );
+
+      while (1)
+	{
+	  
+	  // MenuSelection = ChatDoMenuSelection ( "What will you say?" , MenuTexts , 1 , NULL , FPS_Display_BFont );
+	  MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , ChatMenuTexts , Me[0].Chandra_Chat_Flags , 1 , NULL , FPS_Display_BFont );
+	  
+	  switch( MenuSelection )
+	    {
+	    case 1:
+	      PlayOnceNeededSoundSample( "Tux_Chandra_Who_Are_You_0.wav" , TRUE );
+	      PlayOnceNeededSoundSample( "Chandra_My_Name_Is_0.wav" , TRUE );
+	      Me [ 0 ] . Chandra_Chat_Flags[ 0 ] = 0 ;
+	      break;
+	    case 2:
+	      PlayOnceNeededSoundSample( "Tux_Chandra_What_Can_Place_0.wav" , TRUE );
+	      PlayOnceNeededSoundSample( "Chandra_This_Place_Consists_0.wav" , TRUE );
+	      PlayOnceNeededSoundSample( "Chandra_Formerly_This_Was_0.wav" , TRUE );
+	      PlayOnceNeededSoundSample( "Chandra_But_They_Have_0.wav" , TRUE );
+	      Me [ 0 ] . Chandra_Chat_Flags[ 1 ] = 0 ;
+	      Me [ 0 ] . Chandra_Chat_Flags[ 4 ] = 1 ;
+	      break;
+	    case 3:
+	      PlayOnceNeededSoundSample( "Tux_Chandra_Where_Can_I_0.wav" , TRUE );
+	      PlayOnceNeededSoundSample( "Chandra_You_Might_Try_0.wav" , TRUE );
+	      PlayOnceNeededSoundSample( "Chandra_They_Have_All_0.wav" , TRUE );
+	      PlayOnceNeededSoundSample( "Chandra_Talk_To_The_0.wav" , TRUE );
+	      break;
+	    case 4:
+	      PlayOnceNeededSoundSample( "Tux_Chandra_I_Need_Help_0.wav" , TRUE );
+	      PlayOnceNeededSoundSample( "Chandra_Controls_1.wav" , TRUE );
+	      PlayOnceNeededSoundSample( "Chandra_Controls_2.wav" , TRUE );
+	      PlayOnceNeededSoundSample( "Chandra_Controls_3.wav" , TRUE );
+	      PlayOnceNeededSoundSample( "Chandra_Controls_4.wav" , TRUE );
+	      PlayOnceNeededSoundSample( "Chandra_Controls_5.wav" , TRUE );
+	      PlayOnceNeededSoundSample( "Chandra_Controls_6.wav" , TRUE );
+	      PlayOnceNeededSoundSample( "Chandra_Controls_7.wav" , TRUE );
+	      break;
+	    case 5:
+	      PlayOnceNeededSoundSample( "Tux_Chandra_What_Can_MS_0.wav" , TRUE );
+	      break;
+	    case 6:
+	      break;
+	    case 7:
+	    case (-1):
+	    default:
+	      return;
+	      break;
+	    }
+	}
+
     }
 
   if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "SOR" ) == 0 )

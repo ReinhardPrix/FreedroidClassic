@@ -130,6 +130,168 @@ Mix_Music *Loaded_MOD_Files[ALL_MOD_MUSICS] =
 };
 #endif
 
+char SoundChannelList[5000];
+
+//----------------------------------------------------------------------
+// We want to know in certain cases if a channel has finished playback
+// or not.  For this we keep track of channel finished messages.
+// This works as follows:
+//
+// * When a channel is starting playback via the function 
+//   PlayOnceNeededSoundSample, then we mark the channel as in use.
+//
+// * A callback function is set via SDL to THIS FUNCTION.
+//
+// * This function cancels any channel bits that have finished playback.
+//
+// ---------------------------------------------------------------------
+void channelDone(int channel) {
+  DebugPrintf( 0 , "\nCALLBACK FUNCTION INVOKED:  channel %d finished playback.\n" , channel );
+  SoundChannelList[ channel ] = 0;
+}; // void channelDone(int channel) {
+
+//----------------------------------------------------------------------
+// This function should play a sound sample, that is NOT needed within
+// the action part of the game but only in menus or dialogs and can 
+// therefore be loaded and dumped on demand while the other sound samples
+// for the action parts of the game will be kept in memory all the time.
+// ----------------------------------------------------------------------
+void
+PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting) 
+{
+
+  //--------------------
+  // In case there are no sound capabilities on this machine, we 
+  // terminate immediately.
+  //
+#ifndef HAVE_LIBSDL_MIXER
+  return;
+#else
+
+  int Newest_Sound_Channel=0;
+  Mix_Chunk *One_Shot_WAV_File;
+  char Temp_Filename[5000];
+  char* fpath;
+
+  //--------------------
+  // In case sound has been disabled, we don't do anything here...
+  //
+  if ( !sound_on ) return;
+
+  //--------------------
+  // Now we set a callback function, that should be called by SDL
+  // as soon as ANY other sound channel finishes playing...
+  //
+  Mix_ChannelFinished( channelDone );
+
+  //--------------------
+  // Now we try to load the requested sound file into memory...
+  //
+  One_Shot_WAV_File=NULL;
+
+  strcpy ( Temp_Filename , "speeches/" );
+  strcat ( Temp_Filename , SoundSampleFileName );
+  fpath = find_file ( Temp_Filename , SOUND_DIR, FALSE);
+  One_Shot_WAV_File = Mix_LoadWAV( fpath );
+  if ( One_Shot_WAV_File == NULL )
+    {
+      fprintf (stderr,
+	       "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+The a SDL MIXER WAS UNABLE TO LOAD A CERTAIN SOUND FILE INTO MEMORY.\n\
+\n\
+The name of the problematic file is:\n\
+%s \n\
+\n\
+If the problem persists and you do not find this sound file in the\n\
+Freedroid archive, please inform the developers about the problem.\n\
+\n\
+In the meantime you can choose to play without sound.\n\
+\n\
+If you want this, use the appropriate command line option and Freedroid will \n\
+not complain any more.  But for now Freedroid will terminate to draw attention \n\
+to the sound problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , SoundSampleFileName );
+      Terminate (ERR);
+    } // if ( !Loaded_WAV...
+  else
+    {
+      DebugPrintf ( 0 , "\nSuccessfully loaded file %s into memory for playing once." , SoundSampleFileName );
+    }
+
+  //--------------------
+  // Now we try to play the sound file that has just been successfully
+  // loaded into memory...
+  //
+  // In case of an error, we will of course print an error message
+  // and quit...
+  //
+  Newest_Sound_Channel = Mix_PlayChannel( -1 , One_Shot_WAV_File , 0 );
+  if ( Newest_Sound_Channel <= -1 )
+    {
+      fprintf (stderr,
+	       "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+The a SDL MIXER WAS UNABLE TO PLAY A CERTAIN FILE LOADED INTO MEMORY FOR PLAYING ONCE.\n\
+\n\
+The name of the problematic file is:\n\
+%s \n\
+\n\
+Analysis of the error has returned the following explanation through SDL:\n\
+%s \n\
+Freedroid will be terminated now to draw attention to this sound problem,\n\
+it could not resolve.  Please inform the developers about it.\n\
+Sorry for interrupting your game.  \n\
+----------------------------------------------------------------------\n\
+\n" , SoundSampleFileName , Mix_GetError() );
+      Terminate (ERR);
+    } // if ( ... = -1
+  else
+    {
+      SoundChannelList[ Newest_Sound_Channel ] = 1;
+      DebugPrintf( 0 , "\nSuccessfully playing the 'ONCE NEEDED' file %s.", SoundSampleFileName ) ;
+    }
+
+  //--------------------
+  // Maybe this sound sample is intended to be hooking the CPU and the
+  // program flow, so that nothing happens until the sample has been
+  // played fully...
+  //
+  if ( With_Waiting )
+    {
+      while ( SoundChannelList[ Newest_Sound_Channel ] && !EscapePressed() );
+      //--------------------
+      // In case escape was pressed, the currently playing voice sample must
+      // be terminated immediately.
+      //
+      if ( EscapePressed() )
+	{
+	  Mix_HaltChannel( Newest_Sound_Channel );
+	}
+    }
+  while ( EscapePressed() );
+  
+  //--------------------
+  // Now the channel has finished playing (or we have stopped it) and
+  // now we can unallocate the resources used by it...
+  //
+  Mix_FreeChunk ( One_Shot_WAV_File );
+
+#endif // HAVE_LIBSDL_MIXER
+
+};
+
+// ----------------------------------------------------------------------
+// This function shall initialize the SDL Audio subsystem.  It is called
+// as soon as Freedroid is started.  It does ONLY work with SDL and no
+// longer with any form of sound engine like the YIFF.
+// ----------------------------------------------------------------------
 void 
 Init_Audio(void)
 {
@@ -209,10 +371,11 @@ Sorry...\n\
       DebugPrintf (1, "\nSuccessfully opened SDL audio channel." );
     }
 
+  //--------------------
   // Now that the audio channel is opend, its time to load all the
   // WAV files into memory, something we NEVER did while using the yiff,
   // because the yiff did all the loading, analyzing and playing...
-
+  //
   Loaded_WAV_Files[0]=NULL;
   for (i = 1; i < ALL_SOUNDS; i++)
     {

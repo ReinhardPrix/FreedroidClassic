@@ -497,6 +497,8 @@ typedef struct
 
   unsigned char HaveBeenToLevel[ MAX_LEVELS ]; // record of the levels the player has visited yet.
 
+  unsigned char Chandra_Chat_Flags[ MAX_ANSWERS_PER_PERSON ];
+
   //--------------------
   // THE FOLLOWING ARE INFORMATIONS, THAT ARE HUGE AND THAT ALSO DO NOT NEED
   // TO BE COMMUNICATED FROM THE CLIENT TO THE SERVER OR VICE VERSA

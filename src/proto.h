@@ -215,6 +215,7 @@ EXTERN int TranslateMap (Level Lev);
 #else
 #define EXTERN extern
 #endif
+EXTERN void PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting );
 EXTERN void Init_Audio(void);
 EXTERN void Set_BG_Music_Volume(float);
 EXTERN void Set_Sound_FX_Volume(float);
@@ -433,6 +434,10 @@ EXTERN int NoDirectionPressed (void);
 #define EXTERN extern
 #endif
 EXTERN int DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char* BackgroundToUse , void* MenuFont );
+EXTERN int ChatDoMenuSelectionFlagged( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON] , 
+				       unsigned char Chat_Flags[ MAX_ANSWERS_PER_PERSON ] , int FirstItem , 
+				       char* BackgroundToUse , void* MenuFont );
+EXTERN int ChatDoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char* BackgroundToUse , void* MenuFont );
 EXTERN void StartupMenu (void);
 EXTERN void BuySellMenu ( void );
 EXTERN void HealerMenu ( void );

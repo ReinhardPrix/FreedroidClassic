@@ -1790,6 +1790,15 @@ InitNewMissionList ( char *MissionName )
 
   UpdateAllCharacterStats( 0 );
 
+  //--------------------
+  // Now we disable all chat flags (i.e. the Tux hasn't spoken to
+  // that person at all) for all the non-player-characters in the game
+  //
+  for ( i = 0 ; i < MAX_ANSWERS_PER_PERSON ; i ++ ) 
+    {
+      Me[0].Chandra_Chat_Flags [ i ] = 0 ;
+    }
+
   Me[0].energy = Me[0].maxenergy;
   Me[0].mana = Me[0].maxmana;
   DebugPrintf( 1 , "\n Me[0].energy : %f . " , Me[0].energy );

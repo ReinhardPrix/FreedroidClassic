@@ -577,7 +577,6 @@ TryToBuyItem( item* BuyItem )
 	    }
 	}
     }
-  
 
 }; // void TryToBuyItem( item* BuyItem )
 

@@ -696,6 +696,9 @@ PutMouseMoveCursor ( void )
  * to the center of the combat window if (-1,-1) was specified, or
  * to the specified coordinates anywhere on the screen, useful e.g.
  * for using the influencer as a cursor in the menus.
+ *
+ * The given coordinates then indicate the UPPER LEFT CORNER for
+ * the blit.
  * ----------------------------------------------------------------- */
 void
 PutInfluence ( int x , int y , int PlayerNum )

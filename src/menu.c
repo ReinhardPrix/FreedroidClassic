@@ -126,7 +126,7 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char*
 
   //--------------------
   // At first we hide the mouse cursor, so that there can not be any
-  // ambiguity whether to thing of the tux cursor or the mouse cursor
+  // ambiguity whether to think of the tux cursor or the mouse cursor
   // to be the pointer we use.
   //
   SDL_ShowCursor( SDL_DISABLE );
@@ -260,6 +260,201 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char*
   SDL_ShowCursor( SDL_ENABLE );
   return ( -1 );
 }; // int DoMenuSelection( char* InitialText , char* MenuTexts[10] , asdfasd .... )
+
+/* ----------------------------------------------------------------------
+ * This function performs a menu for the player to select from, using the
+ * keyboard or mouse wheel.
+ * ---------------------------------------------------------------------- */
+int
+ChatDoMenuSelectionFlagged( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON] , 
+			    unsigned char Chat_Flags[ MAX_ANSWERS_PER_PERSON ] , int FirstItem , 
+			    char* BackgroundToUse , void* MenuFont )
+{
+  int MenuSelection = (-1) ;
+  char* FilteredChatMenuTexts[ 10 ] = { "" , "" , "" , "" , "" , "" , "" , "" , "" , "" } ;
+  int i;
+  int use_counter = 0;
+
+  //--------------------
+  // We filter out those answering options that are allowed by the flag mask
+  //
+  for ( i = 0 ; i < MAX_ANSWERS_PER_PERSON ; i ++ )
+    {
+      if ( Chat_Flags[ i ] ) 
+	{
+	  FilteredChatMenuTexts[ use_counter ] = MenuTexts[ i ] ;
+	  use_counter++;
+	  if ( use_counter >= 10 )
+	    {
+	      DebugPrintf( 0 , "\n\nERROR:  TOO MANY CHAT ALTERNATIVES ACTIVATED... TERMINATING...\n\n" );
+	      Terminate ( ERR );
+	    }
+	}
+    }
+
+  //--------------------
+  // Now we do the usual menu selection, using only the activated chat alternatives...
+  //
+  MenuSelection = ChatDoMenuSelection( InitialText , FilteredChatMenuTexts , 
+				       FirstItem , BackgroundToUse , MenuFont );
+
+  //--------------------
+  // Now that we have an answer, we must transpose it back to the original array
+  // of all theoretically possible answering possibilities.
+  //
+  if ( MenuSelection != (-1) )
+    {
+      use_counter = 0 ;
+      for ( i = 0 ; i < MAX_ANSWERS_PER_PERSON ; i ++ )
+	{
+
+	  if ( Chat_Flags[ i ] ) 
+	    {
+	      FilteredChatMenuTexts[ use_counter ] = MenuTexts[ i ] ;
+	      use_counter++;
+	      if ( use_counter >= 10 )
+		{
+		  DebugPrintf( 0 , "\n\nERROR:  TOO MANY CHAT ALTERNATIVES ACTIVATED... TERMINATING...\n\n" );
+		  Terminate ( ERR );
+		}
+	      if ( MenuSelection == use_counter ) 
+		{
+		  DebugPrintf( 0 , "\nOriginal MenuSelect: %d. \nTransposed MenuSelect: %d." , 
+			       MenuSelection , i+1 );
+		  return ( i+1 );
+		}
+	    }
+	}
+    }
+
+
+  return ( MenuSelection );
+};
+
+/* ----------------------------------------------------------------------
+ * This function performs a menu for the player to select from, using the
+ * keyboard or mouse wheel.
+ * ---------------------------------------------------------------------- */
+int
+ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem , char* BackgroundToUse , void* MenuFont )
+{
+  int h = FontHeight (GetCurrentFont());
+  int i;
+  static int MenuPosition = 1;
+  int NumberOfOptionsGiven;
+  int first_menu_item_pos_y;
+  int MenuPosX[] = { 260 , 260 , 260 , 260 , 260 , 260 , 260 , 260 , 260 , 260 } ;
+  int MenuPosY[] = {  80 , 120 , 160 , 200 , 240 , 280 , 320 , 360 , 400 , 440 } ;
+
+  //--------------------
+  // At first we hide the mouse cursor, so that there can not be any
+  // ambiguity whether to think of the tux cursor or the mouse cursor
+  // to be the pointer we use.
+  //
+  SDL_ShowCursor( SDL_DISABLE );
+
+  if ( FirstItem != (-1) ) MenuPosition = FirstItem;
+
+  //--------------------
+  // First thing we do is find out how may options we have
+  // been given for the menu
+  //
+  for ( i = 0 ; i < 10 ; i ++ )
+    {
+      if ( strlen( MenuTexts[ i ] ) == 0 ) break;
+    }
+  NumberOfOptionsGiven = i;
+
+  first_menu_item_pos_y = ( SCREEN_HEIGHT - NumberOfOptionsGiven * h ) / 2 ;
+
+  //--------------------
+  // We need to prepare the background for the menu, so that
+  // it can be accessed with proper speed later...
+  //
+  SDL_SetClipRect( Screen, NULL );
+  StoreMenuBackground ();
+
+  //--------------------
+  // Now that the possible font-changing background assembling is
+  // done, we can finally set the right font for the menu itself.
+  //
+  if ( MenuFont == NULL ) SetCurrentFont ( Menu_BFont );
+  else SetCurrentFont ( (BFont_Info*) MenuFont );
+  h = FontHeight ( GetCurrentFont() );
+
+  while ( 1 )
+    {
+
+      RestoreMenuBackground ();
+
+      //--------------------
+      // We highlight the currently selected option with an 
+      // influencer to the left and right of it.
+      //
+      PutInfluence( MenuPosX[ MenuPosition -1 ] , MenuPosY[ MenuPosition -1 ] + (h/2) , 0 );
+
+      for ( i = 0 ; i < 10 ; i ++ )
+	{
+	  if ( strlen( MenuTexts[ i ] ) == 0 ) continue;
+	  PutString ( Screen ,  MenuPosX[i] , MenuPosY[i] , MenuTexts[ i ] );
+	}
+      if ( strlen( InitialText ) > 0 ) 
+	DisplayText ( InitialText , 50 , 50 , NULL );
+
+      SDL_Flip( Screen );
+  
+      if ( EscapePressed() )
+	{
+	  while ( EscapePressed() );
+	  // MenuItemDeselectedSound();
+
+	  RestoreMenuBackground ();
+	  SDL_Flip( Screen );
+	  SDL_ShowCursor( SDL_ENABLE );
+	  return ( -1 );
+	}
+      if ( EnterPressed() || SpacePressed() || RightPressed() || LeftPressed() ) 
+	{
+	  //--------------------
+	  // The space key or enter key or left mouse button all indicate, that
+	  // the user has made a selection.
+	  //
+	  // In the case of the mouse button, we must of couse first check, if 
+	  // the mouse button really was over a valid menu item and otherwise
+	  // ignore the button.
+	  //
+	  // In case of a key, we always have a valid selection.
+	  //
+	  while ( EnterPressed() || SpacePressed() ); // || RightPressed() || LeftPressed() );
+	  // MenuItemSelectedSound();
+	  
+	  SDL_ShowCursor( SDL_ENABLE );
+	  RestoreMenuBackground ();
+	  SDL_Flip( Screen );
+	  return ( MenuPosition );
+
+	}
+      if ( UpPressed() || MouseWheelUpPressed() ) 
+	{
+	  if (MenuPosition > 1) MenuPosition--;
+	  MoveMenuPositionSound();
+	  while (UpPressed());
+	}
+      if ( DownPressed() || MouseWheelDownPressed() ) 
+	{
+	  if ( MenuPosition < NumberOfOptionsGiven ) MenuPosition++;
+	  MoveMenuPositionSound();
+	  while (DownPressed());
+	}
+
+    }
+
+  SDL_ShowCursor( SDL_ENABLE );
+  RestoreMenuBackground ();
+  SDL_Flip( Screen );
+  return ( -1 );
+
+}; // int ChatDoMenuSelection( char* InitialText , char* MenuTexts[10] , asdfasd .... )
 
 /* ----------------------------------------------------------------------
  * This function prepares the screen for the big Escape menu and 
