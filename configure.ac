@@ -203,6 +203,7 @@ AC_CONFIG_FILES([Makefile
 		graphics/items/NONE_AVAILABLE_YET/Makefile 
 		graphics/obstacles/Makefile 
 		graphics/tux_motion_parts/sword_motion/Makefile 
+		graphics/tux_motion_parts/gun_motion/Makefile 
                 graphics/tux_motion_parts/Makefile])
 
 AC_OUTPUT
