@@ -138,7 +138,7 @@ LoadAndShowStats ( char* CoreFilename )
   if ( stat ( filename , & ( FileInfoBuffer) ) )
     {
       fprintf( stderr, "\n\nfilename: %s. \n" , filename );
-      GiveStandardErrorMessage ( "LoadAndShowStats(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 Freedroid was unable to determine the time of the last modification on\n\
 your saved game file.\n\
 This is either a bug in Freedroid or an indication, that the directory\n\
@@ -171,7 +171,7 @@ or file permissions of ~/.freedroid_rpg are somehow not right.",
   if ( stat ( filename , & ( FileInfoBuffer) ) )
     {
       fprintf( stderr, "\n\nfilename: %s. \n" , filename );
-      GiveStandardErrorMessage ( "LoadAndShowStats(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 Freedroid was unable to determine the time of the last modification on\n\
 your saved game file.\n\
 This is either a bug in Freedroid or an indication, that the directory\n\
@@ -317,7 +317,7 @@ SaveGame( void )
   sprintf( filename , "%s/%s%s", ConfigDir, Me[0].character_name, SHIP_EXT );
   if ( SaveShip( filename ) != OK )
     {
-      GiveStandardErrorMessage ( "SaveGame(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 The SAVING OF THE SHIP DATA FOR THE SAVED GAME FAILED!\n\
 This is either a bug in Freedroid or an indication, that the directory\n\
 or file permissions of ~/.freedroid_rpg are somehow not right.",
@@ -535,7 +535,7 @@ LoadGame( void )
       GiveMouseAlertWindow ( "\nW A R N I N G !\n\nFreedroidRPG was unable to locate the saved game file you requested to load.\nThis might mean that it really isn't there cause you tried to load a game without ever having saved the game before.  \nThe other explanation of this error might be a severe error in FreedroidRPG.\nNothing will be done about it." );
       /*
       fprintf( stderr, "\n\nfilename: '%s'\n" , filename );
-      GiveStandardErrorMessage ( "ReadAndMallocAndTerminateFile(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 Freedroid was unable to open a given text file, that should be there and\n\
 should be accessible.\n\
 This indicates a serious bug in this installation of Freedroid.",

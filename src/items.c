@@ -569,7 +569,7 @@ DropItemAt( int ItemType , float x , float y , int prefix , int suffix , int Tre
   if ( ItemType >= Number_Of_Item_Types ) 
     {
       fprintf ( stderr, "\n\nItemType: '%d'.\n" , ItemType );
-      GiveStandardErrorMessage ( "DropItemAt(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 There was an item code for an item to drop given to the function \n\
 DropItemAt( ... ), which is pointing beyond the scope of the known\n\
 item types.  This indicates a severe bug in Freedroid.",
@@ -631,7 +631,7 @@ DropChestItemAt( int ItemType , float x , float y , int prefix , int suffix , in
   if ( ItemType >= Number_Of_Item_Types ) 
     {
       fprintf ( stderr, "\n\nItemType: '%d'.\n" , ItemType );
-      GiveStandardErrorMessage ( "DropItemAt(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 There was an item code for an item to drop given to the function \n\
 DropItemAt( ... ), which is pointing beyond the scope of the known\n\
 item types.  This indicates a severe bug in Freedroid.",
@@ -1061,7 +1061,7 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
 	} // inner switch
       break;
     default:
-      GiveStandardErrorMessage ( "DropRandomItem(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 Unhandled treasure chest encountered!  This isn't supposed to happen.",
 				 PLEASE_INFORM, IS_FATAL );
       break;
@@ -1678,7 +1678,7 @@ FindFirstInventoryIndexWithItemType ( int Itemtype , int PlayerNum )
   // Severe error:  Item type NOT found in inventory!!!
   //
   fprintf ( stderr, "\n\nItemType: '%d'.\n" , Itemtype );
-  GiveStandardErrorMessage ( "FindFirstInventoryIndexWithItemType(...)" , "\
+  GiveStandardErrorMessage ( __FUNCTION__  , "\
 There was an item code for an item to locate in inventory, but inventory\n\
 did not contain this item type at all!  This indicates a severe bug in Freedroid.",
 			     PLEASE_INFORM, IS_FATAL );
@@ -1727,7 +1727,7 @@ DeleteOneInventoryItemsOfType( int Itemtype , int PlayerNum )
   // This point must never be reached or a severe error has occured...
   //
   fprintf ( stderr, "\n\nItemType: '%d'.\n" , Itemtype );
-  GiveStandardErrorMessage ( "DeleteOneInventoryItemsOfType(...)" , "\
+  GiveStandardErrorMessage ( __FUNCTION__  , "\
 One single item of all the items of a given type in the Tux inventory\n\
 should be removed, but there was not even one such item ever found in\n\
 Tux invenrtory.  Something must have gone awry...",
@@ -2093,7 +2093,7 @@ GetFreeInventoryIndex( void )
   // occured, an error message must be printed out and the program
   // must be terminated.
   //
-  GiveStandardErrorMessage ( "GetFreeInventoryIndex(...)" , "\
+  GiveStandardErrorMessage ( __FUNCTION__  , "\
 A FREE INVENTORY INDEX POSITION COULD NOT BE FOUND.\n\
 This is an internal error, that must never happen unless there are\n\
 severe bugs in the inventory system.",
@@ -3359,7 +3359,7 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
     }
   if ( InvPos >= MAX_ITEMS_IN_INVENTORY -1 )
     {
-      GiveStandardErrorMessage ( "AddFloorItemDirectlyToInventory(...)" , 
+      GiveStandardErrorMessage ( __FUNCTION__  , 
 				 "Ran out of inventory positions.  This doesn't mean inventory is simpy full.\nIt means that FreedroidRPG is wasting inventory positions due to internal bugs.",
 				 PLEASE_INFORM, IS_FATAL );
     }

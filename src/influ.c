@@ -112,7 +112,7 @@ find_free_floor_items_index ( int levelnum )
       if ( DropLevel -> ItemList [ i ] . type == ( -1 ) ) return ( i ) ;
     }
 
-  GiveStandardErrorMessage ( "find_free_floor_items_index(...)" , "FreedroidRPG failed to find a free items index for an item it wanted to put on the floor.\nThis case means that there are too many items on the floor of this level for the current game engine.\nA constant needs to be raised or the engine improved.",
+  GiveStandardErrorMessage ( __FUNCTION__  , "FreedroidRPG failed to find a free items index for an item it wanted to put on the floor.\nThis case means that there are too many items on the floor of this level for the current game engine.\nA constant needs to be raised or the engine improved.",
 			     PLEASE_INFORM, IS_FATAL );
 
   return ( 0 ) ;
@@ -146,7 +146,7 @@ throw_out_all_chest_content ( int obst_index )
       break;
     default: 
       // no chest handed as the chest obstacle!  Clearly a severe error.!
-      GiveStandardErrorMessage ( "throw_out_all_chest_content(...)" , "Obstacle given to empty is not really a chest!" ,
+      GiveStandardErrorMessage ( __FUNCTION__  , "Obstacle given to empty is not really a chest!" ,
 				 PLEASE_INFORM, IS_FATAL );
       break;
     }
@@ -726,7 +726,7 @@ CheckForTuxOutOfMap ( player_num )
 		Me [ player_num ] . pos . x ,
 		Me [ player_num ] . pos . y ,
 		Me [ player_num ] . pos . z );
-      GiveStandardErrorMessage ( "CheckForTuxOutOfMap(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 A player's Tux was found outside the map in MoveInfluence.\n\
 This indicates either a bug in the Freedroid RPG code or\n\
 a bug in the currently used map system of Freedroid RPG.",
@@ -1738,7 +1738,7 @@ move_tux_thowards_intermediate_point ( int player_num )
 	  Me [ player_num ] . mouse_move_target_combo_action_type = NO_COMBO_ACTION_SET ;
 	  break;
 	default:
-	  GiveStandardErrorMessage ( "move_tux_thowards_intermediate_point(...)" , 
+	  GiveStandardErrorMessage ( __FUNCTION__  , 
 				     "Unhandled combo action for intermediate course encountered!" ,
 				     PLEASE_INFORM, IS_FATAL );
 	  break;
@@ -2875,7 +2875,7 @@ check_for_chests_to_open ( int player_num , int chest_index )
 
 	      break;
 	    default:
-	      GiveStandardErrorMessage ( "check_for_chests_to_open(...)" , 
+	      GiveStandardErrorMessage ( __FUNCTION__  , 
 					 "chest to be approached is not a chest obstacle!!" ,
 					 PLEASE_INFORM, IS_FATAL );
 	      break;

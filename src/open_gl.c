@@ -433,7 +433,7 @@ make_texture_out_of_surface ( iso_image* our_image )
   //
   if ( our_image -> texture_has_been_created )
     {
-      GiveStandardErrorMessage ( "make_texture_out_of_surface(...)" , 
+      GiveStandardErrorMessage ( __FUNCTION__  , 
 "Texture has been created already according to flag...\n\
 hmmm... either the surface has been freed and the pointer moved cleanly to NULL\n\
 (which is good for bug detection) or something is not right here...",
@@ -471,7 +471,7 @@ hmmm... either the surface has been freed and the pointer moved cleanly to NULL\
   next_texture_index_to_use ++ ;
   if ( next_texture_index_to_use >= MAX_AMOUNT_OF_TEXTURES_WE_WILL_USE )
     {
-      GiveStandardErrorMessage ( "make_texture_out_of_surface(...)" , 
+      GiveStandardErrorMessage ( __FUNCTION__  , 
 "Ran out of initialized texture positions to use for new textures.",
 				 PLEASE_INFORM, IS_FATAL );
     }
@@ -552,33 +552,33 @@ open_gl_check_error_status ( void )
       // All is well.  No messages need to be generated...
       break;
     case GL_INVALID_ENUM:
-      GiveStandardErrorMessage ( "open_gl_check_error_status(...)" , 
+      GiveStandardErrorMessage ( __FUNCTION__  , 
 "Error code GL_INVALID_ENUM received!", PLEASE_INFORM, IS_FATAL );
 				 
       break;
     case GL_INVALID_VALUE:
-      GiveStandardErrorMessage ( "open_gl_check_error_status(...)" , 
+      GiveStandardErrorMessage ( __FUNCTION__  , 
 "Error code GL_INVALID_VALUE received!", PLEASE_INFORM, IS_FATAL );
 
       break;
     case GL_INVALID_OPERATION:
-      GiveStandardErrorMessage ( "open_gl_check_error_status(...)" , 
+      GiveStandardErrorMessage ( __FUNCTION__  , 
 "Error code GL_INVALID_OPERATION received!", PLEASE_INFORM, IS_FATAL );
       break;
     case GL_STACK_OVERFLOW:
-      GiveStandardErrorMessage ( "open_gl_check_error_status(...)" , 
+      GiveStandardErrorMessage ( __FUNCTION__  , 
 "Error code GL_STACK_OVERFLOW received!", PLEASE_INFORM, IS_FATAL );
       break;
     case GL_STACK_UNDERFLOW:
-      GiveStandardErrorMessage ( "open_gl_check_error_status(...)" , 
+      GiveStandardErrorMessage ( __FUNCTION__  , 
 "Error code GL_STACK_UNDERFLOW received!", PLEASE_INFORM, IS_FATAL );
       break;
     case GL_OUT_OF_MEMORY:
-      GiveStandardErrorMessage ( "open_gl_check_error_status(...)" , 
+      GiveStandardErrorMessage ( __FUNCTION__  , 
 "Error code GL_OUT_OF_MEMORY received!", PLEASE_INFORM, IS_FATAL );
       break;
     default:
-      GiveStandardErrorMessage ( "open_gl_check_error_status(...)" , 
+      GiveStandardErrorMessage ( __FUNCTION__  , 
 "Unhandled error code received!", PLEASE_INFORM, IS_FATAL );
       break;
     }

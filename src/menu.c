@@ -444,7 +444,7 @@ GetNumberOfTextLinesNeeded ( char* GivenText, SDL_Rect GivenRectangle , float te
   //
   if ( strlen ( GivenText ) <= 1 )
     {
-      GiveStandardErrorMessage ( "GetNumberOfTextLinesNeeded (...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 Warning.  Received empty or nearly empty string!",
 				 NO_NEED_TO_INFORM, IS_WARNING_ONLY );
       return ( 1 ) ;
@@ -1808,7 +1808,7 @@ PerformanceTweaksOptionsMenu (void)
 	  strcat ( Options6, " CONTINUOUS" );
 	  break;
 	default:
-	  GiveStandardErrorMessage ( "PerformanceTweaksOptionsMenu(...)" , "\
+	  GiveStandardErrorMessage ( __FUNCTION__  , "\
 Unhandles Tux image update policy encountered!",
 				     PLEASE_INFORM, IS_FATAL );
 	  break;
@@ -2518,7 +2518,7 @@ I need to know that for saving. Abort.\n");
   else
     {
       fprintf ( stderr, "\n\nSaved_Games_Dir: '%s'.\n" , Saved_Games_Dir );
-      GiveStandardErrorMessage ( "Load_Existing_Hero_Menu(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 Either it couldn't open the directory for the saved games\n\
 which should be %s,\n\
 or there were no saved games present in this directory.\n\
@@ -2640,7 +2640,7 @@ I need to know that for saving. Abort.\n");
   else
     {
       fprintf ( stderr, "\n\nSaved_Games_Dir: '%s'.\n" , Saved_Games_Dir );
-      GiveStandardErrorMessage ( "Delete_Existing_Hero_Menu(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 Either it couldn't open the directory for the saved games\n\
 which should be %s,\n\
 or there were no saved games present in this directory.\n\

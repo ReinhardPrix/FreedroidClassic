@@ -62,7 +62,7 @@ GiveItemDescription ( char* ItemDescText , item* CurItem , int ForShop )
   if ( CurItem == NULL ) return;
   if ( CurItem->type == (-1) ) 
     {
-      GiveStandardErrorMessage ( "GiveItemDescription(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 An item description was requested for an item, that does not seem to \n\
 exist really (i.e. has a type = (-1) ).",
 				 PLEASE_INFORM, IS_FATAL );

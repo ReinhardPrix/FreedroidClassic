@@ -266,7 +266,7 @@ PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting , int no
       if ( strcmp ( SoundSampleFileName , "Sorry_No_Voice_Sample_Yet_0.wav" ) )
 	{
 	  fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
-	  GiveStandardErrorMessage ( "PlayOnceNeededSoundSample(...)" , "\
+	  GiveStandardErrorMessage ( __FUNCTION__  , "\
 The SDL MIXER WAS UNABLE TO LOAD A CERTAIN SOUND FILE INTO MEMORY.\n\
 The reason for this is as follows:  Speech files are stored in wav format\n\
 for technical reasons in conjunction with the SDL and the background music.\n\
@@ -333,7 +333,7 @@ either terminate or continue running now.",
   if ( Newest_Sound_Channel <= -1 )
     {
       fprintf( stderr, "\n\nSoundSampleFileName: '%s' Mix_GetError(): %s \n" , SoundSampleFileName , Mix_GetError() );
-      GiveStandardErrorMessage ( "PlayOnceNeededSoundSample(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 The SDL MIXER WAS UNABLE TO PLAY A CERTAIN FILE LOADED INTO MEMORY FOR PLAYING ONCE.\n",
 				 PLEASE_INFORM, IS_WARNING_ONLY );
 
@@ -424,7 +424,7 @@ LoadAllStaticModFiles( void )
       if ( Loaded_MOD_Files[ i ] == NULL )
 	{
 	  fprintf (stderr, "\n\nfpath: '%s' Mix_GetError(): %s.\n" , fpath , Mix_GetError() );
-	  GiveStandardErrorMessage ( "InitAudio(...)" , "\
+	  GiveStandardErrorMessage ( __FUNCTION__  , "\
 The SDL MIXER WAS UNABLE TO LOAD A CERTAIN MOD FILE INTO MEMORY.\n\
 \n\
 Please check that the file is present within your Freedroid installation.\n\
@@ -472,7 +472,7 @@ InitAudio(void)
 
   if ( SDL_InitSubSystem ( SDL_INIT_AUDIO ) == -1 ) 
     {
-      GiveStandardErrorMessage ( "InitAudio(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 The SDL AUDIO SUBSYSTEM COULD NOT BE INITIALIZED.\n\
 \n\
 Please check that your sound card is properly configured,\n\
@@ -495,7 +495,7 @@ not complain any more.",
 
   if ( Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers) ) 
     {
-      GiveStandardErrorMessage ( "InitAudio(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 The SDL AUDIO CHANNEL COULD NOT BE OPEND.\n\
 \n\
 Please check that your sound card is properly configured,\n\
@@ -906,7 +906,7 @@ play_item_sound ( int item_type )
   if ( item_type < 0 )
     {
       fprintf( stderr, "\n\nitem_type %d \n" , item_type );
-      GiveStandardErrorMessage ( "play_item_sound(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 negative item type received!\n",
 				 PLEASE_INFORM, IS_FATAL );
     }
@@ -1471,7 +1471,7 @@ play_sample_using_WAV_cache( char* SoundSampleFileName , int With_Waiting , int 
       if ( dynamic_WAV_cache [ next_free_position_in_cache ]  == NULL )
 	{
 	  fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
-	  GiveStandardErrorMessage ( "play_sample_using_WAV_cache(...)" , "\
+	  GiveStandardErrorMessage ( __FUNCTION__  , "\
 The SDL MIXER WAS UNABLE TO LOAD A CERTAIN SOUND FILE INTO MEMORY.\n\
 This should not happen for samples that are supposed to be cached...",
 				     NO_NEED_TO_INFORM , IS_WARNING_ONLY );
@@ -1510,7 +1510,7 @@ This should not happen for samples that are supposed to be cached...",
       if ( next_free_position_in_cache >= MAX_SOUNDS_IN_DYNAMIC_WAV_CACHE )
 	{
 	  fprintf( stderr, "\n\nnext_free_position_in_cache: %d,\n" , next_free_position_in_cache );
-	  GiveStandardErrorMessage ( "play_sample_using_WAV_cache(...)" , "\
+	  GiveStandardErrorMessage ( __FUNCTION__  , "\
 ALERT!  Ran out of space in the dynamic wav sample cache!  Cache size too small?",
 				     PLEASE_INFORM, IS_FATAL );
 	}
@@ -1527,7 +1527,7 @@ ALERT!  Ran out of space in the dynamic wav sample cache!  Cache size too small?
   if ( Newest_Sound_Channel <= -1 )
     {
       fprintf( stderr, "\n\nSoundSampleFileName: '%s' Mix_GetError(): %s \n" , SoundSampleFileName , Mix_GetError() );
-      GiveStandardErrorMessage ( "play_sample_using_WAV_cache(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 The SDL mixer was unable to play a certain sound sample file, that was supposed to be cached for later.\n",
 				 NO_NEED_TO_INFORM, IS_WARNING_ONLY );
     } // if ( ... = -1

@@ -817,7 +817,7 @@ HandleCurrentlyActivatedSkill( int player_num )
 	    break;
 	default:
 	    fprintf( stderr, "\n\nMe [ 0 ] . readied_skill: %d \n" , Me [ 0 ] . readied_skill );
-	    GiveStandardErrorMessage ( "HandleCurrentlyActivatedSkill(...)" , "\
+	    GiveStandardErrorMessage ( __FUNCTION__  , "\
 There was a request for a spell/skill that is currently not handled.\n\
 Nothing will be done then.  This is a warning message only.\n\
 Usually this error is not severe.",

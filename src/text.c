@@ -133,7 +133,7 @@ push_or_pop_chat_roster ( int push_or_pop )
     }
   else
     {
-      GiveStandardErrorMessage ( "push_or_pop_chat_roster (...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 There was an unrecognized parameter handled to this function." ,
 				 PLEASE_INFORM, IS_FATAL );
     }
@@ -220,7 +220,7 @@ ResolveDialogSectionToChatFlagsIndex ( char* SectionName )
   if ( strncmp ( SectionName , "subdlg_" , 6 ) == 0 ) return PERSON_SUBDIALOG_DUMMY;
 
   DebugPrintf ( -1000 , "\n--------------------\nSectionName: %s." , SectionName );
-  GiveStandardErrorMessage ( "ResolveDialogSectionToChatFlagsIndex(...)" , "\
+  GiveStandardErrorMessage ( __FUNCTION__  , "\
 There was a dialogue section to be used with a droid, that does not have a \n\
 corresponding chat flags array index." ,
 			     PLEASE_INFORM, IS_FATAL );
@@ -245,7 +245,7 @@ PlantCookie ( char* CookieString , int PlayerNum )
   if ( strlen ( CookieString ) >= MAX_COOKIE_LENGTH -1 )
     {
       fprintf( stderr, "\n\nCookieString: %s\n" , CookieString );
-      GiveStandardErrorMessage ( "PlantCookie(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 There was a cookie given that exceeds the maximal length allowed for a\n\
 cookie to be set in FreedroidRPG.",
 				 PLEASE_INFORM, IS_FATAL );
@@ -302,7 +302,7 @@ cookie to be set in FreedroidRPG.",
   if ( i >= MAX_COOKIES ) 
     {
       fprintf( stderr, "\n\nCookieString: %s\n" , CookieString );
-      GiveStandardErrorMessage ( "PlantCookie(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 There were no more free positions available to store this cookie.\n\
 This should not be possible without a severe bug in FreedroidRPG.",
 				 PLEASE_INFORM, IS_FATAL );
@@ -816,7 +816,7 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
 	{
 	  fprintf( stderr, "\n\nErrorneous string: %s \n" , 
 		   ExtraCommandString + strlen ( "DeleteAllInventoryItemsOfType:" ) );
-		   GiveStandardErrorMessage ( "ExecuteChatExtra(...)" , "\
+		   GiveStandardErrorMessage ( __FUNCTION__  , "\
 ERROR:  UNKNOWN ITEM STRING GIVEN AS ITEM TO DELETE FROM INVENTORY!",
 					      PLEASE_INFORM, IS_FATAL );
 	}
@@ -828,7 +828,7 @@ ERROR:  UNKNOWN ITEM STRING GIVEN AS ITEM TO DELETE FROM INVENTORY!",
   else 
     {
       fprintf( stderr, "\n\nExtraCommandString: %s \n" , ExtraCommandString );
-      GiveStandardErrorMessage ( "ExecuteChatExtra(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 ERROR:  UNKNOWN COMMAND STRING GIVEN!",
 				 PLEASE_INFORM, IS_FATAL );
     }
@@ -896,7 +896,7 @@ make_sure_chat_portraits_loaded_for_this_droid ( Enemy this_droid )
   if ( Small_Droid == NULL )
     {
       fprintf( stderr, "\n\nfpath: %s \n" , fpath );
-      GiveStandardErrorMessage ( "PrepareMultipleChoiceDialog(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 It wanted to load a small portrait file in order to display it in the \n\
 chat interface of Freedroid.  But:  Loading this file has ALSO failed.",
 				 PLEASE_INFORM, IS_FATAL );
@@ -963,7 +963,7 @@ make_sure_all_chat_portraits_are_loaded ( void )
       if ( Small_Droid == NULL )
 	{
 	  fprintf( stderr, "\n\nfpath: %s \n" , fpath );
-	  GiveStandardErrorMessage ( "PrepareMultipleChoiceDialog(...)" , "\
+	  GiveStandardErrorMessage ( __FUNCTION__  , "\
 It wanted to load a small portrait file in order to display it in the \n\
 chat interface of Freedroid.  But:  Loading this file has ALSO failed.",
 				     PLEASE_INFORM, IS_FATAL );
@@ -1172,7 +1172,7 @@ TextConditionIsTrue ( char* ConditionString )
     }
 
   fprintf( stderr, "\n\nConditionString: %s. \n" , ConditionString );
-  GiveStandardErrorMessage ( "TextConditionIsTrue(...)" , "\
+  GiveStandardErrorMessage ( __FUNCTION__  , "\
 There were was a Condition string (most likely used for an on-goto-command\n\
 in the Freedroid.dialogues file, that contained a seemingly bogus condition.\n\
 Freedroid was unable to determine the type of said condition.",
@@ -2136,7 +2136,7 @@ DisplayChar (unsigned char c)
   else if ( !isprint(c) ) // don't accept non-printable characters
     {
       fprintf ( stderr , "\nIllegal char passed to DisplayChar(): %d \n", c);
-      GiveStandardErrorMessage ( "DisplayChar(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 There was an illegal character passed to DisplayChar for printing.\n\
 This indicates some error within Freedroid or within one of the dialog\n\
 files of Freedroid.",

@@ -148,7 +148,7 @@ MoveBullets (void)
 	{
 	  if ( Me [ 0 ] . energy > 0 )
 	    {
-	      GiveStandardErrorMessage ( "MoveBullets(...)" , "\
+	      GiveStandardErrorMessage ( __FUNCTION__  , "\
 Non-OUT bullet found 'stale' outside the active levels.\n\
 This is quite normal, if the Tux has just died and the 'present'\n\
 level is therefore not 'active' any more, but in this case it happend\n\
@@ -198,7 +198,7 @@ while the Tux still had some energy in him.  Very suspicios!!",
       if ( ( map_x < 0 ) || ( map_x >= BulletLevel->xlen ) ||
 	   ( map_y < 0 ) || ( map_y >= BulletLevel->ylen ) )
 	{
-	  GiveStandardErrorMessage ( "MoveBullets(...)" , "\
+	  GiveStandardErrorMessage ( __FUNCTION__  , "\
 A BULLET WAS FOUND TO EXIST OUTSIDE THE BOUNDS OF THE MAP.\n\
 This is an idication for an error of some form, but might also be due\n\
 to short occasions of very low frame rates sometimes or it might be due\n\
@@ -341,7 +341,7 @@ animate_blasts (void)
 	if ( ( map_x < 0 ) || ( map_x >= BlastLevel->xlen ) ||
 	     ( map_y < 0 ) || ( map_y >= BlastLevel->ylen ) )
 	  {
-	    GiveStandardErrorMessage ( "MoveBullets(...)" , "\
+	    GiveStandardErrorMessage ( __FUNCTION__  , "\
 A BLAST WAS FOUND TO EXIST OUTSIDE THE BOUNDS OF THE MAP.\n\
 This is an idication for an inconsistency in Freedroid.\n\
 \n\

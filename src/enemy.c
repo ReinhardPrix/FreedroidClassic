@@ -906,7 +906,7 @@ RawSetNewRandomWaypoint ( Enemy ThisRobot )
   if (  num_conn == 0 ) // no connections found!
     {
       fprintf ( stderr , "\nThe offending waypoint nr. is: %d.", nextwp );
-      GiveStandardErrorMessage ( "RawSetNewRandomWaypoint ( ... )" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 There was a droid on a waypoint, that apparently has no connections to other waypoints...\n\
 This is an error in the waypoint structure of this level.",
 				 NO_NEED_TO_INFORM, IS_FATAL );
@@ -1129,7 +1129,7 @@ MakeSureEnemyIsInsideThisLevel ( Enemy ThisRobot )
        ( ThisRobot -> pos . y >= curShip.AllLevels[ ThisRobot -> pos . z ] -> ylen ) )
     {
 
-      GiveStandardErrorMessage ( "MakeSureEnemyIsInsideThisLevel(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 There was a droid found outside the bounds of this level.\n\
 This is an error and should not occur, but most likely it does since\n\
 the bots are allowed some motion without respect to existing waypoints\n\
@@ -1452,7 +1452,7 @@ find_free_bullet_index ( void )
   //--------------------
   // If this point is ever reached, there's a severe bug in here...
   //
-  GiveStandardErrorMessage ( "find_free_bullet_index ( ... )" , "\
+  GiveStandardErrorMessage ( __FUNCTION__  , "\
 I seem to have run out of free bullet entries.  This can't normally happen.  --> some bug in here, oh no..." ,
 			     PLEASE_INFORM, IS_FATAL );
   
@@ -1657,7 +1657,7 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 	      break;
 
 	    default:
-	      GiveStandardErrorMessage ( "RawStartEnemysShot ( ... )" , 
+	      GiveStandardErrorMessage ( __FUNCTION__  , 
 					 "unhandled attack_target_type encountered!",
 					 PLEASE_INFORM, IS_FATAL );
 	      break;
@@ -2089,7 +2089,7 @@ MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int enemynum , int Dire
 	     ( ThisRobot -> attack_target_index >= MAX_PLAYERS ) )
 	{
 	    fprintf ( stderr , "\nThisRobot -> attack_target_index=%d." , ThisRobot -> attack_target_index );
-	    GiveStandardErrorMessage ( "MoveInCloserForOrAwayFromMeleeCombat ( ... )" , 
+	    GiveStandardErrorMessage ( __FUNCTION__  , 
 				       "attack_target_index pointing outside of player number!",
 				       PLEASE_INFORM, IS_FATAL );
 	}
@@ -2111,7 +2111,7 @@ MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int enemynum , int Dire
     }
     else
     {
-	GiveStandardErrorMessage ( "MoveInCloserForOrAwayFromMeleeCombat ( ... )" , 
+	GiveStandardErrorMessage ( __FUNCTION__  , 
 				   "Unhandled attack_target_type encountered!",
 				   PLEASE_INFORM, IS_FATAL );
     }
@@ -2963,7 +2963,7 @@ AnimateEnemys (void)
 
 	    default:
 	      fprintf ( stderr , "\nThe animation type found is: %d.", our_enemy -> animation_type );
-	      GiveStandardErrorMessage ( "AnimateEnemys ( ... )" , "\
+	      GiveStandardErrorMessage ( __FUNCTION__  , "\
 There was an animation type encountered that isn't defined in FreedroidRPG.\n\
 That means:  Something is going *terribly* wrong!" ,
 					 PLEASE_INFORM, IS_FATAL );

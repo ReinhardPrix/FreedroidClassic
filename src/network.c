@@ -317,7 +317,7 @@ Init_Network(void)
   if ( SDLNet_Init() == (-1) ) 
     {
       fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
-      GiveStandardErrorMessage ( "Init_Network(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 The SDL NET SUBSYSTEM COULD NOT BE INITIALIZED.",
 			     NO_NEED_TO_INFORM, IS_FATAL );
     }
@@ -1247,7 +1247,7 @@ SendTextMessageToClient ( int PlayerNum , char* message )
   if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
     {
       fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
-      GiveStandardErrorMessage ( "SendTextMessageToClient(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 The SDL NET COULD NOT SEND A TEXT MESSAGE TO THE CLIENT SUCCESSFULLY.",
 			     NO_NEED_TO_INFORM, IS_FATAL );
     }
@@ -1301,7 +1301,7 @@ SendFullMeUpdateToClient ( int PlayerNum )
   if ( CommunicationResult < ( 2 * (int) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length )
     {
       fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
-      GiveStandardErrorMessage ( "SendFullMeUpdateToClient(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 The SDL NET COULD NOT SEND A FULL ME UPDATE TO THE CLIENT SUCCESSFULLY.",
 				 NO_NEED_TO_INFORM, IS_FATAL );
     }
@@ -1354,7 +1354,7 @@ SendFullPlayerEngramToClient ( int PlayerNum )
   if ( CommunicationResult < 2 * ( (int) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length )
     {
       fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
-      GiveStandardErrorMessage ( "SendFullPlayerEngramToClient(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 The SDL NET COULD NOT SEND A FULL PLAYER ENGRAM TO THE CLIENT SUCCESSFULLY.",
 			     NO_NEED_TO_INFORM, IS_FATAL );
     }
@@ -1407,7 +1407,7 @@ SendFullBulletEngramToClient ( int PlayerNum )
   if ( CommunicationResult < 2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length )
     {
       fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
-      GiveStandardErrorMessage ( "SendFullBulletEngramToClient(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 The SDL NET COULD NOT SEND A FULL BULLET ENGRAM TO THE CLIENT SUCCESSFULLY.",
 				 NO_NEED_TO_INFORM, IS_FATAL );
     }
@@ -1460,7 +1460,7 @@ SendFullBlastEngramToClient ( int PlayerNum )
   if ( CommunicationResult < 2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length )
     {
       fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
-      GiveStandardErrorMessage ( "SendFullBlastEngramToClient(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 The SDL NET COULD NOT SEND A FULL BLAST ENGRAM TO THE CLIENT SUCCESSFULLY.",
 				 NO_NEED_TO_INFORM, IS_FATAL );
     }
@@ -1513,7 +1513,7 @@ SendFullItemEngramToClient ( int PlayerNum )
   if ( CommunicationResult < 2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length )
     {
       fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
-      GiveStandardErrorMessage ( "SendFullItemEngramToClient(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 The SDL NET COULD NOT SEND A FULL ITEM ENGRAM TO THE CLIENT SUCCESSFULLY",
 				 NO_NEED_TO_INFORM, IS_FATAL );
     }
@@ -1649,7 +1649,7 @@ SendItemUpdateToClient ( int PlayerNum )
   if ( CommunicationResult < 2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length )
     {
       fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
-      GiveStandardErrorMessage ( "SendFullItemEngramToClient(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 The SDL NET COULD NOT SEND AN ITEM UPDATE TO THE CLIENT SUCCESSFULLY.",
 				 NO_NEED_TO_INFORM, IS_FATAL );
     }
@@ -1702,7 +1702,7 @@ SendFullEnemyEngramToClient ( int PlayerNum )
   if ( CommunicationResult < 2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length )
     {
       fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
-      GiveStandardErrorMessage ( "SendFullPlayerEngramToClient(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 The SDL NET COULD NOT SEND A FULL PLAYER ENGRAM TO THE CLIENT SUCCESSFULLY.",
 				 NO_NEED_TO_INFORM, IS_FATAL );
     }
@@ -1770,7 +1770,7 @@ SendBulletUpdateEngramToClient ( int PlayerNum )
   if ( CommunicationResult < 2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length )
     {
       fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
-      GiveStandardErrorMessage ( "SendBulletUpdateEngramToClient(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 The SDL NET COULD NOT SEND A FULL PLAYER ENGRAM TO THE CLIENT SUCCESSFULLY.",
 				 NO_NEED_TO_INFORM, IS_FATAL );
     }
@@ -1837,7 +1837,7 @@ SendEnemyUpdateEngramToClient ( int PlayerNum )
   if ( CommunicationResult < 2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length )
     {
       fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
-      GiveStandardErrorMessage ( "SendEnemyUpdateEngramToClient(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 The SDL NET COULD NOT ENEMY UPDATE ENGRAM TO THE CLIENT SUCCESSFULLY.",
 				 NO_NEED_TO_INFORM, IS_FATAL );
     }
@@ -1887,7 +1887,7 @@ SendEnemyDeletionRequestToClient ( int PlayerNum )
   if ( CommunicationResult < 2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length )
     {
       fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
-      GiveStandardErrorMessage ( "SendEnemyDeletionRequestToClient(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 The SDL NET COULD NOT SEND A REQUEST FOR DELETION OF ALL ENEMYS TO THE CLIENT SUCCESSFULLY",
 				 NO_NEED_TO_INFORM, IS_FATAL );
     }
@@ -2145,7 +2145,7 @@ ConnectToFreedroidServer ( void )
   if( SDLNet_ResolveHost( &ip , ServerName , port ) == ( -1 ) )
     {
       fprintf ( stderr, "\n\nServerName: %s , SDLNet_GetError(): '%s'.\n" , ServerName , SDLNet_GetError() );
-      GiveStandardErrorMessage ( "ConnectToFreedroidServer(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 The SDL NET SUBSYSTEM COULD NOT RESOLVE THE HOSTNAME.",
 				 NO_NEED_TO_INFORM, IS_FATAL );
     }
@@ -2164,7 +2164,7 @@ The SDL NET SUBSYSTEM COULD NOT RESOLVE THE HOSTNAME.",
 	       ( ServerIpAddress >> 8 ) &0xff ,
 	       ServerIpAddress &0xff ,
 	       ip.port, SDLNet_GetError() );
-      GiveStandardErrorMessage ( "ConnectToFreedroidServer(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 The SDL NET SUBSYSTEM COULD NOT OPEN A TCP CONNECTION TO THE SERVER\n\
 WITH THE RESOLVED IP ADDRESS.",
 				 NO_NEED_TO_INFORM, IS_FATAL );
@@ -2190,7 +2190,7 @@ WITH THE RESOLVED IP ADDRESS.",
   if ( ( UsedSockets = SDLNet_TCP_AddSocket( The_Set_Of_The_One_Server_Socket , sock ) ) == ( -1 ) )
     {
       fprintf ( stderr, "\n\nServerName: %s , SDLNet_GetError(): '%s'.\n" , ServerName , SDLNet_GetError() );
-      GiveStandardErrorMessage ( "ConnectToFreedroidServer(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 The SDL NET SUBSYSTEM WAS UNABLE TO ADD A NEW SOCKET TO THE SOCKET SET.",
 				 NO_NEED_TO_INFORM, IS_FATAL );
     }
@@ -2314,7 +2314,7 @@ AcceptConnectionsFromClients ( void )
 		 ) == ( -1 ) )
 	    {
 	      fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
-	      GiveStandardErrorMessage ( "ConnectToFreedroidServer(...)" , "\
+	      GiveStandardErrorMessage ( __FUNCTION__  , "\
 The SDL NET SUBSYSTEM WAS UNABLE TO ADD A NEW SOCKET TO THE SOCKET SET.",
 					 NO_NEED_TO_INFORM, IS_FATAL );
 	    }
@@ -2847,7 +2847,7 @@ SendTextMessageToServer ( char* message )
   if ( CommunicationResult < 2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length )
     {
       fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
-      GiveStandardErrorMessage ( "SendTextMessageToServer(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 The SDL NET COULD NOT SEND A TEXT MESSAGE TO THE SERVER SUCCESSFULLY.",
 				 NO_NEED_TO_INFORM, IS_FATAL );
     }
@@ -2895,7 +2895,7 @@ SendPlayerNameToServer ( void )
   if ( CommunicationResult < 2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length )
     {
       fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
-      GiveStandardErrorMessage ( "SendPlayerNameToServer(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 The SDL NET COULD NOT SEND A TEXT MESSAGE TO THE SERVER SUCCESSFULLY.",
 				 NO_NEED_TO_INFORM, IS_FATAL );
     }
@@ -2943,7 +2943,7 @@ SendPlayerKeyboardEventToServer ( SDL_Event event )
   if ( CommunicationResult < 2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length )
     {
       fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
-      GiveStandardErrorMessage ( "SendPlayerKeyboardEventToServer(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 The SDL NET COULD NOT SEND A KEYBOARD EVENT TO THE SERVER SUCCESSFULLY.",
 				 NO_NEED_TO_INFORM, IS_FATAL );
     }
@@ -2991,7 +2991,7 @@ SendPlayerMouseButtonEventToServer ( SDL_Event event )
   if ( CommunicationResult < 2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length )
     {
       fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
-      GiveStandardErrorMessage ( "SendPlayerMouseButtonEventToServer(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 The SDL NET COULD NOT SEND A MOUSE BUTTON EVENT TO THE SERVER SUCCESSFULLY.",
 				 NO_NEED_TO_INFORM, IS_FATAL );
     }
@@ -3044,7 +3044,7 @@ SendPlayerItemDropToServer ( int PositionCode , float x , float y )
   if ( CommunicationResult < 2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length )
     {
       fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
-      GiveStandardErrorMessage ( "SendPlayerItemDropToServer(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 The SDL NET COULD NOT SEND AN ITEM DROP ENGRAM TO THE SERVER SUCCESSFULLY",
 				 NO_NEED_TO_INFORM, IS_FATAL );
     }
@@ -3098,7 +3098,7 @@ SendPlayerItemMoveToServer ( int SourcePositionCode , int DestPositionCode , int
   if ( CommunicationResult < 2 * ( ( int ) sizeof ( int ) ) + LocalCommandBuffer . data_chunk_length )
     {
       fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
-      GiveStandardErrorMessage ( "SendPlayerItemMoveToServer(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 The SDL NET COULD NOT SEND AN ITEM MOVE ENGRAM TO THE SERVER SUCCESSFULLY",
 				 NO_NEED_TO_INFORM, IS_FATAL );
     }

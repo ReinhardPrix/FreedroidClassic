@@ -707,7 +707,7 @@ ShowItemPicture (int PosX, int PosY, int Number )
 	      if ( NumberOfImagesInThisRotation <= 0 )
 		{
 		  fprintf( stderr, "\n\nfpath: %s. \n" , fpath );
-		  GiveStandardErrorMessage ( "ShowItemPicture(...)" , "\
+		  GiveStandardErrorMessage ( __FUNCTION__  , "\
 Freedroid was unable to load even one image of a rotated item image series into memory.\n\
 This error indicates some installation problem with freedroid.",
 					     PLEASE_INFORM, IS_FATAL );
@@ -724,7 +724,7 @@ This error indicates some installation problem with freedroid.",
 	  if ( i >= MAX_NUMBER_OF_IMAGES_IN_ITEM_ROTATION -2 )
 	    {
 	      fprintf( stderr, "\n\nfpath: %s. \n" , fpath );
-	      GiveStandardErrorMessage ( "ShowItemPicture(...)" , "\
+	      GiveStandardErrorMessage ( __FUNCTION__  , "\
 Freedroid was encountered more item images in an item rotation image series\n\
 than it is able to handle.  This is a very strange error.  Someone has been\n\
 trying to make the ultra-fine item rotation series.  Strange.",
@@ -822,7 +822,7 @@ ShowDroidPicture (int PosX, int PosY, int Number )
 	  if ( Whole_Image == NULL )
 	    {
 	      fprintf( stderr, "\n\nfpath: %s. \n" , fpath );
-	      GiveStandardErrorMessage ( "ShowItemPicture(...)" , "\
+	      GiveStandardErrorMessage ( __FUNCTION__  , "\
 Freedroid was unable to load an image of a rotated droid into memory.\n\
 This error indicates some installation problem with freedroid.",
 					 PLEASE_INFORM, IS_FATAL );

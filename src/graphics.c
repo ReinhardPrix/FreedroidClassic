@@ -241,7 +241,7 @@ do_graphical_number_selection_in_range ( int lower_range , int upper_range )
   else 
     {
       fprintf( stderr, "\n\nSDL_GetError: %s \n" , SDL_GetError() );
-      GiveStandardErrorMessage ( "do_graphical_number_selection_in_range(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 ERROR LOADING BACKGROUND IMAGE FILE!",
 				 PLEASE_INFORM, IS_FATAL );
       current_value = 0 ;
@@ -257,7 +257,7 @@ ERROR LOADING BACKGROUND IMAGE FILE!",
   if ( Background == NULL )
     {
       fprintf( stderr, "\n\nSDL_GetError: %s \n" , SDL_GetError() );
-      GiveStandardErrorMessage ( "do_graphical_number_selection_in_range(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 ERROR LOADING BACKGROUND IMAGE FILE!",
 				 PLEASE_INFORM, IS_FATAL );
     }
@@ -270,7 +270,7 @@ ERROR LOADING BACKGROUND IMAGE FILE!",
   if ( SelectionKnob == NULL )
     {
       fprintf( stderr, "\n\nSDL_GetError: %s \n" , SDL_GetError() );
-      GiveStandardErrorMessage ( "do_graphical_number_selection_in_range(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 ERROR LOADING SELECTION KNOB IMAGE FILE!",
 				 PLEASE_INFORM, IS_FATAL );
     }
@@ -1162,7 +1162,7 @@ LoadThemeConfigurationFile(void)
       ReadValueFromString( ReadPointer , "For Bullettype Nr.=" , "%d" , &BulletIndex , EndOfThemesBulletData );
       if ( BulletIndex >= Number_Of_Bullet_Types )
 	{
-	  GiveStandardErrorMessage ( "LoadThemeConfigurationFile(...)" , "\
+	  GiveStandardErrorMessage ( __FUNCTION__  , "\
 A BLAST WAS FOUND TO EXIST OUTSIDE THE BOUNDS OF THE MAP.\n\
 The theme configuration file seems to be BOGUS!!!\n\
 The number of bullettypes mentioned therein does not match the number\n\
@@ -1190,7 +1190,7 @@ is a severe bug in the reading function.",
   //
   if ( NumberOfBulletTypesInConfigFile != Number_Of_Bullet_Types )
     {
-      GiveStandardErrorMessage ( "LoadThemeConfigurationFile(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 The theme configuration file seems to be COMPLETELY BOGUS!!!\n\
 The number of bullettypes mentioned therein does not match the number\n\
 of bullettypes mentioned in the freedroid.ruleset file!!!\n\
@@ -1220,7 +1220,7 @@ get_standard_iso_floor_tile_size ( void )
   if ( standard_floor_tile == NULL )
     {
       fprintf( stderr, "\n\nSDL_GetError: %s \n" , SDL_GetError() );
-      GiveStandardErrorMessage ( "get_standard_iso_floor_tile_size(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 UNABLE TO LOAD STANDARD TILE!",
 				 PLEASE_INFORM, IS_FATAL );
     }
@@ -1349,7 +1349,7 @@ InitOurBFonts ( void )
       if ( ( *MenuFontPointers [ i ] = LoadFont ( fpath ) ) == NULL )
 	{
 	  fprintf (stderr, "\n\nFont file: '%s'.\n" , MenuFontFiles [ i ] );
-	  GiveStandardErrorMessage ( "InitOurBFonts(...)" , "\
+	  GiveStandardErrorMessage ( __FUNCTION__  , "\
 A font file for the BFont library was not found.",
 				     PLEASE_INFORM, IS_FATAL );
 	} 
@@ -1458,7 +1458,7 @@ set_video_mode_for_open_gl ( void )
   //
   if ( SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 ) )
     {
-      GiveStandardErrorMessage ( "InitVideo(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 Unable to set SDL_GL_DOUBLEBUFFER attribute!",
 				 PLEASE_INFORM, IS_FATAL );
     }
@@ -1502,7 +1502,7 @@ Unable to set SDL_GL_DOUBLEBUFFER attribute!",
   switch ( video_mode_ok_check_result )
     {
     case 0:
-      GiveStandardErrorMessage ( "InitVideo(...)" , "\
+      GiveStandardErrorMessage ( __FUNCTION__  , "\
 SDL reported, that the video mode mentioned above is not supported UNDER ANY BIT COLOR DEPTH!\nBreaking off...",
 				 PLEASE_INFORM, IS_FATAL );
       break;
@@ -1516,7 +1516,7 @@ SDL reported, that the video mode mentioned above is not supported UNDER ANY BIT
 	{
 	  DebugPrintf ( -4 , "NO! \nThe closest we will get is %d bits per pixel." , video_mode_ok_check_result );
 	  /*
-	    GiveStandardErrorMessage ( "InitVideo(...)" , "\
+	    GiveStandardErrorMessage ( __FUNCTION__  , "\
 	    SDL reported, that the video mode mentioned \nabove is not supported UNDER THE COLOR DEPTH MENTIONED ABOVE!\n\
 	    We'll be using the alternate color depth given above instead...",
 	    PLEASE_INFORM, IS_WARNING_ONLY );
