@@ -257,6 +257,7 @@ blit_our_own_mouse_cursor ( void )
     static iso_image mouse_cursors [ 16 ] ;
     char constructed_filename[2000];
     char* fpath;
+    int cursor_index = (-1) ;
 
     //--------------------
     // On the first function call ever, we load the surfaces for the
@@ -286,73 +287,64 @@ Error loading flag image.",
 	first_call = FALSE ;
     }
 
+    switch ( global_ingame_mode )
+    {
+	case GLOBAL_INGAME_MODE_SCROLL_UP :
+	    cursor_index = 4 ;
+	    break;
+	case GLOBAL_INGAME_MODE_SCROLL_DOWN :
+	    cursor_index = 5 ;
+	    break;
+	case GLOBAL_INGAME_MODE_IDENTIFY :
+	    cursor_index = 1 ;
+	    break;
+	case GLOBAL_INGAME_MODE_NORMAL:
+	    cursor_index = 0 ;
+	    break;
+	case GLOBAL_INGAME_MODE_EXAMINE:
+	    cursor_index = 2 ;
+	    break;
+	case GLOBAL_INGAME_MODE_LOOT:
+	    cursor_index = 3 ;
+	    break;
+	case GLOBAL_INGAME_MODE_REPAIR:
+	    cursor_index = 6 ;
+	    break;
+	case GLOBAL_INGAME_MODE_UNLOCK:
+	    cursor_index = 7 ;
+	    break;
+	case GLOBAL_INGAME_MODE_TALK:
+	    cursor_index = 8 ;
+	    break;
+	case GLOBAL_INGAME_MODE_FIRST_AID:
+	    cursor_index = 9 ;
+	    break;
+	case GLOBAL_INGAME_MODE_ATTACK:
+	    cursor_index = 10 ;
+	    break;
+	case GLOBAL_INGAME_MODE_PICKPOCKET:
+	    cursor_index = 11 ;
+	    break;
+	default:
+	    DebugPrintf ( -4 , "\n%s(): global_ingame_mode: %d." , __FUNCTION__ , 
+			  global_ingame_mode );
+	    GiveStandardErrorMessage ( __FUNCTION__  , 
+				       "Illegal global ingame mode encountered!" ,
+				       PLEASE_INFORM, IS_FATAL );
+	    break;
+    }
+
     //--------------------
     // We can now blit the mouse cursor...
     //
     if ( use_open_gl )
     {
-	switch ( global_ingame_mode )
-	{
-	    case GLOBAL_INGAME_MODE_SCROLL_UP :
-		blit_open_gl_texture_to_screen_position ( mouse_cursors [ 4 ] , 
-							  GetMousePos_x () , GetMousePos_y () , TRUE );
-		break;
-	    case GLOBAL_INGAME_MODE_SCROLL_DOWN :
-		blit_open_gl_texture_to_screen_position ( mouse_cursors [ 5 ] , 
-							  GetMousePos_x () , GetMousePos_y () , TRUE );
-		break;
-	    case GLOBAL_INGAME_MODE_IDENTIFY :
-		blit_open_gl_texture_to_screen_position ( mouse_cursors [ 1 ] , 
-							  GetMousePos_x () , GetMousePos_y () , TRUE );
-		break;
-	    case GLOBAL_INGAME_MODE_NORMAL:
-		blit_open_gl_texture_to_screen_position ( mouse_cursors [ 0 ] , 
-							  GetMousePos_x () , GetMousePos_y () , TRUE );
-		break;
-	    case GLOBAL_INGAME_MODE_EXAMINE:
-		blit_open_gl_texture_to_screen_position ( mouse_cursors [ 2 ] , 
-							  GetMousePos_x () , GetMousePos_y () , TRUE );
-		break;
-	    case GLOBAL_INGAME_MODE_LOOT:
-		blit_open_gl_texture_to_screen_position ( mouse_cursors [ 3 ] , 
-							  GetMousePos_x () , GetMousePos_y () , TRUE );
-		break;
-	    case GLOBAL_INGAME_MODE_REPAIR:
-		blit_open_gl_texture_to_screen_position ( mouse_cursors [ 6 ] , 
-							  GetMousePos_x () , GetMousePos_y () , TRUE );
-		break;
-	    case GLOBAL_INGAME_MODE_UNLOCK:
-		blit_open_gl_texture_to_screen_position ( mouse_cursors [ 7 ] , 
-							  GetMousePos_x () , GetMousePos_y () , TRUE );
-		break;
-	    case GLOBAL_INGAME_MODE_TALK:
-		blit_open_gl_texture_to_screen_position ( mouse_cursors [ 8 ] , 
-							  GetMousePos_x () , GetMousePos_y () , TRUE );
-		break;
-	    case GLOBAL_INGAME_MODE_FIRST_AID:
-		blit_open_gl_texture_to_screen_position ( mouse_cursors [ 9 ] , 
-							  GetMousePos_x () , GetMousePos_y () , TRUE );
-		break;
-	    case GLOBAL_INGAME_MODE_ATTACK:
-		blit_open_gl_texture_to_screen_position ( mouse_cursors [ 10 ] , 
-							  GetMousePos_x () , GetMousePos_y () , TRUE );
-		break;
-	    case GLOBAL_INGAME_MODE_PICKPOCKET:
-		blit_open_gl_texture_to_screen_position ( mouse_cursors [ 11 ] , 
-							  GetMousePos_x () , GetMousePos_y () , TRUE );
-		break;
-	    default:
-		DebugPrintf ( -4 , "\n%s(): global_ingame_mode: %d." , __FUNCTION__ , 
-			      global_ingame_mode );
-		GiveStandardErrorMessage ( __FUNCTION__  , 
-					   "Illegal global ingame mode encountered!" ,
-					   PLEASE_INFORM, IS_FATAL );
-		break;
-	}
+	blit_open_gl_texture_to_screen_position ( mouse_cursors [ cursor_index ] , 
+						  GetMousePos_x () , GetMousePos_y () , TRUE );
     }
     else
     {
-	blit_iso_image_to_screen_position ( mouse_cursors [ 0 ] , 
+	blit_iso_image_to_screen_position ( mouse_cursors [ cursor_index ] , 
 					    GetMousePos_x () , GetMousePos_y () );
     }
 
