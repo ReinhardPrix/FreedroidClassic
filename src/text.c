@@ -1,13 +1,3 @@
-/*----------------------------------------------------------------------
- *
- * Desc: contains all functions dealing with the HUGE, BIG font used for
- *	the top status line, the score and the text displayed during briefing
- *	and highscore inverview.  This has NOTHING to do with the fonts
- *	of the SVGALIB or the fonts used for the horizontal srolling
- *      message line!
- *
- *----------------------------------------------------------------------*/
-
 /* 
  *
  *   Copyright (c) 1994, 2002 Johannes Prix
@@ -32,6 +22,20 @@
  *  MA  02111-1307  USA
  *
  */
+
+/* ----------------------------------------------------------------------
+ * This file contains all functions dealing with the HUGE, BIG font used for
+ * the top status line, the score and the text displayed during briefing
+ * and highscore inverview.  This has NOTHING to do with the fonts
+ * of the SVGALIB or the fonts used for the horizontal srolling
+ * message line!
+ * ---------------------------------------------------------------------- */
+
+/*
+ * This file has been checked for remnants of german comments and shouldn't be
+ * containing any of these any more.  If you still find any, please let me know. jp.
+ */
+
 #define _text_c
 
 #include "system.h"
@@ -47,17 +51,17 @@ int DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect
 
 char *Wordpointer;
 unsigned char *Fontpointer;
-unsigned char *Zeichenpointer[110];	/* Pointer-Feld auf Buchstaben-Icons */
-unsigned int CurrentFontFG = FIRST_FONT_FG;	/* Momentane Schrift-Farben */
+unsigned char *Zeichenpointer[110];	  // Pointer-array to the letter bitmaps
+unsigned int CurrentFontFG = FIRST_FONT_FG;	// current color of the font
 unsigned int CurrentFontBG = FIRST_FONT_BG;
 
-int CharsPerLine;		/* Zeilenlaenge: veraltet */
+int CharsPerLine;		// line length in chars:  obsolete
 
-/* Aktuelle Text-Einfuege-Position: */
+// curent text insertion position
 int MyCursorX;
 int MyCursorY;
 
-/* Buffer fuer Text-Environment */
+// buffer for text environment
 int StoreCursorX;
 int StoreCursorY;
 
@@ -122,7 +126,6 @@ GetChatWindowInput( SDL_Surface* Background , SDL_Rect* Chat_Window_Pointer )
 /* ----------------------------------------------------------------------
  * This function does the communication routine when the influencer in
  * transfer mode touched a friendly droid.
- *
  * ---------------------------------------------------------------------- */
 void 
 ChatWithFriendlyDroid( int Enum )
@@ -474,8 +477,8 @@ Of course you can ask the droid about anything else it has told you or about wha
 }; // void ChatWithFriendlyDroid( int Enum );
 
 /* ----------------------------------------------------------------------
- *
- *
+ * This function assigns a text comment to say for an enemy right after
+ * is has been hit.  This can be turned off via a switch in GameConfig.
  * ---------------------------------------------------------------------- */
 void 
 EnemyHitByBulletText( int Enum )
@@ -508,6 +511,10 @@ EnemyHitByBulletText( int Enum )
     ThisRobot->TextToBeDisplayed="Aargh, I got hit.  Ugh, I got a bad feeling...";
 }; // void EnemyHitByBullet( int Enum );
 
+/* ----------------------------------------------------------------------
+ * This function assigns a text comment to say for an enemy right after
+ * it has bumped into the player.  This can be turned off via a switch in GameConfig.
+ * ---------------------------------------------------------------------- */
 void 
 EnemyInfluCollisionText ( int Enum )
 {
@@ -534,9 +541,12 @@ EnemyInfluCollisionText ( int Enum )
 	}
     }
 
-} // void AddStandingAndAimingText( int Enum )
+}; // void EnemyInfluCollisionText ( int Enum )
 
-
+/* ----------------------------------------------------------------------
+ * This function assigns a text comment to say for an enemy while it is
+ * standing and aiming for player.  This can be turned off via a switch in GameConfig.
+ * ---------------------------------------------------------------------- */
 void 
 AddStandingAndAimingText ( int Enum )
 {
@@ -555,9 +565,12 @@ AddStandingAndAimingText ( int Enum )
       ThisRobot->TextToBeDisplayed="Stand still while I aim at you.";
     }
 
-} // void AddStandingAndAimingText( int Enum )
+}; // void AddStandingAndAimingText( int Enum )
 
-
+/* ----------------------------------------------------------------------
+ * This function assigns a text comment to say for the influ right after
+ * it has ran into an explosion.  This can be turned off via a switch in GameConfig.
+ * ---------------------------------------------------------------------- */
 void
 AddInfluBurntText( void )
 {
@@ -596,32 +609,20 @@ AddInfluBurntText( void )
       Terminate(ERR);
       break;
     }
-} // void AddInfluBurntText
+}; // void AddInfluBurntText( void )
 
-/*-----------------------------------------------------------------
- * @Desc: Setzt die Palettenwerten (und nicht die RGB-Werte) der
- * 	Proportionalschrift Null als Farbwert bewirkt keinen Effekt
- * 	Sicherheitsabfrage, ob die schrift nicht durch
- * 	Kontrastzerst"orung vernichtet wird
- * 
- * sets only, if color != 0 and other then old color
- * 
- *
- *-----------------------------------------------------------------*/
+/* -----------------------------------------------------------------
+ * This function is completely obsolete and should be removed.
+ * ----------------------------------------------------------------- */
 void
 SetTextColor (unsigned char bg, unsigned char fg)
 {
-
   return;
+};	 /* SetTextcolor */
 
-}				/* SetTextcolor */
-
-/* ====================================================================== 
-   Diese Funktion soll die momentane Farbsituation des Textes wiedergeben.
-	Dazu werden zwei Pointer "ubergeben, damit sie auch ver"andert werden.
-		
-	Grund f"ur die Funktion: so sparen wir zwei weitere globale Variablen
-   ---------------------------------------------------------------------- */
+/* -----------------------------------------------------------------
+ * This function is completely obsolete and should be removed.
+ * ----------------------------------------------------------------- */
 void
 GetTextColor (unsigned int *bg, unsigned int *fg)
 {
@@ -629,34 +630,30 @@ GetTextColor (unsigned int *bg, unsigned int *fg)
   *fg = CurrentFontFG;
 }
 
-/*@Function============================================================
-@Desc: SetTextCursor(x, y): Setzt Cursor fuer folgende Textausgaben
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function sets the text cursor used in DisplayText.
+ * ---------------------------------------------------------------------- */
 void
-SetTextCursor (int x, int y)
+SetTextCursor ( int x , int y )
 {
   MyCursorX = x;
   MyCursorY = y;
 
   return;
-}
+}; // void SetTextCursor ( int x , int y )
 
-/*-----------------------------------------------------------------
- *  scrolls a given text down inside the User-window, 
- *  defined by the global SDL_Rect User_Rect
+/* -----------------------------------------------------------------
+ * This function scrolls a given text down inside the User-window, 
+ * defined by the global SDL_Rect User_Rect
  *
- *  startx/y give the Start-position, 
- *  EndLine is the last line (?)
- *
- *-----------------------------------------------------------------*/
+ * startx/y give the Start-position, 
+ * EndLine is the last line (?)
+ * ----------------------------------------------------------------- */
 int
 ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePictureName )
 {
-  int Number_Of_Line_Feeds = 0;		/* Anzahl der Textzeilen */
-  char *textpt;			/* bewegl. Textpointer */
+  int Number_Of_Line_Feeds = 0;	// number of lines used for the text
+  char *textpt;			// mobile pointer to the text
   int InsertLine = starty;
   int speed = +4;
   int maxspeed = 8;
@@ -758,7 +755,7 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
 int
 DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *clip , SDL_Surface* Background )
 {
-  char *tmp;	/* Beweg. Zeiger auf aktuelle Position im Ausgabe-Text */
+  char *tmp;	// mobile pointer to the current position as the text is drawn
   // SDL_Rect Temp_Clipping_Rect; // adding this to prevent segfault in case of NULL as parameter
 
   SDL_Rect store_clip;
@@ -901,12 +898,10 @@ DisplayText (char *Text, int startx, int starty, const SDL_Rect *clip)
 
 } // DisplayText(...)
 
-/*-----------------------------------------------------------------
- * @Desc: This function displays a char.  It uses Menu_BFont now
+/* -----------------------------------------------------------------
+ * This function displays a char.  It uses Menu_BFont now
  * to do this.  MyCursorX is  updated to new position.
- *
- *
- -----------------------------------------------------------------*/
+ * ----------------------------------------------------------------- */
 void
 DisplayChar (unsigned char c)
 {
@@ -927,22 +922,20 @@ DisplayChar (unsigned char c)
 } // void DisplayChar(...)
 
 
-/*@Function============================================================
-  @Desc: This function checks if the next word still fits in this line
-  of text and initiates a carriage return/line feed if not.
-  Very handy and convenient, for that means it is no longer nescessary
-  to enter \n in the text every time its time for a newline. cool.
-  
-  The function could perhaps still need a little improvement.  But for
-  now its good enough and improvement enough in comparison to the old
-  CheckUmbruch function.
-
-  rp: added argument clip, which contains the text-window we're writing in
-       (formerly known as "TextBorder")
-
-  @Ret: 
-  @Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function checks if the next word still fits in this line
+ * of text and initiates a carriage return/line feed if not.
+ * Very handy and convenient, for that means it is no longer nescessary
+ * to enter \n in the text every time its time for a newline. cool.
+ *  
+ * The function could perhaps still need a little improvement.  But for
+ * now its good enough and improvement enough in comparison to the old
+ * CheckUmbruch function.
+ *
+ * rp: added argument clip, which contains the text-window we're writing in
+ *     (formerly known as "TextBorder")
+ *
+ * ---------------------------------------------------------------------- */
 void
 ImprovedCheckUmbruch (char* Resttext, const SDL_Rect *clip)
 {
@@ -969,30 +962,30 @@ ImprovedCheckUmbruch (char* Resttext, const SDL_Rect *clip)
 	  return;
       }
   }
-} // void ImprovedCheckUmbruch(void)
+}; // void ImprovedCheckUmbruch(void)
 
 
-/*-----------------------------------------------------------------
- * @Desc: reads a string of "MaxLen" from User-input, and echos it 
- *        either to stdout or using graphics-text, depending on the
- *        parameter "echo":	echo=0    no echo
- * 		               	echo=1    print using printf
- *         			echo=2    print using graphics-text
+/* -----------------------------------------------------------------
+ * This function reads a string of "MaxLen" from User-input, and echos it 
+ * either to stdout or using graphics-text, depending on the
+ * parameter "echo":	echo=0    no echo
+ *                      echo=1    print using printf
+ *                      echo=2    print using graphics-text
  *
- *     values of echo > 2 are ignored and treated like echo=0
+ * values of echo > 2 are ignored and treated like echo=0
  *
- *  NOTE: MaxLen is the maximal _strlen_ of the string (excl. \0 !)
+ * NOTE: MaxLen is the maximal _strlen_ of the string (excl. \0 !)
  * 
  * @Ret: char *: String is allocated _here_!!!
  *       (dont forget to free it !)
  * 
- *-----------------------------------------------------------------*/
+ * ----------------------------------------------------------------- */
 char *
 GetString (int MaxLen, int echo)
 {
-  char *input;		/* Pointer auf eingegebenen String */
-  int key;             /* last 'character' entered */
-  int curpos;		/* zaehlt eingeg. Zeichen mit */
+  char *input;		// pointer to the string entered by the user
+  int key;          // last 'character' entered 
+  int curpos;		// counts the characters entered so far
   int finished;
   int x0, y0, height;
   SDL_Rect store_rect, tmp_rect;
@@ -1012,7 +1005,7 @@ GetString (int MaxLen, int echo)
   Set_Rect (store_rect, x0, y0, SCREENLEN, height);
   SDL_BlitSurface (ne_screen, &store_rect, store, NULL);
 
-  /* Speicher fuer Eingabe reservieren */
+  // allocate memory for the users input
   input     = MyMalloc (MaxLen + 5);
 
   memset (input, '.', MaxLen);
@@ -1056,16 +1049,15 @@ GetString (int MaxLen, int echo)
 
   return (input);
 
-} /* GetString() */
+}; // char* GetString( ... ) 
 
-/*-----------------------------------------------------------------
+/* -----------------------------------------------------------------
+ * This function is similar to putchar(), but uses the SDL via the 
+ * BFont-fct PutChar() instead.
  *
- * similar to putchar(), using SDL via the BFont-fct PutChar().
- *
- * sets MyCursor[XY], and allows passing (-1,-1) as coords to indicate
- *  using the current cursor position.
- *
- *-----------------------------------------------------------------*/
+ * Is sets MyCursor[XY], and allows passing (-1,-1) as coords to indicate
+ * using the current cursor position.
+ * ----------------------------------------------------------------- */
 int
 putchar_SDL (SDL_Surface *Surface, int x, int y, int c)
 {
@@ -1081,10 +1073,10 @@ putchar_SDL (SDL_Surface *Surface, int x, int y, int c)
   SDL_Flip (Surface);
 
   return (ret);
-}
+}; // int putchar_SDL (SDL_Surface *Surface, int x, int y, int c)
 
 
-/*-----------------------------------------------------------------
+/* -----------------------------------------------------------------
  * behaves similarly as gl_printf() of svgalib, using the BFont
  * print function PrintString().
  *  
@@ -1096,7 +1088,7 @@ putchar_SDL (SDL_Surface *Surface, int x, int y, int c)
  *  o) passing -1 as coord uses previous x and next-line y for printing
  *  o) Screen is updated immediatly after print, using SDL_flip()                       
  *
- *-----------------------------------------------------------------*/
+ * ----------------------------------------------------------------- */
 void
 printf_SDL (SDL_Surface *screen, int x, int y, char *fmt, ...)
 {
@@ -1132,7 +1124,7 @@ printf_SDL (SDL_Surface *screen, int x, int y, char *fmt, ...)
 
   free (tmp);
   va_end (args);
-}
+}; // void printf_SDL (SDL_Surface *screen, int x, int y, char *fmt, ...)
 
 
 #undef _text_c
