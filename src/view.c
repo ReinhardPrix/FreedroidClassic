@@ -910,7 +910,10 @@ PutInternFenster (void)
 #endif
     }				// for(i=0; ...
 
-  Update_SDL_Screen();
+  // Update_SDL_Screen();
+
+  PrepareScaledSurface();
+
 
 };				// void PutInternFenster(void)
 

@@ -109,7 +109,7 @@ float FPSover100 = 10;
 int framenr = 0;
 int SkipAFewFrames = 0;
 long Overall_Frames_Displayed=0;
-float Overall_Average=0.014;
+float Overall_Average=0.041;
 
 int TestSound (void);
 void CalibratedDelay (long);
@@ -332,8 +332,6 @@ main (int argc, char *const argv[])
 
 	  PutInternFenster ();
 	  
-	  PrepareScaledSurface();
-
 	  YIFF_Server_Check_Events ();
 
 	  UpdateInfoline ();
@@ -407,6 +405,7 @@ main (int argc, char *const argv[])
 		(now.tv_sec - onehundredframetimestamp.tv_sec) * 1000000 +
 		(now.tv_usec - onehundredframetimestamp.tv_usec);
 	      framenr = 0;
+	      printf("\n Current Frame_Time: %f.", Frame_Time());
 	    }
 
 	  FPSover1 = 1000000 * 1 / (float) oneframedelay;
