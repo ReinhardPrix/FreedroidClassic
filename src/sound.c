@@ -623,7 +623,7 @@ Sorry...\n\
   // for a small increase in memory appetite as the price.  Whether this will
   // really resolve the problem however is unsure.
   //
-  DebugPrintf( 0 , "\nChannels allocated: %d. " , Mix_AllocateChannels(200) );
+  DebugPrintf( 0 , "\nChannels allocated: %d. " , Mix_AllocateChannels( 20 ) );
 
   // DebugPrintf (1, "done.");
   // fflush(stdout);

@@ -703,9 +703,8 @@ DamageItem( item* CurItem )
       else
 	{
 	  CurItem->current_duration -= 0.0003 * MyRandom( 100 ) ;
-	  DebugPrintf ( 0 , "\nDamaged item seems to be a weapon... lower damage done." );
+	  DebugPrintf ( 1 , "\nDamaged item seems to be a weapon... lower damage done." );
 	}
-
 
       //--------------------
       // If the item has gone over it's threshhold of duration, it finally
@@ -2630,7 +2629,7 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
 		{
 		  for ( item_width = 0 ; item_width < ItemImageList[ ItemMap[ ItemPointer->type ].picture_number ].inv_size.x ; item_width ++ )
 		    {
-		      printf( "\nChecking pos: %d %d " , Inv_Loc.x + item_width , Inv_Loc.y + item_height );
+		      DebugPrintf( 1 , "\nAddFloorItemDirectlyToInventory:  Checking pos: %d %d " , Inv_Loc.x + item_width , Inv_Loc.y + item_height );
 		      if ( !Inv_Pos_Is_Free( Inv_Loc.x + item_width , 
 					     Inv_Loc.y + item_height ) )
 			{
@@ -2645,7 +2644,7 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
 	      // At this point we know we have reached a position where we can plant this item.
 	      Me[0].Inventory[ InvPos ].inventory_position.x = Inv_Loc.x;
 	      Me[0].Inventory[ InvPos ].inventory_position.y = Inv_Loc.y;
-	      DebugPrintf( 0 , "FINE INVENTORY POSITION FOUND!!");
+	      DebugPrintf( 1 , "\nAddFloorItemDirectlyToInventory:  FINE INVENTORY POSITION FOUND!!");
 	      goto Inv_Loc_Found;
 	      
 	    This_Is_No_Possible_Location:

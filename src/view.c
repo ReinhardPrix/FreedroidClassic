@@ -801,9 +801,8 @@ PutMouseMoveCursor ( void )
 void
 PutTux ( int x , int y , int PlayerNum )
 {
-  static float Previous_angle [ MAX_PLAYERS ]  = { -1000 , -1000 , -1000 , -1000 , -1000 } ; // a completely unrealistic value
-  // static SDL_Surface* tmp_influencer [ MAX_PLAYERS ]  = { NULL , NULL , NULL , NULL , NULL };
-  static int Previous_phase [ MAX_PLAYERS ] = { -100 , -100 , -100 , -100 , -100 } ; // a completely unrealistic value
+  // static float Previous_angle [ MAX_PLAYERS ]  = { -1000 , -1000 , -1000 , -1000 , -1000 } ; // a completely unrealistic value
+  // static int Previous_phase [ MAX_PLAYERS ] = { -100 , -100 , -100 , -100 , -100 } ; // a completely unrealistic value
   moderately_finepoint in_tile_shift;
   float angle;
   SDL_Rect TargetRectangle;
@@ -824,7 +823,7 @@ PutTux ( int x , int y , int PlayerNum )
       angle = - ( atan2 ( input_axis.y,  input_axis.x ) * 180 / M_PI + 90 );
       angle += 360 / ( 2 * MAX_TUX_DIRECTIONS );
       while ( angle < 0 ) angle += 360;
-      DebugPrintf ( 0 , "\nAngle is now: %f." , angle );
+      // DebugPrintf ( 0 , "\nAngle is now: %f." , angle );
     }
   else
     {

@@ -1842,7 +1842,7 @@ AnimateEnemys (void)
 
       if ( AllEnemys[i].energy <= 0 ) 
 	{
-	  DebugPrintf( 0 , "\nWARNING:  Enemy with negative energy encountered.  Phase correction forced..." );
+	  DebugPrintf( 1 , "\nAnimateEnemys: WARNING: Enemy with negative energy encountered.  Phase correction forced..." );
 	  AllEnemys[i].phase = 0 ;
 	}
       else

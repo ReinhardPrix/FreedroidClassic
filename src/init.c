@@ -822,7 +822,7 @@ Get_Game_Events ( char* EventSectionPointer )
 	ReadAndMallocStringFromData ( EventPointer , MAPCHANGE_LABEL_STRING , "\"" ) ;
       if ( strcmp ( TempMapLabelName , "NO_LABEL_DEFINED_YET" ) )
 	{
-	  DebugPrintf ( 0 , "\nMapchange coordinates overridden by map label %s." , TempMapLabelName );
+	  DebugPrintf ( 1 , "\nMapchange coordinates overridden by map label %s." , TempMapLabelName );
 	  ResolveMapLabelOnShip ( TempMapLabelName , &TempLocation );
 	  AllTriggeredActions[ EventActionNumber ] . ChangeMapLocation . x = TempLocation . x ;
 	  AllTriggeredActions[ EventActionNumber ] . ChangeMapLocation . y = TempLocation . y ;
@@ -847,7 +847,7 @@ Get_Game_Events ( char* EventSectionPointer )
 	ReadAndMallocStringFromData ( EventPointer , EVENT_ACTION_TELEPORT_TARGET_LABEL_STRING , "\"" ) ;
       if ( strcmp ( TempMapLabelName , "NO_LABEL_DEFINED_YET" ) )
 	{
-	  DebugPrintf ( 0 , "\nTeleport target coordinates overridden by map label %s." , TempMapLabelName );
+	  DebugPrintf ( 1 , "\nTeleport target coordinates overridden by map label %s." , TempMapLabelName );
 	  ResolveMapLabelOnShip ( TempMapLabelName , &TempLocation );
 	  AllTriggeredActions [ EventActionNumber ] . TeleportTarget . x = TempLocation . x ;
 	  AllTriggeredActions [ EventActionNumber ] . TeleportTarget . y = TempLocation . y ;
@@ -909,7 +909,7 @@ Get_Game_Events ( char* EventSectionPointer )
 	ReadAndMallocStringFromData ( EventPointer , EVENT_TRIGGER_LABEL_STRING , "\"" ) ;
       if ( strcmp ( TempMapLabelName , "NO_LABEL_DEFINED_YET" ) )
 	{
-	  DebugPrintf ( 0 , "\nTrigger coordinates overridden by map label %s." , TempMapLabelName );
+	  DebugPrintf ( 1 , "\nTrigger coordinates overridden by map label %s." , TempMapLabelName );
 	  ResolveMapLabelOnShip ( TempMapLabelName , &TempLocation );
 	  AllEventTriggers [ EventTriggerNumber ] . Influ_Must_Be_At_Point . x = TempLocation . x ;
 	  AllEventTriggers [ EventTriggerNumber ] . Influ_Must_Be_At_Point . y = TempLocation . y ;
@@ -1245,13 +1245,15 @@ Init_Game_Data ( char * Datafilename )
   char *fpath;
   char *Data;
 
+#define INIT_GAME_DATA_DEBUG 1 
+
   DebugPrintf (2, "\nint Init_Game_Data ( char* Datafilename ) called.");
 
   //--------------------
   // First we load the general game constants
   //
   fpath = find_file ( "freedroid.ruleset" , MAP_DIR, FALSE);
-  DebugPrintf ( 0 , "\nvoid Init_Game_Data:  Data will be taken from file : %s.  Commencing... \n" ,
+  DebugPrintf ( INIT_GAME_DATA_DEBUG , "\nvoid Init_Game_Data:  Data will be taken from file : %s.  Commencing... \n" ,
 		fpath );
   Data = ReadAndMallocAndTerminateFile( fpath , "*** End of this Freedroid data File ***" ); 
   Get_General_Game_Constants( Data );
@@ -1261,7 +1263,7 @@ Init_Game_Data ( char * Datafilename )
   // Item archetypes must be loaded too
   //
   fpath = find_file ( "freedroid.item_archetypes" , MAP_DIR , FALSE );
-  DebugPrintf ( 0 , "\nvoid Init_Game_Data:  Data will be taken from file : %s. Commencing... \n" ,
+  DebugPrintf ( INIT_GAME_DATA_DEBUG , "\nvoid Init_Game_Data:  Data will be taken from file : %s. Commencing... \n" ,
 		fpath );
   Data = ReadAndMallocAndTerminateFile( fpath , "*** End of this Freedroid data File ***" ) ;
   Get_Item_Data ( Data );
@@ -1271,7 +1273,7 @@ Init_Game_Data ( char * Datafilename )
   // Time to eat some droid archetypes...
   //
   fpath = find_file ( "freedroid.droid_archetypes" , MAP_DIR , FALSE );
-  DebugPrintf ( 0 , "\nvoid Init_Game_Data:  Data will be taken from file : %s. Commencing... \n" ,
+  DebugPrintf ( INIT_GAME_DATA_DEBUG , "\nvoid Init_Game_Data:  Data will be taken from file : %s. Commencing... \n" ,
 		fpath );
   Data = ReadAndMallocAndTerminateFile( fpath , "*** End of this Freedroid data File ***" ) ;
   Get_Robot_Data ( Data );
@@ -1281,7 +1283,7 @@ Init_Game_Data ( char * Datafilename )
   // Now finally it's time for all the bullet data...
   //
   fpath = find_file ( "freedroid.bullet_archetypes" , MAP_DIR, FALSE);
-  DebugPrintf ( 0 , "\nvoid Init_Game_Data:  Data will be taken from file : %s. Commencing... \n" ,
+  DebugPrintf ( INIT_GAME_DATA_DEBUG , "\nvoid Init_Game_Data:  Data will be taken from file : %s. Commencing... \n" ,
 		fpath );
   Data = ReadAndMallocAndTerminateFile( fpath , "*** End of this Freedroid data File ***" ) ;
   Get_Bullet_Data ( Data );
@@ -1676,6 +1678,8 @@ InitNewMissionList ( char *MissionName )
   // #define END_OF_MISSION_TARGET_STRING "*** End of Mission Target ***"
 #define NEXT_MISSION_NAME_STRING "After completing this mission, load mission : "
 
+#define INIT_NEW_MISSION_DEBUG 1
+
   //--------------------
   // JUST FOR NOW, WE READ IN THE EMPTY DEFAULT SHIP.  THIS WILL NOT
   // HURT.  SOME INITIALISATION (map labels!) become much easier this
@@ -1685,7 +1689,7 @@ InitNewMissionList ( char *MissionName )
   fpath = find_file (Shipname, MAP_DIR, FALSE);
   if ( LoadShip (fpath) == ERR )
     {
-      DebugPrintf (1, "Error in LoadShip\n");
+      DebugPrintf ( 0 , "Error in LoadShip\n");
       Terminate (ERR);
     }
 
@@ -1697,8 +1701,8 @@ InitNewMissionList ( char *MissionName )
   //
   strcpy( Previous_Mission_Name , MissionName ); 
   
-  DebugPrintf (2, "\nvoid InitNewMission( char *MissionName ): real function call confirmed...");
-  DebugPrintf (1, "\nA new mission is being initialized from file %s.\n" , MissionName );
+  DebugPrintf ( INIT_NEW_MISSION_DEBUG , "\nvoid InitNewMission( char *MissionName ): real function call confirmed...");
+  DebugPrintf ( INIT_NEW_MISSION_DEBUG , "\nA new mission is being initialized from file %s.\n" , MissionName );
 
   //--------------------
   //At first we do the things that must be done for all
@@ -1724,17 +1728,17 @@ InitNewMissionList ( char *MissionName )
     {
       DeleteBullet ( i , FALSE );
     }
-  DebugPrintf ( 1 , "\nvoid InitNewMission( ... ): All bullets have been deleted...");
+  DebugPrintf ( INIT_NEW_MISSION_DEBUG , "\nvoid InitNewMission( ... ): All bullets have been deleted...");
   for (i = 0; i < MAXBLASTS; i++)
     {
       DeleteBlast( i );
     }
-  DebugPrintf ( 1 , "\nvoid InitNewMission( ... ): All blasts have been deleted...");
+  DebugPrintf ( INIT_NEW_MISSION_DEBUG , "\nvoid InitNewMission( ... ): All blasts have been deleted...");
   for (i = 0; i < MAX_ACTIVE_SPELLS; i++)
     {
       DeleteSpell( i );
     }
-  DebugPrintf ( 1 , "\nvoid InitNewMission( ... ): All active spells have been deleted...");
+  DebugPrintf ( INIT_NEW_MISSION_DEBUG , "\nvoid InitNewMission( ... ): All active spells have been deleted...");
 
   //--------------------
   //Now its time to start decoding the mission file.
@@ -1752,7 +1756,7 @@ InitNewMissionList ( char *MissionName )
   EventSectionPointer = LocateStringInData ( MainMissionPointer , EVENT_SECTION_BEGIN_STRING );
   // Read in the events and triggers that can be used to cause and define something to happen
   Get_Game_Events ( EventSectionPointer );
-  DebugPrintf (2, "\nvoid InitNewMission(void): Events and triggerable actions have been successfully read in...:");
+  DebugPrintf ( INIT_NEW_MISSION_DEBUG , "\nvoid InitNewMission(void): Events and triggerable actions have been successfully read in...:");
 
   //--------------------
   // We start with doing the briefing things...
@@ -1760,7 +1764,7 @@ InitNewMissionList ( char *MissionName )
   // We display the title and explanation of controls and such... 
   BriefingSectionPointer = LocateStringInData ( MainMissionPointer , MISSION_BRIEFING_BEGIN_STRING );
   Title ( BriefingSectionPointer );
-  DebugPrintf (2, "\nvoid InitNewMission(void): The title signaton has been successfully displayed...:");
+  DebugPrintf ( INIT_NEW_MISSION_DEBUG , "\nvoid InitNewMission(void): The title signaton has been successfully displayed...:");
 
   //--------------------
   // First we extract the game physics file name from the
@@ -1780,7 +1784,7 @@ InitNewMissionList ( char *MissionName )
   fpath = find_file (Shipname, MAP_DIR, FALSE);
   if ( LoadShip (fpath) == ERR )
     {
-      DebugPrintf (1, "Error in LoadShip\n");
+      DebugPrintf ( 0 , "Error in LoadShip\n");
       Terminate (ERR);
     }
 
@@ -1792,7 +1796,7 @@ InitNewMissionList ( char *MissionName )
     ReadAndMallocStringFromData ( MainMissionPointer , ELEVATORNAME_INDICATION_STRING , "\n" ) ;
   if (GetLiftConnections ( Liftname ) == ERR)
     {
-      DebugPrintf (1, "\nError in GetLiftConnections ");
+      DebugPrintf ( 0 , "\nError in GetLiftConnections ");
       Terminate (ERR);
     }
 
@@ -1824,8 +1828,8 @@ InitNewMissionList ( char *MissionName )
   // ROBOT SPECIFICATIONS ARE ALREADY REQUIRED HERE!!!!!
   if (GetCrew ( Crewname ) == ERR)
     {
-      DebugPrintf (1, "\nInitNewGame(): ERROR: Initialization of enemys failed...");
-      Terminate (-1);
+      DebugPrintf ( 0 , "\nInitNewGame(): ERROR: Initialization of enemys failed...");
+      Terminate ( ERR );
     }
 
   //--------------------
@@ -1846,7 +1850,7 @@ InitNewMissionList ( char *MissionName )
   Me [ 0 ] . teleport_anchor . y = Me [ 0 ] . pos . y ;
   Me [ 0 ] . teleport_anchor . z = Me [ 0 ] . pos . z ;
   
-  DebugPrintf ( 1 , "\nFinal starting position: Level=%d XPos=%d YPos=%d." , StartingLevel, StartingXPos, StartingYPos );
+  DebugPrintf ( INIT_NEW_MISSION_DEBUG , "\nFinal starting position: Level=%d XPos=%d YPos=%d." , StartingLevel, StartingXPos, StartingYPos );
   
   //--------------------
   // At this point the position history can be initialized
@@ -1870,7 +1874,7 @@ InitNewMissionList ( char *MissionName )
   // Reactivate the light on alle Levels, that might have been dark 
   for (i = 0; i < curShip.num_levels; i++)
     curShip.AllLevels[i]->empty = FALSE;
-  DebugPrintf (2, "\nvoid InitNewMission( ... ): All levels have been set to 'active'...");
+  DebugPrintf ( 2 , "\nvoid InitNewMission( ... ): All levels have been set to 'active'...");
 
   // show the banner for the game
   ClearGraphMem();

@@ -160,7 +160,7 @@ Allowed Type of Random Droid for this level: 711
 Allowed Type of Random Droid for this level: 742
 Allowed Type of Random Droid for this level: 751
 
-SpecialForce: Type=MER X=11 Y=9 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="StoneStartGameSquare"
+SpecialForce: Type=MER X=11 Y=9 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="MERStartGameSquare"
 
 ** End of this levels droid data **
 

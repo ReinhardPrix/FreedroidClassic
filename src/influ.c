@@ -1494,12 +1494,14 @@ PerformTuxAttackRaw ( int PlayerNum )
   moderately_finepoint Weapon_Target_Vector;
   int i;
 
+#define PERFORM_TUX_ATTACK_RAW_DEBUG 1 
+
   //--------------------
   // We should always make the sound of a fired bullet (or weapon swing)
   // and then of course also subtract a certain fee from the remaining weapon
   // duration in the course of the swing/hit
   //
-  DebugPrintf ( 0 , "\nWeapon_item: %d guntype: %d . " ,  Me [ PlayerNum ] . weapon_item . type , guntype );
+  DebugPrintf ( PERFORM_TUX_ATTACK_RAW_DEBUG , "\nWeapon_item: %d guntype: %d . " ,  Me [ PlayerNum ] . weapon_item . type , guntype );
 
   if ( Me [ PlayerNum ] . weapon_item . type != (-1) ) Fire_Bullet_Sound ( guntype );
   else Fire_Bullet_Sound ( LASER_SWORD_1 );
@@ -1527,8 +1529,8 @@ PerformTuxAttackRaw ( int PlayerNum )
       //
       angle = - ( atan2 ( ServerThinksInputAxisY ( PlayerNum ) + 16 ,  
 			  ServerThinksInputAxisX ( PlayerNum ) + 16 ) * 180 / M_PI + 90 );
-      DebugPrintf( 0 , "\n===> Fire Bullet: angle=%f. " , angle ) ;
-      DebugPrintf( 0 , "\n===> Fire Bullet: InpAxis: X=%d Y=%d . " , 
+      DebugPrintf( PERFORM_TUX_ATTACK_RAW_DEBUG , "\n===> Fire Bullet: angle=%f. " , angle ) ;
+      DebugPrintf( PERFORM_TUX_ATTACK_RAW_DEBUG , "\n===> Fire Bullet: InpAxis: X=%d Y=%d . " , 
 		   ServerThinksInputAxisX ( PlayerNum ) , 
 		   ServerThinksInputAxisY ( PlayerNum ) ) ;
       Weapon_Target_Vector.x = 0 ;
@@ -1536,7 +1538,7 @@ PerformTuxAttackRaw ( int PlayerNum )
       RotateVectorByAngle ( & Weapon_Target_Vector , angle );
       Weapon_Target_Vector.x += Me [ PlayerNum ] . pos . x;
       Weapon_Target_Vector.y += Me [ PlayerNum ] . pos . y;
-      DebugPrintf( 0 , "\n===> Fire Bullet target: x=%f, y=%f. " , Weapon_Target_Vector.x , Weapon_Target_Vector.y ) ;
+      DebugPrintf( PERFORM_TUX_ATTACK_RAW_DEBUG , "\n===> Fire Bullet target: x=%f, y=%f. " , Weapon_Target_Vector.x , Weapon_Target_Vector.y ) ;
       
       for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i ++ )
 	{
@@ -1553,7 +1555,7 @@ PerformTuxAttackRaw ( int PlayerNum )
 	  AllEnemys[ i ] . firewait = 
 	    2 * ItemMap [ Druidmap [ AllEnemys [ i ] . type ] . weapon_item.type ] . item_gun_recharging_time ;
 	  PlayEnemyGotHitSound ( Druidmap [ AllEnemys [ i ] . type ] . got_hit_sound_type );
-	  DebugPrintf( 0 , "\n===> Fire Bullet hit something.... melee ... " ) ;
+	  DebugPrintf( PERFORM_TUX_ATTACK_RAW_DEBUG , "\n===> Fire Bullet hit something.... melee ... " ) ;
 	}
 
       //--------------------

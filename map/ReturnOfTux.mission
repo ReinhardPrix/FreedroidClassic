@@ -247,7 +247,7 @@ Delete the event trigger after it has been triggered=-1
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at X=63 Y=31 Lev=1
-Use map location from map label="NO_LABEL_DEFINED_YET"
+Use map location from map label="TeleportToSecondCombatLevel"
 Event Action to be triggered by this trigger="teleport_to_second_combat_lv"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
@@ -255,7 +255,7 @@ Delete the event trigger after it has been triggered=-1
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at X=20 Y=2 Lev=2
-Use map location from map label="NO_LABEL_DEFINED_YET"
+Use map location from map label="TeleportBackToFirstCombatLevel"
 Event Action to be triggered by this trigger="teleport_back_to_first_combat_lv"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
@@ -271,7 +271,7 @@ Delete the event trigger after it has been triggered=-1
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at X=33 Y=13 Lev=3
-Use map location from map label="NO_LABEL_DEFINED_YET"
+Use map location from map label="TeleportBackToSecondCombatLevel"
 Event Action to be triggered by this trigger="teleport_back_to_second_combat_lv"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
@@ -279,7 +279,7 @@ Delete the event trigger after it has been triggered=-1
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at X=11 Y=3 Lev=3
-Use map location from map label="NO_LABEL_DEFINED_YET"
+Use map location from map label="TeleportToFourthCombatLevel"
 Event Action to be triggered by this trigger="teleport_to_fourth_combat_lv"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
@@ -287,7 +287,7 @@ Delete the event trigger after it has been triggered=-1
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at X=31 Y=2 Lev=4
-Use map location from map label="NO_LABEL_DEFINED_YET"
+Use map location from map label="TeleportBackToThirdCombatLevel"
 Event Action to be triggered by this trigger="teleport_back_to_third_combat_lv"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
@@ -465,7 +465,7 @@ Action label for this action="teleport_back_to_first_combat_lv"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
 Use map label for map change location="NO_LABEL_DEFINED_YET"
 Teleport to TelX=62 TelY=30 TelLev=1
-Use map label for teleport target="NO_LABEL_DEFINED_YET"
+Use map label for teleport target="ReturnFromSecondCombatLevel"
 Action is Influencer say="Back to level one...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
@@ -475,7 +475,7 @@ Action label for this action="teleport_to_third_combat_lv"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
 Use map label for map change location="NO_LABEL_DEFINED_YET"
 Teleport to TelX=34 TelY=12 TelLev=3
-Use map label for teleport target="NO_LABEL_DEFINED_YET"
+Use map label for teleport target="ArriveAtThirdCombatLevel"
 Action is Influencer say="This is level two.  Beware...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
@@ -485,7 +485,7 @@ Action label for this action="teleport_back_to_second_combat_lv"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
 Use map label for map change location="NO_LABEL_DEFINED_YET"
 Teleport to TelX=29 TelY=19 TelLev=2
-Use map label for teleport target="NO_LABEL_DEFINED_YET"
+Use map label for teleport target="ReturnFromThirdCombatLevel"
 Action is Influencer say="Back to level one...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
@@ -495,7 +495,7 @@ Action label for this action="teleport_to_fourth_combat_lv"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
 Use map label for map change location="NO_LABEL_DEFINED_YET"
 Teleport to TelX=31 TelY=1 TelLev=4
-Use map label for teleport target="NO_LABEL_DEFINED_YET"
+Use map label for teleport target="ArriveAtFourthCombatLevel"
 Action is Influencer say="This is level two.  Beware...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
@@ -505,7 +505,7 @@ Action label for this action="teleport_back_to_third_combat_lv"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
 Use map label for map change location="NO_LABEL_DEFINED_YET"
 Teleport to TelX=10 TelY=4 TelLev=3
-Use map label for teleport target="NO_LABEL_DEFINED_YET"
+Use map label for teleport target="ReturnFromFourthCombatLevel"
 Action is Influencer say="Back to level one...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
@@ -777,7 +777,11 @@ Try out the joystick yourself.  (I don't have one, but joystick support IS imple
 ** Beginning of End Title Text Section **
 Congratulations!!
 
-You have successfully managed to remove the droids trying to break into the retreatment bunker.  The makeshift barriers are barely functional and incredibly hot from plasma impact and laser energy.  But not only on the goods storage cellar are humans fighting and struggling for their lives.  Dr. Stone addresses you.
+You have managed to reach the end of the Freedroid RPG.  Sorry, that we don't have very much content to offer at this point.  But we're trying to fill this gap.  We've 'hired' to new content writers, but they still need time to get their systems up and running.  We sincerly hope that the next release of Freedroid has more to offer.
+
+If you liked Freedroid RPG and wish to contribute something to development, like some voices or character dialog or the like, you're invited to do so, best by making contact with us on our mailing list (see the sourceforge freedroid project page for more info).
+
+The Freedroid Dev Team
 
 
 Press Fire to continue
