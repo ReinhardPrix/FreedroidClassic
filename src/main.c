@@ -95,137 +95,157 @@ int feenableexcept (int excepts);
 int
 main (int argc, char * argv[])
 {
-  int i;
-  int PlayerNum;
-  // float test_float_1, test_float_2, test_float_3;
-
-  //--------------------
-  // WARNING!  We're using a GNU extension of standard (ANSI?) C here.  That
-  //           means the following 'feenableexcept' might not be completely
-  //           portable (and also cause a warning about missing prototype at
-  //           compile time).  However, this is not severe.  The feenableexcept
-  //           just helps for debugging the code.  Feel free to slimply cut away
-  //           these instructions in case they give you any porting problems...
-  //--------------------
-#ifndef __WIN32__
-  // feenableexcept ( FE_ALL_EXCEPT );
-  // feenableexcept ( FE_INEXACT ) ;
-  feenableexcept ( FE_DIVBYZERO ) ;
-  // feenableexcept ( FE_UNDERFLOW ) ;
-  // feenableexcept ( FE_OVERFLOW ) ;
-  feenableexcept ( FE_INVALID ) ;
+    int i;
+    int PlayerNum;
+    
+    //--------------------
+    // First we issue some message, that should appear in the debug log for
+    // windows users.
+    //
+#ifdef __WIN32__
+    fprintf ( stderr , "\n\
+Hello!  This window contains the DEBUG OUTPUT of FreedroidRPG\n\
+\n\
+Normally you would not see this message or this window, but apparently\n\
+FreedroidRPG has terminated because of an error of some sort.\n\
+\n\
+You might wish to inspect the debug output below.  Maybe sending the\n\
+debug output (or at least the lower end of the debug output) to the\n\
+FreedroidRPG developers could help them to track down the problem.\n\
+\n\
+Well, it's no guarantee that we can solve any bug, but it's certainly\n\
+better than nothing.  Thanks anyway for you interest in FreedroidRPG.\n\
+\n\n\n\
+--start of real debug log--\n\n" );
 #endif
-
-  /*
-    if ( feraiseexcept ( FE_ALL_EXCEPT ) != 0 )
+    
+    
+    //--------------------
+    // WARNING!  We're using a GNU extension of standard (ANSI?) C here.  That
+    //           means the following 'feenableexcept' might not be completely
+    //           portable (and also cause a warning about missing prototype at
+    //           compile time).  However, this is not severe.  The feenableexcept
+    //           just helps for debugging the code.  Feel free to slimply cut away
+    //           these instructions in case they give you any porting problems...
+    //--------------------
+#ifndef __WIN32__
+    // feenableexcept ( FE_ALL_EXCEPT );
+    // feenableexcept ( FE_INEXACT ) ;
+    feenableexcept ( FE_DIVBYZERO ) ;
+    // feenableexcept ( FE_UNDERFLOW ) ;
+    // feenableexcept ( FE_OVERFLOW ) ;
+    feenableexcept ( FE_INVALID ) ;
+#endif
+    
+    /*
+      if ( feraiseexcept ( FE_ALL_EXCEPT ) != 0 )
+      {
+      DebugPrintf ( -100 , "\nCouldn't set floating point exceptions to be raised...\nTerminating..." );
+      exit ( 0 );
+      }
+      else
+      {
+      DebugPrintf ( -100 , "\nFloating point exceptions to be raised set successfully!\n" );
+      }
+    */
+    /*
+      test_float_1 = 3.1 ;
+      test_float_2 = 0.0 ; 
+      test_float_3 = test_float_1 / test_float_2 ;
+    */
+    
+    DebugPrintf ( 1 , "\nNumber of obstacles: %d." , NUMBER_OF_OBSTACLE_TYPES ) ;
+    DebugPrintf ( 1 , "\nNumber of ISO_V_BATHTUB : %d." , ISO_V_BATHTUB ) ;
+    DebugPrintf ( 1 , "\nNumber of ISO_ROOM_WALL_V_RED : %d." , ISO_ROOM_WALL_V_RED ) ;
+    DebugPrintf ( 1 , "\nNumber of  ISO_OUTER_DOOR_V_00 : %d." , ISO_OUTER_DOOR_V_00 ) ;
+    
+    GameOver = FALSE;
+    QuitProgram = FALSE;
+    
+    /*
+     *  Parse command line and set global switches 
+     *  this function exits program when error, so we don't need to 
+     *  check its success  (dunno if that's good design?)
+     */
+    sound_on = TRUE;	 // default value, can be overridden by command-line 
+    use_open_gl = TRUE;	 // default value, can be overridden by command-line 
+    debug_level = -1;      // -1: shut up all debug ... 0=no debug 1=first debug level (at the moment=all) 
+    fullscreen_on = TRUE;  // use X11-window or full screen 
+    joy_sensitivity = 1;
+    mouse_control = TRUE;
+    classic_user_rect = FALSE;
+    
+    ParseCommandLine (argc, argv); 
+    
+    InitFreedroid ();   // Initialisation of global variables and arrays
+    
+    while (!QuitProgram)
     {
-    DebugPrintf ( -100 , "\nCouldn't set floating point exceptions to be raised...\nTerminating..." );
-    exit ( 0 );
-    }
-    else
-    {
-    DebugPrintf ( -100 , "\nFloating point exceptions to be raised set successfully!\n" );
-    }
-  */
-  /*
-    test_float_1 = 3.1 ;
-    test_float_2 = 0.0 ; 
-    test_float_3 = test_float_1 / test_float_2 ;
-  */
-
-  DebugPrintf ( 1 , "\nNumber of obstacles: %d." , NUMBER_OF_OBSTACLE_TYPES ) ;
-  DebugPrintf ( 1 , "\nNumber of ISO_V_BATHTUB : %d." , ISO_V_BATHTUB ) ;
-  DebugPrintf ( 1 , "\nNumber of ISO_ROOM_WALL_V_RED : %d." , ISO_ROOM_WALL_V_RED ) ;
-  DebugPrintf ( 1 , "\nNumber of  ISO_OUTER_DOOR_V_00 : %d." , ISO_OUTER_DOOR_V_00 ) ;
-
-  GameOver = FALSE;
-  QuitProgram = FALSE;
-
-  /*
-   *  Parse command line and set global switches 
-   *  this function exits program when error, so we don't need to 
-   *  check its success  (dunno if that's good design?)
-   */
-  sound_on = TRUE;	 // default value, can be overridden by command-line 
-  use_open_gl = TRUE;	 // default value, can be overridden by command-line 
-  debug_level = -1;      // -1: shut up all debug ... 0=no debug 1=first debug level (at the moment=all) 
-  fullscreen_on = TRUE;  // use X11-window or full screen 
-  joy_sensitivity = 1;
-  mouse_control = TRUE;
-  classic_user_rect = FALSE;
-
-  ParseCommandLine (argc, argv); 
-
-  InitFreedroid ();   // Initialisation of global variables and arrays
-
-  while (!QuitProgram)
-    {
-
-      StartupMenu ( );
-      GameOver = FALSE;
-
-      while ( (!GameOver && !QuitProgram) || ServerMode )
+	
+	StartupMenu ( );
+	GameOver = FALSE;
+	
+	while ( (!GameOver && !QuitProgram) || ServerMode )
 	{
-	  CurLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ];
-
-	  if ( ServerMode ) AcceptConnectionsFromClients ( ) ;
-
-	  if ( ServerMode ) ListenToAllRemoteClients ( ) ; 
-
-	  if ( ClientMode ) ListenForServerMessages ( ) ;
-
-	  if ( ServerMode ) SendPeriodicServerMessagesToAllClients (  ) ;
-
-	  StartTakingTimeForFPSCalculation(); 
-
-	  ReactToSpecialKeys();
-
-	  for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ ) 
-	    UpdateCountersForThisFrame ( PlayerNum ) ;
-
-	  CollectAutomapData (); // this is a pure client issue.  Only do it for the main player...
-
-	  DoAllMovementAndAnimations();
-
-	  if ( ! GameOver ) 
+	    CurLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ];
+	    
+	    if ( ServerMode ) AcceptConnectionsFromClients ( ) ;
+	    
+	    if ( ServerMode ) ListenToAllRemoteClients ( ) ; 
+	    
+	    if ( ClientMode ) ListenForServerMessages ( ) ;
+	    
+	    if ( ServerMode ) SendPeriodicServerMessagesToAllClients (  ) ;
+	    
+	    StartTakingTimeForFPSCalculation(); 
+	    
+	    ReactToSpecialKeys();
+	    
+	    for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ ) 
+		UpdateCountersForThisFrame ( PlayerNum ) ;
+	    
+	    CollectAutomapData (); // this is a pure client issue.  Only do it for the main player...
+	    
+	    DoAllMovementAndAnimations();
+	    
+	    if ( ! GameOver ) 
 	    {
-	      AssembleCombatPicture ( SHOW_ITEMS ); 
-	      our_SDL_flip_wrapper ( Screen );
+		AssembleCombatPicture ( SHOW_ITEMS ); 
+		our_SDL_flip_wrapper ( Screen );
 	    }
+	    
+	    //--------------------
+	    // This will now be done inside the move bullets function, because there
+	    // might be need to check for collisions on several positions whenever a
+	    // bullet is moving very fast...
+	    //
+	    // for (i = 0; i < MAXBULLETS; i++) CheckBulletCollisions (i);
+	    
+	    if ( ! ClientMode )
+		for ( i = 0 ; i < MAX_PLAYERS ; i ++ ) MoveInfluence ( i );	
 
-	  //--------------------
-	  // This will now be done inside the move bullets function, because there
-	  // might be need to check for collisions on several positions whenever a
-	  // bullet is moving very fast...
-	  //
-	  // for (i = 0; i < MAXBULLETS; i++) CheckBulletCollisions (i);
-
-	  if ( ! ClientMode )
-	    for ( i = 0 ; i < MAX_PLAYERS ; i ++ ) MoveInfluence ( i );	// change Influ-speed depending on keys pressed, but
-	                        // also change his status and position and "phase" of rotation
-
-	  UpdateAllCharacterStats ( 0 );
-
-	  // Move_Influencers_Friends (); // Transport followers to next level
-
-	  if ( ! ClientMode ) MoveEnemys ();	// move all the enemys:
-	                        // also do attacks on influ and also move "phase" or their rotation
-
-	  CheckInfluenceEnemyCollision ();
-
-	  CheckForJumpThresholds( 0  ); // maybe the Tux is so close to the border of one map, that
-	                                // he should be put into the next one already, to link them smoothly
-
-	  CheckIfMissionIsComplete (); 
-
-	  if ( ! GameConfig.hog_CPU ) SDL_Delay (1); // we allow the CPU to also do something else..
-
-	  ComputeFPSForThisFrame();
-
+	    UpdateAllCharacterStats ( 0 );
+	    
+	    // Move_Influencers_Friends (); // Transport followers to next level
+	    
+	    if ( ! ClientMode ) MoveEnemys ();	// move all the enemys:
+	    // also do attacks on influ and also move "phase" or their rotation
+	    
+	    CheckInfluenceEnemyCollision ();
+	    
+	    CheckForJumpThresholds( 0  ); // maybe the Tux is so close to the border of one map, that
+      	    // he should be put into the next one already, to link them smoothly
+	    
+	    CheckIfMissionIsComplete (); 
+	    
+	    if ( ! GameConfig.hog_CPU ) SDL_Delay (1); // we allow the CPU to also do something else..
+	    
+	    ComputeFPSForThisFrame();
+	    
 	} // while !GameOver 
     } // while !QuitProgram 
-  Terminate (0);
-  return (0);
+    Terminate (0);
+    return (0);
 }; // int main ( void )
 
 /* -----------------------------------------------------------------

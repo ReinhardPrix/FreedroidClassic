@@ -1354,39 +1354,62 @@ SaveGameConfig (void)
 void
 Terminate (int ExitCode)
 {
-  DebugPrintf (2, "\nvoid Terminate(int ExitStatus) was called....");
-  printf("\n----------------------------------------------------------------------");
-  printf("\nTermination of freedroidRPG initiated...");
+    char parameter_buf[5000];
 
-  // SaveSettings();
-  SaveGameConfig();
+    DebugPrintf (2, "\nvoid Terminate(int ExitStatus) was called....");
+    printf("\n----------------------------------------------------------------------");
+    printf("\nTermination of freedroidRPG initiated...");
+    
+    //--------------------
+    // We save the config file in any case.
+    //
+    SaveGameConfig();
 
-  if ( ServerMode )
+    //--------------------
+    // If this was a game server, it should close all the
+    // connections to players.
+    //
+    if ( ServerMode )
     {
-      DebugPrintf ( 0 , "\n\
+	DebugPrintf ( 0 , "\n\
 --------------------\n\
 Closing all players connections to this server...\n\
 --------------------\n");
-      DisconnectAllRemoteClinets ( ) ;
+	DisconnectAllRemoteClinets ( ) ;
     }
 
-  // printf("\nUnallocation all resouces...");
+    // free the mixer channels...
+    // Mix_CloseAudio();
 
-  // free the allocated surfaces...
-  // SDL_FreeSurface( static_blocks );
+    // printf("\nAnd now the final step...\n\n");
+    printf("Thank you for playing freedroidRPG.\n\n");
+    SDL_Quit();
+    
+    //--------------------
+    // Occasionally we want the debugger to stop here.  That can be
+    // done by simply forcing a segmentation fault violation signal here,
+    // even if there hasn't been any real segmentation fault.
+    //
+    // raise ( SIGSEGV );
 
-  // free the mixer channels...
-  // Mix_CloseAudio();
+    //--------------------
+    // Finally, especially on win32 systems, we should open an editor with
+    // the last debug output, since people in general won't know how and where
+    // to find the material for proper reporting of bugs.
+    //
+    // sprintf ( parameter_buf , "notepad stderr.txt stdout.txt" );
+#if __WIN32__
+    system ( "notepad stderr.txt" );
+    system ( "notepad stdout.txt" );
+#endif
 
-  // printf("\nAnd now the final step...\n\n");
-  printf("Thank you for playing freedroidRPG.\n\n");
-  SDL_Quit();
+    //--------------------
+    // Now we drop control back to the operating system.  The FreedroidRPG
+    // program has finished.
+    //
+    exit ( ExitCode );
 
-  // raise ( SIGSEGV );
-
-  exit (ExitCode);
-
-  return;
+    return;
 }; // void Terminate ( int ExitCode )
 
 /* ----------------------------------------------------------------------
