@@ -223,6 +223,14 @@ Maximum number of Random Droids=0
 Minimum number of Random Droids=0
 Allowed Type of Random Droid for this level: 123
 
+SpecialForce: Type=571 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="571PlagueBot1StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Plague Bot"
+SpecialForce: Type=571 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="571PlagueBot2StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Plague Bot"
+SpecialForce: Type=571 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="571PlagueBot3StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Plague Bot"
+SpecialForce: Type=571 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="571PlagueBot4StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Plague Bot"
+SpecialForce: Type=571 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="571PlagueBot5StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Plague Bot"
+SpecialForce: Type=571 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="571PlagueBot6StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Plague Bot"
+SpecialForce: Type=571 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="571PlagueBot7StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Plague Bot"
+
 ** End of this levels droid data **
 
 ** Beginning of new Level **

@@ -224,7 +224,7 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , char* B
 	  SDL_ShowCursor( SDL_ENABLE );
 	  return ( -1 );
 	}
-      if ( EnterPressed() || SpacePressed() || RightPressed() || LeftPressed() ) 
+      if ( EnterPressed() || ( SpacePressed() && !axis_is_active ) || RightPressed() || LeftPressed() ) 
 	{
 	  //--------------------
 	  // The space key or enter key or left mouse button all indicate, that
@@ -242,6 +242,21 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , char* B
 	  SDL_ShowCursor( SDL_ENABLE );
 	  return ( MenuPosition );
 
+	}
+      if ( axis_is_active )
+	{
+	  while ( EnterPressed() || SpacePressed() ); // || RightPressed() || LeftPressed() );
+	  //--------------------
+	  // Only when the mouse click really occured on the menu do we
+	  // interpret it as a menu choice.  Otherwise we'll just ignore
+	  // it.
+	  //
+	  if ( MouseCursorIsOverMenuItem( first_menu_item_pos_y , h ) == MenuPosition )
+	    {
+	      MenuItemSelectedSound();
+	      SDL_ShowCursor( SDL_ENABLE );
+	      return ( MenuPosition );
+	    }
 	}
       if ( UpPressed() || MouseWheelUpPressed() ) 
 	{
@@ -458,7 +473,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
 	  SDL_ShowCursor( SDL_ENABLE );
 	  return ( -1 );
 	}
-      if ( EnterPressed() || SpacePressed() || RightPressed() || LeftPressed() ) 
+      if ( EnterPressed() || ( SpacePressed() && !axis_is_active ) || RightPressed() || LeftPressed() ) 
 	{
 	  //--------------------
 	  // The space key or enter key or left mouse button all indicate, that
@@ -478,6 +493,22 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
 	  SDL_Flip( Screen );
 	  return ( MenuPosition );
 
+	}
+      if ( axis_is_active )
+	{
+	  while ( EnterPressed() || SpacePressed() ); // || RightPressed() || LeftPressed() );
+	  //--------------------
+	  // Only if the mouse click really occured within the menu, we will interpret
+	  // it as menu choice.  Otherwise it will be just ignored.
+	  //
+	  if ( MouseCursorIsOverMenuItem( MenuPosY [ 0 ] , MenuPosY [ 1 ] - MenuPosY [ 0 ] ) == MenuPosition )
+	    {
+	      SDL_ShowCursor( SDL_ENABLE );
+	      RestoreMenuBackground ();
+	      SDL_Flip( Screen );
+	      return ( MenuPosition );
+	    }
+	  
 	}
       if ( UpPressed() || MouseWheelUpPressed() ) 
 	{

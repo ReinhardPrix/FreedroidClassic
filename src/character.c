@@ -434,7 +434,8 @@ AddInfluencerItemSecondaryBonus( item* BonusItem )
 void 
 UpdateAllCharacterStats ( int PlayerNum )
 {
-  int BaseExpRequired = 2000;
+  // int BaseExpRequired = 2000;
+  int BaseExpRequired = 500;
   int i;
 
   //--------------------

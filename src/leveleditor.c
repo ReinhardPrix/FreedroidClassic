@@ -2786,7 +2786,7 @@ LevelEditor(void)
 	  //
 	  if ( VanishingMessageDisplayTime < 7 )
 	    {
-	      DisplayText ( VanishingMessage ,  1 , 91 + 5 * FontHeight ( GetCurrentFont () ) , NULL );
+	      DisplayText ( VanishingMessage ,  1 , 191 + 5 * FontHeight ( GetCurrentFont () ) , NULL );
 	    }
 
 	  ShowLevelEditorTopMenu( Highlight );

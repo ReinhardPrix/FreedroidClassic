@@ -757,33 +757,6 @@ AnimateInfluence ( int PlayerNum )
       Me [ PlayerNum ] .phase = 0;
     }
 
-  /*
-  Me [ PlayerNum ] .phase +=
-    (Me [ PlayerNum ] .energy / ( Me [ PlayerNum ] .maxenergy)) * Frame_Time () *
-    DROID_PHASES * 3;
-  */
-
-  /*
-  if (Me [ PlayerNum ] .type != DRUID001)
-    {
-      Me [ PlayerNum ] .phase +=
-	(Me [ PlayerNum ] .energy / (Druidmap[Me [ PlayerNum ] .type].maxenergy + Druidmap[DRUID001].maxenergy)) * Frame_Time () *
-	DROID_PHASES * 3;
-    }
-  else
-    {
-      Me [ PlayerNum ] .phase +=
-	(Me [ PlayerNum ] .energy / (Druidmap[DRUID001].maxenergy)) * Frame_Time () *
-	DROID_PHASES * 3;
-    }
-  */
-
-  /*
-  if (((int) rintf (Me [ PlayerNum ] .phase)) >= DROID_PHASES)
-    {
-      Me [ PlayerNum ] .phase = 0;
-    }
-  */
 }; // void AnimateInfluence ( void )
 
 /* ----------------------------------------------------------------------
@@ -1568,6 +1541,7 @@ PerformTuxAttackRaw ( int PlayerNum )
 	  if ( fabsf ( AllEnemys [ i ] . pos . x - Weapon_Target_Vector.x ) > 0.5 ) continue;
 	  if ( fabsf ( AllEnemys [ i ] . pos . y - Weapon_Target_Vector.y ) > 0.5 ) continue;
 	  AllEnemys[ i ] . energy -= Me [ PlayerNum ] .base_damage + MyRandom( Me [ PlayerNum ] .damage_modifier );
+	  AllEnemys[ i ] . is_friendly = 0 ;
 	  
 	  //--------------------
 	  // War tux freezes enemys with the appropriate plugin...

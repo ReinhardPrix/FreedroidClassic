@@ -145,7 +145,8 @@ AC_CONFIG_FILES([Makefile
 		graphics/items/track_drive/Makefile 
 		graphics/items/vmx_grenade/Makefile 
 		graphics/items/warrior_wristband/Makefile 
-                graphics/rotation_models/Makefile])
+                graphics/rotation_models/Makefile
+                graphics/rotation_models/portraits/Makefile])
 
 AC_OUTPUT
 

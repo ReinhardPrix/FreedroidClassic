@@ -1876,7 +1876,7 @@ InitNewMissionList ( char *MissionName )
       Me[0].DetectedItemList[i].y = 0 ;
     }
   Me[0].exp_level = 1;
-  Me[0].Gold = 100;
+  Me[0].Gold = 0 ; // formerly this was starting funds 100, but no longer... 
 
   //--------------------
   // Now we initialize the skills of the new hero...
