@@ -735,17 +735,20 @@ answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
  * This function reads in the game events, i.e. the locations and conditions
  * under which some actions are triggered.
  * ---------------------------------------------------------------------- */
+// void 
+// Get_Game_Events ( char* EventSectionPointer )
 void 
-Get_Game_Events ( char* EventSectionPointer )
+GetEventsAndEventTriggers ( char* EventsAndEventTriggersFilename )
 {
   char *EventPointer;
   char *EndOfEvent;
   int i;
   int EventActionNumber;
   int EventTriggerNumber;
-
+  char* EventSectionPointer;
   char* TempMapLabelName;
   location TempLocation;
+  char* fpath;
 
 #define EVENT_TRIGGER_BEGIN_STRING "* Start of an Event Trigger Subsection *"
 #define EVENT_TRIGGER_END_STRING "* End of this Event Trigger Subsection *"
@@ -773,6 +776,13 @@ Get_Game_Events ( char* EventSectionPointer )
 #define EVENT_TRIGGER_DELETED_AFTER_TRIGGERING "Delete the event trigger after it has been triggered="
 #define TRIGGER_WHICH_TARGET_LABEL "Event Action to be triggered by this trigger=\""
 #define EVENT_TRIGGER_LABEL_STRING "Use map location from map label=\""
+
+  //--------------------
+  // Now its time to start loading the title file...
+  //
+  fpath = find_file ( EventsAndEventTriggersFilename , MAP_DIR , FALSE );
+  EventSectionPointer = 
+    ReadAndMallocAndTerminateFile( fpath , "*** END OF EVENT ACTION AND EVENT TRIGGER FILE *** LEAVE THIS TERMINATOR IN HERE ***" ) ;
 
   // Delete all events and event triggers
   for ( i = 0 ; i < MAX_EVENT_TRIGGERS ; i++ )
@@ -1504,7 +1514,7 @@ AssignMission( int MissNum )
  * which is assumed to be loaded into memory already.
  * ---------------------------------------------------------------------- */
 void 
-Get_Mission_Targets( char* MissionTargetPointer )
+GetQuestList ( char* QuestListFilename )
 {
   char *EndOfMissionTargetPointer;
   char *NextEventPointer;
@@ -1513,6 +1523,8 @@ Get_Mission_Targets( char* MissionTargetPointer )
   int NumberOfEventsToTriggerAtThisCompletition;
   int ActionNr;
   char* ActionLabel;
+  char* MissionTargetPointer;
+  char* fpath;
 
 #define MISSION_TARGET_SUBSECTION_START_STRING "** Start of this mission target subsection **"
 #define MISSION_TARGET_SUBSECTION_END_STRING "** End of this mission target subsection **"
@@ -1535,6 +1547,12 @@ Get_Mission_Targets( char* MissionTargetPointer )
 #define MISSION_ASSIGNMENT_TRIGGERED_ACTION_STRING "On mission assignment immediately trigger action Nr. : "
 #define MISSION_COMPLETITION_TRIGGERED_ACTION_STRING "On mission completition immediately trigger action labeled=\""
 
+  //--------------------
+  // At first we must load the quest list file given...
+  //
+  fpath = find_file ( QuestListFilename , MAP_DIR , FALSE );
+  MissionTargetPointer = 
+    ReadAndMallocAndTerminateFile( fpath , "*** END OF QUEST LIST *** LEAVE THIS TERMINATOR IN HERE ***" ) ;
 
   //--------------------
   // At first we clear out all existing mission entries, so that no 'zombies' remain
@@ -1847,7 +1865,6 @@ EnforceMissionFile ( char *MissionFileName )
   char *fpath;
   int i , j ;
   char *MainMissionPointer;
-  char *EventSectionPointer;
 
   char* Crewname;
   int StartingLevel=0;
@@ -1859,7 +1876,6 @@ EnforceMissionFile ( char *MissionFileName )
 
 #define END_OF_MISSION_DATA_STRING "*** End of Mission File ***"
 #define EVENT_SECTION_BEGIN_STRING "** Start of Mission Event Section **"
-#define ELEVATORNAME_INDICATION_STRING "Lift file to use for this mission: "
 #define CREWNAME_INDICATION_STRING "Crew file to use for this mission: "
 #define MISSION_START_POINT_STRING "Possible Start Point : "
 #define NEXT_MISSION_NAME_STRING "After completing this mission, load mission : "
@@ -1888,12 +1904,7 @@ EnforceMissionFile ( char *MissionFileName )
   // Now the mission file is read into memory.  That means we can start to decode the details given
   // in the body of the mission file.  
   //
-
-  // Now we search for the beginning of the WHOLE event section within the mission file
-  EventSectionPointer = LocateStringInData ( MainMissionPointer , EVENT_SECTION_BEGIN_STRING );
-  // Read in the events and triggers that can be used to cause and define something to happen
-  Get_Game_Events ( EventSectionPointer );
-  DebugPrintf ( INIT_NEW_MISSION_DEBUG , "\nvoid InitNewMission(void): Events and triggerable actions have been successfully read in...:");
+  GetEventsAndEventTriggers ( "EventsAndEventTriggers" );
 
   PlayATitleFile ( "StartOfGame.title" );
 
@@ -1940,7 +1951,7 @@ EnforceMissionFile ( char *MissionFileName )
   // Now we read in the mission targets for this mission
   // Several different targets may be specified simultaneously
   //
-  Get_Mission_Targets( MainMissionPointer );
+  GetQuestList ( "QuestList" );
 
   //--------------------
   // After the mission targets have been successfully loaded now,

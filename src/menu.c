@@ -1783,10 +1783,11 @@ I need to know that for saving. Abort.\n");
       if ( MenuPosition == (-1) ) return ( FALSE );
       else
 	{
-	  LoadShip ( find_file ( "Asteroid.maps" , MAP_DIR, FALSE) ) ;
-	  EnforceMissionFile ( NEW_MISSION );
+	  // LoadShip ( find_file ( "Asteroid.maps" , MAP_DIR, FALSE) ) ;
+	  // EnforceMissionFile ( NEW_MISSION );
 	  strcpy( Me[0].character_name , MenuTexts[ MenuPosition -1 ] );
 	  LoadGame( );
+	  GetEventsAndEventTriggers ( "EventsAndEventTriggers" );
 	  return ( TRUE );
 	}
     }

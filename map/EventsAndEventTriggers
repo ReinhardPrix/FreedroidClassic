@@ -1,10 +1,5 @@
 
---------------------------------------------------
-This is a mission file for Freedroid.
-It describes the starting point, objectives and other parameters
-of a mission to be completed within freedroid.
-This file is, as all of Freedroid, put under the GPL License:
-
+ *  --------------------------------------------------
  *
  *   Copyright (c) 1994, 2002 Johannes Prix
  *   Copyright (c) 1994, 2002 Reinhard Prix
@@ -27,70 +22,14 @@ This file is, as all of Freedroid, put under the GPL License:
  *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
  *  MA  02111-1307  USA
  *
+ =
+ =  Feel free to make any modifications you like.  If you set up 
+ =  something cool, please send your file in to the Freedroid project.
+ = 
+ * --------------------------------------------------
 
-Feel free to make any modifications you like.  If you set up 
-something cool, please send your file in to the Freedroid project.
 
---------------------------------------------------
-
-The structure of a mission file is simple.
-* There must be a starting string indicating the
-  start of the real mission data.
-* A mission name must be specified
-* A mission briefing text must be specified
-* A mission target must be specified.
-* A "ship" must be specified, where a "ship" could also
-  be for example a small automated mining community or
-  a building complex somewhere on a planet.
-* A crew file must be specified, where the information which
-  droids are to be generated in which levels can be found.
-* A "freedroid.ruleset" file must be specified, containing all the
-  droid specifications and the constants for the game
-  physics.
-* An elevator file must be specified.
-* A missing file termination string should be present to indicate
-  the end and the integrity of the mission file.
-
-What all these strings must look like can easily deduced 
-directly form the following example.
-
-**********************************************************************
-**********************************************************************
-**********************************************************************
-+++
-+++ Now we define the general HEADER information about this mission, things
-+++ that occur only once and therefore have no separate subsections 
-+++ and repetitions
-+++
-
-*** Start of Mission File ***
-
-Mission Name: The Outbreak
-
-+++
-+++ At first we specify the other files, that also contain essential
-+++ information about this mission, e.g. maps and droids and that
-+++
-Lift file to use for this mission: ReturnOfTux.elevators
-Crew file to use for this mission: ReturnOfTux.droids
-Lifts On file to use for this mission: asteroid_on.png
-Lifts Off file to use for this mission: asteroid_off.png
-After completing this mission, load mission : ReturnOfTux.mission
-
-Influs mission start comment="Linux Kernel booted.  001 transfer-tech modules loaded.  System up and running.";
-
-+++
-+++ The new mission starts in the Private Goods Storage Cellar, where the influence device is born....
-+++
-P**ossible Start Point : Level=2 XPos=8 YPos=7
-Possible Start Point : Level=0 XPos=2 YPos=3
-
-**********************************************************************
-**********************************************************************
-**********************************************************************
-+++
-+++ Now we define the event triggers for this whole asteroid building
-+++
+*** START OF EVENT ACTION AND EVENT TRIGGER FILE *** 
 
 ** Start of Mission Event Section **
 
@@ -578,4 +517,5 @@ Action is mission assignment=1
 
 (leave the above termination text in the file or we might get a segfault/corrupt file termination)
 
+*** END OF EVENT ACTION AND EVENT TRIGGER FILE *** LEAVE THIS TERMINATOR IN HERE ***
 
