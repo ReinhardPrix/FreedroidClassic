@@ -836,7 +836,10 @@ ShowItemPicture (int PosX, int PosY, int Number )
 	    }
 	  else
 	    {
-	      sprintf ( ConstructedFileName , "rotation_models/items/%s_%04d.png" , ItemMap[ Number ] . item_rotation_series_prefix , i+1 );
+	      if ( strcmp ( ItemMap[ Number ] . item_rotation_series_prefix , "desk_lamp" ) )
+		sprintf ( ConstructedFileName , "rotation_models/items/%s_%04d.png" , ItemMap[ Number ] . item_rotation_series_prefix , i+1 );
+	      else
+		sprintf ( ConstructedFileName , "rotation_models/items/%s_%04d.jpg" , ItemMap[ Number ] . item_rotation_series_prefix , i+1 );
 	      DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
 	    }
 
