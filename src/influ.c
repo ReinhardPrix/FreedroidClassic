@@ -1407,7 +1407,7 @@ This is very strange.  Well, we'll overwrite the first entry and continue.",
   // To prevent influ from hitting himself with his own bullets,
   // move them a bit..
   //
-  if ( CurBullet->angle_change_rate == 0 ) OffsetFactor = 0.5; else OffsetFactor = 1;
+  if ( CurBullet->angle_change_rate == 0 ) OffsetFactor = 0.0; else OffsetFactor = 1;
   CurBullet->pos.x += OffsetFactor * (CurBullet->speed.x/BulletSpeed);
   CurBullet->pos.y += OffsetFactor * (CurBullet->speed.y/BulletSpeed);
 

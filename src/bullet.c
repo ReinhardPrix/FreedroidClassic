@@ -646,6 +646,12 @@ check_bullet_player_collsisions ( bullet* CurBullet , int num )
       if ( Me [ PlayerNum ] . pos . z != CurBullet -> pos . z ) continue;
       
       //--------------------
+      // A player is supposed not to hit himself with his bullets, so we may
+      // check for that case as well....
+      //
+      if ( CurBullet -> mine ) return;
+      
+      //--------------------
       // Now we see if the distance to the bullet is as low as hitting
       // distance or not.
       //
