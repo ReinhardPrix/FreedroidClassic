@@ -41,21 +41,29 @@
 #define DOOROPENDIST2 1
 
 /* Randbreite der Wand */
-#define WALLPASS		4
+// NORMALISATION #define WALLPASS		4
+#define WALLPASS (4.0/64.0)
 
 /* Randbreite der Konsolen */
-#define KONSOLEPASS_X 	(Block_Width/2 + 4)
-#define KONSOLEPASS_Y 	(Block_Height/2 	+4)
+//NORMALISATION #define KONSOLEPASS_X 	(Block_Width/2 + 4)
+#define KONSOLEPASS_X 	((INITIAL_BLOCK_WIDTH/2 + 4)/64.0)
+//NORMALISATION #define KONSOLEPASS_Y 	(Block_Height/2 	+4)
+#define KONSOLEPASS_Y 	((INITIAL_BLOCK_HEIGHT/2 + 4)/64.0)
 
 /* Breite der Tueren freien Raumes vor Tuer*/
-#define TUERBREITE	6
+//NORMALISATION #define TUERBREITE	6
+#define TUERBREITE	(6/64.0)
 
 /* Rand der offenen Tueren */
+//NORMALISATION #define V_RANDSPACE		WALLPASS
 #define V_RANDSPACE		WALLPASS
-#define V_RANDBREITE		5
+//NORMALISATION #define V_RANDBREITE		5
+#define V_RANDBREITE		(5/64.0)
 
+//NORMALISATION #define H_RANDSPACE		WALLPASS
 #define H_RANDSPACE		WALLPASS
-#define H_RANDBREITE		5
+//NORMALISATION #define H_RANDBREITE		5
+#define H_RANDBREITE		(5/64.0)
 
 #define WAYPOINT_CHAR		'x'
 #define NO_WAYPOINT  		-1

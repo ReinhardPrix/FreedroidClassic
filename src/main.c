@@ -269,11 +269,11 @@ main (int argc, char *const argv[])
 	  if (framenr % 100 == 1)
 	    {
 	      Onehundred_Frame_SDL_Ticks=SDL_GetTicks();
-	      printf("\n%f",1/Frame_Time());
-	      printf("Me.pos.x: %g Me.pos.y: %g Me.speed.x: %g Me.speed.y: %g \n",
-		     Me.pos.x, Me.pos.y, Me.speed.x, Me.speed.y );
-	      printf("Me.maxspeed.x: %g \n",
-		     Druidmap[Me.type].maxspeed );
+	      // printf("\n%f",1/Frame_Time());
+	      // printf("Me.pos.x: %g Me.pos.y: %g Me.speed.x: %g Me.speed.y: %g \n",
+	      //Me.pos.x, Me.pos.y, Me.speed.x, Me.speed.y );
+	      //printf("Me.maxspeed.x: %g \n",
+	      //	     Druidmap[Me.type].maxspeed );
 	    }
 #else
 	  gettimeofday (&oneframetimestamp, NULL);

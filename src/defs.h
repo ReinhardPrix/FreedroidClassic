@@ -324,7 +324,8 @@ enum _directions
 #define BREMSDREHUNG 3		/* warte 3*, bevor Influencer weitergedreht wird */
 
 /* Wegstossgeschw. von Tueren u.ae. */
-#define PUSHSPEED 2
+// NORMALISATION #define PUSHSPEED 2
+#define PUSHSPEED 0
 
 /* Schusstypen */
 enum _bullets
