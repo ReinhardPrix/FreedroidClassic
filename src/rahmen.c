@@ -469,10 +469,10 @@ ShowCurrentSkill( void )
   // Here we also check for possible mouse clicks on the skill icon.  In this
   // case we activate or deactivate the skill screen.
   //
-  if ( ( GetMousePos_x()+16 >= CURRENT_SKILL_RECT_X ) &&
-       ( GetMousePos_x()+16 <= CURRENT_SKILL_RECT_X + CURRENT_SKILL_RECT_W ) &&
-       ( GetMousePos_y()+16 >= CURRENT_SKILL_RECT_Y ) &&
-       ( GetMousePos_y()+16 <= CURRENT_SKILL_RECT_Y + CURRENT_SKILL_RECT_H ) &&
+  if ( ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X >= CURRENT_SKILL_RECT_X ) &&
+       ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X <= CURRENT_SKILL_RECT_X + CURRENT_SKILL_RECT_W ) &&
+       ( GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y >= CURRENT_SKILL_RECT_Y ) &&
+       ( GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y <= CURRENT_SKILL_RECT_Y + CURRENT_SKILL_RECT_H ) &&
        axis_is_active &&
        !Mouse_Button_Pressed_Previous_Frame )
     GameConfig.SkillScreen_Visible = ! GameConfig.SkillScreen_Visible;
@@ -757,7 +757,7 @@ ShowCurrentTextWindow ( void )
   // For testing purposes is bluntly insert the new banner element here:
   //
   // if ( GetMousePos_y( ) >= ( SCREEN_HEIGHT / 2 ) )
-  if ( GetMousePos_y( ) + 16 >= ( UPPER_BANNER_TEXT_RECT_H + UPPER_BANNER_TEXT_RECT_Y ) )
+  if ( GetMousePos_y( ) + MOUSE_CROSSHAIR_OFFSET_Y >= ( UPPER_BANNER_TEXT_RECT_H + UPPER_BANNER_TEXT_RECT_Y ) )
     {
       Banner_Text_Rect.x = UPPER_BANNER_TEXT_RECT_X;
       Banner_Text_Rect.y = UPPER_BANNER_TEXT_RECT_Y;
@@ -772,8 +772,8 @@ ShowCurrentTextWindow ( void )
       Banner_Text_Rect.h = LOWER_BANNER_TEXT_RECT_H;
     }
 
-  CurPos.x = GetMousePos_x() + 16 ;
-  CurPos.y = GetMousePos_y() + 16 ;
+  CurPos.x = GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X ;
+  CurPos.y = GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ;
 
   //--------------------
   // In case some item is held in hand by the player, the situation is simple:

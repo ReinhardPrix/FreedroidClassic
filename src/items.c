@@ -1951,8 +1951,8 @@ DropHeldItemToTheFloor ( void )
 				      ServerThinksInputAxisX ( 0 ) , 
 				      ServerThinksInputAxisY ( 0 ) , FALSE ) ;
 
-  // x = Me [ 0 ] . pos . x + ( GetMousePos_x ( ) + 16 - UserCenter_x ) / ( float ) Block_Width;
-  // y = Me [ 0 ] . pos . y + ( GetMousePos_y ( ) + 16 - UserCenter_y ) / ( float ) Block_Height; 
+  // x = Me [ 0 ] . pos . x + ( GetMousePos_x ( ) + MOUSE_CROSSHAIR_OFFSET_X - UserCenter_x ) / ( float ) Block_Width;
+  // y = Me [ 0 ] . pos . y + ( GetMousePos_y ( ) + MOUSE_CROSSHAIR_OFFSET_Y - UserCenter_y ) / ( float ) Block_Height; 
 
   DropItemToTheFloor ( DropItemPointer , x , y , Me [ 0 ] . pos . z ) ;
 
@@ -2140,8 +2140,10 @@ DropHeldItemToInventory( void )
   // depends as well on current mouse cursor location as well as the
   // size of the dropped item.
   //
-  CurPos.x = GetMousePos_x() + 16 - ( 16 * ItemMap [ DropItemPointer -> type ] . inv_image . inv_size . x - 16 ) ;
-  CurPos.y = GetMousePos_y() + 16 - ( 16 * ItemMap [ DropItemPointer -> type ] . inv_image . inv_size . y - 16 ) ;
+  CurPos.x = GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X - 
+    ( 16 * ( ItemMap [ DropItemPointer -> type ] . inv_image . inv_size . x - 1 ) ) ;
+  CurPos.y = GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y - 
+    ( 16 * ( ItemMap [ DropItemPointer -> type ] . inv_image . inv_size . y - 1 ) ) ;
 
   if ( ItemCanBeDroppedInInv ( DropItemPointer->type , GetInventorySquare_x ( CurPos.x ) , 
 			       GetInventorySquare_y ( CurPos.y ) ) )
@@ -2364,8 +2366,8 @@ ManageInventoryScreen ( void )
   // --------------------
   // We will need the current mouse position on several spots...
   //
-  CurPos.x = GetMousePos_x() + 16;
-  CurPos.y = GetMousePos_y() + 16;
+  CurPos.x = GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X ;
+  CurPos.y = GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ;
 
   //--------------------
   // If the log is not set to visible right now, we do not need to 

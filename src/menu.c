@@ -78,18 +78,18 @@ MouseCursorIsOverMenuItem( int first_menu_item_pos_y , int h )
   int PureFraction;
 
   //--------------------
-  // The value of GetMousePos_y() NOT YET corrected for 16 pixels!!
+  // The value of GetMousePos_y() NOT YET corrected for MOUSE_CROSSHAIR_OFFSET_Y pixels!!
   // Therefore we can write:
   //
   
-  PureFraction = ( GetMousePos_y () + 16 - first_menu_item_pos_y ) / h ;
+  PureFraction = ( GetMousePos_y () + MOUSE_CROSSHAIR_OFFSET_Y - first_menu_item_pos_y ) / h ;
 
   //--------------------
   // Now it can be that the pure difference is negative or that it is positive.
   // However we should not always round thowards zero here, but rather always to
   // the next LOWER integer!  This will be done here:
   //
-  if ( ( GetMousePos_y () + 16 - first_menu_item_pos_y ) < 0 )
+  if ( ( GetMousePos_y () + MOUSE_CROSSHAIR_OFFSET_Y - first_menu_item_pos_y ) < 0 )
     PureFraction--;
   else
     PureFraction++;
@@ -742,12 +742,12 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
 	  //--------------------
 	  // First we see if there was perhaps a click on one of the active scroll buttons
 	  //
-	  if ( ( CursorIsOnButton ( SCROLL_DIALOG_MENU_DOWN_BUTTON , GetMousePos_x () + 16 , GetMousePos_y () + 16 ) ) &&
+	  if ( ( CursorIsOnButton ( SCROLL_DIALOG_MENU_DOWN_BUTTON , GetMousePos_x () + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y () + MOUSE_CROSSHAIR_OFFSET_Y ) ) &&
 	       ( BreakOffCauseNoRoom ) )
 	    {
 	      OptionOffset ++ ;
 	    }
-	  else if ( ( CursorIsOnButton ( SCROLL_DIALOG_MENU_UP_BUTTON , GetMousePos_x () + 16 , GetMousePos_y () + 16 ) ) &&
+	  else if ( ( CursorIsOnButton ( SCROLL_DIALOG_MENU_UP_BUTTON , GetMousePos_x () + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y () + MOUSE_CROSSHAIR_OFFSET_Y ) ) &&
 	       ( OptionOffset ) )
 	    {
 	      OptionOffset -- ;
@@ -823,7 +823,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
 	      
 	      ThisOptionEnd += MenuOptionLineRequirement [ i ] * ( FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) ;
 
-	      if ( GetMousePos_y () + 16 < ThisOptionEnd )
+	      if ( GetMousePos_y () + MOUSE_CROSSHAIR_OFFSET_Y < ThisOptionEnd )
 		{
 		  menu_position_to_remember = i + 1 ; // MouseCursorIsOverMenuItem( MenuPosY [ 0 ] , MenuPosY [ 1 ] - MenuPosY [ 0 ] );
 		  break;

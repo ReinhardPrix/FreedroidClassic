@@ -1552,12 +1552,12 @@ ScrollText (char *Text, int startx, int starty, int EndLine , int background_cod
       Number_Of_Line_Feeds++;
 
   while ( !SpacePressed () 
-	  || ( CursorIsOnButton ( SCROLL_TEXT_UP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
-	  || ( CursorIsOnButton ( SCROLL_TEXT_DOWN_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) ) )
+	  || ( CursorIsOnButton ( SCROLL_TEXT_UP_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_X ) )
+	  || ( CursorIsOnButton ( SCROLL_TEXT_DOWN_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) ) )
     {
       if ( UpPressed () 
 	   || ( SpacePressed () 
-		&& ( CursorIsOnButton ( SCROLL_TEXT_UP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) ) ) )
+		&& ( CursorIsOnButton ( SCROLL_TEXT_UP_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) ) ) )
 	{
 	  speed--;
 	  if (speed < -maxspeed)
@@ -1565,7 +1565,7 @@ ScrollText (char *Text, int startx, int starty, int EndLine , int background_cod
 	}
       if ( DownPressed ()
 	   || ( SpacePressed () 
-		&& ( CursorIsOnButton ( SCROLL_TEXT_DOWN_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) ) ) )
+		&& ( CursorIsOnButton ( SCROLL_TEXT_DOWN_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) ) ) )
 	{
 	  speed++;
 	  if (speed > maxspeed)

@@ -660,22 +660,22 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 
       if (SpacePressed() || EscapePressed() || axis_is_active )
 	{
-	  if ( CursorIsOnButton( UP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
+	  if ( CursorIsOnButton( UP_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed )
 	    {
 	      MoveMenuPositionSound();
 	      Displacement += FontHeight ( GetCurrentFont () );
 	    }
-	  else if ( CursorIsOnButton( DOWN_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
+	  else if ( CursorIsOnButton( DOWN_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed )
 	    {
 	      MoveMenuPositionSound();
 	      Displacement -= FontHeight ( GetCurrentFont () );
 	    }
-	  else if ( CursorIsOnButton( ITEM_BROWSER_EXIT_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
+	  else if ( CursorIsOnButton( ITEM_BROWSER_EXIT_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed )
 	    {
 	      finished = TRUE;
 	      while (SpacePressed() ||EscapePressed());
 	    }
-	  else if ( CursorIsOnButton( LEFT_TUX_SHOP_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
+	  else if ( CursorIsOnButton( LEFT_TUX_SHOP_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed )
 	    {
 	      if ( 0 < RowStart ) 
 		{
@@ -685,7 +685,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	      MoveMenuPositionSound();
 	      while (SpacePressed() ||EscapePressed());
 	    }
-	  else if ( CursorIsOnButton( RIGHT_TUX_SHOP_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
+	  else if ( CursorIsOnButton( RIGHT_TUX_SHOP_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed )
 	    {
 	      if ( RowStart + RowLength < NumberOfItems ) 
 		{
@@ -695,7 +695,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	      MoveMenuPositionSound();
 	      while (SpacePressed() ||EscapePressed());
 	    }
-	  else if ( CursorIsOnButton( LEFT_SHOP_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
+	  else if ( CursorIsOnButton( LEFT_SHOP_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed )
 	    {
 	      if ( 0 < TuxRowStart ) 
 		{
@@ -705,7 +705,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	      MoveMenuPositionSound();
 	      while (SpacePressed() ||EscapePressed());
 	    }
-	  else if ( CursorIsOnButton( RIGHT_SHOP_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
+	  else if ( CursorIsOnButton( RIGHT_SHOP_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed )
 	    {
 	      if ( TuxRowStart + TuxRowLength < NumberOfItemsInTuxRow ) 
 		{
@@ -715,7 +715,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	      MoveMenuPositionSound();
 	      while (SpacePressed() ||EscapePressed());
 	    }
-	  else if ( ( ( ClickTarget = ClickWasOntoItemRowPosition ( GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 , FALSE ) ) >= 0 ) && axis_is_active && !WasPressed )
+	  else if ( ( ( ClickTarget = ClickWasOntoItemRowPosition ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y , FALSE ) ) >= 0 ) && axis_is_active && !WasPressed )
 	    {
 	      if ( ClickTarget < NumberOfItems )
 		{
@@ -723,7 +723,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 		  TuxItemIndex = (-1) ;
 		}
 	    }
-	  else if ( ( ( ClickTarget = ClickWasOntoItemRowPosition ( GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 , TRUE ) ) >= 0 ) && axis_is_active && !WasPressed )
+	  else if ( ( ( ClickTarget = ClickWasOntoItemRowPosition ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y , TRUE ) ) >= 0 ) && axis_is_active && !WasPressed )
 	    {
 	      if ( ClickTarget < NumberOfItemsInTuxRow )
 		{
@@ -731,7 +731,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 		  ItemIndex = (-1) ;
 		}
 	    }
-	  else if ( CursorIsOnButton( BUY_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
+	  else if ( CursorIsOnButton( BUY_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed )
 	    {
 	      if ( BuyButtonActive )
 		{
@@ -755,7 +755,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 		  return ( 0 );
 		}
 	    }
-	  else if ( CursorIsOnButton( SELL_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
+	  else if ( CursorIsOnButton( SELL_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed )
 	    {
 	      if ( SellButtonActive )
 		{
@@ -773,7 +773,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 		  return ( 0 );
 		}
 	    }
-	  else if ( CursorIsOnButton( REPAIR_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && 
+	  else if ( CursorIsOnButton( REPAIR_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && 
 		    axis_is_active && !WasPressed && ( !ShowChestButtons ) )
 	    {
 	      //--------------------
@@ -791,7 +791,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 		  return ( 0 );
 		}
 	    }
-	  else if ( CursorIsOnButton( IDENTIFY_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed && ( !ShowChestButtons ) )
+	  else if ( CursorIsOnButton( IDENTIFY_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed && ( !ShowChestButtons ) )
 	    {
 
 	      if ( ! TuxItemsList [ TuxItemIndex ] -> is_identified )
@@ -857,8 +857,8 @@ ClickedMenuItemPosition( void )
   int CursorX, CursorY;
   int i;
 
-  CursorX = GetMousePos_x() + 16 ; // this is already the position corrected for 16 pixels!!
-  CursorY = GetMousePos_y() + 16 ; // this is already the position corrected for 16 pixels!!
+  CursorX = GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X ; // this is already the position corrected for 16 pixels!!
+  CursorY = GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ; // this is already the position corrected for 16 pixels!!
 
 #define ITEM_MENU_DISTANCE 80
 #define ITEM_FIRST_POS_Y 130

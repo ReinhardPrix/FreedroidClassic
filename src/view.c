@@ -390,8 +390,8 @@ DisplayItemImageAtMouseCursor( int ItemImageCode )
   // And then of course we also have to take into account the size of the
   // item, wich is also not always the same.
   //
-  TargetRect.x = GetMousePos_x() + 16 - ItemMap [ ItemImageCode ] . inv_image . inv_size . x * 16;
-  TargetRect.y = GetMousePos_y() + 16 - ItemMap [ ItemImageCode ] . inv_image . inv_size . y * 16;
+  TargetRect.x = GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X - ItemMap [ ItemImageCode ] . inv_image . inv_size . x * 16;
+  TargetRect.y = GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y - ItemMap [ ItemImageCode ] . inv_image . inv_size . y * 16;
 
   our_SDL_blit_surface_wrapper( ItemMap [ ItemImageCode ] . inv_image . Surface , NULL , Screen , &TargetRect );
 }; // void DisplayItemImageAtMouseCursor( int ItemImageCode )
@@ -759,7 +759,6 @@ There was an obstacle type given, that exceeds the number of\n\
 void
 blit_one_obstacle_highlighted ( obstacle* our_obstacle )
 {
-  iso_image tmp;
 
   if ( ( our_obstacle-> type <= (-1) ) || ( our_obstacle-> type >= NUMBER_OF_OBSTACLE_TYPES ) )
     {
@@ -787,16 +786,6 @@ There was an obstacle type given, that exceeds the number of\n\
   else
     {
       DebugPrintf ( 0 , "\nNormal in-game SDL highlight invoked for marked obstacle!" );
-      /*
-      tmp . surface = our_SDL_display_format_wrapperAlpha ( obstacle_map [ our_obstacle -> type ] . image . surface );
-      tmp . surface -> format -> Bmask = 0x0 ; // 0FFFFFFFF ;
-      tmp . surface -> format -> Rmask = 0x0 ; // FFFFFFFF ;
-      tmp . surface -> format -> Gmask = 0x0FFFFFFFF ;
-      tmp . offset_x = obstacle_map [ our_obstacle -> type ] . image . offset_x ;
-      tmp . offset_y = obstacle_map [ our_obstacle -> type ] . image . offset_y ;
-      blit_iso_image_to_map_position ( tmp , our_obstacle -> pos . x , our_obstacle -> pos . y );
-      SDL_FreeSurface ( tmp . surface );
-      */
       blit_iso_image_to_map_position ( obstacle_map [ our_obstacle -> type ] . image , 
 				       our_obstacle -> pos . x , our_obstacle -> pos . y );
       blit_outline_of_iso_image_to_map_position ( obstacle_map [ our_obstacle -> type ] . image , 

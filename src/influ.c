@@ -195,7 +195,7 @@ closed_chest_below_mouse_cursor ( int player_num )
   int i;
   int obst_index ;
 
-  if ( CursorIsInUserRect( GetMousePos_x()+16 , GetMousePos_y()+16 ) && ( CurLevel != NULL ) )
+  if ( CursorIsInUserRect( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && ( CurLevel != NULL ) )
     {
       MapPositionOfMouse.x = translate_pixel_to_map_location ( player_num , 
 							       (float) ServerThinksInputAxisX ( player_num ) , 
@@ -246,7 +246,8 @@ smashable_barred_below_mouse_cursor ( int player_num )
   int i;
   int obst_index ;
 
-  if ( CursorIsInUserRect( GetMousePos_x()+16 , GetMousePos_y()+16 ) && ( CurLevel != NULL ) )
+  if ( CursorIsInUserRect( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+			   GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && ( CurLevel != NULL ) )
     {
       MapPositionOfMouse.x = translate_pixel_to_map_location ( player_num , 
 							       (float) ServerThinksInputAxisX ( player_num ) , 
@@ -2283,9 +2284,9 @@ ButtonPressWasNotMeantAsFire( player_num )
   // not interpret this as a common in-game movement or firing command.
   //
   if ( ServerThinksAxisIsActive ( player_num ) && 
-       ( CursorIsOnButton( INV_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) ||
-	 CursorIsOnButton( SKI_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) ||
-	 CursorIsOnButton( CHA_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) ) )
+       ( CursorIsOnButton( INV_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) ||
+	 CursorIsOnButton( SKI_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) ||
+	 CursorIsOnButton( CHA_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) ) )
     {
       DebugPrintf( 0 , "\n Cursor is on a button, therefore this press will be ignored." );
       return (TRUE) ;

@@ -21,6 +21,8 @@
  *
  */
 
+// #define MOUSE_CROSSHAIR_OFFSET_Y
+
 /* ----------------------------------------------------------------------
  * This file contains all the functions managing the character skills,
  * which means all the special functions and also the spells of the
@@ -659,14 +661,16 @@ HandleCurrentlyActivatedSkill( void )
     case SPELL_FORCE_EXPLOSION_CIRCLE:
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	{
-	  if ( CursorIsInUserRect ( GetMousePos_x() + 16 , GetMousePos_y() + 16) )
+	  if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+				    GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 	    ForceExplosionCircle( Me[0].pos );
 	}
       break;
     case SPELL_FORCE_EXPLOSION_RAY:
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	{
-	  if ( CursorIsInUserRect ( GetMousePos_x() + 16 , GetMousePos_y() + 16) )
+	  if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+				    GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 	    {
 	      ForceExplosionRay ( Me[0].pos , input_axis );
 	    }
@@ -675,7 +679,8 @@ HandleCurrentlyActivatedSkill( void )
     case SPELL_FORCE_TO_ENERGY:
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	{
-	  if ( CursorIsInUserRect ( GetMousePos_x() + 16 , GetMousePos_y() + 16) )
+	  if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+				    GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 	    {
 	      ForceToEnergyConversion ( );
 	    }
@@ -684,7 +689,8 @@ HandleCurrentlyActivatedSkill( void )
     case SPELL_TELEPORT_HOME:
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	{
-	  if ( CursorIsInUserRect ( GetMousePos_x() + 16 , GetMousePos_y() + 16) )
+	  if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+				    GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 	    {
 	      // TeleportHome ( TargetLocation ) ;
 	      TeleportHome (  ) ;
@@ -694,10 +700,11 @@ HandleCurrentlyActivatedSkill( void )
     case SPELL_FIREY_BOLT:
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	{
-	  if ( CursorIsInUserRect ( GetMousePos_x() + 16 , GetMousePos_y() + 16) )
+	  if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+				    GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 	    {
-	      TargetPoint . x = Me [ 0 ] . pos . x + ( GetMousePos_x() + 16 ) / Block_Width ;
-	      TargetPoint . y = Me [ 0 ] . pos . y + ( GetMousePos_y() + 16 ) / Block_Height ; 
+	      TargetPoint . x = Me [ 0 ] . pos . x + ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X ) / Block_Width ;
+	      TargetPoint . y = Me [ 0 ] . pos . y + ( GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) / Block_Height ; 
 	      FireyBoltSpell ( Me [ 0 ] . pos , TargetPoint );
 	    }
 	}
@@ -705,10 +712,11 @@ HandleCurrentlyActivatedSkill( void )
     case SPELL_COLD_BOLT:
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	{
-	  if ( CursorIsInUserRect ( GetMousePos_x() + 16 , GetMousePos_y() + 16) )
+	  if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+				    GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 	    {
-	      TargetPoint . x = Me [ 0 ] . pos . x + ( GetMousePos_x() + 16 ) / Block_Width ;
-	      TargetPoint . y = Me [ 0 ] . pos . y + ( GetMousePos_y() + 16 ) / Block_Height ; 
+	      TargetPoint . x = Me [ 0 ] . pos . x + ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X ) / Block_Width ;
+	      TargetPoint . y = Me [ 0 ] . pos . y + ( GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) / Block_Height ; 
 	      ColdBoltSpell ( Me [ 0 ] . pos , TargetPoint );
 	    }
 	}
@@ -716,7 +724,8 @@ HandleCurrentlyActivatedSkill( void )
     case SPELL_REPAIR_SKILL:
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	{
-	  if ( !CursorIsInInvRect( GetMousePos_x() + 16 , GetMousePos_y() + 16 ) || !GameConfig.Inventory_Visible )
+	  if ( !CursorIsInInvRect( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+				   GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) || !GameConfig.Inventory_Visible )
 	    {
 	      //--------------------
 	      // Do nothing here.  The right mouse click while in inventory screen
@@ -729,7 +738,8 @@ HandleCurrentlyActivatedSkill( void )
     case SPELL_IDENTIFY_SKILL:
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	{
-	  if ( !CursorIsInInvRect( GetMousePos_x() + 16 , GetMousePos_y() + 16 ) || !GameConfig.Inventory_Visible )
+	  if ( !CursorIsInInvRect( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+				   GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) || !GameConfig.Inventory_Visible )
 	    {
 	      //--------------------
 	      // Do nothing here.  The right mouse click while in inventory screen
@@ -742,10 +752,11 @@ HandleCurrentlyActivatedSkill( void )
     case SPELL_POISON_BOLT:
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	{
-	  if ( CursorIsInUserRect ( GetMousePos_x() + 16 , GetMousePos_y() + 16) )
+	  if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+				    GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 	    {
-	      TargetPoint . x = Me [ 0 ] . pos . x + ( GetMousePos_x() + 16 ) / Block_Width ;
-	      TargetPoint . y = Me [ 0 ] . pos . y + ( GetMousePos_y() + 16 ) / Block_Height ; 
+	      TargetPoint . x = Me [ 0 ] . pos . x + ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X ) / Block_Width ;
+	      TargetPoint . y = Me [ 0 ] . pos . y + ( GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) / Block_Height ; 
 	      PoisonBoltSpell ( Me [ 0 ] . pos , TargetPoint );
 	    }
 	}
@@ -753,10 +764,11 @@ HandleCurrentlyActivatedSkill( void )
     case SPELL_PARALYZE_BOLT:
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	{
-	  if ( CursorIsInUserRect ( GetMousePos_x() + 16 , GetMousePos_y() + 16) )
+	  if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+				    GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 	    {
-	      TargetPoint . x = Me [ 0 ] . pos . x + ( GetMousePos_x() + 16 ) / Block_Width ;
-	      TargetPoint . y = Me [ 0 ] . pos . y + ( GetMousePos_y() + 16 ) / Block_Height ; 
+	      TargetPoint . x = Me [ 0 ] . pos . x + ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X ) / Block_Width ;
+	      TargetPoint . y = Me [ 0 ] . pos . y + ( GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) / Block_Height ; 
 	      ParalyzeBoltSpell ( Me [ 0 ] . pos , TargetPoint );
 	    }
 	}
@@ -764,7 +776,8 @@ HandleCurrentlyActivatedSkill( void )
     case SPELL_DETECT_ITEM:
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	{
-	  if ( CursorIsInUserRect ( GetMousePos_x() + 16 , GetMousePos_y() + 16) )
+	  if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+				    GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 	    {
 	      DetectItemsSpell (  ) ;
 	    }
@@ -773,7 +786,8 @@ HandleCurrentlyActivatedSkill( void )
     case SPELL_RADIAL_EMP_WAVE:
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	{
-	  if ( CursorIsInUserRect ( GetMousePos_x() + 16 , GetMousePos_y() + 16) )
+	  if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+				    GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 	    {
 	      RadialEMPWave ( Me [ 0 ] . pos , TRUE );
 	    }
@@ -782,7 +796,8 @@ HandleCurrentlyActivatedSkill( void )
     case SPELL_RADIAL_VMX_WAVE:
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	{
-	  if ( CursorIsInUserRect ( GetMousePos_x() + 16 , GetMousePos_y() + 16) )
+	  if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+				    GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 	    {
 	      RadialVMXWave ( Me [ 0 ] . pos , TRUE );
 	    }
@@ -791,7 +806,8 @@ HandleCurrentlyActivatedSkill( void )
     case SPELL_RADIAL_FIRE_WAVE:
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	{
-	  if ( CursorIsInUserRect ( GetMousePos_x() + 16 , GetMousePos_y() + 16) )
+	  if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+				    GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 	    {
 	      RadialFireWave ( Me [ 0 ] . pos , TRUE );
 	    }
@@ -1023,8 +1039,8 @@ ShowSkillsScreen ( void )
   // --------------------
   // We will need the current mouse position on several spots...
   //
-  CurPos.x = GetMousePos_x() + 16;
-  CurPos.y = GetMousePos_y() + 16;
+  CurPos.x = GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X ;
+  CurPos.y = GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ;
 
   SkillScreenRect.x = CHARACTERRECT_X;
   SkillScreenRect.y = 0; 

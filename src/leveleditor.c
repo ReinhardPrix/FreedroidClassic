@@ -22,6 +22,9 @@
  *
  */
 
+// GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y) )
+// #define MOUSE_CROSSHAIR_OFFSET_X 16
+
 /* ----------------------------------------------------------------------
  * This file contains all functions for the heart of the level editor.
  * ---------------------------------------------------------------------- */
@@ -467,25 +470,25 @@ ItemDropFromLevelEditor( void )
       while ( ! SpacePressed() ) SDL_Delay(1);
 
       if ( CursorIsOnButton ( LEVEL_EDITOR_NEXT_ITEM_GROUP_BUTTON ,
-			      GetMousePos_x()+16 , GetMousePos_y()+16 ) )
+			      GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 	{
 	  item_group ++ ;
 	}
       else if ( CursorIsOnButton ( LEVEL_EDITOR_PREV_ITEM_GROUP_BUTTON ,
-			      GetMousePos_x()+16 , GetMousePos_y()+16 ) )
+			      GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 	{
 	  if ( item_group > 0 ) item_group -- ;
 	}
       else if ( CursorIsOnButton ( LEVEL_EDITOR_CANCEL_ITEM_DROP_BUTTON ,
-			      GetMousePos_x()+16 , GetMousePos_y()+16 ) )
+			      GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 	{
 	  return ;
 	}
-      else if ( (GetMousePos_x()+16 > 55 ) && ( GetMousePos_x()+16 < 55 + 64 * line_len ) &&
-		(GetMousePos_y()+16 > 32 ) && ( GetMousePos_y()+16 < 32 + 66 * row_len ) )
+      else if ( (GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X > 55 ) && ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X < 55 + 64 * line_len ) &&
+		(GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y > 32 ) && ( GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y < 32 + 66 * row_len ) )
 	{
 	  SelectionDone = TRUE ;
-	  NewItemCode = ( ( GetMousePos_x()+16 - 55 ) / 64 + ( GetMousePos_y()+16 - 32 ) / 66 * line_len + item_group * line_len * row_len ) ;
+	  NewItemCode = ( ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X - 55 ) / 64 + ( GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y - 32 ) / 66 * line_len + item_group * line_len * row_len ) ;
 	}
     }
 
@@ -512,10 +515,10 @@ ItemDropFromLevelEditor( void )
 int
 ClickWasInRect ( SDL_Rect TargetRect )
 {
-  if ( GetMousePos_x ( ) + 16 > TargetRect.x + TargetRect.w ) return FALSE;
-  if ( GetMousePos_x ( ) + 16 < TargetRect.x ) return FALSE;
-  if ( GetMousePos_y ( ) + 16 > TargetRect.y + TargetRect.h ) return FALSE;
-  if ( GetMousePos_y ( ) + 16 < TargetRect.y ) return FALSE;
+  if ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X > TargetRect.x + TargetRect.w ) return FALSE;
+  if ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X < TargetRect.x ) return FALSE;
+  if ( GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y > TargetRect.y + TargetRect.h ) return FALSE;
+  if ( GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y < TargetRect.y ) return FALSE;
 
   return ( TRUE );
 }; // int ClickWasInRect ( SDL_Rect TargetRect )
@@ -546,12 +549,12 @@ HandleBannerMouseClick( void )
   else
     limit = NUMBER_OF_OBSTACLE_TYPES ;
 
-  if ( CursorIsOnButton ( LEFT_LEVEL_EDITOR_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ))
+  if ( CursorIsOnButton ( LEFT_LEVEL_EDITOR_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ))
     {
       FirstBlock-= 8;
       DebugPrintf ( 1 , "\nBlocks should be scrolling now, if appropriate..." );
     }
-  else if ( CursorIsOnButton ( RIGHT_LEVEL_EDITOR_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ))
+  else if ( CursorIsOnButton ( RIGHT_LEVEL_EDITOR_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ))
     {
       FirstBlock+=8 ;
       DebugPrintf ( 1 , "\nBlocks should be scrolling now, if appropriate..." );
@@ -3018,106 +3021,106 @@ show_level_editor_tooltips ( void )
 
 #define TICKS_UNTIL_TOOLTIP 1200
 
-  if ( CursorIsOnButton ( GO_LEVEL_NORTH_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+  if ( CursorIsOnButton ( GO_LEVEL_NORTH_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
     {
       if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
 	show_button_tooltip ( "Use this button to move one level north, i.e. to the level that is glued to the northern side of this level." );
     }
-  else if ( CursorIsOnButton ( GO_LEVEL_SOUTH_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+  else if ( CursorIsOnButton ( GO_LEVEL_SOUTH_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
     {
       if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
 	show_button_tooltip ( "Use this button to move one level south, i.e. to the level that is glued to the southern side of this level." );
     }
-  else if ( CursorIsOnButton ( GO_LEVEL_EAST_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+  else if ( CursorIsOnButton ( GO_LEVEL_EAST_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
     {
       if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
 	show_button_tooltip ( "Use this button to move one level east, i.e. to the level that is glued to the eastern side of this level." );
     }
-  else if ( CursorIsOnButton ( GO_LEVEL_WEST_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+  else if ( CursorIsOnButton ( GO_LEVEL_WEST_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
     {
       if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
 	show_button_tooltip ( "Use this button to move one level west, i.e. to the level that is glued to the western side of this level." );
     }
-  else if ( CursorIsOnButton ( EXPORT_THIS_LEVEL_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+  else if ( CursorIsOnButton ( EXPORT_THIS_LEVEL_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
     {
       if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
 	show_button_tooltip ( "In FreedroidRPG maps can be glued together to form one big map.  But that requires that the maps are identical where they overlap.  This button will copy the borders of this level to the borders of the neighbouring levels, so that the maps are in sync again." );
     }
-  else if ( CursorIsOnButton ( LEVEL_EDITOR_SAVE_SHIP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+  else if ( CursorIsOnButton ( LEVEL_EDITOR_SAVE_SHIP_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
     {
       if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
 	show_button_tooltip ( "This button will save your current ship to the file 'Testship.shp' in your current working directory.  If you are sure that you want this, you can copy it over the regular file 'Asteroid.maps' in maps subdirectory to make your map the default FreedroidRPG map." );
     }
-  else if ( CursorIsOnButton ( LEVEL_EDITOR_ZOOM_OUT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+  else if ( CursorIsOnButton ( LEVEL_EDITOR_ZOOM_OUT_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
     {
       if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
 	show_button_tooltip ( "\nUse this button to zoom INTO or OUT of the level.\n\nYou can also use the hotkey 'O' for this." );
     }
-  else if ( CursorIsOnButton ( LEVEL_EDITOR_RECURSIVE_FILL_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+  else if ( CursorIsOnButton ( LEVEL_EDITOR_RECURSIVE_FILL_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
     {
       if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
 	show_button_tooltip ( "Use this button to fill a certain area of the map with the currently selected map tile.  Filling will proceed from the cursor in all direction until a change of map tile is encountered." );
     }
-  else if ( CursorIsOnButton ( LEVEL_EDITOR_NEW_OBSTACLE_LABEL_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+  else if ( CursorIsOnButton ( LEVEL_EDITOR_NEW_OBSTACLE_LABEL_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
     {
       if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
 	show_button_tooltip ( "Use this button to attach a label to the currently marked obstacle.  These obstacle labels can be used to define obstacles to be modified by events.\n Note that you can also use the hotkey 'h' for this." );
     }
-  else if ( CursorIsOnButton ( LEVEL_EDITOR_NEW_MAP_LABEL_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+  else if ( CursorIsOnButton ( LEVEL_EDITOR_NEW_MAP_LABEL_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
     {
       if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
 	show_button_tooltip ( "Use this button to attach a new map label to the current cursor position.  These map labels can be used to define starting points for bots and characters or also to define locations for events and triggers." );
     }
-  else if ( CursorIsOnButton ( LEVEL_EDITOR_NEW_ITEM_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+  else if ( CursorIsOnButton ( LEVEL_EDITOR_NEW_ITEM_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
     {
       if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
 	show_button_tooltip ( "Use this button to drop a new item to the floor.  You can also use the hotkey 'G' for this." );
     }
-  else if ( CursorIsOnButton ( LEVEL_EDITOR_MODE_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+  else if ( CursorIsOnButton ( LEVEL_EDITOR_MODE_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
     {
       if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
 	show_button_tooltip ( "Use this button to switch between obstacle edit mode and floor edit mode.  The two modes are easily recognized by the top level editor banner showing either floor tiles or obstacles.\n Note, that you can also use the 'f' key to switch between these two modes." );
     }
-  else if ( CursorIsOnButton ( LEVEL_EDITOR_ESC_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+  else if ( CursorIsOnButton ( LEVEL_EDITOR_ESC_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
     {
       if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
 	show_button_tooltip ( "Use this button to enter the main menu of the level editor.\n Note, that you can also use the Escape key to enter the level editor main menu." );
     }
-  else if ( CursorIsOnButton ( LEVEL_EDITOR_LEVEL_RESIZE_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+  else if ( CursorIsOnButton ( LEVEL_EDITOR_LEVEL_RESIZE_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
     {
       if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
 	show_button_tooltip ( "Use this button to enter the level resize menu.  Levels can be resized in various ways so as not to destroy your current map too much and so as to insert the new space where you would best like it to be." );
     }
-  else if ( CursorIsOnButton ( LEVEL_EDITOR_KEYMAP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+  else if ( CursorIsOnButton ( LEVEL_EDITOR_KEYMAP_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
     {
       if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
 	show_button_tooltip ( "Use this button to enter the level editor keymap display." );
     }
-  else if ( CursorIsOnButton ( LEVEL_EDITOR_QUIT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+  else if ( CursorIsOnButton ( LEVEL_EDITOR_QUIT_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
     {
       if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
 	show_button_tooltip ( "Use this button to quit out of the level editor and back to continue the normal game in normal mode.  Useful for e.g. putting objects into boxes.  You can always re-enter the level editor." );
     }
-  else if ( CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_ENEMIES_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) ||
-	          CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_ENEMIES_BUTTON_OFF , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+  else if ( CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_ENEMIES_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) ||
+	          CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_ENEMIES_BUTTON_OFF , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
     {
       if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
 	show_button_tooltip ( "Use this button to toggle between enemies dispalyed in level editor or enemies hidden in level editor." );
     }
-  else if ( CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_OBSTACLES_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) ||
-	          CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_OBSTACLES_BUTTON_OFF , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+  else if ( CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_OBSTACLES_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) ||
+	          CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_OBSTACLES_BUTTON_OFF , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
     {
       if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
 	show_button_tooltip ( "Use this button to toggle between obstacles dispalyed in level editor or obstacles hidden in level editor." );
     }
-  else if ( CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_TUX_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) ||
-	          CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_TUX_BUTTON_OFF , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+  else if ( CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_TUX_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) ||
+	          CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_TUX_BUTTON_OFF , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
     {
       if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
 	show_button_tooltip ( "Use this button to toggle between Tux dispalyed in level editor or Tux hidden in level editor." );
     }
-  else if ( CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_TOOLTIPS_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) ||
-	          CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_TOOLTIPS_BUTTON_OFF , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+  else if ( CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_TOOLTIPS_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) ||
+	          CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_TOOLTIPS_BUTTON_OFF , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
     {
       if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
 	show_button_tooltip ( "Use this button to toggle these annoying help windows on and off." );
@@ -3675,17 +3678,17 @@ LevelEditor(void)
 	  //
 	  if ( GameConfig . zoom_is_on )
 	    {
-	      TargetSquare . x = translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x ( ) + 16.0 - ( SCREEN_WIDTH / 2 ) , 
-								   (float) GetMousePos_y ( ) + 16.0 - ( SCREEN_HEIGHT / 2 ), TRUE );
-	      TargetSquare . y = translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x ( ) + 16.0 - ( SCREEN_WIDTH / 2 ), 
-								   (float) GetMousePos_y ( ) + 16.0 - ( SCREEN_HEIGHT / 2 ), FALSE );
+	      TargetSquare . x = translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X - ( SCREEN_WIDTH / 2 ) , 
+								   (float) GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y - ( SCREEN_HEIGHT / 2 ), TRUE );
+	      TargetSquare . y = translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X - ( SCREEN_WIDTH / 2 ), 
+								   (float) GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y - ( SCREEN_HEIGHT / 2 ), FALSE );
 	    }
 	  else
 	    {
-	      TargetSquare . x = translate_pixel_to_map_location ( 0 , (float) GetMousePos_x ( ) + 16.0 - ( SCREEN_WIDTH / 2 ) , 
-								   (float) GetMousePos_y ( ) + 16.0 - ( SCREEN_HEIGHT / 2 ), TRUE );
-	      TargetSquare . y = translate_pixel_to_map_location ( 0 , (float) GetMousePos_x ( ) + 16.0 - ( SCREEN_WIDTH / 2 ), 
-								   (float) GetMousePos_y ( ) + 16.0 - ( SCREEN_HEIGHT / 2 ), FALSE );
+	      TargetSquare . x = translate_pixel_to_map_location ( 0 , (float) GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X - ( SCREEN_WIDTH / 2 ) , 
+								   (float) GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y - ( SCREEN_HEIGHT / 2 ), TRUE );
+	      TargetSquare . y = translate_pixel_to_map_location ( 0 , (float) GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X - ( SCREEN_WIDTH / 2 ), 
+								   (float) GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y - ( SCREEN_HEIGHT / 2 ), FALSE );
 	    }
 
  
@@ -3727,7 +3730,7 @@ LevelEditor(void)
 	    {
 	      if ( ClickWasInEditorBannerRect() )
 		HandleBannerMouseClick();
-	      else if ( CursorIsOnButton ( GO_LEVEL_NORTH_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+	      else if ( CursorIsOnButton ( GO_LEVEL_NORTH_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 		{
 		  if ( Me [ 0 ] . pos . x < curShip . AllLevels [ EditLevel -> jump_target_north ] -> xlen -1 )
 		    new_x = Me [ 0 ] . pos . x ; 
@@ -3737,7 +3740,7 @@ LevelEditor(void)
 		  if ( EditLevel -> jump_target_north >= 0 ) 
 		    Teleport ( EditLevel -> jump_target_north , new_x , new_y , 0 , TRUE , FALSE );
 		}
-	      else if ( CursorIsOnButton ( GO_LEVEL_SOUTH_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+	      else if ( CursorIsOnButton ( GO_LEVEL_SOUTH_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 		{
 		  if ( Me [ 0 ] . pos . x < curShip . AllLevels [ EditLevel -> jump_target_south ] -> xlen -1 )
 		    new_x = Me [ 0 ] . pos . x ; 
@@ -3747,7 +3750,7 @@ LevelEditor(void)
 		  if ( EditLevel -> jump_target_south >= 0 ) 
 		    Teleport ( EditLevel -> jump_target_south , new_x , new_y , 0 , TRUE , FALSE );
 		}
-	      else if ( CursorIsOnButton ( GO_LEVEL_EAST_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+	      else if ( CursorIsOnButton ( GO_LEVEL_EAST_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 		{
 		  new_x = 3;
 		  if ( Me [ 0 ] . pos . y < curShip . AllLevels [ EditLevel -> jump_target_east ] -> ylen -1 )
@@ -3757,7 +3760,7 @@ LevelEditor(void)
 		  if ( EditLevel -> jump_target_east >= 0 ) 
 		    Teleport ( EditLevel -> jump_target_east , new_x , new_y , 0 , TRUE , FALSE );
 		}
-	      else if ( CursorIsOnButton ( GO_LEVEL_WEST_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+	      else if ( CursorIsOnButton ( GO_LEVEL_WEST_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 		{
 		  new_x = curShip . AllLevels [ EditLevel -> jump_target_west ] -> xlen -4 ;
 		  if ( Me [ 0 ] . pos . y < curShip . AllLevels [ EditLevel -> jump_target_west ] -> ylen -1 )
@@ -3767,11 +3770,11 @@ LevelEditor(void)
 		  if ( EditLevel -> jump_target_west >= 0 ) 
 		    Teleport ( EditLevel -> jump_target_west , new_x , new_y , 0 , TRUE , FALSE );
 		}
-	      else if ( CursorIsOnButton ( EXPORT_THIS_LEVEL_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+	      else if ( CursorIsOnButton ( EXPORT_THIS_LEVEL_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 		{
 		  ExportLevelInterface ( Me [ 0 ] . pos . z );
 		}
-	      else if ( CursorIsOnButton ( LEVEL_EDITOR_SAVE_SHIP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+	      else if ( CursorIsOnButton ( LEVEL_EDITOR_SAVE_SHIP_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 		{
 		  close_all_chests_on_level ( Me [ 0 ] . pos . z ) ;
 		  SaveShip("Testship.shp");
@@ -3782,22 +3785,22 @@ LevelEditor(void)
 		  GiveMouseAlertWindow ( "\nM E S S A G E\n\nYour ship was saved to file 'Testship.shp'.\nIf you are sure, that you wish to use this file in the game, copy it over the 'maps/Asteroid.maps' file so that FreedroidRPG will really use it.\n\nIf you have set up something cool and you wish to contribute it to FreedroidRPG, please contact the FreedroidRPG dev team." ) ;
 
 		}
-	      else if ( GameConfig . zoom_is_on && CursorIsOnButton ( LEVEL_EDITOR_ZOOM_IN_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+	      else if ( GameConfig . zoom_is_on && CursorIsOnButton ( LEVEL_EDITOR_ZOOM_IN_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 		{
 		  GameConfig . zoom_is_on = !GameConfig . zoom_is_on ;
 		  while ( SpacePressed() );
 		}
-		  else if ( !GameConfig . zoom_is_on && CursorIsOnButton ( LEVEL_EDITOR_ZOOM_OUT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+		  else if ( !GameConfig . zoom_is_on && CursorIsOnButton ( LEVEL_EDITOR_ZOOM_OUT_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 		{
 		  GameConfig . zoom_is_on = !GameConfig . zoom_is_on ;
 		  while ( SpacePressed() );
 		}
 
-	      else if ( CursorIsOnButton ( LEVEL_EDITOR_RECURSIVE_FILL_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+	      else if ( CursorIsOnButton ( LEVEL_EDITOR_RECURSIVE_FILL_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 		{
 		  RecFillMap ( EditLevel , BlockY , BlockX , Highlight );
 		}
-	      else if ( CursorIsOnButton ( LEVEL_EDITOR_NEW_OBSTACLE_LABEL_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+	      else if ( CursorIsOnButton ( LEVEL_EDITOR_NEW_OBSTACLE_LABEL_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 		{
 		  if ( level_editor_marked_obstacle != NULL )
 		    {
@@ -3805,15 +3808,15 @@ LevelEditor(void)
 		      while ( SpacePressed() );
 		    }
 		}
-	      else if ( CursorIsOnButton ( LEVEL_EDITOR_NEW_MAP_LABEL_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+	      else if ( CursorIsOnButton ( LEVEL_EDITOR_NEW_MAP_LABEL_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 		{
 		  EditMapLabelData ( EditLevel );
 		}
-	      else if ( CursorIsOnButton ( LEVEL_EDITOR_NEW_ITEM_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+	      else if ( CursorIsOnButton ( LEVEL_EDITOR_NEW_ITEM_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 		{
 		  ItemDropFromLevelEditor(  );
 		}
-	      else if ( CursorIsOnButton ( LEVEL_EDITOR_MODE_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+	      else if ( CursorIsOnButton ( LEVEL_EDITOR_MODE_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 		{
 		  if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_FLOOR )
 		  {
@@ -3835,41 +3838,41 @@ LevelEditor(void)
 		  }	
 		  while ( SpacePressed() );
 		}
-	      else if ( CursorIsOnButton ( LEVEL_EDITOR_ESC_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+	      else if ( CursorIsOnButton ( LEVEL_EDITOR_ESC_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 		{
 		  main_menu_requested = TRUE ;
 		  while ( SpacePressed() );
 		}
-	      else if ( CursorIsOnButton ( LEVEL_EDITOR_LEVEL_RESIZE_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+	      else if ( CursorIsOnButton ( LEVEL_EDITOR_LEVEL_RESIZE_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 		{
 		  EditLevelDimensions (  );
 		}
-	      else if ( CursorIsOnButton ( LEVEL_EDITOR_KEYMAP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+	      else if ( CursorIsOnButton ( LEVEL_EDITOR_KEYMAP_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 		{
 		  ShowLevelEditorKeymap (  );
 		}
-	      else if ( CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_TUX_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) ||
-	                CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_TUX_BUTTON_OFF , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+	      else if ( CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_TUX_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) ||
+	                CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_TUX_BUTTON_OFF , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 		{
 		  GameConfig . omit_tux_in_level_editor = ! GameConfig . omit_tux_in_level_editor ;
 		}
-	      else if ( CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_ENEMIES_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) ||
-	                CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_ENEMIES_BUTTON_OFF , GetMousePos_x() + 16 , GetMousePos_y() + 16 ))
+	      else if ( CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_ENEMIES_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) ||
+	                CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_ENEMIES_BUTTON_OFF , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ))
 		{
 		  GameConfig . omit_enemies_in_level_editor = ! GameConfig . omit_enemies_in_level_editor ;
 		}
-	      else if ( CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_OBSTACLES_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) ||
-	                CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_OBSTACLES_BUTTON_OFF , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+	      else if ( CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_OBSTACLES_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) ||
+	                CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_OBSTACLES_BUTTON_OFF , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 		{
 		  GameConfig . omit_obstacles_in_level_editor = ! GameConfig . omit_obstacles_in_level_editor ;
 		}
-	      else if ( CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_TOOLTIPS_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) ||
-	                CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_TOOLTIPS_BUTTON_OFF , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+	      else if ( CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_TOOLTIPS_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) ||
+	                CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_TOOLTIPS_BUTTON_OFF , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 		{
 	       GameConfig . show_tooltips = ! GameConfig . show_tooltips ;
 		}
 
-	      else if ( CursorIsOnButton ( LEVEL_EDITOR_QUIT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+	      else if ( CursorIsOnButton ( LEVEL_EDITOR_QUIT_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 		{
 		  Weiter=!Weiter;
 		  Done=TRUE;
@@ -3887,12 +3890,12 @@ LevelEditor(void)
 		  //
 		  if ( GameConfig . zoom_is_on )
 		    Me [ 0 ] . pos . x = 
-		      translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x ( ) + 16.0 - ( SCREEN_WIDTH / 2 ) , 
-							(float) GetMousePos_y ( ) + 16.0 - ( SCREEN_HEIGHT / 2 ), TRUE ); 
+		      translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X - ( SCREEN_WIDTH / 2 ) , 
+							(float) GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y - ( SCREEN_HEIGHT / 2 ), TRUE ); 
 		  else
 		    Me [ 0 ] . pos . x = 
-		      translate_pixel_to_map_location ( 0 , (float) GetMousePos_x ( ) + 16.0 - ( SCREEN_WIDTH / 2 ) , 
-							(float) GetMousePos_y ( ) + 16.0 - ( SCREEN_HEIGHT / 2 ), TRUE ); 
+		      translate_pixel_to_map_location ( 0 , (float) GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X - ( SCREEN_WIDTH / 2 ) , 
+							(float) GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y - ( SCREEN_HEIGHT / 2 ), TRUE ); 
 
 		  if ( Me [ 0 ] . pos . x >= curShip.AllLevels[Me[0].pos.z]->xlen-1 )
 		    Me [ 0 ] . pos . x = curShip.AllLevels[Me[0].pos.z]->xlen-1 ;
@@ -3900,12 +3903,12 @@ LevelEditor(void)
 
 		  if ( GameConfig . zoom_is_on )
 		    Me [ 0 ] . pos . y = 
-		      translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x ( ) + 16.0 - ( SCREEN_WIDTH / 2 ), 
-							       (float) GetMousePos_y ( ) + 16.0 - ( SCREEN_HEIGHT / 2 ), FALSE );
+		      translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X - ( SCREEN_WIDTH / 2 ), 
+							       (float) GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y - ( SCREEN_HEIGHT / 2 ), FALSE );
 		  else
 		    Me [ 0 ] . pos . y = 
-		      translate_pixel_to_map_location ( 0 , (float) GetMousePos_x ( ) + 16.0 - ( SCREEN_WIDTH / 2 ), 
-							(float) GetMousePos_y ( ) + 16.0 - ( SCREEN_HEIGHT / 2 ), FALSE );
+		      translate_pixel_to_map_location ( 0 , (float) GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X - ( SCREEN_WIDTH / 2 ), 
+							(float) GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y - ( SCREEN_HEIGHT / 2 ), FALSE );
 		  if ( Me [ 0 ] . pos . y >= curShip.AllLevels[Me[0].pos.z]->ylen-1 )
 		    Me [ 0 ] . pos . y = curShip.AllLevels[Me[0].pos.z]->ylen-1 ;
 		  if ( Me [ 0 ] . pos . y <= 0 ) Me [ 0 ] . pos . y = 0;
