@@ -1292,7 +1292,7 @@ DetermineAngleOfFacing ( int Enum )
   // We calsulate the angle of the vector, but only if the robot has at least
   // some minimal speed.  If not, simply the previous angle will be used again.
   //
-  if ( ( fabsf ( AllEnemys[Enum].speed.y ) > 1 ) || ( fabsf ( AllEnemys[Enum].speed.x ) > 1 ) )
+  if ( ( fabsf ( AllEnemys[Enum].speed.y ) > 0.03 ) || ( fabsf ( AllEnemys[Enum].speed.x ) > 0.03 ) )
     {
       AllEnemys [ Enum ] . current_angle = 180 - ( atan2 ( AllEnemys[Enum].speed.y,  AllEnemys[Enum].speed.x) * 180 / M_PI + 90 );
       AllEnemys[Enum].previous_angle = AllEnemys [ Enum ] . current_angle ;
