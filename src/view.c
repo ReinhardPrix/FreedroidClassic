@@ -688,30 +688,6 @@ isometric_show_all_floor_tiles_around_tux ( int mask )
   int LineStart, LineEnd, ColStart, ColEnd , line, col, MapBrick;
   Level DisplayLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
   SDL_Rect TargetRectangle;
-  //  int north_iso_tile_length=sqrt( 64*64 + 47*47 );
-
-  //--------------------
-  // We select the following area to be the map excerpt, that can be
-  // visible at most.  This is nescessare now that the Freedroid RPG is
-  // going to have larger levels and we don't want to do 100x100 cyles
-  // for nothing each frame.
-  //
-  /*
-  if ( Block_Width != INITIAL_BLOCK_WIDTH )
-    {
-      LineStart = Me [ 0 ] . pos . y - 7 ;
-      LineEnd = Me [ 0 ] . pos . y + 7 ;
-      ColStart = Me [ 0 ] . pos . x - 7 ;
-      ColEnd = Me [ 0 ] . pos . x + 7 ;
-    }
-  else
-    {
-      LineStart = -5 ;
-      LineEnd = DisplayLevel->ylen + 5 ;
-      ColStart = -5 ;
-      ColEnd = DisplayLevel->xlen + 5 ;
-    }
-  */
 
   //--------------------
   // Maybe we should be using a more elegant function here, that will automatically
@@ -731,64 +707,9 @@ isometric_show_all_floor_tiles_around_tux ( int mask )
 	{
 	  if ((MapBrick = GetMapBrick( DisplayLevel, col , line )) != INVISIBLE_BRICK)
 	    {
-	      /*
-	      TargetRectangle.x = UserCenter_x
-		+ ( -Me[0].pos.x+col-0.5 ) * ( + ISO_WIDTH / 2 ) +
-   		  ( -Me[0].pos.y+line-0.5 ) * ( - ISO_WIDTH / 2 ) ;
+	      blit_iso_image_to_map_position ( floor_iso_images [ MapBrick % 5 ] , 
+					       ((float)col)+0.5 , ((float)line) +0.5 );
 
-	      TargetRectangle.y = UserCenter_y
-		+ ( -Me[0].pos.x+col-0.5 ) * ( + ISO_HEIGHT / 2 ) +
-   		  ( -Me[0].pos.y+line-0.5 ) * ( + ISO_HEIGHT / 2 ) ;
-	      */
-	      // TargetRectangle.x = translate_map_point_to_screen_pixel ( +col , +line , TRUE ) - ( ISO_WIDTH / 2 ) ;
-	      // TargetRectangle.y = translate_map_point_to_screen_pixel ( +col , +line , FALSE ) - ( ISO_HEIGHT / 2 ) ;
-
-	      // TargetRectangle.y = UserCenter_y
-	      // + ( -Me[0].pos.y+line-0.5 )*Block_Height;
-
-	      // SDL_BlitSurface( floor_iso_images [ MapBrick % 5 ] . surface , NULL ,
-	      // Screen, &TargetRectangle);
-	      
-	      blit_iso_image_to_map_position ( floor_iso_images [ MapBrick % 5 ] , ((float)col)+0.5 , ((float)line) +0.5 );
-
-	      /*
-	      if ( ( !RespectVisibilityOnMap ) || MapBlockIsVisible ( col , line ) )
-		SDL_BlitSurface( MapBlockSurfacePointer[ DisplayLevel->color ][MapBrick] , NULL ,
-				 Screen, &TargetRectangle);
-	      else
-		{
-		  TargetRectangle.w = Block_Width;
-		  TargetRectangle.h = Block_Height;
-		  SDL_FillRect ( Screen , & TargetRectangle , 0 );
-		}
-	      */
-
-
-
-	      //--------------------
-	      // Maybe this was called from the level editor or from some
-	      // other context requireing to add a grid to all map tiles
-	      // that are in the interface area connecting two levels together
-	      //
-	      if ( mask & SHOW_GRID )
-		{
-		  if ( ( ( line ) < curShip . AllLevels [ Me [ 0 ] . pos . z ] -> jump_threshold_north ) ||
-		       ( ( col ) <  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> jump_threshold_west ) ||
-		       ( ( line ) > curShip . AllLevels [ Me [ 0 ] . pos . z ] -> ylen - 1 -
-			 curShip . AllLevels [ Me [ 0 ] . pos . z ] -> jump_threshold_south ) ||
-		       ( ( col ) > curShip . AllLevels [ Me [ 0 ] . pos . z ] -> xlen - 1 -
-			 curShip . AllLevels [ Me [ 0 ] . pos . z ] -> jump_threshold_east ) )
-		    {
-		      TargetRectangle.x = UserCenter_x 
-			+ ( -Me[0].pos.x+col-0.5 )*Block_Width;
-		      TargetRectangle.y = UserCenter_y
-			+ ( -Me[0].pos.y+line-0.5 )*Block_Height;
-		      TargetRectangle.w = Block_Width;
-		      TargetRectangle.h = Block_Height;
-		      MakeGridOnScreen ( &TargetRectangle );
-		    }
-		}
-      
 	    }			// if !INVISIBLE_BRICK 
 	}			// for(col) 
     }				// for(line) 
@@ -1790,6 +1711,7 @@ PutEnemyEnergyBar ( int Enum , SDL_Rect TargetRectangle )
   // If the enemy is dead already, there's nothing to do here...
   //
   if ( AllEnemys [ Enum ] . Status == OUT ) return;
+  if ( AllEnemys [ Enum ] . energy <= 0 ) return;
 
   //--------------------
   // If the enemy is friendly, then we needn't display his health, right?
@@ -2318,7 +2240,7 @@ function used for this did not succeed.",
 	  //
 	  for ( i = 0 ; i < FIXED_NUMBER_OF_SPARK_ANGLES ; i++ )
 	    {
-	      Angle = 360.0 * (float)i / (float)FIXED_NUMBER_OF_SPARK_ANGLES ;
+	      Angle = -45 + 360.0 * (float)i / (float)FIXED_NUMBER_OF_SPARK_ANGLES ;
 	      
 	      tmp_surf = 
 		rotozoomSurface( SparkPrototypeSurface [ SparkType ] [ k ] , Angle , 1.0 , FALSE );
@@ -2331,7 +2253,7 @@ function used for this did not succeed.",
 
     }
 
-  NumberOfPicturesToUse = ( 2 * Radius * Block_Width * 3.14 ) / (float) SparkPrototypeSurface[ SparkType ] [ PictureType ] -> w;
+  NumberOfPicturesToUse = 2 * ( 2 * Radius * Block_Width * 3.14 ) / (float) SparkPrototypeSurface[ SparkType ] [ PictureType ] -> w;
   NumberOfPicturesToUse += 3 ; // we want some overlap
 
   //--------------------
@@ -2342,16 +2264,16 @@ function used for this did not succeed.",
     {
       Angle = 360.0 * (float)i / (float)NumberOfPicturesToUse ;
       
-      Displacement . x = 0 ; Displacement . y = - Radius * Block_Height ;
+      Displacement . x = 0 ; Displacement . y = - Radius ;
 
       RotateVectorByAngle ( &Displacement , Angle );
 
       PrerotationIndex = rintf ( Angle * (float)FIXED_NUMBER_OF_SPARK_ANGLES / 360.0 ); 
       if ( PrerotationIndex >= FIXED_NUMBER_OF_SPARK_ANGLES ) PrerotationIndex = 0 ;
 
-      TargetRectangle . x = UserCenter_x - ( Me [ 0 ] . pos . x - PosX ) * Block_Width  + Displacement . x - ( ( PrerotatedSparkSurfaces [ SparkType ] [ PictureType ] [ PrerotationIndex ] -> w) / 2 );
-      TargetRectangle . y = UserCenter_y - ( Me [ 0 ] . pos . y - PosY ) * Block_Height + Displacement . y - ( ( PrerotatedSparkSurfaces [ SparkType ] [ PictureType ] [ PrerotationIndex ] -> h) / 2 );
-      
+      TargetRectangle . x = translate_map_point_to_screen_pixel ( PosX + Displacement . x , PosY + Displacement . y , TRUE ) - ( ( PrerotatedSparkSurfaces [ SparkType ] [ PictureType ] [ PrerotationIndex ] -> w ) / 2 );
+      TargetRectangle . y = translate_map_point_to_screen_pixel ( PosX + Displacement . x , PosY + Displacement . y , FALSE ) - ( ( PrerotatedSparkSurfaces [ SparkType ] [ PictureType ] [ PrerotationIndex ] -> h ) / 2 );
+
       SDL_BlitSurface( PrerotatedSparkSurfaces [ SparkType ] [ PictureType ] [ PrerotationIndex ] , NULL , Screen , &TargetRectangle);
 
     }

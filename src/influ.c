@@ -1558,7 +1558,6 @@ PerformTuxAttackRaw ( int PlayerNum )
 	    {
 	      PlayStartAttackSound( Druidmap[ AllEnemys[ i ] . type ].greeting_sound_type );
 	    }
-	  
 
 	  //--------------------
 	  // War tux freezes enemys with the appropriate plugin...

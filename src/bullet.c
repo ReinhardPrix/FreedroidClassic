@@ -408,7 +408,7 @@ MoveActiveSpells (void)
       //
       if ( AllActiveSpells [ i ] . type == SPELL_RADIAL_EMP_WAVE )
 	{
-	  AllActiveSpells [ i ] . spell_radius += 6.0 * PassedTime;
+	  AllActiveSpells [ i ] . spell_radius += 5.0 * PassedTime;
 
 	  //--------------------
 	  // Here we also do the spell-collision checking in this case
