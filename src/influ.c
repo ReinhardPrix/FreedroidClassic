@@ -66,6 +66,7 @@ void limit_tux_speed_to_a_maximum ( int player_num );
 void set_up_intermediate_course_for_tux ( int player_num );
 void clear_out_intermediate_points ( int player_num );
 void check_for_chests_to_open ( int player_num , int chest_index ) ;
+void check_for_barrels_to_smash ( int player_num , int index_of_barrel_below_mouse_cursor ) ;
 
 char recursion_grid[ MAX_MAP_LINES ][ MAX_MAP_LINES ] ;
 // moderately_finepoint first_found_walkable_point;
@@ -1474,6 +1475,9 @@ move_tux_thowards_intermediate_point ( int player_num )
 	case COMBO_ACTION_OPEN_CHEST:
 	  check_for_chests_to_open ( player_num , Me [ player_num ] . mouse_move_target_combo_action_parameter ) ;
 	  break;
+	case COMBO_ACTION_SMASH_BARREL:
+	  check_for_barrels_to_smash ( player_num , Me [ player_num ] . mouse_move_target_combo_action_parameter ) ;
+	  break;
 	case COMBO_ACTION_PICK_UP_ITEM:
 	  break;
 	default:
@@ -2561,29 +2565,80 @@ check_for_chests_to_open ( int player_num , int chest_index )
  *
  * ---------------------------------------------------------------------- */
 void
-check_for_barrels_to_smash ( player_num ) 
+check_for_barrels_to_smash ( int player_num , int barrel_index ) 
 {
-  int index_of_barrel_below_mouse_cursor = smashable_barred_below_mouse_cursor ( player_num ) ;
   Level our_level = curShip . AllLevels [ Me [ player_num ] . pos . z ] ;
 
-  if ( index_of_barrel_below_mouse_cursor != (-1) )
+  if ( barrel_index != (-1) )
     {
+      /*      
       if ( Me [ 0 ] . weapon_item . type >= 0 )
 	{
 	  if ( ( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_angle_change ) &&
 	       ( calc_euklid_distance ( Me [ player_num ] . pos . x , Me [ player_num ] . pos . y , 
-					our_level -> obstacle_list [ index_of_barrel_below_mouse_cursor ] . pos . x ,
-					our_level -> obstacle_list [ index_of_barrel_below_mouse_cursor ] . pos . y ) 
+					our_level -> obstacle_list [ barrel_index ] . pos . x ,
+					our_level -> obstacle_list [ barrel_index ] . pos . y ) 
 		 > BEST_MELEE_DISTANCE+0.1 ) )
 	    return;
 	}
       else if ( calc_euklid_distance ( Me [ player_num ] . pos . x , Me [ player_num ] . pos . y , 
-				       our_level -> obstacle_list [ index_of_barrel_below_mouse_cursor ] . pos . x ,
-				       our_level -> obstacle_list [ index_of_barrel_below_mouse_cursor ] . pos . y ) 
+				       our_level -> obstacle_list [ barrel_index ] . pos . x ,
+				       our_level -> obstacle_list [ barrel_index ] . pos . y ) 
 		> BEST_MELEE_DISTANCE+0.1 )
 	return;
+      */
+
+      //--------------------
+      // If the smash distance for a barrel is not yet reached, then we must set up
+      // a course that will lead us to the barrel and also a combo_action specification,
+      // that will cause the corresponding barrel to be smashed upon arrival.
+      //
+      if ( calc_euklid_distance ( Me [ player_num ] . pos . x , Me [ player_num ] . pos . y , 
+				  our_level -> obstacle_list [ barrel_index ] . pos . x ,
+				  our_level -> obstacle_list [ barrel_index ] . pos . y ) 
+	   > BEST_MELEE_DISTANCE+0.1 )
+	{
+	  //--------------------
+	  // We set up a course, that will lead us directly to the barrel, that we are
+	  // supposed to smash (upon arrival, later).
+	  //
+	  Me [ player_num ] . mouse_move_target . x = our_level -> obstacle_list [ barrel_index ] . pos . x ;
+	  Me [ player_num ] . mouse_move_target . y = our_level -> obstacle_list [ barrel_index ] . pos . y ;
+	  Me [ player_num ] . mouse_move_target . x += 0.8 ;
+	  set_up_intermediate_course_for_tux ( player_num ) ;
+
+	  //--------------------
+	  // We set up the combo_action, so that the barrel can be smashed later...
+	  //
+	  Me [ player_num ] . mouse_move_target_is_enemy = ( -1 ) ;
+	  Me [ player_num ] . mouse_move_target_combo_action_type = COMBO_ACTION_SMASH_BARREL ;
+	  Me [ player_num ] . mouse_move_target_combo_action_parameter = barrel_index ;
+	      
+	  //--------------------
+	  // since we cannot smash immediately, we must return now.  Later, on the 
+	  // second call once we've reached the barrel, this will be different.
+	  //
+	  return;
+	}
+
+      //--------------------
+      // We make sure the barrel gets smashed, eben if the strike made by the
+      // Tux would be otherwise a miss...
+      //
+      smash_obstacle ( our_level -> obstacle_list [ barrel_index ] . pos . x , 
+		       our_level -> obstacle_list [ barrel_index ] . pos . y );
 
       tux_wants_to_attack_now ( player_num ) ;
+
+      //--------------------
+      // Maybe the barrel smashing came from a combo_action, i.e. the click made
+      // the tux come here and the same click should now also make the Tux smash
+      // the barrel.  So we smash the barrel. but that also means, that we can 
+      // now unset the combo_action back to normal state again.
+      //
+      Me [ player_num ] . mouse_move_target_combo_action_type = NO_COMBO_ACTION_SET ;
+      Me [ player_num ] . mouse_move_target_combo_action_parameter = ( -1 ) ;
+      DebugPrintf ( -4 , "\ncheck_for_barrels_to_smash(...):  combo_action now unset." );
     }
 };
 
@@ -2696,7 +2751,7 @@ AnalyzePlayersMouseClick ( int player_num )
 
   check_for_chests_to_open ( player_num , closed_chest_below_mouse_cursor ( player_num ) ) ;
 
-  check_for_barrels_to_smash ( player_num ) ;
+  check_for_barrels_to_smash ( player_num , smashable_barred_below_mouse_cursor ( player_num ) ) ;
 
   check_for_droids_to_attack_or_talk_with ( player_num ) ;
 

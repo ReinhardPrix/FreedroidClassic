@@ -804,7 +804,8 @@ enum _combo_action_types
   {
     NO_COMBO_ACTION_SET = -10 ,
     COMBO_ACTION_OPEN_CHEST = 15 ,
-    COMBO_ACTION_PICK_UP_ITEM = 16
+    COMBO_ACTION_PICK_UP_ITEM = 16 ,
+    COMBO_ACTION_SMASH_BARREL = 17 ,
   };
 
 //--------------------
