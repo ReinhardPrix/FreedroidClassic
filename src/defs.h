@@ -45,6 +45,7 @@ enum
 
 
 #define USE_SDL_FRAMERATE
+#define USE_SDL_AUDIO
 
 enum
 { SHOW_ALL = 0, SHOW_MAP = 1 };

@@ -401,12 +401,29 @@ Init_Video (void)
 
   /* Initialize the SDL library */
   // if ( SDL_Init (SDL_INIT_VIDEO | SDL_INIT_TIMER) == -1 ) 
+
   if ( SDL_Init (SDL_INIT_VIDEO) == -1 ) 
     {
       fprintf(stderr, "Couldn't initialize SDL: %s\n",SDL_GetError());
       Terminate(ERR);
     } else
       printf("\nSDL Video initialisation successful.\n");
+
+#ifdef USE_SDL_AUDIO
+  if ( SDL_InitSubSystem ( SDL_INIT_TIMER ) == -1 ) 
+    {
+      fprintf(stderr, "Couldn't initialize SDL: %s\n",SDL_GetError());
+      Terminate(ERR);
+    } else
+      printf("\nSDL Timer initialisation successful.\n");
+  if ( SDL_InitSubSystem ( SDL_INIT_AUDIO ) == -1 ) 
+    {
+      fprintf(stderr, "Couldn't initialize SDL: %s\n",SDL_GetError());
+      Terminate(ERR);
+    } else
+      printf("\nSDL Audio initialisation successful.\n");
+#endif
+
 
   /* clean up on exit */
   atexit (SDL_Quit);

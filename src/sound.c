@@ -306,8 +306,13 @@ Technical details:
 void
 Switch_Background_Music_To (int Tune)
 {
+#ifndef USE_SDL_AUDIO
   static int Current_Tune = SILENCE;
+#endif
 
+
+
+#ifndef USE_SDL_AUDIO
 #if HAVE_LIBY2
   YEventSoundPlay Music_Parameters;
 
@@ -356,6 +361,8 @@ Switch_Background_Music_To (int Tune)
 ----------------------------------------------------------------------\n\
 Freedroid has encountered a problem:  The YIFF sound server has reported,\n\
 that a certain file it wanted to playback was MISSING OR CORRUPT.\n\
+This error message will also appear if the YIFF sound server has not been\n\
+initialized at all i.e. no attempt to initialize is has been made.\n\
 The file name of this missing or corrupt file was determined as:\n\
 %s\n\
 Under these cirmumstances Freedroid will stop to work in order to draw attention\n\
@@ -412,6 +419,7 @@ Sorry...\n\
     ("\nvoid Switch_Background_Music_To(int Tune):  end of function reached.\n");
 
 #endif /* HAVE_LIBY2 */
+#endif /* USE_SDL_AUDIO */
 } // void Switch_Background_Music_To(int Tune)
 
 
@@ -422,10 +430,11 @@ Sorry...\n\
 @Int:
 * $Function----------------------------------------------------------*/
 void
-Play_YIFF_Server_Sound (int Tune)
+Play_Sound (int Tune)
 {
+#ifndef USE_SDL_AUDIO
   YEventSoundPlay Music_Parameters;
-
+#endif
 
   if ( !sound_on ) return;
 
@@ -433,11 +442,12 @@ Play_YIFF_Server_Sound (int Tune)
   /* the YIFF sound server installed.  Compilation therefore is optional and */
   /* can be toggled with the following  definition.*/
 
+#ifndef USE_SDL_AUDIO
 #if HAVE_LIBY2
   DebugPrintf
-    ("\nvoid Play_YIFF_Server_Sound(int Tune):  Real function call confirmed.");
+    ("\nvoid Play_Sound(int Tune):  Real function call confirmed.");
   DebugPrintf
-    ("\nvoid Play_YIFF_Server_Sound(int Tune):  Playback is about to start!");
+    ("\nvoid Play_Sound(int Tune):  Playback is about to start!");
 
   Music_Parameters.repeats = 0;
   Music_Parameters.total_repeats = 1;	// -1 here means to repeat indefinately
@@ -453,8 +463,9 @@ Play_YIFF_Server_Sound (int Tune)
   play_id = YStartPlaySoundObject(BackgroundMusic_con, ExpandedSoundSampleFilenames[Tune], &Music_Parameters);
 
 #endif /* HAVE_LIBY2 */
+#endif /* USE_SDL_AUDIO */
 
-}  // void Play_YIFF_Server_Sound(int Tune)
+}  // void Play_Sound(int Tune)
 
 /*@Function============================================================
 @Desc: 
@@ -543,7 +554,7 @@ GotHitSound (void)
 {
   if (!sound_on) return;
 
-  Play_YIFF_Server_Sound (GOT_HIT_SOUND);
+  Play_Sound (GOT_HIT_SOUND);
 }				// void GotHitSound(void)
 
 
@@ -558,7 +569,7 @@ GotIntoBlastSound (void)
 {
   if (!sound_on) return;
 
-  Play_YIFF_Server_Sound (GOT_INTO_BLAST_SOUND);
+  Play_Sound (GOT_INTO_BLAST_SOUND);
   return;
 }				// void GotIntoBlastSound(void)
 
@@ -573,7 +584,7 @@ RefreshSound (void)
 {
   if (!sound_on) return;
 
-  Play_YIFF_Server_Sound (REFRESH_SOUND);
+  Play_Sound (REFRESH_SOUND);
   return;
 }				// void RefreshSound(void)
 
@@ -589,7 +600,7 @@ MoveElevatorSound (void)
 {
   if (!sound_on) return;
 
-  Play_YIFF_Server_Sound (MOVE_ELEVATOR_SOUND);
+  Play_Sound (MOVE_ELEVATOR_SOUND);
 }				// void MoveElevatorSound(void)
 
 /*@Function============================================================
@@ -603,7 +614,7 @@ MenuItemSelectedSound (void)
 {
   if (!sound_on) return;
 
-  Play_YIFF_Server_Sound ( MENU_ITEM_SELECTED_SOUND );
+  Play_Sound ( MENU_ITEM_SELECTED_SOUND );
 }				// void MoveElevatorSound(void)
 
 /*@Function============================================================
@@ -617,7 +628,7 @@ MoveMenuPositionSound (void)
 {
   if (!sound_on) return;
 
-  Play_YIFF_Server_Sound ( MOVE_MENU_POSITION_SOUND );
+  Play_Sound ( MOVE_MENU_POSITION_SOUND );
 }				// void MoveElevatorSound(void)
 
 
@@ -631,7 +642,7 @@ void
 ThouArtDefeatedSound (void)
 {
   if (!sound_on) return;
-  Play_YIFF_Server_Sound (THOU_ART_DEFEATED_SOUND);
+  Play_Sound (THOU_ART_DEFEATED_SOUND);
 }				// void MoveElevatorSound(void)
 
 
@@ -646,7 +657,7 @@ EnterElevatorSound (void)
 {
   if (!sound_on) return;
 
-  Play_YIFF_Server_Sound (ENTER_ELEVATOR_SOUND);
+  Play_Sound (ENTER_ELEVATOR_SOUND);
   return;
 }				// void EnterElevatorSound(void)
 
@@ -662,7 +673,7 @@ LeaveElevatorSound (void)
 {
   if (!sound_on) return;
 
-  Play_YIFF_Server_Sound (LEAVE_ELEVATOR_SOUND);
+  Play_Sound (LEAVE_ELEVATOR_SOUND);
 
   return;
 }				// void LeaveElevatorSound(void)
@@ -682,19 +693,19 @@ Fire_Bullet_Sound (int BulletType)
   switch (BulletType)
     {
       case PULSE:
-	Play_YIFF_Server_Sound ( FIRE_BULLET_PULSE_SOUND );
+	Play_Sound ( FIRE_BULLET_PULSE_SOUND );
 	break;
 
       case SINGLE_PULSE:
-	Play_YIFF_Server_Sound ( FIRE_BULLET_SINGLE_PULSE_SOUND );
+	Play_Sound ( FIRE_BULLET_SINGLE_PULSE_SOUND );
 	break;
 
       case MILITARY:
-	Play_YIFF_Server_Sound ( FIRE_BULLET_MILITARY_SOUND );
+	Play_Sound ( FIRE_BULLET_MILITARY_SOUND );
 	break;
 
       case FLASH:
-	Play_YIFF_Server_Sound ( FIRE_BULLET_FLASH_SOUND );
+	Play_Sound ( FIRE_BULLET_FLASH_SOUND );
 	break;
 
     }
@@ -712,7 +723,7 @@ Takeover_Set_Capsule_Sound (void)
 {
   if (!sound_on) return;
 
-  Play_YIFF_Server_Sound (TAKEOVER_SET_CAPSULE_SOUND);
+  Play_Sound (TAKEOVER_SET_CAPSULE_SOUND);
 }				// void FireBulletSound(void)
 
 /*@Function============================================================
@@ -726,7 +737,7 @@ Takeover_Game_Won_Sound (void)
 {
   if (!sound_on) return;
 
-  Play_YIFF_Server_Sound ( TAKEOVER_GAME_WON_SOUND );
+  Play_Sound ( TAKEOVER_GAME_WON_SOUND );
 }				// void FireBulletSound(void)
 
 /*@Function============================================================
@@ -740,7 +751,7 @@ Takeover_Game_Deadlock_Sound (void)
 {
   if (!sound_on) return;
 
-  Play_YIFF_Server_Sound ( TAKEOVER_GAME_DEADLOCK_SOUND );
+  Play_Sound ( TAKEOVER_GAME_DEADLOCK_SOUND );
 }				// void FireBulletSound(void)
 
 /*@Function============================================================
@@ -754,7 +765,7 @@ Takeover_Game_Lost_Sound (void)
 {
   if (!sound_on) return;
 
-  Play_YIFF_Server_Sound ( TAKEOVER_GAME_LOST_SOUND );
+  Play_Sound ( TAKEOVER_GAME_LOST_SOUND );
 }				// void FireBulletSound(void)
 
 
@@ -769,7 +780,7 @@ BounceSound (void)
 {
   if (!sound_on) return;
 
-  Play_YIFF_Server_Sound (COLLISIONSOUND);
+  Play_Sound (COLLISIONSOUND);
 
 }				// void BounceSound(void)
 
@@ -784,7 +795,7 @@ DruidBlastSound (void)
 {
   if (!sound_on) return;
 
-  Play_YIFF_Server_Sound (BLASTSOUND);
+  Play_Sound (BLASTSOUND);
 
 }				// void BounceSound(void)
 

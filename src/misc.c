@@ -1371,8 +1371,8 @@ Terminate (int ExitCode)
 
   DebugPrintf ("\nvoid Terminate(int ExitStatus) wurde aufgerufen....\n");
   printf ("GameOver : %i\n", GameOver);
-  // keyboard_close ();
-  // vga_setmode (TEXT);
+
+  YIFF_Server_Close_Connections();
   
   SDL_Quit();
   exit (ExitCode);
