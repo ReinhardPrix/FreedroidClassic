@@ -81,7 +81,7 @@ main (int argc, char * argv[])
 {
   int i;
   int PlayerNum;
-  float test_float_1, test_float_2, test_float_3;
+  // float test_float_1, test_float_2, test_float_3;
 
   //--------------------
   // WARNING!  We're using a GNU extension of standard (ANSI?) C here.  That
@@ -101,24 +101,25 @@ main (int argc, char * argv[])
 #endif
 
   /*
-  if ( feraiseexcept ( FE_ALL_EXCEPT ) != 0 )
+    if ( feraiseexcept ( FE_ALL_EXCEPT ) != 0 )
     {
-      DebugPrintf ( -100 , "\nCouldn't set floating point exceptions to be raised...\nTerminating..." );
-      exit ( 0 );
+    DebugPrintf ( -100 , "\nCouldn't set floating point exceptions to be raised...\nTerminating..." );
+    exit ( 0 );
     }
-  else
+    else
     {
-      DebugPrintf ( -100 , "\nFloating point exceptions to be raised set successfully!\n" );
+    DebugPrintf ( -100 , "\nFloating point exceptions to be raised set successfully!\n" );
     }
+  */
+  /*
+    test_float_1 = 3.1 ;
+    test_float_2 = 0.0 ; 
+    test_float_3 = test_float_1 / test_float_2 ;
   */
 
   GameOver = FALSE;
   QuitProgram = FALSE;
 
-
-  test_float_1 = 3.1 ;
-  test_float_2 = 0.0 ; 
-  test_float_3 = test_float_1 / test_float_2 ;
 
   /*
    *  Parse command line and set global switches 
