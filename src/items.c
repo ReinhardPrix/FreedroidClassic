@@ -662,7 +662,7 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
   switch ( MyRandom ( TreasureChestRange ) )
     {
     case 0:
-      switch ( MyRandom ( 9 ) )
+      switch ( MyRandom ( 11 ) )
 	{
 	case 0:
 	  DropItemAt( ITEM_TRACKS , x , y , Pre , Suf , TreasureChestRange , 1 );
@@ -694,10 +694,18 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
 	case 9:
 	  DropItemAt( ITEM_CLOAK , x , y , Pre , Suf , TreasureChestRange , 1 );
 	  break;
+	case 10:
+	  DropItemAt( ITEM_PLASMA_AMMUNITION , x , y , Pre , Suf , TreasureChestRange , 3 + MyRandom ( 9 ) );
+	  break;
+	case 11:
+	  DropItemAt( ITEM_LASER_AMMUNITION , x , y , Pre , Suf , TreasureChestRange , 3 + MyRandom ( 9 ) );
+	  break;
+#define ITEM_EXTERMINATOR_AMMUNITION 68
+
 	}
       break;
     case 1:
-      switch ( MyRandom ( 7 ) )
+      switch ( MyRandom ( 10 ) )
 	{
 	case 0:
 	  DropItemAt( ITEM_WHEELS , x , y , Pre , Suf , TreasureChestRange , 1 );
@@ -723,10 +731,19 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
 	case 7:
 	  DropItemAt( ITEM_ROBE , x , y , Pre , Suf , TreasureChestRange , 1 );
 	  break;
+	case 8:
+	  DropItemAt( ITEM_PLASMA_AMMUNITION , x , y , Pre , Suf , TreasureChestRange , 10 + MyRandom ( 9 ) );
+	  break;
+	case 9:
+	  DropItemAt( ITEM_LASER_AMMUNITION , x , y , Pre , Suf , TreasureChestRange , 10 + MyRandom ( 9 ) );
+	  break;
+	case 10:
+	  DropItemAt( ITEM_EXTERMINATOR_AMMUNITION , x , y , Pre , Suf , TreasureChestRange , 10 + MyRandom ( 9 ) );
+	  break;
 	}
       break;
     case 2:
-      switch ( MyRandom ( 8 ) )
+      switch ( MyRandom ( 11 ) )
 	{
 	case 0:
 	  DropItemAt( ITEM_TRIPEDAL , x , y , Pre , Suf , TreasureChestRange , 1 );
@@ -755,10 +772,19 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
 	case 8:
 	  DropItemAt( ITEM_STANDARD_SHIELD , x , y , Pre , Suf , TreasureChestRange , 1 );
 	  break;
+	case 9:
+	  DropItemAt( ITEM_PLASMA_AMMUNITION , x , y , Pre , Suf , TreasureChestRange , 20 + MyRandom ( 9 ) );
+	  break;
+	case 10:
+	  DropItemAt( ITEM_LASER_AMMUNITION , x , y , Pre , Suf , TreasureChestRange , 20 + MyRandom ( 9 ) );
+	  break;
+	case 11:
+	  DropItemAt( ITEM_EXTERMINATOR_AMMUNITION , x , y , Pre , Suf , TreasureChestRange , 20 + MyRandom ( 9 ) );
+	  break;
 	}
       break;
     case 3:
-      switch ( MyRandom ( 8 ) )
+      switch ( MyRandom ( 11 ) )
 	{
 	case 0:
 	  DropItemAt( ITEM_COMPOSITE_BOW , x , y , Pre , Suf , TreasureChestRange , 1 );
@@ -786,6 +812,15 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
 	  break;
 	case 8:
 	  DropItemAt( ITEM_MEDIUM_SHIELD , x , y , Pre , Suf , TreasureChestRange , 1 );
+	  break;
+	case 9:
+	  DropItemAt( ITEM_PLASMA_AMMUNITION , x , y , Pre , Suf , TreasureChestRange , 30 + MyRandom ( 9 ) );
+	  break;
+	case 10:
+	  DropItemAt( ITEM_LASER_AMMUNITION , x , y , Pre , Suf , TreasureChestRange , 30 + MyRandom ( 9 ) );
+	  break;
+	case 11:
+	  DropItemAt( ITEM_EXTERMINATOR_AMMUNITION , x , y , Pre , Suf , TreasureChestRange , 30 + MyRandom ( 9 ) );
 	  break;
 	}
       break;

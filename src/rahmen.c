@@ -504,21 +504,16 @@ ShowCurrentHealthAndForceLevel( void )
   SDL_Rect Unforce_Rect;
   SDL_Surface* tmp;
   char *fpath;
-
-  // static SDL_Surface *SpeedMeterImage = NULL;
   static iso_image speed_meter_iso_image = { NULL , 0 , 0 , NULL , 0 , 0 , 0 } ;
-  static SDL_Surface *SpeedMeterEnergyArrowImage = NULL;
-  static SDL_Surface *SpeedMeterManaArrowImage = NULL;
+  static iso_image SpeedMeterEnergyArrowImage = { NULL , 0 , 0 , NULL , 0 , 0 , 0 } ;
+  static iso_image SpeedMeterManaArrowImage = { NULL , 0 , 0 , NULL , 0 , 0 , 0 } ;
   static SDL_Surface *SpeedOMeterWorkingCopy = NULL;
   static SDL_Rect SpeedMeterRect;
-
   static int Previous_Energy = - 1234; // a completely unrealistic value;
   static int Previous_Mana = - 123; // a completely unrealistic value;
   static int Previous_Maxenergy = - 123; // a completely unrealistic value;
   static int Previous_Maxmana = - 123; // a completely unrealistic value;
-
   point PivotPosition = { 42 , 49 };
-
   SDL_Surface *RotatedArrow; // this will be blitted into the speed-o-meter working copy
   SDL_Rect ArrowRect;
 
@@ -533,23 +528,22 @@ ShowCurrentHealthAndForceLevel( void )
   if ( speed_meter_iso_image . surface == NULL )
     {
       fpath = find_file ( "speed_o_meter.png" , GRAPHICS_DIR, FALSE);
-
       get_iso_image_from_file_and_path ( fpath , & ( speed_meter_iso_image ) ) ;
       tmp = speed_meter_iso_image . surface ;
       speed_meter_iso_image . surface = SDL_DisplayFormatAlpha ( speed_meter_iso_image . surface );
       SDL_FreeSurface ( tmp ) ;
 
-      // SpeedMeterImage = our_IMG_load_wrapper( fpath );
-      if ( use_open_gl )
-	{
-	  make_texture_out_of_surface ( & ( speed_meter_iso_image ) ) ;
-	}
-
       fpath = find_file ( "speed_o_meter_arrow_energy.png" , GRAPHICS_DIR, FALSE);
-      SpeedMeterEnergyArrowImage = our_IMG_load_wrapper( fpath );
+      get_iso_image_from_file_and_path ( fpath , & ( SpeedMeterEnergyArrowImage ) ) ;
+      tmp = SpeedMeterEnergyArrowImage . surface ;
+      SpeedMeterEnergyArrowImage . surface = SDL_DisplayFormatAlpha ( SpeedMeterEnergyArrowImage . surface ) ;
+      SDL_FreeSurface ( tmp ) ;
+
       fpath = find_file ( "speed_o_meter_arrow_mana.png" , GRAPHICS_DIR, FALSE);
-      SpeedMeterManaArrowImage = our_IMG_load_wrapper( fpath );
-      SpeedOMeterWorkingCopy = our_SDL_display_format_wrapper( speed_meter_iso_image . surface );
+      get_iso_image_from_file_and_path ( fpath , & ( SpeedMeterManaArrowImage ) ) ;
+      tmp = SpeedMeterManaArrowImage . surface ;
+      SpeedMeterManaArrowImage . surface = SDL_DisplayFormatAlpha ( SpeedMeterManaArrowImage . surface ) ;
+      SDL_FreeSurface ( tmp ) ;
 
       //--------------------
       // We define the right side of the user screen as the rectangle
@@ -559,6 +553,13 @@ ShowCurrentHealthAndForceLevel( void )
       SpeedMeterRect.y = 0; 
       SpeedMeterRect.w = speed_meter_iso_image . surface -> w;
       SpeedMeterRect.h = speed_meter_iso_image . surface -> h;
+
+      if ( use_open_gl )
+	{
+	  make_texture_out_of_surface ( & ( speed_meter_iso_image ) ) ;
+	  make_texture_out_of_surface ( & ( SpeedMeterEnergyArrowImage ) ) ;
+	  make_texture_out_of_surface ( & ( SpeedMeterManaArrowImage ) ) ;
+	}
     }
 
   //--------------------
@@ -568,12 +569,26 @@ ShowCurrentHealthAndForceLevel( void )
   if ( Me[0].status == BRIEFING ) return;
   
 
-  if ( FALSE ) // use_open_gl
+  if ( use_open_gl ) 
     {
       
       blit_open_gl_texture_to_map_position ( speed_meter_iso_image , 
 					     translate_pixel_to_map_location ( 0 , SCREEN_WIDTH/2 - speed_meter_iso_image . surface -> w + 32 , - SCREEN_HEIGHT / 2 + 32 , TRUE ) , 
 					     translate_pixel_to_map_location ( 0 , SCREEN_WIDTH/2 - speed_meter_iso_image . surface -> w + 32 , - SCREEN_HEIGHT / 2 + 32 , FALSE ) ) ;
+
+      /*
+      blit_open_gl_texture_to_screen_position ( SpeedMeterManaArrowImage , 
+						SCREEN_WIDTH/2 - speed_meter_iso_image . surface -> w , 
+						SCREEN_HEIGHT / 2 );
+      */
+
+      blit_rotated_open_gl_texture_with_center ( SpeedMeterManaArrowImage , 
+						SCREEN_WIDTH - speed_meter_iso_image . surface -> w + PivotPosition . x , 
+						0 + PivotPosition . y  , - 360 * 3 / 4 * Me[0].mana / Me[0].maxmana );
+
+      blit_rotated_open_gl_texture_with_center ( SpeedMeterEnergyArrowImage , 
+						SCREEN_WIDTH - speed_meter_iso_image . surface -> w + PivotPosition . x , 
+						0 + PivotPosition . y  , - 360 * 3 / 4 * Me[0].energy / Me[0].maxenergy );
 
       // blit_open_gl_texture_to_map_position ( speed_meter_iso_image , Me [ 0 ] . pos . x , Me [ 0 ] . pos . y ) ;
     } // if ( use_open_gl )
@@ -591,14 +606,14 @@ ShowCurrentHealthAndForceLevel( void )
 	{
 	  //--------------------
 	  // We generate a new fresh empty speed-o-meter in the working copy
+	  //
 	  SDL_FreeSurface ( SpeedOMeterWorkingCopy );
 	  SpeedOMeterWorkingCopy = our_SDL_display_format_wrapperAlpha ( speed_meter_iso_image . surface );
 	  SDL_SetColorKey ( SpeedOMeterWorkingCopy , SDL_SRCCOLORKEY, 
 			    SDL_MapRGB ( SpeedOMeterWorkingCopy -> format , 255, 0, 255 ) ); 
 	  
-	  
 	  // We blit in the red arrow, showing current energy
-	  RotatedArrow = rotozoomSurface( SpeedMeterEnergyArrowImage , 
+	  RotatedArrow = rotozoomSurface( SpeedMeterEnergyArrowImage . surface , 
 					  - 360 * 3 / 4 * Me[0].energy / Me[0].maxenergy , 1.0 , FALSE );
 	  
 	  ArrowRect.x = PivotPosition.x - ( RotatedArrow->w / 2 ) ;
@@ -607,7 +622,7 @@ ShowCurrentHealthAndForceLevel( void )
 	  SDL_FreeSurface( RotatedArrow );
 	  
 	  // We blit in the blue arrow, showing current mana
-	  RotatedArrow = rotozoomSurface( SpeedMeterManaArrowImage , 
+	  RotatedArrow = rotozoomSurface( SpeedMeterManaArrowImage . surface , 
 					  -360 * 3 / 4 * Me[0].mana / Me[0].maxmana , 1.0 , FALSE );
 	  
 	  ArrowRect.x = PivotPosition.x - ( RotatedArrow->w / 2 ) ;

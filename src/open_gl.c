@@ -659,7 +659,7 @@ blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x 
   //
   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
-  
+
   //--------------------
   // Now of course we need to find out the proper target position.
   //
@@ -702,6 +702,109 @@ blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x 
 #endif
 
 }; // void blit_open_gl_texture_to_pixel_position ( iso_image our_floor_iso_image , int x, int y ) 
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+blit_rotated_open_gl_texture_with_center ( iso_image our_iso_image , int x , int y , float angle_in_degree ) 
+{
+
+#ifdef HAVE_LIBGL
+
+  SDL_Rect target_rectangle;
+  float texture_start_y;
+  float texture_end_y;
+
+  int image_start_x;
+  int image_end_x;
+  int image_start_y;
+  int image_end_y;
+
+  moderately_finepoint corner1, corner2, corner3, corner4;
+
+  //--------------------
+  // Linear Filtering is slow and maybe not nescessary here, so we
+  // stick to the faster 'nearest' variant.
+  //
+  glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+  glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+  
+  glEnable( GL_TEXTURE_2D );  
+  glDisable( GL_ALPHA_TEST );  
+  glEnable(GL_BLEND);
+  glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
+  glBlendFunc( GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA );
+
+  //--------------------
+  // Now of course we need to find out the proper target position.
+  //
+  target_rectangle . x = x ;
+  target_rectangle . y = y ;
+  
+  //--------------------
+  // Now we can begin to draw the actual textured rectangle.
+  //
+  image_start_x = target_rectangle . x ;
+  image_end_x = target_rectangle . x + our_iso_image . texture_width ; 
+  image_start_y = target_rectangle . y ;
+  image_end_y = target_rectangle . y + our_iso_image . texture_height ;
+
+  corner1 . x = 0 - our_iso_image . surface -> w / 2 ;
+  corner1 . y = 0 - our_iso_image . surface -> h / 2 ;
+  corner2 . x = 0 - our_iso_image . surface -> w / 2 ;
+  corner2 . y = 0 + our_iso_image . surface -> h / 2 + ( our_iso_image . texture_height - our_iso_image . surface -> h );
+  corner3 . x = 0 + our_iso_image . surface -> w / 2 + ( our_iso_image . texture_width - our_iso_image . surface -> w );
+  corner3 . y = 0 + our_iso_image . surface -> h / 2 + ( our_iso_image . texture_height - our_iso_image . surface -> h );
+  corner4 . x = 0 + our_iso_image . surface -> w / 2 + ( our_iso_image . texture_width - our_iso_image . surface -> w );
+  corner4 . y = 0 - our_iso_image . surface -> h / 2 ;
+
+  RotateVectorByAngle ( & corner1 , angle_in_degree );
+  RotateVectorByAngle ( & corner2 , angle_in_degree );
+  RotateVectorByAngle ( & corner3 , angle_in_degree );
+  RotateVectorByAngle ( & corner4 , angle_in_degree );
+
+  corner1 . x += x ;
+  corner1 . y += y ;
+  corner2 . x += x ;
+  corner2 . y += y ;
+  corner3 . x += x ;
+  corner3 . y += y ;
+  corner4 . x += x ;
+  corner4 . y += y ;
+
+  if ( image_start_x > 640 ) return ;
+  if ( image_end_x < 0 ) return ;
+  if ( image_start_y > 480 ) return;
+  if ( image_end_y < 0 ) return;
+
+  texture_start_y = 1.0 ; // 1 - ((float)(our_iso_image . surface -> h)) / 127.0 ; // 1.0 
+  texture_end_y = 0.0 ;
+
+  glBindTexture( GL_TEXTURE_2D, our_iso_image . texture );
+  glBegin(GL_QUADS);
+  glTexCoord2i( 0.0f, texture_start_y ); 
+  glVertex2i( corner1 . x , corner1 . y );
+  glTexCoord2i( 0.0f, texture_end_y ); 
+  glVertex2i( corner2 . x , corner2 . y );
+  glTexCoord2i( 1.0f, texture_end_y ); 
+  glVertex2i( corner3 . x , corner3 . y );
+  glTexCoord2f( 1.0f, texture_start_y ); 
+  glVertex2i( corner4 . x , corner4 . y );
+  glEnd( );
+
+  glDisable( GL_TEXTURE_2D );  
+  glDisable(GL_BLEND);
+  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND );
+  // glBlendFunc( GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA );
+
+  glEnable( GL_ALPHA_TEST );  
+  glAlphaFunc ( GL_GREATER , 0.5 ) ;
+
+#endif
+
+}; // void blit_rotated_open_gl_texture_with_center ( iso_image our_iso_image , int x , int y , float angle_in_degree ) 
 
 /* ----------------------------------------------------------------------
  * This function restores the menu background, that must have been stored
