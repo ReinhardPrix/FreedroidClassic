@@ -321,9 +321,15 @@ Assemble_Combat_Picture (int mask)
   int line, col;
   int i, j;
   SDL_Rect TargetRectangle;
+  SDL_Rect CombatRectangle;
 
   DebugPrintf ("\nvoid Assemble_Combat_Picture(...): Real function call confirmed.");
 
+  CombatRectangle.x=USERFENSTERPOSX;
+  CombatRectangle.y=USERFENSTERPOSY;
+  CombatRectangle.w=USERFENSTERBREITE;
+  CombatRectangle.h=USERFENSTERHOEHE;
+  
 
   if (Conceptview)
     {
@@ -331,16 +337,26 @@ Assemble_Combat_Picture (int mask)
       return;
     }
 
+#define USER_FENSTER_CENTER_X (USERFENSTERPOSX + (USERFENSTERBREITE/2))
+#define USER_FENSTER_CENTER_Y (USERFENSTERPOSY + (USERFENSTERHOEHE/2))
 
-  
-  for (line = 0; line < (INTERNHOEHE); line++)
+  SDL_SetClipRect( ne_screen , &CombatRectangle );
+
+  // Why not clip the WHOLE map?  Lets try it!
+  // --> It seems to work!!  THAT IS A VERY POWERFUL AND VERY ABSTRACT PROCEDURE:
+  // * INTERNBREITE IS NO LONGER NEEDED IN HERE
+  // * INTERNHOEHE IS NO LONGER NEEDED IN HERE
+  // * THE COMBATSCREENSIZE COULD *EASYLY* BE CHANGED WITHOUT HAVING TO CHANGE THE CODE!!!
+  // 
+
+  for (line = 0; line < CurLevel->ylen ; line++)
     {
-      for (col = 0; col < (INTERNBREITE); col++)
+      for (col = 0; col < CurLevel->xlen ; col++)
 	{
-	  if ((MapBrick = View[line][col]) != INVISIBLE_BRICK)
+	  if ((MapBrick = CurLevel->map[line][col]) != INVISIBLE_BRICK)
 	    {
-	      TargetRectangle.x=USERFENSTERPOSX+col*BLOCKBREITE;
-	      TargetRectangle.y=USERFENSTERPOSY+line*BLOCKHOEHE;
+	      TargetRectangle.x=USER_FENSTER_CENTER_X-Me.pos.x+col*BLOCKBREITE;
+	      TargetRectangle.y=USER_FENSTER_CENTER_Y-Me.pos.y+line*BLOCKHOEHE;
 	      SDL_BlitSurface(ne_blocks, ne_map_block+MapBrick, ne_screen, &TargetRectangle);
 	    }			// if !INVISIBLE_BRICK 
 	}			// for(col) 
