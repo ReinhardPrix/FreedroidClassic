@@ -2129,13 +2129,13 @@ AssembleCombatPicture ( int mask )
     if ( ! ( mask & ONLY_SHOW_MAP_AND_TEXT ) )
     {
 	ShowItemAlarm();
-	ShowCharacterScreen ( );
-	ShowSkillsScreen ( );
-	ManageInventoryScreen ( );
 	ShowQuickInventory ();
-	DisplayButtons( );
 	if ( ! GameOver )
 	    DisplayBanner ( );
+	ShowCharacterScreen ( );
+	ShowSkillsScreen ( );
+	DisplayButtons( );
+	ManageInventoryScreen ( );
     }
     
     if ( ServerMode )
