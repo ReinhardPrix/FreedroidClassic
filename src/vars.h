@@ -138,10 +138,11 @@ typedef struct
 */
 
 item_bonus SuffixList[] = {
-  { " of Strength"  ,  0 , 50 ,  0 ,  0 , 0 , 0 , 0 },
-  { " of Dexterity" , 50 ,  0 ,  0 ,  0 , 0 , 0 , 0 },
-  { " of Vitality"  ,  0 ,  0 , 50 ,  0 , 0 , 0 , 0 },
-  { " of Magic"     ,  0 ,  0 ,  0 , 50 , 0 , 0 , 0 },
+  { " of Strength"            ,  0 , 50 ,  0 ,  0 ,  0 ,  0 ,  0 },
+  { " of Dexterity"           , 50 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 },
+  { " of Vitality"            ,  0 ,  0 , 50 ,  0 ,  0 ,  0 ,  0 },
+  { " of Magic"               ,  0 ,  0 ,  0 , 50 ,  0 ,  0 ,  0 },
+  { " of the Open Source"     , 50 , 50 , 50 , 50 , 50 , 50 , 50 }
 };
 
 char *Shipnames[ALLSHIPS] = {

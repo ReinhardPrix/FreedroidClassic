@@ -48,18 +48,18 @@
 // #define DRUIDHITDIST2		0
 
 /* ----------------------------------------------------------------------
- *
+ * This function does the rotation of a given vector by a given angle
  *
  * ---------------------------------------------------------------------- */
 void
-RotateVectorByAngle ( finepoint* vector , float rot_angle )
+RotateVectorByAngle ( moderately_finepoint* vector , float rot_angle )
 {
-  finepoint new_vect;
+  moderately_finepoint new_vect;
   float rad_angle;
 
   rad_angle = rot_angle * ( M_PI / 180.0 ) ; // / 180 );
   
-  DebugPrintf( 0 , "\n RAD_ANGLE : %f " , rad_angle );
+  DebugPrintf( 1 , "\n RAD_ANGLE : %f " , rad_angle );
   new_vect.x =  sin( rad_angle ) * vector->y + cos( rad_angle ) * vector->x;
   new_vect.y =  cos( rad_angle ) * vector->y - sin( rad_angle ) * vector->x;
   vector->x = new_vect.x;
@@ -77,7 +77,7 @@ MoveBullets (void)
   int map_x;
   int map_y;
   Bullet CurBullet;
-  finepoint dist_vector;
+  moderately_finepoint dist_vector;
   float dist_vec_len;
 
   // movement of hte bullets
@@ -101,25 +101,31 @@ MoveBullets (void)
 	  // We change the angle of the bullet itself.  That's the easier part.
 	  // Rotation by selecting angle.  Very easy indead.
 	  //
-	  DebugPrintf( 0 , "\n Angle change rate : %f " , CurBullet->angle_change_rate );
+	  DebugPrintf( 1 , "\n Angle change rate : %f " , CurBullet->angle_change_rate );
 	  CurBullet->angle += CurBullet->angle_change_rate * Frame_Time();
 
 	  //--------------------
 	  // Now we must rotate the bullet around the influence device or other
 	  // owner as specified in the bullets owner pointer
 	  //
+	  /*
 	  dist_vector.x = CurBullet->pos.x - CurBullet->owner_pos->x;
 	  dist_vector.y = CurBullet->pos.y - CurBullet->owner_pos->y;
-
 	  dist_vec_len = sqrt( dist_vector.x * dist_vector.x + dist_vector.y * dist_vector.y );
 
 	  dist_vector.x *= CurBullet->fixed_offset / dist_vec_len ;
 	  dist_vector.y *= CurBullet->fixed_offset / dist_vec_len ;
-	  
-	  DebugPrintf( 0 , "\n distance vector : (%f/%f) " , dist_vector.x , dist_vector.y );
-	  
-	  // RotateVectorByAngle ( &dist_vector , CurBullet->angle_change_rate * Frame_Time() );
-	  RotateVectorByAngle ( &dist_vector , CurBullet->angle_change_rate * Frame_Time() );
+	  */
+	  dist_vector.x = 0;
+	  dist_vector.y = - CurBullet->fixed_offset;
+
+	  DebugPrintf( 1 , "\n distance vector : (%f/%f) " , dist_vector.x , dist_vector.y );
+
+	  /*
+	    RotateVectorByAngle ( &dist_vector , CurBullet->angle_change_rate * Frame_Time() );
+	  */
+
+	  RotateVectorByAngle ( &dist_vector , CurBullet->angle );
 
 	  CurBullet->pos.x = CurBullet->owner_pos->x + dist_vector.x;
 	  CurBullet->pos.y = CurBullet->owner_pos->y + dist_vector.y;

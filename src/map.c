@@ -1052,6 +1052,10 @@ Decode_Loaded_Leveldata (char *data)
 			   &( loadlevel->ItemList[ i ].current_duration ) , ItemsSectionEnd );
       ReadValueFromString( ItemPointer , ITEM_GOLD_AMOUNT_STRING , "%d" , 
 			   &( loadlevel->ItemList[ i ].gold_amount ) , ItemsSectionEnd );
+      ReadValueFromString( ItemPointer , ITEM_PREFIX_CODE_STRING , "%d" , 
+			   &( loadlevel->ItemList[ i ].prefix_code ) , ItemsSectionEnd );
+      ReadValueFromString( ItemPointer , ITEM_SUFFIX_CODE_STRING , "%d" , 
+			   &( loadlevel->ItemList[ i ].suffix_code ) , ItemsSectionEnd );
 
       DebugPrintf( 0 , "\nPosX=%f PosY=%f Item=%d" , loadlevel->ItemList[ i ].pos.x , 
 		   loadlevel->ItemList[ i ].pos.y , loadlevel->ItemList[ i ].type );

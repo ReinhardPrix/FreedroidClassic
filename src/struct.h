@@ -470,7 +470,7 @@ bulletspec, *Bulletspec;
 typedef struct
 {
   finepoint pos;
-  finepoint speed;
+  moderately_finepoint speed;
   int type;
   byte phase;
   int damage; // damage done by this particular bullet 
