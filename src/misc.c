@@ -107,37 +107,29 @@ DebugPrintf (char *Print_String)
   fclose (debugfile);
 };
 
-// This Function is for the PORT!!!!
-// Replacing all MyRandom-calls with MyMyRandom-calls
-
+/*-----------------------------------------------------------------
+ * Desc: return an integer-random number in the range [0,Obergrenze]
+ * 
+ *-----------------------------------------------------------------*/
 int
 MyRandom (int Obergrenze)
 {
   float Zwisch;
-  double ReinerZufall;
-  int Endwert;
+  int ReinerZufall;
+  int dice_val;    /* the result in [0, Obergrenze] */
 
-  DebugPrintf
-    ("\nint MyRandom(int Obergrenze): real function call confirmed...");
-  printf ("Obergrenze ist jetzt: %d.", Obergrenze);
+  ReinerZufall = rand ();
 
-  ReinerZufall = (double) rand ();
-  printf ("\nint MyRandom(int Obergrenze): Reiner Zufall ist jetzt: %f.",
-	  ReinerZufall);
-  Zwisch = ((float) ReinerZufall) / ((float) RAND_MAX);
-  printf ("\nint MyRandom(int Obergrenze): Zwisch ist jetzt: %f.", Zwisch);
-  Zwisch = Zwisch * ((float) Obergrenze);
-  Endwert = (unsigned int) rintf (Zwisch);
+  Zwisch = 1.0*ReinerZufall/RAND_MAX; /* random number in [0;1] */
 
-
-  printf ("\nint MyRandom(int Obergrenze): Endwert ist jetzt: %d.", Endwert);
-  DebugPrintf ("\nint MyRandom(int Obergrenze): end of function reached...");
-
-  return Endwert;
-};
-
-// This Function is for the PORT!!!!
-// Replacing all MyRandom-calls with MyMyRandom-calls
+  /* 
+   * we always round OFF for the resulting int, therefore
+   * we first add 0.99999 to make sure that Obergrenze has
+   * roughly the same probablity as the other numbers 
+   */
+  dice_val = (int)( Zwisch * (1.0 * Obergrenze + 0.99999) );
+  return (dice_val);
+} /* MyRandom () */
 
 void
 reverse (char s[])
@@ -149,10 +141,8 @@ reverse (char s[])
       s[i] = s[j];
       s[j] = c;
     }
-}				// void reverse(char s[]) siehe Kernighan&Ritchie!
+}/* void reverse(char s[]) siehe Kernighan&Ritchie! */
 
-// This Function is for the PORT!!!!
-// Replacing all MyRandom-calls with MyMyRandom-calls
 
 char *
 itoa (int n, char s[], int Dummy)
@@ -220,10 +210,10 @@ Armageddon (void)
 } // void Armageddon(void)
 
 /* **********************************************************************
-	Diese Funktion teleportiert an einen beliebigen Ort im Schiff.
-	Es werden Levelnummer und Grobkoordinaten "ubergeben.
-
-	**********************************************************************/
+ *	Diese Funktion teleportiert an einen beliebigen Ort im Schiff.
+ *	Es werden Levelnummer und Grobkoordinaten "ubergeben.
+ *
+ **********************************************************************/
 
 void
 Teleport (int LNum, int X, int Y)
@@ -254,8 +244,8 @@ Teleport (int LNum, int X, int Y)
       ShuffleEnemys ();
 
       /* Position des Influencer richtig setzen */
-      Me.pos.x = X * BLOCKBREITE + BLOCKBREITE / 2;
-      Me.pos.y = Y * BLOCKHOEHE + BLOCKHOEHE / 2;
+      Me.pos.x = Grob2Fein(X);   /* Macro to convert from grob to fein */
+      Me.pos.y = Grob2Fein(Y);
 
       /* Alle Blasts und Bullets loeschen */
       for (i = 0; i < MAXBLASTS; i++)
@@ -269,14 +259,15 @@ Teleport (int LNum, int X, int Y)
   else
     {
       FadeLevel ();
-      Me.pos.x = X * BLOCKBREITE + BLOCKBREITE / 2;
-      Me.pos.y = Y * BLOCKHOEHE + BLOCKHOEHE / 2;
+      Me.pos.x = Grob2Fein(X);
+      Me.pos.y = Grob2Fein(Y);
     }
 
   LeaveElevatorSound ();
-  BeamLine = BLOCKBREITE / 2;
+
   UnfadeLevel ();
-}				// void Teleport(...)
+
+} /* Teleport() */
 
 /* **********************************************************************
  *  Diese Funktion stellt ein praktisches Cheatmenu zur Verf"ugung
