@@ -306,10 +306,21 @@ ShowCurrentTextWindow ( void )
   //--------------------
   // For testing purposes is bluntly insert the new banner element here:
   //
-  Banner_Text_Rect.x = BANNER_TEXT_RECT_X;
-  Banner_Text_Rect.y = BANNER_TEXT_RECT_Y;
-  Banner_Text_Rect.w = BANNER_TEXT_RECT_W;
-  Banner_Text_Rect.h = BANNER_TEXT_RECT_H;
+  // if ( GetMousePos_y( ) >= ( SCREENHEIGHT / 2 ) )
+  if ( GetMousePos_y( ) + 16 >= ( UPPER_BANNER_TEXT_RECT_H + UPPER_BANNER_TEXT_RECT_Y ) )
+    {
+      Banner_Text_Rect.x = UPPER_BANNER_TEXT_RECT_X;
+      Banner_Text_Rect.y = UPPER_BANNER_TEXT_RECT_Y;
+      Banner_Text_Rect.w = UPPER_BANNER_TEXT_RECT_W;
+      Banner_Text_Rect.h = UPPER_BANNER_TEXT_RECT_H;
+    }
+  else
+    {
+      Banner_Text_Rect.x = LOWER_BANNER_TEXT_RECT_X;
+      Banner_Text_Rect.y = LOWER_BANNER_TEXT_RECT_Y;
+      Banner_Text_Rect.w = LOWER_BANNER_TEXT_RECT_W;
+      Banner_Text_Rect.h = LOWER_BANNER_TEXT_RECT_H;
+    }
 
   CurPos.x = GetMousePos_x() + 16 ;
   CurPos.y = GetMousePos_y() + 16 ;
@@ -446,7 +457,7 @@ ShowCurrentTextWindow ( void )
   //--------------------
   // Now we separate the lines and fill them into the line-array
   //
-  InterLineDistance = ( BANNER_TEXT_RECT_H - NumberOfLinesInText * FontHeight( GetCurrentFont() ) ) / 
+  InterLineDistance = ( UPPER_BANNER_TEXT_RECT_H - NumberOfLinesInText * FontHeight( GetCurrentFont() ) ) / 
     ( NumberOfLinesInText + 1 );
 
   LongTextPointer = ItemDescText;

@@ -1678,6 +1678,20 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
   //
   if ( ItemPointer != NULL )
     {
+      //--------------------
+      // In the special case of money, we add the amount of money to our
+      // money counter and eliminate the item on the floor.
+      //
+      if ( ItemPointer->type == ITEM_MONEY )
+	{
+	  PlayItemSound( ItemMap[ ItemPointer->type ].sound_number );
+	  Me.Gold += ItemPointer->gold_amount;
+	  DeleteItem( ItemPointer );
+	  return;
+	}
+
+
+
       // find a free position in the inventory list
       for ( InvPos = 0 ; InvPos < MAX_ITEMS_IN_INVENTORY ; InvPos++ )
 	{
