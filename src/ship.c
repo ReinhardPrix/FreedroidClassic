@@ -73,7 +73,6 @@ EnterElevator (void)
    * by turning off transfer mode as soon as the influ enters the elevator */
   Me.status= ELEVATOR;
 
-  // SetInfoline (NULL, NULL);
   curLevel = CurLevel->levelnum;
 
   if ((curElev = GetCurrentElevator ()) == -1)
@@ -194,7 +193,7 @@ EnterElevator (void)
 
   LeaveElevatorSound ();
   ClearGraphMem ( );
-  DisplayBanner ( BANNER_FORCE_UPDATE );
+  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
 
   UnfadeLevel ();
 
@@ -231,8 +230,7 @@ ShowElevators (void)
   ClearGraphMem();
   // fill the user fenster with some color
   SetUserfenster ( EL_BG_COLOR );
-  DisplayBanner ( BANNER_FORCE_UPDATE );      
-  // SetInfoline (NULL, NULL);
+  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );      
 
   tmp= IMG_Load ( NE_ELEVATOR_PIC_FILE );
   SourceRectangle.x=0;
@@ -377,8 +375,7 @@ PaintConsoleMenu (void)
 
   ClearGraphMem ();
 
-  DisplayBanner ( BANNER_FORCE_UPDATE );
-  // SetInfoline (NULL, NULL);
+  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
 
   /* Userfenster faerben */
   // SetUserfenster (KON_BG_COLOR, Outline320x200);

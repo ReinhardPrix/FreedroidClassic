@@ -565,7 +565,7 @@ InitNewGame (void)
 
   /* Den Banner fuer das Spiel anzeigen */
   ClearGraphMem();
-  DisplayBanner ( BANNER_FORCE_UPDATE );
+  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
 
   SetTextColor (FONT_WHITE, FONT_RED);
   InitBars = TRUE;
@@ -771,7 +771,7 @@ Title (void)
   Me.status=BRIEFING;
 
   // ClearGraphMem ();
-  // DisplayBanner( BANNER_FORCE_UPDATE ); 
+  // DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE ); 
 
   // SetTextColor (FONT_BLACK, FONT_RED);
 
@@ -783,7 +783,7 @@ Title (void)
   ScrollText (TitleText4, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
 
   ClearGraphMem ();
-  DisplayBanner( BANNER_FORCE_UPDATE ); 
+  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE ); 
   SDL_Flip( ne_screen );
 
   return;
@@ -807,7 +807,7 @@ EndTitle (void)
 
   Switch_Background_Music_To (CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC);
 
-  DisplayBanner( BANNER_FORCE_UPDATE );
+  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
 
   SetTextColor (FONT_BLACK, FONT_RED);
 
@@ -840,7 +840,7 @@ ThouArtDefeated (void)
   while ( SDL_GetTicks()-now < 1000 * WAIT_AFTER_KILLED )
     {
       Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
-      DisplayBanner( 0 );
+      DisplayBanner (NULL, NULL,  0 );
       ExplodeBlasts ();
       MoveBullets ();
       MoveEnemys ();

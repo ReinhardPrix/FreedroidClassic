@@ -432,9 +432,7 @@ EXTERN char *GetString (int MaxLen, int echo);
 #else
 #define EXTERN extern
 #endif
-EXTERN void DisplayBanner ( int flags );
-EXTERN void SetInfoline (const char *left, const char *right , int flags );
-
+EXTERN void DisplayBanner (const char* left, const char* right, int flags );
 
 /* takeover.c */
 #undef EXTERN
@@ -450,7 +448,7 @@ EXTERN void PlayGame (void);
 EXTERN void EnemyMovements (void);
 
 EXTERN int GetTakeoverGraphics (void);
-EXTERN void ShowPlayground (void);
+EXTERN void ShowPlayground ();
 EXTERN void InventPlayground (void);
 
 EXTERN void ProcessPlayground (void);

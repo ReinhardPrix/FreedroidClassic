@@ -291,6 +291,7 @@ PutInfluence ( int x, int y)
   // Now we draw the hat and shoes of the influencer
   SDL_BlitSurface( ne_blocks , ne_influ_block+((int) rintf (Me.phase)), ne_screen, &TargetRectangle );
 
+
   // Now we draw the first digit of the influencers current number.
   // SDL SOMETIMES MODIFIES THE TARGET ENTRY, THEREFORE IT HAS TO BE 
   // COMPUTED ANEW!!!!
@@ -348,7 +349,6 @@ PutInfluence ( int x, int y)
 
 @Ret: void
 * $Function----------------------------------------------------------*/
-
 void
 PutEnemy (int Enum , int x , int y)
 {

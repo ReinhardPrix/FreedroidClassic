@@ -106,7 +106,7 @@ typedef grob_Point Vect;
 
 typedef struct
 {
-  const char *druidname;
+  char *druidname;
   double maxspeed;		/* the maximum of speed it can go */
   int class;
   double accel;			/* its acceleration */

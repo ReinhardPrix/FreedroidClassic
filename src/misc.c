@@ -102,13 +102,13 @@ Pause (void)
       AnimateRefresh ();
       RotateBulletColor ();
       AnimateEnemys ();
-      DisplayBanner(0);
+      DisplayBanner (NULL, NULL, 0);
       Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
       
       if (CPressed ())
 	{
 	  Me.status = CHEESE;
-	  DisplayBanner( 0 );
+	  DisplayBanner (NULL, NULL,  0 );
 	  Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
 
 	  while (!SpacePressed ()); /* stay CHEESE until Space pressed */
