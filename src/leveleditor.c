@@ -1441,7 +1441,24 @@ duplicate_all_obstacles_in_area ( Level source_level ,
     }
   
 }; // void duplicate_all_obstacles_in_area ( ... )
-      
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */      
+void 
+floor_copy ( map_tile* target_pointer , map_tile* source_pointer , int amount )
+{
+  int i;
+
+  for ( i = 0 ; i < amount ; i ++ )
+    {
+      target_pointer -> floor_value = source_pointer -> floor_value ;
+      target_pointer ++ ;
+      source_pointer ++ ;
+    }
+}; // void floor_copy ( map_tile* target_pointer , map_tile* source_pointer , int amount )
+
 /* ----------------------------------------------------------------------
  * When we connect two maps smoothly together, we want an area in both
  * maps, that is really synchronized with the other level we connect to.
@@ -1486,9 +1503,11 @@ ExportLevelInterface ( int LevelNum )
       //
       for ( y = 0 ; y < AreaHeight ; y ++ )
 	{
-	  memcpy ( curShip . AllLevels [ TargetLevel ] -> map[ TargetStartLine - y ] ,
-		   curShip . AllLevels [ LevelNum ] -> map[ AreaHeight-1 - y ] ,
-		   AreaWidth ) ;
+	  floor_copy ( curShip . AllLevels [ TargetLevel ] -> map[ TargetStartLine - y ] ,
+		       curShip . AllLevels [ LevelNum ] -> map[ AreaHeight-1 - y ] ,
+		       AreaWidth ) ;
+	  // memset ( curShip . AllLevels [ TargetLevel ] -> map[ TargetStartLine - y ] , 0 , AreaWidth ); 
+	  // DebugPrintf ( 0 , "\nAreaWidth: %d." , AreaWidth * sizeof ( );
 	}
       
       delete_all_obstacles_in_area ( curShip . AllLevels [ TargetLevel ] , 0 , curShip . AllLevels [ TargetLevel ] ->ylen-AreaHeight , AreaWidth , AreaHeight );
@@ -1528,9 +1547,9 @@ ExportLevelInterface ( int LevelNum )
       //
       for ( y = 0 ; y < AreaHeight ; y ++ )
 	{
-	  memcpy ( curShip . AllLevels [ TargetLevel ] -> map[ AreaHeight-1 - y ] ,
-		   curShip . AllLevels [ LevelNum ] -> map[ TargetStartLine - y ] ,
-		   AreaWidth ) ;
+	  floor_copy ( curShip . AllLevels [ TargetLevel ] -> map[ AreaHeight-1 - y ] ,
+		       curShip . AllLevels [ LevelNum ] -> map[ TargetStartLine - y ] ,
+		       AreaWidth ) ;
 	}
 
       delete_all_obstacles_in_area ( curShip . AllLevels [ TargetLevel ] , 0 , 0 , AreaWidth , AreaHeight );
@@ -1569,10 +1588,10 @@ ExportLevelInterface ( int LevelNum )
       //
       for ( y = 0 ; y < AreaHeight ; y ++ )
 	{
-	  memcpy ( curShip . AllLevels [ TargetLevel ] -> map[ y ] ,
-		   (curShip . AllLevels [ LevelNum ] -> map[ y ]) + 
-		    curShip . AllLevels [ LevelNum ] -> xlen - 0 - AreaWidth ,
-		   AreaWidth ) ;
+	  floor_copy ( curShip . AllLevels [ TargetLevel ] -> map[ y ] ,
+		       (curShip . AllLevels [ LevelNum ] -> map[ y ]) + 
+		       curShip . AllLevels [ LevelNum ] -> xlen - 0 - AreaWidth ,
+		       AreaWidth ) ;
 	}
 
       delete_all_obstacles_in_area ( curShip . AllLevels [ TargetLevel ] , 0 , 0 , AreaWidth , AreaHeight );
@@ -1611,10 +1630,10 @@ ExportLevelInterface ( int LevelNum )
       //
       for ( y = 0 ; y < AreaHeight ; y ++ )
 	{
-	  memcpy ( ( curShip . AllLevels [ TargetLevel ] -> map[ y ] ) + 
-		   curShip . AllLevels [ TargetLevel ] -> xlen - 0 - AreaWidth,
-		   ( curShip . AllLevels [ LevelNum ] -> map[ y ] ) + 0 , 
-		   AreaWidth ) ;
+	  floor_copy ( ( curShip . AllLevels [ TargetLevel ] -> map[ y ] ) + 
+		       curShip . AllLevels [ TargetLevel ] -> xlen - 0 - AreaWidth,
+		       ( curShip . AllLevels [ LevelNum ] -> map[ y ] ) + 0 , 
+		       AreaWidth ) ;
 	}
 
       delete_all_obstacles_in_area ( curShip . AllLevels [ TargetLevel ] , curShip . AllLevels [ TargetLevel ] -> xlen - AreaWidth , 0 , AreaWidth , AreaHeight );

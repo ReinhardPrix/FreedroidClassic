@@ -1122,7 +1122,7 @@ show_obstacle_labels ( int mask )
 	}
     }
 
-  show_backgrounded_label_at_map_position ( "This is a test" , 0 , Me [ 0 ] . pos . x + 1 , Me [ 0 ] . pos . y + 1 , mask & ZOOM_OUT );
+  // show_backgrounded_label_at_map_position ( "This is a test" , 0 , Me [ 0 ] . pos . x + 1 , Me [ 0 ] . pos . y + 1 , mask & ZOOM_OUT );
 
 }; // void show_obstacle_labels ( int mask )
 

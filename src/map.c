@@ -571,397 +571,6 @@ decode_obstacle_names_of_this_level ( Level loadlevel , char* DataPointer )
  *
  *
  * ---------------------------------------------------------------------- */
-/*
-void
-generate_wallobstacles_from_level_map ( int level_num )
-{
-  int x, y;
-  level* loadlevel = curShip . AllLevels [ level_num ] ;
-  int obstacle_counter = 0 ;
-  int i;
-
-  return;
-
-  //--------------------
-  // First we must erase all obstacle information, that might still be
-  // lurking around in the uninitialized arrays...
-  //
-  for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
-    {
-      loadlevel -> obstacle_list [ i ] . type = ( -1 ) ;
-    }
-
-  //--------------------
-  // Now we try to make obstacles out of the former 'wall' information,
-  // that was coded into the floor tiles.
-  //
-  for ( y = 0 ; y < loadlevel -> ylen ; y++ )
-    {
-      for ( x = 0 ; x < loadlevel -> xlen ; x++ )
-	{
-	  switch ( loadlevel -> map [ y ] [ x ]  . floor_value )
-	    {
-	    case H_WALL:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_H_WALL ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 1.0 ;
-	      obstacle_counter ++ ;
-	      break;
-	    case H_SHUT_DOOR:
-	    case H_HALF_DOOR1:
-	    case H_HALF_DOOR2:
-	    case H_HALF_DOOR3:
-	    case H_OPEN_DOOR:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_H_DOOR_000_OPEN ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 1.0 ;
-	      obstacle_counter ++ ;
-	      break;
-	    case V_WALL:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_V_WALL ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 1.0 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
-	      obstacle_counter ++ ;
-	      break;
-	    case CORNER_LD:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_V_WALL ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 1.0 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
-	      obstacle_counter ++ ;
-	      break;
-	    case CORNER_RD:
-	    case KREUZ:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_V_WALL ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 1.0 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
-	      obstacle_counter ++ ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_H_WALL ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 1.0 ;
-	      obstacle_counter ++ ;
-	      break;
-	    case CORNER_RU:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_H_WALL ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 1.0 ;
-	      obstacle_counter ++ ;
-	      break;
-	    case CORNER_LU:
-	      break;
-	    case T_D:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_V_WALL ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 1.0 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
-	      obstacle_counter ++ ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_H_WALL ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 1.0 ;
-	      obstacle_counter ++ ;
-	      break;
-	    case T_U:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_H_WALL ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 1.0 ;
-	      obstacle_counter ++ ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_V_WALL ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 1.0 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
-	      obstacle_counter ++ ;
-	      break;
-	    case T_R:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_V_WALL ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 1.0 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
-	      obstacle_counter ++ ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_H_WALL ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 1.0 ;
-	      obstacle_counter ++ ;
-	      break;
-	    case T_L:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_V_WALL ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 1.0 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
-	      obstacle_counter ++ ;
-	      // loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_H_WALL ;
-	      // loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
-	      // loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 1.0 ;
-	      // obstacle_counter ++ ;
-	      break;
-	    case V_SHUT_DOOR:
-	    case V_HALF_DOOR1:
-	    case V_HALF_DOOR2:
-	    case V_HALF_DOOR3:
-	    case V_OPEN_DOOR:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_V_DOOR_000_OPEN ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 1.0 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
-	      obstacle_counter ++ ;
-	      break;
-
-	    case REFRESH1:
-	    case REFRESH2:
-	    case REFRESH3:
-	    case REFRESH4:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_REFRESH_1 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
-	      obstacle_counter ++ ;
-	      break;
-
-	    case TELE_1:
-	    case TELE_2:
-	    case TELE_3:
-	    case TELE_4:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_TELEPORTER_1 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
-	      obstacle_counter ++ ;
-	      break;
-
-	    case LOCKED_H_SHUT_DOOR:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_H_DOOR_LOCKED ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 1.0 ;
-	      obstacle_counter ++ ;
-	      break;
-	    case LOCKED_V_SHUT_DOOR:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_V_DOOR_LOCKED ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 1.0 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
-	      obstacle_counter ++ ;
-	      break;
-
-	    case CHEST_U:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_H_CHEST_CLOSED ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.25 ;
-	      obstacle_counter ++ ;
-	      break;
-
-	    case CHEST_D:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_H_CHEST_CLOSED ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.75 ;
-	      obstacle_counter ++ ;
-	      break;
-
-	    case CHEST_R:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_V_CHEST_CLOSED ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.75 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
-	      obstacle_counter ++ ;
-	      break;
-
-	    case CHEST_L:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_V_CHEST_CLOSED ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.25 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
-	      obstacle_counter ++ ;
-	      break;
-
-	    case AUTOGUN_R:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_AUTOGUN_E ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
-	      obstacle_counter ++ ;
-	      break;
-
-	    case AUTOGUN_L:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_AUTOGUN_W ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
-	      obstacle_counter ++ ;
-	      break;
-
-	    case AUTOGUN_U:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_AUTOGUN_N ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
-	      obstacle_counter ++ ;
-	      break;
-
-	    case AUTOGUN_D:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_AUTOGUN_S ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
-	      obstacle_counter ++ ;
-	      break;
-
-	    case CAVE_V_WALL:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_CAVE_WALL_V ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
-	      obstacle_counter ++ ;
-	      break;
-	    case CAVE_H_WALL:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_CAVE_WALL_H ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
-	      obstacle_counter ++ ;
-	      break;
-
-	    case CAVE_CORNER_RD:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_CAVE_CORNER_SE ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
-	      obstacle_counter ++ ;
-	      break;
-	    case CAVE_CORNER_RU:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_CAVE_CORNER_NE ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
-	      obstacle_counter ++ ;
-	      break;
-	    case CAVE_CORNER_LU:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_CAVE_CORNER_NW ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
-	      obstacle_counter ++ ;
-	      break;
-	    case CAVE_CORNER_LD:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_CAVE_CORNER_SW ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
-	      obstacle_counter ++ ;
-	      break;
-
-	    case CONSOLE_R:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_CONSOLE_E ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.75 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
-	      obstacle_counter ++ ;
-	      break;
-	    case CONSOLE_L:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_CONSOLE_W ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.25 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
-	      obstacle_counter ++ ;
-	      break;
-	    case CONSOLE_U:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_CONSOLE_N ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.25 ;
-	      obstacle_counter ++ ;
-	      break;
-	    case CONSOLE_D:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_CONSOLE_S ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.75 ;
-	      obstacle_counter ++ ;
-	      break;
-
-	    case ALERT:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_ALERT ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
-	      obstacle_counter ++ ;
-	      break;
-
-	    case ENHANCER_RU:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_ENHANCER_RU ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
-	      obstacle_counter ++ ;
-	      break;
-
-	    case ENHANCER_RD:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_ENHANCER_RD ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
-	      obstacle_counter ++ ;
-	      break;
-
-	    case ENHANCER_LU:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_ENHANCER_LU ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
-	      obstacle_counter ++ ;
-	      break;
-
-	    case ENHANCER_LD:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_ENHANCER_LD ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
-	      obstacle_counter ++ ;
-	      break;
-
-	      //--------------------
-	      // Now we add the old blocks and make them into some obstacles, some
-	      // classical columns mostly I think this will be....
-	      // ... unless of course .b makes something out of them :)
-	      //
-	    case BLOCK1:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_BLOCK_1 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
-	      obstacle_counter ++ ;
-	      break;
-	    case BLOCK2:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_BLOCK_2 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
-	      obstacle_counter ++ ;
-	      break;
-	    case BLOCK3:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_BLOCK_3 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
-	      obstacle_counter ++ ;
-	      break;
-
-
-	    case BOX_1:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_BARREL_1 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
-	      obstacle_counter ++ ;
-	      break;
-	    case BOX_2:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_BARREL_2 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
-	      obstacle_counter ++ ;
-	      break;
-	    case BOX_3:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_BARREL_3 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
-	      obstacle_counter ++ ;
-	      break;
-	    case BOX_4:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_BARREL_4 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
-	      obstacle_counter ++ ;
-	      break;
-
-	    default:
-	      if ( IsWallBlock ( loadlevel -> map [ y ] [ x ]  . floor_value ) ) 
-		{
-		  loadlevel -> obstacle_list [ obstacle_counter ] . type = 4 ;
-		  loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
-		  loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
-		  obstacle_counter ++ ;
-		}
-	      break;
-	    }
-	}
-    }
-
-  loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_COOKING_POT ;
-  loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = 20 + 0.5;
-  loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = 80 + 0.5;
-  obstacle_counter ++ ;
-
-  
-}; // void generate_wallobstacles_from_level_map ( int level_num )
-*/
-
-/* ----------------------------------------------------------------------
- *
- *
- * ---------------------------------------------------------------------- */
 void
 glue_obstacles_to_floor_tiles_for_level ( int level_num )
 {
@@ -1111,10 +720,8 @@ CollectAutomapData ( void )
 {
   int x , y ;
   int start_x, start_y, end_x, end_y;
-  // finepoint ObjPos;
   gps ObjPos;
   static int TimePassed;
-  int level = Me [ 0 ] . pos . z ;
   Level AutomapLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
 
   ObjPos . z = Me [ 0 ] . pos . z ;
@@ -1463,37 +1070,6 @@ Error:  A refresh index pointing not to a refresh obstacles found.",
   DebugPrintf (2, "\nvoid AnimateRefresh(void):  end of function reached.");
 
 }; // void AnimateRefresh ( void )
-
-/* ----------------------------------------------------------------------
- * This function moves all the consumer fields to their next phase (if
- * it's time already).
- * ---------------------------------------------------------------------- */
-void
-AnimateConsumer (void)
-{
-  static float InnerWaitCounter = 0;
-  int i;
-  int x, y;
-  Level ConsumerLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
-
-  DebugPrintf (2, "\nvoid AnimateConsumer(void):  real function call confirmed.");
-
-  InnerWaitCounter += Frame_Time () * 10;
-
-  for (i = 0; i < MAX_CONSUMERS_ON_LEVEL; i++)
-    {
-      x = ConsumerLevel->consumers[i].x;
-      y = ConsumerLevel->consumers[i].y;
-      if (x == 0 || y == 0)
-	break;
-
-      ConsumerLevel->map[y][x]  . floor_value = (((int) rintf (InnerWaitCounter)) % 4) + CONSUMER_1;
-
-    }				/* for */
-
-  DebugPrintf (2, "\nvoid AnimateConsumer(void):  end of function reached.");
-
-}; // void AnimateConsumer ( void )
 
 /* ----------------------------------------------------------------------
  * This function moves all the teleporter fields to their next phase (if
@@ -2658,14 +2234,12 @@ DecodeLoadedLeveldata ( char *data )
 void
 GetAllAnimatedMapTiles ( Level Lev )
 {
-  int i, line, col;
+  int i;
   int xlen, ylen;
   int curdoor = 0;
   int curautogun = 0;
   int curref = 0;
-  int curcons = 0;
   int curtele = 0;
-  char brick;
   int obstacle_index;
 
   xlen = Lev -> xlen;
@@ -2814,53 +2388,6 @@ of autoguns currently allowed in a Freedroid map.",
 	}
     }
 
-  // DebugPrintf ( 0 , "\nFound %d doors on level %d." , curdoor , Lev -> levelnum );
-  // for (i = 0; i < MAX_DOORS_ON_LEVEL; i++)
-  // {
-  // DebugPrintf ( 0 , " %d " , Lev -> door_obstacle_indices [ i ] ) ;
-  // }
-  
-
-  //--------------------
-  // now find the autoguns and that...
-  for (line = 0; line < ylen; line++)
-    {
-      for (col = 0; col < xlen; col++)
-	{
-
-
-	  //--------------------
-	  // Old method:  autoguns and that are detected from
-	  // map tiles...
-	  brick = Lev->map[line][col] . floor_value ;
-	  switch ( brick )
-	    {
-
-	    case CONSUMER_1:
-	    case CONSUMER_2:
-	    case CONSUMER_3:
-	    case CONSUMER_4:
-	      Lev->consumers[curcons].x = col;
-	      Lev->consumers[curcons++].y = line;
-
-	      if (curcons >= MAX_CONSUMERS_ON_LEVEL)
-		{
-		  fprintf( stderr , "\n\nLev->levelnum : %d MAX_CONSUMERS_ON_LEVEL: %d \n" , 
-			   Lev->levelnum , MAX_CONSUMERS_ON_LEVEL );
-		  GiveStandardErrorMessage ( "GetAllAnimatedMapTiles(...)" , "\
-The number of consumers found in a level seems to be greater than the number\n\
-of doors currently allowed in a Freedroid map.",
-					     PLEASE_INFORM, IS_FATAL );
-		}
-	    break;
-
-	    default:
-	      // if no animated tile, even better...
-	      break;
-	    }
-	}			/* for */
-    }				/* for */
-  
 }; // void GetAllAnimatedMapTiles ( Level Lev )
 
 /* ----------------------------------------------------------------------
@@ -2871,7 +2398,6 @@ void
 TranslateToHumanReadable ( Uint16* HumanReadable , map_tile* MapInfo, int LineLength , Level Lev , int CurrentLine)
 {
   int col;
-  int i;
   char Buffer[10];
 
   DebugPrintf (1,"\n\nTranslating mapline into human readable format...");
@@ -2880,48 +2406,6 @@ TranslateToHumanReadable ( Uint16* HumanReadable , map_tile* MapInfo, int LineLe
   // doors occur.  The make life easier for the saving routine, these doors should
   // be closed first.
 
-  for (col=0; col < LineLength; col++)
-    {
-      for(i=0; i< Lev->ylen; i++)
-	{
-	  switch ( Lev->map[i][col]  . floor_value )
-	    {
-	    case V_SHUT_DOOR:
-	    case V_HALF_DOOR1:
-	    case V_HALF_DOOR2:
-	    case V_HALF_DOOR3:
-	    case V_OPEN_DOOR:
-	      Lev->map[i][col] . floor_value = V_SHUT_DOOR;
-	      break;
-	    case H_SHUT_DOOR:
-	    case H_HALF_DOOR1:
-	    case H_HALF_DOOR2:
-	    case H_HALF_DOOR3:
-	    case H_OPEN_DOOR:
-	      Lev->map[i][col] . floor_value = H_SHUT_DOOR;
-	      break;
-	      /*
-	    case REFRESH1:
-	    case REFRESH2:
-	    case REFRESH3:
-	    case REFRESH4:
-	      Lev->map[i][col] . floor_value =REFRESH1;
-	      break;
-	      */
-	    case TELE_1:
-	    case TELE_2:
-	    case TELE_3:
-	    case TELE_4:
-	      Lev->map[i][col] . floor_value = TELE_1;
-	      break;
-	    default:
-	      break;
-	    }
-
-	}
-    }
-
-  // transpose the game-engine mapdata line to human readable format 
 
   HumanReadable[0]=0;  // Add a terminator at the beginning
 
@@ -3902,7 +3386,7 @@ void
 AnimateCyclingMapTiles (void)
 {
   AnimateRefresh();
-  AnimateConsumer();
+  // AnimateConsumer();
   AnimateTeleports();
 }; // void AnimateCyclingMapTiles (void)
 
