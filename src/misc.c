@@ -787,8 +787,8 @@ MyMalloc (long Mamount)
 void 
 ExecuteEvent ( int EventNumber )
 {
-  printf("\nvoid ExecuteEvent ( int EventNumber ) : real function call confirmed. ");
-  printf("\nvoid ExecuteEvent ( int EventNumber ) : executing event Nr.: %d." , EventNumber );
+  DebugPrintf( 1 , "\nvoid ExecuteEvent ( int EventNumber ) : real function call confirmed. ");
+  DebugPrintf( 1 , "\nvoid ExecuteEvent ( int EventNumber ) : executing event Nr.: %d." , EventNumber );
 
   // Does the trigger include a change of a map tile?
   if ( AllTriggeredActions[ EventNumber ].ChangeMapTo != -1 )
@@ -863,7 +863,7 @@ CheckForTriggeredEvents ( void )
       // printf("\nWARNING!! INFLU NOW IS AT SOME TRIGGER POINT OF SOME LOCATION-TRIGGERED EVENT!!!");
       ExecuteEvent( AllEventTriggers[i].EventNumber );
 
-      if ( AllEventTriggers[i].DeleteTriggerAfterExecution != (-1) )
+      if ( AllEventTriggers[i].DeleteTriggerAfterExecution == 1 )
 	{
 	  AllEventTriggers[i].EventNumber = (-1); // That should prevent the event from being executed again.
 	}

@@ -24,6 +24,7 @@ THESE ITEMS HAVE FIRST PRIORITY:
    DONE Write doku for the usage of the level editor
    DONE Do segfault protection from planting tiles outside map structure
    DINE Allow for more things to be set directly: Elevators & Boxes
+   h. Add safety/correction check against leading -1 waypoint connections
 
 1. Extend the game dat file
    a. Add direct control over all individual bullet speeds and damages
@@ -32,11 +33,11 @@ THESE ITEMS HAVE FIRST PRIORITY:
 2. Extend the game/graphics engine
    DONE Takeover sound should be added
    b. Takeover graphics effect (alpha-blending?) should be added
-   c. collision damage should be done to the "lighter" droid
+   DONE collision damage should be done to the "lighter" droid
    d. dimensions of combat window should be enlarged vertically
    e. use fixed pictures for each droid.  when no image found-->generate generic ones
    f. use ints instead of chars to write the map file to the disk
-   g. introduce friendly droids, that can be added via the droids file
+   DONE introduce friendly droids, that can be added via the droids file
    h. add new tiles: barred door horizontally/vertically (of about wall size)
 
 3. Extend the freedroid world/missions

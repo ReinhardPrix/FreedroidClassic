@@ -1259,9 +1259,10 @@ Level_Editor(void)
   int MenuPosition=1;
   int i,j,k;
   int OriginWaypoint = (-1);
+  char* OldMapPointer;
 
   enum
-    { SAVE_LEVEL_POSITION=1, CHANGE_LEVEL_POSITION, CHANGE_TILE_SET_POSITION, BACK_TO_LEVEL_EDITING, QUIT_LEVEL_EDITOR_POSITION };
+    { SAVE_LEVEL_POSITION=1, CHANGE_LEVEL_POSITION, CHANGE_TILE_SET_POSITION, CHANGE_SIZE_X, CHANGE_SIZE_Y, BACK_TO_LEVEL_EDITING, QUIT_LEVEL_EDITOR_POSITION };
 
   while ( !Done )
     {
@@ -1557,9 +1558,13 @@ Level_Editor(void)
 				"Current: %d.  Level Up/Down" , CurLevel->levelnum );
 	  CenteredPutString   ( ne_screen ,  6*FontHeight(Menu_BFont),    
 				"Change tile set");
-	  CenteredPutString   ( ne_screen ,  7*FontHeight(Menu_BFont),    
+	  CenteredPrintString ( ne_screen ,  7*FontHeight(Menu_BFont),    
+				"Levelsize in X: %d.  Shrink/Enlarge" , CurLevel->xlen );
+	  CenteredPrintString ( ne_screen ,  8*FontHeight(Menu_BFont),    
+				"Levelsize in Y: %d.  Shrink/Enlarge" , CurLevel->ylen );
+	  CenteredPutString   ( ne_screen ,  9*FontHeight(Menu_BFont),    
 				"Back to Level editing");
-	  CenteredPutString   ( ne_screen ,  8*FontHeight(Menu_BFont),    
+	  CenteredPutString   ( ne_screen ,  10*FontHeight(Menu_BFont),    
 				"Quit Level Editor");
 	  
 	  SDL_Flip ( ne_screen );
@@ -1658,8 +1663,51 @@ Level_Editor(void)
 		      while (LeftPressed());
 		    }
 		  
-		  Teleport ( CurLevel->levelnum , Me.pos.x , Me.pos.y ); // thats just to ensure new tileset is read in
-		  SetCombatScaleTo ( CurrentCombatScaleFactor );
+		case CHANGE_SIZE_X:
+		  if ( RightPressed() )
+		    {
+		      CurLevel->xlen++;
+		      // In case of enlargement, we need to do more:
+		      for ( i = 0 ; i < CurLevel->ylen ; i++ )
+			{
+			  OldMapPointer=CurLevel->map[i];
+			  CurLevel->map[i] = MyMalloc( CurLevel->xlen +1) ;
+			  memcpy( CurLevel->map[i] , OldMapPointer , CurLevel->xlen-1 );
+			  // We don't want to fill the new area with junk, do we? So we set it VOID
+			  CurLevel->map[ i ] [ CurLevel->xlen-1 ] = VOID;  
+			}
+		      while (RightPressed());
+		    }
+		  if ( LeftPressed() )
+		    {
+		      CurLevel->xlen--; // making it smaller is always easy:  just modify the value for size
+		                        // allocation of new memory or things like that are not nescessary.
+		      while (LeftPressed());
+		    }
+		  break;
+		  
+		case CHANGE_SIZE_Y:
+		  if ( RightPressed() )
+		    {
+
+		      CurLevel->ylen++;
+		      
+		      // In case of enlargement, we need to do more:
+		      CurLevel->map[ CurLevel->ylen-1 ] = MyMalloc( CurLevel->xlen +1) ;
+		      
+		      // We don't want to fill the new area with junk, do we? So we set it VOID
+		      memset( CurLevel->map[ CurLevel->ylen-1 ] , VOID , CurLevel->xlen );
+		      
+		      while (RightPressed());
+
+		    }
+
+		  if ( LeftPressed() )
+		    {
+		      CurLevel->ylen--; // making it smaller is always easy:  just modify the value for size
+		                        // allocation of new memory or things like that are not nescessary.
+		      while (LeftPressed());
+		    }
 		  break;
 		  
 		}

@@ -59,7 +59,7 @@ directly form the following example.
 *** Start of Mission File ***
 Mission Name: Corporate takeover
 Physics ('game.dat') file to use for this mission: game.dat
-Ship file to use for this mission: new_ship_2.maps
+Ship file to use for this mission: new_ship_1.maps
 Lift file to use for this mission: new_ship_2.elevators
 Crew file to use for this mission: new_ship_2.droids
 Lifts On file to use for this mission: asteroid_on.bmp
@@ -84,12 +84,35 @@ After completing this mission, load mission : classical_paradroid_mission.missio
 
 ** Start of Mission Event Section **
 
-For this mission, we have not yet set up any events.  We might add some
-a little bit later.  But for now this will do.
+// --------------------
+// The following triggers launch comments of the influ on the situation on
+// board the ship
 
-NOTE:  DO NOT REMOVE THE WHOLE EVENT SECTION! Freedroid does check for
-the existance of this section.  If may contain 0 triggers and 0 actions,
-but the section itself must be present.
+// This is a pure location trigger.  Copy and adapt is as you feel like it.
+* Start of an Event Trigger Subsection *
+Influencer must be at x-coordinate=10
+Influencer must be at y-coordinate=7
+Influencer must be at maplevel=7
+Event Action to be triggered by this trigger=3
+Delete the event trigger after it has been triggered=-1
+* End of this Event Trigger Subsection *
+
+----------------------------------------------------------------------
+FROM HERE ON THERE ARE ACTION DEFINITIONS
+
+// This is a pure text statement.  You can copy it and just adapt the 
+// the text to fill in remarks. Then set up triggers at any location you want.
+* Start of an Event Action Subsection *
+ACTION INDEX NUMBER TO USE=3
+Action is mapchange at positionX=-1
+Action is mapchange at positionY=-1
+Action is mapchange at maplevel=-1
+Action is change map there to new value=-1
+Action is Influencer saying something=1
+Action is Influencer saying the following text="This barrier is scarred from lots of bullet holes!"
+* End of this Event Action Subsection *
+
+
 
 ** End of Mission Event Section **
 

@@ -84,6 +84,11 @@ After completing this mission, load mission : new_mission_2.mission
 
 ** Start of Mission Event Section **
 
+//--------------------
+// the following trigger opens the barrier, so that the influencer can
+// leave the retreatment bunker of the scientists.
+
+// This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at x-coordinate=5
 Influencer must be at y-coordinate=7
@@ -92,6 +97,11 @@ Event Action to be triggered by this trigger=0
 Delete the event trigger after it has been triggered=1
 * End of this Event Trigger Subsection *
 
+// --------------------
+// the following triggers close the barrier behind the influencer
+// after he has left the retreatment bunker
+
+// This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at x-coordinate=2
 Influencer must be at y-coordinate=7
@@ -100,6 +110,7 @@ Event Action to be triggered by this trigger=2
 Delete the event trigger after it has been triggered=1
 * End of this Event Trigger Subsection *
 
+// This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at x-coordinate=2
 Influencer must be at y-coordinate=8
@@ -108,6 +119,7 @@ Event Action to be triggered by this trigger=2
 Delete the event trigger after it has been triggered=1
 * End of this Event Trigger Subsection *
 
+// This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at x-coordinate=2
 Influencer must be at y-coordinate=6
@@ -116,6 +128,7 @@ Event Action to be triggered by this trigger=2
 Delete the event trigger after it has been triggered=1
 * End of this Event Trigger Subsection *
 
+// This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at x-coordinate=3
 Influencer must be at y-coordinate=6
@@ -124,6 +137,7 @@ Event Action to be triggered by this trigger=2
 Delete the event trigger after it has been triggered=1
 * End of this Event Trigger Subsection *
 
+// This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at x-coordinate=3
 Influencer must be at y-coordinate=8
@@ -131,6 +145,22 @@ Influencer must be at maplevel=7
 Event Action to be triggered by this trigger=2
 Delete the event trigger after it has been triggered=1
 * End of this Event Trigger Subsection *
+
+// --------------------
+// The following triggers launch comments of the influ on the situation on
+// board the ship
+
+// This is a pure location trigger.  Copy and adapt is as you feel like it.
+* Start of an Event Trigger Subsection *
+Influencer must be at x-coordinate=10
+Influencer must be at y-coordinate=7
+Influencer must be at maplevel=7
+Event Action to be triggered by this trigger=3
+Delete the event trigger after it has been triggered=-1
+* End of this Event Trigger Subsection *
+
+----------------------------------------------------------------------
+FROM HERE ON THERE ARE ACTION DEFINITIONS
 
 * Start of an Event Action Subsection *
 ACTION INDEX NUMBER TO USE=0
@@ -142,6 +172,9 @@ Action is Influencer saying something=1
 Action is Influencer saying the following text="Thanks for removing the barrier!"
 * End of this Event Action Subsection *
 
+
+// This is a pure text statement.  You can copy it and just adapt the 
+// the text to fill in remarks. Then set up triggers at any location you want.
 * Start of an Event Action Subsection *
 ACTION INDEX NUMBER TO USE=1
 Action is mapchange at positionX=-1
@@ -152,6 +185,8 @@ Action is Influencer saying something=1
 Action is Influencer saying the following text="Don't forget to close the barrier behind me again!"
 * End of this Event Action Subsection *
 
+// This action closes the barrier behind the influencer again. There are several
+// event triggers set to cause this action.
 * Start of an Event Action Subsection *
 ACTION INDEX NUMBER TO USE=2
 Action is mapchange at positionX=4
@@ -160,6 +195,18 @@ Action is mapchange at maplevel=7
 Action is change map there to new value=23
 Action is Influencer saying something=-1
 Action is Influencer saying the following text=""
+* End of this Event Action Subsection *
+
+// This is a pure text statement.  You can copy it and just adapt the 
+// the text to fill in remarks. Then set up triggers at any location you want.
+* Start of an Event Action Subsection *
+ACTION INDEX NUMBER TO USE=3
+Action is mapchange at positionX=-1
+Action is mapchange at positionY=-1
+Action is mapchange at maplevel=-1
+Action is change map there to new value=-1
+Action is Influencer saying something=1
+Action is Influencer saying the following text="This barrier is scarred from lots of bullet holes!"
 * End of this Event Action Subsection *
 
 ** End of Mission Event Section **
