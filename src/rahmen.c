@@ -466,11 +466,19 @@ create_and_blit_droid_description ( int enemy_num )
     
     text_length = TextWidthFont ( BFont_to_use , AllEnemys [ enemy_num ] . short_description_text );
     // strcpy( ItemDescText , AllEnemys [ index_of_droid_below_mouse_cursor ] . short_description_text );
-    temp_fill_rect . y = 50 ;
     temp_fill_rect . h = FontHeight ( BFont_to_use ) ;
     temp_fill_rect . w = ( text_length * cur_enemy -> energy ) / Druidmap [ cur_enemy -> type ] . maxenergy ;
     if ( cur_enemy -> energy <= 0 ) temp_fill_rect . w = 0 ;
-    temp_fill_rect . x = UserCenter_x - text_length / 2 ;
+
+    //--------------------
+    // Instead of having a centered top bar, we now move to have a bar right
+    // over the character in question...
+    //
+    // temp_fill_rect . y = 50 ;
+    // temp_fill_rect . x = UserCenter_x - text_length / 2 ;
+    //
+    temp_fill_rect . x = translate_map_point_to_screen_pixel ( cur_enemy -> pos . x , cur_enemy -> pos . y , TRUE ) - text_length / 2 ;;
+    temp_fill_rect . y = translate_map_point_to_screen_pixel ( cur_enemy -> pos . x , cur_enemy -> pos . y , FALSE ) + enemy_iso_images [ AllEnemys [ enemy_num ] . type ] [ 0 ] [ 0 ] . offset_y - 2.5 * FontHeight ( BFont_to_use ) ;
     
     //--------------------
     // If the 'enemy' is hostile, then we use red underlying color.  If
@@ -500,43 +508,28 @@ create_and_blit_droid_description ( int enemy_num )
 	}
     }
 
-  //--------------------
-  // Now depending on the energy status of this enemy, there will
-  // also be some dark area under the short description text
-  //
-  // We take some extra precautions here to prevent some unsigned
-  // int underflow (and ugly too wide rectangles...)
-  //
-  temp_fill_rect . x = temp_fill_rect . x + temp_fill_rect . w ;
-  if ( temp_fill_rect . w < text_length )
-      temp_fill_rect . w = text_length - temp_fill_rect . w ;
-  else
-      temp_fill_rect . w = 0 ;
-  our_SDL_fill_rect_wrapper ( Screen , & ( temp_fill_rect ) , SDL_MapRGB ( Screen->format , 0x000 , 0x000 , 0x000 ) );
-
-  //--------------------
-  // Now we can blit the actual droid short description text
-  //
-  temp_fill_rect . x = UserCenter_x - text_length / 2 ;
-  PutStringFont ( Screen , BFont_to_use , temp_fill_rect . x , temp_fill_rect . y , 
-		  AllEnemys [ enemy_num ] . short_description_text );
-
-  /*
-  // --------------------
-  // First we print out the droid name.  That's simple.
-  //
-  strcpy( DroidDescText , Druidmap[ CurEnemy->type ].druidname );
-  strcat( DroidDescText , " -- " );
-  strcat( DroidDescText , Classname [ Druidmap[ CurEnemy->type ].class ] );
-  strcat( DroidDescText , "\n" );
-
-  if ( CurEnemy->is_friendly == FALSE )
-    {
-      sprintf( linebuf , " Total Kills : %d " , Me[0].KillRecord[ CurEnemy->type ] );
-      strcat ( DroidDescText , linebuf );
-    }
-  */
-
+    //--------------------
+    // Now depending on the energy status of this enemy, there will
+    // also be some dark area under the short description text
+    //
+    // We take some extra precautions here to prevent some unsigned
+    // int underflow (and ugly too wide rectangles...)
+    //
+    temp_fill_rect . x = temp_fill_rect . x + temp_fill_rect . w ;
+    if ( temp_fill_rect . w < text_length )
+	temp_fill_rect . w = text_length - temp_fill_rect . w ;
+    else
+	temp_fill_rect . w = 0 ;
+    our_SDL_fill_rect_wrapper ( Screen , & ( temp_fill_rect ) , SDL_MapRGB ( Screen->format , 0x000 , 0x000 , 0x000 ) );
+    
+    //--------------------
+    // Now we can blit the actual droid short description text
+    //
+    // temp_fill_rect . x = UserCenter_x - text_length / 2 ;
+    temp_fill_rect . x = translate_map_point_to_screen_pixel ( cur_enemy -> pos . x , cur_enemy -> pos . y , TRUE ) - text_length / 2 ; 
+    PutStringFont ( Screen , BFont_to_use , temp_fill_rect . x , temp_fill_rect . y , 
+		    AllEnemys [ enemy_num ] . short_description_text );
+    
 }; // void GiveDroidDescription ( char* ItemDescText , item* CurItem )
 
 
