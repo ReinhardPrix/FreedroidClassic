@@ -134,7 +134,7 @@ main (int argc, char *const argv[])
 	  for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ )
 	    {
 	      // Update_Tux_Working_Copy ( PlayerNum ); // do this for player Nr. 
-	      Homemade_Update_Tux_Working_Copy ( PlayerNum ); // do this for player Nr. 
+	      HomemadeUpdateTuxWorkingCopy ( PlayerNum ); // do this for player Nr. 
 	    }
 
 	  // AssembleCombatPicture ( DO_SCREEN_UPDATE ); 

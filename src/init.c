@@ -2091,8 +2091,10 @@ InitFreedroid ( void )
   int i;
 
   // feenableexcept ( FE_ALL_EXCEPT );
-  feenableexcept ( FE_DIVBYZERO | FE_INVALID | FE_OVERFLOW ); // FE_INEXACT | FE_UNDERFLOW 
+  // feenableexcept ( FE_DIVBYZERO | FE_INVALID ); // FE_INEXACT | FE_UNDERFLOW | FE_OVERFLOW 
   // fesetexceptflag (const fexcept_t *flagp, int excepts);
+
+
 
   //--------------------
   // It might happen, that the uninitialized AllBullets array contains a 1

@@ -461,7 +461,8 @@ enum _sounds
 
 #define NUM_EL_BLOCKS		17
 
-#define MAX_PLAYERS             5
+// #define MAX_PLAYERS             5
+#define MAX_PLAYERS             1
 
 enum _non_player_characters
   {
@@ -551,6 +552,7 @@ enum
 #define TUX_GOT_HIT_PHASES      3
 // #define TUX_MODELS              9
 #define TUX_MODELS              11
+#define MAX_TUX_DIRECTIONS      8
 
 #define WAIT_LEVELEMPTY		18	// time in frames to wait before removing the light in an empty level
 

@@ -40,6 +40,7 @@
 #include "struct.h"
 #include "global.h"
 #include "proto.h"
+#include "SDL_rotozoom.h"
 
 char *PrefixToFilename[ ENEMY_ROTATION_MODELS_AVAILABLE ];
 int ModelMultiplier[ ENEMY_ROTATION_MODELS_AVAILABLE ];
@@ -605,14 +606,15 @@ Load_Influencer_Surfaces( void )
  * the alternative tux character.
  * ---------------------------------------------------------------------- */
 void 
-Homemade_Update_Tux_Working_Copy ( int PlayerNum )
+HomemadeUpdateTuxWorkingCopy ( int PlayerNum )
 {
-  int i;
+  int i , j;
   static int Previous_weapon_item  [ MAX_PLAYERS ] = { -2 , -2 , -2 , -2 , -2 } ;
   static int Previous_shield_item  [ MAX_PLAYERS ] = { -2 , -2 , -2 , -2 , -2 } ;
   static int Previous_special_item [ MAX_PLAYERS ] = { -2 , -2 , -2 , -2 , -2 } ;
   static int Previous_armour_item  [ MAX_PLAYERS ] = { -2 , -2 , -2 , -2 , -2 } ; 
   SDL_Surface* tmp;
+  float angle;
 
   if ( ( Previous_weapon_item  [ PlayerNum ] == Me [ PlayerNum ] . weapon_item. type ) &&
        ( Previous_shield_item  [ PlayerNum ] == Me [ PlayerNum ] . shield_item. type ) &&
@@ -641,8 +643,8 @@ Homemade_Update_Tux_Working_Copy ( int PlayerNum )
   //
   for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
     {
-      SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] );
-      TuxWorkingCopy [ PlayerNum ]  [ i ] = SDL_DisplayFormatAlpha( TuxMotionArchetypes[7][i] );
+      SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] );
+      TuxWorkingCopy [ PlayerNum ]  [ i ] [ 0 ] = SDL_DisplayFormatAlpha( TuxMotionArchetypes[7][i] );
     }
   
   //--------------------
@@ -653,9 +655,9 @@ Homemade_Update_Tux_Working_Copy ( int PlayerNum )
     {
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
-	  tmp = CreateAlphaCombinedSurface ( TuxWorkingCopy [ PlayerNum ] [i] , TuxMotionArchetypes[8][i] );
-	  SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] );
-	  TuxWorkingCopy [ PlayerNum ] [i] = tmp;
+	  tmp = CreateAlphaCombinedSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] , TuxMotionArchetypes[8][i] );
+	  SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ]);
+	  TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] = tmp;
 	}
     }
 
@@ -666,36 +668,36 @@ Homemade_Update_Tux_Working_Copy ( int PlayerNum )
     {
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
-	  tmp = CreateAlphaCombinedSurface ( TuxWorkingCopy [ PlayerNum ] [i] , TuxMotionArchetypes[4][i] );
-	  SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] );
-	  TuxWorkingCopy [ PlayerNum ] [i] = tmp;
+	  tmp = CreateAlphaCombinedSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] , TuxMotionArchetypes[4][i] );
+	  SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] );
+	  TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] = tmp;
 	}
     }
   else if ( Me[0].weapon_item.type == ITEM_STAFF )
     {
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
-	  tmp = CreateAlphaCombinedSurface ( TuxWorkingCopy [ PlayerNum ] [i] , TuxMotionArchetypes[1][i] );
-	  SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] );
-	  TuxWorkingCopy [ PlayerNum ] [i] = tmp;
+	  tmp = CreateAlphaCombinedSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] , TuxMotionArchetypes[1][i] );
+	  SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] );
+	  TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] = tmp;
 	}
     }
   else if ( ItemMap [ Me[0].weapon_item.type ].item_gun_angle_change == 0 )
     {
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
-	  tmp = CreateAlphaCombinedSurface ( TuxWorkingCopy [ PlayerNum ] [i] , TuxMotionArchetypes[2][i] );
-	  SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] );
-	  TuxWorkingCopy [ PlayerNum ] [i] = tmp;
+	  tmp = CreateAlphaCombinedSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] , TuxMotionArchetypes[2][i] );
+	  SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] );
+	  TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] = tmp;
 	}
     }
   else
     {
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
-	  tmp = CreateAlphaCombinedSurface ( TuxWorkingCopy [ PlayerNum ] [i] , TuxMotionArchetypes[0][i] );
-	  SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] );
-	  TuxWorkingCopy [ PlayerNum ] [i] = tmp;
+	  tmp = CreateAlphaCombinedSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] , TuxMotionArchetypes[0][i] );
+	  SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] );
+	  TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] = tmp;
 	}
     }
 
@@ -706,9 +708,9 @@ Homemade_Update_Tux_Working_Copy ( int PlayerNum )
     {
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
-	  tmp = CreateAlphaCombinedSurface ( TuxWorkingCopy [ PlayerNum ] [i] , TuxMotionArchetypes[3][i] );
-	  SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] );
-	  TuxWorkingCopy [ PlayerNum ] [i] = tmp;
+	  tmp = CreateAlphaCombinedSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] , TuxMotionArchetypes[3][i] );
+	  SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] );
+	  TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] = tmp;
 	}
     }
 
@@ -717,40 +719,58 @@ Homemade_Update_Tux_Working_Copy ( int PlayerNum )
   //
   for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
     {
-      tmp = CreateAlphaCombinedSurface ( TuxWorkingCopy [ PlayerNum ] [i] , TuxMotionArchetypes[6][i] );
-      SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] );
-      TuxWorkingCopy [ PlayerNum ] [i] = tmp;
+      tmp = CreateAlphaCombinedSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] , TuxMotionArchetypes[6][i] );
+      SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] );
+      TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] = tmp;
     }
 
   if ( ( ( Me[0].special_item.type == ( ITEM_IRON_HAT ) ) || ( Me[0].special_item.type == ( ITEM_SMALL_HELM ) ) ) && ( ! Me[0].special_item.currently_held_in_hand ) )
     {
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
-	  tmp = CreateAlphaCombinedSurface ( TuxWorkingCopy [ PlayerNum ] [i] , TuxMotionArchetypes[9][i] );
-	  SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] );
-	  TuxWorkingCopy [ PlayerNum ] [i] = tmp;
+	  tmp = CreateAlphaCombinedSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] , TuxMotionArchetypes[9][i] );
+	  SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] );
+	  TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] = tmp;
 	}
     }
   else if ( ( Me[0].special_item.type == ITEM_IRON_HELM ) && ( ! Me[0].special_item.currently_held_in_hand ) )
     {
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
-	  tmp = CreateAlphaCombinedSurface ( TuxWorkingCopy [ PlayerNum ] [i] , TuxMotionArchetypes[10][i] );
-	  SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] );
-	  TuxWorkingCopy [ PlayerNum ] [i] = tmp;
+	  tmp = CreateAlphaCombinedSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] , TuxMotionArchetypes[10][i] );
+	  SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] );
+	  TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] = tmp;
 	}
     }
   else if ( ( Me[0].special_item.type != (-1) ) && ( ! Me[0].special_item.currently_held_in_hand ) )
     {
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
-	  tmp = CreateAlphaCombinedSurface ( TuxWorkingCopy [ PlayerNum ] [i] , TuxMotionArchetypes[5][i] );
-	  SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] );
-	  TuxWorkingCopy [ PlayerNum ] [i] = tmp;
+	  tmp = CreateAlphaCombinedSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] , TuxMotionArchetypes[5][i] );
+	  SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] );
+	  TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] = tmp;
 	}
     }
   
-}; // void Homemade_Update_Tux_Working_Copy ( void )
+  //--------------------
+  // After the Tux has been assembled, we can do the rotation here as 
+  // well.  Later this rotation step will no longer be nescessary, once
+  // we use isometric viewpoint.  Then, we'll have much more assembling
+  // work above instead...might be much more time-consuming...
+  //
+  for ( j = 1 ; j < MAX_TUX_DIRECTIONS ; j ++ )
+    {
+      for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
+	{
+	  angle = ( j * 360.0 ) / MAX_TUX_DIRECTIONS;
+	  if ( TuxWorkingCopy [ PlayerNum ] [ i ] [ j ] != NULL )
+	    SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [ i ] [ j ] );
+	  TuxWorkingCopy [ PlayerNum ] [ i ] [ j ] = 
+	    rotozoomSurface( TuxWorkingCopy [ PlayerNum ] [ i ] [ 0 ] , angle , 1.0 , FALSE );
+	}
+    }
+
+}; // void HomemadeUpdateTuxWorkingCopy ( void )
 
 /* ----------------------------------------------------------------------
  * This function loads the all tux surfaces, that are needed to display 
@@ -763,9 +783,8 @@ Load_Tux_Surfaces( void )
   SDL_Surface* tmp_surf;
   SDL_Rect Source;
   SDL_Rect Target;
-  int i;
+  int i , j , k;
   char *fpath;
-  int j;
   int PlayerNum;
 
 #define TUX_WIDTH 130
@@ -811,9 +830,18 @@ Load_Tux_Surfaces( void )
 	  if ( j == 7 ) 
 	    {
 	      for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ )
-		TuxWorkingCopy [ PlayerNum ] [i] = SDL_DisplayFormatAlpha( TuxMotionArchetypes[j][i] );
+		{
+		  TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] = SDL_DisplayFormatAlpha( TuxMotionArchetypes[j][i] );
+		}
 	    }
 
+	  for ( k = 1 ; k < MAX_TUX_DIRECTIONS ; k ++ )
+	    {
+	      for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ )
+		{
+		  TuxWorkingCopy [ PlayerNum ] [i] [ k ] = NULL ;
+		}
+	    }
 	}
     }
 
