@@ -401,6 +401,7 @@ enum _non_player_characters
     PERSON_RMS,
     PERSON_STONE,
     PERSON_DIXON,
+    PERSON_DUNCAN,
     PERSON_PENDRAGON,
     PERSON_614,
     PERSON_MER,

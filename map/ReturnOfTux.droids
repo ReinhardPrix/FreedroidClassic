@@ -97,6 +97,11 @@ SpecialForce: Type=WOR X=29 Y=27 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0
 SpecialForce: Type=WOR X=29 Y=27 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="SkippyStartGameSquare" RushTux="no" DialogSectionToUse="Skippy" ShortLabel="Skippy -- Map-Maker Maker"
 
 //--------------------
+// This is Duncan.  He makes grenades.
+//
+SpecialForce: Type=WOR X=29 Y=27 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="DuncanStartGameSquare" RushTux="no" DialogSectionToUse="Duncan" ShortLabel="Duncan -- Grenade Maker"
+
+//--------------------
 // This is Pendragon 'PEN', who can train you in the fighting arts.
 //
 SpecialForce: Type=GUA X=35 Y=18 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="PendragonStartGameSquare" RushTux="no" DialogSectionToUse="PEN" ShortLabel="Pendragon -- Melee Combat Teacher"

@@ -224,6 +224,12 @@ AssembleItemListForTradeCharacter ( item* ListToBeFilled , int ShopCharacterCode
     {
       ListPointer->type = ITEM_MAP_MAKER_SIMPLE; ListPointer++;
     }
+  else if ( ShopCharacterCode == PERSON_DUNCAN )
+    {
+      ListPointer->type = ITEM_VMX_GAS_GRENADE; ListPointer++;
+      ListPointer->type = ITEM_EMP_SHOCK_GRENADE; ListPointer++;
+      ListPointer->type = ITEM_PLASMA_GRENADE; ListPointer++;
+    }
   else
     {
       GiveStandardErrorMessage ( "AssembleItemListForTradeCharacter( ... )" , "\
