@@ -154,7 +154,6 @@ typedef struct
   float LastTransferSoundTime;
   float TextVisibleTime;
   char* TextToBeDisplayed;
-  float Current_Victim_Resistance_Factor;
   gps Position_History_Ring_Buffer[ MAX_INFLU_POSITION_HISTORY ];
   SDL_Surface *pic;              // assembly of influ pic is done here.
 }

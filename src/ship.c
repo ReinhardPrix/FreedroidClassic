@@ -391,18 +391,11 @@ PaintConsoleMenu (int flag)
 
       DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
       
-      strcpy (MenuText, "Unit type ");
-      strcat (MenuText, Druidmap[Me.type].druidname);
-      strcat (MenuText, " - ");
-      strcat (MenuText, Classname[Druidmap[Me.type].class]);
+      sprintf(MenuText, "Unit type %s - %s", Druidmap[Me.type].druidname, Classname[Druidmap[Me.type].class]);
       DisplayText (MenuText, USERFENSTERPOSX, USERFENSTERPOSY, &User_Rect);
       
-      strcpy (MenuText, "\nAccess granted.\nArea : ");
-      strcat (MenuText, curShip.AreaName ); // Shipnames[ThisShip]);
-      strcat (MenuText, "\nDeck : ");
-      strcat (MenuText, CurLevel->Levelname );
-      strcat (MenuText, "\n\nAlert: ");
-      strcat (MenuText, Alertcolor[Alert]);
+      sprintf (MenuText, "\nAccess granted.\n\nArea : %s\n\nDeck : %s\n\nAlert: %s",
+	       curShip.AreaName, CurLevel->Levelname, Alertcolor[Alert]);
 
       DisplayText (MenuText, MENUTEXT_X, USERFENSTERPOSY + 15, &Menu_Rect);
     } // only if not UPDATE_ONLY was required 
@@ -662,10 +655,10 @@ Paradroid to eliminate all rogue robots.");
       show_title = TRUE;
       show_arrows = TRUE;
       sprintf (InfoText, "\
-Entry : %d\n\
+Entry : %02d\n\
 Class : %s\n\
-Height : %5.2f\n\
-Weight: %d \n\
+Height : %5.2f m\n\
+Weight: %d kg\n\
 Drive : %s \n\
 Brain : %s",   droidtype+1, Classes[Druidmap[droidtype].class],
 	       Druidmap[droidtype].height, Druidmap[droidtype].weight,
@@ -677,7 +670,9 @@ Brain : %s",   droidtype+1, Classes[Druidmap[droidtype].class],
       show_arrows = TRUE;
       sprintf( InfoText , "\
 Armamant : %s\n\
-Sensors  1: %s\n          2: %s\n          3: %s", 
+Sensors  1: %s\n\
+                    2: %s\n\
+                    3: %s", 
 	       Weaponnames [ Druidmap[droidtype].armament],
 	       Sensornames[ Druidmap[droidtype].sensor1 ],
 	       Sensornames[ Druidmap[droidtype].sensor2 ],

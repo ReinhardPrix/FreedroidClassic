@@ -845,7 +845,6 @@ InitNewMission ( char *MissionName )
   Me.status = MOBILE;
   Me.phase = 0;
   Me.timer = 0.0;  // set clock to 0
-  Me.Current_Victim_Resistance_Factor=1;  // this will never get changed in "classic" FD
   
   ShuffleEnemys(); // NOTE: THIS REQUIRES CurLevel TO BE INITIALIZED
 
@@ -1098,11 +1097,11 @@ ThouArtDefeated (void)
   ThouArtDefeatedSound ();
   ExplodeInfluencer ();
 
-  while (SpacePressed());
+  //  while (SpacePressed());
 
   now=SDL_GetTicks();
 
-  while ( (SDL_GetTicks() - now < WAIT_AFTER_KILLED) && (!SpacePressed()))
+  while ( (SDL_GetTicks() - now < WAIT_AFTER_KILLED) )//&& (!SpacePressed()))
     {
       DisplayBanner (NULL, NULL,  0 );
       ExplodeBlasts ();
@@ -1112,8 +1111,8 @@ ThouArtDefeated (void)
   
   Mix_HaltMusic ();
 
-  if (!SpacePressed()) 
-    white_noise (ne_screen, &User_Rect, WAIT_AFTER_KILLED);
+  //  if (!SpacePressed()) 
+  white_noise (ne_screen, &User_Rect, WAIT_AFTER_KILLED);
 
   Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
   MakeGridOnScreen (&User_Rect);
@@ -1126,7 +1125,7 @@ ThouArtDefeated (void)
   printf_SDL(ne_screen, -1, -1, "\n");
   SDL_Flip (ne_screen);
   now=SDL_GetTicks();
-  while (  (SDL_GetTicks() - now < SHOW_WAIT) && (!SpacePressed()) );
+  while (  (SDL_GetTicks() - now < SHOW_WAIT) ); //&& (!SpacePressed()) );
 
   UpdateHighscores ();
 

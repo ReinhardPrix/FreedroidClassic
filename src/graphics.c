@@ -1475,7 +1475,7 @@ white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout)
       SDL_UpdateRect (ne_screen, rect->x, rect->y, rect->w, rect->h);
       usleep(25000);
 
-      if (SpacePressed () || (timeout && (SDL_GetTicks()-now > timeout)))
+      if ( (timeout && (SDL_GetTicks()-now > timeout)))
 	break;
 
     } // while (! finished)

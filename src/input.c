@@ -765,12 +765,21 @@ keyboard_update(void)
 	  break;
 	  
 	case SDL_JOYBUTTONDOWN:
-	  CurrentlySpacePressed = TRUE;
+	  // map first button onto fire, all others on right mouse button
+	  if (event.jbutton.button == 0)
+	    CurrentlySpacePressed = TRUE;
+	  else
+	    CurrentlyMouseRightPressed = TRUE;
+	    
 	  axis_is_active = TRUE;
 	  break;
 
 	case SDL_JOYBUTTONUP:
-	  CurrentlySpacePressed = FALSE;
+	  if (event.jbutton.button == 0)
+	    CurrentlySpacePressed = FALSE;
+	  else
+	    CurrentlyMouseRightPressed = FALSE;
+
 	  axis_is_active = FALSE;
 	  break;
 
