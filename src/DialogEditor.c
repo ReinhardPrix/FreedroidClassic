@@ -121,7 +121,7 @@ typedef struct
 } 
 known_do_extra, *Known_do_extra;
 
-#define ALL_KNOWN_EXTRAS 30
+#define ALL_KNOWN_EXTRAS 31
 
 known_do_extra extra_map [ ALL_KNOWN_EXTRAS ] =
   {
@@ -155,6 +155,7 @@ known_do_extra extra_map [ ALL_KNOWN_EXTRAS ] =
     { "IncreaseHackingSkill", 27 , '\0' } ,
     { "ForceBotRespawnOnLevel:" , 28 , '\0' } , 
     { "CompletelyHealTux",  29 , '\0' } , 
+    { "OpenQuestDiaryEntry:" , 30 , ':' } , 
   };
 
 typedef struct

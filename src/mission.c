@@ -190,7 +190,7 @@ There was an illegal mission number received.",
     {
 	if ( Me [ 0 ] . AllMissions [ mis_num ] . mission_description_visible [ mission_diary_index ] )
 	{
-	    DisplayText( Me [ 0 ] . AllMissions [ mis_num ] . mission_description_texts [ mission_diary_index ] , -1 , -1 , &mission_description_rect );	    
+	    DisplayText( mission_diary_texts [ mis_num ] [ mission_diary_index ] , -1 , -1 , &mission_description_rect );	    
 	    DisplayText( "\n" , -1 , -1 , &mission_description_rect );	    
 	}
     }
@@ -793,14 +793,15 @@ GetQuestList ( char* QuestListFilename )
 	//
 	for ( diary_entry_nr = 0 ; diary_entry_nr < MAX_MISSION_DESCRIPTION_TEXTS ; diary_entry_nr ++ )
 	{
-	    Me [ 0 ] . AllMissions [ MissionTargetIndex ] . mission_description_texts [ diary_entry_nr ] = "" ;
+	    mission_diary_texts [ MissionTargetIndex ] [ diary_entry_nr ] = "" ;
 	    Me [ 0 ] . AllMissions [ MissionTargetIndex ] . mission_description_visible [ diary_entry_nr ] = FALSE ;
 	}
 	next_diary_entry_pointer = MissionTargetPointer;
 	number_of_diary_entries = 0;
 	while ( ( next_diary_entry_pointer = strstr( next_diary_entry_pointer , MISSION_DIARY_ENTRY_STRING ) ) != NULL )
 	{    
-	    Me [ 0 ] . AllMissions [ MissionTargetIndex ] . mission_description_texts [ number_of_diary_entries ] = ReadAndMallocStringFromData ( next_diary_entry_pointer , MISSION_DIARY_ENTRY_STRING , "\"" ) ;
+	    mission_diary_texts [ MissionTargetIndex ] [ number_of_diary_entries ] = 
+		ReadAndMallocStringFromData ( next_diary_entry_pointer , MISSION_DIARY_ENTRY_STRING , "\"" ) ;
 	    number_of_diary_entries ++;
 	    next_diary_entry_pointer ++;
 	}

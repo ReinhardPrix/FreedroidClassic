@@ -571,6 +571,7 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
     char tmp_filename [ 5000 ] ;
     char* fpath;
     int i;
+    int mis_num , mis_diary_entry_num;
     
     if ( ! strcmp ( ExtraCommandString , "BreakOffAndBecomeHostile" ) )
     {
@@ -685,6 +686,31 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
 	{
 	    SetNewBigScreenMessage( "1 Item received!" );
 	}
+    }
+    else if ( CountStringOccurences ( ExtraCommandString , "OpenQuestDiaryEntry:" ) )
+    {
+	DebugPrintf( -4 , "\nExtra invoked enabling a new quest diary entry: %s." ,
+		     ExtraCommandString + strlen ( "OpenQuestDiaryEntry:" ) );
+	strncpy ( WorkString , ExtraCommandString + strlen ( "OpenQuestDiaryEntry:" ) , 10 );
+	WorkString [ 10 ] = 0 ;
+	sscanf ( WorkString , "M%dE%d:" , &mis_num , &mis_diary_entry_num );
+	DebugPrintf ( -4 , "\nreceived mission number: %d and diary entry number: %d." , 
+		      mis_num , mis_diary_entry_num );
+	if ( ( mis_num < 0 ) || ( mis_num >= MAX_MISSIONS_IN_GAME ) )
+	{
+	    fprintf ( stderr , "\nmission number received: %d." , mis_num );
+	    GiveStandardErrorMessage ( __FUNCTION__  , "\
+There was an illegal mission number received.",
+				       PLEASE_INFORM, IS_FATAL );
+	}
+	if ( ( mis_diary_entry_num < 0 ) || ( mis_diary_entry_num >= MAX_MISSION_DESCRIPTION_TEXTS ) )
+	{
+	    fprintf ( stderr , "\nmission diary entry number received: %d." , mis_diary_entry_num );
+	    GiveStandardErrorMessage ( __FUNCTION__  , "\
+There was an illegal mission diary entry number received.",
+				       PLEASE_INFORM, IS_FATAL );
+	}
+	Me [ 0 ] . AllMissions [ mis_num ] . mission_description_visible [ mis_diary_entry_num ] = TRUE ;
     }
     else if ( CountStringOccurences ( ExtraCommandString , "ExecuteActionWithLabel:" ) )
     {
