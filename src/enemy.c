@@ -126,10 +126,10 @@ SetDirectCourseToConsole( int EnemyNum )
 	{
 	  switch ( ThisBotsLevel->map[j][i] )
 	    {
-	    case KONSOLE_U:
-	    case KONSOLE_O:
-	    case KONSOLE_R:
-	    case KONSOLE_L:
+	    case CONSOLE_D:
+	    case CONSOLE_U:
+	    case CONSOLE_R:
+	    case CONSOLE_L:
 	      DebugPrintf( 1 , "\nSetDirectCourseToConsole( int EnemyNum ): Console found: %d-%d.", i , j );
 	      if ( DirectLineWalkable( AllEnemys[EnemyNum].pos.x , AllEnemys[EnemyNum].pos.y , i , j , AllEnemys [ EnemyNum ] . pos . z ) )
 		{

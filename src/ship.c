@@ -430,44 +430,44 @@ EnterCodepanel (void)
 	  map_y = (int) rintf( Me[0].pos.y );
 	  switch( CurLevel->map[ map_y ] [ map_x + 1] )
 	    {
-	    case LOCKED_H_ZUTUERE:
-	      CurLevel->map[ map_y ] [ map_x + 1 ] = H_ZUTUERE;
+	    case LOCKED_H_SHUT_DOOR:
+	      CurLevel->map[ map_y ] [ map_x + 1 ] = H_SHUT_DOOR;
 	      break;
-	    case LOCKED_V_ZUTUERE:
-	      CurLevel->map[ map_y ] [ map_x + 1 ] = V_ZUTUERE;
+	    case LOCKED_V_SHUT_DOOR:
+	      CurLevel->map[ map_y ] [ map_x + 1 ] = V_SHUT_DOOR;
 	      break;
 	    default:
 	      break;
 	    }
 	  switch( CurLevel->map[ map_y ] [ map_x - 1 ] )
 	    {
-	    case LOCKED_H_ZUTUERE:
-	      CurLevel->map[ map_y ] [ map_x - 1 ] = H_ZUTUERE;
+	    case LOCKED_H_SHUT_DOOR:
+	      CurLevel->map[ map_y ] [ map_x - 1 ] = H_SHUT_DOOR;
 	      break;
-	    case LOCKED_V_ZUTUERE:
-	      CurLevel->map[ map_y ] [ map_x - 1 ] = V_ZUTUERE;
+	    case LOCKED_V_SHUT_DOOR:
+	      CurLevel->map[ map_y ] [ map_x - 1 ] = V_SHUT_DOOR;
 	      break;
 	    default:
 	      break;
 	    }
 	  switch( CurLevel->map[ map_y + 1 ] [ map_x ] )
 	    {
-	    case LOCKED_H_ZUTUERE:
-	      CurLevel->map[ map_y + 1 ] [ map_x ] = H_ZUTUERE;
+	    case LOCKED_H_SHUT_DOOR:
+	      CurLevel->map[ map_y + 1 ] [ map_x ] = H_SHUT_DOOR;
 	      break;
-	    case LOCKED_V_ZUTUERE:
-	      CurLevel->map[ map_y + 1 ] [ map_x ] = V_ZUTUERE;
+	    case LOCKED_V_SHUT_DOOR:
+	      CurLevel->map[ map_y + 1 ] [ map_x ] = V_SHUT_DOOR;
 	      break;
 	    default:
 	      break;
 	    }
 	  switch( CurLevel->map[ map_y - 1 ] [ map_x ] )
 	    {
-	    case LOCKED_H_ZUTUERE:
-	      CurLevel->map[ map_y - 1 ] [ map_x ] = H_ZUTUERE;
+	    case LOCKED_H_SHUT_DOOR:
+	      CurLevel->map[ map_y - 1 ] [ map_x ] = H_SHUT_DOOR;
 	      break;
-	    case LOCKED_V_ZUTUERE:
-	      CurLevel->map[ map_y - 1 ] [ map_x ] = V_ZUTUERE;
+	    case LOCKED_V_SHUT_DOOR:
+	      CurLevel->map[ map_y - 1 ] [ map_x ] = V_SHUT_DOOR;
 	      break;
 	    default:
 	      break;
@@ -500,7 +500,7 @@ EnterCodepanel (void)
  *	0	* Reenter the game without squashing the colortable
  * ---------------------------------------------------------------------- */
 void
-EnterKonsole (void)
+EnterConsole (void)
 {
   int finished = FALSE;
   int menu_pos = 0;
@@ -595,7 +595,7 @@ EnterKonsole (void)
 
   return;
 
-} // void EnterKonsole(void)
+} // void EnterConsole(void)
 
 /* -----------------------------------------------------------------
  * This function shows the selectable menu items.
@@ -987,15 +987,15 @@ ShowDeckMap (Level deck)
 		    {
 		      MapValue = curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] ;
 		      DebugPrintf ( 0 , "Map value found at click location: %d. " , MapValue );
-		      if ( MapValue == LOCKED_H_ZUTUERE )
+		      if ( MapValue == LOCKED_H_SHUT_DOOR )
 			{
-			  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] = H_ZUTUERE ;
+			  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] = H_SHUT_DOOR ;
 			  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Door_Successfully_Unlocked_0.wav" , FALSE );
 			  SelectedFunction = NO_FUNCTION;
 			}
-		      if ( MapValue == LOCKED_V_ZUTUERE )
+		      if ( MapValue == LOCKED_V_SHUT_DOOR )
 			{
-			  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] = V_ZUTUERE ;
+			  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] = V_SHUT_DOOR ;
 			  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Door_Successfully_Unlocked_0.wav" , FALSE );
 			  SelectedFunction = NO_FUNCTION;
 			}                                         

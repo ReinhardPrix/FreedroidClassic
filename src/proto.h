@@ -27,17 +27,16 @@
 
 #include "struct.h"
 
-/* main.c */
+// main.c 
 #undef EXTERN
 #ifdef _main_c
 #define EXTERN
 #else
 #define EXTERN extern
 #endif
-
 EXTERN int ShipEmptyCounter;
 
-/* main.c */
+// init.c
 #undef EXTERN
 #ifdef _init_c
 #define EXTERN
@@ -57,7 +56,7 @@ EXTERN void ThouArtDefeated (void);
 EXTERN void ThouArtVictorious (void);
 EXTERN void CheckIfMissionIsComplete (void);
 
-/* influ.c */
+// influ.c 
 #undef EXTERN
 #ifdef _influ_c
 #define EXTERN
@@ -69,7 +68,6 @@ EXTERN void InitInfluPositionHistory( int PlayerNum );
 EXTERN float GetInfluPositionHistoryX( int Index );
 EXTERN float GetInfluPositionHistoryY( int Index );
 EXTERN float GetInfluPositionHistoryZ( int Index );
-// EXTERN void Move_Influencers_Friends ( void );
 EXTERN void FireTuxRangedWeaponRaw ( int PlayerNum , int weapon_item_type , int bullet_image_type , int ForceMouseUse , int FreezeSeconds , float PoisonDuration , float PoisonDamagePerSec , float ParalysationDuration , int HitPercentage ) ;
 EXTERN void MoveInfluence ( int PlayerNum ) ;
 EXTERN void AdjustSpeed ( int PlayerNum ) ;
@@ -81,7 +79,7 @@ EXTERN void CheckInfluenceEnemyCollision (void);
 EXTERN void RefreshInfluencer (void);
 EXTERN void ExplodeInfluencer (void);
 
-/* bullet.c */
+// bullet.c 
 #undef EXTERN
 #ifdef _bullet_c
 #define EXTERN
@@ -98,7 +96,7 @@ EXTERN void DeleteBlast (int num);
 EXTERN void CheckBulletCollisions (int num);
 EXTERN void CheckBlastCollisions (int num);
 
-/* view.c */
+// view.c 
 #undef EXTERN
 #ifdef _view_c
 #define EXTERN
@@ -118,15 +116,13 @@ EXTERN void PutMouseMoveCursor ( void ) ;
 EXTERN void ShowRobotPicture (int PosX, int PosY, int Number);
 EXTERN void ShowInventoryScreen ( void );
 
-
-/* blocks.c */
+// blocks.c 
 #undef EXTERN
 #ifdef _blocks_c
 #define EXTERN
 #else
 #define EXTERN extern
 #endif
-
 EXTERN void Load_Item_Surfaces (void);
 EXTERN void Load_Mouse_Move_Cursor_Surfaces(void);
 EXTERN void Load_Skill_Level_Button_Surfaces( void );
@@ -142,14 +138,13 @@ EXTERN void Load_Digit_Surfaces (void);
 EXTERN void Load_Bullet_Surfaces (void);
 EXTERN void Load_Blast_Surfaces (void);
 
-/* graphics.c */
+// graphics.c 
 #undef EXTERN
 #ifdef _graphics_c
 #define EXTERN
 #else
 #define EXTERN extern
 #endif
-
 EXTERN SDL_Surface* CreateAlphaCombinedSurface ( SDL_Surface* FirstSurface , SDL_Surface* SecondSurface );
 EXTERN SDL_Surface* CreateColorFilteredSurface ( SDL_Surface* FirstSurface , int FilterType );
 EXTERN void DrawLineBetweenTiles( float x1 , float y1 , float x2 , float y2 , int Color );
@@ -180,8 +175,7 @@ EXTERN void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
 EXTERN int SaveGame( void );
 EXTERN int LoadGame( void );
 
-
-/* map.c */
+// map.c 
 #undef EXTERN
 #ifdef _map_c
 #define EXTERN
@@ -211,7 +205,7 @@ EXTERN int DruidPassable ( float x , float y , int z );
 EXTERN int IsVisible ( GPS objpos , int PlayerNum ) ;
 EXTERN int TranslateMap (Level Lev);
 
-/* sound.c  OR nosound.c */
+// sound.c  OR nosound.c 
 #undef EXTERN
 #ifdef _sound_c
 #define EXTERN
@@ -222,7 +216,6 @@ EXTERN void PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Wait
 EXTERN void Init_Audio(void);
 EXTERN void Set_BG_Music_Volume(float);
 EXTERN void Set_Sound_FX_Volume(float);
-// EXTERN void Switch_Background_Music_To (int);
 EXTERN void Switch_Background_Music_To ( char * filename_raw );
 EXTERN void Play_Sound (int);
 EXTERN void StartSound (int);
@@ -271,7 +264,6 @@ EXTERN void Play_Shop_ItemIdentifiedSound( void );
 #else
 #define EXTERN extern
 #endif
-
 EXTERN int CountItemtypeInInventory( int Itemtype , int PlayerNum );
 EXTERN void DeleteAllInventoryItemsOfType( int Itemtype , int PlayerNum );
 EXTERN void DamageItem( item* CurItem );
@@ -335,14 +327,13 @@ EXTERN void ClearDetectedItemList( int PlayerNum );
 EXTERN void ShowSkillsScreen ( void );
 EXTERN void HandleCurrentlyActivatedSkill( void );
 
-/* input.c */
+// input.c 
 #undef EXTERN
 #ifdef _input_c
 #define EXTERN
 #else
 #define EXTERN extern
 #endif
-
 EXTERN int MouseWheelUpPressed(void);
 EXTERN int MouseWheelDownPressed(void);
 EXTERN int MouseRightPressed(void);
@@ -432,7 +423,7 @@ EXTERN int YPressed (void);
 EXTERN int ZPressed (void);
 EXTERN int NoDirectionPressed (void);
 
-/* menu.c */
+// menu.c 
 #undef EXTERN
 #ifdef _menu_c
 #define EXTERN
@@ -452,7 +443,7 @@ EXTERN void MissionSelectMenu (void);
 EXTERN void Cheatmenu (void);
 EXTERN void EscapeMenu (void);
 
-/* misc.c */
+// misc.c 
 #undef EXTERN
 #ifdef _misc_c
 #define EXTERN
@@ -507,7 +498,7 @@ EXTERN void ClearEnemys (void);
 EXTERN int ClassOfDruid (int druidtype);
 EXTERN void SwapEnemys ( int First , int Second ) ;
 
-/* ship.c */
+// ship.c 
 #undef EXTERN
 #ifdef _ship_c
 #define EXTERN
@@ -518,7 +509,7 @@ EXTERN void ShowDeckMap (Level deck);
 EXTERN void EnterLift (void);
 EXTERN void EnterItemIdentificationBooth( void );
 EXTERN void EnterCodepanel (void);
-EXTERN void EnterKonsole (void);
+EXTERN void EnterConsole (void);
 EXTERN void AlleLevelsGleichFaerben (void);
 EXTERN int LevelEmpty (void);
 EXTERN int ShipEmpty (void);
@@ -528,7 +519,7 @@ void show_droid_info (int droidtype, int page , char ShowArrows );
 void ShowLifts (int level, int liftrow);
 void PaintConsoleMenu (int menu_pos);
 
-/* text.c */
+// text.c 
 #undef EXTERN
 #ifdef _text_c
 #define EXTERN
@@ -538,7 +529,6 @@ void PaintConsoleMenu (int menu_pos);
 
 EXTERN void SetNewBigScreenMessage( char* ScreenMessageText );
 EXTERN void DisplayBigScreenMessage( void );
-// EXTERN void RestoreChatVariableToInitialValue( int PlayerNum );
 EXTERN char* GetChatWindowInput( SDL_Surface* Background , SDL_Rect* Chat_Window_Pointer );
 EXTERN void ChatWithFriendlyDroid( int Enum );
 EXTERN void EnemyHitByBulletText( int Enum );
@@ -563,7 +553,7 @@ EXTERN void printf_SDL (SDL_Surface *screen, int x, int y, char *fmt, ...);
 EXTERN int putchar_SDL (SDL_Surface *Surface, int x, int y, int c);
 
 
-/* rahmen.c */
+// rahmen.c 
 #undef EXTERN
 #ifdef _rahmen_c
 #define EXTERN
@@ -573,7 +563,7 @@ EXTERN int putchar_SDL (SDL_Surface *Surface, int x, int y, int c);
 EXTERN void GiveItemDescription ( char* ItemDescText , item* CurItem , int ForShop );
 EXTERN void DisplayBanner (const char* left, const char* right, int flags );
 
-/* shop.c */
+// shop.c 
 #undef EXTERN
 #ifdef _shop_c
 #define EXTERN
@@ -620,7 +610,7 @@ EXTERN void PrintServerStatusInformation ( void ) ;
 EXTERN void SendPeriodicServerMessagesToAllClients ( void );
 EXTERN void SendEnemySwapSignalToClient ( int , int , int ) ;
 
-/* takeover.c */
+// takeover.c 
 #undef EXTERN
 #ifdef _takeover_c
 #define EXTERN

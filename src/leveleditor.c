@@ -754,27 +754,27 @@ Level_Editor(void)
 	  if (KP1Pressed()) 
 	    {
 	      if ( Shift_Was_Pressed() ) CurLevel->map[BlockY][BlockX]=AUTOGUN_L;
-	      else CurLevel->map[BlockY][BlockX]=ECK_LU;
+	      else CurLevel->map[BlockY][BlockX]=CORNER_LD;
 	    }
 	  if (KP2Pressed()) 
 	    {
 	      if ( Shift_Was_Pressed() )
-		CurLevel->map[BlockY][BlockX]=KONSOLE_U;
+		CurLevel->map[BlockY][BlockX]=CONSOLE_D;
 	      else if ( Ctrl_Was_Pressed() ) 
 		CurLevel->map[BlockY][BlockX]=CODEPANEL_D;
 	      else if ( Alt_Was_Pressed() ) 
 		CurLevel->map[BlockY][BlockX]=CONVEY_D;
-	      else CurLevel->map[BlockY][BlockX]=T_U;
+	      else CurLevel->map[BlockY][BlockX]=T_D;
 	    }
 	  if (KP3Pressed()) 
 	    {
 	      if ( Shift_Was_Pressed() ) CurLevel->map[BlockY][BlockX]=AUTOGUN_U;
-	      else CurLevel->map[BlockY][BlockX]=ECK_RU;
+	      else CurLevel->map[BlockY][BlockX]=CORNER_RD;
 	    }
 	  if (KP4Pressed()) 
 	    {
 	      if ( Shift_Was_Pressed() )
-		CurLevel->map[BlockY][BlockX]=KONSOLE_L;
+		CurLevel->map[BlockY][BlockX]=CONSOLE_L;
 	      else if ( Ctrl_Was_Pressed() ) 
 		CurLevel->map[BlockY][BlockX]=CODEPANEL_L;
 	      else if ( Alt_Was_Pressed() ) 
@@ -790,7 +790,7 @@ Level_Editor(void)
 	  if (KP6Pressed()) 
 	    {
 	      if ( Shift_Was_Pressed() )
-		CurLevel->map[BlockY][BlockX]=KONSOLE_R;
+		CurLevel->map[BlockY][BlockX]=CONSOLE_R;
 	      else if ( Ctrl_Was_Pressed() ) 
 		CurLevel->map[BlockY][BlockX]=CODEPANEL_R;
 	      else if ( Alt_Was_Pressed() ) 
@@ -800,22 +800,22 @@ Level_Editor(void)
 	  if (KP7Pressed()) 
 	    {
 	      if ( Shift_Was_Pressed() ) CurLevel->map[BlockY][BlockX]=AUTOGUN_D;
-	      else CurLevel->map[BlockY][BlockX]=ECK_LO;
+	      else CurLevel->map[BlockY][BlockX]=CORNER_LU;
 	    }
 	  if ( KP8Pressed() ) 
 	    {
 	      if ( Shift_Was_Pressed() )
-		CurLevel->map[BlockY][BlockX]=KONSOLE_O;
+		CurLevel->map[BlockY][BlockX]=CONSOLE_U;
 	      else if ( Ctrl_Was_Pressed() ) 
 		CurLevel->map[BlockY][BlockX]=CODEPANEL_U;
 	      else if ( Alt_Was_Pressed() ) 
 		CurLevel->map[BlockY][BlockX]=CONVEY_U;
-	      else CurLevel->map[BlockY][BlockX]=T_O;
+	      else CurLevel->map[BlockY][BlockX]=T_U;
 	    }
 	  if (KP9Pressed()) 
 	    {
 	      if ( Shift_Was_Pressed() ) CurLevel->map[BlockY][BlockX]=AUTOGUN_R;
-	      else CurLevel->map[BlockY][BlockX]=ECK_RO;
+	      else CurLevel->map[BlockY][BlockX]=CORNER_RU;
 	    }
 	  if (APressed())
 	    {
@@ -830,14 +830,14 @@ Level_Editor(void)
 	      if ( !Ctrl_Was_Pressed())
 		{
 		  if (Shift_Was_Pressed())
-		    CurLevel->map[BlockY][BlockX]=V_ZUTUERE;	            	      
-		  else CurLevel->map[BlockY][BlockX]=H_ZUTUERE;	            	      
+		    CurLevel->map[BlockY][BlockX]=V_SHUT_DOOR;	            	      
+		  else CurLevel->map[BlockY][BlockX]=H_SHUT_DOOR;	            	      
 		}
 	      else
 		{
 		  if (Shift_Was_Pressed())
-		    CurLevel->map[BlockY][BlockX]=LOCKED_V_ZUTUERE;	            	      
-		  else CurLevel->map[BlockY][BlockX]=LOCKED_H_ZUTUERE;	            	      
+		    CurLevel->map[BlockY][BlockX]=LOCKED_V_SHUT_DOOR;	            	      
+		  else CurLevel->map[BlockY][BlockX]=LOCKED_H_SHUT_DOOR;	            	      
 		}
 	    }
 	  if (SpacePressed())

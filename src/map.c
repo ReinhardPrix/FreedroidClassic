@@ -30,12 +30,6 @@
  * that contains specified coordinates are done in this file.
  * ---------------------------------------------------------------------- */
 
-/*
- * This file has been checked for remains of german in the documentation.
- * They should be all out by now, and if you still find any, please do not
- * hesitate to remove them.
- */
-
 #define _map_c
 
 #include "system.h"
@@ -46,8 +40,6 @@
 #include "global.h"
 
 #include "map.h"
-
-#include "maped.h"
 
 #define AREA_NAME_STRING "Area name=\""
 #define LEVEL_NAME_STRING "Name of this level="
@@ -114,18 +106,18 @@ IsWallBlock (int block)
     case KREUZ:
     case H_WALL:
     case V_WALL:
-    case H_ZUTUERE:
-    case V_ZUTUERE:
-    case LOCKED_H_ZUTUERE:
-    case LOCKED_V_ZUTUERE:
-    case ECK_LU:
-    case T_U:
-    case ECK_RU:
+    case H_SHUT_DOOR:
+    case V_SHUT_DOOR:
+    case LOCKED_H_SHUT_DOOR:
+    case LOCKED_V_SHUT_DOOR:
+    case CORNER_LD:
+    case T_D:
+    case CORNER_RD:
     case T_L:
     case T_R:
-    case ECK_LO:
-    case T_O:
-    case ECK_RO:
+    case CORNER_LU:
+    case T_U:
+    case CORNER_RU:
     case BLOCK1:
     case BLOCK2:
     case BLOCK3:
@@ -386,16 +378,16 @@ ActSpecialField ( int PlayerNum )
       break;
       */
 
-    case KONSOLE_R:
-    case KONSOLE_L:
-    case KONSOLE_O:
-    case KONSOLE_U:
+    case CONSOLE_R:
+    case CONSOLE_L:
+    case CONSOLE_U:
+    case CONSOLE_D:
       if ( ( Me [ 0 ] . status == TRANSFERMODE ) &&
 	   ( PlayerNum == 0 ) &&
 	   ( ! ServerMode ) )
 	{
-	  EnterKonsole ( ) ;
-	  DebugPrintf ( 2 , "\nvoid ActSpecialField(int x, int y):  Back from EnterKonsole().\n");
+	  EnterConsole ( ) ;
+	  DebugPrintf ( 2 , "\nvoid ActSpecialField(int x, int y):  Back from EnterConsole().\n");
 	}
       break;
 
@@ -407,7 +399,7 @@ ActSpecialField ( int PlayerNum )
       if ( Me[0].status == TRANSFERMODE )
 	{
 	  EnterCodepanel ( );
-	  // DebugPrintf (2, "\nvoid ActSpecialField(int x, int y):  Back from EnterKonsole().\n");
+	  // DebugPrintf (2, "\nvoid ActSpecialField(int x, int y):  Back from EnterConsole().\n");
 	}
       break;
       */
@@ -420,7 +412,7 @@ ActSpecialField ( int PlayerNum )
       if (Me[0].status == TRANSFERMODE)
 	{
 	  EnterItemIdentificationBooth ( );
-	  // DebugPrintf (2, "\nvoid ActSpecialField(int x, int y):  Back from EnterKonsole().\n");
+	  // DebugPrintf (2, "\nvoid ActSpecialField(int x, int y):  Back from EnterConsole().\n");
 	}
       break;
       */
@@ -1121,7 +1113,7 @@ freedroid-discussion@lists.sourceforge.net\n\
  * into a Level-struct:
  *
  * NOTE:  Here, the map-data are NOT yet translated to their 
- *        their internal values, like "VOID", "H_GANZTUERE" and
+ *        their internal values, like "VOID", "H_OPEN_DOOR" and
  *         all the other values from the defs.h file.
  *
  * Doors and Waypoints Arrays are initialized too
@@ -1557,7 +1549,7 @@ GetDoors (Level Lev)
 	{
 	  brick = Lev->map[line][col];
 	  // if (brick == '=' || brick == '"')
-	  if ( brick == V_ZUTUERE || brick == H_ZUTUERE )
+	  if ( brick == V_SHUT_DOOR || brick == H_SHUT_DOOR )
 	    {
 	      Lev->doors[curdoor].x = col;
 	      Lev->doors[curdoor++].y = line;
@@ -1803,19 +1795,19 @@ TranslateToHumanReadable ( char* HumanReadable , unsigned char* MapInfo, int Lin
 	{
 	  switch ( Lev->map[i][col] )
 	    {
-	    case V_ZUTUERE:
-	    case V_HALBTUERE1:
-	    case V_HALBTUERE2:
-	    case V_HALBTUERE3:
-	    case V_GANZTUERE:
-	      Lev->map[i][col]=V_ZUTUERE;
+	    case V_SHUT_DOOR:
+	    case V_HALF_DOOR1:
+	    case V_HALF_DOOR2:
+	    case V_HALF_DOOR3:
+	    case V_OPEN_DOOR:
+	      Lev->map[i][col]=V_SHUT_DOOR;
 	      break;
-	    case H_ZUTUERE:
-	    case H_HALBTUERE1:
-	    case H_HALBTUERE2:
-	    case H_HALBTUERE3:
-	    case H_GANZTUERE:
-	      Lev->map[i][col]=H_ZUTUERE;
+	    case H_SHUT_DOOR:
+	    case H_HALF_DOOR1:
+	    case H_HALF_DOOR2:
+	    case H_HALF_DOOR3:
+	    case H_OPEN_DOOR:
+	      Lev->map[i][col]=H_SHUT_DOOR;
 	      break;
 	    case REFRESH1:
 	    case REFRESH2:
@@ -2677,7 +2669,7 @@ MoveLevelDoors ( int PlayerNum )
       //
       if ( one_player_close_enough )
 	{
-	  if ( (*Pos != H_GANZTUERE) && (*Pos != V_GANZTUERE) )
+	  if ( (*Pos != H_OPEN_DOOR) && (*Pos != V_OPEN_DOOR) )
 	    *Pos += 1;
 	}
       else 
@@ -2704,7 +2696,7 @@ MoveLevelDoors ( int PlayerNum )
 		      dist2 = xdist * xdist + ydist * ydist;
 		      if (dist2 < DOOROPENDIST2)
 			{
-			  if ((*Pos != H_GANZTUERE) && (*Pos != V_GANZTUERE))
+			  if ((*Pos != H_OPEN_DOOR) && (*Pos != V_OPEN_DOOR))
 			    *Pos += 1;
 
 			  break;	/* one druid is enough to open a door */
@@ -2715,7 +2707,7 @@ MoveLevelDoors ( int PlayerNum )
 
 	  /* No druid near: close door if it isnt closed */
 	  if (j == NumEnemys)
-	    if ((*Pos != V_ZUTUERE) && (*Pos != H_ZUTUERE))
+	    if ((*Pos != V_SHUT_DOOR) && (*Pos != H_SHUT_DOOR))
 	      *Pos -= 1;
 
 	}			/* else */
@@ -3025,7 +3017,7 @@ IsPassable ( float x , float y , int z , int Checkpos)
 	ret = -1;
       break;
 
-    case KONSOLE_L:
+    case CONSOLE_L:
     case CODEPANEL_L:
     case IDENTIFY_L:
       if (Checkpos == LIGHT)
@@ -3033,13 +3025,13 @@ IsPassable ( float x , float y , int z , int Checkpos)
 	  ret = CENTER;
 	  break;
 	}
-      if ( (fx < WALLPASS) || ( fx > ( 1 - KONSOLEPASS_X ) ) )
+      if ( (fx < WALLPASS) || ( fx > ( 1 - CONSOLEPASS_X ) ) )
 	ret = CENTER;
       else
 	ret = -1;
       break;
 
-    case KONSOLE_R:
+    case CONSOLE_R:
     case CODEPANEL_R:
     case IDENTIFY_R:
       if (Checkpos == LIGHT)
@@ -3047,13 +3039,13 @@ IsPassable ( float x , float y , int z , int Checkpos)
 	  ret = CENTER;
 	  break;
 	}
-      if ( (fx < KONSOLEPASS_X) || (fx > 1 - WALLPASS) ) 
+      if ( (fx < CONSOLEPASS_X) || (fx > 1 - WALLPASS) ) 
 	ret = CENTER;
       else
 	ret = -1;
       break;
 
-    case KONSOLE_O:
+    case CONSOLE_U:
     case CODEPANEL_U:
     case IDENTIFY_U:
       if (Checkpos == LIGHT)
@@ -3061,14 +3053,14 @@ IsPassable ( float x , float y , int z , int Checkpos)
 	  ret = CENTER;
 	  break;
 	}
-      if ( (fy < WALLPASS) || (fy > ( 1 - KONSOLEPASS_Y )) )
+      if ( (fy < WALLPASS) || (fy > ( 1 - CONSOLEPASS_Y )) )
 	ret = CENTER;
       else
 	ret = -1;
       break;
 
 
-    case KONSOLE_U:
+    case CONSOLE_D:
     case CODEPANEL_D:
     case IDENTIFY_D:
       if (Checkpos == LIGHT)
@@ -3076,7 +3068,7 @@ IsPassable ( float x , float y , int z , int Checkpos)
 	  ret = CENTER;
 	  break;
 	}
-      if ( (fy < KONSOLEPASS_Y) || (fy > 1 - WALLPASS) )
+      if ( (fy < CONSOLEPASS_Y) || (fy > 1 - WALLPASS) )
 	ret = CENTER;
       else
 	ret = -1;
@@ -3098,7 +3090,7 @@ IsPassable ( float x , float y , int z , int Checkpos)
 	ret = -1;
       break;
 
-    case ECK_RO:
+    case CORNER_RU:
       if ((fx > 1 - WALLPASS) || (fy < WALLPASS) ||
 	  ((fx < WALLPASS) && (fy > 1 - WALLPASS)))
 	ret = CENTER;
@@ -3106,7 +3098,7 @@ IsPassable ( float x , float y , int z , int Checkpos)
 	ret = -1;
       break;
 
-    case ECK_RU:
+    case CORNER_RD:
       if ((fx > 1 - WALLPASS) || (fy > 1 - WALLPASS) ||
 	  ((fx < WALLPASS) && (fy < WALLPASS)))
 	ret = CENTER;
@@ -3114,7 +3106,7 @@ IsPassable ( float x , float y , int z , int Checkpos)
 	ret = -1;
       break;
 
-    case ECK_LU:
+    case CORNER_LD:
       if ((fx < WALLPASS) || (fy > 1 - WALLPASS) ||
 	  ((fx > 1 - WALLPASS) && (fy < WALLPASS)))
 	ret = CENTER;
@@ -3122,7 +3114,7 @@ IsPassable ( float x , float y , int z , int Checkpos)
 	ret = -1;
       break;
 
-    case ECK_LO:
+    case CORNER_LU:
       if ((fx < WALLPASS) || (fy < WALLPASS) ||
 	  ((fx > 1 - WALLPASS) && (fy > 1 - WALLPASS)))
 	ret = CENTER;
@@ -3130,7 +3122,7 @@ IsPassable ( float x , float y , int z , int Checkpos)
 	ret = -1;
       break;
 
-    case T_O:
+    case T_U:
       if ((fy < WALLPASS) ||
 	  ((fy > 1 - WALLPASS) &&
 	   ((fx < WALLPASS) || (fx > 1 - WALLPASS))))
@@ -3148,7 +3140,7 @@ IsPassable ( float x , float y , int z , int Checkpos)
 	ret = -1;
       break;
 
-    case T_U:
+    case T_D:
       if ((fy > 1 - WALLPASS) ||
 	  ((fy < WALLPASS) &&
 	   ((fx < WALLPASS) || (fx > 1 - WALLPASS))))
@@ -3166,17 +3158,17 @@ IsPassable ( float x , float y , int z , int Checkpos)
 	ret = -1;
       break;
 
-    case H_GANZTUERE:
-    case H_HALBTUERE3:
-    case H_HALBTUERE2:
+    case H_OPEN_DOOR:
+    case H_HALF_DOOR3:
+    case H_HALF_DOOR2:
       if (Checkpos == LIGHT)
 	{
 	  ret = CENTER;
 	  break;
 	}
-    case H_HALBTUERE1:
-    case H_ZUTUERE:
-    case LOCKED_H_ZUTUERE:
+    case H_HALF_DOOR1:
+    case H_SHUT_DOOR:
+    case LOCKED_H_SHUT_DOOR:
       if (Checkpos == LIGHT)
 	{
 	  ret = -1;
@@ -3219,7 +3211,7 @@ IsPassable ( float x , float y , int z , int Checkpos)
 	} // if side of the door has been collided with...
       else
 	{			// directily in the door
-	  if ((MapBrick == H_GANZTUERE) || (MapBrick == H_HALBTUERE3))
+	  if ((MapBrick == H_OPEN_DOOR) || (MapBrick == H_HALF_DOOR3))
 	    ret = CENTER;	// door open
 	  else if ((fy < TUERBREITE) || (fy > 1 - TUERBREITE))
 	    ret = CENTER;	// door closed, but not entirely in
@@ -3228,17 +3220,17 @@ IsPassable ( float x , float y , int z , int Checkpos)
 	}			// directly in the door
 
       break;
-    case V_GANZTUERE:
-    case V_HALBTUERE3:
-    case V_HALBTUERE2:
+    case V_OPEN_DOOR:
+    case V_HALF_DOOR3:
+    case V_HALF_DOOR2:
       if (Checkpos == LIGHT)
 	{
 	  ret = CENTER;
 	  break;
 	}
-    case V_HALBTUERE1:
-    case V_ZUTUERE:
-    case LOCKED_V_ZUTUERE:
+    case V_HALF_DOOR1:
+    case V_SHUT_DOOR:
+    case LOCKED_V_SHUT_DOOR:
       if (Checkpos == LIGHT)
 	{
 	  ret = -1;
@@ -3282,7 +3274,7 @@ IsPassable ( float x , float y , int z , int Checkpos)
 	}			// if side of door has been collided with...
       else
 	{			// directly in the door center
-	  if ((MapBrick == V_GANZTUERE) || (MapBrick == V_HALBTUERE3))
+	  if ((MapBrick == V_OPEN_DOOR) || (MapBrick == V_HALF_DOOR3))
 	    ret = CENTER;	// open door
 	  else if ((fx < TUERBREITE) || (fx > 1 - TUERBREITE))
 	    ret = CENTER;	// closed door, but not entirely there

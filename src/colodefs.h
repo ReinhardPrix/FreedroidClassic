@@ -51,7 +51,7 @@
 #define BULLETCOLOR2 {35,0,0}	// {46,0,0} /* dunkelrot/feuerrot = Kaminrot */
 #define BULLETCOLOR3 {63,63,63}	/* weiss */
 #define BULLETCOLOR4 {63,24,24}	/* hellrot */
-#define BULLETCOLOR5 {50,24,0}	// {45,21,0} /* Konsolenbraun */
+#define BULLETCOLOR5 {50,24,0}	// {45,21,0} /* Consolenbraun */
 
 #define BULLETCOLOR6 {50,30,11}	/* braun */
 #define BULLETCOLOR9 {63,35,8}	/* rotbraun */

@@ -734,8 +734,8 @@ CheckInfluenceWallCollisions ( int PlayerNum )
 	  
 	  // if its an open door, we also correct the east-west position, in the
 	  // sense that we move thowards the middle
-	  if ( ( GetMapBrick ( InfluencerLevel , Me [ PlayerNum ] .pos.x , Me [ PlayerNum ] .pos.y - 0.5  ) == H_GANZTUERE ) || 
-	       ( GetMapBrick ( InfluencerLevel , Me [ PlayerNum ] .pos.x , Me [ PlayerNum ] .pos.y + 0.5  ) == H_GANZTUERE ) )
+	  if ( ( GetMapBrick ( InfluencerLevel , Me [ PlayerNum ] .pos.x , Me [ PlayerNum ] .pos.y - 0.5  ) == H_OPEN_DOOR ) || 
+	       ( GetMapBrick ( InfluencerLevel , Me [ PlayerNum ] .pos.x , Me [ PlayerNum ] .pos.y + 0.5  ) == H_OPEN_DOOR ) )
 	    {
 	      Me [ PlayerNum ] .pos.x += copysignf ( PUSHSPEED * Frame_Time() , ( rintf(Me [ PlayerNum ] .pos.x) - Me [ PlayerNum ] .pos.x ));
 	      H_Door_Sliding_Active = TRUE;
@@ -750,8 +750,8 @@ CheckInfluenceWallCollisions ( int PlayerNum )
 
 	  // if its an open door, we also correct the north-south position, in the
 	  // sense that we move thowards the middle
-	  if ( ( GetMapBrick ( InfluencerLevel , Me [ PlayerNum ] . pos . x + 0.5 , Me [ PlayerNum ] . pos . y ) == V_GANZTUERE ) || 
-	       ( GetMapBrick ( InfluencerLevel , Me [ PlayerNum ] . pos . x - 0.5 , Me [ PlayerNum ] . pos . y ) == V_GANZTUERE ) )
+	  if ( ( GetMapBrick ( InfluencerLevel , Me [ PlayerNum ] . pos . x + 0.5 , Me [ PlayerNum ] . pos . y ) == V_OPEN_DOOR ) || 
+	       ( GetMapBrick ( InfluencerLevel , Me [ PlayerNum ] . pos . x - 0.5 , Me [ PlayerNum ] . pos . y ) == V_OPEN_DOOR ) )
 	    Me [ PlayerNum ] .pos.y += copysignf (PUSHSPEED * Frame_Time() , ( rintf(Me [ PlayerNum ] .pos.y) - Me [ PlayerNum ] .pos.y ));
 	}
 

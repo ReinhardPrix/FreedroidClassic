@@ -58,10 +58,10 @@
 //--------------------
 // How big is the margin in console tiles
 //
-//NORMALISATION #define KONSOLEPASS_X 	(Block_Width/2 + 4)
-#define KONSOLEPASS_X 	((INITIAL_BLOCK_WIDTH/2 + 4)/64.0)
-//NORMALISATION #define KONSOLEPASS_Y 	(Block_Height/2 	+4)
-#define KONSOLEPASS_Y 	((INITIAL_BLOCK_HEIGHT/2 + 4)/64.0)
+//NORMALISATION #define CONSOLEPASS_X 	(Block_Width/2 + 4)
+#define CONSOLEPASS_X 	((INITIAL_BLOCK_WIDTH/2 + 4)/64.0)
+//NORMALISATION #define CONSOLEPASS_Y 	(Block_Height/2 	+4)
+#define CONSOLEPASS_Y 	((INITIAL_BLOCK_HEIGHT/2 + 4)/64.0)
 
 //--------------------
 // How big is the margin of doors and the passable area in front of doors
