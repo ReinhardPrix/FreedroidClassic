@@ -978,240 +978,231 @@ The MENU CODE was unable to properly resolve a mouse button press.",
 int 
 DoEquippmentListSelection( char* Startstring , item* Item_Pointer_List[ MAX_ITEMS_IN_INVENTORY ] , int PricingMethod )
 {
-  int Pointer_Index=0;
-  int i;
-  int InMenuPosition = 0;
-  int MenuInListPosition = 0;
-  char DescriptionText[5000];
-  float PriceFound = 0;
-
-  //--------------------
-  // At first we hide the mouse cursor, so that there can not be any
-  // ambiguity whether to thing of the tux cursor or the mouse cursor
-  // to be the pointer we use.
-  //
-  SDL_ShowCursor( SDL_DISABLE );
-
-  //--------------------
-  // First we make sure, that neither space nor Escape are
-  // pressed in the beginning, so that a real menu selection
-  // will be done.
-  //
-  while ( SpacePressed() || EscapePressed() );
-
-  //--------------------
-  // At first we count how many items are really in this list.
-  // The last one is indicated by a NULL pointer following directly
-  // after it.
-  //
-  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i++ )
+    int Pointer_Index=0;
+    int i;
+    int InMenuPosition = 0;
+    int MenuInListPosition = 0;
+    char DescriptionText[5000];
+    float PriceFound = 0;
+    
+    //--------------------
+    // First we make sure, that neither space nor Escape are
+    // pressed in the beginning, so that a real menu selection
+    // will be done.
+    //
+    while ( SpacePressed() || EscapePressed() );
+    
+    //--------------------
+    // At first we count how many items are really in this list.
+    // The last one is indicated by a NULL pointer following directly
+    // after it.
+    //
+    for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i++ )
     {
-      if ( Item_Pointer_List[ i ] == NULL ) 
+	if ( Item_Pointer_List[ i ] == NULL ) 
 	{
-	  Pointer_Index = i ;
-	  break;
+	    Pointer_Index = i ;
+	    break;
 	}
     }
-
-  //--------------------
-  // Maybe there is NO ITEM IN THE LIST AT ALL!
-  // Then of course we are done, hehe, and return the usual 'back'.
-  // Thats perfectly normal and ok.
-  //
-  if ( Pointer_Index == 0 )
+    
+    //--------------------
+    // Maybe there is NO ITEM IN THE LIST AT ALL!
+    // Then of course we are done, hehe, and return the usual 'back'.
+    // Thats perfectly normal and ok.
+    //
+    if ( Pointer_Index == 0 )
     {
-      DebugPrintf ( 0 , "\nDoEquippmentListSelection(..):  No item in given list.  Returning... " );
-      return ( -1 );
+	DebugPrintf ( 0 , "\nDoEquippmentListSelection(..):  No item in given list.  Returning... " );
+	return ( -1 );
     }
-
-  //--------------------
-  // Now we clean the list from any (-1) items, that might come from
-  // an items just having been sold and therefore deleted from the list.
-  //
-  for ( i = 0 ; i < Pointer_Index ; i++ )
+    
+    //--------------------
+    // Now we clean the list from any (-1) items, that might come from
+    // an items just having been sold and therefore deleted from the list.
+    //
+    for ( i = 0 ; i < Pointer_Index ; i++ )
     {
-      if ( Item_Pointer_List[ i ]->type == (-1 ) )
+	if ( Item_Pointer_List[ i ]->type == (-1 ) )
 	{
-	  DebugPrintf ( 0 , "\nNOTE:  DoEquippmentListSelection(...): Cleaning a '-1' type item from the Item_Pointer_List... " );
-
-	  CopyItem ( Item_Pointer_List[ Pointer_Index - 1 ] , Item_Pointer_List[ i ] , FALSE );
-	  DeleteItem ( Item_Pointer_List[ Pointer_Index - 1 ] ); // this is for -1 cause of SOLD items
-	  Item_Pointer_List[ Pointer_Index -1 ] = NULL;
-	  Pointer_Index --;
-
-	  return ( DoEquippmentListSelection ( Startstring , Item_Pointer_List , PricingMethod ) );
+	    DebugPrintf ( 0 , "\nNOTE:  DoEquippmentListSelection(...): Cleaning a '-1' type item from the Item_Pointer_List... " );
+	    
+	    CopyItem ( Item_Pointer_List[ Pointer_Index - 1 ] , Item_Pointer_List[ i ] , FALSE );
+	    DeleteItem ( Item_Pointer_List[ Pointer_Index - 1 ] ); // this is for -1 cause of SOLD items
+	    Item_Pointer_List[ Pointer_Index -1 ] = NULL;
+	    Pointer_Index --;
+	    
+	    return ( DoEquippmentListSelection ( Startstring , Item_Pointer_List , PricingMethod ) );
 	}
     }
-
-  //--------------------
-  // Now IN CASE OF REPAIR_PRICING, we clean the list from any items, that 
-  // don't need repair.
-  //
-  // TAKE CARE, THAT ITEMS MUST NOT BE OVERWRITTEN, ONLY THE POINTERS MAY BE MANIPULATED!!
-  // Or we would destroy the Tux' inventory list!
-  //
-  if ( PricingMethod == PRICING_FOR_REPAIR )
+    
+    //--------------------
+    // Now IN CASE OF REPAIR_PRICING, we clean the list from any items, that 
+    // don't need repair.
+    //
+    // TAKE CARE, THAT ITEMS MUST NOT BE OVERWRITTEN, ONLY THE POINTERS MAY BE MANIPULATED!!
+    // Or we would destroy the Tux' inventory list!
+    //
+    if ( PricingMethod == PRICING_FOR_REPAIR )
     {
-      for ( i = 0 ; i < Pointer_Index ; i++ )
+	for ( i = 0 ; i < Pointer_Index ; i++ )
 	{
-	  if ( Item_Pointer_List[ i ]->current_duration == Item_Pointer_List[ i ]->max_duration ) 
+	    if ( Item_Pointer_List[ i ]->current_duration == Item_Pointer_List[ i ]->max_duration ) 
 	    {
-	      DebugPrintf ( 0 , "\nNOTE:  DoEquippmentListSelection(...): Cleaning an item that does not need repair from the pointer list... " );
-	      
-	      // CopyItem ( Item_Pointer_List[ Pointer_Index - 1 ] , Item_Pointer_List[ i ] , FALSE );
-	      Item_Pointer_List[ i ] = Item_Pointer_List[ Pointer_Index -1 ] ;
-	      Item_Pointer_List[ Pointer_Index -1 ] = NULL;
-	      Pointer_Index --;
-	      
-	      return ( DoEquippmentListSelection ( Startstring , Item_Pointer_List , PricingMethod ) );
+		DebugPrintf ( 0 , "\nNOTE:  DoEquippmentListSelection(...): Cleaning an item that does not need repair from the pointer list... " );
+		
+		// CopyItem ( Item_Pointer_List[ Pointer_Index - 1 ] , Item_Pointer_List[ i ] , FALSE );
+		Item_Pointer_List[ i ] = Item_Pointer_List[ Pointer_Index -1 ] ;
+		Item_Pointer_List[ Pointer_Index -1 ] = NULL;
+		Pointer_Index --;
+		
+		return ( DoEquippmentListSelection ( Startstring , Item_Pointer_List , PricingMethod ) );
 	    }
 	}
     }
-
-  //--------------------
-  // Now IN CASE OF IDENTIFY_PRICING, we clean the list from any items, that 
-  // don't need to be identified.
-  //
-  // TAKE CARE, THAT ITEMS MUST NOT BE OVERWRITTEN, ONLY THE POINTERS MAY BE MANIPULATED!!
-  // Or we would destroy the Tux' inventory list!
-  //
-  if ( PricingMethod == PRICING_FOR_IDENTIFY )
+    
+    //--------------------
+    // Now IN CASE OF IDENTIFY_PRICING, we clean the list from any items, that 
+    // don't need to be identified.
+    //
+    // TAKE CARE, THAT ITEMS MUST NOT BE OVERWRITTEN, ONLY THE POINTERS MAY BE MANIPULATED!!
+    // Or we would destroy the Tux' inventory list!
+    //
+    if ( PricingMethod == PRICING_FOR_IDENTIFY )
     {
-      for ( i = 0 ; i < Pointer_Index ; i++ )
+	for ( i = 0 ; i < Pointer_Index ; i++ )
 	{
-	  if ( Item_Pointer_List[ i ]->is_identified ) 
+	    if ( Item_Pointer_List[ i ]->is_identified ) 
 	    {
-	      DebugPrintf ( 0 , "\nNOTE:  DoEquippmentListSelection(...): Cleaning an item that does not need to be identified from the pointer list... " );
-	      
-	      Item_Pointer_List[ i ] = Item_Pointer_List[ Pointer_Index -1 ] ;
-	      Item_Pointer_List[ Pointer_Index -1 ] = NULL;
-	      Pointer_Index --;
-	      
-	      return ( DoEquippmentListSelection ( Startstring , Item_Pointer_List , PricingMethod ) );
+		DebugPrintf ( 0 , "\nNOTE:  DoEquippmentListSelection(...): Cleaning an item that does not need to be identified from the pointer list... " );
+		
+		Item_Pointer_List[ i ] = Item_Pointer_List[ Pointer_Index -1 ] ;
+		Item_Pointer_List[ Pointer_Index -1 ] = NULL;
+		Pointer_Index --;
+		
+		return ( DoEquippmentListSelection ( Startstring , Item_Pointer_List , PricingMethod ) );
 	    }
 	}
     }
-
-
-
-  //--------------------
-  // Now we can perform the actual menu selection.
-  // We will loop until a decision of one kind or the other
-  // has been made.
-  //
-  while ( !SpacePressed() && !EscapePressed() )
+    
+    
+    
+    //--------------------
+    // Now we can perform the actual menu selection.
+    // We will loop until a decision of one kind or the other
+    // has been made.
+    //
+    while ( !SpacePressed() && !EscapePressed() )
     {
-      // InitiateMenu( NULL );
-      InitiateMenu( SHOP_BACKGROUND_IMAGE_CODE );
-
-      //--------------------
-      // Now we draw our selection of items to the screen, at least the part
-      // of it, that's currently visible
-      //
-      DisplayText( Startstring , 50 , 50 + (0) * ITEM_MENU_DISTANCE , NULL );
-
-      // DisplayText( DescriptionText , 580 , 50 + ( 0 ) * 80 , NULL );
-      for ( i = 0 ; ( (i < NUMBER_OF_ITEMS_ON_ONE_SCREEN) && ( Item_Pointer_List[ i + MenuInListPosition ] != NULL ) ) ; i++ )
+	// InitiateMenu( NULL );
+	InitiateMenu( SHOP_BACKGROUND_IMAGE_CODE );
+	
+	//--------------------
+	// Now we draw our selection of items to the screen, at least the part
+	// of it, that's currently visible
+	//
+	DisplayText( Startstring , 50 , 50 + (0) * ITEM_MENU_DISTANCE , NULL );
+	
+	// DisplayText( DescriptionText , 580 , 50 + ( 0 ) * 80 , NULL );
+	for ( i = 0 ; ( (i < NUMBER_OF_ITEMS_ON_ONE_SCREEN) && ( Item_Pointer_List[ i + MenuInListPosition ] != NULL ) ) ; i++ )
 	{
-	  // DisplayText( ItemMap [ Repair_Pointer_List[ i + ]->type ].item_name , 50 , 50 + i * 50 , NULL );
-	  // DisplayText( "\n" , -1 , -1, NULL );
-	  GiveItemDescription( DescriptionText , Item_Pointer_List [ i + MenuInListPosition ] , TRUE );
-	  DisplayText( DescriptionText , 50 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
-
-	  //--------------------
-	  // Now we print out the price for this item, depending of course
-	  // on the context in which we display this item.
-	  //
-	  switch ( PricingMethod )
+	    // DisplayText( ItemMap [ Repair_Pointer_List[ i + ]->type ].item_name , 50 , 50 + i * 50 , NULL );
+	    // DisplayText( "\n" , -1 , -1, NULL );
+	    GiveItemDescription( DescriptionText , Item_Pointer_List [ i + MenuInListPosition ] , TRUE );
+	    DisplayText( DescriptionText , 50 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
+	    
+	    //--------------------
+	    // Now we print out the price for this item, depending of course
+	    // on the context in which we display this item.
+	    //
+	    switch ( PricingMethod )
 	    {
-	    case PRICING_FOR_SELL:
-	      PriceFound = calculate_item_sell_price ( Item_Pointer_List [ i + MenuInListPosition ] ) ;
-	      break;
-	    case PRICING_FOR_BUY:
-	      PriceFound = calculate_item_buy_price ( Item_Pointer_List [ i + MenuInListPosition ] ) ;
-	      break;
-	    case PRICING_FOR_IDENTIFY:
-	      PriceFound = 100.0 ;
-	      break;
-	    case PRICING_FOR_REPAIR:
-	      PriceFound = calculate_item_repair_price ( Item_Pointer_List [ i + MenuInListPosition] );
-	      break;
-	    default:
-	      DebugPrintf( 0 , "ERROR:  PRICING METHOD UNSPECIFIED IN SHOP.C!!!\n\nTerminating...\n\n" );
-	      Terminate ( ERR );
-	      break;
-
+		case PRICING_FOR_SELL:
+		    PriceFound = calculate_item_sell_price ( Item_Pointer_List [ i + MenuInListPosition ] ) ;
+		    break;
+		case PRICING_FOR_BUY:
+		    PriceFound = calculate_item_buy_price ( Item_Pointer_List [ i + MenuInListPosition ] ) ;
+		    break;
+		case PRICING_FOR_IDENTIFY:
+		    PriceFound = 100.0 ;
+		    break;
+		case PRICING_FOR_REPAIR:
+		    PriceFound = calculate_item_repair_price ( Item_Pointer_List [ i + MenuInListPosition] );
+		    break;
+		default:
+		    DebugPrintf( 0 , "ERROR:  PRICING METHOD UNSPECIFIED IN SHOP.C!!!\n\nTerminating...\n\n" );
+		    Terminate ( ERR );
+		    break;
+		    
 	    }
-	  sprintf( DescriptionText , "%6.0f" , PriceFound );
-	  DisplayText( DescriptionText , 560 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
+	    sprintf( DescriptionText , "%6.0f" , PriceFound );
+	    DisplayText( DescriptionText , 560 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
 	}
-
-      //--------------------
-      // Now we add a 'BACK' button outside the normal item display area.
-      // Where exactly we put this button is pretty much unimportant, cause any
-      // click outside the items displayed will return -1 to the calling function
-      // and that's the same as clicking directly on the back button.
-      //
-      // DisplayText( "BACK" , 580 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
-      // CenteredPutStringFont( Screen , Menu_Filled_BFont , 50 + (i+1) * ITEM_MENU_DISTANCE , " BACK " );
-      //
-      CenteredPutString( Screen , 50 + (i+1) * ITEM_MENU_DISTANCE , " BACK " );
-      
-      //--------------------
-      // Now we draw the influencer as a cursor
-      //
-      blit_tux ( 10 , 50 + ( InMenuPosition + 1 ) * ITEM_MENU_DISTANCE , 0 );
-
-      //--------------------
-      //
-      //
-      our_SDL_flip_wrapper ( Screen );
-
-      //--------------------
-      // Maybe the cursor key up or cursor key down was pressed.  Then of
-      // course the cursor must either move down or the whole menu must
-      // scroll one step down, if that is still possible.
-      // 
-      // Mouse wheel action will be checked for further down.
-      //
-      if ( UpPressed() || MouseWheelUpPressed() )
+	
+	//--------------------
+	// Now we add a 'BACK' button outside the normal item display area.
+	// Where exactly we put this button is pretty much unimportant, cause any
+	// click outside the items displayed will return -1 to the calling function
+	// and that's the same as clicking directly on the back button.
+	//
+	// DisplayText( "BACK" , 580 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
+	// CenteredPutStringFont( Screen , Menu_Filled_BFont , 50 + (i+1) * ITEM_MENU_DISTANCE , " BACK " );
+	//
+	CenteredPutString( Screen , 50 + (i+1) * ITEM_MENU_DISTANCE , " BACK " );
+	
+	//--------------------
+	// Now we draw the influencer as a cursor
+	//
+	blit_tux ( 10 , 50 + ( InMenuPosition + 1 ) * ITEM_MENU_DISTANCE , 0 );
+	
+	//--------------------
+	//
+	//
+	our_SDL_flip_wrapper ( Screen );
+	
+	//--------------------
+	// Maybe the cursor key up or cursor key down was pressed.  Then of
+	// course the cursor must either move down or the whole menu must
+	// scroll one step down, if that is still possible.
+	// 
+	// Mouse wheel action will be checked for further down.
+	//
+	if ( UpPressed() || MouseWheelUpPressed() )
 	{
-	  if ( InMenuPosition > 0 ) InMenuPosition --;
-	  else 
+	    if ( InMenuPosition > 0 ) InMenuPosition --;
+	    else 
 	    {
-	      if ( MenuInListPosition > 0 )
-		MenuInListPosition --;
+		if ( MenuInListPosition > 0 )
+		    MenuInListPosition --;
 	    }
-	  while ( UpPressed() );
+	    while ( UpPressed() );
 	}
-      if ( DownPressed() || MouseWheelDownPressed() )
+	if ( DownPressed() || MouseWheelDownPressed() )
 	{
-	  if ( ( InMenuPosition < NUMBER_OF_ITEMS_ON_ONE_SCREEN - 1 ) &&
-	       ( InMenuPosition < Pointer_Index -1 ) )
+	    if ( ( InMenuPosition < NUMBER_OF_ITEMS_ON_ONE_SCREEN - 1 ) &&
+		 ( InMenuPosition < Pointer_Index -1 ) )
 	    {
-	      InMenuPosition ++;
+		InMenuPosition ++;
 	    }
-	  else 
+	    else 
 	    {
-	      if ( MenuInListPosition < Pointer_Index - NUMBER_OF_ITEMS_ON_ONE_SCREEN )
-		MenuInListPosition ++;
+		if ( MenuInListPosition < Pointer_Index - NUMBER_OF_ITEMS_ON_ONE_SCREEN )
+		    MenuInListPosition ++;
 	    }
-	  while ( DownPressed() );
+	    while ( DownPressed() );
 	}      
-
+	
     } // while not space pressed...
-
-  if ( SpacePressed() || axis_is_active ) 
+    
+    if ( SpacePressed() || axis_is_active ) 
     {
-      SDL_ShowCursor( SDL_ENABLE );
-      return ( InMenuPosition + MenuInListPosition ) ;
+	return ( InMenuPosition + MenuInListPosition ) ;
     }
-
-  while ( SpacePressed() || EscapePressed() );
-
-  SDL_ShowCursor( SDL_ENABLE );
-  return (-1); // just to make compilers happy :)
-
+    
+    while ( SpacePressed() || EscapePressed() );
+    
+    return (-1); // just to make compilers happy :)
+    
 }; // int DoEquippmentListSelection( char* Startstring , item* Item_Pointer_List[ MAX_ITEMS_IN_INVENTORY ] )
 
 /* ----------------------------------------------------------------------

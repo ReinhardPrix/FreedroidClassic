@@ -983,53 +983,55 @@ This is indicates a severe bug in Freedroid.",
  * allow for better screenshots.
  * ---------------------------------------------------------------------- */
 void
-Pause (void)
+Pause ( void )
 {
-  int Pause = TRUE;
+    int Pause = TRUE;
+    
+    Activate_Conservative_Frame_Computation();
+    
+    Me [ 0 ] . status = PAUSE;
+    AssembleCombatPicture ( DO_SCREEN_UPDATE | USE_OWN_MOUSE_CURSOR );
 
-  Activate_Conservative_Frame_Computation();
-
-  Me[0].status = PAUSE;
-  AssembleCombatPicture ( DO_SCREEN_UPDATE );
-
-  while ( Pause )
+    while ( Pause )
     {
-      SetNewBigScreenMessage( " Pause " );
-      animate_tux ( 0 );
-      AnimateCyclingMapTiles ();
-      DisplayBanner ( );
-      AssembleCombatPicture ( 0 );
-      CenteredPutStringFont ( Screen , Menu_Filled_BFont , 200 , "G A M E    P A U S E D" ) ;
-      our_SDL_flip_wrapper ( Screen );
-      
-      if (CPressed ())
+	SetNewBigScreenMessage( " Pause " );
+	animate_tux ( 0 );
+	AnimateCyclingMapTiles ();
+	DisplayBanner ( );
+	AssembleCombatPicture ( USE_OWN_MOUSE_CURSOR );
+	CenteredPutStringFont ( Screen , Menu_Filled_BFont , 200 , "G A M E    P A U S E D" ) ;
+	our_SDL_flip_wrapper ( Screen );
+	
+	if ( CPressed ( ) )
 	{
-	  Me [ 0 ] . status = CHEESE;
-	  DisplayBanner ( ) ;
-	  AssembleCombatPicture ( DO_SCREEN_UPDATE );
-
-	  while (!SpacePressed ()); /* stay CHEESE until Space pressed */
-	  while ( SpacePressed() ); /* then wait for Space released */
-	  
-	  Me[0].status = PAUSE;       /* return to normal PAUSE */
-	} /* if (CPressed) */
-
-      if ( SpacePressed() )
+	    Me [ 0 ] . status = CHEESE;
+	    DisplayBanner ( ) ;
+	    AssembleCombatPicture ( DO_SCREEN_UPDATE | USE_OWN_MOUSE_CURSOR );
+	    
+	    while (!SpacePressed ()); /* stay CHEESE until Space pressed */
+	    while ( SpacePressed() ); /* then wait for Space released */
+	    
+	    Me[0].status = PAUSE;       /* return to normal PAUSE */
+	} 
+	
+	if ( SpacePressed() )
 	{
-	  Pause = FALSE;
-	  while ( SpacePressed() );  /* wait for release */
+	    Pause = FALSE;
+	    while ( SpacePressed() );  /* wait for release */
 	}
+	
+	//--------------------
+	// During the Pause mode, there is again no need to hog the CPU and to 
+	// go at full force.  We introduce some rest for the CPU here...
+	//
+	SDL_Delay (1);
+	
+    } // while (Pause) 
 
-      //--------------------
-      // During the Pause mode, there is again no need to hog the CPU and to 
-      // go at full force.  We introduce some rest for the CPU here...
-      //
-      SDL_Delay (1);
+    SetNewBigScreenMessage( "" );
+    return;
 
-    } /* while (Pause) */
-  SetNewBigScreenMessage( "" );
-  return;
-}; // Pause () 
+}; // void Pause ( void ) 
 
 /* ----------------------------------------------------------------------
  * This function starts the time-taking process.  Later the results

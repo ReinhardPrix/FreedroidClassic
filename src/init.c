@@ -2015,7 +2015,7 @@ ThouArtDefeated (void)
     {
 	StartTakingTimeForFPSCalculation(); 
 	
-	AssembleCombatPicture ( DO_SCREEN_UPDATE | SHOW_ITEMS );
+	AssembleCombatPicture ( DO_SCREEN_UPDATE | SHOW_ITEMS | USE_OWN_MOUSE_CURSOR );
 	DisplayBanner ( );
 	animate_blasts ();
 	MoveBullets ();

@@ -169,7 +169,6 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , int bac
     // At first we hide the system mouse cursor, because we want to use
     // our own creation in the menus too...
     //
-    // SDL_ShowCursor( SDL_ENABLE );
     make_sure_system_mouse_cursor_is_turned_off();
     
     //--------------------
@@ -281,8 +280,6 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , int bac
 	{
 	    while ( EscapePressed() );
 	    MenuItemDeselectedSound();
-	    
-	    SDL_ShowCursor( SDL_ENABLE );
 	    return ( -1 );
 	}
 	if ( EnterPressed() || ( SpacePressed() && !axis_is_active ) || RightPressed() || LeftPressed() ) 
@@ -299,10 +296,7 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , int bac
 	    //
 	    while ( EnterPressed() || SpacePressed() ); 
 	    MenuItemSelectedSound();
-	    
-	    SDL_ShowCursor( SDL_ENABLE );
 	    return ( MenuPosition );
-	    
 	}
 	if ( axis_is_active )
 	{
@@ -315,7 +309,6 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , int bac
 	    if ( MouseCursorIsOverMenuItem( first_menu_item_pos_y , h ) == MenuPosition )
 	    {
 		MenuItemSelectedSound();
-		SDL_ShowCursor( SDL_ENABLE );
 		return ( MenuPosition );
 	    }
 	}
@@ -350,7 +343,6 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , int bac
 	//usleep ( 1 ) ;
     }
     
-    SDL_ShowCursor( SDL_ENABLE );
     return ( -1 );
 }; // int DoMenuSelection( ... )
 
@@ -877,7 +869,6 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
 	  
 	  RestoreMenuBackground ( 0 );
 	  our_SDL_flip_wrapper( Screen );
-	  SDL_ShowCursor( SDL_ENABLE );
 	  return ( -1 );
       }
       if ( EnterPressed() || ( SpacePressed() && !axis_is_active ) || RightPressed() || LeftPressed() ) 
@@ -894,12 +885,9 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
 	  //
 	  while ( EnterPressed() || SpacePressed() ); // || RightPressed() || LeftPressed() );
 	  // MenuItemSelectedSound();
-	  
-	  SDL_ShowCursor( SDL_ENABLE );
 	  RestoreMenuBackground ( 0 );
 	  our_SDL_flip_wrapper( Screen );
 	  return ( menu_position_to_remember );
-	  
       }
       
       if ( axis_is_active )
@@ -945,7 +933,6 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
 		  MouseCursorIsOverMenuItem ( MenuPosY [ OptionOffset ] , FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) ;
 	      if ( ( MenuLineOfMouseCursor >= 1 ) && ( MenuLineOfMouseCursor <= MaxLinesInMenuRectangle ) )
 	      {
-		  SDL_ShowCursor( SDL_ENABLE );
 		  RestoreMenuBackground ( 0 );
 		  our_SDL_flip_wrapper( Screen );
 		  return ( menu_position_to_remember );
@@ -1015,8 +1002,6 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
       if ( menu_position_to_remember > LastOptionVisible ) menu_position_to_remember = LastOptionVisible ;
       
     }
-    
-    SDL_ShowCursor( SDL_ENABLE );
     RestoreMenuBackground ( 0 );
     our_SDL_flip_wrapper( Screen );
     return ( -1 );
