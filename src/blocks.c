@@ -465,6 +465,188 @@ blit_iso_image_to_map_position ( iso_image our_iso_image , float pos_x , float p
  *
  * ---------------------------------------------------------------------- */
 void
+blit_outline_of_iso_image_to_map_position ( iso_image our_iso_image , float pos_x , float pos_y )
+{
+  SDL_Rect target_rectangle;
+  Uint32 previous_test_color = 0 ;
+  Uint32 new_test_color = 0 ;
+  int x , y ;
+  Uint32 light_frame_color = SDL_MapRGB( Screen->format, 255 , 255 , 0 );
+  Uint32 color_key_value = SDL_MapRGB( our_iso_image . surface -> format, 255 , 0 , 255 );
+  Uint8 previous_test_alpha = 0 ;
+  Uint8 new_test_alpha = 0 ;
+
+  DebugPrintf ( 1 , "\nblit_outline_of_iso_image_to_map_position: function invoked." );
+
+  target_rectangle . x = 
+    translate_map_point_to_screen_pixel ( pos_x , pos_y , TRUE ) + 
+    our_iso_image . offset_x ;
+  target_rectangle . y = 
+    translate_map_point_to_screen_pixel ( pos_x , pos_y , FALSE ) +
+    our_iso_image . offset_y ;
+
+  if ( our_iso_image . surface -> flags & SDL_SRCCOLORKEY )
+    {
+
+  for ( x = 0 ; x < our_iso_image . surface -> w ; x ++ )
+    {
+      for ( y = 0 ; y < our_iso_image . surface -> h ; y ++ )
+	{
+
+	  new_test_color = GetPixel ( our_iso_image . surface , x , y ) ;
+	  // DebugPrintf ( -5 , "\nAlpha received: %d." , (int) new_alpha_component );
+
+	  if ( ( ( new_test_color == color_key_value ) && ( previous_test_color != color_key_value ) ) ||
+	       ( ( new_test_color != color_key_value ) && ( previous_test_color == color_key_value ) ) )
+	    {
+	      if ( y != 0 )
+		{
+		  PutPixel ( Screen , target_rectangle . x + x , target_rectangle . y + y , light_frame_color );
+		  PutPixel ( Screen , target_rectangle . x + x , target_rectangle . y + y - 1 , light_frame_color );
+		  // DebugPrintf ( -5 , "\nPIXEL FILLED!" );
+		}
+	    }
+
+	  if ( ( y == 0 ) && ( new_test_color != color_key_value ) )
+	    {
+	      PutPixel ( Screen , target_rectangle . x + x , target_rectangle . y + y - 1 , light_frame_color );
+	      PutPixel ( Screen , target_rectangle . x + x , target_rectangle . y + y - 2 , light_frame_color );
+	    }
+
+	  if ( ( y == our_iso_image . surface -> h - 1 ) && ( new_test_color != color_key_value ) )
+	    {
+	      PutPixel ( Screen , target_rectangle . x + x , target_rectangle . y + y + 1 , light_frame_color );
+	      PutPixel ( Screen , target_rectangle . x + x , target_rectangle . y + y + 2 , light_frame_color );
+	    }
+
+	  previous_test_color = new_test_color ;
+
+	}
+    }
+
+
+  for ( y = 0 ; y < our_iso_image . surface -> h ; y ++ )
+    {
+      for ( x = 0 ; x < our_iso_image . surface -> w ; x ++ )
+	{
+
+	  new_test_color = GetPixel ( our_iso_image . surface , x , y ) ;
+	  // DebugPrintf ( -5 , "\nAlpha received: %d." , (int) new_alpha_component );
+
+	  if ( ( ( new_test_color == color_key_value ) && ( previous_test_color != color_key_value ) ) ||
+	       ( ( new_test_color != color_key_value ) && ( previous_test_color == color_key_value ) ) )
+	    {
+	      if ( x != 0 )
+		{
+		  PutPixel ( Screen , target_rectangle . x + x     , target_rectangle . y + y , light_frame_color );
+		  PutPixel ( Screen , target_rectangle . x + x - 1 , target_rectangle . y + y , light_frame_color );
+		  // DebugPrintf ( -5 , "\nPIXEL FILLED!" );
+		}
+	    }
+	  
+	  if ( ( x == 0 ) && ( new_test_color != color_key_value ) )
+	    {
+	      PutPixel ( Screen , target_rectangle . x + x - 1 , target_rectangle . y + y , light_frame_color );
+	      PutPixel ( Screen , target_rectangle . x + x - 2 , target_rectangle . y + y , light_frame_color );
+	    }
+
+	  if ( ( x == our_iso_image . surface -> w - 1 ) && ( new_test_color != color_key_value ) )
+	    {
+	      PutPixel ( Screen , target_rectangle . x + x + 1 , target_rectangle . y + y , light_frame_color );
+	      PutPixel ( Screen , target_rectangle . x + x + 2 , target_rectangle . y + y , light_frame_color );
+	    }
+
+	  previous_test_color = new_test_color ;
+
+	}
+    }
+
+    }
+  else
+    {
+
+  for ( x = 0 ; x < our_iso_image . surface -> w ; x ++ )
+    {
+      for ( y = 0 ; y < our_iso_image . surface -> h ; y ++ )
+	{
+
+	  new_test_alpha = GetAlphaComponent ( our_iso_image . surface , x , y ) ;
+	  // DebugPrintf ( -5 , "\nAlpha received: %d." , (int) new_alpha_component );
+
+	  if ( ( ( new_test_alpha == SDL_ALPHA_TRANSPARENT ) && ( previous_test_alpha != SDL_ALPHA_TRANSPARENT ) ) ||
+	       ( ( new_test_alpha != SDL_ALPHA_TRANSPARENT ) && ( previous_test_alpha == SDL_ALPHA_TRANSPARENT ) ) )
+	    {
+	      if ( y != 0 )
+		{
+		  PutPixel ( Screen , target_rectangle . x + x , target_rectangle . y + y , light_frame_color );
+		  PutPixel ( Screen , target_rectangle . x + x , target_rectangle . y + y - 1 , light_frame_color );
+		  // DebugPrintf ( -5 , "\nPIXEL FILLED!" );
+		}
+	    }
+
+	  if ( ( y == 0 ) && ( new_test_alpha != SDL_ALPHA_TRANSPARENT ) )
+	    {
+	      PutPixel ( Screen , target_rectangle . x + x , target_rectangle . y + y - 1 , light_frame_color );
+	      PutPixel ( Screen , target_rectangle . x + x , target_rectangle . y + y - 2 , light_frame_color );
+	    }
+
+	  if ( ( y == our_iso_image . surface -> h - 1 ) && ( new_test_alpha != SDL_ALPHA_TRANSPARENT ) )
+	    {
+	      PutPixel ( Screen , target_rectangle . x + x , target_rectangle . y + y + 1 , light_frame_color );
+	      PutPixel ( Screen , target_rectangle . x + x , target_rectangle . y + y + 2 , light_frame_color );
+	    }
+
+	  previous_test_alpha = new_test_alpha ;
+
+	}
+    }
+
+
+  for ( y = 0 ; y < our_iso_image . surface -> h ; y ++ )
+    {
+      for ( x = 0 ; x < our_iso_image . surface -> w ; x ++ )
+	{
+
+	  new_test_alpha = GetPixel ( our_iso_image . surface , x , y ) ;
+	  // DebugPrintf ( -5 , "\nAlpha received: %d." , (int) new_alpha_component );
+
+	  if ( ( ( new_test_alpha == SDL_ALPHA_TRANSPARENT ) && ( previous_test_alpha != SDL_ALPHA_TRANSPARENT ) ) ||
+	       ( ( new_test_alpha != SDL_ALPHA_TRANSPARENT ) && ( previous_test_alpha == SDL_ALPHA_TRANSPARENT ) ) )
+	    {
+	      if ( x != 0 )
+		{
+		  PutPixel ( Screen , target_rectangle . x + x     , target_rectangle . y + y , light_frame_color );
+		  PutPixel ( Screen , target_rectangle . x + x - 1 , target_rectangle . y + y , light_frame_color );
+		  // DebugPrintf ( -5 , "\nPIXEL FILLED!" );
+		}
+	    }
+	  
+	  if ( ( x == 0 ) && ( new_test_alpha != SDL_ALPHA_TRANSPARENT ) )
+	    {
+	      PutPixel ( Screen , target_rectangle . x + x - 1 , target_rectangle . y + y , light_frame_color );
+	      PutPixel ( Screen , target_rectangle . x + x - 2 , target_rectangle . y + y , light_frame_color );
+	    }
+
+	  if ( ( x == our_iso_image . surface -> w - 1 ) && ( new_test_alpha != SDL_ALPHA_TRANSPARENT ) )
+	    {
+	      PutPixel ( Screen , target_rectangle . x + x + 1 , target_rectangle . y + y , light_frame_color );
+	      PutPixel ( Screen , target_rectangle . x + x + 2 , target_rectangle . y + y , light_frame_color );
+	    }
+
+	  previous_test_alpha = new_test_alpha ;
+
+	}
+    }
+
+
+    }
+}; // void blit_outline_of_iso_image_to_map_position ( iso_image our_iso_image , float pos_x , float pos_y )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
 blit_iso_image_to_screen_position ( iso_image our_iso_image , float pos_x , float pos_y )
 {
   SDL_Rect target_rectangle;

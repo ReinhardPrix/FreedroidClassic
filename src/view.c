@@ -723,7 +723,7 @@ There was an obstacle type given, that exceeds the number of\n\
 	}
       else
 	{
-	  DebugPrintf ( 0 , "\nCOLOR FILTER INVOKED FOR MARKED OBSTACLE!" );
+	  DebugPrintf ( 0 , "\nColor filter for level editor invoked (via SDL!) for marked obstacle!" );
 	  tmp . surface = our_SDL_display_format_wrapperAlpha ( obstacle_map [ our_obstacle -> type ] . image . surface );
 	  tmp . surface -> format -> Bmask = 0x0 ; // 0FFFFFFFF ;
 	  tmp . surface -> format -> Rmask = 0x0 ; // FFFFFFFF ;
@@ -786,7 +786,8 @@ There was an obstacle type given, that exceeds the number of\n\
     }
   else
     {
-      DebugPrintf ( 0 , "\nCOLOR FILTER INVOKED FOR MARKED OBSTACLE!" );
+      DebugPrintf ( 0 , "\nNormal in-game SDL highlight invoked for marked obstacle!" );
+      /*
       tmp . surface = our_SDL_display_format_wrapperAlpha ( obstacle_map [ our_obstacle -> type ] . image . surface );
       tmp . surface -> format -> Bmask = 0x0 ; // 0FFFFFFFF ;
       tmp . surface -> format -> Rmask = 0x0 ; // FFFFFFFF ;
@@ -795,6 +796,11 @@ There was an obstacle type given, that exceeds the number of\n\
       tmp . offset_y = obstacle_map [ our_obstacle -> type ] . image . offset_y ;
       blit_iso_image_to_map_position ( tmp , our_obstacle -> pos . x , our_obstacle -> pos . y );
       SDL_FreeSurface ( tmp . surface );
+      */
+      blit_iso_image_to_map_position ( obstacle_map [ our_obstacle -> type ] . image , 
+				       our_obstacle -> pos . x , our_obstacle -> pos . y );
+      blit_outline_of_iso_image_to_map_position ( obstacle_map [ our_obstacle -> type ] . image , 
+						  our_obstacle -> pos . x , our_obstacle -> pos . y );
     }
 
 }; // blit_one_obstacle_highlighted ( obstacle* our_obstacle )
@@ -2938,6 +2944,8 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 		  else
 		    {
 		      blit_iso_image_to_map_position ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , ThisRobot -> pos . x , ThisRobot -> pos . y );
+		      if ( highlight )
+			blit_outline_of_iso_image_to_map_position ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , ThisRobot -> pos . x , ThisRobot -> pos . y );
 		    }
 
 		  // blit_iso_image_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y );
@@ -3018,6 +3026,8 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 		  else
 		    {
 		      blit_iso_image_to_map_position ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , ThisRobot -> pos . x , ThisRobot -> pos . y );
+		      if ( highlight )
+			blit_outline_of_iso_image_to_map_position ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , ThisRobot -> pos . x , ThisRobot -> pos . y );
 		    }
 
 		}

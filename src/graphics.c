@@ -459,7 +459,7 @@ GetAlphaComponent ( SDL_Surface* surface , int x , int y )
 
   return ( alpha ) ;
 
-}; // int GetAlphaComponent ( SDL_Surface* SourceSurface , int x , int y )
+}; // Uint8 GetAlphaComponent ( SDL_Surface* SourceSurface , int x , int y )
 
 /* ----------------------------------------------------------------------
  * If you have two SDL surfaces with alpha channel (i.e. each pixel has
