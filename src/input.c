@@ -524,6 +524,13 @@ ReactToSpecialKeys(void)
     {
       Activate_Conservative_Frame_Computation ( ) ;
       PrintServerStatusInformation ( ) ;
+
+      if ( CtrlWasPressed ( ) && Alt_Was_Pressed ( ) && Shift_Was_Pressed ( ) )
+	{
+	  DebugPrintf ( -10 , "\nForcefully flushing image cache now --> all backgrounds will be reloaded." );
+	  flush_background_image_cache ( ) ;
+	}
+
       while ( FPressed ( ) );
     }
 

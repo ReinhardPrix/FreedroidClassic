@@ -163,6 +163,7 @@ EXTERN void blit_zoomed_open_gl_texture_to_map_position ( iso_image our_floor_is
 EXTERN void blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x , int y , int set_gl_parameters ) ;
 EXTERN void blit_zoomed_open_gl_texture_to_screen_position ( iso_image* our_floor_iso_image , int x , int y , int set_gl_parameters , float zoom_factor ) ;
 EXTERN void blit_special_background ( int background_code );
+EXTERN void flush_background_image_cache ( void );
 EXTERN void open_gl_check_error_status ( void );
 
 // blocks.c 

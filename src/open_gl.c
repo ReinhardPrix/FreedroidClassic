@@ -1593,14 +1593,7 @@ GL_HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area , unsigned char r ,
 
 }; // void GL_HighlightRectangle
 
-/* ----------------------------------------------------------------------
- * For blitting backgrounds and static images in various positions of the
- * game, we got this function, that handles them, taking especal care to
- * use open-gl textures for faster blitting in OpenGL settings.
- * ---------------------------------------------------------------------- */
-void 
-blit_special_background ( int background_code )
-{
+
 #define CHARACTER_SCREEN_BACKGROUND_FILE "backgrounds/character.png" 
 #define SKILL_SCREEN_BACKGROUND_FILE "backgrounds/SkillScreen.png" 
 #define SKILL_EXPLANATION_SCREEN_BACKGROUND_FILE "backgrounds/SkillExplanationScreen.png" 
@@ -1622,11 +1615,19 @@ blit_special_background ( int background_code )
 #define MOUSE_BUTTON_INV_BACKGROUND_PICTURE "mouse_buttons/INVButton.png"           
 #define MOUSE_BUTTON_SKI_BACKGROUND_PICTURE "mouse_buttons/SKIButton.png"           
 #define MOUSE_BUTTON_PLUS_BACKGROUND_PICTURE "mouse_buttons/PLUSButton.png"          
-
 #define ALL_KNOWN_BACKGROUNDS 20
 
-  static iso_image our_backgrounds [ ALL_KNOWN_BACKGROUNDS ] ;
-  static int first_call = TRUE;
+static iso_image our_backgrounds [ ALL_KNOWN_BACKGROUNDS ] ;
+static int backgrounds_should_be_loaded_now = TRUE;
+
+/* ----------------------------------------------------------------------
+ * For blitting backgrounds and static images in various positions of the
+ * game, we got this function, that handles them, taking especal care to
+ * use open-gl textures for faster blitting in OpenGL settings.
+ * ---------------------------------------------------------------------- */
+void 
+blit_special_background ( int background_code )
+{
   static char* background_filenames [ ALL_KNOWN_BACKGROUNDS ] = { INVENTORY_SCREEN_BACKGROUND_FILE ,  // 0
 								  CHARACTER_SCREEN_BACKGROUND_FILE ,  // 1 
 								  SKILL_SCREEN_BACKGROUND_FILE ,      // 2
@@ -1647,7 +1648,6 @@ blit_special_background ( int background_code )
 								  MOUSE_BUTTON_INV_BACKGROUND_PICTURE , // 17
 								  MOUSE_BUTTON_SKI_BACKGROUND_PICTURE , // 18 
 								  MOUSE_BUTTON_PLUS_BACKGROUND_PICTURE } ; // 19
-
 
   SDL_Rect our_background_rects [ ALL_KNOWN_BACKGROUNDS ] = { { 0 , 0 , 0 , 0 } ,               // 0
 							      { CHARACTERRECT_X , 0 , 0 , 0 } , // 1 
@@ -1677,9 +1677,9 @@ blit_special_background ( int background_code )
   // On the first function call, we load all the surfaces we will need, and
   // in case of OpenGL output method, we also make textures from them...
   //
-  if ( first_call )
+  if ( backgrounds_should_be_loaded_now )
     {
-      first_call = FALSE ; 
+      backgrounds_should_be_loaded_now = FALSE ; 
       for ( i = 0 ; i < ALL_KNOWN_BACKGROUNDS ; i ++ )
 	{
 
@@ -1708,5 +1708,36 @@ blit_special_background ( int background_code )
     }
   
 }; // void blit_special_background ( int background_code )
+
+/* ----------------------------------------------------------------------
+ * Sometimes it might be convenient for development purposes, that the
+ * backgrounds can be exchanged on disk and the game need not be restarted
+ * to try out these new backgrounds.  So we introduce some 'cache flushing'
+ * function here...
+ * ---------------------------------------------------------------------- */
+void
+flush_background_image_cache ( void )
+{
+  int i;
+  static iso_image empty_image = UNLOADED_ISO_IMAGE ;
+
+  //--------------------
+  // Of course the display function must be informed, that it must
+  // reload all background images...
+  //
+  backgrounds_should_be_loaded_now = TRUE;
+
+  //--------------------
+  // Also we dutifully set all background variables to 'empty'
+  // status, cause re-initializing stuff might cause error or
+  // warning messages, if the 'has_been_created' flags are still
+  // set from last time...
+  //
+  for ( i = 0 ; i < ALL_KNOWN_BACKGROUNDS ; i ++ )
+    {
+      memcpy ( & ( our_backgrounds [ i ] ) , & empty_image , sizeof ( iso_image ) );
+    }
+ 
+}; // void flush_background_image_cache ( void )
 
 #undef _open_gl_c
