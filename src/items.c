@@ -719,12 +719,7 @@ ShowInventoryScreen ( void )
   // do anything more, but to restore the usual user rectangle size
   // back to normal and to return...
   //
-  if ( GameConfig.Inventory_Visible == FALSE ) 
-    {
-      User_Rect.x = 0;
-      User_Rect.w = SCREENLEN;
-      return;
-    }
+  if ( GameConfig.Inventory_Visible == FALSE ) return;
 
   // --------------------
   // Some things like the loading of the inventory and initialisation of the
@@ -755,8 +750,8 @@ ShowInventoryScreen ( void )
   //
   // Into this inventory rectangle we draw the inventory mask
   //
-  User_Rect.x = SCREENLEN/2;
-  User_Rect.w = SCREENLEN/2;
+  // User_Rect.x = SCREENLEN/2;
+  // User_Rect.w = SCREENLEN/2;
   // SDL_SetClipRect( Screen, &InventoryRect );
   SDL_SetClipRect( Screen, NULL );
   SDL_BlitSurface ( InventoryImage , NULL , Screen , &InventoryRect );
@@ -1118,8 +1113,8 @@ ShowCharacterScreen ( void )
   //
   if ( GameConfig.CharacterScreen_Visible == FALSE ) 
     {
-      User_Rect.x = 0;
-      User_Rect.w = SCREENLEN;
+      // User_Rect.x = 0;
+      // User_Rect.w = SCREENLEN;
       return;
     }
 
@@ -1152,8 +1147,8 @@ ShowCharacterScreen ( void )
   //
   // Into this inventory rectangle we draw the inventory mask
   //
-  User_Rect.x = 0; // SCREENLEN/2;
-  User_Rect.w = SCREENLEN/2;
+  // User_Rect.x = 0; // SCREENLEN/2;
+  // User_Rect.w = SCREENLEN/2;
   // SDL_SetClipRect( Screen, &InventoryRect );
   SDL_SetClipRect( Screen, NULL );
   SDL_BlitSurface ( CharacterScreenImage , NULL , Screen , &CharacterRect );
