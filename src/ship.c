@@ -871,8 +871,10 @@ ShowDeckMap (Level deck)
   int SelectedFunction = NO_FUNCTION ;
   grob_point TargetSquare;
   char MapValue;
-  int ClearanceIndex = 0 ;
-  int PasswordIndex = 0 ;
+  int ClearanceIndex = -1 ;
+  int PasswordIndex = -1 ;
+  int UnlockAllowed = FALSE ;
+  int GunOnOffAllowed = FALSE ;
 
   tmp.x=Me[0].pos.x;
   tmp.y=Me[0].pos.y;
@@ -885,7 +887,24 @@ ShowDeckMap (Level deck)
 
   while ( ! ExitNow )
     {
-     
+      //--------------------
+      // First we see what operations are allowed with the
+      // current login configuration of the Tux.
+      //
+      UnlockAllowed = FALSE ;
+      GunOnOffAllowed = FALSE ;
+      if ( PasswordIndex != (-1) )
+	{
+	  if ( ! strcmp ( Me [ 0 ] . password_list [ PasswordIndex ] , "Tux Dummy1" )  )
+	    {
+	      UnlockAllowed = TRUE ;
+	    } 
+	  if ( ! strcmp ( Me [ 0 ] . password_list [ PasswordIndex ] , "Tux Dummy2" )  )
+	    {
+	      GunOnOffAllowed = TRUE ;
+	    } 
+	}
+
       ExitNow = EscapePressed();
 
       if ( UpPressed() )
@@ -927,15 +946,37 @@ ShowDeckMap (Level deck)
 	  // Maybe that click went right onto the exit button.  Then
 	  // of course nothing else will be done but an exit performed.
 	  //
-	  else if ( CursorIsOnButton( MAP_UNLOCK_BUTTON_GRAY , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) )
+	  else if ( CursorIsOnButton( MAP_UNLOCK_BUTTON_GREEN , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) )
 	    {
-	      if ( SelectedFunction == UNLOCK_FUNCTION ) SelectedFunction = NO_FUNCTION;
-	      else SelectedFunction = UNLOCK_FUNCTION;
+	      if ( UnlockAllowed )
+		{
+		  if ( SelectedFunction == UNLOCK_FUNCTION ) SelectedFunction = NO_FUNCTION;
+		  else 
+		    {
+		      SelectedFunction = UNLOCK_FUNCTION;
+		      PlayOnceNeededSoundSample ( "../effects/CONSOLE_Select_Door_To_Unlock_0.wav" , FALSE );
+		    }
+		}
+	      else
+		{
+		  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Permission_Denied_0.wav" , FALSE );
+		}
 	    }
-	  else if ( CursorIsOnButton( MAP_GUNONOFF_BUTTON_GRAY , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) )
+	  else if ( CursorIsOnButton( MAP_GUNONOFF_BUTTON_GREEN , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) )
 	    {
-	      if ( SelectedFunction == GUNONOFF_FUNCTION ) SelectedFunction = NO_FUNCTION;
-	      else SelectedFunction = GUNONOFF_FUNCTION;
+	      if ( GunOnOffAllowed )
+		{
+		  if ( SelectedFunction == GUNONOFF_FUNCTION ) SelectedFunction = NO_FUNCTION;
+		  else 
+		    {
+		      SelectedFunction = GUNONOFF_FUNCTION;
+		      PlayOnceNeededSoundSample ( "../effects/CONSOLE_Select_Gun_To_Switch_0.wav" , FALSE );
+		    }
+		}
+	      else
+		{
+		  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Permission_Denied_0.wav" , FALSE );		  
+		}
 	    }
 	  else if ( CursorIsOnButton( MAP_SECURITYLEFT_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) )
 	    {
@@ -943,6 +984,8 @@ ShowDeckMap (Level deck)
 		{
 		  ClearanceIndex --;
 		  MenuItemSelectedSound ( ) ;
+		  PasswordIndex = (-1) ;
+		  SelectedFunction = NO_FUNCTION ;
 		}
 	    }
 	  else if ( CursorIsOnButton( MAP_SECURITYRIGHT_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) )
@@ -953,6 +996,8 @@ ShowDeckMap (Level deck)
 		    {
 		      ClearanceIndex ++;
 		      MenuItemSelectedSound();
+		      PasswordIndex = (-1) ;
+		      SelectedFunction = NO_FUNCTION ;
 		    }
 		}
 	    }
@@ -962,6 +1007,8 @@ ShowDeckMap (Level deck)
 		{
 		  PasswordIndex --;
 		  MenuItemSelectedSound ( ) ;
+		  ClearanceIndex = (-1) ;
+		  SelectedFunction = NO_FUNCTION ;
 		}
 	    }
 	  else if ( CursorIsOnButton( MAP_PASSWORDRIGHT_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) )
@@ -972,6 +1019,8 @@ ShowDeckMap (Level deck)
 		    {
 		      PasswordIndex ++;
 		      MenuItemSelectedSound();
+		      ClearanceIndex = (-1) ;
+		      SelectedFunction = NO_FUNCTION ;
 		    }
 		}
 	    }
@@ -981,6 +1030,13 @@ ShowDeckMap (Level deck)
 	  //
 	  else
 	    {
+
+	      //--------------------
+	      // First we find out which map square the player wishes us to operate on
+	      // 
+	      TargetSquare.x = rintf ( Me [ 0 ] . pos . x + (float)( GetMousePos_x ( ) + 16 - ( SCREEN_WIDTH / 2 ) ) / ( INITIAL_BLOCK_WIDTH * 0.25 ) ) ;
+	      TargetSquare.y = rintf ( Me [ 0 ] . pos . y + (float)( GetMousePos_y ( ) + 16 - ( SCREEN_HEIGHT / 2 ) ) / ( INITIAL_BLOCK_HEIGHT * 0.25 ) ) ;
+
 	      //--------------------
 	      // If no function was selected, then a plain move on the map is
 	      // what we need to do.
@@ -1003,8 +1059,7 @@ ShowDeckMap (Level deck)
 		  // Now we try to unlock the LOCKED door that should be present at the
 		  // location currently pointed at via the mouse cursor.
 		  //
-		  TargetSquare.x = rintf ( Me [ 0 ] . pos . x + (float)( GetMousePos_x ( ) + 16 - ( SCREEN_WIDTH / 2 ) ) / ( INITIAL_BLOCK_WIDTH * 0.25 ) ) ;
-		  TargetSquare.y = rintf ( Me [ 0 ] . pos . y + (float)( GetMousePos_y ( ) + 16 - ( SCREEN_HEIGHT / 2 ) ) / ( INITIAL_BLOCK_HEIGHT * 0.25 ) ) ;
+
 		  //--------------------
 		  // Some sanity check again against clicks ouside of the bounds of the map...
 		  //
@@ -1030,6 +1085,32 @@ ShowDeckMap (Level deck)
 			}                                         
 		    }
 		}
+	      else if ( SelectedFunction == GUNONOFF_FUNCTION )
+		{
+		  //--------------------
+		  // Now we try to turn off the gun turret that should be present at the
+		  // location currently pointed at via the mouse cursor.
+		  //
+
+		  //--------------------
+		  // Some sanity check again against clicks ouside of the bounds of the map...
+		  //
+		  if ( ! ( ( TargetSquare.x < 0 ) || ( TargetSquare.y < 0 ) ||
+			   ( TargetSquare.x + 1 >= curShip . AllLevels [ Me [ 0 ] . pos . z ] -> xlen ) ||
+			   ( TargetSquare.y + 1 >= curShip . AllLevels [ Me [ 0 ] . pos . z ] -> ylen ) ) )
+		    {
+		      MapValue = curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] ;
+		      DebugPrintf ( 0 , "Map value found at click location: %d. " , MapValue );
+		      if ( ( MapValue == AUTOGUN_R ) || ( MapValue == AUTOGUN_L ) || 
+			   ( MapValue == AUTOGUN_D ) || ( MapValue == AUTOGUN_U ) )
+			{
+			  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] = BLOCK1 ;
+			  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Gun_Successfully_Deactivated_0.wav" , FALSE );
+			  SelectedFunction = NO_FUNCTION;
+			  GetAutoguns( curShip.AllLevels[ Me [ 0 ] . pos . z ]  );
+			}
+		    }
+		}
 	    }
 	}
 
@@ -1038,13 +1119,21 @@ ShowDeckMap (Level deck)
       
       ShowGenericButtonFromList ( MAP_EXIT_BUTTON );
 
-      if ( SelectedFunction != UNLOCK_FUNCTION ) ShowGenericButtonFromList ( MAP_UNLOCK_BUTTON_GRAY );
+      if ( SelectedFunction != UNLOCK_FUNCTION ) 
+	{
+	  if ( UnlockAllowed ) ShowGenericButtonFromList ( MAP_UNLOCK_BUTTON_GREEN );
+	  else ShowGenericButtonFromList ( MAP_UNLOCK_BUTTON_RED );
+	}
       else
 	{
 	  ShowGenericButtonFromList ( MAP_UNLOCK_BUTTON_YELLOW );
 	}
 
-      if ( SelectedFunction != GUNONOFF_FUNCTION ) ShowGenericButtonFromList ( MAP_GUNONOFF_BUTTON_GRAY );
+      if ( SelectedFunction != GUNONOFF_FUNCTION ) 
+	{
+	  if ( GunOnOffAllowed ) ShowGenericButtonFromList ( MAP_GUNONOFF_BUTTON_GREEN );
+	  else ShowGenericButtonFromList ( MAP_GUNONOFF_BUTTON_RED );
+	}
       else
 	{
 	  ShowGenericButtonFromList ( MAP_GUNONOFF_BUTTON_YELLOW );
@@ -1065,12 +1154,20 @@ ShowDeckMap (Level deck)
       // SetCurrentFont ( Menu_BFont );
       if ( ClearanceIndex >= 0 )
 	{
-	  PutString ( Screen , 220 , 440 , Druidmap [ Me [ 0 ] . clearance_list [ ClearanceIndex ] ] . druidname );      
+	  PutString ( Screen , 210 , 440 , Druidmap [ Me [ 0 ] . clearance_list [ ClearanceIndex ] ] . druidname );      
+	}
+      else
+	{
+	  PutString ( Screen , 210 , 440 , "---" );      
 	}
 
       if ( PasswordIndex >= 0 )
 	{
-	  PutString ( Screen , 380 , 440 , Me [ 0 ] . password_list [ PasswordIndex ] );      
+	  PutString ( Screen , 440 , 440 , Me [ 0 ] . password_list [ PasswordIndex ] );      
+	}
+      else
+	{
+	  PutString ( Screen , 440 , 440 , "-------" );      
 	}
 
       SDL_Flip (Screen);

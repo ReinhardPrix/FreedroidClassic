@@ -78,9 +78,9 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "MapSecurityButtonMiddle.png"    , {  40 , 425 , 120 ,  50 } } ,
     { NULL , "MapSecurityButtonLeft.png"      , {   5 , 425 ,  30 ,  50 } } ,
     { NULL , "MapSecurityButtonRight.png"     , { 170 , 425 ,  30 ,  50 } } ,
-    { NULL , "MapPasswordButtonMiddle.png"    , { 335 , 425 , 120 ,  50 } } ,
-    { NULL , "MapSecurityButtonLeft.png"      , { 305 , 425 ,  30 ,  50 } } ,
-    { NULL , "MapSecurityButtonRight.png"     , { 465 , 425 ,  30 ,  50 } }
+    { NULL , "MapPasswordButtonMiddle.png"    , { 310 , 425 , 120 ,  50 } } ,
+    { NULL , "MapSecurityButtonLeft.png"      , { 280 , 425 ,  30 ,  50 } } ,
+    { NULL , "MapSecurityButtonRight.png"     , { 440 , 425 ,  30 ,  50 } }
   }; // AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] 
 
 /* ----------------------------------------------------------------------
