@@ -784,6 +784,12 @@ InitNewMission ( char *MissionName )
   DebugPrintf ( 1 , "\nFinal starting position: Level=%d XPos=%d YPos=%d." , StartingLevel, StartingXPos, StartingYPos );
 
 
+  /* Reactivate the light on alle Levels, that might have been dark */
+  for (i = 0; i < curShip.num_levels; i++)
+    curShip.AllLevels[i]->empty = FALSE;
+
+  DebugPrintf (2, "\nvoid InitNewMission( ... ): All levels have been set to 'active'...");
+
 
   //--------------------
   // At this point the position history can be initialized
@@ -791,11 +797,6 @@ InitNewMission ( char *MissionName )
   InitInfluPositionHistory();
   printf_SDL (ne_screen, -1, -1, ".");
 
-  
-  /* Reactivate the light on alle Levels, that might have been dark */
-  for (i = 0; i < curShip.num_levels; i++)
-    curShip.AllLevels[i]->empty = FALSE;
-  DebugPrintf (2, "\nvoid InitNewMission( ... ): All levels have been set to 'active'...");
 
   printf_SDL (ne_screen, -1, -1, " ok\n");
   SetCurrentFont (oldfont);
@@ -813,6 +814,13 @@ InitNewMission ( char *MissionName )
   // Switch_Background_Music_To (COMBAT_BACKGROUND_MUSIC_SOUND);
   Switch_Background_Music_To ( CurLevel->Background_Song_Name );
 
+  for (i = 0; i < curShip.num_levels; i++)
+    {
+      CurLevel = curShip.AllLevels[i];
+      ShuffleEnemys ();
+    }
+  CurLevel = curShip.AllLevels[ StartingLevel ];
+
   // Now that the briefing and all that is done,
   // the influence structure can be initialized for
   // the new mission:
@@ -825,8 +833,6 @@ InitNewMission ( char *MissionName )
   Me.phase = 0;
   Me.timer = 0.0;  // set clock to 0
   
-  ShuffleEnemys(); // NOTE: THIS REQUIRES CurLevel TO BE INITIALIZED
-
   DebugPrintf (1, "done."); // this matches the printf at the beginning of this function
  
   return;

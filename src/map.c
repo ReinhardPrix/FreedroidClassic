@@ -88,37 +88,15 @@ void GetThisLevelsDroids( char* SectionPointer );
 unsigned char
 GetMapBrick (Level deck, float x, float y)
 {
+  int xx, yy;
 
-  /* 
-   * ATTENTION! BE CAREFUL HERE!  What we want is an integer division with rest, 
-   * not an exact foating point division!  Beware of "improvements" here!!!
-   */
+  xx = (int) rintf(x);
+  yy = (int) rintf(y);
 
-  if (((int) rintf (y))  >= deck->ylen)
-    {
-      // printf ("\n----------------------------------------------------------------------\nunsigned char GetMapBrick(Level deck, float x, float y): Error:\n BlockPosition from outside requested: y>ylen\n----------------------------------------------------------------------\n");
-      return VOID;
-      Terminate (-1);
-    }
-  if (((int) rintf (x))  >= deck->xlen)
-    {
-      // printf ("\n----------------------------------------------------------------------\nunsigned char GetMapBrick(Level deck, float x, float y): Error:\n BlockPosition from outside requested: x>xlen\n----------------------------------------------------------------------\n");
-      return VOID;
-      Terminate (-1);
-    }
-  if (((int) rintf (y))  < 0)
-    {
-      // printf ("\n----------------------------------------------------------------------\nunsigned char GetMapBrick(Level deck, float x, float y): Error:\n BlockPosition from outside requested: y<0\n----------------------------------------------------------------------\n");
-      return VOID;
-      Terminate (-1);
-    }
-  if (((int) rintf (x))  < 0)
-    {
-      // printf ("\n----------------------------------------------------------------------\nunsigned char GetMapBrick(Level deck, float x, float y): Error:\n BlockPosition from outside requested: x<0\n----------------------------------------------------------------------\n");
-      return VOID;
-      Terminate (-1);
-    }
-  return deck->map[((int) rintf (y)) ][((int) rintf (x)) ];
+  if ( (yy >= deck->ylen)|| (yy < 0) || (xx >= deck->xlen) || (xx<0) )
+    return VOID;
+  else
+    return (deck->map[yy][xx]);
 } /* GetMapBrick() */
 
 /*@Function============================================================
@@ -143,7 +121,8 @@ GetCurrentLift (void)
   DebugPrintf( 1 , "\nint GetCurrentLift( void ): List of elevators:\n");
   for (i = 0; i < curShip.num_lifts+1; i++)
     {
-      DebugPrintf( 1 , "\nIndex=%d level=%d gx=%d gy=%d" , i , curShip.AllLifts[i].level , curShip.AllLifts[i].x , curShip.AllLifts[i].y );
+      DebugPrintf( 1 , "\nIndex=%d level=%d gx=%d gy=%d" , i , 
+		   curShip.AllLifts[i].level , curShip.AllLifts[i].x , curShip.AllLifts[i].y );
     }
 
   for (i = 0; i < curShip.num_lifts+1; i++) // we check for one more than present, so the last reached

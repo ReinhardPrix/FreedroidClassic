@@ -178,6 +178,8 @@ enum _sounds
   FIRE_BULLET_LASER_RIFLE_SOUND,
   CRY_SOUND,
   TRANSFER_SOUND,
+  COUNTDOWN_SOUND,
+  ENDCOUNTDOWN_SOUND,
   ALL_SOUNDS   // marks the last entry always!
 };
 

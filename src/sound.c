@@ -67,7 +67,9 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
    "Fire_Bullet_Exterminator_Sound_0.wav",
    "phaser.wav",
    "Cry_Sound_0.wav",
-   "Takeover_Sound_0.wav"
+   "Takeover_Sound_0.wav",
+   "Countdown_Sound.wav",
+   "EndCountdown_Sound.wav"
 };
 
 #ifdef HAVE_LIBSDL_MIXER
@@ -222,6 +224,18 @@ Set_Sound_FX_Volume(float NewVolume)
 
 } // void Set_BG_Music_Volume(float NewVolume)
 
+
+void
+CountdownSound (void)
+{
+  Play_Sound (COUNTDOWN_SOUND);
+}
+
+void
+EndCountdownSound (void)
+{
+  Play_Sound (ENDCOUNTDOWN_SOUND);
+}
 
 /*@Function============================================================
 @Desc: Starts a Tune.

@@ -172,6 +172,8 @@ EXTERN void Play_Sound (int);
 EXTERN void StartSound (int);
 EXTERN void GotHitSound (void);
 EXTERN void GotIntoBlastSound (void);
+EXTERN void CountdownSound (void);
+EXTERN void EndCountdownSound (void);
 EXTERN void CrySound (void);
 EXTERN void TransferSound (void);
 EXTERN void RefreshSound (void);

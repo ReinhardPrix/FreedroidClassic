@@ -201,17 +201,21 @@ ShuffleEnemys (void)
   int curlevel = CurLevel->levelnum;
   int i;
   int nth_enemy;
-  int wp_num;
-  int wp = 0;
+  int num_wp, wp;
+  bool used_wp[MAXWAYPOINTS];
   finepoint influ_coord;
 
   /* Anzahl der Waypoints auf CurLevel abzaehlen */
-  wp_num = 0;
+  num_wp = 0;
 
   for ( i=0 ; i<MAXWAYPOINTS ; i++ )
     {
-      if ( CurLevel->AllWaypoints[i].x != 0 ) wp_num ++;
+      if ( CurLevel->AllWaypoints[i].x != 0 ) {
+	used_wp[i] = FALSE;
+	num_wp ++;
+      }
     }
+  
 
   nth_enemy = 0;
   for (i = 0; i < NumEnemys ; i++)
@@ -219,17 +223,16 @@ ShuffleEnemys (void)
       if (AllEnemys[i].status == OUT || AllEnemys[i].levelnum != curlevel)
 	continue;		/* dont handle dead enemys or on other level */
 
-
       nth_enemy++;
-      if (nth_enemy < wp_num)
-	wp = nth_enemy;
-      else
+      if (nth_enemy > num_wp)
 	{
-	  DebugPrintf (0, "\nNumber of waypoints found: %d." , wp_num );
+	  DebugPrintf (0, "\nNumber of waypoints found: %d." , num_wp );
 	  DebugPrintf (0, "\nLess waypoints than enemys on level %d? !", CurLevel->levelnum );
 	  Terminate (ERR);
 	}
+      do { wp = MyRandom(num_wp-1);} while(used_wp[wp]);
 
+      used_wp[wp] = TRUE;
       AllEnemys[i].pos.x = CurLevel->AllWaypoints[wp].x;
       AllEnemys[i].pos.y = CurLevel->AllWaypoints[wp].y;
 
@@ -303,8 +306,7 @@ SelectNextWaypointClassical( int EnemyNum )
 		 connections[MyRandom (MAX_WP_CONNECTIONS - 1)]) == -1);
       else
 	{
-	  DebugPrintf ( 0, "\nvoid MoveThisRobotClassical ( int Enemynum ) : Weird waypoint %d has no connections!\n", nextwp);
-	  Terminate(ERR);
+	  DebugPrintf ( 0, "\nvoid MoveThisRobotClassical() : Weird waypoint %d has no connections!\n", nextwp);
 	}
       
       /* setze neuen Waypoint */

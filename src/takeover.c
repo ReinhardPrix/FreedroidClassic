@@ -376,6 +376,7 @@ PlayGame (void)
   
   ResetMouseWheel ();  // forget about previous wheel events
 
+  CountdownSound();
   while (!FinishTakeover)
     {
       cur_time = SDL_GetTicks ();
@@ -414,8 +415,12 @@ PlayGame (void)
 	  sprintf (count_text, "Finish-%d", countdown);
 	  DisplayBanner (count_text, NULL , 0 );
 
+	  if (countdown && (countdown%10 == 0) ) CountdownSound();
 	  if (countdown == 0)
-	    FinishTakeover = TRUE;
+	    {
+	      EndCountdownSound();
+	      FinishTakeover = TRUE;
+	    }
 
 	  AnimateCurrents ();  /* do some animation on the active cables */
 

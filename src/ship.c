@@ -201,7 +201,7 @@ EnterLift (void)
       CurLevel = curShip.AllLevels[array_num];
 
       // redistribute the enemys around the level
-      ShuffleEnemys ();
+      //      ShuffleEnemys ();
 
       // set the position of the influencer to the correct locatiohn
       Me.pos.x = curShip.AllLifts[curLift].x; 

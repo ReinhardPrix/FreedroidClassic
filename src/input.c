@@ -185,7 +185,7 @@ ReactToSpecialKeys(void)
 
   if ( PPressed () )
     Pause ();
-    
+
 } // void ReactToSpecialKeys(void)
 
 int
@@ -1162,28 +1162,28 @@ int
 LeftPressed (void)
 {
   keyboard_update ();
-  return CurrentlyLeftPressed;
+  return (CurrentlyLeftPressed||CurrentlyAPressed);
 }				// int LeftPressed(void)
 
 int
 RightPressed (void)
 {
   keyboard_update ();
-  return CurrentlyRightPressed;
+  return (CurrentlyRightPressed||CurrentlyDPressed);
 }				// int RightPressed(void)
 
 int
 UpPressed (void)
 {
   keyboard_update ();
-  return CurrentlyUpPressed;
+  return (CurrentlyUpPressed||CurrentlyWPressed);
 }				// int UpPressed(void)
 
 int
 DownPressed (void)
 {
   keyboard_update ();
-  return CurrentlyDownPressed;
+  return (CurrentlyDownPressed||CurrentlySPressed);
 }				// int DownPressed(void)
 
 int
@@ -1192,7 +1192,7 @@ SpacePressed (void)
   keyboard_update ();
   // hack hack: we map return-> space, so that it 
   // generally acts as "fire" in the game, should be convenient:
-  return (CurrentlySpacePressed|CurrentlyEnterPressed);
+  return (CurrentlySpacePressed||CurrentlyEnterPressed);
 }				// int SpacePressed(void)
 
 int

@@ -170,16 +170,16 @@ MoveInfluence (void)
       TransferCounter=0;
     }
 
-  if (UpPressed ())
+  if (UpPressed())
     Me.speed.y -= accel;
   if (DownPressed ())
     Me.speed.y += accel;
-  if (LeftPressed ())
+  if (LeftPressed())
     Me.speed.x -= accel;
-  if (RightPressed ())
+  if (RightPressed())
     Me.speed.x += accel;
 
-  if (!SpacePressed ())
+  if (!SpacePressed())
     Me.status = MOBILE;
 
   if (TransferCounter == 1)
