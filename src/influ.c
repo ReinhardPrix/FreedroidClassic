@@ -1,48 +1,33 @@
-/*=@Header==============================================================
- * $Source$
+/* 
  *
- * @Desc: all features, movement, fireing, collision and extras of the influencer are done in here.
- *	 
- *
- * $Revision$
- * $State$
- *
- * $Author$
- *
- * $Log$
- * Revision 1.16  1997/06/09 23:08:59  jprix
- * Blast phases now adapted to the current framerate.  New constant for speed of animation independant of framerate.
- *
- * Revision 1.15  1997/06/09 21:53:49  jprix
- * Rotation of enemys and influencer now independant of the framerate.
- *
- * Revision 1.14  1997/06/09 21:00:56  jprix
- * The constants for the druids have been largely rescaled to MUCH larger values.
- * This is for the new float and framedependent movement of the enemys.  It works nicley
- * as you will see from the now very smooth movement of each of them.
- *
- * Revision 1.13  1997/06/09 13:42:17  jprix
- * Bullets work now completle adjusted to the framerate.  That looks smooth. fine.
- * Modified makefile to depend also on the important paravars.h .
- *
- * Revision 1.12  1997/06/09 13:01:29  jprix
- * Bullet position and speed now also as float.  Program still functionin. Heeyooh! Great!
- *
- * 
- * Revision 1.5  1997/05/31 13:30:31  rprix
- * Further update by johannes. (sent to me in tar.gz
- *
- * Revision 1.2  1994/06/19  16:22:55  prix
- * Wed Jun 08 13:52:40 1994: Influ moves only when beam finished
- *
- * Revision 1.1  1993/08/04  16:27:43  prix
- * Initial revision
+ *   Copyright (c) 2002 Johannes Prix
+ *   Copyright (c) 2002 Reinhard Prix
  *
  *
- *-@Header------------------------------------------------------------*/
+ *  This file is part of FreeParadroid+
+ *
+ *  FreeParadroid+ is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  FreeParadroid+ is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with FreeParadroid+; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
 
-/* static const char RCSid[]=\
-   "$Id$"; */
+/*----------------------------------------------------------------------
+ *
+ * Desc: all features, movement, fireing, collision and extras of the
+ *	influencer are done in here.
+ *
+ *----------------------------------------------------------------------*/
 
 #define _influ_c
 

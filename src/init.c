@@ -1,50 +1,32 @@
-/*=Header==============================================================
- * $Source$
+/* 
  *
- * @Desc: the paraplus initialisation routines
- * 	
- * $Revision$
- * $State$
+ *   Copyright (c) 2002 Johannes Prix
+ *   Copyright (c) 2002 Reinhard Prix
  *
- * $Author$
  *
- * $Log$
- * Revision 1.9  1997/06/10 14:33:08  rprix
- * InitParaplus(void) now asks for AutoTerminationTime, instead of compiled-in
- * value. More convenient for different developers with different needs... ;)
+ *  This file is part of FreeParadroid+
  *
- * Revision 1.8  1997/06/09 23:08:59  jprix
- * Blast phases now adapted to the current framerate.  New constant for speed of animation independant of framerate.
+ *  FreeParadroid+ is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
  *
- * Revision 1.7  1997/06/09 21:00:56  jprix
- * The constants for the druids have been largely rescaled to MUCH larger values.
- * This is for the new float and framedependent movement of the enemys.  It works nicley
- * as you will see from the now very smooth movement of each of them.
+ *  FreeParadroid+ is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
  *
- * Revision 1.6  1997/06/09 19:44:13  jprix
- * Improved the Title.
+ *  You should have received a copy of the GNU General Public License
+ *  along with FreeParadroid+; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * Revision 1.5  1997/06/09 18:01:51  jprix
- * PCX Loading function is now ready. LBM load commands have been replaced by pcx load commands.
- * LBM files have been removed from repository. (I hope all of them.)
- *
- * Revision 1.4  1997/06/08 23:19:38  jprix
- * Transition to floating point coordinates started.  This version is still working.
- *
- * Revision 1.3  1997/06/08 18:46:11  jprix
- * Sound server should be working perfectly now.  Background music was also activated.
- * Background music file and new fire sound added.
- * Soundserver is currently activated by default. (rp shound install a yiff soon! it's great.)
- *
- * Revision 1.2  1997/06/08 16:33:10  jprix
- * Eliminated all warnings, that resulted from the new -Wall gcc flag.
- *
- * 
- *
- *-@Header------------------------------------------------------------*/
+ */
 
-/* static const char RCSid[]=\
-   "$Id$"; */
+/*----------------------------------------------------------------------
+ *
+ * Desc: the paraplus initialisation routines
+ *
+ *----------------------------------------------------------------------*/
 
 #define _parainit_c
 

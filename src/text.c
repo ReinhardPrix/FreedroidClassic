@@ -1,29 +1,35 @@
-/*=@Header==============================================================
- * $Source$
+/* 
  *
- * @Desc: contains all functions dealing with the HUGE, BIG font used for the top status line, the score and
- *	  the text displayed during briefing and highscore inverview.  This has NOTHING to do with the fonts
- *	  of the SVGALIB or the fonts used for the horizontal srolling message line!
- * 	
- * $Revision$
- *
- * $State$
- *
- * $Author$
- *
- * $Log$
- * Revision 1.8  1997/06/09 19:44:13  jprix
- * Improved the Title.
- *
- * Revision 1.7  1997/06/09 18:01:51  jprix
- * PCX Loading function is now ready. LBM load commands have been replaced by pcx load commands.
- * LBM files have been removed from repository. (I hope all of them.)
- *
- * Revision 1.6  1997/06/08 16:33:10  jprix
- * Eliminated all warnings, that resulted from the new -Wall gcc flag.
+ *   Copyright (c) 2002 Johannes Prix
+ *   Copyright (c) 2002 Reinhard Prix
  *
  *
- *-@Header------------------------------------------------------------*/
+ *  This file is part of FreeParadroid+
+ *
+ *  FreeParadroid+ is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  FreeParadroid+ is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with FreeParadroid+; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+
+/*----------------------------------------------------------------------
+ *
+ * Desc: contains all functions dealing with the HUGE, BIG font used for
+ *	the top status line, the score and the text displayed during briefing
+ *	and highscore inverview.  This has NOTHING to do with the fonts
+ *	of the SVGALIB or the fonts used for the horizontal srolling message line!
+ *
+ *----------------------------------------------------------------------*/
 
 #define _paratext_c
 

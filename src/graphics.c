@@ -1,34 +1,34 @@
-/*=@Header==============================================================
- * $Source$
+/* 
  *
- * @Desc: Graphics primitived, such as functions to load LBM or PCX images, to change the vga color table,
- *        to activate or deachtivate monitor signal, to set video modes etc.
- * 	
- * $Revision$
- *
- * $State$
- *
- * $Author$
- *
- * $Log: graphics.c,v 
- * Revision 1.5  1997/05/31 13:30:31  rpri
- * Further update by johannes. (sent to me in tar.gz
- *
- * Revision 1.2  1994/06/19  16:21:33  prix
- * Sat May 21 07:37:55 1994: Neue Funktion: TransparentLadeLBMBild
- * Sat May 21 09:57:45 1994: Transp.LBMLaden kann auch in den Speicher laden.
- * Sat May 21 10:07:25 1994: LadeLBMBild kann auch in den Speicher laden.
- * Sat May 21 11:19:57 1994: :LBMBIlder ver"andern nicht unbedingt die Pallete
- * Sat May 21 13:24:56 1994: UnfadeLevel eingef"uhrt
- *
- * Revision 1.1  1993/05/22  20:53:58  rp
- * Initial revision
+ *   Copyright (c) 2002 Johannes Prix
+ *   Copyright (c) 2002 Reinhard Prix
  *
  *
- *-@Header------------------------------------------------------------*/
+ *  This file is part of FreeParadroid+
+ *
+ *  FreeParadroid+ is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  FreeParadroid+ is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with FreeParadroid+; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
 
-/* static const char RCSid[]=\
-   "$Id$"; */
+/*----------------------------------------------------------------------
+ *
+ * Desc: Graphics primitived, such as functions to load LBM or PCX images,
+ *	to change the vga color table, to activate or deachtivate monitor
+ *	signal, to set video modes etc.
+ *
+ *----------------------------------------------------------------------*/
 
 #define _graphics_c
 

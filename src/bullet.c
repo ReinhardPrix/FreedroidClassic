@@ -1,50 +1,33 @@
-/*=@Header==============================================================
- * $Source$
+/*
  *
- * @Desc: all Bullet AND Blast - related functions.
- *	 
- * 	
- * $Revision$
- * $State$
- *
- * $Author$
- *
- * $Log$
- * Revision 1.10  1997/06/09 23:08:58  jprix
- * Blast phases now adapted to the current framerate.  New constant for speed of animation independant of framerate.
- *
- * Revision 1.9  1997/06/09 13:42:17  jprix
- * Bullets work now completle adjusted to the framerate.  That looks smooth. fine.
- * Modified makefile to depend also on the important paravars.h .
- *
- * Revision 1.8  1997/06/09 13:01:29  jprix
- * Bullet position and speed now also as float.  Program still functionin. Heeyooh! Great!
- *
- * Revision 1.7  1997/06/08 14:49:40  jprix
- * Added file FILES describing the files of this project.
- * Added more doku while writing the files description.
- * Added -Wall compilerflag for maximal generation of sane warnings.
- *
- * Revision 1.6  1997/06/05 09:24:15  jprix
- * Habe YIFF Soundserver eingebaut, doch derweil bleibt er noch durch einen bedingten Compilierungsschalter deaktiviert, weil er bei euch nicht laufen wird.  He. Ich war grad in irgendeiner Form von vi gefangen! Hilfe! Bis der Soundserver aber wirklich geht, wird es noch ein Bischen dauern.  Er ist aber Klasse und das wird sicher toll.  Bis bald, Johannes.
- *
- * Revision 1.5  2002/04/08 19:19:09  rp
- * Johannes latest (and last) non-cvs version to be checked in. Added graphics,sound,map-subdirs. Sound support using ALSA started.
- *
- * Revision 1.6  1997/05/31 13:30:31  rprix
- * Further update by johannes. (sent to me in tar.gz)
- *
- * Revision 1.2  1994/06/19  16:15:51  prix
- * *** empty log message ***
- *
- * Revision 1.1  1993/08/08  21:20:50  prix
- * Initial revision
+ *   Copyright (c) 2002 Johannes Prix
+ *   Copyright (c) 2002 Reinhard Prix
  *
  *
- *-@Header------------------------------------------------------------*/
+ *  This file is part of FreeParadroid+
+ *
+ *  FreeParadroid+ is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  FreeParadroid+ is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with FreeParadroid+; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
 
-/* static const char RCSid[]=\
-   "$Id$ "; */ 
+/*----------------------------------------------------------------------
+ *
+ * Desc: all Bullet AND Blast - related functions.
+ *	 
+ *
+ *----------------------------------------------------------------------*/
 
 #define _bullet_c
 

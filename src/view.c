@@ -1,42 +1,37 @@
-/*=@Header==============================================================
- * $Source$
+/* 
  *
- * @Desc: all the functions managing the things one gets to see.  That includes assembling of enemys,
- *        assembling the currently relevant porting of the map (the bricks I mean), drawing all visible
- *        elements like bullets, blasts, enemys or influencer in a nonvisible place in memory at first, 
- *	  and finally drawing them to the visible screen for the user.
- *	 
- * 	
- * $Revision$
- *
- * $State$
- *
- * $Author$
- *
- * $Log$
- * Revision 1.20  1997/06/09 23:08:59  jprix
- * Blast phases now adapted to the current framerate.  New constant for speed of animation independant of framerate.
- *
- * Revision 1.19  1997/06/09 21:53:49  jprix
- * Rotation of enemys and influencer now independant of the framerate.
- *
- * Revision 1.18  1997/06/09 13:01:29  jprix
- * Bullet position and speed now also as float.  Program still functionin. Heeyooh! Great!
- *
- * Revision 1.17  1997/06/09 10:50:29  jprix
- * Halfway through with making robot coordinates also info floats.  Still works :->
- *
- * Revision 1.16  1997/06/08 23:46:45  jprix
- * influence_t uses floats now for the coodinates of the influ.  transition successful.
- *
- * Revision 1.15  1997/06/08 16:33:10  jprix
- * Eliminated all warnings, that resulted from the new -Wall gcc flag.
+ *   Copyright (c) 2002 Johannes Prix
+ *   Copyright (c) 2002 Reinhard Prix
  *
  *
- *-@Header------------------------------------------------------------*/
+ *  This file is part of FreeParadroid+
+ *
+ *  FreeParadroid+ is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  FreeParadroid+ is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with FreeParadroid+; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
 
-/* static const char RCSid[]=\
-   "$Id$"; */
+/*----------------------------------------------------------------------
+ *
+ * Desc: all the functions managing the things one gets to see.
+ *	That includes assembling of enemys, assembling the currently
+ *	relevant porting of the map (the bricks I mean), drawing all visible
+ *	elements like bullets, blasts, enemys or influencer in a nonvisible
+ *	place in memory at first, and finally drawing them to the visible
+ *	screen for the user.
+ *
+ *----------------------------------------------------------------------*/
 
 /*
  * Dieses Modul enth"alt Funktionen, die dem Aufbau des Bildes dienen.

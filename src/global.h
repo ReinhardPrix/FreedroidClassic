@@ -1,3 +1,28 @@
+/* 
+ *
+ *   Copyright (c) 2002 Johannes Prix
+ *   Copyright (c) 2002 Reinhard Prix
+ *
+ *
+ *  This file is part of FreeParadroid+
+ *
+ *  FreeParadroid+ is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  FreeParadroid+ is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with FreeParadroid+; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+
+
 #ifndef _global_h
 #define _global_h
 
@@ -171,6 +196,14 @@ EXTERN unsigned char *ShieldBlocks;
  * $Author$
  *
  * $Log$
+ * Revision 1.13  1997/06/10 20:10:46  rprix
+ * Put complete source under GPL Licence: added GPL-Licence file: COPYING
+ * and added Copyright-header to all .c and .h files.
+ * PS: How do you copyright binaries (.pcx,.wav...) and data-files (.shp)??
+ *
+ * Neue Header braucht das Land: Alte RCS- Keyword header ganz entfernt,
+ * only Description-entry in header remains.
+ *
  * Revision 1.12  1997/06/08 11:24:38  jprix
  * Made the pause function into a real function.
  * Deleted some old unused features like non-portable DMA-use etc.

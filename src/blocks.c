@@ -1,34 +1,37 @@
-/*=@Header==============================================================
- * $Source$
+/*
  *
- * @Desc: contains block operating functions, that is when you want to put something on the visible screen
- *        of the paradroid, DO NOT DO IT YOURSELF!  Use one of the functions in here, e.g. DisplayBlock(..),
- *        DisplayMergeBlock(..), CopyMergeBlock(...),.. .
- *        These functions already take into acount the position of the paradoid, so you do not have to worry
- *        about where to put anything, and only have to supply map coordinates.  Very handy.
- * 	
- * $Revision$
- *
- * $State$
- *
- * $Author$
- *
- * $Log$
- * Revision 1.16  1997/06/09 18:01:51  jprix
- * PCX Loading function is now ready. LBM load commands have been replaced by pcx load commands.
- * LBM files have been removed from repository. (I hope all of them.)
- *
- * Revision 1.15  1997/06/09 13:01:29  jprix
- * Bullet position and speed now also as float.  Program still functionin. Heeyooh! Great!
- *
- * Revision 1.14  1997/06/08 16:33:10  jprix
- * Eliminated all warnings, that resulted from the new -Wall gcc flag.
+ *   Copyright (c) 2002 Johannes Prix
+ *   Copyright (c) 2002 Reinhard Prix
  *
  *
- *-@Header------------------------------------------------------------*/
+ *  This file is part of FreeParadroid+
+ *
+ *  FreeParadroid+ is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  FreeParadroid+ is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with FreeParadroid+; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
-/* static const char RCSid[]=\
-   "$Id$"; */
+/*----------------------------------------------------------------------
+ * Desc: contains block operating functions, that is when you want to
+ * 	put something on the visible screen
+ *      of the paradroid, DO NOT DO IT YOURSELF!  Use one of the functions
+ *	in here, e.g. DisplayBlock(..),
+ *      DisplayMergeBlock(..), CopyMergeBlock(...),.. .
+ *      These functions already take into acount the position of the paradoid,
+ * 	so you do not have to worry about where to put anything, and only have
+ *	to supply map coordinates.  Very handy.
+ *
+ *----------------------------------------------------------------------*/
 
 #define _blocks_c
 

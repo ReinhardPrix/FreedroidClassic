@@ -1,35 +1,32 @@
-/*=@Header==============================================================
- * $Source$
+/* 
  *
- * @Desc: all the define-constants and macroes
- * 	
- * $Revision$
- *
- * $State$
- *
- * $Author$
- *
- * $Log$
- * Revision 1.18  1997/06/09 23:08:58  jprix
- * Blast phases now adapted to the current framerate.  New constant for speed of animation independant of framerate.
- *
- * Revision 1.17  1997/06/09 19:44:13  jprix
- * Improved the Title.
- *
- * Revision 1.16  1997/06/09 18:01:51  jprix
- * PCX Loading function is now ready. LBM load commands have been replaced by pcx load commands.
- * LBM files have been removed from repository. (I hope all of them.)
- *
- * Revision 1.15  1997/06/09 11:17:56  jprix
- * Threw out the SpeedX and SpeedY macros/definitions because they get confused with local variables.
- *
- * Revision 1.14  1997/06/08 18:46:11  jprix
- * Sound server should be working perfectly now.  Background music was also activated.
- * Background music file and new fire sound added.
- * Soundserver is currently activated by default. (rp shound install a yiff soon! it's great.)
+ *   Copyright (c) 2002 Johannes Prix
+ *   Copyright (c) 2002 Reinhard Prix
  *
  *
- *-@Header------------------------------------------------------------*/
+ *  This file is part of FreeParadroid+
+ *
+ *  FreeParadroid+ is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  FreeParadroid+ is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with FreeParadroid+; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+
+/*----------------------------------------------------------------------
+ *
+ * Desc: all the define-constants and macroes
+ *
+ *----------------------------------------------------------------------*/
 
 #ifndef _defs_h
 #define _defs_h

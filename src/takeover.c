@@ -1,44 +1,33 @@
-/*=@Header==============================================================
- * $Source$
+/* 
  *
- * @Desc: Everything that has to do with the takeover game of Paradroid is contained in this file.
- *	 
- * 	
- * $Revision$
- * $State$
- *
- * $Author$
- *
- * $Log$
- * Revision 1.8  1997/06/09 18:01:51  jprix
- * PCX Loading function is now ready. LBM load commands have been replaced by pcx load commands.
- * LBM files have been removed from repository. (I hope all of them.)
- *
- * Revision 1.7  1997/06/08 16:33:10  jprix
- * Eliminated all warnings, that resulted from the new -Wall gcc flag.
- *
- * Revision 1.6  1997/06/08 14:49:40  jprix
- * Added file FILES describing the files of this project.
- * Added more doku while writing the files description.
- * Added -Wall compilerflag for maximal generation of sane warnings.
- *
- * Revision 1.5  2002/04/08 19:19:09  rp
- * Johannes latest (and last) non-cvs version to be checked in. Added graphics,sound,map-subdirs. Sound support using ALSA started.
- *
- * Revision 1.5  1997/05/31 13:30:32  rprix
- * Further update by johannes. (sent to me in tar.gz)
- *
- * Revision 1.2  1994/06/19  16:42:11  prix
- * Thu Jun 02 19:42:47 1994: ??
- *
- * Revision 1.1  1993/10/22  20:13:35  prix
- * Initial revision
+ *   Copyright (c) 2002 Johannes Prix
+ *   Copyright (c) 2002 Reinhard Prix
  *
  *
- *-@Header------------------------------------------------------------*/
+ *  This file is part of FreeParadroid+
+ *
+ *  FreeParadroid+ is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  FreeParadroid+ is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with FreeParadroid+; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
 
-/* static const char RCSid[]=\
-   "$Id$"; */
+/*----------------------------------------------------------------------
+ *
+ * Desc: Everything that has to do with the takeover game of Paradroid
+ * 	is contained in this file.
+ *
+ *----------------------------------------------------------------------*/
 
 #define _takeover_c
 
