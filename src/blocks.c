@@ -2605,10 +2605,12 @@ init_obstacle_data( void )
   obstacle_map [ ISO_H_BATHTUB ] . block_area_parm_2 = 0.5 ;
   obstacle_map [ ISO_H_BATHTUB ] . is_smashable = TRUE ;
   obstacle_map [ ISO_H_BATHTUB ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_H_BATHTUB ] . filename = "iso_bathroom_furniture_0000.png" ;
   obstacle_map [ ISO_V_BATHTUB ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_V_BATHTUB ] . block_area_parm_1 = 0.5 ;
   obstacle_map [ ISO_V_BATHTUB ] . block_area_parm_2 = 1.0 ;
   obstacle_map [ ISO_V_BATHTUB ] . is_smashable = TRUE ;
+  obstacle_map [ ISO_V_BATHTUB ] . filename = "iso_bathroom_furniture_0001.png" ;
   obstacle_map [ ISO_V_BATHTUB ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_H_WASHTUB ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_H_WASHTUB ] . block_area_parm_1 = 0.5 ;
