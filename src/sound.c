@@ -1147,34 +1147,35 @@ GotHitSound (void)
 
 
 /* ----------------------------------------------------------------------
- *
+ * Whenever the Tux gets hit, we *might* play a sound sample for the hit,
+ * depending on random results.  Since we don't want to hear the same 
+ * sound sample all the time, there is a selection of possible files 
+ * one of which will be selected at random.
  * ---------------------------------------------------------------------- */
 void
-tux_scream_sound (void)
+tux_scream_sound ( void )
 {
-  if ( MyRandom ( 7 ) <= 5 ) return;
-
-  switch( MyRandom( 4 ) )
+    if ( MyRandom ( 7 ) <= 5 ) return;
+    
+    switch( MyRandom( 4 ) )
     {
-    case 0 :
-      // the 0 sound is bad.  we use the 3 for now
-      play_sample_using_WAV_cache( "../effects/Influencer_Scream_Sound_3.wav", FALSE , FALSE );
-      break;
-    case 1 :
-      play_sample_using_WAV_cache( "../effects/Influencer_Scream_Sound_1.wav", FALSE , FALSE );
-      break;
-    case 2 :
-      // the 2 sound is bad.  we use the 3 for now
-      play_sample_using_WAV_cache( "../effects/Influencer_Scream_Sound_3.wav", FALSE , FALSE );
-      break;
-    case 3 :
-      play_sample_using_WAV_cache( "../effects/Influencer_Scream_Sound_3.wav", FALSE , FALSE );
-      break;
-    case 4 :
-      play_sample_using_WAV_cache( "../effects/Influencer_Scream_Sound_4.wav", FALSE , FALSE );
-      break;
-    default:
-      break;
+	case 0 :
+	    play_sample_using_WAV_cache( "../effects/Influencer_Scream_Sound_0.wav", FALSE , FALSE );
+	    break;
+	case 1 :
+	    play_sample_using_WAV_cache( "../effects/Influencer_Scream_Sound_1.wav", FALSE , FALSE );
+	    break;
+	case 2 :
+	    play_sample_using_WAV_cache( "../effects/Influencer_Scream_Sound_2.wav", FALSE , FALSE );
+	    break;
+	case 3 :
+	    play_sample_using_WAV_cache( "../effects/Influencer_Scream_Sound_3.wav", FALSE , FALSE );
+	    break;
+	case 4 :
+	    play_sample_using_WAV_cache( "../effects/Influencer_Scream_Sound_4.wav", FALSE , FALSE );
+	    break;
+	default:
+	    break;
     }
 }; // void tux_scream_sound (void)
 
