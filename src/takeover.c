@@ -42,29 +42,20 @@
 Uint32 cur_time;  		// current time in ms 
 SDL_Surface *to_blocks;         // the global surface containing all game-blocks 
 
-/* the rectangles containing the blocks */
-// SDL_Rect FillBlocks[NUM_FILL_BLOCKS];
-SDL_Surface* FillBlocks[NUM_FILL_BLOCKS];
+//--------------------
+// The rectangles containing the blocks for the takeover game
+//
+iso_image FillBlocks[NUM_FILL_BLOCKS];
 SDL_Rect FillRects[NUM_FILL_BLOCKS];
-
-// SDL_Rect CapsuleBlocks[NUM_CAPS_BLOCKS];
-SDL_Surface* CapsuleBlocks[NUM_CAPS_BLOCKS];
+iso_image CapsuleBlocks[NUM_CAPS_BLOCKS];
 SDL_Rect CapsuleRects[NUM_CAPS_BLOCKS];
-
-// SDL_Rect ToGameBlocks[NUM_TO_BLOCKS];
-SDL_Surface* ToGameBlocks[NUM_TO_BLOCKS];
+iso_image ToGameBlocks[NUM_TO_BLOCKS];
 SDL_Rect ToGameRects[NUM_TO_BLOCKS];
-
-//SDL_Rect ToGroundBlocks[NUM_GROUND_BLOCKS];
-SDL_Surface* ToGroundBlocks[NUM_GROUND_BLOCKS];
+iso_image ToGroundBlocks[NUM_GROUND_BLOCKS];
 SDL_Rect ToGroundRects[NUM_GROUND_BLOCKS];
-
-// SDL_Rect ToColumnBlock;
-SDL_Surface* ToColumnBlock;
+iso_image ToColumnBlock;
 SDL_Rect ToColumnRect;
-
-// SDL_Rect ToLeaderBlock;
-SDL_Surface* ToLeaderBlock;
+iso_image ToLeaderBlock;
 SDL_Rect ToLeaderRect;
 
 //--------------------
@@ -806,17 +797,17 @@ GetTakeoverGraphics (void)
   if ( use_open_gl ) flip_image_horizontally ( to_blocks );
 
   // Get the fill-blocks 
-  for (i=0; i<NUM_FILL_BLOCKS; i++,curx += FILL_BLOCK_LEN + 2)
+  for ( i = 0 ; i < NUM_FILL_BLOCKS ; i++ , curx += FILL_BLOCK_LEN + 2)
     {
-      Set_Rect ( FillRects[i], curx, cury, FILL_BLOCK_LEN, FILL_BLOCK_HEIGHT);
-      FillBlocks[i] = rip_rectangle_from_alpha_image ( to_blocks , FillRects[i] ) ;
+      Set_Rect ( FillRects [ i ] , curx, cury , FILL_BLOCK_LEN , FILL_BLOCK_HEIGHT );
+      FillBlocks [ i ] . surface = rip_rectangle_from_alpha_image ( to_blocks , FillRects [ i ] ) ;
     }
 
   // Get the capsule blocks 
-  for (i = 0; i < NUM_CAPS_BLOCKS; i++, curx += CAPSULE_LEN + 2)
+  for ( i = 0 ; i < NUM_CAPS_BLOCKS ; i++ , curx += CAPSULE_LEN + 2)
     {
-      Set_Rect ( CapsuleRects[i], curx, cury, CAPSULE_LEN, CAPSULE_HEIGHT);
-      CapsuleBlocks[i] = rip_rectangle_from_alpha_image ( to_blocks , CapsuleRects[i] ) ;
+      Set_Rect ( CapsuleRects [ i ] , curx , cury , CAPSULE_LEN , CAPSULE_HEIGHT );
+      CapsuleBlocks [ i ] . surface = rip_rectangle_from_alpha_image ( to_blocks , CapsuleRects[i] ) ;
     }
     
 
@@ -832,8 +823,8 @@ GetTakeoverGraphics (void)
     {
       for (i = 0; i < TO_BLOCKS; i++)
 	{
-	  Set_Rect (ToGameRects[j*TO_BLOCKS+i], curx, cury, TO_BLOCKLEN,TO_BLOCKHEIGHT);
-	  ToGameBlocks[j*TO_BLOCKS+i] = rip_rectangle_from_alpha_image ( to_blocks , ToGameRects[j*TO_BLOCKS+i] ) ;
+	  Set_Rect ( ToGameRects [ j * TO_BLOCKS + i ] , curx , cury , TO_BLOCKLEN , TO_BLOCKHEIGHT );
+	  ToGameBlocks [ j * TO_BLOCKS + i ] . surface = rip_rectangle_from_alpha_image ( to_blocks , ToGameRects [ j * TO_BLOCKS + i ] ) ;
 	  curx += TO_BLOCKLEN + 2;
 	}
       curx = 0;
@@ -841,10 +832,10 @@ GetTakeoverGraphics (void)
     }
 
   // Get the ground, column and leader blocks 
-  for (i = 0; i < NUM_GROUND_BLOCKS; i++)
+  for ( i = 0 ; i < NUM_GROUND_BLOCKS ; i++ )
     {
-      Set_Rect (ToGroundRects[i], curx, cury, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT);
-      ToGroundBlocks[i] = rip_rectangle_from_alpha_image ( to_blocks , ToGroundRects[i] ) ;
+      Set_Rect ( ToGroundRects [ i ] , curx , cury , GROUNDBLOCKLEN , GROUNDBLOCKHEIGHT );
+      ToGroundBlocks [ i ] . surface = rip_rectangle_from_alpha_image ( to_blocks , ToGroundRects [ i ] ) ;
       curx += GROUNDBLOCKLEN + 2;
     }
   cury += GROUNDBLOCKHEIGHT + 2;
@@ -855,7 +846,7 @@ GetTakeoverGraphics (void)
   // that we can create the new surface for blitting.
   //
   Set_Rect ( ToColumnRect , curx , cury , COLUMNBLOCKLEN , COLUMNBLOCKHEIGHT );
-  ToColumnBlock = rip_rectangle_from_alpha_image ( to_blocks , ToColumnRect ) ;
+  ToColumnBlock . surface = rip_rectangle_from_alpha_image ( to_blocks , ToColumnRect ) ;
 
   //--------------------
   // 
@@ -865,8 +856,8 @@ GetTakeoverGraphics (void)
   // Now the rectangle for the leader block will be set and after
   // that we can create the new surface for blitting.
   //
-  Set_Rect ( ToLeaderRect , curx, cury, LEADERBLOCKLEN, LEADERBLOCKHEIGHT);
-  ToLeaderBlock = rip_rectangle_from_alpha_image ( to_blocks , ToLeaderRect ) ;
+  Set_Rect ( ToLeaderRect , curx , cury , LEADERBLOCKLEN , LEADERBLOCKHEIGHT );
+  ToLeaderBlock . surface = rip_rectangle_from_alpha_image ( to_blocks , ToLeaderRect ) ;
 
   //--------------------
   // Now that everything was loaded, we should remember this, so we
@@ -901,59 +892,59 @@ ShowPlayground ( void )
 
   blit_special_background ( TAKEOVER_BACKGROUND_CODE );
 
-  blit_tux ( xoffs + DruidStart[YourColor].x,
-	     yoffs + DruidStart[YourColor].y + 30 , 0 );
+  blit_tux ( xoffs + DruidStart [ YourColor ] . x ,
+	     yoffs + DruidStart [ YourColor ] . y + 30 , 0 );
 
-  if ( AllEnemys[DroidNum].Status != OUT )
+  if ( AllEnemys [ DroidNum ] . Status != OUT )
     PutEnemy (DroidNum, xoffs + DruidStart[!YourColor].x,
 	      yoffs + DruidStart[!YourColor].y , FALSE , FALSE );
 
 
-  Set_Rect (Target_Rect, xoffs + LEFT_OFFS_X, yoffs + LEFT_OFFS_Y,
-	    User_Rect.w, User_Rect.h);
+  Set_Rect ( Target_Rect, xoffs + LEFT_OFFS_X, yoffs + LEFT_OFFS_Y,
+	     User_Rect.w, User_Rect.h);
 
 
-  our_SDL_blit_surface_wrapper ( ToGroundBlocks[GELB_OBEN], NULL , Screen, &Target_Rect );
+  our_SDL_blit_surface_wrapper ( ToGroundBlocks [ GELB_OBEN ] . surface , NULL , Screen, &Target_Rect );
 
-  Target_Rect.y += GROUNDBLOCKHEIGHT;
+  Target_Rect . y += GROUNDBLOCKHEIGHT;
 
-  for (i = 0; i < 12; i++)
+  for ( i = 0 ; i < 12 ; i++ )
     {
-      our_SDL_blit_surface_wrapper ( ToGroundBlocks[GELB_MITTE], NULL , Screen, &Target_Rect );
+      our_SDL_blit_surface_wrapper ( ToGroundBlocks [ GELB_MITTE ] . surface , NULL , Screen, &Target_Rect );
       Target_Rect.y += GROUNDBLOCKHEIGHT;
     } 
 
-  our_SDL_blit_surface_wrapper ( ToGroundBlocks[GELB_UNTEN], NULL , Screen, &Target_Rect );
+  our_SDL_blit_surface_wrapper ( ToGroundBlocks [ GELB_UNTEN ] . surface , NULL , Screen, &Target_Rect );
 
   // the middle column
   Set_Rect (Target_Rect, xoffs + MID_OFFS_X, yoffs + MID_OFFS_Y,0, 0);
 
-  our_SDL_blit_surface_wrapper ( ToLeaderBlock, NULL , Screen, &Target_Rect);
+  our_SDL_blit_surface_wrapper ( ToLeaderBlock . surface , NULL , Screen, &Target_Rect);
 
   Target_Rect.y += LEADERBLOCKHEIGHT;
   for (i = 0; i < 12; i++, Target_Rect.y += COLUMNBLOCKHEIGHT)
     {
-      our_SDL_blit_surface_wrapper ( ToColumnBlock, NULL , Screen, &Target_Rect );
+      our_SDL_blit_surface_wrapper ( ToColumnBlock . surface , NULL , Screen, &Target_Rect );
     }
 
 
   // the right column
   Set_Rect (Target_Rect, xoffs + RIGHT_OFFS_X, yoffs + RIGHT_OFFS_Y,0, 0);
-  our_SDL_blit_surface_wrapper ( ToGroundBlocks[VIOLETT_OBEN], NULL , Screen, &Target_Rect );
+  our_SDL_blit_surface_wrapper ( ToGroundBlocks [ VIOLETT_OBEN ] . surface , NULL , Screen, &Target_Rect );
 
   Target_Rect.y += GROUNDBLOCKHEIGHT;
 
   for (i = 0; i < 12; i++, Target_Rect.y += GROUNDBLOCKHEIGHT)
-    our_SDL_blit_surface_wrapper ( ToGroundBlocks[VIOLETT_MITTE], NULL , Screen, &Target_Rect );
+    our_SDL_blit_surface_wrapper ( ToGroundBlocks [ VIOLETT_MITTE ] . surface , NULL , Screen, &Target_Rect );
 
-  our_SDL_blit_surface_wrapper ( ToGroundBlocks[VIOLETT_UNTEN], NULL , Screen, &Target_Rect );
+  our_SDL_blit_surface_wrapper ( ToGroundBlocks [ VIOLETT_UNTEN ] . surface , NULL , Screen, &Target_Rect );
 
   // Fill the leader-LED with its color 
   Set_Rect (Target_Rect, xoffs + LEADERLED_X, yoffs + LEADERLED_Y, 0, 0);
-  our_SDL_blit_surface_wrapper ( FillBlocks[LeaderColor], NULL , Screen, &Target_Rect );
+  our_SDL_blit_surface_wrapper ( FillBlocks [ LeaderColor ] . surface , NULL , Screen, &Target_Rect );
 
   Target_Rect.y += FILL_BLOCK_HEIGHT;
-  our_SDL_blit_surface_wrapper ( FillBlocks[LeaderColor] , NULL , Screen, &Target_Rect );
+  our_SDL_blit_surface_wrapper ( FillBlocks [ LeaderColor ] . surface , NULL , Screen, &Target_Rect );
 
   // Fill the display column with its colors 
   for (i = 0; i < NUM_LINES; i++)
@@ -961,7 +952,7 @@ ShowPlayground ( void )
       Set_Rect (Target_Rect, xoffs + LEDCOLUMN_X,
 		yoffs + LEDCOLUMN_Y + i*(FILL_BLOCK_HEIGHT+2),
 		0, 0);
-      our_SDL_blit_surface_wrapper ( FillBlocks[DisplayColumn[i]] , NULL , Screen, &Target_Rect );
+      our_SDL_blit_surface_wrapper ( FillBlocks [ DisplayColumn [ i ] ] . surface , NULL , Screen, &Target_Rect );
     }
 
 
@@ -972,7 +963,7 @@ ShowPlayground ( void )
 	Set_Rect (Target_Rect, xoffs + PlaygroundStart[GELB].x + i * TO_BLOCKLEN,
 		  yoffs + PlaygroundStart[GELB].y + j * TO_BLOCKHEIGHT, 0, 0);
 	block = ToPlayground[GELB][i][j] + ActivationMap[GELB][i][j]*TO_BLOCKS;
-	our_SDL_blit_surface_wrapper ( ToGameBlocks[block] , NULL , Screen, &Target_Rect );
+	our_SDL_blit_surface_wrapper ( ToGameBlocks [ block ] . surface , NULL , Screen, &Target_Rect );
       }
 
 
@@ -985,7 +976,7 @@ ShowPlayground ( void )
 		  yoffs + PlaygroundStart[VIOLETT].y + j * TO_BLOCKHEIGHT, 0, 0);
 	block = ToPlayground[VIOLETT][i][j]+
 	  (NUM_PHASES+ActivationMap[VIOLETT][i][j])*TO_BLOCKS;
-	our_SDL_blit_surface_wrapper ( ToGameBlocks[block] , NULL , Screen, &Target_Rect );
+	our_SDL_blit_surface_wrapper ( ToGameBlocks [ block ] . surface , NULL , Screen, &Target_Rect );
       }
 
   // Show the capsules left for each player 
@@ -1000,13 +991,13 @@ ShowPlayground ( void )
 		yoffs + CurCapsuleStart[color].y + CapsuleCurRow[color]*(CAPSULE_HEIGHT+2),
 		0,0);
       if (NumCapsules[player])
-	our_SDL_blit_surface_wrapper ( CapsuleBlocks[color] , NULL , Screen, &Target_Rect );
+	our_SDL_blit_surface_wrapper ( CapsuleBlocks [ color ] . surface , NULL , Screen, &Target_Rect );
 
       for (i = 0; i < NumCapsules[player]-1; i++)
 	{
 	  Set_Rect (Target_Rect, xoffs + LeftCapsulesStart[color].x,
 		    yoffs + LeftCapsulesStart[color].y + i*CAPSULE_HEIGHT, 0, 0);
-	  our_SDL_blit_surface_wrapper ( CapsuleBlocks[color] , NULL , Screen, &Target_Rect );
+	  our_SDL_blit_surface_wrapper ( CapsuleBlocks [ color ] . surface , NULL , Screen, &Target_Rect );
 	} // for capsules 
     } // for player 
 
