@@ -360,7 +360,7 @@ ActSpecialField ( int PlayerNum )
        ( ((int) rintf(Me[0].pos.y) ) == 7 ) &&
        ( ((int) rintf(Me[0].pos.z) ) == 0 ) )
     {
-      Teleport ( (int) Me[0].teleport_anchor.z , (int) Me[0].teleport_anchor.x , (int) Me[0].teleport_anchor.y , 0 );
+      Teleport ( (int) Me[0].teleport_anchor.z , (int) Me[0].teleport_anchor.x , (int) Me[0].teleport_anchor.y , 0 , FALSE );
     }
 
 

@@ -835,7 +835,7 @@ Armageddon (void)
  * ship.  THIS CAN BE A POSITION ON A DIFFERENT LEVEL.
  * ---------------------------------------------------------------------- */
 void
-Teleport (int LNum, int X, int Y, int PlayerNum )
+Teleport (int LNum, int X, int Y, int PlayerNum , int Shuffling )
 {
   int curLevel = LNum;
   int array_num = 0;
@@ -867,7 +867,7 @@ Teleport (int LNum, int X, int Y, int PlayerNum )
       //
       CurLevel = curShip.AllLevels[array_num];
 
-      ShuffleEnemys ( array_num );
+      // if ( Shuffling ) ShuffleEnemys ( array_num );
 
       ClearDetectedItemList( PlayerNum );
 
@@ -909,6 +909,7 @@ Teleport (int LNum, int X, int Y, int PlayerNum )
     {
       PlayLevelCommentSound ( CurLevel->levelnum );
       Me [ PlayerNum ] . HaveBeenToLevel [ CurLevel->levelnum ] = TRUE;
+      if ( array_num != 0 ) ShuffleEnemys ( array_num );
     }
 
   // UnfadeLevel ();
@@ -1238,7 +1239,7 @@ ExecuteEvent ( int EventNumber , int PlayerNum )
       Teleport ( AllTriggeredActions[ EventNumber ].TeleportTargetLevel ,
 		 AllTriggeredActions[ EventNumber ].TeleportTarget.x ,
 		 AllTriggeredActions[ EventNumber ].TeleportTarget.y ,
-		 PlayerNum );
+		 PlayerNum , FALSE );
     }
 
   // Does the defined action assign the influencer a mission?

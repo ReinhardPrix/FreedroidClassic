@@ -937,13 +937,13 @@ Level_Editor(void)
 		  if ( LeftPressed() )
 		    {
 		      if ( CurLevel->levelnum > 0 )
-			Teleport ( CurLevel->levelnum -1 , 3 , 3 , 0 );
+			Teleport ( CurLevel->levelnum -1 , 3 , 3 , 0 , TRUE );
 		      while (LeftPressed());
 		    }
 		  if ( RightPressed() )
 		    {
 		      if ( CurLevel->levelnum < curShip.num_levels -1 )
-			Teleport ( CurLevel->levelnum +1 , 3 , 3 , 0 );
+			Teleport ( CurLevel->levelnum +1 , 3 , 3 , 0 , TRUE );
 		      while (RightPressed());
 		    }
 		  if ( CurrentCombatScaleFactor != 1 ) SetCombatScaleTo ( CurrentCombatScaleFactor );
@@ -960,7 +960,7 @@ Level_Editor(void)
 		      CurLevel->color--;
 		      while (LeftPressed());
 		    }
-		  Teleport ( CurLevel->levelnum , Me[0].pos.x , Me[0].pos.y , 0 ); 
+		  Teleport ( CurLevel->levelnum , Me[0].pos.x , Me[0].pos.y , 0 , TRUE ); 
 		  break;
 		case CHANGE_SIZE_X:
 		  if ( RightPressed() )

@@ -660,7 +660,7 @@ Cheatmenu (void)
 	  input = GetString (40, 2);
 	  sscanf (input, "%d, %d, %d\n", &LNum, &X, &Y);
 	  free (input);
-	  Teleport ( LNum , X , Y , 0 ) ;
+	  Teleport ( LNum , X , Y , 0 , TRUE ) ;
 	  break;
 
 	case 'r': /* change to new robot type */

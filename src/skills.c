@@ -292,7 +292,7 @@ TeleportHome ( void )
 
       Play_Spell_ForceToEnergy_Sound( );
 
-      Teleport ( 0 , 3 , 3 , 0 ) ;
+      Teleport ( 0 , 3 , 3 , 0 , FALSE ) ;
 
     }
   else

@@ -544,6 +544,7 @@ ChatWithFriendlyDroid( int Enum )
 				       "SOR_Just_A_Moment_0.wav" );
 		  GiveSubtitleNSample( "Your spellcasting ability has improved a lot.  Come back when you want to learn more." , 
 				       "SOR_Your_Spellcasting_Ability_0.wav" );
+		  SetNewBigScreenMessage( "Spellcasting ability improved!" );
 		}
 	      else
 		{
@@ -814,6 +815,7 @@ ChatWithFriendlyDroid( int Enum )
 		      Me [ 0 ] . points_to_distribute -= 10;
 		      Me [ 0 ] . melee_weapon_skill ++ ; // you should have learned something here.
 		      Me [ 0 ] . Gold -= 100;
+		      SetNewBigScreenMessage( "Melee fighting ability improved!" );
 
 		      GiveSubtitleNSample( "Good decision!" , "PEN_Good_Decision_0.wav" );
 		      GiveSubtitleNSample( "The most important thing about melee combat is how you are holding your weapon." , "PEN_The_Most_Important_0.wav" );

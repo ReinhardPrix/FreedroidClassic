@@ -583,6 +583,7 @@ UpdateAllCharacterStats ( int PlayerNum )
       // right over the combat window.
       //
       SetNewBigScreenMessage( "Level Gained!" );
+      Takeover_Game_Won_Sound();
     }
 
   //--------------------
