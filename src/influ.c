@@ -1101,14 +1101,16 @@ streamline_tux_intermediate_course ( int player_num )
 					Me [ player_num ] . next_intermediate_point [ start_index ] . x ,
 					Me [ player_num ] . next_intermediate_point [ start_index ] . y ,
 					Me [ player_num ] . next_intermediate_point [ scan_index ] . x ,
-					Me [ player_num ] . next_intermediate_point [ scan_index ] . y ) &&
-	       CheckIfWayIsFreeOfDroids ( Me [ player_num ] . next_intermediate_point [ start_index ] . x ,
-					  Me [ player_num ] . next_intermediate_point [ start_index ] . y ,
-					  Me [ player_num ] . next_intermediate_point [ scan_index ] . x ,
-					  Me [ player_num ] . next_intermediate_point [ scan_index ] . y , 
-					  Me [ 0 ] . pos . z , (enemy*) NULL , TRUE ) )
+					Me [ player_num ] . next_intermediate_point [ scan_index ] . y ) )
 	    {
-	      last_index = scan_index ;
+	      if ( CheckIfWayIsFreeOfDroidsWithoutTuxchecking ( Me [ player_num ] . next_intermediate_point [ start_index ] . x ,
+								Me [ player_num ] . next_intermediate_point [ start_index ] . y ,
+								Me [ player_num ] . next_intermediate_point [ scan_index ] . x ,
+								Me [ player_num ] . next_intermediate_point [ scan_index ] . y , 
+								Me [ 0 ] . pos . z , ( enemy* ) NULL ) )
+		{
+		  last_index = scan_index ;
+		}
 	    }
 	}
 
@@ -1153,20 +1155,22 @@ streamline_tux_intermediate_course ( int player_num )
 				Me [ player_num ] . pos . x ,
 				Me [ player_num ] . pos . y ,
 				Me [ player_num ] . next_intermediate_point [ 1 ] . x ,
-				Me [ player_num ] . next_intermediate_point [ 1 ] . y ) &&
-       CheckIfWayIsFreeOfDroids ( Me [ player_num ] . pos . x ,
-				  Me [ player_num ] . pos . y ,
-				  Me [ player_num ] . next_intermediate_point [ 1 ] . x ,
-				  Me [ player_num ] . next_intermediate_point [ 1 ] . y , 
-				  Me [ 0 ] . pos . z , (enemy*) NULL , TRUE ) )
+				Me [ player_num ] . next_intermediate_point [ 1 ] . y ) )
     {
-      DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nVERY FIRST INTERMEDIATE POINT CUT MANUALLY!!!!" );
-      for ( cut_away = 1 ; cut_away < MAX_INTERMEDIATE_WAYPOINTS_FOR_TUX ; cut_away ++ )
+      if ( CheckIfWayIsFreeOfDroidsWithoutTuxchecking ( Me [ player_num ] . pos . x ,
+							Me [ player_num ] . pos . y ,
+							Me [ player_num ] . next_intermediate_point [ 1 ] . x ,
+							Me [ player_num ] . next_intermediate_point [ 1 ] . y , 
+							Me [ 0 ] . pos . z , (enemy*) NULL ) )
 	{
-	  Me [ player_num ] . next_intermediate_point [ cut_away - 1 ] . x =
-	    Me [ player_num ] . next_intermediate_point [ cut_away ] . x ;
-	  Me [ player_num ] . next_intermediate_point [ cut_away - 1 ] . y =
-	    Me [ player_num ] . next_intermediate_point [ cut_away ] . y ;
+	  DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nVERY FIRST INTERMEDIATE POINT CUT MANUALLY!!!!" );
+	  for ( cut_away = 1 ; cut_away < MAX_INTERMEDIATE_WAYPOINTS_FOR_TUX ; cut_away ++ )
+	    {
+	      Me [ player_num ] . next_intermediate_point [ cut_away - 1 ] . x =
+		Me [ player_num ] . next_intermediate_point [ cut_away ] . x ;
+	      Me [ player_num ] . next_intermediate_point [ cut_away - 1 ] . y =
+		Me [ player_num ] . next_intermediate_point [ cut_away ] . y ;
+	    }
 	}
     }
   else
@@ -1207,7 +1211,7 @@ recursive_find_walkable_point ( float x1 , float y1 , float x2 , float y2 , int 
   // walkable target for the Tux.
   //
   if ( ( tux_can_walk_this_line ( 0 , x1, y1 , x2 , y2 ) ) &&
-       ( CheckIfWayIsFreeOfDroids ( x1 , y1 , x2 , y2 , Me [ 0 ] . pos . z , (enemy*) NULL , TRUE ) ) ) 
+       ( CheckIfWayIsFreeOfDroidsWithoutTuxchecking ( x1 , y1 , x2 , y2 , Me [ 0 ] . pos . z , (enemy*) NULL ) ) ) 
     {
       //--------------------
       // If the current position is still directly reachable for the Tux, we set it
@@ -1315,40 +1319,42 @@ recursive_find_walkable_point ( float x1 , float y1 , float x2 , float y2 , int 
 	     [ (int) ( y1 + ordered_moves [ i ] . y ) ] == TILE_IS_UNPROCESSED ) &&
 	   ( tux_can_walk_this_line ( 0 , x1, y1 , 
 				      x1 + ordered_moves [ i ] . x , 
-				      y1 + ordered_moves [ i ] . y ) ) &&
-	   ( CheckIfWayIsFreeOfDroids ( x1 , y1 , 
-					x1 + ordered_moves [ i ] . x , 
-					y1 + ordered_moves [ i ] . y , 
-					Me [ 0 ] . pos . z , (enemy*) NULL , TRUE ) ) )
+				      y1 + ordered_moves [ i ] . y ) ) )
 	{
-	  
-	  last_sight_contact . x = x1 ;
-	  last_sight_contact . y = y1 ;
-	  
-	  if ( recursive_find_walkable_point ( rintf ( x1 + ordered_moves [ i ] . x + 0.5 ) - 0.5 , 
-					       rintf ( y1 + ordered_moves [ i ] . y + 0.5 ) - 0.5 , x2 , y2 , recursion_depth + 1 ) )
+	  if ( ( CheckIfWayIsFreeOfDroidsWithoutTuxchecking ( x1 , y1 , 
+							  x1 + ordered_moves [ i ] . x , 
+							  y1 + ordered_moves [ i ] . y , 
+							  Me [ 0 ] . pos . z , (enemy*) NULL ) ) )
 	    {
-	      
-	      //--------------------
-	      // If there is still sight contact to the waypoint closer to the target, we just set this
-	      // waypoint.
-	      // Otherwise we set THE NEXT WAYPOINT.
-	      //
-	      Me [ 0 ] . next_intermediate_point [ next_index_to_set_up ] . x = x1 + ordered_moves [ i ] . x ;
-	      Me [ 0 ] . next_intermediate_point [ next_index_to_set_up ] . y = y1 + ordered_moves [ i ] . y ;
-
-	      DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nAdded another Tux waypoint entry..." );
-	      next_index_to_set_up++;
-
-	      if ( next_index_to_set_up >= MAX_INTERMEDIATE_WAYPOINTS_FOR_TUX )
+	  
+	      last_sight_contact . x = x1 ;
+	      last_sight_contact . y = y1 ;
+	  
+	      if ( recursive_find_walkable_point ( rintf ( x1 + ordered_moves [ i ] . x + 0.5 ) - 0.5 , 
+						   rintf ( y1 + ordered_moves [ i ] . y + 0.5 ) - 0.5 , x2 , y2 , recursion_depth + 1 ) )
 		{
-		  DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nERROR!  Ran out of tux waypoints even with solutionfound!" );
-		  clear_out_intermediate_points ( 0 ) ;
-		  return ( FALSE );
-		}
-
-	      return ( TRUE ) ;
 	      
+		  //--------------------
+		  // If there is still sight contact to the waypoint closer to the target, we just set this
+		  // waypoint.
+		  // Otherwise we set THE NEXT WAYPOINT.
+		  //
+		  Me [ 0 ] . next_intermediate_point [ next_index_to_set_up ] . x = x1 + ordered_moves [ i ] . x ;
+		  Me [ 0 ] . next_intermediate_point [ next_index_to_set_up ] . y = y1 + ordered_moves [ i ] . y ;
+		  
+		  DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nAdded another Tux waypoint entry..." );
+		  next_index_to_set_up++;
+		  
+		  if ( next_index_to_set_up >= MAX_INTERMEDIATE_WAYPOINTS_FOR_TUX )
+		    {
+		      DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nERROR!  Ran out of tux waypoints even with solutionfound!" );
+		      clear_out_intermediate_points ( 0 ) ;
+		      return ( FALSE );
+		    }
+		  
+		  return ( TRUE ) ;
+		  
+		}
 	    }
 	}
     }

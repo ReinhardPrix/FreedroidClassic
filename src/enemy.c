@@ -530,8 +530,8 @@ occasionally_update_first_and_last_bot_indices ( void )
  *
  * ---------------------------------------------------------------------- */
 int 
-CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLevel , 
-			   Enemy ExceptedRobot , int ExceptTux ) 
+CheckIfWayIsFreeOfDroidsWithTuxchecking ( float x1 , float y1 , float x2 , float y2 , int OurLevel , 
+					  Enemy ExceptedRobot ) 
 {
   float LargerDistance;
   int Steps;
@@ -539,14 +539,26 @@ CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLe
   moderately_finepoint step;
   moderately_finepoint CheckPosition;
   enemy* this_enemy;
+  static int first_call = TRUE ;
+  static float steps_per_square;
+
+  //--------------------
+  // Upon the very first function call, we calibrate the density of steps, so that 
+  // we cannot miss out a droid by stepping right over it.
+  //
+  if ( first_call )
+    {
+      first_call = FALSE ;
+      steps_per_square = 1 / ( 2.0 * sqrt(2.0) * Druid_Radius_X );
+    }
 
   // DebugPrintf( 2, "\nint CheckIfWayIsFreeOfDroids (...) : Checking from %d-%d to %d-%d.", (int) x1, (int) y1 , (int) x2, (int) y2 );
   // fflush(stdout);
 
   if ( fabsf ( x1 - x2 ) > fabsf ( y1 - y2 ) ) LargerDistance = fabsf ( x1 - x2 );
-  else LargerDistance=fabsf(y1-y2);
+  else LargerDistance = fabsf ( y1 - y2 );
 
-  Steps = LargerDistance * 2 + 1 ;   // We check four times on each map tile...
+  Steps = LargerDistance * steps_per_square + 1 ;   // We check four times on each map tile...
   // if ( Steps == 0 ) return TRUE;
 
   // We determine the step size when walking from (x1,y1) to (x2,y2) in Steps number of steps
@@ -556,8 +568,8 @@ CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLe
   // DebugPrintf( 2 , "\nint CheckIfWayIsFreeOfDroids (...) :  step.x=%f step.y=%f." , step.x , step.y );
 
   // We start from position (x1, y1)
-  CheckPosition.x = x1;
-  CheckPosition.y = y1;
+  CheckPosition . x = x1;
+  CheckPosition . y = y1;
 
   for ( i = 0 ; i < Steps + 1 ; i++ )
     {
@@ -583,16 +595,13 @@ CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLe
 	}
 
       //--------------------
-      // Whether we should except the Tux or not, we do also a tux collision check
+      // Now we check for collisions with the Tux himself
       //
-      if ( ! ExceptTux )
+      if ( ( fabsf ( Me [ 0 ] . pos.x - CheckPosition.x ) < 2 * Druid_Radius_X ) &&
+	   ( fabsf ( Me [ 0 ] . pos.y - CheckPosition.y ) < 2 * Druid_Radius_Y ) ) 
 	{
-	  if ( ( fabsf( Me [ 0 ] . pos.x - CheckPosition.x ) < 2 * Druid_Radius_X ) &&
-	       ( fabsf( Me [ 0 ] . pos.y - CheckPosition.y ) < 2 * Druid_Radius_Y ) ) 
-	    {
-	       DebugPrintf( 2 , "\nCheckIfWayIsFreeOfDroids (...) : Connection analysis revealed : TRAFFIC-BLOCKED-INFLUENCER !");
-	      return FALSE;
-	    }
+	  // DebugPrintf( 2 , "\nCheckIfWayIsFreeOfDroids (...) : Connection analysis revealed : TRAFFIC-BLOCKED-INFLUENCER !");
+	  return FALSE;
 	}
 	      
       CheckPosition . x += step . x;
@@ -601,6 +610,86 @@ CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLe
 
   return TRUE;
 }; // CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLevel , int ExceptedDroid )
+
+
+/* ----------------------------------------------------------------------
+ * This function checks if the connection between two points is free of
+ * droids.  
+ *
+ * MAP TILES ARE NOT TAKEN INTO CONSIDERATION, ONLY DROIDS!!!
+ *
+ * ---------------------------------------------------------------------- */
+int 
+CheckIfWayIsFreeOfDroidsWithoutTuxchecking ( float x1 , float y1 , float x2 , float y2 , int OurLevel , 
+					     Enemy ExceptedRobot ) 
+{
+  float LargerDistance;
+  int Steps;
+  int i, j;
+  moderately_finepoint step;
+  moderately_finepoint CheckPosition;
+  enemy* this_enemy;
+  static int first_call = TRUE ;
+  static float steps_per_square;
+
+  //--------------------
+  // Upon the very first function call, we calibrate the density of steps, so that 
+  // we cannot miss out a droid by stepping right over it.
+  //
+  if ( first_call )
+    {
+      first_call = FALSE ;
+      steps_per_square = 1 / ( 2.0 * sqrt(2.0) * Druid_Radius_X );
+    }
+
+  // DebugPrintf( 2, "\nint CheckIfWayIsFreeOfDroids (...) : Checking from %d-%d to %d-%d.", (int) x1, (int) y1 , (int) x2, (int) y2 );
+  // fflush(stdout);
+
+  if ( fabsf ( x1 - x2 ) > fabsf ( y1 - y2 ) ) LargerDistance = fabsf ( x1 - x2 );
+  else LargerDistance = fabsf ( y1 - y2 );
+
+  Steps = LargerDistance * steps_per_square + 1 ;   // We check four times on each map tile...
+  // if ( Steps == 0 ) return TRUE;
+
+  // We determine the step size when walking from (x1,y1) to (x2,y2) in Steps number of steps
+  step.x = ( x2 - x1 ) / ((float)Steps) ;
+  step.y = ( y2 - y1 ) / ((float)Steps) ;
+
+  // DebugPrintf( 2 , "\nint CheckIfWayIsFreeOfDroids (...) :  step.x=%f step.y=%f." , step.x , step.y );
+
+  // We start from position (x1, y1)
+  CheckPosition . x = x1;
+  CheckPosition . y = y1;
+
+  for ( i = 0 ; i < Steps + 1 ; i++ )
+    {
+      // for ( j = 0 ; j < MAX_ENEMYS_ON_SHIP ; j ++ )
+      // for ( j = 0 ; j < Number_Of_Droids_On_Ship ; j ++ )
+      for ( j  = first_index_of_bot_on_level [ OurLevel ] ; 
+	    j <=  last_index_of_bot_on_level [ OurLevel ] ; j ++ )
+	{
+	  this_enemy = & ( AllEnemys [ j ] ) ;
+	  if ( this_enemy -> pos.z != OurLevel ) continue;
+	  if ( this_enemy -> Status == OUT ) continue;
+	  if ( this_enemy -> energy <= 0 ) continue;
+	  if ( this_enemy -> warten > 0 ) continue;
+	  if ( this_enemy == ExceptedRobot ) continue;
+
+	  // so it seems that we need to test this one!!
+	  if ( ( fabsf ( this_enemy -> pos . x - CheckPosition . x ) < 2.0 * Druid_Radius_X ) &&
+	       ( fabsf ( this_enemy -> pos . y - CheckPosition . y ) < 2.0 * Druid_Radius_Y ) ) 
+	    {
+	      // DebugPrintf( 2, "\nCheckIfWayIsFreeOfDroids (...) : Connection analysis revealed : TRAFFIC-BLOCKED !");
+	      return FALSE;
+	    }
+	}
+
+      CheckPosition . x += step . x;
+      CheckPosition . y += step . y;
+    }
+
+  return TRUE;
+}; // CheckIfWayIsFreeOfDroidsWithoutTuxchecking ( float x1 , float y1 , float x2 , float y2 , int OurLevel , ExceptedDroid )
 
 
 /* ----------------------------------------------------------------------
@@ -815,7 +904,10 @@ This is an error in the waypoint structure of this level.",
   //
   for ( i = 0; i < num_conn ; i++ )
     {
-      FreeWays[i] = CheckIfWayIsFreeOfDroids ( WpList[ThisRobot->lastwaypoint].x + 0.5 , WpList[ThisRobot->lastwaypoint].y + 0.5 , WpList[WpList[ThisRobot->lastwaypoint].connections[i]].x + 0.5 , WpList[WpList[ThisRobot->lastwaypoint].connections[i]].y + 0.5 , ThisRobot->pos.z , ThisRobot , FALSE );
+      FreeWays[i] = CheckIfWayIsFreeOfDroidsWithTuxchecking ( WpList [ ThisRobot -> lastwaypoint ] . x + 0.5 , 
+							      WpList [ ThisRobot -> lastwaypoint ] . y + 0.5 , 
+							      WpList [ WpList [ ThisRobot -> lastwaypoint ] . connections [ i ] ] . x + 0.5 , 
+							      WpList [ WpList [ ThisRobot -> lastwaypoint ] . connections [ i ] ] . y + 0.5 , ThisRobot->pos.z , ThisRobot );
     }
   
   //--------------------
@@ -1792,10 +1884,10 @@ ConsideredMoveIsFeasible ( Enemy ThisRobot , moderately_finepoint StepVector , i
   if ( ( IsPassable ( ThisRobot -> pos.x + StepVector.x , 
 		      ThisRobot -> pos.y + StepVector.y ,
 		      ThisRobot -> pos.z ) ) &&
-       ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
-				    ThisRobot->pos.x + StepVector . x , 
-				    ThisRobot->pos.y + StepVector . y ,
-				    ThisRobot->pos.z , ThisRobot , FALSE ) ) )
+       ( CheckIfWayIsFreeOfDroidsWithTuxchecking ( ThisRobot->pos.x , ThisRobot->pos.y , 
+						   ThisRobot->pos.x + StepVector . x , 
+						   ThisRobot->pos.y + StepVector . y ,
+						   ThisRobot->pos.z , ThisRobot ) ) )
     {
       return TRUE;
     }
@@ -2442,7 +2534,7 @@ ProcessAttackStateMachine ( int enemynum )
 	{
 	  MoveInCloserForOrAwayFromMeleeCombat ( ThisRobot , TargetPlayer , enemynum , (+1) );
 	} // if a melee weapon is given.
-      else if (dist2 < 1.5)
+      else if ( dist2 < 1.5 )
 	{
 	  MoveInCloserForOrAwayFromMeleeCombat ( ThisRobot , TargetPlayer , enemynum , (-1) );
 	} // else the case, that no melee weapon 
