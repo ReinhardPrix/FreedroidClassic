@@ -32,7 +32,6 @@
 /*
  * This file has been checked for remains of german comments in the code
  * I you still find some, please let me know.
- * 
  */
 
 #define _main_c
