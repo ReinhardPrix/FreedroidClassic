@@ -112,6 +112,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="I'll feed it into the cluster right away."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=6 ChangeToValue=0
+ChangeOption=9 ChangeToValue=1
 DoSomethingExtra="MarkMissionComplete:7"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -131,6 +132,18 @@ OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=202  PositionY=146  
 ChangeOption=8 ChangeToValue=0
 ChangeOption=6 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=9  OptionText="Are there any results of the cluster data evaluation yet?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=396  PositionY=153  
+Subtitle="Yes, of course.  Some preliminary results are there and they look most interesting.  I'll have to inform the chief about this."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="You'll want to talk with him.  He'll know what to do.  Thanks a lot for your efforts.  This might in fact be cruical information for our survival."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=9 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
