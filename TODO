@@ -7,17 +7,6 @@ Preparing "final" release 1.0.0:
 
 Outstanding release-critical bugs (priority: high) 
 --------------------------------------------------
-- (rp) sometimes droids get created in "piles", i.e. on top of each
-  other... 
-  + some strange droid behaviour: very 'vulnerable' droids in piles,
-  walking through walls etc...
-
-- !!: when played for longer periods, game seems to develops some
-  weird anomalies:
-     * creation of enemys in piles  , sometimes higher numbers
-       killable in one shot (which shouldnt)
-     * once after being killed: reappeared in nowhere ??
-
 -  Collision with robo can still kick you out of level.. ??
    --> (rp) check on slow machine if this is still an issue...
 
@@ -282,3 +271,8 @@ Resolved bugs
 - (rp) mouse actions lead to "glitches" in display..
       --> ONLY seems to happen with ATI's 3D driver, not with standard radeon...
         so probably it's not our fault at all!
+
+- (rp) sometimes droids get created in "piles", i.e. on top of each other
+  FIXED!!: forgot to ActivateConservativeFrameComputation() in
+  ThouArtDefeated() ==> huge Frame_Time() in first step of new game!
+  
