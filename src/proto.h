@@ -439,11 +439,8 @@ EXTERN char *GetString (int MaxLen, int echo);
 #else
 #define EXTERN extern
 #endif
-EXTERN void SayLeftInfo (char *text, unsigned char *screen);
-EXTERN void SayRightInfo (char *text, unsigned char *screen);
 EXTERN void DisplayRahmen (unsigned char *screen);
-EXTERN void SetInfoline (void);
-EXTERN void UpdateInfoline (void);
+EXTERN void SetInfoline (const char *left, const char *right);
 
 
 /* takeover.c */
