@@ -396,6 +396,7 @@ EXTERN void ShowCharacterScreen ( void );
 #endif
 EXTERN void create_new_obstacle_on_level ( Level EditLevel , int our_obstacle_type , float pos_x , float pos_y );
 EXTERN void show_button_tooltip ( char* tooltip_text );
+EXTERN void delete_obstacle ( level* EditLevel , obstacle* our_obstacle );
 
 // skills.c
 #undef EXTERN

@@ -3112,6 +3112,13 @@ Unable to find the obstacle in question within the obstacle list!",
   //
   glue_obstacles_to_floor_tiles_for_level ( EditLevel -> levelnum );
 
+  //--------------------
+  // Now that we have disturbed the order of the obstacles on this level, we need
+  // to re-assemble the lists of pointers to obstacles, like the door list, the
+  // teleporter list and the refreshes list.
+  //
+  GetAllAnimatedMapTiles( EditLevel );
+
 }; // void delete_obstacle ( obstacle* our_obstacle )
 
 /* ----------------------------------------------------------------------

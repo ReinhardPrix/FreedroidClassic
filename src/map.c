@@ -714,6 +714,7 @@ smash_obstacles_only_on_tile ( float x , float y , int map_x , int map_y )
   int i , j ;
   Obstacle target_obstacle;
   int smashed_something = FALSE ;
+  moderately_finepoint blast_start_pos;
 
   //--------------------
   // First some security checks against touching the outsides of the map...
@@ -757,8 +758,34 @@ smash_obstacles_only_on_tile ( float x , float y , int map_x , int map_y )
       if ( obstacle_map [ target_obstacle -> type ] . drop_random_treasure )
 	DropRandomItem( target_obstacle -> pos . x , target_obstacle -> pos . y , 1 , FALSE , FALSE , FALSE );
 
+      //--------------------
+      // Since the obstacle is destroyed, we start a blast at it's position.
+      // But here a WARNING WARNING WARNING! is due!  We must not start the
+      // blast before the obstacle is removed, because the blast will again
+      // cause this very obstacle removal function, so we need to be careful
+      // so as not to incide endless recursion.  We memorize the position for
+      // later, then delete the obstacle, then we start the blast.
+      //
+      blast_start_pos . x = target_obstacle -> pos . x ;
+      blast_start_pos . y = target_obstacle -> pos . y ;
+
+      //--------------------
+      // Now we delete the obstacle in question.  For this we got a standard function to
+      // safely do it and not make some errors into the glue structure or obstacles lists...
+      //
+      delete_obstacle ( BoxLevel , target_obstacle );
+
+      //--------------------
+      // Now that the obstacle is removed AND ONLY NOW that the obstacle is
+      // removed, we may start a blast at this position.  Otherwise we would
+      // run into trouble, see the warning further above.
+      //
+      StartBlast( blast_start_pos . x , blast_start_pos . y , BoxLevel->levelnum , DRUIDBLAST );
+
+      /*
       target_obstacle -> type = ( -1 ) ;
       BoxLevel -> map [ map_y ] [ map_x ] . obstacles_glued_to_here [ i ] = (-1) ;
+
       //--------------------
       // Maybe there are other obstacles glued to here.  Then we need to fill the
       // gap in the glue array that we have just created.
@@ -772,8 +799,8 @@ smash_obstacles_only_on_tile ( float x , float y , int map_x , int map_y )
 	      BoxLevel -> map [ map_y ] [ map_x ] . obstacles_glued_to_here [ j + 1 ] = (-1) ;
 	    }
 	}
+      */
 
-      StartBlast( target_obstacle -> pos . x , target_obstacle -> pos . y , BoxLevel->levelnum , DRUIDBLAST );
     }
 
   return ( smashed_something );
@@ -2167,15 +2194,14 @@ GetAllAnimatedMapTiles ( Level Lev )
     Lev -> refresh_obstacle_indices [ i ] = ( -1 ) ;
   for (i = 0; i < MAX_AUTOGUNS_ON_LEVEL; i++)
     Lev -> autogun_obstacle_indices [ i ] = ( -1 ) ;
+  for ( i = 0 ; i < MAX_CONSUMERS_ON_LEVEL ; i ++ )
+    Lev -> consumers [ i ] . x = Lev -> consumers [ i ] . y = 0;
 
   // DebugPrintf ( 0 , "\nPretest for level %d." , Lev -> levelnum );
   // for (i = 0; i < MAX_DOORS_ON_LEVEL; i++)
   // {
   // DebugPrintf ( 0 , " %d " , Lev -> door_obstacle_indices [ i ] ) ;
   // }
-
-  for (i = 0; i < MAX_CONSUMERS_ON_LEVEL; i++)
-    Lev -> consumers[i].x = Lev->consumers[i].y = 0;
 
   //--------------------
   // New method:  proceed through the obstacles of this level
