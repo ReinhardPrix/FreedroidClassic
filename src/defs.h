@@ -47,6 +47,31 @@
 #define Copy_Rect(src, dst) {\
 (dst).x = (src).x; (dst).y = (src).y; (dst).w = (src).w; (dst).h = (src).h; }
 
+#define UserCenter_x (User_Rect.x + User_Rect.w/2)
+#define UserCenter_y (User_Rect.y + User_Rect.h/2)
+
+/* 
+ * these macros are a bit of a hack, as they will work correctly only
+ * as long as INITIAL_BLOCK_WIDTH = INITIAL_BLOCK_HEIGHT
+ * but the handling of the grob/fein coordinates should be changed anyway
+ * in the longer term...
+ */
+#define Grob2Fein(grob) 	\
+ ((grob)* INITIAL_BLOCK_WIDTH + INITIAL_BLOCK_WIDTH / 2)
+
+#define Fein2Grob(fein)		\
+  ((int)(fein) / INITIAL_BLOCK_WIDTH)
+
+/* Macros */
+#define GrobX (Me.pos.x / INITIAL_BLOCK_WIDTH)
+#define GrobY (Me.pos.y / INITIAL_BLOCK_HEIGHT)
+#define FeinX (Me.pos.x%INITIAL_BLOCK_WIDTH)
+#define FeinY (Me.pos.y%INITIAL_BLOCK_HEIGHT)
+
+#define CLFeinY ((Me.pos.y+INITIAL_BLOCK_HEIGHT/2) % INITIAL_BLOCK_HEIGHT)
+#define CLGrobY ((Me.pos.y+INITIAL_BLOCK_HEIGHT/2) / INITIAL_BLOCK_HEIGHT)
+#define CLFeinX ((Me.pos.x+INITIAL_BLOCK_WIDTH/2) % INITIAL_BLOCK_HEIGHT)
+#define CLGrobX ((Me.pos.x+INITIAL_BLOCK_WIDTH/2) / INITIAL_BLOCK_HEIGHT)
 
 //--------------------
 // Constants influencing code generation and
@@ -125,13 +150,6 @@ enum
 #define SCALE_FACTOR  2 /* scale-factor between actually displayed screen and 320x220 */
 #define SCREENLEN		(320*SCALE_FACTOR)
 #define SCREENHEIGHT		(240*SCALE_FACTOR)
-
-#define USERFENSTERHOEHE 	4*INITIAL_BLOCK_HEIGHT
-#define USERFENSTERBREITE 	9*INITIAL_BLOCK_WIDTH
-#define USERFENSTERPOSX 	( (SCREENLEN-USERFENSTERBREITE) / 2)
-#define USERFENSTERPOSY 	( 2*(SCREENHEIGHT-USERFENSTERHOEHE)/3 )
-#define USER_FENSTER_CENTER_X (USERFENSTERPOSX + (USERFENSTERBREITE/2))
-#define USER_FENSTER_CENTER_Y (USERFENSTERPOSY + (USERFENSTERHOEHE/2))
 
 #define DRUIDIMAGE_LENGTH       66
 #define DRUIDIMAGE_HEIGHT       90
@@ -360,29 +378,7 @@ enum _directions
 #define MAX_PHASES_IN_A_BULLET 12
 #define MAX_STEPS_IN_GIVEN_COURSE 1000
 
-/* Macros */
-#define GrobX (Me.pos.x / INITIAL_BLOCK_WIDTH)
-#define GrobY (Me.pos.y / INITIAL_BLOCK_HEIGHT)
-#define FeinX (Me.pos.x%INITIAL_BLOCK_WIDTH)
-#define FeinY (Me.pos.y%INITIAL_BLOCK_HEIGHT)
 
-#define CLFeinY ((Me.pos.y+INITIAL_BLOCK_HEIGHT/2) % INITIAL_BLOCK_HEIGHT)
-#define CLGrobY ((Me.pos.y+INITIAL_BLOCK_HEIGHT/2) / INITIAL_BLOCK_HEIGHT)
-#define CLFeinX ((Me.pos.x+INITIAL_BLOCK_WIDTH/2) % INITIAL_BLOCK_HEIGHT)
-#define CLGrobX ((Me.pos.x+INITIAL_BLOCK_WIDTH/2) / INITIAL_BLOCK_HEIGHT)
-
-
-/* 
- * these macros are a bit of a hack, as they will work correctly only
- * as long as INITIAL_BLOCK_WIDTH = INITIAL_BLOCK_HEIGHT
- * but the handling of the grob/fein coordinates should be changed anyway
- * in the longer term...
- */
-#define Grob2Fein(grob) 	\
- ((grob)* INITIAL_BLOCK_WIDTH + INITIAL_BLOCK_WIDTH / 2)
-
-#define Fein2Grob(fein)		\
-  ((int)(fein) / INITIAL_BLOCK_WIDTH)
 
 #define BREMSDREHUNG 3		// STUPID AND SHOULD BE REMOVED
 

@@ -1052,8 +1052,8 @@ keyboard_update(void)
 	      // of the mouse cursor, but rather in the center of the 32x32 pixel mouse
 	      // cursor, we need to correct the given axis a little (16 pixels) bit.
 	      //
-	      input_axis.x = event.button.x - USER_FENSTER_CENTER_X + 16; 
-	      input_axis.y = event.button.y - USER_FENSTER_CENTER_Y + 16; 	  
+	      input_axis.x = event.button.x - UserCenter_x + 16; 
+	      input_axis.y = event.button.y - UserCenter_y + 16; 	  
 	    }
 	  break;
 	  

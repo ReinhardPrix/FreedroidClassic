@@ -38,6 +38,7 @@
 #include "global.h"
 #include "proto.h"
 #include "takeover.h"
+#include "ship.h"
 #include "map.h"
 
 Uint32 cur_time;  		/* current time in ms */
@@ -1264,8 +1265,40 @@ AnimateCurrents (void)
  *
  *-----------------------------------------------------------------*/
 void
-ShowOpponent (void)
+ShowOpponent ()
 {
+  int Infodroid;
+  char InfoText[10000];
+
+  Infodroid = DroidNum;
+
+  SDL_SetClipRect ( Screen , NULL );
+  DisplayImage ( find_file( NE_CONSOLE_BG_PIC2_FILE , GRAPHICS_DIR, FALSE) );
+  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
+
+  sprintf( InfoText , "Unit type %s - %s" , Druidmap[Infodroid].druidname , 
+	   Classname[Druidmap[Infodroid].class] );
+  DisplayText (InfoText, User_Rect.x, User_Rect.y, &User_Rect);
+  
+  ShowRobotPicture (User_Rect.x, User_Rect.y + 2 * 12, Infodroid );
+
+  sprintf( InfoText, 
+	   "Entry : %d\nClass : %s\nHeight : %f\nWeight: %f \nDrive : %s \nBrain : %s " , 
+	   Infodroid+1 , 
+	   Classes[Druidmap[Infodroid].class] ,
+	   Druidmap[Infodroid].height ,
+	   Druidmap[Infodroid].weight ,
+	   // Drivenames[ Druidmap[Infodroid].drive ] ,
+	   ItemMap [ Druidmap[ Infodroid ].drive_item ].ItemName ,
+	   Brainnames[ Druidmap[Infodroid].brain ] );
+
+	  DisplayText (InfoText, Menu_Rect.x, User_Rect.y + FontHeight (Menu_BFont),
+		       &Menu_Rect);
+
+
+	  SDL_Flip (Screen);
+
+
 
   return;
 }

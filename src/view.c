@@ -193,7 +193,6 @@ void
 ShowInventoryMessages( void )
 {
   int SlotNum;
-  char InventoryText[2000];
   SDL_Rect InventoryRect;
   SDL_Rect TargetRect;
   SDL_Surface *InventoryImage;
@@ -209,8 +208,6 @@ ShowInventoryMessages( void )
 
   User_Rect.x = 0;
   User_Rect.w = SCREENLEN;
-  User_Rect_Center_x=( User_Rect.x + User_Rect.w/2 );
-  User_Rect_Center_y=( User_Rect.y + User_Rect.h/2 );
 
   //--------------------
   // If the log is not set to visible right now, we do not need to 
@@ -228,8 +225,7 @@ ShowInventoryMessages( void )
   // and the other 
   User_Rect.x = SCREENLEN/2;
   User_Rect.w = SCREENLEN/2;
-  User_Rect_Center_x=( User_Rect.x + User_Rect.w/2 );
-  User_Rect_Center_y=( User_Rect.y + User_Rect.h/2 );
+
   SDL_SetClipRect( Screen, &InventoryRect );
   SDL_FillRect( Screen, & InventoryRect , 0x0FFFFFF );
  
@@ -336,9 +332,9 @@ Assemble_Combat_Picture (int mask)
 	{
 	  if ((MapBrick = GetMapBrick( CurLevel, col , line )) != INVISIBLE_BRICK)
 	    {
-	      TargetRectangle.x = User_Rect_Center_x 
+	      TargetRectangle.x = UserCenter_x 
 		+ ( -Me.pos.x+col-0.5 )*Block_Width;
-	      TargetRectangle.y = User_Rect_Center_y
+	      TargetRectangle.y = UserCenter_y
 		+ ( -Me.pos.y+line-0.5 )*Block_Height;
 	      // Screen, &TargetRectangle);
 	      SDL_BlitSurface( MapBlockSurfacePointer[ CurLevel->color ][MapBrick] , NULL ,
@@ -458,8 +454,8 @@ PutInfluence ( int x , int y )
   int alpha_value;
   int i;
 
-  Text_Rect.x=User_Rect.x+(User_Rect.w/2) + Block_Width/3;
-  Text_Rect.y=User_Rect.y+(User_Rect.h/2) - Block_Height/2;
+  Text_Rect.x=UserCenter_x + Block_Width/3;
+  Text_Rect.y=UserCenter_y  - Block_Height/2;
   Text_Rect.w=User_Rect.w/2 - Block_Width/3;
   Text_Rect.h=User_Rect.h/2;
 
@@ -467,8 +463,8 @@ PutInfluence ( int x , int y )
 
   if ( x == -1 ) 
     {
-      TargetRectangle.x=User_Rect_Center_x - Block_Width/2;
-      TargetRectangle.y=User_Rect_Center_y - Block_Height/2;
+      TargetRectangle.x=UserCenter_x - Block_Width/2;
+      TargetRectangle.y=UserCenter_y - Block_Height/2;
     }
   else
     {
@@ -532,8 +528,8 @@ PutInfluence ( int x , int y )
   // COMPUTED ANEW!!!!
   if ( x == -1 ) 
     {
-      TargetRectangle.x=User_Rect_Center_x - Block_Width/2 + First_Digit_Pos_X;
-      TargetRectangle.y=User_Rect_Center_y - Block_Height/2 + First_Digit_Pos_Y;
+      TargetRectangle.x=UserCenter_x - Block_Width/2 + First_Digit_Pos_X;
+      TargetRectangle.y=UserCenter_y - Block_Height/2 + First_Digit_Pos_Y;
     }
   else
     {
@@ -547,10 +543,8 @@ PutInfluence ( int x , int y )
   // COMPUTED ANEW!!!!
   if ( x == -1 ) 
     {
-      // TargetRectangle.x=User_Rect_Center_x - Block_Width/2 + Digit_Pos_X + Digit_Length;
-      // TargetRectangle.y=User_Rect_Center_y - Block_Height/2 + Digit_Pos_Y;
-      TargetRectangle.x=User_Rect_Center_x - Block_Width/2 + Second_Digit_Pos_X;
-      TargetRectangle.y=User_Rect_Center_y - Block_Height/2 + Second_Digit_Pos_Y;
+      TargetRectangle.x=UserCenter_x - Block_Width/2 + Second_Digit_Pos_X;
+      TargetRectangle.y=UserCenter_y - Block_Height/2 + Second_Digit_Pos_Y;
     }
   else
     {
@@ -564,8 +558,8 @@ PutInfluence ( int x , int y )
   // COMPUTED ANEW!!!!
   if ( x == -1 ) 
     {
-      TargetRectangle.x=User_Rect_Center_x - Block_Width/2 + Third_Digit_Pos_X ;
-      TargetRectangle.y=User_Rect_Center_y - Block_Height/2 + Third_Digit_Pos_Y;
+      TargetRectangle.x=UserCenter_x - Block_Width/2 + Third_Digit_Pos_X ;
+      TargetRectangle.y=UserCenter_y - Block_Height/2 + Third_Digit_Pos_Y;
     }
   else
     {
@@ -590,7 +584,8 @@ PutInfluence ( int x , int y )
       //		      User_Rect.y+(User_Rect.h/2) - Block_Height/2 ,  
       //		      Me.TextToBeDisplayed );
       SetCurrentFont( FPS_Display_BFont );
-      DisplayText( Me.TextToBeDisplayed , User_Rect.x+(User_Rect.w/2) + Block_Width/3 , User_Rect.y+(User_Rect.h/2) - Block_Height/2 , &Text_Rect );
+      DisplayText( Me.TextToBeDisplayed , UserCenter_x + Block_Width/3,
+		   UserCenter_y - Block_Height/2 , &Text_Rect );
     }
 
   DebugPrintf (2, "\nvoid PutInfluence(void): enf of function reached.");
@@ -672,9 +667,9 @@ Sorry...\n\
 
   if ( x == (-1) ) 
     {
-      TargetRectangle.x=User_Rect_Center_x+ 
+      TargetRectangle.x=UserCenter_x+ 
 	( (-Me.pos.x+AllEnemys[Enum].pos.x ) ) * Block_Width  -Block_Width/2;
-      TargetRectangle.y=User_Rect_Center_y+ 
+      TargetRectangle.y=UserCenter_y+ 
 	( (-Me.pos.y+AllEnemys[Enum].pos.y ) ) * Block_Height -Block_Height/2;
     }
   else
@@ -723,9 +718,9 @@ Sorry...\n\
   // the combat window, else we blit to the given location.
   if ( x == (-1) )
     {
-      TargetRectangle.x=User_Rect_Center_x - 
+      TargetRectangle.x=UserCenter_x - 
 	(Me.pos.x-AllEnemys[Enum].pos.x) * Block_Width + First_Digit_Pos_X  - Block_Width/2; 
-      TargetRectangle.y=User_Rect_Center_y - 
+      TargetRectangle.y=UserCenter_y - 
 	(Me.pos.y-AllEnemys[Enum].pos.y) * Block_Height + First_Digit_Pos_Y - Block_Height/2;
     }
   else
@@ -746,9 +741,9 @@ Sorry...\n\
 
   if ( x == (-1) )
     {
-  TargetRectangle.x=User_Rect_Center_x - 
+  TargetRectangle.x=UserCenter_x - 
     (Me.pos.x-AllEnemys[Enum].pos.x)*Block_Height + Second_Digit_Pos_X - Block_Width/2;
-  TargetRectangle.y=User_Rect_Center_y - 
+  TargetRectangle.y=UserCenter_y - 
     (Me.pos.y-AllEnemys[Enum].pos.y)*Block_Height + Second_Digit_Pos_Y - Block_Height/2 ;
     }
   else
@@ -768,8 +763,8 @@ Sorry...\n\
 
   if ( x == (-1) )
     {
-      TargetRectangle.x=User_Rect_Center_x - (Me.pos.x-AllEnemys[Enum].pos.x)*Block_Width - Block_Width/2 + Third_Digit_Pos_X ;
-      TargetRectangle.y=User_Rect_Center_y - (Me.pos.y-AllEnemys[Enum].pos.y)*Block_Width - Block_Height/2 + Third_Digit_Pos_Y;
+      TargetRectangle.x=UserCenter_x - (Me.pos.x-AllEnemys[Enum].pos.x)*Block_Width - Block_Width/2 + Third_Digit_Pos_X ;
+      TargetRectangle.y=UserCenter_y - (Me.pos.y-AllEnemys[Enum].pos.y)*Block_Width - Block_Height/2 + Third_Digit_Pos_Y;
     }
   else
     {
@@ -798,8 +793,10 @@ Sorry...\n\
        && GameConfig.All_Texts_Switch )
     {
       PutStringFont ( Screen , FPS_Display_BFont , 
-		      User_Rect.x+(User_Rect.w/2) + Block_Width/3 + (AllEnemys[Enum].pos.x - Me.pos.x) * Block_Width , 
-		      User_Rect.y+(User_Rect.h/2) - Block_Height/2 + (AllEnemys[Enum].pos.y - Me.pos.y) * Block_Height ,  
+		      UserCenter_x + Block_Width/3
+		      + (AllEnemys[Enum].pos.x - Me.pos.x) * Block_Width ,  
+		      UserCenter_y - Block_Height/2
+		      + (AllEnemys[Enum].pos.y - Me.pos.y) * Block_Height ,  
 		      AllEnemys[Enum].TextToBeDisplayed );
     }
 
@@ -878,9 +875,9 @@ PutBullet (int BulletNummer)
   // rectangle containing the full rotated Block_Height x Block_Width rectangle!!!
   // This has to be taken into account when calculating the target position for the 
   // blit of these surfaces!!!!
-  TargetRectangle.x = User_Rect_Center_x
+  TargetRectangle.x = UserCenter_x
     - (Me.pos.x-CurBullet->pos.x)*Block_Width-CurBullet->SurfacePointer[ PhaseOfBullet ]->w/2;
-  TargetRectangle.y = User_Rect_Center_y
+  TargetRectangle.y = UserCenter_y
     - (Me.pos.y-CurBullet->pos.y)*Block_Width-CurBullet->SurfacePointer[ PhaseOfBullet ]->h/2;
 
   SDL_BlitSurface( CurBullet->SurfacePointer[ PhaseOfBullet ] , NULL, Screen , &TargetRectangle );
@@ -892,9 +889,9 @@ PutBullet (int BulletNummer)
   // rectangle containing the full rotated Block_Height x Block_Width rectangle!!!
   // This has to be taken into account when calculating the target position for the 
   // blit of these surfaces!!!!
-  TargetRectangle.x = User_Rect_Center_x
+  TargetRectangle.x = UserCenter_x
     - (Me.pos.x-CurBullet->pos.x)*Block_Width-CurBullet->SurfacePointer[ PhaseOfBullet ]->w/2;
-  TargetRectangle.y = User_Rect_Center_y
+  TargetRectangle.y = UserCenter_y
     - (Me.pos.y-CurBullet->pos.y)*Block_Width-CurBullet->SurfacePointer[ PhaseOfBullet ]->h/2;
 
   SDL_BlitSurface( tmp , NULL, Screen , &TargetRectangle );
@@ -918,8 +915,8 @@ PutItem( int ItemNumber )
   
   if ( CurItem->type == ( -1 ) ) return;
 
-  TargetRectangle.x=User_Rect_Center_x - (Me.pos.x - CurItem->pos.x)*Block_Width  -Block_Width/2;
-  TargetRectangle.y=User_Rect_Center_y - (Me.pos.y - CurItem->pos.y)*Block_Height -Block_Height/2;
+  TargetRectangle.x=UserCenter_x - (Me.pos.x - CurItem->pos.x)*Block_Width  -Block_Width/2;
+  TargetRectangle.y=UserCenter_y - (Me.pos.y - CurItem->pos.y)*Block_Height -Block_Height/2;
 
   SDL_BlitSurface( ItemSurfaceList[ ItemMap[ CurItem->type ].picture_number ] , NULL , Screen , &TargetRectangle);
 }; // void PutItem( int ItemNumber );
@@ -940,8 +937,8 @@ PutBlast (int BlastNummer)
     return;
 
   
-  TargetRectangle.x=User_Rect_Center_x - (Me.pos.x - CurBlast->PX)*Block_Width  -Block_Width/2;
-  TargetRectangle.y=User_Rect_Center_y - (Me.pos.y - CurBlast->PY)*Block_Height -Block_Height/2;
+  TargetRectangle.x=UserCenter_x - (Me.pos.x - CurBlast->PX)*Block_Width  -Block_Width/2;
+  TargetRectangle.y=UserCenter_y - (Me.pos.y - CurBlast->PY)*Block_Height -Block_Height/2;
   // Blastmap[CurBlast->type].block + ((int) floorf(CurBlast->phase)), Screen , &TargetRectangle);
   SDL_BlitSurface( Blastmap[CurBlast->type].SurfacePointer[ (int)floorf(CurBlast->phase) ] , NULL , Screen , &TargetRectangle);
 
@@ -1026,7 +1023,7 @@ Sorry...\n\
 
   SourceRectangle.x=0;
   SourceRectangle.y=0;
-  SourceRectangle.w=USERFENSTERBREITE;
+  SourceRectangle.w=User_Rect.w;
   if ( tmp->w > 200 ) 
     {
       SDL_SetClipRect( Screen , NULL );
@@ -1038,7 +1035,7 @@ Sorry...\n\
     {
       TargetRectangle.x=User_Rect.x;
       TargetRectangle.y=User_Rect.y + TEXT_STRETCH * FontHeight(Menu_BFont) ;
-      SourceRectangle.h=USERFENSTERHOEHE;
+      SourceRectangle.h=User_Rect.h;
     }
 
   SDL_BlitSurface( tmp , &SourceRectangle, Screen , &TargetRectangle );

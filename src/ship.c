@@ -282,9 +282,6 @@ ShowLifts (int level, int liftrow)
 void
 EnterItemIdentificationBooth (void)
 {
-  int map_x;
-  int map_y;
-  int Codepanel_Index;
   int Weiter=FALSE;
   char* RequestString;
   SDL_Surface* Background;
@@ -506,7 +503,7 @@ EnterKonsole (void)
 {
   int ReenterGame = 0;
   int TasteOK;
-
+  int text_offs;
   // Prevent distortion of framerate by the delay coming from 
   // the time spend in the menu.
   Activate_Conservative_Frame_Computation();
@@ -634,7 +631,7 @@ PaintConsoleMenu (void)
   strcat (MenuText, Druidmap[Me.type].druidname);
   strcat (MenuText, " - ");
   strcat (MenuText, Classname[Druidmap[Me.type].class]);
-  DisplayText (MenuText, User_Rect.x, User_Rect.y, &User_Rect);
+  DisplayText (MenuText, Console_Rect.x, Console_Rect.y, &Console_Rect);
 
   strcpy (MenuText, "\nAccess granted.\nArea : ");
   strcat (MenuText, curShip.AreaName ); // Shipnames[ThisShip]);
@@ -643,7 +640,7 @@ PaintConsoleMenu (void)
   strcat (MenuText, "\n\nAlert: ");
   strcat (MenuText, Alertcolor[Alert]);
 
-  DisplayText (MenuText, MENUTEXT_X, User_Rect.y + 15, &Menu_Rect);
+  DisplayText (MenuText, Console_Rect.x, User_Rect.y + 15, &Console_Rect);
 
   /*
    * Hier werden die Icons des Menus ausgegeben
@@ -653,9 +650,9 @@ PaintConsoleMenu (void)
   SourceRectangle.x=(MENUITEMLENGTH+2)*ConsoleMenuPos;
   SourceRectangle.y=0;
   SourceRectangle.w=MENUITEMLENGTH;
-  SourceRectangle.h=USERFENSTERHOEHE;
-  TargetRectangle.x=MENUITEMPOSX;
-  TargetRectangle.y=MENUITEMPOSY;
+  SourceRectangle.h=Console_Rect.h;
+  TargetRectangle.x=Console_Rect.x;
+  TargetRectangle.y=Console_Rect.y;
   SDL_BlitSurface( console_pic , &SourceRectangle , Screen , &TargetRectangle );
 
   return;
@@ -697,9 +694,9 @@ GreatDruidShow (void)
 
 	  sprintf( InfoText , "Unit type %s - %s" , Druidmap[Infodroid].druidname , 
 		   Classname[Druidmap[Infodroid].class] );
-	  DisplayText (InfoText, User_Rect.x, User_Rect.y, &User_Rect);
+	  DisplayText (InfoText, Console_Rect.x, Console_Rect.y, &Console_Rect);
 
-	  ShowRobotPicture (User_Rect.x, User_Rect.y + 2 * FONTHOEHE, Infodroid );
+	  ShowRobotPicture (Console_Rect.x, Console_Rect.y + 2 * FONTHOEHE, Infodroid );
 
 	  sprintf( InfoText, "Entry : %d\nClass : %s\nHeight : %f\nWeight: %f \nDrive : %s \nBrain : %s " , 
 		   Infodroid+1 , 
@@ -710,8 +707,8 @@ GreatDruidShow (void)
 		   ItemMap [ Druidmap[ Infodroid ].drive_item ].ItemName ,
 		   Brainnames[ Druidmap[Infodroid].brain ] );
 
-	  DisplayText (InfoText, MENUTEXT_X, User_Rect.y + FontHeight (Menu_BFont),
-		       &Menu_Rect);
+	  DisplayText (InfoText, Console_Rect.x, Console_Rect.y + FontHeight (Menu_BFont),
+		       &Console_Rect);
 
 
 	  SDL_Flip (Screen);
@@ -779,9 +776,9 @@ GreatDruidShow (void)
 	  
 	  sprintf( InfoText , "Unit type %s - %s" , Druidmap[Infodroid].druidname , Classname[Druidmap[Infodroid].class] );
 	  
-	  DisplayText (InfoText, User_Rect.x, User_Rect.y, &User_Rect);
+	  DisplayText (InfoText, Console_Rect.x, Console_Rect.y, &Console_Rect);
 	  
-	  ShowRobotPicture (User_Rect.x, User_Rect.y + 2 * FONTHOEHE, Infodroid);
+	  ShowRobotPicture (Console_Rect.x, Console_Rect.y + 2 * FONTHOEHE, Infodroid);
 	  
 	  strcpy (InfoText, "Armamant : ");
 	  // strcat (InfoText, Weaponnames[ Druidmap[Infodroid].armament ]);
@@ -793,8 +790,8 @@ GreatDruidShow (void)
 	  strcat (InfoText, "\n          3: ");
 	  strcat (InfoText, Sensornames[ Druidmap[Infodroid].sensor3 ]);
 	  
-	  DisplayText (InfoText, MENUTEXT_X, User_Rect.y + FontHeight (Menu_BFont),
-		       &Menu_Rect);
+	  DisplayText (InfoText, Console_Rect.x, Console_Rect.y + FontHeight (Menu_BFont),
+		       &Console_Rect);
 	  
 	  SDL_Flip (Screen);
 	  
@@ -860,15 +857,15 @@ GreatDruidShow (void)
 
 	  sprintf( InfoText , "Unit type %s - %s" , Druidmap[Infodroid].druidname , Classname[Druidmap[Infodroid].class] );
 
-	  DisplayText (InfoText, User_Rect.x, User_Rect.y, &User_Rect);
+	  DisplayText (InfoText, Console_Rect.x, Console_Rect.y, &Console_Rect);
 
-	  ShowRobotPicture (User_Rect.x, User_Rect.y + 2 * FONTHOEHE, Infodroid );
+	  ShowRobotPicture (Console_Rect.x, Console_Rect.y + 2 * FONTHOEHE, Infodroid );
 
 	  strcpy (InfoText, "Notes: ");
 	  strcat (InfoText, Druidmap[Infodroid].notes);
 
-	  DisplayText (InfoText, MENUTEXT_X, User_Rect.y + FontHeight (Menu_BFont),
-		       &Menu_Rect);
+	  DisplayText (InfoText, Console_Rect.x, Console_Rect.y + FontHeight (Menu_BFont),
+		       &Console_Rect);
 	  
 	  SDL_Flip (Screen);
       

@@ -41,7 +41,7 @@
 
 
 /* Scroll- Fenster */
-#define SCROLLSTARTX		USERFENSTERPOSX
+#define SCROLLSTARTX		User_Rect.x
 #define SCROLLSTARTY		SCREENHEIGHT
 
 void Init_Game_Data( char* Datafilename );
@@ -970,8 +970,6 @@ parse_command_line (int argc, char *const argv[])
     { 0, 	0, 0,  0}
   };
 
-  //   sound_on=TRUE;
-
   while (1)
     {
       c = getopt_long (argc, argv, "vqst:h?d::wfj:", long_options, NULL);
@@ -1594,8 +1592,6 @@ InitFreedroid (void)
   struct timeval timestamp;
   int i;
 
-  Bulletmap=NULL;  // That will cause the memory to be allocated later
-
   //--------------------
   // It might happen, that the uninitialized AllBullets array contains a 1
   // somewhere and that the bullet is deleted and the surface freed, where
@@ -1604,7 +1600,8 @@ InitFreedroid (void)
   // flags.       It should be sufficient to do this here, since the flag
   // will never be set again if not Surfaces are allocated too and then they
   // can of course also be freed as well.
-  //
+
+  Bulletmap=NULL;  // That will cause the memory to be allocated later
   for ( i = 0 ; i < MAXBULLETS ; i++ )
     {
       AllBullets[i].Surfaces_were_generated = FALSE;
@@ -1634,13 +1631,12 @@ InitFreedroid (void)
   GameConfig.Mission_Log_Visible_Max_Time = 5;
   GameConfig.Inventory_Visible_Max_Time = 5;
   GameConfig.Theme_SubPath="lanzz_theme/";
-  User_Rect.x=0;
-  User_Rect.w=640;
-  User_Rect.y = BANNER_HEIGHT;
-  User_Rect.h = 480 - BANNER_HEIGHT;
-  User_Rect_Center_x=( User_Rect.x + User_Rect.w/2 );
-  User_Rect_Center_y=( User_Rect.y + User_Rect.h/2 );
+  Copy_Rect (Full_User_Rect, User_Rect);
 
+  Copy_Rect (Full_User_Rect, Console_Rect);
+  Console_Rect.x += 137
+  Set_Rect (Console_Rect, Full_User_Rect.x + text_offs,  Full_User_Rect.y,
+	    User_Rect.w-text_offs, User_Rect.h);
 
 
   /*
