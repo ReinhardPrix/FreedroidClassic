@@ -3047,8 +3047,8 @@ iso_put_tux_torso ( int x , int y , int player_num , int rotation_index )
 	case ITEM_ARMOR_PROTECTIVE_JACKET:
 	    iso_put_tux_part ( PART_GROUP_TORSO , "iso_armour1" , x , y , player_num , rotation_index );
 	    break;
-	case ITEM_LEATHER_ARMOUR:
-	case ITEM_DROID_PLATING:
+	case ITEM_RED_GUARD_LIGHT_ARMOUR:
+	case ITEM_RED_GUARD_HEAVY_ARMOUR:
 	    iso_put_tux_part ( PART_GROUP_TORSO , "iso_robe" , x , y , player_num , rotation_index );
 	    break;
 	default:

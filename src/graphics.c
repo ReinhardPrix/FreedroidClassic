@@ -564,8 +564,7 @@ do_graphical_number_selection_in_range ( int lower_range , int upper_range )
     char number_text[1000];
     static SDL_Rect knob_target_rect;
 
-    DebugPrintf ( -4 , "\n%s(): graphical number selection invoked." , __FUNCTION__ );
-
+    DebugPrintf ( 1 , "\n%s(): graphical number selection invoked." , __FUNCTION__ );
     
     if ( upper_range >= 1 ) current_value = 1 ; 
     else 
