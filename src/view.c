@@ -3792,11 +3792,26 @@ ShowInventoryScreen( void )
   //
   TargetRect.x = InventoryRect.x + WEAPON_RECT_X;
   TargetRect.y = InventoryRect.y + WEAPON_RECT_Y;
-  if ( ( ! Me[0].weapon_item.currently_held_in_hand ) && ( Me[0].weapon_item.type != (-1) ) )
+  if ( ( ! Me [ 0 ] . weapon_item.currently_held_in_hand ) && ( Me [ 0 ] . weapon_item.type != (-1) ) )
     {
       TargetRect.x += INVENTORY_SUBSQUARE_WIDTH * 0.5 * ( 2 - ItemMap [ Me [ 0 ] . weapon_item . type ] . inv_image . inv_size . x ) ;
       TargetRect.y += INVENTORY_SUBSQUARE_WIDTH * 0.5 * ( 3 - ItemMap [ Me [ 0 ] . weapon_item . type ] . inv_image . inv_size . y ) ;
       our_SDL_blit_surface_wrapper( ItemMap [ Me [ 0 ] . weapon_item . type ] . inv_image . Surface , NULL , Screen , &TargetRect );
+
+      //--------------------
+      // Maybe this is also a 2-handed weapon.  In this case we need to blit the
+      // weapon a second time, this time in the center of the shield rectangle to
+      // visibly reflect the fact, that the shield hand is required too for this
+      // weapon.
+      //
+      if ( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_requires_both_hands )
+	{
+	  TargetRect.x = InventoryRect.x + SHIELD_POS_X;
+	  TargetRect.y = InventoryRect.y + SHIELD_POS_Y;
+	  TargetRect.x += INVENTORY_SUBSQUARE_WIDTH * 0.5 * ( 2 - ItemMap [ Me [ 0 ] . weapon_item . type ] . inv_image . inv_size . x ) ;
+	  TargetRect.y += INVENTORY_SUBSQUARE_WIDTH * 0.5 * ( 3 - ItemMap [ Me [ 0 ] . weapon_item . type ] . inv_image . inv_size . y ) ;
+	  our_SDL_blit_surface_wrapper( ItemMap [ Me [ 0 ] . weapon_item . type ] . inv_image . Surface , NULL , Screen , &TargetRect );
+	}
     }
 
   //--------------------

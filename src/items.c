@@ -2234,7 +2234,6 @@ DropHeldItemToInventory( void )
 					       Me [ 0 ] . Inventory [ FreeInvIndex ] . inventory_position . y ) ;
 		}
 
-
 	      MakeHeldFloorItemOutOf ( & ( Me [ 0 ] . Inventory [ MAX_ITEMS_IN_INVENTORY - 1 ] ) ) ;
 	      Me [ 0 ] . Inventory [ MAX_ITEMS_IN_INVENTORY - 1 ] . currently_held_in_hand = TRUE ;
 
@@ -2704,9 +2703,52 @@ ManageInventoryScreen ( void )
 	    {
 	      if ( HeldItemUsageRequirementsMet(  ) )
 		{
-		  Item_Held_In_Hand = ( -1 );
-		  // DropHeldItemToWeaponSlot ( );
-		  DropHeldItemToSlot ( & ( Me[0].weapon_item ) );
+		  //--------------------
+		  // Now a weapon is about to be dropped to the weapons rectangle and obviously
+		  // the stat requirements for usage are met.  But maybe this is a 2-handed weapon.
+		  // In this case we need to do some extra check.  If it isn't a 2-handed weapon,
+		  // then we can just go ahead and equip the item
+		  if ( ItemMap [ GetHeldItemCode ( ) ] . item_gun_requires_both_hands )
+		    {
+		      //--------------------
+		      // Now if the shield slot is just empty, that makes matters a lot simpler,
+		      // cause then we can just drop this 2-handed weapon to the weapon slot and
+		      // all is fine, cause no conflicts will result...
+		      //
+		      if ( Me [ 0 ] . shield_item . type == (-1) )
+			{
+			  Item_Held_In_Hand = ( -1 );
+			  DropHeldItemToSlot ( & ( Me [ 0 ] . weapon_item ) );
+			}
+		      else
+			{
+			  //--------------------
+			  // But if there is something in the shield slot too, then we need to be
+			  // a bit more sophisticated and either swap the 2-handed item in for just
+			  // the shield alone, which then will be held OR we need to refuse completely
+			  // because there might be a weapon AND a shield equipped already.
+			  //
+			  if ( Me [ 0 ] . weapon_item . type == (-1) )
+			    {
+			      Item_Held_In_Hand = ( -1 );
+			      DropHeldItemToSlot ( & ( Me [ 0 ] . weapon_item ) );
+			      MakeHeldFloorItemOutOf( & ( Me [ 0 ] . shield_item ) ) ;
+			    }
+			  else
+			    {
+			      //--------------------
+			      // Since a sword and a shield are both equipped, we must refuse to
+			      // equip this 2-handed weapon here and now...
+			      //
+			      PlayOnceNeededSoundSample ( "../effects/ThisItemRequiresBothHands.wav" , FALSE , FALSE );
+			    }
+			}
+		    }
+		  else
+		    {
+		      Item_Held_In_Hand = ( -1 );
+		      DropHeldItemToSlot ( & ( Me [ 0 ] . weapon_item ) );
+		    }
 		}
 	    }
 	  else
@@ -2772,13 +2814,33 @@ ManageInventoryScreen ( void )
 	  DebugPrintf( 1 , "\nItem dropped onto the shield rectangle!" );
 	  DebugPrintf( 1 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
 	  if ( ( GetHeldItemCode() != (-1) ) &&
-	       ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_shield_slot ) )
+	       ( ItemMap [ GetHeldItemCode() ] . item_can_be_installed_in_shield_slot ) )
 	    {
 	      if ( HeldItemUsageRequirementsMet(  ) )
 		{
-		  Item_Held_In_Hand = ( -1 );
-		  // DropHeldItemToShieldSlot ( );
-		  DropHeldItemToSlot ( & ( Me[0].shield_item ) );
+		  //--------------------
+		  // Now if there isn't any weapon equipped right now, the matter
+		  // is rather simple and we just need to do the normal drop-to-slot-thing.
+		  //
+		  if ( Me [ 0 ] . weapon_item . type == (-1) )
+		    {
+		      Item_Held_In_Hand = ( -1 );
+		      DropHeldItemToSlot ( & ( Me[0].shield_item ) );
+		    }
+		  else
+		    {
+		      Item_Held_In_Hand = ( -1 );
+		      DropHeldItemToSlot ( & ( Me [ 0 ] . shield_item ) );
+
+		      //--------------------
+		      // A shield, when equipped, will push out any 2-handed weapon currently
+		      // equipped from it's weapon slot...
+		      //
+		      if ( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_requires_both_hands )
+			{
+			  MakeHeldFloorItemOutOf ( & ( Me [ 0 ] . weapon_item ) ) ;
+			}
+		    }
 		}
 	    }
 	  else
@@ -3095,8 +3157,12 @@ raw_move_picked_up_item_to_entry ( item* ItemPointer , item* TargetPointer , poi
 }; // void move_picked_up_item_to_entry ( ItemPointer , TargetPointer )
 
 /* ----------------------------------------------------------------------
- *
- *
+ * This function deals with the case, that WHILE THERE IS NO INVENTORY
+ * SCREEN OPEN, the Tux still clicks some items on the floor to pick them
+ * up.  So no big visible operation is required, but instead the items
+ * picked up should be either auto-equipped, if possible, or they should
+ * be put into the inventory items pool OR IN CASE THERE IS NO ROOM ANY
+ * MORE the function should also say that and not do much else...
  * ---------------------------------------------------------------------- */
 void 
 AddFloorItemDirectlyToInventory( item* ItemPointer )
@@ -3152,16 +3218,50 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
     {
       if ( ItemUsageRequirementsMet( ItemPointer , TRUE ) )
 	{
-	  raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . weapon_item ) , Inv_Loc );
-	  return;
+	  //--------------------
+	  // Now we're picking up a weapon while no weapon is equipped.  But still
+	  // it might be a 2-handed weapon while there is some shield equipped.  Well,
+	  // when that is the case, we refuse to put it directly to the proper slot, 
+	  // otherwise we do it.
+	  //
+	  if ( Me [ 0 ] . shield_item . type == (-1) )
+	    {
+	      raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . weapon_item ) , Inv_Loc );
+	      return;
+	    }
+	  //--------------------
+	  // So now we know that some shield item is equipped.  Let's be careful:  2-handed
+	  // weapons will be rejected from direct addition to the slot.
+	  //
+	  if ( ! ItemMap [ ItemPointer -> type ] . item_gun_requires_both_hands )
+	    {
+	      raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . weapon_item ) , Inv_Loc );
+	      return;
+	    }
 	}
     }
   if ( ( Me [ 0 ] . shield_item . type == (-1) ) && ( ItemMap [ ItemPointer -> type ] . item_can_be_installed_in_shield_slot ) )
     {
       if ( ItemUsageRequirementsMet( ItemPointer , TRUE ) )
 	{
-	  raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . shield_item ) , Inv_Loc );
-	  return;
+	  //--------------------
+	  // Auto-equipping shields can be done.  But only if there isn't a 2-handed
+	  // weapon equipped already.  Well, in case of no weapon present it's easy:
+	  //
+	  if ( Me [ 0 ] . weapon_item . type == (-1) )
+	    {
+	      raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . shield_item ) , Inv_Loc );
+	      return;
+	    }
+	  //--------------------
+	  // But now we know, that there is some weapon present.  We need to be careful:
+	  // it might be a 2-handed weapon.
+	  // 
+	  if ( ! ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_requires_both_hands )
+	    {
+	      raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . shield_item ) , Inv_Loc );
+	      return;
+	    }
 	}
     }
   if ( ( Me [ 0 ] . armour_item . type == (-1) ) && ( ItemMap [ ItemPointer -> type ] . item_can_be_installed_in_armour_slot ) )

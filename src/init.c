@@ -1825,8 +1825,8 @@ InitFreedroid ( void )
   
   // --------------------
   //
-  InventorySize.x = 9;
-  InventorySize.y = 6;
+  InventorySize.x = INVENTORY_GRID_WIDTH ;
+  InventorySize.y = INVENTORY_GRID_HEIGHT ;
 
   ResetGameConfigToDefaultValues ();
 
