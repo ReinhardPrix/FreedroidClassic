@@ -590,7 +590,18 @@ SpecialForce: Type=420 X=38 Y=11 Fixed=0 Marker=26 AdvancedCommand=2 Parameter1=
 SpecialForce: Type=329 X=38 Y=11 Fixed=0 Marker=26 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level17Lurker3StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Lurking Bot"
 SpecialForce: Type=420 X=38 Y=11 Fixed=0 Marker=26 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level17Lurker4StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Lurking Bot"
 
+SpecialForce: Type=614 X=57 Y=46 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="KevinGuardStartGameSquare" RushTux="yes" DialogSectionToUse="KevinGuard" ShortLabel="614 -- Kevin's Guard"
 
+SpecialForce: Type=PRO X=70 Y=52 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="KevinStartGameSquare" RushTux="no" DialogSectionToUse="Kevin" ShortLabel="Kevin --- Hacker "
+
+SpecialForce: Type=598 X=61 Y=42 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Kevins598StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Avenger Bot"
+
+
+SpecialForce: Type=742 X=61 Y=42 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Kevins742StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Avenger Bot"
+
+SpecialForce: Type=883 X=61 Y=42 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Kevins883StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Avenger Bot"
+
+SpecialForce: Type=821 X=61 Y=42 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Kevins821StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Avenger Bot"
 ** End of this levels droid data **
 
 ----------------------------------------------------------------------
