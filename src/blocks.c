@@ -445,9 +445,11 @@ int MergeBlockToWindow(
  * $Author$
  *
  * $Log$
- * Revision 1.4  1993/05/30 22:10:03  prix
- * Sun May 30 12:58:49 1993: GetBlock auf neue Bloecke eingestellt
- * Sun May 30 13:15:36 1993: GetMapBlocks an neue Bloecke angepasst
+ * Revision 1.5  1993/05/31 20:29:02  prix
+ * Sun May 30 18:21:09 1993: GetBlock soll allgemeine Funktion werden
+ * Sun May 30 20:08:22 1993: reduced the various Get*Block funcs to GetBlocks and IsolateBlock
+ * Mon May 31 13:58:53 1993: ShowBlocks Aufrufe
+ * Mon May 31 15:53:26 1993: rewritten ShowBlocks in C (quick and dirty)
  *
  * Revision 1.6  1993/08/29  23:37:44  prix
  * Sat Jul 24 07:35:46 1993: GetDigits in very alpha form
