@@ -195,6 +195,7 @@ ShowInventoryMessages( void )
   int SlotNum;
   char InventoryText[2000];
   SDL_Rect InventoryRect;
+  SDL_Rect TargetRect;
   SDL_Surface *InventoryImage;
   char *fpath;
   char fname[]="inventory.png";
@@ -239,6 +240,27 @@ ShowInventoryMessages( void )
   SDL_BlitSurface ( InventoryImage , NULL , ne_screen , &InventoryRect );
 
   SDL_FreeSurface( InventoryImage );
+
+  for ( SlotNum = 0 ; SlotNum < MAX_ITEMS_IN_INVENTORY; SlotNum ++ )
+    {
+      // In case the item does not exist at all, we need not do anything more...
+      if ( Me.Inventory[ SlotNum ].type == ( -1 ) ) 
+	{
+	  // DisplayText( "\n--- Slot empty ---" , -1 , -1 , &InventoryRect );
+	  continue;
+	}
+
+      // sprintf( InventoryText , "\n Item Nr. %d is %s." , SlotNum , ItemMap[ Me.Inventory[ SlotNum ]. type ].ItemName );
+      // DisplayText( InventoryText , -1 , -1 , &InventoryRect );
+      TargetRect.x = 16 + 32 * Me.Inventory[ SlotNum ].inventory_position.x;
+      TargetRect.y = 480 - 16 - 32 * 6 + 32 * Me.Inventory[ SlotNum ].inventory_position.y;
+      TargetRect.w = 50;
+      TargetRect.h = 50;
+
+      SDL_BlitSurface( ItemSurfaceList[ ItemMap[ Me.Inventory[ SlotNum ].type ].picture_number ] , NULL , ne_screen , &TargetRect );
+      
+    }
+
 
   /*
   MyCursorX=InventoryRect.x;

@@ -222,6 +222,7 @@ typedef struct
   int item_gun_damage;			/* damage done by this bullettype */
   int item_gun_blast;			/* which blast does this bullet create */
   int item_gun_oneshotonly;	        /* if this is set, there is only 1 shot */
+  int item_gun_bullet_image_type;       // which type of image to use for displaying this bullet
 
   // Which picture to use for this item, when it's lying on the floor?
   int picture_number;
@@ -232,6 +233,7 @@ typedef struct
 {
   finepoint pos;
   int type;
+  grob_point inventory_position;
 } item, *Item;
 
 typedef struct
@@ -240,7 +242,7 @@ typedef struct
   int class;
   double maxenergy;		/* the maximum energy the batteries can carry */
   double lose_health;		/* the energy/time the duid loses under influence-control */
-  int gun;			/* Which gun does this druid use */
+  // int gun;			/* Which gun does this druid use */
   int aggression;		/* The aggressiveness of this druidtype */
   int flashimmune;		/* is the droid immune to FLASH-bullets */
   int score;			/* score for the elimination of one droid of this type */

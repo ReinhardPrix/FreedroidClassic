@@ -784,7 +784,8 @@ GreatDruidShow (void)
 	  ShowRobotPicture (USERFENSTERPOSX, USERFENSTERPOSY + 2 * FONTHOEHE, Infodroid);
 	  
 	  strcpy (InfoText, "Armamant : ");
-	  strcat (InfoText, Weaponnames[ Druidmap[Infodroid].armament ]);
+	  // strcat (InfoText, Weaponnames[ Druidmap[Infodroid].armament ]);
+	  strcat (InfoText, ItemMap[ Druidmap[Infodroid].weapon_item ].ItemName );
 	  strcat (InfoText, "\nSensors  1: ");
 	  strcat (InfoText, Sensornames[ Druidmap[Infodroid].sensor1 ]);
 	  strcat (InfoText, "\n          2: ");

@@ -195,7 +195,7 @@ AutoFireBullet (void)
       return;
     }
 
-  guntype = Druidmap[Me.type].gun;
+  guntype = ItemMap[ Druidmap[Me.type].weapon_item ].item_gun_bullet_image_type;
 
   Fire_Bullet_Sound ( guntype );
 
@@ -1015,7 +1015,7 @@ FireBullet (void)
 {
   int i = 0;
   Bullet CurBullet = NULL;	/* das Bullet, um das es jetzt geht */
-  int guntype = Druidmap[Me.type].gun;	/* which gun do we have ? */
+  int guntype = ItemMap[ Druidmap[Me.type].weapon_item ].item_gun_bullet_image_type;	/* which gun do we have ? */
   double BulletSpeed = ItemMap[ Druidmap[ Me.type ].weapon_item ].item_gun_speed;
   double speed_norm;
   finepoint speed;

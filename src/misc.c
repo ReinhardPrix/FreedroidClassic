@@ -1364,10 +1364,10 @@ InstallItem( int InventoryIndex )
   //
 
   // Now we see if this item invokes a change of laser in the influence device
-  if ( ItemMap[ Me.Inventory[ InventoryIndex ].type ].New_Laser_Type_After_Installation != (-1) ) 
-    {
-      Druidmap[ DRUID001 ].gun = ItemMap[ Me.Inventory[ InventoryIndex ].type ].New_Laser_Type_After_Installation;
-    }
+  // if ( ItemMap[ Me.Inventory[ InventoryIndex ].type ].New_Laser_Type_After_Installation != (-1) ) 
+  // {
+  // Druidmap[ DRUID001 ].gun = ItemMap[ Me.Inventory[ InventoryIndex ].type ].New_Laser_Type_After_Installation;
+  // }
 
   // Now we see if this item invokes a change of drive type in the influence device
   // if ( ItemMap[ Me.Inventory[ InventoryIndex ].type ].New_Drive_Type_After_Installation != (-1) ) 
