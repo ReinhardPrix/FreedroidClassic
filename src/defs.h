@@ -1091,6 +1091,9 @@ enum
   ISO_BLOOD_7 ,
   ISO_BLOOD_8 ,
 
+  ISO_EXIT_1 ,
+  ISO_EXIT_2 ,
+
   NUMBER_OF_OBSTACLE_TYPES
 };
 

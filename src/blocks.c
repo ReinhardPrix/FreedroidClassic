@@ -2454,6 +2454,18 @@ init_obstacle_data( void )
   obstacle_map [ ISO_BLOOD_8 ] . filename = "iso_blood_0008.png" ;
   obstacle_map [ ISO_BLOOD_8 ] . needs_pre_put = TRUE ;
 
+  obstacle_map [ ISO_EXIT_1 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_EXIT_1 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_EXIT_1 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_EXIT_1 ] . filename = "iso_exits_0001.png" ;
+  obstacle_map [ ISO_EXIT_1 ] . needs_pre_put = FALSE ;
+
+  obstacle_map [ ISO_EXIT_2 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_EXIT_2 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_EXIT_2 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_EXIT_2 ] . filename = "iso_exits_0002.png" ;
+  obstacle_map [ ISO_EXIT_2 ] . needs_pre_put = FALSE ;
+
 
   //--------------------
   // Now that we have defined the block area paramters, it's time to do some
