@@ -2855,8 +2855,7 @@ MoveLevelDoors ( int PlayerNum )
   int one_player_close_enough = FALSE;
   int PlayerIndex ;
   int door_obstacle_index;
-
-
+  int some_bot_was_close_to_this_door = FALSE ;
 
   DoorLevel = curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] ;
 
@@ -2976,37 +2975,58 @@ Error:  Doors pointing not to door obstacles found.",
 	  // see if perhaps one of the enemys is close enough, so that
 	  // the door would still get opened instead of closed.
 	  //
-	  // for ( j = 0 ; j < Number_Of_Droids_On_Ship ; j ++ )
+	  some_bot_was_close_to_this_door = FALSE ;
 	  for ( j  = first_index_of_bot_on_level [ DoorLevel->levelnum ] ; 
 		j <=  last_index_of_bot_on_level [ DoorLevel->levelnum ] ; j ++ )	    
 	    {
-	      /* ignore druids that are dead or on other levels */
+	      //--------------------
+	      // ignore druids that are dead or on other levels 
+	      //
 	      if ( ( AllEnemys[j].Status == OUT ) ||
 		   ( AllEnemys[j].pos.z  != DoorLevel->levelnum ) )
 		continue;
 
-	      // xdist = abs ( AllEnemys[j].pos.x - doorx ) ;
+	      //--------------------
+	      // We will only consider droids, that are at least within a range of
+	      // say 2 squares in each direction.  Anything beyond that distance
+	      // can be safely ignored for this door.
+	      //
 	      xdist = abs ( AllEnemys [ j ] . pos . x - DoorLevel -> obstacle_list [ door_obstacle_index ] . pos . x ) ;
-	      if (xdist < Block_Width)
+	      if ( xdist < 2.0 )
 		{
-		  // ydist = abs (AllEnemys[j].pos.y - doory);
 		  ydist = abs ( AllEnemys [ j ] . pos . y - DoorLevel -> obstacle_list [ door_obstacle_index ] . pos . y ) ;
-		  if (ydist < Block_Height)
+		  if ( ydist < 2.0 )
 		    {
+		      
+		      //--------------------
+		      // Now that we know, that there is some droid at least halfway
+		      // close to this door, we can start to go into more details and
+		      // compute the exact distance from the droid to the door.
+		      //
 		      dist2 = xdist * xdist + ydist * ydist;
-		      if (dist2 < DOOROPENDIST2)
+		      if ( dist2 < DOOROPENDIST2_FOR_DROIDS )
 			{
 			  if ( ( *Pos != ISO_H_DOOR_100_OPEN ) && ( *Pos != ISO_V_DOOR_100_OPEN ) )
 			    *Pos += 1;
 
-			  break;	/* one druid is enough to open a door */
-			}	/* if */
-		    }		/* if */
-		}		/* if */
-	    }			/* for */
+			  //--------------------
+			  // Just to make sure the last bot doesn't look like the whole loop
+			  // went through without any bot being close...
+			  //
+			  some_bot_was_close_to_this_door = TRUE ;
+			  break;  
+			}	
 
-	  /* No druid near: close door if it isnt closed */
-	  if ( j == Number_Of_Droids_On_Ship )
+		    } // ydist < 2.0
+		} // xdist < 2.0
+	    } // for bots...
+
+	  //--------------------
+	  // So if the whole loop when through, that means that no bot was close
+	  // enough to this door.  That means that we can close this door a bit
+	  // more...
+	  //
+	  if ( ! some_bot_was_close_to_this_door )
 	    if ( ( *Pos != ISO_V_DOOR_000_OPEN ) && ( *Pos != ISO_H_DOOR_000_OPEN ) )
 	      *Pos -= 1;
 
