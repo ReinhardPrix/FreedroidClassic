@@ -1411,7 +1411,7 @@ set_video_mode_for_open_gl ( void )
       Terminate(ERR);
     }
   
-  open_gl_check_error_status ( );
+  // open_gl_check_error_status ( );
   
   //--------------------
   // We need OpenGL double buffering, so we request it.  If we
@@ -1426,7 +1426,7 @@ Unable to set SDL_GL_DOUBLEBUFFER attribute!",
 				 PLEASE_INFORM, IS_FATAL );
     }
   
-  open_gl_check_error_status ( );
+  // open_gl_check_error_status ( );
 
   //--------------------
   // Now we start setting up the proper OpenGL flags to pass to the

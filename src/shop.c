@@ -803,30 +803,43 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 		    axis_is_active && !WasPressed && ( !ShowChestButtons ) )
 	    {
 	      //--------------------
-	      // Of course the repair button should only have effect, if there is
-	      // really something to repair (and therefore the button is shown at
-	      // all further above.
+	      // Reference to the Tux item list must only be made, when the 'highlight'
+	      // is really in the tux item row.  Otherwise we just get a segfault...
 	      //
-	      if ( ( ItemMap [ TuxItemsList [ TuxItemIndex ] -> type ] . base_item_duration >= 0 ) &&
-		   ( TuxItemsList [ TuxItemIndex ] -> max_duration > TuxItemsList [ TuxItemIndex ] -> current_duration ) )
+	      if ( TuxItemIndex > (-1) )
 		{
-		  ShopOrder -> item_selected = TuxItemIndex ;
-		  ShopOrder -> shop_command = REPAIR_ITEM ;
-		  ShopOrder -> number_selected = 1;
-
-		  return ( 0 );
+		  //--------------------
+		  // Of course the repair button should only have effect, if there is
+		  // really something to repair (and therefore the button is shown at
+		  // all further above.
+		  //
+		  if ( ( ItemMap [ TuxItemsList [ TuxItemIndex ] -> type ] . base_item_duration >= 0 ) &&
+		       ( TuxItemsList [ TuxItemIndex ] -> max_duration > TuxItemsList [ TuxItemIndex ] -> current_duration ) )
+		    {
+		      ShopOrder -> item_selected = TuxItemIndex ;
+		      ShopOrder -> shop_command = REPAIR_ITEM ;
+		      ShopOrder -> number_selected = 1;
+		      
+		      return ( 0 );
+		    }
 		}
 	    }
 	  else if ( CursorIsOnButton( IDENTIFY_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed && ( !ShowChestButtons ) )
 	    {
-
-	      if ( ! TuxItemsList [ TuxItemIndex ] -> is_identified )
+	      //--------------------
+	      // Reference to the Tux item list must only be made, when the 'highlight'
+	      // is really in the tux item row.  Otherwise we just get a segfault...
+	      //
+	      if ( TuxItemIndex > (-1) )
 		{
-		  ShopOrder -> item_selected = TuxItemIndex ;
-		  ShopOrder -> shop_command = IDENTIFY_ITEM ;
-		  ShopOrder -> number_selected = 1;
+		  if ( ! TuxItemsList [ TuxItemIndex ] -> is_identified )
+		    {
+		      ShopOrder -> item_selected = TuxItemIndex ;
+		      ShopOrder -> shop_command = IDENTIFY_ITEM ;
+		      ShopOrder -> number_selected = 1;
 
-		  return ( 0 );
+		      return ( 0 );
+		    }
 		}
 	    }
 	}
