@@ -103,7 +103,7 @@ Get_General_Game_Constants ( void* DataPointer )
 } // void Get_General_Game_Constants ( void* DataPointer )
 
 /*----------------------------------------------------------------------
- * This function reads in all the bullet data from the game.dat file,
+ * This function reads in all the bullet data from the freedroid.ruleset file,
  * but IT DOES NOT LOAD THE FILE, IT ASSUMES IT IS ALREADY LOADED and
  * it only receives a pointer to the start of the bullet section from
  * the calling function.
@@ -141,7 +141,7 @@ Get_Bullet_Data ( char* DataPointer )
   DebugPrintf (2, "\n\nStarting to read bullet data...\n\n");
   //--------------------
   // At first, we must allocate memory for the droid specifications.
-  // How much?  That depends on the number of droids defined in game.dat.
+  // How much?  That depends on the number of droids defined in freedroid.ruleset.
   // So we have to count those first.  ok.  lets do it.
 
   CountBulletsPointer=DataPointer;
@@ -152,7 +152,7 @@ Get_Bullet_Data ( char* DataPointer )
       Number_Of_Bullet_Types++;
     }
 
-  // Not that we know how many bullets are defined in game.dat, we can allocate
+  // Not that we know how many bullets are defined in freedroid.ruleset, we can allocate
   // a fitting amount of memory, but of course only if the memory hasn't been allocated
   // aready!!!
   //
@@ -242,7 +242,7 @@ Get_Mission_Events ( char* EventSectionPointer )
   char *SayString;
   char *EventPointer;
   char *ValuePointer;  // we use ValuePointer while EventPointer stays still to allow for
-                       // interchanging of the order of appearance of parameters in the game.dat file
+                       // interchanging of the order of appearance of parameters in the freedroid.ruleset file
   char *EndOfEvent;
   int i;
   int EventActionNumber;
@@ -426,7 +426,7 @@ Get_Robot_Data ( void* DataPointer )
   int RobotIndex = 0;
   char *RobotPointer;
   char *ValuePointer;  // we use ValuePointer while RobotPointer stays still to allow for
-                       // interchanging of the order of appearance of parameters in the game.dat file
+                       // interchanging of the order of appearance of parameters in the freedroid.ruleset file
   char *CountRobotsPointer;
   char *EndOfDataPointer;
   int StringLength;
@@ -506,7 +506,7 @@ Get_Robot_Data ( void* DataPointer )
   DebugPrintf ( 1 , "\n\nStarting to read Robot data...\n\n" );
   //--------------------
   // At first, we must allocate memory for the droid specifications.
-  // How much?  That depends on the number of droids defined in game.dat.
+  // How much?  That depends on the number of droids defined in freedroid.ruleset.
   // So we have to count those first.  ok.  lets do it.
 
   CountRobotsPointer=RobotPointer;
@@ -517,7 +517,7 @@ Get_Robot_Data ( void* DataPointer )
       Number_Of_Droid_Types++;
     }
 
-  // Not that we know how many robots are defined in game.dat, we can allocate
+  // Not that we know how many robots are defined in freedroid.ruleset, we can allocate
   // a fitting amount of memory.
   i=sizeof(druidspec);
   Druidmap = MyMalloc ( i * (Number_Of_Droid_Types + 1) + 1 );
@@ -1123,7 +1123,7 @@ InitNewMission ( char *MissionName )
     }
   
   /* initialize enemys according to crew file */
-  // WARNING!! THIS REQUIRES THE game.dat FILE TO BE READ ALREADY, BECAUSE
+  // WARNING!! THIS REQUIRES THE freedroid.ruleset FILE TO BE READ ALREADY, BECAUSE
   // ROBOT SPECIFICATIONS ARE ALREADY REQUIRED HERE!!!!!
   //
 
@@ -1431,7 +1431,7 @@ InitFreedroid (void)
   
   Init_Joy ();
 
-  Init_Game_Data("game.dat");  // load the default ruleset. This can be */
+  Init_Game_Data("freedroid.ruleset");  // load the default ruleset. This can be */
 			       // overwritten from the mission file.
 
   // The default should be, that no rescaling of the
