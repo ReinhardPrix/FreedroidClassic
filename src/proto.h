@@ -249,14 +249,14 @@ EXTERN void Takeover_Game_Won_Sound (void);
 EXTERN void Takeover_Game_Deadlock_Sound (void);
 EXTERN void Takeover_Game_Lost_Sound (void);
 
-/* keyboard.c */
+/* input.c */
 #undef EXTERN
-#ifdef _keyboard_c
+#ifdef _input_c
 #define EXTERN
 #else
 #define EXTERN extern
 #endif
-
+EXTERN void Init_Joy(void);
 EXTERN void ReactToSpecialKeys(void);
 EXTERN int Shift_Was_Pressed(void);
 EXTERN int Ctrl_Was_Pressed(void);
@@ -501,12 +501,5 @@ EXTERN void vga_waitretrace(void);
 EXTERN int vga_getdefaultmode(void);
 
 
-#undef EXTERN
-#ifdef _joy_c
-#define EXTERN
-#else
-#define EXTERN extern
-#endif
-EXTERN void Init_Joy(void);
 
 #endif

@@ -233,13 +233,14 @@ EXTERN SDL_Surface *ScaledSurface;
 
 
 #undef EXTERN
-#ifdef _joy_c
+#ifdef _input_c
 #define EXTERN
 #else
 #define EXTERN extern
 #endif
 EXTERN SDL_Joystick *joy;
-EXTERN int num_joy_axes; /* number of joystick axes */ 
+EXTERN int joy_num_axes; /* number of joystick axes */ 
 EXTERN int joy_sensitivity;
+EXTERN point joy_ax_values;
 
 #endif  // _global_h

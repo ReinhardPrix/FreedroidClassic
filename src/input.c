@@ -1,6 +1,6 @@
 /*----------------------------------------------------------------------
  *
- * Desc: encapsulation functions for keyboard handling
+ * Desc: functions for keyboard and joystick handling
  *
  *----------------------------------------------------------------------*/
 
@@ -28,7 +28,7 @@
  *  MA  02111-1307  USA
  *
  */
-#define _keyboard_c
+#define _input_c
 
 #include "system.h"
 
@@ -36,9 +36,6 @@
 #include "struct.h"
 #include "global.h"
 #include "proto.h"
-
-
-#undef DIAGONAL_KEYS_AUS
 
 
 SDL_Event event;
@@ -104,6 +101,43 @@ int CurrentlyKP8Pressed=0;
 int CurrentlyKP9Pressed=0;
 int CurrentlyEscapePressed=0;
 int CurrentlyBackspacePressed=0;
+
+
+
+void Init_Joy (void)
+{
+  int num_joy;
+
+  if (SDL_InitSubSystem (SDL_INIT_JOYSTICK) == -1)
+    {
+      fprintf(stderr, "Couldn't initialize SDL-Joystick: %s\n",SDL_GetError());
+      Terminate(ERR);
+    } else
+      DebugPrintf(1, "\nSDL Joystick initialisation successful.\n");
+
+
+  DebugPrintf (1, " %d Joysticks found!\n", num_joy = SDL_NumJoysticks ());
+
+  if (num_joy > 0)
+    joy = SDL_JoystickOpen (0);
+
+  if (joy)
+    {
+      DebugPrintf (1, "Identifier: %s\n", SDL_JoystickName (0));
+      DebugPrintf (1, "Number of Axes: %d\n", joy_num_axes = SDL_JoystickNumAxes(joy));
+      DebugPrintf (1, "Number of Buttons: %d\n", SDL_JoystickNumButtons(joy));
+
+      /* aktivate Joystick event handling */
+      SDL_JoystickEventState (SDL_ENABLE); 
+
+    }
+  else 
+    joy = NULL;  /* signals that no yoystick is present */
+
+
+  return;
+}
+
 
 void 
 ReactToSpecialKeys(void)
@@ -178,7 +212,6 @@ keyboard_update(void)
 	  break;
 	  /* Look for a keypress */
 	case SDL_KEYDOWN:
-
 	  // printf("\nSLD_KEYDOWN event detected...");
 	  // fflush(stdout);
 
@@ -591,14 +624,15 @@ keyboard_update(void)
 
 	case SDL_JOYAXISMOTION:
 	  axis = event.jaxis.axis;
-	  if (axis == 0 || ((num_joy_axes >= 5) && (axis == 3)) ) /* x-axis */
+	  if (axis == 0 || ((joy_num_axes >= 5) && (axis == 3)) ) /* x-axis */
 	    {
-	      if (event.jaxis.value > 15000)   /* about half tilted */
+	      joy_ax_values.x = event.jaxis.value;
+	      if (event.jaxis.value > joy_sensitivity*1000)   /* about half tilted */
 		{
 		  CurrentlyRightPressed = TRUE;
 		  CurrentlyLeftPressed = FALSE;
 		}
-	      else if (event.jaxis.value < -15000)
+	      else if (event.jaxis.value <  -joy_sensitivity*1000)
 		{
 		  CurrentlyLeftPressed = TRUE;
 		  CurrentlyRightPressed = FALSE;
@@ -609,8 +643,9 @@ keyboard_update(void)
 		  CurrentlyRightPressed= FALSE;
 		}
 	    }
-	  else if ((axis == 1) || ((num_joy_axes >=5) && (axis == 4))) /* y-axis */
+	  else if ((axis == 1) || ((joy_num_axes >=5) && (axis == 4))) /* y-axis */
 	    {
+	      joy_ax_values.y = event.jaxis.value;
 	      if (event.jaxis.value > joy_sensitivity*1000)  
 		{
 		  CurrentlyDownPressed = TRUE;
@@ -1111,4 +1146,4 @@ NoDirectionPressed (void)
 } // int NoDirectionPressed(void)
 
 
-#undef _keyboard_c
+#undef _intput_c
