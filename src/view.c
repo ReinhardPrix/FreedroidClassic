@@ -192,6 +192,11 @@ ShowInventoryMessages( void )
   int SlotNum;
   char InventoryText[2000];
   SDL_Rect InventoryRect;
+  SDL_Surface *InventoryImage;
+  char *fpath;
+  char fname[]="ne_inventory.png";
+
+  DebugPrintf (2, "\nvoid ShowInventoryMessages( ... ): Function call confirmed.");
 
   InventoryRect.x = 0;
   InventoryRect.y = User_Rect.y;
@@ -223,8 +228,16 @@ ShowInventoryMessages( void )
   User_Rect_Center_y=( User_Rect.y + User_Rect.h/2 );
   SDL_SetClipRect( ne_screen, &InventoryRect );
   SDL_FillRect( ne_screen, & InventoryRect , 0x0FFFFFF );
+ 
+  fpath = find_file ( fname , GRAPHICS_DIR, FALSE);
 
+  InventoryImage = IMG_Load( fpath );
 
+  SDL_BlitSurface ( InventoryImage , NULL , ne_screen , &InventoryRect );
+
+  SDL_FreeSurface( InventoryImage );
+
+  /*
   MyCursorX=InventoryRect.x;
   MyCursorY=InventoryRect.y;
   DisplayText( "See inventory: \n" , InventoryRect.x , InventoryRect.y , &InventoryRect );
@@ -244,6 +257,7 @@ ShowInventoryMessages( void )
     }
 
   DisplayText( "\n\nNo more items beyond that." , -1 , -1 , &InventoryRect );
+  */
 
   SDL_UpdateRect( ne_screen , InventoryRect.x , InventoryRect.y , InventoryRect.w , InventoryRect.h );
 
