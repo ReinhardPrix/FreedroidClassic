@@ -46,6 +46,7 @@
 
 void Init_Game_Data( char* Datafilename );
 char* DebriefingText;
+char* NextMissionName;
 
 /*@Function============================================================
 @Desc: This function loads all the constant variables of the game from
@@ -101,8 +102,6 @@ Get_Robot_Data ( void* DataPointer )
 #define ARMAMENT_BEGIN_STRING "Armament of this droid : "
 #define ADVANCED_FIGHTING_BEGIN_STRING "Advanced Fighting present in this droid : "
 #define NOTES_BEGIN_STRING "Notes concerning this droid : "
-
-
 
   if ( (RobotPointer = strstr ( DataPointer , ROBOT_SECTION_BEGIN_STRING ) ) == NULL)
     {
@@ -744,6 +743,7 @@ InitNewMission ( char *MissionName )
   char *EndTitlePointer;
   char *StartPointPointer;
   char *MissionTargetPointer;
+  char *NextMissionNamePointer;
   char Shipname[2000];
   char Liftname[2000];
   char Crewname[2000];
@@ -753,6 +753,7 @@ InitNewMission ( char *MissionName )
   int LiftnameLength;
   int GameDataNameLength;
   int EndTitleLength;
+  int NextMissionNameLength;
   int NumberOfStartPoints=0;
   int RealStartPoint=0;
   int StartingLevel=0;
@@ -779,6 +780,8 @@ InitNewMission ( char *MissionName )
 #define MISSION_TARGET_MUST_BE_CLASS_STRING "Mission target is to become class : "
 #define MISSION_TARGET_MUST_BE_TYPE_STRING "Mission target is to become type : "
 #define MISSION_TARGET_MUST_BE_ONE_STRING "Mission target is to overtake droid with marker : "
+#define NEXT_MISSION_NAME_STRING "After completing this mission, load mission : "
+
 
 
 
@@ -1125,6 +1128,26 @@ InitNewMission ( char *MissionName )
       printf("\nMission target MustBeType entry found!  It reads: %d" , Me.mission.MustBeType );
     }
 
+  //--------------------
+  // After the mission targets have been successfully loaded now,
+  // we need to add a pointer to the next mission, so that we will later
+  // now which mission to load after this mission has been completed.
+  //
+  if ( ( NextMissionNamePointer = strstr ( MainMissionPointer, NEXT_MISSION_NAME_STRING )) == NULL )
+    {
+      printf("\nERROR! NO MISSION NEXT MISSION NAME ENTRY FOUND! TERMINATING!");
+      Terminate(ERR);
+    }
+  else
+    {
+      NextMissionNamePointer += strlen ( NEXT_MISSION_NAME_STRING ) ;
+      NextMissionNameLength = strstr ( NextMissionNamePointer , "\n" ) - NextMissionNamePointer;
+      NextMissionName = malloc ( NextMissionNameLength +10 );
+      strncpy( NextMissionName , NextMissionNamePointer , NextMissionNameLength +1 );
+      NextMissionName[NextMissionNameLength] = 0;
+      printf("\nNext mission name found!  It reads: %s" , NextMissionName );
+    }
+  
   /* Reactivate the light on alle Levels, that might have been dark */
   for (i = 0; i < curShip.num_levels; i++)
     curShip.AllLevels[i]->empty = FALSE;
@@ -1523,6 +1546,7 @@ void
 CheckIfMissionIsComplete (void)
 {
   int Robot_Counter;
+  char LoadWhichMission[2000]=MAP_DIR;
 
   if ( Me.mission.KillAll )
     {
@@ -1559,7 +1583,10 @@ CheckIfMissionIsComplete (void)
     }
 
   EndTitle();
-  GameOver=TRUE;
+  // GameOver=TRUE;
+
+  strcat ( LoadWhichMission , NextMissionName );
+  InitNewMission ( LoadWhichMission );
   
 } // void CheckIfMissionIsComplete
 

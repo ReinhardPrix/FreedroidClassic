@@ -45,9 +45,10 @@ Possible Start Point : Level=5 XPos=3 YPos=1
 Possible Start Point : Level=6 XPos=3 YPos=3
 Possible Start Point : Level=7 XPos=2 YPos=1
 Mission target is to kill all droids : 0
-Mission target is to kill class of droids : 9
+Mission target is to kill class of droids : -1
 Mission target is to become class : -1
 Mission target is to become type : 1
+After completing this mission, load mission : new_mission_2.mission
 ** Start of Mission Briefing Text Section **
 * New Mission Briefing Text Subsection *
 It's the the year 2400.  
