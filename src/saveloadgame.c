@@ -59,7 +59,7 @@
  *
  * ---------------------------------------------------------------------- */
 void
-ShowSaveGameProgressMeter( int Percentage ) 
+ShowSaveLoadGameProgressMeter( int Percentage , int IsSavegame ) 
 {
   SDL_Rect TargetRect;
 
@@ -68,7 +68,10 @@ ShowSaveGameProgressMeter( int Percentage )
   TargetRect.w = Percentage ;
   TargetRect.h = 20 ;
 
-  ShowGenericButtonFromList ( SAVE_GAME_BANNER );
+  if ( IsSavegame) 
+    ShowGenericButtonFromList ( SAVE_GAME_BANNER );
+  else
+    ShowGenericButtonFromList ( LOAD_GAME_BANNER );
   SDL_FillRect ( Screen , &TargetRect , SDL_MapRGB ( Screen->format , 0x0FF , 0x0FF , 0x0FF ) ) ;
   UpdateScreenOverButtonFromList ( SAVE_GAME_BANNER );
 
@@ -293,7 +296,7 @@ SaveGame( void )
   // Now that we really start to save the game, it's time to display the save
   // game progress meter...
   //
-  ShowSaveGameProgressMeter( 0 ) ;
+  ShowSaveLoadGameProgressMeter( 0 , TRUE ) ;
 
   //--------------------
   // get home-directory to save in
@@ -439,12 +442,11 @@ freedroid-discussion@lists.sourceforge.net\n\
       // return ERR;
     }
   
-  // ShowSaveGameProgressMeter( 80 ) ;
-  ShowSaveGameProgressMeter( 99 ); 
+  ShowSaveLoadGameProgressMeter( 99 , TRUE ); 
 
   SaveThumbnailOfGame ( );
 
-  ShowSaveGameProgressMeter( 100 ) ;
+  ShowSaveLoadGameProgressMeter( 100 , TRUE ) ;
 
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint SaveGame( void ): end of function reached.");
   
@@ -533,6 +535,8 @@ LoadGame( void )
   // to be restored as well of course.
   //
   GameOver = FALSE; 
+
+  ShowSaveLoadGameProgressMeter( 0 , FALSE )  ;
 
   //--------------------
   // Before we decode the details of the old game, we load the map

@@ -1109,6 +1109,8 @@ LoadShip (char *filename)
       //
       GetAllAnimatedMapTiles ( curShip . AllLevels [ i ] );
 
+      ShowSaveLoadGameProgressMeter( (100*(i+1)) / level_anz , FALSE )  ;
+
     }
 
   //--------------------
@@ -1713,7 +1715,7 @@ int SaveShip(char *filename)
 
   DebugPrintf (2, "\nint SaveShip(char *shipname): real function call confirmed.");
   
-  ShowSaveGameProgressMeter( 0 ) ;
+  ShowSaveLoadGameProgressMeter( 0 , TRUE ) ;
 
   /* count the levels */
   level_anz = 0;
@@ -1819,7 +1821,7 @@ freedroid-discussion@lists.sourceforge.net\n\
     
       free(LevelMem);
 
-      ShowSaveGameProgressMeter( (int) ( (100 * (i+1)) / level_anz ) ); 
+      ShowSaveLoadGameProgressMeter( (int) ( (100 * (i+1)) / level_anz ) , TRUE ); 
     }
 
   //--------------------
