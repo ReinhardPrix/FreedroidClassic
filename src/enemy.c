@@ -10,16 +10,11 @@
  * $Author$
  *
  * $Log$
- * Revision 1.3  1993/10/25 18:18:57  prix
- * Wed Aug 11 20:33:40 1993: New EnemyEnmeyCollision handling
- * Sat Aug 14 09:23:30 1993: enemys warten nicht
- * Sat Aug 14 09:31:18 1993: firewait doesnt depend on guntype but on druid !!
- * Sat Aug 14 16:05:19 1993: Neues Tuning der Feind-aggressivitaet
- * Tue Aug 24 10:31:19 1993: better shuffleEnemys
- * Tue Aug 24 16:46:41 1993: written InitEnemys()
- * Sun Aug 29 10:49:57 1993: enemys shoot only if visible
- * Fri Sep 17 11:47:56 1993: waypoint - Suche beschleunigt
- * Thu Sep 30 14:14:28 1993: written ClassOfDruid()
+ * Revision 1.4  1994/06/19 16:18:12  prix
+ * Mon Oct 25 14:26:49 1993: enemy-collision modifiziert
+ * Mon Oct 25 14:30:47 1993: ShuffleEnemys() modifiziert
+ * Mon Oct 25 20:21:05 1993: debugroutine hinzugef"ugt
+ * Tue Oct 26 10:27:40 1993: enemys haben nun eine Speed !! (fuer collisions)
  *
  * Revision 1.3  1993/10/25  18:18:57  prix
  * Wed Aug 11 20:33:40 1993: New EnemyEnmeyCollision handling
