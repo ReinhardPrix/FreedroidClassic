@@ -229,7 +229,7 @@ allocations routine again.
 int
 ReInitPictures (void)
 {
-  SDL_FreeSurface( ne_blocks );
+  // SDL_FreeSurface( ne_blocks );
   SDL_FreeSurface( ne_static );
 
   return (InitPictures());
@@ -261,6 +261,7 @@ SetCombatScaleTo(float ResizeFactor)
 
   // SDL_SetColorKey( ne_blocks , 0 , 0 );
 
+  /*
   if (SDL_SetColorKey(ne_blocks, SDL_SRCCOLORKEY, 0x00000100 ) == -1 )
     {
       fprintf (stderr, "Transp setting by SDL_SetColorKey() failed: %s \n",
@@ -270,43 +271,45 @@ SetCombatScaleTo(float ResizeFactor)
 
   tmp=zoomSurface( ne_blocks , ResizeFactor , ResizeFactor , 0 );
   SDL_FreeSurface( ne_blocks );
-  ne_blocks = SDL_DisplayFormat(tmp);  /* the surface is copied !*/
+  ne_blocks = SDL_DisplayFormat(tmp);  // the surface is copied !
   if (ne_blocks == NULL) 
     {
       DebugPrintf (1, "\nSDL_DisplayFormat() has failed: %s\n", SDL_GetError());
       Terminate(ERR);
     }
   SDL_FreeSurface( tmp );
-  /* set the transparent color */
+  // set the transparent color 
+
   if (SDL_SetColorKey(ne_blocks, SDL_SRCCOLORKEY, ne_transp_key) == -1 )
     {
       fprintf (stderr, "Transp setting by SDL_SetColorKey() failed: %s \n",
 	       SDL_GetError());
       Terminate(ERR);
     }
+*/
 
   for (i=0; i< NUM_MAP_BLOCKS ; i++)
     {
-      ne_map_block[i].x *= ResizeFactor;
-      ne_map_block[i].y *= ResizeFactor;
-      ne_map_block[i].w *= ResizeFactor;
-      ne_map_block[i].h *= ResizeFactor;
+      // ne_map_block[i].x *= ResizeFactor;
+      // ne_map_block[i].y *= ResizeFactor;
+      // ne_map_block[i].w *= ResizeFactor;
+      // ne_map_block[i].h *= ResizeFactor;
     }
 
   for (i=0; i< DROID_PHASES ; i++)
     {
-      ne_influ_block[i].x *= ResizeFactor;
-      ne_influ_block[i].y *= ResizeFactor;
-      ne_influ_block[i].w *= ResizeFactor;
-      ne_influ_block[i].h *= ResizeFactor;
+      // ne_influ_block[i].x *= ResizeFactor;
+      // ne_influ_block[i].y *= ResizeFactor;
+      // ne_influ_block[i].w *= ResizeFactor;
+      // ne_influ_block[i].h *= ResizeFactor;
     }
 
   for (i=0; i< DROID_PHASES ; i++)
     {
-      ne_droid_block[i].x *= ResizeFactor;
-      ne_droid_block[i].y *= ResizeFactor;
-      ne_droid_block[i].w *= ResizeFactor;
-      ne_droid_block[i].h *= ResizeFactor;
+      // ne_droid_block[i].x *= ResizeFactor;
+      // ne_droid_block[i].y *= ResizeFactor;
+      // ne_droid_block[i].w *= ResizeFactor;
+      // ne_droid_block[i].h *= ResizeFactor;
     }
 
   /*
@@ -331,10 +334,10 @@ SetCombatScaleTo(float ResizeFactor)
 
   for (i=0; i< DIGITNUMBER ; i++)
     {
-      ne_digit_block[i].x *= ResizeFactor;
-      ne_digit_block[i].y *= ResizeFactor;
-      ne_digit_block[i].w *= ResizeFactor;
-      ne_digit_block[i].h *= ResizeFactor;
+      // ne_digit_block[i].x *= ResizeFactor;
+      // ne_digit_block[i].y *= ResizeFactor;
+      // ne_digit_block[i].w *= ResizeFactor;
+      // ne_digit_block[i].h *= ResizeFactor;
     }
 
   Block_Width *= ResizeFactor;
@@ -803,17 +806,6 @@ InitPictures (void)
   SDL_Surface *tmp2;
   int block_line = 0;   /* keep track of line in ne_blocks we're writing */
   char *fpath;
-  char *ColoredBlockFiles[] = {
-    "ne_block_red.gif",
-    "ne_block_yellow.gif",
-    "ne_block_green.gif",
-    "ne_block_gray.gif",
-    "ne_block_blue.gif",
-    "ne_block_turquoise.gif",
-    "ne_block_dark.gif",
-    NULL
-  };
-
 
   Block_Width=INITIAL_BLOCK_WIDTH;
   Block_Height=INITIAL_BLOCK_HEIGHT;
@@ -833,8 +825,8 @@ InitPictures (void)
   /* 
      create the internal storage for all our blocks 
   */
-  tmp = SDL_CreateRGBSurface( 0 , NUM_MAP_BLOCKS*Block_Width,
-			      18*Block_Height, ne_bpp, 0, 0, 0, 0);
+  //tmp = SDL_CreateRGBSurface( 0 , NUM_MAP_BLOCKS*Block_Width,
+  //		      18*Block_Height, ne_bpp, 0, 0, 0, 0);
   tmp2 = SDL_CreateRGBSurface(0, SCREENLEN, SCREENHEIGHT, ne_bpp, 0, 0, 0, 0);
   if ( (tmp == NULL) || (tmp2 == NULL) )
     {
@@ -845,12 +837,14 @@ InitPictures (void)
   /* 
    * convert this to display format for fast blitting 
    */
-  ne_blocks = SDL_DisplayFormat(tmp);  /* the surface is copied !*/
+  /*
+  ne_blocks = SDL_DisplayFormat(tmp);  // the surface is copied !
   if (ne_blocks == NULL) 
     {
       DebugPrintf (1, "\nSDL_DisplayFormat() has failed: %s\n", SDL_GetError());
       return (FALSE);
     }
+  */
 
   ne_static = SDL_DisplayFormat(tmp2);  /* the second surface is copied !*/
   if (ne_static == NULL) 
@@ -858,7 +852,7 @@ InitPictures (void)
       DebugPrintf (1, "\nSDL_DisplayFormat() has failed: %s\n", SDL_GetError());
       return (FALSE);
     }
-  SDL_FreeSurface (tmp); /* and free the old one */
+  // SDL_FreeSurface (tmp); /* and free the old one */
 
   /* set the transparent color */
   /*
@@ -869,13 +863,14 @@ InitPictures (void)
       return (FALSE);
     }
   */
+  /*
   if (SDL_SetColorKey(ne_blocks, 0 , 0 ) == -1 )
     {
       fprintf (stderr, "Transp setting by SDL_SetColorKey() failed: %s \n",
 	       SDL_GetError());
       return (FALSE);
     }
-
+  */
 
   if (SDL_SetColorKey(ne_static, SDL_SRCCOLORKEY, ne_transp_key) == -1 )
     {
@@ -889,8 +884,8 @@ InitPictures (void)
    * and initialise the block-coordinates 
    */
 
-  fpath = find_file (ColoredBlockFiles[ 0 ], GRAPHICS_DIR, TRUE);
-  ne_map_block = ne_get_blocks (fpath, NUM_MAP_BLOCKS, 9, 0, 0);
+  // fpath = find_file (ColoredBlockFiles[ 0 ], GRAPHICS_DIR, TRUE);
+  // ne_map_block = ne_get_blocks (fpath, NUM_MAP_BLOCKS, 9, 0, 0);
 
   Load_MapBlock_Surfaces();
   
@@ -976,34 +971,6 @@ SetColors (int FirstCol, int PalAnz, char *PalPtr)
       MyPalPtr += 3;
     }
 }				// void SetColors(...)
-
-/*@Function============================================================
-@Desc: 
-
- @Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-SetLevelColor (int ColorEntry)
-{
-  char *fpath;
-  char *ColoredBlockFiles[] = {
-    "ne_block_red.gif",
-    "ne_block_yellow.gif",
-    "ne_block_green.gif",
-    "ne_block_gray.gif",
-    "ne_block_blue.gif",
-    "ne_block_turquoise.gif",
-    "ne_block_dark.gif",
-    NULL
-  };
-
-  fpath = find_file (ColoredBlockFiles[ColorEntry], GRAPHICS_DIR, TRUE);
-  ne_map_block = ne_get_blocks (fpath, NUM_MAP_BLOCKS, 9, 0, 0);
-
-  
-} // void SetLevelColor(int ColorEntry)
-
 
 /*-----------------------------------------------------------------
  * Initialise the Video display and graphics engine
@@ -1160,19 +1127,6 @@ Sorry...\n\
 
 } /* InitVideo () */
 
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-UnfadeLevel (void)
-{
-
-  SetLevelColor( CurLevel->color );
-}				// void UnfadeLevel(void)
-
 /* *********************************************************************** */
 
 void
@@ -1252,10 +1206,8 @@ LadeZeichensatz (char *Zeichensatzname)
 void
 LevelGrauFaerben (void)
 {
-  SetLevelColor (PD_DARK);
-  Activate_Conservative_Frame_Computation();  // to prevent a "jump" when the level turns gray
-                                               // observed and reported by rp.
-}
+  CurLevel->color = PD_DARK;
+}; 
 
 
 /*@Function============================================================

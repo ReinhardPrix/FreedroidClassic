@@ -1067,7 +1067,7 @@ InitNewMission ( char *MissionName )
   Me.MissionTimeElapsed=0;
 
   /* Set colors of current level NOTE: THIS REQUIRES CurLevel TO BE INITIALIZED */
-  SetLevelColor (CurLevel->color); 
+  // SetLevelColor (CurLevel->color); 
 
   /* set correct Influ color */
   // SetPalCol (INFLUENCEFARBWERT, Mobilecolor.rot, Mobilecolor.gruen,

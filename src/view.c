@@ -194,13 +194,14 @@ Assemble_Combat_Picture (int mask)
 	}			// for(col) 
     }				// for(line) 
 
+  /*
   if (SDL_SetColorKey(ne_blocks, SDL_SRCCOLORKEY, ne_transp_key) == -1 )
     {
       fprintf (stderr, "Transp setting by SDL_SetColorKey() failed: %s \n",
 	       SDL_GetError());
       Terminate(ERR);
     }
-
+  */
 
   if (mask & ONLY_SHOW_MAP) 
     {
@@ -342,8 +343,9 @@ PutInfluence ( int x, int y)
       alpha_value = (int) ( ( 256 - alpha_offset ) * 
 			    fabsf( 0.5 * Me.MissionTimeElapsed - floor( 0.5 * Me.MissionTimeElapsed ) - 0.5 ) + 
 			    ( alpha_offset ) );
-
+      /*
       SDL_SetAlpha( ne_blocks , SDL_SRCALPHA , alpha_value );
+      */
 
       // ... and also maybe start a new cry-sound
 
@@ -427,8 +429,9 @@ PutInfluence ( int x, int y)
   // Now that all fading effects are done, we can restore the blocks surface to OPAQUE,
   // which is the oposite of TRANSPARENT :)
   //
+  /*
   SDL_SetAlpha( ne_blocks , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-
+  */
   //--------------------
   // Maybe the influencer has something to say :)
   // so let him say it..

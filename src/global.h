@@ -199,7 +199,6 @@ EXTERN const SDL_VideoInfo *ne_vid_info;/* info about current video mode */
 EXTERN color ne_transp_rgb;             /* RGB of transparent color */
 EXTERN int ne_bpp; 			/* bits per pixel */
 EXTERN Uint32 ne_transp_key;            /* key of transparent color */
-EXTERN SDL_Surface *ne_blocks;          /* here we collect all combat game blocks */
 EXTERN SDL_Surface *ne_static;          /* here we collect all non-resizable blocks */
 EXTERN SDL_Surface *ne_console_surface;
 EXTERN SDL_Surface *ship_off_pic;    	/* Side-view of ship: lights off */
@@ -207,10 +206,6 @@ EXTERN SDL_Surface *ship_on_pic;	/* Side-view of ship: lights on */
 
 EXTERN SDL_Rect level_rect[MAX_LEVELS]; /* rect's of levels in side-view */
 EXTERN SDL_Rect liftrow_rect[MAX_LIFT_ROWS]; /* the lift-row rect's in side-view*/
-EXTERN SDL_Rect *ne_map_block;		/* arrays of block positions */
-EXTERN SDL_Rect *ne_droid_block;
-EXTERN SDL_Rect *ne_influ_block;
-EXTERN SDL_Rect *ne_digit_block;
 EXTERN SDL_Rect *ne_rahmen_block;
 EXTERN SDL_Surface *ne_console_surface;
 

@@ -176,7 +176,7 @@ EnterLift (void)
   ClearGraphMem ( );
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
 
-  UnfadeLevel ();
+  // UnfadeLevel ();
 
   /* Wenn Level leer: grau faerben */
   if (CurLevel->empty)

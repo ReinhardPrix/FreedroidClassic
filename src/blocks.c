@@ -99,7 +99,7 @@ ne_get_blocks (char *picfile, int num_blocks, int blocks_per_line,
       ret[i].y = target_line*Block_Height;
       ret[i].w = Block_Width;
       ret[i].h = Block_Height;
-      SDL_BlitSurface (tmp, &rect, ne_blocks, &ret[i]);
+      // SDL_BlitSurface (tmp, &rect, ne_blocks, &ret[i]);
     }
   SDL_FreeSurface (tmp);
 
@@ -139,7 +139,7 @@ ne_get_digit_blocks (char *picfile, int num_blocks, int blocks_per_line,
       ret[i].y = target_line*Block_Height;
       ret[i].w = INITIAL_DIGIT_LENGTH;
       ret[i].h = INITIAL_DIGIT_HEIGHT;
-      SDL_BlitSurface (tmp, &rect, ne_blocks, &ret[i]);
+      // SDL_BlitSurface (tmp, &rect, ne_blocks, &ret[i]);
     }
 
   SDL_FreeSurface (tmp);

@@ -839,7 +839,7 @@ Teleport (int LNum, int X, int Y)
 
   LeaveLiftSound ();
 
-  UnfadeLevel ();
+  // UnfadeLevel ();
 
 } /* Teleport() */
 
