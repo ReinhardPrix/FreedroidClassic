@@ -858,7 +858,7 @@ CheckBlastCollisions (int num)
   // Now we check for enemys, that might have stepped into this
   // one blasts area of effect...
   //
-  for (i = 0; i < NumEnemys; i++)
+  for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i ++ )
     {
       if ((AllEnemys[i].Status == OUT)
 	  || (AllEnemys[i].pos.z != level))

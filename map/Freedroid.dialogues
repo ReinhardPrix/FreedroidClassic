@@ -867,7 +867,7 @@ End of chat dialog for character="DIX"
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
 
-Beginning of new chat dialog for character="SOR"
+Beginning of new chat dialog for character="Sorenson"
 
   //**********************************************************************
   // Here comes the dialog interface for conversation with SORENSON, the
@@ -886,10 +886,13 @@ Subtitle=" Welcome then to this camp!  I'm Sorenson, teacher of magical abilitie
 ReplySample="SOR_Welcome_Then_To_0.wav"
 ChangeOption=2 ChangeToValue=1 ; // this should allow to ask about the magic abilities...
 ChangeOption=0 ChangeToValue=0 ; // this should disallow to be new again...
+ChangeOption=1 ChangeToValue=1 ; // this should disallow to be new again...
 
 ----------------------------------------------------------------------
 
-
+New Option Nr=1 OptionText="[TRADE]"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+DoSomethingExtra="InitTradeWithCharacter:Sorenson" 
 
 ----------------------------------------------------------------------
 
@@ -1015,7 +1018,7 @@ ReplySample="Tux_See_You_Later_0.wav"
 Subtitle="NO_SUBTITLE_AND_NO_WAITING_EITHER"
 ReplySample="SOR_I_Hope_You_0.wav"
 
-End of chat dialog for character="SOR"
+End of chat dialog for character="Sorenson"
 
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------

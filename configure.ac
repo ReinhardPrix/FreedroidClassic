@@ -148,6 +148,7 @@ AC_CONFIG_FILES([Makefile
 		graphics/items/red_dilitium_crystal/Makefile 
 		graphics/items/small_shield/Makefile 
 		graphics/items/sniper_wristband/Makefile 
+		graphics/items/spellbook/Makefile 
 		graphics/items/standard_shield/Makefile 
 		graphics/items/superconducting_relay_unit/Makefile 
 		graphics/items/tachyon_converter/Makefile 

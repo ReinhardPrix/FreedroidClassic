@@ -853,7 +853,7 @@ Cheatmenu (void)
 
 	case 'l': /* robot list of this deck */
 	  l = 0; /* line counter for enemy output */
-	  for (i = 0; i < NumEnemys; i++)
+	  for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i ++ )
 	    {
 	      if (AllEnemys[i].pos.z == CurLevel->levelnum) 
 		{
@@ -888,7 +888,7 @@ Cheatmenu (void)
 		  printf_SDL (Screen, -1, -1, "\n" );
 
 		} /* if (enemy on current level)  */
-	    } /* for (i<NumEnemys) */
+	    } /* for ( i < Number_Of_Droids_On_Ship ) */
 
 	  printf_SDL (Screen, 15, -1," --- END --- \n");
 	  printf_SDL (Screen, 15, -1," BTW:  Number_Of_Droids_On_Ship: %d \n" , Number_Of_Droids_On_Ship );
@@ -919,7 +919,7 @@ Cheatmenu (void)
 			  Druidmap[AllEnemys[i].type].druidname,
 			  (int)AllEnemys[i].energy,
 			  AllEnemys[i].speed.x);
-	    } /* for (i<NumEnemys) */
+	    } /* for ( i < Number_Of_Droids_On_Ship ) */
 
 	  printf_SDL (Screen, -1, -1, " --- END ---\n");
 	  getchar_raw ();
@@ -927,7 +927,7 @@ Cheatmenu (void)
 
 
 	case 'd': /* destroy all robots on this level, haha */
-	  for (i = 0; i < NumEnemys; i++)
+	  for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i ++ )
 	    {
 	      if (AllEnemys[i].pos.z == CurLevel->levelnum)
 		AllEnemys[i].energy = -100;

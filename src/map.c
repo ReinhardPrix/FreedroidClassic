@@ -2674,7 +2674,7 @@ the dialog section name for one special force droid/character.",
 
     } // while Special force droid found...
 
-  NumEnemys=FreeAllEnemysPosition+1; // we silently assume monotonely increasing FreePosition index. seems ok.
+  CountNumberOfDroidsOnShip (  );
 
 }; // void GetThisLevelsSpecialForces ( char* SearchPointer )
 
@@ -2824,6 +2824,7 @@ MoveLevelDoors ( int PlayerNum )
   // set from within the theme, but that may be done later...
   //
   if ( LevelDoorsNotMovedTime < Time_For_Each_Phase_Of_Door_Movement ) return;
+
   //--------------------
   // But only the last of these function calls for each player may 
   // reset the time counter, or the players after the first will
@@ -2847,7 +2848,11 @@ MoveLevelDoors ( int PlayerNum )
 
       // no more doors?
       if ( ( doorx == 0 ) && ( doory == 0 ) )
-	break;
+	{
+	  // DebugPrintf ( 0 , "\nNumber of last door moved on this level : %d." , i );
+	  // DebugPrintf ( 0 , "\nNumber_Of_Droids_On_Ship : %d." , Number_Of_Droids_On_Ship );
+	  break;
+	}
 
       Pos = & ( DoorLevel -> map [doory] [doorx] ) ;
 
@@ -2889,12 +2894,11 @@ MoveLevelDoors ( int PlayerNum )
       else 
 	{
 	  //--------------------
-	  // But if the influencer is not close enough, then we must
+	  // But if the Tux is not close enough, then we must
 	  // see if perhaps one of the enemys is close enough, so that
 	  // the door would still get opened instead of closed.
 	  //
-	  // for (j = 0; j < NumEnemys; j++)
-	  for (j = 0; j < NumEnemys; j++)
+	  for ( j = 0 ; j < Number_Of_Droids_On_Ship ; j ++ )
 	    {
 	      /* ignore druids that are dead or on other levels */
 	      if ( ( AllEnemys[j].Status == OUT ) ||
@@ -2920,8 +2924,8 @@ MoveLevelDoors ( int PlayerNum )
 	    }			/* for */
 
 	  /* No druid near: close door if it isnt closed */
-	  if (j == NumEnemys)
-	    if ((*Pos != V_SHUT_DOOR) && (*Pos != H_SHUT_DOOR))
+	  if ( j == Number_Of_Droids_On_Ship )
+	    if ( ( *Pos != V_SHUT_DOOR ) && ( *Pos != H_SHUT_DOOR ) )
 	      *Pos -= 1;
 
 	}			/* else */

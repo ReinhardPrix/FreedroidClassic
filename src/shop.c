@@ -230,6 +230,13 @@ AssembleItemListForTradeCharacter ( item* ListToBeFilled , int ShopCharacterCode
       ListPointer->type = ITEM_EMP_SHOCK_GRENADE; ListPointer++;
       ListPointer->type = ITEM_PLASMA_GRENADE; ListPointer++;
     }
+  else if ( ShopCharacterCode == PERSON_SORENSON )
+    {
+      ListPointer->type = ITEM_SPELLBOOK_OF_HEALING; ListPointer++;
+      ListPointer->type = ITEM_SPELLBOOK_OF_EXPLOSION_CIRCLE; ListPointer++;
+      ListPointer->type = ITEM_SPELLBOOK_OF_EXPLOSION_RAY; ListPointer++;
+      ListPointer->type = ITEM_SPELLBOOK_OF_TELEPORT_HOME; ListPointer++;
+    }
   else
     {
       GiveStandardErrorMessage ( "AssembleItemListForTradeCharacter( ... )" , "\

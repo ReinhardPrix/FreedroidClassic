@@ -111,8 +111,6 @@ EXTERN event_trigger AllEventTriggers[ MAX_EVENT_TRIGGERS ];
 EXTERN triggered_action AllTriggeredActions[ MAX_TRIGGERED_ACTIONS_IN_GAME ];
 EXTERN char ServerName[ 10000 ];
 
-EXTERN int NumEnemys;
-
 EXTERN Level CurLevel;		/* the current level data */
 EXTERN ship curShip;		/* the current ship-data */
 
@@ -144,11 +142,8 @@ EXTERN int classic_user_rect;   /* use the User-Rect dimensions of the original 
 EXTERN mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] ;
 EXTERN int Item_Held_In_Hand;
 EXTERN point InventorySize;
-// EXTERN item AllItems[ MAX_ITEMS_PER_LEVEL ];
 EXTERN itemspec ItemMap[ MAX_ITEM_TYPES_IN_GAME ];
 
-// EXTERN SDL_Surface* ItemSurfaceList[ NUMBER_OF_ITEM_PICTURES ];
-// EXTERN item_image_spec ItemImageList[ NUMBER_OF_ITEM_PICTURES ];
 EXTERN SDL_Surface* MouseCursorImageList[ NUMBER_OF_MOUSE_CURSOR_PICTURES ];
 EXTERN SDL_Surface* SpellLevelButtonImageList[ NUMBER_OF_SKILL_LEVELS ];
 
