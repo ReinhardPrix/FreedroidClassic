@@ -113,6 +113,13 @@ char* floor_tile_filenames [ ALL_ISOMETRIC_FLOOR_TILES ] =
 
     "iso_miscellaneous_floor_0023.png" ,
     
+    "iso_sand_floor_0001.png" , 
+    "iso_sand_floor_0002.png" ,
+    "iso_sand_floor_0003.png" ,
+    "iso_sand_floor_0004.png" ,
+    "iso_sand_floor_0005.png" ,
+    "iso_sand_floor_0006.png" ,
+
     // , "ERROR_UNUSED.png" , 
   };
 
