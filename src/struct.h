@@ -369,8 +369,11 @@ typedef struct
   double health;		/* the max. possible energy in the moment */
   double energy;		/* current energy level */
   double mana;                  // current mana level 
+
   double firewait;		// time remaining, until the weapon is ready to fire again...
   double phase;			/* the current phase of animation */
+  float weapon_swing_time;	/* How long is the current weapon swing in progress (in seconds of course) */
+
   int autofire;			/* Status of the Firecontrolautomatics */
   int vneut;			/* Status of Velocityneutralizer for the gun */
   int MyFCU;			/* FCU (Fire Control Unit) installed */

@@ -24,13 +24,12 @@
  */
 
 /* ----------------------------------------------------------------------
- * Desc: contains block operating functions, that is when you want to
- * 	put something on the visible screen
- *      of the paradroid, DO NOT DO IT YOURSELF!  Use one of the functions
- *	in here.
- *      These functions already take into acount the position of the paradoid,
- * 	so you do not have to worry about where to put anything, and only have
- *	to supply map coordinates.  Very handy.
+ * This file contains block operating functions, that is when you want to
+ * put something on the visible screen, DO NOT DO IT YOURSELF!  Use one of 
+ * the functions in here.  These functions already take into acount the 
+ * position of the player character so you do not have to worry about 
+ * where to put anything, and only have to supply map coordinates.  
+ * Very handy.
  * ---------------------------------------------------------------------- */
 
 #define _blocks_c
@@ -42,14 +41,10 @@
 #include "global.h"
 #include "proto.h"
 
-/* *********************************************************************** */
-
-/*
-----------------------------------------------------------------------
-This function loads the Blast image and decodes it into the multiple
-small Blast surfaces.
-----------------------------------------------------------------------
-*/
+/* ----------------------------------------------------------------------
+ * This function loads the Blast image and decodes it into the multiple
+ * small Blast surfaces.
+ * ---------------------------------------------------------------------- */
 void 
 Load_Blast_Surfaces( void )
 {
@@ -396,6 +391,9 @@ Load_Tux_Surfaces( void )
   int i;
   char *fpath;
 
+#define TUX_WIDTH 130
+#define TUX_HEIGHT 130
+
   fpath = find_file ( NE_DROID_BLOCK_FILE , GRAPHICS_DIR, TRUE);
 
   Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
@@ -403,15 +401,15 @@ Load_Tux_Surfaces( void )
 
   for ( i=0 ; i < TUX_PHASES ; i++ )
     {
-      tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, vid_bpp, 0, 0, 0, 0);
+      tmp_surf = SDL_CreateRGBSurface( 0 , TUX_WIDTH , TUX_HEIGHT , vid_bpp , 0 , 0 , 0 , 0 );
       SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
       TuxSurfacePointer[i] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
       SDL_SetColorKey( TuxSurfacePointer[i] , 0 , 0 ); // this should clear any color key in the dest surface
       // Now we can copy the image Information
-      Source.x=i*(Block_Height+2);
+      Source.x=i*( TUX_WIDTH + 2 );
       Source.y=2*(Block_Width+2);
-      Source.w=Block_Width;
-      Source.h=Block_Height;
+      Source.w=TUX_WIDTH;
+      Source.h=TUX_HEIGHT;
       Target.x=0;
       Target.y=0;
       Target.w=Block_Width;
