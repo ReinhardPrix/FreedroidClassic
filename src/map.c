@@ -1972,13 +1972,29 @@ CountNumberOfDroidsOnShip ( void )
     {
       type = AllEnemys[i].type;
       if ( type == (-1) ) continue;  // Do nothing to unused entries
+      Number_Of_Droids_On_Ship++;
+    }
+}; // void CountNumberOfDroidsOnShip ( void )
+
+/* ----------------------------------------------------------------------
+ * This function is used to calculate the number of the droids on the 
+ * ship, which is a global variable.
+ * ---------------------------------------------------------------------- */
+void
+ReviveAllDroidsOnShip ( void )
+{
+  int i;
+  int type;
+
+  for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
+    {
+      type = AllEnemys[i].type;
+      if ( type == (-1) ) continue;  // Do nothing to unused entries
       AllEnemys[i].energy = Druidmap[type].maxenergy;
       AllEnemys[i].Status = !OUT;
       AllEnemys[i].has_greeted_influencer = FALSE ;
-      Number_Of_Droids_On_Ship++;
     }
-
-}; // void CountNumberOfDroidsOnShip ( void )
+}; // void ReviveAllDroidsOnShip ( void )
 
 /* -----------------------------------------------------------------
  * This function initializes all enemys, which means that enemys are
@@ -2052,6 +2068,7 @@ GetCrew (char *filename)
   // droids to "full" which means to the maximum of each type.
   //
   CountNumberOfDroidsOnShip ();
+  ReviveAllDroidsOnShip ();
 
   return (OK);
 }; // int GetCrew ( ... ) 
