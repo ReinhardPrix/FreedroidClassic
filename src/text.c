@@ -448,15 +448,12 @@ ChatWithFriendlyDroid( int Enum )
       // Chat_Window.x , Chat_Window.y , &Chat_Window , Background );
       
       SOR_DialogMenuTexts [ 0 ] = " Chandra said you might have something to do for me. " ;
-      SOR_DialogMenuTexts [ 1 ] = " Hi!  I'm new here. " ;
+      SOR_DialogMenuTexts [ 1 ] = " Hi!  I'm new here. " ; // this is enabled ONLY ONCE in InitNewMissionList!
       SOR_DialogMenuTexts [ 2 ] = " What can you teach me about mental abilities? " ;
-      SOR_DialogMenuTexts [ 3 ] = " About this coffee machine... " ;
-
-      SOR_DialogMenuTexts [ 4 ] = " What are these magnetic storms really? " ;
-      
-      SOR_DialogMenuTexts [ 5 ] = " Why didn't you fetch the coffee machine yourself in all the time?" ;
-      SOR_DialogMenuTexts [ 6 ] = " I've found your coffee machine.  Here you are." ;
-      SOR_DialogMenuTexts [ 8 ] = " I'll get the coffee machine for you." ;
+      SOR_DialogMenuTexts [ 3 ] = " Mind +1 (costs 1 ability point)" ;
+      SOR_DialogMenuTexts [ 4 ] = " Mind +5 (costs 5 ability points)" ;
+      SOR_DialogMenuTexts [ 5 ] = " Learn Remote Strike Spell (5 ability points, 100 cash) ";
+      SOR_DialogMenuTexts [ 6 ] = " BACK ";
       SOR_DialogMenuTexts [ END_ANSWER ] = " END ";
       
       DisplaySubtitle( " Welcome Traveller! " , Background );
@@ -479,61 +476,52 @@ ChatWithFriendlyDroid( int Enum )
 	    {
 	    case 1:
 	      PlayOnceNeededSoundSample( "Tux_SOR_Chandra_Said_You_0.wav" , TRUE );
+	      /*
 	      DisplaySubtitle( " Oh Yes! " , Background );
 	      PlayOnceNeededSoundSample( "SOR_Oh_Yes_0.wav" , TRUE );
 	      DisplaySubtitle( " You are the one who wants to get in contact with the resistance then. " , Background );
 	      PlayOnceNeededSoundSample( "SOR_You_Are_The_0.wav" , TRUE );
 	      DisplaySubtitle( " Chandra told me about you and indeed I do have a test for you. " , Background );
 	      PlayOnceNeededSoundSample( "SOR_Chandra_Told_Me_0.wav" , TRUE );
+	      */
 	      Me [ 0 ] . SOR_Chat_Flags[ 0 ] = 0 ; // don't say this twice...
-	      Me [ 0 ] . SOR_Chat_Flags[ 1 ] = 1 ; // this should allow to ask 'so?'
+	      // Me [ 0 ] . SOR_Chat_Flags[ 1 ] = 1 ; // this should allow to ask 'so?'
 	      break;
 	    case 2:
-	      PlayOnceNeededSoundSample( "Tux_SOR_So_0.wav" , TRUE );
-	      DisplaySubtitle( " After the revolution, I was forced to flee to this place. " , Background );
-	      PlayOnceNeededSoundSample( "SOR_After_The_Revolution_0.wav" , TRUE );
-	      DisplaySubtitle( " Most of my belongings stayed behind. " , Background );
-	      PlayOnceNeededSoundSample( "SOR_Most_Of_My_0.wav" , TRUE );
-	      DisplaySubtitle( " Among them is an old coffee machine, an inheritance from my father. " , Background );
-	      PlayOnceNeededSoundSample( "SOR_Among_Them_Is_0.wav" , TRUE );
-	      DisplaySubtitle( " Now here is what I want you to do: Go to the private quarters level of my former place." , Background );
-	      PlayOnceNeededSoundSample( "SOR_Now_Here_Is_0.wav" , TRUE );
-	      DisplaySubtitle( " Find the coffee machine and bring it back to me. " , Background );
-	      PlayOnceNeededSoundSample( "SOR_Find_The_Coffee_0.wav" , TRUE );
-	      DisplaySubtitle( " If you do that, I'll tell chandra that I'd approve if if you were brought in contact with the resistance. " , Background );
-	      PlayOnceNeededSoundSample( "SOR_If_You_Do_0.wav" , TRUE );
-	      Me [ 0 ] . SOR_Chat_Flags[ 1 ] = 0 ; // don't say this twice in one dialog
-	      Me [ 0 ] . SOR_Chat_Flags[ 2 ] = 1 ; // this should allow to ask how-can-i.. 
-	      Me [ 0 ] . SOR_Chat_Flags[ 5 ] = 1 ; // this should allow to ask why-didnt-you...
-	      Me [ 0 ] . SOR_Chat_Flags[ 8 ] = 1 ; // this should allow to agree on the task...
+	      PlayOnceNeededSoundSample( "Tux_SOR_Im_New_In_0.wav" , TRUE );
+	      DisplaySubtitle( " Welcome then to this camp!  I'm Sorenson, teacher of magical abilities. " , Background );
+	      PlayOnceNeededSoundSample( "SOR_Welcome_Then_To_0.wav" , TRUE );
+	      Me [ 0 ] . SOR_Chat_Flags[ 2 ] = 1 ; // this should allow to ask about the magic abilities...
+	      Me [ 0 ] . SOR_Chat_Flags[ 1 ] = 0 ; // this should disallow to be new again...
 	      break;
 	    case 3:
-	      PlayOnceNeededSoundSample( "Tux_SOR_How_Can_I_0.wav" , TRUE );
-	      DisplaySubtitle( " As you might know, a great magnetic storm has shaken the universe. " , Background );
-	      PlayOnceNeededSoundSample( "SOR_As_You_Might_0.wav" , TRUE );
-	      DisplaySubtitle( " Almost all of the existing teleporter connections were disrupted or redirected. " , Background );
-	      PlayOnceNeededSoundSample( "SOR_Almost_All_Of_0.wav" , TRUE );
-	      DisplaySubtitle( " It was during this storm that you arrived at our teleporter terminal." , Background );
-	      PlayOnceNeededSoundSample( "SOR_It_Was_During_0.wav" , TRUE );
-	      DisplaySubtitle( " But anyway, the teleporter now points back to my former home. " , Background );
-	      PlayOnceNeededSoundSample( "SOR_But_Anyway_The_0.wav" , TRUE );
-	      Me [ 0 ] . SOR_Chat_Flags[ 2 ] = 0 ; // don't say this twice in one dialgo
-	      Me [ 0 ] . SOR_Chat_Flags[ 4 ] = 1 ; // this should allow to ask about the mag-storm...
+	      PlayOnceNeededSoundSample( "Tux_SOR_What_Can_You_0.wav" , TRUE );
+	      Me [ 0 ] . SOR_Chat_Flags[ 3 ] = 1 ; // this enables some learning option
+	      Me [ 0 ] . SOR_Chat_Flags[ 4 ] = 1 ; // this enables some learning option
+	      Me [ 0 ] . SOR_Chat_Flags[ 5 ] = 1 ; // this enables some learning option
+	      Me [ 0 ] . SOR_Chat_Flags[ 6 ] = 1 ; // this enables to go back from learning
+	      Me [ 0 ] . SOR_Chat_Flags[ 2 ] = 0 ; // but disable to ask about learning options now again
+	      Me [ 0 ] . SOR_Chat_Flags[ END_ANSWER ] = 0 ; // this disables to quit immediately	      	      
 	      break;
 	    case 4:
-	      PlayOnceNeededSoundSample( "Tux_SOR_About_This_Coffee_0.wav" , TRUE );
+	      // PlayOnceNeededSoundSample( "Tux_SOR_I_Want_To_0.wav" , TRUE );
 	      break;
 	    case 5:
-	      PlayOnceNeededSoundSample( "Tux_SOR_What_Are_These_0.wav" , TRUE );
-	      Me [ 0 ] . SOR_Chat_Flags[ 4 ] = 0 ; // don't say this twice in one dialog
+	      // PlayOnceNeededSoundSample( "Tux_SOR_What_Are_These_0.wav" , TRUE );
+	      // Me [ 0 ] . SOR_Chat_Flags[ 4 ] = 0 ; // don't say this twice in one dialog
 	      break;
 	    case 6:
-	      PlayOnceNeededSoundSample( "Tux_SOR_Why_Didnt_You_0.wav" , TRUE );
-	      Me [ 0 ] . SOR_Chat_Flags[ 5 ] = 0 ; // don't say this twice in one dialog
+	      PlayOnceNeededSoundSample( "Tux_SOR_I_Want_Learn_0.wav" , TRUE );
+	      // Me [ 0 ] . SOR_Chat_Flags[ 5 ] = 0 ; // don't say this twice in one dialog
 	      break;
 	    case 7:
-	      PlayOnceNeededSoundSample( "Tux_SOR_Ive_Found_Your_0.wav" , TRUE );
-	      Me [ 0 ] . SOR_Chat_Flags[ 6 ] = 0 ; // don't say this twice in one dialog
+	      // PlayOnceNeededSoundSample( "Tux_SOR_Ive_Found_Your_0.wav" , TRUE );
+	      Me [ 0 ] . SOR_Chat_Flags[ 3 ] = 0 ; // now disallow all learning options.
+	      Me [ 0 ] . SOR_Chat_Flags[ 4 ] = 0 ; // now disallow all learning options.
+	      Me [ 0 ] . SOR_Chat_Flags[ 5 ] = 0 ; // now disallow all learning options.
+	      Me [ 0 ] . SOR_Chat_Flags[ 6 ] = 0 ; // now disallow also the BACK from lerning button
+	      Me [ 0 ] . SOR_Chat_Flags[ 2 ] = 1 ; // but reallow to ask about learning
+	      Me [ 0 ] . SOR_Chat_Flags[ END_ANSWER ] = 1 ; // but reallow to quit the dialog
 	      break;
 	    case 9:
 	      PlayOnceNeededSoundSample( "Tux_SOR_Ill_Get_Your_0.wav" , TRUE );

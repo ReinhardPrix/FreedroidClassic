@@ -1800,6 +1800,7 @@ InitNewMissionList ( char *MissionName )
       Me[0].RMS_Chat_Flags [ i ] = 0 ;
       Me[0].SOR_Chat_Flags [ i ] = 0 ;
     }
+  Me[0].SOR_Chat_Flags [ 1 ] = 1 ;
   // RestoreChatVariableToInitialValue( 0 );
 
 
