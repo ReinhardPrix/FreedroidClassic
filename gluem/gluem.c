@@ -35,7 +35,7 @@ SDL_Surface *Screen;   // the graphics display
 SDL_Surface *input_surface;   // the graphics display 
 // SDL_Surface *output_surface;   // the graphics display 
 SDL_Surface *background_surface;   // the graphics display 
-char* current_file_series_prefix = NULL ;
+char* current_file_series_prefix = "AUTO" ;
 char copyright[] = "\nCopyright (C) 2004 Johannes Prix\n\
 Gluem comes with NO WARRANTY to the extent permitted by law.\n\
 You may redistribute copies of Gluem\n\
@@ -72,8 +72,8 @@ int Number_Of_Item_Types = 0 ;
 
 // int all_object_directions = 16 ;
 // int max_object_phases = 35 ;
-int all_object_directions = -1 ;
-int max_object_phases = -1 ;
+int all_object_directions = 8 ;
+int max_object_phases = 0 ;
 int walk_object_phases = -1 ;
 int attack_object_phases = -1 ;
 int gethit_object_phases = -1 ;
@@ -85,8 +85,8 @@ Sint16 cooked_gethit_object_phases;
 Sint16 cooked_death_object_phases;
 Sint16 cooked_stand_object_phases;
 
-int tux_direction_numbering = FALSE ;
-int open_gl_sized_images = FALSE ;
+int tux_direction_numbering = TRUE ;
+int open_gl_sized_images = TRUE ;
 
 //--------------------
 // Another dummy function, such that the (unused) parts of the
@@ -594,18 +594,20 @@ ParseCommandLine (int argc, char *const argv[])
 	{
 	    { "version",          0, 0,  'v' },
 	    { "help",             0, 0,  'h' },
-	    { "input_file",       required_argument , 0,  'i' },
-	    { "max_object_phases",       required_argument , 0,  'p' },
-	    { "all_object_directions",       required_argument , 0,  'd' },
+	    { "input_file",       0 , 0,  'i' },
+	    { "max_object_phases",       0 , 0,  'p' },
+	    { "all_object_directions",       0 , 0,  'd' },
 	    { "tux_16_direction_numbering",      0 , 0,  't' },
+	    { "unrecommended_direction_numbering",      0 , 0,  'u' },
 	    { "open_gl_sized_images",      0 , 0,  'o' },
+	    { "no_open_gl_sized_images",      0 , 0,  'n' },
 	    // { "debug",            2, 0,  'd' },
 	    {  0,                 0, 0,   0  }
 	};
     
     while (1)
     {
-	c = getopt_long (argc, argv, "tovi:h?d:p:", long_options, NULL);
+	c = getopt_long (argc, argv, "tounvi:h?d:p:", long_options, NULL);
 	if (c == -1)
 	    break;
 	
@@ -628,9 +630,15 @@ ParseCommandLine (int argc, char *const argv[])
 	    case 't':
 		tux_direction_numbering = TRUE ;
 		break;
+	    case 'u':
+		tux_direction_numbering = FALSE ;
+		break;
 		
 	    case 'o':
 		open_gl_sized_images = TRUE ;
+		break;
+	    case 'n':
+		open_gl_sized_images = FALSE ;
 		break;
 		
 	    case 'i':
