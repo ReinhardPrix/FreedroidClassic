@@ -766,6 +766,8 @@ void
 MoveThisEnemy( int EnemyNum )
 {
   Enemy ThisRobot=&AllEnemys[ EnemyNum ];
+  int RandItem;
+  int i;
 
   //--------------------
   // At first, we check for a lot of cases in which we do not
@@ -786,7 +788,31 @@ MoveThisEnemy( int EnemyNum )
       ThisRobot->Status = OUT;
       RealScore += Druidmap[ ThisRobot->type ].score;
       StartBlast ( ThisRobot->pos.x, ThisRobot->pos.y,
- 		  DRUIDBLAST);
+		   DRUIDBLAST);
+
+      //--------------------
+      // Maybe that robot did have something with him?  The item should then
+      // fall to the floor with it's clanc
+      //
+      // first we search for a free position in the item list
+      for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+	{
+	  if ( CurLevel->ItemList[ i ].type == (-1) ) 
+	    {
+	      RandItem = MyRandom( Number_Of_Item_Types -1 );
+	      CurLevel->ItemList[ i ].type = RandItem;
+	      CurLevel->ItemList[ i ].pos.x = ThisRobot->pos.x;
+	      CurLevel->ItemList[ i ].pos.y = ThisRobot->pos.y;
+	      PlayItemSound( ItemMap[ RandItem ].sound_number );
+	      break;
+	    }
+	}
+      if ( i >= MAX_ITEMS_PER_LEVEL )
+	{
+	  DebugPrintf( 0 , "\n\nNO MORE ITEMS DROPABLE INTO THIS LEVEL!!\n\nTerminating!" );
+	  Terminate( ERR );
+	}
+      
       if (LevelEmpty ())
 	CurLevel->empty = WAIT_LEVELEMPTY;
       return;	// this one's down, so we can move on to the next
