@@ -339,6 +339,9 @@ beginning_of_map
  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33   1  10   3  33  33  33  33  33  33  33  33 
 End of pure map information for this level
 Start of pure statement information for this level
+PosX=1 PosY=1 Statement="This must be the upper left corner of the room."
+PosX=1 PosY=2 Statement="I must be close to the upper left corner of the room."
+PosX=2 PosY=1 Statement="I must be close to the upper left corner of the room."
 End of pure statement information for this level
 wp
 Nr.=  0 x=   1 y=   1	 connections:    1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1

@@ -157,10 +157,22 @@ void Init_Joy (void)
 void 
 ReactToSpecialKeys(void)
 {
+  int i;
+
   if ( QPressed() ) /* user asked for quit */
     Terminate (OK);
   if ( DPressed() )
     Me.energy = 0;
+
+  if ( MPressed() )
+    {
+      for ( i=0 ; i < MAX_STATEMENTS_PER_LEVEL ; i ++ )
+	{
+	  DebugPrintf( 0 , "\nPosX: %d PosY: %d Statement: %s" , CurLevel->StatementList[ i ].x ,
+		       CurLevel->StatementList[ i ].x , CurLevel->StatementList[ i ].Statement_Text );
+	}
+      while ( MPressed() );
+    }
 
   //--------------------
   // We assign the L key to turn on/off the quest log i.e. mission log

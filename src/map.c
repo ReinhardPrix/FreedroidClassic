@@ -392,7 +392,7 @@ void CheckWaypointIntegrity(Level Lev)
 
       // At this point we have found a non-(-1)-entry after a -1 entry.  that means work!!
 
-      DebugPrintf( 0 , "\n WARNING!! INCONSISTENSY FOUNT ON LEVEL %d!! " , Lev->levelnum );
+      DebugPrintf( 0 , "\n WARNING!! INCONSISTENSY FOUND ON LEVEL %d!! " , Lev->levelnum );
       DebugPrintf( 0 , "\n NUMBER OF LEADING -1 ENTRIES: %d!! " , k-j );
       DebugPrintf( 0 , "\n COMPENSATION ACTIVATED..." );
 
@@ -733,6 +733,11 @@ Decode_Loaded_Leveldata (char *data)
   char ThisLine[1000];
   char* ThisLinePointer;
   char* DataPointer;
+  char* StatementSectionBegin;
+  char* StatementSectionEnd;
+  char* StatementPointer;
+  int NumberOfStatementsInThisLevel;
+  char Preserved_Letter;
 
   /* Get the memory for one level */
   loadlevel = (Level) MyMalloc (sizeof (level));
@@ -762,6 +767,51 @@ Decode_Loaded_Leveldata (char *data)
   loadlevel->Background_Song_Name = ReadAndMallocStringFromData ( data , BACKGROUND_SONG_NAME_STRING , "\n" );
   loadlevel->Level_Enter_Comment = ReadAndMallocStringFromData ( data , LEVEL_ENTER_COMMENT_STRING , "\n" );
 
+  //--------------------
+  // Next we extract the statments of the influencer on this level WITHOUT destroying
+  // or damaging the data in the process!
+  //
+  
+  // First we initialize the statement array with 'empty' values
+  //
+  for ( i = 0 ; i < MAX_STATEMENTS_PER_LEVEL ; i ++ )
+    {
+      loadlevel->StatementList[ i ].x = ( -1 ) ;
+      loadlevel->StatementList[ i ].y = ( -1 ) ;
+      loadlevel->StatementList[ i ].Statement_Text = "No Statement loaded." ;
+    }
+
+  // We look for the beginning and end of the map statement section
+  StatementSectionBegin = LocateStringInData( data , STATEMENT_BEGIN_STRING );
+  StatementSectionEnd = LocateStringInData( data , STATEMENT_END_STRING );
+
+  // We add a terminator at the end, but ONLY TEMPORARY.  The damage will be restored later!
+  Preserved_Letter=StatementSectionEnd[0];
+  StatementSectionEnd[0]=0;
+  NumberOfStatementsInThisLevel = CountStringOccurences ( StatementSectionBegin , "Statement=" ) ;
+  DebugPrintf( 0 , "\nNumber of statements found in this level : %d." , NumberOfStatementsInThisLevel );
+
+  
+
+  StatementPointer=StatementSectionBegin;
+  for ( i = 0 ; i < NumberOfStatementsInThisLevel ; i ++ )
+    {
+      StatementPointer = strstr ( StatementPointer + 1 , "PosX=" );
+      ReadValueFromString( StatementPointer , "PosX=" , "%d" , 
+			   &(loadlevel->StatementList[ i ].x) , StatementSectionEnd );
+      ReadValueFromString( StatementPointer , "PosY=" , "%d" , 
+			   &(loadlevel->StatementList[ i ].y) , StatementSectionEnd );
+      loadlevel->StatementList[ i ].Statement_Text = 
+	ReadAndMallocStringFromData ( StatementPointer , "Statement=\"" , "\"" ) ;
+
+      DebugPrintf( 0 , "\nPosX=%d PosY=%d Statement=\"%s\"" , loadlevel->StatementList[ i ].x , 
+		   loadlevel->StatementList[ i ].y , loadlevel->StatementList[ i ].Statement_Text );
+    }
+
+  // Now we repair the damage done to the loaded level data
+  StatementSectionEnd[0]=Preserved_Letter;
+
+  //--------------------
   // find the map data
   // NOTE, that we here only set up a pointer to the map data
   // as they are stored in the file.  This is NOT the same format
@@ -790,7 +840,7 @@ Decode_Loaded_Leveldata (char *data)
 
   DebugPrintf( 2 , "\nReached Waypoint-read-routine.");
 
-  for (i=0; i<MAXWAYPOINTS ; i++)
+  for ( i = 0 ; i < MAXWAYPOINTS ; i++ )
     {
       WaypointPointer = strstr ( WaypointPointer , "\n" ) +1;
 
@@ -814,8 +864,6 @@ Decode_Loaded_Leveldata (char *data)
 
       // getchar();
     }
-
-  
 
   /* Scan the waypoint- connections */
   pos = strtok (wp_begin, "\n");	/* Get Pointer to data-begin */
