@@ -64,7 +64,7 @@ EXTERN void CheckIfMissionIsComplete (void);
 #define EXTERN extern
 #endif
 EXTERN int isignf (float);
-EXTERN void InitInfluPositionHistory( void );
+EXTERN void InitInfluPositionHistory( int PlayerNum );
 EXTERN float GetInfluPositionHistoryX( int Index );
 EXTERN float GetInfluPositionHistoryY( int Index );
 EXTERN float GetInfluPositionHistoryZ( int Index );

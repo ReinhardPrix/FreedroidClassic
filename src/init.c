@@ -1712,7 +1712,7 @@ InitNewMissionList ( char *MissionName )
   //--------------------
   // At this point the position history can be initialized
   //
-  InitInfluPositionHistory();
+  InitInfluPositionHistory( 0 );
 
   //--------------------
   // Now we read in the mission targets for this mission
