@@ -185,6 +185,13 @@ enum _global_ingame_modes
     GLOBAL_INGAME_MODE_PICKPOCKET = 7134 ,
 };
 
+enum _game_config_screen_visible_parameters
+{
+    GAME_CONFIG_SCREEN_VISIBLE_INVENTORY = 8001 ,
+    GAME_CONFIG_SCREEN_VISIBLE_SKILLS = 8002 ,
+    GAME_CONFIG_SCREEN_VISIBLE_CHARACTER = 8003 ,
+};
+
 enum _spell_names
 {
   SPELL_TRANSFERMODE = 0, // 0

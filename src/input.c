@@ -509,7 +509,7 @@ check_for_cheat_keys( void )
  * automap on/off.
  * ---------------------------------------------------------------------- */
 void
-automap_toggle_on_off ( void )
+automap_keyboard_handling ( void )
 {
     static int TabPressed_LastFrame;
 
@@ -541,6 +541,19 @@ automap_toggle_on_off ( void )
 	TabPressed_LastFrame = FALSE;
     }
     
+
+    //--------------------
+    // Now we handle keyboard movement for the automap...
+    //
+    if ( LeftPressed() )
+	GameConfig . automap_manual_shift_x -= 10 ;
+    if ( RightPressed() )
+	GameConfig . automap_manual_shift_x += 10 ;
+    if ( UpPressed() )
+	GameConfig . automap_manual_shift_y -= 10 ;
+    if ( DownPressed() )
+	GameConfig . automap_manual_shift_y += 10 ;
+
 }; // void automap_toggle_on_off ( void )
 
 /* ----------------------------------------------------------------------
@@ -649,6 +662,42 @@ handle_quick_appy_inventory_keys( void )
 }; // void handle_quick_appy_inventory_keys( void )
 
 /* ----------------------------------------------------------------------
+ * This function should toggle the visibility of the inventory/character
+ * and skill screen.  Of course, when one of them is turned on, the other
+ * ones should be turned off again.  At least that was a popular request
+ * from various sources in the past, so we heed it now.
+ * ---------------------------------------------------------------------- */
+void
+toggle_game_config_screen_visibility ( int screen_visible )
+{
+
+    switch ( screen_visible )
+    {
+	case GAME_CONFIG_SCREEN_VISIBLE_INVENTORY :
+	    GameConfig . Inventory_Visible = ! GameConfig . Inventory_Visible;
+	    GameConfig . CharacterScreen_Visible = FALSE ;
+	    GameConfig . SkillScreen_Visible = FALSE ;
+	    break;
+	case GAME_CONFIG_SCREEN_VISIBLE_SKILLS :
+	    GameConfig . SkillScreen_Visible = !GameConfig . SkillScreen_Visible;
+	    GameConfig . CharacterScreen_Visible = FALSE ;
+	    GameConfig . Inventory_Visible = FALSE ;
+	    break;
+	case GAME_CONFIG_SCREEN_VISIBLE_CHARACTER :
+	    GameConfig . CharacterScreen_Visible = !GameConfig . CharacterScreen_Visible;
+	    GameConfig . Inventory_Visible = FALSE ;
+	    GameConfig . SkillScreen_Visible = FALSE ;
+	    break;
+	default:
+	    GiveStandardErrorMessage ( __FUNCTION__  , "\
+unhandled skill screen code received.  something is going VERY wrong!",
+				       PLEASE_INFORM, IS_FATAL );
+	    break;
+    }
+
+}; // void toggle_game_config_screen_visibility ( int screen_visible )
+
+/* ----------------------------------------------------------------------
  * The I S and C keys can be used to open/close the inventory, skills and
  * the character screens.  This function takes care of any keyboard 
  * toggling the user might want to do.
@@ -667,9 +716,7 @@ handle_cha_ski_inv_screen_on_off_keys ( void )
     {
 	if ( !SPressed_LastFrame ) 
 	{
-	    GameConfig.SkillScreen_Visible_Time = 0;
-	    GameConfig.SkillScreen_Visible = !GameConfig.SkillScreen_Visible;
-	    if ( GameConfig.SkillScreen_Visible ) GameConfig.CharacterScreen_Visible = FALSE ;
+	    toggle_game_config_screen_visibility ( GAME_CONFIG_SCREEN_VISIBLE_SKILLS );
 	}
 	
 	SPressed_LastFrame = TRUE;
@@ -686,8 +733,7 @@ handle_cha_ski_inv_screen_on_off_keys ( void )
     {
 	if ( !IPressed_LastFrame ) 
 	{
-	    GameConfig.Inventory_Visible_Time = 0;
-	    GameConfig.Inventory_Visible = !GameConfig.Inventory_Visible;
+	    toggle_game_config_screen_visibility ( GAME_CONFIG_SCREEN_VISIBLE_INVENTORY );
 	}
 	IPressed_LastFrame = TRUE;
     }
@@ -703,11 +749,8 @@ handle_cha_ski_inv_screen_on_off_keys ( void )
     {
 	if ( !CPressed_LastFrame ) 
 	{
-	    GameConfig.CharacterScreen_Visible_Time = 0;
-	    GameConfig.CharacterScreen_Visible = !GameConfig.CharacterScreen_Visible;
-	    if ( GameConfig.CharacterScreen_Visible ) GameConfig.SkillScreen_Visible = FALSE ;
+	    toggle_game_config_screen_visibility ( GAME_CONFIG_SCREEN_VISIBLE_CHARACTER );
 	}
-	
 	CPressed_LastFrame = TRUE;
     }
     else
@@ -724,258 +767,198 @@ handle_cha_ski_inv_screen_on_off_keys ( void )
 void 
 ReactToSpecialKeys(void)
 {
-  int i;
-  static int TPressed_LastFrame;
-  static int LPressed_LastFrame;
-
-  //--------------------
-  // Some QUIT key and some self-destruct keys can stay in
-  // there (they are most convenient for debug purposes, yet
-  // they can't be used for 'cheating' in the normal sense).
-  //
-  if ( QPressed() )
-  {
-      if ( CtrlWasPressed() )
-	  Terminate (OK);
-      else
-      {
-	  quest_browser_interface ( );
-	  while ( QPressed() ) ;
-      }
-  }
-  if ( DPressed() && CtrlWasPressed() ) 
-    Me[0].energy = 0;
-
-  //--------------------
-  // The 'function' keys F1-F10 can be used to quick-ready
-  // a skill.  Currently the skill to associate with each
-  // function key can NOT be customized.  This might follow
-  // later, when the game reaches a more complete state.
-  //
-  if ( F1Pressed()  ) activate_nth_aquired_skill ( 0 );
-  if ( F2Pressed()  ) activate_nth_aquired_skill ( 1 );
-  if ( F3Pressed()  ) activate_nth_aquired_skill ( 2 );
-  if ( F4Pressed()  ) activate_nth_aquired_skill ( 3 );
-  if ( F5Pressed()  ) activate_nth_aquired_skill ( 4 );
-  if ( F6Pressed()  ) activate_nth_aquired_skill ( 5 );
-  if ( F7Pressed()  ) activate_nth_aquired_skill ( 6 );
-  if ( F8Pressed()  ) activate_nth_aquired_skill ( 7 );
-  if ( F9Pressed()  ) activate_nth_aquired_skill ( 8 );
-  if ( F10Pressed() ) activate_nth_aquired_skill ( 9 );
-
-  handle_quick_appy_inventory_keys();
-
-  //--------------------
-  // For debugging purposes, we introduce a key, that causes several 
-  // values to be printed out.  This MUST be removed for the next release.
-  //
-  if ( MPressed() )
+    static int TPressed_LastFrame;
+    static int LPressed_LastFrame;
+    
+    //--------------------
+    // Some QUIT key and some self-destruct keys can stay in
+    // there (they are most convenient for debug purposes, yet
+    // they can't be used for 'cheating' in the normal sense).
+    //
+    if ( QPressed() )
     {
-
-      for ( i=0 ; i < MAX_STATEMENTS_PER_LEVEL ; i ++ )
+	if ( CtrlWasPressed() )
+	    Terminate (OK);
+	else
 	{
-	  DebugPrintf( 1 , "\nPosX: %d PosY: %d Statement: %s" , CurLevel->StatementList[ i ].x ,
-		       CurLevel->StatementList[ i ].x , CurLevel->StatementList[ i ].Statement_Text );
+	    quest_browser_interface ( );
+	    while ( QPressed() ) ;
 	}
-
-      for ( i = 0 ; i < Number_Of_Item_Types ; i ++ )
-	{
-	  if ( ItemMap[ i ] . item_name == NULL ) continue;
-	  DebugPrintf( 0 , "\n\nitem_name: %s " , ItemMap[ i ].item_name );
-	  DebugPrintf( 0 , "\nitem_can_be_applied_in_combat: %d " , ItemMap[ i ].item_can_be_applied_in_combat );
-	  DebugPrintf( 0 , "\nitem_can_be_installed_in_influ: %d " , ItemMap[ i ].item_can_be_installed_in_influ );
-	  DebugPrintf( 0 , "\nitem_can_be_installed_in_weapon_slot: %d " , ItemMap[ i ].item_can_be_installed_in_weapon_slot );
-	  DebugPrintf( 0 , "\nitem_can_be_installed_in_drive_slot: %d " , ItemMap[ i ].item_can_be_installed_in_drive_slot );
-	  DebugPrintf( 0 , "\nbase_item_gun_damage: %d " , ItemMap[ i ].base_item_gun_damage );
-	  DebugPrintf( 0 , "\nitem_gun_recharging_time: %f " , ItemMap[ i ].item_gun_recharging_time );
-	}
-
-
-      for ( i=0 ; i < Number_Of_Droid_Types ; i ++ )
-	{
-
-	  if ( Druidmap[ i ].druidname == NULL ) continue;
-	  DebugPrintf( 0 , "\n\ndruidname: %s " , Druidmap[ i ].druidname );
-
-	  if ( Druidmap[ i ].drive_item.type != (-1 ) )
-	    DebugPrintf( 0 , "\ndrive_item: %d (%s)" , 
-			 Druidmap[ i ].drive_item.type , ItemMap[ Druidmap[ i ].drive_item.type ].item_name );
-	  else DebugPrintf( 0 , "\ndrive_item: NONE " );
-
-	  DebugPrintf( 0 , "\nweapon_item: %d " , Druidmap[ i ].weapon_item.type );
-	  fflush( stdout );
-	  if ( Druidmap[ i ].weapon_item.type != (-1 ) )
-	    DebugPrintf( 0 , "\nweapon_item: %d (%s) " , 
-			 Druidmap[ i ].weapon_item.type , ItemMap[ Druidmap[ i ].weapon_item.type ].item_name );
-	  else DebugPrintf( 0 , "\nweapon_item: NONE" );
-
-	}
-      while ( MPressed() );
     }
-
-  //--------------------
-  // For debugging purposes as well, the F key will print out information
-  // about all players currently known.  This can be used as well from the
-  // server as from each of the client.
-  //
-  if ( FPressed ( ) )
+    
+    if ( DPressed() && CtrlWasPressed() ) 
+	Me[0].energy = 0;
+    
+    //--------------------
+    // The 'function' keys F1-F10 can be used to quick-ready
+    // a skill.  Currently the skill to associate with each
+    // function key can NOT be customized.  This might follow
+    // later, when the game reaches a more complete state.
+    //
+    if ( F1Pressed()  ) activate_nth_aquired_skill ( 0 );
+    if ( F2Pressed()  ) activate_nth_aquired_skill ( 1 );
+    if ( F3Pressed()  ) activate_nth_aquired_skill ( 2 );
+    if ( F4Pressed()  ) activate_nth_aquired_skill ( 3 );
+    if ( F5Pressed()  ) activate_nth_aquired_skill ( 4 );
+    if ( F6Pressed()  ) activate_nth_aquired_skill ( 5 );
+    if ( F7Pressed()  ) activate_nth_aquired_skill ( 6 );
+    if ( F8Pressed()  ) activate_nth_aquired_skill ( 7 );
+    if ( F9Pressed()  ) activate_nth_aquired_skill ( 8 );
+    if ( F10Pressed() ) activate_nth_aquired_skill ( 9 );
+    
+    handle_quick_appy_inventory_keys();
+    
+    //--------------------
+    // For debugging purposes as well, the F key will print out information
+    // about all players currently known.  This can be used as well from the
+    // server as from each of the client.
+    //
+    if ( FPressed ( ) )
     {
-      Activate_Conservative_Frame_Computation ( ) ;
-      PrintServerStatusInformation ( ) ;
-
-      if ( CtrlWasPressed ( ) && Alt_Was_Pressed ( ) && Shift_Was_Pressed ( ) )
+	Activate_Conservative_Frame_Computation ( ) ;
+	PrintServerStatusInformation ( ) ;
+	
+	if ( CtrlWasPressed ( ) && Alt_Was_Pressed ( ) && Shift_Was_Pressed ( ) )
 	{
-	  DebugPrintf ( -10 , "\nForcefully flushing image cache now --> all backgrounds will be reloaded." );
-	  flush_background_image_cache ( ) ;
+	    DebugPrintf ( -10 , "\nForcefully flushing image cache now --> all backgrounds will be reloaded." );
+	    flush_background_image_cache ( ) ;
 	}
-
-      while ( FPressed ( ) );
+	
+	while ( FPressed ( ) );
     }
-
-  //--------------------
-  // We assign the L key to turn on/off the quest log i.e. mission log
-  //
-  if ( LPressed() && ( !LPressed_LastFrame ) )
+    
+    //--------------------
+    // We assign the L key to turn on/off the quest log i.e. mission log
+    //
+    if ( LPressed() && ( !LPressed_LastFrame ) )
     {
-      GameConfig.Mission_Log_Visible_Time = 0;
-      GameConfig.Mission_Log_Visible = !GameConfig.Mission_Log_Visible;
-      DebugPrintf( 0 , "\nMISSION LOG TURNED ON!\n" );
+	GameConfig.Mission_Log_Visible_Time = 0;
+	GameConfig.Mission_Log_Visible = !GameConfig.Mission_Log_Visible;
+	DebugPrintf( 0 , "\nMISSION LOG TURNED ON!\n" );
     }
-  LPressed_LastFrame = LPressed();
-  
-
-  //--------------------
-  // We assign the Space key to turn off all windows and quest log
-  // and also when the Tux is dead, there shouldn't be any windows any more.
-  //
-  if ( ( SpacePressed( ) && !axis_is_active ) ||
-       ( Me[0].energy <= 0 ) )
-  {
-      GameConfig.Mission_Log_Visible = FALSE ; 
-      GameConfig.SkillScreen_Visible = FALSE ;
-      GameConfig.CharacterScreen_Visible = FALSE ;
-      GameConfig.Inventory_Visible = FALSE ;
-  }
-
-  
-  handle_cha_ski_inv_screen_on_off_keys();
-
-
-  automap_toggle_on_off();
-
-  //--------------------
-  // We assign the G key to send greetings either to the server
-  // or from the server to all players.
-  //
-  if ( GPressed () )
+    LPressed_LastFrame = LPressed();
+    
+    
+    //--------------------
+    // We assign the Space key to turn off all windows and quest log
+    // and also when the Tux is dead, there shouldn't be any windows any more.
+    //
+    if ( ( SpacePressed( ) && !axis_is_active ) ||
+	 ( Me[0].energy <= 0 ) )
     {
-      /*
-      Me[0].TextToBeDisplayed="Hello!  Greetings to the Server.";
-      Me[0].TextVisibleTime=0;
+	GameConfig.Mission_Log_Visible = FALSE ; 
+	GameConfig.SkillScreen_Visible = FALSE ;
+	GameConfig.CharacterScreen_Visible = FALSE ;
+	GameConfig.Inventory_Visible = FALSE ;
+    }
+    
+    
+    handle_cha_ski_inv_screen_on_off_keys ( );
+    
+    
+    automap_keyboard_handling ( );
 
-      if ( ! ServerMode )
-	{
+    //--------------------
+    // We assign the G key to send greetings either to the server
+    // or from the server to all players.
+    //
+    if ( GPressed () )
+    {
+	/*
+	  Me[0].TextToBeDisplayed="Hello!  Greetings to the Server.";
+	  Me[0].TextVisibleTime=0;
+	  
+	  if ( ! ServerMode )
+	  {
 	  sprintf ( MessageBuffer , "\nThis is a message from Player '%s'. " , Me[0].character_name );
 	  // Send1024MessageToServer ( MessageBuffer );
 	  SendTextMessageToServer ( MessageBuffer );
-	}
-      else
-	{
+	  }
+	  else
+	  {
 	  ServerSendMessageToAllClients ( "\nThis is a message from the server to all clients. " );
-	}
-      */
+	  }
+	*/
     }
+    
 
+    if ( GameConfig . enable_cheatkeys ) check_for_cheat_keys();
 
-  if ( GameConfig . enable_cheatkeys ) check_for_cheat_keys();
-
-  //--------------------
-  // To quicksave and quickload in a convenient way, I added
-  // a keybinding of save and load game functions to the 3 and 4
-  // keys on the numerical keyboard.
-  //
-  if ( KP3Pressed() )
+    //--------------------
+    // To quicksave and quickload in a convenient way, I added
+    // a keybinding of save and load game functions to the 3 and 4
+    // keys on the numerical keyboard.
+    //
+    if ( KP3Pressed() )
     {
-      while (KP3Pressed());
-      SaveGame();
+	while (KP3Pressed());
+	SaveGame();
     }
-  if ( KP4Pressed() )
+    if ( KP4Pressed() )
     {
-      while ( KP4Pressed() );
-      LoadGame();
+	while ( KP4Pressed() );
+	LoadGame();
     }
-
-  //--------------------
-  // To test various things, there is of course a cheat menu
-  // added to the game.  This cheat menu can be reached by pressing
-  // a combination of keys, intended to be so complicated, that the
-  // users are unlikely to find out about it just by trying out.
-  // Of course they will learn about it if they look at the source,
-  // but hey, then you can outright modify the source, so why bother
-  // to make it any more complicated.
-  //
-  if ( CPressed() && Alt_Was_Pressed()
-       && CtrlWasPressed() && Shift_Was_Pressed() ) 
-    Cheatmenu ();
-
-  //--------------------
-  // The 'Esc' key is assigned to the big main menu, the so called
-  // Escape Menu.  But this will only pop up, if there were no screens
-  // open at that time.  Otherwise, the 'Esc' key will just be interpreted
-  // as a 'close-all-screens' button.
-  //
-  if ( EscapePressed() )
-  {
-      if ( GameConfig . Inventory_Visible ||
-	   GameConfig . CharacterScreen_Visible ||
-	   GameConfig . SkillScreen_Visible )
-      {
-	  GameConfig . Inventory_Visible = FALSE ;
-	  GameConfig . CharacterScreen_Visible = FALSE ;
-	  GameConfig . SkillScreen_Visible = FALSE ;
-	  while ( EscapePressed() );
-      }
-      else
-      {
-	  EscapeMenu ();
-      }
-  }
-
-  //--------------------
-  // The 'P' key is assigned to pause mode.
-  //
-  if ( PPressed () )
-    Pause ();
-  
-  //--------------------
-  // t key turns on/off transparency mode
-  //
-  if ( TPressed() )
+    
+    //--------------------
+    // To test various things, there is of course a cheat menu
+    // added to the game.  This cheat menu can be reached by pressing
+    // a combination of keys, intended to be so complicated, that the
+    // users are unlikely to find out about it just by trying out.
+    // Of course they will learn about it if they look at the source,
+    // but hey, then you can outright modify the source, so why bother
+    // to make it any more complicated.
+    //
+    if ( CPressed() && Alt_Was_Pressed()
+	 && CtrlWasPressed() && Shift_Was_Pressed() ) 
+	Cheatmenu ();
+    
+    //--------------------
+    // The 'Esc' key is assigned to the big main menu, the so called
+    // Escape Menu.  But this will only pop up, if there were no screens
+    // open at that time.  Otherwise, the 'Esc' key will just be interpreted
+    // as a 'close-all-screens' button.
+    //
+    if ( EscapePressed() )
     {
-      if ( !TPressed_LastFrame ) 
+	if ( GameConfig . Inventory_Visible ||
+	     GameConfig . CharacterScreen_Visible ||
+	     GameConfig . SkillScreen_Visible )
 	{
-	  GameConfig.transparency = ! GameConfig.transparency;
+	    GameConfig . Inventory_Visible = FALSE ;
+	    GameConfig . CharacterScreen_Visible = FALSE ;
+	    GameConfig . SkillScreen_Visible = FALSE ;
+	    while ( EscapePressed() );
 	}
-
-      TPressed_LastFrame = TRUE;
+	else
+	{
+	    EscapeMenu ();
+	}
     }
-  else
+    
+    //--------------------
+    // The 'P' key is assigned to pause mode.
+    //
+    if ( PPressed () )
+	Pause ();
+    
+    //--------------------
+    // t key turns on/off transparency mode
+    //
+    if ( TPressed() )
     {
-      TPressed_LastFrame = FALSE;
+	if ( !TPressed_LastFrame ) 
+	{
+	    GameConfig.transparency = ! GameConfig.transparency;
+	}
+	
+	TPressed_LastFrame = TRUE;
     }
-
-  //--------------------
-  // Now we handle keyboard movement...
-  //
-  if ( LeftPressed() )
-      GameConfig . automap_manual_shift_x -= 10 ;
-  if ( RightPressed() )
-      GameConfig . automap_manual_shift_x += 10 ;
-  if ( UpPressed() )
-      GameConfig . automap_manual_shift_y -= 10 ;
-  if ( DownPressed() )
-      GameConfig . automap_manual_shift_y += 10 ;
- 
+    else
+    {
+	TPressed_LastFrame = FALSE;
+    }
+    
 }; // void ReactToSpecialKeys(void)
 
 /* ----------------------------------------------------------------------

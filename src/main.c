@@ -307,7 +307,6 @@ UpdateCountersForThisFrame ( int player_num )
     if ( player_num == 0 )
     {
 	GameConfig . Mission_Log_Visible_Time += latest_frame_time;
-	GameConfig . Inventory_Visible_Time += latest_frame_time;
 	
 	// The next couter counts the frames displayed by freedroid during this
 	// whole run!!  DO NOT RESET THIS COUNTER WHEN THE GAME RESTARTS!!

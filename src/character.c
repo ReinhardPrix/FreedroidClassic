@@ -280,33 +280,26 @@ DisplayButtons( void )
     //
     if ( Me[0].points_to_distribute > 0 )
     {
-	// ShowGenericButtonFromList ( PLUS_BUTTON );
 	blit_special_background ( MOUSE_BUTTON_PLUS_BACKGROUND_PICTURE_CODE );
     }
     else
     {
-	// ShowGenericButtonFromList ( CHA_BUTTON );
 	blit_special_background ( MOUSE_BUTTON_CHA_BACKGROUND_PICTURE_CODE );
     }
-    // ShowGenericButtonFromList ( INV_BUTTON );
-    // ShowGenericButtonFromList ( SKI_BUTTON );
     blit_special_background ( MOUSE_BUTTON_INV_BACKGROUND_PICTURE_CODE );
     blit_special_background ( MOUSE_BUTTON_SKI_BACKGROUND_PICTURE_CODE );
     
-    
     if ( MouseCursorIsOnButton( INV_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
     {
-	GameConfig.Inventory_Visible = ! GameConfig.Inventory_Visible;
+	toggle_game_config_screen_visibility ( GAME_CONFIG_SCREEN_VISIBLE_INVENTORY );
     }
-    
-    if ( MouseCursorIsOnButton( CHA_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+    else if ( MouseCursorIsOnButton( CHA_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
     {
-	GameConfig.CharacterScreen_Visible = ! GameConfig.CharacterScreen_Visible;
+	toggle_game_config_screen_visibility ( GAME_CONFIG_SCREEN_VISIBLE_CHARACTER );
     }
-    
-    if ( MouseCursorIsOnButton( SKI_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+    else if ( MouseCursorIsOnButton( SKI_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
     {
-	GameConfig.SkillScreen_Visible = ! GameConfig.SkillScreen_Visible;
+	toggle_game_config_screen_visibility ( GAME_CONFIG_SCREEN_VISIBLE_SKILLS );
     }
     
     WasPressed = axis_is_active;
@@ -768,6 +761,8 @@ ShowCharacterScreen ( void )
     // back to normal and to return...
     //
     if ( GameConfig.CharacterScreen_Visible == FALSE ) return;
+
+    SetCurrentFont ( FPS_Display_BFont );
     
     // --------------------
     // We will need the current mouse position on several spots...

@@ -544,6 +544,7 @@ EXTERN int TPressed (void); EXTERN int UPressed (void); EXTERN int VPressed (voi
 EXTERN int WPressed (void); EXTERN int XPressed (void); EXTERN int YPressed (void);
 EXTERN int ZPressed (void);
 EXTERN int NoDirectionPressed (void);
+EXTERN void toggle_game_config_screen_visibility ( int screen_visible );
 
 // menu.c 
 #undef EXTERN

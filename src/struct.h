@@ -125,14 +125,14 @@ typedef struct
     float Mission_Log_Visible_Time;
     float Mission_Log_Visible_Max_Time;
     int Inventory_Visible;
-    float Inventory_Visible_Time;
-    float Inventory_Visible_Max_Time;
+    float dummy1 ;
+    float dummy2 ;
     int CharacterScreen_Visible;
-    float CharacterScreen_Visible_Time;
-    float CharacterScreen_Visible_Max_Time;
+    float dummy3 ;
+    float dummy4 ;
     int SkillScreen_Visible;
-    float SkillScreen_Visible_Time;
-    float SkillScreen_Visible_Max_Time;
+    float dummy5 ;
+    float dummy6 ;
     int Automap_Visible;
     int spell_level_visible;
 
