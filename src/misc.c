@@ -60,14 +60,21 @@ mouse_press_button, Mouse_press_button;
 
 mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
   {
-    { NULL , "CHAButton.png" ,   { 600 , 430 ,  38 ,  22 } } ,
-    { NULL , "INVButton.png" ,   { 600 , 400 ,  38 ,  22 } } ,
-    { NULL , "SKIButton.png" ,   { 600 , 370 ,  38 ,  22 } } ,
-    { NULL , "PlusButton.png" ,  { 600 , 430 ,  38 ,  22 } } ,
-    { NULL , "UPButton.png" ,    { 580 , 180 ,  50 , 100 } } ,
-    { NULL , "DOWNButton.png" ,  { 580 , 330 ,  50 , 100 } } ,
-    { NULL , "LEFTButton.png" ,  { 300 , 420 , 100 ,  50 } } ,
-    { NULL , "RIGHTButton.png" , { 450 , 420 , 100 ,  50 } } 
+    { NULL , "CHAButton.png"                  , { 600 , 430 ,  38 ,  22 } } ,
+    { NULL , "INVButton.png"                  , { 600 , 400 ,  38 ,  22 } } ,
+    { NULL , "SKIButton.png"                  , { 600 , 370 ,  38 ,  22 } } ,
+    { NULL , "PlusButton.png"                 , { 600 , 430 ,  38 ,  22 } } ,
+    { NULL , "UPButton.png"                   , { 580 , 180 ,  50 , 100 } } ,
+    { NULL , "DOWNButton.png"                 , { 580 , 330 ,  50 , 100 } } ,
+    { NULL , "LEFTButton.png"                 , { 300 , 420 , 100 ,  50 } } ,
+    { NULL , "RIGHTButton.png"                , { 450 , 420 , 100 ,  50 } } ,
+    { NULL , "MapExitButton.png"              , {  50 ,  5  , 100 ,  50 } } ,
+    { NULL , "MapUnlockDoorButton_gray.png"   , { 200 ,  5  , 100 ,  50 } } ,
+    { NULL , "MapUnlockDoorButton_yellow.png" , { 200 ,  5  , 100 ,  50 } } ,
+    { NULL , "MapUnlockDoorButton_red.png"    , { 200 ,  5  , 100 ,  50 } } ,
+    { NULL , "MapGunOnOffButton_gray.png"     , { 350 ,  5  , 100 ,  50 } } ,
+    { NULL , "MapGunOnOffButton_yellow.png"   , { 350 ,  5  , 100 ,  50 } } ,
+    { NULL , "MapGunOnOffButton_red.png"      , { 350 ,  5  , 100 ,  50 } } 
   }; // AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] 
 
 /* ----------------------------------------------------------------------

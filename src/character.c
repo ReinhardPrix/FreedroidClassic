@@ -88,15 +88,6 @@ float AC_Gain_Per_Dex_Point[]={     -1 ,     1 ,         1  ,        1 };
 #define CHARACTERRECT_W (SCREEN_WIDTH/2)
 #define CHARACTERRECT_H (User_Rect.h)
 
-#define SKI_BUTTON_X 600
-#define SKI_BUTTON_Y 370
-#define INV_BUTTON_X 600
-#define INV_BUTTON_Y 400
-#define CHA_BUTTON_X 600
-#define CHA_BUTTON_Y 430
-#define INV_BUTTON_WIDTH 38
-#define INV_BUTTON_HEIGHT 22
-
 #define MELEE_SKILL_X 130
 #define MELEE_SKILL_Y 346
 #define RANGED_SKILL_X 130
@@ -107,7 +98,6 @@ float AC_Gain_Per_Dex_Point[]={     -1 ,     1 ,         1  ,        1 };
 #define HACKING_SKILL_Y 421
 
 SDL_Rect CharacterRect;
-
 
 /* ----------------------------------------------------------------------
  *
@@ -303,19 +293,7 @@ InitiateNewCharacter ( int PlayerNum , int CharacterClass )
 void
 DisplayButtons( void )
 {
-  static SDL_Rect CHA_Button_Rect;
-  static SDL_Rect INV_Button_Rect;
-  static SDL_Rect SKI_Button_Rect;
   static int WasPressed;
-
-  CHA_Button_Rect.x = CHA_BUTTON_X;
-  CHA_Button_Rect.y = CHA_BUTTON_Y;
-  
-  INV_Button_Rect.x = INV_BUTTON_X;
-  INV_Button_Rect.y = INV_BUTTON_Y;
-
-  SKI_Button_Rect.x = SKI_BUTTON_X;
-  SKI_Button_Rect.y = SKI_BUTTON_Y;
 
   //--------------------
   // Now we can draw either the plus button or the 'cha' button, depending

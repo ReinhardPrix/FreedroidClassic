@@ -46,24 +46,6 @@
 #include "SDL_rotozoom.h"
 
 
-#define UP_BUTTON_WIDTH 50
-#define DOWN_BUTTON_WIDTH UP_BUTTON_WIDTH
-#define LEFT_BUTTON_WIDTH 100
-#define RIGHT_BUTTON_WIDTH LEFT_BUTTON_WIDTH
-#define UP_BUTTON_HEIGHT 100
-#define DOWN_BUTTON_HEIGHT UP_BUTTON_HEIGHT
-#define LEFT_BUTTON_HEIGHT 50
-#define RIGHT_BUTTON_HEIGHT LEFT_BUTTON_HEIGHT
-
-#define UP_BUTTON_X 580
-#define UP_BUTTON_Y 180
-#define DOWN_BUTTON_X UP_BUTTON_X
-#define DOWN_BUTTON_Y (UP_BUTTON_Y + UP_BUTTON_HEIGHT * 1.5 )
-#define LEFT_BUTTON_X 300
-#define LEFT_BUTTON_Y 420
-#define RIGHT_BUTTON_X 450
-#define RIGHT_BUTTON_Y LEFT_BUTTON_Y
-
 int NoKeyPressed (void);
 
 // EXTERN SDL_Surface *console_pic;
@@ -867,6 +849,13 @@ Notes: %s", Druidmap[droidtype].druidname , Classname[Druidmap[droidtype].class]
 } /* show_droid_info */
 
 
+enum 
+  {
+    NO_FUNCTION,
+    UNLOCK_FUNCTION,
+    GUNONOFF_FUNCTION
+  };
+
 /* -----------------------------------------------------------------
  * Displays the concept view of Level "deck" in Userfenster
  * 	  
@@ -878,6 +867,10 @@ ShowDeckMap (Level deck)
 {
   finepoint tmp;
   static char LeftMouseWasPressed = FALSE;
+  int ExitNow;
+  int SelectedFunction = NO_FUNCTION ;
+  grob_point TargetSquare;
+  char MapValue;
 
   tmp.x=Me[0].pos.x;
   tmp.y=Me[0].pos.y;
@@ -888,9 +881,13 @@ ShowDeckMap (Level deck)
 
   SetCombatScaleTo( 0.25 );
 
-  while (!EscapePressed())
+  ExitNow = FALSE ;
+
+  while ( ! ExitNow )
     {
      
+      ExitNow = EscapePressed();
+
       if ( UpPressed() )
 	{
 	  if ( Me[0].pos.y > 1 ) Me[0].pos.y -- ;
@@ -918,21 +915,100 @@ ShowDeckMap (Level deck)
       //
       if ( !LeftMouseWasPressed && axis_is_active )
 	{
-	  Me [ 0 ] . pos . x += ( GetMousePos_x ( ) + 16 - ( SCREEN_WIDTH / 2 ) ) / ( INITIAL_BLOCK_WIDTH * 0.25 ) ;
-	  if ( Me [ 0 ] . pos . x >= curShip.AllLevels[Me[0].pos.z]->xlen-2 )
-	    Me [ 0 ] . pos . x = curShip.AllLevels[Me[0].pos.z]->xlen-2 ;
-	  if ( Me [ 0 ] . pos . x <= 2 ) Me [ 0 ] . pos . x = 2;
-
-	  Me [ 0 ] . pos . y += ( GetMousePos_y ( ) + 16 - ( SCREEN_HEIGHT / 2 ) ) / ( INITIAL_BLOCK_WIDTH * 0.25 ) ;
-	  if ( Me [ 0 ] . pos . y >= curShip.AllLevels[Me[0].pos.z]->ylen-2 )
-	    Me [ 0 ] . pos . y = curShip.AllLevels[Me[0].pos.z]->ylen-2 ;
-	  if ( Me [ 0 ] . pos . y <= 2 ) Me [ 0 ] . pos . y = 2;
+	  //--------------------
+	  // Maybe that click went right onto the exit button.  Then
+	  // of course nothing else will be done but an exit performed.
+	  //
+	  if ( CursorIsOnButton( MAP_EXIT_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) )
+	    {
+	      ExitNow = TRUE;
+	    }
+	  //--------------------
+	  // Maybe that click went right onto the exit button.  Then
+	  // of course nothing else will be done but an exit performed.
+	  //
+	  else if ( CursorIsOnButton( MAP_UNLOCK_BUTTON_GRAY , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) )
+	    {
+	      if ( SelectedFunction == UNLOCK_FUNCTION ) SelectedFunction = NO_FUNCTION;
+	      else SelectedFunction = UNLOCK_FUNCTION;
+	    }
+	  else if ( CursorIsOnButton( MAP_GUNONOFF_BUTTON_GRAY , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) )
+	    {
+	      if ( SelectedFunction == GUNONOFF_FUNCTION ) SelectedFunction = NO_FUNCTION;
+	      else SelectedFunction = GUNONOFF_FUNCTION;
+	    }
+	  //--------------------
+	  // The remaining case is that no particular button but rather some
+	  // place in the map was clicked on.
+	  //
+	  else
+	    {
+	      //--------------------
+	      // If no function was selected, then a plain move on the map is
+	      // what we need to do.
+	      //
+	      if ( SelectedFunction == NO_FUNCTION )
+		{
+		  Me [ 0 ] . pos . x += ( GetMousePos_x ( ) + 16 - ( SCREEN_WIDTH / 2 ) ) / ( INITIAL_BLOCK_WIDTH * 0.25 ) ;
+		  if ( Me [ 0 ] . pos . x >= curShip.AllLevels[Me[0].pos.z]->xlen-2 )
+		    Me [ 0 ] . pos . x = curShip.AllLevels[Me[0].pos.z]->xlen-2 ;
+		  if ( Me [ 0 ] . pos . x <= 2 ) Me [ 0 ] . pos . x = 2;
+		  
+		  Me [ 0 ] . pos . y += ( GetMousePos_y ( ) + 16 - ( SCREEN_HEIGHT / 2 ) ) / ( INITIAL_BLOCK_WIDTH * 0.25 ) ;
+		  if ( Me [ 0 ] . pos . y >= curShip.AllLevels[Me[0].pos.z]->ylen-2 )
+		    Me [ 0 ] . pos . y = curShip.AllLevels[Me[0].pos.z]->ylen-2 ;
+		  if ( Me [ 0 ] . pos . y <= 2 ) Me [ 0 ] . pos . y = 2;
+		}
+	      else if ( SelectedFunction == UNLOCK_FUNCTION )
+		{
+		  //--------------------
+		  // Now we try to unlock the LOCKED door that should be present at the
+		  // location currently pointed at via the mouse cursor.
+		  //
+		  TargetSquare.x = Me [ 0 ] . pos . x + ( GetMousePos_x ( ) + 16 - ( SCREEN_WIDTH / 2 ) ) / ( INITIAL_BLOCK_WIDTH * 0.25 ) ;
+		  TargetSquare.y = Me [ 0 ] . pos . y + ( GetMousePos_y ( ) + 16 - ( SCREEN_HEIGHT / 2 ) ) / ( INITIAL_BLOCK_HEIGHT * 0.25 ) ;
+		  //--------------------
+		  // Some sanity check again against clicks ouside of the bounds of the map...
+		  //
+		  if ( ! ( ( TargetSquare.x < 0 ) || ( TargetSquare.y < 0 ) ||
+			   ( TargetSquare.x + 1 >= curShip . AllLevels [ Me [ 0 ] . pos . z ] -> xlen ) ||
+			   ( TargetSquare.y + 1 >= curShip . AllLevels [ Me [ 0 ] . pos . z ] -> ylen ) ) )
+		    {
+		      MapValue = curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] ;
+		      DebugPrintf ( 0 , "Map value found at click location: %d. " , MapValue );
+		      if ( MapValue == LOCKED_H_ZUTUERE )
+			{
+			  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] = H_ZUTUERE ;
+			  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Door_Successfully_Unlocked_0.wav" , FALSE );
+			  SelectedFunction = NO_FUNCTION;
+			}
+		      if ( MapValue == LOCKED_V_ZUTUERE )
+			{
+			  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] = V_ZUTUERE ;
+			  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Door_Successfully_Unlocked_0.wav" , FALSE );
+			  SelectedFunction = NO_FUNCTION;
+			}                                         
+		    }
+		}
+	    }
 	}
 
       ClearUserFenster();
       Assemble_Combat_Picture( ONLY_SHOW_MAP );
       
-      
+      ShowGenericButtonFromList ( MAP_EXIT_BUTTON );
+
+      if ( SelectedFunction != UNLOCK_FUNCTION ) ShowGenericButtonFromList ( MAP_UNLOCK_BUTTON_GRAY );
+      else
+	{
+	  ShowGenericButtonFromList ( MAP_UNLOCK_BUTTON_YELLOW );
+	}
+
+      if ( SelectedFunction != GUNONOFF_FUNCTION ) ShowGenericButtonFromList ( MAP_GUNONOFF_BUTTON_GRAY );
+      else
+	{
+	  ShowGenericButtonFromList ( MAP_GUNONOFF_BUTTON_YELLOW );
+	}
 
       SDL_Flip (Screen);
 
