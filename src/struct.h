@@ -837,6 +837,7 @@ typedef struct
 {
   int type;
   moderately_finepoint pos;
+  int name_index;
 }
 obstacle, *Obstacle;
 
@@ -856,6 +857,7 @@ typedef struct
   char *Level_Enter_Comment;
   map_statement StatementList[ MAX_STATEMENTS_PER_LEVEL ];
   codepanel CodepanelList[ MAX_CODEPANELS_PER_LEVEL ];
+  char *obstacle_name_list[ MAX_OBSTACLE_NAMES_PER_LEVEL ];
   int xlen;		/* X dimension */
   int ylen;
   int color;

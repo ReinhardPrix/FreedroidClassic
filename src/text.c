@@ -73,6 +73,41 @@ dialogue_option ChatRoster[MAX_DIALOGUE_OPTIONS_IN_ROSTER];
  *
  * ---------------------------------------------------------------------- */
 void
+show_backgrounded_label_at_pixel_position ( char* LabelText , float fill_status , int pos_x , int pos_y )
+{
+  SDL_Rect background_rect;
+
+  background_rect . x = pos_x ;
+  background_rect . y = pos_y ;
+  background_rect . w = 200 ;
+  background_rect . h =  20 ;
+
+  SDL_FillRect ( Screen , & ( background_rect ) , 0 );
+
+  PutString ( Screen , pos_x , pos_y , LabelText );
+
+}; // void show_backgrounded_label_at_pixel_position ( char* LabelText , float fill_status , int pos_x , int pos_y )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+show_backgrounded_label_at_map_position ( char* LabelText , float fill_status , float pos_x , float pos_y )
+{
+  int pixel_x, pixel_y;
+  
+  pixel_x = translate_map_point_to_screen_pixel ( pos_x , pos_y , TRUE );
+  pixel_y = translate_map_point_to_screen_pixel ( pos_x , pos_y , FALSE );
+  show_backgrounded_label_at_pixel_position ( LabelText , fill_status , pixel_x , pixel_y );
+
+}; // void show_backgrounded_label_at_map_position ( char* LabelText , float fill_status , float pos_x , float pos_y )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
 push_or_pop_chat_roster ( int push_or_pop )
 {
   static dialogue_option LocalChatRoster[MAX_DIALOGUE_OPTIONS_IN_ROSTER];

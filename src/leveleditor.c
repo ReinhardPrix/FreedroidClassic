@@ -3151,6 +3151,64 @@ marked_obstacle_is_glued_to_here ( Level EditLevel , float x , float y )
   return ( FALSE );
 
 }; // int marked_obstacle_is_glued_to_here ( Me [ 0 ] . pos . x , Me [ 0 ] . pos . y )
+
+/* ----------------------------------------------------------------------
+ * This function should assign a new name to a given obstacle on a given
+ * level.  New indices must be found and the user must be queried for his
+ * input about the desired new obstacle name.
+ * ---------------------------------------------------------------------- */
+void
+give_new_name_to_obstacle ( Level EditLevel , obstacle* our_obstacle )
+{
+  int i;
+  int free_index=(-1);
+
+  //--------------------
+  // If the obstacle already has a name, we can use that index for the 
+  // new name now.
+  //
+  if ( our_obstacle -> name_index >= 0 )
+    free_index = our_obstacle -> name_index ;
+  else
+    {
+      //--------------------
+      // Else we must find a free index in the list of obstacle names for this level
+      //
+      for ( i = 0 ; i < MAX_OBSTACLE_NAMES_PER_LEVEL ; i ++ )
+	{
+	  if ( EditLevel -> obstacle_name_list [ i ] == NULL )
+	    {
+	      free_index = i ;
+	      break;
+	    }
+	}
+      if ( free_index < 0 ) return;
+    }
+
+  //--------------------
+  // We must query the user for the desired new name
+  //
+  if ( EditLevel -> obstacle_name_list [ free_index ] == NULL )
+    EditLevel -> obstacle_name_list [ free_index ] = "" ;
+  EditLevel -> obstacle_name_list [ free_index ] = 
+    GetEditableStringInPopupWindow ( 1000 , "\nPlease enter name for this obstacle: \n\n" ,
+				     EditLevel -> obstacle_name_list [ free_index ] );
+
+  //--------------------
+  // We must select the right index as the name of this obstacle.
+  //
+  our_obstacle -> name_index = free_index ;
+
+  //--------------------
+  // But if the given name was empty, then we remove everything again.
+  //
+  if ( strlen ( EditLevel -> obstacle_name_list [ free_index ] ) == 0 )
+    {
+      EditLevel -> obstacle_name_list [ free_index ] = NULL ;
+      our_obstacle -> name_index = (-1);
+    }
+
+}; // void give_new_name_to_obstacle ( EditLevel , level_editor_marked_obstacle )
      
 /* ----------------------------------------------------------------------
  * This function is provides the Level Editor integrated into 
@@ -3260,7 +3318,7 @@ LevelEditor(void)
 	  OldTicks = SDL_GetTicks ( ) ;
 
 	  ClearUserFenster();
-	  AssembleCombatPicture ( ONLY_SHOW_MAP_AND_TEXT | SHOW_GRID | SHOW_ITEMS | GameConfig.omit_tux_in_level_editor * OMIT_TUX | GameConfig.omit_obstacles_in_level_editor * OMIT_OBSTACLES | GameConfig.omit_enemies_in_level_editor * OMIT_ENEMIES );
+	  AssembleCombatPicture ( ONLY_SHOW_MAP_AND_TEXT | SHOW_GRID | SHOW_ITEMS | GameConfig.omit_tux_in_level_editor * OMIT_TUX | GameConfig.omit_obstacles_in_level_editor * OMIT_OBSTACLES | GameConfig.omit_enemies_in_level_editor * OMIT_ENEMIES | SHOW_OBSTACLE_NAMES );
 
 	  Highlight_Current_Block();
 
@@ -3409,12 +3467,10 @@ LevelEditor(void)
 	    }
 
 	  //--------------------
-	  // If the person using the level editor decides he/she wants a different
-	  // scale for the editing process, he/she may say so by using the O/I keys.
+	  // The FKEY can be used to toggle between 'floor' and 'obstacle' edit modes
 	  //
-	  if ( OPressed () ) 
+	  if ( FPressed () )
 	    {
-	      // ZoomOut();
 	      if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_FLOOR )
 		GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_OBSTACLES ;
 	      else if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_OBSTACLES )
@@ -3422,6 +3478,12 @@ LevelEditor(void)
 	      while ( OPressed() );
 	      Highlight = 0 ;
 	    }
+
+	  //--------------------
+	  // If the person using the level editor decides he/she wants a different
+	  // scale for the editing process, he/she may say so by using the O/I keys.
+	  //
+	  if ( OPressed () ) ZoomOut();
 	  if ( IPressed () ) ZoomIn();
 
 	  if ( XPressed () )
@@ -3429,6 +3491,18 @@ LevelEditor(void)
 	      delete_obstacle ( EditLevel , level_editor_marked_obstacle );
 	      level_editor_marked_obstacle = NULL ;
 	      while ( XPressed() );
+	    }
+
+	  //--------------------
+	  // The HKEY can be used to give a name to the currently marked obstacle
+	  //
+	  if ( HPressed() )
+	    {
+	      if ( level_editor_marked_obstacle != NULL )
+		{
+		  give_new_name_to_obstacle ( EditLevel , level_editor_marked_obstacle );
+		  while ( HPressed() );
+		}
 	    }
 
 	  if ( NPressed() )

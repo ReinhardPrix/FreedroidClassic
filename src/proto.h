@@ -505,7 +505,7 @@ void PaintConsoleMenu (int menu_pos);
 #else
 #define EXTERN extern
 #endif
-
+EXTERN void show_backgrounded_label_at_map_position ( char* LabelText , float fill_status , float pos_x , float pos_y );
 EXTERN char * GetEditableStringInPopupWindow ( int MaxLen , char* PopupWindowTitle , char* DefaultString );
 EXTERN void GiveMouseAlertWindow ( char* WindowText ) ;
 EXTERN void CutDownStringToMaximalSize ( char* StringToCut , int LengthInPixels );

@@ -411,6 +411,7 @@ decode_obstacles_of_this_level ( Level loadlevel , char* DataPointer )
       loadlevel -> obstacle_list [ i ] . type = ( -1 ) ;
       loadlevel -> obstacle_list [ i ] . pos . x = ( -1 ) ;
       loadlevel -> obstacle_list [ i ] . pos . y = ( -1 ) ;
+      loadlevel -> obstacle_list [ i ] . name_index = ( -1 ) ;
     }
 
   //--------------------
@@ -514,6 +515,26 @@ DecodeMapLabelsOfThisLevel ( Level loadlevel , char* DataPointer )
   MapLabelSectionEnd[0]=PreservedLetter;
 
 }; // void DecodeMapLabelsOfThisLevel ( Level loadlevel , char* DataPointer );
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+decode_obstacle_names_of_this_level ( Level loadlevel , char* DataPointer )
+{
+  int i;
+
+  //--------------------
+  // At first we set all the obstacle name pointers to NULL in order to
+  // mark them as unused.
+  //
+  for ( i = 0 ; i < MAX_OBSTACLE_NAMES_PER_LEVEL ; i ++ )
+    {
+      loadlevel -> obstacle_name_list [ i ] = NULL ;
+    }
+
+}; // void decode_obstacle_names_of_this_level ( loadlevel , DataPointer )
 
 /* ----------------------------------------------------------------------
  *
@@ -2769,6 +2790,8 @@ DecodeLoadedLeveldata ( char *data )
   decode_obstacles_of_this_level ( loadlevel , DataPointer );
 
   DecodeMapLabelsOfThisLevel ( loadlevel , DataPointer );
+
+  decode_obstacle_names_of_this_level ( loadlevel , DataPointer );
 
   //--------------------
   // Next we extract the statments of the influencer on this level WITHOUT destroying

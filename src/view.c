@@ -1011,6 +1011,32 @@ The blitting list contained an illegal blitting object type.",
 
 }; // void blit_all_objects_according_to_blitting_list ( void )
 
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void 
+show_obstacle_labels ( int mask )
+{
+  int i;
+  Level EditLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
+
+  if ( ! ( mask & SHOW_OBSTACLE_NAMES ) ) return;
+
+  for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
+    {
+      if ( EditLevel -> obstacle_list [ i ] . name_index >= 0 )
+	{
+	  show_backgrounded_label_at_map_position ( EditLevel -> obstacle_name_list [ EditLevel -> obstacle_list [ i ] . name_index ]  ,
+						    0 , EditLevel -> obstacle_list [ i ] . pos . x , 
+						    EditLevel -> obstacle_list [ i ] . pos . y );
+	}
+    }
+
+  show_backgrounded_label_at_map_position ( "This is a test" , 0 , Me [ 0 ] . pos . x + 1 , Me [ 0 ] . pos . y + 1 );
+
+}; // void show_obstacle_labels ( int mask )
+
 /* -----------------------------------------------------------------
  * This function assembles the contents of the combat window 
  * in Screen.
@@ -1066,9 +1092,11 @@ AssembleCombatPicture (int mask)
       return;
     }
 
+  show_obstacle_labels ( mask );
+
   ShowAutomapData();
 
-  ShowCombatScreenTexts( mask );
+  ShowCombatScreenTexts ( mask );
 
   //--------------------
   // Here are some more things, that are not needed in the level editor
