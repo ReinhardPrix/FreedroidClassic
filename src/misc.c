@@ -495,6 +495,8 @@ MouseCursorIsInRect ( SDL_Rect* our_rect , int x , int y )
 int
 MouseCursorIsOnButton( int ButtonIndex , int x , int y )
 {
+    SDL_Rect temp_rect;
+
     //--------------------
     // First a sanity check if the button index given does make
     // some sense.
@@ -507,16 +509,16 @@ button index given exceeds the number of buttons defined in freedroid.",
 				   PLEASE_INFORM, IS_FATAL );
     }
 
+    Copy_Rect ( AllMousePressButtons [ ButtonIndex ] . button_rect , temp_rect );
     //--------------------
     // If this button needs scaling still, then we do it now...
     //
     if ( AllMousePressButtons [ ButtonIndex ] . scale_this_button )
     {
-	AllMousePressButtons [ ButtonIndex ] . button_rect . x *= ((float)GameConfig . screen_width)/640.0 ;
-	AllMousePressButtons [ ButtonIndex ] . button_rect . w *= ((float)GameConfig . screen_width)/640.0 ;
-	AllMousePressButtons [ ButtonIndex ] . button_rect . y *= ((float)GameConfig . screen_height)/480.0 ;
-	AllMousePressButtons [ ButtonIndex ] . button_rect . h *= ((float)GameConfig . screen_height)/480.0 ;
-	AllMousePressButtons [ ButtonIndex ] . scale_this_button = FALSE ;
+	temp_rect . x *= ((float)GameConfig . screen_width)/640.0 ;
+	temp_rect . w *= ((float)GameConfig . screen_width)/640.0 ;
+	temp_rect . y *= ((float)GameConfig . screen_height)/480.0 ;
+	temp_rect . h *= ((float)GameConfig . screen_height)/480.0 ;
     }
 
     if ( y < AllMousePressButtons[ ButtonIndex ] . button_rect . y ) return ( FALSE );
@@ -525,7 +527,7 @@ button index given exceeds the number of buttons defined in freedroid.",
     // So since the cursor is not outside of this rectangle, it must
     // we inside, and so we'll return this answer.
     //
-    return ( MouseCursorIsInRect ( & ( AllMousePressButtons[ ButtonIndex ] . button_rect ) , x , y ) ) ;
+    return ( MouseCursorIsInRect ( & ( temp_rect ) , x , y ) ) ;
 
 }; // int MouseCursorIsOnButton( int ButtonIndex , int x , int y )
 
