@@ -2457,12 +2457,12 @@ Credits_Menu (void)
                                         by realsmokers\n\
                                         of kahvi collective\n\
                                       (www.realsmokers.de)\n\
+                                      (www.kahvi.org)\n\n\
+                                      \"Bleostrada\"\n\
+                                        by stud\n\
+                                        of kahvi collective\n\
+                                      (www.atl3.com/stud)\n\
                                       (www.kahvi.org)\n\n\n\
-   MOD COMPOSERS:\n\n\
-                                      freeman/lard design\n\
-                                       (The Great Bath)\n\n\
-                                      radix/solitude (Nowhere)\n\n\
-                                      )\n\n\n\
    VOICES:\n\n\
                                       Tiina Heinonen\n\n\
                                       Doris Stubenrauch\n\n\
