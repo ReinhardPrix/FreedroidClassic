@@ -61,7 +61,7 @@ int BigScreenMessageIndex = 0 ;
 char BigScreenMessage[ MAX_BIG_SCREEN_MESSAGES ] [ 5000 ];
 float BigScreenMessageDuration[ MAX_BIG_SCREEN_MESSAGES ] = { 10000, 10000, 10000, 10000, 10000 } ;
 
-SDL_Surface* Background;
+SDL_Surface* Dialog_Screen_Background = NULL ;
 
 dialogue_option ChatRoster[MAX_DIALOGUE_OPTIONS_IN_ROSTER];
 
@@ -433,7 +433,7 @@ GiveSubtitleNSample( char* SubtitleText , char* SampleFilename )
 
   if ( strcmp ( SubtitleText , "NO_SUBTITLE_AND_NO_WAITING_EITHER" ) )
     {
-      DisplaySubtitle ( SubtitleText , Background );
+      DisplaySubtitle ( SubtitleText , Dialog_Screen_Background );
       PlayOnceNeededSoundSample( SampleFilename , TRUE );
     }
   else
@@ -761,8 +761,8 @@ PrepareMultipleChoiceDialog ( Enemy ChatDroid )
   //--------------------
   // Next we prepare the whole background for all later text operations
   //
-  if ( Background == NULL )
-    Background = our_IMG_load_wrapper( find_file ( CHAT_BACKGROUND_IMAGE_FILE , GRAPHICS_DIR, FALSE ) );
+  if ( Dialog_Screen_Background == NULL )
+    Dialog_Screen_Background = our_IMG_load_wrapper( find_file ( CHAT_BACKGROUND_IMAGE_FILE , GRAPHICS_DIR, FALSE ) );
   else
     {
       //--------------------
@@ -770,10 +770,10 @@ PrepareMultipleChoiceDialog ( Enemy ChatDroid )
       // therefore generate a new fresh one without the image of the previous
       // discussion partner on it.
       //
-      SDL_FreeSurface( Background );
-      Background = our_IMG_load_wrapper( find_file ( CHAT_BACKGROUND_IMAGE_FILE , GRAPHICS_DIR, FALSE ) );
+      SDL_FreeSurface( Dialog_Screen_Background );
+      Dialog_Screen_Background = our_IMG_load_wrapper( find_file ( CHAT_BACKGROUND_IMAGE_FILE , GRAPHICS_DIR, FALSE ) );
     }
-  if ( Background == NULL )
+  if ( Dialog_Screen_Background == NULL )
     {
       fprintf( stderr, "\n\nSDL_GetError: %s \n" , SDL_GetError() );
       GiveStandardErrorMessage ( "PrepareMultipleChoiceDialog(...)" , "\
@@ -830,8 +830,8 @@ chat interface of Freedroid.  But:  Loading this file has failed.",
     {
       Droid_Image_Window . x = 48; Droid_Image_Window . y = 44; // Droid_Image_Window . w = 130; Droid_Image_Window . h = 172;
     }
-  our_SDL_blit_surface_wrapper( Large_Droid , NULL , Background , &Droid_Image_Window );
-  our_SDL_blit_surface_wrapper( Background , NULL , Screen , NULL );
+  our_SDL_blit_surface_wrapper( Large_Droid , NULL , Dialog_Screen_Background , &Droid_Image_Window );
+  our_SDL_blit_surface_wrapper( Dialog_Screen_Background , NULL , Screen , NULL );
   our_SDL_flip_wrapper( Screen );
 
   SDL_FreeSurface( Small_Droid );
@@ -1605,12 +1605,13 @@ ScrollText (char *Text, int startx, int starty, int EndLine , int background_cod
 
     } /* while !Space_Pressed */
 
-  SDL_FreeSurface( Background );
+  // SDL_FreeSurface( Background );
 
   while ( SpacePressed() ); // so that we don't touch again immediately.
 
   return OK;
-}				// void ScrollText(void)
+
+}; // int ScrollText ( ... )
 
 /*-----------------------------------------------------------------
  * This function is much like DisplayText, but with the main difference,
