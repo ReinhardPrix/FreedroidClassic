@@ -27,6 +27,12 @@
  * This file contains all the console and lift functions (mostly)
  * ---------------------------------------------------------------------- */
 
+/*
+ * This file has been checked for remains of german in the documentation.
+ * They should be all out by now, and if you still find any, please do not
+ * hesitate to remove them.
+ */
+
 #define _ship_c
 
 #include "system.h"

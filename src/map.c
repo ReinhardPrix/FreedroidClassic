@@ -1,12 +1,3 @@
-/*----------------------------------------------------------------------
- *
- * Desc: All map-related functions, which also includes loading of decks 
- * and whole ships, starting the lifts and consoles if close to the 
- * paradroid, refreshes as well as determining the map brick that contains
- * specified coordinates are done in this file.
- *
- *----------------------------------------------------------------------*/
-
 /* 
  *
  *   Copyright (c) 1994, 2002 Johannes Prix
@@ -31,6 +22,20 @@
  *  MA  02111-1307  USA
  *
  */
+
+/* ----------------------------------------------------------------------
+ * This file contains (all?) map-related functions, which also includes 
+ * loading of decks and whole ships, starting the lifts and consoles if 
+ * close to the paradroid, refreshes as well as determining the map brick 
+ * that contains specified coordinates are done in this file.
+ * ---------------------------------------------------------------------- */
+
+/*
+ * This file has been checked for remains of german in the documentation.
+ * They should be all out by now, and if you still find any, please do not
+ * hesitate to remove them.
+ */
+
 #define _map_c
 
 #include "system.h"
@@ -77,13 +82,10 @@ void TranslateToHumanReadable ( char* HumanReadable , unsigned char* MapInfo, in
 void GetThisLevelsDroids( char* SectionPointer );
 Level Decode_Loaded_Leveldata ( char *data );
 
-/*@Function============================================================
-  @Desc: unsigned char GetMapBrick(Level deck, float x, float y): liefert
-  intern-code des Elements, das sich auf (deck x/y) befindet
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function returns the map brick code of the tile that occupies the
+ * given position.
+ * ---------------------------------------------------------------------- */
 unsigned char
 GetMapBrick (Level deck, float x, float y)
 {
@@ -118,16 +120,17 @@ GetMapBrick (Level deck, float x, float y)
       Terminate (-1);
     }
   return deck->map[((int) rintf (y)) ][((int) rintf (x)) ];
-} /* GetMapBrick() */
+}; // int GetMapBrick( ... ) 
  
-/*@Function============================================================
-@Desc: int GetCurrentLift: finds Lift-number to your position 
-
-@Ret: -1: 	Not found !!
-		num: 	Number of cur. Lift in AllLifts[]
-		
-@Int:
-* $Function----------------------------------------------------------*/
+/* ---------------------------------------------------------------------- 
+ * This function finds the lift number what corresponds to the current
+ * position of the influencer.
+ *
+ * A return value of  (-1) means: No lift connected to here found !!
+ * Other return values contain the number of the lift in AllLifts[],
+ * that has a connection to this square.
+ *
+ * ---------------------------------------------------------------------- */
 int
 GetCurrentLift (void)
 {
@@ -159,21 +162,18 @@ GetCurrentLift (void)
     return -1;
   else
     return i;
-}; // GetCurrentLift 
+}; // int GetCurrentLift ( void )
 
-
-/*@Function============================================================
-@Desc: ActSpecialField: checks Influencer on SpecialFields like
-Lifts and Konsoles and acts on it 
-
-@Ret: void
-@Int:
-* $Function----------------------------------------------------------*/
+/* ---------------------------------------------------------------------- 
+ * This function checks if something special has to be done, cause the
+ * Influencer or tux has stepped on some special fields like a lifts or
+ * a console or a refresh or something like that.
+ * ---------------------------------------------------------------------- */
 void
 ActSpecialField (float x, float y)
 {
   unsigned char MapBrick;
-  float cx, cy;			/* tmp: NullPunkt im Blockzentrum */
+  float cx, cy;			
 
   DebugPrintf (2, "\nvoid ActSpecialField(int x, int y):  Real function call confirmed.");
 
@@ -189,7 +189,7 @@ ActSpecialField (float x, float y)
       cx = rintf(x) - x ;
       cy = rintf(y) - y ;
 
-      /* Lift nur betreten, wenn ca. im Zentrum */
+      // only enter the lift, when approximately in the center (of the map tile)
       if ((cx * cx + cy * cy) < Druid_Radius_X * Druid_Radius_X)
 	EnterLift ();
       break;
@@ -241,32 +241,22 @@ ActSpecialField (float x, float y)
 
   DebugPrintf (2, "\nvoid ActSpecialField(int x, int y):  end of function reached.");
 
-} /* ActSpecialField */
+}; // void ActSpecialField ( ... )
 
-/*@Function============================================================
-@Desc: 	AnimateRefresh():
-
-@Ret: void
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function moves all the refresh fields to their next phase (if
+ * it's time already).
+ * ---------------------------------------------------------------------- */
 void
 AnimateRefresh (void)
 {
   static float InnerWaitCounter = 0;
-  static int InnerPhase = 0;	/* Zaehler fuer innere Phase */
-  int i, j;
+  int i;
   int x, y;
 
   DebugPrintf (2, "\nvoid AnimateRefresh(void):  real function call confirmed.");
 
   InnerWaitCounter += Frame_Time () * 10;
-
-  // if( (((int)rintf(InnerWaitCounter)) % INNER_REFRESH_COUNTER) == 0) {
-  // InnerPhase ++;
-  // InnerPhase %= INNER_PHASES;
-
-  InnerPhase = (((int) rintf (InnerWaitCounter)) % INNER_PHASES);
-
 
   for (i = 0; i < MAX_REFRESHES_ON_LEVEL; i++)
     {
@@ -277,41 +267,25 @@ AnimateRefresh (void)
 
       CurLevel->map[y][x] = (((int) rintf (InnerWaitCounter)) % 4) + REFRESH1;
 
-      /* Inneres Refresh animieren */
-      for (j = 0; j < 4; j++)
-	{
-	  ;  /* nix hier noch... */
-	}			/* for */
-
     }				/* for */
 
   DebugPrintf (2, "\nvoid AnimateRefresh(void):  end of function reached.");
 
-}				/* AnimateRefresh */
+}; // void AnimateRefresh ( void )
 
-/*@Function============================================================
-@Desc: 	AnimateRefresh():
-
-@Ret: void
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function moves all the teleporter fields to their next phase (if
+ * it's time already).
+ * ---------------------------------------------------------------------- */
 void
 AnimateTeleports (void)
 {
   static float InnerWaitCounter = 0;
-  static int InnerPhase = 0;	/* Zaehler fuer innere Phase */
   int i, x, y;
 
   DebugPrintf (2, "\nvoid AnimateRefresh(void):  real function call confirmed.");
 
   InnerWaitCounter += Frame_Time () * 30;
-
-  // if( (((int)rintf(InnerWaitCounter)) % INNER_REFRESH_COUNTER) == 0) {
-  // InnerPhase ++;
-  // InnerPhase %= INNER_PHASES;
-
-  InnerPhase = (((int) rintf (InnerWaitCounter)) % INNER_PHASES);
-
 
   for (i = 0; i < MAX_TELEPORTERS_ON_LEVEL; i++)
     {
@@ -330,8 +304,7 @@ AnimateTeleports (void)
 
 /* ----------------------------------------------------------------------
  * This function loads the data for a whole ship
- *
- * @Ret: OK | ERR
+ * Possible return values are : OK and ERR
  * ---------------------------------------------------------------------- */
 int
 LoadShip (char *filename)
@@ -382,18 +355,16 @@ LoadShip (char *filename)
 
   return OK;
 
-} /* LoadShip () */
+}; // int LoadShip ( ... ) 
 
-/*@Function============================================================
-@Desc: This function is intended to eliminate leading -1 entries before
-       real entries in the waypoint connection structure.
-
-       Such leading -1 entries might cause problems later, because some
-       Enemy-Movement routines expect that the "real" entries are the
-       first entries in the connection list.
-
-@Ret:  none
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function is intended to eliminate leading -1 entries before
+ * real entries in the waypoint connection structure.
+ *
+ * Such leading -1 entries might cause problems later, because some
+ * Enemy-Movement routines expect that the "real" entries are the
+ * first entries in the connection list.
+ * ---------------------------------------------------------------------- */
 void CheckWaypointIntegrity(Level Lev)
 {
   int i, j , k , l ;
@@ -448,7 +419,8 @@ void CheckWaypointIntegrity(Level Lev)
 /* ----------------------------------------------------------------------
  * This function generates savable text out of the current lavel data
  * ---------------------------------------------------------------------- */
-char *Encode_Level_For_Saving(Level Lev)
+char *
+Encode_Level_For_Saving(Level Lev)
 {
   char *LevelMem;
   int i, j;
@@ -685,8 +657,11 @@ char *Encode_Level_For_Saving(Level Lev)
 ----------------------------------------------------------------------\n\
 \n");
   
-  /* FERTIG:   hat die Memory - Schaetzung gestimmt ?? */
-  /* wenn nicht: :-(  */
+  //--------------------
+  // So we're done now.  Did the estimate for the amount of memory hit
+  // the target or was it at least sufficient? 
+  // If not, we're in trouble...
+  //
   if( strlen(LevelMem) >= MemAmount) 
     {
       printf("\n\nError in StructToMem:  Estimate of memory was wrong...\n\nTerminating...\n\n");
@@ -697,14 +672,14 @@ char *Encode_Level_For_Saving(Level Lev)
   /* all ok : */
   return LevelMem;
   
-} /* Struct to Mem */
+}; // char *Encode_Level_For_Saving ( Level Lev )
 
-/*@Function============================================================
-@Desc: int SaveShip(void): saves ship-data to disk
 
-@Ret: OK | ERR
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function should save a whole ship to disk to the given filename.
+ * It is not only used by the level editor, but also by the function that
+ * saves whole games.
+ * ---------------------------------------------------------------------- */
 int SaveShip(char *filename)
 {
   char *LevelMem;		/* linear memory for one Level */
@@ -844,8 +819,8 @@ freedroid-discussion@lists.sourceforge.net\n\
   DebugPrintf (2, "\nint SaveShip(char *shipname): end of function reached.");
   
   return OK;
-} /* SaveShip */
 
+}; // int SaveShip ( char* filename )
 
 /* ----------------------------------------------------------------------
  * This function is for LOADING map data!
@@ -1127,14 +1102,12 @@ Decode_Loaded_Leveldata (char *data)
 
 }; // Level Decode_Loaded_Leveldata (char *data)
 
-
-
-/*@Function============================================================
-@Desc: GetDoors: initializes the Doors array of the given level structure
-Of course the level data must be in the structure already!!
-
-@Ret: Number of doors found or ERR
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function initializes the Doors array of the given level structure
+ * Of course the level data must be in the structure already!!
+ *
+ * Return value: the number of doors found or ERR
+ * ---------------------------------------------------------------------- */
 int
 GetDoors (Level Lev)
 {
@@ -1193,14 +1166,14 @@ Sorry...\n\
     }				/* for */
 
   return curdoor;
-}				/* GetDoors */
+}; // int GetDoors (...)
 
-/*@Function============================================================
-@Desc: This function initialized the array of Refreshes for animation
-       within the level
-
-@Ret: Number of refreshes found or ERR
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function initialized the array of Refreshes for animation
+ * within the level
+ * 
+ * Return value: the number of refreshes found or ERR
+ * ---------------------------------------------------------------------- */
 int
 GetRefreshes (Level Lev)
 {
@@ -1255,13 +1228,12 @@ Sorry...\n\
   return curref;
 }				// int GetRefreshed(Level lev)
 
-
-/*@Function============================================================
-@Desc: This function initialized the array of Teleports for animation
-       within the level
-
-@Ret: Number of refreshes found or ERR
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function initialized the array of Teleports for animation
+ * within the level
+ *
+ * Return value:  number of refreshes found or ERR
+ * ---------------------------------------------------------------------- */
 int
 GetTeleports (Level Lev)
 {
@@ -1315,42 +1287,10 @@ Sorry...\n\
   return curref;
 }; // int GetTeleports(Level lev)
 
-
-/*======================================================================
-  IsWallBlock():  Returns TRUE (1) for blocks classified as "Walls", 
-  		  0 otherwise
- ======================================================================*/
-int
-IsWallBlock (int block)
-{
-  switch (block)
-    {
-    case KREUZ:
-    case H_WALL:
-    case V_WALL:
-    case H_ZUTUERE:
-    case V_ZUTUERE:
-    case LOCKED_H_ZUTUERE:
-    case LOCKED_V_ZUTUERE:
-    case ECK_LU:
-    case T_U:
-    case ECK_RU:
-    case T_L:
-    case T_R:
-    case ECK_LO:
-    case T_O:
-    case ECK_RO:
-      return (TRUE);
-    default:
-      return (FALSE);
-    }				// switch
-}				// IsWallBlock()
-
-/*----------------------------------------------------------------------
+/* ----------------------------------------------------------------------
  * This function translates map data into human readable map code, that
  * can later be written to the map file on disk.
- *
- ----------------------------------------------------------------------*/
+ * ---------------------------------------------------------------------- */
 void
 TranslateToHumanReadable ( char* HumanReadable , unsigned char* MapInfo, int LineLength , Level Lev , int CurrentLine)
 {
@@ -1405,7 +1345,7 @@ TranslateToHumanReadable ( char* HumanReadable , unsigned char* MapInfo, int Lin
 
 
 
-  /* transpose the game-engine mapdata line to human readable format */
+  // transpose the game-engine mapdata line to human readable format 
 
   HumanReadable[0]=0;  // Add a terminator at the beginning
 
@@ -1415,9 +1355,9 @@ TranslateToHumanReadable ( char* HumanReadable , unsigned char* MapInfo, int Lin
       strcat ( HumanReadable , Buffer );
     }
 
-} // void TranslateToHumanReadable( ... )
+}; // void TranslateToHumanReadable( ... )
 
-/*-----------------------------------------------------------------
+/* -----------------------------------------------------------------
  * @Desc: When the ship is loaded from disk, the data of the map 
  *        are initally in a human readable form with sensible
  *        ascii characters.  This however is NOT the format and
@@ -1468,16 +1408,13 @@ TranslateMap (Level Lev)
 
   DebugPrintf (2, "\nint TranslateMap(Level Lev): end of function reached.");
   return OK;
-}				// int Translate Map(Level lev)
+}; // int Translate Map( Level lev )
 
 
-/*@Function============================================================
-@Desc: GetLiftConnections(char *ship): loads lift-connctions
-					to cur-ship struct
-
-@Ret: 	OK | ERR
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function loads lift-connctions into cur-ship struct
+ * Return values are OK or ERR
+ * ---------------------------------------------------------------------- */
 int
 GetLiftConnections (char *filename)
 {
@@ -1593,13 +1530,11 @@ GetLiftConnections (char *filename)
   return OK;
 }; // int GetLiftConnections(char *shipname)
 
-/*-----------------------------------------------------------------
- * @Desc: This function initializes all enemys
- * 
- *
- * @Ret: OK or ERR
- * 
- *-----------------------------------------------------------------*/
+/* -----------------------------------------------------------------
+ * This function initializes all enemys, which means that enemys are
+ * filled in into the enemy list according to the enemys types that 
+ * are to be found on each deck.
+ * ----------------------------------------------------------------- */
 int
 GetCrew (char *filename)
 {
@@ -1679,10 +1614,9 @@ GetCrew (char *filename)
     }
 
   return (OK);
-} /* GetCrew () */
+}; // int GetCrew ( ... ) 
 
-
-/*-----------------------------------------------------------------
+/* -----------------------------------------------------------------
  * Friendly droids have a list of keywords they understand and to
  * which they answer something, that is a question for the influencer,
  * which the influencer shall answer one way or the other (2 options
@@ -1692,7 +1626,7 @@ GetCrew (char *filename)
  * ansers of the robot to that again plus perhaps some events 
  * that are triggered this way or some missions that are assigned
  * this way.
- *-----------------------------------------------------------------*/
+ * ----------------------------------------------------------------- */
 void 
 GetThisRobotsDecisionRequestList( char* SearchPointer , int RobotNum )
 {
@@ -1820,8 +1754,6 @@ Sorry...\n\
       DebugPrintf( 0 , "Action trigger entry found : %s \n" , 
 		   AllEnemys[ RobotNum ].RequestList[ DecisionNr ].ActionTrigger );
 
-
-
       // Not that this entry has been read, we move all indexes up by one
       DecisionNr++;
       NextDecisionEntry++;
@@ -1831,12 +1763,12 @@ Sorry...\n\
 
 }; // void GetThisRobotsDecisionRequestList( char* SearchPointer, int RobotNum );
 
-/*-----------------------------------------------------------------
+/* -----------------------------------------------------------------
  * Friendly droids have a list of keywords they understand and they
  * can answer in a predefined way.  This list must be decoded from
  * the format style of the droids file to the AllEnemys arrays
  * fields and this is exactly what this function does.
- *-----------------------------------------------------------------*/
+ * ----------------------------------------------------------------- */
 void 
 GetThisRobotsQuestionResponseList( char* SearchPointer , int RobotNum )
 {
@@ -1909,16 +1841,12 @@ Sorry...\n\
   free ( TempSearchArea );
 }; // void GetThisRobotsQuestionResponseList( char* SearchPointer , int RobotNum )
 
-
-
-/*
-----------------------------------------------------------------------
-This function receives a pointer to the already read in crew section
-in a already read in droids file and decodes all the contents of that
-droid section to fill the AllEnemys array with droid types accoriding
-to the specifications made in the file.
-----------------------------------------------------------------------
-*/
+/* ----------------------------------------------------------------------
+ * This function receives a pointer to the already read in crew section
+ * in a already read in droids file and decodes all the contents of that
+ * droid section to fill the AllEnemys array with droid types accoriding
+ * to the specifications made in the file.
+ * ---------------------------------------------------------------------- */
 void
 GetThisLevelsDroids( char* SectionPointer )
 {
@@ -2126,20 +2054,17 @@ Sorry...\n\
 
   NumEnemys=FreeAllEnemysPosition+1; // we silently assume monotonely increasing FreePosition index. seems ok.
   // getchar();
-}
+}; // void GetThisLevelsDroids( char* SectionPointer )
 
-
-/*@Function============================================================
-@Desc: This funtion moves the level doors in the sense that they are opened
-       or closed depending on whether there is a robot close to the door or
-       not.  Initially this function did not take into account the framerate
-       and just worked every frame.  But this WASTES COMPUTATION time and it
-       DOES THE ANIMATION TOO QUICKLY.  So, the most reasonable way out seems
-       to be to operate this function only from time to time, e.g. after a
-       specified delay has passed.
-
-@Ret: 
-* $Function----------------------------------------------------------*/
+/* ---------------------------------------------------------------------- 
+ * This funtion moves the level doors in the sense that they are opened
+ * or closed depending on whether there is a robot close to the door or
+ * not.  Initially this function did not take into account the framerate
+ * and just worked every frame.  But this WASTES COMPUTATION time and it
+ * DOES THE ANIMATION TOO QUICKLY.  So, the most reasonable way out seems
+ * to be to operate this function only from time to time, e.g. after a
+ * specified delay has passed.
+ * ---------------------------------------------------------------------- */
 void
 MoveLevelDoors (void)
 {
@@ -2161,16 +2086,13 @@ MoveLevelDoors (void)
       doorx = (CurLevel->doors[i].x);
       doory = (CurLevel->doors[i].y);
 
-      /* Keine weiteren Tueren */
+      // no more doors?
       if (doorx == 0 && doory == 0)
 	break;
 
       Pos = &(CurLevel->map[doory][doorx]);
 
-      // NORMALISATION doorx = doorx * Block_Width + Block_Width / 2;
-      // NORMALISATION doory = doory * Block_Height + Block_Height / 2;
-
-      /* first check Influencer gegen Tuer */
+      /* first check Influencer distance to doors */
       xdist = Me.pos.x - doorx;
       ydist = Me.pos.y - doory;
       dist2 = xdist * xdist + ydist * ydist;
@@ -2182,7 +2104,7 @@ MoveLevelDoors (void)
 	}
       else
 	{
-	  /* alle Enemys checken */
+	  /* now check all enemys */
 	  for (j = 0; j < NumEnemys; j++)
 	    {
 	      /* ignore druids that are dead or on other levels */
@@ -2217,16 +2139,19 @@ MoveLevelDoors (void)
     }				/* for */
 }; // void MoveLevelDoors ( void )
 
-
-/*@Function============================================================
-@Desc: 	int DruidPassable(int x, int y) - prueft, ob Pos x/y fuer
-Druid passierbar ist, liefert Richtungswerte, falls
-der Druid von einer Tuer "weggestossen" wird
-
-@Ret: 	-1:		Not passable
-Direction:  Druid in Richtung Direction wegschubsen
-CENTER:		Position passable
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function checks if the given position is passable for a droid,
+ * i.e. if there is enough space to the left right up and down, so that
+ * a droids center might be at this point without colliding with a wall.
+ *
+ * In case of a door, the direction into which the influencer has to
+ * be moved in order to 'glide' through the door will be returned.
+ *
+ * In case of an inpassable location, a value of (-1) will be returned.
+ *
+ * In case of a completely passable location, the CENTER constant will
+ * be returned.
+ * ---------------------------------------------------------------------- */
 int
 DruidPassable (float x, float y)
 {
@@ -2263,21 +2188,22 @@ DruidPassable (float x, float y)
     }				/* for */
 
   return ret;
-}				// int DruidPassable(int x, int y)
+}; // int DruidPassable( ... )
 
-
-/*@Function============================================================
-@Desc: IsPassable(int x, int y, int Checkpos):
-prueft, ob der Punkt x/y passierbar ist
-Checkpos: Falls Druid gecheckt wird: aktuelle Check-position
-Checkpos = CENTER means: No Druid check
-			
-@Ret: CENTER: 	TRUE
-Directions + (-1) : FALSE
-
-Directions mean Push Druid if it is one, else is's not passable
-@Int:
-* $Function----------------------------------------------------------*/
+/* ---------------------------------------------------------------------- 
+ * This function checks if a given location lies within a wall or not.
+ * The location given is like the center of a droid and the 'Checkpos'
+ * refers to if the left or right or up or down borders of the droid
+ * should be compared for wall collisions.
+ *
+ * In case of CENTER given as checkpos, no such shift is done but only
+ * the collision situation at the given coordinates is returned.
+ *
+ * A return value of CENTER means that the location is passable in that sense.
+ * while any directions and (-1) indicate that it is not so and in case
+ * of a direction returned, it's the direction into which the droid
+ * should be pushed to resolve the collision (with a door).
+ * ---------------------------------------------------------------------- */
 int
 IsPassable (float x, float y, int Checkpos)
 {
@@ -2286,11 +2212,6 @@ IsPassable (float x, float y, int Checkpos)
   int ret = -1;
 
   MapBrick = GetMapBrick (CurLevel, x, y);
-
-  //NORMALISATION  fx = x % Block_Width;
-  //NORMALISATION  fy = y % Block_Height;
-  // fx = x - rintf(x);
-  // fy = y - rintf(y);
 
   // ATTENTION!  
   // With the new coodinates, the position of the Influencer is an integer,
@@ -2368,7 +2289,6 @@ IsPassable (float x, float y, int Checkpos)
 	  ret = CENTER;
 	  break;
 	}
-      //NORMALISATION if (fy > (Block_Height - KONSOLEPASS_Y))
       if ( (fy < WALLPASS) || (fy > ( 1 - KONSOLEPASS_Y )) )
 	ret = CENTER;
       else
@@ -2393,7 +2313,6 @@ IsPassable (float x, float y, int Checkpos)
 
 
     case H_WALL:
-      //NORMALISATION if ((fy < WALLPASS) || (fy > Block_Height - WALLPASS))
       if ((fy < WALLPASS) || (fy > 1 - WALLPASS))
 	ret = CENTER;
       else
@@ -2401,7 +2320,6 @@ IsPassable (float x, float y, int Checkpos)
       break;
 
     case V_WALL:
-      //NORMALISATION if ((fx < WALLPASS) || (fx > Block_Width - WALLPASS))
       if ((fx < WALLPASS) || (fx > 1 - WALLPASS))
 	ret = CENTER;
       else
@@ -2409,9 +2327,7 @@ IsPassable (float x, float y, int Checkpos)
       break;
 
     case ECK_RO:
-      //NORMALISATION if ((fx > Block_Width - WALLPASS) || (fy < WALLPASS) ||
       if ((fx > 1 - WALLPASS) || (fy < WALLPASS) ||
-	  //NORMALISATION ((fx < WALLPASS) && (fy > Block_Height - WALLPASS)))
 	  ((fx < WALLPASS) && (fy > 1 - WALLPASS)))
 	ret = CENTER;
       else
@@ -2419,7 +2335,6 @@ IsPassable (float x, float y, int Checkpos)
       break;
 
     case ECK_RU:
-      //NORMALISATION if ((fx > Block_Width - WALLPASS) || (fy > Block_Height - WALLPASS) ||
       if ((fx > 1 - WALLPASS) || (fy > 1 - WALLPASS) ||
 	  ((fx < WALLPASS) && (fy < WALLPASS)))
 	ret = CENTER;
@@ -2428,9 +2343,7 @@ IsPassable (float x, float y, int Checkpos)
       break;
 
     case ECK_LU:
-      //NORMALISATION if ((fx < WALLPASS) || (fy > Block_Height - WALLPASS) ||
       if ((fx < WALLPASS) || (fy > 1 - WALLPASS) ||
-	  //NORMALISATION ((fx > Block_Width - WALLPASS) && (fy < WALLPASS)))
 	  ((fx > 1 - WALLPASS) && (fy < WALLPASS)))
 	ret = CENTER;
       else
@@ -2439,7 +2352,6 @@ IsPassable (float x, float y, int Checkpos)
 
     case ECK_LO:
       if ((fx < WALLPASS) || (fy < WALLPASS) ||
-	  //NORMALISATION ((fx > Block_Width - WALLPASS) && (fy > Block_Height - WALLPASS)))
 	  ((fx > 1 - WALLPASS) && (fy > 1 - WALLPASS)))
 	ret = CENTER;
       else
@@ -2448,9 +2360,7 @@ IsPassable (float x, float y, int Checkpos)
 
     case T_O:
       if ((fy < WALLPASS) ||
-	  //NORMALISATION ((fy > Block_Height - WALLPASS) &&
 	  ((fy > 1 - WALLPASS) &&
-	   //NORMALISATION ((fx < WALLPASS) || (fx > Block_Width - WALLPASS))))
 	   ((fx < WALLPASS) || (fx > 1 - WALLPASS))))
 	ret = CENTER;
       else
@@ -2458,10 +2368,8 @@ IsPassable (float x, float y, int Checkpos)
       break;
 
     case T_R:
-      //NORMALISATION if ((fx > Block_Width - WALLPASS) ||
       if ((fx > 1 - WALLPASS) ||
 	  ((fx < WALLPASS) &&
-	   //NORMALISATION ((fy < WALLPASS) || (fy > Block_Height - WALLPASS))))
 	   ((fy < WALLPASS) || (fy > 1 - WALLPASS))))
 	ret = CENTER;
       else
@@ -2469,10 +2377,8 @@ IsPassable (float x, float y, int Checkpos)
       break;
 
     case T_U:
-      //NORMALISATION if ((fy > Block_Height - WALLPASS) ||
       if ((fy > 1 - WALLPASS) ||
 	  ((fy < WALLPASS) &&
-	   //NORMALISATION ((fx < WALLPASS) || (fx > Block_Width - WALLPASS))))
 	   ((fx < WALLPASS) || (fx > 1 - WALLPASS))))
 	ret = CENTER;
       else
@@ -2481,9 +2387,7 @@ IsPassable (float x, float y, int Checkpos)
 
     case T_L:
       if ((fx < WALLPASS) ||
-	  //NORMALISATION ((fx > Block_Width - WALLPASS) &&
 	  ((fx > 1 - WALLPASS) &&
-	   //NORMALISATION ((fy < WALLPASS) || (fy > Block_Height - WALLPASS))))
 	   ((fy < WALLPASS) || (fy > 1 - WALLPASS))))
 	ret = CENTER;
       else
@@ -2507,13 +2411,11 @@ IsPassable (float x, float y, int Checkpos)
 	  break;
 	}
 
-      /* pruefen, ob Rand der Tuer angefahren */
-      //NORMALISATION if (((fx < H_RANDBREITE) || (fx > (Block_Width - H_RANDBREITE)))
+      // check if the unpassable part of the door has been collided with
       if (((fx < H_RANDBREITE) || (fx > (1 - H_RANDBREITE)))
-	  //NORMALISATION && ((fy >= H_RANDSPACE) && (fy <= (Block_Height - H_RANDSPACE))))
 	  && ((fy >= H_RANDSPACE) && (fy <= (1 - H_RANDSPACE))))
 	{
-	  /* DRUIDS: Nur bei Fahrt durch Tuer wegstossen */
+	  // in case of check for droids passable only, push direction will be returned
 	  if ((Checkpos != CENTER) && (Checkpos != LIGHT)
 	      && (Me.speed.y != 0))
 	    {
@@ -2522,7 +2424,6 @@ IsPassable (float x, float y, int Checkpos)
 		case RECHTSOBEN:
 		case RECHTSUNTEN:
 		case RECHTS:
-		  //NORMALISATION if (fx > Block_Width - H_RANDBREITE)
 		  if (fx > 1 - H_RANDBREITE)
 		    ret = LINKS;
 		  else
@@ -2543,17 +2444,16 @@ IsPassable (float x, float y, int Checkpos)
 	    }			/* if DRUID && Me.speed.y != 0 */
 	  else
 	    ret = -1;
-	}			/* if Rand angefahren */
+	} // if side of the door has been collided with...
       else
-	{			/* mitten in der Tuer */
+	{			// directily in the door
 	  if ((MapBrick == H_GANZTUERE) || (MapBrick == H_HALBTUERE3))
-	    ret = CENTER;	/* Tuer offen */
-	  //NORMALISATION else if ((fy < TUERBREITE) || (fy > Block_Height - TUERBREITE))
+	    ret = CENTER;	// door open
 	  else if ((fy < TUERBREITE) || (fy > 1 - TUERBREITE))
-	    ret = CENTER;	/* Tuer zu, aber noch nicht ganz drin */
+	    ret = CENTER;	// door closed, but not entirely in
 	  else
-	    ret = -1;		/* an geschlossener tuer */
-	}			/* else Mitten in der Tuer */
+	    ret = -1;		// closed door
+	}			// directly in the door
 
       break;
     case V_GANZTUERE:
@@ -2573,14 +2473,12 @@ IsPassable (float x, float y, int Checkpos)
 	  break;
 	}
 
-      /* pruefen , ob Rand der Tuer angefahren */
-      //NORMALISATION if ((fy < V_RANDBREITE || fy > (Block_Height - V_RANDBREITE)) &&
+      // check if the side of the door has been collided with...
       if ((fy < V_RANDBREITE || fy > (1 - V_RANDBREITE)) &&
-	  //NORMALISATION (fx >= V_RANDSPACE && fx <= (Block_Width - V_RANDSPACE)))
 	  (fx >= V_RANDSPACE && fx <= ( 1 - V_RANDSPACE)))
 	{
 
-	  /* DRUIDS: bei Fahrt durch Tuer wegstossen */
+	  // only for droids: check if droid needs to be pushed back and return push direction
 	  if ((Checkpos != CENTER) && (Checkpos != LIGHT)
 	      && (Me.speed.x != 0))
 	    {
@@ -2597,7 +2495,6 @@ IsPassable (float x, float y, int Checkpos)
 		case RECHTSUNTEN:
 		case LINKSUNTEN:
 		case UNTEN:
-		  //NORMALISATION if (fy > Block_Height - V_RANDBREITE)
 		  if (fy > 1 - V_RANDBREITE)
 		    ret = OBEN;
 		  else
@@ -2610,17 +2507,16 @@ IsPassable (float x, float y, int Checkpos)
 	    }			/* if DRUID && Me.speed.x != 0 */
 	  else
 	    ret = -1;
-	}			/* if Rand angefahren */
+	}			// if side of door has been collided with...
       else
-	{			/* mitten in die tuer */
+	{			// directly in the door center
 	  if ((MapBrick == V_GANZTUERE) || (MapBrick == V_HALBTUERE3))
-	    ret = CENTER;	/* Tuer offen */
-	  //NORMALISATION else if ((fx < TUERBREITE) || (fx > Block_Width - TUERBREITE))
+	    ret = CENTER;	// open door
 	  else if ((fx < TUERBREITE) || (fx > 1 - TUERBREITE))
-	    ret = CENTER;	/* tuer zu, aber noch nicht ganz dort */
+	    ret = CENTER;	// closed door, but not entirely there
 	  else
-	    ret = -1;		/* an geschlossener Tuer */
-	}			/* else Mitten in der Tuer */
+	    ret = -1;		// closed door
+	}			// else directly in the center of the door
 
       break;
 
@@ -2631,15 +2527,15 @@ IsPassable (float x, float y, int Checkpos)
 
   return ret;
 
-}				/* IsPassable */
+}; // int IsPassable ( ... )
 
-
-/*@Function============================================================
-@Desc: 	IsVisible(): determines wether object on x/y is visible to
-	the 001 or not
-@Ret: TRUE/FALSE
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function determines wether a given object on x/y is visible to
+ * the 001 or not (due to some walls or something in between
+ * 
+ * Return values are TRUE or FALSE accodinly
+ *
+ * ---------------------------------------------------------------------- */
 int
 IsVisible (Finepoint objpos)
 {
@@ -2685,7 +2581,7 @@ IsVisible (Finepoint objpos)
   DebugPrintf (2, "\nint IsVisible(Point objpos): Funktionsende erreicht.");
 
   return TRUE;
-}				// int IsVisible(Point objpos)
+}; // int IsVisible( Point objpos )
 
 
 #undef _map_c
