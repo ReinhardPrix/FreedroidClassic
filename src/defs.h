@@ -275,6 +275,7 @@ enum _directions
 /* Maximal number of ... */
 
 #define NUM_MAP_BLOCKS		50  /* total number of map-blocks */
+#define NUM_COLORS              7   // how many different level colorings?/different tilesets?
 
 // #define ALLBULLETTYPES		4	/* number of bullet-types */
 #define ALLBLASTTYPES		2	/* number of different exposions */

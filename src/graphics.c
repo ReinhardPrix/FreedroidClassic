@@ -731,6 +731,62 @@ Load_Digit_Surfaces( void )
 
 }; // void Load_Digit_Surfaces( void )
 
+/* 
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+*/
+void 
+Load_MapBlock_Surfaces( void )
+{
+  SDL_Surface* Whole_Image;
+  SDL_Surface* tmp_surf;
+  SDL_Rect Source;
+  SDL_Rect Target;
+  int i;
+  int color;
+  char *fpath;
+  char *ColoredBlockFiles[] = {
+    "ne_block_red.gif",
+    "ne_block_yellow.gif",
+    "ne_block_green.gif",
+    "ne_block_gray.gif",
+    "ne_block_blue.gif",
+    "ne_block_turquoise.gif",
+    "ne_block_dark.gif",
+    NULL
+  };
+
+  for ( color = 0 ; color < NUM_COLORS ; color ++ )
+    {
+
+      fpath = find_file ( ColoredBlockFiles[ color ] , GRAPHICS_DIR, TRUE);
+
+      Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+      SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
+      
+      for ( i=0 ; i < NUM_MAP_BLOCKS ; i++ )
+	{
+	  tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, ne_bpp, 0, 0, 0, 0);
+	  SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
+	  MapBlockSurfacePointer[ color ][i] = SDL_DisplayFormat( tmp_surf ); // now we have an alpha-surf of right size
+	  SDL_SetColorKey( MapBlockSurfacePointer[ color ][i] , 0 , 0 ); // this should clear any color key in the dest surface
+	  // Now we can copy the image Information
+	  Source.x=(i%9)*(Block_Height+2);
+	  Source.y=(i/9)*(Block_Width+2);
+	  Source.w=Block_Width;
+	  Source.h=Block_Height;
+	  Target.x=0;
+	  Target.y=0;
+	  Target.w=Block_Width;
+	  Target.h=Block_Height;
+	  SDL_BlitSurface ( Whole_Image , &Source , MapBlockSurfacePointer[ color ][i] , &Target );
+	  SDL_SetAlpha( MapBlockSurfacePointer[ color ][i] , 0 , 0 );
+	}
+      SDL_FreeSurface( tmp_surf );
+    }
+}; // void Load_MapBlock_Surfaces( void )
+
+
 /*-----------------------------------------------------------------
  * @Desc: get the pics for: druids, bullets, blasts
  * 				
@@ -747,6 +803,17 @@ InitPictures (void)
   SDL_Surface *tmp2;
   int block_line = 0;   /* keep track of line in ne_blocks we're writing */
   char *fpath;
+  char *ColoredBlockFiles[] = {
+    "ne_block_red.gif",
+    "ne_block_yellow.gif",
+    "ne_block_green.gif",
+    "ne_block_gray.gif",
+    "ne_block_blue.gif",
+    "ne_block_turquoise.gif",
+    "ne_block_dark.gif",
+    NULL
+  };
+
 
   Block_Width=INITIAL_BLOCK_WIDTH;
   Block_Height=INITIAL_BLOCK_HEIGHT;
@@ -822,12 +889,22 @@ InitPictures (void)
    * and initialise the block-coordinates 
    */
 
+  fpath = find_file (ColoredBlockFiles[ 0 ], GRAPHICS_DIR, TRUE);
+  ne_map_block = ne_get_blocks (fpath, NUM_MAP_BLOCKS, 9, 0, 0);
+
+  Load_MapBlock_Surfaces();
+  
+
   /*
-  fpath =  find_file (NE_MAP_BLOCK_FILE, GRAPHICS_DIR, TRUE);
-  ne_map_block =
-    ne_get_blocks (fpath , NUM_MAP_BLOCKS, 9, 0, block_line++);
+  for ( i = 0 ; i < 7 ; i++ )
+    {
+      fpath =  find_file (NE_MAP_BLOCK_FILE, GRAPHICS_DIR, TRUE);
+      ne_map_block =
+	ne_get_blocks (fpath , NUM_MAP_BLOCKS, 9, 0, block_line++);
+    }
   */
 
+  /*
   if ( CurLevel == NULL )
     {
       fpath =  find_file (NE_MAP_BLOCK_FILE, GRAPHICS_DIR, TRUE);
@@ -839,6 +916,7 @@ InitPictures (void)
       SetLevelColor ( CurLevel->color );
       block_line++;
     }
+  */
 
   DebugPrintf( 2 , "\nvoid InitPictures(void): preparing to load droids." );
 
@@ -909,7 +987,6 @@ void
 SetLevelColor (int ColorEntry)
 {
   char *fpath;
-
   char *ColoredBlockFiles[] = {
     "ne_block_red.gif",
     "ne_block_yellow.gif",
