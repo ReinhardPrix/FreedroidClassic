@@ -595,11 +595,13 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	// We show all the info and the buttons that should be in this
 	// interface...
 	//
+	AssembleCombatPicture( 0 );
 	if ( ItemIndex >= 0 )
 	    ShowItemInfo ( ShowPointerList [ ItemIndex ] , Displacement , FALSE , ITEM_BROWSER_SHOP_BACKGROUND_CODE , FALSE );
 	else if ( TuxItemIndex >= 0 )
 	    ShowItemInfo ( TuxItemsList [ TuxItemIndex ] , Displacement , FALSE , ITEM_BROWSER_SHOP_BACKGROUND_CODE , FALSE );
 	else blit_special_background ( ITEM_BROWSER_SHOP_BACKGROUND_CODE );
+	
 	
 	for ( i = 0 ; i < RowLength ; i++ )
 	{
