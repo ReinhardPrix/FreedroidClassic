@@ -329,13 +329,9 @@ main (int argc, char *const argv[])
 	  MoveBullets ();   
 	  ExplodeBlasts ();	/* Blasts in der Explosionsphase weiterbewegen */
 
-	  // NONSENSE FROM THE OLD ENGINE: GetView();		/* Einen Ausschnitt aus der Gesamtlevelkarte machen */
-
-	  Assemble_Combat_Picture ( SHOW_ALL );
-
-	  PutInternFenster ( TRUE );
-	  
 	  SetInfoline (NULL, NULL); /* put up default infos: MODE  -- SCORE */
+
+	  Assemble_Combat_Picture ( DO_SCREEN_UPDATE ); // | ALSO_UPDATE_EXTERIORS );
 
 	  for (i = 0; i < MAXBULLETS; i++)
 	    CheckBulletCollisions (i);
@@ -460,10 +456,7 @@ ThouArtDefeated (void)
 
   for (i = 0; i < WAIT_AFTER_KILLED; i++)
     {
-      DisplayRahmen (Outline320x200);
-      SetInfoline(NULL, NULL);
-      Assemble_Combat_Picture (SHOW_ALL);
-      PutInternFenster (TRUE);
+      Assemble_Combat_Picture ( DO_SCREEN_UPDATE | ALSO_UPDATE_EXTERIORS );
       ExplodeBlasts ();
       MoveBullets ();
       MoveEnemys ();
@@ -636,10 +629,7 @@ Pause (void)
   Activate_Conservative_Frame_Computation();
 
   Me.status = PAUSE;
-  SetInfoline (NULL, NULL);
-  // NONSENSE FROM THE OLD ENGINE: GetView();		/* Einen Ausschnitt aus der Gesamtlevelkarte machen */
-  Assemble_Combat_Picture (SHOW_ALL);
-  PutInternFenster (TRUE);
+  Assemble_Combat_Picture ( ALSO_UPDATE_EXTERIORS | DO_SCREEN_UPDATE );
 
   while ( Pause )
     {
@@ -648,17 +638,13 @@ Pause (void)
       AnimateRefresh ();
       RotateBulletColor ();
       AnimateEnemys ();
-      // NONSENSE FROM THE OLD ENGINE: GetView();		/* Einen Ausschnitt aus der Gesamtlevelkarte machen */
-      Assemble_Combat_Picture (SHOW_ALL);
-      PutInternFenster (TRUE);
+      Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
 
       if (CPressed ())
 	{
 	  Me.status = CHEESE;
 	  SetInfoline (NULL, NULL);
-	  // NONSENSE FROM THE OLD ENGINE: GetView();		/* Einen Ausschnitt aus der Gesamtlevelkarte machen */
-	  Assemble_Combat_Picture (SHOW_ALL);
-	  PutInternFenster (TRUE);
+	  Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
 
 	  while (!SpacePressed ()); /* stay CHEESE until Space pressed */
 	  while ( SpacePressed() ); /* then wait for Space released */

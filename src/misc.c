@@ -592,12 +592,11 @@ enum
   while (!Weiter)
     {
 
-      // PutInternFenster( FALSE );
-      Assemble_Combat_Picture ( SHOW_ALL );
-
       SDL_SetClipRect( ne_screen, NULL );
 
-      // MakeGridOnScreen( Outline320x200 );
+      Assemble_Combat_Picture ( ALSO_UPDATE_EXTERIORS );
+
+      MakeGridOnScreen();
 
       // 
       // we highlight the currently selected option with an 
@@ -675,11 +674,6 @@ enum
 	  while (DownPressed());
 	}
     }
-  // ClearGraphMem (InternalScreen);
-  // ClearGraphMem (RealScreen);
-  // Update_SDL_Screen();
-  // DisplayRahmen (InternalScreen);
-  InitBars = TRUE;
 
   return;
 
@@ -690,9 +684,7 @@ enum
 void
 Options_Menu (void)
 {
-#ifdef NEW_ENGINE
-  return;
-#else
+
   int Weiter = 0;
   int MenuPosition=1;
 
@@ -715,34 +707,35 @@ enum
   while (!Weiter)
     {
 
-      PutInternFenster( FALSE );
+      Assemble_Combat_Picture ( ALSO_UPDATE_EXTERIORS );
+      MakeGridOnScreen();
+      SDL_SetClipRect( ne_screen, NULL );
 
-      MakeGridOnScreen( Outline320x200 );
+      // 
+      // we highlight the currently selected option with an 
+      // influencer to the left before it
+      // PutInfluence( FIRST_MENU_ITEM_POS_X , 
+      // FIRST_MENU_ITEM_POS_Y + (MenuPosition-1) * (FontHeight(Menu_BFont)) - BLOCKBREITE/4 );
+      PutInfluence( OPTIONS_MENU_ITEM_POS_X - BLOCKBREITE/2, 
+		    FIRST_MENU_ITEM_POS_Y + ( MenuPosition - 1.5 ) * (FontHeight( Menu_BFont )) );
 
-      // Highlight currently selected option with an influencer before it
-      DisplayMergeBlock( OPTIONS_MENU_ITEM_POS_X, (MenuPosition+3) * (FontHeight(Menu_BFont)/2) - BLOCKBREITE/4, 
-			 Influencepointer, BLOCKBREITE, BLOCKHOEHE, RealScreen );
 
-
-      PrepareScaledSurface(FALSE);
-
-      // PrintStringFont          (screen, Font2,0, 4*h2+100,"%2.0f %s",10.0," funny lib!" ); 
-      PrintStringFont (ScaledSurface , Menu_BFont, 2*BLOCKBREITE , 4*FontHeight(Menu_BFont),    
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+0*FontHeight(Menu_BFont),    
 		       "Background Music Volume: %1.2f" , Current_BG_Music_Volume );
-      PrintStringFont (ScaledSurface , Menu_BFont, 2*BLOCKBREITE , 5*FontHeight(Menu_BFont),    
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+1*FontHeight(Menu_BFont),    
 		       "Sound Effects Volume: %1.2f", Current_Sound_FX_Volume );
-      PrintStringFont (ScaledSurface , Menu_BFont, 2*BLOCKBREITE , 6*FontHeight(Menu_BFont),    
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+2*FontHeight(Menu_BFont),    
 		       "Gamma Correction: %1.2f", Current_Gamma_Correction );
-      PrintStringFont (ScaledSurface , Menu_BFont, 2*BLOCKBREITE , 7*FontHeight(Menu_BFont),    
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+3*FontHeight(Menu_BFont),    
 		       "Fullscreen Mode: %s", fullscreen_on ? "ON" : "OFF");
-      PrintStringFont (ScaledSurface , Menu_BFont, 2*BLOCKBREITE , 8*FontHeight(Menu_BFont),    
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+4*FontHeight(Menu_BFont),    
 		       "Show Framerate: %s", Draw_Framerate? "ON" : "OFF");
-      PrintStringFont (ScaledSurface , Menu_BFont, 2*BLOCKBREITE , 9*FontHeight(Menu_BFont),    
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+5*FontHeight(Menu_BFont),    
 		       "Show Energy: %s", Draw_Energy? "ON" : "OFF");
-      PrintStringFont (ScaledSurface , Menu_BFont, 2*BLOCKBREITE , 10*FontHeight(Menu_BFont),    
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+6*FontHeight(Menu_BFont),    
 		       "Back");
 
-      SDL_UpdateRect(ScaledSurface, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
+      SDL_Flip( ne_screen );
 
       // Wait until the user does SOMETHING
 
@@ -815,7 +808,7 @@ enum
 	    {
 	    case SET_FULLSCREEN_FLAG:
 	      while (EnterPressed() || SpacePressed() );
-	      SDL_WM_ToggleFullScreen (ScaledSurface);
+	      SDL_WM_ToggleFullScreen (ne_screen);
 	      fullscreen_on = !fullscreen_on;
 	      break;
 	    case TOGGLE_FRAMERATE:
@@ -855,7 +848,7 @@ enum
   InitBars = TRUE;
 
   return;
-#endif // !NEW_ENGINE
+
 } // Options_Menu
 
 /* -----------------------------------------------------------------

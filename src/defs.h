@@ -114,7 +114,7 @@ enum
 #define USE_SDL_FRAMERATE
 
 enum
-{ SHOW_ALL = 0, SHOW_MAP = 1 };
+{ ONLY_SHOW_MAP = 1 , DO_SCREEN_UPDATE = 2, ALSO_UPDATE_EXTERIORS = 4 };
 
 
 // The following is the definition of the sound file names used in freedroid

@@ -106,7 +106,7 @@ EXTERN void RotateBulletColor (void);
 EXTERN void GetView (void);
 EXTERN void ShowPosition (void);
 EXTERN void DisplayView (void);
-EXTERN void Assemble_Combat_Picture (int mask);
+EXTERN void Assemble_Combat_Picture (int );
 EXTERN void PutInfluence (int , int );
 EXTERN void PutBullet (int);
 EXTERN void PutBlast (int);
@@ -189,7 +189,7 @@ EXTERN int MergeBlockToWindow (unsigned char *,
 // EXTERN void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
 EXTERN void replace_color (SDL_Surface *surf, SDL_Color src, SDL_Color dst);
 EXTERN void display_bmp(char *file_name);
-EXTERN void MakeGridOnScreen(unsigned char*);
+EXTERN void MakeGridOnScreen(void);
 EXTERN int InitPictures (void);
 EXTERN void ClearVGAScreen (void);
 EXTERN void SetColors (int FirstCol, int PalAnz, char *PalPtr);

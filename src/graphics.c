@@ -46,10 +46,12 @@ extern int TimerFlag;
 
 
 void 
-MakeGridOnScreen(unsigned char* Parameter_Screen){
+MakeGridOnScreen(void){
   int x,y;
 
   DebugPrintf("\nvoid MakeGridOnScreen(...): real function call confirmed.");
+
+  SDL_LockSurface( ne_screen );
 
   for (y=0; y<SCREENHOEHE; y++) 
     {
@@ -57,11 +59,13 @@ MakeGridOnScreen(unsigned char* Parameter_Screen){
 	{
 	  if ((x+y)%2 == 0) 
 	    {
-	      Parameter_Screen[x+y*SCREENBREITE]=0;
+	      putpixel( ne_screen, x, y, 0 );
 	    }
 	}
     }
   
+  SDL_UnlockSurface( ne_screen );
+
   DebugPrintf("\nvoid MakeGridOnScreen(...): end of function reached.");
 
 } // void MakeGridOnSchreen(void)
@@ -300,6 +304,8 @@ void
 SetLevelColor (int ColorEntry)
 {
 
+
+
   SetColors (FIRSTBLOCKCOLOR, FARBENPROLEVEL,
 	     LevelColorArray + ColorEntry * 3 * FARBENPROLEVEL);
 
@@ -422,7 +428,7 @@ UnfadeLevel (void)
     Color = PD_DARK;
 
   // NONSENSE FROM THE OLD ENGINE GetView ();
-  Assemble_Combat_Picture (SHOW_ALL);
+  Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
   PutInternFenster (TRUE);
 
   /* Speicher reservieren */
@@ -620,12 +626,9 @@ void
 ClearGraphMem (unsigned char *Parameter_screen)
 {
 
-  SDL_Rect ThisRectangle;
+  SDL_FillRect( ne_screen , NULL , 0 );
 
-  return;
-
-
-}				// void ClearGraphMem(unsigned char* screen)
+}
 
 
 /*@Function============================================================

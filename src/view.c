@@ -134,15 +134,33 @@ RecFlashFill (int LX, int LY, int Color, unsigned char *Parameter_Screen, int SB
     RecFlashFill (LX, LY + BLOCKHOEHE, Color, Parameter_Screen, SBreite);
 }
 
-/*-----------------------------------------------------------------
- * @Desc: Diese Prozedur setzt das Bild im Speicher zusammen, damit
- * 	es dann von PutInternFenster in den Bildschirmspeicher kopiert
- * 	werden kann.
- * Param: mask= SHOW_ALL:   display all entities
- *              SHOW_MAP:    display only map
- *
- * @Ret: none
- *-----------------------------------------------------------------*/
+/*
+-----------------------------------------------------------------
+@Desc: This function assembles the contents of the combat window 
+       in ne_screen.
+
+       Several FLAGS can be used to control its behaviour:
+
+       (*) ONLY_SHOW_MAP = 1:  This flag indicates not do draw any
+           game elements but the map blocks
+
+       (*) DO_SCREEN_UPDATE = 2: This flag indicates for the function
+           to also cause an SDL_Update of the portion of the screen
+           that has been modified
+
+       (*) ALSO_UPDATE_EXTERIORS = 4:  This flag indicated, that not
+           only the combat window, but also the status line above and
+           the designs outside the combat window need to be redrawn
+           and if specified above, updated.
+	   WARNING!  THIS OPTION FORCES THE REDRAWING OF THE INFOLINE
+           AND THE TEXT WITHIN THE INFO LINE, WHICH MIGHT BE UNNESCESSARY
+           AND COSTS FRAMES.  YOU MIGHT CONSIDER USING THE FUNCTION
+           SetInfoline with appropriate flags instead.
+     
+
+ @Ret: none
+-----------------------------------------------------------------
+*/
 
 void
 Assemble_Combat_Picture (int mask)
@@ -161,21 +179,26 @@ Assemble_Combat_Picture (int mask)
   CombatRectangle.w=USERFENSTERBREITE;
   CombatRectangle.h=USERFENSTERHOEHE;
   
-
   if (Conceptview)
     {
       GetConceptInternFenster ();
       return;
     }
 
-  SDL_SetClipRect( ne_screen , &CombatRectangle );
+  // In case that the users asks us to update the whole screen, its best to
+  // clear the screen before starting to update the combat window.
+  if ( mask & ALSO_UPDATE_EXTERIORS )
+    SDL_FillRect( ne_screen , NULL , 0 );
 
-  // Why not clip the WHOLE map?  Lets try it!
+
+  // Why not blit the WHOLE map?  Lets try it!
   // --> It seems to work!!  THAT IS A VERY POWERFUL AND VERY ABSTRACT PROCEDURE:
   // * INTERNBREITE IS NO LONGER NEEDED IN HERE
   // * INTERNHOEHE IS NO LONGER NEEDED IN HERE
   // * THE COMBATSCREENSIZE COULD *EASYLY* BE CHANGED WITHOUT HAVING TO CHANGE THE CODE!!!
   // 
+
+  SDL_SetClipRect( ne_screen , &CombatRectangle );
 
   for (line = 0; line < CurLevel->ylen ; line++)
     {
@@ -190,9 +213,18 @@ Assemble_Combat_Picture (int mask)
 	}			// for(col) 
     }				// for(line) 
 
-  if (mask == SHOW_MAP)		// we want only the map, nothing else 
-    return;
 
+  if (mask & ONLY_SHOW_MAP) 
+    {
+      // in case we only draw the map, we are done here.  But
+      // of course we must check if we should update the screen too.
+      if ( mask & DO_SCREEN_UPDATE ) 
+	SDL_UpdateRect( ne_screen , CombatRectangle.x , CombatRectangle.y , CombatRectangle.w , CombatRectangle.h );
+      return;
+    }
+
+  // At this point we know that now only the map is to be drawn.
+  // so we start drawing the rest of the INTERIOR of the combat window:
 
   for (i = 0; i < NumEnemys; i++)
     PutEnemy (i);
@@ -208,28 +240,37 @@ Assemble_Combat_Picture (int mask)
     if (AllBlasts[i].type != OUT)
       PutBlast (i);
 
-  //#define INFRAME_SCALING
-   #undef INFRAME_SCALING 
-#ifdef INFRAME_SCALING
+  // At this point we are done with the interiours of the
+  // combat window.
+  // But IF the user wants exteriours to be updated too, we
+  // also need to draw the rest of the screen, i.e. status
+  // lines and all that.
 
-  ne_scaled_screen = zoomSurface ( ne_screen , 2 , 2 , 0);
+  if ( mask & ALSO_UPDATE_EXTERIORS )
+    {
+      DisplayRahmen( NULL );
+      SetInfoline( NULL , NULL );
+    }
 
-  SDL_SetClipRect( ne_screen, NULL);
+  // At this point we are done with the drawing procedure
+  // and all that remains to be done is updating the screen.
+  // Depending on where we did our modifications, we update
+  // an according portion of the screen.
 
-  SDL_BlitSurface( ne_scaled_screen , NULL , ne_screen , NULL );
-
-  SDL_Flip ( ne_screen );
-
-  SDL_FreeSurface( ne_scaled_screen );
-
-#else
-
-  SDL_Flip( ne_screen );
-
-#endif
+  if ( mask & DO_SCREEN_UPDATE )
+    {
+      if ( mask & ALSO_UPDATE_EXTERIORS )
+	SDL_Flip( ne_screen );
+      else 
+	SDL_UpdateRect( ne_screen , CombatRectangle.x , CombatRectangle.y , CombatRectangle.w , CombatRectangle.h );
+    }
 
   return;  // for now
 
+
+  // DIRTY CODE:  CHECKING COLLISIONS WITHIN THE
+  // DRAWING ROUTINE:  THAT REMAINS HERE JUST FOR
+  // RECYCLING PURPOSES
 
   // Sofortiger Check auf Bullet-Blast-Kollisionen
   for (j = 0; j < MAXBLASTS; j++)
