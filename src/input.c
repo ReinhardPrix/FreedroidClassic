@@ -317,15 +317,16 @@ ReactToSpecialKeys(void)
   if ( cmd_is_active(CMD_QUIT) ) 
     QuitGameMenu();
 
-  if ( cmd_is_active(CMD_PAUSE) )
+  if ( cmd_is_activeR(CMD_PAUSE) )
     Pause ();
 
-  if ( cmd_is_active(CMD_SCREENSHOT) )
+  if ( cmd_is_active (CMD_SCREENSHOT) )
     TakeScreenshot();
 
   // this stuff remains hardcoded to keys
   if ( KeyIsPressedR('c') && AltPressed() && CtrlPressed() && ShiftPressed() ) 
     Cheatmenu ();
+
   if ( EscapePressedR() )
     EscapeMenu ();
 

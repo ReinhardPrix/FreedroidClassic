@@ -62,8 +62,6 @@ void On_Screen_Display_Options_Menu (void);
 void Key_Config_Menu (void);
 void Display_Key_Config (int selx, int sely);
 
-char *key2str(int key);
-
 EXTERN int MyCursorX;
 EXTERN int MyCursorY;
 
@@ -377,10 +375,16 @@ Display_Key_Config (int selx, int sely)
   //      PutInfluence (startx - 1.1*Block_Rect.w, starty + (MenuPosition-1.5)*fheight);
   
   PrintStringFont (ne_screen, (sely==1)? Font2_BFont:Font1_BFont, startx, starty+(posy++)*fheight, "Back");
+
+  PrintStringFont (ne_screen, Font0_BFont, startx, starty + (posy)*fheight, "Command");
+  PrintStringFont (ne_screen, Font0_BFont, col1, starty + (posy)*fheight, "Key1");
+  PrintStringFont (ne_screen, Font0_BFont, col2, starty + (posy)*fheight, "Key2");
+  PrintStringFont (ne_screen, Font0_BFont, col3, starty + (posy)*fheight, "Key3");
+  posy ++;
       
   for (i=0; i < CMD_LAST; i++)
     {
-      PrintStringFont (ne_screen, Font1_BFont, startx, starty+(posy)*fheight, cmd_strings[i]);
+      PrintStringFont (ne_screen, Font0_BFont, startx, starty+(posy)*fheight, cmd_strings[i]);
       PrintStringFont (ne_screen, PosFont(1,2+i), col1, starty+(posy)*fheight, keystr[key_cmds[i][0]]);
       PrintStringFont (ne_screen, PosFont(2,2+i), col2, starty+(posy)*fheight, keystr[key_cmds[i][1]]);
       PrintStringFont (ne_screen, PosFont(3,2+i), col3, starty+(posy)*fheight, keystr[key_cmds[i][2]]);
@@ -391,40 +395,6 @@ Display_Key_Config (int selx, int sely)
   
   return;
 } // Display_Key_Config
-
-// ----------------------------------------------------------------------
-// translate an SDL-key into a string
-// ----------------------------------------------------------------------
-char *
-key2str (int key)
-{
-  static char result[100];
-
-  if ( (key < 128) && (isprint(key)) )
-    {
-      result[0] = key;
-      result[1] = 0;
-    }
-  else
-    switch (key) 
-      {
-      case SDLK_RETURN:
-	strcpy (result, "Return");
-	break;
-      case SDLK_PAUSE:
-	strcpy (result, "Pause");
-	break;
-
-      default: 
-	strcpy (result, "<??>");
-	break;
-
-      }
-  
-
-
-} // key2str
-
 
 /*@Function============================================================
 @Desc: This function provides a the options menu.  This menu is a 
@@ -1207,8 +1177,8 @@ LevelEditor(void)
 			      HIGHLIGHTCOLOR2 );
 
       
-      PrintStringFont (ne_screen, FPS_Display_BFont, Full_User_Rect.x+Full_User_Rect.w/3 , 
-		       Full_User_Rect.y+Full_User_Rect.h - FontHeight(FPS_Display_BFont), 
+      PrintStringFont (ne_screen, Font0_BFont, Full_User_Rect.x+Full_User_Rect.w/3 , 
+		       Full_User_Rect.y+Full_User_Rect.h - FontHeight(Font0_BFont), 
 		       "Press F1 for keymap");
 
       SDL_Flip( ne_screen );
@@ -1782,7 +1752,7 @@ Cheatmenu (void)
   // the time spend in the menu.
   Activate_Conservative_Frame_Computation();
 
-  font =  FPS_Display_BFont;
+  font =  Font0_BFont;
 
 
   SetCurrentFont (font);  /* not the ideal one, but there's currently */

@@ -159,8 +159,8 @@ Assemble_Combat_Picture (int mask)
   // for the info-line text:
 
   TxtRect.x = Full_User_Rect.x;
-  TxtRect.y = Full_User_Rect.y+Full_User_Rect.h - FontHeight (FPS_Display_BFont);
-  TxtRect.h = FontHeight (FPS_Display_BFont);
+  TxtRect.y = Full_User_Rect.y+Full_User_Rect.h - FontHeight (Font0_BFont);
+  TxtRect.h = FontHeight (Font0_BFont);
   TxtRect.w = Full_User_Rect.w;
   SDL_SetClipRect (ne_screen, &TxtRect);
   if (!GameConfig.FullUserRect)
@@ -169,8 +169,8 @@ Assemble_Combat_Picture (int mask)
 
   if ( GameConfig.Draw_Position )
     {
-      PrintStringFont( ne_screen , FPS_Display_BFont , Full_User_Rect.x+Full_User_Rect.w/6 , 
-		       Full_User_Rect.y+Full_User_Rect.h - FontHeight( FPS_Display_BFont ), 
+      PrintStringFont( ne_screen , Font0_BFont , Full_User_Rect.x+Full_User_Rect.w/6 , 
+		       Full_User_Rect.y+Full_User_Rect.h - FontHeight( Font0_BFont ), 
 		       "GPS: X=%d Y=%d Lev=%d" , (int) rintf(Me.pos.x) , (int) rintf(Me.pos.y) , 
 		       CurLevel->levelnum );
     }
@@ -187,21 +187,21 @@ Assemble_Combat_Picture (int mask)
 	      TimeSinceLastFPSUpdate=0;
 	    }
 	  
-	  PrintStringFont( ne_screen , FPS_Display_BFont , Full_User_Rect.x , 
-			   Full_User_Rect.y+Full_User_Rect.h - FontHeight( FPS_Display_BFont ), 
+	  PrintStringFont( ne_screen , Font0_BFont , Full_User_Rect.x , 
+			   Full_User_Rect.y+Full_User_Rect.h - FontHeight( Font0_BFont ), 
 			   "FPS: %d " , FPS_Displayed );
 	}
 
       if ( GameConfig.Draw_Energy )
 	{
-	  PrintStringFont( ne_screen , FPS_Display_BFont , Full_User_Rect.x+Full_User_Rect.w/2 , 
-			   Full_User_Rect.y+Full_User_Rect.h - FontHeight( FPS_Display_BFont ), 
+	  PrintStringFont( ne_screen , Font0_BFont , Full_User_Rect.x+Full_User_Rect.w/2 , 
+			   Full_User_Rect.y+Full_User_Rect.h - FontHeight( Font0_BFont ), 
 			   "Energy: %d" , (int)Me.energy);
 	}
       if (GameConfig.Draw_DeathCount)
 	{
-	  PrintStringFont( ne_screen , FPS_Display_BFont , Full_User_Rect.x+2*Full_User_Rect.w/3 , 
-			   Full_User_Rect.y+Full_User_Rect.h - FontHeight( FPS_Display_BFont ), 
+	  PrintStringFont( ne_screen , Font0_BFont , Full_User_Rect.x+2*Full_User_Rect.w/3 , 
+			   Full_User_Rect.y+Full_User_Rect.h - FontHeight( Font0_BFont ), 
 			   "Deathcount: %d", (int)DeathCount );
 	}
 
@@ -352,11 +352,11 @@ PutInfluence ( int x, int y)
   //
   if ( ( x == (-1) ) && ( Me.TextVisibleTime < GameConfig.WantedTextVisibleTime ) && GameConfig.Droid_Talk )
     {
-      //      PutStringFont ( ne_screen , FPS_Display_BFont , 
+      //      PutStringFont ( ne_screen , Font0_BFont , 
       //		      User_Rect.x+(User_Rect.w/2) + Block_Rect.w/3 , 
       //		      User_Rect.y+(User_Rect.h/2) - Block_Rect.h/2 ,  
       //		      Me.TextToBeDisplayed );
-      SetCurrentFont( FPS_Display_BFont );
+      SetCurrentFont( Font0_BFont );
       DisplayText( Me.TextToBeDisplayed, User_Rect.x+(User_Rect.w/2) + Block_Rect.w/3,
 		   User_Rect.y+(User_Rect.h/2) - Block_Rect.h/2 , &Text_Rect );
     }
@@ -442,7 +442,7 @@ PutEnemy (int Enum , int x , int y)
        && ( AllEnemys[Enum].TextVisibleTime < GameConfig.WantedTextVisibleTime )
        && GameConfig.Droid_Talk )
     {
-      PutStringFont ( ne_screen , FPS_Display_BFont , 
+      PutStringFont ( ne_screen , Font0_BFont , 
 		      User_Rect.x+(User_Rect.w/2) + Block_Rect.w/3 + (AllEnemys[Enum].pos.x - Me.pos.x) * Block_Rect.w , 
 		      User_Rect.y+(User_Rect.h/2) - Block_Rect.h/2 + (AllEnemys[Enum].pos.y - Me.pos.y) * Block_Rect.h ,  
 		      AllEnemys[Enum].TextToBeDisplayed );

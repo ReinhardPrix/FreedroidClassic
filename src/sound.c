@@ -73,7 +73,8 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
    "EndCountdown_Sound.wav",
    "InfluExplosion.wav",
    "WhiteNoise.wav",
-   "Alert.wav"
+   "Alert.wav",
+   "Screenshot.wav"
 };
 
 #ifdef HAVE_LIBSDL_MIXER
@@ -153,8 +154,8 @@ Continuing with sound disabled\n");
       if (fpath) Loaded_WAV_Files[ i ] = Mix_LoadWAV(fpath); 
       if ( Loaded_WAV_Files[i] == NULL )
 	{
-	  DebugPrintf (0, "Error: could not load Sound-sample: %s", SoundSampleFilenames[ i ]);
-	  DebugPrintf (0, "SDL Mixer Error: %s\n Continuing with sound disabled\n", Mix_GetError());
+	  DebugPrintf (0, "Could not load Sound-sample: %s\n", SoundSampleFilenames[ i ]);
+	  DebugPrintf (0, "WARNING: Continuing with sound disabled\n", Mix_GetError());
 	  sound_on = FALSE;
 	  return;
 	} // if ( !Loaded_WAV...
@@ -237,18 +238,6 @@ EndCountdownSound (void)
 {
   Play_Sound (ENDCOUNTDOWN_SOUND);
 }
-
-/*@Function============================================================
-@Desc: Starts a Tune.
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-StartSound (int Tune)
-{
-
-} /* void StartSound(int Tune) */
 
 /*@Function============================================================
 @Desc: 

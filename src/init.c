@@ -695,7 +695,7 @@ InitNewMission ( char *MissionName )
 
   oldfont = GetCurrentFont ();
 
-  SetCurrentFont (FPS_Display_BFont);
+  SetCurrentFont (Font0_BFont);
   //  printf_SDL (ne_screen, User_Rect.x + 50, -1, "Loading mission data ");
 
   /* Read the whole mission data to memory */

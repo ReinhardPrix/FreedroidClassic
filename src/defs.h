@@ -225,7 +225,7 @@ enum _alertnames {
 #define NEW_MISSION             "CleanPrivateGoodsStorageCellar.mission"
 
 #define PARA_FONT_FILE 		"parafont.png"
-#define FPS_FONT_FILE 		"font05.png"
+#define FONT0_FILE		"font05.png"
 #define FONT1_FILE		"font05_green.png"
 #define FONT2_FILE		"font05_red.png"
 #define ICON_FILE		"paraicon.bmp"
@@ -281,6 +281,7 @@ enum _sounds
   INFLUEXPLOSION_SOUND,
   WHITE_NOISE,
   ALERT_SOUND,
+  SCREENSHOT_SOUND,
   ALL_SOUNDS   // marks the last entry always!
 };
 

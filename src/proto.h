@@ -176,7 +176,6 @@ EXTERN void Set_BG_Music_Volume(float);
 EXTERN void Set_Sound_FX_Volume(float);
 EXTERN void Switch_Background_Music_To ( char * filename_raw );
 EXTERN void Play_Sound (int);
-EXTERN void StartSound (int);
 EXTERN void GotHitSound (void);
 EXTERN void GotIntoBlastSound (void);
 EXTERN void CountdownSound (void);
