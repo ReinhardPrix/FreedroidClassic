@@ -2019,6 +2019,7 @@ Select_Hero_Class_Menu (void)
   int Weiter = 0;
   int MenuPosition=1;
   char* MenuTexts[10];
+  int i;
 
 enum
   { 
@@ -2038,6 +2039,20 @@ enum
   MenuTexts[7]="";
   MenuTexts[8]="";
   MenuTexts[9]="";
+
+  //--------------------
+  // At first we clear the inventory of the new character
+  // of any items (or numeric waste) that might be in there
+  //
+  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+    {
+      Me.Inventory[ i ].type = (-1);
+      Me.Inventory[ i ].prefix_code = (-1);
+      Me.Inventory[ i ].suffix_code = (-1);
+      Me.Inventory[ i ].currently_held_in_hand = FALSE;
+    }
+  DebugPrintf ( 1 , "\nSelect_Hero...( ... ): Inventory has been emptied...");
+
 
   //--------------------
   // Now we add some safety, against 'none present' items
@@ -2086,8 +2101,26 @@ enum
 	  Me.base_strength = 30;
 	  Me.base_dexterity = 25;
 	  Me.base_magic = 10;
-	  Me.weapon_item.type = ITEM_SHORT_SWORD;
+
+	  // Me.weapon_item.type = ITEM_SHORT_SWORD;
 	  Me.drive_item.type = ITEM_ANTIGRAV_BETA;
+
+	  Me.Inventory[ 0 ].type = ITEM_SHORT_SWORD;
+	  Me.Inventory[ 0 ].inventory_position.x = 0;
+	  Me.Inventory[ 0 ].inventory_position.y = 0;
+	  Me.Inventory[ 1 ].type = ITEM_BUCKLER;
+	  Me.Inventory[ 1 ].inventory_position.x = 2;
+	  Me.Inventory[ 1 ].inventory_position.y = 0;
+	  Me.Inventory[ 2 ].type = ITEM_SMALL_HEALTH_POTION;
+	  Me.Inventory[ 2 ].inventory_position.x = 0;
+	  Me.Inventory[ 2 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
+	  Me.Inventory[ 3 ].type = ITEM_SMALL_HEALTH_POTION;
+	  Me.Inventory[ 3 ].inventory_position.x = 1;
+	  Me.Inventory[ 3 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
+	  FillInItemProperties ( & Me.Inventory[ 0 ] , TRUE , 0 );
+	  FillInItemProperties ( & Me.Inventory[ 1 ] , TRUE , 0 );
+	  FillInItemProperties ( & Me.Inventory[ 2 ] , TRUE , 0 );
+	  FillInItemProperties ( & Me.Inventory[ 3 ] , TRUE , 0 );
 
 	  Get_New_Character_Name( );
 	  return ( TRUE );
@@ -2100,8 +2133,21 @@ enum
 	  Me.base_strength = 25;
 	  Me.base_dexterity = 35;
 	  Me.base_magic = 20;
-	  Me.weapon_item.type = ITEM_SHORT_BOW;
+	  
 	  Me.drive_item.type = ITEM_ANTIGRAV_BETA;
+
+	  Me.Inventory[ 0 ].type = ITEM_SHORT_BOW;
+	  Me.Inventory[ 0 ].inventory_position.x = 0;
+	  Me.Inventory[ 0 ].inventory_position.y = 0;
+	  Me.Inventory[ 1 ].type = ITEM_SMALL_HEALTH_POTION;
+	  Me.Inventory[ 1 ].inventory_position.x = 0;
+	  Me.Inventory[ 1 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
+	  Me.Inventory[ 2 ].type = ITEM_SMALL_HEALTH_POTION;
+	  Me.Inventory[ 2 ].inventory_position.x = 1;
+	  Me.Inventory[ 2 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
+	  FillInItemProperties ( & Me.Inventory[ 0 ] , TRUE , 0 );
+	  FillInItemProperties ( & Me.Inventory[ 1 ] , TRUE , 0 );
+	  FillInItemProperties ( & Me.Inventory[ 2 ] , TRUE , 0 );
 
 	  Get_New_Character_Name( );
 	  return ( TRUE );
@@ -2114,8 +2160,20 @@ enum
 	  Me.base_strength = 15;
 	  Me.base_dexterity = 20;
 	  Me.base_magic = 35;
-	  Me.weapon_item.type = ITEM_SHORT_BOW;
 	  Me.drive_item.type = ITEM_ANTIGRAV_ALPHA;
+
+	  Me.Inventory[ 0 ].type = ITEM_STAFF;
+	  Me.Inventory[ 0 ].inventory_position.x = 0;
+	  Me.Inventory[ 0 ].inventory_position.y = 0;
+	  Me.Inventory[ 1 ].type = ITEM_SMALL_MANA_POTION;
+	  Me.Inventory[ 1 ].inventory_position.x = 0;
+	  Me.Inventory[ 1 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
+	  Me.Inventory[ 2 ].type = ITEM_SMALL_MANA_POTION;
+	  Me.Inventory[ 2 ].inventory_position.x = 1;
+	  Me.Inventory[ 2 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
+	  FillInItemProperties ( & Me.Inventory[ 0 ] , TRUE , 0 );
+	  FillInItemProperties ( & Me.Inventory[ 1 ] , TRUE , 0 );
+	  FillInItemProperties ( & Me.Inventory[ 2 ] , TRUE , 0 );
 
 	  Get_New_Character_Name( );
 	  return ( TRUE );
