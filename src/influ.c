@@ -882,19 +882,22 @@ FireBullet (void)
   int i = 0;
   Bullet CurBullet = NULL;	/* das Bullet, um das es jetzt geht */
   int guntype = Druidmap[Me.type].gun;	/* which gun do we have ? */
-  float BulletSpeedX = Bulletmap[guntype].speed;
-  float BulletSpeedY = Bulletmap[guntype].speed;
-  int firedir = LINKS;
+  double BulletSpeed = Bulletmap[guntype].speed;
+  double speed_norm;
+  finepoint speed;
+  double dir, dir8; 
 
-/* Wenn noch kein Schuss loesbar ist sofort zurueck */
+  dir8 = M_PI/8.0;
+
+  /* Wenn noch kein Schuss loesbar ist sofort zurueck */
   if (Me.firewait > 0)
     return;
   Me.firewait = Bulletmap[guntype].WaitNextTime;
 
-/* Geraeusch eines geloesten Schusses fabrizieren */
+  /* Geraeusch eines geloesten Schusses fabrizieren */
   Fire_Bullet_Sound ( guntype );
 
-/* Naechste Freie Bulletposition suchen */
+  /* Naechste Freie Bulletposition suchen */
   for (i = 0; i < (MAXBULLETS); i++)
     {
       if (AllBullets[i].type == OUT)
@@ -915,92 +918,69 @@ FireBullet (void)
   CurBullet->owner = -1;
 
   if (DownPressed ())
-    firedir = UNTEN;
+    speed.y = 1.0;
   if (UpPressed ())
-    firedir = OBEN;
+    speed.y = -1.0;
   if (LeftPressed ())
-    firedir = LINKS;
+    speed.x = -1.0;
   if (RightPressed ())
-    firedir = RECHTS;
-  if (RightPressed () && DownPressed ())
-    firedir = RECHTSUNTEN;
-  if (LeftPressed () && DownPressed ())
-    firedir = LINKSUNTEN;
-  if (LeftPressed () && UpPressed ())
-    firedir = LINKSOBEN;
-  if (RightPressed () && UpPressed ())
-    firedir = RECHTSOBEN;
+    speed.x = 1.0;
 
-  switch (firedir)
+  /* if using a joystick, allow exact directional shots! */
+  if (joy_ax_values.x || joy_ax_values.y)
     {
-    case OBEN:
-      CurBullet->speed.x = 0;
-      CurBullet->speed.y = -BulletSpeedY;
-      CurBullet->phase = OBEN;
-      break;
-
-    case RECHTSOBEN:
-      CurBullet->speed.x = BulletSpeedX;
-      CurBullet->speed.y = -BulletSpeedY;
-      CurBullet->phase = RECHTSOBEN;
-      break;
-
-    case RECHTS:
-      CurBullet->speed.x = BulletSpeedX;
-      CurBullet->speed.y = 0;
-      CurBullet->phase = RECHTS;
-      break;
-
-    case RECHTSUNTEN:
-      CurBullet->speed.x = BulletSpeedX;
-      CurBullet->speed.y = BulletSpeedY;
-      CurBullet->phase = RECHTSUNTEN;
-      break;
-
-    case UNTEN:
-      CurBullet->speed.x = 0;
-      CurBullet->speed.y = BulletSpeedY;
-      CurBullet->phase = OBEN;
-      break;
-
-    case LINKSUNTEN:
-      CurBullet->speed.x = -BulletSpeedX;
-      CurBullet->speed.y = BulletSpeedY;
-      CurBullet->phase = RECHTSOBEN;
-      break;
-
-    case LINKS:
-      CurBullet->speed.x = -BulletSpeedX;
-      CurBullet->speed.y = 0;
-      CurBullet->phase = RECHTS;
-      break;
-
-    case LINKSOBEN:
-      CurBullet->speed.x = -BulletSpeedX;
-      CurBullet->speed.y = -BulletSpeedY;
-      CurBullet->phase = RECHTSUNTEN;
-      break;
+      speed.x = 1.0*joy_ax_values.x/JOY_MAX_VAL;
+      speed.y = 1.0*joy_ax_values.y/JOY_MAX_VAL;
     }
+
+  speed_norm = sqrt (speed.x * speed.x + speed.y * speed.y);
+  CurBullet->speed.x = (speed.x/speed_norm);
+  CurBullet->speed.y = (speed.y/speed_norm);
+
+  /* now determine the bullet-pic, i.e. the major direction */
+  dir = atan2 (speed.y,  speed.x);  
+  if ( (dir < dir8) && (dir > -dir8) ) /* r */
+    CurBullet->phase = RECHTS;
+  if ( (dir < 3*dir8) && (dir > dir8) ) /* ro */
+    CurBullet->phase = RECHTSUNTEN;
+  if ( (dir < 5*dir8) && (dir > 3*dir8) ) /* o */
+    CurBullet->phase = OBEN;
+  if ( (dir < 7*dir8) && (dir > 5*dir8) ) /* lo */
+    CurBullet->phase = RECHTSOBEN;
+  if ( (dir < -7*dir8) || (dir > 7*dir8) ) /* l */
+    CurBullet->phase = RECHTS;
+  if ( (dir < -5*dir8) && (dir > -7*dir8) ) /* lu */
+    CurBullet->phase = RECHTSUNTEN;
+  if ( (dir < -3*dir8) && (dir > -5*dir8) ) /* u */
+    CurBullet->phase = OBEN;
+  if ( (dir < -1*dir8) && (dir > -3*dir8) ) /* ru */
+    CurBullet->phase = RECHTSOBEN;
+
+  
+  //  printf_SDL(ne_screen, User_Rect.x, User_Rect.y, "Bullet speed: %g %g ",
+  //	     CurBullet->speed.x, CurBullet->speed.y);
+  //  getchar_raw();
+
+  CurBullet->speed.x *= BulletSpeed;
+  CurBullet->speed.y *= BulletSpeed;
+
+  CurBullet->pos.x += 0.5 * (CurBullet->speed.x/BulletSpeed);
+  CurBullet->pos.y += 0.5 * (CurBullet->speed.y/BulletSpeed);
 
   // To prevent influ from hitting himself with his own bullets,
   // move them a bit..
 
-  //NORMALISATION CurBullet->pos.x += isignf (CurBullet->speed.x) * Block_Width / 2;
-  CurBullet->pos.x += isignf (CurBullet->speed.x) * 0.5;
-  //NORMALISATION CurBullet->pos.y += isignf (CurBullet->speed.y) * Block_Height / 2;
-  CurBullet->pos.y += isignf (CurBullet->speed.y) * 0.5;
 
-  //  CurBullet->pos.x += Me.speed.x * Frame_Time();
-  //  CurBullet->pos.y += Me.speed.y * Frame_Time();
+    //  CurBullet->pos.x += isignf (CurBullet->speed.x) * 0.5;
+    //  CurBullet->pos.y += isignf (CurBullet->speed.y) * 0.5;
 
-  // NORMALISATION if ((fabsf (BulletSpeedX) < (13)) && (fabsf (BulletSpeedY) < (13)) )
-  if ((fabsf (BulletSpeedX) < (26/64.0)) && (fabsf (BulletSpeedY) < (26/64.0)) )
-    {
+    //  if ((fabsf (BulletSpeed) < (26/64.0)) && (fabsf (BulletSpeed) < (26/64.0)) )
+    //    {
       //NORMALISATION CurBullet->pos.x += isignf (CurBullet->speed.x) * Block_Width / 3;
-      CurBullet->pos.x += isignf (CurBullet->speed.x)  / 3.0;
+    //      CurBullet->pos.x += isignf (CurBullet->speed.x)  / 3.0;
       //NORMALISATION CurBullet->pos.y += isignf (CurBullet->speed.y) * Block_Height / 3;
-      CurBullet->pos.y += isignf (CurBullet->speed.y)  / 3.0;
-    }
+    //      CurBullet->pos.y += isignf (CurBullet->speed.y)  / 3.0;
+  //    }
 
   /*
    * F"ur Geschosse gilt die alsolute Gescho"sgeschwindigkeit am c-64

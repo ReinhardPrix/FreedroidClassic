@@ -37,11 +37,6 @@
 #include "global.h"
 #include "proto.h"
 
-
-#undef DIAGONAL_KEYS_AUS
-
-
-
 // SDL_Surface *screen;
 // SDL_Surface *ScaledSurface;
 

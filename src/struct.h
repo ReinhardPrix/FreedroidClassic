@@ -190,8 +190,8 @@ typedef struct
   finepoint speed;
   byte type;
   byte phase;
-  int time_in_frames;           // how long does the bullet exist, measured in number of frames
-  double time_in_seconds;        // how long does the bullet exist in seconds
+  int time_in_frames;    // how long does the bullet exist, measured in number of frames
+  double time_in_seconds; // how long does the bullet exist in seconds
   signed char mine;
   int owner;
 }

@@ -37,6 +37,7 @@
 #include "colodefs.h"
 #endif
 
+#define JOY_MAX_VAL 32767     // maximal amplitude of joystick axis values
 
 #define Set_Rect(rect, xx, yy, ww, hh) {\
 (rect).x = (xx); (rect).y = (yy); (rect).w = (ww); (rect).h = (hh); }

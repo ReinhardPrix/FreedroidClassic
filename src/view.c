@@ -46,11 +46,6 @@
 
 #include "SDL_rotozoom.h"
 
-
-// local switches for conditional compilation for debugging purposes
-#define BULLETOFF			0
-#define BLASTOFF			0
-
 void FlashWindow (int Flashcolor);
 void RecFlashFill (int LX, int LY, int Color, unsigned char *Parameter_Screen,
 		   int SBreite);
@@ -235,6 +230,10 @@ Assemble_Combat_Picture (int mask)
       PrintStringFont( ne_screen , FPS_Display_BFont , User_Rect.x , 
 		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
 		       "FPS: %d " , FPS_Displayed );
+
+      PrintStringFont( ne_screen , FPS_Display_BFont , User_Rect.x + 100, 
+		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
+		       "Joy: %d %d" , joy_ax_values.x, joy_ax_values.y);
     }
 
   if ( Draw_Energy )
@@ -590,10 +589,6 @@ PutBullet (int BulletNummer)
 
   DebugPrintf (2, "\nvoid PutBullet(int BulletNummer): real function call confirmed.\n");
 
-#if BULLETOFF == 1
-  return;
-#endif
-
   //--------------------
   // in case our bullet is of the type "FLASH", we only
   // draw a big white or black rectangle right over the 
@@ -621,8 +616,10 @@ PutBullet (int BulletNummer)
   // we do the collision check "mathematically" and in a more appropriate
   // place than the a graphics output function.
 
-  TargetRectangle.x=USER_FENSTER_CENTER_X-(Me.pos.x-CurBullet->pos.x)*Block_Width-Block_Width/2;
-  TargetRectangle.y=USER_FENSTER_CENTER_Y-(Me.pos.y-CurBullet->pos.y)*Block_Width-Block_Height/2;
+  TargetRectangle.x = USER_FENSTER_CENTER_X
+    - (Me.pos.x-CurBullet->pos.x)*Block_Width-Block_Width/2;
+  TargetRectangle.y = USER_FENSTER_CENTER_Y
+    - (Me.pos.y-CurBullet->pos.y)*Block_Width-Block_Height/2;
   SDL_BlitSurface( ne_blocks , Bulletmap[CurBullet->type].block + CurBullet->phase, ne_screen , &TargetRectangle );
 
   DebugPrintf (2, "\nvoid PutBullet(int BulletNummer): end of function reched.\n");
@@ -641,10 +638,6 @@ PutBlast (int BlastNummer)
 {
   Blast CurBlast = &AllBlasts[BlastNummer];
   SDL_Rect TargetRectangle;
-
-#if BLASTOFF == 1
-  return;
-#endif
 
   // If the blast is already long deat, we need not do anything else here
   if (CurBlast->type == OUT)
