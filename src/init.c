@@ -1868,7 +1868,7 @@ InitFreedroid ( void )
     ResetGameConfigToDefaultValues ();
 
 #if __WIN32__
-    homedir = ".";
+    our_homedir = ".";
 #else
     // first we need the user's homedir for loading/saving stuff
     if ( ( our_homedir = getenv("HOME")) == NULL )

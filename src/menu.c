@@ -2614,7 +2614,6 @@ one (const struct dirent *unused)
 int 
 Load_Existing_Hero_Menu ( void )
 {
-    char *homedir;
     char Saved_Games_Dir[1000];
     char* MenuTexts[ 10 ] = { "" , "" , "" , "" , "" , "" , "" , "" , "" , "" } ;
     struct dirent **eps;
@@ -2631,10 +2630,10 @@ Load_Existing_Hero_Menu ( void )
     //
     
 #if __WIN32__
-    homedir = ".";
+    our_homedir = ".";
 #else
     // first we need the user's homedir for loading/saving stuff
-    if ( (homedir = getenv("HOME")) == NULL )
+    if ( (our_homedir = getenv("HOME")) == NULL )
     {
 	DebugPrintf ( 0 , "ERROR: Environment does not contain HOME variable... \n\
 I need to know that for saving. Abort.\n");
@@ -2646,7 +2645,7 @@ I need to know that for saving. Abort.\n");
     // Now we generate the right directory for loading from the home
     // directory.
     //
-    sprintf ( Saved_Games_Dir , "%s/.freedroid_rpg" , homedir );
+    sprintf ( Saved_Games_Dir , "%s/.freedroid_rpg" , our_homedir );
     // DisplayText ( "This is the record of all your characters:\n\n" , 50 , 50 , NULL );
     
     //--------------------
@@ -2720,7 +2719,6 @@ Freedroid will continue execution now, since this problem\n\
 int 
 Delete_Existing_Hero_Menu ( void )
 {
-  char *homedir;
   char Saved_Games_Dir[1000];
   char* MenuTexts[ 10 ] = { "" , "" , "" , "" , "" , "" , "" , "" , "" , "" } ;
   struct dirent **eps;
@@ -2734,10 +2732,10 @@ Delete_Existing_Hero_Menu ( void )
   InitiateMenu( NE_TITLE_PIC_BACKGROUND_CODE );
 
 #if __WIN32__
-  homedir = ".";
+  our_homedir = ".";
 #else
   // first we need the user's homedir for loading/saving stuff
-  if ( (homedir = getenv("HOME")) == NULL )
+  if ( (our_homedir = getenv("HOME")) == NULL )
     {
       DebugPrintf ( 0 , "ERROR: Environment does not contain HOME variable... \n\
 I need to know that for saving. Abort.\n");
@@ -2749,7 +2747,7 @@ I need to know that for saving. Abort.\n");
   // Now we generate the right directory for saving from the home
   // directory.
   //
-  sprintf ( Saved_Games_Dir , "%s/.freedroid_rpg" , homedir );
+  sprintf ( Saved_Games_Dir , "%s/.freedroid_rpg" , our_homedir );
 
 
   // DisplayText ( "This is the record of all your characters:\n\n" , 50 , 50 , NULL );
