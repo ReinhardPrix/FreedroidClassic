@@ -932,7 +932,7 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , int backgro
   char InfoText[10000];
   char TextChunk[2000];
   char* ClassString;
-  int repairPrice = 0;
+  long int repairPrice = 0;
 
   SDL_SetClipRect ( Screen , NULL );
 
@@ -1024,19 +1024,18 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , int backgro
   //--------------------
   // Now we give some pricing information, the base list price for the item,
   // the repair price and the sell value
-  sprintf( TextChunk, "Base list price: %d\n", 
-	   ItemMap [ ShowItem->type ] . base_list_price );
+  sprintf( TextChunk, "Base list price: %ld\n", 
+	   calculate_item_buy_price ( ShowItem ) ) ;
   strcat ( InfoText , TextChunk );
   sprintf( TextChunk, "Sell value: %ld\n", 
-	   CalculateItemPrice ( ShowItem , FALSE ) ) ;
+	   calculate_item_sell_price ( ShowItem ) ) ;
   strcat ( InfoText , TextChunk );
   if ( ShowItem->current_duration == ShowItem->max_duration ||
        ShowItem->max_duration == ( -1 ) )
     repairPrice = 0;
   else
-    repairPrice = CalculateItemPrice( ShowItem, TRUE );
-  sprintf( TextChunk, "Repair cost: %d\n", 
-	   repairPrice );
+    repairPrice = calculate_item_repair_price ( ShowItem );
+  sprintf( TextChunk, "Repair cost: %ld\n", repairPrice );
   strcat ( InfoText , TextChunk );
 
   //--------------------

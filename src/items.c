@@ -282,7 +282,7 @@ FindPointerToPositionCode ( int SlotCode , int PlayerNum )
  * (*) AND THE CURRENT DURATION of the item in relation to its max duration.
  * ---------------------------------------------------------------------- */
 long
-CalculateItemPrice ( item* BuyItem , int ForRepair )
+calculate_item_buy_price ( item* BuyItem )
 {
   float PrefixMultiplier = 1;
   float SuffixMultiplier = 1;
@@ -296,33 +296,121 @@ CalculateItemPrice ( item* BuyItem , int ForRepair )
   if ( BuyItem -> prefix_code != (-1) )
     {
       PrefixMultiplier = PrefixList[ BuyItem->prefix_code ].price_factor;
-      // DebugPrintf ( 0 , "\nPriceFactor : %f . " , PrefixMultiplier ) ;
     }
   if ( BuyItem -> suffix_code != (-1) )
     SuffixMultiplier = SuffixList[ BuyItem->suffix_code ].price_factor;
 
 
-  if ( !ForRepair )
-    {
-      if ( BuyItem->max_duration != (-1 ) )
-	{
-	  return ( Multiplicity * ItemMap [ BuyItem->type ].base_list_price * SuffixMultiplier * PrefixMultiplier *
-		   ( BuyItem->current_duration ) / BuyItem->max_duration ); 
-	}
-      else
-	{
-	  return ( Multiplicity * ItemMap [ BuyItem->type ].base_list_price * SuffixMultiplier * PrefixMultiplier );
-	}
-    }
-
-  // --------------------
-  // This is the price of the DAMAGE in the item, haha
-  // This can only be requested for repair items
+  //--------------------
+  // If the item is destructible, we take the current duration into
+  // account, and reduce the item value accordingly...
   //
   if ( BuyItem->max_duration != (-1 ) )
     {
       return ( Multiplicity * ItemMap [ BuyItem->type ].base_list_price * SuffixMultiplier * PrefixMultiplier *
-	       ( BuyItem->max_duration - BuyItem->current_duration ) / BuyItem->max_duration ); 
+	       ( BuyItem->current_duration ) / BuyItem->max_duration ); 
+    }
+  else
+    {
+      return ( Multiplicity * ItemMap [ BuyItem->type ].base_list_price * SuffixMultiplier * PrefixMultiplier );
+    }
+
+  return 0; // just to make compilers happy (no warnings...)
+
+}; // long calculate_item_buy_price ( item* BuyItem )
+
+/* ----------------------------------------------------------------------
+ * This function calculates the price of a given item, taking into account
+ * (*) the items base list price 
+ * (*) the items given prefix modifier
+ * (*) the items given suffix modifier
+ * (*) AND THE CURRENT DURATION of the item in relation to its max duration.
+ * ---------------------------------------------------------------------- */
+long
+calculate_item_sell_price ( item* BuyItem )
+{
+  float PrefixMultiplier = 1;
+  float SuffixMultiplier = 1;
+  float Multiplicity = BuyItem->multiplicity ;
+
+  //--------------------
+  // Maybe the item is magical in one way or the other.  Then we have to
+  // multiply a factor to the price, no matter whether repairing or buying
+  // or selling the item.
+  //
+  if ( BuyItem -> prefix_code != (-1) )
+    {
+      PrefixMultiplier = PrefixList[ BuyItem->prefix_code ].price_factor;
+    }
+  if ( BuyItem -> suffix_code != (-1) )
+    SuffixMultiplier = SuffixList[ BuyItem->suffix_code ].price_factor;
+
+  //--------------------
+  // When selling an item, you don't get the full value of the item, but
+  // instead, only half of the original list price, cause it's a used good.
+  //
+#define SELL_PRICE_FACTOR (0.5)
+  PrefixMultiplier *= SELL_PRICE_FACTOR ;
+
+
+  //--------------------
+  // If the item is destructible, we take the current duration into
+  // account, and reduce the item value accordingly...
+  //
+  if ( BuyItem->max_duration != (-1 ) )
+    {
+      return ( Multiplicity * ItemMap [ BuyItem->type ].base_list_price * SuffixMultiplier * PrefixMultiplier *
+	       ( BuyItem->current_duration ) / BuyItem->max_duration ); 
+    }
+  else
+    {
+      return ( Multiplicity * ItemMap [ BuyItem->type ].base_list_price * SuffixMultiplier * PrefixMultiplier );
+    }
+
+  return 0; // just to make compilers happy (no warnings...)
+
+}; // long calculate_item_sell_price ( item* BuyItem )
+
+/* ----------------------------------------------------------------------
+ * This function calculates the price of a given item, taking into account
+ * (*) the items base list price 
+ * (*) the items given prefix modifier
+ * (*) the items given suffix modifier
+ * (*) AND THE CURRENT DURATION of the item in relation to its max duration.
+ * ---------------------------------------------------------------------- */
+long
+calculate_item_repair_price ( item* repair_item )
+{
+  float PrefixMultiplier = 1;
+  float SuffixMultiplier = 1;
+  float Multiplicity = repair_item->multiplicity ;
+
+  //--------------------
+  // Maybe the item is magical in one way or the other.  Then we have to
+  // multiply a factor to the price, no matter whether repairing or buying
+  // or selling the item.
+  //
+  if ( repair_item -> prefix_code != (-1) )
+    {
+      PrefixMultiplier = PrefixList [ repair_item -> prefix_code ] . price_factor;
+    }
+  if ( repair_item -> suffix_code != (-1) )
+    SuffixMultiplier = SuffixList [ repair_item -> suffix_code ] . price_factor;
+
+  //--------------------
+  // For repair, it's not the full 'buy' cost...
+  //
+#define REPAIR_PRICE_FACTOR (0.5)
+  PrefixMultiplier *= REPAIR_PRICE_FACTOR ;
+
+  //--------------------
+  // This is the price of the DAMAGE in the item, haha
+  // This can only be requested for repair items
+  //
+  if ( repair_item->max_duration != (-1 ) )
+    {
+      return ( Multiplicity * ItemMap [ repair_item->type ].base_list_price * SuffixMultiplier * PrefixMultiplier *
+	       ( repair_item -> max_duration - repair_item -> current_duration ) / repair_item -> max_duration ); 
     }
   else
     {
@@ -330,7 +418,8 @@ CalculateItemPrice ( item* BuyItem , int ForRepair )
       Terminate( ERR );
     }
   return 0;
-}; // long CalculateItemPrice ( item* BuyItem )
+}; // long calculate_item_repair_price ( item* repair_item )
+
 
 /* ----------------------------------------------------------------------
  *

@@ -46,7 +46,6 @@
 
 // #define SELL_PRICE_FACTOR (0.25)
 #define SELL_PRICE_FACTOR (0.5)
-#define REPAIR_PRICE_FACTOR (0.5)
 
 #define SHOP_ROW_LENGTH 8
 
@@ -1089,19 +1088,16 @@ DoEquippmentListSelection( char* Startstring , item* Item_Pointer_List[ MAX_ITEM
 	  switch ( PricingMethod )
 	    {
 	    case PRICING_FOR_SELL:
-	      PriceFound = SELL_PRICE_FACTOR * 
-		( (float) CalculateItemPrice ( Item_Pointer_List[ i + MenuInListPosition] , FALSE ) ) ;
+	      PriceFound = calculate_item_sell_price ( Item_Pointer_List [ i + MenuInListPosition ] ) ;
 	      break;
 	    case PRICING_FOR_BUY:
-	      PriceFound = 
-		CalculateItemPrice ( Item_Pointer_List [ i + MenuInListPosition ] , FALSE ) ;
+	      PriceFound = calculate_item_buy_price ( Item_Pointer_List [ i + MenuInListPosition ] ) ;
 	      break;
 	    case PRICING_FOR_IDENTIFY:
 	      PriceFound = 100.0 ;
 	      break;
 	    case PRICING_FOR_REPAIR:
-	      PriceFound = REPAIR_PRICE_FACTOR * 
-		( (float) CalculateItemPrice ( Item_Pointer_List[ i + MenuInListPosition] , TRUE ) );
+	      PriceFound = calculate_item_repair_price ( Item_Pointer_List [ i + MenuInListPosition] );
 	      break;
 	    default:
 	      DebugPrintf( 0 , "ERROR:  PRICING METHOD UNSPECIFIED IN SHOP.C!!!\n\nTerminating...\n\n" );
@@ -1202,7 +1198,7 @@ TryToRepairItem( item* RepairItem )
 
   while ( SpacePressed() || EnterPressed() );
 
-  if ( REPAIR_PRICE_FACTOR * CalculateItemPrice ( RepairItem , TRUE ) > Me[0].Gold )
+  if ( calculate_item_repair_price ( RepairItem ) > Me [ 0 ] . Gold )
     {
       PlayOnceNeededSoundSample ( "STO_You_Cant_Repaired_0.wav" , FALSE , FALSE );
       MenuTexts[0]=" BACK ";
@@ -1223,7 +1219,7 @@ TryToRepairItem( item* RepairItem )
 	  break;
 	case ANSWER_YES:
 	  while (EnterPressed() || SpacePressed() );
-	  Me[0].Gold -= REPAIR_PRICE_FACTOR * CalculateItemPrice ( RepairItem , TRUE ) ;
+	  Me [ 0 ] . Gold -= calculate_item_repair_price ( RepairItem ) ;
 	  RepairItem->current_duration = RepairItem->max_duration;
 	  PlayOnceNeededSoundSample ( "../effects/Shop_ItemRepairedSound_0.wav" , FALSE , FALSE );
 	  return;
@@ -1346,7 +1342,7 @@ TryToSellItem( item* SellItem , int WithBacktalk , int AmountToSellAtMost )
 	    case ANSWER_YES:
 	      while (EnterPressed() || SpacePressed() );
 
-	      Me[0].Gold += SELL_PRICE_FACTOR * CalculateItemPrice ( SellItem , FALSE );
+	      Me [ 0 ] . Gold += calculate_item_sell_price ( SellItem );
 	      DeleteItem( SellItem );
 	      PlayOnceNeededSoundSample ( "../effects/Shop_ItemSoldSound_0.wav" , FALSE , TRUE );
 
@@ -1361,7 +1357,8 @@ TryToSellItem( item* SellItem , int WithBacktalk , int AmountToSellAtMost )
     }
   else
     {
-      Me[0].Gold += SELL_PRICE_FACTOR * CalculateItemPrice ( SellItem , FALSE ) * (float)AmountToSellAtMost / (float)SellItem->multiplicity ;
+      Me[0].Gold += calculate_item_sell_price ( SellItem ) * 
+	((float)AmountToSellAtMost) / ((float)SellItem->multiplicity) ;
       if ( AmountToSellAtMost < SellItem->multiplicity )
 	SellItem->multiplicity -= AmountToSellAtMost;
       else DeleteItem( SellItem );
@@ -1539,7 +1536,7 @@ TryToBuyItem( item* BuyItem , int WithBacktalk , int AmountToBuyAtMost )
 
   while ( SpacePressed() || EnterPressed() || axis_is_active );
 
-  if ( CalculateItemPrice ( BuyItem , FALSE ) > Me[0].Gold )
+  if ( calculate_item_buy_price ( BuyItem ) > Me [ 0 ] . Gold )
     {
       PlayOnceNeededSoundSample ( "STO_You_Cant_Buy_0.wav" , FALSE , FALSE );
       if ( WithBacktalk )
@@ -1559,7 +1556,7 @@ TryToBuyItem( item* BuyItem , int WithBacktalk , int AmountToBuyAtMost )
   // if that's possible, and if so, subtract the items price from the
   // current gold.
   //
-  PotentialPrice = CalculateItemPrice ( BuyItem , FALSE ) ;
+  PotentialPrice = calculate_item_buy_price ( BuyItem ) ;
 
   if ( TryToIntegrateItemIntoInventory ( BuyItem , AmountToBuyAtMost ) )
     {
