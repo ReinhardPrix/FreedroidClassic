@@ -1842,7 +1842,7 @@ gui_show_tooltip ( int x , int y )
 
       // label with the text
       sprintf( popup_meta_tool_tip_text , "#Option Nr: %d\n" , DialogOptionCovered );
-      if ( strcmp ( ChatRoster [ DialogOptionCovered ] . option_text , "THIS WILL NOT EVER BE VISIBLE" ) )
+      if ( strcmp ( ChatRoster [ DialogOptionCovered ] . option_sample_file_name , "NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER" ) )
 	{
 	  strcat( popup_meta_tool_tip_text , ChatRoster [ DialogOptionCovered ] . option_text );
 	  strcat( popup_meta_tool_tip_text , "\n" );
@@ -2071,7 +2071,7 @@ gui_draw_all_dialog_boxes( void )
       // Depending on whether it's a real dialog option or just a technical
       // option like in a flow chart, we draw either a box or a diamond...
       //
-      if ( strcmp ( ChatRoster [ i ] . option_text , "THIS WILL NOT EVER BE VISIBLE" ) )
+      if ( strcmp ( ChatRoster [ i ] . option_sample_file_name , "NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER" ) )
 	{
 	  //--------------------
 	  // Here we draw the box...
@@ -3491,6 +3491,9 @@ button_press_event (GtkWidget *widget, GdkEventButton *event, gpointer data)
   int dialog_option_index ;
 
 #define MOUSE_BUTTON_PRESS_DEBUG 1
+
+  // begin with destroying the tooltip if there exists one
+  gui_destroy_existing_tooltips (  );
 
   //--------------------
   // We get the mouse position where the mouse click occured...
