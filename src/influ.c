@@ -42,7 +42,8 @@
 #define TIMETILLNEXTBULLET 14
 
 #define REFRESH_ENERGY		3
-#define COLLISION_PUSHSPEED	70
+// NORMALISATION #define COLLISION_PUSHSPEED	70
+#define COLLISION_PUSHSPEED	7
 
 #define BOUNCE_LOSE_ENERGY 3	/* amount of lose-energy at enemy-collisions */
 #define BOUNCE_LOSE_FACT 1
@@ -814,16 +815,16 @@ ExplodeInfluencer (void)
 @Int:
 * $Function----------------------------------------------------------*/
 void
-InfluenceEnemyCollision (void)
+CheckInfluenceEnemyCollision (void)
 {
   int i;
-  int xdist;
-  int ydist;
-  long dist2;
+  float xdist;
+  float ydist;
+  float dist2;
   int swap;
   int first_collision = TRUE;	/* marker */
 
-  return;
+  // return;
 
   for (i = 0; i < NumEnemys; i++)
     {
@@ -840,13 +841,13 @@ InfluenceEnemyCollision (void)
       xdist = Me.pos.x - Feindesliste[i].pos.x;
       ydist = Me.pos.y - Feindesliste[i].pos.y;
 
-      if (abs (xdist) > Block_Width)
+      if (abs (xdist) > 1)
 	continue;
-      if (abs (ydist) > Block_Height)
+      if (abs (ydist) > 1)
 	continue;
 
-      dist2 = (long) xdist *xdist + ydist * ydist;
-      if (dist2 > (long) 4 * DRUIDRADIUSX * DRUIDRADIUSY)
+      dist2 = sqrt( xdist *xdist + ydist * ydist );
+      if (dist2 > 2 * DRUIDRADIUSX)
 	continue;
 
 
@@ -862,14 +863,14 @@ InfluenceEnemyCollision (void)
 
 	      if (Me.speed.x != 0)
 		Me.speed.x +=
-		  COLLISION_PUSHSPEED * (Me.speed.x / abs (Me.speed.x));
+		  COLLISION_PUSHSPEED * (Me.speed.x / fabsf (Me.speed.x));
 	      else if (xdist)
-		Me.speed.x = COLLISION_PUSHSPEED * (xdist / abs (xdist));
+		Me.speed.x = COLLISION_PUSHSPEED * (xdist / fabsf (xdist));
 	      if (Me.speed.y != 0)
 		Me.speed.y +=
-		  COLLISION_PUSHSPEED * (Me.speed.y / abs (Me.speed.y));
+		  COLLISION_PUSHSPEED * (Me.speed.y / fabsf (Me.speed.y));
 	      else if (ydist)
-		Me.speed.y = COLLISION_PUSHSPEED * (ydist / abs (ydist));
+		Me.speed.y = COLLISION_PUSHSPEED * (ydist / fabsf (ydist));
 
 	      /* den Influencer etwas aus dem Feind hinausschieben */
 	      Me.pos.x += Me.speed.x * Frame_Time ();
@@ -906,7 +907,7 @@ InfluenceEnemyCollision (void)
 
     }				/* for */
 
-}				/* InfluenceEnemyCollision */
+} // CheckInfluenceEnemyCollision
 
 /*@Function============================================================
 @Desc: Fire-Routine for the Influencer only !! (should be changed)

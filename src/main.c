@@ -337,6 +337,7 @@ main (int argc, char *const argv[])
 	    }
 
 	  MoveBullets ();   
+
 	  ExplodeBlasts ();	/* Blasts in der Explosionsphase weiterbewegen */
 
 	  DisplayRahmen( 0 );
@@ -345,11 +346,15 @@ main (int argc, char *const argv[])
 
 	  for (i = 0; i < MAXBULLETS; i++)
 	    CheckBulletCollisions (i);
+
 	  PutMessages ();
 
 	  MoveInfluence ();	// change Influ-speed depending on keys pressed
+
 	  MoveEnemys ();	// Auch die Feinde bewegen 
+
 	  AnimateInfluence ();	// Bei animierten Influencer die Phasen weiterzaehlen 
+
 	  AnimateEnemys ();	// Bei den Feinden auch Phasen weiterzaehlen 
 
 	  /* Raeder bremsen die Fahrt des Influencers erheblich */
@@ -370,7 +375,9 @@ main (int argc, char *const argv[])
 	  AdjustSpeed ();
 
 	  BounceInfluencer ();	/* Testen ob der Weg nicht durch Mauern verstellt ist */
-	  InfluenceEnemyCollision ();
+
+	  CheckInfluenceEnemyCollision ();
+
 	  RotateBulletColor ();
 
 	  AllRobotsDead=TRUE;

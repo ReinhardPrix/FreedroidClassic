@@ -74,7 +74,7 @@ EXTERN void BounceInfluencer (void);
 EXTERN void Reibung (void);
 EXTERN void CheckEnergieLevel (void);
 EXTERN void AnimateInfluence (void);
-EXTERN void InfluenceEnemyCollision (void);
+EXTERN void CheckInfluenceEnemyCollision (void);
 EXTERN void RefreshInfluencer (void);
 EXTERN void ExplodeInfluencer (void);
 
@@ -373,7 +373,7 @@ EXTERN void ShowDebugInfos (void);
 #endif
 EXTERN void InitEnemys (void);
 EXTERN void ShuffleEnemys (void);
-EXTERN int EnemyEnemyCollision (int enemynum);
+EXTERN int CheckEnemyEnemyCollision (int enemynum);
 EXTERN void MoveEnemys (void);
 EXTERN void AttackInfluence (int enemynum);
 EXTERN void AnimateEnemys (void);

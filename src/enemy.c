@@ -241,7 +241,7 @@ MoveEnemys (void)
 	 continue;
 
        // Now check for collisions of this enemy with his colleagues
-       EnemyEnemyCollision (i);
+       CheckEnemyEnemyCollision (i);
 
        /* Ermittlung des Restweges zum naechsten Ziel */
        WpList = CurLevel->AllWaypoints;
@@ -452,13 +452,13 @@ AttackInfluence (int enemynum)
 }   /* AttackInfluence */
 
 /*@Function============================================================
-@Desc: EnemyEnemyCollision()
+@Desc: CheckEnemyEnemyCollision()
 
-@Ret: 	TRUE: Enemynum kollidierte mit anderem Enemy
+@Ret: 	TRUE: if enemy Nr. Enemynum collided with another enemy
 @Int:
 * $Function----------------------------------------------------------*/
 int
-EnemyEnemyCollision (int enemynum)
+CheckEnemyEnemyCollision (int enemynum)
 {
   int i;
   int curlev = CurLevel->levelnum;
@@ -531,7 +531,7 @@ EnemyEnemyCollision (int enemynum)
     }				/* for */
 
   return FALSE;
-}
+} // int CheckEnemyEnemyCollision
 
 
 /*@Function============================================================
