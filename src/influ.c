@@ -1065,6 +1065,52 @@ LivingDroidBelowMouseCursor ( int PlayerNum )
 }; // int LivingDroidBelowMouseCursor ( int PlayerNum )
 
 /* ----------------------------------------------------------------------
+ * This function checks if there is a crushable box below the mouse 
+ * cursor or not.
+ * This function is useful for determining if a mouse-button-press was
+ * meant as a mouse-indicated move instruction was given or rather a 
+ * weapon swing/weapon fire command was meant by the player.
+ * ---------------------------------------------------------------------- */
+int
+CrushableBoxBelowMouseCursor ( int PlayerNum )
+{
+  Level SpecialFieldLevel;
+  unsigned char MapBrick;
+  float Mouse_Blocks_X, Mouse_Blocks_Y;
+
+  Mouse_Blocks_X = ((float)ServerThinksInputAxisX ( PlayerNum )) / ((float)Block_Width  ) ;
+  Mouse_Blocks_Y = ((float)ServerThinksInputAxisY ( PlayerNum )) / ((float)Block_Height ) ;
+
+  //--------------------
+  // Now we get the brick code at our corrent location.
+  //
+  SpecialFieldLevel = curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] ;
+  MapBrick = GetMapBrick ( SpecialFieldLevel , Me [ PlayerNum ] . pos . x + Mouse_Blocks_X , 
+			   Me [ PlayerNum ] . pos . y + Mouse_Blocks_Y ) ;
+
+  switch ( MapBrick )
+    {
+    case BOX_1:
+    case BOX_2:
+    case BOX_3:
+    case BOX_4:
+      return ( TRUE );
+      break;
+    default:
+      return ( FALSE );
+      break;
+    }
+
+  //--------------------
+  // It seems that we were unable to locate a box under the mouse 
+  // cursor.  So we return, giving this very same message.
+  //
+  return ( FALSE );
+
+}; // int CrushableBoxBelowMouseCursor ( int PlayerNum )
+
+
+/* ----------------------------------------------------------------------
  * This function checks if there is some living droid below the current
  * mouse cursor and returns the index number of this droid in the array.
  * ---------------------------------------------------------------------- */
@@ -1181,7 +1227,9 @@ FireBullet ( int PlayerNum )
   // Also if the target is pretty close, we interpret a fireing command.
   //
   if ( 
-      ( ( ! LivingDroidBelowMouseCursor ( PlayerNum ) ) && ( ! ServerThinksShiftWasPressed ( PlayerNum ) ) &&
+      ( ( ! LivingDroidBelowMouseCursor ( PlayerNum ) ) && 
+	( ! CrushableBoxBelowMouseCursor ( PlayerNum ) ) && 
+	( ! ServerThinksShiftWasPressed ( PlayerNum ) ) &&
 	( Me [ PlayerNum ] . mouse_move_target_is_enemy == (-1) ) )
 
       /*
@@ -1209,7 +1257,7 @@ FireBullet ( int PlayerNum )
 
     }
 
-  if ( ( ! LivingDroidBelowMouseCursor ( PlayerNum ) ) && ( ! ServerThinksShiftWasPressed ( PlayerNum ) ) )
+  if ( ( ! CrushableBoxBelowMouseCursor ( PlayerNum ) ) && ( ! LivingDroidBelowMouseCursor ( PlayerNum ) ) && ( ! ServerThinksShiftWasPressed ( PlayerNum ) ) )
     {
       //--------------------
       // Later, we will add the new mouse move intention at this point
@@ -1225,6 +1273,28 @@ FireBullet ( int PlayerNum )
       // return;
 
     }
+
+  if ( ( CrushableBoxBelowMouseCursor ( PlayerNum ) ) && ( ! ServerThinksShiftWasPressed ( PlayerNum ) ) )
+    {
+      //--------------------
+      // Perhaps the player is just targeting a crushable box now.
+      // Then of course we must not return, but execute the stroke!!
+      //
+      if ( ( fabsf ( Me [ PlayerNum ] . mouse_move_target . x - 
+		     Me [ PlayerNum ] . pos . x ) < FORCE_FIRE_DISTANCE ) &&
+	   ( fabsf ( Me [ PlayerNum ] . mouse_move_target . y - 
+		     Me [ PlayerNum ] . pos . y ) < FORCE_FIRE_DISTANCE  ) )
+	{
+	  // don't return, but do the attack...
+	  //
+	}
+      else
+	{
+	  return;
+	}
+      
+    }
+
 
   if ( ( LivingDroidBelowMouseCursor ( PlayerNum ) ) && ( ! ServerThinksShiftWasPressed ( PlayerNum ) ) ) 
     {
