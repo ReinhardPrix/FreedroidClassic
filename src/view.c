@@ -438,7 +438,7 @@ PutEnemy (int Enum , int x , int y)
     }
 
   // if the enemy is out of signt, we need not do anything more here
-  if (!IsVisible (&AllEnemys[Enum].pos))
+  if ((!show_all_droids) && (!IsVisible (&AllEnemys[Enum].pos)) )
     {
       DebugPrintf (2, "\nvoid PutEnemy(int Enum): ONSCREEN=FALSE --> usual end of function reached.\n");
       return;

@@ -220,7 +220,8 @@ Takeover (int enemynum)
 	      PreTakeEnergy = Me.energy;
 	    }
 
-	  if (Me.energy > Druidmap[DRUID001].maxenergy) Me.energy = Druidmap[DRUID001].maxenergy;
+	  if (Me.energy > Druidmap[DRUID001].maxenergy) 
+	    Me.energy = Druidmap[DRUID001].maxenergy;
 	  // Me.energy = AllEnemys[enemynum].energy;
 	  Me.energy += AllEnemys[enemynum].energy;
 	  // Me.health = Druidmap[OpponentType].maxenergy;
@@ -260,12 +261,11 @@ Takeover (int enemynum)
 	  message = "Deadlock";
 	}			/* LeadColor == REMIS */
 
-      // NONSENSE FROM THE OLD ENGINE RedrawInfluenceNumber ();
-
       /* don't display enemy if we're finished */
       if (FinishTakeover) 
 	{
 	  AllEnemys[enemynum].Status = OUT;
+	  AllEnemys[enemynum].energy = -1.0;  /* to be sure */
 	  OpponentType = -1;	/* dont display enemy any more */
 	}
 

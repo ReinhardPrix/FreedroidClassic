@@ -127,8 +127,8 @@ typedef struct
   int status;			/* attacking, defense, dead, ... */
   finepoint speed;		/* the current speed of the druid */
   finepoint pos;		/* current position in level levelnum */
-  double health;			/* the max. possible energy in the moment */
-  double energy;			/* current energy */
+  double health;		/* the max. possible energy in the moment */
+  double energy;		/* current energy */
   double firewait;		/* counter after fire */
   double phase;			/* the current phase of animation */
   int autofire;			/* Status of the Firecontrolautomatics */

@@ -117,6 +117,7 @@ EXTERN int sound_on;		/* Toggle TRUE/FALSE for turning sounds on/off */
 EXTERN int debug_level;       	/* 0=no debug 1=some debug messages 2=...etc */
 				/* (currently only 0 or !=0 is implemented) */
 EXTERN int fullscreen_on;	/* toggle for use of fullscreen vs. X11-window */
+EXTERN int show_all_droids;     /* display enemys regardless of IsVisible() */
 
 #undef EXTERN
 #ifdef _misc_c

@@ -87,7 +87,7 @@ Cheatmenu (void)
 {
   char *input;		/* string input from user */
   int Weiter;
-  int LNum, X, Y;
+  int LNum, X, Y, num;
   int i, l;
   int x0, y0, line;
   Waypoint WpList;      /* pointer on current waypoint-list  */
@@ -120,20 +120,33 @@ Cheatmenu (void)
       printf_SDL (ne_screen, -1, -1, " r. change to new robot type\n");
       printf_SDL (ne_screen, -1, -1, " i. Invinciblemode: %s",
 		  InvincibleMode ? "ON\n" : "OFF\n");
-      printf_SDL (ne_screen, -1, -1, " f. full energy\n");
-      printf_SDL (ne_screen, -1, -1, " b. blink-energy\n");
+      printf_SDL (ne_screen, -1, -1, " e. set energy\n");
       printf_SDL (ne_screen, -1, -1, " h. Hide invisible map parts: %s",
 		  HideInvisibleMap ? "ON\n" : "OFF\n" );
+      printf_SDL (ne_screen, -1, -1, " n. No hidden droids: %s",
+		  show_all_droids ? "ON\n" : "OFF\n" );
       printf_SDL (ne_screen, -1, -1, " m. Map of Deck xy\n");
       printf_SDL (ne_screen, -1, -1, " s. Sound: %s",
 		  sound_on ? "ON\n" : "OFF\n");
       printf_SDL (ne_screen, -1, -1, " x. Fullscreen : %s",
 		  fullscreen_on ? "ON\n" : "OFF\n");
       printf_SDL (ne_screen, -1, -1, " w. Print current waypoints\n");
+      printf_SDL (ne_screen, -1, -1, " z. change Zoom factor\n");
       printf_SDL (ne_screen, -1, -1, " q. RESUME game\n");
 
       switch (getchar_raw ())
 	{
+	case 'z':
+	  ClearGraphMem();
+	  printf_SDL (ne_screen, x0, y0, "Current Zoom factor: %f\n",
+		      CurrentCombatScaleFactor); 
+	  printf_SDL (ne_screen, -1, -1, "New zoom factor: ");
+	  input = GetString (40, 2);
+	  sscanf (input, "%f", &CurrentCombatScaleFactor);
+	  free (input);
+	  SetCombatScaleTo (CurrentCombatScaleFactor);
+	  break;
+
 	case 'a': /* armageddon */
 	  Weiter = 1;
 	  Armageddon ();
@@ -255,21 +268,23 @@ Cheatmenu (void)
 	  InvincibleMode = !InvincibleMode;
 	  break;
 
-	case 'f': /* complete heal */
-	  Me.energy = Druidmap[Me.type].maxenergy;
-	  Me.health = Me.energy;
-	  printf_SDL (ne_screen, -1, -1, "Sie sind wieder gesund!\n");
-	  getchar_raw ();
-	  break;
-
-	case 'b': /* minimal energy */
-	  Me.energy = 1;
-	  printf_SDL (ne_screen, -1, -1, "\nSie sind jetzt ziemlich schwach!");
-	  getchar_raw ();
+	case 'e': /* complete heal */
+	  ClearGraphMem();
+	  printf_SDL (ne_screen, x0, y0, "Current energy: %f\n", Me.energy);
+	  printf_SDL (ne_screen, -1, -1, "Enter your new energy: ");
+	  input = GetString (40, 2);
+	  sscanf (input, "%d", &num);
+	  free (input);
+	  Me.energy = (double) num;
+	  if (Me.energy > Me.health) Me.health = Me.energy;
 	  break;
 
 	case 'h': /* toggle hide invisible map */
 	  HideInvisibleMap = !HideInvisibleMap;
+	  break;
+
+	case 'n': /* toggle display of all droids */
+	  show_all_droids = !show_all_droids;
 	  break;
 
 	case 's': /* toggle sound on/off */
