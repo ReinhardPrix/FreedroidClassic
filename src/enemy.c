@@ -568,6 +568,10 @@ RawEnemyApproachPosition ( Enemy ThisRobot , finepoint nextwp_pos )
   else 
     maxspeed = 0.2 * Druidmap [ ThisRobot->type ] . maxspeed;
  
+  //--------------------
+  // While getting hit, the bot or person souldn't be running...
+  // 
+  if ( ThisRobot -> animation_phase == GETHIT_ANIMATION ) return;
 
   //--------------------
   // Now that we have found out where to go, we can start to determine the remaining 
@@ -1373,7 +1377,9 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
       ThisRobot -> animation_phase = ((float)first_attack_animation_image [ ThisRobot -> type ]) + 0.1 ;
       ThisRobot -> animation_type = ATTACK_ANIMATION;
       
-      DeleteBullet ( bullet_index , FALSE );
+      if ( Druidmap [ ThisRobot -> type ] . suppress_bullet_generation_when_attacking )
+	DeleteBullet ( bullet_index , FALSE );
+
       ThisRobot -> current_angle = - ( - 90 + 180 * atan2 ( ydist ,  xdist ) / M_PI );  
 
       if ( ThisRobot -> is_friendly )
@@ -1433,6 +1439,7 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
       //
       Fire_Bullet_Sound ( guntype );
     }
+
 
 }; // void RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 
@@ -1720,6 +1727,14 @@ MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int TargetPlayer , int 
   int i , j ;
 #define ANGLES_TO_TRY 7
   float RotationAngleTryList[ ANGLES_TO_TRY ] = { 0 , 30 , 360-30 , 60, 360-60, 90, 360-90 };
+
+  //--------------------
+  // When the robot is just getting hit, then there shouldn't be much
+  // of a running motion, especially during the corresponding animaiton
+  // phase...
+  //
+  if ( ThisRobot -> animation_phase == GETHIT_ANIMATION ) 
+    return;
 
   //--------------------
   // If the distance is not yet right, we find a new location to move to.  We
@@ -2490,7 +2505,7 @@ AnimateEnemys (void)
 		}
 	      break;
 	    case DEATH_ANIMATION:
-	      if ( ( (int) our_enemy -> animation_phase ) >= last_death_animation_image [ our_enemy -> type ] )
+	      if ( our_enemy -> animation_phase >= last_death_animation_image [ our_enemy -> type ] - 1 )
 		{
 		  our_enemy -> animation_phase = last_death_animation_image [ our_enemy -> type ] - 1 ;
 		  our_enemy -> animation_type = DEATH_ANIMATION ;

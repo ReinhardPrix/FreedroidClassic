@@ -759,7 +759,6 @@ blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our
   texture_start_y = 1.0 ; // 1 - ((float)(our_floor_iso_image . surface -> h)) / 127.0 ; // 1.0 
   texture_end_y = 0.0 ;
   
-
   glBindTexture( GL_TEXTURE_2D, * ( our_floor_iso_image . texture ) );
 
   glBegin(GL_QUADS);

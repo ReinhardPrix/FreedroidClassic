@@ -499,6 +499,7 @@ typedef struct
   char *notes;			        // notes on the druid of this type 
   int is_human;
   int individual_shape_nr;
+  int suppress_bullet_generation_when_attacking; // some bots have weapon and attack built into the animation images...
 }
 druidspec, *Druidspec;
 

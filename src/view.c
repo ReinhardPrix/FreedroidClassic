@@ -2993,7 +2993,7 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 	    {
 	      if ( use_open_gl )
 		{
-		  if ( AllEnemys[Enum].paralysation_duration_left != 0 ) 
+		  if ( AllEnemys [ Enum ] . paralysation_duration_left != 0 ) 
 		    {
 		      blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , 
 							     ThisRobot -> pos . x , ThisRobot -> pos . y , 1.0 , 0.2 , 0.2 , highlight ) ;
