@@ -526,9 +526,12 @@ Debriefing (void)
       SetTextColor (208, RAHMEN_VIOLETT );	// RED // YELLOW
       if (RealScore > GreatScore)
 	{
-	  strcpy (Scoretext, "\n    Great Score !\n Enter your name:");
-	  DisplayText (Scoretext, USERFENSTERPOSX, USERFENSTERPOSY,
-		       RealScreen, FALSE);
+	  // strcpy (Scoretext, "\n    Great Score !\n Enter your name:");
+	  PrintStringFont ( ne_screen , Menu_BFont, USERFENSTERPOSX, USERFENSTERPOSY, 
+			    "    Great Score !");
+	  PrintStringFont ( ne_screen , Menu_BFont, USERFENSTERPOSX, FontHeight(Menu_BFont)+USERFENSTERPOSY, 
+			    "    Enter your name: ");
+	  // DisplayText (Scoretext, USERFENSTERPOSX, USERFENSTERPOSY, RealScreen, FALSE);
 	  PrepareScaledSurface(TRUE);
 
 	  GreatScoreName = GetString (10, 2);
@@ -536,9 +539,12 @@ Debriefing (void)
 	}
       else if (RealScore < LowestScoreOfDay)
 	{
-	  strcpy (Scoretext, "\n   Lowest Score of Day! \n Enter your name:");
-	  DisplayText (Scoretext, USERFENSTERPOSX, USERFENSTERPOSY,
-		       RealScreen, FALSE);
+	  // strcpy (Scoretext, "\n   Lowest Score of Day! \n Enter your name:");
+	  PrintStringFont ( ne_screen , Menu_BFont, USERFENSTERPOSX, USERFENSTERPOSY, 
+			    "\n   Lowest Score of Day!");
+	  PrintStringFont ( ne_screen , Menu_BFont, USERFENSTERPOSX, FontHeight(Menu_BFont)+USERFENSTERPOSY, 
+			    "    Enter your name: ");
+	  // DisplayText (Scoretext, USERFENSTERPOSX, USERFENSTERPOSY, RealScreen, FALSE);
 	  PrepareScaledSurface(TRUE);
 	  LowestName = GetString (10, 2);
 	  LowestScoreOfDay = RealScore;
@@ -547,8 +553,11 @@ Debriefing (void)
 	{
 	  strcpy (Scoretext,
 		  "\n   Highest Score of Day! \n Enter your name:");
-	  DisplayText (Scoretext, USERFENSTERPOSX, USERFENSTERPOSY,
-		       RealScreen, FALSE);
+	  PrintStringFont ( ne_screen , Menu_BFont, USERFENSTERPOSX, USERFENSTERPOSY, 
+			    "\n   Highest Score of Day!" );
+	  PrintStringFont ( ne_screen , Menu_BFont, USERFENSTERPOSX, FontHeight(Menu_BFont)+USERFENSTERPOSY, 
+			    "    Enter your name: ");
+	  // DisplayText (Scoretext, USERFENSTERPOSX, USERFENSTERPOSY, RealScreen, FALSE);
 	  PrepareScaledSurface(TRUE);
 	  HighestName = GetString (10, 2);
 	  HighestScoreOfDay = RealScore;

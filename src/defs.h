@@ -217,7 +217,7 @@ enum _sounds
 #define DROID_PHASES            ENEMYPHASES
 
 #define WAIT_LEVELEMPTY		18	/* warte bevor Graufaerben */
-#define WAIT_AFTER_KILLED	5  // time to wait and still display pictures after the destruction of 
+#define WAIT_AFTER_KILLED	1  // time to wait and still display pictures after the destruction of 
                                    // the players droid.  This is now measured in seconds and can be a float
 #define WAIT_SHIPEMPTY		20
 #define WAIT_TRANSFERMODE	0.3	/* this is a "float" indicating the number of seconds the influence 

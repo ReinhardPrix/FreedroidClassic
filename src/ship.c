@@ -1057,11 +1057,14 @@ NoKeyPressed (void)
 void
 ClearUserFenster (void)
 {
-  int i;
+  SDL_Rect ClearingRectangle;
+  
+  ClearingRectangle.x=USERFENSTERPOSX;
+  ClearingRectangle.y=USERFENSTERPOSY;
+  ClearingRectangle.w=USERFENSTERBREITE;
+  ClearingRectangle.h=USERFENSTERHOEHE;
 
-  for (i = USERFENSTERPOSY; i < (USERFENSTERPOSY + USERFENSTERHOEHE); i++)
-    memset( Outline320x200 + i*SCREENBREITE+USERFENSTERPOSX , 0 , USERFENSTERBREITE );
-
+  SDL_FillRect( ne_screen , &ClearingRectangle, 0 );
   return;
 
 } // void ClearUserFenster(void)

@@ -316,7 +316,11 @@ ScrollText (char *Text, int startx, int starty, int EndLine)
   int speed = +2;
   int maxspeed = 4;
 
+  printf("\nScrollTest should be starting to scroll now...");
+
   ClearVGAScreen ();
+
+  SDL_SetClipRect( ne_screen , NULL );
 
   /* Zeilen zaehlen */
   textpt = Text;
@@ -326,7 +330,7 @@ ScrollText (char *Text, int startx, int starty, int EndLine)
 
   /* Texthoehe berechnen */
   TextHeight = ( Number_Of_Line_Feeds+ strlen(Text)/CharsPerLine )
-    * (FONTHOEHE + ZEILENABSTAND);
+    * ( FontHeight(Menu_BFont) + ZEILENABSTAND );
 
   while (!SpacePressed () && ((InsertLine + TextHeight) > EndLine))
     {
@@ -345,11 +349,11 @@ ScrollText (char *Text, int startx, int starty, int EndLine)
 
       usleep (30000);
 
-      PrepareScaledSurface(TRUE);
-
-      ClearTextBorder (Outline320x200, CurrentFontBG);
+      ClearUserFenster(); 
       DisplayText (Text, startx, InsertLine, Outline320x200, FALSE);
       InsertLine -= speed;
+
+      PrepareScaledSurface(TRUE);
 
       /* Nicht bel. nach unten wegscrollen */
       if (InsertLine > SCREENHOEHE - 10 && (speed < 0))
@@ -479,10 +483,12 @@ DisplayChar (unsigned char Zeichen, unsigned char *screen)
   // DisplayBlock (MyCursorX, MyCursorY, Zeichenpointer[ZNum],
   // FONTBREITE * (1 + ZLen), FONTHOEHE, RealScreen);
 
-  MyCursorX += 2*FONTBREITE * (1 + ZLen);	/* Intern-Cursor weiterbewegen */
-  DebugPrintf("\nvoid DisplayChar(...): Usual end of function reached.");
+  // After the char has been displayed, we must move the cursor to its
+  // new position.  That depends of course on the char displayed.
+  MyCursorX += CharWidth (Menu_BFont , Zeichen ); // 2*FONTBREITE * (1 + ZLen);
 
-}				// void DisplayChar(...)
+  DebugPrintf("\nvoid DisplayChar(...): Usual end of function reached.");
+} // void DisplayChar(...)
 
 /*@Function============================================================
 @Desc: 
