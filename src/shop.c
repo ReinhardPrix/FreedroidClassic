@@ -1486,16 +1486,6 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
       
     };
 
-  /*
-  int StandardShopInventory [ NUMBER_OF_ITEMS_IN_SHOP ] =
-    {
-      ITEM_SMALL_HEALTH_POTION,
-      ITEM_SMALL_MANA_POTION,
-      ITEM_MEDIUM_HEALTH_POTION,
-      ITEM_MEDIUM_MANA_POTION
-    };
-  */
-
   //--------------------
   // First we make a selection of items, that can be considered 'basic'.
   // This selection depends of course on wheter the menu is generated
@@ -1583,8 +1573,6 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
 	  
 	  break;
 	};
-
-      // if ( ItemSelected != (-1) ) TryToBuyItem( Buy_Pointer_List[ ItemSelected ] , FALSE ) ;
 
       //--------------------
       // And since it can be assumed that the shop never runs

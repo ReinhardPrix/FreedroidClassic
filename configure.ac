@@ -120,6 +120,7 @@ AC_CONFIG_FILES([Makefile
 		graphics/items/antimatter_matter_converter/Makefile 
 		graphics/items/basic_armour/Makefile 
 		graphics/items/buckler/Makefile 
+		graphics/items/brain_enlargement_antidode/Makefile 
 		graphics/items/desk_lamp/Makefile 
 		graphics/items/dixons_toolbox/Makefile 
 		graphics/items/emp_grenade/Makefile 
@@ -133,6 +134,9 @@ AC_CONFIG_FILES([Makefile
 		graphics/items/laser_sword_yellow/Makefile 
 		graphics/items/monkey_wrench/Makefile 
 		graphics/items/map_maker/Makefile 
+		graphics/items/pill_dexterity/Makefile 
+		graphics/items/pill_strength/Makefile 
+		graphics/items/pill_magic/Makefile 
 		graphics/items/plasma_double/Makefile 
 		graphics/items/plasma_grenade/Makefile 
 		graphics/items/plasma_single/Makefile 

@@ -1970,6 +1970,10 @@ InitNewMissionList ( char *MissionName )
   strcpy ( Me [ 0 ] . password_list [ 3 ] , "Tux Energy" ) ;
   strcpy ( Me [ 0 ] . password_list [ 4 ] , "Tux Idenfity" ) ;
 
+  for ( j = 0 ; j < MAX_COOKIES ; j ++ )
+    {
+      strcpy ( Me [ 0 ] . cookie_list [ j ] , "" ) ;
+    }
   //--------------------
   // When the Tux arrives, he also should be at perfect health
   // and also full with all the mana he can have on him.

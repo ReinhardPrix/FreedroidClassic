@@ -541,6 +541,7 @@ Subtitle="Sure.  Here is what I can offer today."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=1 ; // this should allow to ask about the magic abilities...
 ChangeOption=0 ChangeToValue=0 ; // this should disallow to be new again...
+DoSomethingExtra="Buy_Basic_Items" 
 
 ----------------------------------------------------------------------
 
