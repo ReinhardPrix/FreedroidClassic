@@ -1019,6 +1019,16 @@ Freedroid received a rotation model number that does not exist!",
   Activate_Conservative_Frame_Computation();
 
   //--------------------
+  // Maybe we got an image collection file for this enemy?  Then
+  // of course we'll use it and not bother with anything else...
+  //
+  if ( ModelNr == 6 )
+  {
+      grab_enemy_images_from_archive ( ModelNr );
+      return ;
+  }
+
+  //--------------------
   // Now that we have the classic ball-shaped design completely done,
   // we can start doing something new:  Let's try to use some pre-rotated
   // enemy surfaces for a change.  That might work out to be cool.

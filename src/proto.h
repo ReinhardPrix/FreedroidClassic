@@ -134,6 +134,7 @@ EXTERN int get_light_strength ( moderately_finepoint target_pos );
 EXTERN void clear_all_loaded_tux_images ( int with_free );
 EXTERN int set_rotation_index_for_this_robot ( enemy* ThisRobot );
 EXTERN int set_rotation_model_for_this_robot ( enemy* ThisRobot );
+EXTERN void grab_enemy_images_from_archive ( int enemy_model_nr );
 
 // open_gl.c 
 #undef EXTERN
