@@ -42,6 +42,7 @@ SDL_Surface* StoredMenuBackground = NULL;
 int Single_Player_Menu (void);
 int Multi_Player_Menu (void);
 void Credits_Menu (void);
+void Contribute_Menu (void);
 void Options_Menu (void);
 void Show_Mission_Log_Menu (void);
 EXTERN void LevelEditor(void);
@@ -1111,6 +1112,7 @@ enum
     SINGLE_PLAYER_POSITION=1, 
     MULTI_PLAYER_POSITION,
     CREDITS_POSITION,
+    CONTRIBUTE_POSITION,
     EXIT_FREEDROID_POSITION
   };
   int Weiter = 0;
@@ -1134,13 +1136,9 @@ enum
       MenuTexts[0]= SINGLE_PLAYER_STRING ;
       MenuTexts[1]="Multi Player";
       MenuTexts[2]="Credits";
-      MenuTexts[3]="Exit Freedroid";
-      MenuTexts[4]="";
+      MenuTexts[3]="Contribute";
+      MenuTexts[4]="Exit Freedroid";
       MenuTexts[5]="";
-      MenuTexts[6]="";
-      MenuTexts[7]="";
-      MenuTexts[8]="";
-      MenuTexts[9]="";
 
       MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NE_TITLE_PIC_FILE , NULL );
 
@@ -1157,6 +1155,9 @@ enum
 	  break;
 	case CREDITS_POSITION:
 	  Credits_Menu();
+	  break;
+	case CONTRIBUTE_POSITION:
+	  Contribute_Menu();
 	  break;
 	case (-1):
 	case EXIT_FREEDROID_POSITION:
@@ -2432,13 +2433,11 @@ enum
 
 } // Multi_Player_Menu
 
-/*@Function============================================================
-@Desc: This function provides the credits screen.  It is a submenu of
-       the big EscapeMenu.  Here you can see who helped developing the
-       game, currently jp, rp and bastian.
-
-@Ret:  none
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function provides the credits screen.  It is a submenu of
+ * the big EscapeMenu.  Here you can see who helped developing the
+ * game.
+ * ---------------------------------------------------------------------- */
 void
 Credits_Menu (void)
 {
@@ -2497,6 +2496,51 @@ Credits_Menu (void)
   while( SpacePressed() || EscapePressed() ) ; /* wait for key release */
 
 }; // void Credits_Menu(void)
+
+/* ----------------------------------------------------------------------
+ * This function provides the contribution screen.  It is a submenu of
+ * the big EscapeMenu.  Here you can see who can help developing the
+ * game into an even better game :)
+ * ---------------------------------------------------------------------- */
+void
+Contribute_Menu (void)
+{
+  char* ContributeText = "\n\n\
+                       HOW TO CONTRIUBTE\n\n\n\
+FreedroidRPG is entirely free software AND free artwork.  It is developed exclusively by volunteers in their leisure time.\n\n\
+FreedroidRPG depends on these contributions to become a better game.  \
+If you feel that you would like to contribute something as well, \
+but are not completely sure how, here's a list of things:\n\n\n\
+   TESTING AND BUG REPORTING:\n\n\
+We need people to try out the game and report anything that does not work correctly or seems to be unstable.  This includes minor things, such as spelling mistakes and the like.  The task of testing is growing with the size of FreedroidRPG.  So we need your help.\n\n\n\
+   MAP IMPROVEMENTS:\n\n\
+The world of FreedroidRPG can be enlarged and modified by point-and-click with the level editor integrated into FreedroidRPG.  There is lots of room for improvements and enrichments in the current FreedroidRPG landscape.\n\n\n\
+   MORE STORY AND CHARACTERS:\n\n\
+FreedroidRPG comes with a separate program for editing and inspecting dialogs.  Your help in setting up some new characters and mission would be greatly appreciated.\n\n\n\
+   VOICE SAMPLES:\n\n\
+The voices for the many characters you can encounter in FreedroidRPG are still only partially done.  So if you can get a microphone somewhere and feel like doing some voice sampling, you're invited to do so.  You need not be a native speaker for this.  Your accent is welcome.\n\n\n\
+   HELP WITH THE ARTWORK:\n\n\
+If you do have some talent with creating graphics or 3d models, preferably in Blender, you could help setting up the graphics and 3d models used within FreedroidRPG.  Please contact the mailing list (see below) to best coordinate your work with work currently in progress.\n\n\n\
+   MUSIC COMPOSERS:\n\n\
+If you are capable of writing some background music, preferably in MOD format, but others might work too, that would be more than welcome.  We need acceptable background music.  It can be ripped off some other game, that's no problem.  But none of our current team is currently able to do something like this.\n\n\n\
+   CONTACT:\n\n\
+If you wish to get in contact with the current list of FreedroidRPG developers and contributors, please send e-mail to the following address:\n\n\
+freedroid-discussion@lists.sourceforge.net\n\n\
+For the reason of spam-protection, your post maybe be held for some time for approval of the list moderator, before it is let through.  You can subscribe via the sourceforge project page of FreedroidRPG to gain direct access.\n\n\
+\n\
+Thank you,\n\n\
+                The FreedroidRPG dev team.
+                                      \n\n\n\n\n";
+
+  while ( SpacePressed() || EscapePressed() ) ; 
+
+  SwitchBackgroundMusicTo ( CREDITS_BACKGROUND_MUSIC_SOUND );
+
+  ScrollText ( ContributeText , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NE_CREDITS_PIC_FILE );
+
+  while ( SpacePressed() || EscapePressed() ) ; 
+
+}; // void Contribute_Menu(void)
 
 /*@Function============================================================
 @Desc: This function provides the details of a mission that has been

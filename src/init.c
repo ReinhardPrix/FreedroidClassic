@@ -511,7 +511,7 @@ answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
 	}
 
       //--------------------
-      // If the item is a gun, we read in the drive specification...
+      // If the item is a gun, we read in the weapon specification...
       //
       if ( ItemMap[ItemIndex].item_can_be_installed_in_weapon_slot == TRUE )
 	{
@@ -645,11 +645,28 @@ The item specification of an item in freedroid.ruleset should contain an \n\
 answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
 					 PLEASE_INFORM, IS_FATAL );
 	    }
-	  
-
-
 	}
-
+      else
+	{
+	  //--------------------
+	  // If it is not a gun, we set the weapon specifications to
+	  // empty values...
+	  //
+	  ItemMap [ ItemIndex ] . base_item_gun_damage = 0 ;
+	  ItemMap [ ItemIndex ] . item_gun_damage_modifier = 0 ;
+	  ItemMap [ ItemIndex ] . item_gun_speed = 0 ;
+	  ItemMap [ ItemIndex ] . item_gun_angle_change = 0 ;
+	  ItemMap [ ItemIndex ] . item_gun_fixed_offset = 0 ;
+	  ItemMap [ ItemIndex ] . item_gun_start_angle_modifier = 0 ;
+	  ItemMap [ ItemIndex ] . item_gun_bullet_ignore_wall_collisions = FALSE ;
+	  ItemMap [ ItemIndex ] . item_gun_bullet_reflect_other_bullets = FALSE ;
+	  ItemMap [ ItemIndex ] . item_gun_bullet_pass_through_explosions = FALSE ;
+	  ItemMap [ ItemIndex ] . item_gun_bullet_pass_through_hit_bodies = FALSE ;
+	  ItemMap [ ItemIndex ] . item_gun_recharging_time = 0 ;
+	  ItemMap [ ItemIndex ] . item_gun_bullet_image_type = 0 ; 
+	  ItemMap [ ItemIndex ] . item_gun_bullet_lifetime = 0 ;
+	  ItemMap [ ItemIndex ] . item_gun_use_ammunition = 0 ;
+	}
 
 	  // Now we read in the armour value of this item as armour or shield or whatever
       ReadValueFromString( ItemPointer ,  "Item as defensive item: base_ac_bonus=" , "%d" , 

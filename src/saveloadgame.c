@@ -625,11 +625,6 @@ This indicates a serious bug in this installation of Freedroid.",
   InfluencerRawDataPointer += strlen ( INFLUENCER_STRUCTURE_RAW_DATA_STRING ) ;
   memcpy( &Me , InfluencerRawDataPointer , sizeof ( influence_t ) );
   InfluencerRawDataPointer += sizeof ( influence_t );
-  /*
-  memcpy( & ( Druidmap[ DRUID001 ] ) , InfluencerRawDataPointer , sizeof ( druidspec ) );
-  Druidmap [ DRUID001 ].druidname = "001";
-  Druidmap [ DRUID001 ].portrait_filename_without_ext = "001";
-  */
 
   //--------------------
   // Now we decode the enemy information.
@@ -664,12 +659,13 @@ This indicates a serious bug in this installation of Freedroid.",
       AllEnemys[ i ].TextToBeDisplayed = "" ;
       AllEnemys[ i ].TextVisibleTime = 0;
     }
-
   for ( i = 0 ; i < MAXBULLETS ; i++ )
     {
       AllBullets[ i ].Surfaces_were_generated = FALSE;
       if ( AllBullets[ i ].angle_change_rate != 0 ) DeleteBullet( i , FALSE );
     }
+  
+
 
   //--------------------
   // Now that we have loaded the game, we must count and initialize the number

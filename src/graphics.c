@@ -130,8 +130,15 @@ init_system_cursor(const char *image[])
 };
 
 /* ----------------------------------------------------------------------
- *
- *
+ * In the shop interface, when an item was selected that could be grouped
+ * together in inventory, we showed three mouse buttons to either buy 1,
+ * buy 10 or buy100 or the similar thing for selling items.
+ * But now Bastian has proposed a new number selector design with a scale
+ * and a small knob to set the right number of items you wish to have and
+ * also with small buttons left and right for some fine tuning. 
+ * This function is intended to handle this number selection process.
+ * It will accept the range allowed and do the complete selection process
+ * with the user until he presses 'OK' on the scale screen.
  * ---------------------------------------------------------------------- */
 int
 do_graphical_number_selection_in_range ( int lower_range , int upper_range )
@@ -141,9 +148,22 @@ do_graphical_number_selection_in_range ( int lower_range , int upper_range )
   int ok_button_was_pressed = FALSE;
   int left_mouse_pressed_previous_frame = FALSE;
   int current_value ;
+  int knob_offset_x = 0 ;
+  int knob_start_x = 200 ;
+  int knob_end_x = 390 ;
+  int knob_is_grabbed = FALSE ;
+  char number_text[1000];
+  static SDL_Rect knob_target_rect;
 
   if ( upper_range >= 1 ) current_value = 1 ; 
-  else current_value = 0 ;
+  else 
+    {
+      fprintf( stderr, "\n\nSDL_GetError: %s \n" , SDL_GetError() );
+      GiveStandardErrorMessage ( "do_graphical_number_selection_in_range(...)" , "\
+ERROR LOADING BACKGROUND IMAGE FILE!",
+				 PLEASE_INFORM, IS_FATAL );
+      current_value = 0 ;
+    }
 
   MakeGridOnScreen ( NULL );
   
@@ -173,36 +193,74 @@ ERROR LOADING SELECTION KNOB IMAGE FILE!",
 				 PLEASE_INFORM, IS_FATAL );
     }
 
-  //--------------------
-  // We select small font for the menu interaction...
-  //
-  SetCurrentFont( FPS_Display_BFont );
+  knob_target_rect . w = SelectionKnob -> w;
+  knob_target_rect . h = SelectionKnob -> h;
 
   while ( SpacePressed() );
   while ( ! ok_button_was_pressed )
     {
-
+      //--------------------
+      // Now we assemble and show the screen, which includes 
+      // 1. the background
+      // 2. the ok button
+      // 3. the knob of the scale
+      // 4. the writing in the number selector
+      //
+      // then: show it.
+      //
       SDL_BlitSurface ( Background , NULL , Screen , NULL );
-
       ShowGenericButtonFromList ( NUMBER_SELECTOR_OK_BUTTON );
-
+      knob_target_rect . x = knob_start_x + knob_offset_x - knob_target_rect . w / 2 ;
+      knob_target_rect . y = 260 - knob_target_rect . h / 2 ;
+      SDL_BlitSurface ( SelectionKnob , NULL , Screen , &knob_target_rect );
+      sprintf ( number_text , "%d" , knob_offset_x * ( upper_range - lower_range ) / ( knob_end_x - knob_start_x ) )  ;
+      PutStringFont( Screen , FPS_Display_BFont , 320 , 190 , number_text );
       SDL_Flip ( Screen );
 
       if ( ( SpacePressed() && axis_is_active ) && ( ! left_mouse_pressed_previous_frame ) ) 
 	{
+	  //--------------------
+	  // Maybe the user has just 'grabbed the knob?  Then we need to
+	  // mark the knob as grabbed.
+	  //
+	  if ( ( abs ( GetMousePos_x ( ) + 16 - ( knob_target_rect . x + knob_target_rect . w / 2 ) ) < knob_target_rect . w ) &&
+	       ( abs ( GetMousePos_y ( ) + 16 - ( knob_target_rect . y + knob_target_rect . h / 2 ) ) < knob_target_rect . h ) )
+	    {
+	      knob_is_grabbed = TRUE ;
+	    }
+
+	  //--------------------
+	  // OK pressed?  Then we can return the current scale value and
+	  // that's it...
+	  //
 	  if ( CursorIsOnButton ( NUMBER_SELECTOR_OK_BUTTON , GetMousePos_x()+16 , GetMousePos_y()+16 ) )
 	    ok_button_was_pressed = TRUE ;
+	  if ( CursorIsOnButton ( NUMBER_SELECTOR_LEFT_BUTTON , GetMousePos_x()+16 , GetMousePos_y()+16 ) )
+	    {
+	      if ( knob_offset_x > 0 ) knob_offset_x -- ;
+	    }
+	  if ( CursorIsOnButton ( NUMBER_SELECTOR_RIGHT_BUTTON , GetMousePos_x()+16 , GetMousePos_y()+16 ) )
+	    {
+	      if ( knob_offset_x < knob_end_x - knob_start_x ) knob_offset_x ++ ;
+	    }
 
 	}
+      if ( ! ( SpacePressed() && axis_is_active ) ) knob_is_grabbed = FALSE ;
+
+      if ( knob_is_grabbed )
+	{
+	  knob_offset_x = GetMousePos_x()+16 - knob_start_x ;
+	  if ( knob_offset_x >= knob_end_x - knob_start_x ) knob_offset_x = knob_end_x - knob_start_x ;
+	  if ( knob_offset_x <= 0 ) knob_offset_x = 0 ; 
+	}
+      
+
       left_mouse_pressed_previous_frame = axis_is_active ;
-
       usleep ( 20 );
-
-
     }
 
 
-  return ( 1 );
+  return ( knob_offset_x * ( upper_range - lower_range ) / ( knob_end_x - knob_start_x ) ) ;
 
 }; // int do_graphical_number_selection_in_range ( int lower_range , int upper_range )
 

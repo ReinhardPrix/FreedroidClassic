@@ -62,8 +62,6 @@
 void InfluEnemyCollisionLoseEnergy (int enemynum);	/* influ can lose energy on coll. */
 int NoInfluBulletOnWay (void);
 
-int CurrentZeroRingIndex=0;
-
 #define max(x,y) ((x) < (y) ? (y) : (x) ) 
 #define MAXIMAL_STEP_SIZE ( 7.0/20.0 )
 
@@ -218,7 +216,7 @@ GetInfluPositionHistoryX( int HowLongPast )
 {
   int RingPosition;
 
-  RingPosition = CurrentZeroRingIndex - HowLongPast;
+  RingPosition = Me [ 0 ] . current_zero_ring_index - HowLongPast;
 
   RingPosition += MAX_INFLU_POSITION_HISTORY; // We don't want any negative values, for safety
 
@@ -232,7 +230,7 @@ GetInfluPositionHistoryY( int HowLongPast )
 {
   int RingPosition;
 
-  RingPosition = CurrentZeroRingIndex - HowLongPast;
+  RingPosition = Me [ 0 ] . current_zero_ring_index - HowLongPast;
 
   RingPosition += MAX_INFLU_POSITION_HISTORY; // We don't want any negative values, for safety
 
@@ -246,7 +244,7 @@ GetInfluPositionHistoryZ( int HowLongPast )
 {
   int RingPosition;
 
-  RingPosition = CurrentZeroRingIndex - HowLongPast;
+  RingPosition = Me [ 0 ] . current_zero_ring_index - HowLongPast;
 
   RingPosition += MAX_INFLU_POSITION_HISTORY; // We don't want any negative values, for safety
 
@@ -484,11 +482,11 @@ MoveInfluence ( int PlayerNum )
   // We store the influencers position for the history record and so that others
   // can follow his trail.
   //
-  CurrentZeroRingIndex++;
-  CurrentZeroRingIndex %= MAX_INFLU_POSITION_HISTORY;
-  Me [ PlayerNum ] . Position_History_Ring_Buffer [CurrentZeroRingIndex].x = Me [ PlayerNum ] .pos.x;
-  Me [ PlayerNum ] . Position_History_Ring_Buffer [CurrentZeroRingIndex].y = Me [ PlayerNum ] .pos.y;
-  Me [ PlayerNum ] . Position_History_Ring_Buffer [CurrentZeroRingIndex].z = MoveLevel->levelnum ;
+  Me [ PlayerNum ] . current_zero_ring_index++;
+  Me [ PlayerNum ] . current_zero_ring_index %= MAX_INFLU_POSITION_HISTORY;
+  Me [ PlayerNum ] . Position_History_Ring_Buffer [ Me [ PlayerNum ] . current_zero_ring_index ] . x = Me [ PlayerNum ] .pos.x;
+  Me [ PlayerNum ] . Position_History_Ring_Buffer [ Me [ PlayerNum ] . current_zero_ring_index ] . y = Me [ PlayerNum ] .pos.y;
+  Me [ PlayerNum ] . Position_History_Ring_Buffer [ Me [ PlayerNum ] . current_zero_ring_index ] . z = MoveLevel->levelnum ;
 
   // check, if the influencer is still ok
   CheckIfCharacterIsStillOk ( PlayerNum ) ;

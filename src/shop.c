@@ -55,6 +55,7 @@ typedef struct
 {
   int shop_command;
   int item_selected;
+  int number_selected;
 }
 shop_decision, *Shop_decision;
 
@@ -549,10 +550,6 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
   SDL_Rect HighlightRect;
   int BuyButtonActive = FALSE ;
   int SellButtonActive = FALSE ;
-  int Buy10ButtonActive = FALSE ;
-  int Sell10ButtonActive = FALSE ;
-  int Buy100ButtonActive = FALSE ;
-  int Sell100ButtonActive = FALSE ;
 
   //--------------------
   // We add some secutiry against indexing beyond the
@@ -639,23 +636,6 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	  else ShowGenericButtonFromList ( BUY_BUTTON );
 	  BuyButtonActive = TRUE; 
 	  SellButtonActive = FALSE ;
-	  Sell10ButtonActive = FALSE ;
-	  Sell100ButtonActive = FALSE ;
-	  if ( ItemMap [ ShowPointerList [ ItemIndex ] -> type ] . item_group_together_in_inventory )
-	    {
-	      if ( ShowChestButtons )
-		{
-		  ShowGenericButtonFromList ( TAKE_10_BUTTON );
-		  ShowGenericButtonFromList ( TAKE_100_BUTTON );
-		}
-	      else
-		{
-		  ShowGenericButtonFromList ( BUY_10_BUTTON );
-		  ShowGenericButtonFromList ( BUY_100_BUTTON );
-		}
-	      Buy10ButtonActive = TRUE ;
-	      Buy100ButtonActive = TRUE ;
-	    }
 	}
       else if ( TuxItemIndex >= 0 )
 	{
@@ -663,32 +643,11 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	  else ShowGenericButtonFromList ( SELL_BUTTON );
 	  SellButtonActive = TRUE; 
 	  BuyButtonActive = FALSE ;
-	  Buy10ButtonActive = FALSE ;
-	  Buy100ButtonActive = FALSE ;
-	  if ( ItemMap [ TuxItemsList [ TuxItemIndex ] -> type ] . item_group_together_in_inventory )
-	    {
-	      if ( ShowChestButtons ) 
-		{
-		  ShowGenericButtonFromList ( PUT_10_BUTTON );
-		  ShowGenericButtonFromList ( PUT_100_BUTTON );
-		}
-	      else
-		{
-		  ShowGenericButtonFromList ( SELL_10_BUTTON );
-		  ShowGenericButtonFromList ( SELL_100_BUTTON );
-		}
-	      Sell10ButtonActive = TRUE; 
-	      Sell100ButtonActive = TRUE; 
-	    }
 	}
       else
 	{
 	  BuyButtonActive = FALSE ;
-	  Buy10ButtonActive = FALSE ;
-	  Buy100ButtonActive = FALSE ;
 	  SellButtonActive = FALSE ;
-	  Sell10ButtonActive = FALSE ;
-	  Sell100ButtonActive = FALSE ;
 	}
 
       sprintf ( GoldString , "%d." , (int) Me [ 0 ] . Gold );
@@ -698,27 +657,6 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 
       if (SpacePressed() || EscapePressed() || axis_is_active )
 	{
-	  /*
-	  if ( CursorIsOnButton( ITEM_BROWSER_RIGHT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
-	    {
-	      if ( ItemIndex < NumberOfItems -1 ) 
-		{
-		  ItemIndex ++;	    
-		  MoveMenuPositionSound();
-		  Displacement = 0;
-		}
-	    }
-	  else if ( CursorIsOnButton( ITEM_BROWSER_LEFT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
-	    {
-	      if ( ItemIndex > 0) 
-		{
-		  ItemIndex --;	      
-		  MoveMenuPositionSound();
-		  Displacement = 0;
-		}
-	    }
-	  else 
-	  */
 	  if ( CursorIsOnButton( UP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
 	    {
 	      MoveMenuPositionSound();
@@ -796,8 +734,18 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 		{
 		  ShopOrder -> item_selected = ItemIndex ;
 		  ShopOrder -> shop_command = BUY_1_ITEM ;
-
-		  do_graphical_number_selection_in_range ( 0 , 100 );
+		  if ( ( ItemMap [ ShowPointerList [ ItemIndex ] -> type ] . item_group_together_in_inventory ) &&
+		       ( Me [ 0 ] . Gold / ItemMap [ ShowPointerList [ ItemIndex ] -> type ] . base_list_price > 1 ) )
+		    {
+		      //--------------------
+		      // We calculate what the Tux could afford here...
+		      //
+		      // Me [ 0 ] . Gold / ItemMap [ ShowPointerList [ ItemIndex ] -> type ] . base_list_price 
+		      ShopOrder -> number_selected = do_graphical_number_selection_in_range ( 0 , ( Me [ 0 ] . Gold / ItemMap [ ShowPointerList [ ItemIndex ] -> type ] . base_list_price ) ) ;
+											      
+		    }
+		  else
+		      ShopOrder -> number_selected = 1;
 
 		  return ( 0 );
 		}
@@ -805,36 +753,15 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 		{
 		  ShopOrder -> item_selected = TuxItemIndex ;
 		  ShopOrder -> shop_command = SELL_1_ITEM ;
-		  return ( 0 );
-		}
-	    }
-	  else if ( CursorIsOnButton( BUY_10_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
-	    {
-	      if ( Buy10ButtonActive )
-		{
-		  ShopOrder -> item_selected = ItemIndex ;
-		  ShopOrder -> shop_command = BUY_10_ITEMS ;
-		  return ( 0 );
-		}
-	      else if ( Sell10ButtonActive )
-		{
-		  ShopOrder -> item_selected = TuxItemIndex ;
-		  ShopOrder -> shop_command = SELL_10_ITEMS ;
-		  return ( 0 );
-		}
-	    }
-	  else if ( CursorIsOnButton( BUY_100_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
-	    {
-	      if ( Buy100ButtonActive )
-		{
-		  ShopOrder -> item_selected = ItemIndex ;
-		  ShopOrder -> shop_command = BUY_100_ITEMS ;
-		  return ( 0 );
-		}
-	      else if ( Sell100ButtonActive )
-		{
-		  ShopOrder -> item_selected = TuxItemIndex ;
-		  ShopOrder -> shop_command = SELL_100_ITEMS ;
+
+		  if ( ( ItemMap [ TuxItemsList [ TuxItemIndex ] -> type ] . item_group_together_in_inventory ) &&
+		       ( TuxItemsList [ TuxItemIndex ] -> multiplicity > 1 ) )
+		    {
+		      ShopOrder -> number_selected = do_graphical_number_selection_in_range ( 0 , TuxItemsList [ TuxItemIndex ] -> multiplicity );
+		    }
+		  else
+		      ShopOrder -> number_selected = 1;
+
 		  return ( 0 );
 		}
 	    }
@@ -1595,7 +1522,7 @@ InitTradeWithCharacter( int CharacterCode )
       switch ( ShopOrder . shop_command )
 	{
 	case BUY_1_ITEM:
-	  TryToBuyItem( BuyPointerList[ ShopOrder . item_selected ] , FALSE , 1 ) ;
+	  TryToBuyItem( BuyPointerList[ ShopOrder . item_selected ] , FALSE , ShopOrder . number_selected ) ;
 	  break;
 	case BUY_10_ITEMS:
 	  TryToBuyItem( BuyPointerList[ ShopOrder . item_selected ] , FALSE , 10 ) ;
@@ -1604,7 +1531,7 @@ InitTradeWithCharacter( int CharacterCode )
 	  TryToBuyItem( BuyPointerList[ ShopOrder . item_selected ] , FALSE , 100 ) ;
 	  break;
 	case SELL_1_ITEM:
-	  TryToSellItem( TuxItemsList[ ShopOrder . item_selected ] , FALSE , 1 ) ;
+	  TryToSellItem( TuxItemsList[ ShopOrder . item_selected ] , FALSE , ShopOrder . number_selected ) ;
 	  break;
 	case SELL_10_ITEMS:
 	  TryToSellItem( TuxItemsList[ ShopOrder . item_selected ] , FALSE , 10 ) ;

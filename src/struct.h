@@ -546,6 +546,7 @@ typedef struct
   Uint16 KillRecord[ 200 ];      // how many ( of the first 1000 monster types) have been killed yet?
   Uint8 Automap [MAX_LEVELS][100][100]; // this is the data for the automatic map
   moderately_finepoint DetectedItemList[ MAX_ITEMS_PER_LEVEL ];
+  int current_zero_ring_index;
   gps Position_History_Ring_Buffer[ MAX_INFLU_POSITION_HISTORY ];
 }
 influence_t, *Influence_t;
