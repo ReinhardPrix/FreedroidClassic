@@ -288,11 +288,6 @@ UpdateCountersForThisFrame ( int PlayerNum )
       if (Me [ PlayerNum ] .firewait < 0) Me [ PlayerNum ] .firewait=0;
     }
 
-  if (Me [ PlayerNum ] .Experience > ShowScore)
-    ShowScore++;
-  if (Me [ PlayerNum ] .Experience < ShowScore)
-    ShowScore--;
-
 } /* UpdateCountersForThisFrame() */
 
 

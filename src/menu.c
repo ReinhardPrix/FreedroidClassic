@@ -1723,28 +1723,29 @@ Load_Existing_Hero_Menu ( void )
   char *homedir;
   char Saved_Games_Dir[1000];
   char* MenuTexts[ 10 ];
-  // DIR *dp;
-  // struct dirent *ep;
   struct dirent **eps;
   int n;  
   int cnt;
   int MenuPosition;
 
+  MenuTexts[ 0 ] = "";
+  MenuTexts[ 1 ] = "";
+  MenuTexts[ 2 ] = "";
+  MenuTexts[ 3 ] = "";
+  MenuTexts[ 4 ] = "";
+  MenuTexts[ 5 ] = "";
+  MenuTexts[ 6 ] = "";
+  MenuTexts[ 7 ] = "";
+  MenuTexts[ 8 ] = "";
+  MenuTexts[ 9 ] = "";
+
   DebugPrintf ( 1 , "\nint Load_Existing_Hero_Menu ( void ): real function call confirmed.");
   InitiateMenu( NE_TITLE_PIC_FILE );
-  MenuTexts[0]="";
-  MenuTexts[1]="";
-  MenuTexts[2]="";
-  MenuTexts[3]="";
-  MenuTexts[4]="";
-  MenuTexts[5]="";
-  MenuTexts[6]="";
-  MenuTexts[7]="";
-  MenuTexts[8]="";
-  MenuTexts[9]="";
 
   //--------------------
-  // get home-directory to save in
+  // First we must find the home directory of the user.  From there on
+  // we can then construct the full directory path of the saved games directory.
+  //
   if ( (homedir = getenv("HOME")) == NULL ) 
     {
       DebugPrintf ( 0 , "ERROR: Environment does not contain HOME variable... \n\
@@ -1754,12 +1755,10 @@ I need to know that for saving. Abort.\n");
     }
 
   //--------------------
-  // Now we generate the right directory for saving from the home
+  // Now we generate the right directory for loading from the home
   // directory.
   //
   sprintf ( Saved_Games_Dir , "%s/.freedroid_rpg" , homedir );
-
-
   // DisplayText ( "This is the record of all your characters:\n\n" , 50 , 50 , NULL );
 
   //--------------------
@@ -1784,6 +1783,7 @@ I need to know that for saving. Abort.\n");
       if ( MenuPosition == (-1) ) return ( FALSE );
       else
 	{
+	  LoadShip ( find_file ( "Asteroid.maps" , MAP_DIR, FALSE) ) ;
 	  InitNewMissionList ( NEW_MISSION );
 	  strcpy( Me[0].character_name , MenuTexts[ MenuPosition -1 ] );
 	  LoadGame( );
@@ -1803,8 +1803,6 @@ Freedroid will continue execution now, since this problem\n\
 
       MenuTexts[0]="BACK";
       MenuTexts[1]="";
-      MenuTexts[2]=""; MenuTexts[3]=""; MenuTexts[4]=""; MenuTexts[5]="";
-      MenuTexts[8]=""; MenuTexts[6]=""; MenuTexts[7]=""; MenuTexts[9]="";
 
       while ( SpacePressed() || EnterPressed() );
       DoMenuSelection ( "\n\nNo saved games found!!  Loading Cancelled. " , MenuTexts , 1 , NE_TITLE_PIC_FILE , NULL );
@@ -1984,11 +1982,6 @@ enum
   MenuTexts[2]="Delete existing Hero";
   MenuTexts[3]="Back";
   MenuTexts[4]="";
-  MenuTexts[5]="";
-  MenuTexts[6]="";
-  MenuTexts[7]="";
-  MenuTexts[8]="";
-  MenuTexts[9]="";
 
   while (!Weiter)
     {
@@ -1998,14 +1991,11 @@ enum
 	{
 	case NEW_HERO_POSITION:
 	  while (EnterPressed() || SpacePressed() ) ;
-
-	  // if ( Select_Hero_Class_Menu ( ) )
-	  // {
 	  PrepareNewHero ();
+	  LoadShip ( find_file ( "Asteroid.maps" , MAP_DIR, FALSE) ) ;
 	  InitNewMissionList ( NEW_MISSION );
 	  Weiter=TRUE;
 	  return ( TRUE );
-	  //}
 	  break;
 
 	case LOAD_EXISTING_HERO_POSITION: 
@@ -2070,11 +2060,6 @@ enum
   MenuTexts[2]="List known Servers";
   MenuTexts[3]="Back";
   MenuTexts[4]="";
-  MenuTexts[5]="";
-  MenuTexts[6]="";
-  MenuTexts[7]="";
-  MenuTexts[8]="";
-  MenuTexts[9]="";
 
   while (!Weiter)
     {
@@ -2084,16 +2069,12 @@ enum
 	{
 	case START_AS_SERVER_POSITION:
 	  while (EnterPressed() || SpacePressed() ) ;
-
+	  LoadShip ( find_file ( "Asteroid.maps" , MAP_DIR , FALSE ) ) ;
 	  InitNewMissionList ( NEW_MISSION );	
-
 	  ServerMode = TRUE ;
-
 	  OpenTheServerSocket (  );
-
 	  Weiter=TRUE;
 	  return ( TRUE );
-
 	  break;
 
 	case JOIN_EXISTING_MULTIPLAYER_POSITION: 
@@ -2102,6 +2083,7 @@ enum
 	  if ( Connect_To_Existing_Server_Menu ( ) == TRUE )
 	    {
 	      Weiter = TRUE;
+	      LoadShip ( find_file ( "Asteroid.maps" , MAP_DIR, FALSE) ) ;
 	      InitNewMissionList ( NEW_MISSION );
 	      ClientMode = TRUE;
 	      return ( TRUE );

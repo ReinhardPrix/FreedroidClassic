@@ -940,10 +940,45 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , char* Backg
   char InfoText[10000];
   char TextChunk[2000];
   char* ClassString;
+  static SDL_Surface* BackgroundSurfaceBackup = NULL ;
+  static char OldBackgroundFileName[2000];
 
   SDL_SetClipRect ( Screen , NULL );
-  DisplayImage ( find_file( BackgroundFileName , GRAPHICS_DIR, FALSE) );
 
+  
+
+  //--------------------
+  // We can't reload the background from disk every frame!  On slow machines
+  // this gives really horrible performance.  So here comes the fix:  If same
+  // background as before is used, backup of background will be used.  That
+  // should fix the problem.
+  //
+  if ( strcmp ( OldBackgroundFileName , BackgroundFileName ) || ( BackgroundSurfaceBackup == NULL ) )
+    {
+      //--------------------
+      // FIRST these preparations.  Only then we can proceed!!!
+      //
+      DebugPrintf ( 0 , "\nReloading background surface for ShowItemInfo!!" );
+      strcpy ( OldBackgroundFileName , BackgroundFileName );
+      if ( BackgroundSurfaceBackup != NULL ) SDL_FreeSurface ( BackgroundSurfaceBackup );
+
+      //--------------------
+      // Now we really reload the background surface...
+      //
+      BackgroundFileName = find_file ( BackgroundFileName , GRAPHICS_DIR , FALSE ) ;
+      BackgroundSurfaceBackup = IMG_Load( BackgroundFileName );
+      if ( BackgroundSurfaceBackup == NULL ) 
+	{
+	  fprintf(stderr, "Couldn't load image %s: %s\n",
+		  BackgroundFileName, IMG_GetError());
+	  Terminate(ERR);
+	}
+    }
+
+  SDL_BlitSurface( BackgroundSurfaceBackup , NULL, Screen, NULL);
+
+  // DisplayImage ( find_file( BackgroundFileName , GRAPHICS_DIR, FALSE) );
+  
   ShowItemPicture ( 45 , 190 , ShowItem->type );
 
   //--------------------
@@ -1672,7 +1707,6 @@ LevelEmpty (void)
 
   CurLevel->empty = TRUE;
   Me[0].Experience += DECKCOMPLETEBONUS;
-  ShowScore += DECKCOMPLETEBONUS;
 
   if (ShipEmpty ())
     ThouArtVictorious ();

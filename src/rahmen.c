@@ -831,114 +831,21 @@ ShowCurrentTextWindow ( void )
 }; // void ShowCurrentTextWindow ( void )
 
 
-/* -----------------------------------------------------------------
- * This function updates the top status bar. 
- * To save framerate on slow machines however it will only work
- * if it thinks that work needs to be done. 
- * You can however force update if you say so with a flag.
- * 
- * BANNER_FORCE_UPDATE=1: Forces the redrawing of the title bar
- * 
- * BANNER_DONT_TOUCH_TEXT=2: Prevents DisplayBanner from touching 
- * the text.
- * 
- * BANNER_NO_SDL_UPDATE=4: Prevents any SDL_Update calls.
- * 
- ----------------------------------------------------------------- */
+/* ----------------------------------------------------------------------
+ * This function updates the various displays that are usually blitted
+ * right into the combat window, like energy and status meter and that...
+ * ---------------------------------------------------------------------- */
 void
 DisplayBanner (const char* left, const char* right,  int flags )
 {
-  char dummy[80];
-  char left_box [LEFT_TEXT_LEN + 10];
-  char right_box[RIGHT_TEXT_LEN + 10];
-  static char previous_left_box [LEFT_TEXT_LEN + 10]="NOUGHT";
-  static char previous_right_box[RIGHT_TEXT_LEN + 10]="NOUGHT";
-  int left_len, right_len;   // the actualy string lengths
 
-  SDL_SetClipRect( Screen , NULL );  // this unsets the clipping rectangle
-  // SDL_BlitSurface( banner_pic, NULL, Screen , NULL);
+  SDL_SetClipRect( Screen , NULL ); 
 
   if ( ( ! GameConfig.CharacterScreen_Visible ) && ( ! GameConfig.SkillScreen_Visible ) )
     ShowCurrentHealthAndForceLevel ( );
 
   ShowCurrentTextWindow ( );
-
   ShowCurrentSkill ( );
-
-  return;
-
-  // --------------------
-  // At first the text is prepared.  This can't hurt.
-  // we will decide whether to dispaly it or not later...
-  //
-
-  if (left == NULL)       // Left-DEFAULT: Mode 
-    left = InfluenceModeNames[Me[0].status];
-
-  if ( right == NULL )  // Right-DEFAULT: Score 
-    {
-      sprintf ( dummy , "%ld" , ShowScore );
-      right = dummy;
-    }
-
-  // Now fill in the text
-  left_len = strlen (left);
-  if( left_len > LEFT_TEXT_LEN )
-    {
-      printf ("\nWarning: String %s too long for Left Infoline!!",left);
-      left_len = LEFT_TEXT_LEN;  // too long, so we cut it! 
-      Terminate(ERR);
-    }
-  right_len = strlen (right);
-  if( right_len > RIGHT_TEXT_LEN )
-    {
-      printf ("\nWarning: String %s too long for Right Infoline!!", right);
-      right_len = RIGHT_TEXT_LEN;  // too long, so we cut it! 
-      Terminate(ERR);
-    }
-  
-  // Now prepare the left/right text-boxes 
-  memset (left_box,  ' ', LEFT_TEXT_LEN);  // pad with spaces 
-  memset (right_box, ' ', RIGHT_TEXT_LEN);  
-  
-  strncpy (left_box,  left, left_len);  // this drops terminating \0 ! 
-  strncpy (right_box, right, left_len);  // this drops terminating \0 ! 
-  
-  left_box [LEFT_TEXT_LEN]  = '\0';     // that's right, we want padding!
-  right_box[RIGHT_TEXT_LEN] = '\0';
-  
-  // --------------------
-  // No we see if the screen need an update...
-
-  if ( BannerIsDestroyed || 
-       (flags & BANNER_FORCE_UPDATE ) || 
-       (strcmp( left_box , previous_left_box )) || 
-       (strcmp( right_box , previous_right_box )) )
-    {
-      // Redraw the whole background of the top status bar
-      SDL_SetClipRect( Screen , NULL );  // this unsets the clipping rectangle
-      SDL_BlitSurface( banner_pic, NULL, Screen , NULL);
-
-      // Now the text should be ready and its
-      // time to display it...
-      if ( (strcmp( left_box , previous_left_box )) || 
-	   (strcmp( right_box , previous_right_box )) ||
-	   ( flags & BANNER_FORCE_UPDATE ) )
-	{
-	  PrintStringFont ( Screen, Para_BFont,
-			    LEFT_INFO_X , LEFT_INFO_Y , left_box );
-	  strcpy( previous_left_box , left_box );
-	  PrintStringFont ( Screen, Para_BFont,
-			    RIGHT_INFO_X , RIGHT_INFO_Y , right_box );
-	  strcpy( previous_right_box , right_box );
-	}
-
-      // finally update the whole top status box
-      if ( !(flags & BANNER_NO_SDL_UPDATE ) )
-	SDL_UpdateRect( Screen, 0, 0, BANNER_WIDTH , BANNER_HEIGHT );
-      BannerIsDestroyed=FALSE;
-      return;
-    } // if 
 
 }; // void DisplayBanner( .. ) 
 

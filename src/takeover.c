@@ -1628,7 +1628,7 @@ to_show_banner (const char* left, const char* right)
 
   if ( right == NULL )
     {
-      sprintf ( dummy , "%ld" , ShowScore );
+      sprintf ( dummy , "Score" );
       right = dummy;
     }
 

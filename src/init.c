@@ -1615,6 +1615,154 @@ Get_Mission_Targets( char* MissionTargetPointer )
 
 }; // void Get_Mission_Targets( ... )
 
+/* ----------------------------------------------------------------------
+ * Now we initialize the skills of the new hero...
+ * ---------------------------------------------------------------------- */
+void
+InitInfluencerStartupSkills( int PlayerNum )
+{
+  int i ;
+
+  Me[ PlayerNum ].readied_skill = 0;
+  for ( i = 0 ; i < NUMBER_OF_SKILLS ; i ++ ) 
+    {
+      Me[ PlayerNum ].SkillLevel [ i ] = 0 ;
+      Me[ PlayerNum ].base_skill_level [ i ] = 0 ;
+    }
+  Me[ PlayerNum ].SkillLevel [ 0 ] = 1 ;
+  Me[ PlayerNum ].base_skill_level [ 0 ] = 1;
+  Me[ PlayerNum ].base_skill_level [ 1 ] = 1;
+  Me[ PlayerNum ].base_skill_level [ 2 ] = 1;
+  Me[ PlayerNum ].base_skill_level [ 3 ] = 1;
+  Me[ PlayerNum ].base_skill_level [ 4 ] = 1;
+  Me[ PlayerNum ].base_skill_level [ 5 ] = 0 ;  // teleport home disabled for consistency...
+  Me[ PlayerNum ].base_skill_level [ 6 ] = 1;
+  Me[ PlayerNum ].base_skill_level [ 7 ] = 1;
+  Me[ PlayerNum ].base_skill_level [ 8 ] = 1;
+  Me[ PlayerNum ].base_skill_level [ 9 ] = 1;
+  Me[ PlayerNum ].base_skill_level [ 10 ] = 1;
+  Me[ PlayerNum ].base_skill_level [ 11 ] = 1;
+  Me[ PlayerNum ].base_skill_level [ 12 ] = 1;
+  Me[ PlayerNum ].base_skill_level [ 13 ] = 1;
+  Me[ PlayerNum ].base_skill_level [ 14 ] = 1;
+  Me[ PlayerNum ].base_skill_level [ 14 ] = 1;
+  GameConfig.spell_level_visible = 0;
+
+  Me [ PlayerNum ] . melee_weapon_skill = 0 ;
+  Me [ PlayerNum ] . ranged_weapon_skill = 0 ;
+  Me [ PlayerNum ] . spellcasting_skill = 0 ;
+  Me [ PlayerNum ] . hacking_skill = 0 ;
+
+}; // void InitInfluencerStartupSkills( int PlayerNum )
+
+/* ----------------------------------------------------------------------
+ * Now we disable all chat flags (i.e. the Tux hasn't spoken to
+ * that person at all) for all the non-player-characters in the game,
+ * except for the 0-chat alternative, which is always set to open.  WHY???????
+ * ---------------------------------------------------------------------- */
+void
+InitInfluencerChatFlags( int PlayerNum )
+{
+  int i , j;
+
+  for ( i = 0 ; i < MAX_ANSWERS_PER_PERSON ; i ++ ) 
+    {
+      for ( j = 0 ; j < MAX_PERSONS ; j ++ )
+	{
+	  Me[ PlayerNum ] . Chat_Flags [ j ] [ i ] = 0 ;
+	  Me[ PlayerNum ] . Chat_Flags [ j ] [ 0 ] = 1 ; // we always allow to say something in the beginning...
+	}
+    }
+}; // void InitInfluencerChatFlags( int PlayerNum )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+InitInfluencerPasswordsAndClearances( int PlayerNum )
+{
+  int j;
+
+  //--------------------
+  // At the beginning, the Tux shouldn't have any passwords
+  // or security clearances on him, and that's was we ensure here.
+  //
+  for ( j = 0 ; j < MAX_CLEARANCES ; j ++ )
+    {
+      Me [ PlayerNum ] . clearance_list [ j ] = 0 ;
+    }
+  j=0;
+  Me [ PlayerNum ] . clearance_list [ j ] = 1 ; j++;
+  Me [ PlayerNum ] . clearance_list [ j ] = 2 ; j++;
+  Me [ PlayerNum ] . clearance_list [ j ] = 3 ; j++;
+  Me [ PlayerNum ] . clearance_list [ j ] = 4 ; j++;
+  Me [ PlayerNum ] . clearance_list [ j ] = 5 ; j++;
+  Me [ PlayerNum ] . clearance_list [ j ] = 6 ; j++;
+  Me [ PlayerNum ] . clearance_list [ j ] = 7 ; j++;
+  Me [ PlayerNum ] . clearance_list [ j ] = 8 ; j++;
+  Me [ PlayerNum ] . clearance_list [ j ] = 9 ; j++;
+  Me [ PlayerNum ] . clearance_list [ j ] = 10 ; j++;
+  Me [ PlayerNum ] . clearance_list [ j ] = 11 ; j++;
+  Me [ PlayerNum ] . clearance_list [ j ] = 12 ; j++;
+  Me [ PlayerNum ] . clearance_list [ j ] = 13 ; j++;
+  Me [ PlayerNum ] . clearance_list [ j ] = 14 ; j++;
+  Me [ PlayerNum ] . clearance_list [ j ] = 15 ; j++;
+  Me [ PlayerNum ] . clearance_list [ j ] = 16 ; j++;
+  Me [ PlayerNum ] . clearance_list [ j ] = 17 ; j++;
+  Me [ PlayerNum ] . clearance_list [ j ] = 18 ; j++;
+  Me [ PlayerNum ] . clearance_list [ j ] = 19 ; j++;
+  Me [ PlayerNum ] . clearance_list [ j ] = 20 ; j++;
+  Me [ PlayerNum ] . clearance_list [ j ] = 21 ; j++;
+  Me [ PlayerNum ] . clearance_list [ j ] = 22 ; j++;
+  Me [ PlayerNum ] . clearance_list [ j ] = 23 ; j++;
+
+  for ( j = 0 ; j < MAX_PASSWORDS ; j ++ )
+    {
+      strcpy ( Me [ PlayerNum ] . password_list [ j ] , "" ) ;
+    }
+  strcpy ( Me [ PlayerNum ] . password_list [ 0 ] , "Tux Himself" ) ;
+  strcpy ( Me [ PlayerNum ] . password_list [ 1 ] , "Tux Dummy1" ) ;
+  strcpy ( Me [ PlayerNum ] . password_list [ 2 ] , "Tux Dummy2" ) ;
+  strcpy ( Me [ PlayerNum ] . password_list [ 3 ] , "Tux Energy" ) ;
+  strcpy ( Me [ PlayerNum ] . password_list [ 4 ] , "Tux Idenfity" ) ;
+
+}; // void
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+InitHarmlessTuxStatusVariables( int PlayerNum )
+{
+  int i;
+
+  Me[ PlayerNum ].type = DRUID001;
+  Me[ PlayerNum ].speed.x = 0;
+  Me[ PlayerNum ].speed.y = 0;
+  Me[ PlayerNum ].autofire = FALSE;
+  Me[ PlayerNum ].status = MOBILE;
+  Me[ PlayerNum ].phase = 0;
+  Me[ PlayerNum ].MissionTimeElapsed=0;
+  Me[ PlayerNum ].Current_Victim_Resistance_Factor=1;
+  Me[ PlayerNum ].FramesOnThisLevel=0;
+  Me[ PlayerNum ].weapon_swing_time = (-1);  // currently not swinging this means...
+  Me[ PlayerNum ].got_hit_time = (-1);  // currently not stunned and needing time to recover...
+  Me[ PlayerNum ].points_to_distribute = 0;
+  Me[ PlayerNum ].ExpRequired = 1500;
+  for ( i = 0 ; i < 1000 ; i ++ ) Me[ PlayerNum ].KillRecord[ i ] = 0;
+  for ( i = 0 ; i < MAX_LEVELS ; i ++ ) Me[ PlayerNum ].HaveBeenToLevel [ i ] = FALSE ;
+  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ ) 
+    {
+      Me[ PlayerNum ].DetectedItemList[i].x = 0 ;
+      Me[ PlayerNum ].DetectedItemList[i].y = 0 ;
+    }
+  Me[ PlayerNum ].exp_level = 1;
+  Me[ PlayerNum ].Gold = 0 ; // formerly this was starting funds 100, but no longer... 
+
+}; // void InitHarmlessTuxStatusVariables( int PlayerNum )
+
 /* -----------------------------------------------------------------
  * This function initializes a completely new game within freedroid.
  * In contrast to InitFreedroid, this function should be called 
@@ -1628,7 +1776,6 @@ InitNewMissionList ( char *MissionName )
   char *MainMissionPointer;
   char *BriefingSectionPointer;
   char *EventSectionPointer;
-  // char *MissionTargetPointer;
 
   char* Crewname;
   char* GameDataName;
@@ -1647,8 +1794,6 @@ InitNewMissionList ( char *MissionName )
 #define SHIPNAME_INDICATION_STRING "Ship file to use for this mission: "
 #define ELEVATORNAME_INDICATION_STRING "Lift file to use for this mission: "
 #define CREWNAME_INDICATION_STRING "Crew file to use for this mission: "
-#define LIFTS_ON_INDICATION_STRING "Lifts On file to use for this mission: "
-#define LIFTS_OFF_INDICATION_STRING "Lifts Off file to use for this mission: "
 #define GAMEDATANAME_INDICATION_STRING "Physics ('game.dat') file to use for this mission: "
 #define MISSION_ENDTITLE_BEGIN_STRING "** Beginning of End Title Text Section **"
 #define MISSION_ENDTITLE_END_STRING "** End of End Title Text Section **"
@@ -1658,19 +1803,6 @@ InitNewMissionList ( char *MissionName )
 #define NEXT_MISSION_NAME_STRING "After completing this mission, load mission : "
 
 #define INIT_NEW_MISSION_DEBUG 1
-
-  //--------------------
-  // JUST FOR NOW, WE READ IN THE EMPTY DEFAULT SHIP.  THIS WILL NOT
-  // HURT.  SOME INITIALISATION (map labels!) become much easier this
-  // way!  Later, we will load the real ship.
-  //
-  Shipname = "Asteroid.maps";
-  fpath = find_file (Shipname, MAP_DIR, FALSE);
-  if ( LoadShip (fpath) == ERR )
-    {
-      DebugPrintf ( 0 , "Error in LoadShip\n");
-      Terminate (ERR);
-    }
 
   //--------------------
   // We store the mission name in case the influ
@@ -1684,8 +1816,9 @@ InitNewMissionList ( char *MissionName )
   DebugPrintf ( INIT_NEW_MISSION_DEBUG , "\nA new mission is being initialized from file %s.\n" , MissionName );
 
   //--------------------
-  //At first we do the things that must be done for all
-  //missions, regardless of mission file given
+  // At first we do the things that must be done for all
+  // missions, regardless of mission file given
+  //
   Activate_Conservative_Frame_Computation();
   Total_Frames_Passed_In_Mission=0;
   LastBlastHit = 0;
@@ -1695,32 +1828,10 @@ InitNewMissionList ( char *MissionName )
   LevelDoorsNotMovedTime = 0.0;
   RespectVisibilityOnMap = TRUE ;
   Me[0].Experience = 0; // This should be done at the end of the highscore list procedure
-  ShowScore = 0; // This should be done at the end of the highscore list procedure
 
   //--------------------
-  // Delete all bullets and blasts.  We need to do this AFTER the map has been
-  // read in, since DeleteBullet calls StartBlast which accesses the map, which
-  // should have been allocated at his point.
-  //
-  for (i = 0; i < MAXBULLETS; i++)
-    {
-      DeleteBullet ( i , FALSE );
-    }
-  DebugPrintf ( INIT_NEW_MISSION_DEBUG , "\nvoid InitNewMission( ... ): All bullets have been deleted...");
-  for (i = 0; i < MAXBLASTS; i++)
-    {
-      DeleteBlast( i );
-    }
-  DebugPrintf ( INIT_NEW_MISSION_DEBUG , "\nvoid InitNewMission( ... ): All blasts have been deleted...");
-  for (i = 0; i < MAX_ACTIVE_SPELLS; i++)
-    {
-      DeleteSpell( i );
-    }
-  DebugPrintf ( INIT_NEW_MISSION_DEBUG , "\nvoid InitNewMission( ... ): All active spells have been deleted...");
-
-  //--------------------
-  //Now its time to start decoding the mission file.
-  //For that, we must get it into memory first.
+  // Now its time to start decoding the mission file.
+  // For that, we must get it into memory first.
   //
   fpath = find_file (MissionName, MAP_DIR, FALSE);
   MainMissionPointer = ReadAndMallocAndTerminateFile( fpath , END_OF_MISSION_DATA_STRING ) ;
@@ -1765,15 +1876,6 @@ InitNewMissionList ( char *MissionName )
       DebugPrintf ( 0 , "Error in LoadShip\n");
       Terminate (ERR);
     }
-
-  //--------------------
-  // Now its time to get the lifts on/off picturec file name from the mission file and
-  // assemble an appropriate crew out of it
-  //
-  ship_on_filename = 
-    ReadAndMallocStringFromData ( MainMissionPointer , LIFTS_ON_INDICATION_STRING , "\n" ) ;
-  ship_off_filename = 
-    ReadAndMallocStringFromData ( MainMissionPointer , LIFTS_OFF_INDICATION_STRING , "\n" ) ;
 
   //--------------------
   // We also load the comment for the influencer to say at the beginning of the mission
@@ -1850,125 +1952,15 @@ InitNewMissionList ( char *MissionName )
 
   SwitchBackgroundMusicTo ( curShip.AllLevels [ Me [ 0 ] . pos . z ] ->Background_Song_Name );
 
-  //--------------------
-  // Now that the briefing and all that is done,
-  // the influence structure can be initialized for
-  // the new mission:
-  Me[0].type = DRUID001;
-  Me[0].speed.x = 0;
-  Me[0].speed.y = 0;
-  Me[0].autofire = FALSE;
-  Me[0].status = MOBILE;
-  Me[0].phase = 0;
-  Me[0].MissionTimeElapsed=0;
-  Me[0].Current_Victim_Resistance_Factor=1;
-  Me[0].FramesOnThisLevel=0;
-  Me[0].weapon_swing_time = (-1);  // currently not swinging this means...
-  Me[0].got_hit_time = (-1);  // currently not stunned and needing time to recover...
+  InitHarmlessTuxStatusVariables( 0 );
 
-  Me[0].points_to_distribute = 0;
-  Me[0].ExpRequired = 1500;
-  for ( i = 0 ; i < 1000 ; i ++ ) Me[0].KillRecord[ i ] = 0;
-  for ( i = 0 ; i < MAX_LEVELS ; i ++ ) Me[0].HaveBeenToLevel [ i ] = FALSE ;
-  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ ) 
-    {
-      Me[0].DetectedItemList[i].x = 0 ;
-      Me[0].DetectedItemList[i].y = 0 ;
-    }
-  Me[0].exp_level = 1;
-  Me[0].Gold = 0 ; // formerly this was starting funds 100, but no longer... 
-
-  //--------------------
-  // Now we initialize the skills of the new hero...
-  //
-  Me[0].readied_skill = 0;
-  for ( i = 0 ; i < NUMBER_OF_SKILLS ; i ++ ) 
-    {
-      Me[0].SkillLevel [ i ] = 0 ;
-      Me[0].base_skill_level [ i ] = 0 ;
-    }
-  Me[0].SkillLevel [ 0 ] = 1 ;
-  Me[0].base_skill_level [ 0 ] = 1;
-  Me[0].base_skill_level [ 1 ] = 1;
-  Me[0].base_skill_level [ 2 ] = 1;
-  Me[0].base_skill_level [ 3 ] = 1;
-  Me[0].base_skill_level [ 4 ] = 1;
-  Me[0].base_skill_level [ 5 ] = 0;  // teleport home disabled for consistency...
-  Me[0].base_skill_level [ 6 ] = 1;
-  Me[0].base_skill_level [ 7 ] = 1;
-  Me[0].base_skill_level [ 8 ] = 1;
-  Me[0].base_skill_level [ 9 ] = 1;
-  Me[0].base_skill_level [ 10 ] = 1;
-  Me[0].base_skill_level [ 11 ] = 1;
-  Me[0].base_skill_level [ 12 ] = 1;
-  Me[0].base_skill_level [ 13 ] = 1;
-  Me[0].base_skill_level [ 14 ] = 1;
-  Me[0].base_skill_level [ 14 ] = 1;
-  GameConfig.spell_level_visible = 0;
-
-  Me [ 0 ] . melee_weapon_skill = 0 ;
-  Me [ 0 ] . ranged_weapon_skill = 0 ;
-  Me [ 0 ] . spellcasting_skill = 0 ;
-  Me [ 0 ] . hacking_skill = 0 ;
+  InitInfluencerStartupSkills( 0 );
 
   UpdateAllCharacterStats( 0 );
 
-  //--------------------
-  // Now we disable all chat flags (i.e. the Tux hasn't spoken to
-  // that person at all) for all the non-player-characters in the game
-  //
-  for ( i = 0 ; i < MAX_ANSWERS_PER_PERSON ; i ++ ) 
-    {
-      for ( j = 0 ; j < MAX_PERSONS ; j ++ )
-	{
-	  Me[0]. Chat_Flags [ j ] [ i ] = 0 ;
-	  Me[0]. Chat_Flags [ j ] [ 0 ] = 1 ; // we always allow to say something in the beginning...
-	}
-    }
+  InitInfluencerChatFlags( 0 );
 
-  //--------------------
-  // At the beginning, the Tux shouldn't have any passwords
-  // or security clearances on him, and that's was we ensure here.
-  //
-  for ( j = 0 ; j < MAX_CLEARANCES ; j ++ )
-    {
-      Me [ 0 ] . clearance_list [ j ] = 0 ;
-    }
-  j=0;
-  Me [ 0 ] . clearance_list [ j ] = 1 ; j++;
-  Me [ 0 ] . clearance_list [ j ] = 2 ; j++;
-  Me [ 0 ] . clearance_list [ j ] = 3 ; j++;
-  Me [ 0 ] . clearance_list [ j ] = 4 ; j++;
-  Me [ 0 ] . clearance_list [ j ] = 5 ; j++;
-  Me [ 0 ] . clearance_list [ j ] = 6 ; j++;
-  Me [ 0 ] . clearance_list [ j ] = 7 ; j++;
-  Me [ 0 ] . clearance_list [ j ] = 8 ; j++;
-  Me [ 0 ] . clearance_list [ j ] = 9 ; j++;
-  Me [ 0 ] . clearance_list [ j ] = 10 ; j++;
-  Me [ 0 ] . clearance_list [ j ] = 11 ; j++;
-  Me [ 0 ] . clearance_list [ j ] = 12 ; j++;
-  Me [ 0 ] . clearance_list [ j ] = 13 ; j++;
-  Me [ 0 ] . clearance_list [ j ] = 14 ; j++;
-  Me [ 0 ] . clearance_list [ j ] = 15 ; j++;
-  Me [ 0 ] . clearance_list [ j ] = 16 ; j++;
-  Me [ 0 ] . clearance_list [ j ] = 17 ; j++;
-  Me [ 0 ] . clearance_list [ j ] = 18 ; j++;
-  Me [ 0 ] . clearance_list [ j ] = 19 ; j++;
-  Me [ 0 ] . clearance_list [ j ] = 20 ; j++;
-  Me [ 0 ] . clearance_list [ j ] = 21 ; j++;
-  Me [ 0 ] . clearance_list [ j ] = 22 ; j++;
-  Me [ 0 ] . clearance_list [ j ] = 23 ; j++;
-
-
-  for ( j = 0 ; j < MAX_PASSWORDS ; j ++ )
-    {
-      strcpy ( Me [ 0 ] . password_list [ j ] , "" ) ;
-    }
-  strcpy ( Me [ 0 ] . password_list [ 0 ] , "Tux Himself" ) ;
-  strcpy ( Me [ 0 ] . password_list [ 1 ] , "Tux Dummy1" ) ;
-  strcpy ( Me [ 0 ] . password_list [ 2 ] , "Tux Dummy2" ) ;
-  strcpy ( Me [ 0 ] . password_list [ 3 ] , "Tux Energy" ) ;
-  strcpy ( Me [ 0 ] . password_list [ 4 ] , "Tux Idenfity" ) ;
+  InitInfluencerPasswordsAndClearances( 0 );
 
   for ( j = 0 ; j < MAX_COOKIES ; j ++ )
     {
@@ -2114,8 +2106,6 @@ InitFreedroid ( void )
   // feenableexcept ( FE_DIVBYZERO | FE_INVALID ); // FE_INEXACT | FE_UNDERFLOW | FE_OVERFLOW 
   // fesetexceptflag (const fexcept_t *flagp, int excepts);
 
-
-
   //--------------------
   // It might happen, that the uninitialized AllBullets array contains a 1
   // somewhere and that the bullet is deleted and the surface freed, where
@@ -2124,12 +2114,20 @@ InitFreedroid ( void )
   // flags.       It should be sufficient to do this here, since the flag
   // will never be set again if not Surfaces are allocated too and then they
   // can of course also be freed as well.
-
+  //
   Bulletmap=NULL;  // That will cause the memory to be allocated later
   for ( i = 0 ; i < MAXBULLETS ; i++ )
     {
       AllBullets[i].Surfaces_were_generated = FALSE;
       DeleteBullet( i , FALSE );
+    }
+  for (i = 0; i < MAXBLASTS; i++)
+    {
+      DeleteBlast( i );
+    }
+  for (i = 0; i < MAX_ACTIVE_SPELLS; i++)
+    {
+      DeleteSpell( i );
     }
 
   ServerMode = FALSE;

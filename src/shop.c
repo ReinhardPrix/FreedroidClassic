@@ -401,7 +401,10 @@ ShowRescaledItem ( int position , int TuxItemRow , item* ShowItem )
   else RescaleFactor = 1.0;
 
   if ( ScaledItemImageBackups [ PictureIndex ] == NULL )
-    ScaledItemImageBackups [ PictureIndex ] = zoomSurface ( ItemImageList[ PictureIndex ] . Surface , RescaleFactor , RescaleFactor , FALSE );
+    {
+      DebugPrintf ( 0 , "\nShowRescaledItem:  first call, so scaling has to be done...\n" );
+      ScaledItemImageBackups [ PictureIndex ] = zoomSurface ( ItemImageList[ PictureIndex ] . Surface , RescaleFactor , RescaleFactor , FALSE );
+    }
   
   SDL_BlitSurface( ScaledItemImageBackups [ PictureIndex ] , NULL , Screen , &TargetRectangle );
 
