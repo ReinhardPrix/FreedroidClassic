@@ -1315,8 +1315,16 @@ blit_preput_objects_according_to_blitting_list ( int mask )
 	if ( blitting_list [ i ] . element_type == BLITTING_TYPE_NONE ) break;
 	if ( blitting_list [ i ] . element_type == BLITTING_TYPE_OBSTACLE )
 	{
-	    if ( ( (obstacle*)  blitting_list [ i ] . element_pointer ) -> type <= (-1) )
+
+	    //--------------------
+	    // We do some sanity checking for illegal obstacle types.
+	    // Can't hurt to do that so as to be on the safe side.
+	    //
+	    if ( ( ( (obstacle*)  blitting_list [ i ] . element_pointer ) -> type <= (-1) ) ||
+		 ( (obstacle*)  blitting_list [ i ] . element_pointer ) -> type >= NUMBER_OF_OBSTACLE_TYPES )
 	    {
+		fprintf ( stderr , "\nerrorneous obstacle type to blit: %d." , 
+			  ( (obstacle*)  blitting_list [ i ] . element_pointer ) -> type );
 		GiveStandardErrorMessage ( __FUNCTION__  , 
 					   "The blitting list contained an illegal blitting object type.",
 					   PLEASE_INFORM, IS_FATAL );
@@ -1418,7 +1426,22 @@ blit_nonpreput_objects_according_to_blitting_list ( int mask )
 	{
 	    case BLITTING_TYPE_OBSTACLE:
 		
+		//--------------------
+		// We do some sanity checking for illegal obstacle types.
+		// Can't hurt to do that so as to be on the safe side.
+		//
+		if ( ( ( (obstacle*)  blitting_list [ i ] . element_pointer ) -> type <= (-1) ) ||
+		     ( (obstacle*)  blitting_list [ i ] . element_pointer ) -> type >= NUMBER_OF_OBSTACLE_TYPES )
+		{
+		    fprintf ( stderr , "\nerrorneous obstacle type to blit: %d." , 
+			      ( (obstacle*)  blitting_list [ i ] . element_pointer ) -> type );
+		    GiveStandardErrorMessage ( __FUNCTION__  , 
+					       "The blitting list contained an illegal blitting object type.",
+					       PLEASE_INFORM, IS_FATAL );
+		}
+
 		if ( obstacle_map [ ( (obstacle*)  blitting_list [ i ] . element_pointer ) -> type ] . needs_pre_put ) break ;
+
 		if ( ! ( mask & OMIT_OBSTACLES ) ) 
 		{
 		    if ( mask & ZOOM_OUT )
