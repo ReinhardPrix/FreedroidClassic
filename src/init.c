@@ -1857,16 +1857,34 @@ InitNewMissionList ( char *MissionName )
 	}
     }
 
+  //--------------------
+  // At the beginning, the Tux shouldn't have any passwords
+  // or security clearances on him, and that's was we ensure here.
+  //
   for ( j = 0 ; j < MAX_CLEARANCES ; j ++ )
     {
       Me [ 0 ] . clearance_list [ j ] = 0 ;
     }
+  for ( j = 0 ; j < MAX_PASSWORDS ; j ++ )
+    {
+      strcpy ( Me [ 0 ] . password_list [ j ] , "" ) ;
+    }
 
+  //--------------------
+  // When the Tux arrives, he also should be at perfect health
+  // and also full with all the mana he can have on him.
+  //
   Me[0].energy = Me[0].maxenergy;
   Me[0].mana = Me[0].maxmana;
   DebugPrintf( 1 , "\n Me[0].energy : %f . " , Me[0].energy );
   Me[0].health = Me[0].energy;	/* start with max. health */
 
+  //--------------------
+  // None of the inventory slots like currently equipped weapons
+  // or the like should be held in hand, like when you take it
+  // 'into your hand' by clicking on it with the mouse button in
+  // the inventory screen.
+  //
   Me[0].weapon_item.currently_held_in_hand = FALSE;
   Me[0].armour_item.currently_held_in_hand = FALSE;
   Me[0].shield_item.currently_held_in_hand = FALSE;

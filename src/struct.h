@@ -511,6 +511,7 @@ typedef struct
 
   unsigned char Chat_Flags[ MAX_PERSONS ][ MAX_ANSWERS_PER_PERSON ];
   int clearance_list[ MAX_CLEARANCES ];
+  char password_list[ MAX_PASSWORDS ] [ MAX_PASSWORD_LENGTH ] ;
 
   // unsigned char Chandra_Chat_Flags[ MAX_ANSWERS_PER_PERSON ];
   // unsigned char RMS_Chat_Flags[ MAX_ANSWERS_PER_PERSON ];

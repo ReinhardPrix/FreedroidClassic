@@ -41,6 +41,10 @@
 
 #include "map.h"
 
+#define MAP_BEGIN_STRING	"beginning_of_map"
+#define WP_BEGIN_STRING		"wp"
+#define LEVEL_END_STRING	"end_of_level"
+
 #define AREA_NAME_STRING "Area name=\""
 #define LEVEL_NAME_STRING "Name of this level="
 #define LEVEL_ENTER_COMMENT_STRING "Comment of the Influencer on entering this level=\""

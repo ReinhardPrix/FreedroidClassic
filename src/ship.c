@@ -976,8 +976,8 @@ ShowDeckMap (Level deck)
 		  // Now we try to unlock the LOCKED door that should be present at the
 		  // location currently pointed at via the mouse cursor.
 		  //
-		  TargetSquare.x = Me [ 0 ] . pos . x + ( GetMousePos_x ( ) + 16 - ( SCREEN_WIDTH / 2 ) ) / ( INITIAL_BLOCK_WIDTH * 0.25 ) ;
-		  TargetSquare.y = Me [ 0 ] . pos . y + ( GetMousePos_y ( ) + 16 - ( SCREEN_HEIGHT / 2 ) ) / ( INITIAL_BLOCK_HEIGHT * 0.25 ) ;
+		  TargetSquare.x = rintf ( Me [ 0 ] . pos . x + (float)( GetMousePos_x ( ) + 16 - ( SCREEN_WIDTH / 2 ) ) / ( INITIAL_BLOCK_WIDTH * 0.25 ) ) ;
+		  TargetSquare.y = rintf ( Me [ 0 ] . pos . y + (float)( GetMousePos_y ( ) + 16 - ( SCREEN_HEIGHT / 2 ) ) / ( INITIAL_BLOCK_HEIGHT * 0.25 ) ) ;
 		  //--------------------
 		  // Some sanity check again against clicks ouside of the bounds of the map...
 		  //
@@ -992,12 +992,14 @@ ShowDeckMap (Level deck)
 			  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] = H_SHUT_DOOR ;
 			  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Door_Successfully_Unlocked_0.wav" , FALSE );
 			  SelectedFunction = NO_FUNCTION;
+			  GetDoors( curShip.AllLevels[ Me [ 0 ] . pos . z ]  );
 			}
 		      if ( MapValue == LOCKED_V_SHUT_DOOR )
 			{
 			  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] = V_SHUT_DOOR ;
 			  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Door_Successfully_Unlocked_0.wav" , FALSE );
 			  SelectedFunction = NO_FUNCTION;
+			  GetDoors( curShip.AllLevels[ Me [ 0 ] . pos . z ]  );
 			}                                         
 		    }
 		}
