@@ -301,6 +301,18 @@ ReactToSpecialKeys(void)
   if ( F6Pressed() )
     Me[0].readied_skill = 5;
 
+  if ( F7Pressed() )
+    Me[0].readied_skill = 6;
+
+  if ( F8Pressed() )
+    Me[0].readied_skill = 7;
+
+  if ( F9Pressed() )
+    Me[0].readied_skill = 8;
+
+  if ( F10Pressed() )
+    Me[0].readied_skill = 9;
+
   // THIS REMAINS DISABLED... if ( Number0Pressed() ) Quick_ApplyItem ( 0 );
 
   if ( Number1Pressed() )

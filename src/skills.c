@@ -701,7 +701,8 @@ ShowSkillsScreen ( void )
       sprintf( CharText , "Skill Level: %d " , Me[0].SkillLevel[ i + NUMBER_OF_SKILLS_PER_SKILL_LEVEL * GameConfig.spell_level_visible ] );
       DisplayText( CharText , 16 + 64 + 16 + SkillScreenRect.x , 
 		   FIRST_SKILLRECT_Y + i * (64 + INTER_SKILLRECT_DIST) + SkillScreenRect.y + FontHeight( GetCurrentFont() ) , &SkillScreenRect );
-      sprintf( CharText , "Mana cost: %d " , ManaCostTable[ i + NUMBER_OF_SKILLS_PER_SKILL_LEVEL * GameConfig.spell_level_visible ][Me[0].SkillLevel[ i + NUMBER_OF_SKILLS_PER_SKILL_LEVEL * GameConfig.spell_level_visible ]] );
+      // sprintf( CharText , "Mana cost: %d " , ManaCostTable[ i + NUMBER_OF_SKILLS_PER_SKILL_LEVEL * GameConfig.spell_level_visible ][Me[0]. SkillLevel[ i + NUMBER_OF_SKILLS_PER_SKILL_LEVEL * GameConfig.spell_level_visible ]] );
+      sprintf( CharText , "Mana cost: %d " , ManaCostTable[ i + NUMBER_OF_SKILLS_PER_SKILL_LEVEL * GameConfig.spell_level_visible ][Me[0]. spellcasting_skill ] );
       DisplayText( CharText , 16 + 64 + 16 + SkillScreenRect.x , 
 		   FIRST_SKILLRECT_Y + i * (64 + INTER_SKILLRECT_DIST) + SkillScreenRect.y + 2 * FontHeight( GetCurrentFont() ) , &SkillScreenRect );
       
