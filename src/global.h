@@ -145,8 +145,6 @@ EXTERN int SkipAFewFrames;
 #else
 #define EXTERN extern
 #endif
-EXTERN int View[INTERNHOEHE + 1][INTERNBREITE];
-
 
 #undef EXTERN
 #ifdef _sound_c

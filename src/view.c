@@ -651,8 +651,8 @@ Sorry...\n\
   if ( tmp->w > 200 ) 
     {
       TargetRectangle.x=0;
-      TargetRectangle.y=RAHMENHOEHE;
-      SourceRectangle.h=SCREENHOEHE-RAHMENHOEHE;
+      TargetRectangle.y=BANNER_WIDTH;
+      SourceRectangle.h=SCREENHOEHE-BANNER_HEIGHT;
     }
   else 
     {

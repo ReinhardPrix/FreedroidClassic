@@ -128,12 +128,12 @@ To save framerate on slow machines however it will only work
 if it thinks that work needs to be done. 
 You can however force update if you say so with a flag.
 
-RAHMEN_FORCE_UPDATE=1: Forces the redrawing of the title bar
+BANNER_FORCE_UPDATE=1: Forces the redrawing of the title bar
 
-RAHMEN_DONT_TOUCH_TEXT=2: Prevents DisplayBanner from touching the
+BANNER_DONT_TOUCH_TEXT=2: Prevents DisplayBanner from touching the
 text, i.e. calling SetInfoline            
 
-RAHMEN_NO_SDL_UPDATE=4: Prevents any SDL_Update calls.
+BANNER_NO_SDL_UPDATE=4: Prevents any SDL_Update calls.
 
 To update the information in the top status line only, you can
 as well use the function SetInfoline.
@@ -191,7 +191,7 @@ DisplayBanner ( int flags )
   // No we see if the screen need an update...
 
   if ( BannerIsDestroyed || 
-       (flags & RAHMEN_FORCE_UPDATE ) || 
+       (flags & BANNER_FORCE_UPDATE ) || 
        (strcmp( left_box , previous_left_box )) || 
        (strcmp( right_box , previous_right_box )) )
     {
@@ -205,7 +205,7 @@ DisplayBanner ( int flags )
       // time to display it...
       if ( (strcmp( left_box , previous_left_box )) || 
 	   (strcmp( right_box , previous_right_box )) ||
-	   ( flags & RAHMEN_FORCE_UPDATE ) )
+	   ( flags & BANNER_FORCE_UPDATE ) )
 	{
 	  PrintStringFont ( ne_screen , Menu_BFont, LEFT_INFO_X , LEFT_INFO_Y , left_box );
 	  strcpy( previous_left_box , left_box );
@@ -216,7 +216,7 @@ DisplayBanner ( int flags )
 
       // finally update the whole top status box
       // printf("\nHad to update whole top status line box...");
-      if ( !(flags & RAHMEN_NO_SDL_UPDATE ) )SDL_UpdateRect( ne_screen, 0, 0, RAHMENBREITE, RAHMENHOEHE );
+      if ( !(flags & BANNER_NO_SDL_UPDATE ) )SDL_UpdateRect( ne_screen, 0, 0, BANNER_WIDTH , BANNER_HEIGHT );
       BannerIsDestroyed=FALSE;
       return;
     }
@@ -277,17 +277,17 @@ SetInfoline (const char *left, const char *right , int flags )
   right_box[RIGHT_TEXT_LEN] = '\0';
 
   /* Hintergrund Textfarbe setzen */
-  SetTextColor (RAHMEN_WHITE, RAHMEN_VIOLETT);	// FONT_RED, 0
+  SetTextColor (BANNER_WHITE, BANNER_VIOLETT);	// FONT_RED, 0
   
   SDL_SetClipRect( ne_screen , NULL );
   // Now the text should be ready and its
   // time to display it...
   if ( (strcmp( left_box , previous_left_box )) || 
        (strcmp( right_box , previous_right_box )) ||
-       ( flags & RAHMEN_FORCE_UPDATE ) )
+       ( flags & BANNER_FORCE_UPDATE ) )
     {
       SetCurrentFont(Para_BFont);
-      DisplayBanner( RAHMEN_FORCE_UPDATE | RAHMEN_DONT_TOUCH_TEXT );
+      DisplayBanner( BANNER_FORCE_UPDATE | BANNER_DONT_TOUCH_TEXT );
       PrintStringFont ( ne_screen , Para_BFont, LEFT_INFO_X , LEFT_INFO_Y , left_box );
       // SDL_UpdateRect( ne_screen, LEFT_INFO_X, LEFT_INFO_Y, FontHeight(Menu_BFont)*8, FontHeight(Menu_BFont) );
       strcpy( previous_left_box , left_box );

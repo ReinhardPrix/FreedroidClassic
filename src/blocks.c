@@ -205,13 +205,13 @@ ne_get_rahmen_block (char *picfile)
   /* now copy the block to ne_static  */
   rect.x = 0;
   rect.y = 0;
-  rect.w = RAHMENBREITE;
-  rect.h = RAHMENHOEHE;
+  rect.w = BANNER_WIDTH;
+  rect.h = BANNER_HEIGHT;
   
   ret[0].x = 0;
   ret[0].y = 0;
-  ret[0].w = RAHMENBREITE;
-  ret[0].h = RAHMENHOEHE;
+  ret[0].w = BANNER_WIDTH;
+  ret[0].h = BANNER_HEIGHT;
   SDL_BlitSurface (tmp, &rect, ne_static, &ret[0]);
 
   SDL_FreeSurface (tmp);

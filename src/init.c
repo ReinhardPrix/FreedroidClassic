@@ -44,6 +44,34 @@
 #define SCROLLSTARTX		USERFENSTERPOSX
 #define SCROLLSTARTY		SCREENHOEHE
 
+
+/*@Function============================================================
+@Desc: 
+
+@Ret: 
+@Int:
+* $Function----------------------------------------------------------*/
+int
+Init_Game_Constants (void)
+{
+  FILE *ColorFile;
+  int i;
+
+  LevelColorArray = MyMalloc (ALLLEVELCOLORS * 3 * FARBENPROLEVEL + 10);
+	// NICHT FREIGEBEN !
+  if ((ColorFile = fopen (COLORFILE, "r")) == NULL)
+    return (FALSE);
+  for (i = 0; i < ALLLEVELCOLORS * FARBENPROLEVEL; i++)
+    {
+      if (fscanf (ColorFile, "%hhd %hhd %hhd", &LevelColorArray[i * 3],
+		  &LevelColorArray[3 * i + 1],
+		  &LevelColorArray[3 * i + 2]) == EOF)
+	return (FALSE);
+    }
+  fclose (ColorFile);
+  return (TRUE);
+} // int Init_Game_Constants ( void )
+
 /* -----------------------------------------------------------------
  * This function is for stability while working with the SVGALIB, which otherwise would
  * be inconvenient if not dangerous in the following respect:  When SVGALIB has switched to
@@ -302,7 +330,7 @@ InitNewGame (void)
 
   /* Den Banner fuer das Spiel anzeigen */
   ClearGraphMem();
-  DisplayBanner ( RAHMEN_FORCE_UPDATE );
+  DisplayBanner ( BANNER_FORCE_UPDATE );
 
   SetTextColor (FONT_WHITE, FONT_RED);
   InitBars = TRUE;
@@ -362,7 +390,7 @@ InitFreedroid (void)
   gettimeofday(&timestamp, NULL);
   srand((unsigned int) timestamp.tv_sec); /* yes, we convert long->int here! */
 
-  /* Initialisierung der Highscorewerte */
+  /* initialize the high score values */
   /* 
    * this really should be read from disk here, 
    * but for the moment we just start from zero 
@@ -375,17 +403,10 @@ InitFreedroid (void)
 
   Init_Druidmap ();   /* initialise some global text variables */
 
-  if ( InitLevelColorTable () == FALSE)
-    {
-      printf (" Kann Farben nicht initialisieren !\n");
-      getchar_raw ();
-      Terminate (ERR);
-    }
-
-
   MinMessageTime = 55;
   MaxMessageTime = 850;
-  /* Farbwerte fuer die Funktion SetColors */
+
+  /* Color values for the function SetColors */
   Transfercolor.gruen = 13;
   Transfercolor.blau = 13;
   Transfercolor.rot = 63;
@@ -394,7 +415,6 @@ InitFreedroid (void)
   Mobilecolor.rot = 63;
 
   GameAdapterPresent = FALSE;	/* start with this */
-  taste = 255;
 
   if (LoadShip (SHIPNAME) == ERR)
     {
@@ -403,6 +423,7 @@ InitFreedroid (void)
     }
 
   CurLevel = NULL; // please leave this here BEFORE InitPictures
+
   /* Now fill the pictures correctly to the structs */
   if (!InitPictures ())
     {		
@@ -513,7 +534,7 @@ Title (void)
   Me.status=BRIEFING;
 
   // ClearGraphMem ();
-  // DisplayBanner( RAHMEN_FORCE_UPDATE ); 
+  // DisplayBanner( BANNER_FORCE_UPDATE ); 
 
   // SetTextColor (FONT_BLACK, FONT_RED);
 
@@ -525,7 +546,7 @@ Title (void)
   ScrollText (TitleText4, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
 
   ClearGraphMem ();
-  DisplayBanner( RAHMEN_FORCE_UPDATE ); 
+  DisplayBanner( BANNER_FORCE_UPDATE ); 
   SDL_Flip( ne_screen );
 
   return;
@@ -549,7 +570,7 @@ EndTitle (void)
 
   Switch_Background_Music_To (CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC);
 
-  DisplayBanner( RAHMEN_FORCE_UPDATE );
+  DisplayBanner( BANNER_FORCE_UPDATE );
 
   SetTextColor (FONT_BLACK, FONT_RED);
 

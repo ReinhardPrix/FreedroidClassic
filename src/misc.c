@@ -351,7 +351,7 @@ InitiateMenu( void )
       //write on it further down.
       SDL_SetClipRect( ne_screen, NULL );
       ClearGraphMem();
-      DisplayBanner( RAHMEN_NO_SDL_UPDATE | RAHMEN_FORCE_UPDATE );
+      DisplayBanner( BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
       Assemble_Combat_Picture ( 0 );
       SDL_SetClipRect( ne_screen, NULL );
       MakeGridOnScreen();
@@ -1054,7 +1054,7 @@ enum
 
       SDL_SetClipRect( ne_screen, NULL );
       ClearGraphMem();
-      DisplayBanner( RAHMEN_NO_SDL_UPDATE | RAHMEN_FORCE_UPDATE );
+      DisplayBanner( BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
       Assemble_Combat_Picture ( 0 );
       SDL_SetClipRect( ne_screen, NULL );
       MakeGridOnScreen();
@@ -1192,7 +1192,7 @@ enum
 
   ClearGraphMem ();
   Update_SDL_Screen();
-  DisplayBanner ( RAHMEN_FORCE_UPDATE );
+  DisplayBanner ( BANNER_FORCE_UPDATE );
   InitBars = TRUE;
 
   return;
@@ -1343,7 +1343,7 @@ Show_Highscore_Menu (void)
   while ( EscapePressed() || EnterPressed() || SpacePressed() );
 
   ClearGraphMem ( );
-  DisplayBanner ( RAHMEN_FORCE_UPDATE );
+  DisplayBanner ( BANNER_FORCE_UPDATE );
   InitBars = TRUE;
 
   */ 

@@ -51,7 +51,7 @@
 
 // The flags for DisplayBanner are:
 enum
-  { RAHMEN_FORCE_UPDATE=1 , RAHMEN_DONT_TOUCH_TEXT=2 , RAHMEN_NO_SDL_UPDATE=4 };
+  { BANNER_FORCE_UPDATE=1 , BANNER_DONT_TOUCH_TEXT=2 , BANNER_NO_SDL_UPDATE=4 };
 
 // The flags for AssembleCombatWindow are:
 enum
@@ -78,7 +78,7 @@ enum
 #define NE_ELEVATOR_PIC_FILE    GRAPHICS_DIR "ne_ship.bmp"
 #define NE_CONSOLEN_PIC_FILE    GRAPHICS_DIR "ne_cons.bmp" 
 #define NE_DIGIT_BLOCK_FILE     GRAPHICS_DIR "ne_digits.bmp"
-#define NE_RAHMEN_BLOCK_FILE    GRAPHICS_DIR "ne_rahmen.bmp"
+#define NE_BANNER_BLOCK_FILE    GRAPHICS_DIR "ne_rahmen.bmp"
 #define NE_TITLE_PIC_FILE       GRAPHICS_DIR "ne_title.jpg"
 
 #define SHIPNAME		MAP_DIR "ship1"
@@ -95,16 +95,12 @@ enum
 
 
 // **********************************************************************
-// Konstants about the size (and mem?) of pixmaps
+// Constants about the size (and mem?) of pixmaps
 
 #define INITIAL_BLOCK_WIDTH	64
 #define INITIAL_BLOCK_HEIGHT	64
 #define BLOCKMEM  		INITIAL_BLOCK_WIDTH*INITIAL_BLOCK_HEIGHT
 
-// #define DIGITLENGTH (8*2)
-// #define DIGITHEIGHT (9*2)
-// #define DIGIT_POS_X 5*2
-// #define DIGIT_POS_Y 12*2
 #define INITIAL_DIGIT_LENGTH (8*2)
 #define INITIAL_DIGIT_HEIGHT (9*2)
 #define INITIAL_DIGIT_POS_X 5*2
@@ -117,14 +113,8 @@ enum
 #define SCREENLEN		(320*2)
 #define SCREENHEIGHT		(200*2)
 
-#define VIEWBREITE 		9
-#define VIEWHOEHE 		4
-
-#define INTERNBREITE 		13
-#define INTERNHOEHE 		7
-
-#define USERFENSTERHOEHE 	VIEWHOEHE*INITIAL_BLOCK_HEIGHT
-#define USERFENSTERBREITE 	VIEWBREITE*INITIAL_BLOCK_WIDTH
+#define USERFENSTERHOEHE 	4*INITIAL_BLOCK_HEIGHT
+#define USERFENSTERBREITE 	9*INITIAL_BLOCK_WIDTH
 #define USERFENSTERPOSX 	( (SCREENBREITE-USERFENSTERBREITE) / 2)
 #define USERFENSTERPOSY 	( (SCREENHOEHE-USERFENSTERHOEHE) )
 #define USER_FENSTER_CENTER_X (USERFENSTERPOSX + (USERFENSTERBREITE/2))
@@ -136,10 +126,7 @@ enum
 #define SCALE_FACTOR  2 /* This constant (please let it be an int!) defines how many times the
 			   actually displayed screen shall be bigger than the 320x200 window. */
 
-#define RAHMENBREITE		SCREENBREITE
-#define RAHMENHOEHE		INITIAL_BLOCK_HEIGHT
-
-/* Startpos + lens of Banner-Texts */
+/* Startpos + dimesnions of Banner-Texts */
 #define LEFT_INFO_X 	(12*2)
 #define LEFT_INFO_Y	(8*2)
 #define RIGHT_INFO_X	(242*2)
@@ -147,6 +134,9 @@ enum
 #define LEFT_TEXT_LEN 10
 #define RIGHT_TEXT_LEN 6
 #define TEXT_STRETCH 1.2
+#define BANNER_WIDTH		SCREENBREITE
+#define BANNER_HEIGHT		INITIAL_BLOCK_HEIGHT
+
 
 
 /* Menu in Konsole */
@@ -254,7 +244,7 @@ enum _sounds
                                   // the final wait time is a random number within [0,ENEMYMAXWAIT].
 #define FLASH_DURATION_IN_FRAMES 10
 
-/* Richtungsdefinitionen (fuer die Einstellung der Schussrichtung) */
+/* direction definitions (fireing bullets and testing blockedness of positions) */
 enum _directions
 {
   OBEN = 0,

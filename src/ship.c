@@ -193,7 +193,7 @@ EnterElevator (void)
 
   LeaveElevatorSound ();
   ClearGraphMem ( );
-  DisplayBanner ( RAHMEN_FORCE_UPDATE );
+  DisplayBanner ( BANNER_FORCE_UPDATE );
 
   UnfadeLevel ();
 
@@ -230,7 +230,7 @@ ShowElevators (void)
   ClearGraphMem();
   // fill the user fenster with some color
   SetUserfenster ( EL_BG_COLOR );
-  DisplayBanner ( RAHMEN_FORCE_UPDATE );      
+  DisplayBanner ( BANNER_FORCE_UPDATE );      
   // SetInfoline (NULL, NULL);
 
   tmp= IMG_Load ( NE_ELEVATOR_PIC_FILE );
@@ -380,7 +380,7 @@ PaintConsoleMenu (void)
 
   ClearGraphMem ();
 
-  DisplayBanner ( RAHMEN_FORCE_UPDATE );
+  DisplayBanner ( BANNER_FORCE_UPDATE );
   // SetInfoline (NULL, NULL);
 
   /* Userfenster faerben */
@@ -389,7 +389,7 @@ PaintConsoleMenu (void)
 
   /* Konsolen-Menue Farbe setzen */
   // SetTextColor (KON_BG_COLOR, KON_TEXT_COLOR);
-  SetTextColor (208, RAHMEN_VIOLETT );	// RED // YELLOW
+  SetTextColor (208, BANNER_VIOLETT );	// RED // YELLOW
 
   strcpy (MenuText, "Unit type ");
   strcat (MenuText, Druidmap[Me.type].druidname);
@@ -451,7 +451,7 @@ GreatDruidShow (void)
 	{
 
 	  ClearUserFenster( );
-	  // SetTextColor (208, RAHMEN_VIOLETT );	// RED // YELLOW
+	  // SetTextColor (208, BANNER_VIOLETT );	// RED // YELLOW
 	  strcpy (InfoText, "Unit type ");
 	  strcat (InfoText, Druidmap[Infodroid].druidname);
 	  strcat (InfoText, " - ");
@@ -516,7 +516,7 @@ GreatDruidShow (void)
       //      ClearGraphMem( Outline320x200 );
       //      DisplayBanner( Outline320x200 );
       ClearUserFenster( );
-      SetTextColor (208, RAHMEN_VIOLETT );	// RED // YELLOW
+      SetTextColor (208, BANNER_VIOLETT );	// RED // YELLOW
       // ClearUserFenster ();
       strcpy (InfoText, "Unit type ");
       strcat (InfoText, Druidmap[Infodroid].druidname);
@@ -580,7 +580,7 @@ GreatDruidShow (void)
       // ClearGraphMem( Outline320x200 );
       // DisplayBanner( Outline320x200 );
       ClearUserFenster( );
-      SetTextColor (208, RAHMEN_VIOLETT );	// BLACK and VIOLETT
+      SetTextColor (208, BANNER_VIOLETT );	// BLACK and VIOLETT
       strcpy (InfoText, "Unit type ");
       strcat (InfoText, Druidmap[Infodroid].druidname);
       strcat (InfoText, " - ");
@@ -631,7 +631,7 @@ GreatDruidShow (void)
       //      ClearGraphMem( Outline320x200 );
       //      DisplayBanner( Outline320x200 );
       ClearUserFenster( );
-      SetTextColor (208, RAHMEN_VIOLETT );	// RED // YELLOW
+      SetTextColor (208, BANNER_VIOLETT );	// RED // YELLOW
       // ClearUserFenster ();
       strcpy (InfoText, "Unit type ");
       strcat (InfoText, Druidmap[Infodroid].druidname);

@@ -1,8 +1,8 @@
 /*----------------------------------------------------------------------
  *
  * Desc: Graphics primitived, such as functions to load LBM or PCX images,
- *	to change the vga color table, to activate or deachtivate monitor
- *	signal, to set video modes etc.
+ * 	 to change the vga color table, to activate or deachtivate monitor
+ *	 signal, to set video modes etc.
  *
  *----------------------------------------------------------------------*/
 
@@ -43,6 +43,17 @@
 #include "colodefs.h"
 #include "SDL_rotozoom.h"
 
+
+/*-----------------------------------------------------------------
+ * This function saves a screenshot to disk.
+ * The screenshots are names "Screenshot_XX.bmp" where XX is a
+ * running number.  
+ *
+ * NOTE:  This function does NOT check for existing screenshots,
+ *        but will silently overwrite them.  No problem in most
+ *        cases I think.
+ *
+ *-----------------------------------------------------------------*/
 void
 TakeScreenshot(void)
 {
@@ -61,12 +72,10 @@ TakeScreenshot(void)
 
 /*
 ----------------------------------------------------------------------
-@Desc: 
-
-This function draws a "grid" on the screen, that means every
-"second" pixel is blacked out, thereby generation a fading 
-effect.  This function was created to fade the background of the 
-Escape menu and its submenus.
+@Desc: This function draws a "grid" on the screen, that means every
+       "second" pixel is blacked out, thereby generation a fading 
+       effect.  This function was created to fade the background of the 
+       Escape menu and its submenus.
 
 @Ret: none
 ----------------------------------------------------------------------
@@ -93,39 +102,15 @@ MakeGridOnScreen(void)
   DebugPrintf("\nvoid MakeGridOnScreen(...): end of function reached.");
 } // void MakeGridOnSchreen(void)
 
-SDL_Surface *LoadImage(char *datafile, int transparent)
-{
-  SDL_Surface *image, *surface;
-  
-  image = IMG_Load(datafile);
-  if ( image == NULL ) {
-    fprintf(stderr, "Couldn't load image %s: %s\n",
-	    datafile, IMG_GetError());
-    return(NULL);
-  }
-  if ( transparent ) {
-    /* Assuming 8-bit BMP image */
-    SDL_SetColorKey(image, (SDL_SRCCOLORKEY|SDL_RLEACCEL),
-		    *(Uint8 *)image->pixels);
-  }
-  surface = SDL_DisplayFormat(image);
-  SDL_FreeSurface(image);
-  return(surface);
-}
 
-/*
-----------------------------------------------------------------------
-@Desc: 
-
-This function load an image and displays it directly to the ne_screen
-but without updating it.
-This might be very handy, especially in the Title() function to 
-display the title image and perhaps also for displaying the ship
-and that.
-
-@Ret: none
-----------------------------------------------------------------------
-*/
+/*----------------------------------------------------------------------
+ * This function load an image and displays it directly to the ne_screen
+ * but without updating it.
+ * This might be very handy, especially in the Title() function to 
+ * display the title image and perhaps also for displaying the ship
+ * and that.
+ *
+ ----------------------------------------------------------------------*/
 void DisplayImage(char *datafile)
 {
   SDL_Surface *image;
@@ -178,6 +163,12 @@ ReInitPictures (void)
 } // int ReInitPictures(void)
 
 
+/*----------------------------------------------------------------------
+ * This function resizes all blocks and structures involved in assembling
+ * the combat picture to a new scale.  The new scale is relative to the
+ * standard scale with means 64x64 tile size.
+ *
+ ----------------------------------------------------------------------*/
 void 
 SetCombatScaleTo(float ResizeFactor)
 {
@@ -267,7 +258,6 @@ SetCombatScaleTo(float ResizeFactor)
  * @Ret: TRUE/FALSE
  *
  *-----------------------------------------------------------------*/
-
 int
 InitPictures (void)
 {
@@ -359,7 +349,7 @@ InitPictures (void)
   ne_digit_block =
     ne_get_digit_blocks (NE_DIGIT_BLOCK_FILE, DIGITNUMBER, DIGITNUMBER, 0, block_line++);
 
-  ne_rahmen_block = ne_get_rahmen_block ( NE_RAHMEN_BLOCK_FILE );
+  ne_rahmen_block = ne_get_rahmen_block ( NE_BANNER_BLOCK_FILE );
   
   // console picture need not be rendered fast or something.  This
   // really has time, so we load it as a surface and do not take the
@@ -397,33 +387,6 @@ SetColors (int FirstCol, int PalAnz, char *PalPtr)
       MyPalPtr += 3;
     }
 }				// void SetColors(...)
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-int
-InitLevelColorTable (void)
-{
-  FILE *ColorFile;
-  int i;
-
-  LevelColorArray = MyMalloc (ALLLEVELCOLORS * 3 * FARBENPROLEVEL + 10);
-	// NICHT FREIGEBEN !
-  if ((ColorFile = fopen (COLORFILE, "r")) == NULL)
-    return (FALSE);
-  for (i = 0; i < ALLLEVELCOLORS * FARBENPROLEVEL; i++)
-    {
-      if (fscanf (ColorFile, "%hhd %hhd %hhd", &LevelColorArray[i * 3],
-		  &LevelColorArray[3 * i + 1],
-		  &LevelColorArray[3 * i + 2]) == EOF)
-	return (FALSE);
-    }
-  fclose (ColorFile);
-  return (TRUE);
-}				// int InitLevelColorTable(void)
 
 /*@Function============================================================
 @Desc: 
@@ -492,21 +455,60 @@ Init_Video (void)
   
   if ( ( Menu_BFont = LoadFont (MENU_FONT_FILE) ) == NULL )
       {
-        fprintf(stderr, "\n\nCouldn't initialize Font.\n\nTerminating...\n\n");
+      fprintf (stderr,
+	     "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+A font file named %s it wanted to load was not found.\n\
+\n\
+Please check that the file is present and not corrupted\n\
+in your distribution of Freedroid.\n\
+\n\
+Freedroid will terminate now to point at the error.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , MENU_FONT_FILE );
         Terminate(ERR);
   } else
   printf("\nSDL Menu Font initialisation successful.\n");
 
   if ( ( Para_BFont = LoadFont (PARA_FONT_FILE) ) == NULL )
     {
-      fprintf(stderr, "\n\nCouldn't initialize Font.\n\nTerminating...\n\n");
+      fprintf (stderr,
+	     "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+A font file named %s it wanted to load was not found.\n\
+\n\
+Please check that the file is present and not corrupted\n\
+in your distribution of Freedroid.\n\
+\n\
+Freedroid will terminate now to point at the error.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , PARA_FONT_FILE );
       Terminate(ERR);
     } else
       printf("\nSDL Para Font initialisation successful.\n");
 
   if ( ( FPS_Display_BFont = LoadFont ( FPS_FONT_FILE) ) == NULL )
     {
-      fprintf(stderr, "\n\nCouldn't initialize Font.\n\nTerminating...\n\n");
+      fprintf (stderr,
+	     "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+A font file named %s it wanted to load was not found.\n\
+\n\
+Please check that the file is present and not corrupted\n\
+in your distribution of Freedroid.\n\
+\n\
+Freedroid will terminate now to point at the error.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , FPS_FONT_FILE );
       Terminate(ERR);
     } else
       printf("\nSDL FPS Display Font initialisation successful.\n");

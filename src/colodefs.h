@@ -29,7 +29,7 @@
 #define DATA70FONTCOLOR 7
 #define DATA70BGCOLOR 0
 
-#define RAHMEN_BG_COLOR		254
+#define BANNER_BG_COLOR		254
 #define ALLALERTCOLORS 		3
 
 #define FARBENPROLEVEL 5
@@ -64,8 +64,8 @@
 #define FONT_FG 251
 #define FONT_HG 252
 
-#define RAHMEN_WHITE 32
-#define RAHMEN_VIOLETT 190
+#define BANNER_WHITE 32
+#define BANNER_VIOLETT 190
 /*
 #define FONT_YELLOW 63,61,0
 #define FONT_GREEN 0,50,0

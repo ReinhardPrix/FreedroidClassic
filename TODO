@@ -28,12 +28,6 @@ Outstanding release-critical bugs (priority: high)
   SDL_rectangle-filling needed, as it's a simple color scheme anyway
   maybe even use alpha-channel??
   
-- (rp:) Robots now "jitter" until they reach their waypoint: adapt to new
-        coordinate-treatment: 
-  (jp:) This does only happen with "slow" machines.  I had that too at
-        first and then adapted the constant.  Will be more cautios and
-        work over the constant again.
-
 - (rp) Build-environment: make sure SDL/X,jpeg etc tests work ok!
 
 - (jp) The game SHOULD be playtested on a *SLOW* machine before any release
@@ -103,6 +97,11 @@ Wishlist
 
 Resolved bugs
 -------------
+- DONE  Robots now "jitter" until they reach their waypoint: adapt to new
+        coordinate-treatment: 
+  (jp:) This does only happen with "slow" machines.  I had that too at
+        first and then adapted the constant.  Will be more cautios and
+        work over the constant again.
 - (DONE) make sure all svgalib references are removed
 - (rp) autoconf/automake: complete SDL checks 
 - (DONE) Frage: weiss irgendwer wozu die globale Variable "BeamLine" dient??
