@@ -3674,15 +3674,22 @@ ThisEnemyNeedsToBeBlitted ( int Enum , int x , int y )
 void
 PutEnemyEnergyBar ( int Enum , SDL_Rect TargetRectangle )
 {
-    int Percentage;
+    float Percentage;
     SDL_Rect FillRect;
     static Uint32 full_color_enemy ;
     static Uint32 full_color_friend ;
     static Uint32 energy_empty_color ;
-#define ENEMY_ENERGY_BAR_OFFSET_X 0
-#define ENEMY_ENERGY_BAR_OFFSET_Y (0)
-#define ENEMY_ENERGY_BAR_LENGTH 65
-    
+   
+    int x, y , w ,h;
+    myColor c1 = {0,0,0,255} ;
+    myColor c2 = {0,0,0,255} ;
+
+    #define ENEMY_ENERGY_BAR_OFFSET_X 0
+    #define ENEMY_ENERGY_BAR_OFFSET_Y (-20)
+    #define ENEMY_ENERGY_BAR_LENGTH 65
+
+    #define ENEMY_ENERGY_BAR_WIDTH 7 
+
     //--------------------
     // If the enemy is dead already, there's nothing to do here...
     //
@@ -3697,39 +3704,59 @@ PutEnemyEnergyBar ( int Enum , SDL_Rect TargetRectangle )
     energy_empty_color = SDL_MapRGB( Screen->format, 0 , 0 , 0 ) ; 
     
     //--------------------
-    // Now we fill our bars...
+    // work out the percentage health
     //
-    Percentage = ( ENEMY_ENERGY_BAR_LENGTH * AllEnemys [ Enum ] . energy ) / Druidmap [ AllEnemys [ Enum ] . type ] . maxenergy ;
+    Percentage = ( AllEnemys [ Enum ] . energy ) / Druidmap [ AllEnemys [ Enum ] . type ] . maxenergy ;
     
-    FillRect . x = TargetRectangle . x + ENEMY_ENERGY_BAR_OFFSET_X ;
-    FillRect . y = TargetRectangle . y - 7 - ENEMY_ENERGY_BAR_OFFSET_Y ;
-    FillRect . h = 7 ; 
-    FillRect . w = Percentage ;
+	if ( use_open_gl ) {
+
+    #ifdef HAVE_LIBGL
+      // draw cool bars here
+      x = TargetRectangle . x ;
+      y = TargetRectangle . y ;
+      w = TargetRectangle . w ;
+      h = TargetRectangle . h ;
+ 
+      if ( AllEnemys [ Enum ] . is_friendly ) 
+		c1.g = 255;
+      else
+	    c1.r = 255;
+
+	  // tweak as needed, this alters the transparency
+	  c1.a = 140 ;
+	  drawIsoEnergyBar( Z_DIR, x,y,1, 5,5,w,Percentage ,&c1, &c2 ) ;
+
+    #endif
+	  
+    } else {
+	  //sdl stuff here
+
+      FillRect . x = TargetRectangle . x ;
+      FillRect . y = TargetRectangle . y - ENEMY_ENERGY_BAR_WIDTH - ENEMY_ENERGY_BAR_OFFSET_Y ;
+      FillRect . h = ENEMY_ENERGY_BAR_WIDTH ; 
+      FillRect . w = Percentage * TargetRectangle . w ;
     
-    //--------------------
-    // If the enemy is friendly, then we needn't display his health, right?
-    // Or better yet, we might show a green energy bar instead.  That's even
-    // better!
-    //
-    if ( AllEnemys [ Enum ] . is_friendly ) 
-	our_SDL_fill_rect_wrapper ( Screen , &FillRect , full_color_friend ) ;
-    else
-	our_SDL_fill_rect_wrapper ( Screen , &FillRect , full_color_enemy ) ;
+      //--------------------
+      // If the enemy is friendly, then we needn't display his health, right?
+      // Or better yet, we might show a green energy bar instead.  That's even
+      // better!
+      if ( AllEnemys [ Enum ] . is_friendly ) 
+	    our_SDL_fill_rect_wrapper ( Screen , &FillRect , full_color_friend ) ;
+      else
+	    our_SDL_fill_rect_wrapper ( Screen , &FillRect , full_color_enemy ) ;
     
-    //--------------------
-    // Now after the energy bar has been drawn, we can start to draw the
-    // empty part of the energy bar (but only of course, if there is some
-    // empty part at all!  (Otherwise we get indefinately large energy
-    // bars...
-    //
-    FillRect . x = TargetRectangle . x + Percentage + ENEMY_ENERGY_BAR_OFFSET_X ;
-    FillRect . y = TargetRectangle . y - 7 - ENEMY_ENERGY_BAR_OFFSET_Y ;
-    FillRect . h = 7 ; 
-    FillRect . w = ENEMY_ENERGY_BAR_LENGTH - Percentage ;
-    
-    if ( Percentage < ENEMY_ENERGY_BAR_LENGTH )
-	our_SDL_fill_rect_wrapper ( Screen , &FillRect , energy_empty_color ) ;
-    
+      //--------------------
+      // Now after the energy bar has been drawn, we can start to draw the
+      // empty part of the energy bar (but only of course, if there is some
+      // empty part at all!  (Otherwise we get indefinately large energy
+      // bars...
+      FillRect . x += (Percentage * TargetRectangle . w) ;
+      FillRect . w = (1-Percentage) * TargetRectangle . w ;
+
+      if ( Percentage < 1.0 )
+	  our_SDL_fill_rect_wrapper ( Screen , &FillRect , energy_empty_color ) ;
+    }
+
 }; // void PutEnemyEnergyBar ( Enum , TargetRectangle )
 
 /* ----------------------------------------------------------------------
@@ -4128,13 +4155,12 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 	    }
 	}
 	
-	
 	TargetRectangle . x = 
 	    translate_map_point_to_screen_pixel ( ThisRobot -> virt_pos.x , ThisRobot -> virt_pos.y , TRUE );
 	TargetRectangle . y = 
-	    translate_map_point_to_screen_pixel ( ThisRobot -> virt_pos.x , ThisRobot -> virt_pos.y , FALSE )
+	    translate_map_point_to_screen_pixel ( ThisRobot -> virt_pos.x , ThisRobot -> virt_pos.y , FALSE ) ;
 	    - ENEMY_ENERGY_BAR_OFFSET_Y ;
-	
+	  
 	if ( use_open_gl )
 	{
 	    //--------------------

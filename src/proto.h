@@ -157,10 +157,26 @@ EXTERN int level_is_partly_visible ( int level_num );
 #else
 #define EXTERN extern
 #endif
+
+typedef struct {
+		Uint8 r;
+		Uint8 g;
+		Uint8 b;
+		Uint8 a;
+} myColor ;
+
+enum {
+		Z_DIR,
+		X_DIR,
+		Y_DIR
+};
+
 EXTERN int our_SDL_flip_wrapper ( SDL_Surface *screen ) ;
 EXTERN int our_SDL_blit_surface_wrapper(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect);
 EXTERN void our_SDL_update_rect_wrapper ( SDL_Surface *screen, Sint32 x, Sint32 y, Sint32 w, Sint32 h ) ;
 EXTERN int our_SDL_fill_rect_wrapper (SDL_Surface *dst, SDL_Rect *dstrect, Uint32 color);
+EXTERN void drawIsoEnergyBar(int dir, int x, int y, int z, int w, int d, int length, float fill, myColor *c1, myColor *c2  ) ;
+
 EXTERN SDL_Surface* our_SDL_display_format_wrapper ( SDL_Surface *surface );
 EXTERN SDL_Surface* our_SDL_display_format_wrapperAlpha ( SDL_Surface *surface );
 EXTERN SDL_Surface* our_IMG_load_wrapper( const char *file );

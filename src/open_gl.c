@@ -36,6 +36,12 @@
 #include "proto.h"
 #include "SDL_rotozoom.h"
 
+// 28 degress is the magic angle for our iso view
+#define COS_45 0.707106
+#define SIN_45 0.707106
+#define COS_28 0.88294759
+#define SIN_28 0.46947156
+
 /* ----------------------------------------------------------------------
  * This is a wrapper for the SDL_Flip function, that will use either the
  * OpenGL buffer-swapping or the classic SDL flipper, depending on the
@@ -231,6 +237,98 @@ our_SDL_fill_rect_wrapper (SDL_Surface *dst, SDL_Rect *dstrect, Uint32 color)
   return ( SDL_FillRect ( dst, dstrect, color) ) ;
 
 }; // int our_SDL_fill_rect_wrapper (SDL_Surface *dst, SDL_Rect *dstrect, Uint32 color)
+
+
+// ISO functions
+// these draw quads in the 3D planes
+void drawISOXYQuad(int x, int y, int z, int w, int h) {
+	glVertex3f( x, y-h, z);
+	glVertex3f( x, y, z);
+	glVertex3f( x+ w * COS_28, y + w * SIN_28, z);
+	glVertex3f( x+ w * COS_28, y-h + w * SIN_28, z);
+}
+
+void drawISOXZQuad(int x, int y, int z, int w, int d) {
+	glVertex3f( x + d * COS_28 ,  y - d * SIN_28, z );
+	glVertex3f(  x , y , z );
+	glVertex3f(  x + w * COS_28 , y + w * SIN_28 , z );
+	glVertex3f( x +w * COS_28 + d * COS_28, y + w * SIN_28 - d* SIN_28, z ) ;
+}
+
+void drawISOYZQuad(int x, int y, int z, int h, int d) {
+	glVertex3f( x , y-h, z );
+	glVertex3f( x, y, z );
+	glVertex3f( x + d*COS_28 , y - d * SIN_28, z );
+	glVertex3f( x + d*COS_28 , y -h - d * SIN_28, z  ) ;
+}
+
+
+/* ----------------------------------------------------------------------
+ * Draws an isometric energy bar.
+ * dir : X_DIR | Y_DIR | Z_DIR
+ * x,y,z : the position of the lower left hand corner
+ * h : the height of the energy bar, as if viewed in the X direction
+ * d : the depth of the energy bar, as if viewed in the X direction
+ * fill : the percentage the energy bar is filled
+ * c1 : the fill color
+ * c1 : the background color
+ * ---------------------------------------------------------------------- */
+void drawIsoEnergyBar(int dir, int x, int y, int z, int h, int d, int length, float fill, myColor *c1, myColor *c2  ) {
+	int l = (int) (fill * length) ;
+	int l2 = (int) length * (1.0-fill) ;
+	int lcos, lsin, l2cos, l2sin ;
+	glEnable(GL_BLEND) ;
+    glDisable( GL_DEPTH_TEST );
+	glDisable( GL_ALPHA_TEST) ;
+	glColor4ub(c1->r, c1->g, c1->b, c1->a ) ;
+	glBegin(GL_QUADS) ;
+
+	// the rest of this is trig to work out the x,y,z co-ordinates of the quads
+	if ( dir == X_DIR ) {
+		// we need to round these or sometimes the
+		// quads will be out by 1 pixel
+		lcos = (int) rint( l * COS_28) ;
+		lsin = (int) rint( l * SIN_28) ;
+		l2cos = (int) rint( l2 * COS_28) ;
+		l2sin = (int) rint( l2 * SIN_28) ;
+		
+		drawISOXYQuad(x,y,z,l,h) ;
+		drawISOYZQuad( x + lcos ,y + lsin ,z,h,d) ;
+		drawISOXZQuad( x, y-h,z, l,d) ;
+		glColor4ub(c2->r, c2->g, c2->b, c2->a ) ;
+		drawISOXYQuad(x+ lcos,y+ lsin ,z,l2,h) ;
+		drawISOYZQuad( x + l2cos + lcos ,y+ l2sin + lsin ,z,h,d) ;
+		drawISOXZQuad( x + lcos, y+ lsin -h,z, l2,d) ;
+
+	} else if ( dir == Y_DIR) {
+		// this should be wcos, but we're saving variables :)
+		lcos = (int) rint ( h * COS_28) ;
+		lsin = (int) rint ( h * SIN_28) ;
+		drawISOXYQuad(x,y,z,h,l) ;
+		drawISOYZQuad( x + lcos ,y + lsin	,z,l,d) ;
+		drawISOXZQuad( x, y-l,z, h,d) ;
+		glColor4ub(c2->r, c2->g, c2->b, c2->a ) ;
+		drawISOXYQuad(x,y-l,z,h,l2) ;
+		drawISOYZQuad( x + lcos ,y -l + lsin ,z,l2,d) ;
+		drawISOXZQuad( x, y-l-l2,z, h,d) ;
+	} else {
+		lcos = (int) rint( l * COS_28) ;
+		lsin = (int) rint( l * SIN_28) ;
+		// think of this a dcos, same reason above
+ 		l2cos = (int) rint( d * COS_28) ;
+		l2sin = (int) rint( d * SIN_28) ;
+		drawISOXYQuad(x,y,z,d,h) ;
+		drawISOYZQuad( x + l2cos ,y + l2sin ,z,h,l) ;
+		drawISOXZQuad( x, y-h,z, d,l) ;
+		
+		glColor4ub(c2->r, c2->g, c2->b, c2->a ) ;
+		drawISOYZQuad( x + l2cos + lcos ,y + l2sin - lsin ,z,h,l2) ;
+		drawISOXZQuad( x+ lcos , y - lsin -h,z, d,l2) ;
+	}
+	glEnd() ;
+}
+
+
 
 /* ----------------------------------------------------------------------
  *
