@@ -6,16 +6,17 @@ next release: 0.7.2  (bug-fix release)
 
 Outstanding release-critical bugs (priority: high)
 --------------------------------------------------
-- (rp!!) SegFault caused by entering Highscore list?! also after/in takeover ?!
-  (rp?, check Debriefing() and GetString() )
+- (jp/rp?) make sure sound-code respects HAVE_LIBSDL_MIXER #define!!
 
-- (rp?) The game gets stuck in the very left elevator on the deck above the
-        very lowest deck.  Might have something to do with map topics?
+- (rp!!) SegFault caused by entering Highscore list?! also after/in takeover ?! 
+==> tritt das wirklich immer noch auf??
+
+... and then: ready for the last release of the old engine!??
 
 Outstanding normal bugs (priority: normal)
 ------------------------------------------
-
-- (rp!) Saving of Ships does NOT work correctly in the LevelEditor integrated in the game
+- (rp!) Saving of Ships does NOT work correctly in the LevelEditor
+  integrated in the game 
 
 Outstanding tuning/design bugs and general TODO (priority: low)
 --------------------------------------------------------------
@@ -27,9 +28,6 @@ Outstanding tuning/design bugs and general TODO (priority: low)
   Framerate verschlingt!! (we should check that first, though)
   (wird sowieso automatisch behoben bzw. automatisch umgestellt, 
   wenn wir mit der neuen Engine dann auf TrueColor-Modus umstellen.
-
-- hide mouse pointer
-  (would that really be a good idea?)
 
 - level 11: console rechts unten ist verkehrt
   (wird leicht zu beheben sein, sobald das Abspeichern von maps aus
@@ -53,12 +51,7 @@ Wishlist
 
 - save highscores to disk
 
-- (DONE) Options menu, wo man etwa: 1.) Die Lautstaerke der Hintergrundmusik
-         bequem einstellen kann: Use ESCAPE key to access menu
-
 - (rp?) mouse-support (should be good with touchstick on laptop!)
-
-- (rp?) joystick/gamepad support waere toll!
 
 - (rp): PORT the map-editor 'maped' ?
   (PARTLY DONE: jp: A maped clone has partly been integrated into the game)
@@ -135,8 +128,8 @@ Resolved bugs
 	   --> Fieps-Fieps ist jetzt auch bei uns nur am Anfang.  Spaeter aber ein Bischen
 	       Themenbezogene Hintergrundmusik find ich dagegen gar nicht so schlecht.
 - (DONE)   Also there are 516 in the yellow level, which shouldn't be the  case.
-           I also encounter OTHER 001 druids of black color! Especially after having died at
-           least once before!  Very strange!
+           I also encounter OTHER 001 druids of black color!
+               Especially after having died at least once before!  Very strange!
            (rp: this should now work ok)
 - (rp)     Timing in takeover game 
 - (DONE)   Concept view is ugly
@@ -165,4 +158,17 @@ Resolved bugs
 	 The variable onscreen is not updated except for in PutEnemys and should
 	 perhaps be removed:  We HAVE the time to calculate visibility every
 	 time we want to use it and DO NOT NEED to store is somewhere.
+- hide mouse pointer
+  (would that really be a good idea?)
+  YES: only relevant for Freedroid-window, and has ben done already 
 
+- (rp?) The game gets stuck in the very left elevator on the deck above the
+          very lowest deck.  Might have something to do with map topics
+  (DONE) enemy-navigation got stuck if waypoint had _zero_
+          connections, such "solo" waypoints are signalled, but works ok now.
+
+- (rp?) joystick/gamepad support waere toll!
+  (DONE) geht schon super!
+
+- (DONE) Options menu, wo man etwa: 1.) Die Lautstaerke der Hintergrundmusik
+         bequem einstellen kann: Use ESCAPE key to access menu
