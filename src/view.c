@@ -873,10 +873,26 @@ void ShowRobotPicture(int PosX,int PosY, int Number, unsigned char* Screen){
  * $Author$
  *
  * $Log$
- * Revision 1.3  1993/05/23 21:04:51  prix
- * Sat May 22 19:54:01 1993: Energiebalken anzeigen
- * Sun May 23 08:21:48 1993: Internal
- * Sun May 23 12:17:02 1993: Level replaced by CurLevel.map struct
+ * Revision 1.4  1993/05/31 20:30:36  prix
+ * Sun May 23 18:30:16 1993: View zeigt nun den bereich etwas weiter links des Influencers
+ * Sun May 23 18:36:59 1993: Neue Berechung des Offset des 001 im internen Fenster
+ * Sun May 23 19:11:30 1993: belibige Angaben fuer INTERNBREITE UND INTERNHOEHE moeglich
+ * Mon May 24 15:04:27 1993: Endversion des Hintergrunganzeigealgorithmus (Alphavers.)
+ * Mon May 24 19:21:58 1993: Korrektur der Anzeige des Influencers fertig
+ * Tue May 25 14:54:14 1993: Bulletanzeige auf Alsolutkoordinaten umstellen */
+ * Tue May 25 15:15:49 1993: bullet wird nicht mehr Angezeigt wennnicht mehr in Sicht
+ * Tue May 25 15:19:49 1993: bullets passieren ungehindert durch offene Tueren
+ * Fri May 28 17:47:09 1993: replaced BulletBlockPointer by struct-reference Gunmap
+ * Fri May 28 18:29:54 1993: uses picpointer of struct to get pictures
+ * Fri May 28 19:06:25 1993: eliminated Darstellphase from PutInfluence (for the moment)
+ * Sun May 30 10:28:35 1993: struct.h must be included before proto.h
+ * Sun May 30 10:50:15 1993: Anpassung, dass CurLevel nun pointer
+ * Sun May 30 13:46:34 1993: Kartenausschnitte ausserhalb des Levels werden als 0 angezeigty
+ * Sun May 30 13:56:31 1993: Blasts und Bullets nur anzeigen, wenn existent
+ * Sun May 30 14:08:10 1993: BLAST/BULLETANZAHL to ALLBLASTS/BULLETS
+ * Mon May 31 14:39:16 1993: killed BlastBlockPointer
+ * Mon May 31 16:18:21 1993: GetInternFenster auch mit Offsets ungleich 0 !
+ * Mon May 31 16:25:22 1993: killed the offset=0 Pointers
  *
  * Revision 1.6  1993/09/22  14:27:14  prix
  * Sat Jul 31 21:20:14 1993: Koordinatenverschiebung bei ungerader INTERNHOEHE
