@@ -49,6 +49,33 @@ SDL_Rect mission_list_rect = { 20 , 280 , 280 , 180 } ;
 SDL_Rect mission_description_rect = { 300 , 30 , 320 , 420 } ; 
 
 /* ----------------------------------------------------------------------
+ * This function is responsible for making a new quest diary entry 
+ * visible inside the quest browser.
+ * ---------------------------------------------------------------------- */
+void
+quest_browser_enable_new_diary_entry ( int mis_num , int mis_diary_entry_num , int player_num )
+{
+
+    if ( ( mis_num < 0 ) || ( mis_num >= MAX_MISSIONS_IN_GAME ) )
+    {
+	fprintf ( stderr , "\nmission number received: %d." , mis_num );
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
+There was an illegal mission number received.",
+				   PLEASE_INFORM, IS_FATAL );
+    }
+    if ( ( mis_diary_entry_num < 0 ) || ( mis_diary_entry_num >= MAX_MISSION_DESCRIPTION_TEXTS ) )
+    {
+	fprintf ( stderr , "\nmission diary entry number received: %d." , mis_diary_entry_num );
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
+There was an illegal mission diary entry number received.",
+				   PLEASE_INFORM, IS_FATAL );
+    }
+    Me [ 0 ] . AllMissions [ mis_num ] . mission_description_visible [ mis_diary_entry_num ] = TRUE ;
+    Me [ 0 ] . AllMissions [ mis_num ] . mission_description_time [ mis_diary_entry_num ] = Me [ player_num ] . current_game_date ;
+    
+}; // void quest_browser_enable_new_diary_entry ( int mis_num , int mis_diary_entry_num , int player_num )
+
+/* ----------------------------------------------------------------------
  * This function should display the currently assigned/unassigned mission
  * and all that directly over the combat screen without interrupting the
  * game in any other way.
@@ -153,8 +180,10 @@ resolve_mouse_click_to_mission_index ( void )
 }; // int resolve_mouse_click_to_mission_index ( void )
 
 /* ----------------------------------------------------------------------
- *
- *
+ * If there is some mission selected inside the quest browser, then we
+ * should also display all info on the current status and history of that
+ * particular mission, which is exactly what this function is responsible
+ * for.
  * ---------------------------------------------------------------------- */
 void
 quest_browser_show_mission_info ( int mis_num )
@@ -190,6 +219,11 @@ There was an illegal mission number received.",
     {
 	if ( Me [ 0 ] . AllMissions [ mis_num ] . mission_description_visible [ mission_diary_index ] )
 	{
+	    sprintf ( temp_text , "[%d %02d:%02d] " , 
+		      get_days_of_game_duration ( Me [ 0 ] . AllMissions [ mis_num ] . mission_description_time [ mission_diary_index ] ) , 
+		      get_hours_of_game_duration ( Me [ 0 ] . AllMissions [ mis_num ] . mission_description_time [ mission_diary_index ] ) , 
+		      get_minutes_of_game_duration ( Me [ 0 ] . AllMissions [ mis_num ] . mission_description_time [ mission_diary_index ] ) ) ;
+	    DisplayText( temp_text , -1 , -1 , &mission_description_rect );	    
 	    DisplayText( mission_diary_texts [ mis_num ] [ mission_diary_index ] , -1 , -1 , &mission_description_rect );	    
 	    DisplayText( "\n" , -1 , -1 , &mission_description_rect );	    
 	}
@@ -590,6 +624,7 @@ AssignMission( int MissNum )
     // can be assigned, so it's safe to do that automatically.
     //
     Me [ 0 ] . AllMissions [ MissNum ] . mission_description_visible [ 0 ] = TRUE;
+    quest_browser_enable_new_diary_entry ( MissNum , 0 , 0 );
 
 }; // void AssignMission( int MissNum );
 
@@ -795,6 +830,7 @@ GetQuestList ( char* QuestListFilename )
 	{
 	    mission_diary_texts [ MissionTargetIndex ] [ diary_entry_nr ] = "" ;
 	    Me [ 0 ] . AllMissions [ MissionTargetIndex ] . mission_description_visible [ diary_entry_nr ] = FALSE ;
+	    Me [ 0 ] . AllMissions [ MissionTargetIndex ] . mission_description_time [ diary_entry_nr ] = 0 ;
 	}
 	next_diary_entry_pointer = MissionTargetPointer;
 	number_of_diary_entries = 0;

@@ -696,21 +696,7 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
 	sscanf ( WorkString , "M%dE%d:" , &mis_num , &mis_diary_entry_num );
 	DebugPrintf ( -4 , "\nreceived mission number: %d and diary entry number: %d." , 
 		      mis_num , mis_diary_entry_num );
-	if ( ( mis_num < 0 ) || ( mis_num >= MAX_MISSIONS_IN_GAME ) )
-	{
-	    fprintf ( stderr , "\nmission number received: %d." , mis_num );
-	    GiveStandardErrorMessage ( __FUNCTION__  , "\
-There was an illegal mission number received.",
-				       PLEASE_INFORM, IS_FATAL );
-	}
-	if ( ( mis_diary_entry_num < 0 ) || ( mis_diary_entry_num >= MAX_MISSION_DESCRIPTION_TEXTS ) )
-	{
-	    fprintf ( stderr , "\nmission diary entry number received: %d." , mis_diary_entry_num );
-	    GiveStandardErrorMessage ( __FUNCTION__  , "\
-There was an illegal mission diary entry number received.",
-				       PLEASE_INFORM, IS_FATAL );
-	}
-	Me [ 0 ] . AllMissions [ mis_num ] . mission_description_visible [ mis_diary_entry_num ] = TRUE ;
+	quest_browser_enable_new_diary_entry ( mis_num , mis_diary_entry_num , 0 );
     }
     else if ( CountStringOccurences ( ExtraCommandString , "ExecuteActionWithLabel:" ) )
     {

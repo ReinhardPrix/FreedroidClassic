@@ -282,6 +282,7 @@ EXTERN void quest_browser_interface ( void );
 EXTERN void AssignMission( int MissNum );
 EXTERN void GetQuestList ( char* QuestListFilename ) ;
 EXTERN void CheckIfMissionIsComplete ( void );
+EXTERN void quest_browser_enable_new_diary_entry ( int mis_num , int mis_diary_entry_num , int player_num );
 
 // map.c 
 #undef EXTERN
@@ -701,6 +702,9 @@ EXTERN int FS_filelength (FILE *f);
 #endif
 EXTERN void GiveItemDescription ( char* ItemDescText , item* CurItem , int ForShop );
 EXTERN void DisplayBanner ( void );
+EXTERN int get_days_of_game_duration ( float current_game_date );
+EXTERN int get_hours_of_game_duration ( float current_game_date );
+EXTERN int get_minutes_of_game_duration ( float current_game_date );
 
 // shop.c 
 #undef EXTERN

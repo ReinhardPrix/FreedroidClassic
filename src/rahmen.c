@@ -1466,6 +1466,36 @@ ShowCurrentTextWindow ( void )
 
 }; // void ShowCurrentTextWindow ( void )
 
+/* ---------------------------------------------------------------------- 
+ * This function derives the 'minutes' component of the time already 
+ * elapsed in this game.
+ * ---------------------------------------------------------------------- */
+int
+get_minutes_of_game_duration ( float current_game_date )
+{
+    return ( ((int)( 10 * Me [ 0 ] . current_game_date / ( 60 ))) % 60 ) ;
+}; // void get_minutes_of_game_duration ( float current_game_date )
+
+/* ---------------------------------------------------------------------- 
+ * This function derives the 'hours' component of the time already 
+ * elapsed in this game.
+ * ---------------------------------------------------------------------- */
+int
+get_hours_of_game_duration ( float current_game_date )
+{
+    return ( ((int)( 10 * Me [ 0 ] . current_game_date / ( 60 * 60 ))) % 60 ) ;
+}; // void get_hours_of_game_duration ( float current_game_date )
+
+/* ---------------------------------------------------------------------- 
+ * This function derives the 'days' component of the time already 
+ * elapsed in this game.
+ * ---------------------------------------------------------------------- */
+int
+get_days_of_game_duration ( float current_game_date )
+{
+    return ( ((int)( 10 * Me [ 0 ] . current_game_date / ( 60 * 60 * 24 ))) );
+}; // void get_days_of_game_duration ( float current_game_date )
+
 /* ----------------------------------------------------------------------
  * This function updates the various displays that are usually blitted
  * right into the combat window, like energy and status meter and that...
@@ -1491,8 +1521,8 @@ DisplayBanner ( void )
     {
 	sprintf ( level_name_and_time , "%s  %02d:%02d " , 
 		  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> Levelname , 
-		  ((int)( 10 * Me [ 0 ] . current_game_date / ( 60 * 60 ))) % 24 ,
-		  ((int)( 10 * Me [ 0 ] . current_game_date / ( 60 ))) % 60 ) ;
+		  get_hours_of_game_duration ( Me [ 0 ] . current_game_date ) ,
+		  get_minutes_of_game_duration ( Me [ 0 ] . current_game_date ) );
 	RightPutStringFont ( Screen , FPS_Display_BFont , 2 , level_name_and_time );
     }
 
