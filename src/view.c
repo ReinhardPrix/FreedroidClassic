@@ -1001,8 +1001,7 @@ void
 ShowRobotPicture (int PosX, int PosY, int Number )
 {
   SDL_Surface *tmp;
-  SDL_Rect SourceRectangle;
-  SDL_Rect TargetRectangle;
+  SDL_Rect target;
   char *fpath;
   char fname[500];
 
@@ -1035,25 +1034,10 @@ Sorry...\n\
     }
   
 
-  SourceRectangle.x=0;
-  SourceRectangle.y=0;
-  SourceRectangle.w=User_Rect.w;
-  if ( tmp->w > 200 ) 
-    {
-      SDL_SetClipRect( Screen , NULL );
-      TargetRectangle.x=0;
-      TargetRectangle.y=BANNER_HEIGHT;
-      SourceRectangle.h=SCREENHEIGHT-BANNER_HEIGHT;
-    }
-  else 
-    {
-      TargetRectangle.x=User_Rect.x;
-      TargetRectangle.y=User_Rect.y + TEXT_STRETCH * FontHeight(Menu_BFont) ;
-      SourceRectangle.h=User_Rect.h;
-    }
+  SDL_SetClipRect( Screen , NULL );
+  Set_Rect (target, PosX, PosY, SCREENLEN, SCREENHEIGHT);
+  SDL_BlitSurface( tmp , NULL, Screen , &target);
 
-  SDL_BlitSurface( tmp , &SourceRectangle, Screen , &TargetRectangle );
-  
   SDL_FreeSurface(tmp);
 
   DebugPrintf (2, "\nvoid ShowRobotPicture(...): Usual end of function reached.");
