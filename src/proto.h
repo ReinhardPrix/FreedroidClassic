@@ -228,8 +228,10 @@ EXTERN int GetInventoryItemAt ( int x , int y );
 EXTERN int CursorIsInInventoryGrid( int x , int y );
 EXTERN int CursorIsInUserRect( int x , int y );
 EXTERN int CursorIsInWeaponRect( int x , int y );
+EXTERN int GetHeldItemCode ( void );
 EXTERN int GetInventorySquare_x( int x );
 EXTERN int GetInventorySquare_y( int x );
+EXTERN void DropHeldItemToWeaponSlot ( void );
 EXTERN void DropHeldItemToInventory( void );
 EXTERN void DropHeldItemToTheFloor ( void );
 

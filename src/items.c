@@ -69,6 +69,36 @@ ApplyItemFromInventory( int ItemNum )
 
 }; // void ApplyItemFromInventory( int ItemNum )
 
+/* ----------------------------------------------------------------------
+ * This function looks through the inventory list and returns the index
+ * of the first inventory item that is marked as 'held in hand'.
+ * If no such item is found, an index of (-1) is returned.
+ * ---------------------------------------------------------------------- */
+int
+GetHeldItemInventoryIndex( void )
+{
+  int InvPos;
+
+  // --------------------
+  // First we find out the inventory index of the item we want to
+  // drop
+  //
+  for ( InvPos = 0 ; InvPos < MAX_ITEMS_IN_INVENTORY ; InvPos ++ )
+    {
+      if ( Me.Inventory[ InvPos ].currently_held_in_hand ) break;
+    }
+  if ( InvPos >=  MAX_ITEMS_IN_INVENTORY )
+    {
+      DebugPrintf( 0 , "\nNo item in inventory seems to be currently held in hand...");
+      InvPos = ( -1 ) ;
+    }
+  else
+    {
+      DebugPrintf( 0 , "\nInventory item index %d was held in hand." , InvPos );
+    }
+  return ( InvPos );
+}; // int GetHeldItemInventoryIndex( void )
+
 int
 Inv_Pos_Is_Free( int x , int y )
 {
@@ -96,8 +126,11 @@ Inv_Pos_Is_Free( int x , int y )
   return ( TRUE );
 }; // int Inv_Pos_Is_Free( Inv_Loc.x , Inv_Loc.y )
 
-
-
+/* ----------------------------------------------------------------------
+ * This function returns the index in the invenotry list of the object
+ * at the inventory position x y.  If no object is found to occupy that
+ * square, an index of (-1) is returned.
+ * ---------------------------------------------------------------------- */
 int 
 GetInventoryItemAt ( int x , int y )
 {
@@ -123,7 +156,7 @@ GetInventoryItemAt ( int x , int y )
     }
   return ( -1 ); // Nothing found at this grabbing location!!
 
-};
+}; // int GetInventoryItemAt ( int x , int y )
 
 /* ----------------------------------------------------------------------
  * This function checks if a given screen position lies within the user
@@ -202,6 +235,35 @@ GetInventorySquare_y( int y )
 }; // int GetInventorySquare_y( y )
 
 /* ----------------------------------------------------------------------
+ * This function gives the item type of the currently held item.  
+ * ---------------------------------------------------------------------- */
+int
+GetHeldItemCode ( void )
+{
+  int InvPos;
+
+  // --------------------
+  // First we find out the inventory index of the item we want to
+  // drop
+  //
+  for ( InvPos = 0 ; InvPos < MAX_ITEMS_IN_INVENTORY ; InvPos ++ )
+    {
+      if ( Me.Inventory[ InvPos ].currently_held_in_hand ) break;
+    }
+  if ( InvPos >=  MAX_ITEMS_IN_INVENTORY )
+    {
+      DebugPrintf( 0 , "\nNo item in inventory seems to be currently held in hand...");
+      return ( -1 );
+    }
+  else
+    {
+      DebugPrintf( 0 , "\nInventory item index %d was held in hand." , InvPos );
+    }
+  
+  return ( Me.Inventory[ InvPos ].type );
+}; // int GetInventorySquare_y( y )
+
+/* ----------------------------------------------------------------------
  * This function checks if a given item type could be dropped into the 
  * inventory grid at location x y.  Only the space is taken into account
  * and if other items block the way or not.
@@ -249,18 +311,12 @@ DropHeldItemToTheFloor ( void )
   // First we find out the inventory index of the item we want to
   // drop
   //
-  for ( InvPos = 0 ; InvPos < MAX_ITEMS_IN_INVENTORY ; InvPos ++ )
+  InvPos = GetHeldItemInventoryIndex(  );
+
+  if ( InvPos ==  (-1) )
     {
-      if ( Me.Inventory[ InvPos ].currently_held_in_hand ) break;
-    }
-  if ( InvPos >=  MAX_ITEMS_IN_INVENTORY )
-    {
-      DebugPrintf( 0 , "\nNo item in inventory seems to be currently held in hand...");
+      DebugPrintf( 0 , "\nvoid DropHeldItemToTheFloor: No item in inventory seems to be currently held in hand...");
       return;
-    }
-  else
-    {
-      DebugPrintf( 0 , "\nInventory item index %d was held in hand." , InvPos );
     }
 
   // --------------------
@@ -290,6 +346,21 @@ DropHeldItemToTheFloor ( void )
 
 }; // void DropHeldItemToTheFloor ( void )
 
+void
+DropHeldItemToWeaponSlot ( void )
+{
+  int InvPos;
+
+  InvPos = GetHeldItemInventoryIndex( );
+
+  // Now the item is installed into the weapon slot of the influencer
+  Druidmap[ DRUID001 ].weapon_item = Me.Inventory[ InvPos ].type;
+
+  // Now the item is removed from inventory and no longer held in hand as well...
+  Me.Inventory[ InvPos ].type = ( -1 );
+  Me.Inventory[ InvPos ].currently_held_in_hand = FALSE;
+
+}; // void DropHeldItemToWeaponSlot ( void )
 
 void 
 DropHeldItemToInventory( void )
@@ -301,18 +372,12 @@ DropHeldItemToInventory( void )
   // First we find out the inventory index of the item we want to
   // drop
   //
-  for ( InvPos = 0 ; InvPos < MAX_ITEMS_IN_INVENTORY ; InvPos ++ )
-    {
-      if ( Me.Inventory[ InvPos ].currently_held_in_hand ) break;
-    }
-  if ( InvPos >=  MAX_ITEMS_IN_INVENTORY )
+  InvPos = GetHeldItemInventoryIndex(  );
+
+  if ( InvPos == (-1) )
     {
       DebugPrintf( 0 , "\nNo item in inventory seems to be currently held in hand...");
       return;
-    }
-  else
-    {
-      DebugPrintf( 0 , "\nInventory item index %d was held in hand." , InvPos );
     }
 
   // --------------------

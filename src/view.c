@@ -361,14 +361,16 @@ ShowInventoryMessages( void )
 	      Item_Held_In_Hand = ( -1 );
 	      DebugPrintf( 0 , "\nGrabbing FAILED!" );
 	    }
-
-	  //--------------------
-	  // At this point we know, that we have just grabbed something from the inventory
-	  // So we set, that something should be displayed in the 'hand', and it should of
-	  // course be the image of the item grabbed from inventory.
-	  //
-	  Item_Held_In_Hand = ItemMap[ Me.Inventory[ Grabbed_InvPos ].type ].picture_number ;
-	  Me.Inventory[ Grabbed_InvPos ].currently_held_in_hand = TRUE;
+	  else
+	    {
+	      //--------------------
+	      // At this point we know, that we have just grabbed something from the inventory
+	      // So we set, that something should be displayed in the 'hand', and it should of
+	      // course be the image of the item grabbed from inventory.
+	      //
+	      Item_Held_In_Hand = ItemMap[ Me.Inventory[ Grabbed_InvPos ].type ].picture_number ;
+	      Me.Inventory[ Grabbed_InvPos ].currently_held_in_hand = TRUE;
+	    }
 	}
       goto NoMoreGrabbing;
     }
@@ -417,10 +419,18 @@ ShowInventoryMessages( void )
       if ( CursorIsInWeaponRect ( CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 0 , "\nItem dropped onto the weapons rectangle!" );
-	  // DropHeldItemToTheFloor( );
-	  Item_Held_In_Hand = ( -1 );
+	  DebugPrintf( 0 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
+	  if ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_weapon_slot )
+	    {
+	      DropHeldItemToWeaponSlot ( );
+	      Item_Held_In_Hand = ( -1 );
+	    }
+	  else
+	    {
+	      // If the item can't be used as a weapon, we don't do anything
+	    }
 	}
-    }
+    } // if release things...
 
  NoMoreReleasing:
  NoMoreGrabbing:
