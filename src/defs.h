@@ -425,6 +425,8 @@ enum _non_player_characters
     PERSON_SUBDIALOG_DUMMY,
     PERSON_TYBALT,
     PERSON_EWALD,
+    PERSON_KEVINS_GUARD,
+    PERSON_KEVIN,
     LAST_PERSON
   };
 #define MAX_PERSONS             (LAST_PERSON)
@@ -688,7 +690,7 @@ enum
 
 
 #define MAXWAYPOINTS 		200
-#define MAX_DOORS_ON_LEVEL 	80
+#define MAX_DOORS_ON_LEVEL 	120
 #define MAX_AUTOGUNS_ON_LEVEL 	60
 #define MAX_REFRESHES_ON_LEVEL	39
 #define MAX_CONSUMERS_ON_LEVEL	39

@@ -218,6 +218,8 @@ ResolveDialogSectionToChatFlagsIndex ( char* SectionName )
   if ( strcmp ( SectionName , "StandardBotAfterTakeover" ) == 0 ) return PERSON_STANDARD_BOT_AFTER_TAKEOVER;
   if ( strcmp ( SectionName , "Tybalt" ) == 0 ) return PERSON_TYBALT;
   if ( strcmp ( SectionName , "Ewald" ) == 0 ) return PERSON_EWALD;
+  if ( strcmp ( SectionName , "KevinGuard" ) == 0 ) return PERSON_KEVINS_GUARD;
+  if ( strcmp ( SectionName , "Kevin" ) == 0 ) return PERSON_KEVIN;
 
   if ( strncmp ( SectionName , "subdlg_" , 6 ) == 0 ) return PERSON_SUBDIALOG_DUMMY;
 
