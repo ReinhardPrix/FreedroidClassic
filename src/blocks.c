@@ -1546,20 +1546,27 @@ Load_Enemy_Surfaces( void )
   droid_stand_animation_speed_factor [ i ] = 5 ;
   ModelMultiplier  [ i ] = 1 ;i++; 
   PrefixToFilename [ i ] = "302" ; // 6
-  first_walk_animation_image[ i ] = 1 ;
-  last_walk_animation_image[ i ] = 1 ;
-  first_attack_animation_image[ i ] = 2 ;
-  last_attack_animation_image[ i ] = 16 ;
-  first_gethit_animation_image[ i ] = 17 ;
-  last_gethit_animation_image[ i ] = 24 ;
-  first_death_animation_image[ i ] = 25 ;
-  last_death_animation_image[ i ] = 31 ;
-  first_stand_animation_image [ i ] = 32 ;
-  last_stand_animation_image [ i ] = 32 ;
-  use_default_attack_image [ i ] = FALSE ;
-  use_default_gethit_image [ i ] = FALSE ;
-  use_default_death_image [ i ] = FALSE ;
-  use_default_stand_image [ i ] = TRUE ;
+  //--------------------
+  // As the 302 now uses an image collection file, the information
+  // about the first and last animation images will be taken from
+  // the image collection archive anyway, so no need to hard-code
+  // anything here and changes in the image collection file will
+  // take effect immediately without code adaption...
+  //
+  // first_walk_animation_image[ i ] = 1 ;
+  // last_walk_animation_image[ i ] = 1 ;
+  // first_attack_animation_image[ i ] = 2 ;
+  // last_attack_animation_image[ i ] = 16 ;
+  // first_gethit_animation_image[ i ] = 17 ;
+  // last_gethit_animation_image[ i ] = 24 ;
+  // first_death_animation_image[ i ] = 25 ;
+  // last_death_animation_image[ i ] = 31 ;
+  // first_stand_animation_image [ i ] = 32 ;
+  // last_stand_animation_image [ i ] = 32 ;
+  // use_default_attack_image [ i ] = FALSE ;
+  // use_default_gethit_image [ i ] = FALSE ;
+  // use_default_death_image [ i ] = FALSE ;
+  // use_default_stand_image [ i ] = TRUE ;
   Druidmap [ i ] . suppress_bullet_generation_when_attacking = TRUE ;
   droid_walk_animation_speed_factor [ i ] = 15 ;
   droid_attack_animation_speed_factor [ i ] = 15 ;
@@ -1723,20 +1730,27 @@ Load_Enemy_Surfaces( void )
   ModelMultiplier  [ i ] = 1 ;i++;
 
   PrefixToFilename [ i ] = "614" ; // 14
-  first_walk_animation_image [ i ] = 1 ;
-  last_walk_animation_image [ i ] = 5 ;
-  first_attack_animation_image [ i ] = 6 ;
-  last_attack_animation_image [ i ] = 6 ;
-  first_gethit_animation_image [ i ] = 7 ;
-  last_gethit_animation_image [ i ] = 7 ;
-  first_death_animation_image [ i ] = 8 ;
-  last_death_animation_image [ i ] = 8 ;
-  first_stand_animation_image [ i ] = 9 ;
-  last_stand_animation_image [ i ] = 18 ;
-  use_default_attack_image [ i ] = TRUE ;
-  use_default_gethit_image [ i ] = TRUE ;
-  use_default_death_image [ i ] = TRUE ;
-  use_default_stand_image [ i ] = FALSE ;
+  //--------------------
+  // As the 614 now uses an image collection file, the information
+  // about the first and last animation images will be taken from
+  // the image collection archive anyway, so no need to hard-code
+  // anything here and changes in the image collection file will
+  // take effect immediately without code adaption...
+  //
+  // first_walk_animation_image [ i ] = 1 ;
+  // last_walk_animation_image [ i ] = 5 ;
+  // first_attack_animation_image [ i ] = 6 ;
+  // last_attack_animation_image [ i ] = 6 ;
+  // first_gethit_animation_image [ i ] = 7 ;
+  // last_gethit_animation_image [ i ] = 7 ;
+  // first_death_animation_image [ i ] = 8 ;
+  // last_death_animation_image [ i ] = 8 ;
+  // first_stand_animation_image [ i ] = 9 ;
+  // last_stand_animation_image [ i ] = 18 ;
+  // use_default_attack_image [ i ] = TRUE ;
+  // use_default_gethit_image [ i ] = TRUE ;
+  // use_default_death_image [ i ] = TRUE ;
+  // use_default_stand_image [ i ] = FALSE ;
   Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
   droid_walk_animation_speed_factor [ i ] = 16 ;
   droid_attack_animation_speed_factor [ i ] = 5 ;
