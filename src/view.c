@@ -2454,7 +2454,7 @@ This indicates a serious bug in this installation of Freedroid.",
     }
     else
     {
-	DebugPrintf ( 1 , "\ngrab_tux_images_from_archive (...): Opening file succeeded...");
+	DebugPrintf ( 1 , "\n%s(): Opening file succeeded..." , __FUNCTION__ );
     }
 
     return ( DataFile );
@@ -2497,7 +2497,7 @@ grab_tux_images_from_archive ( int tux_part_group , int motion_class , char* par
     //--------------------
     // A short message for debug purposes
     //
-    DebugPrintf ( 1 , "\ngrab_tux_images_from_archive:  grabbing new image series..." );
+    DebugPrintf ( 1 , "\n%s():  grabbing new image series..." , __FUNCTION__ );
 
     DataFile = open_tux_image_archive_file ( tux_part_group , motion_class , part_string );
 
@@ -2660,7 +2660,7 @@ belonging to Freedroid.",
     }
     else
     {
-	DebugPrintf( 1 , "\ngrab_tux_images_from_archive(...): file closed successfully...\n");
+	DebugPrintf( 1 , "\n%s(): file closed successfully...\n" , __FUNCTION__ );
     }
     
 }; // void grab_tux_images_from_archive ( ... )
@@ -2725,7 +2725,7 @@ This indicates a serious bug in this installation of Freedroid.",
     }
     else
     {
-	DebugPrintf ( 1 , "\ngrab_enemy_images_from_archive(...) : Opening file succeeded...");
+	DebugPrintf ( 1 , "\n%s() : Opening file succeeded..." , __FUNCTION__ );
     }
 
     //--------------------
@@ -2887,10 +2887,10 @@ belonging to Freedroid.",
     }
     else
     {
-	DebugPrintf( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : file closed successfully...\n");
+	DebugPrintf( 1 , "\n%s(): file closed successfully...\n" , __FUNCTION__ );
     }
     
-    DebugPrintf ( 1 , "\n%s:  grabbing new image series DONE." , __FUNCTION__ );
+    DebugPrintf ( 1 , "\n%s: grabbing new image series DONE." , __FUNCTION__ );
 
 }; // void grab_enemy_images_from_archive ( ... )
 
@@ -3468,7 +3468,7 @@ blit_tux ( int x , int y , int player_num )
     Text_Rect . w = ( User_Rect . w / 2 ) - 21 ;
     Text_Rect . h = ( User_Rect . h / 2 );
     
-    DebugPrintf ( 2 , "\nvoid blit_tux(void): real function call confirmed." ) ;
+    DebugPrintf ( 2 , "\n%s(): real function call confirmed." , __FUNCTION__ ) ;
 
     if ( x == -1 ) 
     {
@@ -3569,7 +3569,7 @@ blit_tux ( int x , int y , int player_num )
     //
     blit_tux_status_flags ( );
     
-    DebugPrintf (2, "\nvoid blit_tux(void): enf of function reached.");
+    DebugPrintf (2, "\n%s(): enf of function reached." , __FUNCTION__ );
 
 }; // void blit_tux( int x , int y )
 
@@ -3630,27 +3630,15 @@ PrintCommentOfThisEnemy ( int Enum )
 int
 ThisEnemyNeedsToBeBlitted ( int Enum , int x , int y )
 {
-
-    /*
-    // if enemy is on other level, return 
-    if ( AllEnemys[Enum].pos.z != CurLevel->levelnum )
-    {
-    // DebugPrintf (3, "\nvoid PutEnemy(int Enum): DIFFERENT LEVEL-->usual end of function reached.\n");
-    return;
-    }
-    */
-    
     // if enemy is on other level, return 
     if ( AllEnemys [ Enum ] . virt_pos . z != Me [ 0 ] . pos . z )
     {
-	// DebugPrintf (3, "\nvoid PutEnemy(int Enum): DIFFERENT LEVEL-->usual end of function reached.\n");
 	return FALSE;
     }
     
     // if enemy is of type (-1), return 
     if ( AllEnemys[Enum].type == ( -1 ) )
     {
-	// DebugPrintf (3, "\nvoid PutEnemy(int Enum): DIFFERENT LEVEL-->usual end of function reached.\n");
 	return FALSE ;
     }
     
@@ -3659,7 +3647,6 @@ ThisEnemyNeedsToBeBlitted ( int Enum , int x , int y )
     // if the enemy is out of sight, we need not do anything more here
     if ( ( ! show_all_droids ) && ( ! IsVisible ( & AllEnemys [ Enum ] . virt_pos , 0 ) ) )
     {
-	// DebugPrintf (3, "\nvoid PutEnemy(int Enum): ONSCREEN=FALSE --> usual end of function reached.\n");
 	return FALSE ;
     }
     
@@ -4252,62 +4239,62 @@ There was a droid type on this level, that does not really exist.",
 void
 PutBullet ( int bullet_index , int mask )
 {
-  bullet* CurBullet = & ( AllBullets [ bullet_index ] ) ;
-  int PhaseOfBullet;
-  int direction_index;
-
-  if ( CurBullet -> time_to_hide_still > 0 ) 
-    return ;
-
-  //--------------------
-  // in case our bullet is of the type "FLASH", we only
-  // draw a big white or black rectangle right over the 
-  // combat window, white for even frames and black for 
-  // odd frames.
-  if ( CurBullet -> type == FLASH )
+    bullet* CurBullet = & ( AllBullets [ bullet_index ] ) ;
+    int PhaseOfBullet;
+    int direction_index;
+    
+    if ( CurBullet -> time_to_hide_still > 0 ) 
+	return ;
+    
+    //--------------------
+    // in case our bullet is of the type "FLASH", we only
+    // draw a big white or black rectangle right over the 
+    // combat window, white for even frames and black for 
+    // odd frames.
+    if ( CurBullet -> type == FLASH )
     {
-      // Now the whole window will be filled with either white
-      // or black each frame until the flash is over.  (Flash 
-      // deletion after some time is done in CheckBulletCollisions.)
-      if ( ( CurBullet -> time_in_frames % 2 ) == 1)
+	// Now the whole window will be filled with either white
+	// or black each frame until the flash is over.  (Flash 
+	// deletion after some time is done in CheckBulletCollisions.)
+	if ( ( CurBullet -> time_in_frames % 2 ) == 1)
 	{
-	  FlashWindow ( flashcolor1 );
-	  return;
+	    FlashWindow ( flashcolor1 );
+	    return;
 	}
-      if ( ( CurBullet -> time_in_frames % 2 ) == 0)
+	if ( ( CurBullet -> time_in_frames % 2 ) == 0)
 	{
-	  FlashWindow ( flashcolor2 );
-	  return;
+	    FlashWindow ( flashcolor2 );
+	    return;
 	}
     } // if type == FLASH
-
-  // DebugPrintf( 0 , "\nBulletType before calculating phase : %d." , CurBullet->type );
-  if ( ( CurBullet -> type >= Number_Of_Bullet_Types ) ||
-       ( CurBullet -> type <  0                      ) )
+    
+    // DebugPrintf( 0 , "\nBulletType before calculating phase : %d." , CurBullet->type );
+    if ( ( CurBullet -> type >= Number_Of_Bullet_Types ) ||
+	 ( CurBullet -> type <  0                      ) )
     {
-      fprintf ( stderr , "\nPutBullet:  bullet type received: %d." , CurBullet -> type );
-      fflush ( stderr );
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
+	fprintf ( stderr , "\nPutBullet:  bullet type received: %d." , CurBullet -> type );
+	fflush ( stderr );
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
 There was a bullet to be blitted of a type that does not really exist.",
-				 PLEASE_INFORM, IS_FATAL );
+				   PLEASE_INFORM, IS_FATAL );
     };
-
-  PhaseOfBullet = CurBullet -> time_in_seconds * Bulletmap [ CurBullet -> type ] . phase_changes_per_second ;
-
-  PhaseOfBullet = PhaseOfBullet % Bulletmap [ CurBullet -> type ] . phases ;
-  // DebugPrintf( 0 , "\nPhaseOfBullet: %d.", PhaseOfBullet );
-
-  direction_index = ( ( CurBullet -> angle + 360.0 + 360 / ( 2 * BULLET_DIRECTIONS ) ) * BULLET_DIRECTIONS / 360 ) ;
-  while ( direction_index < 0  ) direction_index += BULLET_DIRECTIONS ; // just to make sure... a modulo ROTATION_ANGLES_PER_ROTATION_MODEL operation can't hurt
-  while ( direction_index >= BULLET_DIRECTIONS ) direction_index -= BULLET_DIRECTIONS ; // just to make sure... a modulo ROTATION_ANGLES_PER_ROTATION_MODEL operation can't hurt
-
-  if ( mask & ZOOM_OUT )
+    
+    PhaseOfBullet = CurBullet -> time_in_seconds * Bulletmap [ CurBullet -> type ] . phase_changes_per_second ;
+    
+    PhaseOfBullet = PhaseOfBullet % Bulletmap [ CurBullet -> type ] . phases ;
+    // DebugPrintf( 0 , "\nPhaseOfBullet: %d.", PhaseOfBullet );
+    
+    direction_index = ( ( CurBullet -> angle + 360.0 + 360 / ( 2 * BULLET_DIRECTIONS ) ) * BULLET_DIRECTIONS / 360 ) ;
+    while ( direction_index < 0  ) direction_index += BULLET_DIRECTIONS ; // just to make sure... a modulo ROTATION_ANGLES_PER_ROTATION_MODEL operation can't hurt
+    while ( direction_index >= BULLET_DIRECTIONS ) direction_index -= BULLET_DIRECTIONS ; // just to make sure... a modulo ROTATION_ANGLES_PER_ROTATION_MODEL operation can't hurt
+    
+    if ( mask & ZOOM_OUT )
     {
-      // blit_zoomed_iso_image_to_map_position ( & ( Bulletmap [ CurBullet -> type ] . image [ direction_index ] [ PhaseOfBullet ] ) , CurBullet -> pos . x , CurBullet -> pos . y );
+	// blit_zoomed_iso_image_to_map_position ( & ( Bulletmap [ CurBullet -> type ] . image [ direction_index ] [ PhaseOfBullet ] ) , CurBullet -> pos . x , CurBullet -> pos . y );
     }
-  else
-    blit_iso_image_to_map_position ( Bulletmap [ CurBullet -> type ] . image [ direction_index ] [ PhaseOfBullet ] , CurBullet -> pos . x , CurBullet -> pos . y );
-
+    else
+	blit_iso_image_to_map_position ( Bulletmap [ CurBullet -> type ] . image [ direction_index ] [ PhaseOfBullet ] , CurBullet -> pos . x , CurBullet -> pos . y );
+    
 }; // void PutBullet (int Bulletnumber )
 
 /* ----------------------------------------------------------------------
@@ -4570,73 +4557,73 @@ function used for this did not succeed.",
 void
 PutRadialBlueSparksBestQuality( float PosX, float PosY , float Radius )
 {
-  SDL_Rect TargetRectangle;
-  static SDL_Surface* SparkPrototypeSurface=NULL;
-  SDL_Surface* tmp_surf;
-  char* fpath;
-  int NumberOfPicturesToUse;
-  int i;
-  float Angle;
-  moderately_finepoint Displacement;
-
-  //--------------------
-  // We do some sanity check against too small a radius
-  // given as parameter.  This can be loosened later.
-  //
-  if ( Radius <= 1.0 ) return;
-
-  //--------------------
-  // Now if we do not yet have all the prototype images in memory,
-  // we need to load them now and for once...
-  //
-  if ( SparkPrototypeSurface == NULL )
+    SDL_Rect TargetRectangle;
+    static SDL_Surface* SparkPrototypeSurface=NULL;
+    SDL_Surface* tmp_surf;
+    char* fpath;
+    int NumberOfPicturesToUse;
+    int i;
+    float Angle;
+    moderately_finepoint Displacement;
+    
+    //--------------------
+    // We do some sanity check against too small a radius
+    // given as parameter.  This can be loosened later.
+    //
+    if ( Radius <= 1.0 ) return;
+    
+    //--------------------
+    // Now if we do not yet have all the prototype images in memory,
+    // we need to load them now and for once...
+    //
+    if ( SparkPrototypeSurface == NULL )
     {
-      fpath = find_file ( "blue_sparks_0.png" , GRAPHICS_DIR, FALSE );
-
-      tmp_surf = our_IMG_load_wrapper( fpath );
-      if ( tmp_surf == NULL )
+	fpath = find_file ( "blue_sparks_0.png" , GRAPHICS_DIR, FALSE );
+	
+	tmp_surf = our_IMG_load_wrapper( fpath );
+	if ( tmp_surf == NULL )
 	{
-	  fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
-	  GiveStandardErrorMessage ( __FUNCTION__  , "\
+	    fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
+	    GiveStandardErrorMessage ( __FUNCTION__  , "\
 Freedroid wanted to load a certain image file into memory, but the SDL\n\
 function used for this did not succeed.",
-				     PLEASE_INFORM, IS_FATAL );
+				       PLEASE_INFORM, IS_FATAL );
 	}
-      // SDL_SetColorKey( tmp_surf , 0 , 0 ); 
-
-      SparkPrototypeSurface = our_SDL_display_format_wrapperAlpha ( tmp_surf );
-
-      SDL_FreeSurface( tmp_surf );
+	// SDL_SetColorKey( tmp_surf , 0 , 0 ); 
+	
+	SparkPrototypeSurface = our_SDL_display_format_wrapperAlpha ( tmp_surf );
+	
+	SDL_FreeSurface( tmp_surf );
     }
-
-  NumberOfPicturesToUse = ( 2 * Radius * 64 * 3.14 ) / (float) SparkPrototypeSurface -> w;
-  NumberOfPicturesToUse += 3 ; // we want some overlap
-
-  //--------------------
-  // Now we blit all the pictures we like to use...in this case using
-  // multiple dynamic rotations (oh god!)...
-  //
-  for ( i = 0 ; i < NumberOfPicturesToUse ; i++ )
+    
+    NumberOfPicturesToUse = ( 2 * Radius * 64 * 3.14 ) / (float) SparkPrototypeSurface -> w;
+    NumberOfPicturesToUse += 3 ; // we want some overlap
+    
+    //--------------------
+    // Now we blit all the pictures we like to use...in this case using
+    // multiple dynamic rotations (oh god!)...
+    //
+    for ( i = 0 ; i < NumberOfPicturesToUse ; i++ )
     {
-      Angle = 360.0 * (float)i / (float)NumberOfPicturesToUse ;
-      
-      Displacement . x = 0 ; Displacement . y = - Radius * 64 ;
-
-      RotateVectorByAngle ( &Displacement , Angle );
-
-      tmp_surf = 
-	rotozoomSurface( SparkPrototypeSurface , Angle , 1.0 , FALSE );
-
-      TargetRectangle . x = UserCenter_x - ( Me [ 0 ] . pos . x - PosX ) * 64 + Displacement . x - ( (tmp_surf -> w) / 2 );
-      TargetRectangle . y = UserCenter_y - ( Me [ 0 ] . pos . y - PosY ) * 64 + Displacement . y - ( (tmp_surf -> h) / 2 );
-      
-      our_SDL_blit_surface_wrapper( tmp_surf , NULL , Screen , &TargetRectangle);
-
-      SDL_FreeSurface ( tmp_surf );
+	Angle = 360.0 * (float)i / (float)NumberOfPicturesToUse ;
+	
+	Displacement . x = 0 ; Displacement . y = - Radius * 64 ;
+	
+	RotateVectorByAngle ( &Displacement , Angle );
+	
+	tmp_surf = 
+	    rotozoomSurface( SparkPrototypeSurface , Angle , 1.0 , FALSE );
+	
+	TargetRectangle . x = UserCenter_x - ( Me [ 0 ] . pos . x - PosX ) * 64 + Displacement . x - ( (tmp_surf -> w) / 2 );
+	TargetRectangle . y = UserCenter_y - ( Me [ 0 ] . pos . y - PosY ) * 64 + Displacement . y - ( (tmp_surf -> h) / 2 );
+	
+	our_SDL_blit_surface_wrapper( tmp_surf , NULL , Screen , &TargetRectangle);
+	
+	SDL_FreeSurface ( tmp_surf );
     }
-
-  // DebugPrintf ( 0 , "\nSparks drawn!! " );
-
+    
+    // DebugPrintf ( 0 , "\nSparks drawn!! " );
+    
 }; // void PutRadialBlueSparksBestQuality( float PosX, float PosY , float Radius )
 
 /* ----------------------------------------------------------------------
@@ -4708,35 +4695,36 @@ FillRect (SDL_Rect rect, SDL_Color color)
 void
 ShowRobotPicture (int PosX, int PosY, int Number )
 {
-  SDL_Surface *tmp;
-  SDL_Rect target;
-  char *fpath;
-  char fname[500];
-
-  DebugPrintf (2, "\nvoid ShowRobotPicture(...): Function call confirmed.");
-
-  // strcpy( fname, Druidmap[Number].druidname );
-  strcpy( fname, "droids/" );
-  strcat( fname, Druidmap[Number].portrait_filename_without_ext );
-  strcat( fname , "/portrait.png" );
-  DebugPrintf ( 2 , "\ntrying to load this: %s" , fname );
-  fpath = find_file (fname, GRAPHICS_DIR, FALSE);
-
-  if ( (tmp=our_IMG_load_wrapper (fpath)) == NULL )
+    SDL_Surface *tmp;
+    SDL_Rect target;
+    char *fpath;
+    char fname[500];
+    
+    DebugPrintf ( 2 , "\n%s(): Function call confirmed." , __FUNCTION__ );
+    
+    // strcpy( fname, Druidmap[Number].druidname );
+    strcpy( fname, "droids/" );
+    strcat( fname, Druidmap[Number].portrait_filename_without_ext );
+    strcat( fname , "/portrait.png" );
+    DebugPrintf ( 2 , "\ntrying to load this: %s" , fname );
+    fpath = find_file (fname, GRAPHICS_DIR, FALSE);
+    
+    if ( (tmp=our_IMG_load_wrapper (fpath)) == NULL )
     {
-      fprintf( stderr, "\n\nfpath '%s' SDL_GetError(): %s. \n" , fpath, SDL_GetError() );
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
+	fprintf( stderr, "\n\nfpath '%s' SDL_GetError(): %s. \n" , fpath, SDL_GetError() );
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
 A droid portrait failed to load.",
-				 PLEASE_INFORM, IS_FATAL );
+				   PLEASE_INFORM, IS_FATAL );
     }
+    
+    SDL_SetClipRect( Screen , NULL );
+    Set_Rect (target, PosX, PosY, GameConfig . screen_width, GameConfig . screen_height);
+    our_SDL_blit_surface_wrapper( tmp , NULL, Screen , &target);
+    
+    SDL_FreeSurface(tmp);
+    
+    DebugPrintf ( 2 , "\n%s(): Usual end of function reached." , __FUNCTION__ );
 
-  SDL_SetClipRect( Screen , NULL );
-  Set_Rect (target, PosX, PosY, GameConfig . screen_width, GameConfig . screen_height);
-  our_SDL_blit_surface_wrapper( tmp , NULL, Screen , &target);
-
-  SDL_FreeSurface(tmp);
-
-  DebugPrintf (2, "\nvoid ShowRobotPicture(...): Usual end of function reached.");
 }; // void ShowRobotPicture ( ... )
 
 /* ----------------------------------------------------------------------

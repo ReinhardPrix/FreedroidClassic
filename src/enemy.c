@@ -1677,32 +1677,34 @@ set_bullet_speed_to_target_direction ( bullet* NewBullet , float bullet_speed , 
 }; // void set_bullet_speed_to_target_direction ( bullet* NewBullet , float bullet_speed , float xdist , float ydist )
 
 /* ----------------------------------------------------------------------
- * 
- *
+ * Whenever a new bullet is generated, we need to find a free index in 
+ * the array of bullets.  This function automates the process and 
+ * also is secure against too many bullets in the game (with a rather
+ * ungraceful exit, but that event shouldn't ever occur in a normal game.
  * ---------------------------------------------------------------------- */
 int
 find_free_bullet_index ( void )
 {
-  int j;
+    int j;
 
-  for ( j = 0 ; j < MAXBULLETS ; j ++ )
+    for ( j = 0 ; j < MAXBULLETS ; j ++ )
     {
-      if ( AllBullets [ j ] . type == OUT )
+	if ( AllBullets [ j ] . type == OUT )
 	{
-	  return ( j ) ;
-	  break;
+	    return ( j ) ;
+	    break;
 	}
     }
-
-  //--------------------
-  // If this point is ever reached, there's a severe bug in here...
-  //
-  GiveStandardErrorMessage ( __FUNCTION__  , "\
+    
+    //--------------------
+    // If this point is ever reached, there's a severe bug in here...
+    //
+    GiveStandardErrorMessage ( __FUNCTION__  , "\
 I seem to have run out of free bullet entries.  This can't normally happen.  --> some bug in here, oh no..." ,
-			     PLEASE_INFORM, IS_FATAL );
-  
-  return ( -1 ) ; // can't happen.  just to make compilers happy (no warnings)
-
+			       PLEASE_INFORM, IS_FATAL );
+    
+    return ( -1 ) ; // can't happen.  just to make compilers happy (no warnings)
+    
 }; // void find_free_bullet_entry_pointer ( void )
 
 /* ----------------------------------------------------------------------
@@ -2142,72 +2144,72 @@ EnemyOfTuxCloseToThisRobot ( Enemy ThisRobot , moderately_finepoint* vect_to_tar
 void
 update_vector_to_shot_target_for_friend ( enemy* ThisRobot , moderately_finepoint* vect_to_target )
 {
-  int j;
-  float IgnoreRange = Druidmap [ ThisRobot -> type ] . minimal_range_hostile_bots_are_ignored;
-
-  //--------------------
-  // We set some default values, in case there isn't anything attackable
-  // found below...
-  //
-  vect_to_target -> x = -1000;
-  vect_to_target -> y = -1000;
-  
-  //--------------------
-  // Since it's a friendly device in this case, it will aim at the (closest?) of
-  // the MS bots.
-  //
-  // for ( j = 0 ; j < Number_Of_Droids_On_Ship ; j++ )
-  for ( j  = first_index_of_bot_on_level [ ThisRobot -> pos . z ] ; 
-	j <= last_index_of_bot_on_level [ ThisRobot -> pos . z ] ; j++ )
+    int j;
+    float IgnoreRange = Druidmap [ ThisRobot -> type ] . minimal_range_hostile_bots_are_ignored;
+    
+    //--------------------
+    // We set some default values, in case there isn't anything attackable
+    // found below...
+    //
+    vect_to_target -> x = -1000;
+    vect_to_target -> y = -1000;
+    
+    //--------------------
+    // Since it's a friendly device in this case, it will aim at the (closest?) of
+    // the MS bots.
+    //
+    // for ( j = 0 ; j < Number_Of_Droids_On_Ship ; j++ )
+    for ( j  = first_index_of_bot_on_level [ ThisRobot -> pos . z ] ; 
+	  j <= last_index_of_bot_on_level [ ThisRobot -> pos . z ] ; j++ )
     {
-      if ( AllEnemys [ j ] . Status == OUT ) continue;
-      if ( AllEnemys [ j ] . is_friendly ) continue;
-      if ( AllEnemys [ j ] . pos.z != ThisRobot->pos.z ) continue;
-      /*
-	This is MUCH TOO COSTLY!!!
+	if ( AllEnemys [ j ] . Status == OUT ) continue;
+	if ( AllEnemys [ j ] . is_friendly ) continue;
+	if ( AllEnemys [ j ] . pos.z != ThisRobot->pos.z ) continue;
+	/*
+	  This is MUCH TOO COSTLY!!!
+	  
+	  if ( DirectLineWalkable ( ThisRobot -> pos . x , ThisRobot -> pos . y , 
+	  AllEnemys [ j ] . pos . x , AllEnemys [ j ] . pos . y , 
+	  ThisRobot -> pos . z ) != TRUE ) continue;
+	*/
 	
-	if ( DirectLineWalkable ( ThisRobot -> pos . x , ThisRobot -> pos . y , 
-	AllEnemys [ j ] . pos . x , AllEnemys [ j ] . pos . y , 
-	ThisRobot -> pos . z ) != TRUE ) continue;
-      */
-      
-      if ( sqrt ( ( ThisRobot -> pos . x - AllEnemys[ j ] . pos . x ) *
-		  ( ThisRobot -> pos . x - AllEnemys[ j ] . pos . x ) +
-		  ( ThisRobot -> pos . y - AllEnemys[ j ] . pos . y ) *
-		  ( ThisRobot -> pos . y - AllEnemys[ j ] . pos . y ) ) > IgnoreRange ) continue;
-      
-      // At this point we have found our target
-      vect_to_target -> x = AllEnemys [ j ] . pos . x - ThisRobot -> pos . x ;
-      vect_to_target -> y = AllEnemys [ j ] . pos . y - ThisRobot -> pos . y ;
-      DebugPrintf( 0 , "\nPOSSIBLE TARGET FOR FRIENDLY DROID FOUND!!!\n");
-      DebugPrintf( 0 , "\nIt is a good target for: %s.\n", ThisRobot -> dialog_section_name );
-      break;
+	if ( sqrt ( ( ThisRobot -> pos . x - AllEnemys[ j ] . pos . x ) *
+		    ( ThisRobot -> pos . x - AllEnemys[ j ] . pos . x ) +
+		    ( ThisRobot -> pos . y - AllEnemys[ j ] . pos . y ) *
+		    ( ThisRobot -> pos . y - AllEnemys[ j ] . pos . y ) ) > IgnoreRange ) continue;
+	
+	// At this point we have found our target
+	vect_to_target -> x = AllEnemys [ j ] . pos . x - ThisRobot -> pos . x ;
+	vect_to_target -> y = AllEnemys [ j ] . pos . y - ThisRobot -> pos . y ;
+	DebugPrintf( 0 , "\nPOSSIBLE TARGET FOR FRIENDLY DROID FOUND!!!\n");
+	DebugPrintf( 0 , "\nIt is a good target for: %s.\n", ThisRobot -> dialog_section_name );
+	break;
     }
-  
-  
-  /*
-  //--------------------
-  // Maybe we havn't found a single target.  Then we don't attack anything of course.
-  // But the target will be set to the Tux.
-  //
-  if ( j >= Number_Of_Droids_On_Ship ) 
-  {
-  ThisRobot->firewait = 1.0 ;
-  TargetPlayerNum = ClosestVisiblePlayer ( ThisRobot ) ;
-  vect_to_target -> x = Me [ TargetPlayerNum ] . pos . x - ThisRobot -> pos . x ;
-  vect_to_target -> y = Me [ TargetPlayerNum ] . pos . y - ThisRobot -> pos . y ;
-  return; 
-  }
-  */
-
-  if ( j < Number_Of_Droids_On_Ship - 1 ) 
+    
+    
+    /*
+    //--------------------
+    // Maybe we havn't found a single target.  Then we don't attack anything of course.
+    // But the target will be set to the Tux.
+    //
+    if ( j >= Number_Of_Droids_On_Ship ) 
     {
-      ThisRobot -> attack_target_type = ATTACK_TARGET_IS_ENEMY ;
-      ThisRobot -> attack_target_index = j ;
+    ThisRobot->firewait = 1.0 ;
+    TargetPlayerNum = ClosestVisiblePlayer ( ThisRobot ) ;
+    vect_to_target -> x = Me [ TargetPlayerNum ] . pos . x - ThisRobot -> pos . x ;
+    vect_to_target -> y = Me [ TargetPlayerNum ] . pos . y - ThisRobot -> pos . y ;
+    return; 
     }
-  else 
-    ThisRobot -> attack_target_type = ATTACK_TARGET_IS_NOTHING ;
-
+    */
+    
+    if ( j < Number_Of_Droids_On_Ship - 1 ) 
+    {
+	ThisRobot -> attack_target_type = ATTACK_TARGET_IS_ENEMY ;
+	ThisRobot -> attack_target_index = j ;
+    }
+    else 
+	ThisRobot -> attack_target_type = ATTACK_TARGET_IS_NOTHING ;
+    
 }; // void update_vector_to_shot_target_for_friend ( ThisRobot , moderately_finepoint* vect_to_target )
 
 /* ----------------------------------------------------------------------
@@ -2309,10 +2311,21 @@ occasionally_update_vector_and_shot_target ( enemy* ThisRobot , moderately_finep
  * moves are really allowed and feasible.  Therefore we need a function
  * to check if a certain step makes sense or not, which is exactly what
  * this function is supposed to do.
+ *
+ * NOTE:  In order to keep enemies from stepping too close to walls or 
+ *        into obstacles we check a bit longer distance than given in
+ *        the actual parameter.  That's just to have some slack.
+ *
  * ---------------------------------------------------------------------- */
 int
 ConsideredMoveIsFeasible ( Enemy ThisRobot , moderately_finepoint StepVector , int enemynum )
 {
+    float vec_len;
+    
+    vec_len = vect_len ( StepVector );
+    StepVector . x *= (vec_len + 0.37) / vec_len ;
+    StepVector . y *= (vec_len + 0.37) / vec_len ;
+
     if ( ( IsPassable ( ThisRobot -> pos.x + StepVector.x , 
 			ThisRobot -> pos.y + StepVector.y ,
 			ThisRobot -> pos.z ) ) &&
