@@ -3023,7 +3023,7 @@ Multi_Player_Menu (void)
 void
 Credits_Menu (void)
 {
-  char* CreditsText = "\n\n\n\
+    char* CreditsText = "\n\n\n\
                                             CREDITS\n\n\n\
    PROGRAMMING:\n\n\
                                       Johannes Prix, ICQ: 327392941\n\n\
@@ -3072,22 +3072,22 @@ Credits_Menu (void)
    .rpm AND .deb PACKAGING:\n\n\
                                       Ted Cipicchio\n\n\
                                       The Doctor\n\n\n\n\n";
-
-  User_Rect . x = Full_Screen_Rect . x ;
-  User_Rect . y = Full_Screen_Rect . y ;
-  User_Rect . w = Full_Screen_Rect . w ;
-  User_Rect . h = Full_Screen_Rect . h ;
-
-  while( SpacePressed() || EscapePressed() ) ; /* wait for key release */
-
-  // InitiateMenu();
-
-  SwitchBackgroundMusicTo ( CREDITS_BACKGROUND_MUSIC_SOUND );
-
-  ScrollText ( CreditsText , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NE_CREDITS_PIC_BACKGROUND_CODE );
-
-  while( SpacePressed() || EscapePressed() ) ; /* wait for key release */
-
+    
+    User_Rect . x = Full_Screen_Rect . x ;
+    User_Rect . y = Full_Screen_Rect . y ;
+    User_Rect . w = Full_Screen_Rect . w ;
+    User_Rect . h = Full_Screen_Rect . h ;
+    
+    while( SpacePressed() || EscapePressed() ) ; /* wait for key release */
+    
+    // InitiateMenu();
+    
+    SwitchBackgroundMusicTo ( CREDITS_BACKGROUND_MUSIC_SOUND );
+    
+    ScrollText ( CreditsText , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NE_CREDITS_PIC_BACKGROUND_CODE );
+    
+    while( SpacePressed() || EscapePressed() ) ; /* wait for key release */
+    
 }; // void Credits_Menu(void)
 
 /* ----------------------------------------------------------------------

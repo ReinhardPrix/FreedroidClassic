@@ -2037,7 +2037,7 @@ SaveShip(char *filename)
     // we will write to the file will be a fine header, indicating what this file is about
     // and things like that...
     //
-    MapHeaderString="\n\
+    MapHeaderString="% -*- mode: fill -*- \n\n\
 ----------------------------------------------------------------------\n\
  *\n\
  *   Copyright (c) 2002, 2003, 2004 Freedroid dev team\n\

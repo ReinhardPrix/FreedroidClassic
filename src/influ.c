@@ -966,11 +966,19 @@ CheckIfCharacterIsStillOk ( int player_num )
 	Me [ player_num ] . status = OUT;
 	
 	if ( !ServerMode ) ThouArtDefeated ();
-	
+
 	DebugPrintf ( 1 , "\n%s():  Alternate end of function reached." , __FUNCTION__ );
 	return;
     }
-    
+
+    if ( !ServerMode ) 
+    {
+	if ( Me [ player_num ] . AllMissions [ 8 ] . MissionIsComplete )
+	{
+	    ThouHastWon ();
+	}
+    }
+	    
 }; // void CheckIfCharacterIsStillOk ( int player_num ) 
 
 /* ----------------------------------------------------------------------

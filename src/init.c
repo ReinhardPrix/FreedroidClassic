@@ -2079,10 +2079,74 @@ ThouArtDefeated (void)
     //
     clear_automap_texture_completely (  ) ;
 
-    DebugPrintf (2, "\nvoid ThouArtDefeated(void): Usual end of function reached.");
-    DebugPrintf (1, "\n\n DefeatedDone \n\n");
+    DebugPrintf ( 2 , "\n%s():  Usual end of function reached." , __FUNCTION__ );
 
 }; // void ThouArtDefeated(void)
+
+/* ----------------------------------------------------------------------
+ * This function displayes the last seconds of the game when the influencer
+ * has actually been killed.  It generates some explosions and waits for
+ * some seconds, where the user can reload his latest game, or after that
+ * returns to finally quit the inner game loop and the program will 
+ * (outside this function) ask for a completely new game or loading a different
+ * saved game or quit as in the very beginning of the game.
+ * ---------------------------------------------------------------------- */
+void
+ThouHastWon (void)
+{
+    int j;
+    int now;
+
+    DebugPrintf ( 1 , "\n%s(): Real function call confirmed." , __FUNCTION__ );
+    Me [ 0 ] . status = OUT ;
+    append_new_game_message ( "Game won.\n" );
+    GameConfig . Inventory_Visible = FALSE;
+    GameConfig . CharacterScreen_Visible = FALSE;
+    GameConfig . Mission_Log_Visible = FALSE;
+    now = SDL_GetTicks ( ) ;
+
+    GameOver = TRUE;
+    
+    while ( ( SDL_GetTicks() - now < 1000 * WAIT_AFTER_GAME_WON ) && ( GameOver == TRUE ) )
+    {
+	StartTakingTimeForFPSCalculation(); 
+	
+	AssembleCombatPicture ( DO_SCREEN_UPDATE | SHOW_ITEMS | USE_OWN_MOUSE_CURSOR );
+	DisplayBanner ( );
+	animate_blasts ();
+	MoveBullets ();
+	MoveEnemys ();
+	for ( j = 0 ; j < MAX_PLAYERS ; j ++ ) MoveLevelDoors ( j );	
+	
+	// ReactToSpecialKeys();
+	
+	for (j = 0; j < MAXBULLETS; j++)
+	    CheckBulletCollisions (j);
+	
+	ComputeFPSForThisFrame();
+	
+    }
+
+    //--------------------
+    // Now it's time for the end game title file...
+    //
+    PlayATitleFile ( "EndOfGame.title" );
+
+    //--------------------
+    // Now it's time for the credits file
+    //
+    Credits_Menu();
+
+    //--------------------
+    // The automap doesn't need to be shown any more and also when
+    // the next game starts up (on the same level as right now) there
+    // should not be any automap info remaining...
+    //
+    clear_automap_texture_completely (  ) ;
+
+    DebugPrintf ( 2 , "\n%s():  Usual end of function reached." , __FUNCTION__ );
+
+}; // void ThouHastWon(void)
 
 #undef _init_c
 

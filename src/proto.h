@@ -58,11 +58,12 @@ EXTERN void full_update_of_automap_texture ( void );
 #endif
 EXTERN void ResetGameConfigToDefaultValues ( void );
 EXTERN void ShowStartupPercentage ( int Percentage ) ;
-EXTERN void ParseCommandLine (int argc, char *const argv[]);
+EXTERN void ParseCommandLine ( int argc , char *const argv[] );
 EXTERN void ClearAutomapData( void );
-EXTERN void InitFreedroid (void);
+EXTERN void InitFreedroid ( void );
 EXTERN void PrepareStartOfNewCharacter ( void ) ;
-EXTERN void ThouArtDefeated (void);
+EXTERN void ThouArtDefeated ( void );
+EXTERN void ThouHastWon ( void );
 EXTERN void GetEventsAndEventTriggers ( char* EventsAndEventTriggersFilename );
 EXTERN void PlayATitleFile ( char* Filename );
 
