@@ -327,15 +327,7 @@ enum
 #define GAME_MESSAGE_WINDOW_BACKGROUND_CODE 31
 
 #define NEW_MISSION             "ReturnOfTux.mission"
-
-#define PARA_FONT_FILE 		"font/parafont.png"
-#define MENU_FONT_FILE 		"font/cpuFont.png"
-#define MENU_FILLED_FONT_FILE 	"font/ArialGold.png"
-#define RED_FONT_FILE 		"font/font05_red.png"
-#define BLUE_FONT_FILE 		"font/font05_white.png"
-#define FPS_FONT_FILE 		"font/font05.png"
 #define ICON_FILE		"paraicon.bmp"
-
 
 //--------------------
 // Constants about the size (and mem?) of pixmaps

@@ -665,14 +665,14 @@ EXTERN void AddStandingAndAimingText ( int Enum );
 EXTERN void SetTextCursor (int x, int y);
 EXTERN void SetLineLength (int);
 
-EXTERN int DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *clip , SDL_Surface* Background );
+EXTERN int DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *clip , SDL_Surface* Background , float text_stretch );
 EXTERN int DisplayText (char *text, int startx, int starty, const SDL_Rect *clip , float text_stretch );
 EXTERN void display_current_chat_protocol ( int background_picture_code , enemy* ChatDroid , int with_update );
 
 EXTERN void DisplayChar (unsigned char c);
 EXTERN int ScrollText (char *text, int startx, int starty, int EndLine , int background_code );
 
-EXTERN void ImprovedCheckLineBreak(char *text, const SDL_Rect *clip);
+EXTERN void ImprovedCheckLineBreak(char *text, const SDL_Rect *clip , float text_stretch );
 EXTERN char *PreviousLine (char *textstart, char *text);
 EXTERN char *NextLine (char *text);
 EXTERN char *GetString ( int max_len , int echo , int background_code , char* text_for_overhead_promt ) ;

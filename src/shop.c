@@ -1146,7 +1146,7 @@ DoEquippmentListSelection( char* Startstring , item* Item_Pointer_List[ MAX_ITEM
 	// and that's the same as clicking directly on the back button.
 	//
 	// DisplayText( "BACK" , 580 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
-	// CenteredPutStringFont( Screen , Menu_Filled_BFont , 50 + (i+1) * ITEM_MENU_DISTANCE , " BACK " );
+	// CenteredPutStringFont( Screen , Message_BFont , 50 + (i+1) * ITEM_MENU_DISTANCE , " BACK " );
 	//
 	CenteredPutString( Screen , 50 + (i+1) * ITEM_MENU_DISTANCE , " BACK " );
 	
@@ -2054,7 +2054,7 @@ enum
       MenuTexts[8]="";
 
       // MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , SHOP_BACKGROUND_IMAGE , NULL );
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , SHOP_BACKGROUND_IMAGE_CODE , Menu_Filled_BFont );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , SHOP_BACKGROUND_IMAGE_CODE , Message_BFont );
 
       switch (MenuPosition) 
 	{

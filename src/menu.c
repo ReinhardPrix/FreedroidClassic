@@ -463,7 +463,7 @@ Warning.  Received empty or nearly empty string!",
     
     stored_height = GivenRectangle.h ;
     GivenRectangle.h = 32000 ;
-    DisplayText ( GivenText , GivenRectangle.x , GivenRectangle.y , &GivenRectangle , TEXT_STRETCH );
+    DisplayText ( GivenText , GivenRectangle.x , GivenRectangle.y , &GivenRectangle , text_stretch );
     GivenRectangle.h = stored_height ;
     
     //--------------------

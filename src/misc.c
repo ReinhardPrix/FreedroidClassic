@@ -1001,7 +1001,7 @@ Pause ( void )
 	AnimateCyclingMapTiles ();
 	DisplayBanner ( );
 	AssembleCombatPicture ( USE_OWN_MOUSE_CURSOR );
-	CenteredPutStringFont ( Screen , Menu_Filled_BFont , 200 , "G A M E    P A U S E D" ) ;
+	CenteredPutStringFont ( Screen , Message_BFont , 200 , "G A M E    P A U S E D" ) ;
 	our_SDL_flip_wrapper ( Screen );
 	
 	if ( CPressed ( ) )

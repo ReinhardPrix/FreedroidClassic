@@ -1517,10 +1517,13 @@ display_current_game_messages ( void )
     SDL_Rect Subtitle_Window;
     int lines_needed ;
     int protocol_offset ;
-    float our_stretch_factor = TEXT_STRETCH ;
+    float our_stretch_factor = 1.00 ; // TEXT_STRETCH
+    // float extra_stretch_calibrator = ((float)1.0/(float)1.07) ;  // 1.04
+    float extra_stretch_calibrator = 1.00 ;
 
 #define AVERAGE_LINES_IN_MESSAGE_WINDOW 3*GameConfig . screen_height/480
 
+    SetCurrentFont ( Message_BFont );
     if ( game_message_protocol == NULL )
     {
 	game_message_protocol = MyMalloc ( 500000 ) ; // enough for any protocol
@@ -1555,7 +1558,7 @@ display_current_game_messages ( void )
     }
     else
 	protocol_offset = ( FontHeight ( GetCurrentFont() ) * our_stretch_factor ) 
-	    * ( lines_needed - AVERAGE_LINES_IN_MESSAGE_WINDOW + game_message_protocol_scroll_override_from_user ) * 1.04 ;
+	    * ( lines_needed - AVERAGE_LINES_IN_MESSAGE_WINDOW + game_message_protocol_scroll_override_from_user ) * extra_stretch_calibrator ;
 
     //--------------------
     // Now if the protocol offset is really negative, we don't really want
@@ -1579,7 +1582,7 @@ display_current_game_messages ( void )
     Subtitle_Window . y = ( ( 410 + 10 ) * GameConfig . screen_height ) / 480 ;
     Subtitle_Window . w = ( ( 500 - 20 - 20 ) * GameConfig . screen_width ) / 640 ;
     Subtitle_Window . h = ( ( 70 - 10 - 10 ) * GameConfig . screen_height ) / 480 ;
-    SetCurrentFont ( FPS_Display_BFont );
+    SetCurrentFont ( Message_BFont );
     DisplayText ( game_message_protocol , Subtitle_Window.x , Subtitle_Window.y - protocol_offset , &Subtitle_Window , our_stretch_factor );
 
     /*

@@ -371,7 +371,7 @@ blit_mouse_cursor_corona ( void )
     //
     if ( first_call )
     {
-	for ( i = 0 ; i < 4 ; i ++ )
+	for ( i = 0 ; i < 5 ; i ++ )
 	{
 	    sprintf ( constructed_filename , "mouse_cursor_corona_%04d.png" , i );
 	    fpath = find_file ( constructed_filename , GRAPHICS_DIR, FALSE );
@@ -402,12 +402,14 @@ Error loading flag image.",
     else return;
 	
 
-    for ( i = 0 ; i < 4 ; i ++ )
+    for ( i = 0 ; i < 5 ; i ++ )
     {
 	offset_vector . x = 0 ;
 	offset_vector . y = -35 ;
 	RotateVectorByAngle ( &offset_vector , -(i+1) * 35 );
-	
+	offset_vector . x += 7 ;
+	offset_vector . y += 7 ;
+
 	if ( use_open_gl )
 	{
 	    blit_open_gl_texture_to_screen_position ( mouse_cursor_coronas [ i ] , 
@@ -1629,44 +1631,54 @@ void
 InitOurBFonts ( void )
 {
 #define ALL_BFONTS_WE_LOAD 6
-  char* fpath;
-  int i;
-  char* MenuFontFiles[ALL_BFONTS_WE_LOAD] =
-    {
-      MENU_FONT_FILE,
-      MENU_FILLED_FONT_FILE,
-      PARA_FONT_FILE,
-      FPS_FONT_FILE,
-      RED_FONT_FILE,
-      BLUE_FONT_FILE,
-      
-    };
-  BFont_Info** MenuFontPointers[ALL_BFONTS_WE_LOAD] =
-    {
-      &Menu_BFont,
-      &Menu_Filled_BFont,
-      &Para_BFont,
-      &FPS_Display_BFont,
-      &Red_BFont,
-      &Blue_BFont
-    };
 
-  for ( i = 0 ; i < ALL_BFONTS_WE_LOAD ; i ++ )
+#define PARA_FONT_FILE 		"font/parafont.png"
+#define MENU_FONT_FILE 		"font/cpuFont.png"
+// #define MESSAGE_FONT_FILE 	"font/ArialGold.png"
+// #define MESSAGE_FONT_FILE 	"font/SmallStone.png"
+#define MESSAGE_FONT_FILE 	"font/small_white.png"
+#define RED_FONT_FILE 		"font/font05_red.png"
+#define BLUE_FONT_FILE 		"font/font05_white.png"
+#define FPS_FONT_FILE 		"font/font05.png"
+// #define FPS_FONT_FILE 		"font/SmallStone.png"
+
+    char* fpath;
+    int i;
+    char* MenuFontFiles[ALL_BFONTS_WE_LOAD] =
+	{
+	    MENU_FONT_FILE,
+	    MESSAGE_FONT_FILE,
+	    PARA_FONT_FILE,
+	    FPS_FONT_FILE,
+	    RED_FONT_FILE,
+	    BLUE_FONT_FILE,
+	};
+    BFont_Info** MenuFontPointers[ALL_BFONTS_WE_LOAD] =
+	{
+	    &Menu_BFont,
+	    &Message_BFont,
+	    &Para_BFont,
+	    &FPS_Display_BFont,
+	    &Red_BFont,
+	    &Blue_BFont
+	};
+    
+    for ( i = 0 ; i < ALL_BFONTS_WE_LOAD ; i ++ )
     {
-      fpath = find_file ( MenuFontFiles [ i ] , GRAPHICS_DIR , FALSE);
-      if ( ( *MenuFontPointers [ i ] = LoadFont ( fpath ) ) == NULL )
+	fpath = find_file ( MenuFontFiles [ i ] , GRAPHICS_DIR , FALSE);
+	if ( ( *MenuFontPointers [ i ] = LoadFont ( fpath ) ) == NULL )
 	{
-	  fprintf (stderr, "\n\nFont file: '%s'.\n" , MenuFontFiles [ i ] );
-	  GiveStandardErrorMessage ( __FUNCTION__  , "\
+	    fprintf (stderr, "\n\nFont file: '%s'.\n" , MenuFontFiles [ i ] );
+	    GiveStandardErrorMessage ( __FUNCTION__  , "\
 A font file for the BFont library was not found.",
-				     PLEASE_INFORM, IS_FATAL );
+				       PLEASE_INFORM, IS_FATAL );
 	} 
-      else
+	else
 	{
-	  DebugPrintf(1, "\nSDL Menu Font initialisation successful.\n");
+	    DebugPrintf(1, "\nSDL Menu Font initialisation successful.\n");
 	}
     }
-
+    
 }; // InitOurBFonts ( void )
 
 /* -----------------------------------------------------------------

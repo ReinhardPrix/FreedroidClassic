@@ -40,7 +40,7 @@
 #include "global.h"
 #include "SDL_rotozoom.h"
 
-int DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *clip , SDL_Surface* ScrollBackground );
+int DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *clip , SDL_Surface* ScrollBackground , float text_stretch );
 
 int CharsPerLine;		// line length in chars:  obsolete
 
@@ -453,7 +453,7 @@ ScrollText (char *Text, int startx, int starty, int EndLine , int background_cod
  *             out of clip-rect completely)
  *-----------------------------------------------------------------*/
 int
-DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *clip , SDL_Surface* Background )
+DisplayTextWithScrolling ( char *Text , int startx , int starty , const SDL_Rect *clip , SDL_Surface* Background , float text_stretch )
 {
     char *tmp;	// mobile pointer to the current position as the text is drawn
     // SDL_Rect Temp_Clipping_Rect; // adding this to prevent segfault in case of NULL as parameter
@@ -503,11 +503,11 @@ DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *cl
 	};
 	
 	if ( clip )
-	    ImprovedCheckLineBreak ( tmp , clip );   // dont write over right border 
+	    ImprovedCheckLineBreak ( tmp , clip , text_stretch );   // dont write over right border 
 	
     } 
     
-    SDL_SetClipRect (Screen, &store_clip); /* restore previous clip-rect */
+    SDL_SetClipRect (Screen, &store_clip); // restore previous clip-rect 
     
     //--------------------
     // ScrollText() wants to know if we still wrote something inside the
@@ -518,7 +518,7 @@ DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *cl
     else
 	return TRUE; 
     
-};
+};  // DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *clip , SDL_Surface* Background )
 
 /* ----------------------------------------------------------------------
  * This function sets a new text, that will be displayed in huge font 
@@ -563,14 +563,14 @@ DisplayBigScreenMessage( void )
 	if ( Me [ 0 ] . BigScreenMessageDuration [ i ] < GameConfig . delay_for_big_screen_messages )
 	{
 	    SDL_SetClipRect ( Screen , NULL );
-	    CenteredPutStringFont ( Screen , Menu_Filled_BFont , next_screen_message_position , 
+	    CenteredPutStringFont ( Screen , Menu_BFont , next_screen_message_position , 
 				    Me [ 0 ] . BigScreenMessage [ i ]  );
 	    if ( !GameConfig.Inventory_Visible &&
 		 !GameConfig.SkillScreen_Visible &&
 		 !GameConfig.CharacterScreen_Visible )
 		Me [ 0 ] . BigScreenMessageDuration [ i ]  += Frame_Time();
 
-	    next_screen_message_position += FontHeight ( Menu_Filled_BFont ) ;
+	    next_screen_message_position += FontHeight ( Menu_BFont ) ;
 	}
     }
     
@@ -649,7 +649,7 @@ DisplayText ( char *Text, int startx, int starty, const SDL_Rect *clip , float t
 	tmp++;
 	
 	if (clip)
-	    ImprovedCheckLineBreak(tmp, clip);   // dont write over right border 
+	    ImprovedCheckLineBreak( tmp , clip , text_stretch );   // dont write over right border 
 	
     }
     
@@ -728,31 +728,31 @@ files of Freedroid.",
  *
  * ---------------------------------------------------------------------- */
 void
-ImprovedCheckLineBreak (char* Resttext, const SDL_Rect *clip)
+ImprovedCheckLineBreak (char* Resttext, const SDL_Rect *clip, float text_stretch )
 {
-  int i;
-  int NeededSpace=0;
+    int i;
+    int NeededSpace=0;
 #define MAX_WORD_LENGTH 100
-
+    
   // In case of a space, see if the next word will still fit on the line
   // and do a carriage return/line feed if not
-  if ( *Resttext == ' ' ) {
-    for ( i = 1 ; i < MAX_WORD_LENGTH ; i ++ ) 
-      {
-	if ( ( Resttext [ i ] != ' ') && ( Resttext [ i ] != '\n') && ( Resttext [ i ] != 0 ) )
-	  { 
-	    NeededSpace += CharWidth ( GetCurrentFont() , Resttext [ i ] );
-	    if ( MyCursorX + NeededSpace > clip->x + clip->w - 10 )
-	      {
-		MyCursorX = clip->x;
-		MyCursorY += FontHeight ( GetCurrentFont() ) * TEXT_STRETCH;
+    if ( *Resttext == ' ' ) {
+	for ( i = 1 ; i < MAX_WORD_LENGTH ; i ++ ) 
+	{
+	    if ( ( Resttext [ i ] != ' ') && ( Resttext [ i ] != '\n') && ( Resttext [ i ] != 0 ) )
+	    { 
+		NeededSpace += CharWidth ( GetCurrentFont() , Resttext [ i ] );
+		if ( MyCursorX + NeededSpace > clip->x + clip->w - 10 )
+		{
+		    MyCursorX = clip->x;
+		    MyCursorY += FontHeight ( GetCurrentFont() ) * text_stretch ;
+		    return;
+		}
+	    }
+	    else 
 		return;
-	      }
-	  }
-	else 
-	  return;
-      }
-  }
+	}
+    }
 }; // void ImprovedCheckLineBreak(void)
 
 /* -----------------------------------------------------------------
