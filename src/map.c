@@ -56,8 +56,6 @@
 #define MAP_END_STRING "End of pure map information for this level"
 #define STATEMENT_BEGIN_STRING "Start of pure statement information for this level"
 #define STATEMENT_END_STRING "End of pure statement information for this level"
-#define CODEPANEL_SECTION_BEGIN_STRING "Start of pure codepanel information for this level"
-#define CODEPANEL_SECTION_END_STRING "End of pure codepanel information for this level"
 #define ITEMS_SECTION_BEGIN_STRING "Start of pure items information for this level"
 #define ITEMS_SECTION_END_STRING "End of pure items information for this level"
 #define ITEM_CODE_STRING "New item: type="
@@ -86,9 +84,19 @@
 #define X_POSITION_OF_STATEMENT_STRING "PosX="
 #define Y_POSITION_OF_STATEMENT_STRING "PosY="
 #define STATEMENT_ITSELF_ANNOUNCE_STRING "Statement=\""
+
+#define CODEPANEL_SECTION_BEGIN_STRING "Start of pure codepanel information for this level"
+#define CODEPANEL_SECTION_END_STRING "End of pure codepanel information for this level"
 #define CODEPANEL_CODE_ANNOUNCE_STRING "Secret Code=\""
 #define POSITION_X_OF_CODEPANEL_STRING "PanelposX="
 #define POSITION_Y_OF_CODEPANEL_STRING "PanelposY="
+
+#define BIG_MAP_INSERT_SECTION_BEGIN_STRING "Start of big graphics insert information for this level"
+#define BIG_MAP_INSERT_SECTION_END_STRING "End of big graphics insert information for this level"
+#define POSITION_X_OF_BIG_MAP_INSERT_STRING "BigGraphicsInsertPosX="
+#define POSITION_Y_OF_BIG_MAP_INSERT_STRING "BigGraphicsInsertPosY="
+#define BIG_MAP_INSERT_TYPE_STRING "BigGraphicsInsertType="
+
 
 void TranslateToHumanReadable ( char* HumanReadable , unsigned char* MapInfo, int LineLength , Level Lev , int CurrentLine);
 void GetThisLevelsDroids( char* SectionPointer );
@@ -727,6 +735,43 @@ Encode_Level_For_Saving(Level Lev)
   strcat(LevelMem, CODEPANEL_SECTION_END_STRING);
   strcat(LevelMem, "\n");
   
+
+  //--------------------
+  // Now we write out a marker to announce the beginning of the 
+  // big graphics inserts for this map
+  //
+  strcat( LevelMem, BIG_MAP_INSERT_SECTION_BEGIN_STRING );
+  strcat( LevelMem, "\n" );
+
+  //--------------------
+  // Now we write out the bulk of big map insert infos
+  //
+  for ( i = 0 ; i < MAX_MAP_INSERTS_PER_LEVEL ; i ++ )
+    {
+
+      if ( Lev -> MapInsertList [ i ] . type == ( -1 ) ) continue;
+
+      strcat( LevelMem , POSITION_X_OF_BIG_MAP_INSERT_STRING );
+      sprintf( linebuf , "%d " , Lev -> MapInsertList [ i ] . pos . x );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , POSITION_Y_OF_BIG_MAP_INSERT_STRING );
+      sprintf( linebuf , "%d " , Lev -> MapInsertList [ i ] . pos . y );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , BIG_MAP_INSERT_TYPE_STRING );
+      sprintf( linebuf , "%d " , Lev -> MapInsertList [ i ] . type );
+      strcat( LevelMem , linebuf );
+      strcat( LevelMem, "\n" );
+
+    }
+
+  //--------------------
+  // Now we write out a marker to announce the end of the codepanel data
+  //
+  strcat(LevelMem, BIG_MAP_INSERT_SECTION_END_STRING);
+  strcat(LevelMem, "\n");
+
 
   //--------------------
   // Now we write out a marker to announce the beginning of the items data
