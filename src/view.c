@@ -1545,8 +1545,15 @@ blit_all_item_slots ( void )
 					SDL_MapRGB ( Screen->format , 0x000 , 0x000 , 0x099 ) );
 	else
 	{
-	    // our_SDL_fill_rect_wrapper ( Screen , & ( item_level -> ItemList [ i ] . text_slot_rectangle ) , 
-	    //			SDL_MapRGB ( Screen->format , 0x000 , 0x000 , 0x000 ) );
+	    if ( use_open_gl )
+	    {
+		GL_HighlightRectangle ( Screen , item_level -> ItemList [ i ] . text_slot_rectangle , 0 , 0 , 0 , 160 );
+	    }
+	    else
+	    {
+		our_SDL_fill_rect_wrapper ( Screen , & ( item_level -> ItemList [ i ] . text_slot_rectangle ) , 
+					    SDL_MapRGB ( Screen->format , 0x000 , 0x000 , 0x000 ) );
+	    }
 	}
 
 	//--------------------
