@@ -636,7 +636,7 @@ GreatItemShow (void)
 
       if (SpacePressed() || EscapePressed() || axis_is_active )
 	{
-	  if ( CursorIsOnButton( UP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
+	  if ( CursorIsOnButton( ITEM_BROWSER_RIGHT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
 	    {
 	      if ( ItemIndex < NumberOfItems -1 ) 
 		{
@@ -644,7 +644,7 @@ GreatItemShow (void)
 		  MoveMenuPositionSound();
 		}
 	    }
-	  else if ( CursorIsOnButton( DOWN_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
+	  else if ( CursorIsOnButton( ITEM_BROWSER_LEFT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
 	    {
 	      if ( ItemIndex > 0) 
 		{
@@ -652,12 +652,12 @@ GreatItemShow (void)
 		  MoveMenuPositionSound();
 		}
 	    }
-	  else if ( CursorIsOnButton( RIGHT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
+	  else if ( CursorIsOnButton( UP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
 	    {
 	      MoveMenuPositionSound();
 	      if (page < 2) page ++;
 	    }
-	  else if ( CursorIsOnButton( LEFT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
+	  else if ( CursorIsOnButton( DOWN_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
 	    {
 	      MoveMenuPositionSound();
 	      if (page > 0) page --;
@@ -1083,7 +1083,12 @@ Notes: %s",
   SetCurrentFont( Para_BFont );
   DisplayText (InfoText, Cons_Text_Rect.x, Cons_Text_Rect.y, &Cons_Text_Rect);
 
-  if ( ShowArrows ) ShowLeftRightDroidshowButtons (  );
+  if ( ShowArrows ) 
+    {
+      // ShowLeftRightDroidshowButtons (  );
+      ShowGenericButtonFromList ( UP_BUTTON );
+      ShowGenericButtonFromList ( DOWN_BUTTON );
+    }
 
   // SDL_Flip (Screen);
 
