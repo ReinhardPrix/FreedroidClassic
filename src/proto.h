@@ -154,8 +154,7 @@ EXTERN void ClearGraphMem ( void );
 EXTERN void Flimmern (int type);
 EXTERN Uint32 getpixel(SDL_Surface *surface, int x, int y);
 EXTERN void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
-EXTERN void white_noise (SDL_Rect *rect);
-
+EXTERN void white_noise (SDL_Surface *bitmap, SDL_Rect *rect);
 /* map.c */
 #undef EXTERN
 #ifdef _map_c
