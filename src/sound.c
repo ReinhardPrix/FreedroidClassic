@@ -635,17 +635,21 @@ The a SDL MIXER WAS UNABLE TO PLAY A CERTAIN FILE LOADES INTO MEMORY.\n\
 The name of the problematic file is:\n\
 %s \n\
 \n\
+Analysis of the error has returned the following explanation through SDL:\n\
+%s \n\
+The most likely cause for the problem however is, that too many sounds\n\
+have been played in too rapid succession, which should be caught.\n\
 If the problem persists, please inform the developers about it.\n\
 \n\
 In the meantime you can choose to play without sound.\n\
 \n\
 If you want this, use the appropriate command line option and Freedroid will \n\
-not complain any more.  But for now Freedroid will terminate to draw attention \n\
-to the sound problem it could not resolve.\n\
-Sorry...\n\
+not complain any more.  Freedroid will NOT be terminated now to draw attention \n\
+to this sound problem, because the problem is not lethal and will not interfere\n\
+with game performance in any way.  I think this is really not dangerous.\n\
 ----------------------------------------------------------------------\n\
-\n" , ExpandedSoundSampleFilenames[ Tune ]);
-      Terminate (ERR);
+\n" , ExpandedSoundSampleFilenames[ Tune ] , Mix_GetError() );
+      // Terminate (ERR);
     } // if ( ... = -1
   else
     {

@@ -63,8 +63,6 @@ SmallBlock (int LX, int LY, int BlockN, unsigned char *Parameter_Screen, int SBr
   if (LX > USERFENSTERPOSX + USERFENSTERBREITE)
     return;
 
-  Lock_SDL_Screen();
-
   for (i = 0; i < 8; i++)
     {
       for (j = 0; j < 8; j++)
@@ -76,8 +74,6 @@ SmallBlock (int LX, int LY, int BlockN, unsigned char *Parameter_Screen, int SBr
       target += SBreite - 8;
       source += 4 * BLOCKBREITE - 4 * 8;
     }
-
-  Unlock_SDL_Screen();
 
 } /* SmallBlock() */
 

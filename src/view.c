@@ -416,6 +416,8 @@ GetConceptInternFenster (void)
   int LY = 0;
   int i, j;
 
+  char* OutputPointer=InternWindow;
+
   // Darstellen der blo"sen Deckkarte 
   for (i = 0; i < CurLevel->ylen; i++)
     {
@@ -423,7 +425,7 @@ GetConceptInternFenster (void)
 	{
 	  SmallBlock (LX, LY,
 		      GetMapBrick (CurLevel, j * BLOCKBREITE, i * BLOCKHOEHE),
-		      InternWindow, INTERNBREITE * BLOCKBREITE);
+		      OutputPointer, INTERNBREITE * BLOCKBREITE);
 	  LX += 8;
 	}
       LX = 0;
@@ -438,14 +440,14 @@ GetConceptInternFenster (void)
       if (Feindesliste[i].Status == OUT)
 	continue;
       SmallEnemy (Feindesliste[i].pos.x / 4, Feindesliste[i].pos.y / 4,
-		  Druidmap[Feindesliste[i].type].class, InternWindow,
+		  Druidmap[Feindesliste[i].type].class, OutputPointer,
 		  INTERNBREITE * BLOCKBREITE);
     }
 
   // Darstellen des Influencers, wenn er nicht schon vernichtet wurde
   if (Me.energy > 0)
     SmallEnemy (((int) Me.pos.x) / 4, ((int) Me.pos.y) / 4,
-		-10 + Druidmap[Me.type].class, InternWindow,
+		-10 + Druidmap[Me.type].class, OutputPointer,
 		INTERNBREITE * BLOCKBREITE);
 
   // Darstellen der Blasts
@@ -454,7 +456,7 @@ GetConceptInternFenster (void)
       if (AllBlasts[i].type == OUT)
 	continue;
       SmallBlast (AllBlasts[i].PX / 4, AllBlasts[i].PY / 4, AllBlasts[i].type,
-		  AllBlasts[i].phase, InternWindow,
+		  AllBlasts[i].phase, OutputPointer,
 		  INTERNBREITE * BLOCKBREITE);
     }
 
@@ -484,14 +486,14 @@ GetConceptInternFenster (void)
 	    {
 //                                      FlashWindow(0);
 	      RecFlashFill (AllBullets[i].pos.x, AllBullets[i].pos.y,
-			    FLASHCOLOR1, InternWindow,
+			    FLASHCOLOR1, OutputPointer,
 			    INTERNBREITE * BLOCKBREITE);
 	    }
 	  if ( (AllBullets[i].time_in_frames % 2) == 0)
 	    {
 //                                      FlashWindow(15);
 	      RecFlashFill (AllBullets[i].pos.x, AllBullets[i].pos.y,
-			    FLASHCOLOR2, InternWindow,
+			    FLASHCOLOR2, OutputPointer,
 			    INTERNBREITE * BLOCKBREITE);
 	    }
 
@@ -525,12 +527,13 @@ GetConceptInternFenster (void)
       else
 	{
 	  SmallBullet (AllBullets[i].pos.x / 4, AllBullets[i].pos.y / 4,
-		       AllBullets[i].type, AllBullets[i].phase, InternWindow,
+		       AllBullets[i].type, AllBullets[i].phase, OutputPointer,
 		       INTERNBREITE * BLOCKBREITE);
 	}
     }
   return;
-}
+
+} // GetConceptInternWindow()
 
 /*-----------------------------------------------------------------
  * Desc: Diese Funktion malt den Influencer an die Position die
@@ -848,6 +851,9 @@ PutInternFenster (int also_update_scaled_surface)
 		  InternWindow + i * INTERNBREITE * BLOCKBREITE,
 		  USERFENSTERBREITE);
 	}
+      
+      PrepareScaledSurface(also_update_scaled_surface);
+
       return;
     }
 
