@@ -148,7 +148,8 @@ clear_automap_texture_completely ( void )
 #ifdef HAVE_LIBGL
 
     static int empty_texture_is_available = FALSE ;
-    static SDL_Surface* pure_surface ;
+    // static SDL_Surface* pure_surface ;
+    static void* empty_automap_surface ;
     
     //--------------------
     // In the non-open-gl case, this function shouldn't be called ever....
@@ -161,8 +162,12 @@ clear_automap_texture_completely ( void )
     if ( ! empty_texture_is_available ) 
     {
 	empty_texture_is_available = TRUE ;
-	pure_surface = SDL_CreateRGBSurface( 0 , AUTOMAP_TEXTURE_WIDTH , AUTOMAP_TEXTURE_HEIGHT , 32, 0x0FF000000 , 0x000FF0000  , 0x00000FF00 , 0x000FF );
+	// pure_surface = SDL_CreateRGBSurface( 0 , AUTOMAP_TEXTURE_WIDTH , AUTOMAP_TEXTURE_HEIGHT , 32, 0x0FF000000 , 0x000FF0000  , 0x00000FF00 , 0x000FF );
+	empty_automap_surface = MyMalloc ( 4 * ( AUTOMAP_TEXTURE_WIDTH * AUTOMAP_TEXTURE_HEIGHT + 1 ) ) ;
+	memset ( empty_automap_surface , 0 , 4 * AUTOMAP_TEXTURE_WIDTH * AUTOMAP_TEXTURE_HEIGHT ) ;
     }
+
+    DebugPrintf ( 1 , "\n%s(): starting to clear automap." , __FUNCTION__ );
 
     // glEnable ( GL_TEXTURE_2D );
     glBindTexture ( GL_TEXTURE_2D , *automap_texture );
@@ -173,11 +178,11 @@ clear_automap_texture_completely ( void )
 		      AUTOMAP_TEXTURE_HEIGHT , 
 		      GL_BGRA, 
 		      GL_UNSIGNED_BYTE, 
-		      pure_surface -> pixels );
+		      empty_automap_surface );
     
     open_gl_check_error_status ( __FUNCTION__ );
 
-    DebugPrintf ( 1 , "\nclear_automap_texture_completely( ): Texture for AUTOMAP has been cleared..." );
+    DebugPrintf ( 1 , "\n%s(): Texture for AUTOMAP has been cleared..." , __FUNCTION__ );
 
 #endif
 

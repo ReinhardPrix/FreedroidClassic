@@ -1594,6 +1594,17 @@ update_light_list ( int player_num )
 		light_source_strengthes [ next_light_emitter_index ] = 
 		    obstacle_map [ emitter -> type ] . emitted_light_strength ;
 		next_light_emitter_index ++ ;
+
+		//--------------------
+		// We must not write beyond the bounds of our light sources array!
+		//
+		if ( next_light_emitter_index >= MAX_NUMBER_OF_LIGHT_SOURCES - 1 )
+		{
+		    GiveStandardErrorMessage ( __FUNCTION__  , "\
+WARNING!  End of light sources array reached!",
+					       NO_NEED_TO_INFORM, IS_WARNING_ONLY );
+		    return;
+		}
 	    }
 	}
     }
@@ -1608,6 +1619,7 @@ update_light_list ( int player_num )
     {
 	if ( AllEnemys [ i ] . Status == OUT ) continue;
 
+	if ( Me [ 0 ] . pos . z != AllEnemys [ i ] . pos . z ) continue ;
 	if ( fabsf ( Me [ 0 ] . pos . x - AllEnemys [ i ] . pos . x ) >= 12 ) continue ;
 	if ( fabsf ( Me [ 0 ] . pos . y - AllEnemys [ i ] . pos . y ) >= 12 ) continue ;
 
@@ -1618,6 +1630,18 @@ update_light_list ( int player_num )
 	light_sources [ next_light_emitter_index ] . y = AllEnemys [ i ] . pos . y ;
 	light_source_strengthes [ next_light_emitter_index ] = -14 ;
 	next_light_emitter_index ++ ;
+
+	//--------------------
+	// We must not write beyond the bounds of our light sources array!
+	//
+	if ( next_light_emitter_index >= MAX_NUMBER_OF_LIGHT_SOURCES - 1 )
+	{
+	    GiveStandardErrorMessage ( __FUNCTION__  , "\
+WARNING!  End of light sources array reached!",
+				       NO_NEED_TO_INFORM, IS_WARNING_ONLY );
+	    return;
+	}
+	
     }
     
 }; // void update_light_list ( int player_num )
@@ -2015,6 +2039,8 @@ AssembleCombatPicture (int mask)
 {
     int i;
     int item_under_cursor = get_floor_item_index_under_mouse_cursor ( 0 );
+
+    DebugPrintf ( 2 , "\n%s(): inside display code now." , __FUNCTION__ );
     
     clear_screen() ;
     
@@ -2162,6 +2188,8 @@ AssembleCombatPicture (int mask)
     //
     global_check_for_light_only_collisions_flag = FALSE ;
 
+    DebugPrintf ( 2 , "\n%s(): done with display code again." , __FUNCTION__ );
+
 }; // void AssembleCombatPicture(...)
 
 /* -----------------------------------------------------------------
@@ -2256,8 +2284,6 @@ free_one_loaded_tux_image_series ( int tux_part_group )
     int j;
     int k;
     
-    // DebugPrintf ( -3 , "\nfree_one_loaded_tux_image_series:  part_group = %d." , tux_part_group );
-
     //--------------------
     if ( strcmp ( previous_part_strings [ tux_part_group ] , NOT_LOADED_MARKER ) == 0 )
     {
@@ -2266,8 +2292,7 @@ free_one_loaded_tux_image_series ( int tux_part_group )
 	return;
     }
 
-
-    DebugPrintf ( 1 , "\n%s(): starting to free group %d..." , __FUNCTION__ , tux_part_group ) ;
+    DebugPrintf ( 1 , "\n%s():  part_group = %d." , __FUNCTION__ , tux_part_group );
 
     strcpy ( previous_part_strings [ tux_part_group ] , NOT_LOADED_MARKER );
 
@@ -2282,7 +2307,10 @@ free_one_loaded_tux_image_series ( int tux_part_group )
 
 	    SDL_FreeSurface ( 
 		loaded_tux_images [ tux_part_group ] [ j ] [ k ] . surface ) ;
-	        loaded_tux_images [ tux_part_group ] [ j ] [ k ] . surface = NULL ;
+
+	    free ( loaded_tux_images [ tux_part_group ] [ j ] [ k ] . attached_pixel_data );
+
+	    loaded_tux_images [ tux_part_group ] [ j ] [ k ] . surface = NULL ;
 	}
     }
     
@@ -2413,6 +2441,7 @@ grab_tux_images_from_archive ( int tux_part_group , int motion_class , char* par
     char constructed_filename[10000];
     char* fpath;
     size_t chunks_read;
+    void* tmp_buff;
 
     Sint16 img_xlen;
     Sint16 img_ylen;
@@ -2490,6 +2519,11 @@ Received some non-positive Tux surface dimensions.  That's a bug for sure!",
 					       PLEASE_INFORM, IS_FATAL );
 		}
 
+		/*
+		  OLD CODE:  Reading data into the surface from SDL.  Not very clean.
+                             Let's do it differently.  But the old code is here for
+			     reference...
+
 		loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface = 
 		    SDL_CreateRGBSurface ( SDL_SWSURFACE , img_xlen , img_ylen , 32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000 ) ;
 		
@@ -2510,6 +2544,40 @@ Creation of an empty Tux SDL software surface failed.",
 Reading the image archive file met an unexpected lack of read data.",
 					       PLEASE_INFORM, IS_FATAL );
 		}
+		*/
+
+		/*
+		  New code:  read data into some area.  Have SDL make a surface around the
+		             loaded data.
+		*/
+
+		tmp_buff = MyMalloc ( 4 * ( img_xlen * img_ylen + 1 ) ) ;
+		
+
+		chunks_read = fread ( tmp_buff , 1 , 4 * img_xlen * img_ylen , DataFile ) ;
+		if ( chunks_read < 4 * img_xlen * img_ylen )
+		{
+		    fprintf( stderr, "\n\ntux_part_group: %d, our_phase: %d rotation_index: %d\n" , 
+			     tux_part_group, our_phase , rotation_index );
+		    GiveStandardErrorMessage ( __FUNCTION__  , "\
+Reading the image archive file met an unexpected lack of read data.",
+					       PLEASE_INFORM, IS_FATAL );
+		}
+
+		loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . attached_pixel_data = tmp_buff ;
+		loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface = 
+		    SDL_CreateRGBSurfaceFrom ( tmp_buff , img_xlen , img_ylen , 32, 4 * img_xlen , 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000 ) ;
+		
+		if ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface == NULL )
+		{
+		    DebugPrintf ( -1000 , "\n\nError code from SDL: %s." , SDL_GetError() );
+		    GiveStandardErrorMessage ( __FUNCTION__  , "\
+Creation of an Tux SDL software surface from pixel data failed.",
+					       PLEASE_INFORM, IS_FATAL );
+		}
+
+		
+
 
 		//--------------------
 		// Depending on whether this is supposed to work with faster but less
@@ -2867,10 +2935,7 @@ Empty part string received!",
     {
 	if ( strcmp ( previous_part_strings [ tux_part_group ] , part_string ) ) 
 	{
-	    // DebugPrintf ( -3 , "\nprevious string : %s. " , previously_used_part_strings [ tux_part_group ] );
-	    // DebugPrintf ( -3 , "\ncurrent part string : %s. " , part_string );
 	    free_one_loaded_tux_image_series ( tux_part_group );
-	    
 	    make_sure_whole_part_group_is_ready ( tux_part_group , motion_class , part_string );
 	}
     }
@@ -2907,21 +2972,21 @@ Empty part string received!",
 void
 iso_put_tux_torso ( int x , int y , int player_num , int rotation_index )
 {
-  switch ( Me [ player_num ] . armour_item . type )
+    switch ( Me [ player_num ] . armour_item . type )
     {
-    case -1 :
-      iso_put_tux_part ( PART_GROUP_TORSO , "iso_torso" , x , y , player_num , rotation_index );
-      break;
-    case 29:
-    case 30:
-    case 31:
-      iso_put_tux_part ( PART_GROUP_TORSO , "iso_robe" , x , y , player_num , rotation_index );
-      break;
-    default:
-      iso_put_tux_part ( PART_GROUP_TORSO , "iso_armour1" , x , y , player_num , rotation_index );
-      break;
+	case -1 :
+	    iso_put_tux_part ( PART_GROUP_TORSO , "iso_torso" , x , y , player_num , rotation_index );
+	    break;
+	case 29:
+	case 30:
+	case 31:
+	    iso_put_tux_part ( PART_GROUP_TORSO , "iso_robe" , x , y , player_num , rotation_index );
+	    break;
+	default:
+	    iso_put_tux_part ( PART_GROUP_TORSO , "iso_armour1" , x , y , player_num , rotation_index );
+	    break;
     }
-
+    
 }; // void iso_put_tux_head ( int x , int y , int player_num , int rotation_index )
 
 /* ----------------------------------------------------------------------
@@ -2987,11 +3052,11 @@ iso_put_tux_shieldarm ( int x , int y , int player_num , int rotation_index )
 void
 iso_put_tux_head ( int x , int y , int player_num , int rotation_index )
 {
-  if ( Me [ player_num ] . special_item . type == (-1) )
-    iso_put_tux_part ( PART_GROUP_HEAD , "iso_head" , x , y , player_num , rotation_index );
-  else
-    iso_put_tux_part ( PART_GROUP_HEAD , "iso_helm1" , x , y , player_num , rotation_index );
-
+    if ( Me [ player_num ] . special_item . type == (-1) )
+	iso_put_tux_part ( PART_GROUP_HEAD , "iso_head" , x , y , player_num , rotation_index );
+    else
+	iso_put_tux_part ( PART_GROUP_HEAD , "iso_helm1" , x , y , player_num , rotation_index );
+    
 }; // void iso_put_tux_head ( int x , int y , int player_num , int rotation_index )
 
 /* ----------------------------------------------------------------------

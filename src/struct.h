@@ -279,6 +279,7 @@ typedef struct
     int original_image_height;
     int force_color_key;
     int texture_has_been_created;
+    void* attached_pixel_data;
 #ifdef HAVE_LIBGL
     GLuint *texture;  // this is to store an open_gl texture...
 #else

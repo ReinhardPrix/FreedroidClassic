@@ -157,6 +157,7 @@ EXTERN int next_texture_index_to_use ;
 // EXTERN int next_texture_index_to_use ;
 #endif
 
+EXTERN char previous_part_strings [ ALL_PART_GROUPS ] [ 50 ] ;
 EXTERN mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] ;
 EXTERN int Item_Held_In_Hand;
 EXTERN point InventorySize;
@@ -199,7 +200,6 @@ EXTERN int global_check_for_light_only_collisions_flag;
 #endif
 EXTERN iso_image light_radius_chunk[ NUMBER_OF_SHADOW_IMAGES ];
 EXTERN SDL_Rect InventoryRect;
-EXTERN char previous_part_strings [ ALL_PART_GROUPS ] [ 2000 ] ;
 #ifdef HAVE_LIBGL
 EXTERN GLuint *automap_texture;  // this is to store an open_gl texture...
 #endif
@@ -228,7 +228,7 @@ EXTERN int last_index_of_bot_on_level [ MAX_LEVELS ] ;
 #define EXTERN extern
 #endif
 EXTERN int Number_Of_Bullet_Types;
-EXTERN SDL_Surface *Screen;   /* the graphics display */
+EXTERN SDL_Surface *Screen;   
 EXTERN SDL_Surface* StoredMenuBackground [ 2 ] ;
 EXTERN int current_mouse_cursor_shape;
 
