@@ -259,7 +259,7 @@ ShowLifts (int level, int liftrow)
   //ClearGraphMem();
   // fill the user fenster with some color
   Fill_Rect (User_Rect, lift_bg_color);
-  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );      
+  // DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );      
 
   /* First blit ship "lights off" */
   Copy_Rect (User_Rect, dst);
@@ -970,7 +970,7 @@ show_droid_info (int droidtype, int page , char ShowArrows )
   int type;
   SDL_SetClipRect ( Screen , NULL );
   DisplayImage ( find_file( NE_CONSOLE_BG_PIC2_FILE , GRAPHICS_DIR, FALSE) );
-  DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
+  // DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
 
   ShowRobotPicture (Cons_Menu_Rect.x, Cons_Menu_Rect.y,  droidtype );
 
@@ -1040,14 +1040,40 @@ ShowDeckMap (Level deck)
   tmp.y=Me[0].pos.y;
 
   ClearUserFenster ();
-  Me[0].pos.x = CurLevel->xlen/2;
-  Me[0].pos.y = CurLevel->ylen/2;
+  // Me[0].pos.x = CurLevel->xlen/2;
+  // Me[0].pos.y = CurLevel->ylen/2;
 
   SetCombatScaleTo( 0.25 );
 
-  Assemble_Combat_Picture( ONLY_SHOW_MAP );
+  while (!EscapePressed())
+    {
+     
+      if ( UpPressed() )
+	{
+	  if ( Me[0].pos.y > 1 ) Me[0].pos.y -- ;
+	  while ( UpPressed ( ) );
+	}
+      if ( DownPressed() )
+	{
+	  if ( Me[0].pos.y < curShip.AllLevels[Me[0].pos.z]->ylen-2 ) Me[0].pos.y ++;
+	  while ( DownPressed ( ) );
+	}
+      if ( RightPressed() )
+	{
+	  if ( Me[0].pos.x < curShip.AllLevels[Me[0].pos.z]->xlen-2 ) Me[0].pos.x ++;
+	  while ( RightPressed ( ) );
+	}
+      if ( LeftPressed() )
+	{
+	  if ( Me[0].pos.x > 1 ) Me[0].pos.x --;
+	  while ( LeftPressed ( ) );
+	}
+ 
+      Assemble_Combat_Picture( ONLY_SHOW_MAP );
+      SDL_Flip (Screen);
 
-  SDL_Flip (Screen);
+    }
+  while (EscapePressed());
 
   Me[0].pos.x=tmp.x;
   Me[0].pos.y=tmp.y;
