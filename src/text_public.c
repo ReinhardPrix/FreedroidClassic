@@ -63,7 +63,7 @@
 #include "../src/defs.h"
 #include "../src/struct.h"
 
-#include "../dialog_editor/DialogEditor.h"
+#include "DialogEditor.h"
 
 extern int Number_Of_Item_Types;
 extern itemspec* ItemMap;
