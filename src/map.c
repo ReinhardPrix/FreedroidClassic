@@ -2286,8 +2286,6 @@ GetAllAnimatedMapTiles ( Level Lev )
     Lev -> refresh_obstacle_indices [ i ] = ( -1 ) ;
   for (i = 0; i < MAX_AUTOGUNS_ON_LEVEL; i++)
     Lev -> autogun_obstacle_indices [ i ] = ( -1 ) ;
-  for ( i = 0 ; i < MAX_CONSUMERS_ON_LEVEL ; i ++ )
-    Lev -> consumers [ i ] . x = Lev -> consumers [ i ] . y = 0;
 
   // DebugPrintf ( 0 , "\nPretest for level %d." , Lev -> levelnum );
   // for (i = 0; i < MAX_DOORS_ON_LEVEL; i++)
@@ -3393,10 +3391,7 @@ IsPassable ( float x , float y , int z )
 	  if ( position_collides_with_obstacles_on_square ( x , y , x_tile , y_tile , PassLevel ) ) return ( FALSE );
 	}
     }
-
   return ( TRUE ) ;
-
-
 
   //--------------------
   // It should be safe to skip any out-of-map checks here, because the Tux

@@ -527,7 +527,7 @@ CheckIfCharacterIsStillOk ( int player_num )
   //------------------------------
   // Now we check if the main character is really still ok.
   //
-  if ( Me [ player_num ] .energy <= 0 )
+  if ( Me [ player_num ] . energy <= 0 )
     {
       if ( Me [ player_num ] .type != DRUID001 )
 	{
@@ -540,7 +540,7 @@ CheckIfCharacterIsStillOk ( int player_num )
 	}
       else
 	{
-	  Me [ player_num ] .status = OUT;
+	  Me [ player_num ] . status = OUT;
 
 	  if ( !ServerMode ) ThouArtDefeated ();
 	  
@@ -783,6 +783,8 @@ MoveTuxAccordingToHisSpeed ( int player_num )
   planned_step_x = Me [ player_num ] . speed . x * Frame_Time ();
   planned_step_y = Me [ player_num ] . speed . y * Frame_Time ();
 
+  DebugPrintf ( -1000 , "\nPlanned step: x=%f y=%f." ,  planned_step_x , planned_step_y );
+
   //--------------------
   // Maybe the Tux is just executing a weapon strike.  In this case, there should
   // be no movement at all, so in this case we'll just not go anywhere...
@@ -901,6 +903,8 @@ move_tux_thowards_raw_position ( int player_num , float x , float y )
   moderately_finepoint RemainingWay;
   moderately_finepoint planned_step;
   float length;
+
+  DebugPrintf ( -1000 , "\nmove_tux_thowards_raw_position: player_num = %d." , player_num );
 
   //--------------------
   // We do not move any players, who's statuses are 'OUT'.
@@ -1104,11 +1108,13 @@ streamline_tux_intermediate_course ( int player_num )
   //
   // Therefore we do some extra optimisation check here for this special case...
   //
-  if ( tux_can_walk_this_line ( player_num , 
-				Me [ player_num ] . pos . x ,
-				Me [ player_num ] . pos . y ,
-				Me [ player_num ] . next_intermediate_point [ 1 ] . x ,
-				Me [ player_num ] . next_intermediate_point [ 1 ] . y ) )
+  
+  if ( ( tux_can_walk_this_line ( player_num , 
+				  Me [ player_num ] . pos . x ,
+				  Me [ player_num ] . pos . y ,
+				  Me [ player_num ] . next_intermediate_point [ 1 ] . x ,
+				  Me [ player_num ] . next_intermediate_point [ 1 ] . y ) ) &&
+       ( Me [ player_num ] . next_intermediate_point [ 1 ] . x != (-1) ) )
     {
       if ( CheckIfWayIsFreeOfDroidsWithoutTuxchecking ( Me [ player_num ] . pos . x ,
 							Me [ player_num ] . pos . y ,
@@ -1535,6 +1541,8 @@ move_tux_thowards_intermediate_point ( int player_num )
   int i;
   Level PlayerLevel;
 
+  DebugPrintf ( -1000 , "\nmove_tux_thowards_intermediate_point: player_num = %d." , player_num );
+
   //--------------------
   // If there is no intermediate course, we don't need to do anything
   // in this function.
@@ -1632,6 +1640,8 @@ void
 MoveInfluence ( int player_num )
 {
   Level MoveLevel = curShip.AllLevels[ Me [ player_num ] . pos . z ] ;
+
+  DebugPrintf ( -1000 , "\nMoveInfluence: player_num = %d." , player_num );
 
   //--------------------
   // We store the influencers position for the history record and so that others

@@ -2245,7 +2245,7 @@ void
 iso_put_all_tux_parts_for_sword_motion ( int x , int y , int player_num , int rotation_index )
 {
 
-  DebugPrintf ( 1 , "\nDirection given: %d." , rotation_index );
+  DebugPrintf ( 2 , "\nDirection given: %d." , rotation_index );
   // DebugPrintf ( 0 , "\nphase: %d." , (int) Me [ player_num ] . phase );
 
   switch ( rotation_index )
@@ -2315,8 +2315,8 @@ void
 iso_put_all_tux_parts_for_gun_motion ( int x , int y , int player_num , int rotation_index )
 {
 
-  DebugPrintf ( 1 , "\nDirection given: %d." , rotation_index );
-  DebugPrintf ( 1 , "\nphase: %d." , (int) Me [ player_num ] . phase );
+  DebugPrintf ( 2 , "\nDirection given: %d." , rotation_index );
+  // DebugPrintf ( 1 , "\nphase: %d." , (int) Me [ player_num ] . phase );
 
   switch ( rotation_index )
     {
@@ -3349,7 +3349,7 @@ There was a bullet to be blitted of a type that does not really exist.",
 
   if ( mask & ZOOM_OUT )
     {
-      blit_zoomed_iso_image_to_map_position ( & ( Bulletmap [ CurBullet -> type ] . image [ direction_index ] [ PhaseOfBullet ] ) , CurBullet -> pos . x , CurBullet -> pos . y );
+      // blit_zoomed_iso_image_to_map_position ( & ( Bulletmap [ CurBullet -> type ] . image [ direction_index ] [ PhaseOfBullet ] ) , CurBullet -> pos . x , CurBullet -> pos . y );
     }
   else
     blit_iso_image_to_map_position ( Bulletmap [ CurBullet -> type ] . image [ direction_index ] [ PhaseOfBullet ] , CurBullet -> pos . x , CurBullet -> pos . y );

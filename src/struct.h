@@ -903,21 +903,6 @@ typedef struct
 }
 spell_skill_spec, *Spell_Skill_Spec;
 
-
-typedef struct
-{
-  int level;   // The level, where this elevtor entrance is located
-  int x;       // The position in x of this elevator entrance within the level
-  int y;       // The position in y of this elevator entrance within the level
-
-  // connections: Numbers in Lift-Array 
-  int up;
-  int down;
-
-  int lift_row;  // which lift column does this lift entrance belong to?
-}
-lift, *Lift;
-
 typedef struct
 {
   int x;			
@@ -945,15 +930,15 @@ map_tile, *Map_tile;
 typedef struct
 {
   int levelnum;	/* Number of this level */
-  char *Levelname;		/* Name of this level */
-  char *Background_Song_Name;
-  char *Level_Enter_Comment;
-  map_statement StatementList[ MAX_STATEMENTS_PER_LEVEL ];
-  char *obstacle_name_list[ MAX_OBSTACLE_NAMES_PER_LEVEL ];
   int xlen;		/* X dimension */
   int ylen;
   int light_radius_bonus;
-  map_tile *map[MAX_MAP_LINES];	// this is a vector of pointers
+  char *Levelname;		/* Name of this level */
+  char *Background_Song_Name;
+  char *Level_Enter_Comment;
+  map_statement StatementList [ MAX_STATEMENTS_PER_LEVEL ];
+  char *obstacle_name_list [ MAX_OBSTACLE_NAMES_PER_LEVEL ];
+  map_tile *map [ MAX_MAP_LINES ];	// this is a vector of pointers
   int jump_threshold_north;
   int jump_threshold_south;
   int jump_threshold_east;
@@ -970,7 +955,6 @@ typedef struct
   // frame...
   //
   int refresh_obstacle_indices [ MAX_REFRESHES_ON_LEVEL ] ;
-  point consumers[MAX_CONSUMERS_ON_LEVEL];
   int teleporter_obstacle_indices [ MAX_TELEPORTERS_ON_LEVEL ] ;
   int door_obstacle_indices [ MAX_DOORS_ON_LEVEL ];
   int autogun_obstacle_indices [ MAX_AUTOGUNS_ON_LEVEL ] ;
@@ -987,14 +971,8 @@ level, *Level;
 typedef struct
 {
   int num_levels;
-  int num_lifts;
-  int num_lift_rows;
   char* AreaName;
   Level AllLevels[MAX_LEVELS];
-  lift  AllLifts[MAX_LIFTS];
-  SDL_Rect LiftRow_Rect[MAX_LIFT_ROWS];   /* the lift-row rectangles */
-  SDL_Rect Level_Rects[MAX_LEVELS][MAX_LEVEL_RECTS];  /* level rectangles */
-  int num_level_rects[MAX_LEVELS];  /* how many rects has a level */
 }
 ship, *Ship;
 
