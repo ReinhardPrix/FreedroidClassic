@@ -161,6 +161,8 @@ enum
 #define MAP_DIR			"map/"
 
 #define NE_DROID_BLOCK_FILE	"droids.png"
+// #define NE_DROID_BLOCK_FILE	"droids.alpha.png"
+// #define NE_DROID_BLOCK_FILE	"droids.colorkey.png"
 #define NE_BULLET_BLOCK_FILE 	"bullet.png"
 #define NE_BLAST_BLOCK_FILE 	"blast.png"
 #define NE_DIGIT_BLOCK_FILE     "digits.gif"

@@ -129,6 +129,206 @@ init_system_cursor(const char *image[])
 };
 
 /* ----------------------------------------------------------------------
+ * This function gives the green component of a pixel, using a value of
+ * 255 for the most green pixel and 0 for the least green pixel.
+ * ---------------------------------------------------------------------- */
+Uint8
+GetGreenComponent ( SDL_Surface* surface , int x , int y )
+{
+  SDL_PixelFormat *fmt;
+  Uint32 temp, pixel;
+  Uint8 green;
+
+  //--------------------
+  // First we extract the pixel itself and the
+  // format information we need.
+  //
+  fmt = surface -> format ;
+  SDL_LockSurface ( surface ) ;
+  pixel = * ( ( Uint32* ) surface -> pixels ) ;
+  SDL_UnlockSurface ( surface ) ;
+
+  //--------------------
+  // Now we can extract the green component
+  //
+  temp = pixel&fmt->Gmask; /* Isolate green component */
+  temp = temp>>fmt->Gshift;/* Shift it down to 8-bit */
+  temp = temp<<fmt->Gloss; /* Expand to a full 8-bit number */
+  green = (Uint8)temp;
+
+  return ( green ) ;
+
+}; // int GetGreenComponent ( SDL_Surface* SourceSurface , int x , int y )
+
+/* ----------------------------------------------------------------------
+ * This function gives the red component of a pixel, using a value of
+ * 255 for the most red pixel and 0 for the least red pixel.
+ * ---------------------------------------------------------------------- */
+Uint8
+GetRedComponent ( SDL_Surface* surface , int x , int y )
+{
+  SDL_PixelFormat *fmt;
+  Uint32 temp, pixel;
+  Uint8 red;
+
+  //--------------------
+  // First we extract the pixel itself and the
+  // format information we need.
+  //
+  fmt = surface -> format ;
+  SDL_LockSurface ( surface ) ;
+  pixel = * ( ( Uint32* ) surface -> pixels ) ;
+  SDL_UnlockSurface ( surface ) ;
+
+  //--------------------
+  // Now we can extract the red component
+  //
+  temp = pixel&fmt->Rmask; /* Isolate red component */
+  temp = temp>>fmt->Rshift;/* Shift it down to 8-bit */
+  temp = temp<<fmt->Rloss; /* Expand to a full 8-bit number */
+  red = ( Uint8 ) temp ;
+
+  return ( red ) ;
+
+}; // int GetRedComponent ( SDL_Surface* SourceSurface , int x , int y )
+
+/* ----------------------------------------------------------------------
+ * This function gives the blue component of a pixel, using a value of
+ * 255 for the most blue pixel and 0 for the least blue pixel.
+ * ---------------------------------------------------------------------- */
+Uint8
+GetBlueComponent ( SDL_Surface* surface , int x , int y )
+{
+  SDL_PixelFormat *fmt;
+  Uint32 temp, pixel;
+  Uint8 blue;
+
+  //--------------------
+  // First we extract the pixel itself and the
+  // format information we need.
+  //
+  fmt = surface -> format ;
+  SDL_LockSurface ( surface ) ;
+  pixel = * ( ( Uint32* ) surface -> pixels ) ;
+  SDL_UnlockSurface ( surface ) ;
+
+  //--------------------
+  // Now we can extract the green component
+  //
+  temp = pixel&fmt->Bmask;  /* Isolate blue component */
+  temp = temp>>fmt->Bshift; /* Shift it down to 8-bit */
+  temp = temp<<fmt->Bloss;  /* Expand to a full 8-bit number */
+  blue = ( Uint8 ) temp ;
+
+  return ( blue ) ;
+
+}; // int GetBlueComponent ( SDL_Surface* SourceSurface , int x , int y )
+
+/* ----------------------------------------------------------------------
+ * This function gives the alpha component of a pixel, using a value of
+ * 255 for the most opaque pixel and 0 for the least opaque pixel.
+ * ---------------------------------------------------------------------- */
+Uint8
+GetAlphaComponent ( SDL_Surface* surface , int x , int y )
+{
+  SDL_PixelFormat *fmt;
+  Uint32 temp, pixel;
+  Uint8 alpha;
+
+  //--------------------
+  // First we extract the pixel itself and the
+  // format information we need.
+  //
+  fmt = surface -> format ;
+  SDL_LockSurface ( surface ) ;
+  pixel = * ( ( Uint32* ) surface -> pixels ) ;
+  SDL_UnlockSurface ( surface ) ;
+
+  //--------------------
+  // Now we can extract the alpha component
+  //
+  temp = pixel&fmt->Amask;  /* Isolate alpha component */
+  temp = temp>>fmt->Ashift; /* Shift it down to 8-bit */
+  temp = temp<<fmt->Aloss;  /* Expand to a full 8-bit number */
+  alpha = ( Uint8 ) temp ;
+
+  return ( alpha ) ;
+
+}; // int GetAlphaComponent ( SDL_Surface* SourceSurface , int x , int y )
+
+/* ----------------------------------------------------------------------
+ * If you have two SDL surfaces with alpha channel (i.e. each pixel has
+ * it's own alpha value) and you blit one surface over some background
+ * and then the other surface over that, the result is the same, as if
+ * you merge the two alpha surfaces with this function and then blit it
+ * once over the background.
+ *
+ * This function will be very useful for pre-assembling the tux with all
+ * it's equippment out of alpha channeled surfaces only.
+ *
+ * ---------------------------------------------------------------------- */
+SDL_Surface* 
+CreateAlphaCombinedSurface ( SDL_Surface* FirstSurface , SDL_Surface* SecondSurface )
+{
+  SDL_Surface* ThirdSurface; // this will be the surface we return to the calling function.
+  int x , y ; // for processing through the surface...
+  Uint8 red, green, blue;
+  float alpha1, alpha2, alpha3 ;
+
+  //--------------------
+  // First we check if the two surfaces have the same size.  If not, an
+  // error message will be generated and the program will halt.
+  //
+  if ( ( FirstSurface -> w != SecondSurface -> w ) ||
+       ( FirstSurface -> w != SecondSurface -> w ) )
+    {
+      DebugPrintf ( 0 , "\nERROR in SDL_Surface* CreateAlphaCombinedSurface ( SDL_Surface* FirstBlit , SDL_Surface* SecondBlit ):  Surface sizes do not match.... " );
+      Terminate ( ERR );
+    }
+
+  //--------------------
+  // Now we create a new surface, best in display format with alpha channel
+  // ready to be blitted.
+  //
+  ThirdSurface = SDL_DisplayFormatAlpha ( FirstSurface );
+
+  //--------------------
+  // Now we start to process through the whole surface and examine each
+  // pixel.
+  //
+  DebugPrintf( 0 , "\nNewAlphaValue: " ) ;
+  for ( y = 0 ; y < FirstSurface -> h ; y ++ )
+    {
+      for ( x = 0 ; x < FirstSurface -> w ; x ++ )
+	{
+
+	  alpha1 = ( ( float ) GetAlphaComponent (  FirstSurface , x , y ) ) / 255.0 ;
+	  alpha2 = ( ( float ) GetAlphaComponent ( SecondSurface , x , y ) ) / 255.0 ;
+	  alpha3 = 1 - ( 1 - alpha1 ) * ( 1 - alpha2 ) ;
+	  
+	  red =  ( alpha2 * GetRedComponent ( SecondSurface , x , y ) +
+		   ( 1 - alpha2 ) * alpha1 * GetRedComponent ( FirstSurface , x , y ) ) 
+	    / alpha3 ;
+
+	  green =  ( alpha2 * GetGreenComponent ( SecondSurface , x , y ) +
+		   ( 1 - alpha2 ) * alpha1 * GetGreenComponent ( FirstSurface , x , y ) ) 
+	    / alpha3 ;
+
+	  blue =  ( alpha2 * GetBlueComponent ( SecondSurface , x , y ) +
+		   ( 1 - alpha2 ) * alpha1 * GetBlueComponent ( FirstSurface , x , y ) ) 
+	    / alpha3 ;
+
+	  putpixel ( ThirdSurface , x , y , 
+		     SDL_MapRGBA ( ThirdSurface -> format , red , green , blue , 255.0 * alpha3 ) ) ;
+
+	}
+    }
+
+  return ( ThirdSurface );
+
+}; // SDL_Surface* CreateAlphaCombinedSurface ( SDL_Surface* FirstBlit , SDL_Surface* SecondBlit )
+
+/* ----------------------------------------------------------------------
  * This function is used to draw a line between given map tiles.  It is
  * mainly used for the map editor to highlight connections and the 
  * current map tile target.
