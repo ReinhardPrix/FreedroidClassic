@@ -2101,6 +2101,21 @@ HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
 	  else EditLevel->map[BlockY][BlockX]=LOCKED_H_SHUT_DOOR;	            	      
 	}
     }
+  if (UPressed())
+    {
+      if ( !Ctrl_Was_Pressed())
+	{
+	  if (Shift_Was_Pressed())
+	    EditLevel->map[BlockY][BlockX]=CHEST_U;	            	      
+	  else EditLevel->map[BlockY][BlockX]=CHEST_D;	            	      
+	}
+      else
+	{
+	  if (Shift_Was_Pressed())
+	    EditLevel->map[BlockY][BlockX]=CHEST_L;	            	      
+	  else EditLevel->map[BlockY][BlockX]=CHEST_R;	            	      
+	}
+    }
   if (SpacePressed() && !axis_is_active )
     {
       if ( Shift_Was_Pressed() )

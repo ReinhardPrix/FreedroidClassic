@@ -722,6 +722,19 @@ ActSpecialField ( int PlayerNum )
 	}
       break;
 
+    case CHEST_R:
+    case CHEST_L:
+    case CHEST_U:
+    case CHEST_D:
+      if ( ( Me [ 0 ] . status == TRANSFERMODE ) &&
+	   ( PlayerNum == 0 ) &&
+	   ( ! ServerMode ) )
+	{
+	  EnterChest ( ) ;
+	  DebugPrintf ( 2 , "\nvoid ActSpecialField(int x, int y):  Back from EnterChest().\n");
+	}
+      break;
+
       /*
     case CODEPANEL_R:
     case CODEPANEL_L:
@@ -2953,6 +2966,7 @@ IsPassable ( float x , float y , int z , int Checkpos)
 	}
       break;
 
+    case CHEST_L:
     case CONSOLE_L:
     case CODEPANEL_L:
     case IDENTIFY_L:
@@ -2967,6 +2981,7 @@ IsPassable ( float x , float y , int z , int Checkpos)
 	ret = -1;
       break;
 
+    case CHEST_R:
     case CONSOLE_R:
     case CODEPANEL_R:
     case IDENTIFY_R:
@@ -2981,6 +2996,7 @@ IsPassable ( float x , float y , int z , int Checkpos)
 	ret = -1;
       break;
 
+    case CHEST_U:
     case CONSOLE_U:
     case CODEPANEL_U:
     case IDENTIFY_U:
@@ -2995,7 +3011,7 @@ IsPassable ( float x , float y , int z , int Checkpos)
 	ret = -1;
       break;
 
-
+    case CHEST_D:
     case CONSOLE_D:
     case CODEPANEL_D:
     case IDENTIFY_D:

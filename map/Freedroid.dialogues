@@ -852,7 +852,7 @@ ChangeOption=3 ChangeToValue=0 ; // don't say this twice in one dialog
 ChangeOption=4 ChangeToValue=1 ; // allow to ask for the stasis field
 ChangeOption=5 ChangeToValue=1 ; // allow to ask for old age
 ChangeOption=10 ChangeToValue=1 ; // allow to ask for underground cavern
-ChangeOption=11 ChangeToValue=1 ; // allow to ask for name of francis
+ChangeOption=11 ChangeToValue=1 ; // allow to ask for name of Francis
 
 ----------------------------------------------------------------------
 
@@ -870,7 +870,7 @@ ChangeOption=3 ChangeToValue=0 ; // don't say this twice in one dialog
 ChangeOption=4 ChangeToValue=1 ; // allow to ask for the stasis field
 ChangeOption=5 ChangeToValue=1 ; // allow to ask for old age
 ChangeOption=10 ChangeToValue=1 ; // allow to ask for underground cavern
-ChangeOption=11 ChangeToValue=1 ; // allow to ask for name of francis
+ChangeOption=11 ChangeToValue=1 ; // allow to ask for name of Francis
 
 ----------------------------------------------------------------------
 
