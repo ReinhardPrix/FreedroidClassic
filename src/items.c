@@ -569,7 +569,7 @@ DropItemAt( int ItemType , int level_num , float x , float y , int prefix , int 
     if ( ( ItemType <= 0 ) || ( ItemType >= Number_Of_Item_Types ) )
     {
 	DebugPrintf ( -1000 , "\n\nItemType received: %d." , ItemType );
-	raise ( SIGSEGV );
+	// raise ( SIGSEGV );
 	GiveStandardErrorMessage ( __FUNCTION__  , "\
 Received an item type that was outside of range of the allowed item types.",
 				   PLEASE_INFORM, IS_FATAL );
@@ -1083,7 +1083,7 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 		    drop_item_multiplicity = 1 ;
 		    break;
 		case 12:
-		    drop_item_type = ITEM_BOOTS ;
+		    drop_item_type = ITEM_LIGHT_BOOTS ;
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 13:
@@ -1098,7 +1098,7 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 	    } // inner switch
 	    break;
 	case 2:
-	    switch ( MyRandom ( 16 ) )
+	    switch ( MyRandom ( 17 ) )
 	    {
 		case 0:
 		    drop_item_type = ITEM_TRIPEDAL ;
@@ -1165,6 +1165,10 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 16:
+		    drop_item_type = ITEM_BOOTS ;
+		    drop_item_multiplicity =  1 ;
+		    break;
+		case 17:
 		default:
 		    drop_item_type = ITEM_RUNNING_POWER_POTION ;
 		    drop_item_multiplicity =  1 ;
@@ -1172,7 +1176,7 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 	    } // inner switch
 	    break;
 	case 3:
-	    switch ( MyRandom ( 15 ) )
+	    switch ( MyRandom ( 16 ) )
 	    {
 		case 0:
 		    drop_item_type = ITEM_COMPOSITE_BOW ;
@@ -1235,6 +1239,32 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 15:
+		    drop_item_type = ITEM_REINFORCED_BOOTS ;
+		    drop_item_multiplicity =  1 ;
+		    break;
+		case 16:
+		default:
+		    drop_item_type = ITEM_MEDIUM_MANA_POTION ;
+		    drop_item_multiplicity =  1 ;
+		    break;
+	    } // inner switch
+	    break;
+	case 4:
+	    switch ( MyRandom ( 3 ) )
+	    {
+		case 0:
+		    drop_item_type = ITEM_HIKING_BOOTS ;
+		    drop_item_multiplicity =  1 ;
+		    break;
+		case 1:
+		    drop_item_type = ITEM_FULL_MANA_POTION ;
+		    drop_item_multiplicity =  1 ;
+		    break;
+		case 2:
+		    drop_item_type = ITEM_FULL_HEALTH_POTION ;
+		    drop_item_multiplicity =  1 ;
+		    break;
+		case 3:
 		default:
 		    drop_item_type = ITEM_MEDIUM_MANA_POTION ;
 		    drop_item_multiplicity =  1 ;
