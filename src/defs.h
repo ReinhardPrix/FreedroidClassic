@@ -98,7 +98,7 @@ enum
 #define INVENTORY_GRID_WIDTH 9
 #define INVENTORY_GRID_HEIGHT 6
 #define NUMBER_OF_ITEM_PICTURES 68
-#define NUMBER_OF_OBSTACLE_TYPES 103
+#define NUMBER_OF_OBSTACLE_TYPES 113
 #define NUMBER_OF_MOUSE_CURSOR_PICTURES 2
 
 #define ITEM_DROP_PERCENTAGE 20
@@ -1024,9 +1024,6 @@ enum
   ISO_FLOOR_PARQUET = 11 ,
   ALL_ISOMETRIC_FLOOR_TILES = 12 // this is always the last entry.  It's used to count the number of floor tiles.
 };
-
-
-
 
 #define BLUE_BLOCKS_OFFSET 100
 #define GREEN_BLOCKS_OFFSET 200

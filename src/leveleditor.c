@@ -290,7 +290,7 @@ HandleBannerMouseClick( void )
     }
   if ( CursorIsOnButton ( RIGHT_LEVEL_EDITOR_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) )
     {
-      if ( FirstBlock < NUM_MAP_BLOCKS -8 ) FirstBlock+= 8;
+      if ( FirstBlock < NUMBER_OF_OBSTACLE_TYPES -8 ) FirstBlock+= 8;
       DebugPrintf ( 1 , "\nBlocks should be scrolling now, if apprpirate..." );
     }
 
