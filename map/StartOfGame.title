@@ -61,7 +61,11 @@ Song name to play in the end title if the mission is completed: TheBeginning.ogg
 
  The game is best controlled via mouse input:  Left click onto the locations 
  where you want to move to.  Holding left button down will keep moving in 
- that direction.  Right click to use special powers, spells and skills.  Left 
+ that direction.
+
+ Holding down CTRL key will select running motion.
+
+ Right click to use special powers, spells and skills.  Left 
  click an enemy to launch an attack or left click a friend to initiate 
  friendly communication.
 
@@ -73,6 +77,7 @@ Song name to play in the end title if the mission is completed: TheBeginning.ogg
  L ... Show Quest Status Log
  P ... Turn on/off Pause Mode
  Tab ... Turn on/off automap display
+ CTRL ... Running motion (hold down CTRL-key)
  Escape ... Pops up the main menu
  F1-F9 Quick-Switch to skill/ability/spells 1-9
  1-9 ... Quick-Use items from the quick-inventory.  (That's those small items 
@@ -112,9 +117,6 @@ Song name to play in the end title if the mission is completed: TheBeginning.ogg
 
  There are many more skills and spells available in Freedroid.  
  Consult the in-game explanation page from the skills screen for more information.
- Also, to avoid opening unwanted dialogs with people, it might be good to 
- switch so some other skill while moving along, so as not to accidentially 
- start chatting with everyone along the way.
 
     Press Fire to Play
 
