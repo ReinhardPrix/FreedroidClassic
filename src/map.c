@@ -182,6 +182,17 @@ ActSpecialField (float x, float y)
 	}
       break;
 
+    case CODEPANEL_R:
+    case CODEPANEL_L:
+    case CODEPANEL_D:
+    case CODEPANEL_U:
+      if (Me.status == TRANSFERMODE)
+	{
+	  EnterCodepanel ( );
+	  // DebugPrintf (2, "\nvoid ActSpecialField(int x, int y):  Back from EnterKonsole().\n");
+	}
+      break;
+
 
     case REFRESH1:
     case REFRESH2:

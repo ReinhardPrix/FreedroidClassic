@@ -273,6 +273,137 @@ ShowLifts (int level, int liftrow)
 
 } /* ShowLifts() */
 
+/* ----------------------------------------------------------------------
+ * This function does all the codepanel duties, like bring up the 
+ * codepanel screen, ask for a number, compare it to the real codepanel
+ * number and unlock the door/perform the desired action upon right
+ * code, else just say no and logoff.
+ * ----------------------------------------------------------------------*/
+void
+EnterCodepanel (void)
+{
+  int Code;
+  int map_x;
+  int map_y;
+  int Weiter=FALSE;
+  char* RequestString;
+  char* DecisionString;
+  int i;
+  char *fpath;
+  char fname[500];
+  char ReplyString[10000];
+  SDL_Surface* Background;
+  SDL_Rect Chat_Window;
+  SDL_Rect Droid_Image_Window;
+
+
+  //--------------------
+  // First we arrange the background, so that everything looks fine,
+  // similar as in the DroidChat.
+  //
+
+  while (SpacePressed());
+  
+  Chat_Window.x=242;
+  Chat_Window.y=100;
+  Chat_Window.w=380;
+  Chat_Window.h=314;
+
+  Droid_Image_Window.x=15;
+  Droid_Image_Window.y=82;
+  Droid_Image_Window.w=215;
+  Droid_Image_Window.h=330;
+
+  Activate_Conservative_Frame_Computation( );
+  Background = IMG_Load( find_file ( "chat_test.jpg" , GRAPHICS_DIR, FALSE ) );
+  if ( Background == NULL )
+    {
+      printf("\n\nChatWithFriendlyDroid: ERROR LOADING FILE!!!!  Error code: %s " , SDL_GetError() );
+      Terminate(ERR);
+    }
+
+  SDL_BlitSurface( Background , NULL , ne_screen , NULL );
+  SDL_Flip( ne_screen );
+  
+  SetCurrentFont( Para_BFont );
+
+  DisplayTextWithScrolling ( 
+			    "MegaSoft Security Access Control System\n\nEnter Code: " , 
+			    Chat_Window.x , Chat_Window.y , &Chat_Window , Background );
+
+  //--------------------
+  // Now we read in the code the user has.
+  //
+
+  while ( !Weiter )
+    {
+      RequestString = GetChatWindowInput( Background , &Chat_Window );
+
+      //--------------------
+      // the quit command is always simple and clear.  We just need to end
+      // the communication function. hehe.
+      //
+      if ( ( !strcmp ( RequestString , "quit" ) ) || 
+	   ( !strcmp ( RequestString , "bye" ) ) ||
+	   ( !strcmp ( RequestString , "logout" ) ) ||
+	   ( !strcmp ( RequestString , "logoff" ) ) ||
+	   ( !strcmp ( RequestString , "" ) ) ) 
+	{
+	  Me.TextVisibleTime=0;
+	  Me.TextToBeDisplayed="Logging out.  Bye...";
+	  return;
+	}
+
+      if ( !strcmp ( RequestString , "1234" ) )
+	{
+	  Me.TextVisibleTime=0;
+	  Me.TextToBeDisplayed="Wow! I've hacked this terminal.  Cool!";
+	  map_x = (int) rintf( Me.pos.x );
+	  map_y = (int) rintf( Me.pos.y );
+	  switch( CurLevel->map[ map_y + 1 ] [ map_x ] )
+	    {
+	    case LOCKED_H_ZUTUERE:
+	      CurLevel->map[ map_y + 1 ] [ map_x ] = H_ZUTUERE;
+	      break;
+	    case LOCKED_V_ZUTUERE:
+	      CurLevel->map[ map_y + 1 ] [ map_x ] = V_ZUTUERE;
+	      break;
+	    default:
+	      break;
+	    }
+	  switch( CurLevel->map[ map_y - 1 ] [ map_x ] )
+	    {
+	    case LOCKED_H_ZUTUERE:
+	      CurLevel->map[ map_y - 1 ] [ map_x ] = H_ZUTUERE;
+	      break;
+	    case LOCKED_V_ZUTUERE:
+	      CurLevel->map[ map_y - 1 ] [ map_x ] = V_ZUTUERE;
+	      break;
+	    default:
+	      break;
+	    }
+	  GetDoors( CurLevel );
+	  DisplayTextWithScrolling ( 
+				    "\nAccess granted ! ! " , 
+				    -1 , -1 , &Chat_Window , Background );
+	  SDL_Flip( ne_screen );
+	  while (!SpacePressed());
+	  while (SpacePressed());
+	  
+	  return;
+	}
+
+      DisplayTextWithScrolling ( 
+				"Access denied." , 
+				-1 , -1 , &Chat_Window , Background );
+
+    }
+      
+
+  // while ( !SpacePressed() );
+
+}; // void EnterCodepanel (void)
+
 /*@Function============================================================
 @Desc: EnterKonsole(): does all konsole- duties
 This function runs the consoles. This means the following duties:

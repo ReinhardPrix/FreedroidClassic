@@ -1697,6 +1697,9 @@ Show_Waypoints(void)
   int y;
   int BlockX, BlockY;
   int color;
+  char ConnectionText[5000];
+  char TextAddition[1000];
+
 #define ACTIVE_WP_COLOR 0x0FFFFFFFF
 
   BlockX=rintf(Me.pos.x);
@@ -1742,18 +1745,35 @@ Show_Waypoints(void)
       //--------------------
       // Draw the connections to other waypoints, BUT ONLY FOR THE WAYPOINT CURRENTLY TARGETED
       //
+      strcpy( ConnectionText , "List of connection for this wp:\n" );
       for ( i=0; i<MAX_WP_CONNECTIONS; i++ )
 	{
 	  if ( CurLevel->AllWaypoints[wp].connections[i] != (-1) )
 	    {
-	       if ( ( BlockX == CurLevel->AllWaypoints[wp].x ) && ( BlockY == CurLevel->AllWaypoints[wp].y ) )
-		 // color = ACTIVE_WP_COLOR ;
-		 // else color = HIGHLIGHTCOLOR ; 
-		 // printf(" Found a connection!! ");
-		 DrawLineBetweenTiles( CurLevel->AllWaypoints[wp].x , CurLevel->AllWaypoints[wp].y , 
-				       CurLevel->AllWaypoints[CurLevel->AllWaypoints[wp].connections[i]].x , 
-				       CurLevel->AllWaypoints[CurLevel->AllWaypoints[wp].connections[i]].y ,
-				       color );
+	      if ( ( BlockX == CurLevel->AllWaypoints[wp].x ) && ( BlockY == CurLevel->AllWaypoints[wp].y ) )
+		{
+		  // color = ACTIVE_WP_COLOR ;
+		  // else color = HIGHLIGHTCOLOR ; 
+		  // printf(" Found a connection!! ");
+		  // printf_SDL ( ne_screen  , 100 , 100 , "Waypoint connection to: " );
+		  
+		  SDL_UnlockSurface( ne_screen );
+
+		  sprintf ( TextAddition , "To: X=%d Y=%d    " , 
+			    CurLevel->AllWaypoints[CurLevel->AllWaypoints[wp].connections[i]].x , 
+			    CurLevel->AllWaypoints[CurLevel->AllWaypoints[wp].connections[i]].y 
+			    );
+		  strcat ( ConnectionText , TextAddition );
+
+		  DisplayText ( ConnectionText , User_Rect.x , User_Rect.y , &User_Rect );
+
+		  SDL_LockSurface( ne_screen );
+
+		  DrawLineBetweenTiles( CurLevel->AllWaypoints[wp].x , CurLevel->AllWaypoints[wp].y , 
+					CurLevel->AllWaypoints[CurLevel->AllWaypoints[wp].connections[i]].x , 
+					CurLevel->AllWaypoints[CurLevel->AllWaypoints[wp].connections[i]].y ,
+					color );
+		}
 	    }
 	}
     }

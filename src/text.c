@@ -125,6 +125,8 @@ ChatWithFriendlyDroid( int Enum )
   SDL_Surface* Background;
   SDL_Rect Chat_Window;
   SDL_Rect Droid_Image_Window;
+
+  while (SpacePressed());
   
   Chat_Window.x=242;
   Chat_Window.y=100;
@@ -762,7 +764,7 @@ DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *cl
 int
 DisplayText (char *Text, int startx, int starty, const SDL_Rect *clip)
 {
-  char *tmp;	/* Beweg. Zeiger auf aktuelle Position im Ausgabe-Text */
+  char *tmp;	// mobile pointer to the current position in the string to be printed
   SDL_Rect Temp_Clipping_Rect; // adding this to prevent segfault in case of NULL as parameter
 
   SDL_Rect store_clip;
@@ -804,6 +806,8 @@ DisplayText (char *Text, int startx, int starty, const SDL_Rect *clip)
     } // while !FensterVoll()
 
    SDL_SetClipRect (ne_screen, &store_clip); /* restore previous clip-rect */
+
+
 
   /*
    * ScrollText() wants to know if we still wrote something inside the
