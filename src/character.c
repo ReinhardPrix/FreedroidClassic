@@ -89,6 +89,8 @@ float AC_Gain_Per_Dex_Point[]={     -1 ,     1 ,         1  ,        1 };
 #define CHARACTERRECT_W (SCREEN_WIDTH/2)
 #define CHARACTERRECT_H (User_Rect.h)
 
+#define SKI_BUTTON_X 600
+#define SKI_BUTTON_Y 370
 // #define INV_BUTTON_X 20
 #define INV_BUTTON_X 600
 #define INV_BUTTON_Y 400
@@ -302,7 +304,7 @@ InitiateNewCharacter ( int PlayerNum , int CharacterClass )
 
 /* ----------------------------------------------------------------------
  * This function checks if a given screen position lies within the 
- * strength plus button or not
+ * inventory screen toggle button or not.
  * ---------------------------------------------------------------------- */
 int
 CursorIsOnINVButton( int x , int y )
@@ -311,6 +313,20 @@ CursorIsOnINVButton( int x , int y )
   if ( x < INV_BUTTON_X                     ) return ( FALSE );
   if ( y > INV_BUTTON_Y + INV_BUTTON_HEIGHT ) return ( FALSE );
   if ( y < INV_BUTTON_Y                     ) return ( FALSE );
+  return ( TRUE );
+}; // int CursorIsOnStrButton( int x , int y )
+
+/* ----------------------------------------------------------------------
+ * This function checks if a given screen position lies within the 
+ * skills screen toggle button or not
+ * ---------------------------------------------------------------------- */
+int
+CursorIsOnSKIButton( int x , int y )
+{
+  if ( x > SKI_BUTTON_X + INV_BUTTON_WIDTH  ) return ( FALSE );
+  if ( x < SKI_BUTTON_X                     ) return ( FALSE );
+  if ( y > SKI_BUTTON_Y + INV_BUTTON_HEIGHT ) return ( FALSE );
+  if ( y < SKI_BUTTON_Y                     ) return ( FALSE );
   return ( TRUE );
 }; // int CursorIsOnStrButton( int x , int y )
 
@@ -338,14 +354,16 @@ DisplayButtons( void )
 {
   static SDL_Surface *CHA_ButtonImage = NULL;
   static SDL_Surface *INV_ButtonImage = NULL;
+  static SDL_Surface *SKI_ButtonImage = NULL;
   static SDL_Surface *PlusButtonImage = NULL;
   SDL_Surface *tmp;
   static SDL_Rect CHA_Button_Rect;
   static SDL_Rect INV_Button_Rect;
+  static SDL_Rect SKI_Button_Rect;
   static int WasPressed;
   char* fpath;
 
-  if ( GameConfig.CharacterScreen_Visible == TRUE ) return;
+  // if ( GameConfig.CharacterScreen_Visible == TRUE ) return;
   
   // --------------------
   // Some things like the loading of the character screen
@@ -365,6 +383,11 @@ DisplayButtons( void )
       INV_ButtonImage = SDL_DisplayFormat( tmp );
       SDL_FreeSurface( tmp );
 
+      fpath = find_file ( "SKIButton.png" , GRAPHICS_DIR, FALSE);
+      tmp = IMG_Load( fpath );
+      SKI_ButtonImage = SDL_DisplayFormat( tmp );
+      SDL_FreeSurface( tmp );
+
       fpath = find_file ( "PlusButton.png" , GRAPHICS_DIR, FALSE);
       tmp = IMG_Load( fpath );
       PlusButtonImage = SDL_DisplayFormat( tmp );
@@ -381,6 +404,9 @@ DisplayButtons( void )
   // INV_Button_Rect.w = CHARACTERRECT_W;
   // INV_Button_Rect.h = CHARACTERRECT_H;
 
+  SKI_Button_Rect.x = SKI_BUTTON_X;
+  SKI_Button_Rect.y = SKI_BUTTON_Y;
+
   //--------------------
   // Now we can draw either the plus button or the 'cha' button, depending
   // on whether there are points to distribute or not
@@ -395,6 +421,7 @@ DisplayButtons( void )
     }
 
   SDL_BlitSurface( INV_ButtonImage , NULL , Screen , &INV_Button_Rect );
+  SDL_BlitSurface( SKI_ButtonImage , NULL , Screen , &SKI_Button_Rect );
   
   if ( CursorIsOnINVButton( GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
     {
@@ -404,6 +431,11 @@ DisplayButtons( void )
   if ( CursorIsOnCHAButton( GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
     {
       GameConfig.CharacterScreen_Visible = ! GameConfig.CharacterScreen_Visible;
+    }
+
+  if ( CursorIsOnSKIButton( GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
+    {
+      GameConfig.SkillScreen_Visible = ! GameConfig.SkillScreen_Visible;
     }
 
   WasPressed = axis_is_active;

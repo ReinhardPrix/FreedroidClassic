@@ -318,6 +318,9 @@ EXTERN void DropRandomItem( float x , float y , int TreasureChestRange , int For
 #else
 #define EXTERN extern
 #endif
+EXTERN int CursorIsOnINVButton( int x , int y );
+EXTERN int CursorIsOnCHAButton( int x , int y );
+EXTERN int CursorIsOnSKIButton( int x , int y );
 EXTERN void InitiateNewCharacter ( int PlayerNum , int CharacterClass );
 EXTERN void DisplayButtons( void );
 EXTERN void UpdateAllCharacterStats ( int PlayerNum );

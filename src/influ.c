@@ -1334,6 +1334,20 @@ FireBullet ( int PlayerNum )
     }
 
   //--------------------
+  // Also, if the cursor is right on one of the buttons, that open or close
+  // e.g. the inventory screen or the skills screens or the like, we will also
+  // not interpret this as a common in-game movement or firing command.
+  //
+  if ( ServerThinksAxisIsActive ( PlayerNum ) && ( CursorIsOnINVButton( GetMousePos_x() + 16 , GetMousePos_y() + 16 ) ||
+						   CursorIsOnSKIButton( GetMousePos_x() + 16 , GetMousePos_y() + 16 ) ||
+						   CursorIsOnCHAButton( GetMousePos_x() + 16 , GetMousePos_y() + 16 ) ) )
+    {
+      DebugPrintf( 0 , "\n Cursor is on a button, therefore this press will be ignored." );
+      return;
+    }
+
+
+  //--------------------
   // And also if the whole screen is filled with inventory or other screens, then we will
   // of course not fire any weapon or something but rather return immediately.
   //
