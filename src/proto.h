@@ -608,6 +608,7 @@ EXTERN void SetLineLength (int);
 
 EXTERN int DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *clip , SDL_Surface* Background );
 EXTERN int DisplayText (char *text, int startx, int starty, const SDL_Rect *clip);
+EXTERN void display_current_chat_protocol ( int background_picture_code , enemy* ChatDroid );
 
 EXTERN void DisplayChar (unsigned char c);
 EXTERN int ScrollText (char *text, int startx, int starty, int EndLine , int background_code );
