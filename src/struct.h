@@ -505,7 +505,7 @@ typedef struct
   long Gold;
   char character_name[ MAX_CHARACTER_NAME_LENGTH ];
   mission AllMissions[ MAX_MISSIONS_IN_GAME ];         // What must be done to fullfill this mission?
-  int Marker;                   // In case you've taken over a marked droid, this will contain the marker
+  int marker;                   // In case you've taken over a marked droid, this will contain the marker
   float LastCrysoundTime;
   float LastTransferSoundTime;
   float TextVisibleTime;
@@ -594,7 +594,7 @@ typedef struct
   long Gold;
   char character_name[25];
   mission AllMissions[ MAX_MISSIONS_IN_GAME ];         // What must be done to fullfill this mission?
-  int Marker;                   // In case you've taken over a marked droid, this will contain the marker
+  int marker;                   // In case you've taken over a marked droid, this will contain the marker
   float LastCrysoundTime;
   float LastTransferSoundTime;
   float TextVisibleTime;
@@ -651,7 +651,7 @@ typedef struct
   int FollowingInflusTail;      // does this robot follow influs tail? (trott behind him? )
   int SpecialForce;             // This flag will exclude the droid from initial shuffling of droids
 
-  int Marker;                   // This provides a marker for special mission targets
+  int marker;                   // This provides a marker for special mission targets
   int AdvancedCommand;          // An advanced command that modifies the behaviour of the droid (in new missions)
   double Parameter1;            // This contains special information for AdvancedCommand
   double Parameter2;            // This contains special information for AdvancedCommand

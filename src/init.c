@@ -2316,7 +2316,7 @@ CheckIfMissionIsComplete (void)
 	    {
 	      if ( ( AllEnemys[Robot_Counter].energy > 0 ) && 
 		   ( AllEnemys[Robot_Counter].Status != OUT ) && 
-		   ( AllEnemys[Robot_Counter].Marker == Me[0].AllMissions[ MissNum ].KillOne ) )
+		   ( AllEnemys[Robot_Counter] . marker == Me[0].AllMissions[ MissNum ].KillOne ) )
 		{
 		  DebugPrintf ( MIS_COMPLETE_DEBUG , "\nOne of the marked droids is still alive...");
 		  goto CheckNextMission;
@@ -2459,7 +2459,7 @@ CheckIfMissionIsComplete (void)
       //
       if ( Me[0].AllMissions[ MissNum ].MustBeOne != (-1) )
 	{
-	  if ( Me[0].Marker != Me[0].AllMissions[ MissNum ].MustBeOne ) 
+	  if ( Me[0].marker != Me[0].AllMissions[ MissNum ].MustBeOne ) 
 	    {
 	      DebugPrintf ( MIS_COMPLETE_DEBUG , "\nYou're not yet one of the marked ones...");
 	      continue;

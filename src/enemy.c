@@ -281,7 +281,7 @@ ClearEnemys ( void )
       AllEnemys[i].CompletelyFixed = 0;
       AllEnemys[i].Parameter1 = 0;
       AllEnemys[i].Parameter2 = 0;
-      AllEnemys[i].Marker = 0;
+      AllEnemys[i] . marker = 0;
       AllEnemys[i].is_friendly = 0;
       AllEnemys[i].TextVisibleTime = 0;
       AllEnemys[i].TextToBeDisplayed = "";
@@ -1751,6 +1751,28 @@ TurnABitThowardsTux ( Enemy ThisRobot , float TurnSpeed )
 }; // int TurnABitThowardsTux ( Enemy ThisRobot , float TurnSpeed )
 
 /* ----------------------------------------------------------------------
+ * Enemies act as groups.  If one is hit, all will attack and the like.
+ * This transmission of information is handled here.
+ * ---------------------------------------------------------------------- */
+void 
+SetRestOfGroupToState ( Enemy ThisRobot , int NewState )
+{
+  int MarkerCode;
+  int i;
+
+  MarkerCode = ThisRobot -> marker ;
+
+  if ( ( MarkerCode == 0 ) || ( MarkerCode == 101 ) ) return ;
+
+  for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i ++ )
+    {
+      if ( AllEnemys [ i ] . marker == MarkerCode )
+	AllEnemys [ i ] . combat_state = NewState ;
+    }
+
+}; // void SetRestOfGroupToState ( Enemy ThisRobot , int NewState )
+
+/* ----------------------------------------------------------------------
  * This function sometimes fires a bullet from enemy number enemynum 
  * directly into the direction of the influencer, but of course only if 
  * the odds are good i.e. requirements are met.
@@ -1903,6 +1925,7 @@ ProcessAttackStateMachine (int enemynum)
 		{
 		  ThisRobot -> combat_state = MAKE_ATTACK_RUN ;
 		  ThisRobot -> persuing_given_course = FALSE ;
+		  SetRestOfGroupToState ( ThisRobot , MAKE_ATTACK_RUN );
 		}
 	    }
 	}

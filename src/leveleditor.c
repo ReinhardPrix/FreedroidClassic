@@ -2614,14 +2614,6 @@ EditMapLabelData ( Level EditLevel )
   SetCurrentFont( FPS_Display_BFont );
 
   //--------------------
-  // We ask for the new map label
-  //
-  // DisplayText ( "\n Please enter new label for this map position: \n" , -1 , -1 , &User_Rect );
-  // SDL_Flip( Screen );
-  // NewCommentOnThisSquare = GetString( 1000, FALSE );  // TRUE currently not implemented
-  // NewCommentOnThisSquare = GetEditableStringInPopupWindow ( 1000 , "\n Please enter new label for this map position: \n" );
-
-  //--------------------
   // Now we see if a map label entry is existing already for this spot
   //
   for ( i = 0 ; i < MAX_MAP_LABELS_PER_LEVEL ; i ++ )
@@ -2683,7 +2675,6 @@ EditMapLabelData ( Level EditLevel )
     }
 
   SDL_Flip ( Screen );
-  // getchar_raw();
   
 }; // void EditMapLabelData ( EditLevel )
 
