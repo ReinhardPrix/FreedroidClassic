@@ -3165,9 +3165,118 @@ init_obstacle_data( void )
   obstacle_map [ ISO_BRICK_WALL_RUBBLE_2 ] . block_area_parm_2 = 1.2 ;
   obstacle_map [ ISO_BRICK_WALL_RUBBLE_2 ] . filename = "iso_brick_wall_0015.png" ;
 
+  // -------------------------------------------------------------------
+  // START OF SOME SIDEWALK PIECES
+  // I hope I got the collisions right, and what is pre_put?? heh..
   
-
-
+  obstacle_map [ ISO_SIDEWALK_1 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_SIDEWALK_1 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_1 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_1 ] . filename = "iso_sidewalk_0001.png";
+  obstacle_map [ ISO_SIDEWALK_1 ] . needs_pre_put = FALSE;
+  obstacle_map [ ISO_SIDEWALK_2 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_SIDEWALK_2 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_2 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_2 ] . filename = "iso_sidewalk_0002.png";
+  obstacle_map [ ISO_SIDEWALK_2 ] . needs_pre_put = FALSE;
+  obstacle_map [ ISO_SIDEWALK_3 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_SIDEWALK_3 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_3 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_3 ] . filename = "iso_sidewalk_0003.png";
+  obstacle_map [ ISO_SIDEWALK_3 ] . needs_pre_put = FALSE;
+  obstacle_map [ ISO_SIDEWALK_4 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_SIDEWALK_4 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_4 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_4 ] . filename = "iso_sidewalk_0004.png";
+  obstacle_map [ ISO_SIDEWALK_4 ] . needs_pre_put = FALSE;
+  
+  obstacle_map [ ISO_SIDEWALK_SLIDE_1 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_SIDEWALK_SLIDE_1 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_SLIDE_1 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_SLIDE_1 ] . filename = "iso_sidewalk_0005.png";
+  obstacle_map [ ISO_SIDEWALK_SLIDE_1 ] . needs_pre_put = FALSE;
+  obstacle_map [ ISO_SIDEWALK_SLIDE_2 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_SIDEWALK_SLIDE_2 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_SLIDE_2 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_SLIDE_2 ] . filename = "iso_sidewalk_0006.png";
+  obstacle_map [ ISO_SIDEWALK_SLIDE_2 ] . needs_pre_put = FALSE;
+  obstacle_map [ ISO_SIDEWALK_SLIDE_3 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_SIDEWALK_SLIDE_3 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_SLIDE_3 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_SLIDE_3 ] . filename = "iso_sidewalk_0007.png";
+  obstacle_map [ ISO_SIDEWALK_SLIDE_3 ] . needs_pre_put = FALSE;
+  obstacle_map [ ISO_SIDEWALK_SLIDE_4 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_SIDEWALK_SLIDE_4 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_SLIDE_4 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_SLIDE_4 ] . filename = "iso_sidewalk_0008.png";
+  obstacle_map [ ISO_SIDEWALK_SLIDE_4 ] . needs_pre_put = FALSE;
+  
+  obstacle_map [ ISO_SIDEWALK_BUMP_1 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_SIDEWALK_BUMP_1 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_BUMP_1 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_BUMP_1 ] . filename = "iso_sidewalk_0009.png";
+  obstacle_map [ ISO_SIDEWALK_BUMP_1 ] . needs_pre_put = FALSE;
+  obstacle_map [ ISO_SIDEWALK_BUMP_2 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_SIDEWALK_BUMP_2 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_BUMP_2 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_BUMP_2 ] . filename = "iso_sidewalk_0010.png";
+  obstacle_map [ ISO_SIDEWALK_BUMP_2 ] . needs_pre_put = FALSE;
+  obstacle_map [ ISO_SIDEWALK_BUMP_3 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_SIDEWALK_BUMP_3 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_BUMP_3 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_BUMP_3 ] . filename = "iso_sidewalk_0011.png";
+  obstacle_map [ ISO_SIDEWALK_BUMP_3 ] . needs_pre_put = FALSE;
+  obstacle_map [ ISO_SIDEWALK_BUMP_4 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_SIDEWALK_BUMP_4 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_BUMP_4 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_BUMP_4 ] . filename = "iso_sidewalk_0012.png";
+  obstacle_map [ ISO_SIDEWALK_BUMP_4 ] . needs_pre_put = FALSE;
+    
+  obstacle_map [ ISO_SIDEWALK_CORNER_1 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_SIDEWALK_CORNER_1 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_CORNER_1 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_CORNER_1 ] . filename = "iso_sidewalk_0013.png";
+  obstacle_map [ ISO_SIDEWALK_CORNER_1 ] . needs_pre_put = FALSE;
+  obstacle_map [ ISO_SIDEWALK_CORNER_2 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_SIDEWALK_CORNER_2 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_CORNER_2 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_CORNER_2 ] . filename = "iso_sidewalk_0014.png";
+  obstacle_map [ ISO_SIDEWALK_CORNER_2 ] . needs_pre_put = FALSE;
+  obstacle_map [ ISO_SIDEWALK_CORNER_3 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_SIDEWALK_CORNER_3 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_CORNER_3 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_CORNER_3 ] . filename = "iso_sidewalk_0015.png";
+  obstacle_map [ ISO_SIDEWALK_CORNER_3 ] . needs_pre_put = FALSE;
+  obstacle_map [ ISO_SIDEWALK_CORNER_4 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_SIDEWALK_CORNER_4 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_CORNER_4 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_CORNER_4 ] . filename = "iso_sidewalk_0016.png";
+  obstacle_map [ ISO_SIDEWALK_CORNER_4 ] . needs_pre_put = FALSE;
+  
+  obstacle_map [ ISO_SIDEWALK_INNER_CORNER_1 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_SIDEWALK_INNER_CORNER_1 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_INNER_CORNER_1 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_INNER_CORNER_1 ] . filename = "iso_sidewalk_0017.png";
+  obstacle_map [ ISO_SIDEWALK_INNER_CORNER_1 ] . needs_pre_put = FALSE;
+  obstacle_map [ ISO_SIDEWALK_INNER_CORNER_2 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_SIDEWALK_INNER_CORNER_2 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_INNER_CORNER_2 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_INNER_CORNER_2 ] . filename = "iso_sidewalk_0018.png";
+  obstacle_map [ ISO_SIDEWALK_INNER_CORNER_2 ] . needs_pre_put = FALSE;
+  obstacle_map [ ISO_SIDEWALK_INNER_CORNER_3 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_SIDEWALK_INNER_CORNER_3 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_INNER_CORNER_3 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_INNER_CORNER_3 ] . filename = "iso_sidewalk_0019.png";
+  obstacle_map [ ISO_SIDEWALK_INNER_CORNER_3 ] . needs_pre_put = FALSE;
+  obstacle_map [ ISO_SIDEWALK_INNER_CORNER_4 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_SIDEWALK_INNER_CORNER_4 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_INNER_CORNER_4 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_SIDEWALK_INNER_CORNER_4 ] . filename = "iso_sidewalk_0020.png";
+  obstacle_map [ ISO_SIDEWALK_INNER_CORNER_4 ] . needs_pre_put = FALSE;
+    
+  // END OF SIDEWALKS 
+  
+  
   obstacle_map [ ISO_BLOOD_1 ] . block_area_type = COLLISION_TYPE_NONE ;
   obstacle_map [ ISO_BLOOD_1 ] . block_area_parm_1 = 1.0 ;
   obstacle_map [ ISO_BLOOD_1 ] . block_area_parm_2 = 1.0 ;
