@@ -93,57 +93,6 @@ enum _sounds
 #define ERR 	-1
 #define OK		0
 
-/* Konstanten fuer die Dateinamen */
-/*
-#define SHIPNAME "./map/ship1" 
-#define PALBILD	"./graphics/palbild.lbm"
-#define COLORFILE "./map/levels.col"
-#define BLOCKBILD1 "./graphics/block.lbm"
-#define BLOCKBILD2 ""
-// #define TITELBILD1 "./graphics/title.lbm"
-#define TITELBILD1PCX "./graphics/title.pcx"
-#define RAHMENBILD1 "./graphics/rahmen.lbm"
-#define PARAPLUSRAHMENBILD "./graphics/plusrah1.lbm"
-#define BLASTBILD "./graphics/blast.lbm"
-#define BULLETBILD "./graphics/bullet.lbm"
-#define INFLUENCEBILD "./graphics/influ.lbm"
-#define DATA70ZEICHENSATZ "./graphics/para8x8.fnt"
-#define DIGITBILD "./graphics/digits.lbm"
-#define ENEMYBILD "./graphics/enemy.lbm"
-#define SEITENANSICHTBILD "./graphics/ship.lbm"
-#define EL_BLOCKS_FILE 		"./graphics/ship2.lbm"
-#define FONTBILD "./graphics/parafont.lbm"
-#define CONSOLENBILD "./graphics/console.lbm"
-#define ROBOTPICTUREBILD "./graphics/robots.lbm"
-#define SHIELDPICTUREBILD "./graphics/shield.lbm"
-#define TAKEOVERBACKGROUNDBILD "./graphics/overtake.lbm"
-#define PLAYGROUND_FILE	"./graphics/to_ground.lbm"	// graphics - files 
-#define ELEMENTS_FILE	"./graphics/to_elem.lbm"
-*/
-
-/*
-#define PALBILD_PCX                "../graphics/palbild.pcx"
-#define BLOCKBILD1_PCX             "../graphics/block.pcx"
-#define BLOCKBILD2_PCX             ""
-#define TITELBILD1_PCX             "../graphics/newtitle.pcx"
-#define RAHMENBILD1_PCX            "../graphics/rahmen.pcx"
-#define PARAPLUSRAHMENBILD_PCX     "../graphics/plusrah1.pcx"
-#define BLASTBILD_PCX              "../graphics/blast.pcx"
-#define BULLETBILD_PCX             "../graphics/bullet.pcx"
-#define INFLUENCEBILD_PCX          "../graphics/influ.pcx"
-#define DIGITBILD_PCX              "../graphics/digits.pcx"
-#define ENEMYBILD_PCX              "../graphics/enemy.pcx"
-#define SEITENANSICHTBILD_PCX      "../graphics/ship.pcx"
-#define EL_BLOCKS_FILE_PCX         "../graphics/ship2.pcx"
-#define FONTBILD_PCX               "../graphics/parafont.pcx"
-#define CONSOLENBILD_PCX           "../graphics/console.pcx"
-#define ROBOTPICTUREBILD_PCX       "../graphics/robots.pcx"
-#define SHIELDPICTUREBILD_PCX      "../graphics/shield.pcx"
-#define MENU_PICTURE_PCX_FILENAME  "../graphics/Options_Menu_Graphics.pcx"
-//
-#define ELEMENTS_FILE_PCX	   "../graphics/to_elem.pcx"
-*/
-
 #define PALBILD_PCX                "../graphics/palbild.bmp"
 #define BLOCKBILD1_PCX             "../graphics/block.bmp"
 #define BLOCKBILD2_PCX             ""
@@ -162,7 +111,6 @@ enum _sounds
 #define ROBOTPICTUREBILD_PCX       "../graphics/robots.bmp"
 #define SHIELDPICTUREBILD_PCX      "../graphics/shield.bmp"
 #define MENU_PICTURE_PCX_FILENAME  "../graphics/Options_Menu_Graphics.bmp"
-//
 #define ELEMENTS_FILE_PCX	   "../graphics/to_elem.bmp"
 
 
