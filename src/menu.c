@@ -1244,14 +1244,14 @@ Level_Editor(void)
 	  //
 	  if ( OPressed () )
 	    {
-	      if (CurrentCombatScaleFactor > 0.5 )
-		CurrentCombatScaleFactor -= 0.5;
+	      if (CurrentCombatScaleFactor > 0.25 )
+		CurrentCombatScaleFactor -= 0.25;
 	      SetCombatScaleTo (CurrentCombatScaleFactor);
 	      while (OPressed());
 	    }
 	  if ( IPressed () )
 	    {
-	      CurrentCombatScaleFactor += 0.5;
+	      CurrentCombatScaleFactor += 0.25;
 	      SetCombatScaleTo (CurrentCombatScaleFactor);
 	      while (IPressed());
 	    }
