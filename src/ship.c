@@ -571,13 +571,6 @@ GreatItemShow (void)
   MenuTexts[0]="Yes";
   MenuTexts[1]="No";
   MenuTexts[2]="";
-  MenuTexts[3]="";
-  MenuTexts[4]="";
-  MenuTexts[5]="";
-  MenuTexts[8]="";
-  MenuTexts[6]="";
-  MenuTexts[7]="";
-  MenuTexts[9]="";
 
   //--------------------
   // We initialize the text rectangle
@@ -664,59 +657,6 @@ GreatItemShow (void)
 	      // if (page > 0) page --;
 	      Displacement -= FontHeight ( GetCurrentFont () );
 	    }
-	  /*
-	  else if ( CursorIsOnButton( CONSOLE_IDENTIFY_BUTTON_GREEN , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
-	    {
-	      MoveMenuPositionSound();
-	      ShowPointerList [ ItemIndex ] ->is_identified = TRUE;
-	    }
-	  else if ( CursorIsOnButton( MAP_SECURITYLEFT_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
-	    {
-	      if ( ClearanceIndex > 0 ) 
-		{
-		  ClearanceIndex --;
-		  MenuItemSelectedSound ( ) ;
-		  PasswordIndex = (-1) ;
-		  // SelectedFunction = NO_FUNCTION ;
-		}
-	    }
-	  else if ( CursorIsOnButton( MAP_SECURITYRIGHT_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
-	    {
-	      if ( ClearanceIndex < MAX_CLEARANCES - 1 )
-		{
-		  if ( Me [ 0 ] . clearance_list [ ClearanceIndex + 1 ] ) 
-		    {
-		      ClearanceIndex ++;
-		      MenuItemSelectedSound();
-		      PasswordIndex = (-1) ;
-		      // SelectedFunction = NO_FUNCTION ;
-		    }
-		}
-	    }
-	  else if ( CursorIsOnButton( MAP_PASSWORDLEFT_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
-	    {
-	      if ( PasswordIndex > 0 ) 
-		{
-		  PasswordIndex --;
-		  MenuItemSelectedSound ( ) ;
-		  ClearanceIndex = (-1) ;
-		  // SelectedFunction = NO_FUNCTION ;
-		}
-	    }
-	  else if ( CursorIsOnButton( MAP_PASSWORDRIGHT_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
-	    {
-	      if ( PasswordIndex < MAX_PASSWORDS - 1 )
-		{
-		  if ( strlen ( Me [ 0 ] . password_list [ PasswordIndex + 1 ] ) > 0 ) 
-		    {
-		      PasswordIndex ++;
-		      MenuItemSelectedSound();
-		      ClearanceIndex = (-1) ;
-		      // SelectedFunction = NO_FUNCTION ;
-		    }
-		}
-	    }
-	  */
 	  else if ( CursorIsOnButton( ITEM_BROWSER_EXIT_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
 	    {
 	      finished = TRUE;
@@ -731,25 +671,25 @@ GreatItemShow (void)
 	{
 	  MoveMenuPositionSound();
 	  while (UpPressed());
-	  if ( ItemType < Me[0].type) ItemType ++;
+	  Displacement += FontHeight ( GetCurrentFont () );
 	}
       if (DownPressed() || MouseWheelDownPressed())
 	{
 	  MoveMenuPositionSound();
 	  while (DownPressed());
-	  if (ItemType > 0) ItemType --;
+	  Displacement -= FontHeight ( GetCurrentFont () );
 	}
       if (RightPressed() )
 	{
 	  MoveMenuPositionSound();
 	  while (RightPressed());
-	  Displacement += FontHeight ( GetCurrentFont () );
+	  if ( ItemType < Me[0].type) ItemType ++;
 	}
       if (LeftPressed() )
 	{
 	  MoveMenuPositionSound();
 	  while (LeftPressed());
-	  Displacement -= FontHeight ( GetCurrentFont () );
+	  if (ItemType > 0) ItemType --;
 	}
 
     } // while !finished 

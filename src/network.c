@@ -332,21 +332,10 @@ Init_Network(void)
   //
   if ( SDLNet_Init() == (-1) ) 
     {
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The SDL NET SUBSYSTEM COULD NOT BE INITIALIZED.\n\
-\n\
-The reason for this as reportet by the SDL Net is as follows:\n\
-%s\n\
-\n\
-Freedroid will terminate now to draw attention \n\
-to the network code problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , SDLNet_GetError ( ) );
-      Terminate( ERR );
+      fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
+      GiveStandardErrorMessage ( "Init_Network(...)" , "\
+The SDL NET SUBSYSTEM COULD NOT BE INITIALIZED.",
+			     NO_NEED_TO_INFORM, IS_FATAL );
     }
   else
     {
@@ -1273,22 +1262,10 @@ SendTextMessageToClient ( int PlayerNum , char* message )
   DebugPrintf ( 0 , "\nSending TCP message returned : %d . " , CommunicationResult );
   if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
     {
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The SDL NET COULD NOT SEND A TEXT MESSAGE TO THE CLIENT SUCCESSFULLY\n\
-in the function void SendTextMessageToClient ( int PlayerNum , char* message ).\n\
-\n\
-The cause of this problem as reportet by the SDL_net was: \n\
-%s\n\
-\n\
-Freedroid will terminate now to draw attention \n\
-to the networking problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , SDLNet_GetError ( ) ) ;
-      Terminate(ERR);
+      fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
+      GiveStandardErrorMessage ( "SendTextMessageToClient(...)" , "\
+The SDL NET COULD NOT SEND A TEXT MESSAGE TO THE CLIENT SUCCESSFULLY.",
+			     NO_NEED_TO_INFORM, IS_FATAL );
     }
 
 }; // void SendTextMessageToClient ( int PlayerNum , char* message )
@@ -1339,22 +1316,10 @@ SendFullMeUpdateToClient ( int PlayerNum )
   DebugPrintf ( 0 , "\nSending Full Me Update returned : %d . " , CommunicationResult );
   if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
     {
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The SDL NET COULD NOT SEND A FULL ME UPDATE TO THE CLIENT SUCCESSFULLY\n\
-in the function void SendTextMessageToClient ( int PlayerNum , char* message ).\n\
-\n\
-The cause of this problem as reportet by the SDL_net was: \n\
-%s\n\
-\n\
-Freedroid will terminate now to draw attention \n\
-to the networking problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , SDLNet_GetError ( ) ) ;
-      Terminate(ERR);
+      fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
+      GiveStandardErrorMessage ( "SendFullMeUpdateToClient(...)" , "\
+The SDL NET COULD NOT SEND A FULL ME UPDATE TO THE CLIENT SUCCESSFULLY.",
+				 NO_NEED_TO_INFORM, IS_FATAL );
     }
 
 }; // void SendFullMeUpdateToClient ( int PlayerNum )
@@ -1404,22 +1369,10 @@ SendFullPlayerEngramToClient ( int PlayerNum )
   DebugPrintf ( SERVER_SEND_DEBUG , "\nSending Full PlayerEngram returned : %d . " , CommunicationResult );
   if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
     {
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The SDL NET COULD NOT SEND A FULL PLAYER ENGRAM TO THE CLIENT SUCCESSFULLY\n\
-in the function void SendTextMessageToClient ( int PlayerNum , char* message ).\n\
-\n\
-The cause of this problem as reportet by the SDL_net was: \n\
-%s\n\
-\n\
-Freedroid will terminate now to draw attention \n\
-to the networking problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , SDLNet_GetError ( ) ) ;
-      Terminate(ERR);
+      fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
+      GiveStandardErrorMessage ( "SendFullPlayerEngramToClient(...)" , "\
+The SDL NET COULD NOT SEND A FULL PLAYER ENGRAM TO THE CLIENT SUCCESSFULLY.",
+			     NO_NEED_TO_INFORM, IS_FATAL );
     }
 
 }; // void SendFullPlayerEngramToClient ( int PlayerNum )
@@ -1471,22 +1424,10 @@ SendEnemySwapSignalToClient ( int PlayerNum , int First , int Second )
   DebugPrintf ( SERVER_SEND_DEBUG , "\nSending Enemy swap signal returned : %d . " , CommunicationResult );
   if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
     {
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The SDL NET COULD NOT SEND AN ENEMY SWAP SIGNAL TO THE CLIENT SUCCESSFULLY\n\
-in the function void SendTextMessageToClient ( int PlayerNum , char* message ).\n\
-\n\
-The cause of this problem as reportet by the SDL_net was: \n\
-%s\n\
-\n\
-Freedroid will terminate now to draw attention \n\
-to the networking problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , SDLNet_GetError ( ) ) ;
-      Terminate(ERR);
+      fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
+      GiveStandardErrorMessage ( "SendEnemySwapSignalToClient(...)" , "\
+The SDL NET COULD NOT SEND AN ENEMY SWAP SIGNAL TO THE CLIENT SUCCESSFULLY.",
+			     NO_NEED_TO_INFORM, IS_FATAL );
     }
 
 }; // void SendEnemySwapSignalToClient ( int PlayerNum , int First , int Second )
@@ -1536,22 +1477,10 @@ SendFullBulletEngramToClient ( int PlayerNum )
   DebugPrintf ( SERVER_SEND_DEBUG , "\nSending Full BulletEngram returned : %d . " , CommunicationResult );
   if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
     {
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The SDL NET COULD NOT SEND A FULL BULLET ENGRAM TO THE CLIENT SUCCESSFULLY\n\
-in the function void SendTextMessageToClient ( int PlayerNum , char* message ).\n\
-\n\
-The cause of this problem as reportet by the SDL_net was: \n\
-%s\n\
-\n\
-Freedroid will terminate now to draw attention \n\
-to the networking problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , SDLNet_GetError ( ) ) ;
-      Terminate(ERR);
+      fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
+      GiveStandardErrorMessage ( "SendFullBulletEngramToClient(...)" , "\
+The SDL NET COULD NOT SEND A FULL BULLET ENGRAM TO THE CLIENT SUCCESSFULLY.",
+				 NO_NEED_TO_INFORM, IS_FATAL );
     }
 
 }; // void SendFullBulletEngramToClient ( int PlayerNum )
@@ -1601,22 +1530,10 @@ SendFullBlastEngramToClient ( int PlayerNum )
   DebugPrintf ( SERVER_SEND_DEBUG , "\nSending full blast engram returned : %d . " , CommunicationResult );
   if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
     {
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The SDL NET COULD NOT SEND A FULL BLAST ENGRAM TO THE CLIENT SUCCESSFULLY\n\
-in the function void SendTextMessageToClient ( int PlayerNum , char* message ).\n\
-\n\
-The cause of this problem as reportet by the SDL_net was: \n\
-%s\n\
-\n\
-Freedroid will terminate now to draw attention \n\
-to the networking problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , SDLNet_GetError ( ) ) ;
-      Terminate(ERR);
+      fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
+      GiveStandardErrorMessage ( "SendFullBlastEngramToClient(...)" , "\
+The SDL NET COULD NOT SEND A FULL BLAST ENGRAM TO THE CLIENT SUCCESSFULLY.",
+				 NO_NEED_TO_INFORM, IS_FATAL );
     }
 
 }; // void SendFullBlastEngramToClient ( int PlayerNum )
@@ -1666,22 +1583,10 @@ SendFullItemEngramToClient ( int PlayerNum )
   DebugPrintf ( SERVER_SEND_DEBUG , "\nSending full item engram returned : %d . " , CommunicationResult );
   if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
     {
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The SDL NET COULD NOT SEND A FULL ITEM ENGRAM TO THE CLIENT SUCCESSFULLY\n\
-in the function void SendTextMessageToClient ( int PlayerNum , char* message ).\n\
-\n\
-The cause of this problem as reportet by the SDL_net was: \n\
-%s\n\
-\n\
-Freedroid will terminate now to draw attention \n\
-to the networking problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , SDLNet_GetError ( ) ) ;
-      Terminate(ERR);
+      fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
+      GiveStandardErrorMessage ( "SendFullItemEngramToClient(...)" , "\
+The SDL NET COULD NOT SEND A FULL ITEM ENGRAM TO THE CLIENT SUCCESSFULLY",
+				 NO_NEED_TO_INFORM, IS_FATAL );
     }
 
 }; // void SendFullItemEngramToClient ( int PlayerNum )
@@ -1814,22 +1719,10 @@ SendItemUpdateToClient ( int PlayerNum )
   DebugPrintf ( SERVER_SEND_DEBUG , "\nSending item update engram returned : %d . " , CommunicationResult );
   if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
     {
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The SDL NET COULD NOT SEND AN ITEM UPDATE TO THE CLIENT SUCCESSFULLY\n\
-in the function void SendTextMessageToClient ( int PlayerNum , char* message ).\n\
-\n\
-The cause of this problem as reportet by the SDL_net was: \n\
-%s\n\
-\n\
-Freedroid will terminate now to draw attention \n\
-to the networking problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , SDLNet_GetError ( ) ) ;
-      Terminate(ERR);
+      fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
+      GiveStandardErrorMessage ( "SendFullItemEngramToClient(...)" , "\
+The SDL NET COULD NOT SEND AN ITEM UPDATE TO THE CLIENT SUCCESSFULLY.",
+				 NO_NEED_TO_INFORM, IS_FATAL );
     }
 
 }; // void SendFullItemEngramToClient ( int PlayerNum )
@@ -1879,22 +1772,10 @@ SendFullEnemyEngramToClient ( int PlayerNum )
   DebugPrintf ( SERVER_SEND_DEBUG , "\nSending Full PlayerEngram returned : %d . " , CommunicationResult );
   if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
     {
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The SDL NET COULD NOT SEND A FULL PLAYER ENGRAM TO THE CLIENT SUCCESSFULLY\n\
-in the function void SendTextMessageToClient ( int PlayerNum , char* message ).\n\
-\n\
-The cause of this problem as reportet by the SDL_net was: \n\
-%s\n\
-\n\
-Freedroid will terminate now to draw attention \n\
-to the networking problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , SDLNet_GetError ( ) ) ;
-      Terminate(ERR);
+      fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
+      GiveStandardErrorMessage ( "SendFullPlayerEngramToClient(...)" , "\
+The SDL NET COULD NOT SEND A FULL PLAYER ENGRAM TO THE CLIENT SUCCESSFULLY.",
+				 NO_NEED_TO_INFORM, IS_FATAL );
     }
 
 }; // void SendFullPlayerEngramToClient ( int PlayerNum )
@@ -1959,22 +1840,10 @@ SendBulletUpdateEngramToClient ( int PlayerNum )
   DebugPrintf ( SERVER_SEND_DEBUG , "\nSending enemy update engram returned : %d . " , CommunicationResult );
   if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
     {
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The SDL NET COULD NOT SEND A FULL PLAYER ENGRAM TO THE CLIENT SUCCESSFULLY\n\
-in the function void SendTextMessageToClient ( int PlayerNum , char* message ).\n\
-\n\
-The cause of this problem as reportet by the SDL_net was: \n\
-%s\n\
-\n\
-Freedroid will terminate now to draw attention \n\
-to the networking problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , SDLNet_GetError ( ) ) ;
-      Terminate(ERR);
+      fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
+      GiveStandardErrorMessage ( "SendBulletUpdateEngramToClient(...)" , "\
+The SDL NET COULD NOT SEND A FULL PLAYER ENGRAM TO THE CLIENT SUCCESSFULLY.",
+				 NO_NEED_TO_INFORM, IS_FATAL );
     }
 
 }; // void SendBulletUpdateEngramToClient ( int PlayerNum )
@@ -2038,22 +1907,10 @@ SendEnemyUpdateEngramToClient ( int PlayerNum )
   DebugPrintf ( SERVER_SEND_DEBUG , "\nSending enemy update engram returned : %d . " , CommunicationResult );
   if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
     {
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The SDL NET COULD NOT SEND A FULL PLAYER ENGRAM TO THE CLIENT SUCCESSFULLY\n\
-in the function void SendTextMessageToClient ( int PlayerNum , char* message ).\n\
-\n\
-The cause of this problem as reportet by the SDL_net was: \n\
-%s\n\
-\n\
-Freedroid will terminate now to draw attention \n\
-to the networking problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , SDLNet_GetError ( ) ) ;
-      Terminate(ERR);
+      fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
+      GiveStandardErrorMessage ( "SendEnemyUpdateEngramToClient(...)" , "\
+The SDL NET COULD NOT ENEMY UPDATE ENGRAM TO THE CLIENT SUCCESSFULLY.",
+				 NO_NEED_TO_INFORM, IS_FATAL );
     }
 
 }; // void SendEnemyUpdateEngramToClient ( int PlayerNum )
@@ -2100,22 +1957,10 @@ SendEnemyDeletionRequestToClient ( int PlayerNum )
   DebugPrintf ( 0 , "\nSending Delete All Enemys Request to Client returned : %d . " , CommunicationResult );
   if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
     {
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The SDL NET COULD NOT SEND A REQUEST FOR DELETION OF ALL ENEMYS TO THE CLIENT SUCCESSFULLY\n\
-in the function void SendEnemyDeletionRequestToClient ( int PlayerNum ).\n\
-\n\
-The cause of this problem as reportet by the SDL_net was: \n\
-%s\n\
-\n\
-Freedroid will terminate now to draw attention \n\
-to the networking problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , SDLNet_GetError ( ) ) ;
-      Terminate(ERR);
+      fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
+      GiveStandardErrorMessage ( "SendEnemyDeletionRequestToClient(...)" , "\
+The SDL NET COULD NOT SEND A REQUEST FOR DELETION OF ALL ENEMYS TO THE CLIENT SUCCESSFULLY",
+				 NO_NEED_TO_INFORM, IS_FATAL );
     }
 
 }; // void SendEnemyDeletionRequestToClient ( int PlayerNum )
@@ -2376,22 +2221,10 @@ ConnectToFreedroidServer ( void )
   //
   if( SDLNet_ResolveHost( &ip , ServerName , port ) == ( -1 ) )
     {
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The SDL NET SUBSYSTEM COULD NOT RESOLVE THE HOSTNAME %s.\n\
-\n\
-The reason for this as reportet by the SDL Net is as follows:\n\
-%s\n\
-\n\
-Freedroid will terminate now to draw attention \n\
-to the network code problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , ServerName , SDLNet_GetError ( ) );
-
-      Terminate ( ERR );
+      fprintf ( stderr, "\n\nServerName: %s , SDLNet_GetError(): '%s'.\n" , ServerName , SDLNet_GetError() );
+      GiveStandardErrorMessage ( "ConnectToFreedroidServer(...)" , "\
+The SDL NET SUBSYSTEM COULD NOT RESOLVE THE HOSTNAME.",
+				 NO_NEED_TO_INFORM, IS_FATAL );
     }
   else
     {
@@ -2403,30 +2236,15 @@ Sorry...\n\
   sock = SDLNet_TCP_Open( &ip ) ;
   if( ! sock )
     {
-      fprintf( stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The SDL NET SUBSYSTEM COULD NOT OPEN A TCP CONNECTION TO THE SERVER\n\
-WITH THE RESOLVED IP ADDRESS : %d.%d.%d.%d port %hu\n\
-The reason for this as reportet by the SDL Net is as follows:\n\
-%s\n\
-\n\
-Freedroid will terminate now to draw attention \n\
-to the network code problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , 
-	       ServerIpAddress >> 24 ,
+      fprintf ( stderr, "\n\n%d.%d.%d.%d port: %hu, SDLNet_GetError(): '%s'.\n" , ServerIpAddress >> 24 ,
 	       ( ServerIpAddress >> 16) &0xff ,
 	       ( ServerIpAddress >> 8 ) &0xff ,
 	       ServerIpAddress &0xff ,
-	       ip.port,
-	       SDLNet_GetError ( ) );
-      // printf("Accepted a connection from %d.%d.%d.%d port %hu\n",
-      // DebugPrintf( 0 , "\n--------------------\nERROR!!! SDLNet_TCP_Open: %s\n--------------------\n" , 
-      // SDLNet_GetError ( ) ) ;
-      Terminate ( ERR );
+	       ip.port, SDLNet_GetError() );
+      GiveStandardErrorMessage ( "ConnectToFreedroidServer(...)" , "\
+The SDL NET SUBSYSTEM COULD NOT OPEN A TCP CONNECTION TO THE SERVER\n\
+WITH THE RESOLVED IP ADDRESS.",
+				 NO_NEED_TO_INFORM, IS_FATAL );
     }
   else
     {
@@ -2448,21 +2266,10 @@ Sorry...\n\
   //
   if ( ( UsedSockets = SDLNet_TCP_AddSocket( The_Set_Of_The_One_Server_Socket , sock ) ) == ( -1 ) )
     {
-      fprintf( stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The SDL NET SUBSYSTEM WAS UNABLE TO ADD A NEW SOCKET TO THE SOCKET SET.\n\
-\n\
-The reason for this as reported by the SDL is : \n\
-%s\n\
-\n\
-Freedroid will terminate now to draw attention \n\
-to the networking problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , SDLNet_GetError( ) ) ;
-      Terminate(ERR);
+      fprintf ( stderr, "\n\nServerName: %s , SDLNet_GetError(): '%s'.\n" , ServerName , SDLNet_GetError() );
+      GiveStandardErrorMessage ( "ConnectToFreedroidServer(...)" , "\
+The SDL NET SUBSYSTEM WAS UNABLE TO ADD A NEW SOCKET TO THE SOCKET SET.",
+				 NO_NEED_TO_INFORM, IS_FATAL );
     }
   else
     {
@@ -2583,21 +2390,10 @@ AcceptConnectionsFromClients ( void )
 						     AllPlayers [ PlayerNum ] . ThisPlayersSocketAtTheServer ) 
 		 ) == ( -1 ) )
 	    {
-	      fprintf( stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The SDL NET SUBSYSTEM WAS UNABLE TO ADD A NEW SOCKET TO THE SOCKET SET.\n\
-\n\
-The reason for this as reported by the SDL is : \n\
-%s\n\
-\n\
-Freedroid will terminate now to draw attention \n\
-to the networking problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , SDLNet_GetError( ) ) ;
-	      Terminate(ERR);
+	      fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
+	      GiveStandardErrorMessage ( "ConnectToFreedroidServer(...)" , "\
+The SDL NET SUBSYSTEM WAS UNABLE TO ADD A NEW SOCKET TO THE SOCKET SET.",
+					 NO_NEED_TO_INFORM, IS_FATAL );
 	    }
 	  else
 	    {
@@ -3127,22 +2923,10 @@ SendTextMessageToServer ( char* message )
   DebugPrintf ( 0 , "\nSending TCP message returned : %d . " , CommunicationResult );
   if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
     {
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The SDL NET COULD NOT SEND A TEXT MESSAGE TO THE SERVER SUCCESSFULLY\n\
-in the function void SendTextMessageToServer ( char* message ).\n\
-\n\
-The cause of this problem as reportet by the SDL_net was: \n\
-%s\n\
-\n\
-Freedroid will terminate now to draw attention \n\
-to the networking problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , SDLNet_GetError ( ) ) ;
-      Terminate(ERR);
+      fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
+      GiveStandardErrorMessage ( "SendTextMessageToServer(...)" , "\
+The SDL NET COULD NOT SEND A TEXT MESSAGE TO THE SERVER SUCCESSFULLY.",
+				 NO_NEED_TO_INFORM, IS_FATAL );
     }
 
 }; // void SendTextMessageToServer ( char* message )
@@ -3187,22 +2971,10 @@ SendPlayerNameToServer ( void )
   DebugPrintf ( 0 , "\nSending character name to server returned : %d . " , CommunicationResult );
   if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
     {
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The SDL NET COULD NOT SEND A TEXT MESSAGE TO THE SERVER SUCCESSFULLY\n\
-in the function void SendTextMessageToServer ( char* message ).\n\
-\n\
-The cause of this problem as reportet by the SDL_net was: \n\
-%s\n\
-\n\
-Freedroid will terminate now to draw attention \n\
-to the networking problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , SDLNet_GetError ( ) ) ;
-      Terminate(ERR);
+      fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
+      GiveStandardErrorMessage ( "SendPlayerNameToServer(...)" , "\
+The SDL NET COULD NOT SEND A TEXT MESSAGE TO THE SERVER SUCCESSFULLY.",
+				 NO_NEED_TO_INFORM, IS_FATAL );
     }
 
 }; // void SendPlayerNameToServer ( void )
@@ -3247,22 +3019,10 @@ SendPlayerKeyboardEventToServer ( SDL_Event event )
   DebugPrintf ( 0 , "\nSending keyboard event to server returned : %d . " , CommunicationResult );
   if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
     {
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The SDL NET COULD NOT SEND A KEYBOARD EVENT TO THE SERVER SUCCESSFULLY\n\
-in the function void SendTextMessageToServer ( char* message ).\n\
-\n\
-The cause of this problem as reportet by the SDL_net was: \n\
-%s\n\
-\n\
-Freedroid will terminate now to draw attention \n\
-to the networking problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , SDLNet_GetError ( ) ) ;
-      Terminate(ERR);
+      fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
+      GiveStandardErrorMessage ( "SendPlayerKeyboardEventToServer(...)" , "\
+The SDL NET COULD NOT SEND A KEYBOARD EVENT TO THE SERVER SUCCESSFULLY.",
+				 NO_NEED_TO_INFORM, IS_FATAL );
     }
 
 }; // void SendPlayerKeyboardEventToServer ( void )
@@ -3307,22 +3067,10 @@ SendPlayerMouseButtonEventToServer ( SDL_Event event )
   DebugPrintf ( 0 , "\nSending mouse button event to server returned : %d . " , CommunicationResult );
   if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
     {
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The SDL NET COULD NOT SEND A MOUSE BUTTON EVENT TO THE SERVER SUCCESSFULLY\n\
-in the function void SendTextMessageToServer ( char* message ).\n\
-\n\
-The cause of this problem as reportet by the SDL_net was: \n\
-%s\n\
-\n\
-Freedroid will terminate now to draw attention \n\
-to the networking problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , SDLNet_GetError ( ) ) ;
-      Terminate(ERR);
+      fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
+      GiveStandardErrorMessage ( "SendPlayerMouseButtonEventToServer(...)" , "\
+The SDL NET COULD NOT SEND A MOUSE BUTTON EVENT TO THE SERVER SUCCESSFULLY.",
+				 NO_NEED_TO_INFORM, IS_FATAL );
     }
 
 }; // void SendPlayerMouseButtonEventToServer ( void )
@@ -3372,22 +3120,10 @@ SendPlayerItemDropToServer ( int PositionCode , float x , float y )
   DebugPrintf ( 0 , "\nSending item drop engram to server returned : %d . " , CommunicationResult );
   if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
     {
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The SDL NET COULD NOT SEND AN ITEM DROP ENGRAM TO THE SERVER SUCCESSFULLY\n\
-in the function void SendTextMessageToServer ( char* message ).\n\
-\n\
-The cause of this problem as reportet by the SDL_net was: \n\
-%s\n\
-\n\
-Freedroid will terminate now to draw attention \n\
-to the networking problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , SDLNet_GetError ( ) ) ;
-      Terminate(ERR);
+      fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
+      GiveStandardErrorMessage ( "SendPlayerItemDropToServer(...)" , "\
+The SDL NET COULD NOT SEND AN ITEM DROP ENGRAM TO THE SERVER SUCCESSFULLY",
+				 NO_NEED_TO_INFORM, IS_FATAL );
     }
 
 }; // void SendPlayerItemDropToServer ( int PositionCode , float x , float y ) 
@@ -3438,22 +3174,10 @@ SendPlayerItemMoveToServer ( int SourcePositionCode , int DestPositionCode , int
   DebugPrintf ( 0 , "\nSending item move engram to server returned : %d . " , CommunicationResult );
   if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
     {
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The SDL NET COULD NOT SEND AN ITEM MOVE ENGRAM TO THE SERVER SUCCESSFULLY\n\
-in the function void SendTextMessageToServer ( char* message ).\n\
-\n\
-The cause of this problem as reportet by the SDL_net was: \n\
-%s\n\
-\n\
-Freedroid will terminate now to draw attention \n\
-to the networking problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , SDLNet_GetError ( ) ) ;
-      Terminate(ERR);
+      fprintf ( stderr, "\n\nSDLNet_GetError(): '%s'.\n" , SDLNet_GetError() );
+      GiveStandardErrorMessage ( "SendPlayerItemMoveToServer(...)" , "\
+The SDL NET COULD NOT SEND AN ITEM MOVE ENGRAM TO THE SERVER SUCCESSFULLY",
+				 NO_NEED_TO_INFORM, IS_FATAL );
     }
 }; // void SendPlayerItemMoveToServer ( int SourcePositionCode , int DestPositionCode ) 
 
