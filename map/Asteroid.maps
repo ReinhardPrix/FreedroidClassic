@@ -121,10 +121,10 @@ beginning_of_map
   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   2   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
-  4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   5   5   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
-  4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   3   1   1   1   1   1   3   1   1   1   1   1   3   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   5   5   5   5   5   5   1   3   1   1   1   1   1   1   1   4   4   4   4 
-  4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   3   1   1   1   1   1   3   1   1   1   1   1   3   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   5   5   5   5   5   5   1   2   1   1   1   1   1   1   1   4   4   4   4 
-  4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   5   5   5   5   5   5   1   1   1   1   1   1   1   1   1   4   4   4   4 
+  4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   5   5   5   5   5   5   5   1   1   1   1   1   1   1   1   4   4   4   4 
+  4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   3   1   1   1   1   1   3   1   1   1   1   1   3   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   5   5   5   5   5   5   5   3   1   1   1   1   1   1   1   4   4   4   4 
+  4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   3   1   1   1   1   1   3   1   1   1   1   1   3   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   5   5   5   5   5   5   5   2   1   1   1   1   1   1   1   4   4   4   4 
+  4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   5   5   5   5   5   5   5   1   1   1   1   1   1   1   1   4   4   4   4 
   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   5   5   5   5   5   5   5   5   5   5   1   1   1   1   1   4   4   4   4 
   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   5   5   5   5   5   5   5   5   5   5   1   1   1   1   1   4   4   4   4 
   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   3   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   2   2   1   5   5   5   5   5   5   5   5   5   5   1   1   1   1   1   4   4   4   4 
@@ -136,9 +136,9 @@ beginning_of_map
   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   2   1   1   3   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   3   1   1   2   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   6   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  29   4   4   4   4   4   4   4   4   4  28   4  27   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   6   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  29  27   4   4   4   4  28   4   4   4   4   4   4   4   4   4   4  29   4   4   4   4   4   4   4   4   4  29   4   4   4   4   4   4   4   4   4  29   4 
 End of pure map information for this level
 Begin of obstacle data
 ob_type=2 ob_x=18.50 ob_y=1.00 ob_na=-1 
@@ -698,7 +698,6 @@ ob_type=1 ob_x=53.00 ob_y=17.50 ob_na=-1
 ob_type=1 ob_x=57.00 ob_y=17.50 ob_na=-1 
 ob_type=1 ob_x=64.00 ob_y=17.50 ob_na=-1 
 ob_type=2 ob_x=64.50 ob_y=18.00 ob_na=-1 
-ob_type=1 ob_x=65.00 ob_y=17.50 ob_na=-1 
 ob_type=6 ob_x=65.50 ob_y=18.00 ob_na=-1 
 ob_type=6 ob_x=66.50 ob_y=18.00 ob_na=-1 
 ob_type=6 ob_x=67.50 ob_y=18.00 ob_na=-1 
@@ -706,7 +705,6 @@ ob_type=6 ob_x=68.50 ob_y=18.00 ob_na=-1
 ob_type=6 ob_x=69.50 ob_y=18.00 ob_na=-1 
 ob_type=6 ob_x=70.50 ob_y=18.00 ob_na=-1 
 ob_type=2 ob_x=71.50 ob_y=18.00 ob_na=-1 
-ob_type=1 ob_x=72.00 ob_y=17.50 ob_na=-1 
 ob_type=1 ob_x=73.00 ob_y=17.50 ob_na=-1 
 ob_type=2 ob_x=72.50 ob_y=18.00 ob_na=-1 
 ob_type=1 ob_x=81.00 ob_y=17.50 ob_na=-1 
@@ -1866,8 +1864,6 @@ ob_type=1 ob_x=68.00 ob_y=72.50 ob_na=-1
 ob_type=19 ob_x=69.50 ob_y=72.50 ob_na=-1 
 ob_type=1 ob_x=71.00 ob_y=72.50 ob_na=-1 
 ob_type=48 ob_x=73.50 ob_y=72.50 ob_na=-1 
-ob_type=48 ob_x=74.50 ob_y=72.50 ob_na=-1 
-ob_type=47 ob_x=75.50 ob_y=72.50 ob_na=-1 
 ob_type=49 ob_x=76.50 ob_y=72.50 ob_na=-1 
 ob_type=1 ob_x=78.00 ob_y=72.50 ob_na=-1 
 ob_type=21 ob_x=78.50 ob_y=72.50 ob_na=-1 
@@ -2423,6 +2419,7 @@ ob_type=96 ob_x=13.39 ob_y=59.30 ob_na=-1
 ob_type=80 ob_x=17.58 ob_y=67.36 ob_na=-1 
 ob_type=80 ob_x=15.15 ob_y=62.37 ob_na=-1 
 ob_type=67 ob_x=13.49 ob_y=63.63 ob_na=-1 
+ob_type=2 ob_x=80.50 ob_y=44.00 ob_na=-1 
 End of obstacle data
 Start of pure map label information for this level
 label.pos.x=48 label.pos.y=21 label.label_name="StoneStartGameSquare"
@@ -2463,6 +2460,7 @@ End of pure statement information for this level
 Start of pure items information for this level
 New item: type=19  X=16.326372  Y=62.438004  AC=2  DoDamage=0  ModifyDamage=0  MaxDur=11  CurDur=5.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 New item: type=39  X=30.116034  Y=74.320068  AC=0  DoDamage=2  ModifyDamage=3  MaxDur=80  CurDur=51.249691  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=11  X=22.000000  Y=1.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=18  CurDur=17.000000  Gold=0  Multiplicity=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 End of pure items information for this level
 Start of pure chest item information for this level
 End of pure chest item information for this level
@@ -3467,6 +3465,27 @@ ob_type=2 ob_x=76.50 ob_y=58.00 ob_na=-1
 ob_type=2 ob_x=77.50 ob_y=58.00 ob_na=-1 
 ob_type=2 ob_x=78.50 ob_y=58.00 ob_na=-1 
 ob_type=42 ob_x=20.50 ob_y=80.50 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=90.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=88.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=86.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=83.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=85.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=87.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=89.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=84.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=86.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=88.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=90.00 ob_y=84.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=85.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=87.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=89.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=86.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=88.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=90.00 ob_na=-1 
+ob_type=64 ob_x=85.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=87.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=89.00 ob_y=85.00 ob_na=-1 
 End of obstacle data
 Start of pure map label information for this level
 label.pos.x=73 label.pos.y=49 label.label_name="TeleportToSecondCombatLevel"
@@ -8245,7 +8264,7 @@ ob_type=1 ob_x=35.00 ob_y=25.50 ob_na=-1
 ob_type=2 ob_x=34.50 ob_y=26.00 ob_na=-1 
 ob_type=1 ob_x=40.00 ob_y=25.50 ob_na=-1 
 ob_type=56 ob_x=42.50 ob_y=25.50 ob_na=-1 
-ob_type=24 ob_x=44.50 ob_y=25.50 ob_na=-1 
+ob_type=23 ob_x=44.50 ob_y=25.50 ob_na=-1 
 ob_type=57 ob_x=46.50 ob_y=25.50 ob_na=-1 
 ob_type=1 ob_x=50.00 ob_y=25.50 ob_na=-1 
 ob_type=1 ob_x=1.00 ob_y=26.50 ob_na=-1 
@@ -8260,8 +8279,8 @@ ob_type=1 ob_x=1.00 ob_y=27.50 ob_na=-1
 ob_type=1 ob_x=30.00 ob_y=27.50 ob_na=-1 
 ob_type=2 ob_x=29.50 ob_y=28.00 ob_na=-1 
 ob_type=1 ob_x=40.00 ob_y=27.50 ob_na=-1 
-ob_type=24 ob_x=42.50 ob_y=27.50 ob_na=-1 
-ob_type=24 ob_x=46.50 ob_y=27.50 ob_na=-1 
+ob_type=23 ob_x=42.50 ob_y=27.50 ob_na=-1 
+ob_type=23 ob_x=46.50 ob_y=27.50 ob_na=-1 
 ob_type=29 ob_x=48.75 ob_y=27.50 ob_na=-1 
 ob_type=1 ob_x=50.00 ob_y=27.50 ob_na=-1 
 ob_type=1 ob_x=1.00 ob_y=28.50 ob_na=-1 
@@ -8273,7 +8292,7 @@ ob_type=1 ob_x=1.00 ob_y=29.50 ob_na=-1
 ob_type=1 ob_x=29.00 ob_y=29.50 ob_na=-1 
 ob_type=1 ob_x=40.00 ob_y=29.50 ob_na=-1 
 ob_type=55 ob_x=42.50 ob_y=29.50 ob_na=-1 
-ob_type=24 ob_x=44.50 ob_y=29.50 ob_na=-1 
+ob_type=23 ob_x=44.50 ob_y=29.50 ob_na=-1 
 ob_type=58 ob_x=46.50 ob_y=29.50 ob_na=-1 
 ob_type=1 ob_x=50.00 ob_y=29.50 ob_na=-1 
 ob_type=1 ob_x=1.00 ob_y=30.50 ob_na=-1 
@@ -8740,7 +8759,7 @@ ob_type=1 ob_x=18.00 ob_y=88.50 ob_na=-1
 ob_type=1 ob_x=29.00 ob_y=88.50 ob_na=-1 
 ob_type=2 ob_x=34.50 ob_y=89.00 ob_na=-1 
 ob_type=2 ob_x=35.50 ob_y=89.00 ob_na=-1 
-ob_type=24 ob_x=36.50 ob_y=88.50 ob_na=-1 
+ob_type=21 ob_x=36.50 ob_y=88.50 ob_na=-1 
 ob_type=2 ob_x=38.50 ob_y=89.00 ob_na=-1 
 ob_type=1 ob_x=84.00 ob_y=88.50 ob_na=-1 
 ob_type=1 ob_x=85.00 ob_y=88.50 ob_na=-1 
@@ -8824,7 +8843,6 @@ End of pure statement information for this level
 Start of pure items information for this level
 New item: type=12  X=44.000000  Y=52.000000  AC=0  DoDamage=8  ModifyDamage=8  MaxDur=16  CurDur=8.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 New item: type=19  X=4.000000  Y=2.000000  AC=5  DoDamage=0  ModifyDamage=0  MaxDur=16  CurDur=10.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
-New item: type=11  X=22.000000  Y=82.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=18  CurDur=17.000000  Gold=0  Multiplicity=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 End of pure items information for this level
 Start of pure chest item information for this level
 New item: type=27  X=40.237449  Y=27.950050  AC=0  DoDamage=2  ModifyDamage=5  MaxDur=20  CurDur=20.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
@@ -9047,7 +9065,7 @@ beginning_of_map
   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   4   4 
   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   4   4 
   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4  29   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
 End of pure map information for this level
 Begin of obstacle data
 ob_type=37 ob_x=50.50 ob_y=0.50 ob_na=-1 
@@ -9847,6 +9865,7 @@ ob_type=1 ob_x=1.99 ob_y=72.46 ob_na=-1
 ob_type=2 ob_x=0.53 ob_y=76.01 ob_na=-1 
 ob_type=2 ob_x=1.53 ob_y=76.01 ob_na=-1 
 ob_type=72 ob_x=0.48 ob_y=72.30 ob_na=-1 
+ob_type=2 ob_x=1.50 ob_y=44.00 ob_na=-1 
 End of obstacle data
 Start of pure map label information for this level
 label.pos.x=33 label.pos.y=40 label.label_name="JackGuard1StartGameSquare"
@@ -10700,9 +10719,9 @@ beginning_of_map
   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   2   1   1   3   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   3   1   1   2   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   6   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  29   4   4   4   4   4   4   4   4   4  28   4  27   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   6   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  29  27   4   4   4   4  28   4   4   4   4   4   4   4   4   4   4  29   4   4   4   4   4   4   4   4   4  29   4   4   4   4   4   4   4   4   4  29   4 
   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   6   6   4   4   4   4   6   4   4 
   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   6   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4 
   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   6   6   4   4   4   4   6   4   4   4   4   4   4   4   6   6   6   4   4   4   4   4   4 
@@ -20074,33 +20093,6 @@ ob_type=36 ob_x=14.55 ob_y=88.85 ob_na=-1
 ob_type=36 ob_x=13.55 ob_y=88.85 ob_na=-1 
 ob_type=36 ob_x=12.55 ob_y=88.85 ob_na=-1 
 ob_type=36 ob_x=11.55 ob_y=88.85 ob_na=-1 
-ob_type=36 ob_x=79.50 ob_y=89.50 ob_na=-1 
-ob_type=36 ob_x=80.50 ob_y=89.50 ob_na=-1 
-ob_type=36 ob_x=81.50 ob_y=89.50 ob_na=-1 
-ob_type=36 ob_x=82.50 ob_y=89.50 ob_na=-1 
-ob_type=36 ob_x=83.50 ob_y=89.50 ob_na=-1 
-ob_type=36 ob_x=84.50 ob_y=89.50 ob_na=-1 
-ob_type=36 ob_x=85.50 ob_y=89.50 ob_na=-1 
-ob_type=36 ob_x=86.50 ob_y=89.50 ob_na=-1 
-ob_type=36 ob_x=87.50 ob_y=89.50 ob_na=-1 
-ob_type=36 ob_x=88.50 ob_y=89.50 ob_na=-1 
-ob_type=36 ob_x=89.50 ob_y=89.50 ob_na=-1 
-ob_type=36 ob_x=88.56 ob_y=89.50 ob_na=-1 
-ob_type=36 ob_x=88.54 ob_y=89.32 ob_na=-1 
-ob_type=36 ob_x=88.56 ob_y=89.27 ob_na=-1 
-ob_type=36 ob_x=88.55 ob_y=88.85 ob_na=-1 
-ob_type=36 ob_x=87.55 ob_y=88.85 ob_na=-1 
-ob_type=36 ob_x=86.55 ob_y=88.85 ob_na=-1 
-ob_type=36 ob_x=85.55 ob_y=88.85 ob_na=-1 
-ob_type=36 ob_x=84.55 ob_y=88.85 ob_na=-1 
-ob_type=36 ob_x=83.55 ob_y=88.85 ob_na=-1 
-ob_type=36 ob_x=83.55 ob_y=88.85 ob_na=-1 
-ob_type=36 ob_x=81.55 ob_y=88.85 ob_na=-1 
-ob_type=36 ob_x=81.55 ob_y=89.85 ob_na=-1 
-ob_type=36 ob_x=82.55 ob_y=88.85 ob_na=-1 
-ob_type=36 ob_x=79.55 ob_y=88.85 ob_na=-1 
-ob_type=36 ob_x=80.55 ob_y=88.85 ob_na=-1 
-ob_type=36 ob_x=89.56 ob_y=88.86 ob_na=-1 
 ob_type=40 ob_x=7.50 ob_y=0.50 ob_na=-1 
 ob_type=39 ob_x=8.50 ob_y=0.50 ob_na=-1 
 ob_type=37 ob_x=7.50 ob_y=1.50 ob_na=-1 
@@ -20152,6 +20144,33 @@ ob_type=36 ob_x=3.55 ob_y=88.85 ob_na=-1
 ob_type=36 ob_x=2.55 ob_y=88.85 ob_na=-1 
 ob_type=36 ob_x=1.55 ob_y=88.85 ob_na=-1 
 ob_type=36 ob_x=0.55 ob_y=88.85 ob_na=-1 
+ob_type=36 ob_x=79.50 ob_y=89.50 ob_na=-1 
+ob_type=36 ob_x=80.50 ob_y=89.50 ob_na=-1 
+ob_type=36 ob_x=81.50 ob_y=89.50 ob_na=-1 
+ob_type=36 ob_x=82.50 ob_y=89.50 ob_na=-1 
+ob_type=36 ob_x=83.50 ob_y=89.50 ob_na=-1 
+ob_type=36 ob_x=84.50 ob_y=89.50 ob_na=-1 
+ob_type=36 ob_x=85.50 ob_y=89.50 ob_na=-1 
+ob_type=36 ob_x=86.50 ob_y=89.50 ob_na=-1 
+ob_type=36 ob_x=87.50 ob_y=89.50 ob_na=-1 
+ob_type=36 ob_x=88.50 ob_y=89.50 ob_na=-1 
+ob_type=36 ob_x=89.50 ob_y=89.50 ob_na=-1 
+ob_type=36 ob_x=88.56 ob_y=89.50 ob_na=-1 
+ob_type=36 ob_x=88.54 ob_y=89.32 ob_na=-1 
+ob_type=36 ob_x=88.56 ob_y=89.27 ob_na=-1 
+ob_type=36 ob_x=88.55 ob_y=88.85 ob_na=-1 
+ob_type=36 ob_x=87.55 ob_y=88.85 ob_na=-1 
+ob_type=36 ob_x=86.55 ob_y=88.85 ob_na=-1 
+ob_type=36 ob_x=85.55 ob_y=88.85 ob_na=-1 
+ob_type=36 ob_x=84.55 ob_y=88.85 ob_na=-1 
+ob_type=36 ob_x=83.55 ob_y=88.85 ob_na=-1 
+ob_type=36 ob_x=83.55 ob_y=88.85 ob_na=-1 
+ob_type=36 ob_x=81.55 ob_y=88.85 ob_na=-1 
+ob_type=36 ob_x=81.55 ob_y=89.85 ob_na=-1 
+ob_type=36 ob_x=82.55 ob_y=88.85 ob_na=-1 
+ob_type=36 ob_x=79.55 ob_y=88.85 ob_na=-1 
+ob_type=36 ob_x=80.55 ob_y=88.85 ob_na=-1 
+ob_type=36 ob_x=89.56 ob_y=88.86 ob_na=-1 
 End of obstacle data
 Start of pure map label information for this level
 End of pure map label information for this level
@@ -20930,6 +20949,145 @@ ob_type=36 ob_x=86.56 ob_y=88.86 ob_na=-1
 ob_type=36 ob_x=87.56 ob_y=88.86 ob_na=-1 
 ob_type=36 ob_x=88.56 ob_y=88.86 ob_na=-1 
 ob_type=36 ob_x=89.56 ob_y=88.86 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=87.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=85.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=83.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=81.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=79.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=77.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=75.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=73.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=71.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=69.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=67.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=65.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=63.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=61.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=59.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=57.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=55.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=53.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=51.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=49.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=47.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=45.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=43.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=41.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=39.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=37.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=35.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=33.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=31.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=29.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=27.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=25.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=23.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=21.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=19.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=17.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=15.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=13.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=11.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=9.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=7.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=5.00 ob_na=-1 
+ob_type=63 ob_x=82.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=83.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=85.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=87.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=89.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=84.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=86.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=88.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=90.00 ob_y=3.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=4.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=6.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=8.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=10.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=12.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=14.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=16.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=18.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=20.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=22.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=24.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=26.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=28.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=30.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=32.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=34.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=36.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=38.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=40.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=42.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=44.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=46.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=48.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=50.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=52.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=54.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=56.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=58.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=60.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=62.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=64.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=66.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=68.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=70.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=72.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=74.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=76.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=78.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=80.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=82.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=84.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=86.00 ob_na=-1 
+ob_type=63 ob_x=83.00 ob_y=88.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=5.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=7.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=9.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=11.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=13.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=15.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=17.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=19.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=21.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=23.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=25.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=27.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=29.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=31.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=33.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=35.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=37.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=39.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=41.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=43.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=45.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=47.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=49.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=51.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=53.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=55.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=57.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=59.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=61.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=63.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=65.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=67.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=69.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=71.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=73.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=75.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=77.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=79.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=81.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=83.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=85.00 ob_na=-1 
+ob_type=63 ob_x=84.00 ob_y=87.00 ob_na=-1 
+ob_type=64 ob_x=85.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=87.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=89.00 ob_y=4.00 ob_na=-1 
 End of obstacle data
 Start of pure map label information for this level
 label.pos.x=44 label.pos.y=61 label.label_name="516CaveTroll1StartGameSquare"
@@ -21330,28 +21488,6 @@ ob_type=36 ob_x=87.50 ob_y=89.50 ob_na=-1
 ob_type=36 ob_x=88.50 ob_y=89.50 ob_na=-1 
 ob_type=39 ob_x=89.50 ob_y=89.50 ob_na=-1 
 ob_type=42 ob_x=20.50 ob_y=80.50 ob_na=-1 
-ob_type=36 ob_x=0.50 ob_y=89.50 ob_na=-1 
-ob_type=36 ob_x=1.50 ob_y=89.50 ob_na=-1 
-ob_type=36 ob_x=2.50 ob_y=89.50 ob_na=-1 
-ob_type=36 ob_x=3.50 ob_y=89.50 ob_na=-1 
-ob_type=36 ob_x=4.50 ob_y=89.50 ob_na=-1 
-ob_type=36 ob_x=5.50 ob_y=89.50 ob_na=-1 
-ob_type=36 ob_x=6.50 ob_y=89.50 ob_na=-1 
-ob_type=36 ob_x=7.50 ob_y=89.50 ob_na=-1 
-ob_type=36 ob_x=8.50 ob_y=89.50 ob_na=-1 
-ob_type=36 ob_x=9.50 ob_y=89.50 ob_na=-1 
-ob_type=36 ob_x=10.50 ob_y=89.50 ob_na=-1 
-ob_type=36 ob_x=0.56 ob_y=88.86 ob_na=-1 
-ob_type=36 ob_x=1.56 ob_y=88.86 ob_na=-1 
-ob_type=36 ob_x=2.56 ob_y=88.86 ob_na=-1 
-ob_type=36 ob_x=3.56 ob_y=88.86 ob_na=-1 
-ob_type=36 ob_x=4.56 ob_y=88.86 ob_na=-1 
-ob_type=36 ob_x=5.56 ob_y=88.86 ob_na=-1 
-ob_type=36 ob_x=6.56 ob_y=88.86 ob_na=-1 
-ob_type=36 ob_x=7.56 ob_y=88.86 ob_na=-1 
-ob_type=36 ob_x=8.56 ob_y=88.86 ob_na=-1 
-ob_type=36 ob_x=9.56 ob_y=88.86 ob_na=-1 
-ob_type=36 ob_x=10.56 ob_y=88.86 ob_na=-1 
 ob_type=36 ob_x=11.55 ob_y=88.84 ob_na=-1 
 ob_type=36 ob_x=12.57 ob_y=88.85 ob_na=-1 
 ob_type=36 ob_x=13.57 ob_y=88.85 ob_na=-1 
@@ -21430,24 +21566,6 @@ ob_type=36 ob_x=85.57 ob_y=88.85 ob_na=-1
 ob_type=36 ob_x=86.57 ob_y=88.85 ob_na=-1 
 ob_type=36 ob_x=87.57 ob_y=88.85 ob_na=-1 
 ob_type=36 ob_x=89.57 ob_y=88.85 ob_na=-1 
-ob_type=37 ob_x=89.50 ob_y=0.50 ob_na=-1 
-ob_type=37 ob_x=89.50 ob_y=1.50 ob_na=-1 
-ob_type=37 ob_x=89.50 ob_y=2.50 ob_na=-1 
-ob_type=37 ob_x=89.50 ob_y=3.50 ob_na=-1 
-ob_type=37 ob_x=89.50 ob_y=4.50 ob_na=-1 
-ob_type=37 ob_x=89.50 ob_y=5.50 ob_na=-1 
-ob_type=37 ob_x=89.50 ob_y=6.50 ob_na=-1 
-ob_type=37 ob_x=89.50 ob_y=7.50 ob_na=-1 
-ob_type=37 ob_x=89.50 ob_y=8.50 ob_na=-1 
-ob_type=37 ob_x=88.50 ob_y=0.50 ob_na=-1 
-ob_type=37 ob_x=88.50 ob_y=1.50 ob_na=-1 
-ob_type=37 ob_x=88.50 ob_y=2.50 ob_na=-1 
-ob_type=37 ob_x=88.50 ob_y=3.50 ob_na=-1 
-ob_type=37 ob_x=88.50 ob_y=4.50 ob_na=-1 
-ob_type=37 ob_x=88.50 ob_y=5.50 ob_na=-1 
-ob_type=37 ob_x=88.50 ob_y=6.50 ob_na=-1 
-ob_type=37 ob_x=88.50 ob_y=7.50 ob_na=-1 
-ob_type=37 ob_x=88.51 ob_y=8.52 ob_na=-1 
 ob_type=37 ob_x=88.51 ob_y=9.52 ob_na=-1 
 ob_type=37 ob_x=88.51 ob_y=10.52 ob_na=-1 
 ob_type=37 ob_x=88.51 ob_y=11.52 ob_na=-1 
@@ -21529,6 +21647,302 @@ ob_type=37 ob_x=88.51 ob_y=86.52 ob_na=-1
 ob_type=39 ob_x=88.43 ob_y=88.88 ob_na=-1 
 ob_type=37 ob_x=88.47 ob_y=87.90 ob_na=-1 
 ob_type=37 ob_x=88.51 ob_y=87.55 ob_na=-1 
+ob_type=36 ob_x=0.50 ob_y=89.50 ob_na=-1 
+ob_type=36 ob_x=1.50 ob_y=89.50 ob_na=-1 
+ob_type=36 ob_x=2.50 ob_y=89.50 ob_na=-1 
+ob_type=36 ob_x=3.50 ob_y=89.50 ob_na=-1 
+ob_type=36 ob_x=4.50 ob_y=89.50 ob_na=-1 
+ob_type=36 ob_x=5.50 ob_y=89.50 ob_na=-1 
+ob_type=36 ob_x=6.50 ob_y=89.50 ob_na=-1 
+ob_type=36 ob_x=7.50 ob_y=89.50 ob_na=-1 
+ob_type=36 ob_x=8.50 ob_y=89.50 ob_na=-1 
+ob_type=36 ob_x=9.50 ob_y=89.50 ob_na=-1 
+ob_type=36 ob_x=10.50 ob_y=89.50 ob_na=-1 
+ob_type=36 ob_x=0.56 ob_y=88.86 ob_na=-1 
+ob_type=36 ob_x=1.56 ob_y=88.86 ob_na=-1 
+ob_type=36 ob_x=2.56 ob_y=88.86 ob_na=-1 
+ob_type=36 ob_x=3.56 ob_y=88.86 ob_na=-1 
+ob_type=36 ob_x=4.56 ob_y=88.86 ob_na=-1 
+ob_type=36 ob_x=5.56 ob_y=88.86 ob_na=-1 
+ob_type=36 ob_x=6.56 ob_y=88.86 ob_na=-1 
+ob_type=36 ob_x=7.56 ob_y=88.86 ob_na=-1 
+ob_type=36 ob_x=8.56 ob_y=88.86 ob_na=-1 
+ob_type=36 ob_x=9.56 ob_y=88.86 ob_na=-1 
+ob_type=36 ob_x=10.56 ob_y=88.86 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=87.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=85.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=83.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=81.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=79.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=77.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=75.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=73.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=71.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=69.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=67.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=65.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=63.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=61.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=59.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=57.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=55.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=53.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=51.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=49.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=47.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=45.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=43.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=41.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=39.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=37.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=35.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=33.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=31.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=29.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=27.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=25.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=23.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=21.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=19.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=17.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=15.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=13.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=11.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=10.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=12.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=14.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=16.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=18.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=20.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=22.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=24.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=26.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=28.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=30.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=32.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=34.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=36.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=38.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=40.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=42.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=44.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=46.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=48.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=50.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=52.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=54.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=56.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=58.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=60.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=62.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=64.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=66.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=68.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=70.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=72.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=74.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=76.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=78.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=80.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=82.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=84.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=86.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=88.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=11.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=13.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=15.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=17.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=19.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=21.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=23.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=25.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=27.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=29.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=31.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=33.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=35.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=37.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=39.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=41.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=43.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=45.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=47.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=49.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=51.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=53.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=55.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=57.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=59.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=61.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=63.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=65.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=67.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=69.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=71.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=73.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=75.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=77.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=79.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=81.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=83.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=85.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=87.00 ob_na=-1 
+ob_type=37 ob_x=89.50 ob_y=0.50 ob_na=-1 
+ob_type=37 ob_x=89.50 ob_y=1.50 ob_na=-1 
+ob_type=37 ob_x=89.50 ob_y=2.50 ob_na=-1 
+ob_type=37 ob_x=89.50 ob_y=3.50 ob_na=-1 
+ob_type=37 ob_x=89.50 ob_y=4.50 ob_na=-1 
+ob_type=37 ob_x=89.50 ob_y=5.50 ob_na=-1 
+ob_type=37 ob_x=89.50 ob_y=6.50 ob_na=-1 
+ob_type=37 ob_x=89.50 ob_y=7.50 ob_na=-1 
+ob_type=37 ob_x=89.50 ob_y=8.50 ob_na=-1 
+ob_type=37 ob_x=88.50 ob_y=0.50 ob_na=-1 
+ob_type=37 ob_x=88.50 ob_y=1.50 ob_na=-1 
+ob_type=37 ob_x=88.50 ob_y=2.50 ob_na=-1 
+ob_type=37 ob_x=88.50 ob_y=3.50 ob_na=-1 
+ob_type=37 ob_x=88.50 ob_y=4.50 ob_na=-1 
+ob_type=37 ob_x=88.50 ob_y=5.50 ob_na=-1 
+ob_type=37 ob_x=88.50 ob_y=6.50 ob_na=-1 
+ob_type=37 ob_x=88.50 ob_y=7.50 ob_na=-1 
+ob_type=37 ob_x=88.51 ob_y=8.52 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=9.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=7.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=5.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=4.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=6.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=8.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=10.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=12.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=14.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=16.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=18.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=20.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=22.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=24.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=26.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=28.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=30.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=32.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=34.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=36.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=38.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=40.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=42.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=44.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=46.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=48.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=50.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=52.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=54.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=56.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=58.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=60.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=62.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=64.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=66.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=68.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=70.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=72.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=74.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=76.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=78.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=80.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=82.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=84.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=86.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=88.00 ob_y=2.00 ob_na=-1 
+ob_type=64 ob_x=5.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=7.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=9.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=11.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=13.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=15.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=17.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=19.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=21.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=23.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=25.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=27.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=29.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=31.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=33.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=35.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=37.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=39.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=41.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=43.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=45.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=47.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=49.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=51.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=53.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=55.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=57.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=59.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=61.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=63.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=65.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=67.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=69.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=71.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=73.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=75.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=77.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=79.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=81.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=83.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=85.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=87.00 ob_y=3.00 ob_na=-1 
+ob_type=64 ob_x=89.00 ob_y=3.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=4.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=6.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=8.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=5.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=7.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=9.00 ob_na=-1 
+ob_type=64 ob_x=6.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=8.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=10.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=12.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=14.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=16.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=18.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=20.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=22.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=24.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=26.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=28.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=30.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=32.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=34.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=36.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=38.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=40.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=42.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=44.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=46.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=48.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=50.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=52.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=54.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=56.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=58.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=60.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=62.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=64.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=66.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=68.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=70.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=72.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=74.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=76.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=78.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=80.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=82.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=84.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=86.00 ob_y=4.00 ob_na=-1 
+ob_type=64 ob_x=88.00 ob_y=4.00 ob_na=-1 
 End of obstacle data
 Start of pure map label information for this level
 End of pure map label information for this level
@@ -21936,6 +22350,144 @@ ob_type=37 ob_x=88.50 ob_y=86.50 ob_na=-1
 ob_type=37 ob_x=88.50 ob_y=87.50 ob_na=-1 
 ob_type=37 ob_x=88.50 ob_y=88.50 ob_na=-1 
 ob_type=37 ob_x=88.51 ob_y=89.52 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=90.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=88.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=86.00 ob_na=-1 
+ob_type=63 ob_x=3.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=4.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=6.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=8.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=10.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=12.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=14.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=16.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=18.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=20.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=22.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=24.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=26.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=28.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=30.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=32.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=34.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=36.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=38.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=40.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=42.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=44.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=46.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=48.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=50.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=52.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=54.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=56.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=58.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=60.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=62.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=64.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=66.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=68.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=70.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=72.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=74.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=76.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=78.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=80.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=82.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=84.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=86.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=88.00 ob_y=83.00 ob_na=-1 
+ob_type=64 ob_x=5.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=7.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=9.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=11.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=13.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=15.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=17.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=19.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=21.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=23.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=25.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=27.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=29.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=31.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=33.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=35.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=37.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=39.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=41.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=43.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=45.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=47.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=49.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=51.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=53.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=55.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=57.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=59.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=61.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=63.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=65.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=67.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=69.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=71.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=73.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=75.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=77.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=79.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=81.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=83.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=85.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=87.00 ob_y=84.00 ob_na=-1 
+ob_type=64 ob_x=89.00 ob_y=84.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=85.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=87.00 ob_na=-1 
+ob_type=63 ob_x=4.00 ob_y=89.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=86.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=88.00 ob_na=-1 
+ob_type=63 ob_x=5.00 ob_y=90.00 ob_na=-1 
+ob_type=64 ob_x=6.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=8.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=10.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=12.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=14.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=16.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=18.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=20.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=22.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=24.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=26.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=28.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=30.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=32.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=34.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=36.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=38.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=40.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=42.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=44.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=46.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=48.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=50.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=52.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=54.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=56.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=58.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=60.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=62.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=64.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=66.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=68.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=70.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=72.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=74.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=76.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=78.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=80.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=82.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=84.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=86.00 ob_y=85.00 ob_na=-1 
+ob_type=64 ob_x=88.00 ob_y=85.00 ob_na=-1 
 End of obstacle data
 Start of pure map label information for this level
 End of pure map label information for this level
