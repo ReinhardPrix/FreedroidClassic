@@ -592,7 +592,7 @@ enum _directions
 
 
 #define MAXWAYPOINTS 		100
-#define MAX_DOORS_ON_LEVEL 	60
+#define MAX_DOORS_ON_LEVEL 	80
 #define MAX_AUTOGUNS_ON_LEVEL 	60
 #define MAX_REFRESHES_ON_LEVEL	39
 #define MAX_CONSUMERS_ON_LEVEL	39
