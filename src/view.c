@@ -1877,8 +1877,8 @@ void
 iso_put_all_tux_parts_for_gun_motion ( int x , int y , int player_num , int rotation_index )
 {
 
-  // DebugPrintf ( 0 , "\nDirection given: %d." , rotation_index );
-  // DebugPrintf ( 0 , "\nphase: %d." , (int) Me [ player_num ] . phase );
+  DebugPrintf ( -1 , "\nDirection given: %d." , rotation_index );
+  DebugPrintf ( -1 , "\nphase: %d." , (int) Me [ player_num ] . phase );
 
   switch ( rotation_index )
     {
@@ -1886,34 +1886,72 @@ iso_put_all_tux_parts_for_gun_motion ( int x , int y , int player_num , int rota
       iso_put_tux_feet ( x , y , player_num , rotation_index );
       iso_put_tux_torso ( x , y , player_num , rotation_index );
       iso_put_tux_head ( x , y , player_num , rotation_index );
-      iso_put_tux_part ( PART_GROUP_WEAPONARM , "iso_weaponarm" , x , y , player_num , rotation_index );
       iso_put_tux_shieldarm ( x , y , player_num , rotation_index );
       iso_put_tux_weapon ( x , y , player_num , rotation_index );
+      iso_put_tux_part ( PART_GROUP_WEAPONARM , "iso_weaponarm" , x , y , player_num , rotation_index );
       break;
     case 8:
       iso_put_tux_feet ( x , y , player_num , rotation_index );
-      iso_put_tux_part ( PART_GROUP_WEAPONARM , "iso_weaponarm" , x , y , player_num , rotation_index );
       iso_put_tux_shieldarm ( x , y , player_num , rotation_index );
-      iso_put_tux_weapon ( x , y , player_num , rotation_index );
-      iso_put_tux_torso ( x , y , player_num , rotation_index );
+      if ( ( (int) Me [ player_num ] . phase >= 3 ) && ( (int) Me [ player_num ] . phase <= 12 ) )
+	{
+	  iso_put_tux_weapon ( x , y , player_num , rotation_index );
+	  iso_put_tux_torso ( x , y , player_num , rotation_index );
+	  iso_put_tux_part ( PART_GROUP_WEAPONARM , "iso_weaponarm" , x , y , player_num , rotation_index );
+	}
+      else
+	{
+	  iso_put_tux_part ( PART_GROUP_WEAPONARM , "iso_weaponarm" , x , y , player_num , rotation_index );
+	  iso_put_tux_weapon ( x , y , player_num , rotation_index );
+	  iso_put_tux_torso ( x , y , player_num , rotation_index );
+	}
       iso_put_tux_head ( x , y , player_num , rotation_index );
       break;
 
     case 9:
+      iso_put_tux_feet ( x , y , player_num , rotation_index );
+      iso_put_tux_weapon ( x , y , player_num , rotation_index );
+      if ( ( (int) Me [ player_num ] . phase >= 3 ) && ( (int) Me [ player_num ] . phase <= 12 ) )
+	{
+	  iso_put_tux_shieldarm ( x , y , player_num , rotation_index );
+	  iso_put_tux_torso ( x , y , player_num , rotation_index );
+	  iso_put_tux_part ( PART_GROUP_WEAPONARM , "iso_weaponarm" , x , y , player_num , rotation_index );
+	}
+      else
+	{
+	  iso_put_tux_part ( PART_GROUP_WEAPONARM , "iso_weaponarm" , x , y , player_num , rotation_index );
+	  iso_put_tux_torso ( x , y , player_num , rotation_index );
+	  iso_put_tux_shieldarm ( x , y , player_num , rotation_index );
+	}
+      iso_put_tux_head ( x , y , player_num , rotation_index );
+      break;
+
     case 10:
-    case 11:
       iso_put_tux_feet ( x , y , player_num , rotation_index );
       iso_put_tux_weapon ( x , y , player_num , rotation_index );
       iso_put_tux_part ( PART_GROUP_WEAPONARM , "iso_weaponarm" , x , y , player_num , rotation_index );
+      if ( ( (int) Me [ player_num ] . phase >= 3 ) && ( (int) Me [ player_num ] . phase <= 12 ) )
+	{
+	  iso_put_tux_shieldarm ( x , y , player_num , rotation_index );
+	  iso_put_tux_torso ( x , y , player_num , rotation_index );
+	}
+      else
+	{
+	  iso_put_tux_torso ( x , y , player_num , rotation_index );
+	  iso_put_tux_shieldarm ( x , y , player_num , rotation_index );
+	}
+      iso_put_tux_head ( x , y , player_num , rotation_index );
+      break;
+    case 11:
+      iso_put_tux_feet ( x , y , player_num , rotation_index );
+      iso_put_tux_part ( PART_GROUP_WEAPONARM , "iso_weaponarm" , x , y , player_num , rotation_index );
+      iso_put_tux_weapon ( x , y , player_num , rotation_index );
       iso_put_tux_torso ( x , y , player_num , rotation_index );
       iso_put_tux_shieldarm ( x , y , player_num , rotation_index );
       iso_put_tux_head ( x , y , player_num , rotation_index );
       break;
 
     case 12:
-    case 13:
-    case 14:
-    case 15:
       iso_put_tux_feet ( x , y , player_num , rotation_index );
       iso_put_tux_torso ( x , y , player_num , rotation_index );
       iso_put_tux_part ( PART_GROUP_WEAPONARM , "iso_weaponarm" , x , y , player_num , rotation_index );
@@ -1922,8 +1960,47 @@ iso_put_all_tux_parts_for_gun_motion ( int x , int y , int player_num , int rota
       iso_put_tux_head ( x , y , player_num , rotation_index );
       break;
 
+    case 13:
+    case 14:
+    case 15:
+      iso_put_tux_feet ( x , y , player_num , rotation_index );
+      iso_put_tux_part ( PART_GROUP_WEAPONARM , "iso_weaponarm" , x , y , player_num , rotation_index );
+      if ( ( (int) Me [ player_num ] . phase >= 4 ) && ( (int) Me [ player_num ] . phase <= 11 ) )
+	{
+	  iso_put_tux_weapon ( x , y , player_num , rotation_index );
+	  iso_put_tux_torso ( x , y , player_num , rotation_index );
+	}
+      else
+	{
+	  iso_put_tux_torso ( x , y , player_num , rotation_index );
+	  iso_put_tux_weapon ( x , y , player_num , rotation_index );
+	}
+      iso_put_tux_shieldarm ( x , y , player_num , rotation_index );
+      iso_put_tux_head ( x , y , player_num , rotation_index );
+      break;
+
     case 1:
     case 2:
+      iso_put_tux_feet ( x , y , player_num , rotation_index );
+
+      if ( ( (int) Me [ player_num ] . phase >= 4 ) && ( (int) Me [ player_num ] . phase <= 11 ) )
+	{
+	  iso_put_tux_torso ( x , y , player_num , rotation_index );
+	  iso_put_tux_head ( x , y , player_num , rotation_index );
+	  iso_put_tux_shieldarm ( x , y , player_num , rotation_index );
+	}
+      else
+	{
+	  iso_put_tux_shieldarm ( x , y , player_num , rotation_index );
+	  iso_put_tux_torso ( x , y , player_num , rotation_index );
+	  iso_put_tux_head ( x , y , player_num , rotation_index );
+	}
+
+      iso_put_tux_weapon ( x , y , player_num , rotation_index );
+      iso_put_tux_part ( PART_GROUP_WEAPONARM , "iso_weaponarm" , x , y , player_num , rotation_index );
+      break;
+
+
     case 3:
     case 4:
       iso_put_tux_feet ( x , y , player_num , rotation_index );
