@@ -97,6 +97,7 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
    "Item_Range_Weapon_Put_Sound_0.wav",
    "First_Contact_Sound_0.wav",
    "First_Contact_Sound_1.wav",
+   "First_Contact_Sound_2.wav",
    "Not_Enough_Power_Sound_0.wav",
    "Not_Enough_Dist_Sound_0.wav",
    "Not_Enough_Mana_0.wav",
@@ -759,17 +760,29 @@ Not_Enough_Dist_Sound ( void )
   Play_Sound ( NOT_ENOUGH_DIST_SOUND );
 }
 
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function plays a voice sample, stating that not enough magical
+ * energy (force) is available to cast a certain spell.
+ * The sample must of course only be played, if it hasn't been played just
+ * milliseconds before, so a check is made to see that the file is played
+ * with at least a certain interval in between to the last occasion of the
+ * file being played.
+ * ---------------------------------------------------------------------- */
 void
 Not_Enough_Mana_Sound ( void )
 {
-  Play_Sound ( NOT_ENOUGH_FORCE_SOUND );
-};
+
+  static Uint32 PreviousNotEnoughForceSound = (-1) ;
+  Uint32 now;
+
+  now = SDL_GetTicks() ;
+  if ( SDL_GetTicks() - PreviousNotEnoughForceSound >= 1.15 * 1000 )
+    {
+      Play_Sound ( NOT_ENOUGH_FORCE_SOUND );
+      PreviousNotEnoughForceSound = now;
+    }
+
+}; // void Not_Enough_Mana_Sound ( void )
 
 /*@Function============================================================
 @Desc: 
@@ -790,6 +803,9 @@ PlayGreetingSound ( int SoundCode )
       break;
     case 1:
       Play_Sound( FIRST_CONTACT_SOUND_1 );
+      break;
+    case 2:
+      Play_Sound( FIRST_CONTACT_SOUND_2 );
       break;
     default:
       DebugPrintf( 0 , "\nUnknown Greeting sound!!! Terminating...");

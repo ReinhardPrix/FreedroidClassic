@@ -415,7 +415,7 @@ HandleCurrentlyActivatedSkill( void )
       if (MouseRightPressed() == 1)
 	Me[0].status = TRANSFERMODE;
     }
-  else if ( Me[0].readied_skill == SPELL_FORCE_EXPLOSION_RAY )
+  else if ( Me[0].readied_skill == SPELL_FORCE_EXPLOSION_CIRCLE )
     {
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	{
