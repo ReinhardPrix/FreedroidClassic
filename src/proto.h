@@ -552,6 +552,7 @@ EXTERN int NoDirectionPressed (void);
 #else
 #define EXTERN extern
 #endif
+EXTERN int ResolveDialogSectionToChatFlagsIndex ( char* SectionName );
 EXTERN void clear_player_inventory_and_stats ( void );
 EXTERN void StoreMenuBackground ( int backup_slot );
 EXTERN void RestoreMenuBackground ( int backup_slot );

@@ -1325,6 +1325,12 @@ DialogPartnersTurnToEachOther ( Enemy ChatDroid )
     float TurningDirection;
     
 #define TURN_SPEED 90.0
+
+    //--------------------
+    // We reset the mouse cursor shape and abort any other
+    // mouse global mode operation.
+    //
+    global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
     
     Activate_Conservative_Frame_Computation();
     

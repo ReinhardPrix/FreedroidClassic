@@ -52,26 +52,62 @@ extern int fedisableexcept (int TheExceptionFlags );
 void
 clear_out_arrays_for_fresh_game ( void )
 {
-  int i;
+    int i;
 
-  level_editor_marked_obstacle = NULL ;
-  for ( i = 0 ; i < MAXBULLETS ; i++ )
+    level_editor_marked_obstacle = NULL ;
+    for ( i = 0 ; i < MAXBULLETS ; i++ )
     {
-      AllBullets [ i ] . Surfaces_were_generated = FALSE;
-      DeleteBullet ( i , FALSE );
+	AllBullets [ i ] . Surfaces_were_generated = FALSE;
+	DeleteBullet ( i , FALSE );
     }
-  for ( i = 0 ; i < MAXBLASTS ; i++ )
+    for ( i = 0 ; i < MAXBLASTS ; i++ )
     {
-      DeleteBlast ( i );
+	DeleteBlast ( i );
     }
-  for ( i = 0 ; i < MAX_ACTIVE_SPELLS ; i++ )
+    for ( i = 0 ; i < MAX_ACTIVE_SPELLS ; i++ )
     {
-      DeleteSpell ( i );
+	DeleteSpell ( i );
     }
-  ClearEnemys ( ) ;
-  clear_active_spells ( ) ;
-  ClearAutomapData( );
+    ClearEnemys ( ) ;
+    clear_active_spells ( ) ;
+    ClearAutomapData( );
 }; // void clear_out_arrays_for_fresh_game ( void )
+
+/* ---------------------------------------------------------------------- 
+ * Each character inside the game can have a (lengthly) description of
+ * his appearance and the like.  This is somewhat different from the mere
+ * description of the character model, since a character model may be 
+ * used for several characters inside the game.  Therefore the 
+ * descriptions of (town) characters are linked with their dialog section
+ * cause those are more unique.  At startup, for every dialog section
+ * we set up a character description.  Initializing those needs to be
+ * done only once.  We do it here.
+ * ---------------------------------------------------------------------- */
+void
+init_character_descriptions ( void )
+{
+    int i;
+
+    for ( i = 0 ; i < MAX_PERSONS ; i ++ )
+    {
+	character_descriptions [ i ] = "WARNING!  THIS CHARACTER DESCRIPTION IS STILL MISSING!  PLEASE INFORM THE DEVELOPERS ABOUT THIS.  SOME SUITABLE DESCRIPTION MUST STILL BE CONTRIBUTED.  ANY SUGGESTION?" ;
+    }
+
+    character_descriptions [ PERSON_CHA ] = "You see a man of around 80.  While his appearance seems rather fragile, the vivid eyes indicate a well aware man of still rather quick mind." ;
+
+    // character_descriptions [ PERSON_STONE ] = "You see 
+
+    /*
+    PERSON_RMS,
+    PERSON_STONE,
+    PERSON_DIXON,
+    PERSON_DUNCAN,
+    PERSON_PENDRAGON,
+    PERSON_614,
+    PERSON_MER,
+    */
+
+}; // void init_character_descriptions ( void )
 
 /* ---------------------------------------------------------------------- 
  * This function displays a startup status bar that shows a certain
@@ -1779,6 +1815,8 @@ InitFreedroid ( void )
     // can of course also be freed as well.
     //
     GameConfig . level_editor_edit_mode = LEVEL_EDITOR_SELECTION_FLOOR ;
+
+    init_character_descriptions ( );
     
     clear_out_arrays_for_fresh_game ();
     

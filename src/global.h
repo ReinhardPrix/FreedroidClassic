@@ -148,6 +148,7 @@ EXTERN float timeout_from_item_drop;
 EXTERN int use_open_gl;
 EXTERN int command_line_override_for_screen_resolution;
 EXTERN char* mission_diary_texts [ MAX_MISSIONS_IN_GAME ] [ MAX_MISSION_DESCRIPTION_TEXTS ] ;
+EXTERN char* character_descriptions [ MAX_PERSONS ] ;
 
 #ifdef HAVE_LIBGL
 EXTERN GLuint all_freedroid_textures [ MAX_AMOUNT_OF_TEXTURES_WE_WILL_USE ] ;

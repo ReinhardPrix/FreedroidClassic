@@ -3668,9 +3668,10 @@ handle_player_examine_command ( int player_num )
 {
     int obstacle_index ;
     obstacle* our_obstacle;
-    char game_message_text[ 2000 ] ;
+    char game_message_text[ 10000 ] ;
     int final_bot_found=(-1);
-    
+    int chat_section;
+
     //--------------------
     // The highest priority is other droids and characters.  If one
     // of those is under the mouse cursor, then the examine/look command
@@ -3678,7 +3679,22 @@ handle_player_examine_command ( int player_num )
     final_bot_found = GetLivingDroidBelowMouseCursor ( player_num ) ;
     if ( final_bot_found != (-1) )
     {
-	sprintf( game_message_text , "This is %s." , Druidmap [ AllEnemys [ final_bot_found ] . type ] . druidname );
+	//--------------------
+	// If the character encountered is a character with a 
+	// unique and special dialog section associated to him,
+	// then we will also print out the unique description for
+	// that character according to the dialog section used.
+	// Otherwise we will revert to using the standard droid
+	// model description found in the droid archetypes.
+	//
+	chat_section = ResolveDialogSectionToChatFlagsIndex ( AllEnemys [ final_bot_found ] . dialog_section_name ) ; 
+	if ( chat_section != PERSON_STANDARD_BOT_AFTER_TAKEOVER )
+	{
+	    sprintf( game_message_text , "%s" , character_descriptions [ chat_section ] );
+	}
+	else
+	    sprintf( game_message_text , "This is a %s. %s" , Druidmap [ AllEnemys [ final_bot_found ] . type ] . druidname , Druidmap [ AllEnemys [ final_bot_found ] . type ] . notes );
+
 	append_new_game_message ( game_message_text );
 	return;
     }
