@@ -433,6 +433,7 @@ PlayGame (void)
   int up, down, set; 
   int up_counter, down_counter; 
 
+  sprintf (count_text, "Subliminal");   /* Make sure a value gets assigned to count_text */
   count_tick_len = 100;   /* countdown in 1/10 second steps */
   move_tick_len  = 60;    /* allow motion at this tick-speed in ms */
   

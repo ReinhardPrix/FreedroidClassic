@@ -970,8 +970,9 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
 	} // inner switch
       break;
     default:
-      DebugPrintf( 0 , "\n\nERRROR!!! UNHANDLED TREASURE CHEST ENCOUNTERED!!! TERMINATING...\n\n" );
-      Terminate ( ERR );
+      GiveStandardErrorMessage ( "DropRandomItem(...)" , "\
+Unhandled treasure chest encountered!  This isn't supposed to happen.",
+				 PLEASE_INFORM, IS_FATAL );
       break;
     } // switch
 

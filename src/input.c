@@ -764,6 +764,16 @@ ReactToSpecialKeys(void)
        && CtrlWasPressed() && Shift_Was_Pressed() ) 
     Cheatmenu ();
 
+  if ( RPressed() && CtrlWasPressed() ) 
+    {
+      if ( Shift_Was_Pressed() )
+	DropRandomItem( Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , 3 , TRUE  , FALSE , FALSE ) ;
+      else
+	DropRandomItem( Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , 3 , FALSE , FALSE , FALSE ) ;
+
+      while ( RPressed() );
+    }
+
   //--------------------
   // The 'Esc' key is assigned to the big main menu, the so called
   // Escape Menu.
