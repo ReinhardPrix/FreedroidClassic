@@ -239,32 +239,45 @@ our_SDL_fill_rect_wrapper (SDL_Surface *dst, SDL_Rect *dstrect, Uint32 color)
 }; // int our_SDL_fill_rect_wrapper (SDL_Surface *dst, SDL_Rect *dstrect, Uint32 color)
 
 
-// ISO functions
-// these draw quads in the 3D planes
-void drawISOXYQuad(int x, int y, int z, int w, int h) {
-	glVertex3f( x, y-h, z);
-	glVertex3f( x, y, z);
-	glVertex3f( x+ w * COS_28, y + w * SIN_28, z);
-	glVertex3f( x+ w * COS_28, y-h + w * SIN_28, z);
+/* ----------------------------------------------------------------------
+ * Simon N.:  ISO functions.  these draw quads in the 3D planes
+ * ---------------------------------------------------------------------- */
+void 
+drawISOXYQuad ( int x , int y , int z , int w , int h ) 
+{
+#ifdef HAVE_LIBGL
+    glVertex3f( x, y-h, z);
+    glVertex3f( x, y, z);
+    glVertex3f( x+ w * COS_28, y + w * SIN_28, z);
+    glVertex3f( x+ w * COS_28, y-h + w * SIN_28, z);
+#endif
 }
 
-void drawISOXZQuad(int x, int y, int z, int w, int d) {
-	glVertex3f( x + d * COS_28 ,  y - d * SIN_28, z );
-	glVertex3f(  x , y , z );
-	glVertex3f(  x + w * COS_28 , y + w * SIN_28 , z );
-	glVertex3f( x +w * COS_28 + d * COS_28, y + w * SIN_28 - d* SIN_28, z ) ;
+void 
+drawISOXZQuad(int x, int y, int z, int w, int d) 
+{
+#ifdef HAVE_LIBGL
+    glVertex3f( x + d * COS_28 ,  y - d * SIN_28, z );
+    glVertex3f(  x , y , z );
+    glVertex3f(  x + w * COS_28 , y + w * SIN_28 , z );
+    glVertex3f( x +w * COS_28 + d * COS_28, y + w * SIN_28 - d* SIN_28, z ) ;
+#endif
 }
 
-void drawISOYZQuad(int x, int y, int z, int h, int d) {
+void 
+drawISOYZQuad(int x, int y, int z, int h, int d) 
+{
+#ifdef HAVE_LIBGL
 	glVertex3f( x , y-h, z );
 	glVertex3f( x, y, z );
 	glVertex3f( x + d*COS_28 , y - d * SIN_28, z );
 	glVertex3f( x + d*COS_28 , y -h - d * SIN_28, z  ) ;
+#endif
 }
 
 
 /* ----------------------------------------------------------------------
- * Draws an isometric energy bar.
+ * Simon N.: Draws an isometric energy bar.
  * dir : X_DIR | Y_DIR | Z_DIR
  * x,y,z : the position of the lower left hand corner
  * h : the height of the energy bar, as if viewed in the X direction
@@ -275,59 +288,66 @@ void drawISOYZQuad(int x, int y, int z, int h, int d) {
  * ---------------------------------------------------------------------- */
 void 
 drawIsoEnergyBar(int dir, int x, int y, int z, int h, int d, int length, float fill, myColor *c1, myColor *c2  ) {
-	int l = (int) (fill * length) ;
-	int l2 = (int) length * (1.0-fill) ;
-	int lcos, lsin, l2cos, l2sin ;
-	glEnable(GL_BLEND) ;
+#ifdef HAVE_LIBGL
+    int l = (int) (fill * length) ;
+    int l2 = (int) length * (1.0-fill) ;
+    int lcos, lsin, l2cos, l2sin ;
+    glEnable(GL_BLEND) ;
     glDisable( GL_DEPTH_TEST );
-	glDisable( GL_ALPHA_TEST) ;
-	glColor4ub(c1->r, c1->g, c1->b, c1->a ) ;
-	glBegin(GL_QUADS) ;
-
-	// the rest of this is trig to work out the x,y,z co-ordinates of the quads
-	if ( dir == X_DIR ) {
-		// we need to round these or sometimes the
-		// quads will be out by 1 pixel
-		lcos = (int) rint( l * COS_28) ;
-		lsin = (int) rint( l * SIN_28) ;
-		l2cos = (int) rint( l2 * COS_28) ;
-		l2sin = (int) rint( l2 * SIN_28) ;
-		
-		drawISOXYQuad(x,y,z,l,h) ;
-		drawISOYZQuad( x + lcos ,y + lsin ,z,h,d) ;
-		drawISOXZQuad( x, y-h,z, l,d) ;
-		glColor4ub(c2->r, c2->g, c2->b, c2->a ) ;
-		drawISOXYQuad(x+ lcos,y+ lsin ,z,l2,h) ;
-		drawISOYZQuad( x + l2cos + lcos ,y+ l2sin + lsin ,z,h,d) ;
-		drawISOXZQuad( x + lcos, y+ lsin -h,z, l2,d) ;
-
-	} else if ( dir == Y_DIR) {
-		// this should be wcos, but we're saving variables :)
-		lcos = (int) rint ( h * COS_28) ;
-		lsin = (int) rint ( h * SIN_28) ;
-		drawISOXYQuad(x,y,z,h,l) ;
-		drawISOYZQuad( x + lcos ,y + lsin	,z,l,d) ;
-		drawISOXZQuad( x, y-l,z, h,d) ;
-		glColor4ub(c2->r, c2->g, c2->b, c2->a ) ;
-		drawISOXYQuad(x,y-l,z,h,l2) ;
-		drawISOYZQuad( x + lcos ,y -l + lsin ,z,l2,d) ;
-		drawISOXZQuad( x, y-l-l2,z, h,d) ;
-	} else {
-		lcos = (int) rint( l * COS_28) ;
-		lsin = (int) rint( l * SIN_28) ;
-		// think of this a dcos, same reason above
- 		l2cos = (int) rint( d * COS_28) ;
-		l2sin = (int) rint( d * SIN_28) ;
-		drawISOXYQuad(x,y,z,d,h) ;
-		drawISOYZQuad( x + l2cos ,y + l2sin ,z,h,l) ;
-		drawISOXZQuad( x, y-h,z, d,l) ;
-		
-		glColor4ub(c2->r, c2->g, c2->b, c2->a ) ;
-		drawISOYZQuad( x + l2cos + lcos ,y + l2sin - lsin ,z,h,l2) ;
-		drawISOXZQuad( x+ lcos , y - lsin -h,z, d,l2) ;
-	}
-	glEnd() ;
-}
+    glDisable( GL_ALPHA_TEST) ;
+    glColor4ub(c1->r, c1->g, c1->b, c1->a ) ;
+    glBegin(GL_QUADS) ;
+    
+    // the rest of this is trig to work out the x,y,z co-ordinates of the quads
+    if ( dir == X_DIR ) 
+    {
+	// we need to round these or sometimes the
+	// quads will be out by 1 pixel
+	lcos = (int) rint( l * COS_28) ;
+	lsin = (int) rint( l * SIN_28) ;
+	l2cos = (int) rint( l2 * COS_28) ;
+	l2sin = (int) rint( l2 * SIN_28) ;
+	
+	drawISOXYQuad(x,y,z,l,h) ;
+	drawISOYZQuad( x + lcos ,y + lsin ,z,h,d) ;
+	drawISOXZQuad( x, y-h,z, l,d) ;
+	glColor4ub(c2->r, c2->g, c2->b, c2->a ) ;
+	drawISOXYQuad(x+ lcos,y+ lsin ,z,l2,h) ;
+	drawISOYZQuad( x + l2cos + lcos ,y+ l2sin + lsin ,z,h,d) ;
+	drawISOXZQuad( x + lcos, y+ lsin -h,z, l2,d) ;
+	
+    } 
+    else if ( dir == Y_DIR) 
+    {
+	// this should be wcos, but we're saving variables :)
+	lcos = (int) rint ( h * COS_28) ;
+	lsin = (int) rint ( h * SIN_28) ;
+	drawISOXYQuad(x,y,z,h,l) ;
+	drawISOYZQuad( x + lcos ,y + lsin	,z,l,d) ;
+	drawISOXZQuad( x, y-l,z, h,d) ;
+	glColor4ub(c2->r, c2->g, c2->b, c2->a ) ;
+	drawISOXYQuad(x,y-l,z,h,l2) ;
+	drawISOYZQuad( x + lcos ,y -l + lsin ,z,l2,d) ;
+	drawISOXZQuad( x, y-l-l2,z, h,d) ;
+    } 
+    else 
+    {
+	lcos = (int) rint( l * COS_28) ;
+	lsin = (int) rint( l * SIN_28) ;
+	// think of this a dcos, same reason above
+	l2cos = (int) rint( d * COS_28) ;
+	l2sin = (int) rint( d * SIN_28) ;
+	drawISOXYQuad(x,y,z,d,h) ;
+	drawISOYZQuad( x + l2cos ,y + l2sin ,z,h,l) ;
+	drawISOXZQuad( x, y-h,z, d,l) ;
+	
+	glColor4ub(c2->r, c2->g, c2->b, c2->a ) ;
+	drawISOYZQuad( x + l2cos + lcos ,y + l2sin - lsin ,z,h,l2) ;
+	drawISOXZQuad( x+ lcos , y - lsin -h,z, d,l2) ;
+    }
+    glEnd() ;
+#endif
+}; // void drawIsoEnergyBar(int dir, int x, int y, int z, int h, int d, int length, float fill, myColor *c1, myColor *c2  ) 
 
 
 
@@ -358,23 +378,23 @@ our_SDL_display_format_wrapper ( SDL_Surface *surface )
 SDL_Surface*
 our_SDL_display_format_wrapperAlpha ( SDL_Surface *surface )
 {
-  SDL_Surface* return_surface;
+    SDL_Surface* return_surface;
 
-  if ( use_open_gl )
+    if ( use_open_gl )
     {
-      if ( surface == Screen ) return ( NULL );
-      return_surface = SDL_DisplayFormatAlpha ( surface ) ;
-      SDL_SetColorKey( return_surface , 0 , 0 ); // this should clear any color key in the dest surface
-      SDL_SetAlpha( return_surface , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-      return ( return_surface ) ;
+	if ( surface == Screen ) return ( NULL );
+	return_surface = SDL_DisplayFormatAlpha ( surface ) ;
+	SDL_SetColorKey( return_surface , 0 , 0 ); // this should clear any color key in the dest surface
+	SDL_SetAlpha( return_surface , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+	return ( return_surface ) ;
     }
-  else
+    else
     {
-      return ( SDL_DisplayFormatAlpha ( surface ) ) ; 
+	return ( SDL_DisplayFormatAlpha ( surface ) ) ; 
     }
-
-  return ( NULL );
-};
+    
+    return ( NULL );
+}; // SDL_Surface* our_SDL_display_format_wrapperAlpha ( SDL_Surface *surface )
 
 /* ----------------------------------------------------------------------
  * This function flips a given SDL_Surface around the x-axis, i.e. up-down.
@@ -388,16 +408,16 @@ our_SDL_display_format_wrapperAlpha ( SDL_Surface *surface )
 void
 flip_image_horizontally ( SDL_Surface* tmp1 ) 
 {
-  int x , y ;
-  Uint32 temp;
-
-  for ( y = 0 ; y < ( tmp1 -> h ) / 2 ; y ++ )
+    int x , y ;
+    Uint32 temp;
+    
+    for ( y = 0 ; y < ( tmp1 -> h ) / 2 ; y ++ )
     {
-      for ( x = 0 ; x < (tmp1 -> w ) ; x ++ )
+	for ( x = 0 ; x < (tmp1 -> w ) ; x ++ )
 	{
-	  temp = GetPixel ( tmp1 , x , y ) ;
-	  PutPixel ( tmp1 , x , y , GetPixel ( tmp1 , x , ( tmp1 -> h - y - 1 ) ) ) ;
-	  PutPixel ( tmp1 , x , ( tmp1 -> h - y - 1 ) , temp ) ;
+	    temp = GetPixel ( tmp1 , x , y ) ;
+	    PutPixel ( tmp1 , x , y , GetPixel ( tmp1 , x , ( tmp1 -> h - y - 1 ) ) ) ;
+	    PutPixel ( tmp1 , x , ( tmp1 -> h - y - 1 ) , temp ) ;
 	}
     }
 }; // void flip_image_horizontally ( SDL_Surface* tmp1 ) 
@@ -409,21 +429,21 @@ flip_image_horizontally ( SDL_Surface* tmp1 )
 SDL_Surface* 
 our_IMG_load_wrapper( const char *file )
 {
-  SDL_Surface* tmp1;
-
-  if ( use_open_gl )
+    SDL_Surface* tmp1;
+    
+    if ( use_open_gl )
     {
-      tmp1 = IMG_Load ( file ) ;
-
-      if ( tmp1 == NULL ) return ( NULL );
-
-      flip_image_horizontally ( tmp1 ) ;
-
-      return ( tmp1 ) ;
+	tmp1 = IMG_Load ( file ) ;
+	
+	if ( tmp1 == NULL ) return ( NULL );
+	
+	flip_image_horizontally ( tmp1 ) ;
+	
+	return ( tmp1 ) ;
     }
-  else
+    else
     {
-      return ( IMG_Load ( file ) ) ;
+	return ( IMG_Load ( file ) ) ;
     }
 }; // SDL_Surface* our_IMG_load_wrapper( const char *file )
 
