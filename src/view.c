@@ -157,7 +157,10 @@ Assemble_Combat_Picture (int mask)
   int MapBrick;
   int line, col;
   int i;
+  static float TimeSinceLastFPSUpdate=10;
+  static int FPS_Displayed=1;
   SDL_Rect TargetRectangle;
+#define UPDATE_FPS_HOW_OFTEN 0.75
 
   DebugPrintf ("\nvoid Assemble_Combat_Picture(...): Real function call confirmed.");
   
@@ -223,9 +226,16 @@ Assemble_Combat_Picture (int mask)
 
   if ( Draw_Framerate )
     {
+      TimeSinceLastFPSUpdate += Frame_Time();
+      if ( TimeSinceLastFPSUpdate > UPDATE_FPS_HOW_OFTEN )
+	{
+	  FPS_Displayed=(int)(1.0/Frame_Time());
+	  TimeSinceLastFPSUpdate=0;
+	}
+
       PrintStringFont( ne_screen , FPS_Display_BFont , User_Rect.x , 
 		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
-		       "FPS: %d " , (int) (1.00/Frame_Time()) );
+		       "FPS: %d " , FPS_Displayed );
     }
 
   if ( Draw_Energy )
