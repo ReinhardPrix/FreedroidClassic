@@ -14,6 +14,9 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.15  1997/06/09 13:01:29  jprix
+ * Bullet position and speed now also as float.  Program still functionin. Heeyooh! Great!
+ *
  * Revision 1.14  1997/06/08 16:33:10  jprix
  * Eliminated all warnings, that resulted from the new -Wall gcc flag.
  *
@@ -119,8 +122,8 @@ void SmallBullet(int LX,int LY, int BulletT,int phase,unsigned char* Screen,int 
 			if( AllBullets[i].type == OUT ) continue;
 			if( CurBlast->phase > 4) break;
 		
-			if( abs(AllBullets[i].PX - CurBlast->PX) < BLASTRADIUS ) 
-				 if( abs(AllBullets[i].PY - CurBlast->PY) < BLASTRADIUS)
+			if( abs(AllBullets[i].pos.x - CurBlast->PX) < BLASTRADIUS ) 
+				 if( abs(AllBullets[i].pos.y - CurBlast->PY) < BLASTRADIUS)
 				 {
 				 	/* KILL Bullet silently */
 				 	AllBullets[i].type = OUT;

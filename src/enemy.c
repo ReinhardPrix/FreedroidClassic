@@ -314,20 +314,20 @@ void AttackInfluence(int enemynum)
 
       /* Schussrichtung festlegen */
       if (abs(xdist) > abs(ydist) ) {
-	AllBullets[j].SX=Bulletmap[guntype].speed;
-	AllBullets[j].SY=ydist*AllBullets[j].SX/xdist;
+	AllBullets[j].speed.x=Bulletmap[guntype].speed;
+	AllBullets[j].speed.y=ydist*AllBullets[j].speed.x/xdist;
 	if (xdist < 0) {
-	  AllBullets[j].SX=-AllBullets[j].SX;
-	  AllBullets[j].SY=-AllBullets[j].SY;
+	  AllBullets[j].speed.x=-AllBullets[j].speed.x;
+	  AllBullets[j].speed.y=-AllBullets[j].speed.y;
 	}
       } 
       
       if (abs(xdist) < abs(ydist) ) {
-	AllBullets[j].SY=Bulletmap[guntype].speed;
-	AllBullets[j].SX=xdist*AllBullets[j].SY/ydist;
+	AllBullets[j].speed.y=Bulletmap[guntype].speed;
+	AllBullets[j].speed.x=xdist*AllBullets[j].speed.y/ydist;
 	if (ydist < 0) {
-	  AllBullets[j].SX=-AllBullets[j].SX;
-	  AllBullets[j].SY=-AllBullets[j].SY;
+	  AllBullets[j].speed.x=-AllBullets[j].speed.x;
+	  AllBullets[j].speed.y=-AllBullets[j].speed.y;
 	}
       }
 		
@@ -342,14 +342,14 @@ void AttackInfluence(int enemynum)
       }
       
       /* Bullets im Zentrum des Schuetzen starten */
-      AllBullets[j].PX=Feindesliste[enemynum].pos.x;
-      AllBullets[j].PY=Feindesliste[enemynum].pos.y;
+      AllBullets[j].pos.x=Feindesliste[enemynum].pos.x;
+      AllBullets[j].pos.y=Feindesliste[enemynum].pos.y;
       
       /* Bullets so abfeuern, dass sie nicht den Schuetzen treffen */
-      AllBullets[j].PX+=AllBullets[j].SX;
-      AllBullets[j].PY+=AllBullets[j].SY;
-      AllBullets[j].PX+=Feindesliste[enemynum].speed.x;
-      AllBullets[j].PY+=Feindesliste[enemynum].speed.y;
+      AllBullets[j].pos.x+=AllBullets[j].speed.x;
+      AllBullets[j].pos.y+=AllBullets[j].speed.y;
+      AllBullets[j].pos.x+=Feindesliste[enemynum].speed.x;
+      AllBullets[j].pos.y+=Feindesliste[enemynum].speed.y;
       
       /* Dem Bullettype entsprechend lange warten vor naechstem Schuss */
       

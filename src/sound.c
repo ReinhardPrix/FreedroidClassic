@@ -11,6 +11,9 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.13  1997/06/09 13:01:29  jprix
+ * Bullet position and speed now also as float.  Program still functionin. Heeyooh! Great!
+ *
  * Revision 1.12  1997/06/08 21:22:44  jprix
  * Makefile modifiet to generate para with sound per default. Alternative target is now paranosound.
  *
@@ -384,6 +387,9 @@ void YIFF_Server_Close_Connections(void){
    * be automatically shut down.  To ensure that the Y
    * server stays running, you can pass True instead.
    */
+
+  YCloseConnection(BackgroundMusic_con, False);
+  BackgroundMusic_con = NULL;
 
   YCloseConnection(con, False);
   con = NULL;

@@ -10,6 +10,9 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.8  1997/06/09 13:01:29  jprix
+ * Bullet position and speed now also as float.  Program still functionin. Heeyooh! Great!
+ *
  * Revision 1.7  1997/06/08 14:49:40  jprix
  * Added file FILES describing the files of this project.
  * Added more doku while writing the files description.
@@ -67,8 +70,8 @@ void MoveBullets(void)
 	for(CurBullet=AllBullets, i=0;i<MAXBULLETS;CurBullet++, i++) {
 		if (CurBullet->type == OUT) continue;
 		
-		CurBullet->PX += CurBullet->SX;
-		CurBullet->PY += CurBullet->SY;
+		CurBullet->pos.x += CurBullet->speed.x;
+		CurBullet->pos.y += CurBullet->speed.y;
 
 		CurBullet->time++;
 
@@ -100,7 +103,7 @@ void DeleteBullet(int Bulletnummer)
 	CurBullet->mine = FALSE;
 
 	/* Blast erzeugen: type BULLETBLAST */
-	StartBlast(CurBullet->PX, CurBullet->PY, BULLETBLAST);
+	StartBlast(CurBullet->pos.x, CurBullet->pos.y, BULLETBLAST);
 }
 
 /*@Function============================================================
@@ -205,14 +208,14 @@ void CheckBulletCollisions(int num)
 	if(CurBullet->type == OUT) return;
 	
 	/* Kollision der Bullets mit dem Hintergrund feststellen */
-	if (IsPassable(CurBullet->PX, CurBullet->PY, CENTER) != CENTER) {
+	if (IsPassable(CurBullet->pos.x, CurBullet->pos.y, CENTER) != CENTER) {
 		DeleteBullet(num);
 		return;		/* Bullet ist hin */
 	}
 
 	/* Influence getroffen ?? */
-	xdist = Me.pos.x - CurBullet->PX;
-	ydist = Me.pos.y - CurBullet->PY;
+	xdist = Me.pos.x - CurBullet->pos.x;
+	ydist = Me.pos.y - CurBullet->pos.y;
 	if( (xdist*xdist+ydist*ydist) < DRUIDHITDIST2 ) {
 		CurBullet->type = OUT;
 		CurBullet->mine = FALSE;
@@ -226,8 +229,8 @@ void CheckBulletCollisions(int num)
 		if( Feindesliste[i].Status == OUT || Feindesliste[i].levelnum != level)
 			continue;
 
-		xdist = CurBullet->PX - Feindesliste[i].pos.x;
-		ydist = CurBullet->PY - Feindesliste[i].pos.y;
+		xdist = CurBullet->pos.x - Feindesliste[i].pos.x;
+		ydist = CurBullet->pos.y - Feindesliste[i].pos.y;
 
 		if( (xdist*xdist+ydist*ydist) < DRUIDHITDIST2 ) {
 			Feindesliste[i].energy -= Bulletmap[CurBullet->type].damage;
@@ -268,8 +271,8 @@ void CheckBlastCollisions(int num)
 		if( AllBullets[i].type == OUT ) continue;
 		if( CurBlast->phase > 4) break;
 		
-		if( abs(AllBullets[i].PX - CurBlast->PX) < BLASTRADIUS ) 
-			 if( abs(AllBullets[i].PY - CurBlast->PY) < BLASTRADIUS)
+		if( abs(AllBullets[i].pos.x - CurBlast->PX) < BLASTRADIUS ) 
+			 if( abs(AllBullets[i].pos.y - CurBlast->PY) < BLASTRADIUS)
 			 {
 			 	/* KILL Bullet silently */
 			 	AllBullets[i].type = OUT;

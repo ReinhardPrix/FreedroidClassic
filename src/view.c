@@ -14,6 +14,9 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.18  1997/06/09 13:01:29  jprix
+ * Bullet position and speed now also as float.  Program still functionin. Heeyooh! Great!
+ *
  * Revision 1.17  1997/06/09 10:50:29  jprix
  * Halfway through with making robot coordinates also info floats.  Still works :->
  *
@@ -306,8 +309,8 @@ void GetInternFenster(void)
        if( AllBullets[i].type == OUT ) continue;
        if( CurBlast->phase > 4) break;
        
-       if( abs(AllBullets[i].PX - CurBlast->PX) < BLASTRADIUS ) 
-	 if( abs(AllBullets[i].PY - CurBlast->PY) < BLASTRADIUS)
+       if( abs(AllBullets[i].pos.x - CurBlast->PX) < BLASTRADIUS ) 
+	 if( abs(AllBullets[i].pos.y - CurBlast->PY) < BLASTRADIUS)
 	   {
 	     /* KILL Bullet silently */
 	     AllBullets[i].type = OUT;
@@ -381,11 +384,11 @@ void GetConceptInternFenster(void)
  
 			if (AllBullets[i].time == 1) {
 //					FlashWindow(0);
-				RecFlashFill(AllBullets[i].PX,AllBullets[i].PY,FLASHCOLOR1,InternWindow,INTERNBREITE*BLOCKBREITE);
+				RecFlashFill(AllBullets[i].pos.x,AllBullets[i].pos.y,FLASHCOLOR1,InternWindow,INTERNBREITE*BLOCKBREITE);
 			}
 			if (AllBullets[i].time == 2) {
 //					FlashWindow(15);
-				RecFlashFill(AllBullets[i].PX,AllBullets[i].PY,FLASHCOLOR2,InternWindow,INTERNBREITE*BLOCKBREITE);
+				RecFlashFill(AllBullets[i].pos.x,AllBullets[i].pos.y,FLASHCOLOR2,InternWindow,INTERNBREITE*BLOCKBREITE);
 			}
 
 			/*
@@ -407,7 +410,7 @@ void GetConceptInternFenster(void)
 
 			free( Affected );
 		} else {
-			SmallBullet(AllBullets[i].PX/4,AllBullets[i].PY/4,AllBullets[i].type,
+			SmallBullet(AllBullets[i].pos.x/4,AllBullets[i].pos.y/4,AllBullets[i].type,
 				AllBullets[i].phase,InternWindow,INTERNBREITE*BLOCKBREITE);
 		}
 	}
@@ -582,13 +585,13 @@ void PutBullet(int BulletNummer)
 	}
 
 						
-	if( PutObject(CurBullet->PX, CurBullet->PY, bulletpic, TRUE) == TRUE) {
+	if( PutObject(CurBullet->pos.x, CurBullet->pos.y, bulletpic, TRUE) == TRUE) {
 		/* Bullet-Bullet Collision: Bullet loeschen */
 		CurBullet->type = OUT;
 		CurBullet->mine = FALSE;
 
 		/* Druid-Blast dort erzeugen: killt zweites Bullet */
-		StartBlast(CurBullet->PX, CurBullet->PY, DRUIDBLAST);
+		StartBlast(CurBullet->pos.x, CurBullet->pos.y, DRUIDBLAST);
 	} /* if */
 	
 } /* PutBullet */

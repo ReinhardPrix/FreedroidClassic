@@ -9,8 +9,12 @@
  *
  * $Author$
  *
- * $Log: influ.c,v 
- * Revision 1.5  1997/05/31 13:30:31  rpri
+ * $Log$
+ * Revision 1.12  1997/06/09 13:01:29  jprix
+ * Bullet position and speed now also as float.  Program still functionin. Heeyooh! Great!
+ *
+ * 
+ * Revision 1.5  1997/05/31 13:30:31  rprix
  * Further update by johannes. (sent to me in tar.gz
  *
  * Revision 1.2  1994/06/19  16:22:55  prix
@@ -124,20 +128,20 @@ void AutoFireBullet(void){
   
   /* Schussrichtung festlegen */
   if (abs(xdist) > abs(ydist) ) {
-    AllBullets[j].SX=Bulletmap[guntype].speed;
-    AllBullets[j].SY=ydist*AllBullets[j].SX/xdist;
+    AllBullets[j].speed.x=Bulletmap[guntype].speed;
+    AllBullets[j].speed.y=ydist*AllBullets[j].speed.x/xdist;
     if (xdist < 0) {
-      AllBullets[j].SX=-AllBullets[j].SX;
-      AllBullets[j].SY=-AllBullets[j].SY;
+      AllBullets[j].speed.x=-AllBullets[j].speed.x;
+      AllBullets[j].speed.y=-AllBullets[j].speed.y;
     }
   } 
   		
   if (abs(xdist) < abs(ydist) ) {
-    AllBullets[j].SY=Bulletmap[guntype].speed;
-    AllBullets[j].SX=xdist*AllBullets[j].SY/ydist;
+    AllBullets[j].speed.x=Bulletmap[guntype].speed;
+    AllBullets[j].speed.y=xdist*AllBullets[j].speed.y/ydist;
     if (ydist < 0) {
-      AllBullets[j].SX=-AllBullets[j].SX;
-      AllBullets[j].SY=-AllBullets[j].SY;
+      AllBullets[j].speed.x=-AllBullets[j].speed.x;
+      AllBullets[j].speed.y=-AllBullets[j].speed.y;
     }
   }
 
@@ -151,18 +155,18 @@ void AutoFireBullet(void){
     else AllBullets[j].phase=RECHTSOBEN;
   }
   
-  if (AllBullets[j].SX==0) AllBullets[j].phase=OBEN;
-  if (AllBullets[j].SY==0) AllBullets[j].phase=RECHTS;
+  if (AllBullets[j].speed.x == 0) AllBullets[j].phase=OBEN;
+  if (AllBullets[j].speed.y == 0) AllBullets[j].phase=RECHTS;
   
   /* Bullets im Zentrum des Schuetzen starten */
-  AllBullets[j].PX=Me.pos.x;
-  AllBullets[j].PY=Me.pos.y;
+  AllBullets[j].pos.x=Me.pos.x;
+  AllBullets[j].pos.y=Me.pos.y;
   
   /* Bullets so abfeuern, dass sie nicht den Schuetzen treffen */
-  AllBullets[j].PX+=AllBullets[j].SX;
-  AllBullets[j].PY+=AllBullets[j].SY;
-  AllBullets[j].PX+=Me.speed.x;
-  AllBullets[j].PY+=Me.speed.y;
+  AllBullets[j].pos.x+=AllBullets[j].speed.x;
+  AllBullets[j].pos.y+=AllBullets[j].speed.y;
+  AllBullets[j].pos.x+=Me.speed.x;
+  AllBullets[j].pos.y+=Me.speed.y;
   
   /* Bullettype gemaes dem ueblichen guntype fuer den robottyp setzen */
   AllBullets[j].type=guntype;
@@ -616,8 +620,8 @@ void FireBullet(void){
   /* Kein freies Bullet gefunden: Nimm das erste */
   if (CurBullet == NULL) CurBullet=&AllBullets[0];
 
-  CurBullet->PX=Me.pos.x;
-  CurBullet->PY=Me.pos.y;
+  CurBullet->pos.x=Me.pos.x;
+  CurBullet->pos.y=Me.pos.y;
   CurBullet->type=guntype;
   CurBullet->mine = TRUE;
   CurBullet->owner = -1;
@@ -633,61 +637,61 @@ void FireBullet(void){
   
   switch (firedir) {
   case OBEN:
-    CurBullet->SX = 0;
-    CurBullet->SY = -BulletSpeedY;
+    CurBullet->speed.x = 0;
+    CurBullet->speed.y = -BulletSpeedY;
     CurBullet->phase = OBEN;
     break;
 
   case RECHTSOBEN:
-    CurBullet->SX = BulletSpeedX; 
-    CurBullet->SY = -BulletSpeedY;
+    CurBullet->speed.x = BulletSpeedX; 
+    CurBullet->speed.y = -BulletSpeedY;
     CurBullet->phase = RECHTSOBEN;
     break;
     
   case RECHTS:
-    CurBullet->SX = BulletSpeedX;
-    CurBullet->SY = 0;
+    CurBullet->speed.x = BulletSpeedX;
+    CurBullet->speed.y = 0;
     CurBullet->phase = RECHTS;
     break;
 			
   case RECHTSUNTEN:
-    CurBullet->SX = BulletSpeedX;
-    CurBullet->SY = BulletSpeedY;
+    CurBullet->speed.x = BulletSpeedX;
+    CurBullet->speed.y = BulletSpeedY;
     CurBullet->phase = RECHTSUNTEN;
     break;
     
   case UNTEN:
-    CurBullet->SX = 0;
-    CurBullet->SY = BulletSpeedY;
+    CurBullet->speed.x = 0;
+    CurBullet->speed.y = BulletSpeedY;
     CurBullet->phase = OBEN;
     break;
 			
   case LINKSUNTEN:
-    CurBullet->SX = -BulletSpeedX;		
-    CurBullet->SY = BulletSpeedY;
+    CurBullet->speed.x = -BulletSpeedX;		
+    CurBullet->speed.y = BulletSpeedY;
     CurBullet->phase = RECHTSOBEN;
     break;
     
   case LINKS:
-    CurBullet->SX = -BulletSpeedX;
-    CurBullet->SY = 0;
+    CurBullet->speed.x = -BulletSpeedX;
+    CurBullet->speed.y = 0;
     CurBullet->phase = RECHTS;
     break;
     
   case LINKSOBEN:
-    CurBullet->SX = -BulletSpeedX;
-    CurBullet->SY = -BulletSpeedY;
+    CurBullet->speed.x = -BulletSpeedX;
+    CurBullet->speed.y = -BulletSpeedY;
     CurBullet->phase = RECHTSUNTEN;
     break;
   }
 
   /* Um Selbstabschuss zu verhindern Bullet weiterbewegen */
 	
-  CurBullet->PX+=CurBullet->SX;
-  CurBullet->PY+=CurBullet->SY;
+  CurBullet->pos.x += CurBullet->speed.x;
+  CurBullet->pos.y += CurBullet->speed.y;
   if ((abs(BulletSpeedX) < 13) && (abs(BulletSpeedY) < 13)) {
-    CurBullet->PX+=CurBullet->SX;
-    CurBullet->PY+=CurBullet->SY;
+    CurBullet->pos.x+=CurBullet->speed.x;
+    CurBullet->pos.y+=CurBullet->speed.y;
   }
 		
   /*
@@ -705,8 +709,8 @@ void FireBullet(void){
 
   if (PlusExtentionsOn) {
     if (!Me.vneut) {
-      CurBullet->SX+=Me.speed.x / Druidmap[Me.type].vneutral;
-      CurBullet->SY+=Me.speed.y / Druidmap[Me.type].vneutral;
+      CurBullet->speed.x += Me.speed.x / Druidmap[Me.type].vneutral;
+      CurBullet->speed.y += Me.speed.y / Druidmap[Me.type].vneutral;
     }
   }
   

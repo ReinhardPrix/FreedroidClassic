@@ -15,20 +15,20 @@
 #endif
 
 typedef struct {
-	long PlayerScore;
-	void* NextPlayer;
-	char* PlayerName;
+  long PlayerScore;
+  void* NextPlayer;
+  char* PlayerName;
 } HallElement;
 
 typedef struct {
-	unsigned char rot;
-	unsigned char gruen;
-	unsigned char blau;
+  unsigned char rot;
+  unsigned char gruen;
+  unsigned char blau;
 } color, *Color;
 
 typedef struct {
-   signed short x;
-   signed short y;
+  signed short x;
+  signed short y;
 } point, *Point;
 
 typedef struct {
@@ -82,7 +82,7 @@ typedef struct {
   byte type;		/* gibt die Nummer in Druidmap an */
   int levelnum;		/* Level in dem sich enemy befindet */
   finepoint pos;	/* gibt die Koordinaten der Momentanposition an */
-  vect speed;		/* current speed  */
+  finepoint speed;	/* current speed  */
   float energy;		/* gibt die Energie dieses Robots an */
   byte feindphase;	/* gibt die Phase an in der der Feind gedreht ist */
   int feindrehcode;	/* gibt Drehungen von Bruchteilen von Dehphasen an */
@@ -108,15 +108,13 @@ typedef struct {
 } bulletspec, *Bulletspec;
 
 typedef struct {
-   int PX;
-   int PY;
-   signed char SX; /* SpeedX */
-   signed char SY; /* SpeedY */
-   byte type;
-   byte phase;
-   byte time;
-   signed char mine;
-   int owner;
+  finepoint pos;
+  finepoint speed;
+  byte type;
+  byte phase;
+  byte time;
+  signed char mine;
+  int owner;
 } bullet, *Bullet;
 
 typedef struct {
@@ -206,6 +204,9 @@ typedef struct {
  * $Author$
  *
  * $Log$
+ * Revision 1.16  1997/06/09 13:01:29  jprix
+ * Bullet position and speed now also as float.  Program still functionin. Heeyooh! Great!
+ *
  * Revision 1.15  1997/06/09 10:50:29  jprix
  * Halfway through with making robot coordinates also info floats.  Still works :->
  *
