@@ -160,6 +160,8 @@ EXTERN int SkipAFewFrames;
 #else
 #define EXTERN extern
 #endif
+EXTERN SDL_Surface *ne_screen;   /* the graphics display */
+EXTERN SDL_Surface *ne_scaled_screen;   /* the graphics display */
 EXTERN char *ship_on_filename;
 EXTERN char *ship_off_filename;
 EXTERN int BannerIsDestroyed;
@@ -214,22 +216,6 @@ EXTERN unsigned char *Robotptr;
 #else
 #define EXTERN extern
 #endif
-
-#undef EXTERN
-#ifdef _svgaemu_c
-#define EXTERN
-#else
-#define EXTERN extern
-#endif
-
-#ifdef NEW_ENGINE  /* this is for the new graphics engine */
-EXTERN SDL_Surface *ne_screen;   /* the graphics display */
-EXTERN SDL_Surface *ne_scaled_screen;   /* the graphics display */
-#else
-EXTERN SDL_Surface *screen;
-EXTERN SDL_Surface *ScaledSurface;
-#endif
-
 
 #undef EXTERN
 #ifdef _input_c

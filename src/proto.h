@@ -160,11 +160,6 @@ EXTERN void GetDigits (void);
 #define EXTERN extern
 #endif
 
-// EXTERN void Lock_SDL_Screen(void);
-// EXTERN void Unlock_SDL_Screen(void);
-// EXTERN void Update_SDL_Screen(void);
-// EXTERN Uint32 getpixel(SDL_Surface *surface, int x, int y);
-// EXTERN void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
 EXTERN void DrawLineBetweenTiles( float x1 , float y1 , float x2 , float y2 , int Color );
 EXTERN void TakeScreenshot( void );
 EXTERN void replace_color (SDL_Surface *surf, SDL_Color src, SDL_Color dst);
@@ -189,6 +184,8 @@ EXTERN void LadeZeichensatz (char *Zeichensatzname);
 EXTERN void LevelGrauFaerben (void);
 EXTERN void ClearGraphMem ( void );
 EXTERN void Flimmern (int type);
+EXTERN Uint32 getpixel(SDL_Surface *surface, int x, int y);
+EXTERN void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
 
 /* map.c */
 #undef EXTERN
@@ -474,14 +471,9 @@ EXTERN void InitTakeover (void);
 #define EXTERN extern
 #endif
 
-EXTERN void PrepareScaledSurface(int);
 EXTERN void Lock_SDL_Screen(void);
 EXTERN void Unlock_SDL_Screen(void);
-EXTERN void Update_SDL_Screen(void);
-EXTERN Uint32 getpixel(SDL_Surface *surface, int x, int y);
-EXTERN void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
 
-EXTERN int vga_setflipchar(int c);
 EXTERN int vga_flip(void);
 EXTERN int vga_getxdim(void);
 EXTERN int vga_getydim(void);
