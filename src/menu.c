@@ -123,6 +123,7 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char*
   static int MenuPosition = 1;
   int NumberOfOptionsGiven;
   int first_menu_item_pos_y;
+  SDL_Rect HighlightRect;
 
   //--------------------
   // At first we hide the mouse cursor, so that there can not be any
@@ -176,12 +177,20 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char*
       // We highlight the currently selected option with an 
       // influencer to the left and right of it.
       //
+      /*
       PutInfluence( ( SCREEN_WIDTH - TextWidth ( MenuTexts [ MenuPosition - 1 ] ) ) / 2 - Block_Width/3 , 
 		    first_menu_item_pos_y +
 		    ( MenuPosition - 0.5 ) * h , 0 );
       PutInfluence( ( SCREEN_WIDTH + TextWidth ( MenuTexts [ MenuPosition - 1 ] ) ) / 2 + Block_Width/3 , 
 		    first_menu_item_pos_y +
 		    ( MenuPosition - 0.5 ) * h , 0 );
+      */
+      HighlightRect.x = ( SCREEN_WIDTH - TextWidth ( MenuTexts [ MenuPosition - 1 ] ) ) / 2 - h ;
+      HighlightRect.y = first_menu_item_pos_y + ( MenuPosition - 1 ) * h ;
+      HighlightRect.w = TextWidth ( MenuTexts [ MenuPosition - 1 ] ) + 2 * h ;
+      HighlightRect.h = h;		    
+      HighlightRectangle ( Screen , HighlightRect );
+
 
       for ( i = 0 ; i < 10 ; i ++ )
 	{

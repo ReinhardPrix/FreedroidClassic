@@ -138,6 +138,7 @@ GetGreenComponent ( SDL_Surface* surface , int x , int y )
   SDL_PixelFormat *fmt;
   Uint32 temp, pixel;
   Uint8 green;
+  int bpp = surface->format->BytesPerPixel;
 
   //--------------------
   // First we extract the pixel itself and the
@@ -146,7 +147,14 @@ GetGreenComponent ( SDL_Surface* surface , int x , int y )
   fmt = surface -> format ;
   SDL_LockSurface ( surface ) ;
   // pixel = * ( ( Uint32* ) surface -> pixels ) ;
-  pixel = * ( ( ( Uint32* ) surface -> pixels ) + x + y * surface->w )  ;
+  //
+  //--------------------
+  // Now for the longest time we had this command here (which can actually segfault!!)
+  //
+  // pixel = * ( ( ( Uint32* ) surface -> pixels ) + x + y * surface->w )  ;
+  // 
+  pixel = * ( ( Uint32* ) ( ( (Uint8*) ( surface -> pixels ) ) + ( x + y * surface->w ) * bpp ) ) ;
+
   SDL_UnlockSurface ( surface ) ;
 
   //--------------------
@@ -171,6 +179,7 @@ GetRedComponent ( SDL_Surface* surface , int x , int y )
   SDL_PixelFormat *fmt;
   Uint32 temp, pixel;
   Uint8 red;
+  int bpp = surface->format->BytesPerPixel;
 
   //--------------------
   // First we extract the pixel itself and the
@@ -179,7 +188,12 @@ GetRedComponent ( SDL_Surface* surface , int x , int y )
   fmt = surface -> format ;
   SDL_LockSurface ( surface ) ;
   // pixel = * ( ( Uint32* ) surface -> pixels ) ;
-  pixel = * ( ( ( Uint32* ) surface -> pixels ) + x + y * surface->w )  ;
+  //--------------------
+  // Now for the longest time we had this command here (which can actually segfault!!)
+  //
+  // pixel = * ( ( ( Uint32* ) surface -> pixels ) + x + y * surface->w )  ;
+  // 
+  pixel = * ( ( Uint32* ) ( ( (Uint8*) ( surface -> pixels ) ) + ( x + y * surface->w ) * bpp ) ) ;
   SDL_UnlockSurface ( surface ) ;
 
   //--------------------
@@ -204,6 +218,7 @@ GetBlueComponent ( SDL_Surface* surface , int x , int y )
   SDL_PixelFormat *fmt;
   Uint32 temp, pixel;
   Uint8 blue;
+  int bpp = surface->format->BytesPerPixel;
 
   //--------------------
   // First we extract the pixel itself and the
@@ -212,7 +227,12 @@ GetBlueComponent ( SDL_Surface* surface , int x , int y )
   fmt = surface -> format ;
   SDL_LockSurface ( surface ) ;
   // pixel = * ( ( Uint32* ) surface -> pixels ) ;
-  pixel = * ( ( ( Uint32* ) surface -> pixels ) + x + y * surface->w )  ;
+  //--------------------
+  // Now for the longest time we had this command here (which can actually segfault!!)
+  //
+  // pixel = * ( ( ( Uint32* ) surface -> pixels ) + x + y * surface->w )  ;
+  // 
+  pixel = * ( ( Uint32* ) ( ( (Uint8*) ( surface -> pixels ) ) + ( x + y * surface->w ) * bpp ) ) ;
   SDL_UnlockSurface ( surface ) ;
 
   //--------------------
@@ -237,6 +257,7 @@ GetAlphaComponent ( SDL_Surface* surface , int x , int y )
   SDL_PixelFormat *fmt;
   Uint32 temp, pixel;
   Uint8 alpha;
+  int bpp = surface->format->BytesPerPixel;
 
   //--------------------
   // First we extract the pixel itself and the
@@ -244,7 +265,12 @@ GetAlphaComponent ( SDL_Surface* surface , int x , int y )
   //
   fmt = surface -> format ;
   SDL_LockSurface ( surface ) ;
-  pixel = * ( ( ( Uint32* ) surface -> pixels ) + x + y * surface->w )  ;
+  //--------------------
+  // Now for the longest time we had this command here (which can actually segfault!!)
+  //
+  // pixel = * ( ( ( Uint32* ) surface -> pixels ) + x + y * surface->w )  ;
+  // 
+  pixel = * ( ( Uint32* ) ( ( (Uint8*) ( surface -> pixels ) ) + ( x + y * surface->w ) * bpp ) ) ;
   SDL_UnlockSurface ( surface ) ;
 
   //--------------------
@@ -1599,6 +1625,62 @@ void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
         break;
     }
 }; // void putpixel(...)
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area )
+{
+  int x , y ;
+  unsigned char red, green, blue;
+  int max;
+  float EnhancementFactor;
+
+  //--------------------
+  // Now we start to process through the whole surface and examine each
+  // pixel.
+  //
+  SDL_LockSurface ( Surface );
+
+  for ( y = Area.y ; y < Area.y+Area.h ; y ++ )
+    {
+      for ( x = Area.x ; x < Area.x+Area.w ; x ++ )
+	{
+
+	  green = GetGreenComponent ( Surface , x , y ) ;
+	  red = GetRedComponent ( Surface , x , y ) ;
+	  blue = GetBlueComponent ( Surface , x , y ) ;
+
+	  if ( green < red ) max = red; else max = green ; 
+	  if ( max < blue ) max = blue;
+
+	  /*
+	  EnhancementFactor = 254.0 / (float)max ;
+	  // EnhancementFactor = 0 ;
+	  red = (float)red * EnhancementFactor ;
+	  green = (float)green * EnhancementFactor ;
+	  blue = (float)blue * EnhancementFactor ;
+	  */
+	  EnhancementFactor = 90;
+	  
+	  if ( red < 255 - EnhancementFactor ) red += EnhancementFactor ;
+	  else red = 255;
+	  if ( green < 255 - EnhancementFactor ) green += EnhancementFactor ;
+	  else green = 255;
+	  if ( blue < 255 - EnhancementFactor ) blue += EnhancementFactor ;
+	  else green = 255;
+
+	  putpixel ( Surface , x , y , 
+		     SDL_MapRGB ( Surface -> format , red , green , blue ) ) ;
+
+	}
+    }
+
+  SDL_UnlockSurface ( Surface );
+
+}; // void HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area )
 
 
 #undef _graphics_c

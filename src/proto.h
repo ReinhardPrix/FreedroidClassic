@@ -164,6 +164,7 @@ EXTERN void LevelGrauFaerben (void);
 EXTERN void ClearGraphMem ( void );
 EXTERN Uint32 getpixel(SDL_Surface *surface, int x, int y);
 EXTERN void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
+EXTERN void HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area );
 
 // saveloadgame.c 
 #undef EXTERN
