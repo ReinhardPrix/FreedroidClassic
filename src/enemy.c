@@ -496,13 +496,6 @@ RawEnemyApproachPosition ( Enemy ThisRobot , finepoint nextwp_pos )
   //
   // if ( ThisRobot -> paralysation_duration_left != 0 ) return;
 
-  /*
-  if ( ThisRobot -> frozen == 0 )
-    maxspeed = ItemMap[ Druidmap[ ThisRobot->type ].drive_item.type ].item_drive_maxspeed;
-  else 
-    maxspeed = 0.2 * ItemMap[ Druidmap[ ThisRobot->type ].drive_item.type ].item_drive_maxspeed;
-  */
-
   if ( ThisRobot -> frozen == 0 )
     maxspeed = Druidmap [ ThisRobot -> type ] . maxspeed;
   else 
@@ -1350,12 +1343,19 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
   // wait for as long as is usual for this weapon type until making the next shot
   ThisRobot->firewait = ItemMap [ Druidmap[ThisRobot->type].weapon_item.type ].item_gun_recharging_time ;
   
-  
+
+  //--------------------
+  // Maybe this robot doesn't really generate any bullets, but rather the
+  // attack is built into the droid animation itself.  Then of course we
+  // can delete the bullet that might have been created and just apply some
+  // damage to the Tux if the Tux was sufficiently close
+  //
   if ( ( phases_in_enemy_animation [ ThisRobot -> type ] > 1 ) && ( ThisRobot -> animation_phase == 0 ) )
     {
       ThisRobot -> animation_phase = 0.1 ;
       DeleteBullet ( bullet_index , FALSE );
       ThisRobot -> current_angle = - ( - 90 + 180 * atan2 ( ydist ,  xdist ) / M_PI );  
+      Me [ 0 ] . energy -= 10 ;
     }
 
 }; // void RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )

@@ -1426,7 +1426,7 @@ PutMouseMoveCursor ( void )
 void
 iso_put_tux_part ( char* part_string , int x , int y , int player_num , int rotation_index )
 {
-#define ALL_TUX_PARTS 11
+#define ALL_TUX_PARTS 12
 #define ALL_TUX_MOTION_CLASSES 2
   static iso_image tmp [ ALL_TUX_MOTION_CLASSES ] [ ALL_TUX_PARTS ] [ TUX_TOTAL_PHASES ] [ MAX_TUX_DIRECTIONS ] ;
   static int first_call = TRUE;
@@ -1514,6 +1514,10 @@ Empty part string received!",
     {
       part_index = 10 ;
     }
+  else if ( ! strcmp ( part_string , "iron_pipe" ) )
+    {
+      part_index = 11 ;
+    }
   else
     {
       fprintf ( stderr , "Part string: %s " , part_string );
@@ -1543,7 +1547,7 @@ Resolving part string to index failed!",
   // phase any more for all tux parts now that we've introduced a walk cycle.
   //
   our_phase = (int) Me [ player_num ] . phase ;
-  if ( ( part_index == 8 ) || ( part_index == 2 ) )
+  if ( ( ( part_index == 8 ) || ( part_index == 9 ) || ( part_index == 3 ) || ( part_index == 5 ) || ( part_index == 4 ) || ( part_index == 2 ) || ( part_index == 1 ) || ( part_index == 7 ) ) && ( Me [ player_num ] . weapon_swing_time < 0 ) )
     {
       our_phase = (int) Me [ player_num ] . walk_cycle_phase ;
 
@@ -1568,7 +1572,7 @@ Suspicious phase encountered!",
 				 PLEASE_INFORM, IS_FATAL );
     }
 
-  if ( ( part_index != 8 ) && ( part_index != 2 ) && ( our_phase >= TUX_SWING_PHASES + TUX_BREATHE_PHASES + TUX_GOT_HIT_PHASES ) )
+  if ( ( ( part_index == 0 ) || ( part_index == 6 ) || ( part_index == 10 ) ) && ( our_phase >= TUX_SWING_PHASES + TUX_BREATHE_PHASES + TUX_GOT_HIT_PHASES ) )
     {
       fprintf ( stderr , "Suspicious phase encountered: %d " , our_phase );
       GiveStandardErrorMessage ( "iso_put_tux(...)" , "\
@@ -1700,7 +1704,7 @@ void
 iso_put_all_tux_parts_for_sword_motion ( int x , int y , int player_num , int rotation_index )
 {
 
-  // DebugPrintf ( 0 , "\nDirection given: %d." , rotation_index );
+  DebugPrintf ( 0 , "\nDirection given: %d." , rotation_index );
   // DebugPrintf ( 0 , "\nphase: %d." , (int) Me [ player_num ] . phase );
 
   switch ( rotation_index )
@@ -1714,11 +1718,11 @@ iso_put_all_tux_parts_for_sword_motion ( int x , int y , int player_num , int ro
       iso_put_tux_weapon ( x , y , player_num , rotation_index );
       break;
     case 8:
+      iso_put_tux_weapon ( x , y , player_num , rotation_index );
       iso_put_tux_feet ( x , y , player_num , rotation_index );
       iso_put_tux_torso ( x , y , player_num , rotation_index );
       iso_put_tux_part ( "weaponarm" , x , y , player_num , rotation_index );
       iso_put_tux_shieldarm ( x , y , player_num , rotation_index );
-      iso_put_tux_weapon ( x , y , player_num , rotation_index );
       iso_put_tux_head ( x , y , player_num , rotation_index );
       break;
 

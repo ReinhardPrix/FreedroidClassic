@@ -634,6 +634,7 @@ ShowCurrentTextWindow ( void )
   char* LongTextPointer;
   int InterLineDistance;
   int StringLength;
+  int obst_index;
 
 #define REQUIREMENTS_NOT_MET_TEXT "REQUIREMENTS NOT MET"
 
@@ -765,7 +766,11 @@ ShowCurrentTextWindow ( void )
 							       (float) ServerThinksInputAxisY ( 0 ) , FALSE ) ;
 
 
-
+      //--------------------
+      // We find out if maybe the cursor in the user rect is hovering right over an item.
+      // In this case we give the item description in the top status display, as far as
+      // the item is known.
+      //
       for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i++ )
 	{
 	  if ( CurLevel->ItemList[ i ].type == (-1) ) continue;
@@ -777,6 +782,37 @@ ShowCurrentTextWindow ( void )
 	      // strcpy( ItemDescText , ItemMap[ CurLevel->ItemList[ i ].type ].item_name );
 	    }
 	}
+
+      //--------------------
+      // Maybe the cursor in the user rect is hovering right over a closed chest.
+      // In this case we say so in the top status banner.
+      //
+      for ( i = 0 ; i < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; i++ )
+	{
+	  if ( ( ( (int) MapPositionOfMouse . x ) < 0 ) ||
+	       ( ( (int) MapPositionOfMouse . y ) < 0 ) ||
+	       ( ( (int) MapPositionOfMouse . x ) >= CurLevel -> xlen ) ||
+	       ( ( (int) MapPositionOfMouse . y ) >= CurLevel -> ylen ) ) break;
+
+	  obst_index = CurLevel -> map [ (int) MapPositionOfMouse . y ] [ (int) MapPositionOfMouse . x ] . obstacles_glued_to_here [ i ] ;
+
+	  if ( obst_index == (-1) ) continue;
+
+	  switch ( CurLevel -> obstacle_list [ obst_index ] . type )
+	    {
+	    case ISO_H_CHEST_CLOSED:
+	    case ISO_V_CHEST_CLOSED:
+	      // DebugPrintf ( 0 , "\nBANNER: Cursor is now on closed chest!!!" );
+	      strcpy ( ItemDescText , "  C  H  E  S  T  ! ! ! " ) ;
+	      break;
+		
+	    default: 
+	      break;
+	    }
+
+	}
+
+
 
       for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i++ )
 	{

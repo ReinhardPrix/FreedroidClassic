@@ -769,13 +769,14 @@ AnimateInfluence ( int player_num )
   //
   else
     {
-      Me [ player_num ] . phase = ( TUX_BREATHE_PHASES + ( Me [ player_num ] .weapon_swing_time * TUX_SWING_PHASES * 1.0 / TOTAL_SWING_TIME ) ) ;
-      if ( Me [ player_num ] .weapon_swing_time > TOTAL_SWING_TIME ) Me [ player_num ] .weapon_swing_time = (-1) ;
-      if (((int) (Me [ player_num ] .phase)) >= TUX_SWING_PHASES + TUX_BREATHE_PHASES )
+      Me [ player_num ] . phase = ( TUX_BREATHE_PHASES + ( Me [ player_num ] . weapon_swing_time * TUX_SWING_PHASES * 1.0 / TOTAL_SWING_TIME ) ) ;
+      if ( Me [ player_num ] . weapon_swing_time > TOTAL_SWING_TIME ) Me [ player_num ] . weapon_swing_time = (-1) ;
+      if ( ( (int) Me [ player_num ] . phase ) > TUX_SWING_PHASES + TUX_BREATHE_PHASES )
 	{
 	  Me [ player_num ] .phase = 0;
 	}
       Me [ player_num ] . walk_cycle_phase = 17 ;
+      DebugPrintf ( 0 , "\nphase = %d. " , (int) Me [ player_num ] . phase );
     }
 
   
