@@ -1157,7 +1157,8 @@ RefreshInfluencer (void)
   if (timecounter == 0)
     timecounter = 3;
 
-  if (Me.energy < Me.health)
+  // if (Me.energy < Me.health)
+  if ( Me.energy < Druidmap [ Me.type ].maxenergy )
     {
       Me.energy += REFRESH_ENERGY * Frame_Time () * 5;
       RealScore -= REFRESH_ENERGY * Frame_Time () * 10;

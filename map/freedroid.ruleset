@@ -1151,6 +1151,7 @@ Maximum speed of this droid: 5.1
 Class of this droid: 0
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
 Rate of energyloss under influence control: 0.0
 Weapon type this droid uses: 0
 Aggression rate of this droid: 0
@@ -1184,6 +1185,7 @@ Maximum speed of this droid: 2.1
 Class of this droid: 1
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 20.1
+Maximum mana of this droid: 20.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 0
@@ -1217,6 +1219,7 @@ Maximum speed of this droid: 2.1
 Class of this droid: 1
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 20.1
+Maximum mana of this droid: 20.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 0
@@ -1250,6 +1253,7 @@ Maximum speed of this droid: 4.1
 Class of this droid: 2
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 20.1
+Maximum mana of this droid: 20.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 0
@@ -1283,6 +1287,7 @@ Maximum speed of this droid: 3.1
 Class of this droid: 2
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 40.1
+Maximum mana of this droid: 40.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 0
@@ -1316,6 +1321,7 @@ Maximum speed of this droid: 2.1
 Class of this droid: 2
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 40.1
+Maximum mana of this droid: 40.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 0
@@ -1349,6 +1355,7 @@ Maximum speed of this droid: 7.1
 Class of this droid: 3
 Maximum acceleration of this droid: 2.1
 Maximum energy of this droid: 40.1
+Maximum mana of this droid: 40.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 0
@@ -1382,6 +1389,7 @@ Maximum speed of this droid: 1.1
 Class of this droid: 3
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 40.1
+Maximum mana of this droid: 40.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 0
@@ -1415,6 +1423,7 @@ Maximum speed of this droid: 2.1
 Class of this droid: 4
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 60.1
+Maximum mana of this droid: 60.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 0
@@ -1448,6 +1457,7 @@ Maximum speed of this droid: 4.1
 Class of this droid: 4
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 70.1
+Maximum mana of this droid: 70.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 1
 Aggression rate of this droid: 25
@@ -1481,6 +1491,7 @@ Maximum speed of this droid: 4.1
 Class of this droid: 4
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 80.1
+Maximum mana of this droid: 80.1
 Rate of energyloss under influence control: 3.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 0
@@ -1514,6 +1525,7 @@ Maximum speed of this droid: 3.1
 Class of this droid: 5
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 80.1
+Maximum mana of this droid: 80.1
 Rate of energyloss under influence control: 3.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 0
@@ -1547,6 +1559,7 @@ Maximum speed of this droid: 4.1
 Class of this droid: 5
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 80.1
+Maximum mana of this droid: 80.1
 Rate of energyloss under influence control: 3.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 0
@@ -1580,6 +1593,7 @@ Maximum speed of this droid: 3.1
 Class of this droid: 5
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 80.1
+Maximum mana of this droid: 80.1
 Rate of energyloss under influence control: 3.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 0
@@ -1613,6 +1627,7 @@ Maximum speed of this droid: 3.1
 Class of this droid: 6
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
 Rate of energyloss under influence control: 3.1
 Weapon type this droid uses: 5
 Aggression rate of this droid: 30
@@ -1646,6 +1661,7 @@ Maximum speed of this droid: 4.1
 Class of this droid: 6
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
 Rate of energyloss under influence control: 3.1
 Weapon type this droid uses: 1
 Aggression rate of this droid: 30
@@ -1679,6 +1695,7 @@ Maximum speed of this droid: 2.1
 Class of this droid: 6
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
 Rate of energyloss under influence control: 3.1
 Weapon type this droid uses: 2
 Aggression rate of this droid: 40
@@ -1712,6 +1729,7 @@ Maximum speed of this droid: 5.1
 Class of this droid: 7
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 110.1
+Maximum mana of this droid: 110.1
 Rate of energyloss under influence control: 4.1
 Weapon type this droid uses: 3
 Aggression rate of this droid: 60
@@ -1745,6 +1763,7 @@ Maximum speed of this droid: 4.1
 Class of this droid: 7
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 130.1
+Maximum mana of this droid: 130.1
 Rate of energyloss under influence control: 4.1
 Weapon type this droid uses: 3
 Aggression rate of this droid: 60
@@ -1778,6 +1797,7 @@ Maximum speed of this droid: 5.1
 Class of this droid: 7
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 150.1
+Maximum mana of this droid: 150.1
 Rate of energyloss under influence control: 4.1
 Weapon type this droid uses: 1
 Aggression rate of this droid: 80
@@ -1811,6 +1831,7 @@ Maximum speed of this droid: 6.1
 Class of this droid: 8
 Maximum acceleration of this droid: 2.1
 Maximum energy of this droid: 160.1
+Maximum mana of this droid: 160.1
 Rate of energyloss under influence control: 4.1
 Weapon type this droid uses: 2
 Aggression rate of this droid: 65
@@ -1844,6 +1865,7 @@ Maximum speed of this droid: 7.1
 Class of this droid: 8
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 140.1
+Maximum mana of this droid: 140.1
 Rate of energyloss under influence control: 4.1
 Weapon type this droid uses: 1
 Aggression rate of this droid: 55
@@ -1877,6 +1899,7 @@ Maximum speed of this droid: 2.1
 Class of this droid: 8
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 180.1
+Maximum mana of this droid: 180.1
 Rate of energyloss under influence control: 4.1
 Weapon type this droid uses: 4
 Aggression rate of this droid: 90
@@ -1910,6 +1933,7 @@ Maximum speed of this droid: 6.1
 Class of this droid: 9
 Maximum acceleration of this droid: 2.1
 Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
 Rate of energyloss under influence control: 15.1
 Weapon type this droid uses: 2
 Aggression rate of this droid: 90
@@ -1943,6 +1967,7 @@ Maximum speed of this droid: 2.1
 Class of this droid: 1
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 10.1
+Maximum mana of this droid: 10.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 60
@@ -1976,6 +2001,7 @@ Maximum speed of this droid: 2.1
 Class of this droid: 1
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 10.1
+Maximum mana of this droid: 10.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 65
@@ -2009,6 +2035,7 @@ Maximum speed of this droid: 6.1
 Class of this droid: 9
 Maximum acceleration of this droid: 2.1
 Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
 Rate of energyloss under influence control: 15.1
 Weapon type this droid uses: 2
 Aggression rate of this droid: 60
@@ -2042,6 +2069,7 @@ Maximum speed of this droid: 6.1
 Class of this droid: 9
 Maximum acceleration of this droid: 2.1
 Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
 Rate of energyloss under influence control: 15.1
 Weapon type this droid uses: 2
 Aggression rate of this droid: 60
@@ -2075,6 +2103,7 @@ Maximum speed of this droid: 6.1
 Class of this droid: 9
 Maximum acceleration of this droid: 2.1
 Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
 Rate of energyloss under influence control: 15.1
 Weapon type this droid uses: 2
 Aggression rate of this droid: 60
@@ -2108,6 +2137,7 @@ Maximum speed of this droid: 6.1
 Class of this droid: 9
 Maximum acceleration of this droid: 2.1
 Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
 Rate of energyloss under influence control: 15.1
 Weapon type this droid uses: 2
 Aggression rate of this droid: 60
@@ -2141,6 +2171,7 @@ Maximum speed of this droid: 6.1
 Class of this droid: 9
 Maximum acceleration of this droid: 2.1
 Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
 Rate of energyloss under influence control: 15.1
 Weapon type this droid uses: 2
 Aggression rate of this droid: 60
@@ -2174,6 +2205,7 @@ Maximum speed of this droid: 6.1
 Class of this droid: 9
 Maximum acceleration of this droid: 2.1
 Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
 Rate of energyloss under influence control: 15.1
 Weapon type this droid uses: 2
 Aggression rate of this droid: 60
@@ -2207,6 +2239,7 @@ Maximum speed of this droid: 6.1
 Class of this droid: 9
 Maximum acceleration of this droid: 2.1
 Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
 Rate of energyloss under influence control: 15.1
 Weapon type this droid uses: 2
 Aggression rate of this droid: 60
@@ -2240,6 +2273,7 @@ Maximum speed of this droid: 6.1
 Class of this droid: 9
 Maximum acceleration of this droid: 2.1
 Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
 Rate of energyloss under influence control: 15.1
 Weapon type this droid uses: 2
 Aggression rate of this droid: 60
@@ -2273,6 +2307,7 @@ Maximum speed of this droid: 6.1
 Class of this droid: 9
 Maximum acceleration of this droid: 2.1
 Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
 Rate of energyloss under influence control: 15.1
 Weapon type this droid uses: 2
 Aggression rate of this droid: 60
@@ -2306,6 +2341,7 @@ Maximum speed of this droid: 6.1
 Class of this droid: 9
 Maximum acceleration of this droid: 2.1
 Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
 Rate of energyloss under influence control: 15.1
 Weapon type this droid uses: 2
 Aggression rate of this droid: 60
@@ -2339,6 +2375,7 @@ Maximum speed of this droid: 6.1
 Class of this droid: 9
 Maximum acceleration of this droid: 2.1
 Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
 Rate of energyloss under influence control: 15.1
 Weapon type this droid uses: 2
 Aggression rate of this droid: 60

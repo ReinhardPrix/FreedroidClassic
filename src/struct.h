@@ -287,6 +287,7 @@ typedef struct
   char *portrait_filename_without_ext;
   int class;
   double maxenergy;		/* the maximum energy the batteries can carry */
+  double maxmana;		/* the maximum force this droids mind can carry */
   double lose_health;		/* the energy/time the duid loses under influence-control */
   int aggression;		/* The aggressiveness of this druidtype */
   int flashimmune;		/* is the droid immune to FLASH-bullets */

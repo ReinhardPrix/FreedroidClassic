@@ -854,6 +854,7 @@ Get_Robot_Data ( void* DataPointer )
 #define CLASS_BEGIN_STRING "Class of this droid: "
 #define ACCELERATION_BEGIN_STRING "Maximum acceleration of this droid: "
 #define MAXENERGY_BEGIN_STRING "Maximum energy of this droid: "
+#define MAXMANA_BEGIN_STRING "Maximum mana of this droid: "
 #define LOSEHEALTH_BEGIN_STRING "Rate of energyloss under influence control: "
 #define GUN_BEGIN_STRING "Weapon type this droid uses: "
 #define AGGRESSION_BEGIN_STRING "Aggression rate of this droid: "
@@ -961,6 +962,10 @@ Get_Robot_Data ( void* DataPointer )
       // Now we read in the maximal energy this droid can store. 
       ReadValueFromString( RobotPointer , MAXENERGY_BEGIN_STRING , "%lf" , 
 			   &Druidmap[RobotIndex].maxenergy , EndOfDataPointer );
+
+      // Now we read in the maximal mana this droid can store. 
+      ReadValueFromString( RobotPointer , MAXMANA_BEGIN_STRING , "%lf" , 
+			   &Druidmap[RobotIndex].maxmana , EndOfDataPointer );
 
       // Now we read in the lose_health rate.
       ReadValueFromString( RobotPointer , LOSEHEALTH_BEGIN_STRING , "%lf" , 
@@ -1729,7 +1734,7 @@ InitNewMissionList ( char *MissionName )
   Me.speed.x = 0;
   Me.speed.y = 0;
   Me.energy = Druidmap[DRUID001].maxenergy;
-  Me.mana = Druidmap[DRUID001].maxenergy;
+  Me.mana = Druidmap[DRUID001].maxmana;
   printf("\n Me.energy : %f . " , Me.energy );
   Me.health = Me.energy;	/* start with max. health */
   Me.autofire = FALSE;
