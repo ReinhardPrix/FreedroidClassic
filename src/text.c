@@ -204,7 +204,15 @@ the things soul may finally rest.\n\
       Switch_Background_Music_To ( "../speeches/Sorenson01.ogg" );
       ScrollText ( Sorenson_Text , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NULL );
       Switch_Background_Music_To ( CurLevel->Background_Song_Name );
+
+      //--------------------
+      // Now that the SOR has made his first speech, the tux will be
+      // assigned the (second and third) mission.
+      //
+      AssignMission ( 2 );
+      AssignMission ( 1 );
       return;
+
     }
 
   if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "RMS" ) == 0 )
@@ -215,9 +223,9 @@ the things soul may finally rest.\n\
 
       //--------------------
       // Now that the RMS has made his first speech, the tux will be
-      // assigned the (third) mission.
+      // assigned the (fourth) mission.
       //
-      AssignMission ( 2 );
+      AssignMission ( 3 );
       return;
     }
 

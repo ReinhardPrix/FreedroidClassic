@@ -114,6 +114,10 @@
 #define ITEM_START_PLUGIN_SNIPER 51
 #define ITEM_START_PLUGIN_HACKER 52
 
+// This is a special item for a mission....
+#define ITEM_ENERGETIC_HEART 4
+#define ITEM_ULTIMATE_COFFEE_MACHINE 57
+
 #define SKILL_TAKEOVER 0
 
 #define WAR_BOT 1

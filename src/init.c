@@ -1321,6 +1321,7 @@ Get_Mission_Targets( char* MissionTargetPointer )
 #define MISSION_TARGET_NAME_INITIALIZER "Mission Name=\""
 
 #define MISSION_AUTOMATICALLY_ASSIGN_STRING "Assign this mission to influencer automatically at start : "
+#define MISSION_TARGET_FETCH_ITEM_STRING "Mission target is to fetch item : "
 #define MISSION_TARGET_KILL_ALL_STRING "Mission target is to kill all droids : "
 #define MISSION_TARGET_KILL_CLASS_STRING "Mission target is to kill class of droids : "
 #define MISSION_TARGET_KILL_ONE_STRING "Mission target is to kill droids with marker : "
@@ -1380,6 +1381,9 @@ Get_Mission_Targets( char* MissionTargetPointer )
       // From here on we read the details of the mission target, i.e. what the
       // influencer has to do, so that the mission can be thought of as completed
       //
+      ReadValueFromString( MissionTargetPointer , MISSION_TARGET_FETCH_ITEM_STRING , "%d" , 
+			   &Me[0].AllMissions[ MissionTargetIndex ].fetch_item , EndOfMissionTargetPointer );
+
       ReadValueFromString( MissionTargetPointer , MISSION_TARGET_KILL_ALL_STRING , "%d" , 
 			   &Me[0].AllMissions[ MissionTargetIndex ].KillAll , EndOfMissionTargetPointer );
 
@@ -2174,6 +2178,7 @@ void
 CheckIfMissionIsComplete (void)
 {
   int Robot_Counter;
+  int ItemCounter;
   int MissNum;
   int ActionNum;
   static int CheckMissionGrid; 
@@ -2228,6 +2233,23 @@ CheckIfMissionIsComplete (void)
 		  goto CheckNextMission;
 		}
 	    }
+	}
+
+      //--------------------
+      // Continue if the Mission target fetch_item is given but not fullfilled
+      //
+      if ( Me[0].AllMissions[ MissNum ].fetch_item != (-1) )
+	{
+
+	  for ( ItemCounter = 0 ; ItemCounter < MAX_ITEMS_IN_INVENTORY ; ItemCounter++ )
+	    {
+	      if ( Me [ 0 ] . Inventory [ ItemCounter ] . type == Me[0].AllMissions[ MissNum ].fetch_item )
+		{
+		  DebugPrintf ( MIS_COMPLETE_DEBUG , "\nDesired item IS PRESENT!!");
+		  break;
+		}
+	    }
+	  if ( ItemCounter >= MAX_ITEMS_IN_INVENTORY ) goto CheckNextMission;
 	}
 
       //--------------------

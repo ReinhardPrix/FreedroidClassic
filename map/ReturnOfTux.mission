@@ -105,6 +105,7 @@ Possible Start Point : Level=0 XPos=2 YPos=3
 
 Mission Name="Clean Goods Storage"
 Assign this mission to influencer automatically at start : 0
+Mission target is to fetch item : -1
 Mission target is to kill all droids : -1
 Mission target is to kill class of droids : -1
 Mission target is to kill droids with marker : 1
@@ -124,16 +125,14 @@ On mission completition immediately trigger action labeled="wow_done_mission_zer
 ** End of this mission target subsection **
 
 ** Start of this mission target subsection **
-
 +++
-+++ This is the second mission, which consists of removing the 751
-+++ droids on the quarter deck and freeing the scientists there.
++++ This is the second mission:  Fetch ultimate coffee pot...
 +++
-
-Mission Name="Clean Quarters Deck"
+Mission Name="Fetch THE ultimate Coffee machine"
 Assign this mission to influencer automatically at start : 0
+Mission target is to fetch item : 57
 Mission target is to kill all droids : -1
-Mission target is to kill class of droids : 7
+Mission target is to kill class of droids : -1
 Mission target is to kill droids with marker : -1
 Mission target is to become class : -1
 Mission target is to become type : -1
@@ -152,6 +151,7 @@ Mission target is to live for how many seconds : -1
 +++
 Mission Name="Clean Dark Apprentice (DAP)"
 Assign this mission to influencer automatically at start : 0
+Mission target is to fetch item : -1
 Mission target is to kill all droids : -1
 Mission target is to kill class of droids : -1
 Mission target is to kill droids with marker : 101
@@ -166,16 +166,13 @@ Mission target is to live for how many seconds : -1
 ** End of this mission target subsection **
 
 ** Start of this mission target subsection **
-
 +++
-+++ This is the third mission, which consists of removing the 821
-+++ security droids and the saboteur 420 mechanics droid who is
-+++ trying to crash the reactor
++++ This is the fourth mission:  Fetch energetic heart...
 +++
-
-Mission Name="Restabilize Reactor Plant"
+Mission Name="Fetch Droid Energetic Heart"
 Assign this mission to influencer automatically at start : 0
-Mission target is to kill all droids : 1
+Mission target is to fetch item : 4
+Mission target is to kill all droids : -1
 Mission target is to kill class of droids : -1
 Mission target is to kill droids with marker : -1
 Mission target is to become class : -1
@@ -185,7 +182,6 @@ Mission target is to reach level : -1
 Mission target is to reach X-Pos : -1
 Mission target is to reach Y-Pos : -1
 Mission target is to live for how many seconds : -1
-
 ** End of this mission target subsection **
 
 **********************************************************************

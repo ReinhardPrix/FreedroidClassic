@@ -166,6 +166,7 @@ typedef struct
   int AutomaticallyAssignThisMissionAtGameStart; // well...
   // float MissionLastStatusChangeTime; // for how long is the mission now closed?
 
+  int fetch_item;
   int KillAll;
   int KillClass;
   int KillOne;
