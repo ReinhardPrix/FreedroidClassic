@@ -1,4 +1,4 @@
-SUBDIRS = src 
+SUBDIRS = src croppy 
 
 man_MANS = freedroidRPG.6
 
