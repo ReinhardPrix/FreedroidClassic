@@ -45,7 +45,6 @@ SDL_Rect Full_User_Rect = {0, BANNER_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT-BANNER_
 
 SDL_Rect Cons_Rect = {16, 162, 595, 315};
 
-SDL_Rect Cons_Menu_Rect = {32, 180, CONS_MENU_LENGTH, CONS_MENU_HEIGHT};
 SDL_Rect Cons_Text_Rect = {175, 180, SCREEN_WIDTH-175, 305}; 
 
 /*
@@ -159,8 +158,8 @@ obstacle_spec obstacle_map [ NUMBER_OF_OBSTACLE_TYPES ] =
     { { NULL , 0 , 0 , NULL } , COLLISION_TYPE_RECTANGLE , 1.2 , 0.25 , 0 , 0 , 0 , 0 , FALSE , FALSE , FALSE , "iso_obstacle_0056.png" },
     { { NULL , 0 , 0 , NULL } , COLLISION_TYPE_RECTANGLE , 1.2 , 0.25 , 0 , 0 , 0 , 0 , FALSE , FALSE , FALSE , "iso_obstacle_0057.png" },
     { { NULL , 0 , 0 , NULL } , COLLISION_TYPE_RECTANGLE , 1.2 , 0.25 , 0 , 0 , 0 , 0 , FALSE , FALSE , FALSE , "iso_obstacle_0058.png" },
-    { { NULL , 0 , 0 , NULL } , COLLISION_TYPE_RECTANGLE , 1.2 , 0.25 , 0 , 0 , 0 , 0 , FALSE , FALSE , FALSE , "iso_obstacle_0059.png" },
-    { { NULL , 0 , 0 , NULL } , COLLISION_TYPE_RECTANGLE , 1.2 , 0.25 , 0 , 0 , 0 , 0 , FALSE , FALSE , FALSE , "iso_obstacle_0060.png" },
+    { { NULL , 0 , 0 , NULL } , COLLISION_TYPE_RECTANGLE , 1.2 , 0.25 , 0 , 0 , 0 , 0 , FALSE , FALSE , FALSE , "iso_fence_0001.png" },
+    { { NULL , 0 , 0 , NULL } , COLLISION_TYPE_RECTANGLE , 1.2 , 0.25 , 0 , 0 , 0 , 0 , FALSE , FALSE , FALSE , "iso_fence_0002.png" },
     { { NULL , 0 , 0 , NULL } , COLLISION_TYPE_RECTANGLE , 1.2 , 0.25 , 0 , 0 , 0 , 0 , FALSE , FALSE , FALSE , "iso_obstacle_0061.png" },
     { { NULL , 0 , 0 , NULL } , COLLISION_TYPE_RECTANGLE , 1.2 , 0.25 , 0 , 0 , 0 , 0 , FALSE , FALSE , FALSE , "iso_obstacle_0062.png" },
     { { NULL , 0 , 0 , NULL } , COLLISION_TYPE_RECTANGLE , 1.2 , 0.25 , 0 , 0 , 0 , 0 , FALSE , FALSE , FALSE , "iso_obstacle_0063.png" },
