@@ -248,6 +248,8 @@ SetCombatScaleTo(float ResizeFactor)
   int i, j;
   SDL_Surface *tmp;
 
+  return;
+
   CenteredPutString   ( ne_screen ,  User_Rect.y+User_Rect.h-FontHeight(Menu_BFont), "Rescaling...");
 
   // just to be sure, reset the size of the graphics
@@ -819,6 +821,12 @@ InitPictures (void)
    * and now read in the blocks from various files into ne_blocks
    * and initialise the block-coordinates 
    */
+
+  /*
+  fpath =  find_file (NE_MAP_BLOCK_FILE, GRAPHICS_DIR, TRUE);
+  ne_map_block =
+    ne_get_blocks (fpath , NUM_MAP_BLOCKS, 9, 0, block_line++);
+  */
 
   if ( CurLevel == NULL )
     {
