@@ -22,11 +22,6 @@ Outstanding release-critical bugs (priority: high)
 
 - implement the 'Alert' feature of the original version
 
-- add "white noise" sound to the ThouArtDefeated() ceremony
-
-- acoustic "countdown" in takeover game might be useful!
-  --> implemented now, but need better sounds and allow turning it off...
-
 - adapt LevelEditor to new waypoint/connections scheme
   
 - load all droid pics at startup, to avoid delays in DroidShow
@@ -34,8 +29,6 @@ Outstanding release-critical bugs (priority: high)
 
 - playtest on a _really_ slow machine...
 
-- reactivate modifier keys
-           
 Outstanding normal bugs (priority: normal)
 ------------------------------------------
 
@@ -325,3 +318,11 @@ Resolved bugs
 - force "release key" instead of waiting for it
   (is it worth it?) -> I think so!
   (done)
+
+- reactivate modifier keys
+  (fixed that bug!)
+
+- add "white noise" sound to the ThouArtDefeated() ceremony
+  (done!)
+- acoustic "countdown" in takeover game might be useful!
+  --> (done)
