@@ -1599,45 +1599,6 @@ ActSpecialField ( int PlayerNum )
 
   switch (MapBrick)
     {
-    case CONSOLE_R:
-    case CONSOLE_L:
-    case CONSOLE_U:
-    case CONSOLE_D:
-      if ( ( Me [ 0 ] . status == TRANSFERMODE ) &&
-	   ( PlayerNum == 0 ) &&
-	   ( ! ServerMode ) )
-	{
-	  EnterConsole ( ) ;
-	  DebugPrintf ( 2 , "\nvoid ActSpecialField(int x, int y):  Back from EnterConsole().\n");
-	}
-      break;
-
-      /*
-    case CODEPANEL_R:
-    case CODEPANEL_L:
-    case CODEPANEL_D:
-    case CODEPANEL_U:
-      if ( Me[0].status == TRANSFERMODE )
-	{
-	  EnterCodepanel ( );
-	  // DebugPrintf (2, "\nvoid ActSpecialField(int x, int y):  Back from EnterConsole().\n");
-	}
-      break;
-      */
-
-      /*
-    case IDENTIFY_R:
-    case IDENTIFY_L:
-    case IDENTIFY_D:
-    case IDENTIFY_U:
-      if (Me[0].status == TRANSFERMODE)
-	{
-	  EnterItemIdentificationBooth ( );
-	  // DebugPrintf (2, "\nvoid ActSpecialField(int x, int y):  Back from EnterConsole().\n");
-	}
-      break;
-      */
-
     case CONSUMER_1:
     case CONSUMER_2:
     case CONSUMER_3:

@@ -645,8 +645,39 @@ HandleCurrentlyActivatedSkill( void )
 
     case SPELL_TRANSFERMODE:
       if (MouseRightPressed() == 1)
-	Me[0].status = TRANSFERMODE;
+	{
+	  //--------------------
+	  // We switch status to transfermode
+	  Me[0].status = TRANSFERMODE;
+
+	  //--------------------
+	  // Now we check if maybe a console was near.  If that is so, then we
+	  // see how close it really is and maybe we start the console menu.
+	  //
+	  for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
+	    {
+	      switch ( ChestLevel -> obstacle_list [ i ] . type )
+		{
+		case ISO_CONSOLE_S:
+		case ISO_CONSOLE_N:
+		case ISO_CONSOLE_E:
+		case ISO_CONSOLE_W:
+		  if ( ( ( Me [ 0 ] . pos . x - ChestLevel -> obstacle_list [ i ] . pos . x ) *
+			 ( Me [ 0 ] . pos . x - ChestLevel -> obstacle_list [ i ] . pos . x ) +
+			 ( Me [ 0 ] . pos . y - ChestLevel -> obstacle_list [ i ] . pos . y ) *
+			 ( Me [ 0 ] . pos . y - ChestLevel -> obstacle_list [ i ] . pos . y ) ) < 0.4 )
+		    {
+		      EnterConsole();
+		      return;
+		    }
+		  break;
+		default:
+		  break;
+		}
+	    }
+	}
       break;
+
     case SPELL_FORCE_EXPLOSION_CIRCLE:
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	{
