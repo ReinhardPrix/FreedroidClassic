@@ -68,31 +68,46 @@ Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
 
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
-* StXXXXart of an Event Trigger Subsection *
-InflXXXXuencer must be at X=30 Y=20 Lev=2
-Use XXXXmap location from map label="NO_LABEL_DEFINED_YET"
-EvenXXXXt Action to be triggered by this trigger="teleport_to_third_combat_lv"
-DeleXXXXte the event trigger after it has been triggered=-1
-* EnXXXXd of this Event Trigger Subsection *
-
-// This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at X=33 Y=13 Lev=3
 Use map location from map label="TeleportBackToSecondCombatLevel"
-Event Action to be triggered by this trigger="teleport_back_to_second_combat_lv"
+Event Action to be triggered by this trigger="teleport_back_to_kevin_garden"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
 
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at X=11 Y=3 Lev=3
-Use map location from map label="TeleportToFourthCombatLevel"
-Event Action to be triggered by this trigger="teleport_to_fourth_combat_lv"
+Use map location from map label="EntryToKevinsUndergroundStation"
+Eve***nt Action to be triggered by this trigger="teleport_to_kevins_energy_source"
+Event Action to be triggered by this trigger="teleport_to_kevin_underground_station"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
 
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
+Influencer must be at X=11 Y=3 Lev=3
+Use map location from map label="TeleportToKevinsEnergyStation"
+Event Action to be triggered by this trigger="teleport_to_kevins_energy_source"
+Eve***nt Action to be triggered by this trigger="teleport_to_kevin_underground_station"
+Delete the event trigger after it has been triggered=-1
+* End of this Event Trigger Subsection *
+
+// This is a pure location trigger.  Copy and adapt is as you feel like it.
+* Start of an Event Trigger Subsection *
+Influencer must be at X=11 Y=3 Lev=3
+Use map location from map label="KevinEnergyExitPoint"
+Event Action to be triggered by this trigger="return_to_kevins_underground_station"
+Delete the event trigger after it has been triggered=-1
+* End of this Event Trigger Subsection *
+
+
+
+
+
+
+// This is a pure location trigger.  Copy and adapt is as you feel like it.
+* St***art of an Event Trigger Subsection *
 Influencer must be at X=31 Y=2 Lev=4
 Use map location from map label="TeleportBackToThirdCombatLevel"
 Event Action to be triggered by this trigger="teleport_back_to_third_combat_lv"
@@ -115,15 +130,6 @@ Event Action to be triggered by this trigger="teleport_back_to_fourth_combat_lv"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
 
-
-
-// This is a pure location trigger.  Copy and adapt is as you feel like it.
-* StarXXXXt of an Event Trigger Subsection *
-InflueXXXXncer must be at X=36 Y=10 Lev=2
-Use maXXXXp location from map label="NO_LABEL_DEFINED_YET"
-Event XXXXAction to be triggered by this trigger="teleport_to_telemetry_one"
-DeleteXXXX the event trigger after it has been triggered=-1
-* End XXXXof this Event Trigger Subsection *
 
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
@@ -387,41 +393,52 @@ Action is mission assignment=-1
 * End of this Event Action Subsection *
 
 * Start of an Event Action Subsection *
-Action label for this action="teleport_to_third_combat_lv"
+Action label for this action="teleport_to_kevins_underground_station"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
 Use map label for map change location="NO_LABEL_DEFINED_YET"
 Teleport to TelX=34 TelY=12 TelLev=3
-Use map label for teleport target="ArriveAtThirdCombatLevel"
+Use map label for teleport target="ArriveAtKevinsUndergroundStation"
 Action is Influencer say="This is level two.  Beware...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
 
 * Start of an Event Action Subsection *
-Action label for this action="teleport_back_to_second_combat_lv"
+Action label for this action="return_to_kevins_underground_station"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET"
+Teleport to TelX=34 TelY=12 TelLev=3
+Use map label for teleport target="ReturnToKevinUndergroundStation"
+Action is Influencer say="This is level two.  Beware...."
+Action is mission assignment=-1
+* End of this Event Action Subsection *
+
+* Start of an Event Action Subsection *
+Action label for this action="teleport_back_to_kevin_garden"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
 Use map label for map change location="NO_LABEL_DEFINED_YET"
 Teleport to TelX=29 TelY=19 TelLev=2
-Use map label for teleport target="ReturnFromThirdCombatLevel"
-Action is Influencer say="Back to level one...."
+Us***e map label for teleport target="ReturnFromThirdCombatLevel"
+Use map label for teleport target="ReturnFromKevinsUndergroundStation"
+Action is Influencer say="Back at Kevins Garden...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
 
 * Start of an Event Action Subsection *
-Action label for this action="teleport_to_fourth_combat_lv"
+Action label for this action="teleport_to_kevins_energy_source"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
 Use map label for map change location="NO_LABEL_DEFINED_YET"
 Teleport to TelX=31 TelY=1 TelLev=4
-Use map label for teleport target="ArriveAtFourthCombatLevel"
-Action is Influencer say="This is level two.  Beware...."
+Use map label for teleport target="KevinEnergyArrivalPoint"
+Action is Influencer say="There, this must be Kevins Energy Source."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
 
 * Start of an Event Action Subsection *
-Action label for this action="teleport_back_to_third_combat_lv"
+Action label for this action="teleport_to_kevin_underground_station"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
 Use map label for map change location="NO_LABEL_DEFINED_YET"
 Teleport to TelX=10 TelY=4 TelLev=3
-Use map label for teleport target="ReturnFromFourthCombatLevel"
+Use map label for teleport target="ArriveAtKevinsUndergroundStation"
 Action is Influencer say="Back to level one...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
