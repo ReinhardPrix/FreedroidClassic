@@ -299,7 +299,7 @@ TeleportHome ( void )
       Play_Spell_ForceToEnergy_Sound( );
 
       ResolveMapLabelOnShip ( "TeleportHomeTarget" , &(HomeSpot) );
-      Teleport ( HomeSpot.level , HomeSpot.x , HomeSpot.y , 0 , FALSE ) ;
+      Teleport ( HomeSpot.level , HomeSpot.x , HomeSpot.y , 0 , FALSE , TRUE ) ;
 
     }
   else

@@ -982,7 +982,7 @@ Armageddon (void)
  * ship.  THIS CAN BE A POSITION ON A DIFFERENT LEVEL.
  * ---------------------------------------------------------------------- */
 void
-Teleport (int LNum, float X, float Y, int PlayerNum , int Shuffling )
+Teleport (int LNum, float X, float Y, int PlayerNum , int Shuffling , int WithSound )
 {
   int curLevel = LNum;
   int array_num = 0;
@@ -1068,7 +1068,7 @@ This indicates an error in the map system of Freedroid.",
   Me [ PlayerNum ] . mouse_move_target . y = ( -1 ) ;
   Me [ PlayerNum ] . mouse_move_target . z = ( -1 ) ;
 
-  LeaveLiftSound ();
+  if ( WithSound ) LeaveLiftSound ();
 
   //--------------------
   // Perhaps the player is visiting this level for the first time.  Then, the
@@ -1388,7 +1388,7 @@ ExecuteEvent ( int EventNumber , int PlayerNum )
       Teleport ( AllTriggeredActions[ EventNumber ].TeleportTargetLevel ,
 		 AllTriggeredActions[ EventNumber ].TeleportTarget.x ,
 		 AllTriggeredActions[ EventNumber ].TeleportTarget.y ,
-		 PlayerNum , FALSE );
+		 PlayerNum , FALSE , TRUE );
     }
 
   // Does the defined action assign the influencer a mission?

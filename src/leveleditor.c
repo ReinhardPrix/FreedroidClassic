@@ -892,13 +892,13 @@ DoLevelEditorMainMenu ( Level EditLevel )
 	      if ( LeftPressed() )
 		{
 		  if ( EditLevel->levelnum > 0 )
-		    Teleport ( EditLevel->levelnum -1 , 3 , 3 , 0 , TRUE );
+		    Teleport ( EditLevel->levelnum -1 , 3 , 3 , 0 , TRUE , FALSE );
 		  while (LeftPressed());
 		}
 	      if ( RightPressed() )
 		{
 		  if ( EditLevel->levelnum < curShip.num_levels -1 )
-		    Teleport ( EditLevel->levelnum +1 , 3 , 3 , 0 , TRUE );
+		    Teleport ( EditLevel->levelnum +1 , 3 , 3 , 0 , TRUE , FALSE );
 		  while (RightPressed());
 		}
 	      if ( CurrentCombatScaleFactor != 1 ) SetCombatScaleTo ( CurrentCombatScaleFactor );
@@ -915,7 +915,7 @@ DoLevelEditorMainMenu ( Level EditLevel )
 		  EditLevel->color--;
 		  while (LeftPressed());
 		}
-	      Teleport ( EditLevel->levelnum , Me[0].pos.x , Me[0].pos.y , 0 , TRUE ); 
+	      Teleport ( EditLevel->levelnum , Me[0].pos.x , Me[0].pos.y , 0 , TRUE , FALSE ); 
 	      break;
 
 	    case CHANGE_SIZE_X:

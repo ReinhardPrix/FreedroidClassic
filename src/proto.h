@@ -446,7 +446,7 @@ EXTERN void DebugPrintf (int db_level, char *fmt, ...);
 EXTERN void gotoxy (int, int);
 EXTERN int MyRandom (int);
 EXTERN void Armageddon (void);
-EXTERN void Teleport ( int LNum , float X , float Y , int PlayerNum , int Shuffling ) ;
+EXTERN void Teleport ( int LNum , float X , float Y , int PlayerNum , int Shuffling , int WithSound ) ;
 EXTERN int SaveGameConfig (void);
 EXTERN int LoadGameConfig (void);
 EXTERN void InsertNewMessage (void);

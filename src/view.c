@@ -444,57 +444,86 @@ There was a bogus spell type entry found in the active spell list.",
 
 }; // void PutMiscellaneousSpellEffects ( void )
 
-/* -----------------------------------------------------------------
- * This function assembles the contents of the combat window 
- * in Screen.
- *
- * Several FLAGS can be used to control its behaviour:
- *
- * (*) ONLY_SHOW_MAP = 1:  This flag indicates not do draw any
- *     game elements but the map blocks
- *
- * (*) DO_SCREEN_UPDATE = 2: This flag indicates for the function
- *     to also cause an SDL_Update of the portion of the screen
- *     that has been modified
- *
- * (*) ONLY_SHOW_MAP_AND_TEXT = 4: This flag indicates, that only
- *     the map and also info like the current coordinate position
- *     should be entered into the Screen.  This flag is mainly
- *     used for the level editor.
- *
- * ----------------------------------------------------------------- */
+/* ----------------------------------------------------------------------
+ * The combat window can contain also some written text, displaying things
+ * like the current energy level, current position and that.  This function
+ * puts exactly those texts in fine print onto the Screen.
+ * ---------------------------------------------------------------------- */
 void
-AssembleCombatPicture (int mask)
+ShowCombatScreenTexts ( int mask )
 {
-  int MapBrick;
-  int line, col;
-  int i, LineStart, LineEnd, ColStart, ColEnd ;
-  int PlayerNum;
-  int minutes;
-  int seconds;
-  int MapInsertNr;
-  float ResizeFactor;
   static float TimeSinceLastFPSUpdate=10;
   static int FPS_Displayed=1;
-  SDL_Rect TargetRectangle;
-  SDL_Surface *TempRescaledInsert = NULL ;
-  Level DisplayLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
-
 #define UPDATE_FPS_HOW_OFTEN 0.75
+  Level DisplayLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
+  int minutes;
+  int seconds;
 
-  DebugPrintf (2, "\nvoid AssembleCombatPicture(...): Real function call confirmed.");
-  
-  // Why not blit the WHOLE map?  Lets try it!
-  // THAT IS A VERY POWERFUL AND VERY ABSTRACT PROCEDURE:
-  // * THE COMBATSCREENSIZE COULD *EASYLY* BE CHANGED WITHOUT HAVING TO CHANGE THE CODE!!!
-  // 
-  // Recently there were complaints about garbage outside the ship.  This was because
-  // outside the ship, nothing was blittet.  Now the blitting starts at -5 tiles outside
-  // the ship and ends +5 tiles outside the other end of the ship.  That should do it.
-  //
 
-  SDL_SetColorKey (Screen, 0, 0);
-  // SDL_SetAlpha( Screen , 0 , SDL_ALPHA_OPAQUE ); 
+  if ( GameConfig.Draw_Framerate )
+    {
+      TimeSinceLastFPSUpdate += Frame_Time();
+      if ( TimeSinceLastFPSUpdate > UPDATE_FPS_HOW_OFTEN )
+	{
+	  FPS_Displayed=(int)(1.0/Frame_Time());
+	  TimeSinceLastFPSUpdate=0;
+	}
+      
+      PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x , 
+		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
+		       "FPS: %d " , FPS_Displayed );
+
+      PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x + 100, 
+		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
+		       "Axis: %d %d" , input_axis.x, input_axis.y);
+    }
+
+  if ( GameConfig.Draw_Energy )
+    {
+      PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x+User_Rect.w/2 , 
+		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
+		       "Energy: %d " , (int) (Me[0].energy) );
+      PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x+User_Rect.w/2 , 
+		       User_Rect.y+User_Rect.h - 2 * FontHeight( FPS_Display_BFont ), 
+		       "Resistance: %f " , (Me[0].Current_Victim_Resistance_Factor) );
+    }
+
+  if ( GameConfig.Draw_Position || ( mask & ONLY_SHOW_MAP_AND_TEXT ) )
+    {
+      PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x+2*User_Rect.w/3 , 
+		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
+		       "GPS: X=%d Y=%d Lev=%d" , (int) rintf(Me[0].pos.x) , (int) rintf(Me[0].pos.y) , DisplayLevel->levelnum );
+    }
+
+  if ( Me[0].AllMissions[0].MustLiveTime != (-1) )
+    {
+      minutes=floor( ( Me[0].AllMissions[0].MustLiveTime - Me[0].MissionTimeElapsed ) / 60 );
+      seconds= rintf( Me[0].AllMissions[0].MustLiveTime - Me[0].MissionTimeElapsed ) - 60 * minutes;
+      if ( minutes < 0 ) 
+	{
+	  minutes = 0;
+	  seconds = 0;
+	}
+      PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x , 
+		       User_Rect.y + 0*FontHeight( FPS_Display_BFont ), 
+		       "Time to hold out still: %2d:%2d " , minutes , seconds );
+    }
+
+  ShowMissionCompletitionMessages();
+
+}; // void ShowCombatScreenTexts ( int mask )
+
+/* ----------------------------------------------------------------------
+ * This function should assemble the pure floor tiles that will be visible
+ * around the Tux or in the console map view.  Big map inserts and all that
+ * will be handled later...
+ * ---------------------------------------------------------------------- */
+void
+ShowPureMapBlocksAroundTux ( int mask )
+{
+  int LineStart, LineEnd, ColStart, ColEnd , line, col, MapBrick;
+  Level DisplayLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
+  SDL_Rect TargetRectangle;
 
   //--------------------
   // We select the following area to be the map excerpt, that can be
@@ -559,6 +588,43 @@ AssembleCombatPicture (int mask)
 	    }			// if !INVISIBLE_BRICK 
 	}			// for(col) 
     }				// for(line) 
+}; // void ShowPureMapBlocksAroundTux ( int mask )
+
+/* -----------------------------------------------------------------
+ * This function assembles the contents of the combat window 
+ * in Screen.
+ *
+ * Several FLAGS can be used to control its behaviour:
+ *
+ * (*) ONLY_SHOW_MAP = 1:  This flag indicates not do draw any
+ *     game elements but the map blocks
+ *
+ * (*) DO_SCREEN_UPDATE = 2: This flag indicates for the function
+ *     to also cause an SDL_Update of the portion of the screen
+ *     that has been modified
+ *
+ * (*) ONLY_SHOW_MAP_AND_TEXT = 4: This flag indicates, that only
+ *     the map and also info like the current coordinate position
+ *     should be entered into the Screen.  This flag is mainly
+ *     used for the level editor.
+ *
+ * ----------------------------------------------------------------- */
+void
+AssembleCombatPicture (int mask)
+{
+  int i;
+  int PlayerNum;
+  int MapInsertNr;
+  float ResizeFactor;
+  SDL_Rect TargetRectangle;
+  SDL_Surface *TempRescaledInsert = NULL ;
+  Level DisplayLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
+
+  SDL_SetColorKey (Screen, 0, 0);
+  // SDL_SetAlpha( Screen , 0 , SDL_ALPHA_OPAQUE ); 
+
+  ShowPureMapBlocksAroundTux ( mask );
+
 
   //--------------------
   // Now we draw the list of big graphics inserts for this level
@@ -650,56 +716,7 @@ This indicates a severe error in the map insert handling of Freedroid.",
 
   ShowAutomapData();
 
-  if ( GameConfig.Draw_Framerate )
-    {
-      TimeSinceLastFPSUpdate += Frame_Time();
-      if ( TimeSinceLastFPSUpdate > UPDATE_FPS_HOW_OFTEN )
-	{
-	  FPS_Displayed=(int)(1.0/Frame_Time());
-	  TimeSinceLastFPSUpdate=0;
-	}
-      
-      PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x , 
-		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
-		       "FPS: %d " , FPS_Displayed );
-
-      PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x + 100, 
-		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
-		       "Axis: %d %d" , input_axis.x, input_axis.y);
-    }
-
-  if ( GameConfig.Draw_Energy )
-    {
-      PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x+User_Rect.w/2 , 
-		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
-		       "Energy: %d " , (int) (Me[0].energy) );
-      PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x+User_Rect.w/2 , 
-		       User_Rect.y+User_Rect.h - 2 * FontHeight( FPS_Display_BFont ), 
-		       "Resistance: %f " , (Me[0].Current_Victim_Resistance_Factor) );
-    }
-
-  if ( GameConfig.Draw_Position || ( mask & ONLY_SHOW_MAP_AND_TEXT ) )
-    {
-      PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x+2*User_Rect.w/3 , 
-		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
-		       "GPS: X=%d Y=%d Lev=%d" , (int) rintf(Me[0].pos.x) , (int) rintf(Me[0].pos.y) , DisplayLevel->levelnum );
-    }
-
-  if ( Me[0].AllMissions[0].MustLiveTime != (-1) )
-    {
-      minutes=floor( ( Me[0].AllMissions[0].MustLiveTime - Me[0].MissionTimeElapsed ) / 60 );
-      seconds= rintf( Me[0].AllMissions[0].MustLiveTime - Me[0].MissionTimeElapsed ) - 60 * minutes;
-      if ( minutes < 0 ) 
-	{
-	  minutes = 0;
-	  seconds = 0;
-	}
-      PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x , 
-		       User_Rect.y + 0*FontHeight( FPS_Display_BFont ), 
-		       "Time to hold out still: %2d:%2d " , minutes , seconds );
-    }
-
-  ShowMissionCompletitionMessages();
+  ShowCombatScreenTexts( mask );
 
   //--------------------
   // Here are some more things, that are not needed in the level editor
@@ -745,8 +762,6 @@ This indicates a severe error in the map insert handling of Freedroid.",
       SDL_UpdateRect( Screen , User_Rect.x , User_Rect.y , User_Rect.w , User_Rect.h );
     }
 
-
-  DebugPrintf (2, "\nvoid AssembleCombatPicture(...): end of function reached.");
 }; // void AssembleCombatPicture(...)
 
 /* ----------------------------------------------------------------------
@@ -1119,7 +1134,7 @@ ThisEnemyNeedsToBeBlitted ( int Enum , int x , int y )
   // if the enemy is out of sight, we need not do anything more here
   if ( ( ! show_all_droids ) && ( ! IsVisible ( & AllEnemys [ Enum ] . pos , 0 ) ) )
     {
-      DebugPrintf (3, "\nvoid PutEnemy(int Enum): ONSCREEN=FALSE --> usual end of function reached.\n");
+      // DebugPrintf (3, "\nvoid PutEnemy(int Enum): ONSCREEN=FALSE --> usual end of function reached.\n");
       return FALSE ;
     }
 
@@ -1284,11 +1299,11 @@ PutEnemy (int Enum , int x , int y)
   SDL_Rect TargetRectangle;
   point UpperLeftBlitCorner;
 
-  DebugPrintf (3, "\nvoid PutEnemy(int Enum): real function call confirmed...\n");
+  // DebugPrintf (3, "\nvoid PutEnemy(int Enum): real function call confirmed...\n");
 
   if ( ! ThisEnemyNeedsToBeBlitted ( Enum , x , y ) ) return;
 
-  DebugPrintf ( 3 , "\nvoid PutEnemy(int Enum): it seems that we must draw this one on the screen....\n" );
+  // DebugPrintf ( 3 , "\nvoid PutEnemy(int Enum): it seems that we must draw this one on the screen....\n" );
 
   //--------------------
   // We check for incorrect droid types, which sometimes might occor, especially after
@@ -1469,6 +1484,7 @@ PutItem( int ItemNumber )
   Level ItemLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
   Item CurItem = &ItemLevel -> ItemList [ ItemNumber ] ;
   SDL_Rect TargetRectangle;
+  gps ItemGPS;
   
   if ( CurItem->type == ( -1 ) ) 
     {
@@ -1487,9 +1503,13 @@ There was an item type given, that exceeds the range of item images loaded.",
 				 PLEASE_INFORM, IS_FATAL );
     }
 
-
   // We don't blit any item, that we're currently holding in our hand, do we?
   if ( CurItem->currently_held_in_hand == TRUE ) return;
+
+  ItemGPS . x = CurItem -> pos . x ;
+  ItemGPS . y = CurItem -> pos . y ;
+  ItemGPS . z = Me [ 0 ] . pos . z ; // this is silly.  The item is always from this leve...
+  if ( ! IsVisible ( & ItemGPS , 0 ) ) return;
 
   TargetRectangle . x = UserCenter_x - ( Me [ 0 ] . pos . x - CurItem -> pos . x ) * Block_Width  - 
     ( 16 * ItemImageList [ ItemMap [ CurItem -> type ] . picture_number ] . inv_size . x ) ;
