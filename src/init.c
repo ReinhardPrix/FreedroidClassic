@@ -992,7 +992,7 @@ timeout (int sig)
   Terminate (0);
 }; // static void timeout (int sig)
 
-char copyright[] = "\nCopyright (C) 2002 Johannes Prix, Reinhard Prix\n\
+char copyright[] = "\nCopyright (C) 2003 Johannes Prix, Reinhard Prix\n\
 Freedroid comes with NO WARRANTY to the extent permitted by law.\n\
 You may redistribute copies of Freedroid\n\
 under the terms of the GNU General Public License.\n\
