@@ -590,7 +590,10 @@ CursorIsOnWhichSpellLevelButton( int x , int y )
 
 
 /* ----------------------------------------------------------------------
- * This function displays the skills screen.
+ * This function displays the SKILLS SCREEN.  This is NOT the same as the
+ * CHARACTER SCREEN.  In the skills screen you can see what skills/spells
+ * you currenlty have availabe and you can select a new readied skill by
+ * clicking on it with the mouse.
  * ---------------------------------------------------------------------- */
 void 
 ShowSkillsScreen ( void )
@@ -604,6 +607,9 @@ ShowSkillsScreen ( void )
   point CurPos;
   int i;
   SDL_Rect SpellLevelRect;
+
+#define INTER_SKILLRECT_DIST 17
+#define FIRST_SKILLRECT_Y 16
 
   DebugPrintf (2, "\nvoid ShowInventoryMessages( ... ): Function call confirmed.");
 
@@ -666,8 +672,8 @@ ShowSkillsScreen ( void )
   //
   for ( i = 0 ; i < NUMBER_OF_SKILLS_PER_SKILL_LEVEL ; i ++ )
     {
-      ButtonRect.x = SkillScreenRect.x + 16;
-      ButtonRect.y = SkillScreenRect.y + 16 + i * ( 64 + 16 );
+      ButtonRect.x = SkillScreenRect.x + 15 ;
+      ButtonRect.y = SkillScreenRect.y + FIRST_SKILLRECT_Y + i * ( 64 + INTER_SKILLRECT_DIST );
       ButtonRect.w = 64;
       ButtonRect.h = 64;
 
@@ -678,17 +684,17 @@ ShowSkillsScreen ( void )
       //
       DisplayText( SkillName[ i + NUMBER_OF_SKILLS_PER_SKILL_LEVEL * GameConfig.spell_level_visible ] , 
 		   16 + 64 + 16 + SkillScreenRect.x , 
-		   16 + 20 + i * (64 + 16) + SkillScreenRect.y , &SkillScreenRect );
+		   FIRST_SKILLRECT_Y + i * (64 + INTER_SKILLRECT_DIST) + SkillScreenRect.y , &SkillScreenRect );
       
       //--------------------
       // Now we write the competence of the players character in that skill to the screen
       //
       sprintf( CharText , "Skill Level: %d " , Me[0].SkillLevel[ i + NUMBER_OF_SKILLS_PER_SKILL_LEVEL * GameConfig.spell_level_visible ] );
       DisplayText( CharText , 16 + 64 + 16 + SkillScreenRect.x , 
-		   16 + 20 + i * (64 + 16) + SkillScreenRect.y + FontHeight( GetCurrentFont() ) , &SkillScreenRect );
+		   FIRST_SKILLRECT_Y + i * (64 + INTER_SKILLRECT_DIST) + SkillScreenRect.y + FontHeight( GetCurrentFont() ) , &SkillScreenRect );
       sprintf( CharText , "Mana cost: %d " , ManaCostTable[ i + NUMBER_OF_SKILLS_PER_SKILL_LEVEL * GameConfig.spell_level_visible ][Me[0].SkillLevel[ i + NUMBER_OF_SKILLS_PER_SKILL_LEVEL * GameConfig.spell_level_visible ]] );
       DisplayText( CharText , 16 + 64 + 16 + SkillScreenRect.x , 
-		   16 + 20 + i * (64 + 16) + SkillScreenRect.y + 2 * FontHeight( GetCurrentFont() ) , &SkillScreenRect );
+		   FIRST_SKILLRECT_Y + i * (64 + INTER_SKILLRECT_DIST) + SkillScreenRect.y + 2 * FontHeight( GetCurrentFont() ) , &SkillScreenRect );
       
     }
 
