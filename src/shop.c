@@ -1297,7 +1297,7 @@ TryToSellItem( item* SellItem , int WithBacktalk , int AmountToSellAtMost )
 
 	      Me[0].Gold += SELL_PRICE_FACTOR * CalculateItemPrice ( SellItem , FALSE );
 	      DeleteItem( SellItem );
-	      PlayOnceNeededSoundSample ( "../effects/Shop_ItemSoldSound_0.wav" , FALSE , FALSE );
+	      PlayOnceNeededSoundSample ( "../effects/Shop_ItemSoldSound_0.wav" , FALSE , TRUE );
 
 	      return;
 	      break;
@@ -1314,7 +1314,7 @@ TryToSellItem( item* SellItem , int WithBacktalk , int AmountToSellAtMost )
       if ( AmountToSellAtMost < SellItem->multiplicity )
 	SellItem->multiplicity -= AmountToSellAtMost;
       else DeleteItem( SellItem );
-      PlayOnceNeededSoundSample ( "../effects/Shop_ItemSoldSound_0.wav" , FALSE , FALSE );
+      PlayOnceNeededSoundSample ( "../effects/Shop_ItemSoldSound_0.wav" , FALSE , TRUE );
     }
 }; // void TryToSellItem( item* SellItem )
 

@@ -1530,15 +1530,9 @@ answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
       ReadValueFromString( ItemPointer ,  "plus duration modifier=" , "%d" , 
 			   &ItemMap[ItemIndex].item_duration_modifier , EndOfItemData );
 
-      
-
       // Now we read in the number of the picture to be used for this item
       ReadValueFromString( ItemPointer ,  "Picture number=" , "%d" , 
 			   &ItemMap[ItemIndex].picture_number , EndOfItemData );
-
-      // Now we read in the number of the sound to be used for this item
-      ReadValueFromString( ItemPointer ,  "Sound number=" , "%d" , 
-			   &ItemMap[ItemIndex].sound_number , EndOfItemData );
 
       // Now we read in the name of the sound sample to be played when this item is moved
       ItemMap[ItemIndex].item_drop_sound_file_name = 
@@ -1578,8 +1572,8 @@ answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
 }; // void Get_Item_Data ( char* DataPointer );
 
 /* ----------------------------------------------------------------------
- * As soon as a file name is known, we can start to save the dialog
- * information from the dialog roster to this new file.
+ * As soon as a file name is known, we can start to save the item 
+ * information from the item roster to this new file.
  * ---------------------------------------------------------------------- */
 void
 save_item_roster_to_file ( char* filename )
@@ -1777,12 +1771,6 @@ Common factor for all melee weapons damage values: 1.0\n\n\n" ) ;
       // We write out picture number....
       //
       sprintf ( linebuf , "Picture number=%d\n" , ItemMap [ i ] . picture_number ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // We write out sound number....
-      //
-      sprintf ( linebuf , "Sound number=%d\n" , ItemMap [ i ] . sound_number ) ;
       fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
 
       //--------------------
