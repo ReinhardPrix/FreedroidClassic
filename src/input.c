@@ -904,50 +904,13 @@ ReactToSpecialKeys(void)
   // Now we handle keyboard movement...
   //
   if ( LeftPressed() )
-  {
       GameConfig . automap_manual_shift_x -= 10 ;
-
-	/*
-      Me [ 0 ] . mouse_move_target . x = Me [ 0 ] . pos . x - 4.5 ;
-      if ( Me [ 0 ] . mouse_move_target . y == (-1) ) 
-	Me [ 0 ] . mouse_move_target . y = Me [ 0 ] . pos . y ;
-      Me [ 0 ] . mouse_move_target . z = Me [ 0 ] . pos . z ;
-      Me [ 0 ] . mouse_move_target_is_enemy = (-1) ;
-	*/
-    }
   if ( RightPressed() )
-    {
-	GameConfig . automap_manual_shift_x += 10 ;
-	/*
-      Me [ 0 ] . mouse_move_target . x = Me [ 0 ] . pos . x + 4.5 ;
-      if ( Me [ 0 ] . mouse_move_target . y == (-1) ) 
-	Me [ 0 ] . mouse_move_target . y = Me [ 0 ] . pos . y ;
-      Me [ 0 ] . mouse_move_target . z = Me [ 0 ] . pos . z ;
-      Me [ 0 ] . mouse_move_target_is_enemy = (-1) ;
-	*/
-    }
+      GameConfig . automap_manual_shift_x += 10 ;
   if ( UpPressed() )
-    {
-	GameConfig . automap_manual_shift_y -= 10 ;
-/*
-      Me [ 0 ] . mouse_move_target . y = Me [ 0 ] . pos . y - 3.5 ; 
-      if ( Me [ 0 ] . mouse_move_target . x == (-1) ) 
-	Me [ 0 ] . mouse_move_target . x = Me [ 0 ] . pos . x ;
-      Me [ 0 ] . mouse_move_target . z = Me [ 0 ] . pos . z ;
-      Me [ 0 ] . mouse_move_target_is_enemy = (-1) ;
-*/
-    }
+      GameConfig . automap_manual_shift_y -= 10 ;
   if ( DownPressed() )
-    {
-	GameConfig . automap_manual_shift_y += 10 ;
-/*
-      Me [ 0 ] . mouse_move_target . y = Me [ 0 ] . pos . y + 3.5 ; 
-      Me [ 0 ] . mouse_move_target . z = Me [ 0 ] . pos . z ;
-      if ( Me [ 0 ] . mouse_move_target . x == (-1) ) 
-	Me [ 0 ] . mouse_move_target . x = Me [ 0 ] . pos . x ;
-      Me [ 0 ] . mouse_move_target_is_enemy = (-1) ;
-*/
-    }
+      GameConfig . automap_manual_shift_y += 10 ;
  
 }; // void ReactToSpecialKeys(void)
 
@@ -1642,72 +1605,89 @@ keyboard_update(void)
 	  break;
 
 	case SDL_MOUSEMOTION:
-	  // if (mouse_control)
-	  // {
-	  //--------------------
-	  // Since the new mouse cursor does have it's tip at the top left corner
-	  // of the mouse cursor, but rather in the center of the 32x32 pixel mouse
-	  // cursor, we need to correct the given axis a little (16 pixels) bit.
-	  //
-	  // ATTENTION!! THIS ALSO MEANS THAT THE MOUSE CURSOR NEVER NEEDS TO BE
-	  // CORRECTED BY 16 PIXELS ANYWHERE ELSE IN THE CODE, OR WE'LL GET AN
-	  // OVERCORRECTION AND A WRONG RESULT FOR THE MOUSE POSITION!!!
-	  //
-	  input_axis . x = event . button . x - UserCenter_x  ;
-	  input_axis . y = event . button . y - UserCenter_y  ;
-	  CurrentMouseAbsPos.x = event.button.x;
-	  CurrentMouseAbsPos.y = event.button.y;
-	  // }
+	    input_axis . x = event . button . x - UserCenter_x  ;
+	    input_axis . y = event . button . y - UserCenter_y  ;
+	    CurrentMouseAbsPos.x = event.button.x;
+	    CurrentMouseAbsPos.y = event.button.y;
+
+	    //--------------------
+	    // Now maybe the crosshair mouse cursor shape is currently
+	    // selected.  In this case of course we must shift the click
+	    // position a bit, since the crosshair pointer pixel is in the
+	    // middle of the mouse cursor, not in the top left as with the
+	    // other mouse cursor shapes...
+	    //
+	    if ( current_mouse_cursor_shape == MOUSE_CURSOR_CROSSHAIR_SHAPE )
+	    {
+		input_axis . x += 16 ; 
+		input_axis . y += 16 ; 
+		CurrentMouseAbsPos . x += 16 ;
+		CurrentMouseAbsPos . y += 16 ;
+	    }
+
 	  break;
 	  
-	  /* Mouse control */
 	case SDL_MOUSEBUTTONDOWN:
+	    input_axis.x = event.button.x - UserCenter_x ; 
+	    input_axis.y = event.button.y - UserCenter_y ; 	  
+	    CurrentMouseAbsPos.x = event.button.x;
+	    CurrentMouseAbsPos.y = event.button.y;
 
-	  input_axis.x = event.button.x - UserCenter_x + 16; 
-	  input_axis.y = event.button.y - UserCenter_y + 16; 	  
-	  CurrentMouseAbsPos.x = event.button.x;
-	  CurrentMouseAbsPos.y = event.button.y;
-
-	  if ( ( ClientMode ) && ( ! ServerMode ) ) SendPlayerMouseButtonEventToServer ( event );
-
-	  if ( event.button.button == SDL_BUTTON_LEFT )
+	    //--------------------
+	    // Now maybe the crosshair mouse cursor shape is currently
+	    // selected.  In this case of course we must shift the click
+	    // position a bit, since the crosshair pointer pixel is in the
+	    // middle of the mouse cursor, not in the top left as with the
+	    // other mouse cursor shapes...
+	    //
+	    if ( current_mouse_cursor_shape == MOUSE_CURSOR_CROSSHAIR_SHAPE )
 	    {
-	      CurrentlySpacePressed = TRUE;
-	      axis_is_active = TRUE;
-	      CurrentlyMouseLeftPressed = TRUE;
-	      // DebugPrintf ( 0 , "\nLeft button press registered..." );
-
-	      //--------------------
-	      // It is possible to completely freeze freedroidRPG by holding down the left
-	      // mouse button continuously while striking again (the second time).  Therefore
-	      // we must terminate out of this right here.
-	      //
-	      return ( 0 ) ; 
+		input_axis . x += 16 ; 
+		input_axis . y += 16 ; 
+		CurrentMouseAbsPos . x += 16 ;
+		CurrentMouseAbsPos . y += 16 ;
 	    }
 
-	  if ( event.button.button == SDL_BUTTON_RIGHT )	   
-	    CurrentlyMouseRightPressed = TRUE;
+	    if ( ( ClientMode ) && ( ! ServerMode ) ) SendPlayerMouseButtonEventToServer ( event );
 
-	  //--------------------
-	  // We need to add come conditional compilation here, so that 
-	  // on some systems, where the SDL version is < 1.2.5 the code
-	  // still compiles without much trouble. (At least so we hope :)
-	  //
+	    if ( event.button.button == SDL_BUTTON_LEFT )
+	    {
+		CurrentlySpacePressed = TRUE;
+		axis_is_active = TRUE;
+		CurrentlyMouseLeftPressed = TRUE;
+		// DebugPrintf ( 0 , "\nLeft button press registered..." );
+		
+		//--------------------
+		// It is possible to completely freeze freedroidRPG by holding down the left
+		// mouse button continuously while striking again (the second time).  Therefore
+		// we must terminate out of this right here.
+		//
+		return ( 0 ) ; 
+	    }
+
+	    if ( event.button.button == SDL_BUTTON_RIGHT )	   
+		CurrentlyMouseRightPressed = TRUE;
+
+	    //--------------------
+	    // We need to add come conditional compilation here, so that 
+	    // on some systems, where the SDL version is < 1.2.5 the code
+	    // still compiles without much trouble. (At least so we hope :)
+	    //
 #ifdef SDL_BUTTON_WHEELUP 	
-	  if ( event.button.button == SDL_BUTTON_WHEELUP )
+	    if ( event.button.button == SDL_BUTTON_WHEELUP )
 	    {
-	      CurrentlyMouseWheelUpPressed = TRUE;
-	      MouseWheelUpMovesRecorded ++ ;
-	      DebugPrintf( 1 , "\n\nMOUSE WHEEL ACTION UP DETECTED!!!");
+		CurrentlyMouseWheelUpPressed = TRUE;
+		MouseWheelUpMovesRecorded ++ ;
+		DebugPrintf( 1 , "\n\nMOUSE WHEEL ACTION UP DETECTED!!!");
 	    }
-	  if ( event.button.button == SDL_BUTTON_WHEELDOWN )
+	    if ( event.button.button == SDL_BUTTON_WHEELDOWN )
 	    {
-	      CurrentlyMouseWheelDownPressed = TRUE;
-	      MouseWheelDownMovesRecorded ++ ;
-	      DebugPrintf( 1 , "\n\nMOUSE WHEEL ACTION DOWN DETECTED!!!");
+		CurrentlyMouseWheelDownPressed = TRUE;
+		MouseWheelDownMovesRecorded ++ ;
+		DebugPrintf( 1 , "\n\nMOUSE WHEEL ACTION DOWN DETECTED!!!");
 	    }
 #endif
-	  break;
+	    break;
 
         case SDL_MOUSEBUTTONUP:
 

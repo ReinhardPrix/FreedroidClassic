@@ -2559,8 +2559,8 @@ FireTuxRangedWeaponRaw ( int player_num , int weapon_item_type , int bullet_imag
   //
   // But this is ONLY A FIRST ESTIMATE!  It will be fixed shortly!
   //
-  speed . x = translate_pixel_to_map_location ( player_num , ServerThinksInputAxisX ( player_num ) + 16 , ServerThinksInputAxisY ( player_num ) + 16 , TRUE ) - Me [ player_num ] . pos . x ;
-  speed . y = translate_pixel_to_map_location ( player_num , ServerThinksInputAxisX ( player_num ) + 16 , ServerThinksInputAxisY ( player_num ) + 16 , FALSE ) - Me [ player_num ] . pos . y ;
+  speed . x = translate_pixel_to_map_location ( player_num , ServerThinksInputAxisX ( player_num ) , ServerThinksInputAxisY ( player_num ) , TRUE ) - Me [ player_num ] . pos . x ;
+  speed . y = translate_pixel_to_map_location ( player_num , ServerThinksInputAxisX ( player_num ) , ServerThinksInputAxisY ( player_num ) , FALSE ) - Me [ player_num ] . pos . y ;
   speed_norm = sqrt ( speed . x * speed . x + speed . y * speed . y );
   CurBullet -> speed.x = ( speed . x / speed_norm );
   CurBullet -> speed.y = ( speed . y / speed_norm );
@@ -2585,8 +2585,8 @@ FireTuxRangedWeaponRaw ( int player_num , int weapon_item_type , int bullet_imag
   // And now we re-do it all!  But this time with the extra offset
   // applied to the SHOT TARGET POINT!
   //
-  speed . x = translate_pixel_to_map_location ( player_num , ServerThinksInputAxisX ( player_num ) + 16 , ServerThinksInputAxisY ( player_num ) + 16 , TRUE ) - Me [ player_num ] . pos . x - offset . x ;
-  speed . y = translate_pixel_to_map_location ( player_num , ServerThinksInputAxisX ( player_num ) + 16 , ServerThinksInputAxisY ( player_num ) + 16 , FALSE ) - Me [ player_num ] . pos . y - offset . y ;
+  speed . x = translate_pixel_to_map_location ( player_num , ServerThinksInputAxisX ( player_num ) , ServerThinksInputAxisY ( player_num ) , TRUE ) - Me [ player_num ] . pos . x - offset . x ;
+  speed . y = translate_pixel_to_map_location ( player_num , ServerThinksInputAxisX ( player_num ) , ServerThinksInputAxisY ( player_num ) , FALSE ) - Me [ player_num ] . pos . y - offset . y ;
   speed_norm = sqrt ( speed . x * speed . x + speed . y * speed . y );
   CurBullet -> speed.x = ( speed . x / speed_norm );
   CurBullet -> speed.y = ( speed . y / speed_norm );
@@ -2731,8 +2731,8 @@ PerformTuxAttackRaw ( int player_num )
     // Now that an attack is being made, the Tux must turn thowards the direction
     // of the attack, no matter what.
     //
-    Me [ player_num ] . angle = - ( atan2 ( ServerThinksInputAxisY ( player_num ) + 16 ,  
-					    ServerThinksInputAxisX ( player_num ) + 16 ) * 180 / M_PI + 90 );
+    Me [ player_num ] . angle = - ( atan2 ( ServerThinksInputAxisY ( player_num ) ,  
+					    ServerThinksInputAxisX ( player_num ) ) * 180 / M_PI + 90 );
     Me [ player_num ] . speed . x = 0 ;
     Me [ player_num ] . speed . y = 0 ;
     Me [ player_num ] . mouse_move_target . x = Me [ player_num ] . pos . x ;

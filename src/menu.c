@@ -68,22 +68,22 @@ extern int load_game_command_came_from_inside_running_game;
 int
 MouseCursorIsOverMenuItem( int first_menu_item_pos_y , int h )
 {
-  int PureFraction;
+    int PureFraction;
 
-  PureFraction = ( GetMousePos_y ()  - first_menu_item_pos_y ) / h ;
+    PureFraction = ( GetMousePos_y ()  - first_menu_item_pos_y ) / h ;
 
-  //--------------------
-  // Now it can be that the pure difference is negative or that it is positive.
-  // However we should not always round thowards zero here, but rather always to
-  // the next LOWER integer!  This will be done here:
-  //
-  if ( ( GetMousePos_y ()  - first_menu_item_pos_y ) < 0 )
-    PureFraction--;
-  else
-    PureFraction++;
-
-  return ( PureFraction );
-
+    //--------------------
+    // Now it can be that the pure difference is negative or that it is positive.
+    // However we should not always round thowards zero here, but rather always to
+    // the next LOWER integer!  This will be done here:
+    //
+    if ( ( GetMousePos_y ()  - first_menu_item_pos_y ) < 0 )
+	PureFraction--;
+    else
+	PureFraction++;
+    
+    return ( PureFraction );
+    
 }; // void MouseCursorIsOverMenuItem( first_menu_item_pos_y )
 
 /* ----------------------------------------------------------------------

@@ -184,8 +184,10 @@ set_mouse_cursor_to_shape ( int given_shape )
     switch ( given_shape )
     {
 	case MOUSE_CURSOR_CROSSHAIR_SHAPE:
-	    SDL_SetCursor( init_system_cursor( crosshair_mouse_cursor ) );
-	    current_mouse_cursor_shape = MOUSE_CURSOR_CROSSHAIR_SHAPE ;
+	    // SDL_SetCursor( init_system_cursor( crosshair_mouse_cursor ) );
+	    // current_mouse_cursor_shape = MOUSE_CURSOR_CROSSHAIR_SHAPE ;
+	    SDL_SetCursor( init_system_cursor( arrow_mouse_cursor ) );
+	    current_mouse_cursor_shape = MOUSE_CURSOR_ARROW_SHAPE ;
 	    break;
 	case MOUSE_CURSOR_ARROW_SHAPE:
 	    SDL_SetCursor( init_system_cursor( arrow_mouse_cursor ) );
