@@ -58,6 +58,8 @@
 
 extern char *InfluenceModeNames[];
 
+int best_banner_pos_x, best_banner_pos_y;
+
 /* ----------------------------------------------------------------------
  * This function writes the description of an item into the item description
  * string.
@@ -1072,6 +1074,9 @@ prepare_text_window_content ( char* ItemDescText )
     CurPos.x = GetMousePos_x()  ;
     CurPos.y = GetMousePos_y()  ;
 
+    best_banner_pos_x = CurPos . x ;
+    best_banner_pos_y = CurPos . y ;
+
     //--------------------
     // In case some item is held in hand by the player, the situation is simple:
     // we merely need to draw this items description into the description field and
@@ -1109,7 +1114,9 @@ prepare_text_window_content ( char* ItemDescText )
 	    // DebugPrintf( 0 , "\nInv Index targeted: %d." , InvIndex );
 	    if ( InvIndex != (-1) )
 	    {
-		GiveItemDescription ( ItemDescText , &(Me[0].Inventory[ InvIndex ]) , FALSE );
+		GiveItemDescription ( ItemDescText , & ( Me [ 0 ] . Inventory [ InvIndex ] ) , FALSE );
+		best_banner_pos_x = (  Me [ 0 ] . Inventory [ InvIndex ] . inventory_position . x + ItemMap [ Me [ 0 ] . Inventory [ InvIndex ] . type ] . inv_image . inv_size . x ) * 30 + 16 ;
+		best_banner_pos_y = 300 ;
 	    }
 	} 
 	else if ( MouseCursorIsOnButton ( WEAPON_RECT_BUTTON , CurPos.x , CurPos.y ) )
@@ -1279,8 +1286,11 @@ ShowCurrentTextWindow ( void )
     }
     */
 
-    Banner_Text_Rect . x = GetMousePos_x () ;
-    Banner_Text_Rect . y = GetMousePos_y () ;
+    // Banner_Text_Rect . x = GetMousePos_x () ;
+    // Banner_Text_Rect . y = GetMousePos_y () ;
+    Banner_Text_Rect . x = best_banner_pos_x ;
+    Banner_Text_Rect . y = best_banner_pos_y ;
+
     Banner_Text_Rect . w = LOWER_BANNER_TEXT_RECT_W;
     Banner_Text_Rect . h = LOWER_BANNER_TEXT_RECT_H;
 
