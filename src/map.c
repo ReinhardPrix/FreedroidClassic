@@ -830,7 +830,7 @@ AnimateConsumer (void)
 
     }				/* for */
 
-  DebugPrintf (2, "\nvoid AnimateRefresh(void):  end of function reached.");
+  DebugPrintf (2, "\nvoid AnimateConsumer(void):  end of function reached.");
 
 }; // void AnimateConsumer ( void )
 
@@ -846,7 +846,7 @@ AnimateTeleports (void)
   Level TeleporterLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
 
 
-  DebugPrintf (2, "\nvoid AnimateRefresh(void):  real function call confirmed.");
+  DebugPrintf (2, "\nvoid AnimateTeleports(void):  real function call confirmed.");
 
   InnerWaitCounter += Frame_Time () * 30;
 
@@ -861,7 +861,7 @@ AnimateTeleports (void)
 
     }				/* for */
 
-  DebugPrintf (2, "\nvoid AnimateRefresh(void):  end of function reached.");
+  DebugPrintf (2, "\nvoid AnimateTeleports(void):  end of function reached.");
 
 }; // void AnimateTeleports ( void )
 
@@ -916,6 +916,14 @@ LoadShip (char *filename)
       curShip . AllLevels [ i ] = DecodeLoadedLeveldata ( LevelStart [ i ] );
 
       TranslateMap ( curShip . AllLevels [ i ] ) ;
+
+      //--------------------
+      // The level structure contains an array with the locations of all
+      // doors that might have to be opened or closed during the game.  This
+      // list is prepared in advance, so that we don't have to search for doors
+      // on all of the map during program runtime.
+      //
+      GetAllAnimatedMapTiles ( curShip . AllLevels [ i ] );
 
     }
 
@@ -1888,9 +1896,20 @@ GetAllAnimatedMapTiles ( Level Lev )
   xlen = Lev->xlen;
   ylen = Lev->ylen;
 
-  /* init Doors- Array to 0 */
+  //--------------------
+  // At first we must clear out all the junk that might
+  // still be in these arrays...
+  //
   for (i = 0; i < MAX_DOORS_ON_LEVEL; i++)
     Lev->doors[i].x = Lev->doors[i].y = 0;
+  for (i = 0; i < MAX_AUTOGUNS_ON_LEVEL; i++)
+    Lev->autoguns[i].x = Lev->autoguns[i].y = 0;
+  for (i = 0; i < MAX_REFRESHES_ON_LEVEL; i++)
+    Lev->refreshes[i].x = Lev->refreshes[i].y = 0;
+  for (i = 0; i < MAX_CONSUMERS_ON_LEVEL; i++)
+    Lev->consumers[i].x = Lev->consumers[i].y = 0;
+  for (i = 0; i < MAX_CONSUMERS_ON_LEVEL; i++)
+    Lev->teleporters[i].x = Lev->teleporters[i].y = 0;
 
   /* now find the doors */
   for (line = 0; line < ylen; line++)
@@ -2115,137 +2134,10 @@ TranslateMap (Level Lev)
       Lev->map[row]=Buffer;
     }				/* for (row=0..) */
 
-  //--------------------
-  // The level structure contains an array with the locations of all
-  // doors that might have to be opened or closed during the game.  This
-  // list is prepared in advance, so that we don't have to search for doors
-  // on all of the map during program runtime.
-  //
-  GetAllAnimatedMapTiles ( Lev );
-
   DebugPrintf (2, "\nint TranslateMap(Level Lev): end of function reached.");
+
   return OK;
 }; // int Translate Map( Level lev )
-
-
-/* ----------------------------------------------------------------------
- * This function loads lift-connctions into cur-ship struct
- * Return values are OK or ERR
- * ---------------------------------------------------------------------- */
-int
-GetLiftConnections (char *filename)
-{
-  char *fpath;
-  char *Data;
-  char *EntryPointer;
-  char *EndOfDeckRectangleSection;
-  int i;
-  int Label;
-  int DeckIndex;
-  int RectIndex;
-  int ElevatorIndex;
-  char* EndOfLiftRectangleSection;
-  char* EndOfLiftConnectionData;
-  Lift CurLift;
-
-#define END_OF_LIFT_DATA_STRING "*** End of elevator specification file ***"
-#define START_OF_LIFT_DATA_STRING "*** Beginning of Lift Data ***"
-#define START_OF_LIFT_RECTANGLE_DATA_STRING "*** Beginning of elevator rectangles ***"
-#define END_OF_LIFT_CONNECTION_DATA_STRING "*** End of Lift Connection Data ***"
-
-
-
-  /* Now get the lift-connection data from "FILE.elv" file */
-
-  fpath = find_file (filename, MAP_DIR, FALSE);
-
-  Data = ReadAndMallocAndTerminateFile( fpath , END_OF_LIFT_DATA_STRING ) ;
-
-  /*
-  if ( (EntryPointer = strstr( Data , START_OF_LIFT_RECTANGLE_DATA_STRING ) ) == NULL )
-    {
-      DebugPrintf ( 0 , "\nERROR!  START OF LIFT RECTANGLE DATA STRING NOT FOUND!  Terminating...");
-      Terminate(ERR);
-    }
-  */
-
-  EntryPointer = LocateStringInData ( Data , START_OF_LIFT_RECTANGLE_DATA_STRING );
-  EndOfLiftRectangleSection = LocateStringInData ( Data , "*** End of elevator rectangles ***" );
-
-
-  //--------------------
-  // At first we read in the rectangles that define where the colums of the
-  // lift are, so that we can highlight them later.
-  //
-  while ( ( EntryPointer = strstr( EntryPointer , "Elevator Number=" ) ) != NULL )
-    {
-      ReadValueFromString( EntryPointer , "Elevator Number=" , "%d" , &ElevatorIndex , EndOfLiftRectangleSection );
-      EntryPointer ++;
-
-      ReadValueFromString( EntryPointer , "ElRowX=" , "%d" , &curShip.LiftRow_Rect[ ElevatorIndex ].x , EndOfLiftRectangleSection );
-      ReadValueFromString( EntryPointer , "ElRowY=" , "%d" , &curShip.LiftRow_Rect[ ElevatorIndex ].y , EndOfLiftRectangleSection );
-      ReadValueFromString( EntryPointer , "ElRowW=" , "%d" , &curShip.LiftRow_Rect[ ElevatorIndex ].w , EndOfLiftRectangleSection );
-      ReadValueFromString( EntryPointer , "ElRowH=" , "%d" , &curShip.LiftRow_Rect[ ElevatorIndex ].h , EndOfLiftRectangleSection );
-    }
-
-  //--------------------
-  // Now we read in the rectangles that define where the decks of the
-  // current area system are, so that we can highlight them later in the
-  // elevator and console functions.
-  //
-  for ( i = 0 ; i < MAX_LEVELS ; i++ )   curShip.num_level_rects[i] = 0; // this initializes zeros for the number
-
-  EndOfDeckRectangleSection = LocateStringInData ( Data , "*** End of deck rectangle section ***" );
-  EntryPointer = Data ;
-  
-  while ( ( EntryPointer = strstr( EntryPointer , "DeckNr=" ) ) != NULL )
-    {
-      ReadValueFromString( EntryPointer , "DeckNr=" , "%d" , &DeckIndex , EndOfDeckRectangleSection );
-      ReadValueFromString( EntryPointer , "RectNumber=" , "%d" , &RectIndex , EndOfDeckRectangleSection );
-      EntryPointer ++;  // to prevent doubly taking this entry
-      
-      curShip.num_level_rects[ DeckIndex ] ++; // count the number of rects for this deck one up
-
-      ReadValueFromString( EntryPointer , "DeckX=" , "%d" , &curShip.Level_Rects[ DeckIndex ][ RectIndex ].x , EndOfDeckRectangleSection );
-      ReadValueFromString( EntryPointer , "DeckY=" , "%d" , &curShip.Level_Rects[ DeckIndex ][ RectIndex ].y , EndOfDeckRectangleSection );
-      ReadValueFromString( EntryPointer , "DeckW=" , "%d" , &curShip.Level_Rects[ DeckIndex ][ RectIndex ].w , EndOfDeckRectangleSection );
-      ReadValueFromString( EntryPointer , "DeckH=" , "%d" , &curShip.Level_Rects[ DeckIndex ][ RectIndex ].h , EndOfDeckRectangleSection );
-
-    }
-
-  
-
-  //--------------------
-  //
-  //
-  if ( (EntryPointer = strstr( Data , START_OF_LIFT_DATA_STRING ) ) == NULL )
-    {
-      DebugPrintf ( 0 , "\nERROR!  START OF LIFT DATA STRING NOT FOUND!  Terminating...");
-      Terminate(ERR);
-    }
-
-  EndOfLiftConnectionData = LocateStringInData ( Data , END_OF_LIFT_CONNECTION_DATA_STRING );
-  EntryPointer = Data;
-
-  while ( ( EntryPointer = strstr( EntryPointer , "Label=" ) ) != NULL )
-    {
-      ReadValueFromString( EntryPointer , "Label=" , "%d" , &Label , EndOfLiftConnectionData );
-      CurLift = &(curShip.AllLifts[Label]);
-      EntryPointer++; // to avoid doubly taking this entry
-
-      ReadValueFromString( EntryPointer , "Deck=" , "%d" , &(CurLift->level) , EndOfLiftConnectionData );
-      ReadValueFromString( EntryPointer , "PosX=" , "%d" , &(CurLift->x) , EndOfLiftConnectionData );
-      ReadValueFromString( EntryPointer , "PosY=" , "%d" , &(CurLift->y) , EndOfLiftConnectionData );
-      ReadValueFromString( EntryPointer , "LevelUp=" , "%d" , &(CurLift->up) , EndOfLiftConnectionData );
-      ReadValueFromString( EntryPointer , "LevelDown=" , "%d" , &(CurLift->down) , EndOfLiftConnectionData );
-      ReadValueFromString( EntryPointer , "LiftRow=" , "%d" , &(CurLift->lift_row) , EndOfLiftConnectionData );
-      
-    }
-
-  curShip.num_lifts = Label;
-
-  return OK;
-}; // int GetLiftConnections(char *shipname)
 
 /* ----------------------------------------------------------------------
  * This function is used to calculate the number of the droids on the 

@@ -200,8 +200,6 @@ EXTERN void CountNumberOfDroidsOnShip ( void );
 EXTERN int LoadShip (char *filename);
 EXTERN int SaveShip(char *filename);
 EXTERN void GetAllAnimatedMapTiles (Level Lev);
-// EXTERN int GetLiftConnections (char *shipname);
-
 EXTERN int GetCrew (char *shipname);
 
 EXTERN void AnimateRefresh (void);

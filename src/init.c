@@ -1555,7 +1555,7 @@ InitNewMissionList ( char *MissionName )
   char *BriefingSectionPointer;
   char *EventSectionPointer;
   // char *MissionTargetPointer;
-  char* Liftname;
+
   char* Crewname;
   char* GameDataName;
   char* Shipname;
@@ -1690,18 +1690,6 @@ InitNewMissionList ( char *MissionName )
   if ( LoadShip (fpath) == ERR )
     {
       DebugPrintf ( 0 , "Error in LoadShip\n");
-      Terminate (ERR);
-    }
-
-  //--------------------
-  // Now its time to get the elevator file name from the mission file and
-  // read the elevator file into the right memory structures
-  //
-  Liftname = 
-    ReadAndMallocStringFromData ( MainMissionPointer , ELEVATORNAME_INDICATION_STRING , "\n" ) ;
-  if (GetLiftConnections ( Liftname ) == ERR)
-    {
-      DebugPrintf ( 0 , "\nError in GetLiftConnections ");
       Terminate (ERR);
     }
 
