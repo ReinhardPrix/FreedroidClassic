@@ -216,6 +216,7 @@ Allowed Type of Random Droid for this level: 123
 Allowed Type of Random Droid for this level: 139
 Allowed Type of Random Droid for this level: 247
 Allowed Type of Random Droid for this level: 249
+
 ** End of this levels droid data **
 
 ** Beginning of new Level **
@@ -294,6 +295,19 @@ S**pecialForce: Type=751 X=20 Y=5 Fixed=1 Marker=1 AdvancedCommand=0 Parameter1=
 ** End of this levels droid data **
 
 ** Beginning of new Level **
+Level=16
+Maximum number of Random Droids=0
+Minimum number of Random Droids=0
+Allowed Type of Random Droid for this level: 751
+
+SpecialForce: Type=493 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="493AvengerBot1StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Avenger Bot"
+SpecialForce: Type=493 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="493AvengerBot2StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Avenger Bot"
+SpecialForce: Type=493 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="493AvengerBot3StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Avenger Bot"
+SpecialForce: Type=493 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="493AvengerBot4StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Avenger Bot"
+
+** End of this levels droid data **
+
+** Beginning of new Level **
 Level=22
 Maximum number of Random Droids=0
 Minimum number of Random Droids=0
@@ -306,6 +320,9 @@ SpecialForce: Type=476 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1
 SpecialForce: Type=476 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="476MadCircleBot5StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Mad Circle Bot"
 
 ** End of this levels droid data **
+
+
+
 
 
 
