@@ -20,7 +20,7 @@ New Option Nr=1 OptionText="I would like to trade with you."
 OptionSample="Tux_STO_I_Would_Like_0.wav"
 Subtitle="Good!  Here is the selection of items I have for sale."
 ReplySample="STO_Good_Here_Is_0.wav"
-DoSomethingExtra="InitTradeWithCharacter:STO" 
+DoSomethingExtra="InitTradeWithCharacter:Stone" 
 Do---SomethingExtra="Buy_Basic_Items" 
 
 ----------------------------------------------------------------------

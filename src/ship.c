@@ -745,12 +745,24 @@ ShowItemPicture (int PosX, int PosY, int Number )
 	      Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
 
 	      //--------------------
+	      // If that didn't work, then it's time to try the same directory with 'png' ending...
+	      // Maybe there's still some (old) rotation image of this kind.
+	      //
+	      if ( Whole_Image == NULL )
+		{
+		  DebugPrintf ( 1 , "\nNo luck trying to load .jpg item image series from the 'bastian' dir... trying png..." );
+		  sprintf ( ConstructedFileName , "items/%s/portrait_%04d.png" , ItemMap[ Number ] . item_rotation_series_prefix , i+1 );
+		  fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
+		  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+		}
+
+	      //--------------------
 	      // If that didn't work, then it's time to try out the 'classic' rotation models directory.
 	      // Maybe there's still some rotation image there.
 	      //
 	      if ( Whole_Image == NULL )
 		{
-		  DebugPrintf ( 1 , "\nNo luck trying to load .jpg item image series from the 'bastian' dir... trying 'classic' dir..." );
+		  DebugPrintf ( 1 , "\nNo luck trying to load .png item image series from the 'bastian' dir... trying 'classic' dir..." );
 		  sprintf ( ConstructedFileName , "rotation_models/items/%s_%04d.jpg" , ItemMap[ Number ] . item_rotation_series_prefix , i+1 );
 		  fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
 		  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type

@@ -120,9 +120,9 @@ ResolveDialogSectionToChatFlagsIndex ( char* SectionName )
   if ( strcmp ( SectionName , "Chandra" ) == 0 ) return PERSON_CHA ;
   if ( strcmp ( SectionName , "Sorenson" ) == 0 ) return PERSON_SORENSON;
   if ( strcmp ( SectionName , "614" ) == 0 ) return PERSON_614;
-  if ( strcmp ( SectionName , "STO" ) == 0 ) return PERSON_STONE;
-  if ( strcmp ( SectionName , "PEN" ) == 0 ) return PERSON_PENDRAGON;
-  if ( strcmp ( SectionName , "DIX" ) == 0 ) return PERSON_DIXON;
+  if ( strcmp ( SectionName , "Stone" ) == 0 ) return PERSON_STONE;
+  if ( strcmp ( SectionName , "Pendragon" ) == 0 ) return PERSON_PENDRAGON;
+  if ( strcmp ( SectionName , "Dixon" ) == 0 ) return PERSON_DIXON;
   if ( strcmp ( SectionName , "RMS" ) == 0 ) return PERSON_RMS;
   if ( strcmp ( SectionName , "MER" ) == 0 ) return PERSON_MER;
   if ( strcmp ( SectionName , "Francis" ) == 0 ) return PERSON_FRANCIS;
@@ -145,6 +145,7 @@ ResolveDialogSectionToChatFlagsIndex ( char* SectionName )
   if ( strcmp ( SectionName , "MSFacilityGateGuardLeader" ) == 0 ) return PERSON_MS_FACILITY_GATE_GUARD_LEADER;
   if ( strcmp ( SectionName , "HEA" ) == 0 ) return PERSON_HEA;
 
+  DebugPrintf ( 0 , "\n--------------------\nSectionName: %s." , SectionName );
   GiveStandardErrorMessage ( "ResolveDialogSectionToChatFlagsIndex(...)" , "\
 There was a dialogue section to be used with a droid, that does not have a \n\
 corresponding chat flags array index." ,
