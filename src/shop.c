@@ -547,8 +547,11 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
     SDL_Rect HighlightRect;
     int BuyButtonActive = FALSE ;
     int SellButtonActive = FALSE ;
-    
-    make_sure_system_mouse_cursor_is_turned_on();
+
+    //--------------------
+    // For the shop, we'll also try to use our own mouse cursor
+    //
+    make_sure_system_mouse_cursor_is_turned_off();
 
     //--------------------
     // We add some secutiry against indexing beyond the
@@ -598,7 +601,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	// We show all the info and the buttons that should be in this
 	// interface...
 	//
-	AssembleCombatPicture( 0 );
+	AssembleCombatPicture( USE_OWN_MOUSE_CURSOR | ONLY_SHOW_MAP );
 	if ( ItemIndex >= 0 )
 	    ShowItemInfo ( ShowPointerList [ ItemIndex ] , Displacement , FALSE , ITEM_BROWSER_SHOP_BACKGROUND_CODE , FALSE );
 	else if ( TuxItemIndex >= 0 )
@@ -688,6 +691,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	PutStringFont ( Screen , Menu_BFont, 46 * GameConfig . screen_width / 640 , 
 			143 * GameConfig . screen_height / 480 , GoldString );
 	
+	blit_our_own_mouse_cursor ( );
 	our_SDL_flip_wrapper( Screen );
 	
 	if (SpacePressed() || EscapePressed() || axis_is_active )
