@@ -543,8 +543,14 @@ EnterKonsole (void)
 	      ConsoleMenuPos++;
 	      TasteOK = 1;
 	    }
-	  if (SpacePressed ())
+	  if ( SpacePressed () )
 	    TasteOK = 1;
+	  if ( EscapePressed() )
+	    {
+	      TasteOK = 1;
+	      ReenterGame = TRUE;
+	      while ( EscapePressed() );
+	    }
 	}
 
       /* Verhindern, da"s der Menucursor das Menu verl"a"st */
@@ -726,6 +732,13 @@ GreatDruidShow (void)
 	  PassOn = 0;
 	  while (!PassOn)
 	    {
+	      if ( EscapePressed () )
+		{
+		  PassOn = 1;
+		  while ( EscapePressed() );
+		  return;
+		}
+
 	      if (UpPressed ())
 		{
 		  PassOn = 1;
@@ -800,6 +813,13 @@ GreatDruidShow (void)
 	  PassOn = 0;
 	  while (!PassOn)
 	    {
+	      if ( EscapePressed () )
+		{
+		  PassOn = 1;
+		  while ( EscapePressed() );
+		  return;
+		}
+
 	      if (UpPressed ())
 		{
 		  PassOn = 1;
@@ -870,6 +890,13 @@ GreatDruidShow (void)
 	  PassOn = 0;
 	  while (!PassOn)
 	    {
+	      if ( EscapePressed () )
+		{
+		  PassOn = 1;
+		  while ( EscapePressed() );
+		  return;
+		}
+
 	      if (UpPressed ())
 		{
 		  PassOn = 1;
