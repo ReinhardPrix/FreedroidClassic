@@ -772,11 +772,6 @@ Activate_Conservative_Frame_Computation(void)
   // SkipAFewFrames=22;
   SkipAFewFrames=3;
 
-  // Now we are in some form of pause.  It can't
-  // hurt to have the top status bar redrawn after that,
-  // so we set this variable...
-  BannerIsDestroyed=TRUE;
-
   DebugPrintf ( 1 , "\nConservative_Frame_Computation activated!" );
 
 }; // void Activate_Conservative_Frame_Computation(void)

@@ -1658,10 +1658,6 @@ to_show_banner (const char* left, const char* right)
   left_box [LEFT_TEXT_LEN]  = '\0';     // that's right, we want padding!
   right_box[RIGHT_TEXT_LEN] = '\0';
   
-  // Redraw the whole background of the top status bar
-  //  SDL_SetClipRect( Screen , NULL );  // this unsets the clipping rectangle
-  //  our_SDL_blit_surface_wrapper( banner_pic, NULL, Screen , NULL);
-
   // Now the text should be ready and its
   // time to display it...
   DebugPrintf (2, "Takeover said: %s -- %s\n", left_box, right_box);

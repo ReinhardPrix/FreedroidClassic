@@ -235,17 +235,10 @@ EXTERN int first_gethit_animation_image [ ENEMY_ROTATION_MODELS_AVAILABLE ];
 EXTERN int last_gethit_animation_image [ ENEMY_ROTATION_MODELS_AVAILABLE ];
 EXTERN int first_death_animation_image [ ENEMY_ROTATION_MODELS_AVAILABLE ];
 EXTERN int last_death_animation_image [ ENEMY_ROTATION_MODELS_AVAILABLE ];
-
                                                // influencer in different phases of rotation
 EXTERN SDL_Surface *TuxWorkingCopy [ MAX_PLAYERS ] [ TUX_BREATHE_PHASES + TUX_SWING_PHASES + TUX_GOT_HIT_PHASES ] [ MAX_TUX_DIRECTIONS ] ;   // A pointer to the surfaces containing the tux
 EXTERN SDL_Surface *TuxMotionArchetypes[ TUX_MODELS ][ TUX_BREATHE_PHASES + TUX_SWING_PHASES + TUX_GOT_HIT_PHASES ];   // A pointer to the surfaces containing the tux
 EXTERN iso_image floor_iso_images [ ALL_ISOMETRIC_FLOOR_TILES ] ;   
-
-
-EXTERN int BannerIsDestroyed;
-EXTERN unsigned char *LevelColorArray;
-EXTERN int *CRTC;
-EXTERN unsigned char *Data70Pointer;
 
 EXTERN float iso_floor_tile_width;
 EXTERN float iso_floor_tile_height;
@@ -255,13 +248,6 @@ EXTERN const SDL_VideoInfo *vid_info;/* info about current video mode */
 EXTERN color transp_rgb;             /* RGB of transparent color */
 EXTERN int vid_bpp; 			/* bits per pixel */
 EXTERN Uint32 transp_key;            /* key of transparent color */
-EXTERN SDL_Surface *static_blocks;          /* here we collect all non-resizable blocks */
-EXTERN SDL_Surface *ship_off_pic;    	/* Side-view of ship: lights off */
-EXTERN SDL_Surface *ship_on_pic;	/* Side-view of ship: lights on */
-EXTERN SDL_Surface *banner_pic;
-
-EXTERN SDL_Rect level_rect[MAX_LEVELS]; /* rect's of levels in side-view */
-EXTERN SDL_Rect liftrow_rect[MAX_LIFT_ROWS]; /* the lift-row rect's in side-view*/
 
 #undef EXTERN
 #ifdef _blocks_c

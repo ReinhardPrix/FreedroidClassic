@@ -539,13 +539,14 @@ enemy_spray_blood ( Enemy CurEnemy )
 {
   moderately_finepoint target_pos = { 1.0 , 0 } ;
 
+  DebugPrintf ( -3 , "\nBlood has been sprayed..." );
+
   RotateVectorByAngle ( & target_pos , MyRandom ( 360 ) );
 
   target_pos . x += CurEnemy -> pos . x ;
   target_pos . y += CurEnemy -> pos . y ;
 
   create_new_obstacle_on_level ( curShip . AllLevels [ CurEnemy -> pos . z ] , ISO_BLOOD_1 + MyRandom ( 7 ) , target_pos . x , target_pos . y );
-
   
 }; // void enemy_spray_blood ( Enemy CurEnemy ) 
 

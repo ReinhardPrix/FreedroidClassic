@@ -128,7 +128,8 @@ PlayATitleFile ( char* Filename )
       strncpy ( PreparedBriefingText , NextSubsectionStartPointer , ThisTextLength );
       PreparedBriefingText[ThisTextLength]=0;
       fflush(stdout);
-      ScrollText ( PreparedBriefingText, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine , TitlePictureName );
+      // ScrollText ( PreparedBriefingText, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine , TitlePictureName );
+      ScrollText ( PreparedBriefingText, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine , NE_TITLE_PIC_BACKGROUND_CODE );
       free ( PreparedBriefingText );
     }
 

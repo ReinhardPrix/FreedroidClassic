@@ -455,7 +455,7 @@ GreatItemShow ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVENTOR
       MenuTexts[0]=" BACK ";
       MenuTexts[1]="";
       DoMenuSelection ( " YOU DONT HAVE ANYTHING IN INVENTORY, THAT COULD BE VIEWED. " , 
-			MenuTexts, 1 , NULL , NULL );
+			MenuTexts, 1 , -1 , NULL );
       return (-1) ;
     }
 
@@ -471,7 +471,7 @@ GreatItemShow ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVENTOR
       // We show all the info and the buttons that should be in this
       // interface...
       //
-      ShowItemInfo ( ShowPointerList [ ItemIndex ] , Displacement , TRUE , ITEM_BROWESER_BG_PIC_FILE );
+      ShowItemInfo ( ShowPointerList [ ItemIndex ] , Displacement , TRUE , ITEM_BROWSER_BG_PIC_BACKGROUND_CODE );
 
       // PutPasswordButtonsAndPassword ( PasswordIndex );
       // PutSecurityButtonsAndClearance ( ClearanceIndex );
@@ -591,7 +591,7 @@ ShowDroidInfo (int droidtype, int Displacement , char ShowArrows )
 
   SDL_SetClipRect ( Screen , NULL );
 
-  DisplayImage ( find_file( ITEM_BROWESER_BG_PIC_FILE , GRAPHICS_DIR, FALSE) );
+  blit_special_background ( ITEM_BROWSER_BG_PIC_BACKGROUND_CODE ) ;
 
   ShowDroidPicture ( 45 , 190 , droidtype );
 
@@ -901,56 +901,20 @@ This error indicates some installation problem with freedroid.",
  * does update the screen, no our_SDL_flip_wrapper() necesary !
  * ------------------------------------------------------------ */
 void 
-ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , char* BackgroundFileName )
+ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , int background_code )
 {
   char InfoText[10000];
   char TextChunk[2000];
   char* ClassString;
-  static SDL_Surface* BackgroundSurfaceBackup = NULL ;
-  SDL_Surface* tmp_surface = NULL ;
-  static char OldBackgroundFileName[2000];
   int repairPrice = 0;
 
   SDL_SetClipRect ( Screen , NULL );
 
-  //--------------------
-  // We can't reload the background from disk every frame!  On slow machines
-  // this gives really horrible performance.  So here comes the fix:  If same
-  // background as before is used, backup of background will be used.  That
-  // should fix the problem.
-  //
-  if ( strcmp ( OldBackgroundFileName , BackgroundFileName ) || ( BackgroundSurfaceBackup == NULL ) )
-    {
-      //--------------------
-      // FIRST these preparations.  Only then we can proceed!!!
-      //
-      DebugPrintf ( 0 , "\nReloading background surface for ShowItemInfo!!" );
-      strcpy ( OldBackgroundFileName , BackgroundFileName );
-      if ( BackgroundSurfaceBackup != NULL ) SDL_FreeSurface ( BackgroundSurfaceBackup );
-
-      //--------------------
-      // Now we really reload the background surface...
-      //
-      BackgroundFileName = find_file ( BackgroundFileName , GRAPHICS_DIR , FALSE ) ;
-
-      tmp_surface = our_IMG_load_wrapper( BackgroundFileName );
-      if ( tmp_surface == NULL ) 
-	{
-	  fprintf(stderr, "Couldn't load image %s: %s\n",
-		  BackgroundFileName, IMG_GetError());
-	  Terminate(ERR);
-	}
-
-      BackgroundSurfaceBackup = our_SDL_display_format_wrapper ( tmp_surface ) ;
-      
-      SDL_FreeSurface ( tmp_surface );
-
-    }
-
-  our_SDL_blit_surface_wrapper( BackgroundSurfaceBackup , NULL, Screen, NULL);
+  // our_SDL_blit_surface_wrapper( BackgroundSurfaceBackup , NULL, Screen, NULL);
 
   // DisplayImage ( find_file( BackgroundFileName , GRAPHICS_DIR, FALSE) );
   
+  blit_special_background ( background_code );
   ShowItemPicture ( 45 , 190 , ShowItem->type );
 
   //--------------------
@@ -1307,15 +1271,15 @@ ShowDeckMap (Level deck)
 		      MenuTexts[ 2 ] = "BACK" ;
 		      MenuTexts[ 3 ] = "" ;
 		      while ( SpacePressed() );
-		      MenuPosition = DoMenuSelection ( "\n    Select message to read " , MenuTexts , 1 , NULL , NULL );
+		      MenuPosition = DoMenuSelection ( "\n    Select message to read " , MenuTexts , 1 , -1 , NULL );
 		      switch ( MenuPosition )
 			{
 			case 0:
 			case 1:
-			  ScrollText ( EmailText1 , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NE_TITLE_PIC_FILE );
+			  ScrollText ( EmailText1 , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NE_TITLE_PIC_BACKGROUND_CODE );
 			  break;
 			case 2:
-			  ScrollText ( EmailText2 , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NE_TITLE_PIC_FILE );
+			  ScrollText ( EmailText2 , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NE_TITLE_PIC_BACKGROUND_CODE );
 			  break;
 			default:
 			  break;

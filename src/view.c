@@ -3276,7 +3276,7 @@ The transparent plate for the inventory could not be loaded.  This is a fatal er
   // At this point we know, that the inventory screen is desired and must be
   // displayed in-game:
   //
-  blit_special_background ( 0 );
+  blit_special_background ( INVENTORY_SCREEN_BACKGROUND_CODE );
 
   //--------------------
   // Now we display the item in the influencer drive slot

@@ -1130,7 +1130,7 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , Enemy ChatDroid 
 	  ChatDroid -> has_greeted_influencer = TRUE ;
 	}
       else
-	MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , DialogMenuTexts , Me [ PlayerNum ] . Chat_Flags [ ChatPartnerCode ]  , 1 , NULL , FPS_Display_BFont );
+	MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , DialogMenuTexts , Me [ PlayerNum ] . Chat_Flags [ ChatPartnerCode ]  , 1 , -1 , FPS_Display_BFont );
 
       //--------------------
       // We do some correction of the menu selection variable:
@@ -1517,31 +1517,20 @@ SetTextCursor ( int x , int y )
  *
  * ----------------------------------------------------------------- */
 int
-ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePictureName )
+ScrollText (char *Text, int startx, int starty, int EndLine , int background_code )
 {
   int Number_Of_Line_Feeds = 0;	// number of lines used for the text
   char *textpt;			// mobile pointer to the text
   int InsertLine = starty;
   int speed = +4;
   int maxspeed = 8;
-  SDL_Surface* Background = NULL ;
 
   Activate_Conservative_Frame_Computation( );
 
-  if ( TitlePictureName != NULL )
-    Background = our_IMG_load_wrapper( find_file( TitlePictureName , GRAPHICS_DIR, FALSE) );
-  else
-    {
-      GiveStandardErrorMessage ( "ScrollText(...)" , "\
-Null as title picture name received.",
-				 PLEASE_INFORM, IS_FATAL );
-    }
+  if ( background_code != ( -1 ) )
+    blit_special_background ( background_code );
 
   SetCurrentFont( Para_BFont );
-
-  // printf("\nScrollTest should be starting to scroll now...");
-
-  // getchar();
 
   // count the number of lines in the text
   textpt = Text;
@@ -1579,7 +1568,8 @@ Null as title picture name received.",
 
       SDL_Delay (30);
 
-      our_SDL_blit_surface_wrapper ( Background , NULL , Screen , NULL );
+      if ( background_code != ( -1 ) )
+	blit_special_background ( background_code );
 
       if (!DisplayText (Text, startx, InsertLine, &User_Rect))
 	{

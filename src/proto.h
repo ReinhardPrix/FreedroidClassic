@@ -479,14 +479,14 @@ EXTERN int NoDirectionPressed (void);
 #endif
 EXTERN void StoreMenuBackground ( int backup_slot );
 EXTERN void RestoreMenuBackground ( int backup_slot );
-EXTERN int DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char* BackgroundToUse , void* MenuFont );
+EXTERN int DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , int background_code , void* MenuFont );
 EXTERN int ChatDoMenuSelectionFlagged( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON] , 
 				       unsigned char Chat_Flags[ MAX_ANSWERS_PER_PERSON ] , int FirstItem , 
-				       char* BackgroundToUse , void* MenuFont );
-EXTERN int ChatDoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char* BackgroundToUse , void* MenuFont );
+				       int background_code , void* MenuFont );
+EXTERN int ChatDoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , int background_code , void* MenuFont );
 EXTERN void StartupMenu (void);
 EXTERN void BuySellMenu ( void );
-EXTERN void InitiateMenu( char* BackgroundToUse );
+EXTERN void InitiateMenu( int background_code );
 EXTERN void Cheatmenu (void);
 EXTERN void EscapeMenu (void);
 EXTERN void Credits_Menu (void);
@@ -561,7 +561,7 @@ EXTERN void start_gethit_animation_if_applicable ( enemy* ThisRobot ) ;
 #endif
 EXTERN int GreatItemShow ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVENTORY ] );
 EXTERN void ShowDeckMap (Level deck);
-EXTERN void ShowItemInfo ( item* ShowItem , int page , char ShowArrows , char* BackgroundFileName );
+EXTERN void ShowItemInfo ( item* ShowItem , int page , char ShowArrows , int background_code );
 EXTERN void EnterLift (void);
 EXTERN void EnterItemIdentificationBooth( void );
 EXTERN void EnterCodepanel (void);
@@ -599,7 +599,7 @@ EXTERN int DisplayTextWithScrolling (char *Text, int startx, int starty, const S
 EXTERN int DisplayText (char *text, int startx, int starty, const SDL_Rect *clip);
 
 EXTERN void DisplayChar (unsigned char c);
-EXTERN int ScrollText (char *text, int startx, int starty, int EndLine , char* TitlePictureName );
+EXTERN int ScrollText (char *text, int startx, int starty, int EndLine , int background_code );
 
 EXTERN void ImprovedCheckUmbruch(char *text, const SDL_Rect *clip);
 EXTERN char *PreviousLine (char *textstart, char *text);

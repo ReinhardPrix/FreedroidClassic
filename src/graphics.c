@@ -1151,8 +1151,6 @@ UNABLE TO LOAD STANDARD TILE!",
 int
 InitPictures (void)
 {
-  SDL_Surface *tmp;
-
   Block_Width=INITIAL_BLOCK_WIDTH;
   Block_Height=INITIAL_BLOCK_HEIGHT;
 
@@ -1180,29 +1178,6 @@ InitPictures (void)
   ShowStartupPercentage ( 20 ) ; 
 
   SDL_SetCursor( init_system_cursor( arrow ) );
-
-  //--------------------
-  // Now we create the internal storage for all our blocks 
-  //
-  tmp = SDL_CreateRGBSurface(0, SCREEN_WIDTH, SCREEN_HEIGHT, vid_bpp, 0, 0, 0, 0);
-  if (tmp == NULL) 
-    {
-      DebugPrintf (1, "\nCould not create static_blocks surface: %s\n", SDL_GetError());
-      return (FALSE);
-    }
-  static_blocks = our_SDL_display_format_wrapper(tmp);  /* the second surface is copied !*/
-  SDL_FreeSurface( tmp );
-  if (static_blocks == NULL) 
-    {
-      DebugPrintf (1, "\nour_SDL_display_format_wrapper() has failed: %s\n", SDL_GetError());
-      return (FALSE);
-    }
-  if (SDL_SetColorKey(static_blocks, SDL_SRCCOLORKEY, transp_key) == -1 )
-    {
-      fprintf (stderr, "Transp setting by SDL_SetColorKey() failed: %s \n",
-	       SDL_GetError());
-      return (FALSE);
-    }
 
   ShowStartupPercentage ( 22 ) ; 
 
@@ -1505,12 +1480,6 @@ InitVideo (void)
 void
 ClearGraphMem ( void )
 {
-  // One this function is done, the rahmen at the
-  // top of the screen surely is destroyed.  We inform the
-  // DisplayBanner function of the matter...
-  BannerIsDestroyed=TRUE;
-
-  // 
   SDL_SetClipRect( Screen, NULL );
 
   // Now we fill the screen with black color...

@@ -889,7 +889,7 @@ ShowSkillsExplanationScreen( void )
   //--------------------
   // This should draw the background...
   //
-  blit_special_background ( 3 ) ;
+  blit_special_background ( SKILL_SCREEN_EXPLANATION_BACKGROUND_CODE ) ;
 
   TargetSkillRect.x = 15;
   TargetSkillRect.y = 15;
@@ -902,6 +902,32 @@ ShowSkillsExplanationScreen( void )
 
 
 }; // void ShowSkillsExplanationScreen( void )
+
+/* ---------------------------------------------------------------------- 
+ * We will draw only those skills to the skills inventory, that are
+ * already present in the Tux.  That way the game remains open for new
+ * skills to the player and he doesn't now in advance which skills there
+ * are, which is more interesting than complete control and overview.
+ * ---------------------------------------------------------------------- */
+void
+establish_skill_subset_map ( int *SkillSubsetMap )
+{
+  int i;
+  int NextPosition=0;
+
+  for ( i = 0 ; i < NUMBER_OF_SKILLS ; i ++ )
+    {
+      SkillSubsetMap [ i ] = (-1) ;
+    }
+  for ( i = 0 ; i < NUMBER_OF_SKILLS ; i ++ )
+    {
+      if ( Me [ 0 ] . SkillLevel [ i ] > 0 )
+	{
+	  SkillSubsetMap [ NextPosition ] = i ;
+	  NextPosition++;
+	}
+    }
+}; // void establish_skill_subset_map ( int *SkillSubsetMap );
 
 /* ----------------------------------------------------------------------
  * This function displays the SKILLS SCREEN.  This is NOT the same as the
@@ -917,7 +943,6 @@ ShowSkillsScreen ( void )
   static int MouseButtonPressedPreviousFrame = FALSE;
   point CurPos;
   int i;
-  int NextPosition=0;
   SDL_Rect SpellLevelRect;
   int SkillSubsetMap [ NUMBER_OF_SKILLS ] ;
   int SkillOfThisSlot;
@@ -958,19 +983,7 @@ ShowSkillsScreen ( void )
   // skills to the player and he doesn't now in advance which skills there
   // are, which is more interesting than complete control and overview.
   //
-  for ( i = 0 ; i < NUMBER_OF_SKILLS ; i ++ )
-    {
-      SkillSubsetMap [ i ] = (-1) ;
-    }
-  for ( i = 0 ; i < NUMBER_OF_SKILLS ; i ++ )
-    {
-      if ( Me [ 0 ] . SkillLevel [ i ] > 0 )
-	{
-	  SkillSubsetMap [ NextPosition ] = i ;
-	  NextPosition++;
-	}
-    }
-  
+  establish_skill_subset_map ( & ( SkillSubsetMap [ 0 ] ) );
 
   //--------------------
   // At this point we know, that the skill screen is desired and must be
@@ -978,8 +991,8 @@ ShowSkillsScreen ( void )
   //
   // SDL_SetClipRect( Screen, NULL );
   // our_SDL_blit_surface_wrapper ( SkillScreenImage , NULL , Screen , &SkillScreenRect );
-
-  blit_special_background ( 2 );
+  //
+  blit_special_background ( SKILL_SCREEN_BACKGROUND_CODE );
 
 
   if ( GameConfig.skill_explanation_screen_visible )

@@ -603,10 +603,10 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
       // interface...
       //
       if ( ItemIndex >= 0 )
-	ShowItemInfo ( ShowPointerList [ ItemIndex ] , Displacement , TRUE , "backgrounds/item_browser_shop.jpg" );
+	ShowItemInfo ( ShowPointerList [ ItemIndex ] , Displacement , TRUE , ITEM_BROWSER_SHOP_BACKGROUND_CODE );
       else if ( TuxItemIndex >= 0 )
-	ShowItemInfo ( TuxItemsList [ TuxItemIndex ] , Displacement , TRUE , "backgrounds/item_browser_shop.jpg" );
-      else DisplayImage ( find_file( "backgrounds/item_browser_shop.jpg" , GRAPHICS_DIR, FALSE) );
+	ShowItemInfo ( TuxItemsList [ TuxItemIndex ] , Displacement , TRUE , ITEM_BROWSER_SHOP_BACKGROUND_CODE );
+      else blit_special_background ( ITEM_BROWSER_SHOP_BACKGROUND_CODE );
 
       for ( i = 0 ; i < RowLength ; i++ )
 	{
@@ -1011,7 +1011,7 @@ DoEquippmentListSelection( char* Startstring , item* Item_Pointer_List[ MAX_ITEM
   while ( !SpacePressed() && !EscapePressed() )
     {
       // InitiateMenu( NULL );
-      InitiateMenu( SHOP_BACKGROUND_IMAGE );
+      InitiateMenu( SHOP_BACKGROUND_IMAGE_CODE );
 
       //--------------------
       // Now we draw our selection of items to the screen, at least the part
@@ -1152,7 +1152,7 @@ TryToRepairItem( item* RepairItem )
       PlayOnceNeededSoundSample ( "STO_You_Cant_Repaired_0.wav" , FALSE );
       MenuTexts[0]=" BACK ";
       MenuTexts[1]="";
-      DoMenuSelection ( "\n\nYou can't afford to have this item repaired! " , MenuTexts , 1 , NULL , NULL );
+      DoMenuSelection ( "\n\nYou can't afford to have this item repaired! " , MenuTexts , 1 , -1 , NULL );
       return;
     }
 
@@ -1160,7 +1160,7 @@ TryToRepairItem( item* RepairItem )
     {
       GiveItemDescription( linebuf , RepairItem , TRUE );
       strcat ( linebuf , "\n\n    Are you sure you want this item repaired?" );
-      MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 , NULL , NULL );
+      MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 , -1 , NULL );
       switch (MenuPosition) 
 	{
 	case (-1):
@@ -1205,7 +1205,7 @@ TryToIdentifyItem( item* IdentifyItem )
       PlayOnceNeededSoundSample ( "STO_You_Cant_Identified_0.wav" , FALSE );
       MenuTexts[0]=" BACK ";
       MenuTexts[1]="";
-      DoMenuSelection ( "You can't afford to have this item identified! " , MenuTexts , 1 , NULL , NULL );
+      DoMenuSelection ( "You can't afford to have this item identified! " , MenuTexts , 1 , -1 , NULL );
       return;
     }
 
@@ -1213,7 +1213,7 @@ TryToIdentifyItem( item* IdentifyItem )
     {
       GiveItemDescription( linebuf , IdentifyItem , TRUE );
       strcat ( linebuf , "\n\n    Are you sure you want this item identified?" );
-      MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 , NULL , NULL );
+      MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 , -1 , NULL );
       // MenuPosition = DoMenuSelection( " Are you sure you want this item identified? " , MenuTexts , 1 , NULL , NULL );
       switch (MenuPosition) 
 	{
@@ -1230,7 +1230,7 @@ TryToIdentifyItem( item* IdentifyItem )
 	  MenuTexts[1]="";
 	  GiveItemDescription( linebuf , IdentifyItem , TRUE );
 	  strcat ( linebuf , "\n\n " );
-	  MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 , NULL , NULL );
+	  MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 , -1 , NULL );
 
 	  return;
 	  break;
@@ -1282,7 +1282,7 @@ TryToSellItem( item* SellItem , int WithBacktalk , int AmountToSellAtMost )
 	{
 	  GiveItemDescription( linebuf , SellItem , TRUE );
 	  strcat ( linebuf , "\n\n    Are you sure you wish to sell this/(some of these) item(s)?" );
-	  MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 , NULL , NULL );
+	  MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 , -1 , NULL );
 	  switch (MenuPosition) 
 	    {
 	    case (-1):
@@ -1406,7 +1406,7 @@ TryToIntegrateItemIntoInventory ( item* BuyItem , int AmountToBuyAtMost )
   MenuTexts[1]="";
   GiveItemDescription( linebuf , BuyItem , TRUE );
   strcat ( linebuf , "\n\n   No room for this item in inventory!" );
-  DoMenuSelection( linebuf , MenuTexts , 1 , NULL , NULL );
+  DoMenuSelection( linebuf , MenuTexts , 1 , -1 , NULL );
   return ( FALSE );
 
 }; // void TryToIntegrateItemIntoInventory ( item* BuyItem , int AmountToBuyAtMost )
@@ -1492,7 +1492,7 @@ TryToBuyItem( item* BuyItem , int WithBacktalk , int AmountToBuyAtMost )
 	  MenuTexts[1]="";
 	  GiveItemDescription( linebuf , BuyItem , TRUE );
 	  strcat ( linebuf , "\n\n    You can't afford to purchase this item!" );
-	  DoMenuSelection( linebuf , MenuTexts , 1 , NULL , NULL );
+	  DoMenuSelection( linebuf , MenuTexts , 1 , -1 , NULL );
 	}
       return;
     }
@@ -1707,7 +1707,7 @@ Repair_Items( void )
       PlayOnceNeededSoundSample ( "STO_Sorry_But_Repair_0.wav" , FALSE );
       MenuTexts[0]=" BACK ";
       MenuTexts[1]="";
-      DoMenuSelection ( " YOU DONT HAVE ANYTHING THAT WOULD NEED REPAIR " , MenuTexts , 1 , NULL , NULL );
+      DoMenuSelection ( " YOU DONT HAVE ANYTHING THAT WOULD NEED REPAIR " , MenuTexts , 1 , -1 , NULL );
       return;
     }
 
@@ -1810,7 +1810,7 @@ Identify_Items ( void )
       PlayOnceNeededSoundSample ( "STO_You_Dont_Have_0.wav" , FALSE );
       MenuTexts[0]=" BACK ";
       MenuTexts[1]="";
-      DoMenuSelection ( " YOU DONT HAVE ANYTHING THAT WOULD NEED TO BE IDENTIFIED!" , MenuTexts , 1 , NULL , NULL );
+      DoMenuSelection ( " YOU DONT HAVE ANYTHING THAT WOULD NEED TO BE IDENTIFIED!" , MenuTexts , 1 , -1 , NULL );
       return;
     }
 
@@ -1883,7 +1883,7 @@ Sell_Items( int ForHealer )
       MenuTexts[0]=" BACK ";
       MenuTexts[1]="";
       DoMenuSelection ( " YOU DONT HAVE ANYTHING IN INVENTORY (I.E. NOT WORN), THAT COULD BE SOLD. " , 
-			MenuTexts, 1 , NULL , NULL );
+			MenuTexts, 1 , -1 , NULL );
       return;
     }
 
@@ -1943,7 +1943,7 @@ enum
       MenuTexts[8]="";
 
       // MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , SHOP_BACKGROUND_IMAGE , NULL );
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , SHOP_BACKGROUND_IMAGE , Menu_Filled_BFont );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , SHOP_BACKGROUND_IMAGE_CODE , Menu_Filled_BFont );
 
       switch (MenuPosition) 
 	{
@@ -1981,7 +1981,6 @@ enum
   ClearGraphMem();
   // Since we've faded out the whole scren, it can't hurt
   // to have the top status bar redrawn...
-  BannerIsDestroyed=TRUE;
   Me[0].status=MOBILE;
 
   return;

@@ -103,7 +103,7 @@ MouseCursorIsOverMenuItem( int first_menu_item_pos_y , int h )
  * keyboard only, currently, sorry.
  * ---------------------------------------------------------------------- */
 int
-DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , char* BackgroundToUse , void* MenuFont )
+DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , int background_code , void* MenuFont )
 {
   int h = FontHeight (GetCurrentFont());
   int i;
@@ -148,7 +148,7 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , char* B
   // We need to prepare the background for the menu, so that
   // it can be accessed with proper speed later...
   //
-  InitiateMenu( BackgroundToUse );
+  InitiateMenu( background_code );
 
   if ( ! strcmp ( MenuTexts [ 0 ] , SINGLE_PLAYER_STRING ) )
     {
@@ -314,7 +314,7 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , char* B
 int
 ChatDoMenuSelectionFlagged( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON] , 
 			    unsigned char Chat_Flags[ MAX_ANSWERS_PER_PERSON ] , int FirstItem , 
-			    char* BackgroundToUse , void* MenuFont )
+			    int background_code , void* MenuFont )
 {
   int MenuSelection = (-1) ;
   char* FilteredChatMenuTexts[ MAX_ANSWERS_PER_PERSON ] ;
@@ -346,7 +346,7 @@ ChatDoMenuSelectionFlagged( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER
   // Now we do the usual menu selection, using only the activated chat alternatives...
   //
   MenuSelection = ChatDoMenuSelection( InitialText , FilteredChatMenuTexts , 
-				       FirstItem , BackgroundToUse , MenuFont );
+				       FirstItem , background_code , MenuFont );
 
   //--------------------
   // Now that we have an answer, we must transpose it back to the original array
@@ -436,7 +436,7 @@ GetNumberOfTextLinesNeeded ( char* GivenText, SDL_Rect GivenRectangle )
  * keyboard or mouse wheel.
  * ---------------------------------------------------------------------- */
 int
-ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem , char* BackgroundToUse , void* MenuFont )
+ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem , int background_to_use , void* MenuFont )
 {
   int h = FontHeight (GetCurrentFont());
   int i , j ;
@@ -756,7 +756,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
  * that occured since there are so many submenus needing this.
  * ---------------------------------------------------------------------- */
 void 
-InitiateMenu( char* BackgroundToUse )
+InitiateMenu( int background_code )
 {
   //--------------------
   // Here comes the standard initializer for all the menus and submenus
@@ -766,7 +766,7 @@ InitiateMenu( char* BackgroundToUse )
   SDL_SetClipRect( Screen, NULL );
   ClearGraphMem();
 
-  if ( BackgroundToUse == NULL )
+  if ( background_code == ( -1 ) )
     {
       DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
       AssembleCombatPicture ( 0 );
@@ -774,7 +774,8 @@ InitiateMenu( char* BackgroundToUse )
     }
   else
     {
-      DisplayImage ( find_file ( BackgroundToUse , GRAPHICS_DIR, FALSE ) );
+      // DisplayImage ( find_file ( BackgroundToUse , GRAPHICS_DIR, FALSE ) );
+      blit_special_background ( background_code ) ;
     }
 
   SDL_SetClipRect( Screen, NULL );
@@ -1105,17 +1106,14 @@ enum
       MenuTexts[4]="Exit Freedroid";
       MenuTexts[5]="";
 
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NE_TITLE_PIC_FILE , NULL );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NE_TITLE_PIC_BACKGROUND_CODE , NULL );
 
       switch (MenuPosition) 
 	{
 	case SINGLE_PLAYER_POSITION:
-	  // PrepareStartOfNewCharacter ( NEW_MISSION );
 	  Weiter = Single_Player_Menu ( );
 	  break;
 	case MULTI_PLAYER_POSITION:
-	  DisplayImage (find_file (NE_TITLE_PIC_FILE, GRAPHICS_DIR, FALSE));
-	  SetCurrentFont ( Menu_BFont );
 	  Weiter = Multi_Player_Menu();
 	  break;
 	case CREDITS_POSITION:
@@ -1137,7 +1135,6 @@ enum
   ClearGraphMem();
   // Since we've faded out the whole scren, it can't hurt
   // to have the top status bar redrawn...
-  BannerIsDestroyed=TRUE;
   Me[0].status=MOBILE;
 
   return;
@@ -1192,7 +1189,7 @@ enum
       MenuTexts[6]="Quit";
       MenuTexts[7]="";
 
-      MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , NE_TITLE_PIC_FILE , NULL );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , 1 ,  NE_TITLE_PIC_BACKGROUND_CODE , NULL );
 
       switch (MenuPosition) 
 	{
@@ -1235,7 +1232,6 @@ enum
   ClearGraphMem();
   // Since we've faded out the whole scren, it can't hurt
   // to have the top status bar redrawn...
-  BannerIsDestroyed=TRUE;
   Me[0].status=MOBILE;
 
   return;
@@ -1287,7 +1283,7 @@ New_Graphics_Options_Menu (void)
       MenuTexts[4]="Back";
       MenuTexts[5]="";
 
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL , NULL );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , -1 , NULL );
 
       switch (MenuPosition) 
 	{
@@ -1411,7 +1407,7 @@ New_Sound_Options_Menu (void)
       MenuTexts [ 4 ] = "Back";
       MenuTexts [ 5 ] = "";
 
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL , NULL );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , -1 , NULL );
 
       switch (MenuPosition) 
 	{
@@ -1558,7 +1554,7 @@ PerformanceTweaksOptionsMenu (void)
       MenuTexts[6]="Back";
       MenuTexts[7]="";
 
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL , NULL );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , -1 , NULL );
 
       switch (MenuPosition) 
 	{
@@ -1667,7 +1663,7 @@ On_Screen_Display_Options_Menu (void)
       MenuTexts[5]="Back";
       MenuTexts[6]="";
 
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL , NULL );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , -1 , NULL );
 
       switch (MenuPosition) 
 	{
@@ -1754,7 +1750,7 @@ Droid_Talk_Options_Menu (void)
       MenuTexts[5]=Options5;
       MenuTexts[6]="Back";
 
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL , NULL );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , -1 , NULL );
 
       switch (MenuPosition) 
 	{
@@ -1837,7 +1833,7 @@ enum
   while ( !Weiter )
     {
 
-      MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , NULL , NULL );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , -1 , NULL );
 
       switch (MenuPosition) 
 	{
@@ -1891,7 +1887,7 @@ void
 Get_Server_Name ( void )
 {
   char* Temp;
-  InitiateMenu( NE_TITLE_PIC_FILE );
+  InitiateMenu(  NE_TITLE_PIC_BACKGROUND_CODE );
 
   DisplayText ( "\n\
  Please enter name of server to connect to:\n\
@@ -1910,7 +1906,7 @@ void
 Get_New_Character_Name ( void )
 {
   char* Temp;
-  InitiateMenu( NE_TITLE_PIC_FILE );
+  InitiateMenu( NE_TITLE_PIC_BACKGROUND_CODE );
 
   DisplayText ( "\n     Enter the name\n     for the new hero:\n   > " ,
 		50 , 50 , NULL );
@@ -2105,7 +2101,7 @@ Load_Existing_Hero_Menu ( void )
   MenuTexts[ 9 ] = "";
 
   DebugPrintf ( 1 , "\nint Load_Existing_Hero_Menu ( void ): real function call confirmed.");
-  InitiateMenu( NE_TITLE_PIC_FILE );
+  InitiateMenu( NE_TITLE_PIC_BACKGROUND_CODE );
 
   //--------------------
   // First we must find the home directory of the user.  From there on
@@ -2143,7 +2139,7 @@ I need to know that for saving. Abort.\n");
 	    }
 	}
 
-      MenuPosition = DoMenuSelection( LOAD_EXISTING_HERO_STRING , MenuTexts , 1 , NE_TITLE_PIC_FILE , NULL );
+      MenuPosition = DoMenuSelection( LOAD_EXISTING_HERO_STRING , MenuTexts , 1 , NE_TITLE_PIC_BACKGROUND_CODE , NULL );
 
       if ( MenuPosition == (-1) ) return ( FALSE );
       else
@@ -2174,7 +2170,7 @@ Freedroid will continue execution now, since this problem\n\
       MenuTexts[1]="";
 
       while ( SpacePressed() || EnterPressed() );
-      DoMenuSelection ( "\n\nNo saved games found!!  Loading Cancelled. " , MenuTexts , 1 , NE_TITLE_PIC_FILE , NULL );
+      DoMenuSelection ( "\n\nNo saved games found!!  Loading Cancelled. " , MenuTexts , 1 , NE_TITLE_PIC_BACKGROUND_CODE , NULL );
       
       //--------------------
       // Now we got to return the problem to the calling function...
@@ -2208,7 +2204,7 @@ Delete_Existing_Hero_Menu ( void )
   char SafetyText[2000];
 
   DebugPrintf ( 0 , "\nint Delete_Existing_Hero_Menu ( void ): real function call confirmed.");
-  InitiateMenu( NE_TITLE_PIC_FILE );
+  InitiateMenu( NE_TITLE_PIC_BACKGROUND_CODE );
   MenuTexts[0]="";
   MenuTexts[1]="";
   MenuTexts[2]="";
@@ -2257,7 +2253,7 @@ I need to know that for saving. Abort.\n");
 	    }
 	}
 
-      MenuPosition = DoMenuSelection( DELETE_EXISTING_HERO_STRING , MenuTexts , 1 , NE_TITLE_PIC_FILE , NULL );
+      MenuPosition = DoMenuSelection( DELETE_EXISTING_HERO_STRING , MenuTexts , 1 , NE_TITLE_PIC_BACKGROUND_CODE , NULL );
 
       if ( MenuPosition == (-1) ) return ( FALSE );
       else
@@ -2281,7 +2277,7 @@ I need to know that for saving. Abort.\n");
 	  MenuTexts [ 8 ] = "";
 	  MenuTexts [ 9 ] = "";
 	  sprintf( SafetyText , "Really delete hero '%s'?" , Me[0].character_name ) ;
-	  FinalDecision = DoMenuSelection( SafetyText , MenuTexts , 1 , NE_TITLE_PIC_FILE , NULL );
+	  FinalDecision = DoMenuSelection( SafetyText , MenuTexts , 1 , NE_TITLE_PIC_BACKGROUND_CODE , NULL );
 
 	  if ( FinalDecision == 1 )
 	    {
@@ -2307,7 +2303,7 @@ Freedroid will continue execution now, since this problem\n\
       MenuTexts[8]=""; MenuTexts[6]=""; MenuTexts[7]=""; MenuTexts[9]="";
 
       while ( SpacePressed() || EnterPressed() );
-      DoMenuSelection ( "\n\nNo saved games found!!  Deletion Cancelled. " , MenuTexts , 1 , NE_TITLE_PIC_FILE , NULL );
+      DoMenuSelection ( "\n\nNo saved games found!!  Deletion Cancelled. " , MenuTexts , 1 , NE_TITLE_PIC_BACKGROUND_CODE , NULL );
       
       //--------------------
       // Now we got to return the problem to the calling function...
@@ -2354,7 +2350,7 @@ enum
 
   while (!Weiter)
     {
-      MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , NE_TITLE_PIC_FILE , NULL );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , NE_TITLE_PIC_BACKGROUND_CODE , NULL );
 
       switch (MenuPosition) 
 	{
@@ -2434,7 +2430,7 @@ enum
 
   while (!Weiter)
     {
-      MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , NE_TITLE_PIC_FILE , NULL );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , NE_TITLE_PIC_BACKGROUND_CODE , NULL );
 
       switch (MenuPosition) 
 	{
@@ -2556,7 +2552,7 @@ Credits_Menu (void)
 
   SwitchBackgroundMusicTo ( CREDITS_BACKGROUND_MUSIC_SOUND );
 
-  ScrollText ( CreditsText , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NE_CREDITS_PIC_FILE );
+  ScrollText ( CreditsText , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NE_CREDITS_PIC_BACKGROUND_CODE );
 
   while( SpacePressed() || EscapePressed() ) ; /* wait for key release */
 
@@ -2601,7 +2597,7 @@ Thank you,\n\n\
 
   SwitchBackgroundMusicTo ( CREDITS_BACKGROUND_MUSIC_SOUND );
 
-  ScrollText ( ContributeText , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NE_CREDITS_PIC_FILE );
+  ScrollText ( ContributeText , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NE_CREDITS_PIC_BACKGROUND_CODE );
 
   while ( SpacePressed() || EscapePressed() ) ; 
 

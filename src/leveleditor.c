@@ -1150,7 +1150,7 @@ EditLevelDimensions ( void )
   while ( !Weiter )
     {
 
-      InitiateMenu( NULL );
+      InitiateMenu( -1 );
       
       MenuTexts[ 0 ] = "Insert/Remove column to the very west" ;
       MenuTexts[ 1 ] = "Insert/Remove column just east of western Interface" ;
@@ -1170,7 +1170,7 @@ EditLevelDimensions ( void )
       MenuTexts[ 10 ] = "Back To Level Editor Main Menu" ;
       MenuTexts[ 11 ] = "" ;
       
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL , FPS_Display_BFont );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , -1 , FPS_Display_BFont );
       
       while (EnterPressed() || SpacePressed() );
       
@@ -1333,7 +1333,7 @@ enum
       
       EditLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
 
-      InitiateMenu( NULL );
+      InitiateMenu( -1 );
       
       i=0;
       MenuTexts[ i ] = "Save whole ship to 'Testship.shp'" ; i++;
@@ -1355,7 +1355,7 @@ enum
       MenuTexts[ i ] = "Quit Level Editor" ; i++;
       MenuTexts[ i ] = "" ; i++;
 	  
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL , FPS_Display_BFont );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , -1 , FPS_Display_BFont );
 
       
       while (EnterPressed() || SpacePressed() );
@@ -1949,7 +1949,7 @@ SetLevelInterfaces ( void )
       
       EditLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
 
-      InitiateMenu( NULL );
+      InitiateMenu( -1 );
       
       sprintf( Options [ 0 ] , "Jump threshold north: %d.  Up/Down" , EditLevel->jump_threshold_north );
       MenuTexts [ 0 ] = Options [ 0 ] ;
@@ -1972,7 +1972,7 @@ SetLevelInterfaces ( void )
       MenuTexts [ 10 ] = "Quit Threshold Editor" ;
       MenuTexts [ 11 ] = "" ;
 
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL , FPS_Display_BFont );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , -1 , FPS_Display_BFont );
       
       while (EnterPressed() || SpacePressed() );
       

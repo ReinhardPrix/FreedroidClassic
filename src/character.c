@@ -472,8 +472,6 @@ UpdateAllCharacterStats ( int PlayerNum )
       Me [ PlayerNum ] . SkillLevel [ i ] = Me [ PlayerNum ] . base_skill_level [ i ] ;
     }
 
-
-
   //--------------------
   // Now we add all bonuses to the influencers PRIMARY stats
   //
@@ -622,7 +620,7 @@ ShowCharacterScreen ( void )
   CharacterRect.w = CHARACTERRECT_W;
   CharacterRect.h = CHARACTERRECT_H;
 
-  blit_special_background ( 1 );
+  blit_special_background ( CHARACTER_SCREEN_BACKGROUND_CODE );
 
   //--------------------
   // Now we can start to fill in the character values:

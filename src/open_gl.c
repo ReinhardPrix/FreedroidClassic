@@ -1273,16 +1273,38 @@ GL_HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area )
 void 
 blit_special_background ( int background_code )
 {
-#define ALL_KNOWN_BACKGROUNDS 4
+#define CHARACTER_SCREEN_BACKGROUND_FILE "backgrounds/character.png" 
+#define SKILL_SCREEN_BACKGROUND_FILE "backgrounds/SkillScreen.png" 
+#define SKILL_EXPLANATION_SCREEN_BACKGROUND_FILE "backgrounds/SkillExplanationScreen.png" 
+#define INVENTORY_SCREEN_BACKGROUND_FILE "backgrounds/inventory.png"
+#define NE_TITLE_PIC_FILE       "backgrounds/title.jpg"
+#define NE_CREDITS_PIC_FILE     "backgrounds/credits.jpg"
+#define SHOP_BACKGROUND_IMAGE   "backgrounds/shoppe.jpg"
+#define ITEM_BROWSER_BG_PIC_FILE "backgrounds/item_browser.jpg"
+#define ITEM_BROWSER_SHOP_FILE "backgrounds/item_browser_shop.jpg"
+
+#define ALL_KNOWN_BACKGROUNDS 9
+
   static iso_image our_backgrounds [ ALL_KNOWN_BACKGROUNDS ] ;
   static int first_call = TRUE;
   static char* background_filenames [ ALL_KNOWN_BACKGROUNDS ] = { INVENTORY_SCREEN_BACKGROUND_FILE , 
 								  CHARACTER_SCREEN_BACKGROUND_FILE ,
 								  SKILL_SCREEN_BACKGROUND_FILE ,
-								  SKILL_EXPLANATION_SCREEN_BACKGROUND_FILE } ;
+								  SKILL_EXPLANATION_SCREEN_BACKGROUND_FILE ,
+								  NE_TITLE_PIC_FILE ,
+								  NE_CREDITS_PIC_FILE ,
+								  SHOP_BACKGROUND_IMAGE ,
+								  ITEM_BROWSER_BG_PIC_FILE ,
+								  ITEM_BROWSER_SHOP_FILE } ;
+
   SDL_Rect our_background_rects [ ALL_KNOWN_BACKGROUNDS ] = { { 0 , 0 , 0 , 0 } , 
 							      { CHARACTERRECT_X , 0 , 0 , 0 } ,
 							      { CHARACTERRECT_X , 0 , 0 , 0 } ,
+							      { 0 , 0 , 0 , 0 } ,
+							      { 0 , 0 , 0 , 0 } ,
+							      { 0 , 0 , 0 , 0 } ,
+							      { 0 , 0 , 0 , 0 } ,
+							      { 0 , 0 , 0 , 0 } ,
 							      { 0 , 0 , 0 , 0 } } ;
   int i;
   char *fpath;

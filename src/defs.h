@@ -261,23 +261,25 @@ enum
 #define MOUSE_CURSOR_BLOCK_FILE "mouse_move_cursor.png"
 #define SKILL_ICON_FILE         "skills.png"
 #define SKILL_LEVEL_BUTTON_FILE "skill_buttons.png"
-#define SHOP_BACKGROUND_IMAGE   "backgrounds/shoppe.jpg"
 
 #define NE_CONSOLE_PIC_FILE     "backgrounds/console_fg.png" 
-#define NE_TITLE_PIC_FILE       "backgrounds/title.jpg"
 #define NE_CONSOLE_BG_PIC1_FILE "backgrounds/console_bg1.jpg"
 #define NE_CONSOLE_BG_PIC2_FILE "backgrounds/console_bg2.jpg"
-#define ITEM_BROWESER_BG_PIC_FILE "backgrounds/item_browser.jpg"
-#define NE_CREDITS_PIC_FILE     "backgrounds/credits.jpg"
 #define FREEDROID_LOADING_PICTURE_NAME "backgrounds/startup1.jpg"
 #define HS_BACKGROUND_FILE     "backgrounds/transfer.jpg"  
 
-#define CHARACTER_SCREEN_BACKGROUND_FILE "backgrounds/character.png" 
-#define SKILL_SCREEN_BACKGROUND_FILE "backgrounds/SkillScreen.png" 
-#define SKILL_EXPLANATION_SCREEN_BACKGROUND_FILE "backgrounds/SkillExplanationScreen.png" 
-#define INVENTORY_SCREEN_BACKGROUND_FILE "backgrounds/inventory.png"
 #define INVENTORY_SQUARE_OCCUPIED_FILE "backgrounds/TransparentPlate.png"
 #define LEVEL_EDITOR_BANNER_FILE "backgrounds/LevelEditorBanner.png"
+
+#define INVENTORY_SCREEN_BACKGROUND_CODE 0
+#define CHARACTER_SCREEN_BACKGROUND_CODE 1
+#define SKILL_SCREEN_BACKGROUND_CODE 2
+#define SKILL_SCREEN_EXPLANATION_BACKGROUND_CODE 3
+#define NE_TITLE_PIC_BACKGROUND_CODE 4
+#define NE_CREDITS_PIC_BACKGROUND_CODE 5
+#define SHOP_BACKGROUND_IMAGE_CODE 6
+#define ITEM_BROWSER_BG_PIC_BACKGROUND_CODE 7
+#define ITEM_BROWSER_SHOP_BACKGROUND_CODE 8
 
 #define NEW_MISSION             "ReturnOfTux.mission"
 

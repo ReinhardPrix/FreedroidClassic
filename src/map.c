@@ -573,7 +573,8 @@ glue_obstacles_to_floor_tiles_for_level ( int level_num )
 FreedroidRPG was unable to glue a certain obstacle to the nearest map tile.\n\
 This bug can be resolved by simply raising a contant by one, but it needs to be done :)",
 				     PLEASE_INFORM, IS_WARNING_ONLY );
-	  return;
+	  //return;
+	  continue ;
 	}
 
       //--------------------
