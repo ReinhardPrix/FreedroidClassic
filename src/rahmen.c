@@ -1068,12 +1068,13 @@ prepare_text_window_content ( char* ItemDescText )
     int index_of_droid_below_mouse_cursor = GetLivingDroidBelowMouseCursor ( 0 ) ;
     int index_of_floor_item_below_mouse_cursor = ( -1 );
     int index_of_chest_below_mouse_cursor = ( -1 );
+    int index_of_barrel_below_mouse_cursor = ( -1 );
     finepoint MapPositionOfMouse;
 
 #define REQUIREMENTS_NOT_MET_TEXT "REQUIREMENTS NOT MET"
 
-    CurPos.x = GetMousePos_x()  ;
-    CurPos.y = GetMousePos_y()  ;
+    CurPos . x = GetMousePos_x()  ;
+    CurPos . y = GetMousePos_y()  ;
 
     best_banner_pos_x = CurPos . x ;
     best_banner_pos_y = CurPos . y ;
@@ -1086,7 +1087,7 @@ prepare_text_window_content ( char* ItemDescText )
     if ( GetHeldItemPointer( ) != NULL )
     {
 	if ( ItemUsageRequirementsMet( GetHeldItemPointer( ) , FALSE ) )
-	    strcpy( ItemDescText , ItemMap[ GetHeldItemCode() ].item_name );
+	    strcpy( ItemDescText , ItemMap [ GetHeldItemCode() ] . item_name );
 	else 
 	{
 	    strcpy( ItemDescText , REQUIREMENTS_NOT_MET_TEXT  );
@@ -1253,9 +1254,18 @@ prepare_text_window_content ( char* ItemDescText )
 	// Maybe the cursor in the user rect is hovering right over a closed chest.
 	// In this case we say so in the top status banner.
 	//
-	if ( smashable_barrel_below_mouse_cursor ( 0 ) != (-1) )
+	index_of_barrel_below_mouse_cursor = smashable_barrel_below_mouse_cursor ( 0 ) ;
+	if ( index_of_barrel_below_mouse_cursor != (-1) )
 	{
 	    strcpy ( ItemDescText , "  B  A  R  R  E  L  ! ! ! " ); 
+	    best_banner_pos_x = translate_map_point_to_screen_pixel ( 
+		CurLevel -> obstacle_list [ index_of_barrel_below_mouse_cursor ] . pos . x , 
+		CurLevel -> obstacle_list [ index_of_barrel_below_mouse_cursor ] . pos . y  ,
+		TRUE ) + 80 ;
+	    best_banner_pos_y = translate_map_point_to_screen_pixel ( 
+		CurLevel -> obstacle_list [ index_of_barrel_below_mouse_cursor ] . pos . x , 
+		CurLevel -> obstacle_list [ index_of_barrel_below_mouse_cursor ] . pos . y  ,
+		FALSE ) - 30 ;
 	}
 	
 	//--------------------

@@ -1536,7 +1536,7 @@ New_Graphics_Options_Menu (void)
 
   while (!Weiter)
     {
-      sprintf( Options0 , "Gamma Correction: %1.2f", GameConfig.Current_Gamma_Correction );
+      sprintf( Options0 , "Gamma Correction: %1.2f", GameConfig.current_gamma_correction );
       sprintf( Options1 , "Fullscreen Mode: %s", fullscreen_on ? "ON" : "OFF");
       sprintf( Options2 , "Combat Window Size: %s", classic_user_rect ? "CLASSIC" : "FULL" );
       sprintf( Options3 , "Show Blood: %s", 
@@ -1562,15 +1562,15 @@ New_Graphics_Options_Menu (void)
 	  if ( RightPressed() ) 
 	    {
 	      while ( RightPressed());
-	      GameConfig.Current_Gamma_Correction+=0.05;
-	      SDL_SetGamma( GameConfig.Current_Gamma_Correction , GameConfig.Current_Gamma_Correction , GameConfig.Current_Gamma_Correction );
+	      GameConfig.current_gamma_correction+=0.05;
+	      SDL_SetGamma( GameConfig.current_gamma_correction , GameConfig.current_gamma_correction , GameConfig.current_gamma_correction );
 	    }
 
 	  if ( LeftPressed() ) 
 	    {
 	      while (LeftPressed());
-	      GameConfig.Current_Gamma_Correction-=0.05;
-	      SDL_SetGamma( GameConfig.Current_Gamma_Correction , GameConfig.Current_Gamma_Correction , GameConfig.Current_Gamma_Correction );
+	      GameConfig.current_gamma_correction-=0.05;
+	      SDL_SetGamma( GameConfig.current_gamma_correction , GameConfig.current_gamma_correction , GameConfig.current_gamma_correction );
 	    }
 
 	  break;

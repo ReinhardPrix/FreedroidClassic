@@ -73,7 +73,7 @@ typedef struct
     int All_Texts_Switch;
     float Current_BG_Music_Volume;
     float Current_Sound_FX_Volume;
-    float Current_Gamma_Correction;
+    float current_gamma_correction;
     int StandardEnemyMessages_On_Off;
     int StandardInfluencerMessages_On_Off;
     int Mouse_Input_Permitted;
