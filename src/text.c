@@ -147,25 +147,30 @@ ChatWithFriendlyDroid( int Enum )
   SDL_Rect Chat_Window;
   SDL_Rect Droid_Image_Window;
   int SelectedItemNumber;
-  char* MyText;
-	MyText = "Ah, influence device.  It's good that you have returned.  Dark proceedings are going on in
-the universe.\n\
+  char* Chandra_Text;
+  char* Sorenson_Text;
+  
+  Chandra_Text = "Tux!  At last you have returned!\n\
 \n\
-Recently it has come out that the MS have started a project to upload even humans with their new OS brand, transforming them into their mindless zombies.\n\
+Alas, this is an hour of dire need. \n\
+The MS forces have killed may of us immediately at the day of the revolution and others who resisted were dragged away to become subjects in the experiments of the MS. \n\
 \n\
-When the government tried to stop them, they were taken out and a new MS government installed.  All the military and police droids running their OS are under their command and have gone berserk against anybody and anything not belonging to their organisatzion or their prefered person list.\n\
+You must invade their cental and try to save who you can!  \n\
 \n\
-Someone must go out and try to stop these barbaric deeds.  \n\
+If you step through the teleporter, it will take you directly to the first level of their main installation.\n\
 \n\
-Long ago, there was the socalled influence device project, which had to be abandoned due to MS legal action.  The former participants of the project have sent a distress call, that they are under attack and all the MS machines in their current location have turned against them.  Many of them were slain already, but their distress call has automatically
-revived you and sent you to help.\n\
+Perhaps you can rescue some of our friends held captive there. \n\
+\n \n";
+
+  Sorenson_Text = "Oh Tux!  Finally you have returned!  \n\
 \n\
-I hope it is not too late, but the teleporter has been set up to transfer you directly to the Asteroid 232 research installation.\n\
+You've come to save us, havn't you? \n\
 \n\
-If you need help, you can come to me.  I can identify many of the items you will find. And also Mr. Stone, a sales representative of the United Machines Corporation will offer you equippment and repairs.\n\
+You must know that earlier, I was on the MS prefered person list as well.  \n\
+But when they finally requested all their preferred persons be fitted with implants, that would allow them to upload any software directly to my brain any time they wanted, it became too much even for me and I fled to this refuge. \n\
 \n\
-Please, you must go and try to save who you can!  Our best wishes will accompany you.\n\
-\n";
+It's good that I have found new friends and I hope we can survive together. \n\
+\n \n \n ";
 
   // From initiating transfer mode, space might still have been pressed. 
   // So we wait till it's released...
@@ -174,24 +179,26 @@ Please, you must go and try to save who you can!  Our best wishes will accompany
   if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "CHA" ) == 0 )
     {
       Switch_Background_Music_To ( "Chandra01.ogg" );
-
-      ScrollText ( MyText , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NULL );
-      // AnarchyMenu1.mod
+      ScrollText ( Chandra_Text , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NULL );
       Switch_Background_Music_To ( CurLevel->Background_Song_Name );
+      return;
+    }
 
+  if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "SOR" ) == 0 )
+    {
+      Switch_Background_Music_To ( "Sorenson01.ogg" );
+      ScrollText ( Sorenson_Text , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NULL );
+      Switch_Background_Music_To ( CurLevel->Background_Song_Name );
       return;
     }
 
   if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "STO" ) == 0 )
     {
       // Switch_Background_Music_To ( "Chandra01.ogg" );
-
       // ScrollText ( MyText , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NULL );
       // AnarchyMenu1.mod
       // Switch_Background_Music_To ( CurLevel->Background_Song_Name );
-      
       BuySellMenu( );
-
       return;
     }
 

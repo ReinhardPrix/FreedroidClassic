@@ -36,7 +36,7 @@ Area name="Asteroid 232"
 
   Levelnumber: 0
 xlen of this level: 38
-ylen of this level: 16
+ylen of this level: 21
 color of this level: 0
 Name of this level=maintenance
 Comment of the Influencer on entering this level="This is a level, like many other levels.
@@ -56,8 +56,13 @@ beginning_of_map
  11   0  38   0  27   0  17   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  27   0  11 
  11   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11  34  11 
   1  10  10  10   2  10  10  10   9  12   0  26   0   0   0   0   0   0   0   0   0   0   0   0  24   7  10   9   0   0   0   0   0   0   0   4  10   3 
- 33  33  33  33  33  33  33  33   1  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   3  33  11  13   0   0   0   0  16  12  11  33  33 
- 33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33   1  10  10  10  10  10  10  10   3  33  33 
+ 33  33  33  33  33  33  33  33   1  10  10  10   9  23   0   0   0   7  10   9   0   0   0   7  10   3  33  11  13   0   0   0   0  16  12  11  33  33 
+ 33  33  33  33  33  33  33  33  33  33  33  33   1   9   0   0   0  11  33  11   0   0   0  11  33  33  33   1  10  10  10  10  10  10  10   3  33  33 
+ 33  33  33  33  33   7  10  10  10  10   9  33  33  11   0   0   0   1  10   3   0   0   0  11  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
+ 33  33  33  33  33  11  16  17  16  12   1  10  10   3   0   0   0  13  15  16   0   0   0  11  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
+ 33  33  33  33  33  11  17   0  17   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
+ 33  33  33  33  33  11  16  17  16   0  15   0   0   0   0   0   0   0   0   0   0   0   0  11  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
+ 33  33  33  33  33   1  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   3  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
 End of pure map information for this level
 Start of pure statement information for this level
 PosX=5 PosY=11 Statement="This must be the entrance to the teleporter room.  I think GNU will open the door."
@@ -108,12 +113,12 @@ Nr.= 14 x=  11 y=  11	 connections:   15  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 15 x=  17 y=  11	 connections:   14  10  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 16 x=  33 y=  11	 connections:   17  13  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 17 x=  36 y=  11	 connections:   16  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 18 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 19 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 20 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 21 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 22 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 23 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 18 x=  14 y=  18	 connections:   23  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 19 x=   7 y=  18	 connections:   23  21  20  22  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 20 x=   7 y=  17	 connections:   19  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 21 x=   7 y=  19	 connections:   19  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 22 x=   6 y=  18	 connections:   19  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 23 x=   8 y=  18	 connections:   18  19  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 24 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 25 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 26 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
