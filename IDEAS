@@ -1,7 +1,5 @@
 
 
---------------------
-
 New graphics design, Possible solutions:
 
     1. Stay with Ball and number design
@@ -20,57 +18,12 @@ For now, we stick to the first path, I think all aggreed.  Additions? Comments? 
 
 ----------------------------------------------------------------------
 
-Extension idea:  Friendly droid communication
-  I thought of the following nice idea, which would also reposition the game more into
-the adventure/roleplaying genre.  Recently, friendly droids were introduced.  They can
-be defined easily from the droids file of a mission.  But what happens when you try to
-takeover one of those friendly droids?  ---  We might just cause some text interaction
-like in a dialog where you can talk to the droid, ask it to do this or that.  With this,
-we could reshape the game so that the influencer at some point of the mission comes into
-towns with robots, where you can talk to a lot of "people" and solve difficult problems
-not only with fighting, but also with non-violent interaction with droids.  You might
-also find some droids to accompany you in your travels.
-
-Now this is of course all far away.  We might just stick to the interaction possibility
-for now.  Change of missions and story line that way can also be discussed later.
-But what do you think?  Would that be the type of game you would like to see implemented
-or would you prefer to stick to acion/arcade contents?  Comments?  Addisions?  jp.
-
---------------------
-
-Game Extension:  Friendly droids  :  Existence is done.  Chatting and giving commands 
-instead of taking them over when touching them in transfer mode should come next.
-
-
-Game Extension:  Friendly droids  :  Shops and Chatting
-
-Game Extension:  Resizing of combat window, movable objects like boxes or crates a chair
-or a table, a toilet, searchable objects like a bookshelf and dead bodies of robots or
-scientists and other floor textures
-
-Game Extension:  Conveyor belts for multiple directions, especially in very long rooms
-and halls.
-
---------------------
-
-Game Extension:  Teleporters
-
-Since the very beginning, code is already there to properly do Teleportations as far as
-internal game mechanics is concerned.  What is left to do is to add (animated) map tiles that
-symbolize the teleporters and to write the code for detection of teleportation request and
-perhaps a fine graphical fade-in/fade-out effect for the teleportation (while the rest of
-the action continues a usual).
-
-
-
---------------------
-
 Game Extension:  New enemy type:  Not robot but genetically tailored (alien) life form, that
 cannot be taken over (otherwise we cannot create difficult fighting situations where you *have*
 to do some figthing).  Might also be numberd, but differently shaped, with moving tentacles as
 animation of health and numbers in a triangle shape instead of neatly in a line as in droids.
 
-Game Extension:  New Weapon:  Homing missiles
+Game Extension:  New Weapon:  Homing missiles??
 Depreciated by Lanzz
 
 Game Extension:  Lightning ray:  Yes, we really could draw the whole ray in a flashy 
