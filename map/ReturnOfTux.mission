@@ -154,10 +154,10 @@ Mission Name="Clean Dark Apprentice (DAP)"
 Assign this mission to influencer automatically at start : 0
 Mission target is to kill all droids : -1
 Mission target is to kill class of droids : -1
-Mission target is to kill droids with marker : -1
+Mission target is to kill droids with marker : 101
 Mission target is to become class : -1
 Mission target is to become type : -1
-Mission target is to overtake a droid with marker : 101
+Mission target is to overtake a droid with marker : -1
 Mission target is to reach level : -1
 Mission target is to reach X-Pos : -1
 Mission target is to reach Y-Pos : -1

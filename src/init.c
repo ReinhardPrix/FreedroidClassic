@@ -2194,7 +2194,7 @@ CheckIfMissionIsComplete (void)
       EndTitle();
       InitNewMissionList ( NextMissionName );
     }
-  #define MIS_COMPLETE_DEBUG 3
+#define MIS_COMPLETE_DEBUG 0
 
 
   for ( MissNum = 0 ; MissNum < MAX_MISSIONS_IN_GAME ; MissNum ++ )
@@ -2210,6 +2210,8 @@ CheckIfMissionIsComplete (void)
       if ( Me[0].AllMissions[ MissNum ].MissionExistsAtAll != TRUE ) continue;
       if ( Me[0].AllMissions[ MissNum ].MissionWasAssigned != TRUE ) continue;
 
+      DebugPrintf ( 0 , "\nSomething was assigned at all..... MissNum = %d " , MissNum );
+
       //--------------------
       // Continue if the Mission target KillOne is given but not fullfilled
       //
@@ -2222,7 +2224,7 @@ CheckIfMissionIsComplete (void)
 		   ( AllEnemys[Robot_Counter].Status != OUT ) && 
 		   ( AllEnemys[Robot_Counter].Marker == Me[0].AllMissions[ MissNum ].KillOne ) )
 		{
-		  DebugPrintf ( MIS_COMPLETE_DEBUG , "\nOne of the marked droids is still alive...");
+		  DebugPrintf ( 0 , "\nOne of the marked droids is still alive...");
 		  goto CheckNextMission;
 		}
 	    }
@@ -2280,7 +2282,7 @@ CheckIfMissionIsComplete (void)
       
 
       //--------------------
-      // Continue if the Mission target MustBeClass is given but not fullfilled
+      // Continue if the Mission target MustBeType is given but not fullfilled
       //
       if ( Me[0].AllMissions[ MissNum ].MustBeType != (-1) )
 	{

@@ -212,6 +212,12 @@ the things soul may finally rest.\n\
       Switch_Background_Music_To ( "../speeches/Richard01.ogg" );
       ScrollText ( RMS_Text , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NULL );
       Switch_Background_Music_To ( CurLevel->Background_Song_Name );
+
+      //--------------------
+      // Now that the RMS has made his first speech, the tux will be
+      // assigned the (third) mission.
+      //
+      AssignMission ( 2 );
       return;
     }
 
