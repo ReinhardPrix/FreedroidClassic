@@ -1,14 +1,25 @@
 #-*- mode: text -*-
+
+- !! We should have a common bug/patch mailing address somewhere !!
+  freedroid@....
+
 Bugs
 ----
-- (rp): Invincible mode sollte auch Burn-out ueberleben, und ueberhaupt:Schuesse!!
+- Refresh: zaehlt Punkte ins negative, und zieht generell irre viel ab, is das ok?
 
-- put all "cheat"-keys in cheat-menu (some are still accessible outside)
+- Schuss nach Rechts-Unten geht nicht
 
-- Druidmap.notes sollten besser von file eingelesen werden oder
-  zumindest in paravars.h (statt direkt in InitParaplus())
+- Spiel "holpert" oefters: koennte von Scroll-schrift kommen
+  (sollte vielleicht in einem Parallel-prozess laufen, statt in
+  der Hauptschleife?)
 
-- PORT: use vga_screenoff/on() anstatt MonitorSignalUnterbrechung...?
+- gesamt Spiel-geschwindigkeit zu hoch (play original game to compare!!)
+
+- Laufschrift gehoert zu Paradroid-'extensions'
+
+- (rp) Invincible mode: versagt manchmal (Schuesse/collisions)
+
+- (rp) put all "cheat"-keys in cheat-menu (some are still accessible outside)
 
 - (jp) Calculate all movement (where movement is to be understood in an abstract
   sense including movement of energy and such) framerate-dependant
@@ -26,13 +37,15 @@ Bugs
 
 - (rp) Takeover game still looks 'unfinished'
 
+- (jp) "Fieps-pieps" music ist im Originalspiel nur am Anfang, im Haupt-spiel
+  sind nur ein paar "Brumm-brumm" Geraeusche
+
 Missing features
 -----------------
 - save highscores to disk
 - Options menu? 
 - (rp?) mouse-support (should be good with touchstick on laptop!)
 - (rp?) joystick/gamepad support waere toll!
-- (rp) add command-line argument reading
 - (rp): PORT the map-editor 'maped' ?
 
 - (rp+jp) use GNU coding standards (see doc file 'gnu-standards')
@@ -41,3 +54,7 @@ Missing features
   so that porting to X becomes easier?!
 
 - X11 - support (use DGA-mode!)
+
+- Druidmap.notes sollten besser von file eingelesen werden oder
+  zumindest in paravars.h (statt direkt in InitParaplus())
+
