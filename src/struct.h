@@ -384,6 +384,7 @@ typedef struct
   int is_identified;  // is the item identified already?
   int max_duration;     // the maximum item durability reachable for this item
   float current_duration; // the currently remaining durability for this item
+  float throw_time; // has this item just jumped out from a chest maybe or is it jumping right now?
 
   // Here are the rather long-lived properties of the item
   int prefix_code;

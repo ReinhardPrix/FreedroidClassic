@@ -2500,7 +2500,7 @@ There was an item type given, that exceeds the range of item images loaded.",
   ItemGPS . x = CurItem -> pos . x ;
   ItemGPS . y = CurItem -> pos . y ;
   ItemGPS . z = Me [ 0 ] . pos . z ; // this is silly.  The item is always from this leve...
-  if ( ( ! IsVisible ( & ItemGPS , 0 ) ) && RespectVisibilityOnMap ) return;
+  if ( ( ! IsVisible ( & ItemGPS , 0 ) ) && RespectVisibilityOnMap && ( CurItem -> throw_time == 0 ) ) return;
 
   //--------------------
   // Now we can go take a look if maybe there is an ingame surface 
@@ -2515,8 +2515,11 @@ There was an item type given, that exceeds the range of item images loaded.",
     blit_zoomed_iso_image_to_map_position ( & ( ItemImageList[ ItemMap[ CurItem->type ] . picture_number ] . ingame_iso_image ) , 
 					    CurItem -> pos . x , CurItem -> pos . y );
   else
-    blit_iso_image_to_map_position ( ItemImageList[ ItemMap[ CurItem->type ] . picture_number ] . ingame_iso_image , 
-				     CurItem -> pos . x , CurItem -> pos . y );
+    {
+      blit_iso_image_to_map_position ( ItemImageList[ ItemMap[ CurItem->type ] . picture_number ] . ingame_iso_image , 
+				       CurItem -> pos . x - 2.0 * sinf ( CurItem -> throw_time * 3.0 ) , 
+				       CurItem -> pos . y - 2.0 * sinf ( CurItem -> throw_time * 3.0 ) );
+    }
 
 }; // void PutItem( int ItemNumber );
 

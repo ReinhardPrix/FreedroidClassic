@@ -189,6 +189,7 @@ UpdateCountersForThisFrame ( int PlayerNum )
 {
   static long Overall_Frames_Displayed=0;
   int i;
+  Level item_level = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
 
   //--------------------
   // First we do all the updated, that need to be done only once
@@ -237,6 +238,19 @@ UpdateCountersForThisFrame ( int PlayerNum )
 	      if ( AllBullets [ i ] . time_to_hide_still < 0 )
 		AllBullets [ i ] . time_to_hide_still = 0 ; 
 	    }
+	}
+
+      //--------------------
+      // Maybe some items are just thrown in the air and still in the air.
+      // We need to keep track of the time the item has spent in the air so far.
+      //
+      for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+	{
+	  if ( item_level -> ItemList [ i ] . type == ( -1 ) ) continue;
+	  if ( item_level -> ItemList [ i ] . throw_time > 0 ) 
+	    item_level -> ItemList [ i ] . throw_time += Frame_Time();
+	  if ( item_level -> ItemList [ i ] . throw_time > ( M_PI / 3.0 ) ) 
+	    item_level -> ItemList [ i ] . throw_time = 0 ;
 	}
 
       for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)

@@ -392,6 +392,8 @@ FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange
   ThisItem->bonus_to_resist_electricity = 0;
   ThisItem->bonus_to_resist_force = 0;
 
+  ThisItem->throw_time = 0 ; 
+
   ThisItem->is_identified = TRUE;
 
   if ( ThisItem -> suffix_code != (-1) )
@@ -511,9 +513,10 @@ item types.  This indicates a severe bug in Freedroid.",
   CurLevel->ItemList[ i ].prefix_code = prefix;
   CurLevel->ItemList[ i ].suffix_code = suffix;
 
-  FillInItemProperties ( & ( CurLevel->ItemList[ i ] ) , FALSE , TreasureChestRange );
+  FillInItemProperties ( & ( CurLevel->ItemList[ i ] ) , FALSE, TreasureChestRange );
 
   CurLevel->ItemList[ i ].multiplicity = multiplicity ;
+  CurLevel->ItemList[ i ].throw_time = 0.01 ; // something > 0 
 
   PlayItemSound( ItemMap[ ItemType ].sound_number );
 
@@ -1582,6 +1585,7 @@ DropItemToTheFloor ( Item DropItemPointer , float x , float y , int levelnum )
   DropLevel -> ItemList [ i ] . pos . x = x ; 
   DropLevel -> ItemList [ i ] . pos . y = y ; 
   DropLevel -> ItemList [ i ] . currently_held_in_hand = FALSE;
+  DropLevel -> ItemList [ i ] . throw_time = 0.01; // something > 0 
   // DropLevel->ItemList[ i ].type = Me[0].Inventory[ InvPos ].type;
   
   // Me[0].Inventory[ InvPos ].type = ( -1 );
