@@ -413,7 +413,8 @@ examine_input_surface ( void )
   int line_not_empty = FALSE;
   int i , j ;
 
-#define INPUT_EXAM_DEBUG 1 
+  // #define INPUT_EXAM_DEBUG -1000
+#define INPUT_EXAM_DEBUG 1
 
   //--------------------
   // Now we examine the left side..
@@ -423,7 +424,13 @@ examine_input_surface ( void )
     {
       for ( j = 0 ; j < input_surface -> h ; j ++ )
 	{
-	  if ( GetAlphaComponent ( input_surface , i , j ) != 0 )
+	  // if ( GetAlphaComponent ( input_surface , i , j ) != 0 )
+	  //--------------------
+	  // We allow alpha values of 0 AND of 1 to be considered transparent, so
+	  // that also some blender settings with 'almost no' background color will
+	  // be treated correctly.
+	  //
+	  if ( GetAlphaComponent ( input_surface , i , j ) > 1 )
 	    {
 	      column_not_empty = TRUE ;
 	      DebugPrintf ( INPUT_EXAM_DEBUG , "\nFound alpha value of %d at location (%d/%d)." , 
@@ -447,7 +454,13 @@ examine_input_surface ( void )
     {
       for ( j = 0 ; j < input_surface -> h ; j ++ )
 	{
-	  if ( GetAlphaComponent ( input_surface , input_surface->w - i - 1 , j ) != 0 )
+	  // if ( GetAlphaComponent ( input_surface , input_surface->w - i - 1 , j ) != 0 )
+	  //--------------------
+	  // We allow alpha values of 0 AND of 1 to be considered transparent, so
+	  // that also some blender settings with 'almost no' background color will
+	  // be treated correctly.
+	  //
+	  if ( GetAlphaComponent ( input_surface , input_surface->w - i - 1 , j ) > 1 )
 	    {
 	      column_not_empty = TRUE ;
 	      DebugPrintf ( INPUT_EXAM_DEBUG , "\nFound alpha value of %d at location (%d/%d)." , 
@@ -471,7 +484,13 @@ examine_input_surface ( void )
     {
       for ( j = 0 ; j < input_surface -> w ; j ++ )
 	{
-	  if ( GetAlphaComponent ( input_surface , j , i ) != 0 )
+	  // if ( GetAlphaComponent ( input_surface , j , i ) != 0 )
+	  //--------------------
+	  // We allow alpha values of 0 AND of 1 to be considered transparent, so
+	  // that also some blender settings with 'almost no' background color will
+	  // be treated correctly.
+	  //
+	  if ( GetAlphaComponent ( input_surface , j , i ) > 1 )
 	    {
 	      line_not_empty = TRUE ;
 	      DebugPrintf ( INPUT_EXAM_DEBUG , "\nFound alpha value of %d at location (%d/%d)." , 
@@ -495,7 +514,13 @@ examine_input_surface ( void )
     {
       for ( j = 0 ; j < input_surface -> w ; j ++ )
 	{
-	  if ( GetAlphaComponent ( input_surface , j , input_surface -> h - i - 1 ) != 0 )
+	  // if ( GetAlphaComponent ( input_surface , j , input_surface -> h - i - 1 ) != 0 )
+	  //--------------------
+	  // We allow alpha values of 0 AND of 1 to be considered transparent, so
+	  // that also some blender settings with 'almost no' background color will
+	  // be treated correctly.
+	  //
+	  if ( GetAlphaComponent ( input_surface , j , input_surface -> h - i - 1 ) > 1 )
 	    {
 	      line_not_empty = TRUE ;
 	      DebugPrintf ( INPUT_EXAM_DEBUG , "\nFound alpha value of %d at location (%d/%d)." , 
@@ -550,7 +575,7 @@ write_offset_file ( )
     {
       default_center_x = 30 ;
       default_center_y = 45 ;
-      DebugPrintf ( 0 , "\nImage size 60x60 recognized.  Using %d/%d default origin." ,
+      DebugPrintf ( 0 , "\nCROPPY: Image size 60x60 recognized.  Using %d/%d default origin." ,
 		    default_center_x , default_center_y );
     } 
   else if ( ( input_surface -> w == 64 ) &&
@@ -558,7 +583,7 @@ write_offset_file ( )
     {
       default_center_x = 32 ;
       default_center_y = 37 ;
-      DebugPrintf ( 0 , "\nImage size 64x64 recognized.  Using %d/%d default origin." ,
+      DebugPrintf ( 0 , "\nCROPPY: Image size 64x64 recognized.  Using %d/%d default origin." ,
 		    default_center_x , default_center_y );
     }
   else if ( ( input_surface -> w == 80 ) &&
@@ -566,7 +591,7 @@ write_offset_file ( )
     {
       default_center_x = 40 ;
       default_center_y = 40 ;
-      DebugPrintf ( 0 , "\nImage size 80x80 recognized.  Using %d/%d default origin." ,
+      DebugPrintf ( 0 , "\nCROPPY: Image size 80x80 recognized.  Using %d/%d default origin." ,
 		    default_center_x , default_center_y );
     }
   else if ( ( input_surface -> w == 100 ) &&
@@ -574,7 +599,7 @@ write_offset_file ( )
     {
       default_center_x = 50 ;
       default_center_y = 71 ;
-      DebugPrintf ( 0 , "\nImage size 100x100 recognized.  Using %d/%d default origin." ,
+      DebugPrintf ( 0 , "\nCROPPY: Image size 100x100 recognized.  Using %d/%d default origin." ,
 		    default_center_x , default_center_y );
     }
   else if ( ( input_surface -> w == 120 ) &&
@@ -582,7 +607,7 @@ write_offset_file ( )
     {
       default_center_x = 60 ;
       default_center_y = 100 ;
-      DebugPrintf ( 0 , "\nImage size 120x120 recognized.  Using %d/%d default origin." ,
+      DebugPrintf ( 0 , "\nCROPPY: Image size 120x120 recognized.  Using %d/%d default origin." ,
 		    default_center_x , default_center_y );
     }
   else if ( ( input_surface -> w == 128 ) &&
@@ -590,7 +615,7 @@ write_offset_file ( )
     {
       default_center_x = 64 ;
       default_center_y = 100 ;
-      DebugPrintf ( 0 , "\nImage size 128x128 recognized.  Using %d/%d default origin." ,
+      DebugPrintf ( 0 , "\nCROPPY: Image size 128x128 recognized.  Using %d/%d default origin." ,
 		    default_center_x , default_center_y );
     }
   else if ( ( input_surface -> w == 200 ) &&
@@ -598,7 +623,7 @@ write_offset_file ( )
     {
       default_center_x = 99 ;
       default_center_y = 190 ;
-      DebugPrintf ( 0 , "\nImage size 200x240 (typical smaller tux part rendering).  Using %d/%d default origin." ,
+      DebugPrintf ( 0 , "\nCROPPY: Image size 200x240 (typical smaller tux part rendering).  Using %d/%d default origin." ,
 		    default_center_x , default_center_y );
     }
   else if ( ( input_surface -> w == 400 ) &&
@@ -606,7 +631,7 @@ write_offset_file ( )
     {
       default_center_x = 199 ;
       default_center_y = 381 ;
-      DebugPrintf ( 0 , "\nImage size 400x480 (typical larger tux part rendering).  Using %d/%d default origin." ,
+      DebugPrintf ( 0 , "\nCROPPY: Image size 400x480 (typical larger tux part rendering).  Using %d/%d default origin." ,
 		    default_center_x , default_center_y );
     }
   else
@@ -695,12 +720,35 @@ void
 copy_and_crop_input_file ( ) 
 {
   char parameter_buf[5000];
+  char mdk_filename[5000];
 
   sprintf ( parameter_buf , "mogrify -crop %dx%d+%d+%d %s" , input_surface->w - cut_left - cut_right ,
 	    input_surface->h - cut_up - cut_down , cut_left , cut_up , input_filename );
+  DebugPrintf ( 0 , "\nCROPPY:  Now executing command : %s" , parameter_buf );
+  system ( parameter_buf );
 
-  DebugPrintf ( 1 , "\nNow executing command : %s\n" , parameter_buf );
+  //--------------------
+  // Now we must determine mdk-filename
+  //
+  strcpy ( mdk_filename , input_filename );
+  if ( strstr ( mdk_filename , ".png" ) == NULL )
+    {
+      DebugPrintf ( -1000 , "\nCROPPY ERROR:  input_filename doesn't have .png?  strange!" );      
+      Terminate ( ERR );
+    }
+  else
+    {
+      mdk_filename [ strlen ( mdk_filename ) - 4 ] = 0 ;
+      strcat ( mdk_filename , ".mdk" );
+    }
 
+  //--------------------
+  // Now we can copy any existing .mdk file over the surely existing .png file.
+  // (This measure seems to be nescessary with mogrify versions like the one used
+  // on basse's machine.)
+  //
+  sprintf ( parameter_buf , "mv %s %s" , mdk_filename , input_filename );
+  DebugPrintf ( 0 , "\nCROPPY:  Now executing command : %s" , parameter_buf );
   system ( parameter_buf );
 
 }; // void copy_and_crop_input_file ( ) ;
