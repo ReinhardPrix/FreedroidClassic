@@ -252,55 +252,6 @@ mouse_cursor_is_on_that_obstacle ( int obst_index )
  * return the obstacle index of the chest in question.  Else -1 will be
  * returned.
  * ---------------------------------------------------------------------- */
-/*
-int
-closed_chest_below_mouse_cursor ( int player_num ) 
-{
-    finepoint MapPositionOfMouse;
-    int i;
-    int obst_index ;
-    
-    if ( MouseCursorIsInUserRect( GetMousePos_x()  , GetMousePos_y()  ) && ( CurLevel != NULL ) )
-    {
-	MapPositionOfMouse.x = 
-	    translate_pixel_to_map_location ( player_num , 
-					      (float) ServerThinksInputAxisX ( player_num ) , 
-					      (float) ServerThinksInputAxisY ( player_num ) , TRUE ) ;
-	MapPositionOfMouse.y = 
-	    translate_pixel_to_map_location ( player_num , 
-					      (float) ServerThinksInputAxisX ( player_num ) , 
-					      (float) ServerThinksInputAxisY ( player_num ) , FALSE ) ;
-
-	for ( i = 0 ; i < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; i++ )
-	{
-	    if ( ( ( (int) MapPositionOfMouse . x ) < 0 ) ||
-		 ( ( (int) MapPositionOfMouse . y ) < 0 ) ||
-		 ( ( (int) MapPositionOfMouse . x ) >= CurLevel -> xlen ) ||
-		 ( ( (int) MapPositionOfMouse . y ) >= CurLevel -> ylen ) ) return ( -1 ) ;
-	    
-	    obst_index = CurLevel -> map [ (int) MapPositionOfMouse . y ] [ (int) MapPositionOfMouse . x ] . obstacles_glued_to_here [ i ] ;
-	    
-	    if ( obst_index == (-1) ) continue;
-	    
-	    switch ( CurLevel -> obstacle_list [ obst_index ] . type )
-	    {
-		case ISO_H_CHEST_CLOSED:
-		case ISO_V_CHEST_CLOSED:
-		    // DebugPrintf ( 0 , "\nBANNER: Cursor is now on closed chest!!!" );
-		    // strcpy ( ItemDescText , "  C  H  E  S  T  ! ! ! " ) ;
-		    return ( obst_index ) ;
-		    break;
-		    
-		default: 
-		    break;
-	    }
-	}
-    }
-    
-    return ( -1 ) ;
-    
-}; // int closed_chest_below_mouse_cursor ( int player_num ) 
-*/
 int
 closed_chest_below_mouse_cursor ( int player_num ) 
 {
@@ -316,7 +267,6 @@ closed_chest_below_mouse_cursor ( int player_num )
     if ( ! MouseCursorIsInUserRect ( GetMousePos_x() , 
 				     GetMousePos_y() ) && ( CurLevel != NULL ) )
 	return ( -1 ) ;
-
 
     //--------------------
     // We find the approximate position of the mouse cursor on the floor.
