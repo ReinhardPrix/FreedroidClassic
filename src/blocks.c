@@ -2240,14 +2240,19 @@ init_obstacle_data( void )
 
   obstacle_map [ ISO_TELEPORTER_1 ] . block_area_type = COLLISION_TYPE_NONE ;
   obstacle_map [ ISO_TELEPORTER_1 ] . is_smashable = FALSE ;
+  obstacle_map [ ISO_TELEPORTER_1 ] . emitted_light_strength = 10 ;
   obstacle_map [ ISO_TELEPORTER_2 ] . block_area_type = COLLISION_TYPE_NONE ;
   obstacle_map [ ISO_TELEPORTER_2 ] . is_smashable = FALSE ;
+  obstacle_map [ ISO_TELEPORTER_2 ] . emitted_light_strength = 9 ;
   obstacle_map [ ISO_TELEPORTER_3 ] . block_area_type = COLLISION_TYPE_NONE ;
   obstacle_map [ ISO_TELEPORTER_3 ] . is_smashable = FALSE ;
+  obstacle_map [ ISO_TELEPORTER_3 ] . emitted_light_strength = 8 ;
   obstacle_map [ ISO_TELEPORTER_4 ] . block_area_type = COLLISION_TYPE_NONE ;
   obstacle_map [ ISO_TELEPORTER_4 ] . is_smashable = FALSE ;
+  obstacle_map [ ISO_TELEPORTER_4 ] . emitted_light_strength = 9 ;
   obstacle_map [ ISO_TELEPORTER_5 ] . block_area_type = COLLISION_TYPE_NONE ;
   obstacle_map [ ISO_TELEPORTER_5 ] . is_smashable = FALSE ;
+  obstacle_map [ ISO_TELEPORTER_5 ] . emitted_light_strength = 10 ;
 
   obstacle_map [ ISO_V_CHEST_OPEN ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_V_CHEST_OPEN ] . block_area_parm_1 = standard_wall_thickness ;
@@ -2363,6 +2368,7 @@ init_obstacle_data( void )
   obstacle_map [ ISO_LAMP ] . block_area_parm_2 = 0.5 ;
   obstacle_map [ ISO_LAMP ] . is_smashable = FALSE ;
   obstacle_map [ ISO_LAMP ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_LAMP ] . emitted_light_strength = 10 ; // how much light emitted from here...
 
   obstacle_map [ ISO_V_WOOD_FENCE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_V_WOOD_FENCE ] . block_area_parm_1 = 1.00 ;
@@ -2974,22 +2980,18 @@ init_obstacle_data( void )
   obstacle_map [ ISO_YELLOW_CHAIR_N ] . block_area_parm_2 = 0.8 ;
   obstacle_map [ ISO_YELLOW_CHAIR_N ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_YELLOW_CHAIR_N ] . filename = "iso_chairs_0004.png" ;
-  obstacle_map [ ISO_YELLOW_CHAIR_N ] . emitted_light_strength = 10 ; // how much light emitted from here...
   obstacle_map [ ISO_YELLOW_CHAIR_E ] . block_area_parm_1 = 0.8 ;
   obstacle_map [ ISO_YELLOW_CHAIR_E ] . block_area_parm_2 = 0.8 ;
   obstacle_map [ ISO_YELLOW_CHAIR_E ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_YELLOW_CHAIR_E ] . filename = "iso_chairs_0001.png" ;
-  obstacle_map [ ISO_YELLOW_CHAIR_E ] . emitted_light_strength = 10 ; // how much light emitted from here...
   obstacle_map [ ISO_YELLOW_CHAIR_S ] . block_area_parm_1 = 0.8 ;
   obstacle_map [ ISO_YELLOW_CHAIR_S ] . block_area_parm_2 = 0.8 ;
   obstacle_map [ ISO_YELLOW_CHAIR_S ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_YELLOW_CHAIR_S ] . filename = "iso_chairs_0002.png" ;
-  obstacle_map [ ISO_YELLOW_CHAIR_S ] . emitted_light_strength = 10 ; // how much light emitted from here...
   obstacle_map [ ISO_YELLOW_CHAIR_W ] . block_area_parm_1 = 0.8 ;
   obstacle_map [ ISO_YELLOW_CHAIR_W ] . block_area_parm_2 = 0.8 ;
   obstacle_map [ ISO_YELLOW_CHAIR_W ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_YELLOW_CHAIR_W ] . filename = "iso_chairs_0003.png" ;
-  obstacle_map [ ISO_YELLOW_CHAIR_W ] . emitted_light_strength = 10 ; // how much light emitted from here...
 
   obstacle_map [ ISO_RED_CHAIR_N ] . block_area_parm_1 = 1.6 ;
   obstacle_map [ ISO_RED_CHAIR_N ] . block_area_parm_2 = 0.8 ;

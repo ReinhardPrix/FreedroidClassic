@@ -109,7 +109,7 @@ int number_of_objects_currently_in_blitting_list ;
 
 //--------------------
 // 
-#define MAX_NUMBER_OF_LIGHT_SOURCES 10
+#define MAX_NUMBER_OF_LIGHT_SOURCES 100
 moderately_finepoint light_sources [ MAX_NUMBER_OF_LIGHT_SOURCES ] ;
 int light_source_strengthes [ MAX_NUMBER_OF_LIGHT_SOURCES ] ;
 
@@ -1370,6 +1370,11 @@ update_light_list ( int player_num )
 {
     int i;
     Level light_level = curShip . AllLevels [ Me [ player_num ] . pos . z ] ;
+    int map_x, map_y, map_x_end, map_y_end, map_x_start, map_y_start ;
+    int glue_index;
+    int obs_index;
+    int next_light_emitter_index;
+    obstacle* emitter;
 
     //--------------------
     // At first we fill out the light sources array with 'empty' information,
@@ -1389,10 +1394,57 @@ update_light_list ( int player_num )
     light_sources [ 0 ] . x = Me [ player_num ] . pos . x ;
     light_sources [ 0 ] . y = Me [ player_num ] . pos . y ;
     light_source_strengthes [ 0 ] = light_level -> light_radius_bonus ;
-    
+    //--------------------
+    // We must not in any case tear a hole into the beginning of
+    // the list though...
+    //
+    if ( light_source_strengthes [ 0 ] == 0 )
+	light_source_strengthes [ 0 ] = 1;
+    next_light_emitter_index = 1 ;
+
+
     //--------------------
     // Now we can fill in the remaining light sources of this level
     //
+    map_x_start = Me [ player_num ] . pos . x - 12 ;
+    map_y_start = Me [ player_num ] . pos . y - 12 ;
+    map_x_end = Me [ player_num ] . pos . x + 12 ;
+    map_y_end = Me [ player_num ] . pos . y + 12 ;
+    if ( map_x_start < 0 ) map_x_start = 0 ;
+    if ( map_y_start < 0 ) map_y_start = 0 ;
+    if ( map_x_end >= light_level -> xlen ) map_x_end = light_level -> xlen - 1 ;
+    if ( map_y_end >= light_level -> ylen ) map_y_end = light_level -> ylen - 1 ;
+    for ( map_x = map_x_start ; map_x < map_x_end ; map_x ++ )
+    {
+	for ( map_y = map_y_start ; map_y < map_y_end ; map_y ++ )
+	{
+	    for ( glue_index = 0 ; glue_index < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; glue_index ++ )
+	    {
+		//--------------------
+		// end of obstacles glued to here?  great->next square
+		//
+		if ( light_level -> map [ map_y ] [ map_x ] . obstacles_glued_to_here [ glue_index ] == (-1) )
+		    break;
+
+		obs_index = light_level -> map [ map_y ] [ map_x ] . obstacles_glued_to_here [ glue_index ] ;
+		emitter = & ( light_level -> obstacle_list [ obs_index ] );
+
+		if ( obstacle_map [ emitter -> type ] . emitted_light_strength == 0 )
+		    continue;
+
+		//--------------------
+		// Now we know that this one needs to be inserted!
+		//
+		light_sources [ next_light_emitter_index ] . x = emitter -> pos . x ;
+		light_sources [ next_light_emitter_index ] . y = emitter -> pos . y ;
+		light_source_strengthes [ next_light_emitter_index ] = 
+		    obstacle_map [ emitter -> type ] . emitted_light_strength ;
+		
+	    }
+	}
+    }
+    
+/*
     for ( i = 1 ; i < MAX_NUMBER_OF_LIGHT_SOURCES ; i ++ )
     {
 	if ( light_level -> teleporter_obstacle_indices [ i-1 ] != (-1) )
@@ -1402,6 +1454,7 @@ update_light_list ( int player_num )
 	    light_source_strengthes [ i ] = 10 ;
 	}
     }
+*/
     
 }; // void update_light_list ( int player_num )
 
@@ -1412,33 +1465,40 @@ update_light_list ( int player_num )
 int 
 get_light_strength ( moderately_finepoint target_pos )
 {
-  int final_darkness = NUMBER_OF_SHADOW_IMAGES;
-  int i;
-
-  //--------------------
-  // Now that the light sources array is fully set up, we can start
-  // to compute the individual light strength at any given position
-  //
-  for ( i = 0 ; i < MAX_NUMBER_OF_LIGHT_SOURCES ; i ++ )
+    int final_darkness = NUMBER_OF_SHADOW_IMAGES;
+    int i;
+    
+    //--------------------
+    // Now that the light sources array is fully set up, we can start
+    // to compute the individual light strength at any given position
+    //
+    for ( i = 0 ; i < MAX_NUMBER_OF_LIGHT_SOURCES ; i ++ )
     {
-      //--------------------
-      // We could of course use a maximum function to find out the proper light at
-      // any place.  But maybe addition of light would be better, so we use the latter
-      // code.
-      //
-      if ( ( (int) ( sqrt ( ( light_sources [ i ] . x - target_pos . x ) * 
-			    ( light_sources [ i ] . x - target_pos . x ) + 
-			    ( light_sources [ i ] . y - target_pos . y ) * 
-			    ( light_sources [ i ] . y - target_pos . y ) ) * 4.0 ) 
-	     - light_source_strengthes [ i ] ) < final_darkness )
-	final_darkness = (int) ( sqrt ( ( light_sources [ i ] . x - target_pos . x ) * 
-					( light_sources [ i ] . x - target_pos . x ) + 
-					( light_sources [ i ] . y - target_pos . y ) * 
-					( light_sources [ i ] . y - target_pos . y ) ) * 4.0 ) 
-	  - light_source_strengthes [ i ] ;
-    }
+	//--------------------
+	// Now if we've reached the end of the current list of light
+	// sources, then we can stop immediately.
+	//
+	if ( light_source_strengthes [ i ] == 0 )
+	    return ( final_darkness );
 
-  return ( final_darkness );
+	//--------------------
+	// We could of course use a maximum function to find out the proper light at
+	// any place.  But maybe addition of light would be better, so we use the latter
+	// code.
+	//
+	if ( ( (int) ( sqrt ( ( light_sources [ i ] . x - target_pos . x ) * 
+			      ( light_sources [ i ] . x - target_pos . x ) + 
+			      ( light_sources [ i ] . y - target_pos . y ) * 
+			      ( light_sources [ i ] . y - target_pos . y ) ) * 4.0 ) 
+	       - light_source_strengthes [ i ] ) < final_darkness )
+	    final_darkness = (int) ( sqrt ( ( light_sources [ i ] . x - target_pos . x ) * 
+					    ( light_sources [ i ] . x - target_pos . x ) + 
+					    ( light_sources [ i ] . y - target_pos . y ) * 
+					    ( light_sources [ i ] . y - target_pos . y ) ) * 4.0 ) 
+		- light_source_strengthes [ i ] ;
+    }
+    
+    return ( final_darkness );
 
 }; // int get_light_strength ( moderately_finepoint target_pos )
 
