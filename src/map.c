@@ -760,12 +760,12 @@ GetElevatorConnections (char *shipname)
   return OK;
 }				// int GetElevatorConnections(char *shipname)
 
-/*@Function============================================================
-@Desc: int GetCrew(char *shipname): intialisiert Feindesliste
-
-@Ret: OK or ERR
-@Int:
-* $Function----------------------------------------------------------*/
+/*-----------------------------------------------------------------
+ * @Desc: intialisiert Feindesliste
+ *
+ * @Ret: OK or ERR
+ * 
+ *-----------------------------------------------------------------*/
 int
 GetCrew (char *shipname)
 {
@@ -781,87 +781,66 @@ GetCrew (char *shipname)
   char line[CREW_LINE_LEN];
   char *pos;
 
-  DebugPrintf
-    ("\nint GetCrew(char *shipname): real function call confirmed...:");
-
   /* get filename */
   strcpy (filename, shipname);
   strcat (filename, CREWEXT);
 
-  /* Clear Enmey - Array */
+  /* Clear Enemy - Array */
   ClearEnemys ();
 
   if ((CrewFile = fopen (filename, "r")) == NULL)
     {
-      DebugPrintf
-	("\nint GetCrew(char *shipname): end of function reached, although with ERROR!..:");
-      return FALSE;
+      printf ("\nCouldn't open crew-file: %s \n", filename);
+      return (ERR);
     }
 
-  DebugPrintf ("\nint GetCrew(char *shipname): file has been opened...:");
-
   enemy_nr = 0;
-
-  while (fgets (line, linelen, CrewFile))
+  while (fgets (line, linelen, CrewFile))  /* one line per level */
     {
       if (sscanf (line, "%d %d %d ",
 		  &level_num, &upper_limit, &lower_limit) == EOF)
 	{
-	  DebugPrintf
-	    ("\nint GetCrew(char *shipname): end of function reached, although with ERROR!..:");
-	  return ERR;
+	  printf ("\n Read Error in crew-file %s !\n", filename);
+	  return (ERR);
 	}
 
       if (strtok (line, ",") == NULL)
 	{
-	  DebugPrintf
-	    ("\nint GetCrew(char *shipname): end of function reached, although with ERROR!..:");
-	  return ERR;
+	  printf ("\n Read Error in crew-file %s !\n", filename);
+	  return (ERR);
 	}
-
-      DebugPrintf
-	("\nint GetCrew(char *shipname): first two if conditionals passed...:");
 
       type_anz = 0;
       while ((pos = strtok (NULL, " \t")) != NULL)
 	sscanf (pos, "%d", &(types[type_anz++]));
 
       this_limit = MyRandom (upper_limit - lower_limit) + lower_limit;
+
       while (this_limit--)
 	{
-	  Feindesliste[enemy_nr].type = types[MyRandom (type_anz)];
+	  Feindesliste[enemy_nr].type = types[MyRandom (type_anz-1)];
 	  Feindesliste[enemy_nr].levelnum = level_num;
 	  Feindesliste[enemy_nr].Status = 0;
 	  enemy_nr++;
-	}			/* while noch_enemy */
-
-      DebugPrintf
-	("\nint GetCrew(char *shipname): first two while loops passed...:");
+	} /* while (enemy-limit of this level not reached) */
 
       if (enemy_nr >= MAX_ENEMYS_ON_SHIP)
 	{
-	  DebugPrintf
-	    ("\nint GetCrew(char *shipname): end of function reached, although with ERROR!..:");
-	  return ERR;
+	  printf ("\nToo many enemys on ship: %s! \n", filename);
+	  return (ERR);
 	}
 
-    }				/* while fgets() */
-
-  DebugPrintf
-    ("\nint GetCrew(char *shipname): file has been successfully read.:");
+    }	/* while (lines in crew-file to read) */
 
   NumEnemys = enemy_nr;
 
   fclose (CrewFile);
 
-  DebugPrintf ("\nint GetCrew(char *shipname): file has been closed.:");
-
   InitEnemys ();		/* Energiewerte richtig setzen */
 
-  DebugPrintf ("\nint GetCrew(char *shipname): end of function reached..:");
+  return (OK);
 
-  return OK;
-}				// int GetCrew(char *shipname)
+} /* GetCrew () */
 
 
 /*@Function============================================================
