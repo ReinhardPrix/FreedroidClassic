@@ -71,6 +71,7 @@ static SDL_Surface* Background;
 #define MAX_DIALOGUE_OPTIONS_IN_ROSTER 100
 #define MAX_REPLIES_PER_OPTION 100
 #define MAX_SUBTITLES_N_SAMPLES_PER_DIALOGUE_OPTION 20
+#define MAX_EXTRAS_PER_OPTION 10
 typedef struct
 {
   char* option_text;
@@ -78,6 +79,8 @@ typedef struct
 
   char* reply_sample_list[ MAX_REPLIES_PER_OPTION ] ;
   char* reply_subtitle_list[ MAX_REPLIES_PER_OPTION ];
+
+  char* extra_list[ MAX_EXTRAS_PER_OPTION ];
 
   int change_option_nr [ MAX_DIALOGUE_OPTIONS_IN_ROSTER ];
   int change_option_to_value [ MAX_DIALOGUE_OPTIONS_IN_ROSTER ];
@@ -103,6 +106,10 @@ InitChatRosterForNewDialogue( void )
 	  ChatRoster [ i ] . reply_subtitle_list [ j ] = "";
 	}
 
+      for ( j = 0 ; j < MAX_EXTRAS_PER_OPTION ; j++ )
+	{
+	  ChatRoster [ i ] . extra_list [ j ] = "";
+	}
 
       for ( j = 0 ; j < MAX_DIALOGUE_OPTIONS_IN_ROSTER ; j++ )
 	{
@@ -131,9 +138,12 @@ LoadChatRosterWithChatSequence ( char* SequenceCode )
   int NumberOfReplySamples;
   int NumberOfOptionChanges;
   int NumberOfNewOptionValues;
+  int NumberOfExtraEntries;
+
   int RestoreTempDamage;
   char* ReplyPointer;
   char* OptionChangePointer;
+  char* ExtraPointer;
 
   fpath = find_file ( "Freedroid.dialogues" , MAP_DIR, FALSE);
 
@@ -160,6 +170,7 @@ LoadChatRosterWithChatSequence ( char* SequenceCode )
       SectionPointer = LocateStringInData ( SectionPointer, CHAT_CHARACTER_BEGIN_STRING );
       NextChatSectionCode = ReadAndMallocStringFromData ( SectionPointer , CHAT_CHARACTER_BEGIN_STRING , "\"" ) ;
       DebugPrintf( 0 , "\nChat section beginning found.  Chat code given: %s." , NextChatSectionCode );
+      SectionPointer++;
     }
   DebugPrintf( 0 , "\nThat seems to be the chat section we're looking for.  Great!" ) ;
 
@@ -329,6 +340,37 @@ found in this option of the dialogue, which is fine.", NumberOfOptionChanges );
 	  OptionChangePointer = LocateStringInData ( OptionChangePointer, "ChangeToValue" );
 	  OptionChangePointer ++;
 	}
+
+      //--------------------
+      // We count the number of Extras to be done then
+      // we will read them out
+      //
+      NumberOfExtraEntries = CountStringOccurences ( SectionPointer , "DoSomethingExtra" ) ;
+      DebugPrintf( 0 , "\nThere were %d 'Extras' specified in this option." , 
+		   NumberOfExtraEntries );
+      
+      //--------------------
+      // Now that we know exactly how many extra entries 
+      // to read out, we can well start reading exactly that many of them.
+      // 
+      ExtraPointer = SectionPointer;
+      for ( j = 0 ; j < NumberOfExtraEntries ; j ++ )
+	{
+	  // ExtraPointer = LocateStringInData ( ExtraPointer, "DoSomethingExtra" );
+
+	  ChatRoster[ OptionIndex ] . extra_list [ j ] =
+	    ReadAndMallocStringFromData ( ExtraPointer , "DoSomethingExtra=\"" , "\"" ) ;
+
+	  DebugPrintf( 0 , "\nOption will execute this extra: %s. " , 
+		       ChatRoster[ OptionIndex ] . extra_list [ j ] );
+
+	  //--------------------
+	  // Now we must move the option change pointer to after the previous combination.
+	  //
+	  ExtraPointer = LocateStringInData ( ExtraPointer, "DoSomethingExtra" );
+	  ExtraPointer ++;
+	}
+
 
       //--------------------
       // Now that the whole section has been read out into the ChatRoster, we can
@@ -506,6 +548,43 @@ GiveSubtitleNSample( char* SubtitleText , char* SampleFilename )
   PlayOnceNeededSoundSample( SampleFilename , TRUE );
 }; // void GiveSubtitleNSample( char* SubtitleText , char* SampleFilename )
 
+void
+ExecuteChatExtra ( char* ExtraCommandString )
+{
+  if ( ! strcmp ( ExtraCommandString , "Buy_Basic_Items" ) )
+    {
+      Buy_Basic_Items( FALSE , FALSE );
+    }
+  else if ( ! strcmp ( ExtraCommandString , "Sell_Items" ) )
+    {
+      Sell_Items( FALSE );
+    }
+  else if ( ! strcmp ( ExtraCommandString , "Identify_Items" ) )
+    {
+      Identify_Items(  );      
+    }
+  else if ( ! strcmp ( ExtraCommandString , "Repair_Items" ) )
+    {
+      Repair_Items(  );
+    }
+  else if ( ! strcmp ( ExtraCommandString , "Buy_Magical_Items" ) )
+    {
+      Buy_Basic_Items( FALSE , TRUE );      
+    }
+  else 
+    {
+      DebugPrintf( 0 , "\n----------------------------------------------------------------------\n\
+ExecuteChatExtra: ERROR:  UNKNOWN COMMAND STRING GIVEN!!!!  \n\
+Errorneous string: %s \n\
+\n\
+Freedroid will terminate now to draw attention to the chat code\n\
+problem it could not resolve.  Sorry.\n\
+----------------------------------------------------------------------\n" , ExtraCommandString );
+      Terminate(ERR);
+      
+    }
+}; // void ExecuteChatExtra ( char* ExtraCommandString )
+
 /* ----------------------------------------------------------------------
  * This function prepares the chat background window and displays the
  * image of the dialog partner and also sets the right font.
@@ -587,12 +666,14 @@ problem it could not resolve.  Sorry.\n\
 }; // void PrepareMultipleChoiceDialog ( int Enum )
 
 void
-DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode )
+DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , int Enum )
 {
   int i ;
   SDL_Rect Chat_Window;
   int MenuSelection = (-1) ;
   char* DialogMenuTexts[ MAX_ANSWERS_PER_PERSON ];
+
+  PrepareMultipleChoiceDialog ( Enum );
 
   Chat_Window.x=242; Chat_Window.y=100; Chat_Window.w=380; Chat_Window.h=314;
 
@@ -612,7 +693,16 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode )
     {
       MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , DialogMenuTexts , Me [ PlayerNum ] . Chat_Flags [ ChatPartnerCode ]  , 1 , NULL , FPS_Display_BFont );
 
+      //--------------------
+      // We do some correction of the menu selection variable:
+      // The first entry of the menu will give a 1 and so on and therefore
+      // we need to correct this to more C style.
+      //
       MenuSelection --;
+      if ( MenuSelection >= MAX_ANSWERS_PER_PERSON - 2 )
+	{
+	  MenuSelection = MAX_REPLIES_PER_OPTION -1 ;
+	}
 
       //--------------------
       // Now a menu section has been made.  We do the reaction:
@@ -627,11 +717,7 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode )
 	  //--------------------
 	  // Once we encounter an empty string here, we're done with the reply...
 	  //
-	  if ( MenuSelection >= MAX_ANSWERS_PER_PERSON - 2 )
-	    {
-	      MenuSelection = MAX_REPLIES_PER_OPTION -1 ;
-	    }
-	  else if ( ! strlen ( ChatRoster [ MenuSelection ] . reply_subtitle_list [ i ] ) ) 
+	  if ( ! strlen ( ChatRoster [ MenuSelection ] . reply_subtitle_list [ i ] ) ) 
 	    break;
 
 	  GiveSubtitleNSample ( ChatRoster [ MenuSelection ] . reply_subtitle_list [ i ] ,
@@ -658,14 +744,34 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode )
 			ChatRoster [ MenuSelection ] . change_option_to_value[i] );
 	}
 
+      //--------------------
+      // Maybe this option should also invoke some extra function like opening
+      // a shop interface or something.  So we do this here.
+      //
+      for ( i = 0 ; i < MAX_EXTRAS_PER_OPTION ; i ++ )
+	{
+	  //--------------------
+	  // Maybe all nescessary extras were executed by now.  Then it's time
+	  // to quit...
+	  //
+	  if ( !strlen ( ChatRoster [ MenuSelection ] . extra_list [ i ] ) )
+	    break;
 
+	  DebugPrintf ( 0 , "\nWARNING!  Starting to invoke extra.  Text is: %s." ,
+			ChatRoster [ MenuSelection ] . extra_list[i] );
+
+	  ExecuteChatExtra ( ChatRoster [ MenuSelection ] . extra_list[i] );
+
+	  //--------------------
+	  // It can't hurt to have the overall background redrawn after each extra command
+	  // which could have destroyed the background by drawing e.g. a shop interface
+	  PrepareMultipleChoiceDialog ( Enum ) ;
+	}
 
       if ( ( MenuSelection >= MAX_ANSWERS_PER_PERSON - 1 ) || ( MenuSelection < 0 ) )
 	{
 	  return;
 	}
-
-
 
     }
   
@@ -722,127 +828,9 @@ ChatWithFriendlyDroid( int Enum )
       //
       LoadChatRosterWithChatSequence ( "CHA" );
 
-      PrepareMultipleChoiceDialog( Enum );
-
-      DoChatFromChatRosterData( 0 , PERSON_CHA );
+      DoChatFromChatRosterData( 0 , PERSON_CHA , Enum );
 
       return;
-
-      /*
-      //--------------------
-      // Now we do the dialog with Dr. Chandra...
-      //
-      PrepareMultipleChoiceDialog( Enum );
-
-
-      DialogMenuTexts [ 0 ] = " Hi!  I'm new here. " ;
-      DialogMenuTexts [ 1 ] = " What can you tell me about this place? " ;
-      DialogMenuTexts [ 2 ] = " Where can I get better equipment? " ;
-
-      DialogMenuTexts [ 4 ] = " What can you tell me about the MS? " ;
-      DialogMenuTexts [ 5 ] = " Wouldn't that just mean replacing one evil with another?" ;
-      DialogMenuTexts [ 6 ] = " I want to get in contact with the MS." ;
-      DialogMenuTexts [ 7 ] = " I would like to get in contact with the Rebellion." ;
-      DialogMenuTexts [ 8 ] = " How can I gain their trust?" ;
-      DialogMenuTexts [ 9 ] = " Have I done enough quests yet for my meeting with the Resistance?" ;
-      DialogMenuTexts [ MAX_ANSWERS_PER_PERSON - 1 ] = " END ";
-      
-      // GiveSubtitleNSample( " Welcome Traveller! ", "Chandra_Welcome_Traveller_0.wav" );
-      
-
-      while (1)
-	{
-	  
-	  // MenuSelection = ChatDoMenuSelection ( "What will you say?" , MenuTexts , 1 , NULL , FPS_Display_BFont );
-	  MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , DialogMenuTexts , Me[0].Chat_Flags [ PERSON_CHA ]  , 1 , NULL , FPS_Display_BFont );
-	  
-	  switch( MenuSelection )
-	    {
-	    case 1:
-	      PlayOnceNeededSoundSample( "Tux_Hi_Im_New_0.wav" , TRUE );
-	      GiveSubtitleNSample( "Welcome to this camp! I am Chandra. I care about visitors." , "Chandra_Welcome_To_This_0.wav" );
-	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 0 ] = 0 ;
-	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 1 ] = 1 ;
-	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 2 ] = 1 ;
-	      break;
-	    case 2:
-	      PlayOnceNeededSoundSample( "Tux_Chandra_What_Can_Place_0.wav" , TRUE );
-	      GiveSubtitleNSample( "This place is owned by refugees like me, who hide from the MS. " , "Chandra_This_Place_Consists_0.wav" );
-	      GiveSubtitleNSample( "Formerly this was a camp of the resistance movement. " , "Chandra_Formerly_This_Was_0.wav" );
-	      GiveSubtitleNSample( "But they have left long ago. " , "Chandra_But_They_Have_0.wav" );
-	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 1 ] = 0 ;
-	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 4 ] = 1 ;
-	      break;
-	    case 3:
-	      PlayOnceNeededSoundSample( "Tux_Chandra_Where_Can_I_0.wav" , TRUE );
-	      GiveSubtitleNSample( " You might try it at the shop. " , "Chandra_You_Might_Try_0.wav" );
-	      GiveSubtitleNSample( " Mrs. Stone always has a good range of equipment there. " , "Chandra_They_Have_All_0.wav" );
-	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 2 ] = 0 ; // but don't ask this twice.
-	      break;
-	    case 5:
-	      PlayOnceNeededSoundSample( "Tux_Chandra_What_Can_MS_0.wav" , TRUE );
-	      GiveSubtitleNSample( " Currently, the MS is the most powerful organisation in the universe. " , "Chandra_Currently_The_MS_0.wav" );
-	      GiveSubtitleNSample( " But maybe not for very much longer:  A rebellion has started." , "Chandra_But_Maybe_Not_0.wav" );
-	      GiveSubtitleNSample( " The rebels have small supporters throughout the universe." , "Chandra_The_Rebels_Have_0.wav" );
-	      GiveSubtitleNSample( " The number of the rebels has grown a lot in the last decade." , "Chandra_The_Number_Of_0.wav" );
-	      GiveSubtitleNSample( " It might be that in the end they can win their struggle for freedom." , "Chandra_It_Might_Well_0.wav" );
-	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 5 ] = 1 ; // some new possibilities...
-	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 6 ] = 1 ;
-	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 7 ] = 1 ;
-	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 4 ] = 0 ; // but don't ask this twice.
-	      break;
-	    case 6:
-	      PlayOnceNeededSoundSample( "Tux_Chandra_Wouldnt_That_Mean_0.wav" , TRUE );
-	      GiveSubtitleNSample( "By no means.  The rebellion is carried on by individuals. " , "Chandra_By_No_Means_0.wav" );
-	      GiveSubtitleNSample( "They are neither bound to some central authority nor are they paid in any way." , "Chandra_They_Are_Neither_0.wav" );
-	      GiveSubtitleNSample( "They work together for thier common goal of freedom." , "Chandra_They_Work_Together_0.wav" );
-	      GiveSubtitleNSample( "They will not change their goal to support the power and will of only one." , "Chandra_They_Will_Not_0.wav" );
-	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 5 ] = 0 ; // but don't ask this twice.
-	      break;
-	    case 7:
-	      PlayOnceNeededSoundSample( "Tux_Chandra_I_Want_To_0.wav" , TRUE );
-	      GiveSubtitleNSample( "This will be difficult.  As a non-member of the MS, their machines will attack you." , "Chandra_This_Will_Be_0.wav" );
-	      GiveSubtitleNSample( "But maybe there is a way.  I just don't know." , "Chandra_But_Maybe_There_0.wav" );
-	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 6 ] = 0 ; // but don't ask this twice.
-	      break;
-	    case 8:
-	      PlayOnceNeededSoundSample( "Tux_Chandra_I_Would_Like_0.wav" , TRUE );
-	      GiveSubtitleNSample( "This should be possible.  But you must gain their trust first." , "Chandra_This_Should_Be_0.wav" );
-	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 7 ] = 0 ; // but don't ask this twice.
-	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 8 ] = 1 ; // this should lead on...
-	      break;
-	    case 9:
-	      PlayOnceNeededSoundSample( "Tux_Chandra_How_Can_I_0.wav" , TRUE );
-	      GiveSubtitleNSample( "Ask around! " , "Chandra_Ask_Around_Ill_0.wav" );
-	      GiveSubtitleNSample( "I'm sure help is needed at all ends of town! " , "Chandra_Im_Sure_Help_0.wav" );
-	      GiveSubtitleNSample( "If you do well on them, I'll hear that and I'll count it in your favour." , "Chandra_If_You_Do_0.wav" );
-	      GiveSubtitleNSample( "If you think you've done enough quests, come back here and I'll see what I can do." , "Chandra_If_You_Think_0.wav" );
-	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 8 ] = 0 ; // but don't ask this twice.
-	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 9 ] = 1 ; // this should lead on...
-
-	      //--------------------
-	      // This should enable some dialog options for some other characters...
-	      //
-	      // Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 0 ] = 1 ; // 'Chandra said you have something to do for me...
-	      // Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 0 ] = 1 ; // 'Chandra said you have something to do for me...
-	      //
-
-	      break;
-	    case 10:
-	      PlayOnceNeededSoundSample( "Tux_Chandra_Have_I_Done_0.wav" , TRUE );
-	      GiveSubtitleNSample( " No, not yet.  Get going.  There's still a lot of things to do for you." , "Chandra_No_Not_Really_0.wav" );
-	      // Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 9 ] = 0 ; // but don't ask this twice.
-	      // Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 8 ] = 0 ; // this should lead on...
-	      break;
-	    case MAX_ANSWERS_PER_PERSON :
-	    case (-1):
-	    default:
-	      PlayOnceNeededSoundSample( "Tux_Goodbye_0.wav" , TRUE );
-	      return;
-	      break;
-	    }
-	}
-      */
 
     } // end of conversation with Chandra.
 
@@ -994,67 +982,18 @@ ChatWithFriendlyDroid( int Enum )
 
   if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "614" ) == 0 )
     {
+
       //--------------------
-      // Now we do the dialog with 614...
+      // We clean out the chat roster from any previous use
       //
-      PrepareMultipleChoiceDialog( Enum );
+      InitChatRosterForNewDialogue(  );
 
-      DialogMenuTexts [ 0 ] = " Who are you? " ;
-      DialogMenuTexts [ 1 ] = " Have you detected any MS activity?" ; 
-      DialogMenuTexts [ 2 ] = " What can you tell me about the 614 type? " ;
-      DialogMenuTexts [ 3 ] = " What are your orders?" ;
-      DialogMenuTexts [ END_ANSWER ] = " END ";
-      
-      // GiveSubtitleNSample( " Welcome Traveller! " , "Chandra_Welcome_Traveller_0.wav" );
+      //--------------------
+      // Now we load the chat roster with the info from the chat info file
+      //
+      LoadChatRosterWithChatSequence ( "614" );
 
-      while (1)
-	{
-	  
-	  // MenuSelection = ChatDoMenuSelection ( "What will you say?" , MenuTexts , 1 , NULL , FPS_Display_BFont );
-	  MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , DialogMenuTexts , Me[0].Chat_Flags [ PERSON_614 ]  , 1 , NULL , FPS_Display_BFont );
-	  
-	  switch( MenuSelection )
-	    {
-	    case 1:
-	      PlayOnceNeededSoundSample( "Tux_614_Who_Are_You_0.wav" , TRUE );
-	      Me [ 0 ] . Chat_Flags [ PERSON_614 ] [ 0 ] = 0 ; // don't say this twice...
-	      GiveSubtitleNSample( "I am a 614 security bot, once one of the best-selling products of the Nicolson company ever. " , "614_I_Am_A_0.wav" );
-	      break;
-	    case 2:
-	      PlayOnceNeededSoundSample( "Tux_614_Have_You_Detected_0.wav" , TRUE );
-	      GiveSubtitleNSample( "No.  The MS Bots have not shown any activity within the last 24 hours. " , "614_No_The_MS_0.wav" );
-	      Me [ 0 ] . Chat_Flags [ PERSON_614 ] [ 1 ] = 0 ; // don't say this twice...
-	      break;
-	    case 3:
-	      PlayOnceNeededSoundSample( "Tux_614_What_Can_You_0.wav" , TRUE );
-	      GiveSubtitleNSample( "The official manual classifies the 614 as a low security droid." , 
-				   "614_The_Official_Manual_0.wav" );
-	      GiveSubtitleNSample( "It is mainly used within ships to protect certain areas of the ship from intruders.", 
-				   "614_It_Is_Mainly_0.wav" );
-	      GiveSubtitleNSample( "It is considered a slow but sure device." , "614_It_Is_Considered_0.wav" );
-	      GiveSubtitleNSample( "Today it is used only by rebellion and it's supporters, not by the MS any more." , 
-				   "614_Today_It_Is_0.wav" );
-	      GiveSubtitleNSample( "This is because the 614 is by now a discontinued product." , 
-				   "614_This_Is_Because_0.wav" );
-	      GiveSubtitleNSample( "But don't worry.  I'm still in pretty good shape." , 
-				   "614_But_Dont_Worry_0.wav" );
-	      Me [ 0 ] . Chat_Flags [ PERSON_614 ] [ 2 ] = 0 ; // don't say this twice...
-	      break;
-	    case 4:
-	      PlayOnceNeededSoundSample( "Tux_614_What_Are_Your_0.wav" , TRUE );
-	      GiveSubtitleNSample( "My orders are to protect the living beings in this camp from attacks by MS bots." , 
-				   "614_My_Orders_Are_0.wav" );
-	      GiveSubtitleNSample( "This has top priority.  There are no other priorities." , "614_This_Has_Top_0.wav" );
-	      Me [ 0 ] . Chat_Flags [ PERSON_614 ] [ 3 ] = 0 ; // don't say this twice...
-	      break;
-	    case ( MAX_ANSWERS_PER_PERSON ):
-	    case (-1):
-	    default:
-	      PlayOnceNeededSoundSample( "Tux_See_You_Later_0.wav" , TRUE );
-	      return;
-	      break;
-	    }
-	}
+      DoChatFromChatRosterData( 0 , PERSON_614 , Enum );
 
       //--------------------
       // Since there won't be anyone else to talk to when already having
@@ -1063,90 +1002,28 @@ ChatWithFriendlyDroid( int Enum )
       return; 
     } // 614 character dialog
 
+
   if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "STO" ) == 0 )
     {
-      //--------------------
-      // Now we do the dialog with STO...
-      //
-      PrepareMultipleChoiceDialog( Enum );
 
-      DialogMenuTexts [ 0 ] = " Hi!  I'm new here. " ;
-      DialogMenuTexts [ 1 ] = " I would like to buy some equippment." ; 
-      DialogMenuTexts [ 2 ] = " I would like to get rid of some stuff. " ;
-      DialogMenuTexts [ 3 ] = " Can you identify some of the items I found?" ;
-      DialogMenuTexts [ 4 ] = " Some of my things could need repair." ;
-      DialogMenuTexts [ 5 ] = " Do you also have some magical stuff?" ; 
-      DialogMenuTexts [ END_ANSWER ] = " END ";
-      
-      while (1)
-	{
-	  MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , DialogMenuTexts , Me[0].Chat_Flags [ PERSON_STO ]  , 1 , NULL , FPS_Display_BFont );
-	  
-	  switch( MenuSelection )
-	    {
-	    case 1:
-	      PlayOnceNeededSoundSample( "Tux_Hi_Im_New_0.wav" , TRUE );
-	      Me [ 0 ] . Chat_Flags [ PERSON_STO ] [ 0 ] = 0 ; // don't say this twice...
-	      GiveSubtitleNSample( "Welcome to this camp!  I'm Ms. Stone.  I run this shop." , "STO_Welcome_To_This_0.wav" );
-	      Me [ 0 ] . Chat_Flags [ PERSON_STO ] [ 1 ] = 1 ; // allow for all shopping options...
-	      Me [ 0 ] . Chat_Flags [ PERSON_STO ] [ 2 ] = 1 ; // allow for all shopping options...
-	      Me [ 0 ] . Chat_Flags [ PERSON_STO ] [ 3 ] = 1 ; // allow for all shopping options...
-	      Me [ 0 ] . Chat_Flags [ PERSON_STO ] [ 4 ] = 1 ; // allow for all shopping options...
-	      Me [ 0 ] . Chat_Flags [ PERSON_STO ] [ 5 ] = 1 ; // allow for all shopping options...
-	      break;
-	    case 2:
-	      PlayOnceNeededSoundSample( "Tux_STO_I_Would_Like_0.wav" , TRUE );
-	      GiveSubtitleNSample( "Good!  Here is the selection of items I have for sale." , "STO_Good_Here_Is_0.wav" );
-	      Buy_Basic_Items( FALSE , FALSE );
-	      PrepareMultipleChoiceDialog( Enum );
-	      // GiveSubtitleNSample( "Sorry, but you can't afford this item." , "STO_You_Cant_Buy_0.wav" );
-	      break;
-	    case 3:
-	      PlayOnceNeededSoundSample( "Tux_STO_I_Would_Rid_0.wav" , TRUE );
-	      GiveSubtitleNSample( "Good!  Let's see what you have." , "STO_Good_Lets_See_0.wav" );
-	      // GiveSubtitleNSample( "Sorry, but you don't have anything I'd be interested in." , "STO_Sorry_But_You_0.wav" );
-	      Sell_Items( FALSE );
-	      PrepareMultipleChoiceDialog( Enum );
-	      break;
-	    case 4:
-	      PlayOnceNeededSoundSample( "Tux_STO_Can_You_Identify_0.wav" , TRUE );
-	      GiveSubtitleNSample( "Which of your items do you want me to identify?" , "STO_Which_Of_Your_0.wav" );
-	      // GiveSubtitleNSample( "You don't have anything that would need to be identified." , "STO_You_Dont_Have_0.wav" );
-	      // GiveSubtitleNSample( "Sorry, but you can't afford to have this item identified." , "STO_You_Cant_Identified_0.wav" );
-	      Identify_Items(  );
-	      PrepareMultipleChoiceDialog( Enum );
-	      break;
-	    case 5: 
-	      PlayOnceNeededSoundSample( "Tux_STO_Some_Of_My_0.wav" , TRUE );
-	      GiveSubtitleNSample( "Which of your items do you want me to repair?" , 
-				   "STO_Which_Of_Repair_0.wav" );
-	      // GiveSubtitleNSample( "Sorry, but you don't have anything that would need repair." , "STO_Sorry_But_Repair_0.wav" );
-	      // GiveSubtitleNSample( "Sorry, but you can't afford to have this item repaired." , "STO_You_Cant_Repair_0.wav" );
-	      Repair_Items(  );
-	      PrepareMultipleChoiceDialog( Enum );
-	      break;
-	    case 6: 
-	      PlayOnceNeededSoundSample( "Tux_STO_Do_You_Also_0.wav" , TRUE );
-	      GiveSubtitleNSample( "Sure.  But this will be a bit more expensive." , 
-				   "STO_Sure_But_This_0.wav" );
-	      Buy_Basic_Items( FALSE , TRUE );
-	      PrepareMultipleChoiceDialog( Enum );
-	      break;
-	    case ( MAX_ANSWERS_PER_PERSON ):
-	    case (-1):
-	    default:
-	      PlayOnceNeededSoundSample( "Tux_See_You_Later_0.wav" , TRUE );
-	      PlayOnceNeededSoundSample( "STO_Goodbye_Love_0.wav" , FALSE ); // we do not need to wait here...
-	      return;
-	      break;
-	    }
-	}
+      //--------------------
+      // We clean out the chat roster from any previous use
+      //
+      InitChatRosterForNewDialogue(  );
+
+      //--------------------
+      // Now we load the chat roster with the info from the chat info file
+      //
+      LoadChatRosterWithChatSequence ( "STO" );
+
+      DoChatFromChatRosterData( 0 , PERSON_STO , Enum );
 
       //--------------------
       // Since there won't be anyone else to talk to when already having
       // talked to the STO, we can safely return here.
       //
       return; 
+
     } // STO character dialog
 
   if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "PEN" ) == 0 )
