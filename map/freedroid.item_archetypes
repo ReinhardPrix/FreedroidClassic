@@ -336,7 +336,7 @@ Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
-Base item duration=30 plus duration modifier=20
+Base item duration=-1 plus duration modifier=0
 Picture number=5
 Item uses drop sound with filename="Item_Wheels_Put_Sound_0.wav"
 Base list price=100
@@ -375,7 +375,7 @@ Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
-Base item duration=70 plus duration modifier=20
+Base item duration=-1 plus duration modifier=0
 Picture number=8
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=250
@@ -414,7 +414,7 @@ Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
-Base item duration=50 plus duration modifier=20
+Base item duration=-1 plus duration modifier=0
 Picture number=10
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=300
@@ -453,7 +453,7 @@ Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
-Base item duration=90 plus duration modifier=30
+Base item duration=-1 plus duration modifier=0
 Picture number=11
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=65
@@ -4392,7 +4392,7 @@ Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
-Base item duration=10 plus duration modifier=30
+Base item duration=-1 plus duration modifier=0
 Picture number=4
 Item uses drop sound with filename="Item_Drop_Sound_1.wav"
 Base list price=200
@@ -4431,7 +4431,7 @@ Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
-Base item duration=10 plus duration modifier=10
+Base item duration=-1 plus duration modifier=0
 Picture number=4
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=450
