@@ -1,6 +1,6 @@
      ## Process this file with automake to produce Makefile.in
 
-AM_CFLAGS=@CFLAGS@
+##AM_CFLAGS=@CFLAGS@
 
 bin_PROGRAMS = freedroid
 

@@ -67,9 +67,12 @@
 
 
 /* string - signs in ship-data files */
+#define WHITE_SPACE 		" \t"
+
 #define MAP_BEGIN_STRING	"begin_map"
 #define WP_BEGIN_STRING		"begin_waypoints"
 #define LEVEL_END_STRING	"end_level"
+#define CONNECTION_STRING	"connections: "
 
 
 typedef struct

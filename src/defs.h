@@ -84,7 +84,7 @@
 #define LeftPressedR() (KeyIsPressedR(SDLK_LEFT)||KeyIsPressedR('a'))
 #define RightPressedR() (KeyIsPressedR(SDLK_RIGHT)||KeyIsPressedR('d'))
 
-#define Wait4Fire() do {while(1) {if(FirePressedR()||EscapePressedR()) break; else usleep(50);}; } while(0)
+#define Wait4Fire() do {while(1) {if(FirePressedR()||EscapePressedR()) break; else SDL_Delay(50);}; } while(0)
 
 #define COLLISION_STEPSIZE   0.1
 
@@ -131,14 +131,14 @@ enum _alertnames {
 
 // **********************************************************************
 // Constants for Paths and names of Data-files
-// the root "DATADIR" should be defined in the Makefile as $(pkgdatadir)
+// the root "FD_DATADIR" should be defined in the Makefile as $(pkgdatadir)
 // if not, we set it here:
-#ifndef DATADIR
+#ifndef FD_DATADIR
 
-#ifdef MACOSX
-#define DATADIR "FreeDroid.app/Contents/Resources"  // our local fallback
+#ifdef __MACOSX__
+#define FD_DATADIR "FreeDroid.app/Contents/Resources"  // our local fallback
 #else
-#define DATADIR ".."   // our local fallback
+#define FD_DATADIR ".."   // our local fallback
 #endif
 
 #endif

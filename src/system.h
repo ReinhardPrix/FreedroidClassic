@@ -60,9 +60,7 @@
 
 #include <signal.h>
 
-#ifdef HAVE_GETOPT_H
-#include <getopt.h>
-#else
+#ifdef MAXOSX
 #include "mac-osx/getopt.h"
 #endif
 

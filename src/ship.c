@@ -311,7 +311,7 @@ EnterKonsole (void)
 
   while (!ReenterGame)
     {
-      usleep(50);
+      SDL_Delay(1);
       if (show_cursor) SDL_ShowCursor (SDL_ENABLE);
       else SDL_ShowCursor (SDL_DISABLE);
 
@@ -385,7 +385,7 @@ EnterKonsole (void)
 	      ShowLifts (CurLevel->levelnum, -1);
 
 	      while (! (FirePressedR() || EscapePressedR() || MouseRightPressedR() ))
-		usleep(50);
+		SDL_Delay(1);
 	      PaintConsoleMenu(pos, 0);
 	      break;
 	    default: 
@@ -483,7 +483,7 @@ ShowDeckMap (Level deck)
   Me.pos.y=tmp.y;
 
   while (! (FirePressedR() || EscapePressedR() || MouseRightPressedR() )) 
-    usleep(50);
+    SDL_Delay(1);
 
   SetCombatScaleTo (1.0);
 
@@ -558,7 +558,7 @@ GreatDruidShow (void)
   while (!finished)
     {
       show_droid_portrait (Cons_Droid_Rect, droidtype, DROID_ROTATION_TIME, 0);
-      usleep(50);
+      SDL_Delay(1);
       if (show_cursor) SDL_ShowCursor (SDL_ENABLE);
       else SDL_ShowCursor (SDL_DISABLE);
 

@@ -336,7 +336,7 @@ TakeScreenshot(void)
   static int Number_Of_Screenshot=0;
   char *Screenshoot_Filename;
 
-  Screenshoot_Filename=malloc(100);
+  Screenshoot_Filename=MyMalloc(100);
   DebugPrintf (1, "\n\nScreenshoot function called.\n\n");
   sprintf( Screenshoot_Filename , "Screenshot_%d.bmp", Number_Of_Screenshot );
   DebugPrintf(1, "\n\nScreenshoot function: The Filename is: %s.\n\n" , Screenshoot_Filename );
@@ -1105,8 +1105,8 @@ white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout)
 
       for (x = 0; x < rect->w; x++)
 	for (y = 0; y < rect->h; y++)
-	  if (random()%100 > signal_strengh)
-	    PutPixel (noise_tiles[i], x, y, grey[random()%NOISE_COLORS]);
+	  if (rand()%100 > signal_strengh)
+	    PutPixel (noise_tiles[i], x, y, grey[rand()%NOISE_COLORS]);
 
       //      printf_SDL (ne_screen, -1, -1, " %d", i+1);
       //      SDL_BlitSurface (noise_tiles[i], NULL, ne_screen, rect);
@@ -1125,7 +1125,7 @@ white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout)
       // pick an old enough tile
       do
 	{
-	  next_tile = random()%NOISE_TILES;
+	  next_tile = rand()%NOISE_TILES;
 	  for (i = 0; i < sizeof(used_tiles); i++)
 	    {
 	      if (next_tile == used_tiles[i])
@@ -1144,7 +1144,7 @@ white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout)
       // set it
       SDL_BlitSurface (noise_tiles[next_tile], NULL, ne_screen, rect);
       SDL_UpdateRect (ne_screen, rect->x, rect->y, rect->w, rect->h);
-      usleep(25000);
+      SDL_Delay(25);
 
       if ( (timeout && (SDL_GetTicks()-now > timeout)))
 	break;

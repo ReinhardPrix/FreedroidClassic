@@ -117,7 +117,7 @@ QuitGameMenu (void)
 	      User_Rect.y + User_Rect.h/2, "Do you really want to quit? (y/n) ");
   SDL_Flip (ne_screen);
 
-  while ( (!KeyIsPressed('n')) && (!KeyIsPressed('y')) ) usleep(50);
+  while ( (!KeyIsPressed('n')) && (!KeyIsPressed('y')) ) SDL_Delay(1);
   if (KeyIsPressed('y'))
     Terminate (OK);
 }
@@ -176,7 +176,7 @@ EscapeMenu (void)
 
       while (!key)
 	{
-	  usleep (50);
+	  SDL_Delay (1);
 
 	  if (EscapePressedR() )
 	    {
@@ -334,7 +334,7 @@ enum
       while (!key)
 	{
 
-	  usleep(50);
+	  SDL_Delay(1);
 
 	  if ( EscapePressedR () )
 	    {
@@ -532,7 +532,7 @@ enum
 
       while (!key)
 	{
-	  usleep (50);
+	  SDL_Delay (1);
 
 	  if ( EscapePressedR () )
 	    {
@@ -688,7 +688,7 @@ enum
       while (!key)
 	{
 
-	  usleep(50);
+	  SDL_Delay(1);
 
 	  if ( EscapePressedR() )
 	    {
@@ -986,7 +986,7 @@ LevelEditor(void)
 
   while ( !Done )
     {
-      usleep(50);
+      SDL_Delay(1);
 
       BlockX=rintf(Me.pos.x);
       BlockY=rintf(Me.pos.y);
@@ -1047,7 +1047,7 @@ LevelEditor(void)
 	  PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "C...start/end waypoint CONNECTION" ); k++;
 
 	  SDL_Flip ( ne_screen );
-	  while (!FirePressedR() && !EscapePressedR()) usleep(50);
+	  while (!FirePressedR() && !EscapePressedR()) SDL_Delay(1);
 	}
       
       //--------------------
@@ -1278,7 +1278,7 @@ LevelEditMenu (void)
   while (!Weiter)
     {
       SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
-      usleep(50);
+      SDL_Delay(1);
 
       PutInfluence (Menu_Rect.x, Menu_Rect.y + (MenuPosition-1.5)*fheight);
 
@@ -1309,7 +1309,7 @@ LevelEditMenu (void)
       key = FALSE;
       while (!key)
 	{
-	  usleep(50);
+	  SDL_Delay(1);
 	  
 	  if (LeftPressed()||RightPressed()||MouseLeftPressed()||MouseRightPressed()||SpacePressed())
 	    key = TRUE;
@@ -1330,7 +1330,7 @@ LevelEditMenu (void)
 		  SaveShip("Testship");
 		  CenteredPutString (ne_screen, 3*FontHeight(Menu_BFont),"Ship saved as 'Testship.shp'\n");
 		  SDL_Flip ( ne_screen );
-		  while ( !FirePressedR() && !EscapePressedR() ) usleep(50);
+		  while ( !FirePressedR() && !EscapePressedR() ) SDL_Delay(1);
 		}
 	      break;
 	    case SET_LEVEL_NAME:

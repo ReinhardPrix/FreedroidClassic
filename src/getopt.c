@@ -328,7 +328,7 @@ exchange (argv)
     {
       /* We must extend the array.  The user plays games with us and
 	 presents new arguments.  */
-      char *new_str = malloc (top + 1);
+      char *new_str = MyMalloc (top + 1);
       if (new_str == NULL)
 	nonoption_flags_len = nonoption_flags_max_len = 0;
       else
@@ -440,7 +440,7 @@ _getopt_initialize (argc, argv, optstring)
 	      if (nonoption_flags_max_len < argc)
 		nonoption_flags_max_len = argc;
 	      __getopt_nonoption_flags =
-		(char *) malloc (nonoption_flags_max_len);
+		(char *) MyMalloc (nonoption_flags_max_len);
 	      if (__getopt_nonoption_flags == NULL)
 		nonoption_flags_max_len = -1;
 	      else

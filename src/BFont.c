@@ -441,7 +441,7 @@ PrintString (SDL_Surface * Surface, int x, int y, char *fmt, ...)
   char *temp;
   va_start (args, fmt);
 
-  if ((temp = (char *) malloc (1000 + 1)) != NULL)
+  if ((temp = (char *) MyMalloc (1000 + 1)) != NULL)
     {
       vsprintf (temp, fmt, args);
 
@@ -460,7 +460,7 @@ PrintStringFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y,
   char *temp;
   va_start (args, fmt);
 
-  if ((temp = (char *) malloc (1000 + 1)) != NULL)
+  if ((temp = (char *) MyMalloc (1000 + 1)) != NULL)
     {
       vsprintf (temp, fmt, args);
       PutStringFont (Surface, Font, x, y, temp);
@@ -476,7 +476,7 @@ CenteredPrintString (SDL_Surface * Surface, int y, char *fmt, ...)
   char *temp;
   va_start (args, fmt);
 
-  if ((temp = (char *) malloc (1000 + 1)) != NULL)
+  if ((temp = (char *) MyMalloc (1000 + 1)) != NULL)
     {
       vsprintf (temp, fmt, args);
       CenteredPutString (Surface, y, temp);
@@ -493,7 +493,7 @@ CenteredPrintStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
   char *temp;
   va_start (args, fmt);
 
-  if ((temp = (char *) malloc (1000 + 1)) != NULL)
+  if ((temp = (char *) MyMalloc (1000 + 1)) != NULL)
     {
       vsprintf (temp, fmt, args);
       CenteredPutStringFont (Surface, Font, y, temp);
@@ -510,7 +510,7 @@ RightPrintString (SDL_Surface * Surface, int y, char *fmt, ...)
   char *temp;
   va_start (args, fmt);
 
-  if ((temp = (char *) malloc (1000 + 1)) != NULL)
+  if ((temp = (char *) MyMalloc (1000 + 1)) != NULL)
     {
       vsprintf (temp, fmt, args);
       RightPutString (Surface, y, temp);
@@ -527,7 +527,7 @@ RightPrintStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
   char *temp;
   va_start (args, fmt);
 
-  if ((temp = (char *) malloc (1000 + 1)) != NULL)
+  if ((temp = (char *) MyMalloc (1000 + 1)) != NULL)
     {
       vsprintf (temp, fmt, args);
       RightPutStringFont (Surface, Font, y, temp);
@@ -543,7 +543,7 @@ LeftPrintString (SDL_Surface * Surface, int y, char *fmt, ...)
   char *temp;
   va_start (args, fmt);
 
-  if ((temp = (char *) malloc (1000 + 1)) != NULL)
+  if ((temp = (char *) MyMalloc (1000 + 1)) != NULL)
     {
       vsprintf (temp, fmt, args);
       LeftPutString (Surface, y, temp);
@@ -560,7 +560,7 @@ LeftPrintStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
   char *temp;
   va_start (args, fmt);
 
-  if ((temp = (char *) malloc (1000 + 1)) != NULL)
+  if ((temp = (char *) MyMalloc (1000 + 1)) != NULL)
     {
       vsprintf (temp, fmt, args);
       LeftPutStringFont (Surface, Font, y, temp);
@@ -576,7 +576,7 @@ JustifiedPrintString (SDL_Surface * Surface, int y, char *fmt, ...)
   char *temp;
   va_start (args, fmt);
 
-  if ((temp = (char *) malloc (1000 + 1)) != NULL)
+  if ((temp = (char *) MyMalloc (1000 + 1)) != NULL)
     {
       vsprintf (temp, fmt, args);
       JustifiedPutString (Surface, y, temp);
@@ -593,7 +593,7 @@ JustifiedPrintStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
   char *temp;
   va_start (args, fmt);
 
-  if ((temp = (char *) malloc (1000 + 1)) != NULL)
+  if ((temp = (char *) MyMalloc (1000 + 1)) != NULL)
     {
       vsprintf (temp, fmt, args);
       JustifiedPutStringFont (Surface, Font, y, temp);

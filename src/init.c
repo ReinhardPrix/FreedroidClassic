@@ -38,6 +38,7 @@
 #include "global.h"
 #include "proto.h"
 #include "text.h"
+#include "getopt.h"   
 
 void Init_Game_Data( char* Datafilename );
 void Get_Bullet_Data ( char* DataPointer );
@@ -531,7 +532,6 @@ parse_command_line (int argc, char *const argv[])
     {"help", 		0, 0, 'h'},
     {"nosound", 	0, 0, 'q'},
     {"sound", 		0, 0, 's'},
-    {"timeout", 	1, 0, 't'},
     {"debug", 		2, 0, 'd'},
     {"window",  	0, 0, 'w'},
     {"fullscreen",	0, 0, 'f'},
@@ -572,14 +572,6 @@ parse_command_line (int argc, char *const argv[])
 	  sound_on = TRUE;
 	  break;
 
-	case 't':
-	  timeout_time = atoi (optarg);
-	  if (timeout_time > 0)
-	    {
-	      signal (SIGALRM, timeout);
-	      alarm (timeout_time);	/* Terminate after some seconds for safety. */
-	    }
-	  break;
 	case 'j':
 	  joy_sensitivity = atoi (optarg);
 	  if (joy_sensitivity < 0 || joy_sensitivity > 32)
@@ -1125,7 +1117,9 @@ ThouArtDefeated (void)
       ComputeFPSForThisFrame ();
     }
   
+#ifdef HAVE_LIBSDL_MIXER
   Mix_HaltMusic ();
+#endif
 
   // important!!: don't forget to stop fps calculation here (bugfix: enemy piles after gameOver)
   Activate_Conservative_Frame_Computation ();
@@ -1149,7 +1143,7 @@ ThouArtDefeated (void)
   
   now = SDL_GetTicks ();
 
-  while (SDL_GetTicks() - now < SHOW_WAIT) usleep(50);
+  while (SDL_GetTicks() - now < SHOW_WAIT) SDL_Delay(1);
 
   UpdateHighscores ();
 
@@ -1209,7 +1203,7 @@ FindAllThemes (void)
   for (location=0; location < 2; location++)
     {
       if (location == 0)
-	strcpy (dname, DATADIR);   /* first scan DATADIR */
+	strcpy (dname, FD_DATADIR);   /* first scan FD_DATADIR */
       if (location == 1)
 	strcpy (dname, ".."); /* then the local graphics-dir */
 

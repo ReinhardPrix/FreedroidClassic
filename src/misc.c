@@ -43,8 +43,6 @@ int read_variable (char *data, char *var_name, char *fmt, void *var);
 char *homedir = NULL;
 char ConfigDir[255]="\0";
 
-struct timeval now, oneframetimestamp, tenframetimestamp,
-  onehundredframetimestamp, differenz;
 long oneframedelay = 0;
 long tenframedelay = 0;
 long onehundredframedelay = 0;
@@ -153,6 +151,9 @@ Cannot Load or Save settings.\n");
   
   if (stat(ConfigDir, &statbuf) == -1) {
     DebugPrintf (1, "Couldn't stat Config-dir %s, I'll try to create it...", ConfigDir);
+#if __WIN32__
+    _mkdir (ConfigDir);
+#else
     if (mkdir (ConfigDir, S_IREAD|S_IWRITE|S_IEXEC) == -1)
       {
 	DebugPrintf (0, "WARNING: Failed to create config-dir: %s. Giving up...\n", ConfigDir);
@@ -163,6 +164,7 @@ Cannot Load or Save settings.\n");
 	DebugPrintf (1, "ok\n");
 	return (OK);
       }
+#endif
   }
 
   sprintf (fname, "%s/config", ConfigDir);
@@ -577,7 +579,7 @@ ReadValueFromString (char* data, char* label, char* FormatString, void* dst)
 }
 
 /*-----------------------------------------------------------------
- * find a given filename in subdir relative to DATADIR, 
+ * find a given filename in subdir relative to FD_DATADIR, 
  *
  * if you pass NULL as "subdir", it will be ignored
  *
@@ -623,7 +625,7 @@ find_file (char *fname, char *subdir, int use_theme, int critical)
       if (i==0)
 	strcpy (File_Path, "..");   /* first try local subdirs */
       if (i==1)
-	strcpy (File_Path, DATADIR); /* then the DATADIR */
+	strcpy (File_Path, FD_DATADIR); /* then the FD_DATADIR */
 
       strcat (File_Path, "/");
       strcat (File_Path, subdir);
@@ -706,7 +708,7 @@ Pause (void)
       DisplayBanner (NULL, NULL, 0);
       Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
 
-      usleep (50);
+      SDL_Delay (1);
 
       ComputeFPSForThisFrame();
 
@@ -729,11 +731,6 @@ Pause (void)
 /*@Function============================================================
 @Desc: This function starts the time-taking process.  Later the results
        of this function will be used to calculate the current framerate
-
-       Two methods of time-taking are available.  One uses the SDL 
-       ticks.  This seems LESS ACCURATE.  The other one uses the
-       standard ansi c gettimeofday functions and are MORE ACCURATE
-       but less convenient to use.
 @Ret: 
 * $Function----------------------------------------------------------*/
 void 
@@ -769,10 +766,6 @@ StartTakingTimeForFPSCalculation(void)
        NOTE:  To query the actual framerate a DIFFERENT function must
        be used, namely Frame_Time().
 
-       Two methods of time-taking are available.  One uses the SDL 
-       ticks.  This seems LESS ACCURATE.  The other one uses the
-       standard ansi c gettimeofday functions and are MORE ACCURATE
-       but less convenient to use.
 @Ret: 
 * $Function----------------------------------------------------------*/
 void 
@@ -909,11 +902,9 @@ int
 MyRandom (int UpperBound)
 {
   float tmp;
-  int PureRandom;
   int dice_val;    /* the result in [0, Obergrenze] */
 
-  PureRandom = rand ();
-  tmp = 1.0*PureRandom/RAND_MAX; /* random number in [0;1] */
+  tmp = 1.0* rand() / RAND_MAX; /* random number in [0;1] */
 
   /* 
    * we always round OFF for the resulting int, therefore
@@ -1044,6 +1035,10 @@ void *
 MyMalloc (long Mamount)
 {
   void *Mptr = NULL;
+
+  // make Gnu-compatible even if on a broken system:
+  if (Mamount == 0)
+    Mamount = 1;
 
   if ((Mptr = calloc (1, (size_t) Mamount)) == NULL)
     {

@@ -325,7 +325,7 @@ char *StructToMem(Level Lev)
   MemAmount += 50000;		/* Puffer fuer Dimensionen, mark-strings .. */
   
   /* allocate some memory */
-  if( (LevelMem = (char*)malloc(MemAmount)) == NULL) {
+  if( (LevelMem = (char*)MyMalloc(MemAmount)) == NULL) {
     DebugPrintf(1, "\n\nError in StructToMem:  Could not allocate memory...\n\nTerminating...\n\n");
     Terminate(ERR);
   }
@@ -372,7 +372,8 @@ char *StructToMem(Level Lev)
     {
       sprintf(linebuf, "Nr.=%3d x=%4d y=%4d", i, Lev->AllWaypoints[i].x , Lev->AllWaypoints[i].y );
       strcat( LevelMem, linebuf );
-      strcat( LevelMem, "\t connections: ");
+      strcat( LevelMem, "\t ");
+      strcat (LevelMem, CONNECTION_STRING);
       
       this_wp = &Lev->AllWaypoints[i];
       for( j=0; j < this_wp->num_connections; j++) 
@@ -546,6 +547,7 @@ LevelToStruct (char *data)
   char *map_begin, *wp_begin, *level_end;
   char *this_line, *next_line;
   char *pos;
+  size_t len;
   int i;
   int nr, x, y;
   int k;
@@ -596,35 +598,38 @@ LevelToStruct (char *data)
 
   /* now scan the map */
   next_line = map_begin;
-  this_line = strsep (&next_line, "\n");	
+  this_line = strtok (next_line, "\n");	
 
   /* read MapData */
   for (i = 0; i < loadlevel->ylen; i++)
     {
-      if ((this_line = strsep(&next_line, "\n")) == NULL)
+      if ((this_line = strtok (NULL, "\n")) == NULL)
 	return(NULL);
       loadlevel->map[i] = MyMalloc( loadlevel->xlen + 10 );
-      pos = strtok (this_line, " \t"); 
+      pos = this_line;
+      pos += strspn (pos, WHITE_SPACE);  // skip initial whitespace
 
       for (k=0; k < loadlevel->xlen; k++)
 	{
-	  if (pos == NULL)
+	  if (*pos == '\0')
 	    return (NULL);
 	  res = sscanf (pos, "%d", &tmp);
           *(loadlevel->map[i]+k) = (char)tmp;
 	  if ( (res == 0) || (res == EOF) )
 	    return (NULL);
-	  pos = strtok (NULL, " \t");
+	  pos += strcspn (pos, WHITE_SPACE);  // skip last token
+	  pos += strspn (pos, WHITE_SPACE);   // skip initial whitespace of next one
+
 	}
     }
 
   /* Get Waypoints */
   next_line = wp_begin;
-  this_line = strsep (&next_line, "\n");
+  this_line = strtok (next_line, "\n");
 
   for (i=0; i<MAXWAYPOINTS ; i++)
     {
-      if ( (this_line = strsep (&next_line, "\n")) == NULL)
+      if ( (this_line = strtok (NULL, "\n")) == NULL)
 	return (NULL);
       if (this_line == level_end)
 	{
@@ -637,18 +642,22 @@ LevelToStruct (char *data)
       loadlevel->AllWaypoints[i].x=x;
       loadlevel->AllWaypoints[i].y=y;
 
-      pos = strstr (this_line, "connections:");
-      pos = strtok (pos, " \t"); 
+      pos = strstr (this_line, CONNECTION_STRING);
+      pos += strlen (CONNECTION_STRING);	// skip connection-string
+      pos += strspn (pos, WHITE_SPACE); 		// skip initial whitespace
 
       for ( k=0 ; k<MAX_WP_CONNECTIONS ; k++ )
 	{
-	  if ( (pos = strtok (NULL, " \t")) == NULL) // point to next number
+	  if (*pos == '\0')
 	    break;
 	  res = sscanf( pos , "%d" , &connection );
 	  if ( (connection == -1) || (res == 0) || (res == EOF) )
 	    break;
-	  
 	  loadlevel->AllWaypoints[i].connections[k]=connection;
+
+	  pos += strcspn (pos, WHITE_SPACE); // skip last token
+	  pos += strspn (pos, WHITE_SPACE);  // skip initial whitespace for next one
+
 	} // for k < MAX_WP_CONNECTIONS
 
       loadlevel->AllWaypoints[i].num_connections = k;
