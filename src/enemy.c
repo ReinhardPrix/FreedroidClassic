@@ -243,6 +243,7 @@ ClearEnemys (void)
       AllEnemys[i].TextVisibleTime = 0;
       AllEnemys[i].TextToBeDisplayed = "";
       AllEnemys[i].persuing_given_course = FALSE;
+      AllEnemys[i].FollowingInflusTail = FALSE;
       
       for ( j=0 ; j < MAX_STEPS_IN_GIVEN_COURSE ; j++ )
 	{
@@ -512,6 +513,20 @@ MoveThisRobotThowardsHisWaypoint ( int EnemyNum )
       nextwp_pos.y = ThisRobot->PrivatePathway[0].y;
     }
 
+  if ( ThisRobot->FollowingInflusTail == TRUE )
+    {
+      if ( ( fabsf( ThisRobot->pos.x - Me.pos.x ) > 1 ) || 
+           ( fabsf( ThisRobot->pos.y - Me.pos.y ) > 1 ) )
+	{
+	  nextwp_pos.y = Me.Position_History[10].y;
+	  nextwp_pos.x = Me.Position_History[10].x;
+	}
+      else
+	{
+	  nextwp_pos.y = ThisRobot->pos.y;
+	  nextwp_pos.x = ThisRobot->pos.x;
+	}
+    }
 
   // determine the remaining way until the target point is reached
   Restweg.x = nextwp_pos.x - ThisRobot->pos.x;

@@ -114,7 +114,12 @@ ChatWithFriendlyDroid( int Enum )
       // the quit command is always simple and clear.  We just need to end
       // the communication function. hehe.
       //
-      if ( !strcmp ( RequestString , "quit" ) ) return;
+      if ( ( !strcmp ( RequestString , "quit" ) ) || 
+	   ( !strcmp ( RequestString , "bye" ) ) ||
+	   ( !strcmp ( RequestString , "logout" ) ) ||
+	   ( !strcmp ( RequestString , "logoff" ) ) ||
+	   ( !strcmp ( RequestString , "" ) ) ) 
+	return;
 
       //--------------------
       // the help command is always simple and clear.  We just need to print out the 
@@ -122,13 +127,6 @@ ChatWithFriendlyDroid( int Enum )
       //
       if ( !strcmp ( RequestString , "help" ) ) 
 	{
-	  // DisplayTextWithScrolling("You have opend a communication channel to a friendly droid 
-	  // by touching it while in transfer mode.\n\
-	  // You can enter command phrases to make the droid perform some action.\n\
-	  // Or you can ask the droid for valuable information by entering the keywords you request information about.\n\
-	  // Most useful command phrases are: follow stay\n\
-	  // Often useful information requests are: job name status MS\n\
-	  // Type quit to cancel communication." , MyCursorX , MyCursorY , NULL , Background );
 	  DisplayTextWithScrolling("You can enter command phrases or ask about some keyword.\n\
 Most useful command phrases are: FOLLOW STAY STATUS \n\
 Often useful information requests are: JOB NAME MS HELLO \n\
@@ -147,17 +145,28 @@ Of course you can ask the droid about anything else it has told you or about wha
       //
       if ( !strcmp ( RequestString , "follow" ) ) 
 	{
-	  DisplayText( 
+	  DisplayTextWithScrolling( 
 		      "Ok.  I'm on your tail.  I hope you know where you're going.  I'll do my best to keep up." , 
-		      MyCursorX , MyCursorY , NULL );
+		      MyCursorX , MyCursorY , NULL , Background );
+	  AllEnemys[ Enum ].CompletelyFixed = FALSE;
+	  AllEnemys[ Enum ].FollowingInflusTail = TRUE;
 	  continue;
 	}
       if ( !strcmp ( RequestString , "stay" ) )
 	{
-	  DisplayText( 
-		      "Ok.  I'll stay here and wait for further instructions from you.  \n\
+	  DisplayTextWithScrolling( 
+		      "Ok.  I'll stay here and not move a bit.  I will do so until I receive further instructions from you.  \n\
 I hope you know what you're doing." , 
-		      MyCursorX , MyCursorY , NULL );
+		      MyCursorX , MyCursorY , NULL , Background );
+	  AllEnemys[ Enum ].CompletelyFixed = TRUE;
+	  continue;
+	}
+      if ( !strcmp ( RequestString , "status" ) )
+	{
+	  DisplayTextWithScrolling( 
+				   "Here's my status report:\n" ,
+				   MyCursorX , MyCursorY , NULL , Background );
+	  printf_SDL( ne_screen , -1 , -1 , "Energy: %d/%d." , (int) AllEnemys[ Enum ].energy , (int) Druidmap[ AllEnemys[Enum].type ].maxenergy );
 	  continue;
 	}
 

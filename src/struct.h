@@ -229,6 +229,7 @@ typedef struct
   double firewait;		/* gibt die Zeit bis zum naechsten Schuss an */
   // byte onscreen;		/* gibt an ob der Robot im moment sichtbar ist */
   int CompletelyFixed;          // set this flat to make the robot entirely immobile
+  int FollowingInflusTail;      // does this robot follow influs tail? (trott behind him? )
   int SpecialForce;             // This flag will exclude the droid from initial shuffling of droids
   int Marker;                   // This provides a marker for special mission targets
   int AdvancedCommand;          // An advanced command that modifies the behaviour of the droid (in new missions)
