@@ -1309,7 +1309,7 @@ Terminate (int ExitCode)
 {
   DebugPrintf (2, "\nvoid Terminate(int ExitStatus) was called....");
   printf("\n----------------------------------------------------------------------");
-  printf("\nTermination of Freedroid initiated...");
+  printf("\nTermination of freedroidRPG initiated...");
 
   // SaveSettings();
   SaveGameConfig();
@@ -1332,7 +1332,7 @@ Closing all players connections to this server...\n\
   // Mix_CloseAudio();
 
   // printf("\nAnd now the final step...\n\n");
-  printf("Thank you for playing Freedroid.\n\n");
+  printf("Thank you for playing freedroidRPG.\n\n");
   SDL_Quit();
 
   // raise ( SIGSEGV );

@@ -791,16 +791,17 @@ GetTakeoverGraphics (void)
   //
   Set_Rect (tmp, User_Rect.x, User_Rect.y, 0, 0);
 
-  TempLoadSurface = our_IMG_load_wrapper (find_file (TO_BLOCK_FILE, GRAPHICS_DIR, TRUE));
-  to_blocks = our_SDL_display_format_wrapperAlpha( TempLoadSurface ); // the surface is converted
+  TempLoadSurface = our_IMG_load_wrapper ( find_file ( TO_BLOCK_FILE , GRAPHICS_DIR , TRUE ) ) ;
+  to_blocks = our_SDL_display_format_wrapperAlpha ( TempLoadSurface ); // the surface is converted
   SDL_FreeSurface ( TempLoadSurface );
   if ( use_open_gl ) flip_image_horizontally ( to_blocks );
 
   // Get the fill-blocks 
-  for ( i = 0 ; i < NUM_FILL_BLOCKS ; i++ , curx += FILL_BLOCK_LEN + 2)
+  for ( i = 0 ; i < NUM_FILL_BLOCKS ; i++ , curx += FILL_BLOCK_LEN + 2 )
     {
       Set_Rect ( FillRects [ i ] , curx, cury , FILL_BLOCK_LEN , FILL_BLOCK_HEIGHT );
       FillBlocks [ i ] . surface = rip_rectangle_from_alpha_image ( to_blocks , FillRects [ i ] ) ;
+      if ( use_open_gl ) make_texture_out_of_surface ( & ( FillBlocks [ i ] ) ) ;
     }
 
   // Get the capsule blocks 
@@ -808,23 +809,22 @@ GetTakeoverGraphics (void)
     {
       Set_Rect ( CapsuleRects [ i ] , curx , cury , CAPSULE_LEN , CAPSULE_HEIGHT );
       CapsuleBlocks [ i ] . surface = rip_rectangle_from_alpha_image ( to_blocks , CapsuleRects[i] ) ;
+      if ( use_open_gl ) make_texture_out_of_surface ( & ( CapsuleBlocks [ i ] ) ) ;
     }
     
-
   // Get the default background color, to be used when no background picture found! 
   curx += CAPSULE_LEN + 2;
-  
-
   curx = 0;
   cury += FILL_BLOCK_HEIGHT + 2;
 
   // get the game-blocks 
-  for (j = 0; j < 2*NUM_PHASES; j++)
+  for ( j = 0 ; j < 2 * NUM_PHASES ; j++ )
     {
-      for (i = 0; i < TO_BLOCKS; i++)
+      for ( i = 0 ; i < TO_BLOCKS ; i++ )
 	{
 	  Set_Rect ( ToGameRects [ j * TO_BLOCKS + i ] , curx , cury , TO_BLOCKLEN , TO_BLOCKHEIGHT );
 	  ToGameBlocks [ j * TO_BLOCKS + i ] . surface = rip_rectangle_from_alpha_image ( to_blocks , ToGameRects [ j * TO_BLOCKS + i ] ) ;
+	  if ( use_open_gl ) make_texture_out_of_surface ( & ( ToGameBlocks [ j * TO_BLOCKS + i ] ) ) ;
 	  curx += TO_BLOCKLEN + 2;
 	}
       curx = 0;
@@ -836,6 +836,7 @@ GetTakeoverGraphics (void)
     {
       Set_Rect ( ToGroundRects [ i ] , curx , cury , GROUNDBLOCKLEN , GROUNDBLOCKHEIGHT );
       ToGroundBlocks [ i ] . surface = rip_rectangle_from_alpha_image ( to_blocks , ToGroundRects [ i ] ) ;
+      if ( use_open_gl ) make_texture_out_of_surface ( & ( ToGroundBlocks [ i ] ) ) ;
       curx += GROUNDBLOCKLEN + 2;
     }
   cury += GROUNDBLOCKHEIGHT + 2;
@@ -847,6 +848,7 @@ GetTakeoverGraphics (void)
   //
   Set_Rect ( ToColumnRect , curx , cury , COLUMNBLOCKLEN , COLUMNBLOCKHEIGHT );
   ToColumnBlock . surface = rip_rectangle_from_alpha_image ( to_blocks , ToColumnRect ) ;
+  if ( use_open_gl ) make_texture_out_of_surface ( & ( ToColumnBlock ) ) ;
 
   //--------------------
   // 
@@ -858,6 +860,7 @@ GetTakeoverGraphics (void)
   //
   Set_Rect ( ToLeaderRect , curx , cury , LEADERBLOCKLEN , LEADERBLOCKHEIGHT );
   ToLeaderBlock . surface = rip_rectangle_from_alpha_image ( to_blocks , ToLeaderRect ) ;
+  if ( use_open_gl ) make_texture_out_of_surface ( & ( ToLeaderBlock ) ) ;
 
   //--------------------
   // Now that everything was loaded, we should remember this, so we
@@ -904,55 +907,101 @@ ShowPlayground ( void )
 	     User_Rect.w, User_Rect.h);
 
 
-  our_SDL_blit_surface_wrapper ( ToGroundBlocks [ GELB_OBEN ] . surface , NULL , Screen, &Target_Rect );
+  if ( use_open_gl ) 
+      blit_open_gl_texture_to_screen_position ( ToGroundBlocks [ GELB_OBEN ] , Target_Rect . x ,
+						Target_Rect . y , TRUE ) ;
+  else
+      our_SDL_blit_surface_wrapper ( ToGroundBlocks [ GELB_OBEN ] . surface , NULL , Screen, &Target_Rect );
 
   Target_Rect . y += GROUNDBLOCKHEIGHT;
 
   for ( i = 0 ; i < 12 ; i++ )
     {
-      our_SDL_blit_surface_wrapper ( ToGroundBlocks [ GELB_MITTE ] . surface , NULL , Screen, &Target_Rect );
-      Target_Rect.y += GROUNDBLOCKHEIGHT;
+	if ( use_open_gl ) 
+	    blit_open_gl_texture_to_screen_position ( ToGroundBlocks [ GELB_MITTE ] , Target_Rect . x ,
+						      Target_Rect . y , TRUE ) ;
+	else
+	    our_SDL_blit_surface_wrapper ( ToGroundBlocks [ GELB_MITTE ] . surface , NULL , Screen, &Target_Rect );
+	Target_Rect.y += GROUNDBLOCKHEIGHT;
     } 
 
-  our_SDL_blit_surface_wrapper ( ToGroundBlocks [ GELB_UNTEN ] . surface , NULL , Screen, &Target_Rect );
+  if ( use_open_gl ) 
+      blit_open_gl_texture_to_screen_position ( ToGroundBlocks [ GELB_UNTEN ] , Target_Rect . x ,
+						Target_Rect . y , TRUE ) ;
+  else
+      our_SDL_blit_surface_wrapper ( ToGroundBlocks [ GELB_UNTEN ] . surface , NULL , Screen, &Target_Rect );
 
   // the middle column
   Set_Rect (Target_Rect, xoffs + MID_OFFS_X, yoffs + MID_OFFS_Y,0, 0);
 
-  our_SDL_blit_surface_wrapper ( ToLeaderBlock . surface , NULL , Screen, &Target_Rect);
+  if ( use_open_gl ) 
+      blit_open_gl_texture_to_screen_position ( ToLeaderBlock , Target_Rect . x ,
+						Target_Rect . y , TRUE ) ;
+  else
+      our_SDL_blit_surface_wrapper ( ToLeaderBlock . surface , NULL , Screen, &Target_Rect);
 
   Target_Rect.y += LEADERBLOCKHEIGHT;
-  for (i = 0; i < 12; i++, Target_Rect.y += COLUMNBLOCKHEIGHT)
-    {
-      our_SDL_blit_surface_wrapper ( ToColumnBlock . surface , NULL , Screen, &Target_Rect );
+  for ( i = 0 ; i < 12 ; i++ , Target_Rect.y += COLUMNBLOCKHEIGHT )
+  {
+      if ( use_open_gl ) 
+	  blit_open_gl_texture_to_screen_position ( ToColumnBlock , Target_Rect . x ,
+						    Target_Rect . y , TRUE ) ;
+      else
+	  our_SDL_blit_surface_wrapper ( ToColumnBlock . surface , NULL , Screen, &Target_Rect );
     }
 
 
   // the right column
-  Set_Rect (Target_Rect, xoffs + RIGHT_OFFS_X, yoffs + RIGHT_OFFS_Y,0, 0);
-  our_SDL_blit_surface_wrapper ( ToGroundBlocks [ VIOLETT_OBEN ] . surface , NULL , Screen, &Target_Rect );
+  Set_Rect ( Target_Rect , xoffs + RIGHT_OFFS_X , yoffs + RIGHT_OFFS_Y , 0 , 0 );
+  if ( use_open_gl ) 
+      blit_open_gl_texture_to_screen_position ( ToGroundBlocks [ VIOLETT_OBEN ] , Target_Rect . x ,
+						Target_Rect . y , TRUE ) ;
+  else
+      our_SDL_blit_surface_wrapper ( ToGroundBlocks [ VIOLETT_OBEN ] . surface , NULL , Screen , &Target_Rect );
 
   Target_Rect.y += GROUNDBLOCKHEIGHT;
 
-  for (i = 0; i < 12; i++, Target_Rect.y += GROUNDBLOCKHEIGHT)
-    our_SDL_blit_surface_wrapper ( ToGroundBlocks [ VIOLETT_MITTE ] . surface , NULL , Screen, &Target_Rect );
+  for ( i = 0 ; i < 12 ; i++ , Target_Rect.y += GROUNDBLOCKHEIGHT )
+  {
+      if ( use_open_gl ) 
+	  blit_open_gl_texture_to_screen_position ( ToGroundBlocks [ VIOLETT_MITTE ] , Target_Rect . x ,
+						    Target_Rect . y , TRUE ) ;
+      else
+	  our_SDL_blit_surface_wrapper ( ToGroundBlocks [ VIOLETT_MITTE ] . surface , NULL , Screen, &Target_Rect );
+  }
 
-  our_SDL_blit_surface_wrapper ( ToGroundBlocks [ VIOLETT_UNTEN ] . surface , NULL , Screen, &Target_Rect );
+  if ( use_open_gl ) 
+      blit_open_gl_texture_to_screen_position ( ToGroundBlocks [ VIOLETT_UNTEN ] , Target_Rect . x ,
+						Target_Rect . y , TRUE ) ;
+  else
+      our_SDL_blit_surface_wrapper ( ToGroundBlocks [ VIOLETT_UNTEN ] . surface , NULL , Screen, &Target_Rect );
 
   // Fill the leader-LED with its color 
   Set_Rect (Target_Rect, xoffs + LEADERLED_X, yoffs + LEADERLED_Y, 0, 0);
-  our_SDL_blit_surface_wrapper ( FillBlocks [ LeaderColor ] . surface , NULL , Screen, &Target_Rect );
+  if ( use_open_gl ) 
+      blit_open_gl_texture_to_screen_position ( FillBlocks [ LeaderColor ] , Target_Rect . x ,
+						Target_Rect . y , TRUE ) ;
+  else
+      our_SDL_blit_surface_wrapper ( FillBlocks [ LeaderColor ] . surface , NULL , Screen, &Target_Rect );
 
   Target_Rect.y += FILL_BLOCK_HEIGHT;
-  our_SDL_blit_surface_wrapper ( FillBlocks [ LeaderColor ] . surface , NULL , Screen, &Target_Rect );
+  if ( use_open_gl ) 
+      blit_open_gl_texture_to_screen_position ( FillBlocks [ LeaderColor ] , Target_Rect . x ,
+						Target_Rect . y , TRUE ) ;
+  else
+      our_SDL_blit_surface_wrapper ( FillBlocks [ LeaderColor ] . surface , NULL , Screen, &Target_Rect );
 
   // Fill the display column with its colors 
-  for (i = 0; i < NUM_LINES; i++)
+  for ( i = 0 ; i < NUM_LINES ; i++ )
     {
       Set_Rect (Target_Rect, xoffs + LEDCOLUMN_X,
 		yoffs + LEDCOLUMN_Y + i*(FILL_BLOCK_HEIGHT+2),
 		0, 0);
-      our_SDL_blit_surface_wrapper ( FillBlocks [ DisplayColumn [ i ] ] . surface , NULL , Screen, &Target_Rect );
+      if ( use_open_gl ) 
+	  blit_open_gl_texture_to_screen_position ( FillBlocks [ DisplayColumn [ i ] ] , Target_Rect . x ,
+						    Target_Rect . y , TRUE ) ;
+      else
+	  our_SDL_blit_surface_wrapper ( FillBlocks [ DisplayColumn [ i ] ] . surface , NULL , Screen, &Target_Rect );
     }
 
 
@@ -963,20 +1012,28 @@ ShowPlayground ( void )
 	Set_Rect (Target_Rect, xoffs + PlaygroundStart[GELB].x + i * TO_BLOCKLEN,
 		  yoffs + PlaygroundStart[GELB].y + j * TO_BLOCKHEIGHT, 0, 0);
 	block = ToPlayground[GELB][i][j] + ActivationMap[GELB][i][j]*TO_BLOCKS;
-	our_SDL_blit_surface_wrapper ( ToGameBlocks [ block ] . surface , NULL , Screen, &Target_Rect );
+	if ( use_open_gl ) 
+	    blit_open_gl_texture_to_screen_position ( ToGameBlocks [ block ] , Target_Rect . x ,
+						      Target_Rect . y , TRUE ) ;
+	else
+	    our_SDL_blit_surface_wrapper ( ToGameBlocks [ block ] . surface , NULL , Screen, &Target_Rect );
       }
 
 
   // Show the violett playground 
-  for (i = 0; i < NUM_LAYERS - 1; i++)
-    for (j = 0; j < NUM_LINES; j++)
+  for ( i = 0 ; i < NUM_LAYERS - 1 ; i++ )
+    for ( j = 0 ; j < NUM_LINES ; j++ )
       {
 	Set_Rect (Target_Rect,
 		  xoffs + PlaygroundStart[VIOLETT].x +(NUM_LAYERS-i-2)*TO_BLOCKLEN,
 		  yoffs + PlaygroundStart[VIOLETT].y + j * TO_BLOCKHEIGHT, 0, 0);
 	block = ToPlayground[VIOLETT][i][j]+
 	  (NUM_PHASES+ActivationMap[VIOLETT][i][j])*TO_BLOCKS;
-	our_SDL_blit_surface_wrapper ( ToGameBlocks [ block ] . surface , NULL , Screen, &Target_Rect );
+	if ( use_open_gl ) 
+	    blit_open_gl_texture_to_screen_position ( ToGameBlocks [ block ] , Target_Rect . x ,
+						      Target_Rect . y , TRUE ) ;
+	else
+	    our_SDL_blit_surface_wrapper ( ToGameBlocks [ block ] . surface , NULL , Screen, &Target_Rect );
       }
 
   // Show the capsules left for each player 
@@ -990,14 +1047,24 @@ ShowPlayground ( void )
       Set_Rect (Target_Rect, xoffs + CurCapsuleStart[color].x, 
 		yoffs + CurCapsuleStart[color].y + CapsuleCurRow[color]*(CAPSULE_HEIGHT+2),
 		0,0);
-      if (NumCapsules[player])
-	our_SDL_blit_surface_wrapper ( CapsuleBlocks [ color ] . surface , NULL , Screen, &Target_Rect );
+      if ( NumCapsules [ player ] )
+      {
+	  if ( use_open_gl ) 
+	      blit_open_gl_texture_to_screen_position ( CapsuleBlocks [ color ] , Target_Rect . x ,
+							Target_Rect . y , TRUE ) ;
+	  else
+	      our_SDL_blit_surface_wrapper ( CapsuleBlocks [ color ] . surface , NULL , Screen, &Target_Rect );
+      }
 
-      for (i = 0; i < NumCapsules[player]-1; i++)
+      for ( i = 0 ; i < NumCapsules [ player ] - 1 ; i++ )
 	{
-	  Set_Rect (Target_Rect, xoffs + LeftCapsulesStart[color].x,
-		    yoffs + LeftCapsulesStart[color].y + i*CAPSULE_HEIGHT, 0, 0);
-	  our_SDL_blit_surface_wrapper ( CapsuleBlocks [ color ] . surface , NULL , Screen, &Target_Rect );
+	  Set_Rect ( Target_Rect , xoffs + LeftCapsulesStart [ color ] . x ,
+		    yoffs + LeftCapsulesStart [ color ] . y + i * CAPSULE_HEIGHT , 0 , 0 );
+	  if ( use_open_gl ) 
+	      blit_open_gl_texture_to_screen_position ( CapsuleBlocks [ color ] , Target_Rect . x ,
+							Target_Rect . y , TRUE ) ;
+	  else
+	      our_SDL_blit_surface_wrapper ( CapsuleBlocks [ color ] . surface , NULL , Screen, &Target_Rect );
 	} // for capsules 
     } // for player 
 

@@ -531,7 +531,7 @@ hmmm... either the surface has been freed and the pointer moved cleanly to NULL\
 
 #endif
 
-}; // void make_texture_out_of_surface ( & ( floor_iso_images [ tile_type ] ) ) 
+}; // void make_texture_out_of_surface ( iso_image* our_image )
 
 /* ----------------------------------------------------------------------
  * This function checks the error status of the OpenGL driver.  An error
