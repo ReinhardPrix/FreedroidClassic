@@ -15,14 +15,6 @@ Outstanding release-critical bugs (priority: high)
 - game should be able to check if yiff is actually _running_ and
   complain if not and/or continue 
 
-- (DONE)  "hide" cheat menu from normal users (e.g. non-documented
-          command-line switch), otherwise it's too easy ;)
-	  DONE: The key is now SHIFT-CTRL-ALT-C not perfect, but hard enough
-	  and convenient: no need to turn it on and off every time :-)
-
-- (DONE) in the first ~20 seconds the game runs _still_ slowly
-         NO, now runs too fast... lol, frame-time determination should be _immediate_!!
-
 Outstanding normal bugs (priority: normal)
 ------------------------------------------
 - wenn man ganz am rechts unteren Rand einer rechteckigen Kartenform
@@ -31,15 +23,11 @@ Outstanding normal bugs (priority: normal)
   Karte hinaus im Speicher die Sichtbarkeit uberpruefen.  Sehr
   fragwuerdig. 
 
-- Rahmen missing in Takeover game !
-
 Outstanding tuning/design bugs and general TODO (priority: low)
 --------------------------------------------------------------
 - Colors sind allgemein ein wenig verdreht seit SDL Port
 
-- Highscore list + Debriefing ordentlich
-
-- (DONE) Console
+- Debriefing ordentlich
 
 - Lift-entry: man muss zu lange auf Space sein bis man in den Lift
   kommt. Das "Lift-fahren" ist auch zu schwerfaellig.
@@ -49,7 +37,6 @@ Outstanding tuning/design bugs and general TODO (priority: low)
 
 - Farbpalettenrotation fuer Bulletcolor austauschen, da sie die
   Framerate verschlingt!! (we should check that first, though)
-  
 
 - (rp) should have maximally one 999 on commando-bridge
   (jp: I think I've encountered 0 often, later 2 on other ships,
@@ -72,9 +59,10 @@ Outstanding tuning/design bugs and general TODO (priority: low)
 
 - Levelnumber should be the index in curShip.AllLevels for simplicity
 
-- 247 and 249 always in Blinkenergy 
-- 999 rotiert zu schnell
 - Uebernommener 302 is zu schnell, 420 is zu langsam..., etc etc
+  (jp: finde ich nicht.  Ist zwar nicht 100% Originalgetreu, aber ich finde schon,
+  dann die Geschwindigkeit des entsprechenden Robots dann auch fuer den 001 gelten
+  sollte, wenn er einen dieser Robots uebernommen hat.)
 
 - Enemey visibility is a bit shakey (revisit visibility calcuations...)
 
@@ -82,17 +70,15 @@ Outstanding tuning/design bugs and general TODO (priority: low)
 
 Wishlist
 --------
+- Add the original energy-upload-function from the C64 classical game start
+  to Freedroid (instead of BeamLine perhaps...)
+
 - !! We should have a common bug/patch mailing address somewhere !!
   freedroid@....
 
 - (jp) add more sounds:  
-  (DONE) Deadlock-Sound-Sequenz, 
-  (DONE) Complete-Sound-Sequenz, 
   Eventuell waere auch gut fuer jeden Level (oder jede Levelfarbe)
   eine eigene Hintergrundmusik  zu verwenden.
-  (DONE) Different sounds for different bullettypes.
-  (DONE) Win-Takeover-Sound
-  (DONE) Lose-Takeover-Sound
 
 - save highscores to disk
 
@@ -116,14 +102,14 @@ Resolved bugs
 - Frage: weiss irgendwer wozu die globale Variable "BeamLine" dient??
   (rp) erschien mir nutzlos, und hab' die Variable jetzt eliminiert,
   hoffe dass niemand sie doch gebraucht haette...
-- Schussfrequenz des 001 zu hoch
 - (rp) "Ghosts" (i.e. Enemeys go throught walls...)
-- (DONE)  gesamt Spiel-geschwindigkeit zu hoch (play original game to compare!!)
- --> jp: Gut.  Habe Robotgeschwindigkeiten und Schussgeschwindigkeiten etwas adaptiert.
-- (DONE)  Laufschrift gehoert zu Paradroid-'extensions'
-	  --> habe sie als solche vermerkt.
-- (DONE)  (rp) Invincible mode: versagt manchmal (collisions)
-	  --> inzwischen ueberlebt man die absurdesten Kaempfe und Situationen damit
+- (DONE)   Schussfrequenz des 001 zu hoch
+- (DONE)   gesamt Spiel-geschwindigkeit zu hoch (play original game to compare!!)
+           --> jp: Gut.  Habe Robotgeschwindigkeiten und Schussgeschwindigkeiten etwas adaptiert.
+- (DONE)   Laufschrift gehoert zu Paradroid-'extensions'
+	   --> habe sie als solche vermerkt.
+- (DONE)   (rp) Invincible mode: versagt manchmal (collisions)
+	   --> inzwischen ueberlebt man die absurdesten Kaempfe und Situationen damit
 - (DONE?)  (jp) Calculate all movement (where movement is to be understood in an abstract
 	   sense including movement of energy and such) framerate-dependant
 	   --> sollte weitestgehend erledigt sein.  Was fehlt noch?  Anmerkungen bitte.
@@ -144,9 +130,9 @@ Resolved bugs
 	   sind nur ein paar "Brumm-brumm" Geraeusche
 	   --> Fieps-Fieps ist jetzt auch bei uns nur am Anfang.  Spaeter aber ein Bischen
 	       Themenbezogene Hintergrundmusik find ich dagegen gar nicht so schlecht.
-- (DONE) Also there are 516 in the yellow level, which shouldn't be the  case.
-   I also encounter OTHER 001 druids of black color! Especially after having died at
-  least once before!  Very strange!
-  (rp: this should now work ok)
-- (rp) Timing in takeover game 
-- Concept view is ugly
+- (DONE)   Also there are 516 in the yellow level, which shouldn't be the  case.
+           I also encounter OTHER 001 druids of black color! Especially after having died at
+           least once before!  Very strange!
+           (rp: this should now work ok)
+- (rp)     Timing in takeover game 
+-          Concept view is ugly
