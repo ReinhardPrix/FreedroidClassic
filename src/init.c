@@ -2034,55 +2034,64 @@ I will not be able to load or save games or configurations\n\
 void
 ThouArtDefeated (void)
 {
-  int j;
-  int now;
+    int j;
+    int now;
 
-  DebugPrintf (2, "\nvoid ThouArtDefeated(void): Real function call confirmed.");
-  Me [ 0 ] . status = OUT ;
-  GameConfig.Inventory_Visible=FALSE;
-  GameConfig.CharacterScreen_Visible=FALSE;
-  GameConfig.Mission_Log_Visible=FALSE;
-  ThouArtDefeatedSound ();
-  ExplodeInfluencer ();
-  now=SDL_GetTicks();
+    DebugPrintf ( 1 , "\n%s(): Real function call confirmed." , __FUNCTION__ );
+    Me [ 0 ] . status = OUT ;
+    GameConfig . Inventory_Visible = FALSE;
+    GameConfig . CharacterScreen_Visible = FALSE;
+    GameConfig . Mission_Log_Visible = FALSE;
 
-  //--------------------
-  // Now that the influencer is dead, all this precious items
-  // spring off of him...
-  //
-  DropItemAt ( Me[0].weapon_item.type , Me[0].pos.x - 0.5 , Me[0].pos.y - 0.5 , -1 , -1 , 0 , 1 );
-  DropItemAt ( Me[0].drive_item.type  , Me[0].pos.x + 0.5 , Me[0].pos.y - 0.5 , -1 , -1 , 0 , 1 );
-  DropItemAt ( Me[0].shield_item.type , Me[0].pos.x + 0.5 , Me[0].pos.y + 0.5 , -1 , -1 , 0 , 1 );
-  DropItemAt ( Me[0].armour_item.type , Me[0].pos.x - 0.5 , Me[0].pos.y + 0.5 , -1 , -1 , 0 , 1 );
-  DropItemAt ( Me[0].special_item.type , Me[0].pos.x - 0.5 , Me[0].pos.y , -1 , -1 , 0 , 1 );
-  DropItemAt ( Me[0].aux1_item.type , Me[0].pos.x + 0.5 , Me[0].pos.y , -1 , -1 , 0 , 1 );
-  DropItemAt ( Me[0].aux2_item.type , Me[0].pos.x , Me[0].pos.y - 0.5 , -1 , -1 , 0 , 1 );
-  DropItemAt ( ITEM_MONEY , Me[0].pos.x , Me[0].pos.y , -1 , -1 , 0 , 1 );
+    //--------------------
+    // The automap doesn't need to be shown any more and also when
+    // the next game starts up (on the same level as right now) there
+    // should not be any automap info remaining...
+    //
+    clear_automap_texture_completely (  ) ;
 
-  GameOver = TRUE;
+    ThouArtDefeatedSound ( ) ;
+    ExplodeInfluencer ( ) ;
+    now = SDL_GetTicks ( ) ;
 
-  while ( ( SDL_GetTicks() - now < 1000 * WAIT_AFTER_KILLED ) && ( GameOver == TRUE ) )
+    //--------------------
+    // Now that the influencer is dead, all this precious items
+    // spring off of him...
+    //
+    DropItemAt ( Me[0].weapon_item.type , Me[0].pos.x - 0.5 , Me[0].pos.y - 0.5 , -1 , -1 , 0 , 1 );
+    DropItemAt ( Me[0].drive_item.type  , Me[0].pos.x + 0.5 , Me[0].pos.y - 0.5 , -1 , -1 , 0 , 1 );
+    DropItemAt ( Me[0].shield_item.type , Me[0].pos.x + 0.5 , Me[0].pos.y + 0.5 , -1 , -1 , 0 , 1 );
+    DropItemAt ( Me[0].armour_item.type , Me[0].pos.x - 0.5 , Me[0].pos.y + 0.5 , -1 , -1 , 0 , 1 );
+    DropItemAt ( Me[0].special_item.type , Me[0].pos.x - 0.5 , Me[0].pos.y , -1 , -1 , 0 , 1 );
+    DropItemAt ( Me[0].aux1_item.type , Me[0].pos.x + 0.5 , Me[0].pos.y , -1 , -1 , 0 , 1 );
+    DropItemAt ( Me[0].aux2_item.type , Me[0].pos.x , Me[0].pos.y - 0.5 , -1 , -1 , 0 , 1 );
+    DropItemAt ( ITEM_MONEY , Me[0].pos.x , Me[0].pos.y , -1 , -1 , 0 , 1 );
+    
+    GameOver = TRUE;
+    
+    while ( ( SDL_GetTicks() - now < 1000 * WAIT_AFTER_KILLED ) && ( GameOver == TRUE ) )
     {
-      StartTakingTimeForFPSCalculation(); 
-
-      AssembleCombatPicture ( DO_SCREEN_UPDATE | SHOW_ITEMS );
-      DisplayBanner ( );
-      animate_blasts ();
-      MoveBullets ();
-      MoveEnemys ();
-      for ( j = 0 ; j < MAX_PLAYERS ; j ++ ) MoveLevelDoors ( j );	
-
-      ReactToSpecialKeys();
-
-      for (j = 0; j < MAXBULLETS; j++)
-	CheckBulletCollisions (j);
-
-      ComputeFPSForThisFrame();
-
+	StartTakingTimeForFPSCalculation(); 
+	
+	AssembleCombatPicture ( DO_SCREEN_UPDATE | SHOW_ITEMS );
+	DisplayBanner ( );
+	animate_blasts ();
+	MoveBullets ();
+	MoveEnemys ();
+	for ( j = 0 ; j < MAX_PLAYERS ; j ++ ) MoveLevelDoors ( j );	
+	
+	ReactToSpecialKeys();
+	
+	for (j = 0; j < MAXBULLETS; j++)
+	    CheckBulletCollisions (j);
+	
+	ComputeFPSForThisFrame();
+	
     }
+    
+    DebugPrintf (2, "\nvoid ThouArtDefeated(void): Usual end of function reached.");
+    DebugPrintf (1, "\n\n DefeatedDone \n\n");
 
-  DebugPrintf (2, "\nvoid ThouArtDefeated(void): Usual end of function reached.");
-  DebugPrintf (1, "\n\n DefeatedDone \n\n");
 }; // void ThouArtDefeated(void)
 
 /*----------------------------------------------------------------------
