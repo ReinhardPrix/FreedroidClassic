@@ -757,10 +757,11 @@ FireBullet (void)
   moderately_finepoint Weapon_Target_Vector;
   float angle;
 
-  // If the current overtaken droid doesn't have a weapon at all, just return
-  if ( Me.weapon_item.type == (-1) ) return;
+  // If the currently overtaken droid doesn't have a weapon at all, just return
+  // if ( Me.weapon_item.type == (-1) ) return;
 
-  // If the influencer is holding something from the invenotry
+
+  // If the influencer is holding something from the inventory
   // menu via the mouse, also just return
   // if ( Item_Held_In_Hand != (-1) ) return;
 
@@ -792,10 +793,12 @@ FireBullet (void)
   // only the damage is done to the robots in the area of effect
   //
   Me.weapon_swing_time = 0;
-  if ( ItemMap [ Me.weapon_item.type ].item_gun_angle_change != 0 )
+  if ( ( ItemMap [ Me.weapon_item.type ].item_gun_angle_change != 0 ) ||
+       ( Me.weapon_item.type == (-1) ) )
     {
       //--------------------
-      // Since a melee weapon is swung, we calculate where the point
+      // Since a melee weapon is swung, which may be only influencers fists,
+      // we calculate where the point
       // of the weapon should be finally hitting and do some damage
       // to all the enemys in that area.
       //
@@ -830,7 +833,11 @@ FireBullet (void)
       // And then we can return, for real bullet generation isn't required in
       // our case here.
       //
-      Me.firewait = ItemMap[ Me.weapon_item.type ].item_gun_recharging_time;
+      if ( Me.weapon_item.type != (-1) )
+	Me.firewait = ItemMap[ Me.weapon_item.type ].item_gun_recharging_time;
+      else
+	Me.firewait = 0.5;
+
       return;
     }
 

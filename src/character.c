@@ -386,8 +386,8 @@ UpdateAllCharacterStats ( void )
     }
   else
     {
-      Me.base_damage = 0;
-      Me.damage_modifier = 0;
+      Me.base_damage = 1;
+      Me.damage_modifier = 1;
     }
   // ... and also armour class
   Me.AC = ( Me.Dexterity - 15 ) * AC_GAIN_PER_DEX_POINT;

@@ -1460,6 +1460,17 @@ ShowQuickInventory ( void )
   SDL_Rect TargetRect;
   int Index;
 
+  //--------------------
+  // We must not blit something right over the active character screen or the
+  // active skill screen of course.  That would be irritating.
+  //
+  if ( ( GameConfig.SkillScreen_Visible ) || ( GameConfig.CharacterScreen_Visible ) ) return;
+
+  //--------------------
+  // Now we can blit all the objects in the quick inventory, but of course only
+  // those small objects, that have a 1x1 inventory grid size, so that they really
+  // can be drawn from the 'belt' that is actually the quick inventory.
+  //
   for ( i = 0 ; i < 9 ; i ++ )
     {
       PutCharFont ( Screen , FPS_Display_BFont , SCREENLEN - 32 , 100 + i * 32 , '1' + i );
