@@ -374,7 +374,7 @@ AnimateInfluence (void)
    * Farbe des Influencers (15) richtig setzen
    */
 
-#define SET_INFLU_COLOR_EVERY_FRAME
+#undef SET_INFLU_COLOR_EVERY_FRAME
 #ifdef SET_INFLU_COLOR_EVERY_FRAME
   if ((Me.status == TRANSFERMODE) && ( (Me.energy*100 / Druidmap[Me.type].maxenergy) > BLINKENERGY))
     SetPalCol (INFLUENCEFARBWERT, Transfercolor.rot, Transfercolor.gruen,
