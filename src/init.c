@@ -712,16 +712,26 @@ parse_command_line (int argc, char *const argv[])
  *
  *-----------------------------------------------------------------*/
 void
-InitNewGame (void)
+InitNewMission ( char *MissionName )
 {
   int i;
+  struct stat stbuf;
+  FILE *MissionFile;
+  char *MainMissionPointer;
+  char *BriefingSectionPointer;
+  char *EndPointer;
+  // char filename[]=MAP_DIR "game.dat";
+  // #define END_OF_GAME_DAT_STRING "*** End of game.dat File ***"
+#define END_OF_MISSION_DATA_STRING "*** End of Mission File ***"
+#define MISSION_BRIEFING_BEGIN_STRING "** Start of Mission Briefing Text Section **"
 
-  DebugPrintf ("\nvoid InitNewGame(void): real function call confirmed...");
+  DebugPrintf ("\nvoid InitNewMission( char *MissionName ): real function call confirmed...");
+  printf("\nA new mission is being initialized from file %s." , MissionName );
 
-  printf("\nA new game is being initialized...");
-
+  //--------------------
+  //At first we do the things that must be done for all
+  //missions, regardless of mission file given
   Activate_Conservative_Frame_Computation();
-
   LastBlastHit = 0;
   LastGotIntoBlastSound = 2;
   LastRefreshSound = 2;
@@ -729,34 +739,102 @@ InitNewGame (void)
   ThisMessageTime = 0;
   Draw_Framerate=TRUE;
   Draw_Energy=FALSE;
-
-
-  /*
-   * Die Punkte wieder auf 0 setzen
-   */
-  RealScore = 0;
-  ShowScore = 0;
-
-  /* L"oschen der Messagequeue */
-  KillQueue ();
-  InsertMessage (" Game on!  Good Luck,,.");
-
-  /* Alle Bullets und Blasts loeschen */
+  RealScore = 0; // This should be done at the end of the highscore list procedure
+  ShowScore = 0; // This should be done at the end of the highscore list procedure
+  KillQueue (); // This has NO meaning right now...
+  InsertMessage (" Game on!  Good Luck,,."); // this also has NO meaning right now
+  /* Delete all bullets and blasts */
   for (i = 0; i < MAXBULLETS; i++)
     {
       AllBullets[i].type = OUT;
       AllBullets[i].mine = FALSE;
     }
-
-  DebugPrintf ("\nvoid InitNewGame(void): All bullets have been deleted...");
-
+  DebugPrintf ("\nvoid InitNewMission( ... ): All bullets have been deleted...");
   for (i = 0; i < MAXBLASTS; i++)
     {
       AllBlasts[i].phase = OUT;
       AllBlasts[i].type = OUT;
     }
+  DebugPrintf ("\nvoid InitNewMission( ... ): All blasts have been deleted...");
 
-  DebugPrintf ("\nvoid InitNewGame(void): All blasts have been deleted...");
+  //--------------------
+  //Now its time to start decoding the mission file.
+  //For that, we must get it into memory first.
+  //The procedure is the same as with LoadShip
+
+  /* Read the whole mission data to memory */
+  if ((MissionFile = fopen ( MissionName , "r")) == NULL)
+    {
+      DebugPrintf ("\nint InitNewMission( ... ): Error opening file.... ");
+      Terminate(ERR);
+    }
+  else
+    {
+      printf("\nOpening %s file succeeded..." , MissionName );
+    }
+
+  if (fstat (fileno (MissionFile), &stbuf) == EOF)
+    {
+      printf
+	("\nint InitNewMission ( void ): Error fstat-ing File....");
+      Terminate(ERR);
+    }
+  else
+    {
+      printf("\nfstating %s file succeeded..." , MissionName );
+    }
+
+  if (( MainMissionPointer = (char *) malloc (stbuf.st_size + 64*2)) == NULL)
+    {
+      DebugPrintf ("\nint InitNewMission ( char * constantsname ) : Out of Memory? ");
+      Terminate(ERR);
+    }
+
+  fread ( MainMissionPointer , (size_t) 64, (size_t) (stbuf.st_size / 64 +1 ), MissionFile);
+
+  printf("\nReading dat file succeeded... Adding a 0 at the end of read data....");
+
+  if ( (EndPointer = strstr( MainMissionPointer , END_OF_MISSION_DATA_STRING ) ) == NULL )
+    {
+      printf("\nERROR!  END OF MISSION DATA STRING NOT FOUND!  Terminating...");
+      Terminate(ERR);
+    }
+  else
+    {
+      EndPointer[0]=0; // we want to handle the file like a string, even if it is not zero
+                       // terminated by nature.  We just have to add the zero termination.
+    }
+
+  printf("\n\nvoid InitNewMission: The content of the read file: \n%s" , MainMissionPointer );
+
+  //--------------------
+  //Now the mission file is read into memory
+  //That means we can start to decode the details given
+  //in the body of the mission file
+  //
+
+  // First we search for the beginning of the mission briefing big section NOT subsection
+  if ( ( BriefingSectionPointer = strstr ( MainMissionPointer, MISSION_BRIEFING_BEGIN_STRING )) == NULL )
+    {
+      printf("\nERROR! NO MISSION BRIEFING BEGIN STRING FOUND! TERMINATING!");
+      Terminate(ERR);
+    }
+  else
+    {
+      BriefingSectionPointer += strlen ( MISSION_BRIEFING_BEGIN_STRING );
+      printf("\nMission Briefing begin BIG section found!");
+    }
+
+  /* Introduction und Title */
+  Title ( BriefingSectionPointer );
+
+  DebugPrintf
+    ("\nvoid InitNewGame(void): The title signaton has been successfully displayed...:");
+
+
+
+
+
 
   /* Alle Levels wieder aktivieren */
   for (i = 0; i < curShip.num_levels; i++)
@@ -800,12 +878,6 @@ InitNewGame (void)
       break;
     } /* switch */
 
-  // printf("\nvoid InitNewGame(void): Starting point for the influencer has been set...:\n");
-  // printf ("%f,%f", Me.pos.x, Me.pos.y);
-
-  /* Alertcolor auf Gruen zurueckschalten */
-  Alert = 0;
-
   /* Enemys initialisieren */
   if (GetCrew (SHIPNAME) == ERR)
     {
@@ -814,12 +886,6 @@ InitNewGame (void)
       Terminate (-1);
     }
 
-
-  /* Introduction und Title */
-  Title ();
-
-  DebugPrintf
-    ("\nvoid InitNewGame(void): The title signaton has been successfully displayed...:");
 
   /* Farben des aktuellen Levels einstellen */
   SetLevelColor (CurLevel->color); 
@@ -941,20 +1007,26 @@ InitFreedroid (void)
 } /* InitFreedroid() */
 
 /*-----------------------------------------------------------------
- * @Desc: Diese Prozedur ist fuer die Introduction in das Spiel
- *  verantwortlich. Im Moment beschrankt sich ihre Funktion auf das
- *  Laden und anzeigen eines Titelbildes, das dann ausgeblendet wird.
+ * @Desc: This function does the mission briefing.  It assumes, 
+ *  that a mission file has already been successfully loaded into
+ *  memory.  The briefing texts will be extracted and displayed in
+ *  scrolling font.
  * 
  *-----------------------------------------------------------------*/
 void
-Title (void)
+Title ( char *MissionBriefingPointer )
 {
   int ScrollEndLine = USERFENSTERPOSY;	/* Endpunkt des Scrollens */
+  char* NextSubsectionStartPointer;
+  char* PreparedBriefingText;
+  char* TerminationPointer;
+  int ThisTextLength;
+#define NEXT_BRIEFING_SUBSECTION_START_STRING "* New Mission Briefing Text Subsection *"
+#define END_OF_BRIEFING_SUBSECTION_STRING "* End of Mission Briefing Text Subsection *"
 
   // STRANGE!! This command will be silently ignored by SDL?
   // WHY?? DONT KNOW!!!
   // Play_Sound ( CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC );
-
   // Play_Sound ( CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC );
   Switch_Background_Music_To ( CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC );
   // Switch_Background_Music_To ( COMBAT_BACKGROUND_MUSIC_SOUND );
@@ -976,10 +1048,33 @@ Title (void)
 
   SetCurrentFont( FPS_Display_BFont );
 
-  ScrollText (TitleText1, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
-  ScrollText (TitleText2, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
-  ScrollText (TitleText3, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
-  ScrollText (TitleText4, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
+
+  // Next we display all the subsections of the briefing section
+  // with scrolling font
+  NextSubsectionStartPointer = MissionBriefingPointer;
+  while ( ( NextSubsectionStartPointer = strstr ( NextSubsectionStartPointer, NEXT_BRIEFING_SUBSECTION_START_STRING)) != NULL)
+    {
+      NextSubsectionStartPointer += strlen ( NEXT_BRIEFING_SUBSECTION_START_STRING );
+      if ( (TerminationPointer=strstr ( NextSubsectionStartPointer, END_OF_BRIEFING_SUBSECTION_STRING)) == NULL)
+	{
+	  printf("\n\nvoid Title(...): Unterminated Subsection in Mission briefing....Terminating...");
+	  Terminate(ERR);
+	}
+      ThisTextLength=TerminationPointer-NextSubsectionStartPointer;
+      PreparedBriefingText = malloc (ThisTextLength + 10);
+      strncpy ( PreparedBriefingText , NextSubsectionStartPointer , ThisTextLength );
+      PreparedBriefingText[ThisTextLength]=0;
+      
+      printf("\n\nIdentified Text for the scrolling briefing: %s." , PreparedBriefingText);
+      fflush(stdout);
+      ScrollText ( PreparedBriefingText, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
+      free ( PreparedBriefingText );
+    }
+
+    // ScrollText (TitleText1, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
+    // ScrollText (TitleText2, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
+    // ScrollText (TitleText3, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
+    // ScrollText (TitleText4, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
 
   ClearGraphMem ();
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE ); 

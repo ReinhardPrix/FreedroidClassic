@@ -46,10 +46,10 @@ EXTERN int WaitElevatorCounter;
 #define EXTERN extern
 #endif
 EXTERN void parse_command_line (int argc, char *const argv[]);
-EXTERN void Title (void);
+EXTERN void Title ( char *MissionBriefingPointer );
 EXTERN void EndTitle (void);
 EXTERN void InitFreedroid (void);
-EXTERN void InitNewGame (void);
+EXTERN void InitNewMission (char *MissionName);
 EXTERN void ThouArtDefeated (void);
 EXTERN void ThouArtVictorious (void);
 EXTERN void Debriefing (void);

@@ -721,7 +721,7 @@ Single_Player_Menu (void)
 	    case NEW_GAME_POSITION:
 	      while (EnterPressed() || SpacePressed() ) ;
 	      New_Game_Requested=TRUE;
-	      InitNewGame();
+	      InitNewMission( STANDARD_MISSION );
 	      Weiter=!Weiter;
 	      break;
 	    case SHOW_HISCORE_POSITION: 

@@ -81,7 +81,7 @@ main (int argc, char *const argv[])
   while (!QuitProgram)
     {
 
-      InitNewGame ();
+      InitNewMission ( STANDARD_MISSION );
 
       GameOver = FALSE;
 

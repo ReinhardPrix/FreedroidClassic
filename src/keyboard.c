@@ -138,7 +138,7 @@ ReactToSpecialKeys(void)
 
 	  if ( UPressed () )
 	    {
-	      InitNewGame();
+	      InitNewMission ( STANDARD_MISSION ) ;
 	      while (UPressed());
 	    }
 
