@@ -41,6 +41,11 @@
 #define ARMOUR_POS_X 22
 #define ARMOUR_POS_Y 81
 
+#define SHIELD_RECT_WIDTH 64
+#define SHIELD_RECT_HEIGHT 64
+#define SHIELD_POS_X 240
+#define SHIELD_POS_Y 16
+
 
 void
 ApplyItemFromInventory( int ItemNum )
@@ -233,7 +238,7 @@ CursorIsInDriveRect( int x , int y )
 
 /* ----------------------------------------------------------------------
  * This function checks if a given screen position lies within the small
- * rectangle defining the drive slot in the inventory screen.
+ * rectangle defining the armour slot in the inventory screen.
  * ---------------------------------------------------------------------- */
 int 
 CursorIsInArmourRect( int x , int y )
@@ -254,6 +259,30 @@ CursorIsInArmourRect( int x , int y )
     }
   return( FALSE );
 }; // int CursorIsInArmourRect( int x , int y )
+
+/* ----------------------------------------------------------------------
+ * This function checks if a given screen position lies within the small
+ * rectangle defining the shield slot in the inventory screen.
+ * ---------------------------------------------------------------------- */
+int 
+CursorIsInShieldRect( int x , int y )
+{
+  point CurPos;
+  CurPos.x = x ;
+  CurPos.y = y ;
+
+  if ( ( CurPos.x >= SHIELD_POS_X ) && ( CurPos.x <= SHIELD_POS_X + SHIELD_RECT_WIDTH ) )
+    {
+      DebugPrintf( 0 , "\nMight be grabbing in armour rectangle, as far as x is concerned.");
+      if ( ( CurPos.y >= User_Rect.y + SHIELD_POS_Y ) && 
+	   ( CurPos.y <= User_Rect.y + SHIELD_POS_Y + SHIELD_RECT_HEIGHT ) )
+	{
+	  DebugPrintf( 0 , "\nMight be grabbing in armour rectangle, as far as y is concerned.");
+	  return( TRUE );
+	}
+    }
+  return( FALSE );
+}; // int CursorIsInShieldRect( int x , int y )
 
 /* ----------------------------------------------------------------------
  * This function checks if a given screen position lies within the grid
@@ -455,7 +484,23 @@ DropHeldItemToArmourSlot ( void )
   Me.Inventory[ InvPos ].type = ( -1 );
   Me.Inventory[ InvPos ].currently_held_in_hand = FALSE;
 
-}; // void DropHeldItemToDriveSlot ( void )
+}; // void DropHeldItemToArmourSlot ( void )
+
+void
+DropHeldItemToShieldSlot ( void )
+{
+  int InvPos;
+
+  InvPos = GetHeldItemInventoryIndex( );
+
+  // Now the item is installed into the weapon slot of the influencer
+  Druidmap[ DRUID001 ].shield_item = Me.Inventory[ InvPos ].type;
+
+  // Now the item is removed from inventory and no longer held in hand as well...
+  Me.Inventory[ InvPos ].type = ( -1 );
+  Me.Inventory[ InvPos ].currently_held_in_hand = FALSE;
+
+}; // void DropHeldItemToShieldSlot ( void )
 
 /* ----------------------------------------------------------------------
  * If an item is held and then clicked again in the inventory field, this
@@ -608,6 +653,15 @@ ShowInventoryScreen ( void )
   TargetRect.h = 50;
   SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].armour_item ].picture_number ].Surface , NULL , Screen , &TargetRect );
   
+  //--------------------
+  // Now we display the item in the influencer shield slot
+  //
+  TargetRect.x = InventoryRect.x + SHIELD_POS_X ;
+  TargetRect.y = InventoryRect.y + SHIELD_POS_Y ;
+  TargetRect.w = 50;
+  TargetRect.h = 50;
+  SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].shield_item ].picture_number ].Surface , NULL , Screen , &TargetRect );
+  
 
   //--------------------
   // Now we display all the items the influencer is carrying with him
@@ -750,7 +804,7 @@ ShowInventoryScreen ( void )
 	}
 
       //--------------------
-      // If the cursor is in the drive rect, i.e. the small box to the right, then
+      // If the cursor is in the armour rect, then
       // the item should be dropped onto the players current weapon slot
       //
       if ( CursorIsInArmourRect ( CurPos.x , CurPos.y ) )
@@ -760,6 +814,25 @@ ShowInventoryScreen ( void )
 	  if ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_armour_slot )
 	    {
 	      DropHeldItemToArmourSlot ( );
+	      Item_Held_In_Hand = ( -1 );
+	    }
+	  else
+	    {
+	      // If the item can't be used as a weapon, we don't do anything
+	    }
+	}
+
+      //--------------------
+      // If the cursor is in the shield rect, i.e. the small box to the top right, then
+      // the item should be dropped onto the players current weapon slot
+      //
+      if ( CursorIsInShieldRect ( CurPos.x , CurPos.y ) )
+	{
+	  DebugPrintf( 0 , "\nItem dropped onto the shield rectangle!" );
+	  DebugPrintf( 0 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
+	  if ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_shield_slot )
+	    {
+	      DropHeldItemToShieldSlot ( );
 	      Item_Held_In_Hand = ( -1 );
 	    }
 	  else

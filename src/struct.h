@@ -217,6 +217,7 @@ typedef struct
   int item_can_be_installed_in_weapon_slot;
   int item_can_be_installed_in_drive_slot;
   int item_can_be_installed_in_armour_slot;
+  int item_can_be_installed_in_shield_slot;
   int New_Laser_Type_After_Installation;
   int New_Drive_Type_After_Installation;
   double energy_gain_uppon_application_in_combat;
@@ -269,6 +270,7 @@ typedef struct
   int drive_item;
   int weapon_item;
   int armour_item;
+  int shield_item;
   int AdvancedBehaviour;        // Does this droid behave better that in the original paradroid?
   int CallForHelpAfterSufferingHit;  // Does this droid request help from the next console so soon as it is
                                      // hit by a bullet of some type?
