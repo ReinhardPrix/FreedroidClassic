@@ -116,14 +116,14 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , {  3 ,  25 ,  15 ,  60 } , FALSE , FALSE } ,
     { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                       , { 620 ,  26 ,  15 ,  60 } , FALSE , FALSE } ,
 
-    { UNLOADED_ISO_IMAGE , "mouse_buttons/number_selector_ok_button.png"    , { 300 , 288 ,  71 ,  31 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/number_selector_ok_button.png"    , { 308 , 288 ,  48 ,  48 } , FALSE , FALSE } ,
     { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 148 , 244 ,  35 ,  35 } , FALSE , FALSE } ,
     { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 404 , 244 ,  35 ,  35 } , FALSE , FALSE } ,
 
     { UNLOADED_ISO_IMAGE , "mouse_buttons/buy_button.png"                   , { 199 ,  98 ,  47 ,  47 } , TRUE , FALSE } ,
     { UNLOADED_ISO_IMAGE , "mouse_buttons/sell_button.png"                  , { 199 , 153 ,  47 ,  47 } , TRUE , FALSE } ,
-    { UNLOADED_ISO_IMAGE , "mouse_buttons/get_button.png"                   , { 192 ,  98 ,  60 ,  60 } , TRUE , FALSE } ,
-    { UNLOADED_ISO_IMAGE , "mouse_buttons/put_button.png"                   , { 192 , 153 ,  60 ,  60 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/get_button.png"                   , { 193 ,  93 ,  60 ,  60 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/put_button.png"                   , { 192 , 147 ,  60 ,  60 } , TRUE , FALSE } ,
     { UNLOADED_ISO_IMAGE , "mouse_buttons/repair_button.png"                , { 199 , 225 ,  47 ,  47 } , TRUE , FALSE } ,
     { UNLOADED_ISO_IMAGE , "mouse_buttons/identify_button.png"              , { 199 , 275 ,  47 ,  47 } , TRUE , FALSE } ,
 
