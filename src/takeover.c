@@ -590,26 +590,15 @@ EnemyMovements (void)
 }	/* EnemyMovements */
 
 /*@Function============================================================
- * read in takeover game elements. Frees previous SDL-surfaces if 
- * they were allocated, this allows to used this fct also for theme-switching
- *
+ * 
+ *  define all the SDL_Rects for the takeover-game
  *
  *-----------------------------------------------------------------*/
 int
-GetTakeoverGraphics (void)
+set_takeover_rects (void)
 {
   int i,j;
   int curx = 0, cury = 0;
-  SDL_Rect tmp;
-  SDL_Surface* TempLoadSurface;
-
-  Set_Rect (tmp, User_Rect.x, User_Rect.y, 0, 0);
-
-  FreeIfUsed(to_blocks);   /* this happens when we do theme-switching */
-
-  TempLoadSurface = IMG_Load (find_file (TO_BLOCK_FILE, GRAPHICS_DIR, USE_THEME, CRITICAL));
-  to_blocks = SDL_DisplayFormatAlpha( TempLoadSurface ); // the surface is converted
-  SDL_FreeSurface ( TempLoadSurface );
 
   /* Set the fill-blocks */
   for (i=0; i<NUM_FILL_BLOCKS; i++,curx += TO_FillBlock.w + 2)
@@ -651,7 +640,8 @@ GetTakeoverGraphics (void)
   Set_Rect (ToLeaderBlock, curx, cury, 2*TO_LeaderLed.w-4, TO_LeaderLed.h);
 
   return(OK);
-}				// int GetTakeoverGraphics(void)
+
+}	// int set_takeover_rects
 
 /*-----------------------------------------------------------------
  * @Desc: prepares _and displays_ the current Playground

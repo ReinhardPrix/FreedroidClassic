@@ -659,7 +659,10 @@ InitPictures (void)
   update_progress(50);
 
   //---------- get Takeover pics
-  GetTakeoverGraphics ();
+  FreeIfUsed(to_blocks);   /* this happens when we do theme-switching */
+  fpath = find_file (TO_BLOCK_FILE, GRAPHICS_DIR, USE_THEME, CRITICAL);
+  to_blocks = Load_Block (fpath, 0, 0, NULL, 0);
+
   update_progress (60);
 
   FreeIfUsed(ship_on_pic);
@@ -675,9 +678,11 @@ InitPictures (void)
       BuildBlock = SDL_DisplayFormatAlpha (tmp); 
       SDL_FreeSurface (tmp);
 
-      // takeover pics
+      // takeover background pics
       fpath = find_file (TAKEOVER_BG_PIC_FILE, GRAPHICS_DIR, NO_THEME, CRITICAL);
       takeover_bg_pic = Load_Block (fpath, 0, 0, NULL, 0);
+      set_takeover_rects (); // setup takeover rectangles
+
       // cursor shapes
       arrow_cursor = init_system_cursor (arrow_xpm);
       crosshair_cursor = init_system_cursor (crosshair_xpm);
@@ -1286,14 +1291,6 @@ ScaleGraphics (float scale)
       //---------- Banner
       ScalePic (&banner_pic, scale);
 
-      //---------- Droid images ----------
-      // FIXME: this still needs to be done!!!!
-      for (i=0; i<NUM_DROIDS; i++)
-	{
-	  //	  packed_portraits[i] = load_raw_pic (fpath);
-	}
-
-      // we need the 999.png in any case for transparency!
       ScalePic (&pic999, scale);
 
       // get the Ashes pics

@@ -338,7 +338,7 @@ EXTERN void ChooseColor (void);
 EXTERN void PlayGame (void);
 EXTERN void EnemyMovements (void);
 
-EXTERN int GetTakeoverGraphics (void);
+EXTERN int set_takeover_rects (void);
 EXTERN void ShowPlayground ();
 EXTERN void InventPlayground (void);
 
