@@ -707,18 +707,19 @@ CollectAutomapData ( void )
  *
  *
  * ---------------------------------------------------------------------- */
-void
+int
 smash_obstacles_only_on_tile ( float x , float y , int map_x , int map_y )
 {
   Level BoxLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
   int i , j ;
   Obstacle target_obstacle;
+  int smashed_something = FALSE ;
 
   //--------------------
   // First some security checks against touching the outsides of the map...
   //
   if ( ( map_x < 0 ) || ( map_y < 0 ) || ( map_x >= BoxLevel -> xlen ) || ( map_y >= BoxLevel -> ylen ) )
-    return;
+    return ( FALSE ) ;
 
   //--------------------
   // We check all the obstacles on this square if they are maybe destructable
@@ -747,6 +748,8 @@ smash_obstacles_only_on_tile ( float x , float y , int map_x , int map_y )
 		    target_obstacle -> pos . x , target_obstacle -> pos . y ,
 		    x , y );
 
+      smashed_something = TRUE ;
+
       //--------------------
       // Before we destroy the obstacle (and lose the obstacle type) we see if we
       // should maybe drop some item.
@@ -772,7 +775,10 @@ smash_obstacles_only_on_tile ( float x , float y , int map_x , int map_y )
 
       StartBlast( target_obstacle -> pos . x , target_obstacle -> pos . y , BoxLevel->levelnum , DRUIDBLAST );
     }
-}; // void smash_obstacles_only_on_tile ( float x , float y , int map_x , int map_y )
+
+  return ( smashed_something );
+
+}; // int smash_obstacles_only_on_tile ( float x , float y , int map_x , int map_y )
 
 /* ----------------------------------------------------------------------
  * When a destructable type of obstacle gets hit, 
@@ -780,11 +786,12 @@ smash_obstacles_only_on_tile ( float x , float y , int map_x , int map_y )
  * tile or a influencer melee hit on the tile, then the barrel explodes,
  * possibly leaving some goods behind.
  * ---------------------------------------------------------------------- */
-void 
+int 
 smash_obstacle ( float x , float y )
 {
   int map_x, map_y;
   int smash_x, smash_y ;
+  int smashed_something = FALSE;
 
   map_x=(int)rintf(x);
   map_y=(int)rintf(y);
@@ -793,11 +800,14 @@ smash_obstacle ( float x , float y )
     {
       for ( smash_y = map_y - 1 ; smash_y < map_y + 2 ; smash_y ++ )
 	{
-	  smash_obstacles_only_on_tile ( x , y , smash_x , smash_y );
+	  if ( smash_obstacles_only_on_tile ( x , y , smash_x , smash_y ) ) 
+	    smashed_something = TRUE ;
 	}
     }
 
-}; // void smash_obstacle ( float x , float y );
+  return ( smashed_something );
+
+}; // int smash_obstacle ( float x , float y );
 
 /* ----------------------------------------------------------------------
  * This function returns the map brick code of the tile that occupies the

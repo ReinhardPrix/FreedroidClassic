@@ -2279,6 +2279,7 @@ PerformTuxAttackRaw ( int player_num )
   float angle;
   moderately_finepoint Weapon_Target_Vector;
   int i;
+  int melee_weapon_hit_something = FALSE ;
 
 #define PERFORM_TUX_ATTACK_RAW_DEBUG 1
 
@@ -2289,8 +2290,9 @@ PerformTuxAttackRaw ( int player_num )
   //
   DebugPrintf ( PERFORM_TUX_ATTACK_RAW_DEBUG , "\nWeapon_item: %d guntype: %d . " ,  Me [ player_num ] . weapon_item . type , guntype );
 
-  if ( Me [ player_num ] . weapon_item . type != (-1) ) Fire_Bullet_Sound ( guntype );
-  else Fire_Bullet_Sound ( LASER_SWORD_1 );
+  //--------------------
+  // The weapon was used and therefore looses some of it's durability
+  //
   DamageItem ( & ( Me [ player_num ] . weapon_item  ) );
 
   //--------------------
@@ -2348,6 +2350,8 @@ PerformTuxAttackRaw ( int player_num )
 	  AllEnemys[ i ] . energy -= Me [ player_num ] .base_damage + MyRandom( Me [ player_num ] .damage_modifier );
 	  enemy_spray_blood ( & ( AllEnemys [ i ] ) ) ;
 
+	  melee_weapon_hit_something = TRUE;
+
 	  start_gethit_animation_if_applicable ( & ( AllEnemys [ i ] ) ) ; 
 
 	  // AllEnemys[ i ] . is_friendly = 0 ;
@@ -2388,7 +2392,8 @@ PerformTuxAttackRaw ( int player_num )
       // must open pendoras box now.
       //
       // SmashBox ( Weapon_Target_Vector.x , Weapon_Target_Vector.y );
-      smash_obstacle ( Weapon_Target_Vector.x , Weapon_Target_Vector.y );
+      if ( smash_obstacle ( Weapon_Target_Vector.x , Weapon_Target_Vector.y ) )
+	melee_weapon_hit_something = TRUE;
       
       //--------------------
       // Finally we add a new wait-counter, so that bullets or swings
@@ -2406,8 +2411,17 @@ PerformTuxAttackRaw ( int player_num )
       // Now we modify for melee weapon skill...
       Me [ player_num ] . firewait *= MeleeRechargeMultiplierTable [ Me [ player_num ] . melee_weapon_skill ] ;
 
+
+      if ( melee_weapon_hit_something ) play_melee_weapon_hit_something_sound();
+      else play_melee_weapon_missed_sound();
+
       return;
     }
+
+  //--------------------
+  //
+  if ( Me [ player_num ] . weapon_item . type != (-1) ) Fire_Bullet_Sound ( guntype );
+  else Fire_Bullet_Sound ( LASER_SWORD_1 );
 
   FireTuxRangedWeaponRaw ( player_num , Me [ player_num ] . weapon_item . type , guntype, FALSE , 0 , 0 , 0 , 0 , -1 ) ;
 

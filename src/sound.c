@@ -45,7 +45,7 @@
 // The order of appearance here should match the order of appearance 
 // in the enum-Environment located in defs.h!
 
-#define ALL_SOUNDS 62
+#define ALL_SOUNDS 69
 char *SoundSampleFilenames[ALL_SOUNDS] = {
    "ERRORSOUND_NILL.NOWAV",
    "Blast_Sound_0.wav",
@@ -75,6 +75,13 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
    "Fire_Bullet_Plasma_Pistol_Sound_0.wav",
    // "Fire_Bullet_Sword_Sound_0.wav",
    "swing_then_hit_1.wav",
+   "swing_then_hit_2.wav",
+   "swing_then_hit_3.wav",
+   "swing_then_hit_4.wav",
+   "swing_then_nohit_1.wav",
+   "swing_then_nohit_2.wav",
+   "swing_then_nohit_3.wav",
+   "swing_then_nohit_4.wav",
    "Bullet_Reflected_Sound_0.wav",
    "Cry_Sound_0.wav",
    "Takeover_Sound_0.wav",
@@ -1461,8 +1468,59 @@ LeaveLiftSound (void)
   PlaySound (LEAVE_ELEVATOR_SOUND);
 
   return;
-}				// void LeaveLiftSound(void)
+}; // void LeaveLiftSound(void)
 
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+play_melee_weapon_hit_something_sound ( void )
+{
+  switch( MyRandom( 3 ) )
+    {
+    case 0 :
+      PlaySound ( SWING_THEN_HIT_2_SOUND ) ;
+      break;
+    case 1 :
+      PlaySound ( SWING_THEN_HIT_1_SOUND ) ;
+      break;
+    case 2 :
+      PlaySound ( SWING_THEN_HIT_3_SOUND ) ;
+      break;
+    case 3 :
+      PlaySound ( SWING_THEN_HIT_4_SOUND ) ;
+      break;
+    default:
+      break;
+    }
+}; // void play_melee_weapon_hit_something_sound ( void )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+play_melee_weapon_missed_sound ( void )
+{
+  switch( MyRandom( 3 ) )
+    {
+    case 0 :
+      PlaySound ( SWING_THEN_NOHIT_1_SOUND ) ;
+      break;
+    case 1 :
+      PlaySound ( SWING_THEN_NOHIT_2_SOUND ) ;
+      break;
+    case 2 :
+      PlaySound ( SWING_THEN_NOHIT_3_SOUND ) ;
+      break;
+    case 3 :
+      PlaySound ( SWING_THEN_NOHIT_4_SOUND ) ;
+      break;
+    default:
+      break;
+    }
+}; // void play_melee_weapon_missed_sound ( void )
 
 /*@Function============================================================
 @Desc: 
@@ -1515,7 +1573,7 @@ Fire_Bullet_Sound (int BulletType)
     case LASER_AXE:
     case LASER_SWORD_2:
     default:
-      PlaySound ( FIRE_BULLET_SWORD_SOUND );
+      PlaySound ( SWING_THEN_NOHIT_1_SOUND );
       break;
     }
 }; // void FireBulletSound(void)

@@ -254,7 +254,7 @@ EXTERN void glue_obstacles_to_floor_tiles_for_level ( int level_num );
 EXTERN void ResolveMapLabelOnShip ( char* MapLabel , location* PositionPointer );
 EXTERN void CollectAutomapData ( void ) ;
 EXTERN void SmashBox ( float x , float y );
-EXTERN void smash_obstacle ( float x , float y );
+EXTERN int smash_obstacle ( float x , float y );
 EXTERN void AnimateTeleports (void);
 EXTERN Uint16 GetMapBrick (Level deck, float x, float y);
 EXTERN void ActSpecialField ( int player_num ) ;
@@ -328,6 +328,8 @@ EXTERN void PlayEnemyGotHitSound ( int enemytype );
 EXTERN void BulletReflectedSound (void);
 EXTERN void Play_Spell_ForceToEnergy_Sound( void );
 EXTERN void Play_Spell_DetectItems_Sound( void );
+EXTERN void play_melee_weapon_hit_something_sound ( void );
+EXTERN void play_melee_weapon_missed_sound ( void );
 
 // items.c
 #undef EXTERN
