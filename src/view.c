@@ -63,14 +63,14 @@ part_group_strings [ ALL_PART_GROUPS ] =
 iso_image loaded_tux_images [ ALL_TUX_PARTS ] [ TUX_TOTAL_PHASES ] [ MAX_TUX_DIRECTIONS ] ;
 
 int use_walk_cycle_for_part [ ALL_PART_GROUPS ] [ ALL_TUX_MOTION_CLASSES ] = 
-  { 
-    { 1 , 0 } , // head
-    { 1 , 0 } , // shield
+{ 
+    { 1 , 1 } , // head
+    { 1 , 1 } , // shield
     { 1 , 1 } , // torso
     { 1 , 1 } , // feet
-    { 1 , 0 } , // sword
-    { 1 , 0 } , // weaponarm
-  } ;
+    { 1 , 1 } , // sword
+    { 1 , 1 } , // weaponarm
+} ;
 
 char previous_part_strings_for_each_phase_and_direction [ ALL_PART_GROUPS ] [ TUX_TOTAL_PHASES ] [ MAX_TUX_DIRECTIONS ] [ 200 ] ;
 
@@ -425,47 +425,47 @@ ShowItemAlarm( void )
 void
 PutMiscellaneousSpellEffects ( void )
 {
-  int i;
+    int i;
 
-  //--------------------
-  // This is here for some debugging/testing purpose
-  //
-  // long Ticks = SDL_GetTicks ( );
-  // PutRadialBlueSparks( 15.0 , 15.0 , (float) ( Ticks % 10000 ) / 500.0 );
-
-  //--------------------
-  // Now we put all the spells in the list of active spells
-  //
-  for ( i = 0 ; i < MAX_ACTIVE_SPELLS; i ++ )
+    //--------------------
+    // This is here for some debugging/testing purpose
+    //
+    // long Ticks = SDL_GetTicks ( );
+    // PutRadialBlueSparks( 15.0 , 15.0 , (float) ( Ticks % 10000 ) / 500.0 );
+    
+    //--------------------
+    // Now we put all the spells in the list of active spells
+    //
+    for ( i = 0 ; i < MAX_ACTIVE_SPELLS; i ++ )
     {
-      if ( AllActiveSpells [ i ] . type == (-1) ) continue;
-      else if ( AllActiveSpells [ i ] . type == SPELL_RADIAL_EMP_WAVE ) 
+	if ( AllActiveSpells [ i ] . type == (-1) ) continue;
+	else if ( AllActiveSpells [ i ] . type == SPELL_RADIAL_EMP_WAVE ) 
 	{
-	  PutRadialBlueSparks( AllActiveSpells [ i ] . spell_center . x , 
-			       AllActiveSpells [ i ] . spell_center . y , 
-			       AllActiveSpells [ i ] . spell_radius , 0 );
+	    PutRadialBlueSparks( AllActiveSpells [ i ] . spell_center . x , 
+				 AllActiveSpells [ i ] . spell_center . y , 
+				 AllActiveSpells [ i ] . spell_radius , 0 );
 	}
-      else if ( AllActiveSpells [ i ] . type == SPELL_RADIAL_VMX_WAVE ) 
+	else if ( AllActiveSpells [ i ] . type == SPELL_RADIAL_VMX_WAVE ) 
 	{
-	  PutRadialBlueSparks( AllActiveSpells [ i ] . spell_center . x , 
-			       AllActiveSpells [ i ] . spell_center . y , 
-			       AllActiveSpells [ i ] . spell_radius , 1 );
+	    PutRadialBlueSparks( AllActiveSpells [ i ] . spell_center . x , 
+				 AllActiveSpells [ i ] . spell_center . y , 
+				 AllActiveSpells [ i ] . spell_radius , 1 );
 	}
-      else if ( AllActiveSpells [ i ] . type == SPELL_RADIAL_FIRE_WAVE ) 
+	else if ( AllActiveSpells [ i ] . type == SPELL_RADIAL_FIRE_WAVE ) 
 	{
-	  PutRadialBlueSparks( AllActiveSpells [ i ] . spell_center . x , 
-			       AllActiveSpells [ i ] . spell_center . y , 
-			       AllActiveSpells [ i ] . spell_radius , 2 );
+	    PutRadialBlueSparks( AllActiveSpells [ i ] . spell_center . x , 
+				 AllActiveSpells [ i ] . spell_center . y , 
+				 AllActiveSpells [ i ] . spell_radius , 2 );
 	}
-      else
+	else
 	{
-	  fprintf( stderr, "\n\nAllActiveSpells [ i ] . type: '%d'\n" , AllActiveSpells [ i ] . type );
-	  GiveStandardErrorMessage ( "PutMiscellaneousSpellEffects(...)" , "\
+	    fprintf( stderr, "\n\nAllActiveSpells [ i ] . type: '%d'\n" , AllActiveSpells [ i ] . type );
+	    GiveStandardErrorMessage ( "PutMiscellaneousSpellEffects(...)" , "\
 There was a bogus spell type entry found in the active spell list.",
-				     PLEASE_INFORM, IS_FATAL );
+				       PLEASE_INFORM, IS_FATAL );
 	}
     }
-
+    
 }; // void PutMiscellaneousSpellEffects ( void )
 
 /* ----------------------------------------------------------------------
@@ -2046,6 +2046,137 @@ make_sure_tux_image_is_loaded ( int tux_part_group , int our_phase , int rotatio
 }; // void make_sure_tux_image_is_loaded ( ... )
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+grab_tux_images_from_archive ( int tux_part_group , int motion_class , char* part_string )
+{
+    int rotation_index;
+    int our_phase ;
+    FILE *DataFile;
+    char constructed_filename[10000];
+    char* fpath;
+
+    Sint16 img_xlen;
+    Sint16 img_ylen;
+    Sint16 img_x_offs;
+    Sint16 img_y_offs;
+
+    //--------------------
+    // A short message for debug purposes
+    //
+    DebugPrintf ( -1 , "\ngrab_tux_images_from_archive:  grabbing new image series..." );
+
+    //--------------------
+    // We need a file name!
+    //
+    sprintf ( constructed_filename , "tux_motion_parts/%s/%s%s.tux_image_archive" , 
+	      motion_class_string [ motion_class ] , part_group_strings [ tux_part_group ] , 
+	      part_string );
+    fpath = find_file ( constructed_filename , GRAPHICS_DIR, FALSE );
+    
+    //--------------------
+    // First we need to open the file
+    //
+    if ( ( DataFile = fopen ( fpath , "rb" ) ) == NULL )
+    {
+	fprintf( stderr, "\n\nfilename: '%s'\n" , fpath );
+	
+	GiveStandardErrorMessage ( "grab_tux_images_from_archive(...)" , "\
+Freedroid was unable to open a given tux image archive.\n\
+This indicates a serious bug in this installation of Freedroid.",
+				   PLEASE_INFORM, IS_FATAL );
+    }
+    else
+    {
+	DebugPrintf ( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : Opening file succeeded...");
+    }
+
+    // MemoryAmount = FS_filelength( DataFile )  + 64*2 + 10000;
+    // Data = (char *) MyMalloc ( MemoryAmount );
+
+    // DebugPrintf ( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : Reading file succeeded...");
+
+
+
+    for ( rotation_index = 0 ; rotation_index < MAX_TUX_DIRECTIONS ; rotation_index ++ )
+    {
+	for ( our_phase = 0 ; our_phase < 35 ; our_phase ++ )
+	{	    
+	    //--------------------
+	    // Now if the iso_image we want to blit right now has not yet been loaded,
+	    // then we need to do something about is and at least attempt to load the
+	    // surface
+	    //
+	    if ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface == NULL )
+	    {
+
+		fread ( & ( img_xlen ) , 1 , sizeof ( img_xlen ) , DataFile ) ;
+		fread ( & ( img_ylen ) , 1 , sizeof ( img_ylen ) , DataFile ) ;
+		fread ( & ( img_x_offs ) , 1 , sizeof ( img_x_offs ) , DataFile ) ;
+		fread ( & ( img_y_offs ) , 1 , sizeof ( img_y_offs ) , DataFile ) ;
+		
+		loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface = 
+		    SDL_CreateRGBSurface ( SDL_SWSURFACE , img_xlen , img_ylen, 32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000 ) ;
+		fread ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface -> pixels , 4 * img_xlen * img_ylen , 1 , DataFile ) ;
+
+		//--------------------
+		// Depending on whether this is supposed to work with faster but less
+		// quality color key or slower but more quality alpha channel, we set
+		// appropriate parameters in the SDL surfaces and also a reminder flag
+		// in the iso_image structure.
+		//
+		loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . force_color_key = FALSE ;
+
+		//--------------------
+		// This might be useful later, when using only SDL output...
+		//
+		// SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
+		// our_iso_image -> surface = our_SDL_display_format_wrapperAlpha( Whole_Image ); // now we have an alpha-surf of right size
+		loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . zoomed_out_surface = NULL ;
+		loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . texture_has_been_created = FALSE ;
+		loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . offset_x = img_x_offs ;
+		loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . offset_y = img_y_offs ;
+		
+		SDL_SetColorKey( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface , 0 , 0 ); // this should clear any color key in the dest surface
+
+		if ( ! use_open_gl ) 		  
+		    flip_image_horizontally ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface ) ;
+
+		strcpy ( previous_part_strings [ tux_part_group ] , part_string );
+		
+		//--------------------
+		// If we're using the continuous tux image update policy, we'll also need to set
+		// the individual strings for previous tux parts...
+		//
+		strcpy ( previous_part_strings_for_each_phase_and_direction [ tux_part_group ] [ our_phase ] [ rotation_index ] , part_string );
+		
+		// DebugPrintf ( -1000 , "\nmake_sure_tux_image_is_loaded ( ... ): new image has just been loaded!" );
+	    }
+	}
+    }
+
+
+    if ( fclose ( DataFile ) == EOF)
+    {
+	fprintf( stderr, "\n\nfilename: '%s'\n" , fpath );
+	GiveStandardErrorMessage ( "grab_tux_images_from_archive(...)" , "\
+Freedroid was unable to close the image archive file.\n\
+This indicates a strange bug in this installation of Freedroid, that is\n\
+very likely a problem with the file/directory permissions of the files\n\
+belonging to Freedroid.",
+				   PLEASE_INFORM, IS_FATAL );
+    }
+    else
+    {
+	DebugPrintf( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : file closed successfully...\n");
+    }
+
+    
+}; // void grab_tux_images_from_archive ( ... )
+
+/* ----------------------------------------------------------------------
  * When the Tux changes equipment and ONE NEW PART IS EQUIPPED, then
  * ALL THE IMAGES FOR THAT PART IN ALL DIRECTIONS AND ALL PHASES must
  * get loaded and that's what is done here...
@@ -2053,30 +2184,31 @@ make_sure_tux_image_is_loaded ( int tux_part_group , int our_phase , int rotatio
 void
 make_sure_whole_part_group_is_ready ( int tux_part_group , int motion_class , char* part_string )
 {
-  int our_phase;
-  int rotation_index;
+    int our_phase;
+    int rotation_index;
 
-  for ( rotation_index = 0 ; rotation_index < MAX_TUX_DIRECTIONS ; rotation_index ++ )
+    //--------------------
+    // 
+    if ( use_walk_cycle_for_part [ tux_part_group ] [ motion_class ] )
     {
-      if ( use_walk_cycle_for_part [ tux_part_group ] [ motion_class ] )
+	grab_tux_images_from_archive ( tux_part_group , motion_class , part_string );
+    }
+    else
+    {
+	for ( rotation_index = 0 ; rotation_index < MAX_TUX_DIRECTIONS ; rotation_index ++ )
 	{
-	  for ( our_phase = 0 ; our_phase < 35 ; our_phase ++ )
-	    make_sure_tux_image_is_loaded ( tux_part_group , our_phase , rotation_index , motion_class , part_string );
-	}
-      else
-	{
-	  for ( our_phase = 0 ; our_phase < TUX_TOTAL_PHASES - TUX_WALK_CYCLE_PHASES - TUX_RUN_CYCLE_PHASES ; our_phase ++ )
-	    make_sure_tux_image_is_loaded ( tux_part_group , our_phase , rotation_index , motion_class , part_string );
+	    for ( our_phase = 0 ; our_phase < TUX_TOTAL_PHASES - TUX_WALK_CYCLE_PHASES - TUX_RUN_CYCLE_PHASES ; our_phase ++ )
+		make_sure_tux_image_is_loaded ( tux_part_group , our_phase , rotation_index , motion_class , part_string );
 	}
     }
 
-  //--------------------
-  // It can be expected, that this operation HAS TAKEN CONSIDERABLE TIME!
-  // Therefore we must activate the conservative frame time compution now,
-  // so as to prevent any unwanted jumps right now...
-  //
-  Activate_Conservative_Frame_Computation ();
-
+    //--------------------
+    // It can be expected, that this operation HAS TAKEN CONSIDERABLE TIME!
+    // Therefore we must activate the conservative frame time compution now,
+    // so as to prevent any unwanted jumps right now...
+    //
+    Activate_Conservative_Frame_Computation ();
+  
 }; // void make_sure_whole_part_group_is_ready ( int tux_part_group , int motion_class , char* part_string )
 
 /*----------------------------------------------------------------------
