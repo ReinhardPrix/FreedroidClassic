@@ -238,7 +238,6 @@ enum
 #define MAP_DIR			"map/"
 #define DIALOG_DIR		"dialogs/"
 
-#define BALL_SHAPED_DROIDS_FILE	"droids.png"
 #define NE_BLAST_BLOCK_FILE 	"blast.png"
 #define NE_ITEMS_BLOCK_FILE     "items.png"
 #define MOUSE_CURSOR_BLOCK_FILE "mouse_move_cursor.png"

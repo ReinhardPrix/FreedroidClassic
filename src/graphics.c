@@ -1166,12 +1166,6 @@ InitPictures (void)
 
   DebugPrintf( 1 , "\nvoid InitPictures(void): preparing to load droids." );
 
-  ShowStartupPercentage ( 28 ) ; 
-
-  Load_Influencer_Surfaces();
-
-  ShowStartupPercentage ( 30 ) ; 
-
   Load_Enemy_Surfaces();
 
   ShowStartupPercentage ( 38 ) ; 
