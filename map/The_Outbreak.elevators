@@ -43,35 +43,35 @@ The data in this file has the format:
    (7.) New-Line
 *** Beginning of Lift Data ***
 
-Label=00 Deck= 0 PosX=17 PosY= 7 LevelUp= 1 LevelDown=-1 LiftRow=0
-Label=01 Deck= 1 PosX=17 PosY= 7 LevelUp= 2 LevelDown= 0 LiftRow=0
-Label=02 Deck=11 PosX= 9 PosY= 7 LevelUp= 3 LevelDown= 1 LiftRow=0
-Label=03 Deck=10 PosX= 1 PosY= 2 LevelUp= 4 LevelDown= 2 LiftRow=0
-Label=04 Deck= 9 PosX= 1 PosY= 1 LevelUp=-1 LevelDown= 3 LiftRow=0
-Label=05 Deck=14 PosX= 1 PosY= 5 LevelUp= 6 LevelDown=-1 LiftRow=1
-Label=06 Deck=13 PosX= 1 PosY= 4 LevelUp= 7 LevelDown= 5 LiftRow=1
-Label=07 Deck=12 PosX= 1 PosY= 4 LevelUp=-1 LevelDown= 6 LiftRow=1
-Label=08 Deck=11 PosX=29 PosY= 7 LevelUp= 9 LevelDown=-1 LiftRow=2
-Label=09 Deck= 8 PosX= 9 PosY= 4 LevelUp=-1 LevelDown= 8 LiftRow=2
-Label=10 Deck= 5 PosX= 4 PosY= 7 LevelUp=11 LevelDown=-1 LiftRow=3
-Label=11 Deck= 6 PosX= 8 PosY= 7 LevelUp=12 LevelDown=10 LiftRow=3
-Label=12 Deck= 7 PosX=12 PosY= 7 LevelUp=13 LevelDown=11 LiftRow=3
-Label=13 Deck= 8 PosX=23 PosY= 4 LevelUp=14 LevelDown=12 LiftRow=3
-Label=14 Deck= 9 PosX=18 PosY= 5 LevelUp=-1 LevelDown=13 LiftRow=3
-Label=15 Deck=15 PosX= 8 PosY=13 LevelUp=16 LevelDown=-1 LiftRow=4
-Label=16 Deck=13 PosX=32 PosY=14 LevelUp=17 LevelDown=15 LiftRow=4
-Label=17 Deck=12 PosX=32 PosY=14 LevelUp=18 LevelDown=16 LiftRow=4
-Label=18 Deck= 5 PosX= 4 PosY=13 LevelUp=-1 LevelDown=17 LiftRow=4
-Label=19 Deck= 0 PosX=33 PosY= 8 LevelUp=20 LevelDown=-1 LiftRow=5
-Label=20 Deck= 1 PosX=39 PosY= 8 LevelUp=21 LevelDown=19 LiftRow=5
-Label=21 Deck= 2 PosX=19 PosY= 5 LevelUp=23 LevelDown=-1 LiftRow=6
-Label=22 Deck= 3 PosX= 7 PosY= 4 LevelUp=24 LevelDown=22 LiftRow=6
-Label=23 Deck= 4 PosX= 7 PosY= 4 LevelUp=25 LevelDown=23 LiftRow=6
-Label=24 Deck= 5 PosX=11 PosY= 5 LevelUp=26 LevelDown=24 LiftRow=6
-Label=25 Deck= 6 PosX=15 PosY= 5 LevelUp=27 LevelDown=25 LiftRow=6
-Label=26 Deck= 7 PosX=19 PosY= 5 LevelUp=-1 LevelDown=26 LiftRow=6
-Label=27 Deck= 7 PosX=27 PosY= 7 LevelUp=29 LevelDown=-1 LiftRow=7
-Label=28 Deck= 8 PosX=33 PosY=10 LevelUp=-1 LevelDown=28 LiftRow=7
+Label=01 Deck= 0 PosX=17 PosY= 7 LevelUp= 1 LevelDown=-1 LiftRow=0
+Label=02 Deck= 1 PosX=17 PosY= 7 LevelUp= 2 LevelDown= 0 LiftRow=0
+Label=03 Deck=11 PosX= 9 PosY= 7 LevelUp= 3 LevelDown= 1 LiftRow=0
+Label=04 Deck=10 PosX= 1 PosY= 2 LevelUp= 4 LevelDown= 2 LiftRow=0
+Label=05 Deck= 9 PosX= 1 PosY= 1 LevelUp=-1 LevelDown= 3 LiftRow=0
+Label=06 Deck=14 PosX= 1 PosY= 5 LevelUp= 6 LevelDown=-1 LiftRow=1
+Label=07 Deck=13 PosX= 1 PosY= 4 LevelUp= 7 LevelDown= 5 LiftRow=1
+Label=08 Deck=12 PosX= 1 PosY= 4 LevelUp=-1 LevelDown= 6 LiftRow=1
+Label=09 Deck=11 PosX=29 PosY= 7 LevelUp= 9 LevelDown=-1 LiftRow=2
+Label=00 Deck= 8 PosX= 9 PosY= 4 LevelUp=-1 LevelDown= 8 LiftRow=2
+Label=11 Deck= 5 PosX= 4 PosY= 7 LevelUp=11 LevelDown=-1 LiftRow=3
+Label=12 Deck= 6 PosX= 8 PosY= 7 LevelUp=12 LevelDown=10 LiftRow=3
+Label=13 Deck= 7 PosX=12 PosY= 7 LevelUp=13 LevelDown=11 LiftRow=3
+Label=14 Deck= 8 PosX=23 PosY= 4 LevelUp=14 LevelDown=12 LiftRow=3
+Label=15 Deck= 9 PosX=18 PosY= 5 LevelUp=-1 LevelDown=13 LiftRow=3
+Label=16 Deck=15 PosX= 8 PosY=13 LevelUp=16 LevelDown=-1 LiftRow=4
+Label=17 Deck=13 PosX=32 PosY=14 LevelUp=17 LevelDown=15 LiftRow=4
+Label=18 Deck=12 PosX=32 PosY=14 LevelUp=18 LevelDown=16 LiftRow=4
+Label=19 Deck= 5 PosX= 4 PosY=13 LevelUp=-1 LevelDown=17 LiftRow=4
+Label=10 Deck= 0 PosX=33 PosY= 8 LevelUp=20 LevelDown=-1 LiftRow=5
+Label=21 Deck= 1 PosX=39 PosY= 8 LevelUp=21 LevelDown=19 LiftRow=5
+Label=22 Deck= 2 PosX=19 PosY= 5 LevelUp=23 LevelDown=-1 LiftRow=6
+Label=23 Deck= 3 PosX= 7 PosY= 4 LevelUp=24 LevelDown=22 LiftRow=6
+Label=24 Deck= 4 PosX= 7 PosY= 4 LevelUp=25 LevelDown=23 LiftRow=6
+Label=25 Deck= 5 PosX=11 PosY= 5 LevelUp=26 LevelDown=24 LiftRow=6
+Label=26 Deck= 6 PosX=15 PosY= 5 LevelUp=27 LevelDown=25 LiftRow=6
+Label=27 Deck= 7 PosX=19 PosY= 5 LevelUp=-1 LevelDown=26 LiftRow=6
+Label=28 Deck= 7 PosX=27 PosY= 7 LevelUp=29 LevelDown=-1 LiftRow=7
+Label=29 Deck= 8 PosX=33 PosY=10 LevelUp=-1 LevelDown=28 LiftRow=7
 
 *** End of Lift Data ***
 
