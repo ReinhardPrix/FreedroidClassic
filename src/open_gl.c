@@ -754,14 +754,32 @@ open_gl_check_error_status ( char* name_of_calling_function  )
 #endif
 }; // void open_gl_check_error_status ( char* name_of_calling_function  )
 
-void clear_screen() {
+void 
+clear_screen( void ) {
 #ifdef HAVE_LIBGL
 	
-  if ( use_open_gl )
-    glClear(GL_COLOR_BUFFER_BIT);
+    if ( use_open_gl )
+    {
+	//--------------------
+	// Now we specify the default color to use when clearing the screen
+	// with glClear.  Accoding to a hint from Derrick Pallas, this might
+	// be causing problems with S3 graphics cards, so we move the color
+	// specification out and away from initialisation part to the (only) 
+	// location where glClear is actually used.
+	//
+	glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	//--------------------
+	// If there's danger of errors with some graphics cards, we best make
+	// a check, to be safe from surprises...
+	//
+	open_gl_check_error_status ( __FUNCTION__ );
+    }
+
 #endif
 
-}
+}; // void clear_screen ( void )
 
 /* ----------------------------------------------------------------------
  * Initialize the OpenGL interface.
@@ -778,8 +796,6 @@ initialzize_our_default_open_gl_parameters ( void )
     glLoadIdentity();
     glOrtho( 0.0f , GameConfig . screen_width , GameConfig . screen_height , 0.0f , -1.0f , 1.0f );
     glMatrixMode(GL_MODELVIEW);
-    
-    glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
     
     //--------------------
     // We turn off a lot of stuff for faster blitting.  All this can
