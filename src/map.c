@@ -1957,6 +1957,29 @@ GetLiftConnections (char *filename)
   return OK;
 }; // int GetLiftConnections(char *shipname)
 
+/* ----------------------------------------------------------------------
+ * This function is used to calculate the number of the droids on the 
+ * ship, which is a global variable.
+ * ---------------------------------------------------------------------- */
+void
+CountNumberOfDroidsOnShip ( void )
+{
+  int i;
+  int type;
+
+  Number_Of_Droids_On_Ship=0;
+  for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
+    {
+      type = AllEnemys[i].type;
+      if ( type == (-1) ) continue;  // Do nothing to unused entries
+      AllEnemys[i].energy = Druidmap[type].maxenergy;
+      AllEnemys[i].Status = !OUT;
+      AllEnemys[i].has_greeted_influencer = FALSE ;
+      Number_Of_Droids_On_Ship++;
+    }
+
+}; // void CountNumberOfDroidsOnShip ( void )
+
 /* -----------------------------------------------------------------
  * This function initializes all enemys, which means that enemys are
  * filled in into the enemy list according to the enemys types that 
@@ -1969,7 +1992,6 @@ GetCrew (char *filename)
   char *MainDroidsFilePointer;
   char *DroidSectionPointer;
   char *EndOfThisDroidSectionPointer;
-  int i, type;
 
 #define START_OF_DROID_DATA_STRING "*** Beginning of Droid Data ***"
 #define END_OF_DROID_DATA_STRING "*** End of Droid Data ***"
@@ -2029,16 +2051,7 @@ GetCrew (char *filename)
   // right structure, it's time to set the energy of the corresponding
   // droids to "full" which means to the maximum of each type.
   //
-  Number_Of_Droids_On_Ship=0;
-  for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
-    {
-      type = AllEnemys[i].type;
-      if ( type == (-1) ) continue;  // Do nothing to unused entries
-      AllEnemys[i].energy = Druidmap[type].maxenergy;
-      AllEnemys[i].Status = !OUT;
-      AllEnemys[i].has_greeted_influencer = FALSE ;
-      Number_Of_Droids_On_Ship++;
-    }
+  CountNumberOfDroidsOnShip ();
 
   return (OK);
 }; // int GetCrew ( ... ) 

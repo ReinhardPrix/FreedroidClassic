@@ -924,7 +924,6 @@ MoveThisEnemy( int EnemyNum )
   // At first, we check for a lot of cases in which we do not
   // need to move anything for this reason or for that
   //
-
   // ignore robots on other levels, except, it it's following influ's trail
   // if ( ( ThisRobot->pos.z != CurLevel->levelnum) && (!ThisRobot->FollowingInflusTail) ) return;
   if ( ( ! IsActiveLevel ( ThisRobot->pos.z ) )  && ( ! ThisRobot -> FollowingInflusTail ) ) return;
@@ -936,7 +935,7 @@ MoveThisEnemy( int EnemyNum )
   // Now check if the robot is still alive
   // if the robot just got killed, initiate the
   // explosion and all that...
-  if ( ThisRobot->energy <= 0)
+  if ( ThisRobot->energy <= 1)
     {
       ThisRobot->Status = OUT;
       Me[0].Experience += Druidmap[ ThisRobot->type ].score;
@@ -981,7 +980,7 @@ MoveThisEnemy( int EnemyNum )
 	}
 
       if (LevelEmpty ())
-	CurLevel->empty = WAIT_LEVELEMPTY;
+	curShip.AllLevels[ Me[ 0 ] . pos . z ] -> empty = WAIT_LEVELEMPTY;
 
       if ( !ClientMode ) SwapThisRobotToFrontPosition ( ThisRobot );
 
@@ -1564,7 +1563,7 @@ int
 CheckEnemyEnemyCollision (int enemynum)
 {
   int i;
-  int curlev = CurLevel->levelnum;
+  int curlev = Me [ 0 ] . pos . z ; // CurLevel->levelnum;
   float check_x, check_y;
   int swap;
   float xdist, ydist;
@@ -1663,6 +1662,7 @@ AnimateEnemys (void)
       // if (AllEnemys[i].pos.z != CurLevel->levelnum)
       if ( AllEnemys[i].pos.z != Me [ 0 ] . pos . z )
 	continue;
+
       if (AllEnemys[i].Status == OUT)
 	{
 	  AllEnemys[i].phase = DROID_PHASES ;

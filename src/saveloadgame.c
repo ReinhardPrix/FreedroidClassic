@@ -377,6 +377,12 @@ The game however could NOT be saved.\n\
       if ( AllBullets[ i ].angle_change_rate != 0 ) DeleteBullet( i , FALSE );
     }
 
+  //--------------------
+  // Now that we have loaded the game, we must count and initialize the number
+  // of droids used in this ship.  Otherwise we might ignore some robots.
+  //
+  CountNumberOfDroidsOnShip (  ) ;
+
   Switch_Background_Music_To( curShip.AllLevels[ Me[0].pos.z ]->Background_Song_Name );
 
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): end of function reached.");

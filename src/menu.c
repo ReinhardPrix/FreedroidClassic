@@ -610,6 +610,7 @@ Cheatmenu (void)
 	    } /* for (i<NumEnemys) */
 
 	  printf_SDL (Screen, -1, -1," --- END --- \n");
+	  printf_SDL (Screen, -1, -1," BTW:  Number_Of_Droids_On_Ship: %d \n" , Number_Of_Droids_On_Ship );
 	  getchar_raw ();
 	  break;
 

@@ -2524,7 +2524,7 @@ Aux2 item=-1
 Special item=-1
 Greeting Sound number=-1
 Got Hit Sound number=-1
-Chance of this robot scoring a hit=50
+Chance of this robot scoring a hit=80
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0

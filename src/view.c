@@ -1009,7 +1009,7 @@ Sorry...\n\
   TargetRectangle.y = UpperLeftBlitCorner.y ;
   // DebugPrintf( 0 , "X: %d." , TargetRectangle.x ); fflush(stdout);
 
-  if ( AllEnemys[Enum].is_friendly == 0 ) 
+  if ( ! AllEnemys[Enum].is_friendly ) 
     {
       if ( AllEnemys[Enum].paralysation_duration_left != 0 ) 
 	{
