@@ -231,10 +231,8 @@ typedef struct
   int item_can_be_installed_in_shield_slot;
   int item_can_be_installed_in_special_slot;
   int item_can_be_installed_in_aux_slot;
-  int New_Laser_Type_After_Installation;
-  int New_Drive_Type_After_Installation;
-  double energy_gain_uppon_application_in_combat;
-  double item_weight;
+  // double energy_gain_uppon_application_in_combat;
+  // double item_weight;
 
   // How good is the item as drive???
   double item_drive_maxspeed;	// how fast can this item go used as the drive of the droid
