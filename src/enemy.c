@@ -1470,6 +1470,11 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 
       if ( ThisRobot -> is_friendly )
 	{
+
+	  //--------------------
+	  // 
+	  DebugPrintf ( -3 , "\nATTACK OF A FRIENDLY DROID DETECTED!  --> hurting enemies..." );
+	  
 	  target_robot = & ( AllEnemys [ 0 ] ) ;
 	  for ( j = 0 ; j < Number_Of_Droids_On_Ship ; j ++ )
 	    {

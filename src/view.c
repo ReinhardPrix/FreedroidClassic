@@ -1165,7 +1165,8 @@ blit_preput_objects_according_to_blitting_list ( int mask )
       // again later from the list.
       //
       if ( ( blitting_list [ i ] . element_type == BLITTING_TYPE_ENEMY ) &&
-	   ( ( ( enemy* ) blitting_list [ i ] . element_pointer ) -> energy < 0 ) )
+	   // ( ( ( enemy* ) blitting_list [ i ] . element_pointer ) -> energy < 0 ) )
+	   ( ( ( enemy* ) blitting_list [ i ] . element_pointer ) -> animation_type == DEATH_ANIMATION ) )
 	{
 	  if ( ! ( mask & OMIT_ENEMIES ) ) 
 	    {
@@ -1212,6 +1213,8 @@ blit_nonpreput_objects_according_to_blitting_list ( int mask )
 	  if ( ! ( mask & OMIT_ENEMIES ) ) 
 	    {
 	      if ( ( ( enemy* ) blitting_list [ i ] . element_pointer ) -> energy < 0 )
+		continue;
+	      if ( ( ( enemy* ) blitting_list [ i ] . element_pointer ) -> animation_type == DEATH_ANIMATION )
 		continue;
 	      PutEnemy ( blitting_list [ i ] . code_number , -1 , -1 , mask ); 
 	    }
