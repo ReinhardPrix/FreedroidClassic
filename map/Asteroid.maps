@@ -1148,7 +1148,7 @@ ob_type=1 ob_x=19.00 ob_y=34.50 ob_na=-1
 ob_type=1 ob_x=35.00 ob_y=34.50 ob_na=-1 
 ob_type=1 ob_x=40.00 ob_y=34.50 ob_na=-1 
 ob_type=2 ob_x=39.50 ob_y=35.00 ob_na=-1 
-ob_type=6 ob_x=40.50 ob_y=35.00 ob_na=2 
+ob_type=26 ob_x=40.50 ob_y=35.00 ob_na=2 
 ob_type=1 ob_x=42.00 ob_y=34.50 ob_na=-1 
 ob_type=2 ob_x=41.50 ob_y=35.00 ob_na=-1 
 ob_type=2 ob_x=42.50 ob_y=35.00 ob_na=-1 
