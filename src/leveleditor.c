@@ -2828,63 +2828,79 @@ show_level_editor_tooltips ( void )
 
   time_spent_on_some_button += SDL_GetTicks() - previous_function_call_time ; 
 
+  previous_function_call_time = SDL_GetTicks();
+
+#define TICKS_UNTIL_TOOLTIP 1200
 
   if ( CursorIsOnButton ( GO_LEVEL_NORTH_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
     {
-      
-      show_button_tooltip ( "Use this button to move one level north, i.e. to the level that is glued to the northern side of this level." );
+      if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
+	show_button_tooltip ( "Use this button to move one level north, i.e. to the level that is glued to the northern side of this level." );
     }
   else if ( CursorIsOnButton ( GO_LEVEL_SOUTH_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
     {
-      show_button_tooltip ( "Use this button to move one level south, i.e. to the level that is glued to the southern side of this level." );
+      if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
+	show_button_tooltip ( "Use this button to move one level south, i.e. to the level that is glued to the southern side of this level." );
     }
   else if ( CursorIsOnButton ( GO_LEVEL_EAST_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
     {
-      show_button_tooltip ( "Use this button to move one level east, i.e. to the level that is glued to the eastern side of this level." );
+      if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
+	show_button_tooltip ( "Use this button to move one level east, i.e. to the level that is glued to the eastern side of this level." );
     }
   else if ( CursorIsOnButton ( GO_LEVEL_WEST_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
     {
-      show_button_tooltip ( "Use this button to move one level west, i.e. to the level that is glued to the western side of this level." );
+      if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
+	show_button_tooltip ( "Use this button to move one level west, i.e. to the level that is glued to the western side of this level." );
     }
   else if ( CursorIsOnButton ( EXPORT_THIS_LEVEL_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
     {
-      show_button_tooltip ( "In FreedroidRPG maps can be glued together to form one big map.  But that requires that the maps are identical where they overlap.  This button will copy the borders of this level to the borders of the neighbouring levels, so that the maps are in sync again." );
+      if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
+	show_button_tooltip ( "In FreedroidRPG maps can be glued together to form one big map.  But that requires that the maps are identical where they overlap.  This button will copy the borders of this level to the borders of the neighbouring levels, so that the maps are in sync again." );
     }
   else if ( CursorIsOnButton ( LEVEL_EDITOR_SAVE_SHIP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
     {
-      show_button_tooltip ( "This button will save your current ship to the file 'Testship.shp' in your current working directory.  If you are sure that you want this, you can copy it over the regular file 'Asteroid.maps' in maps subdirectory to make your map the default FreedroidRPG map." );
+      if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
+	show_button_tooltip ( "This button will save your current ship to the file 'Testship.shp' in your current working directory.  If you are sure that you want this, you can copy it over the regular file 'Asteroid.maps' in maps subdirectory to make your map the default FreedroidRPG map." );
     }
   else if ( CursorIsOnButton ( LEVEL_EDITOR_ZOOM_IN_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
     {
-      show_button_tooltip ( "\nUse this button to zoom INTO the level.\n\nYou can also use the hotkey 'I' for this." );
+      if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
+	show_button_tooltip ( "\nUse this button to zoom INTO the level.\n\nYou can also use the hotkey 'I' for this." );
     }
   else if ( CursorIsOnButton ( LEVEL_EDITOR_ZOOM_OUT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
     {
-      show_button_tooltip ( "\nUse this button to zoom OUT of the level.\n\nYou can also use the hotkey 'O' for this." );
+      if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
+	show_button_tooltip ( "\nUse this button to zoom OUT of the level.\n\nYou can also use the hotkey 'O' for this." );
     }
   else if ( CursorIsOnButton ( LEVEL_EDITOR_RECURSIVE_FILL_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
     {
-      show_button_tooltip ( "Use this button to fill a certain area of the map with the currently selected map tile.  Filling will proceed from the cursor in all direction until a change of map tile is encountered." );
+      if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
+	show_button_tooltip ( "Use this button to fill a certain area of the map with the currently selected map tile.  Filling will proceed from the cursor in all direction until a change of map tile is encountered." );
     }
   else if ( CursorIsOnButton ( LEVEL_EDITOR_NEW_MAP_LABEL_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
     {
-      show_button_tooltip ( "Use this button to attach a new map label to the current cursor position.  These map labels can be used to define starting points for bots and characters or also to define locations for events and triggers." );
+      if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
+	show_button_tooltip ( "Use this button to attach a new map label to the current cursor position.  These map labels can be used to define starting points for bots and characters or also to define locations for events and triggers." );
     }
   else if ( CursorIsOnButton ( LEVEL_EDITOR_NEW_ITEM_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
     {
-      show_button_tooltip ( "Use this button to drop a new item to the floor.  You can also use the hotkey 'G' for this." );
+      if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
+	show_button_tooltip ( "Use this button to drop a new item to the floor.  You can also use the hotkey 'G' for this." );
     }
   else if ( CursorIsOnButton ( LEVEL_EDITOR_LEVEL_RESIZE_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
     {
-      show_button_tooltip ( "Use this button to enter the level resize menu.  Levels can be resized in various ways so as not to destroy your current map too much and so as to insert the new space where you would best like it to be." );
+      if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
+	show_button_tooltip ( "Use this button to enter the level resize menu.  Levels can be resized in various ways so as not to destroy your current map too much and so as to insert the new space where you would best like it to be." );
     }
   else if ( CursorIsOnButton ( LEVEL_EDITOR_KEYMAP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
     {
-      show_button_tooltip ( "Use this button to enter the level editor keymap display." );
+      if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
+	show_button_tooltip ( "Use this button to enter the level editor keymap display." );
     }
   else if ( CursorIsOnButton ( LEVEL_EDITOR_QUIT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
     {
-      show_button_tooltip ( "Use this button to quit out of the level editor and back to continue the normal game in normal mode.  Useful for e.g. putting objects into boxes.  You can always re-enter the level editor." );
+      if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
+	show_button_tooltip ( "Use this button to quit out of the level editor and back to continue the normal game in normal mode.  Useful for e.g. putting objects into boxes.  You can always re-enter the level editor." );
     }
   else
     {
