@@ -1037,23 +1037,10 @@ int IsVisible(Point objpos){
  * $Author$
  *
  * $Log$
- * Revision 1.5  1993/10/02 16:23:07  prix
- * Sun Aug 08 17:18:44 1993: Merged DruidPassable and IsPassable( old: NotPassable)
- * Sun Aug 08 18:12:31 1993: written GetCurrentElevator()
- * Sun Aug 08 22:31:17 1993: added code to read in Waypoint-data in LoadMap()
- * Mon Aug 09 17:52:15 1993: init of wp-list
- * Mon Aug 09 20:01:11 1993: level->empty init
- * Wed Aug 11 20:08:42 1993: Lift to enter only in center of Block
- * Sat Aug 21 14:44:12 1993: new Ship-loading functions from maped imported
- * Sat Aug 21 14:54:42 1993: written GetElevatorConnections
- * Sat Aug 21 15:24:45 1993: written TranslateMap()
- * Tue Aug 24 09:49:25 1993: written AnimateRefresh()
- * Tue Aug 24 10:00:50 1993: call GetRefreshes
- * Tue Aug 24 17:19:10 1993: moved IsVisible to here
- * Wed Aug 25 18:36:21 1993: writing GetCrew()
- * Sat Sep 18 12:44:43 1993: Refreshes langsameer
- * Sat Sep 18 17:44:56 1993: InnerRefresh wird nun animiert
- * Sat Oct 02 12:22:20 1993: dont call GetCrew() in LoadShip, but in InitNewGame()
+ * Revision 1.6  1994/06/19 16:23:51  prix
+ * Sat Oct 02 12:23:34 1993: moved header to end of file
+ * Sat Oct 09 10:42:12 1993: precision_factor in IsVisible() erhoeht
+ * Fri May 27 08:51:52 1994: void-space durchg"anglich gemacht
  *
  * Revision 1.5  1993/10/02  16:23:07  prix
  * Sun Aug 08 17:18:44 1993: Merged DruidPassable and IsPassable( old: NotPassable)
