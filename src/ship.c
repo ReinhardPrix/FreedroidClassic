@@ -224,6 +224,9 @@ ShowLifts (int level, int liftrow)
 {
   SDL_Rect src, dst;
   int i;
+  SDL_Color lift_bg_color = {0,0,0};  /* black... */
+  int xoffs = User_Rect.x + (User_Rect.w - SCALE_FACTOR*300)/2;
+  int yoffs = User_Rect.y + (User_Rect.h - SCALE_FACTOR*180)/2;
 
   ship_off_pic= IMG_Load (find_file (ship_off_filename, GRAPHICS_DIR, TRUE));
   ship_on_pic = IMG_Load (find_file (ship_on_filename, GRAPHICS_DIR, TRUE));
@@ -231,25 +234,24 @@ ShowLifts (int level, int liftrow)
   // clear the whole screen
   //ClearGraphMem();
   // fill the user fenster with some color
-  SetUserfenster ( EL_BG_COLOR );
+  Fill_Rect (User_Rect, lift_bg_color);
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );      
 
   /* First blit ship "lights off" */
   Copy_Rect (User_Rect, dst);
   SDL_SetClipRect (ne_screen, &dst);
   Copy_Rect (User_Rect, dst);
+  dst.x += xoffs;
+  dst.y += yoffs;
   SDL_BlitSurface (ship_off_pic, NULL, ne_screen, &dst);
   
-  /* Now superpose current level & lift "lights on"  */
-  //  SDL_BlitSurface (ship_on_pic, NULL, ne_screen, &dst);
-
   if (level >= 0)
     for (i=0; i<curShip.num_level_rects[level]; i++)
       {
 	Copy_Rect (curShip.Level_Rects[level][i], src);
 	Copy_Rect (src, dst);
-	dst.x += User_Rect.x;   /* offset respective to User-Rectangle */
-	dst.y += User_Rect.y; 
+	dst.x += User_Rect.x + xoffs;   /* offset respective to User-Rectangle */
+	dst.y += User_Rect.y + yoffs; 
 	SDL_BlitSurface (ship_on_pic, &src, ne_screen, &dst);
       }
 
@@ -257,8 +259,8 @@ ShowLifts (int level, int liftrow)
     {
       Copy_Rect (curShip.LiftRow_Rect[liftrow], src);
       Copy_Rect (src, dst);
-      dst.x += User_Rect.x;   /* offset respective to User-Rectangle */
-      dst.y += User_Rect.y; 
+      dst.x += User_Rect.x + xoffs;   /* offset respective to User-Rectangle */
+      dst.y += User_Rect.y + yoffs; 
       SDL_BlitSurface (ship_on_pic, &src, ne_screen, &dst);
     }
 
