@@ -827,7 +827,7 @@ Base item duration=10 plus duration modifier=8
 File or directory name for inventory image="buckler/inv_image.png"
 Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
 Base list price=30
-Item description text="Your run of the mill shield, nothing special. Low priced and does its job."
+Item description text="This shield is a self made compilation of objects in hand. It has tubes, bolts and parts of metal, slapped together to provide small shielding from enemys. It's very simple and rough.. but some sensors and lights have been added to let the wielder know when the item is getting hits, and how long it is still operational and stuff like that."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
