@@ -418,15 +418,52 @@ PutInfluence ( int x, int y)
       TargetRectangle.y=y;
     }
 
+  // Now we draw the hat and shoes of the influencer
   SDL_BlitSurface( ne_blocks , ne_influ_block+((int) rintf (Me.phase)), ne_screen, &TargetRectangle );
 
-  // SDL_BlitSurface( ne_blocks , ne_digit_block+(Druidmap[Me.type].druidname[0]-'1') , ne_screen, &TargetRectangle );
-  TargetRectangle.x += DIGIT_POS_X;
-  TargetRectangle.y += DIGIT_POS_Y;
+  // Now we draw the first digit of the influencers current number.
+  // SDL SOMETIMES MODIFIES THE TARGET ENTRY, THEREFORE IT HAS TO BE 
+  // COMPUTED ANEW!!!!
+  if ( x == -1 ) 
+    {
+      TargetRectangle.x=USER_FENSTER_CENTER_X - BLOCKBREITE/2 + DIGIT_POS_X;
+      TargetRectangle.y=USER_FENSTER_CENTER_Y - BLOCKHOEHE/2 + DIGIT_POS_Y;
+    }
+  else
+    {
+      TargetRectangle.x=x + DIGIT_POS_X;
+      TargetRectangle.y=y + DIGIT_POS_Y;
+    }
   SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Me.type].druidname[0]-'1'+1) , ne_screen, &TargetRectangle );
-  TargetRectangle.x += DIGITLENGTH;
+
+  // Now we draw the second digit of the influencers current number.
+  // SDL SOMETIMES MODIFIES THE TARGET ENTRY, THEREFORE IT HAS TO BE 
+  // COMPUTED ANEW!!!!
+  if ( x == -1 ) 
+    {
+      TargetRectangle.x=USER_FENSTER_CENTER_X - BLOCKBREITE/2 + DIGIT_POS_X + DIGITLENGTH;
+      TargetRectangle.y=USER_FENSTER_CENTER_Y - BLOCKHOEHE/2 + DIGIT_POS_Y;
+    }
+  else
+    {
+      TargetRectangle.x=x + DIGIT_POS_X + DIGITLENGTH;
+      TargetRectangle.y=y + DIGIT_POS_Y;
+    }
   SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Me.type].druidname[1]-'1'+1) , ne_screen, &TargetRectangle );
-  TargetRectangle.x += DIGITLENGTH;
+
+  // Now we draw the third digit of the influencers current number.
+  // SDL SOMETIMES MODIFIES THE TARGET ENTRY, THEREFORE IT HAS TO BE 
+  // COMPUTED ANEW!!!!
+  if ( x == -1 ) 
+    {
+      TargetRectangle.x=USER_FENSTER_CENTER_X - BLOCKBREITE/2 + DIGIT_POS_X + 2*DIGITLENGTH;
+      TargetRectangle.y=USER_FENSTER_CENTER_Y - BLOCKHOEHE/2 + DIGIT_POS_Y;
+    }
+  else
+    {
+      TargetRectangle.x=x + DIGIT_POS_X + 2*DIGITLENGTH;
+      TargetRectangle.y=y + DIGIT_POS_Y;
+    }
   SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Me.type].druidname[2]-'1'+1) , ne_screen, &TargetRectangle );
 
   DebugPrintf ("\nvoid PutInfluence(void): REAL function ended.");

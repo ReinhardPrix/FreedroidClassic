@@ -560,6 +560,7 @@ void
 EscapeMenu (void)
 {
 #define FIRST_MENU_ITEM_POS_X (2*BLOCKBREITE)
+#define FIRST_MENU_ITEM_POS_Y (USERFENSTERPOSY + FontHeight(Menu_BFont))
 enum
   { 
     SINGLE_PLAYER_POSITION=1, 
@@ -586,31 +587,31 @@ enum
 
   SetCurrentFont( Para_BFont );
   
-  SDL_SetClipRect( ne_screen, NULL );
-
   while ( EscapePressed() );
 
   while (!Weiter)
     {
 
       // PutInternFenster( FALSE );
+      Assemble_Combat_Picture ( SHOW_ALL );
+
+      SDL_SetClipRect( ne_screen, NULL );
 
       // MakeGridOnScreen( Outline320x200 );
 
-      // Highlight currently selected option with an influencer before it
+      // 
+      // we highlight the currently selected option with an 
+      // influencer to the left before it
+      // PutInfluence( FIRST_MENU_ITEM_POS_X , 
+      // FIRST_MENU_ITEM_POS_Y + (MenuPosition-1) * (FontHeight(Menu_BFont)) - BLOCKBREITE/4 );
+      PutInfluence( FIRST_MENU_ITEM_POS_X , 
+		    FIRST_MENU_ITEM_POS_Y + ( MenuPosition - 1.5 ) * (FontHeight( Menu_BFont )) );
 
-      // DisplayMergeBlock( FIRST_MENU_ITEM_POS_X, (MenuPosition+3) * (FontHeight(Menu_BFont)/2) - BLOCKBREITE/4, 
-      // Influencepointer, BLOCKBREITE, BLOCKHOEHE, RealScreen );
-
-      PutInfluence( FIRST_MENU_ITEM_POS_X , (MenuPosition+3) * (FontHeight(Menu_BFont)) - BLOCKBREITE/4 );
-
-      PrepareScaledSurface(FALSE);
-
-      CenteredPutString (ne_screen ,  4*FontHeight(Para_BFont),    "Single Player");
-      CenteredPutString (ne_screen ,  5*FontHeight(Para_BFont),    "Multi Player");
-      CenteredPutString (ne_screen ,  6*FontHeight(Para_BFont),    "Options");
-      CenteredPutString (ne_screen ,  7*FontHeight(Para_BFont),    "Level Editor");
-      CenteredPutString (ne_screen ,  8*FontHeight(Para_BFont),    "Quit Game");
+      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y ,    "Single Player");
+      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +1*FontHeight(Para_BFont),    "Multi Player");
+      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +2*FontHeight(Para_BFont),    "Options");
+      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +3*FontHeight(Para_BFont),    "Level Editor");
+      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +4*FontHeight(Para_BFont),    "Quit Game");
 
       // SDL_UpdateRect(ne_screen, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
       SDL_Flip( ne_screen );

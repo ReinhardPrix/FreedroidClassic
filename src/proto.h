@@ -26,6 +26,7 @@
 #define _proto_h
 
 #include "struct.h"
+#include "SDL/SDL.h"
 
 /* main.c */
 #undef EXTERN
