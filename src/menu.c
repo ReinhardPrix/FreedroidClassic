@@ -63,6 +63,8 @@ extern int MyCursorY;
 #define LOAD_EXISTING_HERO_STRING "The first 10 characters: "
 #define DELETE_EXISTING_HERO_STRING "Select character to delete: "
 
+#define MENU_SELECTION_DEBUG 1
+
 /* ----------------------------------------------------------------------
  * This function tells over which menu item the mouse cursor would be,
  * if there were infinitely many menu items.
@@ -334,17 +336,26 @@ ChatDoMenuSelectionFlagged( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER
 			    char* BackgroundToUse , void* MenuFont )
 {
   int MenuSelection = (-1) ;
-  char* FilteredChatMenuTexts[ MAX_ANSWERS_PER_PERSON ] = { "" , "" , "" , "" , "" , "" , "" , "" , "" , "" } ;
+  char* FilteredChatMenuTexts[ MAX_ANSWERS_PER_PERSON ] ;
   int i;
   int use_counter = 0;
 
   //--------------------
   // We filter out those answering options that are allowed by the flag mask
   //
+  DebugPrintf ( MENU_SELECTION_DEBUG , "\nChatDoMenuSelectionFlagged: \n" , i ) ; 
   for ( i = 0 ; i < MAX_ANSWERS_PER_PERSON ; i ++ )
     {
+      FilteredChatMenuTexts [ i ] = "" ; 
       if ( Chat_Flags[ i ] ) 
 	{
+
+	  DebugPrintf ( MENU_SELECTION_DEBUG , "%2d. " , i ) ; 
+	  DebugPrintf ( MENU_SELECTION_DEBUG , MenuTexts [ i ] ) ; 
+	  DebugPrintf ( MENU_SELECTION_DEBUG , "\n" ) ; 
+	  fflush ( stdout );
+	  fflush ( stderr );
+
 	  FilteredChatMenuTexts[ use_counter ] = MenuTexts[ i ] ;
 	  use_counter++;
 	}
@@ -490,8 +501,15 @@ MaxLinesInMenuRectangle;
   // First thing we do is find out how may options we have
   // been given for the menu
   //
+  DebugPrintf ( MENU_SELECTION_DEBUG , "\nChatDoMenuSelection: \n" , i ) ; 
   for ( i = 0 ; i < 10 ; i ++ )
     {
+      DebugPrintf ( MENU_SELECTION_DEBUG , "%2d. " , i ) ; 
+      DebugPrintf ( MENU_SELECTION_DEBUG , MenuTexts [ i ] ) ; 
+      DebugPrintf ( MENU_SELECTION_DEBUG , "\n" ) ; 
+      fflush ( stdout );
+      fflush ( stderr );
+
       if ( strlen( MenuTexts[ i ] ) == 0 ) break;
     }
   NumberOfOptionsGiven = i;

@@ -532,6 +532,11 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
 	  delete_one_dialog_option ( i , TRUE ); // this must be done so, that no freeing is done...
 	}
 
+      for ( i = 0 ; i < MAX_ANSWERS_PER_PERSON ; i ++ )
+	{
+	  Me [ 0 ] . Chat_Flags [ PERSON_SUBDIALOG_DUMMY ] [ i ] = 0 ;
+	}
+
       LoadChatRosterWithChatSequence ( fpath );
       // ChatDroid -> will_rush_tux = TRUE ;
       ChatDroid -> combat_state = RUSH_TUX_ON_SIGHT_AND_OPEN_TALK ;
@@ -886,7 +891,7 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , Enemy ChatDroid 
 	  DialogMenuTexts [ i ] = ChatRoster [ i ] . option_text ;
 	}
     }
-  DialogMenuTexts [ MAX_ANSWERS_PER_PERSON - 1 ] = " END ";
+  // DialogMenuTexts [ MAX_ANSWERS_PER_PERSON - 1 ] = " END ";
 
   while (1)
     {

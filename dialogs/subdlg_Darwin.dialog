@@ -1,0 +1,217 @@
+
+----------------------------------------------------------------------
+ *
+ *   Copyright (c) 1994, 2002 Johannes Prix
+ *   Copyright (c) 1994, 2002 Reinhard Prix
+ *
+ *
+ *  This file is part of Freedroid
+ *
+ *  Freedroid is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Freedroid is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Freedroid; see the file COPYING. If not, write to the 
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  MA  02111-1307  USA
+ *
+----------------------------------------------------------------------
+
+This file was generated using the FreedroidRPG dialog editor.
+If you have questions concerning FreedroidRPG, please send mail to:
+
+freedroid-discussion@lists.sourceforge.net
+
+Beginning of new chat dialog for character="XXXXX"
+
+New Option Nr=0  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=270  PositionY=290  
+ChangeOption=0 ChangeToValue=0
+ChangeOption=99 ChangeToValue=1
+ChangeOption=7 ChangeToValue=1
+ChangeOption=6 ChangeToValue=1
+ChangeOption=5 ChangeToValue=1
+ChangeOption=4 ChangeToValue=1
+ChangeOption=8 ChangeToValue=1
+
+----------------------------------------------------------------------
+
+New Option Nr=4  OptionText="Extract Plasma Transistor (costs 1 learning point, 50 bucks)"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=424  PositionY=396  
+OnCondition="GoldIsLessThan:50" JumpToOption=10 ElseGoto=11
+
+----------------------------------------------------------------------
+
+New Option Nr=5  OptionText="Extract Superconductors (costs 1 learning point, 50 bucks)"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=428  PositionY=317  
+OnCondition="GoldIsLessThan:50" JumpToOption=10 ElseGoto=14
+
+----------------------------------------------------------------------
+
+New Option Nr=6  OptionText="Extract Antimatter Matter Converters (costs 1 learning point, 50 bucks)"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=421  PositionY=251  
+OnCondition="GoldIsLessThan:50" JumpToOption=10 ElseGoto=15
+
+----------------------------------------------------------------------
+
+New Option Nr=7  OptionText="Extract Entropy Inverters (costs 1 learning point, 50 bucks)"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=418  PositionY=188  
+OnCondition="GoldIsLessThan:50" JumpToOption=10 ElseGoto=16
+
+----------------------------------------------------------------------
+
+New Option Nr=8  OptionText="Extract Tachyon Condensators (costs 1 learning point, 50 bucks)"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=430  PositionY=474  
+OnCondition="GoldIsLessThan:50" JumpToOption=10 ElseGoto=17
+
+----------------------------------------------------------------------
+
+New Option Nr=10  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=556  PositionY=57  
+Subtitle="You don't haven enough bucks on you!  Come back when you have the money."
+ReplySample="SOR_You_Dont_Money_0.wav"
+
+----------------------------------------------------------------------
+
+New Option Nr=11  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=568  PositionY=393  
+OnCondition="PointsToDistributeAtLeast:1" JumpToOption=12 ElseGoto=13
+
+----------------------------------------------------------------------
+
+New Option Nr=12  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=685  PositionY=414  
+Subtitle="The ability to extract plasma transistors is not so complicated."
+ReplySample="SOR_The_Ability_To_0.wav"
+Subtitle="Just take a look at this sketch.  You'll see how to extract the parts you desire right here."
+ReplySample="SOR_Just_A_Moment_0.wav"
+Subtitle="Now that you know how to do it, you absolutely can't fail at it any more."
+ReplySample="SOR_Your_Spellcasting_Ability_0.wav"
+DoSomethingExtra="SubtractPointsToDistribute:1"
+DoSomethingExtra="SubtractGold:50"
+DoSomethingExtra="IncreaseExtractPlasmaTransistorSkill"
+
+----------------------------------------------------------------------
+
+New Option Nr=13  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=713  PositionY=171  
+Subtitle="You don't have enough experience.  I can't teach you anything more right now."
+ReplySample="SOR_You_Dont_Have_0.wav"
+Subtitle="First collect more experience.  Then we can go on."
+ReplySample="SOR_First_Collect_More_0.wav"
+
+----------------------------------------------------------------------
+
+New Option Nr=14  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=567  PositionY=325  
+OnCondition="PointsToDistributeAtLeast:1" JumpToOption=18 ElseGoto=13
+
+----------------------------------------------------------------------
+
+New Option Nr=15  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=567  PositionY=259  
+OnCondition="PointsToDistributeAtLeast:1" JumpToOption=19 ElseGoto=13
+
+----------------------------------------------------------------------
+
+New Option Nr=16  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=563  PositionY=207  
+OnCondition="PointsToDistributeAtLeast:1" JumpToOption=20 ElseGoto=13
+
+----------------------------------------------------------------------
+
+New Option Nr=17  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=567  PositionY=448  
+OnCondition="PointsToDistributeAtLeast:1" JumpToOption=21 ElseGoto=13
+
+----------------------------------------------------------------------
+
+New Option Nr=18  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=690  PositionY=369  
+Subtitle="The ability to extract superconductors is not so complicated."
+ReplySample="SOR_The_Ability_To_0.wav"
+Subtitle="Just take a look at this sketch.  You'll see how to extract the parts you desire right here."
+ReplySample="SOR_Just_A_Moment_0.wav"
+Subtitle="Now that you know how to do it, you absolutely can't fail at it any more."
+ReplySample="SOR_Your_Spellcasting_Ability_0.wav"
+DoSomethingExtra="SubtractPointsToDistribute:1"
+DoSomethingExtra="SubtractGold:50"
+DoSomethingExtra="IncreaseExtractSuperconductorSkill"
+
+----------------------------------------------------------------------
+
+New Option Nr=19  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=682  PositionY=321  
+Subtitle="The ability to extract antimatter-matter converters is not so complicated."
+ReplySample="SOR_The_Ability_To_0.wav"
+Subtitle="Just take a look at this sketch.  You'll see how to extract the parts you desire right here."
+ReplySample="SOR_Just_A_Moment_0.wav"
+Subtitle="Now that you know how to do it, you absolutely can't fail at it any more."
+ReplySample="SOR_Your_Spellcasting_Ability_0.wav"
+DoSomethingExtra="SubtractPointsToDistribute:1"
+DoSomethingExtra="SubtractGold:50"
+DoSomethingExtra="IncreaseExtractConverterSkill"
+
+----------------------------------------------------------------------
+
+New Option Nr=20  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=686  PositionY=264  
+Subtitle="The ability to extract entropy inverters is not so complicated."
+ReplySample="SOR_The_Ability_To_0.wav"
+Subtitle="Just take a look at this sketch.  You'll see how to extract the parts you desire right here."
+ReplySample="SOR_Just_A_Moment_0.wav"
+Subtitle="Now that you know how to do it, you absolutely can't fail at it any more."
+ReplySample="SOR_Your_Spellcasting_Ability_0.wav"
+DoSomethingExtra="SubtractPointsToDistribute:1"
+DoSomethingExtra="SubtractGold:50"
+DoSomethingExtra="IncreaseExtractInverterSkill"
+
+----------------------------------------------------------------------
+
+New Option Nr=21  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=682  PositionY=469  
+Subtitle="The ability to extract tachyon condensators is not so complicated."
+ReplySample="SOR_The_Ability_To_0.wav"
+Subtitle="Just take a look at this sketch.  You'll see how to extract the parts you desire right here."
+ReplySample="SOR_Just_A_Moment_0.wav"
+Subtitle="Now that you know how to do it, you absolutely can't fail at it any more."
+ReplySample="SOR_Your_Spellcasting_Ability_0.wav"
+DoSomethingExtra="SubtractPointsToDistribute:1"
+DoSomethingExtra="SubtractGold:50"
+DoSomethingExtra="IncreaseExtractCondensatorSkill"
+
+----------------------------------------------------------------------
+
+New Option Nr=99  OptionText="BACK"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=419  PositionY=116  
+
+----------------------------------------------------------------------
+
+End of chat dialog for character="XXXXX"
+

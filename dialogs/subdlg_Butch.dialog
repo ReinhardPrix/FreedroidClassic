@@ -31,41 +31,43 @@ freedroid-discussion@lists.sourceforge.net
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Hi!  I'm new here. "
-OptionSample="Tux_Hi_Im_New_0.wav"
-PositionX=157  PositionY=219  
-Subtitle="Really!  I'm not living here either.  I'm just on vacasion. "
-ReplySample="PEN_Really_Im_Not_0.wav"
-Subtitle="Normally I'm a fighter among the ranks of the rebel army.  But now I try to relax. "
-ReplySample="PEN_Normally_Im_A_0.wav"
+New Option Nr=0  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=57  PositionY=350  
 ChangeOption=0 ChangeToValue=0
-ChangeOption=1 ChangeToValue=1
+ChangeOption=99 ChangeToValue=1
+ChangeOption=5 ChangeToValue=1
+ChangeOption=4 ChangeToValue=1
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" Do you also train fighters?"
-OptionSample="Tux_PEN_Do_You_Also_0.wav"
-PositionX=265  PositionY=236  
-Subtitle="Well, I don't do that for a living, but I certainly could.  But not for free."
-ReplySample="PEN_Well_I_Dont_0.wav"
-ChangeOption=1 ChangeToValue=0
-DoSomethingExtra="ExecuteSubdialog:subdlg_Pendragon"
+New Option Nr=4  OptionText="Give me the novice arena."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=286  PositionY=165  
+Subtitle="Of course.  That, you might even survive."
+ReplySample="DIX_Maybe_Its_Better_0.wav"
+Subtitle="Take the accessway.  I've unlocked the door.  Good luck."
+ReplySample="DIX_Perhaps_Later_When_0.wav"
+DoSomethingExtra="ExecuteActionWithLabel:unlock_novice_arena_access_door"
+DoSomethingExtra="AssignMission:3"
 
 ----------------------------------------------------------------------
 
-New Option Nr=5  OptionText=" Can you bring me in contact with the resistance?"
-OptionSample="Tux_PEN_Can_You_Bring_0.wav"
-PositionX=257  PositionY=132  
-Subtitle="I'm not entitled to even talk about that myself.  Talk to Chandra."
-ReplySample="PEN_Im_Not_Entitled_0.wav"
-Subtitle="When he says you can be trusted, I will take you with me when I return to the rebels."
-ReplySample="PEN_When_He_Says_0.wav"
+New Option Nr=5  OptionText="Give me the master arena."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=282  PositionY=248  
+Subtitle="If you think so.  Here you are.  The door is open."
+ReplySample="DIX_Maybe_Its_Better_0.wav"
+Subtitle="In fact I'm very curious to see you in there."
+ReplySample="DIX_Perhaps_Later_When_0.wav"
+DoSomethingExtra="ExecuteActionWithLabel:unlock_master_arena_access_door"
+DoSomethingExtra="AssignMission:4"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" END "
-OptionSample="Tux_See_You_Later_0.wav"
-PositionX=261  PositionY=316  
+New Option Nr=99  OptionText="BACK"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=284  PositionY=349  
 
 ----------------------------------------------------------------------
 
