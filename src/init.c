@@ -1095,8 +1095,23 @@ void
 InitFreedroid (void)
 {
   struct timeval timestamp;
+  int i;
 
   Bulletmap=NULL;  // That will cause the memory to be allocated later
+
+  //--------------------
+  // It might happen, that the uninitialized AllBullets array contains a 1
+  // somewhere and that the bullet is deleted and the surface freed, where
+  // it never has been allocated, resulting in a SEGFAULT.  This has never
+  // happend, but for security, we add this loop to clean out these important 
+  // flags.       It should be sufficient to do this here, since the flag
+  // will never be set again if not Surfaces are allocated too and then they
+  // can of course also be freed as well.
+  //
+  for ( i = 0 ; i < MAXBULLETS ; i++ )
+    {
+      AllBullets[i].Surfaces_were_generated = FALSE;
+    }
 
   Overall_Average=0.041;
   SkipAFewFrames = 0;

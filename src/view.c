@@ -693,6 +693,7 @@ PutBullet (int BulletNummer)
 	    rotozoomSurface( Bulletmap[CurBullet->type].SurfacePointer[ i ] , CurBullet->angle , 1.0 , FALSE );
 	}
       DebugPrintf( 0 , "\nvoid PutBullet(i): This was the first time for this bullet, so images were generated...");
+      CurBullet->Surfaces_were_generated=TRUE;
     }
 
   PhaseOfBullet = (CurBullet->time_in_seconds * Bulletmap[ CurBullet->type ].phase_changes_per_second );

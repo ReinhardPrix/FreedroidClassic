@@ -271,6 +271,7 @@ typedef struct
   int owner;
   double angle;
   SDL_Surface *SurfacePointer[ MAX_PHASES_IN_A_BULLET ];
+  int Surfaces_were_generated; // 
 }
 bullet, *Bullet;
 

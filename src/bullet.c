@@ -97,38 +97,42 @@ MoveBullets (void)
 @Int:
 * $Function----------------------------------------------------------*/
 void
-DeleteBullet (int Bulletnummer)
+DeleteBullet (int Bulletnumber)
 {
-  Bullet CurBullet = &AllBullets[Bulletnummer];
+  Bullet CurBullet = &AllBullets[Bulletnumber];
   int i;
 
   //--------------------
   // maybe, the bullet had several SDL_Surfaces attached to it.  Then we need to 
   // free the SDL_Surfaces again as well...
   //
-  if ( ( CurBullet->type != FLASH) && ( CurBullet->type != OUT ) )
+  // if ( ( CurBullet->type != FLASH) && ( CurBullet->type != OUT ) )
+  if ( CurBullet->Surfaces_were_generated ) 
     {
       DebugPrintf( 0 , "\nvoid DeleteBullet(...): freeing this bullets attached surfaces...");
       for ( i=0 ; i < Bulletmap[ CurBullet->type ].phases ; i++ )
 	{
 	  SDL_FreeSurface( CurBullet->SurfacePointer[i] );
 	}
+      CurBullet->Surfaces_were_generated == FALSE;
     }
 
-
-
-  // delete the bullet
+  //--------------------
+  // Now that the memory has been freed again, we can finally delete this bullet entry.
+  // Hope, that this does not give us a SEGFAULT, but it should not do so.
+  //
   CurBullet->type = OUT;
   CurBullet->time_in_seconds = 0;
   CurBullet->time_in_frames = 0;
   CurBullet->mine = FALSE;
-
-
-
+  CurBullet->phase = 0;
+  CurBullet->pos.x = 0;
+  CurBullet->pos.y = 0;
+  CurBullet->angle = 0;
 
   /* Blast erzeugen: type BULLETBLAST */
   StartBlast (CurBullet->pos.x, CurBullet->pos.y, BULLETBLAST);
-}
+}; // void DeleteBullet(int Bulletnumber)
 
 /*@Function============================================================
 @Desc: StartBlast(): erzeugt einen Blast type an x/y
