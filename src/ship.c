@@ -836,19 +836,21 @@ ShowItemPicture (int PosX, int PosY, int Number )
 	    }
 	  else
 	    {
-	      if ( strcmp ( ItemMap[ Number ] . item_rotation_series_prefix , "desk_lamp" ) )
-		sprintf ( ConstructedFileName , "rotation_models/items/%s_%04d.png" , ItemMap[ Number ] . item_rotation_series_prefix , i+1 );
-	      else
-		sprintf ( ConstructedFileName , "rotation_models/items/%s_%04d.jpg" , ItemMap[ Number ] . item_rotation_series_prefix , i+1 );
-	      DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
+	      sprintf ( ConstructedFileName , "rotation_models/items/%s_%04d.jpg" , ItemMap[ Number ] . item_rotation_series_prefix , i+1 );
+	      fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
+	      Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+	      if ( Whole_Image == NULL )
+		{
+		  DebugPrintf ( 0 , "\nNo luck trying to load .jpg item image series... trying png..." );
+		  sprintf ( ConstructedFileName , "rotation_models/items/%s_%04d.png" , ItemMap[ Number ] . item_rotation_series_prefix , i+1 );
+		  fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
+		  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+		}
 	    }
-
-	  // We must remember, that his is already loaded of course
-	  strcpy ( LastImageSeriesPrefix , ItemMap [ Number ] . item_rotation_series_prefix );
-
-	  fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
-	  
-	  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+	  //--------------------
+	  // But at this point, we should have found the image!!
+	  // Otherwise a severe error has occured...
+	  //
 	  if ( Whole_Image == NULL )
 	    {
 	      fprintf( stderr, "\n\nfpath: %s. \n" , fpath );
@@ -859,11 +861,12 @@ This error indicates some installation problem with freedroid.",
 	    }
 	  
 	  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
-	  
 	  ItemRotationSurfaces[i] = SDL_DisplayFormatAlpha( Whole_Image ); // now we have an alpha-surf of right size
 	  SDL_SetColorKey( ItemRotationSurfaces[i] , 0 , 0 ); // this should clear any color key in the dest surface
-	  
 	  SDL_FreeSurface( Whole_Image );
+
+	  // We must remember, that his is already loaded of course
+	  strcpy ( LastImageSeriesPrefix , ItemMap [ Number ] . item_rotation_series_prefix );
 	  
 	}
 
