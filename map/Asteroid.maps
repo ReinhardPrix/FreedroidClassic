@@ -2454,7 +2454,7 @@ ob_type=192 ob_x=19.00 ob_y=88.50 ob_na=3
 ob_type=192 ob_x=22.00 ob_y=88.50 ob_na=7 
 ob_type=6 ob_x=19.50 ob_y=84.00 ob_na=-1 
 ob_type=6 ob_x=20.50 ob_y=84.00 ob_na=-1 
-ob_type=191 ob_x=82.50 ob_y=68.00 ob_na=8 
+ob_type=191 ob_x=82.50 ob_y=68.00 ob_na=6 
 ob_type=160 ob_x=65.13 ob_y=38.84 ob_na=-1 
 ob_type=155 ob_x=65.00 ob_y=40.50 ob_na=-1 
 ob_type=156 ob_x=57.50 ob_y=41.00 ob_na=-1 
@@ -2521,7 +2521,6 @@ obstacle_label.index=4 obstacle_label_name="OldTownGuardHouseEntrance"
 obstacle_label.index=5 obstacle_label_name="OldTownGuardHouseEntrance"
 obstacle_label.index=6 obstacle_label_name="EastGateOfTown"
 obstacle_label.index=7 obstacle_label_name="SouthGateOfTown2"
-obstacle_label.index=8 obstacle_label_name="EastGateOfTown"
 End of pure obstacle label information for this level
 
 Start of pure statement information for this level
@@ -9171,7 +9170,7 @@ ob_type=156 ob_x=70.50 ob_y=84.00 ob_na=-1
 ob_type=155 ob_x=67.00 ob_y=89.50 ob_na=-1 
 ob_type=155 ob_x=67.00 ob_y=85.50 ob_na=-1 
 ob_type=155 ob_x=67.00 ob_y=84.50 ob_na=-1 
-ob_type=20 ob_x=68.50 ob_y=85.50 ob_na=-1 
+ob_type=16 ob_x=68.50 ob_y=85.50 ob_na=-1 
 ob_type=155 ob_x=71.00 ob_y=85.50 ob_na=-1 
 ob_type=155 ob_x=71.00 ob_y=86.50 ob_na=-1 
 ob_type=155 ob_x=71.00 ob_y=84.50 ob_na=-1 
@@ -9197,14 +9196,14 @@ ob_type=156 ob_x=79.50 ob_y=88.00 ob_na=-1
 ob_type=156 ob_x=80.50 ob_y=88.00 ob_na=-1 
 ob_type=156 ob_x=81.50 ob_y=88.00 ob_na=-1 
 ob_type=156 ob_x=82.50 ob_y=88.00 ob_na=-1 
-ob_type=20 ob_x=76.50 ob_y=85.50 ob_na=-1 
-ob_type=20 ob_x=72.50 ob_y=85.50 ob_na=-1 
+ob_type=16 ob_x=76.50 ob_y=85.50 ob_na=-1 
+ob_type=16 ob_x=72.50 ob_y=85.50 ob_na=-1 
 ob_type=26 ob_x=69.50 ob_y=88.00 ob_na=-1 
 ob_type=26 ob_x=72.50 ob_y=88.00 ob_na=-1 
 ob_type=26 ob_x=77.50 ob_y=88.00 ob_na=-1 
 ob_type=27 ob_x=79.00 ob_y=89.50 ob_na=-1 
 ob_type=155 ob_x=79.00 ob_y=88.50 ob_na=-1 
-ob_type=20 ob_x=80.50 ob_y=89.50 ob_na=-1 
+ob_type=16 ob_x=80.50 ob_y=89.50 ob_na=-1 
 ob_type=180 ob_x=85.50 ob_y=81.50 ob_na=-1 
 ob_type=172 ob_x=85.50 ob_y=82.50 ob_na=-1 
 ob_type=171 ob_x=85.50 ob_y=83.50 ob_na=-1 
