@@ -864,6 +864,7 @@ enum
 
 enum
 {
+  ISO_ERROR_BRICK = 0 ,
   ISO_V_WALL = 1 ,
   ISO_H_WALL = 2 ,
 

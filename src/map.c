@@ -107,6 +107,13 @@
 
 #define SPECIAL_FORCE_INDICATION_STRING "SpecialForce: Type="
 
+#define OBSTACLE_DATA_BEGIN_STRING "Begin of obstacle data"
+#define OBSTACLE_DATA_END_STRING "End of obstacle data"
+#define OBSTACLE_TYPE_STRING "ob_type="
+#define OBSTACLE_X_POSITION_STRING "ob_x="
+#define OBSTACLE_Y_POSITION_STRING "ob_y="
+
+
 void
 TranslateToHumanReadable ( Uint16* HumanReadable , map_tile* MapInfo, int LineLength , Level Lev , int CurrentLine);
 // void TranslateToHumanReadable ( Uint16* HumanReadable , Uint16* MapInfo, int LineLength , Level Lev , int CurrentLine);
@@ -518,6 +525,69 @@ DecodeBigMapInsertsOfThisLevel ( Level loadlevel , char* DataPointer )
 
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+decode_obstacles_of_this_level ( Level loadlevel , char* DataPointer )
+{
+  int i;
+  char PreservedLetter;
+  char* obstacle_Pointer;
+  char* obstacle_SectionBegin;
+  char* obstacle_SectionEnd;
+  int NumberOfobstacle_sInThisLevel;
+
+  //--------------------
+  // First we initialize the obstacles with 'empty' information
+  //
+  for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
+    {
+      loadlevel -> obstacle_list [ i ] . type = ( -1 ) ;
+      loadlevel -> obstacle_list [ i ] . pos . x = ( -1 ) ;
+      loadlevel -> obstacle_list [ i ] . pos . y = ( -1 ) ;
+    }
+
+  //--------------------
+  // Now we look for the beginning and end of the obstacle section
+  //
+  obstacle_SectionBegin = LocateStringInData( DataPointer , OBSTACLE_DATA_BEGIN_STRING );
+  obstacle_SectionEnd = LocateStringInData( DataPointer , OBSTACLE_DATA_END_STRING );
+
+  //--------------------
+  // We add a terminator at the end, but ONLY TEMPORARY.  The damage will be restored later!
+  //
+  PreservedLetter=obstacle_SectionEnd[0];
+  obstacle_SectionEnd[0]=0;
+  NumberOfobstacle_sInThisLevel = CountStringOccurences ( obstacle_SectionBegin , OBSTACLE_TYPE_STRING ) ;
+  DebugPrintf( 1 , "\nNumber of obstacles found in this level : %d." , NumberOfobstacle_sInThisLevel );
+
+  //--------------------
+  // Now we decode all the obstacle information
+  //
+  obstacle_Pointer=obstacle_SectionBegin;
+  for ( i = 0 ; i < NumberOfobstacle_sInThisLevel ; i ++ )
+    {
+      obstacle_Pointer = strstr ( obstacle_Pointer + 1 , OBSTACLE_TYPE_STRING );
+      ReadValueFromString( obstacle_Pointer , OBSTACLE_TYPE_STRING , "%d" , 
+			   & ( loadlevel -> obstacle_list [ i ] . type ) , obstacle_SectionEnd );
+      ReadValueFromString( obstacle_Pointer , OBSTACLE_X_POSITION_STRING , "%f" , 
+			   & ( loadlevel -> obstacle_list [ i ] . pos . x ) , obstacle_SectionEnd );
+      ReadValueFromString( obstacle_Pointer , OBSTACLE_Y_POSITION_STRING , "%f" , 
+			   & ( loadlevel -> obstacle_list [ i ] . pos . y ) , obstacle_SectionEnd );
+
+      // DebugPrintf( 0 , "\nobtacle_type=%d pos.x=%3.2f pos.y=%3.2f" , loadlevel -> obstacle_list [ i ] . type , 
+      // loadlevel -> obstacle_list [ i ] . pos . x , loadlevel-> obstacle_list [ i ] . pos . y );
+    }
+
+  //--------------------
+  // Now we repair the damage done to the loaded level data
+  //
+  obstacle_SectionEnd [ 0 ] = PreservedLetter;
+  
+}; // void decode_obstacles_of_this_level ( loadlevel , DataPointer )
+
+/* ----------------------------------------------------------------------
  * Next we extract the map labels of this level WITHOUT destroying
  * or damaging the data in the process!
  * ---------------------------------------------------------------------- */
@@ -591,6 +661,8 @@ generate_wallobstacles_from_level_map ( int level_num )
   level* loadlevel = curShip . AllLevels [ level_num ] ;
   int obstacle_counter = 0 ;
   int i;
+
+  return;
 
   //--------------------
   // First we must erase all obstacle information, that might still be
@@ -1051,86 +1123,6 @@ This bug can be resolved by simply raising a contant by one, but it needs to be 
     }
 
 }; // glue_obstacles_to_floor_tiles_for_level ( int level_num )
-
-/* ----------------------------------------------------------------------
- * Next we extract the map labels of this level WITHOUT destroying
- * or damaging the data in the process!
- * ---------------------------------------------------------------------- */
-void 
-DecodeObstaclesOfThisLevel ( Level loadlevel , char* DataPointer )
-{
-  int i;
-  /*
-  char PreservedLetter;
-  char* MapLabelPointer;
-  char* MapLabelSectionBegin;
-  char* MapLabelSectionEnd;
-  int NumberOfMapLabelsInThisLevel;
-  */
-
-  //--------------------
-  // First we initialize the obstacle list with 'empty' information
-  //
-  for ( i = 0 ; i < MAX_MAP_LABELS_PER_LEVEL ; i ++ )
-    {
-      loadlevel -> obstacle_list [ i ] . type = ( -1 ) ;
-      loadlevel -> obstacle_list [ i ] . pos . x = ( -1 ) ;
-      loadlevel -> obstacle_list [ i ] . pos . y = ( -1 ) ;
-    }
-
-  loadlevel -> obstacle_list [ 0 ] . type = 0 ;
-  loadlevel -> obstacle_list [ 0 ] . pos . x = 20 ;
-  loadlevel -> obstacle_list [ 0 ] . pos . y = 80 ;
-
-  loadlevel -> obstacle_list [ 1 ] . type = 1 ;
-  loadlevel -> obstacle_list [ 1 ] . pos . x = 22 ;
-  loadlevel -> obstacle_list [ 1 ] . pos . y = 80 ;
-
-  loadlevel -> obstacle_list [ 1 ] . type = 2 ;
-  loadlevel -> obstacle_list [ 1 ] . pos . x = 20 ;
-  loadlevel -> obstacle_list [ 1 ] . pos . y = 78 ;
-
-  /*
-  //--------------------
-  // Now we look for the beginning and end of the map labels section
-  //
-  MapLabelSectionBegin = LocateStringInData( DataPointer , MAP_LABEL_BEGIN_STRING );
-  MapLabelSectionEnd = LocateStringInData( DataPointer , MAP_LABEL_END_STRING );
-
-  //--------------------
-  // We add a terminator at the end, but ONLY TEMPORARY.  The damage will be restored later!
-  //
-  PreservedLetter=MapLabelSectionEnd[0];
-  MapLabelSectionEnd[0]=0;
-  NumberOfMapLabelsInThisLevel = CountStringOccurences ( MapLabelSectionBegin , LABEL_ITSELF_ANNOUNCE_STRING ) ;
-  DebugPrintf( 1 , "\nNumber of map labels found in this level : %d." , NumberOfMapLabelsInThisLevel );
-
-  //--------------------
-  // Now we decode all the map label information
-  //
-  MapLabelPointer=MapLabelSectionBegin;
-  for ( i = 0 ; i < NumberOfMapLabelsInThisLevel ; i ++ )
-    {
-      MapLabelPointer = strstr ( MapLabelPointer + 1 , X_POSITION_OF_LABEL_STRING );
-      ReadValueFromString( MapLabelPointer , X_POSITION_OF_LABEL_STRING , "%d" , 
-			   &(loadlevel->labels[ i ].pos.x) , MapLabelSectionEnd );
-      ReadValueFromString( MapLabelPointer , Y_POSITION_OF_LABEL_STRING , "%d" , 
-			   &(loadlevel->labels[ i ].pos.y) , MapLabelSectionEnd );
-      loadlevel->labels[ i ].label_name = 
-	ReadAndMallocStringFromData ( MapLabelPointer , LABEL_ITSELF_ANNOUNCE_STRING , "\"" ) ;
-
-      DebugPrintf( 1 , "\npos.x=%d pos.y=%d label_name=\"%s\"" , loadlevel->labels[ i ].pos.x , 
-		   loadlevel->labels[ i ].pos.y , loadlevel->labels[ i ].label_name );
-    }
-
-  //--------------------
-  // Now we repair the damage done to the loaded level data
-  //
-  MapLabelSectionEnd[0]=PreservedLetter;
-  */
-
-}; // void DecodeObstaclesOfThisLevel ( Level loadlevel , char* DataPointer );
-
 
 /* ----------------------------------------------------------------------
  * This function returns TRUE for blocks classified as "Walls" and false
@@ -1929,6 +1921,51 @@ void CheckWaypointIntegrity(Level Lev)
 }; // void CheckWaypointIntegrity(Level Lev)
 
 /* ----------------------------------------------------------------------
+ * This should write the obstacle information in human-readable form into
+ * a buffer.
+ * ---------------------------------------------------------------------- */
+void
+encode_obstacles_of_this_level ( char* LevelMem , Level Lev )
+{
+  int i;
+  char linebuf[5000];	  
+
+  //--------------------
+  // Now we write out a marker.  This marker is not really
+  // vital for reading in the file again, but it adds clearness to the files structure.
+  //
+  strcat(LevelMem, OBSTACLE_DATA_BEGIN_STRING);
+  strcat(LevelMem, "\n");
+
+  for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
+    {
+      if ( Lev -> obstacle_list [ i ] . type == (-1) ) continue;
+
+      strcat( LevelMem , OBSTACLE_TYPE_STRING );
+      sprintf( linebuf , "%d " , Lev -> obstacle_list [ i ] . type );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , OBSTACLE_X_POSITION_STRING );
+      sprintf( linebuf , "%3.2f " , Lev -> obstacle_list [ i ] . pos . x );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , OBSTACLE_Y_POSITION_STRING );
+      sprintf( linebuf , "%3.2f " , Lev -> obstacle_list [ i ] . pos . y );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , "\n" );
+    }
+  
+  //--------------------
+  // Now we write out a marker at the end of the map data.  This marker is not really
+  // vital for reading in the file again, but it adds clearness to the files structure.
+  //
+  strcat(LevelMem, OBSTACLE_DATA_END_STRING );
+  strcat(LevelMem, "\n");
+  
+}; // void encode_obstacles_of_this_level ( LevelMem , Lev )
+
+/* ----------------------------------------------------------------------
  * This function adds the statement data of this level to the chunk of 
  * data that will be written out to a file later.
  * ---------------------------------------------------------------------- */
@@ -2294,19 +2331,19 @@ EncodeLevelForSaving(Level Lev)
 {
   char *LevelMem;
   int i, j;
-  int MemAmount=0;		/* the size of the level-data */
+  int MemAmount = 0 ;		// the size of the level-data 
   int xlen = Lev->xlen, ylen = Lev->ylen;
-  int anz_wp;		/* number of Waypoints */
-  char linebuf[5000];		/* Buffer */
+  int anz_wp;		// number of Waypoints 
+  char linebuf[5000];		// Buffer 
   Uint16 HumanReadableMapLine[10000];
   
-  /* Get the number of waypoints */
+  // Get the number of waypoints 
   anz_wp = 0;
   while( Lev->AllWaypoints[anz_wp++].x != 0 );
-  anz_wp --;		/* we counted one too much */
+  anz_wp -- ;		// we counted one too much 
 		
-  /* estimate the amount of memory needed */
-  MemAmount = (xlen+1) * (ylen+1); 	/* Map-memory */
+  // estimate the amount of memory needed 
+  MemAmount = (xlen+1) * (ylen+1); 	// Map-memory 
   MemAmount += MAXWAYPOINTS * MAX_WP_CONNECTIONS * 4;
   MemAmount += 500000;		// add some safety buffer for dimension-strings and marker strings...
   
@@ -2371,6 +2408,8 @@ jump target west: %d\n",
   // vital for reading in the file again, but it adds clearness to the files structure.
   strcat(LevelMem, MAP_END_STRING);
   strcat(LevelMem, "\n");
+
+  encode_obstacles_of_this_level ( LevelMem , Lev );
 
   EncodeMapLabelsOfThisLevel ( LevelMem , Lev );
 
@@ -2808,9 +2847,9 @@ DecodeLoadedLeveldata ( char *data )
   loadlevel->Background_Song_Name = ReadAndMallocStringFromData ( data , BACKGROUND_SONG_NAME_STRING , "\n" );
   loadlevel->Level_Enter_Comment = ReadAndMallocStringFromData ( data , LEVEL_ENTER_COMMENT_STRING , "\n" );
 
-  DecodeMapLabelsOfThisLevel ( loadlevel , DataPointer );
+  decode_obstacles_of_this_level ( loadlevel , DataPointer );
 
-  DecodeObstaclesOfThisLevel ( loadlevel , DataPointer );
+  DecodeMapLabelsOfThisLevel ( loadlevel , DataPointer );
 
   //--------------------
   // Next we extract the statments of the influencer on this level WITHOUT destroying

@@ -613,21 +613,6 @@ HandleCurrentlyActivatedSkill( void )
 	      break;
 	    }
 	}
-      /*
-      switch ( GetMapBrick ( curShip.AllLevels [ Me [ 0 ] . pos . z ] ,
-			     Me [ 0 ] . pos . x , 
-			     Me [ 0 ] . pos . y ) ) 
-	{
-	case CHEST_R:
-	case CHEST_L:
-	case CHEST_U:
-	case CHEST_D:
-	  EnterChest();
-	  return;
-	default:
-	  break;
-	}
-      */
 
       //--------------------
       // Now we check if maybe a dead body is close and if then
