@@ -388,7 +388,7 @@ ChatWithFriendlyDroid( int Enum )
 	      PlayOnceNeededSoundSample( "Tux_Chandra_Wouldnt_That_Mean_0.wav" , TRUE );
 	      GiveSubtitleNSample( "By no means.  The rebellion is carried on by individuals. " , "Chandra_By_No_Means_0.wav" );
 	      GiveSubtitleNSample( "They are neither bound to some central authority nor are they paid in any way." , "Chandra_They_Are_Neither_0.wav" );
-	      GiveSubtitleNSample( "They work together for the goal of freedom." , "Chandra_They_Work_Together_0.wav" );
+	      GiveSubtitleNSample( "They work together for thier common goal of freedom." , "Chandra_They_Work_Together_0.wav" );
 	      GiveSubtitleNSample( "They will not change their goal to support the power and will of only one." , "Chandra_They_Will_Not_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 5 ] = 0 ; // but don't ask this twice.
 	      break;
@@ -406,7 +406,8 @@ ChatWithFriendlyDroid( int Enum )
 	      break;
 	    case 9:
 	      PlayOnceNeededSoundSample( "Tux_Chandra_How_Can_I_0.wav" , TRUE );
-	      GiveSubtitleNSample( "Ask around.  I'll tell everybody to find some quests for you." , "Chandra_Ask_Around_Ill_0.wav" );
+	      GiveSubtitleNSample( "Ask around! " , "Chandra_Ask_Around_Ill_0.wav" );
+	      GiveSubtitleNSample( "I'm sure help is needed at all ends of town! " , "Chandra_Im_Sure_Help_0.wav" );
 	      GiveSubtitleNSample( "If you do well on them, I'll hear that and I'll count it in your favour." , "Chandra_If_You_Do_0.wav" );
 	      GiveSubtitleNSample( "If you think you've done enough quests, come back here and I'll see what I can do." , "Chandra_If_You_Think_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 8 ] = 0 ; // but don't ask this twice.

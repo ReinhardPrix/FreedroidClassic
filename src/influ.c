@@ -1170,7 +1170,7 @@ GetLivingDroidBelowMouseCursor ( int PlayerNum )
  * and SILENTLY TRUSTING THAT THIS TUX HAS A RANGED WEAPON EQUIPPED.
  * ---------------------------------------------------------------------- */
 void
-FireTuxRangedWeaponRaw ( int PlayerNum , int weapon_item_type , int bullet_image_type, int ForceMouseUse , int FreezeSeconds , float PoisonDuration , float PoisonDamagePerSec , float ParalysationDuration ) 
+FireTuxRangedWeaponRaw ( int PlayerNum , int weapon_item_type , int bullet_image_type, int ForceMouseUse , int FreezeSeconds , float PoisonDuration , float PoisonDamagePerSec , float ParalysationDuration , int HitPercentage ) 
 {
   int i = 0;
   Bullet CurBullet = NULL;  // the bullet we're currentl dealing with
@@ -1222,7 +1222,17 @@ FireTuxRangedWeaponRaw ( int PlayerNum , int weapon_item_type , int bullet_image
   CurBullet->pass_through_hit_bodies = ItemMap[ weapon_item_type ].item_gun_bullet_pass_through_hit_bodies;
   CurBullet->miss_hit_influencer = UNCHECKED ;
   memset( CurBullet->total_miss_hit , UNCHECKED , MAX_ENEMYS_ON_SHIP );
-  CurBullet->to_hit = Me [ PlayerNum ] .to_hit;
+
+  //--------------------
+  // Depending on whether this is a real bullet (-1 given as parameter)
+  // or not, we assign this bullet the appropriate to-hit propability
+  //
+  if ( HitPercentage == (-1) ) CurBullet->to_hit = Me [ PlayerNum ] .to_hit;
+  else CurBullet->to_hit = HitPercentage ;
+
+  //--------------------
+  // Maybe the bullet has some magic properties.  This is handled here.
+  //
   CurBullet->freezing_level = FreezeSeconds;
   CurBullet->poison_duration = PoisonDuration;
   CurBullet->poison_damage_per_sec = PoisonDamagePerSec;
@@ -1522,7 +1532,7 @@ FireBullet ( int PlayerNum )
       return;
     }
 
-  FireTuxRangedWeaponRaw ( PlayerNum , Me [ PlayerNum ] .weapon_item.type , guntype, FALSE , 0 , 0 , 0 , 0 ) ;
+  FireTuxRangedWeaponRaw ( PlayerNum , Me [ PlayerNum ] .weapon_item.type , guntype, FALSE , 0 , 0 , 0 , 0 , -1 ) ;
 
 
   return;

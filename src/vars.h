@@ -68,18 +68,6 @@ item_image_spec ItemImageList[ NUMBER_OF_ITEM_PICTURES ] = {
   { { 2 , 2 } , NULL } ,  { { 2 , 2 } , NULL } ,  { { 2 , 2 } , NULL } ,  { { 2 , 2 } , NULL } 
 } ;
 
-int ManaCostTable [ NUMBER_OF_SKILLS ] [ NUMBER_OF_SKILL_LEVELS ] = {
-  {  0   ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 } , 
-  {  100 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } ,  
-  {  100 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } ,  
-  {  100 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } ,  
-  {  7   ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } ,  
-  {  100 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 } 
-};
-
-
-
-
 influence_t Me[ MAX_PLAYERS ] = {
   { DRUID001, WAR_BOT, TRANSFERMODE, {0, 0}, { 120 , 48 , 0 } , { 120 , 48 , 0 } , { -1 , -1 , -1 } , -1 , 100, 100, 0, 0 },
   { DRUID001, WAR_BOT, TRANSFERMODE, {0, 0}, { 120 , 48 , 0 } , { 120 , 48 , 0 } , { -1 , -1 , -1 } , -1 , 100, 100, 0, 0 },
@@ -316,6 +304,47 @@ char* AllSkillTexts [ ] =
     "masterful"
   };
 
+//--------------------
+// This table indicates how many points of magic energy ('force')
+// it takes to cast a given spell, provided the caster is of 
+// the given skill level.
+//
+int ManaCostTable [ NUMBER_OF_SKILLS ] [ NUMBER_OF_SKILL_LEVELS ] = {
+  {    0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 } , // takeover skill.  This should remain free
+  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'Explosion circle'
+  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'Explosion ray'
+  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'Healing'
+  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'Teleportal Home'
+  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'Firey Bolt'
+  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'Ice Bolt'
+  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'UNUSED SLOT 7'
+  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'Poison Bolt'
+  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'Petrification'
+  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'Detect Stuff'
+  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'UNUSED SLOT 11'
+  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'UNUSED SLOT 12'
+  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'UNUSED SLOT 13'
+  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'UNUSED SLOT 14'
+  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'UNUSED SLOT 15'
+  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'UNUSED SLOT 16'
+  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'UNUSED SLOT 17'
+  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'UNUSED SLOT 18'
+  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'UNUSED SLOT 19'
+  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'UNUSED SLOT 20'
+  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'UNUSED SLOT 21'
+  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'UNUSED SLOT 22'
+};
+
+//--------------------
+// In the game, many spells are still internally similar
+// to bullets flying around.  But what hit chance shall this
+// bullet have?  --  That will depend upon the skill level
+// of the caster.  The details will be taken from the following
+// table:
+//
+SpellHitPercentageTable [  ] =
+  {  50 , 70 , 90 , 110 , 130 , 150 } ;
+
 char* SkillName[ NUMBER_OF_SKILLS ] = {
 
   "Takeover/Talk Skill",
@@ -324,11 +353,11 @@ char* SkillName[ NUMBER_OF_SKILLS ] = {
   "Force -> Energy ",
   "Create Teleportal Home",
 
-  "Remote Strike",
-  "Cold Bolt",
-  "Mana Shield",
+  "Firey Bolt", // "Remote Strike",
+  "Ice Bolt",
+  "Unused spell Nr. 7" , // "Mana Shield",
   "Poison Bolt",
-  "Stone Curse",
+  "Petrification",
 
   "Detect Stuff",
   "Unused spell Nr. 11",

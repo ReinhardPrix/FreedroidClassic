@@ -70,7 +70,7 @@ EXTERN float GetInfluPositionHistoryX( int Index );
 EXTERN float GetInfluPositionHistoryY( int Index );
 EXTERN float GetInfluPositionHistoryZ( int Index );
 // EXTERN void Move_Influencers_Friends ( void );
-EXTERN void FireTuxRangedWeaponRaw ( int PlayerNum , int weapon_item_type , int bullet_image_type , int ForceMouseUse , int FreezeSeconds , float PoisonDuration , float PoisonDamagePerSec , float ParalysationDuration ) ;
+EXTERN void FireTuxRangedWeaponRaw ( int PlayerNum , int weapon_item_type , int bullet_image_type , int ForceMouseUse , int FreezeSeconds , float PoisonDuration , float PoisonDamagePerSec , float ParalysationDuration , int HitPercentage ) ;
 EXTERN void MoveInfluence ( int PlayerNum ) ;
 EXTERN void AdjustSpeed ( int PlayerNum ) ;
 EXTERN void CheckInfluenceWallCollisions ( int PlayerNum ) ;

@@ -110,7 +110,8 @@ ClearDetectedItemList( int PlayerNum )
 void
 DetectItemsSpell ( void )
 {
-  int SpellCost = ManaCostTable [ 6 ][ Me[ 0 ].SkillLevel [ 6 ] ] ;
+  // int SpellCost = ManaCostTable [ SPELL_DETECT_ITEM ][ Me[ 0 ].SkillLevel [ 6 ] ] ;
+  int SpellCost = ManaCostTable [ SPELL_DETECT_ITEM ][ Me[ 0 ]. spellcasting_skill ] ;
   Level AutomapLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
   int i;
 
@@ -148,14 +149,15 @@ DetectItemsSpell ( void )
 void
 ParalyzeBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
 {
-  int SpellCost = ManaCostTable [ 6 ][ Me[ 0 ].SkillLevel [ 6 ] ] ;
+  // int SpellCost = ManaCostTable [ SPELL_PARALYZE_BOLT ][ Me[ 0 ].SkillLevel [ 6 ] ] ;
+  int SpellCost = ManaCostTable [ SPELL_PARALYZE_BOLT ][ Me[ 0 ]. spellcasting_skill ] ;
 
   if ( Me [ 0 ] . mana >= SpellCost )
     {
       Me[0].mana -= SpellCost;
 
       //FireTuxRangedWeaponRaw ( 0 , ITEM_COMPOSITE_BOW ) ;
-      FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , WHITE_BULLET, TRUE , 0 , 0 , 0 , 7 ) ;
+      FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , WHITE_BULLET, TRUE , 0 , 0 , 0 , 7 , SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ] ) ;
 
       Play_Spell_ForceToEnergy_Sound( );
 
@@ -174,14 +176,15 @@ ParalyzeBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
 void
 FireyBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
 {
-  int SpellCost = ManaCostTable [ 6 ][ Me[ 0 ].SkillLevel [ 6 ] ] ;
+  // int SpellCost = ManaCostTable [ SPELL_FIREY_BOLT ][ Me[ 0 ].SkillLevel [ 6 ] ] ;
+  int SpellCost = ManaCostTable [ SPELL_FIREY_BOLT ][ Me[ 0 ]. spellcasting_skill ] ;
 
   if ( Me [ 0 ] . mana >= SpellCost )
     {
       Me[0].mana -= SpellCost;
 
       //FireTuxRangedWeaponRaw ( 0 , ITEM_COMPOSITE_BOW ) ;
-      FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , MAGENTA_BULLET, TRUE , 0 , 0 , 0 , 0 ) ;
+      FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , MAGENTA_BULLET, TRUE , 0 , 0 , 0 , 0 , SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ] ) ;
 
       Play_Spell_ForceToEnergy_Sound( );
 
@@ -200,14 +203,15 @@ FireyBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
 void
 ColdBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
 {
-  int SpellCost = ManaCostTable [ 6 ][ Me[ 0 ].SkillLevel [ 6 ] ] ;
+  // int SpellCost = ManaCostTable [ SPELL_COLD_BOLT ][ Me[ 0 ].SkillLevel [ 6 ] ] ;
+  int SpellCost = ManaCostTable [ SPELL_COLD_BOLT ][ Me[ 0 ]. spellcasting_skill ] ;
 
   if ( Me [ 0 ] . mana >= SpellCost )
     {
       Me[0].mana -= SpellCost;
 
       //FireTuxRangedWeaponRaw ( 0 , ITEM_COMPOSITE_BOW ) ;
-      FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , BLUE_BULLET , TRUE , 3 , 0 , 0 , 0 ) ;
+      FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , BLUE_BULLET , TRUE , 3 , 0 , 0 , 0 , SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ] ) ;
 
       Play_Spell_ForceToEnergy_Sound( );
 
@@ -226,14 +230,14 @@ ColdBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
 void
 PoisonBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
 {
-  int SpellCost = ManaCostTable [ 6 ][ Me[ 0 ].SkillLevel [ 6 ] ] ;
+  int SpellCost = ManaCostTable [ SPELL_POISON_BOLT ][ Me[ 0 ] . spellcasting_skill ] ;
 
   if ( Me [ 0 ] . mana >= SpellCost )
     {
       Me[0].mana -= SpellCost;
 
       //FireTuxRangedWeaponRaw ( 0 , ITEM_COMPOSITE_BOW ) ;
-      FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , GREEN_BULLET , TRUE , 0 , 3 , 1 , 0 ) ;
+      FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , GREEN_BULLET , TRUE , 0 , 3 , 1 , 0 , SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ] ) ;
 
       Play_Spell_ForceToEnergy_Sound( );
 
@@ -252,7 +256,8 @@ PoisonBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
 void
 CreateTeleportal ( gps PortalTarget )
 {
-  int SpellCost = ManaCostTable [ 4 ][ Me[ 0 ].SkillLevel [ 4 ] ] ;
+  // int SpellCost = ManaCostTable [ SPELL_TELEPORT_HOME ][ Me[ 0 ].SkillLevel [ 4 ] ] ;
+  int SpellCost = ManaCostTable [ SPELL_TELEPORT_HOME ][ Me[ 0 ]. spellcasting_skill ] ;
 
   if ( Me [ 0 ] . mana >= SpellCost )
     {
@@ -280,7 +285,8 @@ CreateTeleportal ( gps PortalTarget )
 void
 TeleportHome ( void )
 {
-  int SpellCost = ManaCostTable [ 4 ][ Me[ 0 ].SkillLevel [ 4 ] ] ;
+  // int SpellCost = ManaCostTable [ SPELL_TELEPORT_HOME ][ Me[ 0 ].SkillLevel [ SPELL_TELEPORT_HOME ] ] ;
+  int SpellCost = ManaCostTable [ SPELL_TELEPORT_HOME ][ Me[ 0 ]. spellcasting_skill ] ;
 
   if ( Me [ 0 ] . mana >= SpellCost )
     {
@@ -309,7 +315,8 @@ TeleportHome ( void )
 void
 ForceExplosionCircle ( gps ExpCenter )
 {
-  int SpellCost = ManaCostTable [ 1 ][ Me[ 0 ].SkillLevel [ 1 ] ] ;
+  // int SpellCost = ManaCostTable [ SPELL_FORCE_EXPLOSION_CIRCLE ][ Me[ 0 ].SkillLevel [ SPELL_FORCE_EXPLOSION_CIRCLE ] ] ;
+  int SpellCost = ManaCostTable [ SPELL_FORCE_EXPLOSION_CIRCLE ][ Me[ 0 ]. spellcasting_skill ] ;
 
   if ( Me[0].mana >= SpellCost )
     {
@@ -340,7 +347,8 @@ ForceExplosionRay ( gps ExpCenter , point TargetVector )
 {
   int i ;
   moderately_finepoint step;
-  int SpellCost = ManaCostTable [ 2 ][ Me[ 0 ].SkillLevel [ 2 ] ] ;
+  // int SpellCost = ManaCostTable [ SPELL_FORCE_EXPLOSION_RAY ][ Me[ 0 ].SkillLevel [ SPELL_FORCE_EXPLOSION_RAY ] ] ;
+  int SpellCost = ManaCostTable [ SPELL_FORCE_EXPLOSION_RAY ][ Me[ 0 ]. spellcasting_skill ] ;
 
   if ( Me[0].mana >= SpellCost )
     {
@@ -370,7 +378,8 @@ ForceExplosionRay ( gps ExpCenter , point TargetVector )
 void
 ForceToEnergyConversion ( void )
 {
-  int SpellCost = ManaCostTable [ 3 ][ Me[ 0 ].SkillLevel [ 3 ] ] ;
+  // int SpellCost = ManaCostTable [ SPELL_FORCE_TO_ENERGY ][ Me[ 0 ].SkillLevel [ SPELL_FORCE_TO_ENERGY ] ] ;
+  int SpellCost = ManaCostTable [ SPELL_FORCE_TO_ENERGY ][ Me[ 0 ]. spellcasting_skill ] ;
 
   if ( Me[0].mana >= SpellCost )
     {
