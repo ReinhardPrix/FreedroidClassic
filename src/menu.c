@@ -790,7 +790,6 @@ enum
     }
 
   ClearGraphMem ();
-  Update_SDL_Screen();
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
   InitBars = TRUE;
 

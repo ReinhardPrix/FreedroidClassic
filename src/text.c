@@ -256,7 +256,7 @@ ScrollText (char *Text, int startx, int starty, int EndLine)
 
       InsertLine -= speed;
 
-      PrepareScaledSurface(TRUE);
+      SDL_Flip (ne_screen);
 
       /* Nicht bel. nach unten wegscrollen */
       if (InsertLine > SCREENHOEHE - 10 && (speed < 0))

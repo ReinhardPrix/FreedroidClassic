@@ -1871,8 +1871,7 @@ Title ( char *MissionBriefingPointer )
 
   SDL_SetClipRect ( ne_screen, NULL );
   DisplayImage ( NE_TITLE_PIC_FILE );
-
-  PrepareScaledSurface(TRUE);
+  SDL_Flip (ne_screen);
 
   // while (!SpacePressed ());
   // while (SpacePressed());
@@ -2047,7 +2046,7 @@ Debriefing (void)
   new->next = new->prev = NULL;
   DisplayText ("Great Score !", User_Rect.x, User_Rect.y, &User_Rect);
   DisplayText ("\nEnter your name: ", User_Rect.x, User_Rect.y, &User_Rect);
-  PrepareScaledSurface(TRUE);
+  SDL_Flip (ne_screen);
   tmp_name = GetString (MAX_NAME_LEN, 2);
   strcpy (new->name, tmp_name);
   free (tmp_name);

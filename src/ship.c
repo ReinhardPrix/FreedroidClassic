@@ -285,7 +285,7 @@ EnterKonsole (void)
     {
 
       PaintConsoleMenu ();
-      PrepareScaledSurface(TRUE);
+      SDL_Flip (ne_screen);
 
       /* Nichts tun bis eine vern"unftige Taste gedr"uckt wurde */
       TasteOK = 0;
@@ -358,8 +358,8 @@ EnterKonsole (void)
  *    Sie soll die Schriftfarben nicht ver"andern
  *
  *  NOTE: this function does not actually _display_ anything yet,
- *        it just prepares the display in Outline320x200, so you need
- *        to call PrepareScaledSurface(TRUE) to display the result!
+ *        it just prepares the display, so you need
+ *        to call SDL_Flip() to display the result!
  *
  *
  *-----------------------------------------------------------------*/
@@ -463,8 +463,7 @@ GreatDruidShow (void)
 	  ShowRobotPicture (USERFENSTERPOSX, USERFENSTERPOSY + 2 * FONTHOEHE,
 			    Infodroid);
 
-	  Update_SDL_Screen();
-	  PrepareScaledSurface(TRUE);
+	  SDL_Flip (ne_screen);
 
 	  while (!LeftPressed () && !UpPressed () && !DownPressed ()
 		 && !RightPressed () && !SpacePressed ()) ;
@@ -534,8 +533,7 @@ GreatDruidShow (void)
 		   &Menu_Rect);
 
 
-      Update_SDL_Screen();
-      PrepareScaledSurface(TRUE);
+      SDL_Flip (ne_screen);
 
       PassOn = 0;
       while (!PassOn)
@@ -585,8 +583,7 @@ GreatDruidShow (void)
       DisplayText (InfoText, MENUTEXT_X, USERFENSTERPOSY + FontHeight (Menu_BFont),
 		   &Menu_Rect);
 
-      Update_SDL_Screen();
-      PrepareScaledSurface(TRUE);
+      SDL_Flip (ne_screen);
 
       PassOn = 0;
       while (!PassOn)
@@ -629,7 +626,7 @@ GreatDruidShow (void)
       DisplayText (InfoText, MENUTEXT_X, USERFENSTERPOSY + FontHeight (Menu_BFont),
 		   &Menu_Rect);
 
-      PrepareScaledSurface(TRUE);
+      SDL_Flip (ne_screen);
 
       PassOn = 0;
       while (!PassOn)
@@ -674,7 +671,7 @@ ShowDeckMap (Level deck)
 
   Assemble_Combat_Picture( ONLY_SHOW_MAP );
 
-  PrepareScaledSurface(TRUE);
+  SDL_Flip (ne_screen);
 
   Me.pos.x=tmp.x;
   Me.pos.y=tmp.y;

@@ -51,7 +51,6 @@
 // constants defining flags for some functions:
 
 #define USE_SDL_FRAMERATE
-#define NEW_ENGINE
 
 /* ************************************************************
  * Highscore related defines 

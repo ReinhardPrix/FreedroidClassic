@@ -643,11 +643,9 @@ GetTakeoverGraphics (void)
 }				// int GetTakeoverGraphics(void)
 
 /*-----------------------------------------------------------------
- * @Desc: prepares _and displays_ (via PrepareScaledSurface(TRUE)
- *        the current Playground
+ * @Desc: prepares _and displays_ the current Playground
  *
  *   NOTE: this function should only change the USERFENSTER part
- *         of Outline320x200 !!
  *         so that we can do Infoline-setting before this
  *
  * @Ret: void
