@@ -44,15 +44,6 @@ typedef char bool;
 
 typedef struct
 {
-  char name[MAX_NAME_LEN+5];
-  long score;                  /* use -1 for an empty entry */
-  char date[DATE_LEN+5];
-  int mission;    /* classic mission or extensions? */
-}
-highscore_entry, *Highscore_entry;
-
-typedef struct
-{
   unsigned char rot;
   unsigned char gruen;
   unsigned char blau;
@@ -531,7 +522,7 @@ typedef struct
   float MissionTimeElapsed;
   float got_hit_time;           // how long stunned now since the last time tux got hit 
 
-  char freedroid_version_string[100]; // a string to identify games from older freedroid versions
+  char freedroid_version_string[1000]; // a string to identify games from older freedroid versions
 
   int Strength;  // character Strength value = 'power supply max. capacity'
   int Magic;     // character Magic value = 

@@ -328,8 +328,19 @@ SaveGame( void )
   //--------------------
   // We must make sure the version string in the Me struct is set 
   // correctly for later loading...
+  // But not only the version, but also some struct sizes and array
+  // lengthes should be checked as well, so that we have some extra
+  // protection against saved game data not fitting into some structs
+  // any more...
   //
-  strcpy ( Me [ 0 ] . freedroid_version_string, VERSION );
+  sprintf ( Me [ 0 ] . freedroid_version_string , 
+	    "%s;sizeof(influence_t)=%d;sizeof(enemy)=%d;sizeof(bullet)=%d;MAXBULLETS=%d;MAX_ENEMYS_ON_SHIP=%d\n", 
+	    VERSION , 
+	   (int) sizeof(influence_t) , 
+	   (int) sizeof(enemy) ,
+	   (int) sizeof(bullet) ,
+	   (int) MAXBULLETS ,
+	   (int) MAX_ENEMYS_ON_SHIP );
 
   //--------------------
   // get home-directory to save in
@@ -543,6 +554,7 @@ int
 LoadGame( void )
 {
   char Saved_Games_Dir[1000];
+  char version_check_string[1000];
   char* homedir = NULL ;
   char *LoadGameData;
   char filename[1000];
@@ -706,7 +718,17 @@ This indicates a serious bug in this installation of Freedroid.",
   //        THAT REFERENCE IS SO SMALL AS TO JUST SET BACKGROUND MUSIC ACCORDING TO
   //        CURRENT TUX POSITION IN THE MAPS AS FOUND BELOW
   //
-  if ( strcmp ( Me [ 0 ] . freedroid_version_string , VERSION ) != 0 )
+  //
+  //
+  sprintf ( version_check_string , "%s;sizeof(influence_t)=%d;sizeof(enemy)=%d;sizeof(bullet)=%d;MAXBULLETS=%d;MAX_ENEMYS_ON_SHIP=%d\n", 
+	    VERSION , 
+	    (int) sizeof(influence_t) , 
+	    (int) sizeof(enemy) ,
+	    (int) sizeof(bullet) ,
+	    (int) MAXBULLETS ,
+	    (int) MAX_ENEMYS_ON_SHIP );
+
+  if ( strcmp ( Me [ 0 ] . freedroid_version_string , version_check_string ) != 0 )
     {
       show_button_tooltip ( "\n\nERROR!  This game is from a different version of FreedroidRPG.\n\nI refuse to load it!" );
       our_SDL_flip_wrapper( Screen );
