@@ -840,57 +840,66 @@ Freedroid was unable to close an offset file.\nThis is a very strange occasion!"
 void
 get_iso_image_from_file_and_path ( char* fpath , iso_image* our_iso_image , int use_offset_file ) 
 {
-  SDL_Surface* Whole_Image;
+    SDL_Surface* Whole_Image;
   
-  //--------------------
-  // First we (try to) load the image given in the parameter
-  // from hard disk into memory and convert it to the right
-  // format for fast blitting later.
-  //
-  Whole_Image = our_IMG_load_wrapper( fpath ); // This is a surface with alpha channel, since the picture is one of this type
-  if ( Whole_Image == NULL )
+    //--------------------
+    // First we (try to) load the image given in the parameter
+    // from hard disk into memory and convert it to the right
+    // format for fast blitting later.
+    //
+    Whole_Image = our_IMG_load_wrapper( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+    if ( Whole_Image == NULL )
     {
-      fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
-      GiveStandardErrorMessage ( __FUNCTION__  ,  
-				 va ( "Could not load image: %s \n" , fpath ) , PLEASE_INFORM, IS_FATAL );
+	fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
+	GiveStandardErrorMessage ( __FUNCTION__  ,  
+				   va ( "Could not load image: %s \n" , fpath ) , PLEASE_INFORM, IS_FATAL );
     }
 
-  //--------------------
-  // Depending on whether this is supposed to work with faster but less
-  // quality color key or slower but more quality alpha channel, we set
-  // appropriate parameters in the SDL surfaces and also a reminder flag
-  // in the iso_image structure.
-  //
-  our_iso_image -> force_color_key = FALSE ;
-
-  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
-  our_iso_image -> surface = our_SDL_display_format_wrapperAlpha( Whole_Image ); // now we have an alpha-surf of right size
-  our_iso_image -> zoomed_out_surface = NULL ;
-  our_iso_image -> texture_has_been_created = FALSE ;
-
-  SDL_SetColorKey( our_iso_image -> surface , 0 , 0 ); // this should clear any color key in the dest surface
-  //--------------------
-  // Some test here...
-  //
-  // our_iso_image -> surface -> format -> Bmask = 0 ; 
-  // our_iso_image -> surface -> format -> Rmask = 0 ; 
-
-  SDL_FreeSurface( Whole_Image );
-
-  //--------------------
-  // Now that we have loaded the image, it's time to get the proper
-  // offset information for it.
-  //
-  if ( use_offset_file ) 
-    get_offset_for_iso_image_from_file_and_path ( fpath , our_iso_image );
-  else
+    //--------------------
+    // Depending on whether this is supposed to work with faster but less
+    // quality color key or slower but more quality alpha channel, we set
+    // appropriate parameters in the SDL surfaces and also a reminder flag
+    // in the iso_image structure.
+    //
+    our_iso_image -> force_color_key = FALSE ;
+    
+    SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
+    our_iso_image -> surface = our_SDL_display_format_wrapperAlpha( Whole_Image ); // now we have an alpha-surf of right size
+    our_iso_image -> zoomed_out_surface = NULL ;
+    our_iso_image -> texture_has_been_created = FALSE ;
+    
+    SDL_SetColorKey( our_iso_image -> surface , 0 , 0 ); // this should clear any color key in the dest surface
+    //--------------------
+    // Some test here...
+    //
+    // our_iso_image -> surface -> format -> Bmask = 0 ; 
+    // our_iso_image -> surface -> format -> Rmask = 0 ; 
+    
+    SDL_FreeSurface( Whole_Image );
+    
+    //--------------------
+    // Now that we have loaded the image, it's time to get the proper
+    // offset information for it.
+    //
+    if ( use_offset_file ) 
+	get_offset_for_iso_image_from_file_and_path ( fpath , our_iso_image );
+    else
     {
-      //--------------------
-      // We _silently_ assume there is no offset file...
-      //
-      our_iso_image -> offset_x = - INITIAL_BLOCK_WIDTH/2 ;
-      our_iso_image -> offset_y = - INITIAL_BLOCK_HEIGHT/2 ;
+	//--------------------
+	// We _silently_ assume there is no offset file...
+	//
+	our_iso_image -> offset_x = - INITIAL_BLOCK_WIDTH/2 ;
+	our_iso_image -> offset_y = - INITIAL_BLOCK_HEIGHT/2 ;
     }
+ 
+    //--------------------
+    // In the case of no open_gl (and therefore no conversion to a texture)
+    // we make sure, that the open_gl optiomized methods will also find
+    // suitable correspondents in the SDL-loaded images, like the original
+    // image size and such...
+    //
+    our_iso_image -> original_image_width  = our_iso_image -> surface -> w ;
+    our_iso_image -> original_image_height = our_iso_image -> surface -> h ;
 
 }; // void get_iso_image_from_file_and_path ( char* fpath , iso_image* our_iso_image ) 
 
