@@ -70,6 +70,10 @@ End of pure statement information for this level
 Start of pure codepanel information for this level
 PanelposX=4 PanelposY=10 Secret Code="gnu"
 End of pure codepanel information for this level
+Start of big graphics insert information for this level
+BigGraphicsInsertPosX=1 BigGraphicsInsertPosY=1 BigGraphicsInsertType=0 
+BigGraphicsInsertPosX=6 BigGraphicsInsertPosY=2 BigGraphicsInsertType=1 
+End of big graphics insert information for this level
 Start of pure items information for this level
 New item: type=10  X=22.000000  Y=3.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=15  CurDur=12.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 New item: type=4  X=16.000000  Y=3.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
@@ -235,6 +239,10 @@ Start of pure statement information for this level
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
+Start of big graphics insert information for this level
+BigGraphicsInsertPosX=1 BigGraphicsInsertPosY=1 BigGraphicsInsertType=0 
+BigGraphicsInsertPosX=6 BigGraphicsInsertPosY=2 BigGraphicsInsertType=1 
+End of big graphics insert information for this level
 Start of pure items information for this level
 New item: type=19  X=29.000000  Y=20.000000  AC=3  DoDamage=0  ModifyDamage=0  MaxDur=10  CurDur=7.000000  Gold=9  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 New item: type=11  X=23.000000  Y=5.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=20  CurDur=3.000000  Gold=29  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
@@ -389,6 +397,10 @@ Start of pure codepanel information for this level
 PanelposX=4 PanelposY=8 Secret Code="hello"
 PanelposX=4 PanelposY=6 Secret Code="abracadabra"
 End of pure codepanel information for this level
+Start of big graphics insert information for this level
+BigGraphicsInsertPosX=1 BigGraphicsInsertPosY=1 BigGraphicsInsertType=0 
+BigGraphicsInsertPosX=6 BigGraphicsInsertPosY=2 BigGraphicsInsertType=1 
+End of big graphics insert information for this level
 Start of pure items information for this level
 New item: type=3  X=1.966180  Y=4.942550  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 New item: type=1  X=3.000000  Y=1.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
@@ -567,6 +579,10 @@ PosX=64 PosY=2 Statement="I think I can see a teleporter in the far distance to 
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
+Start of big graphics insert information for this level
+BigGraphicsInsertPosX=1 BigGraphicsInsertPosY=1 BigGraphicsInsertType=0 
+BigGraphicsInsertPosX=6 BigGraphicsInsertPosY=2 BigGraphicsInsertType=1 
+End of big graphics insert information for this level
 Start of pure items information for this level
 New item: type=7  X=22.953676  Y=2.274745  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=13  CurDur=8.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 New item: type=5  X=22.547426  Y=1.852869  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=15  CurDur=13.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
@@ -702,6 +718,10 @@ Start of pure statement information for this level
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
+Start of big graphics insert information for this level
+BigGraphicsInsertPosX=1 BigGraphicsInsertPosY=1 BigGraphicsInsertType=0 
+BigGraphicsInsertPosX=6 BigGraphicsInsertPosY=2 BigGraphicsInsertType=1 
+End of big graphics insert information for this level
 Start of pure items information for this level
 End of pure items information for this level
 wp
@@ -837,6 +857,10 @@ Start of pure statement information for this level
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
+Start of big graphics insert information for this level
+BigGraphicsInsertPosX=1 BigGraphicsInsertPosY=1 BigGraphicsInsertType=0 
+BigGraphicsInsertPosX=6 BigGraphicsInsertPosY=2 BigGraphicsInsertType=1 
+End of big graphics insert information for this level
 Start of pure items information for this level
 End of pure items information for this level
 wp
@@ -979,6 +1003,10 @@ Start of pure statement information for this level
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
+Start of big graphics insert information for this level
+BigGraphicsInsertPosX=1 BigGraphicsInsertPosY=1 BigGraphicsInsertType=0 
+BigGraphicsInsertPosX=6 BigGraphicsInsertPosY=2 BigGraphicsInsertType=1 
+End of big graphics insert information for this level
 Start of pure items information for this level
 New item: type=34  X=8.000000  Y=6.000000  AC=0  DoDamage=2  ModifyDamage=4  MaxDur=20  CurDur=8.000000  Gold=31  PrefixCode=7  SuffixCode=8  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=9  StrToHit=8  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 End of pure items information for this level
@@ -1133,6 +1161,10 @@ PosX=23 PosY=5 Statement="The doorplate reads 'D. Koenig'."
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
+Start of big graphics insert information for this level
+BigGraphicsInsertPosX=1 BigGraphicsInsertPosY=1 BigGraphicsInsertType=0 
+BigGraphicsInsertPosX=6 BigGraphicsInsertPosY=2 BigGraphicsInsertType=1 
+End of big graphics insert information for this level
 Start of pure items information for this level
 End of pure items information for this level
 wp
@@ -1293,6 +1325,10 @@ Start of pure statement information for this level
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
+Start of big graphics insert information for this level
+BigGraphicsInsertPosX=1 BigGraphicsInsertPosY=1 BigGraphicsInsertType=0 
+BigGraphicsInsertPosX=6 BigGraphicsInsertPosY=2 BigGraphicsInsertType=1 
+End of big graphics insert information for this level
 Start of pure items information for this level
 End of pure items information for this level
 wp
@@ -1424,6 +1460,10 @@ Start of pure statement information for this level
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
+Start of big graphics insert information for this level
+BigGraphicsInsertPosX=1 BigGraphicsInsertPosY=1 BigGraphicsInsertType=0 
+BigGraphicsInsertPosX=6 BigGraphicsInsertPosY=2 BigGraphicsInsertType=1 
+End of big graphics insert information for this level
 Start of pure items information for this level
 End of pure items information for this level
 wp
@@ -1557,6 +1597,10 @@ Start of pure statement information for this level
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
+Start of big graphics insert information for this level
+BigGraphicsInsertPosX=1 BigGraphicsInsertPosY=1 BigGraphicsInsertType=0 
+BigGraphicsInsertPosX=6 BigGraphicsInsertPosY=2 BigGraphicsInsertType=1 
+End of big graphics insert information for this level
 Start of pure items information for this level
 End of pure items information for this level
 wp
@@ -1692,6 +1736,10 @@ Start of pure statement information for this level
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
+Start of big graphics insert information for this level
+BigGraphicsInsertPosX=1 BigGraphicsInsertPosY=1 BigGraphicsInsertType=0 
+BigGraphicsInsertPosX=6 BigGraphicsInsertPosY=2 BigGraphicsInsertType=1 
+End of big graphics insert information for this level
 Start of pure items information for this level
 End of pure items information for this level
 wp
@@ -1801,7 +1849,7 @@ end_of_level
 
 Levelnumber: 12
 xlen of this level: 41
-ylen of this level: 35
+ylen of this level: 24
 color of this level: 4
 Name of this level=upper cargo
 Comment of the Influencer on entering this level="This is a level, like many other levels.
@@ -1830,23 +1878,16 @@ beginning_of_map
  33  11  14  14   0   0   0   0   0   0  16   0   0  27   0  14  14  17  14  14  17  15  14   0  52  14   0  15  15   0   0  15  15   0  14  14   0  14  15   0  11 
  33  11  15  14   0   0   0   0   0   0   0   0   0  27   0  15  14  17  14  14  17  15  15   0  50  52   0  14  14   0   0  15  14   0  15  15   0  14  13   0  11 
  33  11  13  15  14  15   0   0  14  15  15  14   0  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11 
-  7   2  10  10  10  10  18  18  10  10  10  10  10   2  10  10  10  18  10  10   9   0   0   0   0   0   0   7  10  18  18  10  10  10  10  10  10  10  10  18   6 
- 11  52  14  15  15   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   1   9   0   0   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0   0  11 
- 11  51  15  14  16  14   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   1   9   0   0   0   0  27   0   0   0   0   0   0  14   0   0   0   0   0  11 
- 11  52  15  16  16   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   1   9   0   0   0  11   0   0   0   0   0   0  15   0   0   0   0   0  11 
- 11  52   0   0   0   0   0   0   0  12   0   0   0   0   0   0   0   0   0   0   0   0   0   1  10   8  10   3   0   0   0   0   0   0  16   0   0   0   0   0  11 
- 11   0   0   0   0   0   0   0   0  16   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0  14  14  16  17  16  15  14   0   0  11 
- 11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  27   0   0   0   0   0   0   0   0  16   0   0   0   0   0  11 
- 11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  17   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0   0  15   0   0   0   0   0  11 
-  1   9   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   7  10   2  10   9   0   0   0   0   0   0  14   0   0   0   0   0  11 
- 33   1   9   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   7   3  33  33  33   1   9   0   0   0   0   0   0   0   0   0   0   0  11 
- 33  33   1   9   0   0  14  15   0   0  51  50  51   0   0   0  51  51  52   0   0   7   3  33  33  33  33  33   1   9   0   0   0   0   0   0   0   0   0  12  11 
- 33  33  33   1  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   3  33  33  33  33  33  33  33   1  10  10  10  10  10  10  10  10  10  10   3 
+ 33   1  10  10  10  10  10  10  10  10  10  10  10   2  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   3 
 End of pure map information for this level
 Start of pure statement information for this level
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
+Start of big graphics insert information for this level
+BigGraphicsInsertPosX=1 BigGraphicsInsertPosY=1 BigGraphicsInsertType=0 
+BigGraphicsInsertPosX=6 BigGraphicsInsertPosY=2 BigGraphicsInsertType=1 
+End of big graphics insert information for this level
 Start of pure items information for this level
 End of pure items information for this level
 wp
@@ -1998,6 +2039,10 @@ Start of pure statement information for this level
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
+Start of big graphics insert information for this level
+BigGraphicsInsertPosX=1 BigGraphicsInsertPosY=1 BigGraphicsInsertType=0 
+BigGraphicsInsertPosX=6 BigGraphicsInsertPosY=2 BigGraphicsInsertType=1 
+End of big graphics insert information for this level
 Start of pure items information for this level
 End of pure items information for this level
 wp
@@ -2137,6 +2182,10 @@ Start of pure statement information for this level
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
+Start of big graphics insert information for this level
+BigGraphicsInsertPosX=1 BigGraphicsInsertPosY=1 BigGraphicsInsertType=0 
+BigGraphicsInsertPosX=6 BigGraphicsInsertPosY=2 BigGraphicsInsertType=1 
+End of big graphics insert information for this level
 Start of pure items information for this level
 End of pure items information for this level
 wp
@@ -2272,6 +2321,10 @@ Start of pure statement information for this level
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
+Start of big graphics insert information for this level
+BigGraphicsInsertPosX=1 BigGraphicsInsertPosY=1 BigGraphicsInsertType=0 
+BigGraphicsInsertPosX=6 BigGraphicsInsertPosY=2 BigGraphicsInsertType=1 
+End of big graphics insert information for this level
 Start of pure items information for this level
 End of pure items information for this level
 wp
