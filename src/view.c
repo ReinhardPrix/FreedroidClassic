@@ -49,6 +49,7 @@ void RecFlashFill (int LX, int LY, int Color, unsigned char *Parameter_Screen,
 		   int SBreite);
 int Cent (int);
 void PutRadialBlueSparks( float PosX, float PosY , float Radius , int SparkType );
+void insert_new_element_into_blitting_list ( float new_element_norm , int new_element_type , void* new_element_pointer , int code_number );
 
 char *Affected;
 EXTERN int MyCursorX;
@@ -1072,14 +1073,13 @@ The blitting list size was exceeded!",
 						 PLEASE_INFORM, IS_FATAL );
 		    }
 
+		  //--------------------
+		  // Now we have to insert this obstacle.  We do this of course respecting
+		  // the blitting order, as always...
+		  //
 		  OurObstacle = & ( obstacle_level -> obstacle_list [ obstacle_level -> map [ line ] [ col ] . obstacles_glued_to_here [ i ] ] ) ;
-
-		  blitting_list [ number_of_objects_currently_in_blitting_list ] . norm_of_elements_position =
-		    OurObstacle -> pos . x + OurObstacle -> pos . y ;
-		  blitting_list [ number_of_objects_currently_in_blitting_list ] . element_type = BLITTING_TYPE_OBSTACLE ;
-		  blitting_list [ number_of_objects_currently_in_blitting_list ] . element_pointer = 
-		    OurObstacle ;
-		  number_of_objects_currently_in_blitting_list ++ ;
+		  insert_new_element_into_blitting_list ( OurObstacle -> pos . x + OurObstacle -> pos . y , 
+							  BLITTING_TYPE_OBSTACLE , OurObstacle , -1 );
 		}
 	      else
 		break;
@@ -1087,7 +1087,7 @@ The blitting list size was exceeded!",
 	}
     }
 
-}; // void show_obstacles_around_tux ( void )
+}; // void insert_obstacles_into_blitting_list ( void )
 
 /* ----------------------------------------------------------------------
  *
@@ -1176,7 +1176,9 @@ insert_tux_into_blitting_list ( void )
 void
 insert_one_enemy_into_blitting_list ( int enemy_num )
 {
-  float enemy_norm = AllEnemys [ enemy_num ] . pos . x + AllEnemys [ enemy_num ] . pos . y ;
+  float enemy_norm;
+
+  enemy_norm = AllEnemys [ enemy_num ] . pos . x + AllEnemys [ enemy_num ] . pos . y ;
 
   insert_new_element_into_blitting_list ( enemy_norm , BLITTING_TYPE_ENEMY , & ( AllEnemys [ enemy_num ] ) , enemy_num );
 
@@ -1227,7 +1229,7 @@ insert_enemies_into_blitting_list ( void )
       if ( AllEnemys [ i ] . pos . z != Me [ 0 ] . pos . z ) continue;
       enemy_norm = AllEnemys [ i ] . pos . x + AllEnemys [ i ] . pos . y ;
       
-      if ( abs ( enemy_norm - tux_norm ) > FLOOR_TILES_VISIBLE_AROUND_TUX + FLOOR_TILES_VISIBLE_AROUND_TUX ) continue;
+      if ( fabsf ( enemy_norm - tux_norm ) > FLOOR_TILES_VISIBLE_AROUND_TUX + FLOOR_TILES_VISIBLE_AROUND_TUX ) continue;
 
       insert_one_enemy_into_blitting_list ( i );
     }
@@ -1251,7 +1253,7 @@ insert_bullets_into_blitting_list ( void )
 	insert_one_bullet_into_blitting_list ( i );
     }
       
-}; // void insert_enemies_into_blitting_list ( void )
+}; // void insert_bullets_into_blitting_list ( void )
 
 /* ----------------------------------------------------------------------
  *
@@ -1277,6 +1279,7 @@ insert_blasts_into_blitting_list ( void )
  * leave the code soon again, cause order of blitting has to be taken
  * into account...
  * ---------------------------------------------------------------------- */
+/*
 void
 show_obstacles_around_tux ( void )
 {
@@ -1323,6 +1326,7 @@ show_obstacles_around_tux ( void )
     }
 
 }; // void show_obstacles_around_tux ( void )
+*/
 
 /* ----------------------------------------------------------------------
  * In isometric viewpoint setting, we need to respect visibility when
