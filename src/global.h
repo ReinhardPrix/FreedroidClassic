@@ -203,20 +203,29 @@ EXTERN SDL_Rect InventoryRect;
 #endif
 EXTERN int Number_Of_Bullet_Types;
 EXTERN SDL_Surface *Screen;   /* the graphics display */
-EXTERN SDL_Surface *EnemySurfacePointer[ DROID_PHASES + DEAD_DROID_PHASES ];   // A pointer to the surfaces containing the pictures of the
-                                               // enemys in different phases of rotation
-EXTERN SDL_Surface *BlueEnemySurfacePointer[ DROID_PHASES + DEAD_DROID_PHASES ];   // A pointer to the surfaces containing the pictures of the
-EXTERN SDL_Surface *GreenEnemySurfacePointer[ DROID_PHASES + DEAD_DROID_PHASES ];   // A pointer to the surfaces containing the pictures of the
-EXTERN SDL_Surface *RedEnemySurfacePointer[ DROID_PHASES + DEAD_DROID_PHASES ];   // A pointer to the surfaces containing the pictures of the
+
 EXTERN SDL_Surface *InfluencerSurfacePointer[ DROID_PHASES + DEAD_DROID_PHASES ];   // A pointer to the surfaces containing the pictures of the
-EXTERN SDL_Surface *EnemyRotationSurfacePointer[ ENEMY_ROTATION_MODELS_AVAILABLE ] [ ROTATION_ANGLES_PER_ROTATION_MODEL ];   // A pointer to the surfaces containing the pictures of the
-                                               // enemys in different anles of rotation
-EXTERN SDL_Surface *BlueEnemyRotationSurfacePointer[ ENEMY_ROTATION_MODELS_AVAILABLE ] [ ROTATION_ANGLES_PER_ROTATION_MODEL ];   // A pointer to the surfaces containing the pictures of the
-                                               // enemys in different anles of rotation
-EXTERN SDL_Surface *RedEnemyRotationSurfacePointer[ ENEMY_ROTATION_MODELS_AVAILABLE ] [ ROTATION_ANGLES_PER_ROTATION_MODEL  ];   // A pointer to the surfaces containing the pictures of the
-                                               // enemys in different anles of rotation
-EXTERN SDL_Surface *GreenEnemyRotationSurfacePointer[ ENEMY_ROTATION_MODELS_AVAILABLE ] [ ROTATION_ANGLES_PER_ROTATION_MODEL ];   // A pointer to the surfaces containing the pictures of the
-                                               // enemys in different anles of rotation
+
+//--------------------
+// Now the pointers for the very old paradroid-like
+// ball-shaped droid images...
+//
+EXTERN SDL_Surface *EnemySurfacePointer[ DROID_PHASES + DEAD_DROID_PHASES ];   
+EXTERN SDL_Surface *BlueEnemySurfacePointer[ DROID_PHASES + DEAD_DROID_PHASES ]; 
+EXTERN SDL_Surface *GreenEnemySurfacePointer[ DROID_PHASES + DEAD_DROID_PHASES ];
+EXTERN SDL_Surface *RedEnemySurfacePointer[ DROID_PHASES + DEAD_DROID_PHASES ];  
+
+//--------------------
+// Now the iso-image pointers for the new individually shaped
+// isometric enemy images
+//
+// EXTERN SDL_Surface *EnemyRotationSurfacePointer[ ENEMY_ROTATION_MODELS_AVAILABLE ] [ ROTATION_ANGLES_PER_ROTATION_MODEL ];
+EXTERN iso_image enemy_iso_images [ ENEMY_ROTATION_MODELS_AVAILABLE ] [ ROTATION_ANGLES_PER_ROTATION_MODEL ];
+EXTERN SDL_Surface *BlueEnemyRotationSurfacePointer[ ENEMY_ROTATION_MODELS_AVAILABLE ] [ ROTATION_ANGLES_PER_ROTATION_MODEL ]; 
+EXTERN SDL_Surface *RedEnemyRotationSurfacePointer[ ENEMY_ROTATION_MODELS_AVAILABLE ] [ ROTATION_ANGLES_PER_ROTATION_MODEL  ];  
+EXTERN SDL_Surface *GreenEnemyRotationSurfacePointer[ ENEMY_ROTATION_MODELS_AVAILABLE ] [ ROTATION_ANGLES_PER_ROTATION_MODEL ]; 
+
+
                                                // influencer in different phases of rotation
 EXTERN SDL_Surface *TuxWorkingCopy [ MAX_PLAYERS ] [ TUX_BREATHE_PHASES + TUX_SWING_PHASES + TUX_GOT_HIT_PHASES ] [ MAX_TUX_DIRECTIONS ] ;   // A pointer to the surfaces containing the tux
 EXTERN SDL_Surface *TuxMotionArchetypes[ TUX_MODELS ][ TUX_BREATHE_PHASES + TUX_SWING_PHASES + TUX_GOT_HIT_PHASES ];   // A pointer to the surfaces containing the tux

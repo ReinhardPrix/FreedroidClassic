@@ -439,8 +439,9 @@ This error indicates some installation problem with freedroid.",
       
       SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
       
-      EnemyRotationSurfacePointer [ ModelNr ] [ i ] = SDL_DisplayFormatAlpha( Whole_Image ); // now we have an alpha-surf of right size
-      SDL_SetColorKey( EnemyRotationSurfacePointer [ ModelNr ] [ i ] , 0 , 0 ); // this should clear any color key in the dest surface
+      // EnemyRotationSurfacePointer [ ModelNr ] [ i ] = SDL_DisplayFormatAlpha( Whole_Image ); // now we have an alpha-surf of right size
+      enemy_iso_images [ ModelNr ] [ i ] . surface = SDL_DisplayFormatAlpha( Whole_Image ); // now we have an alpha-surf of right size
+      SDL_SetColorKey( enemy_iso_images [ ModelNr ] [ i ] . surface , 0 , 0 ); // this should clear any color key in the dest surface
       
       SDL_FreeSurface( Whole_Image );
   
@@ -503,7 +504,7 @@ Freedroid received a rotation model number that does not exist!",
   for ( i=0 ; i < ROTATION_ANGLES_PER_ROTATION_MODEL ; i++ )
     {
       GreenEnemyRotationSurfacePointer [ ModelNr ] [ i ] = 
-	CreateColorFilteredSurface ( EnemyRotationSurfacePointer [ ModelNr ] [ i ] , FILTER_GREEN );
+	CreateColorFilteredSurface ( enemy_iso_images [ ModelNr ] [ i ] . surface , FILTER_GREEN );
     }
 }; // void LoadAndPrepareGreenEnemyRotationModelNr ( int ModelNr )
   
@@ -563,7 +564,7 @@ Freedroid received a rotation model number that does not exist!",
   for ( i=0 ; i < ROTATION_ANGLES_PER_ROTATION_MODEL ; i++ )
     {
       BlueEnemyRotationSurfacePointer [ ModelNr ] [ i ] = 
-	CreateColorFilteredSurface ( EnemyRotationSurfacePointer [ ModelNr ] [ i ] , FILTER_BLUE );
+	CreateColorFilteredSurface ( enemy_iso_images [ ModelNr ] [ i ] . surface , FILTER_BLUE );
     }
 }; // void LoadAndPrepareBlueEnemyRotationModelNr ( int ModelNr )
   
@@ -623,7 +624,7 @@ Freedroid received a rotation model number that does not exist!",
   for ( i=0 ; i < ROTATION_ANGLES_PER_ROTATION_MODEL ; i++ )
     {
       RedEnemyRotationSurfacePointer [ ModelNr ] [ i ] = 
-	CreateColorFilteredSurface ( EnemyRotationSurfacePointer [ ModelNr ] [ i ] , FILTER_RED );
+	CreateColorFilteredSurface ( enemy_iso_images [ ModelNr ] [ i ] . surface , FILTER_RED );
     }
 }; // void LoadAndPrepareRedEnemyRotationModelNr ( int ModelNr )
   
@@ -651,7 +652,7 @@ Load_Enemy_Surfaces( void )
     {
       for ( i=0 ; i < ROTATION_ANGLES_PER_ROTATION_MODEL ; i++ )
 	{
-	  EnemyRotationSurfacePointer[j][i] = NULL ;
+	  enemy_iso_images [ j ] [ i ] . surface = NULL ;
 	}
     }
 

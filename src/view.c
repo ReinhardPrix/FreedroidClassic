@@ -1568,12 +1568,12 @@ There was a rotation model type given, that exceeds the number of rotation model
       // bit, cause this rectangle assumes exactly the same size as a map 
       // block and has the origin shifted accordingly.
       //
-      //      if ( EnemyRotationSurfacePointer[ RotationModel ] [ RotationIndex ] -> w != Block_Width )
+      //      if ( enemy_iso_images[ RotationModel ] [ RotationIndex ] -> w != Block_Width )
       // {
-	  TargetRectangle.x -= ( EnemyRotationSurfacePointer[ RotationModel ] [ RotationIndex ] -> w ) / 2 ;
-	  TargetRectangle.y -= ( EnemyRotationSurfacePointer[ RotationModel ] [ RotationIndex ] -> h ) / 2 ;
-	  TargetRectangle.w = EnemyRotationSurfacePointer[ RotationModel ] [ RotationIndex ] -> w;
-	  TargetRectangle.h = EnemyRotationSurfacePointer[ RotationModel ] [ RotationIndex ] -> h;
+	  TargetRectangle.x -= ( enemy_iso_images[ RotationModel ] [ RotationIndex ] . surface -> w ) / 2 ;
+	  TargetRectangle.y -= ( enemy_iso_images[ RotationModel ] [ RotationIndex ] . surface -> h ) / 2 ;
+	  TargetRectangle.w = enemy_iso_images[ RotationModel ] [ RotationIndex ] . surface -> w;
+	  TargetRectangle.h = enemy_iso_images[ RotationModel ] [ RotationIndex ] . surface -> h;
 	  // }
       
       if ( AllEnemys[Enum].paralysation_duration_left != 0 ) 
@@ -1593,7 +1593,7 @@ There was a rotation model type given, that exceeds the number of rotation model
 	}
       else
 	{
-	  SDL_BlitSurface( EnemyRotationSurfacePointer[ RotationModel ] [ RotationIndex ] , NULL , Screen, &TargetRectangle);
+	  SDL_BlitSurface( enemy_iso_images[ RotationModel ] [ RotationIndex ] . surface , NULL , Screen, &TargetRectangle);
 	}
     }
   else
@@ -1615,7 +1615,7 @@ There was a rotation model type given, that exceeds the number of rotation model
 void
 PutEnemy (int Enum , int x , int y)
 {
-  char *druidname;	/* the number-name of the Enemy */
+  char *druidname;	// the number-name of the Enemy 
   SDL_Rect TargetRectangle;
   point UpperLeftBlitCorner;
 
