@@ -1,14 +1,3 @@
-/*----------------------------------------------------------------------
- *
- * Desc: all the functions managing the things one gets to see.
- *	That includes assembling of enemys, assembling the currently
- *	relevant porting of the map (the bricks I mean), drawing all visible
- *	elements like bullets, blasts, enemys or influencer in a nonvisible
- *	place in memory at first, and finally drawing them to the visible
- *	screen for the user.
- *
- *----------------------------------------------------------------------*/
-
 /* 
  *
  *   Copyright (c) 1994, 2002 Johannes Prix
@@ -33,6 +22,21 @@
  *  MA  02111-1307  USA
  *
  */
+
+/* ----------------------------------------------------------------------
+ * This file contains all the functions managing the things one gets to see.
+ * That includes assembling of enemys, assembling the currently
+ * relevant porting of the map (the bricks I mean), drawing all visible
+ * elements like bullets, blasts, enemys or influencer in a nonvisible
+ * place in memory at first, and finally drawing them to the visible
+ * screen for the user.
+ * ---------------------------------------------------------------------- */
+
+/*
+ * This file has been checked for remnants of german comments.  If you still find
+ * any, please let me know.
+ */
+
 #define _view_c
 
 #include "system.h"
@@ -53,12 +57,10 @@ int Cent (int);
 
 char *Affected;
 
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+//
+// POSSIBLY OUTDATED AND UNUSED FUNCTION
+// PLEASE CHECK FOR REMOVAL POSSIBLE
+//
 int
 Cent (int Val)
 {
@@ -66,16 +68,16 @@ Cent (int Val)
   return Val;
 }
 
-/*@Function============================================================
-@Desc: There is more than one approach to the problem of disruptor flashes.
-       (*) One solution is to just completely fill the visible screen white and
-           black altenatingly.
-       (*) The other solution is to start in the center and then recursively
-           proceed through the passable tiles and using this method fill 
-           exactly the whole room where you're currently in.  That is perhaps
-           the more sophisticated method.  Right now however, it's disabled.
-@Ret: 
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * There is more than one approach to the problem of disruptor flashes.
+ * (*) One solution is to just completely fill the visible screen white and
+ *     black altenatingly.
+ * (*) The other solution is to start in the center and then recursively
+ *     proceed through the passable tiles and using this method fill 
+ *     exactly the whole room where you're currently in.  That is perhaps
+ *     the more sophisticated method.  Right now however, it's disabled.
+ * 
+ * ---------------------------------------------------------------------- */
 void
 RecFlashFill (int LX, int LY, int Color, unsigned char *Parameter_Screen, int SBreite)
 {
@@ -90,22 +92,22 @@ RecFlashFill (int LX, int LY, int Color, unsigned char *Parameter_Screen, int SB
 //      printf(" RFF: X=%d Y=%d.\n",LX,LY);
 //      getchar();
 
-  // Dieses Feld als Wirkungsbereich kenntzeichnen
+  // mark this square as within the area of effect
   Affected[LY / Block_Height * CurLevel->xlen + LX / Block_Width] = TRUE;
 
-  // Dieses Feld anf"ullen
+  // fill this square up
   for (i = LY / 4 - ((LY / 4) % 8); i < (LY / 4 - ((LY / 4) % 8) + 8); i++)
     {
       memset (Parameter_Screen + i * SBreite + LX / 4 - ((LX / 4) % 8), Color, 8);
     }
   i -= 4;
 
-  // Feld rechts davon anf"ullen
+  // fill the square to the right also up
   if ((*(Parameter_Screen + i * SBreite + LX / 4 + 8) != Color) &&
       (IsPassable (Cent (LX + Block_Width), Cent (LY), CENTER) == CENTER))
     RecFlashFill (LX + Block_Width, LY, Color, Parameter_Screen, SBreite);
 
-  // Feld links davon anf"ullen
+  // fill the square to the left
   if (LX > Block_Width)
     {
       if ((*(Parameter_Screen + i * SBreite + LX / 4 - 8) != Color) &&
@@ -113,7 +115,7 @@ RecFlashFill (int LX, int LY, int Color, unsigned char *Parameter_Screen, int SB
 	RecFlashFill (LX - Block_Width, LY, Color, Parameter_Screen, SBreite);
     }
 
-  // Feld oben davon anf"ullen
+  // fill the square above
   if ((i > 8) && (LY > Block_Height))
     {
       if ((*(Parameter_Screen + (i - 8) * SBreite + LX / 4) != Color) &&
@@ -121,7 +123,7 @@ RecFlashFill (int LX, int LY, int Color, unsigned char *Parameter_Screen, int SB
 	RecFlashFill (LX, LY - Block_Height, Color, Parameter_Screen, SBreite);
     }
 
-  // Feld unten davon anf"ullen
+  // fill the square below
   if ((*(Parameter_Screen + (i + 8) * SBreite + LX / 4) != Color) &&
       (IsPassable (Cent (LX), Cent (LY + Block_Height), CENTER) == CENTER))
     RecFlashFill (LX, LY + Block_Height, Color, Parameter_Screen, SBreite);
@@ -220,24 +222,20 @@ ShowInventoryMessages( void )
 
 }; // void ShowInventoryMessages();
 
-/*
------------------------------------------------------------------
-@Desc: This function assembles the contents of the combat window 
-       in ne_screen.
-
-       Several FLAGS can be used to control its behaviour:
-
-       (*) ONLY_SHOW_MAP = 1:  This flag indicates not do draw any
-           game elements but the map blocks
-
-       (*) DO_SCREEN_UPDATE = 2: This flag indicates for the function
-           to also cause an SDL_Update of the portion of the screen
-           that has been modified
-
- @Ret: none
------------------------------------------------------------------
-*/
-
+/* -----------------------------------------------------------------
+ * This function assembles the contents of the combat window 
+ * in ne_screen.
+ *
+ * Several FLAGS can be used to control its behaviour:
+ *
+ * (*) ONLY_SHOW_MAP = 1:  This flag indicates not do draw any
+ *     game elements but the map blocks
+ *
+ * (*) DO_SCREEN_UPDATE = 2: This flag indicates for the function
+ *     to also cause an SDL_Update of the portion of the screen
+ *     that has been modified
+ *
+ * ----------------------------------------------------------------- */
 void
 Assemble_Combat_Picture (int mask)
 {
@@ -385,19 +383,14 @@ Assemble_Combat_Picture (int mask)
   DebugPrintf (2, "\nvoid Assemble_Combat_Picture(...): end of function reached.");
 }; // void Assemble_Combat_Picture(...)
 
-/*
------------------------------------------------------------------
-@Desc: This function draws the influencer to the screen, either
-to the center of the combat window if (-1,-1) was specified, or
-to the specified coordinates anywhere on the screen, useful e.g.
-for using the influencer as a cursor in the menus.
-
-@Ret: none
------------------------------------------------------------------
-*/
-
+/* -----------------------------------------------------------------
+ * This function draws the influencer to the screen, either
+ * to the center of the combat window if (-1,-1) was specified, or
+ * to the specified coordinates anywhere on the screen, useful e.g.
+ * for using the influencer as a cursor in the menus.
+ * ----------------------------------------------------------------- */
 void
-PutInfluence ( int x, int y)
+PutInfluence ( int x , int y )
 {
   SDL_Rect TargetRectangle;
   SDL_Rect Text_Rect;
@@ -547,16 +540,14 @@ PutInfluence ( int x, int y)
 
   DebugPrintf (2, "\nvoid PutInfluence(void): enf of function reached.");
 
-} /* PutInfluence() */
+}; // void PutInfluence( int x , int y )
 
 
-/*@Function============================================================
-@Desc: PutEnemy: This function draws an enemy into the combat window.
-       The only parameter given is the number of the enemy within the
-       AllEnemys array. Everything else is computed in here.
-
-@Ret: void
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function draws an enemy into the combat window.
+ * The only parameter given is the number of the enemy within the
+ * AllEnemys array. Everything else is computed in here.
+ * ---------------------------------------------------------------------- */
 void
 PutEnemy (int Enum , int x , int y)
 {
@@ -771,13 +762,11 @@ Sorry...\n\
 
 }	// void PutEnemy(int Enum , int x , int y) 
 
-/*@Function============================================================
-@Desc: PutBullet: draws a Bullet into the combat window.  The only 
-       parameter given is the number of the bullet in the AllBullets 
-       array. Everything else is computed in here.
-
-@Ret: void
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function draws a Bullet into the combat window.  The only 
+ * parameter given is the number of the bullet in the AllBullets 
+ * array. Everything else is computed in here.
+ * ---------------------------------------------------------------------- */
 void
 PutBullet (int BulletNummer)
 {
@@ -913,25 +902,21 @@ PutBlast (int BlastNummer)
 
 }  // void PutBlast(int BlastNummer)
 
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function fills the combat window with one single color, given as
+ * the only parameter to the function.
+ * ---------------------------------------------------------------------- */
 void
 FlashWindow (int Flashcolor)
 {
   SetUserfenster( Flashcolor );
-}				// void FlashWindow(int Flashcolor)
+}; // void FlashWindow(int Flashcolor)
 
-/*@Function============================================================
-@Desc: This function fills the whole combat window with the one color
-       given as the only parameter to the function.  For this purpose
-       a fast SDL basic function is used.
-
-@Ret: none
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function fills the whole combat window with the one color
+ * given as the only parameter to the function.  For this purpose
+ * a fast SDL basic function is used.
+ * ---------------------------------------------------------------------- */
 void
 SetUserfenster (int color)
 {
@@ -942,12 +927,11 @@ SetUserfenster (int color)
   SDL_FillRect( ne_screen , &tmp, color );
 
   return;
-}				/* SetUserFenster() */
+}; // void SetUserFenster( int color ) 
 
-/*-----------------------------------------------------------------
+/* -----------------------------------------------------------------
  * Fill given rectangle with given RBG color
- *
- *-----------------------------------------------------------------*/
+ * ----------------------------------------------------------------- */
 void
 Fill_Rect (SDL_Rect rect, SDL_Color color)
 {
@@ -961,20 +945,18 @@ Fill_Rect (SDL_Rect rect, SDL_Color color)
   SDL_FillRect (ne_screen, &tmp, pixcolor);
   
   return;
-}
+}; // void Fill_Rect (SDL_Rect rect, SDL_Color color)
 
-/*@Function============================================================
-@Desc: This function displays a robot picture.  This does NOT mean a
-       robot picture like in combat but this means a finely renderd
-       artwork by bastian, that is displayed in the console if info
-       about a robot is requested.  The only parameters to this 
-       function are the position on the screen where to blit the 
-       picture and the number of the robot in the Druidmap *NOT*
-       in AllEnemys!!
-
-@Ret: none
-* $Function----------------------------------------------------------*/
-
+/* ----------------------------------------------------------------------
+ * This function displays a robot picture.  This does NOT mean a
+ * robot picture like in combat but this means a finely renderd
+ * artwork by bastian, that is displayed in the console if info
+ * about a robot is requested.  The only parameters to this 
+ * function are the position on the screen where to blit the 
+ * picture and the number of the robot in the Druidmap *NOT*
+ * in AllEnemys!!
+ *
+ * ---------------------------------------------------------------------- */
 void
 ShowRobotPicture (int PosX, int PosY, int Number )
 {
