@@ -1054,6 +1054,15 @@ LoadOneMapTileIfNotYetLoaded( int BlockNr , int Color )
   // Now we load the single tile image file and check for errors while loading...
   //
   Whole_Image = IMG_Load( fpath );
+  if ( Whole_Image == NULL )
+    {
+      fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
+      GiveStandardErrorMessage ( "LoadOneMapTileIfNotYetLoaded(...)" , "\
+Freedroid was unable to load a certain single map tile from the hard disk\n\
+into memory.\n\
+This error indicates some installation problem with freedroid.",
+				 PLEASE_INFORM, IS_FATAL );
+    }
 
   //--------------------
   // Now we convert this to display format and set alpha and colorkey
