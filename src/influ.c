@@ -3669,20 +3669,42 @@ handle_player_examine_command ( int player_num )
     int obstacle_index ;
     obstacle* our_obstacle;
     char game_message_text[ 2000 ] ;
-
-    obstacle_index = GetObstacleBelowMouseCursor ( player_num ) ;
-    if ( obstacle_index == (-1) )
+    int final_bot_found=(-1);
+    
+    //--------------------
+    // The highest priority is other droids and characters.  If one
+    // of those is under the mouse cursor, then the examine/look command
+    // is interpretet to
+    final_bot_found = GetLivingDroidBelowMouseCursor ( player_num ) ;
+    if ( final_bot_found != (-1) )
     {
-	GiveStandardErrorMessage ( __FUNCTION__  , 
-				   "Examine command received, but there isn't any obstacle under the current mouse cursor.  Has it maybe moved away?  I'll simply ignore this request." ,
-				   NO_NEED_TO_INFORM, IS_WARNING_ONLY );
+	sprintf( game_message_text , "This is %s." , Druidmap [ AllEnemys [ final_bot_found ] . type ] . druidname );
+	append_new_game_message ( game_message_text );
 	return;
     }
-    our_obstacle = & ( curShip . AllLevels [ Me [ player_num ] . pos . z ] -> obstacle_list [ obstacle_index ] ) ;
 
-    DebugPrintf ( -4 , "\n%s(): examining obstacle of type : %d. " , __FUNCTION__ , our_obstacle -> type );
+    //--------------------
+    // Now if there wasn't any living droid encountered, we can now
+    // start thinking about obstacles.  Let's see if we find something here
+    //
+    obstacle_index = GetObstacleBelowMouseCursor ( player_num ) ;
+    if ( obstacle_index != (-1) )
+    {
+	our_obstacle = & ( curShip . AllLevels [ Me [ player_num ] . pos . z ] -> obstacle_list [ obstacle_index ] ) ;
+	sprintf ( game_message_text , "Examining %s. (obs type %d).  %s" , 
+		  obstacle_map [ our_obstacle -> type ] . obstacle_short_name , 
+		  our_obstacle -> type , 
+		  obstacle_map [ our_obstacle -> type ] . obstacle_long_description ) ;
+	append_new_game_message ( game_message_text );
+	return;
+    }
 
-    sprintf ( game_message_text , "Examining obstacle of type %d.\n%s: %s" , our_obstacle -> type , obstacle_map [ our_obstacle -> type ] . obstacle_short_name , obstacle_map [ our_obstacle -> type ] . obstacle_long_description ) ;
+    //--------------------
+    // So here we know that neither living droid nor obstacle
+    // was found under the mouse cursor.  Then it's the floor being
+    // examined.  We say so, currently rather unspecific, but still.
+    //
+    sprintf ( game_message_text , "You see the floor.  It should be perfectly safe to walk on it." ) ;
     append_new_game_message ( game_message_text );
 
 }; // void handle_player_examine_command ( int player_num ) 
@@ -3705,20 +3727,14 @@ handle_player_loot_command ( int player_num )
     obstacle_index = GetObstacleBelowMouseCursor ( player_num ) ;
     if ( obstacle_index == (-1) )
     {
-	/*
-	GiveStandardErrorMessage ( __FUNCTION__  , 
-				   "Loot command received, but there isn't any obstacle under the current mouse cursor.  Has it maybe moved away?  I'll simply ignore this request." ,
-				   NO_NEED_TO_INFORM, IS_WARNING_ONLY );
-	*/
 	sprintf ( game_message_text , "Loot what?  The floor?" );
 	append_new_game_message ( game_message_text );
 	return;
     }
     our_obstacle = & ( curShip . AllLevels [ Me [ player_num ] . pos . z ] -> obstacle_list [ obstacle_index ] ) ;
 
-    DebugPrintf ( -4 , "\n%s(): looting obstacle of type : %d. " , __FUNCTION__ , our_obstacle -> type );
-    
-    sprintf ( game_message_text , "Looting obstacle of type %d." , our_obstacle -> type );
+    sprintf ( game_message_text , "Looting %s (obs type %d)." , 
+	      obstacle_map [ our_obstacle -> type ] . obstacle_short_name , our_obstacle -> type );
     append_new_game_message ( game_message_text );
 
     Me [ player_num ] . mouse_move_target . x = our_level -> obstacle_list [ obstacle_index ] . pos . x ;
@@ -3730,10 +3746,8 @@ handle_player_loot_command ( int player_num )
     Me [ player_num ] . mouse_move_target_is_enemy = ( -1 ) ;
     Me [ player_num ] . mouse_move_target_combo_action_type = COMBO_ACTION_LOOT_OBSTACLE ;
     Me [ player_num ] . mouse_move_target_combo_action_parameter = obstacle_index ;
-
-    
 		    
-}; // void handle_player_examine_command ( int player_num ) 
+}; // void handle_player_loot_command ( int player_num ) 
 
 /* ----------------------------------------------------------------------
  *
