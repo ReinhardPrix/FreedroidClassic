@@ -1018,6 +1018,7 @@ ShowInventoryScreen( void )
       // for our inventory screen.
       //
       InventoryRect.x = 0;
+      // InventoryRect.y = SCREENHEIGHT - InventoryImage->h;
       InventoryRect.y = User_Rect.y;
       InventoryRect.w = SCREENLEN/2;
       InventoryRect.h = User_Rect.h;

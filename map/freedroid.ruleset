@@ -1141,7 +1141,7 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
 Drive item=5
-Weapon item=-1
+Weapon item=22
 Shield item=-1
 Armour item=-1
 Aux1 item=-1
@@ -1918,10 +1918,10 @@ Droid portrait file name (without extension) to use="123"
 Maximum speed of this droid: 2.1
 Class of this droid: 1
 Maximum acceleration of this droid: 1.1
-Maximum energy of this droid: 20.1
+Maximum energy of this droid: 10.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 0
-Aggression rate of this droid: 70
+Aggression rate of this droid: 60
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 25
 Height of this droid : 1.37
@@ -1951,10 +1951,10 @@ Droid portrait file name (without extension) to use="139"
 Maximum speed of this droid: 2.1
 Class of this droid: 1
 Maximum acceleration of this droid: 1.1
-Maximum energy of this droid: 20.1
+Maximum energy of this droid: 10.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 0
-Aggression rate of this droid: 75
+Aggression rate of this droid: 65
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 25
 Height of this droid : 1.22
