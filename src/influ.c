@@ -2642,25 +2642,31 @@ check_for_barrels_to_smash ( int player_num , int barrel_index )
 	}
 
       //--------------------
+      // Before the barrel can get destroyed and we loose the position information,
+      // we record the vector of the Tux strike direction...
+      //
+      step_vector . x = - Me [ player_num ] . pos . x + our_level -> obstacle_list [ barrel_index ] . pos . x ;
+      step_vector . y = - Me [ player_num ] . pos . y + our_level -> obstacle_list [ barrel_index ] . pos . y ;
+
+      //--------------------
       // We make sure the barrel gets smashed, eben if the strike made by the
       // Tux would be otherwise a miss...
       //
       smash_obstacle ( our_level -> obstacle_list [ barrel_index ] . pos . x , 
 		       our_level -> obstacle_list [ barrel_index ] . pos . y );
 
-      step_vector . x = Me [ player_num ] . pos . x - our_level -> obstacle_list [ barrel_index ] . pos . x ;
-      step_vector . y = Me [ player_num ] . pos . y - our_level -> obstacle_list [ barrel_index ] . pos . y ;
-      vec_len = vect_len ( step_vector );
-      step_vector . x *= 1.0 / vec_len ; // we normalize the distance to 1.  That should be good.  A
-      step_vector . y *= 1.0 / vec_len ; // distance of a bit more than barrel blocking distance will be best.
+      //--------------------
+      // We start an attack motion...
+      //
+      tux_wants_to_attack_now ( player_num ) ;
 
       //--------------------
       // We set a direction of facing directly thowards the barrel in question
       // so that the strike motion looks authentic...
       //
-      Me [ player_num ] . angle = 0 ;
-
-      tux_wants_to_attack_now ( player_num ) ;
+      Me [ player_num ] . angle = - ( atan2 ( step_vector . y ,  step_vector . x ) * 180 / M_PI - 180 - 45 );
+      Me [ player_num ] . angle += 360 / ( 2 * MAX_TUX_DIRECTIONS );
+      while ( Me [ player_num ] . angle < 0 ) Me [ player_num ] . angle += 360;
 
       //--------------------
       // Maybe the barrel smashing came from a combo_action, i.e. the click made
@@ -2672,7 +2678,7 @@ check_for_barrels_to_smash ( int player_num , int barrel_index )
       Me [ player_num ] . mouse_move_target_combo_action_parameter = ( -1 ) ;
       DebugPrintf ( -4 , "\ncheck_for_barrels_to_smash(...):  combo_action now unset." );
     }
-};
+}; // void check_for_barrels_to_smash ( int player_num , int barrel_index ) 
 
 /* ----------------------------------------------------------------------
  *
