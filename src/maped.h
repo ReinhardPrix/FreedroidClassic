@@ -1,22 +1,33 @@
-/*=@Header==============================================================
- * $Source$
+/* 
+ * Map - editor related defs' struct's etc. 
+ * Taken from the separate old DOS maped code.
  *
- * @Desc: Defs for maped.c
- * 	
- * $Revision$
- * $State$
+ */
+
+/* 
  *
- * $Author$
- *
- * $Log$
- * Revision 1.2  2002/05/17 13:09:12  rprix
- * removed all the nasty ^M 's at the line-endings...
- *
- * Revision 1.1  2002/05/17 06:24:34  jprix
- * Forgot to add the (slighly modified, but otherwise old) maped.h too :-)
+ *   Copyright (c) 1994, 2002 Johannes Prix
+ *   Copyright (c) 1994, 2002 Reinhard Prix
  *
  *
- *-@Header------------------------------------------------------------*/
+ *  This file is part of Freedroid
+ *
+ *  Freedroid is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Freedroid is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Freedroid; see the file COPYING. If not, write to the 
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  MA  02111-1307  USA
+ *
+ */
 #ifndef _maped_h
 #define _maped_h
 
