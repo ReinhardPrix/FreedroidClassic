@@ -336,7 +336,7 @@ ClearEnemys ( void )
 	our_bot = & ( AllEnemys [ i ] ) ;
 
 	our_bot -> type = -1;
-	our_bot -> pos.z = our_bot -> energy = 0;
+	our_bot -> pos . z = our_bot -> virt_pos . z = our_bot -> energy = 0;
 	our_bot -> nextwaypoint = our_bot -> lastwaypoint = 0;
 	our_bot -> Status = OUT;
 	our_bot -> pure_wait = 0;
@@ -555,82 +555,83 @@ int
 CheckIfWayIsFreeOfDroidsWithTuxchecking ( float x1 , float y1 , float x2 , float y2 , int OurLevel , 
 					  Enemy ExceptedRobot ) 
 {
-  float LargerDistance;
-  int Steps;
-  int i, j;
-  moderately_finepoint step;
-  moderately_finepoint CheckPosition;
-  enemy* this_enemy;
-  static int first_call = TRUE ;
-  static float steps_per_square;
+    float LargerDistance;
+    int Steps;
+    int i, j;
+    moderately_finepoint step;
+    moderately_finepoint CheckPosition;
+    enemy* this_enemy;
+    static int first_call = TRUE ;
+    static float steps_per_square;
 
-  //--------------------
-  // Upon the very first function call, we calibrate the density of steps, so that 
-  // we cannot miss out a droid by stepping right over it.
-  //
-  if ( first_call )
+    //--------------------
+    // Upon the very first function call, we calibrate the density of steps, so that 
+    // we cannot miss out a droid by stepping right over it.
+    //
+    if ( first_call )
     {
-      first_call = FALSE ;
-      steps_per_square = 1 / ( 2.0 * sqrt(2.0) * Druid_Radius_X );
+	first_call = FALSE ;
+	steps_per_square = 1 / ( 2.0 * sqrt(2.0) * Druid_Radius_X );
     }
-
-  // DebugPrintf( 2, "\nint CheckIfWayIsFreeOfDroids (...) : Checking from %d-%d to %d-%d.", (int) x1, (int) y1 , (int) x2, (int) y2 );
-  // fflush(stdout);
-
-  if ( fabsf ( x1 - x2 ) > fabsf ( y1 - y2 ) ) LargerDistance = fabsf ( x1 - x2 );
-  else LargerDistance = fabsf ( y1 - y2 );
-
-  Steps = LargerDistance * steps_per_square + 1 ;   // We check four times on each map tile...
-  // if ( Steps == 0 ) return TRUE;
-
-  // We determine the step size when walking from (x1,y1) to (x2,y2) in Steps number of steps
-  step.x = ( x2 - x1 ) / ((float)Steps) ;
-  step.y = ( y2 - y1 ) / ((float)Steps) ;
-
-  // DebugPrintf( 2 , "\nint CheckIfWayIsFreeOfDroids (...) :  step.x=%f step.y=%f." , step.x , step.y );
-
-  // We start from position (x1, y1)
-  CheckPosition . x = x1;
-  CheckPosition . y = y1;
-
-  for ( i = 0 ; i < Steps + 1 ; i++ )
+    
+    // DebugPrintf( 2, "\nint CheckIfWayIsFreeOfDroids (...) : Checking from %d-%d to %d-%d.", (int) x1, (int) y1 , (int) x2, (int) y2 );
+    // fflush(stdout);
+    
+    if ( fabsf ( x1 - x2 ) > fabsf ( y1 - y2 ) ) LargerDistance = fabsf ( x1 - x2 );
+    else LargerDistance = fabsf ( y1 - y2 );
+    
+    Steps = LargerDistance * steps_per_square + 1 ;   // We check four times on each map tile...
+    // if ( Steps == 0 ) return TRUE;
+    
+    // We determine the step size when walking from (x1,y1) to (x2,y2) in Steps number of steps
+    step.x = ( x2 - x1 ) / ((float)Steps) ;
+    step.y = ( y2 - y1 ) / ((float)Steps) ;
+    
+    // DebugPrintf( 2 , "\nint CheckIfWayIsFreeOfDroids (...) :  step.x=%f step.y=%f." , step.x , step.y );
+    
+    // We start from position (x1, y1)
+    CheckPosition . x = x1;
+    CheckPosition . y = y1;
+    
+    for ( i = 0 ; i < Steps + 1 ; i++ )
     {
-      // for ( j = 0 ; j < MAX_ENEMYS_ON_SHIP ; j ++ )
-      // for ( j = 0 ; j < Number_Of_Droids_On_Ship ; j ++ )
-      for ( j  = first_index_of_bot_on_level [ OurLevel ] ; 
-	    j <=  last_index_of_bot_on_level [ OurLevel ] ; j ++ )
+	// for ( j = 0 ; j < MAX_ENEMYS_ON_SHIP ; j ++ )
+	// for ( j = 0 ; j < Number_Of_Droids_On_Ship ; j ++ )
+	for ( j  = first_index_of_bot_on_level [ OurLevel ] ; 
+	      j <=  last_index_of_bot_on_level [ OurLevel ] ; j ++ )
 	{
-	  this_enemy = & ( AllEnemys [ j ] ) ;
-	  if ( this_enemy -> pos.z != OurLevel ) continue;
-	  if ( this_enemy -> Status == OUT ) continue;
-	  if ( this_enemy -> energy <= 0 ) continue;
-	  if ( this_enemy -> pure_wait > 0 ) continue;
-	  if ( this_enemy == ExceptedRobot ) continue;
-
-	  // so it seems that we need to test this one!!
-	  if ( ( fabsf ( this_enemy -> pos . x - CheckPosition . x ) < 2.0 * Druid_Radius_X ) &&
-	       ( fabsf ( this_enemy -> pos . y - CheckPosition . y ) < 2.0 * Druid_Radius_Y ) ) 
+	    this_enemy = & ( AllEnemys [ j ] ) ;
+	    if ( this_enemy -> pos.z != OurLevel ) continue;
+	    if ( this_enemy -> Status == OUT ) continue;
+	    if ( this_enemy -> energy <= 0 ) continue;
+	    if ( this_enemy -> pure_wait > 0 ) continue;
+	    if ( this_enemy == ExceptedRobot ) continue;
+	    
+	    // so it seems that we need to test this one!!
+	    if ( ( fabsf ( this_enemy -> pos . x - CheckPosition . x ) < 2.0 * Druid_Radius_X ) &&
+		 ( fabsf ( this_enemy -> pos . y - CheckPosition . y ) < 2.0 * Druid_Radius_Y ) ) 
 	    {
-	      // DebugPrintf( 2, "\nCheckIfWayIsFreeOfDroids (...) : Connection analysis revealed : TRAFFIC-BLOCKED !");
-	      return FALSE;
+		// DebugPrintf( 2, "\nCheckIfWayIsFreeOfDroids (...) : Connection analysis revealed : TRAFFIC-BLOCKED !");
+		return FALSE;
 	    }
 	}
-
-      //--------------------
-      // Now we check for collisions with the Tux himself
-      //
-      if ( ( fabsf ( Me [ 0 ] . pos.x - CheckPosition.x ) < 2 * Druid_Radius_X ) &&
-	   ( fabsf ( Me [ 0 ] . pos.y - CheckPosition.y ) < 2 * Druid_Radius_Y ) ) 
+	
+	//--------------------
+	// Now we check for collisions with the Tux himself
+	//
+	if ( ( fabsf ( Me [ 0 ] . pos.x - CheckPosition.x ) < 2 * Druid_Radius_X ) &&
+	     ( fabsf ( Me [ 0 ] . pos.y - CheckPosition.y ) < 2 * Druid_Radius_Y ) ) 
 	{
-	  // DebugPrintf( 2 , "\nCheckIfWayIsFreeOfDroids (...) : Connection analysis revealed : TRAFFIC-BLOCKED-INFLUENCER !");
-	  return FALSE;
+	    // DebugPrintf( 2 , "\nCheckIfWayIsFreeOfDroids (...) : Connection analysis revealed : TRAFFIC-BLOCKED-INFLUENCER !");
+	    return FALSE;
 	}
-	      
-      CheckPosition . x += step . x;
-      CheckPosition . y += step . y;
+	
+	CheckPosition . x += step . x;
+	CheckPosition . y += step . y;
     }
+    
+    return TRUE;
 
-  return TRUE;
 }; // CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLevel , int ExceptedDroid )
 
 
@@ -757,14 +758,23 @@ RawEnemyApproachPosition ( Enemy ThisRobot , finepoint next_target_spot )
     // Now that we have found out where to go, we can start to determine the remaining 
     // way until the target point is reached.
     //
-    remaining_way.x = next_target_spot.x - ThisRobot->pos.x;
-    remaining_way.y = next_target_spot.y - ThisRobot->pos.y;
+    remaining_way . x = next_target_spot . x - ThisRobot -> pos . x ;
+    remaining_way . y = next_target_spot . y - ThisRobot -> pos . y ;
     
+    if ( ( ThisRobot -> pos . z != Me [ 0 ] . pos . z ) &&
+	 ( ThisRobot -> combat_state == MAKE_ATTACK_RUN ) )
+    {
+	// DebugPrintf ( -4 , "\n%s(): moving enemy on remote level... " , __FUNCTION__ );
+	// DebugPrintf ( -4 , "\n%s(): remaining_way: x=%f, y=%f." , __FUNCTION__ ,
+	// remaining_way . x , remaining_way . y );
+    }
+
+
     //--------------------
     // As long a the distance from the current position of the enemy
     // to its next wp is large, movement is rather simple:
     //
-    if ( fabsf ( remaining_way . x )  > Frame_Time() * maxspeed )
+    if ( fabsf ( remaining_way . x ) > Frame_Time() * maxspeed )
     {
 	ThisRobot -> speed . x =
 	    ( remaining_way . x / fabsf ( remaining_way . x ) ) * maxspeed;
@@ -792,6 +802,14 @@ RawEnemyApproachPosition ( Enemy ThisRobot , finepoint next_target_spot )
     }
     
     //--------------------
+    // Now the bot is moving, so maybe it's moving over a jump threshold?
+    // In any case, it might be best to check...
+    //
+    adapt_position_for_jump_thresholds ( & ( ThisRobot -> pos ) , & ( ThisRobot -> pos ) );
+    
+
+
+    //--------------------
     // Since this robot is moving, we set the animation type to 
     // walking...
     //
@@ -810,14 +828,14 @@ MoveThisRobotThowardsHisCurrentTarget ( int EnemyNum )
 {
     Waypoint WpList;		/* Pointer to waypoint-list */
     finepoint nextwp_pos;
-    Enemy ThisRobot=&AllEnemys[ EnemyNum ];
+    Enemy ThisRobot = & ( AllEnemys [ EnemyNum ] ) ;
     int HistoryIndex;
     Level WaypointLevel = curShip.AllLevels[ AllEnemys[ EnemyNum ].pos.z ];
     
     // DebugPrintf( 2 , "\n%s(): real function call confirmed. " , __FUNCTION__ );
     
     // We do some definitions to save us some more typing later...
-    WpList = WaypointLevel->AllWaypoints;
+    WpList = WaypointLevel -> AllWaypoints;
     
     //--------------------
     // According to properties of the robot like being frozen or not,
@@ -832,20 +850,20 @@ MoveThisRobotThowardsHisCurrentTarget ( int EnemyNum )
     //
     if ( ThisRobot -> persuing_given_course )
     {
-	nextwp_pos.x = ThisRobot->PrivatePathway[0].x;
-	nextwp_pos.y = ThisRobot->PrivatePathway[0].y;
+	nextwp_pos . x = ThisRobot -> PrivatePathway [ 0 ] . x ;
+	nextwp_pos . y = ThisRobot -> PrivatePathway [ 0 ] . y ;
     }
     else
     {
-	nextwp_pos.x = WpList[ ThisRobot->nextwaypoint ] . x + 0.5 ;
-	nextwp_pos.y = WpList[ ThisRobot->nextwaypoint ] . y + 0.5 ;
+	nextwp_pos . x = WpList [ ThisRobot -> nextwaypoint ] . x + 0.5 ;
+	nextwp_pos . y = WpList [ ThisRobot -> nextwaypoint ] . y + 0.5 ;
     }
     
     //--------------------
     // Maybe this robot is following behind influ.  Then of course we need to set
     // even different special target positions...
     //
-    if ( ThisRobot->FollowingInflusTail == TRUE )
+    if ( ThisRobot -> FollowingInflusTail == TRUE )
     {
 	if ( ( fabsf( ThisRobot->pos.x - Me[0].pos.x ) > 1 ) || 
 	     ( fabsf( ThisRobot->pos.y - Me[0].pos.y ) > 1 ) )
@@ -993,18 +1011,18 @@ This is an error in the waypoint structure of this level.",
 void 
 SelectNextWaypointAdvanced ( int EnemyNum )
 {
-  Enemy ThisRobot=&AllEnemys[ EnemyNum ];
+    Enemy ThisRobot=&AllEnemys[ EnemyNum ];
 
-  DebugPrintf( 2 , "\nvoid SelectNextWaypointAdvanced ( int EnemyNum ) : real function call confirmed. ");
+    DebugPrintf( 2 , "\nvoid SelectNextWaypointAdvanced ( int EnemyNum ) : real function call confirmed. ");
 
-  //--------------------
-  // Maybe currently we do not stick to the whole waypoint system but rather 
-  // choose our course independently.  Then it's PersueGivenCourse.  Otherwise
-  // we select waypoints as we're used to...
-  //
-  if ( ThisRobot->persuing_given_course == TRUE ) return;
-
-  RawSetNewRandomWaypoint ( ThisRobot );
+    //--------------------
+    // Maybe currently we do not stick to the whole waypoint system but rather 
+    // choose our course independently.  Then it's PersueGivenCourse.  Otherwise
+    // we select waypoints as we're used to...
+    //
+    if ( ThisRobot->persuing_given_course == TRUE ) return;
+    
+    RawSetNewRandomWaypoint ( ThisRobot );
 
 }; // void SelectNextWaypointAdvanced ( int EnemyNum )
 
@@ -1106,22 +1124,22 @@ remaining_distance_to_current_walk_target ( Enemy ThisRobot )
 int 
 IsActiveLevel ( int levelnum ) 
 {
-  int PlayerNum;
+    int PlayerNum;
 
-  //--------------------
-  // Now we check for alive players on this level, and if we find
-  // some, the level is an 'active' level.
-  //
-  for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ )
+    //--------------------
+    // Now we check for alive players on this level, and if we find
+    // some, the level is an 'active' level.
+    //
+    for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ )
     {
-      if ( Me [ PlayerNum ] . status == OUT ) continue;
-      if ( Me [ PlayerNum ] . pos . z == levelnum ) return TRUE;
+	if ( Me [ PlayerNum ] . status == OUT ) continue;
+	if ( Me [ PlayerNum ] . pos . z == levelnum ) return TRUE;
     }
-
-  //--------------------
-  // But if we didn't find any, then the level is not 'active'.
-  //
-  return FALSE;
+    
+    //--------------------
+    // But if we didn't find any, then the level is not 'active'.
+    //
+    return FALSE;
 
 }; // int IsActiveLevel ( int levelnum ) 
 
@@ -1143,32 +1161,38 @@ DropEnemyTreasure ( Enemy ThisRobot )
     if ( Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_PLASMA_TRANSISTORS ] )
     {
 	if ( Druidmap [ ThisRobot->type ] . amount_of_plasma_transistors )
-	    DropItemAt( ITEM_DROID_PART_1 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 , 1 );
+	    DropItemAt( ITEM_DROID_PART_1 , ThisRobot -> pos . z , 
+			ThisRobot->virt_pos.x , ThisRobot->virt_pos.y , -1 , -1 , 2 , 1 );
     }
     if ( Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_SUPERCONDUCTORS ] )
     {
 	if ( Druidmap [ ThisRobot->type ] . amount_of_superconductors )
-	    DropItemAt( ITEM_DROID_PART_2 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 , 1 );
+	    DropItemAt( ITEM_DROID_PART_2 , ThisRobot -> pos . z , 
+			ThisRobot->virt_pos.x , ThisRobot->virt_pos.y , -1 , -1 , 2 , 1 );
     }
     if ( Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_ANTIMATTER_CONVERTERS ] )
     {
 	if ( Druidmap [ ThisRobot->type ] . amount_of_antimatter_converters )
-	    DropItemAt( ITEM_DROID_PART_3 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 , 1 );
+	    DropItemAt( ITEM_DROID_PART_3 , ThisRobot -> pos . z , 
+			ThisRobot->virt_pos.x , ThisRobot->virt_pos.y , -1 , -1 , 2 , 1 );
     }
     if ( Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_ENTROPY_INVERTERS ] )
     {
 	if ( Druidmap [ ThisRobot->type ] . amount_of_entropy_inverters )
-	    DropItemAt( ITEM_DROID_PART_4 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 , 1 );
+	    DropItemAt( ITEM_DROID_PART_4 , ThisRobot -> pos . z , 
+			ThisRobot->virt_pos.x , ThisRobot->virt_pos.y , -1 , -1 , 2 , 1 );
     }
     if ( Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_TACHYON_CONDENSATORS ] ) 
     {
 	if ( Druidmap [ ThisRobot->type ] . amount_of_tachyon_condensators )
-	    DropItemAt( ITEM_DROID_PART_5 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 , 1 );
+	    DropItemAt( ITEM_DROID_PART_5 , ThisRobot -> pos . z , 
+			ThisRobot->virt_pos.x , ThisRobot->virt_pos.y , -1 , -1 , 2 , 1 );
     }
     if ( ThisRobot -> on_death_drop_item_code != (-1) )
     {
-	DropItemAt( ThisRobot -> on_death_drop_item_code , ThisRobot -> pos . x , 
-		    ThisRobot -> pos . y , -1 , -1 , 2 , 1 );
+	DropItemAt( ThisRobot -> on_death_drop_item_code , ThisRobot -> pos . z , 
+		    ThisRobot -> virt_pos . x , 
+		    ThisRobot -> virt_pos . y , -1 , -1 , 2 , 1 );
     }  
     
     //--------------------
@@ -1176,7 +1200,7 @@ DropEnemyTreasure ( Enemy ThisRobot )
     // there is still some chance, that the enemy will have (and drop) some other
     // valuables, that the Tux can then collect afterwards.
     //
-    DropRandomItem ( ThisRobot -> pos . x , ThisRobot -> pos . y , Druidmap [ ThisRobot -> type ] . monster_level , FALSE , FALSE , FALSE );
+    DropRandomItem ( ThisRobot -> pos . z , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y , Druidmap [ ThisRobot -> type ] . monster_level , FALSE , FALSE , FALSE );
     
 
 }; // void DropEnemyTreasure ( Enemy ThisRobot )
@@ -1186,16 +1210,16 @@ DropEnemyTreasure ( Enemy ThisRobot )
  *
  * ---------------------------------------------------------------------- */
 int
-MakeSureEnemyIsInsideThisLevel ( Enemy ThisRobot )
+MakeSureEnemyIsInsideHisLevel ( Enemy ThisRobot )
 {
     //--------------------
     // If the enemy is outside of the current map, 
     // that's an error and needs to be correted.
     //
     if ( ( ThisRobot -> pos . x <= 0 ) || 
-	 ( ThisRobot -> pos . x >= curShip.AllLevels[ ThisRobot -> pos . z ] -> xlen ) ||
+	 ( ThisRobot -> pos . x >= curShip . AllLevels [ ThisRobot -> pos . z ] -> xlen ) ||
 	 ( ThisRobot -> pos . y <= 0 ) || 
-	 ( ThisRobot -> pos . y >= curShip.AllLevels[ ThisRobot -> pos . z ] -> ylen ) )
+	 ( ThisRobot -> pos . y >= curShip . AllLevels [ ThisRobot -> pos . z ] -> ylen ) )
     {
 	
 	GiveStandardErrorMessage ( __FUNCTION__  , "\
@@ -1215,7 +1239,7 @@ The offending bot will be deleted silently.",
 	// Terminate(ERR);
     }
 
-  return ( TRUE );
+    return ( TRUE );
 
 }; // int MakeSureEnemyIsInsideThisLevel ( int Enum )
 
@@ -1255,7 +1279,7 @@ InitiateDeathOfEnemy ( Enemy ThisRobot )
     // The dead enemy will now explode and drop treasure, provided that 
     // it was still on this map
     //
-    if ( MakeSureEnemyIsInsideThisLevel ( ThisRobot ) ) 
+    if ( MakeSureEnemyIsInsideHisLevel ( ThisRobot ) ) 
     {
 	Me [ 0 ] . KillRecord [ ThisRobot -> type ] ++ ;
 	//--------------------
@@ -1335,64 +1359,67 @@ DetermineAngleOfFacing ( int Enum )
 void 
 MoveThisEnemy( int EnemyNum )
 {
-  Enemy ThisRobot = & AllEnemys[ EnemyNum ];
+    Enemy ThisRobot = & AllEnemys[ EnemyNum ];
 
-  //--------------------
-  // At first, we check for a lot of cases in which we do not
-  // need to move anything for this reason or for that
-  //
-
-  //--------------------
-  // ignore all enemys with CompletelyFixed flag set...
-  //
-  if ( ThisRobot->CompletelyFixed ) return;
-
-  //--------------------
-  // robots that still have to wait also do not need to
-  // be processed for movement
-  //
-  if ( ThisRobot->pure_wait > 0) return;
-
-  if ( ThisRobot->AdvancedCommand == 2 ) 
+    //--------------------
+    // At first, we check for a lot of cases in which we do not
+    // need to move anything for this reason or for that
+    //
+    
+    //--------------------
+    // ignore all enemys with CompletelyFixed flag set...
+    //
+    if ( ThisRobot->CompletelyFixed ) return;
+    
+    //--------------------
+    // robots that still have to wait also do not need to
+    // be processed for movement
+    //
+    if ( ThisRobot->pure_wait > 0 ) return;
+    
+    if ( ThisRobot->AdvancedCommand == 2 ) 
     {
-      TeleportToClosestWaypoint ( ThisRobot );
-      ThisRobot->AdvancedCommand = 0;
+	TeleportToClosestWaypoint ( ThisRobot );
+	ThisRobot->AdvancedCommand = 0;
     }
-
-  if ( ThisRobot -> will_rush_tux )
+    
+    if ( ThisRobot -> will_rush_tux )
     {
-      if ( IsVisible ( & ( ThisRobot -> pos ) , 0 ) )
+	if ( IsVisible ( & ( ThisRobot -> pos ) , 0 ) )
 	{
-	  ThisRobot -> persuing_given_course = TRUE ;
-	  ThisRobot -> PrivatePathway [ 0 ] . x = Me [ 0 ] . pos . x ;
-	  ThisRobot -> PrivatePathway [ 0 ] . y = Me [ 0 ] . pos . y ;
-
-	  if ( sqrt ( ( ThisRobot -> pos . x - Me [ 0 ] . pos . x ) * ( ThisRobot -> pos . x - Me [ 0 ] . pos . x ) +
-		      ( ThisRobot -> pos . y - Me [ 0 ] . pos . y ) * ( ThisRobot -> pos . y - Me [ 0 ] . pos . y ) ) < 1 )
+	    ThisRobot -> persuing_given_course = TRUE ;
+	    ThisRobot -> PrivatePathway [ 0 ] . x = Me [ 0 ] . pos . x ;
+	    ThisRobot -> PrivatePathway [ 0 ] . y = Me [ 0 ] . pos . y ;
+	    
+	    if ( sqrt ( ( ThisRobot -> pos . x - Me [ 0 ] . pos . x ) * ( ThisRobot -> pos . x - Me [ 0 ] . pos . x ) +
+			( ThisRobot -> pos . y - Me [ 0 ] . pos . y ) * ( ThisRobot -> pos . y - Me [ 0 ] . pos . y ) ) < 1 )
 	    {
-	      ChatWithFriendlyDroid ( ThisRobot );
-	      ThisRobot -> will_rush_tux = FALSE ;
-	      ThisRobot -> persuing_given_course = FALSE ; 
+		ChatWithFriendlyDroid ( ThisRobot );
+		ThisRobot -> will_rush_tux = FALSE ;
+		ThisRobot -> persuing_given_course = FALSE ; 
 	    }
 	}
     }
-  else
+    else
     {
-      //--------------------
-      // Checking collisions with colleagues is only nescessary for
-      // those not busy rushing the Tux...
-      //
-      CheckEnemyEnemyCollision ( EnemyNum );
+	//--------------------
+	// Checking collisions with colleagues is only nescessary for
+	// those not busy rushing the Tux...
+	//
+	CheckEnemyEnemyCollision ( EnemyNum );
     }
 
-  //--------------------
-  // Now comes the real movement part
-  //
-  MoveThisRobotThowardsHisCurrentTarget( EnemyNum );
+    // if ( ThisRobot -> pos . z != Me [ 0 ] . pos . z )
+    // DebugPrintf ( -4 , "\n%s(): moving enemy on remote level... " , __FUNCTION__ );
 
-  SelectNextWaypointAdvanced( EnemyNum );
+    //--------------------
+    // Now comes the real movement part
+    //
+    MoveThisRobotThowardsHisCurrentTarget( EnemyNum );
 
-  DetermineAngleOfFacing ( EnemyNum );
+    SelectNextWaypointAdvanced( EnemyNum );
+    
+    DetermineAngleOfFacing ( EnemyNum );
 
 }; // void MoveThisEnemy ( int EnemyNum )
 
@@ -1404,79 +1431,80 @@ MoveThisEnemy( int EnemyNum )
 void
 MoveEnemys ( void )
 {
-  int i;
-  Enemy ThisRobot;
+    int i;
+    Enemy ThisRobot;
+    
+    //--------------------
+    // We heal the robots again as time passes.  This function has been checked and
+    // optimized for speed already....
+    //
+    PermanentHealRobots ();  // enemy robots heal as time passes...
+    
+    //--------------------
+    // Some robots like 302 are already partly animated.  These robots
+    // must be shifted in phase properly...
+    //
+    AnimateEnemys ();
 
-  //--------------------
-  // We heal the robots again as time passes.  This function has been checked and
-  // optimized for speed already....
-  //
-  PermanentHealRobots ();  // enemy robots heal as time passes...
-
-  //--------------------
-  // Some robots like 302 are already partly animated.  These robots
-  // must be shifted in phase properly...
-  //
-  AnimateEnemys ();
-
-  //--------------------
-  // We make sure that the start and end indices for the bots of each level
-  // are approximately correct, so that bots will (within a second or two)
-  // be updated and taken into account correctly inside the movement code.
-  //
-  occasionally_update_first_and_last_bot_indices (  );
-
-  //--------------------
-  // Now the pure movement stuff..
-  //
-  for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i++ )
-     {
-       ThisRobot = & AllEnemys[ i ];
-
-       //--------------------
-       // ignore dead robots as well...
-       if ( ThisRobot->Status == OUT ) continue;
-
-       //--------------------
-       // Now check if the robot is still alive if the robot just got killed, 
-       // initiate the explosion and all that...
-       //
-       if ( ThisRobot->energy <= 1)
-	 {
-	   InitiateDeathOfEnemy ( ThisRobot );
-	   continue;
-	 }
-
-       //--------------------
-       // Ignore robots on other levels, except perhaps those, 
-       // that are following Tux' trail
-       // 
-       if ( ( ! IsActiveLevel ( ThisRobot->pos.z ) )  && 
-	    ( ! ThisRobot -> FollowingInflusTail ) ) 
-	 continue;
-  
-       //--------------------
-       // Ignore robots, that are in the middle of their attack movement
-       //
-       // if ( ThisRobot -> animation_phase > 0 ) continue ;
-       if ( ThisRobot -> animation_type == ATTACK_ANIMATION ) continue ;
-
-       //--------------------
-       // We set the speed to zero for a start.  Later it can be
-       // set to something else...
-       //
-       ThisRobot -> speed . x = 0 ;
-       ThisRobot -> speed . y = 0 ;
-
-       //--------------------
-       // Now we do the movement, either to the next waypoint OR if one
-       // is set, we persue the given course, which allows complete control
-       // of the bot moves (via the state machine for example)...
-       //
-       ProcessAttackStateMachine ( i );
-
-     }	// for Number_Of_Droids_On_Ship
-
+    //--------------------
+    // We make sure that the start and end indices for the bots of each level
+    // are approximately correct, so that bots will (within a second or two)
+    // be updated and taken into account correctly inside the movement code.
+    //
+    occasionally_update_first_and_last_bot_indices (  );
+    
+    //--------------------
+    // Now the pure movement stuff..
+    //
+    for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i++ )
+    {
+	ThisRobot = & AllEnemys[ i ];
+	
+	//--------------------
+	// ignore dead robots as well...
+	if ( ThisRobot -> Status == OUT ) continue;
+	
+	//--------------------
+	// Now check if the robot is still alive if the robot just got killed, 
+	// initiate the explosion and all that...
+	//
+	if ( ThisRobot->energy <= 1)
+	{
+	    InitiateDeathOfEnemy ( ThisRobot );
+	    continue;
+	}
+	
+	//--------------------
+	// Ignore robots on other levels, except perhaps those, 
+	// that are following Tux' trail
+	// 
+	// if ( ( ! IsActiveLevel ( ThisRobot->pos.z ) )  && 
+	if ( ( ! level_is_partly_visible ( ThisRobot -> pos . z ) )  && 
+	     ( ! ThisRobot -> FollowingInflusTail ) ) 
+	    continue;
+	
+	//--------------------
+	// Ignore robots, that are in the middle of their attack movement
+	//
+	// if ( ThisRobot -> animation_phase > 0 ) continue ;
+	if ( ThisRobot -> animation_type == ATTACK_ANIMATION ) continue ;
+	
+	//--------------------
+	// We set the speed to zero for a start.  Later it can be
+	// set to something else...
+	//
+	ThisRobot -> speed . x = 0 ;
+	ThisRobot -> speed . y = 0 ;
+	
+	//--------------------
+	// Now we do the movement, either to the next waypoint OR if one
+	// is set, we persue the given course, which allows complete control
+	// of the bot moves (via the state machine for example)...
+	//
+	ProcessAttackStateMachine ( i );
+	
+    }	// for Number_Of_Droids_On_Ship
+    
 }; // MoveEnemys( void ) 
 
 /* ----------------------------------------------------------------------
@@ -1628,9 +1656,9 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 	ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_bullet_pass_through_hit_bodies;
     
     // start all bullets in the center of the shooter first...
-    NewBullet -> pos.x = ThisRobot -> pos.x;
-    NewBullet -> pos.y = ThisRobot -> pos.y;
-    NewBullet -> pos.z = ThisRobot -> pos.z;
+    NewBullet -> pos . x = ThisRobot -> virt_pos . x;
+    NewBullet -> pos . y = ThisRobot -> virt_pos . y;
+    NewBullet -> pos . z = ThisRobot -> virt_pos . z;
     
     // fire bullets so, that they don't hit the shooter...
     if ( NewBullet->angle_change_rate == 0 ) OffsetFactor = 0.5; else OffsetFactor = 1;
@@ -1678,7 +1706,8 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 	if ( ThisRobot -> is_friendly )
 	{
 	    DebugPrintf ( -3 , "\nATTACK OF A FRIENDLY DROID WITH BUILT-IN ATTACK ANIMATION DETECTED!-->hurting enemies..." );
-	    for ( j = 0 , target_robot = & ( AllEnemys [ 0 ] ) ; j < Number_Of_Droids_On_Ship ; j ++ , target_robot ++ )
+	    for ( j = 0 , target_robot = & ( AllEnemys [ 0 ] ) ; 
+		  j < Number_Of_Droids_On_Ship ; j ++ , target_robot ++ )
 	    {
 		if ( target_robot -> Status == OUT ) continue ;
 		if ( target_robot -> pos . z != ThisRobot -> pos . z ) continue;
@@ -2009,52 +2038,52 @@ update_vector_to_shot_target_for_friend ( enemy* ThisRobot , moderately_finepoin
 void
 update_vector_to_shot_target_for_enemy ( enemy* this_robot , moderately_finepoint* vect_to_target )
 {
-  int TargetPlayerNum;
-  int j;
-  int our_level = this_robot -> pos . z ;
-  float best_dist, our_dist;
-
-  //--------------------
-  // By default, we set the target of this bot to the Tux himself
-  // i.e. the closest (visible?) player.
-  //
-  TargetPlayerNum = ClosestVisiblePlayer ( this_robot ) ;
-  vect_to_target -> x = Me [ TargetPlayerNum ] . pos . x - this_robot -> pos . x ;
-  vect_to_target -> y = Me [ TargetPlayerNum ] . pos . y - this_robot -> pos . y ;
-  this_robot -> attack_target_type = ATTACK_TARGET_IS_PLAYER ;
-  this_robot -> attack_target_index = TargetPlayerNum ;
-
-  best_dist = vect_len ( *vect_to_target );
-
-  //--------------------
-  // But maybe there is a friend of the Tux also close.  Then maybe we
-  // should attack this one instead, since it's much closer anyway.
-  // Let's see...
-  //
-  for ( j  = first_index_of_bot_on_level [ our_level ] ; 
-	j <=  last_index_of_bot_on_level [ our_level ] ; j ++ )
+    int TargetPlayerNum;
+    int j;
+    int our_level = this_robot -> pos . z ;
+    float best_dist, our_dist;
+    
+    //--------------------
+    // By default, we set the target of this bot to the Tux himself
+    // i.e. the closest (visible?) player.
+    //
+    TargetPlayerNum = ClosestVisiblePlayer ( this_robot ) ;
+    vect_to_target -> x = Me [ TargetPlayerNum ] . pos . x - this_robot -> virt_pos . x ;
+    vect_to_target -> y = Me [ TargetPlayerNum ] . pos . y - this_robot -> virt_pos . y ;
+    this_robot -> attack_target_type = ATTACK_TARGET_IS_PLAYER ;
+    this_robot -> attack_target_index = TargetPlayerNum ;
+    
+    best_dist = vect_len ( *vect_to_target );
+    
+    //--------------------
+    // But maybe there is a friend of the Tux also close.  Then maybe we
+    // should attack this one instead, since it's much closer anyway.
+    // Let's see...
+    //
+    for ( j  = first_index_of_bot_on_level [ our_level ] ; 
+	  j <=  last_index_of_bot_on_level [ our_level ] ; j ++ )
     {
-      if ( AllEnemys [ j ] . pos . z != our_level ) continue ;
-      if ( AllEnemys [ j ] . Status == OUT ) continue ;
-      if ( ! AllEnemys [ j ] . is_friendly ) continue ;
-
-      our_dist = sqrt ( powf ( this_robot -> pos . x - AllEnemys [ j ] . pos . x , 2 ) +
-			powf ( this_robot -> pos . y - AllEnemys [ j ] . pos . y , 2 )   );
-
-      if ( our_dist > 5.0 ) continue ;
+	if ( AllEnemys [ j ] . pos . z != our_level ) continue ;
+	if ( AllEnemys [ j ] . Status == OUT ) continue ;
+	if ( ! AllEnemys [ j ] . is_friendly ) continue ;
 	
-      if ( our_dist < best_dist )
+	our_dist = sqrt ( powf ( this_robot -> pos . x - AllEnemys [ j ] . pos . x , 2 ) +
+			  powf ( this_robot -> pos . y - AllEnemys [ j ] . pos . y , 2 )   );
+	
+	if ( our_dist > 5.0 ) continue ;
+	
+	if ( our_dist < best_dist )
 	{
-	  // DebugPrintf ( -4 , "\nThis hostile robot just switched to attacking a friendly droid." );
-	  best_dist = our_dist ;
-
-	  vect_to_target -> x = AllEnemys [ j ] . pos . x - this_robot -> pos . x ;
-	  vect_to_target -> y = AllEnemys [ j ] . pos . y - this_robot -> pos . y ;
-	  this_robot -> attack_target_type = ATTACK_TARGET_IS_ENEMY ;
-	  this_robot -> attack_target_index = j ;
+	    // DebugPrintf ( -4 , "\nThis hostile robot just switched to attacking a friendly droid." );
+	    best_dist = our_dist ;
+	    
+	    vect_to_target -> x = AllEnemys [ j ] . pos . x - this_robot -> pos . x ;
+	    vect_to_target -> y = AllEnemys [ j ] . pos . y - this_robot -> pos . y ;
+	    this_robot -> attack_target_type = ATTACK_TARGET_IS_ENEMY ;
+	    this_robot -> attack_target_index = j ;
 	}
     }
-
+    
 }; // int update_vector_to_shot_target_for_enemy ( ThisRobot , moderately_finepoint* vect_to_target )
 
 /* ----------------------------------------------------------------------
@@ -2064,25 +2093,25 @@ update_vector_to_shot_target_for_enemy ( enemy* this_robot , moderately_finepoin
 void
 occasionally_update_vector_and_shot_target ( enemy* ThisRobot , moderately_finepoint* vect_to_target ) 
 {
-  /*
-  static int first_call = FALSE ;
-  static int last_time_bots_updated_target;
-
-  if ( first_call )
+    /* 
+       static int first_call = FALSE ;
+       static int last_time_bots_updated_target;
+       
+       if ( first_call )
+       {
+       last_time_bots_updated_target = SDL_GetTicks() - 10000 ;
+       }
+       if ( SDL_GetTicks() - last_time_bots_updated_target < 500 ) return;
+       last_
+    */
+    
+    if ( ThisRobot->is_friendly == TRUE )
     {
-      last_time_bots_updated_target = SDL_GetTicks() - 10000 ;
+	update_vector_to_shot_target_for_friend ( ThisRobot , vect_to_target ) ;
     }
-  if ( SDL_GetTicks() - last_time_bots_updated_target < 500 ) return;
-  last_
-  */
-
-  if ( ThisRobot->is_friendly == TRUE )
+    else
     {
-      update_vector_to_shot_target_for_friend ( ThisRobot , vect_to_target ) ;
-    }
-  else
-    {
-      update_vector_to_shot_target_for_enemy ( ThisRobot , vect_to_target ) ;
+	update_vector_to_shot_target_for_enemy ( ThisRobot , vect_to_target ) ;
     }
 
 }; // void give_occasionally_updated_vector_to_shot_target ( ThisRobot , & vect_to_target ) 
@@ -2097,18 +2126,18 @@ occasionally_update_vector_and_shot_target ( enemy* ThisRobot , moderately_finep
 int
 ConsideredMoveIsFeasible ( Enemy ThisRobot , moderately_finepoint StepVector , int enemynum )
 {
-  if ( ( IsPassable ( ThisRobot -> pos.x + StepVector.x , 
-		      ThisRobot -> pos.y + StepVector.y ,
-		      ThisRobot -> pos.z ) ) &&
-       ( CheckIfWayIsFreeOfDroidsWithTuxchecking ( ThisRobot->pos.x , ThisRobot->pos.y , 
-						   ThisRobot->pos.x + StepVector . x , 
-						   ThisRobot->pos.y + StepVector . y ,
-						   ThisRobot->pos.z , ThisRobot ) ) )
+    if ( ( IsPassable ( ThisRobot -> pos.x + StepVector.x , 
+			ThisRobot -> pos.y + StepVector.y ,
+			ThisRobot -> pos.z ) ) &&
+	 ( CheckIfWayIsFreeOfDroidsWithTuxchecking ( ThisRobot->pos.x , ThisRobot->pos.y , 
+						     ThisRobot->pos.x + StepVector . x , 
+						     ThisRobot->pos.y + StepVector . y ,
+						     ThisRobot->pos.z , ThisRobot ) ) )
     {
-      return TRUE;
+	return TRUE;
     }
-  
-  return FALSE;
+    
+    return FALSE;
 
 }; // int ConsideredMoveIsFeasible ( Enemy ThisRobot , finepoint StepVector )
 
@@ -2193,8 +2222,8 @@ MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int enemynum , int Dire
     }
     else if ( ThisRobot -> attack_target_type == ATTACK_TARGET_IS_ENEMY )
     {
-	VictimPosition . x = AllEnemys [ ThisRobot -> attack_target_index ] . pos . x ;
-	VictimPosition . y = AllEnemys [ ThisRobot -> attack_target_index ] . pos . y ;
+	VictimPosition . x = AllEnemys [ ThisRobot -> attack_target_index ] . virt_pos . x ;
+	VictimPosition . y = AllEnemys [ ThisRobot -> attack_target_index ] . virt_pos . y ;
     }
     else if ( ThisRobot -> attack_target_type == ATTACK_TARGET_IS_NOTHING )
     {
@@ -2211,8 +2240,8 @@ MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int enemynum , int Dire
 				   PLEASE_INFORM, IS_FATAL );
     }
     
-    CurrentPosition . x = ThisRobot -> pos . x ;
-    CurrentPosition . y = ThisRobot -> pos . y ;
+    CurrentPosition . x = ThisRobot -> virt_pos . x ;
+    CurrentPosition . y = ThisRobot -> virt_pos . y ;
     
     StepVector . x = VictimPosition . x - CurrentPosition . x ;
     StepVector . y = VictimPosition . y - CurrentPosition . y ;
@@ -2260,6 +2289,8 @@ MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int enemynum , int Dire
 	RotatedStepVector.y = StepVector.y ;
 	RotateVectorByAngle ( & RotatedStepVector , RotationAngleTryList [ i ] ) ;
 	
+	// DebugPrintf ( -4 , "\n%s(): moving in/out for combat on remote level... " , __FUNCTION__ );
+
 	//--------------------
 	// Maybe we've found a solution, then we can take it and quit
 	// trying around...
@@ -2466,7 +2497,7 @@ ProcessAttackStateMachine ( int enemynum )
     //
     // ignore robots on other levels 
     // if ( ThisRobot->pos.z != CurLevel->levelnum) return;
-    if ( ! IsActiveLevel ( ThisRobot -> pos . z ) ) return;
+    // if ( ! IsActiveLevel ( ThisRobot -> pos . z ) ) return;
     
     // ignore dead robots as well...
     // if ( ThisRobot -> Status == OUT ) return;
@@ -2581,8 +2612,8 @@ ProcessAttackStateMachine ( int enemynum )
 	    ThisRobot -> PrivatePathway [ 0 ] . x = Me [ 0 ] . pos . x ;
 	    ThisRobot -> PrivatePathway [ 0 ] . y = Me [ 0 ] . pos . y ;
 	    
-	    if ( sqrt ( ( ThisRobot -> pos . x - Me [ 0 ] . pos . x ) * ( ThisRobot -> pos . x - Me [ 0 ] . pos . x ) +
-			( ThisRobot -> pos . y - Me [ 0 ] . pos . y ) * ( ThisRobot -> pos . y - Me [ 0 ] . pos . y ) ) < 1 )
+	    if ( sqrt ( ( ThisRobot -> virt_pos . x - Me [ 0 ] . pos . x ) * ( ThisRobot -> virt_pos . x - Me [ 0 ] . pos . x ) +
+			( ThisRobot -> virt_pos . y - Me [ 0 ] . pos . y ) * ( ThisRobot -> virt_pos . y - Me [ 0 ] . pos . y ) ) < 1 )
 	    {
 		ChatWithFriendlyDroid ( ThisRobot );
 		ThisRobot -> will_rush_tux = FALSE ;
@@ -2915,8 +2946,8 @@ ProcessAttackStateMachine ( int enemynum )
     // If the closest alive player is not visible at all, then there is
     // nothing to do and we just return.
     //
-    if ( ! IsVisible ( &ThisRobot->pos , TargetPlayer ) && 
-	 ( ThisRobot->is_friendly == FALSE ) ) 
+    if ( ! IsVisible ( & ThisRobot -> virt_pos , TargetPlayer ) && 
+	 ( ThisRobot -> is_friendly == FALSE ) ) 
 	return; 
     
     // if ( ThisRobot -> is_friendly ) return; 
@@ -3104,7 +3135,7 @@ AnimateEnemys (void)
 	/* ignore enemys that are dead or on other levels or dummys */
 	// if (AllEnemys[i].type == DEBUG_ENEMY) continue;
 	// if (AllEnemys[i].pos.z != CurLevel->levelnum)
-	if ( our_enemy -> pos . z != Me [ 0 ] . pos . z )
+	if ( ! level_is_partly_visible ( our_enemy -> pos . z ) )
 	    continue;
 
 	//--------------------

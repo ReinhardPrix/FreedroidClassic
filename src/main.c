@@ -198,8 +198,7 @@ better than nothing.  Thanks anyway for you interest in FreedroidRPG.\n\
 	    
 	    CheckInfluenceEnemyCollision ();
 	    
-	    CheckForJumpThresholds( 0  ); // maybe the Tux is so close to the border of one map, that
-      	    // he should be put into the next one already, to link them smoothly
+	    correct_tux_position_according_to_jump_thresholds ( 0 );
 	    
 	    CheckIfMissionIsComplete (); 
 	    
@@ -235,7 +234,6 @@ update_timeouts_for_bots_on_level ( int level_num , float latest_frame_time )
 {
     int i;
     enemy* this_bot;
-
     occasionally_update_first_and_last_bot_indices ( );
 
     for ( i  = first_index_of_bot_on_level [ level_num ] ; 
@@ -296,6 +294,7 @@ UpdateCountersForThisFrame ( int player_num )
     Level item_level = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
     float my_speed ;
     float latest_frame_time = Frame_Time();
+    int level_num;
 
     //--------------------
     // First we do all the updated, that need to be done only once
@@ -365,7 +364,11 @@ UpdateCountersForThisFrame ( int player_num )
 	// In any case those counteres must be updated, but we'll only to 
 	// that for the Tux current level (at present).
 	//
-	update_timeouts_for_bots_on_level ( Me [ 0 ] . pos . z , latest_frame_time ) ;
+	for ( level_num = 0 ; level_num < MAX_LEVELS ; level_num ++ )
+	{
+	    if ( level_is_partly_visible ( level_num ) )
+		update_timeouts_for_bots_on_level ( level_num , latest_frame_time ) ;
+	}
 
     }; // things that need to be done only once per program, not per player
     

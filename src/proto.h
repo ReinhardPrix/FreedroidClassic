@@ -82,7 +82,7 @@ EXTERN int closed_chest_below_mouse_cursor ( int player_num ) ;
 EXTERN int smashable_barrel_below_mouse_cursor ( int player_num ) ;
 EXTERN void tux_wants_to_attack_now ( int player_num ) ;
 EXTERN void PerformTuxAttackRaw ( int player_num ) ;
-EXTERN void CheckForJumpThresholds ( int player_num );
+EXTERN void correct_tux_position_according_to_jump_thresholds ( int player_num );
 EXTERN int isignf (float);
 EXTERN void InitInfluPositionHistory( int player_num );
 EXTERN float GetInfluPositionHistoryX( int Index );
@@ -103,6 +103,7 @@ EXTERN void blit_zoomed_iso_image_to_map_position ( iso_image* our_iso_image , f
 EXTERN int tux_can_walk_this_line ( int player_num , float x1, float y1 , float x2 , float y2 );
 EXTERN void clear_out_intermediate_points ( int player_num );
 EXTERN void set_up_intermediate_course_for_tux ( int player_num );
+EXTERN void adapt_position_for_jump_thresholds ( gps* old_position, gps* new_position );
 
 // bullet.c 
 #undef EXTERN
@@ -149,6 +150,7 @@ EXTERN void clear_all_loaded_tux_images ( int with_free );
 EXTERN int set_rotation_index_for_this_robot ( enemy* ThisRobot );
 EXTERN int set_rotation_model_for_this_robot ( enemy* ThisRobot );
 EXTERN void grab_enemy_images_from_archive ( int enemy_model_nr );
+EXTERN int level_is_partly_visible ( int level_num );
 
 // open_gl.c 
 #undef EXTERN
@@ -375,7 +377,7 @@ EXTERN long calculate_item_sell_price ( item* BuyItem );
 EXTERN void FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange );
 EXTERN void DamageAllEquipment( int player_num ) ;
 EXTERN void DropChestItemAt( int ItemType , float x , float y , int prefix , int suffix , int TreasureChestRange );
-EXTERN void DropItemAt( int ItemType , float x , float y , int prefix , int suffix , int TreasureChestRange , int multiplicity );
+EXTERN void DropItemAt( int ItemType , int level_num , float x , float y , int prefix , int suffix , int TreasureChestRange , int multiplicity );
 EXTERN void Quick_ApplyItem( int ItemKey );
 EXTERN void ApplyItem( item* CurItem );
 EXTERN int Inv_Pos_Is_Free( int x , int y );
@@ -397,7 +399,7 @@ EXTERN void ManageInventoryScreen ( void );
 EXTERN void AddFloorItemDirectlyToInventory( item* ItemPointer );
 EXTERN void CopyItem( item* SourceItem , item* DestItem , int MakeSound );
 EXTERN void DeleteItem( item* Item );
-EXTERN void DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , int ForceDrop , int ChestItem );
+EXTERN void DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int ForceMagical , int ForceDrop , int ChestItem );
 EXTERN int get_floor_item_index_under_mouse_cursor ( int player_num );
 
 
@@ -582,7 +584,7 @@ EXTERN char *va (char *format, ...);
 #endif
 EXTERN void robot_group_turn_hostile ( int enemy_num );
 EXTERN void SetRestOfGroupToState ( Enemy ThisRobot , int NewState );
-EXTERN int MakeSureEnemyIsInsideThisLevel ( Enemy ThisRobot );
+EXTERN int MakeSureEnemyIsInsideHisLevel ( Enemy ThisRobot );
 EXTERN void Enemy_Post_Bullethit_Behaviour( int EnemyNum );
 EXTERN void ShuffleEnemys ( int LevelNum );
 EXTERN int CheckEnemyEnemyCollision (int enemynum);

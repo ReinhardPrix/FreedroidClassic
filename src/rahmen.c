@@ -1093,7 +1093,7 @@ prepare_text_window_content ( char* ItemDescText )
     // inventory or other item and in case that's true, we need to give the 
     // description of this item.
     //
-    else if ( GameConfig.Inventory_Visible )
+    else if ( GameConfig . Inventory_Visible )
     {
 	//--------------------
 	// Perhaps the cursor is over some item of the inventory?
@@ -1251,7 +1251,7 @@ ShowCurrentTextWindow ( void )
     //--------------------
     // During the title display phase, we need not have this window visible...
     //
-    if ( Me[0].status == BRIEFING ) return;
+    if ( Me [ 0 ] . status == BRIEFING ) return;
 
     //--------------------
     // We prepare the string, that is to be displayed inside the text 
@@ -1283,9 +1283,6 @@ ShowCurrentTextWindow ( void )
     Banner_Text_Rect . y = GetMousePos_y () ;
     Banner_Text_Rect . w = LOWER_BANNER_TEXT_RECT_W;
     Banner_Text_Rect . h = LOWER_BANNER_TEXT_RECT_H;
-
-
-
 
     SDL_SetClipRect( Screen , NULL );  // this unsets the clipping rectangle
     if ( strlen( ItemDescText ) > 1 )
@@ -1345,7 +1342,6 @@ ShowCurrentTextWindow ( void )
 
 }; // void ShowCurrentTextWindow ( void )
 
-
 /* ----------------------------------------------------------------------
  * This function updates the various displays that are usually blitted
  * right into the combat window, like energy and status meter and that...
@@ -1363,11 +1359,14 @@ DisplayBanner ( void )
     ShowCurrentTextWindow ( );
     ShowCurrentSkill ( );
 
+    //--------------------
+    // We display the name of the current level and the current time inside
+    // the game.
+    //
     sprintf ( level_name_and_time , "%s  %02d:%02d " , 
 	      curShip . AllLevels [ Me [ 0 ] . pos . z ] -> Levelname , 
 	      ((int)( 10 * Me [ 0 ] . current_game_date / ( 60 * 60 ))) % 24 ,
 	      ((int)( 10 * Me [ 0 ] . current_game_date / ( 60 ))) % 60 ) ;
-    
     RightPutStringFont ( Screen , FPS_Display_BFont , 2 , level_name_and_time );
 
 }; // void DisplayBanner( void ) 

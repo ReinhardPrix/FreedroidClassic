@@ -744,6 +744,7 @@ typedef struct
 {
     int type;			// the number of the droid specifications in Druidmap 
     gps pos;		        // coordinates of the current position in the level
+    gps virt_pos;		// the virtual position with respect to remote levels
     finepoint speed;		// current speed  
     double energy;		// current energy of this droid
     

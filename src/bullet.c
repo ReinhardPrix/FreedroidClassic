@@ -563,8 +563,8 @@ enemy_spray_blood ( Enemy CurEnemy )
 
   RotateVectorByAngle ( & target_pos , MyRandom ( 360 ) );
 
-  target_pos . x += CurEnemy -> pos . x ;
-  target_pos . y += CurEnemy -> pos . y ;
+  target_pos . x += CurEnemy -> virt_pos . x ;
+  target_pos . y += CurEnemy -> virt_pos . y ;
 
   create_new_obstacle_on_level ( curShip . AllLevels [ CurEnemy -> pos . z ] , ISO_BLOOD_1 + MyRandom ( 7 ) , target_pos . x , target_pos . y );
   

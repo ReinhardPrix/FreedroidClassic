@@ -803,64 +803,67 @@ The blitting list size was exceeded!",
  * object into the blitting list.
  * ---------------------------------------------------------------------- */
 void
-insert_new_element_into_blitting_list ( float new_element_norm , int new_element_type , void* new_element_pointer , int code_number )
+insert_new_element_into_blitting_list ( float new_element_norm , 
+					int new_element_type , 
+					void* new_element_pointer , 
+					int code_number )
 {
-  int i;
+    int i;
 
-  for ( i = 0 ; i < MAX_ELEMENTS_IN_BLITTING_LIST ; i ++ )
+    for ( i = 0 ; i < MAX_ELEMENTS_IN_BLITTING_LIST ; i ++ )
     {
 
-      //--------------------
-      // Maybe the new element is the last entry that will be added.  This case
-      // must be handled specially.
-      //
-      if ( i == number_of_objects_currently_in_blitting_list )
+	//--------------------
+	// Maybe the new element is the last entry that will be added.  This case
+	// must be handled specially.
+	//
+	if ( i == number_of_objects_currently_in_blitting_list )
 	{
-	  blitting_list [ number_of_objects_currently_in_blitting_list ] . norm_of_elements_position =
-	    new_element_norm ;
-	  blitting_list [ number_of_objects_currently_in_blitting_list ] . element_type = new_element_type ;
-	  blitting_list [ number_of_objects_currently_in_blitting_list ] . element_pointer = new_element_pointer ;
-	  blitting_list [ number_of_objects_currently_in_blitting_list ] . code_number = code_number ;
-	  number_of_objects_currently_in_blitting_list ++ ;
-	  return;
+	    blitting_list [ number_of_objects_currently_in_blitting_list ] . norm_of_elements_position =
+		new_element_norm ;
+	    blitting_list [ number_of_objects_currently_in_blitting_list ] . element_type = new_element_type ;
+	    blitting_list [ number_of_objects_currently_in_blitting_list ] . element_pointer = new_element_pointer ;
+	    blitting_list [ number_of_objects_currently_in_blitting_list ] . code_number = code_number ;
+	    number_of_objects_currently_in_blitting_list ++ ;
+	    return;
 	}
 
-      //--------------------
-      // In this case we know, that the New_Element insertion position is not the last
-      // one and that therefore the other elements behind this position must be
-      // moved along by one.
-      //
-      if ( new_element_norm < blitting_list [ i ] . norm_of_elements_position )
+	//--------------------
+	// In this case we know, that the New_Element insertion position is not the last
+	// one and that therefore the other elements behind this position must be
+	// moved along by one.
+	//
+	if ( new_element_norm < blitting_list [ i ] . norm_of_elements_position )
 	{
-	  //--------------------
-	  // Before we can move the memory here, we must make sure that there
-	  // is room for our shift.  So we'll check that now...
-	  //
-	  if ( i >= MAX_ELEMENTS_IN_BLITTING_LIST - 1 )
+	    //--------------------
+	    // Before we can move the memory here, we must make sure that there
+	    // is room for our shift.  So we'll check that now...
+	    //
+	    if ( i >= MAX_ELEMENTS_IN_BLITTING_LIST - 1 )
 	    {
-	      GiveStandardErrorMessage ( __FUNCTION__  , "\
+		GiveStandardErrorMessage ( __FUNCTION__  , "\
 The blitting list size was exceeded!",
-					 PLEASE_INFORM, IS_FATAL );
+					   PLEASE_INFORM, IS_FATAL );
 	    }
-
-	  //--------------------
-	  // Note that we MUST NOT USE MEMCPY HERE BUT RATHER MUST USE MEM-MOVE!!
-	  // See the GNU C Manual for details!
-	  //
-	  memmove ( & ( blitting_list [ i + 1 ] ) , & ( blitting_list [ i ] ) , 
-		    sizeof ( blitting_list_element ) * ( number_of_objects_currently_in_blitting_list - i + 1 ) );
-
-	  //--------------------
-	  // Now we can insert the New_Element in the new free position that we have 
-	  // created.
-	  //
-	  blitting_list [ i ] . norm_of_elements_position =
-	    new_element_norm ;
-	  blitting_list [ i ] . element_type = new_element_type ;
-	  blitting_list [ i ] . element_pointer = new_element_pointer ;
-	  blitting_list [ i ] . code_number = code_number ;
-	  number_of_objects_currently_in_blitting_list ++ ;	  
-	  return;
+	    
+	    //--------------------
+	    // Note that we MUST NOT USE MEMCPY HERE BUT RATHER MUST USE MEM-MOVE!!
+	    // See the GNU C Manual for details!
+	    //
+	    memmove ( & ( blitting_list [ i + 1 ] ) , & ( blitting_list [ i ] ) , 
+		      sizeof ( blitting_list_element ) * ( number_of_objects_currently_in_blitting_list - i + 1 ) );
+	    
+	    //--------------------
+	    // Now we can insert the New_Element in the new free position that we have 
+	    // created.
+	    //
+	    blitting_list [ i ] . norm_of_elements_position =
+		new_element_norm ;
+	    blitting_list [ i ] . element_type = new_element_type ;
+	    blitting_list [ i ] . element_pointer = new_element_pointer ;
+	    blitting_list [ i ] . code_number = code_number ;
+	    number_of_objects_currently_in_blitting_list ++ ;	  
+	    return;
 	}
     }
 }; // void insert_new_element_into_blitting_list ( ... )
@@ -887,7 +890,7 @@ insert_one_enemy_into_blitting_list ( int enemy_num )
 {
   float enemy_norm;
 
-  enemy_norm = AllEnemys [ enemy_num ] . pos . x + AllEnemys [ enemy_num ] . pos . y ;
+  enemy_norm = AllEnemys [ enemy_num ] . virt_pos . x + AllEnemys [ enemy_num ] . virt_pos . y ;
 
   insert_new_element_into_blitting_list ( enemy_norm , BLITTING_TYPE_ENEMY , & ( AllEnemys [ enemy_num ] ) , enemy_num );
 
@@ -941,6 +944,119 @@ insert_one_blast_into_blitting_list ( int blast_num )
 }; // void insert_one_blast_into_blitting_list ( int enemy_num )
 
 /* ----------------------------------------------------------------------
+ * We need to display bots that are on the current level or on one of the
+ * levels glued to this one.
+ * ---------------------------------------------------------------------- */
+int
+level_is_partly_visible ( int level_num )
+{
+    int current_tux_level = Me [ 0 ] . pos . z ;
+
+    if ( level_num == current_tux_level ) return ( TRUE );
+    if ( level_num == curShip . AllLevels [ current_tux_level ] -> jump_target_north ) return ( TRUE );
+    if ( level_num == curShip . AllLevels [ current_tux_level ] -> jump_target_south ) return ( TRUE );
+    if ( level_num == curShip . AllLevels [ current_tux_level ] -> jump_target_east ) return ( TRUE );
+    if ( level_num == curShip . AllLevels [ current_tux_level ] -> jump_target_west ) return ( TRUE );
+
+    return ( FALSE );
+
+}; // int level_is_partly_visible ( int level_num )
+
+/* ----------------------------------------------------------------------
+ * The Tux can change onto other levels via jump thresholds.  This was an
+ * important step for gluing together several maps into one big map.
+ *
+ * However, enemies will want to follow the Tux.  They should become 
+ * visible when they are technically still on other levels.  Later they
+ * should even become clickable and even later they might even move and
+ * react to the Tux.
+ *
+ * However, from a technical point of view, this is becoming increasingly
+ * unconvenient to handle.  Therefore we introduce 'virtual' positions,
+ * i.e. the position the bot would have, if the bot were in fact counted
+ * as part of a neighbouring level, mostly the level of the Tux.  Using
+ * this concept, we can more easily compute distances and compare 
+ * positions.
+ *
+ * This function is an abstract approach to this problem, working with
+ * the 'gps' notion, such that later it might also be used in conjunction
+ * with items or other stuff...
+ *
+ * ---------------------------------------------------------------------- */
+void
+update_virtual_position ( gps* target_pos , gps* source_pos , int level_num )
+{
+    int north_level, south_level, east_level, west_level;
+
+    //--------------------
+    // The case where the position in question is already directy on 
+    // the virtual level, things are really simple and we can quit
+    // almost immediately...
+    //
+    if ( source_pos -> z == level_num )
+    {
+	target_pos -> x = source_pos -> x ;
+	target_pos -> y = source_pos -> y ;
+	target_pos -> z = source_pos -> z ;
+	return;
+    }
+
+    //--------------------
+    // However, in case of a remote level, we need to compute a 
+    // bit more...
+    //
+    north_level = curShip . AllLevels [ level_num ] -> jump_target_north ;
+    south_level = curShip . AllLevels [ level_num ] -> jump_target_south ;
+    east_level =  curShip . AllLevels [ level_num ] -> jump_target_east ;
+    west_level =  curShip . AllLevels [ level_num ] -> jump_target_west ;
+    
+    if ( source_pos -> z == north_level )
+    {
+	target_pos -> z = level_num ;
+	target_pos -> x = source_pos -> x ;
+	target_pos -> y = source_pos -> y - curShip . AllLevels [ north_level ] -> ylen 
+	    + curShip . AllLevels [ north_level ] -> jump_threshold_south ;
+    }
+    else if ( source_pos -> z == south_level )
+    {
+	target_pos -> z = level_num ;
+	target_pos -> x = source_pos -> x ;
+	target_pos -> y = source_pos -> y + curShip . AllLevels [ level_num ] -> ylen 
+	    - curShip . AllLevels [ level_num ] -> jump_threshold_south ;
+
+	// DebugPrintf ( -4 , "\n%s(): assigning virtual position to bot on southern map." , __FUNCTION__ );
+    }
+    else if ( source_pos -> z == east_level )
+    {
+	target_pos -> z = level_num ;
+	target_pos -> y = source_pos -> y ;
+	target_pos -> x = source_pos -> x + curShip . AllLevels [ level_num ] -> xlen 
+	    - curShip . AllLevels [ level_num ] -> jump_threshold_east ;
+    }
+    else if ( source_pos -> z == west_level )
+    {
+	target_pos -> z = level_num ;
+	target_pos -> y = source_pos -> y ;
+	target_pos -> x = source_pos -> x - curShip . AllLevels [ west_level ] -> xlen 
+	    + curShip . AllLevels [ west_level ] -> jump_threshold_east ;
+    }
+    else
+    {
+	//--------------------
+	// In this case, we've reached the conclusion, that the position
+	// in question cannot be expressed in terms of the virtual level.
+	// That means we'll best 'erase' the virtual positions, so that
+	// no 'phantoms' will occur...
+	//
+	target_pos -> x = (-1) ;
+	target_pos -> y = (-1) ;
+	target_pos -> z = (-1) ;
+	return;
+    }
+    
+}; // void update_virtual_position ( gps* target_pos , gps* source_pos , int level_num )
+
+/* ----------------------------------------------------------------------
  * The blitting list must contain the enemies too.  This function is 
  * responsible for inserting the enemies at the right positions.
  * ---------------------------------------------------------------------- */
@@ -948,29 +1064,56 @@ void
 insert_enemies_into_blitting_list ( void )
 {
     int i;
-    float enemy_norm;
-    float tux_norm = Me [ 0 ] . pos . x + Me [ 0 ] . pos . y ;
     enemy* ThisRobot;
-    
-    for ( i = first_index_of_bot_on_level [ Me [ 0 ] . pos . z ] ; 
-	  i <= last_index_of_bot_on_level [ Me [ 0 ] . pos . z ] ; i ++ )
+    int level_num ;
+
+    //--------------------
+    // Now that we plan to also show bots on other levels, we must be
+    // a bit more general and proceed through all the levels...
+    //
+    // Those levels not in question will be filtered out anyway inside
+    // the loop...
+    //
+    for ( level_num = 0 ; level_num < MAX_LEVELS ; level_num ++ )
     {
-	ThisRobot = & ( AllEnemys [ i ] ) ; 
 
-	if ( ThisRobot -> pos . z != Me [ 0 ] . pos . z ) continue;
-	if ( ( ThisRobot -> Status == OUT ) && ( ! Druidmap [ ThisRobot -> type ] . use_image_archive_file ) ) 
+	if ( ! level_is_partly_visible ( level_num ) ) continue ;
+
+	for ( i = first_index_of_bot_on_level [ level_num ] ; 
+	      i <= last_index_of_bot_on_level [ level_num ] ; i ++ )
 	{
-	    // DebugPrintf ( -4 , "\n%s():  enemy blitting suppressed because of status and no animation..." , __FUNCTION__ );
-	    // continue;
-	}
+	    ThisRobot = & ( AllEnemys [ i ] ) ; 
+	    
+	    if ( ! level_is_partly_visible ( ThisRobot -> pos . z ) ) continue;
 
-	enemy_norm = ThisRobot -> pos . x + ThisRobot -> pos . y ;
-	
-	if ( fabsf ( enemy_norm - tux_norm ) > FLOOR_TILES_VISIBLE_AROUND_TUX + FLOOR_TILES_VISIBLE_AROUND_TUX ) continue;
-	
-	insert_one_enemy_into_blitting_list ( i );
+	    // if ( ThisRobot -> pos . z != Me [ 0 ] . pos . z )
+	    // DebugPrintf ( -4 , "\n%s(): (possibly) inserting truly virtual bot..." , __FUNCTION__ );
+
+	    if ( ( ThisRobot -> Status == OUT ) && ( ! Druidmap [ ThisRobot -> type ] . use_image_archive_file ) ) 
+	    {
+		// DebugPrintf ( -4 , "\n%s():  enemy blitting suppressed because of status and no animation..." , __FUNCTION__ );
+		// continue;
+	    }
+	    
+	    //--------------------
+	    // We update the virtual position of this bot, such that we can handle it 
+	    // with easier expressions later...
+	    //
+	    update_virtual_position ( & ( ThisRobot -> virt_pos ) ,
+				      & ( ThisRobot -> pos ) , Me [ 0 ] . pos . z );
+
+	    if ( fabsf ( ThisRobot -> virt_pos . x - Me [ 0 ] . pos . x ) > 
+		 FLOOR_TILES_VISIBLE_AROUND_TUX + FLOOR_TILES_VISIBLE_AROUND_TUX ) continue;
+	    if ( fabsf ( ThisRobot -> virt_pos . y - Me [ 0 ] . pos . y ) > 
+		 FLOOR_TILES_VISIBLE_AROUND_TUX + FLOOR_TILES_VISIBLE_AROUND_TUX ) continue;
+
+	    // if ( ThisRobot -> pos . z != Me [ 0 ] . pos . z )
+	    // DebugPrintf ( -4 , "\n%s(): (possibly) inserting truly virtual bot..." , __FUNCTION__ );
+	    
+	    insert_one_enemy_into_blitting_list ( i );
+	}
     }
-      
+
 }; // void insert_enemies_into_blitting_list ( void )
 
 /* ----------------------------------------------------------------------
@@ -1121,95 +1264,95 @@ blit_preput_objects_according_to_blitting_list ( int mask )
 void
 blit_nonpreput_objects_according_to_blitting_list ( int mask )
 {
-  int i;
-  int enemy_under_cursor = -1;
-  int barrel_under_cursor = -1;
-  int chest_under_cursor = -1;
-  int item_under_cursor = -1; 
-
-  //--------------------
-  // We memorize which 'enemy' is currently under the mouse target, so that we
-  // can properly highlight this enemy...
-  //
-  enemy_under_cursor = GetLivingDroidBelowMouseCursor ( 0 ) ;
-  barrel_under_cursor = smashable_barrel_below_mouse_cursor ( 0 ) ;
-  chest_under_cursor = closed_chest_below_mouse_cursor ( 0 ) ;
-  item_under_cursor = get_floor_item_index_under_mouse_cursor ( 0 );
-
-  //--------------------
-  // Now it's time to blit all the elements from the list...
-  //
-  for ( i = 0 ; i < MAX_ELEMENTS_IN_BLITTING_LIST ; i ++ )
+    int i;
+    int enemy_under_cursor = -1;
+    int barrel_under_cursor = -1;
+    int chest_under_cursor = -1;
+    int item_under_cursor = -1; 
+    
+    //--------------------
+    // We memorize which 'enemy' is currently under the mouse target, so that we
+    // can properly highlight this enemy...
+    //
+    enemy_under_cursor = GetLivingDroidBelowMouseCursor ( 0 ) ;
+    barrel_under_cursor = smashable_barrel_below_mouse_cursor ( 0 ) ;
+    chest_under_cursor = closed_chest_below_mouse_cursor ( 0 ) ;
+    item_under_cursor = get_floor_item_index_under_mouse_cursor ( 0 );
+    
+    //--------------------
+    // Now it's time to blit all the elements from the list...
+    //
+    for ( i = 0 ; i < MAX_ELEMENTS_IN_BLITTING_LIST ; i ++ )
     {
-      if ( blitting_list [ i ] . element_type == BLITTING_TYPE_NONE ) break;
-      switch ( blitting_list [ i ] . element_type )
+	if ( blitting_list [ i ] . element_type == BLITTING_TYPE_NONE ) break;
+	switch ( blitting_list [ i ] . element_type )
 	{
-	case BLITTING_TYPE_OBSTACLE:
-
-	  if ( obstacle_map [ ( (obstacle*)  blitting_list [ i ] . element_pointer ) -> type ] . needs_pre_put ) break ;
-	  if ( ! ( mask & OMIT_OBSTACLES ) ) 
-	    {
-	      if ( mask & ZOOM_OUT )
-		blit_one_obstacle_zoomed ( (obstacle*)  blitting_list [ i ] . element_pointer );
-	      else
+	    case BLITTING_TYPE_OBSTACLE:
+		
+		if ( obstacle_map [ ( (obstacle*)  blitting_list [ i ] . element_pointer ) -> type ] . needs_pre_put ) break ;
+		if ( ! ( mask & OMIT_OBSTACLES ) ) 
 		{
-		  if ( ( blitting_list [ i ] . code_number == barrel_under_cursor )  ||
-		       ( blitting_list [ i ] . code_number == chest_under_cursor ) )
-		    blit_one_obstacle_highlighted ( (obstacle*)  blitting_list [ i ] . element_pointer );
-		  else
-		    blit_one_obstacle ( (obstacle*)  blitting_list [ i ] . element_pointer );
+		    if ( mask & ZOOM_OUT )
+			blit_one_obstacle_zoomed ( (obstacle*)  blitting_list [ i ] . element_pointer );
+		    else
+		    {
+			if ( ( blitting_list [ i ] . code_number == barrel_under_cursor )  ||
+			     ( blitting_list [ i ] . code_number == chest_under_cursor ) )
+			    blit_one_obstacle_highlighted ( (obstacle*)  blitting_list [ i ] . element_pointer );
+			else
+			    blit_one_obstacle ( (obstacle*)  blitting_list [ i ] . element_pointer );
+		    }
 		}
-	    }
-	  break;
-	case BLITTING_TYPE_TUX:
-	  if ( ! ( mask & OMIT_TUX ) ) 
-	    {
-	      if ( Me [ 0 ] . energy > 0 )
-		blit_tux ( -1 , -1 , 0 ); // this blits player 0 
-	    }
-	  break;
-	case BLITTING_TYPE_ENEMY:
-	  if ( ! ( mask & OMIT_ENEMIES ) ) 
-	    {
-	      if ( ( ( enemy* ) blitting_list [ i ] . element_pointer ) -> energy < 0 )
-		continue;
-	      if ( ( ( enemy* ) blitting_list [ i ] . element_pointer ) -> animation_type == DEATH_ANIMATION )
-		continue;
-
-	      //--------------------
-	      // A droid can either be rendered in normal mode or in highlighted
-	      // mode, depending in whether the mouse cursor is right over it or not.
-	      //
-	      if ( blitting_list [ i ] . code_number == enemy_under_cursor )
-		PutEnemy ( blitting_list [ i ] . code_number , -1 , -1 , mask , TRUE ); 
-	      else
-		PutEnemy ( blitting_list [ i ] . code_number , -1 , -1 , mask , FALSE ); 
-	    }
-	  break;
-	case BLITTING_TYPE_BULLET:
-	  // DebugPrintf ( -1000 , "Bullet code_number: %d. " , blitting_list [ i ] . code_number );
-	  PutBullet ( blitting_list [ i ] . code_number , mask ); 
-	  break;
-	case BLITTING_TYPE_BLAST:
-	  if ( ! ( mask & OMIT_BLASTS ) )
-	    PutBlast ( blitting_list [ i ] . code_number ); 
-	  break;
-	case BLITTING_TYPE_THROWN_ITEM:
-	  if ( item_under_cursor == blitting_list [ i ] . code_number )
-	    PutItem ( blitting_list [ i ] . code_number , mask , PUT_ONLY_THROWN_ITEMS , TRUE ); 
-	  else
-	    PutItem ( blitting_list [ i ] . code_number , mask , PUT_ONLY_THROWN_ITEMS , FALSE ); 
-
-	  // DebugPrintf ( -1 , "\nThrown item now blitted..." );
-	  break;
-	default:
-	  GiveStandardErrorMessage ( __FUNCTION__  , "\
+		break;
+	    case BLITTING_TYPE_TUX:
+		if ( ! ( mask & OMIT_TUX ) ) 
+		{
+		    if ( Me [ 0 ] . energy > 0 )
+			blit_tux ( -1 , -1 , 0 ); // this blits player 0 
+		}
+		break;
+	    case BLITTING_TYPE_ENEMY:
+		if ( ! ( mask & OMIT_ENEMIES ) ) 
+		{
+		    if ( ( ( enemy* ) blitting_list [ i ] . element_pointer ) -> energy < 0 )
+			continue;
+		    if ( ( ( enemy* ) blitting_list [ i ] . element_pointer ) -> animation_type == DEATH_ANIMATION )
+			continue;
+		    
+		    //--------------------
+		    // A droid can either be rendered in normal mode or in highlighted
+		    // mode, depending in whether the mouse cursor is right over it or not.
+		    //
+		    if ( blitting_list [ i ] . code_number == enemy_under_cursor )
+			PutEnemy ( blitting_list [ i ] . code_number , -1 , -1 , mask , TRUE ); 
+		    else
+			PutEnemy ( blitting_list [ i ] . code_number , -1 , -1 , mask , FALSE ); 
+		}
+		break;
+	    case BLITTING_TYPE_BULLET:
+		// DebugPrintf ( -1000 , "Bullet code_number: %d. " , blitting_list [ i ] . code_number );
+		PutBullet ( blitting_list [ i ] . code_number , mask ); 
+		break;
+	    case BLITTING_TYPE_BLAST:
+		if ( ! ( mask & OMIT_BLASTS ) )
+		    PutBlast ( blitting_list [ i ] . code_number ); 
+		break;
+	    case BLITTING_TYPE_THROWN_ITEM:
+		if ( item_under_cursor == blitting_list [ i ] . code_number )
+		    PutItem ( blitting_list [ i ] . code_number , mask , PUT_ONLY_THROWN_ITEMS , TRUE ); 
+		else
+		    PutItem ( blitting_list [ i ] . code_number , mask , PUT_ONLY_THROWN_ITEMS , FALSE ); 
+		
+		// DebugPrintf ( -1 , "\nThrown item now blitted..." );
+		break;
+	    default:
+		GiveStandardErrorMessage ( __FUNCTION__  , "\
 The blitting list contained an illegal blitting object type.",
-				     PLEASE_INFORM, IS_FATAL );
-	  break;
+					   PLEASE_INFORM, IS_FATAL );
+		break;
 	}
     }
-
+    
 }; // void blit_nonpreput_objects_according_to_blitting_list ( ... )
 
 /* ----------------------------------------------------------------------
@@ -3168,44 +3311,44 @@ blit_tux ( int x , int y , int player_num )
 void
 PrintCommentOfThisEnemy ( int Enum )
 {
-  int x_pos, y_pos;
-  char phase_text[200];
-
-  //--------------------
-  // At this point we can assume, that the enemys has been blittet to the
-  // screen, whether it's a friendly enemy or not.
-  // 
-  // So now we can add some text the enemys says.  That might be fun.
-  //
-  if ( ( AllEnemys[Enum].TextVisibleTime < GameConfig.WantedTextVisibleTime )
-       && GameConfig.All_Texts_Switch )
+    int x_pos, y_pos;
+    char phase_text[200];
+    
+    //--------------------
+    // At this point we can assume, that the enemys has been blittet to the
+    // screen, whether it's a friendly enemy or not.
+    // 
+    // So now we can add some text the enemys says.  That might be fun.
+    //
+    if ( ( AllEnemys [ Enum ] . TextVisibleTime < GameConfig . WantedTextVisibleTime )
+	 && GameConfig . All_Texts_Switch )
     {
-      x_pos = translate_map_point_to_screen_pixel ( AllEnemys[ Enum ] . pos . x , AllEnemys [ Enum ] . pos . y , TRUE );
-      y_pos = translate_map_point_to_screen_pixel ( AllEnemys[ Enum ] . pos . x , AllEnemys [ Enum ] . pos . y , FALSE )
-	- 100 ;
-
-      //--------------------
-      // First we display the normal text to be displayed...
-      //
-      PutStringFont ( Screen , FPS_Display_BFont , 
-		      x_pos , y_pos ,  
-		      AllEnemys[Enum].TextToBeDisplayed );
-
-      //--------------------
-      // Now we add some more debug info here...
-      //
-      sprintf ( phase_text , "a-phase: %3.3f a-type: %d" , AllEnemys [ Enum ] . animation_phase , AllEnemys [ Enum ] . animation_type );
-      /*
-      PutStringFont ( Screen , FPS_Display_BFont , 
-		      x_pos , y_pos + FontHeight ( FPS_Display_BFont ) ,  
-		      phase_text );
-      sprintf ( phase_text , "speed: %3.3fx %3.3fy" , AllEnemys [ Enum ] . speed . x , AllEnemys [ Enum ] . speed . y );
-      PutStringFont ( Screen , FPS_Display_BFont , 
-		      x_pos , y_pos + 2 * FontHeight ( FPS_Display_BFont ) ,  
-		      phase_text );
-      */
+	x_pos = translate_map_point_to_screen_pixel ( AllEnemys[ Enum ] . virt_pos . x , AllEnemys [ Enum ] . virt_pos . y , TRUE );
+	y_pos = translate_map_point_to_screen_pixel ( AllEnemys[ Enum ] . virt_pos . x , AllEnemys [ Enum ] . virt_pos . y , FALSE )
+	    - 100 ;
+	
+	//--------------------
+	// First we display the normal text to be displayed...
+	//
+	PutStringFont ( Screen , FPS_Display_BFont , 
+			x_pos , y_pos ,  
+			AllEnemys[Enum].TextToBeDisplayed );
+	
+	//--------------------
+	// Now we add some more debug info here...
+	//
+	sprintf ( phase_text , "a-phase: %3.3f a-type: %d" , AllEnemys [ Enum ] . animation_phase , AllEnemys [ Enum ] . animation_type );
+	/*
+	  PutStringFont ( Screen , FPS_Display_BFont , 
+	  x_pos , y_pos + FontHeight ( FPS_Display_BFont ) ,  
+	  phase_text );
+	  sprintf ( phase_text , "speed: %3.3fx %3.3fy" , AllEnemys [ Enum ] . speed . x , AllEnemys [ Enum ] . speed . y );
+	  PutStringFont ( Screen , FPS_Display_BFont , 
+	  x_pos , y_pos + 2 * FontHeight ( FPS_Display_BFont ) ,  
+	  phase_text );
+	*/
     }
-
+    
 }; // void PrintCommentOfThisEnemy ( int Enum, int x, int y )
 
 /* ----------------------------------------------------------------------
@@ -3217,40 +3360,40 @@ int
 ThisEnemyNeedsToBeBlitted ( int Enum , int x , int y )
 {
 
-  /*
-  // if enemy is on other level, return 
-  if ( AllEnemys[Enum].pos.z != CurLevel->levelnum )
+    /*
+    // if enemy is on other level, return 
+    if ( AllEnemys[Enum].pos.z != CurLevel->levelnum )
     {
-      // DebugPrintf (3, "\nvoid PutEnemy(int Enum): DIFFERENT LEVEL-->usual end of function reached.\n");
-      return;
+    // DebugPrintf (3, "\nvoid PutEnemy(int Enum): DIFFERENT LEVEL-->usual end of function reached.\n");
+    return;
     }
-  */
-
-  // if enemy is on other level, return 
-  if ( AllEnemys[Enum].pos.z != Me [ 0 ] . pos . z )
+    */
+    
+    // if enemy is on other level, return 
+    if ( AllEnemys [ Enum ] . virt_pos . z != Me [ 0 ] . pos . z )
     {
-      // DebugPrintf (3, "\nvoid PutEnemy(int Enum): DIFFERENT LEVEL-->usual end of function reached.\n");
-      return FALSE;
+	// DebugPrintf (3, "\nvoid PutEnemy(int Enum): DIFFERENT LEVEL-->usual end of function reached.\n");
+	return FALSE;
     }
-
-  // if enemy is of type (-1), return 
-  if ( AllEnemys[Enum].type == ( -1 ) )
+    
+    // if enemy is of type (-1), return 
+    if ( AllEnemys[Enum].type == ( -1 ) )
     {
-      // DebugPrintf (3, "\nvoid PutEnemy(int Enum): DIFFERENT LEVEL-->usual end of function reached.\n");
-      return FALSE ;
+	// DebugPrintf (3, "\nvoid PutEnemy(int Enum): DIFFERENT LEVEL-->usual end of function reached.\n");
+	return FALSE ;
     }
-
-  if ( ! MakeSureEnemyIsInsideThisLevel ( &(AllEnemys[Enum] ) ) ) return ( FALSE );
-
-  // if the enemy is out of sight, we need not do anything more here
-  if ( ( ! show_all_droids ) && ( ! IsVisible ( & AllEnemys [ Enum ] . pos , 0 ) ) )
+    
+    if ( ! MakeSureEnemyIsInsideHisLevel ( &(AllEnemys[Enum] ) ) ) return ( FALSE );
+    
+    // if the enemy is out of sight, we need not do anything more here
+    if ( ( ! show_all_droids ) && ( ! IsVisible ( & AllEnemys [ Enum ] . virt_pos , 0 ) ) )
     {
-      // DebugPrintf (3, "\nvoid PutEnemy(int Enum): ONSCREEN=FALSE --> usual end of function reached.\n");
-      return FALSE ;
+	// DebugPrintf (3, "\nvoid PutEnemy(int Enum): ONSCREEN=FALSE --> usual end of function reached.\n");
+	return FALSE ;
     }
-
-  return TRUE;
-
+    
+    return TRUE;
+    
 }; // int ThisEnemyNeedsToBeBlitted ( int Enum , int x , int y )
 
 /* ----------------------------------------------------------------------
@@ -3419,6 +3562,9 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
     enemy* ThisRobot = & ( AllEnemys [ Enum ] ) ;
     moderately_finepoint bot_pos;
 
+    // if ( ThisRobot -> pos . z != Me [ 0 ] . pos . z )
+    // DebugPrintf ( -4 , "\n%s(): Now attempting to blit bot on truly virtual position..." , __FUNCTION__ );
+
     //--------------------
     // We properly set the direction this robot is facing.
     //
@@ -3512,19 +3658,19 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 	    {
 		if ( ThisRobot -> paralysation_duration_left != 0 ) 
 		{
-		    blit_zoomed_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y , 1.0 , 0.2 , 0.2 , highlight, FALSE ) ;
+		    blit_zoomed_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y , 1.0 , 0.2 , 0.2 , highlight, FALSE ) ;
 		}
 		else if ( ThisRobot -> poison_duration_left != 0 ) 
 		{
-		    blit_zoomed_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y , 0.2 , 1.0 , 0.2 , highlight, FALSE ) ;
+		    blit_zoomed_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y , 0.2 , 1.0 , 0.2 , highlight, FALSE ) ;
 		}
 		else if ( ThisRobot -> frozen != 0 ) 
 		{
-		    blit_zoomed_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y , 0.2 , 0.2 , 1.0 , highlight, FALSE ) ;
+		    blit_zoomed_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y , 0.2 , 0.2 , 1.0 , highlight, FALSE ) ;
 		}
 		else
 		{
-		    blit_zoomed_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y , 1.0 , 1.0 , 1.0 , highlight, FALSE ) ;
+		    blit_zoomed_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y , 1.0 , 1.0 , 1.0 , highlight, FALSE ) ;
 		}
 	    }
 	    else
@@ -3534,7 +3680,7 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 		// blitting the small enemies...
 		//
 		blit_zoomed_iso_image_to_map_position ( & ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] ) , 
-							ThisRobot -> pos . x , ThisRobot -> pos . y );
+							ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y );
 	    }
 	}
 	else
@@ -3552,15 +3698,15 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 		    
 		    if ( ThisRobot -> paralysation_duration_left != 0 ) 
 		    {
-			blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y , 1.0 , 0.2 , 0.2 , highlight , FALSE) ;
+			blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y , 1.0 , 0.2 , 0.2 , highlight , FALSE) ;
 		    }
 		    else if ( ThisRobot -> poison_duration_left != 0 ) 
 		    {
-			blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y , 0.2 , 1.0 , 0.2 , highlight , FALSE) ;
+			blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y , 0.2 , 1.0 , 0.2 , highlight , FALSE) ;
 		    }
 		    else if ( ThisRobot -> frozen != 0 ) 
 		    {
-			blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y , 0.2 , 0.2 , 1.0 , highlight , FALSE) ;
+			blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y , 0.2 , 0.2 , 1.0 , highlight , FALSE) ;
 		    }
 		    else
 		    {
@@ -3569,14 +3715,14 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 			// If we're using OpenGL, we can as well apply the darkness to the droids
 			// we're about to blit...
 			//
-			bot_pos . x = ThisRobot -> pos . x ;
-			bot_pos . y = ThisRobot -> pos . y ;
+			bot_pos . x = ThisRobot -> virt_pos . x ;
+			bot_pos . y = ThisRobot -> virt_pos . y ;
 			
 			darkness = 1.5 - 2.0 * ( ( (float) get_light_strength ( bot_pos ) ) / ( (float) NUMBER_OF_SHADOW_IMAGES ) ) ;
 			if ( darkness > 1 ) darkness = 1.0 ;
 			if ( darkness < 0 ) darkness = 0 ;
 			
-			blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y , darkness , darkness , darkness , highlight , FALSE) ;
+			blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y , darkness , darkness , darkness , highlight , FALSE) ;
 		    }		  
 		    
 		}
@@ -3590,35 +3736,35 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 		    if ( ( ThisRobot -> energy <= 0 ) || ( ThisRobot -> Status ==  OUT ) )
 		    {
 			blit_iso_image_to_map_position ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , 
-							 ThisRobot -> pos . x , ThisRobot -> pos . y );
+							 ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y );
 			
 		    }
 		    else if ( ThisRobot -> paralysation_duration_left != 0 ) 
 		    {
 			LoadAndPrepareRedEnemyRotationModelNr ( RotationModel );
 			blit_iso_image_to_map_position ( RedEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
-							 ThisRobot -> pos . x , ThisRobot -> pos . y );
+							 ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y );
 		    }
 		    else if ( ThisRobot -> poison_duration_left != 0 ) 
 		    {
 			LoadAndPrepareGreenEnemyRotationModelNr ( RotationModel );
 			blit_iso_image_to_map_position ( GreenEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
-							 ThisRobot -> pos . x , ThisRobot -> pos . y );
+							 ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y );
 		    }
 		    else if ( ThisRobot -> frozen != 0 ) 
 		    {
 			LoadAndPrepareBlueEnemyRotationModelNr ( RotationModel );
 			blit_iso_image_to_map_position ( BlueEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
-							 ThisRobot -> pos . x , ThisRobot -> pos . y );
+							 ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y );
 		    }
 		    else
 		    {
-			blit_iso_image_to_map_position ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , ThisRobot -> pos . x , ThisRobot -> pos . y );
+			blit_iso_image_to_map_position ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y );
 			if ( highlight )
-			    blit_outline_of_iso_image_to_map_position ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , ThisRobot -> pos . x , ThisRobot -> pos . y );
+			    blit_outline_of_iso_image_to_map_position ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y );
 		    }
 		    
-		    // blit_iso_image_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y );
+		    // blit_iso_image_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y );
 		    
 		}
 	    }
@@ -3635,17 +3781,17 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 		    if ( ThisRobot -> paralysation_duration_left != 0 ) 
 		    {
 			blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , 
-							       ThisRobot -> pos . x , ThisRobot -> pos . y , 1.0 , 0.2 , 0.2 , highlight, FALSE ) ;
+							       ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y , 1.0 , 0.2 , 0.2 , highlight, FALSE ) ;
 		    }
 		    else if ( ThisRobot -> poison_duration_left != 0 ) 
 		    {
 			blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , 
-							       ThisRobot -> pos . x , ThisRobot -> pos . y , 0.2 , 1.0 , 0.2 , highlight, FALSE ) ;
+							       ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y , 0.2 , 1.0 , 0.2 , highlight, FALSE ) ;
 		    }
 		    else if ( ThisRobot -> frozen != 0 ) 
 		    {
 			blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , 
-							       ThisRobot -> pos . x , ThisRobot -> pos . y , 0.2 , 0.2 , 1.0 , highlight , FALSE) ;
+							       ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y , 0.2 , 0.2 , 1.0 , highlight , FALSE) ;
 		    }
 		    else
 		    {
@@ -3653,8 +3799,8 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 			// If we're using OpenGL, we can as well apply the darkness to the droids
 			// we're about to blit...
 			//
-			bot_pos . x = ThisRobot -> pos . x ;
-			bot_pos . y = ThisRobot -> pos . y ;
+			bot_pos . x = ThisRobot -> virt_pos . x ;
+			bot_pos . y = ThisRobot -> virt_pos . y ;
 			
 			darkness = 1.5 - 2.0 * ( ( (float) get_light_strength ( bot_pos ) ) / ( (float) NUMBER_OF_SHADOW_IMAGES ) ) ;
 			if ( darkness > 1 ) darkness = 1.0 ;
@@ -3662,11 +3808,11 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 			
 			// blit_open_gl_texture_to_map_position ( 
 			// enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) 0 ] , 
-			// ThisRobot -> pos . x , ThisRobot -> pos . y , 
+			// ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y , 
 			// darkness , darkness , darkness , highlight , FALSE) ;
 			blit_open_gl_texture_to_map_position ( 
 			    enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , 
-			    ThisRobot -> pos . x , ThisRobot -> pos . y , 
+			    ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y , 
 			    darkness , darkness , darkness , highlight , FALSE) ;
 		    }
 		}
@@ -3680,31 +3826,31 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 		    // 
 		    if ( ( ThisRobot -> energy <= 0 ) || ( ThisRobot -> Status == OUT ) )
 		    {
-			blit_iso_image_to_map_position ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , ThisRobot -> pos . x , ThisRobot -> pos . y );
+			blit_iso_image_to_map_position ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y );
 		    }
 		    else if ( ThisRobot -> paralysation_duration_left != 0 ) 
 		    {
 			LoadAndPrepareRedEnemyRotationModelNr ( RotationModel );
 			blit_iso_image_to_map_position ( RedEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
-							 ThisRobot -> pos . x , ThisRobot -> pos . y );
+							 ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y );
 		    }
 		    else if ( ThisRobot -> poison_duration_left != 0 ) 
 		    {
 			LoadAndPrepareGreenEnemyRotationModelNr ( RotationModel );
 			blit_iso_image_to_map_position ( GreenEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
-							 ThisRobot -> pos . x , ThisRobot -> pos . y );
+							 ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y );
 		    }
 		    else if ( ThisRobot -> frozen != 0 ) 
 		    {
 			LoadAndPrepareBlueEnemyRotationModelNr ( RotationModel );
 			blit_iso_image_to_map_position ( BlueEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
-							 ThisRobot -> pos . x , ThisRobot -> pos . y );
+							 ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y );
 		    }
 		    else
 		    {
-			blit_iso_image_to_map_position ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , ThisRobot -> pos . x , ThisRobot -> pos . y );
+			blit_iso_image_to_map_position ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y );
 			if ( highlight )
-			    blit_outline_of_iso_image_to_map_position ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , ThisRobot -> pos . x , ThisRobot -> pos . y );
+			    blit_outline_of_iso_image_to_map_position ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y );
 		    }
 		    
 		}
@@ -3713,9 +3859,9 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 	
 	
 	TargetRectangle . x = 
-	    translate_map_point_to_screen_pixel ( ThisRobot -> pos.x , ThisRobot -> pos.y , TRUE );
+	    translate_map_point_to_screen_pixel ( ThisRobot -> virt_pos.x , ThisRobot -> virt_pos.y , TRUE );
 	TargetRectangle . y = 
-	    translate_map_point_to_screen_pixel ( ThisRobot -> pos.x , ThisRobot -> pos.y , FALSE )
+	    translate_map_point_to_screen_pixel ( ThisRobot -> virt_pos.x , ThisRobot -> virt_pos.y , FALSE )
 	    - ENEMY_ENERGY_BAR_OFFSET_Y ;
 	
 	if ( use_open_gl )

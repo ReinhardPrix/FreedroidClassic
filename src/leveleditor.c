@@ -1392,7 +1392,7 @@ ItemDropFromLevelEditor( void )
     {
 	our_multiplicity = do_graphical_number_selection_in_range ( 1 , 100 );
     }
-    DropItemAt( NewItemCode , rintf( Me[0].pos.x ) , rintf( Me[0].pos.y ) , 
+    DropItemAt( NewItemCode , Me [ 0 ] . pos . z , rintf( Me[0].pos.x ) , rintf( Me[0].pos.y ) , 
 		previous_prefix_selected , previous_suffix_selected , 0 , our_multiplicity );
     
     while ( SpacePressed() );

@@ -557,61 +557,81 @@ FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange
  * suffix and prefix code.
  * ---------------------------------------------------------------------- */
 void
-DropItemAt( int ItemType , float x , float y , int prefix , int suffix , int TreasureChestRange , int multiplicity )
+DropItemAt( int ItemType , int level_num , float x , float y , int prefix , int suffix , int TreasureChestRange , int multiplicity )
 {
-  int i;
+    int i;
+    gps item_pos;
+    level* item_drop_map_level = NULL ;
 
-  //--------------------
-  // If given a non-existent item type, we don't do anything
-  // of course (and also don't produce a SEGFAULT or something...)
-  //
-  if ( ItemType == ( -1 ) ) return;
-  if ( ItemType >= Number_Of_Item_Types ) 
+    //--------------------
+    // Maybe the given position is from a virtual position of a dying robot.
+    // Then of course we must fix it first.  But fortunately we have suitable
+    // methods already...
+    //
+    item_pos . x = x ;
+    item_pos . y = y ;
+    item_pos . z = level_num ;
+    adapt_position_for_jump_thresholds ( & ( item_pos ) , & ( item_pos ) );
+    x = item_pos . x ;
+    y = item_pos . y ;
+    level_num = item_pos . z ;
+
+    //--------------------
+    // Now we can properly set the level...
+    //
+    item_drop_map_level = curShip . AllLevels [ level_num ] ;
+
+    //--------------------
+    // If given a non-existent item type, we don't do anything
+    // of course (and also don't produce a SEGFAULT or something...)
+    //
+    if ( ItemType == ( -1 ) ) return;
+    if ( ItemType >= Number_Of_Item_Types ) 
     {
-      fprintf ( stderr, "\n\nItemType: '%d'.\n" , ItemType );
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
+	fprintf ( stderr, "\n\nItemType: '%d'.\n" , ItemType );
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
 There was an item code for an item to drop given to the function \n\
 DropItemAt( ... ), which is pointing beyond the scope of the known\n\
 item types.  This indicates a severe bug in Freedroid.",
-				 PLEASE_INFORM, IS_FATAL );
+				   PLEASE_INFORM, IS_FATAL );
     }
-
-  //--------------------
-  // At first we must find a free item index on this level,
-  // so that we can enter the new item there.
-  //
-  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+    
+    //--------------------
+    // At first we must find a free item index on this level,
+    // so that we can enter the new item there.
+    //
+    for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
     {
-      if ( CurLevel->ItemList[ i ].type == (-1) ) 
+	if ( item_drop_map_level -> ItemList [ i ] . type == (-1) ) 
 	{
-	  break;
+	    break;
 	}
     }
-  if ( i >= MAX_ITEMS_PER_LEVEL )
+    if ( i >= MAX_ITEMS_PER_LEVEL )
     {
-      DebugPrintf( 0 , "\n\nNO MORE ITEMS DROPABLE INTO THIS LEVEL!!\n\nTerminating!" );
-      Terminate( ERR );
+	DebugPrintf( 0 , "\n\nNO MORE ITEMS DROPABLE INTO THIS LEVEL!!\n\nTerminating!" );
+	Terminate( ERR );
     }
-
-  //--------------------
-  // Now we can construct the new item
-  //
-  CurLevel -> ItemList [ i ] . type = ItemType;
-  CurLevel -> ItemList [ i ] . pos . x = x;
-  CurLevel -> ItemList [ i ] . pos . y = y;
-  CurLevel -> ItemList [ i ] . prefix_code = prefix;
-  CurLevel -> ItemList [ i ] . suffix_code = suffix;
-
-  FillInItemProperties ( & ( CurLevel->ItemList[ i ] ) , FALSE, TreasureChestRange );
-
-  CurLevel -> ItemList [ i ] . multiplicity = multiplicity ;
-  CurLevel -> ItemList [ i ] . throw_time = 0.01 ; // something > 0 
-  if ( ( prefix == (-1) ) && ( suffix == (-1) ) ) CurLevel -> ItemList [ i ] . is_identified = TRUE ;
-  else CurLevel -> ItemList [ i ] . is_identified = FALSE ;
-
-  // PlayItemSound( ItemMap[ ItemType ].sound_number );
-  play_item_sound( ItemType );
-
+    
+    //--------------------
+    // Now we can construct the new item
+    //
+    item_drop_map_level -> ItemList [ i ] . type = ItemType;
+    item_drop_map_level -> ItemList [ i ] . pos . x = x;
+    item_drop_map_level -> ItemList [ i ] . pos . y = y;
+    item_drop_map_level -> ItemList [ i ] . prefix_code = prefix;
+    item_drop_map_level -> ItemList [ i ] . suffix_code = suffix;
+    
+    FillInItemProperties ( & ( item_drop_map_level->ItemList[ i ] ) , FALSE, TreasureChestRange );
+    
+    item_drop_map_level -> ItemList [ i ] . multiplicity = multiplicity ;
+    item_drop_map_level -> ItemList [ i ] . throw_time = 0.01 ; // something > 0 
+    if ( ( prefix == (-1) ) && ( suffix == (-1) ) ) item_drop_map_level -> ItemList [ i ] . is_identified = TRUE ;
+    else item_drop_map_level -> ItemList [ i ] . is_identified = FALSE ;
+    
+    // PlayItemSound( ItemMap[ ItemType ].sound_number );
+    play_item_sound( ItemType );
+    
 }; // void DropItemAt( int ItemType , int x , int y , int prefix , int suffix , int TreasureChestRange )
 
 /* ----------------------------------------------------------------------
@@ -874,7 +894,7 @@ Prefix code generation error!  Illegal prefix!  This isn't supposed to happen.",
  *
  * ---------------------------------------------------------------------- */
 void
-DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , int ForceDrop , int ChestItem )
+DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int ForceMagical , int ForceDrop , int ChestItem )
 {
     int Suf; int Pre;
     int DropDecision;
@@ -926,7 +946,7 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
     //
     if ( ( !ForceDrop ) && ( DropDecision < 100 - ITEM_DROP_PERCENTAGE ) )
     {
-	DropItemAt( ITEM_MONEY , x , y , -1 , -1 , TreasureChestRange , 1 );
+	DropItemAt( level_num , ITEM_MONEY , x , y , -1 , -1 , TreasureChestRange , 1 );
 	return;
     }
     
@@ -1228,7 +1248,7 @@ Unhandled treasure chest encountered!  This isn't supposed to happen.",
 	Pre = find_suitable_prefix_for_item ( drop_item_type , TreasureChestRange );
     }
     
-    DropItemAt( drop_item_type , x , y , Pre , Suf , TreasureChestRange , drop_item_multiplicity );
+    DropItemAt( drop_item_type , level_num , x , y , Pre , Suf , TreasureChestRange , drop_item_multiplicity );
     
 }; // void DropRandomItem( int x , int y )
 

@@ -458,261 +458,357 @@ tux_wants_to_attack_now ( int player_num )
 }; // void tux_wants_to_attack_now ( int player_num ) 
 
 /* ----------------------------------------------------------------------
- *
+ * 
  *
  * ---------------------------------------------------------------------- */
 void
-CheckForJumpThresholds ( int player_num )
+adapt_position_for_jump_thresholds ( gps* old_position, gps* new_position )
 {
-  int JumpTarget;
-  float JumpThreshold;
-  float SafetyBonus = 0.0 ;
-  float JumpStartThreshold;
-  gps old_mouse_move_target ;
+    int JumpTarget;
+    float JumpThreshold;
+    float JumpStartThreshold;
+    
+#define LEVEL_JUMP_DEBUG 1
+    
+    new_position -> x = old_position -> x ;
+    new_position -> y = old_position -> y ;
+    new_position -> z = old_position -> z ;
 
+    //--------------------
+    // First we check for the northern threshold
+    //
+    JumpThreshold = curShip . AllLevels [ old_position -> z ] -> jump_threshold_north ;
+    JumpStartThreshold = JumpThreshold / 2.0 ;
+    if ( old_position -> y < JumpStartThreshold )
+    {
+	JumpTarget = curShip . AllLevels [ old_position -> z ] -> jump_target_north ; 
+	if ( JumpTarget > -1 ) 
+	{
+	    new_position -> x = old_position -> x ;
+	    new_position -> y = curShip . AllLevels [ JumpTarget ] -> ylen - JumpStartThreshold ;
+	    new_position -> z = JumpTarget ;
+	    return;
+	}
+    }
+    
+    //--------------------
+    // Now we check for the southern threshold
+    //
+    JumpThreshold = curShip.AllLevels [ old_position -> z ] -> jump_threshold_south ;
+    JumpStartThreshold = JumpThreshold / 2.0 ;
+    if ( old_position -> y > 
+	 curShip.AllLevels [ old_position -> z ] -> ylen - 
+	 JumpStartThreshold ) 
+    {
+	JumpTarget = curShip . AllLevels [ old_position -> z ] -> jump_target_south ; 
+	if ( JumpTarget > -1 )
+	{
+	    new_position -> x = old_position -> x ;
+	    new_position -> y = JumpStartThreshold ;
+	    new_position -> z = JumpTarget ;
+	    return;
+	}
+    }
+    
+    //--------------------
+    // Now we check for the eastern threshold
+    //
+    JumpThreshold = curShip.AllLevels [ old_position -> z ] -> jump_threshold_east ;
+    JumpStartThreshold = JumpThreshold / 2.0 ;
+    if ( old_position -> x > 
+	 curShip . AllLevels [ old_position -> z ] -> xlen - 
+	 JumpStartThreshold ) 
+    {
+	JumpTarget = curShip.AllLevels [ old_position -> z ] -> jump_target_east ; 
+	if ( JumpTarget > -1 ) 
+	{
+	    new_position -> x = JumpStartThreshold ;
+	    new_position -> y = old_position -> y ;
+	    new_position -> z = JumpTarget ;
+	    return;
+	}
+    }
+    
+    //--------------------
+    // Now we check for the western threshold
+    //
+    JumpThreshold = curShip.AllLevels [ old_position -> z ] -> jump_threshold_west ;
+    JumpStartThreshold = JumpThreshold / 2.0 ;
+    
+    if ( old_position -> x < JumpStartThreshold )
+    {
+	JumpTarget = curShip.AllLevels [ old_position -> z ] -> jump_target_west ; 
+	if ( JumpTarget > -1 ) 
+	{
+	    new_position -> x = curShip.AllLevels [ JumpTarget ] -> xlen - JumpStartThreshold ;
+	    new_position -> y = old_position -> y ;
+	    new_position -> z = JumpTarget ;
+	    return;
+	}
+    }
+
+
+}; // void adapt_position_for_jump_thresholds ( gps* old_position, gps* new_position )
+
+/* ----------------------------------------------------------------------
+ * The Tux might be close to the borders of a level, so close in fact, 
+ * that he has crossed the internal threshold area.  In that case, we 
+ * must move the Tux silently to the corresponding other level to the
+ * corresponding position inside the threshold area there.  This is what
+ * this function is for.
+ * ---------------------------------------------------------------------- */
+void
+correct_tux_position_according_to_jump_thresholds ( int player_num )
+{
+    int JumpTarget;
+    float JumpThreshold;
+    float SafetyBonus = 0.0 ;
+    float JumpStartThreshold;
+    gps old_mouse_move_target ;
+    
 #define SHUFFLE_WHEN_CROSSING TRUE
 #define LEVEL_JUMP_DEBUG 1
-
-  old_mouse_move_target . x = Me [ player_num ] . mouse_move_target . x ;
-  old_mouse_move_target . y = Me [ player_num ] . mouse_move_target . y ;
-  old_mouse_move_target . z = Me [ player_num ] . mouse_move_target . z ;
-
-  //--------------------
-  // First we check for the northern threshold
-  //
-  JumpThreshold = curShip.AllLevels [ Me [ player_num ] . pos . z ] -> jump_threshold_north ;
-  JumpStartThreshold = JumpThreshold / 2.0 ;
-
-  if ( Me [ player_num ] . pos . y < JumpStartThreshold )
+    
+    old_mouse_move_target . x = Me [ player_num ] . mouse_move_target . x ;
+    old_mouse_move_target . y = Me [ player_num ] . mouse_move_target . y ;
+    old_mouse_move_target . z = Me [ player_num ] . mouse_move_target . z ;
+    
+    //--------------------
+    // First we check for the northern threshold
+    //
+    JumpThreshold = curShip.AllLevels [ Me [ player_num ] . pos . z ] -> jump_threshold_north ;
+    JumpStartThreshold = JumpThreshold / 2.0 ;
+    
+    if ( Me [ player_num ] . pos . y < JumpStartThreshold )
     {
-
-      JumpTarget = curShip.AllLevels [ Me [ player_num ] . pos . z ] -> jump_target_north ; 
-
-      DebugPrintf ( LEVEL_JUMP_DEBUG , "\nJUMP TO THE NORTH CONSIDERED!!" );
-      DebugPrintf ( LEVEL_JUMP_DEBUG , "\nJumpStartThreshold was: %f. " , JumpStartThreshold ); 
-
-      if ( JumpTarget <= -1 ) return;
-
-      Teleport ( JumpTarget , 
-		 Me [ player_num ] . pos . x ,
-		 curShip.AllLevels [ JumpTarget ] -> ylen - 0 - JumpStartThreshold - SafetyBonus ,
-		 player_num , 
-		 SHUFFLE_WHEN_CROSSING , FALSE ) ; 
-
-      //--------------------
-      // We try to translate the mouse move target to the new levels
-      // coordinates (if it was a SIMPLE mouse move, NOT if it was a
-      // combo-action).
-      //
-      if ( ( Me [ player_num ] . mouse_move_target_combo_action_type == NO_COMBO_ACTION_SET ) &&
-	   ( Me [ player_num ] . mouse_move_target_is_enemy == (-1) ) )
-      {
-	  Me [ player_num ] . mouse_move_target . z = Me [ player_num ] . pos . z ;
-	  Me [ player_num ] . mouse_move_target . x = old_mouse_move_target . x ;
-
-	  //--------------------
-	  // The offset how far into the new levels map we must go is this:
-	  //
-	  Me [ player_num ] . mouse_move_target . y = - ( JumpThreshold - old_mouse_move_target . y ) ;
-	  //--------------------
-	  // The correction because we're coming from south now it this:
-	  Me [ player_num ] . mouse_move_target . y += curShip . AllLevels [ Me [ player_num ] . pos . z ] -> ylen ;
-
-	  DebugPrintf (  LEVEL_JUMP_DEBUG , "\nJUMP TO THE NORTH:  target translated:  y=%f!" , Me [ player_num ] . mouse_move_target . y );
-	  if ( IsPassable ( Me [ player_num ] . mouse_move_target . x , Me [ player_num ] . mouse_move_target . y , Me [ player_num ] . mouse_move_target . z ) )
-	      set_up_intermediate_course_for_tux ( player_num );
-	  else
-	  {
-	      Me [ player_num ] . mouse_move_target . x = ( -1 ) ;
-	      Me [ player_num ] . mouse_move_target . y = ( -1 ) ;
-	      Me [ player_num ] . mouse_move_target . z = ( -1 ) ;
-	  }
-
-      }
-
-      return;
-
+	
+	JumpTarget = curShip.AllLevels [ Me [ player_num ] . pos . z ] -> jump_target_north ; 
+	
+	DebugPrintf ( LEVEL_JUMP_DEBUG , "\nJUMP TO THE NORTH CONSIDERED!!" );
+	DebugPrintf ( LEVEL_JUMP_DEBUG , "\nJumpStartThreshold was: %f. " , JumpStartThreshold ); 
+	
+	if ( JumpTarget <= -1 ) return;
+	
+	Teleport ( JumpTarget , 
+		   Me [ player_num ] . pos . x ,
+		   curShip.AllLevels [ JumpTarget ] -> ylen - 0 - JumpStartThreshold - SafetyBonus ,
+		   player_num , 
+		   SHUFFLE_WHEN_CROSSING , FALSE ) ; 
+	
+	//--------------------
+	// We try to translate the mouse move target to the new levels
+	// coordinates (if it was a SIMPLE mouse move, NOT if it was a
+	// combo-action).
+	//
+	if ( ( Me [ player_num ] . mouse_move_target_combo_action_type == NO_COMBO_ACTION_SET ) &&
+	     ( Me [ player_num ] . mouse_move_target_is_enemy == (-1) ) )
+	{
+	    Me [ player_num ] . mouse_move_target . z = Me [ player_num ] . pos . z ;
+	    Me [ player_num ] . mouse_move_target . x = old_mouse_move_target . x ;
+	    
+	    //--------------------
+	    // The offset how far into the new levels map we must go is this:
+	    //
+	    Me [ player_num ] . mouse_move_target . y = - ( JumpThreshold - old_mouse_move_target . y ) ;
+	    //--------------------
+	    // The correction because we're coming from south now it this:
+	    Me [ player_num ] . mouse_move_target . y += curShip . AllLevels [ Me [ player_num ] . pos . z ] -> ylen ;
+	    
+	    DebugPrintf (  LEVEL_JUMP_DEBUG , "\nJUMP TO THE NORTH:  target translated:  y=%f!" , Me [ player_num ] . mouse_move_target . y );
+	    if ( IsPassable ( Me [ player_num ] . mouse_move_target . x , Me [ player_num ] . mouse_move_target . y , Me [ player_num ] . mouse_move_target . z ) )
+		set_up_intermediate_course_for_tux ( player_num );
+	    else
+	    {
+		Me [ player_num ] . mouse_move_target . x = ( -1 ) ;
+		Me [ player_num ] . mouse_move_target . y = ( -1 ) ;
+		Me [ player_num ] . mouse_move_target . z = ( -1 ) ;
+	    }
+	    
+	}
+	
+	return;
+	
     }
-
-  //--------------------
-  // Now we check for the southern threshold
-  //
-  JumpThreshold = curShip.AllLevels [ Me [ player_num ] . pos . z ] -> jump_threshold_south ;
-  JumpStartThreshold = JumpThreshold / 2.0 ;
-
-  if ( Me [ player_num ] . pos . y > 
-       curShip.AllLevels [ Me [ player_num ] . pos . z ] -> ylen - 
-       JumpStartThreshold ) 
+    
+    //--------------------
+    // Now we check for the southern threshold
+    //
+    JumpThreshold = curShip.AllLevels [ Me [ player_num ] . pos . z ] -> jump_threshold_south ;
+    JumpStartThreshold = JumpThreshold / 2.0 ;
+    
+    if ( Me [ player_num ] . pos . y > 
+	 curShip.AllLevels [ Me [ player_num ] . pos . z ] -> ylen - 
+	 JumpStartThreshold ) 
     {
-
-      JumpTarget = curShip.AllLevels [ Me [ player_num ] . pos . z ] -> jump_target_south ; 
-
-      DebugPrintf ( LEVEL_JUMP_DEBUG , "\nJUMP TO THE SOUTH CONSIDERED!!" );
-      DebugPrintf ( LEVEL_JUMP_DEBUG , "\nJumpStartThreshold was: %f. " , JumpStartThreshold ); 
-      DebugPrintf ( LEVEL_JUMP_DEBUG , "\nCurrent Level Y-len: %d. " , curShip.AllLevels [ Me [ player_num ] . pos . z ] -> ylen );
-      DebugPrintf ( LEVEL_JUMP_DEBUG , "\nCurrent Y-pos: %f. " , Me [ player_num ] . pos . y );
-
-      if ( JumpTarget <= -1 ) return;
-
-      Teleport ( JumpTarget , 
-		 Me [ player_num ] . pos . x ,
-		 0 + JumpStartThreshold + SafetyBonus ,
-		 player_num , 
-		 SHUFFLE_WHEN_CROSSING , FALSE ) ; 
-
-      //--------------------
-      // We try to translate the mouse move target to the new levels
-      // coordinates (if it was a SIMPLE mouse move, NOT if it was a
-      // combo-action).
-      //
-      if ( ( Me [ player_num ] . mouse_move_target_combo_action_type == NO_COMBO_ACTION_SET ) &&
-	   ( Me [ player_num ] . mouse_move_target_is_enemy == (-1) ) )
-      {
-	  Me [ player_num ] . mouse_move_target . z = Me [ player_num ] . pos . z ;
-	  Me [ player_num ] . mouse_move_target . x = old_mouse_move_target . x ;
-
-	  //--------------------
-	  // The offset how far into the new levels map we must go is this:
-	  //
-	  Me [ player_num ] . mouse_move_target . y = 
-	      - ( curShip . AllLevels [ Me [ player_num ] . pos . z ] -> ylen - JumpThreshold )
-	      + old_mouse_move_target . y ;
-	  //--------------------
-	  // The correction because we're coming from north is nothing:
-	  Me [ player_num ] . mouse_move_target . y += 0 ;
-
-	  DebugPrintf ( LEVEL_JUMP_DEBUG , "\nJUMP TO THE SOUTH:  target translated to y=%f!" ,  Me [ player_num ] . mouse_move_target . y );
-	  if ( IsPassable ( Me [ player_num ] . mouse_move_target . x , Me [ player_num ] . mouse_move_target . y , Me [ player_num ] . mouse_move_target . z ) )
-	      set_up_intermediate_course_for_tux ( player_num );
-	  else
-	  {
-	      Me [ player_num ] . mouse_move_target . x = ( -1 ) ;
-	      Me [ player_num ] . mouse_move_target . y = ( -1 ) ;
-	      Me [ player_num ] . mouse_move_target . z = ( -1 ) ;
-	  }
-
-      }
-
-      return;
+	
+	JumpTarget = curShip.AllLevels [ Me [ player_num ] . pos . z ] -> jump_target_south ; 
+	
+	DebugPrintf ( LEVEL_JUMP_DEBUG , "\nJUMP TO THE SOUTH CONSIDERED!!" );
+	DebugPrintf ( LEVEL_JUMP_DEBUG , "\nJumpStartThreshold was: %f. " , JumpStartThreshold ); 
+	DebugPrintf ( LEVEL_JUMP_DEBUG , "\nCurrent Level Y-len: %d. " , curShip.AllLevels [ Me [ player_num ] . pos . z ] -> ylen );
+	DebugPrintf ( LEVEL_JUMP_DEBUG , "\nCurrent Y-pos: %f. " , Me [ player_num ] . pos . y );
+	
+	if ( JumpTarget <= -1 ) return;
+	
+	Teleport ( JumpTarget , 
+		   Me [ player_num ] . pos . x ,
+		   0 + JumpStartThreshold + SafetyBonus ,
+		   player_num , 
+		   SHUFFLE_WHEN_CROSSING , FALSE ) ; 
+	
+	//--------------------
+	// We try to translate the mouse move target to the new levels
+	// coordinates (if it was a SIMPLE mouse move, NOT if it was a
+	// combo-action).
+	//
+	if ( ( Me [ player_num ] . mouse_move_target_combo_action_type == NO_COMBO_ACTION_SET ) &&
+	     ( Me [ player_num ] . mouse_move_target_is_enemy == (-1) ) )
+	{
+	    Me [ player_num ] . mouse_move_target . z = Me [ player_num ] . pos . z ;
+	    Me [ player_num ] . mouse_move_target . x = old_mouse_move_target . x ;
+	    
+	    //--------------------
+	    // The offset how far into the new levels map we must go is this:
+	    //
+	    Me [ player_num ] . mouse_move_target . y = 
+		- ( curShip . AllLevels [ Me [ player_num ] . pos . z ] -> ylen - JumpThreshold )
+		+ old_mouse_move_target . y ;
+	    //--------------------
+	    // The correction because we're coming from north is nothing:
+	    Me [ player_num ] . mouse_move_target . y += 0 ;
+	    
+	    DebugPrintf ( LEVEL_JUMP_DEBUG , "\nJUMP TO THE SOUTH:  target translated to y=%f!" ,  Me [ player_num ] . mouse_move_target . y );
+	    if ( IsPassable ( Me [ player_num ] . mouse_move_target . x , Me [ player_num ] . mouse_move_target . y , Me [ player_num ] . mouse_move_target . z ) )
+		set_up_intermediate_course_for_tux ( player_num );
+	    else
+	    {
+		Me [ player_num ] . mouse_move_target . x = ( -1 ) ;
+		Me [ player_num ] . mouse_move_target . y = ( -1 ) ;
+		Me [ player_num ] . mouse_move_target . z = ( -1 ) ;
+	    }
+	    
+	}
+	
+	return;
     }
-
-  //--------------------
-  // Now we check for the eastern threshold
-  //
-  JumpThreshold = curShip.AllLevels [ Me [ player_num ] . pos . z ] -> jump_threshold_east ;
-  JumpStartThreshold = JumpThreshold / 2.0 ;
-
-  if ( Me [ player_num ] . pos . x > 
-       curShip.AllLevels [ Me [ player_num ] . pos . z ] -> xlen - 
-       JumpStartThreshold ) 
+    
+    //--------------------
+    // Now we check for the eastern threshold
+    //
+    JumpThreshold = curShip.AllLevels [ Me [ player_num ] . pos . z ] -> jump_threshold_east ;
+    JumpStartThreshold = JumpThreshold / 2.0 ;
+    
+    if ( Me [ player_num ] . pos . x > 
+	 curShip.AllLevels [ Me [ player_num ] . pos . z ] -> xlen - 
+	 JumpStartThreshold ) 
     {
-
-      JumpTarget = curShip.AllLevels [ Me [ player_num ] . pos . z ] -> jump_target_east ; 
-
-      DebugPrintf ( LEVEL_JUMP_DEBUG , "\nJUMP TO THE EAST CONSIDERED!!" );
-      DebugPrintf ( LEVEL_JUMP_DEBUG , "\nJumpStartThreshold was: %f. " , JumpStartThreshold ); 
-      DebugPrintf ( LEVEL_JUMP_DEBUG , "\nCurrent Level X-len: %d. " , curShip.AllLevels [ Me [ player_num ] . pos . z ] -> xlen );
-      DebugPrintf ( LEVEL_JUMP_DEBUG , "\nCurrent X-pos: %f. " , Me [ player_num ] . pos . x );
-
-      if ( JumpTarget <= -1 ) return;
-
-      Teleport ( JumpTarget , 
-		 0 + JumpStartThreshold + SafetyBonus ,
-		 Me [ player_num ] . pos . y ,
-		 player_num , 
-		 SHUFFLE_WHEN_CROSSING , FALSE ) ; 
-
-      //--------------------
-      // We try to translate the mouse move target to the new levels
-      // coordinates (if it was a SIMPLE mouse move, NOT if it was a
-      // combo-action).
-      //
-      if ( ( Me [ player_num ] . mouse_move_target_combo_action_type == NO_COMBO_ACTION_SET ) &&
-	   ( Me [ player_num ] . mouse_move_target_is_enemy == (-1) ) )
-      {
-	  Me [ player_num ] . mouse_move_target . z = Me [ player_num ] . pos . z ;
-	  Me [ player_num ] . mouse_move_target . y = old_mouse_move_target . y ;
-
-	  //--------------------
-	  // The offset how far into the new levels map we must go is this:
-	  //
-	  Me [ player_num ] . mouse_move_target . x = 
-	      - ( curShip . AllLevels [ Me [ player_num ] . pos . z ] -> xlen - JumpThreshold )
-	      + old_mouse_move_target . x ;
-	  //--------------------
-	  // The correction because we're coming from west is nothing:
-	  Me [ player_num ] . mouse_move_target . x += 0 ;
-
-	  DebugPrintf ( LEVEL_JUMP_DEBUG , "\nJUMP TO THE EAST:  target translated to x=%f!" ,  Me [ player_num ] . mouse_move_target . x );
-	  if ( IsPassable ( Me [ player_num ] . mouse_move_target . x , Me [ player_num ] . mouse_move_target . y , Me [ player_num ] . mouse_move_target . z ) )
-	      set_up_intermediate_course_for_tux ( player_num );
-	  else
-	  {
-	      Me [ player_num ] . mouse_move_target . x = ( -1 ) ;
-	      Me [ player_num ] . mouse_move_target . y = ( -1 ) ;
-	      Me [ player_num ] . mouse_move_target . z = ( -1 ) ;
-	  }
-
-      }
-
-      return;
+	
+	JumpTarget = curShip.AllLevels [ Me [ player_num ] . pos . z ] -> jump_target_east ; 
+	
+	DebugPrintf ( LEVEL_JUMP_DEBUG , "\nJUMP TO THE EAST CONSIDERED!!" );
+	DebugPrintf ( LEVEL_JUMP_DEBUG , "\nJumpStartThreshold was: %f. " , JumpStartThreshold ); 
+	DebugPrintf ( LEVEL_JUMP_DEBUG , "\nCurrent Level X-len: %d. " , curShip.AllLevels [ Me [ player_num ] . pos . z ] -> xlen );
+	DebugPrintf ( LEVEL_JUMP_DEBUG , "\nCurrent X-pos: %f. " , Me [ player_num ] . pos . x );
+	
+	if ( JumpTarget <= -1 ) return;
+	
+	Teleport ( JumpTarget , 
+		   0 + JumpStartThreshold + SafetyBonus ,
+		   Me [ player_num ] . pos . y ,
+		   player_num , 
+		   SHUFFLE_WHEN_CROSSING , FALSE ) ; 
+	
+	//--------------------
+	// We try to translate the mouse move target to the new levels
+	// coordinates (if it was a SIMPLE mouse move, NOT if it was a
+	// combo-action).
+	//
+	if ( ( Me [ player_num ] . mouse_move_target_combo_action_type == NO_COMBO_ACTION_SET ) &&
+	     ( Me [ player_num ] . mouse_move_target_is_enemy == (-1) ) )
+	{
+	    Me [ player_num ] . mouse_move_target . z = Me [ player_num ] . pos . z ;
+	    Me [ player_num ] . mouse_move_target . y = old_mouse_move_target . y ;
+	    
+	    //--------------------
+	    // The offset how far into the new levels map we must go is this:
+	    //
+	    Me [ player_num ] . mouse_move_target . x = 
+		- ( curShip . AllLevels [ Me [ player_num ] . pos . z ] -> xlen - JumpThreshold )
+		+ old_mouse_move_target . x ;
+	    //--------------------
+	    // The correction because we're coming from west is nothing:
+	    Me [ player_num ] . mouse_move_target . x += 0 ;
+	    
+	    DebugPrintf ( LEVEL_JUMP_DEBUG , "\nJUMP TO THE EAST:  target translated to x=%f!" ,  Me [ player_num ] . mouse_move_target . x );
+	    if ( IsPassable ( Me [ player_num ] . mouse_move_target . x , Me [ player_num ] . mouse_move_target . y , Me [ player_num ] . mouse_move_target . z ) )
+		set_up_intermediate_course_for_tux ( player_num );
+	    else
+	    {
+		Me [ player_num ] . mouse_move_target . x = ( -1 ) ;
+		Me [ player_num ] . mouse_move_target . y = ( -1 ) ;
+		Me [ player_num ] . mouse_move_target . z = ( -1 ) ;
+	    }
+	    
+	}
+	
+	return;
     }
-
-  //--------------------
-  // Now we check for the western threshold
-  //
-  JumpThreshold = curShip.AllLevels [ Me [ player_num ] . pos . z ] -> jump_threshold_west ;
-  JumpStartThreshold = JumpThreshold / 2.0 ;
-
-  if ( Me [ player_num ] . pos . x < JumpStartThreshold )
+    
+    //--------------------
+    // Now we check for the western threshold
+    //
+    JumpThreshold = curShip.AllLevels [ Me [ player_num ] . pos . z ] -> jump_threshold_west ;
+    JumpStartThreshold = JumpThreshold / 2.0 ;
+    
+    if ( Me [ player_num ] . pos . x < JumpStartThreshold )
     {
-
-      JumpTarget = curShip.AllLevels [ Me [ player_num ] . pos . z ] -> jump_target_west ; 
-
-      DebugPrintf ( LEVEL_JUMP_DEBUG , "\nJUMP TO THE WEST CONSIDERED!!" );
-      DebugPrintf ( LEVEL_JUMP_DEBUG , "\nJumpStartThreshold was: %f. " , JumpStartThreshold ); 
-
-      if ( JumpTarget <= -1 ) return;
-
-      Teleport ( JumpTarget , 
-		 curShip.AllLevels [ JumpTarget ] -> xlen - 0 - JumpStartThreshold - SafetyBonus ,
-		 Me [ player_num ] . pos . y ,
-		 player_num , 
-		 SHUFFLE_WHEN_CROSSING , FALSE ) ; 
-
-      //--------------------
-      // We try to translate the mouse move target to the new levels
-      // coordinates (if it was a SIMPLE mouse move, NOT if it was a
-      // combo-action).
-      //
-      if ( ( Me [ player_num ] . mouse_move_target_combo_action_type == NO_COMBO_ACTION_SET ) &&
-	   ( Me [ player_num ] . mouse_move_target_is_enemy == (-1) ) )
-      {
-	  Me [ player_num ] . mouse_move_target . z = Me [ player_num ] . pos . z ;
-	  Me [ player_num ] . mouse_move_target . y = old_mouse_move_target . y ;
-
-	  //--------------------
-	  // The offset how far into the new levels map we must go is this:
-	  //
-	  Me [ player_num ] . mouse_move_target . x = - ( JumpThreshold - old_mouse_move_target . x ) ;
-	  //--------------------
-	  // The correction because we're coming from south now it this:
-	  Me [ player_num ] . mouse_move_target . x += curShip . AllLevels [ Me [ player_num ] . pos . z ] -> xlen ;
-
-	  DebugPrintf (  LEVEL_JUMP_DEBUG , "\nJUMP TO THE NORTH:  target translated:  x=%f!" , Me [ player_num ] . mouse_move_target . x );
-	  if ( IsPassable ( Me [ player_num ] . mouse_move_target . x , Me [ player_num ] . mouse_move_target . y , Me [ player_num ] . mouse_move_target . z ) )
-	      set_up_intermediate_course_for_tux ( player_num );
-	  else
-	  {
-	      Me [ player_num ] . mouse_move_target . x = ( -1 ) ;
-	      Me [ player_num ] . mouse_move_target . y = ( -1 ) ;
-	      Me [ player_num ] . mouse_move_target . z = ( -1 ) ;
-	  }
-
-      }
-
-      return;
-
+	
+	JumpTarget = curShip.AllLevels [ Me [ player_num ] . pos . z ] -> jump_target_west ; 
+	
+	DebugPrintf ( LEVEL_JUMP_DEBUG , "\nJUMP TO THE WEST CONSIDERED!!" );
+	DebugPrintf ( LEVEL_JUMP_DEBUG , "\nJumpStartThreshold was: %f. " , JumpStartThreshold ); 
+	
+	if ( JumpTarget <= -1 ) return;
+	
+	Teleport ( JumpTarget , 
+		   curShip.AllLevels [ JumpTarget ] -> xlen - 0 - JumpStartThreshold - SafetyBonus ,
+		   Me [ player_num ] . pos . y ,
+		   player_num , 
+		   SHUFFLE_WHEN_CROSSING , FALSE ) ; 
+	
+	//--------------------
+	// We try to translate the mouse move target to the new levels
+	// coordinates (if it was a SIMPLE mouse move, NOT if it was a
+	// combo-action).
+	//
+	if ( ( Me [ player_num ] . mouse_move_target_combo_action_type == NO_COMBO_ACTION_SET ) &&
+	     ( Me [ player_num ] . mouse_move_target_is_enemy == (-1) ) )
+	{
+	    Me [ player_num ] . mouse_move_target . z = Me [ player_num ] . pos . z ;
+	    Me [ player_num ] . mouse_move_target . y = old_mouse_move_target . y ;
+	    
+	    //--------------------
+	    // The offset how far into the new levels map we must go is this:
+	    //
+	    Me [ player_num ] . mouse_move_target . x = - ( JumpThreshold - old_mouse_move_target . x ) ;
+	    //--------------------
+	    // The correction because we're coming from south now it this:
+	    Me [ player_num ] . mouse_move_target . x += curShip . AllLevels [ Me [ player_num ] . pos . z ] -> xlen ;
+	    
+	    DebugPrintf (  LEVEL_JUMP_DEBUG , "\nJUMP TO THE NORTH:  target translated:  x=%f!" , Me [ player_num ] . mouse_move_target . x );
+	    if ( IsPassable ( Me [ player_num ] . mouse_move_target . x , Me [ player_num ] . mouse_move_target . y , Me [ player_num ] . mouse_move_target . z ) )
+		set_up_intermediate_course_for_tux ( player_num );
+	    else
+	    {
+		Me [ player_num ] . mouse_move_target . x = ( -1 ) ;
+		Me [ player_num ] . mouse_move_target . y = ( -1 ) ;
+		Me [ player_num ] . mouse_move_target . z = ( -1 ) ;
+	    }
+	    
+	}
+	
+	return;
+	
     }
 
 }; // void CheckForJumpThresholds ( int player_num )

@@ -866,7 +866,7 @@ smash_obstacles_only_on_tile ( float x , float y , int map_x , int map_y )
       // should maybe drop some item.
       //
       if ( obstacle_map [ target_obstacle -> type ] . drop_random_treasure )
-	DropRandomItem( target_obstacle -> pos . x , target_obstacle -> pos . y , 1 , FALSE , FALSE , FALSE );
+	  DropRandomItem( Me [ 0 ] . pos . z , target_obstacle -> pos . x , target_obstacle -> pos . y , 1 , FALSE , FALSE , FALSE );
 
       //--------------------
       // Since the obstacle is destroyed, we start a blast at it's position.
