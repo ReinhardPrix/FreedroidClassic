@@ -140,7 +140,8 @@ GiveItemDescription ( char* ItemDescText , item* CurItem )
   // --------------------
   // If it's a weapon, then we give out the damage value of that weapon as well
   //
-  if ( ItemMap[ CurItem->type ].item_can_be_installed_in_weapon_slot )
+  // if ( ItemMap[ CurItem->type ].item_can_be_installed_in_weapon_slot )
+  if ( CurItem->damage )
     {
       sprintf( linebuf , "Damage=%d" , CurItem->damage );
       strcat( ItemDescText , linebuf );

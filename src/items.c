@@ -70,6 +70,8 @@ DropSpecificItemAtPosition( int x , int y , int NewItemCode )
   //
   CurLevel->ItemList[ ItemIndex ].ac_bonus = 
     ItemMap [ NewItemCode ].base_ac_bonus + MyRandom( ItemMap [ NewItemCode ].ac_bonus_modifier );
+  CurLevel->ItemList[ ItemIndex ].damage = 
+    ItemMap [ NewItemCode ].base_item_gun_damage + MyRandom( ItemMap [ NewItemCode ].item_gun_damage_modifier );
 
 }; // void DropSpecificItemAtPosition( int x , int y , int NewItemCode )
 

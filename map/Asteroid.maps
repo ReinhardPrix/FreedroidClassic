@@ -66,18 +66,30 @@ Start of pure codepanel information for this level
 PanelposX=4 PanelposY=10 Secret Code="gnu"
 End of pure codepanel information for this level
 Start of pure items information for this level
-New item: type=22  X=15.000000  Y=1.000000  AC=0 
-New item: type=23  X=16.000000  Y=1.000000  AC=0 
-New item: type=24  X=17.000000  Y=1.000000  AC=0 
-New item: type=1  X=18.000000  Y=1.000000  AC=0 
-New item: type=2  X=14.000000  Y=1.000000  AC=0 
-New item: type=18  X=20.000000  Y=1.000000  AC=24 
-New item: type=19  X=13.000000  Y=1.000000  AC=27 
-New item: type=25  X=21.000000  Y=1.000000  AC=14 
-New item: type=18  X=22.000000  Y=1.000000  AC=22 
-New item: type=25  X=23.000000  Y=1.000000  AC=15 
-New item: type=19  X=12.000000  Y=1.000000  AC=21 
-New item: type=19  X=11.000000  Y=1.000000  AC=27 
+New item: type=24  X=17.000000  Y=1.000000  AC=0  DoDamage=100 
+New item: type=23  X=16.000000  Y=1.000000  AC=0  DoDamage=8 
+New item: type=22  X=15.000000  Y=1.000000  AC=0  DoDamage=12 
+New item: type=1  X=18.000000  Y=1.000000  AC=0  DoDamage=0 
+New item: type=2  X=14.000000  Y=1.000000  AC=0  DoDamage=0 
+New item: type=18  X=20.000000  Y=1.000000  AC=24  DoDamage=0 
+New item: type=19  X=13.000000  Y=1.000000  AC=27  DoDamage=0 
+New item: type=25  X=21.000000  Y=1.000000  AC=14  DoDamage=0 
+New item: type=18  X=22.000000  Y=1.000000  AC=22  DoDamage=0 
+New item: type=25  X=23.000000  Y=1.000000  AC=15  DoDamage=0 
+New item: type=19  X=12.000000  Y=1.000000  AC=21  DoDamage=0 
+New item: type=19  X=11.000000  Y=1.000000  AC=27  DoDamage=0 
+New item: type=3  X=13.000000  Y=2.000000  AC=0  DoDamage=25 
+New item: type=4  X=14.000000  Y=2.000000  AC=0  DoDamage=0 
+New item: type=5  X=15.000000  Y=2.000000  AC=0  DoDamage=0 
+New item: type=6  X=16.000000  Y=2.000000  AC=0  DoDamage=0 
+New item: type=7  X=17.000000  Y=2.000000  AC=0  DoDamage=0 
+New item: type=8  X=18.000000  Y=2.000000  AC=0  DoDamage=0 
+New item: type=9  X=19.000000  Y=2.000000  AC=0  DoDamage=0 
+New item: type=10  X=20.000000  Y=2.000000  AC=0  DoDamage=0 
+New item: type=11  X=21.000000  Y=2.000000  AC=0  DoDamage=0 
+New item: type=14  X=22.000000  Y=2.000000  AC=0  DoDamage=40 
+New item: type=15  X=23.000000  Y=2.000000  AC=0  DoDamage=55 
+New item: type=16  X=23.000000  Y=3.000000  AC=0  DoDamage=40 
 End of pure items information for this level
 wp
 Nr.=  0 x=  11 y=   1	 connections:    5   1   2   3  -1  -1  -1  -1  -1  -1  -1  -1
@@ -374,23 +386,23 @@ PanelposX=4 PanelposY=8 Secret Code="hello"
 PanelposX=4 PanelposY=6 Secret Code="abracadabra"
 End of pure codepanel information for this level
 Start of pure items information for this level
-New item: type=3  X=1.966180  Y=4.942550  AC=0 
-New item: type=1  X=3.000000  Y=1.000000  AC=0 
-New item: type=2  X=3.000000  Y=2.000000  AC=0 
-New item: type=3  X=3.000000  Y=3.000000  AC=0 
-New item: type=4  X=3.000000  Y=4.000000  AC=0 
-New item: type=5  X=3.000000  Y=5.000000  AC=0 
-New item: type=6  X=3.000000  Y=6.000000  AC=0 
-New item: type=7  X=3.000000  Y=7.000000  AC=0 
-New item: type=8  X=3.000000  Y=8.000000  AC=0 
-New item: type=9  X=3.000000  Y=9.000000  AC=0 
-New item: type=10  X=3.000000  Y=10.000000  AC=0 
-New item: type=11  X=3.000000  Y=11.000000  AC=0 
-New item: type=12  X=3.000000  Y=12.000000  AC=0 
-New item: type=13  X=3.000000  Y=13.000000  AC=0 
-New item: type=14  X=2.000000  Y=13.000000  AC=0 
-New item: type=15  X=2.000000  Y=12.000000  AC=0 
-New item: type=16  X=2.000000  Y=11.000000  AC=0 
+New item: type=3  X=1.966180  Y=4.942550  AC=0  DoDamage=0 
+New item: type=1  X=3.000000  Y=1.000000  AC=0  DoDamage=0 
+New item: type=2  X=3.000000  Y=2.000000  AC=0  DoDamage=0 
+New item: type=3  X=3.000000  Y=3.000000  AC=0  DoDamage=0 
+New item: type=4  X=3.000000  Y=4.000000  AC=0  DoDamage=0 
+New item: type=5  X=3.000000  Y=5.000000  AC=0  DoDamage=0 
+New item: type=6  X=3.000000  Y=6.000000  AC=0  DoDamage=0 
+New item: type=7  X=3.000000  Y=7.000000  AC=0  DoDamage=0 
+New item: type=8  X=3.000000  Y=8.000000  AC=0  DoDamage=0 
+New item: type=9  X=3.000000  Y=9.000000  AC=0  DoDamage=0 
+New item: type=10  X=3.000000  Y=10.000000  AC=0  DoDamage=0 
+New item: type=11  X=3.000000  Y=11.000000  AC=0  DoDamage=0 
+New item: type=12  X=3.000000  Y=12.000000  AC=0  DoDamage=0 
+New item: type=13  X=3.000000  Y=13.000000  AC=0  DoDamage=0 
+New item: type=14  X=2.000000  Y=13.000000  AC=0  DoDamage=0 
+New item: type=15  X=2.000000  Y=12.000000  AC=0  DoDamage=0 
+New item: type=16  X=2.000000  Y=11.000000  AC=0  DoDamage=0 
 End of pure items information for this level
 wp
 Nr.=  0 x=   1 y=   1	 connections:    1  17  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
