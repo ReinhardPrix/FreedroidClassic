@@ -1,4 +1,4 @@
-
+% -*- mode: flyspell; mode: fill -*-
 ----------------------------------------------------------------------
  *
  *   Copyright (c) 1994, 2003, 2004 Johannes Prix
@@ -30,7 +30,9 @@ freedroid-discussion@lists.sourceforge.net
 
 BEGIN OF AUTORS NOTES
 
+
 This is Kevin, a most formidable hacker and teacher of hacking skills.
+
 
 END OF AUTORS NOTES
 
@@ -38,10 +40,10 @@ END OF AUTORS NOTES
 Beginning of new chat dialog for character="XXXXX"
 
 New Option Nr=0  OptionText="Hi, I'm new here"
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+OptionSample="Kevin/Tux_hi_im_new.wav"
 PositionX=80  PositionY=219  
 Subtitle="Hi, I'm Kevin, a hacker"
-ReplySample=""
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=3 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -72,7 +74,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=3  OptionText="What can you teach me about hacking ?"
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+OptionSample="Kevin/Tux_what_can_you.wav"
 PositionX=180  PositionY=218  
 ChangeOption=3 ChangeToValue=0
 OnCondition="MissionComplete:6" JumpToOption=4 ElseGoto=1
@@ -114,7 +116,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=6  OptionText="I'll see after the energy supply now."
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+OptionSample="Kevin/Tux_ill_see_after.wav"
 PositionX=454  PositionY=304  
 Subtitle="That's great.  You can't miss it.  It's not hard to find.  Enter my garden and find the lower station entrance there."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -130,7 +132,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=7  OptionText="I'm sorry, but I don't think there's anything I could do about that energy supply."
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+OptionSample="Kevin/Tux_im_sorry_but.wav"
 PositionX=450  PositionY=391  
 Subtitle="That's too bad.  Because I can't leave here to fix it myself.  It's important that my research project can continue uninterrupted."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -160,7 +162,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=10  OptionText="How about some reward for securing your energy supply area?"
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+OptionSample="Kevin/Tux_how_about_some.wav"
 PositionX=185  PositionY=464  
 ChangeOption=10 ChangeToValue=0
 OnCondition="CookieIsPlanted:kevin_reward1_given:" JumpToOption=12 ElseGoto=13
@@ -198,8 +200,8 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=14  OptionText="About that project you had running..."
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+New Option Nr=14  OptionText="About that project you said you have running..."
+OptionSample="Kevin/Tux_about_that_project.wav"
 PositionX=190  PositionY=535  
 Subtitle="Yes, since the energy supply has been constant, results were much better.  I've been able to achive my goal."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -216,7 +218,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=15  OptionText="Maybe I can help somehow to find a suitable cluster."
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+OptionSample="Kevin/Tux_maybe_i_can.wav"
 PositionX=281  PositionY=572  
 Subtitle="That would be great of course.  I know that the old town is maintaining a suitable information infrastructure and has a proper cluster running for some time."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -236,7 +238,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=99  OptionText="I'll be off then"
-OptionSample="Tux_Goodbye_0.wav"
+OptionSample="Kevin/Tux_ill_be_off.wav"
 PositionX=181  PositionY=54  
 ChangeOption=99 ChangeToValue=0
 ChangeOption=3 ChangeToValue=1
