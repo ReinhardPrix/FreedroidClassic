@@ -1230,7 +1230,8 @@ GetHeldItemInventoryIndex( void )
  * that is currently marked as held in hand.  If no such item can be 
  * found, the returned pointer will be NULL.
  * ---------------------------------------------------------------------- */
-item* GetHeldItemPointer( void )
+item* 
+GetHeldItemPointer( void )
 {
   int InvIndex;
   int i;
@@ -2132,7 +2133,6 @@ DropHeldItemToInventory( void )
       DebugPrintf( 0 , "\nvoid DropHeldItemToInventory ( void ) : No item in inventory seems to be currently held in hand...");
       return;
     } 
-  
 
   // --------------------
   // Now we want to drop the item to the right location again.
@@ -2148,11 +2148,11 @@ DropHeldItemToInventory( void )
   if ( ItemCanBeDroppedInInv ( DropItemPointer->type , GetInventorySquare_x ( CurPos.x ) , 
 			       GetInventorySquare_y ( CurPos.y ) ) )
     {
-      CopyItem( DropItemPointer , &( Me[0].Inventory[ FreeInvIndex ] ) , TRUE );
+      CopyItem( DropItemPointer , & ( Me [ 0 ] . Inventory [ FreeInvIndex ] ) , TRUE );
       DeleteItem( DropItemPointer );
-      Me[0].Inventory[ FreeInvIndex ].inventory_position.x = GetInventorySquare_x ( CurPos.x ) ;
-      Me[0].Inventory[ FreeInvIndex ].inventory_position.y = GetInventorySquare_y ( CurPos.y ) ;
-      Me[0].Inventory[ FreeInvIndex ].currently_held_in_hand = FALSE;
+      Me [ 0 ] . Inventory [ FreeInvIndex ] . inventory_position.x = GetInventorySquare_x ( CurPos.x ) ;
+      Me [ 0 ] . Inventory [ FreeInvIndex ] . inventory_position.y = GetInventorySquare_y ( CurPos.y ) ;
+      Me [ 0 ] . Inventory [ FreeInvIndex ] . currently_held_in_hand = FALSE;
 
       // --------------------
       // Now that we know that the item could be dropped directly to inventory 
@@ -2201,7 +2201,7 @@ DropHeldItemToInventory( void )
 	  //
 	  if ( & ( Me[0].Inventory[ i ] ) == DropItemPointer ) continue;
 
-	  Me[0].Inventory[ i ].type = ( -1 ) ;
+	  Me [ 0 ] . Inventory [ i ] . type = ( -1 ) ;
 
 	  if ( ItemCanBeDroppedInInv ( DropItemPointer->type , GetInventorySquare_x ( CurPos.x ) , 
 				       GetInventorySquare_y ( CurPos.y ) ) )
@@ -2284,9 +2284,7 @@ DropHeldItemToInventory( void )
   // solution.  So the item cannot be put into inventory, even at best attampts
   // to do so.  What a pitty.
   //
-  // Item_Held_In_Hand = ItemMap [ GetHeldItemCode ( ) ] . picture_number ;
-  // that is the identyty, so nothing need be done here now...
-  // Item_Held_In_Hand = ItemMap [ GetHeldItemCode ( ) ] . picture_number ;
+  Item_Held_In_Hand = GetHeldItemCode ( ) ;
 
 }; // void DropHeldItemToInventory( void )
 
@@ -2384,7 +2382,6 @@ ManageInventoryScreen ( void )
   point CurPos;
   point Inv_GrabLoc;
   int Grabbed_InvPos;
-  int i;
   finepoint MapPositionOfMouse;
   Level PlayerLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
   int SpellCost = SpellSkillMap [ SPELL_IDENTIFY_SKILL ] . mana_cost_table [ Me[ 0 ] . spellcasting_skill ] ;
@@ -2599,19 +2596,26 @@ ManageInventoryScreen ( void )
       else if ( CursorIsInUserRect( CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 1 , "\nGrabbing in user rect!" );
-	  // MapPositionOfMouse.x = Me[0].pos.x + (CurPos.x - UserCenter_x) / (float) Block_Width;
-	  // MapPositionOfMouse.y = Me[0].pos.y + (CurPos.y - UserCenter_y) / (float) Block_Height;
-	  MapPositionOfMouse . x = 
-	    translate_pixel_to_map_location ( 0 , 
-					      ServerThinksInputAxisX ( 0 ) , 
-					      ServerThinksInputAxisY ( 0 ) , TRUE ) ;
-	  MapPositionOfMouse . y = 
-	    translate_pixel_to_map_location ( 0 , 
-					      ServerThinksInputAxisX ( 0 ) , 
-					      ServerThinksInputAxisY ( 0 ) , FALSE ) ;
-
 	  DebugPrintf( 0  , "\nMouse in map at: %f %f." , MapPositionOfMouse.x , MapPositionOfMouse.y );
 
+	  index_of_item_under_mouse_cursor = get_floor_item_index_under_mouse_cursor ( 0 );
+
+	  if ( index_of_item_under_mouse_cursor != (-1) )
+	    {
+	      if ( PlayerLevel -> ItemList [ index_of_item_under_mouse_cursor ] . type == ITEM_MONEY ) 		      
+		{
+		  AddFloorItemDirectlyToInventory( & ( PlayerLevel -> ItemList [ index_of_item_under_mouse_cursor ] ) );
+		  return;
+		}
+	      else
+		{
+		  Item_Held_In_Hand = PlayerLevel -> ItemList [ index_of_item_under_mouse_cursor ] . type ;
+		  PlayerLevel -> ItemList [ index_of_item_under_mouse_cursor ] . currently_held_in_hand = TRUE;
+		  // break;
+		}
+	    }
+
+	  /*
 	  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i++ )
 	    {
 	      if ( PlayerLevel->ItemList[ i ].type == (-1) ) continue;
@@ -2638,6 +2642,8 @@ ManageInventoryScreen ( void )
 		    }
 		}
 	    }
+	  */
+
 	}
       else
 	{
