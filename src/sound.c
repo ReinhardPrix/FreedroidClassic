@@ -304,6 +304,16 @@ Switch_Background_Music_To ( char* filename_raw )
 
   if ( !sound_on ) return;
 
+#ifndef HAVE_LIBVORBIS
+  if (strstr (filename_raw, ".ogg"))
+    {
+      DebugPrintf (1, "\n\nWARNING: no ogg vorbis libs were found when configuring,\n\
+ can't play %s!\n", filename_raw);
+      return;
+    }
+
+#endif
+
 
   if ( filename_raw == NULL ) 
     {
