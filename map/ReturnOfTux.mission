@@ -515,19 +515,10 @@ So, military and police forces are suddenly under MS control.  Interstellar traf
 Droids are roaming the streets and announcing the new rule.  
 Any resistance is met with utter violence.  
 
-THE FACILITY:
+THE RETURN:
 
-On a large asteroid in a secret research facility of the government, different operating systems and kernels were tested.
-After taking control of the governmental database, the MS learned of the facility and sees it as a potential threat to its security.  It has ruled that the facility be destroyed and all personel there be killed.
-A military battle cruiser has been dispatched to carry out this command, but will arrive only in days.  A small corvette in the vincinity is closer by and arrives first to carry out the MS orders and beams down a contingent of battle droids to eliminate all humans within the installation.
-
-The scientists within the facility have no means to attack or flee.  However they have not completly given up hope.  
-They have activated the asteroids weak defense system, that can only protect the facility from direct bombardment by the corvette but cannot prevent the MS battle droids from beaming down to the facility.  Some humans, who were not taken by surprise and killed immediately, have managed to retreat to the private goods storage deck and set up a makeshift bunker against the force of battle droids.
-It is clear, that the scientists barricades will not last out long against the weapons of the powerful machines.  But meanwhile they are working feverishly on some device called 'influence 001' from forbidden archive data.  
-
-The records indicate, that such a device has been built once before in a case of rampant droids on a ship but research on it came to a crashing halt later due to MS legal action against the researchers.
-
-The new 'influence device' has now booted the latest of the Linux 28.32.199 kernels.  The artificial intelligence module has reached the level of consciousness.  It reports all systems are up and running.  
+According to a strange and ancient prophecy (actually it was a very arcane Theorem of stochastic calculus) Tux the mystic creature from a dimension of cold would return with probability one in times of utter need and danger for the free world.  
+Somehow noone trusted in the proof, but yet, suddenly there's some anomaly in the local teleporter system and gosh:  A strange penguin drops out, holding some disks in his flaps!
 
 Press Fire to play
 
@@ -535,38 +526,37 @@ Press Fire to play
 * New Mission Briefing Text Subsection *
 Controls
 
-The game is controlled via keyboard input, keyboard and mouse or via joystick input.
+The game is best controlled via mouse input:  Left click onto the locations where you want to move to.  Holding left button down will keep moving in that direction.  Right click to use special powers, spells and skills.
 
-Keyboard control:
+Additional Keys:
 
-Use cursor keys to move around.  The speed you can go depends on the druid you currently control.
+I ... Open/Close Inventory Screen
+C ... Open/Close Character Screen
+S ... Open/Close Spells&Skills Screen
+L ... Show Quest Status Log
+S ... Take a Screenshot and save it to disk
+P ... Turn on/off Pause Mode
+Tab ... Turn on/off automap display
+Escape ... Pops up the main menu
+F1-F9 Quick-Switch to spells 1-9
+1-9 ... Quick-Use items from the quick-inventory.  (That's those small items placed on the very bottom of the inventory.)
 
-If you press space bar in -addition- to a cursor key, this fires the weapon of the druid you currently control.
+Space ... Closes all opened screens.
 
+Spells&Skills:
+Takeover/Chat skill:  To chat with a friendly droid, it's enough to click on that one.  To take over a hostile bot, select the takeover/chat skill from the skills screen (level 1), then left click on the bot to mark it as target and then press the right mouse button to initiate takeover once you are close engough.  But be warned:  Other bots getting too close to you while takeover is initiated might accidentially become your takeover target.
 
-If you press space bar whilst NOT pressing a cursor key, this will enter transfer mode.  You will notice your robot to take on a flashy red color.  Now if you touch some other druid, this will initiate the takeover process in which you have to win a small game of logical curcuits within the given time.
-If you succeed, you thereafter can control this new droid and for game purposes, it is as if you were him.
-If you loose, you either are destroyed if you didn't control an enemy druid at that time, or the host you controlled is destroyed together with the unit you wished to control.
+Home teleport spell:  Select the skill and right click somewhere to teleport home.  Once home, the northernmost teleporter will take you back to exactly the location where you came from.
 
-The P key causes the game to pause.
-The S key causes a screenshot to be taken.
-The Escape key causes the menu to pop up.
+Healing spell:  Select the healing spell from the skills screen and right click somewhere.
 
-Keyboard and mouse control:
+Remote strike spell:  Fires bullets that do exactly the same damage and have exactly the same chance to hit like your character with his currently equipped weapon.
 
-At any point in the game, you can use the mouse to fire at a target,
-This is somewhat more convenient than using keyboard only since it allows
-you to fire at any angle, an advantage otherwise only had with joystick
-input.
+Frost blot:  Does some cold damage and also has a chance to 'freeze' bots, so that they can move only at a fraction of their normal speed for some time.  They can however still attack at their normal speed.
 
 Joystick conrol:
 
-Rather self explanatory.  Use fire keys to fire or switch to transfer mode 
-similar with keyboard or mouse control.
-
-Watch out for energy refreshing fields and elevators.
-
-Lifts are also entered via transfer mode if you stand still on the lift
+Try out the joystick yourself.  (I don't have one, but joystick support IS implemented.)
 
     Press Fire to Play
 
