@@ -3278,6 +3278,48 @@ A droid portrait failed to load.",
   DebugPrintf (2, "\nvoid ShowRobotPicture(...): Usual end of function reached.");
 }; // void ShowRobotPicture ( ... )
 
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+draw_inventory_occupied_rectangle ( SDL_Rect TargetRect )
+{
+  static SDL_Surface *TransparentPlateImage = NULL;
+  SDL_Surface *tmp;
+  char *fpath;
+  char fname2 [ ] = INVENTORY_SQUARE_OCCUPIED_FILE;
+
+  if ( use_open_gl )
+    {
+      GL_HighlightRectangle ( Screen , TargetRect , 255 , 0 , 0 );
+    }
+  else
+    {
+      // --------------------
+      // Some things like the loading of the inventory and initialisation of the
+      // inventory rectangle need to be done only once at the first call of this
+      // function. 
+      //
+      if ( TransparentPlateImage == NULL )
+	{
+	  fpath = find_file ( fname2 , GRAPHICS_DIR, FALSE);
+	  tmp = our_IMG_load_wrapper( fpath );
+	  if ( !tmp )
+	    {
+	      fprintf( stderr, "\n\nfname2: '%s'\n" , fname2 );
+	      GiveStandardErrorMessage ( "ShowInventoryScreen(...)" , "\
+The transparent plate for the inventory could not be loaded.  This is a fatal error.",
+					 PLEASE_INFORM, IS_FATAL );
+	    }
+	  TransparentPlateImage = our_SDL_display_format_wrapperAlpha ( tmp );
+	  SDL_FreeSurface ( tmp );
+	}
+      our_SDL_blit_surface_wrapper( TransparentPlateImage , NULL , Screen , &TargetRect );
+    }
+
+
+}; // void draw_inventory_occupied_rectangle ( SDL_Rect TargetRect )
 
 /* ----------------------------------------------------------------------
  * This function displays the inventory screen and also fills in all the
@@ -3287,44 +3329,18 @@ A droid portrait failed to load.",
 void
 ShowInventoryScreen( void )
 {
-  static SDL_Surface *TransparentPlateImage = NULL;
-  SDL_Surface *tmp;
-  char *fpath;
-  char fname2 [ ] = INVENTORY_SQUARE_OCCUPIED_FILE;
   SDL_Rect TargetRect;
   int SlotNum;
   int i , j ;
 
-  // --------------------
-  // Some things like the loading of the inventory and initialisation of the
-  // inventory rectangle need to be done only once at the first call of this
-  // function. 
+  //--------------------
+  // We define the right side of the user screen as the rectangle
+  // for our inventory screen.
   //
-  if ( TransparentPlateImage == NULL )
-    {
-      fpath = find_file ( fname2 , GRAPHICS_DIR, FALSE);
-      tmp = our_IMG_load_wrapper( fpath );
-      if ( !tmp )
-	{
-	  fprintf( stderr, "\n\nfname2: '%s'\n" , fname2 );
-	  GiveStandardErrorMessage ( "ShowInventoryScreen(...)" , "\
-The transparent plate for the inventory could not be loaded.  This is a fatal error.",
-				     PLEASE_INFORM, IS_FATAL );
-	}
-      TransparentPlateImage = our_SDL_display_format_wrapperAlpha ( tmp );
-      SDL_FreeSurface ( tmp );
-
-      //--------------------
-      // We define the right side of the user screen as the rectangle
-      // for our inventory screen.
-      //
-      InventoryRect.x = 0;
-      // InventoryRect.y = SCREEN_HEIGHT - InventoryImage->h;
-      InventoryRect.y = User_Rect.y;
-      InventoryRect.w = SCREEN_WIDTH/2;
-      InventoryRect.h = User_Rect.h;
-
-    }
+  InventoryRect.x = 0;
+  InventoryRect.y = User_Rect.y;
+  InventoryRect.w = SCREEN_WIDTH/2;
+  InventoryRect.h = User_Rect.h;
 
   //--------------------
   // At this point we know, that the inventory screen is desired and must be
@@ -3430,8 +3446,9 @@ The transparent plate for the inventory could not be loaded.  This is a fatal er
 	    {
 	      TargetRect.x = INVENTORY_RECT_X + 32 * ( Me[0].Inventory[ SlotNum ].inventory_position.x + j );
 	      TargetRect.y = User_Rect.y + INVENTORY_RECT_Y + 32 * ( Me[0].Inventory[ SlotNum ].inventory_position.y + i );
-	    
-	      our_SDL_blit_surface_wrapper( TransparentPlateImage , NULL , Screen , &TargetRect );
+	      TargetRect.w = 32 ;
+	      TargetRect.h = 32 ;
+	      draw_inventory_occupied_rectangle ( TargetRect );
 	    }
 	}
 

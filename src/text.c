@@ -1605,8 +1605,6 @@ ScrollText (char *Text, int startx, int starty, int EndLine , int background_cod
 
     } /* while !Space_Pressed */
 
-  // SDL_FreeSurface( Background );
-
   while ( SpacePressed() ); // so that we don't touch again immediately.
 
   return OK;

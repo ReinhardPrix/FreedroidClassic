@@ -136,8 +136,8 @@
 // And now we put here all the rectangle definitions and that...
 //
 
-#define INVENTORY_RECT_Y 256
-#define INVENTORY_RECT_X 16
+#define INVENTORY_RECT_Y 254
+#define INVENTORY_RECT_X 15
 
 #define CURRENT_SKILL_RECT_X 16
 #define CURRENT_SKILL_RECT_Y (480 - 16 - 64)
