@@ -3352,17 +3352,13 @@ translate_pixel_to_zoomed_map_location ( int player_num , float axis_x , float a
 int
 translate_map_point_to_screen_pixel ( float x_map_pos , float y_map_pos , int give_x )
 {
-  if ( give_x )
+    if ( give_x )
     {
-      // return ( UserCenter_x + ( ( x_map_pos - Me [ 0 ] . pos . x ) + ( Me [ 0 ] . pos . y - y_map_pos ) ) * iso_floor_tile_width / 2 ) ; 
-      //--------------------
-      // Now we attempt the same with less deletion of digits...
-      return ( rintf ( UserCenter_x + ( x_map_pos + Me [ 0 ] . pos . y - Me [ 0 ] . pos . x - y_map_pos ) * iso_floor_tile_width / 2 ) ) ; 
+	return ( rintf ( UserCenter_x + ( x_map_pos + Me [ 0 ] . pos . y - Me [ 0 ] . pos . x - y_map_pos ) * iso_floor_tile_width / 2 ) ) ; 
     }
   else
     {
-      // return ( UserCenter_y + ( ( x_map_pos + y_map_pos - Me [ 0 ] . pos . x - Me [ 0 ] . pos . y ) * iso_floor_tile_height / 2 ) ) ;
-      return ( rintf ( ( UserCenter_y + ( x_map_pos + y_map_pos - Me [ 0 ] . pos . x - Me [ 0 ] . pos . y ) * iso_floor_tile_height / 2 ) ) ) ;
+	return ( rintf ( ( UserCenter_y + ( x_map_pos + y_map_pos - Me [ 0 ] . pos . x - Me [ 0 ] . pos . y ) * iso_floor_tile_height / 2 ) ) ) ;
     }
 }; // int translate_map_point_to_screen_pixel ( float x_map_pos , float y_map_pos , int give_x )
 
