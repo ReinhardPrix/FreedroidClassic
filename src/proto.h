@@ -712,9 +712,9 @@ EXTERN void *MyMalloc (long);
 EXTERN void PrepareMultipleChoiceDialog ( Enemy ChatDroid , int with_flip );
 EXTERN int FS_filelength (FILE *f);
 
-// rahmen.c 
+// hud.c 
 #undef EXTERN
-#ifdef _rahmen_c
+#ifdef _hud_c
 #define EXTERN
 #else
 #define EXTERN extern

@@ -3342,71 +3342,59 @@ is not really an autogun.  Instead it's something else.",
 int
 position_collides_with_this_obstacle ( float x , float y , obstacle* our_obstacle )
 {
-  float upper_border;
-  float lower_border;
-  float left_border;
-  float right_border;
-  int obs_type = our_obstacle -> type ;
-
-  //--------------------
-  // First we check for non-existent obstacle.
-  //
-  if ( obs_type <= -1 ) return ( FALSE );
-
-  //--------------------
-  // Now we check if maybe it's a door.  Doors should get ignored, 
-  // if the global ignore_doors_for_collisions flag is set.  This
-  // flag is introduced the reduce function overhead, especially
-  // in the recursions used here and there.
-  //
-  if ( global_ignore_doors_for_collisions_flag )
+    int obs_type = our_obstacle -> type ;
+    
+    //--------------------
+    // First we check for non-existent obstacle.
+    //
+    if ( obs_type <= -1 ) return ( FALSE );
+    
+    //--------------------
+    // Now we check if maybe it's a door.  Doors should get ignored, 
+    // if the global ignore_doors_for_collisions flag is set.  This
+    // flag is introduced the reduce function overhead, especially
+    // in the recursions used here and there.
+    //
+    if ( global_ignore_doors_for_collisions_flag )
     {
-      if ( ( obs_type >= ISO_H_DOOR_000_OPEN ) && ( obs_type <= ISO_V_DOOR_100_OPEN ) )
-	return ( FALSE );
-      if ( ( obs_type >= ISO_OUTER_DOOR_V_00 ) && ( obs_type <= ISO_OUTER_DOOR_H_100 ) )
-	return ( FALSE );
+	if ( ( obs_type >= ISO_H_DOOR_000_OPEN ) && ( obs_type <= ISO_V_DOOR_100_OPEN ) )
+	    return ( FALSE );
+	if ( ( obs_type >= ISO_OUTER_DOOR_V_00 ) && ( obs_type <= ISO_OUTER_DOOR_H_100 ) )
+	    return ( FALSE );
     }
-
-  //--------------------
-  // If the obstacle doesn't even have a collision rectangle, then
-  // of course it's easy, cause then there can't be any collsision
-  //
-  if ( obstacle_map [ obs_type ] . block_area_type == COLLISION_TYPE_NONE )
-    return ( FALSE );
-
-  if ( ( ! obstacle_map [ obs_type ] . block_vision_too ) && ( global_check_for_light_only_collisions_flag ) )
-    return ( FALSE );
-
-  /*
-  if ( obstacle_map [ obs_type ] . block_area_type != COLLISION_TYPE_RECTANGLE )
-    {
+    
+    //--------------------
+    // If the obstacle doesn't even have a collision rectangle, then
+    // of course it's easy, cause then there can't be any collsision
+    //
+    if ( obstacle_map [ obs_type ] . block_area_type == COLLISION_TYPE_NONE )
+	return ( FALSE );
+    
+    if ( ( ! obstacle_map [ obs_type ] . block_vision_too ) && ( global_check_for_light_only_collisions_flag ) )
+	return ( FALSE );
+    
+    /*
+      if ( obstacle_map [ obs_type ] . block_area_type != COLLISION_TYPE_RECTANGLE )
+      {
       fprintf ( stderr, "\n\nCollision_area_type: %d.\n" , obstacle_map [ obs_type ] . block_area_type );
       GiveStandardErrorMessage ( __FUNCTION__  , "\
-Error:  Unsupported type of collision area given.",
-				 PLEASE_INFORM, IS_FATAL );
-    }
-  */
+      Error:  Unsupported type of collision area given.",
+      PLEASE_INFORM, IS_FATAL );
+      }
+    */
+    
+    //--------------------
+    // Now if the position lies inside the collision rectangle, then there's
+    // a collion.  Otherwise not.
+    //
+    if ( ( x > our_obstacle -> pos . x + obstacle_map [ obs_type ] . upper_border ) && 
+	 ( x < our_obstacle -> pos . x + obstacle_map [ obs_type ] . lower_border ) && 
+	 ( y > our_obstacle -> pos . y + obstacle_map [ obs_type ] . left_border ) && 
+	 ( y < our_obstacle -> pos . y + obstacle_map [ obs_type ] . right_border ) )
+	return ( TRUE );
+    
+    return ( FALSE );
 
-  //--------------------
-  // first we find out where the borders of our collision rectangle
-  // lie...
-  //
-  upper_border = our_obstacle -> pos . x - obstacle_map [ obs_type ] . block_area_parm_1 / 2.0 ;
-  lower_border = our_obstacle -> pos . x + obstacle_map [ obs_type ] . block_area_parm_1 / 2.0 ;
-  left_border = our_obstacle -> pos . y - obstacle_map [ obs_type ] . block_area_parm_2 / 2.0 ;
-  right_border = our_obstacle -> pos . y + obstacle_map [ obs_type ] . block_area_parm_2 / 2.0 ;
-
-  //--------------------
-  // Now if the position lies inside the collision rectangle, then there's
-  // a collion.  Otherwise not.
-  //
-  if ( ( x > our_obstacle -> pos . x + obstacle_map [ obs_type ] . upper_border ) && 
-       ( x < our_obstacle -> pos . x + obstacle_map [ obs_type ] . lower_border ) && 
-       ( y > our_obstacle -> pos . y + obstacle_map [ obs_type ] . left_border ) && 
-       ( y < our_obstacle -> pos . y + obstacle_map [ obs_type ] . right_border ) )
-    return ( TRUE );
-
-  return ( FALSE );
 }; // int position_collides_with_this_obstacle ( float x , float y , obstacle* our_obstacle )
 
 /* ----------------------------------------------------------------------

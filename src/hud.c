@@ -27,7 +27,7 @@
  * displays with status etc...
  * ---------------------------------------------------------------------- */
 
-#define _rahmen_c
+#define _hud_c
 
 #include "system.h"
 
@@ -1661,4 +1661,4 @@ DisplayBanner ( void )
 }; // void DisplayBanner( void ) 
 
 
-#undef _rahmen_c
+#undef _hud_c
