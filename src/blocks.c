@@ -635,6 +635,19 @@ in graphics displayed, but FreedroidRPG will continue to work.",
   else
     {
       DebugPrintf ( 1 , "\nThe offset file seems to be there at least.....");
+
+      if ( fclose ( OffsetFile ) == EOF)
+	{
+	  fprintf( stderr, "\n\noffset_file_name: '%s'\n" , offset_file_name );
+	  GiveStandardErrorMessage ( "get_offset_for_iso_image_from_file_and_path(...)" , "\
+Freedroid was unable to close an offset file.\nThis is a very strange occasion!",
+				     PLEASE_INFORM, IS_FATAL );
+	}
+      else
+	{
+	  DebugPrintf( 1 , "\nThe offset file, that is there, was closed again successfully...");
+	}
+
     }
 
   //--------------------

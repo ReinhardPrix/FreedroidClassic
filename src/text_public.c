@@ -267,6 +267,7 @@ ReadAndMallocAndTerminateFile( char* filename , char* File_End_String )
   if ((DataFile = fopen ( filename , "r")) == NULL)
     {
       fprintf( stderr, "\n\nfilename: '%s'\n" , filename );
+      
       GiveStandardErrorMessage ( "ReadAndMallocAndTerminateFile(...)" , "\
 Freedroid was unable to open a given text file, that should be there and\n\
 should be accessible.\n\
