@@ -2772,11 +2772,6 @@ init_obstacle_data( void )
   obstacle_map [ ISO_FUNKY_WALL_4 ] . block_area_parm_2 = 1.2 ;
   obstacle_map [ ISO_FUNKY_WALL_4 ] . filename = "iso_walls_0015.png" ;
 
-    
-
-
-
-
   obstacle_map [ ISO_BRICK_WALL_H ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_BRICK_WALL_H ] . block_area_parm_1 = 1.2 ;
   obstacle_map [ ISO_BRICK_WALL_H ] . block_area_parm_2 = 1.2 ;
@@ -2833,12 +2828,12 @@ init_obstacle_data( void )
   obstacle_map [ ISO_BRICK_WALL_CRACKED_2 ] . block_area_parm_2 = 1.2 ;
   obstacle_map [ ISO_BRICK_WALL_CRACKED_2 ] . filename = "iso_brick_wall_0013.png" ;
   
-  obstacle_map [ ISO_BRICK_WALL_RUBBLE_1 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_BRICK_WALL_RUBBLE_1 ] . block_area_type = COLLISION_TYPE_NONE  ;
   obstacle_map [ ISO_BRICK_WALL_RUBBLE_1 ] . block_area_parm_1 = 1.2 ;
-  obstacle_map [ ISO_BRICK_WALL_RUBBLE_1 ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_BRICK_WALL_RUBBLE_1 ] . block_area_parm_2 = 1.0 ;
   obstacle_map [ ISO_BRICK_WALL_RUBBLE_1 ] . filename = "iso_brick_wall_0014.png" ;
-  obstacle_map [ ISO_BRICK_WALL_RUBBLE_2 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_BRICK_WALL_RUBBLE_2 ] . block_area_parm_1 = 1.2 ;
+  obstacle_map [ ISO_BRICK_WALL_RUBBLE_2 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_BRICK_WALL_RUBBLE_2 ] . block_area_parm_1 = 1.0 ;
   obstacle_map [ ISO_BRICK_WALL_RUBBLE_2 ] . block_area_parm_2 = 1.2 ;
   obstacle_map [ ISO_BRICK_WALL_RUBBLE_2 ] . filename = "iso_brick_wall_0015.png" ;
 
@@ -3212,9 +3207,29 @@ init_obstacle_data( void )
   obstacle_map [ ISO_PROJECTOR_W ] . block_area_parm_1 = 0.5 ;
   obstacle_map [ ISO_PROJECTOR_W ] . block_area_parm_2 = 0.5 ;
   obstacle_map [ ISO_PROJECTOR_W ] . block_vision_too = FALSE ;
-  obstacle_map [ ISO_PROJECTOR_W ] . filename = "iso_conference_furniture_0005.png" ;
+  obstacle_map [ ISO_PROJECTOR_W ] . filename = "iso_conference_furniture_0006.png" ;
+  obstacle_map [ ISO_PROJECTOR_N ] . block_area_parm_1 = 0.50 ;
+  obstacle_map [ ISO_PROJECTOR_N ] . block_area_parm_2 = 0.5 ;
+  obstacle_map [ ISO_PROJECTOR_N ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_PROJECTOR_N ] . filename = "iso_conference_furniture_0007.png" ;
+  obstacle_map [ ISO_PROJECTOR_S ] . block_area_parm_1 = 0.5 ;
+  obstacle_map [ ISO_PROJECTOR_S ] . block_area_parm_2 = 0.5 ;
+  obstacle_map [ ISO_PROJECTOR_S ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_PROJECTOR_S ] . filename = "iso_conference_furniture_0005.png" ;
 
-
+  obstacle_map [ ISO_PROJECTOR_SCREEN_N ] . block_area_parm_1 = 2.2 ;
+  obstacle_map [ ISO_PROJECTOR_SCREEN_N ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_PROJECTOR_SCREEN_N ] . filename = "iso_conference_furniture_0011.png" ;
+  obstacle_map [ ISO_PROJECTOR_SCREEN_E ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_PROJECTOR_SCREEN_E ] . block_area_parm_2 = 2.2 ;
+  obstacle_map [ ISO_PROJECTOR_SCREEN_E ] . filename = "iso_conference_furniture_0008.png" ;
+  obstacle_map [ ISO_PROJECTOR_SCREEN_S ] . block_area_parm_1 = 2.0 ;
+  obstacle_map [ ISO_PROJECTOR_SCREEN_S ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_PROJECTOR_SCREEN_S ] . filename = "iso_conference_furniture_0009.png" ;
+  obstacle_map [ ISO_PROJECTOR_SCREEN_W ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_PROJECTOR_SCREEN_W ] . block_area_parm_2 = 2.2 ;
+  obstacle_map [ ISO_PROJECTOR_SCREEN_W ] . filename = "iso_conference_furniture_0010.png" ;
+  
   obstacle_map [ ISO_SHELF_FULL_V ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_SHELF_FULL_V ] . block_area_parm_2 = 2.3 ;
   obstacle_map [ ISO_SHELF_FULL_V ] . filename = "iso_obstacle_0091.png" ;
@@ -3249,6 +3264,16 @@ init_obstacle_data( void )
   obstacle_map [ ISO_SHELF_SMALL_EMPTY_H ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_SHELF_SMALL_EMPTY_H ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_SHELF_SMALL_EMPTY_H ] . filename = "iso_obstacle_0098.png" ;
+
+  obstacle_map [ ISO_SIGN_1 ] . block_area_parm_1 = 1.1 ;
+  obstacle_map [ ISO_SIGN_1 ] . block_area_parm_2 = 1.1 ;
+  obstacle_map [ ISO_SIGN_1 ] . filename = "iso_signs_0000.png" ;
+  obstacle_map [ ISO_SIGN_2 ] . block_area_parm_1 = 1.1 ;
+  obstacle_map [ ISO_SIGN_2 ] . block_area_parm_2 = 1.1 ;
+  obstacle_map [ ISO_SIGN_2 ] . filename = "iso_signs_0001.png" ;
+  obstacle_map [ ISO_SIGN_3 ] . block_area_parm_1 = 1.1 ;
+  obstacle_map [ ISO_SIGN_3 ] . block_area_parm_2 = 1.1 ;
+  obstacle_map [ ISO_SIGN_3 ] . filename = "iso_signs_0002.png" ;
 
   //--------------------
   // Now that we have defined the block area paramters, it's time to do some

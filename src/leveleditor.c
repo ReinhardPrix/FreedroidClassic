@@ -87,6 +87,11 @@ int wall_indices [ NUMBER_OF_LEVEL_EDITOR_GROUPS ] [ NUMBER_OF_OBSTACLE_TYPES ] 
 	ISO_GREY_WALL_END_N ,
 	ISO_GREY_WALL_END_E ,
 	ISO_GREY_WALL_END_S ,
+	ISO_ROOM_WALL_V_RED ,
+	ISO_ROOM_WALL_H_RED ,
+	ISO_ROOM_WALL_V_GREEN ,
+	ISO_ROOM_WALL_H_GREEN ,
+
 	ISO_LIGHT_GREEN_WALL_1,
         ISO_LIGHT_GREEN_WALL_2,
 	ISO_FUNKY_WALL_1,
@@ -151,10 +156,6 @@ int wall_indices [ NUMBER_OF_LEVEL_EDITOR_GROUPS ] [ NUMBER_OF_OBSTACLE_TYPES ] 
 	ISO_BRICK_WALL_RUBBLE_1 ,
 	ISO_BRICK_WALL_RUBBLE_2 ,
 
-	ISO_ROOM_WALL_V_RED ,
-	ISO_ROOM_WALL_H_RED ,
-	ISO_ROOM_WALL_V_GREEN ,
-	ISO_ROOM_WALL_H_GREEN ,
 	ISO_OUTER_WALL_N1,
 	ISO_OUTER_WALL_N2,
 	ISO_OUTER_WALL_N3,
@@ -215,8 +216,15 @@ int wall_indices [ NUMBER_OF_LEVEL_EDITOR_GROUPS ] [ NUMBER_OF_OBSTACLE_TYPES ] 
 	ISO_TV_PILLAR_N ,
 	ISO_TV_PILLAR_E ,
 	ISO_TV_PILLAR_S ,
-	ISO_PROJECTOR_E,
-	ISO_PROJECTOR_W,
+
+	ISO_PROJECTOR_N ,
+	ISO_PROJECTOR_E ,
+	ISO_PROJECTOR_S ,
+	ISO_PROJECTOR_W ,
+  
+	ISO_SIGN_1 ,
+	ISO_SIGN_2 ,
+	ISO_SIGN_3 ,
 
 	-1,
 	-1,
@@ -299,6 +307,11 @@ int wall_indices [ NUMBER_OF_LEVEL_EDITOR_GROUPS ] [ NUMBER_OF_OBSTACLE_TYPES ] 
 	ISO_CONFERENCE_TABLE_E,
 	ISO_CONFERENCE_TABLE_S,
 	ISO_CONFERENCE_TABLE_W,
+	
+	ISO_PROJECTOR_SCREEN_N ,
+	ISO_PROJECTOR_SCREEN_E ,
+	ISO_PROJECTOR_SCREEN_S ,
+	ISO_PROJECTOR_SCREEN_W ,
 
 	ISO_BED_1,
 	ISO_BED_2,
@@ -1989,7 +2002,7 @@ enum
       InitiateMenu( -1 );
       
       i = 0 ;
-      MenuTexts[ i ] = "Save whole ship to 'Testship.shp'" ; i++;
+      MenuTexts[ i ] = "Save whole ship to 'Asteroids.map'" ; i++;
       sprintf( Options [ 0 ] , "Current: %d.  Level Up/Down" , EditLevel->levelnum );
       MenuTexts[ i ] = Options [ 0 ]; i++;
       sprintf( Options [ 1 ] , "Light radius bonus: %d" , EditLevel -> light_radius_bonus );
@@ -4582,7 +4595,7 @@ LevelEditor(void)
 		  // CenteredPutString ( Screen ,  11*FontHeight(Menu_BFont),    "Your ship was saved...");
 		  // our_SDL_flip_wrapper ( Screen );
 
-		  GiveMouseAlertWindow ( "\nM E S S A G E\n\nYour ship was saved to file 'Testship.shp'.\nIf you are sure, that you wish to use this file in the game, copy it over the 'maps/Asteroid.maps' file so that FreedroidRPG will really use it.\n\nIf you have set up something cool and you wish to contribute it to FreedroidRPG, please contact the FreedroidRPG dev team." ) ;
+		  GiveMouseAlertWindow ( "\nM E S S A G E\n\nYour ship was saved to file 'Asteroids.map' in the map directory.\n\nIf you have set up something cool and you wish to contribute it to FreedroidRPG, please contact the FreedroidRPG dev team." ) ;
 
 		}
 	      else if ( GameConfig . zoom_is_on && CursorIsOnButton ( LEVEL_EDITOR_ZOOM_IN_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
