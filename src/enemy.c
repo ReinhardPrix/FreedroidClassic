@@ -257,6 +257,15 @@ void
 PermanentHealRobots (void)
 {
   int i;
+  static float time_since_last_heal=0;
+#define HEAL_INTERVAL (3.0)
+
+  //--------------------
+  // For performance issues, we won't heal each robot every frame.  Instead it
+  // will be enough to heal the bots every HEAL_INTERVAL seconds or something like that.
+  //
+  time_since_last_heal += Frame_Time() ;
+  if ( time_since_last_heal < HEAL_INTERVAL ) return;
 
   // for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
   for (i = 0; i < Number_Of_Droids_On_Ship; i++)
@@ -264,7 +273,7 @@ PermanentHealRobots (void)
       if ( AllEnemys [ i ] . Status == OUT)
 	continue;
       if ( AllEnemys [ i ] . energy < Druidmap [ AllEnemys [ i ] . type ] . maxenergy )
-	AllEnemys[i].energy += Druidmap[AllEnemys [ i ] . type ] . lose_health * Frame_Time( );
+	AllEnemys[i].energy += Druidmap[AllEnemys [ i ] . type ] . lose_health * HEAL_INTERVAL ;
     }
 
 } // void PermanentHealRobots(void)
@@ -1179,9 +1188,11 @@ MoveEnemys ( void )
   int i;
   Enemy ThisRobot;
 
+  //--------------------
+  // We heal the robots again as time passes.  This function has been checked and
+  // optimized for speed already....
+  //
   PermanentHealRobots ();  // enemy robots heal as time passes...
-
-  AnimateEnemys ();	// move the "phase" of the rotation of enemys
 
   for (i = 0; i < Number_Of_Droids_On_Ship ; i++)
      {
@@ -1380,6 +1391,16 @@ ClosestVisiblePlayer ( Enemy ThisRobot )
   int BestDistance = 100000 ;
   int FoundDistance;
 
+  //--------------------
+  // For now we disable this function again, since there is no
+  // need for multiplayer capabilities right now...
+  //
+  return ( 0 );
+
+
+
+
+
   for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ )
     {
       //--------------------
@@ -1522,6 +1543,7 @@ DetermineVectorToShotTarget( enemy* ThisRobot , moderately_finepoint* vect_to_ta
 
   if ( ThisRobot->is_friendly == TRUE )
     {
+      
       // Since it's a friendly device in this case, it will aim at the (closest?) of
       // the MS bots.
       for ( j = 0 ; j < Number_Of_Droids_On_Ship ; j++ )
@@ -1529,9 +1551,14 @@ DetermineVectorToShotTarget( enemy* ThisRobot , moderately_finepoint* vect_to_ta
 	  if ( AllEnemys[ j ].Status == OUT ) continue;
 	  if ( AllEnemys[ j ].is_friendly ) continue;
 	  if ( AllEnemys[ j ].pos.z != ThisRobot->pos.z ) continue;
+	  /*
+	    This is MUCH TOO COSTLY!!!
+
 	  if ( DirectLineWalkable ( ThisRobot -> pos . x , ThisRobot -> pos . y , 
 				    AllEnemys [ j ] . pos . x , AllEnemys [ j ] . pos . y , 
 				    ThisRobot -> pos . z ) != TRUE ) continue;
+	  */
+
 	  if ( sqrt ( ( ThisRobot -> pos . x - AllEnemys[ j ] . pos . x ) *
 		      ( ThisRobot -> pos . x - AllEnemys[ j ] . pos . x ) +
 		      ( ThisRobot -> pos . y - AllEnemys[ j ] . pos . y ) *
@@ -1544,6 +1571,7 @@ DetermineVectorToShotTarget( enemy* ThisRobot , moderately_finepoint* vect_to_ta
 	  DebugPrintf( 0 , "\nIt is a good target for: %s.\n", ThisRobot -> dialog_section_name );
 	  break;
 	}
+
 
       /*
       //--------------------
@@ -1958,11 +1986,7 @@ ProcessAttackStateMachine (int enemynum)
   if ( ThisRobot -> is_friendly && TargetIsEnemy && ( sqrt ( vect_to_target.x * vect_to_target.x + vect_to_target.y * vect_to_target.x  ) < Druidmap [ ThisRobot -> type ] . minimal_range_hostile_bots_are_ignored ) )
     ThisRobot -> combat_state = FIGHT_ON_TUX_SIDE ;
 
-  // vect_to_target.x = 1;
-  // vect_to_target.y = 1;
-
   dist2 = sqrt( vect_to_target.x * vect_to_target.x + vect_to_target.y * vect_to_target.y );
-  // dist2 = DistanceToTux ( ThisRobot );
 
   TargetPlayer = ClosestVisiblePlayer ( ThisRobot ) ;
 
@@ -2319,60 +2343,5 @@ CheckEnemyEnemyCollision (int enemynum)
 
   return FALSE;
 }; // int CheckEnemyEnemyCollision
-
-/* ----------------------------------------------------------------------
- * This function does the rotation of the enemys according to their 
- * current energy level.
- * ---------------------------------------------------------------------- */
-void
-AnimateEnemys (void)
-{
-  int i;
-  enemy* our_enemy;
-
-  // for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
-  for (i = 0; i < Number_Of_Droids_On_Ship ; i++)
-    {
-      
-      our_enemy = & ( AllEnemys [ i ] ) ;
-
-      /* ignore enemys that are dead or on other levels or dummys */
-      // if (AllEnemys[i].type == DEBUG_ENEMY) continue;
-      // if (AllEnemys[i].pos.z != CurLevel->levelnum)
-      if ( our_enemy -> pos . z != Me [ 0 ] . pos . z )
-	continue;
-
-      if ( our_enemy -> Status == OUT)
-	{
-	  our_enemy -> phase = DROID_PHASES ;
-	  continue;
-	}
-
-      if ( our_enemy -> energy <= 0 ) 
-	{
-	  DebugPrintf( 1 , "\nAnimateEnemys: WARNING: Enemy with negative energy encountered.  Phase correction forced..." );
-	  our_enemy -> phase = 0 ;
-	}
-      else
-	{
-	  our_enemy -> phase +=
-	    ( our_enemy -> energy / Druidmap [ our_enemy -> type ] . maxenergy ) *
-	    Frame_Time () * DROID_PHASES * 2.5;
-	}
-
-      if ( our_enemy -> phase >= DROID_PHASES)
-	{
-	  our_enemy -> phase = 0;
-	}
-
-      if ( our_enemy -> animation_phase > 0 )
-	{
-	  our_enemy -> animation_phase += Frame_Time() * 15 ;
-	  if ( our_enemy -> animation_phase >= phases_in_enemy_animation [ our_enemy -> type ] )
-	    our_enemy -> animation_phase = 0 ;
-	}
-
-    }
-}; // void AnimateEnemys ( void )
 
 #undef _enemy_c

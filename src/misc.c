@@ -536,7 +536,6 @@ Pause (void)
       SetNewBigScreenMessage( " Pause " );
       AnimateInfluence ( 0 );
       AnimateCyclingMapTiles ();
-      AnimateEnemys ();
       DisplayBanner (NULL, NULL, 0);
       AssembleCombatPicture ( 0 );
       CenteredPutStringFont ( Screen , Menu_Filled_BFont , 200 , "G A M E    P A U S E D" ) ;

@@ -538,6 +538,12 @@ blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our
   int image_start_y;
   int image_end_y;
 
+  /*
+  if ( ( our_floor_iso_image . texture_width >= 256 ) || 
+       ( our_floor_iso_image . texture_height >= 256 ) )
+    return;
+  */
+
   //--------------------
   // At first we need to enable texture mapping for all of the following.
   // Without that, we'd just get (faster, but plain white) rectangles.
@@ -577,13 +583,13 @@ blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our
     translate_map_point_to_screen_pixel ( our_col , our_line , FALSE ) +
     our_floor_iso_image . offset_y ;
   
-  glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-  glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+  // glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+  // glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 
   // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL );
   // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND );
-  glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
-  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
+  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+  glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
 
   //--------------------
   // Now we can begin to draw the actual textured rectangle.
