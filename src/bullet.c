@@ -641,7 +641,7 @@ handle_flash_effects ( bullet* CurBullet )
 	}
     }
     
-    if ( ( ! InvincibleMode ) && ( ! Druidmap [ Me [ 0 ] . type ] . flashimmune ) )
+    if ( ! Druidmap [ Me [ 0 ] . type ] . flashimmune )
     {
 	Me [ 0 ] . energy -= CurBullet->damage ;
     }
@@ -760,30 +760,26 @@ check_bullet_player_collisions ( bullet* CurBullet , int num )
       ydist = Me [ player_num ] . pos . y - CurBullet -> pos . y ;
       if ((xdist * xdist + ydist * ydist) < DRUIDHITDIST2)
 	{
-	  if (!InvincibleMode) 
+#ifdef USE_MISS_HIT_ARRAYS
+	    if ( CurBullet->miss_hit_influencer == UNCHECKED ) 
 	    {
-
-#ifdef USE_MISS_HIT_ARRAYS
-	      if ( CurBullet->miss_hit_influencer == UNCHECKED ) 
+		if ( MyRandom ( 100 ) < CurBullet->to_hit )
 		{
-		  if ( MyRandom ( 100 ) < CurBullet->to_hit )
-		    {
-		      CurBullet->miss_hit_influencer = HIT ;
+		    CurBullet->miss_hit_influencer = HIT ;
 #endif			  
-
-		      apply_bullet_damage_to_player ( player_num , CurBullet-> damage ) ;
-
-		      DeleteBullet ( num , TRUE ) ; // we want a bullet-explosion
-		      return;  // This bullet was deleted and does not need to be processed any further...
+		    
+		    apply_bullet_damage_to_player ( player_num , CurBullet-> damage ) ;
+		    
+		    DeleteBullet ( num , TRUE ) ; // we want a bullet-explosion
+		    return;  // This bullet was deleted and does not need to be processed any further...
 #ifdef USE_MISS_HIT_ARRAYS
-		    }
-		  else
-		    {
-		      CurBullet->miss_hit_influencer = MISS ;
-		    }
 		}
-#endif
+		else
+		{
+		    CurBullet->miss_hit_influencer = MISS ;
+		}
 	    }
+#endif
 	}
     }
 }; // check_bullet_player_collisions ( CurBullet , num )
@@ -1006,75 +1002,75 @@ CheckBulletCollisions (int num)
 void
 CheckBlastCollisions (int num)
 {
-  int i;
-  Blast CurBlast = &(AllBlasts[num]);
-  // int level = CurLevel->levelnum;
-  int level = CurBlast->pos.z;
-
-  //--------------------
-  // At first, we check for collisions of this blast with all bullets 
-  //
-  for (i = 0; i < MAXBULLETS; i++)
+    int i;
+    Blast CurBlast = &(AllBlasts[num]);
+    // int level = CurLevel->levelnum;
+    int level = CurBlast->pos.z;
+    
+    //--------------------
+    // At first, we check for collisions of this blast with all bullets 
+    //
+    for (i = 0; i < MAXBULLETS; i++)
     {
-      if (AllBullets[i].type == OUT)
-	continue;
-      if (CurBlast->phase > 4)
-	break;
-
-      if (abs (AllBullets[i].pos.x - CurBlast->pos.x ) < Blast_Radius)
-	if (abs (AllBullets[i].pos.y - CurBlast->pos.y ) < Blast_Radius)
-	  if ( AllBullets[i].pos.z == CurBlast->pos.z )
+	if (AllBullets[i].type == OUT)
+	    continue;
+	if (CurBlast->phase > 4)
+	    break;
+	
+	if (abs (AllBullets[i].pos.x - CurBlast->pos.x ) < Blast_Radius)
+	{
+	    if (abs (AllBullets[i].pos.y - CurBlast->pos.y ) < Blast_Radius)
 	    {
-	      if ( ! AllBullets[i].pass_through_explosions )
+		if ( AllBullets[i].pos.z == CurBlast->pos.z )
 		{
-		  DeleteBullet( i , TRUE ); // we want a bullet-explosion
+		    if ( ! AllBullets[i].pass_through_explosions )
+		    {
+			DeleteBullet( i , TRUE ); // we want a bullet-explosion
+		    }
 		}
 	    }
-    
-    }	
-
-  //--------------------
-  // Now we check for enemys, that might have stepped into this
-  // one blasts area of effect...
-  //
-  for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i ++ )
-    {
-      if ((AllEnemys[i].Status == OUT)
-	  || (AllEnemys[i].pos.z != level))
-	continue;
-
-      if ( ( fabsf (AllEnemys[i].pos.x - CurBlast->pos.x ) < Blast_Radius ) &&
-	   ( fabsf (AllEnemys[i].pos.y - CurBlast->pos.y ) < Blast_Radius ) )
-	  {
-	    /* drag energy of enemy */
-	    AllEnemys[i].energy -= Blast_Damage_Per_Second * Frame_Time ();
-	  }
-    }				/* for */
-
-  //--------------------
-  // Now we check, if perhaps the influencer has stepped into the area
-  // of effect of this one blast.  Then he'll get burnt ;)
-  // 
-  if ( (Me[0].status != OUT) && 
-       ( fabsf (Me[0].pos.x - CurBlast->pos.x ) < Blast_Radius ) &&
-       ( fabsf (Me[0].pos.y - CurBlast->pos.y ) < Blast_Radius ) )
-    {
-      if (!InvincibleMode)
-	{
-	  Me[0].energy -= Blast_Damage_Per_Second * Frame_Time ();
-	  
-	  // So the influencer got some damage from the hot blast
-	  // Now most likely, he then will also say so :)
-	  if ( !CurBlast->MessageWasDone )
-	    {
-	      AddInfluBurntText();
-	      CurBlast->MessageWasDone=TRUE;
-	    }
-	  
 	}
-
+    }	
+    
+    //--------------------
+    // Now we check for enemys, that might have stepped into this
+    // one blasts area of effect...
+    //
+    for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i ++ )
+    {
+	if ((AllEnemys[i].Status == OUT)
+	    || (AllEnemys[i].pos.z != level))
+	    continue;
+	
+	if ( ( fabsf (AllEnemys[i].pos.x - CurBlast->pos.x ) < Blast_Radius ) &&
+	     ( fabsf (AllEnemys[i].pos.y - CurBlast->pos.y ) < Blast_Radius ) )
+	{
+	    //--------------------
+	    // drag energy of enemy 
+	    //
+	    AllEnemys[i].energy -= Blast_Damage_Per_Second * Frame_Time ();
+	}
     }
-
+    
+    //--------------------
+    // Now we check, if perhaps the influencer has stepped into the area
+    // of effect of this one blast.  Then he'll get burnt ;)
+    // 
+    if ( (Me[0].status != OUT) && 
+	 ( fabsf (Me[0].pos.x - CurBlast->pos.x ) < Blast_Radius ) &&
+	 ( fabsf (Me[0].pos.y - CurBlast->pos.y ) < Blast_Radius ) )
+    {
+	Me[0].energy -= Blast_Damage_Per_Second * Frame_Time ();
+	
+	// So the influencer got some damage from the hot blast
+	// Now most likely, he then will also say so :)
+	if ( !CurBlast->MessageWasDone )
+	{
+	    AddInfluBurntText();
+	    CurBlast->MessageWasDone=TRUE;
+	}
+    }
+    
 }; // CheckBlastCollisions( ... )
 
 #undef _bullet_c

@@ -255,7 +255,7 @@ Takeover ( int enemynum )
 	PlayGame ();
 	
 	// evaluate the final score of the game and return it
-	if (InvincibleMode || (LeaderColor == YourColor))
+	if ( LeaderColor == YourColor ) 
 	{
 	    // SwitchBackgroundMusicTo (SILENCE);
 	    Takeover_Game_Won_Sound ();

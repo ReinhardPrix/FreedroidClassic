@@ -101,7 +101,6 @@ EXTERN int InitBars;
 EXTERN int PreTakeEnergy;
 EXTERN int QuitProgram;
 EXTERN int GameOver;
-EXTERN int InvincibleMode;
 EXTERN int Alert;
 EXTERN int RespectVisibilityOnMap;
 

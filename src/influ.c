@@ -3307,38 +3307,4 @@ AnalyzePlayersMouseClick ( int player_num )
 
 }; // void AnalyzePlayersMouseClick ( int player_num )
 
-/* ----------------------------------------------------------------------
- * influ-enemy collisions are sucking someones
- * energy, depending no longer on classes of the colliding parties,
- * but on their weights
- * ---------------------------------------------------------------------- */
-void
-InfluEnemyCollisionLoseEnergy (int enemynum)
-{
-  int enemytype = AllEnemys[enemynum].type;
-
-  //--------------------
-  // This will not be done any more...
-  //
-
-  return;
-
-  if ( AllEnemys[enemynum].is_friendly ) return;
-
-  if (Me[0].type <= enemytype)
-    {
-      if (InvincibleMode)
-	return;
-      
-      Me[0].energy -=
-	(Druidmap[enemytype].weight -
-	 Druidmap[Me[0].type].weight ) * collision_lose_energy_calibrator * 0.01 ;
-    }
-  else
-    AllEnemys[enemynum].energy -=
-      (Druidmap[Me[0].type].weight -
-       Druidmap[enemytype].weight ) * collision_lose_energy_calibrator * 0.01;
-
-}; // void InfluEnemyCollisionLoseEnergy(int enemynum)
-
 #undef _influ_c
