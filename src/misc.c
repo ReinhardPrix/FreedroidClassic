@@ -991,13 +991,13 @@ freedroid-discussion@lists.sourceforge.net\n\
 	   sizeof(char), SettingsFile );
 
   if( fclose( SettingsFile ) == EOF)
-  {
-      printf("\n\nClosing of settings file failed in SaveSettings...\n\nTerminating\n\n");
+    {
+      DebugPrintf( 0 , "\n\nClosing of settings file failed in SaveSettings...\n\nTerminating\n\n");
       Terminate(ERR);
       return;
-  }
+    }
 
-  printf("\nSuccessfully saved settings file (.freedroid.config) in home directory.\n");
+  DebugPrintf( 0 , "\nSuccessfully saved settings file (.freedroid.config) in home directory.\n");
 
 };
 
@@ -1054,7 +1054,8 @@ I need to know that for loading.\n");
 
   //Structure's theme_subpath is a pointer - it might point somewhere strange!
   //I will have to load and save this separately...but for now just set it to default
-  GameConfig.Theme_SubPath = "lanzz_theme/";
+  // GameConfig.Theme_SubPath = "lanzz_theme/";
+  strcpy ( GameConfig.Theme_SubPath , "lanzz_theme/" );
 
   DebugPrintf ( 1 , "\nSuccessfully loaded settings file (.freedroid.config) in home directory\n");
 

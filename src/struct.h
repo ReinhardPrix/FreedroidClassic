@@ -74,7 +74,8 @@ typedef struct
   int StandardEnemyMessages_On_Off;
   int StandardInfluencerMessages_On_Off;
   int Mouse_Input_Permitted;
-  char* Theme_SubPath;
+  // char* Theme_SubPath;
+  char Theme_SubPath[2000];
   int Mission_Log_Visible;
   float Mission_Log_Visible_Time;
   float Mission_Log_Visible_Max_Time;
@@ -89,6 +90,8 @@ typedef struct
   float SkillScreen_Visible_Max_Time;
   int Automap_Visible;
   int spell_level_visible;
+  int terminate_on_missing_speech_sample;
+  int show_subtitles_in_dialogs;
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
 
@@ -498,9 +501,10 @@ typedef struct
   unsigned char HaveBeenToLevel[ MAX_LEVELS ]; // record of the levels the player has visited yet.
 
   unsigned char Chandra_Chat_Flags[ MAX_ANSWERS_PER_PERSON ];
+  unsigned char RMS_Chat_Flags[ MAX_ANSWERS_PER_PERSON ];
 
   //--------------------
-  // THE FOLLOWING ARE INFORMATIONS, THAT ARE HUGE AND THAT ALSO DO NOT NEED
+  // THE FOLLOWING ARE INFORMATION, THAT ARE HUGE AND THAT ALSO DO NOT NEED
   // TO BE COMMUNICATED FROM THE CLIENT TO THE SERVER OR VICE VERSA
   //
   Uint16 KillRecord[ 200 ];      // how many ( of the first 1000 monster types) have been killed yet?

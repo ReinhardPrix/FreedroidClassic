@@ -942,11 +942,13 @@ enum
 	  while (EnterPressed() || SpacePressed() );
 	  if ( !strcmp ( GameConfig.Theme_SubPath , "classic_theme/" ) )
 	    {
-	      GameConfig.Theme_SubPath="lanzz_theme/";
+	      // GameConfig.Theme_SubPath="lanzz_theme/";
+	      strcpy ( GameConfig.Theme_SubPath , "lanzz_theme/" );
 	    }
 	  else
 	    {
-	      GameConfig.Theme_SubPath="classic_theme/";
+	      // GameConfig.Theme_SubPath="classic_theme/";
+	      strcpy ( GameConfig.Theme_SubPath , "classic_theme/" );
 	    }
 	  ReInitPictures();
 	  
@@ -1012,6 +1014,8 @@ New_GraphicsSound_Options_Menu (void)
   char Options2[1000];
   char Options3[1000];
   char Options4[1000];
+  char Options5[1000];
+  char Options6[1000];
   char* MenuTexts[10]={ "" , "" , "" , "" , "" ,
 			"" , "" , "" , "" , "" };
   enum
@@ -1021,6 +1025,8 @@ New_GraphicsSound_Options_Menu (void)
       SET_GAMMA_CORRECTION, 
       SET_FULLSCREEN_FLAG, 
       CW_SIZE,
+      SET_TERMINATE_ON_MISSING_FLAG,
+      SET_SHOW_SUBTITLE_FLAG,
       LEAVE_OPTIONS_MENU 
     };
 
@@ -1038,12 +1044,18 @@ New_GraphicsSound_Options_Menu (void)
       sprintf( Options2 , "Gamma Correction: %1.2f", GameConfig.Current_Gamma_Correction );
       sprintf( Options3 , "Fullscreen Mode: %s", fullscreen_on ? "ON" : "OFF");
       sprintf( Options4 , "Combat Window Size: %s", classic_user_rect ? "CLASSIC" : "FULL" );
+      sprintf( Options5 , "Terminate On Missing Sample: %s", 
+	       GameConfig.terminate_on_missing_speech_sample ? "YES" : "NO" );
+      sprintf( Options6 , "Show Subtitles in Dialogs: %s", 
+	       GameConfig.show_subtitles_in_dialogs ? "YES" : "NO" );
       MenuTexts[0]=Options0;
       MenuTexts[1]=Options1;
       MenuTexts[2]=Options2;
       MenuTexts[3]=Options3;
       MenuTexts[4]=Options4;
-      MenuTexts[5]="Back";
+      MenuTexts[5]=Options5;
+      MenuTexts[6]=Options6;
+      MenuTexts[7]="Back";
 
       MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL , NULL );
 
@@ -1133,6 +1145,16 @@ New_GraphicsSound_Options_Menu (void)
 	  DisplayBanner( NULL , NULL , BANNER_FORCE_UPDATE );
 	  SDL_Flip( Screen );
 	  
+	  break;
+
+	case SET_TERMINATE_ON_MISSING_FLAG:
+	  while (EnterPressed() || SpacePressed() );
+	  GameConfig.terminate_on_missing_speech_sample = !GameConfig.terminate_on_missing_speech_sample;
+	  break;
+
+	case SET_SHOW_SUBTITLE_FLAG:
+	  while (EnterPressed() || SpacePressed() );
+	  GameConfig.show_subtitles_in_dialogs = !GameConfig.show_subtitles_in_dialogs;
 	  break;
 
 	case LEAVE_OPTIONS_MENU:

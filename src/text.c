@@ -121,6 +121,35 @@ GetChatWindowInput( SDL_Surface* Background , SDL_Rect* Chat_Window_Pointer )
 }; // char* GetChatWindowInput( void )
 
 /* ----------------------------------------------------------------------
+ * This function restores all chat-with-friendly-droid variables to their
+ * initial values.
+ * ---------------------------------------------------------------------- */
+void
+RestoreChatVariableToInitialValue( int PlayerNum )
+{
+  Me [ PlayerNum ] . Chandra_Chat_Flags[ 0 ] = 1 ;
+  Me [ PlayerNum ] . Chandra_Chat_Flags[ 1 ] = 1 ;
+  Me [ PlayerNum ] . Chandra_Chat_Flags[ 2 ] = 1 ;
+  Me [ PlayerNum ] . Chandra_Chat_Flags[ 3 ] = 1 ;
+  Me [ PlayerNum ] . Chandra_Chat_Flags[ 4 ] = 0 ;
+  Me [ PlayerNum ] . Chandra_Chat_Flags[ 5 ] = 0 ;
+  Me [ PlayerNum ] . Chandra_Chat_Flags[ 6 ] = 0 ;
+  Me [ PlayerNum ] . Chandra_Chat_Flags[ 7 ] = 0 ;
+  Me [ PlayerNum ] . Chandra_Chat_Flags[ MAX_ANSWERS_PER_PERSON - 1 ] = 1 ;
+      
+  Me [ PlayerNum ] . RMS_Chat_Flags[ 0 ] = 1 ;
+  Me [ PlayerNum ] . RMS_Chat_Flags[ 1 ] = 0 ;
+  Me [ PlayerNum ] . RMS_Chat_Flags[ 2 ] = 0 ;
+  Me [ PlayerNum ] . RMS_Chat_Flags[ 3 ] = 0 ;
+  Me [ PlayerNum ] . RMS_Chat_Flags[ 4 ] = 0 ;
+  Me [ PlayerNum ] . RMS_Chat_Flags[ 5 ] = 0 ;
+  Me [ PlayerNum ] . RMS_Chat_Flags[ 6 ] = 0 ;
+  Me [ PlayerNum ] . RMS_Chat_Flags[ 7 ] = 0 ;
+  Me [ PlayerNum ] . RMS_Chat_Flags[ MAX_ANSWERS_PER_PERSON - 1 ] = 1 ;
+  
+};
+
+/* ----------------------------------------------------------------------
  * This function displays a subtitle for the ChatWithFriendlyDroid interface,
  * so that you can also understand everything with sound disabled.
  * ---------------------------------------------------------------------- */
@@ -128,6 +157,12 @@ void
 DisplaySubtitle( char* SubtitleText , void* Background )
 {
   SDL_Rect Subtitle_Window;
+
+  //--------------------
+  // If the user has disabled the subtitles in the dialogs, we need
+  // not do anything and just return...
+  //
+  if ( !GameConfig.show_subtitles_in_dialogs ) return;
 
   //--------------------
   // First we define our subtitle window.
@@ -143,7 +178,8 @@ DisplaySubtitle( char* SubtitleText , void* Background )
   //--------------------
   // Now we can display the text and update the screen...
   //
-  DisplayTextWithScrolling ( SubtitleText , Subtitle_Window.x , Subtitle_Window.y , &Subtitle_Window , Background );
+  // DisplayTextWithScrolling ( SubtitleText , Subtitle_Window.x , Subtitle_Window.y , &Subtitle_Window , Background );
+  DisplayText ( SubtitleText , Subtitle_Window.x , Subtitle_Window.y , &Subtitle_Window );
   SDL_UpdateRect ( Screen , Subtitle_Window.x , Subtitle_Window.y , Subtitle_Window.w , Subtitle_Window.h );
 
 }; // void DisplaySubtitle( char* SubtitleText , void* Background )
@@ -170,7 +206,8 @@ ChatWithFriendlyDroid( int Enum )
   char* Sorenson_Text;
   char* RMS_Text;
   int MenuSelection = (-1) ;
-  char* ChatMenuTexts[ MAX_ANSWERS_PER_PERSON ];
+  char* Chandra_DialogMenuTexts[ MAX_ANSWERS_PER_PERSON ];
+  char* RMS_DialogMenuTexts[ MAX_ANSWERS_PER_PERSON ];
 
   //--------------------
   // First we empty the array of possible answers in the
@@ -178,11 +215,17 @@ ChatWithFriendlyDroid( int Enum )
   //
   for ( i = 0 ; i < MAX_ANSWERS_PER_PERSON ; i ++ )
     {
-      ChatMenuTexts [ i ] = "" ;
+      Chandra_DialogMenuTexts [ i ] = "" ;
+      RMS_DialogMenuTexts [ i ] = "" ;
     }
-  ChatMenuTexts[0]="Yes";
-  ChatMenuTexts[1]="No";
 
+  //--------------------
+  // This should make all the answering possibilities available
+  // that are there without any prerequisite and that can be played
+  // through again and again without any modification.
+  //
+  RestoreChatVariableToInitialValue( 0 ); // Player=0 for now.
+  
   //--------------------
   // Now we define the texts that the various NPCs will say in case
   // the old monologuous interaction system is used...
@@ -280,25 +323,19 @@ the things soul may finally rest.\n\
       // DisplayTextWithScrolling ( 
       // "Transfer channel protocol set up for text transfer...\n\n" , 
       // Chat_Window.x , Chat_Window.y , &Chat_Window , Background );
-      
-      ChatMenuTexts [ 0 ] = " Who are you? " ;
-      ChatMenuTexts [ 1 ] = " What can you tell me about this place? " ;
-      ChatMenuTexts [ 2 ] = " Where can I get better equipment? " ;
-      ChatMenuTexts [ 3 ] = " I have problems with my controls. " ;
 
-      ChatMenuTexts [ 4 ] = " What can you tell me about the MS? " ;
-      ChatMenuTexts [ 5 ] = " " ;
-      ChatMenuTexts [ 6 ] = " " ;
-      ChatMenuTexts [ 7 ] = " END ";
-      
-      Me [ 0 ] . Chandra_Chat_Flags[ 0 ] = 1 ;
-      Me [ 0 ] . Chandra_Chat_Flags[ 1 ] = 1 ;
-      Me [ 0 ] . Chandra_Chat_Flags[ 2 ] = 1 ;
-      Me [ 0 ] . Chandra_Chat_Flags[ 3 ] = 1 ;
-      Me [ 0 ] . Chandra_Chat_Flags[ 4 ] = 0 ;
-      Me [ 0 ] . Chandra_Chat_Flags[ 5 ] = 0 ;
-      Me [ 0 ] . Chandra_Chat_Flags[ 6 ] = 0 ;
-      Me [ 0 ] . Chandra_Chat_Flags[ 7 ] = 1 ;
+      Chandra_DialogMenuTexts [ 0 ] = " Who are you? " ;
+      Chandra_DialogMenuTexts [ 1 ] = " What can you tell me about this place? " ;
+      Chandra_DialogMenuTexts [ 2 ] = " Where can I get better equipment? " ;
+      Chandra_DialogMenuTexts [ 3 ] = " I have problems with my controls. " ;
+
+      Chandra_DialogMenuTexts [ 4 ] = " What can you tell me about the MS? " ;
+      Chandra_DialogMenuTexts [ 5 ] = " Wouldn't that just mean replacing one evil with another?" ;
+      Chandra_DialogMenuTexts [ 6 ] = " I want to get in contact with the MS." ;
+      Chandra_DialogMenuTexts [ 7 ] = " I would like to get in contact with the Rebellion." ;
+      Chandra_DialogMenuTexts [ 8 ] = " How can I gain their trust?" ;
+      Chandra_DialogMenuTexts [ 9 ] = " Have I done enough quest yet for my meeting with the Resistance?" ;
+      Chandra_DialogMenuTexts [ MAX_ANSWERS_PER_PERSON - 1 ] = " END ";
       
       DisplaySubtitle( " Welcome Traveller! " , Background );
       PlayOnceNeededSoundSample( "Chandra_Welcome_Traveller_0.wav" , TRUE );
@@ -308,7 +345,7 @@ the things soul may finally rest.\n\
 	{
 	  
 	  // MenuSelection = ChatDoMenuSelection ( "What will you say?" , MenuTexts , 1 , NULL , FPS_Display_BFont );
-	  MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , ChatMenuTexts , Me[0].Chandra_Chat_Flags , 1 , NULL , FPS_Display_BFont );
+	  MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , Chandra_DialogMenuTexts , Me[0].Chandra_Chat_Flags , 1 , NULL , FPS_Display_BFont );
 	  
 	  switch( MenuSelection )
 	    {
@@ -337,6 +374,7 @@ the things soul may finally rest.\n\
 	      PlayOnceNeededSoundSample( "Chandra_They_Have_All_0.wav" , TRUE );
 	      DisplaySubtitle( " Talk to Mr. Stone, the shop bot. " , Background );
 	      PlayOnceNeededSoundSample( "Chandra_Talk_To_The_0.wav" , TRUE );
+	      Me [ 0 ] . Chandra_Chat_Flags[ 2 ] = 0 ; // but don't ask this twice.
 	      break;
 	    case 4:
 	      PlayOnceNeededSoundSample( "Tux_Chandra_I_Need_Help_0.wav" , TRUE );
@@ -354,13 +392,71 @@ the things soul may finally rest.\n\
 	      PlayOnceNeededSoundSample( "Chandra_Controls_6.wav" , TRUE );
 	      DisplaySubtitle( " Use the S key to open or close the skills screen. " , Background );
 	      PlayOnceNeededSoundSample( "Chandra_Controls_7.wav" , TRUE );
+	      // Me [ 0 ] . Chandra_Chat_Flags[ 3 ] = 0 ; // but don't ask this twice.
 	      break;
 	    case 5:
 	      PlayOnceNeededSoundSample( "Tux_Chandra_What_Can_MS_0.wav" , TRUE );
+	      DisplaySubtitle( " Currently, the MS is the most powerful organisation in the universe. " , Background );
+	      PlayOnceNeededSoundSample( "Chandra_Currently_The_MS_0.wav" , TRUE );
+	      DisplaySubtitle( " But maybe not for very much longer:  A rebellion has started." , Background );
+	      PlayOnceNeededSoundSample( "Chandra_But_Maybe_Not_0.wav" , TRUE );
+	      DisplaySubtitle( " The rebels have small supporters throughout the universe." , Background );
+	      PlayOnceNeededSoundSample( "Chandra_The_Rebels_Have_0.wav" , TRUE );
+	      DisplaySubtitle( " The number of the rebels has grown a lot in the last decade." , Background );
+	      PlayOnceNeededSoundSample( "Chandra_The_Number_Of_0.wav" , TRUE );
+	      DisplaySubtitle( " It might be that in the end they can win their struggle for freedom." , Background );
+	      PlayOnceNeededSoundSample( "Chandra_It_Might_Well_0.wav" , TRUE );
+	      Me [ 0 ] . Chandra_Chat_Flags[ 5 ] = 1 ; // some new possibilities...
+	      Me [ 0 ] . Chandra_Chat_Flags[ 6 ] = 1 ;
+	      Me [ 0 ] . Chandra_Chat_Flags[ 7 ] = 1 ;
+	      Me [ 0 ] . Chandra_Chat_Flags[ 4 ] = 0 ; // but don't ask this twice.
 	      break;
 	    case 6:
+	      PlayOnceNeededSoundSample( "Tux_Chandra_Wouldnt_That_Mean_0.wav" , TRUE );
+	      DisplaySubtitle( " By no means.  The rebellion is carried on by individuals. " , Background );
+	      PlayOnceNeededSoundSample( "Chandra_By_No_Means_0.wav" , TRUE );
+	      DisplaySubtitle( " They are neither bound to some central authority nor are they paid in any way." , Background );
+	      PlayOnceNeededSoundSample( "Chandra_They_Are_Neither_0.wav" , TRUE );
+	      DisplaySubtitle( " They work together for the goal of freedom." , Background );
+	      PlayOnceNeededSoundSample( "Chandra_They_Work_Together_0.wav" , TRUE );
+	      DisplaySubtitle( " They will not change their goal to support the power and will of only one." , Background );
+	      PlayOnceNeededSoundSample( "Chandra_They_Will_Not_0.wav" , TRUE );
+	      Me [ 0 ] . Chandra_Chat_Flags[ 5 ] = 0 ; // but don't ask this twice.
 	      break;
 	    case 7:
+	      PlayOnceNeededSoundSample( "Tux_Chandra_I_Want_To_0.wav" , TRUE );
+	      DisplaySubtitle( " This will be difficult.  As a non-member of the MS, their machines will attack you." , Background );
+	      PlayOnceNeededSoundSample( "Chandra_This_Will_Be_0.wav" , TRUE );
+	      DisplaySubtitle( " But maybe there is a way.  I just don't know." , Background );
+	      PlayOnceNeededSoundSample( "Chandra_But_Maybe_There_0.wav" , TRUE );
+	      Me [ 0 ] . Chandra_Chat_Flags[ 6 ] = 0 ; // but don't ask this twice.
+	      break;
+	    case 8:
+	      PlayOnceNeededSoundSample( "Tux_Chandra_I_Would_Like_0.wav" , TRUE );
+	      DisplaySubtitle( " This should be possible.  But you must gain their trust first." , Background );
+	      PlayOnceNeededSoundSample( "Chandra_This_Should_Be_0.wav" , TRUE );
+	      Me [ 0 ] . Chandra_Chat_Flags[ 7 ] = 0 ; // but don't ask this twice.
+	      Me [ 0 ] . Chandra_Chat_Flags[ 8 ] = 1 ; // this should lead on...
+	      break;
+	    case 9:
+	      PlayOnceNeededSoundSample( "Tux_Chandra_How_Can_I_0.wav" , TRUE );
+	      DisplaySubtitle( " Ask around.  I'll tell everybody to find some quests for you." , Background );
+	      PlayOnceNeededSoundSample( "Chandra_Ask_Around_Ill_0.wav" , TRUE );
+	      DisplaySubtitle( " If you do well on them, I'll hear that and I'll count it in your favour." , Background );
+	      PlayOnceNeededSoundSample( "Chandra_If_You_Do_0.wav" , TRUE );
+	      DisplaySubtitle( " If you think you've done enough quests, come back here and I'll see what I can do." , Background );
+	      PlayOnceNeededSoundSample( "Chandra_If_You_Think_0.wav" , TRUE );
+	      Me [ 0 ] . Chandra_Chat_Flags[ 8 ] = 0 ; // but don't ask this twice.
+	      Me [ 0 ] . Chandra_Chat_Flags[ 9 ] = 1 ; // this should lead on...
+	      break;
+	    case 10:
+	      PlayOnceNeededSoundSample( "Tux_Chandra_Have_I_Done_0.wav" , TRUE );
+	      DisplaySubtitle( " No, not really.  Hurry up.  There's still a lot to do for you." , Background );
+	      PlayOnceNeededSoundSample( "Chandra_No_Not_Really_0.wav" , TRUE );
+	      // Me [ 0 ] . Chandra_Chat_Flags[ 9 ] = 0 ; // but don't ask this twice.
+	      // Me [ 0 ] . Chandra_Chat_Flags[ 8 ] = 0 ; // this should lead on...
+	      break;
+	    case MAX_ANSWERS_PER_PERSON :
 	    case (-1):
 	    default:
 	      return;
@@ -386,11 +482,176 @@ the things soul may finally rest.\n\
 
     }
 
+  //--------------------
+  // Now that the CHANDRA person is done, we can start to do all the dialog
+  // and interaction with the RMS person.
+  //
+
   if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "RMS" ) == 0 )
     {
+
+      /* 
+	 // *******************************************************
+	 // *** This was the old non-dialog but monolog code... ***
+	 // *******************************************************
       Switch_Background_Music_To ( "../speeches/Richard01.ogg" );
       ScrollText ( RMS_Text , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NULL );
       Switch_Background_Music_To ( CurLevel->Background_Song_Name );
+
+      */
+
+      //--------------------
+      // Now we do the dialog with Dr. Chandra...
+      //
+      
+      // We define our input and image windows...
+      Chat_Window.x=242; Chat_Window.y=100; Chat_Window.w=380; Chat_Window.h=314;
+      Droid_Image_Window.x=15; Droid_Image_Window.y=82; Droid_Image_Window.w=215; Droid_Image_Window.h=330;
+      
+      Activate_Conservative_Frame_Computation( );
+
+      //--------------------
+      // Next we prepare the whole background for all later text operations
+      //
+      Background = IMG_Load( find_file ( "backgrounds/chat_test.jpg" , GRAPHICS_DIR, FALSE ) );
+      if ( Background == NULL )
+	{
+	  printf("\n\nChatWithFriendlyDroid: ERROR LOADING FILE!!!!  Error code: %s " , SDL_GetError() );
+	  Terminate(ERR);
+	}
+      strcpy( fname, Druidmap[ AllEnemys[Enum].type ].druidname );
+      strcat( fname , ".png" );
+      fpath = find_file (fname, GRAPHICS_DIR, FALSE);
+      Small_Droid = IMG_Load (fpath) ;
+      Large_Droid = zoomSurface( Small_Droid , 1.8 , 1.8 , 0 );
+      SDL_BlitSurface( Large_Droid , NULL , Background , &Droid_Image_Window );
+      SDL_BlitSurface( Background , NULL , Screen , NULL );
+      SDL_Flip( Screen );
+      
+      // All droid chat should be done in the paradroid font I would say...
+      // SetCurrentFont( Para_BFont );
+      SetCurrentFont( FPS_Display_BFont );
+      
+      // We print out a little greeting message...
+      // DisplayTextWithScrolling ( 
+      // "Transfer channel protocol set up for text transfer...\n\n" , 
+      // Chat_Window.x , Chat_Window.y , &Chat_Window , Background );
+      
+      RMS_DialogMenuTexts [ 0 ] = " Chandra said you might have something to do for me. " ;
+      RMS_DialogMenuTexts [ 1 ] = " So? " ;
+      RMS_DialogMenuTexts [ 2 ] = " How can I get to your former place? " ;
+      RMS_DialogMenuTexts [ 3 ] = " About this coffee machine... " ;
+
+      RMS_DialogMenuTexts [ 4 ] = " What are these magnetic storms really? " ;
+      
+      RMS_DialogMenuTexts [ 5 ] = " Why didn't you fetch the coffee machine yourself in all the time?" ;
+      RMS_DialogMenuTexts [ 6 ] = " I've found your coffee machine.  Here you are." ;
+      RMS_DialogMenuTexts [ MAX_ANSWERS_PER_PERSON - 1 ] = " END ";
+      RMS_DialogMenuTexts [ 8 ] = " I'll get the coffee machine for you." ;
+      
+      DisplaySubtitle( " Welcome Traveller! " , Background );
+      PlayOnceNeededSoundSample( "Chandra_Welcome_Traveller_0.wav" , TRUE );
+      
+
+      while (1)
+	{
+	  
+	  // MenuSelection = ChatDoMenuSelection ( "What will you say?" , MenuTexts , 1 , NULL , FPS_Display_BFont );
+	  MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , RMS_DialogMenuTexts , Me[0].RMS_Chat_Flags , 1 , NULL , FPS_Display_BFont );
+	  
+	  switch( MenuSelection )
+	    {
+	    case 1:
+	      PlayOnceNeededSoundSample( "Tux_RMS_Chandra_Said_You_0.wav" , TRUE );
+	      DisplaySubtitle( " Oh Yes! " , Background );
+	      PlayOnceNeededSoundSample( "RMS_Oh_Yes_0.wav" , TRUE );
+	      DisplaySubtitle( " You are the one who wants to get in contact with the resistance then. " , Background );
+	      PlayOnceNeededSoundSample( "RMS_You_Are_The_0.wav" , TRUE );
+	      DisplaySubtitle( " Chandra told me about you and indeed I do have a test for you. " , Background );
+	      PlayOnceNeededSoundSample( "RMS_Chandra_Told_Me_0.wav" , TRUE );
+	      Me [ 0 ] . RMS_Chat_Flags[ 0 ] = 0 ; // don't say this twice...
+	      Me [ 0 ] . RMS_Chat_Flags[ 1 ] = 1 ; // this should allow to ask 'so?'
+	      break;
+	    case 2:
+	      PlayOnceNeededSoundSample( "Tux_RMS_So_0.wav" , TRUE );
+	      DisplaySubtitle( " After the revolution, I was forced to flee to this place. " , Background );
+	      PlayOnceNeededSoundSample( "RMS_After_The_Revolution_0.wav" , TRUE );
+	      DisplaySubtitle( " Most of my belongings stayed behind. " , Background );
+	      PlayOnceNeededSoundSample( "RMS_Most_Of_My_0.wav" , TRUE );
+	      DisplaySubtitle( " Among them is an old coffee machine, an inheritance from my father. " , Background );
+	      PlayOnceNeededSoundSample( "RMS_Among_Them_Is_0.wav" , TRUE );
+	      DisplaySubtitle( " Now here is what I want you to do: Go to the private quarters level of my former place." , Background );
+	      PlayOnceNeededSoundSample( "RMS_Now_Here_Is_0.wav" , TRUE );
+	      DisplaySubtitle( " Find the coffee machine and bring it back to me. " , Background );
+	      PlayOnceNeededSoundSample( "RMS_Find_The_Coffee_0.wav" , TRUE );
+	      DisplaySubtitle( " If you do that, I'll tell chandra that I'd approve if if you were brought in contact with the resistance. " , Background );
+	      PlayOnceNeededSoundSample( "RMS_If_You_Do_0.wav" , TRUE );
+	      Me [ 0 ] . RMS_Chat_Flags[ 1 ] = 0 ; // don't say this twice in one dialog
+	      Me [ 0 ] . RMS_Chat_Flags[ 2 ] = 1 ; // this should allow to ask how-can-i.. 
+	      Me [ 0 ] . RMS_Chat_Flags[ 5 ] = 1 ; // this should allow to ask why-didnt-you...
+	      Me [ 0 ] . RMS_Chat_Flags[ 8 ] = 1 ; // this should allow to agree on the task...
+	      break;
+	    case 3:
+	      PlayOnceNeededSoundSample( "Tux_RMS_How_Can_I_0.wav" , TRUE );
+	      DisplaySubtitle( " As you might know, a great magnetic storm has shaken the universe. " , Background );
+	      PlayOnceNeededSoundSample( "RMS_As_You_Might_0.wav" , TRUE );
+	      DisplaySubtitle( " Almost all of the existing teleporter connections were disrupted or redirected. " , Background );
+	      PlayOnceNeededSoundSample( "RMS_Almost_All_Of_0.wav" , TRUE );
+	      DisplaySubtitle( " It was during this storm that you arrived at our teleporter terminal." , Background );
+	      PlayOnceNeededSoundSample( "RMS_It_Was_During_0.wav" , TRUE );
+	      // DisplaySubtitle( " I wonder how you could have survived this. " , Background );
+	      // PlayOnceNeededSoundSample( "Chandra_Talk_To_The_0.wav" , TRUE );
+	      DisplaySubtitle( " But anyway, the teleporter now points back to my former home. " , Background );
+	      PlayOnceNeededSoundSample( "RMS_But_Anyway_The_0.wav" , TRUE );
+	      Me [ 0 ] . RMS_Chat_Flags[ 2 ] = 0 ; // don't say this twice in one dialgo
+	      Me [ 0 ] . RMS_Chat_Flags[ 4 ] = 1 ; // this should allow to ask about the mag-storm...
+	      break;
+	    case 4:
+	      PlayOnceNeededSoundSample( "Tux_RMS_About_This_Coffee_0.wav" , TRUE );
+	      /*
+	      DisplaySubtitle( " Use the left mouse button to move around, talk to friends or attack enemies. " , Background );
+	      PlayOnceNeededSoundSample( "Chandra_Controls_1.wav" , TRUE );
+	      DisplaySubtitle( " Hold down the left mouse button to keep moving. " , Background );
+	      PlayOnceNeededSoundSample( "Chandra_Controls_2.wav" , TRUE );
+	      DisplaySubtitle( " If you press the shift button in addition to the left mouse button, you will only attack and not move. " , Background );
+	      PlayOnceNeededSoundSample( "Chandra_Controls_3.wav" , TRUE );
+	      DisplaySubtitle( " Use the right mouse button to activate your currently readied skill or spell. " , Background );
+	      PlayOnceNeededSoundSample( "Chandra_Controls_4.wav" , TRUE );
+	      DisplaySubtitle( " Use the I key to open or close the inventory screen. " , Background );
+	      PlayOnceNeededSoundSample( "Chandra_Controls_5.wav" , TRUE );
+	      DisplaySubtitle( " Use the C key to open or close the character screen. " , Background );
+	      PlayOnceNeededSoundSample( "Chandra_Controls_6.wav" , TRUE );
+	      DisplaySubtitle( " Use the S key to open or close the skills screen. " , Background );
+	      PlayOnceNeededSoundSample( "Chandra_Controls_7.wav" , TRUE );
+	      */
+	      break;
+	    case 5:
+	      PlayOnceNeededSoundSample( "Tux_RMS_What_Are_These_0.wav" , TRUE );
+	      Me [ 0 ] . RMS_Chat_Flags[ 4 ] = 0 ; // don't say this twice in one dialog
+	      break;
+	    case 6:
+	      PlayOnceNeededSoundSample( "Tux_RMS_Why_Didnt_You_0.wav" , TRUE );
+	      Me [ 0 ] . RMS_Chat_Flags[ 5 ] = 0 ; // don't say this twice in one dialog
+	      break;
+	    case 7:
+	      PlayOnceNeededSoundSample( "Tux_RMS_Ive_Found_Your_0.wav" , TRUE );
+	      Me [ 0 ] . RMS_Chat_Flags[ 6 ] = 0 ; // don't say this twice in one dialog
+	      break;
+	    case 9:
+	      PlayOnceNeededSoundSample( "Tux_RMS_Ill_Get_Your_0.wav" , TRUE );
+	      Me [ 0 ] . RMS_Chat_Flags[ 8 ] = 0 ; // don't say this twice in one dialog
+	      break;
+	    case ( MAX_ANSWERS_PER_PERSON ):
+	    case (-1):
+	    default:
+	      return;
+	      break;
+	    }
+	}
+
+
+
+
 
       //--------------------
       // Now that the RMS has made his first speech, the tux will be

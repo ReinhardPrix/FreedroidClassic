@@ -172,11 +172,38 @@ PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting)
   Mix_Chunk *One_Shot_WAV_File;
   char Temp_Filename[5000];
   char* fpath;
+  int simulated_playback_starting_time;
 
   //--------------------
   // In case sound has been disabled, we don't do anything here...
   //
-  if ( !sound_on ) return;
+  if ( !sound_on ) 
+    {
+      //--------------------
+      // Maybe this sound sample was intended to be hooking the CPU and the
+      // program flow, so that nothing happens until the sample has been
+      // played fully.  In this case we must introduce a waiting time even
+      // now that no sound sample is played.  A default of 7 seconds seems to
+      // be appropriate.  On pressing the left button or space or escape
+      // the waiting time will be cancelled anyway.
+      //
+      if ( With_Waiting )
+	{
+	  simulated_playback_starting_time = SDL_GetTicks() ;
+	  
+	  while ( ( SDL_GetTicks() - simulated_playback_starting_time < 7 * 1000 ) && 
+		  !EscapePressed() && !SpacePressed() );
+	  
+	}
+      while ( EscapePressed() || SpacePressed() );
+
+      //--------------------
+      // Since sound is disabled otherwise we MUST return here and not
+      // try to do any sound operations on this machine with perhaps no sound
+      // modules and no SDL sound initialized.
+      //
+      return;
+    }
 
   //--------------------
   // Now we set a callback function, that should be called by SDL
@@ -200,23 +227,67 @@ PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting)
 \n\
 ----------------------------------------------------------------------\n\
 Freedroid has encountered a problem:\n\
-The a SDL MIXER WAS UNABLE TO LOAD A CERTAIN SOUND FILE INTO MEMORY.\n\
+The SDL MIXER WAS UNABLE TO LOAD A CERTAIN SOUND FILE INTO MEMORY.\n\
 \n\
 The name of the problematic file is:\n\
 %s \n\
 \n\
-If the problem persists and you do not find this sound file in the\n\
-Freedroid archive, please inform the developers about the problem.\n\
+The reason for this is as follows:  Speech files are stored in wav format\n\
+for technical reasons in conjunction with the SDL and the background music.\n\
+This tends to use up much space on disk, i.e. several megabytes which would\n\
+make the archive a bit large for download via 56K modem.  Therefore not all\n\
+sound samples featuring dialog speeches are in the freedroid repository.\n\
 \n\
-In the meantime you can choose to play without sound.\n\
-\n\
-If you want this, use the appropriate command line option and Freedroid will \n\
-not complain any more.  But for now Freedroid will terminate to draw attention \n\
-to the sound problem it could not resolve.\n\
-Sorry...\n\
+But to ensure smooth gameplay even with missing sound files, there is an option\n\
+to have freedroid either ignore the missing dialog sound samples or to terminate\n\
+on encountering a missing sound sample.\n\
+This option is set to " 
+	       , SoundSampleFileName );
+
+      if ( GameConfig.terminate_on_missing_speech_sample )
+	{
+	  fprintf (stderr, " TERMINATE ON MISSING SPEECH SAMPLE=TRUE\n\
+which will cause freedroid to terminate now.  You can use the menu to change\n\
+this setting if you wish to play smoothly or you could download the rest of the\n\
+sound samples, that are missing in the game from our web page (soon).\n\
+But for now Freedroid will terminate to draw attention to the sound problem it \n\
+could not resolve, as you requested via the option mentioned above. Sorry...\n\
 ----------------------------------------------------------------------\n\
-\n" , SoundSampleFileName );
-      Terminate (ERR);
+\n" );
+	}
+      else
+	{
+	  fprintf (stderr, " TERMINATE ON MISSING SPEECH SAMPLE=FALSE\n\
+which will cause freedroid to continue running and do nothing otherwise.\n\
+If you wish to have the sound samples, you could try to download and install\n\
+the rest of the speech samples from our web page (hopefully soon).\n\
+----------------------------------------------------------------------\n\
+\n" );
+	  //--------------------
+	  // Maybe this sound sample was intended to be hooking the CPU and the
+	  // program flow, so that nothing happens until the sample has been
+	  // played fully.  In this case we must introduce a waiting time even
+	  // if no sound sample is played.  A default of 7 seconds seems to
+	  // be appropriate.  On pressing the left button or space or escape
+	  // the waiting time will be cancelled anyway.
+	  //
+	  if ( With_Waiting )
+	    {
+	      simulated_playback_starting_time = SDL_GetTicks() ;
+
+	      while ( ( SDL_GetTicks() - simulated_playback_starting_time < 7 * 1000 ) && 
+		      !EscapePressed() && !SpacePressed() );
+
+	    }
+	  while ( EscapePressed() || SpacePressed() );
+
+	  //--------------------
+	  // Now we must return, since we do not want to 'free' the sound sample, that
+	  // hasn't been loaded successfully and produce a segfault, do we?
+	  //
+	  return;
+
+	}
     } // if ( !Loaded_WAV...
   else
     {
@@ -270,7 +341,7 @@ Sorry for interrupting your game.  \n\
       // In case escape was pressed, the currently playing voice sample must
       // be terminated immediately.
       //
-      if ( EscapePressed() )
+      if ( EscapePressed() || SpacePressed() )
 	{
 	  Mix_HaltChannel( Newest_Sound_Channel );
 	}
@@ -931,6 +1002,13 @@ Influencer_Scream_Sound (void)
 {
   if (!sound_on) return;
 
+  //--------------------
+  // For a test, let's try using not my samples but rather this
+  // one and only sound sample, formerly used for got-into-blast
+  // occasions.
+  Play_Sound (GOT_INTO_BLAST_SOUND);
+  return;
+
   switch( MyRandom( 4 ) )
     {
     case 0 :
@@ -965,7 +1043,7 @@ GotIntoBlastSound (void)
 {
   if (!sound_on) return;
 
-  Play_Sound (GOT_INTO_BLAST_SOUND);
+  // Play_Sound (GOT_INTO_BLAST_SOUND);
   return;
 }				// void GotIntoBlastSound(void)
 

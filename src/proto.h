@@ -528,6 +528,7 @@ void PaintConsoleMenu (int menu_pos);
 #define EXTERN extern
 #endif
 
+// EXTERN void RestoreChatVariableToInitialValue( int PlayerNum );
 EXTERN char* GetChatWindowInput( SDL_Surface* Background , SDL_Rect* Chat_Window_Pointer );
 EXTERN void ChatWithFriendlyDroid( int Enum );
 EXTERN void EnemyHitByBulletText( int Enum );

@@ -1797,7 +1797,10 @@ InitNewMissionList ( char *MissionName )
   for ( i = 0 ; i < MAX_ANSWERS_PER_PERSON ; i ++ ) 
     {
       Me[0].Chandra_Chat_Flags [ i ] = 0 ;
+      Me[0].RMS_Chat_Flags [ i ] = 0 ;
     }
+  // RestoreChatVariableToInitialValue( 0 );
+
 
   Me[0].energy = Me[0].maxenergy;
   Me[0].mana = Me[0].maxmana;
@@ -1930,7 +1933,8 @@ InitFreedroid ( void )
   GameConfig.Influencer_Blast_Text=TRUE;
   GameConfig.Mission_Log_Visible_Max_Time = 5;
   GameConfig.Inventory_Visible_Max_Time = 5;
-  GameConfig.Theme_SubPath="lanzz_theme/";
+  // GameConfig.Theme_SubPath="lanzz_theme/";
+  strcpy ( GameConfig.Theme_SubPath , "lanzz_theme/" );
   GameConfig.Draw_Framerate=TRUE;
   GameConfig.Draw_Energy=FALSE;
   GameConfig.Draw_Position=FALSE;
