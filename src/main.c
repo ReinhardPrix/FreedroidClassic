@@ -203,9 +203,9 @@ UpdateCountersForThisFrame (void)
     ShipEmptyCounter--;
   if (CurLevel->empty > 2)
     CurLevel->empty--;
-  if (RealScore > ShowScore)
+  if (Me.Experience > ShowScore)
     ShowScore++;
-  if (RealScore < ShowScore)
+  if (Me.Experience < ShowScore)
     ShowScore--;
 
   for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)

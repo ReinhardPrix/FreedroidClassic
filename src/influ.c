@@ -1128,8 +1128,6 @@ FireBullet (void)
   //
   RotateVectorByAngle ( & speed , ItemMap[ Druidmap[ Me.type].weapon_item.type ].item_gun_start_angle_modifier );
 
-
-
   speed_norm = sqrt (speed.x * speed.x + speed.y * speed.y);
   CurBullet->speed.x = (speed.x/speed_norm);
   CurBullet->speed.y = (speed.y/speed_norm);
@@ -1186,7 +1184,7 @@ RefreshInfluencer (void)
   if ( Me.energy < Druidmap [ Me.type ].maxenergy )
     {
       Me.energy += REFRESH_ENERGY * Frame_Time () * 5;
-      RealScore -= REFRESH_ENERGY * Frame_Time () * 10;
+      Me.Experience -= REFRESH_ENERGY * Frame_Time () * 10;
       if (Me.energy > Me.health)
 	Me.energy = Me.health;
 

@@ -99,7 +99,6 @@ EXTERN int HideInvisibleMap;
 EXTERN int PlusExtentionsOn;
 EXTERN int Alert;
 EXTERN int ThisShip;
-EXTERN float RealScore;
 EXTERN long ShowScore;
 
 EXTERN enemy AllEnemys[MAX_ENEMYS_ON_SHIP];

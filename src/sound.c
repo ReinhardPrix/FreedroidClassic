@@ -667,13 +667,13 @@ Influencer_Scream_Sound (void)
   switch( MyRandom( 4 ) )
     {
     case 0 :
-      Play_Sound ( INFLUENCER_SCREAM_SOUND_0 );
+      Play_Sound ( INFLUENCER_SCREAM_SOUND_3 );
       break;
     case 1 :
       Play_Sound ( INFLUENCER_SCREAM_SOUND_1 );
       break;
     case 2 :
-      Play_Sound ( INFLUENCER_SCREAM_SOUND_2 );
+      Play_Sound ( INFLUENCER_SCREAM_SOUND_3 );
       break;
     case 3 :
       Play_Sound ( INFLUENCER_SCREAM_SOUND_3 );

@@ -797,7 +797,7 @@ LevelEmpty (void)
     }
 
   CurLevel->empty = TRUE;
-  RealScore += DECKCOMPLETEBONUS;
+  Me.Experience += DECKCOMPLETEBONUS;
   ShowScore += DECKCOMPLETEBONUS;
 
   if (ShipEmpty ())

@@ -447,17 +447,17 @@ ReactToSpecialKeys(void)
   if ( KP0Pressed() )
     {
       while (KP0Pressed());
-      RealScore-=1000;
+      Me.Experience-=1000;
     }
   if ( KP1Pressed() )
     {
       while (KP1Pressed());
-      RealScore+=1000;
+      Me.Experience+=1000;
     }
   if ( KP2Pressed() )
     {
       while (KP2Pressed());
-      RealScore *= 2;
+      Me.Experience *= 2;
     }
 
   if ( KP3Pressed() )

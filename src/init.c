@@ -1573,7 +1573,7 @@ InitNewMissionList ( char *MissionName )
   // GameConfig.Draw_Position=TRUE;
   GameConfig.Draw_Position=FALSE;
 
-  RealScore = 0; // This should be done at the end of the highscore list procedure
+  Me.Experience = 0; // This should be done at the end of the highscore list procedure
   ShowScore = 0; // This should be done at the end of the highscore list procedure
   KillQueue (); // This has NO meaning right now...
   InsertMessage (" Game on!  Good Luck,,."); // this also has NO meaning right now
