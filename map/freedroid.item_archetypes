@@ -107,7 +107,7 @@ Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="inventory_image_27.png"
 Item uses drop sound with filename="drop_potion_sound.wav"
 Base list price=50
-Item description text="These small containers hold purified essence of life, that will automatically mend and repair any injured tissue on the person closest by as soon as the container is opened.  Each container can be used only once, buy multiple of those items can be grouped together like one item in inventory."
+Item description text="These small containers hold purified essence of life, that will automatically mend and repair any injured tissue on the person closest by as soon as the container is opened.  Each container can be used only once, but multiple of those items can be grouped together like one item in inventory."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -147,7 +147,7 @@ Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="inventory_image_0.png"
 Item uses drop sound with filename="drop_potion_sound.wav"
 Base list price=150
-Item description text="These small containers hold purified essence of life, that will automatically mend and repair any injured tissue on the person closest by as soon as the container is opened.  Each container can be used only once, buy multiple of those items can be grouped together like one item in inventory."
+Item description text="These small containers hold purified essence of life, that will automatically mend and repair any injured tissue on the person closest by as soon as the container is opened.  Each container can be used only once, but multiple of those items can be grouped together like one item in inventory."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -1707,7 +1707,7 @@ Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="inventory_image_30.png"
 Item uses drop sound with filename="drop_potion_sound.wav"
 Base list price=50
-Item description text="These small containers hold condensed and purified mental energy also known as 'force', that will automatically merge with the spirit of the person closest by as soon as the container is opened.  Each container can be used only once, buy multiple of those items can be grouped together like one item in inventory."
+Item description text="These small containers hold condensed and purified mental energy also known as 'force', that will automatically merge with the spirit of the person closest by as soon as the container is opened.  Each container can be used only once, but multiple of those items can be grouped together like one item in inventory."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -1747,7 +1747,7 @@ Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="inventory_image_29.png"
 Item uses drop sound with filename="drop_potion_sound.wav"
 Base list price=150
-Item description text="These small containers hold condensed and purified mental energy also known as 'force', that will automatically merge with the spirit of the person closest by as soon as the container is opened.  Each container can be used only once, buy multiple of those items can be grouped together like one item in inventory."
+Item description text="These small containers hold condensed and purified mental energy also known as 'force', that will automatically merge with the spirit of the person closest by as soon as the container is opened.  Each container can be used only once, but multiple of those items can be grouped together like one item in inventory."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -1987,7 +1987,7 @@ Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="inventory_image_34.png"
 Item uses drop sound with filename="drop_potion_sound.wav"
 Base list price=100
-Item description text="These small containers hold purified essence of life, that will automatically mend and repair any injured tissue on the person closest by as soon as the container is opened.  Each container can be used only once, buy multiple of those items can be grouped together like one item in inventory."
+Item description text="These small containers hold purified essence of life, that will automatically mend and repair any injured tissue on the person closest by as soon as the container is opened.  Each container can be used only once, but multiple of those items can be grouped together like one item in inventory."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -2027,7 +2027,7 @@ Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="inventory_image_35.png"
 Item uses drop sound with filename="drop_potion_sound.wav"
 Base list price=100
-Item description text="These small containers hold condensed and purified mental energy also known as 'force', that will automatically merge with the spirit of the person closest by as soon as the container is opened.  Each container can be used only once, buy multiple of those items can be grouped together like one item in inventory."
+Item description text="These small containers hold condensed and purified mental energy also known as 'force', that will automatically merge with the spirit of the person closest by as soon as the container is opened.  Each container can be used only once, but multiple of those items can be grouped together like one item in inventory."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -2330,13 +2330,13 @@ Item as gun: weapon requires both hands="yes"
 
 // Item No. 57
 ** Start of new item specification subsection **
-Item name="Dummy Entry For Replacement"
-Position_X=236
-Position_Y=59
-Item can be applied in combat="no"
+Item name="Running Power Capsule"
+Position_X=42
+Position_Y=239
+Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
-Item uses rotation series with prefix="NONE_AVAILABLE_YET"
+Item uses rotation series with prefix="energy_capsule"
 Items of this type collect together in inventory="yes"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
@@ -2344,10 +2344,10 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_7.png"
-Item uses drop sound with filename="Item_Drop_Sound_4.wav"
-Base list price=50
-Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
+File or directory name for inventory image="inventory_image_0.png"
+Item uses drop sound with filename="drop_potion_sound.wav"
+Base list price=150
+Item description text="These small containers hold purified running strength.  Each capsule can be used only once, but multiple of those items can be grouped together like one item in inventory."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
