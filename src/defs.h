@@ -40,6 +40,7 @@
 
 #define MEMDEBUG
 #define SOUND
+#define USE_SDL_FRAMERATE
 
 enum
 { SHOW_ALL = 0, SHOW_MAP = 1 };
@@ -112,9 +113,6 @@ enum _sounds
 #define SHIELDPICTUREBILD_PCX      "../graphics/shield.bmp"
 #define ELEMENTS_FILE_PCX	   "../graphics/to_elem.bmp"
 
-
-
-
 #define DATA70ZEICHENSATZ          "../graphics/para8x8.fnt"
 #define SHIPNAME                   "../map/ship1"
 #define COLORFILE                  "../map/levels.col"
@@ -182,23 +180,11 @@ enum _sounds
 #define INTERNBREITE 		13
 #define INTERNHOEHE 		7
 
-/* Diese Konstanten geben die Groesse des unsichtbaren Bereiches links,rechts
-	und oberhalb des Userfensters an. */
-// #define USERFENSTERLINKS ((INTERNBREITE-VIEWBREITE)*BLOCKBREITE/2) // (BLOCKBREITE/2+10)  /* 32 */  /* 32+16 */
-// #define USERFENSTEROBEN BLOCKHOEHE/2  /* 25 */
-//#define USERFENSTERUNTEN USERFENSTEROBEN+USERFENSTERHOEHE
-//#define USERFENSTERRECHTS (BLOCKBREITE/2+10) /* 32 */  /* 32+16 */
-//#define USERFENSTERBREITE ((INTERNBREITE-1)*BLOCKBREITE-20)  /* (288-32) */
-//#define USERFENSTERHOEHE ((INTERNHOEHE-1)*BLOCKHOEHE)     /* 112 */
-
 #define USERFENSTERHOEHE 	VIEWHOEHE*BLOCKHOEHE
 #define USERFENSTERBREITE 	VIEWBREITE*BLOCKBREITE
 
 #define USERFENSTERPOSX 	( (SCREENBREITE-USERFENSTERBREITE) / 2)
 #define USERFENSTERPOSY 	( (SCREENHOEHE-USERFENSTERHOEHE) )
-
-//#define USERFENSTEROBEN       BLOCKHOEHE+BLOCKHOEHE/2
-//#define USERFENSTERLINKS      1*BLOCKBREITE
 
 #define BULLETSPEEDINFLUENCE 	2
 

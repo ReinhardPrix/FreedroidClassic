@@ -231,7 +231,7 @@ EnterElevator (void)
   Me.status = MOBILE;
 
   DebugPrintf ("\nvoid EnterElevator(void): Usual end of function reached.");
-}				/* EnterElevator */
+}	/* EnterElevator */
 
 /*-----------------------------------------------------------------
  * @Desc: show elevator view of the ship, and hightlight the current 

@@ -89,6 +89,10 @@ long onehundredframedelay = 0;
 float FPSover1 = 10;
 float FPSover10 = 10;
 float FPSover100 = 10;
+Uint32 Now_SDL_Ticks;
+Uint32 One_Frame_SDL_Ticks;
+Uint32 Ten_Frame_SDL_Ticks;
+Uint32 Onehundred_Frame_SDL_Ticks;
 int framenr = 0;
 int SkipAFewFrames = 0;
 long Overall_Frames_Displayed=0;
@@ -249,11 +253,19 @@ main (int argc, char *const argv[])
 	   * (DO NOT MOVE THIS COMMAND PLEASE!) */
 	  framenr++;
 
+#ifdef USE_SDL_FRAMERATE
+	  One_Frame_SDL_Ticks=SDL_GetTicks();
+	  if (framenr % 10 == 1)
+	    Ten_Frame_SDL_Ticks=SDL_GetTicks();
+	  if (framenr % 100 == 1)
+	    Onehundred_Frame_SDL_Ticks=SDL_GetTicks();
+#else
 	  gettimeofday (&oneframetimestamp, NULL);
 	  if (framenr % 10 == 1)
 	    gettimeofday (&tenframetimestamp, NULL);
 	  if (framenr % 100 == 1)
 	    gettimeofday (&onehundredframetimestamp, NULL);
+#endif
 
 	  UpdateCountersForThisFrame ();
 
@@ -366,7 +378,32 @@ main (int argc, char *const argv[])
 	      CurLevel->empty = TRUE;
 	    }			/* if */
 
-	  // calculate the framerate:
+	  // In the following paragraph the framerate calculation is done.
+	  // There are basically two ways to do this:
+	  // The first way is to use SDL_GetTicks(), a function measuring milliseconds
+	  // since the initialisation of the SDL.
+	  // The second way is to use gettimeofday, a standard ANSI C function I guess,
+	  // defined in time.h or so.
+	  // 
+	  // I have arranged for a definition set in defs.h to switch between the two
+	  // methods of ramerate calculation.  THIS MIGHT INDEED MAKE SENSE, SINCE THERE
+	  // ARE SOME UNEXPLAINED FRAMERATE PHENOMENA WHICH HAVE TO TO WITH KEYBOARD
+	  // SPACE KEY, SO PLEASE DO NOT ERASE EITHER METHOD.  PLEASE ASK JP FIRST.
+	  //
+
+#ifdef USE_SDL_FRAMERATE
+
+	  Now_SDL_Ticks=SDL_GetTicks();
+	  oneframedelay=Now_SDL_Ticks-One_Frame_SDL_Ticks;
+	  tenframedelay=Now_SDL_Ticks-Ten_Frame_SDL_Ticks;
+	  onehundredframedelay=Now_SDL_Ticks-Onehundred_Frame_SDL_Ticks;
+
+	  FPSover1 = 1000 * 1 / (float) oneframedelay;
+	  FPSover10 = 1000 * 10 / (float) tenframedelay;
+	  FPSover100 = 1000 * 100 / (float) onehundredframedelay;
+
+#else
+
 	  gettimeofday (&now, NULL);
 
 	  oneframedelay =
@@ -390,6 +427,8 @@ main (int argc, char *const argv[])
 	  FPSover1 = 1000000 * 1 / (float) oneframedelay;
 	  FPSover10 = 1000000 * 10 / (float) tenframedelay;
 	  FPSover100 = 1000000 * 100 / (float) onehundredframedelay;
+
+#endif
 
 	} /* while !GameOver */
     } /* while !QuitProgram */

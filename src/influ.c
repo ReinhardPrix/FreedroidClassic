@@ -293,12 +293,12 @@ MoveInfluence (void)
       TransferCounter = 0;
     }
 
-  if ((SpacePressed ()) && (NoDirectionPressed ()) &&
-      (Me.status != WEAPON) && (Me.status != TRANSFERMODE) )
+  if ( (SpacePressed ()) && (NoDirectionPressed ()) &&
+       (Me.status != WEAPON) && (Me.status != TRANSFERMODE) )
     TransferCounter += Frame_Time();
 
-  if ((SpacePressed ()) && (!NoDirectionPressed ()) &&
-      (Me.status != TRANSFERMODE))
+  if ( (SpacePressed ()) && (!NoDirectionPressed () ) &&
+       (Me.status != TRANSFERMODE) )
     Me.status = WEAPON;
 
   if (Me.autofire)
@@ -309,7 +309,7 @@ MoveInfluence (void)
     FireBullet ();
 
   /* Checken, ob auf Sonder-Feld (Lift, Konsole) und im Transfermode */
-  ActSpecialField (Me.pos.x, Me.pos.y);
+  ActSpecialField ( Me.pos.x , Me.pos.y );
 
   DebugPrintf ("\nvoid MoveInfluence(void):  Usual end of function reached.");
 
@@ -340,7 +340,7 @@ NoInfluBulletOnWay (void)
     }
 
   return TRUE;
-}
+} // NoInfluBulletOnWay
 
 /*@Function============================================================
 @Desc: AnimateInfluence: zaehlt die Phasen weiter, falls der Roboter
