@@ -287,17 +287,11 @@ main (int argc, char *const argv[])
 	  if ( DPressed() )
 	    Me.energy = 0;
 	  if ( LPressed() ) 
-	    {
-	      while (LPressed () );  /* wait for key release */
 	      ShowHighscoreList ();
-	    }
 	  if ( IPressed() )
 	    ShowDebugInfos ();
 	  if ( CPressed() ) 
-	    {
-	      while (CPressed () );  /* wait for key release */
 	      Cheatmenu ();
-	    }
 	  if ( EscapePressed() )
 	    OptionsMenu ();
 	  if ( PPressed () )
@@ -639,9 +633,6 @@ Pause (void)
   GetInternFenster (SHOW_ALL);
   PutInternFenster ();
 
-
-  while (PPressed ());   /* wait for user to _release_ the P key */
-
   while ( Pause )
     {
       usleep (30000);
@@ -655,7 +646,6 @@ Pause (void)
 
       if (CPressed ())
 	{
-	  while (CPressed ());   /* wait for key release */
 	  Me.status = CHEESE;
 	  SetInfoline ();
 	  UpdateInfoline ();
@@ -663,21 +653,21 @@ Pause (void)
 	  GetInternFenster (SHOW_ALL);
 	  PutInternFenster ();
 
-	  while (!SpacePressed () && !CPressed() ); /* stay CHEESE until Space pressed */
-	  while (CPressed()); /* if it was 'C', wait for its release ! */
-
-
+	  while (!SpacePressed ()); /* stay CHEESE until Space pressed */
+	  while ( SpacePressed() ); /* then wait for Space released */
+	  
 	  Me.status = PAUSE;       /* return to normal PAUSE */
 	  SetInfoline ();
 	  UpdateInfoline ();
 	} /* if (CPressed) */
 
-      if (PPressed ())
-	Pause = FALSE;
+      if ( SpacePressed() )
+	{
+	  Pause = FALSE;
+	  while ( SpacePressed() );  /* wait for release */
+	}
 
     } /* while (Pause) */
-
-  while (PPressed () );   /* make sure we don't back in here immediately */
 
   return;
 

@@ -370,7 +370,11 @@ getchar_raw (void)
 	 */
 	return ((int) event.key.keysym.sym);
       else
-	continue;
+	{
+	  SDL_PushEvent (&event);  /* put this event back into the queue */
+	  keyboard_update ();  /* and treat it the usual way */
+	  continue;
+	}
 
     } /* while(1) */
 
