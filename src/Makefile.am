@@ -2,12 +2,16 @@
 if WIN32
 win32_res = freedroidRPG.rc
 freedroidRPG_LDADD = freedroidRPG.coff
-## dont' try to build dialog-editor when compiling for Win32!
-extra_prg = 
 else
 win32_res = 
+endif
+
+
 ## compile Dialog-editor if gtk-libs were found
-extra_prg = @DIALOG_EDITOR@
+if FOUND_GTK
+extra_prg = DialogEditor
+else
+extra_prg = 
 endif
 
 
