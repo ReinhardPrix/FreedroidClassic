@@ -149,6 +149,8 @@ DisplayBanner (const char* left, const char* right,  int flags )
   char ItemDescText[5000]="=== Nothing ===";
   grob_point inv_square;
   int InvIndex;
+  int i;
+  finepoint MapPositionOfMouse;
 
   Banner_Text_Rect.x = 170;
   Banner_Text_Rect.y = 10;
@@ -180,7 +182,7 @@ DisplayBanner (const char* left, const char* right,  int flags )
   // inventory or other item and in case that's true, we need to give the 
   // description of this item.
   //
-  else 
+  else if ( GameConfig.Inventory_Visible )
     {
       //--------------------
       // Perhaps the cursor is over some item of the inventory?
@@ -237,7 +239,25 @@ DisplayBanner (const char* left, const char* right,  int flags )
 	    strcpy( ItemDescText , ItemMap[ Druidmap[ Me.type ].special_item ].ItemName );
 	}
 
-    } // if nothing is 'held in hand'
+    } // if nothing is 'held in hand' && inventory-screen visible
+
+  if ( CursorIsInUserRect( CurPos.x , CurPos.y ) && ( CurLevel != NULL ) )
+    {
+      DebugPrintf( 0  , "\nCursor is in userfenster... --> see if hovering over an item...");
+      MapPositionOfMouse.x = Me.pos.x + (CurPos.x - UserCenter_x) / (float) Block_Width;
+      MapPositionOfMouse.y = Me.pos.y + (CurPos.y - UserCenter_y) / (float) Block_Height;
+      DebugPrintf( 0  , "\nMouse in map at: %f %f." , MapPositionOfMouse.x , MapPositionOfMouse.y );
+      for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i++ )
+	{
+	  if ( CurLevel->ItemList[ i ].type == (-1) ) continue;
+
+	  if ( ( fabsf( MapPositionOfMouse.x - CurLevel->ItemList[ i ].pos.x ) < 0.5 ) &&
+	       ( fabsf( MapPositionOfMouse.y - CurLevel->ItemList[ i ].pos.y ) < 0.5 ) )
+	    {
+	      strcpy( ItemDescText , ItemMap[ CurLevel->ItemList[ i ].type ].ItemName );
+	    }
+	}
+    }
 
 
   DisplayText ( ItemDescText , 

@@ -1732,6 +1732,7 @@ InitFreedroid (void)
   Overall_Average=0.041;
   SkipAFewFrames = 0;
   Me.TextVisibleTime = 0;
+  CurLevel = NULL;  // please leave this here.  It indicates, that the map is not yet initialized!!!
   // Me.TextToBeDisplayed = "Hello, I'm 001.";
   Me.TextToBeDisplayed = "Linux Kernel booted.  001 transfer-tech modules loaded.  System up and running.";
 
