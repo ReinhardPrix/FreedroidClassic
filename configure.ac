@@ -15,6 +15,7 @@ AM_CONFIG_HEADER(config.h)
 AC_PROG_CC
 AC_PROG_MAKE_SET
 
+AC_HEADER_STDC
 # Checks for libraries.
 AC_CHECK_LIB([m], [sin],, 
 	AC_MSG_ERROR([libm not found!! 
@@ -104,24 +105,37 @@ dnl , [ -logg -lvorbisenc -lvorbisfile  ]
 dnl Don't Check for getopt_long 
 dnl just use bundled version like hello does, and gnuchess
 
-# Checks for header files.
-AC_HEADER_STDC
-AC_CHECK_HEADERS([fcntl.h stdlib.h string.h sys/ioctl.h sys/time.h time.h \
-			  unistd.h dirent.h sys/soundcard.h GL/gl.h 	  \
-			  execinfo.h signal.h ])
+dnl the 'new way' to check for openGL (sets 'no_gl=yes' if not found)
+ACX_PTHREAD
 
+AX_CHECK_GL
+AC_MSG_CHECKING(for openGL libraries)
+if test x$no_gl = xyes; then
+   AC_MSG_RESULT(no)
+   AC_MSG_WARN([ openGL libs not found!
+----------------------------------------------------------------------
+WARNING: openGL libraries/headers could not be found.
+==> Therefore we are building freedroid only with SDL-graphics support. 
+    No 3D acceleration will be available. 
+    It is recommended to install openGL.
 
-if test x$win32 = xtrue; then
-dnl use openGL by default for win32 
-LIBS="$LIBS -l$SYS_GL_LIB"
-AC_DEFINE(HAVE_LIBGL, 1)
+(if compiling on Darwin, try './configure --with-apple-opengl-framework')
+----------------------------------------------------------------------
+])
 else
-AC_CHECK_LIB([GL], [glEnable],, AC_MSG_WARN([
---------------------------------------------------
-OpenGL development libs/header not found!
-Building FreedroidRPG without OpenGL support.
---------------------------------------------------]))
+   AC_MSG_RESULT(yes)
+   dnl for backwards compatibility with our previous check, define
+   dnl the corresponding config.h-define
+   AC_DEFINE(HAVE_LIBGL,1, [Define to 1 if openGL libs were found])
 fi
+AC_CHECK_HEADERS([GL/gl.h  OpenGL/gl.h gl.h])
+
+AC_CHECK_HEADERS([GL/glext.h], [], [], [ #include <GL/gl.h> ])
+AC_CHECK_HEADERS([OpenGL/glext.h], [], [], [ #include <OpenGL/gl.h> ])
+
+# Checks for header files.
+AC_CHECK_HEADERS([fcntl.h stdlib.h string.h sys/ioctl.h sys/time.h time.h \
+			  unistd.h dirent.h sys/soundcard.h execinfo.h signal.h ])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
