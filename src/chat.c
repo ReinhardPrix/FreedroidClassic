@@ -292,7 +292,7 @@ DisplaySubtitle( char* SubtitleText , int subtitle_background )
     // Now we can display the text and update the screen...
     //
     SDL_SetClipRect( Screen, NULL );
-    DisplayText ( SubtitleText , Subtitle_Window.x , Subtitle_Window.y , &Subtitle_Window );
+    DisplayText ( SubtitleText , Subtitle_Window.x , Subtitle_Window.y , &Subtitle_Window , TEXT_STRETCH );
     our_SDL_update_rect_wrapper ( Screen , Subtitle_Window.x , Subtitle_Window.y , Subtitle_Window.w , Subtitle_Window.h );
     
 }; // void DisplaySubtitle( char* SubtitleText , void* SubtitleBackground )
@@ -368,7 +368,7 @@ display_current_chat_protocol ( int background_picture_code , enemy* ChatDroid ,
     Subtitle_Window . y = CHAT_SUBDIALOG_WINDOW_Y; 
     Subtitle_Window . w = CHAT_SUBDIALOG_WINDOW_W;
     Subtitle_Window . h = CHAT_SUBDIALOG_WINDOW_H;
-    DisplayText ( chat_protocol , Subtitle_Window.x , Subtitle_Window.y - protocol_offset , &Subtitle_Window );
+    DisplayText ( chat_protocol , Subtitle_Window.x , Subtitle_Window.y - protocol_offset , &Subtitle_Window , TEXT_STRETCH );
     if ( protocol_offset > 0 ) 
 	ShowGenericButtonFromList ( CHAT_PROTOCOL_SCROLL_UP_BUTTON );
     else

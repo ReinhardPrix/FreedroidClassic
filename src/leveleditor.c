@@ -2594,7 +2594,7 @@ ReportInconsistenciesForLevel ( int LevelNum )
   AssembleCombatPicture ( ONLY_SHOW_MAP_AND_TEXT | SHOW_GRID );
 
   DisplayText ( "\nThe list of inconsistencies of the jump interfaces for this level:\n\n" ,
-		ReportRect.x, ReportRect.y + FontHeight ( GetCurrentFont () ) , &ReportRect);
+		ReportRect.x, ReportRect.y + FontHeight ( GetCurrentFont () ) , &ReportRect , 1.0 );
 
   //--------------------
   // First we test for inconsistencies of back-forth ways, i.e. if the transit
@@ -2606,7 +2606,7 @@ ReportInconsistenciesForLevel ( int LevelNum )
       if ( curShip.AllLevels [ TargetLevel ] -> jump_target_south != LevelNum )
 	{
 	  DisplayText ( "BACK-FORTH-MISMATCH: North doesn't lead back here (yet)!\n" ,
-			-1 , -1 , &ReportRect);
+			-1 , -1 , &ReportRect , 1.0 );
 	}
     }
   if ( curShip.AllLevels [ LevelNum ] -> jump_target_south != (-1) ) 
@@ -2615,7 +2615,7 @@ ReportInconsistenciesForLevel ( int LevelNum )
       if ( curShip.AllLevels [ TargetLevel ] -> jump_target_north != LevelNum )
 	{
 	  DisplayText ( "BACK-FORTH-MISMATCH: South doesn't lead back here (yet)!\n" ,
-			-1 , -1 , &ReportRect);
+			-1 , -1 , &ReportRect , 1.0 );
 	}
     }
   if ( curShip.AllLevels [ LevelNum ] -> jump_target_east != (-1) ) 
@@ -2624,7 +2624,7 @@ ReportInconsistenciesForLevel ( int LevelNum )
       if ( curShip.AllLevels [ TargetLevel ] -> jump_target_west != LevelNum )
 	{
 	  DisplayText ( "BACK-FORTH-MISMATCH: East doesn't lead back here (yet)!\n" ,
-			-1 , -1 , &ReportRect);
+			-1 , -1 , &ReportRect , 1.0 );
 	}
     }
   if ( curShip.AllLevels [ LevelNum ] -> jump_target_west != (-1) ) 
@@ -2633,11 +2633,11 @@ ReportInconsistenciesForLevel ( int LevelNum )
       if ( curShip.AllLevels [ TargetLevel ] -> jump_target_east != LevelNum )
 	{
 	  DisplayText ( "BACK-FORTH-MISMATCH: West doesn't lead back here (yet)!\n" ,
-			-1 , -1 , &ReportRect);
+			-1 , -1 , &ReportRect , 1.0 );
 	}
     }
   DisplayText ( "\nNO OTHER BACK-FORTH-MISMATCH ERRORS other than those listed above\n\n" ,
-		-1 , -1 , &ReportRect);
+		-1 , -1 , &ReportRect , 1.0 );
 
   //--------------------
   // Now we test for inconsistencies of interface sizes, i.e. if the interface source level
@@ -2650,7 +2650,7 @@ ReportInconsistenciesForLevel ( int LevelNum )
 	   curShip.AllLevels [ LevelNum ] -> jump_threshold_north )
 	{
 	  DisplayText ( "INTERFACE SIZE MISMATCH: North doesn't lead so same-sized interface level!!!\n" ,
-			-1 , -1 , &ReportRect);
+			-1 , -1 , &ReportRect , 1.0 );
 	}
     }
   if ( curShip.AllLevels [ LevelNum ] -> jump_target_south != (-1) ) 
@@ -2660,7 +2660,7 @@ ReportInconsistenciesForLevel ( int LevelNum )
 	   curShip.AllLevels [ LevelNum ] -> jump_threshold_south )
 	{
 	  DisplayText ( "INTERFACE SIZE MISMATCH: South doesn't lead so same-sized interface level!!!\n" ,
-			-1 , -1 , &ReportRect);
+			-1 , -1 , &ReportRect , 1.0 );
 	}
     }
   if ( curShip.AllLevels [ LevelNum ] -> jump_target_east != (-1) ) 
@@ -2670,7 +2670,7 @@ ReportInconsistenciesForLevel ( int LevelNum )
 	   curShip.AllLevels [ LevelNum ] -> jump_threshold_east )
 	{
 	  DisplayText ( "INTERFACE SIZE MISMATCH: East doesn't lead so same-sized interface level!!!\n" ,
-			-1 , -1 , &ReportRect);
+			-1 , -1 , &ReportRect , 1.0 );
 	}
     }
   if ( curShip.AllLevels [ LevelNum ] -> jump_target_west != (-1) ) 
@@ -2680,7 +2680,7 @@ ReportInconsistenciesForLevel ( int LevelNum )
 	   curShip.AllLevels [ LevelNum ] -> jump_threshold_west )
 	{
 	  DisplayText ( "INTERFACE SIZE MISMATCH: West doesn't lead so same-sized interface level!!!\n" ,
-			-1 , -1 , &ReportRect);
+			-1 , -1 , &ReportRect , 1.0 );
 	}
     }
 
@@ -2694,7 +2694,7 @@ ReportInconsistenciesForLevel ( int LevelNum )
       if ( curShip.AllLevels [ TargetLevel ] -> xlen != curShip.AllLevels [ LevelNum ] -> xlen )
 	{
 	  DisplayText ( "LEVEL DIMENSION MISMATCH: North doesn't lead so same-sized level (non-fatal, but no good comes from this)!\n" ,
-			-1 , -1 , &ReportRect);
+			-1 , -1 , &ReportRect , 1.0 );
 	}
     }
   if ( curShip.AllLevels [ LevelNum ] -> jump_target_south != (-1) ) 
@@ -2703,7 +2703,7 @@ ReportInconsistenciesForLevel ( int LevelNum )
       if ( curShip.AllLevels [ TargetLevel ] -> xlen != curShip.AllLevels [ LevelNum ] -> xlen )
 	{
 	  DisplayText ( "LEVEL DIMENSION MISMATCH: South doesn't lead so same-sized level (non-fatal, but no good comes from this)!\n" ,
-			-1 , -1 , &ReportRect);
+			-1 , -1 , &ReportRect , 1.0 );
 	}
     }
   if ( curShip.AllLevels [ LevelNum ] -> jump_target_east != (-1) ) 
@@ -2712,7 +2712,7 @@ ReportInconsistenciesForLevel ( int LevelNum )
       if ( curShip.AllLevels [ TargetLevel ] -> ylen != curShip.AllLevels [ LevelNum ] -> ylen )
 	{
 	  DisplayText ( "LEVEL DIMENSION MISMATCH: East doesn't lead so same-sized level (non-fatal, but no good comes from this)!\n" ,
-			-1 , -1 , &ReportRect);
+			-1 , -1 , &ReportRect , 1.0 );
 	}
     }
   if ( curShip.AllLevels [ LevelNum ] -> jump_target_west != (-1) ) 
@@ -2721,7 +2721,7 @@ ReportInconsistenciesForLevel ( int LevelNum )
       if ( curShip.AllLevels [ TargetLevel ] -> ylen != curShip.AllLevels [ LevelNum ] -> ylen )
 	{
 	  DisplayText ( "LEVEL DIMENSION MISMATCH: West doesn't lead so same-sized level (non-fatal, but no good comes from this)!\n" ,
-			-1 , -1 , &ReportRect);
+			-1 , -1 , &ReportRect , 1.0 );
 	}
     }
   
@@ -2729,7 +2729,7 @@ ReportInconsistenciesForLevel ( int LevelNum )
   // This was it.  We can say so and return.
   //
   DisplayText ( "\n\n--- End of List --- Press Space to return to menu ---\n" ,
-		-1 , -1 , &ReportRect);
+		-1 , -1 , &ReportRect , 1.0 );
   
   our_SDL_flip_wrapper ( Screen );
 
@@ -3379,7 +3379,7 @@ PrintMapLabelInformationOfThisSquare ( Level EditLevel )
   sprintf( PanelText , "\n Map Label Information: \n label_name=\"%s\"." , 
 	   EditLevel -> labels [ MapLabelIndex ] . label_name );
   
-  DisplayText ( PanelText , User_Rect.x , 91 + User_Rect.y , &User_Rect );
+  DisplayText ( PanelText , User_Rect.x , 91 + User_Rect.y , &User_Rect , 1.0 );
 
 }; // void PrintMapLabelInformationOfThisSquare ( Level EditLevel )
 
@@ -3606,7 +3606,7 @@ Unable to load the level editor waypoint cursor.",
 				EditLevel->AllWaypoints[this_wp->connections[i]].x , 
 				EditLevel->AllWaypoints[this_wp->connections[i]].y);
 		      strcat ( ConnectionText , TextAddition );
-		      DisplayText ( ConnectionText , User_Rect.x , User_Rect.y , &User_Rect );
+		      DisplayText ( ConnectionText , User_Rect.x , User_Rect.y , &User_Rect , 1.0 );
 		      SDL_LockSurface( Screen );
 		    }
 
@@ -4003,12 +4003,12 @@ EditMapLabelData ( Level EditLevel )
 	}
       if ( i >= MAX_MAP_LABELS_PER_LEVEL )
 	{
-	  DisplayText ( "\nNo more free map label entry found... using first on instead ...\n" , -1 , -1 , &User_Rect );
+	  DisplayText ( "\nNo more free map label entry found... using first on instead ...\n" , -1 , -1 , &User_Rect , 1.0 );
 	  i = 0;
 	}
       else
 	{
-	  DisplayText ( "\nUsing new map label list entry...\n" , -1 , -1 , &User_Rect );
+	  DisplayText ( "\nUsing new map label list entry...\n" , -1 , -1 , &User_Rect , 1.0 );
 	}
       // Terminate( ERR );
     }
@@ -4134,7 +4134,7 @@ show_button_tooltip ( char* tooltip_text )
 
   SetCurrentFont ( FPS_Display_BFont );
 
-  DisplayText ( tooltip_text, TargetRect . x, TargetRect . y , &TargetRect )  ;
+  DisplayText ( tooltip_text, TargetRect . x, TargetRect . y , &TargetRect , 1.0 )  ;
 
 }; // void show_button_tooltip ( char* tooltip_text )
 
@@ -4660,7 +4660,7 @@ LevelEditor(void)
 	  //
 	  if ( VanishingMessageDisplayTime < 7 )
 	    {
-	      DisplayText ( VanishingMessage ,  1 , 191 + 5 * FontHeight ( GetCurrentFont () ) , NULL );
+		DisplayText ( VanishingMessage ,  1 , 191 + 5 * FontHeight ( GetCurrentFont () ) , NULL , 1.0 );
 	    }
 
 	  ShowLevelEditorTopMenu( Highlight );
@@ -4744,7 +4744,7 @@ LevelEditor(void)
 		}
 	      if ( i == MAX_STATEMENTS_PER_LEVEL ) 
 		{
-		  DisplayText ( "\nNo more free comment position.  Using first. " , -1 , -1 , &User_Rect );
+		  DisplayText ( "\nNo more free comment position.  Using first. " , -1 , -1 , &User_Rect , 1.0 );
 		  i=0;
 		  our_SDL_flip_wrapper ( Screen );
 		  getchar_raw();

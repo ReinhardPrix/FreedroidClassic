@@ -337,6 +337,8 @@ typedef struct
     //
     int needs_pre_put; 
     char* filename;
+    char* obstacle_short_name;
+    char* obstacle_long_description;
 }
 obstacle_spec, *Obstacle_spec;
 

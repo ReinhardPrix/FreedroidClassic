@@ -666,7 +666,7 @@ EXTERN void SetTextCursor (int x, int y);
 EXTERN void SetLineLength (int);
 
 EXTERN int DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *clip , SDL_Surface* Background );
-EXTERN int DisplayText (char *text, int startx, int starty, const SDL_Rect *clip);
+EXTERN int DisplayText (char *text, int startx, int starty, const SDL_Rect *clip , float text_stretch );
 EXTERN void display_current_chat_protocol ( int background_picture_code , enemy* ChatDroid , int with_update );
 
 EXTERN void DisplayChar (unsigned char c);
@@ -708,6 +708,7 @@ EXTERN void DisplayBanner ( void );
 EXTERN int get_days_of_game_duration ( float current_game_date );
 EXTERN int get_hours_of_game_duration ( float current_game_date );
 EXTERN int get_minutes_of_game_duration ( float current_game_date );
+EXTERN void append_new_game_message ( char* game_message_text );
 
 // shop.c 
 #undef EXTERN

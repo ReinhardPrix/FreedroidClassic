@@ -245,7 +245,7 @@ PaintConsoleMenu (int menu_pos)
   strcat (MenuText, "\n\nAlert: ");
   strcat (MenuText, Alertcolor[Alert]);
 
-  DisplayText (MenuText, Cons_Text_Rect.x, Cons_Text_Rect.y, &Cons_Text_Rect);
+  DisplayText (MenuText, Cons_Text_Rect.x, Cons_Text_Rect.y, &Cons_Text_Rect , TEXT_STRETCH );
 
   //--------------------
   // Now we blit the menu (4 items above each other, with highlight on the
@@ -595,7 +595,7 @@ Sensors  1: %s\n          2: %s\n          3: %s",
     strcat ( InfoText , TextChunk );
     
     SetCurrentFont( FPS_Display_BFont );
-    DisplayText (InfoText, Cons_Text_Rect.x, Cons_Text_Rect.y + Displacement , &Cons_Text_Rect);
+    DisplayText (InfoText, Cons_Text_Rect.x, Cons_Text_Rect.y + Displacement , &Cons_Text_Rect , TEXT_STRETCH );
     
     if ( ShowArrows ) 
     {
@@ -1078,7 +1078,7 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , int backgro
     // SetCurrentFont( Para_BFont );
     // SetCurrentFont( Menu_BFont );
     SetCurrentFont( FPS_Display_BFont );
-    DisplayText (InfoText, Cons_Text_Rect.x, Cons_Text_Rect.y + Displacement , &Cons_Text_Rect);
+    DisplayText (InfoText, Cons_Text_Rect.x, Cons_Text_Rect.y + Displacement , &Cons_Text_Rect , TEXT_STRETCH );
     
     if ( ShowArrows ) 
     {

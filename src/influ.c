@@ -2130,8 +2130,14 @@ adapt_global_mode_for_player ( int player_num )
     }
 
 
-    if ( LeftPressed ( ) || MouseWheelUpPressed ( ) )
+    if ( ( LeftPressed ( ) && ( ! left_pressed_previous_frame ) ) || MouseWheelUpPressed ( ) )
     {
+	if ( global_ingame_mode == GLOBAL_INGAME_MODE_NORMAL )	
+	    global_ingame_mode = GLOBAL_INGAME_MODE_LOOT ;
+	else if ( global_ingame_mode == GLOBAL_INGAME_MODE_LOOT )	
+	    global_ingame_mode = GLOBAL_INGAME_MODE_EXAMINE ;
+	else
+	    global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
 	
     }
 
@@ -2645,7 +2651,7 @@ GetObstacleBelowMouseCursor ( int player_num )
 							 our_obstacle -> pos . y , 
 							 our_iso_image ) )
 		{
-		    TargetFound = i;
+		    TargetFound = obstacle_index ;
 		}
 	    }
 	}
@@ -3581,6 +3587,7 @@ handle_player_examine_command ( int player_num )
 {
     int obstacle_index ;
     obstacle* our_obstacle;
+    char game_message_text[ 2000 ] ;
 
     obstacle_index = GetObstacleBelowMouseCursor ( player_num ) ;
     if ( obstacle_index == (-1) )
@@ -3594,6 +3601,9 @@ handle_player_examine_command ( int player_num )
 
     DebugPrintf ( -4 , "\n%s(): examining obstacle of type : %d. " , __FUNCTION__ , our_obstacle -> type );
 
+    sprintf ( game_message_text , "Examining obstacle of type %d.\n%s: %s" , our_obstacle -> type , obstacle_map [ our_obstacle -> type ] . obstacle_short_name , obstacle_map [ our_obstacle -> type ] . obstacle_long_description ) ;
+    append_new_game_message ( game_message_text );
+
 }; // void handle_player_examine_command ( int player_num ) 
 
 
@@ -3606,6 +3616,7 @@ handle_player_loot_command ( int player_num )
 {
     int obstacle_index ;
     obstacle* our_obstacle;
+    char game_message_text[ 2000 ] ;
 
     obstacle_index = GetObstacleBelowMouseCursor ( player_num ) ;
     if ( obstacle_index == (-1) )
@@ -3618,6 +3629,9 @@ handle_player_loot_command ( int player_num )
     our_obstacle = & ( curShip . AllLevels [ Me [ player_num ] . pos . z ] -> obstacle_list [ obstacle_index ] ) ;
 
     DebugPrintf ( -4 , "\n%s(): looting obstacle of type : %d. " , __FUNCTION__ , our_obstacle -> type );
+    
+    sprintf ( game_message_text , "Looting obstacle of type %d." , our_obstacle -> type );
+    append_new_game_message ( game_message_text );
 
 }; // void handle_player_examine_command ( int player_num ) 
 

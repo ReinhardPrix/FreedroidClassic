@@ -1001,7 +1001,7 @@ ShowSkillsExplanationScreen( void )
     TargetSkillRect.w = 320 - 15 - 15;
     TargetSkillRect.h = 480 - 15 ;
     DisplayText( SpellSkillMap [ Me [ 0 ] . readied_skill ] . spell_skill_description , 16 , 16+64+16, 
-		 &TargetSkillRect );
+		 &TargetSkillRect , TEXT_STRETCH );
 
 
 }; // void ShowSkillsExplanationScreen( void )
@@ -1203,17 +1203,17 @@ ShowSkillsScreen ( void )
 	DisplayText( SpellSkillMap [ SkillOfThisSlot ] . spell_skill_name , 
 		     16 + 64 + 16 + SkillScreenRect.x , 
 		     FIRST_SKILLRECT_Y + i * (64 + INTER_SKILLRECT_DIST) + SkillScreenRect.y , 
-		     &SkillScreenRect );
+		     &SkillScreenRect , TEXT_STRETCH );
       
 	//--------------------
 	// Now we write the competence of the players character in that skill to the screen
 	//
 	sprintf( CharText , "Skill Level: %d " , Me[0].SkillLevel[ SkillOfThisSlot ] );
 	DisplayText( CharText , 16 + 64 + 16 + SkillScreenRect.x , 
-		     FIRST_SKILLRECT_Y + i * ( 64 + INTER_SKILLRECT_DIST ) + SkillScreenRect.y + FontHeight( GetCurrentFont() ) , &SkillScreenRect );
+		     FIRST_SKILLRECT_Y + i * ( 64 + INTER_SKILLRECT_DIST ) + SkillScreenRect.y + FontHeight( GetCurrentFont() ) , &SkillScreenRect , TEXT_STRETCH );
 	sprintf( CharText , "Mana cost: %d " , SpellSkillMap [ SkillOfThisSlot ] . mana_cost_table [Me[0]. spellcasting_skill ] );
 	DisplayText( CharText , 16 + 64 + 16 + SkillScreenRect.x , 
-		     FIRST_SKILLRECT_Y + i * (64 + INTER_SKILLRECT_DIST) + SkillScreenRect.y + 2 * FontHeight( GetCurrentFont() ) , &SkillScreenRect );
+		     FIRST_SKILLRECT_Y + i * (64 + INTER_SKILLRECT_DIST) + SkillScreenRect.y + 2 * FontHeight( GetCurrentFont() ) , &SkillScreenRect , TEXT_STRETCH );
 	
     }
 

@@ -1790,8 +1790,8 @@ to_show_banner (const char* left, const char* right)
   // time to display it...
   DebugPrintf (2, "Takeover said: %s -- %s\n", left_box, right_box);
   SetCurrentFont( Para_BFont );
-  DisplayText (left_box, LEFT_INFO_X, LEFT_INFO_Y, NULL);
-  DisplayText (right_box, RIGHT_INFO_X, RIGHT_INFO_Y, NULL);
+  DisplayText (left_box, LEFT_INFO_X, LEFT_INFO_Y, NULL , TEXT_STRETCH );
+  DisplayText (right_box, RIGHT_INFO_X, RIGHT_INFO_Y, NULL , TEXT_STRETCH );
 
 }; // void to_show_banner (const char* left, const char* right)
 

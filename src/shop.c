@@ -1101,7 +1101,7 @@ DoEquippmentListSelection( char* Startstring , item* Item_Pointer_List[ MAX_ITEM
 	// Now we draw our selection of items to the screen, at least the part
 	// of it, that's currently visible
 	//
-	DisplayText( Startstring , 50 , 50 + (0) * ITEM_MENU_DISTANCE , NULL );
+	DisplayText( Startstring , 50 , 50 + (0) * ITEM_MENU_DISTANCE , NULL , TEXT_STRETCH );
 	
 	// DisplayText( DescriptionText , 580 , 50 + ( 0 ) * 80 , NULL );
 	for ( i = 0 ; ( (i < NUMBER_OF_ITEMS_ON_ONE_SCREEN) && ( Item_Pointer_List[ i + MenuInListPosition ] != NULL ) ) ; i++ )
@@ -1109,7 +1109,7 @@ DoEquippmentListSelection( char* Startstring , item* Item_Pointer_List[ MAX_ITEM
 	    // DisplayText( ItemMap [ Repair_Pointer_List[ i + ]->type ].item_name , 50 , 50 + i * 50 , NULL );
 	    // DisplayText( "\n" , -1 , -1, NULL );
 	    GiveItemDescription( DescriptionText , Item_Pointer_List [ i + MenuInListPosition ] , TRUE );
-	    DisplayText( DescriptionText , 50 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
+	    DisplayText( DescriptionText , 50 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL , TEXT_STRETCH );
 	    
 	    //--------------------
 	    // Now we print out the price for this item, depending of course
@@ -1136,7 +1136,7 @@ DoEquippmentListSelection( char* Startstring , item* Item_Pointer_List[ MAX_ITEM
 		    
 	    }
 	    sprintf( DescriptionText , "%6.0f" , PriceFound );
-	    DisplayText( DescriptionText , 560 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
+	    DisplayText( DescriptionText , 560 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL , TEXT_STRETCH );
 	}
 	
 	//--------------------

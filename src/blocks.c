@@ -2455,10 +2455,17 @@ init_obstacle_data( void )
 	obstacle_map [ i ] . needs_pre_put = FALSE ;
 	obstacle_map [ i ] . transparent = FALSE ;
 	obstacle_map [ i ] . emitted_light_strength = 0 ; // how much light emitted from here...
+
 	obstacle_map [ i ] . filename = MyMalloc ( 100 ); // that should be sufficient for file names...
 	sprintf ( obstacle_map [ i ] . filename , "iso_obstacle_%04d.png" , i );
+
+	obstacle_map [ i ] . obstacle_short_name = MyMalloc ( 100 ); // that should be sufficient for most short names...
+	sprintf ( obstacle_map [ i ] . obstacle_short_name , "unnamed_obstacle" );
+
+	obstacle_map [ i ] . obstacle_long_description = MyMalloc ( 1000 ); // that should be sufficient for most short names...
+	sprintf ( obstacle_map [ i ] . obstacle_long_description , "undescribed obstacle yet.  wait for Tim...");
+
     }
-    
     //--------------------
     // Now we define all exceptions from the default values
     //

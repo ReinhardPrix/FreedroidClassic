@@ -2318,8 +2318,9 @@ GL_HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area , unsigned char r ,
 #define TO_BG_FILE		"lanzz_theme/to_background.jpg"
 #define QUEST_BROWSER_BACKGROUND_IMAGE_FILE "backgrounds/quest_browser.png"
 #define NUMBER_SELECTOR_BACKGROUND_IMAGE_FILE "backgrounds/number_selector.png"
+#define GAME_MESSAGE_WINDOW_BACKGROUND_IMAGE_FILE "backgrounds/game_message_window.png"
 
-#define ALL_KNOWN_BACKGROUNDS 31
+#define ALL_KNOWN_BACKGROUNDS 32
 
 static iso_image our_backgrounds [ ALL_KNOWN_BACKGROUNDS ] ;
 static int backgrounds_should_be_loaded_now = TRUE;
@@ -2369,7 +2370,8 @@ blit_special_background ( int background_code )
 	    CHAT_BACKGROUND_IMAGE_FILE ,        // 27
 	    TO_BG_FILE ,                        // 28
 	    QUEST_BROWSER_BACKGROUND_IMAGE_FILE, // 29
-	    NUMBER_SELECTOR_BACKGROUND_IMAGE_FILE // 30
+	    NUMBER_SELECTOR_BACKGROUND_IMAGE_FILE, // 30
+	    GAME_MESSAGE_WINDOW_BACKGROUND_IMAGE_FILE, // 31
 	};
 
     SDL_Rect our_background_rects [ ALL_KNOWN_BACKGROUNDS ] = 
@@ -2408,7 +2410,8 @@ blit_special_background ( int background_code )
 	      CHAT_SUBDIALOG_WINDOW_H } ,     // 27
 	    { 0 , 0 , 0 , 0 } ,               // 28
 	    { 0 , 0 , 0 , 0 } ,               // 29
-	    { 0 , 0 , 0 , 0 }                 // 30
+	    { 0 , 0 , 0 , 0 } ,               // 30
+	    { ( 65 * GameConfig . screen_width ) / 640 , GameConfig . screen_height - (70 * GameConfig . screen_height) / 480 , 500 , 70 }           // 31
 	} ;
   
     int need_scaling [ ALL_KNOWN_BACKGROUNDS ] = 
@@ -2443,7 +2446,8 @@ blit_special_background ( int background_code )
 	    TRUE  , // 27
 	    TRUE  , // 28
 	    TRUE  , // 29
-	    FALSE   // 30
+	    FALSE , // 30
+	    TRUE  , // 31
 	};
 	    
     //--------------------

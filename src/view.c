@@ -3560,7 +3560,7 @@ blit_tux ( int x , int y , int player_num )
     {
 	SetCurrentFont( FPS_Display_BFont );
 	DisplayText( Me [ player_num ] . TextToBeDisplayed , UserCenter_x + 21 ,
-		     UserCenter_y - 32 , &Text_Rect );
+		     UserCenter_y - 32 , &Text_Rect , TEXT_STRETCH );
     }
 
     //--------------------

@@ -146,7 +146,7 @@ print_menu_text ( char* InitialText , char* MenuTexts[] , int first_menu_item_po
 	    CenteredPutString ( Screen ,  first_menu_item_pos_y + i * h , MenuTexts[ i ] );
 	}
 	if ( strlen( InitialText ) > 0 ) 
-	    DisplayText ( InitialText , 50 , 50 , NULL );
+	    DisplayText ( InitialText , 50 , 50 , NULL , TEXT_STRETCH );
     }
     
 }; // void print_menu_text ( ... )
@@ -258,7 +258,7 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , int bac
 		CenteredPutString ( Screen ,  first_menu_item_pos_y + i * h , MenuTexts[ i ] );
 	    }
 	    if ( strlen( InitialText ) > 0 ) 
-		DisplayText ( InitialText , 50 , 50 , NULL );
+		DisplayText ( InitialText , 50 , 50 , NULL , TEXT_STRETCH );
 	}
 	
 	//--------------------
@@ -463,7 +463,7 @@ Warning.  Received empty or nearly empty string!",
     
     stored_height = GivenRectangle.h ;
     GivenRectangle.h = 32000 ;
-    DisplayText ( GivenText , GivenRectangle.x , GivenRectangle.y , &GivenRectangle );
+    DisplayText ( GivenText , GivenRectangle.x , GivenRectangle.y , &GivenRectangle , TEXT_STRETCH );
     GivenRectangle.h = stored_height ;
     
     //--------------------
@@ -736,7 +736,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
 	      //--------------------
 	      // Now that we know, that there is enough room, we can blit the next menu option.
 	      //
-	      DisplayText ( MenuTexts [ i ] , MenuPosX [ i ] , MenuPosY [ i ] , &Choice_Window );
+	      DisplayText ( MenuTexts [ i ] , MenuPosX [ i ] , MenuPosY [ i ] , &Choice_Window , TEXT_STRETCH );
 	      SpaceUsedSoFar += MenuOptionLineRequirement [ i ] ;
 	  }
 	  
@@ -2653,7 +2653,7 @@ I need to know that for saving. Abort.\n");
 	for (cnt = 0; cnt < n; ++cnt) 
 	{
 	    puts ( eps[cnt]->d_name );
-	    DisplayText ( eps[cnt]->d_name , 50 , 150 + cnt * 40 , NULL );
+	    DisplayText ( eps[cnt]->d_name , 50 , 150 + cnt * 40 , NULL , TEXT_STRETCH );
 	    if ( cnt < 10 ) 
 	    {
 		MenuTexts[ cnt ] = ReadAndMallocStringFromData ( eps[cnt]->d_name , "" , ".savegame" ) ;
@@ -2758,7 +2758,7 @@ I need to know that for saving. Abort.\n");
       for (cnt = 0; cnt < n; ++cnt) 
 	{
 	  puts ( eps[cnt]->d_name );
-	  DisplayText ( eps[cnt]->d_name , 50 , 150 + cnt * 40 , NULL );
+	  DisplayText ( eps[cnt]->d_name , 50 , 150 + cnt * 40 , NULL , TEXT_STRETCH );
 	  if ( cnt < 10 ) 
 	    {
 	      MenuTexts[ cnt ] = ReadAndMallocStringFromData ( eps[cnt]->d_name , "" , ".savegame" ) ;
@@ -3240,7 +3240,7 @@ Show_Mission_Log_Menu (void)
       SetCurrentFont( Para_BFont );
 
       DisplayText ( "This is the record of all missions you have been assigned:\n\n" , 
-		    0 , FIRST_MISSION_POS_Y - 2 * InterLineSpace , Mission_Window_Pointer );
+		    0 , FIRST_MISSION_POS_Y - 2 * InterLineSpace , Mission_Window_Pointer , TEXT_STRETCH );
 
       NoOfActiveMissions=0;
       for ( i = 0 ; i < MAX_MISSIONS_IN_GAME ; i ++ )
@@ -3254,28 +3254,28 @@ Show_Mission_Log_Menu (void)
 
 	  if ( Me[0].AllMissions[i].MissionIsComplete == TRUE )
 	    {
-	      DisplayText ( "SOLVED: " , 0 , FIRST_MISSION_POS_Y + NoOfActiveMissions * InterLineSpace , Mission_Window_Pointer );
+	      DisplayText ( "SOLVED: " , 0 , FIRST_MISSION_POS_Y + NoOfActiveMissions * InterLineSpace , Mission_Window_Pointer , TEXT_STRETCH );
 	    }
 	  else if ( Me[0].AllMissions[i].MissionWasFailed == TRUE )
 	    {
-	      DisplayText ( "FAILED: " , 0 , FIRST_MISSION_POS_Y + NoOfActiveMissions * InterLineSpace , Mission_Window_Pointer );
+	      DisplayText ( "FAILED: " , 0 , FIRST_MISSION_POS_Y + NoOfActiveMissions * InterLineSpace , Mission_Window_Pointer , TEXT_STRETCH );
 	    }
 	  else if ( Me[0].AllMissions[i].MissionWasAssigned == TRUE ) 
 	    {
-	      DisplayText ( "ASSIGNED: " , 0 , FIRST_MISSION_POS_Y + NoOfActiveMissions * InterLineSpace , Mission_Window_Pointer );
+	      DisplayText ( "ASSIGNED: " , 0 , FIRST_MISSION_POS_Y + NoOfActiveMissions * InterLineSpace , Mission_Window_Pointer , TEXT_STRETCH );
 	    }
 	  else
 	    {
-	      DisplayText ( "UNASSIGNED: " , 0 , FIRST_MISSION_POS_Y +  NoOfActiveMissions * InterLineSpace , Mission_Window_Pointer );
+	      DisplayText ( "UNASSIGNED: " , 0 , FIRST_MISSION_POS_Y +  NoOfActiveMissions * InterLineSpace , Mission_Window_Pointer , TEXT_STRETCH );
 	    }
 
 	  DisplayText ( Me[0].AllMissions[i].MissionName , MISSION_NAME_POS_X , 
-			FIRST_MISSION_POS_Y + NoOfActiveMissions * InterLineSpace ,  Mission_Window_Pointer );
+			FIRST_MISSION_POS_Y + NoOfActiveMissions * InterLineSpace ,  Mission_Window_Pointer , TEXT_STRETCH );
 
 	}
 
       DisplayText ( "\n\n--- Currently no missions beyond that ---" , 
-		    -1 , -1 , Mission_Window_Pointer );
+		    -1 , -1 , Mission_Window_Pointer , TEXT_STRETCH );
 
       // Highlight currently selected option with an influencer before it
       blit_tux( MISSION_NAME_POS_X , FIRST_MISSION_POS_Y + (MenuPosition) * InterLineSpace - 16 , 0 );

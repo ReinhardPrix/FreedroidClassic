@@ -1,6 +1,6 @@
 /* 
  *
- *   Copyright (c) 1994, 2002, 2003 Johannes Prix
+ *   Copyright (c) 1994, 2002, 2003, 2004 Johannes Prix
  *   Copyright (c) 1994, 2002 Reinhard Prix
  *
  *
@@ -59,6 +59,7 @@
 extern char *InfluenceModeNames[];
 
 int best_banner_pos_x, best_banner_pos_y;
+char* game_message_protocol = NULL ;
 
 /* ----------------------------------------------------------------------
  * This function writes the description of an item into the item description
@@ -1371,28 +1372,6 @@ ShowCurrentTextWindow ( void )
     //
     prepare_text_window_content ( ItemDescText ) ;
     
-    /*
-    //--------------------
-    // For testing purposes is bluntly insert the new banner element here:
-    //
-    if ( GetMousePos_y( )  >= ( UPPER_BANNER_TEXT_RECT_H + UPPER_BANNER_TEXT_RECT_Y ) )
-    {
-	Banner_Text_Rect.x = UPPER_BANNER_TEXT_RECT_X;
-	Banner_Text_Rect.y = UPPER_BANNER_TEXT_RECT_Y;
-	Banner_Text_Rect.w = UPPER_BANNER_TEXT_RECT_W;
-	Banner_Text_Rect.h = UPPER_BANNER_TEXT_RECT_H;
-    }
-    else
-    {
-	Banner_Text_Rect.x = LOWER_BANNER_TEXT_RECT_X;
-	Banner_Text_Rect.y = LOWER_BANNER_TEXT_RECT_Y;
-	Banner_Text_Rect.w = LOWER_BANNER_TEXT_RECT_W;
-	Banner_Text_Rect.h = LOWER_BANNER_TEXT_RECT_H;
-    }
-    */
-
-    // Banner_Text_Rect . x = GetMousePos_x () ;
-    // Banner_Text_Rect . y = GetMousePos_y () ;
     Banner_Text_Rect . x = best_banner_pos_x ;
     Banner_Text_Rect . y = best_banner_pos_y ;
 
@@ -1406,7 +1385,6 @@ ShowCurrentTextWindow ( void )
     lines_needed = GetNumberOfTextLinesNeeded ( ItemDescText , Banner_Text_Rect , 1.0 ) ;
     if ( lines_needed <= 20 )
     {
-	// Banner_Text_Rect . y += ( Banner_Text_Rect . h - ( lines_needed + 2 ) *  FontHeight( FPS_Display_BFont ) ) / 2 ;
 	Banner_Text_Rect . h = ( lines_needed + 2 ) *  FontHeight( FPS_Display_BFont );
     }
 
@@ -1468,15 +1446,11 @@ ShowCurrentTextWindow ( void )
 	TextLine [ i ] [ StringLength ] = 0;
 	
 	LongTextPointer += StringLength + 1;
-	// CenteredPutString ( Screen , Banner_Text_Rect.y + InterLineDistance + 
-	// i * ( InterLineDistance + FontHeight( GetCurrentFont() ) ) , TextLine[ i ] );
 	PutString ( Screen , 
 		    Banner_Text_Rect . x + ( Banner_Text_Rect . w - TextWidth ( TextLine [ i ] ) ) / 2 ,
 		    Banner_Text_Rect . y + InterLineDistance + 
 		    i * ( InterLineDistance + FontHeight( GetCurrentFont() ) ) , TextLine[ i ] );
     }
-    // CenteredPutString ( Screen , Banner_Text_Rect.y + InterLineDistance + 
-    // i * ( InterLineDistance + FontHeight( GetCurrentFont() ) ) , LongTextPointer );
     PutString ( Screen , 
 		Banner_Text_Rect . x + ( Banner_Text_Rect . w - TextWidth ( LongTextPointer ) ) / 2 ,
 		Banner_Text_Rect.y + InterLineDistance + 
@@ -1515,6 +1489,140 @@ get_days_of_game_duration ( float current_game_date )
 }; // void get_days_of_game_duration ( float current_game_date )
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+append_new_game_message ( char* game_message_text )
+{
+    if ( game_message_protocol == NULL )
+    {
+	game_message_protocol = MyMalloc ( 500000 ) ; // enough for any protocol
+	sprintf ( game_message_protocol , "This is the protocol.\nOh yes, it is indeed!\nIt has multiple lines too!\nIsn't that great?  But how long may any one line be?  Is there a limit for that?  Anyway, it looks good." );
+    }
+
+    strcat ( game_message_protocol , "\n* " ) ;
+    strcat ( game_message_protocol , game_message_text ) ;
+
+    
+
+}; // void append_new_game_message ( char* game_message_text )
+
+/* ----------------------------------------------------------------------
+ * We display a window with the current text messages.
+ * ---------------------------------------------------------------------- */
+void
+display_current_game_messages ( void )
+{
+    SDL_Rect Subtitle_Window;
+    int lines_needed ;
+    int protocol_offset ;
+    float our_stretch_factor = TEXT_STRETCH ;
+
+#define AVERAGE_LINES_IN_MESSAGE_WINDOW 3*GameConfig . screen_height/480
+
+    if ( game_message_protocol == NULL )
+    {
+	game_message_protocol = MyMalloc ( 500000 ) ; // enough for any protocol
+	sprintf ( game_message_protocol , "This is the protocol.\nOh yes, it is indeed!\nIt has multiple lines too!\nIsn't that great?  But how long may any one line be?  Is there a limit for that?  Anyway, it looks good." );
+    }
+
+    //--------------------
+    // First we define our subtitle window.  We formerly had a small
+    // narrow subtitle window of a format like this:
+    //
+    // { 65 , 410 , 500 , 70 }       
+    Subtitle_Window . x = ( ( 65 + 20 ) * GameConfig . screen_width ) / 640 ;
+    Subtitle_Window . y = ( ( 410 + 10 ) * GameConfig . screen_height ) / 480 ;
+    Subtitle_Window . w = ( ( 500 - 20 - 20 ) * GameConfig . screen_width ) / 640 ;
+    Subtitle_Window . h = ( 70 * GameConfig . screen_height ) / 480 ;
+
+    //--------------------
+    // First we need to know where to begin with our little display.
+    //
+    lines_needed = GetNumberOfTextLinesNeeded ( game_message_protocol , Subtitle_Window , our_stretch_factor );
+    DebugPrintf ( 1 , "\nLines needed: %d. " , lines_needed );
+    
+    if ( lines_needed <= AVERAGE_LINES_IN_MESSAGE_WINDOW ) 
+    {
+	//--------------------
+	// When there isn't anything to scroll yet, we keep the default
+	// position and also the users clicks on up/down button will be
+	// reset immediately
+	//
+	protocol_offset = 0 ;
+	chat_protocol_scroll_override_from_user = 0 ;
+    }
+    else
+	protocol_offset = ( FontHeight ( GetCurrentFont() ) * our_stretch_factor ) 
+	    * ( lines_needed - AVERAGE_LINES_IN_MESSAGE_WINDOW + chat_protocol_scroll_override_from_user ) * 1.04 ;
+
+    //--------------------
+    // Now if the protocol offset is really negative, we don't really want
+    // that and force the user offset back to something sane again.
+    //
+    if ( protocol_offset < 0 )
+    {
+	chat_protocol_scroll_override_from_user ++ ;
+	protocol_offset = 0 ;
+    }
+
+    blit_special_background ( GAME_MESSAGE_WINDOW_BACKGROUND_CODE );
+
+    
+    //--------------------
+    // Now we can display the text and update the screen...
+    //
+    SDL_SetClipRect( Screen, NULL );
+    // { 65 , 410 , 500 , 70 }       
+    Subtitle_Window . x = ( ( 65 + 20 ) * GameConfig . screen_width ) / 640 ;
+    Subtitle_Window . y = ( ( 410 + 10 ) * GameConfig . screen_height ) / 480 ;
+    Subtitle_Window . w = ( ( 500 - 20 - 20 ) * GameConfig . screen_width ) / 640 ;
+    Subtitle_Window . h = ( ( 70 - 10 - 10 ) * GameConfig . screen_height ) / 480 ;
+    SetCurrentFont ( FPS_Display_BFont );
+    DisplayText ( game_message_protocol , Subtitle_Window.x , Subtitle_Window.y - protocol_offset , &Subtitle_Window , our_stretch_factor );
+
+    /*
+    if ( protocol_offset > 0 ) 
+	ShowGenericButtonFromList ( CHAT_PROTOCOL_SCROLL_UP_BUTTON );
+    else
+	ShowGenericButtonFromList ( CHAT_PROTOCOL_SCROLL_OFF_BUTTON );
+    if ( lines_needed <= AVERAGE_LINES_IN_PROTOCOL_WINDOW ) 
+	ShowGenericButtonFromList ( CHAT_PROTOCOL_SCROLL_OFF2_BUTTON );
+    else
+	ShowGenericButtonFromList ( CHAT_PROTOCOL_SCROLL_DOWN_BUTTON );
+    */
+    // if ( with_update ) our_SDL_update_rect_wrapper ( Screen , Subtitle_Window.x , Subtitle_Window.y , Subtitle_Window.w , Subtitle_Window.h );
+    
+}; // void display_current_game_messages ( int background_picture_code , int with_update )
+
+/* ----------------------------------------------------------------------
+ * We need a window with the current text messages.  Since the window 
+ * will be displayed again and again, it might be good to keep it 
+ * internally as an OpenGL texture (which will also allow for faster
+ * and smoother resizing, if nescessary).
+ * ---------------------------------------------------------------------- */
+void
+ShowCurrentGameMessageWindow ( void )
+{
+
+    //--------------------
+    // We blit the background
+    //
+    blit_special_background ( GAME_MESSAGE_WINDOW_BACKGROUND_CODE );
+
+    //--------------------
+    // Then we insert the text.  This would make sense for SDL
+    // graphics output.  But even there, it would be better concerning
+    // performance to have a buffer surface with background and text
+    // and to use that and ONLY UPDATE IT WHEN THE TEXT HAS CHANGED.
+    //
+    
+    
+    
+}; // void ShowCurrentGameMessageWindow ( void )
+
+/* ----------------------------------------------------------------------
  * This function updates the various displays that are usually blitted
  * right into the combat window, like energy and status meter and that...
  * ---------------------------------------------------------------------- */
@@ -1530,6 +1638,8 @@ DisplayBanner ( void )
     
     ShowCurrentTextWindow ( );
     ShowCurrentSkill ( );
+
+    display_current_game_messages ( ) ;
 
     //--------------------
     // We display the name of the current level and the current time inside

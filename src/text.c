@@ -124,8 +124,7 @@ GiveMouseAlertWindow( char* WindowText )
     TargetRect . y += IN_WINDOW_TEXT_OFFSET;
     
     SetCurrentFont ( FPS_Display_BFont );
-    
-    DisplayText ( WindowText, TargetRect . x, TargetRect . y , &TargetRect )  ;
+    DisplayText ( WindowText, TargetRect . x, TargetRect . y , &TargetRect , 1.0 )  ;
     
     our_SDL_flip_wrapper ( Screen );
     
@@ -389,7 +388,7 @@ ScrollText (char *Text, int startx, int starty, int EndLine , int background_cod
 	if ( background_code != ( -1 ) )
 	    blit_special_background ( background_code );
 	
-	if (!DisplayText (Text, startx, InsertLine, &User_Rect))
+	if ( ! DisplayText ( Text , startx , InsertLine , &User_Rect , TEXT_STRETCH ) )
 	{
 	    // JP: I've disabled this, since with this enabled we won't even
 	    // see a single line of the first section of the briefing.
@@ -494,7 +493,7 @@ DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *cl
 	// if ( ( clip->h + clip->y - MyCursorY ) <= 2 * FontHeight ( GetCurrentFont() ) * TEXT_STRETCH )
 	if ( ( clip->h + clip->y - MyCursorY ) <= 1 * FontHeight ( GetCurrentFont() ) * TEXT_STRETCH )
 	{
-	    DisplayText( "--- more --- more --- \n" , MyCursorX , MyCursorY , clip );
+	    DisplayText( "--- more --- more --- \n" , MyCursorX , MyCursorY , clip , 1.0 );
 	    our_SDL_flip_wrapper( Screen );
 	    while ( !SpacePressed() );
 	    while (  SpacePressed() );
@@ -593,7 +592,7 @@ DisplayBigScreenMessage( void )
  *             out of clip-rect completely)
  *-----------------------------------------------------------------*/
 int
-DisplayText ( char *Text, int startx, int starty, const SDL_Rect *clip )
+DisplayText ( char *Text, int startx, int starty, const SDL_Rect *clip , float text_stretch )
 {
     char *tmp;	// mobile pointer to the current position in the string to be printed
     SDL_Rect Temp_Clipping_Rect; // adding this to prevent segfault in case of NULL as parameter
@@ -642,7 +641,7 @@ DisplayText ( char *Text, int startx, int starty, const SDL_Rect *clip )
 	if ( *tmp == '\n' )
 	{
 	    MyCursorX = clip->x;
-	    MyCursorY += FontHeight ( GetCurrentFont() ) * TEXT_STRETCH;
+	    MyCursorY += FontHeight ( GetCurrentFont() ) * text_stretch ;
 	}
 	else
 	    DisplayChar (*tmp);
@@ -802,7 +801,7 @@ GetString ( int MaxLen, int echo , int background_code , char* text_for_overhead
     
     height = FontHeight (GetCurrentFont());
     
-    DisplayText ( text_for_overhead_promt , 50 , 50 , NULL );
+    DisplayText ( text_for_overhead_promt , 50 , 50 , NULL , TEXT_STRETCH );
     x0 = MyCursorX;
     y0 = MyCursorY;
     
@@ -829,7 +828,7 @@ GetString ( int MaxLen, int echo , int background_code , char* text_for_overhead
 	if ( use_open_gl )
 	{
 	    blit_special_background ( background_code );
-	    DisplayText ( text_for_overhead_promt , 50 , 50 , NULL );
+	    DisplayText ( text_for_overhead_promt , 50 , 50 , NULL , TEXT_STRETCH );
 	}
 	else
 	{
@@ -856,7 +855,7 @@ GetString ( int MaxLen, int echo , int background_code , char* text_for_overhead
 	    if ( use_open_gl )
 	    {
 		blit_special_background ( background_code );
-		DisplayText ( text_for_overhead_promt , 50 , 50 , NULL );
+		DisplayText ( text_for_overhead_promt , 50 , 50 , NULL , TEXT_STRETCH );
 		x0 = MyCursorX;
 		y0 = MyCursorY;
 		PutString ( Screen, x0, y0, input);
@@ -944,7 +943,7 @@ GetEditableStringInPopupWindow ( int MaxLen , char* PopupWindowTitle , char* Def
     // Now we find the right position for the new string to start by writing
     // out the title text once, just to get the cursor positioned right...
     //
-    DisplayText ( PopupWindowTitle, TargetRect . x, TargetRect . y , &TargetRect )  ;
+    DisplayText ( PopupWindowTitle, TargetRect . x, TargetRect . y , &TargetRect , TEXT_STRETCH )  ;
     x0 = MyCursorX;
     y0 = MyCursorY;
     
@@ -969,7 +968,7 @@ GetEditableStringInPopupWindow ( int MaxLen , char* PopupWindowTitle , char* Def
 	
 	SetCurrentFont ( FPS_Display_BFont );
 	
-	DisplayText ( PopupWindowTitle, TargetRect . x, TargetRect . y , &TargetRect )  ;
+	DisplayText ( PopupWindowTitle, TargetRect . x, TargetRect . y , &TargetRect , TEXT_STRETCH )  ;
 	
 	PutString (Screen, x0, y0, input);
 	

@@ -110,7 +110,7 @@ classic_show_mission_list ( void )
     // therefore we display it in-game:
     //
     SDL_SetClipRect( Screen , NULL );
-    DisplayText( "\n   See quest log: \n" , User_Rect.x , User_Rect.y , &User_Rect );
+    DisplayText( "\n   See quest log: \n" , User_Rect.x , User_Rect.y , &User_Rect , TEXT_STRETCH );
     
     for ( mis_num = 0 ; mis_num < MAX_MISSIONS_IN_GAME; mis_num ++ )
     {
@@ -127,20 +127,20 @@ classic_show_mission_list ( void )
 	
 	if ( Me[0].AllMissions[ mis_num ].MissionIsComplete == TRUE )
 	{
-	    DisplayText( "\n* Mission completed: " , -1 , -1 , &User_Rect );
+	    DisplayText( "\n* Mission completed: " , -1 , -1 , &User_Rect , TEXT_STRETCH );
 	}
 	else if ( Me[0].AllMissions[ mis_num ].MissionWasFailed == TRUE )
 	{
-	    DisplayText( "\n* Mission failed: " , -1 , -1 , &User_Rect );
+	    DisplayText( "\n* Mission failed: " , -1 , -1 , &User_Rect , TEXT_STRETCH );
 	}
 	else if ( ! Me[0].AllMissions[ mis_num ].MissionWasAssigned == TRUE )
 	{
-	    DisplayText( "\n* Mission not yet assigned: " , -1 , -1 , &User_Rect );
+	    DisplayText( "\n* Mission not yet assigned: " , -1 , -1 , &User_Rect , TEXT_STRETCH );
 	}
 	else 
-	    DisplayText( "\n* Mission assigned: " , -1 , -1 , &User_Rect );
+	    DisplayText( "\n* Mission assigned: " , -1 , -1 , &User_Rect , TEXT_STRETCH );
 	
-	DisplayText( Me[0].AllMissions[ mis_num ].MissionName , -1 , -1 , &User_Rect );
+	DisplayText( Me[0].AllMissions[ mis_num ].MissionName , -1 , -1 , &User_Rect , TEXT_STRETCH );
 	
     }
 }; // void classic_show_mission_list ( void )
@@ -168,16 +168,16 @@ There was an illegal mission number received.",
     SetTextCursor ( mission_description_rect . x , 
 		    mission_description_rect . y );
 
-    DisplayText( "Mission: " , -1 , -1 , &mission_description_rect );
-    DisplayText( Me [ 0 ] . AllMissions [ mis_num ] . MissionName , -1 , -1 , &mission_description_rect );
-    DisplayText( "\nStatus: " , -1 , -1 , &mission_description_rect );
+    DisplayText( "Mission: " , -1 , -1 , &mission_description_rect , TEXT_STRETCH );
+    DisplayText( Me [ 0 ] . AllMissions [ mis_num ] . MissionName , -1 , -1 , &mission_description_rect , TEXT_STRETCH );
+    DisplayText( "\nStatus: " , -1 , -1 , &mission_description_rect , TEXT_STRETCH );
     if ( Me [ 0 ] . AllMissions [ mis_num ] . MissionIsComplete )
-	DisplayText( "COMPLETE" , -1 , -1 , &mission_description_rect );
+	DisplayText( "COMPLETE" , -1 , -1 , &mission_description_rect , TEXT_STRETCH );
     else if ( Me [ 0 ] . AllMissions [ mis_num ] . MissionWasFailed )
-	DisplayText( "FAILED" , -1 , -1 , &mission_description_rect );
+	DisplayText( "FAILED" , -1 , -1 , &mission_description_rect , TEXT_STRETCH );
     else
-	DisplayText( "STILL OPEN" , -1 , -1 , &mission_description_rect );
-    DisplayText( "\nDetails: " , -1 , -1 , &mission_description_rect );
+	DisplayText( "STILL OPEN" , -1 , -1 , &mission_description_rect , TEXT_STRETCH );
+    DisplayText( "\nDetails: " , -1 , -1 , &mission_description_rect , TEXT_STRETCH );
     
     for ( mission_diary_index = 0 ; mission_diary_index < MAX_MISSION_DESCRIPTION_TEXTS ;
 	  mission_diary_index ++ )
@@ -188,9 +188,9 @@ There was an illegal mission number received.",
 		      get_days_of_game_duration ( Me [ 0 ] . AllMissions [ mis_num ] . mission_description_time [ mission_diary_index ] ) , 
 		      get_hours_of_game_duration ( Me [ 0 ] . AllMissions [ mis_num ] . mission_description_time [ mission_diary_index ] ) , 
 		      get_minutes_of_game_duration ( Me [ 0 ] . AllMissions [ mis_num ] . mission_description_time [ mission_diary_index ] ) ) ;
-	    DisplayText( temp_text , -1 , -1 , &mission_description_rect );	    
-	    DisplayText( mission_diary_texts [ mis_num ] [ mission_diary_index ] , -1 , -1 , &mission_description_rect );	    
-	    DisplayText( "\n" , -1 , -1 , &mission_description_rect );	    
+	    DisplayText( temp_text , -1 , -1 , &mission_description_rect , TEXT_STRETCH );	    
+	    DisplayText( mission_diary_texts [ mis_num ] [ mission_diary_index ] , -1 , -1 , &mission_description_rect , TEXT_STRETCH );	    
+	    DisplayText( "\n" , -1 , -1 , &mission_description_rect , TEXT_STRETCH );	    
 	}
     }
 
@@ -329,7 +329,7 @@ quest_browser_display_mission_list ( int list_type )
 	SetTextCursor ( mission_description_rect . x , 
 			mission_description_rect . y );
 	DisplayText( complete_mission_display_text , mission_description_rect . x , 
-		     mission_description_rect . y - mission_list_offset , &mission_description_rect );	
+		     mission_description_rect . y - mission_list_offset , &mission_description_rect , TEXT_STRETCH );	
 	
 	//--------------------
 	// Now it's time to display some short/long symbols in front
@@ -385,13 +385,13 @@ quest_browser_display_mission_list ( int list_type )
 	switch ( list_type )
 	{
 	    case QUEST_BROWSER_SHOW_OPEN_MISSIONS:
-		DisplayText( "No open quests yet." , -1 , -1 , &mission_description_rect );
+		DisplayText( "No open quests yet." , -1 , -1 , &mission_description_rect , TEXT_STRETCH );
 		break;
 	    case QUEST_BROWSER_SHOW_DONE_MISSIONS:
-		DisplayText( "No completed quests yet." , -1 , -1 , &mission_description_rect );
+		DisplayText( "No completed quests yet." , -1 , -1 , &mission_description_rect , TEXT_STRETCH );
 		break;
 	    case QUEST_BROWSER_SHOW_NOTES:
-		DisplayText( "No notes yet." , -1 , -1 , &mission_description_rect );
+		DisplayText( "No notes yet." , -1 , -1 , &mission_description_rect , TEXT_STRETCH );
 		break;
 	    default:
 		GiveStandardErrorMessage ( __FUNCTION__  , "\
