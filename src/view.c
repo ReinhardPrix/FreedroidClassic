@@ -237,70 +237,6 @@ ShowAutomapData( void )
 }; // void ShowAutomapData( void )
 
 /* ----------------------------------------------------------------------
- * There is more than one approach to the problem of disruptor flashes.
- * (*) One solution is to just completely fill the visible screen white and
- *     black altenatingly.
- * (*) The other solution is to start in the center and then recursively
- *     proceed through the passable tiles and using this method fill 
- *     exactly the whole room where you're currently in.  That is perhaps
- *     the more sophisticated method.  Right now however, it's disabled.
- * 
- * ---------------------------------------------------------------------- */
-
-/*
-void
-RecFlashFill (int LX, int LY, int Color, unsigned char *Parameter_Screen, int SBreite)
-{
-  int i;
-  static int num;
-
-  LY = LY;
-  LX = LX;
-  num++;
-
-//      gotoxy(1,1);
-//      printf(" RFF: X=%d Y=%d.\n",LX,LY);
-//      getchar();
-
-  // mark this square as within the area of effect
-  Affected[LY / Block_Height * CurLevel->xlen + LX / Block_Width] = TRUE;
-
-  // fill this square up
-  for (i = LY / 4 - ((LY / 4) % 8); i < (LY / 4 - ((LY / 4) % 8) + 8); i++)
-    {
-      memset (Parameter_Screen + i * SBreite + LX / 4 - ((LX / 4) % 8), Color, 8);
-    }
-  i -= 4;
-
-  // fill the square to the right also up
-  if ((*(Parameter_Screen + i * SBreite + LX / 4 + 8) != Color) &&
-      (IsPassable (Cent (LX + Block_Width), Cent (LY), CENTER) == CENTER))
-    RecFlashFill (LX + Block_Width, LY, Color, Parameter_Screen, SBreite);
-
-  // fill the square to the left
-  if (LX > Block_Width)
-    {
-      if ((*(Parameter_Screen + i * SBreite + LX / 4 - 8) != Color) &&
-	  (IsPassable (Cent (LX - Block_Width), Cent (LY), CENTER) == CENTER))
-	RecFlashFill (LX - Block_Width, LY, Color, Parameter_Screen, SBreite);
-    }
-
-  // fill the square above
-  if ((i > 8) && (LY > Block_Height))
-    {
-      if ((*(Parameter_Screen + (i - 8) * SBreite + LX / 4) != Color) &&
-	  (IsPassable (Cent (LX), Cent (LY - Block_Height), CENTER) == CENTER))
-	RecFlashFill (LX, LY - Block_Height, Color, Parameter_Screen, SBreite);
-    }
-
-  // fill the square below
-  if ((*(Parameter_Screen + (i + 8) * SBreite + LX / 4) != Color) &&
-      (IsPassable (Cent (LX), Cent (LY + Block_Height), CENTER) == CENTER))
-    RecFlashFill (LX, LY + Block_Height, Color, Parameter_Screen, SBreite);
-}
-*/
-
-/* ----------------------------------------------------------------------
  * This function should display the currently assigned/unassigned mission
  * and all that directly over the combat screen without interrupting the
  * game in any other way.
@@ -1439,6 +1375,21 @@ iso_put_tux_part ( char* part_string , int x , int y , int player_num , int rota
   int weapon_type ;
   char* motion_class_string [ ALL_TUX_MOTION_CLASSES ] = { "sword_motion" , "gun_motion" } ;
   float my_speed;
+  int use_walk_cycle_for_part [ ALL_TUX_PARTS ] [ ALL_TUX_MOTION_CLASSES ] = 
+    { 
+      { 0 , 0 } , // head
+      { 0 , 0 } , // helm1
+      { 1 , 1 } , // feet
+      { 1 , 0 } , // sword
+      { 1 , 0 } , // weaponarm
+      { 1 , 0 } , // shieldarm
+      { 1 , 1 } , // torso
+      { 1 , 1 } , // armour1
+      { 1 , 1 } , // boots
+      { 1 , 0 } , // shield
+      { 1 , 0 } , // gun
+      { 1 , 0 }   // iron_pipe
+    } ;
 
   //--------------------
   // At first call, we need to mark all the iso_images as not yet loaded...
@@ -1474,7 +1425,7 @@ Empty part string received!",
     {
       part_index = 0 ;
     }
-  else if ( ! strcmp ( part_string , "torso" ) )
+  else if ( ! strcmp ( part_string , "helm1" ) )
     {
       part_index = 1 ;
     }
@@ -1494,7 +1445,7 @@ Empty part string received!",
     {
       part_index = 5 ;
     }
-  else if ( ! strcmp ( part_string , "helm1" ) )
+  else if ( ! strcmp ( part_string , "torso" ) )
     {
       part_index = 6 ;
     }
@@ -1547,7 +1498,9 @@ Resolving part string to index failed!",
   // phase any more for all tux parts now that we've introduced a walk cycle.
   //
   our_phase = (int) Me [ player_num ] . phase ;
-  if ( ( ( part_index == 8 ) || ( part_index == 9 ) || ( part_index == 3 ) || ( part_index == 5 ) || ( part_index == 4 ) || ( part_index == 2 ) || ( part_index == 1 ) || ( part_index == 7 ) ) && ( Me [ player_num ] . weapon_swing_time < 0 ) )
+
+  if ( use_walk_cycle_for_part [ part_index ] [ motion_class ] )
+    // if ( ( ( part_index == 8 ) || ( part_index == 9 ) || ( part_index == 3 ) || ( part_index == 5 ) || ( part_index == 4 ) || ( part_index == 2 ) || ( part_index == 1 ) || ( part_index == 7 ) ) && ( Me [ player_num ] . weapon_swing_time < 0 ) )
     {
       our_phase = (int) Me [ player_num ] . walk_cycle_phase ;
 
@@ -1564,21 +1517,6 @@ Resolving part string to index failed!",
       // our_phase = ( ( ( int ) SDL_GetTicks()/1000) % 6 ) + 16 ;
     }
 
-  if ( ( our_phase < 0 ) || ( our_phase >= TUX_TOTAL_PHASES ) )
-    {
-      fprintf ( stderr , "Suspicious phase encountered: %d " , our_phase );
-      GiveStandardErrorMessage ( "iso_put_tux(...)" , "\
-Suspicious phase encountered!",
-				 PLEASE_INFORM, IS_FATAL );
-    }
-
-  if ( ( ( part_index == 0 ) || ( part_index == 6 ) || ( part_index == 10 ) ) && ( our_phase >= TUX_SWING_PHASES + TUX_BREATHE_PHASES + TUX_GOT_HIT_PHASES ) )
-    {
-      fprintf ( stderr , "Suspicious phase encountered: %d " , our_phase );
-      GiveStandardErrorMessage ( "iso_put_tux(...)" , "\
-Suspicious phase encountered!",
-				 PLEASE_INFORM, IS_FATAL );
-    }
 
   //--------------------
   // Now if the iso_image we want to blit right now has not yet been loaded,
