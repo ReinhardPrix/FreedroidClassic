@@ -1766,6 +1766,7 @@ InitInfluencerChatFlags( int PlayerNum )
 	  Me[ PlayerNum ] . Chat_Flags [ j ] [ 0 ] = 1 ; // we always allow to say something in the beginning...
 	}
     }
+
 }; // void InitInfluencerChatFlags( int PlayerNum )
 
 /* ----------------------------------------------------------------------

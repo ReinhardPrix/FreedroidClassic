@@ -94,7 +94,9 @@ push_or_pop_chat_roster ( int push_or_pop )
     }
   else
     {
-      
+      GiveStandardErrorMessage ( "push_or_pop_chat_roster (...)" , "\
+There was an unrecognized parameter handled to this function." ,
+				 PLEASE_INFORM, IS_FATAL );
     }
   
 }; // push_or_pop_chat_roster ( int push_or_pop )
@@ -160,7 +162,7 @@ ResolveDialogSectionToChatFlagsIndex ( char* SectionName )
   if ( strcmp ( SectionName , "Butch" ) == 0 ) return PERSON_BUTCH;
   if ( strcmp ( SectionName , "Darwin" ) == 0 ) return PERSON_DARWIN;
   if ( strcmp ( SectionName , "Duncan" ) == 0 ) return PERSON_DUNCAN;
-  if ( strcmp ( SectionName , "Doc Moore" ) == 0 ) return PERSON_DOC_MOORE;
+  if ( strcmp ( SectionName , "DocMoore" ) == 0 ) return PERSON_DOC_MOORE;
   if ( strcmp ( SectionName , "Melfis" ) == 0 ) return PERSON_MELFIS;
   if ( strcmp ( SectionName , "Michelangelo" ) == 0 ) return PERSON_MICHELANGELO;
   if ( strcmp ( SectionName , "Skippy" ) == 0 ) return PERSON_SKIPPY;
@@ -798,6 +800,30 @@ TextConditionIsTrue ( char* ConditionString )
       else
 	return ( FALSE );
     }
+  else if ( CountStringOccurences ( ConditionString , "MissionAssigned" ) )
+    {
+      DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String identified as question for mission assigned." );
+      ReadValueFromString( ConditionString , ":", "%d" , 
+			   &TempValue , ConditionString + strlen ( ConditionString ) );
+      DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String referred to mission number: %d." , TempValue );
+
+      if ( Me [ 0 ] . AllMissions [ TempValue ] . MissionWasAssigned )
+	return ( TRUE );
+      else
+	return ( FALSE );
+    }
+  else if ( CountStringOccurences ( ConditionString , "HaveItemWithCode" ) )
+    {
+      DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String identified as question for have item in inventory." );
+      ReadValueFromString( ConditionString , ":", "%d" , 
+			   &TempValue , ConditionString + strlen ( ConditionString ) );
+      DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String referred to item code: %d." , TempValue );
+
+      if ( CountItemtypeInInventory ( TempValue , 0 ) )
+	return ( TRUE );
+      else
+	return ( FALSE );
+    }
   else if ( CountStringOccurences ( ConditionString , "PointsToDistributeAtLeast" ) )
     {
       DebugPrintf ( CHAT_DEBUG_LEVEL , "\nCondition String identified as question for available skill points to distribute." );
@@ -870,6 +896,128 @@ Freedroid was unable to determine the type of said condition.",
  *
  * ---------------------------------------------------------------------- */
 void
+ProcessThisChatOption ( int MenuSelection , int PlayerNum , int ChatPartnerCode , Enemy ChatDroid )
+{
+  int i;
+
+  //--------------------
+  // Now a menu section has been made.  We do the reaction:
+  // say the samples and the replies, later we'll set the new option values
+  //
+  // But it might be the case that this option is more technical and not accompanied
+  // by any reply.  This case must also be caught.
+  //
+  if ( strcmp ( ChatRoster [ MenuSelection ] . option_sample_file_name , "NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER" ) )
+    {
+      // PlayOnceNeededSoundSample( ChatRoster [ MenuSelection ] . option_sample_file_name , TRUE );
+      GiveSubtitleNSample ( ChatRoster [ MenuSelection ] . option_text ,
+			    ChatRoster [ MenuSelection ] . option_sample_file_name ) ;
+    }
+  
+  //--------------------
+  // Now we can proceed to execute
+  // the rest of the reply that has been set up for this (the now maybe modified)
+  // dialog option.
+  //
+  for ( i = 0 ; i < MAX_REPLIES_PER_OPTION ; i ++ )
+    {
+      //--------------------
+      // Once we encounter an empty string here, we're done with the reply...
+      //
+      if ( ! strlen ( ChatRoster [ MenuSelection ] . reply_subtitle_list [ i ] ) ) 
+	break;
+      
+      GiveSubtitleNSample ( ChatRoster [ MenuSelection ] . reply_subtitle_list [ i ] ,
+			    ChatRoster [ MenuSelection ] . reply_sample_list [ i ]    ) ;
+    }
+  
+  //--------------------
+  // Now that all the replies have been made, we can start on changing
+  // the option flags to their new values
+  //
+  for ( i = 0 ; i < MAX_ANSWERS_PER_PERSON ; i ++ )
+    {
+      //--------------------
+      // Maybe all nescessary changes were made by now.  Then it's time
+      // to quit...
+      //
+      if ( ChatRoster [ MenuSelection ] . change_option_nr [ i ] == (-1) ) 
+	break;
+      
+      Me [ PlayerNum ] . Chat_Flags [ ChatPartnerCode ] [ ChatRoster [ MenuSelection ] . change_option_nr [ i ] ] =
+	ChatRoster [ MenuSelection ] . change_option_to_value [ i ]  ;
+      DebugPrintf ( CHAT_DEBUG_LEVEL , "\nChanged chat flag nr. %d to new value %d." ,
+		    ChatRoster [ MenuSelection ] . change_option_nr[i] ,
+		    ChatRoster [ MenuSelection ] . change_option_to_value[i] );
+    }
+  
+  //--------------------
+  // Maybe this option should also invoke some extra function like opening
+  // a shop interface or something.  So we do this here.
+  //
+  for ( i = 0 ; i < MAX_EXTRAS_PER_OPTION ; i ++ )
+    {
+      //--------------------
+      // Maybe all nescessary extras were executed by now.  Then it's time
+      // to quit...
+      //
+      if ( !strlen ( ChatRoster [ MenuSelection ] . extra_list [ i ] ) )
+	break;
+      
+      DebugPrintf ( CHAT_DEBUG_LEVEL , "\nWARNING!  Starting to invoke extra.  Text is: %s." ,
+		    ChatRoster [ MenuSelection ] . extra_list[i] );
+      
+      ExecuteChatExtra ( ChatRoster [ MenuSelection ] . extra_list[i] , ChatDroid );
+
+      //--------------------
+      // Maybe the chat extra has annoyed the chat partner and he is now
+      // suddenly hostile and breaks off the chat.  This is handled here.
+      //
+      if ( ! ChatDroid -> is_friendly ) return ;
+      
+      //--------------------
+      // It can't hurt to have the overall background redrawn after each extra command
+      // which could have destroyed the background by drawing e.g. a shop interface
+      PrepareMultipleChoiceDialog ( ChatDroid ) ;
+    }
+
+  //--------------------
+  // Maybe there was an ON-GOTO-CONDITION specified for this option.
+  // Then of course we have to jump to the new location!!!
+  //
+  while ( strlen ( ChatRoster [ MenuSelection ] . on_goto_condition ) )
+    {
+      DebugPrintf( CHAT_DEBUG_LEVEL , "\nON-GOTO-CONDITION ENCOUNTERED... CHECKING... " );
+      if ( TextConditionIsTrue ( ChatRoster [ MenuSelection ] . on_goto_condition ) )
+	{
+	  DebugPrintf( CHAT_DEBUG_LEVEL , "...SEEMS TRUE... CONTINUING AT OPTION: %d. " , 
+		       ChatRoster [ MenuSelection ] . on_goto_first_target );
+	  MenuSelection = ChatRoster [ MenuSelection ] . on_goto_first_target ;
+
+	  ProcessThisChatOption ( MenuSelection , PlayerNum , ChatPartnerCode , ChatDroid );
+	  return ;
+	}
+      else
+	{
+	  DebugPrintf( CHAT_DEBUG_LEVEL , "...SEEMS FALSE... CONTINUING AT OPTION: %d. " , 
+		       ChatRoster [ MenuSelection ] . on_goto_second_target );
+	  MenuSelection = ChatRoster [ MenuSelection ] . on_goto_second_target ;
+
+	  ProcessThisChatOption ( MenuSelection , PlayerNum , ChatPartnerCode , ChatDroid );
+	  return ;
+	}
+    }
+  
+
+
+}; // void ProcessThisChatOption ( int MenuSelection , int PlayerNum , int ChatPartnerCode , Enemy ChatDroid )
+
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
 DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , Enemy ChatDroid )
 {
   int i ;
@@ -892,6 +1040,19 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , Enemy ChatDroid 
 	}
     }
   // DialogMenuTexts [ MAX_ANSWERS_PER_PERSON - 1 ] = " END ";
+
+  //--------------------
+  // Now we execute all the options that were marked to be executed
+  // prior to dialog startup
+  //
+  for ( i = 0 ; i < MAX_ANSWERS_PER_PERSON ; i ++ )
+    {
+      if ( ChatRoster [ i ] . always_execute_this_option_prior_to_dialog_start )
+	{
+	  DebugPrintf ( 0 , "\nExecuting option no. %d prior to dialog start.\n" , i );
+	  ProcessThisChatOption ( i , PlayerNum , ChatPartnerCode , ChatDroid );
+	}
+    }
 
   while (1)
     {
@@ -921,107 +1082,10 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , Enemy ChatDroid 
 	  MenuSelection = MAX_REPLIES_PER_OPTION -1 ;
 	}
 
-      //--------------------
-      // Now a menu section has been made.  We do the reaction:
-      // say the samples and the replies, later we'll set the new option values
-      //
-      // But it might be the case that this option is more technical and not accompanied
-      // by any reply.  This case must also be caught.
-      //
-      if ( strcmp ( ChatRoster [ MenuSelection ] . option_sample_file_name , "NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER" ) )
-	{
-	  // PlayOnceNeededSoundSample( ChatRoster [ MenuSelection ] . option_sample_file_name , TRUE );
-	  GiveSubtitleNSample ( ChatRoster [ MenuSelection ] . option_text ,
-			        ChatRoster [ MenuSelection ] . option_sample_file_name ) ;
-	}
-      
-      //--------------------
-      // Maybe there was an ON-GOTO-CONDITION specified for this option.
-      // Then of course we have to jump to the new location!!!
-      //
-      while ( strlen ( ChatRoster [ MenuSelection ] . on_goto_condition ) )
-	{
-	  DebugPrintf( CHAT_DEBUG_LEVEL , "\nON-GOTO-CONDITION ENCOUNTERED... CHECKING... " );
-	  if ( TextConditionIsTrue ( ChatRoster [ MenuSelection ] . on_goto_condition ) )
-	    {
-	      DebugPrintf( CHAT_DEBUG_LEVEL , "...SEEMS TRUE... CONTINUING AT OPTION: %d. " , 
-			   ChatRoster [ MenuSelection ] . on_goto_first_target );
-	      MenuSelection = ChatRoster [ MenuSelection ] . on_goto_first_target ;
-	    }
-	  else
-	    {
-	      DebugPrintf( CHAT_DEBUG_LEVEL , "...SEEMS FALSE... CONTINUING AT OPTION: %d. " , 
-			   ChatRoster [ MenuSelection ] . on_goto_second_target );
-	      MenuSelection = ChatRoster [ MenuSelection ] . on_goto_second_target ;
-	    }
-	}
+      ProcessThisChatOption ( MenuSelection , PlayerNum , ChatPartnerCode , ChatDroid );
 
-      //--------------------
-      // Now that any eventual jump has been done, we can proceed to execute
-      // the rest of the reply that has been set up for this (the now maybe modified)
-      // dialog option.
-      //
-      for ( i = 0 ; i < MAX_REPLIES_PER_OPTION ; i ++ )
-	{
-	  //--------------------
-	  // Once we encounter an empty string here, we're done with the reply...
-	  //
-	  if ( ! strlen ( ChatRoster [ MenuSelection ] . reply_subtitle_list [ i ] ) ) 
-	    break;
 
-	  GiveSubtitleNSample ( ChatRoster [ MenuSelection ] . reply_subtitle_list [ i ] ,
-			        ChatRoster [ MenuSelection ] . reply_sample_list [ i ]    ) ;
-	}
-
-      //--------------------
-      // Now that all the replies have been made, we can start on changing
-      // the option flags to their new values
-      //
-      for ( i = 0 ; i < MAX_ANSWERS_PER_PERSON ; i ++ )
-	{
-	  //--------------------
-	  // Maybe all nescessary changes were made by now.  Then it's time
-	  // to quit...
-	  //
-	  if ( ChatRoster [ MenuSelection ] . change_option_nr [ i ] == (-1) ) 
-	    break;
-
-	  Me [ PlayerNum ] . Chat_Flags [ ChatPartnerCode ] [ ChatRoster [ MenuSelection ] . change_option_nr [ i ] ] =
-	    ChatRoster [ MenuSelection ] . change_option_to_value [ i ]  ;
-	  DebugPrintf ( CHAT_DEBUG_LEVEL , "\nChanged chat flag nr. %d to new value %d." ,
-			ChatRoster [ MenuSelection ] . change_option_nr[i] ,
-			ChatRoster [ MenuSelection ] . change_option_to_value[i] );
-	}
-
-      //--------------------
-      // Maybe this option should also invoke some extra function like opening
-      // a shop interface or something.  So we do this here.
-      //
-      for ( i = 0 ; i < MAX_EXTRAS_PER_OPTION ; i ++ )
-	{
-	  //--------------------
-	  // Maybe all nescessary extras were executed by now.  Then it's time
-	  // to quit...
-	  //
-	  if ( !strlen ( ChatRoster [ MenuSelection ] . extra_list [ i ] ) )
-	    break;
-
-	  DebugPrintf ( CHAT_DEBUG_LEVEL , "\nWARNING!  Starting to invoke extra.  Text is: %s." ,
-			ChatRoster [ MenuSelection ] . extra_list[i] );
-
-	  ExecuteChatExtra ( ChatRoster [ MenuSelection ] . extra_list[i] , ChatDroid );
-
-	  //--------------------
-	  // Maybe the chat extra has annoyed the chat partner and he is now
-	  // suddenly hostile and breaks off the chat.  This is handled here.
-	  //
-	  if ( ! ChatDroid -> is_friendly ) return ;
-
-	  //--------------------
-	  // It can't hurt to have the overall background redrawn after each extra command
-	  // which could have destroyed the background by drawing e.g. a shop interface
-	  PrepareMultipleChoiceDialog ( ChatDroid ) ;
-	}
+      if ( ! ChatDroid -> is_friendly ) return ;
 
       if ( ( MenuSelection >= MAX_ANSWERS_PER_PERSON - 1 ) || ( MenuSelection < 0 ) )
 	{
@@ -1217,102 +1281,6 @@ ChatWithFriendlyDroid( Enemy ChatDroid )
 
   ChatFlagsIndex = ResolveDialogSectionToChatFlagsIndex ( ChatDroid -> dialog_section_name ) ;
 
-  //--------------------
-  // Now we do the dialog with Dixon, the teleporter service man...
-  //
-  if ( Me [ 0 ] . AllMissions [ 1 ] . MissionWasAssigned ) 
-    {
-      Me [ 0 ] . Chat_Flags [ PERSON_DIXON ]  [ 1 ] = FALSE ; // we allow to ask naively...
-      Me [ 0 ] . Chat_Flags [ PERSON_DIXON ]  [ 2 ] = FALSE ; // we allow to ask naively...
-      Me [ 0 ] . Chat_Flags [ PERSON_DIXON ]  [ 3 ] = FALSE ; // we allow to ask naively...
-      Me [ 0 ] . Chat_Flags [ PERSON_DIXON ]  [ 4 ] = FALSE ; // we allow to ask naively...
-      Me [ 0 ] . Chat_Flags [ PERSON_DIXON ]  [ 6 ] = FALSE ; // we allow to ask naively...
-      Me [ 0 ] . Chat_Flags [ PERSON_DIXON ]  [ 7 ] = FALSE ; // we allow to ask naively...
-    }
-  if ( ( Me [ 0 ] . AllMissions [ 1 ] . MissionWasAssigned ) &&
-       ( !Me [ 0 ] . AllMissions [ 1 ] . MissionIsComplete ) )
-    {
-      if ( CountItemtypeInInventory( ITEM_DIXONS_TOOLBOX , 0 ) )
-	{
-	  Me [ 0 ] . Chat_Flags [ PERSON_DIXON ] [ 5 ] = 1 ; // allow to give back the toolset
-	  Me [ 0 ] . Chat_Flags [ PERSON_DIXON ]  [ 7 ] = FALSE ; // we disallow to ask directly for the toolset...
-	}
-      else
-	{
-	  Me [ 0 ] . Chat_Flags [ PERSON_DIXON ] [ 5 ] = 0 ; // disallow to give back the toolset
-	  Me [ 0 ] . Chat_Flags [ PERSON_DIXON ]  [ 7 ] = TRUE ; // we allow to ask directly for the toolset...
-	}
-    }
-  if ( Me [ 0 ] . AllMissions [ 1 ] . MissionIsComplete ) 
-    {
-      Me [ 0 ] . Chat_Flags [ PERSON_DIXON ]  [ 1 ] = TRUE ; // we reallow to ask for the status of teleport...
-    }
-
-  //--------------------
-  // Now we prepare the dialog with Michelangelo, the colony cook...
-  //
-  if ( ( Me [ 0 ] . AllMissions [ 2 ] . MissionWasAssigned ) &&
-       ( !Me [ 0 ] . AllMissions [ 2 ] . MissionIsComplete ) )
-    {
-      if ( CountItemtypeInInventory( ITEM_RED_DILITIUM_CRYSTAL , 0 ) )
-	{
-	  Me [ 0 ] . Chat_Flags [ PERSON_MICHELANGELO ]  [ 7 ] = TRUE ; // we allow to give the crystals...
-	}
-      else
-	{
-	  Me [ 0 ] . Chat_Flags [ PERSON_MICHELANGELO ]  [ 6 ] = TRUE ; // we allow to report no success yet...
-	}
-    }
-  if ( Me [ 0 ] . AllMissions [ 2 ] . MissionIsComplete )
-    {
-      Me [ 0 ] . Chat_Flags [ PERSON_MICHELANGELO ]  [ 8 ] = TRUE ; // we allow to ask for reward again...
-    }
-
-  //--------------------
-  // Now we prepare the dialog with Doc Moore, the old town medic...
-  //
-  if ( ( Me [ 0 ] . AllMissions [ 0 ] . MissionWasAssigned ) &&
-       ( !Me [ 0 ] . AllMissions [ 0 ] . MissionIsComplete ) )
-    {
-      Me [ 0 ] . Chat_Flags [ PERSON_DOC_MOORE ]  [ 2 ] = TRUE ; // we allow to give the crystals...
-      Me [ 0 ] . Chat_Flags [ PERSON_DOC_MOORE ]  [ 3 ] = TRUE ; // we allow to report no success yet...
-    }
-
-  //--------------------
-  // Now we prepare the dialog with Bender, the strong man who ate brain enlargement pills...
-  //
-  if ( ( Me [ 0 ] . AllMissions [ 0 ] . MissionWasAssigned ) &&
-       ( !Me [ 0 ] . AllMissions [ 0 ] . MissionIsComplete ) )
-    {
-      if ( CountItemtypeInInventory( 79 , 0 ) )
-	{
-	  Me [ 0 ] . Chat_Flags [ PERSON_BENDER ]  [ 9  ] = TRUE ; // we allow to give the crystals...
-	  Me [ 0 ] . Chat_Flags [ PERSON_BENDER ]  [ 12 ] = FALSE ; // we allow to give the crystals...
-	}
-      else
-	{
-	  Me [ 0 ] . Chat_Flags [ PERSON_BENDER ]  [ 12 ] = TRUE ; // we allow to report no success yet...
-	  Me [ 0 ] . Chat_Flags [ PERSON_BENDER ]  [ 9  ] = FALSE ; // we allow to report no success yet...
-	}
-    }
-  if ( Me [ 0 ] . AllMissions [ 0 ] . MissionIsComplete ) 
-    {
-      Me [ 0 ] . Chat_Flags [ PERSON_BENDER ]  [ 12 ] = FALSE ; // we disallow to talk more about the mission...
-      Me [ 0 ] . Chat_Flags [ PERSON_BENDER ]  [ 9  ] = FALSE ; // we disallow to talk more about the mission...
-      Me [ 0 ] . Chat_Flags [ PERSON_BENDER ]  [ 13 ] = TRUE ; // we disallow to talk more about the mission...
-    }
-
-  //--------------------
-  // Now we prepare dialog with RMS, the programmer...
-  //
-  if ( ( Me [ 0 ] . AllMissions [ 1 ] . MissionWasAssigned == TRUE ) &&
-       ( Me [ 0 ] . AllMissions [ 1 ] . MissionIsComplete == FALSE ) )
-    {
-      Me [ 0 ] . Chat_Flags [ PERSON_RMS ]  [ 3 ] = TRUE ; // we allow to ask directly for the coffee machine...
-      Me [ 0 ] . Chat_Flags [ PERSON_RMS ]  [ 0 ] = FALSE ; // we disallow to ask about the job naively...
-    }
-  
-  
   //--------------------
   // Now that the 'LoadChatRosterWithChatSequence' function will also be
   // used from within the dialog editor, but with explicit path and file

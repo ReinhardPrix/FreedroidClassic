@@ -56,7 +56,7 @@ SpecialForce: Type=PRO X=10 Y=3 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 
 //--------------------
 // This is Doc Moore, the only medic in the old town
 //
-SpecialForce: Type=PRO X=10 Y=3 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="DocMooreStartGameSquare" RushTux="no" DialogSectionToUse="Doc Moore" ShortLabel="Doc Moore -- Old Town Medic"
+SpecialForce: Type=PRO X=10 Y=3 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="DocMooreStartGameSquare" RushTux="no" DialogSectionToUse="DocMoore" ShortLabel="Doc Moore -- Old Town Medic"
 
 //--------------------
 // This is Mr. Stone, running the main shop of the old town

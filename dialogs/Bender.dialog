@@ -38,6 +38,7 @@ Subtitle=" Hello.  I'm Bender, the dead man of this camp. "
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=1
 ChangeOption=0 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
@@ -51,6 +52,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=1
 ChangeOption=3 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
@@ -65,6 +67,7 @@ ChangeOption=2 ChangeToValue=0
 ChangeOption=3 ChangeToValue=0
 ChangeOption=4 ChangeToValue=1
 ChangeOption=10 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
@@ -77,6 +80,7 @@ ChangeOption=2 ChangeToValue=0
 ChangeOption=3 ChangeToValue=0
 ChangeOption=4 ChangeToValue=1
 ChangeOption=10 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
@@ -94,6 +98,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=4 ChangeToValue=0
 ChangeOption=5 ChangeToValue=1
 ChangeOption=6 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
@@ -103,6 +108,7 @@ PositionX=345  PositionY=250
 Subtitle="Because they said I was dumb.  So I had to do something about it, right?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
@@ -118,6 +124,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=6 ChangeToValue=0
 ChangeOption=7 ChangeToValue=1
 ChangeOption=8 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
@@ -134,6 +141,7 @@ ChangeOption=7 ChangeToValue=0
 ChangeOption=8 ChangeToValue=0
 ChangeOption=11 ChangeToValue=1
 DoSomethingExtra="AssignMission:0"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
@@ -146,12 +154,13 @@ Subtitle="But this rat will rather let me die!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=7 ChangeToValue=0
 ChangeOption=8 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 New Option Nr=9  OptionText="I've got your medicine.  With best wishes from the doctor."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=619  PositionY=219  
+PositionX=397  PositionY=442  
 Subtitle="Wow, you really did it!  I guess to beat the hell out of him."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="He wouldn't help me even after I pounded him a lot."
@@ -168,6 +177,7 @@ DoSomethingExtra="GiveItem:76"
 DoSomethingExtra="DeleteAllInventoryItemsWithCode:79"
 DoSomethingExtra="AddExperienceBonus:150"
 DoSomethingExtra="MarkMissionComplete:0"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
@@ -179,6 +189,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Noone says I'm stupid!  I'm not stupid!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 DoSomethingExtra="BreakOffAndBecomeHostile"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
@@ -192,12 +203,13 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Yes, he'll get a good beating.  That will make him reconsider!  This rat!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=11 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 New Option Nr=12  OptionText="About that medicine that you need..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=615  PositionY=153  
+PositionX=394  PositionY=497  
 Subtitle="What have you got?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="What, you have nothing?"
@@ -205,25 +217,92 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Man, what are you doing here?  Get the medicine!  I need it now!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=12 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 New Option Nr=13  OptionText="How are you feeling now..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=619  PositionY=86  
+PositionX=386  PositionY=389  
 Subtitle="Much better.  I'm cured.  Thanks again man!  I'll vote for you if you want into the city gard!  You're my best friend, man!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=13 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=14  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=59  PositionY=421  
+OnCondition="MissionAssigned:0" JumpToOption=15 ElseGoto=16
+AlwaysExecuteThisOptionPriorToDialogStart="yes"
+
+----------------------------------------------------------------------
+
+New Option Nr=15  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=140  PositionY=407  
+OnCondition="MissionComplete:0" JumpToOption=17 ElseGoto=18
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=16  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=133  PositionY=478  
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=17  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=283  PositionY=386  
+ChangeOption=13 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=18  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=193  PositionY=453  
+ChangeOption=8 ChangeToValue=0
+ChangeOption=7 ChangeToValue=0
+ChangeOption=6 ChangeToValue=0
+ChangeOption=1 ChangeToValue=0
+ChangeOption=3 ChangeToValue=0
+ChangeOption=2 ChangeToValue=0
+ChangeOption=4 ChangeToValue=0
+OnCondition="HaveItemWithCode:79" JumpToOption=20 ElseGoto=19
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=19  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=253  PositionY=495  
+ChangeOption=12 ChangeToValue=1
+ChangeOption=9 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=20  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=252  PositionY=450  
+ChangeOption=9 ChangeToValue=1
+ChangeOption=12 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 New Option Nr=99  OptionText=" END "
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
-PositionX=621  PositionY=287  
+PositionX=559  PositionY=295  
 Subtitle="See you later!"
 ReplySample="Tux_See_You_Later_0.wav"
 Subtitle="NO_SUBTITLE_AND_NO_WAITING_EITHER"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 

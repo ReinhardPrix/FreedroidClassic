@@ -123,7 +123,7 @@ freedroid-discussion@lists.sourceforge.net\n\
 	  // The end of the option-change-value combinations is indicated by
 	  // a (-1) value...
 	  //
-	  if ( ChatRoster [ i ] . change_option_nr [ j ] == (-1) ) break;
+	  if ( ChatRoster [ i ] . change_option_nr [ j ] == (-1) ) continue;
 
 	  sprintf ( linebuf , "ChangeOption=%d ChangeToValue=%d\n" ,
 		    ChatRoster [ i ] . change_option_nr [ j ] ,
@@ -160,6 +160,13 @@ freedroid-discussion@lists.sourceforge.net\n\
 		    ChatRoster [ i ] . on_goto_second_target ) ;
 	  fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
 	}
+
+      sprintf ( linebuf , "AlwaysExecuteThisOptionPriorToDialogStart=\"" ) ;
+      if ( ChatRoster [ i ] . always_execute_this_option_prior_to_dialog_start )
+	strcat ( linebuf , "yes\"\n" );
+      else
+	strcat ( linebuf , "no\"\n" );
+      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
 
       //--------------------
       // Basically this should be it.  So maybe now we can just write out some
@@ -282,6 +289,7 @@ delete_one_dialog_option ( int i , int FirstInitialisation )
   ChatRoster [ i ] . on_goto_condition = "";
   ChatRoster [ i ] . on_goto_first_target = (-1);
   ChatRoster [ i ] . on_goto_second_target = (-1);
+  ChatRoster [ i ] . always_execute_this_option_prior_to_dialog_start = FALSE ;
   
   for ( j = 0 ; j < MAX_DIALOGUE_OPTIONS_IN_ROSTER ; j++ )
     {
@@ -345,6 +353,7 @@ LoadChatRosterWithChatSequence ( char* FullPathAndFullFilename )
   char* ReplyPointer;
   char* OptionChangePointer;
   char* ExtraPointer;
+  char* YesNoString;
 
   fpath = FullPathAndFullFilename;
 
@@ -573,7 +582,6 @@ found in this option of the dialogue, which is fine.", NumberOfOptionChanges );
 	  ExtraPointer ++;
 	}
 
-
       //--------------------
       // Next thing we do will be to look whether there is maybe a on-goto-command
       // included in this option section.  If so, we'll read it out.
@@ -595,6 +603,37 @@ found in this option of the dialogue, which is fine.", NumberOfOptionChanges );
       else
 	{
 	  DebugPrintf( CHAT_DEBUG_LEVEL , "\nThere seems to be NO ON-GOTO-CONDITION AT ALL IN THIS OPTION." );
+	}
+
+      //--------------------
+      // Next thing we do will be to get the always-on-startup flag status.
+      //
+      if ( CountStringOccurences ( SectionPointer , "AlwaysExecuteThisOptionPriorToDialogStart" ) ) 
+	{
+	  DebugPrintf( CHAT_DEBUG_LEVEL , "\nWe've found an ALWAYS-ON-START FLAG IN THIS OPTION!" );
+
+	  // Now we read in if this item can be used by the influ without help
+	  YesNoString = ReadAndMallocStringFromData ( SectionPointer , "AlwaysExecuteThisOptionPriorToDialogStart=\"" , "\"" ) ;
+	  if ( strcmp( YesNoString , "yes" ) == 0 )
+	    {
+	      ChatRoster[ OptionIndex ] . always_execute_this_option_prior_to_dialog_start = TRUE;
+	    }
+	  else if ( strcmp( YesNoString , "no" ) == 0 )
+	    {
+	      ChatRoster[ OptionIndex ] . always_execute_this_option_prior_to_dialog_start = FALSE;
+	    }
+	  else
+	    {
+	      GiveStandardErrorMessage ( "LoadChatRosterWithChatSequence ( ... )" , "\
+The text should contain an \n\
+answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.\n\
+This indicated a corrupted FreedroidRPG dialog.",
+					 PLEASE_INFORM, IS_FATAL );
+	    }
+	}
+      else
+	{
+	  DebugPrintf( CHAT_DEBUG_LEVEL , "\nThere seems to be NO ALWAYS-ON-START FLAG AT ALL IN THIS OPTION." );
 	}
 
       //--------------------
