@@ -1,3 +1,240 @@
+2002-06-08  jprix  <jprix@microwave>
+	* /local/cvsRep/FD/FreeDroid/TODO, /local/cvsRep/FD/FreeDroid/src/graphics.c:
+	Removed some of the bugs mentionen in TODO and gave some comments.
+
+	* /local/cvsRep/FD/FreeDroid/map/new_ship_2.maps, /local/cvsRep/FD/FreeDroid/src/enemy.c:
+	Removed some bugs from the second ships maps file.
+	Improved enemy behaviour: Once they see the influencer, have a weapong and
+	are not friendly, they will not move away but stand and fire at the influ.
+
+2002-06-08  rprix  <rprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/TODO, /local/cvsRep/FD/FreeDroid/src/global.h, /local/cvsRep/FD/FreeDroid/src/menu.c, /local/cvsRep/FD/FreeDroid/src/struct.h, /local/cvsRep/FD/FreeDroid/src/takeover.c, /local/cvsRep/FD/FreeDroid/src/view.c:
+	*) entered "fresh" bugs into TODO
+	*) extended cheat-menu: make all droids visible, allow zooming
+
+2002-06-08  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/map/new_ship_1.maps:
+	Corrected some bugs in the second map.
+	I hope they are historical and not caused by a bug in the Level editor.
+
+	* /local/cvsRep/FD/FreeDroid/src/enemy.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/map.c, /local/cvsRep/FD/FreeDroid/src/struct.h, /local/cvsRep/FD/FreeDroid/map/game.dat, /local/cvsRep/FD/FreeDroid/map/ship_1.maps:
+	Taught the droids some behaviour:  Before moving on to the next waypoint, they
+	first look if the way is really free of other droids.  (Currently, that includes
+	even the influencer!  Real polite.)
+	Corrected some minor bugs in the first map.
+
+	* /local/cvsRep/FD/FreeDroid/src/enemy.c:
+	Reworking enemy movement.  Starting to add new behaviour.
+
+	* /local/cvsRep/FD/FreeDroid/TASK_CHART, /local/cvsRep/FD/FreeDroid/src/enemy.c, /local/cvsRep/FD/FreeDroid/src/map.c, /local/cvsRep/FD/FreeDroid/src/proto.h:
+	Removed some obsolete code.
+	Corrected the bug, that enemys were always moving the speed the influencer could go.  Looks much better now.
+
+	* /local/cvsRep/FD/FreeDroid/src/influ.c, /local/cvsRep/FD/FreeDroid/map/new_ship_1.maps, /local/cvsRep/FD/FreeDroid/map/new_ship_2.maps:
+	Corrected some minor bugs in the new maps.
+	Removed some warnings.
+
+	* /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/sound.c, /local/cvsRep/FD/FreeDroid/src/struct.h, /local/cvsRep/FD/FreeDroid/src/view.c, /local/cvsRep/FD/FreeDroid/Homepage/Freedroid_Manual.tex, /local/cvsRep/FD/FreeDroid/TASK_CHART, /local/cvsRep/FD/FreeDroid/src/bullet.c, /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/global.h, /local/cvsRep/FD/FreeDroid/src/init.c:
+	Updated my TASK_CHART.
+	Implemented the takeover sound.
+	Added documentation about the new keys in the Level Editor to the manual.
+
+2002-06-08  rprix  <rprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/sound.c:
+	replaced some forgotten printf's to DebugPrintfs in sound.c
+
+2002-06-08  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/map/new_ship_1.droids, /local/cvsRep/FD/FreeDroid/map/new_ship_1.maps, /local/cvsRep/FD/FreeDroid/map/new_ship_2.maps, /local/cvsRep/FD/FreeDroid/src/enemy.c, /local/cvsRep/FD/FreeDroid/src/menu.c:
+	Added friendly droids.
+	Improved mission instructions dispaly.
+	Improved the handling of nonfixed special forces.
+
+	* /local/cvsRep/FD/FreeDroid/src/enemy.c, /local/cvsRep/FD/FreeDroid/src/map.c, /local/cvsRep/FD/FreeDroid/src/struct.h, /local/cvsRep/FD/FreeDroid/src/view.c, /local/cvsRep/FD/FreeDroid/TASK_CHART, /local/cvsRep/FD/FreeDroid/configure.ac, /local/cvsRep/FD/FreeDroid/map/new_ship_1.droids, /local/cvsRep/FD/FreeDroid/map/new_ship_1.maps:
+	Added friendly droids.  Modified maps and drois file of the first new mission
+	to contain one, but contact is not possible.
+
+	* /local/cvsRep/FD/FreeDroid/TASK_CHART, /local/cvsRep/FD/FreeDroid/map/game.dat, /local/cvsRep/FD/FreeDroid/src/vars.h:
+	Added a few new tasks.
+
+	* /local/cvsRep/FD/FreeDroid/sound/Cry_Sound_0.wav, /local/cvsRep/FD/FreeDroid/sound/Takeover_Sound_0.wav, /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/sound.c, /local/cvsRep/FD/FreeDroid/src/struct.h, /local/cvsRep/FD/FreeDroid/src/view.c:
+	Implemented the "cry sound", when influs energy is low.
+	Added sounds for the cry sound and the transfer mode sound.
+
+	* /local/cvsRep/FD/FreeDroid/map/new_ship_1.maps:
+	Reshaped the new maps a little bit more for the new mission.
+
+	* /local/cvsRep/FD/FreeDroid/src/keyboard.c, /local/cvsRep/FD/FreeDroid/src/menu.c, /local/cvsRep/FD/FreeDroid/src/proto.h:
+	Extended the level editor to allow for different boxes and pillars the be planted.
+	Extended the keyboard module to recognize keys 0-9.
+
+	* /local/cvsRep/FD/FreeDroid/src/enemy.c, /local/cvsRep/FD/FreeDroid/src/influ.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/view.c, /local/cvsRep/FD/FreeDroid/map/new_mission_2.mission, /local/cvsRep/FD/FreeDroid/map/new_mission_1.mission:
+	Added fading effect when influencer energy is low, using alpha technique.
+
+2002-06-07  rprix  <rprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/text.c, /local/cvsRep/FD/FreeDroid/src/view.c, /local/cvsRep/FD/FreeDroid/src/BFont.c, /local/cvsRep/FD/FreeDroid/src/bullet.c, /local/cvsRep/FD/FreeDroid/src/enemy.c, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/influ.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/joy.c, /local/cvsRep/FD/FreeDroid/src/map.c, /local/cvsRep/FD/FreeDroid/src/menu.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/rahmen.c, /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/src/takeover.c:
+	DebugPrintf () now takes a debug-level and standard printf()-arguments.
+	Put all existing DebugPrintf() to debug-level2, and all current
+	printf() statements are now DebugPrintf (1, ..).
+	To activate these debug-statements, run freedroid with the command-line
+	argument -d<level>, which prints all statements <= level.
+
+2002-06-07  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/map/new_mission_2.mission, /local/cvsRep/FD/FreeDroid/map/new_ship_2.droids:
+	Improved the second mission a bit.  This should do for now.
+
+	* /local/cvsRep/FD/FreeDroid/map/Makefile.am, /local/cvsRep/FD/FreeDroid/map/new_ship_2.droids, /local/cvsRep/FD/FreeDroid/map/new_ship_2.elevators, /local/cvsRep/FD/FreeDroid/map/new_ship_2.maps:
+	Added files for second new mission.  Are the same as for first new misson.
+
+	* /local/cvsRep/FD/FreeDroid/src/struct.h, /local/cvsRep/FD/FreeDroid/src/view.c, /local/cvsRep/FD/FreeDroid/map/new_mission_1.mission, /local/cvsRep/FD/FreeDroid/map/new_mission_2.mission, /local/cvsRep/FD/FreeDroid/map/new_ship_1.droids, /local/cvsRep/FD/FreeDroid/src/enemy.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/map.c, /local/cvsRep/FD/FreeDroid/src/menu.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/sound.c:
+	Removed most of the obsolete messages flushing the text screen.
+	Worked a bit to improve the mission files.
+
+	* /local/cvsRep/FD/FreeDroid/map/new_mission_1.mission, /local/cvsRep/FD/FreeDroid/map/new_ship_1.droids, /local/cvsRep/FD/FreeDroid/map/new_ship_1.maps, /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/enemy.c, /local/cvsRep/FD/FreeDroid/src/influ.c, /local/cvsRep/FD/FreeDroid/src/ship.c:
+	Improved the alternative mission, maps and droids files.
+
+	* /local/cvsRep/FD/FreeDroid/graphics/990.jpg:
+	Arg, that one I forgot...
+
+	* /local/cvsRep/FD/FreeDroid/src/global.h, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/influ.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/ship.c, /local/cvsRep/FD/FreeDroid/graphics/991.jpg, /local/cvsRep/FD/FreeDroid/graphics/992.jpg, /local/cvsRep/FD/FreeDroid/graphics/993.jpg, /local/cvsRep/FD/FreeDroid/graphics/994.jpg, /local/cvsRep/FD/FreeDroid/graphics/995.jpg, /local/cvsRep/FD/FreeDroid/graphics/996.jpg, /local/cvsRep/FD/FreeDroid/graphics/997.jpg, /local/cvsRep/FD/FreeDroid/graphics/998.jpg, /local/cvsRep/FD/FreeDroid/map/classical_paradroid_mission.mission, /local/cvsRep/FD/FreeDroid/map/new_mission_1.mission, /local/cvsRep/FD/FreeDroid/map/new_ship_1.droids, /local/cvsRep/FD/FreeDroid/map/new_ship_1.maps, /local/cvsRep/FD/FreeDroid/src/enemy.c:
+	Added pictures for new droids.
+	Corrected bug in waypoint count in GetLiftConnections.
+	Reshaped another level of the new ship.
+
+	* /local/cvsRep/FD/FreeDroid/graphics/ne_level_0.gif, /local/cvsRep/FD/FreeDroid/graphics/ne_level_1.gif, /local/cvsRep/FD/FreeDroid/graphics/ne_level_10.gif, /local/cvsRep/FD/FreeDroid/graphics/ne_level_11.gif, /local/cvsRep/FD/FreeDroid/graphics/ne_level_12.gif, /local/cvsRep/FD/FreeDroid/graphics/ne_level_13.gif, /local/cvsRep/FD/FreeDroid/graphics/ne_level_14.gif, /local/cvsRep/FD/FreeDroid/graphics/ne_level_15.gif, /local/cvsRep/FD/FreeDroid/graphics/ne_level_2.gif, /local/cvsRep/FD/FreeDroid/graphics/ne_level_3.gif, /local/cvsRep/FD/FreeDroid/graphics/ne_level_4.gif, /local/cvsRep/FD/FreeDroid/graphics/ne_level_5.gif, /local/cvsRep/FD/FreeDroid/graphics/ne_level_6.gif, /local/cvsRep/FD/FreeDroid/graphics/ne_level_7.gif, /local/cvsRep/FD/FreeDroid/graphics/ne_level_8.gif, /local/cvsRep/FD/FreeDroid/graphics/ne_level_9.gif, /local/cvsRep/FD/FreeDroid/graphics/ne_lift_0.gif, /local/cvsRep/FD/FreeDroid/graphics/ne_lift_1.gif, /local/cvsRep/FD/FreeDroid/graphics/ne_lift_2.gif, /local/cvsRep/FD/FreeDroid/graphics/ne_lift_3.gif, /local/cvsRep/FD/FreeDroid/graphics/ne_lift_4.gif, /local/cvsRep/FD/FreeDroid/graphics/ne_lift_5.gif, /local/cvsRep/FD/FreeDroid/graphics/ne_lift_6.gif, /local/cvsRep/FD/FreeDroid/graphics/ne_lift_7.gif:
+	Removed old and unused ship pictures.
+
+	* /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/map/classical_paradroid_mission.mission, /local/cvsRep/FD/FreeDroid/map/game.dat, /local/cvsRep/FD/FreeDroid/map/ship_1.droids, /local/cvsRep/FD/FreeDroid/map/ship_1.maps:
+	Implemented calibrating constants withing game dat for bullet speed and damage.
+	Used these constants to get bullet speed back to paradroid normal.
+	Corrected the minor mistakes that were introduced into the paradroid map in the
+	mapfile format conversion process.  Also corrected some mistakes that existed due
+	to the old format not being able to store apropriate information.
+	Restored the classical paradroid mission back to original mission goal.
+
+	* /local/cvsRep/FD/FreeDroid/map/ship_1.droids, /local/cvsRep/FD/FreeDroid/src/enemy.c, /local/cvsRep/FD/FreeDroid/src/graphics.c, /local/cvsRep/FD/FreeDroid/src/map.c, /local/cvsRep/FD/FreeDroid/src/menu.c, /local/cvsRep/FD/FreeDroid/src/struct.h:
+	Corrected the bug, that junked the screen when changing tileset in the
+	Level Editor while combat windows is rescaled to something != 1.
+
+	* /local/cvsRep/FD/FreeDroid/src/map.c, /local/cvsRep/FD/FreeDroid/src/proto.h, /local/cvsRep/FD/FreeDroid/src/struct.h, /local/cvsRep/FD/FreeDroid/src/takeover.c, /local/cvsRep/FD/FreeDroid/TASK_CHART, /local/cvsRep/FD/FreeDroid/map/classical_paradroid_mission.mission, /local/cvsRep/FD/FreeDroid/map/new_mission_1.mission, /local/cvsRep/FD/FreeDroid/map/ship_1.droids, /local/cvsRep/FD/FreeDroid/src/init.c:
+	Implemented markers for special forces in the droids file.
+	Implemented mission target kill all marked droids.
+	Implemented mission target become one of the marked droids.
+	Added mission target strings in first 2 mission files accordingly.
+
+2002-06-06  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/map.c:
+	Made some improvements to Special forces read-in procedure.
+
+	* /local/cvsRep/FD/FreeDroid/map/ship_1.droids, /local/cvsRep/FD/FreeDroid/src/enemy.c, /local/cvsRep/FD/FreeDroid/src/map.c, /local/cvsRep/FD/FreeDroid/src/menu.c, /local/cvsRep/FD/FreeDroid/src/struct.h:
+	Implemented Special Force droids file entrys.  Needs some extensions though.
+	Implemented CompletelyFixed flag (especially for special forces.)
+
+	* /local/cvsRep/FD/FreeDroid/map/new_ship_1.maps:
+	Worked a bit to improve the new map.
+
+	* /local/cvsRep/FD/FreeDroid/src/influ.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/struct.h, /local/cvsRep/FD/FreeDroid/src/takeover.c:
+	Modified energy handling so that after takeover, the influe has old energy
+	PLUS the hosts energy.  Otherwise the influ can be shot down with one shot
+	if he controls a 249 or below robot, which wasn't the case in the C64 version
+	and which makes the game MUCH more playable and also more fun I think. jp.
+
+	* /local/cvsRep/FD/FreeDroid/map/classical_paradroid_mission.mission, /local/cvsRep/FD/FreeDroid/map/new_mission_1.mission, /local/cvsRep/FD/FreeDroid/map/new_mission_2.mission, /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/enemy.c, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/misc.c, /local/cvsRep/FD/FreeDroid/src/struct.h, /local/cvsRep/FD/FreeDroid/src/view.c:
+	Implemented mission target MustReachLevel.
+	Implemented mission target MustReachPoint.x/y.
+	Implemented mission target MustLiveTime.
+	In the latter case, remaining time to hold out will be printed to the combat window.
+	Added mission target strings to the mission files as required.
+
+	* /local/cvsRep/FD/FreeDroid/Homepage/Freedroid_Manual.tex, /local/cvsRep/FD/FreeDroid/TASK_CHART, /local/cvsRep/FD/FreeDroid/src/menu.c:
+	Allowed for finer steps when rescaling tiles in Level Editor.
+
+	* /local/cvsRep/FD/FreeDroid/Homepage/Freedroid_Home_Page.tex, /local/cvsRep/FD/FreeDroid/Homepage/Freedroid_Manual.tex, /local/cvsRep/FD/FreeDroid/map/classical_paradroid_mission.mission, /local/cvsRep/FD/FreeDroid/map/new_mission_1.mission, /local/cvsRep/FD/FreeDroid/map/new_mission_2.mission, /local/cvsRep/FD/FreeDroid/map/ship_1.droids:
+	Added new mission new_mission_2.mission, though its identical to mission 1 still.
+	Added copyright/licence remark in mission files and droid file.
+	Added a section concerning the Freedroid game rules in the manual.  Needs more though.
+
+	* /local/cvsRep/FD/FreeDroid/map/ship_1.crew, /local/cvsRep/FD/FreeDroid/map/ship_1.droids, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/map.c, /local/cvsRep/FD/FreeDroid/src/struct.h, /local/cvsRep/FD/FreeDroid/map/Makefile.am, /local/cvsRep/FD/FreeDroid/map/classical_paradroid_mission.mission, /local/cvsRep/FD/FreeDroid/map/new_mission_1.mission, /local/cvsRep/FD/FreeDroid/map/new_ship_1.crew, /local/cvsRep/FD/FreeDroid/map/new_ship_1.droids:
+	Completely reworked the shape of crew files.
+	They are now well readable.
+	Droid types can be entered by typing their name instead of their number.
+
+	* /local/cvsRep/FD/FreeDroid/map/classical_paradroid_mission.mission, /local/cvsRep/FD/FreeDroid/map/new_mission_1.mission, /local/cvsRep/FD/FreeDroid/src/init.c:
+	Added next mission pointer:  After completition of one mission, the mission
+	indicated by the next mission pointer in the mission file will be loaded and
+	started.  Classical Paradroid now points to the new mission 1.  The new mission
+	one points to the new mission 2, which does not yet exist.  Otherwise it
+	seems to work quite well.
+
+2002-06-05  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/map/classical_paradroid_mission.mission, /local/cvsRep/FD/FreeDroid/map/new_mission_1.mission, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/struct.h:
+	Added mission target MustBeClass, fully functional.
+	Added mission target MustBeType, fully functional.
+	All mission targets are always AND connceted to see if mission is complete.
+
+	* /local/cvsRep/FD/FreeDroid/map/classical_paradroid_mission.mission, /local/cvsRep/FD/FreeDroid/map/new_mission_1.mission, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/menu.c, /local/cvsRep/FD/FreeDroid/src/struct.h, /local/cvsRep/FD/FreeDroid/src/vars.h:
+	End Title text is now specified in the mission file.
+	Mission target is now specified in the mission file and checked in a separate function.
+	Added simple mission targets for Classical Paradroid and New Mission.
+	Added a structure for mission targets (to be understood as AND connected subtargets).
+
+2002-06-05  rprix  <rprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/menu.c:
+	Changed Cheat-menu font to FPS-font... much better now! ;)
+
+2002-06-05  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/TASK_CHART, /local/cvsRep/FD/FreeDroid/src/defs.h, /local/cvsRep/FD/FreeDroid/src/init.c, /local/cvsRep/FD/FreeDroid/src/main.c, /local/cvsRep/FD/FreeDroid/src/proto.h:
+	Reactivated "font05" for the FPS_Display, i.e. FPS_Display_BFont, might
+	be good for Cheatmenu too?
+
+2002-06-05  rprix  <rprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/ChangeLog:
+	updated with latest changes, some cleanup, put our sourceforge mail addresses.
+
+	* /local/cvsRep/FD/FreeDroid/src/menu.c:
+	started porting Cheatmenu to use SDL-screen (more convenient), using
+	printf_SDL() and GetString(). Should be working 90% ok now.
+
+	* /local/cvsRep/FD/FreeDroid/src/proto.h:
+	new functions: printf_SDL() and putchar_SDL().
+
+	* /local/cvsRep/FD/FreeDroid/src/text.c: added 2 new text-functions:
+	int putchar_SDL (SDL_Surface *Surface, int x, int y, int c)
+	void printf_SDL (SDL_Surface *screen, int x, int y, char *fmt, ...)
+	which extend the BFont-functions PrintString() and PutChar() by using
+	the global cursor position MyCursorX/Y.
+	Passing -1 as coordinate will use the current cursor-position to
+	write. Cursor position is updated.
+	The screen is updated after writing.
+
+	Ported GetString() to SDL using the above text-functions.
+	echo=1 (stdout) is currently not working, only echo=2 (SDL-echo).
+	Backspace should be treated correctly now, but this function still
+	needs some testing.
+
+2002-06-05  jprix  <jprix@microwave>
+
+	* /local/cvsRep/FD/FreeDroid/src/menu.c, /local/cvsRep/FD/FreeDroid/TASK_CHART, /local/cvsRep/FD/FreeDroid/map/new_ship_1.maps:
+	Added "color change" (="change tileset") option for the level editor.
+	Gave the first new level in the new map a new color.
+
+	* /local/cvsRep/FD/FreeDroid/Homepage/Freedroid_Manual.tex, /local/cvsRep/FD/FreeDroid/map/new_mission_1.mission, /local/cvsRep/FD/FreeDroid/map/new_ship_1.maps, /local/cvsRep/FD/FreeDroid/src/enemy.c, /local/cvsRep/FD/FreeDroid/src/menu.c, /local/cvsRep/FD/FreeDroid/TASK_CHART:
+	Added more doku on the level editor for the manual.
+	Added protection against moving out of the map in the level editor.
+	Added level changing option for the level editor.
+	Modified the maps for the alternate story line.
+	Modified starting points for the alternate story line.
+
 2002-06-05  rprix  <rprix@users.sourceforge.net>
 
 	* menu.c:
