@@ -24,12 +24,9 @@
  */
 
 /* ----------------------------------------------------------------------
- * This file contains all the functions managing the things one gets to see.
- * That includes assembling of enemys, assembling the currently
- * relevant porting of the map (the bricks I mean), drawing all visible
- * elements like bullets, blasts, enemys or influencer in a nonvisible
- * place in memory at first, and finally drawing them to the visible
- * screen for the user.
+ * This file contains all the functions managing the lighting inside
+ * the freedroidRPG game window, i.e. the 'light radius' of the Tux and
+ * of other light emanating objects.
  * ---------------------------------------------------------------------- */
 
 #define _light_c
@@ -198,8 +195,6 @@ calculate_light_strength ( moderately_finepoint target_pos )
     int i;
     float xdist;
     float ydist;
-    float tol_x = 0 ;
-    float tol_y = 0 ;
     float light_vec_len;
 
     //--------------------
@@ -250,24 +245,17 @@ calculate_light_strength ( moderately_finepoint target_pos )
 	    // checking as well!  Cool!  But only for the very first light source
 	    //
 	    light_vec_len = sqrt ( xdist * xdist + ydist * ydist );
-	    // if ( i == 0 ) 
-	    // {
-		if ( light_vec_len > 0.5 )
+
+	    if ( light_vec_len > 0.5 )
+	    {
+		if ( curShip . AllLevels [ Me [ 0 ] . pos . z ] -> use_underground_lighting )
 		{
-
-		    // tol_x =  ( xdist / light_vec_len ) * 0.3 ;
-		    // tol_y =  ( ydist / light_vec_len ) * 0.3 ;
-		    
-
-		    if ( curShip . AllLevels [ Me [ 0 ] . pos . z ] -> use_underground_lighting )
-		    {
-			if ( ! DirectLineWalkable( light_sources [ i ] . x , light_sources [ i ] . y , 
-						   target_pos . x + tol_x , target_pos . y + tol_y , 
-						   Me [ 0 ] . pos . z ) )
-			    continue;
-		    }
+		    if ( ! DirectLineWalkable( light_sources [ i ] . x , light_sources [ i ] . y , 
+					       target_pos . x , target_pos . y , 
+					       Me [ 0 ] . pos . z ) )
+			continue;
 		}
-		// }
+	    }
 	    final_darkness = (int) ( light_vec_len * 4.0 ) 
 		- light_source_strengthes [ i ] ;
 	}
@@ -320,7 +308,7 @@ soften_light_distribution ( void )
 		light_strength_buffer [ x - 1 ] [ y - 1 ] = light_strength_buffer [ x ] [ y ] + MAX_LIGHT_STEP ;
 	}
     }
-}; // void     
+}; // void soften_light_distribution ( void )
 
 /* ----------------------------------------------------------------------
  * This function is used to find the light intensity at any given point
@@ -380,6 +368,21 @@ get_light_strength ( moderately_finepoint target_pos )
 Problem with light strength buffering encountered.",
 				   PLEASE_INFORM, IS_WARNING_ONLY );
 	*/
+	if ( ( x >= 0 ) && ( x < 64 ) )
+	{
+	    if ( y >= 48 )
+		return ( light_strength_buffer [ x ] [ 47 ] );
+	    if ( y < 0 )
+		return ( light_strength_buffer [ x ] [ 0 ] );
+	}
+	if ( ( y >= 0 ) && ( y < 48 ) )
+	{
+	    if ( x >= 64 )
+		return ( light_strength_buffer [ 63 ] [ y ] );
+	    if ( x < 0 )
+		return ( light_strength_buffer [ 0 ] [ y ] );
+	}
+
 	return ( NUMBER_OF_SHADOW_IMAGES );
     }
     return ( light_strength_buffer [ x ] [ y ] );
