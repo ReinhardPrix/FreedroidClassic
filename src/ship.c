@@ -75,7 +75,7 @@ EnterElevator (void)
    * by turning off transfer mode as soon as the influ enters the elevator */
   Me.status= ELEVATOR;
 
-  UpdateInfoline();
+  SetInfoline (NULL, NULL);
   curLevel = CurLevel->levelnum;
 
   if ((curElev = GetCurrentElevator ()) == -1)
@@ -210,8 +210,9 @@ EnterElevator (void)
     }				/* if neuer Level */
 
   LeaveElevatorSound ();
-  ClearGraphMem (RealScreen);
-  DisplayRahmen (RealScreen);
+  //  ClearGraphMem (RealScreen);
+  //  DisplayRahmen (Outline320x200);
+  //  SetInfoline (NULL,NULL);
 
   UnfadeLevel ();
 
@@ -243,19 +244,16 @@ ShowElevators (void)
 {
   int curLevel = CurLevel->levelnum;
 
-  DebugPrintf ("\nvoid ShowElevators(void): real function call confirmed.");
-
   /* Zuerst Screen loeschen (InternalScreen) */
-  ClearGraphMem (RealScreen);
+  //  ClearGraphMem (RealScreen);
   
   /* Userfenster faerben */
-  SetUserfenster (EL_BG_COLOR, RealScreen);
-  DisplayRahmen (RealScreen);	/* Rahmen dazu */
-  SayLeftInfo (LeftInfo, RealScreen);
-  SayRightInfo (RightInfo, RealScreen);
+  SetUserfenster (EL_BG_COLOR, Outline320x200);
+  DisplayRahmen (Outline320x200);	/* Rahmen dazu */
+  SetInfoline (NULL, NULL);
 
   DisplayBlock (USERFENSTERPOSX, USERFENSTERPOSY, ElevatorPicture, 
-		USERFENSTERBREITE, USERFENSTERHOEHE, RealScreen);
+		USERFENSTERBREITE, USERFENSTERHOEHE, Outline320x200);
 
   AlleLevelsGleichFaerben ();
   AlleElevatorsGleichFaerben ();
@@ -264,8 +262,8 @@ ShowElevators (void)
 
   PrepareScaledSurface(TRUE);
 
-  DebugPrintf ("\nvoid ShowElevators(void): end of function reached.");
   return;
+
 } /* ShowElevators() */
 
 
@@ -286,8 +284,6 @@ EnterKonsole (void)
   int ReenterGame = 0;
   int TasteOK;
 
-  DebugPrintf ("\nvoid EnterKonsole(void): real function call confirmed.");
-
   // Prevent distortion of framerate by the delay coming from 
   // the time spend in the menu.
   Activate_Conservative_Frame_Computation();
@@ -295,19 +291,8 @@ EnterKonsole (void)
   Me.status = CONSOLE;
 
   Switch_Background_Music_To (CONSOLE_BACKGROUND_MUSIC_SOUND);
-  DebugPrintf
-    ("\nvoid EnterKonsole(void):  Console background music started.");
 
-  /* Initialisierung der Konsole */
-
-  ClearGraphMem (RealScreen);
-  KillTastaturPuffer ();
-
-  while (SpacePressed ())
-    {
-      keyboard_update ();
-      JoystickControl ();
-    }
+  while (SpacePressed ());  /* wait for user to release Space */
 
   /* Gleich zu Beginn die Farben richtig setzten */
   if (MenuPoint == 0)
@@ -414,7 +399,7 @@ EnterKonsole (void)
   Me.status = MOBILE;
   /* Die Textfarben wieder setzen wie sie vorher waren */
   SetTextColor (FONT_WHITE, FONT_RED);	/* BG: Rahmenwei"s FG: FONT_RED */
-  UpdateInfoline ();
+  SetInfoline (NULL, NULL);
 
   while (SpacePressed ())
     {
@@ -424,69 +409,47 @@ EnterKonsole (void)
 
   Switch_Background_Music_To ( COMBAT_BACKGROUND_MUSIC_SOUND );
 
-  DebugPrintf
-	("\nvoid EnterKonsole(void):  Console background replaced by combat background music.");
-  
-  DebugPrintf
-    ("\nvoid EnterKonsole(void): Normal end of function reached.\n\n");
+  return;
 
 } // void EnterKonsole(void)
 
-/*@Function============================================================
-@Desc: diese Funktion zeigt die m"oglichen Auswahlpunkte des Menus
-       Sie soll die Schriftfarben nicht ver"andern
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/*-----------------------------------------------------------------
+ * @Desc: diese Funktion zeigt die m"oglichen Auswahlpunkte des Menus
+ *    Sie soll die Schriftfarben nicht ver"andern
+ *
+ *  NOTE: this function does not actually _display_ anything yet,
+ *        it just prepares the display in Outline320x200, so you need
+ *        to call PrepareScaledSurface(TRUE) to display the result!
+ *
+ *
+ *-----------------------------------------------------------------*/
 void
 PaintConsoleMenu (void)
 {
   char MenuText[200];
   unsigned int fg, bg;
 
-  DebugPrintf ("\nvoid PaintConsoleMenu(void): Real function called.");
+  ClearGraphMem (Outline320x200);
+  GetTextColor (&bg, &fg);	/* store text color settings */
 
-  ClearGraphMem (InternalScreen);
-  GetTextColor (&bg, &fg);	/* Diese Funktion soll die Schriftfarben nicht ver"andern */
-
-  DisplayRahmen (InternalScreen);
-
-  /* Darstellung des oberen Rahmen mit Inhalt */
-  //   SetInfoline();
-  // strcpy(LeftInfo, "Console");
+  DisplayRahmen (Outline320x200);
+  SetInfoline (NULL, NULL);
 
   /* Userfenster faerben */
-  SetUserfenster (KON_BG_COLOR, InternalScreen);
-  // ClearUserFenster();
-
-  SetTextColor (RAHMEN_BG_COLOR, FONT_RED);	/* BG: Rahmenwei"s FG: FONT_RED */
-  SayLeftInfo (LeftInfo, InternalScreen);
-  SayRightInfo (RightInfo, InternalScreen);
+  SetUserfenster (KON_BG_COLOR, Outline320x200);
 
   /* Konsolen-Menue Farbe setzen */
   SetTextColor (KON_BG_COLOR, KON_TEXT_COLOR);
-
-  DebugPrintf
-    ("\nvoid PaintConsoleMenu(void): Now the internals of the console are written to the screen....");
 
   SetTextBorder (MENUTEXT_X, USERFENSTERPOSY,
 		 USERFENSTERPOSX + USERFENSTERBREITE,
 		 USERFENSTERPOSY + USERFENSTERHOEHE, 30);
 
-  // ClearUserFenster();
-  // SetUserfenster(KON_BG_COLOR, InternalScreen);
-
   strcpy (MenuText, "Unit type ");
   strcat (MenuText, Druidmap[Me.type].druidname);
   strcat (MenuText, " - ");
   strcat (MenuText, Classname[Druidmap[Me.type].class]);
-  DisplayText (MenuText, USERFENSTERPOSX, USERFENSTERPOSY, InternalScreen,
-	       FALSE);
-
-
-  DebugPrintf
-    ("\nvoid PaintConsoleMenu(void): Now the screen will be prepared for the real menu....");
+  DisplayText (MenuText, USERFENSTERPOSX, USERFENSTERPOSY, Outline320x200, FALSE);
 
   strcpy (MenuText, "\nAccess granted.\nShip : ");
   strcat (MenuText, Shipnames[ThisShip]);
@@ -495,11 +458,8 @@ PaintConsoleMenu (void)
   strcat (MenuText, "\n\nAlert: ");
   strcat (MenuText, Alertcolor[Alert]);
 
-  DisplayText (MenuText, MENUTEXT_X, USERFENSTERPOSY + 15, InternalScreen,
+  DisplayText (MenuText, MENUTEXT_X, USERFENSTERPOSY + 15, Outline320x200,
 	       FALSE);
-
-  DebugPrintf
-    ("\nvoid PaintConsoleMenu(void): Now the imaged are about to be displayed....");
 
   SetTextBorder (0, 0, SCREENBREITE, SCREENHOEHE, 40);
 
@@ -510,26 +470,18 @@ PaintConsoleMenu (void)
 
   DisplayBlock (MENUITEMPOSX, MENUITEMPOSY + FONTHOEHE + BLOCKHOEHE - 4,
 		MenuItemPointer,
-		MENUITEMLENGTH, MENUITEMHEIGHT, InternalScreen);
+		MENUITEMLENGTH, MENUITEMHEIGHT, Outline320x200);
 
-  DebugPrintf
-    ("\nvoid PaintConsoleMenu(void): Now the Influence will be drawn to the menu....");
 
   DisplayMergeBlock (MENUITEMPOSX + 10, MENUITEMPOSY + FONTHOEHE,
 		     Influencepointer + BLOCKMEM * ((int) rintf (Me.phase)),
-		     BLOCKBREITE, BLOCKHOEHE, InternalScreen);
+		     BLOCKBREITE, BLOCKHOEHE, Outline320x200);
 
-  SwapScreen ();
 
-  DebugPrintf
-    ("\nvoid PaintConsoleMenu(void): Now the Info-Line will be updated....");
+  SetTextColor (bg, fg); /* restore text color settings */
 
-  UpdateInfoline ();
-  SetTextColor (bg, fg);
-
-  DebugPrintf
-    ("\nvoid PaintConsoleMenu(void): Usual end of function reached.");
-}				// void PaintConsoleMenu(void)
+  return;
+}	// PaintConsoleMenu ()
 
 /*@Function============================================================
 @Desc: Zeigt alle erlaubten Roboter.
@@ -570,7 +522,6 @@ GreatDruidShow (void)
       // ClearUserFenster ();
       // ClearGraphMem( Outline320x200 );
       ClearAllButRahmen( );
-	//DisplayRahmen( Outline320x200 );
       /*
        * Ausgabe der ersten Zeile, die den Druidtyp beschreibt
        *
@@ -1060,19 +1011,10 @@ ClearUserFenster (void)
 {
   int i;
 
-  DebugPrintf ("\nvoid ClearUserFenster(void): Real function called.");
-
   for (i = USERFENSTERPOSY; i < (USERFENSTERPOSY + USERFENSTERHOEHE); i++)
-    {
-      // gl_hline (USERFENSTERPOSX, i, USERFENSTERPOSX + USERFENSTERBREITE,
-      // KON_BG_COLOR);
-      // memset(RealScreen+i*SCREENBREITE+USERFENSTERPOSX,USERFENSTERBREITE,KON_BG_COLOR);
-      // memset( Outline320x200 + i*SCREENBREITE+USERFENSTERPOSX , KON_BG_COLOR , USERFENSTERBREITE );
-      // memset( Outline320x200 + i*SCREENBREITE+USERFENSTERPOSX , FONT_BLACK , USERFENSTERBREITE );
-      memset( Outline320x200 + i*SCREENBREITE+USERFENSTERPOSX , 0 , USERFENSTERBREITE );
-    }
+    memset( Outline320x200 + i*SCREENBREITE+USERFENSTERPOSX , 0 , USERFENSTERBREITE );
 
-  DebugPrintf ("\nvoid ClearUserFenster(void): End of function reached.");
+  return;
 
 } // void ClearUserFenster(void)
 
@@ -1087,18 +1029,10 @@ ClearAllButRahmen (void)
 {
   int i;
 
-  DebugPrintf ("\nvoid ClearAllButRahmen(void): Real function called.");
-
   for (i = RAHMENHOEHE; i < SCREENHOEHE; i++)
-    {
-      // gl_hline (USERFENSTERPOSX, i, USERFENSTERPOSX + USERFENSTERBREITE,
-      // KON_BG_COLOR);
-      // memset(RealScreen+i*SCREENBREITE+USERFENSTERPOSX,USERFENSTERBREITE,KON_BG_COLOR);
-      // memset( Outline320x200 + i*SCREENBREITE+USERFENSTERPOSX , KON_BG_COLOR , USERFENSTERBREITE );
-      // memset( Outline320x200 + i*SCREENBREITE+USERFENSTERPOSX , FONT_BLACK , USERFENSTERBREITE );
-      memset( Outline320x200 + i*SCREENBREITE , 0 , SCREENBREITE );
-    }
-  DebugPrintf ("\nvoid ClearUserFenster(void): End of function reached.");
+    memset( Outline320x200 + i*SCREENBREITE , 0 , SCREENBREITE );
+
+  return;
 
 } // void ClearUserFenster(void)
 
