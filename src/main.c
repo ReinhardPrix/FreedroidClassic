@@ -833,12 +833,19 @@ void ShowHighscoreList(void){
  * $Author$
  *
  * $Log$
- * Revision 1.4  1993/05/23 21:04:04  prix
- * Sun May 23 11:02:50 1993: added CurLevel init to InitGlobalVars
- * Sun May 23 11:21:30 1993: modified MoveLevelDoors: removed multiple ifs and made a switch()
- * Sun May 23 11:47:59 1993: Level[][] replaced by CurLevel.map[][]
- * Sun May 23 12:18:41 1993: old Level removed completely
- * Sun May 23 13:14:37 1993: Umstellung auf neue Level-struct fertig
+ * Revision 1.5  1993/05/28 20:58:07  prix
+ * Mon May 24 14:55:57 1993: General Note hinzugefuegt
+ * Mon May 24 19:26:54 1993: Videomodus zuruecksetzen nach Beendung des Programms
+ * Mon May 24 20:00:50 1993: AdjustSpeed rewritten to new data-structs
+ * Mon May 24 20:06:35 1993: init of Druidmap
+ * Tue May 25 07:22:49 1993: added init of Me
+ * Tue May 25 14:15:28 1993: Wallchecks wiederbeleben (Anfang)
+ * Tue May 25 14:24:13 1993: CheckWall respektiert nun offene Tueren als passierbar
+ * Tue May 25 14:27:58 1993: Offsne Tueren werden jetzt als durchgaenglich behandelt
+ * Tue May 25 14:30:30 1993: CalculateCL hinausgeworfen
+ * Tue May 25 14:43:31 1993: Bullet auf Absolutkoordinaten umstellen (Alpha)
+ * Thu May 27 09:36:45 1993: maxspeed verringert ->test
+ * Fri May 28 16:49:47 1993: further adopts to new structs
  *
  * 
  * Revision 1.13  1994/05/21  16:27:15  prix
