@@ -1038,8 +1038,11 @@ ShowInventoryScreen( void )
   //
   TargetRect.x = InventoryRect.x + 20;
   TargetRect.y = InventoryRect.y + 10;
-  SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].weapon_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
-  
+  if ( ( ! Druidmap[ Me.type ].weapon_item.currently_held_in_hand ) && ( Druidmap[ Me.type ].weapon_item.type != (-1) ) )
+    {
+      SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].weapon_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+    }
+
   //--------------------
   // Now we display the item in the influencer armour slot
   //

@@ -1021,6 +1021,9 @@ FireBullet (void)
   finepoint speed;
   int max_val;
 
+  // If the victim doesn't have a weapon at all, just return
+  if ( Druidmap [ Me.type ].weapon_item.type == (-1) ) return;
+
   /* Wenn noch kein Schuss loesbar ist sofort zurueck */
   if (Me.firewait > 0)
     return;
