@@ -523,302 +523,310 @@ ForceToEnergyConversion ( void )
 void
 HandleCurrentlyActivatedSkill( int player_num )
 {
-  static int RightPressedPreviousFrame = 0;
-  int i;
-  float xdist, ydist, dist2;
-  Level ChestLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
-  moderately_finepoint loc_pos ;
-
-  switch ( Me [ 0 ] . readied_skill )
+    static int RightPressedPreviousFrame = 0;
+    int i;
+    float xdist, ydist, dist2;
+    Level ChestLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
+    moderately_finepoint loc_pos ;
+    
+    switch ( Me [ 0 ] . readied_skill )
     {
-    case SPELL_WEAPON:
-      if ( MouseRightPressed ( ) != 1 ) break;
-
-      tux_wants_to_attack_now ( 0 );
-
-      break;
-    case SPELL_LOOT_CHEST_OR_DEAD_BODY:
-      //--------------------
-      // If the right mouse button wasn't pressed at all, then there
-      // is nothing to do here...
-      //
-      if ( ! MouseRightPressed() ) break;
-      
-      //--------------------
-      // Maybe we're standing right on a chest field.  That is the
-      // easiest case.  Then we just need to open the chest.
-      //
-      for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
-	{
-	  switch ( ChestLevel -> obstacle_list [ i ] . type )
+	case SPELL_WEAPON:
+	    if ( MouseRightPressed ( ) != 1 ) break;
+	    
+	    if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+				      GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+		tux_wants_to_attack_now ( 0 );
+	    
+	    break;
+	case SPELL_LOOT_CHEST_OR_DEAD_BODY:
+	    //--------------------
+	    // If the right mouse button wasn't pressed at all, then there
+	    // is nothing to do here...
+	    //
+	    if ( ! MouseRightPressed() ) break;
+	    
+	    //--------------------
+	    // Maybe we're standing right on a chest field.  That is the
+	    // easiest case.  Then we just need to open the chest.
+	    //
+	    for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
 	    {
-	    case ISO_V_CHEST_OPEN:
-	    case ISO_H_CHEST_OPEN:
-	      if ( ( ( Me [ 0 ] . pos . x - ChestLevel -> obstacle_list [ i ] . pos . x ) *
-		     ( Me [ 0 ] . pos . x - ChestLevel -> obstacle_list [ i ] . pos . x ) +
-		     ( Me [ 0 ] . pos . y - ChestLevel -> obstacle_list [ i ] . pos . y ) *
-		     ( Me [ 0 ] . pos . y - ChestLevel -> obstacle_list [ i ] . pos . y ) ) < 0.5 )
+		switch ( ChestLevel -> obstacle_list [ i ] . type )
 		{
-		  EnterChest( ChestLevel -> obstacle_list [ i ] . pos );
-		  return;
+		    case ISO_V_CHEST_OPEN:
+		    case ISO_H_CHEST_OPEN:
+			if ( ( ( Me [ 0 ] . pos . x - ChestLevel -> obstacle_list [ i ] . pos . x ) *
+			       ( Me [ 0 ] . pos . x - ChestLevel -> obstacle_list [ i ] . pos . x ) +
+			       ( Me [ 0 ] . pos . y - ChestLevel -> obstacle_list [ i ] . pos . y ) *
+			       ( Me [ 0 ] . pos . y - ChestLevel -> obstacle_list [ i ] . pos . y ) ) < 0.5 )
+			{
+			    EnterChest( ChestLevel -> obstacle_list [ i ] . pos );
+			    return;
+			}
+			break;
+		    case ISO_V_CHEST_CLOSED:
+		    case ISO_H_CHEST_CLOSED:
+			if ( ( ( Me [ 0 ] . pos . x - ChestLevel -> obstacle_list [ i ] . pos . x ) *
+			       ( Me [ 0 ] . pos . x - ChestLevel -> obstacle_list [ i ] . pos . x ) +
+			       ( Me [ 0 ] . pos . y - ChestLevel -> obstacle_list [ i ] . pos . y ) *
+			       ( Me [ 0 ] . pos . y - ChestLevel -> obstacle_list [ i ] . pos . y ) ) < 0.5 )
+			{
+			    //--------------------
+			    // Later we might introduce some takeover game here for the Tux, so that
+			    // the chest also has to be hacked or it will not open for the Tux without
+			    // the proper key.
+			    //
+			    if ( ChestLevel -> obstacle_list [ i ] . type == ISO_V_CHEST_CLOSED )
+				ChestLevel -> obstacle_list [ i ] . type = ISO_V_CHEST_OPEN;
+			    if ( ChestLevel -> obstacle_list [ i ] . type == ISO_H_CHEST_CLOSED )
+				ChestLevel -> obstacle_list [ i ] . type = ISO_H_CHEST_OPEN;
+			    EnterChest( ChestLevel -> obstacle_list [ i ] . pos );
+			    return;
+			}
+			break;
+		    default:
+			break;
 		}
-	      break;
-	    case ISO_V_CHEST_CLOSED:
-	    case ISO_H_CHEST_CLOSED:
-	      if ( ( ( Me [ 0 ] . pos . x - ChestLevel -> obstacle_list [ i ] . pos . x ) *
-		     ( Me [ 0 ] . pos . x - ChestLevel -> obstacle_list [ i ] . pos . x ) +
-		     ( Me [ 0 ] . pos . y - ChestLevel -> obstacle_list [ i ] . pos . y ) *
-		     ( Me [ 0 ] . pos . y - ChestLevel -> obstacle_list [ i ] . pos . y ) ) < 0.5 )
+	    }
+	    
+	    //--------------------
+	    // Now we check if maybe a dead body is close and if then
+	    // the player meant to loot this dead body...
+	    //
+	    for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i++ )
+	    {
+		//--------------------
+		// ignore enemy that are not on this level or dead 
+		//
+		if ( AllEnemys [ i ] . pos . z != CurLevel -> levelnum )
+		    continue;
+		if ( AllEnemys [ i ] . type == ( -1 ) )
+		    continue;
+		//--------------------
+		// We determine the distance and back out immediately if there
+		// is still one whole square distance or even more...
+		//
+		xdist = Me [ 0 ] . pos . x - AllEnemys [ i ] . pos . x;
+		ydist = Me [ 0 ] . pos . y - AllEnemys [ i ] . pos . y;
+		dist2 = sqrt( (xdist * xdist) + (ydist * ydist) );
+		if ( dist2 < 2 * Druid_Radius_X )
 		{
-		  //--------------------
-		  // Later we might introduce some takeover game here for the Tux, so that
-		  // the chest also has to be hacked or it will not open for the Tux without
-		  // the proper key.
-		  //
-		  if ( ChestLevel -> obstacle_list [ i ] . type == ISO_V_CHEST_CLOSED )
-		    ChestLevel -> obstacle_list [ i ] . type = ISO_V_CHEST_OPEN;
-		  if ( ChestLevel -> obstacle_list [ i ] . type == ISO_H_CHEST_CLOSED )
-		    ChestLevel -> obstacle_list [ i ] . type = ISO_H_CHEST_OPEN;
-		  EnterChest( ChestLevel -> obstacle_list [ i ] . pos );
-		  return;
+		    loc_pos . x = AllEnemys [ i ] . pos . x ;
+		    loc_pos . y = AllEnemys [ i ] . pos . y ;
+		    EnterChest( loc_pos );
+		    return;
 		}
-	      break;
-	    default:
-	      break;
 	    }
-	}
-
-      //--------------------
-      // Now we check if maybe a dead body is close and if then
-      // the player meant to loot this dead body...
-      //
-      for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
-	{
-	  //--------------------
-	  // ignore enemy that are not on this level or dead 
-	  //
-	  if ( AllEnemys[i].pos.z != CurLevel->levelnum )
-	    continue;
-	  if ( AllEnemys[i].type == ( -1 ) )
-	    continue;
-	  //--------------------
-	  // We determine the distance and back out immediately if there
-	  // is still one whole square distance or even more...
-	  //
-	  xdist = Me[0].pos.x - AllEnemys[i].pos.x;
-	  ydist = Me[0].pos.y - AllEnemys[i].pos.y;
-	  dist2 = sqrt( (xdist * xdist) + (ydist * ydist) );
-	  if ( dist2 < 2 * Druid_Radius_X )
+	    PlayOnceNeededSoundSample ( "../effects/I_See_No_Chest_Sound_0.wav" , FALSE , FALSE );
+	    break;
+	    
+	case SPELL_TRANSFERMODE:
+	    if (MouseRightPressed() == 1)
 	    {
-	      loc_pos . x = AllEnemys [ i ] . pos . x ;
-	      loc_pos . y = AllEnemys [ i ] . pos . y ;
-	      EnterChest( loc_pos );
-	      return;
-	    }
-	}
-      PlayOnceNeededSoundSample ( "../effects/I_See_No_Chest_Sound_0.wav" , FALSE , FALSE );
-      break;
-
-    case SPELL_TRANSFERMODE:
-      if (MouseRightPressed() == 1)
-	{
-	  //--------------------
-	  // We switch status to transfermode
-	  Me[0].status = TRANSFERMODE;
-
-	  //--------------------
-	  // Now we check if maybe a console was near.  If that is so, then we
-	  // see how close it really is and maybe we start the console menu.
-	  //
-	  for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
-	    {
-	      switch ( ChestLevel -> obstacle_list [ i ] . type )
+		//--------------------
+		// We switch status to transfermode
+		Me[0].status = TRANSFERMODE;
+		
+		//--------------------
+		// Now we check if maybe a console was near.  If that is so, then we
+		// see how close it really is and maybe we start the console menu.
+		//
+		for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
 		{
-		case ISO_CONSOLE_S:
-		case ISO_CONSOLE_N:
-		case ISO_CONSOLE_E:
-		case ISO_CONSOLE_W:
-		  if ( ( ( Me [ 0 ] . pos . x - ChestLevel -> obstacle_list [ i ] . pos . x ) *
-			 ( Me [ 0 ] . pos . x - ChestLevel -> obstacle_list [ i ] . pos . x ) +
-			 ( Me [ 0 ] . pos . y - ChestLevel -> obstacle_list [ i ] . pos . y ) *
-			 ( Me [ 0 ] . pos . y - ChestLevel -> obstacle_list [ i ] . pos . y ) ) < 0.4 )
+		    switch ( ChestLevel -> obstacle_list [ i ] . type )
 		    {
-		      EnterConsole();
-		      return;
+			case ISO_CONSOLE_S:
+			case ISO_CONSOLE_N:
+			case ISO_CONSOLE_E:
+			case ISO_CONSOLE_W:
+			    if ( ( ( Me [ 0 ] . pos . x - ChestLevel -> obstacle_list [ i ] . pos . x ) *
+				   ( Me [ 0 ] . pos . x - ChestLevel -> obstacle_list [ i ] . pos . x ) +
+				   ( Me [ 0 ] . pos . y - ChestLevel -> obstacle_list [ i ] . pos . y ) *
+				   ( Me [ 0 ] . pos . y - ChestLevel -> obstacle_list [ i ] . pos . y ) ) < 0.4 )
+			    {
+				EnterConsole();
+				return;
+			    }
+			    break;
+			default:
+			    break;
 		    }
-		  break;
-		default:
-		  break;
 		}
 	    }
-	}
-      break;
-
-    case SPELL_FORCE_EXPLOSION_CIRCLE:
-      if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
-	{
-	  if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
-				    GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
-	    ForceExplosionCircle( Me[0].pos );
-	}
-      break;
-    case SPELL_FORCE_EXPLOSION_RAY:
-      if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
-	{
-	  if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
-				    GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	    break;
+	    
+	case SPELL_FORCE_EXPLOSION_CIRCLE:
+	    if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	    {
-	      ForceExplosionRay ( Me [ 0 ] . pos , 
-				  translate_pixel_to_map_location ( player_num , 
-								    (float) ServerThinksInputAxisX ( player_num ) , 
-								    (float) ServerThinksInputAxisY ( player_num ) , TRUE ) - Me [ player_num ] . pos . x ,
-				  translate_pixel_to_map_location ( player_num , 
-								    (float) ServerThinksInputAxisX ( player_num ) , 
-								    (float) ServerThinksInputAxisY ( player_num ) , FALSE ) - Me [ player_num ] . pos . y );
+		if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+					  GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+		    ForceExplosionCircle( Me[0].pos );
 	    }
-	}
-      break;
-    case SPELL_FORCE_TO_ENERGY:
-      if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
-	{
-	  if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
-				    GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	    break;
+	case SPELL_FORCE_EXPLOSION_RAY:
+	    if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	    {
-	      ForceToEnergyConversion ( );
+		if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+					  GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+		{
+		    ForceExplosionRay ( 
+			Me [ 0 ] . pos , 
+			translate_pixel_to_map_location ( player_num , 
+							  (float) ServerThinksInputAxisX ( player_num ) , 
+							  (float) ServerThinksInputAxisY ( player_num ) , TRUE ) 
+			- Me [ player_num ] . pos . x ,
+			translate_pixel_to_map_location ( player_num , 
+							  (float) ServerThinksInputAxisX ( player_num ) , 
+							  (float) ServerThinksInputAxisY ( player_num ) , FALSE ) 
+			- Me [ player_num ] . pos . y );
+		}
 	    }
-	}
-      break;
-    case SPELL_TELEPORT_HOME:
-      if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
-	{
-	  if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
-				    GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	    break;
+	case SPELL_FORCE_TO_ENERGY:
+	    if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	    {
-	      // TeleportHome ( TargetLocation ) ;
-	      TeleportHome (  ) ;
+		if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+					  GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+		{
+		    ForceToEnergyConversion ( );
+		}
 	    }
-	}
-      break;
-    case SPELL_FIREY_BOLT:
-      if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
-	{
-	  if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
-				    GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	    break;
+	case SPELL_TELEPORT_HOME:
+	    if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	    {
-	      FireyBoltSpell ( Me [ 0 ] . pos );
+		if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+					  GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+		{
+		    // TeleportHome ( TargetLocation ) ;
+		    TeleportHome (  ) ;
+		}
 	    }
-	}
-      break;
-    case SPELL_COLD_BOLT:
-      if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
-	{
-	  if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
-				    GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	    break;
+	case SPELL_FIREY_BOLT:
+	    if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	    {
-	      ColdBoltSpell ( Me [ 0 ] . pos );
+		if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+					  GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+		{
+		    FireyBoltSpell ( Me [ 0 ] . pos );
+		}
 	    }
-	}
-      break;
-    case SPELL_REPAIR_SKILL:
-      if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
-	{
-	  if ( !CursorIsInInvRect( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
-				   GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) || !GameConfig.Inventory_Visible )
+	    break;
+	case SPELL_COLD_BOLT:
+	    if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	    {
-	      //--------------------
-	      // Do nothing here.  The right mouse click while in inventory screen
-	      // will be handled in the inventory screen management function.
-	      //
-	      PlayOnceNeededSoundSample ( "../effects/tux_ingame_comments/CantRepairThat.wav" , FALSE , FALSE );
+		if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+					  GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+		{
+		    ColdBoltSpell ( Me [ 0 ] . pos );
+		}
 	    }
-	}
-      break;
-    case SPELL_IDENTIFY_SKILL:
-      if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
-	{
-	  if ( !CursorIsInInvRect( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
-				   GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) || !GameConfig.Inventory_Visible )
+	    break;
+	case SPELL_REPAIR_SKILL:
+	    if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	    {
-	      //--------------------
-	      // Do nothing here.  The right mouse click while in inventory screen
-	      // will be handled in the inventory screen management function.
-	      //
-	      PlayOnceNeededSoundSample ( "../effects/Tux_I_Can_Only_0.wav" , FALSE , FALSE );
+		if ( ! CursorIsInInvRect( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+					 GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) 
+		     || ( !GameConfig.Inventory_Visible ) )
+		{
+		    //--------------------
+		    // Do nothing here.  The right mouse click while in inventory screen
+		    // will be handled in the inventory screen management function.
+		    //
+		    PlayOnceNeededSoundSample ( "../effects/tux_ingame_comments/CantRepairThat.wav" , 
+						FALSE , FALSE );
+		}
 	    }
-	}
-      break;
-    case SPELL_POISON_BOLT:
-      if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
-	{
-	  if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
-				    GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	    break;
+	case SPELL_IDENTIFY_SKILL:
+	    if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	    {
-	      PoisonBoltSpell ( Me [ 0 ] . pos );
+		if ( !CursorIsInInvRect( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+					 GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) 
+		     || ( ! GameConfig.Inventory_Visible ) )
+		{
+		    //--------------------
+		    // Do nothing here.  The right mouse click while in inventory screen
+		    // will be handled in the inventory screen management function.
+		    //
+		    PlayOnceNeededSoundSample ( "../effects/Tux_I_Can_Only_0.wav" , FALSE , FALSE );
+		}
 	    }
-	}
-      break;
-    case SPELL_PARALYZE_BOLT:
-      if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
-	{
-	  if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
-				    GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	    break;
+	case SPELL_POISON_BOLT:
+	    if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	    {
-	      ParalyzeBoltSpell ( Me [ 0 ] . pos );
+		if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+					  GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+		{
+		    PoisonBoltSpell ( Me [ 0 ] . pos );
+		}
 	    }
-	}
-      break;
-    case SPELL_DETECT_ITEM:
-      if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
-	{
-	  if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
-				    GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	    break;
+	case SPELL_PARALYZE_BOLT:
+	    if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	    {
-	      DetectItemsSpell (  ) ;
+		if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+					  GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+		{
+		    ParalyzeBoltSpell ( Me [ 0 ] . pos );
+		}
 	    }
-	}
-      break;
-    case SPELL_RADIAL_EMP_WAVE:
-      if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
-	{
-	  if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
-				    GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	    break;
+	case SPELL_DETECT_ITEM:
+	    if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	    {
-	      RadialEMPWave ( Me [ 0 ] . pos , TRUE );
+		if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+					  GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+		{
+		    DetectItemsSpell (  ) ;
+		}
 	    }
-	}
-      break;
-    case SPELL_RADIAL_VMX_WAVE:
-      if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
-	{
-	  if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
-				    GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	    break;
+	case SPELL_RADIAL_EMP_WAVE:
+	    if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	    {
-	      RadialVMXWave ( Me [ 0 ] . pos , TRUE );
+		if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+					  GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+		{
+		    RadialEMPWave ( Me [ 0 ] . pos , TRUE );
+		}
 	    }
-	}
-      break;
-    case SPELL_RADIAL_FIRE_WAVE:
-      if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
-	{
-	  if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
-				    GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+	    break;
+	case SPELL_RADIAL_VMX_WAVE:
+	    if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	    {
-	      RadialFireWave ( Me [ 0 ] . pos , TRUE );
+		if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+					  GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+		{
+		    RadialVMXWave ( Me [ 0 ] . pos , TRUE );
+		}
 	    }
-	}
-      break;
-    default:
-      fprintf( stderr, "\n\nMe [ 0 ] . readied_skill: %d \n" , Me [ 0 ] . readied_skill );
-      GiveStandardErrorMessage ( "HandleCurrentlyActivatedSkill(...)" , "\
+	    break;
+	case SPELL_RADIAL_FIRE_WAVE:
+	    if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
+	    {
+		if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+					  GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
+		{
+		    RadialFireWave ( Me [ 0 ] . pos , TRUE );
+		}
+	    }
+	    break;
+	default:
+	    fprintf( stderr, "\n\nMe [ 0 ] . readied_skill: %d \n" , Me [ 0 ] . readied_skill );
+	    GiveStandardErrorMessage ( "HandleCurrentlyActivatedSkill(...)" , "\
 There was a request for a spell/skill that is currently not handled.\n\
 Nothing will be done then.  This is a warning message only.\n\
 Usually this error is not severe.",
-				 NO_NEED_TO_INFORM, IS_WARNING_ONLY );
-      break;
+				       NO_NEED_TO_INFORM, IS_WARNING_ONLY );
+	    break;
     }
-
-  RightPressedPreviousFrame = MouseRightPressed() ;
-
+    
+    RightPressedPreviousFrame = MouseRightPressed() ;
+    
 }; // void HandleCurrentlyActivatedSkill( void )
 
 
