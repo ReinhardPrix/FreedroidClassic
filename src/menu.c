@@ -659,6 +659,13 @@ Repair_Items( void )
       //
       SDL_Flip ( Screen );
 
+      //--------------------
+      // Maybe the cursor key up or cursor key down was pressed.  Then of
+      // course the cursor must either move down or the whole menu must
+      // scroll one step down, if that is still possible.
+      // 
+      // Mouse wheel action will be checked for further down.
+      //
       if ( UpPressed() )
 	{
 	  if ( InMenuPosition > 0 ) InMenuPosition --;
@@ -683,6 +690,28 @@ Repair_Items( void )
 	    }
 	  while ( DownPressed() );
 	}      
+
+      //--------------------
+      // Maybe the mouse wheel was pressed up or down.  Then of course we
+      // must not move the cursor, which is only used for keyboard input
+      // but instead we have the menu scrolling up or down, depending on
+      // what's currently requested.
+      //
+      if ( MouseWheelUpPressed() )
+	{
+	  if ( MenuInListPosition > 0 )
+	    MenuInListPosition --;
+
+	  while ( MouseWheelUpPressed() );
+	}
+      if ( MouseWheelDownPressed() )
+	{
+	  if ( MenuInListPosition < Pointer_Index - NUMBER_OF_ITEMS_ON_ONE_SCREEN )
+	    MenuInListPosition ++;
+
+	  while ( MouseWheelDownPressed() );
+	}      
+
     } // while not space pressed...
 
   if ( SpacePressed() && !axis_is_active ) 
@@ -813,6 +842,13 @@ Identify_Items ( void )
       //
       SDL_Flip ( Screen );
 
+      //--------------------
+      // Maybe the cursor key up or cursor key down was pressed.  Then of
+      // course the cursor must either move down or the whole menu must
+      // scroll one step down, if that is still possible.
+      // 
+      // Mouse wheel action will be checked for further down.
+      //
       if ( UpPressed() )
 	{
 	  if ( InMenuPosition > 0 ) InMenuPosition --;
@@ -837,6 +873,29 @@ Identify_Items ( void )
 	    }
 	  while ( DownPressed() );
 	}      
+
+      //--------------------
+      // Maybe the mouse wheel was pressed up or down.  Then of course we
+      // must not move the cursor, which is only used for keyboard input
+      // but instead we have the menu scrolling up or down, depending on
+      // what's currently requested.
+      //
+      if ( MouseWheelUpPressed() )
+	{
+	  if ( MenuInListPosition > 0 )
+	    MenuInListPosition --;
+
+	  while ( MouseWheelUpPressed() );
+	}
+      if ( MouseWheelDownPressed() )
+	{
+	  if ( MenuInListPosition < Pointer_Index - NUMBER_OF_ITEMS_ON_ONE_SCREEN )
+	    MenuInListPosition ++;
+
+	  while ( MouseWheelDownPressed() );
+	}      
+
+
     } // while not space pressed...
 
   if ( SpacePressed() && !axis_is_active ) 
@@ -952,6 +1011,13 @@ Sell_Items( int ForHealer )
       //
       SDL_Flip ( Screen );
 
+      //--------------------
+      // Maybe the cursor key up or cursor key down was pressed.  Then of
+      // course the cursor must either move down or the whole menu must
+      // scroll one step down, if that is still possible.
+      // 
+      // Mouse wheel action will be checked for further down.
+      //
       if ( UpPressed() )
 	{
 	  if ( InMenuPosition > 0 ) InMenuPosition --;
@@ -976,6 +1042,28 @@ Sell_Items( int ForHealer )
 	    }
 	  while ( DownPressed() );
 	}      
+
+      //--------------------
+      // Maybe the mouse wheel was pressed up or down.  Then of course we
+      // must not move the cursor, which is only used for keyboard input
+      // but instead we have the menu scrolling up or down, depending on
+      // what's currently requested.
+      //
+      if ( MouseWheelUpPressed() )
+	{
+	  if ( MenuInListPosition > 0 )
+	    MenuInListPosition --;
+
+	  while ( MouseWheelUpPressed() );
+	}
+      if ( MouseWheelDownPressed() )
+	{
+	  if ( MenuInListPosition < Pointer_Index - NUMBER_OF_ITEMS_ON_ONE_SCREEN )
+	    MenuInListPosition ++;
+
+	  while ( MouseWheelDownPressed() );
+	}      
+
     } // while not space pressed...
 
   if ( SpacePressed() && !axis_is_active ) 
