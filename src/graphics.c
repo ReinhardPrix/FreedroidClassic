@@ -41,6 +41,8 @@
 #include "colodefs.h"
 #include "SDL_rotozoom.h"
 
+void swap_red_and_blue_for_open_gl ( SDL_Surface* FullView );
+
 /* XPM */
 static const char *arrow[] = {
   /* width height num_colors chars_per_pixel */
@@ -841,14 +843,52 @@ TakeScreenshot( void )
 {
   static int Number_Of_Screenshot=0;
   char *Screenshoot_Filename;
+  SDL_Surface* FullView;
 
   Screenshoot_Filename=malloc(100);
   DebugPrintf (1, "\n\nScreenshoot function called.\n\n");
   sprintf( Screenshoot_Filename , "Screenshot_%02d.bmp", Number_Of_Screenshot );
   DebugPrintf(1, "\n\nScreenshoot function: The Filename is: %s.\n\n" , Screenshoot_Filename );
-  SDL_SaveBMP( Screen , Screenshoot_Filename );
+
+  if ( use_open_gl )
+    {
+      //--------------------
+      // We need to make a copy in processor memory.  This has already
+      // been implemented once, and we can just reuse the old code here.
+      //
+      StoreMenuBackground ( 1 ) ;
+
+      //--------------------
+      // Now we need to make a real SDL surface from the raw image data we
+      // have just extracted.
+      //
+      FullView = SDL_CreateRGBSurfaceFrom( StoredMenuBackground [ 1 ] , SCREEN_WIDTH , SCREEN_HEIGHT, 24, 3 * SCREEN_WIDTH, 0x0FF0000, 0x0FF00, 0x0FF , 0 );
+
+      flip_image_horizontally ( FullView );
+      
+      swap_red_and_blue_for_open_gl ( FullView );
+
+      SDL_SaveBMP( FullView , Screenshoot_Filename );
+
+      SDL_FreeSurface ( FullView ) ;
+
+    }
+  else
+    {
+      SDL_SaveBMP( Screen , Screenshoot_Filename );
+    }
+
   Number_Of_Screenshot++;
   free(Screenshoot_Filename);
+
+  //--------------------
+  // Taking the screenshot, converting is and saving it, maybe also
+  // flipping it around, all these things cost time, so in order not
+  // to make to much of a jump after a screenshot has been made and
+  // saved, we use the conservative frame time computation for this
+  // next frame now.
+  //
+  Activate_Conservative_Frame_Computation();
 
 }; // void TakeScreenshot(void)
 
@@ -1561,5 +1601,31 @@ HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area )
   return;
 
 }; // void HighlightRectangle
+
+/* ----------------------------------------------------------------------
+ * OpenGL has a habit of using different order for RGB, namely BGR.  To
+ * fix this when saving something e.g. as bmp, we need to reverse the 
+ * order of red, green and blue again, which we do here.
+ * ---------------------------------------------------------------------- */
+void
+swap_red_and_blue_for_open_gl ( SDL_Surface* FullView )
+{
+  int x , y ;
+  Uint32 pixel;
+
+  for ( x = 0 ; x < FullView -> w ; x ++ )
+    {
+      for ( y = 0 ; y < FullView -> h ; y ++ )
+	{
+	  // pixel = GetPixel ( FullView , x , y ) ;
+	  pixel = SDL_MapRGB ( FullView -> format , 
+			       GetBlueComponent ( FullView, x , y ) , 
+			       GetGreenComponent ( FullView, x , y ) , 
+			       GetRedComponent ( FullView, x , y ) );
+	  PutPixel ( FullView , x , y , pixel);
+	}
+    }
+}; // void swap_red_and_blue_for_open_gl ( SDL_Surface* FullView )
+
 
 #undef _graphics_c
