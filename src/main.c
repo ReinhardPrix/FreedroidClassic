@@ -213,6 +213,75 @@ better than nothing.  Thanks anyway for you interest in FreedroidRPG.\n\
     return (0);
 }; // int main ( void )
 
+/* ----------------------------------------------------------------------
+ * Some bots might be frozen and some might be poisoned, some might still 
+ * have a 'firewait' or a normal wait or a paralysation.  Other bots have
+ * a text, that is being displayed and that will timeout at some point.
+ *
+ * In any case those counteres must be updated, which is what this 
+ * function is supposed to do.
+ *
+ * NOTE:  This whole updating business is a bit in-efficient.  It might 
+ *        be better to use some sort of 'game_time' for this and then
+ *        not use 'duration left' but rather 'end time' for all these 
+ *        poison, paralysation, etc. effects.  That way, we would be able
+ *        be skip this whole counter advancement here...
+ *
+ *        Maybe later it will finally be implemented this way...
+ *
+ * ---------------------------------------------------------------------- */
+void
+update_timeouts_for_bots_on_level ( int level_num , float latest_frame_time ) 
+{
+    int i;
+    enemy* this_bot;
+
+    occasionally_update_first_and_last_bot_indices ( );
+
+    for ( i  = first_index_of_bot_on_level [ level_num ] ; 
+	  i <=  last_index_of_bot_on_level [ level_num ] ; i++ )
+    {
+	this_bot = & ( AllEnemys [ i ] );
+	
+	if ( this_bot -> Status == OUT ) continue;
+	
+	if ( this_bot -> warten > 0 ) 
+	{
+	    this_bot -> warten -= latest_frame_time ;
+	    if ( this_bot -> warten < 0 ) this_bot -> warten = 0;
+	}
+	
+	if ( this_bot -> frozen > 0 ) 
+	{
+	    this_bot -> frozen -= latest_frame_time ;
+	    if ( this_bot -> frozen < 0 ) this_bot -> frozen = 0;
+	}
+	
+	if ( this_bot -> poison_duration_left > 0 ) 
+	{
+	    this_bot -> poison_duration_left -= latest_frame_time ;
+	    if ( this_bot -> poison_duration_left < 0 ) this_bot -> poison_duration_left = 0 ;
+	    this_bot -> energy -= latest_frame_time * this_bot -> poison_damage_per_sec ;
+	}
+	
+	if ( this_bot -> paralysation_duration_left > 0 ) 
+	{
+	    this_bot -> paralysation_duration_left -= latest_frame_time ;
+	    if ( this_bot -> paralysation_duration_left < 0 ) this_bot -> paralysation_duration_left = 0 ;
+	    // this_bot -> energy -= latest_frame_time * this_bot -> paralysation_damage_per_sec ;
+	}
+	
+	if ( this_bot -> firewait > 0 ) 
+	{
+	    this_bot -> firewait -= latest_frame_time ;
+	    if ( this_bot -> firewait <= 0 ) this_bot -> firewait = 0 ;
+	}
+	
+	this_bot -> TextVisibleTime += latest_frame_time;
+    } 
+    
+}; // void update_timeouts_for_bots_on_level ( int level_num ) 
+
 /* -----------------------------------------------------------------
  * This function updates counters and is called ONCE every frame.
  * The counters include timers, but framerate-independence of game speed
@@ -222,196 +291,161 @@ better than nothing.  Thanks anyway for you interest in FreedroidRPG.\n\
 void
 UpdateCountersForThisFrame ( int player_num )
 {
-  static long Overall_Frames_Displayed=0;
-  int i;
-  Level item_level = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
-  float my_speed ;
-  enemy* this_bot;
-  float latest_frame_time = Frame_Time();
+    static long Overall_Frames_Displayed=0;
+    int i;
+    Level item_level = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
+    float my_speed ;
+    float latest_frame_time = Frame_Time();
 
-  //--------------------
-  // First we do all the updated, that need to be done only once
-  // indepentent of the player number...  These are typically some
-  // things, that the client can do without any info from the 
-  // server.
-  //
-  if ( player_num == 0 )
+    //--------------------
+    // First we do all the updated, that need to be done only once
+    // indepentent of the player number...  These are typically some
+    // things, that the client can do without any info from the 
+    // server.
+    //
+    if ( player_num == 0 )
     {
-      GameConfig.Mission_Log_Visible_Time += latest_frame_time;
-      GameConfig.Inventory_Visible_Time += latest_frame_time;
+	GameConfig . Mission_Log_Visible_Time += latest_frame_time;
+	GameConfig . Inventory_Visible_Time += latest_frame_time;
+	
+	// The next couter counts the frames displayed by freedroid during this
+	// whole run!!  DO NOT RESET THIS COUNTER WHEN THE GAME RESTARTS!!
+	Overall_Frames_Displayed++;
+	Overall_Average = ( Overall_Average * ( Overall_Frames_Displayed - 1 )
+			   + latest_frame_time ) / Overall_Frames_Displayed ;
+	
+	// Here are some things, that were previously done by some periodic */
+	// interrupt function
+	ThisMessageTime++;
+	
+	LastGotIntoBlastSound += latest_frame_time ;
+	LastRefreshSound += latest_frame_time ;
+	
+	LevelDoorsNotMovedTime += latest_frame_time;
+	LevelGunsNotFiredTime += latest_frame_time;
+	if ( SkipAFewFrames ) SkipAFewFrames--;
 
-      // The next couter counts the frames displayed by freedroid during this
-      // whole run!!  DO NOT RESET THIS COUNTER WHEN THE GAME RESTARTS!!
-      Overall_Frames_Displayed++;
-      Overall_Average = (Overall_Average*(Overall_Frames_Displayed-1)
-			 + latest_frame_time) / Overall_Frames_Displayed;
-
-      // Here are some things, that were previously done by some periodic */
-      // interrupt function
-      ThisMessageTime++;
-
-      LastGotIntoBlastSound += latest_frame_time ;
-      LastRefreshSound += latest_frame_time ;
-
-      LevelDoorsNotMovedTime += latest_frame_time;
-      LevelGunsNotFiredTime += latest_frame_time;
-      if ( SkipAFewFrames ) SkipAFewFrames--;
-
-      //--------------------
-      // This is the timeout, that the tux should not start a movement
-      // some fraction of a second after an item drop.
-      //
-      if ( timeout_from_item_drop > 0 )
+	//--------------------
+	// This is the timeout, that the tux should not start a movement
+	// some fraction of a second after an item drop.
+	//
+	if ( timeout_from_item_drop > 0 )
 	{
-	  timeout_from_item_drop -= latest_frame_time ;
-	  if ( timeout_from_item_drop < 0 ) timeout_from_item_drop = 0 ; 
+	    timeout_from_item_drop -= latest_frame_time ;
+	    if ( timeout_from_item_drop < 0 ) timeout_from_item_drop = 0 ; 
 	}
 
-
-      for ( i = 0 ; i < MAXBULLETS ; i ++ )
+	
+	for ( i = 0 ; i < MAXBULLETS ; i ++ )
 	{
-	  if ( AllBullets [ i ] . time_to_hide_still > 0 )
+	    if ( AllBullets [ i ] . time_to_hide_still > 0 )
 	    {
-	      AllBullets [ i ] . time_to_hide_still -= latest_frame_time;
-	      if ( AllBullets [ i ] . time_to_hide_still < 0 )
-		AllBullets [ i ] . time_to_hide_still = 0 ; 
+		AllBullets [ i ] . time_to_hide_still -= latest_frame_time;
+		if ( AllBullets [ i ] . time_to_hide_still < 0 )
+		    AllBullets [ i ] . time_to_hide_still = 0 ; 
 	    }
 	}
-
-      //--------------------
-      // Maybe some items are just thrown in the air and still in the air.
-      // We need to keep track of the time the item has spent in the air so far.
-      //
-      for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+	
+	//--------------------
+	// Maybe some items are just thrown in the air and still in the air.
+	// We need to keep track of the time the item has spent in the air so far.
+	//
+	for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
 	{
-	  if ( item_level -> ItemList [ i ] . type == ( -1 ) ) continue;
-	  if ( item_level -> ItemList [ i ] . throw_time > 0 ) 
-	    item_level -> ItemList [ i ] . throw_time += latest_frame_time;
-	  if ( item_level -> ItemList [ i ] . throw_time > ( M_PI / 3.0 ) ) 
-	    item_level -> ItemList [ i ] . throw_time = 0 ;
+	    if ( item_level -> ItemList [ i ] . type == ( -1 ) ) continue;
+	    if ( item_level -> ItemList [ i ] . throw_time > 0 ) 
+		item_level -> ItemList [ i ] . throw_time += latest_frame_time;
+	    if ( item_level -> ItemList [ i ] . throw_time > ( M_PI / 3.0 ) ) 
+		item_level -> ItemList [ i ] . throw_time = 0 ;
 	}
 
-      for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i++ )
-	{
-	  this_bot = & ( AllEnemys [ i ] );
-
-	  if ( this_bot -> Status == OUT ) continue;
-	  
-	  if ( this_bot -> warten > 0 ) 
-	    {
-	      this_bot -> warten -= latest_frame_time ;
-	      if ( this_bot -> warten < 0 ) this_bot -> warten = 0;
-	    }
-	  
-	  if ( this_bot -> frozen > 0 ) 
-	    {
-	      this_bot -> frozen -= latest_frame_time ;
-	      if ( this_bot -> frozen < 0 ) this_bot -> frozen = 0;
-	    }
-	  
-	  if ( this_bot -> poison_duration_left > 0 ) 
-	    {
-	      this_bot -> poison_duration_left -= latest_frame_time ;
-	      if ( this_bot -> poison_duration_left < 0 ) this_bot -> poison_duration_left = 0 ;
-	      this_bot -> energy -= latest_frame_time * this_bot -> poison_damage_per_sec ;
-	    }
-	  
-	  if ( this_bot -> paralysation_duration_left > 0 ) 
-	    {
-	      this_bot -> paralysation_duration_left -= latest_frame_time ;
-	      if ( this_bot -> paralysation_duration_left < 0 ) this_bot -> paralysation_duration_left = 0 ;
-	      // this_bot -> energy -= latest_frame_time * this_bot -> paralysation_damage_per_sec ;
-	    }
-	  
-	  if ( this_bot -> firewait > 0 ) 
-	    {
-	      this_bot -> firewait -= latest_frame_time ;
-	      if ( this_bot -> firewait <= 0 ) this_bot -> firewait = 0 ;
-	    }
-	  
-	  this_bot -> TextVisibleTime += latest_frame_time;
-	} // for (i=0;...
+	//--------------------
+	// Some bots might be frozen and some might be poisoned, some
+	// might still have a 'firewait' or a normal wait or a paralysation.
+	// In any case those counteres must be updated, but we'll only to 
+	// that for the Tux current level (at present).
+	//
+	update_timeouts_for_bots_on_level ( Me [ 0 ] . pos . z , latest_frame_time ) ;
 
     }; // things that need to be done only once per program, not per player
+    
+    //--------------------
+    // Now we do all the things, that need to be updated for each connected
+    // player separatedly.
+    //
+    Me [ player_num ] . FramesOnThisLevel++;
 
-  //--------------------
-  // Now we do all the things, that need to be updated for each connected
-  // player separatedly.
-  //
-  Me [ player_num ] . FramesOnThisLevel++;
-
-  Me [ player_num ] . LastCrysoundTime += latest_frame_time ;
-  Me [ player_num ] . MissionTimeElapsed += latest_frame_time;
-  Me [ player_num ] . LastTransferSoundTime += latest_frame_time;
-  Me [ player_num ] . TextVisibleTime += latest_frame_time;
-
-  //--------------------
-  // We take care of the running stamina...
-  //
-  my_speed = sqrt ( Me [ player_num ] . speed . x * Me [ player_num ] . speed . x +
-		    Me [ player_num ] . speed . y * Me [ player_num ] . speed . y ) ;
-  if ( my_speed >= ( TUX_WALKING_SPEED + TUX_RUNNING_SPEED ) * 0.5 )
+    Me [ player_num ] . LastCrysoundTime += latest_frame_time ;
+    Me [ player_num ] . MissionTimeElapsed += latest_frame_time;
+    Me [ player_num ] . LastTransferSoundTime += latest_frame_time;
+    Me [ player_num ] . TextVisibleTime += latest_frame_time;
+    
+    //--------------------
+    // We take care of the running stamina...
+    //
+    my_speed = sqrt ( Me [ player_num ] . speed . x * Me [ player_num ] . speed . x +
+		      Me [ player_num ] . speed . y * Me [ player_num ] . speed . y ) ;
+    if ( my_speed >= ( TUX_WALKING_SPEED + TUX_RUNNING_SPEED ) * 0.5 )
     {
-      Me [ player_num ] . running_power -= latest_frame_time * 3.0 ;
+	Me [ player_num ] . running_power -= latest_frame_time * 3.0 ;
     }
-  else
+    else
     {
-      Me [ player_num ] . running_power += latest_frame_time * 3.0 ;
-      if ( Me [ player_num ] . running_power > Me [ player_num ] . max_running_power )
-	Me [ player_num ] . running_power = Me [ player_num ] . max_running_power ;
+	Me [ player_num ] . running_power += latest_frame_time * 3.0 ;
+	if ( Me [ player_num ] . running_power > Me [ player_num ] . max_running_power )
+	    Me [ player_num ] . running_power = Me [ player_num ] . max_running_power ;
 
-      if ( Me [ player_num ] . running_power >= 20 )
-      Me [ player_num ] . running_must_rest = FALSE ;
+	if ( Me [ player_num ] . running_power >= 20 )
+	    Me [ player_num ] . running_must_rest = FALSE ;
     }
+    
 
-
-  if ( Me [ player_num ] . weapon_swing_time != (-1) ) Me [ player_num ] . weapon_swing_time += latest_frame_time;
-  if ( Me [ player_num ] . got_hit_time != (-1) ) Me [ player_num ] . got_hit_time += latest_frame_time;
-
-  if ( Me [ player_num ] . firewait > 0 )
+    if ( Me [ player_num ] . weapon_swing_time != (-1) ) Me [ player_num ] . weapon_swing_time += latest_frame_time;
+    if ( Me [ player_num ] . got_hit_time != (-1) ) Me [ player_num ] . got_hit_time += latest_frame_time;
+    
+    if ( Me [ player_num ] . firewait > 0 )
     {
-      Me [ player_num ] . firewait -= latest_frame_time ;
-      if ( Me [ player_num ] . firewait < 0 ) Me [ player_num ] . firewait = 0 ;
+	Me [ player_num ] . firewait -= latest_frame_time ;
+	if ( Me [ player_num ] . firewait < 0 ) Me [ player_num ] . firewait = 0 ;
     }
-  // DebugPrintf ( -1000 , "\nfirewait; %f." , Me [ 0 ] . firewait );
-
-  //--------------------
-  // In order to know when a level can finally be respawned with
-  // enemies, we keep track to the time spent actually in the game, i.e.
-  // time actually spent passing frames...
-  //
-  for ( i = 0 ; i < MAX_LEVELS ; i ++ )
+    // DebugPrintf ( -1000 , "\nfirewait; %f." , Me [ 0 ] . firewait );
+    
+    //--------------------
+    // In order to know when a level can finally be respawned with
+    // enemies, we keep track to the time spent actually in the game, i.e.
+    // time actually spent passing frames...
+    //
+    for ( i = 0 ; i < MAX_LEVELS ; i ++ )
     {
-      if ( Me [ player_num ] . pos . z != i )
+	if ( Me [ player_num ] . pos . z != i )
 	{
-	  if ( Me [ player_num ] . time_since_last_visit_or_respawn [ i ] > (-1) )
+	    if ( Me [ player_num ] . time_since_last_visit_or_respawn [ i ] > (-1) )
 	    {
-	      Me [ player_num ] . time_since_last_visit_or_respawn [ i ] += latest_frame_time ;
+		Me [ player_num ] . time_since_last_visit_or_respawn [ i ] += latest_frame_time ;
 	    }
-
-	  //--------------------
-	  // Now maybe it's time to respawn?  If we really have multiple
-	  // players of course, this check would have to look a bit different...
-	  //
-	  if ( Me [ 0 ] . time_since_last_visit_or_respawn [ i ] > 600 )
+	    
+	    //--------------------
+	    // Now maybe it's time to respawn?  If we really have multiple
+	    // players of course, this check would have to look a bit different...
+	    //
+	    if ( Me [ 0 ] . time_since_last_visit_or_respawn [ i ] > 600 )
 	    {
-	      DebugPrintf ( -10 , "\nNow respawning all bots on level : %d. " , i ) ;
-	      Me [ 0 ] . time_since_last_visit_or_respawn [ i ] = 0 ;
-	      respawn_level ( i ) ;
+		DebugPrintf ( -10 , "\nNow respawning all bots on level : %d. " , i ) ;
+		Me [ 0 ] . time_since_last_visit_or_respawn [ i ] = 0 ;
+		respawn_level ( i ) ;
 	    }
 	  
 	}
-      else
+	else
 	{
-	  //--------------------
-	  // When the Tux is right on this level, there is absolutely no need 
-	  // for respawning anything...
-	  //
-	  Me [ 0 ] . time_since_last_visit_or_respawn [ i ] = 0 ;
+	    //--------------------
+	    // When the Tux is right on this level, there is absolutely no need 
+	    // for respawning anything...
+	    //
+	    Me [ 0 ] . time_since_last_visit_or_respawn [ i ] = 0 ;
 	}
     }
 
 }; // void UpdateCountersForThisFrame(...) 
-
 
 #undef _main_c
