@@ -45,7 +45,7 @@
 // The order of appearance here should match the order of appearance 
 // in the enum-Environment located in defs.h!
 
-#define ALL_SOUNDS 55
+#define ALL_SOUNDS 56
 char *SoundSampleFilenames[ALL_SOUNDS] = {
    "ERRORSOUND_NILL.NOWAV",
    "Combat_Background_Music.wav",
@@ -78,6 +78,7 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
    "Fire_Bullet_Single_Laser_Sound_0.wav",
    "Fire_Bullet_Plasma_Pistol_Sound_0.wav",
    "Fire_Bullet_Sword_Sound_0.wav",
+   "Bullet_Reflected_Sound_0.wav",
    "Cry_Sound_0.wav",
    "Takeover_Sound_0.wav",
    "Mission_Status_Change_Sound_0.wav",
@@ -1026,6 +1027,20 @@ PlayEnemyGotHitSound ( int enemytype )
       break;
     };
 }; // void PlayLevelCommentSound ( int levelnum )
+
+/* ----------------------------------------------------------------------
+ * This function plays a sound of a bullet being reflected. It is only
+ * used, when a bullets is compensated by the tux armour.
+ * ---------------------------------------------------------------------- */
+void
+BulletReflectedSound (void)
+{
+  if (!sound_on) return;
+
+  Play_Sound ( BULLET_REFLECTED_SOUND);
+
+}; // void DruidBlastSound (void)
+
 
 
 

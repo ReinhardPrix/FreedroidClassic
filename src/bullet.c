@@ -501,6 +501,7 @@ CheckBulletCollisions (int num)
 		    {
 		      Me.TextVisibleTime = 0;
 		      Me.TextToBeDisplayed = "That one went into the armour.";
+		      BulletReflectedSound ( ) ;
 		    }
 		  else
 		    {
