@@ -318,7 +318,7 @@ MoveEnemys (void)
 	   else
 	     {
 	       printf ("\nWeird waypoint %d has no connections!\n", nextwp);
-	       Terminate(ERR);
+	       // Terminate(ERR);
 	     }
 
 	  /* setze neuen Waypoint */

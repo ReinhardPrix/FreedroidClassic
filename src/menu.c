@@ -1219,22 +1219,22 @@ Level_Editor(void)
 	  // highlited filed (that is Me.pos) accordingly. This is done here:
 	  if (LeftPressed()) 
 	    {
-	      Me.pos.x-=1;
+	      if ( rintf(Me.pos.x) > 0 ) Me.pos.x-=1;
 	      while (LeftPressed());
 	    }
 	  if (RightPressed()) 
 	    {
-	      Me.pos.x+=1;
+	      if ( rintf(Me.pos.x) < CurLevel->xlen-1 ) Me.pos.x+=1;
 	      while (RightPressed());
 	    }
 	  if (UpPressed()) 
 	    {
-	      Me.pos.y-=1;
+	      if ( rintf(Me.pos.y) > 0 ) Me.pos.y-=1;
 	      while (UpPressed());
 	    }
 	  if (DownPressed()) 
 	    {
-	      Me.pos.y+=1;
+	      if ( rintf(Me.pos.y) < CurLevel->ylen-1 ) Me.pos.y+=1;
 	      while (DownPressed());
 	    }
 
@@ -1462,16 +1462,20 @@ Level_Editor(void)
 	  // Highlight currently selected option with an influencer before it
 	  PutInfluence( SINGLE_PLAYER_MENU_POINTER_POS_X, (MenuPosition+3) * (FontHeight(Menu_BFont)) - Block_Width/4 );
 
-	  CenteredPutString ( ne_screen ,  4*FontHeight(Menu_BFont),    "Save Level:");
-	  CenteredPutString ( ne_screen ,  5*FontHeight(Menu_BFont),    "Set Level name:");
-	  CenteredPutString ( ne_screen ,  6*FontHeight(Menu_BFont),    "Back to Level editing");
-	  CenteredPutString ( ne_screen ,  7*FontHeight(Menu_BFont),    "Quit Level Editor");
+	  CenteredPutString   ( ne_screen ,  4*FontHeight(Menu_BFont),    
+				"Save Level:");
+	  CenteredPrintString ( ne_screen ,  5*FontHeight(Menu_BFont),    
+				"Current: %d.  Level Up/Down" , CurLevel->levelnum );
+	  CenteredPutString   ( ne_screen ,  6*FontHeight(Menu_BFont),    
+				"Back to Level editing");
+	  CenteredPutString   ( ne_screen ,  7*FontHeight(Menu_BFont),    
+				"Quit Level Editor");
 	  
 	  SDL_Flip ( ne_screen );
 	  
 	  // Wait until the user does SOMETHING
 	  
-	  while( !SpacePressed() && !EnterPressed() && !UpPressed() && !DownPressed() && !EscapePressed() )  
+	  while( !SpacePressed() && !EnterPressed() && !UpPressed() && !DownPressed() && !EscapePressed() && !LeftPressed() && !RightPressed())  
 	    keyboard_update();
 	  
 	  if ( EscapePressed() )
@@ -1511,6 +1515,21 @@ Level_Editor(void)
 		default: 
 		  break;
 		}
+	    }
+
+	  // If the user of the level editor pressed left or right, that should have
+	  // an effect IF he/she is a the change level menu point
+	  if ( LeftPressed() )
+	    {
+	      if ( CurLevel->levelnum > 0 )
+		Teleport ( CurLevel->levelnum -1 , 3 , 3 );
+	      while (LeftPressed());
+	    }
+	  if ( RightPressed() )
+	    {
+	      if ( CurLevel->levelnum < curShip.num_levels -1 )
+		Teleport ( CurLevel->levelnum +1 , 3 , 3 );
+	      while (RightPressed());
 	    }
 
 	  // If the user pressed up or down, the cursor within

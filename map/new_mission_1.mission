@@ -42,7 +42,7 @@ Lift file to use for this mission: new_ship_1.elevators
 Crew file to use for this mission: new_ship_1.crew
 Possible Start Point : Level=4 XPos=1 YPos=1
 Possible Start Point : Level=5 XPos=3 YPos=1
-Possible Start Point : Level=6 XPos=2 YPos=1
+Possible Start Point : Level=6 XPos=3 YPos=3
 Possible Start Point : Level=7 XPos=2 YPos=1
 ** Start of Mission Briefing Text Section **
 * New Mission Briefing Text Subsection *

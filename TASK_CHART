@@ -33,18 +33,21 @@ DONE Correct the aggression of droids
 DONE Introduce a flag for new and advanced combat behaviour
      some new robots
 
-2. Read in the flag for new and advanced combat behaviour
+DONE Read in the flag for new and advanced combat behaviour
 
-3. Implement the new and advanced combat behaviour:
-   * Analyze current state and set flags: WILL_BE_HIT_BY_BULLET, HAVE_DIRECT_LINE_OF_FIRE, HAVE_BETTER_WAYPOINT
-   * Fireing state machine && Movement state machine: both independent decision processes
+3.   Implement the new and advanced combat behaviour:
+     * Analyze current state and set flags: WILL_BE_HIT_BY_BULLET, HAVE_DIRECT_LINE_OF_FIRE, HAVE_BETTER_WAYPOINT
+     * Fireing state machine && Movement state machine: both independent decision processes
+     * Changing of waypoints not randomly but decision as demanded
+       by the combat situation
+     * Movement to new waypoint immediately if threatened by enemy fire
 
 (?). Adapt the crew file format, so that you can enter types by
      their names instead of their numbers
 
-(?) Add instructions for using the Level editor in Freedroid perhaps on the home page
+DONE Add instructions for using the Level editor in Freedroid perhaps on the home page
 
--2. Split the home page up into an internal manual html file and a leveleditor manual html file
+DONE Split the home page up into the home page and a manual/leveleditor manual html file
 
 -1. Write doku on how to control the game
 
@@ -52,12 +55,12 @@ DONE Introduce a flag for new and advanced combat behaviour
    DONE Extend the Level Editor to show waypoint connections
    b. Extend the Level Editor to allow for resizing of decks
    c. Extend the Level Editor to allow for changing of color
-   d. Extend the Level Editor to allow for changing of deck map
+   DONE Extend the Level Editor to allow for changing of deck map
    DONE Extend the Level Editor to connect new waypoints to other waypoints 
    f. Allow to change the level name
-   g. Write doku for the usage of the level editor
-   h. Do segfault protection from planting tiles outside map structure
-   i. Allow for more things to be set directly: straight walls & Elevators
+   DONE Write doku for the usage of the level editor
+   DONE Do segfault protection from planting tiles outside map structure
+   i. Allow for more things to be set directly: Elevators & Boxes
 
 1. Introduce "Mission" files consisting of:
    a. Mission target specification: KILLALL, REACH_POS, KILL_TYPE
@@ -78,10 +81,6 @@ DONE Introduce a flag for new and advanced combat behaviour
              
 
 DONE Introduce new robots 
-     Introduce new fighting behaviour
-   3.a Changing of waypoints not randomly but decision as demanded
-       by the combat situation
-   3.b Movement to new waypoint immediately if threatened by enemy fire
 
 (?) Try to introduce an external file for game constants so that mods can be
     made without looking into the code.
