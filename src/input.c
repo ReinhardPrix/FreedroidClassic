@@ -437,7 +437,7 @@ ReactToSpecialKeys(void)
   // To debug the Debriefing() I added a function to add or subtract
   // a thousand points of score via numerical keyboard functions.
   // Activate this if you want to test that.  
-  /*
+
   if ( KP0Pressed() )
     {
       while (KP0Pressed());
@@ -448,7 +448,12 @@ ReactToSpecialKeys(void)
       while (KP1Pressed());
       RealScore+=1000;
     }
-  */
+  if ( KP2Pressed() )
+    {
+      while (KP2Pressed());
+      RealScore *= 2;
+    }
+
   
   if ( CPressed() && Alt_Was_Pressed()
        && Ctrl_Was_Pressed() && Shift_Was_Pressed() ) 
