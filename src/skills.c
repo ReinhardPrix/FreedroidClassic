@@ -24,8 +24,9 @@
  */
 
 /* ----------------------------------------------------------------------
- * This file contains all the functions managing the character attributes
- * and the character stats.
+ * This file contains all the functions managing the character skills,
+ * which means all the special functions and also the spells of the
+ * players character.
  * ---------------------------------------------------------------------- */
 
 #define _skills_c
@@ -73,21 +74,10 @@
 #define CHARACTERRECT_W (SCREEN_WIDTH/2)
 #define CHARACTERRECT_H (User_Rect.h)
 
-#define ENERGY_GAIN_PER_VIT_POINT 2
-#define MANA_GAIN_PER_MAGIC_POINT 2
-// #define DAMAGE_GAIN_PER_STR_POINT 2
-#define AC_GAIN_PER_DEX_POINT 1
-#define RECHARGE_SPEED_PERCENT_PER_DEX_POINT 0
-#define TOHIT_PERCENT_PER_DEX_POINT (0.5)
-
-// #define INV_BUTTON_X 20
 #define INV_BUTTON_X 600
 #define INV_BUTTON_Y 400
-// #define INV_BUTTON_Y 10
-// #define CHA_BUTTON_X 20
 #define CHA_BUTTON_X 600
 #define CHA_BUTTON_Y 430
-// #define CHA_BUTTON_Y 30
 #define INV_BUTTON_WIDTH 38
 #define INV_BUTTON_HEIGHT 22
 
