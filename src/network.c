@@ -42,10 +42,12 @@
 
 #include "SDL_net.h"
 
-#define FREEDROID_NET_PORT (5674)
+#define FREEDROID_NET_PORT (5673)
 
 #define PERIODIC_MESSAGE_DEBUG 2 
 #define SERVER_SEND_DEBUG 2 
+#define PLAYER_RECEIVE_COMMAND_DEBUG 2
+#define ENFORCE_DEBUG 2
 
 Uint16 port = FREEDROID_NET_PORT;
 Uint32 ipaddr;
@@ -817,12 +819,12 @@ EnforceServersPlayerEngram ( void )
 {
   int PlayerNum;
 
-  DebugPrintf ( 0 , "\nvoid EnforceServersAllMeUpdate ( void ) : real function call confirmed. " );
+  DebugPrintf ( ENFORCE_DEBUG , "\nvoid EnforceServersAllMeUpdate ( void ) : real function call confirmed. " );
 
   memcpy ( PlayerEngram , CommandFromServer [ 0 ] . command_data_buffer , sizeof ( PlayerEngram ) );
 
-  DebugPrintf ( 0 , "\nPlayerEngram[0].energy : %f." , PlayerEngram [ 0 ] . energy );
-  DebugPrintf ( 0 , "\nPlayerEngram[0].status : %d." , PlayerEngram [ 0 ] . status );
+  DebugPrintf ( ENFORCE_DEBUG , "\nPlayerEngram[0].energy : %f." , PlayerEngram [ 0 ] . energy );
+  DebugPrintf ( ENFORCE_DEBUG , "\nPlayerEngram[0].status : %d." , PlayerEngram [ 0 ] . status );
 
   //--------------------
   // Now we copy the players information of the engram to the
@@ -845,7 +847,7 @@ EnforceServersPlayerEngram ( void )
 
     }
 
-  DebugPrintf ( 0 , "\nvoid EnforceServersPlayerEngram ( void ) : end of function reached. " );
+  DebugPrintf ( ENFORCE_DEBUG , "\nvoid EnforceServersPlayerEngram ( void ) : end of function reached. " );
   
 }; // void EnforceServersPlayerEngram ( void ) 
 
@@ -857,7 +859,7 @@ EnforceServersFullEnemysEngram ( void )
 {
   int i ;
 
-  DebugPrintf ( 0 , "\nvoid EnforceServersFullEnemysEngram ( void ) : real function call confirmed. " );
+  DebugPrintf ( ENFORCE_DEBUG , "\nvoid EnforceServersFullEnemysEngram ( void ) : real function call confirmed. " );
 
   memcpy ( EnemyEngram , CommandFromServer [ 0 ] . command_data_buffer , sizeof ( EnemyEngram ) );
 
@@ -882,7 +884,7 @@ EnforceServersFullEnemysEngram ( void )
 
     }
 
-  DebugPrintf ( 0 , "\nvoid EnforceServersFullEnemysEngram ( void ) : end of function reached. " );
+  DebugPrintf ( ENFORCE_DEBUG , "\nvoid EnforceServersFullEnemysEngram ( void ) : end of function reached. " );
   
 }; // void EnforceServersFullEnemysEngram ( void ) 
 
@@ -895,8 +897,10 @@ EnforceServersUpdateEnemysEngram ( int NumberOfTargets )
   int i ;
   int WriteIndex;
 
-  DebugPrintf ( 0 , "\nvoid EnforceServersUpdateEnemysEngram ( void ) : real function call confirmed. " );
-  DebugPrintf ( 0 , "\nvoid EnforceServersUpdateEnemysEngram ( void ) : %d enemys to update. " , NumberOfTargets );
+  DebugPrintf ( ENFORCE_DEBUG , 
+		"\nvoid EnforceServersUpdateEnemysEngram ( void ) : real function call confirmed. " );
+  DebugPrintf ( ENFORCE_DEBUG , 
+		"\nvoid EnforceServersUpdateEnemysEngram ( void ) : %d enemys to update. " , NumberOfTargets );
 
   memcpy ( EnemyEngram , CommandFromServer [ 0 ] . command_data_buffer , sizeof ( EnemyEngram ) );
 
@@ -922,7 +926,7 @@ EnforceServersUpdateEnemysEngram ( int NumberOfTargets )
 
     }
 
-  DebugPrintf ( 0 , "\nvoid EnforceServersUpdateEnemysEngram ( void ) : end of function reached. " );
+  DebugPrintf ( ENFORCE_DEBUG , "\nvoid EnforceServersUpdateEnemysEngram ( void ) : end of function reached. " );
   
 }; // void EnforceServersUpdateEnemysEngram ( void ) 
 
@@ -935,8 +939,10 @@ EnforceServersBulletEngram ( int NumberOfTargets )
   int i ;
   int WriteIndex;
 
-  DebugPrintf ( 0 , "\nvoid EnforceServersBulletEngram ( void ) : real function call confirmed. " );
-  DebugPrintf ( 0 , "\nvoid EnforceServersBulletEngram ( void ) : %d enemys to update. " , NumberOfTargets );
+  DebugPrintf ( ENFORCE_DEBUG , 
+		"\nvoid EnforceServersBulletEngram ( void ) : real function call confirmed. " );
+  DebugPrintf ( ENFORCE_DEBUG , 
+		"\nvoid EnforceServersBulletEngram ( void ) : %d enemys to update. " , NumberOfTargets );
 
   memcpy ( BulletEngram , CommandFromServer [ 0 ] . command_data_buffer , sizeof ( BulletEngram ) );
 
@@ -960,7 +966,8 @@ EnforceServersBulletEngram ( int NumberOfTargets )
 
     }
 
-  DebugPrintf ( 0 , "\nvoid EnforceServersUpdateEnemysEngram ( void ) : end of function reached. " );
+  DebugPrintf ( ENFORCE_DEBUG , 
+		"\nvoid EnforceServersUpdateEnemysEngram ( void ) : end of function reached. " );
   
 }; // void EnforceServersBulletEngram ( void ) 
 
@@ -973,8 +980,8 @@ EnforceServersBlastEngram ( int NumberOfTargets )
   int i ;
   int WriteIndex;
 
-  DebugPrintf ( 0 , "\nvoid EnforceServersBlastEngram ( void ) : real function call confirmed. " );
-  DebugPrintf ( 0 , "\nvoid EnforceServersBlastEngram ( void ) : %d blasts to update. " , NumberOfTargets );
+  DebugPrintf ( ENFORCE_DEBUG , "\nvoid EnforceServersBlastEngram ( void ) : real function call confirmed. " );
+  DebugPrintf ( ENFORCE_DEBUG , "\nvoid EnforceServersBlastEngram ( void ) : %d blasts to update. " , NumberOfTargets );
 
   memcpy ( BlastEngram , CommandFromServer [ 0 ] . command_data_buffer , sizeof ( BlastEngram ) );
 
@@ -995,7 +1002,8 @@ EnforceServersBlastEngram ( int NumberOfTargets )
 
     }
 
-  DebugPrintf ( 0 , "\nvoid EnforceServersUpdateEnemysEngram ( void ) : end of function reached. " );
+  DebugPrintf ( ENFORCE_DEBUG , 
+		"\nvoid EnforceServersUpdateEnemysEngram ( void ) : end of function reached. " );
   
 }; // void EnforceServersBlastEngram ( void ) 
 
@@ -1008,8 +1016,8 @@ EnforceServersItemEngram ( int NumberOfTargets )
   int i ;
   int WriteIndex;
 
-  DebugPrintf ( 0 , "\nvoid EnforceServersItemEngram ( void ) : real function call confirmed. " );
-  DebugPrintf ( 0 , "\nvoid EnforceServersItemEngram ( void ) : %d blasts to update. " , NumberOfTargets );
+  DebugPrintf ( ENFORCE_DEBUG , "\nvoid EnforceServersItemEngram ( void ) : real function call confirmed. " );
+  DebugPrintf ( ENFORCE_DEBUG , "\nvoid EnforceServersItemEngram ( void ) : %d blasts to update. " , NumberOfTargets );
 
   memcpy ( ItemEngram , CommandFromServer [ 0 ] . command_data_buffer , sizeof ( ItemEngram ) );
 
@@ -1028,7 +1036,7 @@ EnforceServersItemEngram ( int NumberOfTargets )
       
     }
 
-  DebugPrintf ( 0 , "\nvoid EnforceServersUpdateEnemysEngram ( void ) : end of function reached. " );
+  DebugPrintf ( ENFORCE_DEBUG , "\nvoid EnforceServersUpdateEnemysEngram ( void ) : end of function reached. " );
   
 }; // void EnforceServersItemsEngram ( void ) 
 
@@ -1423,7 +1431,7 @@ Sorry...\n\
 }; // void SendFullBlastEngramToClient ( int PlayerNum )
 
 /* ----------------------------------------------------------------------
- * This function sends a full blast engram to a client in command form.
+ * This function sends a full item engram to a client in command form.
  * ---------------------------------------------------------------------- */
 void
 SendFullItemEngramToClient ( int PlayerNum )
@@ -1465,6 +1473,154 @@ SendFullItemEngramToClient ( int PlayerNum )
   // Now we print out the success or return value of the sending operation
   //
   DebugPrintf ( SERVER_SEND_DEBUG , "\nSending full item engram returned : %d . " , CommunicationResult );
+  if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
+    {
+      fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+The SDL NET COULD NOT SEND A FULL ITEM ENGRAM TO THE CLIENT SUCCESSFULLY\n\
+in the function void SendTextMessageToClient ( int PlayerNum , char* message ).\n\
+\n\
+The cause of this problem as reportet by the SDL_net was: \n\
+%s\n\
+\n\
+Freedroid will terminate now to draw attention \n\
+to the networking problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , SDLNet_GetError ( ) ) ;
+      Terminate(ERR);
+    }
+
+}; // void SendFullItemEngramToClient ( int PlayerNum )
+
+/* ----------------------------------------------------------------------
+ * Since memcmp may not to work correctly with structs such as items,
+ * I write my own comparison function here as recommended in the GNU C
+ * lib manual.
+ * ---------------------------------------------------------------------- */
+int 
+ItemHasChanged ( Item OneItem , Item SecondItem )
+{
+  if ( ( OneItem->type != SecondItem->type ) ||
+       ( OneItem->pos.x != SecondItem->pos.x ) ||
+       ( OneItem->pos.y != SecondItem->pos.y ) ||
+       ( OneItem->is_identified != SecondItem->is_identified ) ||
+       ( OneItem->max_duration != SecondItem->max_duration ) ||
+       ( OneItem->current_duration != SecondItem->current_duration ) ||
+       ( OneItem->prefix_code != SecondItem->prefix_code ) ||
+       ( OneItem->suffix_code != SecondItem->suffix_code ) )
+
+    return TRUE;
+  return FALSE;
+
+}; // int ItemHasChanged ( Item OneItem , Item SecondItem )
+
+/* ----------------------------------------------------------------------
+ *
+ * This function detects what changes have occured in the item list of
+ * this current players level and assembles appropriate item update
+ * information in the engram.
+ *
+ * It will also return the number of items that need updating, cause this
+ * information will be needed in the calling function.
+ *
+ * ---------------------------------------------------------------------- */
+int
+AssembleItemUpdateInformation ( int PlayerNum )
+{
+  int UpdateCounter = 0 ;
+  Level UpdateLevel = curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] ;
+  int i;
+  
+  //--------------------
+  // We proceed through all the items of this level and compare each item
+  // entry with the entry from the previous frame.
+  //
+  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+    {
+      //--------------------
+      // If we find a match, we add this item to the item engram, that
+      // will later be sent over the network and of course we count the
+      // number of added entries for later use.
+      //
+      // if ( memcmp ( & ( UpdateLevel -> ItemList [ i ] ) ,
+      // & ( UpdateLevel -> OldItemList [ i ] ) ,
+      // sizeof ( UpdateLevel -> ItemList [ i ] ) ) ) ;
+      if ( ItemHasChanged ( & ( UpdateLevel -> ItemList [ i ] ) ,
+			    & ( UpdateLevel -> OldItemList [ i ] ) ) )
+	{
+
+	  FillDataIntoItemEngram ( UpdateCounter , i , Me [ PlayerNum ] . pos . z ) ;
+	  UpdateCounter ++ ;
+
+	}
+    }
+
+  return UpdateCounter ;
+
+}; // void AssembleItemUpdateInformation ( int PlayerNum )
+
+/* ----------------------------------------------------------------------
+ * This function sends a full item engram to a client in command form.
+ * ---------------------------------------------------------------------- */
+void
+SendItemUpdateToClient ( int PlayerNum )
+{
+  int CommunicationResult;
+  int len;
+  int ChangedItems;
+  network_command LocalCommandBuffer;
+
+  // print out the message
+  DebugPrintf ( SERVER_SEND_DEBUG , "\nSending item update engram to client in command form.\n" ) ;
+
+  ChangedItems = AssembleItemUpdateInformation ( PlayerNum );
+
+  if ( ChangedItems == 0 )
+    {
+      DebugPrintf ( 0 , "\nComparison of the items on the Level of Player %d showed no changes.  Sending suppressed." ,
+		    PlayerNum );
+      return;
+    }
+  else
+    {
+      DebugPrintf ( 0 , "\nComparison of the items on the Level of Player %d showed %d changes." ,
+		    PlayerNum , ChangedItems ) ;
+    }
+
+  len = ChangedItems * sizeof ( ItemEngram [ 0 ] ) ; // the amount of bytes in the data buffer
+
+  //--------------------
+  // We check against sending too long messages to the server.
+  //
+  if ( len >= COMMAND_BUFFER_MAXLEN )
+    {
+      DebugPrintf ( 0 , "\nAttempted to send too long item update engram to client... Terminating..." );
+      Terminate ( ERR ) ;
+    }
+
+  //--------------------
+  // We prepare the network information we want to send...
+  //
+  // PrepareFullItemEngramForPlayer ( PlayerNum ) ;
+
+  //--------------------
+  // Now we prepare our command buffer.
+  //
+  LocalCommandBuffer . command_code = PLAYER_ACCEPT_ITEM_ENGRAM ;
+  LocalCommandBuffer . data_chunk_length = len ;
+  memcpy ( LocalCommandBuffer . command_data_buffer , ItemEngram , len );
+
+  CommunicationResult = SDLNet_TCP_Send ( AllPlayers [ PlayerNum ] . ThisPlayersSocketAtTheServer , 
+					  & ( LocalCommandBuffer ) , 
+					  2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length ); 
+
+  //--------------------
+  // Now we print out the success or return value of the sending operation
+  //
+  DebugPrintf ( SERVER_SEND_DEBUG , "\nSending item update engram returned : %d . " , CommunicationResult );
   if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
     {
       fprintf(stderr, "\n\
@@ -1830,59 +1986,60 @@ ExecuteServerCommand ( void )
       break;
 
     case PLAYER_SERVER_TAKE_THIS_TEXT_MESSAGE:
-      DebugPrintf ( 0 , "\nPLAYER_SERVER_TAKE_THIS_IS_TEXT_MESSAGE command received... AS CLIENT." );
+      DebugPrintf ( PLAYER_RECEIVE_COMMAND_DEBUG , 
+		    "\nPLAYER_SERVER_TAKE_THIS_IS_TEXT_MESSAGE command received... AS CLIENT." );
       DebugPrintf ( 0 , "\nMessage transmitted : %s." , & CommandFromServer [ 0 ] . command_data_buffer );
       // Terminate ( ERR );
       break;
   
     case PLAYER_ACCEPT_ALL_ME_UPDATES:
-      DebugPrintf ( 0 , "\nPLAYER_ACCEPT_ALL_ME_UPDATES command received... " );
+      DebugPrintf ( PLAYER_RECEIVE_COMMAND_DEBUG , "\nPLAYER_ACCEPT_ALL_ME_UPDATES command received... " );
       EnforceServersAllMeUpdate ( );
       // Terminate ( ERR );
       break;
 
     case PLAYER_ACCEPT_PLAYER_ENGRAM:
-      DebugPrintf ( 0 , "\nPLAYER_ACCEPT_PLAYER_ENGRAM command received... " );
+      DebugPrintf ( PLAYER_RECEIVE_COMMAND_DEBUG , "\nPLAYER_ACCEPT_PLAYER_ENGRAM command received... " );
       EnforceServersPlayerEngram ( ) ;
       // Terminate ( ERR );
       break;
 
     case PLAYER_ACCEPT_FULL_ENEMY_ENGRAM:
-      DebugPrintf ( 0 , "\nPLAYER_ACCEPT_FULL_ENEMY_ENGRAM command received... " );
+      DebugPrintf ( PLAYER_RECEIVE_COMMAND_DEBUG , "\nPLAYER_ACCEPT_FULL_ENEMY_ENGRAM command received... " );
       EnforceServersFullEnemysEngram ( ) ;
       // Terminate ( ERR );
       break;
 
     case PLAYER_ACCEPT_UPDATE_ENEMY_ENGRAM:
-      DebugPrintf ( 0 , "\nPLAYER_ACCEPT_UPDATE_ENEMY_ENGRAM command received... " );
+      DebugPrintf ( PLAYER_RECEIVE_COMMAND_DEBUG , "\nPLAYER_ACCEPT_UPDATE_ENEMY_ENGRAM command received... " );
       TransmittedEnemys = CommandFromServer [ 0 ] . data_chunk_length / sizeof ( EnemyEngram [ 0 ] ) ;
       EnforceServersUpdateEnemysEngram ( TransmittedEnemys ) ;
       // Terminate ( ERR );
       break;
 
     case PLAYER_ACCEPT_BULLET_ENGRAM:
-      DebugPrintf ( 0 , "\nPLAYER_ACCEPT_BULLET_ENGRAM command received... " );
+      DebugPrintf ( PLAYER_RECEIVE_COMMAND_DEBUG , "\nPLAYER_ACCEPT_BULLET_ENGRAM command received... " );
       TransmittedBullets = CommandFromServer [ 0 ] . data_chunk_length / sizeof ( BulletEngram [ 0 ] ) ;
       EnforceServersBulletEngram ( TransmittedBullets ) ;
       // Terminate ( ERR );
       break;
 
     case PLAYER_ACCEPT_BLAST_ENGRAM:
-      DebugPrintf ( 0 , "\nPLAYER_ACCEPT_BLAST_ENGRAM command received... " );
+      DebugPrintf ( PLAYER_RECEIVE_COMMAND_DEBUG , "\nPLAYER_ACCEPT_BLAST_ENGRAM command received... " );
       TransmittedBlasts = CommandFromServer [ 0 ] . data_chunk_length / sizeof ( BlastEngram [ 0 ] ) ;
       EnforceServersBlastEngram ( TransmittedBlasts ) ;
       // Terminate ( ERR );
       break;
 
     case PLAYER_ACCEPT_ITEM_ENGRAM:
-      DebugPrintf ( 0 , "\nPLAYER_ACCEPT_ITEM_ENGRAM command received... " );
+      DebugPrintf ( PLAYER_RECEIVE_COMMAND_DEBUG , "\nPLAYER_ACCEPT_ITEM_ENGRAM command received... " );
       TransmittedItems = CommandFromServer [ 0 ] . data_chunk_length / sizeof ( ItemEngram [ 0 ] ) ;
       EnforceServersItemEngram ( TransmittedItems ) ;
       // Terminate ( ERR );
       break;
 
     case PLAYER_DELETE_ALL_YOUR_ENEMYS:
-      DebugPrintf ( 0 , "\nPLAYER_DELETE_ALL_YOUR_ENEMYS command received... " );
+      DebugPrintf ( PLAYER_RECEIVE_COMMAND_DEBUG , "\nPLAYER_DELETE_ALL_YOUR_ENEMYS command received... " );
       ClearEnemys ( ) ;
       break;
 
@@ -2358,6 +2515,8 @@ ExecutePlayerCommand ( int PlayerNum )
       SendEnemyDeletionRequestToClient ( PlayerNum ) ;
 
       SendFullEnemyEngramToClient ( PlayerNum ) ;
+
+      SendFullItemEngramToClient ( PlayerNum ) ;
 
       break;
 
@@ -2940,6 +3099,28 @@ Sorry...\n\
 }; // void SendPlayerMouseButtonEventToServer ( void )
 
 /* ----------------------------------------------------------------------
+ * This function assembles copys of the item information on all levels
+ * of the map, so that later this information can be used to tell what
+ * changes have happened since the last server-client talk.
+ * ---------------------------------------------------------------------- */
+void
+StoreAllOldItemInformation ( void )
+{
+  int LevelNum;
+
+  // DebugPrintf ( 0 , "\nvoid StoreAllOldItemInformation ( void ) : doing it for %d levels." , curShip.num_levels ) ;
+
+  for ( LevelNum = 0 ; LevelNum < curShip.num_levels ; LevelNum ++ )
+    {
+      
+      memcpy ( & ( curShip . AllLevels [ LevelNum ] -> OldItemList [ 0 ] ) ,
+	       & ( curShip . AllLevels [ LevelNum ] ->    ItemList [ 0 ] ) ,
+	       MAX_ITEMS_PER_LEVEL * sizeof ( item ) ) ;
+    }
+
+}; // void StoreAllOldItemInformation ( void )
+
+/* ----------------------------------------------------------------------
  * This prints out the server status.  Well, it will print anyway, but
  * only the server will know the full and correct information.
  * ---------------------------------------------------------------------- */
@@ -2998,10 +3179,13 @@ SendPeriodicServerMessagesToAllClients ( void )
 
 	  SendFullBlastEngramToClient ( PlayerNum ) ;
 
-	  SendFullItemEngramToClient ( PlayerNum ) ;
+	  // SendFullItemEngramToClient ( PlayerNum ) ;
+	  SendItemUpdateToClient ( PlayerNum ) ;
 
 	}
     }
+
+  StoreAllOldItemInformation ( ) ;
 
 }; // void SendPeriodicServerMessagesToAllClients ( void )
 

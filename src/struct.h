@@ -327,12 +327,15 @@ typedef struct
 
 typedef struct
 {
+  // Here are the rather short-lived properties of the item
   finepoint pos;
   int type;
   int currently_held_in_hand; // is the item currently held 'in hand' with the mouse cursor?
   int is_identified;  // is the item identified already?
+  int max_duration;     // the maximum item durability reachable for this item
+  float current_duration; // the currently remaining durability for this item
 
-  int condition;
+  // Here are the rather long-lived properties of the item
   int prefix_code;
   int suffix_code;
 
@@ -352,9 +355,7 @@ typedef struct
   int ac_bonus;    // how much is ac increased by this item worn
   int damage; // how much damage does this item
   int damage_modifier; // how much additional damage can add to the base damage
-  int max_duration;     // the maximum item durability reachable for this item
   int gold_amount; // how much cyberbucks are there, IN CASE OF CYBERBUCKS
-  float current_duration; // the currently remaining durability for this item
   grob_point inventory_position;
 } item, *Item;
 
@@ -751,7 +752,8 @@ typedef struct
   grob_point teleporters[MAX_TELEPORTERS_ON_LEVEL];
   grob_point doors[MAX_DOORS_ON_LEVEL];
   waypoint AllWaypoints[MAXWAYPOINTS];
-  item ItemList[ MAX_ITEMS_PER_LEVEL ];
+  item    ItemList [ MAX_ITEMS_PER_LEVEL ] ;
+  item OldItemList [ MAX_ITEMS_PER_LEVEL ] ;
 }
 level, *Level;
 
