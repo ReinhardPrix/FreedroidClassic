@@ -435,23 +435,17 @@ quest_browser_interface ( void )
     {
 	RestoreMenuBackground ( 1 );
 	if ( current_quest_browser_mode == QUEST_BROWSER_SHOW_OPEN_MISSIONS )
-	{
 	    ShowGenericButtonFromList ( QUEST_BROWSER_OPEN_QUESTS_BUTTON );
-	}
-	else if ( current_quest_browser_mode == QUEST_BROWSER_SHOW_DONE_MISSIONS )
-	{
-	    ShowGenericButtonFromList ( QUEST_BROWSER_DONE_QUESTS_BUTTON );
-	}
-	else if ( current_quest_browser_mode == QUEST_BROWSER_SHOW_NOTES )
-	{
-	    ShowGenericButtonFromList ( QUEST_BROWSER_NOTES_BUTTON );
-	}
 	else
-	{
-	    GiveStandardErrorMessage ( __FUNCTION__  , "\
-Illegal quest browser status encountered.",
-				       PLEASE_INFORM, IS_FATAL );
-	}
+	    ShowGenericButtonFromList ( QUEST_BROWSER_OPEN_QUESTS_OFF_BUTTON );
+	if ( current_quest_browser_mode == QUEST_BROWSER_SHOW_DONE_MISSIONS )
+	    ShowGenericButtonFromList ( QUEST_BROWSER_DONE_QUESTS_BUTTON );
+	else
+	    ShowGenericButtonFromList ( QUEST_BROWSER_DONE_QUESTS_OFF_BUTTON );
+	if ( current_quest_browser_mode == QUEST_BROWSER_SHOW_NOTES )
+	    ShowGenericButtonFromList ( QUEST_BROWSER_NOTES_BUTTON );
+	else
+	    ShowGenericButtonFromList ( QUEST_BROWSER_NOTES_OFF_BUTTON );
 
 	quest_browser_display_mission_list ( current_quest_browser_mode );
 
