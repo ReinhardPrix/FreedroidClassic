@@ -9,7 +9,7 @@ Release TODO
 - playtest on all possible machines
 - ? make a small man-page ?
 - ? produce binary .tgz, rpm's and .deb packages? (later)
-
+- add some better manual about key-layout and game-instructions?
 
 Bugs
 =======
@@ -18,16 +18,24 @@ Preparing "final" release 1.0.0:
 
 Outstanding release-critical bugs (priority: high) 
 --------------------------------------------------
-- separate 'takeover'-mode  from 'activate' ? 
+- use RLE acceleration?
+
+- use double-buffer + HWSURF + SDL_Flip() to avoid flicker/shearing
 
 - implement the 'Alert' feature of the original version
 
 - adapt LevelEditor to new waypoint/connections scheme
   
-- load all droid pics at startup, to avoid delays in DroidShow
-  (done, but maybe we should show 3D animated pics??)
-
 - playtest on a _really_ slow machine...
+
+- check and adjust 614 parameters (too fast shot-rate!)
+
+- more flexible theme-handling to allow new themes to be added more 
+  easily...
+
+- check if we cannot improve smoothness of scrolling/gameplay, 
+  maybe by reducing fps and explicitly keeping it constant..?? 
+  --> there always is some small 'jitter', worst on non-dma machines!
 
 Outstanding normal bugs (priority: normal)
 ------------------------------------------
@@ -233,8 +241,6 @@ Resolved bugs
           but of the size of the smalled rectrangle containing the uncroped rotated 
 	  square of this size.
 
-
-
 - DONE Put the 'shipname' into the maps file.  Currently 'Paradroid' is always displayed
        as the current ship.
 
@@ -294,10 +300,8 @@ Resolved bugs
 - mouse-cursor visible/invisible should be done in input.c !
   (done)
 
-
 - more mouse-support in Konsole, lift + menu
   (done?!)
-
 
 - missing 711 ...
   (done)
@@ -326,3 +330,18 @@ Resolved bugs
   (done!)
 - acoustic "countdown" in takeover game might be useful!
   --> (done)
+- load all droid pics at startup, to avoid delays in DroidShow
+  (done) 
+- make sure game doesnt SegFault when files are missing
+  (should be done now: pass criticality of file to find_file())
+- change laser-rifle pic in classic theme
+  (done)
+- separate 'takeover'-mode  from 'activate' ? 
+  (done! I think that's much better!)
+- adapt Key-description to new "activate" keys
+  (done)
+- generate 3D rotation models for droids and use them in show_droid_info!
+  (done)
+
+- in ThouArtDefeated: need to use a png-pic of 999 for transparency!
+  (done)
