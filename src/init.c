@@ -245,13 +245,17 @@ Get_Item_Data ( char* DataPointer )
   char *EndOfItemData;
   int i;
   int ItemIndex=0;
+  char *YesNoString;
 
   double bullet_speed_calibrator;
   double bullet_damage_calibrator;
 
-#define ITEM_SECTION_BEGIN_STRING "*** Start of Bullet Data Section: ***" 
-#define ITEM_SECTION_END_STRING "*** End of Bullet Data Section: ***" 
-#define NEW_ITEM_TYPE_BEGIN_STRING "** Start of new bullet specification subsection **"
+#define ITEM_SECTION_BEGIN_STRING "*** Start of item data section: ***"
+#define ITEM_SECTION_END_STRING "*** End of item data section: ***"
+#define NEW_ITEM_TYPE_BEGIN_STRING "** Start of new item specification subsection **"
+
+#define ITEM_NAME_INDICATION_STRING "Item name=\""
+#define ITEM_CAN_BE_APPLIED_IN_COMBAT "Item can be applied in combat=\""
 
 #define ITEM_RECHARGE_TIME_BEGIN_STRING "Time is takes to recharge this bullet/weapon in seconds :"
 #define ITEM_SPEED_BEGIN_STRING "Flying speed of this bullet type :"
@@ -265,6 +269,74 @@ Get_Item_Data ( char* DataPointer )
 
   ItemPointer = LocateStringInData ( DataPointer , ITEM_SECTION_BEGIN_STRING );
   EndOfItemData = LocateStringInData ( DataPointer , ITEM_SECTION_END_STRING );
+
+  //--------------------
+  // Later, when we allow for an arbitrary amount of different items instead
+  // of only the amount that fits into a fixed array, it will be useful to count
+  // the number of items before, so that we can allocate the right amount of memory
+  // in advance.  We count already, though it's not yet dynamic memory that is used.
+  //
+  Number_Of_Item_Types = CountStringOccurences ( DataPointer , NEW_ITEM_TYPE_BEGIN_STRING ) ;
+  DebugPrintf ( 0 , "\nWe have counted %d different item types in the game data file." , Number_Of_Item_Types );
+
+  //--------------------
+  // Now we start to read the values for each bullet type:
+  // 
+  ItemPointer=DataPointer;
+
+  while ( (ItemPointer = strstr ( ItemPointer, NEW_ITEM_TYPE_BEGIN_STRING )) != NULL)
+    {
+      DebugPrintf ( 0 , "\n\nFound another Item specification entry!  Lets add that to the others!");
+      ItemPointer ++; // to avoid doubly taking this entry
+
+      // Now we read in the name of this item
+      ItemMap[ItemIndex].ItemName = ReadAndMallocStringFromData ( ItemPointer , ITEM_NAME_INDICATION_STRING , "\"" ) ;
+
+      // Now we read in the name of this item
+      YesNoString = ReadAndMallocStringFromData ( ItemPointer , ITEM_CAN_BE_APPLIED_IN_COMBAT , "\"" ) ;
+      if ( strcmp( YesNoString , "yes" ) == 0 )
+	{
+	  ItemMap[ItemIndex].item_can_be_applied_in_combat = TRUE;
+	}
+      else if ( strcmp( YesNoString , "no" ) == 0 )
+	{
+	  ItemMap[ItemIndex].item_can_be_applied_in_combat = FALSE;
+	}
+      else
+	{
+	  fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+The item specification of an item in freedroid.ruleset should contain an \n\
+answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.\n\
+\n\
+This indicated a corrupted freedroid.ruleset file with an error at least in\n\
+the item specification section.  Please correct the error or send mail to the\n\
+freedroid development team.\n\
+\n\
+But for now Freedroid will terminate to draw attention \n\
+to the initialisation problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" );
+	  Terminate( ERR );
+	}
+
+      // Now we read in the recharging time for this bullettype(=weapontype)
+      ReadValueFromString( ItemPointer ,  "Energy gain on application in combat=" , "%lf" , 
+			   &ItemMap[ItemIndex].energy_gain_uppon_application_in_combat , EndOfItemData );
+
+      // Now we read in the recharging time for this bullettype(=weapontype)
+      ReadValueFromString( ItemPointer ,  "Item weight=" , "%lf" , 
+			   &ItemMap[ItemIndex].item_weight , EndOfItemData );
+
+      // Now we read in the maximal speed this type of bullet can go.
+      ReadValueFromString( ItemPointer ,  "Picture number=" , "%d" , 
+			   &ItemMap[ItemIndex].picture_number , EndOfItemData );
+
+      ItemIndex++;
+    }
 
 
 }; // void Get_Item_Data ( char* DataPointer );
@@ -1124,6 +1196,11 @@ InitNewMissionList ( char *MissionName )
       DeleteBlast( i );
     }
   DebugPrintf ( 1 , "\nvoid InitNewMission( ... ): All blasts have been deleted...");
+  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+    {
+      Me.Inventory[ i ].type = (-1);
+    }
+  DebugPrintf ( 1 , "\nvoid InitNewMission( ... ): Inventory has been emptied...");
 
 
   //--------------------
@@ -1405,13 +1482,9 @@ InitFreedroid (void)
 
   for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
     {
-      AllItems[ i ].pos.x = 7;
-      AllItems[ i ].pos.y = 7;
+      AllItems[ i ].pos.x = 0;
+      AllItems[ i ].pos.y = 0;
       AllItems[ i ].type = ( -1 ) ;
-    }
-  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
-    {
-      Me.Inventory[ i ].type = (-1);
     }
 
   AllItems[ 0 ].pos.x = 7;
