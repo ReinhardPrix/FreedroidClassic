@@ -571,7 +571,6 @@ MoveThisEnemy( int EnemyNum )
 	{
 
 	  RealScore += DECKCOMPLETEBONUS;
-	  //	  ShowScore += DECKCOMPLETEBONUS;  // FIXME: ?? why not count up as usual?
 
 	  CurLevel->empty = TRUE;
 	  CurLevel->timer = WAIT_LEVELEMPTY;
