@@ -60,15 +60,13 @@ InitFont (BFont_Info * Font)
 	  // output of this character.
 	  //
 	  tmp_char1 = SDL_CreateRGBSurface( 0 , CharWidth ( Font , i ) , FontHeight (Font) -1 , vid_bpp, 0, 0, 0, 0 );
-	  // tmp_char1 = SDL_DisplayFormatAlpha ( Font -> Surface );
-	  // SDL_SetAlpha( tmp_char1 , SDL_SRCALPHA, 255);
 	  SDL_SetAlpha( Font->Surface , 0 , 255 );
-	  // SDL_SetColorKey (Font->Surface, SDL_SRCCOLORKEY, GetPixel (Font->Surface, 0, Font->Surface->h - 1));
 	  SDL_SetColorKey( Font->Surface , 0 , 0 );
 	  Font -> char_surface [ i ] = SDL_DisplayFormatAlpha ( tmp_char1 ) ;
 	  our_SDL_blit_surface_wrapper ( Font->Surface, & ( Font -> Chars [ i ] ) , Font -> char_surface [ i ] , NULL );
 	  SDL_SetAlpha( Font -> char_surface [ i ] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-	  
+	  SDL_SetColorKey ( Font -> char_surface [ i ] , 0 , 0 );
+
 	  flip_image_horizontally ( Font -> char_surface [ i ] ) ;
 
 	  //--------------------
@@ -90,8 +88,8 @@ InitFont (BFont_Info * Font)
   if (SDL_MUSTLOCK (Font->Surface))
     SDL_UnlockSurface (Font->Surface);
 
-  SDL_SetColorKey (Font->Surface, SDL_SRCCOLORKEY,
-		   GetPixel (Font->Surface, 0, Font->Surface->h - 1));
+  SDL_SetColorKey ( Font->Surface, 0 , 0 );
+  SDL_SetAlpha( Font -> Surface , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
 }; // void InitFont (BFont_Info * Font)
 
 /* ----------------------------------------------------------------------
@@ -256,26 +254,33 @@ SetCurrentFont (BFont_Info * Font)
   CurrentFont = Font;
 }; // void SetCurrentFont (BFont_Info * Font)
 
-/* Returns the pointer to the current font strucure in use */
+/* ----------------------------------------------------------------------
+ * Returns the pointer to the current font strucure in use 
+ * ---------------------------------------------------------------------- */
 BFont_Info *
 GetCurrentFont (void)
 {
   return CurrentFont;
-}
+}; // BFont_Info * GetCurrentFont (void)
 
-/* Return the font height */
+/* ----------------------------------------------------------------------
+ * Return the font height 
+ * ---------------------------------------------------------------------- */
 int
 FontHeight (BFont_Info * Font)
 {
   return (Font->h);
-}
+}; // int FontHeight (BFont_Info * Font)
 
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
 void
 SetFontHeight (BFont_Info * Font, int height)
 {
   Font->h = height;
-}
-
+}; // void SetFontHeight (BFont_Info * Font, int height)
 
 /* Return the width of the "c" character */
 int
@@ -284,90 +289,61 @@ CharWidth (BFont_Info * Font, int c)
   return Font->Chars[c].w;
 }
 
-/* Puts a single char on the surface */
+/* ----------------------------------------------------------------------
+ * Puts a single char on the surface 
+ * ---------------------------------------------------------------------- */
 int
 PutChar (SDL_Surface * Surface, int x, int y, int c)
 {
   return PutCharFont (Surface, CurrentFont, x, y, c);
-}
+}; // int PutChar (SDL_Surface * Surface, int x, int y, int c)
 
-/* Puts a single char on the surface with the specified font */
+/* ----------------------------------------------------------------------
+ * Puts a single char on the surface with the specified font 
+ * ---------------------------------------------------------------------- */
 int
 PutCharFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y, int c)
 {
-  int r = 0;
   SDL_Rect dest;
-  // SDL_Surface* tmp_char1;
-  // SDL_Surface* tmp_char2;
-  static int first_call = TRUE;
 
-  if ( use_open_gl )
+  dest.w = CharWidth (Font, ' ');
+  dest.h = FontHeight (Font) ;
+  dest.x = x;
+  dest.y = y;
+
+  if (c != ' ')
     {
-      /*
-
-      tmp_char1 = SDL_CreateRGBSurface( 0 , CharWidth (Font, c ) , FontHeight (Font) -1 , vid_bpp, 0, 0, 0, 0 );
-      // tmp_char1 = SDL_DisplayFormatAlpha ( Font -> Surface );
-      // SDL_SetAlpha( tmp_char1 , SDL_SRCALPHA, 255);
-      SDL_SetAlpha( Font->Surface , 0 , 255 );
-      // SDL_SetColorKey (Font->Surface, SDL_SRCCOLORKEY, GetPixel (Font->Surface, 0, Font->Surface->h - 1));
-      SDL_SetColorKey( Font->Surface , 0 , 0 );
-      tmp_char2 = SDL_DisplayFormatAlpha ( tmp_char1 ) ;
-      our_SDL_blit_surface_wrapper ( Font->Surface, &Font->Chars[c], tmp_char2 , NULL );
-      // tmp_char2 -> flags = tmp_char2 -> flags | SDL_SRCALPHA; 
-      SDL_SetAlpha( tmp_char2 , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-      */
-
       //--------------------
+      // In case of open gl output, we use our prepared small surfaces, since blitting
+      // only a part of the source image isn't effectively implemented in our SDL-OpenGL-wrapper
+      // function.
       //
-      dest.w = CharWidth (Font, ' ');
-      dest.h = FontHeight (Font) ;
-      dest.x = x;
-      dest.y = y;
-      if (c != ' ')
-	{
-	  // our_SDL_blit_surface_wrapper (Font->Surface, &Font->Chars[c], Surface, &dest);
-	  // our_SDL_blit_surface_wrapper ( tmp_char2 , NULL , Surface, &dest);
-	  our_SDL_blit_surface_wrapper ( Font -> char_surface [ c ] , NULL , Surface, &dest);
-	}
-      
-      // SDL_FreeSurface ( tmp_char1 );
-      // SDL_FreeSurface ( tmp_char2 );
-
-    }
-  else
-    {
-      dest.w = CharWidth (Font, ' ');
-      dest.h = FontHeight (Font);
-      dest.x = x;
-      dest.y = y;
-      if ( c != ' ' )
-	{
-	  our_SDL_blit_surface_wrapper (Font->Surface, &Font->Chars[c], Surface, &dest);
-	}
+      if ( use_open_gl )
+	our_SDL_blit_surface_wrapper ( Font -> char_surface [ c ] , NULL , Surface, &dest);
+      else
+	our_SDL_blit_surface_wrapper (Font->Surface, &Font->Chars[c], Surface, &dest);
     }
 
-  r = dest.w;
-
-  if ( first_call )
-    {
-      printf ( "\nWidth of letter 'E': %d.\n" , CharWidth ( Font, 'E' ) );
-      printf ( "\nReturn value: %d.\n" , r );
-      printf ( "\nLetter is : '%c'.\n" , c );
-      first_call = FALSE ;
-    }
-  // return r;
   return CharWidth ( Font , c ) ;
-}
 
+}; // int PutCharFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y, int c)
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
 void
 PutString (SDL_Surface * Surface, int x, int y, char *text)
 {
   PutStringFont (Surface, CurrentFont, x, y, text);
-}
+}; // void PutString (SDL_Surface * Surface, int x, int y, char *text)
 
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
 void
-PutStringFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y,
-	       char *text)
+PutStringFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y, char *text)
 {
   int i = 0;
   //--------------------
@@ -393,15 +369,22 @@ PutStringFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y,
       x += PutCharFont (Surface, Font, x, y, text[i]) + kerning;
       i++;
     }
-}
+}; // void PutStringFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y, char *text)
 
-
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
 int
 TextWidth (char *text)
 {
   return ( TextWidthFont (CurrentFont, text) ) ;
-}
+}; // int TextWidth (char *text)
 
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
 int
 TextWidthFont (BFont_Info * Font, char *text)
 {
@@ -424,8 +407,7 @@ TextWidthFont (BFont_Info * Font, char *text)
       i++;
     }
   return x;
-}
-
+}; // int TextWidthFont (BFont_Info * Font, char *text)
 
 /* counts the spaces of the strings */
 int
