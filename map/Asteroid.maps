@@ -203,7 +203,6 @@ ob_type=1 ob_x=63.00 ob_y=16.50 ob_na=-1
 ob_type=2 ob_x=63.50 ob_y=17.00 ob_na=-1 
 ob_type=1 ob_x=74.00 ob_y=16.50 ob_na=-1 
 ob_type=2 ob_x=73.50 ob_y=17.00 ob_na=-1 
-ob_type=19 ob_x=14.50 ob_y=17.50 ob_na=-1 
 ob_type=1 ob_x=20.00 ob_y=17.50 ob_na=-1 
 ob_type=1 ob_x=24.00 ob_y=17.50 ob_na=-1 
 ob_type=1 ob_x=29.00 ob_y=17.50 ob_na=-1 
@@ -276,7 +275,6 @@ ob_type=1 ob_x=55.00 ob_y=20.50 ob_na=-1
 ob_type=1 ob_x=57.00 ob_y=20.50 ob_na=-1 
 ob_type=1 ob_x=65.00 ob_y=20.50 ob_na=-1 
 ob_type=1 ob_x=72.00 ob_y=20.50 ob_na=-1 
-ob_type=19 ob_x=13.50 ob_y=21.50 ob_na=-1 
 ob_type=11 ob_x=16.00 ob_y=21.50 ob_na=-1 
 ob_type=15 ob_x=44.00 ob_y=21.50 ob_na=-1 
 ob_type=11 ob_x=48.00 ob_y=21.50 ob_na=-1 
@@ -2359,6 +2357,8 @@ ob_type=36 ob_x=89.50 ob_y=4.50 ob_na=-1
 ob_type=126 ob_x=86.50 ob_y=4.50 ob_na=-1 
 ob_type=129 ob_x=83.50 ob_y=3.50 ob_na=-1 
 ob_type=129 ob_x=7.50 ob_y=3.50 ob_na=-1 
+ob_type=21 ob_x=14.50 ob_y=17.50 ob_na=-1 
+ob_type=21 ob_x=13.50 ob_y=21.50 ob_na=-1 
 End of obstacle data
 Start of pure map label information for this level
 label.pos.x=48 label.pos.y=21 label.label_name="StoneStartGameSquare"
@@ -8261,7 +8261,7 @@ ob_type=1 ob_x=35.00 ob_y=25.50 ob_na=-1
 ob_type=2 ob_x=34.50 ob_y=26.00 ob_na=-1 
 ob_type=1 ob_x=40.00 ob_y=25.50 ob_na=-1 
 ob_type=56 ob_x=42.50 ob_y=25.50 ob_na=-1 
-ob_type=25 ob_x=44.50 ob_y=25.50 ob_na=-1 
+ob_type=24 ob_x=44.50 ob_y=25.50 ob_na=-1 
 ob_type=57 ob_x=46.50 ob_y=25.50 ob_na=-1 
 ob_type=1 ob_x=50.00 ob_y=25.50 ob_na=-1 
 ob_type=2 ob_x=30.50 ob_y=27.00 ob_na=-1 
@@ -8272,14 +8272,14 @@ ob_type=2 ob_x=33.50 ob_y=27.00 ob_na=-1
 ob_type=1 ob_x=40.00 ob_y=26.50 ob_na=-1 
 ob_type=1 ob_x=30.00 ob_y=27.50 ob_na=-1 
 ob_type=2 ob_x=29.50 ob_y=28.00 ob_na=-1 
-ob_type=25 ob_x=42.50 ob_y=27.50 ob_na=-1 
-ob_type=25 ob_x=46.50 ob_y=27.50 ob_na=-1 
+ob_type=24 ob_x=42.50 ob_y=27.50 ob_na=-1 
+ob_type=24 ob_x=46.50 ob_y=27.50 ob_na=-1 
 ob_type=29 ob_x=48.75 ob_y=27.50 ob_na=-1 
 ob_type=1 ob_x=29.00 ob_y=28.50 ob_na=-1 
 ob_type=29 ob_x=40.25 ob_y=28.50 ob_na=-1 
 ob_type=1 ob_x=29.00 ob_y=29.50 ob_na=-1 
 ob_type=55 ob_x=42.50 ob_y=29.50 ob_na=-1 
-ob_type=25 ob_x=44.50 ob_y=29.50 ob_na=-1 
+ob_type=24 ob_x=44.50 ob_y=29.50 ob_na=-1 
 ob_type=58 ob_x=46.50 ob_y=29.50 ob_na=-1 
 ob_type=1 ob_x=29.00 ob_y=30.50 ob_na=-1 
 ob_type=1 ob_x=50.00 ob_y=30.50 ob_na=-1 
@@ -8621,7 +8621,7 @@ ob_type=1 ob_x=38.00 ob_y=31.50 ob_na=-1
 ob_type=1 ob_x=38.00 ob_y=32.50 ob_na=-1 
 ob_type=6 ob_x=38.50 ob_y=33.00 ob_na=-1 
 ob_type=6 ob_x=39.50 ob_y=33.00 ob_na=-1 
-ob_type=20 ob_x=69.50 ob_y=12.50 ob_na=-1 
+ob_type=19 ob_x=69.50 ob_y=12.50 ob_na=-1 
 ob_type=26 ob_x=69.50 ob_y=14.50 ob_na=0 
 ob_type=2 ob_x=50.50 ob_y=26.00 ob_na=-1 
 ob_type=2 ob_x=50.50 ob_y=30.00 ob_na=-1 
@@ -8752,7 +8752,7 @@ ob_type=1 ob_x=45.00 ob_y=89.50 ob_na=-1
 ob_type=2 ob_x=45.50 ob_y=90.00 ob_na=-1 
 ob_type=1 ob_x=47.00 ob_y=89.50 ob_na=-1 
 ob_type=2 ob_x=46.50 ob_y=90.00 ob_na=-1 
-ob_type=25 ob_x=47.50 ob_y=89.50 ob_na=-1 
+ob_type=24 ob_x=47.50 ob_y=89.50 ob_na=-1 
 ob_type=1 ob_x=49.00 ob_y=89.50 ob_na=-1 
 ob_type=2 ob_x=49.50 ob_y=90.00 ob_na=-1 
 ob_type=1 ob_x=61.00 ob_y=89.50 ob_na=-1 
@@ -8950,7 +8950,7 @@ ob_type=2 ob_x=75.50 ob_y=83.00 ob_na=-1
 ob_type=2 ob_x=76.50 ob_y=83.00 ob_na=-1 
 ob_type=2 ob_x=34.50 ob_y=85.00 ob_na=-1 
 ob_type=2 ob_x=35.50 ob_y=85.00 ob_na=-1 
-ob_type=25 ob_x=36.50 ob_y=84.50 ob_na=-1 
+ob_type=24 ob_x=36.50 ob_y=84.50 ob_na=-1 
 ob_type=2 ob_x=38.50 ob_y=85.00 ob_na=-1 
 ob_type=1 ob_x=34.00 ob_y=85.50 ob_na=-1 
 ob_type=2 ob_x=34.50 ob_y=86.00 ob_na=-1 
@@ -16735,7 +16735,7 @@ Nr.= 52 x=  39 y=  15	 connections:   51  96   4  53  50
 Nr.= 53 x=  35 y=  14	 connections:   52   4  54  49
 Nr.= 54 x=  31 y=  11	 connections:   53  49  55
 Nr.= 55 x=  27 y=   7	 connections:   54  47  48  57  56
-Nr.= 56 x=  22 y=   4	 connections:   57  55  47
+Nr.= 56 x=  22 y=   4	 connections:   57  55  47  65
 Nr.= 57 x=  21 y=   7	 connections:   55  56
 Nr.= 58 x=  21 y=  13	 connections:   59  98  97  57
 Nr.= 59 x=  17 y=  13	 connections:  100  58
@@ -16743,8 +16743,8 @@ Nr.= 60 x=  13 y=  13	 connections:   61  66
 Nr.= 61 x=  10 y=  10	 connections:   62  60
 Nr.= 62 x=   9 y=   7	 connections:   63  61
 Nr.= 63 x=  10 y=   4	 connections:   64  62
-Nr.= 64 x=  12 y=   2	 connections:   63
-Nr.= 65 x=  16 y=   1	 connections: 
+Nr.= 64 x=  12 y=   2	 connections:   63  65
+Nr.= 65 x=  16 y=   1	 connections:   56  64
 Nr.= 66 x=  12 y=  15	 connections:   60  67
 Nr.= 67 x=   9 y=  16	 connections:   66  68
 Nr.= 68 x=  10 y=  21	 connections:   67  69
