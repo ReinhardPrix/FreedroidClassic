@@ -368,7 +368,7 @@ enum _directions
 #define MAX_ITEMS_IN_INVENTORY 100
 #define INVENTORY_GRID_WIDTH 9
 #define INVENTORY_GRID_HEIGHT 6
-#define NUMBER_OF_ITEM_PICTURES 22
+#define NUMBER_OF_ITEM_PICTURES 28
 #define ALL_ITEMS 100
 
 #define MAX_LIFTS	 	50  	/* actually the entries to the lifts */

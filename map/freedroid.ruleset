@@ -133,6 +133,26 @@ Cannot fire until previous bullet has been deleted : 0
 Type of blast this bullet causes when crashing e.g. against a wall : 0
 ** End of new bullet specification subsection **
 
+// this is half of the influencer primitive rifle
+** Start of new bullet specification subsection **
+Time is takes to recharge this bullet/weapon in seconds : 0.8
+Flying speed of this bullet type : 8.0
+Damage cause by a hit of this bullet type : 12
+Number of different phases that were designed for this bullet type : SEE CONFIG.THEME FILE
+Cannot fire until previous bullet has been deleted : 0
+Type of blast this bullet causes when crashing e.g. against a wall : 0
+** End of new bullet specification subsection **
+
+// this is even less than half of the influencer shot, only a white ball so far
+** Start of new bullet specification subsection **
+Time is takes to recharge this bullet/weapon in seconds : 0.4
+Flying speed of this bullet type : 8.0
+Damage cause by a hit of this bullet type : 8
+Number of different phases that were designed for this bullet type : SEE CONFIG.THEME FILE
+Cannot fire until previous bullet has been deleted : 0
+Type of blast this bullet causes when crashing e.g. against a wall : 0
+** End of new bullet specification subsection **
+
 
 *** End of Bullet Data Section: ***
 
@@ -756,6 +776,61 @@ Picture number=17
 Sound number=0 
 ** End of new item specification subsection **
 
+// Item No. 22
+** Start of new item specification subsection **
+Item name="Single primitive laser device"
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item can be installed in drive slot="no"
+Item can be installed in weapon slot="yes"
+Item can be installed in armour slot="no"
+Item can be installed in shield slot="no"
+Item can be installed in special slot="no"
+Item can be installed in aux slot="no"
+Item installation changes weapon into new value=2
+Item installation changes drive into new value=-1
+Energy gain on application in combat=60
+Item weight=0.8
+Item drive maxspeed=0
+Item drive acceleration=0
+Item as gun: recharging time=0.8
+Item as gun: speed of bullets=8.0
+Item as gun: damage of bullets=12
+Item as gun: blast type to create=1
+Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=6
+Item as armour: ac_bonus=0
+Picture number=18
+Sound number=0 
+** End of new item specification subsection **
+
+// Item No. 23
+** Start of new item specification subsection **
+Item name="Single substandard plasma pistol"
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item can be installed in drive slot="no"
+Item can be installed in weapon slot="yes"
+Item can be installed in armour slot="no"
+Item can be installed in shield slot="no"
+Item can be installed in special slot="no"
+Item can be installed in aux slot="no"
+Item installation changes weapon into new value=2
+Item installation changes drive into new value=-1
+Energy gain on application in combat=60
+Item weight=0.8
+Item drive maxspeed=0
+Item drive acceleration=0
+Item as gun: recharging time=0.6
+Item as gun: speed of bullets=8.0
+Item as gun: damage of bullets=8
+Item as gun: blast type to create=1
+Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=7
+Item as armour: ac_bonus=0
+Picture number=18
+Sound number=0 
+** End of new item specification subsection **
 
 *** End of item data section: ***
 
