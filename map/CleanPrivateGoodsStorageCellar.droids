@@ -87,11 +87,35 @@ Start of Question-Response List for this friendly droid
 
 Question="REFERENCE_NAME" Answer="CHANDRA"
 
-Question="hello" Answer="Ah, how good it is to see you in this finally awoken state.  You must know, that we have gone to great lengthes and danger in contructing you.  You are the reincarnation of a forbidden device, that might save us from utter destruction and the world from total enslavement.  Just tell me if you feel ready for the MISSION yet."
+Question="DESCRIPTION" Answer="You see a man in his mid twenties who is grinning from ear to ear for happyness about his newest creation."
+
+Question="hello" Answer="Ah, how good it is to see you in this finally awoken state.  You must know, that we have gone to great lengthes and danger in contructing you.  You are the reincarnation of a forbidden device, that might save us from utter destruction and the world from total enslavement.  Just tell me if you feel ready for the MISSION yet or if you need more INFO, just say so."
+
+Question="info" Answer="Our situation is as follows:  The government has been taken over by a most powerful corporation which also controls most of the droids in the world and which would like to see all of us killed.  Not wanting to die now, we've constructed YOU.  You are a reconstruction of the influence device that has been successfully employed to clean out a robot freighter long time ago.  But due to MS legal action, the project had to be canceled after that and the archive was moved to the 'forbidden' state."
+
+Question="forbidden" Answer="A really silly concept that some religious pressure groups introduced to ban further research in artificial intelligence after the recent advances."
+
+Question="advances" Answer="The recent advances in AI allowed to create 'brains', that are non-deterministic non-propabilistic algorithms, wich is a contradicion in itself.  We should rather call them 'entities of consciousness'.  The problem these religious groups had with this research is not entirely clear to me.  Perhaps the leader of those groups just needed an enemy to attack, so to increase the fanatism of their followers."
+
+Question="fanatism" Answer="Fanatism is a harmful concept, as well for those living it as well as those who don't."
+
+Question="ms" Answer="The MS is the most powerful organisation in the known universe.  You should talk to Auda about all te details.  She seems to know everything that has ever been on the radio."
 
 Question="name" Answer="I'm Dr. Chandra.  I was the head of this institution."
 
 Question="job" Answer="Ah, haha, I was the head of this institution."
+
+Question="head" Answer="It's easy to find: Just search above my shoulders, haha.  Well no, to be honest it doesn't mean anything but just an administrative status."
+
+Question="administrative" Answer="I hate administrative work.  It's the oposite of creative work."
+
+Question="creative" Answer="Creative work is IMHO something that cannot be 'done' but that must come to you.  Like many of my colleages I hope that it will keep coming to me in the future as well."
+
+Question="future" Answer="That's always an unsure thing.  If I had a choice, I'd like it to be peaceful and in the company of my scientific friends and co-workers."
+
+Question="friends" Answer="Friends are most important."
+
+Question="co-workers" Answer="Without co-workers noone would get anywhere far."
 
 Question="chandra" Answer="Yes, that's my name and the name of many of half on my ancestors."
 
@@ -124,6 +148,8 @@ End of Decision-Request List for this friendly droid
 Start of Question-Response List for this friendly droid
 
 Question="REFERENCE_NAME" Answer="AUDA"
+
+Question="DESCRIPTION" Answer="You see a typical old 302 messenger droid model.  This one is covered with dents and bruises which indicate that it might indeed be a rather old machine."
 
 Question="hello" Answer="Hello!  You must be the droid they contructed from the forbidden archive data.  They say that you could save us.  I wish this was really true."
 
