@@ -3196,6 +3196,18 @@ IsPassable ( float x , float y , int z )
   x_tile = rintf ( x ) ;
   y_tile = rintf ( y ) ;
 
+  //--------------------
+  // Now if the position in question is directly outside of the borders of the
+  // current level, then this position can't be passable in the normal sense, 
+  // or at least it wouldn't make sense for anything to pass there, so we can
+  // as well declare is not passable outright.
+  //
+  if ( ( x < 0 ) || ( y < 0 ) || ( x_tile >= PassLevel -> xlen ) || ( y_tile >= PassLevel -> ylen ) )
+    return ( FALSE );
+
+  //--------------------
+  // Now if the x/y position is at least inside the map, we need to look closer
+  //
   if ( x_tile > 0 )
     {
       if ( position_collides_with_obstacles_on_square ( x , y , x_tile - 1 , y_tile , PassLevel ) ) 

@@ -1745,9 +1745,9 @@ DisplayBigScreenMessage( void )
  *      NOTE: the previous clip-rectange is restored before
  *            the function returns!
  *
- *      NOTE2: this function _does not_ update the screen
+ *     NOTE2: this function _does not_ update the screen
  *
- * @Ret: TRUE if some characters where written inside the clip rectangle
+ * @Ret: TRUE  if some characters where written inside the clip rectangle
  *       FALSE if not (used by ScrollText to know if Text has been scrolled
  *             out of clip-rect completely)
  *-----------------------------------------------------------------*/
@@ -1756,16 +1756,30 @@ DisplayText (char *Text, int startx, int starty, const SDL_Rect *clip)
 {
   char *tmp;	// mobile pointer to the current position in the string to be printed
   SDL_Rect Temp_Clipping_Rect; // adding this to prevent segfault in case of NULL as parameter
-
   SDL_Rect store_clip;
 
+  //--------------------
+  // We position the internal text cursor on the right spot for
+  // the first character to be printed.
+  //
   if ( startx != -1 ) MyCursorX = startx;		
   if ( starty != -1 ) MyCursorY = starty;
 
+  //--------------------
+  // We make a backup of the current clipping rect, so we can respore
+  // it later.
+  //
+  SDL_GetClipRect (Screen, &store_clip);
 
-  SDL_GetClipRect (Screen, &store_clip);  /* store previous clip-rect */
+  //--------------------
+  // If we did receive some clipping rect in the parameter list (like e.g. it's
+  // always the case with dialog output) we enforce this new clipping rect, otherwise
+  // we just set the clipping rect to contain the whole screen.
+  //
   if ( clip != NULL )
-    SDL_SetClipRect ( Screen , clip );
+    {
+      SDL_SetClipRect ( Screen , clip );
+    }
   else
     {
       clip = & Temp_Clipping_Rect;
@@ -1775,8 +1789,12 @@ DisplayText (char *Text, int startx, int starty, const SDL_Rect *clip)
       Temp_Clipping_Rect.h=SCREEN_HEIGHT;
     }
 
-
-  tmp = Text;			/* running text-pointer */
+  //--------------------
+  // Now we can start to print the actual text to the screen.
+  //
+  // The running text pointer must be initialized.
+  //
+  tmp = Text;
 
   while ( *tmp && (MyCursorY < clip->y + clip->h) )
     {
