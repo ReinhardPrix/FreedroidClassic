@@ -42,6 +42,7 @@
 #include "global.h"
 #include "text.h"
 
+
 int CharLenList[100] = {
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	/* ' !"#$%&'()' */
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	/* '*+,-./0123' */
@@ -344,11 +345,13 @@ GetString (int MaxLen, int echo)
   int key;             /* last 'character' entered */
   int curpos;		/* zaehlt eingeg. Zeichen mit */
   int finished;
-  int TextOutX, TextOutY;	/* Einfuegepunkt zum Darstellen der Eingabe */
+  SDL_Rect char_rect;
 
-  /* Texteingabe an momentaner Cursor-Pos. */
-  TextOutX = MyCursorX;
-  TextOutY = MyCursorY;
+  if (echo == 1)		/* echo to stdout */
+    {
+      printf ("\nGetString(): sorry, echo=1 currently not implemented!\n");
+      return NULL;
+    }
 
   /* Speicher fuer Eingabe reservieren */
   input     = MyMalloc (MaxLen + 5);
@@ -364,29 +367,26 @@ GetString (int MaxLen, int echo)
     {
       input[curpos] = '\0';  /* terminate current input-string correctly for echo */
 
-      if (echo == 1)		/* echo to stdout */
-	{
-	  if (curpos>0) 
-	    putchar (input[curpos-1]);  
-	  fflush (stdout);	/* here we need to flush manually (ask rp why) */
-	}
-      else if (echo == 2)   	/* or use graphics-text */
-	{
-	  DisplayText (clear_str, TextOutX, TextOutY, &User_Rect);
-	  DisplayText (input,     TextOutX, TextOutY, &User_Rect);
-	  PrepareScaledSurface(TRUE);
-	} /* if echo */
-
       key = getchar_raw ();  
       
       if (key == SDLK_RETURN) 
 	finished = TRUE;
-
       else if (isprint (key) && (curpos < MaxLen) )  
-	input[curpos ++] = (char) key;   /* printable characters are entered in string */
-
+	{  /* printable characters are entered in string */
+	  input[curpos ++] = (char) key;   
+	  putchar_SDL (ne_screen, -1, -1, input[curpos-1]);
+	}
       else if (key == SDLK_BACKSPACE)
-	if (curpos > 0) curpos --;
+	if (curpos > 0) 
+	  {
+	    Copy_Rect(GetCurrentFont()->Chars[(int)input[curpos-1]], char_rect);
+	    MyCursorX -= char_rect.w;
+	    char_rect.x = MyCursorX;
+	    char_rect.y = MyCursorY;
+	    SDL_FillRect (ne_screen, &char_rect, 1);
+	    SDL_Flip (ne_screen);
+  	    curpos --;
+	  }
       
     } /* while(!finished) */
 
@@ -398,6 +398,85 @@ GetString (int MaxLen, int echo)
   return (input);
 
 } /* GetString() */
+
+/*-----------------------------------------------------------------
+ *
+ * similar to putchar(), using SDL via the BFont-fct PutChar().
+ *
+ * sets MyCursor[XY], and allows passing (-1,-1) as coords to indicate
+ *  using the current cursor position.
+ *
+ *-----------------------------------------------------------------*/
+int
+putchar_SDL (SDL_Surface *Surface, int x, int y, int c)
+{
+  int ret;
+  if (x == -1) x = MyCursorX;
+  if (y == -1) y = MyCursorY;
+  
+  MyCursorX = x + CharWidth (GetCurrentFont(), c);
+  MyCursorY = y;
+
+  ret = PutChar (Surface, x, y, c);
+
+  SDL_Flip (Surface);
+  return (ret);
+}
+
+
+/*-----------------------------------------------------------------
+ * behaves similarly as gl_printf() of svgalib, using the BFont
+ * print function PrintString().
+ *  
+ *  sets current position of MyCursor[XY],  
+ *     if last char is '\n': to same x, next line y
+ *     to end of string otherwise
+ *
+ * Added functionality to PrintString() is: 
+ *  o) passing -1 as coord uses previous x and next-line y for printing
+ *  o) Screen is updated immediatly after print, using SDL_flip()                       
+ *
+ *-----------------------------------------------------------------*/
+void
+printf_SDL (SDL_Surface *screen, int x, int y, char *fmt, ...)
+{
+  va_list args;
+  int i;
+
+  char *tmp;
+  va_start (args, fmt);
+
+  if (x == -1) x = MyCursorX;
+  else MyCursorX = x;
+
+  if (y == -1) y = MyCursorY;
+  else MyCursorY = y;
+
+  tmp = (char *) MyMalloc (1000 + 1);
+    {
+      vsprintf (tmp, fmt, args);
+
+      PutString (screen, x, y, tmp);
+
+      free (tmp);
+    }
+
+  SDL_Flip (screen);
+
+  if (tmp[strlen(tmp)-1] == '\n')
+    {
+      MyCursorX = x;
+      MyCursorY = y+ 1.1* (GetCurrentFont()->h);
+    }
+  else
+    {
+      for (i=0; i < strlen(tmp); i++)
+	MyCursorX += CharWidth (GetCurrentFont(), tmp[i]);
+      MyCursorY = y;
+    }
+
+  va_end (args);
+}
 
 
 #undef _text_c
