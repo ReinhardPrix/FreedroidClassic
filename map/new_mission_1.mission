@@ -44,6 +44,8 @@ Possible Start Point : Level=4 XPos=1 YPos=1
 Possible Start Point : Level=5 XPos=3 YPos=1
 Possible Start Point : Level=6 XPos=3 YPos=3
 Possible Start Point : Level=7 XPos=2 YPos=1
+Mission target is to kill all droids : 0
+Mission target is to kill class of droids : 9
 ** Start of Mission Briefing Text Section **
 * New Mission Briefing Text Subsection *
 It's the the year 2400.  
@@ -103,6 +105,28 @@ Press Fire to Play
 
 
 * End of Mission Briefing Text Subsection *
+
+** Beginning of End Title Text Section **
+Congratulations!!
+
+It seems that you have made it!  
+
+The remaining scientists may now safely leave the emergency retreat bunker
+and collect all their stuff and leave the facility.  A problem remains:
+On the surface, there are still hostile forces protection the secure teleportation
+facility.  And appart from that, the scientists have no ship to escape with.
+Someone must go up and take over the command cyborg at the surface.  With it,
+the scientists can instruct the ships crew droids to land the ship or to activate
+the ships secure transport devices so that the humans can board the spaceship.
+
+
+Your task is now to move to the surface and take over the command cyborg.
+It must be somewhere close to the secure transport facility, which it most
+likely will not leave.  But read all the details in the Briefing...
+
+Press Fire to move on to the next mission
+
+** End of End Title Text Section **
 
 *** End of Mission File ***
 

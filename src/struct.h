@@ -82,6 +82,18 @@ grob_point, *grob_Point;
 typedef grob_point vect;
 typedef grob_Point Vect;
 
+typedef struct
+{
+  int KillAll;
+  int KillClass;
+  int KillOne;
+  point ReachPoint;
+  float MustLiveTime;
+  int MustBeClass;
+  int MustBeType;
+  int MustBeOne;
+}
+missiontarget, *Missiontarget;
 
 typedef struct
 {
@@ -124,6 +136,7 @@ typedef struct
   int MyShield;			/* Shield device installed */
   int Shield[4];		/* Status of Partial Shields */
   finepoint Position_History[11]; // History of the places the influ has been during the last 10 frames
+  missiontarget mission;         // What must be done to fullfill this mission?
 }
 influence_t, *Influence_t;
 

@@ -57,8 +57,6 @@ int
 main (int argc, char *const argv[])
 {
   int i;
-  int Robot_Counter;
-  int AllRobotsDead;
 
   GameOver = FALSE;
   QuitProgram = FALSE;
@@ -123,6 +121,12 @@ main (int argc, char *const argv[])
 	  CheckInfluenceEnemyCollision ();
 
 	  RotateBulletColor ();
+
+	  if (CurLevel->empty == 2)
+	    {
+	      LevelGrauFaerben ();
+	      CurLevel->empty = TRUE;
+	    }			/* if */
 
 	  CheckIfMissionIsComplete ();
 

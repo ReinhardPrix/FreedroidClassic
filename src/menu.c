@@ -344,7 +344,7 @@ Cheatmenu (void)
 void
 MissionSelectMenu (void)
 {
-#define FIRST_MIS_SELECT_ITEM_POS_X (1.5*Block_Width)
+#define FIRST_MIS_SELECT_ITEM_POS_X (0.0*Block_Width)
 #define FIRST_MIS_SELECT_ITEM_POS_Y (USERFENSTERPOSY + FontHeight(Menu_BFont))
 enum
   { 
@@ -389,9 +389,9 @@ enum
 
       CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y -2*FontHeight(GetCurrentFont()), "Mission Selection Menu");
       CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y ,    "Classical Paradroid");
-      CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y +1*FontHeight(GetCurrentFont()), "New Episode");
+      CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y +1*FontHeight(GetCurrentFont()), "Skip Classical Paradroid Episode");
 
-      // SDL_UpdateRect(ne_screen, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
+      // SDL_UpdateRect(ne_screen, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALEb_FACTOR);
       SDL_Flip( ne_screen );
 
       // Wait until the user does SOMETHING

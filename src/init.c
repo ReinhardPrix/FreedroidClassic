@@ -45,7 +45,7 @@
 #define SCROLLSTARTY		SCREENHOEHE
 
 void Init_Game_Data( char* Datafilename );
-
+char* DebriefingText;
 
 /*@Function============================================================
 @Desc: This function loads all the constant variables of the game from
@@ -741,7 +741,9 @@ InitNewMission ( char *MissionName )
   char *LiftnamePointer;
   char *CrewnamePointer;
   char *GameDataNamePointer;
+  char *EndTitlePointer;
   char *StartPointPointer;
+  char *MissionTargetPointer;
   char Shipname[2000];
   char Liftname[2000];
   char Crewname[2000];
@@ -750,6 +752,7 @@ InitNewMission ( char *MissionName )
   int CrewnameLength;
   int LiftnameLength;
   int GameDataNameLength;
+  int EndTitleLength;
   int NumberOfStartPoints=0;
   int RealStartPoint=0;
   int StartingLevel=0;
@@ -763,7 +766,21 @@ InitNewMission ( char *MissionName )
 #define ELEVATORNAME_INDICATION_STRING "Lift file to use for this mission: "
 #define CREWNAME_INDICATION_STRING "Crew file to use for this mission: "
 #define GAMEDATANAME_INDICATION_STRING "Physics ('game.dat') file to use for this mission: "
+#define MISSION_ENDTITLE_BEGIN_STRING "** Beginning of End Title Text Section **"
+#define MISSION_ENDTITLE_END_STRING "** End of End Title Text Section **"
 #define MISSION_START_POINT_STRING "Possible Start Point : "
+#define MISSION_TARGET_KILL_ALL_STRING "Mission target is to kill all droids : "
+#define MISSION_TARGET_KILL_CLASS_STRING "Mission target is to kill class of droids : "
+#define MISSION_TARGET_KILL_ONE_STRING "Mission target is to kill droid with marker : "
+#define MISSION_TARGET_KILL_REACH_POINT_LEVEL_STRING "Mission target is to reach Level : "
+#define MISSION_TARGET_KILL_REACH_POINT_X_STRING "Mission target is to reach X-Pos : "
+#define MISSION_TARGET_KILL_REACH_POINT_Y_STRING "Mission target is to reach Y-Pos : "
+#define MISSION_TARGET_MUST_LIVE_TIME_STRING "Mission target is to live for how many seconds : "
+#define MISSION_TARGET_MUST_BE_CLASS_STRING "Mission target is to become class : "
+#define MISSION_TARGET_MUST_BE_TYPE_STRING "Mission target is to become type : "
+#define MISSION_TARGET_MUST_BE_ONE_STRING "Mission target is to overtake droid with marker : "
+
+
 
   DebugPrintf ("\nvoid InitNewMission( char *MissionName ): real function call confirmed...");
   printf("\nA new mission is being initialized from file %s." , MissionName );
@@ -983,6 +1000,26 @@ InitNewMission ( char *MissionName )
     }
 
   //--------------------
+  // Now its time to get the shipname from the mission file and
+  // read the ship file into the right memory structures
+  //
+  if ( (EndTitlePointer = strstr ( MainMissionPointer, MISSION_ENDTITLE_BEGIN_STRING )) == NULL )
+    {
+      printf("\nERROR! NO END TITLE SECTION BEGIN STRING FOUND! TERMINATING!");
+      Terminate(ERR);
+    }
+  else
+    {
+      EndTitlePointer += strlen ( MISSION_ENDTITLE_BEGIN_STRING ) + 1;
+      EndTitleLength = strstr ( EndTitlePointer , MISSION_ENDTITLE_END_STRING ) - EndTitlePointer;
+      DebriefingText = malloc ( EndTitleLength +10 );
+      strncpy( DebriefingText , EndTitlePointer , EndTitleLength +1 );
+      DebriefingText[EndTitleLength] = 0;
+      
+      printf("\nEnd title string found!  It reads: %s" , DebriefingText );
+    }
+  
+  //--------------------
   // Now we read all the possible starting points for the
   // current mission file, so that we know where to place the
   // influencer at the beginning of the mission.
@@ -1036,7 +1073,33 @@ InitNewMission ( char *MissionName )
       printf("\nMission Start Point string found!");
     }
 
+  //--------------------
+  // Now we read in the mission targets for this mission
+  // Several different targets may be specified simultaneously
+  //
+  if ( ( MissionTargetPointer = strstr ( MainMissionPointer, MISSION_TARGET_KILL_ALL_STRING )) == NULL )
+    {
+      printf("\nERROR! NO MISSION TARGET KILLALL ENTRY FOUND! TERMINATING!");
+      Terminate(ERR);
+    }
+  else
+    {
+      MissionTargetPointer += strlen ( MISSION_TARGET_KILL_ALL_STRING );
+      sscanf ( MissionTargetPointer , "%d" , &Me.mission.KillAll );
+      printf("\nMission target killall entry found!  It reads: %d" , Me.mission.KillAll );
+    }
 
+  if ( ( MissionTargetPointer = strstr ( MainMissionPointer, MISSION_TARGET_KILL_CLASS_STRING )) == NULL )
+    {
+      printf("\nERROR! NO MISSION TARGET KILLALL CLASS ENTRY FOUND! TERMINATING!");
+      Terminate(ERR);
+    }
+  else
+    {
+      MissionTargetPointer += strlen ( MISSION_TARGET_KILL_CLASS_STRING );
+      sscanf ( MissionTargetPointer , "%d" , &Me.mission.KillClass );
+      printf("\nMission target killclass entry found!  It reads: %d" , Me.mission.KillClass );
+    }
 
   /* Reactivate the light on alle Levels, that might have been dark */
   for (i = 0; i < curShip.num_levels; i++)
@@ -1288,8 +1351,7 @@ EndTitle (void)
 
   SetTextColor (FONT_BLACK, FONT_RED);
 
-  ScrollText (EndTitleText1, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
-  ScrollText (EndTitleText2, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
+  ScrollText ( DebriefingText , SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
 
   while ( SpacePressed() );
 
@@ -1328,9 +1390,6 @@ ThouArtDefeated (void)
     }
 
   Debriefing ();
-
-  /* Soundblaster soll keine Toene mehr spucken */
-  //PORT sbfm_silence();
 
   GameOver = TRUE;
 
@@ -1431,27 +1490,41 @@ Debriefing (void)
 
 } /* Debriefing() */
 
+/*----------------------------------------------------------------------
+ * This function checks, if the influencer has succeeded in his given 
+ * mission.  If not it returns, if yes the EndTitle/Debriefing is
+ * started.
+ ----------------------------------------------------------------------*/
 void 
 CheckIfMissionIsComplete (void)
 {
-  int AllRobotsDead=TRUE;
   int Robot_Counter;
 
-  for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
+  if ( Me.mission.KillAll )
     {
-      if (AllEnemys[Robot_Counter].energy) AllRobotsDead=FALSE;
+      for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
+	{
+	  if ( AllEnemys[Robot_Counter].energy > 0 ) return;
+	}
     }
-  if (AllRobotsDead) 
+
+  if ( Me.mission.KillClass != (-1) )
     {
-      EndTitle();
-      GameOver=TRUE;
+      for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
+	{
+	  if ( ( AllEnemys[Robot_Counter].energy > 0 ) && 
+	       ( AllEnemys[Robot_Counter].Status != OUT ) && 
+	       ( Druidmap[AllEnemys[Robot_Counter].type].class == Me.mission.KillClass ) ) 
+	    {
+	      // printf("\nOne is still alive: Nr=%d Lev=%d X=%f Y=%f." , Robot_Counter , AllEnemys[Robot_Counter].levelnum , AllEnemys[Robot_Counter].pos.x , AllEnemys[Robot_Counter].pos.y );
+	      return;
+	    }
+	}
     }
+
+  EndTitle();
+  GameOver=TRUE;
   
-  if (CurLevel->empty == 2)
-    {
-      LevelGrauFaerben ();
-      CurLevel->empty = TRUE;
-    }			/* if */
 } // void CheckIfMissionIsComplete
 
 
