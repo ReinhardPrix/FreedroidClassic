@@ -1284,7 +1284,7 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
   RotateVectorByAngle ( & ( NewBullet->speed ) , ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].item_gun_start_angle_modifier );
   
   
-  NewBullet->angle = - ( 90 + 180 * atan2 ( NewBullet->speed.y,  NewBullet->speed.x ) / M_PI );  
+  NewBullet->angle = - ( 90 + 45 + 180 * atan2 ( NewBullet->speed.y,  NewBullet->speed.x ) / M_PI );  
 
   //--------------------
   // At this point we mention, that when not moving anywhere, the robot should also

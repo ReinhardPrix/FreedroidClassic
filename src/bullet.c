@@ -542,6 +542,334 @@ GetDirection (point robo, point bul)
 }; // int GetDirection (point robo, point bul)
 
 /* ----------------------------------------------------------------------
+ * Bullet collision checks and effect handling for 'flash' bullets is 
+ * done here...  Classic bullet collision and effect handling is done
+ * somewhere else...
+ * ---------------------------------------------------------------------- */
+void
+handle_flash_effects ( bullet* CurBullet )
+{
+  int i;
+
+  //--------------------
+  // if the flash is over, just delete it and return
+  if ( CurBullet->time_in_seconds > FLASH_DURATION_IN_SECONDS )
+    {
+      CurBullet->time_in_frames = 0;
+      CurBullet->time_in_seconds = 0;
+      CurBullet->type = OUT;
+      CurBullet->mine = FALSE;
+      return;
+    }
+  
+  //--------------------
+  // if the flash is not yet over, do some checking for who gets
+  // hurt by it.  
+  //
+  // Two different methode for doing this are available:
+  // The first but less elegant Method is just to check for
+  // flash immunity, for distance and visiblity.
+  //
+  // The second and more elegant method is to recursively fill
+  // out the room where the flash-maker is in and to hurt all
+  // robots in there except of course for those immune.
+  //
+  if ( CurBullet->time_in_frames != 1 ) return; // we only do the damage once and thats at frame nr. 1 of the flash
+  
+  // for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
+  for (i = 0; i < Number_Of_Droids_On_Ship ; i++)
+    {
+      if ( IsVisible ( & AllEnemys[i].pos , 0 ) &
+	   (!Druidmap[AllEnemys[i].type].flashimmune) ) // WARNING:  PLAYER 0 here wrong
+	{
+	  // ITEMS AllEnemys[i].energy -= Bulletmap[FLASH].damage;
+	  AllEnemys[i].energy -= CurBullet->damage;
+	  // Since the enemy just got hit, it might as well say so :)
+	  EnemyHitByBulletText( i );
+	}
+    }
+  
+  if (!InvincibleMode && !Druidmap[Me[0].type].flashimmune)
+    {
+      // ITEMS Me[0].energy -= Bulletmap[FLASH].damage ;
+      Me[0].energy -= CurBullet->damage ;
+    }
+
+}; // handle_flash_effects ( bullet* CurBullet )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */  
+void
+check_bullet_background_collisions ( bullet* CurBullet , int num )
+{
+  // Check for collision with background
+  if ( IsPassable ( CurBullet -> pos . x , CurBullet -> pos . y , CurBullet -> pos . z , CENTER ) != CENTER)
+    {
+      if ( CurBullet->ignore_wall_collisions )
+	{
+	  StartBlast ( CurBullet->pos.x , CurBullet->pos.y , CurBullet->pos.z , BULLETBLAST );
+	}
+      else
+	{
+	  DeleteBullet ( num , TRUE ); // we want a bullet-explosion
+	  return;
+	}
+    }
+}; // void check_bullet_background_collisions ( CurBullet , num )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+check_bullet_player_collsisions ( bullet* CurBullet , int num )
+{
+  int PlayerNum;
+  double xdist, ydist;
+
+  //--------------------
+  // Now we check for collisions with one of the players.
+  //
+  for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ )
+    {
+      //--------------------
+      // Of course only active players and players on the same level
+      // may be checked!
+      //
+      if ( Me [ PlayerNum ] . status == OUT ) continue;
+      if ( Me [ PlayerNum ] . pos . z != CurBullet -> pos . z ) continue;
+      
+      //--------------------
+      // Now we see if the distance to the bullet is as low as hitting
+      // distance or not.
+      //
+      xdist = Me [ PlayerNum ] . pos . x - CurBullet -> pos . x ;
+      ydist = Me [ PlayerNum ] . pos . y - CurBullet -> pos . y ;
+      if ((xdist * xdist + ydist * ydist) < DRUIDHITDIST2)
+	{
+	  if (!InvincibleMode) 
+	    {
+#ifdef USE_MISS_HIT_ARRAYS
+	      if ( CurBullet->miss_hit_influencer == UNCHECKED ) 
+		{
+		  if ( MyRandom ( 100 ) < CurBullet->to_hit )
+		    {
+		      CurBullet->miss_hit_influencer = HIT ;
+#endif			  
+		      //--------------------
+		      // NEW RULE:  Even when the bullet hits, there's still a chance that
+		      // the armour will compensate the shot
+		      //
+		      if ( MyRandom( 100 ) < Me [ PlayerNum ] . AC )
+			{
+			  Me [ PlayerNum ] . TextVisibleTime = 0 ;
+			  Me [ PlayerNum ] . TextToBeDisplayed = "That one went into the armour." ;
+			  BulletReflectedSound ( ) ;
+			}
+		      else
+			{
+			  
+			  Me [ PlayerNum ] . TextVisibleTime = 0 ;
+			  Me [ PlayerNum ] . TextToBeDisplayed = "Ouch!" ;
+			  Me [ PlayerNum ] . energy -= CurBullet -> damage ;	// loose some energy
+			  
+			  //--------------------
+			  // A hit of what form so ever should make the Tux stop
+			  // dead in his tracks.
+			  //
+			  Me [ PlayerNum ] . speed . x = 0;
+			  Me [ PlayerNum ] . speed . y = 0; 
+			  
+			  //--------------------
+			  // As the new rule, the influencer after getting hit, must completely
+			  // start anew to recover his weapon from the previous shot
+			  //
+			  Me [ PlayerNum ] . firewait = ItemMap[ Me [ PlayerNum ] . weapon_item . type ] . item_gun_recharging_time;
+			  Me [ PlayerNum ] . got_hit_time = 0;
+			  
+			  // GotHitSound ();
+			  Influencer_Scream_Sound ( );
+			}
+		      //--------------------
+		      // NEW RULE:  All items equipped suffer damage when the influencer gets hit
+		      //
+		      DamageAllEquipment ( PlayerNum ) ;
+		      DeleteBullet ( num , TRUE ) ; // we want a bullet-explosion
+		      return;  // This bullet was deleted and does not need to be processed any further...
+#ifdef USE_MISS_HIT_ARRAYS
+		    }
+		  else
+		    {
+		      CurBullet->miss_hit_influencer = MISS ;
+		    }
+		}
+#endif
+	    }
+	}
+    }
+}; // check_bullet_player_collsisions ( CurBullet , num )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+check_bullet_enemy_collsisions ( bullet* CurBullet , int num )
+{
+  int i;
+  double xdist, ydist;
+  int level = CurBullet -> pos.z ;
+  static int FBTZaehler = 0;
+
+  //--------------------
+  // Check for collision with enemys
+  //
+  for (i = 0; i < Number_Of_Droids_On_Ship; i++)
+    {
+      if (AllEnemys[i].Status == OUT || AllEnemys[i].pos.z != level)
+	continue;
+      
+      xdist = CurBullet->pos.x - AllEnemys[i].pos.x;
+      ydist = CurBullet->pos.y - AllEnemys[i].pos.y;
+      
+      if ( (xdist * xdist + ydist * ydist) < DRUIDHITDIST2 )
+	{
+#ifdef USE_MISS_HIT_ARRAYS
+	  if ( CurBullet->total_miss_hit[ i ] == UNCHECKED )
+	    {
+	      if ( MyRandom ( 100 ) < CurBullet->to_hit + Druidmap [ AllEnemys[ i ].type ].getting_hit_modifier )
+		{
+		  CurBullet->total_miss_hit[ i ] = HIT;
+#endif
+		  //--------------------
+		  // The enemy who was hit, loses some energy, depending on the bullet, and 
+		  // also gets stunned from the hit, which only means that the enemy can't
+		  // fire immediately now but takes (double?) normal time for the next shot.
+		  //
+		  AllEnemys[i].energy -= CurBullet->damage;
+		  
+		  //--------------------
+		  // If it was a friend, and the bullet came from Tux, the friend
+		  // might now become very angry...
+		  //
+		  if ( CurBullet -> mine ) 
+		    {
+		      AllEnemys [ i ] . is_friendly = FALSE ;
+		      AllEnemys [ i ] . combat_state = MAKE_ATTACK_RUN ;
+		      
+		    }
+		  
+		  AllEnemys[i].frozen += CurBullet->freezing_level;
+		  
+		  AllEnemys[i].poison_duration_left += CurBullet->poison_duration;
+		  AllEnemys[i].poison_damage_per_sec += CurBullet->poison_damage_per_sec;
+		  
+		  AllEnemys[i].paralysation_duration_left += CurBullet->paralysation_duration;
+		  
+		  // AllEnemys[i].firewait =
+		  // 1 * ItemMap [ Druidmap [ AllEnemys[ i ].type ].weapon_item.type ].item_gun_recharging_time ;
+		  
+		  AllEnemys [ i ] . firewait = Druidmap [ AllEnemys [ i ] . type ] . recover_time_after_getting_hit ;
+		  
+		  // Maybe he will also stop doing his fixed routine and return to normal
+		  // operation as well
+		  AllEnemys[i].AdvancedCommand = 0;
+		  
+		  // We might also start a little bullet-blast even after the
+		  // collision of the bullet with an enemy (not in Paradroid)
+		  
+		  //--------------------
+		  // If the blade can pass through dead and not dead bodies, it will so
+		  // so and create a small explosion passing by.  But if it can't, it should
+		  // be completely deleted of course, with the same small explosion as well
+		  //
+		  if ( CurBullet->pass_through_hit_bodies )
+		    StartBlast ( CurBullet->pos.x , CurBullet->pos.y , CurBullet->pos.z , BULLETBLAST );
+		  else DeleteBullet( num , TRUE ); // we want a bullet-explosion
+		  
+		  Enemy_Post_Bullethit_Behaviour( i );
+		  
+		  if (!CurBullet->mine)
+		    {
+		      FBTZaehler++;
+		    }
+		  return;
+#ifdef USE_MISS_HIT_ARRAYS
+		}
+	      
+	      else
+		{
+		  CurBullet->total_miss_hit[ i ] = MISS;
+		  AllEnemys[ i ].TextVisibleTime = 0;
+		  AllEnemys[ i ].TextToBeDisplayed = "Haha, you missed me!";
+		}
+	    }
+#endif
+	} // if distance low enough to possibly be at hit
+    }  /* for AllEnemys */
+}; // void check_bullet_enemy_collsisions ( CurBullet , num )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+check_bullet_bullet_collsisions ( bullet* CurBullet , int num )
+{
+  int i;
+
+  // check for collisions with other bullets
+  for (i = 0; i < MAXBULLETS; i++)
+    {
+      if (i == num) continue;  // never check for collision with youself.. ;)
+      if (AllBullets[i].type == OUT) continue; // never check for collisions with dead bullets.. 
+      if (AllBullets[i].type == FLASH) continue; // never check for collisions with flashes bullets.. 
+      
+      if ( fabsf(AllBullets[i].pos.x-CurBullet->pos.x) > BULLET_BULLET_COLLISION_DIST ) continue;
+      if ( fabsf(AllBullets[i].pos.y-CurBullet->pos.y) > BULLET_BULLET_COLLISION_DIST ) continue;
+      // it seems like we have a collision of two bullets!
+      // both will be deleted and replaced by blasts..
+      DebugPrintf ( 1 , "\nBullet-Bullet-Collision detected..." );
+      
+      //CurBullet->type=OUT;
+      //AllBullets[num].type=OUT;
+      
+      if ( CurBullet->reflect_other_bullets )
+	{
+	  if ( AllBullets[ i ].was_reflected )
+	    {
+	      // well, if it has been reflected once, we don't do any more
+	      // reflections after that...
+	    }
+	  else
+	    {
+	      AllBullets[i].speed.x = - AllBullets[i].speed.x;
+	      AllBullets[i].speed.y = - AllBullets[i].speed.y;
+	      AllBullets[i].was_reflected = TRUE;
+	    }
+	}
+      
+      if ( AllBullets[ i ].reflect_other_bullets )
+	{
+	  if ( CurBullet->was_reflected )
+	    {
+	      // well, if it has been reflected once, we don't do any more
+	      // reflections after that...
+	    }
+	  else
+	    {
+	      CurBullet->speed.x = - CurBullet->speed.x;
+	      CurBullet->speed.y = - CurBullet->speed.y;
+	      CurBullet->was_reflected = TRUE;
+	    }
+	}
+      
+    }
+}; // void check_bullet_bullet_collsisions ( CurBullet , num )
+
+/* ----------------------------------------------------------------------
  * This function checks if there are some collisions of the one bullet
  * with number num with anything else in the game, like blasts, walls,
  * droids, the tux and other bullets.
@@ -552,64 +880,25 @@ CheckBulletCollisions (int num)
   int i;
   double xdist, ydist;
   Bullet CurBullet = &AllBullets[num];
-  // int level = CurLevel->levelnum;
   int level = CurBullet -> pos.z ;
-  static int FBTZaehler = 0;
   int PlayerNum;
 
-  switch (CurBullet->type)
+  switch ( CurBullet -> type )
     {
+    case OUT:
       // --------------------
       // Never do any collision checking if the bullet is OUT already...
-    case OUT:
       return;
       break;
       
+    case FLASH:
       // --------------------
       // Next we handle the case that the bullet is of type FLASH
-    case FLASH:
-      // if the flash is over, just delete it and return
-      if ( CurBullet->time_in_seconds > FLASH_DURATION_IN_SECONDS )
-	{
-	  CurBullet->time_in_frames = 0;
-	  CurBullet->time_in_seconds = 0;
-	  CurBullet->type = OUT;
-	  CurBullet->mine = FALSE;
-	  return;
-	}
-      
-      // if the flash is not yet over, do some checking for who gets
-      // hurt by it.  
-      // Two different methode for doing this are available:
-      // The first but less elegant Method is just to check for
-      // flash immunity, for distance and visiblity.
-      // The second and more elegant method is to recursively fill
-      // out the room where the flash-maker is in and to hurt all
-      // robots in there except of course for those immune.
-      if ( CurBullet->time_in_frames != 1 ) return; // we only do the damage once and thats at frame nr. 1 of the flash
-      
-      // for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
-      for (i = 0; i < Number_Of_Droids_On_Ship ; i++)
-	{
-	  if ( IsVisible ( & AllEnemys[i].pos , 0 ) &
-	       (!Druidmap[AllEnemys[i].type].flashimmune) ) // WARNING:  PLAYER 0 here wrong
-	    {
-	      // ITEMS AllEnemys[i].energy -= Bulletmap[FLASH].damage;
-	      AllEnemys[i].energy -= CurBullet->damage;
-	      // Since the enemy just got hit, it might as well say so :)
-	      EnemyHitByBulletText( i );
-	    }
-	}
-      
-      if (!InvincibleMode && !Druidmap[Me[0].type].flashimmune)
-	{
-	  // ITEMS Me[0].energy -= Bulletmap[FLASH].damage ;
-	  Me[0].energy -= CurBullet->damage ;
-	}
-
+      handle_flash_effects ( CurBullet );
       return;
       break;
 
+    default:
       // --------------------
       // If its a "normal" Bullet, several checks have to be
       // done, one for collisions with background, 
@@ -618,236 +907,11 @@ CheckBulletCollisions (int num)
       // and some for collisions with other bullets
       // and some for collisions with blast
       //
-    default:
-      
-      // Check for collision with background
-      if ( IsPassable ( CurBullet -> pos . x , CurBullet -> pos . y , CurBullet -> pos . z , CENTER ) != CENTER)
-	{
-	  if ( CurBullet->ignore_wall_collisions )
-	    {
-	      StartBlast ( CurBullet->pos.x , CurBullet->pos.y , CurBullet->pos.z , BULLETBLAST );
-	    }
-	  else
-	    {
-	      DeleteBullet ( num , TRUE ); // we want a bullet-explosion
-	      return;
-	    }
-	}
+      check_bullet_background_collisions ( CurBullet , num );
+      check_bullet_player_collsisions ( CurBullet , num );
+      check_bullet_enemy_collsisions ( CurBullet , num );
+      check_bullet_bullet_collsisions ( CurBullet , num );
 
-      //--------------------
-      // Now we check for collisions with one of the players.
-      //
-      for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ )
-	{
-	  //--------------------
-	  // Of course only active players and players on the same level
-	  // may be checked!
-	  //
-	  if ( Me [ PlayerNum ] . status == OUT ) continue;
-	  if ( Me [ PlayerNum ] . pos . z != CurBullet -> pos . z ) continue;
-
-	  //--------------------
-	  // Now we see if the distance to the bullet is as low as hitting
-	  // distance or not.
-	  //
-	  xdist = Me [ PlayerNum ] . pos . x - CurBullet -> pos . x ;
-	  ydist = Me [ PlayerNum ] . pos . y - CurBullet -> pos . y ;
-	  if ((xdist * xdist + ydist * ydist) < DRUIDHITDIST2)
-	    {
-	      if (!InvincibleMode) 
-		{
-#ifdef USE_MISS_HIT_ARRAYS
-		  if ( CurBullet->miss_hit_influencer == UNCHECKED ) 
-		    {
-		      if ( MyRandom ( 100 ) < CurBullet->to_hit )
-			{
-			  CurBullet->miss_hit_influencer = HIT ;
-#endif			  
-			  //--------------------
-			  // NEW RULE:  Even when the bullet hits, there's still a chance that
-			  // the armour will compensate the shot
-			  //
-			  if ( MyRandom( 100 ) < Me [ PlayerNum ] . AC )
-			    {
-			      Me [ PlayerNum ] . TextVisibleTime = 0 ;
-			      Me [ PlayerNum ] . TextToBeDisplayed = "That one went into the armour." ;
-			      BulletReflectedSound ( ) ;
-			    }
-			  else
-			    {
-			      
-			      Me [ PlayerNum ] . TextVisibleTime = 0 ;
-			      Me [ PlayerNum ] . TextToBeDisplayed = "Ouch!" ;
-			      Me [ PlayerNum ] . energy -= CurBullet -> damage ;	// loose some energy
-
-			      //--------------------
-			      // A hit of what form so ever should make the Tux stop
-			      // dead in his tracks.
-			      //
-			      Me [ PlayerNum ] . speed . x = 0;
-			      Me [ PlayerNum ] . speed . y = 0; 
-			      
-			      //--------------------
-			      // As the new rule, the influencer after getting hit, must completely
-			      // start anew to recover his weapon from the previous shot
-			      //
-			      Me [ PlayerNum ] . firewait = ItemMap[ Me [ PlayerNum ] . weapon_item . type ] . item_gun_recharging_time;
-			      Me [ PlayerNum ] . got_hit_time = 0;
-			      
-			      // GotHitSound ();
-			      Influencer_Scream_Sound ( );
-			    }
-			  //--------------------
-			  // NEW RULE:  All items equipped suffer damage when the influencer gets hit
-			  //
-			  DamageAllEquipment ( PlayerNum ) ;
-			  DeleteBullet ( num , TRUE ) ; // we want a bullet-explosion
-			  return;  // This bullet was deleted and does not need to be processed any further...
-#ifdef USE_MISS_HIT_ARRAYS
-			}
-		      else
-			{
-			  CurBullet->miss_hit_influencer = MISS ;
-			}
-		    }
-#endif
-		}
-	    }
-	}
-      
-      //--------------------
-      // Check for collision with enemys
-      //
-      for (i = 0; i < Number_Of_Droids_On_Ship; i++)
-	{
-	  if (AllEnemys[i].Status == OUT || AllEnemys[i].pos.z != level)
-	    continue;
-
-	  xdist = CurBullet->pos.x - AllEnemys[i].pos.x;
-	  ydist = CurBullet->pos.y - AllEnemys[i].pos.y;
-
-	  if ( (xdist * xdist + ydist * ydist) < DRUIDHITDIST2 )
-	    {
-#ifdef USE_MISS_HIT_ARRAYS
-	      if ( CurBullet->total_miss_hit[ i ] == UNCHECKED )
-		{
-		  if ( MyRandom ( 100 ) < CurBullet->to_hit + Druidmap [ AllEnemys[ i ].type ].getting_hit_modifier )
-		    {
-		      CurBullet->total_miss_hit[ i ] = HIT;
-#endif
-		      //--------------------
-		      // The enemy who was hit, loses some energy, depending on the bullet, and 
-		      // also gets stunned from the hit, which only means that the enemy can't
-		      // fire immediately now but takes (double?) normal time for the next shot.
-		      //
-		      AllEnemys[i].energy -= CurBullet->damage;
-
-		      //--------------------
-		      // If it was a friend, and the bullet came from Tux, the friend
-		      // might now become very angry...
-		      //
-		      if ( CurBullet -> mine ) 
-			{
-			  AllEnemys [ i ] . is_friendly = FALSE ;
-			  AllEnemys [ i ] . combat_state = MAKE_ATTACK_RUN ;
-			}
-
-		      AllEnemys[i].frozen += CurBullet->freezing_level;
-
-		      AllEnemys[i].poison_duration_left += CurBullet->poison_duration;
-		      AllEnemys[i].poison_damage_per_sec += CurBullet->poison_damage_per_sec;
-
-		      AllEnemys[i].paralysation_duration_left += CurBullet->paralysation_duration;
-		      
-		      // AllEnemys[i].firewait =
-		      // 1 * ItemMap [ Druidmap [ AllEnemys[ i ].type ].weapon_item.type ].item_gun_recharging_time ;
-
-		      AllEnemys [ i ] . firewait = Druidmap [ AllEnemys [ i ] . type ] . recover_time_after_getting_hit ;
-
-		      // Maybe he will also stop doing his fixed routine and return to normal
-		      // operation as well
-		      AllEnemys[i].AdvancedCommand = 0;
-
-		      // We might also start a little bullet-blast even after the
-		      // collision of the bullet with an enemy (not in Paradroid)
-
-		      //--------------------
-		      // If the blade can pass through dead and not dead bodies, it will so
-		      // so and create a small explosion passing by.  But if it can't, it should
-		      // be completely deleted of course, with the same small explosion as well
-		      //
-		      if ( CurBullet->pass_through_hit_bodies )
-			StartBlast ( CurBullet->pos.x , CurBullet->pos.y , CurBullet->pos.z , BULLETBLAST );
-		      else DeleteBullet( num , TRUE ); // we want a bullet-explosion
-
-		      Enemy_Post_Bullethit_Behaviour( i );
-
-		      if (!CurBullet->mine)
-			{
-			  FBTZaehler++;
-			}
-		      return;
-#ifdef USE_MISS_HIT_ARRAYS
-		    }
-
-		  else
-		    {
-		      CurBullet->total_miss_hit[ i ] = MISS;
-		      AllEnemys[ i ].TextVisibleTime = 0;
-		      AllEnemys[ i ].TextToBeDisplayed = "Haha, you missed me!";
-		    }
-		}
-#endif
-	    } // if distance low enough to possibly be at hit
-	}  /* for AllEnemys */
-
-      // check for collisions with other bullets
-      for (i = 0; i < MAXBULLETS; i++)
-	{
-	  if (i == num) continue;  // never check for collision with youself.. ;)
-	  if (AllBullets[i].type == OUT) continue; // never check for collisions with dead bullets.. 
-	  if (AllBullets[i].type == FLASH) continue; // never check for collisions with flashes bullets.. 
-
-	  if ( fabsf(AllBullets[i].pos.x-CurBullet->pos.x) > BULLET_BULLET_COLLISION_DIST ) continue;
-	  if ( fabsf(AllBullets[i].pos.y-CurBullet->pos.y) > BULLET_BULLET_COLLISION_DIST ) continue;
-	  // it seems like we have a collision of two bullets!
-	  // both will be deleted and replaced by blasts..
-	  DebugPrintf ( 1 , "\nBullet-Bullet-Collision detected..." );
-	  
-	  //CurBullet->type=OUT;
-	  //AllBullets[num].type=OUT;
-
-	  if ( CurBullet->reflect_other_bullets )
-	    {
-	      if ( AllBullets[ i ].was_reflected )
-		{
-		  // well, if it has been reflected once, we don't do any more
-		  // reflections after that...
-		}
-	      else
-		{
-		  AllBullets[i].speed.x = - AllBullets[i].speed.x;
-		  AllBullets[i].speed.y = - AllBullets[i].speed.y;
-		  AllBullets[i].was_reflected = TRUE;
-		}
-	    }
-
-	  if ( AllBullets[ i ].reflect_other_bullets )
-	    {
-	      if ( CurBullet->was_reflected )
-		{
-		  // well, if it has been reflected once, we don't do any more
-		  // reflections after that...
-		}
-	      else
-		{
-		  CurBullet->speed.x = - CurBullet->speed.x;
-		  CurBullet->speed.y = - CurBullet->speed.y;
-		  CurBullet->was_reflected = TRUE;
-		}
-	    }
-
-	}
       break;
     } // switch ( Bullet-Type )
 }; // CheckBulletCollisions( ... )
