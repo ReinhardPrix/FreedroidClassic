@@ -1164,14 +1164,22 @@ show_obstacle_labels ( int mask )
 void
 blit_light_radius ( void )
 {
+#define NUMBER_OF_SHADOW_IMAGES 20
+  
   static int first_call = TRUE ;
-  int i;
-  static iso_image light_radius_chunk[10];
+  int i, j ;
+  static iso_image light_radius_chunk[ NUMBER_OF_SHADOW_IMAGES ];
   char* fpath;
   char constructed_file_name[2000];
   int our_height, our_width, our_max_height, our_max_width;
   int light_strength;
   moderately_finepoint target_pos;
+  static int pos_x_grid [ (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2) ] [ (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2 ) ] ;
+  static int pos_y_grid [ (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2) ] [ (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2 ) ] ;
+  static SDL_Rect target_rectangle;
+  int chunk_size_x;
+  int chunk_size_y;
+
 
   //--------------------
   // If the darkenss chunks have not yet been loaded, we load them...
@@ -1179,18 +1187,62 @@ blit_light_radius ( void )
   if ( first_call )
     {
       first_call = FALSE;
-      for ( i = 0 ; i < 10 ; i ++ )
+      for ( i = 0 ; i < NUMBER_OF_SHADOW_IMAGES ; i ++ )
 	{
-	  sprintf ( constructed_file_name , "iso_light_radius_darkness_%04d.png" , i );
+	  sprintf ( constructed_file_name , "iso_light_radius_darkness_%04d.png" , i + 1 );
 	  fpath = find_file ( constructed_file_name , GRAPHICS_DIR , FALSE );
 	  get_iso_image_from_file_and_path ( fpath , & ( light_radius_chunk [ i ] ) ) ;
 	}
+
+      pos_x_grid [ 0 ] [ 0 ] = translate_map_point_to_screen_pixel ( Me [ 0 ] . pos . x + 0.2 - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , Me [ 0 ] . pos . y -0.2 - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , TRUE ) ;
+      pos_y_grid [ 0 ] [ 0 ] = translate_map_point_to_screen_pixel ( Me [ 0 ] . pos . x + 0.2 - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , Me [ 0 ] . pos . y -0.2 - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , FALSE ) ;
+
+
+      chunk_size_x = ( iso_floor_tile_width / 2 ) * LIGHT_RADIUS_CHUNK_SIZE ; 
+      chunk_size_y = ( iso_floor_tile_height / 2 ) * LIGHT_RADIUS_CHUNK_SIZE ;
+
+      for ( i = 0 ; i < (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2) ; i ++ )
+	{
+	  for ( j = 0 ; j < (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2) ; j ++ )
+	    {
+	      //--------------------
+	      // This case handles the assembly of the first row of chunks (southward movement)
+	      //
+
+	      /*
+		WOW!
+	      if ( ( j == 0 ) && ( i > 0 ) )
+		{
+		  pos_x_grid [ i ] [ j ] = pos_x_grid [ i-1 ] [ j ] + chunk_size_x ;
+		  pos_y_grid [ i ] [ j ] = pos_y_grid [ i-1 ] [ j ] + chunk_size_y + 1 ;
+		}
+	      else if ( i > 0 )
+		{
+		  pos_x_grid [ i ] [ j ] = -0 + pos_x_grid [ i ] [ j-1 ] - chunk_size_x + 1 ;
+		  pos_y_grid [ i ] [ j ] = +0 + pos_y_grid [ i ] [ j-1 ] + chunk_size_y ;
+		}
+	      */
+
+	      if ( ( j == 0 ) && ( i > 0 ) )
+		{
+		  pos_x_grid [ i ] [ j ] = pos_x_grid [ i-1 ] [ j ] + chunk_size_x ;
+		  pos_y_grid [ i ] [ j ] = pos_y_grid [ i-1 ] [ j ] + chunk_size_y + 1 ;
+		}
+	      else if ( i > 0 )
+		{
+		  pos_x_grid [ i ] [ j ] = -0 + pos_x_grid [ i ] [ j-1 ] - chunk_size_x - 1 ;
+		  pos_y_grid [ i ] [ j ] = +0 + pos_y_grid [ i ] [ j-1 ] + chunk_size_y + 0 ;
+		}
+
+	    }
+	}
+
     }
 
   //--------------------
   // Now it's time to apply the light radius
   //
-  our_max_width = FLOOR_TILES_VISIBLE_AROUND_TUX * 5.0 * 2 ;
+  our_max_width = FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2 ;
   our_max_height = our_max_width;
 
 
@@ -1198,12 +1250,17 @@ blit_light_radius ( void )
     {
       for ( our_width = 0 ; our_width < our_max_width ; our_width ++ )
 	{
-	  target_pos . x = Me [ 0 ] . pos . x - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) + our_width * ( 1.0 / 5.0 ) ;
-	  target_pos . y = Me [ 0 ] . pos . y - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) + our_height * ( 1.0 / 5.0 ) ;
-	  light_strength = (int) ( sqrt ( ( Me [ 0 ] . pos . x - target_pos . x ) * ( Me [ 0 ] . pos . x - target_pos . x ) + ( Me [ 0 ] . pos . y - target_pos . y ) * ( Me [ 0 ] . pos . y - target_pos . y ) ) * 2.0 ) ;
-	  if ( light_strength >= 10 ) light_strength = 9 ;
+	  target_pos . x = Me [ 0 ] . pos . x - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) + our_width * LIGHT_RADIUS_CHUNK_SIZE ;
+	  target_pos . y = Me [ 0 ] . pos . y - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) + our_height * LIGHT_RADIUS_CHUNK_SIZE;
+	  light_strength = (int) ( sqrt ( ( Me [ 0 ] . pos . x - target_pos . x ) * ( Me [ 0 ] . pos . x - target_pos . x ) + ( Me [ 0 ] . pos . y - target_pos . y ) * ( Me [ 0 ] . pos . y - target_pos . y ) ) * 4.0 ) ;
+	  if ( light_strength >= NUMBER_OF_SHADOW_IMAGES ) light_strength = NUMBER_OF_SHADOW_IMAGES -1 ;
 	  if ( light_strength <= 0 ) continue ;
-	  blit_iso_image_to_map_position ( light_radius_chunk [ light_strength ] , target_pos . x , target_pos . y );
+
+	  // blit_iso_image_to_map_position ( light_radius_chunk [ light_strength ] , target_pos . x , target_pos . y );
+	  target_rectangle . x = pos_x_grid [ our_width ] [ our_height ] ;
+	  target_rectangle . y = pos_y_grid [ our_width ] [ our_height ] ;
+	  SDL_BlitSurface( light_radius_chunk [ light_strength ] . surface , NULL , Screen, &target_rectangle );
+	  
 	}
     }
 }; // void blit_light_radius ( void )
@@ -1367,7 +1424,7 @@ PutMouseMoveCursor ( void )
  * screen.
  *----------------------------------------------------------------------*/
 void
-iso_put_tux_part ( char* part_string , int x , int y , int PlayerNum , int rotation_index )
+iso_put_tux_part ( char* part_string , int x , int y , int player_num , int rotation_index )
 {
 #define ALL_TUX_PARTS 11
 #define ALL_TUX_MOTION_CLASSES 2
@@ -1381,6 +1438,7 @@ iso_put_tux_part ( char* part_string , int x , int y , int PlayerNum , int rotat
   int motion_class = 0 ;
   int weapon_type ;
   char* motion_class_string [ ALL_TUX_MOTION_CLASSES ] = { "sword_motion" , "gun_motion" } ;
+  float my_speed;
 
   //--------------------
   // At first call, we need to mark all the iso_images as not yet loaded...
@@ -1467,7 +1525,7 @@ Resolving part string to index failed!",
   //--------------------
   // Now we find out which weapon class to use in this case.
   //
-  weapon_type = Me [ PlayerNum ] . weapon_item . type ;
+  weapon_type = Me [ player_num ] . weapon_item . type ;
   if ( weapon_type == (-1) )
     {
       motion_class = 0 ;
@@ -1484,10 +1542,21 @@ Resolving part string to index failed!",
   // Now we determine the phase to use.  This is not all the same
   // phase any more for all tux parts now that we've introduced a walk cycle.
   //
-  our_phase = (int) Me [ PlayerNum ] . phase ;
+  our_phase = (int) Me [ player_num ] . phase ;
   if ( ( part_index == 8 ) || ( part_index == 2 ) )
     {
-      our_phase = (int) Me [ PlayerNum ] . walk_cycle_phase ;
+      our_phase = (int) Me [ player_num ] . walk_cycle_phase ;
+
+      //--------------------
+      // Maybe the Tux speed is so high, that he should be considered running...
+      // But then we should use the running motion, which is just 10 frames shifted
+      // but otherwise in sync with the normal walkcycle...
+      //
+      my_speed = sqrt ( Me [ player_num ] . speed . x * Me [ player_num ] . speed . x +
+			Me [ player_num ] . speed . y * Me [ player_num ] . speed . y ) ;
+      if ( my_speed > RUNNING_SPEED_THRESHOLD )
+	our_phase += TUX_WALK_CYCLE_PHASES ;
+
       // our_phase = ( ( ( int ) SDL_GetTicks()/1000) % 6 ) + 16 ;
     }
 
@@ -1521,7 +1590,7 @@ Suspicious phase encountered!",
 
   if ( tmp [ motion_class ] [ part_index ] [ our_phase ] [ rotation_index ] . surface != NULL )
     {
-      blit_iso_image_to_map_position ( tmp [ motion_class ] [ part_index ] [ our_phase ] [ rotation_index ] , Me [ PlayerNum ] . pos . x , Me [ PlayerNum ] . pos . y );
+      blit_iso_image_to_map_position ( tmp [ motion_class ] [ part_index ] [ our_phase ] [ rotation_index ] , Me [ player_num ] . pos . x , Me [ player_num ] . pos . y );
     }
   else
     {
@@ -1529,128 +1598,128 @@ Suspicious phase encountered!",
 				 PLEASE_INFORM, IS_FATAL );
     }
 
-}; // void iso_put_tux_part ( char* part_string , int x , int y , int PlayerNum )
+}; // void iso_put_tux_part ( char* part_string , int x , int y , int player_num )
 
 /* ----------------------------------------------------------------------
  *
  *
  * ---------------------------------------------------------------------- */
 void
-iso_put_tux_torso ( int x , int y , int PlayerNum , int rotation_index )
+iso_put_tux_torso ( int x , int y , int player_num , int rotation_index )
 {
-  if ( Me [ PlayerNum ] . armour_item . type == (-1) )
-    iso_put_tux_part ( "torso" , x , y , PlayerNum , rotation_index );
+  if ( Me [ player_num ] . armour_item . type == (-1) )
+    iso_put_tux_part ( "torso" , x , y , player_num , rotation_index );
   else
-    iso_put_tux_part ( "armour1" , x , y , PlayerNum , rotation_index );
+    iso_put_tux_part ( "armour1" , x , y , player_num , rotation_index );
 
-}; // void iso_put_tux_head ( int x , int y , int PlayerNum , int rotation_index )
+}; // void iso_put_tux_head ( int x , int y , int player_num , int rotation_index )
 
 /* ----------------------------------------------------------------------
  *
  *
  * ---------------------------------------------------------------------- */
 void
-iso_put_tux_shieldarm ( int x , int y , int PlayerNum , int rotation_index )
+iso_put_tux_shieldarm ( int x , int y , int player_num , int rotation_index )
 {
-  if ( Me [ PlayerNum ] . shield_item . type == (-1) )
-    iso_put_tux_part ( "shieldarm" , x , y , PlayerNum , rotation_index );
+  if ( Me [ player_num ] . shield_item . type == (-1) )
+    iso_put_tux_part ( "shieldarm" , x , y , player_num , rotation_index );
   else
     {
-      if ( Me [ PlayerNum ] . weapon_item . type == (-1) )
+      if ( Me [ player_num ] . weapon_item . type == (-1) )
 	{
-	  iso_put_tux_part ( "shield1" , x , y , PlayerNum , rotation_index );
+	  iso_put_tux_part ( "shield1" , x , y , player_num , rotation_index );
 	}
       else
 	{
-	  if ( ItemMap [ Me [ PlayerNum ] . weapon_item . type ] . item_gun_angle_change > 0 )
+	  if ( ItemMap [ Me [ player_num ] . weapon_item . type ] . item_gun_angle_change > 0 )
 	    {
-	      iso_put_tux_part ( "shield1" , x , y , PlayerNum , rotation_index );
+	      iso_put_tux_part ( "shield1" , x , y , player_num , rotation_index );
 	    }
 	  else
 	    {
-	      iso_put_tux_part ( "shieldarm" , x , y , PlayerNum , rotation_index );
+	      iso_put_tux_part ( "shieldarm" , x , y , player_num , rotation_index );
 	    }
 	}
     }
-}; // void iso_put_tux_head ( int x , int y , int PlayerNum , int rotation_index )
+}; // void iso_put_tux_head ( int x , int y , int player_num , int rotation_index )
 
 /* ----------------------------------------------------------------------
  *
  *
  * ---------------------------------------------------------------------- */
 void
-iso_put_tux_head ( int x , int y , int PlayerNum , int rotation_index )
+iso_put_tux_head ( int x , int y , int player_num , int rotation_index )
 {
-  if ( Me [ PlayerNum ] . special_item . type == (-1) )
-    iso_put_tux_part ( "head" , x , y , PlayerNum , rotation_index );
+  if ( Me [ player_num ] . special_item . type == (-1) )
+    iso_put_tux_part ( "head" , x , y , player_num , rotation_index );
   else
-    iso_put_tux_part ( "helm1" , x , y , PlayerNum , rotation_index );
+    iso_put_tux_part ( "helm1" , x , y , player_num , rotation_index );
 
-}; // void iso_put_tux_head ( int x , int y , int PlayerNum , int rotation_index )
+}; // void iso_put_tux_head ( int x , int y , int player_num , int rotation_index )
 
 /* ----------------------------------------------------------------------
  *
  *
  * ---------------------------------------------------------------------- */
 void
-iso_put_tux_feet ( int x , int y , int PlayerNum , int rotation_index )
+iso_put_tux_feet ( int x , int y , int player_num , int rotation_index )
 {
-  if ( Me [ PlayerNum ] . drive_item . type == (-1) )
-    iso_put_tux_part ( "feet" , x , y , PlayerNum , rotation_index );
+  if ( Me [ player_num ] . drive_item . type == (-1) )
+    iso_put_tux_part ( "feet" , x , y , player_num , rotation_index );
   else
-    iso_put_tux_part ( "boots1" , x , y , PlayerNum , rotation_index );
+    iso_put_tux_part ( "boots1" , x , y , player_num , rotation_index );
 
-}; // void iso_put_tux_head ( int x , int y , int PlayerNum , int rotation_index )
+}; // void iso_put_tux_head ( int x , int y , int player_num , int rotation_index )
 
 /* ----------------------------------------------------------------------
  *
  *
  * ---------------------------------------------------------------------- */
 void
-iso_put_tux_weapon ( int x , int y , int PlayerNum , int rotation_index )
+iso_put_tux_weapon ( int x , int y , int player_num , int rotation_index )
 {
-  if ( Me [ PlayerNum ] . weapon_item . type != (-1) )
+  if ( Me [ player_num ] . weapon_item . type != (-1) )
     {
-      if ( ItemMap [ Me [ PlayerNum ] . weapon_item . type ] . item_gun_angle_change != 0 )
+      if ( ItemMap [ Me [ player_num ] . weapon_item . type ] . item_gun_angle_change != 0 )
 	{
-	  iso_put_tux_part ( "sword" , x , y , PlayerNum , rotation_index );
+	  iso_put_tux_part ( "sword" , x , y , player_num , rotation_index );
 	}
       else
 	{
-	  iso_put_tux_part ( "gun1" , x , y , PlayerNum , rotation_index );
+	  iso_put_tux_part ( "gun1" , x , y , player_num , rotation_index );
 	}
     }
 
-}; // void iso_put_tux_weapon ( int x , int y , int PlayerNum , int rotation_index )
+}; // void iso_put_tux_weapon ( int x , int y , int player_num , int rotation_index )
 
 /* ----------------------------------------------------------------------
  *
  *
  * ---------------------------------------------------------------------- */
 void
-iso_put_all_tux_parts_for_sword_motion ( int x , int y , int PlayerNum , int rotation_index )
+iso_put_all_tux_parts_for_sword_motion ( int x , int y , int player_num , int rotation_index )
 {
 
   // DebugPrintf ( 0 , "\nDirection given: %d." , rotation_index );
-  // DebugPrintf ( 0 , "\nphase: %d." , (int) Me [ PlayerNum ] . phase );
+  // DebugPrintf ( 0 , "\nphase: %d." , (int) Me [ player_num ] . phase );
 
   switch ( rotation_index )
     {
     case 0:
-      iso_put_tux_feet ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_torso ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_head ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_part ( "weaponarm" , x , y , PlayerNum , rotation_index );
-      iso_put_tux_shieldarm ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_weapon ( x , y , PlayerNum , rotation_index );
+      iso_put_tux_feet ( x , y , player_num , rotation_index );
+      iso_put_tux_torso ( x , y , player_num , rotation_index );
+      iso_put_tux_head ( x , y , player_num , rotation_index );
+      iso_put_tux_part ( "weaponarm" , x , y , player_num , rotation_index );
+      iso_put_tux_shieldarm ( x , y , player_num , rotation_index );
+      iso_put_tux_weapon ( x , y , player_num , rotation_index );
       break;
     case 8:
-      iso_put_tux_feet ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_torso ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_part ( "weaponarm" , x , y , PlayerNum , rotation_index );
-      iso_put_tux_shieldarm ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_weapon ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_head ( x , y , PlayerNum , rotation_index );
+      iso_put_tux_feet ( x , y , player_num , rotation_index );
+      iso_put_tux_torso ( x , y , player_num , rotation_index );
+      iso_put_tux_part ( "weaponarm" , x , y , player_num , rotation_index );
+      iso_put_tux_shieldarm ( x , y , player_num , rotation_index );
+      iso_put_tux_weapon ( x , y , player_num , rotation_index );
+      iso_put_tux_head ( x , y , player_num , rotation_index );
       break;
 
     case 9:
@@ -1660,12 +1729,12 @@ iso_put_all_tux_parts_for_sword_motion ( int x , int y , int PlayerNum , int rot
     case 13:
     case 14:
     case 15:
-      iso_put_tux_feet ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_weapon ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_part ( "weaponarm" , x , y , PlayerNum , rotation_index );
-      iso_put_tux_torso ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_shieldarm ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_head ( x , y , PlayerNum , rotation_index );
+      iso_put_tux_feet ( x , y , player_num , rotation_index );
+      iso_put_tux_weapon ( x , y , player_num , rotation_index );
+      iso_put_tux_part ( "weaponarm" , x , y , player_num , rotation_index );
+      iso_put_tux_torso ( x , y , player_num , rotation_index );
+      iso_put_tux_shieldarm ( x , y , player_num , rotation_index );
+      iso_put_tux_head ( x , y , player_num , rotation_index );
       break;
 
     case 1:
@@ -1675,12 +1744,12 @@ iso_put_all_tux_parts_for_sword_motion ( int x , int y , int PlayerNum , int rot
     case 5:
     case 6:
     case 7:
-      iso_put_tux_feet ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_shieldarm ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_torso ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_head ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_weapon ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_part ( "weaponarm" , x , y , PlayerNum , rotation_index );
+      iso_put_tux_feet ( x , y , player_num , rotation_index );
+      iso_put_tux_shieldarm ( x , y , player_num , rotation_index );
+      iso_put_tux_torso ( x , y , player_num , rotation_index );
+      iso_put_tux_head ( x , y , player_num , rotation_index );
+      iso_put_tux_weapon ( x , y , player_num , rotation_index );
+      iso_put_tux_part ( "weaponarm" , x , y , player_num , rotation_index );
       break;
 
     default:
@@ -1691,82 +1760,82 @@ Suspicious rotation index encountered!",
       break;
     }
 
-}; // void iso_put_all_tux_parts_in_direction ( x , y , PlayerNum , rotation_index )
+}; // void iso_put_all_tux_parts_in_direction ( x , y , player_num , rotation_index )
 
 /* ----------------------------------------------------------------------
  *
  *
  * ---------------------------------------------------------------------- */
 void
-iso_put_all_tux_parts_for_gun_motion ( int x , int y , int PlayerNum , int rotation_index )
+iso_put_all_tux_parts_for_gun_motion ( int x , int y , int player_num , int rotation_index )
 {
 
   // DebugPrintf ( 0 , "\nDirection given: %d." , rotation_index );
-  // DebugPrintf ( 0 , "\nphase: %d." , (int) Me [ PlayerNum ] . phase );
+  // DebugPrintf ( 0 , "\nphase: %d." , (int) Me [ player_num ] . phase );
 
   switch ( rotation_index )
     {
     case 0:
-      iso_put_tux_feet ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_torso ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_head ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_part ( "weaponarm" , x , y , PlayerNum , rotation_index );
-      iso_put_tux_shieldarm ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_weapon ( x , y , PlayerNum , rotation_index );
+      iso_put_tux_feet ( x , y , player_num , rotation_index );
+      iso_put_tux_torso ( x , y , player_num , rotation_index );
+      iso_put_tux_head ( x , y , player_num , rotation_index );
+      iso_put_tux_part ( "weaponarm" , x , y , player_num , rotation_index );
+      iso_put_tux_shieldarm ( x , y , player_num , rotation_index );
+      iso_put_tux_weapon ( x , y , player_num , rotation_index );
       break;
     case 8:
-      iso_put_tux_feet ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_part ( "weaponarm" , x , y , PlayerNum , rotation_index );
-      iso_put_tux_shieldarm ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_weapon ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_torso ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_head ( x , y , PlayerNum , rotation_index );
+      iso_put_tux_feet ( x , y , player_num , rotation_index );
+      iso_put_tux_part ( "weaponarm" , x , y , player_num , rotation_index );
+      iso_put_tux_shieldarm ( x , y , player_num , rotation_index );
+      iso_put_tux_weapon ( x , y , player_num , rotation_index );
+      iso_put_tux_torso ( x , y , player_num , rotation_index );
+      iso_put_tux_head ( x , y , player_num , rotation_index );
       break;
 
     case 9:
     case 10:
     case 11:
-      iso_put_tux_feet ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_weapon ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_part ( "weaponarm" , x , y , PlayerNum , rotation_index );
-      iso_put_tux_torso ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_shieldarm ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_head ( x , y , PlayerNum , rotation_index );
+      iso_put_tux_feet ( x , y , player_num , rotation_index );
+      iso_put_tux_weapon ( x , y , player_num , rotation_index );
+      iso_put_tux_part ( "weaponarm" , x , y , player_num , rotation_index );
+      iso_put_tux_torso ( x , y , player_num , rotation_index );
+      iso_put_tux_shieldarm ( x , y , player_num , rotation_index );
+      iso_put_tux_head ( x , y , player_num , rotation_index );
       break;
 
     case 12:
     case 13:
     case 14:
     case 15:
-      iso_put_tux_feet ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_torso ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_part ( "weaponarm" , x , y , PlayerNum , rotation_index );
-      iso_put_tux_weapon ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_shieldarm ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_head ( x , y , PlayerNum , rotation_index );
+      iso_put_tux_feet ( x , y , player_num , rotation_index );
+      iso_put_tux_torso ( x , y , player_num , rotation_index );
+      iso_put_tux_part ( "weaponarm" , x , y , player_num , rotation_index );
+      iso_put_tux_weapon ( x , y , player_num , rotation_index );
+      iso_put_tux_shieldarm ( x , y , player_num , rotation_index );
+      iso_put_tux_head ( x , y , player_num , rotation_index );
       break;
 
     case 1:
     case 2:
     case 3:
     case 4:
-      iso_put_tux_feet ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_shieldarm ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_torso ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_head ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_weapon ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_part ( "weaponarm" , x , y , PlayerNum , rotation_index );
+      iso_put_tux_feet ( x , y , player_num , rotation_index );
+      iso_put_tux_shieldarm ( x , y , player_num , rotation_index );
+      iso_put_tux_torso ( x , y , player_num , rotation_index );
+      iso_put_tux_head ( x , y , player_num , rotation_index );
+      iso_put_tux_weapon ( x , y , player_num , rotation_index );
+      iso_put_tux_part ( "weaponarm" , x , y , player_num , rotation_index );
       break;
 
     case 5:
     case 6:
     case 7:
-      iso_put_tux_feet ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_shieldarm ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_weapon ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_torso ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_part ( "weaponarm" , x , y , PlayerNum , rotation_index );
-      iso_put_tux_head ( x , y , PlayerNum , rotation_index );
+      iso_put_tux_feet ( x , y , player_num , rotation_index );
+      iso_put_tux_shieldarm ( x , y , player_num , rotation_index );
+      iso_put_tux_weapon ( x , y , player_num , rotation_index );
+      iso_put_tux_torso ( x , y , player_num , rotation_index );
+      iso_put_tux_part ( "weaponarm" , x , y , player_num , rotation_index );
+      iso_put_tux_head ( x , y , player_num , rotation_index );
       break;
 
     default:
@@ -1777,14 +1846,14 @@ Suspicious rotation index encountered!",
       break;
     }
 
-}; // void iso_put_all_tux_parts_for_gun_motion ( x , y , PlayerNum , rotation_index )
+}; // void iso_put_all_tux_parts_for_gun_motion ( x , y , player_num , rotation_index )
 
 /*----------------------------------------------------------------------
  * This function should blit the isometric version of the Tux to the
  * screen.
  *----------------------------------------------------------------------*/
 void
-iso_put_tux ( int x , int y , int PlayerNum )
+iso_put_tux ( int x , int y , int player_num )
 {
   int rotation_index;
   float angle;
@@ -1793,13 +1862,13 @@ iso_put_tux ( int x , int y , int PlayerNum )
   // In case there is no weapon swing going on, we can select the direction
   // of facing by examining the current speed.
   //
-  if ( ( Me [ PlayerNum ] . phase > 0 ) && ( Me [ PlayerNum ] . phase <= TUX_SWING_PHASES ) )
+  if ( ( Me [ player_num ] . phase > 0 ) && ( Me [ player_num ] . phase <= TUX_SWING_PHASES ) )
     {
       //--------------------
       // Don't touch the direction of heading here, cause it's set correctly
       // within the raw tux attack function anyway.
       //
-      angle = Me [ PlayerNum ] . angle ;
+      angle = Me [ player_num ] . angle ;
     }
   else
     {
@@ -1807,16 +1876,16 @@ iso_put_tux ( int x , int y , int PlayerNum )
       // We make the angle dependent upon direction of movement, but only if there really is
       // at least some movement.
       //
-      if ( fabsf ( Me [ PlayerNum ] . speed . x ) + fabsf ( Me [ PlayerNum ] . speed . y ) > 0.1 )
+      if ( fabsf ( Me [ player_num ] . speed . x ) + fabsf ( Me [ player_num ] . speed . y ) > 0.1 )
 	{
-	  angle = - ( atan2 (Me [ PlayerNum ].speed.y,  Me [ PlayerNum ].speed.x) * 180 / M_PI - 45 -180 );
+	  angle = - ( atan2 (Me [ player_num ].speed.y,  Me [ player_num ].speed.x) * 180 / M_PI - 45 -180 );
 	  angle += 360 / ( 2 * MAX_TUX_DIRECTIONS );
 	  while ( angle < 0 ) angle += 360;
-	  Me [ PlayerNum ] . angle = angle ;
+	  Me [ player_num ] . angle = angle ;
 	}
       else
 	{ 
-	  angle = Me [ PlayerNum ] . angle ;
+	  angle = Me [ player_num ] . angle ;
 	}
     }
 
@@ -1827,19 +1896,19 @@ iso_put_tux ( int x , int y , int PlayerNum )
   while ( rotation_index >= MAX_TUX_DIRECTIONS ) rotation_index -= MAX_TUX_DIRECTIONS;
   while ( rotation_index < 0 ) rotation_index += MAX_TUX_DIRECTIONS;
 
-  if ( Me [ PlayerNum ] . weapon_item . type == (-1) )
+  if ( Me [ player_num ] . weapon_item . type == (-1) )
     {
-      iso_put_all_tux_parts_for_sword_motion ( x , y , PlayerNum , rotation_index );
+      iso_put_all_tux_parts_for_sword_motion ( x , y , player_num , rotation_index );
     }
   else
     {
-      if ( ItemMap [ Me [ PlayerNum ] . weapon_item . type ] . item_gun_angle_change > 0 )
-	iso_put_all_tux_parts_for_sword_motion ( x , y , PlayerNum , rotation_index );
+      if ( ItemMap [ Me [ player_num ] . weapon_item . type ] . item_gun_angle_change > 0 )
+	iso_put_all_tux_parts_for_sword_motion ( x , y , player_num , rotation_index );
       else
-	iso_put_all_tux_parts_for_gun_motion ( x , y , PlayerNum , rotation_index );
+	iso_put_all_tux_parts_for_gun_motion ( x , y , player_num , rotation_index );
     }
 
-}; // void iso_put_tux ( int x , int y , int PlayerNum )
+}; // void iso_put_tux ( int x , int y , int player_num )
 
 /* -----------------------------------------------------------------
  * This function draws the influencer to the screen, either
@@ -1851,7 +1920,7 @@ iso_put_tux ( int x , int y , int PlayerNum )
  * the blit.
  * ----------------------------------------------------------------- */
 void
-blit_tux ( int x , int y , int PlayerNum )
+blit_tux ( int x , int y , int player_num )
 {
   SDL_Rect TargetRectangle;
   SDL_Rect Text_Rect;
@@ -1875,8 +1944,8 @@ blit_tux ( int x , int y , int PlayerNum )
       // tux is out, so we'll query for that first, as well as for the case
       // of other players that are not on this level.
       //
-      if ( Me [ PlayerNum ] . status == OUT ) return;
-      if ( Me [ PlayerNum ] . pos . z != Me [ 0 ] . pos . z ) return;
+      if ( Me [ player_num ] . status == OUT ) return;
+      if ( Me [ player_num ] . pos . z != Me [ 0 ] . pos . z ) return;
       
       UpperLeftBlitCorner.x = UserCenter_x - Block_Width  / 2 ;
       UpperLeftBlitCorner.y = UserCenter_y - Block_Height / 2 ;
@@ -1905,19 +1974,19 @@ blit_tux ( int x , int y , int PlayerNum )
   //
   
 #define alpha_offset 80
-  if ( ( ( Me [ PlayerNum ].energy * 100 / Me [ PlayerNum ].maxenergy ) <= BLINKENERGY ) && ( x == (-1) ) ) 
+  if ( ( ( Me [ player_num ].energy * 100 / Me [ player_num ].maxenergy ) <= BLINKENERGY ) && ( x == (-1) ) ) 
     {
 
       // In case of low energy, do the fading effect...
       alpha_value = (int) ( ( 256 - alpha_offset ) * 
-			    fabsf( 0.5 * Me [ PlayerNum ].MissionTimeElapsed - floor( 0.5 * Me [ PlayerNum ].MissionTimeElapsed ) - 0.5 ) + 
+			    fabsf( 0.5 * Me [ player_num ].MissionTimeElapsed - floor( 0.5 * Me [ player_num ].MissionTimeElapsed ) - 0.5 ) + 
 			    ( alpha_offset ) );
 
       // ... and also maybe start a new cry-sound
 
-      if ( Me [ PlayerNum ].LastCrysoundTime > CRY_SOUND_INTERVAL )
+      if ( Me [ player_num ].LastCrysoundTime > CRY_SOUND_INTERVAL )
 	{
-	  Me [ PlayerNum ].LastCrysoundTime = 0;
+	  Me [ player_num ].LastCrysoundTime = 0;
 	  CrySound();
 	}
     }
@@ -1926,11 +1995,11 @@ blit_tux ( int x , int y , int PlayerNum )
   // In case of transfer mode, we produce the transfer mode sound
   // but of course only in some periodic intervall...
 
-  if ( Me [ PlayerNum ].status == TRANSFERMODE )
+  if ( Me [ player_num ].status == TRANSFERMODE )
     {
-      if ( Me [ PlayerNum ].LastTransferSoundTime > TRANSFER_SOUND_INTERVAL )
+      if ( Me [ player_num ].LastTransferSoundTime > TRANSFER_SOUND_INTERVAL )
 	{
-	  Me [ PlayerNum ].LastTransferSoundTime = 0;
+	  Me [ player_num ].LastTransferSoundTime = 0;
 	  TransferSound();
 	}
     }
@@ -1939,7 +2008,7 @@ blit_tux ( int x , int y , int PlayerNum )
   // Either we draw the classical influencer or we draw the more modern
   // tux, a descendant of the influencer :)
   //
-  iso_put_tux ( x , y , PlayerNum );
+  iso_put_tux ( x , y , player_num );
 
   //--------------------
   // Now that all fading effects are done, we can restore the blocks surface to OPAQUE,
@@ -1950,14 +2019,14 @@ blit_tux ( int x , int y , int PlayerNum )
   // Maybe the influencer has something to say :)
   // so let him say it..
   //
-  if ( ( x == (-1) ) && ( Me [ PlayerNum ].TextVisibleTime < GameConfig.WantedTextVisibleTime ) && GameConfig.All_Texts_Switch )
+  if ( ( x == (-1) ) && ( Me [ player_num ].TextVisibleTime < GameConfig.WantedTextVisibleTime ) && GameConfig.All_Texts_Switch )
     {
       //      PutStringFont ( Screen , FPS_Display_BFont , 
       //		      User_Rect.x+(User_Rect.w/2) + Block_Width/3 , 
       //		      User_Rect.y+(User_Rect.h/2) - Block_Height/2 ,  
-      //		      Me [ PlayerNum ].TextToBeDisplayed );
+      //		      Me [ player_num ].TextToBeDisplayed );
       SetCurrentFont( FPS_Display_BFont );
-      DisplayText( Me [ PlayerNum ].TextToBeDisplayed , UserCenter_x + Block_Width/3,
+      DisplayText( Me [ player_num ].TextToBeDisplayed , UserCenter_x + Block_Width/3,
 		   UserCenter_y - Block_Height/2 , &Text_Rect );
     }
 

@@ -225,8 +225,8 @@ EXTERN unsigned char *LevelColorArray;
 EXTERN int *CRTC;
 EXTERN unsigned char *Data70Pointer;
 
-EXTERN int iso_floor_tile_width;
-EXTERN int iso_floor_tile_height;
+EXTERN float iso_floor_tile_width;
+EXTERN float iso_floor_tile_height;
 EXTERN int Block_Width;
 EXTERN int Block_Height;
 EXTERN const SDL_VideoInfo *vid_info;/* info about current video mode */
