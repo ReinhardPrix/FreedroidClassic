@@ -73,34 +73,64 @@ ChatWithFriendlyDroid( int Enum )
 {
   char* RequestString;
   int i;
+  int OldTextCursorX, OldTextCursorY;
   SDL_Surface* Background;
+  SDL_Rect Chat_Window;
+  SDL_Rect Input_Window;
+  
+  Chat_Window.x=242;
+  Chat_Window.y=100;
+  Chat_Window.w=380;
+  Chat_Window.h=314;
+
+  Input_Window.x=15;
+  Input_Window.y=434;
+  Input_Window.w=606;
+  Input_Window.h=37;
 
   Activate_Conservative_Frame_Computation( );
-  MakeGridOnScreen( NULL );
+  // MakeGridOnScreen( NULL );
   // Now the background is basically there as we need it.  We store it
   // in its current pure form for later use as background for scrolling
   //
-  Background = SDL_DisplayFormat( ne_screen );
+  // Background = SDL_DisplayFormat( ne_screen );
+  Background = IMG_Load( find_file ( "chat_test.jpg" , GRAPHICS_DIR, FALSE ) );
+  if ( Background == NULL )
+    {
+      printf("\n\nERROR LOADING FILE!!!!  Error code: %s " , SDL_GetError() );
+      Terminate(ERR);
+    }
+
+  SDL_BlitSurface( Background , NULL , ne_screen , NULL );
+  SDL_Flip( ne_screen );
+  
+  // getchar_raw();
 
   SetCurrentFont( Para_BFont );
 
   DisplayTextWithScrolling ( 
 			    "Transfer channel protocol set up for text transfer...\n\n" , 
-			    User_Rect.x , User_Rect.y , NULL , Background );
+			    Chat_Window.x , Chat_Window.y , &Chat_Window , Background );
 
   printf_SDL( ne_screen, -1 , -1 , " Hello, this is %s unit \n" , Druidmap[AllEnemys[Enum].type].druidname  );
 
   while (1)
     {
-      DisplayTextWithScrolling ( 
-				"\nWhat do you say? " ,
-				-1 , -1 , NULL , Background );
-      DisplayTextWithScrolling ( ">" , -1 , -1 , NULL , Background );
-
+      OldTextCursorX=MyCursorX;
+      OldTextCursorY=MyCursorY;
+      DisplayText ( "What do you say? >" ,
+		    Input_Window.x , Input_Window.y + (Input_Window.h - FontHeight (GetCurrentFont() ) ) / 2 , 
+		    &Input_Window ); // , Background );
+      // DisplayTextWithScrolling ( ">" , -1 , -1 , &Input_Window , Background );
       SDL_Flip ( ne_screen );
       RequestString = GetString( 20 , FALSE );
+      MyCursorX=OldTextCursorX;
+      MyCursorY=OldTextCursorY;
+
+      DisplayTextWithScrolling ( "\n>" , MyCursorX , MyCursorY , &Chat_Window , Background );
+
       // printf_SDL( ne_screen, -1 , -1 , "\n" ); // without this, we would write text over the entered string
-      DisplayTextWithScrolling ( "\n    " , -1 , -1 , NULL , Background ); // without this, we would write text over the entered string
+      // DisplayTextWithScrolling ( "\n    " , -1 , -1 , &Chat_Window , Background ); // without this, we would write text over the entered string
 
       //--------------------
       // Cause we do not want to deal with upper and lower case difficulties, we simpy convert 
@@ -131,7 +161,7 @@ ChatWithFriendlyDroid( int Enum )
 Most useful command phrases are: FOLLOW STAY STATUS \n\
 Often useful information requests are: JOB NAME MS HELLO \n\
 Of course you can ask the droid about anything else it has told you or about what you have heard somewhere else." , 
-				   MyCursorX , MyCursorY , NULL , Background );
+				   MyCursorX , MyCursorY , &Chat_Window , Background );
 	  continue;
 	}
       
@@ -147,7 +177,7 @@ Of course you can ask the droid about anything else it has told you or about wha
 	{
 	  DisplayTextWithScrolling( 
 		      "Ok.  I'm on your tail.  I hope you know where you're going.  I'll do my best to keep up." , 
-		      MyCursorX , MyCursorY , NULL , Background );
+		      MyCursorX , MyCursorY , &Chat_Window , Background );
 	  AllEnemys[ Enum ].CompletelyFixed = FALSE;
 	  AllEnemys[ Enum ].FollowingInflusTail = TRUE;
 	  continue;
@@ -157,7 +187,7 @@ Of course you can ask the droid about anything else it has told you or about wha
 	  DisplayTextWithScrolling( 
 				   "Ok.  I'll stay here and not move a bit.  I will do so until I receive further instructions from you.  \n\
 I hope you know what you're doing." , 
-		      MyCursorX , MyCursorY , NULL , Background );
+		      MyCursorX , MyCursorY , &Chat_Window , Background );
 	  AllEnemys[ Enum ].CompletelyFixed = TRUE;
 	  AllEnemys[ Enum ].FollowingInflusTail = FALSE;
 	  continue;
@@ -166,24 +196,24 @@ I hope you know what you're doing." ,
 	{
 	  DisplayTextWithScrolling( 
 				   "Here's my status report:\n" ,
-				   MyCursorX , MyCursorY , NULL , Background );
+				   MyCursorX , MyCursorY , &Chat_Window , Background );
 	  printf_SDL( ne_screen , -1 , -1 , "Energy: %d/%d.\n" , (int) AllEnemys[ Enum ].energy , (int) Druidmap[ AllEnemys[Enum].type ].maxenergy );
 	  if ( AllEnemys[ Enum ].FollowingInflusTail )
 	    DisplayTextWithScrolling( 
 				     "I'm currently following you.\n" ,
-				     MyCursorX , MyCursorY , NULL , Background );
+				     MyCursorX , MyCursorY , &Chat_Window , Background );
 	  else
 	    DisplayTextWithScrolling( 
 				     "I'm currently not following you.\n" ,
-				     MyCursorX , MyCursorY , NULL , Background );
+				     MyCursorX , MyCursorY , &Chat_Window , Background );
 	  if ( AllEnemys[ Enum ].CompletelyFixed )
 	    DisplayTextWithScrolling( 
 				     "I am instructed to wait here for your return.\n" ,
-				     MyCursorX , MyCursorY , NULL , Background );
+				     MyCursorX , MyCursorY , &Chat_Window , Background );
 	  else
 	    DisplayTextWithScrolling( 
 				     "I'm free to move.\n" ,
-				     MyCursorX , MyCursorY , NULL , Background );
+				     MyCursorX , MyCursorY , &Chat_Window , Background );
 	  continue;
 	}
 
@@ -199,7 +229,7 @@ I hope you know what you're doing." ,
 	  if ( !strcmp ( RequestString , AllEnemys[ Enum ].QuestionResponseList[ i * 2 ] ) ) // even entries = questions
 	    {
 	      DisplayTextWithScrolling ( AllEnemys[ Enum ].QuestionResponseList[ i * 2 + 1 ] , 
-					 -1 , -1 , NULL , Background );
+					 -1 , -1 , &Chat_Window , Background );
 	      break;
 	    }
 	}
@@ -214,7 +244,7 @@ I hope you know what you're doing." ,
       if ( i == MAX_CHAT_KEYWORDS_PER_DROID )
 	{
 	  DisplayTextWithScrolling ( "Sorry, but of that I know entirely nothing." , 
-				     -1 , -1 , NULL , Background );
+				     -1 , -1 , &Chat_Window , Background );
 	}
     }
 }; // void ChatWithFriendlyDroid( int Enum );
@@ -525,9 +555,10 @@ DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *cl
       // before we clean the screen and restart displaying text from the top
       // of the given Clipping rectangle
       //
-      if ( ( clip->h + clip->y - MyCursorY ) <= 2 * FontHeight ( GetCurrentFont() ) * TEXT_STRETCH )
+      // if ( ( clip->h + clip->y - MyCursorY ) <= 2 * FontHeight ( GetCurrentFont() ) * TEXT_STRETCH )
+      if ( ( clip->h + clip->y - MyCursorY ) <= 1 * FontHeight ( GetCurrentFont() ) * TEXT_STRETCH )
 	{
-	  DisplayText( "--- more --- more --- more --- more ---\n" , MyCursorX , MyCursorY , clip );
+	  DisplayText( "--- more --- more --- \n" , MyCursorX , MyCursorY , clip );
 	  SDL_Flip( ne_screen );
 	  while ( !SpacePressed() );
 	  while (  SpacePressed() );
