@@ -2248,29 +2248,30 @@ Get_New_Character_Name ( void )
 	Temp = GetString ( 20 , FALSE  , NE_TITLE_PIC_BACKGROUND_CODE , "\n\
      Please enter a name\n\
      for the new hero: \n\
+     (ESCAPE to cancel.)\n\n\
      > " );
     else
 	Temp = "MapEd" ;
 
-  //--------------------
-  // In case 'Escape has been pressed inside GetString, then a NULL pointer
-  // will be returned, which means no name has been given to the character
-  // yet, so we set an empty string for the character name.
-  //
-  if ( Temp == NULL )
+    //--------------------
+    // In case 'Escape has been pressed inside GetString, then a NULL pointer
+    // will be returned, which means no name has been given to the character
+    // yet, so we set an empty string for the character name.
+    //
+    if ( Temp == NULL )
     {
-      strcpy ( Me [ 0 ] . character_name , "" );
-      return ;
+	strcpy ( Me [ 0 ] . character_name , "" );
+	return ;
     }
-
-  //--------------------
-  // If a real name has been given to the character, we can copy that name into
-  // the corresponding structure and return here (not without freeing the string
-  // received.  Could be some valuable 20 bytes after all :)
-  //
-  strcpy ( Me [ 0 ] . character_name , Temp );
-  free( Temp );
-
+    
+    //--------------------
+    // If a real name has been given to the character, we can copy that name into
+    // the corresponding structure and return here (not without freeing the string
+    // received.  Could be some valuable 20 bytes after all :)
+    //
+    strcpy ( Me [ 0 ] . character_name , Temp );
+    free( Temp );
+    
 }; // void Get_New_Character_Name ( void )
 
 /* ----------------------------------------------------------------------
@@ -2279,66 +2280,66 @@ Get_New_Character_Name ( void )
 int
 PrepareNewHero (void)
 {
-  int i;
+    int i;
 
-  //--------------------
-  // At first we clear the inventory of the new character
-  // of any items (or numeric waste) that might be in there
-  //
-  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+    //--------------------
+    // At first we clear the inventory of the new character
+    // of any items (or numeric waste) that might be in there
+    //
+    for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
     {
-      Me[0].Inventory[ i ].type = (-1);
-      Me[0].Inventory[ i ].prefix_code = (-1);
-      Me[0].Inventory[ i ].suffix_code = (-1);
-      Me[0].Inventory[ i ].currently_held_in_hand = FALSE;
+	Me [ 0 ] . Inventory [ i ] . type = (-1);
+	Me [ 0 ] . Inventory [ i ] . prefix_code = (-1);
+	Me [ 0 ] . Inventory [ i ] . suffix_code = (-1);
+	Me [ 0 ] . Inventory [ i ] . currently_held_in_hand = FALSE;
     }
-  DebugPrintf ( 1 , "\nPrepareNewHero...( ... ): Inventory has been emptied...");
+    DebugPrintf ( 1 , "\n%s(): Inventory has been emptied..." , __FUNCTION__ );
 
-  //--------------------
-  // Now we add some safety, against 'none present' items
-  //
-  Me[0].weapon_item.type = ( -1 ) ;
-  Me[0].drive_item.type = ( -1 ) ;
-  Me[0].armour_item.type = ( -1 ) ;
-  Me[0].shield_item.type = ( -1 ) ;
-  Me[0].aux1_item.type = ( -1 ) ;
-  Me[0].aux2_item.type = ( -1 ) ;
-  Me[0].special_item.type = ( -1 ) ;
+    //--------------------
+    // Now we add some safety, against 'none present' items
+    //
+    Me [ 0 ] . weapon_item.type = ( -1 ) ;
+    Me [ 0 ] . drive_item.type = ( -1 ) ;
+    Me [ 0 ] . armour_item.type = ( -1 ) ;
+    Me [ 0 ] . shield_item.type = ( -1 ) ;
+    Me [ 0 ] . aux1_item.type = ( -1 ) ;
+    Me [ 0 ] . aux2_item.type = ( -1 ) ;
+    Me [ 0 ] . special_item.type = ( -1 ) ;
+    
+    Me [ 0 ] . weapon_item.prefix_code = ( -1 ) ;
+    Me [ 0 ] . drive_item.prefix_code = ( -1 ) ;
+    Me [ 0 ] . armour_item.prefix_code = ( -1 ) ;
+    Me [ 0 ] . shield_item.prefix_code = ( -1 ) ;
+    Me [ 0 ] . aux1_item.prefix_code = ( -1 ) ;
+    Me [ 0 ] . aux2_item.prefix_code = ( -1 ) ;
+    Me [ 0 ] . special_item.prefix_code = ( -1 ) ;
+    
+    Me [ 0 ] . weapon_item.suffix_code = ( -1 ) ;
+    Me [ 0 ] . drive_item.suffix_code = ( -1 ) ;
+    Me [ 0 ] . armour_item.suffix_code = ( -1 ) ;
+    Me [ 0 ] . shield_item.suffix_code = ( -1 ) ;
+    Me [ 0 ] . aux1_item.suffix_code = ( -1 ) ;
+    Me [ 0 ] . aux2_item.suffix_code = ( -1 ) ;
+    Me [ 0 ] . special_item.suffix_code = ( -1 ) ;
+    
+    Me [ 0 ] . character_class = WAR_BOT;
+    Me [ 0 ] . base_vitality = 25;
+    Me [ 0 ] . base_strength = 10;
+    Me [ 0 ] . base_dexterity = 15;
+    Me [ 0 ] . base_magic = 40;
+    
+    Me [ 0 ] . is_town_guard_member = FALSE ;
 
-  Me[0].weapon_item.prefix_code = ( -1 ) ;
-  Me[0].drive_item.prefix_code = ( -1 ) ;
-  Me[0].armour_item.prefix_code = ( -1 ) ;
-  Me[0].shield_item.prefix_code = ( -1 ) ;
-  Me[0].aux1_item.prefix_code = ( -1 ) ;
-  Me[0].aux2_item.prefix_code = ( -1 ) ;
-  Me[0].special_item.prefix_code = ( -1 ) ;
-
-  Me[0].weapon_item.suffix_code = ( -1 ) ;
-  Me[0].drive_item.suffix_code = ( -1 ) ;
-  Me[0].armour_item.suffix_code = ( -1 ) ;
-  Me[0].shield_item.suffix_code = ( -1 ) ;
-  Me[0].aux1_item.suffix_code = ( -1 ) ;
-  Me[0].aux2_item.suffix_code = ( -1 ) ;
-  Me[0].special_item.suffix_code = ( -1 ) ;
-
-  Me[0].character_class = WAR_BOT;
-  Me[0].base_vitality = 25;
-  Me[0].base_strength = 10;
-  Me[0].base_dexterity = 15;
-  Me[0].base_magic = 40;
-
-  Me [ 0 ] . is_town_guard_member = FALSE ;
-
-  Get_New_Character_Name( );
-
-  //--------------------
-  // If a real name has been given, then we can proceed and start the
-  // game.  If no real name has been given or 'Escape' has been pressed,
-  // then the calling function will return to the menu and do nothing
-  // else.
-  //
-  if ( strlen ( Me [ 0 ] . character_name ) > 0 ) return ( TRUE ); else return ( FALSE );
-
+    Get_New_Character_Name( );
+    
+    //--------------------
+    // If a real name has been given, then we can proceed and start the
+    // game.  If no real name has been given or 'Escape' has been pressed,
+    // then the calling function will return to the menu and do nothing
+    // else.
+    //
+    if ( strlen ( Me [ 0 ] . character_name ) > 0 ) return ( TRUE ); else return ( FALSE );
+    
 }; // int PrepareNewHero (void)
 
 /* ----------------------------------------------------------------------
@@ -2347,70 +2348,69 @@ PrepareNewHero (void)
 int
 Connect_To_Existing_Server_Menu (void)
 {
+    //--------------------
+    // Now we add some safety, against 'none present' items
+    //
+    Me [ 0 ] . weapon_item.type = ( -1 ) ;
+    Me [ 0 ] . drive_item.type = ( -1 ) ;
+    Me [ 0 ] . armour_item.type = ( -1 ) ;
+    Me [ 0 ] . shield_item.type = ( -1 ) ;
+    Me [ 0 ] . aux1_item.type = ( -1 ) ;
+    Me [ 0 ] . aux2_item.type = ( -1 ) ;
+    Me [ 0 ] . special_item.type = ( -1 ) ;
 
-  //--------------------
-  // Now we add some safety, against 'none present' items
-  //
-  Me[0].weapon_item.type = ( -1 ) ;
-  Me[0].drive_item.type = ( -1 ) ;
-  Me[0].armour_item.type = ( -1 ) ;
-  Me[0].shield_item.type = ( -1 ) ;
-  Me[0].aux1_item.type = ( -1 ) ;
-  Me[0].aux2_item.type = ( -1 ) ;
-  Me[0].special_item.type = ( -1 ) ;
-
-  Me[0].weapon_item.prefix_code = ( -1 ) ;
-  Me[0].drive_item.prefix_code = ( -1 ) ;
-  Me[0].armour_item.prefix_code = ( -1 ) ;
-  Me[0].shield_item.prefix_code = ( -1 ) ;
-  Me[0].aux1_item.prefix_code = ( -1 ) ;
-  Me[0].aux2_item.prefix_code = ( -1 ) ;
-  Me[0].special_item.prefix_code = ( -1 ) ;
-
-  Me[0].weapon_item.suffix_code = ( -1 ) ;
-  Me[0].drive_item.suffix_code = ( -1 ) ;
-  Me[0].armour_item.suffix_code = ( -1 ) ;
-  Me[0].shield_item.suffix_code = ( -1 ) ;
-  Me[0].aux1_item.suffix_code = ( -1 ) ;
-  Me[0].aux2_item.suffix_code = ( -1 ) ;
-  Me[0].special_item.suffix_code = ( -1 ) ;
-
-  Me[0].character_class = WAR_BOT;
-  Me[0].base_vitality = 25;
-  Me[0].base_strength = 30;
-  Me[0].base_dexterity = 25;
-  Me[0].base_magic = 10;
-
-  // Me[0].weapon_item.type = ITEM_SHORT_SWORD;
-  Me[0].drive_item.type = ( -1 ) ;
-
-  Me[0].Inventory[ 0 ].type = ITEM_SHORT_SWORD;
-  Me[0].Inventory[ 0 ].inventory_position.x = 0;
-  Me[0].Inventory[ 0 ].inventory_position.y = 0;
-  Me[0].Inventory[ 1 ].type = ITEM_BUCKLER;
-  Me[0].Inventory[ 1 ].inventory_position.x = 2;
-  Me[0].Inventory[ 1 ].inventory_position.y = 0;
-  Me[0].Inventory[ 2 ].type = ITEM_SMALL_HEALTH_POTION;
-  Me[0].Inventory[ 2 ].inventory_position.x = 0;
-  Me[0].Inventory[ 2 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
-  Me[0].Inventory[ 3 ].type = ITEM_SMALL_HEALTH_POTION;
-  Me[0].Inventory[ 3 ].inventory_position.x = 1;
-  Me[0].Inventory[ 3 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
-  FillInItemProperties ( & Me[0].Inventory[ 0 ] , TRUE , 0 );
-  FillInItemProperties ( & Me[0].Inventory[ 1 ] , TRUE , 0 );
-  FillInItemProperties ( & Me[0].Inventory[ 2 ] , TRUE , 0 );
-  FillInItemProperties ( & Me[0].Inventory[ 3 ] , TRUE , 0 );
-
-  Get_Server_Name ( );
-  Get_New_Character_Name( );
-
-  ConnectToFreedroidServer (  );
-
-  if ( strlen ( ServerName ) > 0 )
-    return ( TRUE );
-  else
-    return ( FALSE );
-
+    Me[0].weapon_item.prefix_code = ( -1 ) ;
+    Me[0].drive_item.prefix_code = ( -1 ) ;
+    Me[0].armour_item.prefix_code = ( -1 ) ;
+    Me[0].shield_item.prefix_code = ( -1 ) ;
+    Me[0].aux1_item.prefix_code = ( -1 ) ;
+    Me[0].aux2_item.prefix_code = ( -1 ) ;
+    Me[0].special_item.prefix_code = ( -1 ) ;
+    
+    Me[0].weapon_item.suffix_code = ( -1 ) ;
+    Me[0].drive_item.suffix_code = ( -1 ) ;
+    Me[0].armour_item.suffix_code = ( -1 ) ;
+    Me[0].shield_item.suffix_code = ( -1 ) ;
+    Me[0].aux1_item.suffix_code = ( -1 ) ;
+    Me[0].aux2_item.suffix_code = ( -1 ) ;
+    Me[0].special_item.suffix_code = ( -1 ) ;
+    
+    Me[0].character_class = WAR_BOT;
+    Me[0].base_vitality = 25;
+    Me[0].base_strength = 30;
+    Me[0].base_dexterity = 25;
+    Me[0].base_magic = 10;
+    
+    // Me[0].weapon_item.type = ITEM_SHORT_SWORD;
+    Me[0].drive_item.type = ( -1 ) ;
+    
+    Me[0].Inventory[ 0 ].type = ITEM_SHORT_SWORD;
+    Me[0].Inventory[ 0 ].inventory_position.x = 0;
+    Me[0].Inventory[ 0 ].inventory_position.y = 0;
+    Me[0].Inventory[ 1 ].type = ITEM_BUCKLER;
+    Me[0].Inventory[ 1 ].inventory_position.x = 2;
+    Me[0].Inventory[ 1 ].inventory_position.y = 0;
+    Me[0].Inventory[ 2 ].type = ITEM_SMALL_HEALTH_POTION;
+    Me[0].Inventory[ 2 ].inventory_position.x = 0;
+    Me[0].Inventory[ 2 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
+    Me[0].Inventory[ 3 ].type = ITEM_SMALL_HEALTH_POTION;
+    Me[0].Inventory[ 3 ].inventory_position.x = 1;
+    Me[0].Inventory[ 3 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
+    FillInItemProperties ( & Me[0].Inventory[ 0 ] , TRUE , 0 );
+    FillInItemProperties ( & Me[0].Inventory[ 1 ] , TRUE , 0 );
+    FillInItemProperties ( & Me[0].Inventory[ 2 ] , TRUE , 0 );
+    FillInItemProperties ( & Me[0].Inventory[ 3 ] , TRUE , 0 );
+    
+    Get_Server_Name ( );
+    Get_New_Character_Name( );
+    
+    ConnectToFreedroidServer (  );
+    
+    if ( strlen ( ServerName ) > 0 )
+	return ( TRUE );
+    else
+	return ( FALSE );
+    
 }; // int Connect_To_Existing_Server_Menu ( void );
 
 /* ----------------------------------------------------------------------
@@ -2425,18 +2425,18 @@ Connect_To_Existing_Server_Menu (void)
 static int
 one (const struct dirent *unused)
 {
-  if ( strstr ( unused->d_name , "savegame" ) != NULL )
+    if ( strstr ( unused->d_name , "savegame" ) != NULL )
     {
-      return ( 1 ) ;
+	return ( 1 ) ;
     }
-  else
+    else
     {
-      return ( 0 ) ;
+	return ( 0 ) ;
     }
-
-  // to make compilers happy...
-  return ( 0 );
-
+    
+    // to make compilers happy...
+    return ( 0 );
+    
 }; // static int one (struct dirent *unused)
 
 /* ----------------------------------------------------------------------

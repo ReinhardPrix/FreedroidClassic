@@ -494,201 +494,208 @@ DeleteGame( void )
 int 
 LoadGame( void )
 {
-  char version_check_string[1000];
-  char *LoadGameData;
-  char filename[1000];
-  unsigned char* InfluencerRawDataPointer;
-  unsigned char* EnemyRawDataPointer;
-  unsigned char* BulletRawDataPointer;
-  int i;
-  int current_geographics_levelnum;
-  FILE *DataFile;
-
-  if (!ConfigDir)
+    char version_check_string[1000];
+    char *LoadGameData;
+    char filename[1000];
+    unsigned char* InfluencerRawDataPointer;
+    unsigned char* EnemyRawDataPointer;
+    unsigned char* BulletRawDataPointer;
+    int i;
+    int current_geographics_levelnum;
+    FILE *DataFile;
+    
+    if (!ConfigDir)
     {
-      DebugPrintf (0, "No Config-directory, cannot load any games\n");
-      return (OK);
+	DebugPrintf (0, "No Config-directory, cannot load any games\n");
+	return (OK);
     }
-
-  DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): function call confirmed....");
-
-  //--------------------
-  // Loading might take a while, therefore we activate the conservative
-  // frame rate, just to be sure, so that no sudden jumps occur, perhaps
-  // placing the influencer or some bullets outside the map even!
-  //
-  Activate_Conservative_Frame_Computation();
-
-  ShowSaveLoadGameProgressMeter( 0 , FALSE )  ;
-
-  //--------------------
-  // First we load the full ship information, same as with the level editor
-
-  sprintf( filename , "%s/%s%s", ConfigDir, Me [ 0 ] . character_name, SHIP_EXT);
-
-  //--------------------
-  // Maybe there isn't any saved game by that name.  This case must be checked for
-  // and handled...
-  //
-  if ((DataFile = fopen ( filename , "rb")) == NULL )
+    
+    DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): function call confirmed....");
+    
+    //--------------------
+    // Loading might take a while, therefore we activate the conservative
+    // frame rate, just to be sure, so that no sudden jumps occur, perhaps
+    // placing the influencer or some bullets outside the map even!
+    //
+    Activate_Conservative_Frame_Computation();
+    
+    ShowSaveLoadGameProgressMeter( 0 , FALSE )  ;
+    
+    //--------------------
+    // First we load the full ship information, same as with the level editor
+    
+    sprintf( filename , "%s/%s%s", ConfigDir, Me [ 0 ] . character_name, SHIP_EXT);
+    
+    //--------------------
+    // Maybe there isn't any saved game by that name.  This case must be checked for
+    // and handled...
+    //
+    if ((DataFile = fopen ( filename , "rb")) == NULL )
     {
-      GiveMouseAlertWindow ( "\nW A R N I N G !\n\nFreedroidRPG was unable to locate the saved game file you requested to load.\nThis might mean that it really isn't there cause you tried to load a game without ever having saved the game before.  \nThe other explanation of this error might be a severe error in FreedroidRPG.\nNothing will be done about it." );
-      /*
-      fprintf( stderr, "\n\nfilename: '%s'\n" , filename );
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
-Freedroid was unable to open a given text file, that should be there and\n\
-should be accessible.\n\
-This indicates a serious bug in this installation of Freedroid.",
-				 PLEASE_INFORM, IS_FATAL );
-      */
-      return ( ERR ) ;
+	GiveMouseAlertWindow ( "\nW A R N I N G !\n\nFreedroidRPG was unable to locate the saved game file you requested to load.\nThis might mean that it really isn't there cause you tried to load a game without ever having saved the game before.  \nThe other explanation of this error might be a severe error in FreedroidRPG.\nNothing will be done about it." );
+	/*
+	  fprintf( stderr, "\n\nfilename: '%s'\n" , filename );
+	  GiveStandardErrorMessage ( __FUNCTION__  , "\
+	  Freedroid was unable to open a given text file, that should be there and\n\
+	  should be accessible.\n\
+	  This indicates a serious bug in this installation of Freedroid.",
+	  PLEASE_INFORM, IS_FATAL );
+	*/
+	return ( ERR ) ;
     }
-  else
+    else
     {
-      DebugPrintf ( 1 , "\nThe saved game file (.shp file) seems to be there at least.....");
+	DebugPrintf ( 1 , "\nThe saved game file (.shp file) seems to be there at least.....");
     }
-
-  LoadShip( filename );
-
-  //--------------------
-  // Now we must determine the savedgame data file name
-  //
-  sprintf (filename, "%s/%s%s", ConfigDir, Me[0].character_name, SAVEDGAME_EXT);
-
-  DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): starting to read savegame data....");
-
-  //--------------------
-  // Now we can read the whole savegame data into memory with one big flush
-  //
-  LoadGameData = ReadAndMallocAndTerminateFile( filename , END_OF_SAVEDGAME_DATA_STRING ) ;
-
-  DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): starting to decode savegame data....");
-
-  //--------------------
-  // Before we start decoding the details, we get the former level-number where the
-  // influencer was walking and construct a new 'CurLevel' out of it.
-  //
-  ReadValueFromString( LoadGameData ,  LEVELNUM_EXPL_STRING , "%d" , 
-		       &current_geographics_levelnum , LoadGameData + 30000 );
-  CurLevel = curShip.AllLevels[ current_geographics_levelnum ];
-
-
-  //--------------------
-  // Now we start decoding our new game information and fill it into the apropriate structs
-  // We assume, that our target strings will be found, so we give 3000000 as the search area
-  // length, since we do not know it exactly
-  //
-  InfluencerRawDataPointer = MyMemmem( LoadGameData , 3000000 , INFLUENCER_STRUCTURE_RAW_DATA_STRING , 
-				       strlen ( INFLUENCER_STRUCTURE_RAW_DATA_STRING ) );
-  InfluencerRawDataPointer += strlen ( INFLUENCER_STRUCTURE_RAW_DATA_STRING ) ;
-  memcpy( &Me , InfluencerRawDataPointer , sizeof ( tux_t ) );
-  InfluencerRawDataPointer += sizeof ( tux_t );
-
-  //--------------------
-  // Now we decode the enemy information.
-  // We assume, that our target strings will be found, so we give 3000000 as the search area
-  // length, since we do not know it exactly
-  //
-  EnemyRawDataPointer = MyMemmem( LoadGameData , 30000000 , ALLENEMYS_RAW_DATA_STRING , 
-				  strlen ( ALLENEMYS_RAW_DATA_STRING ) );
-  EnemyRawDataPointer += strlen ( ALLENEMYS_RAW_DATA_STRING ) ;
-  memcpy( &(AllEnemys) , EnemyRawDataPointer , sizeof ( enemy ) * MAX_ENEMYS_ON_SHIP );
-
-  //--------------------
-  // Now we decode the bullet information.
-  // We assume, that our target strings will be found, so we give 10000000 as the search area
-  // length, since we do not know it exactly
-  //
-  BulletRawDataPointer = MyMemmem( LoadGameData , 30000000 , ALLBULLETS_RAW_DATA_STRING , 
-				   strlen ( ALLBULLETS_RAW_DATA_STRING ) );
-  BulletRawDataPointer += strlen ( ALLBULLETS_RAW_DATA_STRING ) ;
-  memcpy( &(AllBullets) , BulletRawDataPointer , sizeof ( bullet ) * MAXBULLETS );
-
-  //--------------------
-  // When the original game was still going on, some dynamic things like pointers to some
-  // constructed text field might have been used.  Now these dynamic things somewhere in 
-  // memory of course do not exist, so any pointer previously refering to them, must be
-  // set to acceptable values before an accident (SEGFAULT) occurs!
-  //
-  DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): now correcting dangerous pointers....");
-  Me[0].TextToBeDisplayed = "";
-  for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i++ )
+    
+    LoadShip( filename );
+    
+    //--------------------
+    // Now we must determine the savedgame data file name
+    //
+    sprintf (filename, "%s/%s%s", ConfigDir, Me[0].character_name, SAVEDGAME_EXT);
+    
+    DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): starting to read savegame data....");
+    
+    //--------------------
+    // Now we can read the whole savegame data into memory with one big flush
+    //
+    LoadGameData = ReadAndMallocAndTerminateFile( filename , END_OF_SAVEDGAME_DATA_STRING ) ;
+    
+    DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): starting to decode savegame data....");
+    
+    //--------------------
+    // Before we start decoding the details, we get the former level-number where the
+    // influencer was walking and construct a new 'CurLevel' out of it.
+    //
+    ReadValueFromString( LoadGameData ,  LEVELNUM_EXPL_STRING , "%d" , 
+			 &current_geographics_levelnum , LoadGameData + 30000 );
+    CurLevel = curShip.AllLevels[ current_geographics_levelnum ];
+    
+    
+    //--------------------
+    // Now we start decoding our new game information and fill it into the apropriate structs
+    // We assume, that our target strings will be found, so we give 3000000 as the search area
+    // length, since we do not know it exactly
+    //
+    InfluencerRawDataPointer = MyMemmem( LoadGameData , 3000000 , INFLUENCER_STRUCTURE_RAW_DATA_STRING , 
+					 strlen ( INFLUENCER_STRUCTURE_RAW_DATA_STRING ) );
+    InfluencerRawDataPointer += strlen ( INFLUENCER_STRUCTURE_RAW_DATA_STRING ) ;
+    memcpy( &Me , InfluencerRawDataPointer , sizeof ( tux_t ) );
+    InfluencerRawDataPointer += sizeof ( tux_t );
+    
+    //--------------------
+    // Now we decode the enemy information.
+    // We assume, that our target strings will be found, so we give 3000000 as the search area
+    // length, since we do not know it exactly
+    //
+    EnemyRawDataPointer = MyMemmem( LoadGameData , 30000000 , ALLENEMYS_RAW_DATA_STRING , 
+				    strlen ( ALLENEMYS_RAW_DATA_STRING ) );
+    EnemyRawDataPointer += strlen ( ALLENEMYS_RAW_DATA_STRING ) ;
+    memcpy( &(AllEnemys) , EnemyRawDataPointer , sizeof ( enemy ) * MAX_ENEMYS_ON_SHIP );
+    
+    //--------------------
+    // Now we decode the bullet information.
+    // We assume, that our target strings will be found, so we give 10000000 as the search area
+    // length, since we do not know it exactly
+    //
+    BulletRawDataPointer = MyMemmem( LoadGameData , 30000000 , ALLBULLETS_RAW_DATA_STRING , 
+				     strlen ( ALLBULLETS_RAW_DATA_STRING ) );
+    BulletRawDataPointer += strlen ( ALLBULLETS_RAW_DATA_STRING ) ;
+    memcpy( &(AllBullets) , BulletRawDataPointer , sizeof ( bullet ) * MAXBULLETS );
+    
+    //--------------------
+    // When the original game was still going on, some dynamic things like pointers to some
+    // constructed text field might have been used.  Now these dynamic things somewhere in 
+    // memory of course do not exist, so any pointer previously refering to them, must be
+    // set to acceptable values before an accident (SEGFAULT) occurs!
+    //
+    DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): now correcting dangerous pointers....");
+    Me [ 0 ] . TextToBeDisplayed = "";
+    for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i++ )
     {
-      AllEnemys[ i ].TextToBeDisplayed = "" ;
-      AllEnemys[ i ].TextVisibleTime = 0;
+	AllEnemys[ i ].TextToBeDisplayed = "" ;
+	AllEnemys[ i ].TextVisibleTime = 0;
     }
-  for ( i = 0 ; i < MAXBULLETS ; i++ )
+    for ( i = 0 ; i < MAXBULLETS ; i++ )
     {
-      //--------------------
-      // This might mean a slight memory loss, but I guess we can live with that...
-      //
-      AllBullets [ i ] . Surfaces_were_generated = FALSE;
-      if ( AllBullets[ i ].angle_change_rate != 0 ) DeleteBullet( i , FALSE );
+	//--------------------
+	// This might mean a slight memory loss, but I guess we can live with that...
+	//
+	AllBullets [ i ] . Surfaces_were_generated = FALSE;
+	if ( AllBullets[ i ].angle_change_rate != 0 ) DeleteBullet( i , FALSE );
     }
-  
-  //--------------------
-  // Now we check if the loaded game is from a compatible version of FreedroidRPG, or
-  // if we maybe have a saved game from a different version, which would mean trouble
-  //
-  // NOTE:  WE MUST DO THIS BEFORE ANY REFERENCE TO THE LOADED GAME IS MADE, EVEN IF
-  //        THAT REFERENCE IS SO SMALL AS TO JUST SET BACKGROUND MUSIC ACCORDING TO
-  //        CURRENT TUX POSITION IN THE MAPS AS FOUND BELOW
-  //
-  //
-  //
-  sprintf ( version_check_string , "%s;sizeof(tux_t)=%d;sizeof(enemy)=%d;sizeof(bullet)=%d;MAXBULLETS=%d;MAX_ENEMYS_ON_SHIP=%d\n", 
-	    VERSION , 
-	    (int) sizeof(tux_t) , 
-	    (int) sizeof(enemy) ,
-	    (int) sizeof(bullet) ,
-	    (int) MAXBULLETS ,
-	    (int) MAX_ENEMYS_ON_SHIP );
-
-  if ( strcmp ( Me [ 0 ] . freedroid_version_string , version_check_string ) != 0 )
+    
+    //--------------------
+    // Now we check if the loaded game is from a compatible version of FreedroidRPG, or
+    // if we maybe have a saved game from a different version, which would mean trouble
+    //
+    // NOTE:  WE MUST DO THIS BEFORE ANY REFERENCE TO THE LOADED GAME IS MADE, EVEN IF
+    //        THAT REFERENCE IS SO SMALL AS TO JUST SET BACKGROUND MUSIC ACCORDING TO
+    //        CURRENT TUX POSITION IN THE MAPS AS FOUND BELOW
+    //
+    //
+    //
+    sprintf ( version_check_string , "%s;sizeof(tux_t)=%d;sizeof(enemy)=%d;sizeof(bullet)=%d;MAXBULLETS=%d;MAX_ENEMYS_ON_SHIP=%d\n", 
+	      VERSION , 
+	      (int) sizeof(tux_t) , 
+	      (int) sizeof(enemy) ,
+	      (int) sizeof(bullet) ,
+	      (int) MAXBULLETS ,
+	      (int) MAX_ENEMYS_ON_SHIP );
+    
+    if ( strcmp ( Me [ 0 ] . freedroid_version_string , version_check_string ) != 0 )
     {
-      show_button_tooltip ( "Error: Version or structsize mismatch! The saved game in question appears to be from a (slightly?) different version of FreedroidRPG.\n\nSorry, but I refuse to load it for safety/stability reasons..." );
-      our_SDL_flip_wrapper( Screen );
-      while ( SpacePressed() ) SDL_Delay ( 3 );
-      while ( !SpacePressed() ) SDL_Delay ( 3 );
-      while ( SpacePressed() ) SDL_Delay ( 3 );
-      return ( ERR ) ;
+	show_button_tooltip ( "Error: Version or structsize mismatch! The saved game in question appears to be from a (slightly?) different version of FreedroidRPG.\n\nSorry, but I refuse to load it for safety/stability reasons..." );
+	our_SDL_flip_wrapper( Screen );
+	while ( SpacePressed() ) SDL_Delay ( 3 );
+	while ( !SpacePressed() ) SDL_Delay ( 3 );
+	while ( SpacePressed() ) SDL_Delay ( 3 );
+	return ( ERR ) ;
     }
+    
+    //--------------------
+    // To prevent cheating, we remove all active spells, that might still be there
+    // from other games just played before.
+    //
+    clear_active_spells();
+    
+    //--------------------
+    // Now that we have loaded the game, we must count and initialize the number
+    // of droids used in this ship.  Otherwise we might ignore some robots.
+    //
+    CountNumberOfDroidsOnShip (  ) ;
+    
+    SwitchBackgroundMusicTo( curShip.AllLevels[ Me[0].pos.z ]->Background_Song_Name );
+    
+    free ( LoadGameData );
+    
+    //--------------------
+    // Maybe someone just lost in the game and has then pressed the load
+    // button.  Then a new game is loaded and the game-over status has
+    // to be restored as well of course.
+    //
+    GameOver = FALSE; 
+    
+    DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): end of function reached.");
+    
+    //--------------------
+    // Now we know that right after loading an old saved game, the Tux might have
+    // to 'change clothes' i.e. a lot of tux images need to be updated which can
+    // take a little time.  Therefore we print some message so the user will not
+    // panic and push the reset button :)
+    //
+    PutStringFont ( Screen , FPS_Display_BFont , 75 , 150 , "Updating Tux images (this may take a little while...)" );
+    our_SDL_flip_wrapper ( Screen );
+    
+    //--------------------
+    // Now that the whole character information (and that included the automap
+    // information) has been restored, we can use the old automap data to rebuild
+    // the automap texture in the open_gl case...
+    //
+    insert_old_map_info_into_texture (  );
 
-  //--------------------
-  // To prevent cheating, we remove all active spells, that might still be there
-  // from other games just played before.
-  //
-  clear_active_spells();
-
-  //--------------------
-  // Now that we have loaded the game, we must count and initialize the number
-  // of droids used in this ship.  Otherwise we might ignore some robots.
-  //
-  CountNumberOfDroidsOnShip (  ) ;
-
-  SwitchBackgroundMusicTo( curShip.AllLevels[ Me[0].pos.z ]->Background_Song_Name );
-
-  free ( LoadGameData );
-
-  //--------------------
-  // Maybe someone just lost in the game and has then pressed the load
-  // button.  Then a new game is loaded and the game-over status has
-  // to be restored as well of course.
-  //
-  GameOver = FALSE; 
-
-  DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): end of function reached.");
-
-  //--------------------
-  // Now we know that right after loading an old saved game, the Tux might have
-  // to 'change clothes' i.e. a lot of tux images need to be updated which can
-  // take a little time.  Therefore we print some message so the user will not
-  // panic and push the reset button :)
-  //
-  PutStringFont ( Screen , FPS_Display_BFont , 75 , 150 , "Updating Tux images (this may take a little while...)" );
-  our_SDL_flip_wrapper ( Screen );
-
-  return OK;
+    return OK;
 }; // int LoadGame ( void ) 
 
 #undef _saveloadgame_c

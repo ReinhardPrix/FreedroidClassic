@@ -1129,10 +1129,10 @@ blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x 
 	// glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 	glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
 
-	// glEnable ( GL_BLEND );
-	// glDisable ( GL_ALPHA_TEST );
-	glDisable ( GL_BLEND );
-	glEnable ( GL_ALPHA_TEST );
+	glEnable ( GL_BLEND );
+	glDisable ( GL_ALPHA_TEST );
+	// glDisable ( GL_BLEND );
+	// glEnable ( GL_ALPHA_TEST );
     }
     
     //--------------------

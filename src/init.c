@@ -1681,20 +1681,20 @@ PrepareStartOfNewCharacter ( void )
   // 'into your hand' by clicking on it with the mouse button in
   // the inventory screen.
   //
-  Me[0].weapon_item.currently_held_in_hand = FALSE;
-  Me[0].armour_item.currently_held_in_hand = FALSE;
-  Me[0].shield_item.currently_held_in_hand = FALSE;
-  Me[0].special_item.currently_held_in_hand = FALSE;
-  Me[0].drive_item.currently_held_in_hand = FALSE;
-  Me[0].aux1_item.currently_held_in_hand = FALSE;
-  Me[0].aux2_item.currently_held_in_hand = FALSE;
+  Me [ 0 ] . weapon_item  . currently_held_in_hand = FALSE;
+  Me [ 0 ] . armour_item  . currently_held_in_hand = FALSE;
+  Me [ 0 ] . shield_item  . currently_held_in_hand = FALSE;
+  Me [ 0 ] . special_item . currently_held_in_hand = FALSE;
+  Me [ 0 ] . drive_item   . currently_held_in_hand = FALSE;
+  Me [ 0 ] . aux1_item    . currently_held_in_hand = FALSE;
+  Me [ 0 ] . aux2_item    . currently_held_in_hand = FALSE;
   Item_Held_In_Hand = ( -1 );
 
   FillInItemProperties ( & ( Me[0].weapon_item ) , TRUE , 0 );
   FillInItemProperties ( & ( Me[0].drive_item ) , TRUE , 0 );
 
 
-  DebugPrintf ( 0 , "\nPrepareStartOfNewCharacter:  Shuffling droids on all %d levels!" , curShip.num_levels );
+  DebugPrintf ( 1 , "\n%s():  Shuffling droids on all %d levels!" , __FUNCTION__ , curShip.num_levels );
   for ( i = 0 ; i < curShip.num_levels ; i ++ )
     {
       // ShuffleEnemys( Me[0].pos.z ); // NOTE: THIS REQUIRES CurLevel TO BE INITIALIZED !! --> NOT ANY MORE!!!
