@@ -73,7 +73,7 @@ see http://www.libsdl.org/]))
 AC_MSG_NOTICE([[Checking for optional SDL libraries:]])
 AC_CHECK_LIB([SDL_mixer], [Mix_ChannelFinished],,
 	AC_MSG_WARN([libSDL_mixer not found!
-you need the SDL_mixer library if you want sound!
+you need the SDL_mixer library (version >= 1.2.1) if you want sound!
 (see see http://www.libsdl.org/)
 --> compiling without sound support]))
 
