@@ -33,9 +33,11 @@ BEGIN OF AUTORS NOTES
 
 
 
+
 You can use this text field to make some notes on ANYTHING.  
 It's purely for the author's reference.  Tahisafsd asdfasdf asdfasdf.
 The game engine will ignore this entry.
+
 
 
 
@@ -60,7 +62,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=1  OptionText="[TRADE]"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=155  PositionY=302  
-ChangeOption=1 ChangeToValue=0
+ChangeOption=1 ChangeToValue=1
 DoSomethingExtra="InitTradeWithCharacter:Sorenson"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -77,7 +79,7 @@ Subtitle="I could also teach you how to become more adept at spellcasting."
 ReplySample="SOR_I_Could_Also_0.wav"
 Subtitle="Now, what will it be?"
 ReplySample="SOR_Now_What_Will_0.wav"
-ChangeOption=2 ChangeToValue=0
+ChangeOption=2 ChangeToValue=1
 DoSomethingExtra="ExecuteSubdialog:subdlg_Sorenson"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
