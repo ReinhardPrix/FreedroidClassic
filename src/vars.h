@@ -73,9 +73,9 @@ influence_t Me[ MAX_PLAYERS ] = {
 network_influence_t NetworkMe[ MAX_PLAYERS ];
 
 map_insert_spec AllMapInserts[ MAX_MAP_INSERTS ] = {
-  { "BigSquare" , "BigSquare.png" , { 4 , 4 } , NULL } , 
-  { "LongLine" , "LongLine.png" , { 4 , 1 } , NULL } ,
-  { "TelemetryAnnouncement" , "TelemetryAnnouncement.png" , { 4 , 4 } , NULL } 
+  { "BigSquare" , "map_inserts/BigSquare.png" , { 4 , 4 } , NULL } , 
+  { "LongLine" , "map_inserts/LongLine.png" , { 4 , 1 } , NULL } ,
+  { "TelemetryAnnouncement" , "map_inserts/TelemetryAnnouncement.png" , { 4 , 4 } , NULL } 
 };
 
 /*
