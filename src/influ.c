@@ -2176,6 +2176,14 @@ adapt_global_mode_for_player ( int player_num )
     if ( ( LeftPressed ( ) && ( ! left_pressed_previous_frame ) ) || MouseWheelUpPressed ( ) )
     {
 	if ( global_ingame_mode == GLOBAL_INGAME_MODE_NORMAL )	
+	    global_ingame_mode = GLOBAL_INGAME_MODE_PICKPOCKET ;
+	else if ( global_ingame_mode == GLOBAL_INGAME_MODE_PICKPOCKET )	
+	    global_ingame_mode = GLOBAL_INGAME_MODE_ATTACK ;
+	else if ( global_ingame_mode == GLOBAL_INGAME_MODE_ATTACK )	
+	    global_ingame_mode = GLOBAL_INGAME_MODE_FIRST_AID ;
+	else if ( global_ingame_mode == GLOBAL_INGAME_MODE_FIRST_AID )	
+	    global_ingame_mode = GLOBAL_INGAME_MODE_TALK ;
+	else if ( global_ingame_mode == GLOBAL_INGAME_MODE_TALK )	
 	    global_ingame_mode = GLOBAL_INGAME_MODE_UNLOCK ;
 	else if ( global_ingame_mode == GLOBAL_INGAME_MODE_UNLOCK )	
 	    global_ingame_mode = GLOBAL_INGAME_MODE_REPAIR ;
@@ -3840,7 +3848,7 @@ handle_player_first_aid_command ( int player_num )
 
     DebugPrintf ( -4 , "\n%s(): applying first aid to obstacle of type : %d. " , __FUNCTION__ , our_obstacle -> type );
     
-    sprintf ( game_message_text , "Applying first aid to obstacle of type %d." , our_obstacle -> type );
+    sprintf ( game_message_text , "Applying first aid to obstacle of type %d.  Ok.  You've made sure it doesn't bleed.  That's what you wanted, right?" , our_obstacle -> type );
     append_new_game_message ( game_message_text );
 
 }; // void handle_player_repair_command ( int player_num ) 

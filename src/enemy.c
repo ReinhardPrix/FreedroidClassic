@@ -1711,7 +1711,8 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
     bullet* NewBullet=NULL;
     int bullet_index = 0 ;
     enemy* target_robot;
-    
+    char game_message_text[5000];
+
     //--------------------
     // If the robot is not in walk or stand animation, i.e. if it's in
     // gethit, death or attack animation, then we can't start another
@@ -1853,6 +1854,15 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 		if ( target_robot == ThisRobot ) continue;
 		DebugPrintf ( -3 , "\nATTACK OF A FRIENDLY DROID: NOW APPLYING DAMAGE!" );
 		target_robot -> energy -= Druidmap [ ThisRobot -> type ] . physical_damage ; 
+
+		if ( target_robot -> energy < 0 )
+		{
+		    sprintf ( game_message_text , "Hostile %s was destroyed by melee attack from friendly %s." ,
+			      Druidmap [ target_robot -> type ] . druidname ,
+			      Druidmap [ ThisRobot -> type ] . druidname );
+		    append_new_game_message ( game_message_text );
+		}
+
 	    }
 	}
 	else

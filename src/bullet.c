@@ -404,6 +404,7 @@ MoveActiveSpells (void)
     moderately_finepoint Displacement;
     moderately_finepoint final_point;
     float Angle;
+    char game_message_text [ 5000 ] ;
 
     for ( i = 0; i < MAX_ACTIVE_SPELLS; i++ )
     {
@@ -504,12 +505,30 @@ MoveActiveSpells (void)
 			{
 			    case SPELL_RADIAL_EMP_WAVE:
 				AllEnemys [ j ] . energy -= 80.0 * Frame_Time();
+				if ( AllEnemys [ j ] . energy < 0 )
+				{
+				    sprintf ( game_message_text , "%s was destroyed by radial emp wave." ,
+					      Druidmap [ AllEnemys[j].type ] . druidname );
+				    append_new_game_message ( game_message_text );
+				}
 				break;
 			    case SPELL_RADIAL_VMX_WAVE:
 				AllEnemys [ j ] . energy -= 180.0 * Frame_Time();
+				if ( AllEnemys [ j ] . energy < 0 )
+				{
+				    sprintf ( game_message_text , "%s was destroyed by radial vmx wave." ,
+					      Druidmap [ AllEnemys[j].type ] . druidname );
+				    append_new_game_message ( game_message_text );
+				}
 				break;
 			    case SPELL_RADIAL_FIRE_WAVE:
 				AllEnemys [ j ] . energy -= 300.0 * Frame_Time();
+				if ( AllEnemys [ j ] . energy < 0 )
+				{
+				    sprintf ( game_message_text , "%s was destroyed by radial plasma wave." ,
+					      Druidmap [ AllEnemys[j].type ] . druidname );
+				    append_new_game_message ( game_message_text );
+				}
 				break;
 			    default:
 				break;
@@ -596,6 +615,7 @@ void
 handle_flash_effects ( bullet* CurBullet )
 {
     int i;
+    char game_message_text[5000];
 
     //--------------------
     // if the flash is over, just delete it and return
@@ -654,7 +674,12 @@ handle_flash_effects ( bullet* CurBullet )
 	    //
 	    EnemyHitByBulletText( i );
 	    enemy_spray_blood ( & ( AllEnemys [ i ] ) ) ;
-	    
+	    if ( AllEnemys [ i ] . energy < 0 )
+	    {
+		sprintf ( game_message_text , "%s was destroyed by disruptor blast." ,
+			  Druidmap [ AllEnemys[i].type ] . druidname );
+		append_new_game_message ( game_message_text );
+	    }
 	}
     }
     
@@ -815,6 +840,7 @@ check_bullet_enemy_collisions ( bullet* CurBullet , int num )
   int level = CurBullet -> pos.z ;
   static int FBTZaehler = 0;
   enemy* ThisRobot;
+  char game_message_text[5000];
 
   //--------------------
   // Check for collision with enemys
@@ -844,8 +870,7 @@ check_bullet_enemy_collisions ( bullet* CurBullet , int num )
 		  // also gets stunned from the hit, which only means that the enemy can't
 		  // fire immediately now but takes (double?) normal time for the next shot.
 		  //
-		  ThisRobot -> energy -= CurBullet->damage;
-		  
+		  ThisRobot -> energy -= CurBullet->damage;		  
 		  enemy_spray_blood ( ThisRobot ) ;
 
 		  //--------------------
@@ -853,9 +878,25 @@ check_bullet_enemy_collisions ( bullet* CurBullet , int num )
 		  // might now become very angry...
 		  //
 		  if ( CurBullet -> mine ) 
-		    {
+		  {
 		      robot_group_turn_hostile ( i );
-		    }
+		      if ( ThisRobot -> energy < 0 )
+		      {
+			  sprintf ( game_message_text , "%s was destroyed by your bullet." ,
+				    Druidmap [ ThisRobot -> type ] . druidname );
+			  append_new_game_message ( game_message_text );
+		      }
+		  }
+		  else
+		  {
+		      if ( ThisRobot -> energy < 0 )
+		      {
+			  sprintf ( game_message_text , "%s was destroyed by bullet from %s." ,
+				    Druidmap [ ThisRobot -> type ] . druidname ,
+				    Druidmap [ AllEnemys [ CurBullet -> owner ] . type ] . druidname );
+			  append_new_game_message ( game_message_text );
+		      }
+		  }
 		  
 		  ThisRobot -> frozen += CurBullet -> freezing_level;
 		  
