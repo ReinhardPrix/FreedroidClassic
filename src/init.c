@@ -720,10 +720,23 @@ InitNewMission ( char *MissionName )
   char *MainMissionPointer;
   char *BriefingSectionPointer;
   char *EndPointer;
+  char *ShipnamePointer;
+  char *ElevatornamePointer;
+  char *CrewnamePointer;
+  char Shipname[10000];
+  char Elevatorname[10000];
+  char Crewname[10000];
+  int ShipnameLength;
+  int CrewnameLength;
+  int ElevatornameLength;
   // char filename[]=MAP_DIR "game.dat";
   // #define END_OF_GAME_DAT_STRING "*** End of game.dat File ***"
 #define END_OF_MISSION_DATA_STRING "*** End of Mission File ***"
 #define MISSION_BRIEFING_BEGIN_STRING "** Start of Mission Briefing Text Section **"
+#define SHIPNAME_INDICATION_STRING "Ship file to use for this mission: "
+#define ELEVATORNAME_INDICATION_STRING "Elevator file to use for this mission: "
+#define CREWNAME_INDICATION_STRING "Crew file to use for this mission: "
+#define GAME_DAT_NAME_INDICATION_STRING "Physics ('game.dat') file to use for this mission: "
 
   DebugPrintf ("\nvoid InitNewMission( char *MissionName ): real function call confirmed...");
   printf("\nA new mission is being initialized from file %s." , MissionName );
@@ -810,8 +823,8 @@ InitNewMission ( char *MissionName )
   //--------------------
   //Now the mission file is read into memory
   //That means we can start to decode the details given
-  //in the body of the mission file
-  //
+  //in the body of the mission file.  We start with 
+  //doing the briefing things...
 
   // First we search for the beginning of the mission briefing big section NOT subsection
   if ( ( BriefingSectionPointer = strstr ( MainMissionPointer, MISSION_BRIEFING_BEGIN_STRING )) == NULL )
@@ -825,24 +838,91 @@ InitNewMission ( char *MissionName )
       printf("\nMission Briefing begin BIG section found!");
     }
 
-  /* Introduction und Title */
+  /* Title and Explanation of controls and such... */
   Title ( BriefingSectionPointer );
-
   DebugPrintf
     ("\nvoid InitNewGame(void): The title signaton has been successfully displayed...:");
 
 
+  Init_Game_Data ( );
 
+  //--------------------
+  // Now its time to get the shipname from the mission file and
+  // read the ship file into the right memory structures
+  //
+  if ( (ShipnamePointer = strstr ( MainMissionPointer, SHIPNAME_INDICATION_STRING )) == NULL )
+    {
+      printf("\nERROR! NO SHIPNAME FOUND! TERMINATING!");
+      Terminate(ERR);
+    }
+  else
+    {
+      strcpy( Shipname , MAP_DIR );
+      ShipnamePointer += strlen ( SHIPNAME_INDICATION_STRING );
+      
+      ShipnameLength = strstr (ShipnamePointer , "\n") - ShipnamePointer;
+      strncat( Shipname , ShipnamePointer , ShipnameLength );
+      Shipname[ strlen(MAP_DIR) + ShipnameLength ] = 0;
+      
+      
+      printf("\nShipname found!  It reads: %s" , Shipname );
+    }
+  
+  if ( LoadShip ( Shipname ) == ERR )
+    {
+      printf ("Error in LoadShip\n");
+      Terminate (ERR);
+    }
 
+  //--------------------
+  // Now its time to get the elevator file name from the mission file and
+  // read the elevator file into the right memory structures
+  //
+  if ( (ElevatornamePointer = strstr ( MainMissionPointer, ELEVATORNAME_INDICATION_STRING )) == NULL )
+    {
+      printf("\nERROR! NO ELEVATORNAME FOUND! TERMINATING!");
+      printf("Elevator indication string was: %s." , ELEVATORNAME_INDICATION_STRING );
+      Terminate(ERR);
+    }
+  else
+    {
+      strcpy( Elevatorname , MAP_DIR );
+      ElevatornamePointer += strlen ( ELEVATORNAME_INDICATION_STRING );
+      
+      ElevatornameLength = strstr (ElevatornamePointer , "\n") - ElevatornamePointer;
+      strncat( Elevatorname , ElevatornamePointer , ElevatornameLength );
+      Shipname[ strlen(MAP_DIR) + ElevatornameLength ] = 0;
+      
+      printf("\nElevator file name found!  It reads: %s" , Elevatorname );
+    }
+  
+  /* Get the elevator connections */
+  if (GetElevatorConnections ( Elevatorname ) == ERR)
+    {
+      printf ("\nError in GetElevatorConnections ");
+      Terminate (ERR);
+    }
 
-
-  /* Alle Levels wieder aktivieren */
-  for (i = 0; i < curShip.num_levels; i++)
-    curShip.AllLevels[i]->empty = FALSE;
-
-  DebugPrintf
-    ("\nvoid InitNewGame(void): All levels have been set to 'active'...");
-
+  //--------------------
+  // Now its time to get the crew file name from the mission file and
+  // assemble an appropriate crew out of it
+  //
+  if ( (CrewnamePointer = strstr ( MainMissionPointer, CREWNAME_INDICATION_STRING )) == NULL )
+    {
+      printf("\nERROR! NO CREWNAME FOUND! TERMINATING!");
+      Terminate(ERR);
+    }
+  else
+    {
+      strcpy( Crewname , MAP_DIR );
+      CrewnamePointer += strlen ( CREWNAME_INDICATION_STRING );
+      
+      CrewnameLength = strstr (CrewnamePointer , "\n") - CrewnamePointer;
+      strncat( Crewname , CrewnamePointer , CrewnameLength );
+      Crewname[ strlen(MAP_DIR) + CrewnameLength ] = 0;
+      
+      printf("\nCrew file name found!  It reads: %s" , Crewname );
+    }
   
   i = MyRandom (3);  /* chose one out of 4 possible start positions */
   switch (i)
@@ -878,15 +958,26 @@ InitNewMission ( char *MissionName )
       break;
     } /* switch */
 
-  /* Enemys initialisieren */
-  if (GetCrew (SHIPNAME) == ERR)
+
+  /* initialize enemys according to crew file */
+  // WARNING!! THIS REQUIRES THE game.dat FILE TO BE READ ALREADY, BECAUSE
+  // ROBOT SPECIFICATIONS ARE ALREADY REQUIRED HERE!!!!!
+  //
+
+  if (GetCrew ( Crewname ) == ERR)
     {
       printf
 	("\nInitNewGame(): ERROR: Initialization of enemys failed...");
       Terminate (-1);
     }
 
+  /* Reactivate the light on alle Levels, that might have been dark */
+  for (i = 0; i < curShip.num_levels; i++)
+    curShip.AllLevels[i]->empty = FALSE;
+  DebugPrintf
+    ("\nvoid InitNewMission( ... ): All levels have been set to 'active'...");
 
+  
   /* Farben des aktuellen Levels einstellen */
   SetLevelColor (CurLevel->color); 
 
@@ -980,12 +1071,6 @@ InitFreedroid (void)
 
   GameAdapterPresent = FALSE;	/* start with this */
 
-  if (LoadShip (SHIPNAME) == ERR)
-    {
-      printf ("Error in LoadShip\n");
-      Terminate (ERR);
-    }
-
   CurLevel = NULL; // please leave this here BEFORE InitPictures
 
   /* Now fill the pictures correctly to the structs */
@@ -997,8 +1082,6 @@ InitFreedroid (void)
 
   /* Init the Takeover- Game */
   InitTakeover ();
-
-  Init_Game_Data ( );
 
   // Initialisieren der Schildbilder
   //  GetShieldBlocks ();
@@ -1070,11 +1153,6 @@ Title ( char *MissionBriefingPointer )
       ScrollText ( PreparedBriefingText, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
       free ( PreparedBriefingText );
     }
-
-    // ScrollText (TitleText1, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
-    // ScrollText (TitleText2, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
-    // ScrollText (TitleText3, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
-    // ScrollText (TitleText4, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
 
   ClearGraphMem ();
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE ); 

@@ -87,8 +87,6 @@ enum
 #define NE_TITLE_PIC_FILE       GRAPHICS_DIR "ne_title.jpg"
 
 #define STANDARD_MISSION        MAP_DIR "classical_paradroid_mission.mission"
-#define SHIPNAME		MAP_DIR "ship1"
-#define COLORFILE		MAP_DIR "levels.col"
 
 #define PARA_FONT_FILE 		GRAPHICS_DIR "parafont.png"
 // #define MENU_FONT_FILE 		GRAPHICS_DIR "font05.png"

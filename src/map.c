@@ -264,10 +264,10 @@ AnimateRefresh (void)
 @Int:
 * $Function----------------------------------------------------------*/
 int
-LoadShip (char *shipname)
+LoadShip (char *filename)
 {
   struct stat stbuf;
-  char *filename;
+  // char *filename;
   FILE *ShipFile;
   char *ShipData;
   char *endpt;				/* Pointer to end-strings */
@@ -276,31 +276,28 @@ LoadShip (char *shipname)
   int i;
 
   /* build complete filename from ship-name */
-  filename = (char *) MyMalloc (strlen (shipname) + strlen (SHIP_EXT) + 10);
-
-  strcpy (filename, shipname);
-  strcat (filename, SHIP_EXT);
+  // filename = (char *) MyMalloc (strlen (shipname) + strlen (SHIP_EXT) + 10);
+  // strcpy (filename, shipname);
+  // strcat (filename, SHIP_EXT);
 
   /* Read the whole ship-data to memory */
   if ((ShipFile = fopen (filename, "r")) == NULL)
     {
-      DebugPrintf ("\nint LoadShip(char *shipname): Error opening file.... ");
-      getchar ();
-      return ERR;
+      // DebugPrintf ("\nint LoadShip(char *shipname): Error opening file.... ");
+      printf ("\n\nint LoadShip(char *filename): Error opening file....Terminating.... ");
+      Terminate(ERR);
     }
-  free (filename);
-
 
   if (fstat (fileno (ShipFile), &stbuf) == EOF)
     {
       DebugPrintf
-	("\nint LoadShip(char* shipname): Error fstat-ing File....");
+	("\nint LoadShip(char* filename): Error fstat-ing File....");
       return ERR;
     }
 
   if ((ShipData = (char *) malloc (stbuf.st_size + 10)) == NULL)
     {
-      DebugPrintf ("\nint LoadShip(char *shipname): Out of Memory? ");
+      DebugPrintf ("\nint LoadShip(char *filename): Out of Memory? ");
       getchar ();
       return ERR;
     }
@@ -332,14 +329,6 @@ LoadShip (char *shipname)
 	return ERR;
       else
 	TranslateMap (curShip.AllLevels[i]);
-    }
-
-  /* Get the elevator connections */
-  if (GetElevatorConnections (shipname) == ERR)
-    {
-      DebugPrintf ("\nErr in GetElevatorConnections ");
-      getchar ();
-      return ERR;
     }
 
   return OK;
@@ -1013,10 +1002,17 @@ GetElevatorConnections (char *shipname)
 
   /* Now get the elevator-connection data from "FILE.elv" file */
   strcpy (filename, shipname);	/* get elevator filename */
-  strcat (filename, ELEVEXT);
+  // strcat (filename, ELEVEXT);
 
   if ((Elevfile = fopen (filename, "r")) == NULL)
-    return FALSE;
+    {
+      printf("\n\nCouldn't open elevator file...Terminating....\n");
+      Terminate (ERR);
+    }
+  else 
+    {
+      printf("\n\nElevator file successfully opened.");
+    }
 
   for (i = 0; i < MAX_LIFTS; i++)
     {
@@ -1037,7 +1033,10 @@ GetElevatorConnections (char *shipname)
     }
 
   if (fclose (Elevfile) == EOF)
-    return ERR;
+    {
+      printf("\n\nError while trying to close elevator file....Terminating....\n\n");
+      Terminate(ERR);
+    }
 
   return OK;
 }				// int GetElevatorConnections(char *shipname)
@@ -1049,9 +1048,9 @@ GetElevatorConnections (char *shipname)
  * 
  *-----------------------------------------------------------------*/
 int
-GetCrew (char *shipname)
+GetCrew (char *filename)
 {
-  char filename[FILENAME_LEN + 1];
+  // char filename[FILENAME_LEN + 1];
   FILE *CrewFile;
   int level_num;
   int enemy_nr;
@@ -1063,17 +1062,18 @@ GetCrew (char *shipname)
   char line[CREW_LINE_LEN];
   char *pos;
 
-  /* get filename */
-  strcpy (filename, shipname);
-  strcat (filename, CREWEXT);
-
   /* Clear Enemy - Array */
   ClearEnemys ();
 
   if ((CrewFile = fopen (filename, "r")) == NULL)
     {
-      printf ("\nCouldn't open crew-file: %s \n", filename);
-      return (ERR);
+      printf ("\nCouldn't open crew-file: %s .... Terminating.... \n", filename);
+      Terminate(ERR);
+    }
+  else
+    {
+      printf("\nSuccessfully opened crew file %s." , filename );
+      fflush(stdout);
     }
 
   enemy_nr = 0;
@@ -1083,13 +1083,13 @@ GetCrew (char *shipname)
 		  &level_num, &upper_limit, &lower_limit) == EOF)
 	{
 	  printf ("\n Read Error in crew-file %s !\n", filename);
-	  return (ERR);
+	  Terminate(ERR);
 	}
 
       if (strtok (line, ",") == NULL)
 	{
 	  printf ("\n Read Error in crew-file %s !\n", filename);
-	  return (ERR);
+	  Terminate(ERR);
 	}
 
       type_anz = 0;
@@ -1109,15 +1109,25 @@ GetCrew (char *shipname)
       if (enemy_nr >= MAX_ENEMYS_ON_SHIP)
 	{
 	  printf ("\nToo many enemys on ship: %s! \n", filename);
-	  return (ERR);
+	  Terminate(ERR);
 	}
 
     }	/* while (lines in crew-file to read) */
 
   NumEnemys = enemy_nr;
 
-  fclose (CrewFile);
-
+  if( fclose(CrewFile) == EOF) 
+    {
+      printf("\n\nClosing of crew file failed in SaveShip...\n\nTerminating\n\n");
+      fflush(stdout);
+      Terminate(ERR);
+    }
+  else
+    {
+      printf("\n\nCrew file closed successfully.");
+      fflush(stdout);
+    }
+  
   InitEnemys ();		/* Energiewerte richtig setzen */
 
   return (OK);

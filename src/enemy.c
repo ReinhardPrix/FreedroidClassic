@@ -83,11 +83,17 @@ InitEnemys (void)
   int i;
   int type;
 
+  // return;
+
+  printf("\nNumEnemys ist jetzt: %d " ,NumEnemys );
+  fflush(stdout);
   for (i = 0; i < NumEnemys; i++)
     {
       type = AllEnemys[i].type;
       AllEnemys[i].energy = Druidmap[type].maxenergy;
     }
+
+  // return;
 
   /* und gut umruehren */
   ShuffleEnemys ();
@@ -130,6 +136,10 @@ ClearEnemys (void)
 void
 ShuffleEnemys (void)
 {
+  // WARNING!! IT SHOULD BE NOTED THAT THIS FUNCTION REQUIRES THE
+  // CURLEVEL STRUCTURE TO BE SET ALREADY, OR IT WILL SEGFAULT,
+  // EVEN WHEN A RETURN IS PLACED AT THE START OF THE FUNCTION!!!!
+  //
   int curlevel = CurLevel->levelnum;
   int i;
   int nth_enemy;
@@ -158,8 +168,6 @@ ShuffleEnemys (void)
 	  Terminate (-1);
 	}
 
-      // NORMALISATION AllEnemys[i].pos.x = Grob2Fein (CurLevel->AllWaypoints[wp].x);
-      // NORMALISATION AllEnemys[i].pos.y = Grob2Fein (CurLevel->AllWaypoints[wp].y);
       AllEnemys[i].pos.x = CurLevel->AllWaypoints[wp].x;
       AllEnemys[i].pos.y = CurLevel->AllWaypoints[wp].y;
 
