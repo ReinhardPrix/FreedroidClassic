@@ -1491,7 +1491,7 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle )
   // For this, several 'rounding' issues have to be taken into account!
   // But now it has optimal performance.
   //
-  RotationIndex = ( ( AllEnemys [ Enum ] . current_angle + 360.0 + 360 / ( 2 * ROTATION_ANGLES_PER_ROTATION_MODEL ) ) * ROTATION_ANGLES_PER_ROTATION_MODEL / 360 ) ;
+  RotationIndex = ( ( AllEnemys [ Enum ] . current_angle - 45.0 + 360.0 + 360 / ( 2 * ROTATION_ANGLES_PER_ROTATION_MODEL ) ) * ROTATION_ANGLES_PER_ROTATION_MODEL / 360 ) ;
   while ( RotationIndex < 0  ) RotationIndex += ROTATION_ANGLES_PER_ROTATION_MODEL ; // just to make sure... a modulo ROTATION_ANGLES_PER_ROTATION_MODEL operation can't hurt
   while ( RotationIndex >= ROTATION_ANGLES_PER_ROTATION_MODEL ) RotationIndex -= ROTATION_ANGLES_PER_ROTATION_MODEL ; // just to make sure... a modulo ROTATION_ANGLES_PER_ROTATION_MODEL operation can't hurt
 
@@ -1635,16 +1635,10 @@ There was a droid type on this level, that does not really exist.",
   //
   if ( x == (-1) ) 
     {
-
-      UpperLeftBlitCorner.x = translate_map_point_to_screen_pixel ( AllEnemys[Enum].pos.x , AllEnemys[Enum].pos.y , TRUE );
-      UpperLeftBlitCorner.y = translate_map_point_to_screen_pixel ( AllEnemys[Enum].pos.x , AllEnemys[Enum].pos.y , FALSE );
-
-      /*
-      UpperLeftBlitCorner.x = UserCenter_x + 
-	( ( - Me[0].pos.x + AllEnemys[Enum].pos.x ) ) * Block_Width  - Block_Width / 2 ;
-      UpperLeftBlitCorner.y = UserCenter_y + 
-	( ( - Me[0].pos.y + AllEnemys[Enum].pos.y ) ) * Block_Height - Block_Height / 2 ;
-      */
+      UpperLeftBlitCorner.x = 
+	translate_map_point_to_screen_pixel ( AllEnemys[Enum].pos.x , AllEnemys[Enum].pos.y , TRUE );
+      UpperLeftBlitCorner.y = 
+	translate_map_point_to_screen_pixel ( AllEnemys[Enum].pos.x , AllEnemys[Enum].pos.y , FALSE );
     }
   else
     {
