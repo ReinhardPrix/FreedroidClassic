@@ -198,7 +198,8 @@ Sound number=0
 
 // Item No. 1
 ** Start of new item specification subsection **
-Item name="Double Energy Capsule"
+Item name="Energy Capsule
+Recover partial health"
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in drive slot="no"
@@ -234,7 +235,8 @@ Sound number=5
 
 // Item No. 2
 ** Start of new item specification subsection **
-Item name="Triple Energy Capsule"
+Item name="Full Energy Capsule
+Recover Full Health"
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in drive slot="no"
