@@ -488,10 +488,8 @@ GreatDruidShow (void)
       ClearUserFenster( );
       SetTextColor (208, BANNER_VIOLETT );	// RED // YELLOW
       // ClearUserFenster ();
-      strcpy (InfoText, "Unit type ");
-      strcat (InfoText, Druidmap[Infodroid].druidname);
-      strcat (InfoText, " - ");
-      strcat (InfoText, Classname[Druidmap[Infodroid].class]);
+
+      sprintf( InfoText , "Unit type %s - %s" , Druidmap[Infodroid].druidname , Classname[Druidmap[Infodroid].class] );
 
       /*      SetTextBorder (USERFENSTERPOSX, USERFENSTERPOSY, USERFENSTERPOSX +
 		     USERFENSTERBREITE, USERFENSTERPOSY + USERFENSTERHOEHE,
@@ -547,10 +545,8 @@ GreatDruidShow (void)
       // DisplayBanner( Outline320x200 );
       ClearUserFenster( );
       SetTextColor (208, BANNER_VIOLETT );	// BLACK and VIOLETT
-      strcpy (InfoText, "Unit type ");
-      strcat (InfoText, Druidmap[Infodroid].druidname);
-      strcat (InfoText, " - ");
-      strcat (InfoText, Classname[Druidmap[Infodroid].class]);
+
+      sprintf( InfoText , "Unit type %s - %s" , Druidmap[Infodroid].druidname , Classname[Druidmap[Infodroid].class] );
 
       DisplayText (InfoText, USERFENSTERPOSX, USERFENSTERPOSY, &User_Rect);
 
@@ -599,10 +595,8 @@ GreatDruidShow (void)
       ClearUserFenster( );
       SetTextColor (208, BANNER_VIOLETT );	// RED // YELLOW
       // ClearUserFenster ();
-      strcpy (InfoText, "Unit type ");
-      strcat (InfoText, Druidmap[Infodroid].druidname);
-      strcat (InfoText, " - ");
-      strcat (InfoText, Classname[Druidmap[Infodroid].class]);
+
+      sprintf( InfoText , "Unit type %s - %s" , Druidmap[Infodroid].druidname , Classname[Druidmap[Infodroid].class] );
 
       DisplayText (InfoText, USERFENSTERPOSX, USERFENSTERPOSY, &User_Rect);
 

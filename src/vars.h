@@ -36,10 +36,15 @@
 const SDL_Rect User_Rect = { USERFENSTERPOSX, USERFENSTERPOSY,
 		       USERFENSTERBREITE, USERFENSTERHOEHE };
 
+/*
 const SDL_Rect Menu_Rect = {MENUTEXT_X, USERFENSTERPOSY,
 			USERFENSTERPOSX + USERFENSTERBREITE,
 			USERFENSTERPOSY + USERFENSTERHOEHE};
+*/
 
+const SDL_Rect Menu_Rect = {MENUTEXT_X, USERFENSTERPOSY,
+			USERFENSTERBREITE - MENUTEXT_X + USERFENSTERPOSX ,
+			USERFENSTERPOSY + USERFENSTERHOEHE};
 
 char EndTitleText1[] =
 "Congratulations!!\n\nIt seems that you have made it!  The Ship is clear.\n\n At the moment, this is the end of Freedroid.  However we are looking forward to writing a new and different story line, introduce more new concepts, features and sounds.\n\n If you enjoyed the game and would like to contribute, contact one of the developers. \n\n Also if you would like to donate something to help keep alive the Freedroid development, please also contact the developers.\n\n  Since we have not yet written something new, we can not launch the second part of the game now.\n\n What we can do is inform you about the concept of the new story-line and the features we plan to introduce sooner or later:\n\n After this preview of the coming storyline is over, the game will be restarted.\n You however have made it, but if you want, you can restart from the beginning nevertheless.\n\n  Press Space Bar to\nrestart Freedroid from the beginning. \n \n \n ";
