@@ -44,8 +44,6 @@
 #include "proto.h"
 #include "takeover.h"
 
-extern int TimerFlag;
-
 unsigned char *ToPlaygroundBlock;
 unsigned char *ToGroundBlocks;
 unsigned char *ToColumnBlock;
@@ -127,45 +125,44 @@ void RollToColors(void);
 #include "map.h"
 
 
-/*@Function============================================================
-@Desc: InitTakeover():
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void InitTakeover(void)
+/*-----------------------------------------------------------------
+ * @Desc: Initialise the Takeover game
+ *
+ * @Ret: void
+ *
+ *-----------------------------------------------------------------*/
+void
+InitTakeover (void)
 {
-	if( RealScreen == NULL )
-	  // PORT RealScreen = MK_FP(SCREENADDRESS,0000);	
-	  RealScreen=malloc(64010);
+  if( RealScreen == NULL )
+    RealScreen=malloc(64010);
 
-	if( InternalScreen == NULL ) 
-		InternalScreen = (unsigned char*)MyMalloc((size_t)SCREENLEN*SCREENHEIGHT);
+  if( InternalScreen == NULL ) 
+    InternalScreen = (unsigned char*)MyMalloc((size_t)SCREENLEN*SCREENHEIGHT);
 
-	if( InternalScreen == NULL ) {		
-		printf("\nvoid InitTakeover(void): Fatal Error: No memory !");
-		getchar();
+  if( InternalScreen == NULL ) {		
+    printf("\nvoid InitTakeover(void): Fatal Error: No memory !");
+    getchar();
 		
-		Terminate(-1);
-	}
+    Terminate(-1);
+  }
 
-	if( GetTakeoverGraphics() != OK ) {
-		printf("Error !");
-		Terminate(-1);
-	}
+  if( GetTakeoverGraphics() != OK ) {
+    printf("Error !");
+    Terminate(-1);
+  }
 		
-	return;
+  return;
 }
 
-/*@Function============================================================
-@Desc: int Takeover(int enemynum): plays the takeover-game against
-							a druid 
-
-@Ret: 	TRUE: user has won
-	FALSE: user has lost
-@Int:
-* $Function----------------------------------------------------------*/
-int Takeover(int enemynum)
+/*-----------------------------------------------------------------
+ * @Desc: play takeover-game against a druid 
+ *
+ * @Ret: TRUE/FALSE:  user has won/lost
+ *
+ *-----------------------------------------------------------------*/
+int
+Takeover (int enemynum)
 {
   int row;
   int FinishTakeover = FALSE;
@@ -214,7 +211,7 @@ int Takeover(int enemynum)
     NumCapsules[ENEMY] = 4+ClassOfDruid(OpponentType);
 		
     InventPlayground();
-
+    
     ShowPlayground();
 
     printf("\nvoid Takeover(int enemynum): Erstmalige Darstellung ist erfolgt.");
@@ -294,7 +291,9 @@ int Takeover(int enemynum)
   InterruptInfolineUpdate = 1;
 
   printf("\nvoid Takeover(int enemynum): Funktionsende ordnungsgemaess erreicht....");
-	
+  
+  ClearVGAScreen();
+
   if( LeaderColor == YourColor ) return TRUE;
   else return FALSE;
 	
@@ -322,13 +321,7 @@ void ChooseColor(void)
   }
 
 	
-  //PORT  TimerFlag = FALSE;
   while( !ColorChosen ) {
-    //if(kbhit()) getchar();
-    
-    //while( countdown );		/* Wait for next timer-interrupt */
-    //TimerFlag = FALSE;
-
     usleep(30000);  /* Dies soll eine Wartezeit von 3/100stel Sekunden bringen... */
 
     countdown--;		/* Count down */
@@ -384,15 +377,7 @@ void PlayGame(void)
 	
   printf("\nvoid PlayGame(void): Funktion echt aufgerufen.");
 
-  TimerFlag = FALSE;
-	
   while( !FinishTakeover) {
-    //PORT if( kbhit() ) taste = getchar();
-    //KillTastaturPuffer();
-    
-    //PORT    while( !TimerFlag );
-    //PORTTimerFlag = FALSE;
-
     keyboard_update();
     
     if( WPressed() ) {
@@ -475,9 +460,6 @@ void PlayGame(void)
   countdown = CAPSULE_COUNTDOWN+10; 
 	
   while( countdown -- ) {
-    // while( !TimerFlag );
-    // TimerFlag = FALSE;
-    
     usleep(30000);  /* Dies soll eine Wartezeit von 3/100stel Sekunden bringen... */
 
     RollToColors();
@@ -680,12 +662,12 @@ int GetTakeoverGraphics(void)
   
 } // int GetTakeoverGraphics(void)
 
-/*@Function============================================================
-@Desc: void ShowPlayground(void): displays complete initial Playground
-
-@Ret: void
-@Int:
-* $Function----------------------------------------------------------*/
+/*-----------------------------------------------------------------
+ * @Desc: displays complete current Playground
+ *
+ * @Ret: void
+ *
+ *-----------------------------------------------------------------*/
 void 
 ShowPlayground (void)
 {
@@ -702,10 +684,8 @@ ShowPlayground (void)
   printf("\nvoid ShowPlayground(void): Funktion echt aufgerufen.");
 	
 
-  if( WorkBlock == NULL ) 
-    {
-      WorkBlock = MyMalloc(BLOCKMEM+10);
-    }
+  if (WorkBlock == NULL) WorkBlock = MyMalloc(BLOCKMEM+10);
+
 	
   UpdateInfoline();
 
@@ -887,288 +867,282 @@ ShowPlayground (void)
 } /* ShowPlayground */
 
 
-/*@Function============================================================
-@Desc: ClearPlayground(): Clears Playground to default start-values
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void ClearPlayground(void)
+/*-----------------------------------------------------------------
+ * @Desc: Clears Playground to default start-values
+ * @Ret:  void
+ *
+ *-----------------------------------------------------------------*/
+void 
+ClearPlayground (void)
 {
-	int color, layer, row;
+  int color, layer, row;
 
-	for( color = GELB; color < TO_COLORS; color ++) {
-		for( layer = 0; layer < NUM_LAYERS; layer ++) {
-			for( row = 0; row < NUM_LINES; row ++) {
-				if( layer < TO_COLORS - 1)
-					ToPlayground[color][layer][row] = KABEL;
-				else
-					ToPlayground[color][layer][row] = INAKTIV;
-			} /* for row */
-		} /* for layer */
-	} /* for color */
+  for( color = GELB; color < TO_COLORS; color ++) 
+    for( layer = 0; layer < NUM_LAYERS; layer ++) 
+      for( row = 0; row < NUM_LINES; row ++) 
+	if( layer < TO_COLORS - 1)
+	  ToPlayground[color][layer][row] = KABEL;
+	else
+	  ToPlayground[color][layer][row] = INAKTIV;
 
-	for( row = 0; row < NUM_LINES; row ++)
-			DisplayColumn[row] = row % 2;
+
+  for( row = 0; row < NUM_LINES; row ++)
+    DisplayColumn[row] = row % 2;
 			
 } /* ClearPlayground */
 
 
-/*@Function============================================================
-@Desc: InventPlayground():  generates a random Playground
-	
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void InventPlayground(void)
+/*-----------------------------------------------------------------
+ * @Desc: generate a random Playground
+ *	
+ * @Ret: void
+ *
+ *-----------------------------------------------------------------*/
+void
+InventPlayground (void)
 {
-	int anElement;
-	int newElement;
-	int row, layer;
-	int color = GELB;
+  int anElement;
+  int newElement;
+  int row, layer;
+  int color = GELB;
 
-
-	/* first clear the playground: we depend on this !! */
-	ClearPlayground();
+  /* first clear the playground: we depend on this !! */
+  ClearPlayground();
 	
-	for( color = GELB; color < TO_COLORS; color ++) {
-		for( layer = 1; layer < NUM_LAYERS-1; layer ++ ) {
-			for( row = 0; row < NUM_LINES; row ++) {
-				if( ToPlayground[color][layer][row] != KABEL ) continue;
+  for( color = GELB; color < TO_COLORS; color ++) {
+    for( layer = 1; layer < NUM_LAYERS-1; layer ++ ) {
+      for( row = 0; row < NUM_LINES; row ++) {
+	if( ToPlayground[color][layer][row] != KABEL ) continue;
 				
-				newElement = MyRandom(TO_ELEMENTS);
-				if( MyRandom(MAX_PROB) > ElementProb[newElement]) {
-					row --;
-					continue;
-				}
+	newElement = MyRandom(TO_ELEMENTS);
+	if( MyRandom(MAX_PROB) > ElementProb[newElement]) {
+	  row --;
+	  continue;
+	}
 				
-				switch(newElement) {
-					case EL_KABEL:		/* has not to be set any more */
-						anElement = ToPlayground[color][layer-1][row];
-						if( BlockClass[anElement] == NON_CONNECTOR )
-							ToPlayground[color][layer][row] = LEER;
-
-						break;
+	switch(newElement) {
+	case EL_KABEL:		/* has not to be set any more */
+	  anElement = ToPlayground[color][layer-1][row];
+	  if( BlockClass[anElement] == NON_CONNECTOR )
+	    ToPlayground[color][layer][row] = LEER;
+	  break;
 	
-					case EL_KABELENDE:
-						anElement = ToPlayground[color][layer-1][row];
-						if( BlockClass[anElement] == NON_CONNECTOR ) 
-							ToPlayground[color][layer][row] = LEER;
-						else
-							ToPlayground[color][layer][row] = KABELENDE;
-							
-						break;
+	case EL_KABELENDE:
+	  anElement = ToPlayground[color][layer-1][row];
+	  if( BlockClass[anElement] == NON_CONNECTOR ) 
+	    ToPlayground[color][layer][row] = LEER;
+	  else
+	    ToPlayground[color][layer][row] = KABELENDE;
+	  break;
 
-					case EL_VERSTAERKER:
-						anElement = ToPlayground[color][layer-1][row];
-						if( BlockClass[anElement] == NON_CONNECTOR) 
-							ToPlayground[color][layer][row] = LEER;
-						else
-							ToPlayground[color][layer][row] = VERSTAERKER;
-							
-						break;
+	case EL_VERSTAERKER:
+	  anElement = ToPlayground[color][layer-1][row];
+	  if( BlockClass[anElement] == NON_CONNECTOR) 
+	    ToPlayground[color][layer][row] = LEER;
+	  else
+	    ToPlayground[color][layer][row] = VERSTAERKER;
+	  break;
 
-					case EL_FARBTAUSCHER:
-						if( layer != 2 ) {		/* only existing on layer 2 */
-							row --;
-							continue;
-						}
-					
-						anElement = ToPlayground[color][layer-1][row];
-						if( BlockClass[anElement] == NON_CONNECTOR )
-							ToPlayground[color][layer][row] = LEER;
-						else
-							ToPlayground[color][layer][row] = FARBTAUSCHER;
+	case EL_FARBTAUSCHER:
+	  if( layer != 2 ) {		/* only existing on layer 2 */
+	    row --;
+	    continue;
+	  }
+	  
+	  anElement = ToPlayground[color][layer-1][row];
+	  if( BlockClass[anElement] == NON_CONNECTOR )
+	    ToPlayground[color][layer][row] = LEER;
+	  else
+	    ToPlayground[color][layer][row] = FARBTAUSCHER;
+	  break;
 
-						break;
+	case EL_VERZWEIGUNG:
+	  if( row > NUM_LINES-3 ) {
+	    /* try again */
+	    row --;
+	    break;
+	  }
+	  
+	  anElement = ToPlayground[color][layer-1][row+1];
+	  if( BlockClass[anElement] == NON_CONNECTOR ) {
+	    /* try again */
+	    row --;
+	    break;
+	  }
+	  
+	  /* dont destroy verzweigungen in prev. layer */
+	  anElement = ToPlayground[color][layer-1][row];
+	  if( anElement == VERZWEIGUNG_O || anElement == VERZWEIGUNG_U ) {
+	    row --;
+	    break;
+	  }
+	  anElement = ToPlayground[color][layer-1][row+2];
+	  if( anElement == VERZWEIGUNG_O || anElement == VERZWEIGUNG_U ) {
+	    row --;
+	    break;
+	  }							
+	  
+	  /* cut off kabels in last layer, if any */
+	  anElement = ToPlayground[color][layer-1][row];
+	  if( BlockClass[anElement] == CONNECTOR ) 
+	    ToPlayground[color][layer-1][row] = KABELENDE;
+	  
+	  anElement = ToPlayground[color][layer-1][row+2];
+	  if( BlockClass[anElement] == CONNECTOR )
+	    ToPlayground[color][layer-1][row+2] = KABELENDE;
+	  
+	  /* set the verzweigung itself */
+	  ToPlayground[color][layer][row]   = VERZWEIGUNG_O;
+	  ToPlayground[color][layer][row+1] = VERZWEIGUNG_M;
+	  ToPlayground[color][layer][row+2] = VERZWEIGUNG_U;
 
-					case EL_VERZWEIGUNG:
-						if( row > NUM_LINES-3 ) {
-							/* try again */
-							row --;
-							break;
-						}
+	  row += 2;
+	  break;
 
-						anElement = ToPlayground[color][layer-1][row+1];
-						if( BlockClass[anElement] == NON_CONNECTOR ) {
-							/* try again */
-							row --;
-							break;
-						}
-						
-						/* dont destroy verzweigungen in prev. layer */
-						anElement = ToPlayground[color][layer-1][row];
-						if( anElement == VERZWEIGUNG_O || anElement == VERZWEIGUNG_U ) {
-							row --;
-							break;
-						}
-						anElement = ToPlayground[color][layer-1][row+2];
-						if( anElement == VERZWEIGUNG_O || anElement == VERZWEIGUNG_U ) {
-							row --;
-							break;
-						}							
+	case EL_GATTER:
+	  if( row > NUM_LINES-3 ) {
+	    /* try again */
+	    row --;
+	    break;
+	  }
 
-						/* cut off kabels in last layer, if any */
-						anElement = ToPlayground[color][layer-1][row];
-						if( BlockClass[anElement] == CONNECTOR ) 
-							ToPlayground[color][layer-1][row] = KABELENDE;
-							
-						anElement = ToPlayground[color][layer-1][row+2];
-						if( BlockClass[anElement] == CONNECTOR )
-							ToPlayground[color][layer-1][row+2] = KABELENDE;
-
-						/* set the verzweigung itself */
-						ToPlayground[color][layer][row]   = VERZWEIGUNG_O;
-						ToPlayground[color][layer][row+1] = VERZWEIGUNG_M;
-						ToPlayground[color][layer][row+2] = VERZWEIGUNG_U;
-
-						row += 2;
-						break;
-
-					case EL_GATTER:
-						if( row > NUM_LINES-3 ) {
-							/* try again */
-							row --;
-							break;
-						}
-
-						anElement = ToPlayground[color][layer-1][row];
-						if( BlockClass[anElement] == NON_CONNECTOR) {
-							/* try again */
-							row --;
-							break;
-						}
-						anElement = ToPlayground[color][layer-1][row+2];
-						if( BlockClass[anElement] == NON_CONNECTOR) {
-							/* try again */
-							row --;
-							break;
-						}
+	  anElement = ToPlayground[color][layer-1][row];
+	  if( BlockClass[anElement] == NON_CONNECTOR) {
+	    /* try again */
+	    row --;
+	    break;
+	  }
+	  anElement = ToPlayground[color][layer-1][row+2];
+	  if( BlockClass[anElement] == NON_CONNECTOR) {
+	    /* try again */
+	    row --;
+	    break;
+	  }
 	
-
-						/* cut off kabels in last layer, if any */
-						anElement = ToPlayground[color][layer-1][row+1];
-						if( BlockClass[anElement] == CONNECTOR )
-							ToPlayground[color][layer-1][row+1] = KABELENDE;
-
-						/* set the GATTER itself */
-						ToPlayground[color][layer][row]   = GATTER_O;
-						ToPlayground[color][layer][row+1] = GATTER_M;
-						ToPlayground[color][layer][row+2] = GATTER_U;
-
-						row += 2;
-						break;
-
-					default:
-						row --;
-						break;
+	  
+	  /* cut off kabels in last layer, if any */
+	  anElement = ToPlayground[color][layer-1][row+1];
+	  if( BlockClass[anElement] == CONNECTOR )
+	    ToPlayground[color][layer-1][row+1] = KABELENDE;
+	  
+	  /* set the GATTER itself */
+	  ToPlayground[color][layer][row]   = GATTER_O;
+	  ToPlayground[color][layer][row+1] = GATTER_M;
+	  ToPlayground[color][layer][row+2] = GATTER_U;
+	  
+	  row += 2;
+	  break;
+	  
+	default:
+	  row --;
+	  break;
 						
-				} /* switch NewElement */
-
-			} /* for row */
+	} /* switch NewElement */
+	
+      } /* for row */
 			
-		} /* for layer */
-		
-	} /* for color */
+    } /* for layer */
+    
+  } /* for color */
 	
 } /* InventPlayground */
 
-/*@Function============================================================
-@Desc: ProcessPlayground(): process the playground following its
-								intrinsic logic
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void ProcessPlayground(void)
+/*-----------------------------------------------------------------
+ * @Desc: process the playground following its intrinsic logic
+ *
+ * @Ret: void
+ *
+ *-----------------------------------------------------------------*/
+void 
+ProcessPlayground (void)
 {
-	int color, layer, row;
-	int TurnActive = FALSE;
-	int TestElement;
+  int color, layer, row;
+  int TurnActive = FALSE;
+  int TestElement;
 	
-	for( color = GELB; color < TO_COLORS; color ++) {
-		for( layer = 1; layer < NUM_LAYERS; layer ++ ) {
-			for( row = 0; row < NUM_LINES; row ++) {
-				if( layer == NUM_LAYERS-1 ) {
-					if( IsActive(color,row) )
-						ToPlayground[color][layer][row] = AKTIV;
-					else
-						ToPlayground[color][layer][row] = INAKTIV;
+  for( color = GELB; color < TO_COLORS; color ++) {
+    for( layer = 1; layer < NUM_LAYERS; layer ++ ) {
+      for( row = 0; row < NUM_LINES; row ++) {
+	if( layer == NUM_LAYERS-1 ) {
+	  if( IsActive(color,row) )
+	    ToPlayground[color][layer][row] = AKTIV;
+	  else
+	    ToPlayground[color][layer][row] = INAKTIV;
 
-					continue;
-				} /* if last layer */
+	  continue;
+	} /* if last layer */
 
-				TurnActive = FALSE;
+	TurnActive = FALSE;
+	
+	TestElement = ToPlayground[color][layer][row];
+	if( TestElement >= ACTIVE_OFFSET )
+	  TestElement -= ACTIVE_OFFSET;
+	
+	switch(TestElement) {
+	case FARBTAUSCHER:
+	case VERZWEIGUNG_M:
+	case GATTER_O:
+	case GATTER_U:
+	case KABEL:
+	  if( ToPlayground[color][layer-1][row] >= ACTIVE_OFFSET )
+	    TurnActive = TRUE;
+	  
+	  break;
 
-				TestElement = ToPlayground[color][layer][row];
-				if( TestElement >= ACTIVE_OFFSET )
-					TestElement -= ACTIVE_OFFSET;
-					
-				switch(TestElement) {
-					case FARBTAUSCHER:
-					case VERZWEIGUNG_M:
-					case GATTER_O:
-					case GATTER_U:
-					case KABEL:
-						if( ToPlayground[color][layer-1][row] >= ACTIVE_OFFSET )
-							TurnActive = TRUE;
-
-						break;
-
-					case VERSTAERKER:
-						if( ToPlayground[color][layer-1][row] >= ACTIVE_OFFSET )
-							TurnActive = TRUE;
+	case VERSTAERKER:
+	  if( ToPlayground[color][layer-1][row] >= ACTIVE_OFFSET )
+	    TurnActive = TRUE;
 							
-						/* Verstaerker halten sich aber auch selbst aktiv !! */
-						if( ToPlayground[color][layer][row] >= ACTIVE_OFFSET )
-							TurnActive = TRUE;
+	  /* Verstaerker halten sich aber auch selbst aktiv !! */
+	  if( ToPlayground[color][layer][row] >= ACTIVE_OFFSET )
+	    TurnActive = TRUE;
 
-						break;
+	  break;
 						
-					case KABELENDE:
-						break;
+	case KABELENDE:
+	  break;
 
-					case VERZWEIGUNG_O:
-						if( ToPlayground[color][layer][row+1] >= ACTIVE_OFFSET )
-							TurnActive = TRUE;
+	case VERZWEIGUNG_O:
+	  if( ToPlayground[color][layer][row+1] >= ACTIVE_OFFSET )
+	    TurnActive = TRUE;
 
-						break;
+	  break;
 
-					case VERZWEIGUNG_U:
-						if( ToPlayground[color][layer][row-1] >= ACTIVE_OFFSET )
-							TurnActive = TRUE;
+	case VERZWEIGUNG_U:
+	  if( ToPlayground[color][layer][row-1] >= ACTIVE_OFFSET )
+	    TurnActive = TRUE;
 
-						break;
+	  break;
 
-					case GATTER_M:
-						if( (ToPlayground[color][layer][row-1] >= ACTIVE_OFFSET) &&
-							 (ToPlayground[color][layer][row+1] >= ACTIVE_OFFSET) )
-							 	TurnActive = TRUE;
+	case GATTER_M:
+	  if( (ToPlayground[color][layer][row-1] >= ACTIVE_OFFSET) &&
+	      (ToPlayground[color][layer][row+1] >= ACTIVE_OFFSET) )
+	    TurnActive = TRUE;
 
-						break;
+	  break;
 
-					default:
-						break;
+	default:
+	  break;
 
-				} /* switch */
+	} /* switch */
 
-				if( TurnActive ) {
-					if( ToPlayground[color][layer][row] < ACTIVE_OFFSET)
-						ToPlayground[color][layer][row] += ACTIVE_OFFSET;
+	if( TurnActive ) {
+	  if( ToPlayground[color][layer][row] < ACTIVE_OFFSET)
+	    ToPlayground[color][layer][row] += ACTIVE_OFFSET;
 						
-					TurnActive = FALSE;
-				} else {
-					if( ToPlayground[color][layer][row] >= ACTIVE_OFFSET )
-						ToPlayground[color][layer][row] -= ACTIVE_OFFSET;
-				} /* else */
+	  TurnActive = FALSE;
+	} else {
+	  if( ToPlayground[color][layer][row] >= ACTIVE_OFFSET )
+	    ToPlayground[color][layer][row] -= ACTIVE_OFFSET;
+	} /* else */
 
-			} /* for row */
+      } /* for row */
 			
-		} /* for layer */
+    } /* for layer */
 
-	} /* for color */
+  } /* for color */
 
-	return;
+  return;
 } /* ProcessPlayground */
 
 
@@ -1182,7 +1156,7 @@ void ProcessPlayground(void)
 * $Function----------------------------------------------------------*/
 void ProcessDisplayColumn(void)
 {
-  static int CLayer = 3;			/* the connection-layer to the Column */	
+  static int CLayer = 3;	/* the connection-layer to the Column */	
   static int flicker_color=0;
   int row;
   int GelbCounter, ViolettCounter;

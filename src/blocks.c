@@ -329,58 +329,54 @@ unsigned char *GetBlocks(char *picfile, int line, int num)
 } // unsigned char *GetBlocks(...)
 
 
-/*@function============================================================
-@Desc: void DisplayBlock(): gibt Block *block (len*height) an angegebener
-Bildschirmposition x/y aus auf screen
-						
-@Ret: void
-@Int:
-* $Function----------------------------------------------------------*/
-void DisplayBlock(
-		  int x, int y,
-		  unsigned char *block,
-		  int len, int height,
-		  unsigned char *screen )
+/*-----------------------------------------------------------------
+ * @Desc: gibt Block *block (len*height) an angegebener
+ * Bildschirmposition x/y aus auf screen
+ *						
+ * @Ret: void
+ *
+ *-----------------------------------------------------------------*/
+void 
+DisplayBlock (int x, int y,
+	      unsigned char *block,
+	      int len, int height,
+	      unsigned char *screen)
 {
   int row,i,j;
   unsigned char *screenpos;
   unsigned char *source = block;
   
   
-  //
-  // THIS IS NEW FROM AFTER THE PORT, BECAUSE 'REALSCREEN' IS NO LONGER DIRECTLY ACCESSIBLE
-  //
+  /*
+   * THIS IS NEW FROM AFTER THE PORT, BECAUSE 'REALSCREEN' IS NO LONGER
+   * DIRECTLY ACCESSIBLE 
+   */
+  if (screen == RealScreen) 
+    for (i=0;i<height;i++) 
+      for (j=0;j<len;j++) 
+	{
+	  vga_setcolor(*source);
+	  source++;
+	  vga_drawpixel(j+x,i+y);
+	} /* for j */
+  else
+    {
+      screenpos = screen + y*SCREENLEN + x;
 
-    if (screen == RealScreen) 
-      {
-	for (i=0;i<height;i++) 
-	  {
-	    for (j=0;j<len;j++) 
-	      {
-		vga_setcolor(*source);
-		source++;
-		vga_drawpixel(j+x,i+y);
-	      } /* for j */
-	  } /* for i */
-      } /*  if (screen==RealScreen) */
-    else
-      {
-	screenpos = screen + y*SCREENLEN + x;
-
-    	for (row = 0; row < height; row++) 
-	  {
-	    memcpy(screenpos, source, len);
-	    screenpos += SCREENLEN;
-	    source += len;
-	  } /* for row */
-      } /* else */
+      for (row = 0; row < height; row++) 
+	{
+	  memcpy(screenpos, source, len);
+	  screenpos += SCREENLEN;
+	  source += len;
+	} /* for row */
+    } /* else */
     
-    return;
+  return;
     
 } /* DisplayBlock */
 
 /*-----------------------------------------------------------------
- *@Desc: setzt Block *block (len*height) an angegebener
+ * @Desc: setzt Block *block (len*height) an angegebener
  *	Bildschirmposition x/y in den angeg. Bildschirm
  *	-beachtet dabei TRANSPARENTCOLOR 
  *						
@@ -403,34 +399,30 @@ DisplayMergeBlock (int x, int y, unsigned char *block,
 
   /* PORT: we do as Johannes did in DisplayBlock(): */  
   if (screen == RealScreen ) 
-    {
-      for (col=0;col<height;col++) 
-	{
-	  for (row=0;row<len;row++) 
-	    {
-	      vga_setcolor(*source);
-	      source++;
-	      if (*source != TRANSPARENTCOLOR) vga_drawpixel(row+x,col+y);
-	    } /* for row */
-	} /* for col */
-    } /*  if (screen==RealScreen) */
+    for (col=0;col<height;col++) 
+      {
+	for (row=0;row<len;row++) 
+	  {
+	    vga_setcolor(*source);
+	    if (*source != TRANSPARENTCOLOR) vga_drawpixel(x+row,y+col);
+	    source++;
+	  } /* for row */
+      } /* for col */
   else
-    {
-      for (row = 0; row < height; row++) 
-	{
-	  for (col = 0; col < len; col ++) 
-	    {
-	      if (*source != TRANSPARENTCOLOR ) *Screenpos ++ = *source ++;
-	      else 
-		{
-		  Screenpos ++;
-		  source ++;
-		}
-	    } /* for (col) */
-	  Screenpos+=SCREENBREITE-len;
-	} /* for (row) */
-    } /* else */
-
+    for (row = 0; row < height; row++) 
+      {
+	for (col = 0; col < len; col ++) 
+	  {
+	    if (*source != TRANSPARENTCOLOR ) *Screenpos ++ = *source ++;
+	    else 
+	      {
+		Screenpos ++;
+		source ++;
+	      }
+	  } /* for (col) */
+	Screenpos+=SCREENBREITE-len;
+      } /* for (row) */
+  
   return;
 
 } /* DisplayMergeBlock */
