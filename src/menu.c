@@ -1510,7 +1510,10 @@ Level_Editor(void)
 		    CurLevel->color++;
 		  else 
 		    CurLevel->color=0;
-		  Teleport ( CurLevel->levelnum , Me.pos.x , Me.pos.y ); // thats just to ensure new tileset is read in
+		  // SetCombatScaleTo ( 1 );
+		  // Teleport ( CurLevel->levelnum , Me.pos.x , Me.pos.y ); // thats just to ensure new tileset is read in
+		  // SetCombatScaleTo ( CurrentCombatScaleFactor );
+		  // Assemble_Combat_Picture ( ONLY_SHOW_MAP );
 		  while (EnterPressed() || SpacePressed() ) ;
 		  break;
 		case BACK_TO_LEVEL_EDITING:

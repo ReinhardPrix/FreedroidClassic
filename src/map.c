@@ -1247,51 +1247,6 @@ GetCrew (char *filename)
     }
 
 
-  /*
-  enemy_nr = 0;
-  while (fgets (line, linelen, CrewFile))  //
-    {
-      if (sscanf (line, "%d %d %d ",
-		  &level_num, &upper_limit, &lower_limit) == EOF)
-	{
-	  printf ("\n Read Error in crew-file %s !\n", filename);
-	  Terminate(ERR);
-	}
-
-      if (strtok (line, ",") == NULL)
-	{
-	  printf ("\n Read Error in crew-file %s !\n", filename);
-	  Terminate(ERR);
-	}
-
-      type_anz = 0;
-      while ((pos = strtok (NULL, " \t")) != NULL)
-	sscanf (pos, "%d", &(types[type_anz++]));
-
-      this_limit = MyRandom (upper_limit - lower_limit) + lower_limit;
-
-      while (this_limit--)
-	{
-	  AllEnemys[enemy_nr].type = types[MyRandom (type_anz-1)];
-	  AllEnemys[enemy_nr].levelnum = level_num;
-	  AllEnemys[enemy_nr].Status = 0;
-	  enemy_nr++;
-	}  // while (enemy-limit of this level not reached) 
-
-      if (enemy_nr >= MAX_ENEMYS_ON_SHIP)
-	{
-	  printf ("\nToo many enemys on ship: %s! \n", filename);
-	  Terminate(ERR);
-	}
-
-}	// while (lines in crew-file to read) 
-
-  NumEnemys = enemy_nr;
-
-*/
-
-
-  
   InitEnemys ();  // set energy to the correct values
 
   return (OK);
@@ -1317,6 +1272,7 @@ GetThisLevelsDroids( char* SectionPointer )
 #define DROIDS_MAXRAND_INDICATION_STRING "Maximum number of Random Droids="
 #define DROIDS_MINRAND_INDICATION_STRING "Minimum number of Random Droids="
 #define ALLOWED_TYPE_INDICATION_STRING "Allowed Type of Random Droid for this level: "
+#define SPECIAL_FORCE_INDICATION_STRING "SpecialForce: Type="
 
   printf("\nReceived another levels droid section for decoding. It reads: %s " , SectionPointer );
 
@@ -1433,6 +1389,81 @@ Sorry...\n\
       AllEnemys[ FreeAllEnemysPosition ].Status = 0;
 
     }  // while (enemy-limit of this level not reached) 
+
+
+  SearchPointer=SectionPointer;
+  while ( ( SearchPointer = strstr ( SearchPointer , SPECIAL_FORCE_INDICATION_STRING)) != NULL)
+    {
+      SearchPointer += strlen ( SPECIAL_FORCE_INDICATION_STRING );
+      strncpy( TypeIndicationString , SearchPointer , 3 ); // Every type is 3 characters long
+      TypeIndicationString[3]=0;
+      printf("\nSpecial Force Type indication found!  It reads: %s." , TypeIndicationString );
+      fflush(stdout);
+
+      // Now that we have got a type indication string, we only need to translate it
+      // into a number corresponding to that droid in the droid list
+      for ( ListIndex = 0 ; ListIndex < Number_Of_Droid_Types ; ListIndex++ )
+	{
+	  if ( !strcmp( Druidmap[ListIndex].druidname , TypeIndicationString ) ) break ;
+	}
+      if ( ListIndex == Number_Of_Droid_Types )
+	{
+      fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+FREEDROID HAS ENCOUNTERED A PROBLEM:\n\
+The function reading and interpreting the crew file stunbled into something:\n\
+\n\
+It was unable to assign the SPECIAL FORCE droid type identification string '%s' found \n\
+in the entry of the droid types allowed for level %d to an entry in\n\
+the List of droids obtained from the gama data specification\n\
+file you use.  \n\
+\n\
+Please check that this type really is spelled correctly, that it consists of\n\
+only three characters and that it really has a corresponding entry in the\n\
+game data file with all droid type specifications.\n\
+\n\
+But for now Freedroid will terminate to draw attention to the sound problem\n\
+it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , TypeIndicationString , OurLevelNumber );
+	  Terminate(ERR);
+	}
+      else
+	{
+	  printf("\nSpecial force's Type indication string %s translated to type Nr.%d." , 
+		 TypeIndicationString , ListIndex );
+	}
+
+      for ( FreeAllEnemysPosition=0 ; FreeAllEnemysPosition < MAX_ENEMYS_ON_SHIP ; FreeAllEnemysPosition++ )
+	{
+	  if ( AllEnemys[ FreeAllEnemysPosition ].Status == OUT ) break;
+	}
+      if ( FreeAllEnemysPosition == MAX_ENEMYS_ON_SHIP )
+	{
+	  printf("\n\n No more free position to fill random droids into in GetCrew...Terminating....");
+	  Terminate(ERR);
+	}
+
+      SearchPointer = strstr ( SearchPointer , "X=" );
+      SearchPointer += strlen ( "X=" );
+      sscanf ( SearchPointer , "%lf" , &AllEnemys[ FreeAllEnemysPosition ].pos.x );
+      printf("\nX= entry for this special force found!  It reads: %f" , AllEnemys[ FreeAllEnemysPosition ].pos.x );
+      
+      SearchPointer = strstr ( SearchPointer , "Y=" );
+      SearchPointer += strlen ( "Y=" );
+      sscanf ( SearchPointer , "%lf" , &AllEnemys[ FreeAllEnemysPosition ].pos.y );
+      printf("\nX= entry for this special force found!  It reads: %f" , AllEnemys[ FreeAllEnemysPosition ].pos.y );
+      
+      AllEnemys[ FreeAllEnemysPosition ].type = ListIndex;
+      AllEnemys[ FreeAllEnemysPosition ].levelnum = OurLevelNumber;
+      AllEnemys[ FreeAllEnemysPosition ].Status = 0;
+      AllEnemys[ FreeAllEnemysPosition ].SpecialForce = 1;
+      AllEnemys[ FreeAllEnemysPosition ].CompletelyFixed = 1;
+
+    } // while Special force droid found...
+
 
   NumEnemys=FreeAllEnemysPosition; // we silently assume monotonely increasing FreePosition index. seems ok.
   // getchar();

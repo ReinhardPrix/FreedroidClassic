@@ -113,6 +113,8 @@ ClearEnemys (void)
       AllEnemys[i].warten = 0;
       AllEnemys[i].firewait = 0;
       AllEnemys[i].energy = 0;
+      AllEnemys[i].SpecialForce = 0;
+      AllEnemys[i].CompletelyFixed = 0;
     }
 
   return;
@@ -150,6 +152,9 @@ ShuffleEnemys (void)
       if (AllEnemys[i].Status == OUT
 	  || AllEnemys[i].levelnum != curlevel)
 	continue;		/* dont handle dead enemys or on other level */
+
+      if (AllEnemys[i].SpecialForce) continue;
+
 
       nth_enemy++;
       if (nth_enemy < wp_num)
@@ -238,6 +243,9 @@ MoveEnemys (void)
        // If its a combat droid, then if might attack...
        if (Druidmap[AllEnemys[i].type].aggression)
 	 AttackInfluence (i);
+
+       // ignore all enemys with CompletelyFixed flag set...
+       if ( AllEnemys[i].CompletelyFixed ) continue;
 
        // robots that still have to wait also do not need to
        // be processed...

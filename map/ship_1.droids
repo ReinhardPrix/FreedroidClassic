@@ -87,6 +87,7 @@ Allowed Type of Random Droid for this level: 420
 Allowed Type of Random Droid for this level: 476
 Allowed Type of Random Droid for this level: 493
 Allowed Type of Random Droid for this level: 516
+SpecialForce: Type=999 X=1 Y=1 Fixed=1
 ** End of this levels droid data **
 
 ** Beginning of new Level **
@@ -100,6 +101,7 @@ Allowed Type of Random Droid for this level: 302
 Allowed Type of Random Droid for this level: 329
 Allowed Type of Random Droid for this level: 420
 Allowed Type of Random Droid for this level: 476
+SpecialForce: Type=999 X=1 Y=1 Fixed=1
 ** End of this levels droid data **
 
 ** Beginning of new Level **
@@ -110,6 +112,7 @@ Allowed Type of Random Droid for this level: 139
 Allowed Type of Random Droid for this level: 247
 Allowed Type of Random Droid for this level: 329
 Allowed Type of Random Droid for this level: 302
+SpecialForce: Type=999 X=1 Y=1 Fixed=1
 ** End of this levels droid data **
 
 ** Beginning of new Level **
@@ -120,6 +123,7 @@ Allowed Type of Random Droid for this level: 249
 Allowed Type of Random Droid for this level: 296
 Allowed Type of Random Droid for this level: 302
 Allowed Type of Random Droid for this level: 329
+SpecialForce: Type=999 X=1 Y=1 Fixed=1
 ** End of this levels droid data **
 
 ** Beginning of new Level **
@@ -132,6 +136,7 @@ Allowed Type of Random Droid for this level: 614
 Allowed Type of Random Droid for this level: 615
 Allowed Type of Random Droid for this level: 711
 Allowed Type of Random Droid for this level: 999
+SpecialForce: Type=999 X=1 Y=1 Fixed=1
 ** End of this levels droid data **
 
 ** Beginning of new Level **

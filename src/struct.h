@@ -159,6 +159,7 @@ typedef struct
   double firewait;		/* gibt die Zeit bis zum naechsten Schuss an */
   // byte onscreen;		/* gibt an ob der Robot im moment sichtbar ist */
   int CompletelyFixed;          // set this flat to make the robot entirely immobile
+  int SpecialForce;
 }
 enemy, *Enemy;
 
