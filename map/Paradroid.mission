@@ -87,7 +87,7 @@ Possible Start Point : Level=7 XPos=2 YPos=1
 
 The title picture in the graphics subdirectory for this mission is : title.jpg
 The title song in the sound subdirectory for this mission is : Paradroid.ogg
-Song name to play in the end title if the mission is completed: Bach.mod
+Song name to play in the end title if the mission is completed: android-commando_hiscore.mod
 
 
 * New Mission Briefing Text Subsection *
@@ -158,9 +158,14 @@ Press fire to start
 Success!!! Congratulations!!
 You have made it!
 
-The thread of action is continued, but the next mission takes place several years after the asteroid field incident....  However this incident is not forgotten.  Some scientists remembering the story and the first construction of the influence device, a project, that has been abandoned after this.  The scientists reconstruct the device from archive data... It's their last hope to survive.  But read all the details in the next mission's briefing...
+We hope you have enjoyed this piece of C64 nostalgia. 
+Watch out for further FreeDroid based games: 
+FreeDroidRPG for the role-play fans, and 
+FreeDroidWorld for a multi-player arkade version.
 
-Press Space to move on to the next mission
+See http://freedroid.sourceforge.net for further details.
+
+Press Space to play again.
 
 ** End of End Title Text Section **
 
