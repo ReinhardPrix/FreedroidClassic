@@ -885,7 +885,7 @@ ShowDroidPicture (int PosX, int PosY, int Number )
 	    }
 	  else
 	    {
-	      sprintf ( ConstructedFileName , "rotation_models/portraits/portrait_%s_%04d.jpg" , Druidmap[ Number ] . droid_portrait_rotation_series_prefix , i+1 );
+	      sprintf ( ConstructedFileName , "droids/%s/portrait_%04d.jpg" , Druidmap[ Number ] . droid_portrait_rotation_series_prefix , i+1 );
 	      DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
 	    }
 

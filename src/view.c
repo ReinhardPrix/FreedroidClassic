@@ -1990,8 +1990,8 @@ ShowRobotPicture (int PosX, int PosY, int Number )
   // strcpy( fname, Druidmap[Number].druidname );
   strcpy( fname, "droids/" );
   strcat( fname, Druidmap[Number].portrait_filename_without_ext );
-  strcat( fname , ".png" );
-
+  strcat( fname , "/portrait.png" );
+  DebugPrintf (2, "\ntrying to load this: $fname");
   fpath = find_file (fname, GRAPHICS_DIR, FALSE);
 
   if ( (tmp=IMG_Load (fpath)) == NULL )

@@ -112,6 +112,34 @@ AC_CONFIG_FILES([Makefile
 		graphics/mouse_buttons/Makefile
 		graphics/skill_icons/Makefile
 		graphics/droids/Makefile 
+		graphics/droids/123/Makefile
+		graphics/droids/139/Makefile
+		graphics/droids/247/Makefile
+		graphics/droids/249/Makefile
+		graphics/droids/296/Makefile
+		graphics/droids/302/Makefile
+		graphics/droids/329/Makefile
+		graphics/droids/420/Makefile
+		graphics/droids/476/Makefile
+		graphics/droids/493/Makefile
+		graphics/droids/516/Makefile
+		graphics/droids/571/Makefile
+		graphics/droids/598/Makefile
+		graphics/droids/614/Makefile
+		graphics/droids/615/Makefile
+		graphics/droids/629/Makefile
+		graphics/droids/711/Makefile
+		graphics/droids/742/Makefile
+		graphics/droids/751/Makefile
+		graphics/droids/821/Makefile
+		graphics/droids/834/Makefile
+		graphics/droids/883/Makefile
+		graphics/droids/999/Makefile
+		graphics/droids/brown_worker/Makefile
+		graphics/droids/red_guard/Makefile
+		graphics/droids/green_guard/Makefile
+		graphics/droids/blue_guard/Makefile
+		graphics/droids/professor/Makefile
 		graphics/items/Makefile
 		graphics/items/ammo_exterminator_sphere/Makefile
 		graphics/items/ammo_laser_crystal/Makefile 
@@ -155,9 +183,7 @@ AC_CONFIG_FILES([Makefile
 		graphics/items/track_drive/Makefile 
 		graphics/items/vmx_grenade/Makefile 
 		graphics/items/warrior_wristband/Makefile 
-                graphics/rotation_models/Makefile
-                graphics/tux_motion_parts/Makefile
-                graphics/rotation_models/portraits/Makefile])
+                graphics/tux_motion_parts/Makefile])
 
 AC_OUTPUT
 

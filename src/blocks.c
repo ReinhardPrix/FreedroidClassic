@@ -421,7 +421,7 @@ Freedroid received a rotation model number that does not exist!",
   //
   for ( i=0 ; i < ROTATION_ANGLES_PER_ROTATION_MODEL ; i++ )
     {
-      sprintf ( ConstructedFileName , "rotation_models/%s_%04d.png" , PrefixToFilename [ ModelNr ] , 
+      sprintf ( ConstructedFileName , "droids/%s/ingame_%04d.png" , PrefixToFilename [ ModelNr ] ,
 		( ModelMultiplier [ ModelNr ] * i ) + 1 );
       DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
       // fpath = find_file ( "rotation_models/anim0001.png" , GRAPHICS_DIR, FALSE );
@@ -708,7 +708,7 @@ Load_Enemy_Surfaces( void )
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "999" ; // 23
   ModelMultiplier  [ i ] = 1 ;i++;
-  PrefixToFilename [ i ] = "proffa" ; // 24
+  PrefixToFilename [ i ] = "professor" ; // 24
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "red_guard" ; // 25
   ModelMultiplier  [ i ] = 1 ;i++;

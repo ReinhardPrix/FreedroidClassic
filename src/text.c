@@ -1086,7 +1086,7 @@ ERROR LOADING BACKGROUND IMAGE FILE!",
   strcpy( fname, "droids/" );
   // strcat( fname, Druidmap[ ChatDroid -> type ].portrait_filename_without_ext );
   strcat( fname, ChatDroid -> dialog_section_name );
-  strcat( fname , ".png" );
+  strcat( fname , "/portrait.png" );
   fpath = find_file (fname, GRAPHICS_DIR, FALSE);
   Small_Droid = IMG_Load (fpath) ;
   if ( Small_Droid == NULL )
