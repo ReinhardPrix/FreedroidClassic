@@ -504,7 +504,7 @@ Armageddon (void)
   if (key == 'n')
     return;
   else
-    for (i = 0; i < NumEnemys; i++)
+    for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
       {
 	AllEnemys[i].energy = 0;
 	AllEnemys[i].Status = OUT;

@@ -59,8 +59,8 @@ color, *Color;
 
 typedef struct
 {
-  signed short x;
-  signed short y;
+  int x;
+  int y;
 }
 point, *Point;
 
@@ -87,9 +87,9 @@ typedef struct
   int KillAll;
   int KillClass;
   int KillOne;
-  int   ReachLevel;
-  point ReachPoint;
-  float MustLiveTime;
+  int   MustReachLevel;
+  point MustReachPoint;
+  double MustLiveTime;
   int MustBeClass;
   int MustBeType;
   int MustBeOne;
@@ -138,6 +138,7 @@ typedef struct
   int Shield[4];		/* Status of Partial Shields */
   finepoint Position_History[11]; // History of the places the influ has been during the last 10 frames
   missiontarget mission;         // What must be done to fullfill this mission?
+  float MissionTimeElapsed;
 }
 influence_t, *Influence_t;
 

@@ -112,6 +112,7 @@ ClearEnemys (void)
       AllEnemys[i].Status = OUT;
       AllEnemys[i].warten = 0;
       AllEnemys[i].firewait = 0;
+      AllEnemys[i].energy = 0;
     }
 
   return;

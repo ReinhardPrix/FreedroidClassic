@@ -774,9 +774,9 @@ InitNewMission ( char *MissionName )
 #define MISSION_TARGET_KILL_ALL_STRING "Mission target is to kill all droids : "
 #define MISSION_TARGET_KILL_CLASS_STRING "Mission target is to kill class of droids : "
 #define MISSION_TARGET_KILL_ONE_STRING "Mission target is to kill droid with marker : "
-#define MISSION_TARGET_KILL_REACH_POINT_LEVEL_STRING "Mission target is to reach Level : "
-#define MISSION_TARGET_KILL_REACH_POINT_X_STRING "Mission target is to reach X-Pos : "
-#define MISSION_TARGET_KILL_REACH_POINT_Y_STRING "Mission target is to reach Y-Pos : "
+#define MISSION_TARGET_MUST_REACH_LEVEL_STRING "Mission target is to reach level : "
+#define MISSION_TARGET_MUST_REACH_POINT_X_STRING "Mission target is to reach X-Pos : "
+#define MISSION_TARGET_MUST_REACH_POINT_Y_STRING "Mission target is to reach Y-Pos : "
 #define MISSION_TARGET_MUST_LIVE_TIME_STRING "Mission target is to live for how many seconds : "
 #define MISSION_TARGET_MUST_BE_CLASS_STRING "Mission target is to become class : "
 #define MISSION_TARGET_MUST_BE_TYPE_STRING "Mission target is to become type : "
@@ -1129,6 +1129,54 @@ InitNewMission ( char *MissionName )
       printf("\nMission target MustBeType entry found!  It reads: %d" , Me.mission.MustBeType );
     }
 
+  if ( ( MissionTargetPointer = strstr ( MainMissionPointer, MISSION_TARGET_MUST_REACH_LEVEL_STRING )) == NULL )
+    {
+      printf("\nERROR! NO MISSION TARGET MUST REACH LEVEL ENTRY FOUND! TERMINATING!");
+      Terminate(ERR);
+    }
+  else
+    {
+      MissionTargetPointer += strlen ( MISSION_TARGET_MUST_REACH_LEVEL_STRING );
+      sscanf ( MissionTargetPointer , "%d" , &Me.mission.MustReachLevel );
+      printf("\nMission target MustReachLevel entry found!  It reads: %d" , Me.mission.MustReachLevel );
+    }
+
+  if ( ( MissionTargetPointer = strstr ( MainMissionPointer, MISSION_TARGET_MUST_REACH_POINT_X_STRING )) == NULL )
+    {
+      printf("\nERROR! NO MISSION TARGET MUST REACH X ENTRY FOUND! TERMINATING!");
+      Terminate(ERR);
+    }
+  else
+    {
+      MissionTargetPointer += strlen ( MISSION_TARGET_MUST_REACH_POINT_X_STRING );
+      sscanf ( MissionTargetPointer , "%d" , &Me.mission.MustReachPoint.x );
+      printf("\nMission target MustReachPoint.x entry found!  It reads: %d" , Me.mission.MustReachPoint.x );
+    }
+
+  if ( ( MissionTargetPointer = strstr ( MainMissionPointer, MISSION_TARGET_MUST_REACH_POINT_Y_STRING )) == NULL )
+    {
+      printf("\nERROR! NO MISSION TARGET MUST REACH Y ENTRY FOUND! TERMINATING!");
+      Terminate(ERR);
+    }
+  else
+    {
+      MissionTargetPointer += strlen ( MISSION_TARGET_MUST_REACH_POINT_Y_STRING );
+      sscanf ( MissionTargetPointer , "%d" , &Me.mission.MustReachPoint.y );
+      printf("\nMission target MustReachPoint.y entry found!  It reads: %d" , Me.mission.MustReachPoint.y );
+    }
+
+  if ( ( MissionTargetPointer = strstr ( MainMissionPointer, MISSION_TARGET_MUST_LIVE_TIME_STRING )) == NULL )
+    {
+      printf("\nERROR! NO MISSION TARGET MUST LIVE TIME ENTRY FOUND! TERMINATING!");
+      Terminate(ERR);
+    }
+  else
+    {
+      MissionTargetPointer += strlen ( MISSION_TARGET_MUST_LIVE_TIME_STRING );
+      sscanf ( MissionTargetPointer , "%lf" , &Me.mission.MustLiveTime );
+      printf("\nMission target MustReachPoint.y entry found!  It reads: %f" , Me.mission.MustLiveTime );
+    }
+
   //--------------------
   // After the mission targets have been successfully loaded now,
   // we need to add a pointer to the next mission, so that we will later
@@ -1175,42 +1223,7 @@ InitNewMission ( char *MissionName )
   Me.autofire = FALSE;
   Me.status = MOBILE;
   Me.phase = 0;
-
-  /*
-  i = MyRandom (3);  // chose one out of 4 possible start positions 
-  switch (i)
-    {
-    case 0:
-      CurLevel = curShip.AllLevels[4];
-      Me.pos.x = 1;
-      Me.pos.y = 1;
-      break;
-      
-      case 1:
-      CurLevel = curShip.AllLevels[5];
-      Me.pos.x = 3;
-      Me.pos.y = 1;
-      break;
-      
-    case 2:
-      CurLevel = curShip.AllLevels[6];
-  Me.pos.x = 2;
-  Me.pos.y = 1;
-      break;
-
-    case 3:
-      CurLevel = curShip.AllLevels[7];
-  Me.pos.x = 2;
-  Me.pos.y = 1;
-      break;
-
-    default:
-      printf
-	("\n InitNewGame(): MyRandom() failed  Terminating...\n");
-      Terminate (ERR);
-      break;
-    } // switch 
-  */
+  Me.MissionTimeElapsed=0;
 
   /* Set colors of current level NOTE: THIS REQUIRES CurLevel TO BE INITIALIZED */
   SetLevelColor (CurLevel->color); 
@@ -1553,7 +1566,11 @@ CheckIfMissionIsComplete (void)
     {
       for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
 	{
-	  if ( AllEnemys[Robot_Counter].energy > 0 ) return;
+	  if ( AllEnemys[Robot_Counter].energy > 0 ) 
+	    {
+	      // printf("\nThere are some robots still alive...");
+	      return;
+	    }
 	}
     }
 
@@ -1576,14 +1593,59 @@ CheckIfMissionIsComplete (void)
   if ( Me.mission.MustBeClass != (-1) )
     {
       // printf("\nMe.type is now: %d.", Me.type );
-      if ( Druidmap[Me.type].class != Me.mission.MustBeClass ) return;
+      if ( Druidmap[Me.type].class != Me.mission.MustBeClass ) 
+	{
+	  // DebugPrintf("\nMe.class does not match...");
+	  return;
+	}
     }
 
   if ( Me.mission.MustBeType != (-1) )
     {
       // printf("\nMe.type is now: %d.", Me.type );
-      if ( Me.type != Me.mission.MustBeType ) return;
+      if ( Me.type != Me.mission.MustBeType ) 
+	{
+	  // printf("\nMe.type does not match...");
+	  return;
+	}
     }
+
+  if ( Me.mission.MustReachLevel != (-1) )
+    {
+      if ( CurLevel->levelnum != Me.mission.MustReachLevel ) 
+	{
+	  // printf("\nLevel number does not match...");
+	  return;
+	}
+    }
+
+  if ( Me.mission.MustReachPoint.x != (-1) )
+    {
+      if ( Me.pos.x != Me.mission.MustReachPoint.x ) 
+	{
+	  // printf("\nX coordinate does not match...");
+	  return;
+	}
+    }
+
+  if ( Me.mission.MustReachPoint.y != (-1) )
+    {
+      if ( Me.pos.y != Me.mission.MustReachPoint.y ) 
+	{
+	  // printf("\nY coordinate does not match..."); 
+	  return;
+	}
+    }
+
+  if ( Me.mission.MustLiveTime != (-1) )
+    {
+      if ( Me.MissionTimeElapsed < Me.mission.MustLiveTime ) 
+	{
+	  // printf("\nTime Limit not yet reached...");
+	  return;
+	}
+    }
+
 
   EndTitle();
   // GameOver=TRUE;

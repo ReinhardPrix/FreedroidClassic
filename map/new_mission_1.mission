@@ -70,6 +70,10 @@ Mission target is to kill all droids : 0
 Mission target is to kill class of droids : -1
 Mission target is to become class : -1
 Mission target is to become type : 1
+Mission target is to reach level : -1
+Mission target is to reach X-Pos : -1
+Mission target is to reach Y-Pos : -1
+Mission target is to live for how many seconds : 80
 After completing this mission, load mission : new_mission_2.mission
 ** Start of Mission Briefing Text Section **
 * New Mission Briefing Text Subsection *

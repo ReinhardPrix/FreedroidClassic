@@ -152,7 +152,10 @@ UpdateCountersForThisFrame (void)
   static long Overall_Frames_Displayed=0;
   int i;
 
-  if (ShipEmptyCounter == 1) GameOver = TRUE;
+
+  Me.MissionTimeElapsed += Frame_Time();
+
+    // if (ShipEmptyCounter == 1) GameOver = TRUE;
 
   LastBlastHit++;
 

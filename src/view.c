@@ -152,6 +152,8 @@ Assemble_Combat_Picture (int mask)
   int MapBrick;
   int line, col;
   int i;
+  int minutes;
+  int seconds;
   static float TimeSinceLastFPSUpdate=10;
   static int FPS_Displayed=1;
   SDL_Rect TargetRectangle;
@@ -240,6 +242,20 @@ Assemble_Combat_Picture (int mask)
       PrintStringFont( ne_screen , FPS_Display_BFont , User_Rect.x+User_Rect.w/2 , 
 		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
 		       "Energy: %d " , (int) (Me.energy) );
+    }
+
+  if ( Me.mission.MustLiveTime != (-1) )
+    {
+      minutes=floor( ( Me.mission.MustLiveTime - Me.MissionTimeElapsed ) / 60 );
+      seconds= rintf( Me.mission.MustLiveTime - Me.MissionTimeElapsed ) - 60 * minutes;
+      if ( minutes < 0 ) 
+	{
+	  minutes = 0;
+	  seconds = 0;
+	}
+      PrintStringFont( ne_screen , FPS_Display_BFont , User_Rect.x , 
+		       User_Rect.y + 0*FontHeight( FPS_Display_BFont ), 
+		       "Time to hold out still: %2d:%2d " , minutes , seconds );
     }
 
 
