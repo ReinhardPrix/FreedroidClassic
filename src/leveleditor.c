@@ -630,6 +630,8 @@ ShowLevelEditorTopMenu( int Highlight )
 
 	  TargetRectangle.x = INITIAL_BLOCK_WIDTH/2 + INITIAL_BLOCK_WIDTH * i ;
 	  TargetRectangle.y = INITIAL_BLOCK_HEIGHT/3 ;
+	  TargetRectangle.w = INITIAL_BLOCK_WIDTH ;
+	  TargetRectangle.h = INITIAL_BLOCK_HEIGHT ;
 	  
 	  //--------------------
 	  // We create a scaled version of the floor tile in question
@@ -658,7 +660,9 @@ ShowLevelEditorTopMenu( int Highlight )
 
 	  TargetRectangle.x = INITIAL_BLOCK_WIDTH/2 + INITIAL_BLOCK_WIDTH * i ;
 	  TargetRectangle.y = INITIAL_BLOCK_HEIGHT/3 ;
-	  
+	  TargetRectangle.w = INITIAL_BLOCK_WIDTH ;
+	  TargetRectangle.h = INITIAL_BLOCK_HEIGHT ;
+
 	  //--------------------
 	  // We create a scaled version of the obstacle in question
 	  //

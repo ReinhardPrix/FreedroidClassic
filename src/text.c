@@ -409,7 +409,9 @@ DisplaySubtitle( char* SubtitleText , void* SubtitleBackground )
   // Now we need to clear this window, cause there might still be some
   // garbage from the previous subtitle in there...
   //
-  our_SDL_blit_surface_wrapper ( SubtitleBackground , &Subtitle_Window , Screen , &Subtitle_Window );
+  // our_SDL_blit_surface_wrapper ( SubtitleBackground , &Subtitle_Window , Screen , &Subtitle_Window );
+  our_SDL_fill_rect_wrapper ( Screen , &Subtitle_Window , 0 );
+  // our_SDL_fill_rect_wrapper (SDL_Surface *dst, SDL_Rect *dstrect, Uint32 color)
 
   //--------------------
   // Now we can display the text and update the screen...
@@ -728,7 +730,6 @@ PrepareMultipleChoiceDialog ( Enemy ChatDroid )
   SDL_Rect Droid_Image_Window;
   SDL_Surface* Small_Droid;
   SDL_Surface* Large_Droid;
-  // SDL_Surface* Background;
   char *fpath;
   char fname[500];
 
@@ -805,6 +806,21 @@ chat interface of Freedroid.  But:  Loading this file has failed.",
   // Large_Droid = zoomSurface( Small_Droid , 1.8 , 1.8 , 0 );
 
   Large_Droid = zoomSurface( Small_Droid , (float)Droid_Image_Window.w / (float)Small_Droid->w , (float)Droid_Image_Window.w / (float)Small_Droid->w , 0 );
+
+  //--------------------
+  // SDL doesn't understand the flipped around nature of open_gl images, so when
+  // while otherwise continuously using open_gl, we suddenly use SDL here for the
+  // preparation of open_gl output, we must pay respect to this transformation of
+  // coordinates or rather these flipped around images.
+  //
+  if ( use_open_gl )
+    {
+      Droid_Image_Window . x = 48; Droid_Image_Window . y = 480 - 44 - Large_Droid -> h ; // Droid_Image_Window . w = 130; Droid_Image_Window . h = 172;
+    }
+  else
+    {
+      Droid_Image_Window . x = 48; Droid_Image_Window . y = 44; // Droid_Image_Window . w = 130; Droid_Image_Window . h = 172;
+    }
   our_SDL_blit_surface_wrapper( Large_Droid , NULL , Background , &Droid_Image_Window );
   our_SDL_blit_surface_wrapper( Background , NULL , Screen , NULL );
   our_SDL_flip_wrapper( Screen );
@@ -1317,7 +1333,7 @@ ChatWithFriendlyDroid( Enemy ChatDroid )
 
   // From initiating transfer mode, space might still have been pressed. 
   // So we wait till it's released...
-  while (SpacePressed());
+  while ( SpacePressed ( ) );
   
   //--------------------
   // We clean out the chat roster from any previous use
@@ -1791,8 +1807,6 @@ DisplayText (char *Text, int startx, int starty, const SDL_Rect *clip)
 
    SDL_SetClipRect (Screen, &store_clip); /* restore previous clip-rect */
 
-
-
   /*
    * ScrollText() wants to know if we still wrote something inside the
    * clip-rectangle, of if the Text has been scrolled out
@@ -1929,7 +1943,7 @@ GetString (int MaxLen, int echo)
   height = FontHeight (GetCurrentFont());
   
   if ( use_open_gl )
-    StoreMenuBackground();
+    StoreMenuBackground ( 0 );
   else
     {
       store = SDL_CreateRGBSurface(0, SCREEN_WIDTH, height, vid_bpp, 0, 0, 0, 0);
@@ -1949,7 +1963,7 @@ GetString (int MaxLen, int echo)
   while ( !finished  )
     {
       if ( use_open_gl )
-	RestoreMenuBackground ();
+	RestoreMenuBackground ( 0 );
       else
 	{
 	  Copy_Rect( store_rect, tmp_rect);

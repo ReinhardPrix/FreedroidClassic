@@ -147,6 +147,7 @@ EXTERN void make_texture_out_of_surface ( iso_image* our_image ) ;
 EXTERN SDL_Surface* pad_image_for_texture ( SDL_Surface* our_surface ) ;
 EXTERN void blit_open_gl_light_radius ( void );
 EXTERN void blit_open_gl_cheap_light_radius ( void ) ;
+EXTERN void PutPixel_open_gl ( int x, int y, Uint32 pixel);
 
 #ifdef HAVE_LIBGL
 EXTERN int initGL( GLvoid );
@@ -459,8 +460,8 @@ EXTERN int NoDirectionPressed (void);
 #else
 #define EXTERN extern
 #endif
-EXTERN void StoreMenuBackground ( void );
-EXTERN void RestoreMenuBackground ( void );
+EXTERN void StoreMenuBackground ( int backup_slot );
+EXTERN void RestoreMenuBackground ( int backup_slot );
 EXTERN int DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char* BackgroundToUse , void* MenuFont );
 EXTERN int ChatDoMenuSelectionFlagged( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON] , 
 				       unsigned char Chat_Flags[ MAX_ANSWERS_PER_PERSON ] , int FirstItem , 

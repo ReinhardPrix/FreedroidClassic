@@ -203,7 +203,7 @@ EXTERN SDL_Rect InventoryRect;
 #endif
 EXTERN int Number_Of_Bullet_Types;
 EXTERN SDL_Surface *Screen;   /* the graphics display */
-EXTERN SDL_Surface* StoredMenuBackground;
+EXTERN SDL_Surface* StoredMenuBackground [ 2 ] ;
 
 //--------------------
 // Now the iso-image pointers for the new individually shaped

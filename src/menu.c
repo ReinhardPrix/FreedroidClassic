@@ -194,12 +194,11 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , char* B
 	DisplayText ( InitialText , 50 , 50 , NULL );
     }
   
-  StoreMenuBackground ();
+  StoreMenuBackground ( 0 );
 
   while ( 1 )
     {
-      RestoreMenuBackground ();
-
+      RestoreMenuBackground ( 0 );
       if ( MenuWithFileInformation )
 	{
 	  //--------------------
@@ -382,7 +381,6 @@ ChatDoMenuSelectionFlagged( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER
 int
 GetNumberOfTextLinesNeeded ( char* GivenText, SDL_Rect GivenRectangle )
 {
-  SDL_Surface* BackupOfScreen;
   int BackupOfMyCursorX, BackupOfMyCursorY;
   int TextLinesNeeded;
   int i;
@@ -391,10 +389,9 @@ GetNumberOfTextLinesNeeded ( char* GivenText, SDL_Rect GivenRectangle )
   //--------------------
   // First we make a backup of everything, so that we don't destory anything.
   //
-  BackupOfScreen = Screen ; 
+  StoreMenuBackground ( 1 ) ;
   BackupOfMyCursorX = MyCursorX;
   BackupOfMyCursorY = MyCursorY;
-  Screen = SDL_CreateRGBSurface(0, SCREEN_WIDTH, SCREEN_HEIGHT, vid_bpp, 0, 0, 0, 0);
 
   //--------------------
   // Now in our simulated environment, we can blit the Text and see how many lines it takes...
@@ -422,8 +419,8 @@ GetNumberOfTextLinesNeeded ( char* GivenText, SDL_Rect GivenRectangle )
   //--------------------
   // Now that we have found our solution, we can restore everything back to normal
   //
-  SDL_FreeSurface ( Screen );
-  Screen = BackupOfScreen ;
+  RestoreMenuBackground ( 1 ) ;
+
   MyCursorX = BackupOfMyCursorX;
   MyCursorY = BackupOfMyCursorY;
 
@@ -522,7 +519,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
   // it can be accessed with proper speed later...
   //
   SDL_SetClipRect( Screen, NULL );
-  StoreMenuBackground ();
+  StoreMenuBackground ( 0 );
 
   //--------------------
   // Now that the possible font-changing background assembling is
@@ -536,7 +533,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
   while ( 1 )
     {
 
-      RestoreMenuBackground ();
+      RestoreMenuBackground ( 0 );
 
       //--------------------
       // Now that we have a new choice window, we should automatically compute the right
@@ -609,7 +606,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
 	{
 	  while ( EscapePressed() );
 
-	  RestoreMenuBackground ();
+	  RestoreMenuBackground ( 0 );
 	  our_SDL_flip_wrapper( Screen );
 	  SDL_ShowCursor( SDL_ENABLE );
 	  return ( -1 );
@@ -630,7 +627,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
 	  // MenuItemSelectedSound();
 	  
 	  SDL_ShowCursor( SDL_ENABLE );
-	  RestoreMenuBackground ();
+	  RestoreMenuBackground ( 0 );
 	  our_SDL_flip_wrapper( Screen );
 	  return ( MenuPosition );
 
@@ -668,7 +665,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
 	      if ( ( MenuLineOfMouseCursor >= 1 ) && ( MenuLineOfMouseCursor <= MaxLinesInMenuRectangle ) )
 		{
 		  SDL_ShowCursor( SDL_ENABLE );
-		  RestoreMenuBackground ();
+		  RestoreMenuBackground ( 0 );
 		  our_SDL_flip_wrapper( Screen );
 		  return ( MenuPosition );
 		}
@@ -742,7 +739,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
     }
 
   SDL_ShowCursor( SDL_ENABLE );
-  RestoreMenuBackground ();
+  RestoreMenuBackground ( 0 );
   our_SDL_flip_wrapper( Screen );
   return ( -1 );
 

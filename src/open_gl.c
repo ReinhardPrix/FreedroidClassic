@@ -85,7 +85,7 @@ our_SDL_blit_surface_wrapper(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *d
 	  // fflush ( stdout );
 
 	  if ( dstrect == NULL )
-	    glRasterPos2f( 1 , 479 );
+	    glRasterPos2f( 0 , 479 );
 	  else
 	    {
 	      if ( dstrect -> x == 0 )
@@ -94,6 +94,7 @@ our_SDL_blit_surface_wrapper(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *d
 		target_x = dstrect -> x ;
 
 	      target_y = dstrect -> y + src -> h ;
+	      // target_y = 479 - dstrect -> y ;
 
 	      //--------------------
 	      // Here we add some extra security against raster positions (e.g. for
@@ -102,15 +103,8 @@ our_SDL_blit_surface_wrapper(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *d
 	      //
 	      if ( ( target_y >= 480 ) && ( target_y <= 482 ) ) target_y = 478 ; 
 
-	      glRasterPos2f( target_x , target_y ) ;
+	      glRasterPos2i( target_x , target_y ) ;
 	    }
-
-	  /*
-	  if ( src -> flags & SDL_SRCALPHA )
-	    glDrawPixels( src -> w , src -> h, GL_RGBA , GL_UNSIGNED_BYTE , src -> pixels );
-	  else
-	    glDrawPixels( src -> w , src -> h, GL_RGB , GL_UNSIGNED_BYTE , src -> pixels );
-	  */
 
 	  if ( src -> w != 0 )
 	    bytes = src -> pitch / src -> w ;
@@ -126,18 +120,6 @@ our_SDL_blit_surface_wrapper(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *d
 	  
 	  if ( srcrect != NULL )
 	    {
-
-	      /*
-	      for ( y = 0 ; y < srcrect -> h ; y ++ )
-		{
-
-		  for ( x = 0 ; x < srcrect -> w ; x ++ )
-		    {
-		      PutPixel ( Screen , x + dstrect -> x , y + dstrect -> y , GetPixel ( src , srcrect -> x + x , srcrect -> y + y ) ) ;
-		    }
-		}
-	      */
-
 	      DebugPrintf ( -1 , "\nNon-Null source rect encountered. --> doing nothing." );
 	      fflush ( stdout );
 	      return ( 0 ) ;
@@ -720,19 +702,19 @@ blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x 
  * before using the function of similar name.
  * ---------------------------------------------------------------------- */
 void
-RestoreMenuBackground ( void )
+RestoreMenuBackground ( int backup_slot )
 {
   if ( use_open_gl )
     {
 #ifdef HAVE_LIBGL
-      glRasterPos2i( 1 , 1 ) ; 
-      glDrawPixels( 640, 479, GL_RGB, GL_UNSIGNED_BYTE, (GLvoid*) StoredMenuBackground );
+      glRasterPos2i( 0 , 479 ) ; 
+      glDrawPixels( 640, 478, GL_RGB, GL_UNSIGNED_BYTE, (GLvoid*) StoredMenuBackground [ backup_slot ] );
       return ;
 #endif
     }
   else
     {
-      our_SDL_blit_surface_wrapper ( StoredMenuBackground , NULL , Screen , NULL );
+      our_SDL_blit_surface_wrapper ( StoredMenuBackground [ backup_slot ] , NULL , Screen , NULL );
     }
 }; // void RestoreMenuBackground ( void )
 
@@ -742,13 +724,14 @@ RestoreMenuBackground ( void )
  * every frame.
  * ---------------------------------------------------------------------- */
 void
-StoreMenuBackground ( void )
+StoreMenuBackground ( int backup_slot )
 {
   static int first_call = TRUE ;
 
   if ( first_call )
     {
-      StoredMenuBackground = NULL ;
+      StoredMenuBackground [ 0 ] = NULL ;
+      StoredMenuBackground [ 1 ] = NULL ;
       first_call = FALSE ;
     }
 
@@ -760,18 +743,12 @@ StoreMenuBackground ( void )
       // WARNING!  WE ARE USING THE SDL_SURFACE* here much like a char*!!!
       // BEWARE!
       //
-      if ( StoredMenuBackground == NULL )
+      if ( StoredMenuBackground [ backup_slot ] == NULL )
 	{
-
-	}
-      else
-	{
-	  // free ( StoredMenuBackground ) ;
+	  StoredMenuBackground [ backup_slot ] = malloc ( 641 * 481 * 4 ) ;
 	}
 
-      StoredMenuBackground = malloc ( 641 * 481 * 4 ) ;
-
-      glReadPixels( 1 , 1, 639, 479, GL_RGB, GL_UNSIGNED_BYTE, (GLvoid*) StoredMenuBackground );
+      glReadPixels( 0 , 1, 640, 479, GL_RGB, GL_UNSIGNED_BYTE, (GLvoid*) ( StoredMenuBackground [ backup_slot ] ) );
 #endif
     }
   else
@@ -782,18 +759,18 @@ StoreMenuBackground ( void )
       // otherwise we free the old surface and create a new copy of the
       // current screen content...
       //
-      if ( StoredMenuBackground == NULL )
+      if ( StoredMenuBackground [ backup_slot ] == NULL )
 	{
-	  StoredMenuBackground = our_SDL_display_format_wrapper ( Screen );
+	  StoredMenuBackground [ backup_slot ] = our_SDL_display_format_wrapper ( Screen );
 	}
       else
 	{
-	  SDL_FreeSurface ( StoredMenuBackground );
-	  StoredMenuBackground = our_SDL_display_format_wrapper ( Screen );
+	  SDL_FreeSurface ( StoredMenuBackground [ backup_slot ] );
+	  StoredMenuBackground [ backup_slot ] = our_SDL_display_format_wrapper ( Screen );
 	}
     }
 
-}; // void StoreMenuBackground ( void )
+}; // void StoreMenuBackground ( int backup_slot )
 
 /* ----------------------------------------------------------------------
  *
@@ -805,8 +782,8 @@ blit_open_gl_cheap_light_radius ( void )
 #ifdef HAVE_LIBGL
   int our_height, our_width;
   int light_strength;
-  static int pos_x_grid [ (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2) ] [ (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2 ) ] ;
-  static int pos_y_grid [ (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2) ] [ (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2 ) ] ;
+  // static int pos_x_grid [ (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2) ] [ (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2 ) ] ;
+  // static int pos_y_grid [ (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2) ] [ (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2 ) ] ;
   int window_offset_x;
   int light_bonus = curShip . AllLevels [ Me [ 0 ] . pos . z ] -> light_radius_bonus ;
   Uint8 r , g , b , a ;

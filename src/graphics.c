@@ -1539,9 +1539,35 @@ Old_SDL_HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area )
 void
 HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area )
 {
+  SDL_Rect* dstrect = & Area ;
+
   if ( use_open_gl )
     {
+      glRasterPos2i ( 0 , 0 ); 
+      glDisable ( GL_ALPHA_TEST );
+      glEnable ( GL_BLEND );
+      glBlendFunc( GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA );
 
+      glColor4ub( 255 , 255 , 255 , 200 );
+      if ( dstrect == NULL )
+	{
+	  glBegin(GL_QUADS);
+	  glVertex2i( 0       , 480 );
+	  glVertex2i( 0       ,   0 );
+	  glVertex2i( 0 + 639 ,   0 );
+	  glVertex2i( 0 + 639 , 480 );
+	  glEnd( );
+	}
+      else
+	{
+	  glBegin(GL_QUADS);
+	  glVertex2i( dstrect -> x                , dstrect -> y );
+	  glVertex2i( dstrect -> x                , dstrect -> y + dstrect -> h );
+	  glVertex2i( dstrect -> x + dstrect -> w , dstrect -> y + dstrect -> h );
+	  glVertex2i( dstrect -> x + dstrect -> w , dstrect -> y );
+	  glEnd( );
+	}
+      
     }
   else
     {
