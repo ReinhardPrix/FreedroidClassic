@@ -273,7 +273,7 @@ ShowCurrentHealthLevel( void )
   SDL_SetClipRect( Screen , NULL );
   SDL_FillRect( Screen , & ( Health_Rect ) , 0x000FF00 );
   SDL_FillRect( Screen , & ( Unhealth_Rect ) , 0x0FF0000 );
-  SDL_UpdateRect( Screen , Whole_Health_Rect.x , Whole_Health_Rect.y , Whole_Health_Rect.w , Whole_Health_Rect.h );
+  // SDL_UpdateRect( Screen , Whole_Health_Rect.x , Whole_Health_Rect.y , Whole_Health_Rect.w , Whole_Health_Rect.h );
   //  SDL_Flip( Screen );
 }; // void ShowCurrentHealthLevel( void )
 
@@ -472,8 +472,7 @@ DisplayBanner (const char* left, const char* right,  int flags )
   
   // DisplayText ( ItemDescText , Banner_Text_Rect.x , Banner_Text_Rect.y , &Banner_Text_Rect );
 
-  SDL_UpdateRect( Screen , Banner_Text_Rect.x , Banner_Text_Rect.y , 
-		  Banner_Text_Rect.w , Banner_Text_Rect.h );
+  // SDL_UpdateRect( Screen , Banner_Text_Rect.x , Banner_Text_Rect.y , Banner_Text_Rect.w , Banner_Text_Rect.h );
   //--------------------
 
 
