@@ -1071,7 +1071,6 @@ Credits_Menu (void)
   printf_SDL (ne_screen, -1, -1, "\n");
 
   printf_SDL (ne_screen, 20, -1, "C64 LEGACY MUSIC mods:\n");
-  printf_SDL (ne_screen, -1, -1, "\n");
 
   printf_SDL (ne_screen, 20, -1, "#dreamfish/trsi:");
   printf_SDL (ne_screen, User_Rect.w/2 +40, -1, "Green Beret, Sanxion,\n");
@@ -1085,7 +1084,9 @@ Credits_Menu (void)
 
   printf_SDL (ne_screen, 20, -1, "Nashua:");
   printf_SDL (ne_screen, User_Rect.w/2 +40, -1, "Starpaws\n");
-
+  
+  printf_SDL (ne_screen, 20, -1, "Android:");
+  printf_SDL (ne_screen, User_Rect.w/2 +40, -1, "Commando\n");
 
   SDL_Flip( ne_screen );
 

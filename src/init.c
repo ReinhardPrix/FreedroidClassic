@@ -1074,7 +1074,9 @@ EndTitle (void)
     }
 
   Copy_Rect(Full_User_Rect, rect);
+  SDL_SetClipRect ( ne_screen, NULL );
   MakeGridOnScreen (&rect);
+  SDL_Flip(ne_screen);
   rect.x += 10;
   rect.w -= 20;  //leave some border
   ScrollText (DebriefingText , &rect);
@@ -1169,7 +1171,9 @@ CheckIfMissionIsComplete (void)
 
   // mission complete: all droids have been killed
   RealScore += MISSION_COMPLETE_BONUS;
+
   EndTitle();
+
   UpdateHighscores();
 
   GameOver = TRUE;
