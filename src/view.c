@@ -290,7 +290,6 @@ ShowAutomapData( void )
 	{
 	  PutPixel ( Screen , AUTOMAP_SQUARE_SIZE * Me [ 0 ] . pos . x + AUTOMAP_SQUARE_SIZE * ( automap_level -> ylen - Me [ 0 ] . pos . y ) + x , 
 		     AUTOMAP_SQUARE_SIZE * Me [ 0 ] . pos . x + AUTOMAP_SQUARE_SIZE * Me [ 0 ] . pos . y + y , TuxColor );
-
 	  
 	  for ( i = 1 ; i < MAX_PLAYERS ; i ++ )
 	    {
@@ -3225,7 +3224,8 @@ There was -1 item type given to blit.  This must be a mistake! ",
   // load the inventory surface instead, so we really can assume that
   // we have something to use afterwards.
   //
-  if ( ItemMap [ CurItem -> type ] . inv_image . ingame_iso_image . surface == NULL )
+  if ( ( ItemMap [ CurItem -> type ] . inv_image . ingame_iso_image . surface == NULL ) &&
+       ( ! ItemMap [ CurItem -> type ] . inv_image . ingame_iso_image . texture_has_been_created ) )
     try_to_load_ingame_item_surface ( CurItem -> type );
 
   //--------------------
@@ -3235,8 +3235,6 @@ There was -1 item type given to blit.  This must be a mistake! ",
     {
       if ( use_open_gl )
 	{
-	  return ;
-
 	  blit_zoomed_open_gl_texture_to_map_position ( ItemMap [ CurItem -> type ] . inv_image . ingame_iso_image , 
 							CurItem -> pos . x , CurItem -> pos . y , 1.0 , 1.0 , 1.0 , 0.25 );
 	}
@@ -3248,9 +3246,19 @@ There was -1 item type given to blit.  This must be a mistake! ",
     }
   else
     {
-      blit_iso_image_to_map_position ( ItemMap [ CurItem->type ] . inv_image . ingame_iso_image , 
-				       CurItem -> pos . x - 3.0 * sinf ( CurItem -> throw_time * 3.0 ) , 
-				       CurItem -> pos . y - 3.0 * sinf ( CurItem -> throw_time * 3.0 ) );
+      if ( use_open_gl )
+	{
+	  blit_open_gl_texture_to_map_position ( ItemMap [ CurItem -> type ] . inv_image . ingame_iso_image , 
+						 CurItem -> pos . x - 3.0 * sinf ( CurItem -> throw_time * 3.0 ) , 
+						 CurItem -> pos . y - 3.0 * sinf ( CurItem -> throw_time * 3.0 ) , 
+						 1.0 , 1.0 , 1.0 , FALSE );
+	}
+      else
+	{
+	  blit_iso_image_to_map_position ( ItemMap [ CurItem->type ] . inv_image . ingame_iso_image , 
+					   CurItem -> pos . x - 3.0 * sinf ( CurItem -> throw_time * 3.0 ) , 
+					   CurItem -> pos . y - 3.0 * sinf ( CurItem -> throw_time * 3.0 ) );
+	}
     }
 
 }; // void PutItem( int ItemNumber );

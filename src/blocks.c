@@ -186,10 +186,13 @@ try_to_load_ingame_item_surface ( int item_type )
   // First we handle a case, that shouldn't really be happening due to
   // calling function checking already.  But it can't hurt to always double-check
   //
-  if ( ItemMap [ item_type ] . inv_image . ingame_iso_image . surface != NULL )
+  if ( ( ItemMap [ item_type ] . inv_image . ingame_iso_image . surface != NULL ) || ( ItemMap [ item_type ] . inv_image . ingame_iso_image . texture_has_been_created ) )
     {
-      DebugPrintf ( 0 , "\ntry_to_load_ingame_item_surface (...): ERROR.  Surface appears to be loaded already..." );
-      return;
+      GiveStandardErrorMessage ( "try_to_load_ingame_item_surface (...)" , "\
+Surface has been loaded already!",
+				 PLEASE_INFORM, IS_FATAL );
+      // DebugPrintf ( 0 , "\ntry_to_load_ingame_item_surface (...): ERROR.  Surface appears to be loaded already..." );
+      // return;
     }
 
   //--------------------
@@ -221,12 +224,23 @@ Unable to load an item ingame surface on demand.\n\
 Since there seems to be no ingame item surface yet, the inventory\n\
 item surface will be used as a substitute for now.",
 				 NO_NEED_TO_INFORM, IS_WARNING_ONLY );
-      ItemMap [ item_type ] . inv_image . ingame_iso_image . surface  = 
-	ItemMap [ item_type ] . inv_image . Surface ;
+
+      if ( use_open_gl )
+	{
+	  ItemMap [ item_type ] . inv_image . ingame_iso_image . surface  = 
+	    SDL_DisplayFormatAlpha ( ItemMap [ item_type ] . inv_image . Surface ) ;
+	}
+      else
+	{
+	  ItemMap [ item_type ] . inv_image . ingame_iso_image . surface  = 
+	    ItemMap [ item_type ] . inv_image . Surface ;
+	}
+
       ItemMap [ item_type ] . inv_image . ingame_iso_image . offset_x = 
 	- ItemMap [ item_type ] . inv_image . Surface -> w / 2 ;
       ItemMap [ item_type ] . inv_image . ingame_iso_image . offset_y = 
 	- ItemMap [ item_type ] . inv_image . Surface -> h / 2 ;
+
     }
   else
     {
@@ -243,6 +257,17 @@ item surface will be used as a substitute for now.",
       */
       get_iso_image_from_file_and_path ( fpath , & ( ItemMap [ item_type ] . inv_image . ingame_iso_image ) , TRUE );
       SDL_FreeSurface( Whole_Image );
+    }
+
+
+  //--------------------
+  // Now that it has been made sure, that a dispensable image is
+  // loaded for the ingame surface, we can destroy it and make a
+  // textured quad from it...
+  //
+  if ( use_open_gl )
+    {
+      make_texture_out_of_surface ( & ( ItemMap [ item_type ] . inv_image . ingame_iso_image ) ) ;
     }
 
 }; // void try_to_load_ingame_item_surface ( int item_number )
