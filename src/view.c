@@ -370,12 +370,12 @@ Assemble_Combat_Picture (int mask)
   for (i = 0; i < NumEnemys; i++)
     PutEnemy (i);
 
+  if (Me.energy > 0)
+    PutInfluence ();
+
   SDL_Flip ( ne_screen );
 
   return;  // for now
-
-  if (Me.energy > 0)
-    PutInfluence ();
 
   for (i = 0; i < (MAXBULLETS); i++)
     if (AllBullets[i].type != OUT)
@@ -648,6 +648,27 @@ GetConceptInternFenster (void)
  * Param: die momentane Phase der Drehung des 001 : Darstellphase
  *
  *-----------------------------------------------------------------*/
+#ifdef NEW_ENGINE
+void
+PutInfluence (void)
+{
+  SDL_Rect TargetRectangle;
+
+  DebugPrintf ("\nvoid PutInfluence(void): REAL function called.");
+
+  // source = Influencepointer + ((int) rintf (Me.phase)) * BLOCKMEM;
+
+  // PutObject (Me.pos.x, Me.pos.y, source, FALSE);
+
+  TargetRectangle.x=USER_FENSTER_CENTER_X - BLOCKBREITE/2;
+  TargetRectangle.y=USER_FENSTER_CENTER_Y - BLOCKHOEHE/2;
+
+  SDL_BlitSurface( ne_blocks , ne_influ_block+((int) rintf (Me.phase)), ne_screen, &TargetRectangle );
+
+  DebugPrintf ("\nvoid PutInfluence(void): REAL function ended.");
+
+} /* PutInfluence() */
+#else
 void
 PutInfluence (void)
 {
@@ -662,6 +683,7 @@ PutInfluence (void)
   DebugPrintf ("\nvoid PutInfluence(void): REAL function ended.");
 
 } /* PutInfluence() */
+#endif
 
 /*@Function============================================================
 @Desc: PutEnemy: setzt Enemy der Nummer Enum ins InternWindow
@@ -728,6 +750,9 @@ PutEnemy (int Enum)
   TargetRectangle.y=USER_FENSTER_CENTER_Y-Me.pos.y+Feindesliste[Enum].pos.y-BLOCKHOEHE/2;
 
   SDL_BlitSurface(ne_blocks , ne_droid_block+phase, ne_screen, &TargetRectangle);
+
+  // Now the numbers should be blittet.  But since they are not even read in,
+  // I will leave that for now... 
 
   DebugPrintf ("\nvoid PutEnemy(int Enum): ENEMY HAS BEEN PUT --> usual end of function reached.\n");
 
