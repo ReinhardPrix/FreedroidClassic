@@ -1184,30 +1184,49 @@ Init_Game_Data ( char * Datafilename )
   char *fpath;
   char *Data;
 
-#define END_OF_GAME_DAT_STRING "*** End of game.dat File ***"
-
   DebugPrintf (2, "\nint Init_Game_Data ( char* Datafilename ) called.");
 
-  /* Read the whole game data to memory */
-  fpath = find_file (Datafilename, MAP_DIR, FALSE);
-
+  //--------------------
+  // First we load the general game constants
+  //
+  fpath = find_file ( "freedroid.ruleset" , MAP_DIR, FALSE);
   DebugPrintf ( 0 , "\nvoid Init_Game_Data:  Data will be taken from file : %s.  Commencing... \n" ,
-		Datafilename );
-
-  Data = ReadAndMallocAndTerminateFile( fpath , END_OF_GAME_DAT_STRING ) ;
-
+		fpath );
+  Data = ReadAndMallocAndTerminateFile( fpath , "*** End of this Freedroid data File ***" ); 
   Get_General_Game_Constants( Data );
+  free ( Data );
 
+  //--------------------
+  // Item archetypes must be loaded too
+  //
+  fpath = find_file ( "freedroid.item_archetypes" , MAP_DIR , FALSE );
+  DebugPrintf ( 0 , "\nvoid Init_Game_Data:  Data will be taken from file : %s. Commencing... \n" ,
+		fpath );
+  Data = ReadAndMallocAndTerminateFile( fpath , "*** End of this Freedroid data File ***" ) ;
   Get_Item_Data ( Data );
+  free ( Data );
 
+  //--------------------
+  // Time to eat some droid archetypes...
+  //
+  fpath = find_file ( "freedroid.droid_archetypes" , MAP_DIR , FALSE );
+  DebugPrintf ( 0 , "\nvoid Init_Game_Data:  Data will be taken from file : %s. Commencing... \n" ,
+		fpath );
+  Data = ReadAndMallocAndTerminateFile( fpath , "*** End of this Freedroid data File ***" ) ;
   Get_Robot_Data ( Data );
+  free ( Data );
 
+  //--------------------
+  // Now finally it's time for all the bullet data...
+  //
+  fpath = find_file ( "freedroid.bullet_archetypes" , MAP_DIR, FALSE);
+  DebugPrintf ( 0 , "\nvoid Init_Game_Data:  Data will be taken from file : %s. Commencing... \n" ,
+		fpath );
+  Data = ReadAndMallocAndTerminateFile( fpath , "*** End of this Freedroid data File ***" ) ;
   Get_Bullet_Data ( Data );
+  free ( Data );
 
-  // free ( Data ); DO NOT FREE THIS AREA UNLESS YOU REALLOCATE MEMORY FOR THE
-  // DROIDNAMES EVERY TIME!!!
-
-} // int Init_Game_Data ( void )
+}; // int Init_Game_Data ( void )
 
 /* -----------------------------------------------------------------
  * This function is for stability while working with the SVGALIB, which otherwise would

@@ -1,0 +1,2161 @@
+
+----------------------------------------------------------------------
+
+This is a data file for Freedroid.
+It contains the specification of all droids appearing in freedroid.
+This file is, as all of Freedroid, put under the GPL License:
+
+ *
+ *   Copyright (c) 1994, 2002 Johannes Prix
+ *   Copyright (c) 1994, 2002 Reinhard Prix
+ *
+ *
+ *  This file is part of Freedroid
+ *
+ *  Freedroid is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Freedroid is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Freedroid; see the file COPYING. If not, write to the 
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  MA  02111-1307  USA
+ *
+
+Feel free to make any modifications you like.  If you set up 
+something cool, please send your file in to the Freedroid project.
+
+You can edit it with a standard text editor of your choice.
+Feel free to make any modifications you like.
+Freedroid will still accept you modified game dada file as long
+as you stick to the following rules:
+1.) the text indicating the Start of the Robot Data Section must not
+    be removed or changed.  It is needed by Freedroid in order to find
+    the robot section in your modified file.
+2.) the text indicating the end of the data file must not be removed.
+    It is needed by Freedroid to ensure the integrity of this data file.
+3.) Every new robot must begin with the typical "Start of new Robot"
+    string AND the asterisks as you see in the existing robots.
+    Best copy an existing robots data to a new location at the end
+    of the robot data section and modify the values to your liking. 
+
+YOU CAN INSERT EXTRA LINES WITH EXTRA TEXT anywhere you like in this file.
+That will not cause any problems.  
+
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+
+*** Start of Robot Data Section: *** 
+
+This is the header part of the robot data section:
+Here we have some constants which allow you to multiply a
+factor to ALL robot's values simultanously.  If you want to
+modify only ONE PARTICULAR droid, please seek that droid 
+value in the detailed description of each robot further below
+and make your modifiactions there.
+
+Common factor for all droids maxspeed values: 0.7
+Common factor for all droids acceleration values: 3.0
+Common factor for all droids maximum energy values: 1.0
+Common factor for all droids energyloss values: 0.05
+Common factor for all droids aggression values: 1.0
+Common factor for all droids score values: 2.0
+
+Now we come to the description of all the droids:
+
+** Start of new Robot: ** 
+Droidname: 001
+Droid portrait file name (without extension) to use="001"
+Maximum speed of this droid: 5.1
+Class of this droid: 0
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
+Rate of energyloss under influence control: 0.0
+Weapon type this droid uses: 0
+Aggression rate of this droid: 0
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 0
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.00
+Weight of this droid : 27
+Drive of this droid : 0
+Brain of this droid : 0
+Sensor 1 of this droid : 0
+Sensor 2 of this droid : 0
+Sensor 3 of this droid : 0
+Armament of this droid : 0
+Drive item=5
+Weapon item=22
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : Robot activity influence device. This helmet is self-powered and will control any robot for a short time. Lasers are turret-mounted.
+
+** Start of new Robot: ** 
+Droidname: 123
+Droid portrait file name (without extension) to use="123"
+Maximum speed of this droid: 2.1
+Class of this droid: 1
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 20.1
+Maximum mana of this droid: 20.1
+Rate of energyloss under influence control: 2.1
+Weapon type this droid uses: 0
+Aggression rate of this droid: 0
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 25
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.37
+Weight of this droid : 85
+Drive of this droid : 1
+Brain of this droid : 0
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 2
+Sensor 3 of this droid : 0
+Armament of this droid : 0
+Drive item=10
+Weapon item=-1
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : simpe rubbish diposal robot. Common device in most space craft to maintain a clean ship. 
+
+** Start of new Robot: ** 
+Droidname: 139
+Droid portrait file name (without extension) to use="139"
+Maximum speed of this droid: 2.1
+Class of this droid: 1
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 20.1
+Maximum mana of this droid: 20.1
+Rate of energyloss under influence control: 2.1
+Weapon type this droid uses: 0
+Aggression rate of this droid: 0
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 25
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.22
+Weight of this droid : 61
+Drive of this droid : 2
+Brain of this droid : 0
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 0
+Sensor 3 of this droid : 0
+Armament of this droid : 0
+Drive item=10
+Weapon item=-1
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : created by Dr. Masternak to clean up large heaps of rubbish. Its large scoop is used to collect rubbish. It is then crushed internally. 
+
+** Start of new Robot: ** 
+Droidname: 247
+Droid portrait file name (without extension) to use="247"
+Maximum speed of this droid: 4.1
+Class of this droid: 2
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 20.1
+Maximum mana of this droid: 20.1
+Rate of energyloss under influence control: 2.1
+Weapon type this droid uses: 0
+Aggression rate of this droid: 0
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 50
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.56
+Weight of this droid : 78
+Drive of this droid : 2
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 0
+Sensor 3 of this droid : 0
+Armament of this droid : 0
+Drive item=5
+Weapon item=-1
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : light duty servant robot. One of the first to use the anti-grav system. 
+
+** Start of new Robot: ** 
+Droidname: 249
+Droid portrait file name (without extension) to use="249"
+Maximum speed of this droid: 3.1
+Class of this droid: 2
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 40.1
+Maximum mana of this droid: 40.1
+Rate of energyloss under influence control: 2.1
+Weapon type this droid uses: 0
+Aggression rate of this droid: 0
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 50
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.63
+Weight of this droid : 83
+Drive of this droid : 3
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 0
+Sensor 3 of this droid : 0
+Armament of this droid : 0
+Drive item=8
+Weapon item=-1
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : cheaper version of the anti-grav servant robot. 
+
+** Start of new Robot: ** 
+Droidname: 296
+Droid portrait file name (without extension) to use="296"
+Maximum speed of this droid: 2.1
+Class of this droid: 2
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 40.1
+Maximum mana of this droid: 40.1
+Rate of energyloss under influence control: 2.1
+Weapon type this droid uses: 0
+Aggression rate of this droid: 0
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 50
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.20
+Weight of this droid : 47
+Drive of this droid : 1
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 0
+Sensor 3 of this droid : 0
+Armament of this droid : 0
+Drive item=10
+Weapon item=-1
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : this robot is used mainly for serving drinks. A tray is mounted on the head. Built by Orchard and Marsden Enterprises. 
+
+** Start of new Robot: ** 
+Droidname: 302
+Droid portrait file name (without extension) to use="302"
+Maximum speed of this droid: 7.1
+Class of this droid: 3
+Maximum acceleration of this droid: 2.1
+Maximum energy of this droid: 40.1
+Maximum mana of this droid: 40.1
+Rate of energyloss under influence control: 2.1
+Weapon type this droid uses: 0
+Aggression rate of this droid: 0
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 75
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.07
+Weight of this droid : 23
+Drive of this droid : 2
+Brain of this droid : 0
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 0
+Sensor 3 of this droid : 0
+Armament of this droid : 0
+Drive item=11
+Weapon item=-1
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : common device for moving small packages. Clamp is mounted on the lower body. 
+
+** Start of new Robot: ** 
+Droidname: 329
+Droid portrait file name (without extension) to use="329"
+Maximum speed of this droid: 1.1
+Class of this droid: 3
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 40.1
+Maximum mana of this droid: 40.1
+Rate of energyloss under influence control: 2.1
+Weapon type this droid uses: 0
+Aggression rate of this droid: 0
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 75
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.07
+Weight of this droid : 31
+Drive of this droid : 4
+Brain of this droid : 0
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 0
+Sensor 3 of this droid : 0
+Armament of this droid : 0
+Drive item=7
+Weapon item=-1
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : early type messenger robot. Large wheels impede motion on small craft.an
+
+** Start of new Robot: ** 
+Droidname: 420
+Droid portrait file name (without extension) to use="420"
+Maximum speed of this droid: 2.1
+Class of this droid: 4
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 60.1
+Maximum mana of this droid: 60.1
+Rate of energyloss under influence control: 2.1
+Weapon type this droid uses: 0
+Aggression rate of this droid: 0
+Is this droid immune to disruptor blasts? 1
+Score gained for destroying one of this type: 100
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.41
+Weight of this droid : 57
+Drive of this droid : 1
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 0
+Sensor 3 of this droid : 0
+Armament of this droid : 0
+Drive item=10
+Weapon item=-1
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : slow maintenance robot. Confined to drive maintenance during flight. 
+
+** Start of new Robot: ** 
+Droidname: 476
+Droid portrait file name (without extension) to use="476"
+Maximum speed of this droid: 4.1
+Class of this droid: 4
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 16.1
+Maximum mana of this droid: 70.1
+Rate of energyloss under influence control: 2.1
+Weapon type this droid uses: 1
+Aggression rate of this droid: 25
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 100
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.32
+Weight of this droid : 42
+Drive of this droid : 2
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 2
+Sensor 3 of this droid : 0
+Armament of this droid : 1
+Drive item=5
+Weapon item=16
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=70
+Chance modifier, that this robot gets hit=10
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : ship maintenance robot. Fitted with multiple arms to carry out repairs to the ship efficiently. All craft built after the Jupiter-incident are supplied with a team of these. 
+
+** Start of new Robot: ** 
+Droidname: 493
+Droid portrait file name (without extension) to use="493"
+Maximum speed of this droid: 4.1
+Class of this droid: 4
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 80.1
+Maximum mana of this droid: 80.1
+Rate of energyloss under influence control: 3.1
+Weapon type this droid uses: 0
+Aggression rate of this droid: 0
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 100
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.48
+Weight of this droid : 51
+Drive of this droid : 2
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 0
+Sensor 3 of this droid : 0
+Armament of this droid : 0
+Drive item=5
+Weapon item=-1
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : slave maintenance droid. Standard version will carry its own toolbox. 
+
+** Start of new Robot: ** 
+Droidname: 516
+Droid portrait file name (without extension) to use="516"
+Maximum speed of this droid: 3.1
+Class of this droid: 5
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 80.1
+Maximum mana of this droid: 80.1
+Rate of energyloss under influence control: 3.1
+Weapon type this droid uses: 0
+Aggression rate of this droid: 0
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 125
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.57
+Weight of this droid : 74
+Drive of this droid : 5
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 0
+Sensor 3 of this droid : 0
+Armament of this droid : 0
+Drive item=9
+Weapon item=-1
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : early crew droid. Able to carry out simple flight checks only. No longer supplied. 
+
+** Start of new Robot: ** 
+Droidname: 571
+Droid portrait file name (without extension) to use="571"
+Maximum speed of this droid: 4.1
+Class of this droid: 5
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 80.1
+Maximum mana of this droid: 80.1
+Rate of energyloss under influence control: 3.1
+Weapon type this droid uses: 0
+Aggression rate of this droid: 0
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 125
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.76
+Weight of this droid : 62
+Drive of this droid : 5
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 0
+Sensor 3 of this droid : 0
+Armament of this droid : 0
+Drive item=9
+Weapon item=-1
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : standard crew droid. Supplied with the ship. 
+
+** Start of new Robot: ** 
+Droidname: 598
+Droid portrait file name (without extension) to use="598"
+Maximum speed of this droid: 3.1
+Class of this droid: 5
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 80.1
+Maximum mana of this droid: 80.1
+Rate of energyloss under influence control: 3.1
+Weapon type this droid uses: 0
+Aggression rate of this droid: 0
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 125
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.72
+Weight of this droid : 93
+Drive of this droid : 5
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 0
+Sensor 3 of this droid : 0
+Armament of this droid : 0
+Drive item=9
+Weapon item=-1
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : a highly sophisticated device. Able to control the Robo-Freighter on its own. 
+
+** Start of new Robot: ** 
+Droidname: 614
+Droid portrait file name (without extension) to use="614"
+Maximum speed of this droid: 3.1
+Class of this droid: 6
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
+Rate of energyloss under influence control: 3.1
+Weapon type this droid uses: 5
+Aggression rate of this droid: 30
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 150
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.93
+Weight of this droid : 121
+Drive of this droid : 4
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 3
+Sensor 3 of this droid : 0
+Armament of this droid : 2
+Drive item=7
+Weapon item=-1
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 12
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : low security sentinel droid. Used to protect areas of the ship from intruders. A slow but sure device. 
+
+** Start of new Robot: ** 
+Droidname: 615
+Droid portrait file name (without extension) to use="615"
+Maximum speed of this droid: 4.1
+Class of this droid: 6
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
+Rate of energyloss under influence control: 3.1
+Weapon type this droid uses: 1
+Aggression rate of this droid: 30
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 150
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.20
+Weight of this droid : 29
+Drive of this droid : 2
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 2
+Sensor 3 of this droid : 0
+Armament of this droid : 1
+Drive item=5
+Weapon item=16
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : sophisticated sentinel droid. Only 2000 built by the Nicholson Company. these are now very rare.
+
+** Start of new Robot: ** 
+Droidname: 629
+Droid portrait file name (without extension) to use="629"
+Maximum speed of this droid: 2.1
+Class of this droid: 6
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
+Rate of energyloss under influence control: 3.1
+Weapon type this droid uses: 2
+Aggression rate of this droid: 40
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 150
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.09
+Weight of this droid : 59
+Drive of this droid : 1
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 3
+Sensor 3 of this droid : 0
+Armament of this droid : 1
+Drive item=10
+Weapon item=15
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : low sentinel droid. Lasers are built into the turret. These are mounted on a small tank body. May be fitted with an auto-cannon on-the Gillen version. 
+
+** Start of new Robot: ** 
+Droidname: 711
+Droid portrait file name (without extension) to use="711"
+Maximum speed of this droid: 5.1
+Class of this droid: 7
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 110.1
+Maximum mana of this droid: 110.1
+Rate of energyloss under influence control: 4.1
+Weapon type this droid uses: 3
+Aggression rate of this droid: 60
+Is this droid immune to disruptor blasts? 1
+Score gained for destroying one of this type: 175
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.93
+Weight of this droid : 102
+Drive of this droid : 5
+Brain of this droid : 1
+Sensor 1 of this droid : 4
+Sensor 2 of this droid : 5
+Sensor 3 of this droid : 0
+Armament of this droid : 3
+Drive item=9
+Weapon item=14
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : heavy duty battle droid. Disruptor is built into the head. One of the first in service with the Military. 
+
+** Start of new Robot: ** 
+Droidname: 742
+Droid portrait file name (without extension) to use="742"
+Maximum speed of this droid: 4.1
+Class of this droid: 7
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 130.1
+Maximum mana of this droid: 130.1
+Rate of energyloss under influence control: 4.1
+Weapon type this droid uses: 3
+Aggression rate of this droid: 60
+Is this droid immune to disruptor blasts? 1
+Score gained for destroying one of this type: 175
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.87
+Weight of this droid : 140
+Drive of this droid : 5
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 5
+Sensor 3 of this droid : 0
+Armament of this droid : 3
+Drive item=9
+Weapon item=14
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : this version is the one mainly used by the Military. 
+
+** Start of new Robot: ** 
+Droidname: 751
+Droid portrait file name (without extension) to use="751"
+Maximum speed of this droid: 5.1
+Class of this droid: 7
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 150.1
+Maximum mana of this droid: 150.1
+Rate of energyloss under influence control: 4.1
+Weapon type this droid uses: 1
+Aggression rate of this droid: 80
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 175
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.93
+Weight of this droid : 227
+Drive of this droid : 5
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 0
+Sensor 3 of this droid : 0
+Armament of this droid : 1
+Drive item=9
+Weapon item=16
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : very heavy duty battle droid. Only a few have so far entered service. These are the most powerful battle units ever built. 
+
+** Start of new Robot: ** 
+Droidname: 821
+Droid portrait file name (without extension) to use="821"
+Maximum speed of this droid: 6.1
+Class of this droid: 8
+Maximum acceleration of this droid: 2.1
+Maximum energy of this droid: 160.1
+Maximum mana of this droid: 160.1
+Rate of energyloss under influence control: 4.1
+Weapon type this droid uses: 2
+Aggression rate of this droid: 65
+Is this droid immune to disruptor blasts? 1
+Score gained for destroying one of this type: 200
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.00
+Weight of this droid : 28
+Drive of this droid : 2
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 5
+Sensor 3 of this droid : 2
+Armament of this droid : 1
+Drive item=11
+Weapon item=15
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : a very reliable anti-grav unit is fitted into this droid. It will patrol the ship and eliminate intruders as soon as detected by powerful sensors. 
+
+** Start of new Robot: ** 
+Droidname: 834
+Droid portrait file name (without extension) to use="834"
+Maximum speed of this droid: 7.1
+Class of this droid: 8
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 140.1
+Maximum mana of this droid: 140.1
+Rate of energyloss under influence control: 4.1
+Weapon type this droid uses: 1
+Aggression rate of this droid: 55
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 200
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.10
+Weight of this droid : 34
+Drive of this droid : 2
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 5
+Sensor 3 of this droid : 0
+Armament of this droid : 1
+Drive item=5
+Weapon item=16
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : early type anti-grav security droid. Fitted with an over-driven anti-grav unit. This droid is very fast but is not reliable. 
+
+** Start of new Robot: ** 
+Droidname: 883
+Droid portrait file name (without extension) to use="883"
+Maximum speed of this droid: 2.1
+Class of this droid: 8
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 180.1
+Maximum mana of this droid: 180.1
+Rate of energyloss under influence control: 4.1
+Weapon type this droid uses: 4
+Aggression rate of this droid: 90
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 200
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.62
+Weight of this droid : 79
+Drive of this droid : 4
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 5
+Sensor 3 of this droid : 0
+Armament of this droid : 4
+Drive item=7
+Weapon item=13
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=80
+Chance modifier, that this robot gets hit=30
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : this droid was designed from archive data. For some unknown reason it instils great fear in Human adversaries. 
+
+** Start of new Robot: ** 
+Droidname: 999
+Droid portrait file name (without extension) to use="999"
+Maximum speed of this droid: 6.1
+Class of this droid: 9
+Maximum acceleration of this droid: 2.1
+Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
+Rate of energyloss under influence control: 15.1
+Weapon type this droid uses: 2
+Aggression rate of this droid: 90
+Is this droid immune to disruptor blasts? 1
+Score gained for destroying one of this type: 225
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.87
+Weight of this droid : 162
+Drive of this droid : 2
+Brain of this droid : 2
+Sensor 1 of this droid : 2
+Sensor 2 of this droid : 5
+Sensor 3 of this droid : 3
+Armament of this droid : 1
+Drive item=11
+Weapon item=15
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
+
+** Start of new Robot: ** 
+Droidname: 124
+Droid portrait file name (without extension) to use="123"
+Maximum speed of this droid: 2.1
+Class of this droid: 1
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 2.1
+Maximum mana of this droid: 10.1
+Rate of energyloss under influence control: 2.1
+Weapon type this droid uses: 0
+Aggression rate of this droid: 99
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 25
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.37
+Weight of this droid : 85
+Drive of this droid : 1
+Brain of this droid : 0
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 2
+Sensor 3 of this droid : 0
+Armament of this droid : 0
+Drive item=10
+W**eapon item=22
+Weapon item=28
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=0
+Got Hit Sound number=0
+Chance of this robot scoring a hit=60
+Chance modifier, that this robot gets hit=30
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : simpe rubbish diposal robot. Common device in most space craft to maintain a clean ship. 
+
+** Start of new Robot: ** 
+Droidname: 140
+Droid portrait file name (without extension) to use="139"
+Maximum speed of this droid: 2.1
+Class of this droid: 1
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 2.1
+Maximum mana of this droid: 10.1
+Rate of energyloss under influence control: 2.1
+Weapon type this droid uses: 0
+Aggression rate of this droid: 65
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 25
+Monster Level and maximum treasure chest to pick from=1
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.22
+Weight of this droid : 61
+Drive of this droid : 2
+Brain of this droid : 0
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 0
+Sensor 3 of this droid : 0
+Armament of this droid : 0
+Drive item=10
+Weapon item=23
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=1
+Got Hit Sound number=1
+Chance of this robot scoring a hit=60
+Chance modifier, that this robot gets hit=30
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 1
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : created by Dr. Masternak to clean up large heaps of rubbish. Its large scoop is used to collect rubbish. It is then crushed internally. 
+
+** Start of new Robot: ** 
+Droidname: 248
+Droid portrait file name (without extension) to use="247"
+Maximum speed of this droid: 4.1
+Class of this droid: 2
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 6.1
+Maximum mana of this droid: 20.1
+Rate of energyloss under influence control: 2.1
+Weapon type this droid uses: 0
+Aggression rate of this droid: 82
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 50
+Monster Level and maximum treasure chest to pick from=2
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.56
+Weight of this droid : 78
+Drive of this droid : 2
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 0
+Sensor 3 of this droid : 0
+Armament of this droid : 0
+Drive item=5
+Weapon item=27
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=80
+Chance modifier, that this robot gets hit=20
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 2
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : light duty servant robot. One of the first to use the anti-grav system. 
+
+** Start of new Robot: ** 
+Droidname: 250
+Droid portrait file name (without extension) to use="249"
+Maximum speed of this droid: 3.1
+Class of this droid: 2
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 20.1
+Maximum mana of this droid: 20.1
+Rate of energyloss under influence control: 2.1
+Weapon type this droid uses: 0
+Aggression rate of this droid: 84
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 50
+Monster Level and maximum treasure chest to pick from=3
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.63
+Weight of this droid : 83
+Drive of this droid : 3
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 0
+Sensor 3 of this droid : 0
+Armament of this droid : 0
+Drive item=8
+Weapon item=22
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=0
+Chance of this robot scoring a hit=82
+Chance modifier, that this robot gets hit=10
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 3
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : cheaper version of the anti-grav servant robot. 
+
+** Start of new Robot: ** 
+Droidname: 257
+Droid portrait file name (without extension) to use="247"
+Maximum speed of this droid: 4.1
+Class of this droid: 2
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 12.1
+Maximum mana of this droid: 20.1
+Rate of energyloss under influence control: 2.1
+Weapon type this droid uses: 0
+Aggression rate of this droid: 82
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 50
+Monster Level and maximum treasure chest to pick from=3
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.56
+Weight of this droid : 78
+Drive of this droid : 2
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 0
+Sensor 3 of this droid : 0
+Armament of this droid : 0
+Drive item=5
+Weapon item=27
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=80
+Chance modifier, that this robot gets hit=20
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 4
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : light duty servant robot. One of the first to use the anti-grav system. 
+
+** Start of new Robot: ** 
+Droidname: 297
+Droid portrait file name (without extension) to use="296"
+Maximum speed of this droid: 2.1
+Class of this droid: 2
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 40.1
+Maximum mana of this droid: 40.1
+Rate of energyloss under influence control: 2.1
+Weapon type this droid uses: 0
+Aggression rate of this droid: 84
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 50
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.20
+Weight of this droid : 47
+Drive of this droid : 1
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 0
+Sensor 3 of this droid : 0
+Armament of this droid : 0
+Drive item=10
+Weapon item=27
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=85
+Chance modifier, that this robot gets hit=15
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 5
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : this robot is used mainly for serving drinks. A tray is mounted on the head. Built by Orchard and Marsden Enterprises. 
+
+** Start of new Robot: ** 
+Droidname: DAP
+Droid portrait file name (without extension) to use="999"
+Maximum speed of this droid: 6.1
+Class of this droid: 11
+Maximum acceleration of this droid: 2.1
+Maximum energy of this droid: 70.1
+Maximum mana of this droid: 70.1
+Rate of energyloss under influence control: 15.1
+Weapon type this droid uses: 2
+Aggression rate of this droid: 95
+Is this droid immune to disruptor blasts? 1
+Score gained for destroying one of this type: 500
+Monster Level and maximum treasure chest to pick from=3
+Force how many additional magic items to be dropped=2
+Height of this droid : 1.87
+Weight of this droid : 162
+Drive of this droid : 2
+Brain of this droid : 2
+Sensor 1 of this droid : 2
+Sensor 2 of this droid : 5
+Sensor 3 of this droid : 3
+Drive item=9
+Weapon item=12
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=3
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=90
+Chance modifier, that this robot gets hit=-30
+Armament of this droid : 1
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 1
+Individual shape of this droid or just -1 for classic ball shaped : 22
+Going to request reinforcements typical for this droid : 0
+This is a dark Apprentice of the evil MS Super-Corporation.
+
+** Start of new Robot: ** 
+Droidname: 303
+Droid portrait file name (without extension) to use="302"
+Maximum speed of this droid: 6.1
+Class of this droid: 3
+Maximum acceleration of this droid: 2.1
+Maximum energy of this droid: 40.1
+Maximum mana of this droid: 40.1
+Rate of energyloss under influence control: 2.1
+Weapon type this droid uses: 2
+Aggression rate of this droid: 75
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 200
+Monster Level and maximum treasure chest to pick from=3
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.07
+Weight of this droid : 23
+Drive of this droid : 2
+Brain of this droid : 0
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 0
+Sensor 3 of this droid : 0
+Armament of this droid : 0
+Drive item=11
+Weapon item=12
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=85
+Chance modifier, that this robot gets hit=-25
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 6
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : common device for moving small packages. Clamp is mounted on the lower body. 
+
+** Start of new Robot: ** 
+Droidname: GOT
+Droid portrait file name (without extension) to use="883"
+Maximum speed of this droid: 2.1
+Class of this droid: 8
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 180.1
+Maximum mana of this droid: 180.1
+Rate of energyloss under influence control: 4.1
+Weapon type this droid uses: 4
+Aggression rate of this droid: 92
+Is this droid immune to disruptor blasts? 0
+Score gained for destroying one of this type: 200
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=1
+Height of this droid : 1.62
+Weight of this droid : 79
+Drive of this droid : 4
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 5
+Sensor 3 of this droid : 0
+Armament of this droid : 4
+Drive item=7
+Weapon item=60
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=2
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=80
+Chance modifier, that this robot gets hit=30
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 22
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : this droid was designed from archive data. For some unknown reason it instils great fear in Human adversaries. 
+
+
+** Start of new Robot: ** 
+Droidname: DSR
+Droid portrait file name (without extension) to use="999"
+Maximum speed of this droid: 6.1
+Class of this droid: 11
+Maximum acceleration of this droid: 2.1
+Maximum energy of this droid: 110.1
+Maximum mana of this droid: 110.1
+Rate of energyloss under influence control: 15.1
+Weapon type this droid uses: 2
+Aggression rate of this droid: 95
+Is this droid immune to disruptor blasts? 1
+Score gained for destroying one of this type: 800
+Monster Level and maximum treasure chest to pick from=3
+Force how many additional magic items to be dropped=2
+Height of this droid : 1.87
+Weight of this droid : 162
+Drive of this droid : 2
+Brain of this droid : 2
+Sensor 1 of this droid : 2
+Sensor 2 of this droid : 5
+Sensor 3 of this droid : 3
+Drive item=9
+Weapon item=12
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=92
+Chance modifier, that this robot gets hit=-50
+Armament of this droid : 1
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 1
+Individual shape of this droid or just -1 for classic ball shaped : 0
+Going to request reinforcements typical for this droid : 0
+This is a dark Apprentice of the evil MS Super-Corporation.
+
+** Start of new Robot: ** 
+Droidname: CHA
+Droid portrait file name (without extension) to use="CHA"
+Maximum speed of this droid: 6.1
+Class of this droid: 18
+Maximum acceleration of this droid: 2.1
+Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
+Rate of energyloss under influence control: 15.1
+Weapon type this droid uses: 2
+Aggression rate of this droid: 60
+Is this droid immune to disruptor blasts? 1
+Score gained for destroying one of this type: 225
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.87
+Weight of this droid : 162
+Drive of this droid : 2
+Brain of this droid : 2
+Sensor 1 of this droid : 2
+Sensor 2 of this droid : 5
+Sensor 3 of this droid : 3
+Drive item=7
+Weapon item=-1
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Armament of this droid : 1
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 1
+Individual shape of this droid or just -1 for classic ball shaped : 24
+Going to request reinforcements typical for this droid : 0
+This is Dr. Chanra, a leading scientist in the field of artificial intelligence and droid construction optimization theory.
+
+** Start of new Robot: ** 
+Droidname: BEG
+Droid portrait file name (without extension) to use="BEG"
+Maximum speed of this droid: 6.1
+Class of this droid: 18
+Maximum acceleration of this droid: 2.1
+Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
+Rate of energyloss under influence control: 15.1
+Weapon type this droid uses: 2
+Aggression rate of this droid: 60
+Is this droid immune to disruptor blasts? 1
+Score gained for destroying one of this type: 225
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.87
+Weight of this droid : 162
+Drive of this droid : 2
+Brain of this droid : 2
+Sensor 1 of this droid : 2
+Sensor 2 of this droid : 5
+Sensor 3 of this droid : 3
+Drive item=7
+Weapon item=-1
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Armament of this droid : 1
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 1
+Individual shape of this droid or just -1 for classic ball shaped : 0
+Going to request reinforcements typical for this droid : 0
+This is Begolas, a trainer of ranged weapons
+
+** Start of new Robot: ** 
+Droidname: MER
+Droid portrait file name (without extension) to use="999"
+Maximum speed of this droid: 6.1
+Class of this droid: 18
+Maximum acceleration of this droid: 2.1
+Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
+Rate of energyloss under influence control: 15.1
+Weapon type this droid uses: 2
+Aggression rate of this droid: 60
+Is this droid immune to disruptor blasts? 1
+Score gained for destroying one of this type: 225
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.87
+Weight of this droid : 162
+Drive of this droid : 2
+Brain of this droid : 2
+Sensor 1 of this droid : 2
+Sensor 2 of this droid : 5
+Sensor 3 of this droid : 3
+Drive item=7
+Weapon item=-1
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Armament of this droid : 1
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 1
+Individual shape of this droid or just -1 for classic ball shaped : 0
+Going to request reinforcements typical for this droid : 0
+This is Begolas, a trainer of ranged weapons
+
+** Start of new Robot: ** 
+Droidname: STO
+Droid portrait file name (without extension) to use="999"
+Maximum speed of this droid: 6.1
+Class of this droid: 12
+Maximum acceleration of this droid: 2.1
+Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
+Rate of energyloss under influence control: 15.1
+Weapon type this droid uses: 2
+Aggression rate of this droid: 60
+Is this droid immune to disruptor blasts? 1
+Score gained for destroying one of this type: 225
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.87
+Weight of this droid : 162
+Drive of this droid : 2
+Brain of this droid : 2
+Sensor 1 of this droid : 2
+Sensor 2 of this droid : 5
+Sensor 3 of this droid : 3
+Drive item=7
+Weapon item=-1
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Armament of this droid : 1
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 1
+Individual shape of this droid or just -1 for classic ball shaped : 22
+Going to request reinforcements typical for this droid : 0
+Friendly Mrs. Stone, who runs a small equipment shop.
+
+** Start of new Robot: ** 
+Droidname: SOR
+Droid portrait file name (without extension) to use="SOR"
+Maximum speed of this droid: 6.1
+Class of this droid: 15
+Maximum acceleration of this droid: 2.1
+Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
+Rate of energyloss under influence control: 15.1
+Weapon type this droid uses: 2
+Aggression rate of this droid: 60
+Is this droid immune to disruptor blasts? 1
+Score gained for destroying one of this type: 225
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.87
+Weight of this droid : 162
+Drive of this droid : 2
+Brain of this droid : 2
+Sensor 1 of this droid : 2
+Sensor 2 of this droid : 5
+Sensor 3 of this droid : 3
+Drive item=7
+Weapon item=-1
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Armament of this droid : 1
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 1
+Individual shape of this droid or just -1 for classic ball shaped : 24
+Going to request reinforcements typical for this droid : 0
+Sorenson, teacher of magical abilities.
+
+** Start of new Robot: ** 
+Droidname: HEA
+Droid portrait file name (without extension) to use="999"
+Maximum speed of this droid: 6.1
+Class of this droid: 14
+Maximum acceleration of this droid: 2.1
+Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
+Rate of energyloss under influence control: 15.1
+Weapon type this droid uses: 2
+Aggression rate of this droid: 60
+Is this droid immune to disruptor blasts? 1
+Score gained for destroying one of this type: 225
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.87
+Weight of this droid : 162
+Drive of this droid : 2
+Brain of this droid : 2
+Sensor 1 of this droid : 2
+Sensor 2 of this droid : 5
+Sensor 3 of this droid : 3
+Drive item=7
+Weapon item=-1
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Armament of this droid : 1
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 1
+Individual shape of this droid or just -1 for classic ball shaped : 23
+Going to request reinforcements typical for this droid : 0
+This is the healer within the small startup town.
+
+** Start of new Robot: ** 
+Droidname: RMS
+Droid portrait file name (without extension) to use="999"
+Maximum speed of this droid: 6.1
+Class of this droid: 13
+Maximum acceleration of this droid: 2.1
+Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
+Rate of energyloss under influence control: 15.1
+Weapon type this droid uses: 2
+Aggression rate of this droid: 60
+Is this droid immune to disruptor blasts? 1
+Score gained for destroying one of this type: 225
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.87
+Weight of this droid : 162
+Drive of this droid : 2
+Brain of this droid : 2
+Sensor 1 of this droid : 2
+Sensor 2 of this droid : 5
+Sensor 3 of this droid : 3
+Drive item=7
+Weapon item=-1
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=95
+Chance modifier, that this robot gets hit=-30
+Armament of this droid : 1
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 1
+Individual shape of this droid or just -1 for classic ball shaped : 7
+Going to request reinforcements typical for this droid : 0
+This is the RMS, who lost most of his code due to MS deletion initiative
+
+** Start of new Robot: ** 
+Droidname: DIX
+Droid portrait file name (without extension) to use="999"
+Maximum speed of this droid: 6.1
+Class of this droid: 17
+Maximum acceleration of this droid: 2.1
+Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
+Rate of energyloss under influence control: 15.1
+Weapon type this droid uses: 2
+Aggression rate of this droid: 60
+Is this droid immune to disruptor blasts? 1
+Score gained for destroying one of this type: 225
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.87
+Weight of this droid : 162
+Drive of this droid : 2
+Brain of this droid : 2
+Sensor 1 of this droid : 2
+Sensor 2 of this droid : 5
+Sensor 3 of this droid : 3
+Drive item=7
+Weapon item=-1
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=95
+Chance modifier, that this robot gets hit=-30
+Armament of this droid : 1
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 1
+Individual shape of this droid or just -1 for classic ball shaped : 8
+Going to request reinforcements typical for this droid : 0
+This is Dixon, who maintains the teleporters.
+
+** Start of new Robot: ** 
+Droidname: PEN
+Droid portrait file name (without extension) to use="999"
+Maximum speed of this droid: 6.1
+Class of this droid: 16
+Maximum acceleration of this droid: 2.1
+Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
+Rate of energyloss under influence control: 15.1
+Weapon type this droid uses: 2
+Aggression rate of this droid: 60
+Is this droid immune to disruptor blasts? 1
+Score gained for destroying one of this type: 225
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.87
+Weight of this droid : 162
+Drive of this droid : 2
+Brain of this droid : 2
+Sensor 1 of this droid : 2
+Sensor 2 of this droid : 5
+Sensor 3 of this droid : 3
+Drive item=7
+Weapon item=-1
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=95
+Chance modifier, that this robot gets hit=-30
+Armament of this droid : 1
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 1
+Individual shape of this droid or just -1 for classic ball shaped : 9
+Going to request reinforcements typical for this droid : 0
+This is Pendragon, who can train you in the fighting arts.
+
+** Start of new Robot: ** 
+Droidname: 998
+Droid portrait file name (without extension) to use="999"
+Maximum speed of this droid: 6.1
+Class of this droid: 9
+Maximum acceleration of this droid: 2.1
+Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
+Rate of energyloss under influence control: 15.1
+Weapon type this droid uses: 2
+Aggression rate of this droid: 60
+Is this droid immune to disruptor blasts? 1
+Score gained for destroying one of this type: 225
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.87
+Weight of this droid : 162
+Drive of this droid : 2
+Brain of this droid : 2
+Sensor 1 of this droid : 2
+Sensor 2 of this droid : 5
+Sensor 3 of this droid : 3
+Armament of this droid : 1
+Drive item=5
+Weapon item=15
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
+
+** Start of new Robot: ** 
+Droidname: 997
+Droid portrait file name (without extension) to use="999"
+Maximum speed of this droid: 6.1
+Class of this droid: 9
+Maximum acceleration of this droid: 2.1
+Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
+Rate of energyloss under influence control: 15.1
+Weapon type this droid uses: 2
+Aggression rate of this droid: 60
+Is this droid immune to disruptor blasts? 1
+Score gained for destroying one of this type: 225
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.87
+Weight of this droid : 162
+Drive of this droid : 2
+Brain of this droid : 2
+Sensor 1 of this droid : 2
+Sensor 2 of this droid : 5
+Sensor 3 of this droid : 3
+Armament of this droid : 1
+Drive item=5
+Weapon item=15
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
+
+** Start of new Robot: ** 
+Droidname: 996
+Droid portrait file name (without extension) to use="999"
+Maximum speed of this droid: 6.1
+Class of this droid: 9
+Maximum acceleration of this droid: 2.1
+Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
+Rate of energyloss under influence control: 15.1
+Weapon type this droid uses: 2
+Aggression rate of this droid: 60
+Is this droid immune to disruptor blasts? 1
+Score gained for destroying one of this type: 225
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.87
+Weight of this droid : 162
+Drive of this droid : 2
+Brain of this droid : 2
+Sensor 1 of this droid : 2
+Sensor 2 of this droid : 5
+Sensor 3 of this droid : 3
+Armament of this droid : 1
+Drive item=5
+Weapon item=15
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
+
+** Start of new Robot: ** 
+Droidname: 995
+Droid portrait file name (without extension) to use="999"
+Maximum speed of this droid: 6.1
+Class of this droid: 9
+Maximum acceleration of this droid: 2.1
+Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
+Rate of energyloss under influence control: 15.1
+Weapon type this droid uses: 2
+Aggression rate of this droid: 60
+Is this droid immune to disruptor blasts? 1
+Score gained for destroying one of this type: 225
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.87
+Weight of this droid : 162
+Drive of this droid : 2
+Brain of this droid : 2
+Sensor 1 of this droid : 2
+Sensor 2 of this droid : 5
+Sensor 3 of this droid : 3
+Armament of this droid : 1
+Drive item=5
+Weapon item=15
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
+
+** Start of new Robot: ** 
+Droidname: 994
+Droid portrait file name (without extension) to use="999"
+Maximum speed of this droid: 6.1
+Class of this droid: 9
+Maximum acceleration of this droid: 2.1
+Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
+Rate of energyloss under influence control: 15.1
+Weapon type this droid uses: 2
+Aggression rate of this droid: 60
+Is this droid immune to disruptor blasts? 1
+Score gained for destroying one of this type: 225
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.87
+Weight of this droid : 162
+Drive of this droid : 2
+Brain of this droid : 2
+Sensor 1 of this droid : 2
+Sensor 2 of this droid : 5
+Sensor 3 of this droid : 3
+Armament of this droid : 1
+Drive item=5
+Weapon item=15
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
+
+** Start of new Robot: ** 
+Droidname: 993
+Droid portrait file name (without extension) to use="999"
+Maximum speed of this droid: 6.1
+Class of this droid: 9
+Maximum acceleration of this droid: 2.1
+Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
+Rate of energyloss under influence control: 15.1
+Weapon type this droid uses: 2
+Aggression rate of this droid: 60
+Is this droid immune to disruptor blasts? 1
+Score gained for destroying one of this type: 225
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.87
+Weight of this droid : 162
+Drive of this droid : 2
+Brain of this droid : 2
+Sensor 1 of this droid : 2
+Sensor 2 of this droid : 5
+Sensor 3 of this droid : 3
+Armament of this droid : 1
+Drive item=5
+Weapon item=15
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
+
+** Start of new Robot: ** 
+Droidname: 992
+Droid portrait file name (without extension) to use="999"
+Maximum speed of this droid: 6.1
+Class of this droid: 9
+Maximum acceleration of this droid: 2.1
+Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
+Rate of energyloss under influence control: 15.1
+Weapon type this droid uses: 2
+Aggression rate of this droid: 60
+Is this droid immune to disruptor blasts? 1
+Score gained for destroying one of this type: 225
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.87
+Weight of this droid : 162
+Drive of this droid : 2
+Brain of this droid : 2
+Sensor 1 of this droid : 2
+Sensor 2 of this droid : 5
+Sensor 3 of this droid : 3
+Armament of this droid : 1
+Drive item=5
+Weapon item=15
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
+
+** Start of new Robot: ** 
+Droidname: 991
+Droid portrait file name (without extension) to use="999"
+Maximum speed of this droid: 6.1
+Class of this droid: 9
+Maximum acceleration of this droid: 2.1
+Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
+Rate of energyloss under influence control: 15.1
+Weapon type this droid uses: 2
+Aggression rate of this droid: 60
+Is this droid immune to disruptor blasts? 1
+Score gained for destroying one of this type: 225
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.87
+Weight of this droid : 162
+Drive of this droid : 2
+Brain of this droid : 2
+Sensor 1 of this droid : 2
+Sensor 2 of this droid : 5
+Sensor 3 of this droid : 3
+Armament of this droid : 1
+Drive item=5
+Weapon item=15
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
+
+** Start of new Robot: ** 
+Droidname: 990
+Droid portrait file name (without extension) to use="999"
+Maximum speed of this droid: 6.1
+Class of this droid: 9
+Maximum acceleration of this droid: 2.1
+Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
+Rate of energyloss under influence control: 15.1
+Weapon type this droid uses: 2
+Aggression rate of this droid: 60
+Is this droid immune to disruptor blasts? 1
+Score gained for destroying one of this type: 225
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.87
+Weight of this droid : 162
+Drive of this droid : 2
+Brain of this droid : 2
+Sensor 1 of this droid : 2
+Sensor 2 of this droid : 5
+Sensor 3 of this droid : 3
+Armament of this droid : 1
+Drive item=5
+Weapon item=15
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Got Hit Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 0
+Individual shape of this droid or just -1 for classic ball shaped : 0
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
+
+*** End of Robot Data Section: ***
+
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+
+*** End of this Freedroid data File ***

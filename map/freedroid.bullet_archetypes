@@ -1,0 +1,226 @@
+
+----------------------------------------------------------------------
+
+This is a data file for Freedroid.
+It contains the specification of all droids appearing in freedroid.
+This file is, as all of Freedroid, put under the GPL License:
+
+ *
+ *   Copyright (c) 1994, 2002 Johannes Prix
+ *   Copyright (c) 1994, 2002 Reinhard Prix
+ *
+ *
+ *  This file is part of Freedroid
+ *
+ *  Freedroid is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Freedroid is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Freedroid; see the file COPYING. If not, write to the 
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  MA  02111-1307  USA
+ *
+
+Feel free to make any modifications you like.  If you set up 
+something cool, please send your file in to the Freedroid project.
+
+You can edit it with a standard text editor of your choice.
+Feel free to make any modifications you like.
+Freedroid will still accept you modified game dada file as long
+as you stick to the following rules:
+1.) the text indicating the Start of the Robot Data Section must not
+    be removed or changed.  It is needed by Freedroid in order to find
+    the robot section in your modified file.
+2.) the text indicating the end of the data file must not be removed.
+    It is needed by Freedroid to ensure the integrity of this data file.
+3.) Every new robot must begin with the typical "Start of new Robot"
+    string AND the asterisks as you see in the existing robots.
+    Best copy an existing robots data to a new location at the end
+    of the robot data section and modify the values to your liking. 
+
+YOU CAN INSERT EXTRA LINES WITH EXTRA TEXT anywhere you like in this file.
+That will not cause any problems.  
+
+----------------------------------------------------------------------
+
+*** Start of Bullet Data Section: ***
+
+Common factor for all bullet's speed values: 1.0
+Common factor for all bullet's damage values: 1.0
+
+// this is the influencers small double shot
+** Start of new bullet specification subsection **
+Time is takes to recharge this bullet/weapon in seconds : 0.95
+Flying speed of this bullet type : 8.0
+Damage cause by a hit of this bullet type : 25
+Number of different phases that were designed for this bullet type : SEE CONFIG.THEME FILE
+Cannot fire until previous bullet has been deleted : 0
+Type of blast this bullet causes when crashing e.g. against a wall : 0
+** End of new bullet specification subsection **
+
+// this is the 476 standard shot
+** Start of new bullet specification subsection **
+Time is takes to recharge this bullet/weapon in seconds : 1.2
+Flying speed of this bullet type : 8.0
+Damage cause by a hit of this bullet type : 40
+Number of different phases that were designed for this bullet type : SEE CONFIG.THEME FILE
+Cannot fire until previous bullet has been deleted : 0
+Type of blast this bullet causes when crashing e.g. against a wall : 0
+** End of new bullet specification subsection **
+
+// this is the double 821 military shot
+** Start of new bullet specification subsection **
+Time is takes to recharge this bullet/weapon in seconds : 1.4
+Flying speed of this bullet type : 8.0
+Damage cause by a hit of this bullet type : 55
+Number of different phases that were designed for this bullet type : SEE CONFIG.THEME FILE
+Cannot fire until previous bullet has been deleted : 0
+Type of blast this bullet causes when crashing e.g. against a wall : 0
+** End of new bullet specification subsection **
+
+// this is the disruptor, the 742 and 711 use
+** Start of new bullet specification subsection **
+Time is takes to recharge this bullet/weapon in seconds : 1.0
+Flying speed of this bullet type : 8.0
+Damage cause by a hit of this bullet type : 40
+Number of different phases that were designed for this bullet type : SEE CONFIG.THEME FILE
+Cannot fire until previous bullet has been deleted : 0
+Type of blast this bullet causes when crashing e.g. against a wall : 0
+** End of new bullet specification subsection **
+
+// this is the exterminator, the 883 uses
+** Start of new bullet specification subsection **
+Time is takes to recharge this bullet/weapon in seconds : 3.0
+Flying speed of this bullet type : 8.0
+Damage cause by a hit of this bullet type : 80
+Number of different phases that were designed for this bullet type : SEE CONFIG.THEME FILE
+Cannot fire until previous bullet has been deleted : 0
+Type of blast this bullet causes when crashing e.g. against a wall : 0
+** End of new bullet specification subsection **
+
+// this is the laser rifle of the 614
+** Start of new bullet specification subsection **
+Time is takes to recharge this bullet/weapon in seconds : 0.5
+Flying speed of this bullet type : 8.0
+Damage cause by a hit of this bullet type : 40
+Number of different phases that were designed for this bullet type : SEE CONFIG.THEME FILE
+Cannot fire until previous bullet has been deleted : 0
+Type of blast this bullet causes when crashing e.g. against a wall : 0
+** End of new bullet specification subsection **
+
+// this is half of the influencer primitive rifle
+** Start of new bullet specification subsection **
+Time is takes to recharge this bullet/weapon in seconds : 0.8
+Flying speed of this bullet type : 8.0
+Damage cause by a hit of this bullet type : 12
+Number of different phases that were designed for this bullet type : SEE CONFIG.THEME FILE
+Cannot fire until previous bullet has been deleted : 0
+Type of blast this bullet causes when crashing e.g. against a wall : 0
+** End of new bullet specification subsection **
+
+// this is even less than half of the influencer shot, only a white ball so far
+** Start of new bullet specification subsection **
+Time is takes to recharge this bullet/weapon in seconds : 0.4
+Flying speed of this bullet type : 8.0
+Damage cause by a hit of this bullet type : 8
+Number of different phases that were designed for this bullet type : SEE CONFIG.THEME FILE
+Cannot fire until previous bullet has been deleted : 0
+Type of blast this bullet causes when crashing e.g. against a wall : 0
+** End of new bullet specification subsection **
+
+// this is the yellow-red laser sword
+** Start of new bullet specification subsection **
+Time is takes to recharge this bullet/weapon in seconds : 0.4
+Flying speed of this bullet type : 8.0
+Damage cause by a hit of this bullet type : 8
+Number of different phases that were designed for this bullet type : SEE CONFIG.THEME FILE
+Cannot fire until previous bullet has been deleted : 0
+Type of blast this bullet causes when crashing e.g. against a wall : 0
+** End of new bullet specification subsection **
+
+// this is the yellow-red laser axe
+** Start of new bullet specification subsection **
+Time is takes to recharge this bullet/weapon in seconds : 0.4
+Flying speed of this bullet type : 8.0
+Damage cause by a hit of this bullet type : 8
+Number of different phases that were designed for this bullet type : SEE CONFIG.THEME FILE
+Cannot fire until previous bullet has been deleted : 0
+Type of blast this bullet causes when crashing e.g. against a wall : 0
+** End of new bullet specification subsection **
+
+// second version of the yellow-red laser sword
+** Start of new bullet specification subsection **
+Time is takes to recharge this bullet/weapon in seconds : 0.4
+Flying speed of this bullet type : 8.0
+Damage cause by a hit of this bullet type : 8
+Number of different phases that were designed for this bullet type : SEE CONFIG.THEME FILE
+Cannot fire until previous bullet has been deleted : 0
+Type of blast this bullet causes when crashing e.g. against a wall : 0
+** End of new bullet specification subsection **
+
+// this is half of the influencer primitive rifle, but colored in green
+** Start of new bullet specification subsection **
+Time is takes to recharge this bullet/weapon in seconds : 0.8
+Flying speed of this bullet type : 8.0
+Damage cause by a hit of this bullet type : 12
+Number of different phases that were designed for this bullet type : SEE CONFIG.THEME FILE
+Cannot fire until previous bullet has been deleted : 0
+Type of blast this bullet causes when crashing e.g. against a wall : 0
+** End of new bullet specification subsection **
+
+// this is half of the influencer primitive rifle, but colored in blue
+** Start of new bullet specification subsection **
+Time is takes to recharge this bullet/weapon in seconds : 0.8
+Flying speed of this bullet type : 8.0
+Damage cause by a hit of this bullet type : 12
+Number of different phases that were designed for this bullet type : SEE CONFIG.THEME FILE
+Cannot fire until previous bullet has been deleted : 0
+Type of blast this bullet causes when crashing e.g. against a wall : 0
+** End of new bullet specification subsection **
+
+// this is half of the influencer primitive rifle, but colored in magenta
+** Start of new bullet specification subsection **
+Time is takes to recharge this bullet/weapon in seconds : 0.8
+Flying speed of this bullet type : 8.0
+Damage cause by a hit of this bullet type : 12
+Number of different phases that were designed for this bullet type : SEE CONFIG.THEME FILE
+Cannot fire until previous bullet has been deleted : 0
+Type of blast this bullet causes when crashing e.g. against a wall : 0
+** End of new bullet specification subsection **
+
+// this is half of the influencer primitive rifle, but colored in white
+** Start of new bullet specification subsection **
+Time is takes to recharge this bullet/weapon in seconds : 0.8
+Flying speed of this bullet type : 8.0
+Damage cause by a hit of this bullet type : 12
+Number of different phases that were designed for this bullet type : SEE CONFIG.THEME FILE
+Cannot fire until previous bullet has been deleted : 0
+Type of blast this bullet causes when crashing e.g. against a wall : 0
+** End of new bullet specification subsection **
+
+// this is half of the influencer primitive rifle, but colored in yellow
+** Start of new bullet specification subsection **
+Time is takes to recharge this bullet/weapon in seconds : 0.8
+Flying speed of this bullet type : 8.0
+Damage cause by a hit of this bullet type : 12
+Number of different phases that were designed for this bullet type : SEE CONFIG.THEME FILE
+Cannot fire until previous bullet has been deleted : 0
+Type of blast this bullet causes when crashing e.g. against a wall : 0
+** End of new bullet specification subsection **
+
+
+*** End of Bullet Data Section: ***
+
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+
+*** End of this Freedroid data File ***
+

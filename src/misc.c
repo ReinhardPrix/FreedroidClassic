@@ -714,6 +714,8 @@ Freedroid will terminate now to draw attention to the problem...\n\
 	}
     } /* for i */
 
+  // DebugPrintf( 0 , "\nfind_file determined file path: %s." , File_Path );
+
   return (File_Path);
 	
 }; // char * find_file ( ... )
