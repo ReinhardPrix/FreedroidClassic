@@ -110,7 +110,6 @@ enum _sounds
 #define CONSOLENBILD_PCX           "../graphics/console.bmp"
 #define ROBOTPICTUREBILD_PCX       "../graphics/robots.bmp"
 #define SHIELDPICTUREBILD_PCX      "../graphics/shield.bmp"
-#define MENU_PICTURE_PCX_FILENAME  "../graphics/Options_Menu_Graphics.bmp"
 #define ELEMENTS_FILE_PCX	   "../graphics/to_elem.bmp"
 
 

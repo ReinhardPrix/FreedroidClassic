@@ -240,12 +240,6 @@ InitPictures (void)
   IsolateBlock (InternalScreen, MenuItemPointer, 0, 0, MENUITEMLENGTH,
 		MENUITEMHEIGHT);
 
-  /* get Menublocks for the In-game Consoles, not the Options menu! */
-  Load_PCX_Image ( MENU_PICTURE_PCX_FILENAME , InternalScreen, FALSE);
-  OptionsMenuPointer = MyMalloc ( SCREENBREITE * SCREENHOEHE +10 );
-  IsolateBlock (InternalScreen, OptionsMenuPointer, 0, 0, SCREENBREITE ,
-		SCREENHOEHE );
-
   /* get robotpictures */
   DruidFilename = malloc (1000);
   for (i = 0; i < ALLDRUIDTYPES; i++)

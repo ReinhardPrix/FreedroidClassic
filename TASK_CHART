@@ -16,19 +16,17 @@ IN PROGRESS... Try to start level editing functions in FreeDroid and perhaps mer
 
 1. Reactivate the concept view (useful for testing purposes...)
 
-2. Reactivate "Color Rotation" of Bulletcolor, but WITHOUT using the palette for
+2. Make a new attempt on dumping the yiff.  This time i'll 
+   try to be more clever ;-)  But only if SDL performs as good as the yiff.
+
+3. Reactivate "Color Rotation" of Bulletcolor, but WITHOUT using the palette for
    this.  This will be good to for later, if someone designs new and better animated
    bullets with multiple pictures in EACH direction.
 
-?. Add more documentation concerning framerate calculation
+4. Add more documentation concerning framerate calculation
 
-?. Make an attemt to change to TrueColor mode (that means all image-operations have
+5. Make an attemt to change to TrueColor mode (that means all image-operations have
    to be set to word pointers or whatever two bytes are called)
-
-?. Clean up the Concole text descriptions
-
-(?). Make a new attempt on dumping the yiff.  This time i'll 
-     try to be more clever ;-)  But only if SDL performs as good as the yiff.
 
 rp
 --

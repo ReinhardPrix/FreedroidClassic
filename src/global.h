@@ -176,7 +176,6 @@ EXTERN unsigned char *Digitpointer;
 EXTERN unsigned char *ElevatorBlocks;
 EXTERN unsigned char *ElevatorPicture;
 EXTERN unsigned char *MenuItemPointer;
-EXTERN unsigned char *OptionsMenuPointer;
 EXTERN unsigned char *Robotptr;
 EXTERN unsigned char *ShieldBlocks;
 
