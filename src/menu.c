@@ -703,7 +703,7 @@ enum
       //"Show Framerate: %s", GameConfig.Draw_Framerate? "ON" : "OFF");
       //PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+5*FontHeight(Menu_BFont),
       //"Show Energy: %s", GameConfig.Draw_Energy? "ON" : "OFF");
-      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+5*FontHeight(Menu_BFont), 
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+4*FontHeight(Menu_BFont), 
 		       "Back");
 
       SDL_Flip( ne_screen );
