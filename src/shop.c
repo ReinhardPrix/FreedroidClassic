@@ -488,15 +488,20 @@ ShowRescaledItem ( int position , int TuxItemRow , item* ShowItem )
   ShopItemRowRect . h = INITIAL_BLOCK_HEIGHT;
   ShopItemRowRect . w = INITIAL_BLOCK_WIDTH * SHOP_ROW_LENGTH ;
 
-  if ( TuxItemRow )
+  if ( TuxItemRow == 1 )
     {
       TargetRectangle . x = TuxItemRowRect . x + position * INITIAL_BLOCK_WIDTH ;
       TargetRectangle . y = TuxItemRowRect . y ;
     }
-  else
+  else if ( TuxItemRow == 0 )
     {
       TargetRectangle . x = ShopItemRowRect . x + position * INITIAL_BLOCK_WIDTH ;
       TargetRectangle . y = ShopItemRowRect . y ;
+    }
+  else
+    {
+      TargetRectangle . x = ShopItemRowRect . x + position * INITIAL_BLOCK_WIDTH ;
+      TargetRectangle . y = TuxItemRow ;
     }
 
   PictureIndex = ItemMap [ ShowItem->type ] . picture_number ;
@@ -576,21 +581,6 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
   Cons_Text_Rect . y = 108 ;
   Cons_Text_Rect . w = 346 ;
   Cons_Text_Rect . h = 255 ;
-
-  /*
-  if ( ( ShowPointerList[0] == NULL ) && ( TuxItemsList[0] == NULL ) )
-    {
-      MenuTexts[0]=" BACK ";
-      MenuTexts[1]="";
-      DoMenuSelection ( " YOU DONT HAVE ANYTHING IN INVENTORY, THAT COULD BE VIEWED. " , 
-			MenuTexts, 1 , NULL , NULL );
-      ShopOrder -> item_selected = -1 ;
-      ShopOrder -> shop_command = DO_NOTHING ;
-      return (-1) ;
-    }
-  */
-
-  // ItemType = ShowPointerList [ ItemIndex ] -> type ;
 
   Displacement = 0;
 

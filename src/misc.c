@@ -131,8 +131,13 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "mouse_buttons/LevelEditorZoomOutButton.png"     , { 80 , 90 , 0 ,  0 } } ,
     { NULL , "mouse_buttons/LevelEditorRecursiveFillButton.png" , { 120 , 90 , 0 ,  0 } } ,
     { NULL , "mouse_buttons/LevelEditorNewMapLabelButton.png" , { 160 , 90 , 0 ,  0 } } ,
+    { NULL , "mouse_buttons/LevelEditorNewItemButton.png"     , { 200 , 90 , 0 ,  0 } } ,
     { NULL , "mouse_buttons/LevelEditorKeymapButton.png"      , { 640-71 , 90 , 0 ,  0 } } ,
     { NULL , "mouse_buttons/LevelEditorQuitButton.png"        , { 640-31 , 90 , 0 ,  0 } } ,
+
+    { NULL , "mouse_buttons/LevelEditorNextItemGroup.png"     , { 55 + 64 * 8 , 32+5*66 , 0 ,  0 } } ,
+    { NULL , "mouse_buttons/LevelEditorPrevItemGroup.png"     , { 55          , 32+5*66 , 0 ,  0 } } ,
+    { NULL , "mouse_buttons/LevelEditorCancelItemDrop.png"    , { 55 + 130    , 32+5*66 , 0 ,  0 } } ,
 
     { NULL , "backgrounds/SaveGameBanner.png"                 , { (640-200)/2 , (480-50)/2 , 200 , 50 } } ,
     { NULL , "backgrounds/LoadGameBanner.png"                 , { (640-200)/2 , (480-50)/2 , 200 , 50 } } ,

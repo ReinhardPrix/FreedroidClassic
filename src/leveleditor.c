@@ -97,22 +97,111 @@ enum
   };
 
 /* ----------------------------------------------------------------------
+ *
+ * ---------------------------------------------------------------------- */
+void
+ItemDropFromLevelEditor( void )
+{
+  int SelectionDone = FALSE;
+  int NewItemCode = ( -1 );
+  int i;
+  int j;
+  item temp_item;
+  SDL_Rect tmp_rect;
+  int row_len = 5 ;
+  int line_len = 8 ; 
+  int item_group = 0 ; 
+
+  while ( GPressed() );
+
+  while ( !SelectionDone )
+    {
+
+      while ( SpacePressed() );
+
+      tmp_rect . x = i * 64 + 55 ;
+      tmp_rect . y = 32 + (64+2) * j ; 
+      tmp_rect . w = 64 ;
+      tmp_rect . h = 64 ; 
+      SDL_FillRect ( Screen , NULL , 0 );
+
+      for ( j = 0 ; j < row_len ; j ++ )
+	{
+	  for ( i = 0 ; i < line_len ; i ++ ) 
+	    {
+	      /*
+	      tmp_rect . x = i * 64 + 55 ;
+	      tmp_rect . y = 32 + (64+2) * j ; 
+	      tmp_rect . w = 64 ;
+	      tmp_rect . h = 64 ; 
+	      SDL_FillRect ( Screen , &tmp_rect , 0 );
+	      */
+	      temp_item . type = i + j * line_len + item_group * line_len * row_len ;
+	      if ( temp_item.type >= Number_Of_Item_Types )  temp_item.type = 1 ;
+	      ShowRescaledItem ( i , 32 + (64+2) * j, & ( temp_item ) );
+	    }
+	}
+
+      ShowGenericButtonFromList ( LEVEL_EDITOR_NEXT_ITEM_GROUP_BUTTON );
+      ShowGenericButtonFromList ( LEVEL_EDITOR_PREV_ITEM_GROUP_BUTTON );
+      ShowGenericButtonFromList ( LEVEL_EDITOR_CANCEL_ITEM_DROP_BUTTON );
+
+      SDL_Flip( Screen );
+
+      while ( ! SpacePressed() ) usleep ( 2 );
+
+      if ( CursorIsOnButton ( LEVEL_EDITOR_NEXT_ITEM_GROUP_BUTTON ,
+			      GetMousePos_x()+16 , GetMousePos_y()+16 ) )
+	{
+	  item_group ++ ;
+	}
+      else if ( CursorIsOnButton ( LEVEL_EDITOR_PREV_ITEM_GROUP_BUTTON ,
+			      GetMousePos_x()+16 , GetMousePos_y()+16 ) )
+	{
+	  if ( item_group > 0 ) item_group -- ;
+	}
+      else if ( CursorIsOnButton ( LEVEL_EDITOR_CANCEL_ITEM_DROP_BUTTON ,
+			      GetMousePos_x()+16 , GetMousePos_y()+16 ) )
+	{
+	  return ;
+	}
+      else if ( (GetMousePos_x()+16 > 55 ) && ( GetMousePos_x()+16 < 55 + 64 * line_len ) &&
+		(GetMousePos_y()+16 > 32 ) && ( GetMousePos_y()+16 < 32 + 66 * row_len ) )
+	{
+	  SelectionDone = TRUE ;
+	  NewItemCode = ( ( GetMousePos_x()+16 - 55 ) / 64 + ( GetMousePos_y()+16 - 32 ) / 66 * line_len + item_group * line_len * row_len ) ;
+	}
+    }
+  
+
+  if ( NewItemCode >= Number_Of_Item_Types ) 
+    {
+      NewItemCode=0;
+    }
+  
+  DropItemAt( NewItemCode , rintf( Me[0].pos.x ) , rintf( Me[0].pos.y ) , -1 , -1 , 0 );
+
+}; // void ZoomIn( void )
+
+/* ----------------------------------------------------------------------
+ *
  * ---------------------------------------------------------------------- */
 void
 ZoomIn( void )
 {
-  CurrentCombatScaleFactor += 0.25;
+  CurrentCombatScaleFactor += 0.125;
   SetCombatScaleTo (CurrentCombatScaleFactor);
   while (IPressed());
 }; // void ZoomIn( void )
 
 /* ----------------------------------------------------------------------
+ *
  * ---------------------------------------------------------------------- */
 void
 ZoomOut( void )
 {
-  if (CurrentCombatScaleFactor > 0.25 )
-    CurrentCombatScaleFactor -= 0.25;
+  if (CurrentCombatScaleFactor > 0.125 )
+    CurrentCombatScaleFactor -= 0.125;
   SetCombatScaleTo (CurrentCombatScaleFactor);
   while (OPressed());
 }; // void ZoomOut( void )
@@ -2823,6 +2912,7 @@ LevelEditor(void)
 	  ShowGenericButtonFromList ( LEVEL_EDITOR_ZOOM_OUT_BUTTON );
 	  ShowGenericButtonFromList ( LEVEL_EDITOR_RECURSIVE_FILL_BUTTON );
 	  ShowGenericButtonFromList ( LEVEL_EDITOR_NEW_MAP_LABEL_BUTTON );
+	  ShowGenericButtonFromList ( LEVEL_EDITOR_NEW_ITEM_BUTTON );
 	  ShowGenericButtonFromList ( LEVEL_EDITOR_KEYMAP_BUTTON );
 	  ShowGenericButtonFromList ( LEVEL_EDITOR_QUIT_BUTTON );
 
@@ -3056,6 +3146,10 @@ LevelEditor(void)
 	      else if ( CursorIsOnButton ( LEVEL_EDITOR_NEW_MAP_LABEL_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
 		{
 		  EditMapLabelData ( EditLevel );
+		}
+	      else if ( CursorIsOnButton ( LEVEL_EDITOR_NEW_ITEM_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+		{
+		  ItemDropFromLevelEditor(  );
 		}
 	      else if ( CursorIsOnButton ( LEVEL_EDITOR_KEYMAP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
 		{
