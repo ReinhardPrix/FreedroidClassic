@@ -46,9 +46,84 @@ void Options_Menu (void);
 void Show_Mission_Log_Menu (void);
 EXTERN void Level_Editor(void);
 
-EXTERN int MyCursorX;
-EXTERN int MyCursorY;
 EXTERN char Previous_Mission_Name[1000];
+
+#define FIRST_MENU_ITEM_POS_X (2*Block_Width)
+#define FIRST_MENU_ITEM_POS_Y (USERFENSTERPOSY + FontHeight(Menu_BFont))
+
+int
+DoMenuSelection( char* MenuTexts[10] )
+{
+  int h = FontHeight (GetCurrentFont());
+  int i;
+  static int MenuPosition = 1;
+  int NumberOfOptionsGiven;
+
+  //--------------------
+  // First thing we do is find out how may options we have
+  // been given for the menu
+  //
+  for ( i = 0 ; i < 10 ; i ++ )
+    {
+      if ( strlen( MenuTexts[ i ] ) == 0 ) break;
+    }
+  NumberOfOptionsGiven = i;
+
+
+  while ( 1 )
+    {
+
+      InitiateMenu();
+      SetCurrentFont ( Menu_BFont );
+      h = FontHeight (GetCurrentFont());
+
+      //--------------------
+      // we highlight the currently selected option with an 
+      // influencer to the left before it
+      PutInfluence( FIRST_MENU_ITEM_POS_X , 
+		    FIRST_MENU_ITEM_POS_Y +
+		    ( MenuPosition - 1.5 ) * h );
+
+      for ( i = 0 ; i < 10 ; i ++ )
+	{
+	  if ( strlen( MenuTexts[ i ] ) == 0 ) continue;
+	  CenteredPutString ( ne_screen ,  FIRST_MENU_ITEM_POS_Y + i * h , MenuTexts[ i ] );
+	}
+
+      SDL_Flip( ne_screen );
+  
+      // Wait until the user does SOMETHING
+  
+      while( !SpacePressed() && !EnterPressed() && !UpPressed()
+	     && !DownPressed() && !EscapePressed() ) ;
+
+      if ( EscapePressed() )
+	{
+	  while ( EscapePressed() );
+	  MenuItemSelectedSound();
+	  return ( -1 );
+	}
+      if (EnterPressed() || SpacePressed() ) 
+	{
+	  MenuItemSelectedSound();
+	  return ( MenuPosition );
+	}
+      if (UpPressed()) 
+	{
+	  if (MenuPosition > 1) MenuPosition--;
+	  MoveMenuPositionSound();
+	  while (UpPressed());
+	}
+      if (DownPressed()) 
+	{
+	  if ( MenuPosition < NumberOfOptionsGiven ) MenuPosition++;
+	  MoveMenuPositionSound();
+	  while (DownPressed());
+	}
+    }
+
+  return ( -1 );
+}; // int DoMenuSelection( char* MenuTexts[10] )
 
 /*@Function============================================================
 @Desc: This function prepares the screen for the big Escape menu and 
@@ -498,8 +573,6 @@ enum
 void
 EscapeMenu (void)
 {
-#define FIRST_MENU_ITEM_POS_X (2*Block_Width)
-#define FIRST_MENU_ITEM_POS_Y (USERFENSTERPOSY + FontHeight(Menu_BFont))
 enum
   { 
     SINGLE_PLAYER_POSITION=1, 
@@ -516,6 +589,7 @@ enum
   int h;
   char theme_string[40];
   int i;
+  char* MenuTexts[10];
 
   Me.status=MENU;
 
@@ -536,19 +610,6 @@ enum
   while (!Weiter)
     {
 
-      InitiateMenu();
-
-      // 
-      // we highlight the currently selected option with an 
-      // influencer to the left before it
-      // PutInfluence( FIRST_MENU_ITEM_POS_X , 
-      // FIRST_MENU_ITEM_POS_Y + (MenuPosition-1) * (FontHeight(Menu_BFont)) - Block_Width/4 );
-      SetCurrentFont ( Menu_BFont );
-      h = FontHeight (GetCurrentFont());
-      PutInfluence( FIRST_MENU_ITEM_POS_X , 
-		    FIRST_MENU_ITEM_POS_Y +
-		    ( MenuPosition - 1.5 ) * h );
-
       strcpy (theme_string, "Theme: ");
       if (strstr (GameConfig.Theme_SubPath, "default"))
 	strcat (theme_string, "default");
@@ -557,105 +618,84 @@ enum
       else
 	strcat (theme_string, "unknown");
 
-      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y ,    "Single Player");
-      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +1*h,    "Multi Player");
-      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +2*h,    "Options");
-      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +3*h,  theme_string);
-      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +4*h,    "Level Editor");
-      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +5*h,    "Credits");
-      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +6*h,    "Quit Game");
+      MenuTexts[0]="Single Player";
+      MenuTexts[1]="Multi Player";
+      MenuTexts[2]="Options";
+      MenuTexts[3]=theme_string;
+      MenuTexts[4]="Level Editor";
+      MenuTexts[5]="Credits";
+      MenuTexts[6]="Quit Game";
+      MenuTexts[7]="";
+      MenuTexts[8]="";
+      MenuTexts[9]="";
 
-      SDL_Flip( ne_screen );
+      MenuPosition = DoMenuSelection( MenuTexts );
 
-      // Wait until the user does SOMETHING
-
-      while( !SpacePressed() && !EnterPressed() && !UpPressed()
-	     && !DownPressed() && !EscapePressed() ) ;
-
-      if ( EscapePressed() )
+      switch (MenuPosition) 
 	{
-	  while ( EscapePressed() );
+	case (-1):
 	  Weiter=!Weiter;
-	}
-      if (EnterPressed() || SpacePressed() ) 
-	{
-	  MenuItemSelectedSound();
-	  switch (MenuPosition) 
+	  break;
+	case SINGLE_PLAYER_POSITION:
+	  while (EnterPressed() || SpacePressed() );
+	  New_Game_Requested=FALSE;
+	  Single_Player_Menu();
+	  if (New_Game_Requested) Weiter = TRUE;   /* jp forgot this... ;) */
+	  break;
+	case MULTI_PLAYER_POSITION:
+	  while (EnterPressed() || SpacePressed() );
+	  Multi_Player_Menu();
+	  // Weiter = TRUE;   /* jp forgot this... ;) */
+	  break;
+	case OPTIONS_POSITION:
+	  while (EnterPressed() || SpacePressed() );
+	  Options_Menu();
+	  // Weiter = TRUE;   /* jp forgot this... ;) */
+	  break;
+	case SET_THEME:
+	  while (EnterPressed() || SpacePressed() );
+	  if ( !strcmp ( GameConfig.Theme_SubPath , "default_theme/" ) )
 	    {
+	      GameConfig.Theme_SubPath="lanzz_theme/";
+	    }
+	  else
+	    {
+	      GameConfig.Theme_SubPath="default_theme/";
+	    }
+	  ReInitPictures();
+	  
+	  //--------------------
+	  // Now we have loaded a new theme with new images!!  It might however be the
+	  // case, that also the number of phases per bullet, which is specific to each
+	  // theme, has been changed!!! THIS MUST NOT BE IGNORED, OR WE'LL SEGFAULT!!!!
+	  // Because the old number of phases is still attached to living bullets, it
+	  // might try to blit a new (higher) number of phases although there are only
+	  // less Surfaces generated for the bullet in the old theme.  The solution seems
+	  // to be simply to request new graphics to be attached to each bullet, which
+	  // should be simply setting a flag for each of the bullets:
+	  for ( i = 0 ; i < MAXBULLETS ; i++ )
+	    {
+	      AllBullets[i].Surfaces_were_generated = FALSE ;
+	    }
+	  break;
+	case LEVEL_EDITOR_POSITION:
+	  while (EnterPressed() || SpacePressed() );
+	  Level_Editor();
+	  // Weiter = TRUE;   /* jp forgot this... ;) */
+	  break;
+	case CREDITS_POSITION:
+	  while (EnterPressed() || SpacePressed() );
+	  Credits_Menu();
+	  // Weiter = TRUE;   /* jp forgot this... ;) */
+	  break;
+	case QUIT_POSITION:
+	  DebugPrintf (2, "\nvoid Options_Menu(void): Quit Requested by user.  Terminating...");
+	  Terminate(0);
+	  break;
+	default: 
+	  break;
+	} 
 
-	    case SINGLE_PLAYER_POSITION:
-	      while (EnterPressed() || SpacePressed() );
-	      New_Game_Requested=FALSE;
-	      Single_Player_Menu();
-	      if (New_Game_Requested) Weiter = TRUE;   /* jp forgot this... ;) */
-	      break;
-	    case MULTI_PLAYER_POSITION:
-	      while (EnterPressed() || SpacePressed() );
-	      Multi_Player_Menu();
-	      // Weiter = TRUE;   /* jp forgot this... ;) */
-	      break;
-	    case OPTIONS_POSITION:
-	      while (EnterPressed() || SpacePressed() );
-	      Options_Menu();
-	      // Weiter = TRUE;   /* jp forgot this... ;) */
-	      break;
-	    case SET_THEME:
-	      while (EnterPressed() || SpacePressed() );
-	      if ( !strcmp ( GameConfig.Theme_SubPath , "default_theme/" ) )
-		{
-		  GameConfig.Theme_SubPath="lanzz_theme/";
-		}
-	      else
-		{
-		  GameConfig.Theme_SubPath="default_theme/";
-		}
-	      ReInitPictures();
-
-	      //--------------------
-	      // Now we have loaded a new theme with new images!!  It might however be the
-	      // case, that also the number of phases per bullet, which is specific to each
-	      // theme, has been changed!!! THIS MUST NOT BE IGNORED, OR WE'LL SEGFAULT!!!!
-	      // Because the old number of phases is still attached to living bullets, it
-	      // might try to blit a new (higher) number of phases although there are only
-	      // less Surfaces generated for the bullet in the old theme.  The solution seems
-	      // to be simply to request new graphics to be attached to each bullet, which
-	      // should be simply setting a flag for each of the bullets:
-	      for ( i = 0 ; i < MAXBULLETS ; i++ )
-		{
-		  AllBullets[i].Surfaces_were_generated = FALSE ;
-		}
-	      break;
-	    case LEVEL_EDITOR_POSITION:
-	      while (EnterPressed() || SpacePressed() );
-	      Level_Editor();
-	      // Weiter = TRUE;   /* jp forgot this... ;) */
-	      break;
-	    case CREDITS_POSITION:
-	      while (EnterPressed() || SpacePressed() );
-	      Credits_Menu();
-	      // Weiter = TRUE;   /* jp forgot this... ;) */
-	      break;
-	    case QUIT_POSITION:
-	      DebugPrintf (2, "\nvoid Options_Menu(void): Quit Requested by user.  Terminating...");
-	      Terminate(0);
-	      break;
-	    default: 
-	      break;
-	    } 
-	  // Weiter=!Weiter;
-	}
-      if (UpPressed()) 
-	{
-	  if (MenuPosition > 1) MenuPosition--;
-	  MoveMenuPositionSound();
-	  while (UpPressed());
-	}
-      if (DownPressed()) 
-	{
-	  if ( MenuPosition < QUIT_POSITION ) MenuPosition++;
-	  MoveMenuPositionSound();
-	  while (DownPressed());
-	}
     }
 
   ClearGraphMem();
@@ -919,21 +959,9 @@ enum
       SDL_SetClipRect( ne_screen, NULL );
       MakeGridOnScreen( NULL );
 
-      // 
-      // we highlight the currently selected option with an 
-      // influencer to the left before it
-      // PutInfluence( FIRST_MENU_ITEM_POS_X , 
-      // FIRST_MENU_ITEM_POS_Y + (MenuPosition-1) * (FontHeight(Menu_BFont)) - Block_Width/4 );
       PutInfluence( OPTIONS_MENU_ITEM_POS_X - Block_Width/2, 
 		    FIRST_MENU_ITEM_POS_Y + ( MenuPosition - 1.5 ) * (FontHeight( Menu_BFont )) );
 
-
-      //PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+0*FontHeight(Menu_BFont)
-      //"Background Music Volume: %1.2f" , GameConfig.Current_BG_Music_Volume );
-      //PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+1*FontHeight(Menu_BFont),
-      //"Sound Effects Volume: %1.2f", GameConfig.Current_Sound_FX_Volume );
-      //PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+2*FontHeight(Menu_BFont),
-      //"Gamma Correction: %1.2f", GameConfig.Current_Gamma_Correction );
       PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+0*FontHeight(Menu_BFont), 
 		       "Show Position: %s", GameConfig.Draw_Position ? "ON" : "OFF");
       PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+1*FontHeight(Menu_BFont), 
@@ -1155,7 +1183,6 @@ enum
 void
 Options_Menu (void)
 {
-
   int Weiter = 0;
   int MenuPosition=1;
 

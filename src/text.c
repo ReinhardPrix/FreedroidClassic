@@ -611,25 +611,6 @@ AddInfluBurntText( void )
     }
 }; // void AddInfluBurntText( void )
 
-/* -----------------------------------------------------------------
- * This function is completely obsolete and should be removed.
- * ----------------------------------------------------------------- */
-void
-SetTextColor (unsigned char bg, unsigned char fg)
-{
-  return;
-};	 /* SetTextcolor */
-
-/* -----------------------------------------------------------------
- * This function is completely obsolete and should be removed.
- * ----------------------------------------------------------------- */
-void
-GetTextColor (unsigned int *bg, unsigned int *fg)
-{
-  *bg = CurrentFontBG;
-  *fg = CurrentFontFG;
-}
-
 /* ----------------------------------------------------------------------
  * This function sets the text cursor used in DisplayText.
  * ---------------------------------------------------------------------- */

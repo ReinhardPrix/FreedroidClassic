@@ -39,8 +39,6 @@
 void Show_Waypoints(void);
 void Level_Editor(void);
 
-EXTERN int MyCursorX;
-EXTERN int MyCursorY;
 EXTERN char Previous_Mission_Name[1000];
 
 /*@Function============================================================
@@ -811,7 +809,7 @@ Level_Editor(void)
 		  while (EnterPressed() || SpacePressed() ) ;
 		  CenteredPutString ( ne_screen ,  12*FontHeight(Menu_BFont), "Please enter new level comment:\n");
 		  SDL_Flip( ne_screen );
-		  MyCursorX=15; MyCursorY=440;
+		  SetTextCursor( 15 , 440 );
 		  CurLevel->Level_Enter_Comment=GetString( 100 , FALSE );
 		  Weiter=!Weiter;
 		  break;

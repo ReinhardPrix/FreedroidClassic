@@ -184,7 +184,7 @@ Picture number=0
 
 // Item No. 3
 ** Start of new item specification subsection **
-Item name="Mountable Lasers Class Alpha"
+Item name="Droid Lasers Class Alpha"
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item installation changes weapon into new value=2
@@ -307,6 +307,49 @@ Item drive maxspeed=7
 Item drive acceleration=6
 Picture number=4
 ** End of new item specification subsection **
+
+// Item No. 12
+** Start of new item specification subsection **
+Item name="Laser Rifle Class Alpha"
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item installation changes weapon into new value=2
+Item installation changes drive into new value=-1
+Energy gain on application in combat=60
+Item weight=0.8
+Item drive maxspeed=0
+Item drive acceleration=0
+Picture number=2
+** End of new item specification subsection **
+
+// Item No. 13
+** Start of new item specification subsection **
+Item name="Droid Exterminators Class Alpha"
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item installation changes weapon into new value=2
+Item installation changes drive into new value=-1
+Energy gain on application in combat=60
+Item weight=0.8
+Item drive maxspeed=0
+Item drive acceleration=0
+Picture number=2
+** End of new item specification subsection **
+
+// Item No. 14
+** Start of new item specification subsection **
+Item name="Droid Disruptor Class Alpha"
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item installation changes weapon into new value=2
+Item installation changes drive into new value=-1
+Energy gain on application in combat=60
+Item weight=0.8
+Item drive maxspeed=0
+Item drive acceleration=0
+Picture number=2
+** End of new item specification subsection **
+
 
 *** End of item data section: ***
 

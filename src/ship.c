@@ -592,9 +592,6 @@ EnterKonsole (void)
     }				/* (while !ReenterGane) */
 
   Me.status = MOBILE;
-  /* Die Textfarben wieder setzen wie sie vorher waren */
-  SetTextColor (FONT_WHITE, FONT_RED);	/* BG: Bannerwei"s FG: FONT_RED */
-
   ClearGraphMem ( );
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
   SDL_Flip( ne_screen );
@@ -636,10 +633,6 @@ PaintConsoleMenu (void)
   /* Userfenster faerben */
   // SetUserfenster (KON_BG_COLOR, Outline320x200);
   // SetUserfenster ( 208 );
-
-  /* Konsolen-Menue Farbe setzen */
-  // SetTextColor (KON_BG_COLOR, KON_TEXT_COLOR);
-  SetTextColor (208, BANNER_VIOLETT );	// RED // YELLOW
 
   strcpy (MenuText, "Unit type ");
   strcat (MenuText, Druidmap[Me.type].druidname);
@@ -861,9 +854,6 @@ GreatDruidShow (void)
        * Ausgabe der Informationen bezuglich des Druidhintergrundes
        *
        */
-
-      // SetTextColor (208, BANNER_VIOLETT );	// RED // YELLOW
-      // ClearUserFenster ();
 
       LeaveThisInformationPart = FALSE;
       while ( !LeaveThisInformationPart )
