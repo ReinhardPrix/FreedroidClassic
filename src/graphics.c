@@ -794,17 +794,59 @@ TakeScreenshot( void )
  * Escape menu and its submenus.
  * ---------------------------------------------------------------------- */
 void 
-MakeGridOnScreen( SDL_Rect* Grid_Rectangle )
+MakeGridOnScreen( SDL_Rect* GridRectangle )
 {
   int x,y;
+  SDL_Rect TempRect;
 
-  if ( Grid_Rectangle == NULL ) Grid_Rectangle = & User_Rect ;
+  if ( GridRectangle == NULL ) GridRectangle = & User_Rect ;
 
   DebugPrintf (2, "\nvoid MakeGridOnScreen(...): real function call confirmed.");
-  SDL_LockSurface( Screen );
-  for ( y = Grid_Rectangle->y ; y < (Grid_Rectangle->h + Grid_Rectangle->y) ; y++) 
+
+  //--------------------
+  // We store the grid rectangle for later restoration.
+  //
+  Copy_Rect ( *GridRectangle , TempRect );
+
+  //--------------------
+  // At first we do some sanity check to see if this rectangle does really
+  // make sense or not.
+  //
+  if ( GridRectangle->x < 0 )
     {
-      for ( x = Grid_Rectangle->x ; x < Grid_Rectangle->w ; x++ ) 
+      if ( GridRectangle->w >= -GridRectangle->x ) GridRectangle->w += GridRectangle->w ;
+      GridRectangle->x = 0;
+    }
+  if ( GridRectangle->y < 0 )
+    {
+      if ( GridRectangle->h >= -GridRectangle->y ) GridRectangle->h += GridRectangle->y ;
+      GridRectangle->y = 0;
+    }
+  if ( ( GridRectangle->h <= 0 ) || 
+       ( GridRectangle->w <= 0 ) || 
+       ( GridRectangle->x >= SCREEN_WIDTH ) ||
+       ( GridRectangle->y >= SCREEN_HEIGHT ) )
+    {
+      Copy_Rect ( TempRect , *GridRectangle );
+      return;
+    }
+  if ( ( GridRectangle->x + GridRectangle->w ) > SCREEN_WIDTH )
+    {
+      GridRectangle->w = SCREEN_WIDTH - GridRectangle->x ;
+    }
+  if ( ( GridRectangle->y + GridRectangle->h ) > SCREEN_HEIGHT )
+    {
+      GridRectangle->h = SCREEN_HEIGHT - GridRectangle->y ;
+    }
+
+  //--------------------
+  // Now we can start to draw the actual grid rectangle.
+  // We do so completely correctly with locked surfaces and everything.
+  //
+  SDL_LockSurface( Screen );
+  for ( y = GridRectangle->y ; y < (GridRectangle->h + GridRectangle->y) ; y++) 
+    {
+      for ( x = GridRectangle->x ; x < (GridRectangle->x + GridRectangle->w) ; x++ ) 
 	{
 	  if ((x+y)%2 == 0) 
 	    {
@@ -812,10 +854,16 @@ MakeGridOnScreen( SDL_Rect* Grid_Rectangle )
 	    }
 	}
     }
-  
   SDL_UnlockSurface( Screen );
+
+  //--------------------
+  // We restore the original rectangle..
+  //
+  Copy_Rect ( TempRect , *GridRectangle );
+
   DebugPrintf (2, "\nvoid MakeGridOnScreen(...): end of function reached.");
-}; // void MakeGridOnSchreen(void)
+
+}; // void MakeGridOnSchreen( SDL_Rect* GridRectangle )
 
 /* ----------------------------------------------------------------------
  * This function load an image and displays it directly to the Screen

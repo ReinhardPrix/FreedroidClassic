@@ -2182,9 +2182,6 @@ enum
 
       switch (MenuPosition) 
 	{
-	case (-1):
-	  Weiter=!Weiter;
-	  break;
 	case START_AS_SERVER_POSITION:
 	  while (EnterPressed() || SpacePressed() ) ;
 
@@ -2232,11 +2229,11 @@ enum
 
 	  break;
 	case BACK_POSITION:
+	case (-1):
+	default: 
 	  while (EnterPressed() || SpacePressed() ) ;
 	  Weiter=!Weiter;
 	  return ( FALSE );
-	  break;
-	default: 
 	  break;
 	}
     }

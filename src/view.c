@@ -462,6 +462,31 @@ Assemble_Combat_Picture (int mask)
 		+ ( -Me[0].pos.y+line-0.5 )*Block_Height;
 	      SDL_BlitSurface( MapBlockSurfacePointer[ DisplayLevel->color ][MapBrick] , NULL ,
  			       Screen, &TargetRectangle);
+
+	      //--------------------
+	      // Maybe this was called from the level editor or from some
+	      // other context requireing to add a grid to all map tiles
+	      // that are in the interface area connecting two levels together
+	      //
+	      if ( mask & SHOW_GRID )
+		{
+		  if ( ( ( line ) < curShip . AllLevels [ Me [ 0 ] . pos . z ] -> jump_threshold_north ) ||
+		       ( ( col ) <  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> jump_threshold_west ) ||
+		       ( ( line ) > curShip . AllLevels [ Me [ 0 ] . pos . z ] -> ylen - 1 -
+			 curShip . AllLevels [ Me [ 0 ] . pos . z ] -> jump_threshold_south ) ||
+		       ( ( col ) > curShip . AllLevels [ Me [ 0 ] . pos . z ] -> xlen - 1 -
+			 curShip . AllLevels [ Me [ 0 ] . pos . z ] -> jump_threshold_east ) )
+		    {
+		      TargetRectangle.x = UserCenter_x 
+			+ ( -Me[0].pos.x+col-0.5 )*Block_Width;
+		      TargetRectangle.y = UserCenter_y
+			+ ( -Me[0].pos.y+line-0.5 )*Block_Height;
+		      TargetRectangle.w = Block_Width;
+		      TargetRectangle.h = Block_Height;
+		      MakeGridOnScreen ( &TargetRectangle );
+		    }
+		}
+      
 	    }			// if !INVISIBLE_BRICK 
 	}			// for(col) 
     }				// for(line) 
@@ -539,7 +564,7 @@ Assemble_Combat_Picture (int mask)
       DisplayBigScreenMessage();
 
     } // ! ONLY_SHOW_MAP_AND_TEXT
-      
+
 
   ShowAutomapData();
 

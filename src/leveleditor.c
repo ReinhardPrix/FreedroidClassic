@@ -738,7 +738,7 @@ LevelEditor(void)
 	  OldTicks = SDL_GetTicks ( ) ;
 
 	  ClearUserFenster();
-	  Assemble_Combat_Picture ( ONLY_SHOW_MAP_AND_TEXT );
+	  Assemble_Combat_Picture ( ONLY_SHOW_MAP_AND_TEXT | SHOW_GRID );
 	  Highlight_Current_Block();
 	  Show_Waypoints( FALSE );
 	  
