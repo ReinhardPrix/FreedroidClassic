@@ -772,7 +772,7 @@ DrawLineBetweenTiles( float x1 , float y1 , float x2 , float y2 , int Color )
  *
  * ----------------------------------------------------------------- */
 void
-TakeScreenshot(void)
+TakeScreenshot( void )
 {
   static int Number_Of_Screenshot=0;
   char *Screenshoot_Filename;

@@ -57,6 +57,55 @@ EXTERN void Level_Editor(void);
 #define SELL_PRICE_FACTOR (0.25)
 #define REPAIR_PRICE_FACTOR (0.5)
 
+#define SINGLE_PLAYER_STRING "Single Player"
+#define LOAD_EXISTING_HERO_STRING "The first 10 characters: "
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+LoadAndShowThumbnail ( char* CoreFilename )
+{
+  char Saved_Games_Dir[1000];
+  char* homedir = NULL ;
+  char filename[1000];
+  SDL_Surface* NewThumbnail;
+  SDL_Rect TargetRectangle;
+
+#define SAVE_GAME_THUMBNAIL_EXT ".thumbnail.bmp"
+
+  DebugPrintf ( 0 , "\nTrying to load thumbnail for character '%s'. " , CoreFilename );
+
+  //--------------------
+  // get home-directory to save in
+  if ( ( homedir = getenv("HOME")) == NULL ) 
+    {
+      DebugPrintf ( 0 , "ERROR: Environment does not contain HOME variable... \n\
+I need to know that for saving. Abort.\n");
+      Terminate( ERR );
+      // return (ERR);
+    }
+
+  sprintf ( Saved_Games_Dir , "%s/.freedroid_rpg" , homedir );
+
+  //--------------------
+  // First we save the full ship information, same as with the level editor
+  //
+  sprintf( filename , "%s/%s%s", Saved_Games_Dir, CoreFilename , SAVE_GAME_THUMBNAIL_EXT );
+
+  NewThumbnail = IMG_Load ( filename );
+  if ( NewThumbnail == NULL ) return;
+
+  TargetRectangle.x = SCREEN_WIDTH - NewThumbnail ->w ;
+  TargetRectangle.y = SCREEN_HEIGHT - NewThumbnail ->h ;
+  
+  SDL_BlitSurface ( NewThumbnail , NULL , Screen , &TargetRectangle );
+
+  SDL_FreeSurface( NewThumbnail );
+
+}; // void LoadAndShowThumbnail ( char* CoreFilename )
+
 /* ----------------------------------------------------------------------
  * This function tells over which menu item the mouse cursor would be,
  * if there were infinitely many menu items.
@@ -124,6 +173,7 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char*
   int NumberOfOptionsGiven;
   int first_menu_item_pos_y;
   SDL_Rect HighlightRect;
+  int MenuWithFileInformation = FALSE;
 
   //--------------------
   // At first we hide the mouse cursor, so that there can not be any
@@ -160,6 +210,15 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char*
   // it can be accessed with proper speed later...
   //
   InitiateMenu( BackgroundToUse );
+  if ( ! strcmp ( MenuTexts [ 0 ] , SINGLE_PLAYER_STRING ) )
+    {
+      RightPutString( Screen , SCREEN_HEIGHT - FontHeight ( GetCurrentFont() ) , VERSION );
+      // printf ("\n%s %s  \n", PACKAGE, VERSION);
+    }
+  else if ( ! strcmp ( InitialText , LOAD_EXISTING_HERO_STRING ) )
+    {
+      MenuWithFileInformation = TRUE ;
+    }
   StoreMenuBackground ();
 
   //--------------------
@@ -175,6 +234,14 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char*
 
       RestoreMenuBackground ();
 
+      if ( MenuWithFileInformation )
+	{
+	  //--------------------
+	  // We load the thumbnail, or at least we try to do it...
+	  //
+	  LoadAndShowThumbnail ( MenuTexts [ MenuPosition - 1 ] );
+	  
+	}
       //--------------------
       // We highlight the currently selected option with an 
       // influencer to the left and right of it.
@@ -879,7 +946,7 @@ enum
     {
       SetCurrentFont ( Menu_BFont );
 
-      MenuTexts[0]="Single Player";
+      MenuTexts[0]= SINGLE_PLAYER_STRING ;
       MenuTexts[1]="Multi Player";
       MenuTexts[2]="Credits";
       MenuTexts[3]="Exit Freedroid";
@@ -1899,7 +1966,7 @@ I need to know that for saving. Abort.\n");
 	    }
 	}
 
-      MenuPosition = DoMenuSelection( "The first 10 characters: " , MenuTexts , 1 , NE_TITLE_PIC_FILE , NULL );
+      MenuPosition = DoMenuSelection( LOAD_EXISTING_HERO_STRING , MenuTexts , 1 , NE_TITLE_PIC_FILE , NULL );
 
       if ( MenuPosition == (-1) ) return ( FALSE );
       else
@@ -2150,7 +2217,6 @@ Credits_Menu (void)
    STORY AND CHARACTERS:\n\n\
                                       Willian Eugene Frazier\n\n\
                                       Pete Spicer\n\n\
-                                      Nathan Jamison\n\n\
                                       Johannes Prix\n\n\n\
    LEVEL DESIGN:\n\n\
                                       Johannes Prix\n\n\n\

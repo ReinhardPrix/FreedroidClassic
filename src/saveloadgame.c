@@ -41,6 +41,7 @@
 #include "struct.h"
 #include "global.h"
 #include "proto.h"
+#include "SDL_rotozoom.h"
 
 #define INFLUENCER_STRUCTURE_RAW_DATA_STRING "\nNow the raw data of the influencer structure:\n"
 #define ALLENEMYS_RAW_DATA_STRING "\nNow the raw AllEnemys data:\n"
@@ -50,6 +51,46 @@
 #define LEVELNUM_EXPL_STRING "\nExplicit number of the level the influ currently is in="
 
 #define SAVEDGAME_EXT ".savegame"
+#define SAVE_GAME_THUMBNAIL_EXT ".thumbnail.bmp"
+
+/* ----------------------------------------------------------------------
+ * This function stores a thumbnail of the currently running game, so that
+ * these thumbnails can be browsed when choosing which game to load.
+ * ---------------------------------------------------------------------- */
+void
+SaveThumbnailOfGame ( void )
+{
+  char Saved_Games_Dir[1000];
+  char* homedir = NULL ;
+  char filename[1000];
+  SDL_Surface* NewThumbnail;
+
+  //--------------------
+  // get home-directory to save in
+  if ( ( homedir = getenv("HOME")) == NULL ) 
+    {
+      DebugPrintf ( 0 , "ERROR: Environment does not contain HOME variable... \n\
+I need to know that for saving. Abort.\n");
+      Terminate( ERR );
+      // return (ERR);
+    }
+
+  sprintf ( Saved_Games_Dir , "%s/.freedroid_rpg" , homedir );
+
+  //--------------------
+  // First we save the full ship information, same as with the level editor
+  //
+  sprintf( filename , "%s/%s%s", Saved_Games_Dir, Me[0].character_name, SAVE_GAME_THUMBNAIL_EXT );
+
+  Assemble_Combat_Picture ( 0 );
+
+  NewThumbnail = zoomSurface( Screen , 0.32 , 0.32 , 0 );
+
+  SDL_SaveBMP( NewThumbnail , filename );
+
+  SDL_FreeSurface( NewThumbnail );
+
+}; // void SaveThumbnailOfGame ( void )
 
 /* ----------------------------------------------------------------------
  * This function saves the current game of Freedroid to a file.
@@ -231,6 +272,8 @@ freedroid-discussion@lists.sourceforge.net\n\
       // return ERR;
     }
   
+  SaveThumbnailOfGame ( );
+
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint SaveGame( void ): end of function reached.");
   
   return OK;
