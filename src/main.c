@@ -92,6 +92,8 @@
 #define CHARSPERLINE		(int)(USERFENSTERBREITE/FONTBREITE)
 
 int ThisMessageTime;
+float LastGotIntoBlastSound=2;
+float LastRefreshSound=2;
 
 int card = 0;
 int device = 0;
@@ -516,6 +518,10 @@ void ShowHighscoreList(void){
 void UpdateCountersForThisFrame(void){
   // Here are some things, that were previously done by some periodic interrupt function
   ThisMessageTime++;
+
+  LastGotIntoBlastSound+=Frame_Time();
+  LastRefreshSound+=Frame_Time();
+
   if (Me.firewait > 0) Me.firewait--;
   if ( ShipEmptyCounter > 1 ) ShipEmptyCounter --;
   if ( WaitElevatorCounter > 0) WaitElevatorCounter --;

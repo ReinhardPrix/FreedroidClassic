@@ -108,6 +108,8 @@ void InitNewGame(void)
 
   InterruptInfolineUpdate = TRUE;
   LastBlastHit = 0;
+  LastGotIntoBlastSound=2;
+  LastRefreshSound=2;
   BeamLine = BLOCKBREITE;
   PlusExtentionsOn = FALSE;
   ThisMessageTime=0;

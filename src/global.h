@@ -35,6 +35,8 @@
 #else
 #define EXTERN extern
 
+EXTERN float LastRefreshSound;
+EXTERN float LastGotIntoBlastSound;
 EXTERN float FPSover1;
 EXTERN float FPSover10;
 EXTERN float FPSover100;

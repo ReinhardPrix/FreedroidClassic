@@ -65,6 +65,8 @@
 #define LEAVE_ELEVATOR_SOUND 5
 #define MOVE_ELEVATOR_SOUND 6
 #define GOT_INTO_BLAST_SOUND 7
+#define REFRESH_SOUND 8
+#define GOT_HIT_SOUND 9
 
 /* Konstanten fuer die Dateinamen */
 /*

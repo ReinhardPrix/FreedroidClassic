@@ -196,53 +196,52 @@ int GetDirection(point robo,point bul){
 * $Function----------------------------------------------------------*/
 void CheckBulletCollisions(int num)
 {
-	int i;
-	int level = CurLevel->levelnum;
-	long xdist, ydist;
-	Bullet CurBullet = &AllBullets[num];
-	static int FBTZaehler=0;
-
-	if(CurBullet->type == FLASH) return;
-	if(CurBullet->type == OUT) return;
-	
-	/* Kollision der Bullets mit dem Hintergrund feststellen */
-	if (IsPassable(CurBullet->pos.x, CurBullet->pos.y, CENTER) != CENTER) {
-		DeleteBullet(num);
-		return;		/* Bullet ist hin */
-	}
-
-	/* Influence getroffen ?? */
-	xdist = Me.pos.x - CurBullet->pos.x;
-	ydist = Me.pos.y - CurBullet->pos.y;
-	if( (xdist*xdist+ydist*ydist) < DRUIDHITDIST2 ) {
-		CurBullet->type = OUT;
-		CurBullet->mine = FALSE;
-		GotHitSound();
-		Me.energy -= Bulletmap[CurBullet->type].damage;	/* Energie verlieren */
-		return;		/* Bullet ist hin */
-	}
-	
-	/* Alle Enemys checken */
-	for( i=0; i<NumEnemys; i++) {
-		if( Feindesliste[i].Status == OUT || Feindesliste[i].levelnum != level)
-			continue;
-
-		xdist = CurBullet->pos.x - Feindesliste[i].pos.x;
-		ydist = CurBullet->pos.y - Feindesliste[i].pos.y;
-
-		if( (xdist*xdist+ydist*ydist) < DRUIDHITDIST2 ) {
-			Feindesliste[i].energy -= Bulletmap[CurBullet->type].damage;
-			if (!CurBullet->mine) {
-				FBTZaehler++;
-			}
-			CurBullet->type = OUT;
-			CurBullet->mine = FALSE;
-			break; /* Schleife beenden */
-		} /* if getroffen */
-		
-	} /* for Feindesliste */
-		
-		
+  int i;
+  int level = CurLevel->levelnum;
+  long xdist, ydist;
+  Bullet CurBullet = &AllBullets[num];
+  static int FBTZaehler=0;
+  
+  if(CurBullet->type == FLASH) return;
+  if(CurBullet->type == OUT) return;
+  
+  /* Kollision der Bullets mit dem Hintergrund feststellen */
+  if (IsPassable(CurBullet->pos.x, CurBullet->pos.y, CENTER) != CENTER) {
+    DeleteBullet(num);
+    return;		/* Bullet ist hin */
+  }
+  
+  /* Influence getroffen ?? */
+  xdist = Me.pos.x - CurBullet->pos.x;
+  ydist = Me.pos.y - CurBullet->pos.y;
+  if( (xdist*xdist+ydist*ydist) < DRUIDHITDIST2 ) {
+    CurBullet->type = OUT;
+    CurBullet->mine = FALSE;
+    GotHitSound();
+    Me.energy -= Bulletmap[CurBullet->type].damage;	/* Energie verlieren */
+    return;		/* Bullet ist hin */
+  }
+  
+  /* Alle Enemys checken */
+  for( i=0; i<NumEnemys; i++) {
+    if( Feindesliste[i].Status == OUT || Feindesliste[i].levelnum != level)
+      continue;
+    
+    xdist = CurBullet->pos.x - Feindesliste[i].pos.x;
+    ydist = CurBullet->pos.y - Feindesliste[i].pos.y;
+    
+    if( (xdist*xdist+ydist*ydist) < DRUIDHITDIST2 ) {
+      Feindesliste[i].energy -= Bulletmap[CurBullet->type].damage;
+      if (!CurBullet->mine) {
+	FBTZaehler++;
+      }
+      CurBullet->type = OUT;
+      CurBullet->mine = FALSE;
+      break; /* Schleife beenden */
+    } /* if getroffen */
+    
+  } /* for Feindesliste */
+    
 } /* CheckBulletCollisions */
 
 /*@Function============================================================
@@ -259,55 +258,60 @@ void CheckBulletCollisions(int num)
 * $Function----------------------------------------------------------*/
 void CheckBlastCollisions(int num)
 {
-	int i;
-	int level = CurLevel->levelnum;
-	Blast CurBlast = &(AllBlasts[num]);
-	static int RHBZaehler=0;
-	
-	/* check Blast-Bullet Collisions and kill hit Bullets */
-	for( i=0; i<MAXBULLETS; i++ ) {
-		if( AllBullets[i].type == OUT ) continue;
-		if( CurBlast->phase > 4) break;
+  int i;
+  int level = CurLevel->levelnum;
+  Blast CurBlast = &(AllBlasts[num]);
+  static int RHBZaehler=0;
+  
+  /* check Blast-Bullet Collisions and kill hit Bullets */
+  for( i=0; i<MAXBULLETS; i++ ) {
+    if( AllBullets[i].type == OUT ) continue;
+    if( CurBlast->phase > 4) break;
+    
+    if( abs(AllBullets[i].pos.x - CurBlast->PX) < BLASTRADIUS ) 
+      if( abs(AllBullets[i].pos.y - CurBlast->PY) < BLASTRADIUS)
+	{
+	  /* KILL Bullet silently */
+	  AllBullets[i].type = OUT;
+	  AllBullets[i].mine = FALSE;
+	}
+    
+  } /* for */
+  
+  /* Check Blast-Enemy Collisions and smash energy of hit enemy */
+  for( i=0; i<NumEnemys; i++) {
+    if( (Feindesliste[i].Status == OUT) || (Feindesliste[i].levelnum != level))
+      continue;
+    
+    if( abs(Feindesliste[i].pos.x - CurBlast->PX) < BLASTRADIUS+DRUIDRADIUSX )
+      if( abs(Feindesliste[i].pos.y - CurBlast->PY) < BLASTRADIUS+DRUIDRADIUSY) {
+	/* drag energy of enemy */
+	Feindesliste[i].energy -= BLASTDAMAGE;
+	gotoxy(1,2);
+	printf(" Robot hit by Blast %d.\n",RHBZaehler++);
+      }
+    
+    if( Feindesliste[i].energy < 0) Feindesliste[i].energy = 0;
 		
-		if( abs(AllBullets[i].pos.x - CurBlast->PX) < BLASTRADIUS ) 
-			 if( abs(AllBullets[i].pos.y - CurBlast->PY) < BLASTRADIUS)
-			 {
-			 	/* KILL Bullet silently */
-			 	AllBullets[i].type = OUT;
-			 	AllBullets[i].mine = FALSE;
-			 }
+  } /* for */
 
-	} /* for */
- 
-	/* Check Blast-Enemy Collisions and smash energy of hit enemy */
-	for( i=0; i<NumEnemys; i++) {
-		if( (Feindesliste[i].Status == OUT) || (Feindesliste[i].levelnum != level))
-			continue;
-
-		if( abs(Feindesliste[i].pos.x - CurBlast->PX) < BLASTRADIUS+DRUIDRADIUSX )
-			if( abs(Feindesliste[i].pos.y - CurBlast->PY) < BLASTRADIUS+DRUIDRADIUSY) {
-				/* drag energy of enemy */
-				Feindesliste[i].energy -= BLASTDAMAGE;
-				gotoxy(1,2);
-				printf(" Robot hit by Blast %d.\n",RHBZaehler++);
-			}
-				
-		if( Feindesliste[i].energy < 0) Feindesliste[i].energy = 0;
-
-	} /* for */
-
-	/* Check influence-Blast collisions */
-	if( (Me.status != OUT) && (abs(Me.pos.x - CurBlast->PX) < DRUIDRADIUSX) )
-		if( abs(Me.pos.y - CurBlast->PY) < DRUIDRADIUSY) {
-			if (!InvincibleMode) {
-				Me.energy -= BLASTDAMAGE;
-				if ((PlusExtentionsOn) && (LastBlastHit>5))
-					InsertMessage("Blast hit me! OUCH!");
-				LastBlastHit=0;
-			}
-			GotIntoBlastSound();
-		}
-
+  /* Check influence-Blast collisions */
+  if( (Me.status != OUT) && (abs(Me.pos.x - CurBlast->PX) < DRUIDRADIUSX) )
+    if( abs(Me.pos.y - CurBlast->PY) < DRUIDRADIUSY) {
+      if (!InvincibleMode) {
+	Me.energy -= BLASTDAMAGE * Frame_Time();
+	if ((PlusExtentionsOn) && (LastBlastHit>5))
+	  InsertMessage("Blast hit me! OUCH!");
+	LastBlastHit=0;
+      }
+      // In order to avoid a new sound EVERY frame we check for how long the previous blast 
+      // lies back in time.  LastBlastHit is a float, that counts SECONDS real-time !!
+      if ( LastGotIntoBlastSound > 1.2 ) {
+	GotIntoBlastSound();
+	LastGotIntoBlastSound=0;
+      }
+    }
+  
 } /* CheckBlastCollisions */
 
 #undef _bullet_c

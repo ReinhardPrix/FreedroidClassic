@@ -79,10 +79,10 @@ char BlastSoundSampleFilename[]="/../sound/BlastSound1.wav";
 char CollisionSoundSampleFilename[]="/../sound/CollisionSound1.wav";
 char FireSoundSampleFilename[]="/../sound/FireSound1.wav";
 char GotIntoBlastSoundSampleFilename[]="/../sound/GotIntoBlastSound.wav";
-char MoveElevatorSoundSampleFilename[]="/../sound/MoveElevatorSound2.wav";
+char MoveElevatorSoundSampleFilename[]="/../sound/MoveElevatorSound.wav";
 char RefreshSoundSampleFilename[]="/../sound/RefreshSound.wav";
-char LeaveElevatorSoundSampleFilename[]="/../sound/LeaveElevatorSound2.wav";
-char EnterElevatorSoundSampleFilename[]="/../sound/EnterElevatorSound.wav";
+char LeaveElevatorSoundSampleFilename[]="/../sound/LeaveElevatorSound3.wav";
+char EnterElevatorSoundSampleFilename[]="/../sound/EnterElevatorSound2.wav";
 // char BackgroundMusicSampleFilename[]="/../sound/BackgroundMusic1.wav";
 char* ExpandedBlastSoundSampleFilename;
 char* ExpandedCollisionSoundSampleFilename;
@@ -435,6 +435,17 @@ void Play_YIFF_Server_Sound(int Tune){
     // play_id = YStartPlaySoundObjectSimple( con, ExpandedBlastSoundSampleFilename );
     play_id = YStartPlaySoundObjectSimple( BackgroundMusic_con, ExpandedGotIntoBlastSoundSampleFilename );
   }
+
+  if (Tune == ENTER_ELEVATOR_SOUND) {
+    // play_id = YStartPlaySoundObjectSimple( con, ExpandedBlastSoundSampleFilename );
+    play_id = YStartPlaySoundObjectSimple( BackgroundMusic_con, ExpandedEnterElevatorSoundSampleFilename );
+  }
+
+  if (Tune == REFRESH_SOUND) {
+    // play_id = YStartPlaySoundObjectSimple( con, ExpandedBlastSoundSampleFilename );
+    play_id = YStartPlaySoundObjectSimple( BackgroundMusic_con, ExpandedRefreshSoundSampleFilename );
+  }
+
 #endif /* HAVE_LIBY2 */
 
 } // void Play_YIFF_Server_Sound(int Tune)
@@ -626,6 +637,8 @@ int Init_YIFF_Sound_Server(void){
 * $Function----------------------------------------------------------*/
 void GotHitSound(void){
 
+  Play_YIFF_Server_Sound(GOT_HIT_SOUND);
+
 }  // void GotHitSound(void)
 
 
@@ -637,6 +650,7 @@ void GotHitSound(void){
 * $Function----------------------------------------------------------*/
 void GotIntoBlastSound(void){
 
+  Play_YIFF_Server_Sound(GOT_INTO_BLAST_SOUND);
   
   return;
 } // void GotIntoBlastSound(void)
@@ -649,10 +663,8 @@ void GotIntoBlastSound(void){
 * $Function----------------------------------------------------------*/
 void RefreshSound(void){
 
-  /* Sound "uber FM-Generatoren */
-  //	MakeSound(&MoveElevatorTune);
-  // MakeSound(&TankenTune);
-  /* oder "uber MOD-Abspielroutine */
+  Play_YIFF_Server_Sound(REFRESH_SOUND);
+
   return;
 } // void RefreshSound(void)
 
@@ -665,9 +677,8 @@ void RefreshSound(void){
 * $Function----------------------------------------------------------*/
 void MoveElevatorSound(void){
 
-  /* Sound "uber FM-Generatoren */
-  // MakeSound(&MoveElevatorTune);
-  /* oder "uber MOD-Abspielroutine */
+  Play_YIFF_Server_Sound(MOVE_ELEVATOR_SOUND);
+
   return;
 } // void MoveElevatorSound(void)
 
@@ -694,10 +705,10 @@ void EnterElevatorSound(void){
 * $Function----------------------------------------------------------*/
 void LeaveElevatorSound(void){
 
-	Play_YIFF_Server_Sound(LEAVE_ELEVATOR_SOUND);
+  Play_YIFF_Server_Sound(LEAVE_ELEVATOR_SOUND);
 
-	return;
-}
+  return;
+} // void LeaveElevatorSound(void)
 
 
 /*@Function============================================================

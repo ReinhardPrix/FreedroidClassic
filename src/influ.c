@@ -753,7 +753,11 @@ void RefreshInfluencer(void)
     Me.energy += REFRESH_ENERGY * Frame_Time();
     RealScore -= REFRESH_ENERGY*5;
     if ( Me.energy > Me.health ) Me.energy = Me.health;
-    RefreshSound();
+    
+    if ( LastRefreshSound > 0.6 ) {
+      RefreshSound();
+      LastRefreshSound=0;
+    }
   }
 	
   return;
