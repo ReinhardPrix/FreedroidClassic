@@ -1031,8 +1031,11 @@ ShowInventoryScreen( void )
   //
   TargetRect.x = InventoryRect.x + 240;
   TargetRect.y = InventoryRect.y + 93;
-  SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].drive_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
-  
+  if ( ( ! Druidmap[ Me.type ].drive_item.currently_held_in_hand ) && ( Druidmap[ Me.type ].drive_item.type != (-1) ) )
+    {
+      SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].drive_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+    }
+
   //--------------------
   // Now we display the item in the influencer weapon slot
   //
@@ -1048,36 +1051,50 @@ ShowInventoryScreen( void )
   //
   TargetRect.x = InventoryRect.x + ARMOUR_POS_X ;
   TargetRect.y = InventoryRect.y + ARMOUR_POS_Y ;
-  SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].armour_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
-  
+  if ( ( ! Druidmap[ Me.type ].armour_item.currently_held_in_hand ) && ( Druidmap[ Me.type ].armour_item.type != (-1) ) )
+    {
+      SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].armour_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+    }
+
   //--------------------
   // Now we display the item in the influencer shield slot
   //
   TargetRect.x = InventoryRect.x + SHIELD_POS_X ;
   TargetRect.y = InventoryRect.y + SHIELD_POS_Y ;
-  SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].shield_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+  if ( ( ! Druidmap[ Me.type ].shield_item.currently_held_in_hand ) && ( Druidmap[ Me.type ].shield_item.type != (-1) ) )
+    {
+      SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].shield_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+    }
   
   //--------------------
   // Now we display the item in the influencer special slot
   //
   TargetRect.x = InventoryRect.x + SPECIAL_POS_X ;
   TargetRect.y = InventoryRect.y + SPECIAL_POS_Y ;
-  SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].special_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
-  
+  if ( ( ! Druidmap[ Me.type ].special_item.currently_held_in_hand ) && ( Druidmap[ Me.type ].special_item.type != (-1) ) )
+    {
+      SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].special_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+    }
+
   //--------------------
   // Now we display the item in the influencers aux1 slot
   //
   TargetRect.x = InventoryRect.x + AUX1_POS_X ;
   TargetRect.y = InventoryRect.y + AUX1_POS_Y ;
-  SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].aux1_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
-  
+  if ( ( ! Druidmap[ Me.type ].aux1_item.currently_held_in_hand ) && ( Druidmap[ Me.type ].aux1_item.type != (-1) ) )
+    {
+      SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].aux1_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+    }
+
   //--------------------
   // Now we display the item in the influencers aux2 slot
   //
   TargetRect.x = InventoryRect.x + AUX2_POS_X ;
   TargetRect.y = InventoryRect.y + AUX2_POS_Y ;
-  SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].aux2_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
-  
+  if ( ( ! Druidmap[ Me.type ].aux2_item.currently_held_in_hand ) && ( Druidmap[ Me.type ].aux2_item.type != (-1) ) )
+    {
+      SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].aux2_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+    }
 
   //--------------------
   // Now we display all the items the influencer is carrying with him
