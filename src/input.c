@@ -468,6 +468,19 @@ check_for_cheat_keys( void )
 	    Me [ 0 ] . AllMissions [ 5 ] . MissionIsComplete = FALSE ;
 	}
     }
+    if ( Number6Pressed() )
+    {
+	if ( CPressed() )
+	{
+	    Me [ 0 ] . AllMissions [ 6 ] . MissionWasAssigned = TRUE ;
+	    Me [ 0 ] . AllMissions [ 6 ] . MissionIsComplete = TRUE ;
+	}
+	if ( APressed() )
+	{
+	    Me [ 0 ] . AllMissions [ 6 ] . MissionWasAssigned = TRUE ;
+	    Me [ 0 ] . AllMissions [ 6 ] . MissionIsComplete = FALSE ;
+	}
+    }
 
     //--------------------
     // For debugging purposes, we introduce a key, that causes several 

@@ -579,6 +579,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
     
     if ( FirstItem != (-1) ) menu_position_to_remember = FirstItem;
     
+    
     //--------------------
     // First thing we do is find out how may options we have
     // been given for the menu
@@ -648,7 +649,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
       for ( win32_iterations = 0 ; win32_iterations < 2 ; win32_iterations ++ ) 
       {
 #endif
-	  
+
 	  if ( ! use_open_gl ) 
 	      RestoreMenuBackground ( 0 );
 	  else 
@@ -682,17 +683,24 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
 	      // + i * Choice_Window .h / NumberOfOptionsGiven ;
 	      for ( j = OptionOffset ; j < i ; j ++ )
 	      {
-		  MenuPosY[ i ] += MenuOptionLineRequirement [ j ] * ( FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) ;
+		  MenuPosY [ i ] += MenuOptionLineRequirement [ j ] * ( FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) ;
 	      }
 	  }
 	  
 	  //--------------------
 	  // We highlight the currently selected option with a highlighting rectangle
 	  //
+	  // (and we add some security against 'empty' chat selection menus causing
+	  // some segfaults rather easily...)
+	  //
+	  DebugPrintf ( 1 , "\n%s(): menu_position_to_remember: %d." , __FUNCTION__ , menu_position_to_remember );
+	  DebugPrintf ( 1 , "\n%s(): FirstItem: %d." , __FUNCTION__ , FirstItem );
+	  if ( menu_position_to_remember <= 0 ) 
+	      menu_position_to_remember = 1 ;
 	  HighlightRect.x = MenuPosX[ menu_position_to_remember -1 ] - 0 * h ;
 	  HighlightRect.y = MenuPosY[ menu_position_to_remember -1 ] ;
 	  HighlightRect.w = TextWidth ( MenuTexts [ menu_position_to_remember - 1 ] ) + 0 * h ;
-	  if ( HighlightRect.w > 550*GameConfig . screen_width/640 ) HighlightRect.w = 550*GameConfig . screen_width/640 ;
+	  if ( HighlightRect . w > 550 * GameConfig . screen_width / 640 ) HighlightRect . w = 550 * GameConfig . screen_width / 640 ;
 	  HighlightRect.h = MenuOptionLineRequirement [ menu_position_to_remember - 1 ] * 
 	      ( FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) ;	    
 	  HighlightRectangle ( Screen , HighlightRect );

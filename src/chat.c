@@ -1241,7 +1241,7 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , Enemy ChatDroid 
     {
 	if ( strlen ( ChatRoster [ i ] . option_text ) )
 	{
-	  DialogMenuTexts [ i ] = ChatRoster [ i ] . option_text ;
+	    DialogMenuTexts [ i ] = ChatRoster [ i ] . option_text ;
 	}
     }
     // DialogMenuTexts [ MAX_ANSWERS_PER_PERSON - 1 ] = " END ";

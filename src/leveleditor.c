@@ -4586,7 +4586,17 @@ LevelEditor(void)
 	    
 	    BlockX = rintf ( Me [ 0 ] . pos . x - 0.5 );
 	    BlockY = rintf ( Me [ 0 ] . pos . y - 0.5 );
-	    
+	    if ( BlockX < 0 ) 
+	    {
+		BlockX = 0 ;
+		Me [ 0 ] . pos . x = 0.51 ;
+	    }
+	    if ( BlockY < 0 ) 
+	    {
+		BlockY = 0 ;
+		Me [ 0 ] . pos . y = 0.51 ;
+	    }
+
 	    EditLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;	  
 	    GetAllAnimatedMapTiles ( EditLevel );
 	    
