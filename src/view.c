@@ -626,14 +626,31 @@ SetUserfenster (int color)
 {
   SDL_Rect tmp;
 
-  printf ("\nSetUserfenster() called!");
-
   Set_Rect (tmp, User_Rect.x, User_Rect.y, User_Rect.w, User_Rect.h);
 
   SDL_FillRect( ne_screen , &tmp, color );
 
   return;
 }				/* SetUserFenster() */
+
+/*-----------------------------------------------------------------
+ * Fill given rectangle with given RBG color
+ *
+ *-----------------------------------------------------------------*/
+void
+Fill_Rect (SDL_Rect rect, SDL_Color color)
+{
+  Uint32 pixcolor;
+  SDL_Rect tmp;
+
+  Set_Rect (tmp, rect.x, rect.y, rect.w, rect.h);
+
+  pixcolor = SDL_MapRGB (ne_screen->format, color.r, color.g, color.b);
+
+  SDL_FillRect (ne_screen, &tmp, pixcolor);
+  
+  return;
+}
 
 /*@Function============================================================
 @Desc: This function displays a robot picture.  This does NOT mean a
