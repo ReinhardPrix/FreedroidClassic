@@ -244,42 +244,170 @@ GetMousePos_y(void)
  * ---------------------------------------------------------------------- */
 int sgn (int x)
 {
-  return (x ? ((x)/abs(x)) : 0);
+    return (x ? ((x)/abs(x)) : 0);
 }
 
-void Init_Joy (void)
+/* ----------------------------------------------------------------------
+ * This should initialize the joystick, if such a device is present.
+ * ---------------------------------------------------------------------- */
+void 
+Init_Joy ( void )
 {
-  int num_joy;
+    int num_joy;
 
-  if (SDL_InitSubSystem (SDL_INIT_JOYSTICK) == -1)
+    if ( SDL_InitSubSystem ( SDL_INIT_JOYSTICK ) == (-1) )
     {
-      DebugPrintf (0, "Warning: Couldn't initialize SDL-Joystick: %s\n", SDL_GetError());
-      return;
+	DebugPrintf ( 0 , "Warning: Couldn't initialize SDL-Joystick: %s\n", SDL_GetError() );
+	return;
     } 
-  else
-      DebugPrintf(1, "\nSDL Joystick initialisation successful.\n");
-
-  DebugPrintf (1, " %d Joysticks found!\n", num_joy = SDL_NumJoysticks ());
-
-  if (num_joy > 0)
-    joy = SDL_JoystickOpen (0);
-
-  if (joy)
+    else
+	DebugPrintf( 1 , "\nSDL Joystick initialisation successful.\n" );
+    
+    DebugPrintf ( 1 , " %d Joysticks found!\n" , num_joy = SDL_NumJoysticks () );
+    
+    if ( num_joy > 0 )
+	joy = SDL_JoystickOpen (0);
+    
+    if ( joy )
     {
-      DebugPrintf (1, "Identifier: %s\n", SDL_JoystickName (0));
-      DebugPrintf (1, "Number of Axes: %d\n", joy_num_axes = SDL_JoystickNumAxes(joy));
-      DebugPrintf (1, "Number of Buttons: %d\n", SDL_JoystickNumButtons(joy));
-
-      /* aktivate Joystick event handling */
-      SDL_JoystickEventState (SDL_ENABLE); 
-
+	DebugPrintf (1, "Identifier: %s\n", SDL_JoystickName (0));
+	DebugPrintf (1, "Number of Axes: %d\n", joy_num_axes = SDL_JoystickNumAxes(joy));
+	DebugPrintf (1, "Number of Buttons: %d\n", SDL_JoystickNumButtons(joy));
+	
+	// aktivate Joystick event handling 
+	SDL_JoystickEventState (SDL_ENABLE); 
     }
-  else 
-    joy = NULL;  /* signals that no yoystick is present */
+    else 
+	joy = NULL;  // signals that no yoystick is present 
+    
+}; // void Init_Joy ( void )
 
+/* ----------------------------------------------------------------------
+ * Here we insert some cheat codes for assigning and completing missions.
+ * ---------------------------------------------------------------------- */
+void
+mission_status_cheat_handling ( int player_num )
+{
 
-  return;
-}
+    if ( Number0Pressed() )
+    {
+	if ( CPressed() )
+	{
+	    Me [ player_num ] . AllMissions [ 0 ] . MissionWasAssigned = TRUE ;
+	    Me [ player_num ] . AllMissions [ 0 ] . MissionIsComplete = TRUE ;
+	}
+	if ( APressed() )
+	{
+	    Me [ player_num ] . AllMissions [ 0 ] . MissionWasAssigned = TRUE ;
+	    Me [ player_num ] . AllMissions [ 0 ] . MissionIsComplete = FALSE ;
+	}
+    }
+    if ( Number1Pressed() )
+    {
+	if ( CPressed() )
+	{
+	    Me [ player_num ] . AllMissions [ 1 ] . MissionWasAssigned = TRUE ;
+	    Me [ player_num ] . AllMissions [ 1 ] . MissionIsComplete = TRUE ;
+	}
+	if ( APressed() )
+	{
+	    Me [ player_num ] . AllMissions [ 1 ] . MissionWasAssigned = TRUE ;
+	    Me [ player_num ] . AllMissions [ 1 ] . MissionIsComplete = FALSE ;
+	}
+    }
+    if ( Number2Pressed() )
+    {
+	if ( CPressed() )
+	{
+	    Me [ player_num ] . AllMissions [ 2 ] . MissionWasAssigned = TRUE ;
+	    Me [ player_num ] . AllMissions [ 2 ] . MissionIsComplete = TRUE ;
+	}
+	if ( APressed() )
+	{
+	    Me [ player_num ] . AllMissions [ 2 ] . MissionWasAssigned = TRUE ;
+	    Me [ player_num ] . AllMissions [ 2 ] . MissionIsComplete = FALSE ;
+	}
+    }
+    if ( Number3Pressed() )
+    {
+	if ( CPressed() )
+	{
+	    Me [ player_num ] . AllMissions [ 3 ] . MissionWasAssigned = TRUE ;
+	    Me [ player_num ] . AllMissions [ 3 ] . MissionIsComplete = TRUE ;
+	}
+	if ( APressed() )
+	{
+	    Me [ player_num ] . AllMissions [ 3 ] . MissionWasAssigned = TRUE ;
+	    Me [ player_num ] . AllMissions [ 3 ] . MissionIsComplete = FALSE ;
+	}
+    }
+    if ( Number4Pressed() )
+    {
+	if ( CPressed() )
+	{
+	    Me [ player_num ] . AllMissions [ 4 ] . MissionWasAssigned = TRUE ;
+	    Me [ player_num ] . AllMissions [ 4 ] . MissionIsComplete = TRUE ;
+	}
+	if ( APressed() )
+	{
+	    Me [ player_num ] . AllMissions [ 4 ] . MissionWasAssigned = TRUE ;
+	    Me [ player_num ] . AllMissions [ 4 ] . MissionIsComplete = FALSE ;
+	}
+    }
+    if ( Number5Pressed() )
+    {
+	if ( CPressed() )
+	{
+	    Me [ player_num ] . AllMissions [ 5 ] . MissionWasAssigned = TRUE ;
+	    Me [ player_num ] . AllMissions [ 5 ] . MissionIsComplete = TRUE ;
+	}
+	if ( APressed() )
+	{
+	    Me [ player_num ] . AllMissions [ 5 ] . MissionWasAssigned = TRUE ;
+	    Me [ player_num ] . AllMissions [ 5 ] . MissionIsComplete = FALSE ;
+	}
+    }
+    if ( Number6Pressed() )
+    {
+	if ( CPressed() )
+	{
+	    Me [ player_num ] . AllMissions [ 6 ] . MissionWasAssigned = TRUE ;
+	    Me [ player_num ] . AllMissions [ 6 ] . MissionIsComplete = TRUE ;
+	}
+	if ( APressed() )
+	{
+	    Me [ player_num ] . AllMissions [ 6 ] . MissionWasAssigned = TRUE ;
+	    Me [ player_num ] . AllMissions [ 6 ] . MissionIsComplete = FALSE ;
+	}
+    }
+    if ( Number7Pressed() )
+    {
+	if ( CPressed() )
+	{
+	    Me [ player_num ] . AllMissions [ 7 ] . MissionWasAssigned = TRUE ;
+	    Me [ player_num ] . AllMissions [ 7 ] . MissionIsComplete = TRUE ;
+	}
+	if ( APressed() )
+	{
+	    Me [ player_num ] . AllMissions [ 7 ] . MissionWasAssigned = TRUE ;
+	    Me [ player_num ] . AllMissions [ 7 ] . MissionIsComplete = FALSE ;
+	}
+    }
+    if ( Number8Pressed() )
+    {
+	if ( CPressed() )
+	{
+	    Me [ player_num ] . AllMissions [ 8 ] . MissionWasAssigned = TRUE ;
+	    Me [ player_num ] . AllMissions [ 8 ] . MissionIsComplete = TRUE ;
+	}
+	if ( APressed() )
+	{
+	    Me [ player_num ] . AllMissions [ 8 ] . MissionWasAssigned = TRUE ;
+	    Me [ player_num ] . AllMissions [ 8 ] . MissionIsComplete = FALSE ;
+	}
+    }
+
+}; // void mission_status_cheat_handling ( int player_num )
 
 /* ----------------------------------------------------------------------
  * If the cheat keys are enabled (a config option in the cheat menu), 
@@ -390,123 +518,7 @@ check_for_cheat_keys( void )
     //--------------------
     // Here we insert some cheat codes for assigning and completing missions
     //
-    if ( Number0Pressed() )
-    {
-	if ( CPressed() )
-	{
-	    Me [ 0 ] . AllMissions [ 0 ] . MissionWasAssigned = TRUE ;
-	    Me [ 0 ] . AllMissions [ 0 ] . MissionIsComplete = TRUE ;
-	}
-	if ( APressed() )
-	{
-	    Me [ 0 ] . AllMissions [ 0 ] . MissionWasAssigned = TRUE ;
-	    Me [ 0 ] . AllMissions [ 0 ] . MissionIsComplete = FALSE ;
-	}
-    }
-    if ( Number1Pressed() )
-    {
-	if ( CPressed() )
-	{
-	    Me [ 0 ] . AllMissions [ 1 ] . MissionWasAssigned = TRUE ;
-	    Me [ 0 ] . AllMissions [ 1 ] . MissionIsComplete = TRUE ;
-	}
-	if ( APressed() )
-	{
-	    Me [ 0 ] . AllMissions [ 1 ] . MissionWasAssigned = TRUE ;
-	    Me [ 0 ] . AllMissions [ 1 ] . MissionIsComplete = FALSE ;
-	}
-    }
-    if ( Number2Pressed() )
-    {
-	if ( CPressed() )
-	{
-	    Me [ 0 ] . AllMissions [ 2 ] . MissionWasAssigned = TRUE ;
-	    Me [ 0 ] . AllMissions [ 2 ] . MissionIsComplete = TRUE ;
-	}
-	if ( APressed() )
-	{
-	    Me [ 0 ] . AllMissions [ 2 ] . MissionWasAssigned = TRUE ;
-	    Me [ 0 ] . AllMissions [ 2 ] . MissionIsComplete = FALSE ;
-	}
-    }
-    if ( Number3Pressed() )
-    {
-	if ( CPressed() )
-	{
-	    Me [ 0 ] . AllMissions [ 3 ] . MissionWasAssigned = TRUE ;
-	    Me [ 0 ] . AllMissions [ 3 ] . MissionIsComplete = TRUE ;
-	}
-	if ( APressed() )
-	{
-	    Me [ 0 ] . AllMissions [ 3 ] . MissionWasAssigned = TRUE ;
-	    Me [ 0 ] . AllMissions [ 3 ] . MissionIsComplete = FALSE ;
-	}
-    }
-    if ( Number4Pressed() )
-    {
-	if ( CPressed() )
-	{
-	    Me [ 0 ] . AllMissions [ 4 ] . MissionWasAssigned = TRUE ;
-	    Me [ 0 ] . AllMissions [ 4 ] . MissionIsComplete = TRUE ;
-	}
-	if ( APressed() )
-	{
-	    Me [ 0 ] . AllMissions [ 4 ] . MissionWasAssigned = TRUE ;
-	    Me [ 0 ] . AllMissions [ 4 ] . MissionIsComplete = FALSE ;
-	}
-    }
-    if ( Number5Pressed() )
-    {
-	if ( CPressed() )
-	{
-	    Me [ 0 ] . AllMissions [ 5 ] . MissionWasAssigned = TRUE ;
-	    Me [ 0 ] . AllMissions [ 5 ] . MissionIsComplete = TRUE ;
-	}
-	if ( APressed() )
-	{
-	    Me [ 0 ] . AllMissions [ 5 ] . MissionWasAssigned = TRUE ;
-	    Me [ 0 ] . AllMissions [ 5 ] . MissionIsComplete = FALSE ;
-	}
-    }
-    if ( Number6Pressed() )
-    {
-	if ( CPressed() )
-	{
-	    Me [ 0 ] . AllMissions [ 6 ] . MissionWasAssigned = TRUE ;
-	    Me [ 0 ] . AllMissions [ 6 ] . MissionIsComplete = TRUE ;
-	}
-	if ( APressed() )
-	{
-	    Me [ 0 ] . AllMissions [ 6 ] . MissionWasAssigned = TRUE ;
-	    Me [ 0 ] . AllMissions [ 6 ] . MissionIsComplete = FALSE ;
-	}
-    }
-    if ( Number7Pressed() )
-    {
-	if ( CPressed() )
-	{
-	    Me [ 0 ] . AllMissions [ 7 ] . MissionWasAssigned = TRUE ;
-	    Me [ 0 ] . AllMissions [ 7 ] . MissionIsComplete = TRUE ;
-	}
-	if ( APressed() )
-	{
-	    Me [ 0 ] . AllMissions [ 7 ] . MissionWasAssigned = TRUE ;
-	    Me [ 0 ] . AllMissions [ 7 ] . MissionIsComplete = FALSE ;
-	}
-    }
-    if ( Number8Pressed() )
-    {
-	if ( CPressed() )
-	{
-	    Me [ 0 ] . AllMissions [ 8 ] . MissionWasAssigned = TRUE ;
-	    Me [ 0 ] . AllMissions [ 8 ] . MissionIsComplete = TRUE ;
-	}
-	if ( APressed() )
-	{
-	    Me [ 0 ] . AllMissions [ 8 ] . MissionWasAssigned = TRUE ;
-	    Me [ 0 ] . AllMissions [ 8 ] . MissionIsComplete = FALSE ;
-	}
-    }
+    mission_status_cheat_handling ( 0 );
 
     //--------------------
     // For debugging purposes, we introduce a key, that causes several 
@@ -547,7 +559,18 @@ automap_keyboard_handling ( void )
 	if ( !TabPressed_LastFrame ) 
 	{
 	    GameConfig.Automap_Visible = !GameConfig.Automap_Visible;
-	    
+	    if ( Me [ 0 ] . map_maker_is_present )
+	    {
+		if ( GameConfig.Automap_Visible )
+		    append_new_game_message ( "Automap ON." );
+		else
+		    append_new_game_message ( "Automap OFF." );
+	    }
+	    else
+	    {
+		append_new_game_message ( "Sorry, you don't have automap yet:  map maker item not present." );
+	    }
+
 	    //--------------------
 	    // We reset the map position whenever the map is switched off
 	    // and back on again.  That way it should be made certain, that
@@ -996,19 +1019,19 @@ ReactToSpecialKeys(void)
 int
 Shift_Was_Pressed(void)
 {
-  return (ShiftWasPressedInAddition);  
+    return ( ShiftWasPressedInAddition );  
 };
 
 int
 RightShiftWasPressed(void)
 {
-  return (RightShiftWasPressedInAddition);  
+    return ( RightShiftWasPressedInAddition );  
 };
 
 int
 LeftShiftWasPressed(void)
 {
-  return (LeftShiftWasPressedInAddition);  
+    return ( LeftShiftWasPressedInAddition );  
 };
 
 int
@@ -1025,25 +1048,25 @@ Shift_Is_Pressed(void)
 int
 CtrlWasPressed(void)
 {
-  return (CtrlWasPressedInAddition);  
+    return ( CtrlWasPressedInAddition );  
 }
 
 int
 RightCtrlWasPressed(void)
 {
-  return (RightCtrlWasPressedInAddition);  
+    return ( RightCtrlWasPressedInAddition );  
 }
 
 int
 LeftCtrlWasPressed(void)
 {
-  return (LeftCtrlWasPressedInAddition);  
+    return ( LeftCtrlWasPressedInAddition );  
 }
 
 int
 Alt_Was_Pressed(void)
 {
-  return (AltWasPressedInAddition);  
+    return ( AltWasPressedInAddition );  
 }
 
 /* ----------------------------------------------------------------------
@@ -1060,754 +1083,754 @@ LeftAltWasPressed(void)
 int
 RightAltWasPressed(void)
 {
-  return (RightAltWasPressedInAddition);  
+    return ( RightAltWasPressedInAddition );  
 }
 
 int 
 keyboard_update(void)
 {
-  Uint8 axis; 
-
-  while( SDL_PollEvent( &event ) )
+    Uint8 axis; 
+    
+    while( SDL_PollEvent( &event ) )
     {
-      switch( event.type )
+	switch( event.type )
 	{
-	case SDL_QUIT:
-	  printf("\n\nUser requestet Termination...\n\nTerminating...");
-	  Terminate(0);
-	  break;
-	  /* Look for a keypress */
-	case SDL_KEYDOWN:
-
-	  if ( ( ClientMode ) && ( ! ServerMode ) ) SendPlayerKeyboardEventToServer ( event );
-
-	  // printf("\nSLD_KEYDOWN event detected...");
-	  // fflush(stdout);
-
-	  // Check for some additional modifiers and set flags accordingly
-	  if ( event.key.keysym.mod & (KMOD_LSHIFT | KMOD_RSHIFT) )
-	    ShiftWasPressedInAddition=TRUE;
-	  else ShiftWasPressedInAddition=FALSE;
-
-	  if ( event.key.keysym.mod & (KMOD_LSHIFT) )
-	    LeftShiftWasPressedInAddition=TRUE;
-	  else LeftShiftWasPressedInAddition=FALSE;
-
-	  if ( event.key.keysym.mod & (KMOD_RSHIFT) )
-	    RightShiftWasPressedInAddition=TRUE;
-	  else RightShiftWasPressedInAddition=FALSE;
-
-	  if ( event.key.keysym.mod & (KMOD_LCTRL | KMOD_RCTRL) )
-	    {
-	      CtrlWasPressedInAddition=TRUE;
-	    }
-	  else CtrlWasPressedInAddition=FALSE;
-
-	  if ( event.key.keysym.mod & (KMOD_LCTRL) ) LeftCtrlWasPressedInAddition=TRUE;
-	  else LeftCtrlWasPressedInAddition=FALSE;
-	  if ( event.key.keysym.mod & (KMOD_RCTRL) ) RightCtrlWasPressedInAddition=TRUE;
-	  else RightCtrlWasPressedInAddition=FALSE;
-
-	  if ( event.key.keysym.mod & (KMOD_LALT | KMOD_RALT) )
-	    AltWasPressedInAddition=TRUE;
-	  else AltWasPressedInAddition=FALSE;
-
-	  if ( event.key.keysym.mod & ( KMOD_LALT ) )
-	    LeftAltWasPressedInAddition=TRUE;
-	  else LeftAltWasPressedInAddition=FALSE;
-
-	  if ( event.key.keysym.mod & ( KMOD_RALT ) )
-	    RightAltWasPressedInAddition=TRUE;
-	  else RightAltWasPressedInAddition=FALSE;
-
-	  /* Check the SDLKey values */
-	  switch( event.key.keysym.sym )
-	    {
-	    case SDLK_KP_PLUS:
-	      CurrentlyKP_PLUS_Pressed=TRUE;
-	      break;
-	    case SDLK_KP_MINUS:
-	      CurrentlyKP_MINUS_Pressed=TRUE;
-	      break;
-	    case SDLK_KP_MULTIPLY:
-	      CurrentlyKP_MULTIPLY_Pressed=TRUE;
-	      break;
-	    case SDLK_KP_DIVIDE:
-	      CurrentlyKP_DIVIDE_Pressed=TRUE;
-	      break;
-	    case SDLK_KP_ENTER:
-	      CurrentlyKP_ENTER_Pressed=TRUE;
-	      break;
-	    case SDLK_0:
-	      Currently0Pressed=TRUE;
-	      break;
-	    case SDLK_1:
-	      Currently1Pressed=TRUE;
-	      break;
-	    case SDLK_2:
-	      Currently2Pressed=TRUE;
-	      break;
-	    case SDLK_3:
-	      Currently3Pressed=TRUE;
-	      break;
-	    case SDLK_4:
-	      Currently4Pressed=TRUE;
-	      break;
-	    case SDLK_5:
-	      Currently5Pressed=TRUE;
-	      break;
-	    case SDLK_6:
-	      Currently6Pressed=TRUE;
-	      break;
-	    case SDLK_7:
-	      Currently7Pressed=TRUE;
-	      break;
-	    case SDLK_8:
-	      Currently8Pressed=TRUE;
-	      break;
-	    case SDLK_9:
-	      Currently9Pressed=TRUE;
-	      break;
-	    case SDLK_KP0:
-	      CurrentlyKP0Pressed=TRUE;
-	      break;
-	    case SDLK_KP1:
-	      CurrentlyKP1Pressed=TRUE;
-	      break;
-	    case SDLK_KP2:
-	      CurrentlyKP2Pressed=TRUE;
-	      break;
-	    case SDLK_KP3:
-	      CurrentlyKP3Pressed=TRUE;
-	      break;
-	    case SDLK_KP4:
-	      CurrentlyKP4Pressed=TRUE;
-	      break;
-	    case SDLK_KP5:
-	      CurrentlyKP5Pressed=TRUE;
-	      break;
-	    case SDLK_KP6:
-	      CurrentlyKP6Pressed=TRUE;
-	      break;
-	    case SDLK_KP7:
-	      CurrentlyKP7Pressed=TRUE;
-	      break;
-	    case SDLK_KP8:
-	      CurrentlyKP8Pressed=TRUE;
-	      break;
-	    case SDLK_KP9:
-	      CurrentlyKP9Pressed=TRUE;
-	      break;
-	    case SDLK_F1:
-	      CurrentlyF1Pressed=TRUE;
-	      break;
-	    case SDLK_F2:
-	      CurrentlyF2Pressed=TRUE;
-	      break;
-	    case SDLK_F3:
-	      CurrentlyF3Pressed=TRUE;
-	      break;
-	    case SDLK_F4:
-	      CurrentlyF4Pressed=TRUE;
-	      break;
-	    case SDLK_F5:
-	      CurrentlyF5Pressed=TRUE;
-	      break;
-	    case SDLK_F6:
-	      CurrentlyF6Pressed=TRUE;
-	      break;
-	    case SDLK_F7:
-	      CurrentlyF7Pressed=TRUE;
-	      break;
-	    case SDLK_F8:
-	      CurrentlyF8Pressed=TRUE;
-	      break;
-	    case SDLK_F9:
-	      CurrentlyF9Pressed=TRUE;
-	      break;
-	    case SDLK_F10:
-	      CurrentlyF10Pressed=TRUE;
-	      break;
-	    case SDLK_F11:
-	      CurrentlyF11Pressed=TRUE;
-	      break;
-	    case SDLK_F12:
-	      CurrentlyF12Pressed=TRUE;
-	      TakeScreenshot();
-	      break;
-	    case SDLK_BACKSPACE:
-	      CurrentlyBackspacePressed=TRUE;
-	      break;
-	    case SDLK_LCTRL:
-	      CurrentlyLeftCtrlPressed=TRUE;
-	      break;
-	    case SDLK_LEFT:
-	      CurrentlyLeftPressed=TRUE;
-	      break;
-	    case SDLK_RIGHT:
-	      CurrentlyRightPressed=TRUE;
-	      break;
-	    case SDLK_UP:
-	      CurrentlyUpPressed=TRUE;
-	      break;
-	    case SDLK_DOWN:
-	      CurrentlyDownPressed=TRUE;
-	      break;
-	    case SDLK_SPACE:
-	      CurrentlySpacePressed=TRUE;
-	      break;
-	    case SDLK_RETURN:
-	      CurrentlyEnterPressed=TRUE;
-	      break;
-	    case SDLK_a:
-	      CurrentlyAPressed=TRUE;
-	      break;
-	    case SDLK_b:
-	      CurrentlyBPressed=TRUE;
-	      break;
-	    case SDLK_c:
-	      CurrentlyCPressed=TRUE;
-	      break;
-	    case SDLK_d:
-	      CurrentlyDPressed=TRUE;
-	      break;
-	    case SDLK_e:
-	      CurrentlyEPressed=TRUE;
-	      break;
-	    case SDLK_f:
-	      CurrentlyFPressed=TRUE;
-	      break;
-	    case SDLK_g:
-	      CurrentlyGPressed=TRUE;
-	      break;
-	    case SDLK_h:
-	      CurrentlyHPressed=TRUE;
-	      break;
-	    case SDLK_i:
-	      CurrentlyIPressed=TRUE;
-	      break;
-	    case SDLK_j:
-	      CurrentlyJPressed=TRUE;
-	      break;
-	    case SDLK_k:
-	      CurrentlyKPressed=TRUE;
-	      break;
-	    case SDLK_l:
-	      CurrentlyLPressed=TRUE;
-	      break;
-	    case SDLK_m:
-	      CurrentlyMPressed=TRUE;
-	      break;
-	    case SDLK_n:
-	      CurrentlyNPressed=TRUE;
-	      break;
-	    case SDLK_o:
-	      CurrentlyOPressed=TRUE;
-	      break;
-	    case SDLK_p:
-	      CurrentlyPPressed=TRUE;
-	      break;
-	    case SDLK_q:
-	      CurrentlyQPressed=TRUE;
-	      break;
-	    case SDLK_r:
-	      CurrentlyRPressed=TRUE;
-	      break;
-	    case SDLK_s:
-	      CurrentlySPressed=TRUE;
-	      break;
-	    case SDLK_t:
-	      CurrentlyTPressed=TRUE;
-	      break;
-	    case SDLK_u:
-	      CurrentlyUPressed=TRUE;
-	      break;
-	    case SDLK_v:
-	      CurrentlyVPressed=TRUE;
-	      break;
-	    case SDLK_w:
-	      CurrentlyWPressed=TRUE;
-	      break;
-	    case SDLK_x:
-	      CurrentlyXPressed=TRUE;
-	      break;
-	    case SDLK_y:
-	      CurrentlyYPressed=TRUE;
-	      break;
-	    case SDLK_z:
-	      CurrentlyZPressed=TRUE;
-	      break;
-	    case SDLK_ESCAPE:
-	      CurrentlyEscapePressed=TRUE;
-	      break;
-	    case SDLK_TAB:
-	      CurrentlyTabPressed=TRUE;
-	      break;
-	    case SDLK_RSHIFT:
-	      CurrentlyShiftPressed=TRUE;
-	      break;
-	    case SDLK_LSHIFT:
-	      CurrentlyShiftPressed=TRUE;
-	      break;
-	    default:
-	      /*
-		printf("\n\nUnhandled keystroke!! Terminating...\n\n");
-		Terminate(ERR);
-	      */
-	      break;
-	    }
-	  break;
-	  /* We must also use the SDL_KEYUP events to zero the x */
-	  /* and y velocity variables. But we must also be       */
-	  /* careful not to zero the velocities when we shouldn't*/
-	case SDL_KEYUP:
-
-	  if ( ( ClientMode ) && ( ! ServerMode ) ) SendPlayerKeyboardEventToServer ( event );
-
-	  // printf("\nSLD_KEYUP event detected...");
-	  // fflush(stdout);
-
-	  // Check for some additional modifiers and set flags accordingly
-
-	  /*
-	  if ( event.key.keysym.mod & (KMOD_LSHIFT | KMOD_RSHIFT) )
-	    ShiftWasPressedInAddition=TRUE;
-	  else ShiftWasPressedInAddition=FALSE;
-
-	  if ( event.key.keysym.mod & (KMOD_LCTRL | KMOD_RCTRL) )
-	    CtrlWasPressedInAddition=TRUE;
-	  else CtrlWasPressedInAddition=FALSE;
-
-	  if ( event.key.keysym.mod & (KMOD_LCTRL) )
-	    LeftCtrlWasPressedInAddition=TRUE;
-	  else LeftCtrlWasPressedInAddition=FALSE;
-
-	  if ( event.key.keysym.mod & (KMOD_RCTRL) )
-	    RightCtrlWasPressedInAddition=TRUE;
-	  else RightCtrlWasPressedInAddition=FALSE;
-
-	  if ( event.key.keysym.mod & (KMOD_LALT | KMOD_RALT) )
-	    AltWasPressedInAddition=TRUE;
-	  else AltWasPressedInAddition=FALSE;
-	  */
-	  switch( event.key.keysym.sym )
-	    {
-	    case SDLK_KP_PLUS:
-	      CurrentlyKP_PLUS_Pressed=FALSE;
-	      break;
-	    case SDLK_KP_MINUS:
-	      CurrentlyKP_MINUS_Pressed=FALSE;
-	      break;
-	    case SDLK_KP_MULTIPLY:
-	      CurrentlyKP_MULTIPLY_Pressed=FALSE;
-	      break;
-	    case SDLK_KP_DIVIDE:
-	      CurrentlyKP_DIVIDE_Pressed=FALSE;
-	      break;
-	    case SDLK_KP_ENTER:
-	      CurrentlyKP_ENTER_Pressed=FALSE;
-	      break;
-	    case SDLK_0:
-	      Currently0Pressed=FALSE;
-	      break;
-	    case SDLK_1:
-	      Currently1Pressed=FALSE;
-	      break;
-	    case SDLK_2:
-	      Currently2Pressed=FALSE;
-	      break;
-	    case SDLK_3:
-	      Currently3Pressed=FALSE;
-	      break;
-	    case SDLK_4:
-	      Currently4Pressed=FALSE;
-	      break;
-	    case SDLK_5:
-	      Currently5Pressed=FALSE;
-	      break;
-	    case SDLK_6:
-	      Currently6Pressed=FALSE;
-	      break;
-	    case SDLK_7:
-	      Currently7Pressed=FALSE;
-	      break;
-	    case SDLK_8:
-	      Currently8Pressed=FALSE;
-	      break;
-	    case SDLK_9:
-	      Currently9Pressed=FALSE;
-	      break;
-	    case SDLK_KP0:
-	      CurrentlyKP0Pressed=FALSE;
-	      break;
-	    case SDLK_KP1:
-	      CurrentlyKP1Pressed=FALSE;
-	      break;
-	    case SDLK_KP2:
-	      CurrentlyKP2Pressed=FALSE;
-	      break;
-	    case SDLK_KP3:
-	      CurrentlyKP3Pressed=FALSE;
-	      break;
-	    case SDLK_KP4:
-	      CurrentlyKP4Pressed=FALSE;
-	      break;
-	    case SDLK_KP5:
-	      CurrentlyKP5Pressed=FALSE;
-	      break;
-	    case SDLK_KP6:
-	      CurrentlyKP6Pressed=FALSE;
-	      break;
-	    case SDLK_KP7:
-	      CurrentlyKP7Pressed=FALSE;
-	      break;
-	    case SDLK_KP8:
-	      CurrentlyKP8Pressed=FALSE;
-	      break;
-	    case SDLK_KP9:
-	      CurrentlyKP9Pressed=FALSE;
-	      break;
-	    case SDLK_F1:
-	      CurrentlyF1Pressed=FALSE;
-	      break;
-	    case SDLK_F2:
-	      CurrentlyF2Pressed=FALSE;
-	      break;
-	    case SDLK_F3:
-	      CurrentlyF3Pressed=FALSE;
-	      break;
-	    case SDLK_F4:
-	      CurrentlyF4Pressed=FALSE;
-	      break;
-	    case SDLK_F5:
-	      CurrentlyF5Pressed=FALSE;
-	      break;
-	    case SDLK_F6:
-	      CurrentlyF6Pressed=FALSE;
-	      break;
-	    case SDLK_F7:
-	      CurrentlyF7Pressed=FALSE;
-	      break;
-	    case SDLK_F8:
-	      CurrentlyF8Pressed=FALSE;
-	      break;
-	    case SDLK_F9:
-	      CurrentlyF9Pressed=FALSE;
-	      break;
-	    case SDLK_F10:
-	      CurrentlyF10Pressed=FALSE;
-	      break;
-	    case SDLK_F11:
-	      CurrentlyF11Pressed=FALSE;
-	      break;
-	    case SDLK_F12:
-	      CurrentlyF12Pressed=FALSE;
-	      break;
-	    case SDLK_BACKSPACE:
-	      CurrentlyBackspacePressed=FALSE;
-	      break;
-	    case SDLK_LCTRL:
-	      CurrentlyLeftCtrlPressed=FALSE;
-	      break;
-	    case SDLK_LEFT:
-	      CurrentlyLeftPressed=FALSE;
-	      break;
-	    case SDLK_RIGHT:
-	      CurrentlyRightPressed=FALSE;
-	      break;
-	    case SDLK_UP:
-	      CurrentlyUpPressed=FALSE;
-	      break;
-	    case SDLK_DOWN:
-	      CurrentlyDownPressed=FALSE;
-	      break;
-	    case SDLK_SPACE:
-	      CurrentlySpacePressed=FALSE;
-	      break;
-	    case SDLK_RETURN:
-	      CurrentlyEnterPressed=FALSE;
-	      break;
-	    case SDLK_a:
-	      CurrentlyAPressed=FALSE;
-	      break;
-	    case SDLK_b:
-	      CurrentlyBPressed=FALSE;
-	      break;
-	    case SDLK_c:
-	      CurrentlyCPressed=FALSE;
-	      break;
-	    case SDLK_d:
-	      CurrentlyDPressed=FALSE;
-	      break;
-	    case SDLK_e:
-	      CurrentlyEPressed=FALSE;
-	      break;
-	    case SDLK_f:
-	      CurrentlyFPressed=FALSE;
-	      break;
-	    case SDLK_g:
-	      CurrentlyGPressed=FALSE;
-	      break;
-	    case SDLK_h:
-	      CurrentlyHPressed=FALSE;
-	      break;
-	    case SDLK_i:
-	      CurrentlyIPressed=FALSE;
-	      break;
-	    case SDLK_j:
-	      CurrentlyJPressed=FALSE;
-	      break;
-	    case SDLK_k:
-	      CurrentlyKPressed=FALSE;
-	      break;
-	    case SDLK_l:
-	      CurrentlyLPressed=FALSE;
-	      break;
-	    case SDLK_m:
-	      CurrentlyMPressed=FALSE;
-	      break;
-	    case SDLK_n:
-	      CurrentlyNPressed=FALSE;
-	      break;
-	    case SDLK_o:
-	      CurrentlyOPressed=FALSE;
-	      break;
-	    case SDLK_p:
-	      CurrentlyPPressed=FALSE;
-	      break;
-	    case SDLK_q:
-	      CurrentlyQPressed=FALSE;
-	      break;
-	    case SDLK_r:
-	      CurrentlyRPressed=FALSE;
-	      break;
-	    case SDLK_s:
-	      CurrentlySPressed=FALSE;
-	      break;
-	    case SDLK_t:
-	      CurrentlyTPressed=FALSE;
-	      break;
-	    case SDLK_u:
-	      CurrentlyUPressed=FALSE;
-	      break;
-	    case SDLK_v:
-	      CurrentlyVPressed=FALSE;
-	      break;
-	    case SDLK_w:
-	      CurrentlyWPressed=FALSE;
-	      break;
-	    case SDLK_x:
-	      CurrentlyXPressed=FALSE;
-	      break;
-	    case SDLK_y:
-	      CurrentlyYPressed=FALSE;
-	      break;
-	    case SDLK_z:
-	      CurrentlyZPressed=FALSE;
-	      break;
-	    case SDLK_ESCAPE:
-	      CurrentlyEscapePressed=FALSE;
-	      break;
-	    case SDLK_TAB:
-	      CurrentlyTabPressed=FALSE;
-	      break;
-	    case SDLK_RSHIFT:
-	      CurrentlyShiftPressed=FALSE;
-	      break;
-	    case SDLK_LSHIFT:
-	      CurrentlyShiftPressed=FALSE;
-	      break;
-	    default:
-	      break;
-	    }
-	  break;
-
-	case SDL_JOYAXISMOTION:
-	  axis = event.jaxis.axis;
-	  if (axis == 0 || ((joy_num_axes >= 5) && (axis == 3)) ) /* x-axis */
-	    {
-	      input_axis.x = event.jaxis.value;
-
-	      if (event.jaxis.value > joy_sensitivity*1000)   /* about half tilted */
-		{
-		  CurrentlyRightPressed = TRUE;
-		  CurrentlyLeftPressed = FALSE;
-		}
-	      else if (event.jaxis.value <  -joy_sensitivity*1000)
-		{
-		  CurrentlyLeftPressed = TRUE;
-		  CurrentlyRightPressed = FALSE;
-		}
-	      else
-		{
-		  CurrentlyLeftPressed = FALSE;
-		  CurrentlyRightPressed= FALSE;
-		}
-	    }
-	  else if ((axis == 1) || ((joy_num_axes >=5) && (axis == 4))) /* y-axis */
-	    {
-	      input_axis.y = event.jaxis.value;
-
-	      if (event.jaxis.value > joy_sensitivity*1000)  
-		{
-		  CurrentlyDownPressed = TRUE;
-		  CurrentlyUpPressed = FALSE;
-		}
-	      else if (event.jaxis.value < -joy_sensitivity*1000)
-		{
-		  CurrentlyUpPressed = TRUE;
-		  CurrentlyDownPressed = FALSE;
-		}
-	      else
-		{
-		  CurrentlyUpPressed = FALSE;
-		  CurrentlyDownPressed= FALSE;
-		}
-	    }
+	    case SDL_QUIT:
+		printf("\n\nUser requestet Termination...\n\nTerminating...");
+		Terminate(0);
+		break;
+		/* Look for a keypress */
+	    case SDL_KEYDOWN:
 		
-	  break;
-	  
-	case SDL_JOYBUTTONDOWN:
-	  CurrentlySpacePressed = TRUE;
-	  axis_is_active = TRUE;
-	  break;
-
-	case SDL_JOYBUTTONUP:
-	  CurrentlySpacePressed = FALSE;
-	  axis_is_active = FALSE;
-	  break;
-
-	case SDL_MOUSEMOTION:
-	    input_axis . x = event . button . x - UserCenter_x  ;
-	    input_axis . y = event . button . y - UserCenter_y  ;
-	    CurrentMouseAbsPos.x = event.button.x;
-	    CurrentMouseAbsPos.y = event.button.y;
-
-	    //--------------------
-	    // Now maybe the crosshair mouse cursor shape is currently
-	    // selected.  In this case of course we must shift the click
-	    // position a bit, since the crosshair pointer pixel is in the
-	    // middle of the mouse cursor, not in the top left as with the
-	    // other mouse cursor shapes...
-	    //
-	    if ( current_mouse_cursor_shape == MOUSE_CURSOR_CROSSHAIR_SHAPE )
-	    {
-		input_axis . x += 16 ; 
-		input_axis . y += 16 ; 
-		CurrentMouseAbsPos . x += 16 ;
-		CurrentMouseAbsPos . y += 16 ;
-	    }
-
-	  break;
-	  
-	case SDL_MOUSEBUTTONDOWN:
-	    input_axis.x = event.button.x - UserCenter_x ; 
-	    input_axis.y = event.button.y - UserCenter_y ; 	  
-	    CurrentMouseAbsPos.x = event.button.x;
-	    CurrentMouseAbsPos.y = event.button.y;
-
-	    //--------------------
-	    // Now maybe the crosshair mouse cursor shape is currently
-	    // selected.  In this case of course we must shift the click
-	    // position a bit, since the crosshair pointer pixel is in the
-	    // middle of the mouse cursor, not in the top left as with the
-	    // other mouse cursor shapes...
-	    //
-	    if ( current_mouse_cursor_shape == MOUSE_CURSOR_CROSSHAIR_SHAPE )
-	    {
-		input_axis . x += 16 ; 
-		input_axis . y += 16 ; 
-		CurrentMouseAbsPos . x += 16 ;
-		CurrentMouseAbsPos . y += 16 ;
-	    }
-
-	    if ( ( ClientMode ) && ( ! ServerMode ) ) SendPlayerMouseButtonEventToServer ( event );
-
-	    if ( event.button.button == SDL_BUTTON_LEFT )
-	    {
+		if ( ( ClientMode ) && ( ! ServerMode ) ) SendPlayerKeyboardEventToServer ( event );
+		
+		// printf("\nSLD_KEYDOWN event detected...");
+		// fflush(stdout);
+		
+		// Check for some additional modifiers and set flags accordingly
+		if ( event.key.keysym.mod & (KMOD_LSHIFT | KMOD_RSHIFT) )
+		    ShiftWasPressedInAddition=TRUE;
+		else ShiftWasPressedInAddition=FALSE;
+		
+		if ( event.key.keysym.mod & (KMOD_LSHIFT) )
+		    LeftShiftWasPressedInAddition=TRUE;
+		else LeftShiftWasPressedInAddition=FALSE;
+		
+		if ( event.key.keysym.mod & (KMOD_RSHIFT) )
+		    RightShiftWasPressedInAddition=TRUE;
+		else RightShiftWasPressedInAddition=FALSE;
+		
+		if ( event.key.keysym.mod & (KMOD_LCTRL | KMOD_RCTRL) )
+		{
+		    CtrlWasPressedInAddition=TRUE;
+		}
+		else CtrlWasPressedInAddition=FALSE;
+		
+		if ( event.key.keysym.mod & (KMOD_LCTRL) ) LeftCtrlWasPressedInAddition=TRUE;
+		else LeftCtrlWasPressedInAddition=FALSE;
+		if ( event.key.keysym.mod & (KMOD_RCTRL) ) RightCtrlWasPressedInAddition=TRUE;
+		else RightCtrlWasPressedInAddition=FALSE;
+		
+		if ( event.key.keysym.mod & (KMOD_LALT | KMOD_RALT) )
+		    AltWasPressedInAddition=TRUE;
+		else AltWasPressedInAddition=FALSE;
+		
+		if ( event.key.keysym.mod & ( KMOD_LALT ) )
+		    LeftAltWasPressedInAddition=TRUE;
+		else LeftAltWasPressedInAddition=FALSE;
+		
+		if ( event.key.keysym.mod & ( KMOD_RALT ) )
+		    RightAltWasPressedInAddition=TRUE;
+		else RightAltWasPressedInAddition=FALSE;
+		
+		/* Check the SDLKey values */
+		switch( event.key.keysym.sym )
+		{
+		    case SDLK_KP_PLUS:
+			CurrentlyKP_PLUS_Pressed=TRUE;
+			break;
+		    case SDLK_KP_MINUS:
+			CurrentlyKP_MINUS_Pressed=TRUE;
+			break;
+		    case SDLK_KP_MULTIPLY:
+			CurrentlyKP_MULTIPLY_Pressed=TRUE;
+			break;
+		    case SDLK_KP_DIVIDE:
+			CurrentlyKP_DIVIDE_Pressed=TRUE;
+			break;
+		    case SDLK_KP_ENTER:
+			CurrentlyKP_ENTER_Pressed=TRUE;
+			break;
+		    case SDLK_0:
+			Currently0Pressed=TRUE;
+			break;
+		    case SDLK_1:
+			Currently1Pressed=TRUE;
+			break;
+		    case SDLK_2:
+			Currently2Pressed=TRUE;
+			break;
+		    case SDLK_3:
+			Currently3Pressed=TRUE;
+			break;
+		    case SDLK_4:
+			Currently4Pressed=TRUE;
+			break;
+		    case SDLK_5:
+			Currently5Pressed=TRUE;
+			break;
+		    case SDLK_6:
+			Currently6Pressed=TRUE;
+			break;
+		    case SDLK_7:
+			Currently7Pressed=TRUE;
+			break;
+		    case SDLK_8:
+			Currently8Pressed=TRUE;
+			break;
+		    case SDLK_9:
+			Currently9Pressed=TRUE;
+			break;
+		    case SDLK_KP0:
+			CurrentlyKP0Pressed=TRUE;
+			break;
+		    case SDLK_KP1:
+			CurrentlyKP1Pressed=TRUE;
+			break;
+		    case SDLK_KP2:
+			CurrentlyKP2Pressed=TRUE;
+			break;
+		    case SDLK_KP3:
+			CurrentlyKP3Pressed=TRUE;
+			break;
+		    case SDLK_KP4:
+			CurrentlyKP4Pressed=TRUE;
+			break;
+		    case SDLK_KP5:
+			CurrentlyKP5Pressed=TRUE;
+			break;
+		    case SDLK_KP6:
+			CurrentlyKP6Pressed=TRUE;
+			break;
+		    case SDLK_KP7:
+			CurrentlyKP7Pressed=TRUE;
+			break;
+		    case SDLK_KP8:
+			CurrentlyKP8Pressed=TRUE;
+			break;
+		    case SDLK_KP9:
+			CurrentlyKP9Pressed=TRUE;
+			break;
+		    case SDLK_F1:
+			CurrentlyF1Pressed=TRUE;
+			break;
+		    case SDLK_F2:
+			CurrentlyF2Pressed=TRUE;
+			break;
+		    case SDLK_F3:
+			CurrentlyF3Pressed=TRUE;
+			break;
+		    case SDLK_F4:
+			CurrentlyF4Pressed=TRUE;
+			break;
+		    case SDLK_F5:
+			CurrentlyF5Pressed=TRUE;
+			break;
+		    case SDLK_F6:
+			CurrentlyF6Pressed=TRUE;
+			break;
+		    case SDLK_F7:
+			CurrentlyF7Pressed=TRUE;
+			break;
+		    case SDLK_F8:
+			CurrentlyF8Pressed=TRUE;
+			break;
+		    case SDLK_F9:
+			CurrentlyF9Pressed=TRUE;
+			break;
+		    case SDLK_F10:
+			CurrentlyF10Pressed=TRUE;
+			break;
+		    case SDLK_F11:
+			CurrentlyF11Pressed=TRUE;
+			break;
+		    case SDLK_F12:
+			CurrentlyF12Pressed=TRUE;
+			TakeScreenshot();
+			break;
+		    case SDLK_BACKSPACE:
+			CurrentlyBackspacePressed=TRUE;
+			break;
+		    case SDLK_LCTRL:
+			CurrentlyLeftCtrlPressed=TRUE;
+			break;
+		    case SDLK_LEFT:
+			CurrentlyLeftPressed=TRUE;
+			break;
+		    case SDLK_RIGHT:
+			CurrentlyRightPressed=TRUE;
+			break;
+		    case SDLK_UP:
+			CurrentlyUpPressed=TRUE;
+			break;
+		    case SDLK_DOWN:
+			CurrentlyDownPressed=TRUE;
+			break;
+		    case SDLK_SPACE:
+			CurrentlySpacePressed=TRUE;
+			break;
+		    case SDLK_RETURN:
+			CurrentlyEnterPressed=TRUE;
+			break;
+		    case SDLK_a:
+			CurrentlyAPressed=TRUE;
+			break;
+		    case SDLK_b:
+			CurrentlyBPressed=TRUE;
+			break;
+		    case SDLK_c:
+			CurrentlyCPressed=TRUE;
+			break;
+		    case SDLK_d:
+			CurrentlyDPressed=TRUE;
+			break;
+		    case SDLK_e:
+			CurrentlyEPressed=TRUE;
+			break;
+		    case SDLK_f:
+			CurrentlyFPressed=TRUE;
+			break;
+		    case SDLK_g:
+			CurrentlyGPressed=TRUE;
+			break;
+		    case SDLK_h:
+			CurrentlyHPressed=TRUE;
+			break;
+		    case SDLK_i:
+			CurrentlyIPressed=TRUE;
+			break;
+		    case SDLK_j:
+			CurrentlyJPressed=TRUE;
+			break;
+		    case SDLK_k:
+			CurrentlyKPressed=TRUE;
+			break;
+		    case SDLK_l:
+			CurrentlyLPressed=TRUE;
+			break;
+		    case SDLK_m:
+			CurrentlyMPressed=TRUE;
+			break;
+		    case SDLK_n:
+			CurrentlyNPressed=TRUE;
+			break;
+		    case SDLK_o:
+			CurrentlyOPressed=TRUE;
+			break;
+		    case SDLK_p:
+			CurrentlyPPressed=TRUE;
+			break;
+		    case SDLK_q:
+			CurrentlyQPressed=TRUE;
+			break;
+		    case SDLK_r:
+			CurrentlyRPressed=TRUE;
+			break;
+		    case SDLK_s:
+			CurrentlySPressed=TRUE;
+			break;
+		    case SDLK_t:
+			CurrentlyTPressed=TRUE;
+			break;
+		    case SDLK_u:
+			CurrentlyUPressed=TRUE;
+			break;
+		    case SDLK_v:
+			CurrentlyVPressed=TRUE;
+			break;
+		    case SDLK_w:
+			CurrentlyWPressed=TRUE;
+			break;
+		    case SDLK_x:
+			CurrentlyXPressed=TRUE;
+			break;
+		    case SDLK_y:
+			CurrentlyYPressed=TRUE;
+			break;
+		    case SDLK_z:
+			CurrentlyZPressed=TRUE;
+			break;
+		    case SDLK_ESCAPE:
+			CurrentlyEscapePressed=TRUE;
+			break;
+		    case SDLK_TAB:
+			CurrentlyTabPressed=TRUE;
+			break;
+		    case SDLK_RSHIFT:
+			CurrentlyShiftPressed=TRUE;
+			break;
+		    case SDLK_LSHIFT:
+			CurrentlyShiftPressed=TRUE;
+			break;
+		    default:
+			/*
+			  printf("\n\nUnhandled keystroke!! Terminating...\n\n");
+			  Terminate(ERR);
+			*/
+			break;
+		}
+		break;
+		/* We must also use the SDL_KEYUP events to zero the x */
+		/* and y velocity variables. But we must also be       */
+		/* careful not to zero the velocities when we shouldn't*/
+	    case SDL_KEYUP:
+		
+		if ( ( ClientMode ) && ( ! ServerMode ) ) SendPlayerKeyboardEventToServer ( event );
+		
+		// printf("\nSLD_KEYUP event detected...");
+		// fflush(stdout);
+		
+		// Check for some additional modifiers and set flags accordingly
+		
+		/*
+		  if ( event.key.keysym.mod & (KMOD_LSHIFT | KMOD_RSHIFT) )
+		  ShiftWasPressedInAddition=TRUE;
+		  else ShiftWasPressedInAddition=FALSE;
+		  
+		  if ( event.key.keysym.mod & (KMOD_LCTRL | KMOD_RCTRL) )
+		  CtrlWasPressedInAddition=TRUE;
+		  else CtrlWasPressedInAddition=FALSE;
+		  
+		  if ( event.key.keysym.mod & (KMOD_LCTRL) )
+		  LeftCtrlWasPressedInAddition=TRUE;
+		  else LeftCtrlWasPressedInAddition=FALSE;
+		  
+		  if ( event.key.keysym.mod & (KMOD_RCTRL) )
+		  RightCtrlWasPressedInAddition=TRUE;
+		  else RightCtrlWasPressedInAddition=FALSE;
+		  
+		  if ( event.key.keysym.mod & (KMOD_LALT | KMOD_RALT) )
+		  AltWasPressedInAddition=TRUE;
+		  else AltWasPressedInAddition=FALSE;
+		*/
+		switch( event.key.keysym.sym )
+		{
+		    case SDLK_KP_PLUS:
+			CurrentlyKP_PLUS_Pressed=FALSE;
+			break;
+		    case SDLK_KP_MINUS:
+			CurrentlyKP_MINUS_Pressed=FALSE;
+			break;
+		    case SDLK_KP_MULTIPLY:
+			CurrentlyKP_MULTIPLY_Pressed=FALSE;
+			break;
+		    case SDLK_KP_DIVIDE:
+			CurrentlyKP_DIVIDE_Pressed=FALSE;
+			break;
+		    case SDLK_KP_ENTER:
+			CurrentlyKP_ENTER_Pressed=FALSE;
+			break;
+		    case SDLK_0:
+			Currently0Pressed=FALSE;
+			break;
+		    case SDLK_1:
+			Currently1Pressed=FALSE;
+			break;
+		    case SDLK_2:
+			Currently2Pressed=FALSE;
+			break;
+		    case SDLK_3:
+			Currently3Pressed=FALSE;
+			break;
+		    case SDLK_4:
+			Currently4Pressed=FALSE;
+			break;
+		    case SDLK_5:
+			Currently5Pressed=FALSE;
+			break;
+		    case SDLK_6:
+			Currently6Pressed=FALSE;
+			break;
+		    case SDLK_7:
+			Currently7Pressed=FALSE;
+			break;
+		    case SDLK_8:
+			Currently8Pressed=FALSE;
+			break;
+		    case SDLK_9:
+			Currently9Pressed=FALSE;
+			break;
+		    case SDLK_KP0:
+			CurrentlyKP0Pressed=FALSE;
+			break;
+		    case SDLK_KP1:
+			CurrentlyKP1Pressed=FALSE;
+			break;
+		    case SDLK_KP2:
+			CurrentlyKP2Pressed=FALSE;
+			break;
+		    case SDLK_KP3:
+			CurrentlyKP3Pressed=FALSE;
+			break;
+		    case SDLK_KP4:
+			CurrentlyKP4Pressed=FALSE;
+			break;
+		    case SDLK_KP5:
+			CurrentlyKP5Pressed=FALSE;
+			break;
+		    case SDLK_KP6:
+			CurrentlyKP6Pressed=FALSE;
+			break;
+		    case SDLK_KP7:
+			CurrentlyKP7Pressed=FALSE;
+			break;
+		    case SDLK_KP8:
+			CurrentlyKP8Pressed=FALSE;
+			break;
+		    case SDLK_KP9:
+			CurrentlyKP9Pressed=FALSE;
+			break;
+		    case SDLK_F1:
+			CurrentlyF1Pressed=FALSE;
+			break;
+		    case SDLK_F2:
+			CurrentlyF2Pressed=FALSE;
+			break;
+		    case SDLK_F3:
+			CurrentlyF3Pressed=FALSE;
+			break;
+		    case SDLK_F4:
+			CurrentlyF4Pressed=FALSE;
+			break;
+		    case SDLK_F5:
+			CurrentlyF5Pressed=FALSE;
+			break;
+		    case SDLK_F6:
+			CurrentlyF6Pressed=FALSE;
+			break;
+		    case SDLK_F7:
+			CurrentlyF7Pressed=FALSE;
+			break;
+		    case SDLK_F8:
+			CurrentlyF8Pressed=FALSE;
+			break;
+		    case SDLK_F9:
+			CurrentlyF9Pressed=FALSE;
+			break;
+		    case SDLK_F10:
+			CurrentlyF10Pressed=FALSE;
+			break;
+		    case SDLK_F11:
+			CurrentlyF11Pressed=FALSE;
+			break;
+		    case SDLK_F12:
+			CurrentlyF12Pressed=FALSE;
+			break;
+		    case SDLK_BACKSPACE:
+			CurrentlyBackspacePressed=FALSE;
+			break;
+		    case SDLK_LCTRL:
+			CurrentlyLeftCtrlPressed=FALSE;
+			break;
+		    case SDLK_LEFT:
+			CurrentlyLeftPressed=FALSE;
+			break;
+		    case SDLK_RIGHT:
+			CurrentlyRightPressed=FALSE;
+			break;
+		    case SDLK_UP:
+			CurrentlyUpPressed=FALSE;
+			break;
+		    case SDLK_DOWN:
+			CurrentlyDownPressed=FALSE;
+			break;
+		    case SDLK_SPACE:
+			CurrentlySpacePressed=FALSE;
+			break;
+		    case SDLK_RETURN:
+			CurrentlyEnterPressed=FALSE;
+			break;
+		    case SDLK_a:
+			CurrentlyAPressed=FALSE;
+			break;
+		    case SDLK_b:
+			CurrentlyBPressed=FALSE;
+			break;
+		    case SDLK_c:
+			CurrentlyCPressed=FALSE;
+			break;
+		    case SDLK_d:
+			CurrentlyDPressed=FALSE;
+			break;
+		    case SDLK_e:
+			CurrentlyEPressed=FALSE;
+			break;
+		    case SDLK_f:
+			CurrentlyFPressed=FALSE;
+			break;
+		    case SDLK_g:
+			CurrentlyGPressed=FALSE;
+			break;
+		    case SDLK_h:
+			CurrentlyHPressed=FALSE;
+			break;
+		    case SDLK_i:
+			CurrentlyIPressed=FALSE;
+			break;
+		    case SDLK_j:
+			CurrentlyJPressed=FALSE;
+			break;
+		    case SDLK_k:
+			CurrentlyKPressed=FALSE;
+			break;
+		    case SDLK_l:
+			CurrentlyLPressed=FALSE;
+			break;
+		    case SDLK_m:
+			CurrentlyMPressed=FALSE;
+			break;
+		    case SDLK_n:
+			CurrentlyNPressed=FALSE;
+			break;
+		    case SDLK_o:
+			CurrentlyOPressed=FALSE;
+			break;
+		    case SDLK_p:
+			CurrentlyPPressed=FALSE;
+			break;
+		    case SDLK_q:
+			CurrentlyQPressed=FALSE;
+			break;
+		    case SDLK_r:
+			CurrentlyRPressed=FALSE;
+			break;
+		    case SDLK_s:
+			CurrentlySPressed=FALSE;
+			break;
+		    case SDLK_t:
+			CurrentlyTPressed=FALSE;
+			break;
+		    case SDLK_u:
+			CurrentlyUPressed=FALSE;
+			break;
+		    case SDLK_v:
+			CurrentlyVPressed=FALSE;
+			break;
+		    case SDLK_w:
+			CurrentlyWPressed=FALSE;
+			break;
+		    case SDLK_x:
+			CurrentlyXPressed=FALSE;
+			break;
+		    case SDLK_y:
+			CurrentlyYPressed=FALSE;
+			break;
+		    case SDLK_z:
+			CurrentlyZPressed=FALSE;
+			break;
+		    case SDLK_ESCAPE:
+			CurrentlyEscapePressed=FALSE;
+			break;
+		    case SDLK_TAB:
+			CurrentlyTabPressed=FALSE;
+			break;
+		    case SDLK_RSHIFT:
+			CurrentlyShiftPressed=FALSE;
+			break;
+		    case SDLK_LSHIFT:
+			CurrentlyShiftPressed=FALSE;
+			break;
+		    default:
+			break;
+		}
+		break;
+		
+	    case SDL_JOYAXISMOTION:
+		axis = event.jaxis.axis;
+		if (axis == 0 || ((joy_num_axes >= 5) && (axis == 3)) ) /* x-axis */
+		{
+		    input_axis.x = event.jaxis.value;
+		    
+		    if (event.jaxis.value > joy_sensitivity*1000)   /* about half tilted */
+		    {
+			CurrentlyRightPressed = TRUE;
+			CurrentlyLeftPressed = FALSE;
+		    }
+		    else if (event.jaxis.value <  -joy_sensitivity*1000)
+		    {
+			CurrentlyLeftPressed = TRUE;
+			CurrentlyRightPressed = FALSE;
+		    }
+		    else
+		    {
+			CurrentlyLeftPressed = FALSE;
+			CurrentlyRightPressed= FALSE;
+		    }
+		}
+		else if ((axis == 1) || ((joy_num_axes >=5) && (axis == 4))) /* y-axis */
+		{
+		    input_axis.y = event.jaxis.value;
+		    
+		    if (event.jaxis.value > joy_sensitivity*1000)  
+		    {
+			CurrentlyDownPressed = TRUE;
+			CurrentlyUpPressed = FALSE;
+		    }
+		    else if (event.jaxis.value < -joy_sensitivity*1000)
+		    {
+			CurrentlyUpPressed = TRUE;
+			CurrentlyDownPressed = FALSE;
+		    }
+		    else
+		    {
+			CurrentlyUpPressed = FALSE;
+			CurrentlyDownPressed= FALSE;
+		    }
+		}
+		
+		break;
+		
+	    case SDL_JOYBUTTONDOWN:
 		CurrentlySpacePressed = TRUE;
 		axis_is_active = TRUE;
-		CurrentlyMouseLeftPressed = TRUE;
-		// DebugPrintf ( 0 , "\nLeft button press registered..." );
+		break;
+		
+	    case SDL_JOYBUTTONUP:
+		CurrentlySpacePressed = FALSE;
+		axis_is_active = FALSE;
+		break;
+		
+	    case SDL_MOUSEMOTION:
+		input_axis . x = event . button . x - UserCenter_x  ;
+		input_axis . y = event . button . y - UserCenter_y  ;
+		CurrentMouseAbsPos.x = event.button.x;
+		CurrentMouseAbsPos.y = event.button.y;
 		
 		//--------------------
-		// It is possible to completely freeze freedroidRPG by holding down the left
-		// mouse button continuously while striking again (the second time).  Therefore
-		// we must terminate out of this right here.
+		// Now maybe the crosshair mouse cursor shape is currently
+		// selected.  In this case of course we must shift the click
+		// position a bit, since the crosshair pointer pixel is in the
+		// middle of the mouse cursor, not in the top left as with the
+		// other mouse cursor shapes...
 		//
-		return ( 0 ) ; 
-	    }
-
-	    if ( event.button.button == SDL_BUTTON_RIGHT )	   
-		CurrentlyMouseRightPressed = TRUE;
-
-	    //--------------------
-	    // We need to add come conditional compilation here, so that 
-	    // on some systems, where the SDL version is < 1.2.5 the code
-	    // still compiles without much trouble. (At least so we hope :)
-	    //
+		if ( current_mouse_cursor_shape == MOUSE_CURSOR_CROSSHAIR_SHAPE )
+		{
+		    input_axis . x += 16 ; 
+		    input_axis . y += 16 ; 
+		    CurrentMouseAbsPos . x += 16 ;
+		    CurrentMouseAbsPos . y += 16 ;
+		}
+		
+		break;
+		
+	    case SDL_MOUSEBUTTONDOWN:
+		input_axis.x = event.button.x - UserCenter_x ; 
+		input_axis.y = event.button.y - UserCenter_y ; 	  
+		CurrentMouseAbsPos.x = event.button.x;
+		CurrentMouseAbsPos.y = event.button.y;
+		
+		//--------------------
+		// Now maybe the crosshair mouse cursor shape is currently
+		// selected.  In this case of course we must shift the click
+		// position a bit, since the crosshair pointer pixel is in the
+		// middle of the mouse cursor, not in the top left as with the
+		// other mouse cursor shapes...
+		//
+		if ( current_mouse_cursor_shape == MOUSE_CURSOR_CROSSHAIR_SHAPE )
+		{
+		    input_axis . x += 16 ; 
+		    input_axis . y += 16 ; 
+		    CurrentMouseAbsPos . x += 16 ;
+		    CurrentMouseAbsPos . y += 16 ;
+		}
+		
+		if ( ( ClientMode ) && ( ! ServerMode ) ) SendPlayerMouseButtonEventToServer ( event );
+		
+		if ( event.button.button == SDL_BUTTON_LEFT )
+		{
+		    CurrentlySpacePressed = TRUE;
+		    axis_is_active = TRUE;
+		    CurrentlyMouseLeftPressed = TRUE;
+		    // DebugPrintf ( 0 , "\nLeft button press registered..." );
+		    
+		    //--------------------
+		    // It is possible to completely freeze freedroidRPG by holding down the left
+		    // mouse button continuously while striking again (the second time).  Therefore
+		    // we must terminate out of this right here.
+		    //
+		    return ( 0 ) ; 
+		}
+		
+		if ( event.button.button == SDL_BUTTON_RIGHT )	   
+		    CurrentlyMouseRightPressed = TRUE;
+		
+		//--------------------
+		// We need to add come conditional compilation here, so that 
+		// on some systems, where the SDL version is < 1.2.5 the code
+		// still compiles without much trouble. (At least so we hope :)
+		//
 #ifdef SDL_BUTTON_WHEELUP 	
-	    if ( event.button.button == SDL_BUTTON_WHEELUP )
-	    {
-		CurrentlyMouseWheelUpPressed = TRUE;
-		MouseWheelUpMovesRecorded ++ ;
-		DebugPrintf( 1 , "\n\nMOUSE WHEEL ACTION UP DETECTED!!!");
-	    }
-	    if ( event.button.button == SDL_BUTTON_WHEELDOWN )
-	    {
-		CurrentlyMouseWheelDownPressed = TRUE;
-		MouseWheelDownMovesRecorded ++ ;
-		DebugPrintf( 1 , "\n\nMOUSE WHEEL ACTION DOWN DETECTED!!!");
-	    }
+		if ( event.button.button == SDL_BUTTON_WHEELUP )
+		{
+		    CurrentlyMouseWheelUpPressed = TRUE;
+		    MouseWheelUpMovesRecorded ++ ;
+		    DebugPrintf( 1 , "\n\nMOUSE WHEEL ACTION UP DETECTED!!!");
+		}
+		if ( event.button.button == SDL_BUTTON_WHEELDOWN )
+		{
+		    CurrentlyMouseWheelDownPressed = TRUE;
+		    MouseWheelDownMovesRecorded ++ ;
+		    DebugPrintf( 1 , "\n\nMOUSE WHEEL ACTION DOWN DETECTED!!!");
+		}
 #endif
-	    break;
-
-        case SDL_MOUSEBUTTONUP:
-
-	  input_axis.x = event.button.x - UserCenter_x + 16; 
-	  input_axis.y = event.button.y - UserCenter_y + 16; 	  
-	  CurrentMouseAbsPos.x = event.button.x;
-	  CurrentMouseAbsPos.y = event.button.y;
-
-	  if ( ( ClientMode ) && ( ! ServerMode ) ) SendPlayerMouseButtonEventToServer ( event );
-
-	  if (event.button.button == SDL_BUTTON_LEFT)
-	    {
-	      CurrentlySpacePressed = FALSE;
-	      axis_is_active = FALSE;
-	    }
-
-	  if (event.button.button == SDL_BUTTON_RIGHT)
-	    CurrentlyMouseRightPressed = FALSE;
-
-	  //--------------------
-	  // We need to add come conditional compilation here, so that 
-	  // on some systems, where the SDL version is < 1.2.5 the code
-	  // still compiles without much trouble. (At least so we hope :)
-	  //
+		break;
+		
+	    case SDL_MOUSEBUTTONUP:
+		
+		input_axis.x = event.button.x - UserCenter_x + 16; 
+		input_axis.y = event.button.y - UserCenter_y + 16; 	  
+		CurrentMouseAbsPos.x = event.button.x;
+		CurrentMouseAbsPos.y = event.button.y;
+		
+		if ( ( ClientMode ) && ( ! ServerMode ) ) SendPlayerMouseButtonEventToServer ( event );
+		
+		if (event.button.button == SDL_BUTTON_LEFT)
+		{
+		    CurrentlySpacePressed = FALSE;
+		    axis_is_active = FALSE;
+		}
+		
+		if (event.button.button == SDL_BUTTON_RIGHT)
+		    CurrentlyMouseRightPressed = FALSE;
+		
+		//--------------------
+		// We need to add come conditional compilation here, so that 
+		// on some systems, where the SDL version is < 1.2.5 the code
+		// still compiles without much trouble. (At least so we hope :)
+		//
 #ifdef SDL_BUTTON_WHEELUP 
-	  if ( event.button.button == SDL_BUTTON_WHEELUP )
-	    {
-	      CurrentlyMouseWheelUpPressed = FALSE ;
-	      DebugPrintf( 1 , "\n\nMOUSE WHEEL ACTION UP STOPPED!!!");
-	    }
-	  if ( event.button.button == SDL_BUTTON_WHEELDOWN )
-	    {
-	      CurrentlyMouseWheelDownPressed = FALSE;
-	      DebugPrintf( 1 , "\n\nMOUSE WHEEL ACTION DOWN STOPPED!!!");
-	    }
+		if ( event.button.button == SDL_BUTTON_WHEELUP )
+		{
+		    CurrentlyMouseWheelUpPressed = FALSE ;
+		    DebugPrintf( 1 , "\n\nMOUSE WHEEL ACTION UP STOPPED!!!");
+		}
+		if ( event.button.button == SDL_BUTTON_WHEELDOWN )
+		{
+		    CurrentlyMouseWheelDownPressed = FALSE;
+		    DebugPrintf( 1 , "\n\nMOUSE WHEEL ACTION DOWN STOPPED!!!");
+		}
 #endif
-
-	  break;
-
-
- 	default:
- 	  break;
+		
+		break;
+		
+		
+	    default:
+		break;
  	}
-
+	
     }
-
-  return 0;
+    
+    return 0;
 }
 
 /*-----------------------------------------------------------------
@@ -1820,556 +1843,556 @@ keyboard_update(void)
 int
 getchar_raw (void)
 {
-  SDL_Event event;
-  int Returnkey;
-
-  //  keyboard_update ();   /* treat all pending keyboard-events */
-
-  while (1)
+    SDL_Event event;
+    int Returnkey;
+    
+    //  keyboard_update ();   /* treat all pending keyboard-events */
+    
+    while (1)
     {
-      SDL_WaitEvent (&event);    /* wait for next event */
-      
-      if (event.type == SDL_KEYDOWN)
+	SDL_WaitEvent (&event);    /* wait for next event */
+	
+	if (event.type == SDL_KEYDOWN)
 	{
-	  /* 
-	   * here we use the fact that, I cite from SDL_keyboard.h:
-	   * "The keyboard syms have been cleverly chosen to map to ASCII"
-	   * ... I hope that this design feature is portable, and durable ;)  
-	   */
-	  Returnkey = (int) event.key.keysym.sym;
-	  if ( event.key.keysym.mod & KMOD_SHIFT ) Returnkey = toupper( (int)event.key.keysym.sym );
-	  DebugPrintf (3, "getchar_raw() returns key-code: %d\n", Returnkey);
-	  return ( Returnkey );
+	    /* 
+	     * here we use the fact that, I cite from SDL_keyboard.h:
+	     * "The keyboard syms have been cleverly chosen to map to ASCII"
+	     * ... I hope that this design feature is portable, and durable ;)  
+	     */
+	    Returnkey = (int) event.key.keysym.sym;
+	    if ( event.key.keysym.mod & KMOD_SHIFT ) Returnkey = toupper( (int)event.key.keysym.sym );
+	    DebugPrintf (3, "getchar_raw() returns key-code: %d\n", Returnkey);
+	    return ( Returnkey );
 	}
-      else if (event.type == SDL_KEYUP)
+	else if (event.type == SDL_KEYUP)
 	{
-
-	  UnsetAllKeys ();  // we don't want to get any 'stuck' keys, and after entering
-	                    // text, I'm sure no key still has to be pressed...
-
-	  // do nothing here, but don't push this event either
+	    
+	    UnsetAllKeys ();  // we don't want to get any 'stuck' keys, and after entering
+	    // text, I'm sure no key still has to be pressed...
+	    
+	    // do nothing here, but don't push this event either
 	}
-      else
+	else
 	{
-	  SDL_PushEvent (&event);  /* put this event back into the queue */
-	  keyboard_update ();  /* and treat it the usual way */
-	  continue;
+	    SDL_PushEvent (&event);  /* put this event back into the queue */
+	    keyboard_update ();  /* and treat it the usual way */
+	    continue;
 	}
-
+	
     } /* while(1) */
-
+    
 } /* getchar_raw() */
 
 
 int 
 KP_PLUS_Pressed (void)
 {
-  keyboard_update();
-  return CurrentlyKP_PLUS_Pressed;
+    keyboard_update();
+    return CurrentlyKP_PLUS_Pressed;
 }
 
 int 
 KP_MULTIPLY_Pressed (void)
 {
-  keyboard_update();
-  return CurrentlyKP_MULTIPLY_Pressed;
+    keyboard_update();
+    return CurrentlyKP_MULTIPLY_Pressed;
 }
 
 int 
 KP_MINUS_Pressed (void)
 {
-  keyboard_update();
-  return CurrentlyKP_MINUS_Pressed;
+    keyboard_update();
+    return CurrentlyKP_MINUS_Pressed;
 }
 
 int 
 KP_DIVIDE_Pressed (void)
 {
-  keyboard_update();
-  return CurrentlyKP_DIVIDE_Pressed;
+    keyboard_update();
+    return CurrentlyKP_DIVIDE_Pressed;
 }
 
 int 
 KP_ENTER_Pressed (void)
 {
-  keyboard_update();
-  return CurrentlyKP_ENTER_Pressed;
+    keyboard_update();
+    return CurrentlyKP_ENTER_Pressed;
 }
 
 int
 Number0Pressed (void)
 {
-  keyboard_update ();
-  return Currently0Pressed;
+    keyboard_update ();
+    return Currently0Pressed;
 }				// int KP0Pressed(void)
 
 int
 Number1Pressed (void)
 {
-  keyboard_update ();
-  return Currently1Pressed;
+    keyboard_update ();
+    return Currently1Pressed;
 }				// int KP1Pressed(void)
 
 int
 Number2Pressed (void)
 {
-  keyboard_update ();
-  return Currently2Pressed;
+    keyboard_update ();
+    return Currently2Pressed;
 }				// int KP2Pressed(void)
 
 int
 Number3Pressed (void)
 {
-  keyboard_update ();
-  return Currently3Pressed;
+    keyboard_update ();
+    return Currently3Pressed;
 }				// int KP3Pressed(void)
 
 int
 Number4Pressed (void)
 {
-  keyboard_update ();
-  return Currently4Pressed;
+    keyboard_update ();
+    return Currently4Pressed;
 }				// int KP4Pressed(void)
 
 int
 Number5Pressed (void)
 {
-  keyboard_update ();
-  return Currently5Pressed;
+    keyboard_update ();
+    return Currently5Pressed;
 }				// int KP5Pressed(void)
 
 int
 Number6Pressed (void)
 {
-  keyboard_update ();
-  return Currently6Pressed;
+    keyboard_update ();
+    return Currently6Pressed;
 }				// int KP6Pressed(void)
 
 int
 Number7Pressed (void)
 {
-  keyboard_update ();
-  return Currently7Pressed;
+    keyboard_update ();
+    return Currently7Pressed;
 }				// int KP7Pressed(void)
 
 int
 Number8Pressed (void)
 {
-  keyboard_update ();
-  return Currently8Pressed;
+    keyboard_update ();
+    return Currently8Pressed;
 }				// int KP8Pressed(void)
 
 int
 Number9Pressed (void)
 {
-  keyboard_update ();
-  return Currently9Pressed;
+    keyboard_update ();
+    return Currently9Pressed;
 }				// int KP9Pressed(void)
 
 int
 KP0Pressed (void)
 {
-  keyboard_update ();
-  return CurrentlyKP0Pressed;
+    keyboard_update ();
+    return CurrentlyKP0Pressed;
 }				// int KP0Pressed(void)
 
 int
 KP1Pressed (void)
 {
-  keyboard_update ();
-  return CurrentlyKP1Pressed;
+    keyboard_update ();
+    return CurrentlyKP1Pressed;
 }				// int KP1Pressed(void)
 
 int
 KP2Pressed (void)
 {
-  keyboard_update ();
-  return CurrentlyKP2Pressed;
+    keyboard_update ();
+    return CurrentlyKP2Pressed;
 }				// int KP2Pressed(void)
 
 int
 KP3Pressed (void)
 {
-  keyboard_update ();
-  return CurrentlyKP3Pressed;
+    keyboard_update ();
+    return CurrentlyKP3Pressed;
 }				// int KP3Pressed(void)
 
 int
 KP4Pressed (void)
 {
-  keyboard_update ();
-  return CurrentlyKP4Pressed;
+    keyboard_update ();
+    return CurrentlyKP4Pressed;
 }				// int KP4Pressed(void)
 
 int
 KP5Pressed (void)
 {
-  keyboard_update ();
-  return CurrentlyKP5Pressed;
+    keyboard_update ();
+    return CurrentlyKP5Pressed;
 }				// int KP5Pressed(void)
 
 int
 KP6Pressed (void)
 {
-  keyboard_update ();
-  return CurrentlyKP6Pressed;
+    keyboard_update ();
+    return CurrentlyKP6Pressed;
 }				// int KP6Pressed(void)
 
 int
 KP7Pressed (void)
 {
-  keyboard_update ();
-  return CurrentlyKP7Pressed;
+    keyboard_update ();
+    return CurrentlyKP7Pressed;
 }				// int KP7Pressed(void)
 
 int
 KP8Pressed (void)
 {
-  keyboard_update ();
-  return CurrentlyKP8Pressed;
+    keyboard_update ();
+    return CurrentlyKP8Pressed;
 }				// int KP8Pressed(void)
 
 int
 KP9Pressed (void)
 {
-  keyboard_update ();
-  return CurrentlyKP9Pressed;
+    keyboard_update ();
+    return CurrentlyKP9Pressed;
 }				// int KP9Pressed(void)
 
 int
 F1Pressed (void)
 {
-  keyboard_update ();
-  return CurrentlyF1Pressed;
+    keyboard_update ();
+    return CurrentlyF1Pressed;
 }				// int F1Pressed(void)
 
 int
 F2Pressed (void)
 {
-  keyboard_update ();
-  return CurrentlyF2Pressed;
+    keyboard_update ();
+    return CurrentlyF2Pressed;
 }				// int F2Pressed(void)
 
 int
 F3Pressed (void)
 {
-  keyboard_update ();
-  return CurrentlyF3Pressed;
+    keyboard_update ();
+    return CurrentlyF3Pressed;
 }				// int F3Pressed(void)
 
 int
 F4Pressed (void)
 {
-  keyboard_update ();
-  return CurrentlyF4Pressed;
+    keyboard_update ();
+    return CurrentlyF4Pressed;
 }				// int F4Pressed(void)
 
 int
 F5Pressed (void)
 {
-  keyboard_update ();
-  return CurrentlyF5Pressed;
+    keyboard_update ();
+    return CurrentlyF5Pressed;
 }				// int F5Pressed(void)
 
 int
 F6Pressed (void)
 {
-  keyboard_update ();
-  return CurrentlyF6Pressed;
+    keyboard_update ();
+    return CurrentlyF6Pressed;
 }				// int F6Pressed(void)
 
 int
 F7Pressed (void)
 {
-  keyboard_update ();
-  return CurrentlyF7Pressed;
+    keyboard_update ();
+    return CurrentlyF7Pressed;
 }				// int F7Pressed(void)
 
 int
 F8Pressed (void)
 {
-  keyboard_update ();
-  return CurrentlyF8Pressed;
+    keyboard_update ();
+    return CurrentlyF8Pressed;
 }				// int F8Pressed(void)
 
 int
 F9Pressed (void)
 {
-  keyboard_update ();
-  return CurrentlyF9Pressed;
+    keyboard_update ();
+    return CurrentlyF9Pressed;
 }				// int F9Pressed(void)
 
 int
 F10Pressed (void)
 {
-  keyboard_update ();
-  return CurrentlyF10Pressed;
+    keyboard_update ();
+    return CurrentlyF10Pressed;
 }				// int F10Pressed(void)
 
 int
 F11Pressed (void)
 {
-  keyboard_update ();
-  return CurrentlyF11Pressed;
+    keyboard_update ();
+    return CurrentlyF11Pressed;
 }				// int F11Pressed(void)
 
 int
 F12Pressed (void)
 {
-  keyboard_update ();
-  return CurrentlyF12Pressed;
+    keyboard_update ();
+    return CurrentlyF12Pressed;
 }				// int F12Pressed(void)
 
 int
 LeftPressed (void)
 {
-  keyboard_update ();
-  return CurrentlyLeftPressed;
+    keyboard_update ();
+    return CurrentlyLeftPressed;
 }				// int LeftPressed(void)
 
 int
 RightPressed (void)
 {
-  keyboard_update ();
-  return CurrentlyRightPressed;
+    keyboard_update ();
+    return CurrentlyRightPressed;
 }; // int RightPressed(void)
 
 int
 UpPressed (void)
 {
-  keyboard_update ();
-  return CurrentlyUpPressed;
+    keyboard_update ();
+    return CurrentlyUpPressed;
 }				// int UpPressed(void)
 
 int
 DownPressed (void)
 {
-  keyboard_update ();
-  return CurrentlyDownPressed;
+    keyboard_update ();
+    return CurrentlyDownPressed;
 }				// int DownPressed(void)
 
 int
 SpacePressed (void)
 {
-  keyboard_update ();
-  return CurrentlySpacePressed;
+    keyboard_update ();
+    return CurrentlySpacePressed;
 }				// int SpacePressed(void)
 
 int
 EnterPressed (void)
 {
-  keyboard_update ();
-  return CurrentlyEnterPressed;
+    keyboard_update ();
+    return CurrentlyEnterPressed;
 }				// int SpacePressed(void)
 
 int
 BackspacePressed (void)
 {
-  keyboard_update ();
-  return CurrentlyBackspacePressed;
+    keyboard_update ();
+    return CurrentlyBackspacePressed;
 }				// int SpacePressed(void)
 
 int
 LeftCtrlPressed (void)
 {
-  keyboard_update ();
-  return CurrentlyLeftCtrlPressed;
+    keyboard_update ();
+    return CurrentlyLeftCtrlPressed;
 }				// int SpacePressed(void)
 
 int
 APressed (void)
 {
-  keyboard_update ();
-  return CurrentlyAPressed;
+    keyboard_update ();
+    return CurrentlyAPressed;
 }				// int PPressed(void)
 
 int
 BPressed (void)
 {
-  keyboard_update ();
-  return CurrentlyBPressed;
+    keyboard_update ();
+    return CurrentlyBPressed;
 }				// int PPressed(void)
 
 int
 EPressed (void)
 {
-  keyboard_update ();
-  return CurrentlyEPressed;
+    keyboard_update ();
+    return CurrentlyEPressed;
 }				// int PPressed(void)
 
 int
 FPressed (void)
 {
-  keyboard_update ();
-  return CurrentlyFPressed;
+    keyboard_update ();
+    return CurrentlyFPressed;
 }				// int PPressed(void)
 
 int
 GPressed (void)
 {
-  keyboard_update ();
-  return CurrentlyGPressed;
+    keyboard_update ();
+    return CurrentlyGPressed;
 }				// int PPressed(void)
 
 int
 HPressed (void)
 {
-  keyboard_update ();
-  return CurrentlyHPressed;
+    keyboard_update ();
+    return CurrentlyHPressed;
 }				// int PPressed(void)
 
 int
 JPressed (void)
 {
-  keyboard_update ();
-  return CurrentlyJPressed;
+    keyboard_update ();
+    return CurrentlyJPressed;
 }				// int PPressed(void)
 
 int
 KPressed (void)
 {
-  keyboard_update ();
-  return CurrentlyKPressed;
+    keyboard_update ();
+    return CurrentlyKPressed;
 }				// int PPressed(void)
 
 int
 MPressed (void)
 {
-  keyboard_update ();
-  return CurrentlyMPressed;
+    keyboard_update ();
+    return CurrentlyMPressed;
 }				// int PPressed(void)
 
 int
 NPressed (void)
 {
-  keyboard_update ();
-  return CurrentlyNPressed;
+    keyboard_update ();
+    return CurrentlyNPressed;
 }				// int PPressed(void)
 
 int
 OPressed (void)
 {
-  keyboard_update ();
-  return CurrentlyOPressed;
+    keyboard_update ();
+    return CurrentlyOPressed;
 }				// int PPressed(void)
 
 int
 PPressed (void)
 {
-  keyboard_update ();
-  return CurrentlyPPressed;
+    keyboard_update ();
+    return CurrentlyPPressed;
 }				// int PPressed(void)
 
 int
 RPressed (void)
 {
-  keyboard_update ();
-  return CurrentlyRPressed;
+    keyboard_update ();
+    return CurrentlyRPressed;
 }				// int PPressed(void)
 
 int
 SPressed (void)
 {
-  keyboard_update ();
-  return CurrentlySPressed;
+    keyboard_update ();
+    return CurrentlySPressed;
 }				// int PPressed(void)
 
 int
 TPressed (void)
 {
-  keyboard_update ();
-  return CurrentlyTPressed;
+    keyboard_update ();
+    return CurrentlyTPressed;
 }				// int PPressed(void)
 
 int
 QPressed (void)
 {
-  keyboard_update ();
-  return CurrentlyQPressed;
+    keyboard_update ();
+    return CurrentlyQPressed;
 }				// int QPressed(void)
 
 int
 WPressed (void)
 {
-  keyboard_update ();
-  return CurrentlyWPressed;
+    keyboard_update ();
+    return CurrentlyWPressed;
 }				// int WPressed(void)
 
 int
 DPressed (void)
 {
-  keyboard_update ();
-  return CurrentlyDPressed;
+    keyboard_update ();
+    return CurrentlyDPressed;
 }				// int WPressed(void)
 
 int
 LPressed (void)
 {
-  keyboard_update ();
-  return CurrentlyLPressed;
+    keyboard_update ();
+    return CurrentlyLPressed;
 }				// int WPressed(void)
 
 int
 IPressed (void)
 {
-  keyboard_update ();
-  return CurrentlyIPressed;
+    keyboard_update ();
+    return CurrentlyIPressed;
 }				// int WPressed(void)
 
 int
 VPressed (void)
 {
-  keyboard_update ();
-  return CurrentlyVPressed;
+    keyboard_update ();
+    return CurrentlyVPressed;
 }				// int WPressed(void)
 
 int
 CPressed (void)
 {
-  keyboard_update ();
-  return CurrentlyCPressed;
+    keyboard_update ();
+    return CurrentlyCPressed;
 }				// int WPressed(void)
 
 int
 UPressed (void)
 {
-  keyboard_update ();
-  return CurrentlyUPressed;
+    keyboard_update ();
+    return CurrentlyUPressed;
 }				// int WPressed(void)
 
 int
 XPressed (void)
 {
-  keyboard_update ();
-  return CurrentlyXPressed;
+    keyboard_update ();
+    return CurrentlyXPressed;
 }				// int WPressed(void)
 
 int
 YPressed (void)
 {
-  keyboard_update ();
-  return CurrentlyYPressed;
+    keyboard_update ();
+    return CurrentlyYPressed;
 }				// int WPressed(void)
 
 int
 ZPressed (void)
 {
-  keyboard_update ();
-  return CurrentlyZPressed;
+    keyboard_update ();
+    return CurrentlyZPressed;
 }				// int WPressed(void)
 
 int
 EscapePressed (void)
 {
-  keyboard_update ();
-  return CurrentlyEscapePressed;
+    keyboard_update ();
+    return CurrentlyEscapePressed;
 }				// int WPressed(void)
 
 int
 TabPressed (void)
 {
-  keyboard_update ();
-  return CurrentlyTabPressed;
+    keyboard_update ();
+    return CurrentlyTabPressed;
 }				// int WPressed(void)
 
 /* ----------------------------------------------------------------------
@@ -2380,58 +2403,58 @@ TabPressed (void)
 int
 NoDirectionPressed (void)
 {
-  if ( (axis_is_active && (input_axis.x || input_axis.y)) ||
-      DownPressed () || UpPressed() || LeftPressed() || RightPressed() )
-    return ( FALSE );
-  else
-    return ( TRUE );
+    if ( (axis_is_active && (input_axis.x || input_axis.y)) ||
+	 DownPressed () || UpPressed() || LeftPressed() || RightPressed() )
+	return ( FALSE );
+    else
+	return ( TRUE );
 }; // int NoDirectionPressed( void )
 
 
 int
 MouseRightPressed(void)
 {
-  // keyboard_update();  // DON'T UPDATE HERE, OR SOMETHING GOES WRONG WITH KEEPING TRACK
-  // OF MOUSE STATUS IN THE PREVIOUS FRAMES!!!!
-  return CurrentlyMouseRightPressed;
+    // keyboard_update();  // DON'T UPDATE HERE, OR SOMETHING GOES WRONG WITH KEEPING TRACK
+    // OF MOUSE STATUS IN THE PREVIOUS FRAMES!!!!
+    return CurrentlyMouseRightPressed;
 }
 
 int
 MouseLeftPressed(void)
 {
-  // keyboard_update();  // DON'T UPDATE HERE, OR SOMETHING GOES WRONG WITH KEEPING TRACK
-  // OF MOUSE STATUS IN THE PREVIOUS FRAMES!!!!
-  return CurrentlyMouseLeftPressed;
+    // keyboard_update();  // DON'T UPDATE HERE, OR SOMETHING GOES WRONG WITH KEEPING TRACK
+    // OF MOUSE STATUS IN THE PREVIOUS FRAMES!!!!
+    return CurrentlyMouseLeftPressed;
 }
 
 int
 MouseWheelUpPressed(void)
 {
-  // keyboard_update();  // DON'T UPDATE HERE, OR SOMETHING GOES WRONG WITH KEEPING TRACK
-  // OF MOUSE STATUS IN THE PREVIOUS FRAMES!!!!
-  if ( MouseWheelUpMovesRecorded )
+    // keyboard_update();  // DON'T UPDATE HERE, OR SOMETHING GOES WRONG WITH KEEPING TRACK
+    // OF MOUSE STATUS IN THE PREVIOUS FRAMES!!!!
+    if ( MouseWheelUpMovesRecorded )
     {
-      MouseWheelUpMovesRecorded--;
-      return ( TRUE );
+	MouseWheelUpMovesRecorded--;
+	return ( TRUE );
     }
-  else
-    return ( FALSE );
-  // return CurrentlyMouseWheelUpPressed;
+    else
+	return ( FALSE );
+    // return CurrentlyMouseWheelUpPressed;
 }
 
 int
 MouseWheelDownPressed(void)
 {
-  // keyboard_update();  // DON'T UPDATE HERE, OR SOMETHING GOES WRONG WITH KEEPING TRACK
-  // OF MOUSE STATUS IN THE PREVIOUS FRAMES!!!!
-  if ( MouseWheelDownMovesRecorded )
+    // keyboard_update();  // DON'T UPDATE HERE, OR SOMETHING GOES WRONG WITH KEEPING TRACK
+    // OF MOUSE STATUS IN THE PREVIOUS FRAMES!!!!
+    if ( MouseWheelDownMovesRecorded )
     {
-      MouseWheelDownMovesRecorded--;
-      return ( TRUE );
+	MouseWheelDownMovesRecorded--;
+	return ( TRUE );
     }
-  else
-    return ( FALSE );
-  // return CurrentlyMouseWheelDownPressed;
+    else
+	return ( FALSE );
+    // return CurrentlyMouseWheelDownPressed;
 }
 
 
