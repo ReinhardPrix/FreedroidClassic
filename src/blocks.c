@@ -632,6 +632,15 @@ Freedroid was unable to load a certain image file from hard disk into memory.\n\
 This error indicates some installation problem with freedroid.",
 				 PLEASE_INFORM, IS_FATAL );
     }
+
+  //--------------------
+  // Depending on whether this is supposed to work with faster but less
+  // quality color key or slower but more quality alpha channel, we set
+  // appropriate parameters in the SDL surfaces and also a reminder flag
+  // in the iso_image structure.
+  //
+  our_iso_image -> force_color_key = FALSE ;
+
   SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
   our_iso_image -> surface = our_SDL_display_format_wrapperAlpha( Whole_Image ); // now we have an alpha-surf of right size
   our_iso_image -> zoomed_out_surface = NULL ;
@@ -642,6 +651,79 @@ This error indicates some installation problem with freedroid.",
   // our_iso_image -> surface -> format -> Bmask = 0 ; 
   // our_iso_image -> surface -> format -> Rmask = 0 ; 
 
+  SDL_FreeSurface( Whole_Image );
+
+  //--------------------
+  // Now that we have loaded the image, it's time to get the proper
+  // offset information for it.
+  //
+  get_offset_for_iso_image_from_file_and_path ( fpath , our_iso_image );
+
+}; // void get_iso_image_from_file_and_path ( char* fpath , iso_image* our_iso_image ) 
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+get_iso_image_with_colorkey_from_file_and_path ( char* fpath , iso_image* our_iso_image ) 
+{
+  SDL_Surface* Whole_Image;
+  int x , y;
+  Uint32 color_key_value;
+
+  //--------------------
+  // First we (try to) load the image given in the parameter
+  // from hard disk into memory and convert it to the right
+  // format for fast blitting later.
+  //
+  Whole_Image = our_IMG_load_wrapper( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+  if ( Whole_Image == NULL )
+    {
+      fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
+      GiveStandardErrorMessage ( "get_iso_image_from_file_and_path (...)" , "\
+Freedroid was unable to load a certain image file from hard disk into memory.\n\
+This error indicates some installation problem with freedroid.",
+				 PLEASE_INFORM, IS_FATAL );
+    }
+
+  //--------------------
+  // Depending on whether this is supposed to work with faster but less
+  // quality color key or slower but more quality alpha channel, we set
+  // appropriate parameters in the SDL surfaces and also a reminder flag
+  // in the iso_image structure.
+  //
+  our_iso_image -> force_color_key = TRUE ;
+
+  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
+  our_iso_image -> surface = our_SDL_display_format_wrapper( Whole_Image ); // now we have an alpha-surf of right size
+  
+  color_key_value = SDL_MapRGB( our_iso_image -> surface -> format, 255 , 0 , 255 );
+
+  for ( x = 0 ; x < Whole_Image -> w ; x ++ )
+    {
+      for ( y = 0 ; y < Whole_Image -> h ; y ++ )
+	{
+	  //--------------------
+	  // Any pixel that is halfway transparent will now be made 
+	  // into the color key...
+	  //
+	  if ( GetAlphaComponent ( Whole_Image , x , y ) < 50 )
+	    {
+	      PutPixel ( our_iso_image -> surface , x , y , color_key_value );
+	    }
+	}
+    }
+
+  our_iso_image -> zoomed_out_surface = NULL ;
+  SDL_SetColorKey( our_iso_image -> surface , SDL_SRCCOLORKEY , color_key_value ); // this should clear any color key in the dest surface
+
+  //--------------------
+  // Some test here...
+  //
+  // our_iso_image -> surface -> format -> Bmask = 0 ; 
+  // our_iso_image -> surface -> format -> Rmask = 0 ; 
+  //
   SDL_FreeSurface( Whole_Image );
 
   //--------------------
@@ -1508,21 +1590,6 @@ init_obstacle_data( void )
   obstacle_map [ ISO_TELEPORTER_5 ] . block_area_type = COLLISION_TYPE_NONE ;
   obstacle_map [ ISO_TELEPORTER_5 ] . is_smashable = FALSE ;
 
-/*
-  obstacle_map [ ISO_V_CHEST_OPEN ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_V_CHEST_OPEN ] . block_area_parm_1 = 0.25 ;
-  obstacle_map [ ISO_V_CHEST_OPEN ] . block_area_parm_2 = 0.8 ;
-  obstacle_map [ ISO_V_CHEST_CLOSED ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_V_CHEST_CLOSED ] . block_area_parm_1 = 0.25 ;
-  obstacle_map [ ISO_V_CHEST_CLOSED ] . block_area_parm_2 = 0.8 ;
-
-  obstacle_map [ ISO_H_CHEST_OPEN ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_H_CHEST_OPEN ] . block_area_parm_1 = 0.8 ;
-  obstacle_map [ ISO_H_CHEST_OPEN ] . block_area_parm_2 = 0.25 ;
-  obstacle_map [ ISO_H_CHEST_CLOSED ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_H_CHEST_CLOSED ] . block_area_parm_1 = 0.8 ;
-  obstacle_map [ ISO_H_CHEST_CLOSED ] . block_area_parm_2 = 0.25 ;
-*/
   obstacle_map [ ISO_V_CHEST_OPEN ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_V_CHEST_OPEN ] . block_area_parm_1 = 0.25 ;
   obstacle_map [ ISO_V_CHEST_OPEN ] . block_area_parm_2 = 0.8 ;
@@ -2026,12 +2093,14 @@ load_all_obstacles ( void )
       strcpy ( ConstructedFileName , "obstacles/" );
       strcat ( ConstructedFileName , obstacle_map [ i ] . filename ) ;
       fpath = find_file ( ConstructedFileName , GRAPHICS_DIR , FALSE );
-      get_iso_image_from_file_and_path ( fpath , & ( obstacle_map [ i ] . image ) ) ;
 
       if ( use_open_gl )
 	{
+	  get_iso_image_from_file_and_path ( fpath , & ( obstacle_map [ i ] . image ) ); 
 	  make_texture_out_of_surface ( & ( obstacle_map [ i ] . image ) ) ;
 	}
+      else
+	  get_iso_image_with_colorkey_from_file_and_path ( fpath , & ( obstacle_map [ i ] . image ) ) ;
 
     }
 
@@ -2054,11 +2123,14 @@ load_one_isometric_floor_tile ( int tile_type )
   strcat ( ConstructedFileName , floor_tile_filenames [ tile_type ] );
   fpath = find_file ( ConstructedFileName , GRAPHICS_DIR , FALSE );
 
-  get_iso_image_from_file_and_path ( fpath , & ( floor_iso_images [ tile_type ] ) ) ;
-
   if ( use_open_gl )
     {
+      get_iso_image_from_file_and_path ( fpath , & ( floor_iso_images [ tile_type ] ) ) ;
       make_texture_out_of_surface ( & ( floor_iso_images [ tile_type ] ) ) ;
+    }
+  else
+    {
+      get_iso_image_with_colorkey_from_file_and_path ( fpath , & ( floor_iso_images [ tile_type ] ) ) ;
     }
 
 }; // void load_one_isometric_floor_tile ( int tile_type ) 

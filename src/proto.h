@@ -220,6 +220,7 @@ EXTERN void ClearGraphMem ( void );
 EXTERN void SDL_HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area );
 EXTERN void HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area );
 EXTERN int do_graphical_number_selection_in_range ( int lower_range , int upper_range );
+EXTERN Uint8 GetAlphaComponent ( SDL_Surface* surface , int x , int y );
 
 // saveloadgame.c 
 #undef EXTERN
@@ -713,8 +714,6 @@ EXTERN int IsActive (int color, int row);
 #endif
 EXTERN Uint32 GetPixel (SDL_Surface * Surface, Sint32 X, Sint32 Y);
 EXTERN void PutPixel (SDL_Surface * surface, int x, int y, Uint32 pixel);
-
-
 
 #undef EXTERN
 #ifdef _highscore_c

@@ -270,6 +270,7 @@ typedef struct
   SDL_Surface* zoomed_out_surface;
   int texture_width;
   int texture_height;
+  int force_color_key;
 #ifdef HAVE_LIBGL
   GLuint texture;  // this is to store an open_gl texture...
 #else
