@@ -45,7 +45,7 @@
 // The order of appearance here should match the order of appearance 
 // in the enum-Environment located in defs.h!
 
-#define ALL_SOUNDS 63
+#define ALL_SOUNDS 67
 char *SoundSampleFilenames[ALL_SOUNDS] = {
    "ERRORSOUND_NILL.NOWAV",
    "Combat_Background_Music.wav",
@@ -85,6 +85,8 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
    "Mission_Status_Change_Sound_0.wav",
    "Item_Taken_Sound_0.wav",
    "ICantCarryAnyMore_Sound_0.wav",
+   "ICantCarryAnyMore_Sound_1.wav",
+   "ICantCarryAnyMore_Sound_2.wav",
    "MSMachinesClose_0.wav",
    "Item_Drop_Sound_0.wav",
    "Item_Drop_Sound_1.wav",
@@ -98,6 +100,7 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
    "First_Contact_Sound_0.wav",
    "First_Contact_Sound_1.wav",
    "First_Contact_Sound_2.wav",
+   "First_Contact_Sound_3.wav",
    "Not_Enough_Power_Sound_0.wav",
    "Not_Enough_Dist_Sound_0.wav",
    "Not_Enough_Mana_0.wav",
@@ -736,28 +739,48 @@ Play_Spell_DetectItems_Sound( )
   Play_Sound ( SPELL_DETECTITEMS_SOUND_0 ) ;
 };  // void Play_Spell_ForceToEnergy_Sound( )
 
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function plays a voice sample, stating that not enough power
+ * (strength) is available to use a certain item.
+ * The sample must of course only be played, if it hasn't been played just
+ * milliseconds before, so a check is made to see that the file is played
+ * with at least a certain interval in between to the last occasion of the
+ * file being played.
+ * ---------------------------------------------------------------------- */
 void
 Not_Enough_Power_Sound ( void )
 {
-  Play_Sound ( NOT_ENOUGH_POWER_SOUND );
-}
+  static Uint32 PreviousNotEnoughSound = (-1) ;
+  Uint32 now;
 
-/*@Function============================================================
-@Desc: 
+  now = SDL_GetTicks() ;
+  if ( SDL_GetTicks() - PreviousNotEnoughSound >= 1.15 * 1000 )
+    {
+      Play_Sound ( NOT_ENOUGH_POWER_SOUND );
+      PreviousNotEnoughSound = now;
+    }
+}; // void Not_Enough_Power_Sound ( void )
 
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function plays a voice sample, stating that not enough power
+ * distribution (dexterity) is available to use a certain item.
+ * The sample must of course only be played, if it hasn't been played just
+ * milliseconds before, so a check is made to see that the file is played
+ * with at least a certain interval in between to the last occasion of the
+ * file being played.
+ * ---------------------------------------------------------------------- */
 void
 Not_Enough_Dist_Sound ( void )
 {
-  Play_Sound ( NOT_ENOUGH_DIST_SOUND );
+  static Uint32 PreviousNotEnoughSound = (-1) ;
+  Uint32 now;
+
+  now = SDL_GetTicks() ;
+  if ( SDL_GetTicks() - PreviousNotEnoughSound >= 1.15 * 1000 )
+    {
+      Play_Sound ( NOT_ENOUGH_DIST_SOUND );
+      PreviousNotEnoughSound = now;
+    }
 }
 
 /* ----------------------------------------------------------------------
@@ -806,6 +829,9 @@ PlayGreetingSound ( int SoundCode )
       break;
     case 2:
       Play_Sound( FIRST_CONTACT_SOUND_2 );
+      break;
+    case 3:
+      Play_Sound( FIRST_CONTACT_SOUND_3 );  // the dark apprentice.
       break;
     default:
       DebugPrintf( 0 , "\nUnknown Greeting sound!!! Terminating...");
@@ -869,12 +895,25 @@ ItemTakenSound (void)
 void
 CantCarrySound (void)
 {
-  static long CurrentTicks = 0;
+  static Uint32 CurrentTicks = 0;
 
-  if ( ( SDL_GetTicks() - CurrentTicks ) > 4000 )
+  if ( ( SDL_GetTicks() - CurrentTicks ) > 2 * 1000 )
     {
-      Play_Sound ( CANT_CARRY_SOUND );
       CurrentTicks = SDL_GetTicks();
+      switch( MyRandom( 2 ) )
+	{
+	case 0 :
+	  Play_Sound ( CANT_CARRY_SOUND_0 );
+	  break;
+	case 1 :
+	  Play_Sound ( CANT_CARRY_SOUND_1 );
+	  break;
+	case 2 :
+	  Play_Sound ( CANT_CARRY_SOUND_2 );
+	  break;
+	default:
+	  break;
+	}
     }
 }; // void CantCarrySound (void)
 

@@ -881,7 +881,7 @@ enum
   int Weiter = 0;
   int MenuPosition=1;
   char theme_string[40];
-  int i;
+  // int i;
   char* MenuTexts[10];
 
   Me[0].status=MENU;

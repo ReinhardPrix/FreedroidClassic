@@ -1412,6 +1412,11 @@ FireBullet ( int PlayerNum )
 	{
 	  // don't return, but do the attack...
 	  //
+	  Me [ PlayerNum ] . mouse_move_target . x = 
+	    Me [ PlayerNum ] . pos . x + ( (float) ServerThinksInputAxisX ( PlayerNum ) ) / (float) Block_Width ;
+	  Me [ PlayerNum ] . mouse_move_target . y = 
+	    Me [ PlayerNum ] . pos . y + ( (float) ServerThinksInputAxisY ( PlayerNum ) ) / (float) Block_Width ;
+	  Me [ PlayerNum ] . mouse_move_target . z = Me [ PlayerNum ] . pos . z ;
 	}
       else
 	{
