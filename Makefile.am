@@ -1,8 +1,10 @@
-if WIN32
-SUBDIRS = win32 src 
+if NONLINUX
+extradirs = 
 else
-SUBDIRS = win32 src croppy 
-endif
+extradirs = win32 croppy 
+endif 
+
+SUBDIRS =  src $(extradirs)
 
 man_MANS = freedroidRPG.6
 

@@ -15,12 +15,6 @@ AM_CONFIG_HEADER(config.h)
 AC_PROG_CC
 AC_PROG_MAKE_SET
 
-# we don't want optimisation for the moment, as that makes 
-# debugging a bit more confusing
-#CFLAGS="-g -Wall"
-CFLAGS="$CFLAGS -Wall"
-LDFLAGS="$LDFLAGS -rdynamic"
-
 # Checks for libraries.
 AC_CHECK_LIB([m], [sin],, 
 	AC_MSG_ERROR([libm not found!! 
@@ -39,10 +33,16 @@ case "$target" in
 	win32=true
 	;;
 
+	*darwin*)
+	## Darwin has single-precision math-functions in here
+	LDFLAGS="$LDFLAGS -lmx"
+	macosx=true
+	;;
+
 	*)
 	CFLAGS="$CFLAGS  -DFD_DATADIR='\"\$(pkgdatadir)\"'"   #avoid expansion of $pkgdatadir !
+	LDFLAGS="$LDFLAGS -rdynamic"
 	SYS_GL_LIB=GL
-	win32=false
 	;;
 esac
 
@@ -107,7 +107,8 @@ dnl just use bundled version like hello does, and gnuchess
 # Checks for header files.
 AC_HEADER_STDC
 AC_CHECK_HEADERS([fcntl.h stdlib.h string.h sys/ioctl.h sys/time.h time.h \
-			  unistd.h dirent.h sys/soundcard.h GL/gl.h])
+			  unistd.h dirent.h sys/soundcard.h GL/gl.h 	  \
+			  execinfo.h signal.h ])
 
 
 if test x$win32 = xtrue; then
@@ -143,6 +144,8 @@ If you only want to play Freedroid you can ignore this!
 
 dnl send a signal to automake if we're compiling for win32
 AM_CONDITIONAL(WIN32, test x$win32 = xtrue)
+
+AM_CONDITIONAL(NONLINUX, test x$macosx = xtrue -o x$win32 = xtrue)
 
 dnl send a signal to automake wether gtk was found or not
 AM_CONDITIONAL(FOUND_GTK, test x$found_gtk = xtrue)
