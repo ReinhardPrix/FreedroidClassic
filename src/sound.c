@@ -61,7 +61,7 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
   "/../sound/Console_Background_Music.wav",
   "/../sound/Classical_Beep_Beep_Background_Music.wav",
   "/../sound/Blast_Sound_0.wav",
-  "/../sound/CollisionSound1.wav",
+  "/../sound/Collision_Sound_0.wav",
   "/../sound/GotIntoBlastSound.wav",
   "/../sound/MoveElevatorSound1.wav",
   "/../sound/Refresh_Sound_0.wav",
