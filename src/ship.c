@@ -405,8 +405,8 @@ PaintConsoleMenu (void)
   strcat (MenuText, Classname[Druidmap[Me.type].class]);
   DisplayText (MenuText, USERFENSTERPOSX, USERFENSTERPOSY, &User_Rect);
 
-  strcpy (MenuText, "\nAccess granted.\nShip : ");
-  strcat (MenuText, Shipnames[ThisShip]);
+  strcpy (MenuText, "\nAccess granted.\nArea : ");
+  strcat (MenuText, curShip.AreaName ); // Shipnames[ThisShip]);
   strcat (MenuText, "\nDeck : ");
   strcat (MenuText, CurLevel->Levelname );
   strcat (MenuText, "\n\nAlert: ");

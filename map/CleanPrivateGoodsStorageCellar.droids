@@ -92,6 +92,8 @@ Start of Question-Response List for this friendly droid
 
 Question="name" Answer="Technically speaking, my name is 198.0.0.142.2.22, but I prefer my alias name, which is Butch."
 
+Question="follow" Answer="I can well understand, that you would like to have company and in a normal situation I would be more than willing to follow you, but currently, there are still those terriby cold and violent MS machines somewhere on this deck, so that I do not dare to move out of here.  Please forgive my cowardice.  I'm sorry."
+
 Question="butch" Answer="Yes, that's me."
 
 Question="hello" Answer="Hello!  Come inside quickly and pray that they have not seen us!  There are MS droidic killerbots right outside, over at the elevator entrance!  You must be more careful.  Say, are you the droid they said they wanted to contruct from the forbidden archive data?  Has their plan succeeded?"
@@ -114,7 +116,7 @@ Question="pray" Answer="Yes.  It's a technique I've learned from my maker Dr. So
 
 Question="ms" Answer="The MS killer machines are assaulting the scientists retreat.  Why are they doing this?  They have kiled people up at the private quarters deck.  I fear that once they are done with the humans, they will go for us droids too."
 
-Question="droids" Answer=""
+Question="droids" Answer="These MS machines are not really what I would call a droid.  A droid is a somethat intelligent conscious beeing, that has at least basic understanding of his small tasks and place in the world.  But these MS machines are nothing like that.  They are merely mindless zombies of the big MS central control that enforces their actions.  Therefore I refer to them always as 'machines' not as 'droids'."
 
 Question="yes" Answer="Wonderful."
 

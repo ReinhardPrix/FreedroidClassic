@@ -323,11 +323,13 @@ LoadShip (char *filename)
 #define END_OF_SHIP_DATA_STRING "*** End of Ship Data ***"
 
   /* Read the whole ship-data to memory */
-
   fpath = find_file (filename, MAP_DIR, FALSE);
-
   ShipData = ReadAndMallocAndTerminateFile( fpath , END_OF_SHIP_DATA_STRING ) ;
 
+  //--------------------
+  // Now we read the shipname information from the loaded data
+  //
+  curShip.AreaName = ReadAndMallocStringFromData ( ShipData , "Area name=\"", "\"" ) ;
 
   //--------------------
   // Now we count the number of levels and remember their start-addresses.

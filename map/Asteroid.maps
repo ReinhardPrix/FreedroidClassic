@@ -32,6 +32,11 @@ send a short notice (not too large files attached) to the freedroid project.
 
 freedroid-discussion@lists.sourceforge.net
 
+--------------------
+At first we need to give the header information about the ship as a whole.
+Then we will come to each level individually
+Area name="Asteroid 232"
+
 Levelnumber: 0
 xlen of this level: 38
 ylen of this level: 16

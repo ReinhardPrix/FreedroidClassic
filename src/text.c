@@ -97,15 +97,13 @@ ChatWithFriendlyDroid( int Enum )
   Background = IMG_Load( find_file ( "chat_test.jpg" , GRAPHICS_DIR, FALSE ) );
   if ( Background == NULL )
     {
-      printf("\n\nERROR LOADING FILE!!!!  Error code: %s " , SDL_GetError() );
+      printf("\n\nChatWithFriendlyDroid: ERROR LOADING FILE!!!!  Error code: %s " , SDL_GetError() );
       Terminate(ERR);
     }
 
   SDL_BlitSurface( Background , NULL , ne_screen , NULL );
   SDL_Flip( ne_screen );
   
-  // getchar_raw();
-
   SetCurrentFont( Para_BFont );
 
   DisplayTextWithScrolling ( 
@@ -118,6 +116,9 @@ ChatWithFriendlyDroid( int Enum )
     {
       OldTextCursorX=MyCursorX;
       OldTextCursorY=MyCursorY;
+
+      // Now we clear the text window, since the old text is still there
+      SDL_BlitSurface( Background, &Input_Window , ne_screen , &Input_Window );
       DisplayText ( "What do you say? >" ,
 		    Input_Window.x , Input_Window.y + (Input_Window.h - FontHeight (GetCurrentFont() ) ) / 2 , 
 		    &Input_Window ); // , Background );
@@ -128,9 +129,6 @@ ChatWithFriendlyDroid( int Enum )
       MyCursorY=OldTextCursorY;
 
       DisplayTextWithScrolling ( "\n>" , MyCursorX , MyCursorY , &Chat_Window , Background );
-
-      // printf_SDL( ne_screen, -1 , -1 , "\n" ); // without this, we would write text over the entered string
-      // DisplayTextWithScrolling ( "\n    " , -1 , -1 , &Chat_Window , Background ); // without this, we would write text over the entered string
 
       //--------------------
       // Cause we do not want to deal with upper and lower case difficulties, we simpy convert 
@@ -149,7 +147,38 @@ ChatWithFriendlyDroid( int Enum )
 	   ( !strcmp ( RequestString , "logout" ) ) ||
 	   ( !strcmp ( RequestString , "logoff" ) ) ||
 	   ( !strcmp ( RequestString , "" ) ) ) 
-	return;
+	{
+	  Me.TextVisibleTime=0;
+	  Me.TextToBeDisplayed="Logging out.  Bye...";
+	  AllEnemys[ Enum ].TextToBeDisplayed="Connection closed.  See ya...";
+	  AllEnemys[ Enum ].TextVisibleTime=0;
+	  return;
+	}
+
+      //--------------------
+      // In some cases we will not want the default answers to be given,
+      // cause they are the same for all droids.
+      //
+      // We therefore will search this robots question-answer-list FIRST
+      // and look for a 
+      // match in the question entries and if applicable print out the
+      // matching answer of course, and if that is wo, we will continue
+      // and not proceed to the default answers.
+      //
+      for ( i = 0 ; i < MAX_CHAT_KEYWORDS_PER_DROID ; i++ )
+	{
+	  if ( !strcmp ( RequestString , AllEnemys[ Enum ].QuestionResponseList[ i * 2 ] ) ) // even entries = questions
+	    {
+	      DisplayTextWithScrolling ( AllEnemys[ Enum ].QuestionResponseList[ i * 2 + 1 ] , 
+					 -1 , -1 , &Chat_Window , Background );
+	      break;
+	    }
+	}
+      //--------------------
+      // If a keyword matched already, we do not process the default keywords any more
+      // so that some actions can be caught!
+      //
+      if ( i != MAX_CHAT_KEYWORDS_PER_DROID ) continue;
 
       //--------------------
       // the help command is always simple and clear.  We just need to print out the 
@@ -218,24 +247,6 @@ I hope you know what you're doing." ,
 	}
 
       //--------------------
-      // At this point we know, that none of the default answers applied.
-      // We therefore will search this robots question-answer-list for a
-      // match in the question entries and if applicable print out the
-      // matching answer of course.
-      //
-
-      for ( i = 0 ; i < MAX_CHAT_KEYWORDS_PER_DROID ; i++ )
-	{
-	  if ( !strcmp ( RequestString , AllEnemys[ Enum ].QuestionResponseList[ i * 2 ] ) ) // even entries = questions
-	    {
-	      DisplayTextWithScrolling ( AllEnemys[ Enum ].QuestionResponseList[ i * 2 + 1 ] , 
-					 -1 , -1 , &Chat_Window , Background );
-	      break;
-	    }
-	}
-
-
-      //--------------------
       // In case non of the default keywords was said and also none of the
       // special keywords this droid would understand were said, then the
       // droid obviously hasn't understood the message and should also say
@@ -247,6 +258,7 @@ I hope you know what you're doing." ,
 				     -1 , -1 , &Chat_Window , Background );
 	}
     }
+
 }; // void ChatWithFriendlyDroid( int Enum );
 
 void 
