@@ -3,6 +3,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
+#include <vga.h>
+#include <vgagl.h>
+#include <vgakeyboard.h>
 
 #include "defs.h"
 #include "struct.h"
@@ -491,68 +494,270 @@ MaxLen: max. Laenge des Strings
 @Int:
 * $Function----------------------------------------------------------*/
 char* GetString(int MaxLen){
-	char *instring;		/* Pointer auf eingegebenen String */
-	char *loeschstring;	/* String zum Loeschen der Eingabe-Zeile */
-	char taste;				/* eingeg. Zeichen */
-	int charcounter = 0;	/* zaehlt eingeg. Zeichen mit */
-	int TextOutX, TextOutY;	/* Einfuegepunkt zum Darstellen der Eingabe */
+  char *instring;		/* Pointer auf eingegebenen String */
+  char *loeschstring;	/* String zum Loeschen der Eingabe-Zeile */
+  char taste;				/* eingeg. Zeichen */
+  int charcounter = 0;	/* zaehlt eingeg. Zeichen mit */
+  int TextOutX, TextOutY;	/* Einfuegepunkt zum Darstellen der Eingabe */
 
-	/* Texteingabe an momentaner Cursor-Pos. */
-	TextOutX = MyCursorX; 
-	TextOutY = MyCursorY;
+  // The following line calls the LINUX SVGALIB and sets the keyboard mode from
+  // raw mode back to normal mode!  Then the old code can be processed as is (I hope)
+  // keyboard_close();
+
+  /* Texteingabe an momentaner Cursor-Pos. */
+  TextOutX = MyCursorX; 
+  TextOutY = MyCursorY;
 	
-	/* Speicher fuer Eingabe reservieren */
-	if( (instring = MyMalloc(MaxLen + 10)) == NULL) {
-		printf("\nNo Memory left !!");
-		getchar();
-		Terminate(-1);
-	}
-	/* LoeschString reservieren */
-	if( (loeschstring=MyMalloc(2*MaxLen)) == NULL) {
-		printf("\nNo Memory left !!");
-		getchar();
-		Terminate(-1);
-	}
-	memset(loeschstring, ' ', 2*MaxLen - 1); /* Loeschstring mit SPACE fuellen */
-	loeschstring[MaxLen-1]='\0';	/* Loeschstring abschliessen */
+  /* Speicher fuer Eingabe reservieren */
+  if( (instring = MyMalloc(MaxLen + 10)) == NULL) {
+    printf("\nNo Memory left !!");
+    getchar();
+    Terminate(-1);
+  }
+  /* LoeschString reservieren */
+  if( (loeschstring=MyMalloc(2*MaxLen)) == NULL) {
+    printf("\nNo Memory left !!");
+    getchar();
+    Terminate(-1);
+  }
+  memset(loeschstring, ' ', 2*MaxLen - 1);      /* Loeschstring mit SPACE fuellen */
+  loeschstring[MaxLen-1]='\0';	                /* Loeschstring abschliessen */
+  
+  instring[0] = '\0'; /* sicherheitshalber abschliessen */
+
+  /* Leeren String mit Cursor ausgeben */
+  DisplayText(instring, TextOutX, TextOutY, RealScreen, TRUE);
 	
-	instring[0] = '\0'; /* sicherheitshalber abschliessen */
-
-	/* Leeren String mit Cursor ausgeben */
-	DisplayText(instring, TextOutX, TextOutY, RealScreen, TRUE);
+  /* Zeichen einlesen und anzeigen, bis RET gedrueckt */
+  while( !keyboard_keypressed(SCANCODE_ENTER) ) {
 	
-	/* Zeichen einlesen und anzeigen, bis RET gedrueckt */
-	while( (taste = getchar()) != RETURN_ASCII) {
-	
-		/* Sondertasten mit ext. Code ignorieren: */
-		if( taste == 0 ) {getchar(); continue;}
+    keyboard_update();
+    /* Sondertasten mit ext. Code ignorieren: */
+    // if( taste == 0 ) {getchar(); continue;}
 
-		/* Regulaeres Zeichen: aufnehmen, falls MaxLen noch nicht erreicht */
-		if( (taste >= ' ') && (taste <= 'z') && (charcounter < MaxLen) ) {
-			instring[charcounter ++] = taste;	/* Zeichen aufnehmen */
-			instring[charcounter] = '\0';			/* und abschliessen */
-		}
+    /* Backspace: ausfuehren */
+    if( keyboard_keypressed(SCANCODE_BACKSPACE) ) {
+      /* Wenn nicht schon am Beginn des STrings: */
+      if( charcounter ) {
+	charcounter --;					/* Zeichen zurueck */
+	instring[charcounter] = '\0';	/* und abschliessen */
+	DisplayText(loeschstring, TextOutX, TextOutY, RealScreen, FALSE);		
+	while (keyboard_keypressed(SCANCODE_BACKSPACE)) keyboard_update();
+      }
+    }
 
-		/* Backspace: ausfuehren */
-		if( taste == BACKSPACE_ASCII ) {
-			/* Wenn nicht schon am Beginn des STrings: */
-			if( charcounter ) {
-				charcounter --;					/* Zeichen zurueck */
-				instring[charcounter] = '\0';	/* und abschliessen */
-			}
-		}
+    /* Regulaeres Zeichen: aufnehmen, falls MaxLen noch nicht erreicht */
 
-		/* alte eingabe-Zeile loeschen: */
-		/* es wird eine Laenge MaxLen -1 geloescht */
-		DisplayText(loeschstring, TextOutX, TextOutY, RealScreen, FALSE);		
-		
-		
-		/* Eingabe mit Cursor ausgeben */
-		DisplayText(instring, TextOutX, TextOutY, RealScreen, TRUE);
+    // PORT if( (taste >= ' ') && (taste <= 'z') && (charcounter < MaxLen) ) {
+    // PORT instring[charcounter ++] = taste;	/* Zeichen aufnehmen */
+    // PORT instring[charcounter] = '\0';			/* und abschliessen */
+    // }
 
-	} /* While nicht RET gedrueckt */
+    if ( keyboard_keypressed(SCANCODE_A) && charcounter < MaxLen ) {
+      if ( keyboard_keypressed(SCANCODE_LEFTSHIFT) || keyboard_keypressed(SCANCODE_RIGHTSHIFT) ) {
+	instring[charcounter ++]='A'; } else { instring[charcounter ++]='a'; }
+      instring[charcounter] = '\0';			/* und abschliessen */
+      while (keyboard_keypressed(SCANCODE_A)) keyboard_update();
+    }
 
-	return(instring);
+    if ( keyboard_keypressed(SCANCODE_B) && charcounter < MaxLen ) {
+      if ( keyboard_keypressed(SCANCODE_LEFTSHIFT) || keyboard_keypressed(SCANCODE_RIGHTSHIFT) ) {
+	instring[charcounter ++]='B'; } else { instring[charcounter ++]='b'; }
+      instring[charcounter] = '\0';			/* und abschliessen */
+      while (keyboard_keypressed(SCANCODE_B)) keyboard_update();
+    }
+
+    if ( keyboard_keypressed(SCANCODE_C) && charcounter < MaxLen ) {
+      if ( keyboard_keypressed(SCANCODE_LEFTSHIFT) || keyboard_keypressed(SCANCODE_RIGHTSHIFT) ) {
+	instring[charcounter ++]='C'; } else { instring[charcounter ++]='c'; }
+      instring[charcounter] = '\0';			/* und abschliessen */
+      while (keyboard_keypressed(SCANCODE_C)) keyboard_update();
+    }
+
+    if ( keyboard_keypressed(SCANCODE_D) && charcounter < MaxLen ) {
+      if ( keyboard_keypressed(SCANCODE_LEFTSHIFT) || keyboard_keypressed(SCANCODE_RIGHTSHIFT) ) {
+	instring[charcounter ++]='D'; } else { instring[charcounter ++]='d'; }
+      instring[charcounter] = '\0';			/* und abschliessen */
+      while (keyboard_keypressed(SCANCODE_D)) keyboard_update();
+    }
+
+    if ( keyboard_keypressed(SCANCODE_E) && charcounter < MaxLen ) {
+      if ( keyboard_keypressed(SCANCODE_LEFTSHIFT) || keyboard_keypressed(SCANCODE_RIGHTSHIFT) ) {
+	instring[charcounter ++]='E'; } else { instring[charcounter ++]='e'; }
+      instring[charcounter] = '\0';			/* und abschliessen */
+      while (keyboard_keypressed(SCANCODE_E)) keyboard_update();
+    }
+
+    if ( keyboard_keypressed(SCANCODE_F) && charcounter < MaxLen ) {
+      if ( keyboard_keypressed(SCANCODE_LEFTSHIFT) || keyboard_keypressed(SCANCODE_RIGHTSHIFT) ) {
+	instring[charcounter ++]='F'; } else { instring[charcounter ++]='f'; }
+      instring[charcounter] = '\0';			/* und abschliessen */
+      while (keyboard_keypressed(SCANCODE_F)) keyboard_update();
+    }
+
+    if ( keyboard_keypressed(SCANCODE_G) && charcounter < MaxLen ) {
+      if ( keyboard_keypressed(SCANCODE_LEFTSHIFT) || keyboard_keypressed(SCANCODE_RIGHTSHIFT) ) {
+	instring[charcounter ++]='G'; } else { instring[charcounter ++]='g'; }
+      instring[charcounter] = '\0';			/* und abschliessen */
+      while (keyboard_keypressed(SCANCODE_G)) keyboard_update();
+    }
+
+    if ( keyboard_keypressed(SCANCODE_H) && charcounter < MaxLen ) {
+      if ( keyboard_keypressed(SCANCODE_LEFTSHIFT) || keyboard_keypressed(SCANCODE_RIGHTSHIFT) ) {
+	instring[charcounter ++]='H'; } else { instring[charcounter ++]='h'; }
+      instring[charcounter] = '\0';			/* und abschliessen */
+      while (keyboard_keypressed(SCANCODE_H)) keyboard_update();
+    }
+
+    if ( keyboard_keypressed(SCANCODE_I) && charcounter < MaxLen ) {
+      if ( keyboard_keypressed(SCANCODE_LEFTSHIFT) || keyboard_keypressed(SCANCODE_RIGHTSHIFT) ) {
+	instring[charcounter ++]='I'; } else { instring[charcounter ++]='i'; }
+      instring[charcounter] = '\0';			/* und abschliessen */
+      while (keyboard_keypressed(SCANCODE_I)) keyboard_update();
+    }
+
+    if ( keyboard_keypressed(SCANCODE_J) && charcounter < MaxLen ) {
+      if ( keyboard_keypressed(SCANCODE_LEFTSHIFT) || keyboard_keypressed(SCANCODE_RIGHTSHIFT) ) {
+	instring[charcounter ++]='J'; } else { instring[charcounter ++]='j'; }
+      instring[charcounter] = '\0';			/* und abschliessen */
+      while (keyboard_keypressed(SCANCODE_J)) keyboard_update();
+    }
+
+    if ( keyboard_keypressed(SCANCODE_K) && charcounter < MaxLen ) {
+      if ( keyboard_keypressed(SCANCODE_LEFTSHIFT) || keyboard_keypressed(SCANCODE_RIGHTSHIFT) ) {
+	instring[charcounter ++]='K'; } else { instring[charcounter ++]='k'; }
+      instring[charcounter] = '\0';			/* und abschliessen */
+      while (keyboard_keypressed(SCANCODE_K)) keyboard_update();
+    }
+
+    if ( keyboard_keypressed(SCANCODE_A) && charcounter < MaxLen ) {
+      if ( keyboard_keypressed(SCANCODE_LEFTSHIFT) || keyboard_keypressed(SCANCODE_RIGHTSHIFT) ) {
+	instring[charcounter ++]='A'; } else { instring[charcounter ++]='a'; }
+      instring[charcounter] = '\0';			/* und abschliessen */
+      while (keyboard_keypressed(SCANCODE_A)) keyboard_update();
+    }
+
+    if ( keyboard_keypressed(SCANCODE_L) && charcounter < MaxLen ) {
+      if ( keyboard_keypressed(SCANCODE_LEFTSHIFT) || keyboard_keypressed(SCANCODE_RIGHTSHIFT) ) {
+	instring[charcounter ++]='L'; } else { instring[charcounter ++]='l'; }
+      instring[charcounter] = '\0';			/* und abschliessen */
+      while (keyboard_keypressed(SCANCODE_L)) keyboard_update();
+    }
+
+    if ( keyboard_keypressed(SCANCODE_M) && charcounter < MaxLen ) {
+      if ( keyboard_keypressed(SCANCODE_LEFTSHIFT) || keyboard_keypressed(SCANCODE_RIGHTSHIFT) ) {
+	instring[charcounter ++]='M'; } else { instring[charcounter ++]='m'; }
+      instring[charcounter] = '\0';			/* und abschliessen */
+      while (keyboard_keypressed(SCANCODE_M)) keyboard_update();
+    }
+
+    if ( keyboard_keypressed(SCANCODE_N) && charcounter < MaxLen ) {
+      if ( keyboard_keypressed(SCANCODE_LEFTSHIFT) || keyboard_keypressed(SCANCODE_RIGHTSHIFT) ) {
+	instring[charcounter ++]='N'; } else { instring[charcounter ++]='n'; }
+      instring[charcounter] = '\0';			/* und abschliessen */
+      while (keyboard_keypressed(SCANCODE_N)) keyboard_update();
+    }
+
+    if ( keyboard_keypressed(SCANCODE_O) && charcounter < MaxLen ) {
+      if ( keyboard_keypressed(SCANCODE_LEFTSHIFT) || keyboard_keypressed(SCANCODE_RIGHTSHIFT) ) {
+	instring[charcounter ++]='O'; } else { instring[charcounter ++]='o'; }
+      instring[charcounter] = '\0';			/* und abschliessen */
+      while (keyboard_keypressed(SCANCODE_O)) keyboard_update();
+    }
+
+    if ( keyboard_keypressed(SCANCODE_P) && charcounter < MaxLen ) {
+      if ( keyboard_keypressed(SCANCODE_LEFTSHIFT) || keyboard_keypressed(SCANCODE_RIGHTSHIFT) ) {
+	instring[charcounter ++]='P'; } else { instring[charcounter ++]='p'; }
+      instring[charcounter] = '\0';			/* und abschliessen */
+      while (keyboard_keypressed(SCANCODE_P)) keyboard_update();
+    }
+
+    if ( keyboard_keypressed(SCANCODE_Q) && charcounter < MaxLen ) {
+      if ( keyboard_keypressed(SCANCODE_LEFTSHIFT) || keyboard_keypressed(SCANCODE_RIGHTSHIFT) ) {
+	instring[charcounter ++]='Q'; } else { instring[charcounter ++]='q'; }
+      instring[charcounter] = '\0';			/* und abschliessen */
+      while (keyboard_keypressed(SCANCODE_Q)) keyboard_update();
+    }
+
+    if ( keyboard_keypressed(SCANCODE_R) && charcounter < MaxLen ) {
+      if ( keyboard_keypressed(SCANCODE_LEFTSHIFT) || keyboard_keypressed(SCANCODE_RIGHTSHIFT) ) {
+	instring[charcounter ++]='R'; } else { instring[charcounter ++]='r'; }
+      instring[charcounter] = '\0';			/* und abschliessen */
+      while (keyboard_keypressed(SCANCODE_R)) keyboard_update();
+    }
+
+    if ( keyboard_keypressed(SCANCODE_S) && charcounter < MaxLen ) {
+      if ( keyboard_keypressed(SCANCODE_LEFTSHIFT) || keyboard_keypressed(SCANCODE_RIGHTSHIFT) ) {
+	instring[charcounter ++]='S'; } else { instring[charcounter ++]='s'; }
+      instring[charcounter] = '\0';			/* und abschliessen */
+      while (keyboard_keypressed(SCANCODE_S)) keyboard_update();
+    }
+
+    if ( keyboard_keypressed(SCANCODE_T) && charcounter < MaxLen ) {
+      if ( keyboard_keypressed(SCANCODE_LEFTSHIFT) || keyboard_keypressed(SCANCODE_RIGHTSHIFT) ) {
+	instring[charcounter ++]='T'; } else { instring[charcounter ++]='t'; }
+      instring[charcounter] = '\0';			/* und abschliessen */
+      while (keyboard_keypressed(SCANCODE_T)) keyboard_update();
+    }
+
+    if ( keyboard_keypressed(SCANCODE_U) && charcounter < MaxLen ) {
+      if ( keyboard_keypressed(SCANCODE_LEFTSHIFT) || keyboard_keypressed(SCANCODE_RIGHTSHIFT) ) {
+	instring[charcounter ++]='U'; } else { instring[charcounter ++]='u'; }
+      instring[charcounter] = '\0';			/* und abschliessen */
+      while (keyboard_keypressed(SCANCODE_U)) keyboard_update();
+    }
+
+    if ( keyboard_keypressed(SCANCODE_V) && charcounter < MaxLen ) {
+      if ( keyboard_keypressed(SCANCODE_LEFTSHIFT) || keyboard_keypressed(SCANCODE_RIGHTSHIFT) ) {
+	instring[charcounter ++]='V'; } else { instring[charcounter ++]='v'; }
+      instring[charcounter] = '\0';			/* und abschliessen */
+      while (keyboard_keypressed(SCANCODE_V)) keyboard_update();
+    }
+
+    if ( keyboard_keypressed(SCANCODE_W) && charcounter < MaxLen ) {
+      if ( keyboard_keypressed(SCANCODE_LEFTSHIFT) || keyboard_keypressed(SCANCODE_RIGHTSHIFT) ) {
+	instring[charcounter ++]='W'; } else { instring[charcounter ++]='w'; }
+      instring[charcounter] = '\0';			/* und abschliessen */
+      while (keyboard_keypressed(SCANCODE_W)) keyboard_update();
+    }
+
+    if ( keyboard_keypressed(SCANCODE_X) && charcounter < MaxLen ) {
+      if ( keyboard_keypressed(SCANCODE_LEFTSHIFT) || keyboard_keypressed(SCANCODE_RIGHTSHIFT) ) {
+	instring[charcounter ++]='X'; } else { instring[charcounter ++]='x'; }
+      instring[charcounter] = '\0';			/* und abschliessen */
+      while (keyboard_keypressed(SCANCODE_X)) keyboard_update();
+    }
+
+    if ( keyboard_keypressed(SCANCODE_Y) && charcounter < MaxLen ) {
+      if ( keyboard_keypressed(SCANCODE_LEFTSHIFT) || keyboard_keypressed(SCANCODE_RIGHTSHIFT) ) {
+	instring[charcounter ++]='Y'; } else { instring[charcounter ++]='y'; }
+      instring[charcounter] = '\0';			/* und abschliessen */
+      while (keyboard_keypressed(SCANCODE_Y)) keyboard_update();
+    }
+
+    if ( keyboard_keypressed(SCANCODE_Z) && charcounter < MaxLen ) {
+      if ( keyboard_keypressed(SCANCODE_LEFTSHIFT) || keyboard_keypressed(SCANCODE_RIGHTSHIFT) ) {
+	instring[charcounter ++]='Z'; } else { instring[charcounter ++]='z'; }
+      instring[charcounter] = '\0';			/* und abschliessen */
+      while (keyboard_keypressed(SCANCODE_Z)) keyboard_update();
+    }
+
+    /* alte eingabe-Zeile loeschen: */
+    /* es wird eine Laenge MaxLen -1 geloescht */
+    // DisplayText(loeschstring, TextOutX, TextOutY, RealScreen, FALSE);		
+    
+    
+    /* Eingabe mit Cursor ausgeben */
+    // DisplayText(instring, TextOutX, TextOutY, RealScreen, TRUE);
+    DisplayText(instring, TextOutX, TextOutY, RealScreen, TRUE);
+    
+  } /* While nicht RET gedrueckt */
+
+  // After the GetString operation is complete the keyboard can be set to raw mode again
+  // for further play.
+  // keyboard_init();
+
+  return(instring);
 	
 } /* GetString() */
 

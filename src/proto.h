@@ -12,6 +12,7 @@
 #define EXTERN extern
 #endif
 
+EXTERN void CalibratedDelay(long);
 EXTERN int ShipEmptyCounter;
 EXTERN int WaitElevatorCounter;
 EXTERN int TimerFlag;
@@ -221,7 +222,7 @@ EXTERN int TranslateMap(Level Lev);
 EXTERN void StartSound(int);
 EXTERN void out_sb(unsigned char, unsigned char);
 EXTERN unsigned char in_sb(unsigned char);
-EXTERN void init_sb(void);
+EXTERN int Init_OSS(void);
 EXTERN void GotHitSound(void);
 EXTERN void GotIntoBlastSound(void);
 EXTERN void CrySound(void);

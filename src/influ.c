@@ -9,9 +9,9 @@
  *
  * $Author$
  *
- * $Log$
- * Revision 1.4  2002/04/08 09:53:13  rp
- * Johannes' initial linux PORT
+ * $Log: influ.c,v 
+ * Revision 1.5  1997/05/31 13:30:31  rpri
+ * Further update by johannes. (sent to me in tar.gz
  *
  * Revision 1.2  1994/06/19  16:22:55  prix
  * Wed Jun 08 13:52:40 1994: Influ moves only when beam finished
@@ -183,63 +183,65 @@ void MoveInfluence(void)
   /* zum Bremsen der Drehung, wenn man auf der Taste bleibt: */
   static int counter=-1;
 
-  printf("\nvoid MoveInfluence(void):  Funktionsbeginn erfolgreich erreicht...");
+  printf("\nvoid MoveInfluence(void):  Real function call confirmed.");
   printf("\nvoid MoveInfluence(void):  accel ist jetzt: %d.",accel);
 
-  	if (BeamLine) return;
+  if (BeamLine) return;
 	
-	counter ++;
-	counter %= BREMSDREHUNG;		/* Wird mal vom Druid abhaengen */
+  counter ++;
+  counter %= BREMSDREHUNG;		/* Wird mal vom Druid abhaengen */
 
-	PermanentLoseEnergy();			/* influ permanently loses energy */
+  PermanentLoseEnergy();			/* influ permanently loses energy */
+  
+  /* Checken, ob Influencer noch OK */
+  if( Me.energy <= 0) {
+    if (Me.type != DRUID001) {
+      Me.type = DRUID001;
+      RedrawInfluenceNumber();
+      Me.speed.x = 0;
+      Me.speed.y = 0;
+      Me.energy = PreTakeEnergy;
+      Me.health = BLINKENERGY;
+      StartBlast(Me.pos.x,Me.pos.y,DRUIDBLAST);
+    } else {
+      Me.status = OUT;
+      ThouArtDefeated();
+      printf("\nvoid MoveInfluence(void):  Alternate end of function reached.");
+      return;
+    }
+  }
+
+  /* Time passed before entering Transfermode ?? */
+  if( TransferCounter && (TransferCounter-- == 1) ) Me.status = TRANSFERMODE;
 	
-	/* Checken, ob Influencer noch OK */
-	if( Me.energy <= 0) {
-		if (Me.type != DRUID001) {
-			Me.type = DRUID001;
-			RedrawInfluenceNumber();
-			Me.speed.x = 0;
-			Me.speed.y = 0;
-			Me.energy = PreTakeEnergy;
-			Me.health = BLINKENERGY;
-			StartBlast(Me.pos.x,Me.pos.y,DRUIDBLAST);
-		} else {
-			Me.status = OUT;
-			ThouArtDefeated();
-		}
-	}
+  if (UpPressed()) SpeedY-= accel;
+  if (DownPressed()) SpeedY+= accel;
+  if (LeftPressed()) SpeedX-= accel;
+  if (RightPressed()) SpeedX+= accel;
+  
+  if (!SpacePressed()) Me.status=MOBILE;
 
-	/* Time passed before entering Transfermode ?? */
-	if( TransferCounter && (TransferCounter-- == 1) ) Me.status = TRANSFERMODE;
-	
-	if (UpPressed()) SpeedY-= accel;
-	if (DownPressed()) SpeedY+= accel;
-	if (LeftPressed()) SpeedX-= accel;
-	if (RightPressed()) SpeedX+= accel;
-
-	if (!SpacePressed()) Me.status=MOBILE;
-
-	if( TransferCounter == 1 ) {
-		Me.status = TRANSFERMODE;
-		TransferCounter = 0;
-	}
-	
-	if ((SpacePressed()) && (NoDirectionPressed()) &&
-			(Me.status!=WEAPON) && (Me.status != TRANSFERMODE) && (!TransferCounter) )
-		TransferCounter = WAIT_TRANSFERMODE;
-		
-	if ((SpacePressed()) && (!NoDirectionPressed()) &&
-			(Me.status != TRANSFERMODE) )
-		Me.status=WEAPON;
-
-	if (Me.autofire) AutoFireBullet(); else
-		if ((SpacePressed()) && (!NoDirectionPressed()) && (Me.status == WEAPON) &&
-			(Me.firewait == 0) && (NoInfluBulletOnWay())) FireBullet();
-
-	/* Checken, ob auf Sonder-Feld (Lift, Konsole) und im Transfermode */
-	ActSpecialField(Me.pos.x, Me.pos.y);
-
-	
+  if( TransferCounter == 1 ) {
+    Me.status = TRANSFERMODE;
+    TransferCounter = 0;
+  }
+  
+  if ((SpacePressed()) && (NoDirectionPressed()) &&
+      (Me.status!=WEAPON) && (Me.status != TRANSFERMODE) && (!TransferCounter) )
+    TransferCounter = WAIT_TRANSFERMODE;
+  
+  if ((SpacePressed()) && (!NoDirectionPressed()) &&
+      (Me.status != TRANSFERMODE) )
+    Me.status=WEAPON;
+  
+  if (Me.autofire) AutoFireBullet(); else
+    if ((SpacePressed()) && (!NoDirectionPressed()) && (Me.status == WEAPON) &&
+	(Me.firewait == 0) && (NoInfluBulletOnWay())) FireBullet();
+  
+  /* Checken, ob auf Sonder-Feld (Lift, Konsole) und im Transfermode */
+  ActSpecialField(Me.pos.x, Me.pos.y);
+  
+  printf("\nvoid MoveInfluence(void):  Usual end of function reached.");
 } /* MoveInfluence */
 
 
@@ -480,25 +482,26 @@ void Reibung(void){
 * $Function----------------------------------------------------------*/
 void ExplodeInfluencer(void)
 {
-	int i;
-	int counter;
+  int i;
+  int counter;
 	
-	Me.status = OUT;
+  Me.status = OUT;
 
-	
-	/* ein paar versetze Explosionen */
-	for(i = 0; i<4; i++) {
-		/* freien Blast finden */
-		counter = 0;
-		while( AllBlasts[counter++].type != OUT);
-		counter -= 1;
-		AllBlasts[counter].type = DRUIDBLAST;
-		AllBlasts[counter].PX = Me.pos.x -DRUIDRADIUSX/2 + MyRandom(DRUIDRADIUSX);
-		AllBlasts[counter].PY = Me.pos.y - DRUIDRADIUSY/2 + MyRandom(DRUIDRADIUSY);
-		AllBlasts[counter].phase = i;
-	}
-	
-	
+  printf("\nvoid ExplodeInfluencer(void): Real function call confirmed.");
+
+  /* ein paar versetze Explosionen */
+  for(i = 0; i<4; i++) {
+    /* freien Blast finden */
+    counter = 0;
+    while( AllBlasts[counter++].type != OUT);
+    counter -= 1;
+    AllBlasts[counter].type = DRUIDBLAST;
+    AllBlasts[counter].PX = Me.pos.x -DRUIDRADIUSX/2 + MyRandom(DRUIDRADIUSX);
+    AllBlasts[counter].PY = Me.pos.y - DRUIDRADIUSY/2 + MyRandom(DRUIDRADIUSY);
+    AllBlasts[counter].phase = i;
+  }
+  
+  printf("\nvoid ExplodeInfluencer(void): Usual end of function reached.");
 } /* ExplodeInfluencer */
 
 /*@Function============================================================
@@ -784,3 +787,4 @@ void PermanentLoseEnergy(void)
 }
 
 #undef _influ_c
+

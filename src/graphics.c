@@ -9,9 +9,9 @@
  *
  * $Author$
  *
- * $Log$
- * Revision 1.4  2002/04/08 09:53:13  rp
- * Johannes' initial linux PORT
+ * $Log: graphics.c,v 
+ * Revision 1.5  1997/05/31 13:30:31  rpri
+ * Further update by johannes. (sent to me in tar.gz
  *
  * Revision 1.2  1994/06/19  16:21:33  prix
  * Sat May 21 07:37:55 1994: Neue Funktion: TransparentLadeLBMBild
@@ -949,6 +949,8 @@ void Flimmern(void){
   unsigned char* Screenptr;
   unsigned char* Junkptr;
   
+  printf("\nvoid Flimmern(void): Real function call confirmed.");
+
   Screenptr=RealScreen;
 
 #ifdef FLIMMERN1
@@ -1003,7 +1005,7 @@ void Flimmern(void){
     *(Junkptr + USERFENSTERBREITE - i) = 0;
     delay(1);
   }
-
+  
   delay(300);
   /* Clear the rest */
   memset(Junkptr, 0, USERFENSTERBREITE);
@@ -1060,7 +1062,6 @@ void Flimmern(void){
 #endif
 }
 #undef _graphics_c
-
 
 
 

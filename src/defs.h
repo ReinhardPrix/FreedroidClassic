@@ -1,4 +1,4 @@
- /*=@Header==============================================================
+/*=@Header==============================================================
  * $Source$
  *
  * @Desc: all the define-constants and macroes
@@ -9,8 +9,8 @@
  * $Author$
  *
  * $Log$
- * Revision 1.7  2002/04/08 10:25:30  rp
- * ALLDRUIDTYPES set to 24 (instead of 25), which is the correct value IMHO
+ * Revision 1.8  2002/04/08 19:19:09  rp
+ * Johannes latest (and last) non-cvs version to be checked in. Added graphics,sound,map-subdirs. Sound support using ALSA started.
  *
  * Revision 1.7  1997/05/31 13:30:31  rprix
  * Further update by johannes. (sent to me in tar.gz)
@@ -45,7 +45,7 @@
 //
 
 #define MEMDEBUG
-
+#define SOUND
 
 // **********************************************************************
 
@@ -57,27 +57,36 @@
 #define ERR 	-1
 #define OK		0
 
+#define ERRORSOUND 0
+#define BLASTSOUND 1
+#define FIRESOUND 2
+#define COLLISIONSOUND 3
+
 /* Konstanten fuer die Dateinamen */
-#define SHIPNAME "./daten/ship1"
-#define PALBILD	"./daten/palbild.lbm"
-#define COLORFILE "./daten/levels.col"
-#define BLOCKBILD1 "./daten/block.lbm"
+#define SHIPNAME "./map/ship1"
+#define PALBILD	"./graphics/palbild.lbm"
+#define COLORFILE "./map/levels.col"
+#define BLOCKBILD1 "./graphics/block.lbm"
 #define BLOCKBILD2 ""
-#define TITELBILD1 "./daten/title.lbm"
-#define RAHMENBILD1 "./daten/rahmen.lbm"
-#define PARAPLUSRAHMENBILD "./daten/plusrah1.lbm"
-#define BLASTBILD "./daten/blast.lbm"
-#define BULLETBILD "./daten/bullet.lbm"
-#define INFLUENCEBILD "./daten/influ.lbm"
-#define DATA70ZEICHENSATZ "./daten/para8x8.fnt"
-#define DIGITBILD "./daten/digits.lbm"
-#define ENEMYBILD "./daten/enemy.lbm"
-#define SEITENANSICHTBILD "./daten/ship.lbm"
-#define EL_BLOCKS_FILE 		"./daten/ship2.lbm"
-#define FONTBILD "./daten/parafont.lbm"
-#define CONSOLENBILD "./daten/console.lbm"
-#define ROBOTPICTUREBILD "./daten/robots.lbm"
-#define SHIELDPICTUREBILD "./daten/shield.lbm"
+#define TITELBILD1 "./graphics/title.lbm"
+#define RAHMENBILD1 "./graphics/rahmen.lbm"
+#define PARAPLUSRAHMENBILD "./graphics/plusrah1.lbm"
+#define BLASTBILD "./graphics/blast.lbm"
+#define BULLETBILD "./graphics/bullet.lbm"
+#define INFLUENCEBILD "./graphics/influ.lbm"
+#define DATA70ZEICHENSATZ "./graphics/para8x8.fnt"
+#define DIGITBILD "./graphics/digits.lbm"
+#define ENEMYBILD "./graphics/enemy.lbm"
+#define SEITENANSICHTBILD "./graphics/ship.lbm"
+#define EL_BLOCKS_FILE 		"./graphics/ship2.lbm"
+#define FONTBILD "./graphics/parafont.lbm"
+#define CONSOLENBILD "./graphics/console.lbm"
+#define ROBOTPICTUREBILD "./graphics/robots.lbm"
+#define SHIELDPICTUREBILD "./graphics/shield.lbm"
+
+#define TAKEOVERBACKGROUNDBILD "./graphics/overtake.lbm"
+#define PLAYGROUND_FILE	"./graphics/to_ground.lbm"	/* graphics - files */
+#define ELEMENTS_FILE	"./graphics/to_elem.lbm"
 
 /* Konstanten die unmittelbar die Hardware betreffen */
 #define SCREENADDRESS		0xa000	/* screen - data */
@@ -115,19 +124,17 @@
 
 
 #define VIEWBREITE 9
-#define VIEWHOEHE 6
+#define VIEWHOEHE 4
 
-#define INTERNBREITE 11			/* 11 */
-#define INTERNHOEHE 9
+#define INTERNBREITE 13
+#define INTERNHOEHE 7
 
 /* Diese Konstanten geben die Groeáe des unsichtbaren Bereiches links,rechts
 	und oberhalb des Userfensters an. */
-#define USERFENSTERLINKS (BLOCKBREITE/2+10)  /* 32 */  /* 32+16 */
-//#define USERFENSTEROBEN BLOCKHOEHE/2  /* 25 */
-
+// #define USERFENSTERLINKS ((INTERNBREITE-VIEWBREITE)*BLOCKBREITE/2) // (BLOCKBREITE/2+10)  /* 32 */  /* 32+16 */
+// #define USERFENSTEROBEN BLOCKHOEHE/2  /* 25 */
 //#define USERFENSTERUNTEN USERFENSTEROBEN+USERFENSTERHOEHE
 //#define USERFENSTERRECHTS (BLOCKBREITE/2+10) /* 32 */  /* 32+16 */
-
 //#define USERFENSTERBREITE ((INTERNBREITE-1)*BLOCKBREITE-20)  /* (288-32) */
 //#define USERFENSTERHOEHE ((INTERNHOEHE-1)*BLOCKHOEHE)     /* 112 */
 
@@ -137,7 +144,7 @@
 #define USERFENSTERPOSX ( (SCREENBREITE-USERFENSTERBREITE) / 2)
 #define USERFENSTERPOSY ( (SCREENHOEHE-USERFENSTERHOEHE) )
 
-#define USERFENSTEROBEN 		BLOCKHOEHE+BLOCKHOEHE/2
+//#define USERFENSTEROBEN 		BLOCKHOEHE+BLOCKHOEHE/2
 //#define USERFENSTERLINKS 		1*BLOCKBREITE
 
 #define BULLETSPEEDINFLUENCE 2
@@ -151,7 +158,7 @@
 #define ENEMYPHASES 8
 
 #define WAIT_LEVELEMPTY		18		/* warte bevor Graufaerben */
-#define WAIT_AFTER_KILLED	25		/* warte, bevor Spiel aus */
+#define WAIT_AFTER_KILLED	45		/* warte, bevor Spiel aus */
 #define WAIT_SHIPEMPTY	20
 #define WAIT_TRANSFERMODE	5		/* warte, bevor in Transfermode schalten */
 
@@ -202,8 +209,8 @@ enum _directions {
 
 #define BLOCKANZAHL 43
 
-#define ALLDRUIDTYPES		24	/* number of druid-models that exist */
-#define ALLBULLETTYPES		4	/* number of bullet-types */
+#define ALLDRUIDTYPES		25		/* number of druid-models that exist */
+#define ALLBULLETTYPES		4		/* number of bullet-types */
 #define ALLBLASTTYPES		2     /* number of different exposions */
 
 #define MAXBULLETS		10		/* maximum possible Bullets in the air */

@@ -10,8 +10,11 @@
  * $Author$
  *
  * $Log$
- * Revision 1.4  2002/04/08 09:53:13  rp
- * Johannes' initial linux PORT
+ * Revision 1.5  2002/04/08 19:19:09  rp
+ * Johannes latest (and last) non-cvs version to be checked in. Added graphics,sound,map-subdirs. Sound support using ALSA started.
+ *
+ * Revision 1.5  1997/05/31 13:30:32  rprix
+ * Further update by johannes. (sent to me in tar.gz)
  *
  * Revision 1.2  1994/06/19  16:42:11  prix
  * Thu Jun 02 19:42:47 1994: ??
@@ -135,7 +138,7 @@ void InitTakeover(void)
 		InternalScreen = (unsigned char*)MyMalloc((size_t)SCREENLEN*SCREENHEIGHT);
 
 	if( InternalScreen == NULL ) {		
-		printf("\nFatal Error: No memory !");
+		printf("\nvoid InitTakeover(void): Fatal Error: No memory !");
 		getchar();
 		
 		Terminate(-1);
@@ -186,6 +189,8 @@ int Takeover(int enemynum)
     JoystickControl();
     keyboard_update();
   }
+
+  LadeLBMBild(TAKEOVERBACKGROUNDBILD,RealScreen,FALSE);
 
   while( !FinishTakeover ) {
 	

@@ -470,8 +470,11 @@ int MergeBlockToWindow(
  * $Author$
  *
  * $Log$
- * Revision 1.9  2002/04/08 09:53:13  rp
- * Johannes' initial linux PORT
+ * Revision 1.10  2002/04/08 19:19:09  rp
+ * Johannes latest (and last) non-cvs version to be checked in. Added graphics,sound,map-subdirs. Sound support using ALSA started.
+ *
+ * Revision 1.11  1997/05/31 13:30:31  rprix
+ * Further update by johannes. (sent to me in tar.gz)
  *
  * Revision 1.7  1994/06/19  15:59:08  prix
  * Mon May 23 16:32:14 1994: IsolateBlock hat jetzt screen als Parameter 1

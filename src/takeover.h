@@ -9,8 +9,11 @@
  * $Author$
  *
  * $Log$
- * Revision 1.4  2002/04/08 09:53:13  rp
- * Johannes' initial linux PORT
+ * Revision 1.5  2002/04/08 19:19:09  rp
+ * Johannes latest (and last) non-cvs version to be checked in. Added graphics,sound,map-subdirs. Sound support using ALSA started.
+ *
+ * Revision 1.5  1997/05/31 13:30:32  rprix
+ * Further update by johannes. (sent to me in tar.gz)
  *
  * Revision 1.2  1994/06/19  16:42:56  prix
  * ??
@@ -171,9 +174,6 @@ enum to_blocks {
 
 #define NUM_LAYERS		4			/* dimension of the playground */
 #define NUM_LINES			12
-
-#define PLAYGROUND_FILE	"./daten/to_ground.lbm"	/* graphics - files */
-#define ELEMENTS_FILE	"./daten/to_elem.lbm"
 
 /* the playground type */
 typedef int playground_t[TO_COLORS][NUM_LAYERS][NUM_LINES]; 

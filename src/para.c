@@ -39,6 +39,7 @@
 #include <vgagl.h>
 #include <vgakeyboard.h>
 #include <sys/stat.h>
+#include <sys/asoundlib.h>
 
 #include "defs.h"
 #include "struct.h"
@@ -63,13 +64,46 @@
 #define SCROLLSTARTY		SCREENHOEHE
 #define CHARSPERLINE		(int)(USERFENSTERBREITE/FONTBREITE)
 
-int AutoTerminationTime=300;
+int AutoTerminationTime=60;
 int SetDebugPos=FALSE;
 int vgamode;
 int ThisMessageTime;
 
+int card = 0;
+int device = 0;
+void* handle;
+
+int TestSound(void);
+void CalibratedDelay(long);
 void Debriefing(void);
 void ShowHighscoreList(void);
+
+//
+//
+//
+
+int TestSound(void){
+  int err;
+  printf("\nEverything ready to test the alsa sound output... commencing...");
+
+  printf("\nOpening PCM interface...");
+  if ( (err = snd_pcm_open( &handle, card, device,
+			    SND_PCM_OPEN_PLAYBACK )) < 0 ) {
+    fprintf( stderr,
+	     "\nint TestSound(void): open failed: %s\n", snd_strerror( err ) );
+    return -1;
+  } else {
+    printf("\nint TestSound(void): opening PCM interface seems to have worked. Good.");
+  }
+
+  
+
+
+} // void TestSound(void);
+
+void CalibratedDelay(long delay){
+  usleep(delay);
+} // void CalibatedDelay(long delay)
 
 // This Function is for the SVGALIB for the PORT!!!!
 //
@@ -146,7 +180,7 @@ static void timeout(int sig)
 {
   keyboard_close();
   vga_setmode(TEXT);
-  printf("Automatic termination after %d seconds.", AutoTerminationTime);
+  printf("Automatic termination after %d seconds.\n\n", AutoTerminationTime);
   exit(1);
 }
 
@@ -266,6 +300,10 @@ int main(void)
 {
   int i;
 
+  // Use ALSA?  No, thanks.
+  // TestSound();
+  // exit(0);
+
   GameOver = FALSE;
   QuitProgram = FALSE;
   Conceptview = FALSE;
@@ -323,9 +361,7 @@ int main(void)
 
       DisplayRahmen(RealScreen);
 
-      usleep(30000);  /* Dies soll eine Wartezeit von 1/100stel Sekunden bringen... */
-
-      // PORT Hier wurden vor dem Port die Cursortasten und Space abgefragt...
+      CalibratedDelay(20000);  //  This should cause a little delay to make the game more playable
 
       if(keyboard_keypressed(SCANCODE_Q)) {
 	printf("\n*****************************************************");
@@ -622,7 +658,7 @@ void InitParaplus(void)
 
   // ******** ACHTUNG!  Hier folgt nun die Original-Initialisierungsroutine ***********
 
-  init_sb();
+  Init_OSS();
 
 	/* Zuerst den Videomodus setzen */
   SetVideoMode(0x13);
@@ -937,34 +973,37 @@ int NoDirectionPressed(){
 @Int:
 * $Function----------------------------------------------------------*/
 void ThouArtDefeated(void){
-	int i,j;
+  int i,j;
 
-	Me.status=TERMINATED;
-	ExplodeInfluencer();
-		
-	for (i=0;i<WAIT_AFTER_KILLED; i++) {
-//		UpdateInfoline();
-//		SetInfoline();
-		DisplayRahmen(NULL);
-		GetInternFenster();
-		PutInternFenster();
-		ExplodeBlasts();
-		MoveBullets();
-		MoveEnemys();
-		for(j=0;j<MAXBULLETS;j++) CheckBulletCollisions(j);
-		RotateBulletColor();
-		delay(100);
-	}
+  printf("\nvoid ThouArtDefeated(void): Real function call confirmed.");
+  Me.status=TERMINATED;
+  ExplodeInfluencer();
+  
+  for (i=0;i<WAIT_AFTER_KILLED; i++) {
+    //		UpdateInfoline();
+    //		SetInfoline();
+    DisplayRahmen(RealScreen);
+    GetInternFenster();
+    PutInternFenster();
+    ExplodeBlasts();
+    MoveBullets();
+    MoveEnemys();
+    for(j=0;j<MAXBULLETS;j++) CheckBulletCollisions(j);
+    RotateBulletColor();
+    CalibratedDelay(30000);
+  }
 
-	/* Ein Flimmer zieht "uber den Schirm */
-	Flimmern();
-	Debriefing();
+  /* Ein Flimmer zieht "uber den Schirm */
+  Flimmern();
+  Debriefing();
 
-	/* Soundblaster soll keine Toene mehr spucken */
-	//PORT sbfm_silence();
+  /* Soundblaster soll keine Toene mehr spucken */
+  //PORT sbfm_silence();
 
-	GameOver = TRUE;
-}
+  GameOver = TRUE;
+  
+  printf("\nvoid ThouArtDefeated(void): Usual end of function reached.");
+} // void ThouArtDefeated(void)
 
 /*@Function============================================================
 @Desc: 
@@ -986,86 +1025,90 @@ void ThouArtVictorious(void){
 	Diese Funktion updated die Highscoreliste
 	**********************************************************************/
 void Debriefing(void){
-	char* Scoretext;
-	HallElement* Oldptr;
-	HallElement* Newptr;
-	HallElement* SaveHallptr=Hallptr;
-	char* PName;
-	int DebriefColor;
+  char* Scoretext;
+  HallElement* Oldptr;
+  HallElement* Newptr;
+  HallElement* SaveHallptr=Hallptr;
+  char* PName;
+  int DebriefColor;
 
-	DebriefColor=FONT_WHITE;
+  printf("\nvoid Debriefing(void): Real function call confirmed.");
 
-	Me.status=DEBRIEFING;
-	if (!PlusExtentionsOn) {
-		Scoretext=MyMalloc(1000);
-		if (RealScore>GreatScore) {
-			SetUserfenster(DebriefColor,RealScreen); // KON_BG_COLOR
-			SetTextColor(DebriefColor, KON_TEXT_COLOR); // KON_BG_COLOR
-			strcpy(Scoretext,"\n    Great Score !\n Enter your name:");
-			DisplayText(Scoretext,USERFENSTERPOSX,USERFENSTERPOSY,RealScreen,FALSE);
-			free(GreatScoreName);
-			GreatScoreName=GetString(18);
-			GreatScore=RealScore;
-		} else
-		if (RealScore<LowestScoreOfDay) {
-			SetUserfenster(DebriefColor,RealScreen); // KON_BG_COLOR
-			SetTextColor(DebriefColor, KON_TEXT_COLOR); // KON_BG_COLOR
-			strcpy(Scoretext,"\n   Lowest Score of Day! \n Enter your name:");
-			DisplayText(Scoretext,USERFENSTERPOSX,USERFENSTERPOSY,RealScreen,FALSE);
-			free(LowestName);
-			LowestName=GetString(18);
-			LowestScoreOfDay=RealScore;
-		} else 
-		if (RealScore>HighestScoreOfDay) {
-			SetUserfenster(DebriefColor,RealScreen); // KON_BG_COLOR
-			SetTextColor(DebriefColor, KON_TEXT_COLOR); // KON_BG_COLOR
-			strcpy(Scoretext,"\n   Highest Score of Day! \n Enter your name:");
-			DisplayText(Scoretext,USERFENSTERPOSX,USERFENSTERPOSY,RealScreen,FALSE);
-			free(HighestName);
-			HighestName=GetString(18);
-			HighestScoreOfDay=RealScore;
-		}
-		free(Scoretext);
-		
-	} else {
-		SaveHallptr=Hallptr;
-		
-		/* Wir brauchen keine Versager ! */
-		if (RealScore == 0) return;
-		/* Setzten der Umgebung */
-		SetUserfenster(KON_BG_COLOR, RealScreen);
-		SetTextColor(KON_BG_COLOR, KON_TEXT_COLOR);
-		DisplayText(" You have gained entry to the hall\n of fame!\nEnter your name:\n  ",
-			    USERFENSTERPOSX,USERFENSTERPOSY,RealScreen,FALSE);
+  DebriefColor=FONT_WHITE;
 
-		/* Den neuen Eintrag in die Liste integrieren */
-		if (Hallptr->PlayerScore < RealScore) {
-			Oldptr=Hallptr;
-			Hallptr=MyMalloc(sizeof(HallElement)+1);
-			Hallptr->PlayerScore=RealScore;
-			Hallptr->PlayerName=GetString(18);
-			Hallptr->NextPlayer=Oldptr;
-			SaveHallptr=Hallptr;
-		} else {
-			Oldptr=Hallptr;
-			while (Hallptr->PlayerScore > RealScore) {
-				Hallptr=Hallptr->NextPlayer;
-				if (Hallptr->PlayerScore > RealScore) Oldptr=Oldptr->NextPlayer;
-			}
-			Newptr=MyMalloc(sizeof(HallElement)+1);
-			Newptr->PlayerScore=RealScore;
-			Newptr->PlayerName=GetString(18);
-			Newptr->NextPlayer=Hallptr;
-			Oldptr->NextPlayer=Newptr;
-		}
-
-		/* Message an exit */
-		DisplayText("You are now added to the hall\n of fame!\n",
-						USERFENSTERPOSX,USERFENSTERPOSY,RealScreen,FALSE);
-		Hallptr=SaveHallptr;
-		getchar();
+  Me.status=DEBRIEFING;
+  if (!PlusExtentionsOn) {
+    Scoretext=MyMalloc(1000);
+    if (RealScore>GreatScore) {
+      SetUserfenster(DebriefColor,RealScreen); // KON_BG_COLOR
+      SetTextColor(DebriefColor, KON_TEXT_COLOR); // KON_BG_COLOR
+      strcpy(Scoretext,"\n    Great Score !\n Enter your name:");
+      DisplayText(Scoretext,USERFENSTERPOSX,USERFENSTERPOSY,RealScreen,FALSE);
+      free(GreatScoreName);
+      GreatScoreName=GetString(18);
+      GreatScore=RealScore;
+    } else
+      if (RealScore<LowestScoreOfDay) {
+	SetUserfenster(DebriefColor,RealScreen); // KON_BG_COLOR
+	SetTextColor(DebriefColor, KON_TEXT_COLOR); // KON_BG_COLOR
+	strcpy(Scoretext,"\n   Lowest Score of Day! \n Enter your name:");
+	DisplayText(Scoretext,USERFENSTERPOSX,USERFENSTERPOSY,RealScreen,FALSE);
+	free(LowestName);
+	LowestName=GetString(18);
+	LowestScoreOfDay=RealScore;
+      } else 
+	if (RealScore>HighestScoreOfDay) {
+	  SetUserfenster(DebriefColor,RealScreen); // KON_BG_COLOR
+	  SetTextColor(DebriefColor, KON_TEXT_COLOR); // KON_BG_COLOR
+	  strcpy(Scoretext,"\n   Highest Score of Day! \n Enter your name:");
+	  DisplayText(Scoretext,USERFENSTERPOSX,USERFENSTERPOSY,RealScreen,FALSE);
+	  free(HighestName);
+	  HighestName=GetString(18);
+	  HighestScoreOfDay=RealScore;
 	}
-}
+    free(Scoretext);
+    
+  } else {
+    SaveHallptr=Hallptr;
+    
+    /* Wir brauchen keine Versager ! */
+    if (RealScore == 0) return;
+    /* Setzten der Umgebung */
+    SetUserfenster(KON_BG_COLOR, RealScreen);
+    SetTextColor(KON_BG_COLOR, KON_TEXT_COLOR);
+    DisplayText(" You have gained entry to the hall\n of fame!\nEnter your name:\n  ",
+		USERFENSTERPOSX,USERFENSTERPOSY,RealScreen,FALSE);
+    
+    /* Den neuen Eintrag in die Liste integrieren */
+    if (Hallptr->PlayerScore < RealScore) {
+      Oldptr=Hallptr;
+      Hallptr=MyMalloc(sizeof(HallElement)+1);
+      Hallptr->PlayerScore=RealScore;
+      Hallptr->PlayerName=GetString(18);
+      Hallptr->NextPlayer=Oldptr;
+      SaveHallptr=Hallptr;
+    } else {
+      Oldptr=Hallptr;
+      while (Hallptr->PlayerScore > RealScore) {
+	Hallptr=Hallptr->NextPlayer;
+	if (Hallptr->PlayerScore > RealScore) Oldptr=Oldptr->NextPlayer;
+      }
+      Newptr=MyMalloc(sizeof(HallElement)+1);
+      Newptr->PlayerScore=RealScore;
+      Newptr->PlayerName=GetString(18);
+      Newptr->NextPlayer=Hallptr;
+      Oldptr->NextPlayer=Newptr;
+    }
+    
+    /* Message an exit */
+    DisplayText("You are now added to the hall\n of fame!\n",
+		USERFENSTERPOSX,USERFENSTERPOSY,RealScreen,FALSE);
+    Hallptr=SaveHallptr;
+    getchar();
+  }
+
+  printf("\nvoid Debriefing(void): Usual end of function reached.");
+}  // void Debriefing(void)
 
 /* **********************************************************************
 	Diese Funktion gibt die momentane Highscoreliste aus
@@ -1116,8 +1159,11 @@ void ShowHighscoreList(void){
  * $Author$
  *
  * $Log$
- * Revision 1.16  2002/04/08 09:53:13  rp
- * Johannes' initial linux PORT
+ * Revision 1.17  2002/04/08 19:19:09  rp
+ * Johannes latest (and last) non-cvs version to be checked in. Added graphics,sound,map-subdirs. Sound support using ALSA started.
+ *
+ * Revision 1.17  1997/05/31 13:30:31  rprix
+ * Further update by johannes. (sent to me in tar.gz)
  *
  * Revision 1.14  1994/06/19  16:36:43  prix
  * Sat May 21 14:26:01 1994: PutMessages hinzugef"ugt

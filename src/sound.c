@@ -10,8 +10,11 @@
  * $Author$
  *
  * $Log$
- * Revision 1.4  2002/04/08 09:53:13  rp
- * Johannes' initial linux PORT
+ * Revision 1.5  2002/04/08 19:19:09  rp
+ * Johannes latest (and last) non-cvs version to be checked in. Added graphics,sound,map-subdirs. Sound support using ALSA started.
+ *
+ * Revision 1.5  1997/05/31 13:30:32  rprix
+ * Further update by johannes. (sent to me in tar.gz)
  *
  * Revision 1.2  1994/06/19  16:41:10  prix
  * Sat Jun 04 08:42:14 1994: ??
@@ -31,12 +34,48 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/soundcard.h>
+#include <sys/ioctl.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <stdlib.h>
 
 #include "defs.h"
 #include "struct.h"
 #include "global.h"
 #include "proto.h"
-// #include "fm_hrd.h"
+
+
+// unsigned char* data;
+
+int handle = -1;
+int setting = 0x000C000D; // 12 fragments size 8kb
+int channels = 0;         // 0=mono 1=stereo
+int format = AFMT_U8;
+int rate = 8000;
+
+char BlastSoundSampleFilename[]="./sound/BlastSound1.wav";
+char CollisionSoundSampleFilename[]="./sound/CollisionSound1.wav";
+char FireSoundSampleFilename[]="./sound/FireSound2.wav";
+
+long BlastSoundSampleLength=0;
+long CollisionSoundSampleLength=0;
+long FireSoundSampleLength=0;
+
+unsigned char *BlastSoundSamplePointer;
+unsigned char *CollisionSoundSamplePointer;
+unsigned char *FireSoundSamplePointer;
+
+
+
+void ExitProc() {
+  if (handle != -1) {
+    close( handle );
+  }
+}
 
 unsigned char Kanal;
 
@@ -44,50 +83,46 @@ unsigned char Kanal;
 #define MY_FIRE	"myfire.mod"
 
 enum _devices {
-	PC_SPEAKER = 0,
-	SOUNDBLASTER = 7
+  PC_SPEAKER = 0,
+  SOUNDBLASTER = 7
 };
 
 typedef struct{
- 	int car_att;
-	int car_dec;
-	int car_sus;
-	int car_rel;
-	int car_wel;
-	int car_tre;
-	int car_vib;
-	int car_ton;
-	int car_hue;
-	int car_zei;
-	int car_dae;
-	int car_amp;
-
-  	int mod_att;
-	int mod_dec;
-	int mod_sus;
-	int mod_rel;
-	int mod_wel;
-	int mod_tre;
-	int mod_vib;
-	int mod_ton;
-	int mod_hue;
-	int mod_zei;
-	int mod_dae;
-	int mod_amp;
-
-   int freq;
-	int okt;
-   int verb;
-   int rueck;
+  int car_att;
+  int car_dec;
+  int car_sus;
+  int car_rel;
+  int car_wel;
+  int car_tre;
+  int car_vib;
+  int car_ton;
+  int car_hue;
+  int car_zei;
+  int car_dae;
+  int car_amp;
+  
+  int mod_att;
+  int mod_dec;
+  int mod_sus;
+  int mod_rel;
+  int mod_wel;
+  int mod_tre;
+  int mod_vib;
+  int mod_ton;
+  int mod_hue;
+  int mod_zei;
+  int mod_dae;
+  int mod_amp;
+  
+  int freq;
+  int okt;
+  int verb;
+  int rueck;
 }tune;	
 
-tune BounceTune={12,6,15, 1,0,FALSE,FALSE,FALSE,TRUE,11,0,0,
-                 12,2,15,15,0,FALSE,FALSE,FALSE,TRUE, 1,0,0,
-                 700,0,FALSE,6};
-
 tune FireBulletTune2={15,6,15,1,0,FALSE,FALSE,FALSE,FALSE,11,0,0,
-                     13,8,8,8,0,FALSE,FALSE,FALSE,FALSE, 1,0,0,
-                     700,0,FALSE,4};
+		      13,8,8,8,0,FALSE,FALSE,FALSE,FALSE, 1,0,0,
+		      700,0,FALSE,4};
 tune FireBulletTune={15,4,15,0,0,FALSE,FALSE,FALSE,TRUE,11,0,3,
                      15,7,12,0,2,FALSE,FALSE,FALSE,TRUE, 1,0,3,
                      700,0,FALSE,2};
@@ -97,83 +132,91 @@ tune GotHitTune={9,2,4,15,0,FALSE,FALSE,FALSE,FALSE,1,0,0,
                  700,0,FALSE,7};
 
 tune GotIntoBlastTune={12,6,15, 1,0,FALSE,FALSE,FALSE,TRUE,11,0,0,
-                 12,2,15,15,0,FALSE,FALSE,FALSE,TRUE, 1,0,0,
-                 100,0,TRUE,6};
-                 
+		       12,2,15,15,0,FALSE,FALSE,FALSE,TRUE, 1,0,0,
+		       100,0,TRUE,6};
+
 tune MoveElevatorTune={15,3,8,3,0,TRUE,TRUE,TRUE,TRUE,11,0,0,
                        8,8,8,8,0,TRUE,TRUE,TRUE,TRUE,1,0,0,
                        500,1,0,4};
 
 tune OvertakeTune={5,4,12,4,3,FALSE,FALSE,FALSE,FALSE,9,0,0,
-						13,3,8,2,2,TRUE,TRUE,TRUE,FALSE,1,10,0,
-						300,1,0,0};
-                       
+		   13,3,8,2,2,TRUE,TRUE,TRUE,FALSE,1,10,0,
+		   300,1,0,0};
+
 tune CryTune1={3,4,6,3,3,TRUE,TRUE,FALSE,FALSE,3,0,0,
-					5,5,7,9,3,TRUE,TRUE,FALSE,TRUE,11,0,0,
-					400,0,TRUE,5};
+	       5,5,7,9,3,TRUE,TRUE,FALSE,TRUE,11,0,0,
+	       400,0,TRUE,5};
 
 /* Neu ! */
 tune CryTune2={7,8,4,5,2,TRUE,TRUE,FALSE,FALSE,4,5,0,
-					3,6,7,3,0,TRUE,TRUE,FALSE,FALSE,7,0,0,
-					300,3,FALSE,5};
+	       3,6,7,3,0,TRUE,TRUE,FALSE,FALSE,7,0,0,
+	       300,3,FALSE,5};
 
 /* Neu ! */
 tune StartOrLiftverlTune={13,4,8,5,2,TRUE,TRUE,FALSE,FALSE,9,0,0,
-								  2,5,7,3,1,TRUE,TRUE,FALSE,FALSE,4,0,0,
-								  400,2,FALSE,4};
+			  2,5,7,3,1,TRUE,TRUE,FALSE,FALSE,4,0,0,
+			  400,2,FALSE,4};
 
 /* Neu ! Nr. 8 */								  
 tune TankenTune={7,4,8,5,1,TRUE,TRUE,FALSE,FALSE,2,0,0,
-					  13,5,7,3,0,TRUE,TRUE,FALSE,FALSE,5,0,0,
-					  400,2,TRUE,2};
+		 13,5,7,3,0,TRUE,TRUE,FALSE,FALSE,5,0,0,
+		 400,2,TRUE,2};
 
 /* Neu ! */
-tune BlastTune={6,6,7,5,0,FALSE,FALSE,FALSE,FALSE,5,0,0,
-					 8,8,3,2,1,FALSE,FALSE,FALSE,FALSE,2,0,0,
-					 200,3,TRUE,7};
-					 
+// tune BlastTune={6,6,7,5,0,FALSE,FALSE,FALSE,FALSE,5,0,0,
+//		8,8,3,2,1,FALSE,FALSE,FALSE,FALSE,2,0,0,
+//		200,3,TRUE,7};
+// 
 tune HitHimTune1={6,6,7,5,0,FALSE,FALSE,FALSE,FALSE,5,0,0,
-						8,8,3,2,1,FALSE,FALSE,FALSE,FALSE,2,0,0,
-						200,3,TRUE,7};
-					
+		  8,8,3,2,1,FALSE,FALSE,FALSE,FALSE,2,0,0,
+		  200,3,TRUE,7};
+
 tune AllSounds[]={ { 12,6,15, 1,0,FALSE,FALSE,FALSE,TRUE,11,0,0,
-                  	12,2,15,15,0,FALSE,FALSE,FALSE,TRUE, 1,0,0,
-                  	700,0,FALSE,6},
-						 {	15,6,15,1,0,FALSE,FALSE,FALSE,FALSE,11,0,0,
-                     13,8,8,8,0,FALSE,FALSE,FALSE,FALSE, 1,0,0,
-                     700,0,FALSE,4},
+		     12,2,15,15,0,FALSE,FALSE,FALSE,TRUE, 1,0,0,
+		     700,0,FALSE,6},
+		   {	15,6,15,1,0,FALSE,FALSE,FALSE,FALSE,11,0,0,
+			13,8,8,8,0,FALSE,FALSE,FALSE,FALSE, 1,0,0,
+			700,0,FALSE,4},
                    {	15,4,15,0,0,FALSE,FALSE,FALSE,TRUE,11,0,3,
-                     15,7,12,0,2,FALSE,FALSE,FALSE,TRUE, 1,0,3,
-                     700,0,FALSE,2},
-                 	 { 9,2,4,15,0,FALSE,FALSE,FALSE,FALSE,1,0,0,
-	                  15,6,15,0,0,FALSE,FALSE,FALSE,FALSE,2,0,0,
-                 		700,0,FALSE,7},
-                 	 {	12,6,15, 1,0,FALSE,FALSE,FALSE,TRUE,11,0,0,
+			15,7,12,0,2,FALSE,FALSE,FALSE,TRUE, 1,0,3,
+			700,0,FALSE,2},
+		   { 9,2,4,15,0,FALSE,FALSE,FALSE,FALSE,1,0,0,
+		     15,6,15,0,0,FALSE,FALSE,FALSE,FALSE,2,0,0,
+		     700,0,FALSE,7},
+		   {	12,6,15, 1,0,FALSE,FALSE,FALSE,TRUE,11,0,0,
          	       	12,2,15,15,0,FALSE,FALSE,FALSE,TRUE, 1,0,0,
-                 		100,0,TRUE,6},
+			100,0,TRUE,6},
                    {	15,3,8,3,0,TRUE,TRUE,TRUE,TRUE,11,0,0,
-                     8,8,8,8,0,TRUE,TRUE,TRUE,TRUE,1,0,0,
-                     500,1,0,4},
+			8,8,8,8,0,TRUE,TRUE,TRUE,TRUE,1,0,0,
+			500,1,0,4},
                    { 5,4,12,4,3,FALSE,FALSE,FALSE,FALSE,9,0,0,
-							13,3,8,2,2,TRUE,TRUE,TRUE,FALSE,1,10,0,
-							300,1,0,0},
-               	 {	3,4,6,3,3,TRUE,TRUE,FALSE,FALSE,3,0,0,
-							5,5,7,9,3,TRUE,TRUE,FALSE,TRUE,11,0,0,
-							400,0,TRUE,5},
-						 { 7,8,4,5,2,TRUE,TRUE,FALSE,FALSE,4,5,0,
-							3,6,7,3,0,TRUE,TRUE,FALSE,FALSE,7,0,0,
-							300,3,FALSE,5},
-						 { 13,4,8,5,2,TRUE,TRUE,FALSE,FALSE,9,0,0,
-						   2,5,7,3,1,TRUE,TRUE,FALSE,FALSE,4,0,0,
-							400,2,FALSE,4},
-						 { 7,4,8,5,1,TRUE,TRUE,FALSE,FALSE,2,0,0,
-						   13,5,7,3,0,TRUE,TRUE,FALSE,FALSE,5,0,0,
-					  		400,2,TRUE,2},
-					  	 { 6,6,7,5,0,FALSE,FALSE,FALSE,FALSE,5,0,0,
-							8,8,3,2,1,FALSE,FALSE,FALSE,FALSE,2,0,0,
-							200,3,TRUE,7}
-					  };
-                       
+		     13,3,8,2,2,TRUE,TRUE,TRUE,FALSE,1,10,0,
+		     300,1,0,0},
+		   {	3,4,6,3,3,TRUE,TRUE,FALSE,FALSE,3,0,0,
+			5,5,7,9,3,TRUE,TRUE,FALSE,TRUE,11,0,0,
+			400,0,TRUE,5},
+		   { 7,8,4,5,2,TRUE,TRUE,FALSE,FALSE,4,5,0,
+		     3,6,7,3,0,TRUE,TRUE,FALSE,FALSE,7,0,0,
+		     300,3,FALSE,5},
+		   { 13,4,8,5,2,TRUE,TRUE,FALSE,FALSE,9,0,0,
+		     2,5,7,3,1,TRUE,TRUE,FALSE,FALSE,4,0,0,
+		     400,2,FALSE,4},
+		   { 7,4,8,5,1,TRUE,TRUE,FALSE,FALSE,2,0,0,
+		     13,5,7,3,0,TRUE,TRUE,FALSE,FALSE,5,0,0,
+		     400,2,TRUE,2},
+		   { 6,6,7,5,0,FALSE,FALSE,FALSE,FALSE,5,0,0,
+		     8,8,3,2,1,FALSE,FALSE,FALSE,FALSE,2,0,0,
+		     200,3,TRUE,7}
+};
+
+
+
+int i;
+unsigned char* ptr;
+unsigned char v = 128;
+int SampleLaenge;
+
+
 int Device = SOUNDBLASTER;		/* The mod-device */
 
 // extern void pascal modvolume(int v1, int v2, int v3, int v4);
@@ -185,6 +228,18 @@ int Device = SOUNDBLASTER;		/* The mod-device */
 // extern void pascal modinit(void);
 
 void MakeSound(tune* ThisTune);
+long FragmentRoundUp(long FormerLength);
+
+
+
+long FragmentRoundUp(long FormerLength){
+  long NewLength;
+
+  NewLength=FormerLength/(8*1024);
+  NewLength=(NewLength+1)*(8*1024);
+  return NewLength;
+} // long FragmentRoundUp
+
 
 /*@Function============================================================
 @Desc: Starts a Tune.
@@ -193,8 +248,8 @@ void MakeSound(tune* ThisTune);
 @Int:
 * $Function----------------------------------------------------------*/
 void StartSound(int Tune){
-	MakeSound(&(AllSounds[Tune]));
-}
+    
+} // void StartSound(int Tune)
 
 /*@Function============================================================
 @Desc: 
@@ -204,14 +259,6 @@ void StartSound(int Tune){
 * $Function----------------------------------------------------------*/
 void CrySound(void)
 {
-/*	static ThisSound=0;
-
-	if (Me.status == TRANSFERMODE) {
-		printf(" Neuer Wert :");
-		scanf("%d",&ThisSound);
-	}
-	MakeSound(&(AllSounds[ThisSound]));
-*/
 
 	MakeSound(&CryTune1);
 }
@@ -222,82 +269,49 @@ void CrySound(void)
    Der Parameter ist ein Pointer auf eine Struktur, die die Tondaten
    enth"alt.
    ********************************************************************** */
-void MakeSound(tune* ThisTune){
-	unsigned char car,mod,kan;
 
-	//	kan=Kanal;
-	//	Kanal++;
-	//	if (Kanal>SBCHANNELS) Kanal=0;
-	//	car=fm_carrier[kan];
-	//	mod=fm_modulator[kan];
-	//
-	///* Sound zuerst einmal abschalten */
-	//	sbfm_ton(kan,FALSE);
-	//
-	///* Tremolo ausschalten */
-	//	sbfm_tremolo(car,ThisTune->car_tre);
-	//	sbfm_tremolo(mod,ThisTune->mod_tre);
-	//
-	///* Vibrato ausschalten */
-	//	sbfm_vibrato(car,ThisTune->car_vib);
-	//	sbfm_vibrato(mod,ThisTune->mod_vib);
-	//
-	///* Huellkurvenart festleben */
-	//	sbfm_tonart(car,ThisTune->car_ton);
-	//	sbfm_tonart(mod,ThisTune->mod_ton);
-	//
-	///* Huellkurvendaempfung festlegen */
-	//	sbfm_huelldaempf(car,ThisTune->car_hue);
-	//
-	//	sbfm_huelldaempf(mod,ThisTune->mod_hue);
-	//
-	///*	Multiplikationsfaktor festlegen */
-	//	sbfm_zeitfakt(car,ThisTune->car_zei);
-	//	sbfm_zeitfakt(mod,ThisTune->mod_zei);
-	//	
-	///* Daempfung einstellen */
-	//	sbfm_daempfung(car,ThisTune->car_dae);
-	//	sbfm_daempfung(mod,ThisTune->mod_dae);
-	//
-	///* Amplitudendaempfung einstellen */
-	//	sbfm_ampldaempf(car,ThisTune->car_amp);
-	//	sbfm_ampldaempf(mod,ThisTune->mod_amp);
-	//
-	///* Attackwerte festlegen */
-	//	sbfm_attack(car,ThisTune->car_att);
-	//	sbfm_attack(mod,ThisTune->mod_att);
-	//
-	///* decaywerte festlegen */
-	//	sbfm_decay(car,ThisTune->car_dec);
-	//	sbfm_decay(mod,ThisTune->mod_dec);
-	//	
-	///* Sustainwerte festlegen */
-	//	sbfm_sustain(car,ThisTune->car_sus);
-	//	sbfm_sustain(mod,ThisTune->mod_sus);
-	//
-	///* Releasewerte festlegen */
-	//	sbfm_release(car,ThisTune->car_rel);
-	//	sbfm_release(mod,ThisTune->mod_rel);
-	//
-	///* Wellenform festlegen */
-	//	sbfm_welle(car,ThisTune->car_wel);
-	//	sbfm_welle(mod,ThisTune->mod_wel);
-	//	
-	///* Frequenz fuer diesen Kanal festlegen */
-	//	sbfm_frequ(kan,ThisTune->freq);
-	//
-	///* Oktave festlegen */
-	//	sbfm_oktave(kan,ThisTune->okt);
-	//
-	///* Zellenverknuepfung festlegen */
-	//	sbfm_verbind(kan,ThisTune->verb);
-	//	
-	///* Rueckkopplungsgrad festlegen */
-	//	sbfm_rueckkoppl(kan,ThisTune->rueck);
-	//	
-	///* Ton aktivieren */
-	//	sbfm_ton(kan,TRUE);
-}
+void MakeSound(tune* ThisTune){
+
+  printf("\nvoid MakeSound(tune* ThisTune):  Real function call confirmed.");
+
+  // printf("\n Attention!  Playback is about to start!");
+
+  // write(handle, data, 22050*4L);
+
+  //write(handle, data+0x2C, FragmentRoundUp(SampleLaenge));
+
+  // write(handle, data, FragmentRoundUp(SampleLaenge));
+
+  // printf("\n Attention!  Data have been written!");
+
+} // void MakeSound(tune* ThisTune)
+
+void Play_OSS(int Tune){
+
+  printf("\nvoid Play_OSS(int Tune):  Real function call confirmed.");
+
+  printf("\n Attention!  Playback is about to start!");
+
+  // write(handle, data, 22050*4L);
+
+  //write(handle, data+0x2C, FragmentRoundUp(SampleLaenge));
+
+  if (Tune == FIRESOUND) {
+    write(handle, FireSoundSamplePointer, FragmentRoundUp(FireSoundSampleLength));
+  }
+
+  if (Tune == COLLISIONSOUND) {
+    write(handle, CollisionSoundSamplePointer, FragmentRoundUp(CollisionSoundSampleLength));
+  }
+
+  if (Tune == BLASTSOUND) {
+    write(handle, BlastSoundSamplePointer, FragmentRoundUp(BlastSoundSampleLength));
+  }
+
+  printf("\n Attention!  Data have been written!");
+
+} // void Play_OSS(int Tune)
+
 
 /*@Function============================================================
 @Desc: Funktion zur Ausgabe eines Wertes an einen Registerport.
@@ -337,18 +351,157 @@ unsigned char in_sb(unsigned char sb_reg)
 @Int:
 * $Function----------------------------------------------------------*/
 
-void init_sb(void){
-  //	if (sbfm_init() == 2) {
-  //		printf(" Keine Soundblasterkarte installiert !");
-  //		getchar();
-  //	}
-  //	if (sbfm_init() == 1) {
-  //		/*
-  //		printf(" BLASTER ist nicht gesetzt ! ");
-  //		getchar();
-  //		*/
-  //	}
-};
+int Init_OSS(void){
+  FILE* SoundDateihandle;
+  struct stat stbuf;
+
+  unsigned char* BeginningOfScreen;
+	
+  printf("\nAttention!  Opening OSS audio device for playback now!...");
+
+  if ( (handle = open("/dev/dsp",O_WRONLY)) 
+       == -1 ) {
+    perror("open /dev/dsp");
+    return -1;
+  }
+
+  printf("\nAttention!  Opening OSS audio device should have worked so far...");
+
+  if ( atexit( ExitProc ) == -1 ) {
+    perror("atexit");
+    ExitProc();
+    return -1;
+  }
+
+  printf("\nAttention!  Setting Buffer size, whatever that means....");
+
+  if ( ioctl(handle, SNDCTL_DSP_SETFRAGMENT,
+	     &setting) == -1 ) {
+    perror("ioctl set fragment");
+    return errno;
+  }
+
+  printf("\nAttention! Number of Channels will now be set....");
+
+  if ( ioctl(handle, SNDCTL_DSP_STEREO,
+	     &channels) == -1 ) {
+    perror("ioctl stereo");
+    return errno;
+  }
+
+  printf("\nAttention!  Now the Sample format is set....");
+
+  if ( ioctl(handle, SNDCTL_DSP_SETFMT,
+	     &format) == -1 ) {
+    perror("ioctl format");
+    return errno;
+  }
+
+  printf("\nAttention!  Now the speed for playback is set....");
+
+  if ( ioctl(handle, SNDCTL_DSP_SPEED,
+	     &rate) == -1 ) {
+    perror("ioctl sample rate");
+    return errno;
+  }
+
+  // two seconds two channels
+  //data = malloc(22050*2*2L);
+  //ptr = data;    
+  //for (i = 0; i < 22050; ++i) {
+    //    *ptr++ = 128;            // set left channel
+    //    *ptr++ = 128;            // right silence
+  //  *ptr++=0;
+  //}
+  //for (i = 22050; i < 44100; ++i) {
+    //    *ptr++ = 128;
+    //    *ptr++ = 128;
+  //  *ptr++=0;
+  //}
+
+  // Load the sound samples used by paraplus (in wav format)
+
+  // Load the Firesound
+
+  if ((SoundDateihandle=fopen(FireSoundSampleFilename,"rb")) == NULL) {
+    printf("\nint Init_OSS(void): Konnte die Datei %s nicht oeffnen !",FireSoundSampleFilename);
+    getchar(); Terminate(-1);
+  }
+	
+  if( fstat(fileno(SoundDateihandle), &stbuf) == EOF) Terminate(-1);
+
+  if( (FireSoundSamplePointer = (char*) MyMalloc((size_t)FragmentRoundUp(stbuf.st_size) + 10)) == NULL) {
+    FireSoundSampleLength=stbuf.st_size;
+    printf("\nint Init_OSS(void): Out of Memory?");
+    printf("\nFree: %lu", coreleft() );
+    getchar();
+    Terminate(-1);
+  }
+
+  fread(FireSoundSamplePointer, 1, (size_t)stbuf.st_size, SoundDateihandle);	
+  SampleLaenge=stbuf.st_size;
+
+  if (fclose(SoundDateihandle) == EOF) {
+    printf("\nint Init_OSS: Konnte die Datei %s nicht schlieáen !",FireSoundSampleFilename);
+    getchar(); Terminate(-1);
+  }
+
+  // Load the Collisionsound
+
+  if ((SoundDateihandle=fopen(CollisionSoundSampleFilename,"rb")) == NULL) {
+    printf("\nint Init_OSS(void): Konnte die Datei %s nicht oeffnen !",CollisionSoundSampleFilename);
+    getchar(); Terminate(-1);
+  }
+	
+  if( fstat(fileno(SoundDateihandle), &stbuf) == EOF) Terminate(-1);
+
+  if( (CollisionSoundSamplePointer = (char*) MyMalloc((size_t)FragmentRoundUp(stbuf.st_size) + 10)) == NULL) {
+    CollisionSoundSampleLength=stbuf.st_size;
+    printf("\nint Init_OSS(void): Out of Memory?");
+    printf("\nFree: %lu", coreleft() );
+    getchar();
+    Terminate(-1);
+  }
+	
+  fread(CollisionSoundSamplePointer, 1, (size_t)stbuf.st_size, SoundDateihandle);	
+  SampleLaenge=stbuf.st_size;
+
+  if (fclose(SoundDateihandle) == EOF) {
+    printf("\nint Init_OSS: Konnte die Datei %s nicht schlieáen !",CollisionSoundSampleFilename);
+    getchar(); Terminate(-1);
+  }
+
+  // Load the Blastsound
+
+  if ((SoundDateihandle=fopen(BlastSoundSampleFilename,"rb")) == NULL) {
+    printf("\nint Init_OSS(void): Konnte die Datei %s nicht oeffnen !",BlastSoundSampleFilename);
+    getchar(); Terminate(-1);
+  }
+	
+  if( fstat(fileno(SoundDateihandle), &stbuf) == EOF) Terminate(-1);
+
+  if( (BlastSoundSamplePointer = (char*) MyMalloc((size_t)FragmentRoundUp(stbuf.st_size) + 10)) == NULL) {
+    BlastSoundSampleLength=stbuf.st_size;
+    printf("\nint Init_OSS(void): Out of Memory?");
+    printf("\nFree: %lu", coreleft() );
+    getchar();
+    Terminate(-1);
+  }
+	
+  fread(BlastSoundSamplePointer, 1, (size_t)stbuf.st_size, SoundDateihandle);	
+  SampleLaenge=stbuf.st_size;
+
+  if (fclose(SoundDateihandle) == EOF) {
+    printf("\nint Init_OSS: Konnte die Datei %s nicht schlieáen !",BlastSoundSampleFilename);
+    getchar(); Terminate(-1);
+  }
+
+
+
+
+
+
+} // void Init_OSS(void)
 
 
 /*@Function============================================================
@@ -450,6 +603,10 @@ void LeaveElevatorSound(void){
 void FireBulletSound(void){
 	char tmp[200];		/* tmp - string */
 
+
+	Play_OSS(FIRESOUND);
+
+	//MakeSound(&FireBulletTune);
 	//	/* Sound "uber FM-Generatoren */
 	//	if( !ModPlayerOn ) MakeSound(&FireBulletTune);
 	//	/* oder "uber MOD-Abspielroutine */
@@ -471,10 +628,8 @@ void FireBulletSound(void){
 * $Function----------------------------------------------------------*/
 void BounceSound(void){
 
-  //	/* Sound "uber FM-Generatoren */
-  //	MakeSound(&BounceTune);
-  //	/* oder "uber MOD-Abspielroutine */
-  //	return;
+  Play_OSS(COLLISIONSOUND);
+  
 }
 
 /*@Function============================================================

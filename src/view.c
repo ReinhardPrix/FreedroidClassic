@@ -211,7 +211,7 @@ void DisplayView(void)
 
 /*@Function============================================================
 @Desc: Diese Prozedur setzt das Bild im Speicher zusammen, damit es dann
-		 von PutInternFenster in den Bildschirmspeicher kopiert werden kann.
+von PutInternFenster in den Bildschirmspeicher kopiert werden kann.
 
 @Ret: none
 * $Function----------------------------------------------------------*/
@@ -414,14 +414,14 @@ void PutInfluence(void)
 
   source = Influencepointer+(Me.phase)*BLOCKMEM;
 
-  
+
   // PORT
   // PutObject(Me.pos.x, Me.pos.y, source, FALSE);
   // return;
   // PORT
 
   BeamLine=0;
-  
+
   if (BeamLine > BLOCKBREITE/2) { 
     BeamLine--; 
     return; 
@@ -669,24 +669,25 @@ void PutInternFenster(void)
 
   printf("void PutInternFenster(void) wurde ECHT aufgerufen..."); 
 
-  //PORT	if (Conceptview) {
-  //		for(i=0;i<USERFENSTERHOEHE;i++) {
-  //			memcpy(RealScreen+(USERFENSTERPOSY+i)*SCREENBREITE+USERFENSTERPOSX,
-  //			InternWindow+i*INTERNBREITE*BLOCKBREITE,USERFENSTERBREITE);
-  //		}
-  //		return;
-  //	}
+  if (Conceptview) {
+    for(i=0;i<USERFENSTERHOEHE;i++) {
+      memcpy(RealScreen+(USERFENSTERPOSY+i)*SCREENBREITE+USERFENSTERPOSX,
+	     InternWindow+i*INTERNBREITE*BLOCKBREITE,USERFENSTERBREITE);
+    }
+    return;
+  }
 			
-   StartX=(Me.pos.x % BLOCKBREITE) - BLOCKBREITE/2;
-   StartY=((Me.pos.y % BLOCKHOEHE) - BLOCKHOEHE/2) *
-     BLOCKBREITE * INTERNBREITE;
+  StartX=(Me.pos.x % BLOCKBREITE)-BLOCKBREITE/2;
+  StartY=((Me.pos.y % BLOCKHOEHE)-BLOCKHOEHE/2) * BLOCKBREITE * INTERNBREITE;
 
    //   WaitVRetrace();		/* dont waste time with this */
 
    for(i=0; i<USERFENSTERHOEHE; i++) {
      source = InternWindow +
-       USERFENSTEROBEN*INTERNBREITE*BLOCKBREITE + 
-       USERFENSTERLINKS +
+       BLOCKBREITE*(INTERNBREITE-VIEWBREITE)/2 + 
+       INTERNBREITE*BLOCKBREITE* (BLOCKHOEHE*(INTERNHOEHE-VIEWHOEHE))/2+
+       // USERFENSTEROBEN*INTERNBREITE*BLOCKBREITE + 
+       //       USERFENSTERLINKS +
        StartY + StartX + i * INTERNBREITE * BLOCKBREITE ;
      for(j=0; j<USERFENSTERBREITE; j++) {
        vga_setcolor(*source);
@@ -838,8 +839,11 @@ void ShowRobotPicture(int PosX,int PosY, int Number, unsigned char* Screen){
  * $Author$
  *
  * $Log$
- * Revision 1.9  2002/04/08 09:53:13  rp
- * Johannes' initial linux PORT
+ * Revision 1.10  2002/04/08 19:19:09  rp
+ * Johannes latest (and last) non-cvs version to be checked in. Added graphics,sound,map-subdirs. Sound support using ALSA started.
+ *
+ * Revision 1.10  1997/05/31 13:30:32  rprix
+ * Further update by johannes. (sent to me in tar.gz)
  *
  * Revision 1.7  1994/06/19  16:44:10  prix
  * Wed Jun 08 13:46:12 1994: Influence is beamed into the ship when the game starts
@@ -885,7 +889,7 @@ void ShowRobotPicture(int PosX,int PosY, int Number, unsigned char* Screen){
  * Sat Jul 24 16:07:48 1993: Korrekturen an der Zusammenstellung eines Feindes
  * Sat Jul 24 16:24:08 1993: Phasen bei Feinden werden jetzt beruecksichtigt
  * Sat Jul 24 16:31:08 1993: Phase vollstaendig beruecksichtigen
- * Sat Jul 24 16:42:37 1993: Enemys nicht anzeigen wenn der Abstand zu gross ist
+ * Sat Jul 24 16:42:37 1993: Enemys nicht anzeigen wenn der Abstand zu groá ist
  * Sun Jul 25 08:10:13 1993: mehr points statt zwei Zahlen werden fuer enemys verwendet
  * Sun Jul 25 13:18:09 1993: Bereichsueberschreitungscheck fuer PutEnemy eingefuehrt
  * Sun Jul 25 15:34:46 1993: abgeschossene werden nicht angezeigt

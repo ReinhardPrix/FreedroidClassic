@@ -1,6 +1,6 @@
 CFLAGS= -g
 INC =-I/usr/src/linux/include/ 
-LIBS = -lvgagl -lvga -lm 
+LIBS = -lvgagl -lvga -lm -lasound
 
 CC = gcc
 HFILES = Makefile defs.h proto.h global.h struct.h
@@ -16,7 +16,14 @@ para: $(OBJ)
 clean: 
 	rm *.o
 
+soundtest: soundtest.o
+	$(CC) -o soundtest $(CFLAGS) $(LIBS) soundtest.o
 
+vplay: vplay.c
+	$(CC) -o vplay $(CFLAGS) $(LIBS) vplay.c
+
+osstest: osstest.o
+	$(CC) -o osstest $(CFLAGS) $(LIBS) osstest.o
 
 
 

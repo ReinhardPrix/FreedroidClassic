@@ -10,8 +10,11 @@
  * $Author$
  *
  * $Log$
- * Revision 1.3  2002/04/08 09:53:13  rp
- * Johannes' initial linux PORT
+ * Revision 1.4  2002/04/08 19:19:09  rp
+ * Johannes latest (and last) non-cvs version to be checked in. Added graphics,sound,map-subdirs. Sound support using ALSA started.
+ *
+ * Revision 1.4  1997/05/31 13:30:32  rprix
+ * Further update by johannes. (sent to me in tar.gz)
  *
  * Revision 1.1  1994/06/19  16:39:46  prix
  * Initial revision

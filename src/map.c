@@ -1050,8 +1050,11 @@ int IsVisible(Point objpos){
  * $Author$
  *
  * $Log$
- * Revision 1.8  2002/04/08 09:53:13  rp
- * Johannes' initial linux PORT
+ * Revision 1.9  2002/04/08 19:19:09  rp
+ * Johannes latest (and last) non-cvs version to be checked in. Added graphics,sound,map-subdirs. Sound support using ALSA started.
+ *
+ * Revision 1.9  1997/05/31 13:30:31  rprix
+ * Further update by johannes. (sent to me in tar.gz)
  *
  * Revision 1.6  1994/06/19  16:23:51  prix
  * Sat Oct 02 12:23:34 1993: moved header to end of file
