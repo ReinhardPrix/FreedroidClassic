@@ -681,7 +681,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
 	  HighlightRect.x = MenuPosX[ menu_position_to_remember -1 ] - 0 * h ;
 	  HighlightRect.y = MenuPosY[ menu_position_to_remember -1 ] ;
 	  HighlightRect.w = TextWidth ( MenuTexts [ menu_position_to_remember - 1 ] ) + 0 * h ;
-	  if ( HighlightRect.w > 550 ) HighlightRect.w = 550 ;
+	  if ( HighlightRect.w > 550*SCREEN_WIDTH/640 ) HighlightRect.w = 550*SCREEN_WIDTH/640 ;
 	  HighlightRect.h = MenuOptionLineRequirement [ menu_position_to_remember - 1 ] * 
 	      ( FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) ;	    
 	  HighlightRectangle ( Screen , HighlightRect );

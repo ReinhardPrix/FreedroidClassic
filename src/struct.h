@@ -52,9 +52,10 @@ color, *Color;
 
 typedef struct
 {
-  SDL_Surface *button_surface;
-  char *button_image_file_name;
-  SDL_Rect button_rect;
+    SDL_Surface *button_surface;
+    char *button_image_file_name;
+    SDL_Rect button_rect;
+    int scale_this_button;
 }
 mouse_press_button, *Mouse_press_button;
 
