@@ -67,7 +67,7 @@ SDL_Rect TuxItemRowRect;
  * reduce influencers money.
  * ---------------------------------------------------------------------- */
 int 
-TryToPutItem( item* SellItem , int AmountToSellAtMost )
+TryToPutItem( item* SellItem , int AmountToSellAtMost , moderately_finepoint pos )
 {
   int i;
   int FreeIndex;
@@ -162,8 +162,8 @@ write some suitable code here...",
   //
   CopyItem ( SellItem , & ( curShip . AllLevels [ Me [ 0 ] . pos . z ] -> ChestItemList [ i ] ) , TRUE );
   curShip . AllLevels [ Me [ 0 ] . pos . z ] -> ChestItemList [ i ] . multiplicity = AmountToSellAtMost;
-  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> ChestItemList [ i ] . pos . x = Me [ 0 ] . pos . x ;
-  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> ChestItemList [ i ] . pos . y = Me [ 0 ] . pos . y ;
+  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> ChestItemList [ i ] . pos . x = pos . x ;
+  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> ChestItemList [ i ] . pos . y = pos . y ;
   if ( AmountToSellAtMost < SellItem->multiplicity )
     SellItem->multiplicity -= AmountToSellAtMost;
   else DeleteItem( SellItem );
@@ -1955,7 +1955,7 @@ enum
  * which is exactly what this function is supposed to do.
  * ---------------------------------------------------------------------- */
 void
-EnterChest (void)
+EnterChest ( moderately_finepoint pos )
 {
   int ItemSelected = 0 ;
   int NumberOfItemsInTuxRow = 0 ;
@@ -1989,13 +1989,13 @@ EnterChest (void)
 	  TryToTakeItem( Buy_Pointer_List[ ShopOrder . item_selected ] , 100 ) ;
 	  break;
 	case SELL_1_ITEM:
-	  TryToPutItem( TuxItemsList[ ShopOrder . item_selected ] , 1 ) ;
+	  TryToPutItem( TuxItemsList[ ShopOrder . item_selected ] , 1 , pos ) ;
 	  break;
 	case SELL_10_ITEMS:
-	  TryToPutItem( TuxItemsList[ ShopOrder . item_selected ] , 10 ) ;
+	  TryToPutItem( TuxItemsList[ ShopOrder . item_selected ] , 10 , pos ) ;
 	  break;
 	case SELL_100_ITEMS:
-	  TryToPutItem( TuxItemsList[ ShopOrder . item_selected ] , 100 ) ;
+	  TryToPutItem( TuxItemsList[ ShopOrder . item_selected ] , 100 , pos ) ;
 	  break;
 	default:
 	  

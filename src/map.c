@@ -2192,7 +2192,7 @@ DecodeLoadedLeveldata ( char *data )
   end_of_waypoint_data [ 0 ] = 0 ;
 #define WP_BEGIN_STRING "Nr.="
   number_of_waypoints_found = CountStringOccurences ( wp_begin , WP_BEGIN_STRING ) ;
-  DebugPrintf ( 0 , "\nNumberOfWaypointsFound: %d." , number_of_waypoints_found );
+  DebugPrintf ( 1 , "\nNumberOfWaypointsFound: %d." , number_of_waypoints_found );
   if ( number_of_waypoints_found > MAXWAYPOINTS )
     {
       fprintf ( stderr , "\nnumber_of_waypoints_found: %d." , number_of_waypoints_found );

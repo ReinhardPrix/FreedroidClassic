@@ -581,7 +581,7 @@ EXTERN void InitTradeWithCharacter( int CharacterCode ) ;
 EXTERN void Sell_Items( int ForHealer );
 EXTERN void Repair_Items( void );
 EXTERN void Identify_Items ( void );
-EXTERN void EnterChest (void);
+EXTERN void EnterChest ( moderately_finepoint pos );
 
 // network.c 
 #undef EXTERN

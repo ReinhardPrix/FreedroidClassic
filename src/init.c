@@ -398,13 +398,13 @@ decode_all_event_actions ( char* EventSectionPointer )
       *EndOfEvent = 0 ;
       if ( CountStringOccurences ( EventPointer , MODIFY_OBSTACLE_WITH_LABEL_STRING ) )
 	{
-	  DebugPrintf ( 0 , "\nOBSTACLE LABEL FOUND IN THIS EVENT ACTION!" );
+	  DebugPrintf ( 1 , "\nOBSTACLE LABEL FOUND IN THIS EVENT ACTION!" );
 	  TempMapLabelName = 
 	    ReadAndMallocStringFromData ( EventPointer , MODIFY_OBSTACLE_WITH_LABEL_STRING , "\"" ) ;
 	  if ( strcmp ( TempMapLabelName , "NO_LABEL_DEFINED_YET" ) )
 	    {
 	      AllTriggeredActions [ EventActionNumber ] . modify_obstacle_with_label = TempMapLabelName ;
-	      DebugPrintf ( 0 , "\nThe label reads: %s." , AllTriggeredActions [ EventActionNumber ] . modify_obstacle_with_label );
+	      DebugPrintf ( 1 , "\nThe label reads: %s." , AllTriggeredActions [ EventActionNumber ] . modify_obstacle_with_label );
 	    }
 	  else
 	    {
@@ -418,11 +418,11 @@ Leave out the label entry for obstacles if you don't want to use it!" );
 	  //
 	  ReadValueFromString( EventPointer , MODIFY_OBSTACLE_TO_TYPE_STRING , "%d" , 
 			       & ( AllTriggeredActions[ EventActionNumber ] . modify_obstacle_to_type ) , EndOfEvent );
-	  DebugPrintf ( 0 , "\nObstacle will be modified to type: %d." , AllTriggeredActions[ EventActionNumber ] . modify_obstacle_to_type );
+	  DebugPrintf ( 1 , "\nObstacle will be modified to type: %d." , AllTriggeredActions[ EventActionNumber ] . modify_obstacle_to_type );
 	}
       else
 	{
-	  DebugPrintf ( 0 , "\nNO OBSTACLE LABEL FOUND IN THIS EVENT ACTION!" );
+	  DebugPrintf ( 1 , "\nNO OBSTACLE LABEL FOUND IN THIS EVENT ACTION!" );
 	}
       *EndOfEvent = temp_save_char;
 

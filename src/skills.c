@@ -531,6 +531,7 @@ HandleCurrentlyActivatedSkill( void )
   int i;
   float xdist, ydist, dist2;
   Level ChestLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
+  moderately_finepoint loc_pos ;
 
   switch ( Me [ 0 ] . readied_skill )
     {
@@ -583,9 +584,9 @@ HandleCurrentlyActivatedSkill( void )
 	      if ( ( ( Me [ 0 ] . pos . x - ChestLevel -> obstacle_list [ i ] . pos . x ) *
 		     ( Me [ 0 ] . pos . x - ChestLevel -> obstacle_list [ i ] . pos . x ) +
 		     ( Me [ 0 ] . pos . y - ChestLevel -> obstacle_list [ i ] . pos . y ) *
-		     ( Me [ 0 ] . pos . y - ChestLevel -> obstacle_list [ i ] . pos . y ) ) < 0.4 )
+		     ( Me [ 0 ] . pos . y - ChestLevel -> obstacle_list [ i ] . pos . y ) ) < 0.5 )
 		{
-		  EnterChest();
+		  EnterChest( ChestLevel -> obstacle_list [ i ] . pos );
 		  return;
 		}
 	      break;
@@ -594,7 +595,7 @@ HandleCurrentlyActivatedSkill( void )
 	      if ( ( ( Me [ 0 ] . pos . x - ChestLevel -> obstacle_list [ i ] . pos . x ) *
 		     ( Me [ 0 ] . pos . x - ChestLevel -> obstacle_list [ i ] . pos . x ) +
 		     ( Me [ 0 ] . pos . y - ChestLevel -> obstacle_list [ i ] . pos . y ) *
-		     ( Me [ 0 ] . pos . y - ChestLevel -> obstacle_list [ i ] . pos . y ) ) < 0.4 )
+		     ( Me [ 0 ] . pos . y - ChestLevel -> obstacle_list [ i ] . pos . y ) ) < 0.5 )
 		{
 		  //--------------------
 		  // Later we might introduce some takeover game here for the Tux, so that
@@ -605,7 +606,7 @@ HandleCurrentlyActivatedSkill( void )
 		    ChestLevel -> obstacle_list [ i ] . type = ISO_V_CHEST_OPEN;
 		  if ( ChestLevel -> obstacle_list [ i ] . type == ISO_H_CHEST_CLOSED )
 		    ChestLevel -> obstacle_list [ i ] . type = ISO_H_CHEST_OPEN;
-		  EnterChest();
+		  EnterChest( ChestLevel -> obstacle_list [ i ] . pos );
 		  return;
 		}
 	      break;
@@ -636,7 +637,9 @@ HandleCurrentlyActivatedSkill( void )
 	  dist2 = sqrt( (xdist * xdist) + (ydist * ydist) );
 	  if ( dist2 < 2 * Druid_Radius_X )
 	    {
-	      EnterChest();
+	      loc_pos . x = AllEnemys [ i ] . pos . x ;
+	      loc_pos . y = AllEnemys [ i ] . pos . y ;
+	      EnterChest( loc_pos );
 	      return;
 	    }
 	}
