@@ -833,8 +833,15 @@ void ShowHighscoreList(void){
  * $Author$
  *
  * $Log$
- * Revision 1.2  1993/05/23 12:28:33  prix
- * Die Richtung in die der Lauf zeigt wird angezeigt !
+ * Revision 1.3  1993/05/23 14:47:02  prix
+ * Sat May 22 18:33:18 1993: SB-Initialisierung hizugefuegt
+ * Sat May 22 19:28:26 1993: Bullet soll hoerbar sein
+ * Sat May 22 19:58:48 1993: Energieblaken anzeigen
+ * Sun May 23 07:40:54 1993: LaufRichtung begonnen
+ * Sun May 23 08:07:22 1993: Laufanzeige sollte kunktionieren !
+ * Sun May 23 08:27:11 1993: Schussrichtung wird korrekt angezeigt !
+ * Sun May 23 08:55:40 1993: Standardenergieverbrauch eingefuehrt
+ * Sun May 23 10:39:45 1993: Reactor eingefuehrt
  *
  * 
  * Revision 1.13  1994/05/21  16:27:15  prix
