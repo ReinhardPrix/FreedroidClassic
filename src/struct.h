@@ -412,11 +412,11 @@ typedef struct
   // Here are the rather short-lived properties of the item
   finepoint pos;
   int type;
-  int currently_held_in_hand; // is the item currently held 'in hand' with the mouse cursor?
-  int is_identified;  // is the item identified already?
-  int max_duration;     // the maximum item durability reachable for this item
-  float current_duration; // the currently remaining durability for this item
-  float throw_time; // has this item just jumped out from a chest maybe or is it jumping right now?
+  int currently_held_in_hand;      // is the item currently held 'in hand' with the mouse cursor?
+  int is_identified;               // is the item identified already?
+  int max_duration;                // the maximum item durability reachable for this item
+  float current_duration;          // the currently remaining durability for this item
+  float throw_time;                // has this item just jumped out from a chest maybe or is it jumping right now?
 
   // Here are the rather long-lived properties of the item
   int prefix_code;
@@ -430,15 +430,15 @@ typedef struct
   int bonus_to_force;
   int bonus_to_tohit;
   int bonus_to_all_attributes;
-  int bonus_to_ac_or_damage; // this is a percentage
-  int bonus_to_resist_fire;  // this is a percentage
+  int bonus_to_ac_or_damage;       // this is a percentage
+  int bonus_to_resist_fire;        // this is a percentage
   int bonus_to_resist_electricity; // this is a percentage
-  int bonus_to_resist_force; // this is a percentage
+  int bonus_to_resist_force;       // this is a percentage
 
-  int ac_bonus;    // how much is ac increased by this item worn
-  int damage; // how much damage does this item
-  int damage_modifier; // how much additional damage can add to the base damage
-  int gold_amount; // how much cyberbucks are there, IN CASE OF CYBERBUCKS
+  int ac_bonus;                    // how much is ac increased by this item worn
+  int damage;                      // how much damage does this item
+  int damage_modifier;             // how much additional damage can add to the base damage
+  int gold_amount;                 // how much cyberbucks are there, IN CASE OF CYBERBUCKS
   int multiplicity;
   point inventory_position;
 } item, *Item;
@@ -451,18 +451,18 @@ typedef struct
   char *droid_death_sound_file_name;
   char *droid_attack_animation_sound_file_name;
   int class;
-  double maxenergy;		/* the maximum energy the batteries can carry */
-  double maxmana;		/* the maximum force this droids mind can carry */
-  double lose_health;		/* the energy/time the duid loses under influence-control */
+  double maxenergy;		// the maximum energy the batteries can carry 
+  double maxmana;		// the maximum force this droids mind can carry 
+  double lose_health;		// the energy/time the duid loses under influence-control 
 
   double maxspeed;
   double accel;
 
-  float physical_damage;          // the amount of physical (base) damage an attack of this bot will do
+  float physical_damage;        // the amount of physical (base) damage an attack of this bot will do
 
-  int aggression;		/* The aggressiveness of this druidtype */
-  int flashimmune;		/* is the droid immune to FLASH-bullets */
-  int score;			/* score for the elimination of one droid of this type */
+  int aggression;		// The aggressiveness of this druidtype 
+  int flashimmune;		// is the droid immune to FLASH-bullets 
+  int score;			// score for the elimination of one droid of this type 
   double height;                // the height of this droid  
   double weight;                // the weight of this droid
   int brain;
@@ -491,15 +491,15 @@ typedef struct
   int amount_of_entropy_inverters;
   int amount_of_tachyon_condensators;
 
-  int greeting_sound_type; // which sample to play in order to 'greet' the influencer?
-  int got_hit_sound_type; // which sample to play in order to 'greet' the influencer?
-  int to_hit; // chance that this droid hits an unarmoured target
-  int getting_hit_modifier; // modifier for this droid to receive a hit from the player
+  int greeting_sound_type;              // which sample to play in order to 'greet' the influencer?
+  int got_hit_sound_type;               // which sample to play in order to 'greet' the influencer?
+  int to_hit;                           // chance that this droid hits an unarmoured target
+  int getting_hit_modifier;             // modifier for this droid to receive a hit from the player
   float recover_time_after_getting_hit;
-  int advanced_behaviour;        // Does this droid behave better that in the original paradroid?
+  int advanced_behaviour;               // Does this droid behave better that in the original paradroid?
   int call_for_help_after_getting_hit;  // Does this droid request help from the next console so soon as it is
-                                     // hit by a bullet of some type?
-  char *notes;			/* notes on the druid of this type */
+                                        // hit by a bullet of some type?
+  char *notes;			        // notes on the druid of this type 
   int is_human;
   int individual_shape_nr;
 }
@@ -507,19 +507,19 @@ druidspec, *Druidspec;
 
 typedef struct
 {
-  Sint8 type;			/* what kind of druid is this ? */
+  Sint8 type;			  // what kind of druid is this ? 
   Sint8 character_class;          // is this unit a FIGHTER=WAR_BOT, or MAGE=MIND_BOT or ROGUE=SNIPER_BOT character
-  Sint8 status;			/* attacking, defense, dead, ... */
-  finepoint speed;		/* the current speed of the druid */
-  gps pos;		        /* current position in the whole ship */
-  gps teleport_anchor;          // where from have you last teleported home
-  gps mouse_move_target;        // where the tux is going automatically by virtue of mouse move 
+  Sint8 status;			  // attacking, defense, dead, ... 
+  finepoint speed;		  // the current speed of the druid 
+  gps pos;		          // current position in the whole ship 
+  gps teleport_anchor;            // where from have you last teleported home
+  gps mouse_move_target;          // where the tux is going automatically by virtue of mouse move 
   int mouse_move_target_is_enemy; // which enemy has been targeted (for a melee shot)
-  double health;		/* the max. possible energy in the moment */
-  double energy;		/* current energy level */
-  double mana;                  // current mana level 
-  Sint16 LastMouse_X;          // mostly for other players:  Where was the last mouseclick...
-  Sint16 LastMouse_Y;          // mostly for other players:  Where was the last mouseclick...
+  double health;		  // the max. possible energy in the moment 
+  double energy;		  // current energy level 
+  double mana;                    // current mana level 
+  Sint16 LastMouse_X;             // mostly for other players:  Where was the last mouseclick...
+  Sint16 LastMouse_Y;             // mostly for other players:  Where was the last mouseclick...
 
   double firewait;		// time remaining, until the weapon is ready to fire again...
   double phase;			// the current phase of animation 

@@ -208,6 +208,7 @@ ResolveDialogSectionToChatFlagsIndex ( char* SectionName )
   if ( strcmp ( SectionName , "StandardMSFacilityGateGuard" ) == 0 ) return PERSON_STANDARD_MS_FACILITY_GATE_GUARD;
   if ( strcmp ( SectionName , "MSFacilityGateGuardLeader" ) == 0 ) return PERSON_MS_FACILITY_GATE_GUARD_LEADER;
   if ( strcmp ( SectionName , "HEA" ) == 0 ) return PERSON_HEA;
+  if ( strcmp ( SectionName , "StandardBotAfterTakeover" ) == 0 ) return PERSON_STANDARD_BOT_AFTER_TAKEOVER;
 
   if ( strncmp ( SectionName , "subdlg_" , 6 ) == 0 ) return PERSON_SUBDIALOG_DUMMY;
 
