@@ -408,11 +408,24 @@ create_and_blit_droid_description ( int enemy_num )
       our_SDL_fill_rect_wrapper ( Screen , & ( temp_fill_rect ) , SDL_MapRGB ( Screen->format , 0x000 , 0x099 , 0x000 ) );
     }
 
+  //--------------------
+  // Now depending on the energy status of this enemy, there will
+  // also be some dark area under the short description text
+  //
+  // We take some extra precautions here to prevent some unsigned
+  // int underflow (and ugly too wide rectangles...)
+  //
   temp_fill_rect . x = temp_fill_rect . x + temp_fill_rect . w ;
-  temp_fill_rect . w = text_length - temp_fill_rect . w ;
+  if ( temp_fill_rect . w < text_length )
+      temp_fill_rect . w = text_length - temp_fill_rect . w ;
+  else
+      temp_fill_rect . w = 0 ;
   our_SDL_fill_rect_wrapper ( Screen , & ( temp_fill_rect ) , SDL_MapRGB ( Screen->format , 0x000 , 0x000 , 0x000 ) );
-  temp_fill_rect . x = UserCenter_x - text_length / 2 ;
 
+  //--------------------
+  // Now we can blit the actual droid short description text
+  //
+  temp_fill_rect . x = UserCenter_x - text_length / 2 ;
   PutStringFont ( Screen , BFont_to_use , temp_fill_rect . x , temp_fill_rect . y , 
 		  AllEnemys [ enemy_num ] . short_description_text );
 
