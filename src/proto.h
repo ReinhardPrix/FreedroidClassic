@@ -287,6 +287,7 @@ EXTERN void JoystickControl(void);
 #define EXTERN extern
 #endif
 
+EXTERN void DebugPrintf(char *);
 EXTERN void gotoxy(int,int);
 EXTERN int MyRandom(int);
 EXTERN void reverse(char*);

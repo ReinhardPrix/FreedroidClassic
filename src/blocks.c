@@ -396,6 +396,7 @@ DisplayMergeBlock (int x, int y, unsigned char *block,
   unsigned char *Screenpos;
   unsigned char *source = block;
 
+  Screenpos=screen+x+y*SCREENBREITE;
 
   if( screen == NULL )
     return;
@@ -426,6 +427,7 @@ DisplayMergeBlock (int x, int y, unsigned char *block,
 		  source ++;
 		}
 	    } /* for (col) */
+	  Screenpos+=SCREENBREITE-len;
 	} /* for (row) */
     } /* else */
 

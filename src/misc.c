@@ -82,6 +82,11 @@ void gotoxy(int x, int y){
 
 };
 
+void DebugPrintf(char *Print_String){
+  
+  printf(Print_String);
+};
+
 // This Function is for the PORT!!!!
 // Replacing all MyRandom-calls with MyMyRandom-calls
 

@@ -427,7 +427,7 @@ void PaintConsoleMenu(void){
   char MenuText[200];
   unsigned int fg,bg;
 
-  printf("\nvoid PaintConsoleMenu(void): Real function called.");
+  DebugPrintf("\nvoid PaintConsoleMenu(void): Real function called.");
 
   ClearGraphMem(InternalScreen);
   GetTextColor(&bg,&fg);           /* Diese Funktion soll die Schriftfarben nicht ver"andern */
@@ -445,12 +445,17 @@ void PaintConsoleMenu(void){
 	
   /* Konsolen-Menue Farbe setzen */
   SetTextColor(KON_BG_COLOR, KON_TEXT_COLOR);
+
+  DebugPrintf("\nvoid PaintConsoleMenu(void): Now the internals of the console are written to the screen....");
  
   strcpy(MenuText,"Unit type ");
   strcat(MenuText,Druidmap[Me.type].druidname);
   strcat(MenuText," - ");
   strcat(MenuText,Classname[Druidmap[Me.type].class]);
   DisplayText(MenuText,USERFENSTERPOSX,USERFENSTERPOSY,InternalScreen,FALSE);
+
+
+  DebugPrintf("\nvoid PaintConsoleMenu(void): Now the screen will be prepared for the real menu....");
 
   SetTextBorder(MENUTEXT_X, USERFENSTERPOSY,USERFENSTERPOSX+USERFENSTERBREITE,USERFENSTERPOSY+USERFENSTERHOEHE,30);
    
@@ -463,6 +468,7 @@ void PaintConsoleMenu(void){
    
   DisplayText(MenuText,MENUTEXT_X,USERFENSTERPOSY+15,InternalScreen,FALSE);
 
+  DebugPrintf("\nvoid PaintConsoleMenu(void): Now the imaged are about to be displayed....");
 
   SetTextBorder(0, 0, SCREENBREITE, SCREENHOEHE, 40);
 
@@ -477,6 +483,8 @@ void PaintConsoleMenu(void){
 	       MENUITEMLENGTH, MENUITEMHEIGHT,
 	       InternalScreen);
       
+  DebugPrintf("\nvoid PaintConsoleMenu(void): Now the Influence will be drawn to the menu....");
+
   DisplayMergeBlock(
 		    MENUITEMPOSX+15, MENUITEMPOSY,
 		    Influencepointer + BLOCKMEM * ((int)rintf(Me.phase)),
@@ -484,10 +492,13 @@ void PaintConsoleMenu(void){
 		    InternalScreen);
 
   SwapScreen();
+
+  DebugPrintf("\nvoid PaintConsoleMenu(void): Now the Info-Line will be updated....");
+
   UpdateInfoline();
   SetTextColor(bg,fg);
 
-  printf("\nvoid PaintConsoleMenu(void): Usual end of function reached.");
+  DebugPrintf("\nvoid PaintConsoleMenu(void): Usual end of function reached.");
 } // void PaintConsoleMenu(void)
 
 /*@Function============================================================

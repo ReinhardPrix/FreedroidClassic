@@ -313,6 +313,8 @@ void AttackInfluence(int enemynum)
   guntype = Druidmap[Feindesliste[enemynum].type].gun;
   
   dist2 = (xdist*xdist+ydist*ydist);
+
+  /* Only fire, if the influencer is in range.... */
   if (  (dist2 < (long)FIREDIST2) &&
 	( !Feindesliste[enemynum].firewait ) &&
 	IsVisible( &Feindesliste[enemynum].pos) )
@@ -392,68 +394,68 @@ void AttackInfluence(int enemynum)
 * $Function----------------------------------------------------------*/
 int EnemyEnemyCollision(int enemynum)
 {
-	int i;
-	int curlev = CurLevel->levelnum;
-	int check_x, check_y;
-	int swap;
-	long xdist, ydist;
-	long dist2;
-	long crit_dist2 = 4*DRUIDRADIUSX*DRUIDRADIUSX;
-	int speed_x, speed_y;
+  int i;
+  int curlev = CurLevel->levelnum;
+  int check_x, check_y;
+  int swap;
+  long xdist, ydist;
+  long dist2;
+  long crit_dist2 = 4*DRUIDRADIUSX*DRUIDRADIUSX;
+  int speed_x, speed_y;
 	
-	check_x = Feindesliste[enemynum].pos.x;
-	check_y = Feindesliste[enemynum].pos.y;
+  check_x = Feindesliste[enemynum].pos.x;
+  check_y = Feindesliste[enemynum].pos.y;
 	
-	for(i=0; i<NumEnemys; i++) {
-		/* only living enemys on this level */
-		if( Feindesliste[i].Status == OUT || Feindesliste[i].levelnum != curlev)
-			continue;
-		/* dont check yourself */
-		if( i == enemynum ) continue;
-
-		/* get distance between enemy i and enemynum */
-		xdist = check_x - Feindesliste[i].pos.x;
-		ydist = check_y - Feindesliste[i].pos.y;
-
-		dist2 = xdist*xdist+ydist*ydist;
-
-		/* Kollision ?? */
-		if( dist2 <= crit_dist2 ) {
-
-			/* Warte ich ??: */	
-			if( Feindesliste[enemynum].warten ) {
-				/* weiter warten */
-				Feindesliste[enemynum].warten = WAIT_COLLISION;
-				continue;
-			}
-		
-			/* Sonst: Feind stoppen und selbst umdrehen */
-			Feindesliste[i].warten = WAIT_COLLISION;
-			
-			/* gestoppten gegner ein wenig zurueckstossen */
-			if( xdist ) Feindesliste[i].pos.x -= xdist/abs((int)xdist);
-			if( ydist ) Feindesliste[i].pos.y -= ydist/abs((int)ydist);
-			
-			swap = Feindesliste[enemynum].nextwaypoint;
-			Feindesliste[enemynum].nextwaypoint = Feindesliste[enemynum].lastwaypoint;
-			Feindesliste[enemynum].lastwaypoint = swap;
-			
-			/* Etwas aus Gegner herausbewegen !! */
-			speed_x = Feindesliste[enemynum].speed.x;
-			speed_y = Feindesliste[enemynum].speed.y;
-
-			if( speed_x )
-				Feindesliste[enemynum].pos.x -= COL_SPEED*(speed_x)/abs(speed_x);
-			if( speed_y )
-				Feindesliste[enemynum].pos.y -= COL_SPEED*(speed_y)/abs(speed_y);
-			
-			return TRUE;
-			
-		} /* if dist zu klein */
-
-	} /* for */
-
-	return FALSE;
+  for(i=0; i<NumEnemys; i++) {
+    /* only living enemys on this level */
+    if( Feindesliste[i].Status == OUT || Feindesliste[i].levelnum != curlev)
+      continue;
+    /* dont check yourself */
+    if( i == enemynum ) continue;
+    
+    /* get distance between enemy i and enemynum */
+    xdist = check_x - Feindesliste[i].pos.x;
+    ydist = check_y - Feindesliste[i].pos.y;
+    
+    dist2 = xdist*xdist+ydist*ydist;
+    
+    /* Kollision ?? */
+    if( dist2 <= crit_dist2 ) {
+      
+      /* Warte ich ??: */	
+      if( Feindesliste[enemynum].warten ) {
+	/* weiter warten */
+	Feindesliste[enemynum].warten = WAIT_COLLISION;
+	continue;
+      }
+      
+      /* Sonst: Feind stoppen und selbst umdrehen */
+      Feindesliste[i].warten = WAIT_COLLISION;
+      
+      /* gestoppten gegner ein wenig zurueckstossen */
+      if( xdist ) Feindesliste[i].pos.x -= xdist/abs((int)xdist);
+      if( ydist ) Feindesliste[i].pos.y -= ydist/abs((int)ydist);
+      
+      swap = Feindesliste[enemynum].nextwaypoint;
+      Feindesliste[enemynum].nextwaypoint = Feindesliste[enemynum].lastwaypoint;
+      Feindesliste[enemynum].lastwaypoint = swap;
+      
+      /* Etwas aus Gegner herausbewegen !! */
+      speed_x = Feindesliste[enemynum].speed.x;
+      speed_y = Feindesliste[enemynum].speed.y;
+      
+      if( speed_x )
+	Feindesliste[enemynum].pos.x -= COL_SPEED*(speed_x)/abs(speed_x);
+      if( speed_y )
+	Feindesliste[enemynum].pos.y -= COL_SPEED*(speed_y)/abs(speed_y);
+      
+      return TRUE;
+      
+    } /* if dist zu klein */
+    
+  } /* for */
+  
+  return FALSE;
 }
 
 

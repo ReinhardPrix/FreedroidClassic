@@ -229,6 +229,8 @@ void UpdateInfoline(void)
   static char LastRight[50];
   int NoNeedToSaveEnv = 1;
 
+  DebugPrintf("\nvoid UpdateInfoline(void): Real function call confirmed....");
+
   if ((Me.status == CONSOLE) || (Me.status == DEBRIEFING)) NoNeedToSaveEnv = 0;
 	
   if (!NoNeedToSaveEnv) StoreTextEnvironment();
@@ -245,6 +247,9 @@ void UpdateInfoline(void)
   }
 
   if (!NoNeedToSaveEnv) RestoreTextEnvironment();
+
+  DebugPrintf("\nvoid UpdateInfoline(void): end of function reached.");
+
   return;
 } // void UpdateInfoline(void)
 
