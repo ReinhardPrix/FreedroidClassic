@@ -1053,13 +1053,17 @@ ApplyItem( item* CurItem )
     {
       Me[0].mana += Me[0].maxmana;
     }
-  else if ( CurItem->type == ITEM_VMX_GAS_GRANADE )
+  else if ( CurItem->type == ITEM_VMX_GAS_GRENADE )
     {
       RadialVMXWave ( Me [ 0 ] . pos , FALSE );
     }
-  else if ( CurItem->type == ITEM_EMP_SHOCK_GRANADE )
+  else if ( CurItem->type == ITEM_EMP_SHOCK_GRENADE )
     {
       RadialEMPWave ( Me [ 0 ] . pos , FALSE );
+    }
+  else if ( CurItem->type == ITEM_PLASMA_GRENADE )
+    {
+      RadialFireWave ( Me [ 0 ] . pos , FALSE );
     }
   else if ( CurItem->type == ITEM_SPELLBOOK_OF_HEALING )
     {

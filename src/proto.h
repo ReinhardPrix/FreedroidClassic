@@ -333,6 +333,7 @@ EXTERN void ShowCharacterScreen ( void );
 #endif
 EXTERN void RadialVMXWave ( gps ExpCenter , int SpellCostsMana );
 EXTERN void RadialEMPWave ( gps ExpCenter , int SpellCostsMana );
+EXTERN void RadialFireWave ( gps ExpCenter , int SpellCostsMana );
 EXTERN void ClearDetectedItemList( int PlayerNum );
 EXTERN void ShowSkillsScreen ( void );
 EXTERN void HandleCurrentlyActivatedSkill( void );
