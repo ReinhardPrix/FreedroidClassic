@@ -60,7 +60,7 @@ SaveGame( void )
   char *SaveGameHeaderString;
   FILE *SaveGameFile;  // to this file we will save all the ship data...
   char filename[1000];
-  char linebuf[10000];
+  char linebuf[100000];
   char *homedir;
   char* MenuTexts[10]={ "Back" , "" , "" , "" , "" ,
 			"" , "" , "" , "" , "" };
@@ -310,10 +310,10 @@ I need to know that for loading. Abort.\n");
 
   //--------------------
   // Now we start decoding our new game information and fill it into the apropriate structs
-  // We assume, that our target strings will be found, so we give 30000 as the search area
+  // We assume, that our target strings will be found, so we give 3000000 as the search area
   // length, since we do not know it exactly
   //
-  InfluencerRawDataPointer = MyMemmem( LoadGameData , 300000 , INFLUENCER_STRUCTURE_RAW_DATA_STRING , 
+  InfluencerRawDataPointer = MyMemmem( LoadGameData , 3000000 , INFLUENCER_STRUCTURE_RAW_DATA_STRING , 
 				       strlen ( INFLUENCER_STRUCTURE_RAW_DATA_STRING ) );
   InfluencerRawDataPointer += strlen ( INFLUENCER_STRUCTURE_RAW_DATA_STRING ) ;
   memcpy( &Me , InfluencerRawDataPointer , sizeof ( influence_t ) );
@@ -324,17 +324,17 @@ I need to know that for loading. Abort.\n");
 
   //--------------------
   // Now we decode the enemy information.
-  // We assume, that our target strings will be found, so we give 300000 as the search area
+  // We assume, that our target strings will be found, so we give 3000000 as the search area
   // length, since we do not know it exactly
   //
-  EnemyRawDataPointer = MyMemmem( LoadGameData , 300000 , ALLENEMYS_RAW_DATA_STRING , 
+  EnemyRawDataPointer = MyMemmem( LoadGameData , 30000000 , ALLENEMYS_RAW_DATA_STRING , 
 				  strlen ( ALLENEMYS_RAW_DATA_STRING ) );
   EnemyRawDataPointer += strlen ( ALLENEMYS_RAW_DATA_STRING ) ;
   memcpy( &(AllEnemys) , EnemyRawDataPointer , sizeof ( enemy ) * MAX_ENEMYS_ON_SHIP );
 
   //--------------------
   // Now we decode the bullet information.
-  // We assume, that our target strings will be found, so we give 300000 as the search area
+  // We assume, that our target strings will be found, so we give 10000000 as the search area
   // length, since we do not know it exactly
   //
   BulletRawDataPointer = MyMemmem( LoadGameData , 10000000 , ALLBULLETS_RAW_DATA_STRING , 
