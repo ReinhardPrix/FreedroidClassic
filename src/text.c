@@ -519,7 +519,10 @@ display_current_chat_protocol ( int background_picture_code , enemy* ChatDroid ,
 	ShowGenericButtonFromList ( CHAT_PROTOCOL_SCROLL_UP_BUTTON );
     else
 	ShowGenericButtonFromList ( CHAT_PROTOCOL_SCROLL_OFF_BUTTON );
-    ShowGenericButtonFromList ( CHAT_PROTOCOL_SCROLL_DOWN_BUTTON );
+    if ( lines_needed <= AVERAGE_LINES_IN_PROTOCOL_WINDOW ) 
+	ShowGenericButtonFromList ( CHAT_PROTOCOL_SCROLL_OFF2_BUTTON );
+    else
+	ShowGenericButtonFromList ( CHAT_PROTOCOL_SCROLL_DOWN_BUTTON );
     if ( with_update ) our_SDL_update_rect_wrapper ( Screen , Subtitle_Window.x , Subtitle_Window.y , Subtitle_Window.w , Subtitle_Window.h );
     
 }; // void display_current_chat_protocol ( int background_picture_code , int with_update )

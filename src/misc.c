@@ -208,6 +208,7 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { UNLOADED_ISO_IMAGE , "mouse_buttons/ScrollDialogMenuUp.png"           , { 335 , 6   , 160 ,  20 } , TRUE , TRUE } ,
     { UNLOADED_ISO_IMAGE , "mouse_buttons/ScrollDialogMenuDown.png"         , { 335 , 270 , 160 ,  20 } , TRUE , TRUE } ,
     { UNLOADED_ISO_IMAGE , "mouse_buttons/ScrollDialogMenuOff.png"          , { 335 , 6   , 160 ,  20 } , TRUE , TRUE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/ScrollDialogMenuOff.png"          , { 335 , 270 , 160 ,  20 } , TRUE , TRUE } ,
 
     //--------------------
     // These 7 buttons are for the level editor and will not need
