@@ -1902,6 +1902,13 @@ InitFreedroid ( void )
     implant_backtrace_into_signal_handlers ( ) ;
 
     //--------------------
+    // Adapt button positions for the current screen resolution.  (Note: At this
+    // point the command linehas been evaluated already, therefore we know if OpenGL
+    // is used or not and also which screen resolution to use.
+    //
+    adapt_button_positions_to_screen_resolution();
+
+    //--------------------
     // That will cause the memory to be allocated later...
     //
     Bulletmap = NULL;  

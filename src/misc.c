@@ -61,10 +61,10 @@ extern SDL_Surface *zoomSurface(SDL_Surface * src, double zoomx, double zoomy, i
 
 mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
   {
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { SCREEN_WIDTH - 80 , SCREEN_HEIGHT - 46 ,  38 ,  45 } , FALSE } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { SCREEN_WIDTH - 40 , SCREEN_HEIGHT - 60 ,  38 ,  40 } , FALSE } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { SCREEN_WIDTH - 50 , SCREEN_HEIGHT - 104 ,  38 ,  47 } , FALSE } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { SCREEN_WIDTH - 80 , SCREEN_HEIGHT - 46 ,  38 ,  45 } , FALSE } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { - 80 , - 46 ,  38 ,  45 } , FALSE } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { - 40 , - 60 ,  38 ,  40 } , FALSE } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { - 50 , - 104 ,  38 ,  47 } , FALSE } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { - 80 , - 46 ,  38 ,  45 } , FALSE } ,
     { NULL , "mouse_buttons/UPButton.png"                     , { 600 ,  94 ,  40 ,  40 } , TRUE } ,
     { NULL , "mouse_buttons/DOWNButton.png"                   , { 600 , 316 ,  40 ,  40 } , TRUE } ,
     { NULL , "mouse_buttons/LEFTButton.png"                   , { 300 ,   5 , 100 ,  50 } , TRUE } ,
@@ -127,12 +127,12 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
 
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { CHARACTERRECT_X + 11 , 449 , 271 , 25 } , FALSE } ,
 
-    { NULL , "mouse_buttons/GoLevelNorthButton.png"           , { SCREEN_WIDTH-50-6 , SCREEN_HEIGHT-50-8 , 25 ,  25 } , FALSE } ,
-    { NULL , "mouse_buttons/GoLevelSouthButton.png"           , { SCREEN_WIDTH-50-6 , SCREEN_HEIGHT-4-25 , 25 ,  25 } , FALSE } ,
-    { NULL , "mouse_buttons/GoLevelEastButton.png"            , { SCREEN_WIDTH-25-4 , SCREEN_HEIGHT-43 , 25 , 25 } , FALSE } ,
-    { NULL , "mouse_buttons/GoLevelWestButton.png"            , { SCREEN_WIDTH-75-8 , SCREEN_HEIGHT-43 ,  0 , 0 } , FALSE } ,
-    { NULL , "mouse_buttons/ExportThisLevelButton.png"        , { SCREEN_WIDTH-60 , 90 , 0,  0 } , FALSE } ,
-    { NULL , "mouse_buttons/LevelEditorSaveShipButton.png"    , { SCREEN_WIDTH-90 , 90 , 0 ,  0 } , FALSE } ,
+    { NULL , "mouse_buttons/GoLevelNorthButton.png"           , { -50-6 , -50-8 , 25 ,  25 } , FALSE } ,
+    { NULL , "mouse_buttons/GoLevelSouthButton.png"           , { -50-6 , -4-25 , 25 ,  25 } , FALSE } ,
+    { NULL , "mouse_buttons/GoLevelEastButton.png"            , { -25-4 , -43 , 25 , 25 } , FALSE } ,
+    { NULL , "mouse_buttons/GoLevelWestButton.png"            , { -75-8 , -43 ,  0 , 0 } , FALSE } ,
+    { NULL , "mouse_buttons/ExportThisLevelButton.png"        , { -60 , 90 , 0,  0 } , FALSE } ,
+    { NULL , "mouse_buttons/LevelEditorSaveShipButton.png"    , { -90 , 90 , 0 ,  0 } , FALSE } ,
     { NULL , "mouse_buttons/LevelEditorZoomInButton.png"      , { 30 , 90 , 0 ,  0 } , FALSE } ,
     { NULL , "mouse_buttons/LevelEditorZoomOutButton.png"     , { 30 , 90 , 0 ,  0 } , FALSE } ,
     { NULL , "mouse_buttons/LevelEditorRecursiveFillButton.png" , { 60 , 90 , 0 ,  0 } , FALSE } ,
@@ -141,8 +141,8 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "mouse_buttons/LevelEditorNewItemButton.png"     , { 150 , 90 , 0 ,  0 } , FALSE } ,
     { NULL , "mouse_buttons/LevelEditorESCButton.png"         , { 430 , 90 , 0 ,  0 } , FALSE } ,
     { NULL , "mouse_buttons/LevelEditorResizeLevelButton.png" , { 460 , 90 , 0 ,  0 } , FALSE } ,
-    { NULL , "mouse_buttons/LevelEditorKeymapButton.png"      , { SCREEN_WIDTH-120 , 90 , 0 ,  0 } , FALSE } ,
-    { NULL , "mouse_buttons/LevelEditorQuitButton.png"        , { SCREEN_WIDTH-30 , 90 , 0 ,  0 } , FALSE } ,
+    { NULL , "mouse_buttons/LevelEditorKeymapButton.png"      , { -120 , 90 , 0 ,  0 } , FALSE } ,
+    { NULL , "mouse_buttons/LevelEditorQuitButton.png"        , { -30 , 90 , 0 ,  0 } , FALSE } ,
 
     { NULL , "mouse_buttons/LevelEditorToggleTuxButton.png"        , { 210 , 90 , 0 ,  0 } , FALSE } ,
     { NULL , "mouse_buttons/LevelEditorToggleTuxButtonOff.png"        , { 210 , 90 , 0 ,  0 } , FALSE } ,
@@ -164,8 +164,8 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
 
     { NULL , "mouse_buttons/LevelEditorCancelItemDrop.png"    , { 55 + 80     , 32+5*66 , 0 ,  0 } , FALSE } ,
 
-    { NULL , "backgrounds/SaveGameBanner.png"                 , { (SCREEN_WIDTH-200)/2 , (SCREEN_HEIGHT-50)/2 , 200 , 50 } , FALSE } ,
-    { NULL , "backgrounds/LoadGameBanner.png"                 , { (SCREEN_WIDTH-200)/2 , (SCREEN_HEIGHT-50)/2 , 200 , 50 } , FALSE } ,
+    { NULL , "backgrounds/SaveGameBanner.png"                 , { (-200)/2 , (-50)/2 , 200 , 50 } , FALSE } ,
+    { NULL , "backgrounds/LoadGameBanner.png"                 , { (-200)/2 , (-50)/2 , 200 , 50 } , FALSE } ,
 
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { WEAPON_RECT_X , WEAPON_RECT_Y , WEAPON_RECT_WIDTH , WEAPON_RECT_HEIGHT } , FALSE } ,
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { DRIVE_RECT_X  , DRIVE_RECT_Y  , DRIVE_RECT_WIDTH  , DRIVE_RECT_HEIGHT } , FALSE } ,
@@ -187,8 +187,8 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     // title display, the credits menu and the level editor 
     // keyboard explanation...
     //
-    { NULL , "mouse_buttons/arrow_up_for_scroll_text.png"     , { SCREEN_WIDTH - 65 , 10 , 73 , 98 } , FALSE } ,
-    { NULL , "mouse_buttons/arrow_down_for_scroll_text.png"   , { SCREEN_WIDTH - 65 , SCREEN_HEIGHT-10-98 , 73 , 98 } , FALSE } ,
+    { NULL , "mouse_buttons/arrow_up_for_scroll_text.png"     , {  - 65 , 10 , 73 , 98 } , FALSE } ,
+    { NULL , "mouse_buttons/arrow_down_for_scroll_text.png"   , {  - 65 , -10-98 , 73 , 98 } , FALSE } ,
 
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 607 , 99 , 26 , 26 } , FALSE } ,
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 607 , 347 , 26 , 26 } , FALSE } ,
@@ -360,6 +360,27 @@ Now catching SIGSEGV: " );
 #endif
 
 }; // void implant_backtrace_into_signal_handlers ( void )
+
+/* ----------------------------------------------------------------------
+ * If we want the screen resolution to be a runtime option and not a 
+ * compile time option any more, we must not use it as a constant.  That
+ * means we must adapt the button positions to the current screeen 
+ * resolution at runtime to, so we do it in this function, which will be
+ * involed at program startup.
+ * ---------------------------------------------------------------------- */
+void
+adapt_button_positions_to_screen_resolution( void )
+{
+    int i;
+
+    for ( i = 0 ; i < MAX_MOUSE_PRESS_BUTTONS ; i ++ )
+    {
+	if ( AllMousePressButtons[ i ] . button_rect . x < 0 )
+	    AllMousePressButtons[ i ] . button_rect . x += SCREEN_WIDTH ;
+	if ( AllMousePressButtons[ i ] . button_rect . y < 0 )
+	    AllMousePressButtons[ i ] . button_rect . y += SCREEN_HEIGHT ;
+    }
+}; // void adapt_button_positions_to_screen_resolution( void )
 
 /* ----------------------------------------------------------------------
  * This function checks if a given screen position lies within the 

@@ -538,6 +538,7 @@ EXTERN int GetNumberOfTextLinesNeeded ( char* GivenText, SDL_Rect GivenRectangle
 #endif
 EXTERN void print_trace ( int signum );
 EXTERN void implant_backtrace_into_signal_handlers ( void ) ;
+EXTERN void adapt_button_positions_to_screen_resolution( void );
 EXTERN void GiveStandardErrorMessage ( char* FunctionName , char* ProblemDescription, int InformDevelopers , int IsFatal );
 EXTERN void UpdateScreenOverButtonFromList ( int ButtonIndex );
 EXTERN void ShowGenericButtonFromList ( int ButtonIndex );
