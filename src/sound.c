@@ -343,6 +343,13 @@ either terminate or continue running now.",
     }
 
   //--------------------
+  // Hoping, that this will not take up too much processor speed, we'll
+  // now change the volume of the sound sample in question to what is normal
+  // for sound effects right now...
+  //
+  Mix_VolumeChunk( One_Shot_WAV_File , (int) rintf( GameConfig.Current_Sound_FX_Volume * MIX_MAX_VOLUME ) );
+
+  //--------------------
   // Now we try to play the sound file that has just been successfully
   // loaded into memory...
   //
