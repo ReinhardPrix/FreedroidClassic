@@ -1170,9 +1170,14 @@ InitFreedroid (void)
   GameConfig.Enemy_Aim_Text=TRUE;
   GameConfig.Influencer_Refresh_Text=FALSE;
   GameConfig.Influencer_Blast_Text=TRUE;
+  // this is the "classic" version, so defaults are set on "classic"
   GameConfig.Theme_SubPath="classic_theme/";
-  GameConfig.FullUserRect = TRUE;
-  Copy_Rect(Full_User_Rect, User_Rect);
+  GameConfig.FullUserRect = FALSE;
+
+  if (GameConfig.FullUserRect)
+    Copy_Rect(Full_User_Rect, User_Rect);
+  else
+    Copy_Rect(Classic_User_Rect, User_Rect);
 
   Init_Video ();
 

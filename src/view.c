@@ -154,6 +154,7 @@ Assemble_Combat_Picture (int mask)
   static float TimeSinceLastFPSUpdate=10;
   static int FPS_Displayed=1;
   SDL_Rect TargetRectangle;
+  SDL_Rect TxtRect;
 #define UPDATE_FPS_HOW_OFTEN 0.75
 
   DebugPrintf (2, "\nvoid Assemble_Combat_Picture(...): Real function call confirmed.");
@@ -227,7 +228,17 @@ Assemble_Combat_Picture (int mask)
     if (AllBlasts[i].type != OUT)
       PutBlast (i);
 
-  SDL_SetClipRect (ne_screen, NULL);  // allow writing outside User_Rect
+  TxtRect.x = Full_User_Rect.x;
+  TxtRect.y = Full_User_Rect.y+Full_User_Rect.h - FontHeight (FPS_Display_BFont);
+  TxtRect.h = FontHeight (FPS_Display_BFont);
+  TxtRect.w = Full_User_Rect.w;
+
+  SDL_SetClipRect (ne_screen, &TxtRect);
+
+  // if we don't use Fullscreen mode, we have to clear the text-background manually
+  // for the info-line text:
+  if (!GameConfig.FullUserRect)
+    SDL_FillRect(ne_screen, &TxtRect, 0);
 
   if ( GameConfig.Draw_Framerate )
     {
@@ -254,7 +265,8 @@ Assemble_Combat_Picture (int mask)
     {
       PrintStringFont( ne_screen , FPS_Display_BFont , Full_User_Rect.x+2*Full_User_Rect.w/3 , 
 		       Full_User_Rect.y+Full_User_Rect.h - FontHeight( FPS_Display_BFont ), 
-		       "GPS: X=%d Y=%d Lev=%d" , (int) rintf(Me.pos.x) , (int) rintf(Me.pos.y) , CurLevel->levelnum );
+		       "GPS: X=%d Y=%d Lev=%d" , (int) rintf(Me.pos.x) , (int) rintf(Me.pos.y) , 
+		       CurLevel->levelnum );
     }
 
   // At this point we are done with the drawing procedure
