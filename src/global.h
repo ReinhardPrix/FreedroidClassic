@@ -282,6 +282,7 @@ EXTERN obstacle_spec obstacle_map [ NUMBER_OF_OBSTACLE_TYPES ];
 #else
 #define EXTERN extern
 #endif
+EXTERN int display_char_disabled;
 
 #undef EXTERN
 #ifdef _text_public_c

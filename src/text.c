@@ -41,7 +41,7 @@
 #include "SDL_rotozoom.h"
 
 int DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *clip , SDL_Surface* ScrollBackground );
-void DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , Enemy ChatDroid );
+void DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , Enemy ChatDroid , int ClearProtocol );
 
 int CharsPerLine;		// line length in chars:  obsolete
 
@@ -65,6 +65,8 @@ float BigScreenMessageDuration[ MAX_BIG_SCREEN_MESSAGES ] = { 10000, 10000, 1000
 dialogue_option ChatRoster[MAX_DIALOGUE_OPTIONS_IN_ROSTER];
 
 EXTERN char *PrefixToFilename[ ENEMY_ROTATION_MODELS_AVAILABLE ];
+
+char* chat_protocol = NULL ;
 
 //--------------------
 // This is the droid window we used before Bastian reshaped
@@ -438,17 +440,75 @@ DisplaySubtitle( char* SubtitleText , int subtitle_background )
 }; // void DisplaySubtitle( char* SubtitleText , void* SubtitleBackground )
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+display_current_chat_protocol ( int background_picture_code , enemy* ChatDroid )
+{
+  SDL_Rect Subtitle_Window;
+  int lines_needed ;
+  int protocol_offset ;
+
+  if ( ! GameConfig . show_subtitles_in_dialogs ) return;
+
+  //--------------------
+  // First we define our subtitle window.  We formerly had a small
+  // narrow subtitle window of a format like this:
+  //
+  Subtitle_Window . x = CHAT_SUBDIALOG_WINDOW_X; 
+  Subtitle_Window . y = CHAT_SUBDIALOG_WINDOW_Y; 
+  Subtitle_Window . w = CHAT_SUBDIALOG_WINDOW_W;
+  Subtitle_Window . h = CHAT_SUBDIALOG_WINDOW_H;
+
+  //--------------------
+  // First we need to know where to begin with with out little display.
+  //
+  lines_needed = GetNumberOfTextLinesNeeded ( chat_protocol , Subtitle_Window , TEXT_STRETCH );
+  DebugPrintf ( -1000 , "\nLines needed: %d. " , lines_needed );
+
+  if ( lines_needed <= 9 ) protocol_offset = 0 ;
+  else
+    {
+      protocol_offset = ( lines_needed - 8 ) * FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ;
+    }
+
+  //--------------------
+  // Now we need to clear this window, cause there might still be some
+  // garbage from the previous subtitle in there...
+  //
+  // blit_special_background ( CHAT_DIALOG_BACKGROUND_EXCERPT_CODE ) ;
+  PrepareMultipleChoiceDialog ( ChatDroid );
+
+  //--------------------
+  // Now we can display the text and update the screen...
+  //
+  SDL_SetClipRect( Screen, NULL );
+  Subtitle_Window . x = CHAT_SUBDIALOG_WINDOW_X; 
+  Subtitle_Window . y = CHAT_SUBDIALOG_WINDOW_Y; 
+  Subtitle_Window . w = CHAT_SUBDIALOG_WINDOW_W;
+  Subtitle_Window . h = CHAT_SUBDIALOG_WINDOW_H;
+  DisplayText ( chat_protocol , Subtitle_Window.x , Subtitle_Window.y - protocol_offset , &Subtitle_Window );
+  our_SDL_update_rect_wrapper ( Screen , Subtitle_Window.x , Subtitle_Window.y , Subtitle_Window.w , Subtitle_Window.h );
+
+}; // void display_current_chat_protocol ( int background_picture_code )
+
+/* ----------------------------------------------------------------------
  * This function should first display a subtitle and then also a sound
  * sample.  It is not very sophisticated or complicated, but nevertheless
  * important, because this combination does indeed occur so often.
  * ---------------------------------------------------------------------- */
 void
-GiveSubtitleNSample( char* SubtitleText , char* SampleFilename )
+GiveSubtitleNSample( char* SubtitleText , char* SampleFilename , enemy* ChatDroid )
 {
+
+  strcat ( chat_protocol , SubtitleText );
+  strcat ( chat_protocol , "\n" );
 
   if ( strcmp ( SubtitleText , "NO_SUBTITLE_AND_NO_WAITING_EITHER" ) )
     {
-      DisplaySubtitle ( SubtitleText , CHAT_DIALOG_BACKGROUND_PICTURE_CODE );
+      // DisplaySubtitle ( SubtitleText , CHAT_DIALOG_BACKGROUND_PICTURE_CODE );
+      display_current_chat_protocol ( CHAT_DIALOG_BACKGROUND_PICTURE_CODE , ChatDroid );
       PlayOnceNeededSoundSample( SampleFilename , TRUE , FALSE );
     }
   else
@@ -619,7 +679,7 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
       LoadChatRosterWithChatSequence ( fpath );
       // ChatDroid -> will_rush_tux = TRUE ;
       ChatDroid -> combat_state = RUSH_TUX_ON_SIGHT_AND_OPEN_TALK ;
-      DoChatFromChatRosterData( 0 , PERSON_SUBDIALOG_DUMMY , ChatDroid );
+      DoChatFromChatRosterData( 0 , PERSON_SUBDIALOG_DUMMY , ChatDroid , FALSE );
 
       push_or_pop_chat_roster ( POP_ROSTER );
 
@@ -1106,8 +1166,10 @@ ProcessThisChatOption ( int MenuSelection , int PlayerNum , int ChatPartnerCode 
   if ( strcmp ( ChatRoster [ MenuSelection ] . option_sample_file_name , "NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER" ) )
     {
       // PlayOnceNeededSoundSample( ChatRoster [ MenuSelection ] . option_sample_file_name , TRUE );
+      strcat ( chat_protocol , "\1 TUX:" );
       GiveSubtitleNSample ( ChatRoster [ MenuSelection ] . option_text ,
-			    ChatRoster [ MenuSelection ] . option_sample_file_name ) ;
+			    ChatRoster [ MenuSelection ] . option_sample_file_name , ChatDroid ) ;
+      strcat ( chat_protocol , "\2 " );
     }
   
   //--------------------
@@ -1124,7 +1186,7 @@ ProcessThisChatOption ( int MenuSelection , int PlayerNum , int ChatPartnerCode 
 	break;
       
       GiveSubtitleNSample ( ChatRoster [ MenuSelection ] . reply_subtitle_list [ i ] ,
-			    ChatRoster [ MenuSelection ] . reply_sample_list [ i ]    ) ;
+			    ChatRoster [ MenuSelection ] . reply_sample_list [ i ] , ChatDroid ) ;
     }
   
   //--------------------
@@ -1212,12 +1274,23 @@ ProcessThisChatOption ( int MenuSelection , int PlayerNum , int ChatPartnerCode 
  *
  * ---------------------------------------------------------------------- */
 void
-DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , Enemy ChatDroid )
+DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , Enemy ChatDroid , int clear_protocol )
 {
   int i ;
   SDL_Rect Chat_Window;
   int MenuSelection = (-1) ;
   char* DialogMenuTexts[ MAX_ANSWERS_PER_PERSON ];
+
+  //--------------------
+  // We always should clear the chat protocol.  Only for SUBDIALOGS it is
+  // suitable not to clear the chat protocol.
+  //
+  if ( clear_protocol )
+    {
+      if ( chat_protocol != NULL ) free ( chat_protocol );
+      chat_protocol = MyMalloc ( 500000 ); // enough for any chat...
+      strcpy ( chat_protocol , "--- Start of Dialog ---\n" );
+    }
 
   PrepareMultipleChoiceDialog ( ChatDroid );
 
@@ -1287,7 +1360,7 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , Enemy ChatDroid 
 	}
     }
   
-}; // void DoChatFromChatRosterData( void )
+}; // void DoChatFromChatRosterData( ... )
 
 /* ----------------------------------------------------------------------
  *
@@ -1502,7 +1575,7 @@ ChatWithFriendlyDroid( Enemy ChatDroid )
   //--------------------
   // Now with the loaded chat data, we can do the real chat now...
   //
-  DoChatFromChatRosterData( 0 , ChatFlagsIndex , ChatDroid );
+  DoChatFromChatRosterData( 0 , ChatFlagsIndex , ChatDroid , TRUE );
 
 }; // void ChatWithFriendlyDroid( int Enum );
 
@@ -1685,12 +1758,15 @@ ScrollText (char *Text, int startx, int starty, int EndLine , int background_cod
       Number_Of_Line_Feeds++;
 
   while ( !SpacePressed () 
-	  || ( CursorIsOnButton ( SCROLL_TEXT_UP_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_X ) )
-	  || ( CursorIsOnButton ( SCROLL_TEXT_DOWN_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) ) )
+	  || ( CursorIsOnButton ( SCROLL_TEXT_UP_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+				  GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_X ) )
+	  || ( CursorIsOnButton ( SCROLL_TEXT_DOWN_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+				  GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) ) )
     {
       if ( UpPressed () 
 	   || ( SpacePressed () 
-		&& ( CursorIsOnButton ( SCROLL_TEXT_UP_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) ) ) )
+		&& ( CursorIsOnButton ( SCROLL_TEXT_UP_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+					GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) ) ) )
 	{
 	  speed--;
 	  if (speed < -maxspeed)
@@ -1698,7 +1774,8 @@ ScrollText (char *Text, int startx, int starty, int EndLine , int background_cod
 	}
       if ( DownPressed ()
 	   || ( SpacePressed () 
-		&& ( CursorIsOnButton ( SCROLL_TEXT_DOWN_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) ) ) )
+		&& ( CursorIsOnButton ( SCROLL_TEXT_DOWN_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
+					GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) ) ) )
 	{
 	  speed++;
 	  if (speed > maxspeed)
@@ -2021,7 +2098,8 @@ files of Freedroid.",
       return;
     }
 
-  PutChar ( Screen, MyCursorX, MyCursorY, c );
+  if ( ! display_char_disabled ) 
+    PutChar ( Screen, MyCursorX, MyCursorY, c );
 
   // DebugPrintf( 0 , "%c" , c );
 

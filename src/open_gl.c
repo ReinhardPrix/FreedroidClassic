@@ -1228,7 +1228,6 @@ StoreMenuBackground ( int backup_slot )
       first_call = FALSE ;
     }
 
-
   if ( use_open_gl )
     {
 #ifdef HAVE_LIBGL

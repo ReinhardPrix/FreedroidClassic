@@ -437,12 +437,13 @@ ChatDoMenuSelectionFlagged( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER
  * side as one usually does...
  * ---------------------------------------------------------------------- */
 int
-GetNumberOfTextLinesNeeded ( char* GivenText, SDL_Rect GivenRectangle )
+GetNumberOfTextLinesNeeded ( char* GivenText, SDL_Rect GivenRectangle , float text_stretch )
 {
   int BackupOfMyCursorX, BackupOfMyCursorY;
   int TextLinesNeeded;
   int i;
   int TestPosition;
+  int stored_height ;
 
   //--------------------
   // If we receive an empty string, we print out a warning message and then
@@ -459,7 +460,8 @@ Warning.  Received empty or nearly empty string!",
   //--------------------
   // First we make a backup of everything, so that we don't destory anything.
   //
-  StoreMenuBackground ( 1 ) ;
+  // if ( ! use_open_gl ) StoreMenuBackground ( 1 ) ;
+  display_char_disabled = TRUE ;
   BackupOfMyCursorX = MyCursorX;
   BackupOfMyCursorY = MyCursorY;
 
@@ -469,18 +471,22 @@ Warning.  Received empty or nearly empty string!",
   MyCursorX = GivenRectangle . x ;
   MyCursorY = GivenRectangle . y ;
   TestPosition = MyCursorY ;
+
+  stored_height = GivenRectangle.h ;
+  GivenRectangle.h = 32000 ;
   DisplayText ( GivenText , GivenRectangle.x , GivenRectangle.y , &GivenRectangle );
+  GivenRectangle.h = stored_height ;
 
   //--------------------
   // Now we estimate how many lines that must have meant...
   //
-  for ( i = 0 ; i < MAX_ANSWERS_PER_PERSON ; i ++ )
+  for ( i = 0 ; 1 ; i ++ ) // this is infinite until break!
     {
-      if ( MyCursorY == TestPosition ) 
+      if ( MyCursorY <= TestPosition ) 
 	{
 	  break;
 	}
-      TestPosition += FontHeight ( GetCurrentFont() ) * TEXT_STRETCH;
+      TestPosition += FontHeight ( GetCurrentFont() ) * text_stretch;
     }
 
   TextLinesNeeded = i + 1 ;
@@ -489,7 +495,8 @@ Warning.  Received empty or nearly empty string!",
   //--------------------
   // Now that we have found our solution, we can restore everything back to normal
   //
-  RestoreMenuBackground ( 1 ) ;
+  // RestoreMenuBackground ( 1 ) ;
+  display_char_disabled = FALSE ;
 
   MyCursorX = BackupOfMyCursorX;
   MyCursorY = BackupOfMyCursorY;
@@ -603,7 +610,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
     }
   for ( i = 0 ; i < NumberOfOptionsGiven ; i++ )
     {
-      MenuOptionLineRequirement [ i ] = GetNumberOfTextLinesNeeded ( MenuTexts [ i ] , Choice_Window );
+      MenuOptionLineRequirement [ i ] = GetNumberOfTextLinesNeeded ( MenuTexts [ i ] , Choice_Window , TEXT_STRETCH );
     }
   
   //--------------------
@@ -636,10 +643,6 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
   else SetCurrentFont ( (BFont_Info*) MenuFont );
   h = FontHeight ( GetCurrentFont() );
 
-
-
-
-
   OptionOffset = 0 ;
   while ( 1 )
     {
@@ -647,7 +650,10 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
       if ( ! use_open_gl ) 
 	RestoreMenuBackground ( 0 );
       else 
-	PrepareMultipleChoiceDialog ( ChatDroid );
+	{
+	  // PrepareMultipleChoiceDialog ( ChatDroid );
+	  display_current_chat_protocol ( CHAT_DIALOG_BACKGROUND_PICTURE_CODE , ChatDroid );
+	}
 
       //--------------------
       // Now that we have a new choice window, we should automatically compute the right
@@ -716,7 +722,6 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
 
       our_SDL_flip_wrapper( Screen );
 
-
       //--------------------
       // In order to reduce processor load during chat menus and also in order to
       // make menus lag less, we introduce a new loop here, so that the drawing thing
@@ -766,10 +771,6 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
 	      mouse_wheel_has_turned = TRUE ;
 	      while (DownPressed());
 	    }
-
-
-
-
 
 	  //--------------------
 	  // Maybe the mouse is now hovering over a different menu item, that it

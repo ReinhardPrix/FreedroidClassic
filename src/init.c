@@ -1772,6 +1772,11 @@ InitFreedroid ( void )
   int i;
   struct stat statbuf;
 
+  //--------------------
+  // We want DisplayChar to produce visible results by default...
+  //
+  display_char_disabled = FALSE ;
+
   // feenableexcept ( FE_ALL_EXCEPT );
   // feenableexcept ( FE_DIVBYZERO | FE_INVALID ); // FE_INEXACT | FE_UNDERFLOW | FE_OVERFLOW 
   // fesetexceptflag (const fexcept_t *flagp, int excepts);
