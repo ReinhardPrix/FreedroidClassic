@@ -145,12 +145,19 @@ Type of blast this bullet causes when crashing e.g. against a wall : 0
 Item name="Single Energy Capsule"
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
+Item can be installed in drive slot="no"
+Item can be installed in weapon slot="no"
 Item installation changes weapon into new value=-1
 Item installation changes drive into new value=-1
 Energy gain on application in combat=35
 Item weight=0.4
 Item drive maxspeed=0
 Item drive acceleration=0
+Item as gun: recharging time=0.1
+Item as gun: speed of bullets=5
+Item as gun: damage of bullets=1
+Item as gun: blast type to create=1
+Item as gun: one_shot_only=0
 Picture number=0
 ** End of new item specification subsection **
 
@@ -159,12 +166,19 @@ Picture number=0
 Item name="Double Energy Capsule"
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
+Item can be installed in drive slot="no"
+Item can be installed in weapon slot="no"
 Item installation changes weapon into new value=-1
 Item installation changes drive into new value=-1
 Energy gain on application in combat=70
 Item weight=0.6
 Item drive maxspeed=0
 Item drive acceleration=0
+Item as gun: recharging time=0.1
+Item as gun: speed of bullets=5
+Item as gun: damage of bullets=1
+Item as gun: blast type to create=1
+Item as gun: one_shot_only=0
 Picture number=0
 ** End of new item specification subsection **
 
@@ -173,26 +187,40 @@ Picture number=0
 Item name="Triple Energy Capsule"
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
+Item can be installed in drive slot="no"
+Item can be installed in weapon slot="no"
 Item installation changes weapon into new value=-1
 Item installation changes drive into new value=-1
 Energy gain on application in combat=105
 Item weight=0.8
 Item drive maxspeed=0
 Item drive acceleration=0
+Item as gun: recharging time=0.1
+Item as gun: speed of bullets=5
+Item as gun: damage of bullets=1
+Item as gun: blast type to create=1
+Item as gun: one_shot_only=0
 Picture number=0
 ** End of new item specification subsection **
 
 // Item No. 3
 ** Start of new item specification subsection **
-Item name="Droid Lasers Class Alpha"
+Item name="Twin Lasers Class Alpha"
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
+Item can be installed in drive slot="no"
+Item can be installed in weapon slot="yes"
 Item installation changes weapon into new value=2
 Item installation changes drive into new value=-1
 Energy gain on application in combat=60
 Item weight=0.8
 Item drive maxspeed=0
 Item drive acceleration=0
+Item as gun: recharging time=0.1
+Item as gun: speed of bullets=5
+Item as gun: damage of bullets=25
+Item as gun: blast type to create=1
+Item as gun: one_shot_only=0
 Picture number=2
 ** End of new item specification subsection **
 
@@ -201,12 +229,19 @@ Picture number=2
 Item name="Droid Energetic Heart Class Beta"
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
+Item can be installed in drive slot="no"
+Item can be installed in weapon slot="no"
 Item installation changes weapon into new value=-1
 Item installation changes drive into new value=-1
 Energy gain on application in combat=60
 Item weight=0.8
 Item drive maxspeed=0
 Item drive acceleration=0
+Item as gun: recharging time=0.1
+Item as gun: speed of bullets=5
+Item as gun: damage of bullets=1
+Item as gun: blast type to create=1
+Item as gun: one_shot_only=0
 Picture number=3
 ** End of new item specification subsection **
 
@@ -215,12 +250,19 @@ Picture number=3
 Item name="Droid Antigrav Drive Class Alpha"
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
+Item can be installed in drive slot="yes"
+Item can be installed in weapon slot="no"
 Item installation changes weapon into new value=-1
 Item installation changes drive into new value=2
 Energy gain on application in combat=60
 Item weight=0.8
 Item drive maxspeed=4
 Item drive acceleration=3
+Item as gun: recharging time=0.1
+Item as gun: speed of bullets=5
+Item as gun: damage of bullets=1
+Item as gun: blast type to create=1
+Item as gun: one_shot_only=0
 Picture number=4
 ** End of new item specification subsection **
 
@@ -229,12 +271,19 @@ Picture number=4
 Item name="100 Cyberbucks"
 Item can be applied in combat="no"
 Item can be installed in influ="no"
+Item can be installed in drive slot="no"
+Item can be installed in weapon slot="no"
 Item installation changes weapon into new value=-1
 Item installation changes drive into new value=-1
 Energy gain on application in combat=0
 Item weight=0.0
 Item drive maxspeed=0
 Item drive acceleration=0
+Item as gun: recharging time=0.1
+Item as gun: speed of bullets=5
+Item as gun: damage of bullets=1
+Item as gun: blast type to create=1
+Item as gun: one_shot_only=0
 Picture number=1
 ** End of new item specification subsection **
 
@@ -243,12 +292,19 @@ Picture number=1
 Item name="Droid Wheel Drive Class Alpha"
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
+Item can be installed in drive slot="yes"
+Item can be installed in weapon slot="no"
 Item installation changes weapon into new value=-1
 Item installation changes drive into new value=4
 Energy gain on application in combat=60
 Item weight=0.8
 Item drive maxspeed=2
 Item drive acceleration=3
+Item as gun: recharging time=0.1
+Item as gun: speed of bullets=5
+Item as gun: damage of bullets=1
+Item as gun: blast type to create=1
+Item as gun: one_shot_only=0
 Picture number=4
 ** End of new item specification subsection **
 
@@ -257,26 +313,40 @@ Picture number=4
 Item name="Droid Tri-pedal Drive Class Alpha"
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
+Item can be installed in drive slot="no"
+Item can be installed in weapon slot="no"
 Item installation changes weapon into new value=-1
 Item installation changes drive into new value=4
 Energy gain on application in combat=60
 Item weight=0.8
 Item drive maxspeed=3
 Item drive acceleration=3
+Item as gun: recharging time=0.1
+Item as gun: speed of bullets=5
+Item as gun: damage of bullets=1
+Item as gun: blast type to create=1
+Item as gun: one_shot_only=0
 Picture number=4
 ** End of new item specification subsection **
 
 // Item No. 9
 ** Start of new item specification subsection **
-Item name="Droid Wheel Bi-pedal Class Alpha"
+Item name="Droid Bi-pedal Class Alpha"
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
+Item can be installed in drive slot="yes"
+Item can be installed in weapon slot="no"
 Item installation changes weapon into new value=-1
 Item installation changes drive into new value=4
 Energy gain on application in combat=60
 Item weight=0.8
 Item drive maxspeed=2
 Item drive acceleration=3
+Item as gun: recharging time=0.1
+Item as gun: speed of bullets=5
+Item as gun: damage of bullets=1
+Item as gun: blast type to create=1
+Item as gun: one_shot_only=0
 Picture number=4
 ** End of new item specification subsection **
 
@@ -285,12 +355,19 @@ Picture number=4
 Item name="Droid Tracks Drive Class Alpha"
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
+Item can be installed in drive slot="yes"
+Item can be installed in weapon slot="no"
 Item installation changes weapon into new value=-1
 Item installation changes drive into new value=4
 Energy gain on application in combat=60
 Item weight=0.8
 Item drive maxspeed=2
 Item drive acceleration=6
+Item as gun: recharging time=0.1
+Item as gun: speed of bullets=5
+Item as gun: damage of bullets=1
+Item as gun: blast type to create=1
+Item as gun: one_shot_only=0
 Picture number=4
 ** End of new item specification subsection **
 
@@ -299,12 +376,19 @@ Picture number=4
 Item name="Droid Antigrav Drive Class Beta"
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
+Item can be installed in drive slot="yes"
+Item can be installed in weapon slot="no"
 Item installation changes weapon into new value=-1
 Item installation changes drive into new value=2
 Energy gain on application in combat=60
 Item weight=0.8
 Item drive maxspeed=7
 Item drive acceleration=6
+Item as gun: recharging time=0.1
+Item as gun: speed of bullets=5
+Item as gun: damage of bullets=1
+Item as gun: blast type to create=1
+Item as gun: one_shot_only=0
 Picture number=4
 ** End of new item specification subsection **
 
@@ -313,12 +397,19 @@ Picture number=4
 Item name="Laser Rifle Class Alpha"
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
+Item can be installed in drive slot="no"
+Item can be installed in weapon slot="yes"
 Item installation changes weapon into new value=2
 Item installation changes drive into new value=-1
 Energy gain on application in combat=60
 Item weight=0.8
 Item drive maxspeed=0
 Item drive acceleration=0
+Item as gun: recharging time=0.1
+Item as gun: speed of bullets=5
+Item as gun: damage of bullets=40
+Item as gun: blast type to create=1
+Item as gun: one_shot_only=0
 Picture number=2
 ** End of new item specification subsection **
 
@@ -327,12 +418,19 @@ Picture number=2
 Item name="Droid Exterminators Class Alpha"
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
+Item can be installed in drive slot="no"
+Item can be installed in weapon slot="yes"
 Item installation changes weapon into new value=2
 Item installation changes drive into new value=-1
 Energy gain on application in combat=60
 Item weight=0.8
 Item drive maxspeed=0
 Item drive acceleration=0
+Item as gun: recharging time=0.1
+Item as gun: speed of bullets=5
+Item as gun: damage of bullets=80
+Item as gun: blast type to create=1
+Item as gun: one_shot_only=0
 Picture number=2
 ** End of new item specification subsection **
 
@@ -341,12 +439,61 @@ Picture number=2
 Item name="Droid Disruptor Class Alpha"
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
+Item can be installed in drive slot="no"
+Item can be installed in weapon slot="yes"
 Item installation changes weapon into new value=2
 Item installation changes drive into new value=-1
 Energy gain on application in combat=60
 Item weight=0.8
 Item drive maxspeed=0
 Item drive acceleration=0
+Item as gun: recharging time=0.1
+Item as gun: speed of bullets=5
+Item as gun: damage of bullets=40
+Item as gun: blast type to create=1
+Item as gun: one_shot_only=0
+Picture number=2
+** End of new item specification subsection **
+
+// Item No. 15
+** Start of new item specification subsection **
+Item name="Twin Lasers Class Beta"
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item can be installed in drive slot="no"
+Item can be installed in weapon slot="yes"
+Item installation changes weapon into new value=2
+Item installation changes drive into new value=-1
+Energy gain on application in combat=60
+Item weight=0.8
+Item drive maxspeed=0
+Item drive acceleration=0
+Item as gun: recharging time=0.1
+Item as gun: speed of bullets=5
+Item as gun: damage of bullets=55
+Item as gun: blast type to create=1
+Item as gun: one_shot_only=0
+Picture number=2
+** End of new item specification subsection **
+
+// Item No. 16
+** Start of new item specification subsection **
+Item name="Single Lasers Class Beta"
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item can be installed in drive slot="no"
+Item can be installed in weapon slot="yes"
+Item installation changes weapon into new value=2
+Item installation changes drive into new value=-1
+Energy gain on application in combat=60
+Item weight=0.8
+Item drive maxspeed=0
+Item drive acceleration=0
+Item as gun: recharging time=0.1
+Item as gun: speed of bullets=5
+Item as gun: damage of bullets=40
+Item as gun: blast type to create=1
+Item as gun: one_shot_only=0
 Picture number=2
 ** End of new item specification subsection **
 
@@ -393,6 +540,7 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
 Drive item=5
+Weapon item=3
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -418,6 +566,7 @@ Sensor 2 of this droid : 2
 Sensor 3 of this droid : 0
 Armament of this droid : 0
 Drive item=10
+Weapon item=0
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -443,6 +592,7 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
 Drive item=10
+Weapon item=0
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -468,6 +618,7 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
 Drive item=5
+Weapon item=0
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -493,6 +644,7 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
 Drive item=8
+Weapon item=0
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -518,6 +670,7 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
 Drive item=10
+Weapon item=0
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -543,6 +696,7 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
 Drive item=11
+Weapon item=0
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -568,6 +722,7 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
 Drive item=7
+Weapon item=0
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -593,6 +748,7 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
 Drive item=10
+Weapon item=0
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -618,6 +774,7 @@ Sensor 2 of this droid : 2
 Sensor 3 of this droid : 0
 Armament of this droid : 1
 Drive item=5
+Weapon item=16
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -643,6 +800,7 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
 Drive item=5
+Weapon item=0
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -668,6 +826,7 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
 Drive item=9
+Weapon item=0
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -693,6 +852,7 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
 Drive item=9
+Weapon item=0
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -718,6 +878,7 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
 Drive item=9
+Weapon item=0
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -743,6 +904,7 @@ Sensor 2 of this droid : 3
 Sensor 3 of this droid : 0
 Armament of this droid : 2
 Drive item=9
+Weapon item=12
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -768,6 +930,7 @@ Sensor 2 of this droid : 2
 Sensor 3 of this droid : 0
 Armament of this droid : 1
 Drive item=5
+Weapon item=16
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -793,6 +956,7 @@ Sensor 2 of this droid : 3
 Sensor 3 of this droid : 0
 Armament of this droid : 1
 Drive item=10
+Weapon item=15
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -818,6 +982,7 @@ Sensor 2 of this droid : 5
 Sensor 3 of this droid : 0
 Armament of this droid : 3
 Drive item=9
+Weapon item=14
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -843,6 +1008,7 @@ Sensor 2 of this droid : 5
 Sensor 3 of this droid : 0
 Armament of this droid : 3
 Drive item=9
+Weapon item=14
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -868,6 +1034,7 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 1
 Drive item=9
+Weapon item=16
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -893,6 +1060,7 @@ Sensor 2 of this droid : 5
 Sensor 3 of this droid : 2
 Armament of this droid : 1
 Drive item=11
+Weapon item=15
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -918,6 +1086,7 @@ Sensor 2 of this droid : 5
 Sensor 3 of this droid : 0
 Armament of this droid : 1
 Drive item=5
+Weapon item=16
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -943,6 +1112,7 @@ Sensor 2 of this droid : 5
 Sensor 3 of this droid : 0
 Armament of this droid : 4
 Drive item=7
+Weapon item=13
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -968,6 +1138,7 @@ Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
 Armament of this droid : 1
 Drive item=11
+Weapon item=15
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -992,6 +1163,7 @@ Sensor 1 of this droid : 2
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
 Drive item=9
+Weapon item=0
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
@@ -1018,6 +1190,7 @@ Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
 Armament of this droid : 1
 Drive item=5
+Weapon item=15
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1043,6 +1216,7 @@ Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
 Armament of this droid : 1
 Drive item=5
+Weapon item=15
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1068,6 +1242,7 @@ Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
 Armament of this droid : 1
 Drive item=5
+Weapon item=15
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1093,6 +1268,7 @@ Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
 Armament of this droid : 1
 Drive item=5
+Weapon item=15
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1118,6 +1294,7 @@ Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
 Armament of this droid : 1
 Drive item=5
+Weapon item=15
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1143,6 +1320,7 @@ Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
 Armament of this droid : 1
 Drive item=5
+Weapon item=15
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1168,6 +1346,7 @@ Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
 Armament of this droid : 1
 Drive item=5
+Weapon item=15
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1193,6 +1372,7 @@ Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
 Armament of this droid : 1
 Drive item=5
+Weapon item=15
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1218,6 +1398,7 @@ Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
 Armament of this droid : 1
 Drive item=5
+Weapon item=15
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0

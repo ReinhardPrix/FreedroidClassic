@@ -712,7 +712,6 @@ GraphicsSound_Options_Menu (void)
 {
   int Weiter = 0;
   int MenuPosition=1;
-
 #define OPTIONS_MENU_ITEM_POS_X (Block_Width/2)
 enum
   { SET_BG_MUSIC_VOLUME=1, 
@@ -1099,8 +1098,6 @@ Options_Menu (void)
   int Weiter = 0;
   int MenuPosition=1;
   char* MenuTexts[10];
-
-#define OPTIONS_MENU_ITEM_POS_X (Block_Width/2)
 enum
   { GRAPHICS_SOUND_OPTIONS=1, 
     DROID_TALK_OPTIONS,

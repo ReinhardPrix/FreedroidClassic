@@ -985,6 +985,9 @@ AttackInfluence (int enemynum)
       /* Bullettype gemaes dem ueblichen guntype fuer den robottyp setzen */
       AllBullets[j].type = guntype;
 
+      // Now we set the damage of this bullet to the correct value
+      AllBullets[j].damage = ItemMap[ Druidmap[ ThisRobot->type ].weapon_item ].item_gun_damage;
+
       return;
     }
 
@@ -1077,6 +1080,9 @@ AttackInfluence (int enemynum)
 
       /* Bullettype gemaess dem ueblichen guntype fuer den robottyp setzen */
       AllBullets[j].type = guntype;
+
+      // Now we set the damage of this bullet to the correct value
+      AllBullets[j].damage = ItemMap[ Druidmap[ ThisRobot->type ].weapon_item ].item_gun_damage;
 
       //}	/* if */
 

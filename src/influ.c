@@ -1040,6 +1040,7 @@ FireBullet (void)
   CurBullet->pos.x = Me.pos.x;
   CurBullet->pos.y = Me.pos.y;
   CurBullet->type = guntype;
+  CurBullet->damage = ItemMap[ Druidmap[ Me.type].weapon_item ].item_gun_damage;
   CurBullet->mine = TRUE;
   CurBullet->owner = -1;
 

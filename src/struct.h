@@ -205,16 +205,27 @@ typedef struct
   char* ItemClass;  // class of the item, e.g. weapon, drive, shield, other
   int item_can_be_applied_in_combat;
   int item_can_be_installed_in_influ;
+  int item_can_be_installed_in_weapon_slot;
+  int item_can_be_installed_in_drive_slot;
   int New_Laser_Type_After_Installation;
   int New_Drive_Type_After_Installation;
   double energy_gain_uppon_application_in_combat;
   double item_weight;
+
+  // How good is the item as drive???
   double item_drive_maxspeed;	// how fast can this item go used as the drive of the droid
   double item_drive_accel;	// as drive, how fast can you accelerate with this item
-  
+
+  // How good is the item as weapon???
+  double item_gun_recharging_time;       // time until the next shot can be made, measures in seconds
+  double item_gun_speed;			/* speed of the bullet */
+  int item_gun_damage;			/* damage done by this bullettype */
+  int item_gun_blast;			/* which blast does this bullet create */
+  int item_gun_oneshotonly;	        /* if this is set, there is only 1 shot */
+
+  // Which picture to use for this item, when it's lying on the floor?
   int picture_number;
-  char* MaximumSpeed; 
-  // SDL_Surface* SurfacePointer;  // items don't each have individual pictures...
+
 } itemspec , *Itemspec;
 
 typedef struct
@@ -244,6 +255,7 @@ typedef struct
   int sensor3;
   int armament;
   int drive_item;
+  int weapon_item;
   int AdvancedBehaviour;        // Does this droid behave better that in the original paradroid?
   int CallForHelpAfterSufferingHit;  // Does this droid request help from the next console so soon as it is
                                      // hit by a bullet of some type?
@@ -268,7 +280,6 @@ typedef struct
   int MyShield;			/* Shield device installed */
   int Shield[4];		/* Status of Partial Shields */
   gps Position_History_Ring_Buffer[ MAX_INFLU_POSITION_HISTORY ];
-  // finepoint Position_History[ MAX_INFLU_POSITION_HISTORY ]; // History of the places the influ has been during the last 10 frames
   mission AllMissions[ MAX_MISSIONS_IN_GAME ];         // What must be done to fullfill this mission?
   float MissionTimeElapsed;
   int Marker;                   // In case you've taken over a marked droid, this will contain the marker
@@ -336,7 +347,6 @@ typedef struct
 {
   double recharging_time;       // time until the next shot can be made, measures in seconds
   double speed;			/* speed of the bullet */
-  int damage;			/* damage done by this bullettype */
   int phases;			/* how many phases in motion to show */
   double phase_changes_per_second; // how many different phases to display every second
   int blast;			/* which blast does this bullet create */
@@ -344,7 +354,7 @@ typedef struct
   SDL_Surface *SurfacePointer[ MAX_PHASES_IN_A_BULLET ];   // A pointer to the surfaces containing 
                                                            // the bullet images of this bullet
   // SDL_Rect *block;            /* the coordinates of the blocks in ne_blocks */
-}
+} 
 bulletspec, *Bulletspec;
 
 typedef struct
@@ -353,6 +363,7 @@ typedef struct
   finepoint speed;
   byte type;
   byte phase;
+  int damage; // damage done by this particular bullet 
   int time_in_frames;    // how long does the bullet exist, measured in number of frames
   double time_in_seconds; // how long does the bullet exist in seconds
   signed char mine;

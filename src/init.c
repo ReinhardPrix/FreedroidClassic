@@ -185,8 +185,8 @@ Get_Bullet_Data ( char* DataPointer )
 			   &Bulletmap[BulletIndex].speed , EndOfBulletData );
 
       // Now we read in the damage this bullet can do
-      ReadValueFromString( BulletPointer ,  BULLET_DAMAGE_BEGIN_STRING , "%d" , 
-			   &Bulletmap[BulletIndex].damage , EndOfBulletData );
+      // ReadValueFromString( BulletPointer ,  BULLET_DAMAGE_BEGIN_STRING , "%d" , 
+      // &Bulletmap[BulletIndex].damage , EndOfBulletData );
 
       // Now we read in if you can fire before the previous bullet has expired
       ReadValueFromString( BulletPointer ,  BULLET_ONE_SHOT_ONLY_AT_A_TIME , "%d" , 
@@ -226,7 +226,7 @@ Get_Bullet_Data ( char* DataPointer )
   for ( i = 0 ; i < Number_Of_Bullet_Types ; i++ )
     {
       Bulletmap[i].speed *= bullet_speed_calibrator;
-      Bulletmap[i].damage *= bullet_damage_calibrator;
+      // Bulletmap[i].damage *= bullet_damage_calibrator;
     }
 
   DebugPrintf (1, "\nEnd of Get_Bullet_Data ( char* DataPointer ) reached.");
@@ -257,6 +257,8 @@ Get_Item_Data ( char* DataPointer )
 #define ITEM_NAME_INDICATION_STRING "Item name=\""
 #define ITEM_CAN_BE_APPLIED_IN_COMBAT "Item can be applied in combat=\""
 #define ITEM_CAN_BE_INSTALLED_IN_INFLU "Item can be installed in influ=\""
+#define ITEM_CAN_BE_INSTALLED_IN_WEAPON_SLOT "Item can be installed in weapon slot=\""
+#define ITEM_CAN_BE_INSTALLED_IN_DRIVE_SLOT "Item can be installed in drive slot=\""
 
 #define ITEM_RECHARGE_TIME_BEGIN_STRING "Time is takes to recharge this bullet/weapon in seconds :"
 #define ITEM_SPEED_BEGIN_STRING "Flying speed of this bullet type :"
@@ -355,6 +357,68 @@ Sorry...\n\
 	  Terminate( ERR );
 	}
 
+      // Now we read in if this item can be installed in weapon slot
+      YesNoString = ReadAndMallocStringFromData ( ItemPointer , ITEM_CAN_BE_INSTALLED_IN_WEAPON_SLOT , "\"" ) ;
+      if ( strcmp( YesNoString , "yes" ) == 0 )
+	{
+	  ItemMap[ItemIndex].item_can_be_installed_in_weapon_slot = TRUE;
+	}
+      else if ( strcmp( YesNoString , "no" ) == 0 )
+	{
+	  ItemMap[ItemIndex].item_can_be_installed_in_weapon_slot = FALSE;
+	}
+      else
+	{
+	  fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+The item specification of an item in freedroid.ruleset should contain an \n\
+answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.\n\
+\n\
+This indicated a corrupted freedroid.ruleset file with an error at least in\n\
+the item specification section.  Please correct the error or send mail to the\n\
+freedroid development team.\n\
+\n\
+But for now Freedroid will terminate to draw attention \n\
+to the initialisation problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" );
+	  Terminate( ERR );
+	}
+
+      // Now we read in if this item can be installed in the drive slot
+      YesNoString = ReadAndMallocStringFromData ( ItemPointer , ITEM_CAN_BE_INSTALLED_IN_DRIVE_SLOT , "\"" ) ;
+      if ( strcmp( YesNoString , "yes" ) == 0 )
+	{
+	  ItemMap[ItemIndex].item_can_be_installed_in_drive_slot = TRUE;
+	}
+      else if ( strcmp( YesNoString , "no" ) == 0 )
+	{
+	  ItemMap[ItemIndex].item_can_be_installed_in_drive_slot = FALSE;
+	}
+      else
+	{
+	  fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+The item specification of an item in freedroid.ruleset should contain an \n\
+answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.\n\
+\n\
+This indicated a corrupted freedroid.ruleset file with an error at least in\n\
+the item specification section.  Please correct the error or send mail to the\n\
+freedroid development team.\n\
+\n\
+But for now Freedroid will terminate to draw attention \n\
+to the initialisation problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" );
+	  Terminate( ERR );
+	}
+
       // Now we read in the new laser type after installing this item
       ReadValueFromString( ItemPointer ,  "Item installation changes weapon into new value=" , "%d" , 
 			   &ItemMap[ItemIndex].New_Laser_Type_After_Installation , EndOfItemData );
@@ -378,6 +442,13 @@ Sorry...\n\
       // Now we read in the acceleration you will have with this item as drive
       ReadValueFromString( ItemPointer ,  "Item drive acceleration=" , "%lf" , 
 			   &ItemMap[ItemIndex].item_drive_accel , EndOfItemData );
+
+      // Now we read in the damage bullets from this gun will do
+      ReadValueFromString( ItemPointer ,  "Item as gun: damage of bullets=" , "%d" , 
+			   &ItemMap[ItemIndex].item_gun_damage , EndOfItemData );
+
+
+
 
       // Now we read in the number of the picture to be used for this item
       ReadValueFromString( ItemPointer ,  "Picture number=" , "%d" , 
@@ -615,6 +686,7 @@ Get_Robot_Data ( void* DataPointer )
 #define SENSOR3_BEGIN_STRING "Sensor 3 of this droid : "
 #define ARMAMENT_BEGIN_STRING "Armament of this droid : "
 #define DRIVE_ITEM_BEGIN_STRING "Drive item="
+#define WEAPON_ITEM_BEGIN_STRING "Weapon item="
 #define ADVANCED_FIGHTING_BEGIN_STRING "Advanced Fighting present in this droid : "
 #define IS_HUMAN_SPECIFICATION_STRING "Is this 'droid' a human : "
 #define GO_REQUEST_REINFORCEMENTS_BEGIN_STRING "Going to request reinforcements typical for this droid : "
@@ -746,6 +818,10 @@ Get_Robot_Data ( void* DataPointer )
       // Now we read in the drive item of this droid type
       ReadValueFromString( RobotPointer , DRIVE_ITEM_BEGIN_STRING , "%d" , 
 			   &Druidmap[RobotIndex].drive_item , EndOfDataPointer );
+
+      // Now we read in the weapon item of this droid type
+      ReadValueFromString( RobotPointer , WEAPON_ITEM_BEGIN_STRING , "%d" , 
+			   &Druidmap[RobotIndex].weapon_item , EndOfDataPointer );
 
       // Now we read in the AdvancedFighing flag of this droid type
       ReadValueFromString( RobotPointer , ADVANCED_FIGHTING_BEGIN_STRING , "%d" , 
