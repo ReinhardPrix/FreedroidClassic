@@ -184,6 +184,15 @@ Continuing with sound disabled\n");
   //
   Set_Sound_FX_Volume( GameConfig.Current_Sound_FX_Volume );
 
+  //--------------------
+  // Since we don't want some sounds to be omitted due to lack of mixing
+  // channels, we select to have some at our disposal.  The SDL will do this
+  // for a small increase in memory appetite as the price.  Whether this will
+  // really resolve the problem however is unsure.
+  //
+  DebugPrintf( 1 , "\nChannels allocated: %d. " , Mix_AllocateChannels(200) );
+  //
+
   // DebugPrintf (1, "done.");
   // fflush(stdout);
 #endif // HAVE_SDL_MIXER
