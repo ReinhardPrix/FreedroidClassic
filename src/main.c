@@ -48,6 +48,43 @@ float LastRefreshSound = 2;
 
 void UpdateCountersForThisFrame ( int PlayerNum ) ;
 
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+DoAllMovementAndAnimations ( void )
+{
+  int PlayerNum;
+
+  for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ ) 
+    MoveLevelDoors ( PlayerNum ) ; // this is also a pure client issue, but done for all players...
+  
+  for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ ) 
+    WorkLevelGuns( PlayerNum ); // this should fire all autocannons on this level
+  
+  for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ ) 
+    CheckForTriggeredEventsAndStatements ( PlayerNum ) ;
+  
+  AnimateRefresh (); // this is a pure client issue.  Not dependent upon the players.
+  
+  AnimateConsumer (); // this is a pure client issue.  Not dependent upon the players.
+  
+  AnimateTeleports (); // this is a pure client issue.  Not dependent upon the players.
+  
+  ExplodeBlasts ();	// move blasts to the right current "phase" of the blast
+  
+  MoveActiveSpells (); // move moving spells currently active...
+  
+  if ( !ClientMode ) MoveBullets ();   
+  
+  for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ )
+    {
+      HomemadeUpdateTuxWorkingCopy ( PlayerNum ); 
+    }
+  
+}; // void DoAllMovementAndAnimations ( void )
+  
 /* -----------------------------------------------------------------
  * This function is the heart of the game.  It contains the main
  * game loop.
@@ -81,15 +118,10 @@ main (int argc, char *const argv[])
     {
 
       StartupMenu ( );
-      // MissionSelectMenu ( );
-      // InitNewMission ( STANDARD_MISSION );
-      // InitNewMission ( NEW_MISSION );
-
       GameOver = FALSE;
 
       while ( (!GameOver && !QuitProgram) || ServerMode )
 	{
-
 	  CurLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ];
 
 	  if ( ServerMode ) AcceptConnectionsFromClients ( ) ;
@@ -102,48 +134,17 @@ main (int argc, char *const argv[])
 
 	  StartTakingTimeForFPSCalculation(); 
 
+	  ReactToSpecialKeys();
+
 	  for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ ) 
 	    UpdateCountersForThisFrame ( PlayerNum ) ;
 
 	  CollectAutomapData (); // this is a pure client issue.  Only do it for the main player...
 
-	  ReactToSpecialKeys();
+	  DoAllMovementAndAnimations();
 
-	  for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ ) 
-	      MoveLevelDoors ( PlayerNum ) ; // this is also a pure client issue, but done for all players...
-
-	  for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ ) 
-	    WorkLevelGuns( PlayerNum ); // this should fire all autocannons on this level
-
-	  for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ ) 
-	    CheckForTriggeredEventsAndStatements ( PlayerNum ) ;
-
-	  AnimateRefresh (); // this is a pure client issue.  Not dependent upon the players.
-
-	  AnimateConsumer (); // this is a pure client issue.  Not dependent upon the players.
-
-	  AnimateTeleports (); // this is a pure client issue.  Not dependent upon the players.
-
-	  ExplodeBlasts ();	// move blasts to the right current "phase" of the blast
-
-	  MoveActiveSpells (); // move moving spells currently active...
-
-	  //--------------------
-	  // Now, for multiplayer, we update all player images...
-	  //
-	  for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ )
-	    {
-	      // Update_Tux_Working_Copy ( PlayerNum ); // do this for player Nr. 
-	      HomemadeUpdateTuxWorkingCopy ( PlayerNum ); // do this for player Nr. 
-	    }
-
-	  // AssembleCombatPicture ( DO_SCREEN_UPDATE ); 
 	  AssembleCombatPicture ( 0 ); 
-
-	  if ( !ClientMode ) MoveBullets ();   // please leave this in front of graphics output, so that time_in_frames always starts with 1
-
 	  DisplayBanner (NULL, NULL,  0 ); // this is a pure client issue
-
 	  SDL_Flip ( Screen );
 
 	  for (i = 0; i < MAXBULLETS; i++) CheckBulletCollisions (i);
@@ -166,24 +167,15 @@ main (int argc, char *const argv[])
 	  CheckForJumpThresholds( 0  ); // maybe the Tux is so close to the border of one map, that
 	                                // he should be put into the next one already, to link them smoothly
 
-
-	  /*
-	  if (CurLevel->empty == 2)
-	    {
-	      LevelGrauFaerben ();
-	      CurLevel->empty = TRUE;
-	    }		    
-	  */
-
 	  CheckIfMissionIsComplete (); 
 
 	  ComputeFPSForThisFrame();
 
-	} /* while !GameOver */
-    } /* while !QuitProgram */
+	} // while !GameOver 
+    } // while !QuitProgram 
   Terminate (0);
   return (0);
-}; // void main ( void )
+}; // int main ( void )
 
 /* -----------------------------------------------------------------
  * This function updates counters and is called ONCE every frame.

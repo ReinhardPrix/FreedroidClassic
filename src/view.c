@@ -1260,31 +1260,15 @@ void
 PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle )
 {
   int phase = AllEnemys[Enum].phase;
-  float angle;
-  // int alpha_value;
-  // int i;
   int RotationModel;
   int RotationIndex;
 
   //--------------------
-  // The phase now depends upon the direction this robot
-  // is heading.
+  // Now that the angle the robot is facing is determined, we just need to
+  // translate this angle into an index within the image series, i.e. into a 'phase'
+  // of rotation.
   //
-  // We calsulate the angle of the vector
-  //
-  if ( ( fabsf ( AllEnemys[Enum].speed.y ) > 1 ) || ( fabsf ( AllEnemys[Enum].speed.x ) > 1 ) )
-    {
-      angle = 180 - ( atan2 ( AllEnemys[Enum].speed.y,  AllEnemys[Enum].speed.x) * 180 / M_PI + 90 );
-      AllEnemys[Enum].previous_angle = angle ;
-    }
-  else
-    {
-      angle = AllEnemys[Enum].previous_angle ;
-    }
-  //
-  // 3. We make a phase out of the current angle
-  //
-  RotationIndex = ( angle * ROTATION_ANGLES_PER_ROTATION_MODEL / 360 ) ;
+  RotationIndex = ( AllEnemys [ Enum ] . current_angle * ROTATION_ANGLES_PER_ROTATION_MODEL / 360 ) ;
   while ( RotationIndex < 0  ) RotationIndex += ROTATION_ANGLES_PER_ROTATION_MODEL ; // just to make sure... a modulo ROTATION_ANGLES_PER_ROTATION_MODEL operation can't hurt
   while ( RotationIndex >= ROTATION_ANGLES_PER_ROTATION_MODEL ) RotationIndex -= ROTATION_ANGLES_PER_ROTATION_MODEL ; // just to make sure... a modulo ROTATION_ANGLES_PER_ROTATION_MODEL operation can't hurt
   // DebugPrintf ( 0 , "\nCurrent angle: %f Current RotationIndex: %d. " , angle, RotationIndex );

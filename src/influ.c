@@ -616,6 +616,7 @@ MoveInfluence ( int PlayerNum )
   // and this friendly droid is also target of the mouse move.  Then of course
   // a chat with this droid must be initiated.
   //
+  /*
   if ( ( Me [ PlayerNum ] . mouse_move_target_is_enemy != (-1) ) &&
        ( fabsf( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . pos . x -
 		Me [ PlayerNum ] . pos . x ) < BEST_CHAT_DISTANCE_IN_SQUARES ) &&  
@@ -638,6 +639,22 @@ MoveInfluence ( int PlayerNum )
 	  // immediate recurrence of the very same chat.
 	  Me [ PlayerNum ] . mouse_move_target_is_enemy = (-1) ;
 	}
+    }
+  */
+
+  if ( ( Me [ PlayerNum ] . mouse_move_target_is_enemy != (-1) ) &&
+       ( ( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . pos . z -
+	   Me [ PlayerNum ] . pos . z ) == 0 ) &&
+       ( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . is_friendly ) )
+    {
+	  //--------------------
+	  // We chat with the friendly droid
+	  ChatWithFriendlyDroid ( & ( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] ) ) ;
+	  
+	  //--------------------
+	  // and then we deactivate this mouse_move_target_is_enemy to prevent
+	  // immediate recurrence of the very same chat.
+	  Me [ PlayerNum ] . mouse_move_target_is_enemy = (-1) ;
     }
 
   //--------------------

@@ -1097,6 +1097,31 @@ TeleportToClosestWaypoint ( Enemy ThisRobot )
 }; // void TeleportToClosestWaypoint ( Enemy ThisRobot )
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+DetermineAngleOfFacing ( int Enum )
+{
+  //--------------------
+  // The phase now depends upon the direction this robot
+  // is heading.
+  //
+  // We calsulate the angle of the vector, but only if the robot has at least
+  // some minimal speed.  If not, simply the previous angle will be used again.
+  //
+  if ( ( fabsf ( AllEnemys[Enum].speed.y ) > 1 ) || ( fabsf ( AllEnemys[Enum].speed.x ) > 1 ) )
+    {
+      AllEnemys [ Enum ] . current_angle = 180 - ( atan2 ( AllEnemys[Enum].speed.y,  AllEnemys[Enum].speed.x) * 180 / M_PI + 90 );
+      AllEnemys[Enum].previous_angle = AllEnemys [ Enum ] . current_angle ;
+    }
+  else
+    {
+      AllEnemys[ Enum ] . current_angle = AllEnemys[Enum].previous_angle ;
+    }
+}; // void DetermineAngleOfFacing ( int EnemyNum )
+
+/* ----------------------------------------------------------------------
  * This function moves a single enemy.  It is used by MoveEnemys().
  * ---------------------------------------------------------------------- */
 void 
@@ -1179,6 +1204,8 @@ MoveThisEnemy( int EnemyNum )
     SelectNextWaypointClassical( EnemyNum );
 
   Persue_Given_Course( EnemyNum );
+
+  DetermineAngleOfFacing ( EnemyNum );
 
 }; // void MoveThisEnemy ( int EnemyNum )
 

@@ -1143,17 +1143,80 @@ corresponding chat flags array index." ,
 }; // int ResolveDialogSectionToChatFlagsIndex ( Enemy ChatDroid )
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+DialogPartnersTurnToEachOther ( Enemy ChatDroid )
+{
+  int TurningDone = FALSE;
+  float MaximumTurningTime = 2.1 ; 
+  float MinimalTurningTime = 0.5 ;
+  int TurningStartTime;
+  float OldAngle;
+  float RightAngle;
+
+#define TURN_SPEED 120.0
+
+  //--------------------
+  // At first we take the current time, so that we know how long
+  // we're already in this function...
+  //
+  Activate_Conservative_Frame_Computation();
+  TurningStartTime = SDL_GetTicks();
+  
+  RightAngle = 180 - ( atan2 ( Me [ 0 ] . pos . y - ChatDroid -> pos . y ,  Me [ 0 ] . pos . x - ChatDroid -> pos . x ) * 180 / M_PI + 90 );
+
+  //--------------------
+  // Now we turn and show the image until both chat partners are
+  // facing each other, mostly the chat partner is facing the Tux,
+  // since the Tux may still turn around to somewhere else all the 
+  // while, if the chose so
+  //
+  while ( !TurningDone )
+    {
+      StartTakingTimeForFPSCalculation();       
+
+      OldAngle = ChatDroid -> current_angle;
+
+      if ( ( RightAngle - ChatDroid -> current_angle ) > 0 )
+	ChatDroid -> current_angle = OldAngle + Frame_Time() * TURN_SPEED ;
+      else
+	ChatDroid -> current_angle = OldAngle - Frame_Time() * TURN_SPEED ;
+
+      AssembleCombatPicture ( 0 ); 
+      SDL_Flip ( Screen );
+
+      if ( ( ( SDL_GetTicks() - TurningStartTime ) >= 1000.0 * MaximumTurningTime ) ||
+	   ( fabsf ( RightAngle - ChatDroid -> current_angle ) < 10 ) )
+	{
+	  if ( ( SDL_GetTicks() - TurningStartTime ) >= 1000.0 * MinimalTurningTime )
+	    TurningDone = TRUE;
+	}
+
+      ComputeFPSForThisFrame();
+    }
+
+}; // void DialogPartnersTurnToEachOther ( Enemy ChatDroid )
+
+/* ----------------------------------------------------------------------
  * This function does the communication routine when the influencer in
  * transfer mode touched a friendly droid.
  * ---------------------------------------------------------------------- */
 void 
-// ChatWithFriendlyDroid( int Enum )
 ChatWithFriendlyDroid( Enemy ChatDroid )
 {
   int i ;
   SDL_Rect Chat_Window;
   char* DialogMenuTexts[ MAX_ANSWERS_PER_PERSON ];
   int ChatFlagsIndex = (-1);
+
+  //--------------------
+  // Now that we know, that a chat with a friendly droid is planned, the 
+  // friendly droid and the Tux should first turn to each other before the
+  // real dialog is started...
+  //
+  DialogPartnersTurnToEachOther ( ChatDroid );
 
   Chat_Window.x=242; Chat_Window.y=100; Chat_Window.w=380; Chat_Window.h=314;
 
