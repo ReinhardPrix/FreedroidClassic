@@ -679,8 +679,8 @@ Load_Digit_Surfaces( void )
     {
       tmp_surf = SDL_CreateRGBSurface( 0 , INITIAL_DIGIT_LENGTH , INITIAL_DIGIT_HEIGHT, ne_bpp, 0, 0, 0, 0);
       SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
-      InfluDigitSurfacePointer[i] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
-      SDL_SetColorKey( InfluDigitSurfacePointer[i] , 0 , 0 ); // this should clear any color key in the dest surface
+      InfluDigitSurfacePointer[i] = SDL_DisplayFormat( tmp_surf ); // now we have an alpha-surf of right size
+      // SDL_SetColorKey( InfluDigitSurfacePointer[i] , 0 , 0 ); // this should clear any color key in the dest surface
       // Now we can copy the image Information
       Source.x=i*( INITIAL_DIGIT_LENGTH + 2 );
       Source.y=0*( INITIAL_DIGIT_HEIGHT + 2);
@@ -691,7 +691,13 @@ Load_Digit_Surfaces( void )
       Target.w=INITIAL_DIGIT_LENGTH;
       Target.h=INITIAL_DIGIT_HEIGHT;
       SDL_BlitSurface ( Whole_Image , &Source , InfluDigitSurfacePointer[i] , &Target );
-      SDL_SetAlpha( InfluDigitSurfacePointer[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+      SDL_SetAlpha( InfluDigitSurfacePointer[i] , 0 , SDL_ALPHA_OPAQUE );
+      if ( SDL_SetColorKey( InfluDigitSurfacePointer[i] , SDL_SRCCOLORKEY, ne_transp_key ) == -1 )
+	{
+	  fprintf (stderr, "Transp setting by SDL_SetColorKey() failed: %s \n",
+		   SDL_GetError());
+	  Terminate( ERR );
+	}
     }
   SDL_FreeSurface( tmp_surf );
 
@@ -699,8 +705,8 @@ Load_Digit_Surfaces( void )
     {
       tmp_surf = SDL_CreateRGBSurface( 0 , INITIAL_DIGIT_LENGTH , INITIAL_DIGIT_HEIGHT, ne_bpp, 0, 0, 0, 0);
       SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
-      EnemyDigitSurfacePointer[i] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
-      SDL_SetColorKey( EnemyDigitSurfacePointer[i] , 0 , 0 ); // this should clear any color key in the dest surface
+      EnemyDigitSurfacePointer[i] = SDL_DisplayFormat( tmp_surf ); // now we have an alpha-surf of right size
+      // SDL_SetColorKey( EnemyDigitSurfacePointer[i] , 0 , 0 ); // this should clear any color key in the dest surface
       // Now we can copy the image Information
       Source.x=(i+10)*( INITIAL_DIGIT_LENGTH + 2 );
       Source.y=0*( INITIAL_DIGIT_HEIGHT + 2);
@@ -711,7 +717,13 @@ Load_Digit_Surfaces( void )
       Target.w=INITIAL_DIGIT_LENGTH;
       Target.h=INITIAL_DIGIT_HEIGHT;
       SDL_BlitSurface ( Whole_Image , &Source , EnemyDigitSurfacePointer[i] , &Target );
-      SDL_SetAlpha( EnemyDigitSurfacePointer[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+      SDL_SetAlpha( EnemyDigitSurfacePointer[i] , 0 , SDL_ALPHA_OPAQUE );
+      if ( SDL_SetColorKey( EnemyDigitSurfacePointer[i] , SDL_SRCCOLORKEY, ne_transp_key ) == -1 )
+	{
+	  fprintf (stderr, "Transp setting by SDL_SetColorKey() failed: %s \n",
+		   SDL_GetError());
+	  Terminate( ERR );
+	}
     }
   SDL_FreeSurface( tmp_surf );
 
