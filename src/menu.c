@@ -168,6 +168,7 @@ TryToBuyItem( item* BuyItem )
   int x, y;
   int MenuPosition;
   int FreeIndex;
+  char linebuf[1000];
 
 #define ANSWER_YES 1
 #define ANSWER_NO 2
@@ -188,7 +189,13 @@ TryToBuyItem( item* BuyItem )
 
   while ( SpacePressed() || EnterPressed() );
 
-  if ( CalculateItemPrice ( BuyItem ) > Me.Gold ) return;
+  if ( CalculateItemPrice ( BuyItem ) > Me.Gold )
+    {
+      MenuTexts[0]=" BACK ";
+      MenuTexts[1]="";
+      DoMenuSelection ( "YOU CAN'T AFFORD TO PURCHASE THIS ITEM! " , MenuTexts , 1 );
+      return;
+    }
 
   for ( x = 0 ; x < INVENTORY_GRID_WIDTH ; x ++ )
     {
@@ -198,7 +205,9 @@ TryToBuyItem( item* BuyItem )
 	    {
 	      while ( 1 )
 		{
-		  MenuPosition = DoMenuSelection( " Wanna buy? " , MenuTexts , 1 );
+		  GiveItemDescription( linebuf , BuyItem , TRUE );
+		  strcat ( linebuf , "\n\n    Are you sure you wish to purchase this item?" );
+		  MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 );
 		  switch (MenuPosition) 
 		    {
 		    case (-1):

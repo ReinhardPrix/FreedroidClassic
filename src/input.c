@@ -357,6 +357,8 @@ ReactToSpecialKeys(void)
 			 Druidmap[ i ].drive_item.type , ItemMap[ Druidmap[ i ].drive_item.type ].ItemName );
 	  else DebugPrintf( 0 , "\ndrive_item: NONE " );
 
+	  DebugPrintf( 0 , "\nweapon_item: %d " , Druidmap[ i ].weapon_item.type );
+	  fflush( stdout );
 	  if ( Druidmap[ i ].weapon_item.type != (-1 ) )
 	    DebugPrintf( 0 , "\nweapon_item: %d (%s) " , 
 			 Druidmap[ i ].weapon_item.type , ItemMap[ Druidmap[ i ].weapon_item.type ].ItemName );

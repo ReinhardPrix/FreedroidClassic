@@ -801,31 +801,7 @@ MoveThisEnemy( int EnemyNum )
       // Maybe that robot did have something with him?  The item should then
       // fall to the floor with it's clanc
       //
-      // first we search for a free position in the item list
-      //
       DropRandomItem( ThisRobot->pos.x , ThisRobot->pos.y );
-      /*
-      if ( MyRandom( 10 ) <= 1 )
-	{
-	  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
-	    {
-	      if ( CurLevel->ItemList[ i ].type == (-1) ) 
-		{
-		  RandItem = MyRandom( Number_Of_Item_Types -2 ) + 1 ; // +1 to avoid 'none present'
-		  CurLevel->ItemList[ i ].type = RandItem;
-		  CurLevel->ItemList[ i ].pos.x = ThisRobot->pos.x;
-		  CurLevel->ItemList[ i ].pos.y = ThisRobot->pos.y;
-		  PlayItemSound( ItemMap[ RandItem ].sound_number );
-		  break;
-		}
-	    }
-	  if ( i >= MAX_ITEMS_PER_LEVEL )
-	    {
-	      DebugPrintf( 0 , "\n\nNO MORE ITEMS DROPABLE INTO THIS LEVEL!!\n\nTerminating!" );
-	      Terminate( ERR );
-	    }
-	}
-      */
 
       if (LevelEmpty ())
 	CurLevel->empty = WAIT_LEVELEMPTY;
@@ -885,38 +861,112 @@ MoveEnemys (void)
 
 } /* MoveEnemys() */
 
-/*@Function============================================================
-@Desc: AttackInfluence(): This function sometimes fires a bullet from
-enemy number enemynum directly into the direction of the influencer,
-but of course only if the odds are good i.e. requirements are met.
+/* ----------------------------------------------------------------------
+ * This function is low-level:  It simply sets off a shot from enemy
+ * through the pointer ThisRobot at the target VECTOR xdist ydist, which
+ * is a DISTANCE VECTOR, NOT ABSOLUTE COORDINATES OF THE TARGET!!!
+ * ---------------------------------------------------------------------- */
+void 
+RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
+{
+  int guntype = ItemMap[ Druidmap[ThisRobot->type].weapon_item.type ].item_gun_bullet_image_type;
+  double bullet_speed = ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].item_gun_speed;
+  int j;
 
-@Ret: void
-* $Function----------------------------------------------------------*/
+  Fire_Bullet_Sound ( guntype );
+  
+  // find a bullet entry, that isn't currently used... 
+  for (j = 0; j < MAXBULLETS; j++)
+    {
+      if (AllBullets[ j ].type == OUT)
+	break;
+    }
+  if (j >= MAXBULLETS)
+    {
+      DebugPrintf (2, "\nvoid AttackInfluencer(void):  Ran out of Bullets.... Terminating....");
+      Terminate (ERR);
+    }
+  
+  //--------------------
+  // determine the direction of the shot, so that it will go into the direction of
+  // the target
+  
+  if (fabsf (xdist) > fabsf (ydist))
+    {
+      AllBullets[j].speed.x = bullet_speed;
+      AllBullets[j].speed.y = ydist * AllBullets[j].speed.x / xdist;
+      if (xdist < 0)
+	{
+	  AllBullets[j].speed.x = -AllBullets[j].speed.x;
+	  AllBullets[j].speed.y = -AllBullets[j].speed.y;
+	}
+    }
+  
+  if (fabsf (xdist) < fabsf (ydist))
+    {
+      AllBullets[j].speed.y = bullet_speed;
+      AllBullets[j].speed.x = xdist * AllBullets[j].speed.y / ydist;
+      if (ydist < 0)
+	{
+	  AllBullets[j].speed.x = -AllBullets[j].speed.x;
+	  AllBullets[j].speed.y = -AllBullets[j].speed.y;
+	}
+    }
+  
+  //--------------------
+  // Newly, also enemys have to respect the angle modifier in their weapons...
+  //
+  RotateVectorByAngle ( & ( AllBullets[j].speed ) , ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].item_gun_start_angle_modifier );
+  
+  
+  AllBullets[j].angle = - ( 90 + 180 * atan2 ( AllBullets[j].speed.y,  AllBullets[j].speed.x ) / M_PI );  
+  
+  // Bullets im Zentrum des Schuetzen starten 
+  AllBullets[j].pos.x = ThisRobot->pos.x;
+  AllBullets[j].pos.y = ThisRobot->pos.y;
+  
+  // Bullets so abfeuern, dass sie nicht den Schuetzen treffen 
+  AllBullets[j].pos.x +=
+    (AllBullets[j].speed.x) / (bullet_speed) * 0.5;
+  AllBullets[j].pos.y +=
+    (AllBullets[j].speed.y) / (bullet_speed) * 0.5;
+  
+  /* Dem Bullettype entsprechend lange warten vor naechstem Schuss */
+  ThisRobot->firewait = ItemMap [ Druidmap[ThisRobot->type].weapon_item.type ].item_gun_recharging_time ;
+  
+  /* Bullettype gemaess dem ueblichen guntype fuer den robottyp setzen */
+  DebugPrintf( 0 , "Setting gun type : %d." , guntype );
+  AllBullets[j].type = guntype;
+  
+  // Now we set the damage of this bullet to the correct value
+  AllBullets[j].damage = ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].base_item_gun_damage;
+  
+  AllBullets[j].time_in_seconds = 0;
+  AllBullets[j].time_in_frames = 0;
+  AllBullets[j].bullet_lifetime = ItemMap [ Druidmap[ThisRobot->type].weapon_item.type ].item_gun_bullet_lifetime;
+  
+  AllBullets[j].angle_change_rate = ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_angle_change;
+  AllBullets[j].fixed_offset = ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_fixed_offset;
+  AllBullets[j].owner_pos = & ( ThisRobot->pos );
+  AllBullets[j].ignore_wall_collisions = 
+    ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_bullet_ignore_wall_collisions;
+  memset( AllBullets[j].total_miss_hit , UNCHECKED , MAX_ENEMYS_ON_SHIP );
+  AllBullets[j].miss_hit_influencer = FALSE;
+  AllBullets[j].to_hit = Druidmap [ ThisRobot->type ].to_hit ;
+  
+}; // void RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
+
+/* ----------------------------------------------------------------------
+ * determine the distance vector to the target of this shot.  The target
+ * depends of course on wheter it's a friendly device or a hostile device.
+ * ---------------------------------------------------------------------- */
 void
-AttackInfluence (int enemynum)
+DetermineVectorToShotTarget( enemy* ThisRobot , moderately_finepoint* vect_to_target )
 {
   int j;
-  int guntype;
-  float xdist, ydist;
-  float dist2;
-  Enemy ThisRobot=&AllEnemys[ enemynum ];
-  double bullet_speed = ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].item_gun_speed;
 
-  //--------------------
-  // At first, we check for a lot of cases in which we do not
-  // need to move anything for this reason or for that
-  //
-
-  // ignore robots on other levels 
-  if ( ThisRobot->levelnum != CurLevel->levelnum) return;
-
-  // ignore dead robots as well...
-  if ( ThisRobot->Status == OUT ) return;
-
-  //--------------------
-  // determine the distance vector to the target of this shot.  The target
-  // depends of course on wheter it's a friendly device or a hostile device.
-  if ( ThisRobot->Friendly == TRUE )
+  // if ( ThisRobot->Friendly == TRUE )
+  if ( ThisRobot->Friendly == 23 )
     {
       // Since it's a friendly device in this case, it will aim at the (closest?) of
       // the MS bots.
@@ -929,127 +979,79 @@ AttackInfluence (int enemynum)
 	       TRUE ) continue;
 
 	  // At this point we have found our target
-	  xdist = AllEnemys[j].pos.x - ThisRobot->pos.x;
-	  ydist = AllEnemys[j].pos.y - ThisRobot->pos.y;
+	  vect_to_target->x = AllEnemys[j].pos.x - ThisRobot->pos.x;
+	  vect_to_target->y = AllEnemys[j].pos.y - ThisRobot->pos.y;
 	  break;
 	}
       // Maybe we havn't found a single target.  Then we don't attack anything of course.
-      if ( j == Number_Of_Droids_On_Ship ) return; 
+      if ( j >= Number_Of_Droids_On_Ship ) return; 
     }
   else
     {
-      xdist = Me.pos.x - ThisRobot->pos.x;
-      ydist = Me.pos.y - ThisRobot->pos.y;
+      vect_to_target->x = Me.pos.x - ThisRobot->pos.x;
+      vect_to_target->y = Me.pos.y - ThisRobot->pos.y;
     }
 
   // Add some security against division by zero
-  if (xdist == 0) xdist = 0.01;
-  if (ydist == 0) ydist = 0.01;
+  if ( vect_to_target->x == 0) vect_to_target->x = 0.1;
+  if ( vect_to_target->y == 0) vect_to_target->y = 0.1;
 
-  // if odds are good, make a shot at your target
-  guntype = ItemMap[ Druidmap[ThisRobot->type].weapon_item.type ].item_gun_bullet_image_type;
+}; // void DetermineVectorToShotTarget( enemy* ThisRobot , & vect_to_target )
 
-  dist2 = sqrt(xdist * xdist + ydist * ydist);
+/*@Function============================================================
+@Desc: AttackInfluence(): This function sometimes fires a bullet from
+enemy number enemynum directly into the direction of the influencer,
+but of course only if the odds are good i.e. requirements are met.
+
+@Ret: void
+* $Function----------------------------------------------------------*/
+void
+AttackInfluence (int enemynum)
+{
+  moderately_finepoint vect_to_target;
+  // float xdist, ydist;
+  float dist2;
+  Enemy ThisRobot=&AllEnemys[ enemynum ];
+
+  //--------------------
+  // At first, we check for a lot of cases in which we do not
+  // need to move anything for this reason or for that
+  //
+
+  // ignore robots on other levels 
+  if ( ThisRobot->levelnum != CurLevel->levelnum) return;
+
+  // ignore dead robots as well...
+  if ( ThisRobot->Status == OUT ) return;
+
+  // ignore robots, that don't have any weapon
+  if ( Druidmap [ ThisRobot->type ].weapon_item.type == (-1) ) return;
 
   //--------------------
   // If some special command was given, like 
-  // ATTACK_FIXED_MAP_POSITION=1, then we do the following:
+  // ATTACK_FIXED_MAP_POSITION=1, then we IGNORE EVERYTHING AND JUST FIRE OUR BULLETS,
+  // NO MATTER WHOS IN THE LINE OF FIRE, HOW FAR WE ARE AWAY OR ANYTHING, JUST BLUNTLY
+  // DO THAT.
   //
   if ( ThisRobot->AdvancedCommand == 1 )
     {
       if (ThisRobot->firewait) return;  // can't fire:  gun not yet reloaded...
-
-
-      xdist = ThisRobot->Parameter1 - ThisRobot->pos.x;
-      ydist = ThisRobot->Parameter2 - ThisRobot->pos.y;
-
-      Fire_Bullet_Sound ( guntype );
-
-      // find a bullet entry, that isn't currently used... 
-      for (j = 0; j < MAXBULLETS; j++)
-	{
-	  if (AllBullets[j].type == OUT)
-	    break;
-	}
-      if (j == MAXBULLETS)
-	{
-	  DebugPrintf (2, "\nvoid AttackInfluencer(void):  Ran out of Bullets.... Terminating....");
-	  Terminate (ERR);
-	}
-
-      /* Schussrichtung festlegen */
-      if (fabsf (xdist) >= fabsf (ydist))
-	{
-	  AllBullets[j].speed.x = bullet_speed;
-	  AllBullets[j].speed.y = ydist * AllBullets[j].speed.x / xdist;
-	  if (xdist < 0)
-	    {
-	      AllBullets[j].speed.x = -AllBullets[j].speed.x;
-	      AllBullets[j].speed.y = -AllBullets[j].speed.y;
-	    }
-	}
-
-      if (fabsf (xdist) < fabsf (ydist))
-	{
-	  AllBullets[j].speed.y = bullet_speed;
-	  AllBullets[j].speed.x = xdist * AllBullets[j].speed.y / ydist;
-	  if (ydist < 0)
-	    {
-	      AllBullets[j].speed.x = -AllBullets[j].speed.x;
-	      AllBullets[j].speed.y = -AllBullets[j].speed.y;
-	    }
-	}
-
-      //--------------------
-      // Newly, also enemys have to respect the angle modifier in their weapons...
-      //
-      RotateVectorByAngle ( & ( AllBullets[j].speed ) , ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].item_gun_start_angle_modifier );
-
-
-      AllBullets[j].angle = - ( 90 + 180 * atan2 ( AllBullets[j].speed.y ,  AllBullets[j].speed.x ) / M_PI ) ;  
-
-      /* Bullets im Zentrum des Schuetzen starten */
-      AllBullets[j].pos.x = ThisRobot->pos.x;
-      AllBullets[j].pos.y = ThisRobot->pos.y;
-
-      /* Bullets so abfeuern, dass sie nicht den Schuetzen treffen */
-      AllBullets[j].pos.x +=
-	(AllBullets[j].speed.x) / ( bullet_speed ) * 0.5;
-      AllBullets[j].pos.y +=
-	(AllBullets[j].speed.y) / ( bullet_speed ) * 0.5;
-
-      // The following lines could be improved: Use not the sign, but only */
-      // the fraction of the maxspeed times constant!
-      // SINCE WE CAN ASSUME HIGH FRAMERATE DISABLE THIS CRAP! Within one */
-      // frame, the robot cant move into its own bullet.
-      // AllBullets[j].pos.x+=isignf(ThisRobot->speed.x)*Block_Width/2;      
-      // AllBullets[j].pos.y+=isignf(ThisRobot->speed.y)*Block_Height/2;
-
-      /* Dem Bullettype entsprechend lange warten vor naechstem Schuss */
-
-      ThisRobot->firewait = ItemMap [ Druidmap[ThisRobot->type].weapon_item.type ].item_gun_recharging_time ;
-
-      /* Bullettype gemaes dem ueblichen guntype fuer den robottyp setzen */
-      AllBullets[j].type = guntype;
-
-      AllBullets[j].time_in_seconds = 0;
-      AllBullets[j].time_in_frames = 0;
-      AllBullets[j].bullet_lifetime = ItemMap [ Druidmap[ThisRobot->type].weapon_item.type ].item_gun_bullet_lifetime;
-
-      AllBullets[j].angle_change_rate = ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_angle_change;
-      AllBullets[j].fixed_offset = ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_fixed_offset;
-      AllBullets[j].owner_pos = & ( ThisRobot->pos );
-      AllBullets[j].ignore_wall_collisions = 
-	ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_bullet_ignore_wall_collisions;
-      memset( AllBullets[j].total_miss_hit , UNCHECKED , MAX_ENEMYS_ON_SHIP );
-      AllBullets[j].miss_hit_influencer = FALSE;
-      AllBullets[j].to_hit = Druidmap [ ThisRobot->type ].to_hit ;
-
-      // Now we set the damage of this bullet to the correct value
-      AllBullets[j].damage = ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].base_item_gun_damage;
-
+      vect_to_target.x = ThisRobot->Parameter1 - ThisRobot->pos.x;
+      vect_to_target.y = ThisRobot->Parameter2 - ThisRobot->pos.y;
+      RawStartEnemysShot( ThisRobot , vect_to_target.x , vect_to_target.y );
       return;
     }
+
+  //--------------------
+  // determine the distance vector to the target of this shot.  The target
+  // depends of course on wheter it's a friendly device or a hostile device.
+  //
+  DetermineVectorToShotTarget( ThisRobot , & vect_to_target );
+  // vect_to_target.x = 1;
+  // vect_to_target.y = 1;
+
+
+  dist2 = sqrt( vect_to_target.x * vect_to_target.x + vect_to_target.y * vect_to_target.y );
 
   //====================
   //
@@ -1074,13 +1076,6 @@ AttackInfluence (int enemynum)
 	  PlayGreetingSound( Druidmap[ ThisRobot->type ].Greeting_Sound_Type );
 	}
     }
-
-
-  // Only fire, if the target is in range (applies only to MS machines) .... 
-  //  if ((dist2 < FIREDIST2) &&
-  // (!ThisRobot->firewait) &&
-  // IsVisible (&ThisRobot->pos))
-  // {
 
   if ( ( MyRandom (AGGRESSIONMAX) >= Druidmap[ThisRobot->type].aggression ) &&
        ( ThisRobot->Friendly == FALSE ) )
@@ -1148,93 +1143,7 @@ AttackInfluence (int enemynum)
 	   ( dist2 > 1.5 ) ) return;
     }
   
-  
-  Fire_Bullet_Sound ( guntype );
-  
-  // find a bullet entry, that isn't currently used... 
-  for (j = 0; j < MAXBULLETS; j++)
-    {
-      if (AllBullets[j].type == OUT)
-	break;
-    }
-  if (j == MAXBULLETS)
-    {
-      DebugPrintf (2, "\nvoid AttackInfluencer(void):  Ran out of Bullets.... Terminating....");
-      Terminate (ERR);
-    }
-  
-  // determine the direction of the shot, so that it will go into the direction of
-  // the target
-  
-  if (fabsf (xdist) > fabsf (ydist))
-    {
-      AllBullets[j].speed.x = bullet_speed;
-      AllBullets[j].speed.y = ydist * AllBullets[j].speed.x / xdist;
-      if (xdist < 0)
-	{
-	  AllBullets[j].speed.x = -AllBullets[j].speed.x;
-	  AllBullets[j].speed.y = -AllBullets[j].speed.y;
-	}
-    }
-  
-  if (fabsf (xdist) < fabsf (ydist))
-    {
-      AllBullets[j].speed.y = bullet_speed;
-      AllBullets[j].speed.x = xdist * AllBullets[j].speed.y / ydist;
-      if (ydist < 0)
-	{
-	  AllBullets[j].speed.x = -AllBullets[j].speed.x;
-	  AllBullets[j].speed.y = -AllBullets[j].speed.y;
-	}
-    }
-  
-  //--------------------
-  // Newly, also enemys have to respect the angle modifier in their weapons...
-  //
-  RotateVectorByAngle ( & ( AllBullets[j].speed ) , ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].item_gun_start_angle_modifier );
-  
-  
-  AllBullets[j].angle = - ( 90 + 180 * atan2 ( AllBullets[j].speed.y,  AllBullets[j].speed.x ) / M_PI );  
-  
-  /* Bullets im Zentrum des Schuetzen starten */
-  AllBullets[j].pos.x = ThisRobot->pos.x;
-  AllBullets[j].pos.y = ThisRobot->pos.y;
-  
-  /* Bullets so abfeuern, dass sie nicht den Schuetzen treffen */
-  AllBullets[j].pos.x +=
-    (AllBullets[j].speed.x) / (bullet_speed) * 0.5;
-  AllBullets[j].pos.y +=
-    (AllBullets[j].speed.y) / (bullet_speed) * 0.5;
-  
-  // The following lines could be improved: Use not the sign, but only */
-  // the fraction of the maxspeed times constant!
-  // SINCE WE CAN ASSUME HIGH FRAMERATE DISABLE THIS CRAP! Within one */
-  // frame, the robot cant move into its own bullet.
-  // AllBullets[j].pos.x+=isignf(ThisRobot->speed.x)*Block_Width/2;      
-  // AllBullets[j].pos.y+=isignf(ThisRobot->speed.y)*Block_Height/2;
-  
-  /* Dem Bullettype entsprechend lange warten vor naechstem Schuss */
-  
-  ThisRobot->firewait = ItemMap [ Druidmap[ThisRobot->type].weapon_item.type ].item_gun_recharging_time ;
-  
-  /* Bullettype gemaess dem ueblichen guntype fuer den robottyp setzen */
-  AllBullets[j].type = guntype;
-  
-  // Now we set the damage of this bullet to the correct value
-  AllBullets[j].damage = ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].base_item_gun_damage;
-  
-  AllBullets[j].time_in_seconds = 0;
-  AllBullets[j].time_in_frames = 0;
-  AllBullets[j].bullet_lifetime = ItemMap [ Druidmap[ThisRobot->type].weapon_item.type ].item_gun_bullet_lifetime;
-  
-  AllBullets[j].angle_change_rate = ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_angle_change;
-  AllBullets[j].fixed_offset = ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_fixed_offset;
-  AllBullets[j].owner_pos = & ( ThisRobot->pos );
-  AllBullets[j].ignore_wall_collisions = 
-    ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_bullet_ignore_wall_collisions;
-  memset( AllBullets[j].total_miss_hit , UNCHECKED , MAX_ENEMYS_ON_SHIP );
-  AllBullets[j].miss_hit_influencer = FALSE;
-  AllBullets[j].to_hit = Druidmap [ ThisRobot->type ].to_hit ;
+  RawStartEnemysShot( ThisRobot , vect_to_target.x , vect_to_target.y );
   
 }; // AttackInfluence 
 
