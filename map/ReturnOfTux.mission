@@ -552,7 +552,9 @@ Healing spell:  Select the healing spell from the skills screen and right click 
 
 Remote strike spell:  Fires bullets that do exactly the same damage and have exactly the same chance to hit like your character with his currently equipped weapon.
 
-Frost blot:  Does some cold damage and also has a chance to 'freeze' bots, so that they can move only at a fraction of their normal speed for some time.  They can however still attack at their normal speed.
+Frost bolt:  Does some cold damage and also has a chance to 'freeze' bots, so that they can move only at a fraction of their normal speed for some time.  They can however still attack at their normal speed.
+
+Poison bolt:  Poisons an enemy (turning green then), delivering some damage over time.  Note that damage duration AND damage effect are cumulative, (i.e. damage done will raise with the square of the poison bolt hits taken).
 
 Joystick conrol:
 
