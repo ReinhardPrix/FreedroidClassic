@@ -595,7 +595,7 @@ DoLevelEditorMainMenu ( Level CurLevel )
       MenuTexts[ 2 ] = "Change tile set" ;
       sprintf( Options [ 1 ] , "Current levelsize: %d x %d map tiles." , CurLevel->xlen , CurLevel->ylen );
       MenuTexts[ 3 ] = Options [ 1 ];
-      sprintf( Options [ 2 ] , "Levelsize in Y: %d.  Shrink/Enlarge" , CurLevel->ylen  );
+      sprintf( Options [ 2 ] , " --- UNUSED --- " );
       MenuTexts[ 4 ] = Options [ 2 ] ;
       sprintf( Options [ 3 ] , "Level name: %s" , CurLevel->Levelname );
       MenuTexts[ 5 ] = Options [ 3 ] ;
@@ -809,6 +809,10 @@ ReportInconsistenciesForLevel ( int LevelNum )
   DisplayText ( "\nThe list of inconsistencies of the jump interfaces for this level:\n\n" ,
 		ReportRect.x, ReportRect.y + FontHeight ( GetCurrentFont () ) , &ReportRect);
 
+  //--------------------
+  // First we test for inconsistencies of back-forth ways, i.e. if the transit
+  // in one direction will lead back in the right direction when returning.
+  //
   if ( curShip.AllLevels [ LevelNum ] -> jump_target_north != (-1) ) 
     {
       TargetLevel = curShip.AllLevels [ LevelNum ] -> jump_target_north ;
@@ -848,9 +852,97 @@ ReportInconsistenciesForLevel ( int LevelNum )
   DisplayText ( "\nNO OTHER BACK-FORTH-MISMATCH ERRORS other than those listed above\n\n" ,
 		-1 , -1 , &ReportRect);
 
+  //--------------------
+  // Now we test for inconsistencies of interface sizes, i.e. if the interface source level
+  // has an interface as large as the target interface level.
+  //
+  if ( curShip.AllLevels [ LevelNum ] -> jump_target_north != (-1) ) 
+    {
+      TargetLevel = curShip.AllLevels [ LevelNum ] -> jump_target_north ;
+      if ( curShip.AllLevels [ TargetLevel ] -> jump_threshold_south != 
+	   curShip.AllLevels [ LevelNum ] -> jump_threshold_north )
+	{
+	  DisplayText ( "INTERFACE SIZE MISMATCH: North doesn't lead so same-sized interface level!!!\n" ,
+			-1 , -1 , &ReportRect);
+	}
+    }
+  if ( curShip.AllLevels [ LevelNum ] -> jump_target_south != (-1) ) 
+    {
+      TargetLevel = curShip.AllLevels [ LevelNum ] -> jump_target_south ;
+      if ( curShip.AllLevels [ TargetLevel ] -> jump_threshold_north != 
+	   curShip.AllLevels [ LevelNum ] -> jump_threshold_south )
+	{
+	  DisplayText ( "INTERFACE SIZE MISMATCH: South doesn't lead so same-sized interface level!!!\n" ,
+			-1 , -1 , &ReportRect);
+	}
+    }
+  if ( curShip.AllLevels [ LevelNum ] -> jump_target_east != (-1) ) 
+    {
+      TargetLevel = curShip.AllLevels [ LevelNum ] -> jump_target_east ;
+      if ( curShip.AllLevels [ TargetLevel ] -> jump_threshold_west != 
+	   curShip.AllLevels [ LevelNum ] -> jump_threshold_east )
+	{
+	  DisplayText ( "INTERFACE SIZE MISMATCH: East doesn't lead so same-sized interface level!!!\n" ,
+			-1 , -1 , &ReportRect);
+	}
+    }
+  if ( curShip.AllLevels [ LevelNum ] -> jump_target_west != (-1) ) 
+    {
+      TargetLevel = curShip.AllLevels [ LevelNum ] -> jump_target_west ;
+      if ( curShip.AllLevels [ TargetLevel ] -> jump_threshold_east != 
+	   curShip.AllLevels [ LevelNum ] -> jump_threshold_west )
+	{
+	  DisplayText ( "INTERFACE SIZE MISMATCH: West doesn't lead so same-sized interface level!!!\n" ,
+			-1 , -1 , &ReportRect);
+	}
+    }
+
+  //--------------------
+  // Now we test for inconsistencies of level sizes, i.e. if the interface source level
+  // has the same relevant dimension like the target interface level.
+  //
+  if ( curShip.AllLevels [ LevelNum ] -> jump_target_north != (-1) ) 
+    {
+      TargetLevel = curShip.AllLevels [ LevelNum ] -> jump_target_north ;
+      if ( curShip.AllLevels [ TargetLevel ] -> xlen != curShip.AllLevels [ LevelNum ] -> xlen )
+	{
+	  DisplayText ( "LEVEL DIMENSION MISMATCH: North doesn't lead so same-sized level (non-fatal, but no good comes from this)!\n" ,
+			-1 , -1 , &ReportRect);
+	}
+    }
+  if ( curShip.AllLevels [ LevelNum ] -> jump_target_south != (-1) ) 
+    {
+      TargetLevel = curShip.AllLevels [ LevelNum ] -> jump_target_south ;
+      if ( curShip.AllLevels [ TargetLevel ] -> xlen != curShip.AllLevels [ LevelNum ] -> xlen )
+	{
+	  DisplayText ( "LEVEL DIMENSION MISMATCH: South doesn't lead so same-sized level (non-fatal, but no good comes from this)!\n" ,
+			-1 , -1 , &ReportRect);
+	}
+    }
+  if ( curShip.AllLevels [ LevelNum ] -> jump_target_east != (-1) ) 
+    {
+      TargetLevel = curShip.AllLevels [ LevelNum ] -> jump_target_east ;
+      if ( curShip.AllLevels [ TargetLevel ] -> ylen != curShip.AllLevels [ LevelNum ] -> ylen )
+	{
+	  DisplayText ( "LEVEL DIMENSION MISMATCH: East doesn't lead so same-sized level (non-fatal, but no good comes from this)!\n" ,
+			-1 , -1 , &ReportRect);
+	}
+    }
+  if ( curShip.AllLevels [ LevelNum ] -> jump_target_west != (-1) ) 
+    {
+      TargetLevel = curShip.AllLevels [ LevelNum ] -> jump_target_west ;
+      if ( curShip.AllLevels [ TargetLevel ] -> ylen != curShip.AllLevels [ LevelNum ] -> ylen )
+	{
+	  DisplayText ( "LEVEL DIMENSION MISMATCH: West doesn't lead so same-sized level (non-fatal, but no good comes from this)!\n" ,
+			-1 , -1 , &ReportRect);
+	}
+    }
+  
+  //--------------------
+  // This was it.  We can say so and return.
+  //
   DisplayText ( "\n\n--- End of List --- Press Space to return to menu ---\n" ,
 		-1 , -1 , &ReportRect);
-
   
   SDL_Flip ( Screen );
 
@@ -1077,7 +1169,7 @@ SetLevelInterfaces ( void )
 	  break;
 	case REPORT_INTERFACE_INCONSISTENCIES:
 	  while (EnterPressed() || SpacePressed() ) ;
-	  ReportInconsistenciesForLevel ( 0 );
+	  ReportInconsistenciesForLevel ( Me [ 0 ] . pos . z );
 	  while ( !EnterPressed() && !SpacePressed() ) ;
 	  while (EnterPressed() || SpacePressed() ) ;
 	  break;
