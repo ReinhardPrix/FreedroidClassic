@@ -257,6 +257,7 @@ EXTERN void Play_Spell_ForceToEnergy_Sound( void );
 #else
 #define EXTERN extern
 #endif
+EXTERN void DamageItem( item* CurItem );
 EXTERN int GetFreeInventoryIndex( void );
 EXTERN int ItemCanBeDroppedInInv ( int ItemType , int InvPos_x , int InvPos_y );
 EXTERN long CalculateItemPrice ( item* BuyItem , int ForRepair );
