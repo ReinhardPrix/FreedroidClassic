@@ -831,6 +831,9 @@ typedef struct
     char* TextToBeDisplayed;
     moderately_finepoint PrivatePathway[ MAX_STEPS_IN_GIVEN_COURSE ];
     int stick_to_waypoint_system_by_default;
+
+    int bot_stuck_in_wall_at_previous_check;
+    float time_since_previous_stuck_in_wall_check;
 }
 enemy, *Enemy;
 

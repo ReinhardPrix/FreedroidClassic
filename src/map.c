@@ -3591,11 +3591,6 @@ position_collides_with_obstacles_on_square ( float x, float y , int x_tile , int
 
 /* ---------------------------------------------------------------------- 
  * This function checks if a given location lies within a wall or not.
- *
- * A return value of CENTER means that the location is passable in that sense.
- * while any directions and (-1) indicate that it is not so and in case
- * of a direction returned, it's the direction into which the droid
- * should be pushed to resolve the collision (with a door).
  * ---------------------------------------------------------------------- */
 int
 IsPassable ( float x , float y , int z )

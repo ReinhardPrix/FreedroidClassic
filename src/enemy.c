@@ -53,39 +53,40 @@ void AnimateEnemys ( void );
 void
 TeleportToClosestWaypoint ( Enemy ThisRobot )
 {
-  int i;
-  float BestDistance = 10000;
-  float NewDistance;
-  Level ThisLevel = curShip . AllLevels [ ThisRobot->pos.z ] ;
-  int BestWaypoint = ( -1 );
-
-  DebugPrintf ( 1 , "\nAdvancedCommand == 2 encountered --> teleporting to closest wp." );
-  ThisRobot->AdvancedCommand = 0 ;
-  
-  for ( i = 0 ; i < ThisLevel->num_waypoints ; i ++ )
+    int i;
+    float BestDistance = 10000;
+    float NewDistance;
+    Level ThisLevel = curShip . AllLevels [ ThisRobot -> pos . z ] ;
+    int BestWaypoint = ( -1 );
+    
+    DebugPrintf ( 1 , "\nAdvancedCommand == 2 encountered --> teleporting to closest wp." );
+    ThisRobot->AdvancedCommand = 0 ;
+    
+    for ( i = 0 ; i < ThisLevel->num_waypoints ; i ++ )
     {
-      if ( ThisLevel -> AllWaypoints [ i ] . x <= 0 ) continue;
-      
-      NewDistance = sqrt ( ( ThisRobot -> pos . x - ThisLevel -> AllWaypoints [ i ] . x ) *
-			   ( ThisRobot -> pos . x - ThisLevel -> AllWaypoints [ i ] . x ) +
-			   ( ThisRobot -> pos . y - ThisLevel -> AllWaypoints [ i ] . y ) *
-			   ( ThisRobot -> pos . y - ThisLevel -> AllWaypoints [ i ] . y ) ) ;
-
-      if ( NewDistance <= BestDistance )
+	if ( ThisLevel -> AllWaypoints [ i ] . x <= 0 ) continue;
+	
+	NewDistance = sqrt ( ( ThisRobot -> pos . x - ThisLevel -> AllWaypoints [ i ] . x ) *
+			     ( ThisRobot -> pos . x - ThisLevel -> AllWaypoints [ i ] . x ) +
+			     ( ThisRobot -> pos . y - ThisLevel -> AllWaypoints [ i ] . y ) *
+			     ( ThisRobot -> pos . y - ThisLevel -> AllWaypoints [ i ] . y ) ) ;
+	
+	if ( NewDistance <= BestDistance )
 	{
-	  BestDistance = NewDistance;
-	  BestWaypoint = i ;
+	    BestDistance = NewDistance;
+	    BestWaypoint = i ;
 	}
     }
-
-  //--------------------
-  // Now we have found a global minimum.  So we 'teleport' there.
-  //
-  ThisRobot -> pos . x = ThisLevel -> AllWaypoints [ BestWaypoint ] . x ;
-  ThisRobot -> pos . y = ThisLevel -> AllWaypoints [ BestWaypoint ] . y ;
-  ThisRobot -> nextwaypoint = BestWaypoint ;
-  ThisRobot -> lastwaypoint = BestWaypoint ;
-
+    
+    //--------------------
+    // Now we have found a global minimum.  So we 'teleport' there.
+    //
+    ThisRobot -> pos . x = ThisLevel -> AllWaypoints [ BestWaypoint ] . x ;
+    ThisRobot -> pos . y = ThisLevel -> AllWaypoints [ BestWaypoint ] . y ;
+    ThisRobot -> nextwaypoint = BestWaypoint ;
+    ThisRobot -> lastwaypoint = BestWaypoint ;
+    DebugPrintf ( -2 , "\nFinal teleport target poisition: %f/%f on level %d." ,
+		  ThisRobot -> pos . x , ThisRobot -> pos . y , ThisRobot -> pos . z );
 }; // void TeleportToClosestWaypoint ( Enemy ThisRobot )
 
 /* ----------------------------------------------------------------------
@@ -379,6 +380,9 @@ ClearEnemys ( void )
 	    our_bot -> PrivatePathway [ j ] . x = 0 ;
 	    our_bot -> PrivatePathway [ j ] . y = 0 ;
 	}
+
+	our_bot -> time_since_previous_stuck_in_wall_check = ( (float) MyRandom ( 1000 ) ) / 1000.1 ;
+	our_bot -> bot_stuck_in_wall_at_previous_check = FALSE ;
     }
 }; // void ClearEnemys ( void ) 
 
@@ -1618,7 +1622,11 @@ MoveEnemys ( void )
 	    continue;
 	
 	//--------------------
-	// Ignore robots, that are in the middle of their attack movement
+	// Ignore robots, that are in the middle of their attack movement,
+	// because during attack motion, the feet of the animation are
+	// usually not moving, therefore it sometimes looks very bad when
+	// bot position is changing during attach cycle.  That's for better
+	// looks only.
 	//
 	// if ( ThisRobot -> animation_phase > 0 ) continue ;
 	if ( ThisRobot -> animation_type == ATTACK_ANIMATION ) continue ;
@@ -2727,6 +2735,112 @@ enemy_say_current_state_on_screen ( enemy* ThisRobot )
 }; // void enemy_say_current_state_on_screen ( enemy* ThisRobot )
 
 /* ----------------------------------------------------------------------
+ * Some robots (currently) tend to get stuck in walls.  This is an 
+ * annoying bug case we have not yet been able to eliminate completely.
+ * To provide some safety against this case, some extra fallback handling
+ * should be introduced, so that the bots can still recover if that 
+ * unlucky case really happens, which is what we provide here.
+ *
+ * Since passability checks usually can become quite costy in terms of 
+ * processor time and also because it makes sense to allow for some more
+ * 'natural' fallbacks to work, we only check for stuck bots every second
+ * or so.  In order to better distribute the checks (and not cause fps
+ * glitches by doing them all at once) we use individual timers for this
+ * test.
+ * ---------------------------------------------------------------------- */
+void
+enemy_handle_stuck_in_walls ( enemy* ThisRobot )
+{
+
+    //--------------------
+    // Maybe the time for the next check for this bot has not yet come.
+    // in that case we can return right away.
+    //
+    ThisRobot -> time_since_previous_stuck_in_wall_check += Frame_Time();
+    if ( ThisRobot -> time_since_previous_stuck_in_wall_check < 1.0 )
+	return;
+    ThisRobot -> time_since_previous_stuck_in_wall_check = 0 ;
+    
+    //--------------------
+    // First we take a look if this bot is currently stuck in a
+    // wall somewhere.
+    //
+    if ( !IsPassable ( ThisRobot -> pos . x , ThisRobot -> pos . y , ThisRobot -> pos.z ) )
+    {
+	// so the bot is currently inside of some wall.  hmmm.  best thing to do might
+	// be to see if this has been going on for some time.  In that case we would really
+	// have to do something about the problem.
+	//
+	if ( ThisRobot -> bot_stuck_in_wall_at_previous_check )
+	{
+	    // --------------------
+	    // Maybe the robot in question was even sticking to the current 
+	    // waypoint system!  That might indicate, that the waypoint system
+	    // has pathes, that run too close to some walls or bigger obstacles
+	    // This should be fixed inside the map, because upon switching to
+	    // wapointless mode, the bot might suddenly be unable to move at all
+	    // and stuck in the wall at the same time.
+	    //
+	    switch ( ThisRobot -> combat_state )
+	    {
+		case MOVE_ALONG_RANDOM_WAYPOINTS:
+		case TURN_THOWARDS_NEXT_WAYPOINT:
+		    DebugPrintf ( -2 , "\n\nFound robot, that seems really stuck on position: %f/%f/%d." ,
+				  ThisRobot -> pos . x , ThisRobot -> pos . y , ThisRobot -> pos.z );
+		    DebugPrintf ( -2 , "\nMore details on this robot:  Type=%d. has_greeted_influencer=%d." ,
+				  ThisRobot -> type , ThisRobot -> has_greeted_influencer );
+		    enemy_say_current_state_on_screen ( ThisRobot ); // safety:  init the TextToBeDisplayed 
+		    DebugPrintf ( -2 , "\nnextwaypoint=%d. lastwaypoint=%d. combat_%s. Status=%d." ,
+				  ThisRobot -> nextwaypoint , ThisRobot -> lastwaypoint , 
+				  ThisRobot -> TextToBeDisplayed , ThisRobot -> Status );
+		    GiveStandardErrorMessage ( __FUNCTION__  , "\
+There was a bot in MOVE_ALONG_RANDOM_WAYPOINTS or TURN_THOWARDS_NEXT_WAYPOINT \n\
+state, that was found to be inside a wall.  This might indicate, that the wapoints\n\
+on the position mentioned above are badly positioned.  If you are a FreedroidRPG\n\
+map developer, please fix the problem and commit it to cvs.  Thanks a lot!" ,
+					       PLEASE_INFORM, IS_WARNING_ONLY );
+		    ThisRobot -> bot_stuck_in_wall_at_previous_check = TRUE ; 
+		    return;
+		    break;
+		default: 
+		    break;
+	    }
+
+	    //--------------------
+	    // So at this point we know, that we have a bot that is stuck right now,
+	    // has been stuck one second ago and also is not moving along wapoints, which
+	    // would lead to the bot reaching some sensible spot sooner or later anyway.
+	    // In one word:  we have arrived in a situation that might make a crude correction
+	    // sensible.  We teleport the robot back to the nearest waypoint.  From there, it
+	    // might find a suitable way on it's own again.
+	    //	    
+	    DebugPrintf ( -2 , "\n\nFound robot, that seems really stuck on position: %f/%f/%d." ,
+			  ThisRobot -> pos . x , ThisRobot -> pos . y , ThisRobot -> pos.z );
+	    DebugPrintf ( -2 , "\nMore details on this robot:  Type=%d. has_greeted_influencer=%d." ,
+			  ThisRobot -> type , ThisRobot -> has_greeted_influencer );
+	    enemy_say_current_state_on_screen ( ThisRobot ); // safety:  init the TextToBeDisplayed 
+	    DebugPrintf ( -2 , "\nnextwaypoint=%d. lastwaypoint=%d. combat_%s. Status=%d." ,
+			  ThisRobot -> nextwaypoint , ThisRobot -> lastwaypoint , 
+			  ThisRobot -> TextToBeDisplayed , ThisRobot -> Status );
+	    GiveStandardErrorMessage ( __FUNCTION__  , "\
+There was a bot MOVING ON ITS OWN, that was found to be repeatedly inside a wall.\n\
+WARNING!  EMERGENCY FALLBACK ENABLED --> Teleporting back to closest waypoint." ,
+				       NO_NEED_TO_INFORM, IS_WARNING_ONLY );
+	    ThisRobot -> bot_stuck_in_wall_at_previous_check = TRUE ; 
+	    TeleportToClosestWaypoint ( ThisRobot );
+	    return;
+	}
+	ThisRobot -> bot_stuck_in_wall_at_previous_check = TRUE ; 
+    }
+    else
+    {
+	// this bot isn't currently stuck.  what more could anybody want?
+	ThisRobot -> bot_stuck_in_wall_at_previous_check = FALSE ;
+    }
+    
+}; // enemy_handle_stuck_in_walls ( enemy* ThisRobot )
+
+/* ----------------------------------------------------------------------
  * Regardless of the current state, there are some cases where we 
  * ALWAYS switch the current state to something new.  These cases
  * can be handled in advance before the more individual states are
@@ -2786,6 +2900,12 @@ ProcessAttackStateMachine ( int enemynum )
     // robot as his in-game text.
     //
     enemy_say_current_state_on_screen ( ThisRobot );
+
+    //--------------------
+    // for debugging purposes, we check whether the current robot is maybe
+    // stuck inside a wall or something...
+    //
+    enemy_handle_stuck_in_walls ( ThisRobot );
 
     //--------------------
     // Regardless of the current state, there are some cases where we 
