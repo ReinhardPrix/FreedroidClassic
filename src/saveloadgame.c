@@ -663,8 +663,6 @@ This indicates a serious bug in this installation of Freedroid.",
       if ( AllBullets[ i ].angle_change_rate != 0 ) DeleteBullet( i , FALSE );
     }
   
-
-
   //--------------------
   // Now that we have loaded the game, we must count and initialize the number
   // of droids used in this ship.  Otherwise we might ignore some robots.

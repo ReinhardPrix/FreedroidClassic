@@ -649,6 +649,19 @@ EXTERN void AnimateCurrents (void);
 EXTERN void ClearPlayground (void);
 EXTERN int IsActive (int color, int row);
 
+
+// BFont.c
+#undef EXTERN
+#ifdef _bfont_c
+#define EXTERN
+#else
+#define EXTERN extern
+#endif
+EXTERN Uint32 GetPixel (SDL_Surface * Surface, Sint32 X, Sint32 Y);
+EXTERN void PutPixel (SDL_Surface * surface, int x, int y, Uint32 pixel);
+
+
+
 #undef EXTERN
 #ifdef _highscore_c
 #define EXTERN

@@ -4,6 +4,8 @@
 /*                                                         */
 /***********************************************************/
 
+#define _bfont_c
+
 // #include "BFont.h"
 #include "system.h"
 #include "defs.h"
@@ -12,14 +14,9 @@
 #include "global.h"
 #include "SDL_rotozoom.h"
 
+
 /* Current font */
 BFont_Info *CurrentFont;
-
-
-/* utility functions */
-Uint32 GetPixel (SDL_Surface * Surface, Sint32 X, Sint32 Y);
-void PutPixel (SDL_Surface * surface, int x, int y, Uint32 pixel);
-
 
 void
 InitFont (BFont_Info * Font)
@@ -687,6 +684,10 @@ PutPixel (SDL_Surface * surface, int x, int y, Uint32 pixel)
 
 }; // void PutPixel ( ... )
 
+/* ----------------------------------------------------------------------
+ * NOTE:  I THINK THE SURFACE MUST BE LOCKED FOR THIS!
+ *
+ * ---------------------------------------------------------------------- */
 Uint32
 GetPixel (SDL_Surface * Surface, Sint32 X, Sint32 Y)
 {
@@ -694,6 +695,10 @@ GetPixel (SDL_Surface * Surface, Sint32 X, Sint32 Y)
   Uint8 *bits;
   Uint32 Bpp;
 
+  //--------------------
+  // First some security checks against segfaulting due to
+  // coordinates out of bounds...
+  //
   if (X < 0)
     {
       DebugPrintf ( 1 , "x too small in GetPixel!" );
@@ -702,6 +707,16 @@ GetPixel (SDL_Surface * Surface, Sint32 X, Sint32 Y)
   if (X >= Surface->w)
     {
       DebugPrintf ( 1 , "x too big in GetPixel!" );
+      return -1;
+    }
+  if (Y < 0)
+    {
+      DebugPrintf ( 1 , "y too small in GetPixel!" );
+      return -1;
+    }
+  if (Y >= Surface->h)
+    {
+      DebugPrintf ( 1 , "y too big in GetPixel!" );
       return -1;
     }
 
@@ -734,3 +749,5 @@ GetPixel (SDL_Surface * Surface, Sint32 X, Sint32 Y)
 
   return -1;
 }
+
+#undef _bfont_c

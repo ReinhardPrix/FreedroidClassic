@@ -173,13 +173,13 @@ ShowAutomapData( void )
 	{
 	  if ( Me [ 0 ] . Automap [ level ] [ y ] [ x ] & RIGHT_WALL_BIT )
 	    {
-	      putpixel ( Screen , 
+	      PutPixel ( Screen , 
 			 2+AUTOMAP_SQUARE_SIZE * x + AUTOMAP_SQUARE_SIZE * ( automap_level -> ylen - y ) , 
 			 0+AUTOMAP_SQUARE_SIZE * x + AUTOMAP_SQUARE_SIZE * y , AUTOMAP_COLOR );
-	      putpixel ( Screen , 
+	      PutPixel ( Screen , 
 			 2+AUTOMAP_SQUARE_SIZE * x + AUTOMAP_SQUARE_SIZE * ( automap_level -> ylen - y ) , 
 			 1+AUTOMAP_SQUARE_SIZE * x + AUTOMAP_SQUARE_SIZE * y , AUTOMAP_COLOR );
-	      putpixel ( Screen , 
+	      PutPixel ( Screen , 
 			 2+AUTOMAP_SQUARE_SIZE * x + AUTOMAP_SQUARE_SIZE * ( automap_level -> ylen - y ) , 
 			 1+AUTOMAP_SQUARE_SIZE * x + AUTOMAP_SQUARE_SIZE * y , AUTOMAP_COLOR );
 	      // putpixel ( Screen , 3*x+2 , 3*y+0 , AUTOMAP_COLOR );
@@ -188,13 +188,13 @@ ShowAutomapData( void )
 	    }
 	  if ( Me [ 0 ] . Automap [ level ] [ y ] [ x ] & LEFT_WALL_BIT )
 	    {
-	      putpixel ( Screen , 
+	      PutPixel ( Screen , 
 			 0+AUTOMAP_SQUARE_SIZE * x + AUTOMAP_SQUARE_SIZE * ( automap_level -> ylen - y ) , 
 			 0+AUTOMAP_SQUARE_SIZE * x + AUTOMAP_SQUARE_SIZE * y , AUTOMAP_COLOR );
-	      putpixel ( Screen , 
+	      PutPixel ( Screen , 
 			 0+AUTOMAP_SQUARE_SIZE * x + AUTOMAP_SQUARE_SIZE * ( automap_level -> ylen - y ) , 
 			 1+AUTOMAP_SQUARE_SIZE * x + AUTOMAP_SQUARE_SIZE * y , AUTOMAP_COLOR );
-	      putpixel ( Screen , 
+	      PutPixel ( Screen , 
 			 0+AUTOMAP_SQUARE_SIZE * x + AUTOMAP_SQUARE_SIZE * ( automap_level -> ylen - y ) , 
 			 1+AUTOMAP_SQUARE_SIZE * x + AUTOMAP_SQUARE_SIZE * y , AUTOMAP_COLOR );
 	      // putpixel ( Screen , 3*x , 3*y+0 , AUTOMAP_COLOR );
@@ -203,15 +203,15 @@ ShowAutomapData( void )
 	    }
 	  if ( Me [ 0 ] . Automap [ level ] [ y ] [ x ] & UP_WALL_BIT )
 	    {
-	      putpixel ( Screen , 3*x+0 , 3*y , AUTOMAP_COLOR );
-	      putpixel ( Screen , 3*x+1 , 3*y , AUTOMAP_COLOR );
-	      putpixel ( Screen , 3*x+2 , 3*y , AUTOMAP_COLOR );
+	      PutPixel ( Screen , 3*x+0 , 3*y , AUTOMAP_COLOR );
+	      PutPixel ( Screen , 3*x+1 , 3*y , AUTOMAP_COLOR );
+	      PutPixel ( Screen , 3*x+2 , 3*y , AUTOMAP_COLOR );
 	    }
 	  if ( Me [ 0 ] . Automap [ level ] [ y ] [ x ] & DOWN_WALL_BIT )
 	    {
-	      putpixel ( Screen , 3*x+0 , 3*y+2 , AUTOMAP_COLOR );
-	      putpixel ( Screen , 3*x+1 , 3*y+2 , AUTOMAP_COLOR );
-	      putpixel ( Screen , 3*x+2 , 3*y+2 , AUTOMAP_COLOR );
+	      PutPixel ( Screen , 3*x+0 , 3*y+2 , AUTOMAP_COLOR );
+	      PutPixel ( Screen , 3*x+1 , 3*y+2 , AUTOMAP_COLOR );
+	      PutPixel ( Screen , 3*x+2 , 3*y+2 , AUTOMAP_COLOR );
 	    }
 	}
     }
@@ -234,7 +234,7 @@ ShowAutomapData( void )
 	{
 	  for ( y = 0 ; y < AUTOMAP_SQUARE_SIZE ; y ++ )
 	    {
-	      putpixel ( Screen , AUTOMAP_SQUARE_SIZE * automap_level -> ItemList [ i ].pos.x + x , 
+	      PutPixel ( Screen , AUTOMAP_SQUARE_SIZE * automap_level -> ItemList [ i ].pos.x + x , 
 			 AUTOMAP_SQUARE_SIZE * automap_level -> ItemList [ i ].pos.y + y , ItemColor );
 	    }
 	}
@@ -256,12 +256,12 @@ ShowAutomapData( void )
 	    {
 	      if ( AllEnemys [ i ] . is_friendly )
 		{
-		  putpixel ( Screen , AUTOMAP_SQUARE_SIZE * AllEnemys[i].pos.x + AUTOMAP_SQUARE_SIZE * ( automap_level -> ylen - AllEnemys[i].pos.y ) + x , 
+		  PutPixel ( Screen , AUTOMAP_SQUARE_SIZE * AllEnemys[i].pos.x + AUTOMAP_SQUARE_SIZE * ( automap_level -> ylen - AllEnemys[i].pos.y ) + x , 
 			     AUTOMAP_SQUARE_SIZE * AllEnemys[i].pos.x + AUTOMAP_SQUARE_SIZE * AllEnemys[i].pos.y + y , FriendColor );
 		}
 	      else
 		{
-		  putpixel ( Screen , AUTOMAP_SQUARE_SIZE * AllEnemys[i].pos.x + AUTOMAP_SQUARE_SIZE * ( automap_level -> ylen - AllEnemys[i].pos.y ) + x , 
+		  PutPixel ( Screen , AUTOMAP_SQUARE_SIZE * AllEnemys[i].pos.x + AUTOMAP_SQUARE_SIZE * ( automap_level -> ylen - AllEnemys[i].pos.y ) + x , 
 			     AUTOMAP_SQUARE_SIZE * AllEnemys[i].pos.x + AUTOMAP_SQUARE_SIZE * AllEnemys[i].pos.y + y , BoogyColor );
 		}
 	    }
@@ -276,7 +276,7 @@ ShowAutomapData( void )
     {
       for ( y = 0 ; y < AUTOMAP_SQUARE_SIZE ; y ++ )
 	{
-	  putpixel ( Screen , AUTOMAP_SQUARE_SIZE * Me [ 0 ] . pos . x + AUTOMAP_SQUARE_SIZE * ( automap_level -> ylen - Me [ 0 ] . pos . y ) + x , 
+	  PutPixel ( Screen , AUTOMAP_SQUARE_SIZE * Me [ 0 ] . pos . x + AUTOMAP_SQUARE_SIZE * ( automap_level -> ylen - Me [ 0 ] . pos . y ) + x , 
 		     AUTOMAP_SQUARE_SIZE * Me [ 0 ] . pos . x + AUTOMAP_SQUARE_SIZE * Me [ 0 ] . pos . y + y , TuxColor );
 
 	  
@@ -289,7 +289,7 @@ ShowAutomapData( void )
 	      if ( Me [ i ] . pos . z != Me [ 0 ] . pos . z ) continue;
 	      if ( Me [ i ] . status == OUT  ) continue;
 
-	      putpixel ( Screen , AUTOMAP_SQUARE_SIZE * Me [ i ] . pos . x + x , AUTOMAP_SQUARE_SIZE * Me [ i ] . pos . y + y , FriendColor );
+	      PutPixel ( Screen , AUTOMAP_SQUARE_SIZE * Me [ i ] . pos . x + x , AUTOMAP_SQUARE_SIZE * Me [ i ] . pos . y + y , FriendColor );
 	    }
 	}
     }

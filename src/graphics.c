@@ -494,7 +494,7 @@ Slow_CreateAlphaCombinedSurface ( SDL_Surface* FirstSurface , SDL_Surface* Secon
 		   ( 1 - alpha2 ) * alpha1 * GetBlueComponent ( FirstSurface , x , y ) ) 
 	    / alpha3 ;
 
-	  putpixel ( ThirdSurface , x , y , 
+	  PutPixel ( ThirdSurface , x , y , 
 		     SDL_MapRGBA ( ThirdSurface -> format , red , green , blue , 255.0 * alpha3 ) ) ;
 
 	}
@@ -570,7 +570,7 @@ CreateColorFilteredSurface ( SDL_Surface* FirstSurface , int FilterType )
 		       GetGreenComponent ( FirstSurface , x , y ) ) / 3 ;
 	    } 
 
-	  putpixel ( ThirdSurface , x , y , 
+	  PutPixel ( ThirdSurface , x , y , 
 		     SDL_MapRGBA ( ThirdSurface -> format , red , green , blue , alpha3 ) ) ;
 
 	}
@@ -774,10 +774,10 @@ CreateAlphaCombinedSurface ( SDL_Surface* FirstSurface , SDL_Surface* SecondSurf
 	  alpha3 *= 255.0 ; 
 
 	  //--------------------
-	  // This putpixel must go out and be replaced by something with
+	  // This PutPixel must go out and be replaced by something with
 	  // less overhead...
 	  //
-	  // putpixel ( ThirdSurface , x , y , 
+	  // PutPixel ( ThirdSurface , x , y , 
 	  // SDL_MapRGBA ( ThirdSurface -> format , new_red , new_green , new_blue , alpha3 ) ) ;
 
 	  switch (bpp)
@@ -917,7 +917,7 @@ MakeGridOnScreen( SDL_Rect* GridRectangle )
 	{
 	  if ((x+y)%2 == 0) 
 	    {
-	      putpixel( Screen, x, y, 0 );
+	      PutPixel( Screen, x, y, 0 );
 	    }
 	}
     }
@@ -1366,84 +1366,6 @@ ClearGraphMem ( void )
 }; // void ClearGraphMem( void )
 
 /* ----------------------------------------------------------------------
- * This function was taken directly from the SDL documentation.  It 
- * returns the pixel value at a given pixel coordinate (x, y).
- *
- * NOTE: The surface must be locked before calling this!
- * ---------------------------------------------------------------------- */
-Uint32 
-getpixel(SDL_Surface *surface, int x, int y)
-{
-  int bpp = surface->format->BytesPerPixel;
-  /* Here p is the address to the pixel we want to retrieve */
-  Uint8 *p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
-  
-  switch(bpp) 
-    {
-    case 1:
-      return *p;
-      
-    case 2:
-      return *(Uint16 *)p;
-      
-    case 3:
-      if(SDL_BYTEORDER == SDL_BIG_ENDIAN)
-	return p[0] << 16 | p[1] << 8 | p[2];
-      else
-	return p[0] | p[1] << 8 | p[2] << 16;
-      
-    case 4:
-      return *(Uint32 *)p;
-      
-    default:
-      return 0;       /* shouldn't happen, but avoids warnings */
-    }
-
-}; // Uint32 getpixel(...)
-
-
-/* ----------------------------------------------------------------------
- * This function was taken directly from the SDL documentation.
- * It sets the pixel in a given surface at pixel coordinates (x, y) to the 
- * given value.
- *
- * NOTE: The surface must be locked before calling this!
- *
- * ---------------------------------------------------------------------- */
-void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
-{
-    int bpp = surface->format->BytesPerPixel;
-    /* Here p is the address to the pixel we want to set */
-    Uint8 *p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
-
-    switch(bpp) {
-    case 1:
-        *p = pixel;
-        break;
-
-    case 2:
-        *(Uint16 *)p = pixel;
-        break;
-
-    case 3:
-        if(SDL_BYTEORDER == SDL_BIG_ENDIAN) {
-            p[0] = (pixel >> 16) & 0xff;
-            p[1] = (pixel >> 8) & 0xff;
-            p[2] = pixel & 0xff;
-        } else {
-            p[0] = pixel & 0xff;
-            p[1] = (pixel >> 8) & 0xff;
-            p[2] = (pixel >> 16) & 0xff;
-        }
-        break;
-
-    case 4:
-        *(Uint32 *)p = pixel;
-        break;
-    }
-}; // void putpixel(...)
-
-/* ----------------------------------------------------------------------
  *
  *
  * ---------------------------------------------------------------------- */
@@ -1501,7 +1423,7 @@ HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area )
 	  if ( blue < 255 - EnhancementFactor ) blue += EnhancementFactor ;
 	  else green = 255;
 
-	  putpixel ( Surface , x , y , 
+	  PutPixel ( Surface , x , y , 
 		     SDL_MapRGB ( Surface -> format , red , green , blue ) ) ;
 
 	}
