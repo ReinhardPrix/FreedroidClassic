@@ -9,6 +9,10 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.9  1997/06/10 14:33:08  rprix
+ * InitParaplus(void) now asks for AutoTerminationTime, instead of compiled-in
+ * value. More convenient for different developers with different needs... ;)
+ *
  * Revision 1.8  1997/06/09 23:08:59  jprix
  * Blast phases now adapted to the current framerate.  New constant for speed of animation independant of framerate.
  *
@@ -103,13 +107,9 @@ char TitleText3[]="An Influence Device can transmitt\nconsole. A small-scale pla
 //                                                                           jp, 10.04.2002
 //
 
-int AutoTerminationTime=300;
-
-// static void timeout(int sig);
-
 static void timeout(int sig)
 {
-  printf("\n\nstatic void timeout(int sig): Automatic termination after %d seconds.\n\n", AutoTerminationTime);
+  printf("\n\nstatic void timeout(int sig): Automatic termination NOW!!");
   Terminate(0);
 } // static void timeout(int sig)
 
@@ -235,17 +235,24 @@ void InitNewGame(void)
 @Int:
 * $Function----------------------------------------------------------*/
 void InitParaplus(void) {
+  int AutoTerminationTime;
 
   printf("void InitParaplus(void) wurde echt aufgerufen....\n");
 
+  printf("Auto Terminate after how many seconds? (0 for none): ");
+  scanf("%d", &AutoTerminationTime); getchar();
+  if( AutoTerminationTime==0 ) {
+    printf("\nNo AutoTermination... good luck!\n");
+    printf("...last chance to chicken out (i.e. C-c). Press RETURN to continue!\n");
+    getchar();
+  } else {
+    signal(SIGALRM,timeout);
+    printf("\nvoid InitParaplus(void): An alarm signal will be issued in %d seconds,terminating the program for safety.", AutoTerminationTime);
+    alarm(AutoTerminationTime);	/* Terminate after some seconds for safety. */
+  }
+
   Set_SVGALIB_Video_ON(); 
 
-  signal(SIGALRM,timeout);
-
-
-  printf("\nvoid InitParaplus(void): An alarm signal will be issued in %d seconds, terminating the program for safety.", 
-	 AutoTerminationTime);
-  alarm(AutoTerminationTime);	/* Terminate after some seconds for safety. */
 
   // ******** ACHTUNG!  Hier folgt nun die Original-Initialisierungsroutine ***********
 
