@@ -50,7 +50,6 @@
 #define INFLUENCEOFF  	0
 #define BULLETOFF			0
 #define BLASTOFF			0
-#define ENEMYOFF			0
 
 //#define SHOWSTATS
 
@@ -222,14 +221,13 @@ GetView (void)
   signed int mapX0, mapY0;
   signed int mapX, mapY;	/* The map-coordinates, which are to be copied */
 
-  DebugPrintf ("\nvoid GetView(void): Funktion echt aufgerufen.");
   DebugPrintf ("\nvoid GetView(void): CurLevel->xlen: ");
   DebugPrintfInt (CurLevel->xlen);
   DebugPrintf ("\nvoid GetView(void): CurLevel->ylen: ");
   DebugPrintfInt (CurLevel->ylen);
 
-  me_gx = Me.pos.x / BLOCKBREITE;
-  me_gy = Me.pos.y / BLOCKHOEHE;
+  me_gx = Fein2Grob (Me.pos.x);
+  me_gy = Fein2Grob (Me.pos.y);
 
   mapX0 = me_gx - (INTERNBREITE / 2);
   mapY0 = me_gy - (INTERNHOEHE / 2);
@@ -276,10 +274,8 @@ GetView (void)
 	}			/* for col */
     }				/* for line */
 
-  DebugPrintf
-    ("\nvoid GetView(void): Funktionsende ordnungsgemaess erreicht.");
   return;
-}				/* GetView */
+}				/* GetView() */
 
 
 /*-----------------------------------------------------------------
@@ -296,14 +292,12 @@ DisplayView (void)
   int i;
   int ii;
 
-  DebugPrintf (" Das Interne Fenster sieht wie folgt aus:\n");
   for (i = 0; i < INTERNHOEHE; i++)
     {
       for (ii = 0; ii < INTERNBREITE; ii++)
 	{
 	  printf ("%u-", View[i][ii]);
 	}
-      DebugPrintf ("\n");
     }
 }
 
@@ -329,7 +323,6 @@ GetInternFenster (int mask)
   unsigned char *target;
 
   target = InternWindow;
-  DebugPrintf ("\nvoid GetInternFenster(int mask): real function call confirmed.\n");
 
   memset (target, 1, INTERNHOEHE * INTERNBREITE * BLOCKMEM);
 
@@ -367,10 +360,8 @@ GetInternFenster (int mask)
     return;
 
 
-#if ENEMYOFF == 0
   for (i = 0; i < NumEnemys; i++)
     PutEnemy (i);
-#endif
 
   if (Me.energy > 0)
     PutInfluence ();
@@ -405,8 +396,9 @@ GetInternFenster (int mask)
 	}			/* for */
       CurBlast++;
     }				/* for */
-  DebugPrintf
-    ("\nvoid GetInternFenster(int mask): end of function reached.\n");
+
+  return;
+
 }				// void GetInternFenster(void) 
 
 /*@Function============================================================
@@ -829,14 +821,12 @@ PutObject (int x, int y, unsigned char *pic, int check)
 } /* PutObject() */
 
 
-/*@Function============================================================
-@Desc: 	Diese Prozedur schreibt das im Speicher zusammengebaute Bild
-in den Bildschirmspeicher.
-
-Parameter: keine
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/*-----------------------------------------------------------------
+ * @Desc: Diese Prozedur schreibt das im Speicher zusammengebaute
+ * 	Bild in den Bildschirmspeicher.
+ *
+ * 
+ *-----------------------------------------------------------------*/
 void
 PutInternFenster (int also_update_scaled_surface)
 {
@@ -844,8 +834,6 @@ PutInternFenster (int also_update_scaled_surface)
   int i;
   unsigned char *source;
   unsigned char *target;
-
-  DebugPrintf ("\nvoid PutInternFenster(void): real function call confirmed.");
 
   /*
     In case the Conceptview switch is set, only a small map is drawn, like in 
@@ -855,7 +843,7 @@ PutInternFenster (int also_update_scaled_surface)
     {
       for (i = 0; i < USERFENSTERHOEHE; i++)
 	{
-	  memcpy (RealScreen + (USERFENSTERPOSY + i) * SCREENBREITE +
+	  memcpy (Outline320x200 + (USERFENSTERPOSY + i) * SCREENBREITE +
 		  USERFENSTERPOSX,
 		  InternWindow + i * INTERNBREITE * BLOCKBREITE,
 		  USERFENSTERBREITE);
@@ -869,10 +857,8 @@ PutInternFenster (int also_update_scaled_surface)
     ((((int) Me.pos.y) % BLOCKHOEHE) -
      BLOCKHOEHE / 2) * BLOCKBREITE * INTERNBREITE;
 
-  WaitVRetrace ();		//
-
-  //DisplayRahmen ( RealScreen );
   DisplayRahmen ( Outline320x200 );
+  SetInfoline (NULL, NULL);
 
   for (i = 0; i < USERFENSTERHOEHE; i++)
     {
@@ -887,12 +873,12 @@ PutInternFenster (int also_update_scaled_surface)
 
       memcpy(target, source, USERFENSTERBREITE);
 
-    }				// for(i=0; ...
+    }	// for(i=0; ...
 
 
   PrepareScaledSurface(also_update_scaled_surface);
 
-  DebugPrintf ("\nvoid PutInternFenster(void): end of function reached.");
+  return;
 
 }; // void PutInternFenster(void)
 
@@ -997,7 +983,7 @@ FlashWindow (int Flashcolor)
 }				// void FlashWindow(int Flashcolor)
 
 /*-----------------------------------------------------------------
- * @Desc: Setzt die Hintergrundfarbe fuer das Userfenster using glvga
+ * @Desc: Setzt die Hintergrundfarbe fuer das Userfenster using SDLx
  * @Ret: void
  *
  *-----------------------------------------------------------------*/
@@ -1007,9 +993,6 @@ SetUserfenster (int color, unsigned char *Parameter_screen)
   int row;
   SDL_Rect LocalRectangle;
 
-  DebugPrintf ("\nvoid SetUserfenster(...): real function call confirmed.");
-
-
   if (Parameter_screen == RealScreen) 
     {
       LocalRectangle.x=USERFENSTERPOSX;
@@ -1018,8 +1001,6 @@ SetUserfenster (int color, unsigned char *Parameter_screen)
       LocalRectangle.y=USERFENSTERPOSY;
       SDL_FillRect( screen , &LocalRectangle, color);
     }
-    //gl_fillbox (USERFENSTERPOSX, USERFENSTERPOSY, 
-    //USERFENSTERBREITE, USERFENSTERHOEHE, color);
   else
     {
       for (row = 0; row < USERFENSTERHOEHE; row++)
@@ -1028,10 +1009,8 @@ SetUserfenster (int color, unsigned char *Parameter_screen)
 		color, USERFENSTERBREITE);
     }
 
-  DebugPrintf ("\nvoid SetUserfenster(...): end of real function reached.");
-
   return;
-}				/* SetUserFenster */
+}				/* SetUserFenster() */
 
 /* **********************************************************************
    Diese Funktion zeigt einen Robotter an

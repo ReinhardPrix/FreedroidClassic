@@ -107,12 +107,11 @@ StoreTextEnvironment (void)
   GetTextColor (&StoreTextBG, &StoreTextFG);
 }				// void StoreTextEnvironment(void)
 
-/*@Function============================================================
-@Desc:  This function restores the textenvironment
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/*-----------------------------------------------------------------
+ * @Desc:  This function restores the textenvironment
+ * 
+ *
+ *-----------------------------------------------------------------*/
 void
 RestoreTextEnvironment (void)
 {
@@ -172,17 +171,16 @@ InitParaplusFont (void)
   return (OK);
 }				// int InitParaplusFont(void)
 
-/*@Function============================================================
-@Desc: SetTextColor(unsigned bg, unsigned fg)
-Setzt die Palettenwerten (und nicht die RGB-Werte) der Proportionalschrift
-Null als Farbwert bewirkt keinen Effekt
-Sicherheitsabfrage, ob die schrift nicht durch Kontrastzerst"orung vernichtet
-wird
-
-				sets only, if color != 0 and other then old color
-@Ret: void
-@Int:
-* $Function----------------------------------------------------------*/
+/*-----------------------------------------------------------------
+ * @Desc: Setzt die Palettenwerten (und nicht die RGB-Werte) der
+ * 	Proportionalschrift Null als Farbwert bewirkt keinen Effekt
+ * 	Sicherheitsabfrage, ob die schrift nicht durch
+ * 	Kontrastzerst"orung vernichtet wird
+ * 
+ * sets only, if color != 0 and other then old color
+ * 
+ *
+ *-----------------------------------------------------------------*/
 void
 SetTextColor (unsigned char bg, unsigned char fg)
 {
@@ -194,7 +192,7 @@ SetTextColor (unsigned char bg, unsigned char fg)
   /* Sicherheitsabrage bez. Schriftzerst"orung durch Kontrastausl"oschung */
   if ((bg == LastFg) || (bg == fg))
     {
-      printf("\nvoid SetTextColor(...): WARNING ! Die Schrift wird durch diesen Aufruf vernichtet !\n");
+      printf("\nSetTextColor(): Schrift wird durch diesen Aufruf vernichtet !\n");
       Terminate (ERR);
     }
   CurrentFontFG = fg;
@@ -380,10 +378,6 @@ DisplayText (char *Text,
 {
   char *tmp;	/* Beweg. Zeiger auf aktuelle Position im Ausgabe-Text */
 
-  DebugPrintf ("\nvoid DisplayText(...): Funktion echt aufgerufen.");
-  DebugPrintf ("\nvoid DisplayText(...): Der Text lautet:\n");
-  DebugPrintf (Text);
-
   MyCursorX = startx;		/* akt. Schreib-Position */
   MyCursorY = starty;
 
@@ -440,8 +434,9 @@ DisplayText (char *Text,
       ImprovedCheckUmbruch(tmp);
 
     } // while !FensterVoll()
-  DebugPrintf
-    ("\nvoid DisplayText(...): Funktionsende ordnungsgemaess erreicht.");
+
+  return;
+
 } // void DisplayText(...)
 
 /*@Function============================================================
@@ -470,18 +465,16 @@ DisplayWord (char *Worttext)
   CheckUmbruch ();
 }
 
-/*@Function============================================================
-@Desc: Stellt ein Zeichen an der Pos MyCursorX/Y INNERHALB des
-Text-Borders dar. Hinausragende Teile des Zeichens werden
-"abgeschnitten".
-Der Einfuegepunkt MyCursorX/Y wird nach der Ausgabe um die
-Zeichenbreite nach rechts verschoben.
-
-Einfuegepunkt: LINKS OBEN
-
-@Ret: void
-@Int:
-* $Function----------------------------------------------------------*/
+/*-----------------------------------------------------------------
+ * @Desc: Stellt ein Zeichen an der Pos MyCursorX/Y INNERHALB des
+ * Text-Borders dar. Hinausragende Teile des Zeichens werden
+ * "abgeschnitten". Der Einfuegepunkt MyCursorX/Y wird nach der
+ * Ausgabe um die Zeichenbreite nach rechts verschoben.
+ * 
+ * Einfuegepunkt: LINKS OBEN
+ * 
+ *
+ *-----------------------------------------------------------------*/
 void
 DisplayChar (unsigned char Zeichen, unsigned char *screen)
 {
@@ -490,8 +483,6 @@ DisplayChar (unsigned char Zeichen, unsigned char *screen)
   int ZLen = CharLenList[ZNum];
 
   unsigned char *target;	/* Pointer auf Ausgabeposition am Screen */
-
-  DebugPrintf("\nvoid DisplayChar(...): Real function call confirmed.");
 
   if (Zeichen == '\n')
     {
