@@ -1684,7 +1684,24 @@ New_Graphics_Options_Menu (void)
 		
 	    case CHANGE_SCREEN_RESOLUTION:
 		while (EnterPressed() || SpacePressed() );
-		Change_Screen_Resolution_Menu();
+		if ( ! use_open_gl )
+		{
+		    GiveMouseAlertWindow ( "\n\
+You are using SDL instead of OpenGL\n\
+for graphics ouput right now.\n\
+\n\
+Other screen resolutions than 640x480\n\
+are currently now supported with SDL.\n\
+\n\
+You might want to restart the game using\n\
+OpenGL instead.  Then you can change the\n\
+screen resolution using this menu option.\n\
+\n\
+Thanks you.\n");
+		    SetCurrentFont ( Menu_BFont );
+		}
+		else
+		    Change_Screen_Resolution_Menu();
 		break;
 		
 	    case SET_SHOW_BLOOD_FLAG:
