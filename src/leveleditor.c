@@ -108,6 +108,41 @@ ExportLevelInterface ( int LevelNum )
     }
 
   //--------------------
+  // Now we see if we need to copy the southern interface region
+  // into another map.
+  //
+  TargetLevel = curShip.AllLevels [ LevelNum ] -> jump_target_south ;
+  if ( TargetLevel != (-1) ) 
+    {
+      //--------------------
+      // First we find out the dimensions of the area we want to copy
+      //
+      if ( curShip . AllLevels [ LevelNum ] -> xlen < curShip . AllLevels [ TargetLevel ] -> xlen )
+	AreaWidth = curShip . AllLevels [ LevelNum ] -> xlen;
+      else 
+	AreaWidth = curShip . AllLevels [ TargetLevel ] -> xlen ;
+      
+      AreaHeight = curShip . AllLevels [ LevelNum ] -> jump_threshold_south;
+      
+      if ( AreaHeight <= 0 ) return;
+      
+      TargetStartLine = ( curShip . AllLevels [ LevelNum ] -> ylen ) - 1 ;
+
+      //--------------------
+      // Now we can start to make the copy...
+      //
+      for ( y = 0 ; y < AreaHeight ; y ++ )
+	{
+	  memcpy ( curShip . AllLevels [ TargetLevel ] -> map[ AreaHeight-1 - y ] ,
+		   curShip . AllLevels [ LevelNum ] -> map[ TargetStartLine - y ] ,
+		   AreaWidth ) ;
+	}
+      GetDoors ( curShip . AllLevels [ TargetLevel ] );
+      GetRefreshes ( curShip . AllLevels [ TargetLevel ] );
+      GetTeleports ( curShip . AllLevels [ TargetLevel ] );
+    }
+
+  //--------------------
   // Now we see if we need to copy the eastern interface region
   // into another map.
   //

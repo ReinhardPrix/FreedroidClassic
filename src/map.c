@@ -3041,7 +3041,11 @@ IsPassable ( float x , float y , int z , int Checkpos)
       if (Checkpos == LIGHT)
 	ret = CENTER;
       else
-	ret = -1;
+	{
+	  if ((fy < WALLPASS) || (fy > 1 - WALLPASS) || (fx < WALLPASS) || (fx > 1 - WALLPASS))
+	    ret = CENTER;
+	  else ret = -1;
+	}
       break;
 
     case CONSOLE_L:
