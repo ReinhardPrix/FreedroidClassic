@@ -572,7 +572,9 @@ EnterConsole (void)
 	    case 3:
 	      ClearGraphMem();
 	      ShowLifts (CurLevel->levelnum, -1);
-	      getchar_raw();
+	      // getchar_raw();
+	      while ( !SpacePressed() );
+	      while ( SpacePressed() );
 	      break;
 	    default:
 	      DebugPrintf(0,"\nError in Console: menu-pos out of bounds \n");
@@ -691,8 +693,23 @@ GreatDruidShow (void)
   bool finished = FALSE;
   bool key_pressed = FALSE;
   static int WasPressed = FALSE ;
+  int ClearanceIndex = 0;
+  int NumberOfClearances = 0;
+  int i;
 
-  droidtype = Me[0].type;
+  //--------------------
+  // First we find out how many clearances the Tux has gained
+  // so far.
+  //
+  for ( i = 0 ; i < MAX_CLEARANCES ; i ++ )
+    {
+      if ( Me [ 0 ] . clearance_list [ i ] == 0 ) break;
+    }
+  NumberOfClearances = i;
+
+  // droidtype = Me[0].type;
+  droidtype = Me [ 0 ] . clearance_list [ ClearanceIndex ] ;
+
   page = 0;
 
   show_droid_info (droidtype, page , TRUE );
@@ -700,6 +717,9 @@ GreatDruidShow (void)
   while (!finished)
     {
       usleep ( 2 );
+
+      droidtype = Me [ 0 ] . clearance_list [ ClearanceIndex ] ;
+
       if (key_pressed)
 	{
 	  show_droid_info (droidtype, page , TRUE );
@@ -710,15 +730,21 @@ GreatDruidShow (void)
 	{
 	  if ( CursorIsOnButton( UP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
 	    {
-	      if ( droidtype < Me[0].type) droidtype ++;	    
+	      if ( ClearanceIndex < NumberOfClearances -1 ) 
+		{
+		  ClearanceIndex ++;	    
+		  MoveMenuPositionSound();
+		}
 	      key_pressed = TRUE;
-	      MoveMenuPositionSound();
 	    }
 	  else if ( CursorIsOnButton( DOWN_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
 	    {
-	      if (droidtype > 0) droidtype --;	      
+	      if ( ClearanceIndex > 0) 
+		{
+		  ClearanceIndex --;	      
+		  MoveMenuPositionSound();
+		}
 	      key_pressed = TRUE;
-	      MoveMenuPositionSound();
 	    }
 	  else if ( CursorIsOnButton( RIGHT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
 	    {
@@ -807,7 +833,7 @@ Class : %s\n\
 Height : %f\n\
 Weight: %f \n\
 Drive : %s \n\
-Brain : %s", Druidmap[droidtype].druidname, Classname[Druidmap[Me[0].type].class],
+Brain : %s", Druidmap[droidtype].druidname, Classname[Druidmap[ droidtype ].class],
 	       droidtype+1, Classes[Druidmap[droidtype].class],
 	       Druidmap[droidtype].height, Druidmap[droidtype].weight,
 	       ItemMap [ Druidmap[ droidtype ].drive_item.type ].item_name,

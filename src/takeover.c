@@ -198,11 +198,6 @@ Takeover (int enemynum)
 
       EvaluatePlayground ();
 
-      DebugPrintf ( 0 , "\nFirst yellow position has gain: %f. " , EvaluatePosition ( GELB , 0 , 1 ) );
-      DebugPrintf ( 0 , "\nFirst violett position has gain: %f. " , EvaluatePosition ( VIOLETT , 0 , 1 ) );
-      DebugPrintf ( 0 , "\nSecond yellow position has gain: %f. " , EvaluatePosition ( GELB , 1 , 1 ) );
-      DebugPrintf ( 0 , "\nSecond violett position has gain: %f. " , EvaluatePosition ( VIOLETT , 1 , 1 ) );
-
       ShowPlayground ();
       SDL_Flip (Screen);
 
@@ -225,6 +220,7 @@ Takeover (int enemynum)
 	  // We allow to gain the current energy/full health that was still in the 
 	  // other droid, since all previous damage must be due to fighting damage,
 	  // and this is exactly the sort of damage can usually be cured in refreshes.
+	  //
 	  Me[0].energy += AllEnemys[enemynum].energy;
 	  Me[0].health += Druidmap[OpponentType].maxenergy;
 

@@ -125,6 +125,10 @@ IsWallBlock (int block)
     case BLOCK1:
     case BLOCK2:
     case BLOCK3:
+    case AUTOGUN_L:
+    case AUTOGUN_R:
+    case AUTOGUN_U:
+    case AUTOGUN_D:
     case ALERT:
     case CODEPANEL_L:
     case CODEPANEL_R:
