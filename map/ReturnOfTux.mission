@@ -347,6 +347,25 @@ Event Action to be triggered by this trigger="teleport_from_north_maintainance_t
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
 
+//--------------------
+// Now we do the connection from Sundabar to the MS abandoned cargo and back
+// in the following two events...
+//
+
+// This is a pure location trigger.  Copy and adapt is as you feel like it.
+* Start of an Event Trigger Subsection *
+Influencer must be at X=8 Y=9 Lev=7
+Event Action to be triggered by this trigger="teleport_from_sundabar_to_abandoned_cargo"
+Delete the event trigger after it has been triggered=-1
+* End of this Event Trigger Subsection *
+
+// This is a pure location trigger.  Copy and adapt is as you feel like it.
+* Start of an Event Trigger Subsection *
+Influencer must be at X=4 Y=31 Lev=4
+Event Action to be triggered by this trigger="teleport_from_abandoned_cargo_to_sundabar"
+Delete the event trigger after it has been triggered=-1
+* End of this Event Trigger Subsection *
+
 
 
 
@@ -528,6 +547,27 @@ Action label for this action="teleport_from_north_maintainance_to_camp"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
 Teleport to TelX=29 TelY=23 TelLev=0
 Action is Influencer say="Arrived back at camp from north maintainance...."
+Action is mission assignment=-1
+* End of this Event Action Subsection *
+
+//--------------------
+// Now we enter the connection actions (teleporting) from
+// the abandoned cargo to sundabar and vice versa
+//
+
+* Start of an Event Action Subsection *
+Action label for this action="teleport_from_sundabar_to_abandoned_cargo"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Teleport to TelX=5 TelY=32 TelLev=4
+Action is Influencer say="Arrived at abandoned cargo area...."
+Action is mission assignment=-1
+* End of this Event Action Subsection *
+
+* Start of an Event Action Subsection *
+Action label for this action="teleport_from_abandoned_cargo_to_sundabar"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Teleport to TelX=7 TelY=8 TelLev=7
+Action is Influencer say="Arrived at sundabar from abandoned cargo area...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
 
