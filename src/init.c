@@ -544,13 +544,22 @@ Sorry...\n\
 	  Terminate( ERR );
 	}
 
+      // Now we read in minimum strength, dex and magic required to wear/wield this item
+      ReadValueFromString( ItemPointer , "Strength minimum required to wear/wield this item=" , "%d" , 
+			   &ItemMap[ItemIndex].item_require_strength , EndOfItemData );
+      ReadValueFromString( ItemPointer , "Dexterity minimum required to wear/wield this item=" , "%d" , 
+			   &ItemMap[ItemIndex].item_require_dexterity , EndOfItemData );
+      ReadValueFromString( ItemPointer , "Magic minimum required to wear/wield this item=" , "%d" , 
+			   &ItemMap[ItemIndex].item_require_magic , EndOfItemData );
+
+
       // Now we read in the new laser type after installing this item
-      ReadValueFromString( ItemPointer ,  "Item installation changes weapon into new value=" , "%d" , 
-			   &ItemMap[ItemIndex].New_Laser_Type_After_Installation , EndOfItemData );
+      // ReadValueFromString( ItemPointer ,  "Item installation changes weapon into new value=" , "%d" , 
+      // &ItemMap[ItemIndex].New_Laser_Type_After_Installation , EndOfItemData );
 
       // Now we read in the new drive type after installing this item
-      ReadValueFromString( ItemPointer ,  "Item installation changes drive into new value=" , "%d" , 
-			   &ItemMap[ItemIndex].New_Drive_Type_After_Installation , EndOfItemData );
+      // ReadValueFromString( ItemPointer ,  "Item installation changes drive into new value=" , "%d" , 
+      // &ItemMap[ItemIndex].New_Drive_Type_After_Installation , EndOfItemData );
 
       // Now we read in the energy and health the influ gains (upon drinking this potion)
       ReadValueFromString( ItemPointer ,  "Energy gain on application in combat=" , "%lf" , 
@@ -591,6 +600,10 @@ Sorry...\n\
       // Now we read in the armour value of this item as armour
       ReadValueFromString( ItemPointer ,  "Item as armour: ac_bonus=" , "%lf" , 
 			   &ItemMap[ItemIndex].item_armour_ac_bonus , EndOfItemData );
+
+      // Now we read in the armour value of this item as shield
+      ReadValueFromString( ItemPointer ,  "Item as shield: ac_bonus=" , "%lf" , 
+			   &ItemMap[ItemIndex].item_shield_ac_bonus , EndOfItemData );
 
       // Now we read in the number of the picture to be used for this item
       ReadValueFromString( ItemPointer ,  "Picture number=" , "%d" , 
