@@ -1228,10 +1228,6 @@ InitPictures (void)
 
   Load_Tux_Surfaces();
 
-  ShowStartupPercentage ( 55 ) ;
-  
-  Load_Big_Map_Insert_Surfaces();
-
   ShowStartupPercentage ( 60 ) ; 
 
   Load_Digit_Surfaces();

@@ -719,6 +719,8 @@ This indicates a severe error in the map insert handling of Freedroid.",
       // Now at this point we know, that this map insert is really visible, so we 
       // can really blit it to the screen now...
       //
+      LoadOneMapInsertSurfaceIfNotYetLoaded ( DisplayLevel->MapInsertList [ MapInsertNr ] . type );
+
       if ( Block_Width != INITIAL_BLOCK_WIDTH )
 	{
 	  ResizeFactor = (float)Block_Width / INITIAL_BLOCK_WIDTH  ;

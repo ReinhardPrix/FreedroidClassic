@@ -1053,55 +1053,47 @@ This error indicates some installation problem with freedroid.",
 }; // void Load_Tux_Surfaces( void )
 
 /* ----------------------------------------------------------------------
- * This function creates all the surfaces, that are nescessary to store
- * the big map inserts, that might add some spice to the otherwise rather
- * monotonous rooms and halls of the freedroid maps.
+ *
+ *
  * ---------------------------------------------------------------------- */
-void 
-Load_Big_Map_Insert_Surfaces( void )
+void
+LoadOneMapInsertSurfaceIfNotYetLoaded ( int i )
 {
-  int i ;
   char *fpath;
   SDL_Surface* TempSurface;
 
-  for ( i = 0 ; i < MAX_MAP_INSERTS ; i ++ )
+  //--------------------
+  // Now if this map surface has been loaded into memory already,
+  // then there's really nothing we'd have to do here...
+  //
+  if ( AllMapInserts [ i ] . insert_surface != NULL ) return;
+
+  //--------------------
+  // Now we try to load the surface and then we also convert it
+  // immediately to display format, so it can be blittet later and
+  // at maximum speed!!!
+  //
+  fpath = find_file ( AllMapInserts [ i ] . map_insert_file_name , GRAPHICS_DIR , FALSE );
+  TempSurface = IMG_Load( fpath ) ;
+  if ( TempSurface == 0 )
     {
-
-      //--------------------
-      // Now we try to load the surface and then we also convert it
-      // immediately to display format, so it can be blittet later and
-      // at maximum speed!!!
-      //
-      fpath = find_file ( AllMapInserts [ i ] . map_insert_file_name , GRAPHICS_DIR , FALSE );
-      TempSurface = IMG_Load( fpath ) ;
-      if ( TempSurface == 0 )
-	{
-	  fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
-	  GiveStandardErrorMessage ( "Load_Big_Map_Insert_Surfaces(...)" , "\
+      fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
+      GiveStandardErrorMessage ( "Load_Big_Map_Insert_Surfaces(...)" , "\
 Freedroid was unable to load a big graphics insert from the hard disk\n\
 into memory.\n\
 This error indicates some installation problem with freedroid.",
-				     PLEASE_INFORM, IS_FATAL );
-	}
-      AllMapInserts [ i ] . insert_surface = SDL_DisplayFormat ( TempSurface ) ;
-      SDL_FreeSurface ( TempSurface ) ;
-
-      //--------------------
-      // Now we check if the file has been loaded successfully, or otherwise
-      // we print out an error message...
-      //
-      if ( ! AllMapInserts [ i ] . insert_surface )
-	{
-	  fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
-	  GiveStandardErrorMessage ( "Load_Big_Map_Insert_Surfaces(...)" , "\
-Freedroid was unable to load a big graphics insert from the hard disk\n\
-into memory.\n\
-This error indicates some installation problem with freedroid.",
-				     PLEASE_INFORM, IS_FATAL );
-	}
+				 PLEASE_INFORM, IS_FATAL );
     }
-	  
-}; // void Load_Big_Map_Insert_Surfaces( void )
+  AllMapInserts [ i ] . insert_surface = SDL_DisplayFormat ( TempSurface ) ;
+  SDL_FreeSurface ( TempSurface ) ;
+
+  //--------------------
+  // Since this might have taken some time to do, we'll make sure it
+  // does not cause too much of a glich in the game...
+  //
+  Activate_Conservative_Frame_Computation();
+
+}; // void 
 
 /* ----------------------------------------------------------------------
  * This function creates all the surfaces, that are nescessary to blit a
