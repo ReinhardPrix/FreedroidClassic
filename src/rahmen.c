@@ -344,6 +344,11 @@ ShowCurrentTextWindow ( void )
 #define REQUIREMENTS_NOT_MET_TEXT "REQUIREMENTS NOT MET"
 
   //--------------------
+  // During the title display phase, we need not have this window visible...
+  //
+  if ( Me.status == BRIEFING ) return;
+
+  //--------------------
   // For testing purposes is bluntly insert the new banner element here:
   //
   // if ( GetMousePos_y( ) >= ( SCREENHEIGHT / 2 ) )
