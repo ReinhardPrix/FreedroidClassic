@@ -85,20 +85,15 @@ float AC_Gain_Per_Dex_Point[]={     -1 ,     1 ,         1  ,        1 };
 #define AC_Y 171
 
 #define CHARACTERRECT_X (SCREEN_WIDTH/2)
-// #define CHARACTERRECT_Y (User_Rect.y)
 #define CHARACTERRECT_W (SCREEN_WIDTH/2)
 #define CHARACTERRECT_H (User_Rect.h)
 
 #define SKI_BUTTON_X 600
 #define SKI_BUTTON_Y 370
-// #define INV_BUTTON_X 20
 #define INV_BUTTON_X 600
 #define INV_BUTTON_Y 400
-// #define INV_BUTTON_Y 10
-// #define CHA_BUTTON_X 20
 #define CHA_BUTTON_X 600
 #define CHA_BUTTON_Y 430
-// #define CHA_BUTTON_Y 30
 #define INV_BUTTON_WIDTH 38
 #define INV_BUTTON_HEIGHT 22
 
@@ -301,50 +296,6 @@ InitiateNewCharacter ( int PlayerNum , int CharacterClass )
   
 }; // void InitiateNewCharacter ( int PlayerNum , int CharacterClass )
 
-
-/* ----------------------------------------------------------------------
- * This function checks if a given screen position lies within the 
- * inventory screen toggle button or not.
- * ---------------------------------------------------------------------- */
-int
-CursorIsOnINVButton( int x , int y )
-{
-  if ( x > INV_BUTTON_X + INV_BUTTON_WIDTH  ) return ( FALSE );
-  if ( x < INV_BUTTON_X                     ) return ( FALSE );
-  if ( y > INV_BUTTON_Y + INV_BUTTON_HEIGHT ) return ( FALSE );
-  if ( y < INV_BUTTON_Y                     ) return ( FALSE );
-  return ( TRUE );
-}; // int CursorIsOnStrButton( int x , int y )
-
-/* ----------------------------------------------------------------------
- * This function checks if a given screen position lies within the 
- * skills screen toggle button or not
- * ---------------------------------------------------------------------- */
-int
-CursorIsOnSKIButton( int x , int y )
-{
-  if ( x > SKI_BUTTON_X + INV_BUTTON_WIDTH  ) return ( FALSE );
-  if ( x < SKI_BUTTON_X                     ) return ( FALSE );
-  if ( y > SKI_BUTTON_Y + INV_BUTTON_HEIGHT ) return ( FALSE );
-  if ( y < SKI_BUTTON_Y                     ) return ( FALSE );
-  return ( TRUE );
-}; // int CursorIsOnStrButton( int x , int y )
-
-/* ----------------------------------------------------------------------
- * This function checks if a given screen position lies within the 
- * strength plus button or not
- * ---------------------------------------------------------------------- */
-int
-CursorIsOnCHAButton( int x , int y )
-{
-  if ( x > CHA_BUTTON_X + INV_BUTTON_WIDTH  ) return ( FALSE );
-  if ( x < CHA_BUTTON_X                     ) return ( FALSE );
-  if ( y > CHA_BUTTON_Y + INV_BUTTON_HEIGHT ) return ( FALSE );
-  if ( y < CHA_BUTTON_Y                     ) return ( FALSE );
-  return ( TRUE );
-}; // int CursorIsOnStrButton( int x , int y )
-
-
 /* ----------------------------------------------------------------------
  * This function displays all the buttons that open up the character
  * screen and the invenotry screen
@@ -352,46 +303,10 @@ CursorIsOnCHAButton( int x , int y )
 void
 DisplayButtons( void )
 {
-  static SDL_Surface *CHA_ButtonImage = NULL;
-  static SDL_Surface *INV_ButtonImage = NULL;
-  static SDL_Surface *SKI_ButtonImage = NULL;
-  static SDL_Surface *PlusButtonImage = NULL;
-  SDL_Surface *tmp;
   static SDL_Rect CHA_Button_Rect;
   static SDL_Rect INV_Button_Rect;
   static SDL_Rect SKI_Button_Rect;
   static int WasPressed;
-  char* fpath;
-
-  // if ( GameConfig.CharacterScreen_Visible == TRUE ) return;
-  
-  // --------------------
-  // Some things like the loading of the character screen
-  // need to be done only once at the first call of this
-  // function. 
-  //
-  if ( INV_ButtonImage == NULL )
-    {
-      fpath = find_file ( "CHAButton.png" , GRAPHICS_DIR, FALSE);
-      tmp = IMG_Load( fpath );
-      CHA_ButtonImage = SDL_DisplayFormat( tmp );
-      SDL_FreeSurface( tmp );
-
-      fpath = find_file ( "INVButton.png" , GRAPHICS_DIR, FALSE);
-      tmp = IMG_Load( fpath );
-      INV_ButtonImage = SDL_DisplayFormat( tmp );
-      SDL_FreeSurface( tmp );
-
-      fpath = find_file ( "SKIButton.png" , GRAPHICS_DIR, FALSE);
-      tmp = IMG_Load( fpath );
-      SKI_ButtonImage = SDL_DisplayFormat( tmp );
-      SDL_FreeSurface( tmp );
-
-      fpath = find_file ( "PlusButton.png" , GRAPHICS_DIR, FALSE);
-      tmp = IMG_Load( fpath );
-      PlusButtonImage = SDL_DisplayFormat( tmp );
-      SDL_FreeSurface( tmp );
-    }
 
   CHA_Button_Rect.x = CHA_BUTTON_X;
   CHA_Button_Rect.y = CHA_BUTTON_Y;
@@ -408,27 +323,28 @@ DisplayButtons( void )
   //
   if ( Me[0].points_to_distribute > 0 )
     {
-      SDL_BlitSurface( PlusButtonImage , NULL , Screen , &CHA_Button_Rect );
+      ShowGenericButtonFromList ( PLUS_BUTTON );
     }
   else
     {
-      SDL_BlitSurface( CHA_ButtonImage , NULL , Screen , &CHA_Button_Rect );
+      ShowGenericButtonFromList ( CHA_BUTTON );
     }
+  ShowGenericButtonFromList ( INV_BUTTON );
+  ShowGenericButtonFromList ( SKI_BUTTON );
 
-  SDL_BlitSurface( INV_ButtonImage , NULL , Screen , &INV_Button_Rect );
-  SDL_BlitSurface( SKI_ButtonImage , NULL , Screen , &SKI_Button_Rect );
-  
-  if ( CursorIsOnINVButton( GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
+
+
+  if ( CursorIsOnButton( INV_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
     {
       GameConfig.Inventory_Visible = ! GameConfig.Inventory_Visible;
     }
 
-  if ( CursorIsOnCHAButton( GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
+  if ( CursorIsOnButton( CHA_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
     {
       GameConfig.CharacterScreen_Visible = ! GameConfig.CharacterScreen_Visible;
     }
 
-  if ( CursorIsOnSKIButton( GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
+  if ( CursorIsOnButton( SKI_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
     {
       GameConfig.SkillScreen_Visible = ! GameConfig.SkillScreen_Visible;
     }
@@ -450,48 +366,6 @@ CursorIsOnStrButton( int x , int y )
   if ( y < CharacterRect.y + BUTTON_MOD_X + STR_Y ) return ( FALSE );
   return ( TRUE );
 }; // int CursorIsOnStrButton( int x , int y )
-
-/* ----------------------------------------------------------------------
- * This function checks if a given screen position lies within the 
- * dexterity plus button or not
- * ---------------------------------------------------------------------- */
-int
-CursorIsOnDexButton( int x , int y )
-{
-  if ( x > CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X + BUTTON_WIDTH ) return ( FALSE );
-  if ( x < CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X ) return ( FALSE );
-  if ( y > CharacterRect.y + BUTTON_MOD_X + DEX_Y + BUTTON_HEIGHT ) return ( FALSE );
-  if ( y < CharacterRect.y + BUTTON_MOD_X + DEX_Y ) return ( FALSE );
-  return ( TRUE );
-}; // int CursorIsOnDexButton( int x , int y )
-
-/* ----------------------------------------------------------------------
- * This function checks if a given screen position lies within the 
- * magic plus button or not
- * ---------------------------------------------------------------------- */
-int
-CursorIsOnMagButton( int x , int y )
-{
-  if ( x > CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X + BUTTON_WIDTH ) return ( FALSE );
-  if ( x < CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X ) return ( FALSE );
-  if ( y > CharacterRect.y + BUTTON_MOD_X + MAG_Y + BUTTON_HEIGHT ) return ( FALSE );
-  if ( y < CharacterRect.y + BUTTON_MOD_X + MAG_Y ) return ( FALSE );
-  return ( TRUE );
-}; // int CursorIsOnMagButton( int x , int y )
-
-/* ----------------------------------------------------------------------
- * This function checks if a given screen position lies within the 
- * vitality plus button or not
- * ---------------------------------------------------------------------- */
-int
-CursorIsOnVitButton( int x , int y )
-{
-  if ( x > CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X + BUTTON_WIDTH ) return ( FALSE );
-  if ( x < CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X ) return ( FALSE );
-  if ( y > CharacterRect.y + BUTTON_MOD_X + VIT_Y + BUTTON_HEIGHT ) return ( FALSE );
-  if ( y < CharacterRect.y + BUTTON_MOD_X + VIT_Y ) return ( FALSE );
-  return ( TRUE );
-}; // int CursorIsOnVitButton( int x , int y )
 
 /* ----------------------------------------------------------------------
  * This function adds any bonuses that might be on the influencers things

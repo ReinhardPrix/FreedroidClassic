@@ -1338,9 +1338,10 @@ FireBullet ( int PlayerNum )
   // e.g. the inventory screen or the skills screens or the like, we will also
   // not interpret this as a common in-game movement or firing command.
   //
-  if ( ServerThinksAxisIsActive ( PlayerNum ) && ( CursorIsOnINVButton( GetMousePos_x() + 16 , GetMousePos_y() + 16 ) ||
-						   CursorIsOnSKIButton( GetMousePos_x() + 16 , GetMousePos_y() + 16 ) ||
-						   CursorIsOnCHAButton( GetMousePos_x() + 16 , GetMousePos_y() + 16 ) ) )
+  if ( ServerThinksAxisIsActive ( PlayerNum ) && 
+       ( CursorIsOnButton( INV_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) ||
+	 CursorIsOnButton( SKI_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) ||
+	 CursorIsOnButton( CHA_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) ) )
     {
       DebugPrintf( 0 , "\n Cursor is on a button, therefore this press will be ignored." );
       return;

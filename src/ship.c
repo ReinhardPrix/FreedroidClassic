@@ -682,63 +682,6 @@ PaintConsoleMenu (int menu_pos)
 }; // void PaintConsoleMenu ( int MenuPos )
 
 /* ----------------------------------------------------------------------
- * This function checks if a given screen position lies within the 
- * UP button of the droid show or not.
- * ---------------------------------------------------------------------- */
-int
-CursorIsOnUPButton( int x , int y )
-{
-  if ( x > UP_BUTTON_X + UP_BUTTON_WIDTH  ) return ( FALSE );
-  if ( x < UP_BUTTON_X                     ) return ( FALSE );
-  if ( y > UP_BUTTON_Y + UP_BUTTON_HEIGHT ) return ( FALSE );
-  if ( y < UP_BUTTON_Y                     ) return ( FALSE );
-  return ( TRUE );
-}; // int CursorIsOnStrButton( int x , int y )
-
-/* ----------------------------------------------------------------------
- * This function checks if a given screen position lies within the 
- * DOWN button of the droid show or not.
- * ---------------------------------------------------------------------- */
-int
-CursorIsOnDOWNButton( int x , int y )
-{
-  if ( x > DOWN_BUTTON_X + DOWN_BUTTON_WIDTH  ) return ( FALSE );
-  if ( x < DOWN_BUTTON_X                     ) return ( FALSE );
-  if ( y > DOWN_BUTTON_Y + DOWN_BUTTON_HEIGHT ) return ( FALSE );
-  if ( y < DOWN_BUTTON_Y                     ) return ( FALSE );
-  return ( TRUE );
-}; // int CursorIsOnStrButton( int x , int y )
-
-/* ----------------------------------------------------------------------
- * This function checks if a given screen position lies within the 
- * LEFT button of the droid show or not.
- * ---------------------------------------------------------------------- */
-int
-CursorIsOnLEFTButton( int x , int y )
-{
-  if ( x > LEFT_BUTTON_X + LEFT_BUTTON_WIDTH  ) return ( FALSE );
-  if ( x < LEFT_BUTTON_X                     ) return ( FALSE );
-  if ( y > LEFT_BUTTON_Y + LEFT_BUTTON_HEIGHT ) return ( FALSE );
-  if ( y < LEFT_BUTTON_Y                     ) return ( FALSE );
-  return ( TRUE );
-}; // int CursorIsOnStrButton( int x , int y )
-
-/* ----------------------------------------------------------------------
- * This function checks if a given screen position lies within the 
- * UP button of the droid show or not.
- * ---------------------------------------------------------------------- */
-int
-CursorIsOnRIGHTButton( int x , int y )
-{
-  if ( x > RIGHT_BUTTON_X + RIGHT_BUTTON_WIDTH  ) return ( FALSE );
-  if ( x < RIGHT_BUTTON_X                     ) return ( FALSE );
-  if ( y > RIGHT_BUTTON_Y + RIGHT_BUTTON_HEIGHT ) return ( FALSE );
-  if ( y < RIGHT_BUTTON_Y                     ) return ( FALSE );
-  return ( TRUE );
-}; // int CursorIsOnStrButton( int x , int y )
-
-
-/* ----------------------------------------------------------------------
  * This function is intended to show some buttons (with an arrow pointing
  * left and with an arrow pointing right and perhaps also with arrows
  * pointing up or down) so that one can easily navigate through the droid
@@ -748,62 +691,10 @@ CursorIsOnRIGHTButton( int x , int y )
 void
 ShowLeftRightDroidshowButtons ( void )
 {
-  static SDL_Surface *UP_ButtonImage = NULL;
-  static SDL_Surface *DOWN_ButtonImage = NULL;
-  static SDL_Surface *LEFT_ButtonImage = NULL;
-  static SDL_Surface *RIGHT_ButtonImage = NULL;
-  SDL_Surface *tmp;
-  static SDL_Rect UP_Button_Rect;
-  static SDL_Rect DOWN_Button_Rect;
-  static SDL_Rect LEFT_Button_Rect;
-  static SDL_Rect RIGHT_Button_Rect;
-  char* fpath;
-
-  // --------------------
-  // Some things like the loading of the button images
-  // need to be done only once at the first call of this
-  // function. 
-  //
-  if ( UP_ButtonImage == NULL )
-    {
-      fpath = find_file ( "UPButton.png" , GRAPHICS_DIR, FALSE);
-      tmp = IMG_Load( fpath );
-      UP_ButtonImage = SDL_DisplayFormat( tmp );
-      SDL_FreeSurface( tmp );
-
-      fpath = find_file ( "DOWNButton.png" , GRAPHICS_DIR, FALSE);
-      tmp = IMG_Load( fpath );
-      DOWN_ButtonImage = SDL_DisplayFormat( tmp );
-      SDL_FreeSurface( tmp );
-
-      fpath = find_file ( "LEFTButton.png" , GRAPHICS_DIR, FALSE);
-      tmp = IMG_Load( fpath );
-      LEFT_ButtonImage = SDL_DisplayFormat( tmp );
-      SDL_FreeSurface( tmp );
-
-      fpath = find_file ( "RIGHTButton.png" , GRAPHICS_DIR, FALSE);
-      tmp = IMG_Load( fpath );
-      RIGHT_ButtonImage = SDL_DisplayFormat( tmp );
-      SDL_FreeSurface( tmp );
-    }
-
-  UP_Button_Rect.x = UP_BUTTON_X;
-  UP_Button_Rect.y = UP_BUTTON_Y;
-  
-  DOWN_Button_Rect.x = DOWN_BUTTON_X;
-  DOWN_Button_Rect.y = DOWN_BUTTON_Y;
-  
-  LEFT_Button_Rect.x = LEFT_BUTTON_X;
-  LEFT_Button_Rect.y = LEFT_BUTTON_Y;
-  
-  RIGHT_Button_Rect.x = RIGHT_BUTTON_X;
-  RIGHT_Button_Rect.y = RIGHT_BUTTON_Y;
-  
-  SDL_BlitSurface( UP_ButtonImage , NULL , Screen , &UP_Button_Rect );
-  SDL_BlitSurface( DOWN_ButtonImage , NULL , Screen , &DOWN_Button_Rect );
-  SDL_BlitSurface( LEFT_ButtonImage , NULL , Screen , &LEFT_Button_Rect );
-  SDL_BlitSurface( RIGHT_ButtonImage , NULL , Screen , &RIGHT_Button_Rect );
-
+  ShowGenericButtonFromList ( UP_BUTTON );
+  ShowGenericButtonFromList ( DOWN_BUTTON );
+  ShowGenericButtonFromList ( LEFT_BUTTON );
+  ShowGenericButtonFromList ( RIGHT_BUTTON );
 }; // void ShowLeftRightDroidshowButtons ( void )
 
 /* ----------------------------------------------------------------------
@@ -835,35 +726,35 @@ GreatDruidShow (void)
 
       if (SpacePressed() || EscapePressed() || axis_is_active )
 	{
-	  if ( CursorIsOnUPButton( GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
+	  if ( CursorIsOnButton( UP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
 	    {
 	      if ( droidtype < Me[0].type) droidtype ++;	    
 	      key_pressed = TRUE;
 	      MoveMenuPositionSound();
 	    }
-	  else if ( CursorIsOnDOWNButton( GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
+	  else if ( CursorIsOnButton( DOWN_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
 	    {
 	      if (droidtype > 0) droidtype --;	      
 	      key_pressed = TRUE;
 	      MoveMenuPositionSound();
 	    }
-	  else if ( CursorIsOnRIGHTButton( GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
+	  else if ( CursorIsOnButton( RIGHT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
 	    {
 	      MoveMenuPositionSound();
 	      if (page < 2) page ++;
 	      key_pressed = TRUE;
 	    }
-	  else if ( CursorIsOnLEFTButton( GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
+	  else if ( CursorIsOnButton( LEFT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
 	    {
 	      MoveMenuPositionSound();
 	      if (page > 0) page --;
 	      key_pressed = TRUE;
 	    }
 
-	  if ( ! CursorIsOnUPButton( GetMousePos_x() + 16 , GetMousePos_y() + 16 ) &&
-	       ! CursorIsOnDOWNButton( GetMousePos_x() + 16 , GetMousePos_y() + 16 ) &&
-	       ! CursorIsOnLEFTButton( GetMousePos_x() + 16 , GetMousePos_y() + 16 ) &&
-	       ! CursorIsOnRIGHTButton( GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+	  if ( ! CursorIsOnButton( UP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) &&
+	       ! CursorIsOnButton( DOWN_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) &&
+	       ! CursorIsOnButton( LEFT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) &&
+	       ! CursorIsOnButton( RIGHT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
 	    {
 	      finished = TRUE;
 	      while (SpacePressed() ||EscapePressed());
@@ -1040,6 +931,9 @@ ShowDeckMap (Level deck)
 
       ClearUserFenster();
       Assemble_Combat_Picture( ONLY_SHOW_MAP );
+      
+      
+
       SDL_Flip (Screen);
 
       LeftMouseWasPressed = axis_is_active;

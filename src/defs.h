@@ -463,6 +463,20 @@ enum _non_player_characters
 #define MAX_MAP_INSERTS         6
 #define MAX_MAP_INSERTS_PER_LEVEL 20
 
+#define MAX_MOUSE_PRESS_BUTTONS 8
+enum
+  { 
+    CHA_BUTTON, 
+    INV_BUTTON,
+    SKI_BUTTON, 
+    PLUS_BUTTON,
+    UP_BUTTON,
+    DOWN_BUTTON,
+    LEFT_BUTTON,
+    RIGHT_BUTTON
+  };
+
+
 #define EL_BLOCK_LEN		8
 #define EL_BLOCK_HEIGHT		8
 #define EL_BLOCK_MEM 		EL_BLOCK_LEN * EL_BLOCK_HEIGHT

@@ -318,9 +318,6 @@ EXTERN void DropRandomItem( float x , float y , int TreasureChestRange , int For
 #else
 #define EXTERN extern
 #endif
-EXTERN int CursorIsOnINVButton( int x , int y );
-EXTERN int CursorIsOnCHAButton( int x , int y );
-EXTERN int CursorIsOnSKIButton( int x , int y );
 EXTERN void InitiateNewCharacter ( int PlayerNum , int CharacterClass );
 EXTERN void DisplayButtons( void );
 EXTERN void UpdateAllCharacterStats ( int PlayerNum );
@@ -461,6 +458,8 @@ EXTERN void EscapeMenu (void);
 #else
 #define EXTERN extern
 #endif
+EXTERN void ShowGenericButtonFromList ( int ButtonIndex );
+EXTERN int CursorIsOnButton( int ButtonIndex , int x , int y );
 EXTERN void *MyMemmem ( unsigned char *haystack, size_t haystacklen, unsigned char *needle, size_t needlelen);
 EXTERN char* ReadAndMallocStringFromData ( char* SearchString , char* StartIndicationString , char* EndIndicationString );
 EXTERN int CountStringOccurences ( char* SearchString , char* TargetString ) ;
@@ -480,8 +479,6 @@ EXTERN void gotoxy (int, int);
 EXTERN int MyRandom (int);
 EXTERN void Armageddon (void);
 EXTERN void Teleport ( int LNum , int X , int Y , int PlayerNum , int Shuffling ) ;
-// EXTERN void SaveSettings (void);
-// EXTERN void LoadSettings (void);
 EXTERN int SaveGameConfig (void);
 EXTERN int LoadGameConfig (void);
 EXTERN void InsertNewMessage (void);
@@ -492,7 +489,7 @@ EXTERN int GiveNumberToThisActionLabel ( char* ActionLabel );
 EXTERN void ExecuteActionWithLabel ( char* ActionLabel , int PlayerNum ) ;
 EXTERN void ExecuteEvent ( int EventNumber , int PlayerNum );
 
-/* enemy.c */
+// enemy.c 
 #undef EXTERN
 #ifdef _enemy_c
 #define EXTERN

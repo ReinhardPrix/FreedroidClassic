@@ -38,8 +38,10 @@
 #include "global.h"
 #include "proto.h"
 
+//--------------------
 // The definition of the message structure can stay here,
 // because its only needed in this module.
+//
 typedef struct
 {
   void *NextMessage;
@@ -47,6 +49,124 @@ typedef struct
   char *MessageText;
 }
 message, Message;
+
+typedef struct
+{
+  SDL_Surface *button_surface;
+  char *button_image_file_name;
+  SDL_Rect button_rect;
+}
+mouse_press_button, Mouse_press_button;
+
+mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
+  {
+    { NULL , "CHAButton.png" ,   { 600 , 430 ,  38 ,  22 } } ,
+    { NULL , "INVButton.png" ,   { 600 , 400 ,  38 ,  22 } } ,
+    { NULL , "SKIButton.png" ,   { 600 , 370 ,  38 ,  22 } } ,
+    { NULL , "PlusButton.png" ,  { 600 , 430 ,  38 ,  22 } } ,
+    { NULL , "UPButton.png" ,    { 580 , 180 ,  50 , 100 } } ,
+    { NULL , "DOWNButton.png" ,  { 580 , 330 ,  50 , 100 } } ,
+    { NULL , "LEFTButton.png" ,  { 300 , 420 , 100 ,  50 } } ,
+    { NULL , "RIGHTButton.png" , { 450 , 420 , 100 ,  50 } } 
+  }; // AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] 
+
+/* ----------------------------------------------------------------------
+ * This function checks if a given screen position lies within the 
+ * inventory screen toggle button or not.
+ * ---------------------------------------------------------------------- */
+int
+CursorIsOnButton( int ButtonIndex , int x , int y )
+{
+  //--------------------
+  // First a sanity check if the button index given does make
+  // some sense.
+  //
+  if ( ( ButtonIndex >= MAX_MOUSE_PRESS_BUTTONS ) || ( ButtonIndex < 0 ) )
+    {
+      fprintf (stderr, "\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+A Button that should be checked for mouse contact was requested, but the\n\
+button index given exceeds the number of buttons defined in freedroid.\n\
+\n\
+Freedroid will terminate now to draw attention to the problem...\n\
+----------------------------------------------------------------------\n" );
+    }
+
+  //--------------------
+  // Now that we know we have been given a valid button index,
+  // we can start to check if the mouse cursor really is on that
+  // rectangle or not.
+  //
+  if ( x > AllMousePressButtons[ ButtonIndex ] . button_rect . x + 
+       AllMousePressButtons[ ButtonIndex ] . button_rect . w  ) return ( FALSE );
+  if ( x < AllMousePressButtons[ ButtonIndex ] . button_rect . x ) return ( FALSE );
+  if ( y > AllMousePressButtons[ ButtonIndex ] . button_rect . y + 
+       AllMousePressButtons[ ButtonIndex ] . button_rect . h ) return ( FALSE );
+  if ( y < AllMousePressButtons[ ButtonIndex ] . button_rect . y ) return ( FALSE );
+
+  //--------------------
+  // So since the cursor is not outside of this rectangle, it must
+  // we inside, and so we'll return this answer.
+  //
+  return ( TRUE );
+
+}; // int CursorIsOnButton( int ButtonIndex , int x , int y )
+
+/* ----------------------------------------------------------------------
+ * This function blits a button to the screen.  The button must have been
+ * defined prior to this in the above button list.
+ * ---------------------------------------------------------------------- */
+void 
+ShowGenericButtonFromList ( int ButtonIndex )
+{ 
+  SDL_Surface *tmp;
+  char *fpath;
+  SDL_Rect Temp_Blitting_Rect;
+
+  //--------------------
+  // First a sanity check if the button index given does make
+  // some sense.
+  //
+  if ( ( ButtonIndex >= MAX_MOUSE_PRESS_BUTTONS ) || ( ButtonIndex < 0 ) )
+    {
+      fprintf (stderr,
+	       "\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+A Button that should be displayed on the screen was requested, but the\n\
+button index given exceeds the number of buttons defined in freedroid.\n\
+\n\
+Freedroid will terminate now to draw attention to the problem...\n\
+----------------------------------------------------------------------\n" );
+    }
+
+  //--------------------
+  // Now we check if we have to load the button image still
+  // or if it is perhaps already loaded into memory.
+  //
+  if ( AllMousePressButtons[ ButtonIndex ] . button_surface == NULL )
+    {
+      fpath = find_file ( AllMousePressButtons[ ButtonIndex ] . button_image_file_name , GRAPHICS_DIR, FALSE);
+      tmp = IMG_Load( fpath );
+      AllMousePressButtons[ ButtonIndex ] . button_surface = SDL_DisplayFormat ( tmp );
+      SDL_FreeSurface ( tmp );
+    }
+
+  //--------------------
+  // Now that we know we have the button image loaded, we can start
+  // to blit the button image to the screen.
+  //
+  // But in order not to damage the original rect data, we use the
+  // temp value as parameter for the SDL_Blit thing..
+  //
+  Copy_Rect ( AllMousePressButtons[ ButtonIndex ] . button_rect , Temp_Blitting_Rect );
+  SDL_BlitSurface( AllMousePressButtons[ ButtonIndex ] . button_surface , NULL , Screen , &Temp_Blitting_Rect );
+
+}; // void ShowGenericButtonFromList ( int ButtonIndex )
+
+
+
 
 #define SETTINGS_STRUCTURE_RAW_DATA_STRING "\nSettings Raw Data:\n"
 #define END_OF_SETTINGS_DATA_STRING "\nEnd of Settings File.\n"
@@ -81,6 +201,9 @@ int framenr = 0;
 
 char *homedir = NULL;
 char ConfigDir[255]="\0";
+
+
+
 
 /* ----------------------------------------------------------------------
  * This function does something similar to memmem.  Indeed, it would be
