@@ -193,10 +193,11 @@ SpecialForce: Type=883 X=29 Y=21 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1
 ** Beginning of new Level **
 Level=3
 Maximum number of Random Droids=50
-Minimum number of Random Droids=50
-Allowed Type of Random Droid for this level: 247
+Minimum number of Random Droids=45
 Allowed Type of Random Droid for this level: 249
-SpecialForce: Type=883 X=8 Y=3 Fixed=0 Marker=2 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="StoneStartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Dark Apprentice of the MS" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+Allowed Type of Random Droid for this level: 329
+Allowed Type of Random Droid for this level: 302
+
 ** End of this levels droid data **
 
 ----------------------------------------------------------------------
@@ -206,13 +207,13 @@ SpecialForce: Type=883 X=8 Y=3 Fixed=0 Marker=2 AdvancedCommand=2 Parameter1=0 P
 ** Beginning of new Level **
 Level=4
 Maximum number of Random Droids=85
-Minimum number of Random Droids=85
-Allowed Type of Random Droid for this level: 139
-Allowed Type of Random Droid for this level: 123
-Allowed Type of Random Droid for this level: 247
-Allowed Type of Random Droid for this level: 249
+Minimum number of Random Droids=75
+
+Allowed Type of Random Droid for this level: 512
+Allowed Type of Random Droid for this level: 420
+Allowed Type of Random Droid for this level: 476
 Allowed Type of Random Droid for this level: 302
-SpecialForce: Type=883 X=10 Y=37 Fixed=0 Marker=2 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="StoneStartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Heavy Teleporter Guard" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+
 ** End of this levels droid data **
 
 ----------------------------------------------------------------------
@@ -485,7 +486,9 @@ Allowed Type of Random Droid for this level: 883
 Level=14
 Maximum number of Random Droids=15
 Minimum number of Random Droids=15
-Allowed Type of Random Droid for this level: 751
+Allowed Type of Random Droid for this level: 476
+Allowed Type of Random Droid for this level: 420
+
 ** End of this levels droid data **
 
 ----------------------------------------------------------------------
