@@ -195,6 +195,9 @@ PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting)
   // These variables will always be needed!
   //
   int simulated_playback_starting_time;
+  static char PreviousFileName [1000]="HalloHallo";
+  static Uint32 PreviousStartTicks = 0 ;
+  Uint32 TicksNow;
 
   //--------------------
   // These variables will only be needed when compiling with sound!
@@ -205,6 +208,16 @@ PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting)
   char Temp_Filename[5000];
   char* fpath;
 #endif
+
+  //--------------------
+  // In case the same sample is played again and again in a very
+  // short time, we might refuse operation here, since this could
+  // lead to non-loadability errors with the sound files.
+  //
+  TicksNow = SDL_GetTicks();
+  if ( ( ! strcmp ( PreviousFileName , SoundSampleFileName ) ) && ( ( TicksNow - PreviousStartTicks ) < 2.5 * 1000 ) ) return;
+  PreviousStartTicks = TicksNow;
+  strcpy ( PreviousFileName , SoundSampleFileName );
 
   //--------------------
   // In case there are no sound capabilities on this machine, we 
