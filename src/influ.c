@@ -2121,6 +2121,16 @@ adapt_global_mode_for_player ( int player_num )
 	global_ingame_mode = GLOBAL_INGAME_MODE_SCROLL_DOWN ;
 	return;
     }
+    //--------------------
+    // Now at this point, we know that the cursor is *not* in the text message
+    // window any more, so we can normalize the current state to no scroll mode
+    // at this point already.
+    //
+    if ( ( global_ingame_mode == GLOBAL_INGAME_MODE_SCROLL_UP ) ||
+	 ( global_ingame_mode == GLOBAL_INGAME_MODE_SCROLL_DOWN ) )
+    {
+	global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
+    }
 
     //--------------------
     // Now we need to find the obstacle under the current mouse

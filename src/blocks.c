@@ -2462,8 +2462,8 @@ init_obstacle_data( void )
 	obstacle_map [ i ] . obstacle_short_name = MyMalloc ( 100 ); // that should be sufficient for most short names...
 	sprintf ( obstacle_map [ i ] . obstacle_short_name , "unnamed_obstacle" );
 
-	obstacle_map [ i ] . obstacle_long_description = MyMalloc ( 1000 ); // that should be sufficient for most short names...
-	sprintf ( obstacle_map [ i ] . obstacle_long_description , "undescribed obstacle yet.  wait for Tim...");
+	obstacle_map [ i ] . obstacle_long_description = MyMalloc ( 1000 ); // that should be sufficient for most long descriptions...
+	sprintf ( obstacle_map [ i ] . obstacle_long_description , "This undescribed obstacle is still waiting for for some contibutions to it's description.....");
 
     }
     //--------------------
@@ -2473,31 +2473,43 @@ init_obstacle_data( void )
     obstacle_map [ ISO_V_WALL ] . block_area_parm_2 = 1.2 ;
     obstacle_map [ ISO_V_WALL ] . filename = "iso_walls_0001.png" ;
     obstacle_map [ ISO_V_WALL ] . transparent = TRANSPARENCY_FOR_WALLS ;
+    obstacle_map [ ISO_V_WALL ] . obstacle_short_name = "Wall";
+    obstacle_map [ ISO_V_WALL ] . obstacle_long_description = "Hey ! This looks like...a WALL ! Maybe you could run into it to be sure...";
     obstacle_map [ ISO_H_WALL ] . block_area_parm_1 = 1.2 ;
     obstacle_map [ ISO_H_WALL ] . block_area_parm_2 = standard_wall_thickness ;
     obstacle_map [ ISO_H_WALL ] . filename = "iso_walls_0002.png" ;
     obstacle_map [ ISO_H_WALL ] . transparent = TRANSPARENCY_FOR_WALLS;
-    
+    obstacle_map [ ISO_H_WALL ] . obstacle_short_name = "Wall";
+    obstacle_map [ ISO_H_WALL ] . obstacle_long_description = "Hey ! This looks like...a WALL ! Maybe you could run into it to be sure...";
+        
     obstacle_map [ ISO_V_WALL_WITH_DOT ] . block_area_parm_1 = standard_wall_thickness ;
     obstacle_map [ ISO_V_WALL_WITH_DOT ] . block_area_parm_2 = 1.2 ;
     obstacle_map [ ISO_V_WALL_WITH_DOT ] . filename = "iso_walls_0003.png"; 
     obstacle_map [ ISO_V_WALL_WITH_DOT ] . transparent = TRANSPARENCY_FOR_WALLS ;
+    obstacle_map [ ISO_V_WALL_WITH_DOT ] . obstacle_short_name = "Wall";
+    obstacle_map [ ISO_V_WALL_WITH_DOT ] . obstacle_long_description = "Maybe you could use a door to go out. This wall seems pretty solid.";
     obstacle_map [ ISO_H_WALL_WITH_DOT ] . block_area_parm_1 = 1.2 ;
     obstacle_map [ ISO_H_WALL_WITH_DOT ] . block_area_parm_2 = standard_wall_thickness ;
     obstacle_map [ ISO_H_WALL_WITH_DOT ] . filename = "iso_walls_0004.png" ;
     obstacle_map [ ISO_H_WALL_WITH_DOT ] . transparent = TRANSPARENCY_FOR_WALLS ;
-    
+    obstacle_map [ ISO_H_WALL_WITH_DOT ] . obstacle_short_name = obstacle_map [ ISO_V_WALL_WITH_DOT ] . obstacle_short_name;
+    obstacle_map [ ISO_H_WALL_WITH_DOT ] . obstacle_long_description = obstacle_map [ ISO_V_WALL_WITH_DOT ] . obstacle_long_description;
+        
     obstacle_map [ ISO_GLASS_WALL_1 ] . block_area_parm_1 = standard_wall_thickness ;
     obstacle_map [ ISO_GLASS_WALL_1 ] . block_area_parm_2 = 1.2 ;
     obstacle_map [ ISO_GLASS_WALL_1 ] . block_vision_too = FALSE ;
     obstacle_map [ ISO_GLASS_WALL_1 ] . filename = "iso_walls_0020.png" ;
     obstacle_map [ ISO_GLASS_WALL_1 ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS ;
+    obstacle_map [ ISO_GLASS_WALL_1 ] . obstacle_short_name = "Glass wall";
+    obstacle_map [ ISO_GLASS_WALL_1 ] . obstacle_long_description = "A wall, made out of glass.";
     
     obstacle_map [ ISO_GLASS_WALL_2 ] . block_area_parm_1 = standard_wall_thickness ;
     obstacle_map [ ISO_GLASS_WALL_2 ] . block_area_parm_2 = 1.2 ;
     obstacle_map [ ISO_GLASS_WALL_2 ] . block_vision_too = FALSE ;
     obstacle_map [ ISO_GLASS_WALL_2 ] . filename = "iso_walls_0021.png" ;
     obstacle_map [ ISO_GLASS_WALL_2 ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS ;
+    obstacle_map [ ISO_GLASS_WALL_2 ] . obstacle_short_name = "Glass wall";
+    obstacle_map [ ISO_GLASS_WALL_2 ] . obstacle_long_description = "A wall, made out of glass.";
   
     obstacle_map [ ISO_CYAN_WALL_WINDOW_1 ] . block_area_parm_1 = standard_wall_thickness ;
     obstacle_map [ ISO_CYAN_WALL_WINDOW_1 ] . block_area_parm_2 = 1.2 ;
@@ -3296,6 +3308,16 @@ init_obstacle_data( void )
   obstacle_map [ ISO_GREY_WALL_END_N ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_GREY_WALL_END_N ] . block_area_parm_2 = 1.0 ;
   obstacle_map [ ISO_GREY_WALL_END_N ] . filename = "iso_walls_0006.png" ;
+  /*description for all ISO_GREY_WALL_END_*/
+  obstacle_map [ ISO_GREY_WALL_END_N ] . obstacle_short_name = "A grey wall.";
+  obstacle_map [ ISO_GREY_WALL_END_W ] . obstacle_short_name = "A grey wall.";
+  obstacle_map [ ISO_GREY_WALL_END_E ] . obstacle_short_name = "A grey wall.";
+  obstacle_map [ ISO_GREY_WALL_END_S ] . obstacle_short_name = "A grey wall.";
+  obstacle_map [ ISO_GREY_WALL_END_N ] . obstacle_long_description = "This is grey and seems quite hard to destroy. People usually call it a wall. You have no chance to go through : there must be another path.";
+  obstacle_map [ ISO_GREY_WALL_END_W ] . obstacle_long_description = "This is grey and seems quite hard to destroy. People usually call it a wall. You have no chance to go through : there must be another path.";
+  obstacle_map [ ISO_GREY_WALL_END_E ] . obstacle_long_description = "This is grey and seems quite hard to destroy. People usually call it a wall. You have no chance to go through : there must be another path.";
+  obstacle_map [ ISO_GREY_WALL_END_S ] . obstacle_long_description = "This is grey and seems quite hard to destroy. People usually call it a wall. You have no chance to go through : there must be another path.";
+  /**************************************/
   obstacle_map [ ISO_GREY_WALL_END_E ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_GREY_WALL_END_E ] . block_area_parm_1 = 1.0 ;
   obstacle_map [ ISO_GREY_WALL_END_E ] . block_area_parm_2 = 1.1 ;
@@ -3308,6 +3330,7 @@ init_obstacle_data( void )
   for( i = ISO_LIGHT_GREEN_WALL_1 ; i <= ISO_FUNKY_WALL_4 ; i++) {
     obstacle_map [ i ] . transparent = TRANSPARENCY_FOR_WALLS ;
   }
+
 
   obstacle_map [ ISO_LIGHT_GREEN_WALL_1 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_LIGHT_GREEN_WALL_1 ] . block_area_parm_1 = 1.0 ;
@@ -3408,6 +3431,31 @@ init_obstacle_data( void )
   obstacle_map [ ISO_BRICK_WALL_JUNCTION_4 ] . block_area_parm_2 = 1.2 ;
   obstacle_map [ ISO_BRICK_WALL_JUNCTION_4 ] . filename = "iso_brick_wall_0011.png" ;
 
+  //all brick walls above share the same description
+  obstacle_map [ ISO_BRICK_WALL_JUNCTION_4 ] . obstacle_short_name = "Brick wall" ;
+  obstacle_map [ ISO_BRICK_WALL_JUNCTION_4 ] . obstacle_long_description = "A badly constructed brick wall. Maybe you could alter it...";
+  obstacle_map [ ISO_BRICK_WALL_JUNCTION_3 ] . obstacle_short_name = obstacle_map [ ISO_BRICK_WALL_JUNCTION_4 ] . obstacle_short_name;
+  obstacle_map [ ISO_BRICK_WALL_JUNCTION_3 ] . obstacle_long_description = obstacle_map [ ISO_BRICK_WALL_JUNCTION_4 ] . obstacle_long_description;
+  obstacle_map [ ISO_BRICK_WALL_JUNCTION_2 ] . obstacle_short_name = obstacle_map [ ISO_BRICK_WALL_JUNCTION_4 ] . obstacle_short_name;
+  obstacle_map [ ISO_BRICK_WALL_JUNCTION_2 ] . obstacle_long_description = obstacle_map [ ISO_BRICK_WALL_JUNCTION_4 ] . obstacle_long_description;
+  obstacle_map [ ISO_BRICK_WALL_JUNCTION_1 ] . obstacle_short_name = obstacle_map [ ISO_BRICK_WALL_JUNCTION_4 ] . obstacle_short_name;
+  obstacle_map [ ISO_BRICK_WALL_JUNCTION_1 ] . obstacle_long_description = obstacle_map [ ISO_BRICK_WALL_JUNCTION_4 ] . obstacle_long_description;
+  obstacle_map [ ISO_BRICK_WALL_CORNER_1 ] . obstacle_short_name = obstacle_map [ ISO_BRICK_WALL_JUNCTION_4 ] . obstacle_short_name;
+  obstacle_map [ ISO_BRICK_WALL_CORNER_1 ] . obstacle_long_description = obstacle_map [ ISO_BRICK_WALL_JUNCTION_4 ] . obstacle_long_description;
+  obstacle_map [ ISO_BRICK_WALL_CORNER_2 ] . obstacle_short_name = obstacle_map [ ISO_BRICK_WALL_JUNCTION_4 ] . obstacle_short_name;
+  obstacle_map [ ISO_BRICK_WALL_CORNER_2 ] . obstacle_long_description = obstacle_map [ ISO_BRICK_WALL_JUNCTION_4 ] . obstacle_long_description;
+  obstacle_map [ ISO_BRICK_WALL_CORNER_3 ] . obstacle_short_name = obstacle_map [ ISO_BRICK_WALL_JUNCTION_4 ] . obstacle_short_name;
+  obstacle_map [ ISO_BRICK_WALL_CORNER_3 ] . obstacle_long_description = obstacle_map [ ISO_BRICK_WALL_JUNCTION_4 ] . obstacle_long_description;
+  obstacle_map [ ISO_BRICK_WALL_CORNER_4 ] . obstacle_short_name = obstacle_map [ ISO_BRICK_WALL_JUNCTION_4 ] . obstacle_short_name;
+  obstacle_map [ ISO_BRICK_WALL_CORNER_4 ] . obstacle_long_description = obstacle_map [ ISO_BRICK_WALL_JUNCTION_4 ] . obstacle_long_description;
+  obstacle_map [ ISO_BRICK_WALL_END ] . obstacle_short_name = obstacle_map [ ISO_BRICK_WALL_JUNCTION_4 ] . obstacle_short_name;
+  obstacle_map [ ISO_BRICK_WALL_END ] . obstacle_long_description = obstacle_map [ ISO_BRICK_WALL_JUNCTION_4 ] . obstacle_long_description;
+  obstacle_map [ ISO_BRICK_WALL_H ] . obstacle_short_name = obstacle_map [ ISO_BRICK_WALL_JUNCTION_4 ] . obstacle_short_name;
+  obstacle_map [ ISO_BRICK_WALL_H ] . obstacle_long_description = obstacle_map [ ISO_BRICK_WALL_JUNCTION_4 ] . obstacle_long_description;
+  obstacle_map [ ISO_BRICK_WALL_V ] . obstacle_short_name = obstacle_map [ ISO_BRICK_WALL_JUNCTION_4 ] . obstacle_short_name;
+  obstacle_map [ ISO_BRICK_WALL_V ] . obstacle_long_description = obstacle_map [ ISO_BRICK_WALL_JUNCTION_4 ] . obstacle_long_description;
+
+
   //--------------------
   // Brick walls are smashable.  When you smash them, there should be
   // first a cracked brick wall, then when smashing again, there will
@@ -3425,6 +3473,11 @@ init_obstacle_data( void )
   obstacle_map [ ISO_BRICK_WALL_CRACKED_2 ] . filename = "iso_brick_wall_0013.png" ;
   obstacle_map [ ISO_BRICK_WALL_CRACKED_2 ] . result_type_after_smashing_once = ISO_BRICK_WALL_RUBBLE_2 ;
   obstacle_map [ ISO_BRICK_WALL_CRACKED_2 ] . is_smashable = TRUE ;
+  obstacle_map [ ISO_BRICK_WALL_CRACKED_2 ] . obstacle_short_name = "Wall.";
+  obstacle_map [ ISO_BRICK_WALL_CRACKED_2 ] . obstacle_long_description = "This wall is suffering. Kill it definitely !";
+  obstacle_map [ ISO_BRICK_WALL_CRACKED_1 ] . obstacle_short_name = "Wall.";
+  obstacle_map [ ISO_BRICK_WALL_CRACKED_1 ] . obstacle_long_description = "This wall is suffering. Kill it definitely !";
+  
   obstacle_map [ ISO_BRICK_WALL_RUBBLE_1 ] . block_area_type = COLLISION_TYPE_NONE  ;
   obstacle_map [ ISO_BRICK_WALL_RUBBLE_1 ] . block_area_parm_1 = 1.2 ;
   obstacle_map [ ISO_BRICK_WALL_RUBBLE_1 ] . block_area_parm_2 = 1.0 ;
@@ -3433,6 +3486,11 @@ init_obstacle_data( void )
   obstacle_map [ ISO_BRICK_WALL_RUBBLE_2 ] . block_area_parm_1 = 1.0 ;
   obstacle_map [ ISO_BRICK_WALL_RUBBLE_2 ] . block_area_parm_2 = 1.2 ;
   obstacle_map [ ISO_BRICK_WALL_RUBBLE_2 ] . filename = "iso_brick_wall_0015.png" ;
+  obstacle_map [ ISO_BRICK_WALL_RUBBLE_2 ] . obstacle_short_name = "Wall.";
+  obstacle_map [ ISO_BRICK_WALL_RUBBLE_2 ] . obstacle_long_description = "Well ... it was not very resistant ";
+  obstacle_map [ ISO_BRICK_WALL_RUBBLE_1 ] . obstacle_short_name = "Wall.";
+  obstacle_map [ ISO_BRICK_WALL_RUBBLE_1 ] . obstacle_long_description = "Well ... it was not very resistant ";
+  
 
   obstacle_map [ ISO_BLOOD_1 ] . block_area_type = COLLISION_TYPE_NONE ;
   obstacle_map [ ISO_BLOOD_1 ] . block_area_parm_1 = 1.0 ;
@@ -3474,6 +3532,25 @@ init_obstacle_data( void )
   obstacle_map [ ISO_BLOOD_8 ] . block_area_parm_2 = 1.0 ;
   obstacle_map [ ISO_BLOOD_8 ] . filename = "iso_blood_0008.png" ;
   obstacle_map [ ISO_BLOOD_8 ] . needs_pre_put = TRUE ;
+  // the eight blood tiles have the same description - normal, right ?
+  obstacle_map [ ISO_BLOOD_1 ] . obstacle_short_name = "Blood.";
+  obstacle_map [ ISO_BLOOD_1 ] . obstacle_long_description = "Do droids bleed ? These do.";
+  obstacle_map [ ISO_BLOOD_2 ] . obstacle_short_name = obstacle_map [ ISO_BLOOD_1 ] . obstacle_short_name;
+  obstacle_map [ ISO_BLOOD_2 ] . obstacle_long_description = obstacle_map [ ISO_BLOOD_1 ] . obstacle_long_description;
+  obstacle_map [ ISO_BLOOD_3 ] . obstacle_short_name = obstacle_map [ ISO_BLOOD_1 ] . obstacle_short_name;
+  obstacle_map [ ISO_BLOOD_3 ] . obstacle_long_description = obstacle_map [ ISO_BLOOD_1 ] . obstacle_long_description;
+  obstacle_map [ ISO_BLOOD_4 ] . obstacle_short_name = obstacle_map [ ISO_BLOOD_1 ] . obstacle_short_name;
+  obstacle_map [ ISO_BLOOD_4 ] . obstacle_long_description = obstacle_map [ ISO_BLOOD_1 ] . obstacle_long_description;
+  obstacle_map [ ISO_BLOOD_5 ] . obstacle_short_name = obstacle_map [ ISO_BLOOD_1 ] . obstacle_short_name;
+  obstacle_map [ ISO_BLOOD_5 ] . obstacle_long_description = obstacle_map [ ISO_BLOOD_1 ] . obstacle_long_description;
+  obstacle_map [ ISO_BLOOD_6 ] . obstacle_short_name = obstacle_map [ ISO_BLOOD_1 ] . obstacle_short_name;
+  obstacle_map [ ISO_BLOOD_6 ] . obstacle_long_description = obstacle_map [ ISO_BLOOD_1 ] . obstacle_long_description;
+  obstacle_map [ ISO_BLOOD_7 ] . obstacle_short_name = obstacle_map [ ISO_BLOOD_1 ] . obstacle_short_name;
+  obstacle_map [ ISO_BLOOD_7 ] . obstacle_long_description = obstacle_map [ ISO_BLOOD_1 ] . obstacle_long_description;
+  obstacle_map [ ISO_BLOOD_8 ] . obstacle_short_name = obstacle_map [ ISO_BLOOD_1 ] . obstacle_short_name;
+  obstacle_map [ ISO_BLOOD_8 ] . obstacle_long_description = obstacle_map [ ISO_BLOOD_1 ] . obstacle_long_description;
+  
+ 
 
   obstacle_map [ ISO_EXIT_1 ] . block_area_type = COLLISION_TYPE_NONE ;
   obstacle_map [ ISO_EXIT_1 ] . block_area_parm_1 = 1.0 ;
@@ -3512,6 +3589,8 @@ init_obstacle_data( void )
   obstacle_map [ ISO_ROCKS_N_PLANTS_1 ] . filename = "iso_rocks_n_plants_0000.png" ;
   obstacle_map [ ISO_ROCKS_N_PLANTS_1 ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_ROCKS_N_PLANTS_1 ] . emitted_light_strength = -9 ;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_1 ] . obstacle_short_name = "Exotic plant.";
+  obstacle_map [ ISO_ROCKS_N_PLANTS_1 ] . obstacle_long_description = "A wonderful exotic plant. You can read \"Made by Basse\" on it";
 
   obstacle_map [ ISO_ROCKS_N_PLANTS_2 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_ROCKS_N_PLANTS_2 ] . block_area_parm_1 = 1.5 ;
@@ -3528,6 +3607,16 @@ init_obstacle_data( void )
   obstacle_map [ ISO_ROCKS_N_PLANTS_4 ] . block_area_parm_1 = 1.0 ;
   obstacle_map [ ISO_ROCKS_N_PLANTS_4 ] . block_area_parm_2 = 1.0 ;
   obstacle_map [ ISO_ROCKS_N_PLANTS_4 ] . filename = "iso_rocks_n_plants_0003.png" ;
+  
+  //the three rocks above have the same description for the moment
+  //inspired by fallout1
+  obstacle_map [ ISO_ROCKS_N_PLANTS_2 ] . obstacle_short_name = "Rocks.";
+  obstacle_map [ ISO_ROCKS_N_PLANTS_2 ] . obstacle_long_description = "Do you think a rock can attack you ? No, MS droids can't hide themselves that way : they crash before.";
+  obstacle_map [ ISO_ROCKS_N_PLANTS_3 ] . obstacle_short_name = obstacle_map [ ISO_ROCKS_N_PLANTS_1 ] . obstacle_short_name;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_3 ] . obstacle_long_description = obstacle_map [ ISO_ROCKS_N_PLANTS_1 ] . obstacle_long_description;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_4 ] . obstacle_short_name = obstacle_map [ ISO_ROCKS_N_PLANTS_1 ] . obstacle_short_name;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_4 ] . obstacle_long_description = obstacle_map [ ISO_ROCKS_N_PLANTS_1 ] . obstacle_long_description;
+
 
   obstacle_map [ ISO_ROCKS_N_PLANTS_5 ] . block_area_parm_1 = 1.0 ;
   obstacle_map [ ISO_ROCKS_N_PLANTS_5 ] . block_area_parm_2 = 1.0 ;
@@ -3553,6 +3642,15 @@ init_obstacle_data( void )
   obstacle_map [ ISO_ROCKS_N_PLANTS_8 ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_ROCKS_N_PLANTS_8 ] . emitted_light_strength = -8 ;
   
+  obstacle_map [ ISO_ROCKS_N_PLANTS_5 ] . obstacle_short_name = "An exotic plant";
+  obstacle_map [ ISO_ROCKS_N_PLANTS_5 ] . obstacle_long_description = "Maybe you can eat that. Some people have reported that kind of plant to be drugs. Beware : eating too much could lead to kernel panic.";
+  obstacle_map [ ISO_ROCKS_N_PLANTS_6 ] . obstacle_short_name = obstacle_map [ ISO_ROCKS_N_PLANTS_5 ] . obstacle_short_name;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_6 ] . obstacle_long_description = obstacle_map [ ISO_ROCKS_N_PLANTS_5 ] . obstacle_long_description;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_7 ] . obstacle_short_name = obstacle_map [ ISO_ROCKS_N_PLANTS_5 ] . obstacle_short_name;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_7 ] . obstacle_long_description = obstacle_map [ ISO_ROCKS_N_PLANTS_5 ] . obstacle_long_description;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_8 ] . obstacle_short_name = obstacle_map [ ISO_ROCKS_N_PLANTS_5 ] . obstacle_short_name;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_8 ] . obstacle_long_description = obstacle_map [ ISO_ROCKS_N_PLANTS_5 ] . obstacle_long_description;  
+    
   for ( i = ISO_ROOM_WALL_V_RED ; i <= ISO_ROOM_WALL_H_GREEN ; i++) 
   {
     obstacle_map [ i ] . transparent = TRANSPARENCY_FOR_WALLS ;
@@ -3570,7 +3668,14 @@ init_obstacle_data( void )
   obstacle_map [ ISO_ROOM_WALL_H_GREEN ] . block_area_parm_1 = 1.2 ;
   obstacle_map [ ISO_ROOM_WALL_H_GREEN ] . block_area_parm_2 = standard_wall_thickness ;
   obstacle_map [ ISO_ROOM_WALL_H_GREEN ] . filename = "iso_walls_0019.png" ;
-
+  obstacle_map [ ISO_ROOM_WALL_V_RED ] . obstacle_short_name = "A red wall";
+  obstacle_map [ ISO_ROOM_WALL_H_RED ] . obstacle_short_name = "A red wall";
+  obstacle_map [ ISO_ROOM_WALL_V_RED ] . obstacle_long_description = "You think it would be better with a penguin on it. You are right.";
+  obstacle_map [ ISO_ROOM_WALL_H_RED ] . obstacle_long_description = "You think it would be better with a penguin on it. You are right.";
+  obstacle_map [ ISO_ROOM_WALL_V_GREEN ] . obstacle_short_name = "A green wall";
+  obstacle_map [ ISO_ROOM_WALL_H_GREEN ] . obstacle_short_name = "A green wall";
+  obstacle_map [ ISO_ROOM_WALL_V_GREEN ] . obstacle_long_description = "You think it would be better with a penguin on it. You are right.";
+  obstacle_map [ ISO_ROOM_WALL_H_GREEN ] . obstacle_long_description = "You think it would be better with a penguin on it. You are right.";
   //--------------------
   // These two are for the big long shop counter.  It has a suitable
   // collision rectangle, but light may pass through, so you can see

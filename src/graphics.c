@@ -264,7 +264,7 @@ blit_our_own_mouse_cursor ( void )
     //
     if ( first_call )
     {
-	for ( i = 0 ; i < 6 ; i ++ )
+	for ( i = 0 ; i < 8 ; i ++ )
 	{
 	    sprintf ( constructed_filename , "mouse_cursor_%04d.png" , i );
 	    fpath = find_file ( constructed_filename , GRAPHICS_DIR, FALSE );
@@ -317,6 +317,14 @@ Error loading flag image.",
 		blit_open_gl_texture_to_screen_position ( mouse_cursors [ 3 ] , 
 							  GetMousePos_x () , GetMousePos_y () , TRUE );
 		break;
+	    case GLOBAL_INGAME_MODE_REPAIR:
+		blit_open_gl_texture_to_screen_position ( mouse_cursors [ 6 ] , 
+							  GetMousePos_x () , GetMousePos_y () , TRUE );
+		break;
+	    case GLOBAL_INGAME_MODE_UNLOCK:
+		blit_open_gl_texture_to_screen_position ( mouse_cursors [ 7 ] , 
+							  GetMousePos_x () , GetMousePos_y () , TRUE );
+		break;
 	    default:
 		DebugPrintf ( -4 , "\n%s(): global_ingame_mode: %d." , __FUNCTION__ , 
 			      global_ingame_mode );
@@ -363,7 +371,7 @@ blit_mouse_cursor_corona ( void )
     //
     if ( first_call )
     {
-	for ( i = 0 ; i < 3 ; i ++ )
+	for ( i = 0 ; i < 4 ; i ++ )
 	{
 	    sprintf ( constructed_filename , "mouse_cursor_corona_%04d.png" , i );
 	    fpath = find_file ( constructed_filename , GRAPHICS_DIR, FALSE );
@@ -394,11 +402,11 @@ Error loading flag image.",
     else return;
 	
 
-    for ( i = 0 ; i < 3 ; i ++ )
+    for ( i = 0 ; i < 4 ; i ++ )
     {
 	offset_vector . x = 0 ;
 	offset_vector . y = -35 ;
-	RotateVectorByAngle ( &offset_vector , -(i+1) * 45 );
+	RotateVectorByAngle ( &offset_vector , -(i+1) * 35 );
 	
 	if ( use_open_gl )
 	{
