@@ -1659,7 +1659,9 @@ Level_Editor(void)
   int Weiter=FALSE;
   int MenuPosition=1;
   int i,j,k;
+  int SpecialMapValue;
   int OriginWaypoint = (-1);
+  char* NumericInputString;
   char* OldMapPointer;
 
   enum
@@ -1703,6 +1705,24 @@ Level_Editor(void)
 	    {
 	      if ( rintf(Me.pos.y) < CurLevel->ylen-1 ) Me.pos.y+=1;
 	      while (DownPressed());
+	    }
+
+	  //--------------------
+	  // Since the level editor will not always be able to
+	  // immediately feature all the the map tiles that might
+	  // have been added recently, we should offer a feature, so that you can
+	  // specify the value of a map piece just numerically.  This will be
+	  // done upon pressing the 'e' key.
+	  //
+	  if ( EPressed () )
+	    {
+	      while (EPressed());
+	      CenteredPutString   ( ne_screen ,  6*FontHeight(Menu_BFont), "Please enter new value (blindly):");
+	      SDL_Flip( ne_screen );
+	      NumericInputString=GetString( 10, FALSE );  // TRUE currently not implemented
+	      sscanf( NumericInputString , "%d" , &SpecialMapValue );
+	      if ( SpecialMapValue >= NUM_MAP_BLOCKS ) SpecialMapValue=0;
+	      CurLevel->map[BlockY][BlockX]=SpecialMapValue;
 	    }
 
 	  //--------------------

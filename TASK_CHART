@@ -17,6 +17,7 @@ THESE ITEMS HAVE FIRST PRIORITY:
 DONE Put each bullet specification variable under the control of the game.dat file
 DONE Make fash independent of framerate
 DONE Correct the way flash damage is handled:  once and not every frame damage should be done
+
 4. Think of a way new tiles can be incorporated into the game
 5. Add documentation about how to incorporate new map tiles into the game
 6. Add function to select map tile code directly
@@ -54,10 +55,10 @@ DONE Correct the way flash damage is handled:  once and not every frame damage s
    DONE Do segfault protection from planting tiles outside map structure
    DONE Allow for more things to be set directly: Elevators & Boxes
    DONE Add safety/correction check against leading -1 waypoint connections
-   i. Add a function to specify map tiles to be planted using their number
-      instead of a fixed key.  That should provide a fallback for freshly
-      self-implemented tiles, that do not have their own key sequence in
-      the level-editor yet.
+   DONE Add a function to specify map tiles to be planted using their number
+        instead of a fixed key.  That should provide a fallback for freshly
+        self-implemented tiles, that do not have their own key sequence in
+        the level-editor yet.
 
 1. Extend the game dat file
    DONE Add direct control over all individual bullet speeds and damages

@@ -44,7 +44,7 @@
 
 #include "maped.h"
 
-symtrans Translator[BLOCKANZAHL] = {
+symtrans Translator[ NUM_MAP_BLOCKS ] = {
   {'.', FLOOR},
   {'\'', VOID},
   {'x', FLOOR},			/* A waypoint is invisible */

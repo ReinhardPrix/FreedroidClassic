@@ -274,14 +274,9 @@ enum _directions
 };
 
 
-#define ENERGIEBALKENBREITE 15
-#define MAXENERGIEBALKENLAENGE 160
-#define ENERGIEPOSY 180
-
 /* Maximal number of ... */
 
-#define BLOCKANZAHL 		43
-#define NUM_MAP_BLOCKS		BLOCKANZAHL  /* total number of map-blocks */
+#define NUM_MAP_BLOCKS		50  /* total number of map-blocks */
 
 #define ALLBULLETTYPES		4	/* number of bullet-types */
 #define ALLBLASTTYPES		2	/* number of different exposions */
@@ -425,9 +420,9 @@ enum
   H_WALL=10,     V_WALL,       ALERT,        BLOCK1,       BLOCK2,      BLOCK3, BLOCK4,  BLOCK5,
   H_ZUTUERE=18,  H_HALBTUERE1, H_HALBTUERE2, H_HALBTUERE3, H_GANZTUERE,
   KONSOLE_L=23,  KONSOLE_R,    KONSOLE_O,    KONSOLE_U,
-  V_ZUTUERE,  V_HALBTUERE1, V_HALBTUERE2, V_HALBTUERE3, V_GANZTUERE,
-  LIFT,       VOID,         REFRESH1,     REFRESH2,     REFRESH3,    REFRESH4,
-  I_REFRESH1, I_REFRESH2,   I_REFRESH3,   I_REFRESH4,   INVISIBLE_BRICK
+  V_ZUTUERE=27,  V_HALBTUERE1, V_HALBTUERE2, V_HALBTUERE3, V_GANZTUERE,
+  LIFT=32,       VOID,         REFRESH1,     REFRESH2,     REFRESH3,    REFRESH4,
+  I_REFRESH1=38, I_REFRESH2,   I_REFRESH3,   I_REFRESH4,   INVISIBLE_BRICK
 };
 
 
