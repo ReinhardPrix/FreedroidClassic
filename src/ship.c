@@ -233,7 +233,7 @@ ShowElevators (void)
   DisplayBanner ( RAHMEN_FORCE_UPDATE );      
   // SetInfoline (NULL, NULL);
 
-  tmp=SDL_LoadBMP( NE_ELEVATOR_PIC_FILE );
+  tmp= IMG_Load ( NE_ELEVATOR_PIC_FILE );
   SourceRectangle.x=0;
   SourceRectangle.y=0;
   SourceRectangle.w=USERFENSTERBREITE;

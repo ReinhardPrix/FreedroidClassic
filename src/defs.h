@@ -79,7 +79,7 @@ enum
 #define NE_CONSOLEN_PIC_FILE    GRAPHICS_DIR "ne_cons.bmp" 
 #define NE_DIGIT_BLOCK_FILE     GRAPHICS_DIR "ne_digits.bmp"
 #define NE_RAHMEN_BLOCK_FILE    GRAPHICS_DIR "ne_rahmen.bmp"
-#define NE_TITLE_PIC_FILE       GRAPHICS_DIR "ne_title.bmp"
+#define NE_TITLE_PIC_FILE       GRAPHICS_DIR "ne_title.jpg"
 
 #define SHIPNAME		MAP_DIR "ship1"
 #define COLORFILE		MAP_DIR "levels.col"

@@ -364,7 +364,7 @@ InitPictures (void)
   // console picture need not be rendered fast or something.  This
   // really has time, so we load it as a surface and do not take the
   // elements apart (they dont have typical block format either)
-  ne_console_surface=SDL_LoadBMP( NE_CONSOLEN_PIC_FILE );
+  ne_console_surface= IMG_Load ( NE_CONSOLEN_PIC_FILE );
 
 
   // For debuggin purposes of the image loading procedure an
@@ -524,7 +524,7 @@ Init_Video (void)
   if (vid_info->wm_available)  /* if there's a window-manager */
     {
       SDL_WM_SetCaption ("Freedroid", "");
-      SDL_WM_SetIcon(SDL_LoadBMP (ICON_FILE), NULL);
+      SDL_WM_SetIcon( IMG_Load (ICON_FILE), NULL);
     }
 
 
