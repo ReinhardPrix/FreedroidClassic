@@ -328,10 +328,10 @@ enum
 #define INITIAL_DIGIT_POS_X 5*2
 #define INITIAL_DIGIT_POS_Y 12*2
 
-#define SCREEN_WIDTH		640
-#define SCREEN_HEIGHT		480
-// #define SCREEN_WIDTH		800
-// #define SCREEN_HEIGHT		600
+// #define SCREEN_WIDTH		640
+// #define SCREEN_HEIGHT		480
+#define SCREEN_WIDTH		800
+#define SCREEN_HEIGHT		600
 
 #define DRUIDIMAGE_LENGTH       66
 #define DRUIDIMAGE_HEIGHT       90

@@ -59,10 +59,10 @@ message, Message;
 
 mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
   {
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 560 , 434 ,  38 ,  45 } } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 600 , 420 ,  38 ,  40 } } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 590 , 376 ,  38 ,  47 } } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 560 , 434 ,  38 ,  45 } } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { SCREEN_WIDTH - 80 , SCREEN_HEIGHT - 46 ,  38 ,  45 } } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { SCREEN_WIDTH - 40 , SCREEN_HEIGHT - 60 ,  38 ,  40 } } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { SCREEN_WIDTH - 50 , SCREEN_HEIGHT - 104 ,  38 ,  47 } } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { SCREEN_WIDTH - 80 , SCREEN_HEIGHT - 46 ,  38 ,  45 } } ,
     { NULL , "mouse_buttons/UPButton.png"                     , { 600 ,  94 ,  40 ,  40 } } ,
     { NULL , "mouse_buttons/DOWNButton.png"                   , { 600 , 316 ,  40 ,  40 } } ,
     { NULL , "mouse_buttons/LEFTButton.png"                   , { 300 ,   5 , 100 ,  50 } } ,
@@ -125,12 +125,12 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
 
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 320 + 11 , 449 , 297 , 25 } } ,
 
-    { NULL , "mouse_buttons/GoLevelNorthButton.png"           , { 640-50-6 , 480-50-8 , 25 ,  25 } } ,
-    { NULL , "mouse_buttons/GoLevelSouthButton.png"           , { 640-50-6 , 480-4-25 , 25 ,  25 } } ,
-    { NULL , "mouse_buttons/GoLevelEastButton.png"            , { 640-25-4 , 437 , 25 , 25 } } ,
-    { NULL , "mouse_buttons/GoLevelWestButton.png"            , { 640-75-8 , 437 ,  0 , 0 } } ,
-    { NULL , "mouse_buttons/ExportThisLevelButton.png"        , { 640-60 , 90 , 0,  0 } } ,
-    { NULL , "mouse_buttons/LevelEditorSaveShipButton.png"    , { 640-90 , 90 , 0 ,  0 } } ,
+    { NULL , "mouse_buttons/GoLevelNorthButton.png"           , { SCREEN_WIDTH-50-6 , SCREEN_HEIGHT-50-8 , 25 ,  25 } } ,
+    { NULL , "mouse_buttons/GoLevelSouthButton.png"           , { SCREEN_WIDTH-50-6 , SCREEN_HEIGHT-4-25 , 25 ,  25 } } ,
+    { NULL , "mouse_buttons/GoLevelEastButton.png"            , { SCREEN_WIDTH-25-4 , 437 , 25 , 25 } } ,
+    { NULL , "mouse_buttons/GoLevelWestButton.png"            , { SCREEN_WIDTH-75-8 , 437 ,  0 , 0 } } ,
+    { NULL , "mouse_buttons/ExportThisLevelButton.png"        , { SCREEN_WIDTH-60 , 90 , 0,  0 } } ,
+    { NULL , "mouse_buttons/LevelEditorSaveShipButton.png"    , { SCREEN_WIDTH-90 , 90 , 0 ,  0 } } ,
     { NULL , "mouse_buttons/LevelEditorZoomInButton.png"      , { 30 , 90 , 0 ,  0 } } ,
     { NULL , "mouse_buttons/LevelEditorZoomOutButton.png"     , { 30 , 90 , 0 ,  0 } } ,
     { NULL , "mouse_buttons/LevelEditorRecursiveFillButton.png" , { 60 , 90 , 0 ,  0 } } ,
@@ -139,8 +139,8 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "mouse_buttons/LevelEditorNewItemButton.png"     , { 150 , 90 , 0 ,  0 } } ,
     { NULL , "mouse_buttons/LevelEditorESCButton.png"         , { 430 , 90 , 0 ,  0 } } ,
     { NULL , "mouse_buttons/LevelEditorResizeLevelButton.png" , { 460 , 90 , 0 ,  0 } } ,
-    { NULL , "mouse_buttons/LevelEditorKeymapButton.png"      , { 640-120 , 90 , 0 ,  0 } } ,
-    { NULL , "mouse_buttons/LevelEditorQuitButton.png"        , { 640-30 , 90 , 0 ,  0 } } ,
+    { NULL , "mouse_buttons/LevelEditorKeymapButton.png"      , { SCREEN_WIDTH-120 , 90 , 0 ,  0 } } ,
+    { NULL , "mouse_buttons/LevelEditorQuitButton.png"        , { SCREEN_WIDTH-30 , 90 , 0 ,  0 } } ,
 
     { NULL , "mouse_buttons/LevelEditorToggleTuxButton.png"        , { 210 , 90 , 0 ,  0 } } ,
     { NULL , "mouse_buttons/LevelEditorToggleTuxButtonOff.png"        , { 210 , 90 , 0 ,  0 } } ,
@@ -162,8 +162,8 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
 
     { NULL , "mouse_buttons/LevelEditorCancelItemDrop.png"    , { 55 + 80     , 32+5*66 , 0 ,  0 } } ,
 
-    { NULL , "backgrounds/SaveGameBanner.png"                 , { (640-200)/2 , (480-50)/2 , 200 , 50 } } ,
-    { NULL , "backgrounds/LoadGameBanner.png"                 , { (640-200)/2 , (480-50)/2 , 200 , 50 } } ,
+    { NULL , "backgrounds/SaveGameBanner.png"                 , { (SCREEN_WIDTH-200)/2 , (SCREEN_HEIGHT-50)/2 , 200 , 50 } } ,
+    { NULL , "backgrounds/LoadGameBanner.png"                 , { (SCREEN_WIDTH-200)/2 , (SCREEN_HEIGHT-50)/2 , 200 , 50 } } ,
 
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { WEAPON_RECT_X , WEAPON_RECT_Y , WEAPON_RECT_WIDTH , WEAPON_RECT_HEIGHT } } ,
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { DRIVE_RECT_X  , DRIVE_RECT_Y  , DRIVE_RECT_WIDTH  , DRIVE_RECT_HEIGHT } } ,
@@ -173,15 +173,15 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { HELMET_RECT_POS_X , HELMET_RECT_POS_Y , HELMET_RECT_WIDTH , HELMET_RECT_HEIGHT } } ,
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { ARMOUR_POS_X  , ARMOUR_POS_Y  , ARMOUR_RECT_WIDTH , ARMOUR_RECT_HEIGHT } } ,
 
-    { NULL , "mouse_buttons/ScrollDialogMenuUp.png"           , { 233 , 480-20-130-20 , 160 ,  20 } } ,
-    { NULL , "mouse_buttons/ScrollDialogMenuDown.png"         , { 233 , 480-20 , 160 ,  20 } } ,
+    { NULL , "mouse_buttons/ScrollDialogMenuUp.png"           , { 233 , SCREEN_HEIGHT-20-130-20 , 160 ,  20 } } ,
+    { NULL , "mouse_buttons/ScrollDialogMenuDown.png"         , { 233 , SCREEN_HEIGHT-20 , 160 ,  20 } } ,
     { NULL , "mouse_buttons/AttributePlusButton.png"                   , { CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X  , STR_Y  , 38 , 22 } } ,
     { NULL , "mouse_buttons/AttributePlusButton.png"                   , { CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X  , MAG_Y  , 38 , 22 } } ,
     { NULL , "mouse_buttons/AttributePlusButton.png"                   , { CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X  , DEX_Y  , 38 , 22 } } ,
     { NULL , "mouse_buttons/AttributePlusButton.png"                   , { CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X  , VIT_Y  , 38 , 22 } } ,
 
     { NULL , "mouse_buttons/arrow_up_for_scroll_text.png"     , { 575 , 10 , 73 , 98 } } ,
-    { NULL , "mouse_buttons/arrow_down_for_scroll_text.png"   , { 575 , 480-10-98 , 73 , 98 } } ,
+    { NULL , "mouse_buttons/arrow_down_for_scroll_text.png"   , { 575 , SCREEN_HEIGHT-10-98 , 73 , 98 } } ,
 
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 607 , 99 , 26 , 26 } } ,
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 607 , 347 , 26 , 26 } } ,

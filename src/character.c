@@ -275,45 +275,45 @@ InitiateNewCharacter ( int PlayerNum , int CharacterClass )
 void
 DisplayButtons( void )
 {
-  static int WasPressed;
+    static int WasPressed;
 
-  //--------------------
-  // Now we can draw either the plus button or the 'cha' button, depending
-  // on whether there are points to distribute or not
-  //
-  if ( Me[0].points_to_distribute > 0 )
+    //--------------------
+    // Now we can draw either the plus button or the 'cha' button, depending
+    // on whether there are points to distribute or not
+    //
+    if ( Me[0].points_to_distribute > 0 )
     {
-      // ShowGenericButtonFromList ( PLUS_BUTTON );
-      blit_special_background ( MOUSE_BUTTON_PLUS_BACKGROUND_PICTURE_CODE );
+	// ShowGenericButtonFromList ( PLUS_BUTTON );
+	blit_special_background ( MOUSE_BUTTON_PLUS_BACKGROUND_PICTURE_CODE );
     }
-  else
+    else
     {
-      // ShowGenericButtonFromList ( CHA_BUTTON );
-      blit_special_background ( MOUSE_BUTTON_CHA_BACKGROUND_PICTURE_CODE );
+	// ShowGenericButtonFromList ( CHA_BUTTON );
+	blit_special_background ( MOUSE_BUTTON_CHA_BACKGROUND_PICTURE_CODE );
     }
-  // ShowGenericButtonFromList ( INV_BUTTON );
-  // ShowGenericButtonFromList ( SKI_BUTTON );
-  blit_special_background ( MOUSE_BUTTON_INV_BACKGROUND_PICTURE_CODE );
-  blit_special_background ( MOUSE_BUTTON_SKI_BACKGROUND_PICTURE_CODE );
-
-
-  if ( MouseCursorIsOnButton( INV_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+    // ShowGenericButtonFromList ( INV_BUTTON );
+    // ShowGenericButtonFromList ( SKI_BUTTON );
+    blit_special_background ( MOUSE_BUTTON_INV_BACKGROUND_PICTURE_CODE );
+    blit_special_background ( MOUSE_BUTTON_SKI_BACKGROUND_PICTURE_CODE );
+    
+    
+    if ( MouseCursorIsOnButton( INV_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
     {
-      GameConfig.Inventory_Visible = ! GameConfig.Inventory_Visible;
+	GameConfig.Inventory_Visible = ! GameConfig.Inventory_Visible;
     }
-
-  if ( MouseCursorIsOnButton( CHA_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+    
+    if ( MouseCursorIsOnButton( CHA_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
     {
-      GameConfig.CharacterScreen_Visible = ! GameConfig.CharacterScreen_Visible;
+	GameConfig.CharacterScreen_Visible = ! GameConfig.CharacterScreen_Visible;
     }
-
-  if ( MouseCursorIsOnButton( SKI_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+    
+    if ( MouseCursorIsOnButton( SKI_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
     {
-      GameConfig.SkillScreen_Visible = ! GameConfig.SkillScreen_Visible;
+	GameConfig.SkillScreen_Visible = ! GameConfig.SkillScreen_Visible;
     }
-
-  WasPressed = axis_is_active;
-
+    
+    WasPressed = axis_is_active;
+    
 }; // void DisplayButtons( void )
 
 /* ----------------------------------------------------------------------

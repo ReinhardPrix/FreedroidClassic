@@ -46,10 +46,10 @@
 // bug that only occurs when very little space is given for those
 // rectangles...
 //
-#define UPPER_BANNER_TEXT_RECT_X 160
+#define UPPER_BANNER_TEXT_RECT_X (SCREEN_WIDTH/4)
 #define UPPER_BANNER_TEXT_RECT_Y 1
-#define UPPER_BANNER_TEXT_RECT_W 320
-#define UPPER_BANNER_TEXT_RECT_H 120
+#define UPPER_BANNER_TEXT_RECT_W (SCREEN_WIDTH/2)
+#define UPPER_BANNER_TEXT_RECT_H 130
 #define LOWER_BANNER_TEXT_RECT_X UPPER_BANNER_TEXT_RECT_X
 #define LOWER_BANNER_TEXT_RECT_Y ( SCREEN_HEIGHT - UPPER_BANNER_TEXT_RECT_Y - UPPER_BANNER_TEXT_RECT_H )
 #define LOWER_BANNER_TEXT_RECT_W UPPER_BANNER_TEXT_RECT_W
@@ -534,41 +534,27 @@ create_and_blit_droid_description ( int enemy_num )
 void 
 ShowCurrentSkill( void )
 {
-  SDL_Rect Target_Rect;
-  static int Mouse_Button_Pressed_Previous_Frame = FALSE;
+    SDL_Rect Target_Rect;
+    static int Mouse_Button_Pressed_Previous_Frame = FALSE;
+    
+    if ( Me [ 0 ] . status == BRIEFING ) return;
+    if ( GameConfig . Inventory_Visible ) return;
+    if ( GameConfig . SkillScreen_Visible && GameConfig . skill_explanation_screen_visible ) return;
 
-  if ( Me[0].status == BRIEFING ) return;
-  if ( GameConfig.Inventory_Visible ) return;
-  if ( GameConfig.SkillScreen_Visible && GameConfig.skill_explanation_screen_visible ) return;
+    Target_Rect.x = CURRENT_SKILL_RECT_X ;
+    Target_Rect.y = CURRENT_SKILL_RECT_Y ;
+    Target_Rect.w = CURRENT_SKILL_RECT_W ;
+    Target_Rect.h = CURRENT_SKILL_RECT_H ;
+    
+    LoadOneSkillSurfaceIfNotYetLoaded ( Me [ 0 ] . readied_skill );
 
-  Target_Rect.x = CURRENT_SKILL_RECT_X ;
-  Target_Rect.y = CURRENT_SKILL_RECT_Y ;
-  Target_Rect.w = CURRENT_SKILL_RECT_W ;
-  Target_Rect.h = CURRENT_SKILL_RECT_H ;
-
-  LoadOneSkillSurfaceIfNotYetLoaded ( Me[0].readied_skill );
-
-  if ( use_open_gl )
+    if ( use_open_gl )
     {
-      blit_open_gl_texture_to_screen_position ( SpellSkillMap [ Me[0].readied_skill ] . spell_skill_icon_surface , Target_Rect . x , Target_Rect . y , TRUE ) ;
+	blit_open_gl_texture_to_screen_position ( SpellSkillMap [ Me[0].readied_skill ] . spell_skill_icon_surface , Target_Rect . x , Target_Rect . y , TRUE ) ;
     }
-  else
-    our_SDL_blit_surface_wrapper ( SpellSkillMap [ Me[0].readied_skill ] . spell_skill_icon_surface . surface , NULL , Screen , &Target_Rect );
-
-  /*
-  //--------------------
-  // Here we also check for possible mouse clicks on the skill icon.  In this
-  // case we activate or deactivate the skill screen.
-  //
-  if ( ( GetMousePos_x()  >= CURRENT_SKILL_RECT_X ) &&
-       ( GetMousePos_x()  <= CURRENT_SKILL_RECT_X + CURRENT_SKILL_RECT_W ) &&
-       ( GetMousePos_y()  >= CURRENT_SKILL_RECT_Y ) &&
-       ( GetMousePos_y()  <= CURRENT_SKILL_RECT_Y + CURRENT_SKILL_RECT_H ) &&
-       axis_is_active &&
-       !Mouse_Button_Pressed_Previous_Frame )
-    GameConfig.SkillScreen_Visible = ! GameConfig.SkillScreen_Visible;
-  */
-
+    else
+	our_SDL_blit_surface_wrapper ( SpellSkillMap [ Me[0].readied_skill ] . spell_skill_icon_surface . surface , NULL , Screen , &Target_Rect );
+    
   Mouse_Button_Pressed_Previous_Frame = axis_is_active;
 
 }; // void ShowCurrentSkill ( void )
@@ -1319,16 +1305,15 @@ void
 DisplayBanner ( void )
 {
 
-  SDL_SetClipRect( Screen , NULL ); 
+    SDL_SetClipRect( Screen , NULL ); 
 
-  if ( ( ! GameConfig.CharacterScreen_Visible ) && ( ! GameConfig.SkillScreen_Visible ) )
-    ShowCurrentHealthAndForceLevel ( );
-
-  ShowCurrentTextWindow ( );
-  ShowCurrentSkill ( );
-
-  RightPutStringFont ( Screen , FPS_Display_BFont , 2 , curShip . AllLevels [ Me [ 0 ] . pos . z ] -> Levelname );
-
+    if ( ( ! GameConfig.CharacterScreen_Visible ) && ( ! GameConfig.SkillScreen_Visible ) )
+	ShowCurrentHealthAndForceLevel ( );
+    
+    ShowCurrentTextWindow ( );
+    ShowCurrentSkill ( );
+    
+    RightPutStringFont ( Screen , FPS_Display_BFont , 2 , curShip . AllLevels [ Me [ 0 ] . pos . z ] -> Levelname );
 
 }; // void DisplayBanner( void ) 
 

@@ -208,10 +208,10 @@ our_SDL_fill_rect_wrapper (SDL_Surface *dst, SDL_Rect *dstrect, Uint32 color)
 	  if ( dstrect == NULL )
 	    {
 	      glBegin(GL_QUADS);
-	      glVertex2i( 0       , 480 );
-	      glVertex2i( 0       ,   0 );
-	      glVertex2i( 0 + 640 ,   0 );
-	      glVertex2i( 0 + 640 , 480 );
+	      glVertex2i( 0                , SCREEN_HEIGHT );
+	      glVertex2i( 0                ,   0 );
+	      glVertex2i( 0 + SCREEN_WIDTH ,   0 );
+	      glVertex2i( 0 + SCREEN_WIDTH , SCREEN_HEIGHT );
 	      glEnd( );
 	    }
 	  else
@@ -1163,9 +1163,9 @@ blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x 
     image_start_y = target_rectangle . y ;
     image_end_y = target_rectangle . y + our_floor_iso_image . texture_height ; // * LIGHT_RADIUS_CRUDENESS_FACTOR ; // + 127
     
-    if ( image_start_x > 640 ) return ;
+    if ( image_start_x > SCREEN_WIDTH ) return ;
     if ( image_end_x < 0 ) return ;
-    if ( image_start_y > 480 ) return;
+    if ( image_start_y > SCREEN_HEIGHT ) return;
     if ( image_end_y < 0 ) return;
 
     // DebugPrintf ( -1 , "\nheight: %d." , our_floor_iso_image . surface -> h ) ;
@@ -1195,6 +1195,69 @@ blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x 
 #endif
 
 }; // void blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x , int y , int set_gl_parameters ) 
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+blit_open_gl_texture_to_full_screen ( iso_image our_floor_iso_image , int set_gl_parameters ) 
+{
+
+#ifdef HAVE_LIBGL
+
+    SDL_Rect target_rectangle;
+    int image_start_x;
+    int image_end_x;
+    int image_start_y;
+    int image_end_y;
+    
+    if ( set_gl_parameters )
+    {
+	//--------------------
+	// At first we need to enable texture mapping for all of the following.
+	// Without that, we'd just get (faster, but plain white) rectangles.
+	//
+	glEnable( GL_TEXTURE_2D );
+	glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
+	glEnable ( GL_BLEND );
+	glDisable ( GL_ALPHA_TEST );
+	glBlendFunc( GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA );
+    }
+    
+    //--------------------
+    // Now of course we need to find out the proper target position.
+    //
+    target_rectangle . x = 0 ;
+    target_rectangle . y = 0 ;
+    target_rectangle . w = SCREEN_WIDTH ;
+    target_rectangle . h = SCREEN_HEIGHT ;
+
+    image_start_x = target_rectangle . x ;
+    image_start_y = target_rectangle . y ;
+    image_end_x = SCREEN_WIDTH  * our_floor_iso_image . texture_width / 640 ; 
+    image_end_y = SCREEN_HEIGHT * our_floor_iso_image . texture_height / 480 ; 
+
+    glBindTexture( GL_TEXTURE_2D, * ( our_floor_iso_image . texture ) );
+    glBegin(GL_QUADS);
+    glTexCoord2i( 0.0f, 1.0f ); 
+    glVertex2i( image_start_x , image_start_y );
+    glTexCoord2i( 0.0f, 0.0f ); 
+    glVertex2i( image_start_x , image_end_y );
+    glTexCoord2i( 1.0f, 0.0f ); 
+    glVertex2i( image_end_x , image_end_y );
+    glTexCoord2f( 1.0f, 1.0f ); 
+    glVertex2i( image_end_x , image_start_y );
+    glEnd( );
+    
+    if ( set_gl_parameters )
+    {
+	glDisable( GL_TEXTURE_2D );
+    }
+    
+#endif
+
+}; // void blit_open_gl_texture_to_full_screen ( iso_image our_floor_iso_image , int set_gl_parameters ) 
 
 /* ----------------------------------------------------------------------
  *
@@ -1243,9 +1306,9 @@ blit_semitransparent_open_gl_texture_to_screen_position ( iso_image our_floor_is
     image_start_y = target_rectangle . y ;
     image_end_y = target_rectangle . y + our_floor_iso_image . texture_height ; // * LIGHT_RADIUS_CRUDENESS_FACTOR ; // + 127
     
-    if ( image_start_x > 640 ) return ;
+    if ( image_start_x > SCREEN_WIDTH ) return ;
     if ( image_end_x < 0 ) return ;
-    if ( image_start_y > 480 ) return;
+    if ( image_start_y > SCREEN_HEIGHT ) return;
     if ( image_end_y < 0 ) return;
 
     // DebugPrintf ( -1 , "\nheight: %d." , our_floor_iso_image . surface -> h ) ;
@@ -1325,9 +1388,9 @@ blit_zoomed_open_gl_texture_to_screen_position ( iso_image* our_floor_iso_image 
   image_start_y = target_rectangle . y ;
   image_end_y = target_rectangle . y + our_floor_iso_image -> texture_height * zoom_factor ; // * LIGHT_RADIUS_CRUDENESS_FACTOR ; // + 127
   
-  if ( image_start_x > 640 ) return ;
+  if ( image_start_x > SCREEN_WIDTH ) return ;
   if ( image_end_x < 0 ) return ;
-  if ( image_start_y > 480 ) return;
+  if ( image_start_y > SCREEN_HEIGHT ) return;
   if ( image_end_y < 0 ) return;
 
   // DebugPrintf ( -1 , "\nheight: %d." , our_floor_iso_image . surface -> h ) ;
@@ -1445,9 +1508,9 @@ blit_rotated_open_gl_texture_with_center ( iso_image our_iso_image , int x , int
   corner4 . x += x ;
   corner4 . y += y ;
 
-  if ( image_start_x > 640 ) return ;
+  if ( image_start_x > SCREEN_WIDTH ) return ;
   if ( image_end_x < 0 ) return ;
-  if ( image_start_y > 480 ) return;
+  if ( image_start_y > SCREEN_HEIGHT ) return;
   if ( image_end_y < 0 ) return;
 
   texture_start_y = 1.0 ; // 1 - ((float)(our_iso_image . original_image_height)) / 127.0 ; // 1.0 
@@ -1913,141 +1976,157 @@ static int backgrounds_should_be_loaded_now = TRUE;
 void 
 blit_special_background ( int background_code )
 {
-  SDL_Surface* tmp_surf_1;
-  SDL_Rect src_rect;
-  static char* background_filenames [ ALL_KNOWN_BACKGROUNDS ] = { INVENTORY_SCREEN_BACKGROUND_FILE ,  // 0
-								  CHARACTER_SCREEN_BACKGROUND_FILE ,  // 1 
-								  SKILL_SCREEN_BACKGROUND_FILE ,      // 2
-								  SKILL_EXPLANATION_SCREEN_BACKGROUND_FILE , // 3
-								  NE_TITLE_PIC_FILE ,                 // 4
-								  NE_CREDITS_PIC_FILE ,               // 5
-								  SHOP_BACKGROUND_IMAGE ,             // 6
-								  ITEM_BROWSER_BG_PIC_FILE ,          // 7
-								  ITEM_BROWSER_SHOP_FILE ,            // 8 
-								  NE_CONSOLE_FG_1_FILE ,              // 9 
-								  NE_CONSOLE_FG_2_FILE ,              // 10
-								  NE_CONSOLE_FG_3_FILE ,              // 11
-								  NE_CONSOLE_FG_4_FILE ,              // 12
-								  NE_CONSOLE_BG_PIC1_FILE ,           // 13
-                                                                  LEVEL_EDITOR_BANNER_FILE1 ,          // 14
-                                                                  LEVEL_EDITOR_BANNER_FILE2 ,          // 15
-                                                                  LEVEL_EDITOR_BANNER_FILE3 ,          // 16
-                                                                  LEVEL_EDITOR_BANNER_FILE4 ,          // 17
-                                                                  LEVEL_EDITOR_BANNER_FILE5 ,          // 18
-                                                                  LEVEL_EDITOR_BANNER_FILE6 ,          // 19
-                                                                  LEVEL_EDITOR_BANNER_FILE7 ,          // 20
-								  FREEDROID_LOADING_PICTURE_NAME ,    // 21
-								  MOUSE_BUTTON_CHA_BACKGROUND_PICTURE , // 22
-								  MOUSE_BUTTON_INV_BACKGROUND_PICTURE , // 23
-								  MOUSE_BUTTON_SKI_BACKGROUND_PICTURE , // 24 
-								  MOUSE_BUTTON_PLUS_BACKGROUND_PICTURE , // 25
-								  CHAT_BACKGROUND_IMAGE_FILE ,        // 26
-								  CHAT_BACKGROUND_IMAGE_FILE ,        // 27
-                                                                  TO_BG_FILE };        // 28
+    SDL_Surface* tmp_surf_1;
+    SDL_Rect src_rect;
+    int i;
+    char *fpath;
+    static char* background_filenames [ ALL_KNOWN_BACKGROUNDS ] = 
+	{ 
+	    INVENTORY_SCREEN_BACKGROUND_FILE ,  // 0
+	    CHARACTER_SCREEN_BACKGROUND_FILE ,  // 1 
+	    SKILL_SCREEN_BACKGROUND_FILE ,      // 2
+	    SKILL_EXPLANATION_SCREEN_BACKGROUND_FILE , // 3
+	    NE_TITLE_PIC_FILE ,                 // 4
+	    NE_CREDITS_PIC_FILE ,               // 5
+	    SHOP_BACKGROUND_IMAGE ,             // 6
+	    ITEM_BROWSER_BG_PIC_FILE ,          // 7
+	    ITEM_BROWSER_SHOP_FILE ,            // 8 
+	    NE_CONSOLE_FG_1_FILE ,              // 9 
+	    NE_CONSOLE_FG_2_FILE ,              // 10
+	    NE_CONSOLE_FG_3_FILE ,              // 11
+	    NE_CONSOLE_FG_4_FILE ,              // 12
+	    NE_CONSOLE_BG_PIC1_FILE ,           // 13
+	    LEVEL_EDITOR_BANNER_FILE1 ,          // 14
+	    LEVEL_EDITOR_BANNER_FILE2 ,          // 15
+	    LEVEL_EDITOR_BANNER_FILE3 ,          // 16
+	    LEVEL_EDITOR_BANNER_FILE4 ,          // 17
+	    LEVEL_EDITOR_BANNER_FILE5 ,          // 18
+	    LEVEL_EDITOR_BANNER_FILE6 ,          // 19
+	    LEVEL_EDITOR_BANNER_FILE7 ,          // 20
+	    FREEDROID_LOADING_PICTURE_NAME ,    // 21
+	    MOUSE_BUTTON_CHA_BACKGROUND_PICTURE , // 22
+	    MOUSE_BUTTON_INV_BACKGROUND_PICTURE , // 23
+	    MOUSE_BUTTON_SKI_BACKGROUND_PICTURE , // 24 
+	    MOUSE_BUTTON_PLUS_BACKGROUND_PICTURE , // 25
+	    CHAT_BACKGROUND_IMAGE_FILE ,        // 26
+	    CHAT_BACKGROUND_IMAGE_FILE ,        // 27
+	    TO_BG_FILE 
+	};        // 28
 
-  SDL_Rect our_background_rects [ ALL_KNOWN_BACKGROUNDS ] = { { 0 , 0 , 0 , 0 } ,               // 0
-							      { CHARACTERRECT_X , 0 , 0 , 0 } , // 1 
-							      { CHARACTERRECT_X , 0 , 0 , 0 } , // 2
-							      { 0 , 0 , 0 , 0 } ,               // 3
-							      { 0 , 0 , 0 , 0 } ,               // 4 
-							      { 0 , 0 , 0 , 0 } ,               // 5
-							      { 0 , 0 , 0 , 0 } ,               // 6
-							      { 0 , 0 , 0 , 0 } ,               // 7
-							      { 0 , 0 , 0 , 0 } ,               // 8
-
-							      { 32, 180, CONS_MENU_LENGTH, CONS_MENU_HEIGHT } , // 9
-							      { 32, 180, CONS_MENU_LENGTH, CONS_MENU_HEIGHT } , // 10
-							      { 32, 180, CONS_MENU_LENGTH, CONS_MENU_HEIGHT } , // 11
-							      { 32, 180, CONS_MENU_LENGTH, CONS_MENU_HEIGHT } , // 12
-							      { 0 , 0 , 0 , 0 } ,               // 13
-							      { 0 , 0 , 0 , 0 } ,               // 14
-							      { 0 , 0 , 0 , 0 } ,               // 15
-							      { 0 , 0 , 0 , 0 } ,               // 16
-							      { 0 , 0 , 0 , 0 } ,               // 17
-							      { 0 , 0 , 0 , 0 } ,               // 18
-							      { 0 , 0 , 0 , 0 } ,               // 19
-							      { 0 , 0 , 0 , 0 } ,               // 20
-							      { 0 , 0 , 0 , 0 } ,               // 21
-							      { 560 , 434 ,  38 ,  45 } ,       // 22
-							      { 600 , 420 ,  38 ,  40 } ,       // 23 
-							      { 590 , 376 ,  38 ,  47 } ,       // 24
-							      { 560 , 434 ,  38 ,  45 } ,       // 25
-                                                              { 0 , 0 , 0 , 0 } ,               // 26
-                                                              { CHAT_SUBDIALOG_WINDOW_X , 
-								CHAT_SUBDIALOG_WINDOW_Y , 
-								CHAT_SUBDIALOG_WINDOW_W , 
-								CHAT_SUBDIALOG_WINDOW_H } ,     // 27
-                                                              { 0 , 0 , 0 , 0 } } ;             // 28
-  int i;
-  char *fpath;
+    SDL_Rect our_background_rects [ ALL_KNOWN_BACKGROUNDS ] = 
+	{ 
+	    { 0 , 0 , 0 , 0 } ,               // 0
+	    { CHARACTERRECT_X , 0 , 0 , 0 } , // 1 
+	    { CHARACTERRECT_X , 0 , 0 , 0 } , // 2
+	    { 0 , 0 , 0 , 0 } ,               // 3
+	    { 0 , 0 , SCREEN_WIDTH , SCREEN_HEIGHT } ,               // 4 
+	    { 0 , 0 , SCREEN_WIDTH , SCREEN_HEIGHT } ,               // 5
+	    { 0 , 0 , 0 , 0 } ,               // 6
+	    { 0 , 0 , 0 , 0 } ,               // 7
+	    { 0 , 0 , 0 , 0 } ,               // 8
+	    
+	    { 32, 180, CONS_MENU_LENGTH, CONS_MENU_HEIGHT } , // 9
+	    { 32, 180, CONS_MENU_LENGTH, CONS_MENU_HEIGHT } , // 10
+	    { 32, 180, CONS_MENU_LENGTH, CONS_MENU_HEIGHT } , // 11
+	    { 32, 180, CONS_MENU_LENGTH, CONS_MENU_HEIGHT } , // 12
+	    { 0 , 0 , 0 , 0 } ,               // 13
+	    { 0 , 0 , 0 , 0 } ,               // 14
+	    { 0 , 0 , 0 , 0 } ,               // 15
+	    { 0 , 0 , 0 , 0 } ,               // 16
+	    { 0 , 0 , 0 , 0 } ,               // 17
+	    { 0 , 0 , 0 , 0 } ,               // 18
+	    { 0 , 0 , 0 , 0 } ,               // 19
+	    { 0 , 0 , 0 , 0 } ,               // 20
+	    { 0 , 0 , SCREEN_WIDTH , SCREEN_HEIGHT } ,               // 21
+	    { SCREEN_WIDTH - 80 , SCREEN_HEIGHT - 46 ,  38 ,  45 } , // 22
+	    { SCREEN_WIDTH - 40 , SCREEN_HEIGHT - 60 ,  38 ,  40 } , // 23 
+	    { SCREEN_WIDTH - 50 , SCREEN_HEIGHT - 104 ,  38 ,  47 } , // 24
+	    { SCREEN_WIDTH - 80 , SCREEN_HEIGHT - 46 ,  38 ,  45 } , // 25
+	    { 0 , 0 , 0 , 0 } ,               // 26
+	    { CHAT_SUBDIALOG_WINDOW_X , 
+	      CHAT_SUBDIALOG_WINDOW_Y , 
+	      CHAT_SUBDIALOG_WINDOW_W , 
+	      CHAT_SUBDIALOG_WINDOW_H } ,     // 27
+	    { 0 , 0 , 0 , 0 }                 // 28
+	} ;
   
-  //--------------------
-  // On the first function call, we load all the surfaces we will need, and
-  // in case of OpenGL output method, we also make textures from them...
-  //
-  if ( backgrounds_should_be_loaded_now )
+    //--------------------
+    // On the first function call, we load all the surfaces we will need, and
+    // in case of OpenGL output method, we also make textures from them...
+    //
+    if ( backgrounds_should_be_loaded_now )
     {
-      backgrounds_should_be_loaded_now = FALSE ; 
-      for ( i = 0 ; i < ALL_KNOWN_BACKGROUNDS ; i ++ )
+	backgrounds_should_be_loaded_now = FALSE ; 
+	for ( i = 0 ; i < ALL_KNOWN_BACKGROUNDS ; i ++ )
 	{
-
-	  fpath = find_file ( background_filenames [ i ] , GRAPHICS_DIR , FALSE );
-	  get_iso_image_from_file_and_path ( fpath , & ( our_backgrounds [ i ] ) , FALSE ) ;
-
-	  //--------------------
-	  // For the dialog, we need not only the dialog background, but also some smaller
-	  // parts of the background image, so we can re-do the background part that is in
-	  // the dialog partners chat output window.  We don't make a separate image on disk
-	  // but rather extract the info inside the code.  That makes for easier adaption
-	  // of the window dimensions from inside the code...
-	  //
-	  if ( i == CHAT_DIALOG_BACKGROUND_EXCERPT_CODE )
+	    
+	    fpath = find_file ( background_filenames [ i ] , GRAPHICS_DIR , FALSE );
+	    get_iso_image_from_file_and_path ( fpath , & ( our_backgrounds [ i ] ) , FALSE ) ;
+	    
+	    //--------------------
+	    // For the dialog, we need not only the dialog background, but also some smaller
+	    // parts of the background image, so we can re-do the background part that is in
+	    // the dialog partners chat output window.  We don't make a separate image on disk
+	    // but rather extract the info inside the code.  That makes for easier adaption
+	    // of the window dimensions from inside the code...
+	    //
+	    if ( i == CHAT_DIALOG_BACKGROUND_EXCERPT_CODE )
 	    {
-	      tmp_surf_1 = SDL_CreateRGBSurface ( SDL_SWSURFACE , CHAT_SUBDIALOG_WINDOW_W , CHAT_SUBDIALOG_WINDOW_H , 
-						  32 , 0x000000ff , 0x0000ff00 , 0x00ff0000 , 0xff000000 );
-
-	      src_rect . x = CHAT_SUBDIALOG_WINDOW_X ;
-	      src_rect . w = CHAT_SUBDIALOG_WINDOW_W ;
-	      src_rect . h = CHAT_SUBDIALOG_WINDOW_H ;
-	      //--------------------
-	      // With OpenGL, the image is flipped at this point already, so we
-	      // just copy the image in flipped form, cause later it should be 
-	      // flipped anyway.  Cool, eh?  Of course this way only the location
-	      // of the rectangle has to be adapted a bit...
-	      //
-	      if ( use_open_gl )
+		tmp_surf_1 = SDL_CreateRGBSurface ( SDL_SWSURFACE , CHAT_SUBDIALOG_WINDOW_W , CHAT_SUBDIALOG_WINDOW_H , 
+						    32 , 0x000000ff , 0x0000ff00 , 0x00ff0000 , 0xff000000 );
+		
+		src_rect . x = CHAT_SUBDIALOG_WINDOW_X ;
+		src_rect . w = CHAT_SUBDIALOG_WINDOW_W ;
+		src_rect . h = CHAT_SUBDIALOG_WINDOW_H ;
+		//--------------------
+		// With OpenGL, the image is flipped at this point already, so we
+		// just copy the image in flipped form, cause later it should be 
+		// flipped anyway.  Cool, eh?  Of course this way only the location
+		// of the rectangle has to be adapted a bit...
+		//
+		if ( use_open_gl )
 		{
-		  src_rect . y = 480 - CHAT_SUBDIALOG_WINDOW_Y - CHAT_SUBDIALOG_WINDOW_H ;
+		    src_rect . y = 480 - CHAT_SUBDIALOG_WINDOW_Y - CHAT_SUBDIALOG_WINDOW_H ;
 		}
-	      else
+		else
 		{
-		  src_rect . y = CHAT_SUBDIALOG_WINDOW_Y ;
+		    src_rect . y = CHAT_SUBDIALOG_WINDOW_Y ;
 		}
-
-	      SDL_BlitSurface ( our_backgrounds [ i ] . surface , &src_rect , tmp_surf_1 , NULL );
-	      SDL_FreeSurface ( our_backgrounds [ i ] . surface ) ;
-	      our_backgrounds [ i ] . surface = SDL_DisplayFormat ( tmp_surf_1 );
+		
+		SDL_BlitSurface ( our_backgrounds [ i ] . surface , &src_rect , tmp_surf_1 , NULL );
+		SDL_FreeSurface ( our_backgrounds [ i ] . surface ) ;
+		our_backgrounds [ i ] . surface = SDL_DisplayFormat ( tmp_surf_1 );
 	    }
-
-	  if ( use_open_gl )
+	    
+	    if ( use_open_gl )
 	    {
-	      make_texture_out_of_surface ( & ( our_backgrounds [ i ] ) ) ;
+		make_texture_out_of_surface ( & ( our_backgrounds [ i ] ) ) ;
 	    }
 	}
     }
-
-  //--------------------
-  // Now that all the surfaces are loaded, we can start to blit the backgrounds
-  // in question to their proper locations.
-  //
-  if ( use_open_gl )
+    
+    //--------------------
+    // Now that all the surfaces are loaded, we can start to blit the backgrounds
+    // in question to their proper locations.
+    //
+    if ( use_open_gl )
     {
-      blit_open_gl_texture_to_screen_position ( our_backgrounds [ background_code ] , our_background_rects [ background_code ] . x , our_background_rects [ background_code ] . y , TRUE ) ;
+	if ( ( our_background_rects [ background_code ] . w == SCREEN_WIDTH ) &&
+	     ( our_background_rects [ background_code ] . h == SCREEN_HEIGHT ) )
+	{
+	    blit_open_gl_texture_to_full_screen ( 
+		our_backgrounds [ background_code ] , TRUE ) ;
+	}
+	else
+	    blit_open_gl_texture_to_screen_position ( 
+		our_backgrounds [ background_code ] , 
+		our_background_rects [ background_code ] . x , 
+		our_background_rects [ background_code ] . y , TRUE ) ;
     }
-  else
+    else
     {
-      SDL_SetClipRect( Screen, NULL );
-      our_SDL_blit_surface_wrapper ( our_backgrounds [ background_code ] . surface , NULL , Screen , &( our_background_rects [ background_code ] ) );
+	SDL_SetClipRect( Screen, NULL );
+	our_SDL_blit_surface_wrapper ( our_backgrounds [ background_code ] . surface , NULL , Screen , &( our_background_rects [ background_code ] ) );
     }
   
 }; // void blit_special_background ( int background_code )
