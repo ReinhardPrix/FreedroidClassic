@@ -41,17 +41,6 @@
 
 extern char *InfluenceModeNames[];
 
-/* Startpositionen fuer Rahmen-Texte */
-#define LEFTINFO_X 	12
-#define LEFTINFO_Y	8
-
-#define RIGHTINFO_X	242
-#define RIGHTINFO_Y	8
-
-
-#define LEFT_TEXT_LEN 10
-#define RIGHT_TEXT_LEN 6
-
 // Dieses Array enth"alt die Datenstrukturen "uber alle im Spiel vorkommenden
 // Anzeigebalken.
 //
@@ -132,150 +121,79 @@ DrawBar (int BarCode, int Wert, unsigned char *Parameter_Screen)
 
 }				// void DrawBar(...)
 
-/*@Function============================================================
-@Desc: SayLeftInfo( char* text):
-						gibt text oben links im Rahmen aus, loescht
-						alten text zuerst
-
-@Ret: void
-@Int:
-* $Function----------------------------------------------------------*/
-void
-SayLeftInfo (char *text, unsigned char *Parameter_Screen)
-{
-  char textbox[LEFT_TEXT_LEN + 10];
-
-  if (!PlusExtentionsOn)
-    {
-      /* Hintergrund Textfarbe setzen */
-      // SetTextColor (FONT_WHITE, FONT_RED);	// FONT_RED, 0
-      SetTextColor (RAHMEN_WHITE, RAHMEN_VIOLETT);	// FONT_RED, 0
-
-      strncpy (textbox, text, LEFT_TEXT_LEN);
-      if (strlen (text) < LEFT_TEXT_LEN)
-	strncat (textbox, "           ", LEFT_TEXT_LEN - strlen (text));
-      textbox[LEFT_TEXT_LEN] = '\0';	/* String abschliessen */
-
-      /* Text ausgeben */
-      DisplayText (textbox, LEFTINFO_X, LEFTINFO_Y, Parameter_Screen, FALSE);
-      return;
-    }
-}				// void SayLeftInfo(...)
-
-/*@Function============================================================
-@Desc: SayRightInfo(char *text): wie SayLeftInfo()
-
-@Ret: void
-@Int:
-* $Function----------------------------------------------------------*/
-void
-SayRightInfo (char *text, unsigned char *Parameter_Screen)
-{
-  char textbox[RIGHT_TEXT_LEN + 10];
-
-  if (!PlusExtentionsOn)
-    {
-      /* Hintergrund Textfarbe richtig setzen */
-      // SetTextColor (FONT_WHITE, FONT_RED);
-      SetTextColor (RAHMEN_WHITE, RAHMEN_VIOLETT);	// FONT_RED, 0
-
-      strncpy (textbox, text, RIGHT_TEXT_LEN);
-      if (strlen (text) < RIGHT_TEXT_LEN)
-	strncat (textbox, "           ", RIGHT_TEXT_LEN - strlen (text));
-      textbox[RIGHT_TEXT_LEN] = '\0';
-
-      /* Text ausgeben */
-      DisplayText (textbox, RIGHTINFO_X, RIGHTINFO_Y, Parameter_Screen, FALSE);
-    }
-  return;
-}				/* SayRightInfo */
-
-
-/*@Function============================================================
-@Desc: DisplayRahmen(*Parameter_Screen):  gibt Rahmen mit Info-Texten auf screen aus
-    Die Funktion sichert und restauriert jetzt auch die Schriftfarben
-
-@Ret: void
-@Int:
-* $Function----------------------------------------------------------*/
+/*-----------------------------------------------------------------
+ * @Desc: well, do just that
+ *
+ * NOTE: this function used to update also the infoline display,
+ *    this is now down by a separate call to SetInfoline(left,right)!!
+ *
+ *-----------------------------------------------------------------*/
 void
 DisplayRahmen (unsigned char *Parameter_Screen)
 {
   DisplayMergeBlock(0, 0, RahmenPicture, RAHMENBREITE, RAHMENHOEHE, Parameter_Screen);
 
-  SayRightInfo (RightInfo, Parameter_Screen );
-  SayLeftInfo (LeftInfo, Parameter_Screen );
+  return;
 
-} /* DisplayRahmen */
+} /* DisplayRahmen() */
 
 
-/*@Function============================================================
-@Desc: SetInfoline(): schreibt Modus und Punkte-Werte in die
-						globalen Infoline-Variable
-
-@Ret: void
-@Int:
-* $Function----------------------------------------------------------*/
+/*-----------------------------------------------------------------
+ * @Desc: setzt Infos im Rahmen neu BUT does NOT update screen!!
+ * 
+ *  *left, *right: pointer to strings to display left and right
+ *                 ! strings longer than LEFT/RIGHT_TEXT_LEN get cut
+ *
+ * NULL-pointer indicates to display default: left=MODE, right=SCORE 
+ * 
+ *-----------------------------------------------------------------*/
 void
-SetInfoline (void)
+SetInfoline (const char *left, const char *right)
 {
   char dummy[80];
-  /* Modus des Influencers links angeben  */
-  strncpy (LeftInfo, InfluenceModeNames[Me.status], LEFT_TEXT_LEN - 1);
-  LeftInfo[LEFT_TEXT_LEN - 1] = '\0';
+  char left_box [LEFT_TEXT_LEN + 10];
+  char right_box[RIGHT_TEXT_LEN + 10];
+  int left_len, right_len;   /* the actualy string-lens */
 
-  /* Punkte des Users rechts ausgeben */
-  strncpy (RightInfo, ltoa (ShowScore, dummy, 10), RIGHT_TEXT_LEN - 1);
-  RightInfo[RIGHT_TEXT_LEN - 1] = '\0';
+  if (left == NULL)       /* Left-DEFAULT: Mode */
+    left = InfluenceModeNames[Me.status];
 
-  return;
-}				/* SetInfoline */
+  if ( right == NULL )  /* Right-DEFAULT: Score */
+    right =  ltoa (ShowScore, dummy, 10);
 
 
-/*@Function============================================================
-@Desc: UpdateInfoline(): 		setzt Infos im Rahmen neu (nur RealScreen),
-								wenn sie sich geaendert haben: Flimmern 
-
-@Ret: void
-@Int:
-* $Function----------------------------------------------------------*/
-void
-UpdateInfoline (void)
-{
-  static char LastLeft[50];	/* the change-detectors */
-  static char LastRight[50];
-  int NoNeedToSaveEnv = 1;
-
-  DebugPrintf
-    ("\nvoid UpdateInfoline(void): Real function call confirmed....");
-
-  if ((Me.status == CONSOLE) || (Me.status == DEBRIEFING))
-    NoNeedToSaveEnv = 0;
-
-  if (!NoNeedToSaveEnv)
-    StoreTextEnvironment ();
-
-  if (strcmp (LastLeft, LeftInfo) != 0)
+  left_len = strlen (left);
+  if( left_len > LEFT_TEXT_LEN )
     {
-      SetTextColor (FONT_WHITE, FONT_RED);
-      // SayLeftInfo (LeftInfo, RealScreen);
-      SayLeftInfo (LeftInfo, InternalScreen);
-      strcpy (LastLeft, LeftInfo);
+      printf ("\nWarning: String %s too long for Left Infoline!!",left);
+      left_len = LEFT_TEXT_LEN;  /* too long, so we cut it! */
+    }
+  right_len = strlen (right);
+  if( right_len > RIGHT_TEXT_LEN )
+    {
+      printf ("\nWarning: String %s too long for Right Infoline!!", right);
+      right_len = RIGHT_TEXT_LEN;  /* too long, so we cut it! */
     }
 
-  if (strcmp (LastRight, RightInfo) != 0)
-    {
-      // SayRightInfo (RightInfo, RealScreen);
-      SayRightInfo (RightInfo, InternalScreen);
-      strcpy (LastRight, RightInfo);
-    }
+  /* Now prepare the left/right text-boxes */
+  memset (left_box,  ' ', LEFT_TEXT_LEN);  /* pad with spaces */
+  memset (right_box, ' ', RIGHT_TEXT_LEN);  
 
-  if (!NoNeedToSaveEnv)
-    RestoreTextEnvironment ();
+  strncpy (left_box,  left, left_len);  /* this drops terminating \0 ! */
+  strncpy (right_box, right, left_len);  /* this drops terminating \0 ! */
 
-  DebugPrintf ("\nvoid UpdateInfoline(void): end of function reached.");
+  left_box [LEFT_TEXT_LEN]  = '\0';     /* that's right, we want padding! */
+  right_box[RIGHT_TEXT_LEN] = '\0';
+
+  /* Hintergrund Textfarbe setzen */
+  SetTextColor (RAHMEN_WHITE, RAHMEN_VIOLETT);	// FONT_RED, 0
+
+  /* Text ausgeben */
+  DisplayText (left_box, LEFTINFO_X, LEFTINFO_Y, Outline320x200, FALSE);
+  DisplayText (right_box, RIGHTINFO_X, RIGHTINFO_Y, Outline320x200, FALSE);
 
   return;
-} // void UpdateInfoline(void)
+
+} /* SetInfoline () */
 
 #undef _rahmen_c
