@@ -2208,7 +2208,6 @@ ImprovedCheckUmbruch (char* Resttext, const SDL_Rect *clip)
   }
 }; // void ImprovedCheckUmbruch(void)
 
-
 /* -----------------------------------------------------------------
  * This function reads a string of "MaxLen" from User-input, and echos it 
  * either to stdout or using graphics-text, depending on the
@@ -2294,6 +2293,163 @@ GetString (int MaxLen, int echo)
   return (input);
 
 }; // char* GetString( ... ) 
+
+/* -----------------------------------------------------------------
+ * This function reads a string of "MaxLen" from User-input.
+ *
+ * NOTE: MaxLen is the maximal _strlen_ of the string (excl. \0 !)
+ * 
+ * ----------------------------------------------------------------- */
+char *
+GetEditableStringInPopupWindow ( int MaxLen , char* PopupWindowTitle , char* DefaultString )
+{
+  char *input;		// pointer to the string entered by the user
+  int key;          // last 'character' entered 
+  int curpos;		// counts the characters entered so far
+  int finished;
+  int x0, y0;
+  SDL_Rect TargetRect;
+  SDL_Rect CursorRect;
+  char tmp_char;
+  int i;
+
+#define EDIT_WINDOW_TEXT_OFFSET 15
+
+  if ( MaxLen > 70 ) MaxLen = 70;
+
+  if ( strlen ( DefaultString ) >= MaxLen -1 ) DefaultString [ MaxLen - 1 ] = 0 ;
+
+  //--------------------
+  // We prepare a new string, mostly empty...
+  //
+  input = MyMalloc (MaxLen + 5);
+  // memset (input, '.', MaxLen);
+  // input[MaxLen] = 0;
+  // input [ 0 ] = 0 ;
+  strcpy ( input , DefaultString );
+  curpos = strlen ( input ) ;
+
+  //--------------------
+  // Now we prepare a rectangle for our popup window...
+  //
+  TargetRect . w = 440 ; 
+  TargetRect . h = 340 ; 
+  TargetRect . x = ( 640 - TargetRect . w ) / 2 ; 
+  TargetRect . y = ( 480 - TargetRect . h ) / 2 ; 
+  TargetRect . w -= EDIT_WINDOW_TEXT_OFFSET;
+  TargetRect . h -= EDIT_WINDOW_TEXT_OFFSET;
+  TargetRect . x += EDIT_WINDOW_TEXT_OFFSET;
+  TargetRect . y += EDIT_WINDOW_TEXT_OFFSET;
+    
+  //--------------------
+  // Now we find the right position for the new string to start by writing
+  // out the title text once, just to get the cursor positioned right...
+  //
+  DisplayText ( PopupWindowTitle, TargetRect . x, TargetRect . y , &TargetRect )  ;
+  x0 = MyCursorX;
+  y0 = MyCursorY;
+
+  //--------------------
+  // Now we can start the enter-string cycle...
+  //
+  finished = FALSE;
+  while ( !finished  )
+    {
+
+      TargetRect . w = 440 ; 
+      TargetRect . h = 340 ; 
+      TargetRect . x = ( 640 - TargetRect . w ) / 2 ; 
+      TargetRect . y = ( 480 - TargetRect . h ) / 2 ; 
+      SDL_FillRect ( Screen , &TargetRect , 
+		     SDL_MapRGB ( Screen->format, 0 , 0 , 0 ) ) ;
+
+      TargetRect . w -= EDIT_WINDOW_TEXT_OFFSET;
+      TargetRect . h -= EDIT_WINDOW_TEXT_OFFSET;
+      TargetRect . x += EDIT_WINDOW_TEXT_OFFSET;
+      TargetRect . y += EDIT_WINDOW_TEXT_OFFSET;
+
+      SetCurrentFont ( FPS_Display_BFont );
+
+      DisplayText ( PopupWindowTitle, TargetRect . x, TargetRect . y , &TargetRect )  ;
+
+      PutString (Screen, x0, y0, input);
+
+      //--------------------
+      // We position the cursor right on its real location
+      //
+      tmp_char = input [ curpos ] ;
+      input [ curpos ] = 0 ;
+      CursorRect . x = x0 + TextWidth( input ) ;
+      input [ curpos ] = tmp_char ;
+      CursorRect . y = y0 ;
+      CursorRect . h = FontHeight ( GetCurrentFont() );
+      CursorRect . w = 8 ;
+      HighlightRectangle ( Screen , CursorRect );
+
+      SDL_Flip (Screen);
+
+      key = getchar_raw ();  
+      
+      if (key == SDLK_RETURN) 
+	{
+	  // input[curpos] = 0;
+	  finished = TRUE;
+	}
+      else if (isprint (key) && (curpos < MaxLen) )  
+	{
+	  //--------------------
+	  // If a printable character has been entered, it is either appended to
+	  // the end of the current input string or the rest of the string is being
+	  // moved and the new character inserted at the end.
+	  //
+	  if ( curpos == strlen ( input ) )
+	    {
+	      input[curpos] = (char) key;   
+	      curpos ++;
+	      input[curpos] = 0 ;
+	    }
+	  else
+	    {
+	      if ( strlen ( input ) == MaxLen - 1 ) input [ MaxLen - 2 ] = 0 ;
+	      for ( i = strlen ( input ) ; i >= curpos ; i -- )
+		{
+		  input [ i+1 ] = input [ i ] ;
+		}
+	      input[curpos] = (char) key;   
+	      curpos ++;
+	    }
+	}
+      else if ( key == SDLK_LEFT )
+	{
+	  if ( curpos > 0 ) curpos --;
+	  // input[curpos] = '.';
+	}
+      else if ( key == SDLK_RIGHT )
+	{
+	  if ( curpos < strlen ( input ) ) curpos ++;
+	  // input[curpos] = '.';
+	}
+      else if (key == SDLK_BACKSPACE)
+	{
+	  if ( curpos > 0 ) 
+	    {
+	      i = curpos ; 
+	      while ( input [ i - 1 ] != 0 ) 
+		{
+		  input [ i-1 ] = input [ i ] ;
+		  i++;
+		}
+	      curpos --;
+	    }
+	}
+      
+    } // while ( ! finished ) 
+
+  DebugPrintf ( 1, "\n\nchar *GetString(..):  The final string is: '%s'.\n\n\n" , input );
+
+  return (input);
+
+}; // char* GetEditableStringInPopupWindow ( int MaxLen , char* PopupWindowTitle )
 
 /* -----------------------------------------------------------------
  * This function is similar to putchar(), but uses the SDL via the 

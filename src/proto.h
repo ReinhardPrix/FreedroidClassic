@@ -494,6 +494,7 @@ void PaintConsoleMenu (int menu_pos);
 #define EXTERN extern
 #endif
 
+EXTERN char * GetEditableStringInPopupWindow ( int MaxLen , char* PopupWindowTitle , char* DefaultString );
 EXTERN void GiveMouseAlertWindow ( char* WindowText ) ;
 EXTERN void CutDownStringToMaximalSize ( char* StringToCut , int LengthInPixels );
 EXTERN void SetNewBigScreenMessage( char* ScreenMessageText );

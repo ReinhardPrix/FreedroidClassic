@@ -2616,21 +2616,29 @@ EditMapLabelData ( Level EditLevel )
   //--------------------
   // We ask for the new map label
   //
-  DisplayText ( "\n Please enter new label for this map position: \n" , -1 , -1 , &User_Rect );
-  SDL_Flip( Screen );
-  NewCommentOnThisSquare = GetString( 1000, FALSE );  // TRUE currently not implemented
-  
+  // DisplayText ( "\n Please enter new label for this map position: \n" , -1 , -1 , &User_Rect );
+  // SDL_Flip( Screen );
+  // NewCommentOnThisSquare = GetString( 1000, FALSE );  // TRUE currently not implemented
+  // NewCommentOnThisSquare = GetEditableStringInPopupWindow ( 1000 , "\n Please enter new label for this map position: \n" );
+
   //--------------------
   // Now we see if a map label entry is existing already for this spot
   //
   for ( i = 0 ; i < MAX_MAP_LABELS_PER_LEVEL ; i ++ )
     {
       if ( ( EditLevel -> labels [ i ] . pos . x == (int)rintf( Me[0].pos.x) ) &&
-	   ( EditLevel -> labels [ i ] . pos . y == (int)rintf( Me[0].pos.y) ) ) break;
+	   ( EditLevel -> labels [ i ] . pos . y == (int)rintf( Me[0].pos.y) ) ) 
+	{
+	  break;
+	}
     }
   if ( i >= MAX_MAP_LABELS_PER_LEVEL ) 
     {
       DisplayText ( "\nNo existing map label entry found...\n" , -1 , -1 , &User_Rect );
+      NewCommentOnThisSquare = 
+	GetEditableStringInPopupWindow ( 1000 , "\n Please enter new label for this map position: \n" ,
+					 "" );
+
       i=0;
       for ( i = 0 ; i < MAX_MAP_LABELS_PER_LEVEL ; i ++ )
 	{
@@ -2651,6 +2659,9 @@ EditMapLabelData ( Level EditLevel )
   else
     {
       DisplayText ( "\nOverwriting existing map label list entry...\n" , -1 , -1 , &User_Rect );
+      NewCommentOnThisSquare = 
+	GetEditableStringInPopupWindow ( 1000 , "\n Please enter new label for this map position: \n" ,
+					 EditLevel -> labels [ i ] . label_name );
     }
 
   //--------------------
@@ -2672,7 +2683,7 @@ EditMapLabelData ( Level EditLevel )
     }
 
   SDL_Flip ( Screen );
-  getchar_raw();
+  // getchar_raw();
   
 }; // void EditMapLabelData ( EditLevel )
 
@@ -3052,6 +3063,10 @@ LevelEditor(void)
 	      else if ( CursorIsOnButton ( LEVEL_EDITOR_RECURSIVE_FILL_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
 		{
 		  RecFillMap ( EditLevel , BlockY , BlockX , Highlight );
+		}
+	      else if ( CursorIsOnButton ( LEVEL_EDITOR_NEW_MAP_LABEL_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+		{
+		  EditMapLabelData ( EditLevel );
 		}
 	      else if ( CursorIsOnButton ( LEVEL_EDITOR_KEYMAP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
 		{
