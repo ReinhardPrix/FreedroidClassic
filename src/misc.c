@@ -885,6 +885,16 @@ Teleport (int LNum, int X, int Y)
 
   LeaveLiftSound ();
 
+  //--------------------
+  // Perhaps the player is visiting this level for the first time.  Then, the
+  // tux should make it's initial statement about the location, if there is one.
+  //
+  if ( ! Me.HaveBeenToLevel [ CurLevel->levelnum ] )
+    {
+      PlayLevelCommentSound ( CurLevel->levelnum );
+      Me.HaveBeenToLevel [ CurLevel->levelnum ] = TRUE;
+    }
+
   // UnfadeLevel ();
 
   Switch_Background_Music_To( CurLevel->Background_Song_Name );

@@ -240,6 +240,7 @@ EXTERN void Takeover_Game_Deadlock_Sound (void);
 EXTERN void Takeover_Game_Lost_Sound (void);
 EXTERN void PlayGreetingSound ( int SoundCode );
 EXTERN void PlayItemSound ( int SoundCode );
+EXTERN void PlayLevelCommentSound ( int levelnum );
 
 
 // items.c

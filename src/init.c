@@ -1727,6 +1727,7 @@ InitNewMissionList ( char *MissionName )
   Me.PointsToDistribute = 0;
   Me.ExpRequired = 1500;
   for ( i = 0 ; i < 1000 ; i ++ ) Me.KillRecord[ i ] = 0;
+  for ( i = 0 ; i < MAX_LEVELS ; i ++ ) Me.HaveBeenToLevel [ i ] = FALSE ;
   Me.exp_level = 1;
   Me.Gold = 100;
   // strcpy ( Me.character_name , "R2D2 v.0.8.5." );

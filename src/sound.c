@@ -45,7 +45,7 @@
 // The order of appearance here should match the order of appearance 
 // in the enum-Environment located in defs.h!
 
-#define ALL_SOUNDS 53
+#define ALL_SOUNDS 54
 char *SoundSampleFilenames[ALL_SOUNDS] = {
    "ERRORSOUND_NILL.NOWAV",
    "Combat_Background_Music.wav",
@@ -82,6 +82,7 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
    "Mission_Status_Change_Sound_0.wav",
    "Item_Taken_Sound_0.wav",
    "ICantCarryAnyMore_Sound_0.wav",
+   "MSMachinesClose_0.wav",
    "Item_Drop_Sound_0.wav",
    "Item_Drop_Sound_1.wav",
    "Item_Drop_Sound_2.wav",
@@ -982,5 +983,22 @@ DruidBlastSound (void)
 
 }; // void DruidBlastSound (void)
 
+
+void 
+PlayLevelCommentSound ( int levelnum )
+{
+  switch ( levelnum )
+    {
+    case 0:
+      // I've been away for a far too long time it seems...
+      break;
+    case 3:
+      // I can feel the MS Machines close now!
+      Play_Sound ( MS_MACHINES_CLOSE_NOW_SOUND );
+      break;
+    default: 
+      break;
+    };
+}; // void PlayLevelCommentSound ( int levelnum )
 
 #undef _sound_c
