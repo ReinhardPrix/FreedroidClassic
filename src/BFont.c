@@ -4,8 +4,8 @@
 /*                                                         */
 /***********************************************************/
 
-#include "system.h"
 #include "BFont.h"
+#include "system.h"
 
 /* Current font */
 BFont_Info *CurrentFont;

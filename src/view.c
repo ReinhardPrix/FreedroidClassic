@@ -329,7 +329,7 @@ GetInternFenster (int mask)
   unsigned char *target;
 
   target = InternWindow;
-  DebugPrintf ("\nvoid GetInternFenster(void) wurde ECHT aufgerufen.\n");
+  DebugPrintf ("\nvoid GetInternFenster(int mask): real function call confirmed.\n");
 
   memset (target, 1, INTERNHOEHE * INTERNBREITE * BLOCKMEM);
 
@@ -406,7 +406,7 @@ GetInternFenster (int mask)
       CurBlast++;
     }				/* for */
   DebugPrintf
-    ("\nvoid GetInternFenster(void): Ende der Funktion fehlerfrei erreicht...\n");
+    ("\nvoid GetInternFenster(int mask): end of function reached.\n");
 }				// void GetInternFenster(void) 
 
 /*@Function============================================================
@@ -838,7 +838,7 @@ Parameter: keine
 @Int:
 * $Function----------------------------------------------------------*/
 void
-PutInternFenster (void)
+PutInternFenster (int also_update_scaled_surface)
 {
   int StartX, StartY;
   int i;
@@ -890,7 +890,7 @@ PutInternFenster (void)
     }				// for(i=0; ...
 
 
-  PrepareScaledSurface(TRUE);
+  PrepareScaledSurface(also_update_scaled_surface);
 
   DebugPrintf ("\nvoid PutInternFenster(void): end of function reached.");
 

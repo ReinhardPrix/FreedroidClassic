@@ -8,6 +8,8 @@
 extern "C" {
 #endif
 
+#include <SDL/SDL.h>
+
 typedef struct {
     /* font height */
 	int h;

@@ -108,7 +108,7 @@ EXTERN void PutInfluence (void);
 EXTERN void PutBullet (int);
 EXTERN void PutBlast (int);
 EXTERN void PutEnemy (int);
-EXTERN void PutInternFenster (void);
+EXTERN void PutInternFenster (int);
 EXTERN int PutObject (int x, int y, unsigned char *pic, int check);
 EXTERN void DrawDigit (unsigned char *, unsigned char *);
 EXTERN void RedrawInfluenceNumber (void);

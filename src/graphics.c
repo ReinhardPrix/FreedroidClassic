@@ -529,7 +529,7 @@ UnfadeLevel (void)
 
   GetView ();
   GetInternFenster (SHOW_ALL);
-  PutInternFenster ();
+  PutInternFenster (TRUE);
 
   /* Speicher reservieren */
   CMAPBuffer = MyMalloc (257 * 3);	// wird wieder freigegeben

@@ -326,7 +326,7 @@ main (int argc, char *const argv[])
 
 	  GetInternFenster (SHOW_ALL);
 
-	  PutInternFenster ();
+	  PutInternFenster ( TRUE );
 	  
 	  YIFF_Server_Check_Events ();
 
@@ -449,7 +449,7 @@ ThouArtDefeated (void)
       SetInfoline();
       DisplayRahmen (RealScreen);
       GetInternFenster (SHOW_ALL);
-      PutInternFenster ();
+      PutInternFenster (TRUE);
       ExplodeBlasts ();
       MoveBullets ();
       MoveEnemys ();
@@ -631,7 +631,7 @@ Pause (void)
   UpdateInfoline ();
   GetView ();
   GetInternFenster (SHOW_ALL);
-  PutInternFenster ();
+  PutInternFenster (TRUE);
 
   while ( Pause )
     {
@@ -642,7 +642,7 @@ Pause (void)
       AnimateEnemys ();
       GetView ();
       GetInternFenster (SHOW_ALL);
-      PutInternFenster ();
+      PutInternFenster (TRUE);
 
       if (CPressed ())
 	{
@@ -651,7 +651,7 @@ Pause (void)
 	  UpdateInfoline ();
 	  GetView ();
 	  GetInternFenster (SHOW_ALL);
-	  PutInternFenster ();
+	  PutInternFenster (TRUE);
 
 	  while (!SpacePressed ()); /* stay CHEESE until Space pressed */
 	  while ( SpacePressed() ); /* then wait for Space released */

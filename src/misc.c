@@ -66,6 +66,7 @@ message, Message;
 void CreateMessageBar (char *MText);
 void CleanMessageLine (void);
 void AdvanceQueue (void);
+void SinglePlayerMenu (void);
 
 int VectsHaveBeenTurned = 0;
 unsigned char *MessageBar;
@@ -573,47 +574,27 @@ OptionsMenu (void)
   // #define FIRST_MENU_ITEM_POS_Y (BLOCKHOEHE + 12)
   // #define MENU_ITEM_DISTANCE 21
 #define SINGLE_PLAYER_POSITION 1
-#define MULTI_PLAYER_POSITION 1
-#define OPTIONS_POSITION 1
-#define HELP_POSITION 1
+#define MULTI_PLAYER_POSITION 2
+#define OPTIONS_POSITION 3
+#define HELP_POSITION 4
 #define QUIT_POSITION 5
 
   // Prevent distortion of framerate by the delay coming from 
   // the time spend in the menu.
   Activate_Conservative_Frame_Computation();
 
-  // return to normal keyboard operation
-  // keyboard_close ();
-
-  //  gotoxy(1,1);
-  //  vgamode = vga_getcurrentmode();
-  //  vga_setmode(TEXT);
-
   // This is not some Debug Menu but an optically impressive 
   // menu for the player.  Therefore I suggest we just fade out
   // the game screen a little bit.
 
-  // CopyScreenToInternalScreen();
+  while ( EscapePressed() );
 
   while (!Weiter)
     {
 
-      // SwapScreen();
+      PutInternFenster( FALSE );
 
       MakeGridOnScreen( Outline320x200 );
-
-      // vga_clear ();
-
-      // This will bring the Options menu on the screen, leaving the background alone
-      // The options are (like in Quake) :
-      //
-      // Single Player
-      // Multi Player
-      // Options
-      // Help
-      // Quit
-      //
-      // DisplayMergeBlock(0,0, OptionsMenuPointer, SCREENBREITE, SCREENHOEHE, RealScreen );
 
       // Highlight currently selected option with an influencer before it
       DisplayMergeBlock( FIRST_MENU_ITEM_POS_X, (MenuPosition+3) * (FontHeight(Font1)/2) - BLOCKBREITE/4, 
@@ -630,6 +611,95 @@ OptionsMenu (void)
 
       SDL_UpdateRect(ScaledSurface, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
 
+      // Wait until the user does SOMETHING
+
+      while( !SpacePressed() && !EnterPressed() && !UpPressed() && !DownPressed() && !EscapePressed() ) 
+	{
+	  keyboard_update();
+	}
+
+      // 
+      if ( EscapePressed() )
+	{
+	  while ( EscapePressed() );
+	  Weiter=!Weiter;
+	}
+      if (EnterPressed() || SpacePressed() ) 
+	{
+	  MenuItemSelectedSound();
+	  switch (MenuPosition) 
+	    {
+
+	    case SINGLE_PLAYER_POSITION:
+	      while (EnterPressed() || SpacePressed() );
+	      SinglePlayerMenu();
+	      break;
+	    case QUIT_POSITION:
+	      DebugPrintf("\nvoid OptionsMenu(void): Quit Requested by user.  Terminating...");
+	      Terminate(0);
+	      break;
+	    default: 
+	      break;
+	    }
+	  // Weiter=!Weiter;
+	}
+      if (UpPressed()) 
+	{
+	  if (MenuPosition > 1) MenuPosition--;
+	  MoveMenuPositionSound();
+	  while (UpPressed());
+	}
+      if (DownPressed()) 
+	{
+	  if (MenuPosition < 5) MenuPosition++;
+	  MoveMenuPositionSound();
+	  while (DownPressed());
+	}
+    }
+  ClearGraphMem (InternalScreen);
+  ClearGraphMem (RealScreen);
+  Update_SDL_Screen();
+  DisplayRahmen (InternalScreen);
+  InitBars = TRUE;
+
+  vga_clear ();
+  
+  // keyboard_init (); /* return to raw keyboard mode */
+
+  return;
+} // OptionsMenu
+
+/* -----------------------------------------------------------------
+ *-----------------------------------------------------------------*/
+void
+SinglePlayerMenu (void)
+{
+  int Weiter = 0;
+  int MenuPosition=1;
+
+enum
+  { NEW_GAME_POSITION=1, SHOW_HISCORE_POSITION=2, SHOW_MISSION_POSITION=3, BACK_POSITION=4 };
+
+  while (!Weiter)
+    {
+
+      PutInternFenster( FALSE );
+
+      MakeGridOnScreen( Outline320x200 );
+
+      // Highlight currently selected option with an influencer before it
+      DisplayMergeBlock( FIRST_MENU_ITEM_POS_X, (MenuPosition+3) * (FontHeight(Font1)/2) - BLOCKBREITE/4, 
+			 Influencepointer, BLOCKBREITE, BLOCKHOEHE, RealScreen );
+
+
+      PrepareScaledSurface(FALSE);
+
+      CenteredPutString (ScaledSurface ,  4*FontHeight(Font1),    "New Game");
+      CenteredPutString (ScaledSurface ,  5*FontHeight(Font1),    "Show Hiscore List");
+      CenteredPutString (ScaledSurface ,  6*FontHeight(Font1),    "Show Mission Instructions");
+      CenteredPutString (ScaledSurface ,  7*FontHeight(Font1),    "Back");
+
+      SDL_UpdateRect(ScaledSurface, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
 
       // Wait until the user does SOMETHING
 
@@ -649,9 +719,14 @@ OptionsMenu (void)
 	  switch (MenuPosition) 
 	    {
 
-	    case QUIT_POSITION:
-	      DebugPrintf("\nvoid OptionsMenu(void): Quit Requested by user.  Terminating...");
-	      Terminate(0);
+	    case NEW_GAME_POSITION:
+	      while (EnterPressed() || SpacePressed() ) ;
+	      InitNewGame();
+	      break;
+	    case SHOW_HISCORE_POSITION: 
+	    case SHOW_MISSION_POSITION:
+	    case BACK_POSITION:
+	      while (EnterPressed() || SpacePressed() ) ;
 	      break;
 	    default: 
 	      break;
@@ -682,7 +757,7 @@ OptionsMenu (void)
   // keyboard_init (); /* return to raw keyboard mode */
 
   return;
-} // OptionsMenu
+} // SinglePlayerMenu
 
 
 /*@Function============================================================
