@@ -136,6 +136,8 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { UNLOADED_ISO_IMAGE , "mouse_buttons/ExportThisLevelButton.png"        , { -60 , 90 , 0,  0 } , FALSE , FALSE } ,
     { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorSaveShipButton.png"    , { -90 , 90 , 0 ,  0 } , FALSE , FALSE } ,
     { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorToggleWaypointButton.png" , { 00 , 150 , 0 ,  0 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorToggleConnectionBlueButton.png" , { 00 , 180 , 0 ,  0 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorToggleConnectionRedButton.png" , { 00 , 180 , 0 ,  0 } , FALSE , FALSE } ,
     { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorBeautifyGrassButton.png" , { 00 , 90 , 0 ,  0 } , FALSE , FALSE } ,
     { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorZoomInButton.png"      , { 30 , 90 , 0 ,  0 } , FALSE , FALSE } ,
     { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorZoomOutButton.png"     , { 30 , 90 , 0 ,  0 } , FALSE , FALSE } ,

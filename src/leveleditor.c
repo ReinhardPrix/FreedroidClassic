@@ -3696,6 +3696,19 @@ Unable to load the level editor waypoint cursor.",
 	}
     }
 
+    //--------------------
+    // Now we do something extra:  If there is a connection attempt currently
+    // going on, then we also draw a connection from the origin point to the
+    // current cursor (i.e. 'me') position.
+    //
+    if ( OriginWaypoint != (-1) )
+    {
+	this_wp = & ( EditLevel -> AllWaypoints [ OriginWaypoint ] ) ;
+	draw_connection_between_tiles ( this_wp->x + 0.5, this_wp->y + 0.5 , 
+					Me [ 0 ] . pos . x , 
+					Me [ 0 ] . pos . y , mask );
+    }
+
 }; // void ShowWaypoints( int PrintConnectionList );
 
 /* ----------------------------------------------------------------------
@@ -4205,6 +4218,16 @@ show_level_editor_tooltips ( void )
 	if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
 	    show_button_tooltip ( "\nUse this button to toggle waypoints on the current cursor location.  Waypoints are marked with a white (or multicolored) 4-direction arrow.\n\nYou can also use the W key for this." );
     }
+    else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_TOGGLE_CONNECTION_BLUE_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
+    {
+	if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
+	{
+	    if ( OriginWaypoint == (-1) )
+		show_button_tooltip ( "\nUse this button to start a connection between waypoints, so that droids can move along this connection.\n\nYou can also use the C key for this." );
+	    else
+		show_button_tooltip ( "\nYou have currently a connection attempt going on already.  Go to the desired destination waypoint and hit this button again to establish the connection.\n\nYou can also use the C key for this." );
+	}
+    }
     else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_BEAUTIFY_GRASS_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
     {
 	if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
@@ -4682,6 +4705,11 @@ level_editor_handle_left_mouse_button ( int proceed_now )
 	    ToggleWaypoint ( EditLevel , BlockX, BlockY , FALSE );
 	    while ( SpacePressed() );
 	}
+	else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_TOGGLE_CONNECTION_BLUE_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
+	{
+	    ToggleWaypointConnection ( EditLevel, BlockX, BlockY );
+	    while ( SpacePressed() );
+	}
 	else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_BEAUTIFY_GRASS_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
 	{
 	    beautify_grass_tiles_on_level ( EditLevel );
@@ -4857,6 +4885,10 @@ level_editor_blit_mouse_buttons ( Level EditLevel )
     else
 	ShowGenericButtonFromList ( LEVEL_EDITOR_ZOOM_OUT_BUTTON );
     ShowGenericButtonFromList ( LEVEL_EDITOR_TOGGLE_WAYPOINT_BUTTON );
+    if ( OriginWaypoint == (-1) )
+	ShowGenericButtonFromList ( LEVEL_EDITOR_TOGGLE_CONNECTION_BLUE_BUTTON );
+    else
+	ShowGenericButtonFromList ( LEVEL_EDITOR_TOGGLE_CONNECTION_RED_BUTTON );
     ShowGenericButtonFromList ( LEVEL_EDITOR_BEAUTIFY_GRASS_BUTTON );
     ShowGenericButtonFromList ( LEVEL_EDITOR_RECURSIVE_FILL_BUTTON );
     ShowGenericButtonFromList ( LEVEL_EDITOR_NEW_OBSTACLE_LABEL_BUTTON );
