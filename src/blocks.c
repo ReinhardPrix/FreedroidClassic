@@ -643,10 +643,8 @@ get_iso_image_from_file_and_path ( char* fpath , iso_image* our_iso_image )
   if ( Whole_Image == NULL )
     {
       fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
-      GiveStandardErrorMessage ( "get_iso_image_from_file_and_path (...)" , "\
-Freedroid was unable to load a certain image file from hard disk into memory.\n\
-This error indicates some installation problem with freedroid.",
-				 PLEASE_INFORM, IS_FATAL );
+      GiveStandardErrorMessage ( "get_iso_image_from_file_and_path (...)" , 
+va("Could not load image: %s \n",fpath), PLEASE_INFORM, IS_FATAL );
     }
 
   //--------------------

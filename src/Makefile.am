@@ -21,7 +21,7 @@ freedroidRPG_SOURCES = menu.c shop.c network.c items.c character.c skills.c save
 	enemy.c   input.c  main.c  rahmen.c view.c BFont.c \
 	colodefs.h itemdefs.h defs.h map.h vars.h ship.h takeover.h global.h \
 	proto.h struct.h system.h BFont.h DialogEditor.h \
-	SDL_rotozoom.c SDL_rotozoom.h highscore.c open_gl.c \
+	SDL_rotozoom.c SDL_rotozoom.h open_gl.c \
 	getopt.c getopt1.c getopt.h scandir.c scandir.h  \
 	$(win32_res)
 
