@@ -409,7 +409,7 @@ EXTERN void RadialEMPWave ( gps ExpCenter , int SpellCostsMana );
 EXTERN void RadialFireWave ( gps ExpCenter , int SpellCostsMana );
 EXTERN void ClearDetectedItemList( int player_num );
 EXTERN void ShowSkillsScreen ( void );
-EXTERN void HandleCurrentlyActivatedSkill( void );
+EXTERN void HandleCurrentlyActivatedSkill( int player_num );
 EXTERN void activate_nth_aquired_skill ( int skill_num );
 
 // input.c 

@@ -330,7 +330,7 @@ ForceExplosionCircle ( gps ExpCenter )
 }; // void ForceExplosionCircle ( finepoint ExpCenter )
 
 /* ----------------------------------------------------------------------
- * This function handles the ForceExplosionCircle skill.
+ * This function handles the RadialEMPWave skill.
  * ---------------------------------------------------------------------- */
 void
 RadialEMPWave ( gps ExpCenter , int SpellCostsMana )
@@ -374,7 +374,7 @@ RadialEMPWave ( gps ExpCenter , int SpellCostsMana )
 }; // void RadialEMPWave ( finepoint ExpCenter )
 
 /* ----------------------------------------------------------------------
- * This function handles the ForceExplosionCircle skill.
+ * This function handles the RadialVMXWave skill.
  * ---------------------------------------------------------------------- */
 void
 RadialVMXWave ( gps ExpCenter , int SpellCostsMana )
@@ -419,7 +419,7 @@ RadialVMXWave ( gps ExpCenter , int SpellCostsMana )
 }; // void RadialVMXWave ( finepoint ExpCenter )
 
 /* ----------------------------------------------------------------------
- * This function handles the ForceExplosionCircle skill.
+ * This function handles the RadialFireWave skill.
  * ---------------------------------------------------------------------- */
 void
 RadialFireWave ( gps ExpCenter , int SpellCostsMana )
@@ -464,34 +464,34 @@ RadialFireWave ( gps ExpCenter , int SpellCostsMana )
 }; // void RadialFireWave ( finepoint ExpCenter )
 
 /* ----------------------------------------------------------------------
- * This function handles the ForceExplosionCircle skill.
+ * This function handles the ForceExplosionRay skill.
  * ---------------------------------------------------------------------- */
 void
-ForceExplosionRay ( gps ExpCenter , point TargetVector )
+ForceExplosionRay ( gps ExpCenter , float target_vector_x , float target_vector_y )
 {
   int i ;
   moderately_finepoint step;
-  int SpellCost = SpellSkillMap [ SPELL_FORCE_EXPLOSION_RAY ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
+  int SpellCost = SpellSkillMap [ SPELL_FORCE_EXPLOSION_RAY ] . mana_cost_table [ Me [ 0 ] . spellcasting_skill ] ;
 
-  if ( Me[0].mana >= SpellCost )
+  if ( Me [ 0 ] . mana >= SpellCost )
     {
-      Me[0].mana -= SpellCost;
-      step.x = ( TargetVector.x * 0.25 ) / Block_Width;
-      step.y = ( TargetVector.y * 0.25 ) / Block_Height;
+      Me [ 0 ] . mana -= SpellCost;
+      step . x = ( target_vector_x * 0.25 ) ;
+      step . y = ( target_vector_y * 0.25 ) ;
 
       for ( i = 1 ; i < 5 ; i ++ )
 	{
-	  StartBlast ( ExpCenter.x + i * step.x , ExpCenter.y + i * step.y , ExpCenter.z , DRUIDBLAST );
+	  StartBlast ( ExpCenter . x + i * step . x , ExpCenter . y + i * step . y , ExpCenter . z , DRUIDBLAST );
 	}
     }
   else
     {
-      Me[0].TextVisibleTime = 0;
-      Me[0].TextToBeDisplayed = "Not enough force left within me.";
+      Me [ 0 ] . TextVisibleTime = 0;
+      Me [ 0 ] . TextToBeDisplayed = "Not enough force left within me.";
       Not_Enough_Mana_Sound(  );
     }
 
-}; // void ForceExplosionCircle ( finepoint ExpCenter )
+}; // void ForceExplosionRay ( gps ExpCenter , point TargetVector )
 
 /* ----------------------------------------------------------------------
  * This function handles the ForceToEnergyConversion skill.
@@ -517,14 +517,14 @@ ForceToEnergyConversion ( void )
       Not_Enough_Mana_Sound(  );
     }
 
-}; // void ForceExplosionCircle ( finepoint ExpCenter )
+}; // void ForceToEnergyConversion ( void )
 
 /* ----------------------------------------------------------------------
  * This function handles the skills the player might have acitivated
  * or deactivated or whatever.
  * ---------------------------------------------------------------------- */
 void
-HandleCurrentlyActivatedSkill( void )
+HandleCurrentlyActivatedSkill( int player_num )
 {
   static int RightPressedPreviousFrame = 0;
   moderately_finepoint TargetPoint;
@@ -672,7 +672,13 @@ HandleCurrentlyActivatedSkill( void )
 	  if ( CursorIsInUserRect ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , 
 				    GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 	    {
-	      ForceExplosionRay ( Me[0].pos , input_axis );
+	      ForceExplosionRay ( Me [ 0 ] . pos , 
+				  translate_pixel_to_map_location ( player_num , 
+								    (float) ServerThinksInputAxisX ( player_num ) , 
+								    (float) ServerThinksInputAxisY ( player_num ) , TRUE ) - Me [ player_num ] . pos . x ,
+				  translate_pixel_to_map_location ( player_num , 
+								    (float) ServerThinksInputAxisX ( player_num ) , 
+								    (float) ServerThinksInputAxisY ( player_num ) , FALSE ) - Me [ player_num ] . pos . y );
 	    }
 	}
       break;

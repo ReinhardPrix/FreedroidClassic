@@ -1716,7 +1716,7 @@ MoveInfluence ( int player_num )
   // Perhaps the player has pressed the right mouse button, indicating the use
   // of the currently selected special function or spell.
   //
-  HandleCurrentlyActivatedSkill();
+  HandleCurrentlyActivatedSkill( player_num );
 
   // --------------------
   // Maybe we need to fire a bullet or set a new mouse move target
@@ -2116,9 +2116,6 @@ GetLivingDroidBelowMouseCursor ( int player_num )
   float DistanceFound = 1000;
   float CurrentDistance;
   enemy* this_bot;
-
-  // Mouse_Blocks_X = (float)ServerThinksInputAxisX ( player_num ) / (float)Block_Width ;
-  // Mouse_Blocks_Y = (float)ServerThinksInputAxisY ( player_num ) / (float)Block_Height ;
 
   Mouse_Blocks_X = translate_pixel_to_map_location ( player_num , 
 						     (float) ServerThinksInputAxisX ( player_num ) , 
@@ -2865,10 +2862,8 @@ check_for_droids_to_attack_or_talk_with ( int player_num )
     {
       Me [ player_num ] . mouse_move_target . x = 
 	translate_pixel_to_map_location ( player_num , ServerThinksInputAxisX ( player_num ) , ServerThinksInputAxisY ( player_num ) , TRUE ) ;
-      // Me [ player_num ] . pos . x + ( (float) ServerThinksInputAxisX ( player_num ) ) / (float) Block_Width ;
       Me [ player_num ] . mouse_move_target . y = 
 	translate_pixel_to_map_location ( player_num , ServerThinksInputAxisX ( player_num ) , ServerThinksInputAxisY ( player_num ) , FALSE ) ;
-	// Me [ player_num ] . pos . y + ( (float) ServerThinksInputAxisY ( player_num ) ) / (float) Block_Width ;
       Me [ player_num ] . mouse_move_target . z = Me [ player_num ] . pos . z ;
 
       Me [ player_num ] . mouse_move_target_is_enemy = (-1) ;

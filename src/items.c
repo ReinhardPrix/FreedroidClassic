@@ -1943,17 +1943,12 @@ DropHeldItemToTheFloor ( void )
       return;
     } 
 
-  x = 
-    translate_pixel_to_map_location ( 0 , 
-				      ServerThinksInputAxisX ( 0 ) , 
-				      ServerThinksInputAxisY ( 0 ) , TRUE ) ;
-  y = 
-    translate_pixel_to_map_location ( 0 , 
-				      ServerThinksInputAxisX ( 0 ) , 
-				      ServerThinksInputAxisY ( 0 ) , FALSE ) ;
-
-  // x = Me [ 0 ] . pos . x + ( GetMousePos_x ( ) + MOUSE_CROSSHAIR_OFFSET_X - UserCenter_x ) / ( float ) Block_Width;
-  // y = Me [ 0 ] . pos . y + ( GetMousePos_y ( ) + MOUSE_CROSSHAIR_OFFSET_Y - UserCenter_y ) / ( float ) Block_Height; 
+  x = translate_pixel_to_map_location ( 0 , 
+					ServerThinksInputAxisX ( 0 ) , 
+					ServerThinksInputAxisY ( 0 ) , TRUE ) ;
+  y = translate_pixel_to_map_location ( 0 , 
+					ServerThinksInputAxisX ( 0 ) , 
+					ServerThinksInputAxisY ( 0 ) , FALSE ) ;
 
   DropItemToTheFloor ( DropItemPointer , x , y , Me [ 0 ] . pos . z ) ;
 
@@ -2403,8 +2398,8 @@ ManageInventoryScreen ( void )
   // --------------------
   // We will need the current mouse position on several spots...
   //
-  CurPos.x = GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X ;
-  CurPos.y = GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ;
+  CurPos . x = GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X ;
+  CurPos . y = GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ;
 
   //--------------------
   // If the log is not set to visible right now, we do not need to 
@@ -2422,8 +2417,10 @@ ManageInventoryScreen ( void )
       if ( ( axis_is_active ) && ( !MouseButtonPressedPreviousFrame ) && ( Item_Held_In_Hand == (-1) ) )
 	{
 	  // DebugPrintf( 1 , "\nCollecting items for direct addition to the inventory without grabbing." );
-	  MapPositionOfMouse.x = Me [ 0 ] . pos . x + ( CurPos.x - UserCenter_x ) / (float) Block_Width;
-	  MapPositionOfMouse.y = Me [ 0 ] . pos . y + ( CurPos.y - UserCenter_y ) / (float) Block_Height;
+	  MapPositionOfMouse . x = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , 
+								     ServerThinksInputAxisY ( 0 ) , TRUE ) ;
+	  MapPositionOfMouse . y = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , 
+								     ServerThinksInputAxisY ( 0 ) , FALSE ) ;
 
 	  // We only take items, when they are close enough 
 	  if ( ( fabsf( MapPositionOfMouse . x - Me [ 0 ] . pos . x ) < ITEM_TAKE_DIST ) &&
