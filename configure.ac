@@ -104,7 +104,7 @@ AC_CHECK_FUNCS([alarm getcwd gettimeofday memset sqrt strstr strtok])
 ## Check gtk libs
 AM_PATH_GTK(1.2.0,,AC_MSG_WARN([
 --------------------------------------------------
-WARNING: You need libgtk-dev >= 1.20 in order to 
+WARNING: You need libgtk-dev 1.20 in order to 
 be able to build the DialogEditor!
 
 If you only want to play Freedroid you can ignore this!
@@ -116,7 +116,6 @@ AC_CONFIG_FILES([Makefile
                 src/Makefile 
                 map/Makefile 
                 dialogs/Makefile 
-		dialog_editor/Makefile
                 sound/Makefile 
 		sound/speeches/Makefile
 		sound/effects/Makefile 

@@ -21,7 +21,6 @@
  *  MA  02111-1307  USA
  *
  */
-
 #ifdef DIALOG_EDITOR 
 
 dialogue_option ChatRoster[MAX_DIALOGUE_OPTIONS_IN_ROSTER];
@@ -54,7 +53,4 @@ extern void Terminate ( int exit_status ) ;
 char authors_notes[100000]="\nYou can use this text field to make some notes on anything.  These otes will get saved with the dialog.\nThis is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.\n";
 
 #endif
-
-
-
 

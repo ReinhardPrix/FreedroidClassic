@@ -1,4 +1,4 @@
-SUBDIRS = src map graphics sound dialogs dialog_editor
+SUBDIRS = src map graphics sound dialogs
 
 
 
