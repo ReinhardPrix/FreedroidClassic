@@ -674,6 +674,8 @@ InitPictures (void)
   // the following are not theme-specific and are therefore only loaded once!
   if (first_call)
     {
+      fpath = find_file (TAKEOVER_BG_PIC_FILE, GRAPHICS_DIR, NO_THEME, CRITICAL);
+      takeover_bg_pic = Load_Block (fpath, 0, 0, NULL);
       // cursor shapes
       arrow_cursor = init_system_cursor (arrow_xpm);
       crosshair_cursor = init_system_cursor (crosshair_xpm);

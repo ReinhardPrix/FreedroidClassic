@@ -134,6 +134,7 @@ enum
 #define CONSOLE_PIC_FILE        "console_fg.png" 
 #define CONSOLE_BG_PIC1_FILE    "console_bg1.jpg"
 #define CONSOLE_BG_PIC2_FILE    "console_bg2.jpg"
+#define TAKEOVER_BG_PIC_FILE    "takeover_bg.jpg"
 #define CREDITS_PIC_FILE        "credits.jpg"
 
 #define SHIP_ON_PIC_FILE        "ship_on.png"

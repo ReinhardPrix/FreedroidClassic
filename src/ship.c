@@ -876,6 +876,7 @@ show_droid_portrait (SDL_Rect dst, int droid_type, float cycle_time, int flags)
 
     }
 
+  SDL_SetClipRect (ne_screen, NULL);
      
   return;
 

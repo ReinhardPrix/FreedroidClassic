@@ -177,6 +177,7 @@ EXTERN Uint32 TransparentPixel;           // pixel-value of our transparent colo
 EXTERN SDL_Surface *banner_pic;      /* the banner pic */
 EXTERN SDL_RWops *packed_portraits[NUM_DROIDS];
 
+EXTERN SDL_Surface *takeover_bg_pic;
 EXTERN SDL_Surface *console_pic;
 EXTERN SDL_Surface *console_bg_pic1;
 EXTERN SDL_Surface *console_bg_pic2;

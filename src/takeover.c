@@ -171,7 +171,7 @@ Takeover (int enemynum)
   while (!FirePressedR())
     show_droid_portrait (Cons_Droid_Rect,  AllEnemys[enemynum].type, DROID_ROTATION_TIME, 0);
 
-  SDL_BlitSurface (console_bg_pic1, NULL, ne_screen, NULL);
+  SDL_BlitSurface (takeover_bg_pic, NULL, ne_screen, NULL);
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
 
   while (!FinishTakeover)
@@ -671,7 +671,8 @@ ShowPlayground ()
   //  SDL_SetColorKey (ne_screen, 0, 0);
   SDL_SetClipRect (ne_screen , &User_Rect);
 
-  Fill_Rect (User_Rect, to_bg_color);
+  //  Fill_Rect (User_Rect, to_bg_color);
+  SDL_BlitSurface (takeover_bg_pic, &User_Rect, ne_screen, &User_Rect);
 
   PutInfluence (xoffs + DruidStart[YourColor].x,
 		yoffs + DruidStart[YourColor].y);
