@@ -174,6 +174,8 @@ EXTERN int SkipAFewFrames;
 #else
 #define EXTERN extern
 #endif
+EXTERN int User_Rect_Center_x;
+EXTERN int User_Rect_Center_y;
 EXTERN int Number_Of_Item_Types;
 EXTERN int Number_Of_Bullet_Types;
 EXTERN SDL_Surface *ne_screen;   /* the graphics display */
