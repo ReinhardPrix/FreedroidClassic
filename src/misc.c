@@ -847,8 +847,9 @@ Teleport (int LNum, int X, int Y)
 	AllBlasts[i].type = OUT;
       for (i = 0; i < MAXBULLETS; i++)
 	{
-	  AllBullets[i].type = OUT;
-	  AllBullets[i].mine = FALSE;
+	  DeleteBullet ( i ); // Don't ever delete bullets any other way!!! SEGFAULTS might result!!!
+	    //AllBullets[i].type = OUT;
+	    //AllBullets[i].mine = FALSE;
 	}
     }
   else

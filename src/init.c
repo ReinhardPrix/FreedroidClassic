@@ -849,8 +849,9 @@ InitNewMission ( char *MissionName )
   /* Delete all bullets and blasts */
   for (i = 0; i < MAXBULLETS; i++)
     {
-      AllBullets[i].type = OUT;
-      AllBullets[i].mine = FALSE;
+      DeleteBullet ( i );
+      // AllBullets[i].type = OUT;
+      // AllBullets[i].mine = FALSE;
     }
   DebugPrintf (2, "\nvoid InitNewMission( ... ): All bullets have been deleted...");
   for (i = 0; i < MAXBLASTS; i++)

@@ -88,7 +88,7 @@ enum
 #define NE_BLAST_BLOCK_FILE 	"ne_blast.png"
 #define NE_DIGIT_BLOCK_FILE     "ne_digits.gif"
 
-#define NE_CONSOLEN_PIC_FILE    "ne_cons.gif" 
+#define NE_CONSOLEN_PIC_FILE    "ne_cons.png" 
 #define NE_BANNER_BLOCK_FILE    "ne_rahmen.gif"
 #define NE_TITLE_PIC_FILE       "ne_title.jpg"
 #define NE_CREDITS_PIC_FILE     "ne_credits.jpg"
