@@ -85,21 +85,9 @@ ClickedMenuItemPosition( void )
   // if this point is ever reached, a severe error has occured, and Freedroid
   // should therefore also say so.
   //
-  fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a severe problem:\n\
-The MENU CODE was unable to properly resolve a mouse button press\n\
-in the function int ClickedMenuItemPosition( void ) in menu.c.\n\
-\n\
-This indicates a bug in Freedroid.  Please contact the developers.\n\
-\n\
-For now Freedroid will terminate to draw attention \n\
-to the position resolution problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" );
-  Terminate(ERR);
+  GiveStandardErrorMessage ( "ClickedMenuItemPosition(...)" , "\
+The MENU CODE was unable to properly resolve a mouse button press.",
+				 PLEASE_INFORM, IS_FATAL );
 
   return ( 3 ); // to make compilers happy :)
 

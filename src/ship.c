@@ -899,25 +899,11 @@ ShowItemPicture (int PosX, int PosY, int Number )
 	  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
 	  if ( Whole_Image == NULL )
 	    {
-	      fprintf( stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-Freedroid was unable to load a rotated image of an item into memory.\n\
-\n\
-The full path name of the file, that could not be loaded was : \n\
-%s\n\
-\n\
-This error indicates some installation problem with freedroid.\n\
-Please contact the developers, as always freedroid-discussion@lists.sourceforge.net.\n\
-Thanks a lot.\n\
-\n\
-But for now Freedroid will terminate to draw attention \n\
-to the graphics loading problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , fpath );
-	      Terminate(ERR);
+	      fprintf( stderr, "\n\nfpath: %s. \n" , fpath );
+	      GiveStandardErrorMessage ( "ShowItemPicture(...)" , "\
+Freedroid was unable to load an image of a rotated item into memory.\n\
+This error indicates some installation problem with freedroid.",
+					 PLEASE_INFORM, IS_FATAL );
 	    }
 	  
 	  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
@@ -1011,25 +997,11 @@ ShowDroidPicture (int PosX, int PosY, int Number )
 	  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
 	  if ( Whole_Image == NULL )
 	    {
-	      fprintf( stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-Freedroid was unable to load a rotated image of an item into memory.\n\
-\n\
-The full path name of the file, that could not be loaded was : \n\
-%s\n\
-\n\
-This error indicates some installation problem with freedroid.\n\
-Please contact the developers, as always freedroid-discussion@lists.sourceforge.net.\n\
-Thanks a lot.\n\
-\n\
-But for now Freedroid will terminate to draw attention \n\
-to the graphics loading problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , fpath );
-	      Terminate(ERR);
+	      fprintf( stderr, "\n\nfpath: %s. \n" , fpath );
+	      GiveStandardErrorMessage ( "ShowItemPicture(...)" , "\
+Freedroid was unable to load an image of a rotated droid into memory.\n\
+This error indicates some installation problem with freedroid.",
+					 PLEASE_INFORM, IS_FATAL );
 	    }
 	  
 	  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );

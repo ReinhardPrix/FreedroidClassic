@@ -621,19 +621,12 @@ HandleCurrentlyActivatedSkill( void )
 	}
       break;
     default:
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
+      fprintf( stderr, "\n\nMe [ 0 ] . readied_skill: %d \n" , Me [ 0 ] . readied_skill );
+      GiveStandardErrorMessage ( "HandleCurrentlyActivatedSkill(...)" , "\
 There was a request for a spell/skill that is currently not handled.\n\
-\n\
 Nothing will be done then.  This is a warning message only.\n\
-The code of the requested spell was: %d.\n\
-Usually this error is not severe.\n\
-\n\
-For now we'll choose not to worry and return.\n\
-----------------------------------------------------------------------\n\
-\n" , Me [ 0 ] . readied_skill );
+Usually this error is not severe.",
+				 NO_NEED_TO_INFORM, IS_WARNING_ONLY );
       break;
     }
 

@@ -429,19 +429,10 @@ PutMiscellaneousSpellEffects ( void )
 	}
       else
 	{
-	  fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-There was a bogus spell type entry found in the active spell list.\n\
-\n\
-This is a severe error and should not occur.\n\
-\n\
-The code in question was: %d.\n\
-\n\
-Freedroid will terminate now to draw attention to the problem.\n\
-----------------------------------------------------------------------\n\
-\n" , AllActiveSpells [ i ] . type );
+	  fprintf( stderr, "\n\nAllActiveSpells [ i ] . type: '%d'\n" , AllActiveSpells [ i ] . type );
+	  GiveStandardErrorMessage ( "PutMiscellaneousSpellEffects(...)" , "\
+There was a bogus spell type entry found in the active spell list.",
+				     PLEASE_INFORM, IS_FATAL );
 	}
     }
 
@@ -1289,20 +1280,10 @@ PutEnemy (int Enum , int x , int y)
   //
   if ( AllEnemys[Enum].type >= Number_Of_Droid_Types )
     {
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-There was a droid type on this level, that does not really exist.\n\
-\n\
-We might use a fallback to shortly work around this problem.  That would\n\
-not be difficult.  But for now Freedroid will terminate to draw attention \n\
-to the sound problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" );
+      GiveStandardErrorMessage ( "PutEnemy(...)" , "\
+There was a droid type on this level, that does not really exist.",
+				 PLEASE_INFORM, IS_FATAL );
       AllEnemys[Enum].type = 0;
-      Terminate(ERR);
     }
 
   //--------------------
@@ -1396,20 +1377,9 @@ PutBullet (int BulletNummer)
   // DebugPrintf( 0 , "\nBulletType before calculating phase : %d." , CurBullet->type );
   if ( CurBullet->type >= Number_Of_Bullet_Types ) 
     {
-      fprintf (stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The PutBullet function should blit a bullet of a type that does not\n\
-exist at all.  THIS IS A SEVERE INTERNAL BUG IN FREEDROID.  IF YOU EVER\n\
-ENCOUNTER THIS MESSAGE, PLEASE CONTACT THE DEVELOPERS AND TELL THEM\n\
-ABOUT THIS ERROR MESSAGE!! THANKS A LOT.
-\n\
-Freedroid will terminate now to point at the error.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" );
-      Terminate( ERR );
+      GiveStandardErrorMessage ( "PutBullet(...)" , "\
+There was a bullet to be blitted of a type that does not really exist.",
+				 PLEASE_INFORM, IS_FATAL );
     };
 
   PhaseOfBullet = (CurBullet->time_in_seconds * Bulletmap[ CurBullet->type ].phase_changes_per_second );
@@ -1549,22 +1519,11 @@ PutRadialBlueSparks( float PosX, float PosY , float Radius , int SparkType )
 	  tmp_surf = IMG_Load( fpath );
 	  if ( tmp_surf == NULL )
 	    {
-	      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
+	      fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
+	      GiveStandardErrorMessage ( "PutRadialBlueSparks(...)" , "\
 Freedroid wanted to load a certain image file into memory, but the SDL\n\
-function used for this did non succeed.\n\
-\n\
-There file name used as parameter was: %s.\n\
-\n\
-This indicates that there is a file missing in your Freedroid RPG installation.\n\
-\n\
-Freedroid will terminate now to draw attention to the problem\n\
-it could not resolve.\n\
-----------------------------------------------------------------------\n\
-\n" , fpath );
-	      Terminate(ERR);
+function used for this did not succeed.",
+					 PLEASE_INFORM, IS_FATAL );
 	    }
 
 	  // SDL_SetColorKey( tmp_surf , 0 , 0 ); 
@@ -1651,22 +1610,11 @@ PutRadialBlueSparksBestQuality( float PosX, float PosY , float Radius )
       tmp_surf = IMG_Load( fpath );
       if ( tmp_surf == NULL )
 	{
-	  fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
+	  fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
+	  GiveStandardErrorMessage ( "PutRadialBlueSparksBestQuality(...)" , "\
 Freedroid wanted to load a certain image file into memory, but the SDL\n\
-function used for this did non succeed.\n\
-\n\
-There file name used as parameter was: %s.\n\
-\n\
-This indicates that there is a file missing in your Freedroid RPG installation.\n\
-\n\
-Freedroid will terminate now to draw attention to the problem\n\
-it could not resolve.\n\
-----------------------------------------------------------------------\n\
-\n" , fpath );
-	  Terminate(ERR);
+function used for this did not succeed.",
+				     PLEASE_INFORM, IS_FATAL );
 	}
       // SDL_SetColorKey( tmp_surf , 0 , 0 ); 
 
@@ -1723,29 +1671,18 @@ PutBlast (int BlastNummer)
   // DebugPrintf( 0 , "\nBulletType before calculating phase : %d." , CurBullet->type );
   if ( CurBlast->type >= ALLBLASTTYPES ) 
     {
-      fprintf (stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
+      GiveStandardErrorMessage ( "PutBlast(...)" , "\
 The PutBlast function should blit a blast of a type that does not\n\
-exist at all.  THIS IS A SEVERE INTERNAL BUG IN FREEDROID.  IF YOU EVER\n\
-ENCOUNTER THIS MESSAGE, PLEASE CONTACT THE DEVELOPERS AND TELL THEM\n\
-ABOUT THIS ERROR MESSAGE!! THANKS A LOT.
-\n\
-Freedroid will terminate now to point at the error.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" );
-      Terminate( ERR );
+exist at all.",
+				 PLEASE_INFORM, IS_FATAL );
     };
-
   
   TargetRectangle.x=UserCenter_x - (Me[0].pos.x - CurBlast->pos.x )*Block_Width  -Block_Width/2;
   TargetRectangle.y=UserCenter_y - (Me[0].pos.y - CurBlast->pos.y )*Block_Height -Block_Height/2;
-  // Blastmap[CurBlast->type].block + ((int) floorf(CurBlast->phase)), Screen , &TargetRectangle);
-  SDL_BlitSurface( Blastmap[CurBlast->type].SurfacePointer[ (int)floorf(CurBlast->phase) ] , NULL , Screen , &TargetRectangle);
+  SDL_BlitSurface( Blastmap[CurBlast->type].SurfacePointer[ (int)floorf(CurBlast->phase) ] , 
+		   NULL , Screen , &TargetRectangle);
 
-}  // void PutBlast(int BlastNummer)
+};  // void PutBlast(int BlastNummer)
 
 /* ----------------------------------------------------------------------
  * This function fills the combat window with one single color, given as
@@ -1805,23 +1742,10 @@ ShowRobotPicture (int PosX, int PosY, int Number )
 
   if ( (tmp=IMG_Load (fpath)) == NULL )
     {
-      fprintf (stderr,
-	     "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The image file named %s could not be read by SDL.\n\
-\n\
-The error reason as specified by SDL is : %s.\n\
-\n\
-Please check that the file is present and not corrupted\n\
-in your distribution of Freedroid.\n\
-\n\
-Freedroid will terminate now to point at the error.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , fpath , SDL_GetError() );
-      Terminate (ERR);
+      fprintf( stderr, "\n\nfpath '%s' SDL_GetError(): %s. \n" , fpath, SDL_GetError() );
+      GiveStandardErrorMessage ( "ShowRobotPicture(...)" , "\
+A droid portrait failed to load.",
+				 PLEASE_INFORM, IS_FATAL );
     }
   
 

@@ -71,22 +71,10 @@ GiveItemDescription ( char* ItemDescText , item* CurItem , int ForShop )
   if ( CurItem == NULL ) return;
   if ( CurItem->type == (-1) ) 
     {
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
+      GiveStandardErrorMessage ( "GiveItemDescription(...)" , "\
 An item description was requested for an item, that does not seem to \n\
-exist really (i.e. has a type = (-1) ).\n\
-\n\
-This indicated a severe bug in freedroid.\n\
-Please inform the developers about the problem.\n\
-\n\
-But for now Freedroid will terminate to draw attention \n\
-to the item type problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" );
-      Terminate( ERR );
+exist really (i.e. has a type = (-1) ).",
+				 PLEASE_INFORM, IS_FATAL );
       return;
     }
 

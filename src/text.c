@@ -918,24 +918,12 @@ TextConditionIsTrue ( char* ConditionString )
 	return ( FALSE );
     }
 
-
-  fprintf (stderr, "\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
+  fprintf( stderr, "\n\nConditionString: %s. \n" , ConditionString );
+  GiveStandardErrorMessage ( "TextConditionIsTrue(...)" , "\
 There were was a Condition string (most likely used for an on-goto-command\n\
 in the Freedroid.dialogues file, that contained a seemingly bogus condition.\n\
-\n\
-Freedroid was unable to determine the type of the condition.\n\
-The errorneous string was: %s.\n\
-\n\
-Please inform the Freedroid dev team about the problem, best by sending\n\
-e-mail to freedroid-discussion@lists.sourceforge.net\n\
-\n\
-Thanks a lot for reporting the issue.\n\
-Freedroid will terminate now to draw attention to the problem...\n\
-----------------------------------------------------------------------\n" ,
-	   ConditionString );
-  Terminate ( ERR );
+Freedroid was unable to determine the type of said condition.",
+			     PLEASE_INFORM, IS_FATAL );
 
   return ( TRUE );
 }; // int TextConditionIsTrue ( char* ConditionString )
@@ -1214,26 +1202,14 @@ ChatWithFriendlyDroid( int Enum )
     }
   else
     {
-      fprintf (stderr, "\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-There was a dialogue with a friendly droid or person supposed to be initiated,\n\
-but the character name of the person in question was not recognized by the\n\
-Freedroid RPG dialogue module.\n\
-\n\
-The short name of the character in question was: %s.\n\
-\n\
+      fprintf( stderr, "\n\nDruidmap[ AllEnemys[ Enum ].type ].druidname: %s. \n" , Druidmap[ AllEnemys[ Enum ].type ].druidname );
+      GiveStandardErrorMessage ( "ChatWithFriendlyDroid(...)" , "\
+There was a dialogue with a friendly droid or person supposed to be initiated.\n\
+But the character name of the person in question could not be handled by the\n\
+Freedroid RPG dialogue function.\n\
 This indicates that you have maybe reached a part of the Freedroid RPG story\n\
-that is not yet implemented or some other bug in Freedroid RPG.\n\
-\n\
-Please inform the Freedroid dev team about the problem, best by sending\n\
-e-mail to freedroid-discussion@lists.sourceforge.net\n\
-\n\
-Thanks a lot for reporting the issue.\n\
-Freedroid will terminate now to draw attention to the problem...\n\
-----------------------------------------------------------------------\n" ,
-	       Druidmap[ AllEnemys[ Enum ].type ].druidname );
-      Terminate ( ERR );
+that is not yet implemented or some other bug in Freedroid RPG.",
+				 PLEASE_INFORM, IS_FATAL );
     }
 
 }; // void ChatWithFriendlyDroid( int Enum );

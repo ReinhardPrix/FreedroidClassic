@@ -135,23 +135,13 @@ I need to know that for saving. Abort.\n");
 
   if ( stat ( filename , & ( FileInfoBuffer) ) )
     {
-      fprintf( stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
+      fprintf( stderr, "\n\nfilename: %s. \n" , filename );
+      GiveStandardErrorMessage ( "LoadAndShowStats(...)" , "\
 Freedroid was unable to determine the time of the last modification on\n\
 your saved game file.\n\
-\n\
-The file in question was named: %s.\n\
-\n\
 This is either a bug in Freedroid or an indication, that the directory\n\
-or file permissions are somehow not right.\n\
-\n\
-Freedroid will terminate now to draw attention to the problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , filename );
-      Terminate(ERR);
+or file permissions of ~/.freedroid_rpg are somehow not right.",
+				 NO_NEED_TO_INFORM, IS_FATAL );
     };
 
   LocalTimeSplitup = localtime ( & ( FileInfoBuffer.st_mtime ) ) ;
@@ -178,23 +168,13 @@ Sorry...\n\
   sprintf( filename , "%s/%s%s", Saved_Games_Dir, CoreFilename , ".shp" );
   if ( stat ( filename , & ( FileInfoBuffer) ) )
     {
-      fprintf( stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
+      fprintf( stderr, "\n\nfilename: %s. \n" , filename );
+      GiveStandardErrorMessage ( "LoadAndShowStats(...)" , "\
 Freedroid was unable to determine the time of the last modification on\n\
 your saved game file.\n\
-\n\
-The file in question was named: %s.\n\
-\n\
 This is either a bug in Freedroid or an indication, that the directory\n\
-or file permissions are somehow not right.\n\
-\n\
-Freedroid will terminate now to draw attention to the problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , filename );
-      Terminate(ERR);
+or file permissions of ~/.freedroid_rpg are somehow not right.",
+				 NO_NEED_TO_INFORM, IS_FATAL );
     };
   FileSize += FileInfoBuffer.st_size;
 
@@ -308,20 +288,11 @@ I need to know that for saving. Abort.\n");
   sprintf( filename , "%s/%s%s", Saved_Games_Dir, Me[0].character_name, SHIP_EXT );
   if ( SaveShip( filename ) != OK )
     {
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The SAVING OF THE SHIP DATA FOR THE SAVED GAME FAILED!!!\n\
-\n\
+      GiveStandardErrorMessage ( "SaveGame(...)" , "\
+The SAVING OF THE SHIP DATA FOR THE SAVED GAME FAILED!\n\
 This is either a bug in Freedroid or an indication, that the directory\n\
-permissions are somehow not right.\n\
-\n\
-Freedroid will terminate now to draw attention to the problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" );
-      Terminate(ERR);
+or file permissions of ~/.freedroid_rpg are somehow not right.",
+				 PLEASE_INFORM, IS_FATAL );
     } 
   else
     {
