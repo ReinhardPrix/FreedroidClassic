@@ -1872,8 +1872,6 @@ The transparent plate for the inventory could not be loaded.  This is a fatal er
       TransparentPlateImage = SDL_DisplayFormatAlpha ( tmp );
       SDL_FreeSurface ( tmp );
 
-    }
-
       //--------------------
       // We define the right side of the user screen as the rectangle
       // for our inventory screen.
@@ -1884,12 +1882,7 @@ The transparent plate for the inventory could not be loaded.  This is a fatal er
       InventoryRect.w = SCREEN_WIDTH/2;
       InventoryRect.h = User_Rect.h;
 
-      InventoryRect.x = 0;
-      // InventoryRect.y = SCREEN_HEIGHT - InventoryImage->h;
-      InventoryRect.y = User_Rect.y;
-      InventoryRect.w = SCREEN_WIDTH/2;
-      InventoryRect.h = User_Rect.h;
-
+    }
 
   //--------------------
   // At this point we know, that the inventory screen is desired and must be
@@ -1898,8 +1891,7 @@ The transparent plate for the inventory could not be loaded.  This is a fatal er
   // Into this inventory rectangle we draw the inventory mask
   //
   SDL_SetClipRect( Screen, NULL );
-  // SDL_BlitSurface ( InventoryImage , NULL , Screen , &InventoryRect );
-  SDL_BlitSurface ( InventoryImage , NULL , Screen , NULL );
+  SDL_BlitSurface ( InventoryImage , NULL , Screen , &InventoryRect );
 
   //--------------------
   // Now we display the item in the influencer drive slot
