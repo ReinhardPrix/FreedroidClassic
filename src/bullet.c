@@ -156,14 +156,14 @@ MoveBullets (void)
 Freedroid has encountered a problem:\n\
 A BULLET WAS FOUND TO EXIST OUTSIDE THE BOUNDS OF THE MAP.\n\
 This is an idication for an error of some form, but might also be due
-to short occasions of very low frame rates sometimes.\n\
+to short occasions of very low frame rates sometimes or it might be due
+to a melee weapon swing active when the swing robot was destroyed, which
+swapped him outside and the bullet thereby also outside.\n\
 \n\
-Please report the problem to the Freedroid developers.
+This problem is not severe, so this is a warning message only.\n\
 \n\
-Freedroid will NOT terminate now\n\
-to draw attention to the internal problem that indicates an error\n\
-in the code.  Please tell the developers about the problem detected\n\
-from the function MoveBullets().  Sorry for destroying your game...\n\
+Freedroid will NOT terminate now to draw attention to the problem\n\
+encounteres in the function MoveBullets().  Game should proceed as usual.\n\
 ----------------------------------------------------------------------\n\
 \n" );
 	  DeleteBullet ( i , FALSE );
