@@ -241,7 +241,7 @@ EXTERN void PlayItemSound ( int SoundCode );
 #define EXTERN extern
 #endif
 EXTERN void DamageAllEquipment( void );
-EXTERN void DropSpecificItemAtPosition( int x , int y , int NewItemCode );
+EXTERN void DropItemAt( int ItemType , int x , int y );
 EXTERN void ApplyItem( item* CurItem );
 EXTERN int Inv_Pos_Is_Free( int x , int y );
 EXTERN int GetInventoryItemAt ( int x , int y );

@@ -1741,6 +1741,7 @@ InitNewMissionList ( char *MissionName )
   Me.PointsToDistribute = 15;
   Me.ExpRequired = 1500;
   Me.exp_level = 1;
+  Me.Gold = 100;
   // strcpy ( Me.character_name , "R2D2 v.0.8.5." );
   strcpy ( Me.character_name , "character_name" );
   // strcpy ( Me.class_name , "Force bot" );

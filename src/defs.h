@@ -47,6 +47,9 @@
 #define INVENTORY_RECTANGLE_DEBUG_LEVEL 2 
 #define INVENTORY_MOUSE_BUTTON_DEBUG 2
 
+#define ITEM_MONEY 6
+#define ITEM_HEALTH_POTION 1
+
 
 //--------------------
 // This is old and should go out, but that must be done from at home, 
@@ -189,7 +192,8 @@ enum
 #define TEXT_STRETCH 1.2
 #define BANNER_WIDTH		SCREENLEN
 // #define BANNER_HEIGHT		( INITIAL_BLOCK_HEIGHT+15 )
-#define BANNER_HEIGHT		( 115 )
+// #define BANNER_HEIGHT		( 115 )
+#define BANNER_HEIGHT		( 2 )
 
 
 
