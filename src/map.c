@@ -62,6 +62,7 @@
 #define ITEM_MAX_DURATION_STRING " MaxDur="
 #define ITEM_CUR_DURATION_STRING " CurDur="
 #define ITEM_GOLD_AMOUNT_STRING " Gold="
+#define ITEM_MULTIPLICITY_STRING " Multiplicity="
 #define ITEM_PREFIX_CODE_STRING " PrefixCode="
 #define ITEM_SUFFIX_CODE_STRING " SuffixCode="
 #define ITEM_BONUS_TO_STR_STRING " StrBon="
@@ -1080,6 +1081,141 @@ EncodeStatementsOfThisLevel ( char* LevelMem , Level Lev )
   strcat(LevelMem, "\n");
   
 }; // void EncodeStatementsOfThisLevel ( char* LevelMem , Level Lev )
+
+/* ----------------------------------------------------------------------
+ *
+ * ---------------------------------------------------------------------- */
+void
+EncodeItemSectionOfThisLevel ( char* LevelMem , Level Lev ) 
+{
+  char linebuf[5000];	// Buffer 
+  int i;
+
+  //--------------------
+  // Now we write out a marker to announce the beginning of the items data
+  //
+  strcat(LevelMem, ITEMS_SECTION_BEGIN_STRING);
+  strcat(LevelMem, "\n");
+
+  //--------------------
+  // Now we write out the bulk of items infos
+  //
+  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+    {
+      if ( Lev->ItemList[ i ].type == (-1) ) continue;
+
+      strcat( LevelMem , ITEM_CODE_STRING );
+      sprintf( linebuf , "%d " , Lev->ItemList[ i ].type );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , ITEM_POS_X_STRING );
+      sprintf( linebuf , "%f " , Lev->ItemList[ i ].pos.x );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , ITEM_POS_Y_STRING );
+      sprintf( linebuf , "%f " , Lev->ItemList[ i ].pos.y );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , ITEM_AC_BONUS_STRING );
+      sprintf( linebuf , "%d " , Lev->ItemList[ i ].ac_bonus );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , ITEM_DAMAGE_STRING );
+      sprintf( linebuf , "%d " , Lev->ItemList[ i ].damage );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , ITEM_DAMAGE_MODIFIER_STRING );
+      sprintf( linebuf , "%d " , Lev->ItemList[ i ].damage_modifier );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , ITEM_MAX_DURATION_STRING );
+      sprintf( linebuf , "%d " , Lev->ItemList[ i ].max_duration );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , ITEM_CUR_DURATION_STRING );
+      sprintf( linebuf , "%f " , Lev->ItemList[ i ].current_duration );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , ITEM_GOLD_AMOUNT_STRING );
+      sprintf( linebuf , "%d " , Lev->ItemList[ i ].gold_amount );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , ITEM_MULTIPLICITY_STRING );
+      sprintf( linebuf , "%d " , Lev->ItemList[ i ].multiplicity );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , ITEM_PREFIX_CODE_STRING );
+      sprintf( linebuf , "%d " , Lev->ItemList[ i ].prefix_code );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , ITEM_SUFFIX_CODE_STRING );
+      sprintf( linebuf , "%d " , Lev->ItemList[ i ].suffix_code );
+      strcat( LevelMem , linebuf );
+
+      // Now we save the primary stat (attribute) boni
+
+      strcat( LevelMem , ITEM_BONUS_TO_STR_STRING );
+      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_str );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , ITEM_BONUS_TO_DEX_STRING );
+      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_dex );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , ITEM_BONUS_TO_VIT_STRING );
+      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_vit );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , ITEM_BONUS_TO_MAG_STRING );
+      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_mag );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , ITEM_BONUS_TO_ALLATT_STRING );
+      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_all_attributes );
+      strcat( LevelMem , linebuf );
+
+      // Now we save the secondary stat boni
+
+      strcat( LevelMem , ITEM_BONUS_TO_LIFE_STRING );
+      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_life );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , ITEM_BONUS_TO_FORCE_STRING );
+      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_force );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , ITEM_BONUS_TO_TOHIT_STRING );
+      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_tohit );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , ITEM_BONUS_TO_ACDAM_STRING );
+      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_ac_or_damage );
+      strcat( LevelMem , linebuf );
+
+      // Now we save the resistanc boni
+
+      strcat( LevelMem , ITEM_BONUS_TO_RESELE_STRING );
+      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_resist_electricity );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , ITEM_BONUS_TO_RESFOR_STRING );
+      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_resist_force );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , ITEM_BONUS_TO_RESFIR_STRING );
+      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_resist_fire );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , "\n" );
+    }
+  //--------------------
+  // Now we write out a marker to announce the end of the items data
+  //
+  strcat(LevelMem, ITEMS_SECTION_END_STRING);
+  strcat(LevelMem, "\n");
+  
+}; // void EncodeItemSectionOfThisLevel ( LevelMem , Lev ) 
+
 		
 /* ----------------------------------------------------------------------
  * This function generates savable text out of the current lavel data
@@ -1240,126 +1376,7 @@ jump target west: %d\n",
   strcat(LevelMem, BIG_MAP_INSERT_SECTION_END_STRING);
   strcat(LevelMem, "\n");
 
-
-  //--------------------
-  // Now we write out a marker to announce the beginning of the items data
-  //
-  strcat(LevelMem, ITEMS_SECTION_BEGIN_STRING);
-  strcat(LevelMem, "\n");
-
-  //--------------------
-  // Now we write out the bulk of items infos
-  //
-  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
-    {
-      if ( Lev->ItemList[ i ].type == (-1) ) continue;
-
-      strcat( LevelMem , ITEM_CODE_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].type );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_POS_X_STRING );
-      sprintf( linebuf , "%f " , Lev->ItemList[ i ].pos.x );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_POS_Y_STRING );
-      sprintf( linebuf , "%f " , Lev->ItemList[ i ].pos.y );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_AC_BONUS_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].ac_bonus );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_DAMAGE_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].damage );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_DAMAGE_MODIFIER_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].damage_modifier );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_MAX_DURATION_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].max_duration );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_CUR_DURATION_STRING );
-      sprintf( linebuf , "%f " , Lev->ItemList[ i ].current_duration );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_GOLD_AMOUNT_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].gold_amount );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_PREFIX_CODE_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].prefix_code );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_SUFFIX_CODE_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].suffix_code );
-      strcat( LevelMem , linebuf );
-
-      // Now we save the primary stat (attribute) boni
-
-      strcat( LevelMem , ITEM_BONUS_TO_STR_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_str );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_BONUS_TO_DEX_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_dex );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_BONUS_TO_VIT_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_vit );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_BONUS_TO_MAG_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_mag );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_BONUS_TO_ALLATT_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_all_attributes );
-      strcat( LevelMem , linebuf );
-
-      // Now we save the secondary stat boni
-
-      strcat( LevelMem , ITEM_BONUS_TO_LIFE_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_life );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_BONUS_TO_FORCE_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_force );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_BONUS_TO_TOHIT_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_tohit );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_BONUS_TO_ACDAM_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_ac_or_damage );
-      strcat( LevelMem , linebuf );
-
-      // Now we save the resistanc boni
-
-      strcat( LevelMem , ITEM_BONUS_TO_RESELE_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_resist_electricity );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_BONUS_TO_RESFOR_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_resist_force );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , ITEM_BONUS_TO_RESFIR_STRING );
-      sprintf( linebuf , "%d " , Lev->ItemList[ i ].bonus_to_resist_fire );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , "\n" );
-    }
-  //--------------------
-  // Now we write out a marker to announce the end of the items data
-  //
-  strcat(LevelMem, ITEMS_SECTION_END_STRING);
-  strcat(LevelMem, "\n");
-  
+  EncodeItemSectionOfThisLevel ( LevelMem , Lev ) ;
 
   // --------------------  
   // The next thing we must do is write the waypoints of this level also
@@ -1570,6 +1587,109 @@ freedroid-discussion@lists.sourceforge.net\n\
 
 }; // int SaveShip ( char* filename )
 
+//----------------------------------------------------------------------
+// From here on we take apart the items section of the loaded level...
+//----------------------------------------------------------------------
+void
+DecodeItemSectionOfThisLevel ( Level loadlevel , char* data )
+{
+  int i;
+  char Preserved_Letter;
+  int NumberOfItemsInThisLevel;
+  char* ItemPointer;
+  char* ItemsSectionBegin;
+  char* ItemsSectionEnd;
+
+  //--------------------
+  // First we initialize the items arrays with 'empty' information
+  //
+  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+    {
+      loadlevel->ItemList[ i ].pos.x = ( -1 ) ;
+      loadlevel->ItemList[ i ].pos.y = ( -1 ) ;
+      loadlevel->ItemList[ i ].type = ( -1 ) ;
+      loadlevel->ItemList[ i ].currently_held_in_hand = FALSE;
+    }
+
+  // We look for the beginning and end of the items section
+  ItemsSectionBegin = LocateStringInData( data , ITEMS_SECTION_BEGIN_STRING );
+  ItemsSectionEnd = LocateStringInData( data , ITEMS_SECTION_END_STRING );
+
+  // We add a terminator at the end of the items section, but ONLY TEMPORARY.  
+  // The damage will be restored later!
+  Preserved_Letter=ItemsSectionEnd[0];
+  ItemsSectionEnd[0]=0;
+  NumberOfItemsInThisLevel = CountStringOccurences ( ItemsSectionBegin , ITEM_CODE_STRING ) ;
+  DebugPrintf( 1 , "\nNumber of items found in this level : %d." , NumberOfItemsInThisLevel );
+
+  // Now we decode all the item information
+  ItemPointer=ItemsSectionBegin;
+  for ( i = 0 ; i < NumberOfItemsInThisLevel ; i ++ )
+    {
+      ItemPointer = strstr ( ItemPointer + 1 , ITEM_CODE_STRING );
+      ReadValueFromString( ItemPointer , ITEM_CODE_STRING , "%d" , 
+			   &(loadlevel->ItemList[ i ].type) , ItemsSectionEnd );
+      ReadValueFromString( ItemPointer , ITEM_POS_X_STRING , "%lf" , 
+			   &(loadlevel->ItemList[ i ].pos.x) , ItemsSectionEnd );
+      ReadValueFromString( ItemPointer , ITEM_POS_Y_STRING , "%lf" , 
+			   &(loadlevel->ItemList[ i ].pos.y) , ItemsSectionEnd );
+      ReadValueFromString( ItemPointer , ITEM_AC_BONUS_STRING , "%d" , 
+			   &( loadlevel->ItemList[ i ].ac_bonus ) , ItemsSectionEnd );
+      ReadValueFromString( ItemPointer , ITEM_DAMAGE_STRING , "%d" , 
+			   &( loadlevel->ItemList[ i ].damage ) , ItemsSectionEnd );
+      ReadValueFromString( ItemPointer , ITEM_DAMAGE_MODIFIER_STRING , "%d" , 
+			   &( loadlevel->ItemList[ i ].damage_modifier ) , ItemsSectionEnd );
+      ReadValueFromString( ItemPointer , ITEM_MAX_DURATION_STRING , "%d" , 
+			   &( loadlevel->ItemList[ i ].max_duration ) , ItemsSectionEnd );
+      ReadValueFromString( ItemPointer , ITEM_CUR_DURATION_STRING , "%f" , 
+			   &( loadlevel->ItemList[ i ].current_duration ) , ItemsSectionEnd );
+      ReadValueFromString( ItemPointer , ITEM_GOLD_AMOUNT_STRING , "%d" , 
+			   &( loadlevel->ItemList[ i ].gold_amount ) , ItemsSectionEnd );
+      ReadValueFromString( ItemPointer , ITEM_MULTIPLICITY_STRING , "%d" , 
+			   &( loadlevel->ItemList[ i ].multiplicity ) , ItemsSectionEnd );
+      ReadValueFromString( ItemPointer , ITEM_PREFIX_CODE_STRING , "%d" , 
+			   &( loadlevel->ItemList[ i ].prefix_code ) , ItemsSectionEnd );
+      ReadValueFromString( ItemPointer , ITEM_SUFFIX_CODE_STRING , "%d" , 
+			   &( loadlevel->ItemList[ i ].suffix_code ) , ItemsSectionEnd );
+      // Now we read in the boni to the primary stats (attributes)
+      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_STR_STRING , "%d" , 
+			   &( loadlevel->ItemList[ i ].bonus_to_str ) , ItemsSectionEnd );
+      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_DEX_STRING , "%d" , 
+			   &( loadlevel->ItemList[ i ].bonus_to_dex ) , ItemsSectionEnd );
+      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_MAG_STRING , "%d" , 
+			   &( loadlevel->ItemList[ i ].bonus_to_mag ) , ItemsSectionEnd );
+      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_VIT_STRING , "%d" , 
+			   &( loadlevel->ItemList[ i ].bonus_to_vit ) , ItemsSectionEnd );
+      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_ALLATT_STRING , "%d" , 
+			   &( loadlevel->ItemList[ i ].bonus_to_all_attributes ) , ItemsSectionEnd );
+      // Now we read in the boni for the secondary stats
+      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_LIFE_STRING , "%d" , 
+			   &( loadlevel->ItemList[ i ].bonus_to_life ) , ItemsSectionEnd );
+      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_FORCE_STRING , "%d" , 
+			   &( loadlevel->ItemList[ i ].bonus_to_force ) , ItemsSectionEnd );
+      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_TOHIT_STRING , "%d" , 
+			   &( loadlevel->ItemList[ i ].bonus_to_tohit ) , ItemsSectionEnd );
+      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_ACDAM_STRING , "%d" , 
+			   &( loadlevel->ItemList[ i ].bonus_to_ac_or_damage ) , ItemsSectionEnd );
+      // Now we read in the boni for resistances
+      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_RESELE_STRING , "%d" , 
+			   &( loadlevel->ItemList[ i ].bonus_to_resist_electricity ) , ItemsSectionEnd );
+      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_RESFIR_STRING , "%d" , 
+			   &( loadlevel->ItemList[ i ].bonus_to_resist_fire ) , ItemsSectionEnd );
+      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_RESFOR_STRING , "%d" , 
+			   &( loadlevel->ItemList[ i ].bonus_to_resist_force ) , ItemsSectionEnd );
+
+      DebugPrintf( 1 , "\nPosX=%f PosY=%f Item=%d" , loadlevel->ItemList[ i ].pos.x , 
+		   loadlevel->ItemList[ i ].pos.y , loadlevel->ItemList[ i ].type );
+    }
+  
+  // Now we repair the damage done to the loaded level data
+  ItemsSectionEnd[0]=Preserved_Letter;
+
+  fflush(stdout);
+
+}; // void DecodeItemSectionOfThisLevel ( Level loadlevel , char* data )
+
 /* ----------------------------------------------------------------------
  * This function is for LOADING map data!
  * This function extracts the data from *data and writes them 
@@ -1600,11 +1720,7 @@ DecodeLoadedLeveldata ( char *data )
   char* MapInsertPointer;
   char* MapInsertSectionBegin;
   char* MapInsertSectionEnd;
-  char* ItemPointer;
-  char* ItemsSectionBegin;
-  char* ItemsSectionEnd;
   int NumberOfMapInsertsInThisLevel;
-  int NumberOfItemsInThisLevel;
   char Preserved_Letter;
 
   //--------------------
@@ -1720,91 +1836,8 @@ DecodeLoadedLeveldata ( char *data )
   // From here on we take apart the items section of the loaded level...
   //----------------------------------------------------------------------
   
-  //--------------------
-  // First we initialize the items arrays with 'empty' information
-  //
-  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
-    {
-      loadlevel->ItemList[ i ].pos.x = ( -1 ) ;
-      loadlevel->ItemList[ i ].pos.y = ( -1 ) ;
-      loadlevel->ItemList[ i ].type = ( -1 ) ;
-      loadlevel->ItemList[ i ].currently_held_in_hand = FALSE;
-    }
-
-  // We look for the beginning and end of the items section
-  ItemsSectionBegin = LocateStringInData( data , ITEMS_SECTION_BEGIN_STRING );
-  ItemsSectionEnd = LocateStringInData( data , ITEMS_SECTION_END_STRING );
-
-  // We add a terminator at the end of the items section, but ONLY TEMPORARY.  
-  // The damage will be restored later!
-  Preserved_Letter=ItemsSectionEnd[0];
-  ItemsSectionEnd[0]=0;
-  NumberOfItemsInThisLevel = CountStringOccurences ( ItemsSectionBegin , ITEM_CODE_STRING ) ;
-  DebugPrintf( 1 , "\nNumber of items found in this level : %d." , NumberOfItemsInThisLevel );
-
-  // Now we decode all the item information
-  ItemPointer=ItemsSectionBegin;
-  for ( i = 0 ; i < NumberOfItemsInThisLevel ; i ++ )
-    {
-      ItemPointer = strstr ( ItemPointer + 1 , ITEM_CODE_STRING );
-      ReadValueFromString( ItemPointer , ITEM_CODE_STRING , "%d" , 
-			   &(loadlevel->ItemList[ i ].type) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_POS_X_STRING , "%lf" , 
-			   &(loadlevel->ItemList[ i ].pos.x) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_POS_Y_STRING , "%lf" , 
-			   &(loadlevel->ItemList[ i ].pos.y) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_AC_BONUS_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].ac_bonus ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_DAMAGE_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].damage ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_DAMAGE_MODIFIER_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].damage_modifier ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_MAX_DURATION_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].max_duration ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_CUR_DURATION_STRING , "%f" , 
-			   &( loadlevel->ItemList[ i ].current_duration ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_GOLD_AMOUNT_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].gold_amount ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_PREFIX_CODE_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].prefix_code ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_SUFFIX_CODE_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].suffix_code ) , ItemsSectionEnd );
-      // Now we read in the boni to the primary stats (attributes)
-      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_STR_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].bonus_to_str ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_DEX_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].bonus_to_dex ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_MAG_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].bonus_to_mag ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_VIT_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].bonus_to_vit ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_ALLATT_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].bonus_to_all_attributes ) , ItemsSectionEnd );
-      // Now we read in the boni for the secondary stats
-      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_LIFE_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].bonus_to_life ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_FORCE_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].bonus_to_force ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_TOHIT_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].bonus_to_tohit ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_ACDAM_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].bonus_to_ac_or_damage ) , ItemsSectionEnd );
-      // Now we read in the boni for resistances
-      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_RESELE_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].bonus_to_resist_electricity ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_RESFIR_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].bonus_to_resist_fire ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_RESFOR_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].bonus_to_resist_force ) , ItemsSectionEnd );
-
-      DebugPrintf( 1 , "\nPosX=%f PosY=%f Item=%d" , loadlevel->ItemList[ i ].pos.x , 
-		   loadlevel->ItemList[ i ].pos.y , loadlevel->ItemList[ i ].type );
-    }
+  DecodeItemSectionOfThisLevel ( loadlevel , data );
   
-  // Now we repair the damage done to the loaded level data
-  ItemsSectionEnd[0]=Preserved_Letter;
-
-  fflush(stdout);
 
   //--------------------
   // find the map data

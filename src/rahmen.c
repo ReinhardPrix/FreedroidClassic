@@ -126,6 +126,18 @@ exist really (i.e. has a type = (-1) ).",
       strcat( ItemDescText , linebuf );
     }
 
+  //--------------------
+  // If this item has a multiplicity, we print it out
+  //
+  if ( CurItem->multiplicity )
+    {
+      // if ( ! ForShop ) 
+      sprintf( linebuf , "Multiplicity: %d \n" , CurItem->multiplicity );
+      // else
+      // sprintf( linebuf , "Dam: %d-%d " , CurItem->damage , CurItem->damage_modifier + CurItem->damage );
+      strcat( ItemDescText , linebuf );
+    }
+
   // --------------------
   // If it's a drive, then we give out the maxspeed and accel values as well
   //

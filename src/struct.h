@@ -310,6 +310,7 @@ typedef struct
   int item_can_be_installed_in_aux_slot;
 
   int item_can_be_bought_in_shop;
+  int item_group_together_in_inventory;
 
   char* item_rotation_series_prefix;
 
@@ -392,6 +393,7 @@ typedef struct
   int damage; // how much damage does this item
   int damage_modifier; // how much additional damage can add to the base damage
   int gold_amount; // how much cyberbucks are there, IN CASE OF CYBERBUCKS
+  int multiplicity;
   point inventory_position;
 } item, *Item;
 

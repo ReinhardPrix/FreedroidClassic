@@ -75,7 +75,7 @@ enum
 #define MAX_ITEMS_IN_INVENTORY 100
 #define INVENTORY_GRID_WIDTH 9
 #define INVENTORY_GRID_HEIGHT 6
-#define NUMBER_OF_ITEM_PICTURES 54
+#define NUMBER_OF_ITEM_PICTURES 56
 #define NUMBER_OF_MOUSE_CURSOR_PICTURES 2
 #define ALL_ITEMS 100
 
@@ -392,6 +392,7 @@ enum _sounds
 // #define MAX_PLAYERS             5
 #define MAX_PLAYERS             1
 #define MAX_PLAYERS_AT_MOST     5
+#define PLAYER_NR_0             0
 
 enum _non_player_characters
   {

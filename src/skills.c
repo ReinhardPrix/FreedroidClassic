@@ -356,6 +356,7 @@ RadialEMPWave ( gps ExpCenter )
       //
       Me[0].mana -= SpellCost;
       //
+      PlaySound ( SPELL_FORCETOENERGY_SOUND_0 ) ;
 
       //--------------------
       // First we find a new entry in the active spells list
@@ -400,6 +401,7 @@ RadialVMXWave ( gps ExpCenter )
       //
       Me[0].mana -= SpellCost;
       //
+      PlaySound ( SPELL_FORCETOENERGY_SOUND_0 ) ;
 
       //--------------------
       // First we find a new entry in the active spells list

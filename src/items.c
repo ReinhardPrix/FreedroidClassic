@@ -313,6 +313,7 @@ FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange
     {
       ThisItem->gold_amount = 20 * TreasureChestRange + MyRandom( 20 ) + 1;
     }
+  ThisItem->multiplicity = 1;
 
   //--------------------
   // We now have to set a duration, as well a maximum duration
@@ -1176,6 +1177,29 @@ CountItemtypeInInventory( int Itemtype , int PlayerNum )
     }
   return NumberOfItemsFound;
 }; // int CountItemtypeInInventory( int Itemtype , int PlayerNum )
+
+int
+FindFirstInventoryIndexWithItemType ( int Itemtype , int PlayerNum )
+{
+  int i;
+
+  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i++ )
+    {
+      if ( Me [ PlayerNum ] . Inventory [ i ] . type == Itemtype ) return ( i );
+    }
+  
+  //--------------------
+  // Severe error:  Item type NOT found in inventory!!!
+  //
+  fprintf ( stderr, "\n\nItemType: '%d'.\n" , Itemtype );
+  GiveStandardErrorMessage ( "FindFirstInventoryIndexWithItemType(...)" , "\
+There was an item code for an item to locate in inventory, but inventory\n\
+did not contain this item type at all!  This indicates a severe bug in Freedroid.",
+			     PLEASE_INFORM, IS_FATAL );
+
+  return ( -1 );
+  
+}; // int FindFirstInventoryIndexWithItemType ( ItemPointer->type , PLAYER_NR_0 )
 
 /* ----------------------------------------------------------------------
  * At some point the Tux will hand over all his items of a given type
@@ -2591,6 +2615,7 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
   point Inv_Loc;
   char TempText[1000];
   int SourceCode , DestCode ;
+  int TargetItemIndex;
 
   //--------------------
   // In case we found an item on the floor, we remove it from the floor
@@ -2610,7 +2635,18 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
 	  return;
 	}
 
-
+      if ( ItemMap [ ItemPointer->type ] . item_group_together_in_inventory )
+	{
+	  if ( CountItemtypeInInventory ( ItemPointer->type , PLAYER_NR_0 ) )
+	    {
+	      TargetItemIndex = FindFirstInventoryIndexWithItemType ( ItemPointer->type , PLAYER_NR_0 );
+	      Me [ PLAYER_NR_0 ] . Inventory [ TargetItemIndex ] . multiplicity += ItemPointer->multiplicity;
+	      PlayItemSound( ItemMap[ ItemPointer->type ].sound_number );
+	      // Me[0].Gold += ItemPointer->gold_amount;
+	      DeleteItem( ItemPointer );
+	      return;
+	    }
+	}
 
       // find a free position in the inventory list
       for ( InvPos = 0 ; InvPos < MAX_ITEMS_IN_INVENTORY -1 ; InvPos++ )

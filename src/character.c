@@ -616,7 +616,7 @@ ShowCharacterScreen ( void )
 {
   // static SDL_Rect ButtonRect;
   static SDL_Surface *CharacterScreenImage = NULL;
-  static SDL_Surface *PlusButtonImage = NULL;
+  // static SDL_Surface *PlusButtonImage = NULL;
   SDL_Surface *tmp = NULL;
   char *fpath;
   char CharText[1000];
@@ -652,10 +652,12 @@ ShowCharacterScreen ( void )
       CharacterScreenImage = SDL_DisplayFormat ( tmp );
       SDL_FreeSurface ( tmp );
 
-      fpath = find_file ( "PlusButton.png" , GRAPHICS_DIR, FALSE);
+      /*
+      fpath = find_file ( "mouse_buttons/PlusButton.png" , GRAPHICS_DIR, FALSE);
       tmp = IMG_Load( fpath );
       PlusButtonImage = SDL_DisplayFormat ( tmp );
       SDL_FreeSurface ( tmp );
+      */
 
       //--------------------
       // We define the right side of the user screen as the rectangle

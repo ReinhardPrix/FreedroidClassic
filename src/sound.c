@@ -606,19 +606,6 @@ SetSoundFXVolume(float NewVolume)
 
 } // void SetBGMusicVolume(float NewVolume)
 
-
-/*@Function============================================================
-@Desc: Starts a Tune.
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-StartSound (int Tune)
-{
-
-} /* void StartSound(int Tune) */
-
 /*@Function============================================================
 @Desc: 
 

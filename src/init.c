@@ -267,6 +267,7 @@ Get_Item_Data ( char* DataPointer )
 #define ITEM_CAN_BE_INSTALLED_IN_SLOT_WITH_NAME "Item can be installed in slot with name=\""
 #define ITEM_ROTATION_SERIES_NAME_PREFIX "Item uses rotation series with prefix=\""
 #define ITEM_CAN_BE_BOUGHT_IN_SHOP "Item can be bought in shop=\""
+#define ITEM_GROUP_TOGETHER_IN_INVENTORY "Items of this type collect together in inventory=\""
 
 #define ITEM_GUN_IGNORE_WALL "Item as gun: ignore collisions with wall=\""
 
@@ -407,8 +408,9 @@ answer for the slot installation possiblieties, that was neither
       //
       ItemMap [ ItemIndex ] . item_rotation_series_prefix = ReadAndMallocStringFromData ( ItemPointer , ITEM_ROTATION_SERIES_NAME_PREFIX , "\"" ) ;
 
-
+      //--------------------
       // Now we read in if this item can bought in shops
+      //
       YesNoString = ReadAndMallocStringFromData ( ItemPointer , ITEM_CAN_BE_BOUGHT_IN_SHOP , "\"" ) ;
       if ( strcmp( YesNoString , "yes" ) == 0 )
 	{
@@ -417,6 +419,26 @@ answer for the slot installation possiblieties, that was neither
       else if ( strcmp( YesNoString , "no" ) == 0 )
 	{
 	  ItemMap[ItemIndex].item_can_be_bought_in_shop = FALSE;
+	}
+      else
+	{
+	  GiveStandardErrorMessage ( "Get_Item_Data(...)" , "\
+The item specification of an item in freedroid.ruleset should contain an \n\
+answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
+				     PLEASE_INFORM, IS_FATAL );
+	}
+
+      //--------------------
+      // Now we read in if this item will group together in inventory
+      //
+      YesNoString = ReadAndMallocStringFromData ( ItemPointer , ITEM_GROUP_TOGETHER_IN_INVENTORY , "\"" ) ;
+      if ( strcmp( YesNoString , "yes" ) == 0 )
+	{
+	  ItemMap[ItemIndex].item_group_together_in_inventory = TRUE;
+	}
+      else if ( strcmp( YesNoString , "no" ) == 0 )
+	{
+	  ItemMap[ItemIndex].item_group_together_in_inventory = FALSE;
 	}
       else
 	{
