@@ -260,9 +260,12 @@ Get_Game_Events ( char* EventSectionPointer )
 #define EVENT_ACTION_ASSIGN_WHICH_MISSION "Action is mission assignment="
 #define ACTION_LABEL_INDICATION_STRING "Action label for this action=\""
 
-#define EVENT_TRIGGER_POS_X_STRING "Influencer must be at x-coordinate="
-#define EVENT_TRIGGER_POS_Y_STRING "Influencer must be at y-coordinate="
-#define EVENT_TRIGGER_POS_MAPLEVEL_STRING "Influencer must be at maplevel="
+#define EVENT_TRIGGER_POS_X_STRING "Influencer must be at X="
+#define EVENT_TRIGGER_POS_Y_STRING " Y="
+#define EVENT_TRIGGER_POS_MAPLEVEL_STRING " Lev="
+  // #define EVENT_TRIGGER_POS_X_STRING "Influencer must be at x-coordinate="
+  // #define EVENT_TRIGGER_POS_Y_STRING "Influencer must be at y-coordinate="
+  // #define EVENT_TRIGGER_POS_MAPLEVEL_STRING "Influencer must be at maplevel="
 #define EVENT_TRIGGER_DELETED_AFTER_TRIGGERING "Delete the event trigger after it has been triggered="
 #define TRIGGER_WHICH_TARGET_LABEL "Event Action to be triggered by this trigger=\""
 
