@@ -3040,7 +3040,7 @@ ShowWaypoints( int PrintConnectionList , int mask )
   char ConnectionText[5000];
   char TextAddition[1000];
   Level EditLevel;
-  static iso_image level_editor_waypoint_cursor = UNLOADED_ISO_IMAGE ;
+  static iso_image level_editor_waypoint_cursor [ 2 ] = { UNLOADED_ISO_IMAGE , UNLOADED_ISO_IMAGE } ;
   char* fpath;
   waypoint *this_wp;
 
@@ -3052,25 +3052,32 @@ ShowWaypoints( int PrintConnectionList , int mask )
   // Maybe, if the level editor floor cursor has not yet been loaded,
   // we need to load it.
   //
-  if ( ( level_editor_waypoint_cursor . surface == NULL ) && ( ! level_editor_waypoint_cursor . texture_has_been_created ) )
-    {
-      fpath = find_file ( "level_editor_waypoint_cursor.png" , GRAPHICS_DIR, FALSE );
-      get_iso_image_from_file_and_path ( fpath , & ( level_editor_waypoint_cursor ) , TRUE ) ;
-      if ( level_editor_waypoint_cursor . surface == NULL )
-	{
-	  GiveStandardErrorMessage ( "ShowWaypoints( int PrintConnectionList )" , "\
-Unable to load the level editor waypoint cursor.",
-				     PLEASE_INFORM, IS_FATAL );
-	}
+  for ( i = 0 ; i < 2 ; i ++ )
+  {
+      if ( ( level_editor_waypoint_cursor [ i ] . surface == NULL ) && ( ! level_editor_waypoint_cursor [ i ] . texture_has_been_created ) )
+      {
+	  if ( i == 0 )
+	      fpath = find_file ( "level_editor_waypoint_cursor.png" , GRAPHICS_DIR, FALSE );
+	  else
+	      fpath = find_file ( "level_editor_norand_waypoint_cursor.png" , GRAPHICS_DIR, FALSE );
+	  get_iso_image_from_file_and_path ( fpath , & ( level_editor_waypoint_cursor [ i ] ) , TRUE ) ;
 
-      if ( use_open_gl )
-	make_texture_out_of_surface ( & level_editor_waypoint_cursor );
-    }
+	  if ( level_editor_waypoint_cursor [ i ] . surface == NULL )
+	  {
+	      GiveStandardErrorMessage ( "ShowWaypoints(...)" , "\
+Unable to load the level editor waypoint cursor.",
+					 PLEASE_INFORM, IS_FATAL );
+	  }
+	  
+	  if ( use_open_gl )
+	      make_texture_out_of_surface ( & ( level_editor_waypoint_cursor [ i ] ) );
+      }
+  }
 
   BlockX = rintf ( Me [ 0 ] . pos . x - 0.5 );
   BlockY = rintf ( Me [ 0 ] . pos . y - 0.5 );
 	  
-  for (wp=0; wp<EditLevel->num_waypoints; wp++)
+  for ( wp = 0 ; wp < EditLevel -> num_waypoints ; wp++ )
     {
       this_wp = &(EditLevel->AllWaypoints[wp]);
       if ( this_wp->x == 0 && this_wp->y == 0) continue;
@@ -3079,22 +3086,22 @@ Unable to load the level editor waypoint cursor.",
 	{
 	  if ( use_open_gl )
 	    {
-	      blit_zoomed_open_gl_texture_to_map_position ( level_editor_waypoint_cursor , 
+	      blit_zoomed_open_gl_texture_to_map_position ( level_editor_waypoint_cursor [ this_wp -> suppress_random_spawn ] , 
 							    this_wp->x + 0.5 , this_wp->y + 0.5 , 1.0 , 1.0 , 1.0 , 0.25 ) ;
 	    }
 	  else
 	    {
-	      blit_zoomed_iso_image_to_map_position ( & ( level_editor_waypoint_cursor ) , 
+	      blit_zoomed_iso_image_to_map_position ( & ( level_editor_waypoint_cursor [ this_wp -> suppress_random_spawn ]  ) , 
 						      this_wp->x + 0.5 , this_wp->y + 0.5 ) ;
 	    }
 	}
       else
 	{
 	  if ( use_open_gl )
-	    blit_open_gl_texture_to_map_position ( level_editor_waypoint_cursor , 
+	    blit_open_gl_texture_to_map_position ( level_editor_waypoint_cursor [ this_wp -> suppress_random_spawn ]  , 
 						   this_wp->x + 0.5 , this_wp->y + 0.5 , 1.0 , 1.0 , 1.0 , 0.25 ) ;
 	  else
-	    blit_iso_image_to_map_position ( level_editor_waypoint_cursor , 
+	    blit_iso_image_to_map_position ( level_editor_waypoint_cursor [ this_wp -> suppress_random_spawn ] , 
 					     this_wp->x + 0.5 , this_wp->y + 0.5 ) ;
 	}
       
@@ -3382,24 +3389,40 @@ HandleLevelEditorCursorKeys ( void )
  *
  * ---------------------------------------------------------------------- */
 void
-ToggleWaypoint ( Level EditLevel , int BlockX , int BlockY )
+ToggleWaypoint ( Level EditLevel , int BlockX , int BlockY , int toggle_random_spawn )
 {
   int i;
 
   // find out if there is a waypoint on the current square
-  for (i=0 ; i < EditLevel->num_waypoints ; i++)
+  for ( i = 0 ; i < EditLevel->num_waypoints ; i++ )
     {
       if ( ( EditLevel->AllWaypoints[i].x == BlockX ) &&
 	   ( EditLevel->AllWaypoints[i].y == BlockY ) ) break;
     }
   
-  // if its waypoint already, this waypoint must be deleted.
-  if ( i < EditLevel->num_waypoints )
-    DeleteWaypoint (EditLevel, i);
+  //--------------------
+  // If its waypoint already, this waypoint must either be deleted
+  // or the random spawn bit reset...
+  //
+  if ( i < EditLevel -> num_waypoints )
+  {
+      if ( toggle_random_spawn )
+      {
+	  if ( EditLevel -> AllWaypoints [ i ] . suppress_random_spawn )
+	      EditLevel -> AllWaypoints [ i ] . suppress_random_spawn = 0 ;
+	  else
+	      EditLevel -> AllWaypoints [ i ] . suppress_random_spawn = 1 ;
+      }
+      else
+	  DeleteWaypoint ( EditLevel , i );
+  }
   else // if its not a waypoint already, it must be made into one
-    CreateWaypoint (EditLevel, BlockX, BlockY);
+  {
+      if ( ! toggle_random_spawn )
+	  CreateWaypoint ( EditLevel , BlockX , BlockY );
+  }
   
-  DebugPrintf (1, "\n\n  i is now: %d ", i );
+  DebugPrintf ( 1 , "\n\n  i is now: %d ", i );
   
 }; // void ToggleWaypoint ( Level EditLevel , int BlockX , int BlockY )
 
@@ -4305,10 +4328,20 @@ LevelEditor(void)
 	  // toggled on the current square.  That means either removed or added.
 	  // And in case of removal, also the connections must be removed.
 	  //
-	  if (WPressed())
+	  if ( WPressed( ) )
 	    {
-	      ToggleWaypoint ( EditLevel , BlockX, BlockY );
+	      ToggleWaypoint ( EditLevel , BlockX, BlockY , FALSE );
 	      while ( WPressed() );
+	    }
+
+	  //--------------------
+	  // If the person using the level editor pressed r, the waypoint on 
+	  // the current square is toggled concerning random spawning of bots.
+	  //
+	  if ( RPressed( ) )
+	    {
+	      ToggleWaypoint ( EditLevel , BlockX, BlockY , TRUE );
+	      while ( RPressed() );
 	    }
 
 	  //--------------------

@@ -906,10 +906,11 @@ spell_skill_spec, *Spell_Skill_Spec;
 
 typedef struct
 {
-  int x;			
-  int y;
-  int num_connections;
-  int connections [ MAX_WP_CONNECTIONS ] ;
+    int x;			
+    int y;
+    int num_connections;
+    int suppress_random_spawn;
+    int connections [ MAX_WP_CONNECTIONS ] ;
 }
 waypoint, *Waypoint;
 

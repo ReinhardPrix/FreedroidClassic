@@ -1156,7 +1156,7 @@ LoadShip (char *filename)
   //
   level_anz = 0;
   endpt = ShipData;
-  LevelStart[level_anz] = ShipData;
+  LevelStart [ level_anz ] = ShipData;
   while ((endpt = strstr (endpt, LEVEL_END_STRING)) != NULL)
     {
       endpt += strlen (LEVEL_END_STRING);
@@ -2211,8 +2211,9 @@ DecodeLoadedLeveldata ( char *data )
       if ( x == 0 && y == 0 )
 	continue;
       
-      loadlevel->AllWaypoints[i].x=x;
-      loadlevel->AllWaypoints[i].y=y;
+      loadlevel -> AllWaypoints [ i ] . x = x;
+      loadlevel -> AllWaypoints [ i ] . y = y;
+      loadlevel -> AllWaypoints [ i ] . suppress_random_spawn = 0 ;
 
       pos = strstr (this_line, CONNECTION_STRING);
       pos += strlen (CONNECTION_STRING);	// skip connection-string
@@ -2226,14 +2227,14 @@ DecodeLoadedLeveldata ( char *data )
 	  res = sscanf( pos , "%d" , &connection );
 	  if ( (connection == -1) || (res == 0) || (res == EOF) )
 	    break;
-	  loadlevel->AllWaypoints[i].connections[k]=connection;
+	  loadlevel -> AllWaypoints [ i ] . connections [ k ] = connection;
 
 	  pos += strcspn (pos, WHITE_SPACE); // skip last token
 	  pos += strspn (pos, WHITE_SPACE);  // skip initial whitespace for next one
 
 	} // for k < MAX_WP_CONNECTIONS
 
-      loadlevel->AllWaypoints[i].num_connections = k;
+      loadlevel -> AllWaypoints [ i ] . num_connections = k;
 
     } // for i < MAXWAYPOINTS
 
@@ -3498,7 +3499,7 @@ AnimateCyclingMapTiles (void)
 
 
 /*----------------------------------------------------------------------
- *  get rid of all "holes" (0/0) in waypoint-list, which are due to
+ * get rid of all "holes" (0/0) in waypoint-list, which are due to
  * old waypoint-handling
  *----------------------------------------------------------------------*/
 void
@@ -3578,26 +3579,25 @@ CreateWaypoint (level *Lev, int x, int y)
 {
   int num;
 
-  if (Lev->num_waypoints == MAXWAYPOINTS)
+  if ( Lev -> num_waypoints == MAXWAYPOINTS )
     {
-      DebugPrintf (0, "WARNING: maximal number of waypoints (%d) reached on this level!!\n",
+      DebugPrintf ( 0 , "WARNING: maximal number of waypoints (%d) reached on this level!!\n",
 		   MAXWAYPOINTS);
-      DebugPrintf (0, "... cannot insert any more, sorry!\n");
+      DebugPrintf ( 0 , "... cannot insert any more, sorry!\n");
       return;
     }
 
-  num = Lev->num_waypoints;
-  Lev->num_waypoints ++;
+  num = Lev -> num_waypoints;
+  Lev -> num_waypoints ++;
 
-  Lev->AllWaypoints[num].x = x;
-  Lev->AllWaypoints[num].y = y;
-  Lev->AllWaypoints[num].num_connections = 0;
+  Lev -> AllWaypoints [ num ] . x = x ;
+  Lev -> AllWaypoints [ num ] . y = y ;
+  Lev -> AllWaypoints [ num ] . num_connections = 0 ;
+  Lev -> AllWaypoints [ num ] . num_connections = 0 ;
+  Lev -> AllWaypoints [ num ] . suppress_random_spawn = 0 ;
 
   return;
 } // CreateWaypoint()
-
-
-
 
 
 #undef _map_c

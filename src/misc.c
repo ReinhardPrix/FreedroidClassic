@@ -1068,9 +1068,9 @@ Teleport (int LNum, float X, float Y, int PlayerNum , int Shuffling , int WithSo
       // We set a new CurLevel.  This is old and depreciated code,
       // that should sooner or later be completely deactivated.
       //
-      CurLevel = curShip.AllLevels[array_num];
+      CurLevel = curShip . AllLevels [ array_num ] ;
 
-      ClearDetectedItemList( PlayerNum );
+      ClearDetectedItemList ( PlayerNum );
 
       Me [ PlayerNum ] . pos . x = X;
       Me [ PlayerNum ] . pos . y = Y;
@@ -1133,13 +1133,16 @@ This indicates an error in the map system of Freedroid.",
     }
 
   //--------------------
-  // We reset the mouse move target, cause the old target
-  // still referred to the old level...
+  // After the teleport, the mouse move target might be
+  // completely out of date.  Therefore we simply delete it.  In cases
+  // where the jump came from crossing a jump threshold (levels glued
+  // together) we can still restore the move target in that (the calling!)
+  // function.
   //
   Me [ PlayerNum ] . mouse_move_target . x = ( -1 ) ;
   Me [ PlayerNum ] . mouse_move_target . y = ( -1 ) ;
   Me [ PlayerNum ] . mouse_move_target . z = ( -1 ) ;
-
+  
   if ( WithSound ) teleport_arrival_sound ();
 
   //--------------------
