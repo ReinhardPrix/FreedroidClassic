@@ -432,6 +432,7 @@ ReactToSpecialKeys(void)
 	    {
 	      Me.TextVisibleTime = 0;
 	      Me.TextToBeDisplayed = "I can't carry any more.";
+	      CantCarrySound();
 	      // can't take any more items,
 	    }
 	  else

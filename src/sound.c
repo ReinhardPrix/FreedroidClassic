@@ -1,9 +1,3 @@
-/*----------------------------------------------------------------------
- *
- * Desc:  all functions dealing with sound are contained in this file.
- *
- *----------------------------------------------------------------------*/
-
 /* 
  *
  *   Copyright (c) 1994, 2002 Johannes Prix
@@ -28,6 +22,12 @@
  *  MA  02111-1307  USA
  *
  */
+/*----------------------------------------------------------------------
+ *
+ * Desc:  all functions dealing with sound are contained in this file.
+ *
+ *----------------------------------------------------------------------*/
+
 #ifndef _sound_c
 #define _sound_c
 #endif
@@ -45,7 +45,7 @@
 // The order of appearance here should match the order of appearance 
 // in the enum-Environment located in defs.h!
 
-#define ALL_SOUNDS 30
+#define ALL_SOUNDS 31
 char *SoundSampleFilenames[ALL_SOUNDS] = {
    "ERRORSOUND_NILL.NOWAV",
    "Combat_Background_Music.wav",
@@ -76,7 +76,8 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
    "Cry_Sound_0.wav",
    "Takeover_Sound_0.wav",
    "Mission_Status_Change_Sound_0.wav",
-   "Item_Taken_Sound_0.wav"
+   "Item_Taken_Sound_0.wav",
+   "ICantCarryAnyMore_Sound_0.wav"
 };
 
 #ifdef HAVE_LIBSDL_MIXER
@@ -345,6 +346,24 @@ ItemTakenSound (void)
 {
   Play_Sound ( ITEM_TAKEN_SOUND );
 }
+
+/* ----------------------------------------------------------------------
+ * This function generates a voice output stating that the influencer 
+ * can't carry any more right now.  Also this function will see to it,
+ * that the sentence is not repeated until 4 seconds after the previous
+ * cant-carry-sentence have passed.
+ * ---------------------------------------------------------------------- */
+void
+CantCarrySound (void)
+{
+  static long CurrentTicks = 0;
+
+  if ( ( SDL_GetTicks() - CurrentTicks ) > 4000 )
+    {
+      Play_Sound ( CANT_CARRY_SOUND );
+      CurrentTicks = SDL_GetTicks();
+    }
+}; // void CantCarrySound (void)
 
 /*@Function============================================================
 @Desc: 

@@ -197,6 +197,7 @@ EXTERN void StartSound (int);
 EXTERN void GotHitSound (void);
 EXTERN void GotIntoBlastSound (void);
 EXTERN void CrySound (void);
+EXTERN void CantCarrySound (void);
 EXTERN void ItemTakenSound (void);
 EXTERN void TransferSound (void);
 EXTERN void RefreshSound (void);
