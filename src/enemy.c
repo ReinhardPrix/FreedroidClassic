@@ -352,6 +352,9 @@ ClearEnemys ( void )
       AllEnemys[i].Parameter2 = 0;
       AllEnemys[i] . marker = 0;
       AllEnemys[i].is_friendly = 0;
+      AllEnemys[i].attack_target_type = ATTACK_TARGET_IS_NOTHING ;
+      AllEnemys[i].attack_target_index = (-1) ;
+      AllEnemys[i].is_friendly = 0;
       AllEnemys[i].TextVisibleTime = 0;
       AllEnemys[i].TextToBeDisplayed = "";
       AllEnemys[i].persuing_given_course = FALSE;
@@ -1227,6 +1230,13 @@ MoveEnemys ( void )
   AnimateEnemys ();
 
   //--------------------
+  // We make sure that the start and end indices for the bots of each level
+  // are approximately correct, so that bots will (within a second or two)
+  // be updated and taken into account correctly inside the movement code.
+  //
+  occasionally_update_first_and_last_bot_indices (  );
+
+  //--------------------
   // Now the pure movement stuff..
   //
   for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i++ )
@@ -1666,7 +1676,7 @@ EnemyOfTuxCloseToThisRobot ( Enemy ThisRobot , moderately_finepoint* vect_to_tar
  *
  *
  * ---------------------------------------------------------------------- */
-int
+void
 update_vector_to_shot_target_for_friend ( enemy* ThisRobot , moderately_finepoint* vect_to_target )
 {
   int j;
@@ -1682,11 +1692,14 @@ update_vector_to_shot_target_for_friend ( enemy* ThisRobot , moderately_finepoin
   //--------------------
   // Since it's a friendly device in this case, it will aim at the (closest?) of
   // the MS bots.
-  for ( j = 0 ; j < Number_Of_Droids_On_Ship ; j++ )
+  //
+  // for ( j = 0 ; j < Number_Of_Droids_On_Ship ; j++ )
+  for ( j  = first_index_of_bot_on_level [ ThisRobot -> pos . z ] ; 
+	j <= last_index_of_bot_on_level [ ThisRobot -> pos . z ] ; j++ )
     {
-      if ( AllEnemys[ j ].Status == OUT ) continue;
-      if ( AllEnemys[ j ].is_friendly ) continue;
-      if ( AllEnemys[ j ].pos.z != ThisRobot->pos.z ) continue;
+      if ( AllEnemys [ j ] . Status == OUT ) continue;
+      if ( AllEnemys [ j ] . is_friendly ) continue;
+      if ( AllEnemys [ j ] . pos.z != ThisRobot->pos.z ) continue;
       /*
 	This is MUCH TOO COSTLY!!!
 	
@@ -1724,16 +1737,21 @@ update_vector_to_shot_target_for_friend ( enemy* ThisRobot , moderately_finepoin
   }
   */
 
-  if ( j < Number_Of_Droids_On_Ship - 1 ) return ( TRUE );
-  else return ( FALSE );
+  if ( j < Number_Of_Droids_On_Ship - 1 ) 
+    {
+      ThisRobot -> attack_target_type = ATTACK_TARGET_IS_ENEMY ;
+      ThisRobot -> attack_target_index = j ;
+    }
+  else 
+    ThisRobot -> attack_target_type = ATTACK_TARGET_IS_NOTHING ;
 
-}; // int update_vector_to_shot_target_for_friend ( ThisRobot , moderately_finepoint* vect_to_target )
+}; // void update_vector_to_shot_target_for_friend ( ThisRobot , moderately_finepoint* vect_to_target )
 
 /* ----------------------------------------------------------------------
  *
  *
  * ---------------------------------------------------------------------- */
-int
+void
 update_vector_to_shot_target_for_enemy ( enemy* ThisRobot , moderately_finepoint* vect_to_target )
 {
   int TargetPlayerNum;
@@ -1742,7 +1760,8 @@ update_vector_to_shot_target_for_enemy ( enemy* ThisRobot , moderately_finepoint
   vect_to_target -> x = Me [ TargetPlayerNum ] . pos . x - ThisRobot -> pos . x ;
   vect_to_target -> y = Me [ TargetPlayerNum ] . pos . y - ThisRobot -> pos . y ;
 
-  return ( TRUE ) ;
+  ThisRobot -> attack_target_type = ATTACK_TARGET_IS_PLAYER ;
+  ThisRobot -> attack_target_index = TargetPlayerNum ;
 
 }; // int update_vector_to_shot_target_for_friend ( ThisRobot , moderately_finepoint* vect_to_target )
 
@@ -1750,20 +1769,20 @@ update_vector_to_shot_target_for_enemy ( enemy* ThisRobot , moderately_finepoint
  *
  *
  * ---------------------------------------------------------------------- */
-int
-give_occasionally_updated_vector_to_shot_target ( enemy* ThisRobot , moderately_finepoint* vect_to_target ) 
+void
+occasionally_update_vector_and_shot_target ( enemy* ThisRobot , moderately_finepoint* vect_to_target ) 
 {
 
   if ( ThisRobot->is_friendly == TRUE )
     {
-      return ( update_vector_to_shot_target_for_friend ( ThisRobot , vect_to_target ) );
+      update_vector_to_shot_target_for_friend ( ThisRobot , vect_to_target ) ;
     }
   else
     {
-      return ( update_vector_to_shot_target_for_enemy ( ThisRobot , vect_to_target ) );
+      update_vector_to_shot_target_for_enemy ( ThisRobot , vect_to_target ) ;
     }
 
-}; // int give_occasionally_updated_vector_to_shot_target ( ThisRobot , & vect_to_target ) 
+}; // void give_occasionally_updated_vector_to_shot_target ( ThisRobot , & vect_to_target ) 
 
 /* ----------------------------------------------------------------------
  * In some of the movement functions for enemy droids, we consider making
@@ -2069,7 +2088,6 @@ ProcessAttackStateMachine ( int enemynum )
   float dist2;
   Enemy ThisRobot = & AllEnemys[ enemynum ] ;
   int TargetPlayer;
-  int TargetIsEnemy;
 
   //--------------------
   // At first, we check for a lot of cases in which we do not
@@ -2148,18 +2166,19 @@ ProcessAttackStateMachine ( int enemynum )
 	}
     }
 
-
   //--------------------
   // determine the distance vector to the target of this shot.  The target
   // depends of course on wheter it's a friendly device or a hostile device.
   //
-  TargetIsEnemy = give_occasionally_updated_vector_to_shot_target ( ThisRobot , & vect_to_target ) ;
+  occasionally_update_vector_and_shot_target ( ThisRobot , & vect_to_target ) ;
 
   //--------------------
   // A friendly bot *MIGHT* help the tux in combat.  But this state must
   // not be entered too easily, as it might break some other things...
   //
-  if ( ThisRobot -> is_friendly && TargetIsEnemy && ( sqrt ( vect_to_target . x * vect_to_target.x + vect_to_target . y * vect_to_target . y  ) < Druidmap [ ThisRobot -> type ] . minimal_range_hostile_bots_are_ignored ) )
+  if ( ( ThisRobot -> is_friendly ) && 
+       ( ThisRobot -> attack_target_type == ATTACK_TARGET_IS_ENEMY ) && 
+       ( sqrt ( vect_to_target . x * vect_to_target.x + vect_to_target . y * vect_to_target . y  ) < Druidmap [ ThisRobot -> type ] . minimal_range_hostile_bots_are_ignored ) )
     {
       if ( DirectLineWalkable ( ThisRobot -> pos . x , ThisRobot -> pos . y , ThisRobot -> pos . x + vect_to_target . x ,
 				ThisRobot -> pos . y + vect_to_target . y , ThisRobot -> pos . z ) &&
