@@ -868,9 +868,8 @@ enum
 enum
 {
 
-  ISO_UNUSED_BRICK = 0 ,
-  ISO_ANOTHER_UNUSED_BRICK = 5 ,
-
+  ISO_TREE_4 = 0 ,
+  ISO_TREE_5 = 5 ,
 
   //--------------------
   // These obstacles originate from wall_tiles.blend.

@@ -1890,9 +1890,6 @@ init_obstacle_data( void )
       sprintf ( obstacle_map [ i ] . filename , "iso_obstacle_%04d.png" , i );
     }
 
-  obstacle_map [ ISO_UNUSED_BRICK ] . block_area_type = COLLISION_TYPE_NONE ;
-  obstacle_map [ ISO_ANOTHER_UNUSED_BRICK ] . block_area_type = COLLISION_TYPE_NONE ;
-  
   //--------------------
   // Now we define all exceptions from the default values
   //
@@ -2335,6 +2332,15 @@ init_obstacle_data( void )
   obstacle_map [ ISO_TREE_3 ] . block_area_parm_1 = 0.4 ;
   obstacle_map [ ISO_TREE_3 ] . block_area_parm_2 = 0.4 ;
   obstacle_map [ ISO_TREE_3 ] . is_smashable = FALSE ;
+
+  obstacle_map [ ISO_TREE_4 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_TREE_4 ] . block_area_parm_1 = 1.2 ;
+  obstacle_map [ ISO_TREE_4 ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_TREE_4 ] . filename = "iso_tree_0000.png" ;
+  obstacle_map [ ISO_TREE_5 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_TREE_5 ] . block_area_parm_1 = 1.2 ;
+  obstacle_map [ ISO_TREE_5 ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_TREE_5 ] . filename = "iso_tree_0001.png" ;
 
   obstacle_map [ ISO_THICK_WALL_H ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_THICK_WALL_H ] . block_area_parm_1 = 1.1 ;
