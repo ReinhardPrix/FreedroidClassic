@@ -18,6 +18,8 @@ Preparing "final" release 1.0.0:
 
 Outstanding release-critical bugs (priority: high) 
 --------------------------------------------------
+- separate 'takeover'-mode  from 'activate' ? 
+
 - implement the 'Alert' feature of the original version
 
 - add "white noise" sound to the ThouArtDefeated() ceremony
