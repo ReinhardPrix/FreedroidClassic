@@ -1056,7 +1056,8 @@ InitNewMission ( char *MissionName )
   SetTextColor (FONT_WHITE, FONT_RED);
   InitBars = TRUE;
 
-  Switch_Background_Music_To (COMBAT_BACKGROUND_MUSIC_SOUND);
+  // Switch_Background_Music_To (COMBAT_BACKGROUND_MUSIC_SOUND);
+  Switch_Background_Music_To ( CurLevel->Background_Song_Name );
 
   // Now that the briefing and all that is done,
   // the influence structure can be initialized for

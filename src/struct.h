@@ -332,6 +332,7 @@ typedef struct
   int empty;
   int levelnum;	/* Number of this level */
   char *Levelname;		/* Name of this level */
+  char *Background_Song_Name;
   int xlen;		/* X dimension */
   int ylen;
   int color;

@@ -37,6 +37,7 @@ xlen of this level: 38
 ylen of this level: 16
 color of this level: 0
 Name of this level=maintenance
+Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
  33  33  33  33  33  33  33  33   7  10  10  10  10  10  10  10  10  10  10  10  10  10  10   8  10   9  33  33  33  33  33  33  33  33  33  33  33  33 
   7  10  10  10  10  10  10  10   6   0   0   0   0   0   0   0   0   0   0   0   0   0   0  27   0  11  33  33  33  33  33  33  33  33  33  33  33  33 
@@ -164,6 +165,7 @@ xlen of this level: 48
 ylen of this level: 16
 color of this level: 5
 Name of this level=engeneering
+Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
  33  33  33  33   7  10  10  10  10  10  10  10  10  10  10  10  10  10  10   8  10  10  10  10  10   9  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
   7  10  10  10   6   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0  11  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
@@ -291,6 +293,7 @@ xlen of this level: 18
 ylen of this level: 11
 color of this level: 3
 Name of this level=robostores
+Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
   7  10  10  10  10  10  10   9  33  33  33  33  33  33  33  33  33  33 
  11   0   0   0   0   0  24   4  10  10  10  10  10   9  33  33  33  33 
@@ -413,6 +416,7 @@ xlen of this level: 31
 ylen of this level: 13
 color of this level: 0
 Name of this level=quarterd
+Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
   7  10  10  10  10  10  10   9  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
  11   0   0   0   0   0   0   4  10  10  10  10  10  10  10   9  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
@@ -537,6 +541,7 @@ xlen of this level: 32
 ylen of this level: 13
 color of this level: 4
 Name of this level=repairs
+Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
   7  10  10  10  10  10  10   9  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
  11   0   0   0   0   0   0   4  10  10  10  10  10  10  10  10  10   9  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
@@ -661,6 +666,7 @@ xlen of this level: 38
 ylen of this level: 15
 color of this level: 1
 Name of this level=staterooms
+Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
   7  10  10  10  10   9  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
  11  12  25   0   0   4  10  10  10   9  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
@@ -787,6 +793,7 @@ xlen of this level: 38
 ylen of this level: 15
 color of this level: 3
 Name of this level=stores
+Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
   7  10  10  10  10  10  10   8  10   9  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
  11   0   0   0   0   0   0  27   0   4  10  10  10   9  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
@@ -913,6 +920,7 @@ xlen of this level: 38
 ylen of this level: 15
 color of this level: 2
 Name of this level=research
+Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
   7  10  10  10  10  10  10  10  10  10  10  10  10  10  10   9  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
@@ -1039,6 +1047,7 @@ xlen of this level: 38
 ylen of this level: 12
 color of this level: 0
 Name of this level=bridge
+Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
   7  10  10  10  10  10  10  10   8  10  10  10  10  10  10  10   8  10  10   9  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
  11   0   0   0   0   0   0   0  27   0   0   0   0   0   0   0  27   0  24  11  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
@@ -1162,6 +1171,7 @@ xlen of this level: 20
 ylen of this level: 8
 color of this level: 3
 Name of this level=observation
+Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
   7  10  10  10  10   9  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
  11  32   0   0   0  11  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
@@ -1281,6 +1291,7 @@ xlen of this level: 22
 ylen of this level: 5
 color of this level: 4
 Name of this level=airlock
+Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
   7  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   9 
  11   0   0   0   0   0   0   0  17   0  17   0  25   0   0   0   0   0  34   0  34  11 
@@ -1397,6 +1408,7 @@ xlen of this level: 34
 ylen of this level: 15
 color of this level: 1
 Name of this level=reactor
+Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
   7  10  10  10  10  10  10  10  10  10  10  10   8  10  10  10  10  10  10  10  10  10  10  10  10   8  10  10  10  10  10  10  10   9 
  11   0   0   0   0   0   0   0   0   0   0   0  27   0   0   0   0   0   0   0   0   0   0   0   0  27   0   0   0   0   0   0   0  11 
@@ -1523,6 +1535,7 @@ xlen of this level: 34
 ylen of this level: 16
 color of this level: 0
 Name of this level=upper cargo
+Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
   7  10  10  10  10  10  10  10  10  10  10  10  10  10   8  10  10  10  10  10  10  10  10  10  10  10  10  10   8  10  10  10  10   9 
  11  12   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0  14  11 
@@ -1650,6 +1663,7 @@ xlen of this level: 34
 ylen of this level: 16
 color of this level: 2
 Name of this level=mid carga
+Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
   7  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   9 
  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11 
@@ -1777,6 +1791,7 @@ xlen of this level: 26
 ylen of this level: 16
 color of this level: 1
 Name of this level=vehicle hold
+Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
   7  10  10  10  10  10   8  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   9 
  11   0   0   0   0   0  27   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11 
@@ -1904,6 +1919,7 @@ xlen of this level: 10
 ylen of this level: 15
 color of this level: 5
 Name of this level=shuttle bay
+Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
   7  10  10  10  10  10  10  10  10   9 
  11   0   0   0   0   0   0   0   0  11 

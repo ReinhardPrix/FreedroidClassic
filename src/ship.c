@@ -359,7 +359,8 @@ EnterKonsole (void)
 
   while (SpacePressed ());
 
-  Switch_Background_Music_To ( COMBAT_BACKGROUND_MUSIC_SOUND );
+  // Switch_Background_Music_To ( COMBAT_BACKGROUND_MUSIC_SOUND );
+  Switch_Background_Music_To ( CurLevel->Background_Song_Name );
 
   return;
 

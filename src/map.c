@@ -45,6 +45,7 @@
 #include "maped.h"
 
 #define LEVEL_NAME_STRING "Name of this level="
+#define BACKGROUND_SONG_NAME_STRING "Name of background song for this level="
 
 symtrans Translator[ NUM_MAP_BLOCKS ] = {
   {'.', FLOOR},
@@ -354,6 +355,7 @@ LoadShip (char *filename)
 
       TranslateMap (curShip.AllLevels[i]);
 
+      // curShip.AllLevels[i]->Background_Song_Name = "ELYSIUM.MOD";
     }
 
   return OK;
@@ -461,6 +463,9 @@ char *StructToMem(Level Lev)
   strcpy(LevelMem, linebuf);
   strcat(LevelMem, LEVEL_NAME_STRING );
   strcat(LevelMem, Lev->Levelname );
+  strcat(LevelMem, "\n" );
+  strcat(LevelMem, BACKGROUND_SONG_NAME_STRING );
+  strcat(LevelMem, Lev->Background_Song_Name );
   // strcat(LevelMem, Decknames[Lev->levelnum] ); 
   strcat(LevelMem, "\n" );
   
@@ -739,6 +744,7 @@ LevelToStruct (char *data)
   DebugPrintf( 2 , "\nylen of this level: %d ", loadlevel->ylen );
   DebugPrintf( 2 , "\ncolor of this level: %d ", loadlevel->ylen );
 
+  /*
   DataPointer = strstr( data , LEVEL_NAME_STRING );
   if ( DataPointer == NULL )
     {
@@ -750,7 +756,10 @@ LevelToStruct (char *data)
   loadlevel->Levelname=MyMalloc ( LevelNameLength + 10 );
   strncpy ( loadlevel->Levelname , DataPointer, LevelNameLength );
   loadlevel->Levelname[LevelNameLength]=0;
-  
+  */
+
+  // curShip.AllLevels[i]->Background_Song_Name = "ELYSIUM.MOD";
+
 
   // find the map data
   // NOTE, that we here only set up a pointer to the map data
