@@ -2961,10 +2961,10 @@ init_obstacle_data( void )
 
   obstacle_map [ ISO_OUTER_DOOR_V_LOCKED ] . block_area_parm_1 = standard_wall_thickness ;
   obstacle_map [ ISO_OUTER_DOOR_V_LOCKED ] . block_area_parm_2 = 1.2 ;
-  obstacle_map [ ISO_OUTER_DOOR_V_LOCKED ] . filename = "iso_doors_0023.png" ;
+  obstacle_map [ ISO_OUTER_DOOR_V_LOCKED ] . filename = "iso_doors_0024.png" ;
   obstacle_map [ ISO_OUTER_DOOR_V_LOCKED ] . block_vision_too = FALSE ;
 
-  obstacle_map [ ISO_OUTER_DOOR_H_LOCKED ] . filename = "iso_doors_0024.png" ;
+  obstacle_map [ ISO_OUTER_DOOR_H_LOCKED ] . filename = "iso_doors_0023.png" ;
   obstacle_map [ ISO_OUTER_DOOR_H_LOCKED ] . block_area_parm_1 = 1.2 ;
   obstacle_map [ ISO_OUTER_DOOR_H_LOCKED ] . block_area_parm_2 = standard_wall_thickness ;
   obstacle_map [ ISO_OUTER_DOOR_H_LOCKED ] . block_vision_too = FALSE ;
