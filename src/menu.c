@@ -36,6 +36,9 @@
 #include "global.h"
 #include "proto.h"
 
+#define SELL_PRICE_FACTOR (0.25)
+#define REPAIR_PRICE_FACTOR (0.5)
+
 int New_Game_Requested=FALSE;
 
 void Single_Player_Menu (void);
@@ -78,7 +81,8 @@ TryToRepairItem( item* RepairItem )
 
   while ( SpacePressed() || EnterPressed() );
 
-  if ( CalculateItemPrice ( RepairItem ) > Me.Gold ) 
+  if ( REPAIR_PRICE_FACTOR * CalculateItemPrice ( RepairItem ) * 
+       (RepairItem->max_duration - RepairItem->current_duration ) / RepairItem->max_duration > Me.Gold ) 
     {
       MenuTexts[0]=" BACK ";
       MenuTexts[1]="";
@@ -96,8 +100,9 @@ TryToRepairItem( item* RepairItem )
 	  break;
 	case ANSWER_YES:
 	  while (EnterPressed() || SpacePressed() );
+	  Me.Gold -= REPAIR_PRICE_FACTOR * CalculateItemPrice ( RepairItem ) * 
+       (RepairItem->max_duration - RepairItem->current_duration ) / RepairItem->max_duration ;
 	  RepairItem->current_duration = RepairItem->max_duration;
-	  Me.Gold -= CalculateItemPrice ( RepairItem );
 	  return;
 	  break;
 	case ANSWER_NO:
@@ -145,7 +150,7 @@ TryToSellItem( item* SellItem )
 	  break;
 	case ANSWER_YES:
 	  while (EnterPressed() || SpacePressed() );
-	  Me.Gold += CalculateItemPrice ( SellItem );
+	  Me.Gold += SELL_PRICE_FACTOR * CalculateItemPrice ( SellItem );
 	  DeleteItem( SellItem );
 	  return;
 	  break;
@@ -417,7 +422,12 @@ Repair_Items( void )
 	  // DisplayText( "\n" , -1 , -1, NULL );
 	  GiveItemDescription( DescriptionText , Repair_Pointer_List [ i + MenuInListPosition ] , TRUE );
 	  DisplayText( DescriptionText , 50 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
-	  sprintf( DescriptionText , "%4ld" , CalculateItemPrice ( Repair_Pointer_List[ i + MenuInListPosition] ) );
+	  sprintf( DescriptionText , "%6.0f" , 
+		   REPAIR_PRICE_FACTOR * 
+		   ( Repair_Pointer_List[ i + MenuInListPosition ]->max_duration - 
+		     Repair_Pointer_List[ i + MenuInListPosition ]->current_duration ) / 
+		   Repair_Pointer_List[ i + MenuInListPosition]->max_duration * 
+		   CalculateItemPrice ( Repair_Pointer_List[ i + MenuInListPosition] ) );
 	  DisplayText( DescriptionText , 580 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
 	}
       
@@ -538,7 +548,7 @@ Sell_Items( void )
 	  // DisplayText( "\n" , -1 , -1, NULL );
 	  GiveItemDescription( DescriptionText , Sell_Pointer_List [ i + MenuInListPosition ] , TRUE );
 	  DisplayText( DescriptionText , 50 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
-	  sprintf( DescriptionText , "%4ld" , CalculateItemPrice ( Sell_Pointer_List[ i + MenuInListPosition] ) );
+	  sprintf( DescriptionText , "%6.0f" , SELL_PRICE_FACTOR * CalculateItemPrice ( Sell_Pointer_List[ i + MenuInListPosition] ) );
 	  DisplayText( DescriptionText , 580 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
 	}
       

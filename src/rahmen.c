@@ -341,6 +341,8 @@ ShowCurrentTextWindow ( void )
   int InterLineDistance;
   int StringLength;
 
+#define REQUIREMENTS_NOT_MET_TEXT "REQUIREMENTS NOT MET"
+
   //--------------------
   // For testing purposes is bluntly insert the new banner element here:
   //
@@ -374,7 +376,9 @@ ShowCurrentTextWindow ( void )
       if ( ItemUsageRequirementsMet( GetHeldItemPointer( ) , FALSE ) )
 	strcpy( ItemDescText , ItemMap[ GetHeldItemCode() ].ItemName );
       else 
-	strcpy( ItemDescText , "REQUIREMENTS NOT MET" );
+	{
+	  strcpy( ItemDescText , REQUIREMENTS_NOT_MET_TEXT  );
+	}
     }
 
   //--------------------
@@ -484,8 +488,15 @@ ShowCurrentTextWindow ( void )
     {
       // SDL_FillRect( Screen , &Banner_Text_Rect , BANNER_TEXT_REC_BACKGROUNDCOLOR );
     }
-  SetCurrentFont( FPS_Display_BFont );
-  // SetCurrentFont( Red_BFont );
+
+  if ( strcmp ( ItemDescText , REQUIREMENTS_NOT_MET_TEXT ) == 0 )
+    {
+      SetCurrentFont( Red_BFont );
+    }
+  else
+    {
+      SetCurrentFont( FPS_Display_BFont );
+    }
 
   //--------------------
   // Now we count how many lines are to be printed

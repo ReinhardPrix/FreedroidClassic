@@ -684,6 +684,7 @@ SelectNextWaypointAdvanced ( int EnemyNum )
       //
       if ( Druidmap[ThisRobot->type].aggression &&
 	   IsVisible ( &(ThisRobot->pos) ) &&
+	   // ! ItemMap [ Druidmap [ ThisRobot->type ].weapon_item.type ].item_gun_angle_change  &&
 	   ! ThisRobot->Friendly )
 	{
 	  // But now that the enemy is are almost ready to fire, it just
@@ -872,6 +873,7 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
   int guntype = ItemMap[ Druidmap[ThisRobot->type].weapon_item.type ].item_gun_bullet_image_type;
   double bullet_speed = ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].item_gun_speed;
   int j;
+  float OffsetFactor;
 
   Fire_Bullet_Sound ( guntype );
   
@@ -921,21 +923,8 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
   
   AllBullets[j].angle = - ( 90 + 180 * atan2 ( AllBullets[j].speed.y,  AllBullets[j].speed.x ) / M_PI );  
   
-  // Bullets im Zentrum des Schuetzen starten 
-  AllBullets[j].pos.x = ThisRobot->pos.x;
-  AllBullets[j].pos.y = ThisRobot->pos.y;
-  
-  // Bullets so abfeuern, dass sie nicht den Schuetzen treffen 
-  AllBullets[j].pos.x +=
-    (AllBullets[j].speed.x) / (bullet_speed) * 0.5;
-  AllBullets[j].pos.y +=
-    (AllBullets[j].speed.y) / (bullet_speed) * 0.5;
-  
-  /* Dem Bullettype entsprechend lange warten vor naechstem Schuss */
-  ThisRobot->firewait = ItemMap [ Druidmap[ThisRobot->type].weapon_item.type ].item_gun_recharging_time ;
-  
-  /* Bullettype gemaess dem ueblichen guntype fuer den robottyp setzen */
-  DebugPrintf( 0 , "Setting gun type : %d." , guntype );
+  // now we set the bullet type right
+  // DebugPrintf( 0 , "Setting gun type : %d." , guntype );
   AllBullets[j].type = guntype;
   
   // Now we set the damage of this bullet to the correct value
@@ -954,6 +943,20 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
   AllBullets[j].miss_hit_influencer = FALSE;
   AllBullets[j].to_hit = Druidmap [ ThisRobot->type ].to_hit ;
   AllBullets[j].was_reflected = FALSE;
+  
+// start all bullets in the center of the shooter first...
+  AllBullets[j].pos.x = ThisRobot->pos.x;
+  AllBullets[j].pos.y = ThisRobot->pos.y;
+  
+  // fire bullets so, that they don't hit the shooter...
+  if ( AllBullets[j].angle_change_rate == 0 ) OffsetFactor = 0.5; else OffsetFactor = 1;
+  AllBullets[j].pos.x +=
+    (AllBullets[j].speed.x) / (bullet_speed) * OffsetFactor ;
+  AllBullets[j].pos.y +=
+    (AllBullets[j].speed.y) / (bullet_speed) * OffsetFactor ;
+  
+  // wait for as long as is usual for this weapon type until making the next shot
+  ThisRobot->firewait = ItemMap [ Druidmap[ThisRobot->type].weapon_item.type ].item_gun_recharging_time ;
   
 }; // void RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 
@@ -1108,13 +1111,23 @@ AttackInfluence (int enemynum)
 	{
 	  if ( ( Me.pos.x - ThisRobot->pos.x ) > 0 )
 	    {
-	      if ( DruidPassable ( rintf ( ThisRobot->pos.x ) + 1 , ThisRobot->PrivatePathway[ 0 ].y ) == CENTER )
-		ThisRobot->PrivatePathway[ 0 ].x = rintf ( ThisRobot->pos.x ) + 1;
+	      if ( ( DruidPassable ( rintf ( ThisRobot->pos.x ) + 1 , ThisRobot->PrivatePathway[ 0 ].y ) == CENTER ) &&
+		  ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
+		  ThisRobot->PrivatePathway[ 0 ].x + 1 , ThisRobot->PrivatePathway[ 0 ].y,
+		  ThisRobot->levelnum , enemynum ) ) )
+		{
+		  ThisRobot->PrivatePathway[ 0 ].x = rintf ( ThisRobot->pos.x ) + 1;
+		}
 	    }
 	  else
 	    {
-	      if ( DruidPassable ( rintf ( ThisRobot->pos.x ) - 1 , ThisRobot->PrivatePathway[ 0 ].y ) == CENTER )
-		ThisRobot->PrivatePathway[ 0 ].x = rintf ( ThisRobot->pos.x ) - 1;
+	      if ( ( DruidPassable ( rintf ( ThisRobot->pos.x ) - 1 , ThisRobot->PrivatePathway[ 0 ].y ) == CENTER ) &&
+		  ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
+		  ThisRobot->PrivatePathway[ 0 ].x - 1 , ThisRobot->PrivatePathway[ 0 ].y,
+		  ThisRobot->levelnum , enemynum ) ) )
+		{
+		  ThisRobot->PrivatePathway[ 0 ].x = rintf ( ThisRobot->pos.x ) - 1;
+		}
 	    }
 	}
       //--------------------
@@ -1124,15 +1137,23 @@ AttackInfluence (int enemynum)
 	{
 	  if ( ( Me.pos.y - ThisRobot->pos.y ) > 0 )
 	    {
-	      if ( DruidPassable ( rintf ( ThisRobot->pos.x ) , 
-				   rintf ( ThisRobot->PrivatePathway[ 0 ].y ) + 1 ) == CENTER )
+	      if ( ( DruidPassable ( rintf ( ThisRobot->pos.x ) , 
+				     rintf ( ThisRobot->PrivatePathway[ 0 ].y ) + 1 ) == CENTER ) &&
+		   ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
+						ThisRobot->PrivatePathway[ 0 ].x , ThisRobot->PrivatePathway[ 0 ].y + 1 ,
+						ThisRobot->levelnum , enemynum ) ) )
 		ThisRobot->PrivatePathway[ 0 ].y = rintf ( ThisRobot->pos.y ) + 1;
 	    }
 	  else
 	    {
-	      if ( DruidPassable ( rintf ( ThisRobot->pos.x ) , 
-				   rintf ( ThisRobot->PrivatePathway[ 0 ].y ) - 1 ) == CENTER )
-		ThisRobot->PrivatePathway[ 0 ].y = rintf ( ThisRobot->pos.y ) - 1;
+	      if ( ( DruidPassable ( rintf ( ThisRobot->pos.x ) , 
+				     rintf ( ThisRobot->PrivatePathway[ 0 ].y ) - 1 ) == CENTER ) &&
+		   ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
+						ThisRobot->PrivatePathway[ 0 ].x , ThisRobot->PrivatePathway[ 0 ].y + 1 ,
+						ThisRobot->levelnum , enemynum ) ) )
+		{
+		  ThisRobot->PrivatePathway[ 0 ].y = rintf ( ThisRobot->pos.y ) - 1;
+		}
 	    }
 	}
 
