@@ -145,7 +145,8 @@ GetGreenComponent ( SDL_Surface* surface , int x , int y )
   //
   fmt = surface -> format ;
   SDL_LockSurface ( surface ) ;
-  pixel = * ( ( Uint32* ) surface -> pixels ) ;
+  // pixel = * ( ( Uint32* ) surface -> pixels ) ;
+  pixel = * ( ( ( Uint32* ) surface -> pixels ) + x + y * surface->w )  ;
   SDL_UnlockSurface ( surface ) ;
 
   //--------------------
@@ -177,7 +178,8 @@ GetRedComponent ( SDL_Surface* surface , int x , int y )
   //
   fmt = surface -> format ;
   SDL_LockSurface ( surface ) ;
-  pixel = * ( ( Uint32* ) surface -> pixels ) ;
+  // pixel = * ( ( Uint32* ) surface -> pixels ) ;
+  pixel = * ( ( ( Uint32* ) surface -> pixels ) + x + y * surface->w )  ;
   SDL_UnlockSurface ( surface ) ;
 
   //--------------------
@@ -209,11 +211,12 @@ GetBlueComponent ( SDL_Surface* surface , int x , int y )
   //
   fmt = surface -> format ;
   SDL_LockSurface ( surface ) ;
-  pixel = * ( ( Uint32* ) surface -> pixels ) ;
+  // pixel = * ( ( Uint32* ) surface -> pixels ) ;
+  pixel = * ( ( ( Uint32* ) surface -> pixels ) + x + y * surface->w )  ;
   SDL_UnlockSurface ( surface ) ;
 
   //--------------------
-  // Now we can extract the green component
+  // Now we can extract the blue component
   //
   temp = pixel&fmt->Bmask;  /* Isolate blue component */
   temp = temp>>fmt->Bshift; /* Shift it down to 8-bit */
@@ -241,7 +244,7 @@ GetAlphaComponent ( SDL_Surface* surface , int x , int y )
   //
   fmt = surface -> format ;
   SDL_LockSurface ( surface ) ;
-  pixel = * ( ( Uint32* ) surface -> pixels ) ;
+  pixel = * ( ( ( Uint32* ) surface -> pixels ) + x + y * surface->w )  ;
   SDL_UnlockSurface ( surface ) ;
 
   //--------------------
@@ -268,7 +271,7 @@ GetAlphaComponent ( SDL_Surface* surface , int x , int y )
  *
  * ---------------------------------------------------------------------- */
 SDL_Surface* 
-CreateAlphaCombinedSurface ( SDL_Surface* FirstSurface , SDL_Surface* SecondSurface )
+Slow_CreateAlphaCombinedSurface ( SDL_Surface* FirstSurface , SDL_Surface* SecondSurface )
 {
   SDL_Surface* ThirdSurface; // this will be the surface we return to the calling function.
   int x , y ; // for processing through the surface...
@@ -296,7 +299,6 @@ CreateAlphaCombinedSurface ( SDL_Surface* FirstSurface , SDL_Surface* SecondSurf
   // Now we start to process through the whole surface and examine each
   // pixel.
   //
-  DebugPrintf( 0 , "\nNewAlphaValue: " ) ;
   for ( y = 0 ; y < FirstSurface -> h ; y ++ )
     {
       for ( x = 0 ; x < FirstSurface -> w ; x ++ )
@@ -305,7 +307,20 @@ CreateAlphaCombinedSurface ( SDL_Surface* FirstSurface , SDL_Surface* SecondSurf
 	  alpha1 = ( ( float ) GetAlphaComponent (  FirstSurface , x , y ) ) / 255.0 ;
 	  alpha2 = ( ( float ) GetAlphaComponent ( SecondSurface , x , y ) ) / 255.0 ;
 	  alpha3 = 1 - ( 1 - alpha1 ) * ( 1 - alpha2 ) ;
-	  
+
+	  //--------------------
+	  // In some cases we give exact alpha values...
+	  //
+	  /*
+	  if ( ( x == 64 ) && ( y == 96 ) )
+	    {
+	      DebugPrintf( 0 , "\nOldAlphaValue 1: %d OldAlphaValue 2: %d " , 
+			   GetAlphaComponent (  FirstSurface , x , y ) ,
+			   GetAlphaComponent ( SecondSurface , x , y ) 
+			   ) ;
+	    }
+	  */
+
 	  red =  ( alpha2 * GetRedComponent ( SecondSurface , x , y ) +
 		   ( 1 - alpha2 ) * alpha1 * GetRedComponent ( FirstSurface , x , y ) ) 
 	    / alpha3 ;
@@ -323,6 +338,184 @@ CreateAlphaCombinedSurface ( SDL_Surface* FirstSurface , SDL_Surface* SecondSurf
 
 	}
     }
+
+  return ( ThirdSurface );
+
+}; // SDL_Surface* Slow_CreateAlphaCombinedSurface ( SDL_Surface* FirstBlit , SDL_Surface* SecondBlit )
+
+/* ----------------------------------------------------------------------
+ * If you have two SDL surfaces with alpha channel (i.e. each pixel has
+ * it's own alpha value) and you blit one surface over some background
+ * and then the other surface over that, the result is the same, as if
+ * you merge the two alpha surfaces with this function and then blit it
+ * once over the background.
+ *
+ * This function will be very useful for pre-assembling the tux with all
+ * it's equippment out of alpha channeled surfaces only.
+ *
+ * ---------------------------------------------------------------------- */
+SDL_Surface* 
+CreateAlphaCombinedSurface ( SDL_Surface* FirstSurface , SDL_Surface* SecondSurface )
+{
+  SDL_Surface* ThirdSurface; // this will be the surface we return to the calling function.
+  int x , y ; // for processing through the surface...
+  Uint8 new_red, new_green, new_blue, red1, red2, green1, green2, blue1 , blue2, raw_alpha1, raw_alpha2 ;
+  float alpha1, alpha2, alpha3 ;
+  SDL_PixelFormat *fmt1;
+  SDL_PixelFormat *fmt2;
+  Uint32 temp, pixel1 , pixel2 ;
+  Uint32* pixel_pointer1;
+  Uint32* pixel_pointer2;
+  // Uint8 blue;
+
+
+  //--------------------
+  // First we check if the two surfaces have the same size.  If not, an
+  // error message will be generated and the program will halt.
+  //
+  if ( ( FirstSurface -> w != SecondSurface -> w ) ||
+       ( FirstSurface -> w != SecondSurface -> w ) )
+    {
+      DebugPrintf ( 0 , "\nERROR in SDL_Surface* CreateAlphaCombinedSurface ( SDL_Surface* FirstBlit , SDL_Surface* SecondBlit ):  Surface sizes do not match.... " );
+      Terminate ( ERR );
+    }
+
+  //--------------------
+  // Now we create a new surface, best in display format with alpha channel
+  // ready to be blitted.
+  //
+  ThirdSurface = SDL_DisplayFormatAlpha ( FirstSurface );
+
+  //--------------------
+  // Now we prepare some pointer, so that we only have to increase it later on...
+  //
+  fmt1 = FirstSurface -> format ;
+  fmt2 = SecondSurface -> format ;
+  SDL_LockSurface ( FirstSurface ) ;
+  SDL_LockSurface ( SecondSurface ) ;
+  pixel_pointer1 = ( ( ( Uint32* ) FirstSurface -> pixels ) + 0 + 0 * FirstSurface->w )  ;
+  pixel_pointer2 = ( ( ( Uint32* ) SecondSurface -> pixels ) + 0 + 0 * SecondSurface->w )  ;
+
+
+
+
+
+
+
+
+
+  //--------------------
+  // Now we start to process through the whole surface and examine each
+  // pixel.
+  //
+  for ( y = 0 ; y < FirstSurface -> h ; y ++ )
+    {
+      for ( x = 0 ; x < FirstSurface -> w ; x ++ )
+	{
+
+	  pixel1 = * pixel_pointer1;
+	  pixel2 = * pixel_pointer2;
+
+	  pixel_pointer1 ++;
+	  pixel_pointer2 ++;
+
+	  //--------------------
+	  // Now we can extract the blue component
+	  //
+	  temp = pixel1&fmt1->Bmask;  /* Isolate blue component */
+	  temp = temp>>fmt1->Bshift; /* Shift it down to 8-bit */
+	  temp = temp<<fmt1->Bloss;  /* Expand to a full 8-bit number */
+	  blue1 = ( Uint8 ) temp ;
+
+	  temp = pixel2&fmt2->Bmask;  /* Isolate blue component */
+	  temp = temp>>fmt2->Bshift; /* Shift it down to 8-bit */
+	  temp = temp<<fmt2->Bloss;  /* Expand to a full 8-bit number */
+	  blue2 = ( Uint8 ) temp ;
+
+	  //--------------------
+	  // Now we can extract the red component
+	  //
+	  temp = pixel1&fmt1->Rmask; /* Isolate red component */
+	  temp = temp>>fmt1->Rshift;/* Shift it down to 8-bit */
+	  temp = temp<<fmt1->Rloss; /* Expand to a full 8-bit number */
+	  red1 = ( Uint8 ) temp ;
+
+	  temp = pixel2&fmt2->Rmask; /* Isolate red component */
+	  temp = temp>>fmt2->Rshift;/* Shift it down to 8-bit */
+	  temp = temp<<fmt2->Rloss; /* Expand to a full 8-bit number */
+	  red2 = ( Uint8 ) temp ;
+
+	  //--------------------
+	  // Now we can extract the green component
+	  //
+	  temp = pixel1&fmt1->Gmask; /* Isolate green component */
+	  temp = temp>>fmt1->Gshift;/* Shift it down to 8-bit */
+	  temp = temp<<fmt1->Gloss; /* Expand to a full 8-bit number */
+	  green1 = (Uint8)temp;
+
+	  temp = pixel2&fmt2->Gmask; /* Isolate green component */
+	  temp = temp>>fmt2->Gshift;/* Shift it down to 8-bit */
+	  temp = temp<<fmt2->Gloss; /* Expand to a full 8-bit number */
+	  green2 = (Uint8)temp;
+
+	  //--------------------
+	  // Now we can extract the alpha component
+	  //
+	  temp = pixel1&fmt1->Amask;  /* Isolate alpha component */
+	  temp = temp>>fmt1->Ashift; /* Shift it down to 8-bit */
+	  temp = temp<<fmt1->Aloss;  /* Expand to a full 8-bit number */
+	  raw_alpha1 = ( Uint8 ) temp ;
+
+	  temp = pixel2&fmt2->Amask;  /* Isolate alpha component */
+	  temp = temp>>fmt2->Ashift; /* Shift it down to 8-bit */
+	  temp = temp<<fmt2->Aloss;  /* Expand to a full 8-bit number */
+	  raw_alpha2 = ( Uint8 ) temp ;
+
+
+
+	  //--------------------
+	  // Now we can start to do our normal operation like in the
+	  // well working but too slow slow variant...
+	  //
+
+	  alpha1 = ( ( float ) raw_alpha1 ) / 255.0 ;
+	  alpha2 = ( ( float ) raw_alpha2 ) / 255.0 ;
+	  alpha3 = 1 - ( 1 - alpha1 ) * ( 1 - alpha2 ) ;
+
+	  //--------------------
+	  // In some cases we give exact alpha values...
+	  //
+	  /*
+	  if ( ( x == 64 ) && ( y == 96 ) )
+	    {
+	      DebugPrintf( 0 , "\nOldAlphaValue 1: %d OldAlphaValue 2: %d " , 
+			   GetAlphaComponent (  FirstSurface , x , y ) ,
+			   GetAlphaComponent ( SecondSurface , x , y ) 
+			   ) ;
+	    }
+	  */
+
+	  new_red =  ( alpha2 * red2 +
+		   ( 1 - alpha2 ) * alpha1 * red1 ) 
+	    / alpha3 ;
+
+	  new_green =  ( alpha2 * green2 +
+		   ( 1 - alpha2 ) * alpha1 * green1 ) 
+	    / alpha3 ;
+
+	  new_blue =  ( alpha2 * blue2 +
+		   ( 1 - alpha2 ) * alpha1 * blue1 ) 
+	    / alpha3 ;
+
+	  putpixel ( ThirdSurface , x , y , 
+		     SDL_MapRGBA ( ThirdSurface -> format , new_red , new_green , new_blue , 255.0 * alpha3 ) ) ;
+
+	}
+    }
+
+
+  SDL_UnlockSurface ( FirstSurface ) ;
+  SDL_UnlockSurface ( SecondSurface ) ;
 
   return ( ThirdSurface );
 

@@ -130,6 +130,7 @@ EXTERN void Load_MapBlock_Surfaces (void);
 EXTERN void Load_Enemy_Surfaces (void);
 EXTERN void Load_Influencer_Surfaces (void);
 EXTERN void Update_Tux_Working_Copy ( int PlayerNum );
+EXTERN void Homemade_Update_Tux_Working_Copy ( int PlayerNum );
 EXTERN void Load_Tux_Surfaces( void );
 EXTERN void Load_Big_Map_Insert_Surfaces( void );
 EXTERN void Load_Digit_Surfaces (void);
@@ -144,6 +145,7 @@ EXTERN void Load_Blast_Surfaces (void);
 #define EXTERN extern
 #endif
 
+EXTERN SDL_Surface* CreateAlphaCombinedSurface ( SDL_Surface* FirstSurface , SDL_Surface* SecondSurface );
 EXTERN void DrawLineBetweenTiles( float x1 , float y1 , float x2 , float y2 , int Color );
 EXTERN void TakeScreenshot( void );
 EXTERN void replace_color (SDL_Surface *surf, SDL_Color src, SDL_Color dst);
