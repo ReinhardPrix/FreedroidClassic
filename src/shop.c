@@ -529,11 +529,11 @@ ShowRescaledItem ( int position , int TuxItemRow , item* ShowItem )
     {
       DebugPrintf ( 1 , "\nShowRescaledItem:  first call, so scaling has to be done...\n" );
       tmp_surface = zoomSurface ( ItemImageList[ PictureIndex ] . Surface , RescaleFactor , RescaleFactor , FALSE );
-      ScaledItemImageBackups [ PictureIndex ] = SDL_DisplayFormatAlpha ( tmp_surface ) ;
+      ScaledItemImageBackups [ PictureIndex ] = our_SDL_display_format_wrapperAlpha ( tmp_surface ) ;
       SDL_FreeSurface ( tmp_surface );
     }
   
-  SDL_BlitSurface( ScaledItemImageBackups [ PictureIndex ] , NULL , Screen , &TargetRectangle );
+  our_SDL_blit_surface_wrapper( ScaledItemImageBackups [ PictureIndex ] , NULL , Screen , &TargetRectangle );
 
 }; // void ShowRescaledItem ( int position , item* ShowItem )
 
@@ -667,7 +667,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
       sprintf ( GoldString , "%d." , (int) Me [ 0 ] . Gold );
       PutStringFont ( Screen , Menu_BFont, 90, 141, GoldString );
 
-      SDL_Flip( Screen );
+      our_SDL_flip_wrapper( Screen );
 
       if (SpacePressed() || EscapePressed() || axis_is_active )
 	{
@@ -1075,7 +1075,7 @@ DoEquippmentListSelection( char* Startstring , item* Item_Pointer_List[ MAX_ITEM
       //--------------------
       //
       //
-      SDL_Flip ( Screen );
+      our_SDL_flip_wrapper ( Screen );
 
       //--------------------
       // Maybe the cursor key up or cursor key down was pressed.  Then of

@@ -167,7 +167,7 @@ Show_Highscores (void)
       if (Highscores[i]->score >= 0)
 	PrintString (Screen, x3, y0 + (i+2)*height, "%ld", Highscores[i]->score);
     }
-  SDL_Flip (Screen);
+  our_SDL_flip_wrapper (Screen);
   
   getchar_raw ();
 

@@ -287,6 +287,8 @@ enum
 // #define ISO_WIDTH               128.0
 // #define ISO_HEIGHT              94.0
 #define BLOCKMEM  		INITIAL_BLOCK_WIDTH*INITIAL_BLOCK_HEIGHT
+#define NUMBER_OF_SHADOW_IMAGES 20
+  
 
 /* Scroll- Fenster */
 #define SCROLLSTARTX		User_Rect.x

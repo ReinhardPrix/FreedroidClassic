@@ -174,7 +174,7 @@ Takeover (int enemynum)
   while ( !Finished )
     {
       ShowDroidInfo ( AllEnemys[enemynum].type, Displacement , TRUE );
-      SDL_Flip ( Screen );
+      our_SDL_flip_wrapper ( Screen );
       
       if ( CursorIsOnButton( UP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
 	{
@@ -228,7 +228,7 @@ Takeover (int enemynum)
       EvaluatePlayground ();
 
       ShowPlayground ();
-      SDL_Flip (Screen);
+      our_SDL_flip_wrapper (Screen);
 
       ChooseColor ();
 
@@ -324,7 +324,7 @@ Takeover (int enemynum)
 
   	  ShowPlayground ();
   	  to_show_banner (message, NULL);
-	  SDL_Flip (Screen);
+	  our_SDL_flip_wrapper (Screen);
 	  // 	} /* WHILE waiter */ */
 
     }	/* while !FinishTakeover */
@@ -388,7 +388,7 @@ ChooseColor (void)
 
       ShowPlayground ();
       to_show_banner (count_text, NULL);
-      SDL_Flip (Screen);
+      our_SDL_flip_wrapper (Screen);
 
       if (countdown == 0)
 	ColorChosen = TRUE;
@@ -542,7 +542,7 @@ PlayGame (void)
 
       ShowPlayground ();
       to_show_banner (count_text, NULL);
-      SDL_Flip (Screen);
+      our_SDL_flip_wrapper (Screen);
     }	/* while !FinishTakeover */
 
   /* Final contdown */
@@ -562,7 +562,7 @@ PlayGame (void)
       ProcessPlayground ();	/* this has to be done several times to be sure */
       ProcessDisplayColumn ();
       ShowPlayground ();
-      SDL_Flip (Screen);
+      our_SDL_flip_wrapper (Screen);
     }	/* while (countdown) */
 
     return;
@@ -779,13 +779,13 @@ GetTakeoverGraphics (void)
   if (to_background)
     free (to_background);
   
-  to_background = IMG_Load (find_file (TO_BG_FILE, GRAPHICS_DIR, TRUE));
+  to_background = our_IMG_load_wrapper (find_file (TO_BG_FILE, GRAPHICS_DIR, TRUE));
   if (to_background == NULL)
     DebugPrintf ( 0, "\nWARNING: Takeover Background file %s missing for theme %s\n", 
 		 TO_BG_FILE, GameConfig.Theme_SubPath);
 
-  TempLoadSurface = IMG_Load (find_file (TO_BLOCK_FILE, GRAPHICS_DIR, TRUE));
-  to_blocks = SDL_DisplayFormatAlpha( TempLoadSurface ); // the surface is converted
+  TempLoadSurface = our_IMG_load_wrapper (find_file (TO_BLOCK_FILE, GRAPHICS_DIR, TRUE));
+  to_blocks = our_SDL_display_format_wrapperAlpha( TempLoadSurface ); // the surface is converted
   SDL_FreeSurface ( TempLoadSurface );
 
   /* Get the fill-blocks */
@@ -863,7 +863,7 @@ ShowPlayground ()
   SDL_SetClipRect (Screen , &User_Rect);
 
   if (to_background)
-    SDL_BlitSurface (to_background, NULL, Screen, NULL);
+    our_SDL_blit_surface_wrapper (to_background, NULL, Screen, NULL);
   else
     FillRect (User_Rect, to_bg_color);  /* fallback if now background pic found */
 
@@ -878,54 +878,54 @@ ShowPlayground ()
   Set_Rect (Target_Rect, xoffs + LEFT_OFFS_X, yoffs + LEFT_OFFS_Y,
 	    User_Rect.w, User_Rect.h);
 
-  SDL_BlitSurface (to_blocks, &ToGroundBlocks[GELB_OBEN],
+  our_SDL_blit_surface_wrapper (to_blocks, &ToGroundBlocks[GELB_OBEN],
 		   Screen, &Target_Rect);
 
   Target_Rect.y += GROUNDBLOCKHEIGHT;
 
   for (i = 0; i < 12; i++)
     {
-      SDL_BlitSurface (to_blocks, &ToGroundBlocks[GELB_MITTE],
+      our_SDL_blit_surface_wrapper (to_blocks, &ToGroundBlocks[GELB_MITTE],
 		       Screen, &Target_Rect);
 
       Target_Rect.y += GROUNDBLOCKHEIGHT;
     }				/* for i=1 to 12 */
 
-  SDL_BlitSurface (to_blocks, &ToGroundBlocks[GELB_UNTEN],
+  our_SDL_blit_surface_wrapper (to_blocks, &ToGroundBlocks[GELB_UNTEN],
 		   Screen, &Target_Rect);
 
 
   /* Mittlere Saeule */
   Set_Rect (Target_Rect, xoffs + MID_OFFS_X, yoffs + MID_OFFS_Y,0, 0);
-  SDL_BlitSurface (to_blocks, &ToLeaderBlock,
+  our_SDL_blit_surface_wrapper (to_blocks, &ToLeaderBlock,
 		   Screen, &Target_Rect);
 
   Target_Rect.y += LEADERBLOCKHEIGHT;
   for (i = 0; i < 12; i++, Target_Rect.y += COLUMNBLOCKHEIGHT)
-    SDL_BlitSurface (to_blocks, &ToColumnBlock,
+    our_SDL_blit_surface_wrapper (to_blocks, &ToColumnBlock,
 		     Screen, &Target_Rect);
 
 
   /* rechte Saeule */
   Set_Rect (Target_Rect, xoffs + RIGHT_OFFS_X, yoffs + RIGHT_OFFS_Y,0, 0);
 
-  SDL_BlitSurface (to_blocks, &ToGroundBlocks[VIOLETT_OBEN],
+  our_SDL_blit_surface_wrapper (to_blocks, &ToGroundBlocks[VIOLETT_OBEN],
 		   Screen, &Target_Rect);
   Target_Rect.y += GROUNDBLOCKHEIGHT;
 
   for (i = 0; i < 12; i++, Target_Rect.y += GROUNDBLOCKHEIGHT)
-    SDL_BlitSurface (to_blocks, &ToGroundBlocks[VIOLETT_MITTE],
+    our_SDL_blit_surface_wrapper (to_blocks, &ToGroundBlocks[VIOLETT_MITTE],
 		     Screen, &Target_Rect);
 
-  SDL_BlitSurface (to_blocks, &ToGroundBlocks[VIOLETT_UNTEN],
+  our_SDL_blit_surface_wrapper (to_blocks, &ToGroundBlocks[VIOLETT_UNTEN],
 		   Screen, &Target_Rect);
 
   /* Fill the Leader-LED with its color */
   Set_Rect (Target_Rect, xoffs + LEADERLED_X, yoffs + LEADERLED_Y, 0, 0);
-  SDL_BlitSurface (to_blocks, &FillBlocks[LeaderColor],
+  our_SDL_blit_surface_wrapper (to_blocks, &FillBlocks[LeaderColor],
 		   Screen, &Target_Rect);
   Target_Rect.y += FILL_BLOCK_HEIGHT;
-  SDL_BlitSurface (to_blocks, &FillBlocks[LeaderColor],
+  our_SDL_blit_surface_wrapper (to_blocks, &FillBlocks[LeaderColor],
 		   Screen, &Target_Rect);
 
   /* Fill the Display Column with its colors */
@@ -934,7 +934,7 @@ ShowPlayground ()
       Set_Rect (Target_Rect, xoffs + LEDCOLUMN_X,
 		yoffs + LEDCOLUMN_Y + i*(FILL_BLOCK_HEIGHT+2),
 		0, 0);
-      SDL_BlitSurface (to_blocks, &FillBlocks[DisplayColumn[i]],
+      our_SDL_blit_surface_wrapper (to_blocks, &FillBlocks[DisplayColumn[i]],
 		       Screen, &Target_Rect);
     }
 
@@ -946,7 +946,7 @@ ShowPlayground ()
 	Set_Rect (Target_Rect, xoffs + PlaygroundStart[GELB].x + i * TO_BLOCKLEN,
 		  yoffs + PlaygroundStart[GELB].y + j * TO_BLOCKHEIGHT, 0, 0);
 	block = ToPlayground[GELB][i][j] + ActivationMap[GELB][i][j]*TO_BLOCKS;
-	SDL_BlitSurface (to_blocks, &ToGameBlocks[block],Screen, &Target_Rect);
+	our_SDL_blit_surface_wrapper (to_blocks, &ToGameBlocks[block],Screen, &Target_Rect);
       }
 
 
@@ -959,7 +959,7 @@ ShowPlayground ()
 		  yoffs + PlaygroundStart[VIOLETT].y + j * TO_BLOCKHEIGHT, 0, 0);
 	block = ToPlayground[VIOLETT][i][j]+
 	  (NUM_PHASES+ActivationMap[VIOLETT][i][j])*TO_BLOCKS;
-	SDL_BlitSurface (to_blocks, &ToGameBlocks[block],Screen, &Target_Rect);
+	our_SDL_blit_surface_wrapper (to_blocks, &ToGameBlocks[block],Screen, &Target_Rect);
       }
 
   /* Show the capsules left for each player */
@@ -974,14 +974,14 @@ ShowPlayground ()
 		yoffs + CurCapsuleStart[color].y + CapsuleCurRow[color]*(CAPSULE_HEIGHT+2),
 		0,0);
       if (NumCapsules[player])
-	SDL_BlitSurface (to_blocks, &CapsuleBlocks[color], Screen, &Target_Rect);
+	our_SDL_blit_surface_wrapper (to_blocks, &CapsuleBlocks[color], Screen, &Target_Rect);
 
 
       for (i = 0; i < NumCapsules[player]-1; i++)
 	{
 	  Set_Rect (Target_Rect, xoffs + LeftCapsulesStart[color].x,
 		    yoffs + LeftCapsulesStart[color].y + i*CAPSULE_HEIGHT, 0, 0);
-	  SDL_BlitSurface (to_blocks, &CapsuleBlocks[color],
+	  our_SDL_blit_surface_wrapper (to_blocks, &CapsuleBlocks[color],
 			   Screen, &Target_Rect);
 	} /* for capsules */
     } /* for player */
@@ -1668,7 +1668,7 @@ to_show_banner (const char* left, const char* right)
   
   // Redraw the whole background of the top status bar
   //  SDL_SetClipRect( Screen , NULL );  // this unsets the clipping rectangle
-  //  SDL_BlitSurface( banner_pic, NULL, Screen , NULL);
+  //  our_SDL_blit_surface_wrapper( banner_pic, NULL, Screen , NULL);
 
   // Now the text should be ready and its
   // time to display it...

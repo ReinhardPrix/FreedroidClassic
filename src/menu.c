@@ -105,7 +105,16 @@ MouseCursorIsOverMenuItem( int first_menu_item_pos_y , int h )
 void
 RestoreMenuBackground ( void )
 {
-  SDL_BlitSurface ( StoredMenuBackground , NULL , Screen , NULL );
+  if ( use_open_gl )
+    {
+      glRasterPos2i( 1 , 1 ) ; 
+      glDrawPixels( 640, 479, GL_RGB, GL_UNSIGNED_BYTE, (GLvoid*) StoredMenuBackground );
+      return ;
+    }
+  else
+    {
+      our_SDL_blit_surface_wrapper ( StoredMenuBackground , NULL , Screen , NULL );
+    }
 }; // void RestoreMenuBackground ( void )
 
 /* ----------------------------------------------------------------------
@@ -116,20 +125,44 @@ RestoreMenuBackground ( void )
 void
 StoreMenuBackground ( void )
 {
-  //--------------------
-  // If the memory was not yet allocated, we need to do that now...
-  //
-  // otherwise we free the old surface and create a new copy of the
-  // current screen content...
-  //
-  if ( StoredMenuBackground == NULL )
+
+  if ( use_open_gl )
     {
-      StoredMenuBackground = SDL_DisplayFormat ( Screen );
+      //--------------------
+      // WARNING!  WE ARE USING THE SDL_SURFACE* here much like a char*!!!
+      // BEWARE!
+      //
+      if ( StoredMenuBackground == NULL )
+	{
+
+	}
+      else
+	{
+	  // free ( StoredMenuBackground ) ;
+	}
+
+      StoredMenuBackground = malloc ( 641 * 481 * 4 ) ;
+
+      glReadPixels( 1 , 1, 639, 479, GL_RGB, GL_UNSIGNED_BYTE, (GLvoid*) StoredMenuBackground );
+
     }
   else
     {
-      SDL_FreeSurface ( StoredMenuBackground );
-      StoredMenuBackground = SDL_DisplayFormat ( Screen );
+      //--------------------
+      // If the memory was not yet allocated, we need to do that now...
+      //
+      // otherwise we free the old surface and create a new copy of the
+      // current screen content...
+      //
+      if ( StoredMenuBackground == NULL )
+	{
+	  StoredMenuBackground = our_SDL_display_format_wrapper ( Screen );
+	}
+      else
+	{
+	  SDL_FreeSurface ( StoredMenuBackground );
+	  StoredMenuBackground = our_SDL_display_format_wrapper ( Screen );
+	}
     }
 
 }; // void StoreMenuBackground ( void )
@@ -249,7 +282,7 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , char* B
 	    DisplayText ( InitialText , 50 , 50 , NULL );
 	}
 
-      SDL_Flip( Screen );
+      our_SDL_flip_wrapper( Screen );
   
       if ( EscapePressed() )
 	{
@@ -625,14 +658,14 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
       if ( BreakOffCauseNoRoom ) ShowGenericButtonFromList ( SCROLL_DIALOG_MENU_DOWN_BUTTON );
       if ( OptionOffset ) ShowGenericButtonFromList ( SCROLL_DIALOG_MENU_UP_BUTTON );
 
-      SDL_Flip( Screen );
+      our_SDL_flip_wrapper( Screen );
   
       if ( EscapePressed() )
 	{
 	  while ( EscapePressed() );
 
 	  RestoreMenuBackground ();
-	  SDL_Flip( Screen );
+	  our_SDL_flip_wrapper( Screen );
 	  SDL_ShowCursor( SDL_ENABLE );
 	  return ( -1 );
 	}
@@ -653,7 +686,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
 	  
 	  SDL_ShowCursor( SDL_ENABLE );
 	  RestoreMenuBackground ();
-	  SDL_Flip( Screen );
+	  our_SDL_flip_wrapper( Screen );
 	  return ( MenuPosition );
 
 	}
@@ -691,7 +724,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
 		{
 		  SDL_ShowCursor( SDL_ENABLE );
 		  RestoreMenuBackground ();
-		  SDL_Flip( Screen );
+		  our_SDL_flip_wrapper( Screen );
 		  return ( MenuPosition );
 		}
 	    }
@@ -765,7 +798,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
 
   SDL_ShowCursor( SDL_ENABLE );
   RestoreMenuBackground ();
-  SDL_Flip( Screen );
+  our_SDL_flip_wrapper( Screen );
   return ( -1 );
 
 }; // int ChatDoMenuSelection( char* InitialText , char* MenuTexts[10] , asdfasd .... )
@@ -1072,7 +1105,7 @@ Cheatmenu (void)
   InitBars = TRUE;
 
   ClearGraphMem ();
-  SDL_Flip (Screen);
+  our_SDL_flip_wrapper (Screen);
 
   keyboard_update (); /* treat all pending keyboard events */
   /* 
@@ -1409,7 +1442,7 @@ New_GraphicsSound_Options_Menu (void)
 	  
 	  ClearGraphMem();
 	  DisplayBanner( NULL , NULL , BANNER_FORCE_UPDATE );
-	  SDL_Flip( Screen );
+	  our_SDL_flip_wrapper( Screen );
 	  
 	  break;
 
@@ -2112,7 +2145,7 @@ Freedroid will continue execution now, since this problem\n\
     }
 
 
-  SDL_Flip( Screen );
+  our_SDL_flip_wrapper( Screen );
 
   return ( OK );
 }; // int Load_Existing_Hero_Menu ( void )
@@ -2244,7 +2277,7 @@ Freedroid will continue execution now, since this problem\n\
       return ( FALSE );
     }
 
-  SDL_Flip( Screen );
+  our_SDL_flip_wrapper( Screen );
 
   return ( OK );
 }; // int Delete_Existing_Hero_Menu ( void )
@@ -2594,7 +2627,7 @@ Show_Mission_Details ( int MissionNumber )
       if ( Me[0].AllMissions[ MissionNumber ].KillClass != (-1) ) printf_SDL( Screen , -1 , -1 , "%s" , Classname[Me[0].AllMissions[ MissionNumber ].KillClass] ); 
       else printf_SDL( Screen , -1 , -1 , "NONE\n" );
 
-      SDL_Flip( Screen );
+      our_SDL_flip_wrapper( Screen );
 
       while ( (!EscapePressed()) && (!EnterPressed()) && (!SpacePressed()) );
       // Wait until the user does SOMETHING
@@ -2701,7 +2734,7 @@ Show_Mission_Log_Menu (void)
 	  while ( EnterPressed() || SpacePressed() );
 	}
 
-      SDL_Flip( Screen );
+      our_SDL_flip_wrapper( Screen );
 
       if ( EscapePressed() || EnterPressed() || SpacePressed() )
 	{

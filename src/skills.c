@@ -896,8 +896,8 @@ ShowSkillsExplanationScreen( void )
   if ( SkillExplanationScreenImage == NULL )
     {
       fpath = find_file ( SKILL_EXPLANATION_SCREEN_BACKGROUND_FILE , GRAPHICS_DIR, FALSE);
-      tmp = IMG_Load( fpath );
-      SkillExplanationScreenImage = SDL_DisplayFormat ( tmp );
+      tmp = our_IMG_load_wrapper( fpath );
+      SkillExplanationScreenImage = our_SDL_display_format_wrapper ( tmp );
       SDL_FreeSurface ( tmp );
     }
   
@@ -905,11 +905,11 @@ ShowSkillsExplanationScreen( void )
   // Now we blit the explanation screen background and fill in all the
   // information about this skill.
   //
-  SDL_BlitSurface ( SkillExplanationScreenImage , NULL , Screen , NULL );
+  our_SDL_blit_surface_wrapper ( SkillExplanationScreenImage , NULL , Screen , NULL );
   
   TargetSkillRect.x = 15;
   TargetSkillRect.y = 15;
-  SDL_BlitSurface ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . spell_skill_icon_surface , NULL , Screen , &TargetSkillRect );
+  our_SDL_blit_surface_wrapper ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . spell_skill_icon_surface , NULL , Screen , &TargetSkillRect );
 
   TargetSkillRect.w = 320 - 15 - 15;
   TargetSkillRect.h = 480 - 15 ;
@@ -974,8 +974,8 @@ ShowSkillsScreen ( void )
   if ( SkillScreenImage == NULL )
     {
       fpath = find_file ( SKILL_SCREEN_BACKGROUND_FILE , GRAPHICS_DIR, FALSE);
-      tmp = IMG_Load( fpath );
-      SkillScreenImage = SDL_DisplayFormat ( tmp );
+      tmp = our_IMG_load_wrapper( fpath );
+      SkillScreenImage = our_SDL_display_format_wrapper ( tmp );
       SDL_FreeSurface ( tmp );
 
       //--------------------
@@ -1013,7 +1013,7 @@ ShowSkillsScreen ( void )
   // displayed in-game:
   //
   SDL_SetClipRect( Screen, NULL );
-  SDL_BlitSurface ( SkillScreenImage , NULL , Screen , &SkillScreenRect );
+  our_SDL_blit_surface_wrapper ( SkillScreenImage , NULL , Screen , &SkillScreenRect );
   if ( GameConfig.skill_explanation_screen_visible )
     ShowSkillsExplanationScreen( );
 
@@ -1025,7 +1025,7 @@ ShowSkillsScreen ( void )
   SpellLevelRect.x = SkillScreenRect.x + SPELL_LEVEL_BUTTONS_X + 
     SPELL_LEVEL_BUTTON_WIDTH * GameConfig.spell_level_visible ;
   SpellLevelRect.y = SkillScreenRect.y + SPELL_LEVEL_BUTTONS_Y ;
-  SDL_BlitSurface ( SpellLevelButtonImageList[ GameConfig.spell_level_visible ] , NULL , Screen , &SpellLevelRect );
+  our_SDL_blit_surface_wrapper ( SpellLevelButtonImageList[ GameConfig.spell_level_visible ] , NULL , Screen , &SpellLevelRect );
 
   //--------------------
   // Now we fill in the skills available to this bot.  ( For now, these skills 
@@ -1043,7 +1043,7 @@ ShowSkillsScreen ( void )
       if ( SkillOfThisSlot < 0 ) continue;
 
       LoadOneSkillSurfaceIfNotYetLoaded ( SkillOfThisSlot );
-      SDL_BlitSurface ( SpellSkillMap [ SkillOfThisSlot ] . spell_skill_icon_surface , NULL , Screen , &ButtonRect );
+      our_SDL_blit_surface_wrapper ( SpellSkillMap [ SkillOfThisSlot ] . spell_skill_icon_surface , NULL , Screen , &ButtonRect );
 
       //--------------------
       // First we write the name of the skill to the screen

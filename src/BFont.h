@@ -6,6 +6,8 @@
 
 #include "system.h"
 
+#define MAX_CHARS_IN_FONT 256
+
 typedef struct
 {
   /* font height */
@@ -13,7 +15,7 @@ typedef struct
   /* font surface */
   SDL_Surface *Surface;
   /* characters width */
-  SDL_Rect Chars[256];
+  SDL_Rect Chars [ MAX_CHARS_IN_FONT ];
 }
 BFont_Info;
 

@@ -616,7 +616,7 @@ SDL_Surface *rotozoomSurface(SDL_Surface * src, double angle, double zoom, int s
 	 */
 	rz_src =
 	    SDL_CreateRGBSurface(SDL_SWSURFACE, src->w, src->h, 32, 0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000);
-	SDL_BlitSurface(src, NULL, rz_src, NULL);
+	our_SDL_blit_surface_wrapper(src, NULL, rz_src, NULL);
 	src_converted = 1;
 	is32bit = 1;
     }
@@ -862,7 +862,7 @@ SDL_Surface *zoomSurface(SDL_Surface * src, double zoomx, double zoomy, int smoo
 	 */
 	rz_src =
 	    SDL_CreateRGBSurface(SDL_SWSURFACE, src->w, src->h, 32, 0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000);
-	SDL_BlitSurface(src, NULL, rz_src, NULL);
+	our_SDL_blit_surface_wrapper(src, NULL, rz_src, NULL);
 	src_converted = 1;
 	is32bit = 1;
     }

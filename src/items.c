@@ -2003,7 +2003,7 @@ ShowQuickInventory ( void )
 	  TargetRect.x = SCREEN_WIDTH - 32 ;
 	  TargetRect.y = 100 + i * 32 ;
       
-	  SDL_BlitSurface( ItemImageList[ ItemMap[ Me[0].Inventory[ Index ].type ].picture_number ].Surface , 
+	  our_SDL_blit_surface_wrapper( ItemImageList[ ItemMap[ Me[0].Inventory[ Index ].type ].picture_number ].Surface , 
 			   NULL , Screen , &TargetRect );
 	  
 	}
@@ -2633,7 +2633,7 @@ ManageInventoryScreen ( void )
   // visible and therefore we must updated it here, since it is currently not
   // contained within the user rectangle that also gets updated every frame.
   //
-  // SDL_UpdateRect( Screen , InventoryRect.x , InventoryRect.y , InventoryRect.w , InventoryRect.h );
+  // our_SDL_update_rect_wrapper( Screen , InventoryRect.x , InventoryRect.y , InventoryRect.w , InventoryRect.h );
 
 
   MouseButtonPressedPreviousFrame = axis_is_active;

@@ -39,6 +39,9 @@ typedef char bool;
 #define _BOOL
 #endif
 
+#include <GL/gl.h>
+#include <GL/glu.h>
+
 typedef struct
 {
   char name[MAX_NAME_LEN+5];
@@ -251,6 +254,10 @@ typedef struct
   int offset_x;
   int offset_y;
   SDL_Surface* zoomed_out_surface;
+  int texture_width;
+  int texture_height;
+  GLuint texture;  // this is to store an open_gl texture...
+  
 }
 iso_image, *Iso_image;
 

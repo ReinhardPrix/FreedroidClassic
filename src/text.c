@@ -82,7 +82,7 @@ show_backgrounded_label_at_pixel_position ( char* LabelText , float fill_status 
   background_rect . w = 200 ;
   background_rect . h =  20 ;
 
-  SDL_FillRect ( Screen , & ( background_rect ) , 0 );
+  our_SDL_fill_rect_wrapper ( Screen , & ( background_rect ) , 0 );
 
   PutString ( Screen , pos_x , pos_y , LabelText );
 
@@ -153,7 +153,7 @@ GiveMouseAlertWindow( char* WindowText )
   TargetRect . h = 340 ; 
   TargetRect . x = ( 640 - TargetRect . w ) / 2 ; 
   TargetRect . y = ( 480 - TargetRect . h ) / 2 ; 
-  SDL_FillRect ( Screen , &TargetRect , 
+  our_SDL_fill_rect_wrapper ( Screen , &TargetRect , 
 		 SDL_MapRGB ( Screen->format, 0 , 0 , 0 ) ) ;
   
 #define IN_WINDOW_TEXT_OFFSET 15
@@ -166,7 +166,7 @@ GiveMouseAlertWindow( char* WindowText )
 
   DisplayText ( WindowText, TargetRect . x, TargetRect . y , &TargetRect )  ;
 
-  SDL_Flip ( Screen );
+  our_SDL_flip_wrapper ( Screen );
 
   while (!EnterPressed() && !SpacePressed() ) ;
   while (EnterPressed() || SpacePressed() ) ;
@@ -409,14 +409,14 @@ DisplaySubtitle( char* SubtitleText , void* SubtitleBackground )
   // Now we need to clear this window, cause there might still be some
   // garbage from the previous subtitle in there...
   //
-  SDL_BlitSurface ( SubtitleBackground , &Subtitle_Window , Screen , &Subtitle_Window );
+  our_SDL_blit_surface_wrapper ( SubtitleBackground , &Subtitle_Window , Screen , &Subtitle_Window );
 
   //--------------------
   // Now we can display the text and update the screen...
   //
   SDL_SetClipRect( Screen, NULL );
   DisplayText ( SubtitleText , Subtitle_Window.x , Subtitle_Window.y , &Subtitle_Window );
-  SDL_UpdateRect ( Screen , Subtitle_Window.x , Subtitle_Window.y , Subtitle_Window.w , Subtitle_Window.h );
+  our_SDL_update_rect_wrapper ( Screen , Subtitle_Window.x , Subtitle_Window.y , Subtitle_Window.w , Subtitle_Window.h );
 
 }; // void DisplaySubtitle( char* SubtitleText , void* SubtitleBackground )
 
@@ -752,7 +752,7 @@ PrepareMultipleChoiceDialog ( Enemy ChatDroid )
   // Next we prepare the whole background for all later text operations
   //
   if ( Background == NULL )
-    Background = IMG_Load( find_file ( CHAT_BACKGROUND_IMAGE_FILE , GRAPHICS_DIR, FALSE ) );
+    Background = our_IMG_load_wrapper( find_file ( CHAT_BACKGROUND_IMAGE_FILE , GRAPHICS_DIR, FALSE ) );
   else
     {
       //--------------------
@@ -761,7 +761,7 @@ PrepareMultipleChoiceDialog ( Enemy ChatDroid )
       // discussion partner on it.
       //
       SDL_FreeSurface( Background );
-      Background = IMG_Load( find_file ( CHAT_BACKGROUND_IMAGE_FILE , GRAPHICS_DIR, FALSE ) );
+      Background = our_IMG_load_wrapper( find_file ( CHAT_BACKGROUND_IMAGE_FILE , GRAPHICS_DIR, FALSE ) );
     }
   if ( Background == NULL )
     {
@@ -786,13 +786,13 @@ ERROR LOADING BACKGROUND IMAGE FILE!",
   strcat( fname, ChatDroid -> dialog_section_name );
   strcat( fname , "/portrait.png" );
   fpath = find_file (fname, GRAPHICS_DIR, FALSE);
-  Small_Droid = IMG_Load (fpath) ;
+  Small_Droid = our_IMG_load_wrapper (fpath) ;
   if ( Small_Droid == NULL )
     {
       strcpy( fname, "droids/" );
       strcat( fname, "DefaultPortrait.png" );
       fpath = find_file (fname, GRAPHICS_DIR, FALSE);
-      Small_Droid = IMG_Load (fpath) ;
+      Small_Droid = our_IMG_load_wrapper (fpath) ;
     }
   if ( Small_Droid == NULL )
     {
@@ -805,9 +805,9 @@ chat interface of Freedroid.  But:  Loading this file has failed.",
   // Large_Droid = zoomSurface( Small_Droid , 1.8 , 1.8 , 0 );
 
   Large_Droid = zoomSurface( Small_Droid , (float)Droid_Image_Window.w / (float)Small_Droid->w , (float)Droid_Image_Window.w / (float)Small_Droid->w , 0 );
-  SDL_BlitSurface( Large_Droid , NULL , Background , &Droid_Image_Window );
-  SDL_BlitSurface( Background , NULL , Screen , NULL );
-  SDL_Flip( Screen );
+  our_SDL_blit_surface_wrapper( Large_Droid , NULL , Background , &Droid_Image_Window );
+  our_SDL_blit_surface_wrapper( Background , NULL , Screen , NULL );
+  our_SDL_flip_wrapper( Screen );
 
   SDL_FreeSurface( Small_Droid );
   SDL_FreeSurface( Large_Droid );
@@ -1169,7 +1169,7 @@ DialogPartnersTurnToEachOther ( Enemy ChatDroid )
       StartTakingTimeForFPSCalculation();       
 
       AssembleCombatPicture ( SHOW_ITEMS ); 
-      SDL_Flip ( Screen );
+      our_SDL_flip_wrapper ( Screen );
       
       if ( ( SDL_GetTicks() - TurningStartTime ) >= 1000.0 * WaitBeforeTurningTime )
 	TurningDone = TRUE;
@@ -1232,7 +1232,7 @@ DialogPartnersTurnToEachOther ( Enemy ChatDroid )
       StartTakingTimeForFPSCalculation();       
 
       AssembleCombatPicture ( SHOW_ITEMS ); 
-      SDL_Flip ( Screen );
+      our_SDL_flip_wrapper ( Screen );
 
       OldAngle = ChatDroid -> current_angle;
 
@@ -1263,7 +1263,7 @@ DialogPartnersTurnToEachOther ( Enemy ChatDroid )
       StartTakingTimeForFPSCalculation();       
 
       AssembleCombatPicture ( SHOW_ITEMS ); 
-      SDL_Flip ( Screen );
+      our_SDL_flip_wrapper ( Screen );
       
       if ( ( SDL_GetTicks() - TurningStartTime ) >= 1000.0 * WaitAfterTurningTime )
 	TurningDone = TRUE;
@@ -1508,16 +1508,18 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
   int InsertLine = starty;
   int speed = +4;
   int maxspeed = 8;
-  SDL_Surface* Background;
+  SDL_Surface* Background = NULL ;
 
   Activate_Conservative_Frame_Computation( );
 
   if ( TitlePictureName != NULL )
-    DisplayImage ( find_file( TitlePictureName , GRAPHICS_DIR, FALSE) );
-
-  MakeGridOnScreen( (SDL_Rect*) &Full_Screen_Rect );
-  // DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE ); 
-  Background = SDL_DisplayFormat( Screen );
+    Background = our_IMG_load_wrapper( find_file( TitlePictureName , GRAPHICS_DIR, FALSE) );
+  else
+    {
+      GiveStandardErrorMessage ( "ScrollText(...)" , "\
+Null as title picture name received.",
+				 PLEASE_INFORM, IS_FATAL );
+    }
 
   SetCurrentFont( Para_BFont );
 
@@ -1561,12 +1563,7 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
 
       usleep (30000);
 
-      // DisplayImage ( find_file(TitlePictureName,GRAPHICS_DIR, FALSE) );
-      // MakeGridOnScreen( (SDL_Rect*) &Full_Screen_Rect );
-      // DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE ); 
-      // ClearUserFenster(); 
-
-      SDL_BlitSurface ( Background , NULL , Screen , NULL );
+      our_SDL_blit_surface_wrapper ( Background , NULL , Screen , NULL );
 
       if (!DisplayText (Text, startx, InsertLine, &User_Rect))
 	{
@@ -1582,7 +1579,7 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
 
       InsertLine -= speed;
 
-      SDL_Flip (Screen);
+      our_SDL_flip_wrapper (Screen);
 
       /* Nicht bel. nach unten wegscrollen */
       if (InsertLine > SCREEN_HEIGHT - 10 && (speed < 0))
@@ -1666,12 +1663,12 @@ DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *cl
       if ( ( clip->h + clip->y - MyCursorY ) <= 1 * FontHeight ( GetCurrentFont() ) * TEXT_STRETCH )
 	{
 	  DisplayText( "--- more --- more --- \n" , MyCursorX , MyCursorY , clip );
-	  SDL_Flip( Screen );
+	  our_SDL_flip_wrapper( Screen );
 	  while ( !SpacePressed() );
 	  while (  SpacePressed() );
-	  SDL_BlitSurface( Background , NULL , Screen , NULL );
+	  our_SDL_blit_surface_wrapper( Background , NULL , Screen , NULL );
 	  MyCursorY = clip->y;
-	  SDL_Flip( Screen );
+	  our_SDL_flip_wrapper( Screen );
 	};
       
       if (clip)
@@ -1931,9 +1928,14 @@ GetString (int MaxLen, int echo)
   y0 = MyCursorY;
   height = FontHeight (GetCurrentFont());
   
-  store = SDL_CreateRGBSurface(0, SCREEN_WIDTH, height, vid_bpp, 0, 0, 0, 0);
-  Set_Rect (store_rect, x0, y0, SCREEN_WIDTH, height);
-  SDL_BlitSurface (Screen, &store_rect, store, NULL);
+  if ( use_open_gl )
+    StoreMenuBackground();
+  else
+    {
+      store = SDL_CreateRGBSurface(0, SCREEN_WIDTH, height, vid_bpp, 0, 0, 0, 0);
+      Set_Rect (store_rect, x0, y0, SCREEN_WIDTH, height);
+      our_SDL_blit_surface_wrapper (Screen, &store_rect, store, NULL);
+    }
 
   // allocate memory for the users input
   input     = MyMalloc (MaxLen + 5);
@@ -1946,10 +1948,16 @@ GetString (int MaxLen, int echo)
 
   while ( !finished  )
     {
-      Copy_Rect( store_rect, tmp_rect);
-      SDL_BlitSurface (store, NULL, Screen, &tmp_rect);
+      if ( use_open_gl )
+	RestoreMenuBackground ();
+      else
+	{
+	  Copy_Rect( store_rect, tmp_rect);
+	  our_SDL_blit_surface_wrapper (store, NULL, Screen, &tmp_rect);
+	}
+
       PutString (Screen, x0, y0, input);
-      SDL_Flip (Screen);
+      our_SDL_flip_wrapper (Screen);
       
       key = getchar_raw ();  
       
@@ -2047,7 +2055,7 @@ GetEditableStringInPopupWindow ( int MaxLen , char* PopupWindowTitle , char* Def
       TargetRect . h = 340 ; 
       TargetRect . x = ( 640 - TargetRect . w ) / 2 ; 
       TargetRect . y = ( 480 - TargetRect . h ) / 2 ; 
-      SDL_FillRect ( Screen , &TargetRect , 
+      our_SDL_fill_rect_wrapper ( Screen , &TargetRect , 
 		     SDL_MapRGB ( Screen->format, 0 , 0 , 0 ) ) ;
 
       TargetRect . w -= EDIT_WINDOW_TEXT_OFFSET;
@@ -2073,7 +2081,7 @@ GetEditableStringInPopupWindow ( int MaxLen , char* PopupWindowTitle , char* Def
       CursorRect . w = 8 ;
       HighlightRectangle ( Screen , CursorRect );
 
-      SDL_Flip (Screen);
+      our_SDL_flip_wrapper (Screen);
 
       key = getchar_raw ();  
       
@@ -2157,7 +2165,7 @@ putchar_SDL (SDL_Surface *Surface, int x, int y, int c)
 
   ret = PutChar (Surface, x, y, c);
 
-  SDL_Flip (Surface);
+  our_SDL_flip_wrapper (Surface);
 
   return (ret);
 }; // int putchar_SDL (SDL_Surface *Surface, int x, int y, int c)
@@ -2195,7 +2203,7 @@ printf_SDL (SDL_Surface *screen, int x, int y, char *fmt, ...)
   vsprintf (tmp, fmt, args);
   PutString (screen, x, y, tmp);
 
-  SDL_Flip (screen);
+  our_SDL_flip_wrapper (screen);
 
   if (tmp[strlen(tmp)-1] == '\n')
     {

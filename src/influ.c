@@ -1828,6 +1828,16 @@ PerformTuxAttackRaw ( int player_num )
 float
 translate_pixel_to_map_location ( int player_num , float axis_x , float axis_y , int give_x ) 
 {
+
+  //--------------------
+  // NOTE:  This function does not expect absolute screen coordinates but rather coordinates relative
+  // to the center of the screen.
+  //
+  // That's also why it's 'axis' rather than 'pos' or 'point'.
+  //
+  // That is because mouse clicks can best be analyzed this way.
+  //
+
   if ( give_x )
     {
       return ( Me [ player_num ] . pos . x + ( axis_x / ((float)iso_floor_tile_width) ) + ( axis_y / ((float)iso_floor_tile_height) ) ) ;

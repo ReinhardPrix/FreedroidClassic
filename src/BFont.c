@@ -74,19 +74,30 @@ InitFont (BFont_Info * Font)
 BFont_Info *
 LoadFont (char *filename)
 {
-  SDL_Surface *surface = NULL;
   int x;
   BFont_Info *Font = NULL;
+  SDL_Surface *tmp = NULL ;
 
   if (filename != NULL)
     {
       Font = (BFont_Info *) malloc (sizeof (BFont_Info));
       if (Font != NULL)
 	{
-	  surface = (SDL_Surface *) IMG_Load (filename);
-	  if (surface != NULL)
+	  //--------------------
+	  // Here we cannot use our image loading wrapper, cause that one
+	  // would also flip the image horizontally, which would destroy the
+	  // top character info!
+	  // 
+	  // Too bad!
+	  //
+	  // tmp = (SDL_Surface *) our_IMG_load_wrapper (filename);
+	  //
+	  tmp = (SDL_Surface *) IMG_Load (filename);
+
+	  if (tmp != NULL)
 	    {
-	      Font->Surface = surface;
+	      Font->Surface = SDL_DisplayFormatAlpha ( tmp ) ;
+	      SDL_FreeSurface ( tmp ) ;
 	      for (x = 0; x < 256; x++)
 		{
 		  Font->Chars[x].x = 0;
@@ -98,6 +109,12 @@ LoadFont (char *filename)
 	      InitFont (Font);
 	      /* Set the font as the current font */
 	      SetCurrentFont (Font);
+	      
+	      if ( use_open_gl )
+		{
+		  flip_image_horizontally ( Font -> Surface ) ;
+		}
+
 	    }
 	  else
 	    {
@@ -244,17 +261,62 @@ PutCharFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y, int c)
 {
   int r = 0;
   SDL_Rect dest;
+  SDL_Surface* tmp_char1;
+  SDL_Surface* tmp_char2;
+  static int first_call = TRUE;
 
-  dest.w = CharWidth (Font, ' ');
-  dest.h = FontHeight (Font);
-  dest.x = x;
-  dest.y = y;
-  if (c != ' ')
+  if ( use_open_gl )
     {
-      SDL_BlitSurface (Font->Surface, &Font->Chars[c], Surface, &dest);
+      tmp_char1 = SDL_CreateRGBSurface( 0 , CharWidth (Font, c ) , FontHeight (Font) -1 , vid_bpp, 0, 0, 0, 0 );
+      // tmp_char1 = SDL_DisplayFormatAlpha ( Font -> Surface );
+      // SDL_SetAlpha( tmp_char1 , SDL_SRCALPHA, 255);
+      SDL_SetAlpha( Font->Surface , 0 , 255 );
+      // SDL_SetColorKey (Font->Surface, SDL_SRCCOLORKEY, GetPixel (Font->Surface, 0, Font->Surface->h - 1));
+      SDL_SetColorKey( Font->Surface , 0 , 0 );
+      tmp_char2 = SDL_DisplayFormatAlpha ( tmp_char1 ) ;
+      our_SDL_blit_surface_wrapper ( Font->Surface, &Font->Chars[c], tmp_char2 , NULL );
+      // tmp_char2 -> flags = tmp_char2 -> flags | SDL_SRCALPHA; 
+      SDL_SetAlpha( tmp_char2 , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+      
+      //--------------------
+      //
+      dest.w = CharWidth (Font, ' ');
+      dest.h = FontHeight (Font) ;
+      dest.x = x;
+      dest.y = y;
+      if (c != ' ')
+	{
+	  // our_SDL_blit_surface_wrapper (Font->Surface, &Font->Chars[c], Surface, &dest);
+	  our_SDL_blit_surface_wrapper ( tmp_char2 , NULL , Surface, &dest);
+	}
+      
+      SDL_FreeSurface ( tmp_char1 );
+      SDL_FreeSurface ( tmp_char2 );
+
     }
+  else
+    {
+      dest.w = CharWidth (Font, ' ');
+      dest.h = FontHeight (Font);
+      dest.x = x;
+      dest.y = y;
+      if ( c != ' ' )
+	{
+	  our_SDL_blit_surface_wrapper (Font->Surface, &Font->Chars[c], Surface, &dest);
+	}
+    }
+
   r = dest.w;
-  return r;
+
+  if ( first_call )
+    {
+      printf ( "\nWidth of letter 'E': %d.\n" , CharWidth ( Font, 'E' ) );
+      printf ( "\nReturn value: %d.\n" , r );
+      printf ( "\nLetter is : '%c'.\n" , c );
+      first_call = FALSE ;
+    }
+  // return r;
+  return CharWidth ( Font , c ) ;
 }
 
 void
@@ -268,7 +330,6 @@ PutStringFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y,
 	       char *text)
 {
   int i = 0;
-
   //--------------------
   // I added little hack to kern MenuFont..
   // This basicly just prints them more tight on the screen.
@@ -276,7 +337,6 @@ PutStringFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y,
   //
   int kerning = 0;
   if (Font==Menu_BFont) kerning = -4;
-
 
   while (text[i] != '\0')
     {
@@ -290,7 +350,7 @@ PutStringFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y,
       if ( text[i] == 2 ) Font = Blue_BFont;
       if ( text[i] == 3 ) Font = FPS_Display_BFont;
 
-      x += PutCharFont (Surface, Font, x, y, text[i]) +kerning;
+      x += PutCharFont (Surface, Font, x, y, text[i]) + kerning;
       i++;
     }
 }
@@ -642,6 +702,17 @@ PutPixel (SDL_Surface * surface, int x, int y, Uint32 pixel)
 {
   int bpp = surface->format->BytesPerPixel;
   Uint8 *p;
+
+  if ( use_open_gl )
+    {
+      if ( surface == Screen ) 
+	{
+	  glRasterPos2i( x , y ) ;
+	  glDrawPixels( 1 , 1, GL_RGBA , GL_UNSIGNED_BYTE , & pixel );
+	  return;
+	}
+    }
+
 
   //--------------------
   // Here I add a security query against segfaults due to writing

@@ -420,10 +420,10 @@ create_and_blit_droid_description ( int enemy_num )
 
   if ( ! cur_enemy -> is_friendly ) 
     {
-      SDL_FillRect ( Screen , & ( temp_fill_rect ) , SDL_MapRGB ( Screen->format , 0x099 , 0x000 , 0x000 ) );
+      our_SDL_fill_rect_wrapper ( Screen , & ( temp_fill_rect ) , SDL_MapRGB ( Screen->format , 0x099 , 0x000 , 0x000 ) );
       temp_fill_rect . x = temp_fill_rect . x + temp_fill_rect . w ;
       temp_fill_rect . w = text_length - temp_fill_rect . w ;
-      SDL_FillRect ( Screen , & ( temp_fill_rect ) , SDL_MapRGB ( Screen->format , 0x000 , 0x000 , 0x000 ) );
+      our_SDL_fill_rect_wrapper ( Screen , & ( temp_fill_rect ) , SDL_MapRGB ( Screen->format , 0x000 , 0x000 , 0x000 ) );
       temp_fill_rect . x = UserCenter_x - text_length / 2 ;
     }
 
@@ -470,7 +470,7 @@ ShowCurrentSkill( void )
   Target_Rect.h = CURRENT_SKILL_RECT_H ;
 
   LoadOneSkillSurfaceIfNotYetLoaded ( Me[0].readied_skill );
-  SDL_BlitSurface ( SpellSkillMap [ Me[0].readied_skill ] . spell_skill_icon_surface , NULL , Screen , &Target_Rect );
+  our_SDL_blit_surface_wrapper ( SpellSkillMap [ Me[0].readied_skill ] . spell_skill_icon_surface , NULL , Screen , &Target_Rect );
 
   /*
   //--------------------
@@ -502,10 +502,11 @@ ShowCurrentHealthAndForceLevel( void )
   SDL_Rect Unhealth_Rect;
   SDL_Rect Force_Rect;
   SDL_Rect Unforce_Rect;
-
+  SDL_Surface* tmp;
   char *fpath;
 
-  static SDL_Surface *SpeedMeterImage = NULL;
+  // static SDL_Surface *SpeedMeterImage = NULL;
+  static iso_image speed_meter_iso_image = { NULL , 0 , 0 , NULL , 0 , 0 , 0 } ;
   static SDL_Surface *SpeedMeterEnergyArrowImage = NULL;
   static SDL_Surface *SpeedMeterManaArrowImage = NULL;
   static SDL_Surface *SpeedOMeterWorkingCopy = NULL;
@@ -529,24 +530,35 @@ ShowCurrentHealthAndForceLevel( void )
   // done then to prevent framerate-distortion later, when the first
   // real-game-frame is drawn.
   //
-  if ( SpeedMeterImage == NULL )
+  if ( speed_meter_iso_image . surface == NULL )
     {
       fpath = find_file ( "speed_o_meter.png" , GRAPHICS_DIR, FALSE);
-      SpeedMeterImage = IMG_Load( fpath );
+
+      get_iso_image_from_file_and_path ( fpath , & ( speed_meter_iso_image ) ) ;
+      tmp = speed_meter_iso_image . surface ;
+      speed_meter_iso_image . surface = SDL_DisplayFormatAlpha ( speed_meter_iso_image . surface );
+      SDL_FreeSurface ( tmp ) ;
+
+      // SpeedMeterImage = our_IMG_load_wrapper( fpath );
+      if ( use_open_gl )
+	{
+	  make_texture_out_of_surface ( & ( speed_meter_iso_image ) ) ;
+	}
+
       fpath = find_file ( "speed_o_meter_arrow_energy.png" , GRAPHICS_DIR, FALSE);
-      SpeedMeterEnergyArrowImage = IMG_Load( fpath );
+      SpeedMeterEnergyArrowImage = our_IMG_load_wrapper( fpath );
       fpath = find_file ( "speed_o_meter_arrow_mana.png" , GRAPHICS_DIR, FALSE);
-      SpeedMeterManaArrowImage = IMG_Load( fpath );
-      SpeedOMeterWorkingCopy = SDL_DisplayFormat( SpeedMeterImage ); // to initialize the thing
+      SpeedMeterManaArrowImage = our_IMG_load_wrapper( fpath );
+      SpeedOMeterWorkingCopy = our_SDL_display_format_wrapper( speed_meter_iso_image . surface );
 
       //--------------------
       // We define the right side of the user screen as the rectangle
       // for our speed-o-meter
       //
-      SpeedMeterRect.x = SCREEN_WIDTH - SpeedMeterImage->w;
+      SpeedMeterRect.x = SCREEN_WIDTH - speed_meter_iso_image . surface ->w;
       SpeedMeterRect.y = 0; 
-      SpeedMeterRect.w = SpeedMeterImage->w;
-      SpeedMeterRect.h = SpeedMeterImage->h;
+      SpeedMeterRect.w = speed_meter_iso_image . surface -> w;
+      SpeedMeterRect.h = speed_meter_iso_image . surface -> h;
     }
 
   //--------------------
@@ -555,64 +567,78 @@ ShowCurrentHealthAndForceLevel( void )
   //
   if ( Me[0].status == BRIEFING ) return;
   
-  //--------------------
-  // We only need to regenerate the whole image, blitting the arrows into
-  // a new working copy, if something has changed in the values displayed
-  // by the arrow position.  
-  //
-  if ( ( Previous_Energy    != (int) Me[0].energy ) ||
-       ( Previous_Mana      != (int) Me[0].mana ) ||
-       ( Previous_Maxenergy != (int) Me[0].maxenergy ) ||
-       ( Previous_Maxmana   != (int) Me[0].maxmana ) )
+
+  if ( FALSE ) // use_open_gl
+    {
+      
+      blit_open_gl_texture_to_map_position ( speed_meter_iso_image , 
+					     translate_pixel_to_map_location ( 0 , SCREEN_WIDTH/2 - speed_meter_iso_image . surface -> w + 32 , - SCREEN_HEIGHT / 2 + 32 , TRUE ) , 
+					     translate_pixel_to_map_location ( 0 , SCREEN_WIDTH/2 - speed_meter_iso_image . surface -> w + 32 , - SCREEN_HEIGHT / 2 + 32 , FALSE ) ) ;
+
+      // blit_open_gl_texture_to_map_position ( speed_meter_iso_image , Me [ 0 ] . pos . x , Me [ 0 ] . pos . y ) ;
+    } // if ( use_open_gl )
+  else
     {
       //--------------------
-      // We generate a new fresh empty speed-o-meter in the working copy
-      SDL_FreeSurface ( SpeedOMeterWorkingCopy );
-      SpeedOMeterWorkingCopy = SDL_DisplayFormatAlpha ( SpeedMeterImage );
-      SDL_SetColorKey ( SpeedOMeterWorkingCopy , SDL_SRCCOLORKEY, 
-			SDL_MapRGB ( SpeedOMeterWorkingCopy -> format , 255, 0, 255 ) ); 
-      
+      // We only need to regenerate the whole image, blitting the arrows into
+      // a new working copy, if something has changed in the values displayed
+      // by the arrow position.  
+      //
+      if ( ( Previous_Energy    != (int) Me[0].energy ) ||
+	   ( Previous_Mana      != (int) Me[0].mana ) ||
+	   ( Previous_Maxenergy != (int) Me[0].maxenergy ) ||
+	   ( Previous_Maxmana   != (int) Me[0].maxmana ) )
+	{
+	  //--------------------
+	  // We generate a new fresh empty speed-o-meter in the working copy
+	  SDL_FreeSurface ( SpeedOMeterWorkingCopy );
+	  SpeedOMeterWorkingCopy = our_SDL_display_format_wrapperAlpha ( speed_meter_iso_image . surface );
+	  SDL_SetColorKey ( SpeedOMeterWorkingCopy , SDL_SRCCOLORKEY, 
+			    SDL_MapRGB ( SpeedOMeterWorkingCopy -> format , 255, 0, 255 ) ); 
+	  
+	  
+	  // We blit in the red arrow, showing current energy
+	  RotatedArrow = rotozoomSurface( SpeedMeterEnergyArrowImage , 
+					  - 360 * 3 / 4 * Me[0].energy / Me[0].maxenergy , 1.0 , FALSE );
+	  
+	  ArrowRect.x = PivotPosition.x - ( RotatedArrow->w / 2 ) ;
+	  ArrowRect.y = PivotPosition.y - ( RotatedArrow->h / 2 ) ;
+	  our_SDL_blit_surface_wrapper( RotatedArrow , NULL , SpeedOMeterWorkingCopy , & ArrowRect );
+	  SDL_FreeSurface( RotatedArrow );
+	  
+	  // We blit in the blue arrow, showing current mana
+	  RotatedArrow = rotozoomSurface( SpeedMeterManaArrowImage , 
+					  -360 * 3 / 4 * Me[0].mana / Me[0].maxmana , 1.0 , FALSE );
+	  
+	  ArrowRect.x = PivotPosition.x - ( RotatedArrow->w / 2 ) ;
+	  ArrowRect.y = PivotPosition.y - ( RotatedArrow->h / 2 ) ;
+	  our_SDL_blit_surface_wrapper( RotatedArrow , NULL , SpeedOMeterWorkingCopy , & ArrowRect );
+	  SDL_FreeSurface( RotatedArrow );
+	  
+	  //--------------------
+	  // And of course we must remember the current values, so that
+	  // we can detect any changes when this function is called during 
+	  // the next frame.
+	  //
+	  Previous_Energy    = Me[0].energy ;
+	  Previous_Mana      = Me[0].mana ;
+	  Previous_Maxenergy = Me[0].maxenergy ;
+	  Previous_Maxmana   = Me[0].maxmana ;
+	  
+	  //--------------------
+	  // Just to make sure, that we really achieved, that the thing is not reassembled
+	  // every frame, we print out a message.
+	  //
+	  // DebugPrintf ( 2 , "\nValue change detected. --> Speed-o-meter completely reassembled...." ) ;
+	}
 
-      // We blit in the red arrow, showing current energy
-      RotatedArrow = rotozoomSurface( SpeedMeterEnergyArrowImage , 
-				      - 360 * 3 / 4 * Me[0].energy / Me[0].maxenergy , 1.0 , FALSE );
-
-      ArrowRect.x = PivotPosition.x - ( RotatedArrow->w / 2 ) ;
-      ArrowRect.y = PivotPosition.y - ( RotatedArrow->h / 2 ) ;
-      SDL_BlitSurface( RotatedArrow , NULL , SpeedOMeterWorkingCopy , & ArrowRect );
-      SDL_FreeSurface( RotatedArrow );
-
-      // We blit in the blue arrow, showing current mana
-      RotatedArrow = rotozoomSurface( SpeedMeterManaArrowImage , 
-				      -360 * 3 / 4 * Me[0].mana / Me[0].maxmana , 1.0 , FALSE );
-
-      ArrowRect.x = PivotPosition.x - ( RotatedArrow->w / 2 ) ;
-      ArrowRect.y = PivotPosition.y - ( RotatedArrow->h / 2 ) ;
-      SDL_BlitSurface( RotatedArrow , NULL , SpeedOMeterWorkingCopy , & ArrowRect );
-      SDL_FreeSurface( RotatedArrow );
 
       //--------------------
-      // And of course we must remember the current values, so that
-      // we can detect any changes when this function is called during 
-      // the next frame.
+      // Finally, we blit the fully assembled speed-o-meter
       //
-      Previous_Energy    = Me[0].energy ;
-      Previous_Mana      = Me[0].mana ;
-      Previous_Maxenergy = Me[0].maxenergy ;
-      Previous_Maxmana   = Me[0].maxmana ;
+      our_SDL_blit_surface_wrapper( SpeedOMeterWorkingCopy , NULL , Screen, &SpeedMeterRect );
 
-      //--------------------
-      // Just to make sure, that we really achieved, that the thing is not reassembled
-      // every frame, we print out a message.
-      //
-      // DebugPrintf ( 2 , "\nValue change detected. --> Speed-o-meter completely reassembled...." ) ;
-    }
-
-
-  //--------------------
-  // Finally, we blit the fully assembled speed-o-meter
-  //
-  SDL_BlitSurface( SpeedOMeterWorkingCopy , NULL , Screen, &SpeedMeterRect );
+    } // if ( ! use_open_gl )
 
   return; // The rest can remain disabled for now...
 
@@ -649,10 +675,10 @@ ShowCurrentHealthAndForceLevel( void )
   if ( Unforce_Rect.h > WHOLE_FORCE_RECT_H ) Unforce_Rect.h = 0;
 
   SDL_SetClipRect( Screen , NULL );
-  SDL_FillRect( Screen , & ( Health_Rect ) , HEALTH_RECT_COLOR );
-  SDL_FillRect( Screen , & ( Unhealth_Rect ) , 0x0FF00000 );
-  SDL_FillRect( Screen , & ( Force_Rect ) , FORCE_RECT_COLOR );
-  SDL_FillRect( Screen , & ( Unforce_Rect ) , 0x0FF0000 );
+  our_SDL_fill_rect_wrapper( Screen , & ( Health_Rect ) , HEALTH_RECT_COLOR );
+  our_SDL_fill_rect_wrapper( Screen , & ( Unhealth_Rect ) , 0x0FF00000 );
+  our_SDL_fill_rect_wrapper( Screen , & ( Force_Rect ) , FORCE_RECT_COLOR );
+  our_SDL_fill_rect_wrapper( Screen , & ( Unforce_Rect ) , 0x0FF0000 );
 }; // void ShowCurrentHealthAndForceLevel( void )
 
 /* ----------------------------------------------------------------------
@@ -857,7 +883,7 @@ ShowCurrentTextWindow ( void )
   SDL_SetClipRect( Screen , NULL );  // this unsets the clipping rectangle
   if ( strlen( ItemDescText ) > 1 )
     {
-      // SDL_FillRect( Screen , &Banner_Text_Rect , BANNER_TEXT_REC_BACKGROUNDCOLOR );
+      // our_SDL_fill_rect_wrapper( Screen , &Banner_Text_Rect , BANNER_TEXT_REC_BACKGROUNDCOLOR );
     }
 
   if ( strcmp ( ItemDescText , REQUIREMENTS_NOT_MET_TEXT ) == 0 )

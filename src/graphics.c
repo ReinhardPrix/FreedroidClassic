@@ -41,6 +41,9 @@
 #include "colodefs.h"
 #include "SDL_rotozoom.h"
 
+#include <GL/gl.h>
+#include <GL/glu.h>
+
 /* XPM */
 static const char *arrow[] = {
   /* width height num_colors chars_per_pixel */
@@ -86,6 +89,291 @@ static const char *arrow[] = {
 };
 
 // SDL_Surface *BackupMapBlockSurfacePointer[ NUM_COLORS ][ NUM_MAP_BLOCKS ] = { { NULL , NULL } , { NULL , NULL } } ; 
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+int 
+our_SDL_flip_wrapper ( SDL_Surface *screen )
+{
+  if ( use_open_gl )
+    SDL_GL_SwapBuffers( ); 
+  else
+    return ( SDL_Flip ( Screen ) ) ;
+
+  return ( 0 );
+}; // int SDL_Flip ( SDL_Surface *screen )
+
+/* ----------------------------------------------------------------------
+ * Here comes our SDL wrapper, that will either do a normal SDL blit or,
+ * if OpenGL is present and enabled, use OpenGL to draw the scene.
+ * ---------------------------------------------------------------------- */
+int
+our_SDL_blit_surface_wrapper(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect)
+{
+  int bytes;
+  int target_x, target_y ;
+
+  if ( use_open_gl )
+    {
+
+      if ( src == NULL ) 
+	{
+	  DebugPrintf ( -1 , "\nNull source surface received. --> doing nothing." );
+	  fflush ( stdout );
+	  
+	  return ( 0 );
+	}
+
+      if ( dst == Screen )
+	{
+	  
+	  // DebugPrintf ( -1 , "\nReached our_SDL_blit_surface_wrapper." );
+	  // fflush ( stdout );
+
+	  if ( dstrect == NULL )
+	    glRasterPos2f( 1 , 479 );
+	  else
+	    {
+	      if ( dstrect -> x == 0 )
+		target_x = 1 ;
+	      else
+		target_x = dstrect -> x ;
+
+	      target_y = dstrect -> y + src -> h ;
+
+	      if ( target_y >= 480 ) target_y = 478 ; 
+
+	      glRasterPos2f( target_x , target_y ) ;
+	    }
+
+	  /*
+	  if ( src -> flags & SDL_SRCALPHA )
+	    glDrawPixels( src -> w , src -> h, GL_RGBA , GL_UNSIGNED_BYTE , src -> pixels );
+	  else
+	    glDrawPixels( src -> w , src -> h, GL_RGB , GL_UNSIGNED_BYTE , src -> pixels );
+	  */
+
+	  if ( src -> w != 0 )
+	    bytes = src -> pitch / src -> w ;
+	  else
+	    {
+	      DebugPrintf ( -1 , "\nSurface of width 0 encountered. --> doing nothing." );
+	      fflush ( stdout );
+	      return ( 0 ) ;
+	    }
+
+	  // DebugPrintf ( -1 , "\nSurface has bytes: %d. " , bytes );
+	  // fflush ( stdout );
+	  
+	  if ( srcrect != NULL )
+	    {
+
+	      /*
+	      for ( y = 0 ; y < srcrect -> h ; y ++ )
+		{
+
+		  for ( x = 0 ; x < srcrect -> w ; x ++ )
+		    {
+		      PutPixel ( Screen , x + dstrect -> x , y + dstrect -> y , GetPixel ( src , srcrect -> x + x , srcrect -> y + y ) ) ;
+		    }
+		}
+	      */
+
+	      DebugPrintf ( -1 , "\nNon-Null source rect encountered. --> doing nothing." );
+	      fflush ( stdout );
+	      return ( 0 ) ;
+	    }
+
+	  if ( bytes == 4 )
+	    {
+	      glEnable( GL_ALPHA_TEST );  
+	      glAlphaFunc ( GL_GREATER , 0.05 ) ;
+	      glDrawPixels( src -> w , src -> h, GL_BGRA , GL_UNSIGNED_BYTE , src -> pixels );
+	    }
+	  else if ( bytes == 3 )
+	    {
+	      DebugPrintf ( -1 , "\nSurface has bytes: %d. " , bytes );
+	      fflush ( stdout );
+	      glDrawPixels( src -> w , src -> h, GL_RGB , GL_UNSIGNED_BYTE , src -> pixels );
+	    }
+	  else if ( bytes == 2 )
+	    {
+	      DebugPrintf ( -1 , "\nSurface has bytes: %d. --> using GL_UNSIGNED_SHORT_5_6_5. " , bytes );
+	      fflush ( stdout );
+	      glDrawPixels( src -> w , src -> h, GL_RGB , GL_UNSIGNED_SHORT_5_6_5 , src -> pixels );
+	    }
+	  else
+	    {
+	      DebugPrintf ( -1 , "\nSurface has bytes: %d.--> doing nothing. " , bytes );
+	      fflush ( stdout );
+	    }
+
+	  return ( 0 ) ;
+	}
+
+      return SDL_BlitSurface ( src, srcrect, dst, dstrect);
+    }
+  else
+    {
+      return SDL_BlitSurface ( src, srcrect, dst, dstrect);
+    }
+
+  return 0 ;
+
+}; // void our_SDL_blit_surface_wrapper(image, NULL, Screen, NULL)
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void 
+our_SDL_update_rect_wrapper ( SDL_Surface *screen, Sint32 x, Sint32 y, Sint32 w, Sint32 h ) 
+{
+  if ( use_open_gl )
+    {
+      our_SDL_flip_wrapper ( screen ) ;
+    }
+  else
+    {
+      SDL_UpdateRect ( screen, x, y, w, h ) ;
+    }
+}; // void our_SDL_update_rect_wrapper ( SDL_Surface *screen, Sint32 x, Sint32 y, Sint32 w, Sint32 h ) 
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+int 
+our_SDL_fill_rect_wrapper (SDL_Surface *dst, SDL_Rect *dstrect, Uint32 color)
+{
+  Uint8 r , g , b , a ;
+
+  if ( use_open_gl )
+    {
+      if ( dst == Screen )
+	{
+	  SDL_GetRGBA( color, Screen -> format , &r, &g, &b, &a);
+	  glRasterPos2i ( 0 , 0 ); 
+	  glDisable ( GL_ALPHA_TEST );
+	  glColor4ub( r , g , b , a );
+	  if ( dstrect == NULL )
+	    {
+	      glBegin(GL_QUADS);
+	      glVertex2i( 0       , 480 );
+	      glVertex2i( 0       ,   0 );
+	      glVertex2i( 0 + 639 ,   0 );
+	      glVertex2i( 0 + 639 , 480 );
+	      glEnd( );
+	    }
+	  else
+	    {
+	      glBegin(GL_QUADS);
+	      glVertex2i( dstrect -> x                , dstrect -> y );
+	      glVertex2i( dstrect -> x                , dstrect -> y + dstrect -> h );
+	      glVertex2i( dstrect -> x + dstrect -> w , dstrect -> y + dstrect -> h );
+	      glVertex2i( dstrect -> x + dstrect -> w , dstrect -> y );
+	      glEnd( );
+	    }
+	  return ( 0 );
+	}
+    }
+
+  return ( SDL_FillRect ( dst, dstrect, color) ) ;
+
+}; // int our_SDL_fill_rect_wrapper (SDL_Surface *dst, SDL_Rect *dstrect, Uint32 color)
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+SDL_Surface*
+our_SDL_display_format_wrapper ( SDL_Surface *surface )
+{
+  if ( use_open_gl )
+    {
+      if ( surface == Screen ) return ( NULL );
+      return ( SDL_DisplayFormat ( surface ) ) ; 
+    }
+  else
+    {
+      return ( SDL_DisplayFormat ( surface ) ) ; 
+    }
+
+  return ( NULL );
+};
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+SDL_Surface*
+our_SDL_display_format_wrapperAlpha ( SDL_Surface *surface )
+{
+  SDL_Surface* return_surface;
+
+  if ( use_open_gl )
+    {
+      if ( surface == Screen ) return ( NULL );
+      return_surface = SDL_DisplayFormatAlpha ( surface ) ;
+      SDL_SetColorKey( return_surface , 0 , 0 ); // this should clear any color key in the dest surface
+      SDL_SetAlpha( return_surface , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+      return ( return_surface ) ;
+    }
+  else
+    {
+      return ( SDL_DisplayFormatAlpha ( surface ) ) ; 
+    }
+
+  return ( NULL );
+};
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+flip_image_horizontally ( SDL_Surface* tmp1 ) 
+{
+  int x , y ;
+  Uint32 temp;
+
+  for ( y = 0 ; y < ( tmp1 -> h ) / 2 ; y ++ )
+    {
+      for ( x = 0 ; x < (tmp1 -> w ) ; x ++ )
+	{
+	  temp = GetPixel ( tmp1 , x , y ) ;
+	  PutPixel ( tmp1 , x , y , GetPixel ( tmp1 , x , ( tmp1 -> h - y - 1 ) ) ) ;
+	  PutPixel ( tmp1 , x , ( tmp1 -> h - y - 1 ) , temp ) ;
+	}
+    }
+}; // void flip_image_horizontally ( SDL_Surface* tmp1 ) 
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+SDL_Surface* 
+our_IMG_load_wrapper( const char *file )
+{
+  SDL_Surface* tmp1;
+
+  if ( use_open_gl )
+    {
+      tmp1 = IMG_Load ( file ) ;
+
+      if ( tmp1 == NULL ) return ( NULL );
+
+      flip_image_horizontally ( tmp1 ) ;
+
+      return ( tmp1 ) ;
+    }
+  else
+    {
+      return ( IMG_Load ( file ) ) ;
+    }
+}; // SDL_Surface* our_IMG_load_wrapper( const char *file )
 
 /* ----------------------------------------------------------------------
  * This function was taken directly from the example in the SDL docu.
@@ -170,7 +458,7 @@ ERROR LOADING BACKGROUND IMAGE FILE!",
   // Next we prepare the whole background for all later operations
   //
   if ( Background == NULL )
-    Background = IMG_Load( find_file ( "backgrounds/number_selector.png" , GRAPHICS_DIR, FALSE ) );
+    Background = our_IMG_load_wrapper( find_file ( "backgrounds/number_selector.png" , GRAPHICS_DIR, FALSE ) );
   if ( Background == NULL )
     {
       fprintf( stderr, "\n\nSDL_GetError: %s \n" , SDL_GetError() );
@@ -183,7 +471,7 @@ ERROR LOADING BACKGROUND IMAGE FILE!",
   // Next we prepare the selection knob for all later operations
   //
   if ( SelectionKnob == NULL )
-    SelectionKnob = IMG_Load( find_file ( "mouse_buttons/number_selector_selection_knob.png" , GRAPHICS_DIR, FALSE ) );
+    SelectionKnob = our_IMG_load_wrapper( find_file ( "mouse_buttons/number_selector_selection_knob.png" , GRAPHICS_DIR, FALSE ) );
   if ( SelectionKnob == NULL )
     {
       fprintf( stderr, "\n\nSDL_GetError: %s \n" , SDL_GetError() );
@@ -207,14 +495,14 @@ ERROR LOADING SELECTION KNOB IMAGE FILE!",
       //
       // then: show it.
       //
-      SDL_BlitSurface ( Background , NULL , Screen , NULL );
+      our_SDL_blit_surface_wrapper ( Background , NULL , Screen , NULL );
       ShowGenericButtonFromList ( NUMBER_SELECTOR_OK_BUTTON );
       knob_target_rect . x = knob_start_x + knob_offset_x - knob_target_rect . w / 2 ;
       knob_target_rect . y = 260 - knob_target_rect . h / 2 ;
-      SDL_BlitSurface ( SelectionKnob , NULL , Screen , &knob_target_rect );
+      our_SDL_blit_surface_wrapper ( SelectionKnob , NULL , Screen , &knob_target_rect );
       sprintf ( number_text , "%d" , knob_offset_x * ( upper_range - lower_range ) / ( knob_end_x - knob_start_x ) )  ;
       PutStringFont( Screen , FPS_Display_BFont , 320 , 190 , number_text );
-      SDL_Flip ( Screen );
+      our_SDL_flip_wrapper ( Screen );
 
       if ( ( SpacePressed() && axis_is_active ) && ( ! left_mouse_pressed_previous_frame ) ) 
 	{
@@ -454,7 +742,7 @@ Slow_CreateAlphaCombinedSurface ( SDL_Surface* FirstSurface , SDL_Surface* Secon
   // Now we create a new surface, best in display format with alpha channel
   // ready to be blitted.
   //
-  ThirdSurface = SDL_DisplayFormatAlpha ( FirstSurface );
+  ThirdSurface = our_SDL_display_format_wrapperAlpha ( FirstSurface );
 
   //--------------------
   // Now we start to process through the whole surface and examine each
@@ -532,7 +820,7 @@ CreateColorFilteredSurface ( SDL_Surface* FirstSurface , int FilterType )
   // Now we create a new surface, best in display format with alpha channel
   // ready to be blitted.
   //
-  ThirdSurface = SDL_DisplayFormatAlpha ( FirstSurface );
+  ThirdSurface = our_SDL_display_format_wrapperAlpha ( FirstSurface );
 
   //--------------------
   // Now we start to process through the whole surface and examine each
@@ -627,7 +915,7 @@ CreateAlphaCombinedSurface ( SDL_Surface* FirstSurface , SDL_Surface* SecondSurf
   // Now we create a new surface, best in display format with alpha channel
   // ready to be blitted.
   //
-  ThirdSurface = SDL_DisplayFormatAlpha ( FirstSurface );
+  ThirdSurface = our_SDL_display_format_wrapperAlpha ( FirstSurface );
   bpp = ThirdSurface->format->BytesPerPixel;
 
   //--------------------
@@ -944,14 +1232,14 @@ DisplayImage( char *datafile )
 {
   SDL_Surface *image;
   
-  image = IMG_Load(datafile);
+  image = our_IMG_load_wrapper(datafile);
   if ( image == NULL ) {
     fprintf(stderr, "Couldn't load image %s: %s\n",
 	    datafile, IMG_GetError());
     Terminate(ERR);
   }
 
-  SDL_BlitSurface(image, NULL, Screen, NULL);
+  our_SDL_blit_surface_wrapper(image, NULL, Screen, NULL);
 
   SDL_FreeSurface(image);
 
@@ -1077,7 +1365,7 @@ get_standard_iso_floor_tile_size ( void )
 {
   SDL_Surface *standard_floor_tile;
 
-  standard_floor_tile = IMG_Load( find_file ( "floor_tiles/iso_miscellaneous_floor_0000.png" , GRAPHICS_DIR, FALSE ) );
+  standard_floor_tile = our_IMG_load_wrapper( find_file ( "floor_tiles/iso_miscellaneous_floor_0000.png" , GRAPHICS_DIR, FALSE ) );
   if ( standard_floor_tile == NULL )
     {
       fprintf( stderr, "\n\nSDL_GetError: %s \n" , SDL_GetError() );
@@ -1140,11 +1428,11 @@ InitPictures (void)
       DebugPrintf (1, "\nCould not create static_blocks surface: %s\n", SDL_GetError());
       return (FALSE);
     }
-  static_blocks = SDL_DisplayFormat(tmp);  /* the second surface is copied !*/
+  static_blocks = our_SDL_display_format_wrapper(tmp);  /* the second surface is copied !*/
   SDL_FreeSurface( tmp );
   if (static_blocks == NULL) 
     {
-      DebugPrintf (1, "\nSDL_DisplayFormat() has failed: %s\n", SDL_GetError());
+      DebugPrintf (1, "\nour_SDL_display_format_wrapper() has failed: %s\n", SDL_GetError());
       return (FALSE);
     }
   if (SDL_SetColorKey(static_blocks, SDL_SRCCOLORKEY, transp_key) == -1 )
@@ -1252,6 +1540,72 @@ A font file for the BFont library was not found.",
 }; // InitOutBFonts ( void )
 
 /* -----------------------------------------------------------------
+ * This funciton initialises the timer subsystem.
+ * -----------------------------------------------------------------*/
+void
+InitTimer (void)
+{
+  //--------------------
+  // Now SDL_TIMER is initialized here:
+  //
+  if ( SDL_InitSubSystem ( SDL_INIT_TIMER ) == -1 ) 
+    {
+      fprintf(stderr, "Couldn't initialize SDL: %s\n",SDL_GetError());
+      Terminate(ERR);
+    } 
+  else
+    DebugPrintf(1, "\nSDL Timer initialisation successful.\n");
+
+}; // void InitTimer (void)
+
+/* ----------------------------------------------------------------------
+ * Initialize the OpenGL interface.
+ * ---------------------------------------------------------------------- */
+int 
+initGL( GLvoid )
+{
+  //--------------------
+  // Set up the screne, viewport matrix, coordinate system and all that...
+  //
+  glViewport(0,0,640,480);
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity();
+  glOrtho(0.0f,640.0f,480.0f,0.0f,-1.0f,1.0f);
+  glMatrixMode(GL_MODELVIEW);
+
+  //--------------------
+  // We turn off a lot of stuff for faster blitting.  All this can
+  // be turned on again later anyway as needed.  
+  //
+  // (Well, yes, the above is true, but function call overhead might
+  //  be enourmous!  So don't change too much inside of quick loops
+  //  if it can be avoided.)
+  //
+  glDisable (GL_BLEND);
+  glDisable (GL_DITHER);
+  glDisable (GL_FOG);
+  glDisable (GL_LIGHTING);
+  glDisable (GL_TEXTURE_1D);
+  glDisable (GL_TEXTURE_2D);
+  glDisable (GL_TEXTURE_3D);
+  glShadeModel (GL_FLAT);
+
+  //--------------------
+  // We disable depth test for all purposes.
+  //
+  glDisable(GL_DEPTH_TEST);
+  
+  //--------------------
+  // The default output method will be alpha test with threshold 0.5.
+  //
+  glEnable( GL_ALPHA_TEST );  
+  glAlphaFunc ( GL_GREATER , 0.5 ) ;
+  
+  return( TRUE );
+
+}; // int initGL( GLvoid )
+
+/* -----------------------------------------------------------------
  * This funciton initialises the video display and opens up a 
  * window for graphics display.
  * -----------------------------------------------------------------*/
@@ -1261,81 +1615,114 @@ InitVideo (void)
   const SDL_VideoInfo *vid_info;
   //  SDL_Rect **vid_modes;
   char vid_driver[81];
-  Uint32 flags = 0;  // flags for SDL video mode 
+  Uint32 video_flags = 0 ;  // flags for SDL video mode 
+
   char *fpath;
 
-  /* Initialize the SDL library */
-  // if ( SDL_Init (SDL_INIT_VIDEO | SDL_INIT_TIMER) == -1 ) 
-
+  //--------------------
+  // Initialize the SDL library 
+  //
   if ( SDL_Init (SDL_INIT_VIDEO) == -1 ) 
     {
       fprintf(stderr, "Couldn't initialize SDL: %s\n",SDL_GetError());
       Terminate(ERR);
-    } else
-      DebugPrintf(1, "\nSDL Video initialisation successful.\n");
-
-  // Now SDL_TIMER is initialized here:
-
-  if ( SDL_InitSubSystem ( SDL_INIT_TIMER ) == -1 ) 
-    {
-      fprintf(stderr, "Couldn't initialize SDL: %s\n",SDL_GetError());
-      Terminate(ERR);
-    } else
-      DebugPrintf(1, "\nSDL Timer initialisation successful.\n");
+    } 
+  else
+    DebugPrintf( 1, "\nSDL Video initialisation successful.\n");
 
   /* clean up on exit */
   atexit (SDL_Quit);
 
-  InitOurBFonts ( );
-
-
   vid_info = SDL_GetVideoInfo (); /* just curious */
+  if ( !vid_info )
+    {
+      fprintf(stderr, "Could not obtain video info via SDL: %s\n",SDL_GetError());
+      Terminate(ERR);
+    }
+
   SDL_VideoDriverName (vid_driver, 80);
 
-  //  vid_modes = SDL_ListModes (NULL, SDL_SWSURFACE);
+  vid_bpp = 16; /* start with the simplest */
+  
+  if ( use_open_gl )
+    {
+      /* the flags to pass to SDL_SetVideoMode */
+      video_flags  = SDL_OPENGL;          /* Enable OpenGL in SDL */
+      video_flags |= SDL_GL_DOUBLEBUFFER; /* Enable double buffering */
+      video_flags |= SDL_HWPALETTE;       /* Store the palette in hardware */
+      video_flags |= SDL_RESIZABLE;       /* Enable window resizing */
+      if (fullscreen_on) video_flags |= SDL_FULLSCREEN;
+      
+      /* This checks to see if surfaces can be stored in memory */
+      if ( vid_info->hw_available )
+	video_flags |= SDL_HWSURFACE;
+      else
+	video_flags |= SDL_SWSURFACE;
+      
+      /* This checks if hardware blits can be done */
+      if ( vid_info->blit_hw )
+	video_flags |= SDL_HWACCEL;
+      
+      /* Sets up OpenGL double buffering */
+      SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
+      
+      /* get a SDL surface */
+      Screen = SDL_SetVideoMode( SCREEN_WIDTH, SCREEN_HEIGHT, vid_bpp , video_flags );
+      /* Verify there is a surface */
+      if ( !Screen )
+	{
+	  fprintf( stderr,  "Video mode set failed: %s\n", SDL_GetError( ) );
+	  Terminate ( ERR ) ;
+	}
+      
+      fprintf( stderr , "\nUse of OpenGL for graphics output has been requested.\nYour GL_VENDOR string seems to be: %s\n", glGetString( GL_VENDOR ) );
 
-  if (vid_info->wm_available)  /* if there's a window-manager */
+      /* initialize OpenGL */
+      initGL( );
+      
+      /* resize the initial window */
+      // resizeWindow( SCREEN_WIDTH, SCREEN_HEIGHT );
+
+      /* Enable Texture Mapping ( NEW ) */
+      // glEnable( GL_TEXTURE_2D );
+
+    }
+  else
+    {
+      // RP: let's try without those...
+      // video_flags = SDL_SWSURFACE | SDL_HWPALETTE ;
+      if (fullscreen_on) video_flags |= SDL_FULLSCREEN;
+      
+      /* 
+       * currently only the simple 320x200 mode is supported for 
+       * simplicity, as all our graphics are in this format
+       * once this is up and running, we'll provide others modes
+       * as well.
+       */
+      if( !(Screen = SDL_SetVideoMode ( SCREEN_WIDTH, SCREEN_HEIGHT , 0 , video_flags )) )
+	{
+	  fprintf(stderr, "Couldn't set (2*) 320x240*SCALE_FACTOR video mode: %s\n",
+		  SDL_GetError()); 
+	  Terminate ( ERR ) ; 
+	}
+    }
+
+  //--------------------
+  // End of possibly open-gl dependant initialisation stuff...
+  //
+  if ( vid_info->wm_available )  /* if there's a window-manager */
     {
       SDL_WM_SetCaption ("Freedroid", "");
       fpath = find_file (ICON_FILE, GRAPHICS_DIR, FALSE);
-      SDL_WM_SetIcon( IMG_Load (fpath), NULL);
+      SDL_WM_SetIcon( our_IMG_load_wrapper (fpath), NULL);
     }
 
-
-  /* 
-   * currently only the simple 320x200 mode is supported for 
-   * simplicity, as all our graphics are in this format
-   * once this is up and running, we'll provide others modes
-   * as well.
-   */
-
-  vid_bpp = 16; 
-
-  
-  // RP: let's try without those
-  //  flags = SDL_SWSURFACE | SDL_HWPALETTE ;
-
-  if (fullscreen_on) flags |= SDL_FULLSCREEN;
-
-
-  #define SCALE_FACTOR 2
-
-  if( !(Screen = SDL_SetVideoMode ( SCREEN_WIDTH, SCREEN_HEIGHT , 0 , flags)) )
-    {
-      fprintf(stderr, "Couldn't set (2*) 320x240*SCALE_FACTOR video mode: %s\n",
-	      SDL_GetError()); 
-      exit(-1);
-    }
+  InitOurBFonts ( );
 
   DisplayImage ( find_file( FREEDROID_LOADING_PICTURE_NAME , GRAPHICS_DIR, FALSE) );
-  SDL_Flip ( Screen ) ;
+  our_SDL_flip_wrapper ( Screen ) ;
 
   ShowStartupPercentage ( 10 ) ; 
-
-  if (!mouse_control)  /* hide mouse pointer if not needed */
-    SDL_ShowCursor (SDL_DISABLE);
-
-  vid_info = SDL_GetVideoInfo (); /* info about current video mode */
 
   // RGB of transparent color in our pics 
   transp_rgb.rot   = 199; 
@@ -1347,6 +1734,9 @@ InitVideo (void)
 
   SDL_SetGamma( 1 , 1 , 1 );
   GameConfig.Current_Gamma_Correction=1;
+
+  if ( ! mouse_control )  // hide mouse pointer if not needed 
+    SDL_ShowCursor (SDL_DISABLE);
 
 }; // InitVideo () 
 
@@ -1367,7 +1757,7 @@ ClearGraphMem ( void )
   SDL_SetClipRect( Screen, NULL );
 
   // Now we fill the screen with black color...
-  SDL_FillRect( Screen , NULL , 0 );
+  our_SDL_fill_rect_wrapper( Screen , NULL , 0 );
 }; // void ClearGraphMem( void )
 
 /* ----------------------------------------------------------------------
@@ -1375,7 +1765,7 @@ ClearGraphMem ( void )
  *
  * ---------------------------------------------------------------------- */
 void
-HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area )
+Old_SDL_HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area )
 {
   int x , y ;
   unsigned char red, green, blue;
@@ -1436,7 +1826,24 @@ HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area )
 
   SDL_UnlockSurface ( Surface );
 
-}; // void HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area )
+}; // void Old_SDL_HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area )
 
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area )
+{
+  if ( use_open_gl )
+    {
+
+    }
+  else
+    {
+      Old_SDL_HighlightRectangle ( Surface , Area );
+    }
+}; // void HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area )
 
 #undef _graphics_c

@@ -70,7 +70,7 @@ ShowSaveLoadGameProgressMeter( int Percentage , int IsSavegame )
     ShowGenericButtonFromList ( SAVE_GAME_BANNER );
   else
     ShowGenericButtonFromList ( LOAD_GAME_BANNER );
-  SDL_FillRect ( Screen , &TargetRect , SDL_MapRGB ( Screen->format , 0x0FF , 0x0FF , 0x0FF ) ) ;
+  our_SDL_fill_rect_wrapper ( Screen , &TargetRect , SDL_MapRGB ( Screen->format , 0x0FF , 0x0FF , 0x0FF ) ) ;
   UpdateScreenOverButtonFromList ( SAVE_GAME_BANNER );
 
 }; // void ShowSaveGameProgressMeter( int Percentage ) 
@@ -107,14 +107,14 @@ I need to know that for saving. Abort.\n");
   //
   sprintf( filename , "%s/%s%s", Saved_Games_Dir, CoreFilename , SAVE_GAME_THUMBNAIL_EXT );
 
-  NewThumbnail = IMG_Load ( filename );
+  NewThumbnail = our_IMG_load_wrapper ( filename );
   if ( NewThumbnail == NULL ) return;
 
   // TargetRectangle.x = SCREEN_WIDTH - NewThumbnail ->w ;
   TargetRectangle.x = 10 ;
   TargetRectangle.y = SCREEN_HEIGHT - NewThumbnail ->h - 10 ;
   
-  SDL_BlitSurface ( NewThumbnail , NULL , Screen , &TargetRectangle );
+  our_SDL_blit_surface_wrapper ( NewThumbnail , NULL , Screen , &TargetRectangle );
 
   SDL_FreeSurface( NewThumbnail );
 

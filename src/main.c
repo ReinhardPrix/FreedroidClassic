@@ -95,6 +95,7 @@ main (int argc, char *const argv[])
    *  check its success  (dunno if that's good design?)
    */
   sound_on = TRUE;	 /* default value, can be overridden by command-line */
+  use_open_gl = FALSE;	 /* default value, can be overridden by command-line */
   debug_level = -1;       /* -1: shut up all debug ... 0=no debug 1=first debug level (at the moment=all) */
   fullscreen_on = TRUE; /* use X11-window or full screen */
   joy_sensitivity = 1;
@@ -137,8 +138,7 @@ main (int argc, char *const argv[])
 	  if ( ! GameOver ) 
 	    {
 	      AssembleCombatPicture ( SHOW_ITEMS ); 
-	      DisplayBanner (NULL, NULL,  0 ); // this is a pure client issue
-	      SDL_Flip ( Screen );
+	      our_SDL_flip_wrapper ( Screen );
 	    }
 
 	  //--------------------

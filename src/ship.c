@@ -129,7 +129,7 @@ EnterConsole (void)
   if ( console_pic == NULL )
     {
       fpath = find_file ( NE_CONSOLE_PIC_FILE , GRAPHICS_DIR , FALSE );
-      console_pic = IMG_Load ( fpath ); 
+      console_pic = our_IMG_load_wrapper ( fpath ); 
     }
 
   //--------------------
@@ -149,7 +149,7 @@ EnterConsole (void)
   while (!finished)
     {
       PaintConsoleMenu (menu_pos);
-      SDL_Flip (Screen);
+      our_SDL_flip_wrapper (Screen);
       usleep(2);
 
       if ( DownPressed() || MouseWheelDownPressed() ) 
@@ -213,7 +213,7 @@ EnterConsole (void)
   Me[0].status = MOBILE;
   ClearGraphMem ( );
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
-  SDL_Flip( Screen );
+  our_SDL_flip_wrapper( Screen );
 
   while (SpacePressed ());
 
@@ -226,7 +226,7 @@ EnterConsole (void)
  *
  *  NOTE: this function does not actually _display_ anything yet,
  *        it just prepares the display, so you need
- *        to call SDL_Flip() to display the result!
+ *        to call our_SDL_flip_wrapper() to display the result!
  *
  * ----------------------------------------------------------------- */
 void
@@ -243,7 +243,7 @@ PaintConsoleMenu (int menu_pos)
   //
   if ( image == NULL )
     {
-      image = IMG_Load( find_file ( NE_CONSOLE_BG_PIC1_FILE , GRAPHICS_DIR , FALSE ) );
+      image = our_IMG_load_wrapper( find_file ( NE_CONSOLE_BG_PIC1_FILE , GRAPHICS_DIR , FALSE ) );
       if ( image == NULL ) {
 	fprintf(stderr, "Couldn't load image %s: %s\n",
 		find_file ( NE_CONSOLE_BG_PIC1_FILE , GRAPHICS_DIR , FALSE ) , IMG_GetError ( ) );
@@ -254,7 +254,7 @@ PaintConsoleMenu (int menu_pos)
   //--------------------
   // At this point we can safely display the image from memory.
   //
-  SDL_BlitSurface( image , NULL , Screen , NULL );
+  our_SDL_blit_surface_wrapper( image , NULL , Screen , NULL );
 
   strcpy (MenuText, "Unit type ");
   strcat (MenuText, Druidmap[Me[0].type].druidname);
@@ -277,7 +277,7 @@ PaintConsoleMenu (int menu_pos)
   SourceRectangle.w=CONS_MENU_LENGTH;
   SourceRectangle.h=CONS_MENU_HEIGHT;
   Copy_Rect (Cons_Menu_Rect, TargetRectangle);
-  SDL_BlitSurface( console_pic , &SourceRectangle , Screen , &TargetRectangle );
+  our_SDL_blit_surface_wrapper( console_pic , &SourceRectangle , Screen , &TargetRectangle );
 
 }; // void PaintConsoleMenu ( int MenuPos )
 
@@ -340,7 +340,7 @@ GreatDruidShow (void)
       // PutPasswordButtonsAndPassword ( PasswordIndex );
       // PutSecurityButtonsAndClearance ( ClearanceIndex );
 
-      SDL_Flip( Screen );
+      our_SDL_flip_wrapper( Screen );
 
       if (SpacePressed() || EscapePressed() || axis_is_active )
 	{
@@ -476,7 +476,7 @@ GreatItemShow ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVENTOR
       // PutPasswordButtonsAndPassword ( PasswordIndex );
       // PutSecurityButtonsAndClearance ( ClearanceIndex );
 
-      SDL_Flip( Screen );
+      our_SDL_flip_wrapper( Screen );
 
       //--------------------
       // Now we see if identification of the current item is allowed
@@ -574,7 +574,7 @@ GreatItemShow ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVENTOR
 
 /* ------------------------------------------------------------
  * display infopage page of droidtype
- * does update the screen, no SDL_Flip() necesary !
+ * does update the screen, no our_SDL_flip_wrapper() necesary !
  * ------------------------------------------------------------ */
 void 
 ShowDroidInfo (int droidtype, int Displacement , char ShowArrows )
@@ -695,7 +695,7 @@ ShowItemPicture (int PosX, int PosY, int Number )
 	  //
 	  sprintf ( ConstructedFileName , "items/%s/portrait_%04d.jpg" , ItemMap[ Number ] . item_rotation_series_prefix , i+1 );
 	  fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
-	  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+	  Whole_Image = our_IMG_load_wrapper( fpath ); // This is a surface with alpha channel, since the picture is one of this type
 	  
 	  //--------------------
 	  // If that didn't work, then it's time to try the same directory with 'png' ending...
@@ -706,7 +706,7 @@ ShowItemPicture (int PosX, int PosY, int Number )
 	      DebugPrintf ( 1 , "\nNo luck trying to load .jpg item image series from the 'bastian' dir... trying png..." );
 	      sprintf ( ConstructedFileName , "items/%s/portrait_%04d.png" , ItemMap[ Number ] . item_rotation_series_prefix , i+1 );
 	      fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
-	      Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+	      Whole_Image = our_IMG_load_wrapper( fpath ); // This is a surface with alpha channel, since the picture is one of this type
 	    }
 	  
 	  //--------------------
@@ -718,7 +718,7 @@ ShowItemPicture (int PosX, int PosY, int Number )
 	      DebugPrintf ( 1 , "\nNo luck trying to load .png item image series from the 'bastian' dir... trying 'classic' dir..." );
 	      sprintf ( ConstructedFileName , "rotation_models/items/%s_%04d.jpg" , ItemMap[ Number ] . item_rotation_series_prefix , i+1 );
 	      fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
-	      Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+	      Whole_Image = our_IMG_load_wrapper( fpath ); // This is a surface with alpha channel, since the picture is one of this type
 	    }
 	  
 	  if ( Whole_Image == NULL )
@@ -726,7 +726,7 @@ ShowItemPicture (int PosX, int PosY, int Number )
 	      DebugPrintf ( 1 , "\nNo luck trying to load .jpg item image series from 'classic' dir... trying png..." );
 	      sprintf ( ConstructedFileName , "rotation_models/items/%s_%04d.png" , ItemMap[ Number ] . item_rotation_series_prefix , i+1 );
 	      fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
-	      Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+	      Whole_Image = our_IMG_load_wrapper( fpath ); // This is a surface with alpha channel, since the picture is one of this type
 	    }
 	  // }
 	  
@@ -774,7 +774,7 @@ trying to make the ultra-fine item rotation series.  Strange.",
 	    }
 
 	  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
-	  ItemRotationSurfaces[i] = SDL_DisplayFormatAlpha( Whole_Image ); // now we have an alpha-surf of right size
+	  ItemRotationSurfaces[i] = our_SDL_display_format_wrapperAlpha( Whole_Image ); // now we have an alpha-surf of right size
 	  SDL_SetColorKey( ItemRotationSurfaces[i] , 0 , 0 ); // this should clear any color key in the dest surface
 	  SDL_FreeSurface( Whole_Image );
 
@@ -793,7 +793,7 @@ trying to make the ultra-fine item rotation series.  Strange.",
 
   SDL_SetClipRect( Screen , NULL );
   Set_Rect ( target, PosX, PosY, SCREEN_WIDTH, SCREEN_HEIGHT);
-  SDL_BlitSurface( tmp , NULL, Screen , &target);
+  our_SDL_blit_surface_wrapper( tmp , NULL, Screen , &target);
 
   DebugPrintf (2, "\nvoid ShowItemPicture(...): Usual end of function reached.");
 
@@ -860,7 +860,7 @@ ShowDroidPicture (int PosX, int PosY, int Number )
 
 	  fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
 	  
-	  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+	  Whole_Image = our_IMG_load_wrapper( fpath ); // This is a surface with alpha channel, since the picture is one of this type
 	  if ( Whole_Image == NULL )
 	    {
 	      fprintf( stderr, "\n\nfpath: %s. \n" , fpath );
@@ -872,7 +872,7 @@ This error indicates some installation problem with freedroid.",
 	  
 	  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
 	  
-	  DroidRotationSurfaces[i] = SDL_DisplayFormatAlpha( Whole_Image ); // now we have an alpha-surf of right size
+	  DroidRotationSurfaces[i] = our_SDL_display_format_wrapperAlpha( Whole_Image ); // now we have an alpha-surf of right size
 	  SDL_SetColorKey( DroidRotationSurfaces[i] , 0 , 0 ); // this should clear any color key in the dest surface
 	  
 	  SDL_FreeSurface( Whole_Image );
@@ -889,7 +889,7 @@ This error indicates some installation problem with freedroid.",
 
   SDL_SetClipRect( Screen , NULL );
   Set_Rect ( target, PosX, PosY, SCREEN_WIDTH, SCREEN_HEIGHT);
-  SDL_BlitSurface( tmp , NULL, Screen , &target);
+  our_SDL_blit_surface_wrapper( tmp , NULL, Screen , &target);
 
   DebugPrintf ( 2 , "\nvoid ShowDroidPicture(...): Usual end of function reached.");
 
@@ -898,7 +898,7 @@ This error indicates some installation problem with freedroid.",
 
 /* ------------------------------------------------------------
  * display infopage page of droidtype
- * does update the screen, no SDL_Flip() necesary !
+ * does update the screen, no our_SDL_flip_wrapper() necesary !
  * ------------------------------------------------------------ */
 void 
 ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , char* BackgroundFileName )
@@ -933,7 +933,7 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , char* Backg
       //
       BackgroundFileName = find_file ( BackgroundFileName , GRAPHICS_DIR , FALSE ) ;
 
-      tmp_surface = IMG_Load( BackgroundFileName );
+      tmp_surface = our_IMG_load_wrapper( BackgroundFileName );
       if ( tmp_surface == NULL ) 
 	{
 	  fprintf(stderr, "Couldn't load image %s: %s\n",
@@ -941,13 +941,13 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , char* Backg
 	  Terminate(ERR);
 	}
 
-      BackgroundSurfaceBackup = SDL_DisplayFormat ( tmp_surface ) ;
+      BackgroundSurfaceBackup = our_SDL_display_format_wrapper ( tmp_surface ) ;
       
       SDL_FreeSurface ( tmp_surface );
 
     }
 
-  SDL_BlitSurface( BackgroundSurfaceBackup , NULL, Screen, NULL);
+  our_SDL_blit_surface_wrapper( BackgroundSurfaceBackup , NULL, Screen, NULL);
 
   // DisplayImage ( find_file( BackgroundFileName , GRAPHICS_DIR, FALSE) );
   
@@ -1650,7 +1650,7 @@ ShowDeckMap (Level deck)
 
       PutPasswordButtonsAndPassword ( PasswordIndex ) ;
 
-      SDL_Flip (Screen);
+      our_SDL_flip_wrapper (Screen);
 
       LeftMouseWasPressed = axis_is_active;
 
@@ -1672,7 +1672,7 @@ ClearUserFenster (void)
   
   Copy_Rect (User_Rect, tmp)
 
-  SDL_FillRect( Screen , &tmp, 0 );
+  our_SDL_fill_rect_wrapper( Screen , &tmp, 0 );
 
 }; // void ClearUserFenster( void )
 

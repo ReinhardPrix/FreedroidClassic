@@ -56,17 +56,17 @@ ShowStartupPercentage ( int Percentage )
   Bar_Rect . y = 200 ;
   Bar_Rect . w = 2 * Percentage ;
   Bar_Rect . h = 30 ;
-  SDL_FillRect ( Screen , & Bar_Rect , FillColor ) ;
+  our_SDL_fill_rect_wrapper ( Screen , & Bar_Rect , FillColor ) ;
 
   Bar_Rect . x = 200 + 2 * Percentage ;
   Bar_Rect . y = 200 ;
   Bar_Rect . w = 200 - 2 * Percentage ;
   Bar_Rect . h = 30 ;
-  SDL_FillRect ( Screen , & Bar_Rect , 0 ) ;
+  our_SDL_fill_rect_wrapper ( Screen , & Bar_Rect , 0 ) ;
 
   PrintString ( Screen , 200 + 80 , 200 + 4 , "%d%%", Percentage ) ;
 
-  SDL_UpdateRect ( Screen , 200 , 200 , 200 , 30  ) ;
+  our_SDL_update_rect_wrapper ( Screen , 200 , 200 , 200 , 30  ) ;
 
 }; // void ShowStartupPercentage ( int Percentage )
 
@@ -132,7 +132,7 @@ PlayATitleFile ( char* Filename )
 
   ClearGraphMem ();
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE ); 
-  SDL_Flip( Screen );
+  our_SDL_flip_wrapper( Screen );
   
 }; // void PlayATitleFile ( char* Filename )
 
@@ -1025,21 +1025,23 @@ ParseCommandLine (int argc, char *const argv[])
   int timeout_time;		/* timeout to restore text-mode */
 
   static struct option long_options[] = {
-    {"version", 0, 0, 'v'},
-    {"help", 	0, 0, 'h'},
-    {"nosound", 0, 0, 'q'},
-    {"sound", 	0, 0, 's'},
-    {"timeout", 1, 0, 't'},
-    {"debug", 	2, 0, 'd'},
-    {"window",  0, 0, 'w'},
-    {"fullscreen",0,0,'f'},
-    {"sensitivity",1,0,'j'},
-    { 0, 	0, 0,  0}
+    {"version",     0, 0,  'v'},
+    {"help", 	    0, 0,  'h'},
+    {"open_gl",     0, 0,  'o'},
+    {"no_open_gl",  0, 0,  'n'},
+    {"nosound",     0, 0,  'q'},
+    {"sound", 	    0, 0,  's'},
+    {"timeout",     1, 0,  't'},
+    {"debug", 	    2, 0,  'd'},
+    {"window",      0, 0,  'w'},
+    {"fullscreen",  0, 0,  'f'},
+    {"sensitivity", 1, 0,  'j'},
+    { 0, 	    0, 0,    0}
   };
 
   while (1)
     {
-      c = getopt_long (argc, argv, "vqst:h?d::wfj:", long_options, NULL);
+      c = getopt_long (argc, argv, "vonqst:h?d::wfj:", long_options, NULL);
       if (c == -1)
 	break;
 
@@ -1057,6 +1059,14 @@ ParseCommandLine (int argc, char *const argv[])
 	case '?':
 	  printf (usage_string);
 	  exit (0);
+	  break;
+
+	case 'o':
+	  use_open_gl = TRUE;
+	  break;
+
+	case 'n':
+	  use_open_gl = FALSE;
 	  break;
 
 	case 'q':
@@ -1789,6 +1799,8 @@ InitFreedroid ( void )
   LoadGameConfig ();
 
   Copy_Rect (Full_User_Rect, User_Rect);
+
+  InitTimer ();
 
   InitVideo ();
 

@@ -127,11 +127,12 @@ Load_Item_Surfaces( void )
       tmp_surf = SDL_CreateRGBSurface( 0 , Source . w , Source . h , vid_bpp , 0 , 0 , 0 , 0 );
       SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
 
-      ItemImageList [ j ] . Surface = SDL_DisplayFormatAlpha ( tmp_surf ); // now we have an alpha-surf of right size
+      ItemImageList [ j ] . Surface = our_SDL_display_format_wrapperAlpha ( tmp_surf ); // now we have an alpha-surf of right size
       SDL_SetColorKey( ItemImageList[ j ].Surface , 0 , 0 ); // this should clear any color key in the dest surface
       // Now we can copy the image Information
-      SDL_BlitSurface ( Whole_Image , &Source , ItemImageList[ j ].Surface , &Target );
+      our_SDL_blit_surface_wrapper ( Whole_Image , &Source , ItemImageList[ j ].Surface , &Target );
       SDL_SetAlpha( ItemImageList[ j ].Surface , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+      flip_image_horizontally ( ItemImageList[ j ].Surface );
       SDL_FreeSurface( tmp_surf );
 
       //--------------------
@@ -139,7 +140,6 @@ Load_Item_Surfaces( void )
       // will be loaded later as soon as there is some demand...
       //
       ItemImageList [ j ] . ingame_iso_image . surface = NULL ;
-
     }
 
   SDL_FreeSurface( Whole_Image );
@@ -177,7 +177,7 @@ try_to_load_ingame_item_surface ( int item_type )
   //
   sprintf ( ConstructedFileName , "items/%s/ingame.png" , ItemMap[ item_type ] . item_rotation_series_prefix );
   fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
-  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+  Whole_Image = our_IMG_load_wrapper( fpath ); // This is a surface with alpha channel, since the picture is one of this type
 	  
   //--------------------
   // If that didn't work, then it's time to try out the 'classic' rotation models directory.
@@ -210,7 +210,7 @@ item surface will be used as a substitute for now.",
       /*
       SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
       ItemImageList [ ItemMap [ item_type ] . picture_number ] . ingame_surface = 
-	SDL_DisplayFormatAlpha( Whole_Image ); // now we have an alpha-surf of right size
+	our_SDL_display_format_wrapperAlpha( Whole_Image ); // now we have an alpha-surf of right size
       SDL_SetColorKey( ItemImageList [ ItemMap [ item_type ] . picture_number ] . ingame_surface , 0 , 0 ); // this should clear any color key in the dest surface
       */
       get_iso_image_from_file_and_path ( fpath , & ( ItemImageList [ ItemMap [ item_type ] . picture_number ] . ingame_iso_image ) );
@@ -242,26 +242,28 @@ Load_Mouse_Move_Cursor_Surfaces( void )
 
   Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
   SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
+  // SDL_SetColorKey( Whole_Image , 0 , 0 ); // this should clear any color key in the source surface
 
-  tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width , Block_Height , vid_bpp , 0 , 0 , 0 , 0 );
-  SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
+  // tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width , Block_Height , 32 , 0x0FF000000 , 0x0FF0000 , 0x0FF00 , 0x0FF );
+  tmp_surf = SDL_CreateRGBSurface( 0 , 64 , 64 , vid_bpp , 0 , 0 , 0 , 0 );
 
   for ( j=0 ; j < NUMBER_OF_MOUSE_CURSOR_PICTURES ; j++ )
     {
-      Source.x = j * ( Block_Height + 2 );
-      Source.y = i * ( Block_Width  + 2 );
-      Source.w = Block_Width ;
-      Source.h = Block_Height ;
+      Source.x = j * ( 64 + 2 );
+      Source.y = i * ( 64 + 2 );
+      Source.w = 64 ;
+      Source.h = 64 ;
       Target.x = 0;
       Target.y = 0;
       Target.w = Source.w;
       Target.h = Source.h;
 
-      MouseCursorImageList[ j ] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
+      MouseCursorImageList[ j ] = our_SDL_display_format_wrapperAlpha( tmp_surf ); // now we have an alpha-surf of right size
       SDL_SetColorKey( MouseCursorImageList[ j ] , 0 , 0 ); // this should clear any color key in the dest surface
       // Now we can copy the image Information
-      SDL_BlitSurface ( Whole_Image , &Source , MouseCursorImageList[ j ] , &Target );
+      our_SDL_blit_surface_wrapper ( Whole_Image , &Source , MouseCursorImageList[ j ] , &Target );
       SDL_SetAlpha( MouseCursorImageList[ j ] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+
     }
 
   SDL_FreeSurface( tmp_surf );
@@ -296,7 +298,7 @@ Load_Skill_Level_Button_Surfaces( void )
   //
   fpath = find_file ( SKILL_LEVEL_BUTTON_FILE , GRAPHICS_DIR, TRUE);
 
-  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+  Whole_Image = our_IMG_load_wrapper( fpath ); // This is a surface with alpha channel, since the picture is one of this type
   SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
 
   tmp_surf = SDL_CreateRGBSurface( 0 , SKILL_LEVEL_BUTTON_WIDTH , SKILL_LEVEL_BUTTON_HEIGHT , 
@@ -314,10 +316,10 @@ Load_Skill_Level_Button_Surfaces( void )
       Target.w = Source.w;
       Target.h = Source.h;
 
-      SpellLevelButtonImageList[ j ] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
+      SpellLevelButtonImageList[ j ] = our_SDL_display_format_wrapperAlpha( tmp_surf ); // now we have an alpha-surf of right size
       SDL_SetColorKey( SpellLevelButtonImageList[ j ] , 0 , 0 ); // this should clear any color key in the dest surface
       // Now we can copy the image Information
-      SDL_BlitSurface ( Whole_Image , &Source , SpellLevelButtonImageList[ j ] , &Target );
+      our_SDL_blit_surface_wrapper ( Whole_Image , &Source , SpellLevelButtonImageList[ j ] , &Target );
       SDL_SetAlpha( SpellLevelButtonImageList[ j ] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
     }
 
@@ -426,7 +428,7 @@ LoadOneSkillSurfaceIfNotYetLoaded ( int SkillSpellNr )
   //--------------------
   // Now we can load and prepare the image and that's it
   //
-  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+  Whole_Image = our_IMG_load_wrapper( fpath ); // This is a surface with alpha channel, since the picture is one of this type
   if ( !Whole_Image )
     {
       fprintf ( stderr , "\nfpath=%s." , fpath );
@@ -436,7 +438,7 @@ This error indicates some installation problem with freedroid.",
 				 PLEASE_INFORM, IS_FATAL );
     }
 
-  SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_surface = SDL_DisplayFormatAlpha( Whole_Image ); 
+  SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_surface = our_SDL_display_format_wrapperAlpha( Whole_Image ); 
 
   SDL_SetColorKey( SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_surface , 0 , 0 ); 
   SDL_SetAlpha( SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_surface , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
@@ -461,7 +463,7 @@ blit_iso_image_to_map_position ( iso_image our_iso_image , float pos_x , float p
     translate_map_point_to_screen_pixel ( pos_x , pos_y , FALSE ) +
     our_iso_image . offset_y ;
 
-  SDL_BlitSurface( our_iso_image . surface , NULL , Screen, &target_rectangle );
+  our_SDL_blit_surface_wrapper( our_iso_image . surface , NULL , Screen, &target_rectangle );
 
 }; // void blit_iso_image_to_map_position ( iso_image our_iso_image , float pos_x , float pos_y )
 
@@ -482,7 +484,7 @@ blit_zoomed_iso_image_to_map_position ( iso_image* our_iso_image , float pos_x ,
     our_iso_image -> offset_y / FIXED_ZOOM_OUT_FACT ;
 
   make_sure_zoomed_surface_is_there ( our_iso_image );
-  SDL_BlitSurface( our_iso_image -> zoomed_out_surface , NULL , Screen, &target_rectangle );
+  our_SDL_blit_surface_wrapper( our_iso_image -> zoomed_out_surface , NULL , Screen, &target_rectangle );
 
 }; // void blit_zoomed_iso_image_to_map_position ( iso_image our_iso_image , float pos_x , float pos_y )
 
@@ -503,7 +505,7 @@ blit_iso_image_to_map_position_in_buffer ( SDL_Surface *current_buffer ,
     translate_map_point_to_screen_pixel ( pos_x , pos_y , FALSE ) +
     our_iso_image . offset_y ;
 
-  SDL_BlitSurface( our_iso_image . surface , NULL , current_buffer, &target_rectangle );
+  our_SDL_blit_surface_wrapper( our_iso_image . surface , NULL , current_buffer, &target_rectangle );
 
 }; // void blit_iso_image_to_map_position_in_buffer ( ... )
 
@@ -615,7 +617,7 @@ get_iso_image_from_file_and_path ( char* fpath , iso_image* our_iso_image )
   // from hard disk into memory and convert it to the right
   // format for fast blitting later.
   //
-  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+  Whole_Image = our_IMG_load_wrapper( fpath ); // This is a surface with alpha channel, since the picture is one of this type
   if ( Whole_Image == NULL )
     {
       fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
@@ -625,7 +627,7 @@ This error indicates some installation problem with freedroid.",
 				 PLEASE_INFORM, IS_FATAL );
     }
   SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
-  our_iso_image -> surface = SDL_DisplayFormatAlpha( Whole_Image ); // now we have an alpha-surf of right size
+  our_iso_image -> surface = our_SDL_display_format_wrapperAlpha( Whole_Image ); // now we have an alpha-surf of right size
   our_iso_image -> zoomed_out_surface = NULL ;
   SDL_SetColorKey( our_iso_image -> surface , 0 , 0 ); // this should clear any color key in the dest surface
   //--------------------
@@ -1063,7 +1065,7 @@ LoadOneTuxSurfaceIfNotYetLoaded ( int TuxModel , int TuxPhase )
   // 
   sprintf ( ConstructedFileName , "tux_motion_parts/tux_motion_%02d_%02d.png" , TuxModel , TuxPhase );
   fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
-  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+  Whole_Image = our_IMG_load_wrapper( fpath ); // This is a surface with alpha channel, since the picture is one of this type
   if ( Whole_Image == NULL )
     {
       fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
@@ -1077,7 +1079,7 @@ This error indicates some installation problem with freedroid.",
   SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE ); // this should 
   SDL_SetColorKey( Whole_Image , 0 , 0 ); // this should clear any color key in the source surface
   
-  TuxMotionArchetypes [ TuxModel ] [ TuxPhase ] = SDL_DisplayFormatAlpha ( Whole_Image ); // now we have an alpha-surf of right size
+  TuxMotionArchetypes [ TuxModel ] [ TuxPhase ] = our_SDL_display_format_wrapperAlpha ( Whole_Image ); // now we have an alpha-surf of right size
   SDL_SetColorKey ( TuxMotionArchetypes [ TuxModel ] [ TuxPhase ] , SDL_SRCCOLORKEY, 
 		    SDL_MapRGB ( TuxMotionArchetypes [ TuxModel ] [ TuxPhase ] -> format , 255 , 0 , 255 ) ); 
   SDL_SetAlpha( TuxMotionArchetypes [ TuxModel ] [ TuxPhase ] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
@@ -1131,7 +1133,7 @@ HomemadeUpdateTuxWorkingCopy ( int PlayerNum )
     {
       SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] );
       LoadOneTuxSurfaceIfNotYetLoaded ( 7 , i ) ;
-      TuxWorkingCopy [ PlayerNum ]  [ i ] [ 0 ] = SDL_DisplayFormatAlpha( TuxMotionArchetypes[7][i] );
+      TuxWorkingCopy [ PlayerNum ]  [ i ] [ 0 ] = our_SDL_display_format_wrapperAlpha( TuxMotionArchetypes[7][i] );
     }
   
   //--------------------
@@ -1317,7 +1319,7 @@ InitTuxWorkingCopy( void )
     {
       for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ )
 	{
-	  TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] = SDL_DisplayFormatAlpha( DummySurface );
+	  TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] = our_SDL_display_format_wrapperAlpha( DummySurface );
 	}
       for ( k = 1 ; k < MAX_TUX_DIRECTIONS ; k ++ )
 	{
@@ -2019,9 +2021,150 @@ load_all_obstacles ( void )
       strcat ( ConstructedFileName , obstacle_map [ i ] . filename ) ;
       fpath = find_file ( ConstructedFileName , GRAPHICS_DIR , FALSE );
       get_iso_image_from_file_and_path ( fpath , & ( obstacle_map [ i ] . image ) ) ;
+
+      if ( use_open_gl )
+	{
+	  make_texture_out_of_surface ( & ( obstacle_map [ i ] . image ) ) ;
+	}
+
     }
 
 }; // void load_all_obstacles ( void )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+SDL_Surface*
+pad_image_for_texture ( SDL_Surface* our_surface ) 
+{
+  int i ; 
+  int x = 1 ;
+  int y = 1 ;
+  SDL_Surface* padded_surf;
+  SDL_Surface* tmp_surf;
+  SDL_Rect dest;
+  Uint32 target_color;
+
+  for ( i = 1 ; i < 100 ; i ++ )
+    {
+      if ( x >= our_surface -> w )
+	break;
+      x = x * 2 ;
+    }
+
+  for ( i = 1 ; i < 100 ; i ++ )
+    {
+      if ( y >= our_surface -> h )
+	break;
+      y = y * 2 ;
+    }
+
+  if ( x < 64 )
+    {
+      DebugPrintf ( -1 , "\nWARNING!  Texture x < 64 encountered.  Raising to 64 x." ) ;
+      x = 64 ;
+    }
+  if ( y < 64 )
+    {
+      DebugPrintf ( -1 , "\nWARNING!  Texture y < 64 encountered.  Raising to 64 y." ) ;
+      y = 64 ;
+    }
+
+  DebugPrintf ( -1 , "\nPadding image to texture size: final is x=%d, y=%d." , x , y );
+  
+  padded_surf = SDL_CreateRGBSurface( 0 , x , y , 32, 0x0FF000000 , 0x000FF0000  , 0x00000FF00 , 0x000FF );
+  tmp_surf = SDL_DisplayFormatAlpha ( padded_surf ) ;
+  SDL_FreeSurface ( padded_surf );
+
+  SDL_SetAlpha( our_surface , 0 , 0 );
+  SDL_SetColorKey( our_surface , 0 , 0x0FF );
+
+  dest . x = 0;
+  dest . y = y - our_surface -> h ;
+  dest . w = our_surface -> w ;
+  dest . h = our_surface -> h ;
+
+  target_color = SDL_MapRGBA( tmp_surf -> format, 0, 0, 0, 0 );
+  for ( x = 0 ; x < tmp_surf -> w ; x ++ )
+    {
+      for ( y = 0 ; y < tmp_surf -> h ; y ++ )
+	{
+	  PutPixel ( tmp_surf , x , y , target_color ) ;
+	}
+    }
+
+  our_SDL_blit_surface_wrapper ( our_surface, NULL , tmp_surf , & dest );
+
+  return ( tmp_surf );
+
+}; // SDL_Surface* pad_image_for_texture ( SDL_Surface* our_surface ) 
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+make_texture_out_of_surface ( iso_image* our_image ) 
+{
+  SDL_Surface* right_sized_image ;
+
+  //--------------------
+  // This fill up the image with transparent material, so that 
+  // it will have powers of 2 as the dimensions, which is a requirement
+  // for textures on most OpenGL capable cards.
+  //
+  right_sized_image = pad_image_for_texture ( our_image -> surface ) ;
+  
+  our_image -> texture_width = right_sized_image -> w ;
+  our_image -> texture_height = right_sized_image -> h ;
+
+  //--------------------
+  // 
+  // The following code can be tested to check if the pagging procedure
+  // above really does what it should.
+  //
+
+  //--------------------
+  // Having prepared the raw image it's now time to create the real
+  // textures.
+  //
+  glPixelStorei( GL_UNPACK_ALIGNMENT,1 );
+
+  // Create The Texture 
+  glGenTextures( 1, & our_image -> texture );
+
+  //--------------------
+  // Typical Texture Generation Using Data From The Bitmap 
+  //
+  glBindTexture( GL_TEXTURE_2D, our_image -> texture );
+  
+  //--------------------
+  // Maybe we will want to set some storage parameters, but I'm not
+  // completely sure if they would really help us in any way...
+  //
+  // glPixelStorei(GL_UNPACK_ALIGNMENT, 0);
+  // glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
+  // glPixelStorei(GL_UNPACK_SKIP_ROWS, 0);
+  // glPixelStorei(GL_UNPACK_SKIP_PIXELS, 0);
+  
+  //--------------------
+  // We will use the 'GL_REPLACE' texturing environment or get 
+  // unusable (and slow) results.
+  //
+  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL );
+  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND );
+  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+  glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
+
+  // Generate The Texture 
+  glTexImage2D( GL_TEXTURE_2D, 0, 4, right_sized_image ->w,
+		right_sized_image -> h, 0, GL_BGRA,
+		GL_UNSIGNED_BYTE, right_sized_image -> pixels );
+
+  SDL_FreeSurface ( right_sized_image );
+
+}; // void make_texture_out_of_surface ( & ( floor_iso_images [ tile_type ] ) ) 
 
 /* ----------------------------------------------------------------------
  *
@@ -2041,6 +2184,11 @@ load_one_isometric_floor_tile ( int tile_type )
   fpath = find_file ( ConstructedFileName , GRAPHICS_DIR , FALSE );
 
   get_iso_image_from_file_and_path ( fpath , & ( floor_iso_images [ tile_type ] ) ) ;
+
+  if ( use_open_gl )
+    {
+      make_texture_out_of_surface ( & ( floor_iso_images [ tile_type ] ) ) ;
+    }
 
 }; // void load_one_isometric_floor_tile ( int tile_type ) 
 

@@ -209,7 +209,7 @@ button index given exceeds the number of buttons defined in freedroid.",
 void 
 UpdateScreenOverButtonFromList ( int ButtonIndex )
 { 
-  SDL_UpdateRect ( Screen , 
+  our_SDL_update_rect_wrapper ( Screen , 
 		   AllMousePressButtons[ ButtonIndex ] . button_rect . x ,
 		   AllMousePressButtons[ ButtonIndex ] . button_rect . y ,
 		   AllMousePressButtons[ ButtonIndex ] . button_rect . w ,
@@ -247,7 +247,7 @@ button index given exceeds the number of buttons defined in freedroid.",
   if ( AllMousePressButtons[ ButtonIndex ] . button_surface == NULL )
     {
       fpath = find_file ( AllMousePressButtons[ ButtonIndex ] . button_image_file_name , GRAPHICS_DIR, FALSE);
-      tmp = IMG_Load( fpath );
+      tmp = our_IMG_load_wrapper( fpath );
       if ( tmp == NULL )
 	{
 	  fprintf ( stderr , "\nfpath: %s.\nButton Index: %d.\n" , fpath , ButtonIndex ) ;
@@ -257,7 +257,7 @@ be successfully loaded into memory.\n\
 This is an indication of a severe bug/installation problem of freedroid.",
 				     PLEASE_INFORM, IS_FATAL );
 	}
-      AllMousePressButtons[ ButtonIndex ] . button_surface = SDL_DisplayFormatAlpha ( tmp );
+      AllMousePressButtons[ ButtonIndex ] . button_surface = our_SDL_display_format_wrapperAlpha ( tmp );
       SDL_FreeSurface ( tmp );
     }
 
@@ -285,7 +285,7 @@ This is an indication of a severe bug/installation problem of freedroid.",
   // temp value as parameter for the SDL_Blit thing..
   //
   Copy_Rect ( AllMousePressButtons[ ButtonIndex ] . button_rect , Temp_Blitting_Rect );
-  SDL_BlitSurface( AllMousePressButtons[ ButtonIndex ] . button_surface , NULL , Screen , &Temp_Blitting_Rect );
+  our_SDL_blit_surface_wrapper( AllMousePressButtons[ ButtonIndex ] . button_surface , NULL , Screen , &Temp_Blitting_Rect );
 
 }; // void ShowGenericButtonFromList ( int ButtonIndex )
 
@@ -542,7 +542,7 @@ Pause (void)
       DisplayBanner (NULL, NULL, 0);
       AssembleCombatPicture ( 0 );
       CenteredPutStringFont ( Screen , Menu_Filled_BFont , 200 , "G A M E    P A U S E D" ) ;
-      SDL_Flip ( Screen );
+      our_SDL_flip_wrapper ( Screen );
       
       if (CPressed ())
 	{

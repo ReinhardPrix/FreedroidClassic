@@ -146,7 +146,7 @@ EXTERN int classic_user_rect;   /* use the User-Rect dimensions of the original 
 EXTERN int Number_Of_Item_Types;
 EXTERN itemspec* ItemMap;
 EXTERN float timeout_from_item_drop;
-
+EXTERN int use_open_gl;
 
 EXTERN mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] ;
 EXTERN int Item_Held_In_Hand;
@@ -185,7 +185,7 @@ EXTERN int SkipAFewFrames;
 #else
 #define EXTERN extern
 #endif
-
+EXTERN iso_image light_radius_chunk[ NUMBER_OF_SHADOW_IMAGES ];
 EXTERN SDL_Rect InventoryRect;
 
 #undef EXTERN

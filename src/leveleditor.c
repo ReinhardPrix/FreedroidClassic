@@ -444,7 +444,7 @@ ItemDropFromLevelEditor( void )
 
       while ( SpacePressed() );
 
-      SDL_FillRect ( Screen , NULL , 0 );
+      our_SDL_fill_rect_wrapper ( Screen , NULL , 0 );
 
       for ( j = 0 ; j < row_len ; j ++ )
 	{
@@ -460,7 +460,7 @@ ItemDropFromLevelEditor( void )
       ShowGenericButtonFromList ( LEVEL_EDITOR_PREV_ITEM_GROUP_BUTTON );
       ShowGenericButtonFromList ( LEVEL_EDITOR_CANCEL_ITEM_DROP_BUTTON );
 
-      SDL_Flip( Screen );
+      our_SDL_flip_wrapper( Screen );
 
       while ( ! SpacePressed() ) usleep ( 2 );
 
@@ -601,8 +601,8 @@ ShowLevelEditorTopMenu( int Highlight )
   if ( LevelEditorTopBanner == NULL )
     {
       fpath = find_file ( LEVEL_EDITOR_BANNER_FILE , GRAPHICS_DIR, FALSE);
-      tmp = IMG_Load( fpath );
-      LevelEditorTopBanner = SDL_DisplayFormat ( tmp );
+      tmp = our_IMG_load_wrapper( fpath );
+      LevelEditorTopBanner = our_SDL_display_format_wrapper ( tmp );
       SDL_FreeSurface ( tmp );
 
       EditorBannerRect.x = 0;
@@ -614,7 +614,7 @@ ShowLevelEditorTopMenu( int Highlight )
   //--------------------
   // Now we blit the top status and selection banner background.  Fine.
   //
-  SDL_BlitSurface ( LevelEditorTopBanner , NULL , Screen , &EditorBannerRect );
+  our_SDL_blit_surface_wrapper ( LevelEditorTopBanner , NULL , Screen , &EditorBannerRect );
 
   //--------------------
   // Time to fill something into the top selection banner, so that the
@@ -639,7 +639,7 @@ ShowLevelEditorTopMenu( int Highlight )
 	  //--------------------
 	  // Now we can show and free the scaled verion of the floor tile again.
 	  //
-	  SDL_BlitSurface( tmp , NULL , Screen, &TargetRectangle);
+	  our_SDL_blit_surface_wrapper( tmp , NULL , Screen, &TargetRectangle);
 	  SDL_FreeSurface ( tmp );
 	  
 	  if ( selected_index == Highlight ) 
@@ -670,7 +670,7 @@ ShowLevelEditorTopMenu( int Highlight )
 	  //--------------------
 	  // Now we can show and free the scaled verion of the floor tile again.
 	  //
-	  SDL_BlitSurface( tmp , NULL , Screen, &TargetRectangle);
+	  our_SDL_blit_surface_wrapper( tmp , NULL , Screen, &TargetRectangle);
 	  SDL_FreeSurface ( tmp );
 	  
 	  if ( selected_index == Highlight ) 
@@ -1367,7 +1367,7 @@ enum
 	  close_all_chests_on_level ( Me [ 0 ] . pos . z ) ;
 	  SaveShip("Testship.shp");
 	  CenteredPutString ( Screen ,  11*FontHeight(Menu_BFont),    "Your ship was saved...");
-	  SDL_Flip ( Screen );
+	  our_SDL_flip_wrapper ( Screen );
 	  while (!EnterPressed() && !SpacePressed() ) ;
 	  while (EnterPressed() || SpacePressed() ) ;
 	  // Weiter=!Weiter;
@@ -1405,7 +1405,7 @@ enum
 	  curShip.AllLevels[ curShip.num_levels ] = CreateNewMapLevel();
 	  curShip.num_levels ++ ;
 	  CenteredPutString ( Screen ,  12*FontHeight(FPS_Display_BFont), "New level has been added!");
-	  SDL_Flip( Screen );
+	  our_SDL_flip_wrapper( Screen );
 	  while (!SpacePressed() && !EnterPressed() );
 	  while (EnterPressed() || SpacePressed() ) ;
 	  SetTextCursor( 15 , 440 );
@@ -1658,7 +1658,7 @@ ReportInconsistenciesForLevel ( int LevelNum )
   DisplayText ( "\n\n--- End of List --- Press Space to return to menu ---\n" ,
 		-1 , -1 , &ReportRect);
   
-  SDL_Flip ( Screen );
+  our_SDL_flip_wrapper ( Screen );
 
 }; // void ReportInconsistenciesForLevel ( int LevelNum )
 
@@ -2885,7 +2885,7 @@ EditMapLabelData ( Level EditLevel )
       EditLevel -> labels [ i ] . pos . y = (-1) ;
     }
 
-  SDL_Flip ( Screen );
+  our_SDL_flip_wrapper ( Screen );
   
 }; // void EditMapLabelData ( EditLevel )
 
@@ -2937,7 +2937,7 @@ show_button_tooltip ( char* tooltip_text )
   TargetRect . h = 220 ; 
   TargetRect . x = ( 640 - TargetRect . w ) / 2 ; 
   TargetRect . y = 2 * ( 480 - TargetRect . h ) / 3 ; 
-  SDL_FillRect ( Screen , &TargetRect , 
+  our_SDL_fill_rect_wrapper ( Screen , &TargetRect , 
 		 SDL_MapRGB ( Screen->format, 0 , 0 , 0 ) ) ;
   
 #define IN_WINDOW_TEXT_OFFSET 15
@@ -3417,7 +3417,7 @@ LevelEditor(void)
 	  //--------------------
 	  // Now that everything is blitted and printed, we may update the screen again...
 	  //
-	  SDL_Flip( Screen );
+	  our_SDL_flip_wrapper( Screen );
 
 	  //--------------------
 	  // If the user of the Level editor pressed some cursor keys, move the
@@ -3445,7 +3445,7 @@ LevelEditor(void)
 		{
 		  DisplayText ( "\nNo more free comment position.  Using first. " , -1 , -1 , &User_Rect );
 		  i=0;
-		  SDL_Flip ( Screen );
+		  our_SDL_flip_wrapper ( Screen );
 		  getchar_raw();
 		  // Terminate( ERR );
 		}
@@ -3647,7 +3647,7 @@ LevelEditor(void)
 		  SaveShip("Testship.shp");
 
 		  // CenteredPutString ( Screen ,  11*FontHeight(Menu_BFont),    "Your ship was saved...");
-		  // SDL_Flip ( Screen );
+		  // our_SDL_flip_wrapper ( Screen );
 
 		  GiveMouseAlertWindow ( "\nM E S S A G E\n\nYour ship was saved to file 'Testship.shp'.\nIf you are sure, that you wish to use this file in the game, copy it over the 'maps/Asteroid.maps' file so that FreedroidRPG will really use it.\n\nIf you have set up something cool and you wish to contribute it to FreedroidRPG, please contact the FreedroidRPG dev team." ) ;
 

@@ -44,6 +44,9 @@
 #include "colodefs.h"
 #include "SDL_rotozoom.h"
 
+#include <GL/gl.h>
+#include <GL/glu.h>
+
 #define NOT_LOADED_MARKER "nothing_loaded"
 enum
   {
@@ -73,6 +76,8 @@ part_group_strings [ ALL_PART_GROUPS ] =
 #define ALL_TUX_PARTS 12
 #define ALL_TUX_MOTION_CLASSES 2
   static iso_image loaded_tux_images [ ALL_TUX_PARTS ] [ TUX_TOTAL_PHASES ] [ MAX_TUX_DIRECTIONS ] ;
+
+#define LIGHT_RADIUS_CRUDENESS_FACTOR 1
 
 int use_walk_cycle_for_part [ ALL_PART_GROUPS ] [ ALL_TUX_MOTION_CLASSES ] = 
   { 
@@ -385,7 +390,7 @@ DisplayItemImageAtMouseCursor( int ItemImageCode )
   TargetRect.x = GetMousePos_x() + 16 - ItemImageList[ ItemImageCode ].inv_size.x * 16;
   TargetRect.y = GetMousePos_y() + 16 - ItemImageList[ ItemImageCode ].inv_size.y * 16;
 
-  SDL_BlitSurface( ItemImageList[ ItemImageCode ].Surface , NULL , Screen , &TargetRect );
+  our_SDL_blit_surface_wrapper( ItemImageList[ ItemImageCode ].Surface , NULL , Screen , &TargetRect );
 }; // void DisplayItemImageAtMouseCursor( int ItemImageCode )
 
 /* ----------------------------------------------------------------------
@@ -407,7 +412,7 @@ ShowOneItemAlarm( item* AlarmItem , int Position )
 
   if ( AlarmItem->current_duration < 5 )
     {
-      SDL_BlitSurface( ItemImageList[ ItemImageCode ].Surface , NULL , Screen , &TargetRect );
+      our_SDL_blit_surface_wrapper( ItemImageList[ ItemImageCode ].Surface , NULL , Screen , &TargetRect );
     }
 }; // void ShowOneItemAlarm( item* AlarmItem )
 
@@ -623,6 +628,193 @@ MapBlockIsVisible ( int col , int line )
 }; // int MapBlockIsVisible ( int col , int line )
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our_col , float our_line ) 
+{
+  SDL_Rect target_rectangle;
+  float texture_start_y;
+  float texture_end_y;
+  int image_start_x;
+  int image_end_x;
+  int image_start_y;
+  int image_end_y;
+
+  //--------------------
+  // At first we need to enable texture mapping for all of the following.
+  // Without that, we'd just get (faster, but plain white) rectangles.
+  //
+  glEnable( GL_TEXTURE_2D );
+  
+  //--------------------
+  // Linear Filtering is slow and maybe not nescessary here, so we
+  // stick to the faster 'nearest' variant.
+  //
+  // glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+  // glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+  //
+  glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+  glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+  
+  //--------------------
+  // Blending can be used, if there is no suitable alpha checking so that
+  // I could get it to work right....
+  //
+  // But alpha check functions ARE a bit faster, even on my hardware, so
+  // let's stick with that possibility for now, especially with the floor.
+  //
+  // glEnable(GL_BLEND);
+  // glBlendFunc( GL_SRC_ALPHA , GL_ONE );
+  //
+  glEnable( GL_ALPHA_TEST );  
+  glAlphaFunc ( GL_GREATER , 0.5 ) ;
+  
+  // glDisable(GL_BLEND);
+  // glDisable( GL_ALPHA_TEST );  
+  
+  //--------------------
+  // Now of course we need to find out the proper target position.
+  //
+  target_rectangle . x = 
+    translate_map_point_to_screen_pixel ( our_col , our_line , TRUE ) + 
+    our_floor_iso_image . offset_x ;
+  target_rectangle . y = 
+    translate_map_point_to_screen_pixel ( our_col , our_line , FALSE ) +
+    our_floor_iso_image . offset_y ;
+  
+  glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+  glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+
+  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL );
+  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND );
+  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+  glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
+
+  //--------------------
+  // Now we can begin to draw the actual textured rectangle.
+  //
+  image_start_x = target_rectangle . x ;
+  image_end_x = target_rectangle . x + our_floor_iso_image . texture_width ; // + 255
+  image_start_y = target_rectangle . y ;
+  image_end_y = target_rectangle . y + our_floor_iso_image . texture_height ; // + 127
+  
+  // DebugPrintf ( -1 , "\nheight: %d." , our_floor_iso_image . surface -> h ) ;
+  
+  texture_start_y = 1.0 ; // 1 - ((float)(our_floor_iso_image . surface -> h)) / 127.0 ; // 1.0 
+  texture_end_y = 0.0 ;
+  
+  glBindTexture( GL_TEXTURE_2D, our_floor_iso_image . texture );
+  glBegin(GL_QUADS);
+  
+  glTexCoord2i( 0.0f, texture_start_y ); 
+  glVertex2i( image_start_x , image_start_y );
+  glTexCoord2i( 0.0f, texture_end_y ); 
+  glVertex2i( image_start_x , image_end_y );
+  glTexCoord2i( 1.0f, texture_end_y ); 
+  glVertex2i( image_end_x , image_end_y );
+  glTexCoord2f( 1.0f, texture_start_y ); 
+  glVertex2i( image_end_x , image_start_y );
+  
+  glEnd( );
+  
+  //--------------------
+  // But for the rest of the drawing function, the peripherals and other
+  // things that are to be blitted after that, we should not forget to
+  // disable the texturing things again, or HORRIBLE framerates will result...
+  //
+  // So we revert everything that we might have touched to normal state.
+  //
+  glDisable( GL_TEXTURE_2D );
+  glDisable( GL_BLEND );
+  glEnable( GL_ALPHA_TEST );  
+  glAlphaFunc ( GL_GREATER , 0.5 ) ;
+  
+}; // void blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our_col , float our_line ) 
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x , int y ) 
+{
+  SDL_Rect target_rectangle;
+  float texture_start_y;
+  float texture_end_y;
+  int image_start_x;
+  int image_end_x;
+  int image_start_y;
+  int image_end_y;
+
+  //--------------------
+  // Linear Filtering is slow and maybe not nescessary here, so we
+  // stick to the faster 'nearest' variant.
+  //
+  glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+  glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+  
+  //--------------------
+  // Now of course we need to find out the proper target position.
+  //
+  target_rectangle . x = x ;
+  target_rectangle . y = y ;
+  
+  // glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+  // glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+
+  //--------------------
+  // Now we can begin to draw the actual textured rectangle.
+  //
+  image_start_x = target_rectangle . x ;
+  image_end_x = target_rectangle . x + our_floor_iso_image . texture_width * LIGHT_RADIUS_CRUDENESS_FACTOR  ; // + 255
+  image_start_y = target_rectangle . y ;
+  image_end_y = target_rectangle . y + our_floor_iso_image . texture_height * LIGHT_RADIUS_CRUDENESS_FACTOR ; // + 127
+  
+  if ( image_start_x > 640 ) return ;
+  if ( image_end_x < 0 ) return ;
+  if ( image_start_y > 480 ) return;
+  if ( image_end_y < 0 ) return;
+
+  // DebugPrintf ( -1 , "\nheight: %d." , our_floor_iso_image . surface -> h ) ;
+  
+  texture_start_y = 1.0 ; // 1 - ((float)(our_floor_iso_image . surface -> h)) / 127.0 ; // 1.0 
+  texture_end_y = 0.0 ;
+
+  glBindTexture( GL_TEXTURE_2D, our_floor_iso_image . texture );
+  glBegin(GL_QUADS);
+  glTexCoord2i( 0.0f, texture_start_y ); 
+  glVertex2i( image_start_x , image_start_y );
+  glTexCoord2i( 0.0f, texture_end_y ); 
+  glVertex2i( image_start_x , image_end_y );
+  glTexCoord2i( 1.0f, texture_end_y ); 
+  glVertex2i( image_end_x , image_end_y );
+  glTexCoord2f( 1.0f, texture_start_y ); 
+  glVertex2i( image_end_x , image_start_y );
+  glEnd( );
+
+}; // void blit_open_gl_texture_to_pixel_position ( iso_image our_floor_iso_image , int x, int y ) 
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+blit_this_floor_tile_to_screen ( iso_image our_floor_iso_image ,
+				 float our_col, float our_line )
+{
+  if ( use_open_gl )
+    {
+      blit_open_gl_texture_to_map_position ( our_floor_iso_image , our_col , our_line ) ;
+    }
+  else
+    {
+      blit_iso_image_to_map_position ( our_floor_iso_image , our_col , our_line ) ;
+    }
+}; // void blit_this_floor_tile_to_screen ( iso_image our_floor_iso_image , float our_col, float our_line )
+
+/* ----------------------------------------------------------------------
  * This function should assemble the pure floor tiles that will be visible
  * around the Tux or in the console map view.  Big map inserts and all that
  * will be handled later...
@@ -677,9 +869,8 @@ isometric_show_floor_around_tux_without_doublebuffering ( int mask )
 	    {
 	      if ((MapBrick = GetMapBrick( DisplayLevel, col , line )) != INVISIBLE_BRICK)
 		{
-		  blit_iso_image_to_map_position ( floor_iso_images [ MapBrick % ALL_ISOMETRIC_FLOOR_TILES ] , 
+		  blit_this_floor_tile_to_screen ( floor_iso_images [ MapBrick % ALL_ISOMETRIC_FLOOR_TILES ] , 
 						   ((float)col)+0.5 , ((float)line) +0.5 );
-		  
 		}	// if !INVISIBLE_BRICK 
 	    }		// for(col) 
 	}		// for(line) 
@@ -714,7 +905,7 @@ There was an obstacle type given, that exceeds the number of\n\
   if ( our_obstacle == level_editor_marked_obstacle )
     {
       DebugPrintf ( 0 , "\nCOLOR FILTER INVOKED FOR MARKED OBSTACLE!" );
-      tmp . surface = SDL_DisplayFormatAlpha ( obstacle_map [ our_obstacle -> type ] . image . surface );
+      tmp . surface = our_SDL_display_format_wrapperAlpha ( obstacle_map [ our_obstacle -> type ] . image . surface );
       tmp . surface -> format -> Bmask = 0x0 ; // 0FFFFFFFF ;
       tmp . surface -> format -> Rmask = 0x0 ; // FFFFFFFF ;
       tmp . surface -> format -> Gmask = 0x0FFFFFFFF ;
@@ -731,8 +922,18 @@ There was an obstacle type given, that exceeds the number of\n\
       // SDL_UnlockSurface ( obstacle_map [ our_obstacle -> type ] . image . surface );
     }
   else
-    blit_iso_image_to_map_position ( obstacle_map [ our_obstacle -> type ] . image , 
-				     our_obstacle -> pos . x , our_obstacle -> pos . y );
+    {
+      if ( use_open_gl )
+	{
+	  blit_open_gl_texture_to_map_position ( obstacle_map [ our_obstacle -> type ] . image , 
+						 our_obstacle -> pos . x , our_obstacle -> pos . y ) ;
+	}
+      else
+	{
+	  blit_iso_image_to_map_position ( obstacle_map [ our_obstacle -> type ] . image , 
+					   our_obstacle -> pos . x , our_obstacle -> pos . y );
+	}
+    }
 }; // blit_one_obstacle ( obstacle* our_obstacle )
 
 /* ----------------------------------------------------------------------
@@ -764,7 +965,7 @@ There was an obstacle type given, that exceeds the number of\n\
   if ( our_obstacle == level_editor_marked_obstacle )
     {
       DebugPrintf ( 0 , "\nCOLOR FILTER INVOKED FOR MARKED OBSTACLE!" );
-      tmp . surface = SDL_DisplayFormatAlpha ( obstacle_map [ our_obstacle -> type ] . image . surface );
+      tmp . surface = our_SDL_display_format_wrapperAlpha ( obstacle_map [ our_obstacle -> type ] . image . surface );
       tmp . surface -> format -> Bmask = 0x0 ; // 0FFFFFFFF ;
       tmp . surface -> format -> Rmask = 0x0 ; // FFFFFFFF ;
       tmp . surface -> format -> Gmask = 0x0FFFFFFFF ;
@@ -1247,11 +1448,8 @@ show_obstacle_labels ( int mask )
 void
 blit_light_radius ( void )
 {
-#define NUMBER_OF_SHADOW_IMAGES 20
-  
   static int first_call = TRUE ;
   int i, j ;
-  static iso_image light_radius_chunk[ NUMBER_OF_SHADOW_IMAGES ];
   char* fpath;
   char constructed_file_name[2000];
   int our_height, our_width, our_max_height, our_max_width;
@@ -1264,6 +1462,41 @@ blit_light_radius ( void )
   int chunk_size_y;
   int window_offset_x;
   int light_bonus = curShip . AllLevels [ Me [ 0 ] . pos . z ] -> light_radius_bonus ;
+  SDL_Surface* tmp;
+
+  //--------------------
+  // At first we need to enable texture mapping for all of the following.
+  // Without that, we'd just get (faster, but plain white) rectangles.
+  //
+  glEnable( GL_TEXTURE_2D );
+  //--------------------
+  // We disable depth test for all purposes.
+  //
+  glDisable(GL_DEPTH_TEST);
+
+
+
+  //--------------------
+  // We will use the 'GL_REPLACE' texturing environment or get 
+  // unusable (and slow) results.
+  //
+  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL );
+  glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND );
+  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
+
+  //--------------------
+  // Blending can be used, if there is no suitable alpha checking so that
+  // I could get it to work right....
+  //
+  // But alpha check functions ARE a bit faster, even on my hardware, so
+  // let's stick with that possibility for now, especially with the floor.
+  //
+  glDisable( GL_ALPHA_TEST );  
+  glEnable(GL_BLEND);
+  glBlendFunc( GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA );
+
+
 
   //--------------------
   // If the darkenss chunks have not yet been loaded, we load them...
@@ -1276,6 +1509,14 @@ blit_light_radius ( void )
 	  sprintf ( constructed_file_name , "light_radius_chunks/iso_light_radius_darkness_%04d.png" , i + 1 );
 	  fpath = find_file ( constructed_file_name , GRAPHICS_DIR , FALSE );
 	  get_iso_image_from_file_and_path ( fpath , & ( light_radius_chunk [ i ] ) ) ;
+	  tmp = light_radius_chunk [ i ] . surface ;
+	  light_radius_chunk [ i ] . surface = SDL_DisplayFormatAlpha ( light_radius_chunk [ i ] . surface ) ; 
+	  SDL_FreeSurface ( tmp ) ;
+
+	  if ( use_open_gl )
+	    {
+	      make_texture_out_of_surface ( & ( light_radius_chunk [ i ] ) ) ;
+	    }
 	}
 
       pos_x_grid [ 0 ] [ 0 ] = translate_map_point_to_screen_pixel ( Me [ 0 ] . pos . x - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , Me [ 0 ] . pos . y - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , TRUE ) - 10 ;
@@ -1288,6 +1529,7 @@ blit_light_radius ( void )
 	{
 	  for ( j = 0 ; j < (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2) ; j ++ )
 	    {
+	      /*
 	      //--------------------
 	      // This case handles the assembly of the first row of chunks (southward movement)
 	      //
@@ -1301,7 +1543,9 @@ blit_light_radius ( void )
 		  pos_x_grid [ i ] [ j ] = -0 + pos_x_grid [ i ] [ j-1 ] - chunk_size_x + 0 ;
 		  pos_y_grid [ i ] [ j ] = +0 + pos_y_grid [ i ] [ j-1 ] + chunk_size_y + 0 ;
 		}
-
+	      */
+	      pos_x_grid [ i ] [ j ] = pos_x_grid [ 0 ] [ 0 ] + ( i - j ) * chunk_size_x ;
+	      pos_y_grid [ i ] [ j ] = pos_y_grid [ 0 ] [ 0 ] + ( i + j ) * chunk_size_y ;
 	    }
 	}
 
@@ -1319,6 +1563,9 @@ blit_light_radius ( void )
     {
       for ( our_width = 0 ; our_width < our_max_width ; our_width ++ )
 	{
+	  if ( our_width % LIGHT_RADIUS_CRUDENESS_FACTOR ) continue;
+	  if ( our_height % LIGHT_RADIUS_CRUDENESS_FACTOR ) continue;
+
 	  target_pos . x = Me [ 0 ] . pos . x - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) + our_width * LIGHT_RADIUS_CHUNK_SIZE ;
 	  target_pos . y = Me [ 0 ] . pos . y - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) + our_height * LIGHT_RADIUS_CHUNK_SIZE;
 	  light_strength = (int) ( sqrt ( ( Me [ 0 ] . pos . x - target_pos . x ) * ( Me [ 0 ] . pos . x - target_pos . x ) + ( Me [ 0 ] . pos . y - target_pos . y ) * ( Me [ 0 ] . pos . y - target_pos . y ) ) * 4.0 ) - light_bonus ;
@@ -1328,10 +1575,35 @@ blit_light_radius ( void )
 	  // blit_iso_image_to_map_position ( light_radius_chunk [ light_strength ] , target_pos . x , target_pos . y );
 	  target_rectangle . x = pos_x_grid [ our_width ] [ our_height ] + window_offset_x ;
 	  target_rectangle . y = pos_y_grid [ our_width ] [ our_height ] ;
-	  SDL_BlitSurface( light_radius_chunk [ light_strength ] . surface , NULL , Screen, &target_rectangle );
+
+	  if ( use_open_gl ) // use_open_gl )
+	    {
+	      blit_open_gl_texture_to_screen_position ( light_radius_chunk [ light_strength ] , target_rectangle . x , target_rectangle . y ) ;
+	      // blit_open_gl_texture_to_map_position ( light_radius_chunk [ light_strength ] , Me [ 0 ] . pos . x + ((float)our_width)/5.0 , Me [ 0 ] . pos . y + ((float)our_height)/5.0 ) ;
+	    }
+	  else
+	    {
+	      our_SDL_blit_surface_wrapper( light_radius_chunk [ light_strength ] . surface , NULL , Screen, &target_rectangle );
+	    }
 	  
 	}
     }
+
+
+
+
+  //--------------------
+  // But for the rest of the drawing function, the peripherals and other
+  // things that are to be blitted after that, we should not forget to
+  // disable the texturing things again, or HORRIBLE framerates will result...
+  //
+  // So we revert everything that we might have touched to normal state.
+  //
+  glDisable( GL_TEXTURE_2D );
+  glDisable( GL_BLEND );
+  glEnable( GL_ALPHA_TEST );  
+  glAlphaFunc ( GL_GREATER , 0.5 ) ;
+  
 }; // void blit_light_radius ( void )
 
 /* -----------------------------------------------------------------
@@ -1357,6 +1629,15 @@ void
 AssembleCombatPicture (int mask)
 {
   int i;
+  // SDL_Surface* right_sized_image ;
+
+  if ( use_open_gl )
+    {
+      // glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+      glClearColor( 0.0f, 0.0f, 1.0f, 0.0f );
+      glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+    }
+
 
   SDL_SetColorKey (Screen, 0, 0);
   // SDL_SetAlpha( Screen , 0 , SDL_ALPHA_OPAQUE ); 
@@ -1390,7 +1671,7 @@ AssembleCombatPicture (int mask)
       // in case we only draw the map, we are done here.  But
       // of course we must check if we should update the screen too.
       if ( mask & DO_SCREEN_UPDATE ) 
-	SDL_UpdateRect( Screen , User_Rect.x , User_Rect.y , User_Rect.w , User_Rect.h );
+	our_SDL_update_rect_wrapper( Screen , User_Rect.x , User_Rect.y , User_Rect.w , User_Rect.h );
       return;
     }
 
@@ -1412,6 +1693,8 @@ AssembleCombatPicture (int mask)
       ManageInventoryScreen ( );
       ShowQuickInventory ();
       DisplayButtons( );
+      if ( ! GameOver )
+	DisplayBanner (NULL, NULL,  0 ); // this is a pure client issue
     }
 
   if ( ServerMode )
@@ -1441,7 +1724,7 @@ AssembleCombatPicture (int mask)
   //
   if ( mask & DO_SCREEN_UPDATE )
     {
-      SDL_UpdateRect( Screen , User_Rect.x , User_Rect.y , User_Rect.w , User_Rect.h );
+      our_SDL_update_rect_wrapper( Screen , User_Rect.x , User_Rect.y , User_Rect.w , User_Rect.h );
     }
 
 }; // void AssembleCombatPicture(...)
@@ -1482,9 +1765,9 @@ PutMouseMoveCursor ( void )
     }
 
   if ( Me [ 0 ] . mouse_move_target_is_enemy == (-1) )
-    SDL_BlitSurface ( MouseCursorImageList[ 0 ] , NULL , Screen , &TargetRectangle);
+    our_SDL_blit_surface_wrapper ( MouseCursorImageList[ 0 ] , NULL , Screen , &TargetRectangle);
   else
-    SDL_BlitSurface ( MouseCursorImageList[ 1 ] , NULL , Screen , &TargetRectangle);
+    our_SDL_blit_surface_wrapper ( MouseCursorImageList[ 1 ] , NULL , Screen , &TargetRectangle);
 
 }; // void PutMouseMoveCursor ( void )
 
@@ -2338,14 +2621,14 @@ PutEnemyEnergyBar ( int Enum , SDL_Rect TargetRectangle )
   FillRect . h = 7 ; 
   FillRect . w = Percentage ;
 
-  SDL_FillRect ( Screen , &FillRect , FullColor ) ;
+  our_SDL_fill_rect_wrapper ( Screen , &FillRect , FullColor ) ;
 
   FillRect . x = TargetRectangle . x + Percentage + ENEMY_ENERGY_BAR_OFFSET_X ;
   FillRect . y = TargetRectangle . y + ENEMY_ENERGY_BAR_OFFSET_Y ;
   FillRect . h = 7 ; 
   FillRect . w = ENEMY_ENERGY_BAR_LENGTH - Percentage ;
   
-  SDL_FillRect ( Screen , &FillRect , EmptyColor ) ;
+  our_SDL_fill_rect_wrapper ( Screen , &FillRect , EmptyColor ) ;
 
 }; // void PutEnemyEnergyBar ( Enum , TargetRectangle )
 
@@ -2450,14 +2733,14 @@ There was a rotation model type given, that exceeds the number of rotation model
       if ( AllEnemys[Enum].paralysation_duration_left != 0 ) 
 	{
 	  LoadAndPrepareRedEnemyRotationModelNr ( RotationModel );
-	  // SDL_BlitSurface( RedEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] , NULL , Screen, &TargetRectangle);
+	  // our_SDL_blit_surface_wrapper( RedEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] , NULL , Screen, &TargetRectangle);
 	  blit_iso_image_to_map_position ( RedEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
 					   AllEnemys [ Enum ] . pos . x , AllEnemys [ Enum ] . pos . y );
 	}
       else if ( AllEnemys[Enum].poison_duration_left != 0 ) 
 	{
 	  LoadAndPrepareGreenEnemyRotationModelNr ( RotationModel );
-	  // SDL_BlitSurface( GreenEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] , NULL , Screen, &TargetRectangle);
+	  // our_SDL_blit_surface_wrapper( GreenEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] , NULL , Screen, &TargetRectangle);
 	  blit_iso_image_to_map_position ( GreenEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
 					   AllEnemys [ Enum ] . pos . x , AllEnemys [ Enum ] . pos . y );
 
@@ -2465,7 +2748,7 @@ There was a rotation model type given, that exceeds the number of rotation model
       else if ( AllEnemys[Enum].frozen != 0 ) 
 	{
 	  LoadAndPrepareBlueEnemyRotationModelNr ( RotationModel );
-	  // SDL_BlitSurface( BlueEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] , NULL , Screen, &TargetRectangle);
+	  // our_SDL_blit_surface_wrapper( BlueEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] , NULL , Screen, &TargetRectangle);
 	  blit_iso_image_to_map_position ( BlueEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
 					   AllEnemys [ Enum ] . pos . x , AllEnemys [ Enum ] . pos . y );
 	}
@@ -2473,7 +2756,7 @@ There was a rotation model type given, that exceeds the number of rotation model
 	{
 	  if ( ( TargetRectangle . x != 0 ) && ( TargetRectangle . y != 0 ) )
 	    {
-	      SDL_BlitSurface( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface , NULL , Screen, &TargetRectangle);
+	      our_SDL_blit_surface_wrapper( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface , NULL , Screen, &TargetRectangle);
 	      if ( GameConfig . enemy_energy_bars_visible )
 		PutEnemyEnergyBar ( Enum , TargetRectangle );
 	      return;
@@ -2519,7 +2802,7 @@ There was a rotation model type given, that exceeds the number of rotation model
       // Only if the robot is dead already, we can print
       // out the explosion dust like in the classic ball shaped version.
       //
-      // SDL_BlitSurface( EnemySurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
+      // our_SDL_blit_surface_wrapper( EnemySurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
     }
 
 
@@ -2801,7 +3084,7 @@ Freedroid encountered a radial wave type that does not exist in Freedroid.",
 	  
 	  fpath = find_file ( ConstructedFilename , GRAPHICS_DIR, FALSE );
 
-	  tmp_surf = IMG_Load( fpath );
+	  tmp_surf = our_IMG_load_wrapper( fpath );
 	  if ( tmp_surf == NULL )
 	    {
 	      fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
@@ -2812,7 +3095,7 @@ function used for this did not succeed.",
 	    }
 
 	  // SDL_SetColorKey( tmp_surf , 0 , 0 ); 
-	  SparkPrototypeSurface [ SparkType ] [ k ] = SDL_DisplayFormatAlpha ( tmp_surf );
+	  SparkPrototypeSurface [ SparkType ] [ k ] = our_SDL_display_format_wrapperAlpha ( tmp_surf );
 	  SDL_FreeSurface( tmp_surf );
 
 	  //--------------------
@@ -2826,7 +3109,7 @@ function used for this did not succeed.",
 	      tmp_surf = 
 		rotozoomSurface( SparkPrototypeSurface [ SparkType ] [ k ] , Angle , 1.0 , FALSE );
 	      
-	      PrerotatedSparkSurfaces [ SparkType ] [ k ] [ i ] = SDL_DisplayFormatAlpha ( tmp_surf );
+	      PrerotatedSparkSurfaces [ SparkType ] [ k ] [ i ] = our_SDL_display_format_wrapperAlpha ( tmp_surf );
 	      
 	      SDL_FreeSurface ( tmp_surf );
 	    }
@@ -2855,7 +3138,7 @@ function used for this did not succeed.",
       TargetRectangle . x = translate_map_point_to_screen_pixel ( PosX + Displacement . x , PosY + Displacement . y , TRUE ) - ( ( PrerotatedSparkSurfaces [ SparkType ] [ PictureType ] [ PrerotationIndex ] -> w ) / 2 );
       TargetRectangle . y = translate_map_point_to_screen_pixel ( PosX + Displacement . x , PosY + Displacement . y , FALSE ) - ( ( PrerotatedSparkSurfaces [ SparkType ] [ PictureType ] [ PrerotationIndex ] -> h ) / 2 );
 
-      SDL_BlitSurface( PrerotatedSparkSurfaces [ SparkType ] [ PictureType ] [ PrerotationIndex ] , NULL , Screen , &TargetRectangle);
+      our_SDL_blit_surface_wrapper( PrerotatedSparkSurfaces [ SparkType ] [ PictureType ] [ PrerotationIndex ] , NULL , Screen , &TargetRectangle);
 
     }
 
@@ -2892,7 +3175,7 @@ PutRadialBlueSparksBestQuality( float PosX, float PosY , float Radius )
     {
       fpath = find_file ( "blue_sparks_0.png" , GRAPHICS_DIR, FALSE );
 
-      tmp_surf = IMG_Load( fpath );
+      tmp_surf = our_IMG_load_wrapper( fpath );
       if ( tmp_surf == NULL )
 	{
 	  fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
@@ -2903,7 +3186,7 @@ function used for this did not succeed.",
 	}
       // SDL_SetColorKey( tmp_surf , 0 , 0 ); 
 
-      SparkPrototypeSurface = SDL_DisplayFormatAlpha ( tmp_surf );
+      SparkPrototypeSurface = our_SDL_display_format_wrapperAlpha ( tmp_surf );
 
       SDL_FreeSurface( tmp_surf );
     }
@@ -2929,7 +3212,7 @@ function used for this did not succeed.",
       TargetRectangle . x = UserCenter_x - ( Me [ 0 ] . pos . x - PosX ) * Block_Width  + Displacement . x - ( (tmp_surf -> w) / 2 );
       TargetRectangle . y = UserCenter_y - ( Me [ 0 ] . pos . y - PosY ) * Block_Height + Displacement . y - ( (tmp_surf -> h) / 2 );
       
-      SDL_BlitSurface( tmp_surf , NULL , Screen , &TargetRectangle);
+      our_SDL_blit_surface_wrapper( tmp_surf , NULL , Screen , &TargetRectangle);
 
       SDL_FreeSurface ( tmp_surf );
     }
@@ -2991,7 +3274,7 @@ FillRect (SDL_Rect rect, SDL_Color color)
 
   pixcolor = SDL_MapRGB (Screen->format, color.r, color.g, color.b);
 
-  SDL_FillRect (Screen, &tmp, pixcolor);
+  our_SDL_fill_rect_wrapper (Screen, &tmp, pixcolor);
   
   return;
 }; // void FillRect (SDL_Rect rect, SDL_Color color)
@@ -3023,7 +3306,7 @@ ShowRobotPicture (int PosX, int PosY, int Number )
   DebugPrintf (2, "\ntrying to load this: $fname");
   fpath = find_file (fname, GRAPHICS_DIR, FALSE);
 
-  if ( (tmp=IMG_Load (fpath)) == NULL )
+  if ( (tmp=our_IMG_load_wrapper (fpath)) == NULL )
     {
       fprintf( stderr, "\n\nfpath '%s' SDL_GetError(): %s. \n" , fpath, SDL_GetError() );
       GiveStandardErrorMessage ( "ShowRobotPicture(...)" , "\
@@ -3034,7 +3317,7 @@ A droid portrait failed to load.",
 
   SDL_SetClipRect( Screen , NULL );
   Set_Rect (target, PosX, PosY, SCREEN_WIDTH, SCREEN_HEIGHT);
-  SDL_BlitSurface( tmp , NULL, Screen , &target);
+  our_SDL_blit_surface_wrapper( tmp , NULL, Screen , &target);
 
   SDL_FreeSurface(tmp);
 
@@ -3067,9 +3350,9 @@ ShowInventoryScreen( void )
   //
   if ( InventoryImage == NULL )
     {
-      // SDL_FillRect( Screen, & InventoryRect , 0x0FFFFFF );
+      // our_SDL_fill_rect_wrapper( Screen, & InventoryRect , 0x0FFFFFF );
       fpath = find_file ( fname , GRAPHICS_DIR, FALSE);
-      tmp = IMG_Load( fpath );
+      tmp = our_IMG_load_wrapper( fpath );
       if ( !tmp )
 	{
 	  fprintf( stderr, "\n\nfname: '%s'\n" , fname );
@@ -3078,11 +3361,11 @@ The inventory screen background image could not be loaded.  This is a fatal erro
 				     PLEASE_INFORM, IS_FATAL );
 	}
 
-      InventoryImage = SDL_DisplayFormat ( tmp );
+      InventoryImage = our_SDL_display_format_wrapper ( tmp );
       SDL_FreeSurface ( tmp );
 
       fpath = find_file ( fname2 , GRAPHICS_DIR, FALSE);
-      tmp = IMG_Load( fpath );
+      tmp = our_IMG_load_wrapper( fpath );
       if ( !tmp )
 	{
 	  fprintf( stderr, "\n\nfname: '%s'\n" , fname );
@@ -3090,7 +3373,7 @@ The inventory screen background image could not be loaded.  This is a fatal erro
 The transparent plate for the inventory could not be loaded.  This is a fatal error.",
 				     PLEASE_INFORM, IS_FATAL );
 	}
-      TransparentPlateImage = SDL_DisplayFormatAlpha ( tmp );
+      TransparentPlateImage = our_SDL_display_format_wrapperAlpha ( tmp );
       SDL_FreeSurface ( tmp );
 
       //--------------------
@@ -3112,7 +3395,7 @@ The transparent plate for the inventory could not be loaded.  This is a fatal er
   // Into this inventory rectangle we draw the inventory mask
   //
   SDL_SetClipRect( Screen, NULL );
-  SDL_BlitSurface ( InventoryImage , NULL , Screen , &InventoryRect );
+  our_SDL_blit_surface_wrapper ( InventoryImage , NULL , Screen , &InventoryRect );
 
   //--------------------
   // Now we display the item in the influencer drive slot
@@ -3121,7 +3404,7 @@ The transparent plate for the inventory could not be loaded.  This is a fatal er
   TargetRect.y = InventoryRect.y + DRIVE_RECT_Y;
   if ( ( ! Me[0].drive_item.currently_held_in_hand ) && ( Me[0].drive_item.type != (-1) ) )
     {
-      SDL_BlitSurface( ItemImageList[ ItemMap[ Me[0].drive_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+      our_SDL_blit_surface_wrapper( ItemImageList[ ItemMap[ Me[0].drive_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
     }
 
   //--------------------
@@ -3135,7 +3418,7 @@ The transparent plate for the inventory could not be loaded.  This is a fatal er
     {
       TargetRect.x += 32 * 0.5 * ( 2 - ItemImageList [ ItemMap[ Me[0].weapon_item.type ] . picture_number ] . inv_size . x ) ;
       TargetRect.y += 32 * 0.5 * ( 3 - ItemImageList [ ItemMap[ Me[0].weapon_item.type ] . picture_number ] . inv_size . y ) ;
-      SDL_BlitSurface( ItemImageList[ ItemMap[ Me[0].weapon_item.type ].picture_number ] . Surface , NULL , Screen , &TargetRect );
+      our_SDL_blit_surface_wrapper( ItemImageList[ ItemMap[ Me[0].weapon_item.type ].picture_number ] . Surface , NULL , Screen , &TargetRect );
     }
 
   //--------------------
@@ -3145,7 +3428,7 @@ The transparent plate for the inventory could not be loaded.  This is a fatal er
   TargetRect.y = InventoryRect.y + ARMOUR_POS_Y ;
   if ( ( ! Me[0].armour_item.currently_held_in_hand ) && ( Me[0].armour_item.type != (-1) ) )
     {
-      SDL_BlitSurface( ItemImageList[ ItemMap[ Me[0].armour_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+      our_SDL_blit_surface_wrapper( ItemImageList[ ItemMap[ Me[0].armour_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
     }
 
   //--------------------
@@ -3155,7 +3438,7 @@ The transparent plate for the inventory could not be loaded.  This is a fatal er
   TargetRect.y = InventoryRect.y + SHIELD_POS_Y ;
   if ( ( ! Me[0].shield_item.currently_held_in_hand ) && ( Me[0].shield_item.type != (-1) ) )
     {
-      SDL_BlitSurface( ItemImageList[ ItemMap[ Me[0].shield_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+      our_SDL_blit_surface_wrapper( ItemImageList[ ItemMap[ Me[0].shield_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
     }
   
   //--------------------
@@ -3165,7 +3448,7 @@ The transparent plate for the inventory could not be loaded.  This is a fatal er
   TargetRect.y = InventoryRect.y + SPECIAL_POS_Y ;
   if ( ( ! Me[0].special_item.currently_held_in_hand ) && ( Me[0].special_item.type != (-1) ) )
     {
-      SDL_BlitSurface( ItemImageList[ ItemMap[ Me[0].special_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+      our_SDL_blit_surface_wrapper( ItemImageList[ ItemMap[ Me[0].special_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
     }
 
   //--------------------
@@ -3175,7 +3458,7 @@ The transparent plate for the inventory could not be loaded.  This is a fatal er
   TargetRect.y = InventoryRect.y + AUX1_POS_Y ;
   if ( ( ! Me[0].aux1_item.currently_held_in_hand ) && ( Me[0].aux1_item.type != (-1) ) )
     {
-      SDL_BlitSurface( ItemImageList[ ItemMap[ Me[0].aux1_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+      our_SDL_blit_surface_wrapper( ItemImageList[ ItemMap[ Me[0].aux1_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
     }
 
   //--------------------
@@ -3185,7 +3468,7 @@ The transparent plate for the inventory could not be loaded.  This is a fatal er
   TargetRect.y = InventoryRect.y + AUX2_POS_Y ;
   if ( ( ! Me[0].aux2_item.currently_held_in_hand ) && ( Me[0].aux2_item.type != (-1) ) )
     {
-      SDL_BlitSurface( ItemImageList[ ItemMap[ Me[0].aux2_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+      our_SDL_blit_surface_wrapper( ItemImageList[ ItemMap[ Me[0].aux2_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
     }
 
   //--------------------
@@ -3213,14 +3496,14 @@ The transparent plate for the inventory could not be loaded.  This is a fatal er
 	      TargetRect.x = INVENTORY_RECT_X + 32 * ( Me[0].Inventory[ SlotNum ].inventory_position.x + j );
 	      TargetRect.y = User_Rect.y + INVENTORY_RECT_Y + 32 * ( Me[0].Inventory[ SlotNum ].inventory_position.y + i );
 	    
-	      SDL_BlitSurface( TransparentPlateImage , NULL , Screen , &TargetRect );
+	      our_SDL_blit_surface_wrapper( TransparentPlateImage , NULL , Screen , &TargetRect );
 	    }
 	}
 
       TargetRect.x = INVENTORY_RECT_X + 32 * Me[0].Inventory[ SlotNum ].inventory_position.x;
       TargetRect.y = User_Rect.y +INVENTORY_RECT_Y + 32 * Me[0].Inventory[ SlotNum ].inventory_position.y;
       
-      SDL_BlitSurface( ItemImageList[ ItemMap[ Me[0].Inventory[ SlotNum ].type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+      our_SDL_blit_surface_wrapper( ItemImageList[ ItemMap[ Me[0].Inventory[ SlotNum ].type ].picture_number ].Surface , NULL , Screen , &TargetRect );
 
     }
 }; // void ShowInventoryScreen( void )

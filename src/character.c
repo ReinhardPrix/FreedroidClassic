@@ -625,16 +625,16 @@ ShowCharacterScreen ( void )
   //
   if ( CharacterScreenImage == NULL )
     {
-      // SDL_FillRect( Screen, & InventoryRect , 0x0FFFFFF );
+      // our_SDL_fill_rect_wrapper( Screen, & InventoryRect , 0x0FFFFFF );
       fpath = find_file ( CHARACTER_SCREEN_BACKGROUND_FILE , GRAPHICS_DIR, FALSE);
-      tmp = IMG_Load( fpath );
-      CharacterScreenImage = SDL_DisplayFormat ( tmp );
+      tmp = our_IMG_load_wrapper( fpath );
+      CharacterScreenImage = our_SDL_display_format_wrapper ( tmp );
       SDL_FreeSurface ( tmp );
 
       /*
       fpath = find_file ( "mouse_buttons/PlusButton.png" , GRAPHICS_DIR, FALSE);
-      tmp = IMG_Load( fpath );
-      PlusButtonImage = SDL_DisplayFormat ( tmp );
+      tmp = our_IMG_load_wrapper( fpath );
+      PlusButtonImage = our_SDL_display_format_wrapper ( tmp );
       SDL_FreeSurface ( tmp );
       */
 
@@ -655,7 +655,7 @@ ShowCharacterScreen ( void )
   // Into this inventory rectangle we draw the inventory mask
   //
   SDL_SetClipRect( Screen, NULL );
-  SDL_BlitSurface ( CharacterScreenImage , NULL , Screen , &CharacterRect );
+  our_SDL_blit_surface_wrapper ( CharacterScreenImage , NULL , Screen , &CharacterRect );
 
   //--------------------
   // Now we can start to fill in the character values:
@@ -818,7 +818,7 @@ ShowCharacterScreen ( void )
   // visible and therefore we must updated it here, since it is currently not
   // contained within the user rectangle that also gets updated every frame.
   //
-  // SDL_UpdateRect( Screen , CharacterRect.x , CharacterRect.y , CharacterRect.w , CharacterRect.h );
+  // our_SDL_update_rect_wrapper( Screen , CharacterRect.x , CharacterRect.y , CharacterRect.w , CharacterRect.h );
 
 
   //--------------------
