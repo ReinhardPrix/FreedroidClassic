@@ -315,6 +315,7 @@ void ThouArtDefeated(void){
     ExplodeBlasts();
     MoveBullets();
     MoveEnemys();
+    AnimateEnemys();
     for(j=0;j<MAXBULLETS;j++) CheckBulletCollisions(j);
     RotateBulletColor();
     usleep(10000);

@@ -199,30 +199,28 @@ void ActSpecialField(int x, int y)
 * $Function----------------------------------------------------------*/
 void AnimateRefresh(void)
 {
-  static int OuterWaitCounter = 0;
-  static int InnerWaitCounter = 0;
+  static float InnerWaitCounter = 0;
   static int InnerPhase = 0;		/* Zaehler fuer innere Phase */
   int i,j;
   int x, y;
 
-  OuterWaitCounter ++;
-  OuterWaitCounter %= OUTER_REFRESH_COUNTER;
-  InnerWaitCounter ++;
-  InnerWaitCounter %= INNER_REFRESH_COUNTER;
+  DebugPrintf("\nvoid AnimateRefresh(void):  real function call confirmed.");
+
+  InnerWaitCounter += Frame_Time() * 10 ;
   
-  if( InnerWaitCounter == 0) {
-    InnerPhase ++;
-    InnerPhase %= INNER_PHASES;
-  }
+  // if( (((int)rintf(InnerWaitCounter)) % INNER_REFRESH_COUNTER) == 0) {
+  // InnerPhase ++;
+  // InnerPhase %= INNER_PHASES;
+  
+  InnerPhase=(((int)rintf(InnerWaitCounter)) % INNER_PHASES);
+
 	
   for(i=0; i<MAX_REFRESHES_ON_LEVEL; i++) {
     x = CurLevel->refreshes[i].x;
     y = CurLevel->refreshes[i].y;
     if( x == 0 || y == 0 ) break;
-    
-    if( OuterWaitCounter == 0)
-      CurLevel->map[y][x] ++;
-    if( CurLevel->map[y][x] > REFRESH4 ) CurLevel->map[y][x] = REFRESH1;
+
+    CurLevel->map[y][x] = (((int)rintf(InnerWaitCounter)) % 4) + REFRESH1;
     
     /* Inneres Refresh animieren */
     for( j=0; j<4; j++) {
@@ -235,6 +233,8 @@ void AnimateRefresh(void)
 				
   } /* for */
 	
+  DebugPrintf("\nvoid AnimateRefresh(void):  end of function reached.");
+
 } /* AnimateRefresh */
 
 /*@Function============================================================
