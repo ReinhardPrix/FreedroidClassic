@@ -109,15 +109,12 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 148 , 244 ,  35 ,  35 } } ,
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 404 , 244 ,  35 ,  35 } } ,
 
-    // { NULL , "mouse_buttons/BuyButton.png"                    , { 233 , 375 , 120 ,  37 } } ,
     { NULL , "mouse_buttons/buy_button.png"                   , { 193 , 102 ,  60 ,  60 } } ,
-    // { NULL , "mouse_buttons/SellButton.png"                   , { 233 , 375 , 120 ,  37 } } ,
     { NULL , "mouse_buttons/sell_button.png"                  , { 193 , 185 ,  60 ,  60 } } ,
-    // { NULL , "mouse_buttons/TakeButton.png"                   , { 233 , 375 , 120 ,  37 } } ,
     { NULL , "mouse_buttons/get_button.png"                   , { 193 , 102 ,  60 ,  60 } } ,
-    // { NULL , "mouse_buttons/PutButton.png"                    , { 233 , 375 , 120 ,  37 } } ,
-    { NULL , "mouse_buttons/put_button.png"                  , { 193 , 185 ,  60 ,  60 } } ,
-    { NULL , "mouse_buttons/RepairButton.png"                 , { 363 , 375 , 120 ,  37 } } ,
+    { NULL , "mouse_buttons/put_button.png"                   , { 193 , 185 ,  60 ,  60 } } ,
+    { NULL , "mouse_buttons/repair_button.png"                , { 330 , 350 , 120 ,  37 } } ,
+    { NULL , "mouse_buttons/identify_button.png"              , { 420 , 350 , 120 ,  37 } } ,
 
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 320 + 11 , 449 , 297 , 25 } } ,
 

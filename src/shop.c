@@ -660,6 +660,18 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	  else ShowGenericButtonFromList ( SELL_BUTTON );
 	  SellButtonActive = TRUE; 
 	  BuyButtonActive = FALSE ;
+	  
+	  //--------------------
+	  // If some stuff in the Tux inventory is currently highlighted, we might
+	  // eventually show repair and identify buttons, but only if appropriate
+	  //
+	  if ( ( ItemMap [ TuxItemsList [ TuxItemIndex ] -> type ] . base_item_duration >= 0 ) &&
+	       ( TuxItemsList [ TuxItemIndex ] -> max_duration > TuxItemsList [ TuxItemIndex ] -> current_duration ) )
+	    ShowGenericButtonFromList ( REPAIR_BUTTON );
+
+	  if ( ! TuxItemsList [ TuxItemIndex ] -> is_identified )
+	    ShowGenericButtonFromList ( IDENTIFY_BUTTON );
+
 	}
       else
 	{
@@ -787,7 +799,39 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 		  return ( 0 );
 		}
 	    }
+	  else if ( CursorIsOnButton( REPAIR_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && 
+		    axis_is_active && !WasPressed )
+	    {
+	      //--------------------
+	      // Of course the repair button should only have effect, if there is
+	      // really something to repair (and therefore the button is shown at
+	      // all further above.
+	      //
+	      if ( ( ItemMap [ TuxItemsList [ TuxItemIndex ] -> type ] . base_item_duration >= 0 ) &&
+		   ( TuxItemsList [ TuxItemIndex ] -> max_duration > TuxItemsList [ TuxItemIndex ] -> current_duration ) )
+		{
+		  ShopOrder -> item_selected = TuxItemIndex ;
+		  ShopOrder -> shop_command = REPAIR_ITEM ;
+		  ShopOrder -> number_selected = 1;
+
+		  return ( 0 );
+		}
+	    }
+	  else if ( CursorIsOnButton( IDENTIFY_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
+	    {
+
+	      if ( ! TuxItemsList [ TuxItemIndex ] -> is_identified )
+		{
+		  ShopOrder -> item_selected = TuxItemIndex ;
+		  ShopOrder -> shop_command = IDENTIFY_ITEM ;
+		  ShopOrder -> number_selected = 1;
+
+		  return ( 0 );
+		}
+	    }
 	}
+
+
 
       WasPressed = axis_is_active;
 
@@ -1591,6 +1635,12 @@ InitTradeWithCharacter( int CharacterCode )
 	  break;
 	case SELL_100_ITEMS:
 	  TryToSellItem( TuxItemsList[ ShopOrder . item_selected ] , FALSE , 100 ) ;
+	  break;
+	case REPAIR_ITEM:
+	  TryToRepairItem( TuxItemsList[ ShopOrder . item_selected ] );
+	  break;
+	case IDENTIFY_ITEM:
+	  TryToIdentifyItem( TuxItemsList[ ShopOrder . item_selected ] );
 	  break;
 	default:
 	  

@@ -498,6 +498,7 @@ enum
     TAKE_BUTTON,
     PUT_BUTTON,
     REPAIR_BUTTON,
+    IDENTIFY_BUTTON,
 
     OPEN_CLOSE_SKILL_EXPLANATION_BUTTON,
 
@@ -806,7 +807,9 @@ enum
     PUT_100_ITEMS = 8 , 
     TAKE_1_ITEM = 9 , 
     TAKE_10_ITEMS = 10 , 
-    TAKE_100_ITEMS = 11
+    TAKE_100_ITEMS = 11 ,
+    REPAIR_ITEM = 12 , 
+    IDENTIFY_ITEM = 13 
   };
 
 
