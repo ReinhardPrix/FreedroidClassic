@@ -1,5 +1,195 @@
 
 /* ----------------------------------------------------------------------
+ * As soon as a file name is known, we can start to save the dialog
+ * information from the dialog roster to this new file.
+ * ---------------------------------------------------------------------- */
+void
+save_dialog_roster_to_file ( char* filename )
+{
+  FILE *SaveGameFile;  // to this file we will save all the ship data...
+  char linebuf[10000];
+  int i;
+  int j;
+
+  DebugPrintf ( 0 , "\nvoid save_dialog_roster_to_file(...): real function call confirmed.");
+  DebugPrintf ( 0 , "\nvoid save_dialog_roster_to_file(...): now opening the savegame file for writing ..."); 
+
+  //--------------------
+  // Now that we know which filename to use, we can open the save file for writing
+  //
+  if( ( SaveGameFile = fopen(filename, "w")) == NULL) 
+    {
+      DebugPrintf( 0 , "\n\nError opening save game file for writing...\n\nTerminating...\n\n");
+      Terminate(ERR);
+    }
+  
+  //--------------------
+  // Now that the file is opend for writing, we can start writing.  And the first thing
+  // we will write to the file will be a fine header, indicating what this file is about
+  // and things like that...
+  //
+  strcpy ( linebuf , "\n\
+----------------------------------------------------------------------\n\
+ *\n\
+ *   Copyright (c) 1994, 2002 Johannes Prix\n\
+ *   Copyright (c) 1994, 2002 Reinhard Prix\n\
+ *\n\
+ *\n\
+ *  This file is part of Freedroid\n\
+ *\n\
+ *  Freedroid is free software; you can redistribute it and/or modify\n\
+ *  it under the terms of the GNU General Public License as published by\n\
+ *  the Free Software Foundation; either version 2 of the License, or\n\
+ *  (at your option) any later version.\n\
+ *\n\
+ *  Freedroid is distributed in the hope that it will be useful,\n\
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of\n\
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n\
+ *  GNU General Public License for more details.\n\
+ *\n\
+ *  You should have received a copy of the GNU General Public License\n\
+ *  along with Freedroid; see the file COPYING. If not, write to the \n\
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, \n\
+ *  MA  02111-1307  USA\n\
+ *\n\
+----------------------------------------------------------------------\n\
+\n\
+This file was generated using the FreedroidRPG dialog editor.\n\
+If you have questions concerning FreedroidRPG, please send mail to:\n\
+\n\
+freedroid-discussion@lists.sourceforge.net\n\
+\n" );
+  fwrite ( linebuf , strlen( linebuf ), sizeof ( char ), SaveGameFile );  
+
+  //--------------------
+  // Now we can write out the certain string, that is still needed by
+  // the dialog loading function...
+  //
+  strcpy ( linebuf , "Beginning of new chat dialog for character=\"XXXXX\"\n\n" );
+  fwrite ( linebuf , strlen( linebuf ), sizeof(char), SaveGameFile);  
+
+  //--------------------
+  // Now it's time to proceed through the whole dialog roster and save
+  // each dialog option, one after the other, hopefully loosing no bit
+  // of information...
+  //
+  for ( i = 0 ; i < MAX_DIALOGUE_OPTIONS_IN_ROSTER ; i ++ )
+    {
+      //--------------------
+      // Unused dialog options are recognized by their zero length
+      // option text, right?
+      //
+      if ( strlen ( ChatRoster [ i ] . option_text ) == 0 ) continue ;
+
+      //--------------------
+      // We write out the new dialog option starter...
+      //
+      sprintf ( linebuf , "New Option Nr=%d  OptionText=\"%s\"\nOptionSample=\"%s\"\n" , 
+		i , ChatRoster [ i ] . option_text , ChatRoster [ i ] . option_sample_file_name ) ;
+      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+
+      //--------------------
+      // We write out the option positions of this option..
+      //
+      sprintf ( linebuf , "PositionX=%d  PositionY=%d  \n" , 
+		ChatRoster [ i ] . position_x , ChatRoster [ i ] . position_y ) ;
+      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+
+      //--------------------
+      // Now we write out all reply-text reply-sample combinations that there are for this
+      // dialog option...
+      //
+      for ( j = 0 ; j < MAX_DIALOGUE_OPTIONS_IN_ROSTER ; j ++ )
+	{
+	  //--------------------
+	  // The end of the reply-subtitle-sample combinations is indicated again by
+	  // an empty string...
+	  //
+	  if ( strlen ( ChatRoster [ i ] . reply_subtitle_list [ j ] ) == 0 ) break;
+
+	  sprintf ( linebuf , "Subtitle=\"%s\"\nReplySample=\"%s\"\n" ,
+		    ChatRoster [ i ] . reply_subtitle_list [ j ] ,
+		    ChatRoster [ i ] . reply_sample_list [ j ] );
+	  fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	}
+
+      //--------------------
+      // Now we write out all option-change option-value combinations that there are for this
+      // dialog option...
+      //
+      for ( j = 0 ; j < MAX_DIALOGUE_OPTIONS_IN_ROSTER ; j ++ )
+	{
+	  //--------------------
+	  // The end of the option-change-value combinations is indicated by
+	  // a (-1) value...
+	  //
+	  if ( ChatRoster [ i ] . change_option_nr [ j ] == (-1) ) break;
+
+	  sprintf ( linebuf , "ChangeOption=%d ChangeToValue=%d\n" ,
+		    ChatRoster [ i ] . change_option_nr [ j ] ,
+		    ChatRoster [ i ] . change_option_to_value [ j ] );
+	  fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	}
+      
+      //--------------------
+      // Now we write out all extra commands given for this
+      // dialog option...
+      //
+      for ( j = 0 ; j < MAX_DIALOGUE_OPTIONS_IN_ROSTER ; j ++ )
+	{
+	  //--------------------
+	  // The end of the extra list is indicated again by
+	  // an empty string...
+	  //
+	  if ( strlen ( ChatRoster [ i ] . extra_list [ j ] ) == 0 ) break;
+
+	  sprintf ( linebuf , "DoSomethingExtra=\"%s\"\n" ,
+		    ChatRoster [ i ] . extra_list [ j ] );
+	  fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	}
+
+      //--------------------
+      // We write out the on-goto-condition of this dialog option...but of
+      // course only, if the on-goto-condition is used too, i.e. if the 
+      // condition string is not empty...
+      //
+      if ( strlen ( ChatRoster [ i ] . on_goto_condition ) != 0 )
+	{
+	  sprintf ( linebuf , "OnCondition=\"%s\" JumpToOption=%d ElseGoto=%d\n" , 
+		    ChatRoster [ i ] . on_goto_condition , ChatRoster [ i ] . on_goto_first_target ,
+		    ChatRoster [ i ] . on_goto_second_target ) ;
+	  fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+	}
+
+      //--------------------
+      // Basically this should be it.  So maybe now we can just write out some
+      // separation string and that's it...
+      //
+      sprintf ( linebuf , "\n----------------------------------------------------------------------\n\n" );
+      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+      
+    }
+
+
+  //--------------------
+  // Now finally, we can write out the certain string, that is still needed by
+  // the dialog loading function...
+  //
+  strcpy ( linebuf , "End of chat dialog for character=\"XXXXX\"\n\n" );
+  fwrite ( linebuf , strlen( linebuf ), sizeof(char), SaveGameFile);  
+
+  if( fclose( SaveGameFile ) == EOF) 
+    {
+      printf("\n\nClosing of dialog file failed in save_dialog_roster_to_file(...)\n\nTerminating\n\n");
+      Terminate(ERR);
+    }
+  
+  DebugPrintf ( 0 , "\nsave_dialog_roster_to_file ( char* filename ): end of function reached.");
+
+}; // void save_dialog_roster_to_file ( char* filename )
+
+
+/* ----------------------------------------------------------------------
  * This function does the rotation of a given vector by a given angle.
  * The vector is a vector.
  * The angle given is in DEGREE MEASURE, i.e. 0-360 or so, maybe more or
