@@ -414,7 +414,7 @@ CheckBlastCollisions (int num)
 	    Blast_Radius + Druid_Radius_Y)
 	  {
 	    /* drag energy of enemy */
-	    AllEnemys[i].energy -= BLASTDAMAGE * Frame_Time ();
+	    AllEnemys[i].energy -= Blast_Damage_Per_Second * Frame_Time ();
 	  }
 
       if (AllEnemys[i].energy < 0)
@@ -428,7 +428,7 @@ CheckBlastCollisions (int num)
       {
 	if (!InvincibleMode)
 	  {
-	    Me.energy -= BLASTDAMAGE * Frame_Time ();
+	    Me.energy -= Blast_Damage_Per_Second * Frame_Time ();
 	    if ((PlusExtentionsOn) && (LastBlastHit > 5))
 	      InsertMessage ("Blast hit me! OUCH!");
 	    LastBlastHit = 0;

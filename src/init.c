@@ -68,6 +68,7 @@ Get_General_Game_Constants ( void* DataPointer )
 #define BLAST_RADIUS_SPECIFICATION_STRING "Radius of explosions (as far as damage is concerned) in multiples of tiles="
 #define DRUID_RADIUS_X_SPECIFICATION_STRING "'Radius' of droids in x direction="
 #define DRUID_RADIUS_Y_SPECIFICATION_STRING "'Radius' of droids in x direction="
+#define BLAST_DAMAGE_SPECIFICATION_STRING "Amount of damage done by contact to a blast per second of time="
 
   if ( (ConstantPointer = strstr ( DataPointer , CONSTANTS_SECTION_BEGIN_STRING ) ) == NULL)
     {
@@ -143,6 +144,18 @@ Get_General_Game_Constants ( void* DataPointer )
       DebugPrintf( 1 , "\nDruid_Radius_X now reads:  %f" , Druid_Radius_Y );
     }
 
+  // Now we read in the blast damage amount per 'second' of contact with the blast
+  if ( (ValuePointer = strstr ( DataPointer, BLAST_DAMAGE_SPECIFICATION_STRING )) == NULL )
+    {
+      DebugPrintf( 0 , "\nERROR! NO BLAST DAMAGE SPECIFICATION ENTRY FOUND! TERMINATING!");
+      Terminate(ERR);
+    }
+  else
+    {
+      ValuePointer += strlen ( BLAST_DAMAGE_SPECIFICATION_STRING );
+      sscanf ( ValuePointer , "%lf" , &Blast_Damage_Per_Second );
+      DebugPrintf( 1 , "\nBlast_Damage_Per_Second now reads:  %f" , Blast_Damage_Per_Second );
+    }
 
 
 } // void Get_General_Game_Constants ( void* DataPointer )

@@ -130,6 +130,7 @@ EXTERN int mouse_control;       /* allow for mouse control */
 #else
 #define EXTERN extern
 #endif
+EXTERN double Blast_Damage_Per_Second;
 EXTERN double Blast_Radius;
 EXTERN double Druid_Radius_X;
 EXTERN double Druid_Radius_Y;

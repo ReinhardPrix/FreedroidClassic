@@ -419,7 +419,7 @@ enum _status
 };
 
 
-#define BLASTDAMAGE		45
+// #define BLASTDAMAGE		45
 #define BLASTPHASES_PER_SECOND  15
 
 #define DECKCOMPLETEBONUS 500

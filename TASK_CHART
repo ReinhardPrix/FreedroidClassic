@@ -61,7 +61,7 @@ DONE Correct the way flash damage is handled:  once and not every frame damage s
 
 1. Extend the game dat file
    DONE Add direct control over all individual bullet speeds and damages
-   b. Add direct control over blast radiuses and blast damages
+   DONE Add direct control over blast radiuses and blast damages
 
 2. Extend the game/graphics engine
    DONE Takeover sound should be added
