@@ -152,6 +152,7 @@ EXTERN itemspec ItemMap[ ALL_ITEMS ];
 
 // EXTERN SDL_Surface* ItemSurfaceList[ NUMBER_OF_ITEM_PICTURES ];
 EXTERN item_image_spec ItemImageList[ NUMBER_OF_ITEM_PICTURES ];
+EXTERN SDL_Surface* MouseCursorImageList[ NUMBER_OF_MOUSE_CURSOR_PICTURES ];
 
 EXTERN double Conveyor_Belt_Speed;
 EXTERN long Total_Frames_Passed_In_Mission;

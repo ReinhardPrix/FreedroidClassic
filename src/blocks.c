@@ -208,6 +208,48 @@ Load_Item_Surfaces( void )
 }; // void Load_Item_Surfaces( void )
 
 /* ----------------------------------------------------------------------
+ * This function loads the items image and decodes it into the multiple
+ * small item surfaces.
+ * ---------------------------------------------------------------------- */
+void 
+Load_Mouse_Move_Cursor_Surfaces( void )
+{
+  SDL_Surface* Whole_Image;
+  SDL_Surface* tmp_surf;
+  SDL_Rect Source;
+  SDL_Rect Target;
+  int i=0;
+  int j;
+  char *fpath;
+
+  fpath = find_file ( MOUSE_CURSOR_BLOCK_FILE , GRAPHICS_DIR, TRUE);
+
+  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
+
+  for ( j=0 ; j < NUMBER_OF_MOUSE_CURSOR_PICTURES ; j++ )
+    {
+      Source.x = j * ( Block_Height + 2 );
+      Source.y = i * ( Block_Width  + 2 );
+      Source.w = Block_Width ;
+      Source.h = Block_Height ;
+      Target.x = 0;
+      Target.y = 0;
+      Target.w = Source.w;
+      Target.h = Source.h;
+      tmp_surf = SDL_CreateRGBSurface( 0 , Source.w , Source.h , vid_bpp , 0 , 0 , 0 , 0 );
+      SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
+      MouseCursorImageList[ j ] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
+      SDL_SetColorKey( MouseCursorImageList[ j ] , 0 , 0 ); // this should clear any color key in the dest surface
+      // Now we can copy the image Information
+      SDL_BlitSurface ( Whole_Image , &Source , MouseCursorImageList[ j ] , &Target );
+      SDL_SetAlpha( MouseCursorImageList[ j ] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+      SDL_FreeSurface( tmp_surf );
+    }
+  SDL_FreeSurface( Whole_Image );
+}; // void Load_Mouse_Move_Cursor_Surfaces( void )
+
+/* ----------------------------------------------------------------------
  * This function loads the Bullet image and decodes it into the multiple
  * small Blast surfaces.
  * ---------------------------------------------------------------------- */

@@ -185,6 +185,7 @@ MoveInfluence ( int PlayerNum )
   static float TransferCounter = 0;
   moderately_finepoint RemainingWay;
   moderately_finepoint MinimalWayAtThisSpeed;
+  float RemainingWayLength;
 
   //--------------------
   // We do not move any players, who's statuses are 'OUT'.
@@ -241,6 +242,9 @@ MoveInfluence ( int PlayerNum )
 		 Me [ PlayerNum ] . pos . z ) )
 	    {
 	      Me [ PlayerNum ] . mouse_move_target_is_enemy = ( -1 ) ;
+	      Me [ PlayerNum ] . mouse_move_target . x = ( -1 ) ;
+	      Me [ PlayerNum ] . mouse_move_target . y = ( -1 ) ;
+	      Me [ PlayerNum ] . mouse_move_target . z = ( -1 ) ;
 	    }
 	  else
 	    {
@@ -248,23 +252,37 @@ MoveInfluence ( int PlayerNum )
 		AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . pos . x ;
 	      Me [ PlayerNum ] . mouse_move_target . y = 
 		AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . pos . y ;
-	    }
+	      // }
+
+	      RemainingWay . x = Me [ PlayerNum ] . pos . x - Me [ PlayerNum ] . mouse_move_target . x ;
+	      RemainingWay . y = Me [ PlayerNum ] . pos . y - Me [ PlayerNum ] . mouse_move_target . y ;
+
+	      RemainingWayLength = sqrtf ( ( RemainingWay . x ) * ( RemainingWay . x ) +
+					   ( RemainingWay . y ) * ( RemainingWay . y ) ) ;
+
+	      RemainingWay . x = ( RemainingWay . x / RemainingWayLength ) * 
+		( RemainingWayLength - BEST_MELEE_DISTANCE_IN_SQUARES ) ;
+	      RemainingWay . y = ( RemainingWay . y / RemainingWayLength ) * 
+		( RemainingWayLength - BEST_MELEE_DISTANCE_IN_SQUARES ) ;
 
 
-	  RemainingWay . x = Me [ PlayerNum ] . pos . x - Me [ PlayerNum ] . mouse_move_target . x ;
-	  RemainingWay . y = Me [ PlayerNum ] . pos . y - Me [ PlayerNum ] . mouse_move_target . y ;
+	      Me [ PlayerNum ] . mouse_move_target . x = Me [ PlayerNum ] . pos . x - RemainingWay . x ;
+	      Me [ PlayerNum ] . mouse_move_target . y = Me [ PlayerNum ] . pos . y - RemainingWay . y ;
+
 
 	  //--------------------
 	  // Now we stop one square before crashing into our target...
 	  //
-	  if ( fabsf( RemainingWay . x ) > BEST_MELEE_DISTANCE_IN_SQUARES )
-	    {
-	      Me [ PlayerNum ] . mouse_move_target . x = Me [ PlayerNum ] . pos . x - copysignf ( fabsf ( RemainingWay . x ) - BEST_MELEE_DISTANCE_IN_SQUARES , RemainingWay . x ) ;
-	    }
+	  // if ( fabsf( RemainingWay . x ) > BEST_MELEE_DISTANCE_IN_SQUARES )
+	  // {
+	      // Me [ PlayerNum ] . mouse_move_target . x = Me [ PlayerNum ] . pos . x - copysignf ( fabsf ( RemainingWay . x ) - BEST_MELEE_DISTANCE_IN_SQUARES + 0.0 , RemainingWay . x ) ;
+	      // }
 
-	  if ( fabsf( RemainingWay . y ) > BEST_MELEE_DISTANCE_IN_SQUARES )
-	    {
-	      Me [ PlayerNum ] . mouse_move_target . y = Me [ PlayerNum ] . pos . y - copysignf ( fabsf ( RemainingWay . y ) - BEST_MELEE_DISTANCE_IN_SQUARES , RemainingWay . y ) ;
+	      // if ( fabsf( RemainingWay . y ) > BEST_MELEE_DISTANCE_IN_SQUARES )
+	      // {
+	      // Me [ PlayerNum ] . mouse_move_target . y = Me [ PlayerNum ] . pos . y - copysignf ( fabsf ( RemainingWay . y ) - BEST_MELEE_DISTANCE_IN_SQUARES + 0.0 , RemainingWay . y ) ;
+	      // }
+
 	    }
 
 	}
@@ -329,14 +347,15 @@ MoveInfluence ( int PlayerNum )
 	  // but also if we have been thrown onto a different level, we cancel our current
 	  // mouse move target...
 	  //
-	  if ( ( ( fabsf ( RemainingWay.y ) <= DISTANCE_TOLERANCE ) && ( fabsf ( RemainingWay.x ) <= DISTANCE_TOLERANCE ) ) ||
+	  if ( ( ( fabsf ( RemainingWay.y ) <= DISTANCE_TOLERANCE ) && 
+		 ( fabsf ( RemainingWay.x ) <= DISTANCE_TOLERANCE )     ) ||
 	       ( Me [ PlayerNum ] . mouse_move_target . z != Me [ PlayerNum ] . pos . z ) )
 	    {
 	      Me [ PlayerNum ] . mouse_move_target . x = ( -1 ) ;
 	      Me [ PlayerNum ] . mouse_move_target . y = ( -1 ) ;
 	      Me [ PlayerNum ] . mouse_move_target . z = ( -1 ) ;
 
-	      Me [ PlayerNum ] . mouse_move_target_is_enemy = ( -1 ) ;
+	      // Me [ PlayerNum ] . mouse_move_target_is_enemy = ( -1 ) ;
 	    }
 
 	}
@@ -950,8 +969,8 @@ LivingDroidBelowMouseCursor ( int PlayerNum )
   int i;
   float Mouse_Blocks_X, Mouse_Blocks_Y;
 
-  Mouse_Blocks_X = (float)ServerThinksInputAxisX ( PlayerNum ) / (float)Block_Width ;
-  Mouse_Blocks_Y = (float)ServerThinksInputAxisY ( PlayerNum ) / (float)Block_Height ;
+  Mouse_Blocks_X = ((float)ServerThinksInputAxisX ( PlayerNum )) / ((float)Block_Width  ) ;
+  Mouse_Blocks_Y = ((float)ServerThinksInputAxisY ( PlayerNum )) / ((float)Block_Height ) ;
 
   // for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
   for (i = 0; i < Number_Of_Droids_On_Ship; i++)
@@ -993,6 +1012,7 @@ GetLivingDroidBelowMouseCursor ( int PlayerNum )
   float Mouse_Blocks_X, Mouse_Blocks_Y;
   int TargetFound = (-1);
   float DistanceFound = 1000;
+  float CurrentDistance;
 
   Mouse_Blocks_X = (float)ServerThinksInputAxisX ( PlayerNum ) / (float)Block_Width ;
   Mouse_Blocks_Y = (float)ServerThinksInputAxisY ( PlayerNum ) / (float)Block_Height ;
@@ -1009,17 +1029,16 @@ GetLivingDroidBelowMouseCursor ( int PlayerNum )
       if ( fabsf (AllEnemys[i].pos.y - ( Me[ PlayerNum ] . pos . y + Mouse_Blocks_Y ) ) >= DROID_SELECTION_TOLERANCE )
 	continue;
 
+      CurrentDistance = 
+	( fabsf (AllEnemys[i].pos.x - ( Me[ PlayerNum ] . pos . x + Mouse_Blocks_X ) ) ) *
+	( fabsf (AllEnemys[i].pos.x - ( Me[ PlayerNum ] . pos . x + Mouse_Blocks_X ) ) ) +
+	( fabsf (AllEnemys[i].pos.y - ( Me[ PlayerNum ] . pos . y + Mouse_Blocks_Y ) ) ) *
+	( fabsf (AllEnemys[i].pos.y - ( Me[ PlayerNum ] . pos . y + Mouse_Blocks_Y ) ) ) ;
 
-      if (  ( fabsf (AllEnemys[i].pos.x - ( Me[ PlayerNum ] . pos . x + Mouse_Blocks_X ) ) ) *
-	    ( fabsf (AllEnemys[i].pos.x - ( Me[ PlayerNum ] . pos . x + Mouse_Blocks_X ) ) ) +
-	    ( fabsf (AllEnemys[i].pos.y - ( Me[ PlayerNum ] . pos . y + Mouse_Blocks_Y ) ) ) *
-	    ( fabsf (AllEnemys[i].pos.y - ( Me[ PlayerNum ] . pos . y + Mouse_Blocks_Y ) ) )  
-	    < DistanceFound )
+
+      if ( CurrentDistance < DistanceFound )
 	{
-	  DistanceFound = ( fabsf (AllEnemys[i].pos.x - ( Me[ PlayerNum ] . pos . x + Mouse_Blocks_X ) ) ) *
-	    ( fabsf (AllEnemys[i].pos.x - ( Me[ PlayerNum ] . pos . x + Mouse_Blocks_X ) ) ) +
-	    ( fabsf (AllEnemys[i].pos.y - ( Me[ PlayerNum ] . pos . y + Mouse_Blocks_Y ) ) ) *
-	    ( fabsf (AllEnemys[i].pos.y - ( Me[ PlayerNum ] . pos . y + Mouse_Blocks_Y ) ) ) ;
+	  DistanceFound = CurrentDistance ;
 	  TargetFound = i;
 	}      
 
@@ -1099,12 +1118,16 @@ FireBullet ( int PlayerNum )
   // Also if the target is pretty close, we interpret a fireing command.
   //
   if ( 
-      ( ( ! LivingDroidBelowMouseCursor ( PlayerNum ) ) && ( ! ServerThinksShiftWasPressed ( PlayerNum ) ) ) ||
+      ( ( ! LivingDroidBelowMouseCursor ( PlayerNum ) ) && ( ! ServerThinksShiftWasPressed ( PlayerNum ) ) &&
+	( Me [ PlayerNum ] . mouse_move_target_is_enemy == (-1) ) )
 
+      /*
+	||
       ( ( ItemMap [ Me [ PlayerNum ] . weapon_item . type ] . item_gun_angle_change != 0 ) &&
 	//	( ( abs ( ServerThinksInputAxisX ( PlayerNum ) ) > Block_Width  * FORCE_FIRE_DISTANCE  ) || 
 	// ( abs ( ServerThinksInputAxisY ( PlayerNum ) ) > Block_Height * FORCE_FIRE_DISTANCE  ) ) &&
 	( ! ServerThinksShiftWasPressed ( PlayerNum ) ) )
+      */
 
       )
     {
@@ -1117,6 +1140,31 @@ FireBullet ( int PlayerNum )
 	Me [ PlayerNum ] . pos . y + ( (float) ServerThinksInputAxisY ( PlayerNum ) ) / (float) Block_Width ;
       Me [ PlayerNum ] . mouse_move_target . z = Me [ PlayerNum ] . pos . z ;
 
+      // Me [ PlayerNum ] . mouse_move_target_is_enemy = (-1) ;
+
+      return;
+
+    }
+
+  if ( ( ! LivingDroidBelowMouseCursor ( PlayerNum ) ) && ( ! ServerThinksShiftWasPressed ( PlayerNum ) ) )
+    {
+      //--------------------
+      // Later, we will add the new mouse move intention at this point
+      //
+      Me [ PlayerNum ] . mouse_move_target . x = 
+	Me [ PlayerNum ] . pos . x + ( (float) ServerThinksInputAxisX ( PlayerNum ) ) / (float) Block_Width ;
+      Me [ PlayerNum ] . mouse_move_target . y = 
+	Me [ PlayerNum ] . pos . y + ( (float) ServerThinksInputAxisY ( PlayerNum ) ) / (float) Block_Width ;
+      Me [ PlayerNum ] . mouse_move_target . z = Me [ PlayerNum ] . pos . z ;
+
+      Me [ PlayerNum ] . mouse_move_target_is_enemy = (-1) ;
+
+      // return;
+
+    }
+
+  if ( ( LivingDroidBelowMouseCursor ( PlayerNum ) ) && ( ! ServerThinksShiftWasPressed ( PlayerNum ) ) ) 
+    {
       //--------------------
       // We assign the target robot of the coming attack operation.
       // In case of no robot, we should get (-1), which is also serving us well.

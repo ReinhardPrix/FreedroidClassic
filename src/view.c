@@ -487,6 +487,8 @@ Assemble_Combat_Picture (int mask)
 	if (AllBlasts[i].type != OUT)
 	  PutBlast (i);
 
+      PutMouseMoveCursor ( );
+
     } // ! ONLY_SHOW_MAP_AND_TEXT
       
 
@@ -621,6 +623,43 @@ BlitRobotDigits( point UpperLeftBlitCorner , char* druidname , int Friendly )
 	}
     }
 }; // void 
+
+/* -----------------------------------------------------------------
+ * This function draws the mouse move cursor.
+ * ----------------------------------------------------------------- */
+void
+PutMouseMoveCursor ( void )
+{
+  SDL_Rect TargetRectangle;
+
+  if ( ( Me [ 0 ] . mouse_move_target . x == (-1) ) &&
+       ( Me [ 0 ] . mouse_move_target_is_enemy == (-1) ) )
+    {
+      // DebugPrintf ( 0 , "\nMouse Move Target: x == (-1) ! and NO ENEMY TARGETED!! " );
+      return;
+    }
+
+  if ( Me [ 0 ] . mouse_move_target_is_enemy == (-1) )
+    {
+      TargetRectangle . x = UserCenter_x - 
+	( Me[0].pos.x - Me [ 0 ] . mouse_move_target . x ) * Block_Width  - Block_Width  / 2  ;
+      TargetRectangle . y = UserCenter_y - 
+	( Me[0].pos.y - Me [ 0 ] . mouse_move_target . y ) * Block_Height - Block_Height / 2 ;
+    }
+  else
+    {
+      TargetRectangle . x = UserCenter_x - 
+	( Me[0].pos.x - AllEnemys [ Me [ 0 ] . mouse_move_target_is_enemy ] . pos . x ) * Block_Width  - Block_Width  / 2  ;
+      TargetRectangle . y = UserCenter_y - 
+	( Me[0].pos.y - AllEnemys [ Me [ 0 ] . mouse_move_target_is_enemy ] . pos . y ) * Block_Height - Block_Height / 2 ;
+    }
+
+  if ( Me [ 0 ] . mouse_move_target_is_enemy == (-1) )
+    SDL_BlitSurface ( MouseCursorImageList[ 0 ] , NULL , Screen , &TargetRectangle);
+  else
+    SDL_BlitSurface ( MouseCursorImageList[ 1 ] , NULL , Screen , &TargetRectangle);
+
+}; // void PutMouseMoveCursor ( void )
 
 /* -----------------------------------------------------------------
  * This function draws the influencer to the screen, either

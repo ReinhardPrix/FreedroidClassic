@@ -277,6 +277,7 @@ typedef struct
   int modifier_to_bonus_to_resist_electricity; // this is a percentage
   int base_bonus_to_resist_force; // this is a percentage
   int modifier_to_bonus_to_resist_force; // this is a percentage
+  // int freezing_time_in_seconds;
   int dummy_value;
   int affix_level; // the level of this affix (i.e. to which level items it can be attached or not)
   float price_factor;
@@ -696,7 +697,7 @@ typedef struct
   int ignore_wall_collisions; // does this bullet go through walls (e.g. a laser sword strike)
   int was_reflected; // has this bullet been reflected once in it's lifetime?
   int reflect_other_bullets; // does this bullet reflect other bullets in case of a collision?
-  int freezing_level;        // does this bullet freeze the target?
+  // int freezing_level;        // does this bullet freeze the target?
 
   // these are values only of relevance in case of a melee weapon
   double angle_change_rate;

@@ -112,6 +112,7 @@ EXTERN void PutBullet (int);
 EXTERN void PutItem (int);
 EXTERN void PutBlast (int);
 EXTERN void PutEnemy (int Enum, int x , int y );
+EXTERN void PutMouseMoveCursor ( void ) ;
 EXTERN void ShowRobotPicture (int PosX, int PosY, int Number);
 EXTERN void ShowInventoryScreen ( void );
 
@@ -125,6 +126,7 @@ EXTERN void ShowInventoryScreen ( void );
 #endif
 
 EXTERN void Load_Item_Surfaces (void);
+EXTERN void Load_Mouse_Move_Cursor_Surfaces(void);
 EXTERN void Load_SkillIcon_Surfaces (void);
 EXTERN void Load_MapBlock_Surfaces (void);
 EXTERN void Load_Enemy_Surfaces (void);
