@@ -99,10 +99,10 @@ Keyboard control:
 
 Use cursor keys to move around.  The speed you can go depends on the druid you currently control.
 
-If you press space bar in -addition- to a cursor key, this fires the weapon of the druid you currently control.
+If you press space or fire in -addition- to a cursor key, this fires the weapon of the druid you currently control. 
 
 
-If you press space bar while NOT pressing a cursor key, this will enter transfer mode.  You will notice your robot to take on a flashy red colour.  Now if you touch some other druid, this will initiate the takeover process in which you have to win a small game of logical circuits within the given time.
+If you space or fire while NOT pressing a cursor key, this will enter transfer mode.  You will notice your robot to take on a flashy red colour.  Now if you touch some other druid, this will initiate the takeover process in which you have to win a small game of logical circuits within the given time.
 If you succeed, you thereafter can control this new droid and for game purposes, it is as if you were him.
 If you loose, you either are destroyed if you didn't control an enemy druid at that time, or the host you controlled is destroyed together with the unit you wished to control.
 
@@ -126,7 +126,7 @@ Watch out for energy refreshing fields and elevators.
 
 Lifts are also entered via transfer mode if you stand still on the lift
 
-    Press Space to Play
+    Press Fire to Play
 
 * End of Mission Briefing Text Subsection *
 
@@ -139,7 +139,7 @@ A fleet of Robo-freighters on its way to the Beta Ceti system reported entering 
 * New Mission Briefing Text Subsection *
 The 001 Influence Device consists of a helmet, which, when placed over a robots control unit can halt the normal activities of that robot for a short time. The helmet has its own energy supply and powers the robot itself, at an upgraded capability. The helmet also uses an energy cloak for protection of the host. The helmet is fitted with twin lasers mounted in a turret. These can be focused on any target inside a range of eight metres. Most of the device's resources are channelled towards holding control of the host robot, as it attempts to resume 'normal' operation. It is therefore necessary to change the host robot often to prevent the device from burning out. Transfer to a new robot requires the device to drain its host of energy in order to take  over. Failure to achieve transfer results in the device being a free agent once more.
 
-       Press space bar to skip instructions
+       Press Fire to skip instructions
 
 
 * End of Mission Briefing Text Subsection *
@@ -166,7 +166,7 @@ FreeDroidWorld for a multi-player arkade version.
 
 See http://freedroid.sourceforge.net for further details.
 
-Press Space to play again.
+Press Fire to play again.
 
 ** End of End Title Text Section **
 
