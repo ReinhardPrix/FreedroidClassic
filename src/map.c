@@ -41,64 +41,64 @@
 
 #include "map.h"
 
-void
-TranslateToHumanReadable ( Uint16* HumanReadable , map_tile* MapInfo, int LineLength , Level Lev , int CurrentLine);
-// void TranslateToHumanReadable ( Uint16* HumanReadable , Uint16* MapInfo, int LineLength , Level Lev , int CurrentLine);
+void TranslateToHumanReadable ( Uint16* HumanReadable , map_tile* MapInfo, int LineLength , Level Lev , int CurrentLine);
 void GetThisLevelsDroids( char* SectionPointer );
 Level DecodeLoadedLeveldata ( char *data );
-// int IsWallBlock ( int block );
 
 /* ----------------------------------------------------------------------
- * 
- *
+ * If the blood doesn't vanish, then there will be more and more blood,
+ * especially after the bots on the level have respawned a few times.
+ * Therefore we need this function, which will remove all traces of blood
+ * from a given level.
  * ---------------------------------------------------------------------- */
 void
 remove_blood_obstacles_for_respawning ( int level_num )
 {
-  int i;
-
-  //--------------------
-  // We pass through all the obstacles, deleting those
-  // that are 'blood'.
-  //
-  for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
+    int i;
+    
+    //--------------------
+    // We pass through all the obstacles, deleting those
+    // that are 'blood'.
+    //
+    for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
     {
-      switch ( curShip . AllLevels [ level_num ] -> obstacle_list [ i ] . type )
+	switch ( curShip . AllLevels [ level_num ] -> obstacle_list [ i ] . type )
 	{
-	  //--------------------
-	  // In case we encounter the -1 obstacle, we're done, cause 'holes'
-	  // aren't permitted inside the obstacle list of a level...
-	  //
-	case (-1) :
-	  return;
-	  break;
-	case ISO_BLOOD_1:
-	case ISO_BLOOD_2:
-	case ISO_BLOOD_3:
-	case ISO_BLOOD_4:
-	case ISO_BLOOD_5:
-	case ISO_BLOOD_6:
-	case ISO_BLOOD_7:
-	case ISO_BLOOD_8:
-	  delete_obstacle ( curShip . AllLevels [ level_num ] , 
-			    & ( curShip . AllLevels [ level_num ] -> obstacle_list [ i ] ) ) ;
-	  //--------------------
-	  // Now the obstacles have shifted a bit to close the gap from the
-	  // deletion.  We need to re-process the current index in the next
-	  // loop of this cycle...
-	  //
-	  i -- ;
-	  break;
-	default: 
-	  break;
+	    //--------------------
+	    // In case we encounter the -1 obstacle, we're done, cause 'holes'
+	    // aren't permitted inside the obstacle list of a level...
+	    //
+	    case (-1) :
+		return;
+		break;
+	    case ISO_BLOOD_1:
+	    case ISO_BLOOD_2:
+	    case ISO_BLOOD_3:
+	    case ISO_BLOOD_4:
+	    case ISO_BLOOD_5:
+	    case ISO_BLOOD_6:
+	    case ISO_BLOOD_7:
+	    case ISO_BLOOD_8:
+		delete_obstacle ( curShip . AllLevels [ level_num ] , 
+				  & ( curShip . AllLevels [ level_num ] -> obstacle_list [ i ] ) ) ;
+		//--------------------
+		// Now the obstacles have shifted a bit to close the gap from the
+		// deletion.  We need to re-process the current index in the next
+		// loop of this cycle...
+		//
+		i -- ;
+		break;
+	    default: 
+		break;
 	}
     }
-
+    
 }; // void remove_blood_obstacles_for_respawning ( int level_num )
 
 /* ----------------------------------------------------------------------
- *
- *
+ * This function will make all blood obstacles vanish and all dead bots
+ * (and characters) come back to life and resume their previous operation
+ * from before thier death.
  * ---------------------------------------------------------------------- */
 void
 respawn_level ( int level_num )
@@ -152,47 +152,47 @@ respawn_level ( int level_num )
 int
 decode_floor_tiles_of_this_level (Level Lev)
 {
-  int xdim = Lev->xlen;
-  int ydim = Lev->ylen;
-  int row, col;
-  map_tile *Buffer;
-  int tmp;
-  int glue_index;
-
-  DebugPrintf ( 1 , "\nStarting to translate the map from human readable disk format into game-engine format.");
-
-  for (row = 0; row < ydim  ; row++)
+    int xdim = Lev->xlen;
+    int ydim = Lev->ylen;
+    int row, col;
+    map_tile *Buffer;
+    int tmp;
+    int glue_index;
+    
+    DebugPrintf ( 1 , "\nStarting to translate the map from human readable disk format into game-engine format.");
+    
+    for (row = 0; row < ydim  ; row++)
     {
-
-      //--------------------
-      // Now a strange thing is going on here:  The floor tile information, stored
-      // as text is already in the 'map' poitner, that is NORMALLY SOMETHING 
-      // COMPLETELY DIFFERENT than a text pointer.  But the information is there
-      // we need to convert it into real map information with proper struct...
-      // Finally the proper struct can then replace the old map pointer.
-      //
-      Buffer = MyMalloc( sizeof ( map_tile ) * ( xdim + 10 ) );
-      for ( col = 0 ; col < xdim  ; col ++ )
+	
+	//--------------------
+	// Now a strange thing is going on here:  The floor tile information, stored
+	// as text is already in the 'map' poitner, that is NORMALLY SOMETHING 
+	// COMPLETELY DIFFERENT than a text pointer.  But the information is there
+	// we need to convert it into real map information with proper struct...
+	// Finally the proper struct can then replace the old map pointer.
+	//
+	Buffer = MyMalloc( sizeof ( map_tile ) * ( xdim + 10 ) );
+	for ( col = 0 ; col < xdim  ; col ++ )
 	{
-	  sscanf( ( ( (char*)(Lev->map[row]) ) + 4 * col) , "%04d " , &tmp);
-	  Buffer [ col ] . floor_value = (Uint16) tmp;
-	  for ( glue_index = 0 ; glue_index < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; glue_index ++ )
+	    sscanf( ( ( (char*)(Lev->map[row]) ) + 4 * col) , "%04d " , &tmp);
+	    Buffer [ col ] . floor_value = (Uint16) tmp;
+	    for ( glue_index = 0 ; glue_index < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; glue_index ++ )
 	    {
-	      Buffer [ col ] . obstacles_glued_to_here [ glue_index ] = ( -1 ) ;
+		Buffer [ col ] . obstacles_glued_to_here [ glue_index ] = ( -1 ) ;
 	    }
 	}
-
-      //--------------------
-      // Now the old text pointer can be replaced with a pointer to the 
-      // correctly assembled struct...
-      //
-      Lev -> map [ row ] = Buffer;
-
+	
+	//--------------------
+	// Now the old text pointer can be replaced with a pointer to the 
+	// correctly assembled struct...
+	//
+	Lev -> map [ row ] = Buffer;
+	
     } // for ( row = 0 ..) 
-
-  DebugPrintf (2, "\nint decode_floor_tiles_of_this_level (Level Lev): end of function reached.");
-
-  return OK;
+    
+    DebugPrintf (2, "\nint decode_floor_tiles_of_this_level (Level Lev): end of function reached.");
+    
+    return OK;
 }; // int decode_floor_tiles_of_this_level ( Level lev )
 
 /* ----------------------------------------------------------------------
@@ -204,29 +204,29 @@ decode_floor_tiles_of_this_level (Level Lev)
 void
 ResolveMapLabelOnLevel ( char* MapLabel , location* PositionPointer , int LevelNum )
 {
-  Level ResolveLevel = curShip . AllLevels [ LevelNum ] ;
-  int i;
-  
-  for ( i = 0 ; i < MAX_MAP_LABELS_PER_LEVEL ; i ++ )
+    Level ResolveLevel = curShip . AllLevels [ LevelNum ] ;
+    int i;
+    
+    for ( i = 0 ; i < MAX_MAP_LABELS_PER_LEVEL ; i ++ )
     {
-      if ( ResolveLevel->labels [ i ] . pos . x == (-1) ) continue;
-      
-      if ( !strcmp ( ResolveLevel->labels [ i ] . label_name , MapLabel ) )
+	if ( ResolveLevel->labels [ i ] . pos . x == (-1) ) continue;
+	
+	if ( !strcmp ( ResolveLevel->labels [ i ] . label_name , MapLabel ) )
 	{
-	  PositionPointer->x = ResolveLevel->labels [ i ] . pos . x + 0.5 ;
-	  PositionPointer->y = ResolveLevel->labels [ i ] . pos . y + 0.5 ;
-	  PositionPointer->level = LevelNum ;
-	  DebugPrintf ( 1 , "\nResolving map label '%s' succeeded: pos.x=%d, pos.y=%d, pos.z=%d." ,
-			MapLabel , PositionPointer->x , PositionPointer->y , PositionPointer->level );
-	  return;
+	    PositionPointer->x = ResolveLevel->labels [ i ] . pos . x + 0.5 ;
+	    PositionPointer->y = ResolveLevel->labels [ i ] . pos . y + 0.5 ;
+	    PositionPointer->level = LevelNum ;
+	    DebugPrintf ( 1 , "\nResolving map label '%s' succeeded: pos.x=%d, pos.y=%d, pos.z=%d." ,
+			  MapLabel , PositionPointer->x , PositionPointer->y , PositionPointer->level );
+	    return;
 	}
     }
-
-  PositionPointer->x = -1;
-  PositionPointer->y = -1;
-  PositionPointer->level = -1 ;
-  DebugPrintf ( 1 , "\nResolving map label '%s' failed on level %d." ,
-		MapLabel , LevelNum );
+    
+    PositionPointer->x = -1;
+    PositionPointer->y = -1;
+    PositionPointer->level = -1 ;
+    DebugPrintf ( 1 , "\nResolving map label '%s' failed on level %d." ,
+		  MapLabel , LevelNum );
 }; // void ResolveMapLabel ( char* MapLabel , grob_point* PositionPointer )
 
 /* ----------------------------------------------------------------------
@@ -236,95 +236,98 @@ ResolveMapLabelOnLevel ( char* MapLabel , location* PositionPointer , int LevelN
 void
 ResolveMapLabelOnShip ( char* MapLabel , location* PositionPointer )
 {
-  int i ;
-
-  //--------------------
-  // We empty the given target pointer, so that we can tell
-  // a successful resolve later...
-  //
-  PositionPointer->x = -1;
-  PositionPointer->y = -1;
-  
-  //--------------------
-  // Now we check each level of the ship, if it maybe contains this
-  // label...
-  //
-  for ( i = 0 ; i < curShip.num_levels ; i ++ )
+    int i ;
+    
+    //--------------------
+    // We empty the given target pointer, so that we can tell
+    // a successful resolve later...
+    //
+    PositionPointer->x = -1;
+    PositionPointer->y = -1;
+    
+    //--------------------
+    // Now we check each level of the ship, if it maybe contains this
+    // label...
+    //
+    for ( i = 0 ; i < curShip.num_levels ; i ++ )
     {
-      ResolveMapLabelOnLevel ( MapLabel , PositionPointer , i );
-      
-      if ( PositionPointer->x != ( -1 ) ) return;
+	ResolveMapLabelOnLevel ( MapLabel , PositionPointer , i );
+	
+	if ( PositionPointer->x != ( -1 ) ) return;
     }
-
-  fprintf ( stderr, "\n\nMapLabel: '%s'.\n" , MapLabel );
-  GiveStandardErrorMessage ( __FUNCTION__  , "\
+    
+    fprintf ( stderr, "\n\nMapLabel: '%s'.\n" , MapLabel );
+    GiveStandardErrorMessage ( __FUNCTION__  , "\
 Resolving a certain map label failed on the complete ship!\n\
 This is a severe error in the game data of Freedroid.",
-			     PLEASE_INFORM, IS_FATAL );
-
+			       PLEASE_INFORM, IS_FATAL );
+    
 }; // void ResolveMapLabelOnShip ( char* MapLabel , grob_point* PositionPointer , int LevelNum )
 
 /* ----------------------------------------------------------------------
- *
- *
+ * Next we extract the level interface data from the human-readable data 
+ * into the level struct, but WITHOUT destroying or damaging the 
+ * human-readable data in the process!
  * ---------------------------------------------------------------------- */
 void 
 DecodeInterfaceDataForThisLevel ( Level loadlevel , char* DataPointer )
 {
-  char* TempSectionPointer;
-  char PreservedLetter;
-
-  //--------------------
-  // Now we read in the jump points associated with this map
-  //
-
-  // We look for the beginning and end of the map statement section
-  TempSectionPointer = LocateStringInData( DataPointer , MAP_BEGIN_STRING );
-
-  // We add a terminator at the end, but ONLY TEMPORARY.  The damage will be restored later!
-  PreservedLetter=TempSectionPointer[0];
-  TempSectionPointer[0]=0;
-
+    char* TempSectionPointer;
+    char PreservedLetter;
+    
+    //--------------------
+    // Now we read in the jump points associated with this map
+    //
+    
+    // We look for the beginning and end of the map statement section
+    TempSectionPointer = LocateStringInData( DataPointer , MAP_BEGIN_STRING );
+    
+    // We add a terminator at the end, but ONLY TEMPORARY.  The damage will be restored later!
+    PreservedLetter=TempSectionPointer[0];
+    TempSectionPointer[0]=0;
+    
 #define DEBUG_LEVEL_INTERFACES 1
-
-  ReadValueFromString( DataPointer , "jump threshold north: " , "%d" , 
-		       &(loadlevel->jump_threshold_north) , TempSectionPointer );
-  DebugPrintf( DEBUG_LEVEL_INTERFACES , "\nSuccessfully read jump theshold north : %d ", loadlevel->jump_threshold_north );
-  ReadValueFromString( DataPointer , "jump threshold south: " , "%d" , 
-		       &(loadlevel->jump_threshold_south) , TempSectionPointer );
-  DebugPrintf( DEBUG_LEVEL_INTERFACES , "\nSuccessfully read jump theshold south : %d ", loadlevel->jump_threshold_south );
-  ReadValueFromString( DataPointer , "jump threshold east: " , "%d" , 
-		       &(loadlevel->jump_threshold_east) , TempSectionPointer );
-  DebugPrintf( DEBUG_LEVEL_INTERFACES , "\nSuccessfully read jump theshold east : %d ", loadlevel->jump_threshold_east );
-  ReadValueFromString( DataPointer , "jump threshold west: " , "%d" , 
-		       &(loadlevel->jump_threshold_west) , TempSectionPointer );
-  DebugPrintf( DEBUG_LEVEL_INTERFACES , "\nSuccessfully read jump theshold west : %d ", loadlevel->jump_threshold_west );
-
-  ReadValueFromString( DataPointer , "jump target north: " , "%d" , 
-		       &(loadlevel->jump_target_north) , TempSectionPointer );
-  DebugPrintf( DEBUG_LEVEL_INTERFACES , "\nSuccessfully read jump target north : %d ", loadlevel->jump_target_north );
-  ReadValueFromString( DataPointer , "jump target south: " , "%d" , 
-		       &(loadlevel->jump_target_south) , TempSectionPointer );
-  DebugPrintf( DEBUG_LEVEL_INTERFACES , "\nSuccessfully read jump target south : %d ", loadlevel->jump_target_south );
-  ReadValueFromString( DataPointer , "jump target east: " , "%d" , 
-		       &(loadlevel->jump_target_east) , TempSectionPointer );
-  DebugPrintf( DEBUG_LEVEL_INTERFACES , "\nSuccessfully read jump target east : %d ", loadlevel->jump_target_east );
-  ReadValueFromString( DataPointer , "jump target west: " , "%d" , 
-		       &(loadlevel->jump_target_west) , TempSectionPointer );
-  DebugPrintf( DEBUG_LEVEL_INTERFACES , "\nSuccessfully read jump target west : %d ", loadlevel->jump_target_west );
-
-
-  TempSectionPointer [ 0 ] = PreservedLetter ;
-
+    
+    ReadValueFromString( DataPointer , "jump threshold north: " , "%d" , 
+			 &(loadlevel->jump_threshold_north) , TempSectionPointer );
+    DebugPrintf( DEBUG_LEVEL_INTERFACES , "\nSuccessfully read jump theshold north : %d ", loadlevel->jump_threshold_north );
+    ReadValueFromString( DataPointer , "jump threshold south: " , "%d" , 
+			 &(loadlevel->jump_threshold_south) , TempSectionPointer );
+    DebugPrintf( DEBUG_LEVEL_INTERFACES , "\nSuccessfully read jump theshold south : %d ", loadlevel->jump_threshold_south );
+    ReadValueFromString( DataPointer , "jump threshold east: " , "%d" , 
+			 &(loadlevel->jump_threshold_east) , TempSectionPointer );
+    DebugPrintf( DEBUG_LEVEL_INTERFACES , "\nSuccessfully read jump theshold east : %d ", loadlevel->jump_threshold_east );
+    ReadValueFromString( DataPointer , "jump threshold west: " , "%d" , 
+			 &(loadlevel->jump_threshold_west) , TempSectionPointer );
+    DebugPrintf( DEBUG_LEVEL_INTERFACES , "\nSuccessfully read jump theshold west : %d ", loadlevel->jump_threshold_west );
+    
+    ReadValueFromString( DataPointer , "jump target north: " , "%d" , 
+			 &(loadlevel->jump_target_north) , TempSectionPointer );
+    DebugPrintf( DEBUG_LEVEL_INTERFACES , "\nSuccessfully read jump target north : %d ", loadlevel->jump_target_north );
+    ReadValueFromString( DataPointer , "jump target south: " , "%d" , 
+			 &(loadlevel->jump_target_south) , TempSectionPointer );
+    DebugPrintf( DEBUG_LEVEL_INTERFACES , "\nSuccessfully read jump target south : %d ", loadlevel->jump_target_south );
+    ReadValueFromString( DataPointer , "jump target east: " , "%d" , 
+			 &(loadlevel->jump_target_east) , TempSectionPointer );
+    DebugPrintf( DEBUG_LEVEL_INTERFACES , "\nSuccessfully read jump target east : %d ", loadlevel->jump_target_east );
+    ReadValueFromString( DataPointer , "jump target west: " , "%d" , 
+			 &(loadlevel->jump_target_west) , TempSectionPointer );
+    DebugPrintf( DEBUG_LEVEL_INTERFACES , "\nSuccessfully read jump target west : %d ", loadlevel->jump_target_west );
+    
+    
+    TempSectionPointer [ 0 ] = PreservedLetter ;
+    
 }; // void DecodeInterfaceDataForThisLevel ( Level loadlevel , char* data )
 
 /* ----------------------------------------------------------------------
- *
- *
+ * Next we extract the level parameters from the human-readable data into
+ * the level struct, but WITHOUT destroying or damaging the human-readable
+ * data in the process!
  * ---------------------------------------------------------------------- */
 void 
 DecodeDimensionsOfThisLevel ( Level loadlevel , char* DataPointer )
 {
+    
     sscanf ( DataPointer , "Levelnumber: %u \n\
  xlen of this level: %u \n\
  ylen of this level: %u \n\
@@ -351,6 +354,7 @@ for a map level as by the constant MAX_MAP_LINES in defs.h.\n\
 Sorry, but unless this constant is raised, Freedroid will refuse to load this map.",
 				   PLEASE_INFORM, IS_FATAL );
     }
+
 }; // void DecodeDimensionsOfThisLevel ( Level loadlevel , char* DataPointer );
 
 /* ----------------------------------------------------------------------
@@ -360,116 +364,116 @@ Sorry, but unless this constant is raised, Freedroid will refuse to load this ma
 void 
 DecodeStatementsOfThisLevel ( Level loadlevel , char* DataPointer )
 {
-  char PreservedLetter;
-  int i , NumberOfStatementsInThisLevel;
-  char* StatementSectionBegin;
-  char* StatementSectionEnd;
-  char* StatementPointer;
-  
-  //--------------------
-  // First we initialize the statement array with 'empty' values
-  //
-  for ( i = 0 ; i < MAX_STATEMENTS_PER_LEVEL ; i ++ )
+    char PreservedLetter;
+    int i , NumberOfStatementsInThisLevel;
+    char* StatementSectionBegin;
+    char* StatementSectionEnd;
+    char* StatementPointer;
+    
+    //--------------------
+    // First we initialize the statement array with 'empty' values
+    //
+    for ( i = 0 ; i < MAX_STATEMENTS_PER_LEVEL ; i ++ )
     {
-      loadlevel->StatementList[ i ].x = ( -1 ) ;
-      loadlevel->StatementList[ i ].y = ( -1 ) ;
-      loadlevel->StatementList[ i ].Statement_Text = "No Statement loaded." ;
+	loadlevel->StatementList[ i ].x = ( -1 ) ;
+	loadlevel->StatementList[ i ].y = ( -1 ) ;
+	loadlevel->StatementList[ i ].Statement_Text = "No Statement loaded." ;
     }
-
-  // We look for the beginning and end of the map statement section
-  StatementSectionBegin = LocateStringInData( DataPointer , STATEMENT_BEGIN_STRING );
-  StatementSectionEnd = LocateStringInData( DataPointer , STATEMENT_END_STRING );
-
-  // We add a terminator at the end, but ONLY TEMPORARY.  The damage will be restored later!
-  PreservedLetter=StatementSectionEnd[0];
-  StatementSectionEnd[0]=0;
-  NumberOfStatementsInThisLevel = CountStringOccurences ( StatementSectionBegin , STATEMENT_ITSELF_ANNOUNCE_STRING ) ;
-  DebugPrintf( 1 , "\nNumber of statements found in this level : %d." , NumberOfStatementsInThisLevel );
-
-  StatementPointer=StatementSectionBegin;
-  for ( i = 0 ; i < NumberOfStatementsInThisLevel ; i ++ )
+    
+    // We look for the beginning and end of the map statement section
+    StatementSectionBegin = LocateStringInData( DataPointer , STATEMENT_BEGIN_STRING );
+    StatementSectionEnd = LocateStringInData( DataPointer , STATEMENT_END_STRING );
+    
+    // We add a terminator at the end, but ONLY TEMPORARY.  The damage will be restored later!
+    PreservedLetter=StatementSectionEnd[0];
+    StatementSectionEnd[0]=0;
+    NumberOfStatementsInThisLevel = CountStringOccurences ( StatementSectionBegin , STATEMENT_ITSELF_ANNOUNCE_STRING ) ;
+    DebugPrintf( 1 , "\nNumber of statements found in this level : %d." , NumberOfStatementsInThisLevel );
+    
+    StatementPointer=StatementSectionBegin;
+    for ( i = 0 ; i < NumberOfStatementsInThisLevel ; i ++ )
     {
-      StatementPointer = strstr ( StatementPointer + 1 , X_POSITION_OF_STATEMENT_STRING );
-      ReadValueFromString( StatementPointer , X_POSITION_OF_STATEMENT_STRING , "%d" , 
-			   &(loadlevel->StatementList[ i ].x) , StatementSectionEnd );
-      ReadValueFromString( StatementPointer , Y_POSITION_OF_STATEMENT_STRING , "%d" , 
-			   &(loadlevel->StatementList[ i ].y) , StatementSectionEnd );
-      loadlevel->StatementList[ i ].Statement_Text = 
-	ReadAndMallocStringFromData ( StatementPointer , STATEMENT_ITSELF_ANNOUNCE_STRING , "\"" ) ;
-
-      DebugPrintf( 1 , "\nPosX=%d PosY=%d Statement=\"%s\"" , loadlevel->StatementList[ i ].x , 
-		   loadlevel->StatementList[ i ].y , loadlevel->StatementList[ i ].Statement_Text );
+	StatementPointer = strstr ( StatementPointer + 1 , X_POSITION_OF_STATEMENT_STRING );
+	ReadValueFromString( StatementPointer , X_POSITION_OF_STATEMENT_STRING , "%d" , 
+			     &(loadlevel->StatementList[ i ].x) , StatementSectionEnd );
+	ReadValueFromString( StatementPointer , Y_POSITION_OF_STATEMENT_STRING , "%d" , 
+			     &(loadlevel->StatementList[ i ].y) , StatementSectionEnd );
+	loadlevel->StatementList[ i ].Statement_Text = 
+	    ReadAndMallocStringFromData ( StatementPointer , STATEMENT_ITSELF_ANNOUNCE_STRING , "\"" ) ;
+	
+	DebugPrintf( 1 , "\nPosX=%d PosY=%d Statement=\"%s\"" , loadlevel->StatementList[ i ].x , 
+		     loadlevel->StatementList[ i ].y , loadlevel->StatementList[ i ].Statement_Text );
     }
-
-  // Now we repair the damage done to the loaded level data
-  StatementSectionEnd[0]=PreservedLetter;
-
+    
+    // Now we repair the damage done to the loaded level data
+    StatementSectionEnd[0]=PreservedLetter;
+    
 }; // void DecodeStatementsOfThisLevel ( Level loadlevel , char* DataPointer );
 
 /* ----------------------------------------------------------------------
- *
- *
+ * Next we extract the human readable obstacle data into the level struct
+ * WITHOUT destroying or damaging the human-readable data in the process!
  * ---------------------------------------------------------------------- */
 void
 decode_obstacles_of_this_level ( Level loadlevel , char* DataPointer )
 {
-  int i;
-  char PreservedLetter;
-  char* obstacle_Pointer;
-  char* obstacle_SectionBegin;
-  char* obstacle_SectionEnd;
-  int NumberOfobstacle_sInThisLevel;
-
-  //--------------------
-  // First we initialize the obstacles with 'empty' information
-  //
-  for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
+    int i;
+    char PreservedLetter;
+    char* obstacle_Pointer;
+    char* obstacle_SectionBegin;
+    char* obstacle_SectionEnd;
+    int NumberOfobstacle_sInThisLevel;
+    
+    //--------------------
+    // First we initialize the obstacles with 'empty' information
+    //
+    for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
     {
-      loadlevel -> obstacle_list [ i ] . type = ( -1 ) ;
-      loadlevel -> obstacle_list [ i ] . pos . x = ( -1 ) ;
-      loadlevel -> obstacle_list [ i ] . pos . y = ( -1 ) ;
-      loadlevel -> obstacle_list [ i ] . name_index = ( -1 ) ;
+	loadlevel -> obstacle_list [ i ] . type = ( -1 ) ;
+	loadlevel -> obstacle_list [ i ] . pos . x = ( -1 ) ;
+	loadlevel -> obstacle_list [ i ] . pos . y = ( -1 ) ;
+	loadlevel -> obstacle_list [ i ] . name_index = ( -1 ) ;
     }
-
-  //--------------------
-  // Now we look for the beginning and end of the obstacle section
-  //
-  obstacle_SectionBegin = LocateStringInData( DataPointer , OBSTACLE_DATA_BEGIN_STRING );
-  obstacle_SectionEnd = LocateStringInData( DataPointer , OBSTACLE_DATA_END_STRING );
-
-  //--------------------
-  // We add a terminator at the end, but ONLY TEMPORARY.  The damage will be restored later!
-  //
-  PreservedLetter=obstacle_SectionEnd[0];
-  obstacle_SectionEnd[0]=0;
-  NumberOfobstacle_sInThisLevel = CountStringOccurences ( obstacle_SectionBegin , OBSTACLE_TYPE_STRING ) ;
-  DebugPrintf( 1 , "\nNumber of obstacles found in this level : %d." , NumberOfobstacle_sInThisLevel );
-
-  //--------------------
-  // Now we decode all the obstacle information
-  //
-  obstacle_Pointer=obstacle_SectionBegin;
-  for ( i = 0 ; i < NumberOfobstacle_sInThisLevel ; i ++ )
+    
+    //--------------------
+    // Now we look for the beginning and end of the obstacle section
+    //
+    obstacle_SectionBegin = LocateStringInData( DataPointer , OBSTACLE_DATA_BEGIN_STRING );
+    obstacle_SectionEnd = LocateStringInData( DataPointer , OBSTACLE_DATA_END_STRING );
+    
+    //--------------------
+    // We add a terminator at the end, but ONLY TEMPORARY.  The damage will be restored later!
+    //
+    PreservedLetter=obstacle_SectionEnd[0];
+    obstacle_SectionEnd[0]=0;
+    NumberOfobstacle_sInThisLevel = CountStringOccurences ( obstacle_SectionBegin , OBSTACLE_TYPE_STRING ) ;
+    DebugPrintf( 1 , "\nNumber of obstacles found in this level : %d." , NumberOfobstacle_sInThisLevel );
+    
+    //--------------------
+    // Now we decode all the obstacle information
+    //
+    obstacle_Pointer=obstacle_SectionBegin;
+    for ( i = 0 ; i < NumberOfobstacle_sInThisLevel ; i ++ )
     {
-      obstacle_Pointer = strstr ( obstacle_Pointer + 1 , OBSTACLE_TYPE_STRING );
-      ReadValueFromString( obstacle_Pointer , OBSTACLE_TYPE_STRING , "%d" , 
-			   & ( loadlevel -> obstacle_list [ i ] . type ) , obstacle_SectionEnd );
-      ReadValueFromString( obstacle_Pointer , OBSTACLE_X_POSITION_STRING , "%f" , 
-			   & ( loadlevel -> obstacle_list [ i ] . pos . x ) , obstacle_SectionEnd );
-      ReadValueFromString( obstacle_Pointer , OBSTACLE_Y_POSITION_STRING , "%f" , 
-			   & ( loadlevel -> obstacle_list [ i ] . pos . y ) , obstacle_SectionEnd );
-      ReadValueFromString( obstacle_Pointer , OBSTACLE_LABEL_INDEX_STRING , "%d" , 
-			   & ( loadlevel -> obstacle_list [ i ] . name_index ) , obstacle_SectionEnd );
-
-      // DebugPrintf( 0 , "\nobtacle_type=%d pos.x=%3.2f pos.y=%3.2f" , loadlevel -> obstacle_list [ i ] . type , 
-      // loadlevel -> obstacle_list [ i ] . pos . x , loadlevel-> obstacle_list [ i ] . pos . y );
+	obstacle_Pointer = strstr ( obstacle_Pointer + 1 , OBSTACLE_TYPE_STRING );
+	ReadValueFromString( obstacle_Pointer , OBSTACLE_TYPE_STRING , "%d" , 
+			     & ( loadlevel -> obstacle_list [ i ] . type ) , obstacle_SectionEnd );
+	ReadValueFromString( obstacle_Pointer , OBSTACLE_X_POSITION_STRING , "%f" , 
+			     & ( loadlevel -> obstacle_list [ i ] . pos . x ) , obstacle_SectionEnd );
+	ReadValueFromString( obstacle_Pointer , OBSTACLE_Y_POSITION_STRING , "%f" , 
+			     & ( loadlevel -> obstacle_list [ i ] . pos . y ) , obstacle_SectionEnd );
+	ReadValueFromString( obstacle_Pointer , OBSTACLE_LABEL_INDEX_STRING , "%d" , 
+			     & ( loadlevel -> obstacle_list [ i ] . name_index ) , obstacle_SectionEnd );
+	
+	// DebugPrintf( 0 , "\nobtacle_type=%d pos.x=%3.2f pos.y=%3.2f" , loadlevel -> obstacle_list [ i ] . type , 
+	// loadlevel -> obstacle_list [ i ] . pos . x , loadlevel-> obstacle_list [ i ] . pos . y );
     }
-
-  //--------------------
-  // Now we repair the damage done to the loaded level data
-  //
-  obstacle_SectionEnd [ 0 ] = PreservedLetter;
-  
+    
+    //--------------------
+    // Now we repair the damage done to the loaded level data
+    //
+    obstacle_SectionEnd [ 0 ] = PreservedLetter;
+    
 }; // void decode_obstacles_of_this_level ( loadlevel , DataPointer )
 
 /* ----------------------------------------------------------------------
@@ -479,60 +483,60 @@ decode_obstacles_of_this_level ( Level loadlevel , char* DataPointer )
 void 
 DecodeMapLabelsOfThisLevel ( Level loadlevel , char* DataPointer )
 {
-  int i;
-  char PreservedLetter;
-  char* MapLabelPointer;
-  char* MapLabelSectionBegin;
-  char* MapLabelSectionEnd;
-  int NumberOfMapLabelsInThisLevel;
-
-  //--------------------
-  // First we initialize the map labels array with 'empty' information
-  //
-  for ( i = 0 ; i < MAX_MAP_LABELS_PER_LEVEL ; i ++ )
+    int i;
+    char PreservedLetter;
+    char* MapLabelPointer;
+    char* MapLabelSectionBegin;
+    char* MapLabelSectionEnd;
+    int NumberOfMapLabelsInThisLevel;
+    
+    //--------------------
+    // First we initialize the map labels array with 'empty' information
+    //
+    for ( i = 0 ; i < MAX_MAP_LABELS_PER_LEVEL ; i ++ )
     {
-      loadlevel -> labels [ i ] . pos . x = ( -1 ) ;
-      loadlevel -> labels [ i ] . pos . y = ( -1 ) ;
-      loadlevel -> labels [ i ] . label_name = "no_label_defined" ;
+	loadlevel -> labels [ i ] . pos . x = ( -1 ) ;
+	loadlevel -> labels [ i ] . pos . y = ( -1 ) ;
+	loadlevel -> labels [ i ] . label_name = "no_label_defined" ;
     }
-
-  //--------------------
-  // Now we look for the beginning and end of the map labels section
-  //
-  MapLabelSectionBegin = LocateStringInData( DataPointer , MAP_LABEL_BEGIN_STRING );
-  MapLabelSectionEnd = LocateStringInData( DataPointer , MAP_LABEL_END_STRING );
-
-  //--------------------
-  // We add a terminator at the end, but ONLY TEMPORARY.  The damage will be restored later!
-  //
-  PreservedLetter=MapLabelSectionEnd[0];
-  MapLabelSectionEnd[0]=0;
-  NumberOfMapLabelsInThisLevel = CountStringOccurences ( MapLabelSectionBegin , LABEL_ITSELF_ANNOUNCE_STRING ) ;
-  DebugPrintf( 1 , "\nNumber of map labels found in this level : %d." , NumberOfMapLabelsInThisLevel );
-
-  //--------------------
-  // Now we decode all the map label information
-  //
-  MapLabelPointer=MapLabelSectionBegin;
-  for ( i = 0 ; i < NumberOfMapLabelsInThisLevel ; i ++ )
+    
+    //--------------------
+    // Now we look for the beginning and end of the map labels section
+    //
+    MapLabelSectionBegin = LocateStringInData( DataPointer , MAP_LABEL_BEGIN_STRING );
+    MapLabelSectionEnd = LocateStringInData( DataPointer , MAP_LABEL_END_STRING );
+    
+    //--------------------
+    // We add a terminator at the end, but ONLY TEMPORARY.  The damage will be restored later!
+    //
+    PreservedLetter=MapLabelSectionEnd[0];
+    MapLabelSectionEnd[0]=0;
+    NumberOfMapLabelsInThisLevel = CountStringOccurences ( MapLabelSectionBegin , LABEL_ITSELF_ANNOUNCE_STRING ) ;
+    DebugPrintf( 1 , "\nNumber of map labels found in this level : %d." , NumberOfMapLabelsInThisLevel );
+    
+    //--------------------
+    // Now we decode all the map label information
+    //
+    MapLabelPointer=MapLabelSectionBegin;
+    for ( i = 0 ; i < NumberOfMapLabelsInThisLevel ; i ++ )
     {
-      MapLabelPointer = strstr ( MapLabelPointer + 1 , X_POSITION_OF_LABEL_STRING );
-      ReadValueFromString( MapLabelPointer , X_POSITION_OF_LABEL_STRING , "%d" , 
-			   &(loadlevel->labels[ i ].pos.x) , MapLabelSectionEnd );
-      ReadValueFromString( MapLabelPointer , Y_POSITION_OF_LABEL_STRING , "%d" , 
-			   &(loadlevel->labels[ i ].pos.y) , MapLabelSectionEnd );
-      loadlevel->labels[ i ].label_name = 
-	ReadAndMallocStringFromData ( MapLabelPointer , LABEL_ITSELF_ANNOUNCE_STRING , "\"" ) ;
-
-      DebugPrintf( 1 , "\npos.x=%d pos.y=%d label_name=\"%s\"" , loadlevel->labels[ i ].pos.x , 
-		   loadlevel->labels[ i ].pos.y , loadlevel->labels[ i ].label_name );
+	MapLabelPointer = strstr ( MapLabelPointer + 1 , X_POSITION_OF_LABEL_STRING );
+	ReadValueFromString( MapLabelPointer , X_POSITION_OF_LABEL_STRING , "%d" , 
+			     &(loadlevel->labels[ i ].pos.x) , MapLabelSectionEnd );
+	ReadValueFromString( MapLabelPointer , Y_POSITION_OF_LABEL_STRING , "%d" , 
+			     &(loadlevel->labels[ i ].pos.y) , MapLabelSectionEnd );
+	loadlevel->labels[ i ].label_name = 
+	    ReadAndMallocStringFromData ( MapLabelPointer , LABEL_ITSELF_ANNOUNCE_STRING , "\"" ) ;
+	
+	DebugPrintf( 1 , "\npos.x=%d pos.y=%d label_name=\"%s\"" , loadlevel->labels[ i ].pos.x , 
+		     loadlevel->labels[ i ].pos.y , loadlevel->labels[ i ].label_name );
     }
-
-  //--------------------
-  // Now we repair the damage done to the loaded level data
-  //
-  MapLabelSectionEnd[0]=PreservedLetter;
-
+    
+    //--------------------
+    // Now we repair the damage done to the loaded level data
+    //
+    MapLabelSectionEnd[0]=PreservedLetter;
+    
 }; // void DecodeMapLabelsOfThisLevel ( Level loadlevel , char* DataPointer );
 
 /* ----------------------------------------------------------------------
@@ -542,60 +546,60 @@ DecodeMapLabelsOfThisLevel ( Level loadlevel , char* DataPointer )
 void
 decode_obstacle_names_of_this_level ( Level loadlevel , char* DataPointer )
 {
-  int i;
-  char PreservedLetter;
-  char* obstacle_namePointer;
-  char* obstacle_nameSectionBegin;
-  char* obstacle_nameSectionEnd;
-  int NumberOfobstacle_namesInThisLevel;
-  int target_index;
+    int i;
+    char PreservedLetter;
+    char* obstacle_namePointer;
+    char* obstacle_nameSectionBegin;
+    char* obstacle_nameSectionEnd;
+    int NumberOfobstacle_namesInThisLevel;
+    int target_index;
 
-  //--------------------
-  // At first we set all the obstacle name pointers to NULL in order to
-  // mark them as unused.
-  //
-  for ( i = 0 ; i < MAX_OBSTACLE_NAMES_PER_LEVEL ; i ++ )
+    //--------------------
+    // At first we set all the obstacle name pointers to NULL in order to
+    // mark them as unused.
+    //
+    for ( i = 0 ; i < MAX_OBSTACLE_NAMES_PER_LEVEL ; i ++ )
     {
-      loadlevel -> obstacle_name_list [ i ] = NULL ;
+	loadlevel -> obstacle_name_list [ i ] = NULL ;
     }
-
-  //--------------------
-  // Now we look for the beginning and end of the map labels section
-  //
-  obstacle_nameSectionBegin = LocateStringInData( DataPointer , OBSTACLE_LABEL_BEGIN_STRING );
-  obstacle_nameSectionEnd = LocateStringInData( DataPointer , OBSTACLE_LABEL_END_STRING );
-
-  //--------------------
-  // We add a terminator at the end, but ONLY TEMPORARY.  The damage will be restored later!
-  //
-  PreservedLetter=obstacle_nameSectionEnd[0];
-  obstacle_nameSectionEnd[0]=0;
-  NumberOfobstacle_namesInThisLevel = CountStringOccurences ( obstacle_nameSectionBegin , OBSTACLE_LABEL_ANNOUNCE_STRING ) ;
-  DebugPrintf( 1 , "\nNumber of obstacle labels found in this level : %d." , NumberOfobstacle_namesInThisLevel );
-
-  //--------------------
-  // Now we decode all the map label information
-  //
-  obstacle_namePointer=obstacle_nameSectionBegin;
-  for ( i = 0 ; i < NumberOfobstacle_namesInThisLevel ; i ++ )
+    
+    //--------------------
+    // Now we look for the beginning and end of the map labels section
+    //
+    obstacle_nameSectionBegin = LocateStringInData( DataPointer , OBSTACLE_LABEL_BEGIN_STRING );
+    obstacle_nameSectionEnd = LocateStringInData( DataPointer , OBSTACLE_LABEL_END_STRING );
+    
+    //--------------------
+    // We add a terminator at the end, but ONLY TEMPORARY.  The damage will be restored later!
+    //
+    PreservedLetter=obstacle_nameSectionEnd[0];
+    obstacle_nameSectionEnd[0]=0;
+    NumberOfobstacle_namesInThisLevel = CountStringOccurences ( obstacle_nameSectionBegin , OBSTACLE_LABEL_ANNOUNCE_STRING ) ;
+    DebugPrintf( 1 , "\nNumber of obstacle labels found in this level : %d." , NumberOfobstacle_namesInThisLevel );
+    
+    //--------------------
+    // Now we decode all the map label information
+    //
+    obstacle_namePointer=obstacle_nameSectionBegin;
+    for ( i = 0 ; i < NumberOfobstacle_namesInThisLevel ; i ++ )
     {
-      obstacle_namePointer = strstr ( obstacle_namePointer + 1 , INDEX_OF_OBSTACLE_NAME );
-      ReadValueFromString( obstacle_namePointer , INDEX_OF_OBSTACLE_NAME , "%d" , 
-			   &(target_index) , obstacle_nameSectionEnd );
-
-      loadlevel -> obstacle_name_list [ target_index ] = 
-	ReadAndMallocStringFromData ( obstacle_namePointer , OBSTACLE_LABEL_ANNOUNCE_STRING , "\"" ) ;
-
-      DebugPrintf( 1 , "\nobstacle_name_index=%d obstacle_label_name=\"%s\"" , target_index ,
-		   loadlevel -> obstacle_name_list [ target_index ] );
+	obstacle_namePointer = strstr ( obstacle_namePointer + 1 , INDEX_OF_OBSTACLE_NAME );
+	ReadValueFromString( obstacle_namePointer , INDEX_OF_OBSTACLE_NAME , "%d" , 
+			     &(target_index) , obstacle_nameSectionEnd );
+	
+	loadlevel -> obstacle_name_list [ target_index ] = 
+	    ReadAndMallocStringFromData ( obstacle_namePointer , OBSTACLE_LABEL_ANNOUNCE_STRING , "\"" ) ;
+	
+	DebugPrintf( 1 , "\nobstacle_name_index=%d obstacle_label_name=\"%s\"" , target_index ,
+		     loadlevel -> obstacle_name_list [ target_index ] );
     }
-
-  //--------------------
-  // Now we repair the damage done to the loaded level data
-  //
-  obstacle_nameSectionEnd [ 0 ] = PreservedLetter;
-  
-
+    
+    //--------------------
+    // Now we repair the damage done to the loaded level data
+    //
+    obstacle_nameSectionEnd [ 0 ] = PreservedLetter;
+    
+    
 }; // void decode_obstacle_names_of_this_level ( loadlevel , DataPointer )
 
 /* ----------------------------------------------------------------------
@@ -605,93 +609,93 @@ decode_obstacle_names_of_this_level ( Level loadlevel , char* DataPointer )
 void
 glue_obstacles_to_floor_tiles_for_level ( int level_num )
 {
-  level* loadlevel = curShip . AllLevels [ level_num ] ;
-  int obstacle_counter = 2 ;
-  int x_tile;
-  int y_tile;
-  int glue_index;
-  int next_free_index;
-
-  //--------------------
-  // We clean out any obstacle glue information that might be still
-  // in this level.
-  //
-  for ( x_tile = 0 ; x_tile < loadlevel -> xlen ; x_tile ++ )
+    level* loadlevel = curShip . AllLevels [ level_num ] ;
+    int obstacle_counter = 2 ;
+    int x_tile;
+    int y_tile;
+    int glue_index;
+    int next_free_index;
+    
+    //--------------------
+    // We clean out any obstacle glue information that might be still
+    // in this level.
+    //
+    for ( x_tile = 0 ; x_tile < loadlevel -> xlen ; x_tile ++ )
     {
-      for ( y_tile = 0 ; y_tile < loadlevel -> ylen ; y_tile ++ )
+	for ( y_tile = 0 ; y_tile < loadlevel -> ylen ; y_tile ++ )
 	{
-	  for ( glue_index = 0 ; glue_index < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; glue_index ++ )
+	    for ( glue_index = 0 ; glue_index < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; glue_index ++ )
 	    {
-	      loadlevel -> map [ y_tile ] [ x_tile ] . obstacles_glued_to_here [ glue_index ] = (-1) ;
+		loadlevel -> map [ y_tile ] [ x_tile ] . obstacles_glued_to_here [ glue_index ] = (-1) ;
 	    }
 	}
     }  
-
-  //--------------------
-  // Each obstacles must to be anchored to exactly one (the closest!)
-  // map tile, so that we can find out obstacles 'close' to somewhere
-  // more easily...
-  //
-  for ( obstacle_counter = 0 ; obstacle_counter < MAX_OBSTACLES_ON_MAP ; obstacle_counter  ++ )
+    
+    //--------------------
+    // Each obstacles must to be anchored to exactly one (the closest!)
+    // map tile, so that we can find out obstacles 'close' to somewhere
+    // more easily...
+    //
+    for ( obstacle_counter = 0 ; obstacle_counter < MAX_OBSTACLES_ON_MAP ; obstacle_counter  ++ )
     {
-      //--------------------
-      // Maybe we're done here already...?
-      //
-      if ( loadlevel -> obstacle_list [ obstacle_counter ] . type <= (-1) ) break;
-
-      //--------------------
-      // We need to glue this one and we glue it to the closest map tile center we have...
-      // For this we need first to prepare some things...
-      //
-      x_tile = rintf ( loadlevel -> obstacle_list [ obstacle_counter ] . pos . x - 0.5 );
-      y_tile = rintf ( loadlevel -> obstacle_list [ obstacle_counter ] . pos . y - 0.5 );
-
-      if ( x_tile < 0 ) x_tile = 0;       if ( y_tile < 0 ) y_tile = 0 ;
-      if ( x_tile >= loadlevel -> xlen ) x_tile = loadlevel -> xlen - 1;
-      if ( y_tile >= loadlevel -> ylen ) y_tile = loadlevel -> ylen - 1;
-
-      next_free_index = MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ;
-      for ( glue_index = 0 ; glue_index < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; glue_index ++ )
+	//--------------------
+	// Maybe we're done here already...?
+	//
+	if ( loadlevel -> obstacle_list [ obstacle_counter ] . type <= (-1) ) break;
+	
+	//--------------------
+	// We need to glue this one and we glue it to the closest map tile center we have...
+	// For this we need first to prepare some things...
+	//
+	x_tile = rintf ( loadlevel -> obstacle_list [ obstacle_counter ] . pos . x - 0.5 );
+	y_tile = rintf ( loadlevel -> obstacle_list [ obstacle_counter ] . pos . y - 0.5 );
+	
+	if ( x_tile < 0 ) x_tile = 0;       if ( y_tile < 0 ) y_tile = 0 ;
+	if ( x_tile >= loadlevel -> xlen ) x_tile = loadlevel -> xlen - 1;
+	if ( y_tile >= loadlevel -> ylen ) y_tile = loadlevel -> ylen - 1;
+	
+	next_free_index = MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ;
+	for ( glue_index = 0 ; glue_index < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; glue_index ++ )
 	{
-	  if ( loadlevel -> map [ y_tile ] [ x_tile ] . obstacles_glued_to_here [ glue_index ] != (-1) )
+	    if ( loadlevel -> map [ y_tile ] [ x_tile ] . obstacles_glued_to_here [ glue_index ] != (-1) )
 	    {
-	      // DebugPrintf ( 0 , "\nHey, someone's already sitting here... moving to next index...: %d." ,
-	      // glue_index + 1 );
+		// DebugPrintf ( 0 , "\nHey, someone's already sitting here... moving to next index...: %d." ,
+		// glue_index + 1 );
 	    }
-	  else
+	    else
 	    {
-	      next_free_index = glue_index ;
-	      break;
+		next_free_index = glue_index ;
+		break;
 	    }
 	}
-
-      //--------------------
-      // some safety check against writing beyond the bonds of the
-      // array.
-      //
-      if ( next_free_index >= MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE )
+	
+	//--------------------
+	// some safety check against writing beyond the bonds of the
+	// array.
+	//
+	if ( next_free_index >= MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE )
 	{
-	  // 
-	  // We disable this VERY FREQUENT warning now...
-	  //   
-	  /*
-	  DebugPrintf ( 0 , "The position where the problem occured is: x_tile=%d, y_tile=%d." , x_tile , y_tile );
-	  GiveStandardErrorMessage ( __FUNCTION__  , "\
-FreedroidRPG was unable to glue a certain obstacle to the nearest map tile.\n\
-This bug can be resolved by simply raising a contant by one, but it needs to be done :)",
-				     PLEASE_INFORM, IS_WARNING_ONLY );
-	  */
-	  continue ;
+	    // 
+	    // We disable this VERY FREQUENT warning now...
+	    //   
+	    /*
+	      DebugPrintf ( 0 , "The position where the problem occured is: x_tile=%d, y_tile=%d." , x_tile , y_tile );
+	      GiveStandardErrorMessage ( __FUNCTION__  , "\
+	      FreedroidRPG was unable to glue a certain obstacle to the nearest map tile.\n\
+	      This bug can be resolved by simply raising a contant by one, but it needs to be done :)",
+	      PLEASE_INFORM, IS_WARNING_ONLY );
+	    */
+	    continue ;
 	}
-
-      //--------------------
-      // Now it can be glued...
-      //
-      loadlevel -> map [ y_tile ] [ x_tile ] . obstacles_glued_to_here [ next_free_index ] =
-	obstacle_counter ; 
-
+	
+	//--------------------
+	// Now it can be glued...
+	//
+	loadlevel -> map [ y_tile ] [ x_tile ] . obstacles_glued_to_here [ next_free_index ] =
+	    obstacle_counter ; 
+	
     }
-
+    
 }; // glue_obstacles_to_floor_tiles_for_level ( int level_num )
 
 /* ----------------------------------------------------------------------
@@ -952,32 +956,25 @@ GetMapBrick ( Level deck , float x , float y )
     //
     RoundX = (int) rintf (x) ;
     RoundY = (int) rintf (y) ;
-    
+
+    //--------------------
+    // First we check against the case of requests beyond the limits of
+    // the current level
+    //
     if ( RoundY >= deck->ylen)
-    {
-	// printf ("\n----------------------------------------------------------------------\nunsigned char GetMapBrick(Level deck, float x, float y): Error:\n BlockPosition from outside requested: y>ylen\n----------------------------------------------------------------------\n");
 	return ISO_COMPLETELY_DARK;
-	Terminate (-1);
-    }
     if ( RoundX >= deck->xlen)
-    {
-	// printf ("\n----------------------------------------------------------------------\nunsigned char GetMapBrick(Level deck, float x, float y): Error:\n BlockPosition from outside requested: x>xlen\n----------------------------------------------------------------------\n");
 	return ISO_COMPLETELY_DARK;
-	Terminate (-1);
-    }
     if ( RoundY < 0)
-    {
-	// printf ("\n----------------------------------------------------------------------\nunsigned char GetMapBrick(Level deck, float x, float y): Error:\n BlockPosition from outside requested: y<0\n----------------------------------------------------------------------\n");
 	return ISO_COMPLETELY_DARK;
-	Terminate (-1);
-    }
     if ( RoundX < 0)
-    {
-	// printf ("\n----------------------------------------------------------------------\nunsigned char GetMapBrick(Level deck, float x, float y): Error:\n BlockPosition from outside requested: x<0\n----------------------------------------------------------------------\n");
 	return ISO_COMPLETELY_DARK;
-	Terminate (-1);
-    }
-    
+
+    //--------------------
+    // Now we can return the floor tile information, but again we
+    // do so with sanitiy check for the range of allowed floor tile
+    // types and that...
+    //
     BrickWanted = deck -> map[ RoundY ][ RoundX ] . floor_value ;
     if ( BrickWanted >= ALL_ISOMETRIC_FLOOR_TILES )
     {
@@ -1067,43 +1064,42 @@ ActSpecialField ( int PlayerNum )
 void
 AnimateRefresh (void)
 {
-  static float InnerWaitCounter = 0;
-  int i;
-  Level RefreshLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
-
-  DebugPrintf (2, "\nvoid AnimateRefresh(void):  real function call confirmed.");
-
-  InnerWaitCounter += Frame_Time () * 3;
-
-  for (i = 0; i < MAX_REFRESHES_ON_LEVEL; i++)
+    static float InnerWaitCounter = 0;
+    int i;
+    Level RefreshLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
+    
+    DebugPrintf (2, "\nvoid AnimateRefresh(void):  real function call confirmed.");
+    
+    InnerWaitCounter += Frame_Time () * 3 ;
+    
+    for ( i = 0 ; i < MAX_REFRESHES_ON_LEVEL ; i++ )
     {
-      if ( RefreshLevel -> refresh_obstacle_indices [ i ] <= ( -1 ) ) break;
-
-      switch ( RefreshLevel -> obstacle_list [ RefreshLevel -> refresh_obstacle_indices [ i ] ] . type )
+	if ( RefreshLevel -> refresh_obstacle_indices [ i ] <= ( -1 ) ) break;
+	
+	switch ( RefreshLevel -> obstacle_list [ RefreshLevel -> refresh_obstacle_indices [ i ] ] . type )
 	{
-	case ISO_REFRESH_1:
-	case ISO_REFRESH_2:
-	case ISO_REFRESH_3:
-	case ISO_REFRESH_4:
-	case ISO_REFRESH_5:
-	  //--------------------
-	  // All is well :)
-	  //
-	  break;
-	default:
-	  // fprintf ( stderr, "\n*Pos: '%d'.\ni: %d\nPlayerNum: %d\nlevelnum: %d\nObstacle index: %d" , *Pos , i , PlayerNum , DoorLevel -> levelnum , door_obstacle_index );
-	  GiveStandardErrorMessage ( __FUNCTION__  , "\
+	    case ISO_REFRESH_1:
+	    case ISO_REFRESH_2:
+	    case ISO_REFRESH_3:
+	    case ISO_REFRESH_4:
+	    case ISO_REFRESH_5:
+		//--------------------
+		// All is well :)
+		//
+		break;
+	    default:
+		GiveStandardErrorMessage ( __FUNCTION__  , "\
 Error:  A refresh index pointing not to a refresh obstacles found.",
-				     PLEASE_INFORM, IS_FATAL );
-	  break;
+					   PLEASE_INFORM, IS_FATAL );
+		break;
 	}
-
-      RefreshLevel -> obstacle_list [ RefreshLevel -> refresh_obstacle_indices [ i ] ] . type = (((int) rintf (InnerWaitCounter)) % 5) + ISO_REFRESH_1;
-
+	
+	RefreshLevel -> obstacle_list [ RefreshLevel -> refresh_obstacle_indices [ i ] ] . type = (((int) rintf (InnerWaitCounter)) % 5) + ISO_REFRESH_1;
+	
     }	// for
-
-  DebugPrintf (2, "\nvoid AnimateRefresh(void):  end of function reached.");
-
+    
+    DebugPrintf ( 2 , "\nvoid AnimateRefresh(void):  end of function reached." );
+    
 }; // void AnimateRefresh ( void )
 
 /* ----------------------------------------------------------------------
@@ -1113,43 +1109,42 @@ Error:  A refresh index pointing not to a refresh obstacles found.",
 void
 AnimateTeleports (void)
 {
-  static float InnerWaitCounter = 0;
-  int i;
-  Level TeleportLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
-
-  DebugPrintf (2, "\nvoid AnimateTeleports(void):  real function call confirmed.");
-
-  InnerWaitCounter += Frame_Time () * 10;
-
-  for (i = 0; i < MAX_TELEPORTERS_ON_LEVEL; i++)
+    static float InnerWaitCounter = 0;
+    int i;
+    Level TeleportLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
+    
+    DebugPrintf (2, "\nvoid AnimateTeleports(void):  real function call confirmed.");
+    
+    InnerWaitCounter += Frame_Time () * 10;
+    
+    for (i = 0; i < MAX_TELEPORTERS_ON_LEVEL; i++)
     {
-      if ( TeleportLevel -> teleporter_obstacle_indices [ i ] <= ( -1 ) ) break;
-
-      switch ( TeleportLevel -> obstacle_list [ TeleportLevel -> teleporter_obstacle_indices [ i ] ] . type )
+	if ( TeleportLevel -> teleporter_obstacle_indices [ i ] <= ( -1 ) ) break;
+	
+	switch ( TeleportLevel -> obstacle_list [ TeleportLevel -> teleporter_obstacle_indices [ i ] ] . type )
 	{
-	case ISO_TELEPORTER_1:
-	case ISO_TELEPORTER_2:
-	case ISO_TELEPORTER_3:
-	case ISO_TELEPORTER_4:
-	case ISO_TELEPORTER_5:
-	  //--------------------
-	  // All is well :)
-	  //
-	  break;
-	default:
-	  // fprintf ( stderr, "\n*Pos: '%d'.\ni: %d\nPlayerNum: %d\nlevelnum: %d\nObstacle index: %d" , *Pos , i , PlayerNum , DoorLevel -> levelnum , door_obstacle_index );
-	  GiveStandardErrorMessage ( __FUNCTION__  , "\
+	    case ISO_TELEPORTER_1:
+	    case ISO_TELEPORTER_2:
+	    case ISO_TELEPORTER_3:
+	    case ISO_TELEPORTER_4:
+	    case ISO_TELEPORTER_5:
+		//--------------------
+		// All is well :)
+		//
+		break;
+	    default:
+		GiveStandardErrorMessage ( __FUNCTION__  , "\
 Error:  A teleporter index pointing not to a teleporter obstacle found.",
-				     PLEASE_INFORM, IS_FATAL );
-	  break;
+					   PLEASE_INFORM, IS_FATAL );
+		break;
 	}
-
-      TeleportLevel -> obstacle_list [ TeleportLevel -> teleporter_obstacle_indices [ i ] ] . type = (((int) rintf (InnerWaitCounter)) % 5) + ISO_TELEPORTER_1;
-
+	
+	TeleportLevel -> obstacle_list [ TeleportLevel -> teleporter_obstacle_indices [ i ] ] . type = (((int) rintf (InnerWaitCounter)) % 5) + ISO_TELEPORTER_1;
+	
     }	// for
-
-  DebugPrintf (2, "\nvoid AnimateTeleports(void):  end of function reached.");
-
+    
+    DebugPrintf (2, "\nvoid AnimateTeleports(void):  end of function reached.");
+    
 }; // void AnimateTeleports ( void )
 
 /* ----------------------------------------------------------------------
@@ -1159,78 +1154,78 @@ Error:  A teleporter index pointing not to a teleporter obstacle found.",
 int
 LoadShip (char *filename)
 {
-  char *ShipData;
-  char *endpt;				// Pointer to end-strings 
-  char *LevelStart[MAX_LEVELS];		// Pointer to a level-start
-  int level_anz;
-  int i;
-
+    char *ShipData;
+    char *endpt;				// Pointer to end-strings 
+    char *LevelStart[MAX_LEVELS];		// Pointer to a level-start
+    int level_anz;
+    int i;
+    
 #define END_OF_SHIP_DATA_STRING "*** End of Ship Data ***"
-
-  //--------------------
-  // Read the whole ship-data to memory 
-  //
-  ShipData = ReadAndMallocAndTerminateFile( filename , END_OF_SHIP_DATA_STRING ) ;
-
-  //--------------------
-  // Now we read the shipname information from the loaded data
-  //
-  curShip.AreaName = ReadAndMallocStringFromData ( ShipData , AREA_NAME_STRING , "\"" ) ;
-
-  //--------------------
-  // Now we count the number of levels and remember their start-addresses.
-  // This is done by searching for the LEVEL_END_STRING again and again
-  // until it is no longer found in the ship file.  good.
-  //
-  level_anz = 0;
-  endpt = ShipData;
-  LevelStart [ level_anz ] = ShipData;
-  while ((endpt = strstr (endpt, LEVEL_END_STRING)) != NULL)
+    
+    //--------------------
+    // Read the whole ship-data to memory 
+    //
+    ShipData = ReadAndMallocAndTerminateFile( filename , END_OF_SHIP_DATA_STRING ) ;
+    
+    //--------------------
+    // Now we read the shipname information from the loaded data
+    //
+    curShip.AreaName = ReadAndMallocStringFromData ( ShipData , AREA_NAME_STRING , "\"" ) ;
+    
+    //--------------------
+    // Now we count the number of levels and remember their start-addresses.
+    // This is done by searching for the LEVEL_END_STRING again and again
+    // until it is no longer found in the ship file.  good.
+    //
+    level_anz = 0;
+    endpt = ShipData;
+    LevelStart [ level_anz ] = ShipData;
+    while ( ( endpt = strstr ( endpt , LEVEL_END_STRING ) ) != NULL )
     {
-      endpt += strlen (LEVEL_END_STRING);
-      level_anz++;
-      LevelStart[level_anz] = endpt + 1;
+	endpt += strlen (LEVEL_END_STRING);
+	level_anz++;
+	LevelStart[level_anz] = endpt + 1;
     }
-  curShip . num_levels = level_anz;
-
-  //--------------------
-  // Now we can start to take apart the information about each level...
-  //
-  for (i = 0; i < curShip.num_levels; i++)
+    curShip . num_levels = level_anz;
+    
+    //--------------------
+    // Now we can start to take apart the information about each level...
+    //
+    for ( i = 0 ; i < curShip.num_levels ; i++ )
     {
-      curShip . AllLevels [ i ] = DecodeLoadedLeveldata ( LevelStart [ i ] );
-
-      decode_floor_tiles_of_this_level ( curShip . AllLevels [ i ] ) ;
-
-      //--------------------
-      // The level structure contains an array with the locations of all
-      // doors that might have to be opened or closed during the game.  This
-      // list is prepared in advance, so that we don't have to search for doors
-      // on all of the map during program runtime.
-      //
-      // It requires, that the obstacles have been read in already.
-      //
-      GetAllAnimatedMapTiles ( curShip . AllLevels [ i ] );
-
-      //--------------------
-      // We attach each obstacle to a floor tile, just so that we can sort
-      // out the obstacles 'close' more easily within an array of literally
-      // thousands of obstacles...
-      //
-      glue_obstacles_to_floor_tiles_for_level ( i );
-
-      ShowSaveLoadGameProgressMeter( (100*(i+1)) / level_anz , FALSE )  ;
-
+	curShip . AllLevels [ i ] = DecodeLoadedLeveldata ( LevelStart [ i ] );
+	
+	decode_floor_tiles_of_this_level ( curShip . AllLevels [ i ] ) ;
+	
+	//--------------------
+	// The level structure contains an array with the locations of all
+	// doors that might have to be opened or closed during the game.  This
+	// list is prepared in advance, so that we don't have to search for doors
+	// on all of the map during program runtime.
+	//
+	// It requires, that the obstacles have been read in already.
+	//
+	GetAllAnimatedMapTiles ( curShip . AllLevels [ i ] );
+	
+	//--------------------
+	// We attach each obstacle to a floor tile, just so that we can sort
+	// out the obstacles 'close' more easily within an array of literally
+	// thousands of obstacles...
+	//
+	glue_obstacles_to_floor_tiles_for_level ( i );
+	
+	ShowSaveLoadGameProgressMeter( ( 100 * ( i + 1 ) ) / level_anz , FALSE )  ;
+	
     }
-
-  //--------------------
-  // Now that all the information has been copied, we can free the loaded data
-  // again.
-  //
-  free ( ShipData );
-
-  return OK;
-
+    
+    //--------------------
+    // Now that all the information has been copied, we can free the loaded data
+    // again.
+    //
+    free ( ShipData );
+    
+    return OK;
+    
 }; // int LoadShip ( ... ) 
 
 /* ----------------------------------------------------------------------
@@ -1243,52 +1238,52 @@ LoadShip (char *filename)
  * ---------------------------------------------------------------------- */
 void CheckWaypointIntegrity(Level Lev)
 {
-  int i, j , k , l ;
-
-  for ( i = 0 ; i < MAXWAYPOINTS ; i++ )
+    int i, j , k , l ;
+    
+    for ( i = 0 ; i < MAXWAYPOINTS ; i++ )
     {
-      // Search for the first -1 entry:  j contains this number
-      for ( j = 0 ; j < MAX_WP_CONNECTIONS ; j++ )
+	// Search for the first -1 entry:  j contains this number
+	for ( j = 0 ; j < MAX_WP_CONNECTIONS ; j++ )
 	{
-	  if (Lev->AllWaypoints[i].connections[j] == -1 ) break;
+	    if (Lev->AllWaypoints[i].connections[j] == -1 ) break;
 	}
-
-      // have only non-(-1)-entries?  then we needn't do anything.
-      if ( j == MAX_WP_CONNECTIONS ) continue;
-      // have only one (-1) entry in the last position?  then we needn't do anything.
-      if ( j == MAX_WP_CONNECTIONS - 1 ) continue;
-      
-      // search for the next non-(-1)-entry AFTER the -1 entry fount first
-      for ( k = j + 1 ; k < MAX_WP_CONNECTIONS ; k ++ )
+	
+	// have only non-(-1)-entries?  then we needn't do anything.
+	if ( j == MAX_WP_CONNECTIONS ) continue;
+	// have only one (-1) entry in the last position?  then we needn't do anything.
+	if ( j == MAX_WP_CONNECTIONS - 1 ) continue;
+	
+	// search for the next non-(-1)-entry AFTER the -1 entry fount first
+	for ( k = j + 1 ; k < MAX_WP_CONNECTIONS ; k ++ )
 	{
-	  if (Lev->AllWaypoints[i].connections[k] != -1 ) break;
+	    if (Lev->AllWaypoints[i].connections[k] != -1 ) break;
 	}
-      
-      // none found? -- that would be good.  no corrections nescessary.  we can go.
-      if ( k == MAX_WP_CONNECTIONS ) continue;
-
-      // At this point we have found a non-(-1)-entry after a -1 entry.  that means work!!
-
-      DebugPrintf( 0 , "\n WARNING!! INCONSISTENSY FOUND ON LEVEL %d!! " , Lev->levelnum );
-      DebugPrintf( 0 , "\n NUMBER OF LEADING -1 ENTRIES: %d!! " , k-j );
-      DebugPrintf( 0 , "\n COMPENSATION ACTIVATED..." );
-
-      // So we move the later waypoints just right over the existing leading -1 entries
-
-      for ( l = j ; l < MAX_WP_CONNECTIONS-(k-j) ; l++ )
+	
+	// none found? -- that would be good.  no corrections nescessary.  we can go.
+	if ( k == MAX_WP_CONNECTIONS ) continue;
+	
+	// At this point we have found a non-(-1)-entry after a -1 entry.  that means work!!
+	
+	DebugPrintf( 0 , "\n WARNING!! INCONSISTENSY FOUND ON LEVEL %d!! " , Lev->levelnum );
+	DebugPrintf( 0 , "\n NUMBER OF LEADING -1 ENTRIES: %d!! " , k-j );
+	DebugPrintf( 0 , "\n COMPENSATION ACTIVATED..." );
+	
+	// So we move the later waypoints just right over the existing leading -1 entries
+	
+	for ( l = j ; l < MAX_WP_CONNECTIONS-(k-j) ; l++ )
 	{
-	  Lev->AllWaypoints[i].connections[l]=Lev->AllWaypoints[i].connections[l+(k-j)];
+	    Lev->AllWaypoints[i].connections[l]=Lev->AllWaypoints[i].connections[l+(k-j)];
 	}
-
-      // So the block of leading -1 entries has been eliminated
-      // BUT:  This may have introduced double entries of waypoints, e.g. if there was a -1
-      // at the start and all other entries filled!  WE DO NOT HANDLE THIS CASE.  SORRY.
-      // Also there might be a second sequence of -1 entries followed by another non-(-1)-entry
-      // sequence.  SORRY, THAT CASE WILL ALSO NOT BE HANDLES SEPARATELY.  Maybe later.
-      // For now this function will do perfectly well as it is now.
-
+	
+	// So the block of leading -1 entries has been eliminated
+	// BUT:  This may have introduced double entries of waypoints, e.g. if there was a -1
+	// at the start and all other entries filled!  WE DO NOT HANDLE THIS CASE.  SORRY.
+	// Also there might be a second sequence of -1 entries followed by another non-(-1)-entry
+	// sequence.  SORRY, THAT CASE WILL ALSO NOT BE HANDLES SEPARATELY.  Maybe later.
+	// For now this function will do perfectly well as it is now.
+	
     }
-
+    
 }; // void CheckWaypointIntegrity(Level Lev)
 
 /* ----------------------------------------------------------------------
@@ -1298,46 +1293,46 @@ void CheckWaypointIntegrity(Level Lev)
 void
 encode_obstacles_of_this_level ( char* LevelMem , Level Lev )
 {
-  int i;
-  char linebuf[5000];	  
-
-  //--------------------
-  // Now we write out a marker.  This marker is not really
-  // vital for reading in the file again, but it adds clearness to the files structure.
-  //
-  strcat(LevelMem, OBSTACLE_DATA_BEGIN_STRING);
-  strcat(LevelMem, "\n");
-
-  for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
+    int i;
+    char linebuf[5000];	  
+    
+    //--------------------
+    // Now we write out a marker.  This marker is not really
+    // vital for reading in the file again, but it adds clearness to the files structure.
+    //
+    strcat(LevelMem, OBSTACLE_DATA_BEGIN_STRING);
+    strcat(LevelMem, "\n");
+    
+    for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
     {
-      if ( Lev -> obstacle_list [ i ] . type == (-1) ) continue;
-
-      strcat( LevelMem , OBSTACLE_TYPE_STRING );
-      sprintf( linebuf , "%d " , Lev -> obstacle_list [ i ] . type );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , OBSTACLE_X_POSITION_STRING );
-      sprintf( linebuf , "%3.2f " , Lev -> obstacle_list [ i ] . pos . x );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , OBSTACLE_Y_POSITION_STRING );
-      sprintf( linebuf , "%3.2f " , Lev -> obstacle_list [ i ] . pos . y );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , OBSTACLE_LABEL_INDEX_STRING );
-      sprintf( linebuf , "%d " , Lev -> obstacle_list [ i ] . name_index );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , "\n" );
+	if ( Lev -> obstacle_list [ i ] . type == (-1) ) continue;
+	
+	strcat( LevelMem , OBSTACLE_TYPE_STRING );
+	sprintf( linebuf , "%d " , Lev -> obstacle_list [ i ] . type );
+	strcat( LevelMem , linebuf );
+	
+	strcat( LevelMem , OBSTACLE_X_POSITION_STRING );
+	sprintf( linebuf , "%3.2f " , Lev -> obstacle_list [ i ] . pos . x );
+	strcat( LevelMem , linebuf );
+	
+	strcat( LevelMem , OBSTACLE_Y_POSITION_STRING );
+	sprintf( linebuf , "%3.2f " , Lev -> obstacle_list [ i ] . pos . y );
+	strcat( LevelMem , linebuf );
+	
+	strcat( LevelMem , OBSTACLE_LABEL_INDEX_STRING );
+	sprintf( linebuf , "%d " , Lev -> obstacle_list [ i ] . name_index );
+	strcat( LevelMem , linebuf );
+	
+	strcat( LevelMem , "\n" );
     }
-  
-  //--------------------
-  // Now we write out a marker at the end of the map data.  This marker is not really
-  // vital for reading in the file again, but it adds clearness to the files structure.
-  //
-  strcat(LevelMem, OBSTACLE_DATA_END_STRING );
-  strcat(LevelMem, "\n");
-  
+    
+    //--------------------
+    // Now we write out a marker at the end of the map data.  This marker is not really
+    // vital for reading in the file again, but it adds clearness to the files structure.
+    //
+    strcat(LevelMem, OBSTACLE_DATA_END_STRING );
+    strcat(LevelMem, "\n");
+    
 }; // void encode_obstacles_of_this_level ( LevelMem , Lev )
 
 /* ----------------------------------------------------------------------
@@ -1347,40 +1342,40 @@ encode_obstacles_of_this_level ( char* LevelMem , Level Lev )
 void
 EncodeMapLabelsOfThisLevel ( char* LevelMem , Level Lev )
 {
-  int i;
-  char linebuf[5000];	  
-
-  //--------------------
-  // Now we write out a marker at the end of the map data.  This marker is not really
-  // vital for reading in the file again, but it adds clearness to the files structure.
-  //
-  strcat(LevelMem, MAP_LABEL_BEGIN_STRING);
-  strcat(LevelMem, "\n");
-
-  for ( i = 0 ; i < MAX_MAP_LABELS_PER_LEVEL ; i ++ )
+    int i;
+    char linebuf[5000];	  
+    
+    //--------------------
+    // Now we write out a marker at the end of the map data.  This marker is not really
+    // vital for reading in the file again, but it adds clearness to the files structure.
+    //
+    strcat(LevelMem, MAP_LABEL_BEGIN_STRING);
+    strcat(LevelMem, "\n");
+    
+    for ( i = 0 ; i < MAX_MAP_LABELS_PER_LEVEL ; i ++ )
     {
-      if ( Lev -> labels [ i ] . pos . x == (-1) ) continue;
-
-      strcat( LevelMem , X_POSITION_OF_LABEL_STRING );
-      sprintf( linebuf , "%d " , Lev -> labels [ i ] . pos . x );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , Y_POSITION_OF_LABEL_STRING );
-      sprintf( linebuf , "%d " , Lev -> labels [ i ] . pos . y );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , LABEL_ITSELF_ANNOUNCE_STRING );
-      strcat( LevelMem , Lev -> labels [ i ] . label_name );
-      strcat( LevelMem , "\"\n" );
+	if ( Lev -> labels [ i ] . pos . x == (-1) ) continue;
+	
+	strcat( LevelMem , X_POSITION_OF_LABEL_STRING );
+	sprintf( linebuf , "%d " , Lev -> labels [ i ] . pos . x );
+	strcat( LevelMem , linebuf );
+	
+	strcat( LevelMem , Y_POSITION_OF_LABEL_STRING );
+	sprintf( linebuf , "%d " , Lev -> labels [ i ] . pos . y );
+	strcat( LevelMem , linebuf );
+	
+	strcat( LevelMem , LABEL_ITSELF_ANNOUNCE_STRING );
+	strcat( LevelMem , Lev -> labels [ i ] . label_name );
+	strcat( LevelMem , "\"\n" );
     }
-  
-  //--------------------
-  // Now we write out a marker at the end of the map data.  This marker is not really
-  // vital for reading in the file again, but it adds clearness to the files structure.
-  //
-  strcat(LevelMem, MAP_LABEL_END_STRING);
-  strcat(LevelMem, "\n");
-  
+    
+    //--------------------
+    // Now we write out a marker at the end of the map data.  This marker is not really
+    // vital for reading in the file again, but it adds clearness to the files structure.
+    //
+    strcat ( LevelMem , MAP_LABEL_END_STRING );
+    strcat ( LevelMem , "\n" );
+    
 }; // void EncodeMapLabelsOfThisLevel ( char* LevelMem , Level Lev )
 
 /* ----------------------------------------------------------------------
@@ -1390,36 +1385,36 @@ EncodeMapLabelsOfThisLevel ( char* LevelMem , Level Lev )
 void
 encode_obstacle_names_of_this_level ( char* LevelMem , Level Lev )
 {
-  int i;
-  char linebuf[5000];	  
-
-  //--------------------
-  // Now we write out a marker at the end of the map data.  This marker is not really
-  // vital for reading in the file again, but it adds clearness to the files structure.
-  //
-  strcat(LevelMem, OBSTACLE_LABEL_BEGIN_STRING);
-  strcat(LevelMem, "\n");
-
-  for ( i = 0 ; i < MAX_OBSTACLE_NAMES_PER_LEVEL ; i ++ )
+    int i;
+    char linebuf[5000];	  
+    
+    //--------------------
+    // Now we write out a marker at the end of the map data.  This marker is not really
+    // vital for reading in the file again, but it adds clearness to the files structure.
+    //
+    strcat(LevelMem, OBSTACLE_LABEL_BEGIN_STRING);
+    strcat(LevelMem, "\n");
+    
+    for ( i = 0 ; i < MAX_OBSTACLE_NAMES_PER_LEVEL ; i ++ )
     {
-      if ( Lev -> obstacle_name_list [ i ] == NULL ) continue;
-
-      strcat( LevelMem , INDEX_OF_OBSTACLE_NAME );
-      sprintf( linebuf , "%d " , i );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , OBSTACLE_LABEL_ANNOUNCE_STRING );
-      strcat( LevelMem , Lev -> obstacle_name_list [ i ] );
-      strcat( LevelMem , "\"\n" );
+	if ( Lev -> obstacle_name_list [ i ] == NULL ) continue;
+	
+	strcat( LevelMem , INDEX_OF_OBSTACLE_NAME );
+	sprintf( linebuf , "%d " , i );
+	strcat( LevelMem , linebuf );
+	
+	strcat( LevelMem , OBSTACLE_LABEL_ANNOUNCE_STRING );
+	strcat( LevelMem , Lev -> obstacle_name_list [ i ] );
+	strcat( LevelMem , "\"\n" );
     }
-  
-  //--------------------
-  // Now we write out a marker at the end of the map data.  This marker is not really
-  // vital for reading in the file again, but it adds clearness to the files structure.
-  //
-  strcat(LevelMem, OBSTACLE_LABEL_END_STRING);
-  strcat(LevelMem, "\n\n");
-  
+    
+    //--------------------
+    // Now we write out a marker at the end of the map data.  This marker is not really
+    // vital for reading in the file again, but it adds clearness to the files structure.
+    //
+    strcat(LevelMem, OBSTACLE_LABEL_END_STRING);
+    strcat(LevelMem, "\n\n");
+    
 }; // void encode_obstacle_names_of_this_level ( char* LevelMem , Level Lev )
 
 /* ----------------------------------------------------------------------
@@ -1429,40 +1424,40 @@ encode_obstacle_names_of_this_level ( char* LevelMem , Level Lev )
 void
 EncodeStatementsOfThisLevel ( char* LevelMem , Level Lev )
 {
-  int i;
-  char linebuf[5000];	  
-
-  //--------------------
-  // Now we write out a marker at the end of the map data.  This marker is not really
-  // vital for reading in the file again, but it adds clearness to the files structure.
-  //
-  strcat(LevelMem, STATEMENT_BEGIN_STRING);
-  strcat(LevelMem, "\n");
-
-  for ( i = 0 ; i < MAX_STATEMENTS_PER_LEVEL ; i ++ )
+    int i;
+    char linebuf[5000];	  
+    
+    //--------------------
+    // Now we write out a marker at the end of the map data.  This marker is not really
+    // vital for reading in the file again, but it adds clearness to the files structure.
+    //
+    strcat(LevelMem, STATEMENT_BEGIN_STRING);
+    strcat(LevelMem, "\n");
+    
+    for ( i = 0 ; i < MAX_STATEMENTS_PER_LEVEL ; i ++ )
     {
-      if ( Lev->StatementList[ i ].x == (-1) ) continue;
-
-      strcat( LevelMem , X_POSITION_OF_STATEMENT_STRING );
-      sprintf( linebuf , "%d " , Lev->StatementList[ i ].x );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , Y_POSITION_OF_STATEMENT_STRING );
-      sprintf( linebuf , "%d " , Lev->StatementList[ i ].y );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , STATEMENT_ITSELF_ANNOUNCE_STRING );
-      strcat( LevelMem , Lev->StatementList[ i ].Statement_Text );
-      strcat( LevelMem , "\"\n" );
+	if ( Lev->StatementList[ i ].x == (-1) ) continue;
+	
+	strcat( LevelMem , X_POSITION_OF_STATEMENT_STRING );
+	sprintf( linebuf , "%d " , Lev->StatementList[ i ].x );
+	strcat( LevelMem , linebuf );
+	
+	strcat( LevelMem , Y_POSITION_OF_STATEMENT_STRING );
+	sprintf( linebuf , "%d " , Lev->StatementList[ i ].y );
+	strcat( LevelMem , linebuf );
+	
+	strcat( LevelMem , STATEMENT_ITSELF_ANNOUNCE_STRING );
+	strcat( LevelMem , Lev->StatementList[ i ].Statement_Text );
+	strcat( LevelMem , "\"\n" );
     }
-  
-  //--------------------
-  // Now we write out a marker at the end of the map data.  This marker is not really
-  // vital for reading in the file again, but it adds clearness to the files structure.
-  //
-  strcat(LevelMem, STATEMENT_END_STRING);
-  strcat(LevelMem, "\n\n");
-  
+    
+    //--------------------
+    // Now we write out a marker at the end of the map data.  This marker is not really
+    // vital for reading in the file again, but it adds clearness to the files structure.
+    //
+    strcat(LevelMem, STATEMENT_END_STRING);
+    strcat(LevelMem, "\n\n");
+    
 }; // void EncodeStatementsOfThisLevel ( char* LevelMem , Level Lev )
 
 /* ----------------------------------------------------------------------
