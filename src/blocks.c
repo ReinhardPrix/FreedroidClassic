@@ -135,8 +135,8 @@ Load_Item_Surfaces( void )
   ItemImageList[ 14 ].inv_size.y = 2;
   ItemImageList[ 15 ].inv_size.x = 2;
   ItemImageList[ 15 ].inv_size.y = 3;
-  ItemImageList[ 16 ].inv_size.x = 1;
-  ItemImageList[ 16 ].inv_size.y = 1;
+  ItemImageList[ 16 ].inv_size.x = 2;
+  ItemImageList[ 16 ].inv_size.y = 2;
   ItemImageList[ 17 ].inv_size.x = 1;
   ItemImageList[ 17 ].inv_size.y = 1;
   ItemImageList[ 18 ].inv_size.x = 2;
@@ -422,7 +422,6 @@ Update_Tux_Working_Copy ( void )
     {
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
-	  // SDL_FreeSurface ( TuxWorkingCopy[i] );
 	  SDL_SetAlpha( TuxMotionArchetypes[3][i] , 0 , SDL_ALPHA_OPAQUE );
 	  SDL_SetColorKey ( TuxMotionArchetypes[3][i] , SDL_SRCCOLORKEY, SDL_MapRGB( TuxMotionArchetypes[3][i]->format, 255, 0, 255) ); 
 	  SDL_BlitSurface ( TuxMotionArchetypes[3][i] , NULL , TuxWorkingCopy[i] , NULL );
@@ -430,6 +429,19 @@ Update_Tux_Working_Copy ( void )
     }
   
 
+  //--------------------
+  // Now as the last part, we blit the hat OVER it.
+  //
+  if ( ( Me.special_item.type != (-1) ) && ( ! Me.special_item.currently_held_in_hand ) )
+    {
+      for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
+	{
+	  SDL_SetAlpha( TuxMotionArchetypes[5][i] , 0 , SDL_ALPHA_OPAQUE );
+	  SDL_SetColorKey ( TuxMotionArchetypes[5][i] , SDL_SRCCOLORKEY, SDL_MapRGB( TuxMotionArchetypes[5][i]->format, 255, 0, 255) ); 
+	  SDL_BlitSurface ( TuxMotionArchetypes[5][i] , NULL , TuxWorkingCopy[i] , NULL );
+	}
+    }
+  
 }; // void Update_Tux_Working_Copy ( void )
 
 
