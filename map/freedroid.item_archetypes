@@ -805,7 +805,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=3
 Item as defensive item: ac_bonus_modifier=2
 Base item duration=10 plus duration modifier=8
-File or directory name for inventory image="inventory_image_24.png"
+File or directory name for inventory image="buckler/inv_image.png"
 Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
 Base list price=30
 Item description text="Your run of the mill shield, nothing special. Low priced and does its job."
@@ -1195,7 +1195,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=8
 Item as defensive item: ac_bonus_modifier=4
 Base item duration=20 plus duration modifier=10
-File or directory name for inventory image="inventory_image_39.png"
+File or directory name for inventory image="armour_robe/inv_image.png"
 Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
 Base list price=75
 Item description text="A light garment that is basically more for looks than defense."
@@ -1351,7 +1351,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=12
 Item as defensive item: ac_bonus_modifier=4
 Base item duration=25 plus duration modifier=10
-File or directory name for inventory image="inventory_image_43.png"
+File or directory name for inventory image="standard_shield/inv_image.png"
 Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
 Base list price=250
 Item description text="Better than a buckler, but only a bit more effective."
@@ -1546,7 +1546,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
-File or directory name for inventory image="inventory_image_69.png"
+File or directory name for inventory image="club/inv_image.png"
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=50
 Item description text="Many would think that in this day and age a club would be more suited for a Neanderthal&but then again they didnt have the extra laser edge to depend on. "
@@ -1741,7 +1741,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=6
 Item as defensive item: ac_bonus_modifier=4
 Base item duration=10 plus duration modifier=8
-File or directory name for inventory image="inventory_image_6.png"
+File or directory name for inventory image="small_shield/inv_image.png"
 Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
 Base list price=90
 Item description text="A small, lightweight and pretty straightforward shield. Provides decent protection."
@@ -1780,7 +1780,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_32.png"
+File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.wav"
 Base list price=1000
 Item description text="An incredible healing spell, in some cases the only one you will ever need."
@@ -1819,7 +1819,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_32.png"
+File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.wav"
 Base list price=1000
 Item description text="Teleporting takes on a whole new face with this book-use it wisely."
@@ -1858,7 +1858,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_32.png"
+File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.wav"
 Base list price=1000
 Item description text="The destructive magic of this bookis best used in tight situations, when the enemies have an upper hand."
@@ -1897,7 +1897,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_32.png"
+File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.wav"
 Base list price=1000
 Item description text="Another damaging book this one having a similar effect to dropping a house on an enemy."
@@ -2053,7 +2053,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_41.png"
+File or directory name for inventory image="sniper_wristband/inv_image.png"
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=0
 Item description text="Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -2092,7 +2092,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_42.png"
+File or directory name for inventory image="hacker_wristband/inv_image.png"
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=0
 Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -2170,7 +2170,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=6
 Item as defensive item: ac_bonus_modifier=8
 Base item duration=28 plus duration modifier=15
-File or directory name for inventory image="inventory_image_38.png"
+File or directory name for inventory image="helmet_skull_cap/inv_image.png"
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=275
 Item description text="Top of the line head gear, manages to protect against a myriad of close range and long range attacks."
@@ -2248,7 +2248,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=20
 Item as defensive item: ac_bonus_modifier=4
 Base item duration=35 plus duration modifier=20
-File or directory name for inventory image="inventory_image_44.png"
+File or directory name for inventory image="large_shield/inv_image.png"
 Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
 Base list price=450
 Item description text="A powerful shield in large size."
@@ -2273,13 +2273,13 @@ Item as gun: required ammunition type="none"
 
 // Item No. 57
 ** Start of new item specification subsection **
-Item name="Eating fork"
-Position_X=161
-Position_Y=185
+Item name="Dummy Entry For Replacement"
+Position_X=261
+Position_Y=71
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
-Item uses rotation series with prefix="eating_fork"
+Item uses rotation series with prefix="NONE_AVAILABLE_YET"
 Items of this type collect together in inventory="yes"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
@@ -2287,9 +2287,9 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_64.png"
+File or directory name for inventory image="inventory_image_7.png"
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
-Base list price=12
+Base list price=50
 Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
@@ -2312,13 +2312,13 @@ Item as gun: required ammunition type="none"
 
 // Item No. 58
 ** Start of new item specification subsection **
-Item name="Eating Plate"
-Position_X=131
-Position_Y=145
+Item name="Dummy Entry For Replacement"
+Position_X=244
+Position_Y=91
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
-Item uses rotation series with prefix="eating_plate"
+Item uses rotation series with prefix="NONE_AVAILABLE_YET"
 Items of this type collect together in inventory="yes"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
@@ -2326,9 +2326,9 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_65.png"
+File or directory name for inventory image="inventory_image_7.png"
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
-Base list price=15
+Base list price=50
 Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
@@ -2365,7 +2365,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_47.png"
+File or directory name for inventory image="dixons_toolbox/inv_image.png"
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=150
 Item description text="This is a common teleporter service toolbox.  It's complete and orderly, though a few dents on the outside give prof of frequent use.  'C. Dixon' is carved into the outside with fine print."
@@ -2443,7 +2443,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_48.png"
+File or directory name for inventory image="plasma_transistor/inv_image.png"
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=10
 Item description text="This is an standard part within many robots types."
@@ -2482,7 +2482,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_49.png"
+File or directory name for inventory image="superconducting_relay_unit/inv_image.png"
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=10
 Item description text="This is an standard part within many robots types."
@@ -2521,7 +2521,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_50.png"
+File or directory name for inventory image="antimatter_matter_converter/inv_image.png"
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=10
 Item description text="This is an standard part within many robot types."
@@ -2560,7 +2560,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_51.png"
+File or directory name for inventory image="entropy_inverter/inv_image.png"
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=10
 Item description text="This is an standard part within many robots types."
@@ -2638,7 +2638,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_54.png"
+File or directory name for inventory image="ammo_plasma_bullet/inv_image.png"
 Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
 Base list price=1
 Item description text="This is the most common ammunition for modern plasma weapons."
@@ -2677,7 +2677,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_53.png"
+File or directory name for inventory image="ammo_laser_crystal/inv_image.png"
 Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
 Base list price=2
 Item description text="This is standard ammunition for most modern laser rifles."
@@ -2716,7 +2716,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_55.png"
+File or directory name for inventory image="ammo_exterminator_sphere/inv_image.png"
 Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
 Base list price=5
 Item description text="Exterminators need this kind of ammunition.  It can cause skin irritations due to leaking extermination radiation when carried close to the body for long time."
@@ -2755,7 +2755,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_56.png"
+File or directory name for inventory image="vmx_grenade/inv_image.png"
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=250
 Item description text="This grenade has about the same effect as the dreaded radial vmx wave spell."
@@ -2794,7 +2794,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_57.png"
+File or directory name for inventory image="emp_grenade/inv_image.png"
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=150
 Item description text="This grenade has about the same effect as the dreaded radial emp wave spell."
@@ -2819,7 +2819,7 @@ Item as gun: required ammunition type="none"
 
 // Item No. 71
 ** Start of new item specification subsection **
-Item name="Common Desk Lamp"
+Item name="Desk Lamp"
 Position_X=134
 Position_Y=187
 Item can be applied in combat="no"
@@ -2833,7 +2833,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_58.png"
+File or directory name for inventory image="desk_lamp/inv_image.png"
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=32
 Item description text="What would modern science be without this important item?"
@@ -2872,7 +2872,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_59.png"
+File or directory name for inventory image="plasma_grenade/inv_image.png"
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=250
 Item description text="This grenade has about the same effect as the dreaded radial fire wave spell."
@@ -2989,7 +2989,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_33.png"
+File or directory name for inventory image="map_maker/inv_image.png"
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=18
 Item description text="This small device automatically collects data about the area within a range of 7 times 7 meters and draws a small-scale plan of the immediate surroundings.  Because of it's very tiny display, it needs to be held closely to the eye and the image will then be projected directly into the eyeball of the user.  Still, the collected map data will be split up by the device into several sectors for convenient viewing."
@@ -3028,7 +3028,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_61.png"
+File or directory name for inventory image="pill_strength/inv_image.png"
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=250
 Item description text="These pills permanently raise strength within a character by one point each.  They work on a nano-technological basis.  Consult you physician, the receipt or pharmacy experts for details on intended effects, possible interactions and side effects of this drug."
@@ -3067,7 +3067,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_60.png"
+File or directory name for inventory image="pill_dexterity/inv_image.png"
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=250
 Item description text="These pills permanently raise dexterity within a character by one point each.  They work on a nano-technological basis.  Consult you physician, the receipt or pharmacy experts for details on intended effects, possible interactions and side effects of this drug."
@@ -3106,7 +3106,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_62.png"
+File or directory name for inventory image="pill_magic/inv_image.png"
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=250
 Item description text="These pills permanently raise magic within a character by one point each.  They work on a nano-technological basis.  Consult you physician, the receipt or pharmacy experts for details on intended effects, possible interactions and side effects of this drug."
@@ -3145,7 +3145,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_63.png"
+File or directory name for inventory image="brain_enlargement_antidode/inv_image.png"
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=50
 Item description text="These pills can reverse the harmful effects of the 'brain enlargement pills' that are publicly sold via the net.  The galaxy-wide guild of medics has recommended not to respond to these adds at all, while attempts to entirely ban the distribution of those pills was never completely successful."
@@ -3209,7 +3209,7 @@ Item as gun: required ammunition type="none"
 
 // Item No. 81
 ** Start of new item specification subsection **
-Item name="(Eating) Plate"
+Item name="Plate"
 Position_X=157
 Position_Y=135
 Item can be applied in combat="no"
@@ -3262,7 +3262,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_66.png"
+File or directory name for inventory image="drinking_mug/inv_image.png"
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=50
 Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
@@ -3301,7 +3301,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_32.png"
+File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.wav"
 Base list price=1000
 Item description text="An incredible healing spell, in some cases the only one you will ever need."
@@ -3340,7 +3340,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_32.png"
+File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.wav"
 Base list price=1000
 Item description text="An incredible healing spell, in some cases the only one you will ever need."
@@ -3379,7 +3379,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_32.png"
+File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.wav"
 Base list price=1000
 Item description text="An incredible healing spell, in some cases the only one you will ever need."
@@ -3418,7 +3418,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_32.png"
+File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.wav"
 Base list price=1000
 Item description text="An incredible healing spell, in some cases the only one you will ever need."
@@ -3457,7 +3457,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_32.png"
+File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.wav"
 Base list price=1000
 Item description text="An incredible healing spell, in some cases the only one you will ever need."
@@ -3496,7 +3496,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_32.png"
+File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.wav"
 Base list price=1000
 Item description text="An incredible healing spell, in some cases the only one you will ever need."
@@ -3535,7 +3535,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_32.png"
+File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.wav"
 Base list price=1000
 Item description text="An incredible healing spell, in some cases the only one you will ever need."
@@ -3574,7 +3574,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_32.png"
+File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.wav"
 Base list price=1000
 Item description text="An incredible healing spell, in some cases the only one you will ever need."
@@ -3613,7 +3613,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_32.png"
+File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.wav"
 Base list price=800
 Item description text="This manual allows to learn the identify spell."
@@ -3644,7 +3644,7 @@ Position_Y=91
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
-Item uses rotation series with prefix="drinking_mug"
+Item uses rotation series with prefix="NONE_AVAILABLE_YET"
 Items of this type collect together in inventory="yes"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
@@ -3652,7 +3652,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_66.png"
+File or directory name for inventory image="inventory_image_7.png"
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=50
 Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
@@ -3683,7 +3683,7 @@ Position_Y=126
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
-Item uses rotation series with prefix="drinking_mug"
+Item uses rotation series with prefix="NONE_AVAILABLE_YET"
 Items of this type collect together in inventory="yes"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
@@ -3691,7 +3691,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_66.png"
+File or directory name for inventory image="inventory_image_7.png"
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=50
 Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
@@ -3722,7 +3722,7 @@ Position_Y=164
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
-Item uses rotation series with prefix="drinking_mug"
+Item uses rotation series with prefix="NONE_AVAILABLE_YET"
 Items of this type collect together in inventory="yes"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
@@ -3730,7 +3730,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_66.png"
+File or directory name for inventory image="inventory_image_7.png"
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=50
 Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
@@ -3761,7 +3761,7 @@ Position_Y=200
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
-Item uses rotation series with prefix="drinking_mug"
+Item uses rotation series with prefix="NONE_AVAILABLE_YET"
 Items of this type collect together in inventory="yes"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
@@ -3769,7 +3769,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_66.png"
+File or directory name for inventory image="inventory_image_7.png"
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=50
 Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
@@ -3800,7 +3800,7 @@ Position_Y=235
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
-Item uses rotation series with prefix="drinking_mug"
+Item uses rotation series with prefix="NONE_AVAILABLE_YET"
 Items of this type collect together in inventory="yes"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
@@ -3808,7 +3808,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_66.png"
+File or directory name for inventory image="inventory_image_7.png"
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=50
 Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
@@ -3839,7 +3839,7 @@ Position_Y=267
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
-Item uses rotation series with prefix="drinking_mug"
+Item uses rotation series with prefix="NONE_AVAILABLE_YET"
 Items of this type collect together in inventory="yes"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
@@ -3847,7 +3847,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_66.png"
+File or directory name for inventory image="inventory_image_7.png"
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=50
 Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
@@ -3878,7 +3878,7 @@ Position_Y=301
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
-Item uses rotation series with prefix="drinking_mug"
+Item uses rotation series with prefix="NONE_AVAILABLE_YET"
 Items of this type collect together in inventory="yes"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
@@ -3886,7 +3886,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_66.png"
+File or directory name for inventory image="inventory_image_7.png"
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=50
 Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
@@ -3917,7 +3917,7 @@ Position_Y=333
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
-Item uses rotation series with prefix="drinking_mug"
+Item uses rotation series with prefix="NONE_AVAILABLE_YET"
 Items of this type collect together in inventory="yes"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
@@ -3925,7 +3925,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_66.png"
+File or directory name for inventory image="inventory_image_7.png"
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=50
 Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
@@ -3956,7 +3956,7 @@ Position_Y=367
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
-Item uses rotation series with prefix="drinking_mug"
+Item uses rotation series with prefix="NONE_AVAILABLE_YET"
 Items of this type collect together in inventory="yes"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
@@ -3964,7 +3964,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_66.png"
+File or directory name for inventory image="inventory_image_7.png"
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=50
 Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
@@ -4471,7 +4471,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=20 plus duration modifier=10
-File or directory name for inventory image="inventory_image_68.png"
+File or directory name for inventory image="mace/inv_image.png"
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=120
 Item description text="A mace, good for crushing bones."
@@ -4510,7 +4510,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_33.png"
+File or directory name for inventory image="inventory_image_7.png"
 Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
 Base list price=1000
 Item description text="This isn't really any item of the game.  It's just a dummy/error value!"
