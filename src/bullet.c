@@ -100,18 +100,22 @@ MoveBullets (void)
 @Int:
 * $Function----------------------------------------------------------*/
 void
-DeleteBullet (int Bulletnumber)//, bool with_blast)
+DeleteBullet (int Bulletnumber)
 {
   Bullet CurBullet = &AllBullets[Bulletnumber];
   int i;
 
   if (CurBullet->type == OUT) // ignore dead bullets
     return;
+
   //--------------------
   // At first we generate the blast at the collision spot of the bullet,
   // cause later, after the bullet is deleted, it will be hard to know
   // the correct location ;)
-  StartBlast (CurBullet->pos.x, CurBullet->pos.y, BULLETBLAST);
+
+  // RP (18/11/02): nay, we do that manually before DeleteBullet() now,
+  // --> not all bullets should create Blasts (i.e. not if droid was hit)
+  //  StartBlast (CurBullet->pos.x, CurBullet->pos.y, BULLETBLAST);
 
   //--------------------
   // maybe, the bullet had several SDL_Surfaces attached to it.  Then we need to 
@@ -251,7 +255,7 @@ GetDirection (point robo, point bul)
 
 /*@Function============================================================
 @Desc: CheckBulletCollisions(int num)
-			checkt Collisions des Bullets Num mit Hintergrund && Druids
+	checkt Collisions des Bullets Num mit Hintergrund && Druids
 
 @Ret: void
 @Int:
@@ -345,6 +349,7 @@ CheckBulletCollisions (int num)
 
 	  if (IsPassable (CurBullet->pos.x, CurBullet->pos.y, CENTER) != CENTER)
 	    {
+	      StartBlast (CurBullet->pos.x, CurBullet->pos.y, BULLETBLAST);
 	      DeleteBullet (num);
 	      return;			
 	    }
@@ -384,8 +389,6 @@ CheckBulletCollisions (int num)
 		  // operation as well
 		  AllEnemys[i].AdvancedCommand = 0;
 
-		  // We might also start a little bullet-blast even after the
-		  // collision of the bullet with an enemy (not in Paradroid)
 		  DeleteBullet( num );
 
 		  Enemy_Post_Bullethit_Behaviour( i );
@@ -442,22 +445,25 @@ CheckBlastCollisions (int num)
   int i;
   int level = CurLevel->levelnum;
   Blast CurBlast = &(AllBlasts[num]);
+  Bullet CurBullet;
   // static int RHBZaehler = 0;
 
   /* check Blast-Bullet Collisions and kill hit Bullets */
   for (i = 0; i < MAXBULLETS; i++)
     {
-      if (AllBullets[i].type == OUT)
+      CurBullet = &AllBullets[i];
+      if (CurBullet->type == OUT)
 	continue;
       if (CurBlast->phase > 4)
 	break;
 
-      if (abs (AllBullets[i].pos.x - CurBlast->PX) < Blast_Radius)
-	if (abs (AllBullets[i].pos.y - CurBlast->PY) < Blast_Radius)
+      if (abs (CurBullet->pos.x - CurBlast->PX) < Blast_Radius)
+	if (abs (CurBullet->pos.y - CurBlast->PY) < Blast_Radius)
 	  {
 	    /* KILL Bullet silently */
 	    //AllBullets[i].type = OUT;
 	    //AllBullets[i].mine = FALSE;
+	    StartBlast (CurBullet->pos.x, CurBullet->pos.y, BULLETBLAST);
 	    DeleteBullet( i );
 	  }
 

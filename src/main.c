@@ -126,9 +126,9 @@ main (int argc, char *const argv[])
 
 	  MoveBullets ();   // please leave this in front of graphics output, so that time_in_frames always starts with 1
 
-	  for (i = 0; i < MAXBULLETS; i++) CheckBulletCollisions (i);
-
 	  Assemble_Combat_Picture ( DO_SCREEN_UPDATE ); 
+
+	  for (i = 0; i < MAXBULLETS; i++) CheckBulletCollisions (i);
 
 	  MoveInfluence ();	// change Influ-speed depending on keys pressed, but
 	                        // also change his status and position and "phase" of rotation
