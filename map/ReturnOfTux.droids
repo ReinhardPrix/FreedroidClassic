@@ -129,6 +129,11 @@ SpecialForce: Type=GUA X=35 Y=18 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter
 S**pecialForce: Type=GUA X=35 Y=18 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="SpencerStartGameSquare" RushTux="no" DialogSectionToUse="Spencer" ShortLabel="Spencer -- Chief of the old town guard"
 SpecialForce: Type=GUA X=35 Y=18 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="NewSpencer" RushTux="no" DialogSectionToUse="Spencer" ShortLabel="Spencer -- Chief of the old town guard"
 
+//--------------------
+// This is Tybalt, the 'citadel' gate guardian
+//
+SpecialForce: Type=GUA X=35 Y=18 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="TybaltStartGameSquare" RushTux="no" DialogSectionToUse="Tybalt" ShortLabel="Tybalt -- Citadel Gate Guard"
+
 ** End of this levels droid data **
 
 ----------------------------------------------------------------------
