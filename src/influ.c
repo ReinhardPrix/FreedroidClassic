@@ -1083,6 +1083,9 @@ FireBullet (void)
   CurBullet->damage = Me.Damage;
   CurBullet->mine = TRUE;
   CurBullet->owner = -1;
+  CurBullet->bullet_lifetime = ItemMap[ Druidmap[ Me.type].weapon_item.type ].item_gun_bullet_lifetime;
+  CurBullet->time_in_frames = 0;
+  CurBullet->time_in_seconds = 0;
   // Me.firewait = ItemMap[ Druidmap[ Me.type ].weapon_item.type ].item_gun_recharging_time * Me.RechargeTimeModifier;
   Me.firewait = Me.RechargeTime;
 

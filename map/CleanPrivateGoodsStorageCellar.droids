@@ -72,9 +72,11 @@ End of Question-Response List for this friendly droid
 
 ** Beginning of new Level **
 Level=1
-Maximum number of Random Droids=0
-Minimum number of Random Droids=0
-Allowed Type of Random Droid for this level: 420
+Maximum number of Random Droids=60
+Minimum number of Random Droids=60
+Allowed Type of Random Droid for this level: 140
+Allowed Type of Random Droid for this level: 124
+Allowed Type of Random Droid for this level: 476
 ** End of this levels droid data **
 
 ** Beginning of new Level **

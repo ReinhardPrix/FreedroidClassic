@@ -986,6 +986,10 @@ AttackInfluence (int enemynum)
       /* Bullettype gemaes dem ueblichen guntype fuer den robottyp setzen */
       AllBullets[j].type = guntype;
 
+      AllBullets[j].time_in_seconds = 0;
+      AllBullets[j].time_in_frames = 0;
+      AllBullets[j].bullet_lifetime = ItemMap [ Druidmap[ThisRobot->type].weapon_item.type ].item_gun_bullet_lifetime;
+
       // Now we set the damage of this bullet to the correct value
       AllBullets[j].damage = ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].item_gun_damage;
 
