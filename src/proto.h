@@ -44,6 +44,7 @@ EXTERN int ShipEmptyCounter;
 #else
 #define EXTERN extern
 #endif
+EXTERN void Reset_GameConfig_To_Default_Values ( void );
 EXTERN void ShowStartupPercentage ( int Percentage ) ;
 EXTERN void AssignMission( int MissNum );
 EXTERN void parse_command_line (int argc, char *const argv[]);
@@ -568,6 +569,17 @@ EXTERN int putchar_SDL (SDL_Surface *Surface, int x, int y, int c);
 EXTERN void GiveItemDescription ( char* ItemDescText , item* CurItem , int ForShop );
 EXTERN void DisplayBanner (const char* left, const char* right, int flags );
 
+/* shop.c */
+#undef EXTERN
+#ifdef _shop_c
+#define EXTERN
+#else
+#define EXTERN extern
+#endif
+EXTERN void Buy_Basic_Items( int ForHealer , int ForceMagic );
+EXTERN void Sell_Items( int ForHealer );
+EXTERN void Repair_Items( void );
+EXTERN void Identify_Items ( void );
 
 // network.c 
 #undef EXTERN

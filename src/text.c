@@ -340,7 +340,7 @@ ChatWithFriendlyDroid( int Enum )
       DialogMenuTexts [ 9 ] = " Have I done enough quests yet for my meeting with the Resistance?" ;
       DialogMenuTexts [ MAX_ANSWERS_PER_PERSON - 1 ] = " END ";
       
-      GiveSubtitleNSample( " Welcome Traveller! ", "Chandra_Welcome_Traveller_0.wav" );
+      // GiveSubtitleNSample( " Welcome Traveller! ", "Chandra_Welcome_Traveller_0.wav" );
       
 
       while (1)
@@ -460,7 +460,7 @@ ChatWithFriendlyDroid( int Enum )
       DialogMenuTexts [ 6 ] = " BACK ";
       DialogMenuTexts [ END_ANSWER ] = " END ";
       
-      GiveSubtitleNSample( " Welcome Traveller! " , "Chandra_Welcome_Traveller_0.wav" );
+      // GiveSubtitleNSample( " Welcome Traveller! " , "Chandra_Welcome_Traveller_0.wav" );
 
       while (1)
 	{
@@ -471,7 +471,7 @@ ChatWithFriendlyDroid( int Enum )
 	  switch( MenuSelection )
 	    {
 	    case 1:
-	      PlayOnceNeededSoundSample( "Tux_SOR_Im_New_In_0.wav" , TRUE );
+	      PlayOnceNeededSoundSample( "Tux_Hi_Im_New_0.wav" , TRUE );
 	      GiveSubtitleNSample( " Welcome then to this camp!  I'm Sorenson, teacher of magical abilities. " , "SOR_Welcome_Then_To_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 2 ] = 1 ; // this should allow to ask about the magic abilities...
 	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 0 ] = 0 ; // this should disallow to be new again...
@@ -497,7 +497,7 @@ ChatWithFriendlyDroid( int Enum )
 	    case 4: // " Mind +1 (costs 1 ability point)" ;
 	      if ( Me [ 0 ] . points_to_distribute >= 1 )
 		{
-		  GiveSubtitleNSample( "The force-capacity of your mind has risen considerably now." , 
+		  GiveSubtitleNSample( "The force-capacity of your mind has risen considerably." , 
 				       "SOR_The_ForceCapacity_Of_0.wav" );
 		  Me [ 0 ] . points_to_distribute -= 1;
 		  Me [ 0 ] . base_magic += 1;
@@ -540,9 +540,9 @@ ChatWithFriendlyDroid( int Enum )
 		  Me [ 0 ] . points_to_distribute -= 5;
 		  Me [ 0 ] . spellcasting_skill ++;
 		  Me [ 0 ] . Gold -= 100;
-		  GiveSubtitleNSample( "The ability to cast spells is very complicated, and best transfered directly to your mind, using magic of course." , 
+		  GiveSubtitleNSample( "The ability to cast spells is very complicated, and best transfered directly to you." , 
 				       "SOR_The_Ability_To_0.wav" );
-		  GiveSubtitleNSample( "Just a moment... and voila, it's done." , 
+		  GiveSubtitleNSample( "We'll use magic to transfer the power.  Just a moment... and alright, it's done." , 
 				       "SOR_Just_A_Moment_0.wav" );
 		  GiveSubtitleNSample( "Your spellcasting ability has improved a lot.  Come back when you want to learn more." , 
 				       "SOR_Your_Spellcasting_Ability_0.wav" );
@@ -570,6 +570,7 @@ ChatWithFriendlyDroid( int Enum )
 	    case (-1):
 	    default:
 	      PlayOnceNeededSoundSample( "Tux_See_You_Later_0.wav" , TRUE );
+	      PlayOnceNeededSoundSample( "SOR_I_Hope_You_0.wav" , TRUE );
 	      return;
 	      break;
 	    }
@@ -596,7 +597,7 @@ ChatWithFriendlyDroid( int Enum )
       DialogMenuTexts [ 3 ] = " What are your orders?" ;
       DialogMenuTexts [ END_ANSWER ] = " END ";
       
-      GiveSubtitleNSample( " Welcome Traveller! " , "Chandra_Welcome_Traveller_0.wav" );
+      // GiveSubtitleNSample( " Welcome Traveller! " , "Chandra_Welcome_Traveller_0.wav" );
 
       while (1)
 	{
@@ -618,17 +619,23 @@ ChatWithFriendlyDroid( int Enum )
 	      break;
 	    case 3:
 	      PlayOnceNeededSoundSample( "Tux_614_What_Can_You_0.wav" , TRUE );
-	      GiveSubtitleNSample( "The official manual classifies the 614 as a low security droid." , "614_The_Official_Manual_0.wav" );
-	      GiveSubtitleNSample( "It is mainly used within ships to protect certain areas of the ship from intruders." , "614_It_Is_Mainly_0.wav" );
+	      GiveSubtitleNSample( "The official manual classifies the 614 as a low security droid." , 
+				   "614_The_Official_Manual_0.wav" );
+	      GiveSubtitleNSample( "It is mainly used within ships to protect certain areas of the ship from intruders.", 
+				   "614_It_Is_Mainly_0.wav" );
 	      GiveSubtitleNSample( "It is considered a slow but sure device." , "614_It_Is_Considered_0.wav" );
-	      GiveSubtitleNSample( "Today it is used only by rebellion and it's supporters, not by the MS any more." , "614_Today_It_Is_0.wav" );
-	      GiveSubtitleNSample( "This is because the 614 is by now a discontinued product." , "614_This_Is_Because_0.wav" );
-	      GiveSubtitleNSample( "But don't worry.  I'm still in pretty good shape." , "614_But_Dont_Worry_0.wav" );
+	      GiveSubtitleNSample( "Today it is used only by rebellion and it's supporters, not by the MS any more." , 
+				   "614_Today_It_Is_0.wav" );
+	      GiveSubtitleNSample( "This is because the 614 is by now a discontinued product." , 
+				   "614_This_Is_Because_0.wav" );
+	      GiveSubtitleNSample( "But don't worry.  I'm still in pretty good shape." , 
+				   "614_But_Dont_Worry_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_614 ] [ 2 ] = 0 ; // don't say this twice...
 	      break;
 	    case 4:
 	      PlayOnceNeededSoundSample( "Tux_614_What_Are_Your_0.wav" , TRUE );
-	      GiveSubtitleNSample( "My orders are to protect the living beings in this camp from attacks by MS bots." , "614_My_Orders_Are_0.wav" );
+	      GiveSubtitleNSample( "My orders are to protect the living beings in this camp from attacks by MS bots." , 
+				   "614_My_Orders_Are_0.wav" );
 	      GiveSubtitleNSample( "This has top priority.  There are no other priorities." , "614_This_Has_Top_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_614 ] [ 3 ] = 0 ; // don't say this twice...
 	      break;
@@ -660,52 +667,62 @@ ChatWithFriendlyDroid( int Enum )
       DialogMenuTexts [ 2 ] = " I would like to get rid of some stuff. " ;
       DialogMenuTexts [ 3 ] = " Can you identify some of the items I found?" ;
       DialogMenuTexts [ 4 ] = " Some of my things could need repair." ;
+      DialogMenuTexts [ 5 ] = " Do you also have some magical stuff?" ; 
       DialogMenuTexts [ END_ANSWER ] = " END ";
       
-      GiveSubtitleNSample( " Welcome Traveller! " , "Chandra_Welcome_Traveller_0.wav" );
-
       while (1)
 	{
-	  
-	  // MenuSelection = ChatDoMenuSelection ( "What will you say?" , MenuTexts , 1 , NULL , FPS_Display_BFont );
 	  MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , DialogMenuTexts , Me[0].Chat_Flags [ PERSON_STO ]  , 1 , NULL , FPS_Display_BFont );
 	  
 	  switch( MenuSelection )
 	    {
 	    case 1:
-	      PlayOnceNeededSoundSample( "Tux_Hi_Im_New_Here_0.wav" , TRUE );
+	      PlayOnceNeededSoundSample( "Tux_Hi_Im_New_0.wav" , TRUE );
 	      Me [ 0 ] . Chat_Flags [ PERSON_STO ] [ 0 ] = 0 ; // don't say this twice...
 	      GiveSubtitleNSample( "Welcome to this camp!  I'm Ms. Stone.  I run this shop." , "STO_Welcome_To_This_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_STO ] [ 1 ] = 1 ; // allow for all shopping options...
 	      Me [ 0 ] . Chat_Flags [ PERSON_STO ] [ 2 ] = 1 ; // allow for all shopping options...
 	      Me [ 0 ] . Chat_Flags [ PERSON_STO ] [ 3 ] = 1 ; // allow for all shopping options...
 	      Me [ 0 ] . Chat_Flags [ PERSON_STO ] [ 4 ] = 1 ; // allow for all shopping options...
+	      Me [ 0 ] . Chat_Flags [ PERSON_STO ] [ 5 ] = 1 ; // allow for all shopping options...
 	      break;
 	    case 2:
 	      PlayOnceNeededSoundSample( "Tux_STO_I_Would_Like_0.wav" , TRUE );
 	      GiveSubtitleNSample( "Good!  Here is the selection of items I have for sale." , "STO_Good_Here_Is_0.wav" );
-	      GiveSubtitleNSample( "Sorry, but you can't afford this item." , 
-				   "STO_You_Cant_Buy_0.wav" );
+	      Buy_Basic_Items( FALSE , FALSE );
+	      PrepareMultipleChoiceDialog( Enum );
+	      // GiveSubtitleNSample( "Sorry, but you can't afford this item." , "STO_You_Cant_Buy_0.wav" );
 	      break;
 	    case 3:
 	      PlayOnceNeededSoundSample( "Tux_STO_I_Would_Rid_0.wav" , TRUE );
 	      GiveSubtitleNSample( "Good!  Let's see what you have." , "STO_Good_Lets_See_0.wav" );
-	      GiveSubtitleNSample( "Sorry, but you don't have anything I'd be interested in." , 
-				   "STO_Sorry_But_You_0.wav" );
+	      // GiveSubtitleNSample( "Sorry, but you don't have anything I'd be interested in." , "STO_Sorry_But_You_0.wav" );
+	      Sell_Items( FALSE );
+	      PrepareMultipleChoiceDialog( Enum );
 	      break;
 	    case 4:
 	      PlayOnceNeededSoundSample( "Tux_STO_Can_You_Identify_0.wav" , TRUE );
 	      GiveSubtitleNSample( "Which of your items do you want me to identify?" , "STO_Which_Of_Your_0.wav" );
-	      GiveSubtitleNSample( "You don't have anything that would need to be identified." , "STO_You_Dont_Have_0.wav" );
-	      GiveSubtitleNSample( "Sorry, but you can't afford to have this item identified." , 
-				   "STO_You_Cant_Identified_0.wav" );
+	      // GiveSubtitleNSample( "You don't have anything that would need to be identified." , "STO_You_Dont_Have_0.wav" );
+	      // GiveSubtitleNSample( "Sorry, but you can't afford to have this item identified." , "STO_You_Cant_Identified_0.wav" );
+	      Identify_Items(  );
+	      PrepareMultipleChoiceDialog( Enum );
 	      break;
 	    case 5: 
 	      PlayOnceNeededSoundSample( "Tux_STO_Some_Of_My_0.wav" , TRUE );
-	      GiveSubtitleNSample( "Which of your items do you want me to repair?" , "STO_Which_Of_Repair_0.wav" );
-	      GiveSubtitleNSample( "Sorry, but you don't have anything that would need repair." , "STO_Sorry_But_Repair_0.wav" );
-	      GiveSubtitleNSample( "Sorry, but you can't afford to have this item repaired." , 
-				   "STO_You_Cant_Identified_0.wav" );
+	      GiveSubtitleNSample( "Which of your items do you want me to repair?" , 
+				   "STO_Which_Of_Repair_0.wav" );
+	      // GiveSubtitleNSample( "Sorry, but you don't have anything that would need repair." , "STO_Sorry_But_Repair_0.wav" );
+	      // GiveSubtitleNSample( "Sorry, but you can't afford to have this item repaired." , "STO_You_Cant_Repair_0.wav" );
+	      Repair_Items(  );
+	      PrepareMultipleChoiceDialog( Enum );
+	      break;
+	    case 6: 
+	      PlayOnceNeededSoundSample( "Tux_STO_Do_You_Also_0.wav" , TRUE );
+	      GiveSubtitleNSample( "Sure.  But this will be a bit more expensive." , 
+				   "STO_Sure_But_This_0.wav" );
+	      Buy_Basic_Items( FALSE , TRUE );
+	      PrepareMultipleChoiceDialog( Enum );
 	      break;
 	    case ( MAX_ANSWERS_PER_PERSON ):
 	    case (-1):
@@ -739,7 +756,7 @@ ChatWithFriendlyDroid( int Enum )
       DialogMenuTexts [ 5 ] = " Can you bring me in contact with the resistance?" ; 
       DialogMenuTexts [ END_ANSWER ] = " END ";
       
-      GiveSubtitleNSample( " Welcome Traveller! " , "Chandra_Welcome_Traveller_0.wav" );
+      // GiveSubtitleNSample( " Welcome Traveller! " , "Chandra_Welcome_Traveller_0.wav" );
 
       while (1)
 	{
@@ -828,7 +845,7 @@ ChatWithFriendlyDroid( int Enum )
       else
 	Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 5 ] = 0 ; 
 
-      GiveSubtitleNSample( " Welcome Traveller! " , "Chandra_Welcome_Traveller_0.wav" );
+      // GiveSubtitleNSample( " Welcome Traveller! " , "Chandra_Welcome_Traveller_0.wav" );
 
       while (1)
 	{
@@ -941,7 +958,7 @@ ChatWithFriendlyDroid( int Enum )
       DialogMenuTexts [ 8 ] = " I'll get the coffee machine for you." ;
       DialogMenuTexts [ MAX_ANSWERS_PER_PERSON - 1 ] = " END ";
       
-      GiveSubtitleNSample( " Welcome Traveller! " , "Chandra_Welcome_Traveller_0.wav" );
+      // GiveSubtitleNSample( " Welcome Traveller! " , "Chandra_Welcome_Traveller_0.wav" );
 
       if ( ( Me [ 0 ] . AllMissions [ 1 ] . MissionWasAssigned == TRUE ) &&
 	   ( Me [ 0 ] . AllMissions [ 1 ] . MissionIsComplete == FALSE ) )

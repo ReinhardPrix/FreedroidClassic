@@ -92,6 +92,7 @@ typedef struct
   int spell_level_visible;
   int terminate_on_missing_speech_sample;
   int show_subtitles_in_dialogs;
+  char freedroid_version_string[500];
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
 

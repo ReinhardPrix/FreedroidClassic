@@ -1879,6 +1879,43 @@ ClearAutomapData( void )
 
 }; // void ClearAutomapData ( void )
 
+/* ----------------------------------------------------------------------
+ * This function sets the GameConfig back to the default values, NOT THE
+ * VALUES STORED IN THE USERS CONFIG FILE.  This function is useful if 
+ * no config file if found or if the config file turns out to originate
+ * from a different version of freedroid, which could be dangerous as
+ * well.
+ * ---------------------------------------------------------------------- */
+void 
+Reset_GameConfig_To_Default_Values ( void )
+{
+  //--------------------
+  // At first we set audio volume to maximum value.
+  // This might be replaced later with values from a 
+  // private user Freedroid config file.  But for now
+  // this code is good enough...
+  //
+  GameConfig.Current_BG_Music_Volume=1.0;
+  GameConfig.Current_Sound_FX_Volume=0.5;
+
+  GameConfig.WantedTextVisibleTime = 3;
+  GameConfig.Draw_Framerate=FALSE;
+  GameConfig.All_Texts_Switch=TRUE;
+  GameConfig.Enemy_Hit_Text=FALSE;
+  GameConfig.Enemy_Bump_Text=TRUE;
+  GameConfig.Enemy_Aim_Text=TRUE;
+  GameConfig.Influencer_Refresh_Text=FALSE;
+  GameConfig.Influencer_Blast_Text=TRUE;
+  GameConfig.Mission_Log_Visible_Max_Time = 5;
+  GameConfig.Inventory_Visible_Max_Time = 5;
+  // GameConfig.Theme_SubPath="lanzz_theme/";
+  strcpy ( GameConfig.Theme_SubPath , "lanzz_theme/" );
+  GameConfig.Draw_Framerate=TRUE;
+  GameConfig.Draw_Energy=FALSE;
+  GameConfig.Draw_Position=FALSE;
+  GameConfig.All_Texts_Switch = FALSE;
+}; // void Reset_GameConfig_To_Default_Values ( void )
+
 /* -----------------------------------------------------------------
  * This function initializes the whole Freedroid game.
  * 
@@ -1926,29 +1963,7 @@ InitFreedroid ( void )
   InventorySize.x = 9;
   InventorySize.y = 6;
 
-  // At first we set audio volume to maximum value.
-  // This might be replaced later with values from a 
-  // private user Freedroid config file.  But for now
-  // this code is good enough...
-  GameConfig.Current_BG_Music_Volume=1.0;
-  GameConfig.Current_Sound_FX_Volume=0.5;
-
-  GameConfig.WantedTextVisibleTime = 3;
-  GameConfig.Draw_Framerate=FALSE;
-  GameConfig.All_Texts_Switch=TRUE;
-  GameConfig.Enemy_Hit_Text=FALSE;
-  GameConfig.Enemy_Bump_Text=TRUE;
-  GameConfig.Enemy_Aim_Text=TRUE;
-  GameConfig.Influencer_Refresh_Text=FALSE;
-  GameConfig.Influencer_Blast_Text=TRUE;
-  GameConfig.Mission_Log_Visible_Max_Time = 5;
-  GameConfig.Inventory_Visible_Max_Time = 5;
-  // GameConfig.Theme_SubPath="lanzz_theme/";
-  strcpy ( GameConfig.Theme_SubPath , "lanzz_theme/" );
-  GameConfig.Draw_Framerate=TRUE;
-  GameConfig.Draw_Energy=FALSE;
-  GameConfig.Draw_Position=FALSE;
-  GameConfig.All_Texts_Switch = FALSE;
+  Reset_GameConfig_To_Default_Values ();
 
   //Load user config file if it exists...
   LoadSettings ();

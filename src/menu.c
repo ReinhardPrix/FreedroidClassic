@@ -2056,7 +2056,7 @@ Credits_Menu (void)
                                       ???   (alfa , bladerunner,\n\
                                       delta2, slow)\n\n\n\
    VOICES:\n\n\
-                                      Tiina\n\n\
+                                      Tiina Heinonen\n\n\
                                       Doris Stubenrauch\n\n\
                                       Johannes Prix\n\n\
                                       Mbrola\n\
