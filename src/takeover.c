@@ -266,7 +266,7 @@ Takeover (int enemynum)
 	  message = "Deadlock";
 	}			/* LeadColor == REMIS */
 
-      RedrawInfluenceNumber ();
+      // NONSENSE FROM THE OLD ENGINE RedrawInfluenceNumber ();
 
       /* don't display enemy if we're finished */
       if (FinishTakeover) 
@@ -907,8 +907,8 @@ ShowPlayground (void)
   /* Display the two opponents */
   if (OpponentType == -1)
     Enemypic = NULL;
-  else
-    Enemypic = FeindZusammenstellen (Druidmap[OpponentType].druidname, 0);
+
+    // NONSENSE FROM THE OLD ENGINE   else Enemypic = FeindZusammenstellen (Druidmap[OpponentType].druidname, 0);
 
   if (YourColor == GELB)
     {

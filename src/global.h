@@ -219,6 +219,7 @@ EXTERN int Draw_Energy;
 
 #ifdef NEW_ENGINE  /* this is for the new graphics engine */
 EXTERN SDL_Surface *ne_screen;   /* the graphics display */
+EXTERN SDL_Surface *ne_scaled_screen;   /* the graphics display */
 #else
 EXTERN SDL_Surface *screen;
 EXTERN SDL_Surface *ScaledSurface;

@@ -236,7 +236,7 @@ main (int argc, char *const argv[])
   /* Initialisieren der globalen Variablen und Arrays */
   InitParaplus ();
 
-  RedrawInfluenceNumber ();
+  // NONSENSE FROM THE OLD ENGINE RedrawInfluenceNumber ();
 
   while (!QuitProgram)
     {
@@ -259,7 +259,10 @@ main (int argc, char *const argv[])
 	  if (framenr % 10 == 1)
 	    Ten_Frame_SDL_Ticks=SDL_GetTicks();
 	  if (framenr % 100 == 1)
-	    Onehundred_Frame_SDL_Ticks=SDL_GetTicks();
+	    {
+	      Onehundred_Frame_SDL_Ticks=SDL_GetTicks();
+	      printf("\n%f",1/Frame_Time());
+	    }
 #else
 	  gettimeofday (&oneframetimestamp, NULL);
 	  if (framenr % 10 == 1)
@@ -326,7 +329,7 @@ main (int argc, char *const argv[])
 	  MoveBullets ();   
 	  ExplodeBlasts ();	/* Blasts in der Explosionsphase weiterbewegen */
 
-	  GetView();		/* Einen Ausschnitt aus der Gesamtlevelkarte machen */
+	  // NONSENSE FROM THE OLD ENGINE: GetView();		/* Einen Ausschnitt aus der Gesamtlevelkarte machen */
 
 	  Assemble_Combat_Picture ( SHOW_ALL );
 
@@ -634,7 +637,7 @@ Pause (void)
 
   Me.status = PAUSE;
   SetInfoline (NULL, NULL);
-  GetView ();
+  // NONSENSE FROM THE OLD ENGINE: GetView();		/* Einen Ausschnitt aus der Gesamtlevelkarte machen */
   Assemble_Combat_Picture (SHOW_ALL);
   PutInternFenster (TRUE);
 
@@ -645,7 +648,7 @@ Pause (void)
       AnimateRefresh ();
       RotateBulletColor ();
       AnimateEnemys ();
-      GetView ();
+      // NONSENSE FROM THE OLD ENGINE: GetView();		/* Einen Ausschnitt aus der Gesamtlevelkarte machen */
       Assemble_Combat_Picture (SHOW_ALL);
       PutInternFenster (TRUE);
 
@@ -653,7 +656,7 @@ Pause (void)
 	{
 	  Me.status = CHEESE;
 	  SetInfoline (NULL, NULL);
-	  GetView ();
+	  // NONSENSE FROM THE OLD ENGINE: GetView();		/* Einen Ausschnitt aus der Gesamtlevelkarte machen */
 	  Assemble_Combat_Picture (SHOW_ALL);
 	  PutInternFenster (TRUE);
 

@@ -44,6 +44,7 @@
 #include "proto.h"
 #include "colodefs.h"
 
+#include "SDL_rotozoom.h"
 
 
 /* locale Schalter zu DEBUG-Zwecken */
@@ -133,180 +134,6 @@ RecFlashFill (int LX, int LY, int Color, unsigned char *Parameter_Screen, int SB
     RecFlashFill (LX, LY + BLOCKHOEHE, Color, Parameter_Screen, SBreite);
 }
 
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-unsigned char *
-FeindZusammenstellen (const char *FZahl, int FPhase)
-{
-  unsigned char *LSrce;
-  unsigned char *LDest;
-  int i;
-  int Verschiebung;
-  int ZielVerschiebung;
-
-  DebugPrintf
-    ("\nunsigned char * FeindZusammenstellen(...): real function call confirmed.\n");
-
-  //  printf( "\n Zuletzt berichtete Phase in FeindZusammenstellen(...) is: %d." , FPhase );
-  //  printf( "\n Zuletzt berichtete Zahl is: %s.\n\n" , FZahl );
-
-  for (i = 0; i < 3; i++)
-    {
-      Verschiebung = (*(FZahl + i) - '1' + 11 ) * 9 * 9;
-
-      if (Verschiebung < 0) 
-	{
-	  printf(" SUSPICIOUS Verschiebung in FeindZusammenstellen: NEGATIVE. Terminating.");
-	  Terminate(ERR);
-	}
-      
-      if (Verschiebung >= DIGITMEM) 
-	{
-	  printf(" SUSPICIOUS Verschiebung in FeindZusammenstellen: > DIGITMEM!. Terminating.");
-	  Terminate(ERR);
-	}
-
-      /*
-      if ( ( (*(FZahl + i)) - '1' -1 ) < 0 )
-	{
-	  printf(" Digit das kein Digit ist in FeindZusammenstellen?: Terminiere.");
-	  Terminate(ERR);
-	}
-      */
-
-      ZielVerschiebung =  NUMBEROFS + i * 8 + BLOCKMEM * FPhase; 
-
-      if ( ZielVerschiebung < 0) 
-	{
-	  printf(" SUSPICIOUS ZielVerschiebung in FeindZusammenstellen: NEGATIVE. Terminating.");
-	  Terminate(ERR);
-	}
-      
-      if ( ZielVerschiebung >= ENEMYPHASES * BLOCKMEM ) 
-	{
-	  printf(" SUSPICIOUS ZielVerschiebung in FeindZusammenstellen: > ENEMYPHASES * BLOCKMEM!. Terminating.");
-	  Terminate(ERR);
-	}
-
-      LSrce = Digitpointer + Verschiebung;
-      LDest = Enemypointer + ZielVerschiebung;
-      DrawDigit ( LSrce , LDest );
-    }
-
-  DebugPrintf
-    ("\nunsigned char * FeindZusammenstellen(...): usual end of function reached.\n");
-
-  return (Enemypointer + FPhase * BLOCKMEM);
-} // unsigned char * FeindZusammenstellen (...)
-
-
-/*@Function============================================================
-@Desc: 	Diese Prozedur stellt den momentan intern sichtbaren Kartenausschnitt
-			zusammen
-
-			Parameter: keine
-
-@Ret: 	void
-* $Function----------------------------------------------------------*/
-void
-GetView (void)
-{
-  int col, line;
-  finepoint testpos;
-  int me_gx, me_gy;		/* influ- Grobkoord. */
-  signed int mapX0, mapY0;
-  signed int mapX, mapY;	/* The map-coordinates, which are to be copied */
-
-#ifdef NEW_ENGINE
-  return;
-#endif
-
-  DebugPrintf ("\nvoid GetView(void): CurLevel->xlen: ");
-  DebugPrintfInt (CurLevel->xlen);
-  DebugPrintf ("\nvoid GetView(void): CurLevel->ylen: ");
-  DebugPrintfInt (CurLevel->ylen);
-
-  me_gx = Fein2Grob (Me.pos.x);
-  me_gy = Fein2Grob (Me.pos.y);
-
-  mapX0 = me_gx - (INTERNBREITE / 2);
-  mapY0 = me_gy - (INTERNHOEHE / 2);
-
-  mapX = mapX0;
-  mapY = mapY0;
-
-  for (line = 0; line < INTERNHOEHE; line++, mapY++)
-    {
-      mapX = mapX0;
-      for (col = 0; col < INTERNBREITE; col++, mapX++)
-	{
-
-	  /* Achtung, falls map-brick nicht mehr sichtbar ! */
-	  if (HideInvisibleMap)
-	    {
-	      testpos.x = mapX * BLOCKBREITE + BLOCKBREITE / 2;
-	      testpos.y = mapY * BLOCKHOEHE + BLOCKHOEHE / 2;
-
-	      /* relative Lage des Blocks zum Influ. ber"ucksichtigen */
-	      if (me_gx < mapX)
-		testpos.x -= BLOCKBREITE / 2;
-	      else if (me_gx > mapX)
-		testpos.x += BLOCKBREITE / 2;
-	      if (me_gy < mapY)
-		testpos.y -= BLOCKHOEHE / 2;
-	      else if (me_gy > mapY)
-		testpos.y += BLOCKHOEHE / 2;
-
-	      if (!IsVisible (&testpos))
-		{
-		  View[line][col] = INVISIBLE_BRICK;
-		  continue;
-		}
-	    }
-
-	  /* Achtung wenn Koordinate ausserhalb der Map */
-	  if (mapX < 0 ||
-	      mapY < 0 ||
-	      mapX >= (CurLevel->xlen) || mapY >= (CurLevel->ylen))
-	    View[line][col] = VOID;
-	  else
-	    View[line][col] = CurLevel->map[mapY][mapX];
-	}			/* for col */
-    }				/* for line */
-
-  DebugPrintf ("\nvoid GetView(void): end of function reached.\n ");
-  return;
-}				/* GetView() */
-
-
-/*-----------------------------------------------------------------
- * @Desc: Diese Prozedur gibt den momentan intern sichtbaren 
- * 	  Kartenausschnitt in Textform	am Bildschirm aus
- *
- * Parameter: keine
- *
- *
- *-----------------------------------------------------------------*/
-void
-DisplayView (void)
-{
-  int i;
-  int ii;
-
-  for (i = 0; i < INTERNHOEHE; i++)
-    {
-      for (ii = 0; ii < INTERNBREITE; ii++)
-	{
-	  printf ("%u-", View[i][ii]);
-	}
-    }
-}
-
-
 /*-----------------------------------------------------------------
  * @Desc: Diese Prozedur setzt das Bild im Speicher zusammen, damit
  * 	es dann von PutInternFenster in den Bildschirmspeicher kopiert
@@ -316,7 +143,7 @@ DisplayView (void)
  *
  * @Ret: none
  *-----------------------------------------------------------------*/
-#ifdef NEW_ENGINE
+
 void
 Assemble_Combat_Picture (int mask)
 {
@@ -381,7 +208,23 @@ Assemble_Combat_Picture (int mask)
     if (AllBlasts[i].type != OUT)
       PutBlast (i);
 
+#define INFRAME_SCALING
+  // #undef INFRAME_SCALING 
+#ifdef INFRAME_SCALING
+  ne_scaled_screen = zoomSurface ( ne_screen , 2 , 2 , 0);
+
+  SDL_SetClipRect( ne_screen, NULL);
+
+  SDL_BlitSurface( ne_scaled_screen , NULL , ne_screen , NULL );
+
   SDL_Flip ( ne_screen );
+
+  SDL_FreeSurface( ne_scaled_screen );
+#else
+
+  SDL_Flip( ne_screen );
+
+#endif
 
   return;  // for now
 
@@ -413,100 +256,6 @@ Assemble_Combat_Picture (int mask)
   return;
 
 } // void Assemble_Combat_Picture(...)
-#else
-void
-Assemble_Combat_Picture (int mask)
-{
-  Blast CurBlast = &(AllBlasts[0]);
-  int MapBrick;
-  int line, col;
-  int i, j;
-
-  unsigned char *source;	/* the current block to copy */
-  unsigned char *target;
-
-  target = InternWindow;
-
-  memset (target, 1, INTERNHOEHE * INTERNBREITE * BLOCKMEM);
-
-  if (Conceptview)
-    {
-      GetConceptInternFenster ();
-      return;
-    }
-
-  for (line = 0; line < (INTERNHOEHE); line++)
-    {
-      for (col = 0; col < (INTERNBREITE); col++)
-	{
-	  if ((MapBrick = View[line][col]) != INVISIBLE_BRICK)
-	    {
-	      source = MapBlocks + MapBrick * BLOCKMEM;
-	      for (i = 0; i < BLOCKHOEHE; i++)
-		{
-		  memcpy (target, source, BLOCKBREITE);
-		  target += INTERNBREITE * BLOCKBREITE;
-		  source += BLOCKBREITE;
-		}
-	    }			// if !INVISIBLE_BRICK 
-	  else
-	    {
-	      target += INTERNBREITE * BLOCKMEM;
-	    }
-	  if (col < INTERNBREITE - 1)
-	    target -= INTERNBREITE * BLOCKMEM - BLOCKBREITE;
-	}			// for(col) 
-      target -= (INTERNBREITE - 1) * BLOCKBREITE;
-    }				// for(line) 
-
-
-  if (mask == SHOW_MAP)		// we want only the map, nothing else 
-    return;
-
-
-  for (i = 0; i < NumEnemys; i++)
-    PutEnemy (i);
-
-  if (Me.energy > 0)
-    PutInfluence ();
-
-  for (i = 0; i < (MAXBULLETS); i++)
-    if (AllBullets[i].type != OUT)
-      PutBullet (i);
-
-
-  for (i = 0; i < (MAXBLASTS); i++)
-    if (AllBlasts[i].type != OUT)
-      PutBlast (i);
-
-  // Sofortiger Check auf Bullet-Blast-Kollisionen
-  for (j = 0; j < MAXBLASTS; j++)
-    {
-      /* check Blast-Bullet Collisions and kill hit Bullets */
-      for (i = 0; i < MAXBULLETS; i++)
-	{
-	  if (AllBullets[i].type == OUT)
-	    continue;
-	  if (CurBlast->phase > 4)
-	    break;
-
-	  if (abs (AllBullets[i].pos.x - CurBlast->PX) < BLASTRADIUS)
-	    if (abs (AllBullets[i].pos.y - CurBlast->PY) < BLASTRADIUS)
-	      {
-		/* KILL Bullet silently */
-		AllBullets[i].type = OUT;
-		AllBullets[i].mine = FALSE;
-	      }
-	}			/* for */
-      CurBlast++;
-    }				/* for */
-
-  DebugPrintf ("\nvoid Assemble_Combat_Picture(...): end of function reached.");
-
-  return;
-
-} // void Assemble_Combat_Picture(...)
-#endif
 
 /*@Function============================================================
 @Desc: GetConceptInternFenster(): analoge Funktion zu GetInternFenster()
@@ -648,7 +397,7 @@ GetConceptInternFenster (void)
  * Param: die momentane Phase der Drehung des 001 : Darstellphase
  *
  *-----------------------------------------------------------------*/
-#ifdef NEW_ENGINE
+
 void
 PutInfluence (void)
 {
@@ -673,22 +422,7 @@ PutInfluence (void)
   DebugPrintf ("\nvoid PutInfluence(void): REAL function ended.");
 
 } /* PutInfluence() */
-#else
-void
-PutInfluence (void)
-{
-  unsigned char *source;	/* the druid-block to copy */
 
-  DebugPrintf ("\nvoid PutInfluence(void): REAL function called.");
-
-  source = Influencepointer + ((int) rintf (Me.phase)) * BLOCKMEM;
-
-  PutObject (Me.pos.x, Me.pos.y, source, FALSE);
-
-  DebugPrintf ("\nvoid PutInfluence(void): REAL function ended.");
-
-} /* PutInfluence() */
-#endif
 
 /*@Function============================================================
 @Desc: PutEnemy: setzt Enemy der Nummer Enum ins InternWindow
@@ -696,7 +430,7 @@ PutInfluence (void)
 @Ret: void
 @Int:
 * $Function----------------------------------------------------------*/
-#ifdef NEW_ENGINE
+
 void
 PutEnemy (int Enum)
 {
@@ -776,68 +510,6 @@ PutEnemy (int Enum)
   DebugPrintf ("\nvoid PutEnemy(int Enum): ENEMY HAS BEEN PUT --> usual end of function reached.\n");
 
 }	// void PutEnemy(int Enum) 
-#else
-void
-PutEnemy (int Enum)
-{
-  unsigned char *Enemypic;
-  int enemyX, enemyY;
-  const char *druidname;	/* the number-name of the Enemy */
-  int phase;
-
-  DebugPrintf
-    ("\nvoid PutEnemy(int Enum): real function call confirmed...\n");
-
-  /* if enemy is on other level, return */
-  if (Feindesliste[Enum].levelnum != CurLevel->levelnum)
-    {
-      DebugPrintf
-	("\nvoid PutEnemy(int Enum): DIFFERENT LEVEL-->usual end of function reached.\n");
-      return;
-    }
-
-  /* wenn dieser Feind abgeschossen ist kann sofort zurueckgekehrt werden */
-  if (Feindesliste[Enum].Status == OUT)
-    {
-      DebugPrintf
-	("\nvoid PutEnemy(int Enum): STATUS==OUT --> usual end of function reached.\n");
-      return;
-    }
-
-  /* Wenn Feind nicht sichtbar: weiter */
-  if (!IsVisible (&Feindesliste[Enum].pos))
-    {
-      DebugPrintf
-	("\nvoid PutEnemy(int Enum): ONSCREEN=FALSE --> usual end of function reached.\n");
-      return;
-    }
-
-  DebugPrintf
-    ("\nvoid PutEnemy(int Enum): it seems that we must draw this one on the screen....\n");
-
-  // Den Druidtyp nochmals mit einer Sicherheitsabfrage ueberpruefen:
-  if ( Feindesliste[Enum].type >= ALLDRUIDTYPES )
-    {
-      DebugPrintf("\nvoid PutEnemy(int Enum): ERROR!  IMPOSSIBLE DRUIDTYPE ENCOUNTERED!  EMERGENCY WORKAROUND DONE!!");
-      DebugPrintf("\nvoid PutEnemy(int Enum): NOTE THAT THIS PROBLEM REMAINS!  PLEASE FOLLOW THIS BUG AND CORRECT IT!!");
-      Feindesliste[Enum].type = 0;
-    }
-
-  /* Bild des Feindes mit richtiger Nummer in der richtigen Phase darstellen */
-  druidname = Druidmap[Feindesliste[Enum].type].druidname;
-  phase = Feindesliste[Enum].feindphase;
-
-  Enemypic = FeindZusammenstellen (druidname, phase);
-
-  enemyX = Feindesliste[Enum].pos.x;
-  enemyY = Feindesliste[Enum].pos.y;
-
-  PutObject (enemyX, enemyY, Enemypic, FALSE);
-
-  DebugPrintf ("\nvoid PutEnemy(int Enum): ENEMY HAS BEEN PUT --> usual end of function reached.\n");
-
-}				// void PutEnemy(int Enum) 
-#endif
 
 /*@Function============================================================
 @Desc: PutBullet: setzt das Bullet BulletNummer ins InternWindow
@@ -845,7 +517,7 @@ PutEnemy (int Enum)
 @Ret: void
 @Int:
 * $Function----------------------------------------------------------*/
-#ifdef NEW_ENGINE
+
 void
 PutBullet (int BulletNummer)
 {
@@ -906,60 +578,6 @@ PutBullet (int BulletNummer)
     ("\nvoid PutBullet(int BulletNummer): end of function reched.\n");
 
 }	/* PutBullet */
-#else
-void
-PutBullet (int BulletNummer)
-{
-  Bullet CurBullet = &AllBullets[BulletNummer];
-  unsigned char *bulletpic;
-
-  DebugPrintf
-    ("\nvoid PutBullet(int BulletNummer): real function call confirmed.\n");
-
-#if BULLETOFF == 1
-  return;
-#endif
-
-  bulletpic = Bulletmap[CurBullet->type].picpointer +
-    CurBullet->phase * BLOCKMEM;
-
-  /*
-   * Wenn ein FLASH gestartet ist, wird einfach der ganze Screen
-   * zuerst schwarz, dann weiss geschaltet
-   */
-  if (CurBullet->type == FLASH)
-    {
-      // Now the whole window will be filled with either white
-      // or black each frame until the flash is over.  (Flash 
-      // deletion after some time is done in CheckBulletCollisions.)
-      if ( (CurBullet->time_in_frames % 2) == 1)
-	{
-	  FlashWindow (0);
-	  return;
-	}
-      if ( (CurBullet->time_in_frames % 2) == 0)
-	{
-	  FlashWindow (15);
-	  return;
-	}
-    } // if type == FLASH
-
-
-  if (PutObject (CurBullet->pos.x, CurBullet->pos.y, bulletpic, TRUE) == TRUE)
-    {
-      /* Bullet-Bullet Collision: Bullet loeschen */
-      CurBullet->type = OUT;
-      CurBullet->mine = FALSE;
-
-      /* Druid-Blast dort erzeugen: killt zweites Bullet */
-      StartBlast (CurBullet->pos.x, CurBullet->pos.y, DRUIDBLAST);
-    }				/* if */
-
-  DebugPrintf
-    ("\nvoid PutBullet(int BulletNummer): end of function reched.\n");
-
-}	/* PutBullet */
-#endif
 
 /*@Function============================================================
 @Desc:  PutBlast: setzt das Blast BlastNummer ins InternWindow
@@ -968,7 +586,7 @@ PutBullet (int BulletNummer)
 @Ret: void
 @Int:
 * $Function----------------------------------------------------------*/
-#ifdef NEW_ENGINE
+
 void
 PutBlast (int BlastNummer)
 {
@@ -998,28 +616,6 @@ PutBlast (int BlastNummer)
   PutObject (CurBlast->PX, CurBlast->PY, blastpic, FALSE);
 }  // void PutBlast(int BlastNummer)
 
-#else
-void
-PutBlast (int BlastNummer)
-{
-  Blast CurBlast = &AllBlasts[BlastNummer];
-  unsigned char *blastpic;
-
-#if BLASTOFF == 1
-  return;
-#endif
-
-  /* Wenn Blast OUT ist sofort naechsten bearbeiten */
-  if (CurBlast->type == OUT)
-    return;
-
-  blastpic =
-    Blastmap[CurBlast->type].picpointer +
-    ((int) rintf (CurBlast->phase)) * BLOCKMEM;
-
-  PutObject (CurBlast->PX, CurBlast->PY, blastpic, FALSE);
-}				// void PutBlast(int BlastNummer)
-#endif
 
 /*-----------------------------------------------------------------
  * @Desc: PutObject: Puts object with center-coordinates x/y and the
@@ -1107,9 +703,7 @@ PutInternFenster (int also_update_scaled_surface)
   unsigned char *source;
   unsigned char *target;
 
-#ifdef NEW_ENGINE
   return;
-#endif
 
   /*
     In case the Conceptview switch is set, only a small map is drawn, like in 
@@ -1162,67 +756,6 @@ PutInternFenster (int also_update_scaled_surface)
 }; // void PutInternFenster(void)
 
 /*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-RedrawInfluenceNumber (void)
-{
-  unsigned char *LSource;
-  unsigned char *LDest;
-  int LPhase = 0;
-  unsigned char LDigit = 0;
-  int j;
-
-  for (LPhase = 0; LPhase < ENEMYPHASES; LPhase++)
-    {
-      for (j = 0; j < 3; j++)
-	{
-	  LDigit = *(Druidmap[Me.type].druidname + j) - '0';
-	  LSource = Digitpointer + LDigit * 9 * 9;
-	  LDest =
-	    Influencepointer + LPhase * BLOCKBREITE * BLOCKHOEHE + j * 8 +
-	    NUMBEROFS;
-	  DrawDigit (LSource, LDest);
-	}			// for
-    }				// for
-}				// void RedrawInfluenceNumber(void)
-
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-DrawDigit (unsigned char *Src, unsigned char *Dst)
-{
-#ifdef NEW_ENGINE
-  return;
-#else
-  int i;
-  int j;
-
-  DebugPrintf ("\nvoid DrawDigit(...): real function call confirmed.");
-
-  for (i = 0; i < DIGITHEIGHT; i++)
-    {
-      for (j = 0; j < DIGITLENGTH-1; j++)
-	{
-	  *(Dst + i * BLOCKBREITE + j) = *(Src + i * 9 + j);
-	}
-    }
-
-  DebugPrintf ("\nvoid DrawDigit(...): end of usual function reached.");
-
-#endif // !NEW_ENGINE
-} // void DrawDigit(,..)
-
-
-/*@Function============================================================
 @Desc: Diese Funktion setzt die Schu"sfarbe um einen Wert weiter
 
 @Ret: 
@@ -1273,30 +806,13 @@ FlashWindow (int Flashcolor)
 void
 SetUserfenster (int color, unsigned char *Parameter_screen)
 {
-#ifdef NEW_ENGINE
-  return;
-#else
+
+
   int row;
   SDL_Rect LocalRectangle;
 
-  if (Parameter_screen == RealScreen) 
-    {
-      LocalRectangle.x=USERFENSTERPOSX;
-      LocalRectangle.w=USERFENSTERBREITE;
-      LocalRectangle.h=USERFENSTERHOEHE;
-      LocalRectangle.y=USERFENSTERPOSY;
-      SDL_FillRect( screen , &LocalRectangle, color);
-    }
-  else
-    {
-      for (row = 0; row < USERFENSTERHOEHE; row++)
-	memset (Parameter_screen + USERFENSTERPOSX +
-		(USERFENSTERPOSY + row) * SCREENBREITE,
-		color, USERFENSTERBREITE);
-    }
-
   return;
-#endif // !NEW_ENGINE
+
 }				/* SetUserFenster() */
 
 /* **********************************************************************

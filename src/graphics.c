@@ -86,94 +86,6 @@ SDL_Surface *LoadImage(char *datafile, int transparent)
   return(surface);
 }
 
-void display_bmp(char *file_name)
-{
-#ifdef NEW_ENGINE
-  return;
-#else
-  SDL_Surface *image;
-
-  DebugPrintf
-    ("\nvoid display_bmp(char *file_name):  Real function call confirmed...");
-
-  /* Load the BMP file into a surface */
-  image = SDL_LoadBMP(file_name);
-  if (image == NULL) {
-    fprintf(stderr, "Couldn't load %s: %s\n", file_name, SDL_GetError());
-    return;
-  }
-  
-  /*
-   * Palettized screen modes will have a default palette (a standard
-   * 8*8*4 colour cube), but if the image is palettized as well we can
-   * use that palette for a nicer colour matching
-   */
-  if (image->format->palette && screen->format->palette) 
-    {
-      SDL_SetColors( screen , image->format->palette->colors, 0,
-		     image->format->palette->ncolors);
-      SDL_SetColors( ScaledSurface , image->format->palette->colors, 0,
-		     image->format->palette->ncolors);
-      /*
-	printf("\n\n\nFarbpalette wurde erkannt...\n\n\nTerminiere...\n\n\n");
-	Terminate(0);
-      */
-    }
-  
-  if ( SDL_SetColorKey(image, SDL_SRCCOLORKEY, 252) == (-1) )
-    {
-      printf("\n\nvoid display_bmp(char* file_name): ERROR in SDL_SetColorKey.\n\nTerminating...\n\n");
-      Terminate(ERR);
-    }
-  
-  /* Blit onto the screen surface */
-  if(SDL_BlitSurface(image, NULL, screen, NULL) < 0)
-    fprintf(stderr, "BlitSurface error: %s\n", SDL_GetError());
-  
-  SDL_UpdateRect(screen, 0, 0, image->w, image->h);
-  
-  /* Free the allocated BMP surface */
-  SDL_FreeSurface(image);
-
-  DebugPrintf
-    ("\nvoid display_bmp(char *file_name):  end of function reached...");
-
-  return;
-#endif // !NEW_ENGINE
-}  /* display_bmp() */
-
-
-/*-----------------------------------------------------------------
- * 
- * 
- * 
- *-----------------------------------------------------------------*/
-void
-Load_PCX_Image (char *PCX_Filename, unsigned char *Parameter_Screen, int LoadPal)
-{
-#ifdef NEW_ENGINE
-  return;
-#else
-  int i,j;
-
-  display_bmp(PCX_Filename);
-
-  SDL_UpdateRect(screen, 0, 0, SCREENBREITE, SCREENHOEHE);
-
-  Lock_SDL_Screen();
-
-  for (i=0;i<SCREENHOEHE;i++)
-    for (j=0;j<SCREENBREITE;j++)
-      {
-	*(Parameter_Screen+i*SCREENBREITE+j)=getpixel(screen, j, i);
-      }
-
-  Unlock_SDL_Screen();
-
-
-#endif // !NEW_ENGINE
-
-} // void Load_PCX_Image(char* PCX_Filename,unsigned char* Screen,int LoadPal)
 
 /*
  * replace every occurance of color src by dst in Surface surf
@@ -199,7 +111,7 @@ void replace_color (SDL_Surface *surf, SDL_Color src, SDL_Color dst)
  * @Ret: TRUE/FALSE
  *
  *-----------------------------------------------------------------*/
-#ifdef NEW_ENGINE /* new experimental graphics engine */
+
 int
 InitPictures (void)
 {
@@ -291,80 +203,6 @@ InitPictures (void)
   return (TRUE);
 }
 
-#else /* the old working engine */
-int
-InitPictures (void)
-{
-  int i;
-  char *DruidFilename;
-
-  /* First read the map blocks */
-  GetMapBlocks ();
-
-  /* Get the enemy-blocks */
-  GetBlocks (ENEMYBILD_PCX, 0, 0);
-  Enemypointer = GetBlocks (NULL, 0, ENEMYPHASES);
-
-  /* Get the influence-blocks */
-  GetBlocks (INFLUENCEBILD_PCX, 0, 0);
-  Influencepointer = GetBlocks (NULL, 0, ENEMYPHASES);
-
-  /* the same game for the bullets */
-  GetBlocks (BULLETBILD_PCX, 0, 0);
-  for (i = 0; i < ALLBULLETTYPES; i++)
-    {
-      Bulletmap[i].picpointer = GetBlocks (NULL, i, Bulletmap[i].phases);
-    }
-
-  /* ...and the blasts */
-  GetBlocks (BLASTBILD_PCX, 0, 0);
-  for (i = 0; i < ALLBLASTTYPES; i++)
-    {
-      Blastmap[i].picpointer = GetBlocks (NULL, i, Blastmap[i].phases);
-    }
-
-  /* Get the Frame */
-  Load_PCX_Image (RAHMENBILD1_PCX, InternalScreen, FALSE);
-  RahmenPicture =
-    (unsigned char *) MyMalloc (RAHMENBREITE * RAHMENHOEHE + 10);
-  IsolateBlock (InternalScreen, RahmenPicture, 0, 0, RAHMENBREITE,
-		RAHMENHOEHE);
-
-  /* new: get Elevator-ship picture */
-  ElevatorPicture = (unsigned char *) 
-    MyMalloc (USERFENSTERBREITE*USERFENSTERHOEHE + 10);
-  Load_PCX_Image (SEITENANSICHTBILD_PCX, InternalScreen, FALSE);
-  IsolateBlock (InternalScreen, ElevatorPicture, 0, 0,
-		USERFENSTERBREITE, USERFENSTERHOEHE);
-
-  /* get Menublocks for the In-game Consoles, not the Options menu! */
-  Load_PCX_Image ( CONSOLENBILD_PCX, InternalScreen, FALSE);
-  MenuItemPointer = MyMalloc (MENUITEMMEM);
-  IsolateBlock (InternalScreen, MenuItemPointer, 0, 0, MENUITEMLENGTH,
-		MENUITEMHEIGHT);
-
-  /* get robotpictures */
-  DruidFilename = malloc (1000);
-  for (i = 0; i < ALLDRUIDTYPES; i++)
-    {
-      DruidFilename[0] = 0;
-      DruidFilename = strcat (DruidFilename, "../graphics/");
-      DruidFilename = strcat (DruidFilename, Druidmap[i].druidname);
-      DruidFilename = strcat (DruidFilename, ".bmp");
-      DebugPrintf ("\nint InitPictures(void): Loading Druidpicture: ");
-      DebugPrintf (DruidFilename);
-      Load_PCX_Image (DruidFilename, InternalScreen, FALSE);
-      Druidmap[i].image = malloc (DRUIDIMAGE_LENGTH * DRUIDIMAGE_HEIGHT + 1);
-      IsolateBlock (InternalScreen, Druidmap[i].image, 0, 0,
-		    DRUIDIMAGE_LENGTH, DRUIDIMAGE_HEIGHT);
-    }
-  free (DruidFilename);
-  return TRUE;
-
-} // int InitPictures(void)
-
-#endif // !NEW_ENGINE
-
 /*-----------------------------------------------------------------
  * @Desc: 
  * @Ret: 
@@ -373,9 +211,9 @@ InitPictures (void)
 void
 ClearVGAScreen (void)
 {
-#ifdef NEW_ENGINE
+
   return;
-#endif
+
 
   memset( Outline320x200, 0, SCREENBREITE * SCREENHOEHE );
 
@@ -415,15 +253,13 @@ SetColors (int FirstCol, int PalAnz, char *PalPtr)
 int
 InitPalette (void)
 {
-#ifdef NEW_ENGINE
+
   return (OK);
-#else
 
   /* Hier sollte die Palette geladen werden */
-  Load_PCX_Image (PALBILD_PCX, InternalScreen, TRUE);
+  // FROM THE OLD ENGINE Load_PCX_Image (PALBILD_PCX, InternalScreen, TRUE);
   return OK;
 
-#endif
 }				// int InitPalette(void)
 
 
@@ -535,7 +371,6 @@ Init_Video (void)
     }
 
 
-#ifdef NEW_ENGINE  /* new experimental graphics engine */
   /* 
    * currently only the simple 320x200 mode is supported for 
    * simplicity, as all our graphics are in this format
@@ -543,11 +378,15 @@ Init_Video (void)
    * as well.
    */
   ne_bpp = 8; /* start with the simplest */
-  if( !(ne_screen = SDL_SetVideoMode (320, 200, ne_bpp, flags)) )
+
+  #define SCALE_FACTOR 2
+
+  if( !(ne_screen = SDL_SetVideoMode ( 320*SCALE_FACTOR, 200*SCALE_FACTOR , ne_bpp , flags)) )
     {
-      fprintf(stderr, "Couldn't set 320x200 video mode: %s\n", SDL_GetError());
+      fprintf(stderr, "Couldn't set 320x200*SCALE_FACTOR video mode: %s\n", SDL_GetError());
       exit(-1);
     }
+
   ne_vid_info = SDL_GetVideoInfo (); /* info about current video mode */
   /* RGB of transparent color in our pics */
   ne_transp_rgb.rot   = 199; 
@@ -556,18 +395,6 @@ Init_Video (void)
   /* and corresponding key: */
   ne_transp_key = SDL_MapRGB(ne_screen->format, ne_transp_rgb.rot,
 			     ne_transp_rgb.gruen, ne_transp_rgb.blau);
-
-#else     /* use the old but working graphics engine */
-  ScaledSurface = SDL_SetVideoMode(320*2 , 200*2, 8, flags);
-  SDL_ShowCursor (SDL_DISABLE);  /* turn off display of mouse cursor */
-  if ( ScaledSurface == NULL ) {
-    fprintf(stderr, "Couldn't set 320x200 video mode: %s\n",
-	    SDL_GetError());
-    exit(2);
-  } 
-  screen = SDL_CreateRGBSurface( SDL_SWSURFACE , 320, 200, 8, 0, 0, 0, 0 );
-
-#endif  /* !NEW_ENGINE */
 
   SDL_SetGamma( 2 , 2 , 2 );
   Current_Gamma_Correction=2;
@@ -592,7 +419,7 @@ UnfadeLevel (void)
   if (CurLevel->empty)
     Color = PD_DARK;
 
-  GetView ();
+  // NONSENSE FROM THE OLD ENGINE GetView ();
   Assemble_Combat_Picture (SHOW_ALL);
   PutInternFenster (TRUE);
 
@@ -790,22 +617,12 @@ LevelGrauFaerben (void)
 void
 ClearGraphMem (unsigned char *Parameter_screen)
 {
-#ifdef NEW_ENGINE
-  return;
-#else
+
   SDL_Rect ThisRectangle;
 
-  if (Parameter_screen == RealScreen) 
-    {
-      ThisRectangle.x=0;
-      ThisRectangle.y=0;
-      ThisRectangle.w=SCREENBREITE;
-      ThisRectangle.h=SCREENHOEHE;
-      SDL_FillRect( screen , & ThisRectangle , 0 );
-    }
-  else
-    memset (Parameter_screen, 0, SCREENBREITE * SCREENHOEHE);
-#endif // !NEW_ENGINE
+  return;
+
+
 }				// void ClearGraphMem(unsigned char* screen)
 
 
@@ -827,15 +644,13 @@ SetPalCol (unsigned int palpos, unsigned char rot, unsigned char gruen,
   ThisOneColor.b=blau;
   ThisOneColor.unused=0;
 
+  return;
+
   // DebugPrintf("\nvoid SetPalCol(...): Real function called.");
   // vga_setpalette (palpos, rot, gruen, blau);
 
-#ifdef NEW_ENGINE
   SDL_SetColors( ne_screen , &ThisOneColor, palpos, 1 );
   // SDL_SetColors( ne_blocks , &ThisOneColor, palpos, 1 );
-#else
-  SDL_SetColors( ScaledSurface , &ThisOneColor, palpos, 1 );
-#endif // !NEW_ENGINE
 
   // SDL_SetColors( screen , &ThisOneColor, palpos, 1 );
   // DebugPrintf("\nvoid SetPalCol(...): Usual end of function reached.");

@@ -194,23 +194,9 @@ SmallEnemy (int LX, int LY, int enemyclass, unsigned char *Parameter_Screen,
 void
 GetDigits (void)
 {
-#ifdef NEW_ENGINE
+
   return;
-#else
 
-  int i;
-
-  Digitpointer = MyMalloc (DIGITMEM);
-  Load_PCX_Image (DIGITBILD_PCX, InternalScreen, FALSE);
-
-  for (i = 0; i < 20; i++)
-    {
-      IsolateBlock (InternalScreen,
-		    Digitpointer + DIGITHEIGHT * DIGITLENGTH * i,
-		    i * DIGITLENGTH, 0, DIGITLENGTH, DIGITHEIGHT);
-    }
-
-#endif // !NEW_ENGINE
 } // void GetDigits(void)
 
 /* *********************************************************************** */
@@ -437,46 +423,6 @@ ne_get_rahmen_block (char *picfile, int num_blocks, int blocks_per_line,
 } /* ne_get_rahmen_block() */
 
 #endif // NEW_ENGINE
-
-/*@Function============================================================
-@Desc: GetBlocks
-gets the requested picture file and returns a pointer to
-the requested blocks (sequtially stored)
-				
-@Arguments:	char *picfile	: the picture-file to load, or
-NULL to use the old one
-									
-int line: block-line to get blocks from
-int num:	number of blocks to get from line
-
-@Ret: char * : pointer to 
-@Int:
-* $Function----------------------------------------------------------*/
-unsigned char *
-GetBlocks (char *picfile, int line, int num)
-{
-  int i;
-  unsigned char *tmp;
-  unsigned char *blocktarget;
-
-  if (picfile)
-    {
-      Load_PCX_Image (picfile, InternalScreen, FALSE);
-    }
-
-  if (!num)
-    return NULL;		/* this was only an 'init'-call */
-
-  blocktarget = MyMalloc (BLOCKMEM * num + 1600);
-  tmp = blocktarget;
-
-  for (i = 0; i < num; tmp += BLOCKMEM, i++)
-    IsolateBlock (InternalScreen, tmp, i * (BLOCKBREITE + 1),
-		  line * (BLOCKHOEHE + 1), BLOCKBREITE, BLOCKHOEHE);
-
-  return blocktarget;
-}				// unsigned char *GetBlocks(...)
-
 
 /*-----------------------------------------------------------------
  * @Desc: gibt Block *block (len*height) an angegebener

@@ -78,11 +78,14 @@ For more information about these matters, see the file named COPYING.\n";
 
 
 char usage_string[] =
-  "Usage: freedroid [-v|--version] [-q|--nosound] [-s|--sound] \n\
-			[-t|--timeout=SECONDS] \n\
-			[-f|--fullscreen] [-w|--window]\n\
-			[-j|--sensitivity]\n\
-	      		[-d|--debug=LEVEL]\n\n\
+  "Usage: freedroid [-v|--version] \n\
+                    [-q|--nosound] \n\
+                    [-s|--sound] \n\
+                    [-t|--timeout=SECONDS] \n\
+                    [-f|--fullscreen] [-w|--window]\n\
+                    [-j|--sensitivity]\n\
+                    [-d|--debug=LEVEL]\n\
+\n\
 Report bugs to freedroid@??? (sorry, havent got one yet ;)\n";
 
 /* -----------------------------------------------------------------
@@ -107,6 +110,8 @@ parse_command_line (int argc, char *const argv[])
     {"sensitivity",1,0,'j'},
     { 0, 	0, 0,  0}
   };
+
+  //   sound_on=TRUE;
 
   while (1)
     {
@@ -294,7 +299,7 @@ InitNewGame (void)
   Me.status = MOBILE;
   Me.phase = 0;
 
-  RedrawInfluenceNumber ();
+  // NONSENSE FROM THE OLD ENGINE RedrawInfluenceNumber ();
 
   /* Introduction und Title */
   Title ();
@@ -324,7 +329,8 @@ InitNewGame (void)
 
   return;
 
-}				/* InitNewGame */
+} /* InitNewGame */
+
 /*-----------------------------------------------------------------
  * @Desc: InitParaplus(): initialisiert das Spiel beim Programmstart
  * 
@@ -538,12 +544,14 @@ Title (void)
   // *          Auskommentiert zu Testzwecken
   // *
 
+  /*
   ScrollText (TitleText1, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
   ScrollText (TitleText2, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
   ScrollText (TitleText3, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
   ScrollText (TitleText4, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
-
+  */
   SetTextBorder (0, 0, SCREENBREITE, SCREENHOEHE, 40);
+  //
 
   return;
 #else

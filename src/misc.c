@@ -449,7 +449,7 @@ Cheatmenu (void)
 	      Me.health = Me.energy;
 	      printf ("\nYou are now a %s. Have fun!\n", input);
 	      getchar_raw ();
-	      RedrawInfluenceNumber ();
+	      // NONSENSE FROM THE OLD ENGINE RedrawInfluenceNumber ();
 	    }
 	  free (input);
 	  break;
@@ -559,12 +559,6 @@ Cheatmenu (void)
 void
 EscapeMenu (void)
 {
-#ifdef NEW_ENGINE
-  return;
-#else
-  int Weiter = 0;
-  int MenuPosition=1;
-
 #define FIRST_MENU_ITEM_POS_X 3*(BLOCKBREITE - 7)
 enum
   { 
@@ -574,6 +568,10 @@ enum
     LEVEL_EDITOR_POSITION=4, 
     QUIT_POSITION=5 
   };
+
+  int Weiter = 0;
+  int MenuPosition=1;
+
 
  DebugPrintf("\nvoid EscapeMenu(void): real function call confirmed."); 
 
@@ -586,31 +584,32 @@ enum
   // menu for the player.  Therefore I suggest we just fade out
   // the game screen a little bit.
 
-  SetCurrentFont( Menu_BFont );
+  SetCurrentFont( Para_BFont );
 
   while ( EscapePressed() );
 
   while (!Weiter)
     {
 
-      PutInternFenster( FALSE );
+      // PutInternFenster( FALSE );
 
-      MakeGridOnScreen( Outline320x200 );
+      // MakeGridOnScreen( Outline320x200 );
 
       // Highlight currently selected option with an influencer before it
-      DisplayMergeBlock( FIRST_MENU_ITEM_POS_X, (MenuPosition+3) * (FontHeight(Menu_BFont)/2) - BLOCKBREITE/4, 
-			 Influencepointer, BLOCKBREITE, BLOCKHOEHE, RealScreen );
+      // DisplayMergeBlock( FIRST_MENU_ITEM_POS_X, (MenuPosition+3) * (FontHeight(Menu_BFont)/2) - BLOCKBREITE/4, 
+      // Influencepointer, BLOCKBREITE, BLOCKHOEHE, RealScreen );
 
 
       PrepareScaledSurface(FALSE);
 
-      CenteredPutString (ScaledSurface ,  4*FontHeight(Menu_BFont),    "Single Player");
-      CenteredPutString (ScaledSurface ,  5*FontHeight(Menu_BFont),    "Multi Player");
-      CenteredPutString (ScaledSurface ,  6*FontHeight(Menu_BFont),    "Options");
-      CenteredPutString (ScaledSurface ,  7*FontHeight(Menu_BFont),    "Level Editor");
-      CenteredPutString (ScaledSurface ,  8*FontHeight(Menu_BFont),    "Quit Game");
+      CenteredPutString (ne_screen ,  4*FontHeight(Para_BFont),    "Single Player");
+      CenteredPutString (ne_screen ,  5*FontHeight(Para_BFont),    "Multi Player");
+      CenteredPutString (ne_screen ,  6*FontHeight(Para_BFont),    "Options");
+      CenteredPutString (ne_screen ,  7*FontHeight(Para_BFont),    "Level Editor");
+      CenteredPutString (ne_screen ,  8*FontHeight(Para_BFont),    "Quit Game");
 
-      SDL_UpdateRect(ScaledSurface, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
+      // SDL_UpdateRect(ne_screen, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
+      SDL_Flip( ne_screen );
 
       // Wait until the user does SOMETHING
 
@@ -671,14 +670,14 @@ enum
 	  while (DownPressed());
 	}
     }
-  ClearGraphMem (InternalScreen);
-  ClearGraphMem (RealScreen);
-  Update_SDL_Screen();
-  DisplayRahmen (InternalScreen);
+  // ClearGraphMem (InternalScreen);
+  // ClearGraphMem (RealScreen);
+  // Update_SDL_Screen();
+  // DisplayRahmen (InternalScreen);
   InitBars = TRUE;
 
   return;
-#endif // !NEW_ENGINE
+
 } // EscapeMenu
 
 /* -----------------------------------------------------------------
