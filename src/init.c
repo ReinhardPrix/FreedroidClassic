@@ -822,6 +822,8 @@ InitNewMission ( char *MissionName )
   char *BriefingSectionPointer;
   char *EndPointer;
   char *ShipnamePointer;
+  char *ShipOnPointer;
+  char *ShipOffPointer;
   char *LiftnamePointer;
   char *CrewnamePointer;
   char *GameDataNamePointer;
@@ -834,6 +836,8 @@ InitNewMission ( char *MissionName )
   char Crewname[2000];
   char GameDataName[2000];
   int ShipnameLength;
+  int ShipOnLength;
+  int ShipOffLength;
   int CrewnameLength;
   int LiftnameLength;
   int GameDataNameLength;
@@ -852,6 +856,8 @@ InitNewMission ( char *MissionName )
 #define SHIPNAME_INDICATION_STRING "Ship file to use for this mission: "
 #define ELEVATORNAME_INDICATION_STRING "Lift file to use for this mission: "
 #define CREWNAME_INDICATION_STRING "Crew file to use for this mission: "
+#define LIFTS_ON_INDICATION_STRING "Lifts On file to use for this mission: "
+#define LIFTS_OFF_INDICATION_STRING "Lifts Off file to use for this mission: "
 #define GAMEDATANAME_INDICATION_STRING "Physics ('game.dat') file to use for this mission: "
 #define MISSION_ENDTITLE_BEGIN_STRING "** Beginning of End Title Text Section **"
 #define MISSION_ENDTITLE_END_STRING "** End of End Title Text Section **"
@@ -1055,6 +1061,47 @@ InitNewMission ( char *MissionName )
       printf ("\nError in GetLiftConnections ");
       Terminate (ERR);
     }
+
+  //--------------------
+  // Now its time to get the lifts on/off picturec file name from the mission file and
+  // assemble an appropriate crew out of it
+  //
+  if ( ( ShipOnPointer = strstr ( MainMissionPointer, LIFTS_ON_INDICATION_STRING )) == NULL )
+    {
+      printf("\nERROR! NO LIFTS ON FILENAME FOUND! TERMINATING!");
+      Terminate(ERR);
+    }
+  else
+    {
+      ship_on_filename = malloc(2000);
+      strcpy( ship_on_filename , GRAPHICS_DIR );
+      ShipOnPointer += strlen ( LIFTS_ON_INDICATION_STRING );
+      
+      ShipOnLength = strstr ( ShipOnPointer , "\n") - ShipOnPointer;
+      strncat( ship_on_filename , ShipOnPointer , ShipOnLength );
+      ship_on_filename[ strlen(GRAPHICS_DIR) + ShipOnLength ] = 0;
+      
+      printf("\nShipOn file name found!  It reads: %s" , ship_on_filename );
+    }
+  if ( ( ShipOffPointer = strstr ( MainMissionPointer, LIFTS_OFF_INDICATION_STRING )) == NULL )
+    {
+      printf("\nERROR! NO LIFTS OFF FILENAME FOUND! TERMINATING!");
+      Terminate(ERR);
+    }
+  else
+    {
+      ship_off_filename = malloc(2000);
+      strcpy( ship_off_filename , GRAPHICS_DIR );
+      ShipOffPointer += strlen ( LIFTS_OFF_INDICATION_STRING );
+      
+      ShipOffLength = strstr ( ShipOffPointer , "\n") - ShipOffPointer;
+      strncat( ship_off_filename , ShipOffPointer , ShipOffLength );
+      ship_off_filename[ strlen(GRAPHICS_DIR) + ShipOffLength ] = 0;
+      
+      printf("\nShipOff file name found!  It reads: %s" , ship_off_filename );
+    }
+
+  // getchar();
 
   //--------------------
   // Now its time to get the crew file name from the mission file and

@@ -159,6 +159,8 @@ EXTERN float Current_Sound_FX_Volume;
 #else
 #define EXTERN extern
 #endif
+EXTERN char *ship_on_filename;
+EXTERN char *ship_off_filename;
 EXTERN int BannerIsDestroyed;
 EXTERN unsigned char *LevelColorArray;
 EXTERN int *CRTC;

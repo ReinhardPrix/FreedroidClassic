@@ -864,7 +864,7 @@ CheckInfluenceEnemyCollision (void)
 
   // return;
 
-  for (i = 0; i < NumEnemys; i++)
+  for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
     {
       /* ignore debug-enemys */
       if (AllEnemys[i].type == DEBUG_ENEMY)

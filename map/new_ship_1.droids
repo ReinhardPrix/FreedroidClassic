@@ -40,32 +40,23 @@ something cool, please send your file in to the Freedroid project.
 
 ** Beginning of new Level **
 Level=0 
-Maximum number of Random Droids=8 
-Minimum number of Random Droids=7
+Maximum number of Random Droids=0
+Minimum number of Random Droids=0
 Allowed Type of Random Droid for this level: 476
-Allowed Type of Random Droid for this level: 493
-Allowed Type of Random Droid for this level: 516
-Allowed Type of Random Droid for this level: 598
-Allowed Type of Random Droid for this level: 614
 ** End of this levels droid data **
 
 ** Beginning of new Level **
 Level=1
-Maximum number of Random Droids=8
-Minimum number of Random Droids=7
+Maximum number of Random Droids=0
+Minimum number of Random Droids=0
 Allowed Type of Random Droid for this level: 420
-Allowed Type of Random Droid for this level: 476
-Allowed Type of Random Droid for this level: 493
 ** End of this levels droid data **
 
 ** Beginning of new Level **
 Level=2
-Maximum number of Random Droids=4
-Minimum number of Random Droids=4
+Maximum number of Random Droids=0
+Minimum number of Random Droids=0
 Allowed Type of Random Droid for this level: 420
-Allowed Type of Random Droid for this level: 476
-Allowed Type of Random Droid for this level: 493
-Allowed Type of Random Droid for this level: 516
 ** End of this levels droid data **
 
 ** Beginning of new Level **
@@ -80,8 +71,8 @@ Allowed Type of Random Droid for this level: 834
 
 ** Beginning of new Level **
 Level=4
-Maximum number of Random Droids=8
-Minimum number of Random Droids=8
+Maximum number of Random Droids=3
+Minimum number of Random Droids=3
 Allowed Type of Random Droid for this level: 139
 Allowed Type of Random Droid for this level: 249
 Allowed Type of Random Droid for this level: 296
@@ -94,8 +85,8 @@ Allowed Type of Random Droid for this level: 516
 
 ** Beginning of new Level **
 Level=5
-Maximum number of Random Droids=8
-Minimum number of Random Droids=8
+Maximum number of Random Droids=5
+Minimum number of Random Droids=5
 Allowed Type of Random Droid for this level: 996
 Allowed Type of Random Droid for this level: 997
 Allowed Type of Random Droid for this level: 247

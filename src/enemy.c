@@ -85,10 +85,12 @@ InitEnemys (void)
 
   // printf("\nNumEnemys ist jetzt: %d " ,NumEnemys );
   // fflush(stdout);
-  for (i = 0; i < NumEnemys; i++)
+  for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
     {
       type = AllEnemys[i].type;
+      if (type == OUT) continue;
       AllEnemys[i].energy = Druidmap[type].maxenergy;
+      AllEnemys[i].Status = !OUT;
     }
 
 } /* InitEnemys */
@@ -115,6 +117,8 @@ ClearEnemys (void)
       AllEnemys[i].energy = 0;
       AllEnemys[i].SpecialForce = 0;
       AllEnemys[i].CompletelyFixed = 0;
+      AllEnemys[i].Parameter1 = 0;
+      AllEnemys[i].Parameter2 = 0;
     }
 
   return;
@@ -143,11 +147,14 @@ ShuffleEnemys (void)
 
   /* Anzahl der Waypoints auf CurLevel abzaehlen */
   wp_num = 0;
-  while (CurLevel->AllWaypoints[wp_num].x != 0)
-    wp_num ++;
+
+  for ( i=0 ; i<MAXWAYPOINTS ; i++ )
+    {
+      if ( CurLevel->AllWaypoints[wp_num].x != 0 ) wp_num ++;
+    }
 
   nth_enemy = 0;
-  for (i = 0; i < NumEnemys; i++)
+  for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
     {
       if (AllEnemys[i].Status == OUT
 	  || AllEnemys[i].levelnum != curlevel)
@@ -161,8 +168,9 @@ ShuffleEnemys (void)
 	wp = nth_enemy;
       else
 	{
-	  DebugPrintf ("\nWeniger waypoints als Gegner auf Level ?? !");
-	  Terminate (-1);
+	  
+	  printf ("\nLess waypoints than enemys on level %d? !", CurLevel->levelnum );
+	  Terminate (ERR);
 	}
 
       AllEnemys[i].pos.x = CurLevel->AllWaypoints[wp].x;
@@ -171,7 +179,7 @@ ShuffleEnemys (void)
       AllEnemys[i].lastwaypoint = wp;
       AllEnemys[i].nextwaypoint = wp;
 
-    }/* for(NumEnemys) */
+    }/* for (MAX_ENEMYS_ON_SHIP) */
 
   /* enemys ein bisschen sich selbst ueberlassen */
 
@@ -209,7 +217,7 @@ MoveEnemys (void)
 
   AnimateEnemys ();	// move the "phase" of the rotation of enemys
 
-  for (i = 0; i < NumEnemys; i++)
+  for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
      {
        maxspeed = Druidmap[Me.type].maxspeed;
 
@@ -333,7 +341,7 @@ MoveEnemys (void)
 	  /* setze neuen Waypoint */
 	  AllEnemys[i].nextwaypoint = trywp;
 	}			/* if */
-    }	/* for (NumEnemeys) */
+    }	/* for (MAX_ENEMYS_ON_SHIP) */
 
 } /* MoveEnemys() */
 
@@ -581,7 +589,7 @@ CheckEnemyEnemyCollision (int enemynum)
   check_x = AllEnemys[enemynum].pos.x;
   check_y = AllEnemys[enemynum].pos.y;
 
-  for (i = 0; i < NumEnemys; i++)
+  for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
     {
       // check only collisions of LIVING enemys on this level
       if (AllEnemys[i].Status == OUT || AllEnemys[i].levelnum != curlev)
@@ -654,7 +662,7 @@ AnimateEnemys (void)
 {
   int i;
 
-  for (i = 0; i < NumEnemys; i++)
+  for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
     {
       if (AllEnemys[i].type == DRUID598)
 	{
@@ -690,7 +698,7 @@ AnimateEnemys (void)
 	  AllEnemys[i].feindphase = 0;
 	}
     }
-}				// void AnimateEnemys(void)
+} // void AnimateEnemys(void)
 
 /*@Function============================================================
 @Desc: ClassOfDruid(druidtype): liefert die Classe des Druidtypes type

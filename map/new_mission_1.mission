@@ -62,15 +62,17 @@ Physics ('game.dat') file to use for this mission: game.dat
 Ship file to use for this mission: new_ship_1.maps
 Lift file to use for this mission: new_ship_1.elevators
 Crew file to use for this mission: new_ship_1.droids
+Lifts On file to use for this mission: asteroid_on.bmp
+Lifts Off file to use for this mission: asteroid_off.bmp
 Possible Start Point : Level=4 XPos=1 YPos=1
-Possible Start Point : Level=5 XPos=3 YPos=1
+Possible Start Point : Level=5 XPos=5 YPos=5
 Possible Start Point : Level=6 XPos=3 YPos=3
 Possible Start Point : Level=7 XPos=2 YPos=1
-Mission target is to kill all droids : 0
-Mission target is to kill class of droids : -1
-Mission target is to kill droids with marker : 1
+Mission target is to kill all droids : -1
+Mission target is to kill class of droids : 9
+Mission target is to kill droids with marker : -1
 Mission target is to become class : -1
-Mission target is to become type : 1
+Mission target is to become type : -1
 Mission target is to overtake a droid with marker : -1
 Mission target is to reach level : -1
 Mission target is to reach X-Pos : -1

@@ -204,6 +204,15 @@ ShowLifts (int level, int liftrow)
 {
   SDL_Rect src, dst;
   int i;
+
+  ship_off_pic = IMG_Load ( ship_off_filename );
+  ship_on_pic = IMG_Load ( ship_on_filename );
+  SDL_SetColorKey(ship_off_pic, SDL_SRCCOLORKEY, ne_transp_key);
+  SDL_SetColorKey(ship_on_pic, SDL_SRCCOLORKEY, ne_transp_key);
+
+
+
+
   // clear the whole screen
   //  ClearGraphMem();
   // fill the user fenster with some color
@@ -237,6 +246,9 @@ ShowLifts (int level, int liftrow)
     }
 
   SDL_Flip (ne_screen);
+
+  SDL_FreeSurface( ship_off_pic );
+  SDL_FreeSurface( ship_on_pic );
 
   return;
 
