@@ -30,8 +30,10 @@ freedroid-discussion@lists.sourceforge.net
 
 BEGIN OF AUTORS NOTES
 
+
 You can use this text field to make some notes on anything.  These otes will get saved with the dialog.
 This is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.
+
 
 END OF AUTORS NOTES
 
@@ -75,26 +77,6 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=6  OptionText="My home world?"
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=612  PositionY=89  
-Subtitle="Well, it's obvious you are not a human like me.  You are a Linarian.  So Linaria is your home world.  It's not so common for Linarians to appear here.  In fact you're the first one I've met face to face."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=6 ChangeToValue=0
-AlwaysExecuteThisOptionPriorToDialogStart="no"
-
-----------------------------------------------------------------------
-
-New Option Nr=7  OptionText="You mentioned some 'Resistance'?"
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=758  PositionY=90  
-Subtitle="The resistance is the organisation that tries to get rid of the oppression through the MS forces.  It's existence is a direct consequence of the great assault, that happend 3 months ago."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=7 ChangeToValue=0
-AlwaysExecuteThisOptionPriorToDialogStart="no"
-
-----------------------------------------------------------------------
-
 New Option Nr=9  OptionText="Where can I get a weapon?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=395  PositionY=395  
@@ -105,20 +87,6 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Security measures in the gear have been deactivated, but it's still toys more or less, some of them are a bit tuned, but that's it."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=9 ChangeToValue=0
-AlwaysExecuteThisOptionPriorToDialogStart="no"
-
-----------------------------------------------------------------------
-
-New Option Nr=10  OptionText="We are in an underground cavern here, right?"
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=672  PositionY=91  
-Subtitle="Right.  This whole area around you is a system of underground tunnels and halls very deep under ground."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="We had to retreat to this place to seek refuge from the bot armies after the Great Assault."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="But still many bots have made it down here.  So take care!"
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=10 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------

@@ -1,8 +1,7 @@
 
 ----------------------------------------------------------------------
  *
- *   Copyright (c) 1994, 2002 Johannes Prix
- *   Copyright (c) 1994, 2002 Reinhard Prix
+ *   Copyright (c) 1994, 2003, 2004 Johannes Prix
  *
  *
  *  This file is part of Freedroid
@@ -31,12 +30,8 @@ freedroid-discussion@lists.sourceforge.net
 
 BEGIN OF AUTORS NOTES
 
-
-
 You can use this text field to make some notes on anything.  These otes will get saved with the dialog.
 This is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.
-
-
 
 END OF AUTORS NOTES
 
@@ -71,13 +66,13 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=254  PositionY=336  
 Subtitle="You seem not to understand.  We have no real weapons."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="What we have is what is available and that is mostly toys or hunting gears from various real-file role playing events and from sports and the like."
+Subtitle="What we have is what is available and that is mostly stuff from an rpg convention that took place on this location some time ago."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Initially these things all had extra security setting built in so that noone could get hurt in big games and tournaments."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="But the real weapons are not available because the MS initially made sure these supplies were destroyed so make resistance to their bots impossible."
+Subtitle="Now most of the security settings have been globally disabled. Some of the stuff has even been tuned a bit, but that's it."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="If you're looking for real weapons, I'm afraid you won't find them here."
+Subtitle="Real weapons are in general available.  If you're looking for real weapons, I'm afraid you won't find them here."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="The guards have some supperior stuff, but still real weapons are beyond them."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"

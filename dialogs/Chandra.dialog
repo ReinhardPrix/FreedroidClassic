@@ -1,8 +1,7 @@
 
 ----------------------------------------------------------------------
  *
- *   Copyright (c) 1994, 2002 Johannes Prix
- *   Copyright (c) 1994, 2002 Reinhard Prix
+ *   Copyright (c) 1994, 2003, 2004 Johannes Prix
  *
  *
  *  This file is part of Freedroid
@@ -32,7 +31,7 @@ freedroid-discussion@lists.sourceforge.net
 BEGIN OF AUTORS NOTES
 
 
-You can use this text field to make some notes on anything.  These otes will get saved with the dialog.
+You can use this text field to make some notes on anything.  These notes will get saved with the dialog.
 This is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.
 
 
@@ -77,36 +76,33 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=4  OptionText=" What can you tell me about the MS? "
-OptionSample="Tux_Chandra_What_Can_MS_0.wav"
-PositionX=186  PositionY=312  
-Subtitle=" While the MS was in power, it must have had the most powerful hold of the galaxy ever.  But their systems were crap and that lead to the Great Assault."
+New Option Nr=3  OptionText="So what's so strange about the attack?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=248  PositionY=199  
+Subtitle="It seems that the bots are not intent on merly killing humans.  It has been reported, that they have been transporting away human corpses in automated spaceships. "
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="They tried to fix the problems, but, again, using their crap, it didn't work in time and they got attacked themselves."
+Subtitle="This is purely irrational and completely incomprehensible to me.  There isn't any logic in this."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Then they split up and the different branches are now fighting each other.  It's complete chaos."
+Subtitle="Apart from that, the attack is not full-scale.  There are countless reserves of bots.  Yet, they don't attack. "
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=6 ChangeToValue=1
-ChangeOption=7 ChangeToValue=0
-ChangeOption=4 ChangeToValue=0
+Subtitle="They seem to be waiting.  Only a small fraction is attacking at each time.  That's also most strange and irrational."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=3 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=5  OptionText="Why haven't you joined with the other settlements to fight the bots?"
-OptionSample="Tux_Chandra_Wouldnt_That_Mean_0.wav"
-PositionX=368  PositionY=49  
-Subtitle="Fighting the bots is not so easy.  They are numerous and some of them are hard to defeat. "
+New Option Nr=4  OptionText="What can you tell me about the hostile bots? "
+OptionSample="Tux_Chandra_What_Can_MS_0.wav"
+PositionX=186  PositionY=312  
+Subtitle="The phenomenon of hostile bots has occupied my mind for quite some time.  There are some strange irrationalities in this behaviour, that I cannot explain."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Also the other camps have different goals than we have."
+Subtitle="This concerns not only the irrationality of the attack but also the methods and the scale if it all."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="While we seek to make life acceptable in here, they weave great plans that are futile."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="As far as I know, they even try to break the barrier, that originates from the MS facility."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="But with their makeshift devices, this is not even worth trying."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=5 ChangeToValue=0
+ChangeOption=6 ChangeToValue=1
+ChangeOption=7 ChangeToValue=0
+ChangeOption=4 ChangeToValue=0
+ChangeOption=3 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -124,32 +120,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=7  OptionText="No, I meant I would like to leave this planet."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=314  PositionY=297  
+PositionX=289  PositionY=264  
 Subtitle="I don't know a way how you could do that.  There are no transports going any more.  But you might have more luck in one of the cities to the south."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=7 ChangeToValue=0
-AlwaysExecuteThisOptionPriorToDialogStart="no"
-
-----------------------------------------------------------------------
-
-New Option Nr=8  OptionText="I will find a way to get away from here."
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=443  PositionY=50  
-Subtitle="If you think so.  I wish you the best of luck."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="But remember there is a big force field cloaking this whole colony."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="It prevents any life form from geting out, even teleporting out."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="This force field originates from the former MS facility on this planet."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="It was part of their effort to keep their affairs totally secret, so no employee or anyone can get away."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="And now that the MS facility is full of hostile bots, no one can turn off the force field."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="And that's the reason why no one, human or linarian, can ever get out of this place, I'm sorry."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=8 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------

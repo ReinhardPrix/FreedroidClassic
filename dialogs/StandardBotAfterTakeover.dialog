@@ -35,8 +35,10 @@ BEGIN OF AUTORS NOTES
 
 
 
+
 You can use this text field to make some notes on anything.  These otes will get saved with the dialog.
 This is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.
+
 
 
 
@@ -90,46 +92,6 @@ Subtitle="...removing energy from breaks... resuming normal patrol operations...
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
 DoSomethingExtra="SetMoveFreelyProperty"
-AlwaysExecuteThisOptionPriorToDialogStart="no"
-
-----------------------------------------------------------------------
-
-New Option Nr=5  OptionText="Why haven't you joined with the other settlements to fight the bots?"
-OptionSample="Tux_Chandra_Wouldnt_That_Mean_0.wav"
-PositionX=356  PositionY=161  
-Subtitle="Fighting the bots is not so easy.  They are numerous and some of them are hard to defeat. "
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Also the other camps have different goals than we have."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="While we seek to make life acceptable in here, they weave great plans that are futile."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="As far as I know, they even try to break the barrier, that originates from the MS facility."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="But with their makeshift devices, this is not even worth trying."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=5 ChangeToValue=0
-AlwaysExecuteThisOptionPriorToDialogStart="no"
-
-----------------------------------------------------------------------
-
-New Option Nr=8  OptionText="I will find a way to get away from here."
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=354  PositionY=101  
-Subtitle="If you think so.  I wish you the best of luck."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="But remember there is a big force field cloaking this whole colony."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="It prevents any life form from geting out, even teleporting out."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="This force field originates from the former MS facility on this planet."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="It was part of their effort to keep their affairs totally secret, so no employee or anyone can get away."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="And now that the MS facility is full of hostile bots, no one can turn off the force field."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="And that's the reason why no one, human or linarian, can ever get out of this place, I'm sorry."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=8 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------

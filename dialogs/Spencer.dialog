@@ -1,8 +1,7 @@
 
 ----------------------------------------------------------------------
  *
- *   Copyright (c) 1994, 2002 Johannes Prix
- *   Copyright (c) 1994, 2002 Reinhard Prix
+ *   Copyright (c) 1994, 2003, 2004 Johannes Prix
  *
  *
  *  This file is part of Freedroid
@@ -31,16 +30,8 @@ freedroid-discussion@lists.sourceforge.net
 
 BEGIN OF AUTORS NOTES
 
-
-
-
-
-
 This character is "SPENCER", one of the most important characters of old town.
 His most important features are, that he can check through for quests done and maybe bring you into the Town Guard.
-
-
-
 
 
 
@@ -96,11 +87,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=4  OptionText="ASSIGN WAREHOUSE MISSION"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=293  PositionY=53  
-Subtitle="These are bad times.  The MS machines threaten to overrun our defenses.  "
+Subtitle="These are bad times.  The interplanetary travel is made impossible by bot ships, so we need to stick to our local resources."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="We've tried to get rid of the problem by sending a group of our men into a large warehouse where many bots are still lurking."
+Subtitle="We've got a list of stuff we'd need from the automated underground storage north of town.  But the bots there are numerous."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="We wanted to blow the place up, and we even had some help, a guy from outside.  But he was an MS agent, led the troop into a trap and everyone was slain."
+Subtitle="And currently I can't spare a single man from the city defenses.  It's a quite difficult situation."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=1
 ChangeOption=4 ChangeToValue=0
@@ -158,9 +149,9 @@ New Option Nr=9  OptionText="MISSION_IS_NOT_DONE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=376  PositionY=235  
 Subtitle="Not too good.  It seems that even you could not (yet) help us with the warehouse.  So my problems are all the same still."
-ReplySample=""
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Maybe later, when you grow more experienced you might be able to help us after all."
-ReplySample=""
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=9 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -169,10 +160,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=10  OptionText="DONT_GIVE_REWARD"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=490  PositionY=182  
-Subtitle="Thanks to your previous action, the warehouse is now clean and we can safely draw goods from it.  You've really helped us out there."
-ReplySample=""
+Subtitle="Thanks to your previous action, we've been able to organize all the goods we needed right now.  You've really helped us out there."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Rest assured that we will never forget your brave activity for our community down in that warehouse."
-ReplySample=""
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=10 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -183,9 +174,11 @@ OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=488  PositionY=100  
 Subtitle="Man, you really did it!  
 I can hardly believe it, but all the bots are gone!"
-ReplySample=""
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Take these 500 bucks as a reward.  And be assured that you've earned my deepest respect, Linarian."
-ReplySample=""
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Our people are transporting the good we need at maximum speed as we speak.  It can't be too long until new bots from ships in the orbit of the planet with beam down to replace the dead bots."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=11 ChangeToValue=0
 DoSomethingExtra="AddGold:500"
 DoSomethingExtra="PlantCookie:reward_for_warehouse_given:"
