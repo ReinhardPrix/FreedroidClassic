@@ -29,17 +29,12 @@ Outstanding release-critical bugs (priority: high)
 
 - adapt LevelEditor to new waypoint/connections scheme
   
-- update level displayed when changed in LevelEditor
-
-- increase sound-channels to allow playing more sounds simultaneously
-
 - load all droid pics at startup, to avoid delays in DroidShow
+  (done, but maybe we should show 3D animated pics??)
 
-- force "release key" instead of waiting for it
-  (is it worth it?)
+- playtest on a _really_ slow machine...
 
-- Collision with robo can still kick you out of level.. ??
-   --> (rp) check on slow machine if this is still an issue...
+- reactivate modifier keys
            
 Outstanding normal bugs (priority: normal)
 ------------------------------------------
@@ -319,4 +314,14 @@ Resolved bugs
   (done)
 
 - decrease CPU usage in menu and maybe console(?)
+  (done)
+
+- update level displayed when changed in LevelEditor
+  (done)
+- increase sound-channels to allow playing more sounds simultaneously
+  (done: 20 channels now)
+
+
+- force "release key" instead of waiting for it
+  (is it worth it?) -> I think so!
   (done)
