@@ -1117,7 +1117,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
-File or directory name for inventory image="inventory_image_19.png"
+File or directory name for inventory image="laser_sword_yellow/inv_image.png"
 Item uses drop sound with filename="drop_sword_sound.wav"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
@@ -1624,7 +1624,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
-File or directory name for inventory image="inventory_image_19.png"
+File or directory name for inventory image="laser_sword_yellow/inv_image.png"
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=80
 Item description text="The power of an axe combined with modern technology is a force to be reckoned with. This easily acquired but much talked about weapon has a storied past."
@@ -4003,7 +4003,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
-File or directory name for inventory image="inventory_image_19.png"
+File or directory name for inventory image="laser_sword_yellow/inv_image.png"
 Item uses drop sound with filename="drop_sword_sound.wav"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
@@ -4042,7 +4042,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
-File or directory name for inventory image="inventory_image_19.png"
+File or directory name for inventory image="laser_sword_yellow/inv_image.png"
 Item uses drop sound with filename="drop_sword_sound.wav"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
@@ -4081,7 +4081,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
-File or directory name for inventory image="inventory_image_19.png"
+File or directory name for inventory image="laser_sword_yellow/inv_image.png"
 Item uses drop sound with filename="drop_sword_sound.wav"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
@@ -4120,7 +4120,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
-File or directory name for inventory image="inventory_image_19.png"
+File or directory name for inventory image="laser_sword_yellow/inv_image.png"
 Item uses drop sound with filename="drop_sword_sound.wav"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
@@ -4159,7 +4159,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
-File or directory name for inventory image="inventory_image_19.png"
+File or directory name for inventory image="laser_sword_yellow/inv_image.png"
 Item uses drop sound with filename="drop_sword_sound.wav"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
@@ -4198,7 +4198,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
-File or directory name for inventory image="inventory_image_19.png"
+File or directory name for inventory image="laser_sword_yellow/inv_image.png"
 Item uses drop sound with filename="drop_sword_sound.wav"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
@@ -4237,7 +4237,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
-File or directory name for inventory image="inventory_image_19.png"
+File or directory name for inventory image="laser_sword_yellow/inv_image.png"
 Item uses drop sound with filename="drop_sword_sound.wav"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
@@ -4276,7 +4276,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
-File or directory name for inventory image="inventory_image_19.png"
+File or directory name for inventory image="laser_sword_yellow/inv_image.png"
 Item uses drop sound with filename="drop_sword_sound.wav"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
@@ -4315,7 +4315,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
-File or directory name for inventory image="inventory_image_19.png"
+File or directory name for inventory image="laser_sword_yellow/inv_image.png"
 Item uses drop sound with filename="drop_sword_sound.wav"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
@@ -4354,7 +4354,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
-File or directory name for inventory image="inventory_image_19.png"
+File or directory name for inventory image="laser_sword_yellow/inv_image.png"
 Item uses drop sound with filename="drop_sword_sound.wav"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
