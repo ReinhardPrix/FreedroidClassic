@@ -126,7 +126,8 @@ SpecialForce: Type=GUA X=35 Y=18 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0
 //--------------------
 // This is Spencer 'SPE', the chief of the guard, who won't let Tux into the citadel
 //
-SpecialForce: Type=GUA X=35 Y=18 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="SpencerStartGameSquare" RushTux="no" DialogSectionToUse="Spencer" ShortLabel="Spencer -- Chief of the old town guard"
+S**pecialForce: Type=GUA X=35 Y=18 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="SpencerStartGameSquare" RushTux="no" DialogSectionToUse="Spencer" ShortLabel="Spencer -- Chief of the old town guard"
+SpecialForce: Type=GUA X=35 Y=18 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="NewSpencer" RushTux="no" DialogSectionToUse="Spencer" ShortLabel="Spencer -- Chief of the old town guard"
 
 ** End of this levels droid data **
 

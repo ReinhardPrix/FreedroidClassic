@@ -38,16 +38,16 @@
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at X=2 Y=11 Lev=0
-Use map location from map label="NO_LABEL_DEFINED_YET"
-Event Action to be triggered by this trigger="teleport_in"
+Use map location from map label="TeleportIntoTheWarehouse"
+Event Action to be triggered by this trigger="teleport_into_the_warehouse"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
 
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at X=28 Y=2 Lev=1
-Use map location from map label="NO_LABEL_DEFINED_YET"
-Event Action to be triggered by this trigger="teleport_out"
+Use map location from map label="TeleportFromWarehouseToWood"
+Event Action to be triggered by this trigger="teleport_out_from_warehouse"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
 
@@ -285,22 +285,22 @@ Action is mission assignment=-1
 
 
 * Start of an Event Action Subsection *
-Action label for this action="teleport_in"
+Action label for this action="teleport_into_the_warehouse"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
 Use map label for map change location="NO_LABEL_DEFINED_YET"
 Teleport to TelX=27 TelY=3 TelLev=1
-Use map label for teleport target="NO_LABEL_DEFINED_YET"
+Use map label for teleport target="ArrivePointInWarehouse"
 Action is Influencer say="Now I should get teleported...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
 
 
 * Start of an Event Action Subsection *
-Action label for this action="teleport_out"
+Action label for this action="teleport_out_from_warehouse"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
 Use map label for map change location="NO_LABEL_DEFINED_YET"
 Teleport to TelX=3 TelY=11 TelLev=0
-Use map label for teleport target="NO_LABEL_DEFINED_YET"
+Use map label for teleport target="ArrivePointBackFromWarehouse"
 Action is Influencer say="Now I should get teleported...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
