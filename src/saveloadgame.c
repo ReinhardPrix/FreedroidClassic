@@ -539,14 +539,6 @@ LoadGame( void )
     if ((DataFile = fopen ( filename , "rb")) == NULL )
     {
 	GiveMouseAlertWindow ( "\nW A R N I N G !\n\nFreedroidRPG was unable to locate the saved game file you requested to load.\nThis might mean that it really isn't there cause you tried to load a game without ever having saved the game before.  \nThe other explanation of this error might be a severe error in FreedroidRPG.\nNothing will be done about it." );
-	/*
-	  fprintf( stderr, "\n\nfilename: '%s'\n" , filename );
-	  GiveStandardErrorMessage ( __FUNCTION__  , "\
-	  Freedroid was unable to open a given text file, that should be there and\n\
-	  should be accessible.\n\
-	  This indicates a serious bug in this installation of Freedroid.",
-	  PLEASE_INFORM, IS_FATAL );
-	*/
 	append_new_game_message ( "Failed to load old game." );
 	return ( ERR ) ;
     }

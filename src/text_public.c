@@ -303,8 +303,8 @@ ReadAndMallocAndTerminateFile( char* filename , const char* File_End_String )
 	fprintf( stderr, "\n\nfilename: '%s'\n" , filename );
 	
 	GiveStandardErrorMessage ( __FUNCTION__  , "\
-Freedroid was unable to open a given text file, that should be there and\n\
-should be accessible.\n\
+Freedroid was unable to open a given text file,\n\
+that should be there and should be accessible.\n\
 This indicates a serious bug in this installation of Freedroid.",
 				   PLEASE_INFORM, IS_FATAL );
     }
