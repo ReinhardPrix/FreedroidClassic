@@ -1121,7 +1121,11 @@ MoveThisEnemy( int EnemyNum )
   //
   if ( ThisRobot->warten > 0) return;
 
-  if ( ThisRobot->AdvancedCommand == 2 ) TeleportToClosestWaypoint ( ThisRobot );
+  if ( ThisRobot->AdvancedCommand == 2 ) 
+    {
+      TeleportToClosestWaypoint ( ThisRobot );
+      ThisRobot->AdvancedCommand = 0;
+    }
 
   if ( ThisRobot -> will_rush_tux )
     {
@@ -1183,10 +1187,11 @@ MoveEnemys (void)
        MoveThisEnemy(i);
 
        // If its a combat droid, then if might attack...
-       if (Druidmap[AllEnemys[i].type].aggression)
+       if ( ( Druidmap [ AllEnemys [ i ] . type ] . aggression ) &&
+	    !AllEnemys [ i ] . is_friendly ) 
 	 AttackInfluence (i);
 
-    }	/* for (MAX_ENEMYS_ON_SHIP) */
+     }	// for Number_Of_Droids_On_Ship
 
 }; // MoveEnemys( void ) 
 

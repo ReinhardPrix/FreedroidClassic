@@ -1112,6 +1112,37 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , Enemy ChatDroid 
 }; // void DoChatFromChatRosterData( void )
 
 /* ----------------------------------------------------------------------
+ * This function finds the index of the array where the chat flags for
+ * this person are stored.  It does this by exploiting on the (unique?)
+ * dialog section to use entry of each (friendly) droid.
+ * ---------------------------------------------------------------------- */
+int
+ResolveDialogSectionToChatFlagsIndex ( Enemy ChatDroid )
+{
+
+  if ( strcmp ( ChatDroid -> dialog_section_name , "Chandra" ) == 0 ) return PERSON_CHA ;
+  if ( strcmp ( ChatDroid -> dialog_section_name , "SOR" ) == 0 ) return PERSON_SOR;
+  if ( strcmp ( ChatDroid -> dialog_section_name , "614" ) == 0 ) return PERSON_614;
+  if ( strcmp ( ChatDroid -> dialog_section_name , "STO" ) == 0 ) return PERSON_STO;
+  if ( strcmp ( ChatDroid -> dialog_section_name , "PEN" ) == 0 ) return PERSON_PEN;
+  if ( strcmp ( ChatDroid -> dialog_section_name , "DIX" ) == 0 ) return PERSON_DIX;
+  if ( strcmp ( ChatDroid -> dialog_section_name , "RMS" ) == 0 ) return PERSON_RMS;
+  if ( strcmp ( ChatDroid -> dialog_section_name , "MER" ) == 0 ) return PERSON_MER;
+  if ( strcmp ( ChatDroid -> dialog_section_name , "Francis" ) == 0 ) return PERSON_FRA;
+  if ( strcmp ( ChatDroid -> dialog_section_name , "Ernie" ) == 0 ) return PERSON_ERN;
+  if ( strcmp ( ChatDroid -> dialog_section_name , "Benjamin" ) == 0 ) return PERSON_BEN;
+  if ( strcmp ( ChatDroid -> dialog_section_name , "HEA" ) == 0 ) return PERSON_HEA;
+
+  GiveStandardErrorMessage ( "ResolveDialogSectionToChatFlagsIndex(...)" , "\
+There was a dialogue section to be used with a droid, that does not have a \n\
+corresponding chat flags array index." ,
+			     PLEASE_INFORM, IS_FATAL );
+
+  return (-1);
+
+}; // int ResolveDialogSectionToChatFlagsIndex ( Enemy ChatDroid )
+
+/* ----------------------------------------------------------------------
  * This function does the communication routine when the influencer in
  * transfer mode touched a friendly droid.
  * ---------------------------------------------------------------------- */
@@ -1122,6 +1153,7 @@ ChatWithFriendlyDroid( Enemy ChatDroid )
   int i ;
   SDL_Rect Chat_Window;
   char* DialogMenuTexts[ MAX_ANSWERS_PER_PERSON ];
+  int ChatFlagsIndex = (-1);
 
   Chat_Window.x=242; Chat_Window.y=100; Chat_Window.w=380; Chat_Window.h=314;
 
@@ -1150,6 +1182,56 @@ ChatWithFriendlyDroid( Enemy ChatDroid )
   // We clean out the chat roster from any previous use
   //
   InitChatRosterForNewDialogue(  );
+
+  ChatFlagsIndex = ResolveDialogSectionToChatFlagsIndex ( ChatDroid ) ;
+
+  //--------------------
+  // Now we do the dialog with DIX...
+  //
+  if ( CountItemtypeInInventory( ITEM_DIXONS_TOOLBOX , 0 ) )
+    {
+      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 5 ] = 1 ; 
+      
+      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 1 ] = FALSE ; // we allow to ask naively...
+      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 2 ] = FALSE ; // we allow to ask naively...
+      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 3 ] = FALSE ; // we allow to ask naively...
+      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 4 ] = FALSE ; // we allow to ask naively...
+      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 6 ] = FALSE ; // we allow to ask naively...
+      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 7 ] = FALSE ; // we allow to ask naively...
+    }
+  else
+    {
+      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 5 ] = 0 ; 
+      
+      if ( ( Me [ 0 ] . AllMissions [ 4 ] . MissionWasAssigned == TRUE ) &&
+	   ( Me [ 0 ] . AllMissions [ 4 ] . MissionIsComplete == FALSE ) )
+	{
+	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 7 ] = TRUE ; // we allow to ask directly for the toolset...
+	  
+	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 1 ] = FALSE ; // we allow to ask naively...
+	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 2 ] = FALSE ; // we allow to ask naively...
+	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 3 ] = FALSE ; // we allow to ask naively...
+	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 4 ] = FALSE ; // we allow to ask naively...
+	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 5 ] = FALSE ; // we allow to ask naively...
+	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 6 ] = FALSE ; // we allow to ask naively...
+	}
+    }
+  
+  
+  if ( ( Me [ 0 ] . AllMissions [ 1 ] . MissionWasAssigned == TRUE ) &&
+       ( Me [ 0 ] . AllMissions [ 1 ] . MissionIsComplete == FALSE ) )
+    {
+      Me [ 0 ] . Chat_Flags [ PERSON_RMS ]  [ 3 ] = TRUE ; // we allow to ask directly for the coffee machine...
+      Me [ 0 ] . Chat_Flags [ PERSON_RMS ]  [ 0 ] = FALSE ; // we disallow to ask about the job naively...
+    }
+  
+  
+  LoadChatRosterWithChatSequence ( ChatDroid -> dialog_section_name );
+  DoChatFromChatRosterData( 0 , ChatFlagsIndex , ChatDroid );
+
+  return ;
+
+
 
   if ( strcmp ( Druidmap[ ChatDroid -> type ].druidname , "CHA" ) == 0 )
     {

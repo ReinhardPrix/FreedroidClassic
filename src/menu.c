@@ -643,7 +643,7 @@ Cheatmenu (void)
 		    {
 		      ClearGraphMem ();
 		      printf_SDL (Screen, x0, y0,
-				   " NR.   ID  X    Y   ENERGY   speedX Status\n");
+				   " NR.   ID  X    Y   ENERGY   speedX Status Friendly\n");
 		      printf_SDL (Screen, -1, -1,
 				  "---------------------------------------------\n");
 		    }
@@ -659,6 +659,8 @@ Cheatmenu (void)
 		  if ( AllEnemys[i].Status == MOBILE ) printf_SDL (Screen, -1, -1, "MOB" );
 		  else if ( AllEnemys[i].Status == OUT ) printf_SDL (Screen, -1, -1, "OUT" );
 		  else printf_SDL (Screen, -1, -1, "ERROR-UNKNOWN" );
+		  if ( AllEnemys[i].is_friendly ) printf_SDL (Screen, -1, -1, " YES" );
+		  else printf_SDL (Screen, -1, -1, " NO" );
 		  printf_SDL (Screen, -1, -1, "\n" );
 
 		} /* if (enemy on current level)  */

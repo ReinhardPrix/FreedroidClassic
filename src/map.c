@@ -2511,6 +2511,7 @@ GetThisLevelsSpecialForces ( char* SearchPointer , int OurLevelNumber , int Free
   char* StartMapLabel;
   char* YesNoString;
   location StartupLocation;
+  char* DialogSection;
 
   while ( ( SearchPointer = strstr ( SearchPointer , SPECIAL_FORCE_INDICATION_STRING)) != NULL)
     {
@@ -2591,6 +2592,19 @@ This indicated a corrupted freedroid.ruleset file with an error at least in\n\
 the item specification section.",
 				     PLEASE_INFORM, IS_FATAL );
 	}
+
+      DialogSection = 
+	ReadAndMallocStringFromData ( SearchPointer , "DialogSectionToUse=\"" , "\"" ) ;
+      if ( strlen ( DialogSection ) >= MAX_LENGTH_FOR_DIALOG_SECTION_NAME-1 )
+	{
+	  GiveStandardErrorMessage ( "GetThisLevelsSpecialForces(...)" , "\
+The dialog section specification string for a bot was too large.\n\
+This indicated a corrupted ReturnOfTux.droids file with an error when specifying\n\
+the dialog section name for one special force droid/character.",
+				     PLEASE_INFORM, IS_FATAL );
+	}
+      strcpy ( AllEnemys[ FreeAllEnemysPosition ].dialog_section_name , DialogSection );
+      free ( DialogSection );
 
       AllEnemys[ FreeAllEnemysPosition ].type = ListIndex;
       AllEnemys[ FreeAllEnemysPosition ].pos.z = OurLevelNumber;

@@ -177,7 +177,7 @@ End of chat dialog for character="Benjamin"
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
 
-Beginning of new chat dialog for character="CHA"
+Beginning of new chat dialog for character="Chandra"
 
 New Option Nr=0 
 OptionText=" Hi!  I'm new here. " 
@@ -276,7 +276,7 @@ ReplySample="Chandra_No_Not_Really_0.wav"
 New Option Nr=99 OptionText=" END "
 OptionSample="Tux_Goodbye_0.wav"
 
-End of chat dialog for character="CHA"
+End of chat dialog for character="Chandra"
 
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
@@ -966,7 +966,7 @@ End of chat dialog for character="MER"
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
 
-Beginning of new chat dialog for character="FRA"
+Beginning of new chat dialog for character="Francis"
 
 ----------------------------------------------------------------------
 
@@ -1244,13 +1244,13 @@ ChangeOption=1 ChangeToValue=1 ; //
 
 ----------------------------------------------------------------------
 
-End of chat dialog for character="FRA"
+End of chat dialog for character="Francis"
 
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
 
-Beginning of new chat dialog for character="ERN"
+Beginning of new chat dialog for character="Ernie"
 
 ----------------------------------------------------------------------
 
@@ -1309,7 +1309,7 @@ ChangeOption=2 ChangeToValue=1 ; //
 
 ----------------------------------------------------------------------
 
-End of chat dialog for character="ERN"
+End of chat dialog for character="Ernie"
 
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------

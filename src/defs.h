@@ -160,6 +160,7 @@ enum _spell_names
 #define CLGrobX ((Me[0].pos.x+INITIAL_BLOCK_WIDTH/2) / INITIAL_BLOCK_HEIGHT)
 
 #define MAX_CHARACTER_NAME_LENGTH (25)
+#define MAX_LENGTH_FOR_DIALOG_SECTION_NAME 100
 
 //--------------------
 // Highscore related defines 
@@ -408,6 +409,8 @@ enum _non_player_characters
     PERSON_MER,
     PERSON_FRA,
     PERSON_ERN,
+    PERSON_BEN,
+    PERSON_HEA,
     LAST_PERSON
   };
 #define MAX_PERSONS             (LAST_PERSON)

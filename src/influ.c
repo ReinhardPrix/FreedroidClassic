@@ -79,6 +79,8 @@ CheckForJumpThresholds ( int PlayerNum )
   float SafetyBonus = 0.0 ;
   float JumpStartThreshold;
 
+#define SHUFFLE_WHEN_CROSSING TRUE
+
   //--------------------
   // First we check for the northern threshold
   //
@@ -99,7 +101,7 @@ CheckForJumpThresholds ( int PlayerNum )
 		 Me [ PlayerNum ] . pos . x ,
 		 curShip.AllLevels [ JumpTarget ] -> ylen - 0 - JumpStartThreshold - SafetyBonus ,
 		 PlayerNum , 
-		 FALSE , FALSE ) ; 
+		 SHUFFLE_WHEN_CROSSING , FALSE ) ; 
 
       return;
 
@@ -129,7 +131,7 @@ CheckForJumpThresholds ( int PlayerNum )
 		 Me [ PlayerNum ] . pos . x ,
 		 0 + JumpStartThreshold + SafetyBonus ,
 		 PlayerNum , 
-		 FALSE , FALSE ) ; 
+		 SHUFFLE_WHEN_CROSSING , FALSE ) ; 
       return;
     }
 
@@ -157,7 +159,7 @@ CheckForJumpThresholds ( int PlayerNum )
 		 0 + JumpStartThreshold + SafetyBonus ,
 		 Me [ PlayerNum ] . pos . y ,
 		 PlayerNum , 
-		 FALSE , FALSE ) ; 
+		 SHUFFLE_WHEN_CROSSING , FALSE ) ; 
       return;
     }
 
@@ -181,7 +183,7 @@ CheckForJumpThresholds ( int PlayerNum )
 		 curShip.AllLevels [ JumpTarget ] -> xlen - 0 - JumpStartThreshold - SafetyBonus ,
 		 Me [ PlayerNum ] . pos . y ,
 		 PlayerNum , 
-		 FALSE , FALSE ) ; 
+		 SHUFFLE_WHEN_CROSSING , FALSE ) ; 
 
       return;
 
