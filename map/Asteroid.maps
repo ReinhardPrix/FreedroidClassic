@@ -3302,9 +3302,9 @@ ob_type=1 ob_x=43.00 ob_y=16.50 ob_na=-1
 ob_type=1 ob_x=43.00 ob_y=17.50 ob_na=-1 
 ob_type=1 ob_x=43.00 ob_y=18.50 ob_na=-1 
 ob_type=1 ob_x=43.00 ob_y=19.50 ob_na=-1 
-ob_type=18 ob_x=34.50 ob_y=18.50 ob_na=-1 
 ob_type=11 ob_x=61.00 ob_y=50.50 ob_na=-1 
 ob_type=11 ob_x=61.00 ob_y=51.50 ob_na=-1 
+ob_type=271 ob_x=34.50 ob_y=18.50 ob_na=-1 
 End of obstacle data
 Start of pure map label information for this level
 label.pos.x=73 label.pos.y=49 label.label_name="TeleportToSecondCombatLevel"
@@ -6337,11 +6337,11 @@ Comment of the Influencer on entering this level="This is a level, like many oth
 Name of background song for this level=Daybreak.ogg
 beginning_of_map
   1   1   1   1   1   1   1   1   1   1   1  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31   1   1   1   1  31  31  31  31  31   1   1   1  31  31 
-  1   1   1   1   1   1   1   1   1   1   1   1  31  31  31  31  31  31  31  31  31  31  31  31  31  31   1   1   1   1   1  31  31  31  31   1   1   1   1  31 
-  1   1   1   1   1   1   1   1   1   1   1   1  31  31  31  31  31  31  31  31  31  31  31  31  31  31   1   1   1   1   1  31  31  31  31   1   1   1   1  31 
-  1   1   1   1   1   1   1   1   1   1   1   1  31  31  31  31  31  31  31   1   1   1   1   1   1   1   1   1   1   1   1  31  31  31  31   1   1   1   1  31 
-  1   1   1   1   1   1   1   1   1   1   1   1  31  31  31  31  31  31  31   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  31 
-  1   1   1   1   1   1   1   1   1   1  31  31  31  31  31  31  31  31  31   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  31 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  31  31  31  31  31  31  31  31  31  31  31   1   1   1   1   1  31  31  31  31   1   1   1   1  31 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  31  31  31  31  31  31  31  31  31  31  31   1   1   1   1   1  31  31  31  31   1   1   1   1  31 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  31  31  31  31   1   1   1   1   1   1   1   1   1   1   1   1  31  31  31  31   1   1   1   1  31 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  31  31  31  31   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  31 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  31  31  31  31   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  31 
   1   1   1   1   1   1   1   1   1   1  31  31  31  31  31  31  31  31  31   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  31 
   1   1   1   1   1   1   1   1   1   1  31  31  31  31  31  31  31  31  31  31   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  31 
   1   1   1   1   1   1   1   1   1   1  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31   1   1   1   1   1   1   1   1   1   1   1   1  31 
@@ -6400,14 +6400,12 @@ ob_type=2 ob_x=38.50 ob_y=1.00 ob_na=-1
 ob_type=2 ob_x=39.50 ob_y=1.00 ob_na=-1 
 ob_type=1 ob_x=1.00 ob_y=1.50 ob_na=-1 
 ob_type=11 ob_x=10.00 ob_y=1.50 ob_na=-1 
-ob_type=1 ob_x=12.00 ob_y=1.50 ob_na=-1 
 ob_type=1 ob_x=27.00 ob_y=1.50 ob_na=-1 
 ob_type=1 ob_x=31.00 ob_y=1.50 ob_na=-1 
 ob_type=1 ob_x=35.00 ob_y=1.50 ob_na=-1 
 ob_type=1 ob_x=40.00 ob_y=1.50 ob_na=-1 
 ob_type=1 ob_x=1.00 ob_y=2.50 ob_na=-1 
 ob_type=1 ob_x=10.00 ob_y=2.50 ob_na=-1 
-ob_type=1 ob_x=12.00 ob_y=2.50 ob_na=-1 
 ob_type=1 ob_x=27.00 ob_y=2.50 ob_na=-1 
 ob_type=1 ob_x=31.00 ob_y=2.50 ob_na=-1 
 ob_type=1 ob_x=35.00 ob_y=2.50 ob_na=-1 
@@ -6416,8 +6414,6 @@ ob_type=1 ob_x=1.00 ob_y=3.50 ob_na=-1
 ob_type=2 ob_x=4.50 ob_y=4.00 ob_na=-1 
 ob_type=2 ob_x=5.50 ob_y=4.00 ob_na=-1 
 ob_type=1 ob_x=10.00 ob_y=3.50 ob_na=-1 
-ob_type=19 ob_x=10.50 ob_y=3.50 ob_na=-1 
-ob_type=1 ob_x=12.00 ob_y=3.50 ob_na=-1 
 ob_type=2 ob_x=20.50 ob_y=4.00 ob_na=-1 
 ob_type=2 ob_x=21.50 ob_y=4.00 ob_na=-1 
 ob_type=2 ob_x=22.50 ob_y=4.00 ob_na=-1 
@@ -6439,9 +6435,6 @@ ob_type=2 ob_x=3.50 ob_y=5.00 ob_na=-1
 ob_type=1 ob_x=6.00 ob_y=4.50 ob_na=-1 
 ob_type=2 ob_x=6.50 ob_y=5.00 ob_na=-1 
 ob_type=1 ob_x=10.00 ob_y=4.50 ob_na=-1 
-ob_type=2 ob_x=10.50 ob_y=5.00 ob_na=-1 
-ob_type=1 ob_x=12.00 ob_y=4.50 ob_na=-1 
-ob_type=2 ob_x=11.50 ob_y=5.00 ob_na=-1 
 ob_type=1 ob_x=20.00 ob_y=4.50 ob_na=-1 
 ob_type=50 ob_x=30.50 ob_y=4.50 ob_na=-1 
 ob_type=51 ob_x=31.50 ob_y=4.50 ob_na=-1 
@@ -6816,9 +6809,25 @@ ob_type=141 ob_x=3.33 ob_y=5.37 ob_na=-1
 ob_type=147 ob_x=4.70 ob_y=6.82 ob_na=-1 
 ob_type=142 ob_x=5.08 ob_y=5.89 ob_na=-1 
 ob_type=147 ob_x=5.12 ob_y=6.40 ob_na=-1 
+ob_type=2 ob_x=12.50 ob_y=1.00 ob_na=-1 
+ob_type=2 ob_x=13.50 ob_y=1.00 ob_na=-1 
+ob_type=2 ob_x=14.50 ob_y=1.00 ob_na=-1 
+ob_type=1 ob_x=15.00 ob_y=1.50 ob_na=-1 
+ob_type=1 ob_x=15.00 ob_y=2.50 ob_na=-1 
+ob_type=1 ob_x=15.00 ob_y=3.50 ob_na=-1 
+ob_type=1 ob_x=15.00 ob_y=4.50 ob_na=-1 
+ob_type=1 ob_x=15.00 ob_y=5.50 ob_na=-1 
+ob_type=2 ob_x=14.50 ob_y=6.00 ob_na=-1 
+ob_type=2 ob_x=13.50 ob_y=6.00 ob_na=-1 
+ob_type=2 ob_x=12.50 ob_y=6.00 ob_na=-1 
+ob_type=2 ob_x=11.50 ob_y=6.00 ob_na=-1 
+ob_type=2 ob_x=10.50 ob_y=6.00 ob_na=-1 
+ob_type=271 ob_x=12.50 ob_y=3.50 ob_na=-1 
 End of obstacle data
 Start of pure map label information for this level
 label.pos.x=35 label.pos.y=11 label.label_name="ToolkitBossMonsterStartGameSquare"
+label.pos.x=12 label.pos.y=3 label.label_name="FromMaintainanceTunnelToTown"
+label.pos.x=11 label.pos.y=3 label.label_name="MaintainanceTunnelArrivalPoint"
 End of pure map label information for this level
 Start of pure obstacle label information for this level
 End of pure obstacle label information for this level
@@ -8426,7 +8435,7 @@ ob_type=117 ob_x=66.50 ob_y=89.50 ob_na=-1
 ob_type=117 ob_x=70.50 ob_y=83.50 ob_na=-1 
 ob_type=117 ob_x=70.50 ob_y=84.50 ob_na=-1 
 ob_type=117 ob_x=70.50 ob_y=85.50 ob_na=-1 
-ob_type=19 ob_x=68.50 ob_y=84.50 ob_na=-1 
+ob_type=17 ob_x=68.50 ob_y=84.50 ob_na=-1 
 ob_type=26 ob_x=68.50 ob_y=86.50 ob_na=-1 
 ob_type=116 ob_x=67.50 ob_y=86.50 ob_na=-1 
 ob_type=116 ob_x=69.50 ob_y=86.50 ob_na=-1 
@@ -8442,8 +8451,8 @@ ob_type=116 ob_x=75.50 ob_y=86.50 ob_na=-1
 ob_type=26 ob_x=76.50 ob_y=86.50 ob_na=-1 
 ob_type=26 ob_x=72.50 ob_y=86.50 ob_na=-1 
 ob_type=122 ob_x=74.50 ob_y=86.50 ob_na=-1 
-ob_type=19 ob_x=72.50 ob_y=84.50 ob_na=-1 
-ob_type=19 ob_x=76.50 ob_y=84.50 ob_na=-1 
+ob_type=17 ob_x=72.50 ob_y=84.50 ob_na=-1 
+ob_type=17 ob_x=76.50 ob_y=84.50 ob_na=-1 
 ob_type=243 ob_x=60.98 ob_y=87.05 ob_na=-1 
 ob_type=241 ob_x=60.40 ob_y=83.51 ob_na=-1 
 ob_type=47 ob_x=82.50 ob_y=84.50 ob_na=-1 
