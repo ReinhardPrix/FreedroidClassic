@@ -937,13 +937,13 @@ CantCarrySound (void)
       switch( MyRandom( 2 ) )
 	{
 	case 0 :
-	  play_sample_using_WAV_cache ( "../effects/ICantCarryAnyMore_Sound_0.wav", FALSE , FALSE );
+	  play_sample_using_WAV_cache ( "../effects/tux_ingame_comments/ICantCarryAnyMore_Sound_0.wav", FALSE , FALSE );
 	  break;
 	case 1 :
-	  play_sample_using_WAV_cache ( "../effects/ICantCarryAnyMore_Sound_1.wav", FALSE , FALSE );
+	  play_sample_using_WAV_cache ( "../effects/tux_ingame_comments/ICantCarryAnyMore_Sound_1.wav", FALSE , FALSE );
 	  break;
 	case 2 :
-	  play_sample_using_WAV_cache ( "../effects/ICantCarryAnyMore_Sound_2.wav", FALSE , FALSE );
+	  play_sample_using_WAV_cache ( "../effects/tux_ingame_comments/ICantCarryAnyMore_Sound_2.wav", FALSE , FALSE );
 	  break;
 	default:
 	  break;
