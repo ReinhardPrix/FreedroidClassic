@@ -75,8 +75,6 @@ unsigned int StoreTextBG;
 unsigned int StoreTextFG;
 
 
-extern int TimerFlag;		/* Timerflag- wer haette das gedacht ! */
-
 /*-----------------------------------------------------------------
  * @Desc: Setzt die Palettenwerten (und nicht die RGB-Werte) der
  * 	Proportionalschrift Null als Farbwert bewirkt keinen Effekt

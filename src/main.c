@@ -40,21 +40,9 @@
 #include "vars.h"
 #include "ship.h"
 
-
-/* Schalter fuer die bedingte Kompilierung */
-
-#define MOVEENEMYSOFF 		FALSE
-#define ANIMATEENEMYSOFF 	FALSE
-
-#define ENERGIEBALKENOFF 	TRUE
-
 int ThisMessageTime;
 float LastGotIntoBlastSound = 2;
 float LastRefreshSound = 2;
-
-int card = 0;
-int device = 0;
-void *handle;
 
 void Debriefing (void);
 void UpdateCountersForThisFrame (void);
@@ -108,27 +96,9 @@ main (int argc, char *const argv[])
 
 	  ReactToSpecialKeys();
 
-	  if (ShipEmptyCounter == 1)
-	    GameOver = TRUE;
+	  MoveLevelDoors ();	
 
-	  LastBlastHit++;
-
-	  MoveLevelDoors ();	/* Die Tueren im Level auf und zu bewegen */
-	  AnimateRefresh ();	/* Refreshes Animieren */
-
-	  for (i = 0; i < NumEnemys; i++)
-	    {
-	      if (Feindesliste[i].warten > 0) 
-		{
-		  Feindesliste[i].warten -= Frame_Time() ;
-		  if (Feindesliste[i].warten < 0) Feindesliste[i].warten = 0;
-		}
-	      if (Feindesliste[i].firewait > 0) 
-		{
-		  Feindesliste[i].firewait -= Frame_Time() ;
-		  if (Feindesliste[i].firewait <= 0) Feindesliste[i].firewait=0;
-		}
-	    }
+	  AnimateRefresh ();	
 
 	  MoveBullets ();   
 
@@ -138,25 +108,15 @@ main (int argc, char *const argv[])
 
 	  Assemble_Combat_Picture ( DO_SCREEN_UPDATE ); 
 
-	  for (i = 0; i < MAXBULLETS; i++)
-	    CheckBulletCollisions (i);
+	  for (i = 0; i < MAXBULLETS; i++) CheckBulletCollisions (i);
 
 	  PutMessages ();
 
-	  MoveInfluence ();	// change Influ-speed depending on keys pressed
+	  MoveInfluence ();	// change Influ-speed depending on keys pressed, but
+	                        // also change his status and position and "phase" of rotation
 
-	  MoveEnemys ();	// Auch die Feinde bewegen 
-
-	  AnimateInfluence ();	// Bei animierten Influencer die Phasen weiterzaehlen 
-
-	  AnimateEnemys ();	// Bei den Feinden auch Phasen weiterzaehlen 
-
-	  InfluenceFrictionWithAir ();
-
-	  /* Influencedruid nach der momentanen Geschwindigkeit weiterbewegen */
-	  Me.pos.x += Me.speed.x * Frame_Time ();
-	  Me.pos.y += Me.speed.y * Frame_Time ();
-	  AdjustSpeed ();
+	  MoveEnemys ();	// move all the enemys:
+	                        // also do attacks on influ and also move "phase" or their rotation
 
 	  CheckInfluenceWallCollisions ();	/* Testen ob der Weg nicht durch Mauern verstellt ist */
 
@@ -189,82 +149,23 @@ main (int argc, char *const argv[])
   return (0);
 }				// void main(void)
 
-/*@Function============================================================
-@Desc: Diese Funktion Sprengt den Influencer und beendet das Programm
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-ThouArtDefeated (void)
-{
-  int j;
-  int now;
-
-  DebugPrintf ("\nvoid ThouArtDefeated(void): Real function call confirmed.");
-  Me.status = TERMINATED;
-  ThouArtDefeatedSound ();
-  ExplodeInfluencer ();
-
-  now=SDL_GetTicks();
-
-  while ( SDL_GetTicks()-now < 1000 * WAIT_AFTER_KILLED )
-    {
-      Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
-      DisplayRahmen( 0 );
-      ExplodeBlasts ();
-      MoveBullets ();
-      MoveEnemys ();
-      AnimateEnemys ();
-      for (j = 0; j < MAXBULLETS; j++)
-	CheckBulletCollisions (j);
-      RotateBulletColor ();
-    }
-
-#ifdef NEW_ENGINE
-
-#else
-  /* Ein Flimmer zieht "uber den Schirm */
-  Flimmern (4);  /* type 4 flimmer */
-#endif
-
-  Debriefing ();
-
-  /* Soundblaster soll keine Toene mehr spucken */
-  //PORT sbfm_silence();
-
-  GameOver = TRUE;
-
-  DebugPrintf
-    ("\nvoid ThouArtDefeated(void): Usual end of function reached.");
-  printf("\n\n DefeatedDone \n\n");
-}				// void ThouArtDefeated(void)
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-ThouArtVictorious (void)
-{
-  ShipEmptyCounter = WAIT_SHIPEMPTY;
-  GameOver = TRUE;		/*  */
-
-  ClearUserFenster ();
-  getchar_raw ();
-}
-
 /*-----------------------------------------------------------------
- * 
- * 
- * 
+@Desc: This function updates counters and is called ONCE every frame.
+The counters include timers, but framerate-independence of game speed
+is preserved because everything is weighted with the Frame_Time()
+function.
+
+@Ret: none
  *-----------------------------------------------------------------*/
 void
 UpdateCountersForThisFrame (void)
 {
   static long Overall_Frames_Displayed=0;
+  int i;
+
+  if (ShipEmptyCounter == 1) GameOver = TRUE;
+
+  LastBlastHit++;
 
   // The next couter counts the frames displayed by freedroid during this
   // whole run!!  DO NOT RESET THIS COUNTER WHEN THE GAME RESTARTS!!
@@ -296,6 +197,20 @@ UpdateCountersForThisFrame (void)
     ShowScore++;
   if (RealScore < ShowScore)
     ShowScore--;
+
+  for (i = 0; i < NumEnemys; i++)
+    {
+      if (Feindesliste[i].warten > 0) 
+	{
+	  Feindesliste[i].warten -= Frame_Time() ;
+	  if (Feindesliste[i].warten < 0) Feindesliste[i].warten = 0;
+	}
+      if (Feindesliste[i].firewait > 0) 
+	{
+	  Feindesliste[i].firewait -= Frame_Time() ;
+	  if (Feindesliste[i].firewait <= 0) Feindesliste[i].firewait=0;
+	}
+    } // for (i=0;...
 
 } /* UpdateCountersForThisFrame() */
 

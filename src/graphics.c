@@ -43,19 +43,11 @@
 #include "colodefs.h"
 #include "SDL_rotozoom.h"
 
-
-extern int TimerFlag;
-
-
-
 void
 TakeScreenshot(void)
 {
   static int Number_Of_Screenshot=0;
   char *Screenshoot_Filename;
-
-  // Screenshoot_Filename=malloc(100);
-  //="This is a dummy string, that should be sufficiently long ";
 
   Screenshoot_Filename=malloc(100);
   printf("\n\nScreenshoot function called.\n\n");
@@ -649,69 +641,7 @@ LadeZeichensatz (char *Zeichensatzname)
 	    }
 	}
     }
-}				// void LadeZeichensatz(char* Zeichensatzname)
-
-
-/* ********************************************************************** */
-
-void
-RotateColors (register int ColNum1, register int ColNum2)
-{
-  /*
-     Diese Prozedur rotiert einen fest vorgegebenen Bereich der DAC-Register
-     um eins aufsteigend. Ein Zwischenspeicher wird reserviert und wieder
-     freigegeben.
-
-     Parameter : die Werte des ersten und lesten Registers: ColNum1 und ColNum2
-   */
-
-  //    static unsigned char *FarbFeldPointer = NULL;
-  //    register unsigned char Zwisch[3];
-
-  //    register int AnzColors = ColNum2 - ColNum1 +1;
-  // int ColOfs;
-  // int ColSeg;
-  // int i;
-
-  //    if( FarbFeldPointer == NULL ) FarbFeldPointer = MyMalloc(1000);
-
-  //    ColOfs=FP_OFF(FarbFeldPointer);
-  //    ColSeg=FP_SEG(FarbFeldPointer);
-
-  /* Farben aus den Registern in den Speicher uebertragen */
-  //    asm{
-  //    push es
-  //    mov ax,1017h
-  //    mov bx,ColNum1
-  //    mov cx,AnzColors
-  //    mov dx,ColSeg
-  //    mov es,dx
-  //    mov dx,ColOfs
-  //    int 10h
-  //    pop es
-  //}
-
-  /* Farben im Speicher um eins rotieren */
-  //memcpy(Zwisch,FarbFeldPointer, 3);
-
-  //memcpy(FarbFeldPointer,FarbFeldPointer+3, (AnzColors-1)*3 );
-
-  //memcpy(FarbFeldPointer+(AnzColors-1)*3, Zwisch, 3);
-
-  /* Farben aus dem Speicher zurueck in die DAC-Register schreiben */
-  //asm{
-  //            push es
-  //    mov ax,1012h
-  //    mov bx,ColNum1
-  //    mov cx,AnzColors
-  //    mov dx,ColSeg
-  //    mov es,dx
-  //    mov dx,ColOfs
-  //    int 10h
-  //    pop es
-  //}
-
-}				// void RotateColors(...)
+}  // void LadeZeichensatz(char* Zeichensatzname)
 
 /*@Function============================================================
 @Desc: 

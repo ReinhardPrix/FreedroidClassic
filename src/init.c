@@ -562,6 +562,74 @@ EndTitle (void)
 
 } /* EndTitle() */
 
+/*@Function============================================================
+@Desc: Diese Funktion Sprengt den Influencer und beendet das Programm
+
+@Ret: 
+@Int:
+* $Function----------------------------------------------------------*/
+void
+ThouArtDefeated (void)
+{
+  int j;
+  int now;
+
+  DebugPrintf ("\nvoid ThouArtDefeated(void): Real function call confirmed.");
+  Me.status = TERMINATED;
+  ThouArtDefeatedSound ();
+  ExplodeInfluencer ();
+
+  now=SDL_GetTicks();
+
+  while ( SDL_GetTicks()-now < 1000 * WAIT_AFTER_KILLED )
+    {
+      Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
+      DisplayRahmen( 0 );
+      ExplodeBlasts ();
+      MoveBullets ();
+      MoveEnemys ();
+
+      for (j = 0; j < MAXBULLETS; j++)
+	CheckBulletCollisions (j);
+      RotateBulletColor ();
+    }
+
+#ifdef NEW_ENGINE
+
+#else
+  /* Ein Flimmer zieht "uber den Schirm */
+  Flimmern (4);  /* type 4 flimmer */
+#endif
+
+  Debriefing ();
+
+  /* Soundblaster soll keine Toene mehr spucken */
+  //PORT sbfm_silence();
+
+  GameOver = TRUE;
+
+  DebugPrintf
+    ("\nvoid ThouArtDefeated(void): Usual end of function reached.");
+  printf("\n\n DefeatedDone \n\n");
+}				// void ThouArtDefeated(void)
+
+/*@Function============================================================
+@Desc: 
+
+@Ret: 
+@Int:
+* $Function----------------------------------------------------------*/
+void
+ThouArtVictorious (void)
+{
+  ShipEmptyCounter = WAIT_SHIPEMPTY;
+  GameOver = TRUE;		/*  */
+
+  ClearUserFenster ();
+  getchar_raw ();
+}
+
+
 /* 
 ----------------------------------------------------------------------
 @Desc: This function does the mission debriefing.  If the score was

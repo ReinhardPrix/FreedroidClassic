@@ -198,9 +198,9 @@ MoveEnemys (void)
   finepoint nextwp_pos;
   int trywp;
 
-  // NORMALISATION if (! MPressed() ) return;
-
   PermanentHealRobots ();
+
+  AnimateEnemys ();	// move the "phase" of the rotation of enemys
 
   for (i = 0; i < NumEnemys; i++)
      {

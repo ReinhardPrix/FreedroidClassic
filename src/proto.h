@@ -37,11 +37,6 @@
 
 EXTERN int ShipEmptyCounter;
 EXTERN int WaitElevatorCounter;
-EXTERN int TimerFlag;
-EXTERN void PutEnergy (void);
-EXTERN void ThouArtDefeated (void);
-EXTERN void ThouArtVictorious (void);
-EXTERN void StandardEnergieLieferungen (void);
 
 /* main.c */
 #undef EXTERN
@@ -56,6 +51,8 @@ EXTERN void EndTitle (void);
 EXTERN void InitFreedroid (void);
 EXTERN void InitNewGame (void);
 EXTERN void Init_Druidmap (void);
+EXTERN void ThouArtDefeated (void);
+EXTERN void ThouArtVictorious (void);
 EXTERN void Debriefing (void);
 
 /* influ.c */
@@ -203,7 +200,6 @@ EXTERN void TransparentLadeLBMBild (char *LBMDateiname, unsigned char *Screen,
 EXTERN void Init_Video (void);
 EXTERN void UnfadeLevel (void);
 EXTERN void LadeZeichensatz (char *Zeichensatzname);
-EXTERN void RotateColors (int, int);
 EXTERN void LevelGrauFaerben (void);
 EXTERN void ClearGraphMem ( void );
 EXTERN void Flimmern (int type);

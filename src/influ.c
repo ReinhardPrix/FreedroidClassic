@@ -216,11 +216,10 @@ AutoFireBullet (void)
 
 
 /*@Function============================================================
-@Desc: Diese Funktion bewegt den Influencer gemaess seiner momentanen
-	Geschwindigkeit. Ausserdem wird er weitergedreht gemaess der momentanen
-   Energie.
-@Ret: keiner
-@Int: keiner
+@Desc: This function moves the influencer, adjusts his speed according to
+keys pressed and also adjusts his status and current "phase" of his rotation.
+
+@Ret: none
 * $Function----------------------------------------------------------*/
 void
 MoveInfluence (void)
@@ -309,8 +308,18 @@ MoveInfluence (void)
 	&& (Me.firewait == 0) && (NoInfluBulletOnWay ()))
     FireBullet ();
 
-  /* Checken, ob auf Sonder-Feld (Lift, Konsole) und im Transfermode */
+  InfluenceFrictionWithAir (); // The influ should lose some of his speed when no key is pressed
+
+  AdjustSpeed ();  // If the influ is faster than allowed for his type, slow him
+
+  // Move influence according to current speed
+  Me.pos.x += Me.speed.x * Frame_Time ();
+  Me.pos.y += Me.speed.y * Frame_Time ();
+
+  // Check it the influ is on a special field like a lift, a console or a refresh
   ActSpecialField ( Me.pos.x , Me.pos.y );
+
+  AnimateInfluence ();	// move the "phase" of influencers rotation
 
   DebugPrintf ("\nvoid MoveInfluence(void):  Usual end of function reached.");
 

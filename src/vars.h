@@ -99,7 +99,6 @@ char Text1[] =
 int Shieldcolors[INITIAL_BLOCK_WIDTH];
 
 int ShipEmptyCounter = 0;	/* counter to Message: you have won(this ship */
-int TimerFlag = FALSE;		/* the internal timer */
 
 influence_t Me = {
   DRUID001, TRANSFERMODE, {0, 0}, {120, 48}, 100, 100, 0, 0
