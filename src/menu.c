@@ -44,8 +44,7 @@ void Multi_Player_Menu (void);
 void Credits_Menu (void);
 void Options_Menu (void);
 void Show_Mission_Log_Menu (void);
-void Show_Waypoints(void);
-void Level_Editor(void);
+EXTERN void Level_Editor(void);
 
 EXTERN int MyCursorX;
 EXTERN int MyCursorY;

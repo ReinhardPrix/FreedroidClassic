@@ -36,13 +36,6 @@
 #include "global.h"
 #include "proto.h"
 
-// int New_Game_Requested=FALSE;
-
-void Single_Player_Menu (void);
-void Multi_Player_Menu (void);
-void Credits_Menu (void);
-void Options_Menu (void);
-void Show_Mission_Log_Menu (void);
 void Show_Waypoints(void);
 void Level_Editor(void);
 
@@ -249,6 +242,8 @@ Level_Editor(void)
   int MenuPosition=1;
   int i,j,k;
   int SpecialMapValue;
+  int NewItemCode;
+  int ItemIndex;
   int OriginWaypoint = (-1);
   char* NumericInputString;
   char* NewCommentOnThisSquare;
@@ -422,6 +417,34 @@ Level_Editor(void)
 	      sscanf( NumericInputString , "%d" , &SpecialMapValue );
 	      if ( SpecialMapValue >= NUM_MAP_BLOCKS ) SpecialMapValue=0;
 	      CurLevel->map[BlockY][BlockX]=SpecialMapValue;
+	    }
+
+	  //--------------------
+	  // From the level editor, it should also be possible to drop new goods
+	  // at some location via the 'G' key. (G like in Goods.)
+	  //
+	  if ( GPressed () )
+	    {
+	      while ( GPressed() );
+	      CenteredPutString   ( ne_screen ,  6*FontHeight(Menu_BFont), "Please enter code of new item:");
+	      SDL_Flip( ne_screen );
+	      NumericInputString=GetString( 10, FALSE );  // TRUE currently not implemented
+	      sscanf( NumericInputString , "%d" , &NewItemCode );
+	      if ( SpecialMapValue >= Number_Of_Item_Types ) NewItemCode=0;
+	      
+	      for ( ItemIndex = 0 ; ItemIndex < MAX_ITEMS_PER_LEVEL ; ItemIndex++ )
+		{
+		  if ( CurLevel->ItemList[ ItemIndex ].type  == (-1) ) break;
+		}
+	      if ( ItemIndex >= MAX_ITEMS_PER_LEVEL )
+		{
+		  CenteredPutString   ( ne_screen ,  8*FontHeight(Menu_BFont), "Item maximum for level reached.");
+		  CenteredPutString   ( ne_screen ,  9*FontHeight(Menu_BFont), "--> Overwriting first item.");
+		  ItemIndex = 0;
+		}
+	      CurLevel->ItemList[ ItemIndex ].pos.x = rintf( Me.pos.x );
+	      CurLevel->ItemList[ ItemIndex ].pos.y = rintf( Me.pos.y );
+	      CurLevel->ItemList[ ItemIndex ].type = NewItemCode;
 	    }
 
 	  //--------------------
