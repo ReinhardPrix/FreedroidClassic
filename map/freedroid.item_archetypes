@@ -771,8 +771,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 18
 ** Start of new item specification subsection **
 Item name="Droid Plating"
-Position_X=459
-Position_Y=86
+Position_X=456
+Position_Y=202
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="armour"
@@ -1050,9 +1050,9 @@ Item as gun: weapon requires both hands="no"
 
 // Item No. 25
 ** Start of new item specification subsection **
-Item name="Cloak"
-Position_X=443
-Position_Y=102
+Item name="Simple Jacket"
+Position_X=451
+Position_Y=35
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="armour"
@@ -1210,13 +1210,13 @@ Item as gun: weapon requires both hands="yes"
 
 // Item No. 29
 ** Start of new item specification subsection **
-Item name="Robe"
-Position_X=475
-Position_Y=68
+Item name="Reinforced Jacket"
+Position_X=454
+Position_Y=66
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="armour"
-Item uses rotation series with prefix="armour_robe"
+Item uses rotation series with prefix="basic_armour2"
 Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
@@ -1224,7 +1224,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=8
 Item as defensive item: ac_bonus_modifier=4
 Base item duration=20 plus duration modifier=10
-File or directory name for inventory image="armour_robe/inv_image.png"
+File or directory name for inventory image="basic_armour2/inv_image.png"
 Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
 Base list price=75
 Item description text="A light garment that is basically more for looks than defense."
@@ -1250,13 +1250,13 @@ Item as gun: weapon requires both hands="yes"
 
 // Item No. 30
 ** Start of new item specification subsection **
-Item name="Quilted Armour"
-Position_X=459
-Position_Y=51
+Item name="Protective Jacket"
+Position_X=453
+Position_Y=100
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="armour"
-Item uses rotation series with prefix="green_armour"
+Item uses rotation series with prefix="basic_armour3"
 Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
@@ -1264,7 +1264,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=13
 Item as defensive item: ac_bonus_modifier=4
 Base item duration=30 plus duration modifier=10
-File or directory name for inventory image="inventory_image_40.png"
+File or directory name for inventory image="basic_armour3/inv_image.png"
 Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
 Base list price=200
 Item description text="Very strong for its size, does a good job of absorbing basic blows."
@@ -1291,8 +1291,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 31
 ** Start of new item specification subsection **
 Item name="Leather Armour"
-Position_X=443
-Position_Y=69
+Position_X=458
+Position_Y=154
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="armour"
