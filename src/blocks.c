@@ -812,6 +812,57 @@ Load_Influencer_Surfaces( void )
 }; // void Load_Influencer_Surfaces( void )
 
 /* ----------------------------------------------------------------------
+ * 
+ *
+ * ---------------------------------------------------------------------- */
+void
+LoadOneTuxSurfaceIfNotYetLoaded ( int TuxModel , int TuxPhase )
+{
+  SDL_Surface* Whole_Image;
+  char *fpath;
+  char ConstructedFileName[2000];
+
+  //--------------------
+  // This function only has something to do at all, if the motion surface in question
+  // hasn't been loaded already anyway.  So maybe we can just do nothing an return.
+  // That's queried here.
+  //
+  if ( TuxMotionArchetypes [ TuxModel ] [ TuxPhase ] != NULL ) return;
+    
+  //--------------------
+  // Now that we know, that we really have some work to do, we must
+  // see to it, that not too much of a glitch is created from this...
+  //
+  Activate_Conservative_Frame_Computation ( ) ;
+
+  //--------------------
+  // Now we can proceed to really load the surfaces...
+  // 
+  sprintf ( ConstructedFileName , "tux_motion_parts/tux_motion_%02d_%02d.png" , TuxModel , TuxPhase );
+  fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
+  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+  if ( Whole_Image == NULL )
+    {
+      fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
+      GiveStandardErrorMessage ( "Load_Tux_Surfaces(...)" , "\
+Freedroid was unable to load a certain Tux surface from the hard disk\n\
+into memory.\n\
+This error indicates some installation problem with freedroid.",
+				 PLEASE_INFORM, IS_FATAL );
+    }
+  
+  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE ); // this should 
+  SDL_SetColorKey( Whole_Image , 0 , 0 ); // this should clear any color key in the source surface
+  
+  TuxMotionArchetypes [ TuxModel ] [ TuxPhase ] = SDL_DisplayFormatAlpha ( Whole_Image ); // now we have an alpha-surf of right size
+  SDL_SetColorKey ( TuxMotionArchetypes [ TuxModel ] [ TuxPhase ] , SDL_SRCCOLORKEY, 
+		    SDL_MapRGB ( TuxMotionArchetypes [ TuxModel ] [ TuxPhase ] -> format , 255 , 0 , 255 ) ); 
+  SDL_SetAlpha( TuxMotionArchetypes [ TuxModel ] [ TuxPhase ] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+  SDL_FreeSurface( Whole_Image );
+
+}; // void LoadOneTuxSurfaceIfNotYetLoaded ( int TuxModel , int TuxPhase )
+
+/* ----------------------------------------------------------------------
  * This function loads the all tux surfaces, that are needed to display 
  * the alternative tux character.
  * ---------------------------------------------------------------------- */
@@ -854,6 +905,7 @@ HomemadeUpdateTuxWorkingCopy ( int PlayerNum )
   for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
     {
       SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] );
+      LoadOneTuxSurfaceIfNotYetLoaded ( 7 , i ) ;
       TuxWorkingCopy [ PlayerNum ]  [ i ] [ 0 ] = SDL_DisplayFormatAlpha( TuxMotionArchetypes[7][i] );
     }
   
@@ -865,6 +917,7 @@ HomemadeUpdateTuxWorkingCopy ( int PlayerNum )
     {
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
+	  LoadOneTuxSurfaceIfNotYetLoaded ( 8 , i ) ;
 	  tmp = CreateAlphaCombinedSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] , TuxMotionArchetypes[8][i] );
 	  SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ]);
 	  TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] = tmp;
@@ -878,6 +931,7 @@ HomemadeUpdateTuxWorkingCopy ( int PlayerNum )
     {
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
+	  LoadOneTuxSurfaceIfNotYetLoaded ( 4 , i ) ;
 	  tmp = CreateAlphaCombinedSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] , TuxMotionArchetypes[4][i] );
 	  SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] );
 	  TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] = tmp;
@@ -887,6 +941,7 @@ HomemadeUpdateTuxWorkingCopy ( int PlayerNum )
     {
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
+	  LoadOneTuxSurfaceIfNotYetLoaded ( 1 , i ) ;
 	  tmp = CreateAlphaCombinedSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] , TuxMotionArchetypes[1][i] );
 	  SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] );
 	  TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] = tmp;
@@ -896,6 +951,7 @@ HomemadeUpdateTuxWorkingCopy ( int PlayerNum )
     {
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
+	  LoadOneTuxSurfaceIfNotYetLoaded ( 2 , i ) ;
 	  tmp = CreateAlphaCombinedSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] , TuxMotionArchetypes[2][i] );
 	  SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] );
 	  TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] = tmp;
@@ -905,6 +961,7 @@ HomemadeUpdateTuxWorkingCopy ( int PlayerNum )
     {
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
+	  LoadOneTuxSurfaceIfNotYetLoaded ( 0 , i ) ;
 	  tmp = CreateAlphaCombinedSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] , TuxMotionArchetypes[0][i] );
 	  SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] );
 	  TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] = tmp;
@@ -918,6 +975,7 @@ HomemadeUpdateTuxWorkingCopy ( int PlayerNum )
     {
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
+	  LoadOneTuxSurfaceIfNotYetLoaded ( 3 , i ) ;
 	  tmp = CreateAlphaCombinedSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] , TuxMotionArchetypes[3][i] );
 	  SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] );
 	  TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] = tmp;
@@ -929,6 +987,7 @@ HomemadeUpdateTuxWorkingCopy ( int PlayerNum )
   //
   for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
     {
+      LoadOneTuxSurfaceIfNotYetLoaded ( 6 , i ) ;
       tmp = CreateAlphaCombinedSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] , TuxMotionArchetypes[6][i] );
       SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] );
       TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] = tmp;
@@ -938,6 +997,7 @@ HomemadeUpdateTuxWorkingCopy ( int PlayerNum )
     {
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
+	  LoadOneTuxSurfaceIfNotYetLoaded ( 9 , i ) ;
 	  tmp = CreateAlphaCombinedSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] , TuxMotionArchetypes[9][i] );
 	  SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] );
 	  TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] = tmp;
@@ -947,6 +1007,7 @@ HomemadeUpdateTuxWorkingCopy ( int PlayerNum )
     {
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
+	  LoadOneTuxSurfaceIfNotYetLoaded ( 10 , i ) ;
 	  tmp = CreateAlphaCombinedSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] , TuxMotionArchetypes[10][i] );
 	  SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] );
 	  TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] = tmp;
@@ -956,6 +1017,7 @@ HomemadeUpdateTuxWorkingCopy ( int PlayerNum )
     {
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
+	  LoadOneTuxSurfaceIfNotYetLoaded ( 5 , i ) ;
 	  tmp = CreateAlphaCombinedSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] , TuxMotionArchetypes[5][i] );
 	  SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] );
 	  TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] = tmp;
@@ -983,20 +1045,50 @@ HomemadeUpdateTuxWorkingCopy ( int PlayerNum )
 }; // void HomemadeUpdateTuxWorkingCopy ( void )
 
 /* ----------------------------------------------------------------------
+ * The Tux working copy will be freed and reallocated serveral times.  So
+ * be must initialize it once when the program is started up.
+ * ---------------------------------------------------------------------- */
+void
+InitTuxWorkingCopy( void )
+{
+  int PlayerNum;
+  SDL_Surface* DummySurface;
+  int k, i;
+
+#define TUX_WIDTH 130
+#define TUX_HEIGHT 130
+
+  DummySurface = SDL_CreateRGBSurface ( 0 , TUX_WIDTH , TUX_HEIGHT , vid_bpp , 0 , 0 , 0 , 0 ) ;
+
+  //--------------------
+  // And at this point, we also initialize the Tux working copys, so we
+  // won't run into trouble with uninitialized working copys later.
+  //
+  for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i++ ) 
+    {
+      for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ )
+	{
+	  TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] = SDL_DisplayFormatAlpha( DummySurface );
+	}
+      for ( k = 1 ; k < MAX_TUX_DIRECTIONS ; k ++ )
+	{
+	  for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ )
+	    {
+	      TuxWorkingCopy [ PlayerNum ] [i] [ k ] = NULL ;
+	    }
+	}
+    }
+
+}; // void InitTuxWorkingCopy( void )
+
+/* ----------------------------------------------------------------------
  * This function loads the all tux surfaces, that are needed to display 
  * the alternative tux character.
  * ---------------------------------------------------------------------- */
 void 
 Load_Tux_Surfaces( void )
 {
-  SDL_Surface* Whole_Image;
-  int i , j , k;
-  char *fpath;
-  int PlayerNum;
-  char ConstructedFileName[2000];
-
-#define TUX_WIDTH 130
-#define TUX_HEIGHT 130
+  int i , j ;
 
   for ( j = 0 ; j < TUX_MODELS ; j ++ )
     {
@@ -1006,47 +1098,10 @@ Load_Tux_Surfaces( void )
       for ( i=0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i++ )
 	{
 	  
-	  sprintf ( ConstructedFileName , "tux_motion_parts/tux_motion_%02d_%02d.png" , j , i );
-	  
-	  fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
-	  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
-	  if ( Whole_Image == NULL )
-	    {
-	      fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
-	      GiveStandardErrorMessage ( "Load_Tux_Surfaces(...)" , "\
-Freedroid was unable to load a certain Tux surface from the hard disk\n\
-into memory.\n\
-This error indicates some installation problem with freedroid.",
-					 PLEASE_INFORM, IS_FATAL );
-	    }
+	  // LoadOneTuxSurfaceIfNotYetLoaded ( j , i );
 
-	  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE ); // this should 
-	  SDL_SetColorKey( Whole_Image , 0 , 0 ); // this should clear any color key in the source surface
+	  TuxMotionArchetypes [ j ] [ i ] = NULL;
 
-	  TuxMotionArchetypes[j][i] = SDL_DisplayFormatAlpha( Whole_Image ); // now we have an alpha-surf of right size
-	  SDL_SetColorKey ( TuxMotionArchetypes[j][i] , SDL_SRCCOLORKEY, 
-			    SDL_MapRGB( TuxMotionArchetypes[j][i]->format, 255, 0, 255) ); 
-	  SDL_SetAlpha( TuxMotionArchetypes[j][i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-	  SDL_FreeSurface( Whole_Image );
-
-	  //--------------------
-	  // And at this point, we also initialize the Tux working copys, so we
-	  // won't run into trouble with uninitialized working copys later.
-	  //
-	  if ( j == 7 ) 
-	    {
-	      for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ )
-		{
-		  TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] = SDL_DisplayFormatAlpha( TuxMotionArchetypes[j][i] );
-		}
-	      for ( k = 1 ; k < MAX_TUX_DIRECTIONS ; k ++ )
-		{
-		  for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ )
-		    {
-		      TuxWorkingCopy [ PlayerNum ] [i] [ k ] = NULL ;
-		    }
-		}
-	    }
 	}
     }
 

@@ -1226,6 +1226,10 @@ InitPictures (void)
 
   ShowStartupPercentage ( 38 ) ; 
 
+  InitTuxWorkingCopy( ) ;
+
+  ShowStartupPercentage ( 43 ) ; 
+
   Load_Tux_Surfaces();
 
   ShowStartupPercentage ( 60 ) ; 
