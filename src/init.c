@@ -44,6 +44,35 @@ void Init_Game_Data( char* Datafilename );
 void Get_Bullet_Data ( char* DataPointer );
 extern int feenableexcept (int TheExceptionFlags );
 
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+clear_out_arrays_for_fresh_game ( void )
+{
+  int i;
+
+  level_editor_marked_obstacle = NULL ;
+  Bulletmap=NULL;  // That will cause the memory to be allocated later
+  for ( i = 0 ; i < MAXBULLETS ; i++ )
+    {
+      AllBullets [ i ] . Surfaces_were_generated = FALSE;
+      DeleteBullet ( i , FALSE );
+    }
+  for ( i = 0 ; i < MAXBLASTS ; i++ )
+    {
+      DeleteBlast ( i );
+    }
+  for ( i = 0 ; i < MAX_ACTIVE_SPELLS ; i++ )
+    {
+      DeleteSpell ( i );
+    }
+  ClearEnemys ( ) ;
+  clear_active_spells ( ) ;
+  ClearAutomapData( );
+}; // void clear_out_arrays_for_fresh_game ( void )
+
 /* ---------------------------------------------------------------------- 
  * This function displays a startup status bar that shows a certain
  * percentage of loading done.
@@ -1540,6 +1569,12 @@ PrepareStartOfNewCharacter ( void )
   RespectVisibilityOnMap = TRUE ;
 
   //--------------------
+  // We make sure we don't have garbage in our arrays from a 
+  // previous game or failed load-game attempt...
+  //
+  clear_out_arrays_for_fresh_game ( );
+
+  //--------------------
   // Now the mission file is read into memory.  That means we can start to decode the details given
   // in the body of the mission file.  
   //
@@ -1769,7 +1804,6 @@ InitFreedroid ( void )
 #ifndef USE_SDL_FRAMERATE
   struct timeval timestamp;
 #endif
-  int i;
   struct stat statbuf;
 
   //--------------------
@@ -1801,24 +1835,9 @@ InitFreedroid ( void )
   // will never be set again if not Surfaces are allocated too and then they
   // can of course also be freed as well.
   //
-  level_editor_marked_obstacle = NULL ;
   GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_FLOOR ;
-  Bulletmap=NULL;  // That will cause the memory to be allocated later
-  for ( i = 0 ; i < MAXBULLETS ; i++ )
-    {
-      AllBullets[i].Surfaces_were_generated = FALSE;
-      DeleteBullet( i , FALSE );
-    }
-  for (i = 0; i < MAXBLASTS; i++)
-    {
-      DeleteBlast( i );
-    }
-  for (i = 0; i < MAX_ACTIVE_SPELLS; i++)
-    {
-      DeleteSpell( i );
-    }
-  ClearEnemys ();
-  clear_active_spells();
+
+  clear_out_arrays_for_fresh_game ();
 
   ServerMode = FALSE;
   ClientMode = FALSE;
@@ -1919,10 +1938,7 @@ I will not be able to load or save games or configurations\n\
   //--------------------
   // Now we prepare the automap data for later use
   //
-  GameConfig.Automap_Visible = TRUE;
-  ClearAutomapData( );
-
-  ShowStartupPercentage ( 12 ) ; 
+  GameConfig . Automap_Visible = TRUE;
 
   Init_Network ();
 

@@ -103,7 +103,7 @@ typedef struct
 }
 blitting_list_element, *Blitting_list_element;
 
-blitting_list_element blitting_list [ MAX_ELEMENTS_IN_BLITTING_LIST ] ;
+blitting_list_element blitting_list [ MAX_ELEMENTS_IN_BLITTING_LIST + 10 ] ;
 int number_of_objects_currently_in_blitting_list ;
 
 enum
@@ -968,7 +968,7 @@ The blitting list size was exceeded!",
 	  // See the GNU C Manual for details!
 	  //
 	  memmove ( & ( blitting_list [ i + 1 ] ) , & ( blitting_list [ i ] ) , 
-		    sizeof ( blitting_list_element ) * ( number_of_objects_currently_in_blitting_list - i ) );
+		    sizeof ( blitting_list_element ) * ( number_of_objects_currently_in_blitting_list - i + 1 ) );
 
 	  //--------------------
 	  // Now we can insert the New_Element in the new free position that we have 
@@ -1098,7 +1098,7 @@ insert_bullets_into_blitting_list ( void )
 
   for ( i = 0 ; i < MAXBULLETS ; i ++ )
     {
-      if (AllBullets[i].type != OUT)
+      if ( AllBullets [ i ] . type != OUT )
 	insert_one_bullet_into_blitting_list ( i );
     }
       
@@ -3273,7 +3273,7 @@ There was a droid type on this level, that does not really exist.",
 void
 PutBullet ( int Bullet_number , int mask )
 {
-  Bullet CurBullet = &AllBullets[Bullet_number];
+  Bullet CurBullet = & ( AllBullets [ Bullet_number ] ) ;
   int PhaseOfBullet;
   int direction_index;
 
@@ -3309,7 +3309,7 @@ There was a bullet to be blitted of a type that does not really exist.",
 				 PLEASE_INFORM, IS_FATAL );
     };
 
-  PhaseOfBullet = (CurBullet->time_in_seconds * Bulletmap[ CurBullet->type ].phase_changes_per_second );
+  PhaseOfBullet = ( CurBullet -> time_in_seconds * Bulletmap [ CurBullet->type ] . phase_changes_per_second );
 
   PhaseOfBullet = PhaseOfBullet % Bulletmap[CurBullet->type].phases ;
   // DebugPrintf( 0 , "\nPhaseOfBullet: %d.", PhaseOfBullet );
