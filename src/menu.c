@@ -942,6 +942,7 @@ Cheatmenu (void)
 	  ClearGraphMem ();
 	  printf_SDL (Screen, x0, y0, "Enter Level, X, Y: ");
 	  input = GetString (40, 2);
+	  if ( input == NULL ) break ; // We take into account the possibility of escape being pressed...
 	  sscanf (input, "%d, %d, %d\n", &LNum, &X, &Y);
 	  free (input);
 	  Teleport ( LNum , X , Y , 0 , TRUE , TRUE ) ;
@@ -951,6 +952,7 @@ Cheatmenu (void)
 	  ClearGraphMem ();
 	  printf_SDL (Screen, x0, y0, "Type number of new robot: ");
 	  input = GetString (40, 2);
+	  if ( input == NULL ) break ; // We take into account the possibility of escape being pressed...
 	  for (i = 0; i < Number_Of_Droid_Types ; i++)
 	    if (!strcmp (Druidmap[i].druidname, input))
 	      break;
@@ -982,6 +984,7 @@ Cheatmenu (void)
 	  printf_SDL (Screen, x0, y0, "Current energy: %f\n", Me[0].energy);
 	  printf_SDL (Screen, -1, -1, "Enter your new energy: ");
 	  input = GetString (40, 2);
+	  if ( input == NULL ) break ; // We take into account the possibility of escape being pressed...
 	  sscanf (input, "%d", &num);
 	  free (input);
 	  Me[0].energy = (double) num;
@@ -1003,6 +1006,7 @@ Cheatmenu (void)
 	case 'm': /* Show deck map in Concept view */
 	  printf_SDL (Screen, -1, -1, "\nLevelnum: ");
 	  input = GetString (40, 2);
+	  if ( input == NULL ) break ; // We take into account the possibility of escape being pressed...
 	  sscanf (input, "%d", &LNum);
 	  free (input);
 	  ShowDeckMap (curShip.AllLevels[LNum]);
@@ -1895,8 +1899,16 @@ Get_Server_Name ( void )
  \n      " , 50 , 50 , NULL );
 
   Temp = GetString( 140 , FALSE );
-  strcpy ( ServerName , Temp );
-  free( Temp );
+  if ( Temp == NULL )
+    {
+      strcpy ( ServerName , "NoSeverNameGiven" );
+    }
+  else
+    {
+      strcpy ( ServerName , Temp );
+      free( Temp );
+    }
+
 }; // void Get_Server_Name ( void )
 
 /* ----------------------------------------------------------------------
