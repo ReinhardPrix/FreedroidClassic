@@ -234,7 +234,7 @@ SetTextCursor (int x, int y)
  *           1  if user pressed space
  *-----------------------------------------------------------------*/
 int
-ScrollText (char *Text, SDL_Rect *rect)
+ScrollText (char *Text, SDL_Rect *rect, int SecondsMinimumDuration )
 {
   int Number_Of_Line_Feeds = 0;		/* Anzahl der Textzeilen */
   char *textpt;			/* bewegl. Textpointer */
@@ -243,10 +243,12 @@ ScrollText (char *Text, SDL_Rect *rect)
   int maxspeed = 150;
   SDL_Surface* Background;
   int ret = 0;
-  Uint32 prev_tick, now;
+  Uint32 first_tick, prev_tick, now;
   bool just_started = TRUE;
 
   Background = SDL_DisplayFormat( ne_screen );
+
+  first_tick = SDL_GetTicks ();
 
   // count the number of lines in the text
   textpt = Text;
@@ -271,7 +273,13 @@ ScrollText (char *Text, SDL_Rect *rect)
 	  just_started = FALSE;
 	  now = SDL_GetTicks();
 	  while ( !SpacePressed() && (SDL_GetTicks() - now < SHOW_WAIT)) ;  // wait before scrolling
-	  if (SpacePressed())
+
+	  //--------------------
+	  // Returning from this function is only possible after the minimum display time has been
+	  // reached.  This is useful for the game-won-phase, where the text must not disappear, even
+	  // if several clicks occur from heavy combat just instants before.
+	  //
+	  if ( SpacePressed() && ( ( SDL_GetTicks() - first_tick ) >= 1000 * SecondsMinimumDuration ) )
 	    {
 	      ret = 1;
 	      break;
@@ -292,7 +300,13 @@ ScrollText (char *Text, SDL_Rect *rect)
 	  if (speed > maxspeed)
 	    speed = maxspeed;
 	}
-      if (SpacePressed())
+
+      //--------------------
+      // Returning from this function is only possible after the minimum display time has been
+      // reached.  This is useful for the game-won-phase, where the text must not disappear, even
+      // if several clicks occur from heavy combat just instants before.
+      //
+      if ( SpacePressed() && ( ( SDL_GetTicks() - first_tick ) >= 1000 * SecondsMinimumDuration ) )
 	{
 	  ret = 1;
 	  break;

@@ -1023,7 +1023,7 @@ Title ( char *MissionBriefingPointer )
       Copy_Rect(Full_User_Rect, rect);
       rect.x += 10;
       rect.w -= 10; //leave some border
-      if (ScrollText ( PreparedBriefingText, &rect) == 1)
+      if (ScrollText ( PreparedBriefingText, &rect , 0 ) == 1)
 	break;  // User pressed 'fire'
  
       free ( PreparedBriefingText );
@@ -1073,7 +1073,7 @@ EndTitle (void)
   SDL_Flip(ne_screen);
   rect.x += 10;
   rect.w -= 20;  //leave some border
-  ScrollText (DebriefingText , &rect);
+  ScrollText (DebriefingText , &rect , 6 );
 
   while ( SpacePressed() );
 

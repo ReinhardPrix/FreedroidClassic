@@ -168,8 +168,10 @@ void Init_Joy (void)
 void 
 ReactToSpecialKeys(void)
 {
-  if ( QPressed() ) /* user asked for quit */
-    QuitGameMenu();
+  //--------------------
+  // user asked for quit
+  //
+  if ( QPressed() ) QuitGameMenu();
 
 /*   if ( DPressed() ) */
 /*     Me.energy = 0; */
@@ -199,8 +201,7 @@ ReactToSpecialKeys(void)
 
   if ( PPressed () )
     Pause ();
-  
-  
+    
 } // void ReactToSpecialKeys(void)
 
 int
