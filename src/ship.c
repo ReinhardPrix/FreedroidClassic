@@ -930,12 +930,10 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , char* Backg
   char InfoText[10000];
   char TextChunk[2000];
   char* ClassString;
-  // ITEM_BROWESER_BG_PIC_FILE
 
   SDL_SetClipRect ( Screen , NULL );
   DisplayImage ( find_file( BackgroundFileName , GRAPHICS_DIR, FALSE) );
 
-  // ShowItemPicture ( Cons_Menu_Rect.x, Cons_Menu_Rect.y, ShowItem->type );
   ShowItemPicture ( 45 , 190 , ShowItem->type );
 
   //--------------------
@@ -955,9 +953,9 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , char* Backg
   else if ( ItemMap [ ShowItem->type ] . item_can_be_installed_in_shield_slot )
     ClassString = "Shield" ; 
   else if ( ItemMap [ ShowItem->type ] . item_can_be_installed_in_special_slot )
-    ClassString = "Collar" ; 
+    ClassString = "Helm" ; 
   else if ( ItemMap [ ShowItem->type ] . item_can_be_installed_in_aux_slot )
-    ClassString = "Wristband" ; 
+    ClassString = "Wristband/Collar" ; 
   else ClassString = "Miscellaneous" ; 
 
   sprintf( InfoText, "Item: %s \nClass: %s\n" ,
@@ -992,36 +990,60 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , char* Backg
     }
   else
     {
-      sprintf( TextChunk, "Required Str: %d\n\
-Required Dex: %d\n\
-Required Mag: %d\n", 
-	       ItemMap [ ShowItem->type ] . item_require_strength,
-	       ItemMap [ ShowItem->type ] . item_require_dexterity,
-	       ItemMap [ ShowItem->type ] . item_require_magic );
-      strcat ( InfoText , TextChunk );
+      if ( ItemMap [ ShowItem->type ] . item_require_strength > 0 )
+	{
+	  sprintf( TextChunk, "Str: %d " , ItemMap [ ShowItem->type ] . item_require_strength ) ;
+	  strcat ( InfoText , TextChunk );
+	}
+      if ( ItemMap [ ShowItem->type ] . item_require_dexterity > 0 )
+	{
+	  sprintf( TextChunk, "Dex: %d " , ItemMap [ ShowItem->type ] . item_require_dexterity ) ;
+	  strcat ( InfoText , TextChunk );
+	}
+      if ( ItemMap [ ShowItem->type ] . item_require_magic > 0 )
+	{
+	  sprintf( TextChunk, "Mag: %d " , ItemMap [ ShowItem->type ] . item_require_magic ) ;
+	  strcat ( InfoText , TextChunk );
+	}
+      strcat ( InfoText , "\n" );
     }
 
   sprintf( TextChunk, "Base list price: %d\n", 
 	   ItemMap [ ShowItem->type ] . base_list_price );
   strcat ( InfoText , TextChunk );
 
-  sprintf( TextChunk, "Damage: %d - %d\n\
-Recharge time: %f\n\
-Defence bonus: %d\n\
-Speed / Acceleration: %d / %d \n", 
-	   ItemMap [ ShowItem->type ] . base_item_gun_damage,
-	   ItemMap [ ShowItem->type ] . base_item_gun_damage +
-	   ItemMap [ ShowItem->type ] . item_gun_damage_modifier,
-	   ItemMap [ ShowItem->type ] . item_gun_recharging_time,
-	   ShowItem->ac_bonus,
-	   (int)ItemMap [ ShowItem->type ] . item_drive_maxspeed,
-	   (int)ItemMap [ ShowItem->type ] . item_drive_accel );
+  if ( ItemMap [ ShowItem->type ] . base_item_gun_damage + ItemMap [ ShowItem->type ] . item_gun_damage_modifier > 0 )
+    {
+      sprintf( TextChunk, "Damage: %d - %d\n" , 
+	       ItemMap [ ShowItem->type ] . base_item_gun_damage,
+	       ItemMap [ ShowItem->type ] . base_item_gun_damage + 
+	       ItemMap [ ShowItem->type ] . item_gun_damage_modifier );
+      strcat ( InfoText , TextChunk );
+    }
 
-  strcat ( InfoText , TextChunk );
+  if ( ItemMap [ ShowItem->type ] . item_gun_recharging_time > 0 )
+    {
+      sprintf( TextChunk, "Recharge time: %f\n" , 
+	       ItemMap [ ShowItem->type ] . item_gun_recharging_time );
+      strcat ( InfoText , TextChunk );
+    }
+
+  if ( ShowItem->ac_bonus > 0 )
+    {
+      sprintf ( TextChunk, "Defence bonus: %d\n" , ShowItem->ac_bonus ) ;
+      strcat ( InfoText , TextChunk );
+    }
+
+  if ( ItemMap [ ShowItem->type ] . item_can_be_installed_in_drive_slot )
+    {
+      sprintf ( TextChunk, "Speed / Acceleration: %d / %d \n", 
+		(int)ItemMap [ ShowItem->type ] . item_drive_maxspeed,
+		(int)ItemMap [ ShowItem->type ] . item_drive_accel );
+      strcat ( InfoText , TextChunk );
+    }
 
   sprintf ( TextChunk, "Notes: %s", 
 	    ItemMap [ ShowItem->type ] . item_description );
-
   strcat ( InfoText, TextChunk );
 
   switch ( ItemMap [ ShowItem->type ] . item_gun_use_ammunition )

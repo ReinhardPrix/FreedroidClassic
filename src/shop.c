@@ -382,8 +382,6 @@ ShowRescaledItem ( int position , int TuxItemRow , item* ShowItem )
   ShopItemRowRect . h = INITIAL_BLOCK_HEIGHT;
   ShopItemRowRect . w = INITIAL_BLOCK_WIDTH * SHOP_ROW_LENGTH ;
 
-
-
   if ( TuxItemRow )
     {
       TargetRectangle . x = TuxItemRowRect . x + position * INITIAL_BLOCK_WIDTH ;

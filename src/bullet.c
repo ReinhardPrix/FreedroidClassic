@@ -659,6 +659,13 @@ CheckBulletCollisions (int num)
 			      Me [ PlayerNum ] . TextVisibleTime = 0 ;
 			      Me [ PlayerNum ] . TextToBeDisplayed = "Ouch!" ;
 			      Me [ PlayerNum ] . energy -= CurBullet -> damage ;	// loose some energy
+
+			      //--------------------
+			      // A hit of what form so ever should make the Tux stop
+			      // dead in his tracks.
+			      //
+			      Me [ PlayerNum ] . speed . x = 0;
+			      Me [ PlayerNum ] . speed . y = 0; 
 			      
 			      //--------------------
 			      // As the new rule, the influencer after getting hit, must completely

@@ -1508,8 +1508,8 @@ CreateNewMapLevel( void )
   DebugPrintf (0, "\nStarting to create and add a completely new level to the ship.");
 
   NewLevel->levelnum = curShip.num_levels;
-  NewLevel->xlen = 9;
-  NewLevel->ylen = 9;
+  NewLevel->xlen = 90;
+  NewLevel->ylen = 90;
   NewLevel->color = 1;
 
   DebugPrintf( 2 , "\nLevelnumber : %d ", NewLevel->levelnum );
@@ -1572,6 +1572,17 @@ CreateNewMapLevel( void )
       NewLevel->ItemList[ i ].pos.y = ( -1 ) ;
       NewLevel->ItemList[ i ].type = ( -1 ) ;
       NewLevel->ItemList[ i ].currently_held_in_hand = FALSE;
+    }
+
+  //--------------------
+  // Now we initialize the chest items arrays with 'empty' information
+  //
+  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+    {
+      NewLevel->ChestItemList[ i ].pos.x = ( -1 ) ;
+      NewLevel->ChestItemList[ i ].pos.y = ( -1 ) ;
+      NewLevel->ChestItemList[ i ].type = ( -1 ) ;
+      NewLevel->ChestItemList[ i ].currently_held_in_hand = FALSE;
     }
 
   //--------------------

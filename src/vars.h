@@ -335,7 +335,7 @@ int ManaCostTable [ NUMBER_OF_SKILLS ] [ NUMBER_OF_SKILL_LEVELS ] = {
   {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'Petrification'
   {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'Detect Stuff'
   {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'EMP Radial Wave'
-  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'VMS Radial Wave'
+  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'VMX Radial Wave'
   {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'Fire Radial Wave'
   {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'UNUSED SLOT 14'
   {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'UNUSED SLOT 15'
@@ -377,22 +377,22 @@ int SpellHitPercentageTable [  ] =
 
 char* SkillName[ NUMBER_OF_SKILLS ] = {
 
-  "Takeover/Talk Skill",
-  "Force Explosion Circle",
+  "Takeover/Talk/Loot",
+  "Repair Skill",
   "Force Explosion Ray",
   "Force -> Energy ",
   "Create Teleportal Home",
 
   "Firey Bolt", // "Remote Strike",
   "Ice Bolt",
-  "Unused spell Nr. 7" , // "Mana Shield",
+  "Explosion Circle" , // "Mana Shield",
   "Poison Bolt",
   "Petrification",
 
   "Detect Stuff",
-  "EMP Radial Wave",
-  "Unused spell Nr. 12",
-  "Unused spell Nr. 13",
+  "Radial EMP Wave",
+  "Radial VMX Wave",
+  "Radial Plasma Wave",
   "Unused spell Nr. 14",
   
   "Unused spell Nr. 15",
