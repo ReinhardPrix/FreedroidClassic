@@ -1,5 +1,5 @@
 # Process this file with autoconf to produce a configure script.
-AC_INIT(freedroidRPG, 0.9.10cvs)
+AC_INIT(freedroidRPG, 0.9.11)
 
 dnl Detect the canonical host and target build environment
 AC_CANONICAL_HOST
@@ -19,6 +19,7 @@ AC_PROG_MAKE_SET
 # debugging a bit more confusing
 #CFLAGS="-g -Wall"
 CFLAGS="$CFLAGS -Wall"
+LDFLAGS="$LDFLAGS -rdynamic"
 
 # Checks for libraries.
 AC_CHECK_LIB([m], [sin],, 
