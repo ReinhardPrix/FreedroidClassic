@@ -75,6 +75,9 @@ typedef struct
   int StandardInfluencerMessages_On_Off;
   int Mouse_Input_Permitted;
   char* Theme_SubPath;
+  int Mission_Log_Visible;
+  float Mission_Log_Visible_Time;
+  float Mission_Log_Visible_Max_Time;
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
 
@@ -114,6 +117,14 @@ typedef grob_Point Vect;
 
 typedef struct
 {
+  char* MissionName;  // this should be the name of the mission, currently uninitialized
+  int MissionWasAssigned; // has be influencer been assigned to this mission? , currently uninitialized
+  int MissionIsComplete; // has the mission been completed?
+  int MissionWasFailed; // has the mission been failed?
+  int MissionExistsAtAll; // is this mission entry used at all, or is it just unused memory?
+  int AutomaticallyAssignThisMissionAtGameStart; // well...
+  // float MissionLastStatusChangeTime; // for how long is the mission now closed?
+
   int KillAll;
   int KillClass;
   int KillOne;
@@ -123,14 +134,19 @@ typedef struct
   int MustBeClass;
   int MustBeType;
   int MustBeOne;
+  
+  int ListOfActionsToBeTriggeredAtAssignment[ MAX_MISSION_TRIGGERED_ACTIONS ];
+  int ListOfActionsToBeTriggeredAtCompletition[ MAX_MISSION_TRIGGERED_ACTIONS ];
 }
-missiontarget, *Missiontarget;
+mission, *Mission;
 
 // This structure can contain things, that might be triggered by a special
 // condition, that can be specified in the mission file as well.
 //
 typedef struct
 {
+  char* ActionLabel;  // this is a better reference than a number
+
   // Maybe the triggered event consists of the influencer saying something
   int InfluencerSaySomething;
   char* InfluencerSayText;
@@ -140,7 +156,8 @@ typedef struct
   int ChangeMapTo;
   int ChangeMapLevel;
 
-  // Maybe the triggered event consists of ??????
+  // Maybe the triggered action consists of a mission assignment
+  int AssignWhichMission;
 
 }
 triggered_action , *Triggered_action;
@@ -161,7 +178,8 @@ typedef struct
   int DeleteTriggerAfterExecution;
   // And now of course which event to trigger!!!!
   // Thats propably the most important information at all!!!
-  int EventNumber;
+  // int EventNumber;
+  char* TargetActionLabel;
 }
 event_trigger , *Event_trigger;
 
@@ -191,6 +209,7 @@ typedef struct
   int CallForHelpAfterSufferingHit;  // Does this droid request help from the next console so soon as it is
                                      // hit by a bullet of some type?
   char *notes;			/* notes on the druid of this type */
+  int IsHuman;
 }
 druidspec, *Druidspec;
 
@@ -211,7 +230,7 @@ typedef struct
   int Shield[4];		/* Status of Partial Shields */
   gps Position_History_Ring_Buffer[ MAX_INFLU_POSITION_HISTORY ];
   // finepoint Position_History[ MAX_INFLU_POSITION_HISTORY ]; // History of the places the influ has been during the last 10 frames
-  missiontarget mission;         // What must be done to fullfill this mission?
+  mission AllMissions[ MAX_MISSIONS_IN_GAME ];         // What must be done to fullfill this mission?
   float MissionTimeElapsed;
   int Marker;                   // In case you've taken over a marked droid, this will contain the marker
   float LastCrysoundTime;
@@ -222,6 +241,17 @@ typedef struct
   int FramesOnThisLevel;        // how many frames has the influ spent on this level already?
 }
 influence_t, *Influence_t;
+
+typedef struct
+{
+  char* RequestTrigger; // which word of the influencer initiates the request
+  char* RequestText;  // which text will be used to pose the request
+  char* AnswerYes;    // what does the influ have to say to confirm?
+  char* AnswerNo;     // what does the influ have to say to reject?
+  char* ResponseYes;  // what will the droid respond, if influ confirms the question
+  char* ResponseNo;   // what will the droid respond, if influ denies the question
+  char* ActionTrigger; // label of the action, that is to be set of on confirmation of the request
+} request, *Request;
 
 typedef struct
 {
@@ -255,6 +285,8 @@ typedef struct
   int NumberOfPeriodicSpecialStatements;
   char **PeriodicSpecialStatements;
   char* QuestionResponseList[ MAX_CHAT_KEYWORDS_PER_DROID * 2 ];  // even indices for keywords, odd for answers 
+
+  request RequestList[ MAX_REQUESTS_PER_DROID ];
 }
 enemy, *Enemy;
 

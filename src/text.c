@@ -64,6 +64,48 @@ int StoreCursorY;
 unsigned int StoreTextBG;
 unsigned int StoreTextFG;
 
+
+char* 
+GetChatWindowInput( SDL_Surface* Background , SDL_Rect* Chat_Window_Pointer )
+{
+  int OldTextCursorX, OldTextCursorY;
+  int j;
+  char* RequestString;
+  SDL_Rect Input_Window;
+  Input_Window.x=15;
+  Input_Window.y=434;
+  Input_Window.w=606;
+  Input_Window.h=37;
+
+
+  OldTextCursorX=MyCursorX;
+  OldTextCursorY=MyCursorY;
+  
+  // Now we clear the text window, since the old text is still there
+  SDL_BlitSurface( Background, &Input_Window , ne_screen , &Input_Window );
+  DisplayText ( "What do you say? >" ,
+		Input_Window.x , Input_Window.y + (Input_Window.h - FontHeight (GetCurrentFont() ) ) / 2 , 
+		&Input_Window ); // , Background );
+  // DisplayTextWithScrolling ( ">" , -1 , -1 , &Input_Window , Background );
+  SDL_Flip ( ne_screen );
+  RequestString = GetString( 20 , FALSE );
+  MyCursorX=OldTextCursorX;
+  MyCursorY=OldTextCursorY;
+  
+  DisplayTextWithScrolling ( "\n>" , MyCursorX , MyCursorY , Chat_Window_Pointer , Background );
+  
+  //--------------------
+  // Cause we do not want to deal with upper and lower case difficulties, we simpy convert 
+  // the given input string into lower cases.  That will make pattern matching afterwards
+  // much more reliable.
+  //
+  j=0;
+  while ( RequestString[j] != 0 ) { RequestString[j]=tolower( RequestString[j] ); j++; }
+
+  return ( RequestString );
+}; // char* GetChatWindowInput( void )
+
+
 /* ----------------------------------------------------------------------
  * This function does the communication routine when the influencer in
  * transfer mode touched a friendly droid.
@@ -73,8 +115,8 @@ void
 ChatWithFriendlyDroid( int Enum )
 {
   char* RequestString;
+  char* DecisionString;
   int i;
-  int OldTextCursorX, OldTextCursorY;
   char *fpath;
   char fname[500];
   char ReplyString[10000];
@@ -82,7 +124,7 @@ ChatWithFriendlyDroid( int Enum )
   SDL_Surface* Large_Droid;
   SDL_Surface* Background;
   SDL_Rect Chat_Window;
-  SDL_Rect Input_Window;
+  // SDL_Rect Input_Window;
   SDL_Rect Droid_Image_Window;
   
   Chat_Window.x=242;
@@ -90,10 +132,10 @@ ChatWithFriendlyDroid( int Enum )
   Chat_Window.w=380;
   Chat_Window.h=314;
 
-  Input_Window.x=15;
-  Input_Window.y=434;
-  Input_Window.w=606;
-  Input_Window.h=37;
+  //  Input_Window.x=15;
+  //  Input_Window.y=434;
+  //  Input_Window.w=606;
+  //  Input_Window.h=37;
 
   Droid_Image_Window.x=15;
   Droid_Image_Window.y=82;
@@ -132,29 +174,8 @@ ChatWithFriendlyDroid( int Enum )
 
   while (1)
     {
-      OldTextCursorX=MyCursorX;
-      OldTextCursorY=MyCursorY;
 
-      // Now we clear the text window, since the old text is still there
-      SDL_BlitSurface( Background, &Input_Window , ne_screen , &Input_Window );
-      DisplayText ( "What do you say? >" ,
-		    Input_Window.x , Input_Window.y + (Input_Window.h - FontHeight (GetCurrentFont() ) ) / 2 , 
-		    &Input_Window ); // , Background );
-      // DisplayTextWithScrolling ( ">" , -1 , -1 , &Input_Window , Background );
-      SDL_Flip ( ne_screen );
-      RequestString = GetString( 20 , FALSE );
-      MyCursorX=OldTextCursorX;
-      MyCursorY=OldTextCursorY;
-
-      DisplayTextWithScrolling ( "\n>" , MyCursorX , MyCursorY , &Chat_Window , Background );
-
-      //--------------------
-      // Cause we do not want to deal with upper and lower case difficulties, we simpy convert 
-      // the given input string into lower cases.  That will make pattern matching afterwards
-      // much more reliable.
-      //
-      i=0;
-      while ( RequestString[i] != 0 ) { RequestString[i]=tolower( RequestString[i] ); i++; }
+      RequestString = GetChatWindowInput( Background , &Chat_Window );
 
       //--------------------
       // the quit command is always simple and clear.  We just need to end
@@ -172,6 +193,64 @@ ChatWithFriendlyDroid( int Enum )
 	  AllEnemys[ Enum ].TextVisibleTime=0;
 	  return;
 	}
+
+      //--------------------
+      // At this point we examine the entered string and see if it is perhaps the
+      // trigger for some request for a decision to the influencer by this droid.
+      //
+      // If this is the case, then we may ask for influs answer to the request
+      // of course with a certain text again.
+      //
+      // Then we get the answer and see if it is a valid answer.
+      //
+      // And if this whole procedure was applied, then we need not match for other
+      // things and can continue the chat immediately
+      //
+      for ( i = 0 ; i < MAX_REQUESTS_PER_DROID ; i++ )
+	{
+	  if ( !strcmp ( RequestString , AllEnemys[ Enum ].RequestList[ i ].RequestTrigger ) ) 
+	    {
+
+	      // This asks the influ for a decision to make
+	      DisplayTextWithScrolling ( AllEnemys[ Enum ].RequestList[ i ].RequestText , 
+					 -1 , -1 , &Chat_Window , Background );
+
+	      // Now we read in his answer and we do this as long as often as it takes for the influ
+	      // to give a valid answer
+	      DecisionString = "XASDFASDF";
+
+	      while ( ( strcmp( DecisionString , AllEnemys[ Enum ].RequestList[ i ].AnswerYes ) != 0 ) &&
+		      ( strcmp( DecisionString , AllEnemys[ Enum ].RequestList[ i ].AnswerNo ) != 0 ) )
+		{
+		  DecisionString = GetChatWindowInput( Background , &Chat_Window );
+		  if ( ( strcmp( DecisionString , AllEnemys[ Enum ].RequestList[ i ].AnswerYes ) != 0 ) &&
+		       ( strcmp( DecisionString , AllEnemys[ Enum ].RequestList[ i ].AnswerNo  ) != 0 ) )
+		    DisplayTextWithScrolling ( "Please answer only yes or no." , 
+					       -1 , -1 , &Chat_Window , Background );
+		}
+	      
+	      // Now we respond to the decision the infuencer has made
+		  if ( strcmp( DecisionString , AllEnemys[ Enum ].RequestList[ i ].AnswerYes ) == 0 )
+		    {
+		      DisplayTextWithScrolling ( AllEnemys[ Enum ].RequestList[ i ].ResponseYes , 
+						 -1 , -1 , &Chat_Window , Background );
+		      ExecuteActionWithLabel ( AllEnemys[ Enum ].RequestList[ i ].ActionTrigger );
+		    }
+		  else
+		    {
+		      DisplayTextWithScrolling ( AllEnemys[ Enum ].RequestList[ i ].ResponseNo , 
+						 -1 , -1 , &Chat_Window , Background );
+		    }
+	      
+
+	      break;
+	    }
+	}
+      //--------------------
+      // If a request trigger matched already, we do not process the default keywords any more
+      // so that some actions can be caught!
+      //
+      if ( i != MAX_REQUESTS_PER_DROID ) continue;
 
       //--------------------
       // In some cases we will not want the default answers to be given,

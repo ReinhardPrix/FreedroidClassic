@@ -44,11 +44,12 @@ EXTERN int ShipEmptyCounter;
 #else
 #define EXTERN extern
 #endif
+EXTERN void AssignMission( int MissNum );
 EXTERN void parse_command_line (int argc, char *const argv[]);
 EXTERN void Title ( char *MissionBriefingPointer );
 EXTERN void EndTitle (void);
 EXTERN void InitFreedroid (void);
-EXTERN void InitNewMission (char *MissionName);
+EXTERN void InitNewMissionList (char *MissionName);
 EXTERN void ThouArtDefeated (void);
 EXTERN void ThouArtVictorious (void);
 EXTERN void CheckIfMissionIsComplete (void);
@@ -207,6 +208,7 @@ EXTERN void MoveMenuPositionSound (void);
 EXTERN void EnterLiftSound (void);
 EXTERN void LeaveLiftSound (void);
 EXTERN void Fire_Bullet_Sound (int);
+EXTERN void Mission_Status_Change_Sound (void);
 EXTERN void BounceSound (void);
 EXTERN void DruidBlastSound (void);
 EXTERN void ThouArtDefeatedSound (void);
@@ -350,6 +352,8 @@ EXTERN void PutMessages (void);
 EXTERN void InsertMessage (char *MText);
 EXTERN void *MyMalloc (long);
 EXTERN void ShowDebugInfos (void);
+EXTERN void ExecuteActionWithLabel ( char* ActionLabel );
+EXTERN void ExecuteEvent ( int EventNumber );
 
 /* enemy.c */
 #undef EXTERN

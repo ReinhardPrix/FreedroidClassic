@@ -54,7 +54,14 @@ The structure of a mission file is simple.
 What all these strings must look like can easily deduced 
 directly form the following example.
 
---------------------------------------------------
+**********************************************************************
+**********************************************************************
+**********************************************************************
++++
++++ Now we define the general HEADER information about this mission, things
++++ that occur only once and therefore have no separate subsections 
++++ and repetitions
++++
 
 *** Start of Mission File ***
 
@@ -75,21 +82,28 @@ After completing this mission, load mission : CleanPrivateQuartersDeck.mission
 Influs mission start comment="Linux Kernel booted.  001 transfer-tech modules loaded.  System up and running.";
 
 +++
-+++ For the Outbreak mission, there is only one single starting point allowed,
-+++ which is in the interiour of the scientists barricades:
++++ The new mission starts in the Private Goods Storage Cellar, where the influence device is born....
 +++
 Possible Start Point : Level=2 XPos=8 YPos=7
-P**ossible Start Point : Level=10 XPos=2 YPos=2
 
 
-*** Begin of Mission Target ***
+**********************************************************************
+**********************************************************************
+**********************************************************************
++++
++++ Now we define the mission targets
++++
+
+** Start of this mission target subsection **
 
 +++
-+++ Now we define the mission target
-+++ For the Outbreak mission, this target is defined as
-+++ to eliminate all droids with the specified marker
-+++ namely '1'.  Thats also quite simple.
++++ The first mission is to remove the droids lurking directly in front
++++ of the scientists improvised refuge bunker.
++++ These droids are marked with the 1 label.
 +++
+
+Mission Name="Clean Goods Storage"
+Assign this mission to influencer automatically at start : 0
 Mission target is to kill all droids : -1
 Mission target is to kill class of droids : -1
 Mission target is to kill droids with marker : 1
@@ -101,9 +115,64 @@ Mission target is to reach X-Pos : -1
 Mission target is to reach Y-Pos : -1
 Mission target is to live for how many seconds : -1
 
-*** End of Mission Target ***
+On mission assignment immediately trigger action Nr. : 0
 
-----------------------------------------------------------------------
+
+On mission completition immediately trigger action Nr. : 1
+
+** End of this mission target subsection **
+
+** Start of this mission target subsection **
+
++++
++++ This is the second mission, which consists of removing the 751
++++ droids on the quarter deck and freeing the scientists there.
++++
+
+Mission Name="Clean Quarters Deck"
+Assign this mission to influencer automatically at start : 0
+Mission target is to kill all droids : -1
+Mission target is to kill class of droids : 7
+Mission target is to kill droids with marker : -1
+Mission target is to become class : -1
+Mission target is to become type : -1
+Mission target is to overtake a droid with marker : -1
+Mission target is to reach level : -1
+Mission target is to reach X-Pos : -1
+Mission target is to reach Y-Pos : -1
+Mission target is to live for how many seconds : -1
+
+** End of this mission target subsection **
+
+** Start of this mission target subsection **
+
++++
++++ This is the third mission, which consists of removing the 821
++++ security droids and the saboteur 420 mechanics droid who is
++++ trying to crash the reactor
++++
+
+Mission Name="Restabilize Reactor Plant"
+Assign this mission to influencer automatically at start : 0
+Mission target is to kill all droids : 1
+Mission target is to kill class of droids : -1
+Mission target is to kill droids with marker : -1
+Mission target is to become class : -1
+Mission target is to become type : -1
+Mission target is to overtake a droid with marker : -1
+Mission target is to reach level : -1
+Mission target is to reach X-Pos : -1
+Mission target is to reach Y-Pos : -1
+Mission target is to live for how many seconds : -1
+
+** End of this mission target subsection **
+
+**********************************************************************
+**********************************************************************
+**********************************************************************
++++
++++ Now we define the event triggers for this whole asteroid building
++++
 
 ** Start of Mission Event Section **
 
@@ -112,11 +181,12 @@ Mission target is to live for how many seconds : -1
 // leave the retreatment bunker of the scientists.
 
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
-* Start of an Event Trigger Subsection *
+* S**tart of an Event Trigger Subsection *
 Influencer must be at x-coordinate=5
 Influencer must be at y-coordinate=7
 Influencer must be at maplevel=2
-Event Action to be triggered by this trigger=0
+E**vent Action to be triggered by this trigger=0
+Event Action to be triggered by this trigger="thanks"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
 
@@ -126,10 +196,11 @@ Delete the event trigger after it has been triggered=-1
 // triggers.
 
 * Start of an Event Trigger Subsection *
-Influencer must be at x-coordinate=2
+Influencer must be at x-coordinate=2 
 Influencer must be at y-coordinate=7
 Influencer must be at maplevel=2
-Event Action to be triggered by this trigger=2
+E**vent Action to be triggered by this trigger=2
+Event Action to be triggered by this trigger="close_barrier"
 Delete the event trigger after it has been triggered=1
 * End of this Event Trigger Subsection *
 
@@ -137,7 +208,8 @@ Delete the event trigger after it has been triggered=1
 Influencer must be at x-coordinate=2
 Influencer must be at y-coordinate=8
 Influencer must be at maplevel=2
-Event Action to be triggered by this trigger=2
+E**vent Action to be triggered by this trigger=2
+Event Action to be triggered by this trigger="close_barrier"
 Delete the event trigger after it has been triggered=1
 * End of this Event Trigger Subsection *
 
@@ -145,7 +217,8 @@ Delete the event trigger after it has been triggered=1
 Influencer must be at x-coordinate=2
 Influencer must be at y-coordinate=6
 Influencer must be at maplevel=2
-Event Action to be triggered by this trigger=2
+E**vent Action to be triggered by this trigger=2
+Event Action to be triggered by this trigger="close_barrier"
 Delete the event trigger after it has been triggered=1
 * End of this Event Trigger Subsection *
 
@@ -153,7 +226,8 @@ Delete the event trigger after it has been triggered=1
 Influencer must be at x-coordinate=3
 Influencer must be at y-coordinate=6
 Influencer must be at maplevel=2
-Event Action to be triggered by this trigger=2
+E**vent Action to be triggered by this trigger=2
+Event Action to be triggered by this trigger="close_barrier"
 Delete the event trigger after it has been triggered=1
 * End of this Event Trigger Subsection *
 
@@ -161,7 +235,8 @@ Delete the event trigger after it has been triggered=1
 Influencer must be at x-coordinate=3
 Influencer must be at y-coordinate=8
 Influencer must be at maplevel=2
-Event Action to be triggered by this trigger=2
+E**vent Action to be triggered by this trigger=2
+Event Action to be triggered by this trigger="close_barrier"
 Delete the event trigger after it has been triggered=1
 * End of this Event Trigger Subsection *
 
@@ -174,7 +249,8 @@ Delete the event trigger after it has been triggered=1
 Influencer must be at x-coordinate=10
 Influencer must be at y-coordinate=7
 Influencer must be at maplevel=2
-Event Action to be triggered by this trigger=3
+E**vent Action to be triggered by this trigger=3
+Event Action to be triggered by this trigger="barrier_bullet_comment"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
 
@@ -183,7 +259,8 @@ Delete the event trigger after it has been triggered=-1
 Influencer must be at x-coordinate=19
 Influencer must be at y-coordinate=5
 Influencer must be at maplevel=2
-Event Action to be triggered by this trigger=5
+E**vent Action to be triggered by this trigger=5
+Event Action to be triggered by this trigger="stay_with_first_mission_comment"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
 
@@ -192,21 +269,28 @@ Delete the event trigger after it has been triggered=-1
 Influencer must be at x-coordinate=6
 Influencer must be at y-coordinate=6
 Influencer must be at maplevel=2
-Event Action to be triggered by this trigger=4
+E**vent Action to be triggered by this trigger=4
+Event Action to be triggered by this trigger="teleport_not_working_comment"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
 
-----------------------------------------------------------------------
-FROM HERE ON THERE ARE ACTION DEFINITIONS
+**********************************************************************
+**********************************************************************
+**********************************************************************
++++
++++ Now we define ACTIONS, that can be triggered by triggers
++++
 
 * Start of an Event Action Subsection *
 ACTION INDEX NUMBER TO USE=0
+Action label for this action="thanks"
 Action is mapchange at positionX=4
 Action is mapchange at positionY=7
 Action is mapchange at maplevel=2
 Action is change map there to new value=0
 Action is Influencer saying something=1
 Action is Influencer saying the following text="Thanks for removing the barrier!"
+Action is mission assignment=-1
 * End of this Event Action Subsection *
 
 
@@ -214,65 +298,108 @@ Action is Influencer saying the following text="Thanks for removing the barrier!
 // the text to fill in remarks. Then set up triggers at any location you want.
 * Start of an Event Action Subsection *
 ACTION INDEX NUMBER TO USE=1
+Action label for this action="remind"
 Action is mapchange at positionX=-1
 Action is mapchange at positionY=-1
 Action is mapchange at maplevel=-1
 Action is change map there to new value=-1
 Action is Influencer saying something=1
 Action is Influencer saying the following text="Don't forget to close the barrier behind me again!"
+Action is mission assignment=-1
 * End of this Event Action Subsection *
 
 // This action closes the barrier behind the influencer again. There are several
 // event triggers set to cause this action.
 * Start of an Event Action Subsection *
 ACTION INDEX NUMBER TO USE=2
+Action label for this action="close_barrier"
 Action is mapchange at positionX=4
 Action is mapchange at positionY=7
 Action is mapchange at maplevel=2
 Action is change map there to new value=23
 Action is Influencer saying something=-1
 Action is Influencer saying the following text=""
+Action is mission assignment=-1
 * End of this Event Action Subsection *
 
 // This is a pure text statement.  You can copy it and just adapt the 
 // the text to fill in remarks. Then set up triggers at any location you want.
 * Start of an Event Action Subsection *
 ACTION INDEX NUMBER TO USE=3
+Action label for this action="barrier_bullet_comment"
 Action is mapchange at positionX=-1
 Action is mapchange at positionY=-1
 Action is mapchange at maplevel=-1
 Action is change map there to new value=-1
 Action is Influencer saying something=1
 Action is Influencer saying the following text="This barrier is scarred from lots of bullet holes!"
+Action is mission assignment=-1
 * End of this Event Action Subsection *
 
 // This is a pure text statement.  You can copy it and just adapt the 
 // the text to fill in remarks. Then set up triggers at any location you want.
 * Start of an Event Action Subsection *
 ACTION INDEX NUMBER TO USE=4
+Action label for this action="teleport_not_working_comment"
 Action is mapchange at positionX=-1
 Action is mapchange at positionY=-1
 Action is mapchange at maplevel=-1
 Action is change map there to new value=-1
 Action is Influencer saying something=1
 Action is Influencer saying the following text="This teleportation device is not yet functional!"
+Action is mission assignment=-1
 * End of this Event Action Subsection *
 
 // This is a pure text statement.  You can copy it and just adapt the 
 // the text to fill in remarks. Then set up triggers at any location you want.
 * Start of an Event Action Subsection *
 ACTION INDEX NUMBER TO USE=5
+Action label for this action="stay_with_first_mission_comment"
 Action is mapchange at positionX=-1
 Action is mapchange at positionY=-1
 Action is mapchange at maplevel=-1
 Action is change map there to new value=-1
 Action is Influencer saying something=1
 Action is Influencer saying the following text="I think I should destroy the hostile machines around the scientists retreat first, before I venture any furthery.  The humans might get destroyed otherwise!"
+Action is mission assignment=-1
+* End of this Event Action Subsection *
+
+
+// This is a pure mission assignment
+* Start of an Event Action Subsection *
+ACTION INDEX NUMBER TO USE=6
+Action label for this action="assign_mission_zero"
+Action is mapchange at positionX=-1
+Action is mapchange at positionY=-1
+Action is mapchange at maplevel=-1
+Action is change map there to new value=-1
+Action is Influencer saying something=1
+Action is Influencer saying the following text="Hey, I think I've been assigned a mission!  Cool!"
+Action is mission assignment=0
+* End of this Event Action Subsection *
+
+// This is a pure mission assignment
+* Start of an Event Action Subsection *
+ACTION INDEX NUMBER TO USE=7
+Action label for this action="assign_mission_one"
+Action is mapchange at positionX=-1
+Action is mapchange at positionY=-1
+Action is mapchange at maplevel=-1
+Action is change map there to new value=-1
+Action is Influencer saying something=1
+Action is Influencer saying the following text="Hey, I think I've been assigned another mission!  Super!"
+Action is mission assignment=1
 * End of this Event Action Subsection *
 
 ** End of Mission Event Section **
 
-----------------------------------------------------------------------
+**********************************************************************
+**********************************************************************
+**********************************************************************
++++
++++ Now we define the BRIEFING and DEBRIEFING texts, displayed as 
++++ scrolling text at the beginning/end
++++
 
 ** Start of Mission Briefing Text Section **
 

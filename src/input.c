@@ -162,6 +162,15 @@ ReactToSpecialKeys(void)
   if ( DPressed() )
     Me.energy = 0;
 
+  //--------------------
+  // We assign the L key to turn on/off the quest log i.e. mission log
+  //
+  if ( LPressed() )
+    {
+      GameConfig.Mission_Log_Visible_Time = 0;
+      GameConfig.Mission_Log_Visible = !GameConfig.Mission_Log_Visible;
+    }
+
   if ( GPressed () )
     {
       Me.TextToBeDisplayed="Hello!  Greetings to all other Freedom Fighters.";
@@ -194,7 +203,7 @@ ReactToSpecialKeys(void)
   
   if ( UPressed () )
     {
-      InitNewMission ( STANDARD_MISSION ) ;
+      InitNewMissionList ( STANDARD_MISSION ) ;
       while (UPressed());
     }
   

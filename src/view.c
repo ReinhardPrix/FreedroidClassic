@@ -127,6 +127,54 @@ RecFlashFill (int LX, int LY, int Color, unsigned char *Parameter_Screen, int SB
     RecFlashFill (LX, LY + Block_Height, Color, Parameter_Screen, SBreite);
 }
 
+
+void 
+ShowMissionCompletitionMessages( void )
+{
+  int MissNum;
+
+  //--------------------
+  // If the log is not set to visible right now, we do not need to 
+  // do anything more
+  //
+  if ( GameConfig.Mission_Log_Visible == FALSE ) return;
+  if ( GameConfig.Mission_Log_Visible_Time >= GameConfig.Mission_Log_Visible_Max_Time ) return;
+
+  //--------------------
+  // At this point we know, that the quest log is desired and
+  // therefore we display it in-game:
+  //
+  DisplayText( "See quest log: \n" , User_Rect.x , User_Rect.y , &User_Rect );
+
+  for ( MissNum = 0 ; MissNum < MAX_MISSIONS_IN_GAME; MissNum ++ )
+    {
+      // In case the mission does not exist at all, we need not do anything more...
+      if ( Me.AllMissions[ MissNum ].MissionExistsAtAll != TRUE ) continue;
+
+      // In case the mission was not yet assigned, we need not do anything more...
+      if ( Me.AllMissions[ MissNum ].MissionWasAssigned != TRUE ) continue;
+
+      // In case the message is rather old, we need not do anything more...
+      // if ( Me.AllMissions[ MissNum ].MissionLastStatusChangeTime > 1000 ) continue;
+
+      // At this point we know, that the mission has recently been completed or failed
+
+      if ( Me.AllMissions[ MissNum ].MissionIsComplete == TRUE )
+	{
+	  DisplayText( "\n* Mission completed: " , -1 , -1 , &User_Rect );
+	}
+      else if ( Me.AllMissions[ MissNum ].MissionWasFailed == TRUE )
+	{
+	  DisplayText( "\n* Mission completed: " , -1 , -1 , &User_Rect );
+	}
+      else
+	  DisplayText( "\n* Mission assigned: " , -1 , -1 , &User_Rect );
+
+      DisplayText( Me.AllMissions[ MissNum ].MissionName , -1 , -1 , &User_Rect );
+
+    }
+};
+
 /*
 -----------------------------------------------------------------
 @Desc: This function assembles the contents of the combat window 
@@ -264,10 +312,10 @@ Assemble_Combat_Picture (int mask)
 		       "GPS: X=%d Y=%d Lev=%d" , (int) rintf(Me.pos.x) , (int) rintf(Me.pos.y) , CurLevel->levelnum );
     }
 
-  if ( Me.mission.MustLiveTime != (-1) )
+  if ( Me.AllMissions[0].MustLiveTime != (-1) )
     {
-      minutes=floor( ( Me.mission.MustLiveTime - Me.MissionTimeElapsed ) / 60 );
-      seconds= rintf( Me.mission.MustLiveTime - Me.MissionTimeElapsed ) - 60 * minutes;
+      minutes=floor( ( Me.AllMissions[0].MustLiveTime - Me.MissionTimeElapsed ) / 60 );
+      seconds= rintf( Me.AllMissions[0].MustLiveTime - Me.MissionTimeElapsed ) - 60 * minutes;
       if ( minutes < 0 ) 
 	{
 	  minutes = 0;
@@ -278,22 +326,22 @@ Assemble_Combat_Picture (int mask)
 		       "Time to hold out still: %2d:%2d " , minutes , seconds );
     }
 
+  ShowMissionCompletitionMessages();
 
+
+  //--------------------
   // At this point we are done with the drawing procedure
   // and all that remains to be done is updating the screen.
   // Depending on where we did our modifications, we update
   // an according portion of the screen.
-
   if ( mask & DO_SCREEN_UPDATE )
     {
       SDL_UpdateRect( ne_screen , User_Rect.x , User_Rect.y , User_Rect.w , User_Rect.h );
     }
 
+
   DebugPrintf (2, "\nvoid Assemble_Combat_Picture(...): end of function reached.");
-
-  return;
-
-} // void Assemble_Combat_Picture(...)
+}; // void Assemble_Combat_Picture(...)
 
 /*
 -----------------------------------------------------------------
@@ -474,21 +522,25 @@ PutEnemy (int Enum , int x , int y)
   int phase;
   int alpha_value;
   int i;
+  int HumanModifier;
   SDL_Rect TargetRectangle;
 
   DebugPrintf (3, "\nvoid PutEnemy(int Enum): real function call confirmed...\n");
 
+  if ( Druidmap[AllEnemys[ Enum ].type ].IsHuman ) HumanModifier =  'A' - '1' - 13;
+  else HumanModifier = 0;
+
   /* if enemy is on other level, return */
   if (AllEnemys[Enum].levelnum != CurLevel->levelnum)
     {
-      DebugPrintf (3, "\nvoid PutEnemy(int Enum): DIFFERENT LEVEL-->usual end of function reached.\n");
+      // DebugPrintf (3, "\nvoid PutEnemy(int Enum): DIFFERENT LEVEL-->usual end of function reached.\n");
       return;
     }
 
   // if this enemy is dead, we need not do anything more here
   if (AllEnemys[Enum].Status == OUT)
     {
-      DebugPrintf (3, "\nvoid PutEnemy(int Enum): STATUS==OUT --> usual end of function reached.\n");
+      // DebugPrintf (3, "\nvoid PutEnemy(int Enum): STATUS==OUT --> usual end of function reached.\n");
       return;
     }
 
@@ -602,7 +654,8 @@ Sorry...\n\
     }
   else
     {
-      SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[0]-'1'+1 ] , NULL, ne_screen, &TargetRectangle );
+      
+      SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[0]-'1'+1+HumanModifier ] , NULL, ne_screen, &TargetRectangle );
       // SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[AllEnemys[Enum].type].druidname[0]-'1'+1) , 
       //       ne_screen, &TargetRectangle );
     }
@@ -626,7 +679,7 @@ Sorry...\n\
     }
   else
     {
-      SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[1]-'1'+1 ] , NULL, ne_screen, &TargetRectangle );
+      SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[1]-'1'+1 +HumanModifier ] , NULL, ne_screen, &TargetRectangle );
       // SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[AllEnemys[Enum].type].druidname[1]-'1'+1) , 
       // ne_screen, &TargetRectangle );
     }
@@ -648,7 +701,7 @@ Sorry...\n\
     }
   else
     {
-      SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[2]-'1'+1 ] , NULL, ne_screen, &TargetRectangle );
+      SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[2]-'1'+1 +HumanModifier ] , NULL, ne_screen, &TargetRectangle );
       // SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[AllEnemys[Enum].type].druidname[2]-'1'+1) , 
       //       ne_screen, &TargetRectangle );
     }
