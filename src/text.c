@@ -1106,7 +1106,6 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , Enemy ChatDroid 
 	{
 	  return;
 	}
-
     }
   
 }; // void DoChatFromChatRosterData( void )

@@ -216,7 +216,7 @@ PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting)
   // lead to non-loadability errors with the sound files.
   //
   TicksNow = SDL_GetTicks();
-  if ( ( ! strcmp ( PreviousFileName , SoundSampleFileName ) ) && ( ( TicksNow - PreviousStartTicks ) < 2.5 * 1000 ) ) return;
+  if ( ( strcmp ( "Sorry_No_Voice_Sample_Yet_0.wav" , SoundSampleFileName ) ) && ( ! strcmp ( PreviousFileName , SoundSampleFileName ) ) && ( ( TicksNow - PreviousStartTicks ) < 2.5 * 1000 ) ) return;
   PreviousStartTicks = TicksNow;
   strcpy ( PreviousFileName , SoundSampleFileName );
 
