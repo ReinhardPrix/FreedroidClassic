@@ -855,8 +855,8 @@ DisplayText (char *Text, int startx, int starty, const SDL_Rect *clip)
 
 
   SDL_GetClipRect (ne_screen, &store_clip);  /* store previous clip-rect */
-  if (clip)
-    SDL_SetClipRect (ne_screen, clip);
+  if ( clip != NULL )
+    SDL_SetClipRect ( ne_screen , clip );
   else
     {
       clip = & Temp_Clipping_Rect;

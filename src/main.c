@@ -162,7 +162,7 @@ UpdateCountersForThisFrame (void)
   int i;
 
   GameConfig.Mission_Log_Visible_Time += Frame_Time();
-
+  GameConfig.Inventory_Visible_Time += Frame_Time();
   // if (ShipEmptyCounter == 1) GameOver = TRUE;
 
   LastBlastHit++;

@@ -1553,6 +1553,8 @@ InitFreedroid (void)
   User_Rect.w=640;
   User_Rect.y = BANNER_HEIGHT;
   User_Rect.h = 480 - BANNER_HEIGHT;
+  User_Rect_Center_x=( User_Rect.x + User_Rect.w/2 );
+  User_Rect_Center_y=( User_Rect.y + User_Rect.h/2 );
 
 
 

@@ -56,6 +56,8 @@ void RecFlashFill (int LX, int LY, int Color, unsigned char *Parameter_Screen,
 int Cent (int);
 
 char *Affected;
+EXTERN int MyCursorX;
+EXTERN int MyCursorY;
 
 //
 // POSSIBLY OUTDATED AND UNUSED FUNCTION
@@ -189,36 +191,61 @@ ShowInventoryMessages( void )
 {
   int SlotNum;
   char InventoryText[2000];
+  SDL_Rect InventoryRect;
+
+  InventoryRect.x = 0;
+  InventoryRect.y = User_Rect.y;
+  InventoryRect.w = SCREENLEN/2;
+  InventoryRect.h = User_Rect.h;
+
+  User_Rect.x = 0;
+  User_Rect.w = SCREENLEN;
+  User_Rect_Center_x=( User_Rect.x + User_Rect.w/2 );
+  User_Rect_Center_y=( User_Rect.y + User_Rect.h/2 );
 
   //--------------------
   // If the log is not set to visible right now, we do not need to 
   // do anything more
   //
   if ( GameConfig.Inventory_Visible == FALSE ) return;
-  if ( GameConfig.Inventory_Visible_Time >= GameConfig.Inventory_Visible_Max_Time ) return;
+  // if ( GameConfig.Inventory_Visible_Time >= GameConfig.Inventory_Visible_Max_Time ) return;
 
   //--------------------
   // At this point we know, that the quest log is desired and
   // therefore we display it in-game:
   //
-  DisplayText( "See inventory: \n" , User_Rect.x , User_Rect.y , &User_Rect );
 
+  // We split the screen to half, so that one half can be used for the inventory
+  // and the other 
+  User_Rect.x = SCREENLEN/2;
+  User_Rect.w = SCREENLEN/2;
+  User_Rect_Center_x=( User_Rect.x + User_Rect.w/2 );
+  User_Rect_Center_y=( User_Rect.y + User_Rect.h/2 );
+  SDL_SetClipRect( ne_screen, &InventoryRect );
+  SDL_FillRect( ne_screen, & InventoryRect , 0x0FFFFFF );
+
+
+  MyCursorX=InventoryRect.x;
+  MyCursorY=InventoryRect.y;
+  DisplayText( "See inventory: \n" , InventoryRect.x , InventoryRect.y , &InventoryRect );
+  
   for ( SlotNum = 0 ; SlotNum < MAX_ITEMS_IN_INVENTORY; SlotNum ++ )
     {
       // In case the item does not exist at all, we need not do anything more...
       if ( Me.Inventory[ SlotNum ].type == ( -1 ) ) 
 	{
-	  DisplayText( "\n--- Slot empty ---" , -1 , -1 , &User_Rect );
+	  DisplayText( "\n--- Slot empty ---" , -1 , -1 , &InventoryRect );
 	  continue;
 	}
 
       sprintf( InventoryText , "\n Item Nr. %d is %s." , SlotNum , ItemMap[ Me.Inventory[ SlotNum ]. type ].ItemName );
-      DisplayText( InventoryText , -1 , -1 , &User_Rect );
+      DisplayText( InventoryText , -1 , -1 , &InventoryRect );
 
     }
 
-  DisplayText( "\n\nNo more items beyond that." , -1 , -1 , &User_Rect );
+  DisplayText( "\n\nNo more items beyond that." , -1 , -1 , &InventoryRect );
 
+  SDL_UpdateRect( ne_screen , InventoryRect.x , InventoryRect.y , InventoryRect.w , InventoryRect.h );
 
 }; // void ShowInventoryMessages();
 
@@ -273,9 +300,9 @@ Assemble_Combat_Picture (int mask)
 	{
 	  if ((MapBrick = GetMapBrick( CurLevel, col , line )) != INVISIBLE_BRICK)
 	    {
-	      TargetRectangle.x = USER_FENSTER_CENTER_X 
+	      TargetRectangle.x = User_Rect_Center_x 
 		+ ( -Me.pos.x+col-0.5 )*Block_Width;
-	      TargetRectangle.y = USER_FENSTER_CENTER_Y
+	      TargetRectangle.y = User_Rect_Center_y
 		+ ( -Me.pos.y+line-0.5 )*Block_Height;
 	      // SDL_BlitSurface(ne_blocks, ne_map_block+MapBrick,
 	      // ne_screen, &TargetRectangle);
@@ -368,7 +395,6 @@ Assemble_Combat_Picture (int mask)
   ShowMissionCompletitionMessages();
   ShowInventoryMessages();
 
-
   //--------------------
   // At this point we are done with the drawing procedure
   // and all that remains to be done is updating the screen.
@@ -406,8 +432,8 @@ PutInfluence ( int x , int y )
 
   if ( x == -1 ) 
     {
-      TargetRectangle.x=USER_FENSTER_CENTER_X - Block_Width/2;
-      TargetRectangle.y=USER_FENSTER_CENTER_Y - Block_Height/2;
+      TargetRectangle.x=User_Rect_Center_x - Block_Width/2;
+      TargetRectangle.y=User_Rect_Center_y - Block_Height/2;
     }
   else
     {
@@ -472,8 +498,8 @@ PutInfluence ( int x , int y )
   // COMPUTED ANEW!!!!
   if ( x == -1 ) 
     {
-      TargetRectangle.x=USER_FENSTER_CENTER_X - Block_Width/2 + First_Digit_Pos_X;
-      TargetRectangle.y=USER_FENSTER_CENTER_Y - Block_Height/2 + First_Digit_Pos_Y;
+      TargetRectangle.x=User_Rect_Center_x - Block_Width/2 + First_Digit_Pos_X;
+      TargetRectangle.y=User_Rect_Center_y - Block_Height/2 + First_Digit_Pos_Y;
     }
   else
     {
@@ -488,10 +514,10 @@ PutInfluence ( int x , int y )
   // COMPUTED ANEW!!!!
   if ( x == -1 ) 
     {
-      // TargetRectangle.x=USER_FENSTER_CENTER_X - Block_Width/2 + Digit_Pos_X + Digit_Length;
-      // TargetRectangle.y=USER_FENSTER_CENTER_Y - Block_Height/2 + Digit_Pos_Y;
-      TargetRectangle.x=USER_FENSTER_CENTER_X - Block_Width/2 + Second_Digit_Pos_X;
-      TargetRectangle.y=USER_FENSTER_CENTER_Y - Block_Height/2 + Second_Digit_Pos_Y;
+      // TargetRectangle.x=User_Rect_Center_x - Block_Width/2 + Digit_Pos_X + Digit_Length;
+      // TargetRectangle.y=User_Rect_Center_y - Block_Height/2 + Digit_Pos_Y;
+      TargetRectangle.x=User_Rect_Center_x - Block_Width/2 + Second_Digit_Pos_X;
+      TargetRectangle.y=User_Rect_Center_y - Block_Height/2 + Second_Digit_Pos_Y;
     }
   else
     {
@@ -506,8 +532,8 @@ PutInfluence ( int x , int y )
   // COMPUTED ANEW!!!!
   if ( x == -1 ) 
     {
-      TargetRectangle.x=USER_FENSTER_CENTER_X - Block_Width/2 + Third_Digit_Pos_X ;
-      TargetRectangle.y=USER_FENSTER_CENTER_Y - Block_Height/2 + Third_Digit_Pos_Y;
+      TargetRectangle.x=User_Rect_Center_x - Block_Width/2 + Third_Digit_Pos_X ;
+      TargetRectangle.y=User_Rect_Center_y - Block_Height/2 + Third_Digit_Pos_Y;
     }
   else
     {
@@ -617,9 +643,9 @@ Sorry...\n\
 
   if ( x == (-1) ) 
     {
-      TargetRectangle.x=USER_FENSTER_CENTER_X+ 
+      TargetRectangle.x=User_Rect_Center_x+ 
 	( (-Me.pos.x+AllEnemys[Enum].pos.x ) ) * Block_Width  -Block_Width/2;
-      TargetRectangle.y=USER_FENSTER_CENTER_Y+ 
+      TargetRectangle.y=User_Rect_Center_y+ 
 	( (-Me.pos.y+AllEnemys[Enum].pos.y ) ) * Block_Height -Block_Height/2;
     }
   else
@@ -670,9 +696,9 @@ Sorry...\n\
   // the combat window, else we blit to the given location.
   if ( x == (-1) )
     {
-      TargetRectangle.x=USER_FENSTER_CENTER_X - 
+      TargetRectangle.x=User_Rect_Center_x - 
 	(Me.pos.x-AllEnemys[Enum].pos.x) * Block_Width + First_Digit_Pos_X  - Block_Width/2; 
-      TargetRectangle.y=USER_FENSTER_CENTER_Y - 
+      TargetRectangle.y=User_Rect_Center_y - 
 	(Me.pos.y-AllEnemys[Enum].pos.y) * Block_Height + First_Digit_Pos_Y - Block_Height/2;
     }
   else
@@ -695,9 +721,9 @@ Sorry...\n\
 
   if ( x == (-1) )
     {
-  TargetRectangle.x=USER_FENSTER_CENTER_X - 
+  TargetRectangle.x=User_Rect_Center_x - 
     (Me.pos.x-AllEnemys[Enum].pos.x)*Block_Height + Second_Digit_Pos_X - Block_Width/2;
-  TargetRectangle.y=USER_FENSTER_CENTER_Y - 
+  TargetRectangle.y=User_Rect_Center_y - 
     (Me.pos.y-AllEnemys[Enum].pos.y)*Block_Height + Second_Digit_Pos_Y - Block_Height/2 ;
     }
   else
@@ -719,8 +745,8 @@ Sorry...\n\
 
   if ( x == (-1) )
     {
-      TargetRectangle.x=USER_FENSTER_CENTER_X - (Me.pos.x-AllEnemys[Enum].pos.x)*Block_Width - Block_Width/2 + Third_Digit_Pos_X ;
-      TargetRectangle.y=USER_FENSTER_CENTER_Y - (Me.pos.y-AllEnemys[Enum].pos.y)*Block_Width - Block_Height/2 + Third_Digit_Pos_Y;
+      TargetRectangle.x=User_Rect_Center_x - (Me.pos.x-AllEnemys[Enum].pos.x)*Block_Width - Block_Width/2 + Third_Digit_Pos_X ;
+      TargetRectangle.y=User_Rect_Center_y - (Me.pos.y-AllEnemys[Enum].pos.y)*Block_Width - Block_Height/2 + Third_Digit_Pos_Y;
     }
   else
     {
@@ -832,9 +858,9 @@ PutBullet (int BulletNummer)
   // rectangle containing the full rotated Block_Height x Block_Width rectangle!!!
   // This has to be taken into account when calculating the target position for the 
   // blit of these surfaces!!!!
-  TargetRectangle.x = USER_FENSTER_CENTER_X
+  TargetRectangle.x = User_Rect_Center_x
     - (Me.pos.x-CurBullet->pos.x)*Block_Width-CurBullet->SurfacePointer[ PhaseOfBullet ]->w/2;
-  TargetRectangle.y = USER_FENSTER_CENTER_Y
+  TargetRectangle.y = User_Rect_Center_y
     - (Me.pos.y-CurBullet->pos.y)*Block_Width-CurBullet->SurfacePointer[ PhaseOfBullet ]->h/2;
 
   SDL_BlitSurface( CurBullet->SurfacePointer[ PhaseOfBullet ] , NULL, ne_screen , &TargetRectangle );
@@ -846,9 +872,9 @@ PutBullet (int BulletNummer)
   // rectangle containing the full rotated Block_Height x Block_Width rectangle!!!
   // This has to be taken into account when calculating the target position for the 
   // blit of these surfaces!!!!
-  TargetRectangle.x = USER_FENSTER_CENTER_X
+  TargetRectangle.x = User_Rect_Center_x
     - (Me.pos.x-CurBullet->pos.x)*Block_Width-CurBullet->SurfacePointer[ PhaseOfBullet ]->w/2;
-  TargetRectangle.y = USER_FENSTER_CENTER_Y
+  TargetRectangle.y = User_Rect_Center_y
     - (Me.pos.y-CurBullet->pos.y)*Block_Width-CurBullet->SurfacePointer[ PhaseOfBullet ]->h/2;
 
   SDL_BlitSurface( tmp , NULL, ne_screen , &TargetRectangle );
@@ -872,8 +898,8 @@ PutItem( int ItemNumber )
   
   if ( CurItem->type == ( -1 ) ) return;
 
-  TargetRectangle.x=USER_FENSTER_CENTER_X - (Me.pos.x - CurItem->pos.x)*Block_Width  -Block_Width/2;
-  TargetRectangle.y=USER_FENSTER_CENTER_Y - (Me.pos.y - CurItem->pos.y)*Block_Height -Block_Height/2;
+  TargetRectangle.x=User_Rect_Center_x - (Me.pos.x - CurItem->pos.x)*Block_Width  -Block_Width/2;
+  TargetRectangle.y=User_Rect_Center_y - (Me.pos.y - CurItem->pos.y)*Block_Height -Block_Height/2;
 
   SDL_BlitSurface( ItemSurfaceList[ ItemMap[ CurItem->type ].picture_number ] , NULL , ne_screen , &TargetRectangle);
 }; // void PutItem( int ItemNumber );
@@ -894,8 +920,8 @@ PutBlast (int BlastNummer)
     return;
 
   
-  TargetRectangle.x=USER_FENSTER_CENTER_X - (Me.pos.x - CurBlast->PX)*Block_Width  -Block_Width/2;
-  TargetRectangle.y=USER_FENSTER_CENTER_Y - (Me.pos.y - CurBlast->PY)*Block_Height -Block_Height/2;
+  TargetRectangle.x=User_Rect_Center_x - (Me.pos.x - CurBlast->PX)*Block_Width  -Block_Width/2;
+  TargetRectangle.y=User_Rect_Center_y - (Me.pos.y - CurBlast->PY)*Block_Height -Block_Height/2;
   // SDL_BlitSurface( ne_blocks, 
   // Blastmap[CurBlast->type].block + ((int) floorf(CurBlast->phase)), ne_screen , &TargetRectangle);
   SDL_BlitSurface( Blastmap[CurBlast->type].SurfacePointer[ (int)floorf(CurBlast->phase) ] , NULL , ne_screen , &TargetRectangle);
