@@ -661,8 +661,8 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	  SellButtonActive = FALSE ;
 	}
 
-      sprintf ( GoldString , "%d." , (int) Me [ 0 ] . Gold );
-      PutStringFont ( Screen , Menu_BFont, 90, 141, GoldString );
+      sprintf ( GoldString , "%6d." , (int) Me [ 0 ] . Gold );
+      PutStringFont ( Screen , Menu_BFont, 46, 143, GoldString );
 
       our_SDL_flip_wrapper( Screen );
 
