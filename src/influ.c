@@ -1029,8 +1029,8 @@ FireBullet ( int PlayerNum )
   //
   if ( ( ( ! LivingDroidBelowMouseCursor ( PlayerNum ) ) && ( ! ServerThinksShiftWasPressed ( PlayerNum ) ) ) ||
        ( ( ItemMap [ Me [ PlayerNum ] . weapon_item . type ] . item_gun_angle_change != 0 ) &&
-	 ( ( abs ( ServerThinksInputAxisX ( PlayerNum ) ) > Block_Width  ) || 
-	   ( abs ( ServerThinksInputAxisY ( PlayerNum ) ) > Block_Height ) ) ) 
+	 ( ( abs ( ServerThinksInputAxisX ( PlayerNum ) ) > Block_Width  ) || ( abs ( ServerThinksInputAxisY ( PlayerNum ) ) > Block_Height ) ) &&
+	   ( ! ServerThinksShiftWasPressed ( PlayerNum ) ) )
        )
     {
       //--------------------
