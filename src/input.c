@@ -150,9 +150,45 @@ ReactToSpecialKeys(void)
   if ( DPressed() )
     Me.energy = 0;
 
+  if ( WPressed () )
+    {
+      if (User_Rect.x == 0) 
+	{
+	  User_Rect.x=USERFENSTERPOSX;
+	  User_Rect.w=USERFENSTERBREITE;
+	  ClearGraphMem();
+	  DisplayBanner( NULL , NULL , BANNER_FORCE_UPDATE );
+	  SDL_Flip( ne_screen );
+	}
+      else
+	{
+	  User_Rect.x=0;
+	  User_Rect.w=640;
+	}
+      while ( WPressed() );
+    }
+
   if ( HPressed () )
     {
-      Me.TextToBeDisplayed="Hello!  I hope you're all well, cause I need you.";
+      if ( User_Rect.y == BANNER_HEIGHT ) 
+	{
+	  User_Rect.y=USERFENSTERPOSY;
+	  User_Rect.h=USERFENSTERHOEHE;
+	  ClearGraphMem();
+	  DisplayBanner( NULL , NULL , BANNER_FORCE_UPDATE );
+	  SDL_Flip( ne_screen );
+	}
+      else
+	{
+	  User_Rect.y = BANNER_HEIGHT;
+	  User_Rect.h = 480 - BANNER_HEIGHT;
+	}
+      while ( HPressed() );
+    }
+
+  if ( GPressed () )
+    {
+      Me.TextToBeDisplayed="Hello!  Greetings to all other Freedom Fighters.";
       Me.TextVisibleTime=0;
     }
   
