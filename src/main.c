@@ -117,7 +117,7 @@ main (int argc, char *const argv[])
 	  MoveInfluence ();	// change Influ-speed depending on keys pressed, but
 	                        // also change his status and position and "phase" of rotation
 
-	  Move_Influencers_Friends (); // 
+	  // Move_Influencers_Friends (); // Transport followers to next level
 
 	  MoveEnemys ();	// move all the enemys:
 	                        // also do attacks on influ and also move "phase" or their rotation

@@ -50,10 +50,13 @@ void InfluEnemyCollisionLoseEnergy (int enemynum);	/* influ can lose energy on c
 void PermanentLoseEnergy (void);	/* influ permanently loses energy */
 int NoInfluBulletOnWay (void);
 
+int CurrentZeroRingIndex=0;
+
 #define max(x,y) ((x) < (y) ? (y) : (x) ) 
 #define MAXIMAL_STEP_SIZE ( 7.0/20 )
 
 
+/*
 void
 Move_Influencers_Friends ( void )
 {
@@ -77,6 +80,49 @@ Move_Influencers_Friends ( void )
 	}
     }
 }; // void Move_Influencers_Friends (void)
+*/
+
+float 
+GetInfluPositionHistoryX( int HowLongPast )
+{
+  int RingPosition;
+
+  RingPosition = CurrentZeroRingIndex - HowLongPast;
+
+  RingPosition += MAX_INFLU_POSITION_HISTORY; // We don't want any negative values, for safety
+
+  RingPosition %= MAX_INFLU_POSITION_HISTORY; // We do MODULO for the Ring buffer length 
+
+  return Me.Position_History_Ring_Buffer[ RingPosition ].x;
+}
+
+float 
+GetInfluPositionHistoryY( int HowLongPast )
+{
+  int RingPosition;
+
+  RingPosition = CurrentZeroRingIndex - HowLongPast;
+
+  RingPosition += MAX_INFLU_POSITION_HISTORY; // We don't want any negative values, for safety
+
+  RingPosition %= MAX_INFLU_POSITION_HISTORY; // We do MODULO for the Ring buffer length 
+
+  return Me.Position_History_Ring_Buffer[ RingPosition ].y;
+}
+
+float 
+GetInfluPositionHistoryZ( int HowLongPast )
+{
+  int RingPosition;
+
+  RingPosition = CurrentZeroRingIndex - HowLongPast;
+
+  RingPosition += MAX_INFLU_POSITION_HISTORY; // We don't want any negative values, for safety
+
+  RingPosition %= MAX_INFLU_POSITION_HISTORY; // We do MODULO for the Ring buffer length 
+
+  return Me.Position_History_Ring_Buffer[ RingPosition ].z;
+}
 
 
 /*@Function============================================================
@@ -217,12 +263,16 @@ MoveInfluence (void)
   float planned_step_x;
   float planned_step_y;
   static float TransferCounter = 0;
-  int i;
 
   accel *= Frame_Time();
 
   DebugPrintf (2, "\nvoid MoveInfluence(void):  Real function call confirmed.");
 
+  //--------------------
+  // We store the influencers position for the history record and so that others
+  // can follow his trail.
+  //
+  /*
   for ( i = 0 ; i < (MAX_INFLU_POSITION_HISTORY-1) ; i++ )
     {
       Me.Position_History[ MAX_INFLU_POSITION_HISTORY - 1 - i ].x = 
@@ -232,6 +282,12 @@ MoveInfluence (void)
     }
   Me.Position_History[0].x=Me.pos.x;
   Me.Position_History[0].y=Me.pos.y;
+  */
+  CurrentZeroRingIndex++;
+  CurrentZeroRingIndex %= MAX_INFLU_POSITION_HISTORY;
+  Me.Position_History_Ring_Buffer [CurrentZeroRingIndex].x = Me.pos.x;
+  Me.Position_History_Ring_Buffer [CurrentZeroRingIndex].y = Me.pos.y;
+  Me.Position_History_Ring_Buffer [CurrentZeroRingIndex].z = CurLevel->levelnum ;
 
   PermanentLoseEnergy ();	/* influ permanently loses energy */
 
@@ -546,11 +602,11 @@ CheckInfluenceWallCollisions (void)
       // be done here and now:
       
       if ( (DruidPassable (Me.pos.x, Me.pos.y) != CENTER) && 
-	   (DruidPassable (Me.Position_History[0].x, Me.Position_History[0].y) != CENTER) &&
-	   (DruidPassable (Me.Position_History[1].x, Me.Position_History[1].y) != CENTER) )
+	   (DruidPassable ( GetInfluPositionHistoryX( 0 ) , GetInfluPositionHistoryY( 0 ) ) != CENTER) &&
+	   (DruidPassable ( GetInfluPositionHistoryX( 1 ) , GetInfluPositionHistoryY( 1 ) ) != CENTER) )
 	{
-	  Me.pos.x=Me.Position_History[2].x;
-	  Me.pos.y=Me.Position_History[2].y;
+	  Me.pos.x = GetInfluPositionHistoryX( 2 );
+	  Me.pos.y = GetInfluPositionHistoryY( 2 );
 	  DebugPrintf(1, "\nATTENTION! CheckInfluenceWallCollsision FALLBACK ACTIVATED!!");
 	}
 
@@ -703,11 +759,11 @@ CheckInfluenceWallCollisions (void)
   // be done here and now:
 
   if ( (DruidPassable (Me.pos.x, Me.pos.y) != CENTER) && 
-       (DruidPassable (Me.Position_History[0].x, Me.Position_History[0].y) != CENTER) &&
-       (DruidPassable (Me.Position_History[1].x, Me.Position_History[1].y) != CENTER) )
+       (DruidPassable ( GetInfluPositionHistoryX ( 0 ) , GetInfluPositionHistoryY ( 0 ) != CENTER ) ) &&
+       (DruidPassable ( GetInfluPositionHistoryX ( 1 ) , GetInfluPositionHistoryY ( 1 ) != CENTER ) ) ) 
     {
-      Me.pos.x=Me.Position_History[2].x;
-      Me.pos.y=Me.Position_History[2].y;
+      Me.pos.x = GetInfluPositionHistoryX ( 2 );
+      Me.pos.y = GetInfluPositionHistoryY ( 2 );      
     }
 
 } /* CheckInfluenceWallCollisions */

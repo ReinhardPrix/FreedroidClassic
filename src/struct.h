@@ -96,6 +96,13 @@ finepoint, *Finepoint;
 
 typedef struct
 {
+  double x;
+  double y;
+  int z;
+} gps, *GPS;
+
+typedef struct
+{
   signed char x;
   signed char y;
 }
@@ -202,7 +209,8 @@ typedef struct
   int MyFCU;			/* FCU (Fire Control Unit) installed */
   int MyShield;			/* Shield device installed */
   int Shield[4];		/* Status of Partial Shields */
-  finepoint Position_History[ MAX_INFLU_POSITION_HISTORY ]; // History of the places the influ has been during the last 10 frames
+  gps Position_History_Ring_Buffer[ MAX_INFLU_POSITION_HISTORY ];
+  // finepoint Position_History[ MAX_INFLU_POSITION_HISTORY ]; // History of the places the influ has been during the last 10 frames
   missiontarget mission;         // What must be done to fullfill this mission?
   float MissionTimeElapsed;
   int Marker;                   // In case you've taken over a marked droid, this will contain the marker

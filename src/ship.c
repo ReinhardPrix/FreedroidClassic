@@ -170,11 +170,11 @@ EnterLift (void)
 
       // We reset the time on this level and the position history
       Me.FramesOnThisLevel=0;
-      for ( i = 0 ; i < MAX_INFLU_POSITION_HISTORY ; i++ ) 
-	{
-	  Me.Position_History[ i ].x = Me.pos.x;
-	  Me.Position_History[ i ].y = Me.pos.y;
-	}
+      // for ( i = 0 ; i < MAX_INFLU_POSITION_HISTORY ; i++ ) 
+      // {
+      // Me.Position_History[ i ].x = Me.pos.x;
+      // Me.Position_History[ i ].y = Me.pos.y;
+      // }
 
       // delete all bullets and blasts
       for (i = 0; i < MAXBLASTS; i++)

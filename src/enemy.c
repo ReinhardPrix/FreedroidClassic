@@ -524,8 +524,16 @@ MoveThisRobotThowardsHisWaypoint ( int EnemyNum )
 	  else
 	    HistoryIndex = MAX_INFLU_POSITION_HISTORY-1;
 
-	  nextwp_pos.y = Me.Position_History[ HistoryIndex ].y;
-	  nextwp_pos.x = Me.Position_History[ HistoryIndex ].x;
+	  nextwp_pos.y = GetInfluPositionHistoryY( HistoryIndex );
+	  nextwp_pos.x = GetInfluPositionHistoryX( HistoryIndex );
+	  // jump to the next level, if the influencer did
+	  // that might cause some inconsistencies, but who cares right now?
+	  if ( ThisRobot->levelnum != GetInfluPositionHistoryZ( HistoryIndex ) )
+	    {
+	      ThisRobot->pos.x = GetInfluPositionHistoryX( HistoryIndex );
+	      ThisRobot->pos.y = GetInfluPositionHistoryY( HistoryIndex );
+	      ThisRobot->levelnum = GetInfluPositionHistoryZ( HistoryIndex );
+	    }
 	}
       else
 	{
@@ -540,7 +548,7 @@ MoveThisRobotThowardsHisWaypoint ( int EnemyNum )
 
   // --------------------
   // As long a the distance from the current position of the enemy
-  // to its next wp is large, movement is rather sinple:
+  // to its next wp is large, movement is rather simple:
   //
 
   if ( fabsf (Restweg.x)  > Frame_Time() * maxspeed )
@@ -762,8 +770,8 @@ MoveThisEnemy( int EnemyNum )
   // need to move anything for this reason or for that
   //
 
-  // ignore robots on other levels 
-  if ( ThisRobot->levelnum != CurLevel->levelnum) return;
+  // ignore robots on other levels, except, it it's following influ's trail
+  if ( ( ThisRobot->levelnum != CurLevel->levelnum) && (!ThisRobot->FollowingInflusTail) ) return;
 
   // ignore dead robots as well...
   if ( ThisRobot->Status == OUT ) return;
