@@ -51,6 +51,42 @@ EXTERN char Previous_Mission_Name[1000];
 #define FIRST_MENU_ITEM_POS_Y (BANNER_HEIGHT + FontHeight(Menu_BFont))
 
 /* ----------------------------------------------------------------------
+ * This function tries to buy the item given as parameter.  Currently
+ * is just drops the item to the floor under the influencer and will
+ * reduce influencers money.
+ * ---------------------------------------------------------------------- */
+void 
+TryToBuyItem( item* BuyItem )
+{
+  int x, y;
+  int FreeIndex;
+
+  FreeIndex = GetFreeInventoryIndex(  );
+
+  if ( CalculateItemPrice ( BuyItem ) > Me.Gold ) return;
+
+
+  for ( x = 0 ; x < INVENTORY_GRID_WIDTH ; x ++ )
+    {
+      for ( y = 0 ; y < INVENTORY_GRID_HEIGHT ; y ++ )
+	{
+	  if ( ItemCanBeDroppedInInv ( BuyItem->type , x , y ) )
+	    {
+	      CopyItem( BuyItem , & ( Me.Inventory[ FreeIndex ] ) , TRUE );
+	      Me.Inventory[ FreeIndex ].currently_held_in_hand = FALSE;
+	      Me.Inventory[ FreeIndex ].inventory_position.x = x;
+	      Me.Inventory[ FreeIndex ].inventory_position.y = y;
+	      Me.Gold -= CalculateItemPrice ( BuyItem );
+	      return;
+	    }
+	}
+    }
+  
+
+}; // void TryToBuyItem( item* BuyItem )
+
+
+/* ----------------------------------------------------------------------
  * This is the menu, where you can buy basic items.
  * ---------------------------------------------------------------------- */
 void
@@ -74,7 +110,7 @@ Buy_Basic_Items( void )
       FillInItemProperties( & ( SalesList[ i ] ) );
     }
 
-  while ( !SpacePressed() )
+  while ( !SpacePressed() && !EscapePressed() )
     {
       InitiateMenu();
 
@@ -125,14 +161,12 @@ Buy_Basic_Items( void )
 		MenuInListPosition ++;
 	    }
 	  while ( DownPressed() );
-	}
-      
-      
+	}      
+    } // while not space pressed...
 
-    }
+  if ( SpacePressed() ) TryToBuyItem( & ( SalesList[ InMenuPosition + MenuInListPosition ] ) ) ;
 
-
-  while ( SpacePressed() );
+  while ( SpacePressed() || EscapePressed() );
 
 }; // void Buy_Basic_Items( void )
 

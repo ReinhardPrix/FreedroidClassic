@@ -241,6 +241,8 @@ EXTERN void PlayItemSound ( int SoundCode );
 #else
 #define EXTERN extern
 #endif
+EXTERN int GetFreeInventoryIndex( void );
+EXTERN int ItemCanBeDroppedInInv ( int ItemType , int InvPos_x , int InvPos_y );
 EXTERN long CalculateItemPrice ( item* BuyItem );
 EXTERN void FillInItemProperties( item* ThisItem );
 EXTERN void DamageAllEquipment( void );

@@ -348,10 +348,20 @@ ReactToSpecialKeys(void)
 
       for ( i=0 ; i < Number_Of_Droid_Types ; i ++ )
 	{
+
 	  if ( Druidmap[ i ].druidname == NULL ) continue;
 	  DebugPrintf( 0 , "\n\ndruidname: %s " , Druidmap[ i ].druidname );
-	  DebugPrintf( 0 , "\ndrive_item: %d (%s)" , Druidmap[ i ].drive_item.type , ItemMap[ Druidmap[ i ].drive_item.type ].ItemName );
-	  DebugPrintf( 0 , "\nweapon_item: %d (%s) " , Druidmap[ i ].weapon_item.type , ItemMap[ Druidmap[ i ].weapon_item.type ].ItemName );
+
+	  if ( Druidmap[ i ].drive_item.type != (-1 ) )
+	    DebugPrintf( 0 , "\ndrive_item: %d (%s)" , 
+			 Druidmap[ i ].drive_item.type , ItemMap[ Druidmap[ i ].drive_item.type ].ItemName );
+	  else DebugPrintf( 0 , "\ndrive_item: NONE " );
+
+	  if ( Druidmap[ i ].weapon_item.type != (-1 ) )
+	    DebugPrintf( 0 , "\nweapon_item: %d (%s) " , 
+			 Druidmap[ i ].weapon_item.type , ItemMap[ Druidmap[ i ].weapon_item.type ].ItemName );
+	  else DebugPrintf( 0 , "\nweapon_item: NONE" );
+
 	}
 
 
