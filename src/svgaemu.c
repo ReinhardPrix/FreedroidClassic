@@ -53,6 +53,9 @@
 // SDL_Surface *screen;
 // SDL_Surface *ScaledSurface;
 
+extern int FullScreen_Requested_By_Player;
+
+
 void 
 PrepareScaledSurface()
 {
@@ -63,15 +66,37 @@ PrepareScaledSurface()
   Lock_SDL_Screen();
   SDL_LockSurface( ScaledSurface );
 
+  
+
   for ( y = 0; y < SCREENHOEHE; y++ )
     {
       for ( x = 0; x< SCREENBREITE; x++ )
 	{
 	  SourcePixel=getpixel(screen, x, y);
-	  putpixel ( ScaledSurface , x*2   , y*2   , SourcePixel );
-	  putpixel ( ScaledSurface , x*2+1 , y*2   , SourcePixel );
-	  putpixel ( ScaledSurface , x*2   , y*2+1 , SourcePixel );
-	  putpixel ( ScaledSurface , x*2+1 , y*2+1 , SourcePixel );
+	  
+	  switch ( SCALE_FACTOR ) 
+	    {
+	    case 2:
+	      putpixel ( ScaledSurface , x*2   , y*2   , SourcePixel );
+	      putpixel ( ScaledSurface , x*2+1 , y*2   , SourcePixel );
+	      putpixel ( ScaledSurface , x*2   , y*2+1 , SourcePixel );
+	      putpixel ( ScaledSurface , x*2+1 , y*2+1 , SourcePixel );
+	      break;
+	    case 3:
+	      putpixel ( ScaledSurface , x*3     , y*3   , SourcePixel );
+	      putpixel ( ScaledSurface , x*3+1   , y*3   , SourcePixel );
+	      putpixel ( ScaledSurface , x*3     , y*3+1 , SourcePixel );
+	      putpixel ( ScaledSurface , x*3+1   , y*3+1 , SourcePixel );
+	      putpixel ( ScaledSurface , x*3  +2 , y*3   , SourcePixel );
+	      putpixel ( ScaledSurface , x*3  +2 , y*3+1 , SourcePixel );
+	      putpixel ( ScaledSurface , x*3  +1 , y*3+2 , SourcePixel );
+	      putpixel ( ScaledSurface , x*3     , y*3+2 , SourcePixel );
+	      putpixel ( ScaledSurface , x*3  +2 , y*3+2 , SourcePixel );
+	      break;
+	    default:
+	      printf("\n\nvoid PrepareScaledSurface(): Unhandled SCALE_FACTOR...\n\nTerminating...\n\n");
+	      break;
+	    }
 	}
     }
 
@@ -106,7 +131,7 @@ Update_SDL_Screen(void)
 {
   /* Update just the part of the display that we've changed */
   // SDL_UpdateRect( screen , 0, 0, SCREENBREITE, SCREENHOEHE);
-  SDL_UpdateRect(ScaledSurface, 0, 0, SCREENBREITE*2, SCREENHOEHE*2);
+  SDL_UpdateRect(ScaledSurface, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
 } // void Update_SDL_Screen
 
 /*
@@ -350,7 +375,17 @@ int vga_setmode(int mode)
   // screen = SDL_SetVideoMode(320, 200, 0, SDL_SWSURFACE|SDL_FULLSCREEN|SDL_HWPALETTE );
   // screen = SDL_SetVideoMode(320, 200, 0, SDL_SWSURFACE|SDL_FULLSCREEN );
   // screen = SDL_SetVideoMode(320 , 200, 8, SDL_SWSURFACE | SDL_HWPALETTE );
-  ScaledSurface = SDL_SetVideoMode(320*2 , 200*2, 8, SDL_SWSURFACE | SDL_HWPALETTE | SDL_RESIZABLE );
+  if (FullScreen_Requested_By_Player == TRUE) 
+    {
+      ScaledSurface = SDL_SetVideoMode(320*SCALE_FACTOR , 200*SCALE_FACTOR, 8, 
+				       SDL_SWSURFACE | SDL_HWPALETTE | SDL_RESIZABLE | SDL_FULLSCREEN );
+    }
+  else
+    { 
+      ScaledSurface = SDL_SetVideoMode(320*SCALE_FACTOR , 200*SCALE_FACTOR, 8, 
+				       SDL_SWSURFACE | SDL_HWPALETTE | SDL_RESIZABLE );
+    }
+
   // ScaledSurface = SDL_SetVideoMode(320*2 , 200*2, 8, SDL_SWSURFACE | SDL_HWPALETTE | SDL_RESIZABLE | SDL_FULLSCREEN );
   if ( ScaledSurface == NULL ) {
     fprintf(stderr, "Couldn't set 320x200 video mode: %s\n",

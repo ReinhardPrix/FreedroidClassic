@@ -568,6 +568,7 @@ OptionsMenu (void)
       DisplayMergeBlock( FIRST_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y + (MenuPosition-1) * MENU_ITEM_DISTANCE , 
 			 Influencepointer, BLOCKBREITE, BLOCKHOEHE, RealScreen );
 
+      PrepareScaledSurface();
 
       // Wait until the user does SOMETHING
 
@@ -609,11 +610,14 @@ OptionsMenu (void)
 	  while (DownPressed());
 	}
     }
+  ClearGraphMem (InternalScreen);
   ClearGraphMem (RealScreen);
-  DisplayRahmen (RealScreen);
+  Update_SDL_Screen();
+  DisplayRahmen (InternalScreen);
   InitBars = TRUE;
 
   vga_clear ();
+  
   // keyboard_init (); /* return to raw keyboard mode */
 
   return;

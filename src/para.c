@@ -152,7 +152,12 @@ Frame_Time (void)
   
 
   // Rate_To_Be_Returned = (1.0 / FPSover10);
-  Rate_To_Be_Returned = (1.0 / FPSover100);
+  if ( Overall_Frames_Displayed < 100 )
+    {
+      Rate_To_Be_Returned = (1.0 / FPSover10);
+      return Rate_To_Be_Returned;
+    }
+  else Rate_To_Be_Returned = (1.0 / FPSover100);
 
   // if (FPSover10 > 20)
   /* if (FPSover100 > 20)

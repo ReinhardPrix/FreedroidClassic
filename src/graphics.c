@@ -950,16 +950,24 @@ LevelGrauFaerben (void)
 @Int:
 * $Function----------------------------------------------------------*/
 void
-ClearGraphMem (unsigned char *screen)
+ClearGraphMem (unsigned char *Parameter_screen)
 {
+  SDL_Rect ThisRectangle;
 
   DebugPrintf
     ("\nvoid ClearGraphMem(unsigned char* screen): Real function called.");
 
-  if (screen == RealScreen)
-    vga_clear ();
+  if (screen == RealScreen) 
+    {
+      ThisRectangle.x=0;
+      ThisRectangle.y=0;
+      ThisRectangle.w=SCREENBREITE;
+      ThisRectangle.h=SCREENHOEHE;
+      SDL_FillRect( screen , & ThisRectangle , 0 );
+      vga_clear ();
+    }
   else
-    memset (screen, 0, SCREENBREITE * SCREENHOEHE);
+    memset (Parameter_screen, 0, SCREENBREITE * SCREENHOEHE);
 
   DebugPrintf
     ("\nvoid ClearGraphMem(unsigned char* screen): Usual end of function reached.");

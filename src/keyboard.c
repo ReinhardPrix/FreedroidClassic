@@ -206,8 +206,10 @@ keyboard_update(void)
 	      CurrentlyEscapePressed=TRUE;
 	      break;
 	    default:
-	      printf("\n\nUnhandled keystroke!! Terminating...\n\n");
-	      Terminate(ERR);
+	      /*
+		printf("\n\nUnhandled keystroke!! Terminating...\n\n");
+		Terminate(ERR);
+	      */
 	      break;
 	    }
 	  break;

@@ -185,6 +185,10 @@ enum _sounds
 #define DRUIDIMAGE_LENGTH       66
 #define DRUIDIMAGE_HEIGHT       90
 
+#define SCALE_FACTOR  2 /* This constant (please let it be an int!) defines how many times the
+			   actually displayed screen shall be bigger than the 320x200 window. */
+
+
 /* Dimensionen von Bloecken und Bildern */
 
 // Little Digits to be filled into robot pictures.

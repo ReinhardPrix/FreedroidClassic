@@ -70,6 +70,8 @@
 #define CHARSPERLINE		(int)(USERFENSTERBREITE/FONTBREITE)
 
 
+int FullScreen_Requested_By_Player=FALSE;
+
 char EndTitleText1[] =
 "Congratulations!!\n\nIt seems that you have made it!  The Ship is clear.\n\n At the moment, this is the end of FreeDroid.  However we are looking forward to writing a new and different story line, introduce more new concepts, features and sounds.\n\n If you enjoyed the game and would like to contribute, contact one of the developers. \n\n Also if you would like to donate something to help keep alive the FreeDroid development, please also contact the developers.\n\n  Since we have not yet written something new, we can not launch the second part of the game now.\n\n What we can do is inform you about the concept of the new story-line and the features we plan to introduce sooner or later:\n\n After this preview of the coming storyline is over, the game will be restarted.\n You however have made it, but if you want, you can restart from the beginning nevertheless.\n\n  Press Space Bar to\nrestart Freedroid from the beginning. \n \n \n ";
 
@@ -160,13 +162,14 @@ parse_command_line (int argc, char *const argv[])
   int timeout_time;		/* timeout to restore text-mode */
 
   static struct option long_options[] = {
-    {"version", 0, 0, 'v'},
-    {"help", 	0, 0, 'h'},
-    {"nosound", 0, 0, 'q'},
-    {"sound", 	0, 0, 's'},
-    {"timeout", 1, 0, 't'},
-    {"debug", 	2, 0, 'd'},
-    { 0, 	0, 0,  0}
+    {"version",    0, 0, 'v'},
+    {"help", 	   0, 0, 'h'},
+    {"nosound",    0, 0, 'q'},
+    {"sound", 	   0, 0, 's'},
+    {"timeout",    1, 0, 't'},
+    {"debug", 	   2, 0, 'd'},
+    {"fullscreen", 0, 0, 'f'},
+    { 0, 	   0, 0,  0}
   };
 
   while (1)
@@ -213,6 +216,12 @@ parse_command_line (int argc, char *const argv[])
 	    debug_level = 1;
 	  else
 	    debug_level = atoi (optarg);
+	  break;
+
+	case 'f':
+	  // printf (PACKAGE_STRING); 
+	  printf ("\nPlayer has requested FULLSCREEN via command line option...\n");
+	  FullScreen_Requested_By_Player=TRUE;
 	  break;
 
 	default:
