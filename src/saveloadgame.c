@@ -148,6 +148,7 @@ freedroid-discussion@lists.sourceforge.net\n\
   //
   fwrite ( LEVELNUM_EXPL_STRING , strlen ( LEVELNUM_EXPL_STRING ) , sizeof(char), SaveGameFile);  
   sprintf( linebuf , "%d\n", CurLevel->levelnum );
+  fwrite ( linebuf , strlen ( linebuf ) , sizeof(char), SaveGameFile);  
 
   // --------------------
   // Now we write the influencer raw data start string out to the file and of course
@@ -209,9 +210,20 @@ LoadGame( void )
   unsigned char* EnemyRawDataPointer;
   unsigned char* BulletRawDataPointer;
   int i;
+  int current_geographics_levelnum;
 
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): function call confirmed....");
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): determining file name....");
+
+
+  //--------------------
+  // Before we decode the details of the old game, we load the map
+  // information for the old game.  This is not very difficult, since
+  // we have very old and proven functions to do it.
+  //
+  strcpy(filename, Me.character_name );
+  strcat(filename, SHIP_EXT );
+  LoadShip( filename );
 
   //--------------------
   // First, we must determine the savedgame data file name
@@ -228,6 +240,15 @@ LoadGame( void )
   LoadGameData = ReadAndMallocAndTerminateFile( fpath , END_OF_SAVEDGAME_DATA_STRING ) ;
 
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): starting to decode savegame data....");
+
+  //--------------------
+  // Before we start decoding the details, we get the former level-number where the
+  // influencer was walking and construct a new 'CurLevel' out of it.
+  //
+  ReadValueFromString( LoadGameData ,  LEVELNUM_EXPL_STRING , "%d" , 
+		       &current_geographics_levelnum , LoadGameData + 30000 );
+  CurLevel = curShip.AllLevels[ current_geographics_levelnum ];
+
 
   //--------------------
   // Now we start decoding our new game information and fill it into the apropriate structs

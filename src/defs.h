@@ -48,6 +48,14 @@
 #define INVENTORY_MOUSE_BUTTON_DEBUG 2
 
 
+//--------------------
+// This is old and should go out, but that must be done from at home, 
+// cause here I can't check if the code is still running without it
+//
+#define FILENAME_LEN	5000
+#define SHIP_EXT	".shp"
+
+
 #define JOY_MAX_VAL 32767     // maximal amplitude of joystick axis values
 
 #define Set_Rect(rect, xx, yy, ww, hh) {\
