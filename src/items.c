@@ -2551,7 +2551,7 @@ ManageInventoryScreen ( void )
 	      Me[0].armour_item.currently_held_in_hand = TRUE;
 	    }
 	}
-      else if ( CursorIsOnButton( SPECIAL_RECT_BUTTON , CurPos.x , CurPos.y ) )
+      else if ( CursorIsOnButton( HELMET_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 1 , "\nGrabbing in special rect!" );
 	  if ( Me[0].special_item.type > 0 )
@@ -2791,7 +2791,7 @@ ManageInventoryScreen ( void )
       // If the cursor is in the special rect, i.e. the small box to the top left, then
       // the item should be dropped onto the players current weapon slot
       //
-      if ( CursorIsOnButton ( SPECIAL_RECT_BUTTON , CurPos.x , CurPos.y ) )
+      if ( CursorIsOnButton ( HELMET_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 1 , "\nItem dropped onto the special rectangle!" );
 	  DebugPrintf( 1 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
@@ -2942,7 +2942,7 @@ ManageInventoryScreen ( void )
 	      if ( Me [ 0 ] . armour_item . type != (-1) )
 		HomeMadeItemRepair ( & ( Me [ 0 ] . armour_item ) );
 	    }
-	  else if ( CursorIsOnButton ( SPECIAL_RECT_BUTTON , CurPos.x , CurPos.y ) )
+	  else if ( CursorIsOnButton ( HELMET_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	    {
 	      DebugPrintf( 0 , "\nItem repair requested for the special rectangle!" );
 	      if ( Me [ 0 ] . special_item . type != (-1) )

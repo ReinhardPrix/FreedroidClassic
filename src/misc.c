@@ -157,7 +157,7 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { SHIELD_POS_X  , SHIELD_POS_Y  , SHIELD_RECT_WIDTH , SHIELD_RECT_HEIGHT } } ,
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { AUX1_POS_X    , AUX1_POS_Y    , AUX1_RECT_WIDTH , AUX1_RECT_HEIGHT } } ,
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { AUX2_POS_X    , AUX2_POS_Y    , AUX2_RECT_WIDTH , AUX2_RECT_HEIGHT } } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { SPECIAL_POS_X , SPECIAL_POS_Y , SPECIAL_RECT_WIDTH , SPECIAL_RECT_HEIGHT } } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { HELMET_RECT_POS_X , HELMET_RECT_POS_Y , HELMET_RECT_WIDTH , HELMET_RECT_HEIGHT } } ,
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { ARMOUR_POS_X  , ARMOUR_POS_Y  , ARMOUR_RECT_WIDTH , ARMOUR_RECT_HEIGHT } } ,
 
     { NULL , "mouse_buttons/ScrollDialogMenuUp.png"           , { 233 , 480-20-130-20 , 160 ,  20 } } ,

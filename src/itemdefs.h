@@ -175,36 +175,64 @@
 #define RIGHT_WHOLE_FORCE_RECT_X ( SCREEN_WIDTH - LEFT_WHOLE_FORCE_RECT_X - WHOLE_FORCE_RECT_W )
 #define FORCE_RECT_COLOR ( 0 * 64 * 64 + 64 * 0 + 63 )
 
+//--------------------
+// The weapon rectangle is of course for the weapon the Tux is
+// using.  When using a 2-handed weapon, the 'shield' rectangle
+// will ALSO be used to show this weapon, since the shield-hand
+// is also needed to wield such a thing.
+//
 #define WEAPON_RECT_WIDTH 64
 #define WEAPON_RECT_HEIGHT 64
-#define WEAPON_RECT_X 16
-#define WEAPON_RECT_Y 97
+#define WEAPON_RECT_X 21
+#define WEAPON_RECT_Y 117
 
+//--------------------
+// The armour rectangle is where you can place some armour
+// for the body of the Tux.
+//
 #define ARMOUR_RECT_WIDTH 64
 #define ARMOUR_RECT_HEIGHT 64
-#define ARMOUR_POS_X 128
-#define ARMOUR_POS_Y 96
+#define ARMOUR_POS_X 129
+#define ARMOUR_POS_Y 90
 
+//--------------------
+// The shield rectangle is obviously for the shields, but not only
+// that:  when using a 2-handed weapon, its also good for the weapon
+// again, to indicate, that no shield can be used in conjunction with
+// such a 2-handed weapon.
+//
 #define SHIELD_RECT_WIDTH 64
 #define SHIELD_RECT_HEIGHT 64
-#define SHIELD_POS_X 240
-#define SHIELD_POS_Y 97
+#define SHIELD_POS_X 237
+#define SHIELD_POS_Y 116
 
+//--------------------
+// The 'drive' rectangle is actually for the footwear.
+//
 #define DRIVE_RECT_WIDTH 64
 #define DRIVE_RECT_HEIGHT 64
-#define DRIVE_RECT_X 241
-#define DRIVE_RECT_Y 180
+#define DRIVE_RECT_X 237
+#define DRIVE_RECT_Y 25
 
-#define SPECIAL_RECT_WIDTH 64
-#define SPECIAL_RECT_HEIGHT 64
-#define SPECIAL_POS_X 240
-#define SPECIAL_POS_Y 16
+//--------------------
+// Now this is the 'helmet' rectangle.
+//
+#define HELMET_RECT_WIDTH 64
+#define HELMET_RECT_HEIGHT 64
+#define HELMET_RECT_POS_X 22
+#define HELMET_RECT_POS_Y 26
 
+//--------------------
+// Now these are the 'bracelet' rectangles, where you could put
+// some wristbands and the like.  But since there are no such things
+// available in the game right now, these slots don't really have a 
+// meaning and therefore currently don't need to appear in the inventory
+// screen.
+//
 #define AUX1_RECT_WIDTH 64
 #define AUX1_RECT_HEIGHT 64
 #define AUX1_POS_X 32
 #define AUX1_POS_Y 25
-
 #define AUX2_RECT_WIDTH 64
 #define AUX2_RECT_HEIGHT 64
 #define AUX2_POS_X 47

@@ -846,7 +846,7 @@ ShowCurrentTextWindow ( void )
 	   if ( Me[0].aux2_item.type > 0 )
 	   GiveItemDescription ( ItemDescText , & ( Me[0].aux2_item) , FALSE );
 	}
-      else if ( CursorIsOnButton ( SPECIAL_RECT_BUTTON , CurPos.x , CurPos.y ) )
+      else if ( CursorIsOnButton ( HELMET_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	   if ( Me[0].special_item.type > 0 )
 	   GiveItemDescription ( ItemDescText , & ( Me[0].special_item) , FALSE );

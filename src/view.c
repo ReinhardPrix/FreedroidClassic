@@ -3814,16 +3814,22 @@ ShowInventoryScreen( void )
   //
   TargetRect.x = InventoryRect.x + SHIELD_POS_X ;
   TargetRect.y = InventoryRect.y + SHIELD_POS_Y ;
-  if ( ( ! Me[0].shield_item.currently_held_in_hand ) && ( Me[0].shield_item.type != (-1) ) )
+  if ( ( ! Me [ 0 ] . shield_item . currently_held_in_hand ) && ( Me [ 0 ] . shield_item . type != (-1) ) )
     {
+      //--------------------
+      // Not all shield have the same height, therefore we do a little safety
+      // correction here, so that the shield will always appear in the center
+      // of the shield slot
+      //
+      TargetRect.y += INVENTORY_SUBSQUARE_WIDTH * 0.5 * ( 3 - ItemMap [ Me [ 0 ] . shield_item . type ] . inv_image . inv_size . y ) ;
       our_SDL_blit_surface_wrapper( ItemMap [ Me [ 0 ] . shield_item . type ] . inv_image . Surface , NULL , Screen , &TargetRect );
     }
   
   //--------------------
   // Now we display the item in the influencer special slot
   //
-  TargetRect.x = InventoryRect.x + SPECIAL_POS_X ;
-  TargetRect.y = InventoryRect.y + SPECIAL_POS_Y ;
+  TargetRect.x = InventoryRect.x + HELMET_RECT_POS_X ;
+  TargetRect.y = InventoryRect.y + HELMET_RECT_POS_Y ;
   if ( ( ! Me[0].special_item.currently_held_in_hand ) && ( Me[0].special_item.type != (-1) ) )
     {
       our_SDL_blit_surface_wrapper( ItemMap [ Me [ 0 ] . special_item . type ] . inv_image . Surface , NULL , Screen , &TargetRect );
