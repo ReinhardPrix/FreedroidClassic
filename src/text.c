@@ -372,21 +372,20 @@ ScrollText (char *Text, int startx, int starty, int EndLine)
   return OK;
 }				// void ScrollText(void)
 
-/*@Function============================================================
-@Desc: void DisplayText(char *Text, int startx, int starty):
-gibt Text beginnend bei startx/starty aus
-Zeilenumbruch bei voller Zeile oder bei '\n'
-
-*screen: Pointer to the screen to use
-EnterCursor: TRUE/FALSE Cursor darstellen ja/nein.
-@Ret: void
-@Int:
-* $Function----------------------------------------------------------*/
+/*-----------------------------------------------------------------
+ * @Desc: gibt Text beginnend bei startx/starty aus Zeilenumbruch bei 
+ *        voller Zeile oder bei '\n' 
+ * 
+ * Params: 	*screen: Pointer to the screen to use
+ * EnterCursor: TRUE/FALSE Cursor darstellen ja/nein.
+ * 
+ * @Ret: void
+ *-----------------------------------------------------------------*/
 void
 DisplayText (char *Text,
 	     int startx, int starty, unsigned char *screen, int EnterCursor)
 {
-  char *tmp;			/* Beweg. Zeiger auf aktuelle Position im Ausgabe-Text */
+  char *tmp;	/* Beweg. Zeiger auf aktuelle Position im Ausgabe-Text */
 
   DebugPrintf ("\nvoid DisplayText(...): Funktion echt aufgerufen.");
   DebugPrintf ("\nvoid DisplayText(...): Der Text lautet:\n");
@@ -632,510 +631,73 @@ FensterVoll (void)
   return (FALSE);
 }
 
-/*@Function============================================================
-@Desc: GetString(): Liest einen String vom User ein
-MaxLen: max. Laenge des Strings
-
-@Ret: char *: String wird HIER reserviert !!! (dont forget to free it !)
-@Int:
-* $Function----------------------------------------------------------*/
+/*-----------------------------------------------------------------
+ * @Desc: reads a string of "MaxLen" from User-input, and echos it 
+ *        either to stdout or using graphics-text, depending on the
+ *        parameter "echo":	echo=0    no echo
+ * 		               	echo=1    print using printf
+ *         			echo=2    print using graphics-text
+ *
+ *     values of echo > 2 are ignored and treated like echo=0
+ *
+ * @Ret: char *: String wird HIER reserviert !!! 
+ *       (dont forget to free it !)
+ * 
+ *-----------------------------------------------------------------*/
 char *
-GetString (int MaxLen)
+GetString (int MaxLen, int echo)
 {
-  char *instring;		/* Pointer auf eingegebenen String */
-  char *loeschstring;		/* String zum Loeschen der Eingabe-Zeile */
-  // PORT char taste;                           /* eingeg. Zeichen */
-  int charcounter = 0;		/* zaehlt eingeg. Zeichen mit */
+  char *input;		/* Pointer auf eingegebenen String */
+  int curpos;		/* zaehlt eingeg. Zeichen mit */
+  int finished;
   int TextOutX, TextOutY;	/* Einfuegepunkt zum Darstellen der Eingabe */
-
-  // The following line calls the LINUX SVGALIB and sets the keyboard mode from
-  // raw mode back to normal mode!  Then the old code can be processed as is (I hope)
-  // keyboard_close();
 
   /* Texteingabe an momentaner Cursor-Pos. */
   TextOutX = MyCursorX;
   TextOutY = MyCursorY;
 
   /* Speicher fuer Eingabe reservieren */
-  if ((instring = MyMalloc (MaxLen + 10)) == NULL)
+  if ((input = MyMalloc (MaxLen + 10)) == NULL)
     {
       DebugPrintf ("\nNo Memory left !!");
-      getchar ();
       Terminate (-1);
     }
-  /* LoeschString reservieren */
-  if ((loeschstring = MyMalloc (2 * MaxLen)) == NULL)
+
+  finished = FALSE;
+  curpos = 0;
+  input[0] = '\0'; 
+  
+  while ( !finished  )
     {
-      DebugPrintf ("\nNo Memory left !!");
-      getchar ();
-      Terminate (-1);
-    }
-  memset (loeschstring, ' ', 2 * MaxLen - 1);	/* Loeschstring mit SPACE fuellen */
-  loeschstring[MaxLen - 1] = '\0';	/* Loeschstring abschliessen */
-
-  instring[0] = '\0';		/* sicherheitshalber abschliessen */
-
-  /* Leeren String mit Cursor ausgeben */
-  DisplayText (instring, TextOutX, TextOutY, RealScreen, TRUE);
-
-  /* Zeichen einlesen und anzeigen, bis RET gedrueckt */
-  while ( !EnterPressed() )
-    {
-
-      /* Backspace: ausfuehren */
-      // if (keyboard_keypressed (SCANCODE_BACKSPACE))
-      if ( BackspacePressed() )
+      if (echo == 1)		/* echo to stdout */
 	{
-	  /* Wenn nicht schon am Beginn des STrings: */
-	  if (charcounter)
-	    {
-	      charcounter--;	/* Zeichen zurueck */
-	      instring[charcounter] = '\0';	/* und abschliessen */
-	      DisplayText (loeschstring, TextOutX, TextOutY, RealScreen,
-			   FALSE);
-	      while ( BackspacePressed() )
-		keyboard_update ();
-	    }
+	  if (curpos>0) 
+	    putchar (input[curpos-1]);  
+	  fflush (stdout);	/* here we need to flush manually (ask rp why) */
 	}
-
-      /* Regulaeres Zeichen: aufnehmen, falls MaxLen noch nicht erreicht */
-
-      // PORT if( (taste >= ' ') && (taste <= 'z') && (charcounter < MaxLen) ) {
-      // PORT instring[charcounter ++] = taste;   /* Zeichen aufnehmen */
-      // PORT instring[charcounter] = '\0';                       /* und abschliessen */
-      // }
-
-      if ( APressed()  && charcounter < MaxLen) 
+      else if (echo == 2)   	/* or use graphics-text */
 	{
-	  if ( LeftPressed() 
-	      || RightPressed() )
-	    {
-	      instring[charcounter++] = 'A';
-	    }
-	  else
-	    {
-	      instring[charcounter++] = 'a';
-	    }
-	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while ( APressed() )
-	    keyboard_update ();
-	}
+	  DisplayText (input, TextOutX, TextOutY, RealScreen, TRUE);
+	  PrepareScaledSurface();
+	} /* if echo */
 
-      if ( BPressed()  && charcounter < MaxLen) 
-	{
-	  if ( LeftPressed() 
-	      || RightPressed() )
-	    {
-	      instring[charcounter++] = 'B';
-	    }
-	  else
-	    {
-	      instring[charcounter++] = 'b';
-	    }
-	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while ( BPressed() )
-	    keyboard_update ();
-	}
+      input[curpos] = (char) getchar_raw (); 	/* read char from raw kbd */
+      if (input[curpos] == '\r')  		/* return pressed */
+	finished = TRUE;
+      else
+	curpos ++;
 
-      if ( CPressed()  && charcounter < MaxLen) 
-	{
-	  if ( LeftPressed() 
-	      || RightPressed() )
-	    {
-	      instring[charcounter++] = 'C';
-	    }
-	  else
-	    {
-	      instring[charcounter++] = 'c';
-	    }
-	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while ( CPressed() )
-	    keyboard_update ();
-	}
+      if (curpos == MaxLen) 
+	finished = TRUE;
 
-      if ( DPressed()  && charcounter < MaxLen) 
-	{
-	  if ( LeftPressed()
-	      || RightPressed() )
-	    {
-	      instring[charcounter++] = 'D';
-	    }
-	  else
-	    {
-	      instring[charcounter++] = 'd';
-	    }
-	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while ( DPressed() )
-	    keyboard_update ();
-	}
+      input[curpos] = '\0'; 	/* terminate string. this must be inside */
+				/* the loop for DisplayText() ! */
 
-      if ( EPressed()  && charcounter < MaxLen) 
-	{
-	  if ( LeftPressed()
-	      || RightPressed() )
-	    {
-	      instring[charcounter++] = 'E';
-	    }
-	  else
-	    {
-	      instring[charcounter++] = 'e';
-	    }
-	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while ( EPressed() )
-	    keyboard_update ();
-	}
+    } /* while(!finished) */
 
-      if ( FPressed()  && charcounter < MaxLen) 
-	{
-	  if ( LeftPressed()
-	      || RightPressed() )
-	    {
-	      instring[charcounter++] = 'F';
-	    }
-	  else
-	    {
-	      instring[charcounter++] = 'f';
-	    }
-	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while ( FPressed() )
-	    keyboard_update ();
-	}
+  return (input);
 
-      if ( GPressed()  && charcounter < MaxLen) 
-	{
-	  if ( LeftPressed() || RightPressed() )
-	    {
-	      instring[charcounter++] = 'G';
-	    }
-	  else
-	    {
-	      instring[charcounter++] = 'g';
-	    }
-	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while ( GPressed() )
-	    keyboard_update ();
-	}
-
-      if ( HPressed()  && charcounter < MaxLen) 
-	{
-	  if ( LeftPressed() || RightPressed() )
-	    {
-	      instring[charcounter++] = 'H';
-	    }
-	  else
-	    {
-	      instring[charcounter++] = 'h';
-	    }
-	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while ( HPressed() )
-	    keyboard_update ();
-	}
-
-      if ( IPressed()  && charcounter < MaxLen) 
-	{
-	  if ( LeftPressed() || RightPressed() )
-	    {
-	      instring[charcounter++] = 'I';
-	    }
-	  else
-	    {
-	      instring[charcounter++] = 'i';
-	    }
-	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while ( IPressed() )
-	    keyboard_update ();
-	}
-
-      if ( JPressed()  && charcounter < MaxLen) 
-	{
-	  if ( LeftPressed() || RightPressed() )
-	    {
-	      instring[charcounter++] = 'J';
-	    }
-	  else
-	    {
-	      instring[charcounter++] = 'j';
-	    }
-	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while ( JPressed() )
-	    keyboard_update ();
-	}
-
-      if ( KPressed()  && charcounter < MaxLen) 
-	{
-	  if ( LeftPressed() || RightPressed() )
-	    {
-	      instring[charcounter++] = 'K';
-	    }
-	  else
-	    {
-	      instring[charcounter++] = 'k';
-	    }
-	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while ( KPressed() )
-	    keyboard_update ();
-	}
-
-      if ( APressed()  && charcounter < MaxLen) 
-	{
-	  if ( LeftPressed() || RightPressed() )
-	    {
-	      instring[charcounter++] = 'A';
-	    }
-	  else
-	    {
-	      instring[charcounter++] = 'a';
-	    }
-	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while ( APressed() )
-	    keyboard_update ();
-	}
-
-      if ( LPressed()  && charcounter < MaxLen) 
-	{
-	  if ( LeftPressed() || RightPressed() )
-	    {
-	      instring[charcounter++] = 'L';
-	    }
-	  else
-	    {
-	      instring[charcounter++] = 'l';
-	    }
-	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while ( LPressed() )
-	    keyboard_update ();
-	}
-
-      if ( MPressed()  && charcounter < MaxLen) 
-	{
-	  if ( LeftPressed() || RightPressed() )
-	    {
-	      instring[charcounter++] = 'M';
-	    }
-	  else
-	    {
-	      instring[charcounter++] = 'm';
-	    }
-	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while ( MPressed() )
-	    keyboard_update ();
-	}
-
-      if ( NPressed()  && charcounter < MaxLen) 
-	{
-	  if ( LeftPressed() || RightPressed() )
-	    {
-	      instring[charcounter++] = 'N';
-	    }
-	  else
-	    {
-	      instring[charcounter++] = 'n';
-	    }
-	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while ( NPressed() )
-	    keyboard_update ();
-	}
-
-      if ( OPressed()  && charcounter < MaxLen) 
-	{
-	  if ( LeftPressed() || RightPressed() )
-	    {
-	      instring[charcounter++] = 'O';
-	    }
-	  else
-	    {
-	      instring[charcounter++] = 'o';
-	    }
-	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while ( OPressed() )
-	    keyboard_update ();
-	}
-
-      if ( PPressed()  && charcounter < MaxLen) 
-	{
-	  if ( LeftPressed() || RightPressed() )
-	    {
-	      instring[charcounter++] = 'P';
-	    }
-	  else
-	    {
-	      instring[charcounter++] = 'p';
-	    }
-	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while ( PPressed() )
-	    keyboard_update ();
-	}
-
-      if ( QPressed()  && charcounter < MaxLen) 
-	{
-	  if ( LeftPressed() || RightPressed() )
-	    {
-	      instring[charcounter++] = 'Q';
-	    }
-	  else
-	    {
-	      instring[charcounter++] = 'q';
-	    }
-	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while ( QPressed() )
-	    keyboard_update ();
-	}
-
-      if ( RPressed()  && charcounter < MaxLen) 
-	{
-	  if ( LeftPressed() || RightPressed() )
-	    {
-	      instring[charcounter++] = 'R';
-	    }
-	  else
-	    {
-	      instring[charcounter++] = 'r';
-	    }
-	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while ( RPressed() )
-	    keyboard_update ();
-	}
-
-      if ( SPressed()  && charcounter < MaxLen) 
-	{
-	  if ( LeftPressed() || RightPressed() )
-	    {
-	      instring[charcounter++] = 'S';
-	    }
-	  else
-	    {
-	      instring[charcounter++] = 's';
-	    }
-	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while ( SPressed() )
-	    keyboard_update ();
-	}
-
-      if ( TPressed()  && charcounter < MaxLen) 
-	{
-	  if ( LeftPressed() || RightPressed() )
-	    {
-	      instring[charcounter++] = 'T';
-	    }
-	  else
-	    {
-	      instring[charcounter++] = 't';
-	    }
-	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while ( TPressed() )
-	    keyboard_update ();
-	}
-
-      if ( UPressed()  && charcounter < MaxLen) 
-	{
-	  if ( LeftPressed() || RightPressed() )
-	    {
-	      instring[charcounter++] = 'U';
-	    }
-	  else
-	    {
-	      instring[charcounter++] = 'u';
-	    }
-	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while ( UPressed() )
-	    keyboard_update ();
-	}
-
-      if ( VPressed()  && charcounter < MaxLen) 
-	{
-	  if ( LeftPressed() || RightPressed() )
-	    {
-	      instring[charcounter++] = 'V';
-	    }
-	  else
-	    {
-	      instring[charcounter++] = 'v';
-	    }
-	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while ( VPressed() )
-	    keyboard_update ();
-	}
-
-      if ( WPressed()  && charcounter < MaxLen) 
-	{
-	  if ( LeftPressed() || RightPressed() )
-	    {
-	      instring[charcounter++] = 'W';
-	    }
-	  else
-	    {
-	      instring[charcounter++] = 'w';
-	    }
-	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while ( WPressed() )
-	    keyboard_update ();
-	}
-
-      if ( XPressed()  && charcounter < MaxLen) 
-	{
-	  if ( LeftPressed() || RightPressed() )
-	    {
-	      instring[charcounter++] = 'X';
-	    }
-	  else
-	    {
-	      instring[charcounter++] = 'x';
-	    }
-	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while ( XPressed() )
-	    keyboard_update ();
-	}
-
-      if ( YPressed()  && charcounter < MaxLen) 
-	{
-	  if ( LeftPressed() || RightPressed() )
-	    {
-	      instring[charcounter++] = 'Y';
-	    }
-	  else
-	    {
-	      instring[charcounter++] = 'y';
-	    }
-	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while ( YPressed() )
-	    keyboard_update ();
-	}
-
-      if ( ZPressed()  && charcounter < MaxLen) 
-	{
-	  if ( LeftPressed() || RightPressed() )
-	    {
-	      instring[charcounter++] = 'Z';
-	    }
-	  else
-	    {
-	      instring[charcounter++] = 'z';
-	    }
-	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while ( ZPressed() )
-	    keyboard_update ();
-	}
-
-      /* alte eingabe-Zeile loeschen: */
-      /* es wird eine Laenge MaxLen -1 geloescht */
-      // DisplayText(loeschstring, TextOutX, TextOutY, RealScreen, FALSE);                
-
-
-      /* Eingabe mit Cursor ausgeben */
-      // DisplayText(instring, TextOutX, TextOutY, RealScreen, TRUE);
-      DisplayText (instring, TextOutX, TextOutY, RealScreen, TRUE);
-      
-      PrepareScaledSurface();
-
-    }				/* While nicht RET gedrueckt */
-
-  // After the GetString operation is complete the keyboard can be set to raw mode again
-  // for further play.
-  // keyboard_init();
-
-  return (instring);
-
-}				/* GetString() */
+} /* GetString() */
 
 
 #undef _paratext_c
