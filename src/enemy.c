@@ -1151,6 +1151,12 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
   
   
   NewBullet->angle = - ( 90 + 180 * atan2 ( NewBullet->speed.y,  NewBullet->speed.x ) / M_PI );  
+
+  //--------------------
+  // At this point we mention, that when not moving anywhere, the robot should also
+  // face into the direction of the shot
+  //
+  ThisRobot->previous_angle = NewBullet->angle;
   
   // now we set the bullet type right
   // DebugPrintf( 0 , "Setting gun type : %d." , guntype );

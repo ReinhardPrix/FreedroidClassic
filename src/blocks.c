@@ -367,7 +367,7 @@ Load_Enemy_Surfaces( void )
   int ModelMultiplier[ ENEMY_ROTATION_MODELS_AVAILABLE ];
 
   i=0;
-  PrefixToFilename [ i ] = "999" ;
+  PrefixToFilename [ i ] = "123" ; // 0
   ModelMultiplier  [ i ] = 5 ; i++;
   PrefixToFilename [ i ] = "139" ;
   ModelMultiplier  [ i ] = 5 ;i++;
@@ -387,11 +387,13 @@ Load_Enemy_Surfaces( void )
   ModelMultiplier  [ i ] = 5 ;i++;
   PrefixToFilename [ i ] = "493" ;
   ModelMultiplier  [ i ] = 5 ;i++;
-  PrefixToFilename [ i ] = "516" ;
+  PrefixToFilename [ i ] = "516" ; // 10
   ModelMultiplier  [ i ] = 5 ;i++;
   PrefixToFilename [ i ] = "571" ;
   ModelMultiplier  [ i ] = 5 ;i++;
   PrefixToFilename [ i ] = "614" ;
+  ModelMultiplier  [ i ] = 5 ;i++;
+  PrefixToFilename [ i ] = "999" ;
   ModelMultiplier  [ i ] = 5 ;i++;
 
   fpath = find_file ( NE_DROID_BLOCK_FILE , GRAPHICS_DIR, TRUE);
