@@ -123,7 +123,10 @@ main (int argc, char *const argv[])
 	  // Now, for multiplayer, we update all player images...
 	  //
 	  for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ )
-	    Update_Tux_Working_Copy ( PlayerNum ); // do this for player Nr. 
+	    {
+	      // Update_Tux_Working_Copy ( PlayerNum ); // do this for player Nr. 
+	      Homemade_Update_Tux_Working_Copy ( PlayerNum ); // do this for player Nr. 
+	    }
 
 	  // Assemble_Combat_Picture ( DO_SCREEN_UPDATE ); 
 	  Assemble_Combat_Picture ( 0 ); 
