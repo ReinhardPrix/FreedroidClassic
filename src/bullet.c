@@ -538,7 +538,7 @@ CheckBulletCollisions (int num)
 	    {
 	      if ( CurBullet->total_miss_hit[ i ] == UNCHECKED )
 		{
-		  if ( MyRandom ( 100 ) < CurBullet->to_hit )
+		  if ( MyRandom ( 100 ) < CurBullet->to_hit + Druidmap [ AllEnemys[ i ].type ].getting_hit_modifier )
 		    {
 		      CurBullet->total_miss_hit[ i ] = HIT;
 		      // The enemy who was hit, loses some energy, depending on the bullet

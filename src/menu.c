@@ -78,7 +78,13 @@ TryToRepairItem( item* RepairItem )
 
   while ( SpacePressed() || EnterPressed() );
 
-  if ( CalculateItemPrice ( RepairItem ) > Me.Gold ) return;
+  if ( CalculateItemPrice ( RepairItem ) > Me.Gold ) 
+    {
+      MenuTexts[0]=" BACK ";
+      MenuTexts[1]="";
+      DoMenuSelection ( "YOU CAN't AFFORD TO HAVE THIS ITEM REPAIRED! " , MenuTexts , 1 );
+      return;
+    }
 
   while ( 1 )
     {
@@ -101,6 +107,55 @@ TryToRepairItem( item* RepairItem )
 	}
     }
 }; // void TryToRepairItem( item* RepairItem )
+
+/* ----------------------------------------------------------------------
+ * This function tries to buy the item given as parameter.  Currently
+ * is just drops the item to the floor under the influencer and will
+ * reduce influencers money.
+ * ---------------------------------------------------------------------- */
+void 
+TryToSellItem( item* SellItem )
+{
+  int MenuPosition;
+
+#define ANSWER_YES 1
+#define ANSWER_NO 2
+
+  char* MenuTexts[ 10 ];
+  MenuTexts[0]="Yes";
+  MenuTexts[1]="No";
+  MenuTexts[2]="";
+  MenuTexts[3]="";
+  MenuTexts[4]="";
+  MenuTexts[5]="";
+  MenuTexts[8]="";
+  MenuTexts[6]="";
+  MenuTexts[7]="";
+  MenuTexts[9]="";
+
+  while ( SpacePressed() || EnterPressed() );
+
+  while ( 1 )
+    {
+      MenuPosition = DoMenuSelection( " Are you sure you want to sell this itemd? " , MenuTexts , 1 );
+      switch (MenuPosition) 
+	{
+	case (-1):
+	  return;
+	  break;
+	case ANSWER_YES:
+	  while (EnterPressed() || SpacePressed() );
+	  Me.Gold += CalculateItemPrice ( SellItem );
+	  DeleteItem( SellItem );
+	  return;
+	  break;
+	case ANSWER_NO:
+	  while (EnterPressed() || SpacePressed() );
+	  return;
+	  break;
+	}
+    }
+}; // void TryToSellItem( item* SellItem )
 
 /* ----------------------------------------------------------------------
  * This function tries to buy the item given as parameter.  Currently
@@ -379,10 +434,14 @@ Repair_Items( void )
 	}
       if ( DownPressed() )
 	{
-	  if ( InMenuPosition < NUMBER_OF_ITEMS_ON_ONE_SCREEN - 1 ) InMenuPosition ++;
+	  if ( ( InMenuPosition < NUMBER_OF_ITEMS_ON_ONE_SCREEN - 1 ) && 
+	       ( InMenuPosition < Pointer_Index -1 ) )
+	    {
+	      InMenuPosition ++;
+	    }
 	  else 
 	    {
-	      if ( MenuInListPosition < BASIC_ITEMS_NUMBER - NUMBER_OF_ITEMS_ON_ONE_SCREEN )
+	      if ( MenuInListPosition < Pointer_Index - NUMBER_OF_ITEMS_ON_ONE_SCREEN )
 		MenuInListPosition ++;
 	    }
 	  while ( DownPressed() );
@@ -394,6 +453,127 @@ Repair_Items( void )
   while ( SpacePressed() || EscapePressed() );
 
 }; // void Repair_Items( void )
+
+/* ----------------------------------------------------------------------
+ * This is the menu, where you can sell inventory items.
+ * ---------------------------------------------------------------------- */
+void
+Sell_Items( void )
+{
+#define BASIC_ITEMS_NUMBER 10
+#define NUMBER_OF_ITEMS_ON_ONE_SCREEN 4
+#define ITEM_MENU_DISTANCE 80
+  item* Sell_Pointer_List[ MAX_ITEMS_IN_INVENTORY ];
+  int Pointer_Index=0;
+  int i;
+  int InMenuPosition = 0;
+  int MenuInListPosition = 0;
+  char DescriptionText[5000];
+  char* MenuTexts[ 10 ];
+  MenuTexts[0]="Yes";
+  MenuTexts[1]="No";
+  MenuTexts[2]="";
+  MenuTexts[3]="";
+  MenuTexts[4]="";
+  MenuTexts[5]="";
+  MenuTexts[8]="";
+  MenuTexts[6]="";
+  MenuTexts[7]="";
+  MenuTexts[9]="";
+
+
+  //--------------------
+  // First we clean out the new Sell_Pointer_List
+  //
+  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+    {
+      Sell_Pointer_List[ i ] = NULL;
+    }
+
+  //--------------------
+  // Now we start to fill the Sell_Pointer_List
+  //
+  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+    {
+      if ( Me.Inventory [ i ].type == (-1) ) continue;
+      else
+	{
+	  Sell_Pointer_List [ Pointer_Index ] = & ( Me.Inventory[ i ] );
+	  Pointer_Index ++;
+	}
+    }
+
+  if ( Pointer_Index == 0 )
+    {
+      MenuTexts[0]=" BACK ";
+      MenuTexts[1]="";
+      DoMenuSelection ( " YOU DONT HAVE ANYTHING IN INVENTORY (i.e. not equipped!), THAT COULD BE SOLD. " , MenuTexts , -1 );
+      return;
+    }
+
+
+  while ( !SpacePressed() && !EscapePressed() )
+    {
+      InitiateMenu();
+
+      //--------------------
+      // Now we draw our selection of items to the screen, at least the part
+      // of it, that's currently visible
+      //
+      DisplayText( " I WOULD BUY FROM YOU THESE ITEMS        YOUR GOLD:" , 50 , 50 + (0) * ITEM_MENU_DISTANCE , NULL );
+      sprintf( DescriptionText , "%4ld" , Me.Gold );
+      DisplayText( DescriptionText , 580 , 50 + ( 0 ) * 80 , NULL );
+      for ( i = 0 ; ( (i < NUMBER_OF_ITEMS_ON_ONE_SCREEN) && (Sell_Pointer_List[ i + MenuInListPosition ] != NULL ) ) ; i++ )
+	{
+	  // DisplayText( ItemMap [ Repair_Pointer_List[ i + ]->type ].ItemName , 50 , 50 + i * 50 , NULL );
+	  // DisplayText( "\n" , -1 , -1, NULL );
+	  GiveItemDescription( DescriptionText , Sell_Pointer_List [ i + MenuInListPosition ] , TRUE );
+	  DisplayText( DescriptionText , 50 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
+	  sprintf( DescriptionText , "%4ld" , CalculateItemPrice ( Sell_Pointer_List[ i + MenuInListPosition] ) );
+	  DisplayText( DescriptionText , 580 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
+	}
+      
+      //--------------------
+      // Now we draw the influencer as a cursor
+      //
+      PutInfluence ( 10 , 50 + ( InMenuPosition + 1 ) * ITEM_MENU_DISTANCE );
+
+      //--------------------
+      //
+      //
+      SDL_Flip ( Screen );
+
+      if ( UpPressed() )
+	{
+	  if ( InMenuPosition > 0 ) InMenuPosition --;
+	  else 
+	    {
+	      if ( MenuInListPosition > 0 )
+		MenuInListPosition --;
+	    }
+	  while ( UpPressed() );
+	}
+      if ( DownPressed() )
+	{
+	  if ( ( InMenuPosition < NUMBER_OF_ITEMS_ON_ONE_SCREEN - 1 ) &&
+	       ( InMenuPosition < Pointer_Index -1 ) )
+	    {
+	      InMenuPosition ++;
+	    }
+	  else 
+	    {
+	      if ( MenuInListPosition < Pointer_Index - NUMBER_OF_ITEMS_ON_ONE_SCREEN )
+		MenuInListPosition ++;
+	    }
+	  while ( DownPressed() );
+	}      
+    } // while not space pressed...
+
+  if ( SpacePressed() ) TryToSellItem( Sell_Pointer_List[ InMenuPosition + MenuInListPosition ] ) ;
+
+  while ( SpacePressed() || EscapePressed() );
+
+}; // void Sell_Items( void )
 
 
 /* ----------------------------------------------------------------------
@@ -424,13 +604,11 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem )
 
   first_menu_item_pos_y = ( SCREENHEIGHT - NumberOfOptionsGiven * h ) / 2 ;
 
-  if ( strlen( InitialText ) > 0 ) 
-    DisplayText ( InitialText , 50 , 50 , NULL );
-
   SetCurrentFont ( Menu_BFont );
+  // SetCurrentFont ( FPS_Display_BFont );
   h = FontHeight ( GetCurrentFont() );
 
-
+  // DisplayText ( InitialText , 50 , 50 , &Full_Screen_Rect );
 
   while ( 1 )
     {
@@ -449,6 +627,8 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem )
 	  if ( strlen( MenuTexts[ i ] ) == 0 ) continue;
 	  CenteredPutString ( Screen ,  first_menu_item_pos_y + i * h , MenuTexts[ i ] );
 	}
+      if ( strlen( InitialText ) > 0 ) 
+	DisplayText ( InitialText , 50 , 50 , NULL );
 
       SDL_Flip( Screen );
   
@@ -553,6 +733,7 @@ enum
 	  break;
 	case SELL_ITEMS:
 	  while (EnterPressed() || SpacePressed() );
+	  Sell_Items();
 	  break;
 	case REPAIR_ITEMS:
 	  while (EnterPressed() || SpacePressed() );
