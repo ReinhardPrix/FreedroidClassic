@@ -40,7 +40,7 @@ ylen of this level: 21
 color of this level: 0
 Name of this level=maintenance
 Comment of the Influencer on entering this level="This is a level, like many other levels.
-Name of background song for this level=AnarchyMenu1.mod
+Name of background song for this level=THEGREATBATH.MOD
 beginning_of_map
  33  33  33  33  33  33  33  33   7  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   9  33  33   7  10  10  10   9  33  33  33  33  33  33 
   7  10  10  10  10  10  10  10   3   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11  33  33  11  14  15  12  11  33   7  10   9  33  33 
@@ -1007,7 +1007,7 @@ ylen of this level: 15
 color of this level: 5
 Name of this level=shuttle bay
 Comment of the Influencer on entering this level="This is a level, like many other levels.
-Name of background song for this level=The_Last_V8.mod
+Name of background song for this level=WORLD.MOD
 beginning_of_map
   7  10  10  10  10  10  10  10  10   9 
  11   0   0   0   0   0   0   0   0  11 
@@ -1145,7 +1145,7 @@ ylen of this level: 19
 color of this level: 1
 Name of this level=Asteroid Control Center
 Comment of the Influencer on entering this level="This is a level, like many other levels.
-Name of background song for this level=The_Last_V8.mod
+Name of background song for this level=BLADRUN.MOD
 beginning_of_map
   7  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   9 
  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11 
@@ -1287,7 +1287,7 @@ ylen of this level: 40
 color of this level: 0
 Name of this level=Main reactor block
 Comment of the Influencer on entering this level="This must be the main reactor level.  Humans are not allowed here.
-Name of background song for this level=The_Last_V8.mod
+Name of background song for this level=ALFA.MOD
 beginning_of_map
  33  33  33  33  33  33  33  33   7  10  10  10  10  10  10  10  10  10  10   9  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
  33  33  33  33  33  33  33  33  11   0   0   0   0   0   0   0   0   0   0  11  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
@@ -1450,7 +1450,7 @@ ylen of this level: 11
 color of this level: 3
 Name of this level=Administration
 Comment of the Influencer on entering this level="This must be the administration.
-Name of background song for this level=The_Last_V8.mod
+Name of background song for this level=NOWHERE.MOD
 beginning_of_map
  33  33  33   7  10  10  10   8  10  10  10   8  10  10  10   8  10  10  10   8  10  10   9  33  33  33 
  33  33  33  11   0  25   0  11   0  25   0  11   0  25   0  11   0  25   0  27   0   0  11  33  33  33 
@@ -1584,7 +1584,7 @@ ylen of this level: 13
 color of this level: 1
 Name of this level=airlock
 Comment of the Influencer on entering this level="This is a level, like many other levels.
-Name of background song for this level=The_Last_V8.mod
+Name of background song for this level=Hardcore-Theme.mod
 beginning_of_map
   7  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   9  33 
  11   0   0   0   0   0   0   0  17   0  17   0  25  25  25   0  12   0  34  14  34   0  25  25  25   0  34  14  34  11  33 
@@ -1720,7 +1720,7 @@ ylen of this level: 15
 color of this level: 4
 Name of this level=reactor
 Comment of the Influencer on entering this level="This is a level, like many other levels.
-Name of background song for this level=The_Last_V8.mod
+Name of background song for this level=stylebln.mod
 beginning_of_map
   7  10  10  10  10  10  10  10  10   8  10  10   8  10  10   8  10  10  10  10  10  10  10  10   8  10  10  10   8  10   8  10  10  10   9 
  11  14  14  14  14   0  14   0   0  11  34  34  11  34  34  11   0   0  13  13  13  13  13  13  11  17  25  17  11   0  11   0  12   0  11 
@@ -1858,7 +1858,7 @@ ylen of this level: 15
 color of this level: 4
 Name of this level=Robot construction facility
 Comment of the Influencer on entering this level="This is a level, like many other levels.
-Name of background song for this level=The_Last_V8.mod
+Name of background song for this level=princess.mod
 beginning_of_map
  33  33  33  33  33  33  33  33  33  33  33   7  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   8  10  10  10  10  10  10  10   9 
  33  33  33  33  33  33  33  33  33  33  33  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0  11 
@@ -1996,7 +1996,7 @@ ylen of this level: 57
 color of this level: 2
 Name of this level=Telemetry
 Comment of the Influencer on entering this level="This is a level, like many other levels.
-Name of background song for this level=The_Last_V8.mod
+Name of background song for this level=ap-nosta.mod
 beginning_of_map
  33  33  33  33   7  10   9  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33   7  10  10  10  10  10  10  10   9  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33   7  10   9  33  33  33 
  33  33  33  33  11   0  11  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  11   0   0   0  16   0   0   0  11  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  11   0  11  33  33  33 
@@ -2176,7 +2176,7 @@ ylen of this level: 26
 color of this level: 5
 Name of this level=Scientists quarters
 Comment of the Influencer on entering this level="These must be the private quarters of the scientific staff of the installation.
-Name of background song for this level=The_Last_V8.mod
+Name of background song for this level=Starworx.mod
 beginning_of_map
  33  33  33  33   7  10  10  10  10   8  10  10  10  10   8  10  10  10  10   8  10  10  10  10   8  10  10  10  10   8  10  10  10  10   8  10  10  10  10   8  10  10  10  10  10  10  10   9  33  33  33 
   7  10  10  10   6  12   0   0  14  11  12   0   0  15  11  12   0   0  14  11  12   0   0  15  11  12   0   0  14  11  12   0   0  15  11  12   0   0  14  11   0   0   0   0   0  14  15  11  33  33  33 
@@ -2332,7 +2332,7 @@ ylen of this level: 17
 color of this level: 5
 Name of this level=Private Goods Storage Cellar
 Comment of the Influencer on entering this level="This is the level, where I was created, back in the scientists makeshift bunker
-Name of background song for this level=The_Last_V8.mod
+Name of background song for this level=Psychospugs.mod
 beginning_of_map
   7  10  10  10  10  10  10  10  10  10  10  10  10  10  10   8  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   8  10  10   8  10  10   8  10   8  10  10  10   9 
  11   0   0   0   0   0   0   0   0   0   0   0   0  14  14  11   0  14  15  14  14  14  15  15  15   0  13   0  14  14   0  14  15  14  14  14   0  46   0   0  11   0   0  45   0  11  17  17  17  11 
