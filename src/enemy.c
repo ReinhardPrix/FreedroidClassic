@@ -732,7 +732,8 @@ RawEnemyApproachPosition ( Enemy ThisRobot , finepoint next_target_spot )
 {
     finepoint remaining_way;
     float maxspeed;
-    
+    int old_map_level;
+
     //--------------------
     // If the robot has the 'completely fixed' property, then
     // we don't move anywhere
@@ -823,9 +824,19 @@ RawEnemyApproachPosition ( Enemy ThisRobot , finepoint next_target_spot )
     // Now the bot is moving, so maybe it's moving over a jump threshold?
     // In any case, it might be best to check...
     //
+    // In case a jump has taken place, we best also reset the current
+    // waypointless wandering target.  Otherwise the bot might want to
+    // walk to the end of the map before thinking again...
+    //
+    old_map_level = ThisRobot -> pos . z ;
     adapt_position_for_jump_thresholds ( & ( ThisRobot -> pos ) , & ( ThisRobot -> pos ) );
-    
-
+    if ( ThisRobot -> pos . z != old_map_level )
+    {
+	ThisRobot -> PrivatePathway [ 0 ] . x = ThisRobot -> pos . x ;
+	ThisRobot -> PrivatePathway [ 0 ] . y = ThisRobot -> pos . y ;
+	DebugPrintf ( 1 , "\n%s(): tuncated current waypoinless target because of level jump..." , 
+		      __FUNCTION__ );
+    }
 
     //--------------------
     // Since this robot is moving, we set the animation type to 
