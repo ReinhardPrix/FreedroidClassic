@@ -104,7 +104,13 @@ update_light_list ( int player_num )
 
 	light_sources [ next_light_emitter_index ] . x = AllBlasts [ blast ] . pos . x ;
 	light_sources [ next_light_emitter_index ] . y = AllBlasts [ blast ] . pos . y ;
-	light_source_strengthes [ next_light_emitter_index ] = 20 ;	    
+
+	//--------------------
+	// We add some light strength according to the phase of the blast
+	//
+	light_source_strengthes [ next_light_emitter_index ] = 20 - AllBlasts [ blast ] . phase / 2 ;
+	if ( light_source_strengthes [ next_light_emitter_index ] < 0 )
+	    light_source_strengthes [ next_light_emitter_index ] = 1 ;
 	next_light_emitter_index ++ ;
 	
 	//--------------------
