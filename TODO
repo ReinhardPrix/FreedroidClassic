@@ -1,6 +1,21 @@
 #-*- mode: text -*-
 Bugs
 ----
+- (DONE) Frage: weiss irgendwer wozu die globale Variable "BeamLine" dient??
+  (rp) erschien mir nutzlos, und hab' die Variable jetzt eliminiert,
+  hoffe dass niemand sie doch gebraucht haette...
+
+- (rp) need to allow waypoint ON a refresh for ex. (-> level 5!)
+
+- Levelnumber should be the index in curShip.AllLevels to simplify things...
+
+- 247 and 249 always in Blinkenergy 
+- 999 rotiert zu schnell
+- "Flash" schuss ist zwar jetzt sichtbarer, scheint aber nicht mehr zu
+  wirken...
+- Schussfrequenz des 001 zu hoch
+- Uebernommener 302 is zu schnell, 420 is zu langsam...
+
 - (rp) "Ghosts" (i.e. Enemeys go throught walls...)
   ->  Waypoint info in map seems ok, must be bug in enemy-movement
 
@@ -22,7 +37,7 @@ Bugs
   Sichtbarkeit uberpruefen.  Sehr fragwuerdig.
 
 - (DONE)  gesamt Spiel-geschwindigkeit zu hoch (play original game to compare!!)
-	  --> jp: Gut.  Habe Robotgeschwindigkeiten und Schussgeschwindigkeiten etwas adaptiert.
+ --> jp: Gut.  Habe Robotgeschwindigkeiten und Schussgeschwindigkeiten etwas adaptiert.
 
 - (DONE)  Laufschrift gehoert zu Paradroid-'extensions'
 	  --> habe sie als solche vermerkt.
@@ -38,13 +53,15 @@ Bugs
 
 - (DONE)   (rp/jp?) Ship-console endlich ordentlich machen, haufenweise
 	   Robo-graphics noetig:  Graphics sind jetzt da, einbauen noch noetig.
-	   --> Konsole ist jetzt relativ ansehnlich.  Weitere Verbesserungsvorschaege erwuenscht.
-	   (Bei zu viel Text, scheint immernoch ein segfault zu drohen durch die GreatDruidShow!!)
+	   --> Konsole ist jetzt relativ ansehnlich.  Weitere
+	   Verbesserungsvorschaege erwuenscht. 
+	   (Bei zu viel Text, scheint immernoch ein segfault zu drohen
+	   durch die GreatDruidShow!!) 
 
 - (jp) add more sounds:  Deadlock-Sound-Sequenz, Complete-Sound-Sequenz, 
   verschiedene Schuesse sollten auch verschiedene Ger\"ausche Produzieren...
-  Eventuell waere auch gut fuer jeden Level (oder jede Levelfarbe) eine eigene Hintergrundmusik
-  zu verwenden.
+  Eventuell waere auch gut fuer jeden Level (oder jede Levelfarbe)
+  eine eigene Hintergrundmusik  zu verwenden.
   Different sounds for different bullettypes.
   Win-Takeover-Sound
   Lose-Takeover-Sound
@@ -55,7 +72,8 @@ Bugs
 	   sie vielleicht noch.
 
 - (DONE)   correct the too fast explosion (blast) damage effect
-	   --> sowohl fuer Feinde als auch fuer den Influ sollte das jetzt angemessen wirken
+	   --> sowohl fuer Feinde als auch fuer den Influ sollte das
+	   jetzt angemessen wirken 
 
 - (DONE)   (rp) Takeover game still looks 'unfinished'
 	   --> der Reinhard hat da scheinbar weitgehend aufger\"aumt...
@@ -75,7 +93,8 @@ Missing features
 
 - save highscores to disk
 
-- Options menu, wo man etwa: 1.) Die Lautstaerke der Hintergrundmusik bequem einstellen kann 
+- Options menu, wo man etwa: 1.) Die Lautstaerke der Hintergrundmusik
+  bequem einstellen kann  
   (Under construction:  Menu exists at least, accessible via ESCAPE key)
 
 - (rp?) mouse-support (should be good with touchstick on laptop!)
