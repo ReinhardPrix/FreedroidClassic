@@ -1860,7 +1860,7 @@ void
 iso_put_all_tux_parts_for_sword_motion ( int x , int y , int player_num , int rotation_index )
 {
 
-  // DebugPrintf ( 0 , "\nDirection given: %d." , rotation_index );
+  DebugPrintf ( -1 , "\nDirection given: %d." , rotation_index );
   // DebugPrintf ( 0 , "\nphase: %d." , (int) Me [ player_num ] . phase );
 
   switch ( rotation_index )

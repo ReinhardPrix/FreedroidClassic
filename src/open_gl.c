@@ -124,7 +124,7 @@ our_SDL_blit_surface_wrapper(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *d
 	  if ( bytes == 4 )
 	    {
 	      glEnable( GL_ALPHA_TEST );  
-	      glAlphaFunc ( GL_GREATER , 0.05 ) ;
+	      glAlphaFunc ( GL_GREATER , 0.5 ) ;
 	      glDrawPixels( src -> w , src -> h, GL_BGRA , GL_UNSIGNED_BYTE , src -> pixels );
 	    }
 	  else if ( bytes == 3 )
