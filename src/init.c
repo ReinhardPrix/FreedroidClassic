@@ -248,7 +248,7 @@ InitNewGame (void)
   Me.pos.y = 1;
   
   i = MyRandom (3);  /* chose one out of 4 possible start positions */
-  i = 3;
+  i = 2;
   switch (i)
     {
     case 0:

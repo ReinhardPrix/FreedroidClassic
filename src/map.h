@@ -36,7 +36,9 @@
 #define CREW_LINE_LEN			MAX_TYPES_ON_LEVEL * 3 + 20
 
 /* Distance, where door opens */
-#define DOOROPENDIST2 	(Block_Height + Block_Width)*(Block_Width + Block_Height)/4
+//NORMALISATION #define DOOROPENDIST2 	(Block_Height + Block_Width)*(Block_Width + Block_Height)/4
+// #define DOOROPENDIST2 	(((Block_Height + Block_Width)*(Block_Width + Block_Height)/4)/64.0)
+#define DOOROPENDIST2 1
 
 /* Randbreite der Wand */
 #define WALLPASS		4

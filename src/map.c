@@ -1012,8 +1012,8 @@ MoveLevelDoors (void)
 {
   int i, j;
   int doorx, doory;
-  long xdist, ydist;
-  long dist2;
+  float xdist, ydist;
+  float dist2;
   char *Pos;
 
   for (i = 0; i < MAX_DOORS_ON_LEVEL; i++)
@@ -1027,8 +1027,8 @@ MoveLevelDoors (void)
 
       Pos = &(CurLevel->map[doory][doorx]);
 
-      doorx = doorx * Block_Width + Block_Width / 2;
-      doory = doory * Block_Height + Block_Height / 2;
+      // NORMALISATION doorx = doorx * Block_Width + Block_Width / 2;
+      // NORMALISATION doory = doory * Block_Height + Block_Height / 2;
 
       /* first check Influencer gegen Tuer */
       xdist = Me.pos.x - doorx;
