@@ -89,7 +89,7 @@ EnemyHitByBulletText( int Enum )
       ThisRobot->TextToBeDisplayed="Unhandled exception fault.  Press ok to reboot.";
       break;
     case 1:
-      ThisRobot->TextToBeDisplayed="System fault. Please buy a new version.";
+      ThisRobot->TextToBeDisplayed="System fault. Please buy a newer version.";
       break;
     }
   else
