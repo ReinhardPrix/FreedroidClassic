@@ -254,4 +254,12 @@ EXTERN int axis_is_active;  /* is firing to use axis-values or not */
 EXTERN highscore_entry **Highscores;
 EXTERN int num_highscores;  /* total number of entries in our list (fixed) */
 
+#undef EXTERN
+#ifdef _takeover_c
+#define EXTERN
+#else
+#define EXTERN extern
+#endif
+
+
 #endif  // _global_h

@@ -1180,9 +1180,6 @@ InitFreedroid (void)
       Terminate(ERR);
     }
 
-  /* Init the Takeover- Game */
-  InitTakeover ();
-
   // Initialisieren der Schildbilder
   //  GetShieldBlocks ();
 

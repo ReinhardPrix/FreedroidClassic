@@ -41,7 +41,6 @@
 #include "map.h"
 
 Uint32 cur_time;  		/* current time in ms */
-
 SDL_Surface *to_blocks;      /* the global surface containing all game-blocks */
 
 /* the rectangles containing the blocks */
@@ -124,24 +123,6 @@ SDL_Color to_bg_color = {199, 199, 199};
 playground_t ToPlayground;
 playground_t ActivationMap;
 playground_t CapsuleCountdown;
-
-/*-----------------------------------------------------------------
- * @Desc: Initialise the Takeover game
- *
- * @Ret: void
- *
- *-----------------------------------------------------------------*/
-void
-InitTakeover (void)
-{
-  if (GetTakeoverGraphics () != OK)
-    {
-      DebugPrintf (2, "Error !");
-      Terminate (-1);
-    }
-
-  return;
-}
 
 /*-----------------------------------------------------------------
  * @Desc: play takeover-game against a druid 
@@ -582,11 +563,11 @@ EnemyMovements (void)
 }	/* EnemyMovements */
 
 /*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+ * read in takeover game elements. Frees previous SDL-surfaces if 
+ * they were allocated, this allows to used this fct also for theme-switching
+ *
+ *
+ *-----------------------------------------------------------------*/
 int
 GetTakeoverGraphics (void)
 {
@@ -595,7 +576,10 @@ GetTakeoverGraphics (void)
   SDL_Rect tmp;
 
   Set_Rect (tmp, User_Rect.x, User_Rect.y, 0, 0);
-  
+
+  if (to_blocks)   /* this happens when we do theme-switching */
+    free(to_blocks);
+
   to_blocks = IMG_Load (find_file (TO_BLOCK_FILE, GRAPHICS_DIR, TRUE));
 
   /* Set the fill-blocks */
@@ -662,10 +646,12 @@ ShowPlayground ()
 
   Fill_Rect (User_Rect, to_bg_color);
 
-  PutInfluence (DruidStart[YourColor].x, DruidStart[YourColor].y);
+  PutInfluence (User_Rect.x + DruidStart[YourColor].x,
+		User_Rect.y + DruidStart[YourColor].y);
 
   if (AllEnemys[DroidNum].Status != OUT)
-    PutEnemy (DroidNum, DruidStart[!YourColor].x, DruidStart[!YourColor].y);
+    PutEnemy (DroidNum, User_Rect.x + DruidStart[!YourColor].x,
+	      User_Rect.y + DruidStart[!YourColor].y);
 
 
   Set_Rect (Target_Rect, User_Rect.x + LEFT_OFFS_X, User_Rect.y + LEFT_OFFS_Y,
@@ -714,7 +700,7 @@ ShowPlayground ()
 		   ne_screen, &Target_Rect);
 
   /* Fill the Leader-LED with its color */
-  Set_Rect (Target_Rect, LEADERLED_X, LEADERLED_Y, 0, 0);
+  Set_Rect (Target_Rect, User_Rect.x + LEADERLED_X, User_Rect.y + LEADERLED_Y, 0, 0);
   SDL_BlitSurface (to_blocks, &FillBlocks[LeaderColor],
 		   ne_screen, &Target_Rect);
   Target_Rect.y += FILL_BLOCK_HEIGHT;
@@ -724,7 +710,8 @@ ShowPlayground ()
   /* Fill the Display Column with its colors */
   for (i = 0; i < NUM_LINES; i++)
     {
-      Set_Rect (Target_Rect, LEDCOLUMN_X, LEDCOLUMN_Y + i*(FILL_BLOCK_HEIGHT+2),
+      Set_Rect (Target_Rect, User_Rect.x + LEDCOLUMN_X,
+		User_Rect.y + LEDCOLUMN_Y + i*(FILL_BLOCK_HEIGHT+2),
 		0, 0);
       SDL_BlitSurface (to_blocks, &FillBlocks[DisplayColumn[i]],
 		       ne_screen, &Target_Rect);
@@ -735,8 +722,8 @@ ShowPlayground ()
   for (i = 0; i < NUM_LAYERS - 1; i++)
     for (j = 0; j < NUM_LINES; j++)
       {
-	Set_Rect (Target_Rect, PlaygroundStart[GELB].x + i * TO_BLOCKLEN,
-		  PlaygroundStart[GELB].y + j * TO_BLOCKHEIGHT, 0, 0);
+	Set_Rect (Target_Rect, User_Rect.x + PlaygroundStart[GELB].x + i * TO_BLOCKLEN,
+		  User_Rect.y + PlaygroundStart[GELB].y + j * TO_BLOCKHEIGHT, 0, 0);
 	block = ToPlayground[GELB][i][j] + ActivationMap[GELB][i][j]*TO_BLOCKS;
 	SDL_BlitSurface (to_blocks, &ToGameBlocks[block],ne_screen, &Target_Rect);
       }
@@ -747,8 +734,8 @@ ShowPlayground ()
     for (j = 0; j < NUM_LINES; j++)
       {
 	Set_Rect (Target_Rect,
-		  PlaygroundStart[VIOLETT].x +(NUM_LAYERS-i-2)*TO_BLOCKLEN,
-		  PlaygroundStart[VIOLETT].y + j * TO_BLOCKHEIGHT, 0, 0);
+		  User_Rect.x + PlaygroundStart[VIOLETT].x +(NUM_LAYERS-i-2)*TO_BLOCKLEN,
+		  User_Rect.y + PlaygroundStart[VIOLETT].y + j * TO_BLOCKHEIGHT, 0, 0);
 	block = ToPlayground[VIOLETT][i][j]+
 	  (NUM_PHASES+ActivationMap[VIOLETT][i][j])*TO_BLOCKS;
 	SDL_BlitSurface (to_blocks, &ToGameBlocks[block],ne_screen, &Target_Rect);
@@ -762,8 +749,8 @@ ShowPlayground ()
       else
 	color = OpponentColor;
 
-      Set_Rect (Target_Rect, CurCapsuleStart[color].x, 
-		CurCapsuleStart[color].y + CapsuleCurRow[color]*(CAPSULE_HEIGHT+2),
+      Set_Rect (Target_Rect, User_Rect.x + CurCapsuleStart[color].x, 
+		User_Rect.y + CurCapsuleStart[color].y + CapsuleCurRow[color]*(CAPSULE_HEIGHT+2),
 		0,0);
       if (NumCapsules[player])
 	SDL_BlitSurface (to_blocks, &CapsuleBlocks[color], ne_screen, &Target_Rect);
@@ -771,8 +758,8 @@ ShowPlayground ()
 
       for (i = 0; i < NumCapsules[player]-1; i++)
 	{
-	  Set_Rect (Target_Rect, LeftCapsulesStart[color].x,
-		    LeftCapsulesStart[color].y + i*CAPSULE_HEIGHT, 0, 0);
+	  Set_Rect (Target_Rect, User_Rect.x + LeftCapsulesStart[color].x,
+		    User_Rect.y + LeftCapsulesStart[color].y + i*CAPSULE_HEIGHT, 0, 0);
 	  SDL_BlitSurface (to_blocks, &CapsuleBlocks[color],
 			   ne_screen, &Target_Rect);
 	} /* for capsules */

@@ -982,6 +982,8 @@ InitPictures (void)
   ne_console_surface= IMG_Load (fpath); 
 
   // ne_blocks = SDL_DisplayFormat( ne_blocks );  /* the surface is copied !*/
+
+  GetTakeoverGraphics();
   
   return (TRUE);
 }  // InitPictures
