@@ -1897,7 +1897,7 @@ Get_Server_Name ( void )
   Temp = GetString( 140 , FALSE );
   strcpy ( ServerName , Temp );
   free( Temp );
-}; // void Get_New_Character_Name ( void )
+}; // void Get_Server_Name ( void )
 
 /* ----------------------------------------------------------------------
  * This reads in the new name for the character...
@@ -1911,9 +1911,27 @@ Get_New_Character_Name ( void )
   DisplayText ( "\n     Enter the name\n     for the new hero:\n   > " ,
 		50 , 50 , NULL );
 
-  Temp = GetString( 20 , FALSE );
-  strcpy ( Me[0].character_name , Temp );
+  Temp = GetString ( 20 , FALSE );
+
+  //--------------------
+  // In case 'Escape has been pressed inside GetString, then a NULL pointer
+  // will be returned, which means no name has been given to the character
+  // yet, so we set an empty string for the character name.
+  //
+  if ( Temp == NULL )
+    {
+      strcpy ( Me [ 0 ] . character_name , "" );
+      return ;
+    }
+
+  //--------------------
+  // If a real name has been given to the character, we can copy that name into
+  // the corresponding structure and return here (not without freeing the string
+  // received.  Could be some valuable 20 bytes after all :)
+  //
+  strcpy ( Me [ 0 ] . character_name , Temp );
   free( Temp );
+
 }; // void Get_New_Character_Name ( void )
 
 /* ----------------------------------------------------------------------
@@ -1971,7 +1989,14 @@ PrepareNewHero (void)
   Me[0].base_magic = 40;
 
   Get_New_Character_Name( );
-  return ( TRUE );
+
+  //--------------------
+  // If a real name has been given, then we can proceed and start the
+  // game.  If no real name has been given or 'Escape' has been pressed,
+  // then the calling function will return to the menu and do nothing
+  // else.
+  //
+  if ( strlen ( Me [ 0 ] . character_name ) > 0 ) return ( TRUE ); else return ( FALSE );
 
 }; // int PrepareNewHero (void)
 
@@ -2356,11 +2381,18 @@ enum
 	{
 	case NEW_HERO_POSITION:
 	  while (EnterPressed() || SpacePressed() ) ;
-	  PrepareNewHero ();
-	  LoadShip ( find_file ( "Asteroid.maps" , MAP_DIR, FALSE) ) ;
-	  PrepareStartOfNewCharacter (  );
-	  Weiter=TRUE;
-	  return ( TRUE );
+
+	  if ( PrepareNewHero ( ) == TRUE )
+	    {
+	      LoadShip ( find_file ( "Asteroid.maps" , MAP_DIR, FALSE) ) ;
+	      PrepareStartOfNewCharacter ( ) ;
+	      Weiter=TRUE;
+	      return ( TRUE );
+	    }
+	  else
+	    {
+	      Weiter=FALSE;
+	    }
 	  break;
 
 	case LOAD_EXISTING_HERO_POSITION: 

@@ -2027,13 +2027,16 @@ GetString (int MaxLen, int echo)
 	  if ( curpos > 0 ) curpos --;
 	  input[curpos] = '.';
 	}
+      else if ( key == SDLK_ESCAPE )
+	{
+	  return ( NULL );
+	}
       
     } /* while(!finished) */
 
   DebugPrintf (2, "\n\nchar *GetString(..):  The final string is:\n");
   DebugPrintf (2,  input );
   DebugPrintf (2, "\n\n");
-
 
   return (input);
 
