@@ -260,7 +260,7 @@ Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=18
 Sound number=3 
-Base list price=0
+Base list price=100
 ** End of new item specification subsection **
 
 // Item No. 4
