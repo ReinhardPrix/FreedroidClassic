@@ -1031,6 +1031,10 @@ somehow gotten outside of the map.\n\
 \n" );
       AllEnemys[Enum].type = (-1) ;
       AllEnemys[Enum].Status = (OUT) ;
+      //--------------------
+      // This droid must not be blitted!!
+      //
+      return ( FALSE );
       // Terminate(ERR);
     }
 

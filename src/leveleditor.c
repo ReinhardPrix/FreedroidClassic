@@ -94,10 +94,48 @@ enum
   };
 
 /* ----------------------------------------------------------------------
+ * When new lines are inserted into the map, the waypoints south of this
+ * line must move too with the rest of the map.  This function sees to it.
+ * ---------------------------------------------------------------------- */
+void
+MoveWaypointsSouthOf ( int FromWhere , int ByWhat , Level EditLevel )
+{
+  int i;
+
+  for ( i = 0 ; i < MAXWAYPOINTS ; i ++ )
+    {
+      if ( EditLevel -> AllWaypoints [ i ] . x == ( 0 ) ) continue;
+      
+      if ( EditLevel -> AllWaypoints [ i ] . y >= FromWhere )
+	EditLevel -> AllWaypoints [ i ] . y += ByWhat;
+    }
+  
+}; // void MoveWaypointsSouthOf ( int FromWhere , int ByWhat )
+
+/* ----------------------------------------------------------------------
+ * When new lines are inserted into the map, the waypoints south of this
+ * line must move too with the rest of the map.  This function sees to it.
+ * ---------------------------------------------------------------------- */
+void
+MoveWaypointsEastOf ( int FromWhere , int ByWhat , Level EditLevel )
+{
+  int i;
+
+  for ( i = 0 ; i < MAXWAYPOINTS ; i ++ )
+    {
+      if ( EditLevel -> AllWaypoints [ i ] . x == ( 0 ) ) continue;
+      
+      if ( EditLevel -> AllWaypoints [ i ] . x >= FromWhere )
+	EditLevel -> AllWaypoints [ i ] . x += ByWhat;
+    }
+  
+}; // void MoveWaypointsEastOf ( int FromWhere , int ByWhat )
+
+/* ----------------------------------------------------------------------
  * Self-explanatory.
  * ---------------------------------------------------------------------- */
 void
-InsertLineVerySouth ( Level CurLevel )
+InsertLineVerySouth ( Level EditLevel )
 {
 
   //--------------------
@@ -105,44 +143,44 @@ InsertLineVerySouth ( Level CurLevel )
   // defined in defs.h.  This is carefully checked or no operation at
   // all will be performed.
   //
-  if ( (CurLevel->ylen)+1 < MAX_MAP_LINES )
+  if ( (EditLevel->ylen)+1 < MAX_MAP_LINES )
     {
-      CurLevel->ylen++;
+      EditLevel->ylen++;
       // In case of enlargement, we need to do more:
-      CurLevel->map[ CurLevel->ylen-1 ] = MyMalloc( CurLevel->xlen +1) ;
+      EditLevel->map[ EditLevel->ylen-1 ] = MyMalloc( EditLevel->xlen +1) ;
       // We don't want to fill the new area with junk, do we? So we make it floor tiles
-      memset( CurLevel->map[ CurLevel->ylen-1 ] , FLOOR , CurLevel->xlen );
+      memset( EditLevel->map[ EditLevel->ylen-1 ] , FLOOR , EditLevel->xlen );
     }
 
-}; // void InsertLineVerySouth ( Level CurLevel )
+}; // void InsertLineVerySouth ( Level EditLevel )
 
 /* ----------------------------------------------------------------------
  * Self-explanatory.
  * ---------------------------------------------------------------------- */
 void
-InsertColumnVeryEast ( Level CurLevel )
+InsertColumnVeryEast ( Level EditLevel )
 {
   int i;
   char* OldMapPointer;
 
-  CurLevel->xlen++;
+  EditLevel->xlen++;
   // In case of enlargement, we need to do more:
-  for ( i = 0 ; i < CurLevel->ylen ; i++ )
+  for ( i = 0 ; i < EditLevel->ylen ; i++ )
     {
-      OldMapPointer=CurLevel->map[i];
-      CurLevel->map[i] = MyMalloc( CurLevel->xlen +1) ;
-      memcpy( CurLevel->map[i] , OldMapPointer , CurLevel->xlen-1 );
+      OldMapPointer=EditLevel->map[i];
+      EditLevel->map[i] = MyMalloc( EditLevel->xlen +1) ;
+      memcpy( EditLevel->map[i] , OldMapPointer , EditLevel->xlen-1 );
       // We don't want to fill the new area with junk, do we? So we make it floor tiles
-      CurLevel->map[ i ] [ CurLevel->xlen-1 ] = FLOOR;  
+      EditLevel->map[ i ] [ EditLevel->xlen-1 ] = FLOOR;  
     }
 
-}; // void InsertColumnVeryEast ( Level CurLevel )
+}; // void InsertColumnVeryEast ( Level EditLevel )
       
 /* ----------------------------------------------------------------------
  * Self-explanatory.
  * ---------------------------------------------------------------------- */
 void
-InsertColumnEasternInterface( Level CurLevel )
+InsertColumnEasternInterface( Level EditLevel )
 {
   int i;
 
@@ -150,37 +188,39 @@ InsertColumnEasternInterface( Level CurLevel )
   // First a sanity check:  If there's no eastern threshold, this
   // must be a mistake and will just be ignored...
   //
-  if ( CurLevel -> jump_threshold_east <= 0 ) return;
+  if ( EditLevel -> jump_threshold_east <= 0 ) return;
 
   //--------------------
   // We use available methods to add a column, even if in the wrong
   // place for now.
   //
-  InsertColumnVeryEast ( CurLevel );
+  InsertColumnVeryEast ( EditLevel );
 
   //--------------------
   // Now the new memory and everything is done.  All we
   // need to do is move the information to the east
   //
-  for ( i = 0 ; i < CurLevel->ylen ; i ++ )
+  for ( i = 0 ; i < EditLevel->ylen ; i ++ )
     {
       //--------------------
       // REMEMBER:  WE MUST NO USE MEMCPY HERE, CAUSE THE AREAS IN QUESTION
       // MIGHT (EVEN WILL) OVERLAP!!  THAT MUST NOT BE THE CASE WITH MEMCPY!!
       //
-      memmove ( & ( CurLevel->map [ i ] [ CurLevel->xlen - CurLevel->jump_threshold_east - 1 ] ) ,
-		& ( CurLevel->map [ i ] [ CurLevel->xlen - CurLevel->jump_threshold_east - 2 ] ) ,
-		CurLevel->jump_threshold_east );
-      CurLevel->map [ i ] [ CurLevel->xlen - CurLevel->jump_threshold_east - 1 ] = FLOOR ;
+      memmove ( & ( EditLevel->map [ i ] [ EditLevel->xlen - EditLevel->jump_threshold_east - 1 ] ) ,
+		& ( EditLevel->map [ i ] [ EditLevel->xlen - EditLevel->jump_threshold_east - 2 ] ) ,
+		EditLevel->jump_threshold_east );
+      EditLevel->map [ i ] [ EditLevel->xlen - EditLevel->jump_threshold_east - 1 ] = FLOOR ;
     }
 
-}; // void InsertColumnEasternInterface( CurLevel );
+  MoveWaypointsEastOf ( EditLevel->xlen - EditLevel->jump_threshold_east - 1 , +1 , EditLevel ) ;
+
+}; // void InsertColumnEasternInterface( EditLevel );
 
 /* ----------------------------------------------------------------------
  * Self-explanatory.
  * ---------------------------------------------------------------------- */
 void
-RemoveColumnEasternInterface( Level CurLevel )
+RemoveColumnEasternInterface( Level EditLevel )
 {
   int i;
 
@@ -188,33 +228,35 @@ RemoveColumnEasternInterface( Level CurLevel )
   // First a sanity check:  If there's no eastern threshold, this
   // must be a mistake and will just be ignored...
   //
-  if ( CurLevel -> jump_threshold_east <= 0 ) return;
+  if ( EditLevel -> jump_threshold_east <= 0 ) return;
 
   //--------------------
   // Now the new memory and everything is done.  All we
   // need to do is move the information to the east
   //
-  for ( i = 0 ; i < CurLevel->ylen ; i ++ )
+  for ( i = 0 ; i < EditLevel->ylen ; i ++ )
     {
       //--------------------
       // REMEMBER:  WE MUST NO USE MEMCPY HERE, CAUSE THE AREAS IN QUESTION
       // MIGHT (EVEN WILL) OVERLAP!!  THAT MUST NOT BE THE CASE WITH MEMCPY!!
       //
-      memmove ( & ( CurLevel->map [ i ] [ CurLevel->xlen - CurLevel->jump_threshold_east - 1 ] ) ,
-		& ( CurLevel->map [ i ] [ CurLevel->xlen - CurLevel->jump_threshold_east - 0 ] ) ,
-		CurLevel->jump_threshold_east - 0 );
-      // CurLevel->map [ i ] [ CurLevel->xlen - CurLevel->jump_threshold_east - 1 ] = FLOOR ;
+      memmove ( & ( EditLevel->map [ i ] [ EditLevel->xlen - EditLevel->jump_threshold_east - 1 ] ) ,
+		& ( EditLevel->map [ i ] [ EditLevel->xlen - EditLevel->jump_threshold_east - 0 ] ) ,
+		EditLevel->jump_threshold_east - 0 );
+      // EditLevel->map [ i ] [ EditLevel->xlen - EditLevel->jump_threshold_east - 1 ] = FLOOR ;
     }
 
-  CurLevel -> xlen --;
+  EditLevel -> xlen --;
 
-}; // void InsertColumnEasternInterface( CurLevel );
+  MoveWaypointsEastOf ( EditLevel->xlen - EditLevel->jump_threshold_east + 1 , -1 , EditLevel ) ;
+
+}; // void InsertColumnEasternInterface( EditLevel );
 
 /* ----------------------------------------------------------------------
  * Self-explanatory.
  * ---------------------------------------------------------------------- */
 void
-InsertColumnWesternInterface( Level CurLevel )
+InsertColumnWesternInterface( Level EditLevel )
 {
   int BackupOfEasternInterface;
 
@@ -222,25 +264,25 @@ InsertColumnWesternInterface( Level CurLevel )
   // First a sanity check:  If there's no western threshold, this
   // must be a mistake and will just be ignored...
   //
-  if ( CurLevel -> jump_threshold_west <= 0 ) return;
+  if ( EditLevel -> jump_threshold_west <= 0 ) return;
 
   //--------------------
   // Again we exploit existing code, namely the insertion procedure
   // for the eastern interface.  We shortly change the interface, use
   // that code from the eastern interface and restore the eastern interface.
   //
-  BackupOfEasternInterface = CurLevel->jump_threshold_east;
-  CurLevel->jump_threshold_east = CurLevel->xlen - CurLevel->jump_threshold_west ;
-  InsertColumnEasternInterface ( CurLevel );
-  CurLevel->jump_threshold_east = BackupOfEasternInterface ;
+  BackupOfEasternInterface = EditLevel->jump_threshold_east;
+  EditLevel->jump_threshold_east = EditLevel->xlen - EditLevel->jump_threshold_west ;
+  InsertColumnEasternInterface ( EditLevel );
+  EditLevel->jump_threshold_east = BackupOfEasternInterface ;
 
-}; // void InsertColumnWesternInterface( Level CurLevel )
+}; // void InsertColumnWesternInterface( Level EditLevel )
 
 /* ----------------------------------------------------------------------
  * Self-explanatory.
  * ---------------------------------------------------------------------- */
 void
-RemoveColumnWesternInterface( Level CurLevel )
+RemoveColumnWesternInterface( Level EditLevel )
 {
   int BackupOfEasternInterface;
 
@@ -248,25 +290,25 @@ RemoveColumnWesternInterface( Level CurLevel )
   // First a sanity check:  If there's no western threshold, this
   // must be a mistake and will just be ignored...
   //
-  if ( CurLevel -> jump_threshold_west <= 0 ) return;
+  if ( EditLevel -> jump_threshold_west <= 0 ) return;
 
   //--------------------
   // Again we exploit existing code, namely the insertion procedure
   // for the eastern interface.  We shortly change the interface, use
   // that code from the eastern interface and restore the eastern interface.
   //
-  BackupOfEasternInterface = CurLevel->jump_threshold_east;
-  CurLevel->jump_threshold_east = CurLevel->xlen - CurLevel->jump_threshold_west - 1;
-  RemoveColumnEasternInterface ( CurLevel );
-  CurLevel->jump_threshold_east = BackupOfEasternInterface ;
+  BackupOfEasternInterface = EditLevel->jump_threshold_east;
+  EditLevel->jump_threshold_east = EditLevel->xlen - EditLevel->jump_threshold_west - 1;
+  RemoveColumnEasternInterface ( EditLevel );
+  EditLevel->jump_threshold_east = BackupOfEasternInterface ;
 
-}; // void RemoveColumnWesternInterface( Level CurLevel )
+}; // void RemoveColumnWesternInterface( Level EditLevel )
 
 /* ----------------------------------------------------------------------
  * Self-Explanatory.
  * ---------------------------------------------------------------------- */
 void
-InsertLineSouthernInterface ( Level CurLevel )
+InsertLineSouthernInterface ( Level EditLevel )
 {
   char* temp;
   int i;
@@ -274,141 +316,153 @@ InsertLineSouthernInterface ( Level CurLevel )
   //--------------------
   // First a sanity check for existing interface
   //
-  if ( CurLevel -> jump_threshold_south <= 0 ) return;
+  if ( EditLevel -> jump_threshold_south <= 0 ) return;
 
   //--------------------
   // We build upon the existing code again.
   //
-  InsertLineVerySouth( CurLevel );
+  InsertLineVerySouth( EditLevel );
   
   //--------------------
   // Now we do some swapping of lines
   //
-  temp = CurLevel -> map [ CurLevel -> ylen - 1 ] ;
+  temp = EditLevel -> map [ EditLevel -> ylen - 1 ] ;
 
-  for ( i = 0 ; i < CurLevel -> jump_threshold_south ; i ++ )
+  for ( i = 0 ; i < EditLevel -> jump_threshold_south ; i ++ )
     {
-      CurLevel -> map [ CurLevel -> ylen - i - 1 ] = 
-	CurLevel -> map [ CurLevel -> ylen - i - 2 ] ;
+      EditLevel -> map [ EditLevel -> ylen - i - 1 ] = 
+	EditLevel -> map [ EditLevel -> ylen - i - 2 ] ;
     }
-  CurLevel -> map [ CurLevel -> ylen - 1 - CurLevel -> jump_threshold_south ] = temp ;
+  EditLevel -> map [ EditLevel -> ylen - 1 - EditLevel -> jump_threshold_south ] = temp ;
 
-}; // void InsertLineSouthernInterface ( CurLevel )
+  //--------------------
+  // Now we have the waypoints moved as well
+  //
+  MoveWaypointsSouthOf ( EditLevel -> ylen - 1 - EditLevel -> jump_threshold_south ,
+			 +1 , EditLevel ) ;
+
+}; // void InsertLineSouthernInterface ( EditLevel )
 
 /* ----------------------------------------------------------------------
  * Self-Explanatory.
  * ---------------------------------------------------------------------- */
 void
-RemoveLineSouthernInterface ( Level CurLevel )
+RemoveLineSouthernInterface ( Level EditLevel )
 {
   int i;
 
   //--------------------
   // First a sanity check for existing interface
   //
-  if ( CurLevel -> jump_threshold_south <= 0 ) return;
+  if ( EditLevel -> jump_threshold_south <= 0 ) return;
 
   //--------------------
   // Now we do some swapping of lines
   //
-  for ( i = CurLevel -> ylen - 1 - CurLevel -> jump_threshold_south ; 
-	i < CurLevel -> ylen - 1 ; i ++ )
+  for ( i = EditLevel -> ylen - 1 - EditLevel -> jump_threshold_south ; 
+	i < EditLevel -> ylen - 1 ; i ++ )
     {
-      CurLevel -> map [ i ] = CurLevel -> map [ i + 1 ] ;
+      EditLevel -> map [ i ] = EditLevel -> map [ i + 1 ] ;
     }
-  CurLevel -> ylen -- ;
+  EditLevel -> ylen -- ;
 
-}; // void RemoveLineSouthernInterface ( CurLevel )
+  //--------------------
+  // Now we have the waypoints moved as well
+  //
+  MoveWaypointsSouthOf ( EditLevel -> ylen - 0 - EditLevel -> jump_threshold_south ,
+			 -1 , EditLevel ) ;
+
+}; // void RemoveLineSouthernInterface ( EditLevel )
 
 /* ----------------------------------------------------------------------
  * Self-Explanatory.
  * ---------------------------------------------------------------------- */
 void
-InsertLineNorthernInterface ( Level CurLevel )
+InsertLineNorthernInterface ( Level EditLevel )
 {
   int OldSouthernInterface;
 
   //--------------------
   // First a sanity check for existing interface
   //
-  if ( CurLevel -> jump_threshold_north <= 0 ) return;
+  if ( EditLevel -> jump_threshold_north <= 0 ) return;
 
   //--------------------
   // We shortly change the southern interface to reuse the code for there
   //
-  OldSouthernInterface = CurLevel -> jump_threshold_south;
+  OldSouthernInterface = EditLevel -> jump_threshold_south;
 
-  CurLevel -> jump_threshold_south = CurLevel -> ylen - CurLevel -> jump_threshold_north - 0 ;
-  InsertLineSouthernInterface ( CurLevel );
+  EditLevel -> jump_threshold_south = EditLevel -> ylen - EditLevel -> jump_threshold_north - 0 ;
+  InsertLineSouthernInterface ( EditLevel );
 
-  CurLevel -> jump_threshold_south = OldSouthernInterface ;
+  EditLevel -> jump_threshold_south = OldSouthernInterface ;
 
-}; // void InsertLineNorthernInterface ( CurLevel )
+}; // void InsertLineNorthernInterface ( EditLevel )
 
 /* ----------------------------------------------------------------------
  * Self-Explanatory.
  * ---------------------------------------------------------------------- */
 void
-RemoveLineNorthernInterface ( Level CurLevel )
+RemoveLineNorthernInterface ( Level EditLevel )
 {
   int OldSouthernInterface;
 
   //--------------------
   // First a sanity check for existing interface
   //
-  if ( CurLevel -> jump_threshold_north <= 0 ) return;
+  if ( EditLevel -> jump_threshold_north <= 0 ) return;
 
   //--------------------
   // We shortly change the southern interface to reuse the code for there
   //
-  OldSouthernInterface = CurLevel -> jump_threshold_south;
+  OldSouthernInterface = EditLevel -> jump_threshold_south;
 
-  CurLevel -> jump_threshold_south = CurLevel -> ylen - CurLevel -> jump_threshold_north - 1 ;
-  RemoveLineSouthernInterface ( CurLevel );
+  EditLevel -> jump_threshold_south = EditLevel -> ylen - EditLevel -> jump_threshold_north - 1 ;
+  RemoveLineSouthernInterface ( EditLevel );
 
-  CurLevel -> jump_threshold_south = OldSouthernInterface ;
+  EditLevel -> jump_threshold_south = OldSouthernInterface ;
 
-}; // void RemoveLineNorthernInterface ( Level CurLevel )
+}; // void RemoveLineNorthernInterface ( Level EditLevel )
 
 /* ----------------------------------------------------------------------
  * Self-Explanatory.
  * ---------------------------------------------------------------------- */
 void
-InsertLineVeryNorth ( Level CurLevel )
+InsertLineVeryNorth ( Level EditLevel )
 {
   int OldSouthernInterface;
 
   //--------------------
   // We shortly change the southern interface to reuse the code for there
   //
-  OldSouthernInterface = CurLevel -> jump_threshold_south;
+  OldSouthernInterface = EditLevel -> jump_threshold_south;
 
-  CurLevel -> jump_threshold_south = CurLevel -> ylen - 0 ;
-  InsertLineSouthernInterface ( CurLevel );
+  EditLevel -> jump_threshold_south = EditLevel -> ylen - 0 ;
+  InsertLineSouthernInterface ( EditLevel );
 
-  CurLevel -> jump_threshold_south = OldSouthernInterface ;
+  EditLevel -> jump_threshold_south = OldSouthernInterface ;
 
-}; // void InsertLineVeryNorth ( CurLevel )
+}; // void InsertLineVeryNorth ( EditLevel )
 
 /* ----------------------------------------------------------------------
  * Self-Explanatory.
  * ---------------------------------------------------------------------- */
 void
-RemoveLineVeryNorth ( Level CurLevel )
+RemoveLineVeryNorth ( Level EditLevel )
 {
   int OldSouthernInterface;
 
   //--------------------
   // We shortly change the southern interface to reuse the code for there
   //
-  OldSouthernInterface = CurLevel -> jump_threshold_south;
+  OldSouthernInterface = EditLevel -> jump_threshold_south;
 
-  CurLevel -> jump_threshold_south = CurLevel -> ylen - 1 ;
-  RemoveLineSouthernInterface ( CurLevel );
+  EditLevel -> jump_threshold_south = EditLevel -> ylen - 1 ;
+  RemoveLineSouthernInterface ( EditLevel );
 
-  CurLevel -> jump_threshold_south = OldSouthernInterface ;
+  EditLevel -> jump_threshold_south = OldSouthernInterface ;
 
-}; // void RemoveLineVeryNorth ( Level CurLevel )
+}; // void RemoveLineVeryNorth ( Level EditLevel )
 
 /* ----------------------------------------------------------------------
  * This a a menu interface to allow to edit the level dimensions in a
@@ -422,8 +476,9 @@ EditLevelDimensions ( void )
   char Options [ 20 ] [1000];
   int MenuPosition = 1 ;
   int Weiter = FALSE ;
+  Level EditLevel;
 
-  CurLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
+  EditLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
 
   while ( !Weiter )
     {
@@ -440,9 +495,9 @@ EditLevelDimensions ( void )
       MenuTexts[ 6 ] = "Insert/Remove line just north of southern Interface" ;
       MenuTexts[ 7 ] = "Insert/Remove line to the very south" ;
       
-      sprintf( Options [ 0 ] , "Current level size in X: %d." , CurLevel->xlen );
+      sprintf( Options [ 0 ] , "Current level size in X: %d." , EditLevel->xlen );
       MenuTexts[ 8 ] = Options [ 0 ];
-      sprintf( Options [ 1 ] , "Current level size in Y: %d." , CurLevel->ylen  );
+      sprintf( Options [ 1 ] , "Current level size in Y: %d." , EditLevel->ylen  );
       MenuTexts[ 9 ] = Options [ 1 ] ;
 
       MenuTexts[ 10 ] = "Back To Level Editor Main Menu" ;
@@ -457,12 +512,12 @@ EditLevelDimensions ( void )
 	case INSERTREMOVE_COLUMN_VERY_EAST:
 	  if ( RightPressed() )
 	    {
-	      InsertColumnVeryEast( CurLevel );
+	      InsertColumnVeryEast( EditLevel );
 	      while (RightPressed());
 	    }
 	  if ( LeftPressed() )
 	    {
-	      CurLevel->xlen--; // making it smaller is always easy:  just modify the value for size
+	      EditLevel->xlen--; // making it smaller is always easy:  just modify the value for size
 	      // allocation of new memory or things like that are not nescessary
 	      while (LeftPressed());
 	    }
@@ -471,12 +526,12 @@ EditLevelDimensions ( void )
 	case INSERTREMOVE_COLUMN_EASTERN_INTERFACE:
 	  if ( RightPressed() )
 	    {
-	      InsertColumnEasternInterface( CurLevel );
+	      InsertColumnEasternInterface( EditLevel );
 	      while (RightPressed());
 	    }
 	  if ( LeftPressed() )
 	    {
-	      RemoveColumnEasternInterface( CurLevel );
+	      RemoveColumnEasternInterface( EditLevel );
 	      while (LeftPressed());
 	    }
 	  break;
@@ -484,12 +539,12 @@ EditLevelDimensions ( void )
 	case INSERTREMOVE_COLUMN_WESTERN_INTERFACE:
 	  if ( RightPressed() )
 	    {
-	      InsertColumnWesternInterface( CurLevel );
+	      InsertColumnWesternInterface( EditLevel );
 	      while (RightPressed());
 	    }
 	  if ( LeftPressed() )
 	    {
-	      RemoveColumnWesternInterface( CurLevel );
+	      RemoveColumnWesternInterface( EditLevel );
 	      while (LeftPressed());
 	    }
 	  break;
@@ -497,13 +552,13 @@ EditLevelDimensions ( void )
 	case INSERTREMOVE_LINE_VERY_SOUTH:
 	  if ( RightPressed() )
 	    {
-	      InsertLineVerySouth ( CurLevel );
+	      InsertLineVerySouth ( EditLevel );
 	      while (RightPressed());
 	    }
 	  
 	  if ( LeftPressed() )
 	    {
-	      CurLevel->ylen--; // making it smaller is always easy:  just modify the value for size
+	      EditLevel->ylen--; // making it smaller is always easy:  just modify the value for size
 	      // allocation of new memory or things like that are not nescessary.
 	      while (LeftPressed());
 	    }
@@ -512,12 +567,12 @@ EditLevelDimensions ( void )
 	case INSERTREMOVE_LINE_SOUTHERN_INTERFACE:
 	  if ( RightPressed() )
 	    {
-	      InsertLineSouthernInterface ( CurLevel );
+	      InsertLineSouthernInterface ( EditLevel );
 	      while (RightPressed());
 	    }
 	  if ( LeftPressed() )
 	    {
-	      RemoveLineSouthernInterface ( CurLevel );
+	      RemoveLineSouthernInterface ( EditLevel );
 	      while (LeftPressed());
 	    }
 	  break;
@@ -525,12 +580,12 @@ EditLevelDimensions ( void )
 	case INSERTREMOVE_LINE_NORTHERN_INTERFACE:
 	  if ( RightPressed() )
 	    {
-	      InsertLineNorthernInterface ( CurLevel );
+	      InsertLineNorthernInterface ( EditLevel );
 	      while (RightPressed());
 	    }
 	  if ( LeftPressed() )
 	    {
-	      RemoveLineNorthernInterface ( CurLevel );
+	      RemoveLineNorthernInterface ( EditLevel );
 	      while (LeftPressed());
 	    }
 	  break;
@@ -538,12 +593,12 @@ EditLevelDimensions ( void )
 	case INSERTREMOVE_LINE_VERY_NORTH:
 	  if ( RightPressed() )
 	    {
-	      InsertLineVeryNorth ( CurLevel );
+	      InsertLineVeryNorth ( EditLevel );
 	      while (RightPressed());
 	    }
 	  if ( LeftPressed() )
 	    {
-	      RemoveLineVeryNorth ( CurLevel );
+	      RemoveLineVeryNorth ( EditLevel );
 	      while (LeftPressed());
 	    }
 	  break;
@@ -551,10 +606,10 @@ EditLevelDimensions ( void )
 	case (-1):
 	case BACK_TO_LE_MAIN_MENU:
 	  while (EnterPressed() || SpacePressed() || EscapePressed() ) ;
-	  GetDoors ( CurLevel );
-	  GetRefreshes ( CurLevel );
-	  GetTeleports ( CurLevel );
-	  GetAutoguns ( CurLevel );
+	  GetDoors ( EditLevel );
+	  GetRefreshes ( EditLevel );
+	  GetTeleports ( EditLevel );
+	  GetAutoguns ( EditLevel );
 	  Weiter=!Weiter;
 	  break;
 
@@ -572,7 +627,7 @@ EditLevelDimensions ( void )
  *
  * ---------------------------------------------------------------------- */
 int
-DoLevelEditorMainMenu ( Level CurLevel )
+DoLevelEditorMainMenu ( Level EditLevel )
 {
   char* MenuTexts[ 20 ];
   char Options [ 20 ] [1000];
@@ -585,23 +640,23 @@ DoLevelEditorMainMenu ( Level CurLevel )
   while (!Weiter)
     {
       
-      CurLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
+      EditLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
 
       InitiateMenu( NULL );
       
       MenuTexts[ 0 ] = "Save whole ship to 'Testship.shp'" ;
-      sprintf( Options [ 0 ] , "Current: %d.  Level Up/Down" , CurLevel->levelnum );
+      sprintf( Options [ 0 ] , "Current: %d.  Level Up/Down" , EditLevel->levelnum );
       MenuTexts[ 1 ] = Options [ 0 ];
       MenuTexts[ 2 ] = "Change tile set" ;
-      sprintf( Options [ 1 ] , "Current levelsize: %d x %d map tiles." , CurLevel->xlen , CurLevel->ylen );
+      sprintf( Options [ 1 ] , "Current levelsize: %d x %d map tiles." , EditLevel->xlen , EditLevel->ylen );
       MenuTexts[ 3 ] = Options [ 1 ];
       sprintf( Options [ 2 ] , " --- UNUSED --- " );
       MenuTexts[ 4 ] = Options [ 2 ] ;
-      sprintf( Options [ 3 ] , "Level name: %s" , CurLevel->Levelname );
+      sprintf( Options [ 3 ] , "Level name: %s" , EditLevel->Levelname );
       MenuTexts[ 5 ] = Options [ 3 ] ;
-      sprintf( Options [ 4 ] , "Background music file name: %s" , CurLevel->Background_Song_Name );
+      sprintf( Options [ 4 ] , "Background music file name: %s" , EditLevel->Background_Song_Name );
       MenuTexts[ 6 ] = Options [ 4 ] ;
-      sprintf( Options [ 5 ] , "Set Level Comment: %s" , CurLevel->Level_Enter_Comment );
+      sprintf( Options [ 5 ] , "Set Level Comment: %s" , EditLevel->Level_Enter_Comment );
       MenuTexts[ 7 ] = Options [ 5 ] ;
       MenuTexts[ 8 ] = "Add completely new level" ; 
       MenuTexts[ 9 ] = "Set Level Interfaces" ;
@@ -633,7 +688,7 @@ DoLevelEditorMainMenu ( Level CurLevel )
 	  // Weiter=!Weiter;
 	  break;
 	case CHANGE_LEVEL_POSITION: 
-	  // if ( CurLevel->levelnum ) Teleport ( CurLevel->levelnum-1 , Me[0].pos.x , Me[0].pos.y ); 
+	  // if ( EditLevel->levelnum ) Teleport ( EditLevel->levelnum-1 , Me[0].pos.x , Me[0].pos.y ); 
 	  while (EnterPressed() || SpacePressed() ) ;
 	  break;
 	case CHANGE_TILE_SET_POSITION: 
@@ -643,14 +698,14 @@ DoLevelEditorMainMenu ( Level CurLevel )
 	  while (EnterPressed() || SpacePressed() ) ;
 	  CenteredPutString ( Screen ,  12*FontHeight(Menu_BFont), "Please enter new level name:");
 	  SDL_Flip( Screen );
-	  CurLevel->Levelname=GetString( 100 , FALSE );
+	  EditLevel->Levelname=GetString( 100 , FALSE );
 	  Weiter=!Weiter;
 	  break;
 	case SET_BACKGROUND_SONG_NAME:
 	  while (EnterPressed() || SpacePressed() ) ;
 	  CenteredPutString ( Screen ,  12*FontHeight(Menu_BFont), "Please enter new music file name:");
 	  SDL_Flip( Screen );
-	  CurLevel->Background_Song_Name=GetString( 100 , FALSE );
+	  EditLevel->Background_Song_Name=GetString( 100 , FALSE );
 	  Weiter=!Weiter;
 	  break;
 	case SET_LEVEL_COMMENT:
@@ -658,7 +713,7 @@ DoLevelEditorMainMenu ( Level CurLevel )
 	  CenteredPutString ( Screen ,  12*FontHeight(Menu_BFont), "Please enter new level comment:\n");
 	  SDL_Flip( Screen );
 	  SetTextCursor( 15 , 440 );
-	  CurLevel->Level_Enter_Comment=GetString( 100 , FALSE );
+	  EditLevel->Level_Enter_Comment=GetString( 100 , FALSE );
 	  Weiter=!Weiter;
 	  break;
 	case ADD_NEW_LEVEL:
@@ -704,31 +759,31 @@ DoLevelEditorMainMenu ( Level CurLevel )
 	    case CHANGE_LEVEL_POSITION:
 	      if ( LeftPressed() )
 		{
-		  if ( CurLevel->levelnum > 0 )
-		    Teleport ( CurLevel->levelnum -1 , 3 , 3 , 0 , TRUE );
+		  if ( EditLevel->levelnum > 0 )
+		    Teleport ( EditLevel->levelnum -1 , 3 , 3 , 0 , TRUE );
 		  while (LeftPressed());
 		}
 	      if ( RightPressed() )
 		{
-		  if ( CurLevel->levelnum < curShip.num_levels -1 )
-		    Teleport ( CurLevel->levelnum +1 , 3 , 3 , 0 , TRUE );
+		  if ( EditLevel->levelnum < curShip.num_levels -1 )
+		    Teleport ( EditLevel->levelnum +1 , 3 , 3 , 0 , TRUE );
 		  while (RightPressed());
 		}
 	      if ( CurrentCombatScaleFactor != 1 ) SetCombatScaleTo ( CurrentCombatScaleFactor );
 	      break;
 	      
 	    case CHANGE_TILE_SET_POSITION:
-	      if ( RightPressed() && (CurLevel->color  < 6 ) )
+	      if ( RightPressed() && (EditLevel->color  < 6 ) )
 		{
-		  CurLevel->color++;
+		  EditLevel->color++;
 		  while (RightPressed());
 		}
-	      if ( LeftPressed() && (CurLevel->color > 0) )
+	      if ( LeftPressed() && (EditLevel->color > 0) )
 		{
-		  CurLevel->color--;
+		  EditLevel->color--;
 		  while (LeftPressed());
 		}
-	      Teleport ( CurLevel->levelnum , Me[0].pos.x , Me[0].pos.y , 0 , TRUE ); 
+	      Teleport ( EditLevel->levelnum , Me[0].pos.x , Me[0].pos.y , 0 , TRUE ); 
 	      break;
 
 	    case CHANGE_SIZE_X:
@@ -744,7 +799,7 @@ DoLevelEditorMainMenu ( Level CurLevel )
 
   return ( Done );
 
-}; // void DoLevelEditorMainMenu ( Level CurLevel );
+}; // void DoLevelEditorMainMenu ( Level EditLevel );
 
 /* ----------------------------------------------------------------------
  *
@@ -1121,29 +1176,32 @@ SetLevelInterfaces ( void )
   int Weiter = FALSE;
   int MenuPosition = 1 ;
   char Options [ 20 ] [ 500 ] ;
+  Level EditLevel;
+
+  EditLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
 
   while (!Weiter)
     {
       
-      CurLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
+      EditLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
 
       InitiateMenu( NULL );
       
-      sprintf( Options [ 0 ] , "Jump threshold north: %d.  Up/Down" , CurLevel->jump_threshold_north );
+      sprintf( Options [ 0 ] , "Jump threshold north: %d.  Up/Down" , EditLevel->jump_threshold_north );
       MenuTexts [ 0 ] = Options [ 0 ] ;
-      sprintf( Options [ 1 ] , "Jump threshold south: %d.  Up/Down" , CurLevel->jump_threshold_south );
+      sprintf( Options [ 1 ] , "Jump threshold south: %d.  Up/Down" , EditLevel->jump_threshold_south );
       MenuTexts [ 1 ] = Options [ 1 ] ;
-      sprintf( Options [ 2 ] , "Jump threshold east: %d.  Up/Down" , CurLevel->jump_threshold_east );
+      sprintf( Options [ 2 ] , "Jump threshold east: %d.  Up/Down" , EditLevel->jump_threshold_east );
       MenuTexts [ 2 ] = Options [ 2 ] ;
-      sprintf( Options [ 3 ] , "Jump threshold west: %d.  Up/Down" , CurLevel->jump_threshold_west );
+      sprintf( Options [ 3 ] , "Jump threshold west: %d.  Up/Down" , EditLevel->jump_threshold_west );
       MenuTexts [ 3 ] = Options [ 3 ] ;
-      sprintf( Options [ 4 ] , "Jump target north: %d.  Up/Down" , CurLevel->jump_target_north );
+      sprintf( Options [ 4 ] , "Jump target north: %d.  Up/Down" , EditLevel->jump_target_north );
       MenuTexts [ 4 ] = Options [ 4 ] ;
-      sprintf( Options [ 5 ] , "Jump target south: %d.  Up/Down" , CurLevel->jump_target_south );
+      sprintf( Options [ 5 ] , "Jump target south: %d.  Up/Down" , EditLevel->jump_target_south );
       MenuTexts [ 5 ] = Options [ 5 ] ;
-      sprintf( Options [ 6 ] , "Jump target east: %d.  Up/Down" , CurLevel->jump_target_east );
+      sprintf( Options [ 6 ] , "Jump target east: %d.  Up/Down" , EditLevel->jump_target_east );
       MenuTexts [ 6 ] = Options [ 6 ] ;
-      sprintf( Options [ 7 ] , "Jump target west: %d.  Up/Down" , CurLevel->jump_target_west );
+      sprintf( Options [ 7 ] , "Jump target west: %d.  Up/Down" , EditLevel->jump_target_west );
       MenuTexts [ 7 ] = Options [ 7 ] ;
       MenuTexts [ 8 ] = "Export this level to other target levels" ;
       MenuTexts [ 9 ] = "Report interface inconsistencies";
@@ -1194,12 +1252,12 @@ SetLevelInterfaces ( void )
 	    case JUMP_THRESHOLD_NORTH:
 	      if ( LeftPressed() )
 		{
-		  if ( CurLevel->jump_threshold_north >= 0 ) CurLevel->jump_threshold_north -- ;
+		  if ( EditLevel->jump_threshold_north >= 0 ) EditLevel->jump_threshold_north -- ;
 		  while (LeftPressed());
 		}
 	      if ( RightPressed() )
 		{
-		  CurLevel->jump_threshold_north ++ ;
+		  EditLevel->jump_threshold_north ++ ;
 		  while (RightPressed());
 		}
 	      break;
@@ -1207,12 +1265,12 @@ SetLevelInterfaces ( void )
 	    case JUMP_THRESHOLD_SOUTH:
 	      if ( LeftPressed() )
 		{
-		  if ( CurLevel->jump_threshold_south >= 0 ) CurLevel->jump_threshold_south -- ;
+		  if ( EditLevel->jump_threshold_south >= 0 ) EditLevel->jump_threshold_south -- ;
 		  while (LeftPressed());
 		}
 	      if ( RightPressed() )
 		{
-		  CurLevel->jump_threshold_south ++ ;
+		  EditLevel->jump_threshold_south ++ ;
 		  while (RightPressed());
 		}
 	      break;
@@ -1220,12 +1278,12 @@ SetLevelInterfaces ( void )
 	    case JUMP_THRESHOLD_EAST:
 	      if ( LeftPressed() )
 		{
-		  if ( CurLevel->jump_threshold_east >= 0 ) CurLevel->jump_threshold_east -- ;
+		  if ( EditLevel->jump_threshold_east >= 0 ) EditLevel->jump_threshold_east -- ;
 		  while (LeftPressed());
 		}
 	      if ( RightPressed() )
 		{
-		  CurLevel->jump_threshold_east ++ ;
+		  EditLevel->jump_threshold_east ++ ;
 		  while (RightPressed());
 		}
 	      break;
@@ -1233,12 +1291,12 @@ SetLevelInterfaces ( void )
 	    case JUMP_THRESHOLD_WEST:
 	      if ( LeftPressed() )
 		{
-		  if ( CurLevel->jump_threshold_west >= 0 ) CurLevel->jump_threshold_west -- ;
+		  if ( EditLevel->jump_threshold_west >= 0 ) EditLevel->jump_threshold_west -- ;
 		  while (LeftPressed());
 		}
 	      if ( RightPressed() )
 		{
-		  CurLevel->jump_threshold_west ++ ;
+		  EditLevel->jump_threshold_west ++ ;
 		  while (RightPressed());
 		}
 	      break;
@@ -1246,12 +1304,12 @@ SetLevelInterfaces ( void )
 	    case JUMP_TARGET_NORTH:
 	      if ( LeftPressed() )
 		{
-		  if ( CurLevel->jump_target_north >= 0 ) CurLevel->jump_target_north -- ;
+		  if ( EditLevel->jump_target_north >= 0 ) EditLevel->jump_target_north -- ;
 		  while (LeftPressed());
 		}
 	      if ( RightPressed() )
 		{
-		  CurLevel->jump_target_north ++ ;
+		  EditLevel->jump_target_north ++ ;
 		  while (RightPressed());
 		}
 	      break;
@@ -1259,12 +1317,12 @@ SetLevelInterfaces ( void )
 	    case JUMP_TARGET_SOUTH:
 	      if ( LeftPressed() )
 		{
-		  if ( CurLevel->jump_target_south >= 0 ) CurLevel->jump_target_south -- ;
+		  if ( EditLevel->jump_target_south >= 0 ) EditLevel->jump_target_south -- ;
 		  while (LeftPressed());
 		}
 	      if ( RightPressed() )
 		{
-		  CurLevel->jump_target_south ++ ;
+		  EditLevel->jump_target_south ++ ;
 		  while (RightPressed());
 		}
 	      break;
@@ -1272,12 +1330,12 @@ SetLevelInterfaces ( void )
 	    case JUMP_TARGET_EAST:
 	      if ( LeftPressed() )
 		{
-		  if ( CurLevel->jump_target_east >= 0 ) CurLevel->jump_target_east -- ;
+		  if ( EditLevel->jump_target_east >= 0 ) EditLevel->jump_target_east -- ;
 		  while (LeftPressed());
 		}
 	      if ( RightPressed() )
 		{
-		  CurLevel->jump_target_east ++ ;
+		  EditLevel->jump_target_east ++ ;
 		  while (RightPressed());
 		}
 	      break;
@@ -1285,12 +1343,12 @@ SetLevelInterfaces ( void )
 	    case JUMP_TARGET_WEST:
 	      if ( LeftPressed() )
 		{
-		  if ( CurLevel->jump_target_west >= 0 ) CurLevel->jump_target_west -- ;
+		  if ( EditLevel->jump_target_west >= 0 ) EditLevel->jump_target_west -- ;
 		  while (LeftPressed());
 		}
 	      if ( RightPressed() )
 		{
-		  CurLevel->jump_target_west ++ ;
+		  EditLevel->jump_target_west ++ ;
 		  while (RightPressed());
 		}
 	      break;
@@ -1448,6 +1506,9 @@ Highlight_Current_Block(void)
   int i;
   char PanelText[5000]="";
   int Codepanel_Index;
+  Level EditLevel;
+
+  EditLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
 
 #define HIGHLIGHTCOLOR 255
 
@@ -1481,7 +1542,7 @@ Highlight_Current_Block(void)
   // Now we print out the codepanel information about this tile
   // just in case it is really a codepanel.
   //
-  switch ( CurLevel->map [ (int)rintf( Me[0].pos.y) ] [ (int)rintf( Me[0].pos.x ) ] )
+  switch ( EditLevel->map [ (int)rintf( Me[0].pos.y) ] [ (int)rintf( Me[0].pos.x ) ] )
     {
     case CODEPANEL_L:
     case CODEPANEL_R:
@@ -1490,8 +1551,8 @@ Highlight_Current_Block(void)
 
       for ( Codepanel_Index = 0 ; Codepanel_Index < MAX_CODEPANELS_PER_LEVEL ; Codepanel_Index ++ )
 	{
-	  if ( ( ( (int) rintf( Me[0].pos.x ) ) == CurLevel->CodepanelList[ Codepanel_Index ].x ) && 
-	       ( ( (int) rintf( Me[0].pos.y ) ) == CurLevel->CodepanelList[ Codepanel_Index ].y ) )
+	  if ( ( ( (int) rintf( Me[0].pos.x ) ) == EditLevel->CodepanelList[ Codepanel_Index ].x ) && 
+	       ( ( (int) rintf( Me[0].pos.y ) ) == EditLevel->CodepanelList[ Codepanel_Index ].y ) )
 	    break;
 	}
 
@@ -1502,7 +1563,7 @@ Highlight_Current_Block(void)
       else
 	{
 	  sprintf( PanelText , "\nCode Panel Information: \n Codeword=\"%s\"." , 
-		   CurLevel->CodepanelList[ Codepanel_Index ].Secret_Code );
+		   EditLevel->CodepanelList[ Codepanel_Index ].Secret_Code );
 	}
 
       DisplayText ( PanelText , User_Rect.x , User_Rect.y , &User_Rect );
@@ -1527,6 +1588,9 @@ Show_Waypoints( int PrintConnectionList )
   int color;
   char ConnectionText[5000];
   char TextAddition[1000];
+  Level EditLevel;
+
+  EditLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
 
 #define ACTIVE_WP_COLOR 0x0FFFFFFFF
 
@@ -1538,7 +1602,7 @@ Show_Waypoints( int PrintConnectionList )
   for (wp=0; wp<MAXWAYPOINTS; wp++)
     {
 
-      if ( CurLevel->AllWaypoints[wp].x == 0) continue;
+      if ( EditLevel->AllWaypoints[wp].x == 0) continue;
 
       //--------------------
       // Draw the cross in the middle of the middle of the tile
@@ -1546,25 +1610,25 @@ Show_Waypoints( int PrintConnectionList )
       for (i= Block_Width/4; i<3 * Block_Width / 4; i++)
 	{
 	  // This draws a (double) line at the upper border of the current block
-	  x = i + User_Rect.x+(User_Rect.w/2)- (( Me[0].pos.x)-CurLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
-	  y = i + User_Rect.y+User_Rect.h/2 - (( Me[0].pos.y)-CurLevel->AllWaypoints[wp].y + 0.5) * Block_Height;
+	  x = i + User_Rect.x+(User_Rect.w/2)- (( Me[0].pos.x)-EditLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
+	  y = i + User_Rect.y+User_Rect.h/2 - (( Me[0].pos.y)-EditLevel->AllWaypoints[wp].y + 0.5) * Block_Height;
 	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
 	  putpixel( Screen , x , y , HIGHLIGHTCOLOR );
 
 		    
-	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me[0].pos.x )-CurLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
-	  y = i + User_Rect.y+User_Rect.h/2- (( Me[0].pos.y)-CurLevel->AllWaypoints[wp].y + 0.5) * Block_Height + 1;
+	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me[0].pos.x )-EditLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
+	  y = i + User_Rect.y+User_Rect.h/2- (( Me[0].pos.y)-EditLevel->AllWaypoints[wp].y + 0.5) * Block_Height + 1;
 	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
 	  putpixel( Screen , x , y , HIGHLIGHTCOLOR );
 	  
 	  // This draws a line at the lower border of the current block
-	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me[0].pos.x)-CurLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
-	  y = -i + User_Rect.y + User_Rect.h/2 - (( Me[0].pos.y )-CurLevel->AllWaypoints[wp].y - 0.5 ) * Block_Height -1;
+	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me[0].pos.x)-EditLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
+	  y = -i + User_Rect.y + User_Rect.h/2 - (( Me[0].pos.y )-EditLevel->AllWaypoints[wp].y - 0.5 ) * Block_Height -1;
 	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
 	  putpixel( Screen , x , y , HIGHLIGHTCOLOR );
 
-	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me[0].pos.x)-CurLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
-	  y = -i + User_Rect.y + User_Rect.h/2 - ((Me[0].pos.y)-CurLevel->AllWaypoints[wp].y - 0.5 ) * Block_Height -2;
+	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me[0].pos.x)-EditLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
+	  y = -i + User_Rect.y + User_Rect.h/2 - ((Me[0].pos.y)-EditLevel->AllWaypoints[wp].y - 0.5 ) * Block_Height -2;
 	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
 	  putpixel( Screen , x , y , HIGHLIGHTCOLOR );
 	  
@@ -1581,9 +1645,9 @@ Show_Waypoints( int PrintConnectionList )
 
       for ( i=0; i<MAX_WP_CONNECTIONS; i++ )
 	{
-	  if ( CurLevel->AllWaypoints[wp].connections[i] != (-1) )
+	  if ( EditLevel->AllWaypoints[wp].connections[i] != (-1) )
 	    {
-	      if ( ( BlockX == CurLevel->AllWaypoints[wp].x ) && ( BlockY == CurLevel->AllWaypoints[wp].y ) )
+	      if ( ( BlockX == EditLevel->AllWaypoints[wp].x ) && ( BlockY == EditLevel->AllWaypoints[wp].y ) )
 		{
 		  // color = ACTIVE_WP_COLOR ;
 		  // else color = HIGHLIGHTCOLOR ; 
@@ -1599,17 +1663,17 @@ Show_Waypoints( int PrintConnectionList )
 		    {
 		      SDL_UnlockSurface( Screen );
 		      sprintf ( TextAddition , "To: X=%d Y=%d    " , 
-				CurLevel->AllWaypoints[CurLevel->AllWaypoints[wp].connections[i]].x , 
-				CurLevel->AllWaypoints[CurLevel->AllWaypoints[wp].connections[i]].y 
+				EditLevel->AllWaypoints[EditLevel->AllWaypoints[wp].connections[i]].x , 
+				EditLevel->AllWaypoints[EditLevel->AllWaypoints[wp].connections[i]].y 
 				);
 		      strcat ( ConnectionText , TextAddition );
 		      DisplayText ( ConnectionText , User_Rect.x , User_Rect.y , &User_Rect );
 		      SDL_LockSurface( Screen );
 		    }
 		      
-		  DrawLineBetweenTiles( CurLevel->AllWaypoints[wp].x , CurLevel->AllWaypoints[wp].y , 
-					CurLevel->AllWaypoints[CurLevel->AllWaypoints[wp].connections[i]].x , 
-					CurLevel->AllWaypoints[CurLevel->AllWaypoints[wp].connections[i]].y ,
+		  DrawLineBetweenTiles( EditLevel->AllWaypoints[wp].x , EditLevel->AllWaypoints[wp].y , 
+					EditLevel->AllWaypoints[EditLevel->AllWaypoints[wp].connections[i]].x , 
+					EditLevel->AllWaypoints[EditLevel->AllWaypoints[wp].connections[i]].y ,
 					color );
 		}
 	    }
@@ -1625,7 +1689,7 @@ Show_Waypoints( int PrintConnectionList )
  *
  * ---------------------------------------------------------------------- */
 void
-HandleMapTileEditingKeys ( Level CurLevel , int BlockX , int BlockY )
+HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
 {
   
   //--------------------
@@ -1633,7 +1697,7 @@ HandleMapTileEditingKeys ( Level CurLevel , int BlockX , int BlockY )
   //
   if ( TPressed()) 
     {
-      CurLevel -> map [ BlockY ] [ BlockX ] = TELE_1 ;
+      EditLevel -> map [ BlockY ] [ BlockX ] = TELE_1 ;
     }
   
   //--------------------
@@ -1643,147 +1707,147 @@ HandleMapTileEditingKeys ( Level CurLevel , int BlockX , int BlockY )
   if (Number1Pressed()) 
     {
       if ( Shift_Was_Pressed() )
-	CurLevel->map[BlockY][BlockX]=BOX_1;
+	EditLevel->map[BlockY][BlockX]=BOX_1;
       else
-	CurLevel->map[BlockY][BlockX]=BLOCK1;
+	EditLevel->map[BlockY][BlockX]=BLOCK1;
     }
   if (Number2Pressed()) 
     {
       if ( Shift_Was_Pressed() )
-	CurLevel->map[BlockY][BlockX]=BOX_2;
+	EditLevel->map[BlockY][BlockX]=BOX_2;
       else
-	CurLevel->map[BlockY][BlockX]=BLOCK2;
+	EditLevel->map[BlockY][BlockX]=BLOCK2;
     }
   if (Number3Pressed()) 
     {
       if ( Shift_Was_Pressed() )
-	CurLevel->map[BlockY][BlockX]=BOX_3;
+	EditLevel->map[BlockY][BlockX]=BOX_3;
       else
-	CurLevel->map[BlockY][BlockX]=BLOCK3;
+	EditLevel->map[BlockY][BlockX]=BLOCK3;
     }
   if (Number4Pressed()) 
     {
       if ( Shift_Was_Pressed() )
-	CurLevel->map[BlockY][BlockX]=BOX_4;
+	EditLevel->map[BlockY][BlockX]=BOX_4;
       else
-	CurLevel->map[BlockY][BlockX]=BLOCK4;
+	EditLevel->map[BlockY][BlockX]=BLOCK4;
     }
   if (Number5Pressed()) 
     {
-      CurLevel->map[BlockY][BlockX]=BLOCK5;
+      EditLevel->map[BlockY][BlockX]=BLOCK5;
     }
   if (LPressed()) 
     {
-      CurLevel->map[BlockY][BlockX]=LIFT;
+      EditLevel->map[BlockY][BlockX]=LIFT;
     }
   if (KP_PLUS_Pressed()) 
     {
-      CurLevel->map[BlockY][BlockX]=V_WALL;
+      EditLevel->map[BlockY][BlockX]=V_WALL;
     }
   if (KP0Pressed()) 
     {
-      CurLevel->map[BlockY][BlockX]=H_WALL;
+      EditLevel->map[BlockY][BlockX]=H_WALL;
     }
   if (KP1Pressed()) 
     {
-      if ( Shift_Was_Pressed() ) CurLevel->map[BlockY][BlockX]=AUTOGUN_L;
-      else if ( Ctrl_Was_Pressed() ) CurLevel->map[BlockY][BlockX]=ENHANCER_LD;
-      else CurLevel->map[BlockY][BlockX]=CORNER_LD;
+      if ( Shift_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=AUTOGUN_L;
+      else if ( Ctrl_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=ENHANCER_LD;
+      else EditLevel->map[BlockY][BlockX]=CORNER_LD;
     }
   if (KP2Pressed()) 
     {
       if ( Shift_Was_Pressed() )
-	CurLevel->map[BlockY][BlockX]=CONSOLE_D;
+	EditLevel->map[BlockY][BlockX]=CONSOLE_D;
       else if ( Ctrl_Was_Pressed() ) 
-	CurLevel->map[BlockY][BlockX]=CODEPANEL_D;
+	EditLevel->map[BlockY][BlockX]=CODEPANEL_D;
       else if ( Alt_Was_Pressed() ) 
-	CurLevel->map[BlockY][BlockX]=CONVEY_D;
-      else CurLevel->map[BlockY][BlockX]=T_D;
+	EditLevel->map[BlockY][BlockX]=CONVEY_D;
+      else EditLevel->map[BlockY][BlockX]=T_D;
     }
   if (KP3Pressed()) 
     {
-      if ( Shift_Was_Pressed() ) CurLevel->map[BlockY][BlockX]=AUTOGUN_U;
-      else if ( Ctrl_Was_Pressed() ) CurLevel->map[BlockY][BlockX]=ENHANCER_RD;
-      else CurLevel->map[BlockY][BlockX]=CORNER_RD;
+      if ( Shift_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=AUTOGUN_U;
+      else if ( Ctrl_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=ENHANCER_RD;
+      else EditLevel->map[BlockY][BlockX]=CORNER_RD;
     }
   if (KP4Pressed()) 
     {
       if ( Shift_Was_Pressed() )
-	CurLevel->map[BlockY][BlockX]=CONSOLE_L;
+	EditLevel->map[BlockY][BlockX]=CONSOLE_L;
       else if ( Ctrl_Was_Pressed() ) 
-	CurLevel->map[BlockY][BlockX]=CODEPANEL_L;
+	EditLevel->map[BlockY][BlockX]=CODEPANEL_L;
       else if ( Alt_Was_Pressed() ) 
-	CurLevel->map[BlockY][BlockX]=CONVEY_R;
-      else CurLevel->map[BlockY][BlockX]=T_L;
+	EditLevel->map[BlockY][BlockX]=CONVEY_R;
+      else EditLevel->map[BlockY][BlockX]=T_L;
     }
   if (KP5Pressed()) 
     {
       if (!Shift_Was_Pressed())
-	CurLevel->map[BlockY][BlockX]=KREUZ;
-      else CurLevel->map[BlockY][BlockX]=VOID;
+	EditLevel->map[BlockY][BlockX]=KREUZ;
+      else EditLevel->map[BlockY][BlockX]=VOID;
     }
   if (KP6Pressed()) 
     {
       if ( Shift_Was_Pressed() )
-	CurLevel->map[BlockY][BlockX]=CONSOLE_R;
+	EditLevel->map[BlockY][BlockX]=CONSOLE_R;
       else if ( Ctrl_Was_Pressed() ) 
-	CurLevel->map[BlockY][BlockX]=CODEPANEL_R;
+	EditLevel->map[BlockY][BlockX]=CODEPANEL_R;
       else if ( Alt_Was_Pressed() ) 
-	CurLevel->map[BlockY][BlockX]=CONVEY_L;
-      else CurLevel->map[BlockY][BlockX]=T_R;
+	EditLevel->map[BlockY][BlockX]=CONVEY_L;
+      else EditLevel->map[BlockY][BlockX]=T_R;
     }
   if (KP7Pressed()) 
     {
-      if ( Shift_Was_Pressed() ) CurLevel->map[BlockY][BlockX]=AUTOGUN_D;
-      else if ( Ctrl_Was_Pressed() ) CurLevel->map[BlockY][BlockX]=ENHANCER_LU;
-      else CurLevel->map[BlockY][BlockX]=CORNER_LU;
+      if ( Shift_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=AUTOGUN_D;
+      else if ( Ctrl_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=ENHANCER_LU;
+      else EditLevel->map[BlockY][BlockX]=CORNER_LU;
     }
   if ( KP8Pressed() ) 
     {
       if ( Shift_Was_Pressed() )
-	CurLevel->map[BlockY][BlockX]=CONSOLE_U;
+	EditLevel->map[BlockY][BlockX]=CONSOLE_U;
       else if ( Ctrl_Was_Pressed() ) 
-	CurLevel->map[BlockY][BlockX]=CODEPANEL_U;
+	EditLevel->map[BlockY][BlockX]=CODEPANEL_U;
       else if ( Alt_Was_Pressed() ) 
-	CurLevel->map[BlockY][BlockX]=CONVEY_U;
-      else CurLevel->map[BlockY][BlockX]=T_U;
+	EditLevel->map[BlockY][BlockX]=CONVEY_U;
+      else EditLevel->map[BlockY][BlockX]=T_U;
     }
   if (KP9Pressed()) 
     {
-      if ( Shift_Was_Pressed() ) CurLevel->map[BlockY][BlockX]=AUTOGUN_R;
-      else if ( Ctrl_Was_Pressed() ) CurLevel->map[BlockY][BlockX]=ENHANCER_RU;
-      else CurLevel->map[BlockY][BlockX]=CORNER_RU;
+      if ( Shift_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=AUTOGUN_R;
+      else if ( Ctrl_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=ENHANCER_RU;
+      else EditLevel->map[BlockY][BlockX]=CORNER_RU;
     }
   if (APressed())
     {
-      CurLevel->map[BlockY][BlockX]=ALERT;	      
+      EditLevel->map[BlockY][BlockX]=ALERT;	      
     }
   if (RPressed())
     {
-      if ( Shift_Was_Pressed() ) CurLevel->map[BlockY][BlockX] = CONSUMER_1;
-      else CurLevel->map[BlockY][BlockX] = REFRESH1;	            
+      if ( Shift_Was_Pressed() ) EditLevel->map[BlockY][BlockX] = CONSUMER_1;
+      else EditLevel->map[BlockY][BlockX] = REFRESH1;	            
     }
   if (DPressed())
     {
       if ( !Ctrl_Was_Pressed())
 	{
 	  if (Shift_Was_Pressed())
-	    CurLevel->map[BlockY][BlockX]=V_SHUT_DOOR;	            	      
-	  else CurLevel->map[BlockY][BlockX]=H_SHUT_DOOR;	            	      
+	    EditLevel->map[BlockY][BlockX]=V_SHUT_DOOR;	            	      
+	  else EditLevel->map[BlockY][BlockX]=H_SHUT_DOOR;	            	      
 	}
       else
 	{
 	  if (Shift_Was_Pressed())
-	    CurLevel->map[BlockY][BlockX]=LOCKED_V_SHUT_DOOR;	            	      
-	  else CurLevel->map[BlockY][BlockX]=LOCKED_H_SHUT_DOOR;	            	      
+	    EditLevel->map[BlockY][BlockX]=LOCKED_V_SHUT_DOOR;	            	      
+	  else EditLevel->map[BlockY][BlockX]=LOCKED_H_SHUT_DOOR;	            	      
 	}
     }
   if (SpacePressed())
     {
       if ( Shift_Was_Pressed() )
-	CurLevel->map[BlockY][BlockX]=FINE_GRID;	            	      	    
+	EditLevel->map[BlockY][BlockX]=FINE_GRID;	            	      	    
       else
-	CurLevel->map[BlockY][BlockX]=FLOOR;	            	      	    
+	EditLevel->map[BlockY][BlockX]=FLOOR;	            	      	    
     }
   
 }; // void 
@@ -1793,7 +1857,7 @@ HandleMapTileEditingKeys ( Level CurLevel , int BlockX , int BlockY )
  *
  * ---------------------------------------------------------------------- */
 void 
-ToggleBigGraphicsInserts ( Level CurLevel , int BlockX, int BlockY )
+ToggleBigGraphicsInserts ( Level EditLevel , int BlockX, int BlockY )
 {
   int MapInsertNr;
 
@@ -1808,9 +1872,9 @@ ToggleBigGraphicsInserts ( Level CurLevel , int BlockX, int BlockY )
   //
   for ( MapInsertNr = 0 ; MapInsertNr < MAX_MAP_INSERTS_PER_LEVEL ; MapInsertNr ++ )
     {
-      if ( CurLevel->MapInsertList [ MapInsertNr ] . type == ( -1 ) ) continue; 
-      if ( CurLevel->MapInsertList [ MapInsertNr ] . pos.x != BlockX ) continue; 
-      if ( CurLevel->MapInsertList [ MapInsertNr ] . pos.y != BlockY ) continue; 
+      if ( EditLevel->MapInsertList [ MapInsertNr ] . type == ( -1 ) ) continue; 
+      if ( EditLevel->MapInsertList [ MapInsertNr ] . pos.x != BlockX ) continue; 
+      if ( EditLevel->MapInsertList [ MapInsertNr ] . pos.y != BlockY ) continue; 
       break;
     }
   
@@ -1825,7 +1889,7 @@ ToggleBigGraphicsInserts ( Level CurLevel , int BlockX, int BlockY )
       VanishingMessageDisplayTime = 0 ;
       for ( MapInsertNr = 0 ; MapInsertNr < MAX_MAP_INSERTS_PER_LEVEL ; MapInsertNr ++ )
 	{
-	  if ( CurLevel->MapInsertList [ MapInsertNr ] . type == ( -1 ) ) break;
+	  if ( EditLevel->MapInsertList [ MapInsertNr ] . type == ( -1 ) ) break;
 	}
       if ( MapInsertNr >= MAX_MAP_INSERTS_PER_LEVEL )
 	{
@@ -1837,8 +1901,8 @@ ToggleBigGraphicsInserts ( Level CurLevel , int BlockX, int BlockY )
       //--------------------
       // Now we enter the right coordinates for our new map index...
       //
-      CurLevel->MapInsertList [ MapInsertNr ] . pos.x = BlockX ;
-      CurLevel->MapInsertList [ MapInsertNr ] . pos.y = BlockY ;
+      EditLevel->MapInsertList [ MapInsertNr ] . pos.x = BlockX ;
+      EditLevel->MapInsertList [ MapInsertNr ] . pos.y = BlockY ;
       
     }
       
@@ -1847,12 +1911,12 @@ ToggleBigGraphicsInserts ( Level CurLevel , int BlockX, int BlockY )
   // hands.  Therefore we increase the number of the type and possible
   // reset it to -1 if the last index was exceeded...
   //
-  CurLevel->MapInsertList [ MapInsertNr ] . type ++ ;
+  EditLevel->MapInsertList [ MapInsertNr ] . type ++ ;
   
-  if ( CurLevel->MapInsertList [ MapInsertNr ] . type >= MAX_MAP_INSERTS )
-    CurLevel->MapInsertList [ MapInsertNr ] . type = -1;
+  if ( EditLevel->MapInsertList [ MapInsertNr ] . type >= MAX_MAP_INSERTS )
+    EditLevel->MapInsertList [ MapInsertNr ] . type = -1;
   
-}; // void ToggleBigGraphicsInserts ( Level CurLevel , int BlockX, int BlockY );
+}; // void ToggleBigGraphicsInserts ( Level EditLevel , int BlockX, int BlockY );
 
 /* ----------------------------------------------------------------------
  *
@@ -1861,6 +1925,10 @@ ToggleBigGraphicsInserts ( Level CurLevel , int BlockX, int BlockY )
 void 
 HandleLevelEditorCursorKeys ( void )
 {
+  Level EditLevel;
+
+  EditLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
+
   if (LeftPressed()) 
     {
       if ( rintf(Me[0].pos.x) > 0 ) Me[0].pos.x-=1;
@@ -1868,7 +1936,7 @@ HandleLevelEditorCursorKeys ( void )
     }
   if (RightPressed()) 
     {
-      if ( rintf(Me[0].pos.x) < CurLevel->xlen-1 ) Me[0].pos.x+=1;
+      if ( rintf(Me[0].pos.x) < EditLevel->xlen-1 ) Me[0].pos.x+=1;
       while (RightPressed());
     }
   if (UpPressed()) 
@@ -1878,7 +1946,7 @@ HandleLevelEditorCursorKeys ( void )
     }
   if (DownPressed()) 
     {
-      if ( rintf(Me[0].pos.y) < CurLevel->ylen-1 ) Me[0].pos.y+=1;
+      if ( rintf(Me[0].pos.y) < EditLevel->ylen-1 ) Me[0].pos.y+=1;
       while (DownPressed());
     }
 }; // void HandleLevelEditorCursorKeys ( void )
@@ -1888,33 +1956,33 @@ HandleLevelEditorCursorKeys ( void )
  *
  * ---------------------------------------------------------------------- */
 void
-ToggleWaypoint ( Level CurLevel , int BlockX , int BlockY )
+ToggleWaypoint ( Level EditLevel , int BlockX , int BlockY )
 {
   int i , k , j ;
 
   // find out if there is a waypoint on the current square
   for (i=0 ; i < MAXWAYPOINTS ; i++)
     {
-      if ( ( CurLevel->AllWaypoints[i].x == BlockX ) &&
-	   ( CurLevel->AllWaypoints[i].y == BlockY ) ) break;
+      if ( ( EditLevel->AllWaypoints[i].x == BlockX ) &&
+	   ( EditLevel->AllWaypoints[i].y == BlockY ) ) break;
     }
   
   // if its waypoint already, this waypoint must be deleted.
   if ( i != MAXWAYPOINTS )
     {
       // Eliminate the waypoint itself
-      CurLevel->AllWaypoints[i].x = 0;
-      CurLevel->AllWaypoints[i].y = 0;
+      EditLevel->AllWaypoints[i].x = 0;
+      EditLevel->AllWaypoints[i].y = 0;
       for ( k = 0; k < MAX_WP_CONNECTIONS ; k++) 
-	CurLevel->AllWaypoints[i].connections[k] = (-1) ;
+	EditLevel->AllWaypoints[i].connections[k] = (-1) ;
       
 		  
       // Eliminate all connections pointing to this waypoint
       for ( j = 0; j < MAXWAYPOINTS ; j++ )
 	{
 	  for ( k = 0; k < MAX_WP_CONNECTIONS ; k++) 
-	    if ( CurLevel->AllWaypoints[j].connections[k] == i )
-	      CurLevel->AllWaypoints[j].connections[k] = (-1) ;
+	    if ( EditLevel->AllWaypoints[j].connections[k] == i )
+	      EditLevel->AllWaypoints[j].connections[k] = (-1) ;
 	}
     }
   else // if its not a waypoint already, it must be made into one
@@ -1922,7 +1990,7 @@ ToggleWaypoint ( Level CurLevel , int BlockX , int BlockY )
       // seek a free position
       for ( i = 0 ; i < MAXWAYPOINTS ; i++ )
 	{
-	  if ( CurLevel->AllWaypoints[i].x == 0 ) break;
+	  if ( EditLevel->AllWaypoints[i].x == 0 ) break;
 	}
       if ( i == MAXWAYPOINTS )
 	{
@@ -1931,33 +1999,33 @@ ToggleWaypoint ( Level CurLevel , int BlockX , int BlockY )
 	}
       
       // Now make the new entry into the waypoint list
-      CurLevel->AllWaypoints[i].x = BlockX;
-      CurLevel->AllWaypoints[i].y = BlockY;
+      EditLevel->AllWaypoints[i].x = BlockX;
+      EditLevel->AllWaypoints[i].y = BlockY;
       
       // delete all old connection information from the new waypoint
       for ( k = 0; k < MAX_WP_CONNECTIONS ; k++ ) 
-	CurLevel->AllWaypoints[i].connections[k] = (-1) ;
+	EditLevel->AllWaypoints[i].connections[k] = (-1) ;
       
     }
   
   printf("\n\n  i is now: %d ", i ); fflush(stdout);
   
-}; // void ToggleWaypoint ( Level CurLevel , int BlockX , int BlockY )
+}; // void ToggleWaypoint ( Level EditLevel , int BlockX , int BlockY )
 
 /* ----------------------------------------------------------------------
  *
  *
  * ---------------------------------------------------------------------- */
 void
-ToggleWaypointConnection ( Level CurLevel , int BlockX , int BlockY )
+ToggleWaypointConnection ( Level EditLevel , int BlockX , int BlockY )
 {
   int i , k ;
 
   // Determine which waypoint is currently targeted
   for (i=0 ; i < MAXWAYPOINTS ; i++)
     {
-      if ( ( CurLevel->AllWaypoints[i].x == BlockX ) &&
-	   ( CurLevel->AllWaypoints[i].y == BlockY ) ) break;
+      if ( ( EditLevel->AllWaypoints[i].x == BlockX ) &&
+	   ( EditLevel->AllWaypoints[i].y == BlockY ) ) break;
     }
   
   if ( i == MAXWAYPOINTS )
@@ -1986,7 +2054,7 @@ ToggleWaypointConnection ( Level CurLevel , int BlockX , int BlockY )
 	      sprintf( VanishingMessage , "\n\nOrigin: %d Target: %d. Operation makes sense.", OriginWaypoint , i );
 	      for ( k = 0; k < MAX_WP_CONNECTIONS ; k++ ) 
 		{
-		  if (CurLevel->AllWaypoints[ OriginWaypoint ].connections[k] == (-1) ) break;
+		  if (EditLevel->AllWaypoints[ OriginWaypoint ].connections[k] == (-1) ) break;
 		}
 	      if ( k == MAX_WP_CONNECTIONS ) 
 		{
@@ -1994,7 +2062,7 @@ ToggleWaypointConnection ( Level CurLevel , int BlockX , int BlockY )
 		}
 	      else
 		{
-		  CurLevel->AllWaypoints[ OriginWaypoint ].connections[k] = i;
+		  EditLevel->AllWaypoints[ OriginWaypoint ].connections[k] = i;
 		  strcat ( VanishingMessage , "\nOPERATION DONE!! CONNECTION SHOULD BE THERE." );
 		}
 	      OriginWaypoint = (-1);
@@ -2002,7 +2070,7 @@ ToggleWaypointConnection ( Level CurLevel , int BlockX , int BlockY )
 	}
     }
 
-}; // void ToggleWaypointConnection ( Level CurLevel , int BlockX , int BlockY )
+}; // void ToggleWaypointConnection ( Level EditLevel , int BlockX , int BlockY )
 
 /* ----------------------------------------------------------------------
  * This function is provides the Level Editor integrated into 
@@ -2026,7 +2094,10 @@ LevelEditor(void)
   char linebuf[10000];
   long OldTicks;
   SDL_Rect Editor_Window;
-  
+  Level EditLevel;
+
+  EditLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
+
   strcpy ( VanishingMessage , "Hello" );
   VanishingMessageDisplayTime = 0 ;
   OriginWaypoint = (-1);
@@ -2075,8 +2146,8 @@ LevelEditor(void)
 	  else
 	    {
 	      sprintf ( linebuf , " Source Waypoint selected : X=%d Y=%d. " , 
-			CurLevel -> AllWaypoints [ OriginWaypoint ] . x , 
-			CurLevel -> AllWaypoints [ OriginWaypoint ] . y );
+			EditLevel -> AllWaypoints [ OriginWaypoint ] . x , 
+			EditLevel -> AllWaypoints [ OriginWaypoint ] . y );
 	    }
 	  LeftPutString ( Screen , 4 * FontHeight( GetCurrentFont() ), linebuf );
 
@@ -2116,7 +2187,7 @@ LevelEditor(void)
 	      NewCommentOnThisSquare = GetString( 1000, FALSE );  // TRUE currently not implemented
 	      for ( i = 0 ; i < MAX_STATEMENTS_PER_LEVEL ; i ++ )
 		{
-		  if ( CurLevel->StatementList[ i ].x == (-1) ) break;
+		  if ( EditLevel->StatementList[ i ].x == (-1) ) break;
 		}
 	      if ( i == MAX_STATEMENTS_PER_LEVEL ) 
 		{
@@ -2127,9 +2198,9 @@ LevelEditor(void)
 		  // Terminate( ERR );
 		}
 
-	      CurLevel->StatementList[ i ].Statement_Text = NewCommentOnThisSquare;
-	      CurLevel->StatementList[ i ].x = rintf( Me[0].pos.x );
-	      CurLevel->StatementList[ i ].y = rintf( Me[0].pos.y );
+	      EditLevel->StatementList[ i ].Statement_Text = NewCommentOnThisSquare;
+	      EditLevel->StatementList[ i ].x = rintf( Me[0].pos.x );
+	      EditLevel->StatementList[ i ].y = rintf( Me[0].pos.y );
 	    }
 
 	  //--------------------
@@ -2143,7 +2214,7 @@ LevelEditor(void)
 	      SetCurrentFont( FPS_Display_BFont );
 
 	      // First we check if we really are directly on a codepanel:
-	      switch ( CurLevel->map [ (int)rintf( Me[0].pos.y) ] [ (int)rintf( Me[0].pos.x ) ] )
+	      switch ( EditLevel->map [ (int)rintf( Me[0].pos.y) ] [ (int)rintf( Me[0].pos.x ) ] )
 		{
 		case CODEPANEL_L:
 		case CODEPANEL_R:
@@ -2158,8 +2229,8 @@ LevelEditor(void)
 		  // Now we see if a codepanel entry is existing already for this square
 		  for ( i = 0 ; i < MAX_CODEPANELS_PER_LEVEL ; i ++ )
 		    {
-		      if ( ( CurLevel->CodepanelList[ i ].x == (int)rintf( Me[0].pos.x) ) &&
-			   ( CurLevel->CodepanelList[ i ].y == (int)rintf( Me[0].pos.y) ) ) break;
+		      if ( ( EditLevel->CodepanelList[ i ].x == (int)rintf( Me[0].pos.x) ) &&
+			   ( EditLevel->CodepanelList[ i ].y == (int)rintf( Me[0].pos.y) ) ) break;
 		    }
 		  if ( i >= MAX_CODEPANELS_PER_LEVEL ) 
 		    {
@@ -2167,7 +2238,7 @@ LevelEditor(void)
 		      i=0;
 		      for ( i = 0 ; i < MAX_CODEPANELS_PER_LEVEL ; i ++ )
 			{
-			  if ( CurLevel->CodepanelList[ i ].x == (-1) )
+			  if ( EditLevel->CodepanelList[ i ].x == (-1) )
 			    break;
 			}
 		      if ( i >= MAX_CODEPANELS_PER_LEVEL )
@@ -2186,9 +2257,9 @@ LevelEditor(void)
 		      DisplayText ( "\nOverwriting existing codepanel list entry...\n" , -1 , -1 , &User_Rect );
 
 		    }
-		  CurLevel->CodepanelList[ i ].Secret_Code = NewCommentOnThisSquare;
-		  CurLevel->CodepanelList[ i ].x = rintf( Me[0].pos.x );
-		  CurLevel->CodepanelList[ i ].y = rintf( Me[0].pos.y );
+		  EditLevel->CodepanelList[ i ].Secret_Code = NewCommentOnThisSquare;
+		  EditLevel->CodepanelList[ i ].x = rintf( Me[0].pos.x );
+		  EditLevel->CodepanelList[ i ].y = rintf( Me[0].pos.y );
 
 
 		  SDL_Flip ( Screen );
@@ -2219,7 +2290,7 @@ LevelEditor(void)
 	      NumericInputString=GetString( 10, FALSE );  // TRUE currently not implemented
 	      sscanf( NumericInputString , "%d" , &SpecialMapValue );
 	      if ( SpecialMapValue >= NUM_MAP_BLOCKS ) SpecialMapValue=0;
-	      CurLevel->map[BlockY][BlockX]=SpecialMapValue;
+	      EditLevel->map[BlockY][BlockX]=SpecialMapValue;
 	    }
 
 	  //--------------------
@@ -2268,7 +2339,7 @@ LevelEditor(void)
 	  //
 	  if (WPressed())
 	    {
-	      ToggleWaypoint ( CurLevel , BlockX, BlockY );
+	      ToggleWaypoint ( EditLevel , BlockX, BlockY );
 	      while ( WPressed() );
 	    }
 
@@ -2280,7 +2351,7 @@ LevelEditor(void)
 	  //
 	  if (CPressed())
 	    {
-	      ToggleWaypointConnection ( CurLevel, BlockX, BlockY );
+	      ToggleWaypointConnection ( EditLevel, BlockX, BlockY );
 	      while (CPressed());
 	      fflush(stdout);
 	    }
@@ -2291,14 +2362,14 @@ LevelEditor(void)
 	  if ( BPressed()) 
 	    {
 	      while ( BPressed() );
-	      ToggleBigGraphicsInserts ( CurLevel , BlockX, BlockY );
+	      ToggleBigGraphicsInserts ( EditLevel , BlockX, BlockY );
 	    }
 	  
 	  //----------------------------------------------------------------------
 	  // If the person using the level editor pressed some editing keys, insert the
 	  // corresponding map tile.  This is done in the following:
 	  //
-	  HandleMapTileEditingKeys ( CurLevel , BlockX , BlockY );
+	  HandleMapTileEditingKeys ( EditLevel , BlockX , BlockY );
 
 	  if (QPressed())
 	    {
@@ -2312,7 +2383,7 @@ LevelEditor(void)
       // After Level editing is done and escape has been pressed, 
       // display the Menu with level save options and all that.
       //
-      Done = DoLevelEditorMainMenu ( CurLevel );
+      Done = DoLevelEditorMainMenu ( EditLevel );
       
     } // while (!Done)
 
