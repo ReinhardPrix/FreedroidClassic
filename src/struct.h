@@ -151,22 +151,6 @@ location, *Location;
 
 typedef struct
 {
-  char* map_insert_name;
-  char* map_insert_file_name;
-  point map_insert_size_in_blocks; // how many blocks does this big map insert cover?
-  SDL_Surface* insert_surface;
-}
-map_insert_spec, *Map_Insert_Spec;
-
-typedef struct
-{
-  int type;
-  point pos;
-}
-map_insert, *Map_Insert;
-
-typedef struct
-{
   char* label_name;
   point pos; // how many blocks does this big map insert cover?
 }
@@ -870,7 +854,6 @@ typedef struct
   char *Level_Enter_Comment;
   map_statement StatementList[ MAX_STATEMENTS_PER_LEVEL ];
   codepanel CodepanelList[ MAX_CODEPANELS_PER_LEVEL ];
-  map_insert MapInsertList[ MAX_MAP_INSERTS_PER_LEVEL ] ;
   int xlen;		/* X dimension */
   int ylen;
   int color;

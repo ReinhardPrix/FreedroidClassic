@@ -131,7 +131,6 @@ EXTERN void Load_Item_Surfaces (void);
 EXTERN void Load_Mouse_Move_Cursor_Surfaces(void);
 EXTERN void Load_Skill_Level_Button_Surfaces( void );
 EXTERN void LoadOneSkillSurfaceIfNotYetLoaded ( int SkillSpellNr );
-EXTERN void Load_MapBlock_Surfaces (void);
 EXTERN void LoadAndPrepareEnemyRotationModelNr ( int RotationModel );
 EXTERN void LoadAndPrepareRedEnemyRotationModelNr ( int RotationModel );
 EXTERN void LoadAndPrepareGreenEnemyRotationModelNr ( int RotationModel );

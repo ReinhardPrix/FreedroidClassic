@@ -1374,49 +1374,6 @@ Load_Tux_Surfaces( void )
 }; // void Load_Tux_Surfaces( void )
 
 /* ----------------------------------------------------------------------
- *
- *
- * ---------------------------------------------------------------------- */
-void
-LoadOneMapInsertSurfaceIfNotYetLoaded ( int i )
-{
-  char *fpath;
-  SDL_Surface* TempSurface;
-
-  //--------------------
-  // Now if this map surface has been loaded into memory already,
-  // then there's really nothing we'd have to do here...
-  //
-  if ( AllMapInserts [ i ] . insert_surface != NULL ) return;
-
-  //--------------------
-  // Now we try to load the surface and then we also convert it
-  // immediately to display format, so it can be blittet later and
-  // at maximum speed!!!
-  //
-  fpath = find_file ( AllMapInserts [ i ] . map_insert_file_name , GRAPHICS_DIR , FALSE );
-  TempSurface = IMG_Load( fpath ) ;
-  if ( TempSurface == 0 )
-    {
-      fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
-      GiveStandardErrorMessage ( "Load_Big_Map_Insert_Surfaces(...)" , "\
-Freedroid was unable to load a big graphics insert from the hard disk\n\
-into memory.\n\
-This error indicates some installation problem with freedroid.",
-				 PLEASE_INFORM, IS_FATAL );
-    }
-  AllMapInserts [ i ] . insert_surface = SDL_DisplayFormat ( TempSurface ) ;
-  SDL_FreeSurface ( TempSurface ) ;
-
-  //--------------------
-  // Since this might have taken some time to do, we'll make sure it
-  // does not cause too much of a glich in the game...
-  //
-  Activate_Conservative_Frame_Computation();
-
-}; // void 
-
-/* ----------------------------------------------------------------------
  * This function creates all the surfaces, that are nescessary to blit a
  * digit.
  * ---------------------------------------------------------------------- */
@@ -1726,44 +1683,7 @@ load_all_obstacles ( void )
   obstacle_map [ ISO_BARREL_4 ] . drop_random_treasure = TRUE ;
   obstacle_map [ ISO_BARREL_4 ] . is_smashable = TRUE ;
 
-}; // void LoadAllMapTilesThatAreNotYetLoaded( void )
-
-/* ---------------------------------------------------------------------- 
- *
- *
- * ---------------------------------------------------------------------- */
-void
-LoadAllMapTilesThatAreNotYetLoaded( void )
-{
-  int i;
-  int color;
-
-  for ( color = 0 ; color < NUM_COLORS ; color ++ )
-    {
-      for ( i=0 ; i < NUM_MAP_BLOCKS ; i++ )
-	{
-	  LoadOneMapTileIfNotYetLoaded( i , color );
-	}
-    }
-
-  DebugPrintf ( 0 , "\n %d map blocks loaded... " , NUM_MAP_BLOCKS );
-
-}; // void LoadAllMapTilesThatAreNotYetLoaded( void )
-
-/* ----------------------------------------------------------------------
- * This function creates all the surfaces, that are nescessary to blit
- * some map tiles of any color.
- * ---------------------------------------------------------------------- */
-void 
-Load_MapBlock_Surfaces( void )
-{
-
-  Block_Width=INITIAL_BLOCK_WIDTH;
-  Block_Height=INITIAL_BLOCK_HEIGHT;
-
-  LoadAllMapTilesThatAreNotYetLoaded( );
-
-}; // void Load_MapBlock_Surfaces( void )
+}; // void load_all_obstacles ( void )
 
 /* ----------------------------------------------------------------------
  *

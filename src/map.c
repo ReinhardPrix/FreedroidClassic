@@ -389,141 +389,6 @@ DecodeCodepanelsOfThisLevel ( Level loadlevel , char* DataPointer )
 
 }; // void DecodeCodepanelsOfThisLevel ( Level loadlevel , char* DataPointer );
 
-
-/* ----------------------------------------------------------------------
- * Next we extract the codepanels of this level WITHOUT destroying
- * or damaging the data in the process!
- * ---------------------------------------------------------------------- */
-void 
-DecodeBigMapInsertsOfThisLevel ( Level loadlevel , char* DataPointer )
-{
-  int i;
-  char PreservedLetter;
-  char* MapInsertPointer;
-  char* MapInsertSectionBegin;
-  char* MapInsertSectionEnd;
-  int NumberOfMapInsertsInThisLevel;
-
-  //----------------------------------------------------------------------
-  // From here on we take apart the big map graphics inserts of the 
-  // loaded level...
-  //----------------------------------------------------------------------
-
-  //--------------------
-  // First we initialize the graphics insert array with 'empty' information
-  //
-  for ( i = 0 ; i < MAX_MAP_INSERTS_PER_LEVEL ; i ++ )
-    {
-      loadlevel->MapInsertList [ i ] . type = ( -1 ) ;
-      loadlevel->MapInsertList [ i ] . pos . x = ( -1 ) ;
-      loadlevel->MapInsertList [ i ] . pos . y = ( -1 ) ;
-    }
-
-  //--------------------
-  // We look for the beginning and end of the codepanel section
-  //
-  MapInsertSectionBegin = LocateStringInData( DataPointer , BIG_MAP_INSERT_SECTION_BEGIN_STRING );
-  MapInsertSectionEnd = LocateStringInData( DataPointer , BIG_MAP_INSERT_SECTION_END_STRING );
-
-  //--------------------
-  // We add a terminator at the end, but ONLY TEMPORARY.  The damage will be restored later!
-  //
-  PreservedLetter=MapInsertSectionEnd[0];
-  MapInsertSectionEnd[0]=0;
-  NumberOfMapInsertsInThisLevel = CountStringOccurences ( MapInsertSectionBegin , POSITION_X_OF_BIG_MAP_INSERT_STRING ) ;
-  DebugPrintf( 1 , "\nNumber of big map inserts found in this level : %d." , NumberOfMapInsertsInThisLevel );
-
-
-  //--------------------
-  // Now we decode all the codepanel information
-  //
-  MapInsertPointer=MapInsertSectionBegin;
-  for ( i = 0 ; i < NumberOfMapInsertsInThisLevel ; i ++ )
-    {
-      MapInsertPointer = strstr ( MapInsertPointer + 1 , POSITION_X_OF_BIG_MAP_INSERT_STRING );
-      ReadValueFromString( MapInsertPointer , POSITION_X_OF_BIG_MAP_INSERT_STRING , "%d" , 
-			   &(loadlevel->MapInsertList[ i ].pos.x) , MapInsertSectionEnd );
-      ReadValueFromString( MapInsertPointer , POSITION_Y_OF_BIG_MAP_INSERT_STRING , "%d" , 
-			   &(loadlevel->MapInsertList[ i ].pos.y) , MapInsertSectionEnd );
-
-      ReadValueFromString( MapInsertPointer , BIG_MAP_INSERT_TYPE_STRING , "%d" , 
-			   &(loadlevel->MapInsertList[ i ].type ) , MapInsertSectionEnd );
-
-      DebugPrintf( 1 , "\nPosX=%d PosY=%d MapInsertType=%d" , loadlevel->MapInsertList[ i ].pos.x , 
-		   loadlevel->MapInsertList[ i ].pos.y , loadlevel->MapInsertList[ i ].type );
-    }
-
-  //--------------------
-  // For debugging purposes now the complete list of map inserts:
-  //
-  /*
-  DebugPrintf( 0 , "\n\nNOW THE COMPLETE LIST: \n\n" );
-  for ( i = 0 ; i < MAX_MAP_INSERTS_PER_LEVEL ; i ++ )
-    {
-      DebugPrintf( 0 , "\nPosX=%d PosY=%d MapInsertType=%d" , loadlevel->MapInsertList[ i ].pos.x , 
-		   loadlevel->MapInsertList[ i ].pos.y , loadlevel->MapInsertList[ i ].type );
-    }
-  */
-
-  //--------------------
-  // Now we repair the damage done to the loaded level data
-  //
-  MapInsertSectionEnd[0]=PreservedLetter;
-
-
-  /*
-  //--------------------
-  // First we initialize the codepanel arrays with 'empty' information
-  //
-  for ( i = 0 ; i < MAX_CODEPANELS_PER_LEVEL ; i ++ )
-    {
-      loadlevel->CodepanelList[ i ].x = ( -1 ) ;
-      loadlevel->CodepanelList[ i ].y = ( -1 ) ;
-      loadlevel->CodepanelList[ i ].Secret_Code = "nonono" ;
-    }
-
-  //--------------------
-  // We look for the beginning and end of the codepanel section
-  //
-  CodepanelSectionBegin = LocateStringInData( DataPointer , CODEPANEL_SECTION_BEGIN_STRING );
-  CodepanelSectionEnd = LocateStringInData( DataPointer , CODEPANEL_SECTION_END_STRING );
-
-  //--------------------
-  // We add a terminator at the end, but ONLY TEMPORARY.  The damage will be restored later!
-  //
-  PreservedLetter=CodepanelSectionEnd[0];
-  CodepanelSectionEnd[0]=0;
-  NumberOfCodepanelsInThisLevel = CountStringOccurences ( CodepanelSectionBegin , CODEPANEL_CODE_ANNOUNCE_STRING ) ;
-  DebugPrintf( 1 , "\nNumber of codepanels found in this level : %d." , NumberOfCodepanelsInThisLevel );
-
-
-  //--------------------
-  // Now we decode all the codepanel information
-  //
-  CodepanelPointer=CodepanelSectionBegin;
-  for ( i = 0 ; i < NumberOfCodepanelsInThisLevel ; i ++ )
-    {
-      CodepanelPointer = strstr ( CodepanelPointer + 1 , POSITION_X_OF_CODEPANEL_STRING );
-      ReadValueFromString( CodepanelPointer , POSITION_X_OF_CODEPANEL_STRING , "%d" , 
-			   &(loadlevel->CodepanelList[ i ].x) , CodepanelSectionEnd );
-      ReadValueFromString( CodepanelPointer , POSITION_Y_OF_CODEPANEL_STRING , "%d" , 
-			   &(loadlevel->CodepanelList[ i ].y) , CodepanelSectionEnd );
-      loadlevel->CodepanelList[ i ].Secret_Code = 
-	ReadAndMallocStringFromData ( CodepanelPointer , CODEPANEL_CODE_ANNOUNCE_STRING , "\"" ) ;
-
-      DebugPrintf( 1 , "\nPosX=%d PosY=%d Codepanel=\"%s\"" , loadlevel->CodepanelList[ i ].x , 
-		   loadlevel->CodepanelList[ i ].y , loadlevel->CodepanelList[ i ].Secret_Code );
-    }
-
-  //--------------------
-  // Now we repair the damage done to the loaded level data
-  //
-  CodepanelSectionEnd[0]=PreservedLetter;
-  */
-
-}; // void DecodeBigMapInsertsOfThisLevel ( Level loadlevel , char* DataPointer );
-
-
 /* ----------------------------------------------------------------------
  *
  *
@@ -2212,54 +2077,6 @@ EncodeCodepanelsOfThisLevel ( char* LevelMem , Level Lev )
 }; // void EncodeCodepanelsOfThisLevel ( char* LevelMem , Level Lev )
 
 /* ----------------------------------------------------------------------
- * This function adds the statement data of this level to the chunk of 
- * data that will be written out to a file later.
- * ---------------------------------------------------------------------- */
-void
-EncodeBigMapInsertsOfThisLevel ( char* LevelMem , Level Lev )
-{
-  int i;
-  char linebuf[5000];	  
-
-  //--------------------
-  // Now we write out a marker to announce the beginning of the 
-  // big graphics inserts for this map
-  //
-  strcat( LevelMem, BIG_MAP_INSERT_SECTION_BEGIN_STRING );
-  strcat( LevelMem, "\n" );
-
-  //--------------------
-  // Now we write out the bulk of big map insert infos
-  //
-  for ( i = 0 ; i < MAX_MAP_INSERTS_PER_LEVEL ; i ++ )
-    {
-
-      if ( Lev -> MapInsertList [ i ] . type <= ( -1 ) ) continue;
-
-      strcat( LevelMem , POSITION_X_OF_BIG_MAP_INSERT_STRING );
-      sprintf( linebuf , "%d " , Lev -> MapInsertList [ i ] . pos . x );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , POSITION_Y_OF_BIG_MAP_INSERT_STRING );
-      sprintf( linebuf , "%d " , Lev -> MapInsertList [ i ] . pos . y );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , BIG_MAP_INSERT_TYPE_STRING );
-      sprintf( linebuf , "%d " , Lev -> MapInsertList [ i ] . type );
-      strcat( LevelMem , linebuf );
-      strcat( LevelMem, "\n" );
-
-    }
-
-  //--------------------
-  // Now we write out a marker to announce the end of the codepanel data
-  //
-  strcat(LevelMem, BIG_MAP_INSERT_SECTION_END_STRING);
-  strcat(LevelMem, "\n");
-
-}; // void EncodeBigMapInsertsOfThisLevel ( char* LevelMem , Level Lev )
-
-/* ----------------------------------------------------------------------
  *
  * 
  * ---------------------------------------------------------------------- */
@@ -2535,8 +2352,6 @@ jump target west: %d\n",
   EncodeStatementsOfThisLevel ( LevelMem , Lev );
 
   EncodeCodepanelsOfThisLevel ( LevelMem , Lev );
-
-  EncodeBigMapInsertsOfThisLevel ( LevelMem , Lev );
 
   EncodeItemSectionOfThisLevel ( LevelMem , Lev ) ;
 
@@ -2981,8 +2796,6 @@ DecodeLoadedLeveldata ( char *data )
   // or damaging the data in the process!
   //
   DecodeCodepanelsOfThisLevel ( loadlevel , DataPointer );
-
-  DecodeBigMapInsertsOfThisLevel ( loadlevel , DataPointer );
 
   DecodeItemSectionOfThisLevel ( loadlevel , data );
 

@@ -1030,6 +1030,8 @@ SetCombatScaleTo(float ResizeFactor)
   // just to be sure, reset the size of the graphics
   // ReInitPictures();
 
+  return;
+
   //--------------------
   // If a backup does not yet exist, we'll make one of each map block
   //
@@ -1303,13 +1305,6 @@ InitPictures (void)
     }
 
   ShowStartupPercentage ( 22 ) ; 
-
-  //--------------------
-  // And now we read in the blocks from various files 
-  //
-  Load_MapBlock_Surfaces();
-
-  ShowStartupPercentage ( 24 ) ; 
 
   load_all_isometric_floor_tiles (  );
 

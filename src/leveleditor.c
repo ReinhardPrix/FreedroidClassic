@@ -82,6 +82,63 @@ enum
   };
 
 /* ----------------------------------------------------------------------
+ * When new lines are inserted into the map, the map labels south of this
+ * line must move too with the rest of the map.  This function sees to it.
+ * ---------------------------------------------------------------------- */
+void
+MoveMapLabelsSouthOf ( int FromWhere , int ByWhat , Level EditLevel )
+{
+  int i;
+
+  for ( i = 0 ; i < MAX_MAP_LABELS_PER_LEVEL ; i ++ )
+    {
+      if ( EditLevel -> labels [ i ] . pos . x <= ( -1 ) ) continue;
+      
+      if ( EditLevel -> labels [ i ] . pos . y >= FromWhere )
+	EditLevel -> labels [ i ] . pos . y += ByWhat;
+    }
+  
+}; // void MoveMapLabelsSouthOf ( int FromWhere , int ByWhat , Level EditLevel)
+
+/* ----------------------------------------------------------------------
+ * When new lines are inserted into the map, the map labels east of this
+ * line must move too with the rest of the map.  This function sees to it.
+ * ---------------------------------------------------------------------- */
+void
+MoveMapLabelsEastOf ( int FromWhere , int ByWhat , Level EditLevel )
+{
+  int i;
+
+  for ( i = 0 ; i < MAX_MAP_LABELS_PER_LEVEL ; i ++ )
+    {
+      if ( EditLevel -> labels [ i ] . pos . x <= ( -1 ) ) continue;
+      
+      if ( EditLevel -> labels [ i ] . pos . x >= FromWhere )
+	EditLevel -> labels [ i ] . pos . x += ByWhat;
+    }
+  
+}; // void MoveMapLabelsEastOf ( int FromWhere , int ByWhat , Level EditLevel)
+
+/* ----------------------------------------------------------------------
+ * When new lines are inserted into the map, the waypoints south of this
+ * line must move too with the rest of the map.  This function sees to it.
+ * ---------------------------------------------------------------------- */
+void
+MoveWaypointsSouthOf ( int FromWhere , int ByWhat , Level EditLevel )
+{
+  int i;
+
+  for ( i = 0 ; i < MAXWAYPOINTS ; i ++ )
+    {
+      if ( EditLevel -> AllWaypoints [ i ] . x == ( 0 ) ) continue;
+      
+      if ( EditLevel -> AllWaypoints [ i ] . y >= FromWhere )
+	EditLevel -> AllWaypoints [ i ] . y += ByWhat;
+    }
+  
+}; // void MoveWaypointsSouthOf ( int FromWhere , int ByWhat , Level EditLevel)
+
+/* ----------------------------------------------------------------------
  * This function drops an item onto the floor.  It works with a selection
  * of item images and clicking with the mouse on an item image or on one
  * of the buttons presented to the person editing the level.
@@ -318,101 +375,6 @@ ShowLevelEditorTopMenu( int Highlight )
 }; // void ShowLevelEditorTopMenu( void )
 
 /* ----------------------------------------------------------------------
- * When new lines are inserted into the map, the map inserts south of this
- * line must move too with the rest of the map.  This function sees to it.
- * ---------------------------------------------------------------------- */
-void
-MoveBigMapInsertsSouthOf ( int FromWhere , int ByWhat , Level EditLevel )
-{
-  int i;
-
-  for ( i = 0 ; i < MAX_MAP_INSERTS_PER_LEVEL ; i ++ )
-    {
-      if ( EditLevel -> MapInsertList [ i ] . type == ( -1 ) ) continue;
-      
-      if ( EditLevel -> MapInsertList [ i ] . pos . y >= FromWhere )
-	EditLevel -> MapInsertList [ i ] . pos . y += ByWhat;
-    }
-  
-}; // void MoveBigMapInsertsSouthOf ( int FromWhere , int ByWhat , Level EditLevel)
-
-/* ----------------------------------------------------------------------
- * When new lines are inserted into the map, the map inserts east of this
- * line must move too with the rest of the map.  This function sees to it.
- * ---------------------------------------------------------------------- */
-void
-MoveBigMapInsertsEastOf ( int FromWhere , int ByWhat , Level EditLevel )
-{
-  int i;
-
-  for ( i = 0 ; i < MAX_MAP_INSERTS_PER_LEVEL ; i ++ )
-    {
-      if ( EditLevel -> MapInsertList [ i ] . type == ( -1 ) ) continue;
-      
-      if ( EditLevel -> MapInsertList [ i ] . pos . x >= FromWhere )
-	EditLevel -> MapInsertList [ i ] . pos . x += ByWhat;
-    }
-  
-}; // void MoveBigMapInsertsEastOf ( int FromWhere , int ByWhat , Level EditLevel)
-
-/* ----------------------------------------------------------------------
- * When new lines are inserted into the map, the map labels south of this
- * line must move too with the rest of the map.  This function sees to it.
- * ---------------------------------------------------------------------- */
-void
-MoveMapLabelsSouthOf ( int FromWhere , int ByWhat , Level EditLevel )
-{
-  int i;
-
-  for ( i = 0 ; i < MAX_MAP_LABELS_PER_LEVEL ; i ++ )
-    {
-      if ( EditLevel -> labels [ i ] . pos . x <= ( -1 ) ) continue;
-      
-      if ( EditLevel -> labels [ i ] . pos . y >= FromWhere )
-	EditLevel -> labels [ i ] . pos . y += ByWhat;
-    }
-  
-}; // void MoveMapLabelsSouthOf ( int FromWhere , int ByWhat , Level EditLevel)
-
-/* ----------------------------------------------------------------------
- * When new lines are inserted into the map, the map labels east of this
- * line must move too with the rest of the map.  This function sees to it.
- * ---------------------------------------------------------------------- */
-void
-MoveMapLabelsEastOf ( int FromWhere , int ByWhat , Level EditLevel )
-{
-  int i;
-
-  for ( i = 0 ; i < MAX_MAP_LABELS_PER_LEVEL ; i ++ )
-    {
-      if ( EditLevel -> labels [ i ] . pos . x <= ( -1 ) ) continue;
-      
-      if ( EditLevel -> labels [ i ] . pos . x >= FromWhere )
-	EditLevel -> labels [ i ] . pos . x += ByWhat;
-    }
-  
-}; // void MoveMapLabelsEastOf ( int FromWhere , int ByWhat , Level EditLevel)
-
-/* ----------------------------------------------------------------------
- * When new lines are inserted into the map, the waypoints south of this
- * line must move too with the rest of the map.  This function sees to it.
- * ---------------------------------------------------------------------- */
-void
-MoveWaypointsSouthOf ( int FromWhere , int ByWhat , Level EditLevel )
-{
-  int i;
-
-  for ( i = 0 ; i < MAXWAYPOINTS ; i ++ )
-    {
-      if ( EditLevel -> AllWaypoints [ i ] . x == ( 0 ) ) continue;
-      
-      if ( EditLevel -> AllWaypoints [ i ] . y >= FromWhere )
-	EditLevel -> AllWaypoints [ i ] . y += ByWhat;
-    }
-  
-}; // void MoveWaypointsSouthOf ( int FromWhere , int ByWhat , Level EditLevel)
-
-/* ----------------------------------------------------------------------
  * When new lines are inserted into the map, the waypoints east of this
  * line must move too with the rest of the map.  This function sees to it.
  * ---------------------------------------------------------------------- */
@@ -513,7 +475,6 @@ InsertColumnEasternInterface( Level EditLevel )
     }
 
   MoveWaypointsEastOf ( EditLevel->xlen - EditLevel->jump_threshold_east - 1 , +1 , EditLevel ) ;
-  MoveBigMapInsertsEastOf ( EditLevel->xlen - EditLevel->jump_threshold_east - 1 , +1 , EditLevel ) ;
   MoveMapLabelsEastOf ( EditLevel->xlen - EditLevel->jump_threshold_east - 1 , +1 , EditLevel ) ;
 
 }; // void InsertColumnEasternInterface( EditLevel );
@@ -551,7 +512,6 @@ RemoveColumnEasternInterface( Level EditLevel )
   EditLevel -> xlen --;
 
   MoveWaypointsEastOf ( EditLevel->xlen - EditLevel->jump_threshold_east + 1 , -1 , EditLevel ) ;
-  MoveBigMapInsertsEastOf ( EditLevel->xlen - EditLevel->jump_threshold_east + 1 , -1 , EditLevel ) ;
   MoveMapLabelsEastOf ( EditLevel->xlen - EditLevel->jump_threshold_east + 1 , -1 , EditLevel ) ;
 
 }; // void InsertColumnEasternInterface( EditLevel );
@@ -683,7 +643,6 @@ InsertLineSouthernInterface ( Level EditLevel )
   // Now we have the waypoints moved as well
   //
   MoveWaypointsSouthOf ( EditLevel -> ylen - 1 - EditLevel -> jump_threshold_south , +1 , EditLevel ) ;
-  MoveBigMapInsertsSouthOf ( EditLevel -> ylen - 1 - EditLevel -> jump_threshold_south , +1 , EditLevel ) ;
   MoveMapLabelsSouthOf ( EditLevel -> ylen - 1 - EditLevel -> jump_threshold_south , +1 , EditLevel ) ;
 
 }; // void InsertLineSouthernInterface ( EditLevel )
@@ -715,7 +674,6 @@ RemoveLineSouthernInterface ( Level EditLevel )
   // Now we have the waypoints moved as well
   //
   MoveWaypointsSouthOf ( EditLevel -> ylen - 0 - EditLevel -> jump_threshold_south , -1 , EditLevel ) ;
-  MoveBigMapInsertsSouthOf ( EditLevel -> ylen - 0 - EditLevel -> jump_threshold_south , -1 , EditLevel ) ;
   MoveMapLabelsSouthOf ( EditLevel -> ylen - 0 - EditLevel -> jump_threshold_south , -1 , EditLevel ) ;
 
 }; // void RemoveLineSouthernInterface ( EditLevel )
@@ -1785,16 +1743,6 @@ CreateNewMapLevel( void )
     }
 
   //--------------------
-  // First we initialize the graphics insert array with 'empty' information
-  //
-  for ( i = 0 ; i < MAX_MAP_INSERTS_PER_LEVEL ; i ++ )
-    {
-      NewLevel->MapInsertList [ i ] . type = ( -1 ) ;
-      NewLevel->MapInsertList [ i ] . pos . x = ( -1 ) ;
-      NewLevel->MapInsertList [ i ] . pos . y = ( -1 ) ;
-    }
-
-  //--------------------
   // First we initialize the items arrays with 'empty' information
   //
   for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
@@ -2433,72 +2381,6 @@ HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
     }
   
 }; // void HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
-
-/* ----------------------------------------------------------------------
- *
- *
- * ---------------------------------------------------------------------- */
-void 
-ToggleBigGraphicsInserts ( Level EditLevel , int BlockX, int BlockY )
-{
-  int MapInsertNr;
-
-  //--------------------
-  // First we wait till the b key is released again...
-  //
-  while ( BPressed() );
-  
-  //--------------------
-  // Now we go and take a look if there is some grapics insert
-  // at this location present already...
-  //
-  for ( MapInsertNr = 0 ; MapInsertNr < MAX_MAP_INSERTS_PER_LEVEL ; MapInsertNr ++ )
-    {
-      if ( EditLevel->MapInsertList [ MapInsertNr ] . type == ( -1 ) ) continue; 
-      if ( EditLevel->MapInsertList [ MapInsertNr ] . pos.x != BlockX ) continue; 
-      if ( EditLevel->MapInsertList [ MapInsertNr ] . pos.y != BlockY ) continue; 
-      break;
-    }
-  
-  if ( MapInsertNr < MAX_MAP_INSERTS_PER_LEVEL )
-    {
-      sprintf( VanishingMessage , " Old map insert on this position found... " );
-      VanishingMessageDisplayTime = 0 ;
-    }
-  else
-    {
-      sprintf( VanishingMessage , " No Old map insert on this position found. Opening new index...." );
-      VanishingMessageDisplayTime = 0 ;
-      for ( MapInsertNr = 0 ; MapInsertNr < MAX_MAP_INSERTS_PER_LEVEL ; MapInsertNr ++ )
-	{
-	  if ( EditLevel->MapInsertList [ MapInsertNr ] . type == ( -1 ) ) break;
-	}
-      if ( MapInsertNr >= MAX_MAP_INSERTS_PER_LEVEL )
-	{
-	  sprintf( VanishingMessage , " No new map insert index available.\n Overwriting first one..." );
-	  VanishingMessageDisplayTime = 0 ;
-	  MapInsertNr = 0;
-	}
-      
-      //--------------------
-      // Now we enter the right coordinates for our new map index...
-      //
-      EditLevel->MapInsertList [ MapInsertNr ] . pos.x = BlockX ;
-      EditLevel->MapInsertList [ MapInsertNr ] . pos.y = BlockY ;
-      
-    }
-      
-  //--------------------
-  // At this point we know, that we have a good map insert index at our
-  // hands.  Therefore we increase the number of the type and possible
-  // reset it to -1 if the last index was exceeded...
-  //
-  EditLevel->MapInsertList [ MapInsertNr ] . type ++ ;
-  
-  if ( EditLevel->MapInsertList [ MapInsertNr ] . type >= MAX_MAP_INSERTS )
-    EditLevel->MapInsertList [ MapInsertNr ] . type = -1;
-  
-}; // void ToggleBigGraphicsInserts ( Level EditLevel , int BlockX, int BlockY );
 
 /* ----------------------------------------------------------------------
  *
@@ -3254,15 +3136,6 @@ LevelEditor(void)
 	      fflush(stdout);
 	    }
 
-	  //--------------------
-	  // Pressing the 'B' key will toggle the big graphics insert by one...
-	  //
-	  if ( BPressed()) 
-	    {
-	      while ( BPressed() );
-	      ToggleBigGraphicsInserts ( EditLevel , BlockX, BlockY );
-	    }
-	  
 	  //----------------------------------------------------------------------
 	  // If the person using the level editor pressed some editing keys, insert the
 	  // corresponding map tile.  This is done in the following:

@@ -73,7 +73,6 @@ EXTERN float RangedRechargeMultiplierTable [  ] ;
 EXTERN spell_skill_spec SpellSkillMap[ NUMBER_OF_SKILLS ] ;
 EXTERN influence_t Me[ MAX_PLAYERS ];		/* the influence data */
 EXTERN network_influence_t NetworkMe[ MAX_PLAYERS ];		/* the influence data */
-EXTERN map_insert_spec AllMapInserts[ MAX_MAP_INSERTS ] ;
 // EXTERN druidspec Druidmap[ALLDRUIDTYPES];	/* map of druid specifications */
 EXTERN Druidspec Druidmap;     
 // EXTERN bulletspec Bulletmap[ALLBULLETTYPES];	/* map of gun specs */
