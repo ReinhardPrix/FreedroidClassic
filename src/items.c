@@ -2600,6 +2600,23 @@ ManageInventoryScreen ( void )
 	      Item_Held_In_Hand = Me [ 0 ] . shield_item . type ;
 	      Me[0].shield_item.currently_held_in_hand = TRUE;
 	    }
+	  else if ( Me [ 0 ] . weapon_item . type > 0 )
+	    {
+		if ( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_requires_both_hands )
+		{
+		    //--------------------
+		    // At this point we know, that we have just grabbed something from the shield rect
+		    // but it's not the shield but rather the 2-handed weapon, that is in the weapon
+		    // slot.  
+		    // So we set, that something should be displayed in the 'hand', and it should of
+		    // course be the image of the item grabbed from inventory.
+		    //
+		    Item_Held_In_Hand = Me [ 0 ] . weapon_item . type ;
+		    Me [ 0 ] . weapon_item . currently_held_in_hand = TRUE;
+		}
+	    }
+
+
 	}
       else if ( MouseCursorIsOnButton( ARMOUR_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{

@@ -1083,8 +1083,15 @@ ShowCurrentTextWindow ( void )
 	}
       else if ( MouseCursorIsOnButton ( SHIELD_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
-	   if ( Me[0].shield_item.type > 0 )
-	   GiveItemDescription ( ItemDescText , & ( Me[0].shield_item) , FALSE );
+	   if ( Me [ 0 ] . shield_item . type > 0 )
+	       GiveItemDescription ( ItemDescText , & ( Me [ 0 ] . shield_item ) , FALSE );
+	   else if ( Me [ 0 ] . weapon_item . type > 0 )
+	   {
+		if ( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_requires_both_hands )
+		{
+		    GiveItemDescription ( ItemDescText , & ( Me [ 0 ] . weapon_item ) , FALSE );
+		}
+	   }
 	}
       else if ( MouseCursorIsOnButton ( ARMOUR_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
