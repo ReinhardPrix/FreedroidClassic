@@ -58,7 +58,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <time.h>
+#include <sys/time.h>
 #include <signal.h>
 #include <unistd.h>
 #include <sys/stat.h>
@@ -231,7 +231,7 @@ main (int argc, char *const argv[])
 
   sound_on = TRUE;	 /* default value, can be overridden by command-line */
   debug_level = 0;       /* 0=no debug 1=first debug level (at the moment=all) */
-  use_fullscreen = FALSE; /* use X11-window or full screen */
+  fullscreen_on = FALSE; /* use X11-window or full screen */
 
   /*
    *  Parse command line and set global switches 
@@ -296,14 +296,18 @@ main (int argc, char *const argv[])
 	    }
 	  if ( DPressed() )
 	    Me.energy = 0;
-	  if ( LPressed() )
-	    ShowHighscoreList ();
+	  if ( LPressed() ) 
+	    {
+	      while (LPressed () );  /* wait for key release */
+	      ShowHighscoreList ();
+	    }
 	  if ( IPressed() )
 	    ShowDebugInfos ();
-	  if ( VPressed() )
-	    HideInvisibleMap = !HideInvisibleMap;
-	  if ( CPressed() )
-	    Cheatmenu ();
+	  if ( CPressed() ) 
+	    {
+	      while (CPressed () );  /* wait for key release */
+	      Cheatmenu ();
+	    }
 	  if ( EscapePressed() )
 	    OptionsMenu ();
 	  if ( PPressed () )
@@ -331,7 +335,7 @@ main (int argc, char *const argv[])
 		}
 	    }
 
-	  MoveBullets ();	/* Bullets entsprechend ihrer Geschwindigkeit weiterbewegen */
+	  MoveBullets ();   
 	  ExplodeBlasts ();	/* Blasts in der Explosionsphase weiterbewegen */
 
 	  GetView ();		/* Einen Ausschnitt aus der Gesamtlevelkarte machen */
@@ -348,7 +352,7 @@ main (int argc, char *const argv[])
 	  PutMessages ();
 
 	  JoystickControl ();	// Wenn vorhanden: Joystick einlesen 
-	  MoveInfluence ();	// Gemaess den gedrueckten Tasten die Geschwindigkeit veraendern 
+	  MoveInfluence ();	// change Influ-speed depending on keys pressed
 	  MoveEnemys ();	// Auch die Feinde bewegen 
 	  AnimateInfluence ();	// Bei animierten Influencer die Phasen weiterzaehlen 
 	  AnimateEnemys ();	// Bei den Feinden auch Phasen weiterzaehlen 
@@ -457,8 +461,8 @@ ThouArtDefeated (void)
 
   for (i = 0; i < WAIT_AFTER_KILLED; i++)
     {
-      //          UpdateInfoline();
-      //          SetInfoline();
+      UpdateInfoline();
+      SetInfoline();
       DisplayRahmen (RealScreen);
       GetInternFenster (SHOW_ALL);
       PutInternFenster ();
@@ -473,7 +477,7 @@ ThouArtDefeated (void)
     }
 
   /* Ein Flimmer zieht "uber den Schirm */
-  Flimmern ();
+  Flimmern (4);  /* type 4 flimmer */
   Debriefing ();
 
   /* Soundblaster soll keine Toene mehr spucken */
@@ -515,8 +519,6 @@ Debriefing (void)
   HallElement *SaveHallptr = Hallptr;
   int DebriefColor;
 
-  DebugPrintf ("\nvoid Debriefing(void): Real function call confirmed.");
-
   DebriefColor = FONT_WHITE;
 
   Me.status = DEBRIEFING;
@@ -534,7 +536,7 @@ Debriefing (void)
 	  // SwapScreen();
 	  PrepareScaledSurface();
 
-	  GreatScoreName = GetString (18);
+	  GreatScoreName = GetString (18, 2);
 	  GreatScore = RealScore;
 	}
       else if (RealScore < LowestScoreOfDay)
@@ -547,7 +549,7 @@ Debriefing (void)
 	  // SwapScreen();
 	  PrepareScaledSurface();
 	  // free (LowestName);
-	  LowestName = GetString (18);
+	  LowestName = GetString (18, 2);
 	  LowestScoreOfDay = RealScore;
 	}
       else if (RealScore > HighestScoreOfDay)
@@ -561,7 +563,7 @@ Debriefing (void)
 	  // free (HighestName);
 	  // SwapScreen();
 	  PrepareScaledSurface();
-	  HighestName = GetString (18);
+	  HighestName = GetString (18, 2);
 	  HighestScoreOfDay = RealScore;
 	}
       free (Scoretext);
@@ -590,7 +592,7 @@ Debriefing (void)
 	  Oldptr = Hallptr;
 	  Hallptr = MyMalloc (sizeof (HallElement) + 1);
 	  Hallptr->PlayerScore = RealScore;
-	  Hallptr->PlayerName = GetString (18);
+	  Hallptr->PlayerName = GetString (18, 2);
 	  Hallptr->NextPlayer = Oldptr;
 	  SaveHallptr = Hallptr;
 	}
@@ -605,7 +607,7 @@ Debriefing (void)
 	    }
 	  Newptr = MyMalloc (sizeof (HallElement) + 1);
 	  Newptr->PlayerScore = RealScore;
-	  Newptr->PlayerName = GetString (18);
+	  Newptr->PlayerName = GetString (18, 2);
 	  Newptr->NextPlayer = Hallptr;
 	  Oldptr->NextPlayer = Newptr;
 	}
@@ -617,32 +619,42 @@ Debriefing (void)
       // SwapScreen();
 	  PrepareScaledSurface();
       getchar ();
-    }
+    } /* if (ParaPlusExtensions) */
 
-  DebugPrintf ("\nvoid Debriefing(void): Usual end of function reached.");
-}				// void Debriefing(void)
+  printf ("\nSurvived Debriefing! \n");
 
-// This function does the Pause-Mode, which means, that the game process is halted,
-// while the graphics and animations are not.  The "Mode" can be set to CHEESE, which is
-// a feature from the original program that should allow for better screenshots and
-// of course allow the player to take a rest.
-//
-// Status: functioning perfectly
-//
+  return;
 
+} /* Debriefing() */
+
+/*-----------------------------------------------------------------
+ * Desc: realise Pause-Mode: the game process is halted,
+ * 	while the graphics and animations are not.  This mode 
+ *	can further be toggled from PAUSE to CHEESE, which is
+ * 	a feature from the original program that should probably
+ * 	allow for better screenshots.
+ *
+ *      We have incorporated the "CHEESE" feature for completeness.
+ *
+ *-----------------------------------------------------------------*/
 void
 Pause (void)
 {
+  int Pause = TRUE;
+
   Me.status = PAUSE;
   SetInfoline ();
   UpdateInfoline ();
-  ClearKbState ();
-  while (!PPressed ())
+  GetView ();
+  GetInternFenster (SHOW_ALL);
+  PutInternFenster ();
+
+
+  while (PPressed ());   /* wait for user to _release_ the P key */
+
+  while ( Pause )
     {
       usleep (30000);
-      JoystickControl ();
-      //PORT: worfuer war das??  
-      //while (!TimerFlag) JoystickControl();
       AnimateInfluence ();
       AnimateRefresh ();
       RotateBulletColor ();
@@ -650,56 +662,61 @@ Pause (void)
       GetView ();
       GetInternFenster (SHOW_ALL);
       PutInternFenster ();
-      //PORT          if (kbhit()) taste=getch();
+
       if (CPressed ())
 	{
-	  JoystickControl ();
+	  while (CPressed ());   /* wait for key release */
 	  Me.status = CHEESE;
 	  SetInfoline ();
 	  UpdateInfoline ();
-	  while (!SpacePressed ())
-	    {
-	      JoystickControl ();
-	      keyboard_update ();
-	    }
-	  Me.status = PAUSE;
+	  GetView ();
+	  GetInternFenster (SHOW_ALL);
+	  PutInternFenster ();
+
+	  while (!SpacePressed () && !CPressed() ); /* stay CHEESE until Space pressed */
+	  while (CPressed()); /* if it was 'C', wait for its release ! */
+
+
+	  Me.status = PAUSE;       /* return to normal PAUSE */
 	  SetInfoline ();
 	  UpdateInfoline ();
-	  while (SpacePressed ())
-	    {
-	      JoystickControl ();
-	      keyboard_update ();
-	    }
-	  taste = 1;
-	}
-    }
-  ClearKbState ();
-}				// void Pause(void)
+	} /* if (CPressed) */
+
+      if (PPressed ())
+	Pause = FALSE;
+
+    } /* while (Pause) */
+
+  while (PPressed () );   /* make sure we don't back in here immediately */
+
+  return;
+
+} /* Pause () */
+
 
 /* **********************************************************************
-	Diese Funktion gibt die momentane Highscoreliste aus
-	Derweil ist sie noch im Textmodus.
-	Wenn sie fertig ist, soll sie die Liste in Paraplusart nach oben
-	scrollen.
-	**********************************************************************/
+ *	Diese Funktion gibt die momentane Highscoreliste aus
+ *	Derweil ist sie noch im Textmodus.
+ *	Wenn sie fertig ist, soll sie die Liste in Paraplusart nach oben
+ *	scrollen.
+ ***********************************************************************/
 void
 ShowHighscoreList (void)
 {
   int Rankcounter = 0;
   HallElement *SaveHallptr = Hallptr;
 
-  vga_clear ();
-  keyboard_close ();		// for the moment we don't bother, just use normal kb mode
   if (!PlusExtentionsOn)
     {
-      gl_printf (20, 5, " Dies ist die aktuelle Highsoreliste:\n\n");
-      gl_printf (-1, -1, " Highest Score: %10s : %4d\n", HighestName,
-		 HighestScoreOfDay);
+      DisplayText ("Highscore list:", 10,10, RealScreen, FALSE);
+
+      //      DisplayText ("Highest Score: %10s : %4d\n", HighestName, HighestScoreOfDay);
       gl_printf (-1, -1, " Ok Score:      %10s : %4d\n", GreatScoreName,
 		 GreatScore);
       gl_printf (-1, -1, " Lowest Score:  %10s : %4d\n", LowestName,
 		 LowestScoreOfDay);
-      getchar ();
+      PrepareScaledSurface ();
+      getchar_raw ();
     }
   else
     {
@@ -715,13 +732,10 @@ ShowHighscoreList (void)
 	}
       getchar ();
     }
-  Hallptr = SaveHallptr;
+  //  Hallptr = SaveHallptr;
 
-  vga_clear ();
-  // return to raw kb mode
-  keyboard_init ();
-
-}				// void ShowHighscoreList(void)
+  return;
+} /* ShowHighscoreList () */
 
 void
 UpdateCountersForThisFrame (void)
