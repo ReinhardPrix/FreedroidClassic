@@ -1764,6 +1764,7 @@ InitFreedroid ( void )
   SkipAFewFrames = 0;
   Me[0].TextVisibleTime = 0;
   Me[0].readied_skill = 0;
+  Me[0].walk_cycle_phase = 0 ;
   CurLevel = NULL;  // please leave this here.  It indicates, that the map is not yet initialized!!!
   Me[0].TextToBeDisplayed = "Linux Kernel booted.  001 transfer-tech modules loaded.  System up and running.";
 

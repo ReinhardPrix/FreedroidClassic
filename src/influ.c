@@ -677,6 +677,7 @@ NoInfluBulletOnWay (void)
 void
 AnimateInfluence ( int PlayerNum )
 {
+  float my_speed;
 #define TOTAL_SWING_TIME 0.55
 #define FULL_BREATHE_TIME 3
 #define TOTAL_STUNNED_TIME 0.35
@@ -686,10 +687,22 @@ AnimateInfluence ( int PlayerNum )
       Me [ PlayerNum ] .phase = TUX_SWING_PHASES + TUX_BREATHE_PHASES + 
 	( Me [ PlayerNum ] .got_hit_time * TUX_GOT_HIT_PHASES * 1.0 / TOTAL_STUNNED_TIME ) ;
       if ( Me [ PlayerNum ] .got_hit_time > TOTAL_STUNNED_TIME ) Me [ PlayerNum ] .got_hit_time = (-1) ;
+
+      Me [ PlayerNum ] . walk_cycle_phase = 17 ;
     }
   else if ( Me [ PlayerNum ] .weapon_swing_time == (-1) )
     {
       Me [ PlayerNum ] .phase = ( (int) ( Me [ PlayerNum ] .MissionTimeElapsed * TUX_BREATHE_PHASES / FULL_BREATHE_TIME ) ) % TUX_BREATHE_PHASES ;
+
+      if ( fabsf ( Me [ PlayerNum ] . speed . x ) + fabsf ( Me [ PlayerNum ] . speed . y ) < 0.3 )
+	Me [ PlayerNum ] . walk_cycle_phase = 17 ;
+      else
+	{
+	  my_speed = sqrt ( Me [ PlayerNum ] . speed . x * Me [ PlayerNum ] . speed . x +
+			    Me [ PlayerNum ] . speed . y * Me [ PlayerNum ] . speed . y ) ;
+	  Me [ PlayerNum ] . walk_cycle_phase += Frame_Time() * 8.0 * my_speed ;
+	  if ( Me [ PlayerNum ] . walk_cycle_phase > 25.0 ) Me [ PlayerNum ] . walk_cycle_phase = 15.0 ;
+	}
     }
   else
     {
@@ -699,13 +712,16 @@ AnimateInfluence ( int PlayerNum )
 	{
 	  Me [ PlayerNum ] .phase = 0;
 	}
-
+      // Me [ PlayerNum ] . walk_cycle_phase = Me [ PlayerNum ] . phase ;
+      Me [ PlayerNum ] . walk_cycle_phase = 17 ;
     }
 
   if (((int) (Me [ PlayerNum ] .phase)) >= TUX_SWING_PHASES + TUX_BREATHE_PHASES + TUX_GOT_HIT_PHASES )
     {
       Me [ PlayerNum ] .phase = 0;
     }
+
+  // Me [ PlayerNum ] . walk_cycle_phase = Me [ PlayerNum ] . phase ;
 
 }; // void AnimateInfluence ( void )
 

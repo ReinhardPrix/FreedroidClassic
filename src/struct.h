@@ -477,6 +477,7 @@ typedef struct
 
   double firewait;		// time remaining, until the weapon is ready to fire again...
   double phase;			// the current phase of animation 
+  float walk_cycle_phase;       // 
   float weapon_swing_time;	// How long is the current weapon swing in progress (in seconds of course) 
   float MissionTimeElapsed;
   float got_hit_time;           // how long stunned now since the last time tux got hit 
@@ -849,13 +850,11 @@ map_tile, *Map_tile;
 
 typedef struct
 {
-  // int empty;
   int levelnum;	/* Number of this level */
   char *Levelname;		/* Name of this level */
   char *Background_Song_Name;
   char *Level_Enter_Comment;
   map_statement StatementList[ MAX_STATEMENTS_PER_LEVEL ];
-  // codepanel CodepanelList[ MAX_CODEPANELS_PER_LEVEL ];
   char *obstacle_name_list[ MAX_OBSTACLE_NAMES_PER_LEVEL ];
   int xlen;		/* X dimension */
   int ylen;
