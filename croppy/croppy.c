@@ -481,7 +481,7 @@ examine_input_surface ( void )
 	}
     }
 
-  DebugPrintf ( INPUT_EXAM_DEBUG , "\nAmount cropped on side N/S/E/W: %d/%d/%d/%d." , 
+  DebugPrintf ( 0 , "\nAmount cropped on side N/S/E/W: %d/%d/%d/%d." , 
 		cut_up , cut_down , cut_right , cut_left );
 
 }; // void examine_input_surface ( void )
@@ -495,11 +495,11 @@ write_offset_file ( )
 {
   char filename[10000];
   char linebuf[10000];
-  int default_center_x = 120;
-  int default_center_y = 240;
+  int default_center_x = 359;
+  int default_center_y = 301;
   FILE *OffsetFile;  // to this file we will save all the ship data...
 
-#define OFFSET_EXPLANATION_STRING "FreedroidRPG uses isometric viewpoint and at the same time images of various sizes for objects within the game.  To determine the correct location for each of these images in the main game screen, FreedroidRPG must somehow know where the 'origin' of the object in question is within the given graphics file.  This is what these offset files are for:  They describe how much and in which direction the top left corner of the visible object is shifted away from the 'origin' or rather 'feet point' of the object in the image displayed.\n\n"
+#define OFFSET_EXPLANATION_STRING "\n\nFreedroidRPG uses isometric viewpoint and at the same time images of various sizes for objects within the game.  To determine the correct location for each of these images in the main game screen, FreedroidRPG must somehow know where the 'origin' of the object in question is within the given graphics file.  This is what these offset files are for:  They describe how much and in which direction the top left corner of the visible object is shifted away from the 'origin' or rather 'feet point' of the object in the image displayed.\n\n"
 
   //--------------------
   // Now we must determine the output filename
@@ -528,7 +528,7 @@ write_offset_file ( )
   fwrite ( START_OF_OFFSET_FILE_STRING , strlen( START_OF_OFFSET_FILE_STRING ), 
 	   sizeof(char), OffsetFile );
 
-  fwrite ( START_OF_OFFSET_EXPLANATION_STRING , strlen( START_OF_OFFSET_EXPLANATION_STRING ), 
+  fwrite ( OFFSET_EXPLANATION_STRING , strlen( OFFSET_EXPLANATION_STRING ), 
 	   sizeof(char), OffsetFile );
 
   sprintf ( linebuf , "\n%s%d\n" , OFFSET_FILE_OFFSETX_STRING , cut_left - default_center_x );

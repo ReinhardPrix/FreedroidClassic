@@ -52,7 +52,8 @@
 #define DISTANCE_TOLERANCE (0.2)
 #define FORCE_FIRE_DISTANCE (1.5)
 #define ATTACK_BOXES_DISTANCE (2.0)
-#define DROID_SELECTION_TOLERANCE (0.9)
+// #define DROID_SELECTION_TOLERANCE (0.9)
+#define DROID_SELECTION_TOLERANCE (0.3)
 
 #define REFRESH_ENERGY		3
 #define COLLISION_PUSHSPEED	7
@@ -972,7 +973,7 @@ CheckInfluenceEnemyCollision (void)
   //--------------------
   // We need to go through the whole list of enemys...
   //
-  for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
+  for (i = 0; i < Number_Of_Droids_On_Ship ; i++)
     {
 
       //--------------------
@@ -1544,8 +1545,10 @@ PerformTuxAttackRaw ( int PlayerNum )
 	  if ( fabsf ( AllEnemys [ i ] . pos . x - Weapon_Target_Vector.x ) > 0.5 ) continue;
 	  if ( fabsf ( AllEnemys [ i ] . pos . y - Weapon_Target_Vector.y ) > 0.5 ) continue;
 	  AllEnemys[ i ] . energy -= Me [ PlayerNum ] .base_damage + MyRandom( Me [ PlayerNum ] .damage_modifier );
-	  AllEnemys[ i ] . is_friendly = 0 ;
-	  AllEnemys[ i ] . combat_state = MAKE_ATTACK_RUN ;
+
+	  // AllEnemys[ i ] . is_friendly = 0 ;
+	  // AllEnemys[ i ] . combat_state = MAKE_ATTACK_RUN ;
+	  robot_group_turn_hostile ( i );
 	  SetRestOfGroupToState ( & ( AllEnemys[i] ) , MAKE_ATTACK_RUN );
 
 	  //--------------------
