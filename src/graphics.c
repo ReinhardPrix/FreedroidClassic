@@ -971,19 +971,26 @@ SetPalCol2 (unsigned int palpos, color Farbwert)
 }				// void SetPalCol2(...)
 
 
-/* **********************************************************************
-   Diese Funktion bringt ein Flimmer auf den Schirm
-**********************************************************************/
-
+/*-----------------------------------------------------------------
+ *   Diese Funktion bringt ein Flimmer auf den Schirm
+ *
+ * Param: type = 0   no flimmer
+ *               1   flimmer type 1 
+ *               etc...
+ *
+ *  Note: Type 1-3 are not really implemented, just kept from earlier
+ *        versions. Only type 4 works currently with SDL
+ * 
+ *-----------------------------------------------------------------*/
 
 #define BLANKBREITE 20
-#define FLIMMERN4
 
 void
-Flimmern (void)
+Flimmern (int type)
 {
   int i, j;
   unsigned char *Screenptr;
+  unsigned char *Junkptr = 0x0;
   SDL_Rect LocalRectangle;
 
   DebugPrintf ("\nvoid Flimmern(void): Real function call confirmed.");
@@ -991,62 +998,72 @@ Flimmern (void)
   //Screenptr = RealScreen;
   Screenptr = Outline320x200;
 
-#ifdef FLIMMERN1
-  Screenptr += USERFENSTERPOSY * SCREENBREITE + USERFENSTERPOSX;
-  randomize ();
-  for (i = 0; i < USERFENSTERHOEHE; i++)
+  switch (type)
     {
-      for (j = 0; j < USERFENSTERBREITE; j++)
+    case 0:
+      break;
+      
+    case 1:
+      Screenptr += USERFENSTERPOSY * SCREENBREITE + USERFENSTERPOSX;
+      //      randomize ();
+      for (i = 0; i < USERFENSTERHOEHE; i++)
 	{
-	  *Screenptr = *Junkptr;
-	  Screenptr++;
-	  Junkptr++;
+	  for (j = 0; j < USERFENSTERBREITE; j++)
+	    {
+	      *Screenptr = *Junkptr;
+	      Screenptr++;
+	      Junkptr++;
+	    }
+	  Screenptr += SCREENBREITE - USERFENSTERBREITE;
 	}
-      Screenptr += SCREENBREITE - USERFENSTERBREITE;
-    }
-  return;
-#endif
+      break;
 
-#ifdef FLIMMERN2
-  for (i = 0; i < BLANKBREITE; i++)
-    {
-      memset (Screenptr + (i + USERFENSTERPOSY) * SCREENBREITE +
-	      USERFENSTERPOSX, 0, USERFENSTERBREITE);
-      memset (Screenptr +
-	      (USERFENSTERPOSY - i + USERFENSTERHOEHE) * SCREENBREITE +
-	      USERFENSTERPOSX, 0, USERFENSTERBREITE);
-      for (j = 0; j < USERFENSTERHOEHE; j++)
+    case 2:
+      for (i = 0; i < BLANKBREITE; i++)
 	{
-	  *(Screenptr + (USERFENSTERPOSY + j) * SCREENBREITE +
-	    USERFENSTERPOSX + i) = 0;
-	  *(Screenptr + (USERFENSTERPOSY + j) * SCREENBREITE +
-	    USERFENSTERPOSX + USERFENSTERBREITE - i) = 0;
+	  memset (Screenptr + (i + USERFENSTERPOSY) * SCREENBREITE +
+		  USERFENSTERPOSX, 0, USERFENSTERBREITE);
+	  memset (Screenptr +
+		  (USERFENSTERPOSY - i + USERFENSTERHOEHE) * SCREENBREITE +
+		  USERFENSTERPOSX, 0, USERFENSTERBREITE);
+	  for (j = 0; j < USERFENSTERHOEHE; j++)
+	    {
+	      *(Screenptr + (USERFENSTERPOSY + j) * SCREENBREITE +
+		USERFENSTERPOSX + i) = 0;
+	      *(Screenptr + (USERFENSTERPOSY + j) * SCREENBREITE +
+		USERFENSTERPOSX + USERFENSTERBREITE - i) = 0;
+	    }
 	}
-    }
-  return;
-#endif
+      break;
 
-#ifdef FLIMMERN3
-  /* vertical close Userfenster */
-  for (i = 0; i < USERFENSTERHOEHE / (2); i++)
-    {
-      memset (Screenptr + (i + USERFENSTERPOSY) * SCREENBREITE +
-	      USERFENSTERPOSX, 0, USERFENSTERBREITE);
-      memset (Screenptr +
-	      (USERFENSTERPOSY + USERFENSTERHOEHE - i) * SCREENBREITE +
-	      USERFENSTERPOSX, 0, USERFENSTERBREITE);
-      usleep (200);
-    }
+    case 3:
+      /* vertical close Userfenster */
+      for (i = 0; i < USERFENSTERHOEHE / (2); i++)
+	{
+	  memset (Screenptr + (i + USERFENSTERPOSY) * SCREENBREITE +
+		  USERFENSTERPOSX, 0, USERFENSTERBREITE);
+	  memset (Screenptr +
+		  (USERFENSTERPOSY + USERFENSTERHOEHE - i) * SCREENBREITE +
+		  USERFENSTERPOSX, 0, USERFENSTERBREITE);
+	  usleep (200);
+	}
 
-  /* make the central line white */
-  Junkptr = Screenptr +
-    (USERFENSTERPOSY + USERFENSTERHOEHE / 2) * SCREENBREITE + USERFENSTERPOSX;
-  memset (Junkptr, FONT_WHITE, USERFENSTERBREITE);
-
-  usleep (50000);
+      /* make the central line white */
+      Junkptr = Screenptr +
+	(USERFENSTERPOSY + USERFENSTERHOEHE / 2) * SCREENBREITE + USERFENSTERPOSX;
+      memset (Junkptr, FONT_WHITE, USERFENSTERBREITE);
+      
+      usleep (50000);
 
 
-  /* horizontal close userfenster */
+      /* horizontal close userfenster */
+
+      for (i = 0; i < USERFENSTERBREITE / 2 - 2; i++)
+	{
+	  *(Junkptr + i) = 0;
+	  *(Junkptr + USERFENSTERBREITE - i) = 0;
+	  usleep (100);
+	}
 
   for (i = 0; i < USERFENSTERBREITE / 2 - 2; i++)
     {
@@ -1058,11 +1075,9 @@ Flimmern (void)
   usleep (30000);
   /* Clear the rest */
   memset (Junkptr, 0, USERFENSTERBREITE);
+  break;
 
-  return;
-#endif
-
-#ifdef FLIMMERN4
+case 4:	
 
   LocalRectangle.x=USERFENSTERPOSX;
   LocalRectangle.w=USERFENSTERBREITE;
@@ -1089,21 +1104,14 @@ Flimmern (void)
       PrepareScaledSurface();
     }
 
+
+
+    default:
+      break;
+    } /* switch (type of flimmer) */
+
   return;
-#endif
 
-#ifndef FLIMMERN4
-#ifndef FLIMMERN3
-#ifndef FLIMMERN2
-#ifndef FLIMMERN1
-  /* Wenn "uberhaupt keine der angebotenen Varianten genommen wurde */
-  DebugPrintf (" Warning: No Flimmern at all !\n");
-  getchar ();
-#endif
-#endif
-#endif
-#endif
-
-}
+} /* Flimmern() */
 
 #undef _graphics_c
