@@ -268,9 +268,9 @@ SetTextBorder (int left, int upper, int right, int lower, int chars_per_line)
 void
 ClearTextBorder (unsigned char *Parameter_Screen, int color)
 {
-  register int i;
-  register int height = LowerTextBorder - UpperTextBorder;
-  register int xlen = RightTextBorder - LeftTextBorder;
+  int i;
+  int height = LowerTextBorder - UpperTextBorder;
+  int xlen = RightTextBorder - LeftTextBorder;
   unsigned char *target;
 
   target = Parameter_Screen + UpperTextBorder * SCREENBREITE + LeftTextBorder;
@@ -427,7 +427,8 @@ DisplayText (char *Text,
 	    JoystickControl ();
 	  MyCursorX = startx;
 	  MyCursorY = starty;
-	  ClearUserFenster ();
+	  // ClearUserFenster ();
+	  ClearTextBorder( Outline320x200, 208 );
 	  continue;
 	}
 

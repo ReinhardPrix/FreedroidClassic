@@ -506,10 +506,11 @@ Debriefing (void)
   if (!PlusExtentionsOn)
     {
       Scoretext = MyMalloc (1000);
+      SetUserfenster (DebriefColor, RealScreen);	// KON_BG_COLOR
+      // SetTextColor (DebriefColor, KON_TEXT_COLOR);	// KON_BG_COLOR
+      SetTextColor (208, RAHMEN_VIOLETT );	// RED // YELLOW
       if (RealScore > GreatScore)
 	{
-	  SetUserfenster (DebriefColor, RealScreen);	// KON_BG_COLOR
-	  SetTextColor (DebriefColor, KON_TEXT_COLOR);	// KON_BG_COLOR
 	  strcpy (Scoretext, "\n    Great Score !\n Enter your name:");
 	  DisplayText (Scoretext, USERFENSTERPOSX, USERFENSTERPOSY,
 		       RealScreen, FALSE);
@@ -520,8 +521,6 @@ Debriefing (void)
 	}
       else if (RealScore < LowestScoreOfDay)
 	{
-	  SetUserfenster (DebriefColor, RealScreen);	// KON_BG_COLOR
-	  SetTextColor (DebriefColor, KON_TEXT_COLOR);	// KON_BG_COLOR
 	  strcpy (Scoretext, "\n   Lowest Score of Day! \n Enter your name:");
 	  DisplayText (Scoretext, USERFENSTERPOSX, USERFENSTERPOSY,
 		       RealScreen, FALSE);
@@ -531,8 +530,6 @@ Debriefing (void)
 	}
       else if (RealScore > HighestScoreOfDay)
 	{
-	  SetUserfenster (DebriefColor, RealScreen);	// KON_BG_COLOR
-	  SetTextColor (DebriefColor, KON_TEXT_COLOR);	// KON_BG_COLOR
 	  strcpy (Scoretext,
 		  "\n   Highest Score of Day! \n Enter your name:");
 	  DisplayText (Scoretext, USERFENSTERPOSX, USERFENSTERPOSY,

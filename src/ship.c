@@ -568,8 +568,9 @@ GreatDruidShow (void)
     {
 
       // ClearUserFenster ();
-      ClearGraphMem( Outline320x200 );
-      DisplayRahmen( Outline320x200 );
+      // ClearGraphMem( Outline320x200 );
+      ClearAllButRahmen( );
+	//DisplayRahmen( Outline320x200 );
       /*
        * Ausgabe der ersten Zeile, die den Druidtyp beschreibt
        *
@@ -582,8 +583,9 @@ GreatDruidShow (void)
 
 	  // Am Bildschirm anzeigen
 	  // ClearUserFenster ();
-	  ClearGraphMem( Outline320x200 );
-	  DisplayRahmen( Outline320x200 );
+	  // ClearGraphMem( Outline320x200 );
+	  // DisplayRahmen( Outline320x200 );
+	  ClearAllButRahmen( );
 	  SetTextColor (208, RAHMEN_VIOLETT );	// RED // YELLOW
 	  strcpy (InfoText, "Unit type ");
 	  strcat (InfoText, Druidmap[Infodroid].druidname);
@@ -659,8 +661,9 @@ GreatDruidShow (void)
        *
        */
 
-      ClearGraphMem( Outline320x200 );
-      DisplayRahmen( Outline320x200 );
+      //      ClearGraphMem( Outline320x200 );
+      //      DisplayRahmen( Outline320x200 );
+      ClearAllButRahmen( );
       SetTextColor (208, RAHMEN_VIOLETT );	// RED // YELLOW
       // ClearUserFenster ();
       strcpy (InfoText, "Unit type ");
@@ -730,9 +733,10 @@ GreatDruidShow (void)
        */
 
       // ClearUserFenster ();
-      ClearGraphMem( Outline320x200 );
-      DisplayRahmen( Outline320x200 );
-      SetTextColor (208, RAHMEN_VIOLETT );	// RED // YELLOW
+      // ClearGraphMem( Outline320x200 );
+      // DisplayRahmen( Outline320x200 );
+      ClearAllButRahmen( );
+      SetTextColor (208, RAHMEN_VIOLETT );	// BLACK and VIOLETT
       strcpy (InfoText, "Unit type ");
       strcat (InfoText, Druidmap[Infodroid].druidname);
       strcat (InfoText, " - ");
@@ -795,8 +799,9 @@ GreatDruidShow (void)
        *
        */
 
-      ClearGraphMem( Outline320x200 );
-      DisplayRahmen( Outline320x200 );
+      //      ClearGraphMem( Outline320x200 );
+      //      DisplayRahmen( Outline320x200 );
+      ClearAllButRahmen( );
       SetTextColor (208, RAHMEN_VIOLETT );	// RED // YELLOW
       // ClearUserFenster ();
       strcpy (InfoText, "Unit type ");
@@ -815,7 +820,10 @@ GreatDruidShow (void)
       strcpy (InfoText, "Notes: ");
       strcat (InfoText, Druidmap[Infodroid].notes);
 
-      SetTextBorder (MENUTEXT_X, USERFENSTERPOSX,
+      // SetTextBorder (MENUTEXT_X, USERFENSTERPOSX,
+      // USERFENSTERPOSX + USERFENSTERBREITE,
+      // USERFENSTERHOEHE + USERFENSTERPOSY, 30);
+      SetTextBorder (MENUTEXT_X, USERFENSTERPOSY + (1.35) * FONTHOEHE,
 		     USERFENSTERPOSX + USERFENSTERBREITE,
 		     USERFENSTERHOEHE + USERFENSTERPOSY, 30);
       DisplayText (InfoText, MENUTEXT_X, USERFENSTERPOSY + 17, RealScreen,
@@ -1064,6 +1072,32 @@ ClearUserFenster (void)
       memset( Outline320x200 + i*SCREENBREITE+USERFENSTERPOSX , 0 , USERFENSTERBREITE );
     }
 
+  DebugPrintf ("\nvoid ClearUserFenster(void): End of function reached.");
+
+} // void ClearUserFenster(void)
+
+/*@Function============================================================
+@Desc: l"oscht das Userfenster
+
+@Ret: 
+@Int:
+* $Function----------------------------------------------------------*/
+void
+ClearAllButRahmen (void)
+{
+  int i;
+
+  DebugPrintf ("\nvoid ClearAllButRahmen(void): Real function called.");
+
+  for (i = RAHMENHOEHE; i < SCREENHOEHE; i++)
+    {
+      // gl_hline (USERFENSTERPOSX, i, USERFENSTERPOSX + USERFENSTERBREITE,
+      // KON_BG_COLOR);
+      // memset(RealScreen+i*SCREENBREITE+USERFENSTERPOSX,USERFENSTERBREITE,KON_BG_COLOR);
+      // memset( Outline320x200 + i*SCREENBREITE+USERFENSTERPOSX , KON_BG_COLOR , USERFENSTERBREITE );
+      // memset( Outline320x200 + i*SCREENBREITE+USERFENSTERPOSX , FONT_BLACK , USERFENSTERBREITE );
+      memset( Outline320x200 + i*SCREENBREITE , 0 , SCREENBREITE );
+    }
   DebugPrintf ("\nvoid ClearUserFenster(void): End of function reached.");
 
 } // void ClearUserFenster(void)
