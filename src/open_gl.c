@@ -717,18 +717,16 @@ open_gl_check_error_status ( char* name_of_calling_function  )
 	    fprintf ( stderr , "\nCheck occured in function: %s." , name_of_calling_function );
 	    GiveStandardErrorMessage ( __FUNCTION__  , 
 				       "Error code GL_INVALID_ENUM received!", PLEASE_INFORM, IS_FATAL );
-	    
 	    break;
 	case GL_INVALID_VALUE:
 	    fprintf ( stderr , "\nCheck occured in function: %s." , name_of_calling_function );
 	    GiveStandardErrorMessage ( __FUNCTION__  , 
 				       "Error code GL_INVALID_VALUE received!", PLEASE_INFORM, IS_FATAL );
-	    
 	    break;
 	case GL_INVALID_OPERATION:
 	    fprintf ( stderr , "\nCheck occured in function: %s." , name_of_calling_function );
 	    GiveStandardErrorMessage ( __FUNCTION__  , 
-				       "Error code GL_INVALID_OPERATION received!", PLEASE_INFORM, IS_FATAL );
+				       "Error code GL_INVALID_OPERATION received!", PLEASE_INFORM, IS_WARNING_ONLY );
 	    break;
 	case GL_STACK_OVERFLOW:
 	    fprintf ( stderr , "\nCheck occured in function: %s." , name_of_calling_function );

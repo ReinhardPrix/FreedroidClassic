@@ -880,7 +880,7 @@ get_iso_image_from_file_and_path ( char* fpath , iso_image* our_iso_image , int 
     {
 	fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
 	GiveStandardErrorMessage ( __FUNCTION__  ,  
-				   va ( "Could not load image: %s \n" , fpath ) , PLEASE_INFORM, IS_FATAL );
+				   va ( "Could not load image: File name: see next line\n%s \n" , fpath ) , PLEASE_INFORM, IS_FATAL );
     }
 
     //--------------------

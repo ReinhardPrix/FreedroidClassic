@@ -211,6 +211,98 @@ ERROR: Unhandled mouse cursor shape type received.",
 }; // void set_mouse_cursor_to_shape ( int given_shape ) 
 
 /* ----------------------------------------------------------------------
+ * Because we're using our own mouse cursor, it might be important to
+ * make sure, that the system mouse cursor is hidden, so it will not show
+ * and we can draw our own mouse cursor image right at that place safely.
+ * ---------------------------------------------------------------------- */
+void
+make_sure_system_mouse_cursor_is_turned_off ( void )
+{
+
+    if ( SDL_ShowCursor( SDL_QUERY ) == SDL_ENABLE )
+    {
+	DebugPrintf ( 1 , "\n%s(): now hiding mouse cursor again, because it was shown." , __FUNCTION__ );
+	SDL_ShowCursor( SDL_DISABLE );
+    }
+
+}; // void make_sure_system_mouse_cursor_is_turned_off ( void )
+
+/* ----------------------------------------------------------------------
+ * Because we're using our own mouse cursor, it might be important to
+ * make sure, that the system mouse cursor is hidden, so it will not show
+ * and we can draw our own mouse cursor image right at that place safely.
+ * ---------------------------------------------------------------------- */
+void
+make_sure_system_mouse_cursor_is_turned_on ( void )
+{
+
+    if ( SDL_ShowCursor( SDL_QUERY ) == SDL_DISABLE )
+    {
+	DebugPrintf ( 1 , "\n%s(): now showing mouse cursor again, because it was hidden." , __FUNCTION__ );
+	SDL_ShowCursor( SDL_ENABLE );
+    }
+
+}; // void make_sure_system_mouse_cursor_is_turned_off ( void )
+
+/* ----------------------------------------------------------------------
+ * When the system mouse cursor is now shown, we need to blit our own 
+ * mouse cursor instead.  That is good, because that we we can even use
+ * many colors and maybe also some small animation in a controlled way.
+ * ---------------------------------------------------------------------- */
+void
+blit_our_own_mouse_cursor ( void )
+{
+    static int first_call = TRUE ;
+    int i;
+    static iso_image mouse_cursors [ 16 ] ;
+    char constructed_filename[2000];
+    char* fpath;
+
+    //--------------------
+    // On the first function call ever, we load the surfaces for the
+    // flags into memory.
+    //
+    if ( first_call )
+    {
+	for ( i = 0 ; i < 3 ; i ++ )
+	{
+	    sprintf ( constructed_filename , "mouse_cursor_%04d.png" , i );
+	    fpath = find_file ( constructed_filename , GRAPHICS_DIR, FALSE );
+	    get_iso_image_from_file_and_path ( fpath , & ( mouse_cursors [ i ] ) , FALSE ) ;
+	    if ( mouse_cursors [ i ] . surface == NULL ) 
+	    {
+		fprintf ( stderr , "\nFull path used: %s." , fpath );
+		GiveStandardErrorMessage ( __FUNCTION__ , "\
+Error loading flag image.",
+					   PLEASE_INFORM, IS_FATAL );
+	    }
+	    if ( use_open_gl )
+	    {
+		DebugPrintf ( 1 , "\n%s(): Texture made from mouse cursor surface..." );
+		make_texture_out_of_surface ( & ( mouse_cursors [ i ] ) ) ;
+	    }
+	}
+
+	first_call = FALSE ;
+    }
+
+    //--------------------
+    // We can now blit the mouse cursor...
+    //
+    if ( use_open_gl )
+    {
+	blit_open_gl_texture_to_screen_position ( mouse_cursors [ 0 ] , 
+						  GetMousePos_x () , GetMousePos_y () , TRUE );
+    }
+    else
+    {
+	blit_iso_image_to_map_position ( mouse_cursors [ 0 ] , 
+					 GetMousePos_x () , GetMousePos_x () );
+    }
+
+}; // void blit_our_own_mouse_cursor ( void )
+
+/* ----------------------------------------------------------------------
  * Occasionally it might come in handly to have the whole image fading
  * out when something time-consuming is happening, which is not displayed.
  * This function is intended to provide a mechanism for this using the
@@ -1565,7 +1657,12 @@ safely_get_SDL_video_info ( void )
 	Terminate(ERR);
     }
     
-    open_gl_check_error_status ( __FUNCTION__ );
+    //--------------------
+    // Since the OpenGL stuff hasn't been initialized yet, it's normal
+    // to get an GL_INVALID_OPERATION here, if we would really do the
+    // check.  So better refrain from OpenGL error checking here...
+    //
+    // open_gl_check_error_status ( __FUNCTION__ );
 
     return ( vid_info );
 
@@ -1589,7 +1686,12 @@ Unable to set SDL_GL_DOUBLEBUFFER attribute!",
 				   PLEASE_INFORM, IS_FATAL );
     }
     
-    open_gl_check_error_status ( __FUNCTION__ );
+    //--------------------
+    // Since the OpenGL stuff hasn't been initialized yet, it's normal
+    // to get an GL_INVALID_OPERATION here, if we would really do the
+    // check.  So better refrain from OpenGL error checking here...
+    //
+    // open_gl_check_error_status ( __FUNCTION__ );
 
 #endif
     
@@ -1709,7 +1811,12 @@ SDL reported, that the video mode mentioned above is not supported UNDER ANY BIT
 		 buffer_size , red_size, green_size, blue_size, alpha_size, depth_size );
     }
     
-    open_gl_check_error_status ( __FUNCTION__ );
+    //--------------------
+    // Since the OpenGL stuff hasn't been initialized yet, it's normal
+    // to get an GL_INVALID_OPERATION here, if we would really do the
+    // check.  So better refrain from OpenGL error checking here...
+    //
+    // open_gl_check_error_status ( __FUNCTION__ );
     
     safely_show_open_gl_driver_info ( );
     

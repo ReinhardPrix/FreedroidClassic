@@ -216,8 +216,6 @@ Error loading flag image.",
 	}
     }
 
-
-
 }; // void blit_tux_status_flags ( void )
 
 /* ----------------------------------------------------------------------
@@ -2070,6 +2068,8 @@ AssembleCombatPicture (int mask)
     
     clear_screen() ;
     
+    make_sure_system_mouse_cursor_is_turned_off();
+
     //--------------------
     // We generate a list of obstacles (and other stuff) that might
     // emitt some light.  It should be sufficient to establish this
@@ -2189,6 +2189,8 @@ AssembleCombatPicture (int mask)
 	User_Rect.x = 0;
 	User_Rect.w = GameConfig . screen_width;
     }
+
+    blit_our_own_mouse_cursor();
     
     //--------------------
     // At this point we are done with the drawing procedure
@@ -2544,42 +2546,12 @@ This indicates a serious bug in this installation of Freedroid.",
 Received some non-positive Tux surface dimensions.  That's a bug for sure!",
 					       PLEASE_INFORM, IS_FATAL );
 		}
-
-		/*
-		  OLD CODE:  Reading data into the surface from SDL.  Not very clean.
-                             Let's do it differently.  But the old code is here for
-			     reference...
-
-		loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface = 
-		    SDL_CreateRGBSurface ( SDL_SWSURFACE , img_xlen , img_ylen , 32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000 ) ;
-		
-		if ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface == NULL )
-		{
-		    DebugPrintf ( -1000 , "\n\nError code from SDL: %s." , SDL_GetError() );
-		    GiveStandardErrorMessage ( __FUNCTION__  , "\
-Creation of an empty Tux SDL software surface failed.",
-					       PLEASE_INFORM, IS_FATAL );
-		}
-
-		chunks_read = fread ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface -> pixels , 1 , 4 * img_xlen * img_ylen , DataFile ) ;
-		if ( chunks_read < 4 * img_xlen * img_ylen )
-		{
-		    fprintf( stderr, "\n\ntux_part_group: %d, our_phase: %d rotation_index: %d\n" , 
-			     tux_part_group, our_phase , rotation_index );
-		    GiveStandardErrorMessage ( __FUNCTION__  , "\
-Reading the image archive file met an unexpected lack of read data.",
-					       PLEASE_INFORM, IS_FATAL );
-		}
-		*/
-
-		/*
-		  New code:  read data into some area.  Have SDL make a surface around the
-		             loaded data.
-		*/
-
+		//--------------------
+		// New code:  read data into some area.  Have SDL make a surface around the
+		// loaded data.  That is much cleaner than hard-writing the data into the 
+		// memory, that SDL has prepared internally.
+		//
 		tmp_buff = MyMalloc ( 4 * ( img_xlen * img_ylen + 1 ) ) ;
-		
-
 		chunks_read = fread ( tmp_buff , 1 , 4 * img_xlen * img_ylen , DataFile ) ;
 		if ( chunks_read < 4 * img_xlen * img_ylen )
 		{
