@@ -253,22 +253,22 @@ ShowCurrentHealthLevel( void )
   SDL_Rect Whole_Health_Rect;
   
 
-  Health_Rect.x = 15;
-  Health_Rect.y = 15;
-  Health_Rect.w = 115;
+  Health_Rect.x = WHOLE_HEALTH_RECT_X;
+  Health_Rect.y = WHOLE_HEALTH_RECT_Y;
+  Health_Rect.w = WHOLE_HEALTH_RECT_W;
   Health_Rect.h = ( 100 * Me.energy ) / Druidmap[ DRUID001 ].maxenergy ;
   if ( Me.energy < 0 ) Health_Rect.h = 0;
 
-  Unhealth_Rect.x = 15;
-  Unhealth_Rect.y = 15 + ( ( 100 * Me.energy ) / Druidmap[ DRUID001 ].maxenergy ) ;
-  Unhealth_Rect.w = 115;
-  Unhealth_Rect.h = 100 - ( ( 100 * Me.energy ) / Druidmap[ DRUID001 ].maxenergy ) ;
+  Unhealth_Rect.x = WHOLE_HEALTH_RECT_X;
+  Unhealth_Rect.y = WHOLE_HEALTH_RECT_Y + ( ( 100 * Me.energy ) / Druidmap[ DRUID001 ].maxenergy ) ;
+  Unhealth_Rect.w = WHOLE_HEALTH_RECT_W;
+  Unhealth_Rect.h = WHOLE_HEALTH_RECT_H - ( ( WHOLE_HEALTH_RECT_H * Me.energy ) / Druidmap[ DRUID001 ].maxenergy ) ;
   if ( Unhealth_Rect.h <= 0 ) Unhealth_Rect.h = 0;
 
-  Whole_Health_Rect.x = 15;
-  Whole_Health_Rect.y = 15;
-  Whole_Health_Rect.w = 115;
-  Whole_Health_Rect.h = 100;
+  Whole_Health_Rect.x = WHOLE_HEALTH_RECT_X;
+  Whole_Health_Rect.y = WHOLE_HEALTH_RECT_Y;
+  Whole_Health_Rect.w = WHOLE_HEALTH_RECT_W;
+  Whole_Health_Rect.h = WHOLE_HEALTH_RECT_H;
 
   SDL_SetClipRect( Screen , NULL );
   SDL_FillRect( Screen , & ( Health_Rect ) , 0x000FF00 );
@@ -327,7 +327,7 @@ DisplayBanner (const char* left, const char* right,  int flags )
   CurPos.x = GetMousePos_x() + 16 ;
   CurPos.y = GetMousePos_y() + 16 ;
   SDL_SetClipRect( Screen , NULL );  // this unsets the clipping rectangle
-  SDL_FillRect( Screen , &Banner_Text_Rect , 0x00FF );
+  SDL_FillRect( Screen , &Banner_Text_Rect , 0x00 );
 
   //--------------------
   // In case some item is held in hand by the player, the situation is simple:
