@@ -2109,12 +2109,10 @@ I need to know that for saving. Abort.\n");
       else
 	{
 	  InitNewMissionList ( NEW_MISSION );
-	  strcpy( Me.character_name , MenuTexts[ MenuPosition ] );
+	  strcpy( Me.character_name , MenuTexts[ MenuPosition -1 ] );
 	  LoadGame( );
 	  return ( TRUE );
 	}
-      
-      
     }
   else
     {
