@@ -930,10 +930,13 @@ Terminate (int ExitCode)
   printf("\n----------------------------------------------------------------------");
   printf("\nTermination of Freedroid initiated...");
 
-  DebugPrintf (2, "Writing config file\n");
-  SaveGameConfig ();
-  DebugPrintf (2, "Writing highscores to disk\n");
-  SaveHighscores ();
+  if (ExitCode == OK)
+    {
+      DebugPrintf (2, "Writing config file\n");
+      SaveGameConfig ();
+      DebugPrintf (2, "Writing highscores to disk\n");
+      SaveHighscores ();
+    }
 
   printf("Thank you for playing Freedroid.\n\n");
   SDL_Quit();
