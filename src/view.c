@@ -1,5 +1,38 @@
-// static const char RCSid[]=\
-// "$Id$";
+/* 
+ *
+ *   Copyright (c) 1994, 2002 Johannes Prix
+ *   Copyright (c) 1994, 2002 Reinhard Prix
+ *
+ *
+ *  This file is part of FreeParadroid+
+ *
+ *  FreeParadroid+ is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  FreeParadroid+ is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with FreeParadroid+; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+
+/*----------------------------------------------------------------------
+ *
+ * Desc: all the functions managing the things one gets to see.
+ *	That includes assembling of enemys, assembling the currently
+ *	relevant porting of the map (the bricks I mean), drawing all visible
+ *	elements like bullets, blasts, enemys or influencer in a nonvisible
+ *	place in memory at first, and finally drawing them to the visible
+ *	screen for the user.
+ *
+ *----------------------------------------------------------------------*/
+#include <config.h>
 
 /*
  * Dieses Modul enth"alt Funktionen, die dem Aufbau des Bildes dienen.
@@ -19,6 +52,8 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#include <vga.h>
+#include <vgagl.h>
 
 #include "defs.h"
 #include "struct.h"
@@ -27,6 +62,7 @@
 #include "proto.h"
 #include "colodefs.h"
 
+void GetConceptInternFenster(void);
 void FlashWindow(int Flashcolor);
 void RecFlashFill(int LX,int LY,int Color,unsigned char* screen, int SBreite);
 int Cent(int);
@@ -132,7 +168,7 @@ int i;
 void GetView(void)
 {
   int col, line;
-  point testpos;
+  finepoint testpos;
   int me_gx, me_gy;		/* influ- Grobkoord. */	
   signed int mapX0, mapY0;
   signed int mapX, mapY;	/* The map-coordinates, which are to be copied */
@@ -219,10 +255,8 @@ void GetInternFenster(void)
 {
   Blast CurBlast = &(AllBlasts[0]);
   int MapBrick;
-  int line;
-  int col;
-  int i;
-  int LX,LY,j;
+  int line, col;
+  int i, j;
   
   unsigned char *source;		/* the current block to copy */
   unsigned char *target;
@@ -242,7 +276,7 @@ void GetInternFenster(void)
       if( (MapBrick=View[line][col]) != INVISIBLE_BRICK) {
 	source = MapBlocks + MapBrick*BLOCKMEM;
 	for(i=0; i<BLOCKHOEHE; i++) {
-	  MyMemcpy(target, source, BLOCKBREITE);
+	  memcpy(target, source, BLOCKBREITE);
 	  target += INTERNBREITE*BLOCKBREITE;
 	  source += BLOCKBREITE;
 	}
@@ -277,8 +311,8 @@ void GetInternFenster(void)
        if( AllBullets[i].type == OUT ) continue;
        if( CurBlast->phase > 4) break;
        
-       if( abs(AllBullets[i].PX - CurBlast->PX) < BLASTRADIUS ) 
-	 if( abs(AllBullets[i].PY - CurBlast->PY) < BLASTRADIUS)
+       if( abs(AllBullets[i].pos.x - CurBlast->PX) < BLASTRADIUS ) 
+	 if( abs(AllBullets[i].pos.y - CurBlast->PY) < BLASTRADIUS)
 	   {
 	     /* KILL Bullet silently */
 	     AllBullets[i].type = OUT;
@@ -324,7 +358,7 @@ void GetConceptInternFenster(void)
 	}
 
 	// Darstellen des Influencers, wenn er nicht schon vernichtet wurde
-	if (Me.energy>0) SmallEnemy(Me.pos.x/4,Me.pos.y/4,-10+Druidmap[Me.type].class,InternWindow,INTERNBREITE*BLOCKBREITE);
+	if (Me.energy>0) SmallEnemy(((int)Me.pos.x)/4,((int)Me.pos.y)/4,-10+Druidmap[Me.type].class,InternWindow,INTERNBREITE*BLOCKBREITE);
 	
 	// Darstellen der Blasts
 	for(i=0;i<MAXBLASTS;i++) {
@@ -352,11 +386,11 @@ void GetConceptInternFenster(void)
  
 			if (AllBullets[i].time == 1) {
 //					FlashWindow(0);
-				RecFlashFill(AllBullets[i].PX,AllBullets[i].PY,FLASHCOLOR1,InternWindow,INTERNBREITE*BLOCKBREITE);
+				RecFlashFill(AllBullets[i].pos.x,AllBullets[i].pos.y,FLASHCOLOR1,InternWindow,INTERNBREITE*BLOCKBREITE);
 			}
 			if (AllBullets[i].time == 2) {
 //					FlashWindow(15);
-				RecFlashFill(AllBullets[i].PX,AllBullets[i].PY,FLASHCOLOR2,InternWindow,INTERNBREITE*BLOCKBREITE);
+				RecFlashFill(AllBullets[i].pos.x,AllBullets[i].pos.y,FLASHCOLOR2,InternWindow,INTERNBREITE*BLOCKBREITE);
 			}
 
 			/*
@@ -366,19 +400,19 @@ void GetConceptInternFenster(void)
 	 
 			for (j=0;j<MAX_ENEMYS_ON_SHIP;j++) {
 				if (Feindesliste[j].levelnum != CurLevel->levelnum) continue;
-				if ( Affected[Feindesliste[j].pos.x/BLOCKBREITE+Feindesliste[j].pos.y/BLOCKHOEHE*CurLevel->xlen] &&
-					  (!Druidmap[Feindesliste[j].type].flashimmune) ) {
+				if ( Affected[((int)rintf(Feindesliste[j].pos.x))/BLOCKBREITE+((int)rintf(Feindesliste[j].pos.y))/BLOCKHOEHE*CurLevel->xlen] &&
+					  (!Druidmap[((int)rintf(Feindesliste[j].type))].flashimmune) ) {
 							Feindesliste[j].energy-=Bulletmap[FLASH].damage/2;
 				}
 			}
 
 			if (!InvincibleMode && !Druidmap[Me.type].flashimmune &&
-				Affected[Me.pos.x/BLOCKBREITE+Me.pos.y/BLOCKHOEHE*CurLevel->xlen])
+				Affected[((int)Me.pos.x)/BLOCKBREITE+((int)Me.pos.y)/BLOCKHOEHE*CurLevel->xlen])
 				Me.energy-=Bulletmap[FLASH].damage/2;
 
 			free( Affected );
 		} else {
-			SmallBullet(AllBullets[i].PX/4,AllBullets[i].PY/4,AllBullets[i].type,
+			SmallBullet(AllBullets[i].pos.x/4,AllBullets[i].pos.y/4,AllBullets[i].type,
 				AllBullets[i].phase,InternWindow,INTERNBREITE*BLOCKBREITE);
 		}
 	}
@@ -403,16 +437,15 @@ void PutInfluence(void)
   // SONST GIBTS NACH CA. 10 BILDERN DEN ERSTEN SEGMENTATION FAULT!!!!
   //
 
-  int InternFensterOffset;
   unsigned char *target;
   unsigned char *source;		/* the druid-block to copy */
   int i,j;
-  static BeamDelay=1;
+  static int BeamDelay=1;
 
   printf("\nvoid PutInfluence(void): REAL function called.");
 
 
-  source = Influencepointer+(Me.phase)*BLOCKMEM;
+  source = Influencepointer+((int)rintf(Me.phase))*BLOCKMEM;
 
 
   // PORT
@@ -431,7 +464,7 @@ void PutInfluence(void)
     PutObject(Me.pos.x, Me.pos.y, source, FALSE);
   } else {
     for (i=0;i<BLOCKHOEHE;i++) {
-      // MyMemcpy(target+BLOCKBREITE*INTERNBREITE*i+BeamLine,source+BLOCKHOEHE*i+BeamLine,(BLOCKBREITE/2+1-BeamLine)*2);
+      // memcpy(target+BLOCKBREITE*INTERNBREITE*i+BeamLine,source+BLOCKHOEHE*i+BeamLine,(BLOCKBREITE/2+1-BeamLine)*2);
       for (j=0;j<(BLOCKBREITE/2+1-BeamLine)*2;j++) {
 	if (*(source+BLOCKHOEHE*i+BeamLine+j) != TRANSPARENTCOLOR)
 	  *(target+BLOCKBREITE*INTERNBREITE*i+BeamLine+j)=*(source+BLOCKHOEHE*i+BeamLine+j);
@@ -449,43 +482,40 @@ void PutInfluence(void)
 
 /*@Function============================================================
 @Desc: PutEnemy: setzt Enemy der Nummer Enum ins InternWindow
-					 dazu wird dir Function PutObject verwendet
+                 dazu wird dir Function PutObject verwendet
 @Ret: void
 @Int:
 * $Function----------------------------------------------------------*/
 void PutEnemy(int Enum){
-	int i;
-	int j;
-
-	unsigned char *Enemypic;	
-	int enemyX, enemyY;
-	const char *druidname;		/* the number-name of the Enemy */
-	int phase;
+  unsigned char *Enemypic;	
+  int enemyX, enemyY;
+  const char *druidname;		/* the number-name of the Enemy */
+  int phase;
 	
-	/* if enemy is on other level, return */
-	if (Feindesliste[Enum].levelnum != CurLevel->levelnum) return;
+  /* if enemy is on other level, return */
+  if (Feindesliste[Enum].levelnum != CurLevel->levelnum) return;
 
-	/* wenn dieser Feind abgeschossen ist kann sofort zurueckgekehrt werden */
-	if (Feindesliste[Enum].Status == OUT ) return;
+  /* wenn dieser Feind abgeschossen ist kann sofort zurueckgekehrt werden */
+  if (Feindesliste[Enum].Status == OUT ) return;
 
-	/* Wenn Feind nicht sichtbar: weiter */
-	if( ! IsVisible(&Feindesliste[Enum].pos) ) {
-		Feindesliste[Enum].onscreen=FALSE;
-		return;
-	} else Feindesliste[Enum].onscreen=TRUE;
+  /* Wenn Feind nicht sichtbar: weiter */
+  if( ! IsVisible(&Feindesliste[Enum].pos) ) {
+    Feindesliste[Enum].onscreen=FALSE;
+    return;
+  } else Feindesliste[Enum].onscreen=TRUE;
 
-	/* Bild des Feindes mit richtiger Nummer in der richtigen Phase darstellen */
-	druidname = Druidmap[Feindesliste[Enum].type].druidname;
-	phase = Feindesliste[Enum].feindphase;
+  /* Bild des Feindes mit richtiger Nummer in der richtigen Phase darstellen */
+  druidname = Druidmap[Feindesliste[Enum].type].druidname;
+  phase = Feindesliste[Enum].feindphase;
 
-	Enemypic = FeindZusammenstellen(druidname,phase);
+  Enemypic = FeindZusammenstellen(druidname,phase);
 
-	enemyX = Feindesliste[Enum].pos.x;
-	enemyY = Feindesliste[Enum].pos.y;
+  enemyX = Feindesliste[Enum].pos.x;
+  enemyY = Feindesliste[Enum].pos.y;
 	
-	PutObject(enemyX, enemyY, Enemypic, FALSE);
-	
-}
+  PutObject(enemyX, enemyY, Enemypic, FALSE);
+
+} // void PutEnemy(int Enum) 
 
 
 /*@Function============================================================
@@ -557,13 +587,13 @@ void PutBullet(int BulletNummer)
 	}
 
 						
-	if( PutObject(CurBullet->PX, CurBullet->PY, bulletpic, TRUE) == TRUE) {
+	if( PutObject(CurBullet->pos.x, CurBullet->pos.y, bulletpic, TRUE) == TRUE) {
 		/* Bullet-Bullet Collision: Bullet loeschen */
 		CurBullet->type = OUT;
 		CurBullet->mine = FALSE;
 
 		/* Druid-Blast dort erzeugen: killt zweites Bullet */
-		StartBlast(CurBullet->PX, CurBullet->PY, DRUIDBLAST);
+		StartBlast(CurBullet->pos.x, CurBullet->pos.y, DRUIDBLAST);
 	} /* if */
 	
 } /* PutBullet */
@@ -577,20 +607,20 @@ void PutBullet(int BulletNummer)
 * $Function----------------------------------------------------------*/
 void PutBlast(int BlastNummer)
 {
-	Blast CurBlast = &AllBlasts[BlastNummer];
-	unsigned char *blastpic;
+  Blast CurBlast = &AllBlasts[BlastNummer];
+  unsigned char *blastpic;
 
 #if BLASTOFF == 1
-	return;
+  return;
 #endif
 
-	/* Wenn Blast OUT ist sofort naechsten bearbeiten */
-	if (CurBlast->type == OUT) return;
+  /* Wenn Blast OUT ist sofort naechsten bearbeiten */
+  if (CurBlast->type == OUT) return;
 	
-   blastpic = Blastmap[CurBlast->type].picpointer + (CurBlast->phase)*BLOCKMEM;
-
-	PutObject(CurBlast->PX, CurBlast->PY, blastpic, FALSE);
-}
+  blastpic = Blastmap[CurBlast->type].picpointer + ((int)rintf(CurBlast->phase))*BLOCKMEM;
+  
+  PutObject(CurBlast->PX, CurBlast->PY, blastpic, FALSE);
+} // void PutBlast(int BlastNummer)
 
 /*@Function============================================================
 @Desc: PutObject: Puts object with center-coordinates x/y and the
@@ -625,9 +655,9 @@ int PutObject(int x, int y, unsigned char *pic, int check)
 		BLOCKBREITE*INTERNBREITE*BLOCKHOEHE/2;
 				
 	/* Verschiebung zum Influencer  (linkes oberes Eck !!) */
- 	InternWindowOffset += ((Me.pos.y % BLOCKHOEHE) - BLOCKHOEHE/2 )*
+ 	InternWindowOffset += ((((int)Me.pos.y) % BLOCKHOEHE) - BLOCKHOEHE/2 )*
 			BLOCKBREITE*INTERNBREITE +
-			(Me.pos.x % BLOCKBREITE) - BLOCKBREITE/2;
+			(((int)Me.pos.x) % BLOCKBREITE) - BLOCKBREITE/2;
 
 	/* relative Verschiebung des Objekts zum Influencer */
 	InternWindowOffset += DifY * BLOCKBREITE*INTERNBREITE + DifX;
@@ -660,11 +690,12 @@ int PutObject(int x, int y, unsigned char *pic, int check)
 * $Function----------------------------------------------------------*/
 void PutInternFenster(void)
 {
-  // MODIFIED FOR THE PORT!!!!!!!!!!!
   int StartX, StartY;
-  int i,j;
+  int i;
+#ifdef SLOW_VIDEO_CALLS     
+  int j;
+#endif
 
-  unsigned char *target;
   unsigned char *source;
 
   printf("void PutInternFenster(void) wurde ECHT aufgerufen..."); 
@@ -677,10 +708,10 @@ void PutInternFenster(void)
     return;
   }
 			
-  StartX=(Me.pos.x % BLOCKBREITE)-BLOCKBREITE/2;
-  StartY=((Me.pos.y % BLOCKHOEHE)-BLOCKHOEHE/2) * BLOCKBREITE * INTERNBREITE;
+  StartX=(((int)Me.pos.x) % BLOCKBREITE)-BLOCKBREITE/2;
+  StartY=((((int)Me.pos.y) % BLOCKHOEHE)-BLOCKHOEHE/2) * BLOCKBREITE * INTERNBREITE;
 
-   //   WaitVRetrace();		/* dont waste time with this */
+   WaitVRetrace();		//
 
    for(i=0; i<USERFENSTERHOEHE; i++) {
      source = InternWindow +
@@ -689,11 +720,16 @@ void PutInternFenster(void)
        // USERFENSTEROBEN*INTERNBREITE*BLOCKBREITE + 
        //       USERFENSTERLINKS +
        StartY + StartX + i * INTERNBREITE * BLOCKBREITE ;
+#ifdef SLOW_VIDEO_CALLS     
      for(j=0; j<USERFENSTERBREITE; j++) {
        vga_setcolor(*source);
        source++;
        vga_drawpixel(USERFENSTERPOSX+j,USERFENSTERPOSY+i);
      } // for(j=0; ...
+#else
+     vga_drawscansegment(source, USERFENSTERPOSX,USERFENSTERPOSY+i,USERFENSTERBREITE);
+     // source+=USERFENSTERBREITE;
+#endif
    } // for(i=0; ...
 };  // void PutInternFenster(void)
 
@@ -703,24 +739,22 @@ void PutInternFenster(void)
 @Ret: 
 @Int:
 * $Function----------------------------------------------------------*/
-void RedrawInfluenceNumber(){
-unsigned char* LSource;
-unsigned char* LDest;
-int i;
-int j;
-int k;
-int LPhase=0;
-unsigned char LDigit=0;
+void RedrawInfluenceNumber(void){
+  unsigned char* LSource;
+  unsigned char* LDest;
+  int LPhase=0;
+  unsigned char LDigit=0;
+  int j;
 
-	for (LPhase=0;LPhase<ENEMYPHASES;LPhase++) {
-		for (j=0;j<3;j++) {
-			LDigit=*(Druidmap[Me.type].druidname+j)-'0';
-			LSource=Digitpointer+LDigit*9*9;
-			LDest=Influencepointer+LPhase*BLOCKBREITE*BLOCKHOEHE+j*8+NUMBEROFS;
-			DrawDigit(LSource,LDest);
-		}
-	}
-}
+  for (LPhase=0;LPhase<ENEMYPHASES;LPhase++) {
+    for (j=0;j<3;j++) {
+      LDigit=*(Druidmap[Me.type].druidname+j)-'0';
+      LSource=Digitpointer+LDigit*9*9;
+      LDest=Influencepointer+LPhase*BLOCKBREITE*BLOCKHOEHE+j*8+NUMBEROFS;
+      DrawDigit(LSource,LDest);
+    } // for
+  } // for
+} // void RedrawInfluenceNumber(void)
 
 
 /*@Function============================================================
@@ -750,7 +784,7 @@ void DrawDigit(unsigned char* Src, unsigned char* Dst) {
 * $Function----------------------------------------------------------*/
 void RotateBulletColor(void){
 	static int BulColNum;
-	int rot,gruen,blau;
+
 	static color BulletColors[MAXBULCOL]=
 		{BULLETCOLOR1, BULLETCOLOR2, BULLETCOLOR3, BULLETCOLOR4, BULLETCOLOR5 };
 	BulColNum++;
@@ -760,7 +794,7 @@ void RotateBulletColor(void){
 
 	SetPalCol(BULLETCOLOR,BulletColors[BulColNum].rot,
 		BulletColors[BulColNum].gruen, BulletColors[BulColNum].blau);
-}
+} // void RotateBulletColor(void)
 
 
 /*@Function============================================================
@@ -770,17 +804,12 @@ void RotateBulletColor(void){
 @Int:
 * $Function----------------------------------------------------------*/
 void FlashWindow(int Flashcolor){
-	int i;
-
-	/*
-	 * das ganze Fenster kann durch einen einzigen Aufruf vom memset
-	 * auf den gew"unschten Wert gesetzt werden
-	 */
-
-	memset(InternWindow,Flashcolor,
-		INTERNBREITE*INTERNHOEHE*BLOCKBREITE*BLOCKHOEHE);
-	
-}
+  /*
+   * das ganze Fenster kann durch einen einzigen Aufruf vom memset
+   * auf den gew"unschten Wert gesetzt werden
+   */
+  memset(InternWindow,Flashcolor,INTERNBREITE*INTERNHOEHE*BLOCKBREITE*BLOCKHOEHE);
+} // void FlashWindow(int Flashcolor)
 
 /*@Function============================================================
 @Desc: void SetUserfenster(int color): Setzt die Hintergrundfarbe fuer das
@@ -818,7 +847,7 @@ void ShowRobotPicture(int PosX,int PosY, int Number, unsigned char* Screen){
   printf("\nvoid ShowRobotPicture(...): Function call confirmed.");
 
   for(j=0;j<ROBOTBILDHOEHE;j++){
-    // PORT MyMemcpy(Screen+PosX+(PosY+j)*SCREENBREITE,Robotptr+((Number/8)+j)*
+    // PORT memcpy(Screen+PosX+(PosY+j)*SCREENBREITE,Robotptr+((Number/8)+j)*
     // PORT	     SCREENBREITE+(Number % 8)*ROBOTBILDBREITE,ROBOTBILDBREITE);
   }
 
@@ -826,113 +855,4 @@ void ShowRobotPicture(int PosX,int PosY, int Number, unsigned char* Screen){
 } // void ShowRobotPicture(...)
 
 #undef _view_c
-
-/*=@Header==============================================================
- * $Source$
- *
- * @Desc: all the functions managing the things one gets to see
- *	 
- * 	
- * $Revision$
- * $State$
- *
- * $Author$
- *
- * $Log$
- * Revision 1.10  2002/04/08 19:19:09  rp
- * Johannes latest (and last) non-cvs version to be checked in. Added graphics,sound,map-subdirs. Sound support using ALSA started.
- *
- * Revision 1.10  1997/05/31 13:30:32  rprix
- * Further update by johannes. (sent to me in tar.gz)
- *
- * Revision 1.7  1994/06/19  16:44:10  prix
- * Wed Jun 08 13:46:12 1994: Influence is beamed into the ship when the game starts
- * Wed Jun 15 20:18:01 1994: Schild wird beim Teleportieren nicht angezeigt.
- *
- * Revision 1.6  1993/09/22  14:27:14  prix
- * Sat Jul 31 21:20:14 1993: Koordinatenverschiebung bei ungerader INTERNHOEHE
- * Sun Aug 01 10:37:50 1993: Verschiebungen der Offsets, um 001 ins Zentrum zu bekommen
- * Sun Aug 01 11:51:18 1993: written general PutObject function
- * Sun Aug 01 12:03:26 1993: FeindZusammenstellen liefert Pointer auf Feind-Picture !
- * Sun Aug 01 12:23:41 1993: Written all Put* Functions new: using PutObject
- * Mon Aug 02 09:18:48 1993: RotateBulletColor hinzugefuegt
- * Mon Aug 02 10:00:44 1993: farben genauer an c-64 angenaehert
- * Tue Aug 10 14:28:55 1993: BulletCollision check in MergeBlockToWindow()
- * Tue Aug 24 11:31:04 1993: call to IsVisible()
- *
- * Revision 1.5  1993/08/01  00:48:26  prix
- * Mon May 31 16:51:40 1993: rewritten GetInternFenster in C !
- * Mon May 31 17:11:14 1993: rewritten PutInfluence() in C
- * Mon May 31 17:20:05 1993: PutBullet rewritten in C !
- * Mon May 31 17:24:37 1993: rewritten PutBlast in C
- * Mon May 31 17:55:00 1993: PutInternFenster rewritten in C !!!
- * Mon May 31 19:57:37 1993: TRANSPARENTCOLOR in PutInfluence beruecksichtigen !
- * Mon May 31 20:00:06 1993: char pointers unsigned
- * Tue Jun 01 08:34:08 1993: Bullets ausserhalb des USERFENSTERS nicht darstellen
- * Tue Jun 01 08:37:40 1993: anzeige der Energie
- * Tue Jun 01 08:43:27 1993: Blast ausserhalb des USERFENSTERs nicht mehr anzeigen
- * Tue Jun 01 09:21:58 1993: added func MergeBlockToWindow: adds visible Block to a 'window'
- * Tue Jun 01 09:33:49 1993: ShowPosition wird mit SHOWSTATS define eingeschaltet
- * Tue Jun 01 13:46:40 1993: PutInfluence: erweitert fuer animierte roboter
- * Fri Jul 23 10:43:03 1993: Optionale Positionsausgabe in Koordinatzen eingefuehrt
- * Sat Jul 24 08:08:50 1993: RedrawInfluenceNumber als very alpha eingefuehrt
- * Sat Jul 24 11:30:34 1993: mehrere Digits werden geschrieben
- * Sat Jul 24 11:42:22 1993: die Schrift an die Richtige Position stellen
- * Sat Jul 24 13:54:07 1993: PutEnemy eingefuehrt
- * Sat Jul 24 14:27:44 1993: EnemyAusgabe in GetInternFenster includiert
- * Sat Jul 24 14:36:03 1993: Feindzusammenstellen hinzugefuegt
- * Sat Jul 24 15:02:55 1993: jetzt sollte Putenemy einen sichtbaren Effekt haben
- * Sat Jul 24 15:07:08 1993: Sicherheit gengen Offsetueberlauf eingefuehrt
- * Sat Jul 24 15:19:37 1993: Feinzusammenstellen bis auf DrawDigit reaktiviert
- * Sat Jul 24 15:34:30 1993: Putenemy ohne einschraenkende Kommentare aktiv
- * Sat Jul 24 15:57:23 1993: MergeBlockToWindow wird nicht mehr verwendet
- * Sat Jul 24 16:07:48 1993: Korrekturen an der Zusammenstellung eines Feindes
- * Sat Jul 24 16:24:08 1993: Phasen bei Feinden werden jetzt beruecksichtigt
- * Sat Jul 24 16:31:08 1993: Phase vollstaendig beruecksichtigen
- * Sat Jul 24 16:42:37 1993: Enemys nicht anzeigen wenn der Abstand zu groá ist
- * Sun Jul 25 08:10:13 1993: mehr points statt zwei Zahlen werden fuer enemys verwendet
- * Sun Jul 25 13:18:09 1993: Bereichsueberschreitungscheck fuer PutEnemy eingefuehrt
- * Sun Jul 25 15:34:46 1993: abgeschossene werden nicht angezeigt
- * Mon Jul 26 08:46:13 1993: debugswitch eingefuehrt
- * Sun Mar 26 00:49:49 2000: Blasts die OUT sind nicht anzeigen
- * Fri Jul 30 07:59:05 1993: Influence wird nicht angezeigt wenn er explodiert
- * Sat Jul 31 07:38:11 1993: Ferben aendern sich abhaengig vom Me.status
- * Sat Jul 31 07:55:07 1993: keine Structs mehr im assembler-teil
- * Sat Jul 31 18:04:28 1993: ES GIBT KEINE phases-VARIABLE ! mehr
- * Sat Jul 31 18:56:13 1993: NO MORE ENEMYMAXONLEVEL
- *
- * Revision 1.4  1993/05/31  20:30:36  prix
- * Sun May 23 18:30:16 1993: View zeigt nun den bereich etwas weiter links des Influencers
- * Sun May 23 18:36:59 1993: Neue Berechung des Offset des 001 im internen Fenster
- * Sun May 23 19:11:30 1993: belibige Angaben fuer INTERNBREITE UND INTERNHOEHE moeglich
- * Mon May 24 15:04:27 1993: Endversion des Hintergrunganzeigealgorithmus (Alphavers.)
- * Mon May 24 19:21:58 1993: Korrektur der Anzeige des Influencers fertig
- * Tue May 25 14:54:14 1993: Bulletanzeige auf Alsolutkoordinaten umstellen 
- * Tue May 25 15:15:49 1993: bullet wird nicht mehr Angezeigt wennnicht mehr in Sicht
- * Tue May 25 15:19:49 1993: bullets passieren ungehindert durch offene Tueren
- * Fri May 28 17:47:09 1993: replaced BulletBlockPointer by struct-reference Gunmap
- * Fri May 28 18:29:54 1993: uses picpointer of struct to get pictures
- * Fri May 28 19:06:25 1993: eliminated Darstellphase from PutInfluence (for the moment)
- * Sun May 30 10:28:35 1993: struct.h must be included before proto.h
- * Sun May 30 10:50:15 1993: Anpassung, dass CurLevel nun pointer
- * Sun May 30 13:46:34 1993: Kartenausschnitte ausserhalb des Levels werden als 0 angezeigty
- * Sun May 30 13:56:31 1993: Blasts und Bullets nur anzeigen, wenn existent
- * Sun May 30 14:08:10 1993: BLAST/BULLETANZAHL to ALLBLASTS/BULLETS
- * Mon May 31 14:39:16 1993: killed BlastBlockPointer
- * Mon May 31 16:18:21 1993: GetInternFenster auch mit Offsets ungleich 0 !
- * Mon May 31 16:25:22 1993: killed the offset=0 Pointers
- *
- * Revision 1.3  1993/05/23  21:04:51  prix
- * Sat May 22 19:54:01 1993: Energiebalken anzeigen
- * Sun May 23 08:21:48 1993: Internal
- * Sun May 23 12:17:02 1993: Level replaced by CurLevel.map struct
- *
- * Revision 1.2  1993/05/22  21:49:22  rp
- * Sat May 22 17:48:39 1993: written junk
- *
- * Revision 1.1  1993/05/22  20:54:32  rp
- * Initial revision
- *
- *
- *-@Header------------------------------------------------------------*/
 

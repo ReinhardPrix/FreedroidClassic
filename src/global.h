@@ -1,3 +1,28 @@
+/* 
+ *
+ *   Copyright (c) 1994, 2002 Johannes Prix
+ *   Copyright (c) 1994, 2002 Reinhard Prix
+ *
+ *
+ *  This file is part of FreeParadroid+
+ *
+ *  FreeParadroid+ is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  FreeParadroid+ is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with FreeParadroid+; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+
+
 #ifndef _global_h
 #define _global_h
 
@@ -9,6 +34,9 @@
 #else
 #define EXTERN extern
 
+EXTERN float FPSover1;
+EXTERN float FPSover10;
+EXTERN float FPSover100;
 EXTERN char *Alertcolor[ALLALERTCOLORS];
 EXTERN char *Shipnames[ALLSHIPS];
 EXTERN char *Decknames[];
@@ -44,7 +72,6 @@ EXTERN int Conceptview;
 EXTERN int QuitProgram;
 EXTERN int GameOver;
 EXTERN int LastBlastHit;
-EXTERN int DMAUseON;
 EXTERN int InterruptInfolineUpdate;
 EXTERN int InvincibleMode;
 EXTERN int HideInvisibleMap;
@@ -121,8 +148,6 @@ EXTERN int View[INTERNHOEHE+1][INTERNBREITE];
 #else
 #define EXTERN extern
 #endif
-/* Ist fuer den Soundblaster */
-EXTERN sb_register[256];
 
 
 #undef EXTERN
@@ -171,6 +196,29 @@ EXTERN unsigned char *ShieldBlocks;
  * $Author$
  *
  * $Log$
+ * Revision 1.14  2002/04/22 07:26:20  rprix
+ * NEW Project NAME:  FreeDroid (aka freedroid-0.6.0).
+ * All c-files now include <config.h>, built from configure
+ *
+ * Revision 1.13  1997/06/10 20:10:46  rprix
+ * Put complete source under GPL Licence: added GPL-Licence file: COPYING
+ * and added Copyright-header to all .c and .h files.
+ * PS: How do you copyright binaries (.pcx,.wav...) and data-files (.shp)??
+ *
+ * Neue Header braucht das Land: Alte RCS- Keyword header ganz entfernt,
+ * only Description-entry in header remains.
+ *
+ * Revision 1.12  1997/06/08 11:24:38  jprix
+ * Made the pause function into a real function.
+ * Deleted some old unused features like non-portable DMA-use etc.
+ * added some doku.
+ *
+ * Revision 1.11  1997/06/07 09:26:01  jprix
+ * Framerates are now calculated and displayed. Average FPS over 1, 10 and 100 Frames are now globally available.
+ *
+ * Revision 1.10  1997/06/05 09:24:15  jprix
+ * Habe YIFF Soundserver eingebaut, doch derweil bleibt er noch durch einen bedingten Compilierungsschalter deaktiviert, weil er bei euch nicht laufen wird.  He. Ich war grad in irgendeiner Form von vi gefangen! Hilfe! Bis der Soundserver aber wirklich geht, wird es noch ein Bischen dauern.  Er ist aber Klasse und das wird sicher toll.  Bis bald, Johannes.
+ *
  * Revision 1.9  2002/04/08 19:19:09  rp
  * Johannes latest (and last) non-cvs version to be checked in. Added graphics,sound,map-subdirs. Sound support using ALSA started.
  *

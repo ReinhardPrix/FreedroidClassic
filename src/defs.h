@@ -1,37 +1,32 @@
-/*=@Header==============================================================
- * $Source$
+/* 
  *
- * @Desc: all the define-constants and macroes
- * 	
- * $Revision$
- * $State$
- *
- * $Author$
- *
- * $Log$
- * Revision 1.8  2002/04/08 19:19:09  rp
- * Johannes latest (and last) non-cvs version to be checked in. Added graphics,sound,map-subdirs. Sound support using ALSA started.
- *
- * Revision 1.7  1997/05/31 13:30:31  rprix
- * Further update by johannes. (sent to me in tar.gz)
- *
- * Revision 1.4  1994/06/19  16:17:44  prix
- * Sat May 21 07:52:34 1994: neues Rahmenbild
- * Sat May 21 11:40:01 1994: Wait_after_killed von 20 auf 35
- * Sat May 21 11:55:23 1994: wait_after_killed von 35 auf 25
- *
- * Revision 1.3  1993/05/23  21:03:10  prix
- * Sun May 23 07:43:22 1993: Laufkonstanten hinzugefuegt
- * Sun May 23 16:29:09 1993: added druid related defines
- *
- * Revision 1.2  1993/05/22  21:58:10  rp
- * added MAXMAPLINES
- *
- * Revision 1.1  1993/05/22  20:55:51  rp
- * Initial revision
+ *   Copyright (c) 1994, 2002 Johannes Prix
+ *   Copyright (c) 1994, 2002 Reinhard Prix
  *
  *
- *-@Header------------------------------------------------------------*/
+ *  This file is part of FreeParadroid+
+ *
+ *  FreeParadroid+ is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  FreeParadroid+ is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with FreeParadroid+; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+
+/*----------------------------------------------------------------------
+ *
+ * Desc: all the define-constants and macroes
+ *
+ *----------------------------------------------------------------------*/
 
 #ifndef _defs_h
 #define _defs_h
@@ -46,6 +41,10 @@
 
 #define MEMDEBUG
 #define SOUND
+
+// For development purposes, the sound will not be activated unless the following definition is made
+// #undef PARADROID_SOUND_SUPPORT_ON
+#define PARADROID_SOUND_SUPPORT_ON
 
 // **********************************************************************
 
@@ -63,12 +62,14 @@
 #define COLLISIONSOUND 3
 
 /* Konstanten fuer die Dateinamen */
-#define SHIPNAME "./map/ship1"
+/*
+#define SHIPNAME "./map/ship1" 
 #define PALBILD	"./graphics/palbild.lbm"
 #define COLORFILE "./map/levels.col"
 #define BLOCKBILD1 "./graphics/block.lbm"
 #define BLOCKBILD2 ""
-#define TITELBILD1 "./graphics/title.lbm"
+// #define TITELBILD1 "./graphics/title.lbm"
+#define TITELBILD1PCX "./graphics/title.pcx"
 #define RAHMENBILD1 "./graphics/rahmen.lbm"
 #define PARAPLUSRAHMENBILD "./graphics/plusrah1.lbm"
 #define BLASTBILD "./graphics/blast.lbm"
@@ -83,10 +84,37 @@
 #define CONSOLENBILD "./graphics/console.lbm"
 #define ROBOTPICTUREBILD "./graphics/robots.lbm"
 #define SHIELDPICTUREBILD "./graphics/shield.lbm"
-
 #define TAKEOVERBACKGROUNDBILD "./graphics/overtake.lbm"
-#define PLAYGROUND_FILE	"./graphics/to_ground.lbm"	/* graphics - files */
+#define PLAYGROUND_FILE	"./graphics/to_ground.lbm"	// graphics - files 
 #define ELEMENTS_FILE	"./graphics/to_elem.lbm"
+*/
+
+#define PALBILD_PCX                "./graphics/palbild.pcx"
+#define BLOCKBILD1_PCX             "./graphics/block.pcx"
+#define BLOCKBILD2_PCX             ""
+#define TITELBILD1_PCX             "./graphics/title4.pcx"
+#define RAHMENBILD1_PCX            "./graphics/rahmen.pcx"
+#define PARAPLUSRAHMENBILD_PCX     "./graphics/plusrah1.pcx"
+#define BLASTBILD_PCX              "./graphics/blast.pcx"
+#define BULLETBILD_PCX             "./graphics/bullet.pcx"
+#define INFLUENCEBILD_PCX          "./graphics/influ.pcx"
+#define DIGITBILD_PCX              "./graphics/digits.pcx"
+#define ENEMYBILD_PCX              "./graphics/enemy.pcx"
+#define SEITENANSICHTBILD_PCX      "./graphics/ship.pcx"
+#define EL_BLOCKS_FILE_PCX         "./graphics/ship2.pcx"
+#define FONTBILD_PCX               "./graphics/parafont.pcx"
+#define CONSOLENBILD_PCX           "./graphics/console.pcx"
+#define ROBOTPICTUREBILD_PCX       "./graphics/robots.pcx"
+#define SHIELDPICTUREBILD_PCX      "./graphics/shield.pcx"
+#define TAKEOVERBACKGROUNDBILD_PCX "./graphics/overtake.pcx"
+#define PLAYGROUND_FILE_PCX    	   "./graphics/to_ground.pcx"	// graphics - files 
+#define ELEMENTS_FILE_PCX	   "./graphics/to_elem.pcx"
+
+#define DATA70ZEICHENSATZ          "./graphics/para8x8.fnt"
+#define SHIPNAME                   "./map/ship1" 
+#define COLORFILE                  "./map/levels.col"
+
+#define PARADROID_ORIGINAL_TITLE_MUSIC "/sound/Paradroid_8000.wav" // do not add a leading . in this filename!!!
 
 /* Konstanten die unmittelbar die Hardware betreffen */
 #define SCREENADDRESS		0xa000	/* screen - data */
@@ -209,7 +237,7 @@ enum _directions {
 
 #define BLOCKANZAHL 43
 
-#define ALLDRUIDTYPES		25		/* number of druid-models that exist */
+#define ALLDRUIDTYPES		24		/* number of druid-models that exist */
 #define ALLBULLETTYPES		4		/* number of bullet-types */
 #define ALLBLASTTYPES		2     /* number of different exposions */
 
@@ -244,11 +272,6 @@ enum _directions {
 #define CLGrobY ((Me.pos.y+BLOCKHOEHE/2) / BLOCKHOEHE)
 #define CLFeinX ((Me.pos.x+BLOCKBREITE/2) % BLOCKHOEHE)
 #define CLGrobX ((Me.pos.x+BLOCKBREITE/2) / BLOCKHOEHE)
-
-#define SpeedX (Me.speed.x)
-#define SpeedY (Me.speed.y)
-
-// #define SwapScreen() MyMemcpy(RealScreen, InternalScreen, SCREENLEN*SCREENHEIGHT)
 
 #define BREMSDREHUNG 3 		/* warte 3*, bevor Influencer weitergedreht wird */
 
@@ -326,6 +349,7 @@ enum _status {
 /* Dimension eines Blasts */
 #define BLASTRADIUS		BLOCKBREITE/3
 #define BLASTDAMAGE		5
+#define BLASTPHASES_PER_SECOND  15
 
 #define DECKCOMPLETEBONUS 500
 

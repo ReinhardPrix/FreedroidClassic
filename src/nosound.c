@@ -1,7 +1,7 @@
 /* 
  *
- *   Copyright (c) 2002 Johannes Prix
- *   Copyright (c) 2002 Reinhard Prix
+ *   Copyright (c) 1994, 2002 Johannes Prix
+ *   Copyright (c) 1994, 2002 Reinhard Prix
  *
  *
  *  This file is part of FreeParadroid+
@@ -27,6 +27,7 @@
  * Desc:  all sound functions as dummies: for paranosound 
  *
  *----------------------------------------------------------------------*/
+#include <config.h>
 
 #ifndef _sound_c
 #define _sound_c

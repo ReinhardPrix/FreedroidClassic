@@ -1,28 +1,33 @@
-/*=@Header==============================================================
- * $Source$
+/* 
  *
- * @Desc:  The Takeover-game of Paradroid
- * 	
- * $Revision$
- * $State$
- *
- * $Author$
- *
- * $Log$
- * Revision 1.5  2002/04/08 19:19:09  rp
- * Johannes latest (and last) non-cvs version to be checked in. Added graphics,sound,map-subdirs. Sound support using ALSA started.
- *
- * Revision 1.5  1997/05/31 13:30:32  rprix
- * Further update by johannes. (sent to me in tar.gz)
- *
- * Revision 1.2  1994/06/19  16:42:56  prix
- * ??
- *
- * Revision 1.1  1993/10/22  20:13:54  prix
- * Initial revision
+ *   Copyright (c) 1994, 2002 Johannes Prix
+ *   Copyright (c) 1994, 2002 Reinhard Prix
  *
  *
- *-@Header------------------------------------------------------------*/
+ *  This file is part of FreeParadroid+
+ *
+ *  FreeParadroid+ is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  FreeParadroid+ is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with FreeParadroid+; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+
+/*----------------------------------------------------------------------
+ *
+ * Desc:  The Takeover-game of Paradroid
+ *
+ *----------------------------------------------------------------------*/
+
 #ifndef _takeover_h
 #define _takeover_h
 

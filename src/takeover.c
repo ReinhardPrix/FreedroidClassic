@@ -1,38 +1,41 @@
-/*=@Header==============================================================
- * $Source$
+/* 
  *
- * @Desc:  the takeover-game of Paradroid
- *	 
- * 	
- * $Revision$
- * $State$
- *
- * $Author$
- *
- * $Log$
- * Revision 1.5  2002/04/08 19:19:09  rp
- * Johannes latest (and last) non-cvs version to be checked in. Added graphics,sound,map-subdirs. Sound support using ALSA started.
- *
- * Revision 1.5  1997/05/31 13:30:32  rprix
- * Further update by johannes. (sent to me in tar.gz)
- *
- * Revision 1.2  1994/06/19  16:42:11  prix
- * Thu Jun 02 19:42:47 1994: ??
- *
- * Revision 1.1  1993/10/22  20:13:35  prix
- * Initial revision
+ *   Copyright (c) 1994, 2002 Johannes Prix
+ *   Copyright (c) 1994, 2002 Reinhard Prix
  *
  *
- *-@Header------------------------------------------------------------*/
+ *  This file is part of FreeParadroid+
+ *
+ *  FreeParadroid+ is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  FreeParadroid+ is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with FreeParadroid+; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
 
-// static const char RCSid[]=\
-// "$Id$";
+/*----------------------------------------------------------------------
+ *
+ * Desc: Everything that has to do with the takeover game of Paradroid
+ * 	is contained in this file.
+ *
+ *----------------------------------------------------------------------*/
+#include <config.h>
 
 #define _takeover_c
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <vgakeyboard.h>
 
 #include "defs.h"
 #include "struct.h"
@@ -162,7 +165,6 @@ void InitTakeover(void)
 * $Function----------------------------------------------------------*/
 int Takeover(int enemynum)
 {
-  int taste;
   int row;
   int FinishTakeover = FALSE;
   int waiter = 0;
@@ -190,7 +192,7 @@ int Takeover(int enemynum)
     keyboard_update();
   }
 
-  LadeLBMBild(TAKEOVERBACKGROUNDBILD,RealScreen,FALSE);
+  Load_PCX_Image( TAKEOVERBACKGROUNDBILD_PCX , RealScreen , FALSE );
 
   while( !FinishTakeover ) {
 	
@@ -375,7 +377,6 @@ void PlayGame(void)
 {
   int countdown = GAME_COUNTDOWN*2;
   char dummy[80];
-  int taste;
   int FinishTakeover = FALSE;
   int waiter = 0;
   int row;
@@ -588,89 +589,88 @@ void  EnemyMovements(void)
 * $Function----------------------------------------------------------*/
 int GetTakeoverGraphics(void)
 {
-	unsigned char *tmp;
-	int i, j;
-	int curx, cury;
+  unsigned char *tmp;
+  int i, j;
+  int curx, cury;
 	
-
-	/* Get the elements */	
-	LadeLBMBild(ELEMENTS_FILE,InternalScreen,FALSE);
-
-	curx = 0;
-	cury = 0;		/* readpos in pic */
+  /* Get the elements */	
+  Load_PCX_Image( ELEMENTS_FILE_PCX , InternalScreen , FALSE );
+  
+  curx = 0;
+  cury = 0;		/* readpos in pic */
 	
-	/* Get the fill-blocks */
-	FillBlocks = (unsigned char*)MyMalloc( 3*FILLBLOCKMEM +10);
-	IsolateBlock(InternalScreen, FillBlocks, curx, cury, FILLBLOCKLEN, FILLBLOCKHEIGHT);
-	curx += FILLBLOCKLEN+1;
-	
-	IsolateBlock(InternalScreen, FillBlocks+FILLBLOCKMEM, curx, cury,
-				FILLBLOCKLEN, FILLBLOCKHEIGHT);
-	curx += FILLBLOCKLEN+1;
-	
-	IsolateBlock(InternalScreen, FillBlocks+2*FILLBLOCKMEM, curx, cury,
-				FILLBLOCKLEN, FILLBLOCKHEIGHT);
-	curx += FILLBLOCKLEN+1;
+  /* Get the fill-blocks */
+  FillBlocks = (unsigned char*)MyMalloc( 3*FILLBLOCKMEM +10);
+  IsolateBlock(InternalScreen, FillBlocks, curx, cury, FILLBLOCKLEN, FILLBLOCKHEIGHT);
+  curx += FILLBLOCKLEN+1;
+  
+  IsolateBlock(InternalScreen, FillBlocks+FILLBLOCKMEM, curx, cury,
+	       FILLBLOCKLEN, FILLBLOCKHEIGHT);
+  curx += FILLBLOCKLEN+1;
+  
+  IsolateBlock(InternalScreen, FillBlocks+2*FILLBLOCKMEM, curx, cury,
+	       FILLBLOCKLEN, FILLBLOCKHEIGHT);
+  curx += FILLBLOCKLEN+1;
+  
 
-
-	/* Get the capsule Blocks */
-	CapsuleBlocks = (unsigned char*)MyMalloc( 3*CAPSULE_MEM +10);
-	for( i=0; i<3; i++) {
-		IsolateBlock(InternalScreen, CapsuleBlocks+i*CAPSULE_MEM,
-			curx, cury, CAPSULE_LEN, CAPSULE_HEIGHT);
-		curx += CAPSULE_LEN+1;
-	}
-
-	curx = 0;
-	cury += FILLBLOCKHEIGHT+1;	
+  /* Get the capsule Blocks */
+  CapsuleBlocks = (unsigned char*)MyMalloc( 3*CAPSULE_MEM +10);
+  for( i=0; i<3; i++) {
+    IsolateBlock(InternalScreen, CapsuleBlocks+i*CAPSULE_MEM,
+		 curx, cury, CAPSULE_LEN, CAPSULE_HEIGHT);
+    curx += CAPSULE_LEN+1;
+  }
+  
+  curx = 0;
+  cury += FILLBLOCKHEIGHT+1;	
 		
-	/* get the game-blocks */
-	
-	ToGameBlocks = (unsigned char*)MyMalloc( 4 * TO_BLOCKS * TO_BLOCKMEM);
+  /* get the game-blocks */
+  
+  ToGameBlocks = (unsigned char*)MyMalloc( 4 * TO_BLOCKS * TO_BLOCKMEM);
+  
+  tmp = ToGameBlocks;
+  for ( j=0; j<4; j++) {
+    
+    for( i=0; i<7; i++ ) {
+      IsolateBlock(InternalScreen, tmp, curx, cury,	TO_BLOCKLEN, TO_BLOCKHEIGHT);
+      tmp += TO_BLOCKMEM;
+      curx += TO_BLOCKLEN+1;
+    }
+    
+    curx = 0;		
+    cury += TO_BLOCKHEIGHT+1;
+    
+    for( i=0; i<4; i++ ) {
+      IsolateBlock(InternalScreen, tmp,	curx,cury, TO_BLOCKLEN, TO_BLOCKHEIGHT);
+      tmp += TO_BLOCKMEM;
+      curx += TO_BLOCKLEN+1;
+    }
 
-	tmp = ToGameBlocks;
-	for ( j=0; j<4; j++) {
-
-		for( i=0; i<7; i++ ) {
-			IsolateBlock(InternalScreen, tmp, curx, cury,	TO_BLOCKLEN, TO_BLOCKHEIGHT);
-			tmp += TO_BLOCKMEM;
-			curx += TO_BLOCKLEN+1;
-		}
-
-		curx = 0;		
-		cury += TO_BLOCKHEIGHT+1;
-		
-		for( i=0; i<4; i++ ) {
-			IsolateBlock(InternalScreen, tmp,	curx,cury, TO_BLOCKLEN, TO_BLOCKHEIGHT);
-			tmp += TO_BLOCKMEM;
-			curx += TO_BLOCKLEN+1;
-		}
-
-		curx = 0;
-		cury += TO_BLOCKHEIGHT+1;
-	}
-		
-	
-	/* Get the ground, column and leader blocks */
-	ToGroundBlocks = (unsigned char*)MyMalloc(6*GROUNDBLOCKLEN*GROUNDBLOCKHEIGHT+10);
-	tmp = ToGroundBlocks;
-	for( i=0; i<6; i++, tmp += GROUNDBLOCKLEN*GROUNDBLOCKHEIGHT ) {
-		IsolateBlock(InternalScreen, tmp, curx, cury, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT);
-		curx += GROUNDBLOCKLEN+1;
-	}
-	cury += GROUNDBLOCKHEIGHT+1;
-	curx = 0;
-
-	ToColumnBlock = (unsigned char*)MyMalloc(COLUMNBLOCKLEN*COLUMNBLOCKHEIGHT+10);
-	IsolateBlock(InternalScreen, ToColumnBlock, curx, cury, COLUMNBLOCKLEN, COLUMNBLOCKHEIGHT);
-	curx += COLUMNBLOCKLEN+1;
-
-	ToLeaderBlock = (unsigned char*)MyMalloc(LEADERBLOCKLEN*LEADERBLOCKHEIGHT+10);
-	IsolateBlock(InternalScreen, ToLeaderBlock, curx, cury, LEADERBLOCKLEN, LEADERBLOCKHEIGHT);
-	
-	return OK;
-	
-}
+    curx = 0;
+    cury += TO_BLOCKHEIGHT+1;
+  }
+  
+  
+  /* Get the ground, column and leader blocks */
+  ToGroundBlocks = (unsigned char*)MyMalloc(6*GROUNDBLOCKLEN*GROUNDBLOCKHEIGHT+10);
+  tmp = ToGroundBlocks;
+  for( i=0; i<6; i++, tmp += GROUNDBLOCKLEN*GROUNDBLOCKHEIGHT ) {
+    IsolateBlock(InternalScreen, tmp, curx, cury, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT);
+    curx += GROUNDBLOCKLEN+1;
+  }
+  cury += GROUNDBLOCKHEIGHT+1;
+  curx = 0;
+  
+  ToColumnBlock = (unsigned char*)MyMalloc(COLUMNBLOCKLEN*COLUMNBLOCKHEIGHT+10);
+  IsolateBlock(InternalScreen, ToColumnBlock, curx, cury, COLUMNBLOCKLEN, COLUMNBLOCKHEIGHT);
+  curx += COLUMNBLOCKLEN+1;
+  
+  ToLeaderBlock = (unsigned char*)MyMalloc(LEADERBLOCKLEN*LEADERBLOCKHEIGHT+10);
+  IsolateBlock(InternalScreen, ToLeaderBlock, curx, cury, LEADERBLOCKLEN, LEADERBLOCKHEIGHT);
+  
+  return OK;
+  
+} // int GetTakeoverGraphics(void)
 
 /*@Function============================================================
 @Desc: void ShowPlayground(void): displays complete initial Playground
@@ -1156,80 +1156,75 @@ void ProcessPlayground(void)
 
 /*@Function============================================================
 @Desc:  ProcessDisplayColumn(): setzt die Korrekten Werte in der Display-
-										Saeule. Blinkende LEDs werden ebenfalls hier
-										realisiert
+        Saeule. Blinkende LEDs werden ebenfalls hier realisiert
 
 @Ret: void
 @Int:
 * $Function----------------------------------------------------------*/
 void ProcessDisplayColumn(void)
 {
-	static int CLayer = 3;			/* the connection-layer to the Column */	
-	static int flicker_color=0;
-	int row, color;
-	int GelbCounter, ViolettCounter;
-	int Tauscher = FARBTAUSCHER + ACTIVE_OFFSET;
-
-	flicker_color = !flicker_color;
- 	
-	for( row=0; row < NUM_LINES; row++ ) {
+  static int CLayer = 3;			/* the connection-layer to the Column */	
+  static int flicker_color=0;
+  int row;
+  int GelbCounter, ViolettCounter;
+  int Tauscher = FARBTAUSCHER + ACTIVE_OFFSET;
+  
+  flicker_color = !flicker_color;
+  
+  for( row=0; row < NUM_LINES; row++ ) {
 		
-		/* eindeutig gelb */
-		if( (ToPlayground[GELB][CLayer][row] == AKTIV) &&
-			(ToPlayground[VIOLETT][CLayer][row] == INAKTIV) ) {
-			/* Farbtauscher ??? */
-			if( ToPlayground[GELB][CLayer-1][row] == Tauscher )
-				DisplayColumn[row] = VIOLETT;
-			else
-				DisplayColumn[row] = GELB;
-				
-			continue;
-		}
-
+    /* eindeutig gelb */
+    if( (ToPlayground[GELB][CLayer][row] == AKTIV) &&
+	(ToPlayground[VIOLETT][CLayer][row] == INAKTIV) ) {
+      /* Farbtauscher ??? */
+      if( ToPlayground[GELB][CLayer-1][row] == Tauscher )
+	DisplayColumn[row] = VIOLETT;
+      else
+	DisplayColumn[row] = GELB;
+      continue;
+    }
 	
-		/* eindeutig violett */
-		if( (ToPlayground[GELB][CLayer][row] == INAKTIV) &&
-			(ToPlayground[VIOLETT][CLayer][row] == AKTIV) ) {
-			/* Farbtauscher ??? */
-			if( ToPlayground[VIOLETT][CLayer-1][row] == Tauscher )
-				DisplayColumn[row] = GELB;
-			else
-				DisplayColumn[row] = VIOLETT;
-				
-			continue;
-		}
+    /* eindeutig violett */
+    if( (ToPlayground[GELB][CLayer][row] == INAKTIV) &&
+	(ToPlayground[VIOLETT][CLayer][row] == AKTIV) ) {
+      /* Farbtauscher ??? */
+      if( ToPlayground[VIOLETT][CLayer-1][row] == Tauscher )
+	DisplayColumn[row] = GELB;
+      else
+	DisplayColumn[row] = VIOLETT;
+      
+      continue;
+    }
 
-		/* unentschieden: Flimmern */
-		if( (ToPlayground[GELB][CLayer][row] == AKTIV) &&
-			(ToPlayground[VIOLETT][CLayer][row] == AKTIV) ) {
-			/* Farbtauscher - Faelle */
-			if( (ToPlayground[GELB][CLayer-1][row] == Tauscher) &&
-				(ToPlayground[VIOLETT][CLayer-1][row] != Tauscher) )
-				DisplayColumn[row] = VIOLETT;
-			else if( (ToPlayground[GELB][CLayer-1][row] != Tauscher) &&
-					(ToPlayground[VIOLETT][CLayer-1][row] == Tauscher) )
-						DisplayColumn[row] = GELB;
-			else {
-				if( flicker_color == 0 ) DisplayColumn[row] = GELB;
-				else DisplayColumn[row] = VIOLETT;
-			} /* if - else if - else */
-			
-		} /* if unentschieden */
-		
-
-	} /* for */
-
-	/* Win Color beurteilen */
-	GelbCounter = 0;
-	ViolettCounter = 0;
-	for( row = 0; row < NUM_LINES; row ++) 
-		if( DisplayColumn[row] == GELB ) GelbCounter ++;
-		else ViolettCounter ++;
-
-	if( ViolettCounter < GelbCounter ) LeaderColor = GELB;
-	else if( ViolettCounter > GelbCounter ) LeaderColor = VIOLETT;
-	else LeaderColor = REMIS;
-	
+    /* unentschieden: Flimmern */
+    if( (ToPlayground[GELB][CLayer][row] == AKTIV) &&
+	(ToPlayground[VIOLETT][CLayer][row] == AKTIV) ) {
+      /* Farbtauscher - Faelle */
+      if( (ToPlayground[GELB][CLayer-1][row] == Tauscher) &&
+	  (ToPlayground[VIOLETT][CLayer-1][row] != Tauscher) )
+	DisplayColumn[row] = VIOLETT;
+      else if( (ToPlayground[GELB][CLayer-1][row] != Tauscher) &&
+	       (ToPlayground[VIOLETT][CLayer-1][row] == Tauscher) )
+	DisplayColumn[row] = GELB;
+      else {
+	if( flicker_color == 0 ) DisplayColumn[row] = GELB;
+	else DisplayColumn[row] = VIOLETT;
+      } /* if - else if - else */
+      
+    } /* if unentschieden */
+    
+  } /* for */
+  
+  /* Win Color beurteilen */
+  GelbCounter = 0;
+  ViolettCounter = 0;
+  for( row = 0; row < NUM_LINES; row ++) 
+    if( DisplayColumn[row] == GELB ) GelbCounter ++;
+    else ViolettCounter ++;
+  
+  if( ViolettCounter < GelbCounter ) LeaderColor = GELB;
+  else if( ViolettCounter > GelbCounter ) LeaderColor = VIOLETT;
+  else LeaderColor = REMIS;
 	
 } /* ProcessDisplayColumn */
 
@@ -1242,21 +1237,21 @@ void ProcessDisplayColumn(void)
 * $Function----------------------------------------------------------*/
 void ProcessCapsules(void)
 {
-	int row;
-	int color;
-
-	for( color=GELB; color <= VIOLETT; color++ )
-		for( row = 0; row < NUM_LINES; row ++ ) {
-			if( CapsuleCountdown[color][row] > 0 )
-				CapsuleCountdown[color][row] --;
-				
-			if( CapsuleCountdown[color][row] == 0 ) {
-				CapsuleCountdown[color][row] = -1;
-				ToPlayground[color][0][row] = KABEL;
-			}
-
-		} /* for row */
-		
+  int row;
+  int color;
+  
+  for( color=GELB; color <= VIOLETT; color++ )
+    for( row = 0; row < NUM_LINES; row ++ ) {
+      if( CapsuleCountdown[color][row] > 0 )
+	CapsuleCountdown[color][row] --;
+      
+      if( CapsuleCountdown[color][row] == 0 ) {
+	CapsuleCountdown[color][row] = -1;
+	ToPlayground[color][0][row] = KABEL;
+      }
+      
+    } /* for row */
+  
 } /* ProcessCapsules() */		
 		
 

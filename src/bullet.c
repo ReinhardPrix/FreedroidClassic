@@ -1,31 +1,34 @@
-/*=@Header==============================================================
- * $Source$
+/*
  *
- * @Desc: Bullet AND Blast - related functions 
+ *   Copyright (c) 1994, 2002 Johannes Prix
+ *   Copyright (c) 1994, 2002 Reinhard Prix
+ *
+ *
+ *  This file is part of FreeParadroid+
+ *
+ *  FreeParadroid+ is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  FreeParadroid+ is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with FreeParadroid+; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+
+/*----------------------------------------------------------------------
+ *
+ * Desc: all Bullet AND Blast - related functions.
  *	 
- * 	
- * $Revision$
- * $State$
  *
- * $Author$
- *
- * $Log$
- * Revision 1.5  2002/04/08 19:19:09  rp
- * Johannes latest (and last) non-cvs version to be checked in. Added graphics,sound,map-subdirs. Sound support using ALSA started.
- *
- * Revision 1.6  1997/05/31 13:30:31  rprix
- * Further update by johannes. (sent to me in tar.gz)
- *
- * Revision 1.2  1994/06/19  16:15:51  prix
- * *** empty log message ***
- *
- * Revision 1.1  1993/08/08  21:20:50  prix
- * Initial revision
- *
- *
- *-@Header------------------------------------------------------------*/
-// static const char RCSid[]=\
-// "$Id$";
+ *----------------------------------------------------------------------*/
+#include <config.h>
 
 #define _bullet_c
 
@@ -43,36 +46,41 @@
 
 
 /*@Function============================================================
-@Desc: Diese Funktion bewegt alle Bullets gemaess ihrer Geschwindigkeit.
+@Desc: this function moves all the bullets according to their speeds.
+
+NEW: this function also takes into accoung the current framerate.
+
 @Ret: keiner
+
 @Int: keiner
 * $Function----------------------------------------------------------*/
+
 void MoveBullets(void)
 {
 
-/* lokale Variablen der Funktion: */
-	int i;
-	Bullet CurBullet;
+  /* lokale Variablen der Funktion: */
+  int i;
+  Bullet CurBullet;
 
-	/* Bewegung der Bullets */
-	for(CurBullet=AllBullets, i=0;i<MAXBULLETS;CurBullet++, i++) {
-		if (CurBullet->type == OUT) continue;
+  /* Bewegung der Bullets */
+  for(CurBullet=AllBullets, i=0;i<MAXBULLETS;CurBullet++, i++) {
+    if (CurBullet->type == OUT) continue;
+    
+    CurBullet->pos.x += CurBullet->speed.x * Frame_Time();
+    CurBullet->pos.y += CurBullet->speed.y * Frame_Time();
+    
+    CurBullet->time++;
+
+    /*
+      UM ZU VERHINDERN, DASS DIE BULLETS, DIE ETWAS TREFFEN, NICHT MEHR
+      DARGESTELLT WERDEN, PASSIERT DIE BULLETKOLLISIONSABFRAGE ERST NACH
+      DER ZUSAMMENSTELLUNG DES INTERNFENSTERS. jp, 23.5.94 */
 		
-		CurBullet->PX += CurBullet->SX;
-		CurBullet->PY += CurBullet->SY;
+    /* Kollisionen mit Mauern und Druids checken UND behandeln */
+    //		CheckBulletCollisions(i);
 
-		CurBullet->time++;
-
-/*
-	UM ZU VERHINDERN, DASS DIE BULLETS, DIE ETWAS TREFFEN, NICHT MEHR
-	DARGESTELLT WERDEN, PASSIERT DIE BULLETKOLLISIONSABFRAGE ERST NACH
-	DER ZUSAMMENSTELLUNG DES INTERNFENSTERS. jp, 23.5.94 */
-		
-		/* Kollisionen mit Mauern und Druids checken UND behandeln */
-//		CheckBulletCollisions(i);
-
-	} /* for */
-} /* MoveBullets */
+  } /* for */
+} // void MoveBullets(void)
 
 
 /*@Function============================================================
@@ -91,7 +99,7 @@ void DeleteBullet(int Bulletnummer)
 	CurBullet->mine = FALSE;
 
 	/* Blast erzeugen: type BULLETBLAST */
-	StartBlast(CurBullet->PX, CurBullet->PY, BULLETBLAST);
+	StartBlast(CurBullet->pos.x, CurBullet->pos.y, BULLETBLAST);
 }
 
 /*@Function============================================================
@@ -123,8 +131,7 @@ void StartBlast(int x, int y, int type)
    NewBlast->phase=0;
 
 
-   if (type == DRUIDBLAST) Play_OSS(BLASTSOUND);
-
+   if (type == DRUIDBLAST) Play_YIFF_Server_Sound(BLASTSOUND);
 
 } /* StartBlast */
 
@@ -134,19 +141,20 @@ void StartBlast(int x, int y, int type)
 @Int: keiner
 * $Function----------------------------------------------------------*/
 void ExplodeBlasts(void){
-	int i;
-	Blast CurBlast = AllBlasts;
+  int i;
+  Blast CurBlast = AllBlasts;
 	
-	for (i=0;i<MAXBLASTS;i++, CurBlast ++)
-    	if (CurBlast->type != OUT )  {
+  for (i=0;i<MAXBLASTS;i++, CurBlast ++)
+    if (CurBlast->type != OUT )  {
     		
-    		/* Druidblasts sind gefaehrlich !! */
-    		if( CurBlast->type == DRUIDBLAST) CheckBlastCollisions(i);
-    		
-			CurBlast->phase++;
-			if (CurBlast->phase >= Blastmap[CurBlast->type].phases) 
-				DeleteBlast(i);
-  		} /* if */
+      /* Druidblasts sind gefaehrlich !! */
+      if( CurBlast->type == DRUIDBLAST) CheckBlastCollisions(i);
+      
+      // CurBlast->phase++;
+      CurBlast->phase += Frame_Time() * BLASTPHASES_PER_SECOND;
+      if ( ((int)rintf(CurBlast->phase)) >= Blastmap[CurBlast->type].phases ) 
+	DeleteBlast(i);
+    } /* if */
 } /* ExplodeBlasts */
 
 /*@Function============================================================
@@ -197,14 +205,14 @@ void CheckBulletCollisions(int num)
 	if(CurBullet->type == OUT) return;
 	
 	/* Kollision der Bullets mit dem Hintergrund feststellen */
-	if (IsPassable(CurBullet->PX, CurBullet->PY, CENTER) != CENTER) {
+	if (IsPassable(CurBullet->pos.x, CurBullet->pos.y, CENTER) != CENTER) {
 		DeleteBullet(num);
 		return;		/* Bullet ist hin */
 	}
 
 	/* Influence getroffen ?? */
-	xdist = Me.pos.x - CurBullet->PX;
-	ydist = Me.pos.y - CurBullet->PY;
+	xdist = Me.pos.x - CurBullet->pos.x;
+	ydist = Me.pos.y - CurBullet->pos.y;
 	if( (xdist*xdist+ydist*ydist) < DRUIDHITDIST2 ) {
 		CurBullet->type = OUT;
 		CurBullet->mine = FALSE;
@@ -218,8 +226,8 @@ void CheckBulletCollisions(int num)
 		if( Feindesliste[i].Status == OUT || Feindesliste[i].levelnum != level)
 			continue;
 
-		xdist = CurBullet->PX - Feindesliste[i].pos.x;
-		ydist = CurBullet->PY - Feindesliste[i].pos.y;
+		xdist = CurBullet->pos.x - Feindesliste[i].pos.x;
+		ydist = CurBullet->pos.y - Feindesliste[i].pos.y;
 
 		if( (xdist*xdist+ydist*ydist) < DRUIDHITDIST2 ) {
 			Feindesliste[i].energy -= Bulletmap[CurBullet->type].damage;
@@ -260,8 +268,8 @@ void CheckBlastCollisions(int num)
 		if( AllBullets[i].type == OUT ) continue;
 		if( CurBlast->phase > 4) break;
 		
-		if( abs(AllBullets[i].PX - CurBlast->PX) < BLASTRADIUS ) 
-			 if( abs(AllBullets[i].PY - CurBlast->PY) < BLASTRADIUS)
+		if( abs(AllBullets[i].pos.x - CurBlast->PX) < BLASTRADIUS ) 
+			 if( abs(AllBullets[i].pos.y - CurBlast->PY) < BLASTRADIUS)
 			 {
 			 	/* KILL Bullet silently */
 			 	AllBullets[i].type = OUT;

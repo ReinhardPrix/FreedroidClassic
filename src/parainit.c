@@ -1,7 +1,7 @@
 /* 
  *
- *   Copyright (c) 2002 Johannes Prix
- *   Copyright (c) 2002 Reinhard Prix
+ *   Copyright (c) 1994, 2002 Johannes Prix
+ *   Copyright (c) 1994, 2002 Reinhard Prix
  *
  *
  *  This file is part of FreeParadroid+
@@ -27,6 +27,7 @@
  * Desc: the paraplus initialisation routines
  *
  *----------------------------------------------------------------------*/
+#include <config.h>
 
 #define _parainit_c
 
@@ -48,7 +49,6 @@
 #include <vgagl.h>
 #include <vgakeyboard.h>
 #include <sys/stat.h>
-#include <sys/asoundlib.h>
 
 #include "defs.h"
 #include "struct.h"
@@ -238,10 +238,8 @@ void InitParaplus(void) {
 
   // ******** ACHTUNG!  Hier folgt nun die Original-Initialisierungsroutine ***********
 
-#ifdef PARADROID_SOUND_SUPPORT_ON
   Init_YIFF_Sound_Server();
   Play_YIFF_BackgroundMusic(0);
-#endif
 
   /* Unterbrechung des Monitorsignal solange Initialisierung l"auft. */
   // #ifdef NOJUNKWHILEINIT

@@ -1,8 +1,44 @@
+/* 
+ *
+ *   Copyright (c) 1994, 2002 Johannes Prix
+ *   Copyright (c) 1994, 2002 Reinhard Prix
+ *
+ *
+ *  This file is part of FreeParadroid+
+ *
+ *  FreeParadroid+ is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  FreeParadroid+ is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with FreeParadroid+; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+
+/*----------------------------------------------------------------------
+ *
+ * Desc: contains all functions dealing with the HUGE, BIG font used for
+ *	the top status line, the score and the text displayed during briefing
+ *	and highscore inverview.  This has NOTHING to do with the fonts
+ *	of the SVGALIB or the fonts used for the horizontal srolling message line!
+ *
+ *----------------------------------------------------------------------*/
+#include <config.h>
+
 #define _paratext_c
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <unistd.h>
 #include <vga.h>
 #include <vgagl.h>
 #include <vgakeyboard.h>
@@ -113,7 +149,7 @@ int InitParaplusFont(void){
     Terminate(-1);
   }
 	
-  LadeLBMBild(FONTBILD,InternalScreen,FALSE);
+  Load_PCX_Image( FONTBILD_PCX , InternalScreen , FALSE );
 
   FontMem = (unsigned char*)MyMalloc(FONTANZAHL*FONTMEM*2+10);
 	
@@ -151,9 +187,10 @@ void SetTextColor(unsigned bg, unsigned fg)
   register unsigned char *source;
   
   /* Sicherheitsabrage bez. Schriftzerst"orung durch Kontrastausl"oschung */
-  if ((bg == LastFg) || (bg == fg)) {
-    printf(" WARNING ! Die Schrift wird durch diesen Aufruf vernichtet !\n");
+  if ( (bg == LastFg) || (bg == fg) ) {
+    printf("\nvoid SetTextColor(...): WARNING ! Die Schrift wird durch diesen Aufruf vernichtet !\n");
     getchar();
+    Terminate(ERR);
   }
   CurrentFontFG=fg;
   CurrentFontBG=bg;
@@ -188,11 +225,11 @@ void GetTextColor(unsigned int* bg,unsigned int* fg){
 
 /*@Function============================================================
 @Desc: SetTextBorder(): setzt die Bezugs-daten fuer die folgenden
-							Text-ausgaben
-					RightTextBorder:
-					LeftTextBorder:
-					UpperTextBorder:
-					LowerTextBorder:
+Text-ausgaben
+RightTextBorder:
+LeftTextBorder:
+UpperTextBorder:
+LowerTextBorder:
 
 @Ret: 
 @Int:
@@ -263,6 +300,9 @@ int ScrollText(char *Text, int startx, int starty, int EndLine) {
   int speed = +2;
   int maxspeed = 4;
 
+
+  ClearGraphMem(InternalScreen);
+
   /* Zeilen zaehlen */
   textpt = Text;
   while(*textpt++)
@@ -278,20 +318,15 @@ int ScrollText(char *Text, int startx, int starty, int EndLine) {
     if( UpPressed() ) {
       speed--;
       if( speed < -maxspeed ) speed = -maxspeed;
-      // PORT UpPressed = FALSE;
     }
     if( DownPressed() ) {
       speed ++;
       if( speed > maxspeed ) speed = maxspeed;
-      // PORT DownPressed = FALSE;
     }
 		
-    KillTastaturPuffer();
-		
-    // PORT if( !TimerFlag ) continue;		/* Synchronisierung */
-    // PORT TimerFlag = FALSE;
+    usleep(30000);
 
-    ClearTextBorder(InternalScreen,CurrentFontBG );
+    ClearTextBorder( InternalScreen , CurrentFontBG );
     DisplayText(Text, startx, InsertLine, InternalScreen, FALSE);
     InsertLine -= speed;
     
@@ -327,7 +362,6 @@ void DisplayText(
 		 ) 
 {
   char *tmp; /* Beweg. Zeiger auf aktuelle Position im Ausgabe-Text */
-  int i;
 
   printf("\nvoid DisplayText(...): Funktion echt aufgerufen.");
 
@@ -407,7 +441,7 @@ void DisplayWord(char* Worttext){
 @Int:
 * $Function----------------------------------------------------------*/
 void DisplayChar(unsigned char Zeichen, unsigned char *screen){
-  int i,j;
+  int i;
   int ZNum = Zeichen - ' ';
   int ZLen = CharLenList[ZNum];
   
@@ -439,7 +473,7 @@ void DisplayChar(unsigned char Zeichen, unsigned char *screen){
 	break;
 
       target = screen+MyCursorX+MyCursorY*SCREENBREITE + i*SCREENBREITE;
-      MyMemcpy(target, Zeichenpointer[ZNum] + i*(1+ZLen)*FONTBREITE,
+      memcpy(target, Zeichenpointer[ZNum] + i*(1+ZLen)*FONTBREITE,
 	       FONTBREITE * (1+ZLen) );
     } // for(i=0;i<FONT...
   } // if (screen==RealScreen)
@@ -496,7 +530,7 @@ MaxLen: max. Laenge des Strings
 char* GetString(int MaxLen){
   char *instring;		/* Pointer auf eingegebenen String */
   char *loeschstring;	/* String zum Loeschen der Eingabe-Zeile */
-  char taste;				/* eingeg. Zeichen */
+  // PORT char taste;				/* eingeg. Zeichen */
   int charcounter = 0;	/* zaehlt eingeg. Zeichen mit */
   int TextOutX, TextOutY;	/* Einfuegepunkt zum Darstellen der Eingabe */
 

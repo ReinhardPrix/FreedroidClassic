@@ -1,62 +1,36 @@
-/*=@Header==============================================================
- * $Source$
+/* 
  *
- * @Desc: enemy related functions 
- *
- * $Revision$
- *
- * $State$
- *
- * $Author$
- *
- * $Log$
- * Revision 1.7  2002/04/08 19:19:09  rp
- * Johannes latest (and last) non-cvs version to be checked in. Added graphics,sound,map-subdirs. Sound support using ALSA started.
- *
- * Revision 1.7  1997/05/31 13:30:31  rprix
- * Further update by johannes. (sent to me in tar.gz)
- *
- * Revision 1.4  1994/06/19  16:18:12  prix
- * Mon Oct 25 14:26:49 1993: enemy-collision modifiziert
- * Mon Oct 25 14:30:47 1993: ShuffleEnemys() modifiziert
- * Mon Oct 25 20:21:05 1993: debugroutine hinzugef"ugt
- * Tue Oct 26 10:27:40 1993: enemys haben nun eine Speed !! (fuer collisions)
- *
- * Revision 1.3  1993/10/25  18:18:57  prix
- * Wed Aug 11 20:33:40 1993: New EnemyEnmeyCollision handling
- * Sat Aug 14 09:23:30 1993: enemys warten nicht
- * Sat Aug 14 09:31:18 1993: firewait doesnt depend on guntype but on druid !!
- * Sat Aug 14 16:05:19 1993: Neues Tuning der Feind-aggressivitaet
- * Tue Aug 24 10:31:19 1993: better shuffleEnemys
- * Tue Aug 24 16:46:41 1993: written InitEnemys()
- * Sun Aug 29 10:49:57 1993: enemys shoot only if visible
- * Fri Sep 17 11:47:56 1993: waypoint - Suche beschleunigt
- * Thu Sep 30 14:14:28 1993: written ClassOfDruid()
- *
- * Revision 1.2  1993/08/12  00:25:22  prix
- * Fri Jul 30 07:30:17 1993: Enemys schiessen nicht immer wenn sie koennen
- * Sat Jul 31 11:08:07 1993: renamed WAYPOINTMAX to MAXWAYPOINTS
- * Sat Jul 31 12:39:30 1993: type instead of typennummer in enemy - struct
- * Sat Jul 31 12:44:21 1993: no abgschossen in enemy but Status
- * Sat Jul 31 18:08:36 1993: agression is type-specific, not individual for each enemy !
- * Sat Jul 31 19:55:24 1993: only work on enemys that are alive and on current level
- * Sun Aug 08 21:33:15 1993: changed MoveEnemys() to new Waypoint-management
- * Mon Aug 09 17:18:36 1993: written ShuffleEnemys()
- * Mon Aug 09 18:17:24 1993: written CheckEnemeyCollsion()
- * Mon Aug 09 18:25:46 1993: renamed CheckEnemyCollsion to EnemyEnemyCollision()
- * Mon Aug 09 18:58:38 1993: emergency: total collsion: trennt enemys
- * Tue Aug 10 19:49:21 1993: enemys shoot only if dist is ok
- * Tue Aug 10 20:07:55 1993: kein EnemyGetroffen mehr
- * Tue Aug 10 21:04:24 1993: written AttackInfluence
- *
- * Revision 1.1  1993/07/29  17:28:02  prix
- * Initial revision
+ *   Copyright (c) 1994, 2002 Johannes Prix
+ *   Copyright (c) 1994, 2002 Reinhard Prix
  *
  *
- *-@Header------------------------------------------------------------*/
+ *  This file is part of FreeParadroid+
+ *
+ *  FreeParadroid+ is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  FreeParadroid+ is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with FreeParadroid+; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
 
-// static const char RCSid[]=\
-// "$Id$";
+/*----------------------------------------------------------------------
+ *
+ * Desc: All enemy - realted functions.  This includes their whole behaviour,
+ *	healing, initialization, shuffling them around after evevator-transitions
+ *	of the paradroid, deleting them, collisions of enemys among themselves,
+ *	their fireing, animation and such.
+ *
+ *----------------------------------------------------------------------*/
+#include <config.h>
 
 #define _enemy_c
 
@@ -134,17 +108,17 @@ void InitEnemys(void)
 * $Function----------------------------------------------------------*/
 void ClearEnemys(void)
 {
-	int i;
+  int i;
 	
-	for ( i = 0; i < MAX_ENEMYS_ON_SHIP; i++ ) {
-		Feindesliste[i].type = -1;
-		Feindesliste[i].levelnum = Feindesliste[i].energy = 0;
-		Feindesliste[i].feindphase = Feindesliste[i].feindrehcode = 0;
-		Feindesliste[i].nextwaypoint = Feindesliste[i].lastwaypoint = 0;
-		Feindesliste[i].Status = OUT;
-		Feindesliste[i].warten = Feindesliste[i].firewait = 0;
-	}
-}
+  for ( i = 0; i < MAX_ENEMYS_ON_SHIP; i++ ) {
+    Feindesliste[i].type = -1;
+    Feindesliste[i].levelnum = Feindesliste[i].energy = 0;
+    Feindesliste[i].feindphase = 0;
+    Feindesliste[i].nextwaypoint = Feindesliste[i].lastwaypoint = 0;
+    Feindesliste[i].Status = OUT;
+    Feindesliste[i].warten = Feindesliste[i].firewait = 0;
+  }
+} // void ClearEnemys(void)
 
 
 /*@Function============================================================
@@ -155,12 +129,12 @@ void ClearEnemys(void)
 * $Function----------------------------------------------------------*/
 void ShuffleEnemys(void)
 {
-	int curlevel = CurLevel->levelnum;
-	int i;
-	int nth_enemy;
-	int wp_num;
-	int wp;
-	int influ_x, influ_y;
+  int curlevel = CurLevel->levelnum;
+  int i;
+  int nth_enemy;
+  int wp_num;
+  int wp;
+  finepoint influ_coord;
 	
 	/* Anzahl der Waypoints auf CurLevel abzaehlen */
 	wp_num = 0;
@@ -195,15 +169,15 @@ void ShuffleEnemys(void)
 	/* enemys ein bisschen sich selbst ueberlassen */
 	
 	/* Influencer zuerst entfernen */
-	influ_x = Me.pos.x;
-	influ_y = Me.pos.y;
+	influ_coord.x  = Me.pos.x;
+	influ_coord.y  = Me.pos.y;
 	Me.pos.x = Me.pos.y = 0;
 	
 	for( i=0; i<30; i++ ) MoveEnemys();
 
 	/* influencer wieder her */
-	Me.pos.x = influ_x;
-	Me.pos.y = influ_y;
+	Me.pos.x = influ_coord.x;
+	Me.pos.y = influ_coord.y;
 	
 } /* ShuffleEnemys() */
 
@@ -214,101 +188,101 @@ void ShuffleEnemys(void)
 @Int:
 * $Function----------------------------------------------------------*/
 void MoveEnemys(void){
-	int i;
-	int j;
-	point Restweg;
-	Waypoint WpList;	/* Pointer to waypoint-liste */
-	int nextwp;
-	point nextwp_pos;
-	int trywp;
-	int PossibleConnections;
-	int swap;
+  int i;
+  point Restweg;
+  Waypoint WpList;	/* Pointer to waypoint-liste */
+  int nextwp;
+  finepoint nextwp_pos;
+  int trywp;
+  int PossibleConnections;
 
-	if (BeamLine) return;
+  if (BeamLine) return;
 	
-	PermanentHealRobots();
+  PermanentHealRobots();
 	
-	for (i=0;i<NumEnemys;i++) {
+  for (i=0;i<NumEnemys;i++) {
 		
-		if( Feindesliste[i].nextwaypoint == 100 ) continue;
+    if( Feindesliste[i].nextwaypoint == 100 ) continue;
 		
-		/* ignore robots on other levels */
-		if (Feindesliste[i].levelnum != CurLevel->levelnum) continue;
+    /* ignore robots on other levels */
+    if (Feindesliste[i].levelnum != CurLevel->levelnum) continue;
 		
-		/* Wenn der robot tot ist dann weiter */
-		if (Feindesliste[i].Status == OUT) continue;
+    /* Wenn der robot tot ist dann weiter */
+    if (Feindesliste[i].Status == OUT) continue;
 
-		/* ist der Robot gerade toedlich getroffen worden ?? */
-		if( Feindesliste[i].energy <= 0) {
-			Feindesliste[i].Status = OUT;
-			RealScore+=Druidmap[Feindesliste[i].type].score;
-			StartBlast(Feindesliste[i].pos.x, Feindesliste[i].pos.y, DRUIDBLAST);
-			if( LevelEmpty() ) CurLevel->empty = WAIT_LEVELEMPTY;
-			continue; /* naechster Enemy, der ist hin */
-		}
+    /* ist der Robot gerade toedlich getroffen worden ?? */
+    if( Feindesliste[i].energy <= 0) {
+      Feindesliste[i].Status = OUT;
+      RealScore+=Druidmap[Feindesliste[i].type].score;
+      StartBlast(Feindesliste[i].pos.x, Feindesliste[i].pos.y, DRUIDBLAST);
+      if( LevelEmpty() ) CurLevel->empty = WAIT_LEVELEMPTY;
+      continue; /* naechster Enemy, der ist hin */
+    }
 
-		if( Druidmap[Feindesliste[i].type].aggression ) AttackInfluence(i);
+    if( Druidmap[Feindesliste[i].type].aggression ) AttackInfluence(i);
 		
-		/* Wenn der Robot noch zu warten hat dann gleich weiter */
-		if (Feindesliste[i].warten > 0) continue;
+    /* Wenn der Robot noch zu warten hat dann gleich weiter */
+    if (Feindesliste[i].warten > 0) continue;
 
-		/* collision mit anderem Druid */
-		EnemyEnemyCollision(i);
+    /* collision mit anderem Druid */
+    EnemyEnemyCollision(i);
 				
-		/* Ermittlung des Restweges zum naechsten Ziel */
-		WpList = CurLevel->AllWaypoints;
-		nextwp = Feindesliste[i].nextwaypoint;
-		nextwp_pos.x = WpList[nextwp].x*BLOCKBREITE+BLOCKBREITE/2;
-		nextwp_pos.y = WpList[nextwp].y*BLOCKHOEHE+BLOCKHOEHE/2;
-	
-		Restweg.x=nextwp_pos.x - Feindesliste[i].pos.x;
-		Restweg.y=nextwp_pos.y -Feindesliste[i].pos.y;
+    /* Ermittlung des Restweges zum naechsten Ziel */
+    WpList = CurLevel->AllWaypoints;
+    nextwp = Feindesliste[i].nextwaypoint;
+    nextwp_pos.x = WpList[nextwp].x*BLOCKBREITE+BLOCKBREITE/2;
+    nextwp_pos.y = WpList[nextwp].y*BLOCKHOEHE+BLOCKHOEHE/2;
+    
+    Restweg.x = nextwp_pos.x - Feindesliste[i].pos.x;
+    Restweg.y = nextwp_pos.y - Feindesliste[i].pos.y;
 
 
-		/* Bewegung wenn der Abstand noch groesser als maxspeed ist */
-		if (abs(Restweg.x) >= Druidmap[Feindesliste[i].type].maxspeed) {
-			Feindesliste[i].speed.x =
-				(Restweg.x/abs(Restweg.x))*Druidmap[Feindesliste[i].type].maxspeed; 
-			Feindesliste[i].pos.x += Feindesliste[i].speed.x;
-		}
+    /* Bewegung wenn der Abstand noch groesser als maxspeed ist */
+    if ( ( fabsf(Restweg.x) >= Druidmap[Feindesliste[i].type].maxspeed * Frame_Time() ) && ( Restweg.x != 0 ) ) {
+      Feindesliste[i].speed.x =
+	(Restweg.x/abs(Restweg.x))*Druidmap[Feindesliste[i].type].maxspeed; 
+      Feindesliste[i].pos.x += Feindesliste[i].speed.x * Frame_Time();
+    }
 
-		if (abs(Restweg.y) >= Druidmap[Feindesliste[i].type].maxspeed) {
-			Feindesliste[i].speed.y =
-				(Restweg.y/abs(Restweg.y))*Druidmap[Feindesliste[i].type].maxspeed;
-			Feindesliste[i].pos.y += Feindesliste[i].speed.y;
-		}
+    if ( ( fabsf(Restweg.y) >= Druidmap[Feindesliste[i].type].maxspeed * Frame_Time() ) && ( Restweg.y != 0 ) ) {
+      Feindesliste[i].speed.y =
+	(Restweg.y/fabsf(Restweg.y))*Druidmap[Feindesliste[i].type].maxspeed;
+      Feindesliste[i].pos.y += Feindesliste[i].speed.y * Frame_Time();
+    }
 
-		/* Endannaeherung aktuellen waypoint und anvisieren des naechsten */
-		if ( abs(Restweg.x) < Druidmap[Feindesliste[i].type].maxspeed) {
-	  		Feindesliste[i].pos.x = nextwp_pos.x;
-  			Feindesliste[i].speed.x = 0;
-	  	}
+    /* Endannaeherung aktuellen waypoint und anvisieren des naechsten */
+    printf("/* Endannaeherung aktuellen waypoint und anvisieren des naechsten */");
+    if ( abs(Restweg.x) < Druidmap[Feindesliste[i].type].maxspeed * Frame_Time() ) {
+      Feindesliste[i].pos.x = nextwp_pos.x;
+      Feindesliste[i].speed.x = 0;
+    }
 		  		
-		if ( abs(Restweg.y) < Druidmap[Feindesliste[i].type].maxspeed ) {
-  			Feindesliste[i].pos.y = nextwp_pos.y;
-  			Feindesliste[i].speed.y = 0;
-	  	}
+    if ( abs(Restweg.y) < Druidmap[Feindesliste[i].type].maxspeed * Frame_Time() ) {
+      Feindesliste[i].pos.y = nextwp_pos.y;
+      Feindesliste[i].speed.y = 0;
+    }
 					
-		if ( (Restweg.x == 0) && (Restweg.y == 0) ) {
-			Feindesliste[i].lastwaypoint = Feindesliste[i].nextwaypoint;
-			Feindesliste[i].warten = MyRandom(ENEMYMAXWAIT)*18;
-		
-		/* suche moegliche Verbindung von hier */
-		PossibleConnections = -1;
-		while((PossibleConnections < MAX_WP_CONNECTIONS) && 
-			(WpList[nextwp].connections[++PossibleConnections] != -1) );
-
-			if( PossibleConnections > 0) {
-				do {
-					trywp = (WpList[nextwp]).connections[MyRandom(PossibleConnections)];
-				} while( trywp == -1 );
-			
+    if ( (Restweg.x == 0) && (Restweg.y == 0) ) {
+      Feindesliste[i].lastwaypoint = Feindesliste[i].nextwaypoint;
+      Feindesliste[i].warten = MyRandom(ENEMYMAXWAIT)*18;
+      
+      /* suche moegliche Verbindung von hier */
+      printf("/* suche moegliche Verbindung von hier */");
+      PossibleConnections = -1;
+      while((PossibleConnections < MAX_WP_CONNECTIONS) && 
+	    (WpList[nextwp].connections[++PossibleConnections] != -1) );
+      
+      if( PossibleConnections > 0) {
+	do {
+	  trywp = (WpList[nextwp]).connections[MyRandom(PossibleConnections)];
+	} while( trywp == -1 );
+	
 				/* setze neuen Waypoint */
-				Feindesliste[i].nextwaypoint = trywp;
-			} /* if */
-		} /* if */
-
-	} /* for */
+	Feindesliste[i].nextwaypoint = trywp;
+      } /* if */
+    } /* if */
+    
+  } /* for */
 	
 } /* MoveEnemys */
 
@@ -321,91 +295,91 @@ void MoveEnemys(void){
 * $Function----------------------------------------------------------*/
 void AttackInfluence(int enemynum)
 {
-	int j;
-	int guntype;
-	int xdist, ydist;
-	long dist2;
-	int dummy;
+  int j;
+  int guntype;
+  int xdist, ydist;
+  long dist2;
 	
-	/* Ermittlung des Abstandsvektors zum Influencer */
-	xdist = Me.pos.x-Feindesliste[enemynum].pos.x;
-	ydist =Me.pos.y-Feindesliste[enemynum].pos.y;
+  /* Ermittlung des Abstandsvektors zum Influencer */
+  xdist = Me.pos.x-Feindesliste[enemynum].pos.x;
+  ydist =Me.pos.y-Feindesliste[enemynum].pos.y;
 	
-	/* Sicherheit gegen Division durch 0 */
-	if (abs(xdist) < 2) xdist = 2;
-	if (abs(ydist) < 2) ydist = 2;
+  /* Sicherheit gegen Division durch 0 */
+  if (abs(xdist) < 2) xdist = 2;
+  if (abs(ydist) < 2) ydist = 2;
 
-	/* wenn die Vorzeichen gut sind einen Schuss auf den 001 abgeben */
-	guntype = Druidmap[Feindesliste[enemynum].type].gun;
+  /* wenn die Vorzeichen gut sind einen Schuss auf den 001 abgeben */
+  guntype = Druidmap[Feindesliste[enemynum].type].gun;
+  
+  dist2 = (xdist*xdist+ydist*ydist);
+  if (  (dist2 < (long)FIREDIST2) &&
+	( !Feindesliste[enemynum].firewait ) &&
+	IsVisible( &Feindesliste[enemynum].pos) )
+    {
+      if( MyRandom(AGGRESSIONMAX) >= Druidmap[Feindesliste[enemynum].type].aggression) {
+	/* Diesmal nicht schiessen */
+	Feindesliste[enemynum].firewait =
+	  MyRandom(Druidmap[Feindesliste[enemynum].type].firewait)*18;
+	return;
+      }
+      
+      FireBulletSound();
+      
+      /* Einen bulleteintragg suchen, der noch nicht belegt ist */
+      for (j=0;j<MAXBULLETS;j++) {
+	if (AllBullets[j].type == OUT) break; 
+      }
 
-	dist2 = (xdist*xdist+ydist*ydist);
-	if (  (dist2 < (long)FIREDIST2) &&
-		( !Feindesliste[enemynum].firewait ) &&
-		IsVisible( &Feindesliste[enemynum].pos) )
-	{
- 		if( MyRandom(AGGRESSIONMAX) >= Druidmap[Feindesliste[enemynum].type].aggression) {
- 			/* Diesmal nicht schiessen */
-			Feindesliste[enemynum].firewait =
-				MyRandom(Druidmap[Feindesliste[enemynum].type].firewait)*18;
-			return;
-		}
+      /* Schussrichtung festlegen */
+      if (abs(xdist) > abs(ydist) ) {
+	AllBullets[j].speed.x=Bulletmap[guntype].speed;
+	AllBullets[j].speed.y=ydist*AllBullets[j].speed.x/xdist;
+	if (xdist < 0) {
+	  AllBullets[j].speed.x=-AllBullets[j].speed.x;
+	  AllBullets[j].speed.y=-AllBullets[j].speed.y;
+	}
+      } 
+      
+      if (abs(xdist) < abs(ydist) ) {
+	AllBullets[j].speed.y=Bulletmap[guntype].speed;
+	AllBullets[j].speed.x=xdist*AllBullets[j].speed.y/ydist;
+	if (ydist < 0) {
+	  AllBullets[j].speed.x=-AllBullets[j].speed.x;
+	  AllBullets[j].speed.y=-AllBullets[j].speed.y;
+	}
+      }
 		
-		FireBulletSound();
-			
-		/* Einen bulleteintragg suchen, der noch nicht belegt ist */
-		for (j=0;j<MAXBULLETS;j++) {
-			if (AllBullets[j].type == OUT) break; 
-		}
+      /* Schussphase festlegen ( ->phase=Schussbild ) */
+      AllBullets[j].phase=NOSTRAIGHTDIR;
+      if ((abs(xdist)*2/3)/abs(ydist)) AllBullets[j].phase=RECHTS;
+      if ((abs(ydist)*2/3)/abs(xdist)) AllBullets[j].phase=OBEN;
+      if (AllBullets[j].phase == NOSTRAIGHTDIR) {
+	if (((xdist < 0) && (ydist < 0)) || ((xdist > 0) && (ydist > 0)))
+	  AllBullets[j].phase=RECHTSUNTEN;
+	else AllBullets[j].phase=RECHTSOBEN;
+      }
+      
+      /* Bullets im Zentrum des Schuetzen starten */
+      AllBullets[j].pos.x=Feindesliste[enemynum].pos.x;
+      AllBullets[j].pos.y=Feindesliste[enemynum].pos.y;
+      
+      /* Bullets so abfeuern, dass sie nicht den Schuetzen treffen */
+      AllBullets[j].pos.x+=isignf(AllBullets[j].speed.x)*BLOCKBREITE/2;
+      AllBullets[j].pos.y+=isignf(AllBullets[j].speed.y)*BLOCKHOEHE/2;
 
-		/* Schussrichtung festlegen */
-		if (abs(xdist) > abs(ydist) ) {
-			AllBullets[j].SX=Bulletmap[guntype].speed;
-			AllBullets[j].SY=ydist*AllBullets[j].SX/xdist;
-			if (xdist < 0) {
-				AllBullets[j].SX=-AllBullets[j].SX;
-				AllBullets[j].SY=-AllBullets[j].SY;
-			}
-		} 
-  		
-		if (abs(xdist) < abs(ydist) ) {
-			AllBullets[j].SY=Bulletmap[guntype].speed;
-			AllBullets[j].SX=xdist*AllBullets[j].SY/ydist;
-			if (ydist < 0) {
-				AllBullets[j].SX=-AllBullets[j].SX;
-				AllBullets[j].SY=-AllBullets[j].SY;
-			}
-		}
-		
-		/* Schussphase festlegen ( ->phase=Schussbild ) */
-		AllBullets[j].phase=NOSTRAIGHTDIR;
-		if ((abs(xdist)*2/3)/abs(ydist)) AllBullets[j].phase=RECHTS;
-		if ((abs(ydist)*2/3)/abs(xdist)) AllBullets[j].phase=OBEN;
-		if (AllBullets[j].phase == NOSTRAIGHTDIR) {
-			if (((xdist < 0) && (ydist < 0)) || ((xdist > 0) && (ydist > 0)))
-				AllBullets[j].phase=RECHTSUNTEN;
-				else AllBullets[j].phase=RECHTSOBEN;
-		}
+      // The following lines could be improved: Use not the sign, but only the fraction of the maxspeed times constant!
+      AllBullets[j].pos.x+=isignf(Feindesliste[enemynum].speed.x)*BLOCKBREITE/2;      
+      AllBullets[j].pos.y+=isignf(Feindesliste[enemynum].speed.y)*BLOCKHOEHE/2;
+      
+      /* Dem Bullettype entsprechend lange warten vor naechstem Schuss */
+      
+      Feindesliste[enemynum].firewait=
+	MyRandom(Druidmap[Feindesliste[enemynum].type].firewait)*18+4;
+      
+      /* Bullettype gemaes dem ueblichen guntype fuer den robottyp setzen */
+      AllBullets[j].type=guntype;
 
-		/* Bullets im Zentrum des Schuetzen starten */
-		AllBullets[j].PX=Feindesliste[enemynum].pos.x;
-		AllBullets[j].PY=Feindesliste[enemynum].pos.y;
-		
-		/* Bullets so abfeuern, dass sie nicht den Schuetzen treffen */
-		AllBullets[j].PX+=AllBullets[j].SX;
-		AllBullets[j].PY+=AllBullets[j].SY;
-		AllBullets[j].PX+=Feindesliste[enemynum].speed.x;
-		AllBullets[j].PY+=Feindesliste[enemynum].speed.y;
-			
-		/* Dem Bullettype entsprechend lange warten vor naechstem Schuss */
-
-		Feindesliste[enemynum].firewait=
-			MyRandom(Druidmap[Feindesliste[enemynum].type].firewait)*18+4;
-					
-		/* Bullettype gemaes dem ueblichen guntype fuer den robottyp setzen */
-		AllBullets[j].type=guntype;
-			
-	} /* if */
-		
+    } /* if */
 
 } /* AttackInfluence */
 
@@ -489,38 +463,37 @@ int EnemyEnemyCollision(int enemynum)
 @Int:
 * $Function----------------------------------------------------------*/
 void AnimateEnemys(void) {
-	int i;
-	gotoxy(1,1);
-	for (i=0;i<NumEnemys;i++) {
-		if (Feindesliste[i].type == DRUID598) {
-	//			printf(" \n Feindrehcode : %d \n maxenergy: %d \n nowenergy: %d \n phase: %d ! ",
-	//			Feindesliste[i].feindrehcode,
-	//			Druidmap[Feindesliste[i].type].maxenergy,
-	//			Feindesliste[i].energy,
-	//			Feindesliste[i].feindphase);
-		}
+  int i;
+
+  for (i=0;i<NumEnemys;i++) {
+    if (Feindesliste[i].type == DRUID598) {
+      //   printf(" \n Feindrehcode : %d \n maxenergy: %d \n nowenergy: %d \n phase: %d ! ",
+      //   Feindesliste[i].feindrehcode,
+      //   Druidmap[Feindesliste[i].type].maxenergy,
+      //   Feindesliste[i].energy,
+      //  Feindesliste[i].feindphase);
+    }
 			
-		/* ignore enemys that are dead or on other levels or dummys */
-		if( Feindesliste[i].type == DEBUG_ENEMY) continue;
-		if ( Feindesliste[i].levelnum != CurLevel->levelnum) continue;
-		if ( Feindesliste[i].Status == OUT ) continue;
+    /* ignore enemys that are dead or on other levels or dummys */
+    if( Feindesliste[i].type == DEBUG_ENEMY) continue;
+    if ( Feindesliste[i].levelnum != CurLevel->levelnum) continue;
+    if ( Feindesliste[i].Status == OUT ) continue;
 		
-		Feindesliste[i].feindrehcode+=Feindesliste[i].energy;
-		Feindesliste[i].feindphase=Feindesliste[i].feindrehcode/Druidmap[Feindesliste[i].type].maxenergy;
+    // Feindesliste[i].feindrehcode+=Feindesliste[i].energy;
+    Feindesliste[i].feindphase += 
+      (Feindesliste[i].energy/Druidmap[Feindesliste[i].type].maxenergy) * Frame_Time() * ENEMYPHASES * 2.5; 
 			
-		if (Feindesliste[i].feindphase>=ENEMYPHASES) {
+    if (Feindesliste[i].feindphase>=ENEMYPHASES) {
 #ifdef ENEMYPHASEDEBUG			
-			if (Feindesliste[i].type == DRUID598) {
-				printf(" Broke at: %d ",Feindesliste[i].feindphase);
-				getchar();
-			}
+      if (Feindesliste[i].type == DRUID598) {
+	printf(" Broke at: %d ",Feindesliste[i].feindphase);
+	getchar();
+      }
 #endif			
-			Feindesliste[i].feindphase=0;
-			Feindesliste[i].feindrehcode=0;
-		}
-	}
-	
-}
+      Feindesliste[i].feindphase=0;
+    }
+  }
+} // void AnimateEnemys(void)
 
 /*@Function============================================================
 @Desc: ClassOfDruid(druidtype): liefert die Classe des Druidtypes type

@@ -1,29 +1,34 @@
-/*=@Header==============================================================
- * $Source$
+/* 
  *
- * @Desc:	Rahmen - related functions 
- *	 
- * 	
- * $Revision$
- * $State$
- *
- * $Author$
- *
- * $Log$
- * Revision 1.4  2002/04/08 19:19:09  rp
- * Johannes latest (and last) non-cvs version to be checked in. Added graphics,sound,map-subdirs. Sound support using ALSA started.
- *
- * Revision 1.4  1997/05/31 13:30:32  rprix
- * Further update by johannes. (sent to me in tar.gz)
- *
- * Revision 1.1  1994/06/19  16:39:46  prix
- * Initial revision
+ *   Copyright (c) 1994, 2002 Johannes Prix
+ *   Copyright (c) 1994, 2002 Reinhard Prix
  *
  *
- *-@Header------------------------------------------------------------*/
+ *  This file is part of FreeParadroid+
+ *
+ *  FreeParadroid+ is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  FreeParadroid+ is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with FreeParadroid+; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
 
-// static const char RCSid[]=\
-// "$Id$";
+/*----------------------------------------------------------------------
+ *
+ * Desc: contains functions to update and draw the top status line with
+ *	score and status etc...
+ *
+ *----------------------------------------------------------------------*/
+#include <config.h>
 
 #define _rahmen_c
 
@@ -76,42 +81,42 @@ void DrawBar(int,int,unsigned char*);
 @Int:
 * $Function----------------------------------------------------------*/
 void DrawBar(int BarCode,int Wert,unsigned char* Screen){
-	unsigned char* BarPoint=Screen;
-	int xlen;
-	int barcol=0;
-	int i,j;
+  unsigned char* BarPoint=Screen;
+  int xlen;
+  int barcol=0;
+  int i;
 
-	if (Wert<0) Wert=0;
-	BarPoint+=AllBars[BarCode].pos.x+AllBars[BarCode].pos.y*SCREENBREITE;
+  if (Wert<0) Wert=0;
+  BarPoint+=AllBars[BarCode].pos.x+AllBars[BarCode].pos.y*SCREENBREITE;
 
-	if (InitBars) {
- 		for(i=0;i<AllBars[BarCode].hgt;i++){
-			memset(BarPoint,AllBars[BarCode].col,Wert);
-			memset(BarPoint+Wert,0,abs(AllBars[BarCode].len-Wert));
-			BarPoint+=SCREENBREITE;
-		}
-		AllBars[BarCode].oldval=Wert;
-		return;
-	}
+  if (InitBars) {
+    for(i=0;i<AllBars[BarCode].hgt;i++){
+      memset(BarPoint,AllBars[BarCode].col,Wert);
+      memset(BarPoint+Wert,0,abs(AllBars[BarCode].len-Wert));
+      BarPoint+=SCREENBREITE;
+    }
+    AllBars[BarCode].oldval=Wert;
+    return;
+  }
 	
-	if (Wert==AllBars[BarCode].oldval) return;
+  if (Wert==AllBars[BarCode].oldval) return;
+  
+  xlen=abs(Wert-AllBars[BarCode].oldval);
 
-	xlen=abs(Wert-AllBars[BarCode].oldval);
+  // Den Cursor an die Position stellen und rot oder schwarz einstellen.	
+  if (Wert>AllBars[BarCode].oldval) {
+    barcol=AllBars[BarCode].col;
+    BarPoint+=AllBars[BarCode].oldval;
+  } else BarPoint+=Wert;
 
-// Den Cursor an die Position stellen und rot oder schwarz einstellen.	
-	if (Wert>AllBars[BarCode].oldval) {
-		barcol=AllBars[BarCode].col;
-		BarPoint+=AllBars[BarCode].oldval;
-	} else BarPoint+=Wert;
+  // Balken soweit zeichnen, wie die Ver"anderung ausmacht.
+  for(i=0;i<AllBars[BarCode].hgt;i++){
+    memset(BarPoint,barcol,xlen);
+    BarPoint+=SCREENBREITE;
+  }
 
-// Balken soweit zeichnen, wie die Ver"anderung ausmacht.
-	for(i=0;i<AllBars[BarCode].hgt;i++){
-		memset(BarPoint,barcol,xlen);
-		BarPoint+=SCREENBREITE;
-	}
-
-	AllBars[BarCode].oldval=Wert;
-}
+  AllBars[BarCode].oldval=Wert;
+} // void DrawBar(...)
 
 /*@Function============================================================
 @Desc: SayLeftInfo( char* text):
@@ -174,8 +179,8 @@ void SayRightInfo(char *text, unsigned char *screen)
 * $Function----------------------------------------------------------*/
 void DisplayRahmen(unsigned char *screen)
 {
-  unsigned int bg;
-  unsigned int fg;
+  // unsigned int bg;
+  // unsigned int fg;
   
   DisplayBlock(0, 0, RahmenPicture, RAHMENBREITE, RAHMENHOEHE, screen);
 
@@ -222,7 +227,6 @@ void UpdateInfoline(void)
   static char LastLeft[50];			/* the change-detectors */
   static char LastRight[50];
   int NoNeedToSaveEnv = 1;
-  int i;
 
   if ((Me.status == CONSOLE) || (Me.status == DEBRIEFING)) NoNeedToSaveEnv = 0;
 	
@@ -241,7 +245,7 @@ void UpdateInfoline(void)
 
   if (!NoNeedToSaveEnv) RestoreTextEnvironment();
   return;
-} /* UpdateInfoline */
+} // void UpdateInfoline(void)
 
 #undef _rahmen_c
 

@@ -1,38 +1,38 @@
-/*=@Header==============================================================
- * $Source$
+/* 
  *
- * @Desc: the konsole- and elevator functions
- *	 
- * 	
- * $Revision$
- * $State$
- *
- * $Author$
- *
- * $Log$
- * Revision 1.5  2002/04/08 19:19:09  rp
- * Johannes latest (and last) non-cvs version to be checked in. Added graphics,sound,map-subdirs. Sound support using ALSA started.
- *
- * Revision 1.5  1997/05/31 13:30:32  rprix
- * Further update by johannes. (sent to me in tar.gz)
- *
- * Revision 1.2  1994/06/19  16:40:20  prix
- * Sat May 21 12:41:50 1994: FadeLevel bei Elevatoreintritt
- * Sat May 21 16:11:52 1994: neue Aufrufparameter an DisplayText()
- * Tue Jun 14 10:34:17 1994: ClearUserFenster made global
- *
- * Revision 1.1  1993/08/07  19:14:45  prix
- * Initial revision
+ *   Copyright (c) 1994, 2002 Johannes Prix
+ *   Copyright (c) 1994, 2002 Reinhard Prix
  *
  *
- *-@Header------------------------------------------------------------*/
+ *  This file is part of FreeParadroid+
+ *
+ *  FreeParadroid+ is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  FreeParadroid+ is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with FreeParadroid+; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
 
-// static const char RCSid[]=\
-// "$Id$";
+/*----------------------------------------------------------------------
+ *
+ * Desc: the konsole- and elevator functions
+ *
+ *----------------------------------------------------------------------*/
+#include <config.h>
 
 #define _ship_c
 #include <stdio.h>
 #include <math.h>
+#include <vgakeyboard.h>
 #include <string.h>
 
 #include "defs.h"
@@ -45,7 +45,6 @@
 
 int NoKeyPressed(void);
 
-void ShowDeckMap(Level deck);
 void GreatDruidShow(void); 
 
 void ShowElevators(void);
@@ -134,7 +133,7 @@ void EnterElevator(void)
   while( !SpacePressed() ) {
     JoystickControl();		/* Falls vorhanden einlesen */
     keyboard_update();
-    // if( kbhit() ) getchar();		/* Tastatur-Buffer leeren */
+    // if( kbhit() ) getchar();		/* Tastaturuffer leeren */
 	   
     if( UpPressed() && !DownPressed() ) 
       if( upElev != -1 ) { 	/* gibt es noch einen Lift hoeher ? */
@@ -297,7 +296,7 @@ void ShowElevators(void)
 	return;
 	}
 
-	LadeLBMBild(SEITENANSICHTBILD,RealScreen,FALSE);
+	Load_PCX_Image( SEITENANSICHTBILD_PCX , RealScreen , FALSE );
 	AlleLevelsGleichFaerben();
 	AlleElevatorsGleichFaerben();
 	
@@ -321,9 +320,7 @@ void EnterKonsole(void)
 {
   int MenuPoint=0;
   int ReenterGame=0;
-  int i;
   int TasteOK;
-  char LocalTaste;
   
   printf("\nvoid EnterKonsole(void): Real function called.");
 
@@ -416,7 +413,6 @@ void EnterKonsole(void)
   }
 
   printf("\nvoid EnterKonsole(void): Normal end of function reached.");
-
 } // void EnterKonsole(void)
 
 /*@Function============================================================
@@ -482,7 +478,7 @@ void PaintConsoleMenu(void){
       
   DisplayMergeBlock(
 		    MENUITEMPOSX+15, MENUITEMPOSY,
-		    Influencepointer + BLOCKMEM * Me.phase,
+		    Influencepointer + BLOCKMEM * ((int)rintf(Me.phase)),
 		    BLOCKBREITE, BLOCKHOEHE,
 		    InternalScreen);
 
@@ -526,8 +522,6 @@ void GreatDruidShow(void){
 
     ClearUserFenster();
 		
-RebeginSequence:;
-
     /*
      * Ausgabe der ersten Zeile, die den Druidtyp beschreibt
      *
@@ -775,8 +769,6 @@ void AlleLevelsGleichFaerben(void){
   unsigned char rot=0;
   unsigned char gruen=0;
   unsigned char blau=50;
-  static unsigned int FOfs;
-  static unsigned int FSeg;
   
   if (!FarbFeldPointer) {
     FarbFeldPointer=MyMalloc(32*3);
@@ -785,30 +777,12 @@ void AlleLevelsGleichFaerben(void){
       Terminate(-1);
     }
   }
-     
   for (i=0;i<16;i++){
     FarbFeldPointer[i*3]=rot;
     FarbFeldPointer[i*3+1]=gruen;
     FarbFeldPointer[i*3+2]=blau;
   }
-
   SetColors(EL_FIRSTCOLOR, 16, FarbFeldPointer);
-
-  //	FSeg=FP_SEG(FarbFeldPointer);
-  //	FOfs=FP_OFF(FarbFeldPointer);
-  //
-  //   
-  //	asm{
-  //		push es
-  //		mov ax,1012h
-  //		mov bx,EL_FIRSTCOLOR
-  //		mov cx,16
-  //		mov dx,FSeg
-  //		mov es,dx
-  //		mov dx,FOfs
-  //		int 10h
-  //		pop es
-  //	}
 }  // void AlleLevelsGleichFaerben(void)
 
 

@@ -1,10 +1,45 @@
-// static const char RCSid[]=\
-// "$Id$";
+/*
+ *
+ *   Copyright (c) 1994, 2002 Johannes Prix
+ *   Copyright (c) 1994, 2002 Reinhard Prix
+ *
+ *
+ *  This file is part of FreeParadroid+
+ *
+ *  FreeParadroid+ is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  FreeParadroid+ is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with FreeParadroid+; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
+/*----------------------------------------------------------------------
+ * Desc: contains block operating functions, that is when you want to
+ * 	put something on the visible screen
+ *      of the paradroid, DO NOT DO IT YOURSELF!  Use one of the functions
+ *	in here, e.g. DisplayBlock(..),
+ *      DisplayMergeBlock(..), CopyMergeBlock(...),.. .
+ *      These functions already take into acount the position of the paradoid,
+ * 	so you do not have to worry about where to put anything, and only have
+ *	to supply map coordinates.  Very handy.
+ *
+ *----------------------------------------------------------------------*/
+#include <config.h>
 
 #define _blocks_c
 
 #include <stdio.h>
 #include <math.h>
+#include <vga.h>
+#include <vgagl.h>
 
 #include "defs.h"
 #include "struct.h"
@@ -95,8 +130,8 @@ void SmallBullet(int LX,int LY, int BulletT,int phase,unsigned char* Screen,int 
 			if( AllBullets[i].type == OUT ) continue;
 			if( CurBlast->phase > 4) break;
 		
-			if( abs(AllBullets[i].PX - CurBlast->PX) < BLASTRADIUS ) 
-				 if( abs(AllBullets[i].PY - CurBlast->PY) < BLASTRADIUS)
+			if( abs(AllBullets[i].pos.x - CurBlast->PX) < BLASTRADIUS ) 
+				 if( abs(AllBullets[i].pos.y - CurBlast->PY) < BLASTRADIUS)
 				 {
 				 	/* KILL Bullet silently */
 				 	AllBullets[i].type = OUT;
@@ -130,21 +165,20 @@ void SmallEnemy(int LX,int LY,int enemyclass,unsigned char* Screen,int SBreite)
 
 /* *********************************************************************** */
 
-void GetDigits(){
-int i;
-unsigned char* Localpointer;
+void GetDigits(void){
+  int i;
 
-	Digitpointer=MyMalloc(DIGITMEM);
-	LadeLBMBild(DIGITBILD,InternalScreen,FALSE);
+  Digitpointer=MyMalloc(DIGITMEM);
+  Load_PCX_Image( DIGITBILD_PCX , InternalScreen , FALSE );
 
-	for (i=0;i<20;i++) {
-		IsolateBlock(
-			InternalScreen,
-			Digitpointer+DIGITHEIGHT*DIGITLENGTH*i,
-			i*DIGITLENGTH,
-			0,DIGITLENGTH,DIGITHEIGHT);
-	}
-}
+  for (i=0;i<20;i++) {
+    IsolateBlock(
+		 InternalScreen,
+		 Digitpointer+DIGITHEIGHT*DIGITLENGTH*i,
+		 i*DIGITLENGTH,
+		 0,DIGITLENGTH,DIGITHEIGHT);
+  }
+} // void GetDigits(void)
 
 /* *********************************************************************** */
 
@@ -163,29 +197,26 @@ unsigned char* Localpointer;
 @Int:
 * $Function----------------------------------------------------------*/
 void IsolateBlock(
-	unsigned char *screen,
+		  unsigned char *screen,
 	unsigned char *target,
 	int BlockEckLinks,
 	int BlockEckOben,
 	int Blockbreite,
 	int Blockhoehe)
 {
-	int row, col;
-	unsigned char *source;
-	unsigned char *tmp;
+  int row;
+  unsigned char *source;
+  unsigned char *tmp;
 
-	source = screen + BlockEckOben*SCREENLEN + BlockEckLinks;
-	tmp = target;
+  source = screen + BlockEckOben*SCREENLEN + BlockEckLinks;
+  tmp = target;
 	
-	for( row = 0; row < Blockhoehe; row ++ ) {
-		MyMemcpy(tmp, source, Blockbreite);
-		tmp += Blockbreite;
-		source += SCREENLEN;
-	}
-	
-	
-	
-}
+  for( row = 0; row < Blockhoehe; row ++ ) {
+    memcpy(tmp, source, Blockbreite);
+    tmp += Blockbreite;
+    source += SCREENLEN;
+  }
+} // void IsolateBlock(...)
 
 /* ***********************************************************************/
 void GetMapBlocks(void)
@@ -202,7 +233,7 @@ void GetMapBlocks(void)
 	unsigned char *tmp;
 
 	MapBlocks=(unsigned char*)MyMalloc(BLOCKANZAHL*BLOCKMEM+100);
-	LadeLBMBild(BLOCKBILD1,InternalScreen,FALSE);
+	Load_PCX_Image(BLOCKBILD1_PCX , InternalScreen , FALSE );
 
 	tmp = MapBlocks;
 	
@@ -234,67 +265,66 @@ void GetMapBlocks(void)
 @Int:
 * $Function----------------------------------------------------------*/
 void GetShieldBlocks(void){
-	int i;
+  int i;
 
-	// Sicherheitsabfrage gegen doppeltes initialisieren
-	if (ShieldBlocks) {
-		printf(" Die Schildbloecke waren schon initialisiert !");
-		getchar();
-		Terminate(ERR);
-	}
+  // Sicherheitsabfrage gegen doppeltes initialisieren
+  if (ShieldBlocks) {
+    printf(" Die Schildbloecke waren schon initialisiert !");
+    getchar();
+    Terminate(ERR);
+  }
 
-	if (!(ShieldBlocks=MyMalloc(4*BLOCKMEM+10))){
-		printf(" Keine Memory fuer ShieldBlocks !.");
-		getchar();
-		Terminate(ERR);
-	}
+  if (!(ShieldBlocks=MyMalloc(4*BLOCKMEM+10))){
+    printf(" Keine Memory fuer ShieldBlocks !.");
+    getchar();
+    Terminate(ERR);
+  }
 	
-	// Laden des Bildes
-	LadeLBMBild(SHIELDPICTUREBILD,InternalScreen,FALSE);
+  // Laden des Bildes
+  Load_PCX_Image( SHIELDPICTUREBILD_PCX , InternalScreen , FALSE );
 
-	// Isolieren der Schildbl"ocke
-	for(i=0;i<4;i++){
-		IsolateBlock(InternalScreen, ShieldBlocks+i*BLOCKBREITE*BLOCKHOEHE, i*(BLOCKBREITE+1), 0, BLOCKBREITE, BLOCKHOEHE);
-	}
-}
-
+  // Isolieren der Schildbl"ocke
+  for(i=0;i<4;i++){
+    IsolateBlock(InternalScreen, ShieldBlocks+i*BLOCKBREITE*BLOCKHOEHE, i*(BLOCKBREITE+1), 0, BLOCKBREITE, BLOCKHOEHE);
+  }
+} // void GetShieldBlocks(void)
 
 
 /*@Function============================================================
 @Desc: GetBlocks
-				gets the requested picture file and returns a pointer to
-				the requested blocks (sequtially stored)
+gets the requested picture file and returns a pointer to
+the requested blocks (sequtially stored)
 				
 @Arguments:	char *picfile	: the picture-file to load, or
-									NULL to use the old one
+NULL to use the old one
 									
-				int line: block-line to get blocks from
-				int num:	number of blocks to get from line
+int line: block-line to get blocks from
+int num:	number of blocks to get from line
 
 @Ret: char * : pointer to 
 @Int:
 * $Function----------------------------------------------------------*/
 unsigned char *GetBlocks(char *picfile, int line, int num)
 {
-	int i;
-	unsigned char *tmp;
-	unsigned char *blocktarget;
+  int i;
+  unsigned char *tmp;
+  unsigned char *blocktarget;
+  
+  if(picfile) {
+    Load_PCX_Image( picfile , InternalScreen , FALSE );
+  }
 	
-	if(picfile) {
-		LadeLBMBild(picfile,InternalScreen,FALSE);
-	}
+  if(!num) return NULL; /* this was only an 'init'-call */
 	
-	if(!num) return NULL; /* this was only an 'init'-call */
+  blocktarget=MyMalloc(BLOCKMEM * num+1600);
+  tmp = blocktarget;
 	
-	blocktarget=MyMalloc(BLOCKMEM * num+1600);
-	tmp = blocktarget;
-	
-	for (i=0;i<num;tmp += BLOCKMEM, i++)
-		IsolateBlock(InternalScreen, tmp, i*(BLOCKBREITE+1), line*(BLOCKHOEHE+1),
-			BLOCKBREITE, BLOCKHOEHE );
+  for (i=0;i<num;tmp += BLOCKMEM, i++)
+    IsolateBlock(InternalScreen, tmp, i*(BLOCKBREITE+1), line*(BLOCKHOEHE+1),
+		 BLOCKBREITE, BLOCKHOEHE );
 
-	return blocktarget;
-}
+  return blocktarget;
+} // unsigned char *GetBlocks(...)
 
 
 /*@function============================================================
@@ -340,7 +370,7 @@ void DisplayBlock(
 	screenpos = screen + y*SCREENLEN + x;
 
 	for( row = 0; row < height; row++ ) {
-		MyMemcpy(screenpos, source, len);
+		memcpy(screenpos, source, len);
 		screenpos += SCREENLEN;
 		source += len;
 	}
@@ -458,72 +488,4 @@ int MergeBlockToWindow(
 
 
 #undef _blocks_c
-/*=@Header==============================================================
- * $Source$
- *
- * @Desc: block operating functions
- *	 
- * 	
- * $Revision$
- * $State$
- *
- * $Author$
- *
- * $Log$
- * Revision 1.10  2002/04/08 19:19:09  rp
- * Johannes latest (and last) non-cvs version to be checked in. Added graphics,sound,map-subdirs. Sound support using ALSA started.
- *
- * Revision 1.11  1997/05/31 13:30:31  rprix
- * Further update by johannes. (sent to me in tar.gz)
- *
- * Revision 1.7  1994/06/19  15:59:08  prix
- * Mon May 23 16:32:14 1994: IsolateBlock hat jetzt screen als Parameter 1
- * Thu Jun 02 17:48:21 1994: Bullet-Bullet-Collisions in Conceptview
- * Tue Jun 14 10:26:39 1994: ShowBlocks transfered to junk.c
- * Thu Jun 16 06:47:46 1994: SmallBlock optimized
- *
- * Revision 1.6  1993/08/29  23:37:44  prix
- * Sat Jul 24 07:35:46 1993: GetDigits in very alpha form
- * Sat Jul 24 07:55:19 1993: Kontrollwarten eingefuehrt
- * Sat Jul 24 08:02:37 1993: Anzeige der isolierten Digits eingefuehrt
- * Sat Jul 24 14:01:20 1993: GetEnemyBox hinzugefuegt
- * Sat Jul 24 15:27:03 1993: die isolierten Enemybilder werden jetzt zur Konstrolle gezeigt
- * Sat Jul 24 16:38:51 1993: Korrekturm, da im Bild zwischen Phasen ein Pixel abstand ist
- * Sun Jul 25 09:10:04 1993: Steicher fuer Digitpointer erhoehet
- * Sun Jul 25 09:11:26 1993: Speicher fuer Enemypointer erhoeht
- * Sun Jul 25 15:28:37 1993: getch entfern
- * Sun Jul 25 15:43:46 1993: Memorygroessen erhoeht
- * Wed Jul 28 10:30:04 1993: einlesen der neuen Mapblocks
- * Fri Jul 30 11:44:23 1993: v_tuere nun 6 phasig !: 6 Bloecke einlesen
- * Fri Jul 30 13:20:44 1993: 6 phases for h-doors
- * Sat Jul 31 18:21:53 1993: nicht mehr als ENEMYPHASES Bilder isolieren nach Enemypointer
- * Wed Aug 04 13:30:01 1993: removed MEGATUERE-block read from GetMapBlocks()
- * Wed Aug 04 13:41:01 1993: include of map.h
- * Wed Aug 04 13:41:59 1993: removed incl. of map.h again
- * Wed Aug 11 09:34:35 1993: getch entfernt
- * Sat Aug 21 19:31:41 1993: neue Blockreihenfolge in GetMapBlocks beachten
- * Sat Aug 21 19:42:55 1993: 4 refresh-phases
- *
- * Revision 1.5  1993/05/31  20:29:02  prix
- * Sun May 30 18:21:09 1993: GetBlock soll allgemeine Funktion werden
- * Sun May 30 20:08:22 1993: reduced the various Get*Block funcs to GetBlocks and IsolateBlock
- * Mon May 31 13:58:53 1993: ShowBlocks Aufrufe
- * Mon May 31 15:53:26 1993: rewritten ShowBlocks in C (quick and dirty)
- *
- * Revision 1.4  1993/05/30  22:10:03  prix
- * Sun May 30 12:58:49 1993: GetBlock auf neue Bloecke eingestellt
- * Sun May 30 13:15:36 1993: GetMapBlocks an neue Bloecke angepasst
- *
- * Revision 1.3  1993/05/30  16:57:49  prix
- * Sun May 30 10:29:15 1993: struct.h must be included before proto.h
- *
- * Revision 1.2  1993/05/23  21:07:07  prix
- * Sun May 23 08:17:27 1993: internal
- * Sun May 23 08:20:01 1993: Internal
- *
- * Revision 1.1  1993/05/22  20:54:54  rp
- * Initial revision
- *
- *
- *-@Header------------------------------------------------------------*/
 
