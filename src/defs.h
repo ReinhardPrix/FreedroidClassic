@@ -581,6 +581,7 @@ enum _directions
 // #define MAX_STEPS_IN_GIVEN_COURSE 1000
 #define MAX_STEPS_IN_GIVEN_COURSE 100
 
+#undef USE_MISS_HIT_ARRAYS
 #define UNCHECKED 0
 #define HIT 1
 #define MISS 2

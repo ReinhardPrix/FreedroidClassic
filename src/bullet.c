@@ -601,55 +601,60 @@ CheckBulletCollisions (int num)
 	  ydist = Me [ PlayerNum ] . pos . y - CurBullet -> pos . y ;
 	  if ((xdist * xdist + ydist * ydist) < DRUIDHITDIST2)
 	    {
-	      
-	      if ( (!InvincibleMode) && ( CurBullet->miss_hit_influencer == UNCHECKED ) )
+	      if (!InvincibleMode) 
 		{
-		  if ( MyRandom ( 100 ) < CurBullet->to_hit )
+#ifdef USE_MISS_HIT_ARRAYS
+		  if ( CurBullet->miss_hit_influencer == UNCHECKED ) 
 		    {
-		      CurBullet->miss_hit_influencer = HIT ;
-		      
-		      //--------------------
-		      // NEW RULE:  Even when the bullet hits, there's still a chance that
-		      // the armour will compensate the shot
-		      //
-		      if ( MyRandom( 100 ) < Me [ PlayerNum ] . AC )
+		      if ( MyRandom ( 100 ) < CurBullet->to_hit )
 			{
-			  Me [ PlayerNum ] . TextVisibleTime = 0 ;
-			  Me [ PlayerNum ] . TextToBeDisplayed = "That one went into the armour." ;
-			  BulletReflectedSound ( ) ;
+			  CurBullet->miss_hit_influencer = HIT ;
+#endif			  
+			  //--------------------
+			  // NEW RULE:  Even when the bullet hits, there's still a chance that
+			  // the armour will compensate the shot
+			  //
+			  if ( MyRandom( 100 ) < Me [ PlayerNum ] . AC )
+			    {
+			      Me [ PlayerNum ] . TextVisibleTime = 0 ;
+			      Me [ PlayerNum ] . TextToBeDisplayed = "That one went into the armour." ;
+			      BulletReflectedSound ( ) ;
+			    }
+			  else
+			    {
+			      
+			      Me [ PlayerNum ] . TextVisibleTime = 0 ;
+			      Me [ PlayerNum ] . TextToBeDisplayed = "Ouch!" ;
+			      Me [ PlayerNum ] . energy -= CurBullet -> damage ;	// loose some energy
+			      
+			      //--------------------
+			      // As the new rule, the influencer after getting hit, must completely
+			      // start anew to recover his weapon from the previous shot
+			      //
+			      Me [ PlayerNum ] . firewait = ItemMap[ Me [ PlayerNum ] . weapon_item . type ] . item_gun_recharging_time;
+			      Me [ PlayerNum ] . got_hit_time = 0;
+			      
+			      // GotHitSound ();
+			      Influencer_Scream_Sound ( );
+			    }
+			  //--------------------
+			  // NEW RULE:  All items equipped suffer damage when the influencer gets hit
+			  //
+			  DamageAllEquipment ( PlayerNum ) ;
+			  DeleteBullet ( num , TRUE ) ; // we want a bullet-explosion
+			  return;  // This bullet was deleted and does not need to be processed any further...
+#ifdef USE_MISS_HIT_ARRAYS
 			}
 		      else
 			{
-			  
-			  Me [ PlayerNum ] . TextVisibleTime = 0 ;
-			  Me [ PlayerNum ] . TextToBeDisplayed = "Ouch!" ;
-			  Me [ PlayerNum ] . energy -= CurBullet -> damage ;	// loose some energy
-			  
-			  //--------------------
-			  // As the new rule, the influencer after getting hit, must completely
-			  // start anew to recover his weapon from the previous shot
-			  //
-			  Me [ PlayerNum ] . firewait = ItemMap[ Me [ PlayerNum ] . weapon_item . type ] . item_gun_recharging_time;
-			  Me [ PlayerNum ] . got_hit_time = 0;
-			  
-			  // GotHitSound ();
-			  Influencer_Scream_Sound ( );
+			  CurBullet->miss_hit_influencer = MISS ;
 			}
-		      //--------------------
-		      // NEW RULE:  All items equipped suffer damage when the influencer gets hit
-		      //
-		      DamageAllEquipment ( PlayerNum ) ;
-		      DeleteBullet ( num , TRUE ) ; // we want a bullet-explosion
-		      return;  // This bullet was deleted and does not need to be processed any further...
 		    }
-		  else
-		    {
-		      CurBullet->miss_hit_influencer = MISS ;
-		    }
+#endif
 		}
 	    }
 	}
-
+      
       //--------------------
       // Check for collision with enemys
       //
@@ -663,12 +668,13 @@ CheckBulletCollisions (int num)
 
 	  if ( (xdist * xdist + ydist * ydist) < DRUIDHITDIST2 )
 	    {
+#ifdef USE_MISS_HIT_ARRAYS
 	      if ( CurBullet->total_miss_hit[ i ] == UNCHECKED )
 		{
 		  if ( MyRandom ( 100 ) < CurBullet->to_hit + Druidmap [ AllEnemys[ i ].type ].getting_hit_modifier )
 		    {
 		      CurBullet->total_miss_hit[ i ] = HIT;
-
+#endif
 		      //--------------------
 		      // The enemy who was hit, loses some energy, depending on the bullet, and 
 		      // also gets stunned from the hit, which only means that the enemy can't
@@ -711,7 +717,9 @@ CheckBulletCollisions (int num)
 			  FBTZaehler++;
 			}
 		      return;
+#ifdef USE_MISS_HIT_ARRAYS
 		    }
+
 		  else
 		    {
 		      CurBullet->total_miss_hit[ i ] = MISS;
@@ -719,6 +727,7 @@ CheckBulletCollisions (int num)
 		      AllEnemys[ i ].TextToBeDisplayed = "Haha, you missed me!";
 		    }
 		}
+#endif
 	    } // if distance low enough to possibly be at hit
 	}  /* for AllEnemys */
 

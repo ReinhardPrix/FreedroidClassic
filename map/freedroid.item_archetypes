@@ -54,6 +54,9 @@ That will not cause any problems.
 
 *** Start of item data section: ***
 
+Common factor for all ranged weapons bullet speed values: 2.0
+Common factor for all ranged weapons bullet damage values: 2.0
+
 // Item No. 0
 ** Start of new item specification subsection **
 Item name="none present"

@@ -53,7 +53,7 @@ That will not cause any problems.
 *** Start of Bullet Data Section: ***
 
 Common factor for all bullet's speed values: 1.0
-Common factor for all bullet's damage values: 1.0
+Common factor for all bullet's damage values: 3.0
 
 // this is the influencers small double shot
 ** Start of new bullet specification subsection **

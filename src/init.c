@@ -245,6 +245,8 @@ Get_Item_Data ( char* DataPointer )
   // int i;
   int ItemIndex=0;
   char *YesNoString;
+  float ranged_weapon_damage_calibrator;
+  float ranged_weapon_speed_calibrator;
 
   // double bullet_speed_calibrator;
   // double bullet_damage_calibrator;
@@ -307,6 +309,16 @@ than the maximum allowance for item types in the ALL_ITEMS constant.",
   // Now we start to read the values for each bullet type:
   // 
   ItemPointer=DataPointer;
+
+  // Now we read in the speed calibration factor for all bullets
+  ReadValueFromString( DataPointer ,  "Common factor for all ranged weapons bullet speed values:" , "%f" , 
+		       &ranged_weapon_speed_calibrator , EndOfItemData );
+
+  // Now we read in the damage calibration factor for all bullets
+  ReadValueFromString( DataPointer ,  "Common factor for all ranged weapons bullet damage values:" , "%f" , 
+		       &ranged_weapon_damage_calibrator , EndOfItemData );
+
+  DebugPrintf ( 0 , "\nCommon bullet speed factor: %f.\nCommon bullet damage factor: %f", ranged_weapon_speed_calibrator, ranged_weapon_damage_calibrator );
 
   while ( (ItemPointer = strstr ( ItemPointer, NEW_ITEM_TYPE_BEGIN_STRING )) != NULL)
     {
@@ -622,6 +634,19 @@ answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
       ItemIndex++;
 
     }
+
+  //--------------------
+  // Now that all the calibrations factors have been read in, we can start to
+  // apply them to all the bullet types
+  //
+  for ( ItemIndex = 0 ; ItemIndex < Number_Of_Item_Types ; ItemIndex++ )
+    {
+      ItemMap [ ItemIndex ] . item_gun_speed *= ranged_weapon_speed_calibrator;
+      ItemMap [ ItemIndex ] . base_item_gun_damage *= ranged_weapon_damage_calibrator;
+      ItemMap [ ItemIndex ] . item_gun_damage_modifier *= ranged_weapon_damage_calibrator;
+    }
+
+
 
 }; // void Get_Item_Data ( char* DataPointer );
 
