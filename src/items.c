@@ -1211,7 +1211,7 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 8:
-		    drop_item_type = ITEM_LARGE_SHIELD ;
+		    drop_item_type = ITEM_MEDIUM_SHIELD ;
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 9:
@@ -1250,7 +1250,7 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 	    } // inner switch
 	    break;
 	case 4:
-	    switch ( MyRandom ( 3 ) )
+	    switch ( MyRandom ( 4 ) )
 	    {
 		case 0:
 		    drop_item_type = ITEM_HIKING_BOOTS ;
@@ -1265,6 +1265,10 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 3:
+		    drop_item_type = ITEM_LARGE_SHIELD ;
+		    drop_item_multiplicity =  1 ;
+		    break;
+		case 4:
 		default:
 		    drop_item_type = ITEM_MEDIUM_MANA_POTION ;
 		    drop_item_multiplicity =  1 ;
