@@ -1839,18 +1839,55 @@ update_vector_to_shot_target_for_friend ( enemy* ThisRobot , moderately_finepoin
  *
  * ---------------------------------------------------------------------- */
 void
-update_vector_to_shot_target_for_enemy ( enemy* ThisRobot , moderately_finepoint* vect_to_target )
+update_vector_to_shot_target_for_enemy ( enemy* this_robot , moderately_finepoint* vect_to_target )
 {
   int TargetPlayerNum;
+  int j;
+  int our_level = this_robot -> pos . z ;
+  float best_dist, our_dist;
 
-  TargetPlayerNum = ClosestVisiblePlayer ( ThisRobot ) ;
-  vect_to_target -> x = Me [ TargetPlayerNum ] . pos . x - ThisRobot -> pos . x ;
-  vect_to_target -> y = Me [ TargetPlayerNum ] . pos . y - ThisRobot -> pos . y ;
+  //--------------------
+  // By default, we set the target of this bot to the Tux himself
+  // i.e. the closest (visible?) player.
+  //
+  TargetPlayerNum = ClosestVisiblePlayer ( this_robot ) ;
+  vect_to_target -> x = Me [ TargetPlayerNum ] . pos . x - this_robot -> pos . x ;
+  vect_to_target -> y = Me [ TargetPlayerNum ] . pos . y - this_robot -> pos . y ;
+  this_robot -> attack_target_type = ATTACK_TARGET_IS_PLAYER ;
+  this_robot -> attack_target_index = TargetPlayerNum ;
 
-  ThisRobot -> attack_target_type = ATTACK_TARGET_IS_PLAYER ;
-  ThisRobot -> attack_target_index = TargetPlayerNum ;
+  best_dist = vect_len ( *vect_to_target );
 
-}; // int update_vector_to_shot_target_for_friend ( ThisRobot , moderately_finepoint* vect_to_target )
+  //--------------------
+  // But maybe there is a friend of the Tux also close.  Then maybe we
+  // should attack this one instead, since it's much closer anyway.
+  // Let's see...
+  //
+  for ( j  = first_index_of_bot_on_level [ our_level ] ; 
+	j <=  last_index_of_bot_on_level [ our_level ] ; j ++ )
+    {
+      if ( AllEnemys [ j ] . pos . z != our_level ) continue ;
+      if ( AllEnemys [ j ] . Status == OUT ) continue ;
+      if ( ! AllEnemys [ j ] . is_friendly ) continue ;
+
+      our_dist = sqrt ( powf ( this_robot -> pos . x - AllEnemys [ j ] . pos . x , 2 ) +
+			powf ( this_robot -> pos . y - AllEnemys [ j ] . pos . y , 2 )   );
+
+      if ( our_dist > 5.0 ) continue ;
+	
+      if ( our_dist < best_dist )
+	{
+	  // DebugPrintf ( -4 , "\nThis hostile robot just switched to attacking a friendly droid." );
+	  best_dist = our_dist ;
+
+	  vect_to_target -> x = AllEnemys [ j ] . pos . x - this_robot -> pos . x ;
+	  vect_to_target -> y = AllEnemys [ j ] . pos . y - this_robot -> pos . y ;
+	  this_robot -> attack_target_type = ATTACK_TARGET_IS_ENEMY ;
+	  this_robot -> attack_target_index = j ;
+	}
+    }
+
+}; // int update_vector_to_shot_target_for_enemy ( ThisRobot , moderately_finepoint* vect_to_target )
 
 /* ----------------------------------------------------------------------
  *
@@ -1859,6 +1896,17 @@ update_vector_to_shot_target_for_enemy ( enemy* ThisRobot , moderately_finepoint
 void
 occasionally_update_vector_and_shot_target ( enemy* ThisRobot , moderately_finepoint* vect_to_target ) 
 {
+  /*
+  static int first_call = FALSE ;
+  static int last_time_bots_updated_target;
+
+  if ( first_call )
+    {
+      last_time_bots_updated_target = SDL_GetTicks() - 10000 ;
+    }
+  if ( SDL_GetTicks() - last_time_bots_updated_target < 500 ) return;
+  last_
+  */
 
   if ( ThisRobot->is_friendly == TRUE )
     {
@@ -1911,7 +1959,7 @@ ConsideredMoveIsFeasible ( Enemy ThisRobot , moderately_finepoint StepVector , i
  * otherwise sign (+1) must be given.
  * ---------------------------------------------------------------------- */
 void
-MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int TargetPlayer , int enemynum , int DirectionSign )
+MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int enemynum , int DirectionSign )
 {
   finepoint VictimPosition;
   finepoint CurrentPosition;
@@ -1952,8 +2000,39 @@ MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int TargetPlayer , int 
   // without passing though walls and if it's also free of other droids so
   // that we won't bump into our colleagues as well.
   //
-  VictimPosition . x = Me [ TargetPlayer ] . pos . x ;
-  VictimPosition . y = Me [ TargetPlayer ] . pos . y ;
+  if ( ThisRobot -> attack_target_type == ATTACK_TARGET_IS_PLAYER )
+    {
+      if ( ( ThisRobot -> attack_target_index < 0 ) ||
+	   ( ThisRobot -> attack_target_index >= MAX_PLAYERS ) )
+	{
+	  fprintf ( stderr , "\nThisRobot -> attack_target_index=%d." , ThisRobot -> attack_target_index );
+	  GiveStandardErrorMessage ( "MoveInCloserForOrAwayFromMeleeCombat ( ... )" , 
+				     "attack_target_index pointing outside of player number!",
+				     PLEASE_INFORM, IS_FATAL );
+	}
+      VictimPosition . x = Me [ ThisRobot -> attack_target_index ] . pos . x ;
+      VictimPosition . y = Me [ ThisRobot -> attack_target_index ] . pos . y ;
+    }
+  else if ( ThisRobot -> attack_target_type == ATTACK_TARGET_IS_ENEMY )
+    {
+      VictimPosition . x = AllEnemys [ ThisRobot -> attack_target_index ] . pos . x ;
+      VictimPosition . y = AllEnemys [ ThisRobot -> attack_target_index ] . pos . y ;
+    }
+  else if ( ThisRobot -> attack_target_type == ATTACK_TARGET_IS_NOTHING )
+    {
+      //--------------------
+      // Well, if there is no target given, we don't do anything here in 
+      // this function...
+      //
+      return;
+    }
+  else
+    {
+      GiveStandardErrorMessage ( "MoveInCloserForOrAwayFromMeleeCombat ( ... )" , 
+				 "Unhandled attack_target_type encountered!",
+				 PLEASE_INFORM, IS_FATAL );
+    }
+
   CurrentPosition . x = ThisRobot -> pos . x ;
   CurrentPosition . y = ThisRobot -> pos . y ;
 
@@ -2532,11 +2611,11 @@ ProcessAttackStateMachine ( int enemynum )
       ThisRobot -> last_combat_step = 0 ; 
       if ( ItemMap [ Druidmap [ ThisRobot -> type ] . weapon_item . type ] . item_gun_angle_change != 0 )
 	{
-	  MoveInCloserForOrAwayFromMeleeCombat ( ThisRobot , TargetPlayer , enemynum , (+1) );
+	  MoveInCloserForOrAwayFromMeleeCombat ( ThisRobot , enemynum , (+1) );
 	} // if a melee weapon is given.
       else if ( dist2 < 1.5 )
 	{
-	  MoveInCloserForOrAwayFromMeleeCombat ( ThisRobot , TargetPlayer , enemynum , (-1) );
+	  MoveInCloserForOrAwayFromMeleeCombat ( ThisRobot , enemynum , (-1) );
 	} // else the case, that no melee weapon 
     }
   else

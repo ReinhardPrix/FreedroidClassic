@@ -95,7 +95,7 @@ calc_euklid_distance ( float pos1_x , float pos1_y , float pos2_x , float pos2_y
 float
 vect_len ( moderately_finepoint our_vector )
 {
-  return ( sqrt ( ( our_vector . x * our_vector . x ) + ( our_vector . y * our_vector . y ) ) ) ;
+  return ( sqrt ( powf ( our_vector . x , 2 ) + powf ( our_vector . y , 2 ) ) ) ;
 }; // float vect_len ( moderately_finepoint our_vector )
 
 /* ----------------------------------------------------------------------
