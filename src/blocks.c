@@ -392,8 +392,8 @@ iso_load_bullet_surfaces ( void )
 	  // Now we add proper offset in here, so that we can later conveniently use
 	  // the standard iso_object blitting functions refering to map locations.
 	  //
-	  Bulletmap [ i ] . image [ 0 ] [ j ] . offset_x = - Bulletmap [ i ] . image [ 0 ] [ j ] . surface -> w / 2 ;
-	  Bulletmap [ i ] . image [ 0 ] [ j ] . offset_y = - Bulletmap [ i ] . image [ 0 ] [ j ] . surface -> h / 2 ;
+	  // Bulletmap [ i ] . image [ 0 ] [ j ] . offset_x = - Bulletmap [ i ] . image [ 0 ] [ j ] . surface -> w / 2 ;
+	  // Bulletmap [ i ] . image [ 0 ] [ j ] . offset_y = - Bulletmap [ i ] . image [ 0 ] [ j ] . surface -> h / 2 ;
 	}
     }
 

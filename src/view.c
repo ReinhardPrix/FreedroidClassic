@@ -1572,7 +1572,7 @@ iso_put_all_tux_parts_for_sword_motion ( int x , int y , int PlayerNum , int rot
 {
 
   // DebugPrintf ( 0 , "\nDirection given: %d." , rotation_index );
-  DebugPrintf ( 0 , "\nphase: %d." , (int) Me [ PlayerNum ] . phase );
+  // DebugPrintf ( 0 , "\nphase: %d." , (int) Me [ PlayerNum ] . phase );
 
   switch ( rotation_index )
     {
@@ -1641,7 +1641,7 @@ void
 iso_put_all_tux_parts_for_gun_motion ( int x , int y , int PlayerNum , int rotation_index )
 {
 
-  DebugPrintf ( 0 , "\nDirection given: %d." , rotation_index );
+  // DebugPrintf ( 0 , "\nDirection given: %d." , rotation_index );
   // DebugPrintf ( 0 , "\nphase: %d." , (int) Me [ PlayerNum ] . phase );
 
   switch ( rotation_index )

@@ -1404,7 +1404,7 @@ This is very strange.  Well, we'll overwrite the first entry and continue.",
   // and not start in this direction, but rather somewhat 'before' it,
   // so that the rotation will hit the target later.
   //
-  RotateVectorByAngle ( & speed , ItemMap[ weapon_item_type ] . item_gun_start_angle_modifier );
+  // RotateVectorByAngle ( & speed , ItemMap[ weapon_item_type ] . item_gun_start_angle_modifier );
 
   speed_norm = sqrt ( speed . x * speed . x + speed . y * speed . y );
   CurBullet->speed.x = (speed.x/speed_norm);
@@ -1441,11 +1441,12 @@ This is very strange.  Well, we'll overwrite the first entry and continue.",
 
   offset . x = OffsetFactor * ( CurBullet -> speed . x / BulletSpeed );
   offset . y = OffsetFactor * ( CurBullet -> speed . y / BulletSpeed );
-  RotateVectorByAngle ( & ( offset ) , -45 );
+  RotateVectorByAngle ( & ( offset ) , -60 );
   CurBullet -> pos . x += offset . x ;
   CurBullet -> pos . y += offset . y ; 
+  DebugPrintf ( 0 , "\nOffset:  x=%f y=%f." , offset . x , offset . y );
 
-  DebugPrintf( FIRE_TUX_RANGED_WEAPON_RAW_DEBUG , 
+  DebugPrintf( 0 , // FIRE_TUX_RANGED_WEAPON_RAW_DEBUG , 
 	       "\nFireTuxRangedWeaponRaw(...) : final position of bullet = (%f/%f)." , 
 	       CurBullet->pos . x , CurBullet->pos . y );
   DebugPrintf( FIRE_TUX_RANGED_WEAPON_RAW_DEBUG , 
