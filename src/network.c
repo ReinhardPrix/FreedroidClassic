@@ -56,6 +56,49 @@ TCPsocket sock; // this is for the client
 int len;
 
 //--------------------
+// Now we define a shortened data type, that is designed to
+// be sent from the server to the client, best periodically,
+// no matter whether whether there was some change or not.
+//
+typedef struct
+{
+  int ItemIndex;
+
+
+  finepoint pos;
+  int type;
+  int is_identified;  // is the item identified already?
+
+  int condition;
+  int prefix_code;
+  int suffix_code;
+
+  int bonus_to_dex;
+  int bonus_to_str;
+  int bonus_to_vit;
+  int bonus_to_mag;
+  int bonus_to_life;
+  int bonus_to_force;
+  int bonus_to_tohit;
+  int bonus_to_all_attributes;
+  int bonus_to_ac_or_damage; // this is a percentage
+  int bonus_to_resist_fire;  // this is a percentage
+  int bonus_to_resist_electricity; // this is a percentage
+  int bonus_to_resist_force; // this is a percentage
+
+  int ac_bonus;    // how much is ac increased by this item worn
+  int damage; // how much damage does this item
+  int damage_modifier; // how much additional damage can add to the base damage
+  int max_duration;     // the maximum item durability reachable for this item
+  int gold_amount; // how much cyberbucks are there, IN CASE OF CYBERBUCKS
+  float current_duration; // the currently remaining durability for this item
+  grob_point inventory_position;
+  int currently_held_in_hand; // is the item currently held 'in hand' with the mouse cursor?
+} item_engram , *Item_Engram ;
+
+item_engram ItemEngram [ MAX_ITEMS_PER_LEVEL ] ;
+
+//--------------------
 // Now we define a short message, that is designed to
 // be sent from the server to the client, best periodically,
 // no matter whether whether there was some change or not.
@@ -170,6 +213,7 @@ enum
     PLAYER_ACCEPT_PLAYER_ENGRAM ,
     PLAYER_ACCEPT_BULLET_ENGRAM ,
     PLAYER_ACCEPT_BLAST_ENGRAM ,
+    PLAYER_ACCEPT_ITEM_ENGRAM ,
 
     PLAYER_ACCEPT_FULL_ENEMY_ENGRAM ,
     PLAYER_ACCEPT_UPDATE_ENEMY_ENGRAM ,
@@ -657,7 +701,7 @@ FillDataIntoBulletEngram ( int WriteIndex , int BulletIndex )
 }; // void FillDataIntoEnemyEngram ( int WriteIndex , int EnemyIndex )
 
 /* ----------------------------------------------------------------------
- * This function fills data from AllEnemys into the enemy engram.
+ * This function fills data from AllBlasts into the blasts engram.
  * ---------------------------------------------------------------------- */
 void
 FillDataIntoBlastEngram ( int WriteIndex , int BlastIndex )
@@ -670,6 +714,22 @@ FillDataIntoBlastEngram ( int WriteIndex , int BlastIndex )
   BlastEngram [ WriteIndex ] . pos . z    = AllBlasts [ BlastIndex ] . pos . z ;
   BlastEngram [ WriteIndex ] . phase      = AllBlasts [ BlastIndex ] . phase ;
   // BulletEngram [ WriteIndex ] . angle = AllBlasts [ BlastIndex ] . angle ;
+  
+}; // void FillDataIntoEnemyEngram ( int WriteIndex , int EnemyIndex )
+
+/* ----------------------------------------------------------------------
+ * This function fills data from AllBlasts into the blasts engram.
+ * ---------------------------------------------------------------------- */
+void
+FillDataIntoItemEngram ( int WriteIndex , int ItemIndex , int MapLevel )
+{
+
+  ItemEngram [ WriteIndex ] . ItemIndex = ItemIndex ;
+  ItemEngram [ WriteIndex ] . type       = curShip . AllLevels [ MapLevel ]->ItemList [ ItemIndex ] . type ;
+  ItemEngram [ WriteIndex ] . pos . x    = curShip . AllLevels [ MapLevel ]->ItemList [ ItemIndex ] . pos . x ;
+  ItemEngram [ WriteIndex ] . pos . y    = curShip . AllLevels [ MapLevel ]->ItemList [ ItemIndex ] . pos . y ;
+
+  // More should follow later...
   
 }; // void FillDataIntoEnemyEngram ( int WriteIndex , int EnemyIndex )
 
@@ -726,6 +786,25 @@ PrepareFullBlastEngramForPlayer ( int PlayerNum )
   for ( i = 0 ; i < MAXBLASTS ; i ++ )
     {
       FillDataIntoBlastEngram ( i , i ) ;
+    }
+  
+}; // void PrepareFullBlastEngramForPlayer ( int PlayerNum ) 
+
+/* ----------------------------------------------------------------------
+ * This function prepares a full blasts engram for player number PlayerNum.
+ * ---------------------------------------------------------------------- */
+void
+PrepareFullItemEngramForPlayer ( int PlayerNum ) 
+{
+  int i;
+
+  //--------------------
+  // Now we copy the existing information about the enemys
+  // into the short engram.
+  //
+  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+    {
+      FillDataIntoItemEngram ( i , i , Me [ PlayerNum ] . pos . z ) ;
     }
   
 }; // void PrepareFullBlastEngramForPlayer ( int PlayerNum ) 
@@ -919,6 +998,39 @@ EnforceServersBlastEngram ( int NumberOfTargets )
   DebugPrintf ( 0 , "\nvoid EnforceServersUpdateEnemysEngram ( void ) : end of function reached. " );
   
 }; // void EnforceServersBlastEngram ( void ) 
+
+/* ----------------------------------------------------------------------
+ * This function enforces a item engram with NumberOfTargets items.
+ * ---------------------------------------------------------------------- */
+void
+EnforceServersItemEngram ( int NumberOfTargets ) 
+{
+  int i ;
+  int WriteIndex;
+
+  DebugPrintf ( 0 , "\nvoid EnforceServersItemEngram ( void ) : real function call confirmed. " );
+  DebugPrintf ( 0 , "\nvoid EnforceServersItemEngram ( void ) : %d blasts to update. " , NumberOfTargets );
+
+  memcpy ( ItemEngram , CommandFromServer [ 0 ] . command_data_buffer , sizeof ( ItemEngram ) );
+
+  //--------------------
+  // Now we copy the existing information about the enemys
+  // into the short engram.
+  //
+  for ( i = 0 ; i < NumberOfTargets ; i ++ )
+    {
+	  
+      WriteIndex = ItemEngram [ i ] . ItemIndex ;
+	
+      curShip . AllLevels [ Me [ 0 ] . pos . z ] -> ItemList [ WriteIndex ] . type       = ItemEngram [ i ] . type ;
+      curShip . AllLevels [ Me [ 0 ] . pos . z ] -> ItemList [ WriteIndex ] . pos . x    = ItemEngram [ i ] . pos . x ;
+      curShip . AllLevels [ Me [ 0 ] . pos . z ] -> ItemList [ WriteIndex ] . pos . y    = ItemEngram [ i ] . pos . y ;
+      
+    }
+
+  DebugPrintf ( 0 , "\nvoid EnforceServersUpdateEnemysEngram ( void ) : end of function reached. " );
+  
+}; // void EnforceServersItemsEngram ( void ) 
 
 /* ----------------------------------------------------------------------
  * This function creates a copy of the Me structure, that is reduced to
@@ -1246,7 +1358,7 @@ Sorry...\n\
 }; // void SendFullBulletEngramToClient ( int PlayerNum )
 
 /* ----------------------------------------------------------------------
- * This function sends a text message to a client in command form.
+ * This function sends a full blast engram to a client in command form.
  * ---------------------------------------------------------------------- */
 void
 SendFullBlastEngramToClient ( int PlayerNum )
@@ -1309,6 +1421,71 @@ Sorry...\n\
     }
 
 }; // void SendFullBlastEngramToClient ( int PlayerNum )
+
+/* ----------------------------------------------------------------------
+ * This function sends a full blast engram to a client in command form.
+ * ---------------------------------------------------------------------- */
+void
+SendFullItemEngramToClient ( int PlayerNum )
+{
+  int CommunicationResult;
+  int len;
+  network_command LocalCommandBuffer;
+
+  // print out the message
+  DebugPrintf ( SERVER_SEND_DEBUG , "\nSending full item engram to client in command form.\n" ) ;
+  len = sizeof ( ItemEngram ) ; // the amount of bytes in the data buffer
+
+  //--------------------
+  // We check against sending too long messages to the server.
+  //
+  if ( len >= COMMAND_BUFFER_MAXLEN )
+    {
+      DebugPrintf ( 0 , "\nAttempted to send too long item engram to client... Terminating..." );
+      Terminate ( ERR ) ;
+    }
+
+  //--------------------
+  // We prepare the network information we want to send...
+  //
+  PrepareFullItemEngramForPlayer ( PlayerNum ) ;
+
+  //--------------------
+  // Now we prepare our command buffer.
+  //
+  LocalCommandBuffer . command_code = PLAYER_ACCEPT_ITEM_ENGRAM ;
+  LocalCommandBuffer . data_chunk_length = len ;
+  memcpy ( LocalCommandBuffer . command_data_buffer , ItemEngram , len );
+
+  CommunicationResult = SDLNet_TCP_Send ( AllPlayers [ PlayerNum ] . ThisPlayersSocketAtTheServer , 
+					  & ( LocalCommandBuffer ) , 
+					  2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length ); 
+
+  //--------------------
+  // Now we print out the success or return value of the sending operation
+  //
+  DebugPrintf ( SERVER_SEND_DEBUG , "\nSending full item engram returned : %d . " , CommunicationResult );
+  if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
+    {
+      fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+The SDL NET COULD NOT SEND A FULL ITEM ENGRAM TO THE CLIENT SUCCESSFULLY\n\
+in the function void SendTextMessageToClient ( int PlayerNum , char* message ).\n\
+\n\
+The cause of this problem as reportet by the SDL_net was: \n\
+%s\n\
+\n\
+Freedroid will terminate now to draw attention \n\
+to the networking problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , SDLNet_GetError ( ) ) ;
+      Terminate(ERR);
+    }
+
+}; // void SendFullItemEngramToClient ( int PlayerNum )
 
 /* ----------------------------------------------------------------------
  * This function sends a text message to a client in command form.
@@ -1633,6 +1810,7 @@ ExecuteServerCommand ( void )
   int TransmittedEnemys;
   int TransmittedBullets;
   int TransmittedBlasts;
+  int TransmittedItems;
 
   DebugPrintf ( 0 , "\nExecuteServerCommand ( void ): real function call confirmed." ) ;
 
@@ -1693,6 +1871,13 @@ ExecuteServerCommand ( void )
       DebugPrintf ( 0 , "\nPLAYER_ACCEPT_BLAST_ENGRAM command received... " );
       TransmittedBlasts = CommandFromServer [ 0 ] . data_chunk_length / sizeof ( BlastEngram [ 0 ] ) ;
       EnforceServersBlastEngram ( TransmittedBlasts ) ;
+      // Terminate ( ERR );
+      break;
+
+    case PLAYER_ACCEPT_ITEM_ENGRAM:
+      DebugPrintf ( 0 , "\nPLAYER_ACCEPT_ITEM_ENGRAM command received... " );
+      TransmittedItems = CommandFromServer [ 0 ] . data_chunk_length / sizeof ( ItemEngram [ 0 ] ) ;
+      EnforceServersItemEngram ( TransmittedItems ) ;
       // Terminate ( ERR );
       break;
 
@@ -2812,6 +2997,8 @@ SendPeriodicServerMessagesToAllClients ( void )
 	  SendFullBulletEngramToClient ( PlayerNum ) ;
 
 	  SendFullBlastEngramToClient ( PlayerNum ) ;
+
+	  SendFullItemEngramToClient ( PlayerNum ) ;
 
 	}
     }
