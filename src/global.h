@@ -108,6 +108,7 @@ EXTERN color Mobilecolor;
 
 EXTERN unsigned char *RealScreen;
 EXTERN unsigned char *InternalScreen;
+EXTERN unsigned char *Outline320x200;
 
 EXTERN bullet AllBullets[MAXBULLETS + 10];
 EXTERN blast AllBlasts[MAXBLASTS + 10];

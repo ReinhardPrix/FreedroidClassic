@@ -55,11 +55,11 @@
 @Int:
 * $Function----------------------------------------------------------*/
 void
-SmallBlock (int LX, int LY, int BlockN, unsigned char *Screen, int SBreite)
+SmallBlock (int LX, int LY, int BlockN, unsigned char *Parameter_Screen, int SBreite)
 {
   int i, j;
   unsigned char *source = MapBlocks + BLOCKBREITE * BLOCKHOEHE * BlockN;
-  unsigned char *target = Screen + LY * SBreite + LX;
+  unsigned char *target = Parameter_Screen + LY * SBreite + LX;
 
   //DebugPrintf("\nvoid SmallBlock(...): Function call confirmed.");
   if (LX > USERFENSTERPOSX + USERFENSTERBREITE)
@@ -73,7 +73,7 @@ SmallBlock (int LX, int LY, int BlockN, unsigned char *Screen, int SBreite)
 	{
 	  *target = *source;
 	  target++;
-	  if (Screen == RealScreen)
+	  if (Parameter_Screen == RealScreen)
 	    {
 	      // SDL vga_setcolor (*source);
 	      putpixel (screen, LX + i, LY + j, *source );
@@ -98,7 +98,7 @@ SmallBlock (int LX, int LY, int BlockN, unsigned char *Screen, int SBreite)
 @Int:
 * $Function----------------------------------------------------------*/
 void
-SmallBlast (int LX, int LY, int BlastT, int phase, unsigned char *Screen,
+SmallBlast (int LX, int LY, int BlastT, int phase, unsigned char *Parameter_Screen,
 	    int SBreite)
 {
   int i, j;
@@ -111,7 +111,7 @@ SmallBlast (int LX, int LY, int BlastT, int phase, unsigned char *Screen,
 	if (*
 	    (Blastmap[BlastT].picpointer + j * 4 + i * BLOCKBREITE * 4 +
 	     phase * BLOCKMEM) != TRANSPARENTCOLOR)
-	  Screen[LX - DIGITLENGTH / 2 + j +
+	  Parameter_Screen[LX - DIGITLENGTH / 2 + j +
 		 (LY + i - DIGITHEIGHT / 2) * SBreite] =
 	    *(Blastmap[BlastT].picpointer + j * 4 + i * BLOCKBREITE * 4 +
 	      phase * BLOCKMEM);
@@ -125,7 +125,7 @@ SmallBlast (int LX, int LY, int BlastT, int phase, unsigned char *Screen,
 @Int:
 * $Function----------------------------------------------------------*/
 void
-SmallBullet (int LX, int LY, int BulletT, int phase, unsigned char *Screen,
+SmallBullet (int LX, int LY, int BulletT, int phase, unsigned char *Parameter_Screen,
 	     int SBreite)
 {
   Blast CurBlast = &(AllBlasts[0]);
@@ -142,10 +142,10 @@ SmallBullet (int LX, int LY, int BulletT, int phase, unsigned char *Screen,
 	       phase * BLOCKMEM) != TRANSPARENTCOLOR)
 	    {
 	      if ((unsigned char)
-		  Screen[LX - DIGITLENGTH / 2 + j +
+		  Parameter_Screen[LX - DIGITLENGTH / 2 + j +
 			 (LY + i - DIGITHEIGHT / 2) * SBreite] == BULLETCOLOR)
 		StartBlast (LX * 4 + 2, LY * 4 + 2, DRUIDBLAST);
-	      Screen[LX - DIGITLENGTH / 2 + j +
+	      Parameter_Screen[LX - DIGITLENGTH / 2 + j +
 		     (LY + i - DIGITHEIGHT / 2) * SBreite] =
 		*(Bulletmap[BulletT].picpointer + j * 4 +
 		  i * BLOCKBREITE * 4 + phase * BLOCKMEM);
@@ -181,7 +181,7 @@ SmallBullet (int LX, int LY, int BulletT, int phase, unsigned char *Screen,
 @Int:
 * $Function----------------------------------------------------------*/
 void
-SmallEnemy (int LX, int LY, int enemyclass, unsigned char *Screen,
+SmallEnemy (int LX, int LY, int enemyclass, unsigned char *Parameter_Screen,
 	    int SBreite)
 {
   int i, j;
@@ -195,7 +195,7 @@ SmallEnemy (int LX, int LY, int enemyclass, unsigned char *Screen,
 	if (Digitpointer
 	    [enemyclass * DIGITLENGTH * DIGITHEIGHT + i * DIGITLENGTH + j] !=
 	    TRANSPARENTCOLOR)
-	  Screen[LX - DIGITLENGTH / 2 + j +
+	  Parameter_Screen[LX - DIGITLENGTH / 2 + j +
 		 (LY + i - DIGITHEIGHT / 2) * SBreite] =
 	    Digitpointer[enemyclass * DIGITLENGTH * DIGITHEIGHT +
 			 i * DIGITLENGTH + j];
@@ -237,7 +237,7 @@ GetDigits (void)
  *
  *-----------------------------------------------------------------*/
 void
-IsolateBlock (unsigned char *screen,
+IsolateBlock (unsigned char *Parameter_screen,
 	      unsigned char *target,
 	      int BlockEckLinks,
 	      int BlockEckOben, int Blockbreite, int Blockhoehe)
@@ -246,7 +246,7 @@ IsolateBlock (unsigned char *screen,
   unsigned char *source;
   unsigned char *tmp;
 
-  source = screen + BlockEckOben * SCREENLEN + BlockEckLinks;
+  source = Parameter_screen + BlockEckOben * SCREENLEN + BlockEckLinks;
   tmp = target;
 
   for (row = 0; row < Blockhoehe; row++)

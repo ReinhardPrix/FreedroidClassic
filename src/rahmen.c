@@ -82,9 +82,9 @@ void DrawBar (int, int, unsigned char *);
 @Int:
 * $Function----------------------------------------------------------*/
 void
-DrawBar (int BarCode, int Wert, unsigned char *Screen)
+DrawBar (int BarCode, int Wert, unsigned char *Parameter_Screen)
 {
-  unsigned char *BarPoint = Screen;
+  unsigned char *BarPoint = Parameter_Screen;
   int xlen;
   int barcol = 0;
   int i;
@@ -146,7 +146,7 @@ DrawBar (int BarCode, int Wert, unsigned char *Screen)
 @Int:
 * $Function----------------------------------------------------------*/
 void
-SayLeftInfo (char *text, unsigned char *screen)
+SayLeftInfo (char *text, unsigned char *Parameter_Screen)
 {
   char textbox[LEFT_TEXT_LEN + 10];
 
@@ -161,7 +161,7 @@ SayLeftInfo (char *text, unsigned char *screen)
       textbox[LEFT_TEXT_LEN] = '\0';	/* String abschliessen */
 
       /* Text ausgeben */
-      DisplayText (textbox, LEFTINFO_X, LEFTINFO_Y, screen, FALSE);
+      DisplayText (textbox, LEFTINFO_X, LEFTINFO_Y, Parameter_Screen, FALSE);
       return;
     }
 }				// void SayLeftInfo(...)
@@ -173,7 +173,7 @@ SayLeftInfo (char *text, unsigned char *screen)
 @Int:
 * $Function----------------------------------------------------------*/
 void
-SayRightInfo (char *text, unsigned char *screen)
+SayRightInfo (char *text, unsigned char *Parameter_Screen)
 {
   char textbox[RIGHT_TEXT_LEN + 10];
 
@@ -188,26 +188,26 @@ SayRightInfo (char *text, unsigned char *screen)
       textbox[RIGHT_TEXT_LEN] = '\0';
 
       /* Text ausgeben */
-      DisplayText (textbox, RIGHTINFO_X, RIGHTINFO_Y, screen, FALSE);
+      DisplayText (textbox, RIGHTINFO_X, RIGHTINFO_Y, Parameter_Screen, FALSE);
     }
   return;
 }				/* SayRightInfo */
 
 
 /*@Function============================================================
-@Desc: DisplayRahmen(*screen):  gibt Rahmen mit Info-Texten auf screen aus
+@Desc: DisplayRahmen(*Parameter_Screen):  gibt Rahmen mit Info-Texten auf screen aus
     Die Funktion sichert und restauriert jetzt auch die Schriftfarben
 
 @Ret: void
 @Int:
 * $Function----------------------------------------------------------*/
 void
-DisplayRahmen (unsigned char *screen)
+DisplayRahmen (unsigned char *Parameter_Screen)
 {
   // unsigned int bg;
   // unsigned int fg;
 
-  // DisplayBlock(0, 0, RahmenPicture, RAHMENBREITE, RAHMENHOEHE, screen);
+  // DisplayBlock(0, 0, RahmenPicture, RAHMENBREITE, RAHMENHOEHE, Parameter_Screen);
   DisplayMergeBlock (0, 0, RahmenPicture, RAHMENBREITE, RAHMENHOEHE, InternalScreen);
 
   /*    GetTextColor(&bg,&fg);

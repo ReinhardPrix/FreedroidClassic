@@ -65,7 +65,7 @@
 
 void GetConceptInternFenster (void);
 void FlashWindow (int Flashcolor);
-void RecFlashFill (int LX, int LY, int Color, unsigned char *screen,
+void RecFlashFill (int LX, int LY, int Color, unsigned char *Parameter_Screen,
 		   int SBreite);
 int Cent (int);
 
@@ -91,7 +91,7 @@ Cent (int Val)
 @Int:
 * $Function----------------------------------------------------------*/
 void
-RecFlashFill (int LX, int LY, int Color, unsigned char *Screen, int SBreite)
+RecFlashFill (int LX, int LY, int Color, unsigned char *Parameter_Screen, int SBreite)
 {
   int i;
   static int num;
@@ -110,35 +110,35 @@ RecFlashFill (int LX, int LY, int Color, unsigned char *Screen, int SBreite)
   // Dieses Feld anf"ullen
   for (i = LY / 4 - ((LY / 4) % 8); i < (LY / 4 - ((LY / 4) % 8) + 8); i++)
     {
-      memset (Screen + i * SBreite + LX / 4 - ((LX / 4) % 8), Color, 8);
+      memset (Parameter_Screen + i * SBreite + LX / 4 - ((LX / 4) % 8), Color, 8);
     }
   i -= 4;
 
   // Feld rechts davon anf"ullen
-  if ((*(Screen + i * SBreite + LX / 4 + 8) != Color) &&
+  if ((*(Parameter_Screen + i * SBreite + LX / 4 + 8) != Color) &&
       (IsPassable (Cent (LX + BLOCKBREITE), Cent (LY), CENTER) == CENTER))
-    RecFlashFill (LX + BLOCKBREITE, LY, Color, Screen, SBreite);
+    RecFlashFill (LX + BLOCKBREITE, LY, Color, Parameter_Screen, SBreite);
 
   // Feld links davon anf"ullen
   if (LX > BLOCKBREITE)
     {
-      if ((*(Screen + i * SBreite + LX / 4 - 8) != Color) &&
+      if ((*(Parameter_Screen + i * SBreite + LX / 4 - 8) != Color) &&
 	  (IsPassable (Cent (LX - BLOCKBREITE), Cent (LY), CENTER) == CENTER))
-	RecFlashFill (LX - BLOCKBREITE, LY, Color, Screen, SBreite);
+	RecFlashFill (LX - BLOCKBREITE, LY, Color, Parameter_Screen, SBreite);
     }
 
   // Feld oben davon anf"ullen
   if ((i > 8) && (LY > BLOCKHOEHE))
     {
-      if ((*(Screen + (i - 8) * SBreite + LX / 4) != Color) &&
+      if ((*(Parameter_Screen + (i - 8) * SBreite + LX / 4) != Color) &&
 	  (IsPassable (Cent (LX), Cent (LY - BLOCKHOEHE), CENTER) == CENTER))
-	RecFlashFill (LX, LY - BLOCKHOEHE, Color, Screen, SBreite);
+	RecFlashFill (LX, LY - BLOCKHOEHE, Color, Parameter_Screen, SBreite);
     }
 
   // Feld unten davon anf"ullen
-  if ((*(Screen + (i + 8) * SBreite + LX / 4) != Color) &&
+  if ((*(Parameter_Screen + (i + 8) * SBreite + LX / 4) != Color) &&
       (IsPassable (Cent (LX), Cent (LY + BLOCKHOEHE), CENTER) == CENTER))
-    RecFlashFill (LX, LY + BLOCKHOEHE, Color, Screen, SBreite);
+    RecFlashFill (LX, LY + BLOCKHOEHE, Color, Parameter_Screen, SBreite);
 }
 
 /*@Function============================================================
@@ -879,6 +879,8 @@ PutInternFenster (void)
 
   DisplayRahmen ( RealScreen );
 
+  Lock_SDL_Screen();
+
   for (i = 0; i < USERFENSTERHOEHE; i++)
     {
       source = InternWindow +
@@ -892,16 +894,15 @@ PutInternFenster (void)
 #define SLOW_VIDEO_CALLS
 #ifdef SLOW_VIDEO_CALLS
 
-      Lock_SDL_Screen();
-
+#define DRAW_TO_SCREEN_VARIABLE
+#ifdef DRAW_TO_SCREEN_VARIABLE
       for (j = 0; j < USERFENSTERBREITE; j++)
 	{
 	  // SDL vga_setcolor (*source);
 	  source++;
 	  putpixel (screen, USERFENSTERPOSX + j, USERFENSTERPOSY + i, *source );
 	}			// for(j=0; ...
-
-      Unlock_SDL_Screen();
+#endif
 
 #else
       vga_drawscansegment (source, USERFENSTERPOSX, USERFENSTERPOSY + i,
@@ -909,6 +910,9 @@ PutInternFenster (void)
       // source+=USERFENSTERBREITE;
 #endif
     }				// for(i=0; ...
+
+
+  Unlock_SDL_Screen();
 
   // Update_SDL_Screen();
 
@@ -984,9 +988,11 @@ void
 RotateBulletColor (void)
 {
   static int BulColNum;
-
   static color BulletColors[MAXBULCOL] =
     { BULLETCOLOR1, BULLETCOLOR2, BULLETCOLOR3, BULLETCOLOR4, BULLETCOLOR5 };
+
+  return;
+
   BulColNum++;
   BulColNum = MyRandom (MAXBULCOL);
 
@@ -995,7 +1001,7 @@ RotateBulletColor (void)
 
   SetPalCol (BULLETCOLOR, BulletColors[BulColNum].rot,
 	     BulletColors[BulColNum].gruen, BulletColors[BulColNum].blau);
-}				// void RotateBulletColor(void)
+} /* void RotateBulletColor(void) */
 
 
 /*@Function============================================================

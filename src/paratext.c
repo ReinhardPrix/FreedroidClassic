@@ -269,21 +269,21 @@ SetTextBorder (int left, int upper, int right, int lower, int chars_per_line)
 }				/* SetTextBorder */
 
 /*@Function============================================================
-@Desc: ClearTextBorder(*screen): Loescht am Screen den Bereich des
+@Desc: ClearTextBorder(*Paramter_Screen): Loescht am Screen den Bereich des
 					gesetzten Textfensters (textborder)
 
 @Ret: voidN
 @Int:
 * $Function----------------------------------------------------------*/
 void
-ClearTextBorder (unsigned char *screen, int color)
+ClearTextBorder (unsigned char *Parameter_Screen, int color)
 {
   register int i;
   register int height = LowerTextBorder - UpperTextBorder;
   register int xlen = RightTextBorder - LeftTextBorder;
   unsigned char *target;
 
-  target = screen + UpperTextBorder * SCREENBREITE + LeftTextBorder;
+  target = Parameter_Screen + UpperTextBorder * SCREENBREITE + LeftTextBorder;
 
   for (i = 0; i < height; i++)
     {
