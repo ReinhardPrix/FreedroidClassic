@@ -163,6 +163,7 @@ EXTERN int SkipAFewFrames;
 #endif
 EXTERN SDL_Surface *ne_screen;   /* the graphics display */
 EXTERN SDL_Surface *ne_scaled_screen;   /* the graphics display */
+EXTERN SDL_Surface *ne_bullet[ALLBULLETTYPES];   /* the surface containing the simplest form of a bullet */
 EXTERN char *ship_on_filename;
 EXTERN char *ship_off_filename;
 EXTERN int BannerIsDestroyed;

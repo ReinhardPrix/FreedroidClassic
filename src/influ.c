@@ -969,7 +969,10 @@ FireBullet (void)
   if ( (dir < -1*dir8) && (dir > -3*dir8) ) /* ru NO RECHTSOBEN !!! */
     CurBullet->phase = RECHTSOBEN;
 
+  CurBullet->angle= - (dir * 180 / M_PI +90 );
+
   DebugPrintf( 2 , "\nFireBullet(...) : Phase of bullet=%d." , CurBullet->phase );
+  DebugPrintf( 0 , "\nFireBullet(...) : angle of bullet=%f." , CurBullet->angle );
   
   //  printf_SDL(ne_screen, User_Rect.x, User_Rect.y, "Bullet speed: %g %g ",
   //	     CurBullet->speed.x, CurBullet->speed.y);

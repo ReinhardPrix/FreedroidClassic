@@ -166,6 +166,10 @@ Assemble_Combat_Picture (int mask)
   //
 
   SDL_SetColorKey (ne_screen, 0, 0);
+  // SDL_SetAlpha( ne_screen , 0 , SDL_ALPHA_OPAQUE ); 
+  // SDL_SetAlpha( ne_blocks , 0 , SDL_ALPHA_OPAQUE ); 
+
+                         
   SDL_SetClipRect (ne_screen , &User_Rect);
 
   for (line = -5; line < CurLevel->ylen + 5; line++)
@@ -621,6 +625,7 @@ PutBullet (int BulletNummer)
 {
   Bullet CurBullet = &AllBullets[BulletNummer];
   SDL_Rect TargetRectangle;
+  SDL_Surface *tmp;
 
   DebugPrintf (2, "\nvoid PutBullet(int BulletNummer): real function call confirmed.\n");
 
@@ -655,7 +660,14 @@ PutBullet (int BulletNummer)
     - (Me.pos.x-CurBullet->pos.x)*Block_Width-Block_Width/2;
   TargetRectangle.y = USER_FENSTER_CENTER_Y
     - (Me.pos.y-CurBullet->pos.y)*Block_Width-Block_Height/2;
-  SDL_BlitSurface( ne_blocks , Bulletmap[CurBullet->type].block + CurBullet->phase, ne_screen , &TargetRectangle );
+  // SDL_BlitSurface( ne_blocks , Bulletmap[CurBullet->type].block + CurBullet->phase, ne_screen , &TargetRectangle );
+
+  // tmp = rotozoomSurface( ne_bullet[CurBullet->type] , 45*CurBullet->phase , 1.0 , FALSE );
+  tmp = rotozoomSurface( ne_bullet[CurBullet->type] , CurBullet->angle , 1.0 , FALSE );
+
+  // SDL_BlitSurface( ne_bullet[CurBullet->type] , NULL, ne_screen , &TargetRectangle );
+  SDL_BlitSurface( tmp , NULL, ne_screen , &TargetRectangle );
+  SDL_FreeSurface( tmp );
 
   DebugPrintf (2, "\nvoid PutBullet(int BulletNummer): end of function reched.\n");
 

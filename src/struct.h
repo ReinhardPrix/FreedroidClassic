@@ -265,6 +265,7 @@ typedef struct
   double time_in_seconds; // how long does the bullet exist in seconds
   signed char mine;
   int owner;
+  double angle;
 }
 bullet, *Bullet;
 
