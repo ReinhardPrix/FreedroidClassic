@@ -257,25 +257,25 @@ PoisonBoltSpell ( gps BoltSource )
 void
 CreateTeleportal ( gps PortalTarget )
 {
-  int SpellCost = SpellSkillMap [ SPELL_TELEPORT_HOME ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
-
-  if ( Me [ 0 ] . mana >= SpellCost )
+    int SpellCost = SpellSkillMap [ SPELL_TELEPORT_HOME ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
+    
+    if ( Me [ 0 ] . mana >= SpellCost )
     {
-      Me[0].mana -= SpellCost;
-
-      if ( curShip.AllLevels[ PortalTarget.z ]->map [ (int) PortalTarget.y ] [ (int) PortalTarget.x ] . floor_value == FLOOR )
+	Me[0].mana -= SpellCost;
+	
+	if ( curShip.AllLevels[ PortalTarget.z ]->map [ (int) PortalTarget.y ] [ (int) PortalTarget.x ] . floor_value == FLOOR )
 	{
-	  curShip.AllLevels[ PortalTarget.z ]->map [ (int) PortalTarget.y ] [ (int) PortalTarget.x ] . floor_value = TELE_1 ;
+	    curShip.AllLevels[ PortalTarget.z ]->map [ (int) PortalTarget.y ] [ (int) PortalTarget.x ] . floor_value = TELE_1 ;
 	}
-
-      Play_Spell_ForceToEnergy_Sound( );
-
+	
+	Play_Spell_ForceToEnergy_Sound( );
+	
     }
-  else
+    else
     {
-      Me[0].TextVisibleTime = 0;
-      Me[0].TextToBeDisplayed = "Not enough force left within me.";
-      Not_Enough_Mana_Sound(  );
+	Me[0].TextVisibleTime = 0;
+	Me[0].TextToBeDisplayed = "Not enough force left within me.";
+	Not_Enough_Mana_Sound(  );
     }
 }; // void CreateTeleportal ( gps PortalTarget )
 
@@ -285,28 +285,29 @@ CreateTeleportal ( gps PortalTarget )
 void
 TeleportHome ( void )
 {
-  int SpellCost = SpellSkillMap [ SPELL_TELEPORT_HOME ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
-  location HomeSpot;
-
-  if ( Me [ 0 ] . mana >= SpellCost )
+    int SpellCost = SpellSkillMap [ SPELL_TELEPORT_HOME ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
+    location HomeSpot;
+    
+    if ( Me [ 0 ] . mana >= SpellCost )
     {
-      Me[0].mana -= SpellCost;
-
-      Me[0].teleport_anchor.x = Me [ 0 ] . pos . x;
-      Me[0].teleport_anchor.y = Me [ 0 ] . pos . y;
-      Me[0].teleport_anchor.z = Me [ 0 ] . pos . z;
-
-      Play_Spell_ForceToEnergy_Sound( );
-
-      ResolveMapLabelOnShip ( "TeleportHomeTarget" , &(HomeSpot) );
-      Teleport ( HomeSpot.level , HomeSpot.x + 0.5 , HomeSpot.y + 0.5 , 0 , FALSE , TRUE ) ;
-
+	Me[0].mana -= SpellCost;
+	
+	Me[0].teleport_anchor.x = Me [ 0 ] . pos . x;
+	Me[0].teleport_anchor.y = Me [ 0 ] . pos . y;
+	Me[0].teleport_anchor.z = Me [ 0 ] . pos . z;
+	
+	// Play_Spell_ForceToEnergy_Sound( );
+	teleport_arrival_sound ( );
+	
+	ResolveMapLabelOnShip ( "TeleportHomeTarget" , &(HomeSpot) );
+	Teleport ( HomeSpot.level , HomeSpot.x + 0.5 , HomeSpot.y + 0.5 , 0 , FALSE , TRUE ) ;
+	
     }
-  else
+    else
     {
-      Me[0].TextVisibleTime = 0;
-      Me[0].TextToBeDisplayed = "Not enough force left within me.";
-      Not_Enough_Mana_Sound(  );
+	Me[0].TextVisibleTime = 0;
+	Me[0].TextToBeDisplayed = "Not enough force left within me.";
+	Not_Enough_Mana_Sound(  );
     }
 }; // void CreateTeleportal ( gps PortalTarget )
 
@@ -509,22 +510,21 @@ ForceExplosionRay ( gps ExpCenter , float target_vector_x , float target_vector_
 void
 ForceToEnergyConversion ( void )
 {
-  int SpellCost = SpellSkillMap [ SPELL_FORCE_TO_ENERGY ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
+    int SpellCost = SpellSkillMap [ SPELL_FORCE_TO_ENERGY ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
 
-  if ( Me[0].mana >= SpellCost )
+    if ( Me [ 0 ] . mana >= SpellCost )
     {
-      Me[0].mana   -= SpellCost;
-      Me[0].energy += 10 ; // * SpellLevel
-      if ( Me [ 0 ] . energy > Me [ 0 ] . maxenergy ) Me [ 0 ] . energy = Me [ 0 ] . maxenergy ;
+	Me [ 0 ] . mana -= SpellCost;
+	Me [ 0 ] . energy += 10 ; // * SpellLevel
+	if ( Me [ 0 ] . energy > Me [ 0 ] . maxenergy ) Me [ 0 ] . energy = Me [ 0 ] . maxenergy ;
 
-      Play_Spell_ForceToEnergy_Sound( );
-
+	healing_spell_sound ( );
     }
-  else
+    else
     {
-      Me[0].TextVisibleTime = 0;
-      Me[0].TextToBeDisplayed = "Not enough force left within me.";
-      Not_Enough_Mana_Sound(  );
+	Me [ 0 ] . TextVisibleTime = 0;
+	Me [ 0 ] . TextToBeDisplayed = "Not enough force left within me.";
+	Not_Enough_Mana_Sound(  );
     }
 
 }; // void ForceToEnergyConversion ( void )

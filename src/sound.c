@@ -949,13 +949,24 @@ Mission_Status_Change_Sound (void)
 }; // void Mission_Status_Change_Sound (void)
 
 /* ----------------------------------------------------------------------
- *
+ * When the Tux uses the 'teleport home' spell, this sound will be played.
  * ---------------------------------------------------------------------- */
 void
 teleport_arrival_sound ( void )
 {
-  play_sample_using_WAV_cache ( "../effects/LeaveElevator_Sound_0.wav", FALSE , FALSE );
+    // play_sample_using_WAV_cache ( "../effects/LeaveElevator_Sound_0.wav", FALSE , FALSE );
+    play_sample_using_WAV_cache ( "../effects/new_teleporter_sound.wav", FALSE , FALSE );
 }; // void teleport_arrival_sound ( void )
+
+/* ----------------------------------------------------------------------
+ * When the Tux casts a healing spell, this sound will be played.
+ * ---------------------------------------------------------------------- */
+void
+healing_spell_sound ( void )
+{
+    play_sample_using_WAV_cache ( "../effects/new_healing_sound.wav", FALSE , FALSE );
+}; // void healing_spell_sound ( void )
+
 
 /* ----------------------------------------------------------------------
  * This function is intended to provide a convenient way of switching

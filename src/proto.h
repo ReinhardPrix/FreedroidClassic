@@ -331,6 +331,7 @@ EXTERN void MenuItemSelectedSound (void);
 EXTERN void MenuItemDeselectedSound (void);
 EXTERN void MoveMenuPositionSound (void);
 EXTERN void teleport_arrival_sound (void);
+EXTERN void healing_spell_sound ( void );
 EXTERN void Fire_Bullet_Sound (int);
 EXTERN void Mission_Status_Change_Sound (void);
 EXTERN void BounceSound (void);
