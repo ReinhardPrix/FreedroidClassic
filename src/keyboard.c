@@ -1,3 +1,8 @@
+/*----------------------------------------------------------------------
+ *
+ * Desc: encapsulation functions for keyboard handling
+ *
+ *----------------------------------------------------------------------*/
 /* 
  *
  *   Copyright (c) 1994, 2002 Johannes Prix
@@ -23,11 +28,6 @@
  *
  */
 
-/*----------------------------------------------------------------------
- *
- * Desc: functions to make keyboard access via svgalib somewhat easyer.
- *
- *----------------------------------------------------------------------*/
 #include <config.h>
 
 #define _keyboard_c
@@ -82,7 +82,7 @@ int CurrentlyBackspacePressed=0;
 void 
 Init_SDL_Keyboard(void)
 {
-  
+  return;  
 }
 
 int 
@@ -346,6 +346,41 @@ keyboard_update(void)
   return 0;
 }
 
+/*-----------------------------------------------------------------
+ * Desc: should do roughly what getchar() does, but in raw 
+ * 	 (SLD) keyboard mode. 
+ * 
+ * Return: the (SDLKey) of the next key-pressed event cast to (int)
+ *
+ *-----------------------------------------------------------------*/
+int
+getchar_raw (void)
+{
+  SDL_Event event;
+
+  keyboard_update ();   /* treat all pending keyboard-events */
+
+  while (1)
+    {
+      SDL_WaitEvent (&event);    /* wait for next event */
+      
+      if (event.type == SDL_KEYDOWN)
+	/* 
+	 * here we use the fact that, I cite from SDL_keyboard.h:
+	 * "The keyboard syms have been cleverly chosen to map to ASCII"
+	 * ... I hope that this design feature is portable, and durable ;)  
+	 */
+	return ((int) event.key.keysym.sym);
+      else
+	continue;
+
+    } /* while(1) */
+
+} /* getchar_raw() */
+
+
+/*-----------------------------------------------------------------
+ *-----------------------------------------------------------------*/
 void
 ClearKbState (void)
 {
