@@ -77,6 +77,7 @@ char previous_part_strings_for_each_phase_and_direction [ ALL_PART_GROUPS ] [ TU
 char* motion_class_string [ ALL_TUX_MOTION_CLASSES ] = { "sword_motion" , "gun_motion" } ;
 int previously_used_motion_class = -4 ; // something we'll never really use...
 
+extern int level_editor_mouse_move_mode;
 
 void FlashWindow (SDL_Color Flashcolor);
 void RecFlashFill (int LX, int LY, int Color, unsigned char *Parameter_Screen,
@@ -657,6 +658,7 @@ isometric_show_floor_around_tux_without_doublebuffering ( int mask )
     }
 }; // void isometric_show_floor_around_tux_without_doublebuffering ( int mask )
 
+
 /* ----------------------------------------------------------------------
  * This function should blit an obstacle, that is given via it's address
  * in the parameter
@@ -664,69 +666,93 @@ isometric_show_floor_around_tux_without_doublebuffering ( int mask )
 void
 blit_one_obstacle ( obstacle* our_obstacle )
 {
-  iso_image tmp;
-  float darkness ;
-  // DebugPrintf ( 0 , "\nObstacle to be blitted: type=%d x=%f y=%f." , our_obstacle -> type ,
-  // our_obstacle -> pos . x , our_obstacle -> pos . y );
+    iso_image tmp;
+    float darkness ;
+    moderately_finepoint obs_onscreen_position;
 
-  if ( ( our_obstacle-> type <= (-1) ) || ( our_obstacle-> type >= NUMBER_OF_OBSTACLE_TYPES ) )
+    if ( ( our_obstacle-> type <= (-1) ) || ( our_obstacle-> type >= NUMBER_OF_OBSTACLE_TYPES ) )
     {
 	fprintf ( stderr , "\nobstacle_type found=%d." , our_obstacle-> type ) ;
-      GiveStandardErrorMessage ( "blit_one_obstacle(...)" , "\
+	GiveStandardErrorMessage ( "blit_one_obstacle(...)" , "\
 There was an obstacle type given, that exceeds the number of\n\
  obstacle types allowed and loaded in Freedroid.",
-				 PLEASE_INFORM, IS_FATAL );
-
+				   PLEASE_INFORM, IS_FATAL );
+	
     }
 
-  //--------------------
-  // Maybe the children friendly version is desired.  Then the blood on the floor
-  // will not be blitted to the screen.
-  //
-  if ( ( ! GameConfig . show_blood ) && 
-       ( our_obstacle-> type >= ISO_BLOOD_1 ) && 
-       ( our_obstacle -> type <= ISO_BLOOD_8 ) ) 
-    return;
-
-  //--------------------
-  // We blit the obstacle in question, but if we're in the level editor and this
-  // obstacle has been marked, we apply a color filter to it.  Otherwise we blit
-  // it just so.
-  //
-  if ( our_obstacle == level_editor_marked_obstacle )
+    //--------------------
+    // Maybe the children friendly version is desired.  Then the blood on the floor
+    // will not be blitted to the screen.
+    //
+    if ( ( ! GameConfig . show_blood ) && 
+	 ( our_obstacle-> type >= ISO_BLOOD_1 ) && 
+	 ( our_obstacle -> type <= ISO_BLOOD_8 ) ) 
+	return;
+    
+    //--------------------
+    // We blit the obstacle in question, but if we're in the level editor and this
+    // obstacle has been marked, we apply a color filter to it.  Otherwise we blit
+    // it just so.
+    //
+    if ( our_obstacle == level_editor_marked_obstacle )
     {
-      if ( use_open_gl )
+	//--------------------
+	// Maybe the obstacle in question is also subject to the mouse_move_mode
+	// of the level editor.  In this case we blit the obstacle on the current
+	// mouse cursor location instead.
+	//
+	if ( level_editor_mouse_move_mode )
 	{
-	  blit_open_gl_texture_to_map_position ( obstacle_map [ our_obstacle -> type ] . image , 
-						 our_obstacle -> pos . x , our_obstacle -> pos . y , ( SDL_GetTicks() % 3) / 2.0  , ( ( SDL_GetTicks() + 1 ) % 3) / 2.0 , ( ( SDL_GetTicks() + 2 ) % 3) / 2.0 , TRUE ) ;
+	    obs_onscreen_position . x = 
+		translate_pixel_to_map_location ( 0 ,
+						  (float) ServerThinksInputAxisX ( 0 ) , 
+						  (float) ServerThinksInputAxisY ( 0 ) , TRUE ) ;
+	    obs_onscreen_position . y = 
+		translate_pixel_to_map_location ( 0 ,
+						  (float) ServerThinksInputAxisX ( 0 ) , 
+						  (float) ServerThinksInputAxisY ( 0 ) , FALSE ) ;
 	}
-      else
+	else
 	{
-	  DebugPrintf ( 0 , "\nColor filter for level editor invoked (via SDL!) for marked obstacle!" );
-	  tmp . surface = our_SDL_display_format_wrapperAlpha ( obstacle_map [ our_obstacle -> type ] . image . surface );
-	  tmp . surface -> format -> Bmask = 0x0 ; // 0FFFFFFFF ;
-	  tmp . surface -> format -> Rmask = 0x0 ; // FFFFFFFF ;
-	  tmp . surface -> format -> Gmask = 0x0FFFFFFFF ;
-	  tmp . offset_x = obstacle_map [ our_obstacle -> type ] . image . offset_x ;
-	  tmp . offset_y = obstacle_map [ our_obstacle -> type ] . image . offset_y ;
-	  blit_iso_image_to_map_position ( tmp , our_obstacle -> pos . x , our_obstacle -> pos . y );
-	  SDL_FreeSurface ( tmp . surface );
+	    obs_onscreen_position . x = our_obstacle -> pos . x ;
+	    obs_onscreen_position . y = our_obstacle -> pos . y ;
+	}
+
+	if ( use_open_gl )
+	{
+	    blit_open_gl_texture_to_map_position ( obstacle_map [ our_obstacle -> type ] . image , 
+						   obs_onscreen_position . x , obs_onscreen_position . y , 
+						   ( SDL_GetTicks() % 3) / 2.0  , 
+						   ( ( SDL_GetTicks() + 1 ) % 3) / 2.0 , 
+						   ( ( SDL_GetTicks() + 2 ) % 3) / 2.0 , TRUE ) ;
+	}
+	else
+	{
+	    DebugPrintf ( 1 , "\nColor filter for level editor invoked (via SDL!) for marked obstacle!" );
+	    tmp . surface = our_SDL_display_format_wrapperAlpha ( obstacle_map [ our_obstacle -> type ] . image . surface );
+	    tmp . surface -> format -> Bmask = 0x0 ; // 0FFFFFFFF ;
+	    tmp . surface -> format -> Rmask = 0x0 ; // FFFFFFFF ;
+	    tmp . surface -> format -> Gmask = 0x0FFFFFFFF ;
+	    tmp . offset_x = obstacle_map [ our_obstacle -> type ] . image . offset_x ;
+	    tmp . offset_y = obstacle_map [ our_obstacle -> type ] . image . offset_y ;
+	    blit_iso_image_to_map_position ( tmp , obs_onscreen_position . x , obs_onscreen_position . y );
+	    SDL_FreeSurface ( tmp . surface );
 	}
     }
-  else
+    else
     {
-      if ( use_open_gl )
+	if ( use_open_gl )
 	{
-	  darkness = 2.0 - 2.0 * ( ( (float) get_light_strength ( our_obstacle -> pos ) ) / ( (float) NUMBER_OF_SHADOW_IMAGES ) ) ;
-	  if ( darkness > 1 ) darkness = 1.0 ;
-	  if ( darkness < 0 ) darkness = 0 ;
-	  blit_open_gl_texture_to_map_position ( obstacle_map [ our_obstacle -> type ] . image , 
-						 our_obstacle -> pos . x , our_obstacle -> pos . y , darkness , darkness, darkness , FALSE ) ;
+	    darkness = 2.0 - 2.0 * ( ( (float) get_light_strength ( our_obstacle -> pos ) ) / ( (float) NUMBER_OF_SHADOW_IMAGES ) ) ;
+	    if ( darkness > 1 ) darkness = 1.0 ;
+	    if ( darkness < 0 ) darkness = 0 ;
+	    blit_open_gl_texture_to_map_position ( obstacle_map [ our_obstacle -> type ] . image , 
+						   our_obstacle -> pos . x , our_obstacle -> pos . y , darkness , darkness, darkness , FALSE ) ;
 	}
-      else
+	else
 	{
-	  blit_iso_image_to_map_position ( obstacle_map [ our_obstacle -> type ] . image , 
-					   our_obstacle -> pos . x , our_obstacle -> pos . y );
+	    blit_iso_image_to_map_position ( obstacle_map [ our_obstacle -> type ] . image , 
+					     our_obstacle -> pos . x , our_obstacle -> pos . y );
 	}
     }
 }; // blit_one_obstacle ( obstacle* our_obstacle )

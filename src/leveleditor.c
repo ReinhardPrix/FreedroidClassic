@@ -62,8 +62,8 @@ float VanishingMessageDisplayTime = 0;
 SDL_Rect EditorBannerRect = { 0 , 0 , 640 , 90 } ;
 int FirstBlock = 0 ;
 int Highlight = 3 ;
-
 int number_of_walls [ NUMBER_OF_LEVEL_EDITOR_GROUPS ] ;
+int level_editor_mouse_move_mode = FALSE ;
 
 int wall_indices [ NUMBER_OF_LEVEL_EDITOR_GROUPS ] [ NUMBER_OF_OBSTACLE_TYPES ] = 
 {
@@ -2020,7 +2020,7 @@ enum
 	case SAVE_LEVEL_POSITION:
 	  while (EnterPressed() || SpacePressed() ) ;
 	  close_all_chests_on_level ( Me [ 0 ] . pos . z ) ;
-	  SaveShip("Testship.shp");
+	  SaveShip("../map/Asteroid.maps");
 	  CenteredPutString ( Screen ,  11*FontHeight(Menu_BFont),    "Your ship was saved...");
 	  our_SDL_flip_wrapper ( Screen );
 	  while (!EnterPressed() && !SpacePressed() ) ;
@@ -3769,7 +3769,7 @@ show_level_editor_tooltips ( void )
   else if ( CursorIsOnButton ( LEVEL_EDITOR_SAVE_SHIP_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
     {
       if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
-	show_button_tooltip ( "This button will save your current ship to the file 'Testship.shp' in your current working directory.  If you are sure that you want this, you can copy it over the regular file 'Asteroid.maps' in maps subdirectory to make your map the default FreedroidRPG map." );
+	show_button_tooltip ( "This button will save your current ship over the file '../map/Asteroid.maps' from your current working directory.  A need to manually copy anything like in earlier versions of FreedroidRPG is no longer given." );
     }
   else if ( CursorIsOnButton ( LEVEL_EDITOR_ZOOM_OUT_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
     {
@@ -4307,10 +4307,48 @@ LevelEditor(void)
 	    }
 
 	  //--------------------
-	  // With the 'M' key, you can edit the current map label.
+	  // With the 'L' key, you can edit the current map label.
 	  // The label will be assumed to be directly under the cursor.
 	  //
-	  if ( MPressed () ) EditMapLabelData ( EditLevel );
+	  if ( LPressed () ) EditMapLabelData ( EditLevel );
+
+	  //--------------------
+	  // The 'M' key will activate mouse-move-mode to allow for convenient
+	  // mouse-based re-placement of the currently marked obstacle, OR,
+	  // if the mouse-move-mode was already activated, it will drop the
+	  // marked obstacle to it's new place.
+	  //
+	  if ( MPressed () ) 
+	  {
+	      if ( ! level_editor_mouse_move_mode )
+	      {
+		  if ( level_editor_marked_obstacle != NULL ) 
+		      level_editor_mouse_move_mode = TRUE ;
+	      }
+	      else
+	      {
+		  if ( level_editor_marked_obstacle != NULL ) 
+		  {
+		      level_editor_marked_obstacle -> pos . x = 
+			  translate_pixel_to_map_location ( 0 ,
+							    (float) ServerThinksInputAxisX ( 0 ) , 
+							    (float) ServerThinksInputAxisY ( 0 ) , TRUE ) ;
+		      level_editor_marked_obstacle -> pos . y = 
+			  translate_pixel_to_map_location ( 0 ,
+							    (float) ServerThinksInputAxisX ( 0 ) , 
+							    (float) ServerThinksInputAxisY ( 0 ) , FALSE ) ;
+		      glue_obstacles_to_floor_tiles_for_level ( EditLevel -> levelnum );
+		      level_editor_marked_obstacle = NULL ;
+		  }
+		  level_editor_mouse_move_mode = FALSE ;
+	      }
+	      while ( MPressed() );
+	  }
+	  else
+	  {
+	      if ( level_editor_mouse_move_mode && ( level_editor_marked_obstacle == NULL ) )
+		  level_editor_mouse_move_mode = FALSE ;
+	  }
 
 	  //--------------------
 	  // From the level editor, it should also be possible to drop new goods
