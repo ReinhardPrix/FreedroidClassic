@@ -1874,7 +1874,7 @@ ManageInventoryScreen ( void )
       // DebugPrintf( 2 , "\nINVENTORY NOT VISIBLE!!" );
       if ( ( axis_is_active ) && ( !MouseButtonPressedPreviousFrame ) && ( Item_Held_In_Hand == (-1) ) )
 	{
-	  // DebugPrintf( 1 , "\nCollecting items for direct addition to the invenotry without grabbing." );
+	  // DebugPrintf( 1 , "\nCollecting items for direct addition to the inventory without grabbing." );
 	  MapPositionOfMouse.x = Me[0].pos.x + (CurPos.x - UserCenter_x) / (float) Block_Width;
 	  MapPositionOfMouse.y = Me[0].pos.y + (CurPos.y - UserCenter_y) / (float) Block_Height;
 
@@ -2066,10 +2066,23 @@ ManageInventoryScreen ( void )
 	      if ( ( fabsf( MapPositionOfMouse.x - PlayerLevel->ItemList[ i ].pos.x ) < 0.5 ) &&
 		   ( fabsf( MapPositionOfMouse.y - PlayerLevel->ItemList[ i ].pos.y ) < 0.5 ) )
 		{
+		  //--------------------
 		  // We've found some item to grab!!! How wonderful!!!
-		  Item_Held_In_Hand = ItemMap[ PlayerLevel->ItemList[ i ].type ].picture_number ;
-		  PlayerLevel->ItemList[ i ].currently_held_in_hand = TRUE;
-		  break;
+		  // 
+		  // But of course we only really take the item into our 'hand' if it's
+		  // something else than money, cause money need not be put anywhere...
+		  //
+		  if ( PlayerLevel->ItemList[ i ].type == ITEM_MONEY ) 		      
+		    {
+		      AddFloorItemDirectlyToInventory( &( PlayerLevel->ItemList[ i ] ) );
+		      return;
+		    }
+		  else
+		    {
+		      Item_Held_In_Hand = ItemMap[ PlayerLevel->ItemList[ i ].type ].picture_number ;
+		      PlayerLevel->ItemList[ i ].currently_held_in_hand = TRUE;
+		      break;
+		    }
 		}
 	    }
 	}
