@@ -41,6 +41,78 @@ The data in this file has the format:
 5. Where to continue if the influ goes one level down (specify the Label to go to)
 6. Which lift column does this lift entrance belong to
    (7.) New-Line
+
+*** Beginning of elevator rectangles ***
+
+Elevator Number=0 ElRowX= 68 ElRowY= 18 ElRowW=16 ElRowH=160
+Elevator Number=1 ElRowX=132 ElRowY= 66 ElRowW=16 ElRowH=208
+Elevator Number=2 ElRowX=228 ElRowY= 34 ElRowW=16 ElRowH= 30
+Elevator Number=3 ElRowX=308 ElRowY= 18 ElRowW=16 ElRowH= 78
+Elevator Number=4 ElRowX=324 ElRowY= 82 ElRowW=16 ElRowH=110
+Elevator Number=5 ElRowX=356 ElRowY=130 ElRowW=16 ElRowH= 46
+Elevator Number=6 ElRowX=404 ElRowY= 50 ElRowW=16 ElRowH= 94
+Elevator Number=7 ElRowX=436 ElRowY= 34 ElRowW=16 ElRowH= 30
+
+*** End of elevator rectangles ***
+
+*** Beginning of deck rectangles ***
+
+DeckNr=0 RectNumber=0 DeckX=  0 DeckY= 162 DeckW=  68 DeckH= 16
+DeckNr=0 RectNumber=1 DeckX= 84 DeckY= 162 DeckW=  48 DeckH= 16 
+DeckNr=0 RectNumber=2 DeckX=340 DeckY= 162 DeckW=  16 DeckH= 16 
+
+DeckNr=1 RectNumber=0 DeckX=  0 DeckY= 146 DeckW=  68 DeckH= 16 
+DeckNr=1 RectNumber=1 DeckX= 84 DeckY= 146 DeckW=  48 DeckH= 16 
+DeckNr=1 RectNumber=2 DeckX=340 DeckY= 146 DeckW=  16 DeckH= 16 
+DeckNr=1 RectNumber=3 DeckX=372 DeckY= 146 DeckW=  32 DeckH= 16 
+
+DeckNr=2 RectNumber=0 DeckX=340 DeckY= 130 DeckW=  16 DeckH= 16 
+DeckNr=2 RectNumber=1 DeckX=372 DeckY= 130 DeckW=  32 DeckH= 16 
+DeckNr=2 RectNumber=2 DeckX=420 DeckY= 130 DeckW=  48 DeckH= 16 
+
+DeckNr=3 RectNumber=0 DeckX=340 DeckY= 114 DeckW=  64 DeckH= 16 
+DeckNr=3 RectNumber=1 DeckX=420 DeckY= 114 DeckW=  96 DeckH= 16 
+
+DeckNr=4 RectNumber=0 DeckX=340 DeckY= 98 DeckW=  64 DeckH= 16 
+DeckNr=4 RectNumber=1 DeckX=420 DeckY= 98 DeckW= 128 DeckH= 16 
+
+DeckNr=5 RectNumber=0 DeckX=340 DeckY= 82 DeckW=  64 DeckH= 16 
+DeckNr=5 RectNumber=1 DeckX=420 DeckY= 82 DeckW= 156 DeckH= 16 
+
+DeckNr=6 RectNumber=0 DeckX=276 DeckY= 66 DeckW=  32 DeckH= 16 
+DeckNr=6 RectNumber=1 DeckX=324 DeckY= 66 DeckW=  80 DeckH= 16 
+DeckNr=6 RectNumber=2 DeckX=420 DeckY= 66 DeckW= 128 DeckH= 16 
+
+DeckNr=7 RectNumber=0 DeckX=244 DeckY= 50 DeckW=  64 DeckH= 16 
+DeckNr=7 RectNumber=1 DeckX=324 DeckY= 50 DeckW=  80 DeckH= 16 
+DeckNr=7 RectNumber=2 DeckX=420 DeckY= 50 DeckW=  16 DeckH= 16 
+DeckNr=7 RectNumber=3 DeckX=452 DeckY= 50 DeckW=  64 DeckH= 16 
+
+DeckNr=8 RectNumber=0 DeckX=244 DeckY= 34 DeckW=  64 DeckH= 16 
+DeckNr=8 RectNumber=1 DeckX=324 DeckY= 34 DeckW=  80 DeckH= 16 
+DeckNr=8 RectNumber=2 DeckX=452 DeckY= 34 DeckW=  16 DeckH= 16 
+
+DeckNr=9 RectNumber=0 DeckX= 84 DeckY= 18 DeckW=  32 DeckH= 16 
+DeckNr=9 RectNumber=1 DeckX=292 DeckY= 18 DeckW=  16 DeckH= 16 
+DeckNr=9 RectNumber=2 DeckX=324 DeckY= 18 DeckW=  18 DeckH= 16 
+
+DeckNr=10 RectNumber=0 DeckX= 84 DeckY= 34 DeckW= 112 DeckH= 16
+
+DeckNr=11 RectNumber=0 DeckX= 36 DeckY= 50 DeckW=  32 DeckH= 16 
+DeckNr=11 RectNumber=1 DeckX= 84 DeckY= 50 DeckW= 144 DeckH= 16 
+
+DeckNr=12 RectNumber=0 DeckX=148 DeckY= 66 DeckW= 128 DeckH= 16 
+DeckNr=12 RectNumber=1 DeckX=148 DeckY= 82 DeckW= 160 DeckH= 16 
+DeckNr=12 RectNumber=2 DeckX=148 DeckY= 98 DeckW= 176 DeckH= 16 
+
+DeckNr=13 RectNumber=0 DeckX=148 DeckY=114 DeckW= 176 DeckH= 48
+
+DeckNr=14 RectNumber=0 DeckX=148 DeckY=162 DeckW= 124 DeckH= 48
+
+DeckNr=15 RectNumber=0 DeckX=276 DeckY=162 DeckW=  48 DeckH= 32
+
+*** End of deck rectangle section ***
+
 *** Beginning of Lift Data ***
 
 Label=01 Deck= 0 PosX=17 PosY= 7 LevelUp= 1 LevelDown=-1 LiftRow=0
