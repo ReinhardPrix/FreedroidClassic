@@ -50,7 +50,6 @@ int NoKeyPressed (void);
 void GreatDruidShow (void);
 
 void ShowElevators (void);
-void SetElColor (unsigned char *block, byte color);
 
 void AlleElevatorsGleichFaerben (void);
 
@@ -59,70 +58,11 @@ void PaintConsoleMenu (void);
 int WaitElevatorCounter = 0;
 
 
-byte ElevatorRaster[ELEVATOR_HEIGHT][ELEVATOR_LEN] = {
-  {0, 0, 0, 0, 0, 1, 5, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 1, 7, 0, 0, 0,
-   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-  {0, 0, 0, 0, 0, 2, 5, 5, 5, 5, 5, 5, 5, 0, 0, 1, 5, 5, 5, 5, 2, 5, 5, 5, 5,
-   6, 0, 0, 1, 7, 0, 0, 0, 0, 0, 0, 0, 0},
-  {0, 0, 0, 4, 5, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 2, 5, 5, 5, 5, 2, 5, 5, 5, 5,
-   5, 1, 5, 3, 5, 5, 5, 5, 6, 0, 0, 0, 0},
-  {12, 12, 12, 12, 12, 2, 12, 12, 12, 1, 8, 8, 8, 8, 8, 8, 8, 9, 4, 5, 2, 5,
-   5, 5, 5, 5, 2, 5, 5, 5, 5, 5, 5, 5, 5, 6, 0, 0},
-  {12, 12, 12, 12, 12, 2, 12, 12, 12, 2, 11, 11, 11, 11, 11, 11, 11, 11, 11,
-   11, 3, 1, 5, 5, 5, 5, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6},
-  {12, 12, 12, 12, 12, 2, 12, 12, 12, 2, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-   10, 10, 2, 4, 5, 5, 5, 2, 5, 5, 5, 5, 5, 5, 5, 5, 6, 0, 0},
-  {12, 12, 12, 12, 12, 2, 12, 12, 12, 2, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 2,
-   4, 5, 5, 5, 2, 5, 5, 5, 5, 5, 5, 6, 0, 0, 0, 0},
-  {12, 12, 12, 12, 12, 2, 12, 12, 12, 2, 11, 11, 11, 11, 11, 11, 11, 11, 11,
-   11, 11, 2, 4, 1, 5, 5, 3, 5, 5, 6, 0, 0, 0, 0, 0, 0, 0, 0},
-  {4, 5, 5, 5, 5, 2, 5, 5, 5, 2, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-   2, 4, 2, 5, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-  {4, 5, 5, 5, 5, 3, 5, 5, 5, 2, 8, 8, 8, 8, 8, 8, 8, 9, 15, 8, 8, 2, 4, 3, 0,
-   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-  {0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 11, 11, 11, 11, 11, 11, 11, 13, 16, 10, 10,
-   3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-  {0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 10, 10, 10, 10, 10, 10, 10, 14, 0, 0, 0, 0,
-   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-};
 
-
-byte ElevatorColors[ELEVATOR_HEIGHT][ELEVATOR_LEN] = {
-  {0, 0, 0, 0, 0, 18, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 21, 10, 0,
-   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-  {0, 0, 0, 0, 0, 18, 11, 11, 11, 11, 11, 11, 11, 0, 0, 20, 9, 9, 9, 9, 21, 9,
-   9, 9, 9, 9, 0, 0, 25, 9, 0, 0, 0, 0, 0, 0, 0, 0},
-  {0, 0, 0, 12, 12, 18, 12, 12, 12, 12, 12, 12, 12, 12, 12, 20, 8, 8, 8, 8,
-   21, 8, 8, 8, 8, 8, 24, 8, 25, 8, 8, 8, 8, 8, 0, 0, 0, 0},
-  {17, 17, 17, 17, 17, 18, 17, 17, 17, 19, 13, 13, 13, 13, 13, 13, 13, 13, 7,
-   7, 21, 7, 7, 7, 7, 7, 24, 7, 7, 7, 7, 7, 7, 7, 7, 7, 0, 0},
-  {17, 17, 17, 17, 17, 18, 17, 17, 17, 19, 13, 13, 13, 13, 13, 13, 13, 13, 13,
-   13, 21, 22, 6, 6, 6, 6, 24, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6},
-  {17, 17, 17, 17, 17, 18, 17, 17, 17, 19, 13, 13, 13, 13, 13, 13, 13, 13, 13,
-   13, 13, 22, 5, 5, 5, 5, 24, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 0},
-  {17, 17, 17, 17, 17, 18, 17, 17, 17, 19, 14, 14, 14, 14, 14, 14, 14, 14, 14,
-   14, 14, 22, 4, 4, 4, 4, 24, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0},
-  {17, 17, 17, 17, 17, 18, 17, 17, 17, 19, 14, 14, 14, 14, 14, 14, 14, 14, 14,
-   14, 14, 22, 3, 23, 3, 3, 24, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0},
-  {2, 2, 2, 2, 2, 18, 2, 2, 2, 19, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14,
-   22, 2, 23, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-  {1, 1, 1, 1, 1, 18, 1, 1, 1, 19, 15, 15, 15, 15, 15, 15, 15, 15, 16, 16, 16,
-   22, 1, 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-  {0, 0, 0, 0, 0, 0, 0, 0, 0, 19, 15, 15, 15, 15, 15, 15, 15, 15, 16, 16, 16,
-   22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-  {0, 0, 0, 0, 0, 0, 0, 0, 0, 19, 15, 15, 15, 15, 15, 15, 15, 15, 0, 0, 0, 0,
-   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-};
-
-
-
-/*@Function============================================================
-@Desc: EnterElevator(): does all the work if the Influencer enters an
-							elevator
-
-@Ret: voidn
-@Int:
-* $Function----------------------------------------------------------*/
+/*-----------------------------------------------------------------
+ * @Desc: does all the work when we enter an elevator
+ * 
+ *-----------------------------------------------------------------*/
 void
 EnterElevator (void)
 {
@@ -132,12 +72,12 @@ EnterElevator (void)
 
   DebugPrintf ("\nvoid EnterElevator(void): Function call confirmed.");
 
-  // Prevent distortion of framerate by the delay coming from 
-  // the time spend in the menu.
+  /* Prevent distortion of framerate by the delay coming from 
+   * the time spend in the menu. */
   Activate_Conservative_Frame_Computation();
 
-  // Prevent the influ from coming out of the elevator in transfer mode
-  // by turning off transfer mode as soon as the influ enters the elevator
+  /* Prevent the influ from coming out of the elevator in transfer mode
+   * by turning off transfer mode as soon as the influ enters the elevator */
   Me.status= ELEVATOR;
 
   UpdateInfoline();
@@ -145,7 +85,6 @@ EnterElevator (void)
 
   if ((curElev = GetCurrentElevator ()) == -1)
     {
-      gotoxy (2, 2);
       printf ("Elevator out of order, I'm so sorry !");
       return;
     }
@@ -298,78 +237,31 @@ EnterElevator (void)
   DebugPrintf ("\nvoid EnterElevator(void): Usual end of function reached.");
 }				/* EnterElevator */
 
-/*@Function============================================================
-@Desc: ShowElevators(): 	gibt Seitenansicht des Schiffs aus
-
-@Ret: void
-@Int:
-* $Function----------------------------------------------------------*/
+/*-----------------------------------------------------------------
+ * @Desc: show elevator view of the ship, and hightlight the current 
+ *        level + lift
+ *
+ *
+ *-----------------------------------------------------------------*/
 void
 ShowElevators (void)
 {
-  int row, col;
-  byte block;
-  byte color;
-  unsigned char *BlockPt;
-  int StartX, StartY;
-  int x, y;
   int curLevel = CurLevel->levelnum;
 
   DebugPrintf ("\nvoid ShowElevators(void): real function call confirmed.");
 
-  if (!PlusExtentionsOn)
-    {
-      StartX = USERFENSTERPOSX;
-      StartY = USERFENSTERPOSY + EL_BLOCK_HEIGHT + 5;
+  /* Zuerst Screen loeschen (InternalScreen) */
+  ClearGraphMem (RealScreen);
+  
+  /* Userfenster faerben */
+  SetUserfenster (EL_BG_COLOR, RealScreen);
+  DisplayRahmen (RealScreen);	/* Rahmen dazu */
+  SayLeftInfo (LeftInfo, RealScreen);
+  SayRightInfo (RightInfo, RealScreen);
 
-      /* Zuerst Screen loeschen (InternalScreen) */
-      ClearGraphMem (InternalScreen);
+  DisplayBlock (USERFENSTERPOSX, USERFENSTERPOSY, ElevatorPicture, 
+		USERFENSTERBREITE, USERFENSTERHOEHE, RealScreen);
 
-      /* Userfenster faerben */
-      SetUserfenster (EL_BG_COLOR, InternalScreen);
-
-      y = StartY;
-      for (row = 0; row < ELEVATOR_HEIGHT; row++)
-	{
-	  x = StartX;
-	  y += EL_BLOCK_HEIGHT;
-	  for (col = 0; col < ELEVATOR_LEN; col++)
-	    {
-	      block = ElevatorRaster[row][col];
-	      if (block != 0)
-		{
-		  BlockPt = ElevatorBlocks + block * EL_BLOCK_MEM;
-		  color = EL_STARTCOLOR + ElevatorColors[row][col];
-		  SetElColor (BlockPt, color);
-
-		  DisplayBlock (x, y,
-				BlockPt,
-				EL_BLOCK_LEN, EL_BLOCK_HEIGHT,
-				InternalScreen);
-		}		/* if block */
-
-	      x += EL_BLOCK_LEN;
-
-	    }			/* for row */
-
-	}			/* for col */
-
-      DisplayRahmen (InternalScreen);	/* Rahmen dazu */
-      SayLeftInfo (LeftInfo, InternalScreen);
-      SayRightInfo (RightInfo, InternalScreen);
-      AlleLevelsGleichFaerben ();
-      AlleElevatorsGleichFaerben ();
-
-      HilightLevel (curLevel);
-      SwapScreen ();		/* und anzeigen */
-      PrepareScaledSurface();
-      DebugPrintf ("\nvoid ShowElevators(void): end of function reached.");
-      return;
-    }
-
-  printf("\n\nUnreachable area reached in ShowElevators...\n\n Terminating...\n\n");
-  Terminate(ERR);
-  Load_PCX_Image (SEITENANSICHTBILD_PCX, RealScreen, FALSE);
   AlleLevelsGleichFaerben ();
   AlleElevatorsGleichFaerben ();
 
@@ -377,7 +269,7 @@ ShowElevators (void)
 
   DebugPrintf ("\nvoid ShowElevators(void): end of function reached.");
   return;
-}				/* ShowElevators() */
+} /* ShowElevators() */
 
 
 /*@Function============================================================
@@ -1024,77 +916,31 @@ ShowDeckMap (Level deck)
 void
 AlleLevelsGleichFaerben (void)
 {
-  static unsigned char *FarbFeldPointer = NULL;
   int i;
-  unsigned char rot = 0;
-  unsigned char gruen = 0;
-  unsigned char blau = 50;
 
-  if (!FarbFeldPointer)
-    {
-      FarbFeldPointer = MyMalloc (32 * 3);
-      if (!FarbFeldPointer)
-	{
-	  DebugPrintf (" Kein Speicher fuer AlleLev.");
-	  Terminate (-1);
-	}
-    }
-  for (i = 0; i < 16; i++)
-    {
-      FarbFeldPointer[i * 3] = rot;
-      FarbFeldPointer[i * 3 + 1] = gruen;
-      FarbFeldPointer[i * 3 + 2] = blau;
-    }
-  SetColors (EL_FIRSTCOLOR, 16, FarbFeldPointer);
-}				// void AlleLevelsGleichFaerben(void)
+  for (i = 0; i < curShip.num_levels; i++)
+    SetPalCol (EL_FIRST_LEVEL_COLOR + i, 0, 0, 30);
+
+  return;
+} /* void AlleLevelsGleichFaerben() */
 
 
-/*@Function============================================================
-@Desc: 	Alle Farben der Elevators in der Seitenansicht gleich setzen 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/*-----------------------------------------------------------------
+ * @Desc: Alle Farben der Elevators in der Seitenansicht gleich setzen 
+ *
+ *
+ *-----------------------------------------------------------------*/
 void
 AlleElevatorsGleichFaerben (void)
 {
-  //    static unsigned char* FarbFeldPointer=NULL;
-  //    int i;
-  //    unsigned char rot=0;
-  //    unsigned char gruen=0;
-  //    unsigned char blau=30;
-  //    static unsigned int FOfs;
-  //    static unsigned int FSeg;
-  //
-  //    if (!FarbFeldPointer) {
-  //            FarbFeldPointer=MyMalloc(32*3);
-  //            if (!FarbFeldPointer) {
-  //                    DebugPrintf(" Kein Speicher fuer AlleLev.");
-  //                    Terminate(-1);
-  //            }
-  //    }
-  //   
-  //    for (i=0;i<7;i++){
-  //            FarbFeldPointer[i*3]=rot;
-  //            FarbFeldPointer[i*3+1]=gruen;
-  //            FarbFeldPointer[i*3+2]=blau;
-  //    }
-  //    FSeg=FP_SEG(FarbFeldPointer);
-  //    FOfs=FP_OFF(FarbFeldPointer);
-  //
-  //   
-  //    asm{
-  //            push es
-  //            mov ax,1012h
-  //            mov bx,EL_FIRST_ELEVATOR_COLOR
-  //            mov cx,7
-  //            mov dx,FSeg
-  //            mov es,dx
-  //            mov dx,FOfs
-  //            int 10h
-  //            pop es
-  //    }
-}
+  int i;
+  curShip.num_lift_rows = 8;
+  for (i=0; i<curShip.num_lift_rows; i++)
+    SetPalCol (EL_FIRST_ROW_COLOR + i, 0, 0, 40);
+
+  return;
+
+} /* AlleElevatorsGleichFaerben() */
 
 
 
@@ -1112,7 +958,7 @@ HilightLevel (int Levelnummer)
   int gruen = 63;
   int blau = 33;
 
-  SetPalCol (Levelnummer + EL_FIRSTCOLOR, rot, gruen, blau);
+  SetPalCol ( EL_FIRST_LEVEL_COLOR + Levelnummer, rot, gruen, blau);
 }
 
 /*@Function============================================================
@@ -1128,30 +974,8 @@ HilightElevator (int ElevatorRow)
   int gruen = 63;
   int blau = 63;
 
-  SetPalCol (ElevatorRow + EL_FIRST_ELEVATOR_COLOR, rot, gruen, blau);
+  SetPalCol (ElevatorRow + EL_FIRST_ROW_COLOR, rot, gruen, blau);
 }
-
-/*@Function============================================================
-@Desc: SetElColor(unsigned char *block, int color):
-				Setzt die EL_FIRSTCOLOR in block auf color
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-SetElColor (unsigned char *block, byte color)
-{
-  int counter;
-  unsigned char *tmp = block;
-
-  for (counter = 0; counter < EL_BLOCK_HEIGHT * EL_BLOCK_LEN;
-       counter++, tmp++)
-    if ((*tmp >= EL_FIRSTCOLOR) && (*tmp <= EL_LASTCOLOR))
-      *tmp = color;
-
-  return;
-}
-
 
 /*@Function============================================================
 @Desc: 
@@ -1197,7 +1021,7 @@ ShipEmpty (void)
 {
   int i;
 
-  for (i = 0; i < ALLLEVELS; i++)
+  for (i = 0; i < curShip.num_levels; i++)
     {
       if (curShip.AllLevels[i] == NULL)
 	continue;
