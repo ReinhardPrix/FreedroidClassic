@@ -5,12 +5,8 @@ Welcome to
     FREEDROID :  R E A D M E
    --------------------------
 
-A Linux game inpired by Andrew Braybrook's classic Paradroid on 
-the good old Commodore C64 and Blizzards' Classics Diablo I/II.
-
-
-*** The rest of this document is hopelessly outdated!!! ***
-
+A Linux game by Johannes Prix and Reinhard Prix, inpired by 
+Andrew Braybrook's classic Paradroid on the good old Commodore C64.
 
 Installation & Compilation
 --------------------------
@@ -56,9 +52,7 @@ Contact
 =======
 In case of problems, read the documentation or mail to 
 
-* johannesprix at users dot sourceforge dot net   
-* r.prix@maths.soton.ac.uk 
-* freedroid-discussion@lists.sourceforge.net
+johannesprix@kfunigraz.ac.at and/or r.prix@maths.soton.ac.uk 
 
 And Now Have Fun with Freedroid!
 ================================

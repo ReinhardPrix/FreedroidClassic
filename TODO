@@ -4,13 +4,10 @@ Release TODO
 ============
 - write some Changelog summary vs 0.8.4
 - write a HappyPenguin announcement
-- update INSTALL instructions
+- update INSTALL-instructions, README, News etc..
 - produce the .tar.gz archive and test it
 - playtest on all possible machines
-- make a small man-page
-  (done!)
 - ? produce binary .tgz, rpm's and .deb packages? (later)
-- add some better manual about key-layout and game-instructions?
 
 Bugs
 =======
@@ -19,12 +16,6 @@ Preparing "final" release 1.0.0:
 
 Outstanding release-critical bugs (priority: high) 
 --------------------------------------------------
-- check if we cannot improve smoothness of scrolling/gameplay, 
-  maybe by reducing fps and explicitly keeping it constant..?? 
-  ..there always is some small 'jitter', worst on non-dma machines!
-  -> use RLE acceleration?
-  -> use double-buffer + HWSURF + SDL_Flip() to avoid flicker/shearing?
-
 - playtest on a _really_ slow machine...
 
 - adjust Alert params (->freedroid.rules)
@@ -33,11 +24,18 @@ Outstanding release-critical bugs (priority: high)
 
 - steal the 'Metal Edition' as an additional theme?
 
+- save Game option?
+
 Outstanding normal bugs (priority: normal)
 ------------------------------------------
 
 Outstanding tuning/design bugs and general TODO (priority: low)
 --------------------------------------------------------------
+- check if we cannot improve smoothness of scrolling/gameplay, 
+  maybe by reducing fps and explicitly keeping it constant..?? 
+  ..there always is some small 'jitter', worst on non-dma machines!
+  -> use RLE acceleration?
+  -> use double-buffer + HWSURF + SDL_Flip() to avoid flicker/shearing?
 
 Wishlist
 --------
