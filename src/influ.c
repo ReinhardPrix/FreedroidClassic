@@ -3756,23 +3756,59 @@ handle_player_talk_command ( int player_num )
     int obstacle_index ;
     obstacle* our_obstacle;
     char game_message_text[ 2000 ] ;
+    int our_enemy_index;
+    enemy* this_enemy;
 
+    //--------------------
+    // Maybe there is a robot/character below the current mouse cursor.
+    // In this case we try to talk to that bot/character.
+    //
+    our_enemy_index = GetLivingDroidBelowMouseCursor ( player_num ) ;
+    if ( our_enemy_index != (-1) )
+    {
+	this_enemy = & ( AllEnemys [ our_enemy_index ] );
+	
+	//--------------------
+	// Is it a hostile bot?  Then the bot will not let you do
+	// the first aid thing!  After all, he got no reason to trust
+	// you, right?
+	//
+	if ( ! this_enemy -> is_friendly )
+	{
+	    sprintf ( game_message_text , "You try to hack %s." , Druidmap [ this_enemy -> type ] . druidname );
+	    append_new_game_message ( game_message_text );
+	    Takeover ( our_enemy_index );
+	    return;
+	}
+
+	sprintf ( game_message_text , "You chat with %s." , Druidmap [ this_enemy -> type ] . druidname );
+	append_new_game_message ( game_message_text );
+	ChatWithFriendlyDroid ( this_enemy ) ;
+	return;
+
+    }
+
+    //--------------------
+    // Now if there wasn't any enemy below the mouse cursor (and only then)
+    // we look for an obstacle to apply our first-aid skill to.  Most likely
+    // this will not do anything, but for completeness we handle the case.
+    //
     obstacle_index = GetObstacleBelowMouseCursor ( player_num ) ;
     if ( obstacle_index == (-1) )
     {
 	GiveStandardErrorMessage ( __FUNCTION__  , 
-				   "Talk command received, but there isn't any obstacle under the current mouse cursor.  Has it maybe moved away?  I'll simply ignore this request." ,
+				   "Talk command received, but there isn't any person or obstacle under the current mouse cursor.  Has it maybe moved away?  I'll simply ignore this request." ,
 				   NO_NEED_TO_INFORM, IS_WARNING_ONLY );
 	return;
     }
     our_obstacle = & ( curShip . AllLevels [ Me [ player_num ] . pos . z ] -> obstacle_list [ obstacle_index ] ) ;
 
-    DebugPrintf ( -4 , "\n%s(): talking to obstacle of type : %d. " , __FUNCTION__ , our_obstacle -> type );
+    DebugPrintf ( -4 , "\n%s(): applying talk skill to obstacle of type : %d. " , __FUNCTION__ , our_obstacle -> type );
     
-    sprintf ( game_message_text , "Talking to obstacle of type %d." , our_obstacle -> type );
+    sprintf ( game_message_text , "Talking to an obstacle of type %d.  Ok.  You've told it everything.  Maybe it just needs more time to digest the news." , our_obstacle -> type );
     append_new_game_message ( game_message_text );
 
-}; // void handle_player_repair_command ( int player_num ) 
+}; // void handle_player_talk_command ( int player_num ) 
 
 /* ----------------------------------------------------------------------
  *
@@ -3851,7 +3887,7 @@ handle_player_first_aid_command ( int player_num )
     sprintf ( game_message_text , "Applying first aid to obstacle of type %d.  Ok.  You've made sure it doesn't bleed.  That's what you wanted, right?" , our_obstacle -> type );
     append_new_game_message ( game_message_text );
 
-}; // void handle_player_repair_command ( int player_num ) 
+}; // void handle_player_first_aid_command ( int player_num ) 
 
 /* ----------------------------------------------------------------------
  *
@@ -3879,7 +3915,7 @@ handle_player_attack_command ( int player_num )
     sprintf ( game_message_text , "Attacking obstacle of type %d." , our_obstacle -> type );
     append_new_game_message ( game_message_text );
 
-}; // void handle_player_repair_command ( int player_num ) 
+}; // void handle_player_attack_command ( int player_num ) 
 
 /* ----------------------------------------------------------------------
  *
@@ -3907,7 +3943,7 @@ handle_player_pickpocket_command ( int player_num )
     sprintf ( game_message_text , "Picking pockets of obstacle of type %d." , our_obstacle -> type );
     append_new_game_message ( game_message_text );
 
-}; // void handle_player_repair_command ( int player_num ) 
+}; // void handle_player_pickpocket_command ( int player_num ) 
 
 /* ----------------------------------------------------------------------
  * If the user clicked his mouse, this might have several reasons.  It 
