@@ -1420,7 +1420,8 @@ FireBullet ( int PlayerNum )
 	   ( fabsf ( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . pos . x - 
 		     Me [ PlayerNum ] . pos . x ) < FORCE_FIRE_DISTANCE ) &&
 	   ( fabsf ( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . pos . y - 
-		     Me [ PlayerNum ] . pos . y ) < FORCE_FIRE_DISTANCE  ) )
+		     Me [ PlayerNum ] . pos . y ) < FORCE_FIRE_DISTANCE  ) &&
+	   ( !AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . is_friendly ) )
 	{
 	  // don't return, but do the attack...
 	  //

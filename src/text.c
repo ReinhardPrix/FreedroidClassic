@@ -190,7 +190,7 @@ DisplaySubtitle( char* SubtitleText , void* SubtitleBackground )
   //--------------------
   // Now we can display the text and update the screen...
   //
-  // DisplayTextWithScrolling ( SubtitleText , Subtitle_Window.x , Subtitle_Window.y , &Subtitle_Window , SubtitleBackground );
+  SDL_SetClipRect( Screen, NULL );
   DisplayText ( SubtitleText , Subtitle_Window.x , Subtitle_Window.y , &Subtitle_Window );
   SDL_UpdateRect ( Screen , Subtitle_Window.x , Subtitle_Window.y , Subtitle_Window.w , Subtitle_Window.h );
 
@@ -218,6 +218,16 @@ PrepareMultipleChoiceDialog ( int Enum )
   //
   if ( Background == NULL )
     Background = IMG_Load( find_file ( "backgrounds/chat_test.jpg" , GRAPHICS_DIR, FALSE ) );
+  else
+    {
+      //--------------------
+      // when there is still an old surface present, it might be tainted and we 
+      // therefore generate a new fresh one without the image of the previous
+      // discussion partner on it.
+      //
+      SDL_FreeSurface( Background );
+      Background = IMG_Load( find_file ( "backgrounds/chat_test.jpg" , GRAPHICS_DIR, FALSE ) );
+    }
   if ( Background == NULL )
     {
       printf("\n\nChatWithFriendlyDroid: ERROR LOADING FILE!!!!  Error code: %s " , SDL_GetError() );
