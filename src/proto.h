@@ -356,7 +356,7 @@ EXTERN int LevelEmpty (void);
 void GreatDruidShow (void);
 EXTERN void show_droid_info (int droidtype, int page);
 void ShowLifts (int level, int liftrow);
-void PaintConsoleMenu (int flag);
+void PaintConsoleMenu (int pos,int flag);
 
 /* text.c */
 #undef EXTERN

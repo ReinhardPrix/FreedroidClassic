@@ -66,19 +66,17 @@ SDL_Rect Cons_Droid_Rect = {32, 180, 100, 256};
 SDL_Rect Cons_Menu_Rect = {60, 180, 100, 256};
 SDL_Rect Cons_Text_Rect = {180, 180, SCREENLEN-175, 305}; 
 
-SDL_Rect Cons_Menu_Rect0 = {60, 180 + 0*64, 100, 64};
-SDL_Rect Cons_Menu_Rect1 = {60, 180 + 1*64, 100, 64};
-SDL_Rect Cons_Menu_Rect2 = {60, 180 + 2*64, 100, 64};
-SDL_Rect Cons_Menu_Rect3 = {60, 180 + 3*64, 100, 64};
-
+SDL_Rect Cons_Menu_Rects[4] = {
+  {60, 180 + 0*64, 100, 64},
+  {60, 180 + 1*64, 100, 64},
+  {60, 180 + 2*64, 100, 64},
+  {60, 180 + 3*64, 100, 64} };
 
 SDL_Rect up_rect;
 SDL_Rect down_rect;
 SDL_Rect left_rect;
 SDL_Rect right_rect;
 
-
-int ConsoleMenuPos=0;
 
 /*-----------------------------------------------------------------
  * @Desc: does all the work when we enter a lift
@@ -299,6 +297,7 @@ void
 EnterKonsole (void)
 {
   int ReenterGame = FALSE;
+  int i, pos;
   SDL_Rect TmpRect;
   // Prevent distortion of framerate by the delay coming from 
   // the time spend in the menu.
@@ -319,8 +318,8 @@ EnterKonsole (void)
 
   SetCurrentFont( Para_BFont );
 
-  ConsoleMenuPos=0;
-  PaintConsoleMenu (0);
+  pos = 0;   // starting menu position
+  PaintConsoleMenu (pos, 0);
 
   /* Gesamtkonsolenschleife */
 
@@ -335,71 +334,61 @@ EnterKonsole (void)
       if (UpPressed () || WheelUpPressed())
 	{
 	  MoveMenuPositionSound ();
-	  if (ConsoleMenuPos > 0) ConsoleMenuPos--;
-	  else ConsoleMenuPos = 3;
-	  PaintConsoleMenu (UPDATE_ONLY);
+	  if (pos > 0) pos--;
+	  else pos = 3;
+	  SDL_WarpMouse (Cons_Menu_Rects[pos].x+Cons_Menu_Rects[pos].w/2, 
+			 Cons_Menu_Rects[pos].y+Cons_Menu_Rects[pos].h/2);
+
+	  PaintConsoleMenu (pos, UPDATE_ONLY);
 	  while (UpPressed());
 	}
       if (DownPressed () || WheelDownPressed())
 	{
 	  MoveMenuPositionSound ();
-	  if (ConsoleMenuPos < 3) ConsoleMenuPos++;
-	  else ConsoleMenuPos = 0;
-	  PaintConsoleMenu (UPDATE_ONLY);
+	  if (pos < 3) pos++;
+	  else pos = 0;
+	  SDL_WarpMouse (Cons_Menu_Rects[pos].x+Cons_Menu_Rects[pos].w/2, 
+			 Cons_Menu_Rects[pos].y+Cons_Menu_Rects[pos].h/2);
+
+	  PaintConsoleMenu (pos, UPDATE_ONLY);
 	  while (DownPressed());
 	}
-      if (CursorIsOnRect (&Cons_Menu_Rect0) && (ConsoleMenuPos != 0) )
-	{
-	  MoveMenuPositionSound ();
-	  ConsoleMenuPos = 0;
-	  PaintConsoleMenu (UPDATE_ONLY);
-	}
-      if (CursorIsOnRect (&Cons_Menu_Rect1) && (ConsoleMenuPos != 1) )
-	{
-	  MoveMenuPositionSound ();
-	  ConsoleMenuPos = 1;
-	  PaintConsoleMenu (UPDATE_ONLY);
-	}
-      if (CursorIsOnRect (&Cons_Menu_Rect2) && (ConsoleMenuPos != 2) )
-	{
-	  MoveMenuPositionSound ();
-	  ConsoleMenuPos = 2;
-	  PaintConsoleMenu (UPDATE_ONLY);
-	}
-      if (CursorIsOnRect (&Cons_Menu_Rect3) && (ConsoleMenuPos != 3) )
-	{
-	  MoveMenuPositionSound ();
-	  ConsoleMenuPos = 3;
-	  PaintConsoleMenu (UPDATE_ONLY);
-	}
-	
+
+      // check if the mouse-cursor is on any of the console-menu points
+      for (i=0; i < 4; i++)
+	if (CursorIsOnRect (&Cons_Menu_Rects[i]) && (pos != i) )
+	  {
+	    MoveMenuPositionSound ();
+	    pos = i;
+	    PaintConsoleMenu (pos, UPDATE_ONLY);
+	  }
 
       if (SpacePressed ())
 	{
 	  MenuItemSelectedSound();
 	  while (SpacePressed());
-	  switch (ConsoleMenuPos)
+	  switch (pos)
 	    {
 	    case 0:
 	      ReenterGame = TRUE;
 	      break;
 	    case 1:
 	      GreatDruidShow ();
-	      PaintConsoleMenu (0);
+	      PaintConsoleMenu (pos, 0);
 	      break;
 	    case 2:
 	      ShowDeckMap (CurLevel);
-	      PaintConsoleMenu(0);
+	      PaintConsoleMenu(pos, 0);
 	      break;
 	    case 3:
 	      Fill_Rect(User_Rect, Black);
 	      ShowLifts (CurLevel->levelnum, -1);
 	      Wait4Fire();
-	      PaintConsoleMenu(0);
+	      PaintConsoleMenu(pos, 0);
 	      break;
 	    default: 
-	      DebugPrintf (1, "Konsole menu out of bounds... pos = %d", ConsoleMenuPos);
-	      ConsoleMenuPos = 0;
+	      DebugPrintf (1, "Konsole menu out of bounds... pos = %d", pos);
+	      pos = 0;
 	      break;
 	    } // switch
 	} // if SpacePressed
@@ -427,11 +416,11 @@ EnterKonsole (void)
  *  NOTE: this function does not actually _display_ anything yet,
  *        it just prepares the display, so you need
  *        to call SDL_Flip() to display the result!
- *
+ *  pos  : 0<=pos<=3: which menu-position is currently active?
  *  flag : UPDATE_ONLY  only update the console-menu bar, not text & background
  *-----------------------------------------------------------------*/
 void
-PaintConsoleMenu (int flag)
+PaintConsoleMenu (int pos, int flag)
 {
   char MenuText[200];
   SDL_Rect src;
@@ -453,7 +442,7 @@ PaintConsoleMenu (int flag)
 
     } // only if not UPDATE_ONLY was required 
 
-  src.x=(MENUITEMLENGTH+2)*ConsoleMenuPos;
+  src.x=(MENUITEMLENGTH+2)*pos;
   src.y=0;
   src.w=MENUITEMLENGTH;
   src.h=MENUITEMHEIGHT;
