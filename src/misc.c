@@ -456,21 +456,21 @@ adapt_button_positions_to_screen_resolution( void )
 int
 MouseCursorIsInRect ( SDL_Rect* our_rect , int x , int y )
 {
-  //--------------------
-  // Now we can start to check if the mouse cursor really is on that
-  // rectangle or not.
-  //
-  if ( x > our_rect -> x + our_rect -> w ) return ( FALSE );
-  if ( x < our_rect -> x ) return ( FALSE );
-  if ( y > our_rect -> y + our_rect -> h ) return ( FALSE );
-  if ( y < our_rect -> y ) return ( FALSE );
-
-  //--------------------
-  // So since the cursor is not outside of this rectangle, it must
-  // we inside, and so we'll return this answer.
-  //
-  return ( TRUE );
-
+    //--------------------
+    // Now we can start to check if the mouse cursor really is on that
+    // rectangle or not.
+    //
+    if ( x > our_rect -> x + our_rect -> w ) return ( FALSE );
+    if ( x < our_rect -> x ) return ( FALSE );
+    if ( y > our_rect -> y + our_rect -> h ) return ( FALSE );
+    if ( y < our_rect -> y ) return ( FALSE );
+    
+    //--------------------
+    // So since the cursor is not outside of this rectangle, it must
+    // we inside, and so we'll return this answer.
+    //
+    return ( TRUE );
+    
 }; // int MouseCursorIsInRect( SDL_rect* our_rect , int x , int y )
 
 /* ----------------------------------------------------------------------

@@ -264,7 +264,7 @@ blit_our_own_mouse_cursor ( void )
     //
     if ( first_call )
     {
-	for ( i = 0 ; i < 4 ; i ++ )
+	for ( i = 0 ; i < 6 ; i ++ )
 	{
 	    sprintf ( constructed_filename , "mouse_cursor_%04d.png" , i );
 	    fpath = find_file ( constructed_filename , GRAPHICS_DIR, FALSE );
@@ -293,6 +293,14 @@ Error loading flag image.",
     {
 	switch ( global_ingame_mode )
 	{
+	    case GLOBAL_INGAME_MODE_SCROLL_UP :
+		blit_open_gl_texture_to_screen_position ( mouse_cursors [ 4 ] , 
+							  GetMousePos_x () , GetMousePos_y () , TRUE );
+		break;
+	    case GLOBAL_INGAME_MODE_SCROLL_DOWN :
+		blit_open_gl_texture_to_screen_position ( mouse_cursors [ 5 ] , 
+							  GetMousePos_x () , GetMousePos_y () , TRUE );
+		break;
 	    case GLOBAL_INGAME_MODE_IDENTIFY :
 		blit_open_gl_texture_to_screen_position ( mouse_cursors [ 1 ] , 
 							  GetMousePos_x () , GetMousePos_y () , TRUE );
@@ -341,6 +349,13 @@ blit_mouse_cursor_corona ( void )
     char* fpath;
     moderately_finepoint offset_vector;
     int our_obstacle_index ;
+
+    //--------------------
+    // In case of scroll modes, we don't have to blit any corona...
+    //
+    if ( ( global_ingame_mode == GLOBAL_INGAME_MODE_SCROLL_UP ) ||
+	 ( global_ingame_mode == GLOBAL_INGAME_MODE_SCROLL_DOWN ) )
+	return;
 
     //--------------------
     // On the first function call ever, we load the surfaces for the

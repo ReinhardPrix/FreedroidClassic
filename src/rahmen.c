@@ -1504,7 +1504,7 @@ append_new_game_message ( char* game_message_text )
     strcat ( game_message_protocol , "\n* " ) ;
     strcat ( game_message_protocol , game_message_text ) ;
 
-    
+    game_message_protocol_scroll_override_from_user = 0 ;
 
 }; // void append_new_game_message ( char* game_message_text )
 
@@ -1551,11 +1551,11 @@ display_current_game_messages ( void )
 	// reset immediately
 	//
 	protocol_offset = 0 ;
-	chat_protocol_scroll_override_from_user = 0 ;
+	game_message_protocol_scroll_override_from_user = 0 ;
     }
     else
 	protocol_offset = ( FontHeight ( GetCurrentFont() ) * our_stretch_factor ) 
-	    * ( lines_needed - AVERAGE_LINES_IN_MESSAGE_WINDOW + chat_protocol_scroll_override_from_user ) * 1.04 ;
+	    * ( lines_needed - AVERAGE_LINES_IN_MESSAGE_WINDOW + game_message_protocol_scroll_override_from_user ) * 1.04 ;
 
     //--------------------
     // Now if the protocol offset is really negative, we don't really want
@@ -1563,7 +1563,7 @@ display_current_game_messages ( void )
     //
     if ( protocol_offset < 0 )
     {
-	chat_protocol_scroll_override_from_user ++ ;
+	game_message_protocol_scroll_override_from_user ++ ;
 	protocol_offset = 0 ;
     }
 

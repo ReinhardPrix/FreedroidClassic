@@ -2106,7 +2106,24 @@ adapt_global_mode_for_player ( int player_num )
     static int left_pressed_previous_frame = FALSE ;
 
     //--------------------
-    // At first we need to find the obstacle under the current mouse
+    // At first we check if maybe the player is scrolling the game
+    // message window.
+    //
+    SDL_Rect upper_rect = { ( 65 * GameConfig . screen_width ) / 640 , GameConfig . screen_height - (70 * GameConfig . screen_height) / 480 , 500 , (70/2) } ;
+    SDL_Rect lower_rect = { ( 65 * GameConfig . screen_width ) / 640 , GameConfig . screen_height - ( (70/2) * GameConfig . screen_height) / 480 , 500 , (70/2) } ;
+    if ( MouseCursorIsInRect ( &upper_rect , GetMousePos_x() , GetMousePos_y() ) )
+    {
+	global_ingame_mode = GLOBAL_INGAME_MODE_SCROLL_UP ;
+	return;
+    }
+    if ( MouseCursorIsInRect ( &lower_rect , GetMousePos_x() , GetMousePos_y() ) )
+    {
+	global_ingame_mode = GLOBAL_INGAME_MODE_SCROLL_DOWN ;
+	return;
+    }
+
+    //--------------------
+    // Now we need to find the obstacle under the current mouse
     // corsor.  If there isn't any obstacle under it, then the global
     // mode can be (more or less) reset.
     //
@@ -3651,6 +3668,26 @@ AnalyzePlayersMouseClick ( int player_num )
 
     switch ( global_ingame_mode )
     {
+	case GLOBAL_INGAME_MODE_SCROLL_UP:
+	    game_message_protocol_scroll_override_from_user -- ;
+	    //--------------------
+	    // To stop any movement, we wait for the release of the 
+	    // mouse button.
+	    //
+	    while ( SpacePressed() );
+	    Activate_Conservative_Frame_Computation();
+
+	    break;
+	case GLOBAL_INGAME_MODE_SCROLL_DOWN:
+	    game_message_protocol_scroll_override_from_user ++ ;
+	    //--------------------
+	    // To stop any movement, we wait for the release of the 
+	    // mouse button.
+	    //
+	    while ( SpacePressed() );
+	    Activate_Conservative_Frame_Computation();
+
+	    break;
 	case GLOBAL_INGAME_MODE_IDENTIFY:
 	    handle_player_identification_command( 0 );
 	    global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
