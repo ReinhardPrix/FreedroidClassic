@@ -1805,11 +1805,18 @@ Level_Editor(void)
   int SpecialMapValue;
   int OriginWaypoint = (-1);
   char* NumericInputString;
+  char* NewCommentOnThisSquare;
   char* OldMapPointer;
-
+  char linebuf[10000];
+  SDL_Rect Editor_Window;
   enum
     { SAVE_LEVEL_POSITION=1, CHANGE_LEVEL_POSITION, CHANGE_TILE_SET_POSITION, CHANGE_SIZE_X, CHANGE_SIZE_Y, SET_LEVEL_NAME , SET_BACKGROUND_SONG_NAME , SET_LEVEL_COMMENT, QUIT_LEVEL_EDITOR_POSITION };
-
+  
+  Editor_Window.x=User_Rect.x;
+  Editor_Window.y=User_Rect.y;  
+  Editor_Window.w=User_Rect.w;
+  Editor_Window.h=User_Rect.h;
+  
   while ( !Done )
     {
       Weiter=FALSE;
@@ -1848,6 +1855,37 @@ Level_Editor(void)
 	    {
 	      if ( rintf(Me.pos.y) < CurLevel->ylen-1 ) Me.pos.y+=1;
 	      while (DownPressed());
+	    }
+
+	  //--------------------
+	  // With the 'S' key, you can attach a statement for the influencer to 
+	  // say to a given location, i.e. the location the map editor cursor
+	  // currently is on.
+	  //
+	  if ( SPressed () )
+	    {
+	      while (SPressed());
+	      SetCurrentFont( FPS_Display_BFont );
+	      // CenteredPutString   ( ne_screen ,  6*FontHeight(Menu_BFont), "Please enter new value (blindly):");
+	      DisplayText ( "\n Please enter comment below: \n" , -1 , -1 , &User_Rect );
+	      SDL_Flip( ne_screen );
+	      NewCommentOnThisSquare = GetString( 1000, FALSE );  // TRUE currently not implemented
+	      for ( i = 0 ; i < MAX_STATEMENTS_PER_LEVEL ; i ++ )
+		{
+		  if ( CurLevel->StatementList[ i ].x == (-1) ) break;
+		}
+	      if ( i == MAX_STATEMENTS_PER_LEVEL ) 
+		{
+		  DisplayText ( "\nNo more free comment position.  Using first. " , -1 , -1 , &User_Rect );
+		  i=0;
+		  SDL_Flip ( ne_screen );
+		  getchar_raw();
+		  // Terminate( ERR );
+		}
+
+	      CurLevel->StatementList[ i ].Statement_Text = NewCommentOnThisSquare;
+	      CurLevel->StatementList[ i ].x = rintf( Me.pos.x );
+	      CurLevel->StatementList[ i ].y = rintf( Me.pos.y );
 	    }
 
 	  //--------------------
@@ -2153,25 +2191,31 @@ Level_Editor(void)
 	  // Highlight currently selected option with an influencer before it
 	  PutInfluence( SINGLE_PLAYER_MENU_POINTER_POS_X, (MenuPosition+3) * (FontHeight(Menu_BFont)) - Block_Width/4 );
 
-	  CenteredPutString   ( ne_screen ,  4*FontHeight(Menu_BFont),    
-				"Save whole ship to 'Testship.shp'");
-	  CenteredPrintString ( ne_screen ,  5*FontHeight(Menu_BFont),    
-				"Current: %d.  Level Up/Down" , CurLevel->levelnum );
-	  CenteredPutString   ( ne_screen ,  6*FontHeight(Menu_BFont),    
-				"Change tile set");
-	  CenteredPrintString ( ne_screen ,  7*FontHeight(Menu_BFont),    
-				"Levelsize in X: %d.  Shrink/Enlarge" , CurLevel->xlen );
-	  CenteredPrintString ( ne_screen ,  8*FontHeight(Menu_BFont),    
-				"Levelsize in Y: %d.  Shrink/Enlarge" , CurLevel->ylen );
-	  CenteredPrintString ( ne_screen ,  9*FontHeight(Menu_BFont),    
-				"Level name: %s" , CurLevel->Levelname );
-	  CenteredPrintString ( ne_screen ,  10*FontHeight(Menu_BFont),    
-				"Background music file name: %s" , CurLevel->Background_Song_Name );
-	  CenteredPrintString ( ne_screen ,  11*FontHeight(Menu_BFont),    
-				"Set Level Comment: %s" , CurLevel->Level_Enter_Comment );
-	  CenteredPutString   ( ne_screen ,  12*FontHeight(Menu_BFont),    
-				"Quit Level Editor");
-	  
+	  DisplayText ( "Save whole ship to 'Testship.shp'" , User_Rect.x , 4*FontHeight(Menu_BFont), &Editor_Window );
+
+	  sprintf( linebuf, "Current: %d.  Level Up/Down" , CurLevel->levelnum );
+	  DisplayText ( linebuf , User_Rect.x , 5*FontHeight(Menu_BFont), &Editor_Window );
+
+	  DisplayText ( "Change tile set" , User_Rect.x , 6*FontHeight(Menu_BFont), &Editor_Window );
+
+	  sprintf( linebuf, "Levelsize in X: %d.  Shrink/Enlarge" , CurLevel->xlen );
+	  DisplayText ( linebuf , User_Rect.x , 7*FontHeight(Menu_BFont), &Editor_Window );
+
+	  sprintf( linebuf, "Levelsize in Y: %d.  Shrink/Enlarge" , CurLevel->ylen  );
+	  DisplayText ( linebuf , User_Rect.x , 8*FontHeight(Menu_BFont), &Editor_Window );
+
+	  sprintf( linebuf, "Level name: %s" , CurLevel->Levelname );
+	  DisplayText ( linebuf , User_Rect.x , 9*FontHeight(Menu_BFont), &Editor_Window );
+
+	  sprintf( linebuf, "Background music file name: %s" , CurLevel->Background_Song_Name );
+	  DisplayText ( linebuf , User_Rect.x , 10*FontHeight(Menu_BFont), &Editor_Window );
+
+	  sprintf( linebuf, "Set Level Comment: %s" , CurLevel->Level_Enter_Comment );
+	  DisplayText ( linebuf , User_Rect.x , 11*FontHeight(Menu_BFont), &Editor_Window );
+
+	  sprintf( linebuf, "Quit Level Editor" );
+	  DisplayText ( linebuf , User_Rect.x , 12*FontHeight(Menu_BFont), &Editor_Window );
+
 	  SDL_Flip ( ne_screen );
 	  
 	  // Wait until the user does SOMETHING
