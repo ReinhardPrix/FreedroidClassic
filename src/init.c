@@ -245,25 +245,25 @@ InitNewGame (void)
     {
     case 0:
       Me.pos.x = BLOCKBREITE*4;
-      Me.pos.y = BLOCKHOEHE*2;
+      Me.pos.y = BLOCKHOEHE*1.5;
       CurLevel = curShip.AllLevels[4];
       break;
 
     case 1:
       Me.pos.x = BLOCKBREITE*4;
-      Me.pos.y = BLOCKHOEHE*2;
+      Me.pos.y = BLOCKHOEHE*1.5;
       CurLevel = curShip.AllLevels[5];
       break;
 
     case 2:
       Me.pos.x = BLOCKBREITE*4;
-      Me.pos.y = BLOCKHOEHE*2;
+      Me.pos.y = BLOCKHOEHE*1.5;
       CurLevel = curShip.AllLevels[6];
       break;
 
     case 3:
       Me.pos.x = BLOCKBREITE*4;
-      Me.pos.y = BLOCKHOEHE*2;
+      Me.pos.y = BLOCKHOEHE*1.5;
       CurLevel = curShip.AllLevels[7];
       break;
 

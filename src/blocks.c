@@ -238,51 +238,6 @@ IsolateBlock (unsigned char *Parameter_screen,
 
 
 /*-----------------------------------------------------------------
- * Diese Prozedur isoliert ueber Aufrufe der Funktion GetBlock aus dem
- * Anfangsbild alle Bloecke, die benoetigt werden und legt diese im Speicher
- * ab
- * 
- *   Parameter: keine
- *-----------------------------------------------------------------*/
-void
-GetMapBlocks (void)
-{
-#ifdef NEW_ENGINE
-  return;
-#else
-
-  int i;
-  unsigned char *tmp;
-
-  MapBlocks = (unsigned char *) MyMalloc (BLOCKANZAHL * BLOCKMEM + 100);
-  Load_PCX_Image (BLOCKBILD1_PCX, InternalScreen, FALSE);
-
-  tmp = MapBlocks;
-
-  for (i = 0; i < 9; tmp += BLOCKMEM, i++)
-    IsolateBlock (InternalScreen, tmp, i * (BLOCKBREITE + 1), 0, BLOCKBREITE,
-		  BLOCKHOEHE);
-
-  for (i = 0; i < 9; tmp += BLOCKMEM, i++)
-    IsolateBlock (InternalScreen, tmp, i * (BLOCKBREITE + 1), BLOCKHOEHE + 1,
-		  BLOCKBREITE, BLOCKHOEHE);
-
-  for (i = 0; i < 9; tmp += BLOCKMEM, i++)
-    IsolateBlock (InternalScreen, tmp, i * (BLOCKBREITE + 1),
-		  BLOCKHOEHE * 2 + 2, BLOCKBREITE, BLOCKHOEHE);
-
-  for (i = 0; i < 9; tmp += BLOCKMEM, i++)
-    IsolateBlock (InternalScreen, tmp, i * (BLOCKBREITE + 1),
-		  BLOCKHOEHE * 3 + 3, BLOCKBREITE, BLOCKHOEHE);
-
-  for (i = 0; i < 7; tmp += BLOCKMEM, i++)
-    IsolateBlock (InternalScreen, tmp, i * (BLOCKBREITE + 1),
-		  BLOCKHOEHE * 4 + 4, BLOCKBREITE, BLOCKHOEHE);
-
-#endif // !NEW_ENGINE
-}
-
-/*-----------------------------------------------------------------
  * @Desc: loads picture file, transfers blocks into main block-surface
  *        (ne_blocks), and fills SDL_Rect array with the appropriate 
  *        coordinates. 
@@ -323,8 +278,8 @@ ne_get_blocks (char *picfile, int num_blocks, int blocks_per_line,
   /* now copy the individual map-blocks into ne_blocks */
   for (i=0; i < num_blocks; i++)
     {
-      rect.x = (i%blocks_per_line)*(BLOCK_WIDTH+1);
-      rect.y = (source_line+i/blocks_per_line)*(BLOCK_HEIGHT+1);
+      rect.x = (i%blocks_per_line)*(BLOCK_WIDTH+2);
+      rect.y = (source_line+i/blocks_per_line)*(BLOCK_HEIGHT+2);
       rect.w = BLOCK_WIDTH;
       rect.h = BLOCK_HEIGHT;
       
@@ -365,8 +320,8 @@ ne_get_digit_blocks (char *picfile, int num_blocks, int blocks_per_line,
   for (i=0; i < num_blocks; i++)
     {
       rect.x = (i%blocks_per_line)*(DIGITLENGTH);
-      rect.y = (source_line+i/blocks_per_line)*(BLOCK_HEIGHT+1);
-      rect.w = DIGITLENGTH-1;
+      rect.y = (source_line+i/blocks_per_line)*(BLOCK_HEIGHT+2);
+      rect.w = DIGITLENGTH-3;
       rect.h = DIGITHEIGHT;
       
       ret[i].x = i*DIGITLENGTH;
@@ -406,7 +361,7 @@ ne_get_rahmen_block (char *picfile, int num_blocks, int blocks_per_line,
   for (i=0; i < num_blocks; i++)
     {
       rect.x = (i%blocks_per_line)*(DIGITLENGTH);
-      rect.y = (source_line+i/blocks_per_line)*(BLOCK_HEIGHT+1);
+      rect.y = (source_line+i/blocks_per_line)*(BLOCK_HEIGHT+2);
       rect.w = RAHMENBREITE;
       rect.h = RAHMENHOEHE;
       
