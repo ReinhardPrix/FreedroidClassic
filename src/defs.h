@@ -600,8 +600,6 @@ enum _directions
 #define DOWN_WALL_BIT 8
 
 #define MAX_ENEMYS_ON_SHIP	1000
-#define MAX_REQUESTS_PER_DROID 5
-#define MAX_CHAT_KEYWORDS_PER_DROID 30
 #define MAX_INFLU_POSITION_HISTORY 10000
 #define MAX_MISSIONS_IN_GAME 10         // how many missions can there be at most in Freedroid
 #define MAX_MISSION_TRIGGERED_ACTIONS 10

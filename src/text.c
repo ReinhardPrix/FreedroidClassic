@@ -1068,12 +1068,8 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , int Enum )
 void 
 ChatWithFriendlyDroid( int Enum )
 {
-  char* RequestString;
-  char* DecisionString;
   int i ;
-  char ReplyString[10000];
   SDL_Rect Chat_Window;
-  int MenuSelection = (-1) ;
   char* DialogMenuTexts[ MAX_ANSWERS_PER_PERSON ];
 
   Chat_Window.x=242; Chat_Window.y=100; Chat_Window.w=380; Chat_Window.h=314;
@@ -1099,247 +1095,37 @@ ChatWithFriendlyDroid( int Enum )
   // So we wait till it's released...
   while (SpacePressed());
   
+  //--------------------
+  // We clean out the chat roster from any previous use
+  //
+  InitChatRosterForNewDialogue(  );
+
   if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "CHA" ) == 0 )
     {
-
-      //--------------------
-      // We clean out the chat roster from any previous use
-      //
-      InitChatRosterForNewDialogue(  );
-
-      //--------------------
-      // Now we load the chat roster with the info from the chat info file
-      //
       LoadChatRosterWithChatSequence ( "CHA" );
-
       DoChatFromChatRosterData( 0 , PERSON_CHA , Enum );
-
-      return;
-
     } // end of conversation with Chandra.
-
-  //**********************************************************************
-  // Here comes the dialog interface for conversation with SORENSON, the
-  // SOR person for short.
-  //
-  // This should be a teacher of magical abilities.
-  // He does not assign any quests so far.
-  //
-  if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "SOR" ) == 0 )
+  else if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "SOR" ) == 0 )
     {
-      //--------------------
-      // We clean out the chat roster from any previous use
-      //
-      InitChatRosterForNewDialogue(  );
-
-      //--------------------
-      // Now we load the chat roster with the info from the chat info file
-      //
       LoadChatRosterWithChatSequence ( "SOR" );
-
       DoChatFromChatRosterData( 0 , PERSON_SOR , Enum );
-
-      return;
-
     }
-
-  if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "614" ) == 0 )
+  else if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "614" ) == 0 )
     {
-
-      //--------------------
-      // We clean out the chat roster from any previous use
-      //
-      InitChatRosterForNewDialogue(  );
-
-      //--------------------
-      // Now we load the chat roster with the info from the chat info file
-      //
       LoadChatRosterWithChatSequence ( "614" );
-
       DoChatFromChatRosterData( 0 , PERSON_614 , Enum );
-
-      //--------------------
-      // Since there won't be anyone else to talk to when already having
-      // talked to the 614, we can safely return here.
-      //
-      return; 
     } // 614 character dialog
-
-
-  if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "STO" ) == 0 )
+  else if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "STO" ) == 0 )
     {
-
-      //--------------------
-      // We clean out the chat roster from any previous use
-      //
-      InitChatRosterForNewDialogue(  );
-
-      //--------------------
-      // Now we load the chat roster with the info from the chat info file
-      //
       LoadChatRosterWithChatSequence ( "STO" );
-
       DoChatFromChatRosterData( 0 , PERSON_STO , Enum );
-
-      //--------------------
-      // Since there won't be anyone else to talk to when already having
-      // talked to the STO, we can safely return here.
-      //
-      return; 
-
     } // STO character dialog
-
-  if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "PEN" ) == 0 )
+  else if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "PEN" ) == 0 )
     {
-      //--------------------
-      // We clean out the chat roster from any previous use
-      //
-      InitChatRosterForNewDialogue(  );
-
-      //--------------------
-      // Now we load the chat roster with the info from the chat info file
-      //
       LoadChatRosterWithChatSequence ( "PEN" );
-
       DoChatFromChatRosterData( 0 , PERSON_PEN , Enum );
-
-      //--------------------
-      // Since there won't be anyone else to talk to when already having
-      // talked to the STO, we can safely return here.
-      //
-      return; 
-
-      //--------------------
-      // Now we do the dialog with PEN...
-      //
-      PrepareMultipleChoiceDialog( Enum );
-
-      DialogMenuTexts [ 0 ] = " Hi!  I'm new here. " ;
-      DialogMenuTexts [ 1 ] = " Do you also train fighters?" ; 
-      DialogMenuTexts [ 2 ] = " Melee weapons level 1 (cost: 10 skill points 100 bucks)" ;
-      DialogMenuTexts [ 3 ] = " Melee weapons level 2 " ;
-      DialogMenuTexts [ 4 ] = " BACK ";
-      DialogMenuTexts [ 5 ] = " Can you bring me in contact with the resistance?" ; 
-      DialogMenuTexts [ END_ANSWER ] = " END ";
-
-      // GiveSubtitleNSample( " Welcome Traveller! " , "Chandra_Welcome_Traveller_0.wav" );
-
-      while (1)
-	{
-	  
-	  // MenuSelection = ChatDoMenuSelection ( "What will you say?" , MenuTexts , 1 , NULL , FPS_Display_BFont );
-	  MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , DialogMenuTexts , Me[0].Chat_Flags [ PERSON_PEN ]  , 1 , NULL , FPS_Display_BFont );
-	  
-	  switch( MenuSelection )
-	    {
-	    case 1:
-	      PlayOnceNeededSoundSample( "Tux_Hi_Im_New_0.wav" , TRUE );
-	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 0 ] = 0 ; // don't say this twice...
-	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 1 ] = 1 ; // allow to ask for training possibilities
-	      GiveSubtitleNSample( "Really!  I'm not living here either.  I'm just on vacasion. " , "PEN_Really_Im_Not_0.wav" );
-	      GiveSubtitleNSample( "Normally I'm a fighter among the ranks of the rebel army.  But now I try to relax. " , "PEN_Normally_Im_A_0.wav" );
-	      break;
-	    case 2:
-	      PlayOnceNeededSoundSample( "Tux_PEN_Do_You_Also_0.wav" , TRUE );
-	      GiveSubtitleNSample( "Well, I don't do that for a living, but I certainly could.  But not for free." , "PEN_Well_I_Dont_0.wav" );
-	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 1 ] = 0 ; // allow to ask for training possibilities
-
-	      /*
-	      if ( Me [ 0 ] . melee_weapon_skill == 0 )
-		{
-		  //--------------------
-		  // Only absolute melee-weaklings can receive training here
-		  //
-		  Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 2 ] = 1 ; // allow training request 1
-		}
-	      else 
-		{
-		Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 2 ] = 0 ; // disallow training request 1
-		}
-	      */
-	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 2 ] = 1 ; // allow training request 1
-	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 3 ] = 1 ; // allow training request 2
-	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 4 ] = 1 ; // allow back from training requests
-	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ END_ANSWER ] = 0 ; // disallow direct quit
-	      break;
-	    case 3:
-	      PlayOnceNeededSoundSample( "Tux_PEN_I_Want_To_0.wav" , TRUE ); // ... to become more adapt with melee weapon
-	      
-	      if ( Me [ 0 ] . melee_weapon_skill == 0 )
-		{
-		  //--------------------
-		  // Only absolute melee-weaklings can receive training here
-		  //
-
-
-		  if ( Me [ 0 ] . Gold < 100 )
-		    {
-		      GiveSubtitleNSample( "You don't haven enough bucks on you!  Come back when you have the money." , 
-					   "PEN_You_Dont_Money_0.wav" );
-		    }
-		  else if ( Me [ 0 ] . points_to_distribute >= 10 )
-		    {
-		      Me [ 0 ] . points_to_distribute -= 10;
-		      Me [ 0 ] . melee_weapon_skill ++ ; // you should have learned something here.
-		      Me [ 0 ] . Gold -= 100;
-		      SetNewBigScreenMessage( "Melee fighting ability improved!" );
-
-		      GiveSubtitleNSample( "Good decision!" , "PEN_Good_Decision_0.wav" );
-		      GiveSubtitleNSample( "The most important thing about melee combat is how you are holding your weapon." , "PEN_The_Most_Important_0.wav" );
-		      GiveSubtitleNSample( "Hold it too laxly and you will loose it, hold it too firmly and your movements will be uncontrolled." , "PEN_Hold_It_Too_0.wav" );
-		      GiveSubtitleNSample( "Now, you've already improved a lot.  Come back when you want to learn more." , "PEN_Now_Youve_Already_0.wav" );
-		    }
-		  else
-		    {
-		      GiveSubtitleNSample( "You don't have enough experience.  I can't teach you anything more right now." , 
-					   "PEN_You_Dont_Have_0.wav" );
-		      GiveSubtitleNSample( "First collect more experience.  Then we can go on." , 
-					   "PEN_First_Collect_More_0.wav" );
-		    }
-		}
-	      else
-		{
-		  GiveSubtitleNSample( "You already know the basics of melee combat!" , "PEN_You_Already_Know_0.wav" );
-		}
-	      // Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 2 ] = 0 ; // don't say this twice...
-	      break;
-	    case 4:
-	      PlayOnceNeededSoundSample( "Tux_PEN_I_Want_Master_0.wav" , TRUE ); // ... to become a master of melee weapon
-	      GiveSubtitleNSample( "Haha!" , "PEN_Haha_0.wav" );
-	      GiveSubtitleNSample( "You're very ambitious.  I like that.  But I can't help you there." , "PEN_Youre_Very_Ambitious_0.wav" );
-	      GiveSubtitleNSample( "To become more adapt, you must see a real teacher of melee weapons.  And there is none in this town, I'm sorry." , "PEN_To_Become_More_0.wav" );
-	      // Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 3 ] = 0 ; // don't say this twice...
-	      break;
-	    case 5:
-	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 2 ] = 0 ; // disallow training request 1
-	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 3 ] = 0 ; // disallow training request 2
-	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 4 ] = 0 ; // disallow back from training requests
-	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 1 ] = 1 ; // reallow to ask for training possibilities
-	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ END_ANSWER ] = 1 ; // reallow direct quit
-	      break;
-	    case 6:
-	      PlayOnceNeededSoundSample( "Tux_PEN_Can_You_Bring_0.wav" , TRUE ); // ... me in contact with Resist
-	      GiveSubtitleNSample( "I'm not entitled to even talk about that myself.  Talk to Chandra." , "PEN_Im_Not_Entitled_0.wav" );
-	      GiveSubtitleNSample( "When he says you can be trusted, I will take you with me when I return to the rebels." , "PEN_When_He_Says_0.wav" );
-	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 3 ] = 0 ; // don't say this twice...
-	      break;
-	    case ( MAX_ANSWERS_PER_PERSON ):
-	    case (-1):
-	    default:
-	      PlayOnceNeededSoundSample( "Tux_See_You_Later_0.wav" , TRUE );
-	      return;
-	      break;
-	    }
-	}
-
-      //--------------------
-      // Since there won't be anyone else to talk to when already having
-      // talked to the PEN, we can safely return here.
-      //
-      return; 
     } // PEN character dialog
-
-  if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "DIX" ) == 0 )
+  else if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "DIX" ) == 0 )
     {
       //--------------------
       // Now we do the dialog with DIX...
@@ -1373,49 +1159,11 @@ ChatWithFriendlyDroid( int Enum )
 	    }
 	}
 
-      //--------------------
-      // We clean out the chat roster from any previous use
-      //
-      InitChatRosterForNewDialogue(  );
-
-      //--------------------
-      // Now we load the chat roster with the info from the chat info file
-      //
       LoadChatRosterWithChatSequence ( "DIX" );
-
       DoChatFromChatRosterData( 0 , PERSON_DIX , Enum );
-
-      //--------------------
-      // Since there won't be anyone else to talk to when already having
-      // talked to the DIX, we can safely return here.
-      //
-      return; 
     }
-
-  //--------------------
-  // Now that the CHANDRA person is done, we can start to do all the dialog
-  // and interaction with the RMS person.
-  //
-  if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "RMS" ) == 0 )
+  else if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "RMS" ) == 0 )
     {
-      //--------------------
-      // Now we do the dialog with RMS...
-      //
-      PrepareMultipleChoiceDialog( Enum );
-      
-      DialogMenuTexts [ 0 ] = " Hi!  I'm new here. " ;
-      DialogMenuTexts [ 1 ] = " Why did the MS erase your code? " ;
-      DialogMenuTexts [ 2 ] = " How can I get to your former place? " ;
-      DialogMenuTexts [ 3 ] = " About this coffee machine... " ;
-      DialogMenuTexts [ 4 ] = " What are these magnetic storms really? " ;
-      DialogMenuTexts [ 5 ] = " Why didn't you fetch the coffee machine yourself in all the time?" ;
-      DialogMenuTexts [ 6 ] = " I've found your coffee machine.  Here you are." ;
-      DialogMenuTexts [ 7 ] = " Maybe I can help somehow? " ;
-      DialogMenuTexts [ 8 ] = " I'll get the coffee machine for you." ;
-      DialogMenuTexts [ MAX_ANSWERS_PER_PERSON - 1 ] = " END ";
-      
-      // GiveSubtitleNSample( " Welcome Traveller! " , "Chandra_Welcome_Traveller_0.wav" );
-
       if ( ( Me [ 0 ] . AllMissions [ 1 ] . MissionWasAssigned == TRUE ) &&
 	   ( Me [ 0 ] . AllMissions [ 1 ] . MissionIsComplete == FALSE ) )
 	{
@@ -1423,334 +1171,35 @@ ChatWithFriendlyDroid( int Enum )
 	  Me [ 0 ] . Chat_Flags [ PERSON_RMS ]  [ 0 ] = FALSE ; // we disallow to ask about the job naively...
 	}
 
-      while (1)
-	{
-	  MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , DialogMenuTexts , Me[0].Chat_Flags [ PERSON_RMS ]  , 1 , NULL , FPS_Display_BFont );
-	  
-	  switch( MenuSelection )
-	    {
-	    case 1:
-	      PlayOnceNeededSoundSample( "Tux_Hi_Im_New_0.wav" , TRUE );
-	      GiveSubtitleNSample( "Welcome them!  I'm called RMS.  I used to be a well-known programmer." , 
-				   "RMS_Welcome_Then_Im_0.wav" );
-	      GiveSubtitleNSample( "Alas, that time is long gone now.  The MS have recursively erased all my code throughout the universe." , 
-				   "RMS_Alas_That_Time_0.wav" );
-	      GiveSubtitleNSample( "Some local copies I still have, but they are incomplete and outdated." , 
-				   "RMS_Some_Local_Copies_0.wav" );
-	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 0 ] = 0 ; // don't say this twice...
-	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 1 ] = 1 ; // this should allow to ask 'so?'
-	      break;
-	    case 2:
-	      PlayOnceNeededSoundSample( "Tux_RMS_Why_Did_The_0.wav" , TRUE );
-	      GiveSubtitleNSample( "One of the main pillars of the power of the MS is their software monopoly." , 
-				   "RMS_One_Of_The_0.wav" );
-	      GiveSubtitleNSample( "This monopoly they started to enforce by law after they had taken over the government." , 
-				   "RMS_This_Monopoly_They_0.wav" );
-	      GiveSubtitleNSample( "And now they have installed bots in every corner of the universe to erase all non-MS code." , 
-				   "RMS_And_Now_They_0.wav" );
-	      GiveSubtitleNSample( "And particularly free code they like to erase the most." , 
-				   "RMS_And_Particularly_Free_0.wav" );
-	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 1 ] = 0 ; // don't say this twice in one dialog
-	      break;
-	    case 3:
-	      PlayOnceNeededSoundSample( "Tux_RMS_How_Can_I_0.wav" , TRUE );
-	      GiveSubtitleNSample( "As you might know, a great magnetic storm has shaken the universe." , 
-				   "RMS_As_You_Might_0.wav" );
-	      GiveSubtitleNSample( "Almost all of the existing teleporter connections were disrupted or redirected." , 
-				   "RMS_Almost_All_Of_0.wav" );
-	      GiveSubtitleNSample( "It was during this storm that you arrived at our teleporter terminal." , 
-				   "RMS_It_Was_During_0.wav" );
-	      GiveSubtitleNSample( "But anyway, the teleporter now points back to my former home. " , 
-				   "RMS_But_Anyway_The_0.wav" );
-	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 2 ] = 0 ; // don't say this twice in one dialgo
-	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 4 ] = 1 ; // this should allow to ask about the mag-storm...
-	      break;
-	    case 4:
-	      PlayOnceNeededSoundSample( "Tux_RMS_About_This_Coffee_0.wav" , TRUE );
-	      break;
-	    case 5:
-	      PlayOnceNeededSoundSample( "Tux_RMS_What_Are_These_0.wav" , TRUE );
-	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 4 ] = 0 ; // don't say this twice in one dialog
-	      break;
-	    case 6:
-	      PlayOnceNeededSoundSample( "Tux_RMS_Why_Didnt_You_0.wav" , TRUE );
-	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 5 ] = 0 ; // don't say this twice in one dialog
-	      break;
-	    case 7:
-	      PlayOnceNeededSoundSample( "Tux_RMS_Ive_Found_Your_0.wav" , TRUE );
-	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 6 ] = 0 ; // don't say this twice in one dialog
-	      break;
-	    case 9:
-	      PlayOnceNeededSoundSample( "Tux_RMS_Ill_Get_Your_0.wav" , TRUE );
-	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 8 ] = 0 ; // don't say this twice in one dialog
-	      AssignMission ( 1 ); // this should assign the coffee machine mission...
-	      break;
-	    case ( MAX_ANSWERS_PER_PERSON ):
-	    case (-1):
-	    default:
-	      PlayOnceNeededSoundSample( "Tux_Ill_Be_Back_0.wav" , TRUE );
-	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 1 ] = 1 ; // reallow to ask why the ms erased his code
-	      return;
-	      break;
-	    }
-	}
-
-      //--------------------
-      // Since there won't be anyone else to talk to when already having
-      // talked to the RMS, we can safely return here.
-      //
-      return; 
-      
+      LoadChatRosterWithChatSequence ( "RMS" );
+      DoChatFromChatRosterData( 0 , PERSON_RMS , Enum );
     }
-
-  if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "STO" ) == 0 )
-    {
-      BuySellMenu( );
-      return;
-    }
-
-  if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "HEA" ) == 0 )
+  else if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "HEA" ) == 0 )
     {
       HealerMenu( );
-      return;
     }
-
-  PrepareMultipleChoiceDialog( Enum );
-
-  // We print out a little greeting message...
-  DisplayTextWithScrolling ( 
-			    "Transfer channel protocol set up for text transfer...\n\n" , 
-			    Chat_Window.x , Chat_Window.y , &Chat_Window , Background );
-
-  //--------------------
-  // If the droid has a visual desciption in his question-response-list, then we print
-  // out this visual description first, so the player get's a better feeling for the
-  // chat partner he's facing...
-  //
-  for ( i = 0 ; i < MAX_CHAT_KEYWORDS_PER_DROID ; i++ )
+  else
     {
-      if ( !strcmp ( "DESCRIPTION" , AllEnemys[ Enum ].QuestionResponseList[ i * 2 ] ) ) // even entries = questions
-	{
-	  DisplayTextWithScrolling ( AllEnemys[ Enum ].QuestionResponseList[ i * 2 + 1 ] , 
-				     -1 , -1 , &Chat_Window , Background );
-	  break;
-	}
-    }
-
-  while (1)
-    {
-
-      RequestString = GetChatWindowInput( Background , &Chat_Window );
-
-      //--------------------
-      // the quit command is always simple and clear.  We just need to end
-      // the communication function. hehe.
-      //
-      if ( ( !strcmp ( RequestString , "quit" ) ) || 
-	   ( !strcmp ( RequestString , "bye" ) ) ||
-	   ( !strcmp ( RequestString , "logout" ) ) ||
-	   ( !strcmp ( RequestString , "logoff" ) ) ||
-	   ( !strcmp ( RequestString , "" ) ) ) 
-	{
-	  Me[0].TextVisibleTime=0;
-	  Me[0].TextToBeDisplayed="Logging out.  Bye...";
-	  AllEnemys[ Enum ].TextToBeDisplayed="Connection closed.  See ya...";
-	  AllEnemys[ Enum ].TextVisibleTime=0;
-	  return;
-	}
-
-      //--------------------
-      // At this point we examine the entered string and see if it is perhaps the
-      // trigger for some request for a decision to the influencer by this droid.
-      //
-      // If this is the case, then we may ask for influs answer to the request
-      // of course with a certain text again.
-      //
-      // Then we get the answer and see if it is a valid answer.
-      //
-      // And if this whole procedure was applied, then we need not match for other
-      // things and can continue the chat immediately
-      //
-      for ( i = 0 ; i < MAX_REQUESTS_PER_DROID ; i++ )
-	{
-	  //--------------------
-	  // First we see, if the mission situation is right for this request to be
-	  // imposed upon the player
-	  //
-	  if ( AllEnemys[ Enum ].RequestList[ i ].RequestRequiresMissionDone != (-1) )
-	    {
-	      if ( Me[0].AllMissions[ AllEnemys[ Enum ].RequestList[ i ].RequestRequiresMissionDone ].MissionIsComplete != TRUE ) continue;
-	    }
-	  if ( AllEnemys[ Enum ].RequestList[ i ].RequestRequiresMissionUnassigned != (-1) )
-	    {
-	      if ( Me[0].AllMissions[ AllEnemys[ Enum ].RequestList[ i ].RequestRequiresMissionUnassigned ].MissionWasAssigned == TRUE ) continue;
-	    }
-
-	  // So if the word matches, then the request is really proper
-	  if ( !strcmp ( RequestString , AllEnemys[ Enum ].RequestList[ i ].RequestTrigger ) ) 
-	    {
-
-	      // This asks the influ for a decision to make
-	      DisplayTextWithScrolling ( AllEnemys[ Enum ].RequestList[ i ].RequestText , 
-					 -1 , -1 , &Chat_Window , Background );
-
-	      // Now we read in his answer and we do this as long as often as it takes for the influ
-	      // to give a valid answer
-	      DecisionString = "XASDFASDF";
-
-	      while ( ( strcmp( DecisionString , AllEnemys[ Enum ].RequestList[ i ].AnswerYes ) != 0 ) &&
-		      ( strcmp( DecisionString , AllEnemys[ Enum ].RequestList[ i ].AnswerNo ) != 0 ) )
-		{
-		  DecisionString = GetChatWindowInput( Background , &Chat_Window );
-		  if ( ( strcmp( DecisionString , AllEnemys[ Enum ].RequestList[ i ].AnswerYes ) != 0 ) &&
-		       ( strcmp( DecisionString , AllEnemys[ Enum ].RequestList[ i ].AnswerNo  ) != 0 ) )
-		    DisplayTextWithScrolling ( "Please answer only yes or no." , 
-					       -1 , -1 , &Chat_Window , Background );
-		}
-	      
-	      // Now we respond to the decision the infuencer has made
-		  if ( strcmp( DecisionString , AllEnemys[ Enum ].RequestList[ i ].AnswerYes ) == 0 )
-		    {
-		      DisplayTextWithScrolling ( AllEnemys[ Enum ].RequestList[ i ].ResponseYes , 
-						 -1 , -1 , &Chat_Window , Background );
-		      ExecuteActionWithLabel ( AllEnemys[ Enum ].RequestList[ i ].ActionTrigger , 0 );
-		    }
-		  else
-		    {
-		      DisplayTextWithScrolling ( AllEnemys[ Enum ].RequestList[ i ].ResponseNo , 
-						 -1 , -1 , &Chat_Window , Background );
-		    }
-	      
-
-	      break;
-	    }
-	}
-      //--------------------
-      // If a request trigger matched already, we do not process the default keywords any more
-      // so that some actions can be caught!
-      //
-      if ( i != MAX_REQUESTS_PER_DROID ) continue;
-
-      //--------------------
-      // In some cases we will not want the default answers to be given,
-      // cause they are the same for all droids.
-      //
-      // We therefore will search this robots question-answer-list FIRST
-      // and look for a 
-      // match in the question entries and if applicable print out the
-      // matching answer of course, and if that is wo, we will continue
-      // and not proceed to the default answers.
-      //
-      for ( i = 0 ; i < MAX_CHAT_KEYWORDS_PER_DROID ; i++ )
-	{
-	  if ( !strcmp ( RequestString , AllEnemys[ Enum ].QuestionResponseList[ i * 2 ] ) ) // even entries = questions
-	    {
-	      DisplayTextWithScrolling ( AllEnemys[ Enum ].QuestionResponseList[ i * 2 + 1 ] , 
-					 -1 , -1 , &Chat_Window , Background );
-	      break;
-	    }
-	}
-      //--------------------
-      // If a keyword matched already, we do not process the default keywords any more
-      // so that some actions can be caught!
-      //
-      if ( i != MAX_CHAT_KEYWORDS_PER_DROID ) continue;
-
-      //--------------------
-      // the help command is always simple and clear.  We just need to print out the 
-      // following help text describing common command and keyword options and that's it.
-      //
-      if ( !strcmp ( RequestString , "help" ) ) 
-	{
-	  DisplayTextWithScrolling("You can enter command phrases or ask about some keyword.\n\
-Most useful command phrases are: FOLLOW STAY STATUS CLOSER DISTANT INSTALL \n\
-Often useful information requests are: JOB NAME MS HELLO \n\
-Of course you can ask the droid about anything else it has told you or about what you have heard somewhere else." , 
-				   -1 , -1 , &Chat_Window , Background );
-	  continue;
-	}
-      
-      //--------------------
-      // If the player requested the robot to follow him, this robot should switch to 
-      // following mode and follow the 001 robot.  But this is at the moment not implemented.
-      // Instead the robot will just print out the message, that he would follow, but don't
-      // do anything at this time.
-      //
-      // Same holds true for the 'stay' command
-      //
-      if ( !strcmp ( RequestString , "follow" ) ) 
-	{
-	  DisplayTextWithScrolling( 
-		      "Ok.  I'm on your tail.  I go where you go.  I will rest where you have rested.  I will follow your every step.  I try to do it at your speed.  You lead and I follow.  I hope you know where you're going.  I'll do my best to keep up." , 
-		      -1 , -1 , &Chat_Window , Background );
-	  AllEnemys[ Enum ].CompletelyFixed = FALSE;
-	  AllEnemys[ Enum ].FollowingInflusTail = TRUE;
-	  AllEnemys[ Enum ].StayHowManyFramesBehind = Get_Average_FPS ( ) * AllEnemys[ Enum ].StayHowManySecondsBehind;
-	  AllEnemys[ Enum ].warten = AllEnemys[ Enum ].StayHowManySecondsBehind;
-	  // printf(" Staying %d Frames behind.  Should be 5 seconds." , AllEnemys[ Enum ].StayHowManyFramesBehind );
-	  // fflush( stdout );
-	  continue;
-	}
-
-      if ( !strcmp ( RequestString , "closer" ) )
-	{
-	  if ( AllEnemys[ Enum ].StayHowManySecondsBehind > 1 ) AllEnemys[ Enum ].StayHowManySecondsBehind--;
-	  sprintf( ReplyString , "Ok.  I'll stay closer to you, lets say %d seconds back." , 
-		   AllEnemys[ Enum ].StayHowManySecondsBehind );
-	  DisplayTextWithScrolling( ReplyString , -1 , -1 , &Chat_Window , Background );
-	  AllEnemys[ Enum ].StayHowManyFramesBehind = Get_Average_FPS( ) * AllEnemys[ Enum ].StayHowManySecondsBehind;
-	  continue;
-	}
-
-      if ( !strcmp ( RequestString , "distant" ) )
-	{
-	  if ( AllEnemys[ Enum ].StayHowManySecondsBehind < 10 ) AllEnemys[ Enum ].StayHowManySecondsBehind++;
-	  sprintf( ReplyString , "Ok.  I'll stay farther away from you, lets say %d seconds back." , 
-		   AllEnemys[ Enum ].StayHowManySecondsBehind );
-	  DisplayTextWithScrolling( ReplyString , -1 , -1 , &Chat_Window , Background );
-	  AllEnemys[ Enum ].StayHowManyFramesBehind = Get_Average_FPS( ) * AllEnemys[ Enum ].StayHowManySecondsBehind;
-	  continue;
-	}
-
-      if ( !strcmp ( RequestString , "stay" ) )
-	{
-	  DisplayTextWithScrolling( 
-				   "Ok.  I'll stay here and not move a bit.  I will do so until I receive further instructions from you.  I hope you will come back sooner or later." , 
-		      -1 , -1 , &Chat_Window , Background );
-	  AllEnemys[ Enum ].CompletelyFixed = TRUE;
-	  AllEnemys[ Enum ].FollowingInflusTail = FALSE;
-	  continue;
-	}
-      if ( !strcmp ( RequestString , "status" ) )
-	{
-	  sprintf( ReplyString , "Here's my status report:\nEnergy: %d/%d.\n" , 
-		   (int) AllEnemys[ Enum ].energy , 
-		   (int) Druidmap[ AllEnemys[Enum].type ].maxenergy );
-	  if ( AllEnemys[ Enum ].FollowingInflusTail )
-	      strcat( ReplyString , "I'm currently following you.\n" );
-	  else
-	    strcat( ReplyString , "I'm currently not following you.\n" );
-	  if ( AllEnemys[ Enum ].CompletelyFixed )
-	    strcat( ReplyString , "I am instructed to wait here for your return.\n" );
-	  else
-	    strcat( ReplyString , "I'm free to move.\n" );
-
-	  DisplayTextWithScrolling( ReplyString , -1 , -1 , &Chat_Window , Background );
-
-	  continue;
-	}
-
-      //--------------------
-      // In case non of the default keywords was said and also none of the
-      // special keywords this droid would understand were said, then the
-      // droid obviously hasn't understood the message and should also say
-      // so.
-      //
-      if ( i == MAX_CHAT_KEYWORDS_PER_DROID )
-	{
-	  DisplayTextWithScrolling ( "Sorry, but of that I know entirely nothing." , 
-				     -1 , -1 , &Chat_Window , Background );
-	}
+      fprintf (stderr, "\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+There was a dialogue with a friendly droid or person supposed to be initiated,\n\
+but the character name of the person in question was not recognized by the\n\
+Freedroid RPG dialogue module.\n\
+\n\
+The short name of the character in question was: %s.\n\
+\n\
+This indicates that you have maybe reached a part of the Freedroid RPG story\n\
+that is not yet implemented or some other bug in Freedroid RPG.\n\
+\n\
+Please inform the Freedroid dev team about the problem, best by sending\n\
+e-mail to freedroid-discussion@lists.sourceforge.net\n\
+\n\
+Thanks a lot for reporting the issue.\n\
+Freedroid will terminate now to draw attention to the problem...\n\
+----------------------------------------------------------------------\n" ,
+	       Druidmap[ AllEnemys[ Enum ].type ].druidname );
+      Terminate ( ERR );
     }
 
 }; // void ChatWithFriendlyDroid( int Enum );

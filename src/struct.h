@@ -617,20 +617,6 @@ typedef struct
 }
 network_influence_t, *Network_Influence_t;
 
-
-typedef struct
-{
-  char* RequestTrigger; // which word of the influencer initiates the request
-  char* RequestText;  // which text will be used to pose the request
-  int RequestRequiresMissionDone; // which mission must be done in order to get this request
-  int RequestRequiresMissionUnassigned; // which mission must be unassigned in order to get this request
-  char* AnswerYes;    // what does the influ have to say to confirm?
-  char* AnswerNo;     // what does the influ have to say to reject?
-  char* ResponseYes;  // what will the droid respond, if influ confirms the question
-  char* ResponseNo;   // what will the droid respond, if influ denies the question
-  char* ActionTrigger; // label of the action, that is to be set of on confirmation of the request
-} request, *Request;
-
 typedef struct
 {
   int type;			// the number of the droid specifications in Druidmap 
@@ -669,8 +655,6 @@ typedef struct
   float TextVisibleTime;
   char* TextToBeDisplayed;
   moderately_finepoint PrivatePathway[ MAX_STEPS_IN_GIVEN_COURSE ];
-  char* QuestionResponseList[ MAX_CHAT_KEYWORDS_PER_DROID * 2 ];  // even indices for keywords, odd for answers 
-  request RequestList[ MAX_REQUESTS_PER_DROID ];
 }
 enemy, *Enemy;
 
