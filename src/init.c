@@ -257,21 +257,47 @@ Get_Bullet_Data ( char* DataPointer )
 } // void Get_Bullet_Data ( char* DataPointer );
 
 /* ----------------------------------------------------------------------
- * This function reads in the game events, i.e. the locations and conditions
- * under which some actions are triggered.
+ * Delete all events and event triggers
  * ---------------------------------------------------------------------- */
-void 
-GetEventsAndEventTriggers ( char* EventsAndEventTriggersFilename )
+void
+clear_out_all_events_and_actions( void )
 {
-  char *EventPointer;
-  char *EndOfEvent;
   int i;
-  int EventActionNumber;
-  int EventTriggerNumber;
-  char* EventSectionPointer;
-  char* TempMapLabelName;
-  location TempLocation;
-  char* fpath;
+
+  for ( i = 0 ; i < MAX_EVENT_TRIGGERS ; i++ )
+    {
+      AllEventTriggers[i].Influ_Must_Be_At_Level=-1;
+      AllEventTriggers[i].Influ_Must_Be_At_Point.x=-1;
+      AllEventTriggers[i].Influ_Must_Be_At_Point.y=-1;
+      
+      // Maybe the event is triggered by time
+      AllEventTriggers[i].Mission_Time_Must_Have_Passed=-1;
+      AllEventTriggers[i].Mission_Time_Must_Not_Have_Passed=-1;
+      
+      // And now of course which event to trigger!!!!
+      // Thats propably the most important information at all!!!
+      // AllEventTriggers[i].EventNumber=-1;
+      AllEventTriggers[i].TargetActionLabel="none";
+    }
+  for ( i = 0 ; i < MAX_TRIGGERED_ACTIONS_IN_GAME ; i++ )
+    {
+      // Maybe the triggered event consists of the influencer saying something
+      AllTriggeredActions[i].ActionLabel="";
+      AllTriggeredActions[i].InfluencerSayText="";
+
+      // Maybe the triggered action will change some obstacle on some level...
+      AllTriggeredActions[i].modify_obstacle_with_label="";
+      AllTriggeredActions[i].modify_obstacle_to_type=-1;
+
+      // Maybe the triggered event consists of the map beeing changed at some tile
+      AllTriggeredActions[i].ChangeMapLevel=-1;
+      AllTriggeredActions[i].ChangeMapLocation.x=-1;
+      AllTriggeredActions[i].ChangeMapLocation.y=-1;
+      AllTriggeredActions[i].ChangeMapTo=-1;
+      AllTriggeredActions[i].AssignWhichMission=-1;
+      // Maybe the triggered event consists of ??????
+    }
+}; // void clear_out_all_events_and_actions( void )
 
 #define EVENT_TRIGGER_BEGIN_STRING "* Start of an Event Trigger Subsection *"
 #define EVENT_TRIGGER_END_STRING "* End of this Event Trigger Subsection *"
@@ -300,47 +326,23 @@ GetEventsAndEventTriggers ( char* EventsAndEventTriggersFilename )
 #define TRIGGER_WHICH_TARGET_LABEL "Event Action to be triggered by this trigger=\""
 #define EVENT_TRIGGER_LABEL_STRING "Use map location from map label=\""
 
-  //--------------------
-  // Now its time to start loading the title file...
-  //
-  fpath = find_file ( EventsAndEventTriggersFilename , MAP_DIR , FALSE );
-  EventSectionPointer = 
-    ReadAndMallocAndTerminateFile( fpath , "*** END OF EVENT ACTION AND EVENT TRIGGER FILE *** LEAVE THIS TERMINATOR IN HERE ***" ) ;
+#define MODIFY_OBSTACLE_WITH_LABEL_STRING "modify_obstacle_with_label=\""
+#define MODIFY_OBSTACLE_TO_TYPE "modify_obstacle_to_type="
 
-  // Delete all events and event triggers
-  for ( i = 0 ; i < MAX_EVENT_TRIGGERS ; i++ )
-    {
-      AllEventTriggers[i].Influ_Must_Be_At_Level=-1;
-      AllEventTriggers[i].Influ_Must_Be_At_Point.x=-1;
-      AllEventTriggers[i].Influ_Must_Be_At_Point.y=-1;
-      
-      // Maybe the event is triggered by time
-      AllEventTriggers[i].Mission_Time_Must_Have_Passed=-1;
-      AllEventTriggers[i].Mission_Time_Must_Not_Have_Passed=-1;
-      
-      // And now of course which event to trigger!!!!
-      // Thats propably the most important information at all!!!
-      // AllEventTriggers[i].EventNumber=-1;
-      AllEventTriggers[i].TargetActionLabel="none";
-    }
-  for ( i = 0 ; i < MAX_TRIGGERED_ACTIONS_IN_GAME ; i++ )
-    {
-      // Maybe the triggered event consists of the influencer saying something
-      AllTriggeredActions[i].ActionLabel="";
-      AllTriggeredActions[i].InfluencerSayText="";
-      // Maybe the triggered event consists of the map beeing changed at some tile
-      AllTriggeredActions[i].ChangeMapLevel=-1;
-      AllTriggeredActions[i].ChangeMapLocation.x=-1;
-      AllTriggeredActions[i].ChangeMapLocation.y=-1;
-      AllTriggeredActions[i].ChangeMapTo=-1;
-      AllTriggeredActions[i].AssignWhichMission=-1;
-      // Maybe the triggered event consists of ??????
-    }
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+decode_all_event_actions ( char* EventSectionPointer )
+{
+  char *EventPointer;
+  char *EndOfEvent;
+  int EventActionNumber;
+  char* TempMapLabelName;
+  location TempLocation;
+  char temp_save_char;
 
-
-  //--------------------
-  // At first we decode ALL THE EVENT ACTIONS not the TRIGGERS!!!!
-  //
   EventPointer=EventSectionPointer;
   EventActionNumber=0;
   while ( ( EventPointer = strstr ( EventPointer , EVENT_ACTION_BEGIN_STRING ) ) != NULL)
@@ -348,19 +350,14 @@ GetEventsAndEventTriggers ( char* EventsAndEventTriggersFilename )
       DebugPrintf(1, "\nBegin of a new Event Action Section found. Good. ");
       EventPointer += strlen( EVENT_ACTION_BEGIN_STRING ) + 1;
 
-      EndOfEvent = LocateStringInData ( EventSectionPointer , EVENT_ACTION_END_STRING );
+      // EndOfEvent = LocateStringInData ( EventSectionPointer , EVENT_ACTION_END_STRING );
+      EndOfEvent = LocateStringInData ( EventPointer , EVENT_ACTION_END_STRING );
 
       DebugPrintf (1, "\n\nStarting to read details of this event action section\n\n");
 
       //--------------------
       // Now we decode the details of this event action section
       //
-
-      // FIRST OF ALL, WE NEED TO KNOW AT WHICH INDEX WE MUST MODIFY OUR STRUTURE.
-      // SO FIRST WE READ IN THE EVENT ACTIONS INDEX NUMBER
-      // ReadValueFromString( EventPointer , EVENT_ACTION_INDEX_NUMBER_TO_USE_STRING , "%d" , 
-      // &EventActionNumber , EndOfEvent );
-
       AllTriggeredActions[ EventActionNumber].ActionLabel =
 	ReadAndMallocStringFromData ( EventPointer , ACTION_LABEL_INDICATION_STRING , "\"" ) ;
 
@@ -388,6 +385,37 @@ GetEventsAndEventTriggers ( char* EventsAndEventTriggersFilename )
 	{
 	  DebugPrintf ( 1 , "\nMapchange label unused..." );
 	}
+
+
+      //--------------------
+      // Now we see if maybe there was an obstacle label given, that should be used
+      // to change an obstacle later.  We take a look if that is the case at all, and
+      // if it is, we'll read in the corresponding obstacle label of course.
+      //
+      temp_save_char = *EndOfEvent ;
+      *EndOfEvent = 0 ;
+      if ( CountStringOccurences ( EventPointer , MODIFY_OBSTACLE_WITH_LABEL_STRING ) )
+	{
+	  DebugPrintf ( 0 , "\nOBSTACLE LABEL FOUND IN THIS EVENT ACTION!" );
+	  TempMapLabelName = 
+	    ReadAndMallocStringFromData ( EventPointer , MODIFY_OBSTACLE_WITH_LABEL_STRING , "\"" ) ;
+	  if ( strcmp ( TempMapLabelName , "NO_LABEL_DEFINED_YET" ) )
+	    {
+	      AllTriggeredActions [ EventActionNumber ] . modify_obstacle_with_label = TempMapLabelName ;
+	      DebugPrintf ( 0 , "\nThe label reads: %s." , AllTriggeredActions [ EventActionNumber ] . modify_obstacle_with_label );
+	    }
+	  else
+	    {
+	      DebugPrintf ( 0 , "\nERROR:  Improper label given.\n\
+Leave out the label entry for obstacles if you don't want to use it!" );
+	      Terminate ( ERR );
+	    }
+	}
+      else
+	{
+	  DebugPrintf ( 0 , "\nNO OBSTACLE LABEL FOUND IN THIS EVENT ACTION!" );
+	}
+      *EndOfEvent = temp_save_char;
 
       //--------------------
       // Now we read in the teleport target position in x and y and level coordinates
@@ -432,12 +460,21 @@ GetEventsAndEventTriggers ( char* EventsAndEventTriggersFilename )
 
   DebugPrintf (1, "\nThat must have been the last Event Action section.\nWe can now start with the Triggers. Good.");  
 
+}; // void 
 
-  //----------------------------------------------------------------------
+/* ---------------------------------------------------------------------- 
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+decode_all_event_triggers ( char* EventSectionPointer )
+{
+  char *EventPointer;
+  char *EndOfEvent;
+  int EventTriggerNumber;
+  char* TempMapLabelName;
+  location TempLocation;
 
-  //--------------------
-  // Now we decode ALL THE EVENT TRIGGERS not the ACTIONS!!!!
-  //
   EventPointer=EventSectionPointer;
   EventTriggerNumber=0;
   while ( ( EventPointer = strstr ( EventPointer , EVENT_TRIGGER_BEGIN_STRING ) ) != NULL)
@@ -490,8 +527,44 @@ GetEventsAndEventTriggers ( char* EventsAndEventTriggersFilename )
       EventTriggerNumber++;
     } // While Event trigger begin string found...
 
-
   DebugPrintf (1 , "\nThat must have been the last Event Trigger section.");
+
+}; // void
+
+/* ----------------------------------------------------------------------
+ * This function reads in the game events, i.e. the locations and conditions
+ * under which some actions are triggered.
+ * ---------------------------------------------------------------------- */
+void 
+GetEventsAndEventTriggers ( char* EventsAndEventTriggersFilename )
+{
+  char* EventSectionPointer;
+  char* fpath;
+
+  //--------------------
+  // At first we clear out any garbage that might randomly reside in the current event
+  // and action structures...
+  //
+  clear_out_all_events_and_actions();
+
+  //--------------------
+  // Now its time to start loading the event file...
+  //
+  fpath = find_file ( EventsAndEventTriggersFilename , MAP_DIR , FALSE );
+  EventSectionPointer = 
+    ReadAndMallocAndTerminateFile( fpath , 
+				   "*** END OF EVENT ACTION AND EVENT TRIGGER FILE *** LEAVE THIS TERMINATOR IN HERE ***" 
+				   ) ;
+
+  //--------------------
+  // At first we decode ALL THE EVENT ACTIONS not the TRIGGERS!!!!
+  //
+  decode_all_event_actions ( EventSectionPointer );
+
+  //--------------------
+  // Now we decode ALL THE EVENT TRIGGERS not the ACTIONS!!!!
+  //
+  decode_all_event_triggers ( EventSectionPointer );
 
 }; // void Get_Game_Events ( char* EventSectionPointer );
 
