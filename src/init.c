@@ -146,9 +146,6 @@ Get_Bullet_Data ( char* DataPointer )
   int i;
   int BulletIndex=0;
 
-  double bullet_speed_calibrator;
-  double bullet_damage_calibrator;
-
 #define BULLET_SECTION_BEGIN_STRING "*** Start of Bullet Data Section: ***" 
 #define BULLET_SECTION_END_STRING "*** End of Bullet Data Section: ***" 
 #define NEW_BULLET_TYPE_BEGIN_STRING "** Start of new bullet specification subsection **"
@@ -156,12 +153,8 @@ Get_Bullet_Data ( char* DataPointer )
 #define BULLET_RECHARGE_TIME_BEGIN_STRING "Time is takes to recharge this bullet/weapon in seconds :"
 #define BULLET_SPEED_BEGIN_STRING "Flying speed of this bullet type :"
 #define BULLET_DAMAGE_BEGIN_STRING "Damage cause by a hit of this bullet type :"
-  // #define BULLET_NUMBER_OF_PHASES_BEGIN_STRING "Number of different phases that were designed for this bullet type :"
 #define BULLET_ONE_SHOT_ONLY_AT_A_TIME "Cannot fire until previous bullet has been deleted : "
 #define BULLET_BLAST_TYPE_CAUSED_BEGIN_STRING "Type of blast this bullet causes when crashing e.g. against a wall :"
-
-#define BULLET_SPEED_CALIBRATOR_STRING "Common factor for all bullet's speed values: "
-#define BULLET_DAMAGE_CALIBRATOR_STRING "Common factor for all bullet's damage values: "
 
   BulletPointer = LocateStringInData ( DataPointer , BULLET_SECTION_BEGIN_STRING );
   EndOfBulletData = LocateStringInData ( DataPointer , BULLET_SECTION_END_STRING );
@@ -201,31 +194,6 @@ Get_Bullet_Data ( char* DataPointer )
       BulletPointer ++; // to avoid doubly taking this entry
 
       BulletIndex++;
-    }
-
-  //--------------------
-  // Now that the detailed values for the bullets have been read in,
-  // we now read in the general calibration contants and after that
-  // the start to apply them right now, so they also take effect.
-  
-  DebugPrintf (1, "\n\nStarting to read bullet calibration section\n\n");
-
-  // Now we read in the speed calibration factor for all bullets
-  ReadValueFromString( DataPointer ,  BULLET_SPEED_CALIBRATOR_STRING , "%lf" , 
-		       &bullet_speed_calibrator , EndOfBulletData );
-
-  // Now we read in the damage calibration factor for all bullets
-  ReadValueFromString( DataPointer ,  BULLET_DAMAGE_CALIBRATOR_STRING , "%lf" , 
-		       &bullet_damage_calibrator , EndOfBulletData );
-
-  //--------------------
-  // Now that all the calibrations factors have been read in, we can start to
-  // apply them to all the bullet types
-  //
-  for ( i = 0 ; i < Number_Of_Bullet_Types ; i++ )
-    {
-      // Bulletmap[i].speed *= bullet_speed_calibrator;
-      // Bulletmap[i].damage *= bullet_damage_calibrator;
     }
 
   DebugPrintf (1, "\nEnd of Get_Bullet_Data ( char* DataPointer ) reached.");
