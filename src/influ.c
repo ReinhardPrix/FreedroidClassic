@@ -345,8 +345,15 @@ AnimateInfluence (void)
 {
 #define TOTAL_SWING_TIME 0.7
 #define FULL_BREATHE_TIME 3
+#define TOTAL_STUNNED_TIME 1.0
 
-  if ( Me.weapon_swing_time == (-1) )
+  if ( Me.got_hit_time != (-1) )
+    {
+      Me.phase = TUX_SWING_PHASES + TUX_BREATHE_PHASES + 
+	( Me.got_hit_time * TUX_GOT_HIT_PHASES * 1.0 / TOTAL_STUNNED_TIME ) ;
+      if ( Me.got_hit_time > TOTAL_STUNNED_TIME ) Me.got_hit_time = (-1) ;
+    }
+  else if ( Me.weapon_swing_time == (-1) )
     {
       Me.phase = ( (int) ( Me.MissionTimeElapsed * TUX_BREATHE_PHASES / FULL_BREATHE_TIME ) ) % TUX_BREATHE_PHASES ;
     }
@@ -356,7 +363,7 @@ AnimateInfluence (void)
       if ( Me.weapon_swing_time > TOTAL_SWING_TIME ) Me.weapon_swing_time = (-1) ;
     }
 
-  if (((int) (Me.phase)) >= TUX_SWING_PHASES + TUX_BREATHE_PHASES )
+  if (((int) (Me.phase)) >= TUX_SWING_PHASES + TUX_BREATHE_PHASES + TUX_GOT_HIT_PHASES )
     {
       Me.phase = 0;
     }

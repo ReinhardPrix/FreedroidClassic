@@ -371,8 +371,10 @@ typedef struct
   double mana;                  // current mana level 
 
   double firewait;		// time remaining, until the weapon is ready to fire again...
-  double phase;			/* the current phase of animation */
-  float weapon_swing_time;	/* How long is the current weapon swing in progress (in seconds of course) */
+  double phase;			// the current phase of animation 
+  float weapon_swing_time;	// How long is the current weapon swing in progress (in seconds of course) 
+  float MissionTimeElapsed;
+  float got_hit_time;           // how long stunned now since the last time tux got hit 
 
   int autofire;			/* Status of the Firecontrolautomatics */
   int vneut;			/* Status of Velocityneutralizer for the gun */
@@ -406,7 +408,6 @@ typedef struct
   char character_name[25];
   gps Position_History_Ring_Buffer[ MAX_INFLU_POSITION_HISTORY ];
   mission AllMissions[ MAX_MISSIONS_IN_GAME ];         // What must be done to fullfill this mission?
-  float MissionTimeElapsed;
   int Marker;                   // In case you've taken over a marked droid, this will contain the marker
   float LastCrysoundTime;
   float LastTransferSoundTime;
