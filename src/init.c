@@ -838,7 +838,21 @@ Get_Mission_Targets( char* MissionTargetPointer )
 #define MISSION_COMPLETITION_TRIGGERED_ACTION_STRING "On mission completition immediately trigger action labeled=\""
 
 
+  //--------------------
+  // At first we clear out all existing mission entries, so that no 'zombies' remain
+  // when the game is restarted and (perhaps less) new missions are loaded.
+  //
+  for ( MissionTargetIndex = 0 ; MissionTargetIndex < MAX_MISSIONS_IN_GAME ; MissionTargetIndex ++ )
+    {
+      Me.AllMissions[ MissionTargetIndex ].MissionExistsAtAll = FALSE;
+      Me.AllMissions[ MissionTargetIndex ].MissionIsComplete = FALSE;
+      Me.AllMissions[ MissionTargetIndex ].MissionWasFailed = FALSE;
+      Me.AllMissions[ MissionTargetIndex ].MissionWasAssigned = FALSE;
+    }
 
+
+
+  MissionTargetIndex = 0;
   while ( ( MissionTargetPointer = strstr( MissionTargetPointer , MISSION_TARGET_SUBSECTION_START_STRING ) ) != NULL )
     {
       EndOfMissionTargetPointer = LocateStringInData ( MissionTargetPointer , MISSION_TARGET_SUBSECTION_END_STRING ) ;
