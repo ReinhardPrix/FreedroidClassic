@@ -594,8 +594,8 @@ ApplyItem( item* CurItem )
     }
   else if ( CurItem->type == ITEM_FULL_HEALTH_POTION )
     {
-      Me.health += Druidmap [ Me.type ].maxenergy;
-      Me.energy += Druidmap [ Me.type ].maxenergy;
+      Me.health += Me.maxenergy;
+      Me.energy += Me.maxenergy;
     }
   else if ( CurItem->type == ITEM_SMALL_MANA_POTION )
     {
@@ -603,11 +603,11 @@ ApplyItem( item* CurItem )
     }
   else if ( CurItem->type == ITEM_FULL_MANA_POTION )
     {
-      Me.mana += Druidmap [ Me.type ].maxmana;
+      Me.mana += Me.maxmana;
     }
 
-  if ( Me.energy > Druidmap [ Me.type ].maxenergy ) Me.energy = Druidmap [ Me.type ].maxenergy ;
-  if ( Me.mana > Druidmap [ Me.type ].maxmana ) Me.mana = Druidmap [ Me.type ].maxmana ;
+  if ( Me.energy > Me.maxenergy ) Me.energy = Me.maxenergy ;
+  if ( Me.mana > Me.maxmana ) Me.mana = Me.maxmana ;
 
   PlayItemSound( ItemMap[ CurItem->type ].sound_number );
 

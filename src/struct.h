@@ -391,8 +391,13 @@ typedef struct
   // float RechargeTimeModifier; // the factor to be multiplied to the recharge time (times 100 for % notation)
   // float RechargeTime; // the actual minimum time to wait for the influencer between shots
   float to_hit;
-  int exp_level; // which 'experience level' is the influencer currenly at?
-  long ExpRequired; // how much experience required for the next level?
+  int resist_force;        // percentage to reduce from force damage
+  int resist_fire;         // percentage to reduce from fire damage
+  int resist_electricity;  // percentage to reduce from electricity damage
+  float maxenergy; // current top limit for the influencers energy
+  float maxmana;   // current top limit for the influencers magic power
+  int exp_level;       // which 'experience level' is the influencer currenly at?
+  long ExpRequired;    // how much experience required for the next level?
   long Gold;
   char character_name[25];
   gps Position_History_Ring_Buffer[ MAX_INFLU_POSITION_HISTORY ];

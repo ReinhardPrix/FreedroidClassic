@@ -806,7 +806,7 @@ MoveThisEnemy( int EnemyNum )
       // must be dropped and they must always be magical.
       //
       DropRandomItem ( ThisRobot->pos.x , ThisRobot->pos.y , Druidmap [ ThisRobot->type ].monster_level , 
-		       ! ( MyRandom ( 5 ) ) , FALSE ) ;
+		       ! ( MyRandom ( 10 ) ) , FALSE ) ;
       for ( i = 0 ; i < Druidmap [ ThisRobot->type ].forced_magic_items ; i ++ )
 	{
 	  DropRandomItem ( ThisRobot->pos.x + MyRandom(10) * 0.07 , ThisRobot->pos.y + MyRandom(10) * 0.07 , Druidmap [ ThisRobot->type ].monster_level , 

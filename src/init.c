@@ -1754,8 +1754,8 @@ InitNewMissionList ( char *MissionName )
 
   UpdateAllCharacterStats();
 
-  Me.energy = Druidmap[DRUID001].maxenergy;
-  Me.mana = Druidmap[DRUID001].maxmana;
+  Me.energy = Me.maxenergy;
+  Me.mana = Me.maxmana;
   DebugPrintf( 1 , "\n Me.energy : %f . " , Me.energy );
   Me.health = Me.energy;	/* start with max. health */
 

@@ -343,6 +343,11 @@ NoInfluBulletOnWay (void)
 void
 AnimateInfluence (void)
 {
+  Me.phase +=
+    (Me.energy / ( Me.maxenergy)) * Frame_Time () *
+    ENEMYPHASES * 3;
+
+  /*
   if (Me.type != DRUID001)
     {
       Me.phase +=
@@ -355,6 +360,7 @@ AnimateInfluence (void)
 	(Me.energy / (Druidmap[DRUID001].maxenergy)) * Frame_Time () *
 	ENEMYPHASES * 3;
     }
+  */
 
   if (((int) rintf (Me.phase)) >= ENEMYPHASES)
     {
@@ -850,7 +856,7 @@ void
 RefreshInfluencer (void)
 {
 
-  if ( Me.energy < Druidmap [ Me.type ].maxenergy )
+  if ( Me.energy < Me.maxenergy )
     {
       Me.energy += REFRESH_ENERGY * Frame_Time () * 5;
       Me.Experience -= REFRESH_ENERGY * Frame_Time () * 10;
