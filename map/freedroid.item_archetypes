@@ -245,7 +245,7 @@ Item as gun: required ammunition type="none"
 
 // Item No. 5
 ** Start of new item specification subsection **
-Item name="Simple Boots"
+Item name="Shoes"
 Position_X=647
 Position_Y=61
 Item can be applied in combat="no"
@@ -479,7 +479,7 @@ Item as gun: required ammunition type="none"
 
 // Item No. 11
 ** Start of new item specification subsection **
-Item name="Advanced Boots"
+Item name="Boots"
 Position_X=632
 Position_Y=46
 Item can be applied in combat="no"
@@ -490,8 +490,8 @@ Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=4
-Item as defensive item: ac_bonus_modifier=2
+Item as defensive item: base_ac_bonus=6
+Item as defensive item: ac_bonus_modifier=3
 Base item duration=13 plus duration modifier=5
 Picture number=67
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
