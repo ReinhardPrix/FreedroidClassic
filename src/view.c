@@ -464,7 +464,7 @@ PutBullet (int BulletNummer)
 	}
       if ( (CurBullet->time_in_frames % 2) == 0)
 	{
-	  FlashWindow (15);
+	  FlashWindow (0x0FFFFFFFF);
 	  return;
 	}
     } // if type == FLASH
@@ -630,12 +630,7 @@ RotateBulletColor (void)
 void
 FlashWindow (int Flashcolor)
 {
-  /*
-   * das ganze Fenster kann durch einen einzigen Aufruf vom memset
-   * auf den gew"unschten Wert gesetzt werden
-   */
-  memset (InternWindow, Flashcolor,
-	  INTERNBREITE * INTERNHOEHE * Block_Width * Block_Height);
+  SetUserfenster( Flashcolor );
 }				// void FlashWindow(int Flashcolor)
 
 /*-----------------------------------------------------------------

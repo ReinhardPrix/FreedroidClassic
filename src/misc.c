@@ -63,6 +63,7 @@ void CleanMessageLine (void);
 void AdvanceQueue (void);
 void Single_Player_Menu (void);
 void Multi_Player_Menu (void);
+void Credits_Menu (void);
 void Options_Menu (void);
 void Show_Highscore_Menu (void);
 void Show_Mission_Instructions_Menu (void);
@@ -588,10 +589,11 @@ EscapeMenu (void)
 enum
   { 
     SINGLE_PLAYER_POSITION=1, 
-    MULTI_PLAYER_POSITION=2, 
-    OPTIONS_POSITION=3, 
-    LEVEL_EDITOR_POSITION=4, 
-    QUIT_POSITION=5 
+    MULTI_PLAYER_POSITION, 
+    OPTIONS_POSITION, 
+    LEVEL_EDITOR_POSITION, 
+    CREDITS_POSITION,
+    QUIT_POSITION
   };
 
   int Weiter = 0;
@@ -632,7 +634,8 @@ enum
       CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +1*FontHeight(GetCurrentFont()),    "Multi Player");
       CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +2*FontHeight(GetCurrentFont()),    "Options");
       CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +3*FontHeight(GetCurrentFont()),    "Level Editor");
-      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +4*FontHeight(GetCurrentFont()),    "Quit Game");
+      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +4*FontHeight(GetCurrentFont()),    "Credits");
+      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +5*FontHeight(GetCurrentFont()),    "Quit Game");
 
       // SDL_UpdateRect(ne_screen, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
       SDL_Flip( ne_screen );
@@ -672,6 +675,11 @@ enum
 	    case LEVEL_EDITOR_POSITION:
 	      while (EnterPressed() || SpacePressed() );
 	      Level_Editor();
+	      // Weiter = TRUE;   /* jp forgot this... ;) */
+	      break;
+	    case CREDITS_POSITION:
+	      while (EnterPressed() || SpacePressed() );
+	      Credits_Menu();
 	      // Weiter = TRUE;   /* jp forgot this... ;) */
 	      break;
 	    case QUIT_POSITION:
@@ -1065,6 +1073,46 @@ Multi_Player_Menu (void)
   while ( EscapePressed() || EnterPressed() || SpacePressed() );
 
 } // Multi_Player_Menu
+
+/*
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+*/
+
+void
+Credits_Menu (void)
+{
+  int Weiter = 0;
+
+  // while( !SpacePressed() && !EnterPressed() ) keyboard_update(); 
+  while( SpacePressed() || EnterPressed() ) keyboard_update(); 
+
+  while (!Weiter)
+    {
+
+      InitiateMenu();
+
+      CenteredPutString ( ne_screen , 1*FontHeight(Menu_BFont), "CREDITS" );
+      LeftPutString ( ne_screen , 3*FontHeight(Menu_BFont), "PROGRAMMING:");
+      LeftPutString ( ne_screen , 4*FontHeight(Menu_BFont), "Johannes Prix and Reinhard Prix");
+      LeftPutString ( ne_screen , 5*FontHeight(Menu_BFont), "");
+      LeftPutString ( ne_screen , 6*FontHeight(Menu_BFont), "ARTWORK:");
+      LeftPutString ( ne_screen , 7*FontHeight(Menu_BFont), "Bastian Samela");
+      LeftPutString ( ne_screen , 8*FontHeight(Menu_BFont), "");
+
+      SDL_Flip( ne_screen );
+
+      // Wait until the user does SOMETHING
+
+      if ( EscapePressed() || EnterPressed() || SpacePressed() )
+	{
+	  Weiter=!Weiter;
+	}
+    }
+  while ( EscapePressed() || EnterPressed() || SpacePressed() );
+
+} // Credits_Menu
+
 
 void
 Show_Mission_Instructions_Menu (void)
