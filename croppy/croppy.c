@@ -577,64 +577,68 @@ write_offset_file ( )
       default_center_y = 45 ;
       DebugPrintf ( 0 , "\nImage size 60x60 recognized.  Using %d/%d default origin." ,
 		    default_center_x , default_center_y );
-    }
-  if ( ( input_surface -> w == 64 ) &&
-       ( input_surface -> h == 64 ) )
+    } 
+  else if ( ( input_surface -> w == 64 ) &&
+	    ( input_surface -> h == 64 ) )
     {
       default_center_x = 32 ;
       default_center_y = 37 ;
       DebugPrintf ( 0 , "\nImage size 64x64 recognized.  Using %d/%d default origin." ,
 		    default_center_x , default_center_y );
     }
-  if ( ( input_surface -> w == 80 ) &&
-       ( input_surface -> h == 80 ) )
+  else if ( ( input_surface -> w == 80 ) &&
+	    ( input_surface -> h == 80 ) )
     {
       default_center_x = 40 ;
       default_center_y = 40 ;
       DebugPrintf ( 0 , "\nImage size 80x80 recognized.  Using %d/%d default origin." ,
 		    default_center_x , default_center_y );
     }
-  if ( ( input_surface -> w == 100 ) &&
-       ( input_surface -> h == 100 ) )
+  else if ( ( input_surface -> w == 100 ) &&
+	    ( input_surface -> h == 100 ) )
     {
       default_center_x = 50 ;
       default_center_y = 71 ;
       DebugPrintf ( 0 , "\nImage size 100x100 recognized.  Using %d/%d default origin." ,
 		    default_center_x , default_center_y );
     }
-  if ( ( input_surface -> w == 120 ) &&
-       ( input_surface -> h == 120 ) )
+  else if ( ( input_surface -> w == 120 ) &&
+	    ( input_surface -> h == 120 ) )
     {
       default_center_x = 60 ;
       default_center_y = 100 ;
       DebugPrintf ( 0 , "\nImage size 120x120 recognized.  Using %d/%d default origin." ,
 		    default_center_x , default_center_y );
     }
-  if ( ( input_surface -> w == 128 ) &&
-       ( input_surface -> h == 128 ) )
+  else if ( ( input_surface -> w == 128 ) &&
+	    ( input_surface -> h == 128 ) )
     {
       default_center_x = 64 ;
       default_center_y = 100 ;
       DebugPrintf ( 0 , "\nImage size 128x128 recognized.  Using %d/%d default origin." ,
 		    default_center_x , default_center_y );
     }
-  if ( ( input_surface -> w == 200 ) &&
-       ( input_surface -> h == 240 ) )
+  else if ( ( input_surface -> w == 200 ) &&
+	    ( input_surface -> h == 240 ) )
     {
       default_center_x = 99 ;
       default_center_y = 190 ;
       DebugPrintf ( 0 , "\nImage size 200x240 (typical smaller tux part rendering).  Using %d/%d default origin." ,
 		    default_center_x , default_center_y );
     }
-  if ( ( input_surface -> w == 400 ) &&
-       ( input_surface -> h == 480 ) )
+  else if ( ( input_surface -> w == 400 ) &&
+	    ( input_surface -> h == 480 ) )
     {
       default_center_x = 199 ;
       default_center_y = 381 ;
       DebugPrintf ( 0 , "\nImage size 400x480 (typical larger tux part rendering).  Using %d/%d default origin." ,
 		    default_center_x , default_center_y );
     }
-
+  else
+    {
+      DebugPrintf ( 0 , "\nCROPPY ERROR:  Unrecognized image format received... terminating in order to prevent accidents..." , 
+		    default_center_x , default_center_y );
+    }
   //--------------------
   // Maybe some extra information was passed via the command line, which overrides
   // the default origin settings for this image.  We take that possibility into
