@@ -91,6 +91,8 @@ char *Affected;
 EXTERN int MyCursorX;
 EXTERN int MyCursorY;
 
+EXTERN char *PrefixToFilename[ ENEMY_ROTATION_MODELS_AVAILABLE ];
+
 SDL_Color flashcolor1 = {100, 100, 100};
 SDL_Color flashcolor2 = {0, 0, 0};
 
@@ -2435,8 +2437,8 @@ grab_enemy_images_from_archive ( int enemy_model_nr )
     // We need a file name!
     //
     sprintf ( constructed_filename , "droids/%s/%s.tux_image_archive" , 
-	      Druidmap [ enemy_model_nr ] . druidname ,
-	      Druidmap [ enemy_model_nr ] . druidname );
+	      PrefixToFilename [ enemy_model_nr ] ,
+	      PrefixToFilename [ enemy_model_nr ] );
     fpath = find_file ( constructed_filename , GRAPHICS_DIR, FALSE );
     
     //--------------------
