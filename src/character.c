@@ -267,7 +267,7 @@ UpdateAllCharacterStats ( void )
   // if ( Me.exp_level == 1 ) Me.ExpRequired = BaseExpRequired;
   Me.ExpRequired = BaseExpRequired * ( exp ( ( Me.exp_level - 1 ) * log ( 2 ) ) ) ;
 
-  if ( RealScore > Me.ExpRequired ) 
+  if ( Me.Experience > Me.ExpRequired ) 
     {
       Me.exp_level ++ ;
       Me.PointsToDistribute += 5;
@@ -399,7 +399,7 @@ ShowCharacterScreen ( void )
   sprintf( CharText , "%4d", Me.exp_level );
   DisplayText( CharText , 62 + CharacterRect.x , 56 + CharacterRect.y , &CharacterRect );
 
-  Me.Experience = RealScore;
+  // Me.Experience = RealScore;
   sprintf( CharText , "%6ld", Me.Experience ); // this should be the real score, sooner or later
   DisplayText( CharText , 240 + CharacterRect.x ,  EXPERIENCE_Y + CharacterRect.y , &CharacterRect );
 

@@ -172,7 +172,7 @@ Enemy_Post_Bullethit_Behaviour( int EnemyNum )
   // It that is an enemy, who can go and tell his mommy MS at the next console,
   // we will establish a route to the next best console and set the droid to
   // persue this route and make his report.
-
+  //
   if ( Druidmap[ ThisRobot->type ].CallForHelpAfterSufferingHit ) 
     {
       DebugPrintf( 1 , "\nEnemy_Post_Bullethit_Behaviour( int EnemyNum ): starting to set up special course.");
@@ -762,6 +762,10 @@ SelectNextWaypointAdvanced ( int EnemyNum )
 } // void MoveThisRobotAdvanced ( int EnemyNum )
 
 
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
 void 
 MoveThisEnemy( int EnemyNum )
 {
@@ -784,7 +788,7 @@ MoveThisEnemy( int EnemyNum )
   if ( ThisRobot->energy <= 0)
     {
       ThisRobot->Status = OUT;
-      RealScore += Druidmap[ ThisRobot->type ].score;
+      Me.Experience += Druidmap[ ThisRobot->type ].score;
       StartBlast ( ThisRobot->pos.x, ThisRobot->pos.y,
 		   DRUIDBLAST);
 
@@ -991,6 +995,12 @@ AttackInfluence (int enemynum)
 	    }
 	}
 
+      //--------------------
+      // Newly, also enemys have to respect the angle modifier in their weapons...
+      //
+      RotateVectorByAngle ( & ( AllBullets[j].speed ) , ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].item_gun_start_angle_modifier );
+
+
       AllBullets[j].angle = - ( 90 + 180 * atan2 ( AllBullets[j].speed.y ,  AllBullets[j].speed.x ) / M_PI ) ;  
 
       /* Bullets im Zentrum des Schuetzen starten */
@@ -1074,6 +1084,58 @@ AttackInfluence (int enemynum)
 	  return;
 	}
 
+      
+      // if ( dist2 > 2 )
+      if ( ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_angle_change > 0 )
+	{
+	  //--------------------
+	  // If the distance is not yet right, we find a new location to move to.  We
+	  // do this WITHOUT consulting the waypoints, so that the robots become more
+	  // 'intelligent' in their movement.
+	  //
+	  ThisRobot->TextVisibleTime = 0 ;
+	  ThisRobot->TextToBeDisplayed = "Seeking to get closer to target...";
+
+	  ThisRobot->persuing_given_course = TRUE;
+	  ThisRobot->PrivatePathway[ 0 ].x = ThisRobot->pos.x;
+	  ThisRobot->PrivatePathway[ 0 ].y = ThisRobot->pos.y;
+	  
+	  //--------------------
+	  // Now we check if it's perhaps time to make a step to the left/right
+	  //
+	  if ( fabsf ( Me.pos.x - ThisRobot->pos.x ) > 1 )
+	    {
+	      if ( ( Me.pos.x - ThisRobot->pos.x ) > 0 )
+		{
+		  if ( DruidPassable ( ( (int) ThisRobot->pos.x ) + 1 , ThisRobot->PrivatePathway[ 0 ].y ) == CENTER )
+		    ThisRobot->PrivatePathway[ 0 ].x = ( (int) ThisRobot->pos.x ) + 1;
+		}
+	      else
+		{
+		  if ( DruidPassable ( ( (int) ThisRobot->pos.x ) - 1 , ThisRobot->PrivatePathway[ 0 ].y ) == CENTER )
+		    ThisRobot->PrivatePathway[ 0 ].x = ( (int) ThisRobot->pos.x ) - 1;
+		}
+	    }
+	  //--------------------
+	  // Now we check if it's perhaps time to make a step up/down
+	  //
+	  if ( fabsf ( Me.pos.y - ThisRobot->pos.y ) > 1 )
+	    {
+	      if ( ( Me.pos.y - ThisRobot->pos.y ) > 0 )
+		{
+		  if ( DruidPassable ( ( (int) ThisRobot->pos.x ) , 
+				       ( (int) ThisRobot->PrivatePathway[ 0 ].y ) + 1 ) == CENTER )
+		    ThisRobot->PrivatePathway[ 0 ].y = ( (int) ThisRobot->pos.y ) + 1;
+		}
+	      else
+		{
+		  if ( DruidPassable ( ( (int) ThisRobot->pos.x ) , 
+				       ( (int) ThisRobot->PrivatePathway[ 0 ].y ) - 1 ) == CENTER )
+		    ThisRobot->PrivatePathway[ 0 ].y = ( (int) ThisRobot->pos.y ) - 1;
+		}
+	    }
+	}
+
 
       Fire_Bullet_Sound ( guntype );
 
@@ -1113,6 +1175,12 @@ AttackInfluence (int enemynum)
 	      AllBullets[j].speed.y = -AllBullets[j].speed.y;
 	    }
 	}
+
+      //--------------------
+      // Newly, also enemys have to respect the angle modifier in their weapons...
+      //
+      RotateVectorByAngle ( & ( AllBullets[j].speed ) , ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].item_gun_start_angle_modifier );
+
 
       AllBullets[j].angle = - ( 90 + 180 * atan2 ( AllBullets[j].speed.y,  AllBullets[j].speed.x ) / M_PI );  
 
