@@ -94,7 +94,6 @@ EXTERN enemy Feindesliste[MAX_ENEMYS_ON_SHIP];
 
 EXTERN int NumEnemys;
 EXTERN int GameAdapterPresent;
-EXTERN int ModPlayerOn;
 
 EXTERN Level CurLevel;		/* the current level data */
 EXTERN ship curShip;		/* the current ship-data */
@@ -113,9 +112,6 @@ EXTERN int KeyCode;
 EXTERN unsigned int MapBlockIndex;
 
 EXTERN unsigned char *InternWindow;
-
-EXTERN char LeftInfo[50];
-EXTERN char RightInfo[50];
 
 EXTERN int taste;
 
