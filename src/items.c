@@ -661,7 +661,7 @@ void
 DamageAllEquipment( int PlayerNum )
 {
 
-  DamageItem ( & ( Me [ PlayerNum ] . weapon_item  ) );
+  // DamageItem ( & ( Me [ PlayerNum ] . weapon_item  ) );
   DamageItem ( & ( Me [ PlayerNum ] . armour_item  ) );
   DamageItem ( & ( Me [ PlayerNum ] . shield_item  ) );
   DamageItem ( & ( Me [ PlayerNum ] . drive_item   ) );

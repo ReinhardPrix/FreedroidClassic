@@ -1029,7 +1029,7 @@ FireBullet ( int PlayerNum )
   //
   if ( ( ( ! LivingDroidBelowMouseCursor ( PlayerNum ) ) && ( ! ServerThinksShiftWasPressed ( PlayerNum ) ) ) ||
        ( ( ItemMap [ Me [ PlayerNum ] . weapon_item . type ] . item_gun_angle_change != 0 ) &&
-	 ( ( abs ( ServerThinksInputAxisX ( PlayerNum ) ) > Block_Width  ) || ( abs ( ServerThinksInputAxisY ( PlayerNum ) ) > Block_Height ) ) &&
+	 ( ( abs ( ServerThinksInputAxisX ( PlayerNum ) ) > Block_Width * 1.5  ) || ( abs ( ServerThinksInputAxisY ( PlayerNum ) ) > Block_Height * 1.5 ) ) &&
 	   ( ! ServerThinksShiftWasPressed ( PlayerNum ) ) )
        )
     {
@@ -1051,8 +1051,11 @@ FireBullet ( int PlayerNum )
 
   //--------------------
   // We should always make the sound of a fired bullet (or weapon swing)
+  // and then of course also subtract a certain fee from the remaining weapon
+  // duration in the course of the swing/hit
   //
   Fire_Bullet_Sound ( guntype );
+  DamageItem ( & ( Me [ PlayerNum ] . weapon_item  ) );
 
   //--------------------
   // We always start the weapon application cycle, i.e. change of tux
