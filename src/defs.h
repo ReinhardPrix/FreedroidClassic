@@ -51,6 +51,7 @@
 #define OK		0
 
 #define max(x,y) ((x) < (y) ? (y) : (x) ) 
+#define min(x,y) ((x) > (y) ? (y) : (x) ) 
 
 #define USE_SDL_FRAMERATE
 
@@ -782,6 +783,15 @@ enum _status
   BRIEFING,
   MENU
 };
+
+//--------------------
+// The possible edito modes for the level editor
+//
+enum _level_editor_edit_modes
+  {
+    LEVEL_EDITOR_EDIT_FLOOR = 3,
+    LEVEL_EDITOR_EDIT_OBSTACLES = 4
+  };
 
 enum _enemy_combat_state_machine_states
 {

@@ -1654,6 +1654,7 @@ InitFreedroid ( void )
   // can of course also be freed as well.
   //
   level_editor_marked_obstacle = NULL ;
+  GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_FLOOR ;
   Bulletmap=NULL;  // That will cause the memory to be allocated later
   for ( i = 0 ; i < MAXBULLETS ; i++ )
     {

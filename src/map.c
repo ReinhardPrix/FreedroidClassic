@@ -936,6 +936,21 @@ glue_obstacles_to_floor_tiles_for_level ( int level_num )
   int next_free_index;
 
   //--------------------
+  // We clean out any obstacle glue information that might be still
+  // in this level.
+  //
+  for ( x_tile = 0 ; x_tile < loadlevel -> xlen ; x_tile ++ )
+    {
+      for ( y_tile = 0 ; y_tile < loadlevel -> ylen ; y_tile ++ )
+	{
+	  for ( glue_index = 0 ; glue_index < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; glue_index ++ )
+	    {
+	      loadlevel -> map [ y_tile ] [ x_tile ] . obstacles_glued_to_here [ glue_index ] = (-1) ;
+	    }
+	}
+    }  
+
+  //--------------------
   // Each obstacles must to be anchored to exactly one (the closest!)
   // map tile, so that we can find out obstacles 'close' to somewhere
   // more easily...
@@ -958,6 +973,7 @@ glue_obstacles_to_floor_tiles_for_level ( int level_num )
       if ( x_tile >= loadlevel -> xlen ) x_tile = loadlevel -> xlen - 1;
       if ( y_tile >= loadlevel -> ylen ) y_tile = loadlevel -> ylen - 1;
 
+      next_free_index = MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ;
       for ( glue_index = 0 ; glue_index < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; glue_index ++ )
 	{
 	  if ( loadlevel -> map [ y_tile ] [ x_tile ] . obstacles_glued_to_here [ glue_index ] != (-1) )
@@ -967,16 +983,21 @@ glue_obstacles_to_floor_tiles_for_level ( int level_num )
 	    }
 	  else
 	    {
-	      if ( glue_index == MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE )
-		{
-		  GiveStandardErrorMessage ( "glue_obstacles_to_floor_tiles_for_level (...)" , "\
-FreedroidRPG was unable to glue a certain obstacle to the nearest map tile.\n\
-This bug can be resolved by simply raising a contant by one, but it needs to be done :)",
-					     PLEASE_INFORM, IS_FATAL );
-		}
 	      next_free_index = glue_index ;
 	      break;
 	    }
+	}
+
+      //--------------------
+      // some safety check against writing beyond the bonds of the
+      // array.
+      //
+      if ( next_free_index >= MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE )
+	{
+	  GiveStandardErrorMessage ( "glue_obstacles_to_floor_tiles_for_level (...)" , "\
+FreedroidRPG was unable to glue a certain obstacle to the nearest map tile.\n\
+This bug can be resolved by simply raising a contant by one, but it needs to be done :)",
+				     PLEASE_INFORM, IS_FATAL );
 	}
 
       //--------------------

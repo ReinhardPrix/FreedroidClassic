@@ -299,8 +299,20 @@ HandleBannerMouseClick( void )
 	}
     }
 
-  if ( Highlight >= ALL_ISOMETRIC_FLOOR_TILES )
-    Highlight = ALL_ISOMETRIC_FLOOR_TILES - 1;
+  //--------------------
+  // Now some extra security against selecting indices that would point to
+  // undefined objects (floor tiles or obstacles) later
+  //
+  if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_FLOOR )
+    {
+      if ( Highlight >= ALL_ISOMETRIC_FLOOR_TILES )
+	Highlight = ALL_ISOMETRIC_FLOOR_TILES - 1;
+    }
+  else if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_OBSTACLES )
+    {
+      if ( Highlight >= NUMBER_OF_OBSTACLE_TYPES )
+	Highlight = NUMBER_OF_OBSTACLE_TYPES - 1;
+    }
 
 }; // void HandleBannerMouseClick( void )
 
@@ -314,12 +326,17 @@ ShowLevelEditorTopMenu( int Highlight )
 {
   int i;
   SDL_Rect TargetRectangle;
-  int MapBrick = FirstBlock;
+  int selected_index = FirstBlock;
   Level DisplayLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
   static SDL_Surface *LevelEditorTopBanner = NULL;
   SDL_Surface *tmp = NULL;
   char* fpath;
+  float zoom_factor;
 
+  //--------------------
+  // At first we check if we might need to load the top status and
+  // selection banner.  This will have to be done only once.
+  //
   if ( LevelEditorTopBanner == NULL )
     {
       fpath = find_file ( LEVEL_EDITOR_BANNER_FILE , GRAPHICS_DIR, FALSE);
@@ -333,40 +350,73 @@ ShowLevelEditorTopMenu( int Highlight )
       EditorBannerRect.h = LevelEditorTopBanner -> h;
     }
   
+  //--------------------
+  // Now we blit the top status and selection banner background.  Fine.
+  //
   SDL_BlitSurface ( LevelEditorTopBanner , NULL , Screen , &EditorBannerRect );
 
-  for ( i = 0 ; i < 9 ; i ++ )
+  //--------------------
+  // Time to fill something into the top selection banner, so that the
+  // user can really has something to select from there.  But this must be
+  // done differently, depending on whether we show the menu for the floor
+  // edit mode or for the obstacle edit mode.
+  //
+  if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_FLOOR )
     {
-      TargetRectangle.x = INITIAL_BLOCK_WIDTH/2 + INITIAL_BLOCK_WIDTH * i ;
-      TargetRectangle.y = INITIAL_BLOCK_HEIGHT/3 ;
-
-      /*
-      if ( INITIAL_BLOCK_WIDTH == Block_Width )
+      for ( i = 0 ; i < 9 ; i ++ )
 	{
-	  SDL_BlitSurface( MapBlockSurfacePointer[ DisplayLevel->color ][MapBrick] , NULL ,
-			   Screen, &TargetRectangle);
+	  TargetRectangle.x = INITIAL_BLOCK_WIDTH/2 + INITIAL_BLOCK_WIDTH * i ;
+	  TargetRectangle.y = INITIAL_BLOCK_HEIGHT/3 ;
+	  
+	  //--------------------
+	  // We create a scaled version of the floor tile in question
+	  //
+	  tmp = zoomSurface ( floor_iso_images [ selected_index ] . surface , 0.5 , 0.5, FALSE );
+	  
+	  //--------------------
+	  // Now we can show and free the scaled verion of the floor tile again.
+	  //
+	  SDL_BlitSurface( tmp , NULL , Screen, &TargetRectangle);
+	  SDL_FreeSurface ( tmp );
+	  
+	  if ( selected_index == Highlight ) 
+	    HighlightRectangle ( Screen , TargetRectangle );
+	  
+	  if ( selected_index < ALL_ISOMETRIC_FLOOR_TILES -1 ) selected_index ++ ;
 	}
-      else
+    }
+  else if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_OBSTACLES )
+    {
+      for ( i = 0 ; i < 9 ; i ++ )
 	{
-	  SDL_BlitSurface( BackupMapBlockSurfacePointer[ DisplayLevel->color ][ MapBrick ] , NULL ,
-			   Screen, &TargetRectangle);
+	  TargetRectangle.x = INITIAL_BLOCK_WIDTH/2 + INITIAL_BLOCK_WIDTH * i ;
+	  TargetRectangle.y = INITIAL_BLOCK_HEIGHT/3 ;
+	  
+	  //--------------------
+	  // We create a scaled version of the obstacle in question
+	  //
+	  zoom_factor = min ( 
+			     ( (float)INITIAL_BLOCK_WIDTH / (float)obstacle_map [ selected_index ] . image . surface->w ) ,
+			     ( (float)INITIAL_BLOCK_HEIGHT / (float)obstacle_map [ selected_index ] . image . surface->h ) );
+	  tmp = zoomSurface ( obstacle_map [ selected_index ] . image . surface , zoom_factor , zoom_factor , FALSE );
+	  
+	  //--------------------
+	  // Now we can show and free the scaled verion of the floor tile again.
+	  //
+	  SDL_BlitSurface( tmp , NULL , Screen, &TargetRectangle);
+	  SDL_FreeSurface ( tmp );
+	  
+	  if ( selected_index == Highlight ) 
+	    HighlightRectangle ( Screen , TargetRectangle );
+	  
+	  if ( selected_index < NUMBER_OF_OBSTACLE_TYPES -1 ) selected_index ++ ;
 	}
-      */
-      //--------------------
-      // We create a scaled version of the floor tile in question
-      //
-      tmp = zoomSurface ( floor_iso_images [ MapBrick ] . surface , 0.5 , 0.5, FALSE );
-      
-      //--------------------
-      // Now we can show and free the scaled verion of the floor tile again.
-      //
-      SDL_BlitSurface( tmp , NULL , Screen, &TargetRectangle);
-      SDL_FreeSurface ( tmp );
-
-      if ( MapBrick == Highlight ) 
-	HighlightRectangle ( Screen , TargetRectangle );
-
-      if ( MapBrick < ALL_ISOMETRIC_FLOOR_TILES -1 ) MapBrick ++ ;
+    }
+  else
+    {
+      GiveStandardErrorMessage ( "ShowLevelEditorTopMenu (...)" , "\
+Unhandles level editor edit mode received.",
+				 PLEASE_INFORM , IS_FATAL );
     }
 
   ShowGenericButtonFromList ( LEFT_LEVEL_EDITOR_BUTTON ) ;
@@ -2863,6 +2913,31 @@ show_level_editor_tooltips ( void )
 }; // void show_level_editor_tooltips ( void )
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+add_obstacle ( Level EditLevel , float x , float y , int new_obstacle_type )
+{
+  int i;
+
+  for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
+    {
+      if ( EditLevel -> obstacle_list [ i ] . type == (-1) )
+	{
+	  EditLevel -> obstacle_list [ i ] . type = new_obstacle_type ;
+	  EditLevel -> obstacle_list [ i ] . pos . x = x ;
+	  EditLevel -> obstacle_list [ i ] . pos . y = y ;
+	  glue_obstacles_to_floor_tiles_for_level ( EditLevel -> levelnum );
+	  DebugPrintf ( 0 , "\nNew obstacle has been added!!!" );
+	  fflush(stdout);
+	  return;
+	}
+    }
+
+}; // void add_obstacle ( Level EditLevel , float x , float y , int Highlight )
+
+/* ----------------------------------------------------------------------
  * This function is provides the Level Editor integrated into 
  * freedroid.  Actually this function is a submenu of the big
  * Escape Menu.  In here you can edit the level and, upon pressing
@@ -2872,10 +2947,10 @@ show_level_editor_tooltips ( void )
 void 
 LevelEditor(void)
 {
-  int BlockX=rintf(Me[0].pos.x+0.5);
-  int BlockY=rintf(Me[0].pos.y+0.5);
-  int Done=FALSE;
-  int Weiter=FALSE;
+  int BlockX = rintf( Me [ 0 ] . pos . x + 0.5 );
+  int BlockY = rintf( Me [ 0 ] . pos . y + 0.5 );
+  int Done = FALSE;
+  int Weiter = FALSE;
   int i ;
   int SpecialMapValue;
   char* NumericInputString;
@@ -2884,7 +2959,8 @@ LevelEditor(void)
   Level EditLevel;
   char* NewCommentOnThisSquare;
   int LeftMousePressedPreviousFrame = FALSE;
-  point TargetSquare;
+  int RightMousePressedPreviousFrame = FALSE;
+  moderately_finepoint TargetSquare;
   int new_x, new_y;
 
   //--------------------
@@ -3109,7 +3185,16 @@ LevelEditor(void)
 	  // If the person using the level editor decides he/she wants a different
 	  // scale for the editing process, he/she may say so by using the O/I keys.
 	  //
-	  if ( OPressed () ) ZoomOut();
+	  if ( OPressed () ) 
+	    {
+	      // ZoomOut();
+	      if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_FLOOR )
+		GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_OBSTACLES ;
+	      else if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_OBSTACLES )
+		GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_FLOOR ;
+	      while ( OPressed() );
+	      Highlight = 0 ;
+	    }
 	  if ( IPressed () ) ZoomIn();
   
 	  //--------------------
@@ -3287,13 +3372,20 @@ LevelEditor(void)
 	  // to prevent segfault due to writing outside the level, but that's easily
 	  // accomplished.
 	  //
-	  if ( MouseRightPressed() )
+	  if ( MouseRightPressed() && !RightMousePressedPreviousFrame )
 	    {
-	      if ( ( TargetSquare . x >= 0 ) &&
-		   ( TargetSquare . x <= EditLevel->xlen-1 ) &&
-		   ( TargetSquare . y >= 0 ) &&
-		   ( TargetSquare . y <= EditLevel->ylen-1 ) )
-		EditLevel -> map [ TargetSquare . y ] [ TargetSquare . x ] . floor_value = Highlight ;	      
+	      if ( ( (int)TargetSquare . x >= 0 ) &&
+		   ( (int)TargetSquare . x <= EditLevel->xlen-1 ) &&
+		   ( (int)TargetSquare . y >= 0 ) &&
+		   ( (int)TargetSquare . y <= EditLevel->ylen-1 ) )
+		{
+		  if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_FLOOR )
+		    EditLevel -> map [ (int)TargetSquare . y ] [ (int)TargetSquare . x ] . floor_value = Highlight ;
+		  else if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_OBSTACLES )
+		    {
+		      add_obstacle ( EditLevel , TargetSquare . x , TargetSquare . y , Highlight );
+		    }
+		}
 	    }
 
 	  if (QPressed())
@@ -3302,6 +3394,7 @@ LevelEditor(void)
 	    }
 
 	  LeftMousePressedPreviousFrame = axis_is_active; 
+	  RightMousePressedPreviousFrame = MouseRightPressed() ;
 
 	} // while (!EscapePressed())
       while( EscapePressed() );

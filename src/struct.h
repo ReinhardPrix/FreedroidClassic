@@ -110,6 +110,7 @@ typedef struct
   int omit_tux_in_level_editor;
   int omit_obstacles_in_level_editor;
   int omit_enemies_in_level_editor;
+  int level_editor_edit_mode;
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
 
