@@ -1062,11 +1062,13 @@ InitNewMissionList ( char *MissionName )
   InsertMessage (" Game on!  Good Luck,,."); // this also has NO meaning right now
 
   //--------------------
-  // Delete all bullets and blasts 
+  // Delete all bullets and blasts.  We need to do this AFTER the map has been
+  // read in, since DeleteBullet calls StartBlast which accesses the map, which
+  // should have been allocated at his point.
   //
   for (i = 0; i < MAXBULLETS; i++)
     {
-      DeleteBullet ( i );
+      DeleteBullet ( i , FALSE );
     }
   DebugPrintf ( 1 , "\nvoid InitNewMission( ... ): All bullets have been deleted...");
   for (i = 0; i < MAXBLASTS; i++)
@@ -1074,6 +1076,7 @@ InitNewMissionList ( char *MissionName )
       DeleteBlast( i );
     }
   DebugPrintf ( 1 , "\nvoid InitNewMission( ... ): All blasts have been deleted...");
+
 
   //--------------------
   //Now its time to start decoding the mission file.
@@ -1272,6 +1275,23 @@ InitNewMissionList ( char *MissionName )
 	  AssignMission( MissionTargetIndex );
 	}
     }
+  /*
+  //--------------------
+  // Delete all bullets and blasts.  We need to do this AFTER the map has been
+  // read in, since DeleteBullet calls StartBlast which accesses the map, which
+  // should have been allocated at his point.
+  //
+  for (i = 0; i < MAXBULLETS; i++)
+    {
+      DeleteBullet ( i );
+    }
+  DebugPrintf ( 1 , "\nvoid InitNewMission( ... ): All bullets have been deleted...");
+  for (i = 0; i < MAXBLASTS; i++)
+    {
+      DeleteBlast( i );
+    }
+  DebugPrintf ( 1 , "\nvoid InitNewMission( ... ): All blasts have been deleted...");
+  */
 
 }; // void InitNewMissionList ( char* MissionName )
 

@@ -842,7 +842,8 @@ Teleport (int LNum, int X, int Y)
 	AllBlasts[i].type = OUT;
       for (i = 0; i < MAXBULLETS; i++)
 	{
-	  DeleteBullet ( i ); // Don't ever delete bullets any other way!!! SEGFAULTS might result!!!
+	  DeleteBullet ( i , FALSE ); // Don't ever delete bullets any other way!!! SEGFAULTS might result!!!
+	                              // in this case, we need no bullet-explosions
 	    //AllBullets[i].type = OUT;
 	    //AllBullets[i].mine = FALSE;
 	}
