@@ -142,7 +142,8 @@ Type of blast this bullet causes when crashing e.g. against a wall : 0
 
 ** Start of new item specification subsection **
 Item name="Single Energy Capsule"
-Item can be applied in combat="yes"
+Item can be applied in combat="no"
+Item can be installed in influ="no"
 Energy gain on application in combat=35
 Item weight=0.4
 Picture number=0
@@ -151,6 +152,7 @@ Picture number=0
 ** Start of new item specification subsection **
 Item name="Double Energy Capsule"
 Item can be applied in combat="yes"
+Item can be installed in influ="no"
 Energy gain on application in combat=70
 Item weight=0.6
 Picture number=1
@@ -159,6 +161,7 @@ Picture number=1
 ** Start of new item specification subsection **
 Item name="Triple Energy Capsule"
 Item can be applied in combat="yes"
+Item can be installed in influ="no"
 Energy gain on application in combat=105
 Item weight=0.8
 Picture number=2
@@ -167,6 +170,7 @@ Picture number=2
 ** Start of new item specification subsection **
 Item name="Mountable Lasers Class Alpha"
 Item can be applied in combat="no"
+Item can be installed in influ="yes"
 Energy gain on application in combat=60
 Item weight=0.8
 Picture number=2
@@ -175,6 +179,7 @@ Picture number=2
 ** Start of new item specification subsection **
 Item name="Droid Energetic Heart Class Beta"
 Item can be applied in combat="no"
+Item can be installed in influ="yes"
 Energy gain on application in combat=60
 Item weight=0.8
 Picture number=2
@@ -183,6 +188,7 @@ Picture number=2
 ** Start of new item specification subsection **
 Item name="Droid Antigrav Drive Class Alpha"
 Item can be applied in combat="no"
+Item can be installed in influ="yes"
 Energy gain on application in combat=60
 Item weight=0.8
 Picture number=2
