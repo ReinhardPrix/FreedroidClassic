@@ -153,6 +153,37 @@ void Init_Joy (void)
   return;
 }
 
+void
+ApplyItemFromInventory( int ItemNum )
+{
+  DebugPrintf( 0 , "\nvoid ApplyItemFromInventory( int ItemNum ): function call confirmed.");
+
+  // If the inventory slot is not at all filled, we need not do anything more...
+  if ( Me.Inventory[ ItemNum ].type == (-1) ) return;
+
+  if ( ItemMap[ Me.Inventory[ ItemNum ].type ].item_can_be_applied_in_combat == FALSE ) 
+    {
+      Me.TextVisibleTime = 0;
+      Me.TextToBeDisplayed = "I can't use this item here.";
+      return;
+    }
+
+  //--------------------
+  // At this point we know that the item is applicable in combat situation
+  // and therefore all we need to do from here on is execute the item effect
+  // upon the influencer or his environment.
+  //
+  Me.health += ItemMap[ Me.Inventory[ ItemNum ].type ].energy_gain_uppon_application_in_combat;
+  Me.energy += ItemMap[ Me.Inventory[ ItemNum ].type ].energy_gain_uppon_application_in_combat;
+
+  //--------------------
+  // In some cases the item concerned is a one-shot-device like a health potion, which should
+  // evaporize after the first application.  Therefore we delete the item from the inventory list.
+  //
+  Me.Inventory[ ItemNum ].type = (-1);
+
+}; // void ApplyItemFromInventory( int ItemNum )
+
 /* ----------------------------------------------------------------------
  * This function does the reactions to keypresses of the player other
  * than pressing cursor keys.
@@ -164,13 +195,14 @@ ReactToSpecialKeys(void)
   int InvPos;
   static int IPressed_LastFrame;
 
-  
- 
 
   if ( QPressed() ) /* user asked for quit */
     Terminate (OK);
   if ( DPressed() )
     Me.energy = 0;
+
+  if ( Number1Pressed() )
+    ApplyItemFromInventory( 1 );
 
   if ( MPressed() )
     {
@@ -198,6 +230,7 @@ ReactToSpecialKeys(void)
     {
       for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i++ )
 	{
+	  if ( AllItems[ i ].type == (-1) ) continue;
 	  if ( ( fabsf( Me.pos.x - AllItems[ i ].pos.x ) < 0.5 ) &&
 	       ( fabsf( Me.pos.x - AllItems[ i ].pos.x ) < 0.5 ) )
 	    break;
@@ -211,15 +244,15 @@ ReactToSpecialKeys(void)
 	  // find a free position in the inventory
 	  for ( InvPos = 0 ; InvPos < MAX_ITEMS_IN_INVENTORY ; InvPos++ )
 	    {
-	      if ( AllItems[ InvPos ].type == (-1) ) break;
+	      if ( Me.Inventory [ InvPos ].type == (-1) ) break;
 	    }
 	  if ( InvPos == MAX_ITEMS_IN_INVENTORY ) 
 	    {
-
+	      // can't take any more items,
 	    }
 	  else
 	    {
-	      Me.Inventory[ InvPos-1 ].type = AllItems[ i ].type;
+	      Me.Inventory[ InvPos ].type = AllItems[ i ].type;
 	      AllItems[ i ].type = (-1);
 	    }
 	}
