@@ -76,9 +76,9 @@
 
 
 /* string - signs in ship-data files */
-#define MAP_BEGIN_STRING	"beginning_of_map"
-#define WP_BEGIN_STRING		"wp"
-#define LEVEL_END_STRING	"end_of_level"
+#define MAP_BEGIN_STRING	"begin_map"
+#define WP_BEGIN_STRING		"begin_waypoints"
+#define LEVEL_END_STRING	"end_level"
 
 
 typedef struct

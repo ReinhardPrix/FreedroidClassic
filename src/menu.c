@@ -356,7 +356,7 @@ Cheatmenu (void)
 
 	case 'w':  /* print waypoint info of current level */
 	  WpList = CurLevel->AllWaypoints;
-	  for (i=0; i<MAXWAYPOINTS && WpList[i].x; i++)
+	  for (i=0; i<CurLevel->num_waypoints; i++)
 	    {
 	      if (i && !(i%20))
 		{
@@ -1172,6 +1172,7 @@ Show_Waypoints(void)
   int y;
   int BlockX, BlockY;
   int color;
+  waypoint *this_wp;
 #define ACTIVE_WP_COLOR 0x0FFFFFFFF
 
   BlockX=rintf(Me.pos.x);
@@ -1179,37 +1180,34 @@ Show_Waypoints(void)
 	  
   SDL_LockSurface( ne_screen );
 
-  // for (wp=0; wp<CurLevel->num_waypoints; wp++)
-  for (wp=0; wp < MAXWAYPOINTS; wp++)
+  for (wp=0; wp<CurLevel->num_waypoints; wp++)
     {
-
-      if ( CurLevel->AllWaypoints[wp].x == 0 ) continue;
-
+      this_wp = &CurLevel->AllWaypoints[wp];
       //--------------------
       // Draw the cross in the middle of the middle of the tile
       //
       for (i= Block_Width/4; i<3 * Block_Width / 4; i++)
 	{
 	  // This draws a (double) line at the upper border of the current block
-	  x = i + User_Rect.x+(User_Rect.w/2)- (( Me.pos.x)-CurLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
-	  y = i + USER_FENSTER_CENTER_Y - (( Me.pos.y)-CurLevel->AllWaypoints[wp].y + 0.5) * Block_Height;
+	  x = i + User_Rect.x+(User_Rect.w/2)- (( Me.pos.x)-this_wp->x + 0.5) * Block_Width;
+	  y = i + USER_FENSTER_CENTER_Y - (( Me.pos.y)-this_wp->y + 0.5) * Block_Height;
 	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
 	  putpixel( ne_screen , x , y , HIGHLIGHTCOLOR );
 
 		    
-	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me.pos.x )-CurLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
-	  y = i + USER_FENSTER_CENTER_Y - (( Me.pos.y)-CurLevel->AllWaypoints[wp].y + 0.5) * Block_Height + 1;
+	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me.pos.x )-this_wp->x + 0.5) * Block_Width;
+	  y = i + USER_FENSTER_CENTER_Y - (( Me.pos.y)-this_wp->y + 0.5) * Block_Height + 1;
 	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
 	  putpixel( ne_screen , x , y , HIGHLIGHTCOLOR );
 	  
 	  // This draws a line at the lower border of the current block
-	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me.pos.x)-CurLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
-	  y = -i + USER_FENSTER_CENTER_Y - (( Me.pos.y )-CurLevel->AllWaypoints[wp].y - 0.5 ) * Block_Height -1;
+	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me.pos.x)-this_wp->x + 0.5) * Block_Width;
+	  y = -i + USER_FENSTER_CENTER_Y - (( Me.pos.y )-this_wp->y - 0.5 ) * Block_Height -1;
 	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
 	  putpixel( ne_screen , x , y , HIGHLIGHTCOLOR );
 
-	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me.pos.x)-CurLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
-	  y = -i + USER_FENSTER_CENTER_Y - ((Me.pos.y)-CurLevel->AllWaypoints[wp].y - 0.5 ) * Block_Height -2;
+	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me.pos.x)-this_wp->x + 0.5) * Block_Width;
+	  y = -i + USER_FENSTER_CENTER_Y - ((Me.pos.y)-this_wp->y - 0.5 ) * Block_Height -2;
 	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
 	  putpixel( ne_screen , x , y , HIGHLIGHTCOLOR );
 	  
@@ -1218,16 +1216,13 @@ Show_Waypoints(void)
       //--------------------
       // Draw the connections to other waypoints, BUT ONLY FOR THE WAYPOINT CURRENTLY TARGETED
       //
-      if ( (BlockX == CurLevel->AllWaypoints[wp].x) && (BlockY == CurLevel->AllWaypoints[wp].y) )
-	for ( i=0; i<MAX_WP_CONNECTIONS; i++ )
+      if ( (BlockX == this_wp->x) && (BlockY == this_wp->y) )
+	for ( i=0; i<this_wp->num_connections; i++ )
 	  {
-	    if ( CurLevel->AllWaypoints[wp].connections[i] == -1 )
-	      break;
-	    else
-	      DrawLineBetweenTiles( CurLevel->AllWaypoints[wp].x , CurLevel->AllWaypoints[wp].y , 
-				    CurLevel->AllWaypoints[CurLevel->AllWaypoints[wp].connections[i]].x , 
-				    CurLevel->AllWaypoints[CurLevel->AllWaypoints[wp].connections[i]].y ,
-				    color );
+	    DrawLineBetweenTiles( this_wp->x , this_wp->y , 
+				  CurLevel->AllWaypoints[this_wp->connections[i]].x , 
+				  CurLevel->AllWaypoints[this_wp->connections[i]].y ,
+				  color );
 	  }
     }
   SDL_UnlockSurface( ne_screen );
@@ -1277,8 +1272,6 @@ LevelEditor(void)
       Highlight_Current_Block();
       Show_Waypoints();
 
-      // CenteredPutString ( ne_screen ,  1*FontHeight(Menu_BFont),    "LEVEL EDITOR");
-      //      LeftPutString ( ne_screen ,  3*FontHeight(FPS_Display_BFont),    "Press F1 for keymap");
       PrintStringFont (ne_screen, FPS_Display_BFont, Full_User_Rect.x+Full_User_Rect.w/3 , 
 		       Full_User_Rect.y+Full_User_Rect.h - FontHeight(FPS_Display_BFont), 
 		       "Press F1 for keymap");
@@ -1305,7 +1298,8 @@ LevelEditor(void)
       if ( KeyIsPressedR (SDLK_F1) )
 	{
 	  k=3;
-	  SDL_BlitSurface ( console_bg_pic2 , NULL, ne_screen, NULL);
+	  //	  SDL_BlitSurface ( console_bg_pic2 , NULL, ne_screen, NULL);
+	  MakeGridOnScreen (NULL);
 	  CenteredPutString   ( ne_screen ,  (k)*FontHeight(Menu_BFont), "Level Editor Keymap"); k+=2;
 	  // DisplayText ("Use cursor keys to move around.", 1, 2 *FontHeight(Menu_BFont), NULL );
 	  PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "Use cursor keys to move around." ); k++;

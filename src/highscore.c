@@ -162,7 +162,7 @@ UpdateHighscores (void)
   Assemble_Combat_Picture ( 0);
   MakeGridOnScreen (&User_Rect);
   Set_Rect (dst, UserCenter_x -70, UserCenter_y - 80, Portrait_Rect.w, Portrait_Rect.h);
-  show_droid_portrait (dst, DRUID999, 0.0, RESET|UPDATE);
+  SDL_BlitSurface (pic999, NULL, ne_screen, &dst);
 
   DisplayText ("Great Score !",  UserCenter_x -90, UserCenter_y - 100, &User_Rect);
   DisplayText ("Enter your name: ",  UserCenter_x -160, UserCenter_y + 100, &User_Rect);

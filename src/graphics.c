@@ -698,11 +698,11 @@ InitPictures (void)
       //---------- get Droid images ----------
       for (i=0; i<NUM_DROIDS; i++)
 	{
-	  // first check if we find a file with rotation-frames: first try .png
+	  // first check if we find a file with rotation-frames: first try .jpg
 	  strcpy( fname, Druidmap[i].druidname );
 	  strcat( fname , ".jpg" );
 	  fpath = find_file (fname, GRAPHICS_DIR, NO_THEME, IGNORE);
-	  // then try with .jpg
+	  // then try with .png
 	  if (!fpath)
 	    {
 	      strcpy( fname, Druidmap[i].druidname );
@@ -712,6 +712,13 @@ InitPictures (void)
 
 	  packed_portraits[i] = load_raw_pic (fpath);
 	}
+
+      // we need the 999.png in any case for transparency!
+      strcpy( fname, Druidmap[DRUID999].druidname );
+      strcat( fname , ".png" );
+      fpath = find_file (fname, GRAPHICS_DIR, NO_THEME, CRITICAL);
+      pic999 = Load_Block (fpath, 0, 0, NULL);
+
     }
   
   printf_SDL (ne_screen, -1, -1, " ok\n");

@@ -257,7 +257,8 @@ typedef struct
 {
   byte x;			/* Grob */
   byte y;
-  signed char connections[MAX_WP_CONNECTIONS];
+  int num_connections;
+  int connections[MAX_WP_CONNECTIONS];
 }
 waypoint, *Waypoint;
 

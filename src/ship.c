@@ -830,7 +830,7 @@ show_droid_portrait (SDL_Rect dst, int droid_type, float cycle_time, int flags)
       // now see if its a jpg, then we add some transparency by color-keying:
       if (IMG_isJPG(packed_portraits[droid_type]))
 	{
-	  //eh non  SDL_SetColorKey (tmp, SDL_SRCCOLORKEY|SDL_RLEACCEL, TransparentPixel);
+	  // non SDL_SetColorKey (tmp, SDL_SRCCOLORKEY|SDL_RLEACCEL, TransparentPixel);
 	  droid_pics = SDL_DisplayFormat (tmp);
 	} // else assume it's png ;)
       else

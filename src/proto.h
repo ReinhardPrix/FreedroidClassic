@@ -155,7 +155,7 @@ EXTERN void MoveLevelDoors (void);
 EXTERN int IsPassable (float x, float y, int Checkpos);
 EXTERN int DruidPassable (float x, float y);
 EXTERN int IsVisible (Finepoint objpos);
-EXTERN int TranslateMap (Level Lev);
+EXTERN int InterpretMap (Level Lev);
 
 /* sound.c  OR nosound.c */
 #undef EXTERN

@@ -694,7 +694,7 @@ InitNewMission ( char *MissionName )
 
   if ( LoadShip ( Shipname ) == ERR )
     {
-      DebugPrintf (1, "Error in LoadShip\n");
+      DebugPrintf (0, "Error in LoadShip\n");
       Terminate (ERR);
     }
   //  printf_SDL (ne_screen, -1, -1, ".");
@@ -1096,7 +1096,7 @@ ThouArtDefeated (void)
   MakeGridOnScreen (&User_Rect);
 
   Set_Rect (dst, UserCenter_x -70, UserCenter_y - 80, Portrait_Rect.w, Portrait_Rect.h);
-  show_droid_portrait (dst, DRUID999, 0.0, RESET|UPDATE);
+  SDL_BlitSurface (pic999, NULL, ne_screen, &dst);
   ThouArtDefeatedSound ();
 
   SetCurrentFont (Para_BFont);

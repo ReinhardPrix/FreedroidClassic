@@ -73,7 +73,7 @@ symtrans Translator[ NUM_MAP_BLOCKS ] = {
   {0, -1}			// marks the end
 };
 
-void TranslateToHumanReadable ( char* HumanReadable , unsigned char* MapInfo, int LineLength , Level Lev , int CurrentLine);
+void ResetLevelMap (Level Lev);
 void GetThisLevelsDroids( char* SectionPointer );
 
 
@@ -339,8 +339,12 @@ LoadShip (char *filename)
     {
       curShip.AllLevels[i] = LevelToStruct (LevelStart[i]);
 
-      TranslateMap (curShip.AllLevels[i]);
-
+      if (curShip.AllLevels[i] == NULL)
+	{
+	  DebugPrintf (0, "ERROR: reading of level %d failed\n", i);
+	  return (ERR);
+	}
+      InterpretMap (curShip.AllLevels[i]); // initialize doors, refreshes and lifts
     }
 
   return OK;
@@ -421,9 +425,9 @@ char *StructToMem(Level Lev)
   int MemAmount=0;		/* the size of the level-data */
   int xlen = Lev->xlen, ylen = Lev->ylen;
   int anz_wp;		/* number of Waypoints */
-  char linebuf[81];		/* Buffer */
-  char HumanReadableMapLine[10000]="Hello, this is gonna be a made into a readable map-string.";
-  
+  char linebuf[500];		/* Buffer */
+  waypoint *this_wp;
+
   anz_wp = Lev->num_waypoints;
 		
   /* estimate the amount of memory needed */
@@ -460,10 +464,12 @@ char *StructToMem(Level Lev)
   // Now in the loop each line of map data should be saved as a whole
   for( i = 0 ; i < ylen ; i++ ) {
 
-    // But before we can write this line of the map to the disk, we need to
-    // convert is back to human readable format.
-    TranslateToHumanReadable ( HumanReadableMapLine , Lev->map[i] , xlen , Lev , i );
-    strncat(LevelMem, HumanReadableMapLine , xlen * 4 ); // We need FOUR chars per map tile
+    ResetLevelMap (Lev); // make sure all doors are closed
+    for (j=0; j<xlen; j++)
+      {
+	sprintf (linebuf, "%2d ", Lev->map[i][j]);
+	strcat (LevelMem, linebuf);
+      }
     strcat(LevelMem, "\n");
   }
 
@@ -483,18 +489,15 @@ char *StructToMem(Level Lev)
       sprintf(linebuf, "Nr.=%3d x=%4d y=%4d", i, Lev->AllWaypoints[i].x , Lev->AllWaypoints[i].y );
       strcat( LevelMem, linebuf );
       strcat( LevelMem, "\t connections: ");
-
-      for( j=0; j<MAX_WP_CONNECTIONS; j++) 
+      
+      this_wp = &Lev->AllWaypoints[i];
+      for( j=0; j < this_wp->num_connections; j++) 
 	{
-	  sprintf(linebuf, " %3d", Lev->AllWaypoints[i].connections[j]);
+	  sprintf(linebuf, "%2d ", this_wp->connections[j]);
 	  strcat(LevelMem, linebuf);
-	  if (Lev->AllWaypoints[i].connections[j] == -1)
-	    break;
 	} /* for connections */
       strcat(LevelMem, "\n");
     } /* for waypoints */
-  sprintf(linebuf, "Nr.=%3d x=  -1 y=  -1 \n", Lev->num_waypoints);  // end of waypoints marker
-  strcat( LevelMem, linebuf );
   
   strcat(LevelMem, LEVEL_END_STRING);
   strcat(LevelMem, "\n----------------------------------------------------------------------\n");
@@ -503,7 +506,7 @@ char *StructToMem(Level Lev)
   /* wenn nicht: :-(  */
   if( strlen(LevelMem) >= MemAmount) 
     {
-      printf("\n\nError in StructToMem:  Estimate of memory was wrong...\n\nTerminating...\n\n");
+      DebugPrintf(0, "\n\nError in StructToMem:  Estimate of memory was wrong...\nTerminating...\n");
       Terminate(ERR);
     } 
   
@@ -555,29 +558,6 @@ int SaveShip(char *shipname)
   //
   MapHeaderString="\n\
 ----------------------------------------------------------------------\n\
- *\n\
- *   Copyright (c) 1994, 2002 Johannes Prix\n\
- *   Copyright (c) 1994, 2002 Reinhard Prix\n\
- *\n\
- *\n\
- *  This file is part of Freedroid\n\
- *\n\
- *  Freedroid is free software; you can redistribute it and/or modify\n\
- *  it under the terms of the GNU General Public License as published by\n\
- *  the Free Software Foundation; either version 2 of the License, or\n\
- *  (at your option) any later version.\n\
- *\n\
- *  Freedroid is distributed in the hope that it will be useful,\n\
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of\n\
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n\
- *  GNU General Public License for more details.\n\
- *\n\
- *  You should have received a copy of the GNU General Public License\n\
- *  along with Freedroid; see the file COPYING. If not, write to the \n\
- *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, \n\
- *  MA  02111-1307  USA\n\
- *\n\
-----------------------------------------------------------------------\n\
 \n\
 This file was generated using the Freedroid level editor.\n\
 Please feel free to make any modifications you like, but in order for you\n\
@@ -586,6 +566,7 @@ editor for this purpose.  If you have created some good new maps, please \n\
 send a short notice (not too large files attached) to the freedroid project.\n\
 \n\
 freedroid-discussion@lists.sourceforge.net\n\
+----------------------------------------------------------------------\n\
 \n";
   fwrite ( MapHeaderString , strlen( MapHeaderString), sizeof(char), ShipFile);  
 
@@ -683,16 +664,15 @@ Level
 LevelToStruct (char *data)
 {
   Level loadlevel;
+  char *map_begin, *wp_begin, *level_end;
+  char *this_line, *next_line;
   char *pos;
-  char *map_begin, *wp_begin;
-  char *WaypointPointer;
   int i;
   int nr, x, y;
   int k;
   int connection;
-  char ThisLine[1000];
-  char* ThisLinePointer;
   char* DataPointer;
+  int res;
 
   /* Get the memory for one level */
   loadlevel = (Level) MyMalloc (sizeof (level));
@@ -723,71 +703,78 @@ LevelToStruct (char *data)
   loadlevel->Level_Enter_Comment = ReadAndMallocStringFromData ( data , LEVEL_ENTER_COMMENT_STRING , "\n" );
 
   // find the map data
-  // NOTE, that we here only set up a pointer to the map data
-  // as they are stored in the file.  This is NOT the same format
-  // as the map data stored internally for the game, but rather
-  // an easily human readable format with acceptable ascii 
-  // characters.  The transformation into game-usable data is
-  // done in a later step outside of this function!
-  //
   if ((map_begin = strstr (data, MAP_BEGIN_STRING)) == NULL)
-    return NULL;
+    return(NULL);
 
   /* set position to Waypoint-Data */
   if ((wp_begin = strstr (data, WP_BEGIN_STRING)) == NULL)
-    return NULL;
+    return(NULL);
+  
+  // find end of level-data
+  if ((level_end = strstr (data, LEVEL_END_STRING)) == NULL)
+    return(NULL);
 
   /* now scan the map */
-  strtok (map_begin, "\n");	/* init strtok to map-begin */
+  next_line = map_begin;
+  this_line = strsep (&next_line, "\n");	
 
   /* read MapData */
   for (i = 0; i < loadlevel->ylen; i++)
-    if ((loadlevel->map[i] = strtok (NULL, "\n")) == NULL)
-      return NULL;
+    {
+      if ((this_line = strsep(&next_line, "\n")) == NULL)
+	return(NULL);
+      loadlevel->map[i] = MyMalloc( loadlevel->xlen + 10 );
+      pos = strtok (this_line, " \t"); 
+
+      for (k=0; k < loadlevel->xlen; k++)
+	{
+	  if (pos == NULL)
+	    return (NULL);
+	  res = sscanf (pos, "%d", (int*)(loadlevel->map[i]+k));
+	  if ( (res == 0) || (res == EOF) )
+	    return (NULL);
+	  pos = strtok (NULL, " \t");
+	}
+    }
 
   /* Get Waypoints */
-  WaypointPointer = wp_begin;
-
-  DebugPrintf( 2 , "\nReached Waypoint-read-routine.");
+  next_line = wp_begin;
+  this_line = strsep (&next_line, "\n");
 
   for (i=0; i<MAXWAYPOINTS ; i++)
     {
-      WaypointPointer = strstr ( WaypointPointer , "\n" ) +1;
-
-      strncpy (ThisLine , WaypointPointer , strstr( WaypointPointer , "\n") - WaypointPointer + 2);
-      ThisLine[strstr( WaypointPointer , "\n") - WaypointPointer + 1 ]=0;
-      sscanf( ThisLine , "Nr.=%d \t x=%d \t y=%d" , &nr , &x , &y );
-      // printf("\n Values: nr=%d, x=%d, y=%d" , nr , x , y );
-
-      if (x == -1) 
+      if ( (this_line = strsep (&next_line, "\n")) == NULL)
+	return (NULL);
+      if (this_line == level_end)
 	{
 	  loadlevel->num_waypoints = i;
 	  break;
 	}
+
+      sscanf( this_line , "Nr.=%d \t x=%d \t y=%d" , &nr , &x , &y );
+      
       loadlevel->AllWaypoints[i].x=x;
       loadlevel->AllWaypoints[i].y=y;
 
-      ThisLinePointer = strstr ( ThisLine , "connections: " ) +strlen("connections: ");
+      pos = strstr (this_line, "connections:");
+      pos = strtok (pos, " \t"); 
 
       for ( k=0 ; k<MAX_WP_CONNECTIONS ; k++ )
 	{
-	  sscanf( ThisLinePointer , "%4d" , &connection );
-	  // printf(", con=%d" , connection );
-	  loadlevel->AllWaypoints[i].connections[k]=connection;
-	  ThisLinePointer+=4;
-	  if (connection == -1)
+	  if ( (pos = strtok (NULL, " \t")) == NULL) // point to next number
 	    break;
-	}
+	  res = sscanf( pos , "%d" , &connection );
+	  if ( (connection == -1) || (res == 0) || (res == EOF) )
+	    break;
+	  
+	  loadlevel->AllWaypoints[i].connections[k]=connection;
+	} // for k < MAX_WP_CONNECTIONS
 
-      // getchar();
-    }
+      loadlevel->AllWaypoints[i].num_connections = k;
 
-  
+    } // for i < MAXWAYPOINTS
 
-  /* Scan the waypoint- connections */
-  pos = strtok (wp_begin, "\n");	/* Get Pointer to data-begin */
-
-  return loadlevel;
+  return (loadlevel);
 
 } /* LevelToStruct */
 
@@ -1009,24 +996,20 @@ IsWallBlock (int block)
 }				// IsWallBlock()
 
 /*----------------------------------------------------------------------
- * This function translates map data into human readable map code, that
- * can later be written to the map file on disk.
+ * close all doors and set refreshes to first phase for "canonical map"
  *
  ----------------------------------------------------------------------*/
 void
-TranslateToHumanReadable ( char* HumanReadable , unsigned char* MapInfo, int LineLength , Level Lev , int CurrentLine)
+ResetLevelMap (Level Lev) 
 {
   int col;
   int i;
-  char Buffer[10];
 
-  DebugPrintf (1,"\n\nTranslating mapline into human readable format...");
-  
   // Now in the game and in the level editor, it might have happend that some open
   // doors occur.  The make life easier for the saving routine, these doors should
   // be closed first.
 
-  for (col=0; col < LineLength; col++)
+  for (col=0; col < Lev->xlen; col++)
     {
       for(i=0; i< Lev->ylen; i++)
 	{
@@ -1061,69 +1044,25 @@ TranslateToHumanReadable ( char* HumanReadable , unsigned char* MapInfo, int Lin
 	    default:
 	      break;
 	    }
-
 	}
     }
 
+  return;
+}
 
 
-  /* transpose the game-engine mapdata line to human readable format */
-
-  HumanReadable[0]=0;  // Add a terminator at the beginning
-
-  for (col = 0; col < LineLength; col++)
-    {
-      sprintf( Buffer , "%3d " , MapInfo[col] );
-      strcat ( HumanReadable , Buffer );
-    }
-
-} // void TranslateToHumanReadable( ... )
 
 /*-----------------------------------------------------------------
- * @Desc: When the ship is loaded from disk, the data of the map 
- *        are initally in a human readable form with sensible
- *        ascii characters.  This however is NOT the format and
- *        the map encoding actually used by the game engine.
- *        Therefore a translation of human readable format to
- *        game-engine format has to occur and that is what this
- *        function achieves.
+ * @Desc: initialize doors, refreshes and lifts for the given level-data
  *
  * @Ret: OK | ERR
  *
  *-----------------------------------------------------------------*/
 int
-TranslateMap (Level Lev)
+InterpretMap (Level Lev)
 {
-  int xdim = Lev->xlen;
-  int ydim = Lev->ylen;
-  int row, col;
-  char *Buffer;
-  int tmp;
-
-  DebugPrintf (2, "\n\nStarting to translate the map from human readable disk format into game-engine format.");
-
-  // first round: transpose all ascii-mapdata to internal numbers for map 
-  for (row = 0; row < ydim  ; row++)
-    {
-
-      Buffer=MyMalloc( xdim + 10 );
-
-      for (col = 0; col < xdim  ; col++)
-	{
-
-	  sscanf( Lev->map[row]+4*col , "%d " , &tmp);
-	  Buffer[col] = (char)tmp;
-
-	}
-
-      Lev->map[row]=Buffer;
-    }				/* for (row=0..) */
-
-
   /* Get Doors Array */
   GetDoors ( Lev );
-
-  // NumWaypoints = GetWaypoints (loadlevel);
 
   // Get Refreshes 
   GetRefreshes ( Lev );
@@ -1131,9 +1070,8 @@ TranslateMap (Level Lev)
   // Get Refreshes 
   GetTeleports ( Lev );
 
-  DebugPrintf (2, "\nint TranslateMap(Level Lev): end of function reached.");
-  return OK;
-}				// int Translate Map(Level lev)
+  return(OK);
+}		
 
 
 /*@Function============================================================

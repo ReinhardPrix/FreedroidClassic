@@ -248,7 +248,7 @@ ShuffleEnemys (void)
 void 
 SelectNextWaypointClassical( int EnemyNum )
 {
-  int j;
+  int num_con;
   finepoint Restweg;
   Waypoint WpList;		/* Pointer to waypoint-liste */
   int nextwp;
@@ -273,14 +273,10 @@ SelectNextWaypointClassical( int EnemyNum )
       
       /* suche moegliche Verbindung von hier */
       DebugPrintf (2, "/* suche moegliche Verbindung von hier */\n");
-      /* but only if there are connections possible */
-      for ( j=0; j<MAX_WP_CONNECTIONS; j++ )
-	if ( WpList[nextwp].connections[j] == -1 )
-	  break;
-            
-      /* setze neuen Waypoint */
-      if (j>0)
-	ThisRobot->nextwaypoint = WpList[nextwp].connections[MyRandom(j-1)];
+
+      num_con = WpList[nextwp].num_connections;
+      if ( num_con > 0)
+	ThisRobot->nextwaypoint = WpList[nextwp].connections[MyRandom(num_con-1)];
     }			/* if */
 
   return;
