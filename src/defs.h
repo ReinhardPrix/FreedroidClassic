@@ -92,6 +92,7 @@ enum
 
 #define LIGHT_RADIUS_CHUNK_SIZE (1.0/5.0)
 #define LIGHT_RADIUS_CRUDENESS_FACTOR 1
+#define NUMBER_OF_SHADOW_IMAGES 20
 
 
 #define MAX_OBSTACLES_ON_MAP 3000
@@ -290,7 +291,6 @@ enum
 // #define ISO_WIDTH               128.0
 // #define ISO_HEIGHT              94.0
 #define BLOCKMEM  		INITIAL_BLOCK_WIDTH*INITIAL_BLOCK_HEIGHT
-#define NUMBER_OF_SHADOW_IMAGES 20
   
 
 /* Scroll- Fenster */

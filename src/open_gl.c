@@ -525,7 +525,7 @@ initGL( void )
  *
  * ---------------------------------------------------------------------- */
 void
-blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our_col , float our_line ) 
+blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our_col , float our_line , float r, float g , float b ) 
 {
 
 #ifdef HAVE_LIBGL
@@ -547,9 +547,6 @@ blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our
   //--------------------
   // Linear Filtering is slow and maybe not nescessary here, so we
   // stick to the faster 'nearest' variant.
-  //
-  // glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-  // glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
   //
   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
@@ -585,8 +582,8 @@ blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our
 
   // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL );
   // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND );
-  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
-  glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
+  glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
 
   //--------------------
   // Now we can begin to draw the actual textured rectangle.
@@ -601,7 +598,14 @@ blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our
   texture_start_y = 1.0 ; // 1 - ((float)(our_floor_iso_image . surface -> h)) / 127.0 ; // 1.0 
   texture_end_y = 0.0 ;
   
+  // glColor3f( 0.5 , 0.5 , 0.5 );
+  glColor3f( r , g , b );
+  // glColor4f( 1, 1 , 1 , 1 );
+
   glBindTexture( GL_TEXTURE_2D, our_floor_iso_image . texture );
+
+  // glColor4f(1,1,1,1);
+
   glBegin(GL_QUADS);
   
   glTexCoord2i( 0.0f, texture_start_y ); 
@@ -941,7 +945,6 @@ blit_open_gl_cheap_light_radius ( void )
   int our_height, our_width;
   int light_strength;
   int window_offset_x;
-  int light_bonus = curShip . AllLevels [ Me [ 0 ] . pos . z ] -> light_radius_bonus ;
   Uint8 r , g , b , a ;
   moderately_finepoint target_pos;
 
@@ -956,17 +959,17 @@ blit_open_gl_cheap_light_radius ( void )
 	  if ( our_width % LIGHT_RADIUS_CRUDENESS_FACTOR ) continue;
 	  if ( our_height % LIGHT_RADIUS_CRUDENESS_FACTOR ) continue;
 
-	  target_pos . x = translate_pixel_to_map_location ( 0 , ( 0 + our_width ) * 16 - UserCenter_x + 32 ,
-							   ( 0 + our_height ) * 12 - UserCenter_y + 32 , TRUE );
-	  target_pos . y = translate_pixel_to_map_location ( 0 , ( 0 + our_width ) * 16 - UserCenter_x + 32 ,
-							   ( 0 + our_height ) * 12 - UserCenter_y + 32 , FALSE );
+	  target_pos . x = translate_pixel_to_map_location ( 0 , ( 0 + our_width ) * 16 - UserCenter_x + 16 ,
+							   ( 0 + our_height ) * 12 - UserCenter_y + 16 , TRUE );
+	  target_pos . y = translate_pixel_to_map_location ( 0 , ( 0 + our_width ) * 16 - UserCenter_x + 16 ,
+							   ( 0 + our_height ) * 12 - UserCenter_y + 16 , FALSE );
 
-	  light_strength = (int) ( sqrt ( ( Me [ 0 ] . pos . x - target_pos . x ) * ( Me [ 0 ] . pos . x - target_pos . x ) + ( Me [ 0 ] . pos . y - target_pos . y ) * ( Me [ 0 ] . pos . y - target_pos . y ) ) * 4.0 ) - light_bonus ;
+	  light_strength = get_light_strength ( target_pos );
 
 	  if ( light_strength >= NUMBER_OF_SHADOW_IMAGES ) light_strength = NUMBER_OF_SHADOW_IMAGES -1 ;
 	  if ( light_strength <= 0 ) continue ;
 
-	  r = 0 ; b = 0 ; g = 0 ; a = ( 255 / 20 ) * light_strength ; 
+	  r = 0 ; b = 0 ; g = 0 ; a = ( 255.0 / ( (float) NUMBER_OF_SHADOW_IMAGES ) ) * ( (float) light_strength ) ; 
 
 	  glDisable ( GL_ALPHA_TEST );
 	  glColor4ub( r , g , b , a );

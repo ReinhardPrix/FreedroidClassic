@@ -632,7 +632,7 @@ blit_this_floor_tile_to_screen ( iso_image our_floor_iso_image ,
 {
   if ( use_open_gl )
     {
-      blit_open_gl_texture_to_map_position ( our_floor_iso_image , our_col , our_line ) ;
+      blit_open_gl_texture_to_map_position ( our_floor_iso_image , our_col , our_line , 1.0 , 1.0 , 1.0 ) ;
     }
   else
     {
@@ -711,6 +711,7 @@ void
 blit_one_obstacle ( obstacle* our_obstacle )
 {
   iso_image tmp;
+  float darkness ;
   // DebugPrintf ( 0 , "\nObstacle to be blitted: type=%d x=%f y=%f." , our_obstacle -> type ,
   // our_obstacle -> pos . x , our_obstacle -> pos . y );
 
@@ -751,8 +752,11 @@ There was an obstacle type given, that exceeds the number of\n\
     {
       if ( use_open_gl )
 	{
+	  darkness = 2.0 - 2.0 * ( ( (float) get_light_strength ( our_obstacle -> pos ) ) / ( (float) NUMBER_OF_SHADOW_IMAGES ) ) ;
+	  if ( darkness > 1 ) darkness = 1.0 ;
+	  if ( darkness < 0 ) darkness = 0 ;
 	  blit_open_gl_texture_to_map_position ( obstacle_map [ our_obstacle -> type ] . image , 
-						 our_obstacle -> pos . x , our_obstacle -> pos . y ) ;
+						 our_obstacle -> pos . x , our_obstacle -> pos . y , darkness , darkness, darkness ) ;
 	}
       else
 	{
@@ -1268,8 +1272,23 @@ show_obstacle_labels ( int mask )
 }; // void show_obstacle_labels ( int mask )
 
 /* ----------------------------------------------------------------------
- *
- *
+ * This function is used to find the light intensity at any given point
+ * on the map.
+ * ---------------------------------------------------------------------- */
+int 
+get_light_strength ( moderately_finepoint target_pos )
+{
+  int light_bonus = curShip . AllLevels [ Me [ 0 ] . pos . z ] -> light_radius_bonus ;
+  // int final_darkness = NUMBER_OF_SHADOW_IMAGES;
+
+  return ( (int) ( sqrt ( ( Me [ 0 ] . pos . x - target_pos . x ) * ( Me [ 0 ] . pos . x - target_pos . x ) + ( Me [ 0 ] . pos . y - target_pos . y ) * ( Me [ 0 ] . pos . y - target_pos . y ) ) * 4.0 ) - light_bonus ) ;
+
+}; // int get_light_strength ( moderately_finepoint target_pos )
+
+/* ----------------------------------------------------------------------
+ * This function should blit the shadows on the floor, that are used to
+ * generate the impression of a 'light radius' around the players 
+ * character.
  * ---------------------------------------------------------------------- */
 void
 blit_classic_SDL_light_radius( void )
@@ -1287,7 +1306,6 @@ blit_classic_SDL_light_radius( void )
   int chunk_size_x;
   int chunk_size_y;
   int window_offset_x;
-  int light_bonus = curShip . AllLevels [ Me [ 0 ] . pos . z ] -> light_radius_bonus ;
   SDL_Surface* tmp;
 
   //--------------------
@@ -1340,7 +1358,8 @@ blit_classic_SDL_light_radius( void )
 
 	  target_pos . x = Me [ 0 ] . pos . x - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) + our_width * LIGHT_RADIUS_CHUNK_SIZE ;
 	  target_pos . y = Me [ 0 ] . pos . y - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) + our_height * LIGHT_RADIUS_CHUNK_SIZE;
-	  light_strength = (int) ( sqrt ( ( Me [ 0 ] . pos . x - target_pos . x ) * ( Me [ 0 ] . pos . x - target_pos . x ) + ( Me [ 0 ] . pos . y - target_pos . y ) * ( Me [ 0 ] . pos . y - target_pos . y ) ) * 4.0 ) - light_bonus ;
+	  light_strength = get_light_strength ( target_pos ) ;
+
 	  if ( light_strength >= NUMBER_OF_SHADOW_IMAGES ) light_strength = NUMBER_OF_SHADOW_IMAGES -1 ;
 	  if ( light_strength <= 0 ) continue ;
 

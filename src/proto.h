@@ -127,6 +127,7 @@ EXTERN void PutEnemy (int Enum, int x , int y , int mask );
 EXTERN void PutMouseMoveCursor ( void ) ;
 EXTERN void ShowRobotPicture (int PosX, int PosY, int Number);
 EXTERN void ShowInventoryScreen ( void );
+EXTERN int get_light_strength ( moderately_finepoint target_pos );
 
 // open_gl.c 
 #undef EXTERN
@@ -159,7 +160,7 @@ EXTERN int initGL( GLvoid );
 EXTERN int initGL( void );
 #endif
 
-EXTERN void blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our_col , float our_line ) ;
+EXTERN void blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our_col , float our_line , float r , float g , float b ) ;
 EXTERN void blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x , int y ) ;
 
 // blocks.c 
