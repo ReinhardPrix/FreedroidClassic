@@ -421,7 +421,7 @@ quest_browser_interface ( void )
     // throw every moving thing from the map.
     //
     Activate_Conservative_Frame_Computation ();
-    make_sure_system_mouse_cursor_is_turned_on ( );
+    make_sure_system_mouse_cursor_is_turned_off ( );
     SetCurrentFont ( FPS_Display_BFont );
 
     while ( EscapePressed() );
@@ -451,6 +451,8 @@ quest_browser_interface ( void )
 
 	if ( currently_selected_mission != (-1) )
 	    quest_browser_show_mission_info ( currently_selected_mission );
+
+	blit_our_own_mouse_cursor();
 	our_SDL_flip_wrapper ( Screen );
 	    
 	if ( QPressed() )
