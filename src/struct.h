@@ -225,18 +225,34 @@ typedef struct
 typedef struct
 {
   char* bonus_name;
-  int bonus_to_dex;
-  int bonus_to_str;
-  int bonus_to_vit;
-  int bonus_to_mag;
-  int bonus_to_life;
-  int bonus_to_force;
-  int bonus_to_tohit;
-  int bonus_to_all_attributes;
-  int bonus_to_ac_or_damage; // this is a percentage
-  int bonus_to_resist_fire;  // this is a percentage
-  int bonus_to_resist_electricity; // this is a percentage
-  int bonus_to_resist_force; // this is a percentage
+  int base_bonus_to_dex;
+  int modifier_to_bonus_to_dex;
+  int base_bonus_to_str;
+  int modifier_to_bonus_to_str;
+  int base_bonus_to_vit;
+  int modifier_to_bonus_to_vit;
+  int base_bonus_to_mag;
+  int modifier_to_bonus_to_mag;
+  int base_bonus_to_all_attributes;
+  int modifier_to_bonus_to_all_attributes;
+
+  int base_bonus_to_life;
+  int modifier_to_bonus_to_life;
+  int base_bonus_to_force;
+  int modifier_to_bonus_to_force;
+
+  int base_bonus_to_tohit;
+  int modifier_to_bonus_to_tohit;
+  int base_bonus_to_ac_or_damage; // this is a percentage
+  int modifier_to_bonus_to_ac_or_damage; // this is a percentage
+
+  int base_bonus_to_resist_fire;  // this is a percentage
+  int modifier_to_bonus_to_resist_fire;  // this is a percentage
+  int base_bonus_to_resist_electricity; // this is a percentage
+  int modifier_to_bonus_to_resist_electricity; // this is a percentage
+  int base_bonus_to_resist_force; // this is a percentage
+  int modifier_to_bonus_to_resist_force; // this is a percentage
+  int dummy_value;
   int affix_level; // the level of this affix (i.e. to which level items it can be attached or not)
   float price_factor;
 } item_bonus , *Item_bonus;
@@ -310,6 +326,20 @@ typedef struct
   int condition;
   int prefix_code;
   int suffix_code;
+
+  int bonus_to_dex;
+  int bonus_to_str;
+  int bonus_to_vit;
+  int bonus_to_mag;
+  int bonus_to_life;
+  int bonus_to_force;
+  int bonus_to_tohit;
+  int bonus_to_all_attributes;
+  int bonus_to_ac_or_damage; // this is a percentage
+  int bonus_to_resist_fire;  // this is a percentage
+  int bonus_to_resist_electricity; // this is a percentage
+  int bonus_to_resist_force; // this is a percentage
+
   int ac_bonus;    // how much is ac increased by this item worn
   int damage; // how much damage does this item
   int damage_modifier; // how much additional damage can add to the base damage

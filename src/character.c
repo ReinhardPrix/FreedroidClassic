@@ -268,14 +268,10 @@ AddInfluencerItemAttributeBonus( item* BonusItem )
   //
   if ( BonusItem->suffix_code != ( -1 ) )
     {
-      Me.Strength  += SuffixList[ BonusItem->suffix_code ].bonus_to_str + 
-	SuffixList[ BonusItem->suffix_code ].bonus_to_all_attributes ;
-      Me.Dexterity += SuffixList[ BonusItem->suffix_code ].bonus_to_dex + 
-	SuffixList[ BonusItem->suffix_code ].bonus_to_all_attributes ;
-      Me.Magic     += SuffixList[ BonusItem->suffix_code ].bonus_to_mag + 
-	SuffixList[ BonusItem->suffix_code ].bonus_to_all_attributes ;
-      Me.Vitality  += SuffixList[ BonusItem->suffix_code ].bonus_to_vit + 
-	SuffixList[ BonusItem->suffix_code ].bonus_to_all_attributes ;
+      Me.Strength  += BonusItem->bonus_to_str + BonusItem->bonus_to_all_attributes ;
+      Me.Dexterity += BonusItem->bonus_to_dex + BonusItem->bonus_to_all_attributes ;
+      Me.Magic     += BonusItem->bonus_to_mag + BonusItem->bonus_to_all_attributes ;
+      Me.Vitality  += BonusItem->bonus_to_vit + BonusItem->bonus_to_all_attributes ;
     }
 
   //--------------------
@@ -303,14 +299,14 @@ AddInfluencerItemSecondaryBonus( item* BonusItem )
   //
   if ( BonusItem->suffix_code != ( -1 ) )
     {
-      Me.to_hit += SuffixList[ BonusItem->suffix_code ].bonus_to_tohit ;
-      Me.maxmana   += SuffixList[ BonusItem->suffix_code ].bonus_to_force ;
-      Me.maxenergy += SuffixList[ BonusItem->suffix_code ].bonus_to_life ; 
-      Me.Vitality  += SuffixList[ BonusItem->suffix_code ].bonus_to_vit ;
+      Me.to_hit    += BonusItem->bonus_to_tohit ;
+      Me.maxmana   += BonusItem->bonus_to_force ;
+      Me.maxenergy += BonusItem->bonus_to_life ; 
+      Me.Vitality  += BonusItem->bonus_to_vit ;
 
-      Me.resist_force       += SuffixList[ BonusItem->suffix_code ].bonus_to_resist_force ;
-      Me.resist_fire        += SuffixList[ BonusItem->suffix_code ].bonus_to_resist_fire ;
-      Me.resist_electricity += SuffixList[ BonusItem->suffix_code ].bonus_to_resist_electricity ;
+      Me.resist_force       += BonusItem->bonus_to_resist_force ;
+      Me.resist_fire        += BonusItem->bonus_to_resist_fire ;
+      Me.resist_electricity += BonusItem->bonus_to_resist_electricity ;
 
     }
 
