@@ -654,9 +654,9 @@ ShowCharacterScreen ( void )
   DisplayText( Me[0].character_name , 20 + CharacterRect.x , 18 + CharacterRect.y , &CharacterRect );
 
   if ( Me [ 0 ] . is_town_guard_member )
-    DisplayText( "Standard Red Guard" , CLASS_X + CharacterRect . x , 18 + CharacterRect . y , &CharacterRect );
+    DisplayText( "Red Guard" , CLASS_X + CharacterRect . x , 18 + CharacterRect . y , &CharacterRect );
   else
-    DisplayText( "No Memberships" , CLASS_X + CharacterRect . x , 18 + CharacterRect . y , &CharacterRect );
+    DisplayText( "Novice" , CLASS_X + CharacterRect . x , 18 + CharacterRect . y , &CharacterRect );
 
   /*
   switch ( Me[0].character_class )
