@@ -143,14 +143,14 @@ InitTakeover (void)
     InternalScreen = (unsigned char*)MyMalloc((size_t)SCREENLEN*SCREENHEIGHT);
 
   if( InternalScreen == NULL ) {		
-    printf("\nvoid InitTakeover(void): Fatal Error: No memory !");
+    DebugPrintf("\nvoid InitTakeover(void): Fatal Error: No memory !");
     getchar();
 		
     Terminate(-1);
   }
 
   if( GetTakeoverGraphics() != OK ) {
-    printf("Error !");
+    DebugPrintf("Error !");
     Terminate(-1);
   }
 		
@@ -229,7 +229,7 @@ Takeover (int enemynum)
 
     PlayGame();
 
-    DebugPrintf("\nvoid Takeover(int enemynum): PlayGames ist wieder zurueckgekehrt.");
+    DebugPrintf("\nTakeover(): PlayGame() ist wieder zurueckgekehrt.");
 	
     /* Ausgang beurteilen und returnen */
     if (InvincibleMode || (LeaderColor == YourColor) ) 
@@ -272,7 +272,9 @@ Takeover (int enemynum)
       message = "Deadlock";
       } /* LeadColor == REMIS */
 
+    DebugPrintf ("\nTakeover(): now calling RedrawInfluenceNumber()");
     RedrawInfluenceNumber();
+    DebugPrintf ("\nTakeover(): survived RedrawInfluenceNumber()");
 		
     /* Feind in jedem Fall ausschalten */		
     Feindesliste[enemynum].Status = OUT;
@@ -285,13 +287,19 @@ Takeover (int enemynum)
 
       waiter--;
       RollToColors();
+      DebugPrintf("\nTakeover(): calling SetInfoline()");
       SetInfoline();
+      DebugPrintf("\nTakeover(): survived SetInfoline()");
+
       strcpy(LeftInfo, message);		/* eigene Message anzeigen */
+      DebugPrintf("\nTakeover(): survived strcpy");
       
       ShowPlayground();
-      printf("\nvoid Takeover(int EnemyNum): Mitten in der Endschleife.");
+      DebugPrintf("\nvoid Takeover(int EnemyNum): Mitten in der Endschleife.");
     } /* while waiter */			
   } /* while !FinishTakeover */
+
+  DebugPrintf("Takeover(): just left main-loop FinishTakeover=TRUE");
 
   /* Tastaturwiederholung wieder auf langsam setzen */
   SetTypematicRate(TYPEMATIC_SLOW);
@@ -311,7 +319,8 @@ Takeover (int enemynum)
 
   if( LeaderColor == YourColor ) return TRUE;
   else return FALSE;
-	
+
+  DebugPrintf("rp: Takeover game finished ok!");
 } // void Takeover(int enemynum)
 
 
@@ -328,7 +337,7 @@ void ChooseColor(void)
   int ColorChosen = FALSE;
   char dummy[80];
 
-  printf("\nvoid ChooseColor(void): Funktion echt aufgerufen.");
+  DebugPrintf("\nvoid ChooseColor(void): Funktion echt aufgerufen.");
   
   while (SpacePressed()) {
     JoystickControl();
@@ -363,7 +372,7 @@ void ChooseColor(void)
     }
       
     ShowPlayground();
-    printf("\nvoid ChooseColor(void): ShowPlayground erfolgreich durchgefuehrt.....");
+    DebugPrintf("\nvoid ChooseColor(void): ShowPlayground erfolgreich durchgefuehrt.....");
 
     strcpy(LeftInfo, "Color? ");
     strcat(LeftInfo, itoa(countdown/2, dummy, 10));
@@ -371,7 +380,7 @@ void ChooseColor(void)
     if( countdown == 0 ) ColorChosen = TRUE;
     
   } /* while */
-  printf("\nvoid ChooseColor(void): Funktionsende ordnungsgemaess erreicht.");
+  DebugPrintf("\nvoid ChooseColor(void): Funktionsende ordnungsgemaess erreicht.");
   return;
 } // void ChooseColor(void)
 
@@ -456,7 +465,7 @@ void PlayGame(void)
 	ToPlayground[YourColor][0][row] += ACTIVE_OFFSET;
 	CapsuleCountdown[YourColor][row] = CAPSULE_COUNTDOWN*2;
 	
-	Takeover_Set_Capsule_Sound();
+	if (sound_on) Takeover_Set_Capsule_Sound();
       } /* if */
     }
 
@@ -494,7 +503,7 @@ void PlayGame(void)
     ShowPlayground();
   } /* while .. */
 	
-  printf("\nvoid PlayGame(void): Funktionsende ordnungsgemaess erreicht....");	
+  DebugPrintf("\nvoid PlayGame(void): Funktionsende ordnungsgemaess erreicht....");	
 } // void PlayGame(void)
 
 /*@Function============================================================
@@ -507,14 +516,14 @@ void RollToColors(void)
 {
   static int rotate_waiter = 0;
 	
-  printf("\nvoid RollToColors(void): Funktion echt aufgerufen....");	
+  DebugPrintf("\nvoid RollToColors(void): Funktion echt aufgerufen....");	
 
   if( rotate_waiter-- == 0 ) {
     RotateColors(67, 70);
     RotateColors(74, 77);
     rotate_waiter = WAIT_COLOR_ROTATION;
   }
-  printf("\nvoid RollToColors(void): Funktionsende ordnungsgemaess erreicht....");	
+  DebugPrintf("\nvoid RollToColors(void): Funktionsende ordnungsgemaess erreicht....");	
 } 
 
 /*-----------------------------------------------------------------
@@ -566,7 +575,7 @@ EnemyMovements (void)
 	  ToPlayground[OpponentColor][0][row] += ACTIVE_OFFSET;
 	  CapsuleCountdown[OpponentColor][row] = CAPSULE_COUNTDOWN;
 	  row = -1;	/* For the next capsule: startpos */
-	  Takeover_Set_Capsule_Sound();
+	  if (sound_on) Takeover_Set_Capsule_Sound();
 	} /* if */
       } /* if MyRandom */
 
@@ -696,15 +705,15 @@ ShowPlayground (void)
   register int curx, cury;
   unsigned char *tmp;
   int caps_row, caps_x, caps_y;		/* Play-capsule state */
-	
-  static unsigned char *WorkBlock = NULL;
 
-  printf("\nvoid ShowPlayground(void): Funktion echt aufgerufen.");
+  static unsigned char *WorkBlock = NULL;	
+	
+  DebugPrintf("\nShowPlayground: Funktion echt aufgerufen.");
 
   if (WorkBlock == NULL) WorkBlock = MyMalloc(BLOCKMEM+10);
 	
   UpdateInfoline();
-
+  DebugPrintf("\nShowPlayground(): first UpdateInfoline() survived");
   curx = USERFENSTERPOSX + LEFT_OFFS_X;
   cury = USERFENSTERPOSY + LEFT_OFFS_Y;
 				
@@ -717,34 +726,36 @@ ShowPlayground (void)
   caps_x = CurCapsuleStart[GELB].x;
   caps_y = CurCapsuleStart[GELB].y + caps_row*(CAPSULE_HEIGHT+1);
 	
-  DisplayMergeBlock( curx, cury, ToGroundBlocks + GELB_OBEN*GROUNDBLOCKMEM,	GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
+  DisplayBlock( curx, cury, ToGroundBlocks + GELB_OBEN*GROUNDBLOCKMEM,
+		     GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
  	
   cury += GROUNDBLOCKHEIGHT;
   tmp = ToGroundBlocks + GELB_MITTE*GROUNDBLOCKMEM;
   for (i=0; i<12 ; i++, cury += GROUNDBLOCKHEIGHT) 
     {
-      DisplayMergeBlock(curx, cury,tmp, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
+      DisplayBlock(curx, cury,tmp, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
       if ( (caps_row == i) || (i==11 && caps_row == 12) )
 	{
-	  DisplayMergeBlock (caps_x, caps_y,
+	  DisplayBlock (caps_x, caps_y,
 			CapsuleBlocks,
 			CAPSULE_LEN, CAPSULE_HEIGHT,
 			RealScreen);
 	} /* if */
     } /* for i=1 to 12 */
 
-  DisplayMergeBlock (curx, cury, ToGroundBlocks + GELB_UNTEN*GROUNDBLOCKMEM, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
+  DisplayBlock (curx, cury, ToGroundBlocks + GELB_UNTEN*GROUNDBLOCKMEM,
+		     GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
 
   /* Mittlere Saeule */
   curx = USERFENSTERPOSX + MID_OFFS_X;
   cury = USERFENSTERPOSY + MID_OFFS_Y;
 
-  DisplayMergeBlock (curx, cury, ToLeaderBlock,
+  DisplayBlock (curx, cury, ToLeaderBlock,
 		     LEADERBLOCKLEN, LEADERBLOCKHEIGHT, RealScreen);
 
   cury += LEADERBLOCKHEIGHT;
   for( i=0; i<12; i++, cury += COLUMNBLOCKHEIGHT)
-    DisplayMergeBlock (curx, cury, ToColumnBlock,
+    DisplayBlock (curx, cury, ToColumnBlock,
 		       COLUMNBLOCKLEN, COLUMNBLOCKHEIGHT, RealScreen);
 
   /* rechte Saeule */
@@ -760,37 +771,37 @@ ShowPlayground (void)
   caps_x = CurCapsuleStart[VIOLETT].x;
   caps_y = CurCapsuleStart[VIOLETT].y + caps_row*(CAPSULE_HEIGHT+1);
 	
-  DisplayMergeBlock(curx, cury, ToGroundBlocks + VIOLETT_OBEN*GROUNDBLOCKMEM, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
+  DisplayBlock(curx, cury, ToGroundBlocks + VIOLETT_OBEN*GROUNDBLOCKMEM, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
 							
   cury += GROUNDBLOCKHEIGHT;
 	
   tmp = ToGroundBlocks+VIOLETT_MITTE*GROUNDBLOCKMEM;
   for( i=0; i<12; i++, cury += GROUNDBLOCKHEIGHT ) {
-    DisplayMergeBlock(curx, cury,tmp, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
+    DisplayBlock(curx, cury,tmp, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
     if( (caps_row == i) || (i==11 && caps_row == 12) ) 	
-      DisplayMergeBlock(caps_x, caps_y,
+      DisplayBlock(caps_x, caps_y,
 		   CapsuleBlocks + CAPSULE_MEM,
 		   CAPSULE_LEN, CAPSULE_HEIGHT,
 		   RealScreen);
   } /* for */
   
-  DisplayMergeBlock(curx, cury, ToGroundBlocks + VIOLETT_UNTEN*GROUNDBLOCKMEM, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
+  DisplayBlock(curx, cury, ToGroundBlocks + VIOLETT_UNTEN*GROUNDBLOCKMEM, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
 
   /* Fill the Leader-LED with its color */
-  DisplayMergeBlock (LEADERLEDX, LEADERLEDY, FillBlocks+LeaderColor*FILLBLOCKMEM,
+  DisplayBlock (LEADERLEDX, LEADERLEDY, FillBlocks+LeaderColor*FILLBLOCKMEM,
 		FILLBLOCKLEN, FILLBLOCKHEIGHT,RealScreen);
 		
-  DisplayMergeBlock(LEADERLEDX, LEADERLEDY+FILLBLOCKHEIGHT,FillBlocks+LeaderColor*FILLBLOCKMEM,FILLBLOCKLEN, FILLBLOCKHEIGHT,RealScreen);
+  DisplayBlock(LEADERLEDX, LEADERLEDY+FILLBLOCKHEIGHT,FillBlocks+LeaderColor*FILLBLOCKMEM,FILLBLOCKLEN, FILLBLOCKHEIGHT,RealScreen);
 
   
   /* Fill the Display Column with its colors */
   for( i=0; i<NUM_LINES; i++) 			
-    DisplayMergeBlock(LEDCOLUMNX, LEDCOLUMNY+i*(FILLBLOCKHEIGHT+1),	FillBlocks+DisplayColumn[i]*FILLBLOCKMEM,FILLBLOCKLEN, FILLBLOCKHEIGHT,RealScreen);
+    DisplayBlock(LEDCOLUMNX, LEDCOLUMNY+i*(FILLBLOCKHEIGHT+1),	FillBlocks+DisplayColumn[i]*FILLBLOCKMEM,FILLBLOCKLEN, FILLBLOCKHEIGHT,RealScreen);
 
   /* Show the yellow playground */
   for( i=0; i<NUM_LAYERS-1; i++ )
     for( j=0; j<NUM_LINES; j++ ) {
-      DisplayMergeBlock(PlaygroundStart[GELB].x + i*TO_BLOCKLEN,PlaygroundStart[GELB].y + j*TO_BLOCKHEIGHT,ToGameBlocks + ToPlayground[GELB][i][j] * TO_BLOCKMEM,TO_BLOCKLEN, TO_BLOCKHEIGHT,RealScreen);
+      DisplayBlock(PlaygroundStart[GELB].x + i*TO_BLOCKLEN,PlaygroundStart[GELB].y + j*TO_BLOCKHEIGHT,ToGameBlocks + ToPlayground[GELB][i][j] * TO_BLOCKMEM,TO_BLOCKLEN, TO_BLOCKHEIGHT,RealScreen);
     }
 
   /* Show the violett playground */
@@ -799,8 +810,8 @@ ShowPlayground (void)
   for( i=0; i<NUM_LAYERS-1; i++, curx -= TO_BLOCKLEN ) {
     cury = PlaygroundStart[VIOLETT].y;		
     for( j=0; j<NUM_LINES; j++, cury += TO_BLOCKHEIGHT ) {
-      DisplayMergeBlock(curx, cury, 
-		   ToGameBlocks + ToPlayground[VIOLETT][i][j] * TO_BLOCKMEM + TO_BLOCKS*TO_BLOCKMEM,
+      DisplayBlock(curx, cury, 
+			ToGameBlocks + ToPlayground[VIOLETT][i][j] * TO_BLOCKMEM + TO_BLOCKS*TO_BLOCKMEM,
 		   TO_BLOCKLEN, TO_BLOCKHEIGHT,
 		   RealScreen);
     } /* for lines */
@@ -815,14 +826,14 @@ ShowPlayground (void)
     
     for( i=0; i<MAX_CAPSULES; i++ ) {
       if( i < NumCapsules[opponent]-1 )
-	DisplayMergeBlock(
+	DisplayBlock(
 		     LeftCapsulesStart[color].x,
 		     LeftCapsulesStart[color].y + i*(CAPSULE_HEIGHT),
 		     CapsuleBlocks+ color*CAPSULE_MEM,
 		     CAPSULE_LEN, CAPSULE_HEIGHT,
 		     RealScreen);
       else
-	DisplayMergeBlock(
+	DisplayBlock(
 		     LeftCapsulesStart[color].x,
 		     LeftCapsulesStart[color].y + i*(CAPSULE_HEIGHT),
 		     CapsuleBlocks + TO_COLORS*CAPSULE_MEM,
@@ -849,14 +860,12 @@ ShowPlayground (void)
   }
 
   /* Show Druid - pictures */
-  
-  /*  memset(WorkBlock, TO_BG_COLOR, BLOCKMEM); */
+  memset(WorkBlock, TO_BG_COLOR, BLOCKMEM);
   
   if( LeftDruid != NULL )
     CopyMergeBlock(WorkBlock, LeftDruid, BLOCKMEM);
-		
-  DisplayMergeBlock(
-	       DruidStart[GELB].x, DruidStart[GELB].y ,
+
+  DisplayBlock(DruidStart[GELB].x, DruidStart[GELB].y ,
 	       WorkBlock,
 	       BLOCKBREITE, BLOCKHOEHE-5,
 	       RealScreen);
@@ -865,14 +874,14 @@ ShowPlayground (void)
 	
   if( RightDruid != NULL )
     CopyMergeBlock(WorkBlock, RightDruid, BLOCKMEM);
+
 		
-  DisplayMergeBlock(
-	       DruidStart[VIOLETT].x, DruidStart[VIOLETT].y,
+  DisplayBlock(DruidStart[VIOLETT].x, DruidStart[VIOLETT].y,
 	       WorkBlock,
 	       BLOCKBREITE, BLOCKHOEHE-5,
 	       RealScreen);
 
-  printf("\nvoid ShowPlayground(void): Funktionsende ordnungsgemaess erreicht....");
+  DebugPrintf("\nvoid ShowPlayground(void): Funktionsende ordnungsgemaess erreicht....");
 	
 
 } /* ShowPlayground */
