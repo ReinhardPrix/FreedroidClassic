@@ -1484,7 +1484,6 @@ IsVisible (Finepoint objpos)
   float a_x;		/* Vector Influencer->objectpos */
   float a_y;
   finepoint step;			/* effective step */
-  float step_len = (7/64.0);		/* the approx. length of a step-vect. */
   int step_num;			/* number of neccessary steps */
   float a_len;			/* Lenght of a */
   int i;

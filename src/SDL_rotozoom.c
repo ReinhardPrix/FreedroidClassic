@@ -328,7 +328,7 @@ void transformSurfaceRGBA(SDL_Surface * src, SDL_Surface * dst, int cx, int cy, 
 {
     int x, y, t1, t2, dx, dy, xd, yd, sdx, sdy, ax, ay, ex, ey, sw, sh;
     tColorRGBA c00, c01, c10, c11;
-    tColorRGBA *pc, *sp, *spb;
+    tColorRGBA *pc, *sp; //, *spb;
     int gap;
 
     /*
@@ -542,9 +542,9 @@ void transformSurfaceY(SDL_Surface * src, SDL_Surface * dst, int cx, int cy, int
 void rotozoomSurfaceSizeTrig(int width, int height, double angle, double zoom, int *dstwidth, int *dstheight,
 			     double *canglezoom, double *sanglezoom)
 {
-    double x, y, cx, cy, sx, sy;
-    double radangle;
-    int dstwidthhalf, dstheighthalf;
+  double x, y, cx, cy, sx, sy;
+  double radangle;
+  int dstwidthhalf, dstheighthalf;
 
     /*
      * Determine destination width and height by rotating a centered source box 
@@ -588,7 +588,7 @@ SDL_Surface *rotozoomSurface(SDL_Surface * src, double angle, double zoom, int s
     double zoominv;
     double sanglezoom, canglezoom, sanglezoominv, canglezoominv;
     int dstwidthhalf, dstwidth, dstheighthalf, dstheight;
-    double x, y, cx, cy, sx, sy;
+    // double x, y, cx, cy, sx, sy;
     int is32bit;
     int i, src_converted;
 

@@ -520,7 +520,6 @@ void
 PutBlast (int BlastNummer)
 {
   Blast CurBlast = &AllBlasts[BlastNummer];
-  unsigned char *blastpic;
   SDL_Rect TargetRectangle;
 
 #if BLASTOFF == 1

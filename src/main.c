@@ -376,7 +376,7 @@ main (int argc, char *const argv[])
 	  DebugPrintf ("\nvoid main: Me.speed.y ist jetzt: ");
 	  DebugPrintfFloat (Me.speed.y);
 
-	  Reibung ();
+	  InfluenceFrictionWithAir ();
 
 	  DebugPrintf ("\nvoid main: Me.speed.x nach REIBUNG ist jetzt: ");
 	  DebugPrintfFloat (Me.speed.x);
@@ -387,7 +387,7 @@ main (int argc, char *const argv[])
 	  Me.pos.y += Me.speed.y * Frame_Time ();
 	  AdjustSpeed ();
 
-	  BounceInfluencer ();	/* Testen ob der Weg nicht durch Mauern verstellt ist */
+	  CheckInfluenceWallCollisions ();	/* Testen ob der Weg nicht durch Mauern verstellt ist */
 
 	  CheckInfluenceEnemyCollision ();
 

@@ -442,7 +442,7 @@ NOTE: Of course this functions HAS to take into account the current framerate!
 @Int:
 * $Function----------------------------------------------------------*/
 void
-BounceInfluencer (void)
+CheckInfluenceWallCollisions (void)
 {
   int sign;
   double SX = Me.speed.x * Frame_Time ();
@@ -553,7 +553,7 @@ BounceInfluencer (void)
     {
       Me.pos.x=Me.Position_History[2].x;
       Me.pos.y=Me.Position_History[2].y;
-      printf("\nATTENTION! BounceInflu FALLBACK ACTIVATED!!");
+      printf("\nATTENTION! CheckInfluenceWallCollsision FALLBACK ACTIVATED!!");
     }
 
 
@@ -712,7 +712,7 @@ BounceInfluencer (void)
       Me.pos.y=Me.Position_History[2].y;
     }
 
-} /* BounceInfluencer */
+} /* CheckInfluenceWallCollisions */
 
 /*@Function============================================================
 @Desc: Dies Prozedur passt die momentane Geschwindigkeit an die Hoechst-
@@ -744,9 +744,8 @@ AdjustSpeed (void)
 
 * $Function----------------------------------------------------------*/
 void
-Reibung (void)
+InfluenceFrictionWithAir (void)
 {
-  int i;
 
   if (!UpPressed () && !DownPressed ())
     {
@@ -769,7 +768,7 @@ Reibung (void)
       Me.speed.x *= exp(log(0.02) * Frame_Time());
     }
 
-}				// void Reibung(void)
+} // InfluenceFrictionWithAir (void)
 
 /*@Function============================================================
 @Desc: ExplodeInfluencer(): generiert eine grosse Explosion an
@@ -877,7 +876,7 @@ CheckInfluenceEnemyCollision (void)
 	      Me.pos.y += Me.speed.y * Frame_Time ();
 
 	      /* etwaige Wand - collisionen beruecksichtigen */
-	      BounceInfluencer ();
+	      CheckInfluenceWallCollisions ();
 
 	      BounceSound ();
 

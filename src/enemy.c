@@ -468,7 +468,6 @@ CheckEnemyEnemyCollision (int enemynum)
   int swap;
   float xdist, ydist;
   float dist2;
-  float crit_dist2 = 4 * DRUIDRADIUSX * DRUIDRADIUSX;
   float speed_x, speed_y;
 
   check_x = Feindesliste[enemynum].pos.x;

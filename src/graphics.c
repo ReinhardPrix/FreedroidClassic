@@ -169,7 +169,6 @@ SetCombatScaleTo(float ResizeFactor)
 {
   int i, j;
   SDL_Surface *tmp;
-  SDL_Surface *zwisch;
 
   // just to be sure, reset the size of the graphics
   ReInitPictures();
@@ -236,16 +235,10 @@ SetCombatScaleTo(float ResizeFactor)
   Block_Width *= ResizeFactor;
   Block_Height *= ResizeFactor;
 
-  // printf("\nDigit_Length: %d " , Digit_Length );
-  // printf("\nDigit_Pos_X: %d " , Digit_Pos_X );
-
   Digit_Length *= ResizeFactor;
   Digit_Height *= ResizeFactor;
   Digit_Pos_X *= ResizeFactor;
   Digit_Pos_Y *= ResizeFactor;
-
-  // printf("\nDigit_Length: %d " , Digit_Length );
-  //  printf("\nDigit_Pos_X: %d " , Digit_Pos_X );
 
   SDL_SaveBMP ( tmp, "../graphics/debugSmall.bmp");
 
