@@ -39,11 +39,14 @@
 
 #include "items.h"
 
+#define EXPERIENCE_Y 55
+#define NEXT_LEVEL_Y 82
+
 #define STR_BASE_X 100
 #define STR_NOW_X 148
 #define STR_Y 143
 #define MAG_Y 171
-#define DEX_Y 200
+#define DEX_Y 197
 #define VIT_Y 227
 #define POINTS_Y 252
 
@@ -53,7 +56,7 @@
 #define BUTTON_HEIGHT 19
 
 #define DAMAGE_X 260
-#define DAMAGE_Y 228
+#define DAMAGE_Y 225
 
 #define RECHARGE_X 260
 #define RECHARGE_Y 200
@@ -120,10 +123,13 @@ DisplayButtons( void )
 {
   static SDL_Surface *CHA_ButtonImage = NULL;
   static SDL_Surface *INV_ButtonImage = NULL;
+  static SDL_Surface *PlusButtonImage = NULL;
   static SDL_Rect CHA_Button_Rect;
   static SDL_Rect INV_Button_Rect;
   static int WasPressed;
   char* fpath;
+
+  if ( GameConfig.CharacterScreen_Visible == TRUE ) return;
   
   // --------------------
   // Some things like the loading of the character screen
@@ -137,20 +143,33 @@ DisplayButtons( void )
       CHA_ButtonImage = IMG_Load( fpath );
       fpath = find_file ( "INVButton.png" , GRAPHICS_DIR, FALSE);
       INV_ButtonImage = IMG_Load( fpath );
-
+      fpath = find_file ( "PlusButton.png" , GRAPHICS_DIR, FALSE);
+      PlusButtonImage = IMG_Load( fpath );
     }
 
-      CHA_Button_Rect.x = CHA_BUTTON_X;
-      CHA_Button_Rect.y = CHA_BUTTON_Y;
-      // CHA_Button_Rect.w = CHARACTERRECT_W;
-      // CHA_Button_Rect.h = CHARACTERRECT_H;
-
-      INV_Button_Rect.x = INV_BUTTON_X;
-      INV_Button_Rect.y = INV_BUTTON_Y;
-      // INV_Button_Rect.w = CHARACTERRECT_W;
-      // INV_Button_Rect.h = CHARACTERRECT_H;
+  CHA_Button_Rect.x = CHA_BUTTON_X;
+  CHA_Button_Rect.y = CHA_BUTTON_Y;
+  // CHA_Button_Rect.w = CHARACTERRECT_W;
+  // CHA_Button_Rect.h = CHARACTERRECT_H;
   
-  SDL_BlitSurface( CHA_ButtonImage , NULL , Screen , &CHA_Button_Rect );
+  INV_Button_Rect.x = INV_BUTTON_X;
+  INV_Button_Rect.y = INV_BUTTON_Y;
+  // INV_Button_Rect.w = CHARACTERRECT_W;
+  // INV_Button_Rect.h = CHARACTERRECT_H;
+
+  //--------------------
+  // Now we can draw either the plus button or the 'cha' button, depending
+  // on whether there are points to distribute or not
+  //
+  if ( Me.PointsToDistribute > 0 )
+    {
+      SDL_BlitSurface( PlusButtonImage , NULL , Screen , &CHA_Button_Rect );
+    }
+  else
+    {
+      SDL_BlitSurface( CHA_ButtonImage , NULL , Screen , &CHA_Button_Rect );
+    }
+
   SDL_BlitSurface( INV_ButtonImage , NULL , Screen , &INV_Button_Rect );
   
   if ( CursorIsOnINVButton( GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
@@ -371,15 +390,15 @@ ShowCharacterScreen ( void )
   //
   DisplayText( Me.character_name , 20 + CharacterRect.x , 18 + CharacterRect.y , &CharacterRect );
 
-  sprintf( CharText , "%d", Me.exp_level );
+  sprintf( CharText , "%4d", Me.exp_level );
   DisplayText( CharText , 62 + CharacterRect.x , 56 + CharacterRect.y , &CharacterRect );
 
   Me.Experience = RealScore;
   sprintf( CharText , "%6ld", Me.Experience ); // this should be the real score, sooner or later
-  DisplayText( CharText , 250 + CharacterRect.x ,  58 + CharacterRect.y , &CharacterRect );
+  DisplayText( CharText , 240 + CharacterRect.x ,  EXPERIENCE_Y + CharacterRect.y , &CharacterRect );
 
   sprintf( CharText , "%6ld", Me.ExpRequired ); 
-  DisplayText( CharText , 250 + CharacterRect.x ,  85 + CharacterRect.y , &CharacterRect );
+  DisplayText( CharText , 240 + CharacterRect.x ,  NEXT_LEVEL_Y + CharacterRect.y , &CharacterRect );
 
   sprintf( CharText , "%d", Me.Strength );
   DisplayText( CharText , STR_BASE_X + CharacterRect.x , STR_Y + CharacterRect.y , &CharacterRect );

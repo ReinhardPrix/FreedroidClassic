@@ -244,7 +244,10 @@ GiveDroidDescription ( char* DroidDescText , enemy* CurEnemy )
 
 }; // void GiveDroidDescription ( char* ItemDescText , item* CurItem )
 
-
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
 void 
 ShowCurrentHealthLevel( void )
 {
@@ -263,7 +266,7 @@ ShowCurrentHealthLevel( void )
   Unhealth_Rect.y = WHOLE_HEALTH_RECT_Y + ( ( 100 * Me.energy ) / Druidmap[ DRUID001 ].maxenergy ) ;
   Unhealth_Rect.w = WHOLE_HEALTH_RECT_W;
   Unhealth_Rect.h = WHOLE_HEALTH_RECT_H - ( ( WHOLE_HEALTH_RECT_H * Me.energy ) / Druidmap[ DRUID001 ].maxenergy ) ;
-  if ( Unhealth_Rect.h <= 0 ) Unhealth_Rect.h = 0;
+  if ( Unhealth_Rect.h > WHOLE_HEALTH_RECT_H ) Unhealth_Rect.h = 0;
 
   Whole_Health_Rect.x = WHOLE_HEALTH_RECT_X;
   Whole_Health_Rect.y = WHOLE_HEALTH_RECT_Y;
@@ -313,11 +316,15 @@ ShowCurrentTextWindow ( void )
   //--------------------
   // In case some item is held in hand by the player, the situation is simple:
   // we merely need to draw this items description into the description field and
-  // that's it.
+  // that's it OR WE MUST SAY THAT THE requirements for this item are not met
   //
-  if ( GetHeldItemCode() != (-1) )
+  // if ( GetHeldItemCode() != (-1) )
+  if ( GetHeldItemPointer( ) != NULL )
     {
-      strcpy( ItemDescText , ItemMap[ GetHeldItemCode() ].ItemName );
+      if ( ItemUsageRequirementsMet( GetHeldItemPointer( ) , FALSE ) )
+	strcpy( ItemDescText , ItemMap[ GetHeldItemCode() ].ItemName );
+      else 
+	strcpy( ItemDescText , "REQUIREMENTS NOT MET" );
     }
 
   //--------------------
