@@ -61,6 +61,57 @@ message* Queue=NULL;
 // int ThisMessageTime=0;		/* Counter fuer Message-Timing */
 
 
+// This Function is for the PORT!!!!
+// Replacing all MyRandom-calls with MyMyRandom-calls
+
+void reverse(char s[])
+{
+  int c,i,j;
+  for(i=0,j=strlen(s)-1;i<j;i++,j--){
+    c=s[i];
+    s[i]=s[j];
+    s[j]=c;
+  }
+} // void reverse(char s[]) siehe Kernighan&Ritchie!
+
+// This Function is for the PORT!!!!
+// Replacing all MyRandom-calls with MyMyRandom-calls
+
+char* itoa(int n,char s[], int Dummy) {
+  int i, sign;
+
+  if ((sign=n)<0)
+    n=-n;
+  i=0;
+  do {
+    s[i++]=n%10+'0';
+  } while ((n /= 10) > 0);
+  if (sign < 0)
+    s[i++]='-';
+  s[i]='\0';
+  reverse(s);
+  return s;
+} // void itoa(int n, char s[]) siehe Kernighan&Ritchie!
+
+// This Function is for the PORT!!!!
+// Replacing all MyRandom-calls with MyMyRandom-calls
+
+char *ltoa(long n,char s[],int Dummy) {
+  int i, sign;
+
+  if ((sign=n)<0)
+    n=-n;
+  i=0;
+  do {
+    s[i++]=n%10+'0';
+  } while ((n /= 10) > 0);
+  if (sign < 0)
+    s[i++]='-';
+  s[i]='\0';
+  reverse(s);
+  return s;
+} // void ltoa(long n, char s[]) angelehnt an itoa!
+
 /* **********************************************************************
    Diese Funktion l"oscht alle Roboter auf dem momentanen Level
 **********************************************************************/

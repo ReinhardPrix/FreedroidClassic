@@ -17,9 +17,6 @@ EXTERN void CalibratedDelay(long);
 EXTERN int ShipEmptyCounter;
 EXTERN int WaitElevatorCounter;
 EXTERN int TimerFlag;
-EXTERN void reverse(char*);
-EXTERN char* itoa(int,char*,int);
-EXTERN char* ltoa(long,char*,int);
 EXTERN void delay(int);
 EXTERN void gotoxy(int,int);
 EXTERN int kbhit(void);
@@ -175,8 +172,6 @@ EXTERN void LadeZeichensatz(char* Zeichensatzname);
 EXTERN void RotateColors(int,int);
 EXTERN void LevelGrauFaerben(void);
 EXTERN void ClearGraphMem(unsigned char *screen);
-EXTERN void SaveVideoMode(void);
-EXTERN void RestoreVideoMode(void);
 EXTERN void Flimmern(void);
 
 /* map.c */
@@ -262,6 +257,9 @@ EXTERN void JoystickControl(void);
 #define EXTERN extern
 #endif
 
+EXTERN void reverse(char*);
+EXTERN char* itoa(int,char*,int);
+EXTERN char* ltoa(long,char*,int);
 EXTERN void Armageddon(void);
 EXTERN void Teleport(int LNum,int X,int Y);
 EXTERN void Cheatmenu(void);

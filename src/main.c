@@ -57,7 +57,6 @@
 #include "struct.h"
 #include "global.h"
 #include "proto.h"
-// That goes out for the PORT !!!! #include "fm_hrd.h"
 #include "paratext.h"
 #include "paravars.h"
 #include "ship.h"
@@ -95,11 +94,13 @@ float FPSover10=10;
 float FPSover100=10;
 int framenr=0;
 
+static void timeout(int sig);
 int TestSound(void);
 void CalibratedDelay(long);
 void Debriefing(void);
 void ShowHighscoreList(void);
 void Pause(void);
+void UpdateCountersForThisFrame(void);
 
 float Frame_Time(void){
   if (FPSover1 > 10) {
@@ -112,93 +113,6 @@ float Frame_Time(void){
 void CalibratedDelay(long delay){
   usleep(delay);
 } // void CalibatedDelay(long delay)
-
-
-// Before the port to Linux, a (non-periodic) interrupt updated several global variables,
-// that should reflect the keyboard status.  This was a rather crude solution, since some
-// keystrokes tended to get missed if too many keys were pressed simulaneously.
-//
-// But now we've got the svgalib functionality anyway, which does a far better job:  The
-// svgalib has certain functions to immediately report the status of a give key.  The old
-// global variables could now be replaced by functions of the same name, that do not contain
-// the status of the previous interrupt call, but that gain the information about the current
-// status directly from the keyboard!  Long live the linux kernel and the svgalib!
-//                                                                          jp, 10.04.2002
-void ClearKbState(void) {
-  keyboard_clearstate();  // This resets the state of all keys when keyboard in raw mode
-} // void ClearKbState(void)
-
-//
-// This function is for stability while working with the SVGALIB, which otherwise would
-// be inconvenient if not dangerous in the following respect:  When SVGALIB has switched to
-// graphic mode and has grabbed the keyboard in raw mode and the program gets stuck, the 
-// console will NOT be returned to normal, the keyboard will remain useless and login from
-// outside and shutting down or reseting the console will be the only way to avoid a hard
-// reset!
-// Therefore this function is introduced.  When Paradroid starts up, the operating system is
-// instructed to generate a signal ALARM after a specified time has passed.  This signal will
-// be handled by this function, which in turn restores to console to normal and resets the
-// yiff sound server access if applicable. (All this is done via calling Terminate of course.)
-//                                                                           jp, 10.04.2002
-//
-
-static void timeout(int sig)
-{
-  printf("\n\nstatic void timeout(int sig): Automatic termination after %d seconds.\n\n", AutoTerminationTime);
-  Terminate(0);
-} // static void timeout(int sig)
-
-
-// This Function is for the PORT!!!!
-// Replacing all MyRandom-calls with MyMyRandom-calls
-
-void reverse(char s[])
-{
-  int c,i,j;
-  for(i=0,j=strlen(s)-1;i<j;i++,j--){
-    c=s[i];
-    s[i]=s[j];
-    s[j]=c;
-  }
-} // void reverse(char s[]) siehe Kernighan&Ritchie!
-
-// This Function is for the PORT!!!!
-// Replacing all MyRandom-calls with MyMyRandom-calls
-
-char* itoa(int n,char s[], int Dummy) {
-  int i, sign;
-
-  if ((sign=n)<0)
-    n=-n;
-  i=0;
-  do {
-    s[i++]=n%10+'0';
-  } while ((n /= 10) > 0);
-  if (sign < 0)
-    s[i++]='-';
-  s[i]='\0';
-  reverse(s);
-  return s;
-} // void itoa(int n, char s[]) siehe Kernighan&Ritchie!
-
-// This Function is for the PORT!!!!
-// Replacing all MyRandom-calls with MyMyRandom-calls
-
-char *ltoa(long n,char s[],int Dummy) {
-  int i, sign;
-
-  if ((sign=n)<0)
-    n=-n;
-  i=0;
-  do {
-    s[i++]=n%10+'0';
-  } while ((n /= 10) > 0);
-  if (sign < 0)
-    s[i++]='-';
-  s[i]='\0';
-  reverse(s);
-  return s;
-} // void ltoa(long n, char s[]) angelehnt an itoa!
 
 // This Function is for the PORT!!!!
 // Replacing all MyRandom-calls with MyMyRandom-calls
@@ -265,7 +179,6 @@ int main(void)
   InterruptInfolineUpdate=TRUE;
 
   /* Initialisieren der globalen Variablen und Arrays */
-  SaveVideoMode();
   InitParaplus();
 
 #if REDRAW001OFF == 0
@@ -291,25 +204,11 @@ int main(void)
       if (  framenr %  10 == 1) gettimeofday(&tenframetimestamp,NULL); 
       if (  framenr % 100 == 1) gettimeofday(&onehundredframetimestamp,NULL);
 
-      // Here are some things, that were previously done by some periodic interrupt function
-      ThisMessageTime++;
-      if (Me.firewait > 0) Me.firewait--;
-      if ( ShipEmptyCounter > 1 ) ShipEmptyCounter --;
-      if ( WaitElevatorCounter > 0) WaitElevatorCounter --;
-      if ( CurLevel->empty > 2) CurLevel->empty--;
-      if(RealScore > ShowScore) ShowScore++;
-      if(RealScore < ShowScore) ShowScore--;
-      if (InterruptInfolineUpdate) {
-      	UpdateInfoline();
-      	SetInfoline();
-      }
-      // This is the end of the things, that were previously done by periodic interrupt
+      UpdateCountersForThisFrame();
 
 	
       printf("void main(void): Innerhalb der !GameOver && !QuitProgram - Schleife....\n");
-
       keyboard_update();
-
       DisplayRahmen(RealScreen);
 
       // CalibratedDelay(20000);  //  This should cause a little delay to make the game more playable
@@ -326,41 +225,23 @@ int main(void)
       if(keyboard_keypressed(SCANCODE_V)) HideInvisibleMap = !HideInvisibleMap; 
       if(keyboard_keypressed(SCANCODE_C)) Cheatmenu();
       if(PPressed()) Pause();
-      // } /* if while () */
-
-      //PORT	if( !TimerFlag ) continue;		/* the clock - timing */
-      //PORT	else TimerFlag = FALSE;
 
       if( ShipEmptyCounter == 1) GameOver = TRUE;
 
       LastBlastHit++;
 
-      /*
-       * Hier wird die Statuszeile ausgegeben
-       *
-       */
-
-      /* Die Tueren im Level auf und zu bewegen */
-      MoveLevelDoors();
-
-      /* Refreshes Animieren */
-      AnimateRefresh();
+      MoveLevelDoors();       /* Die Tueren im Level auf und zu bewegen */
+      AnimateRefresh();       /* Refreshes Animieren */
 
       for (i=0;i<NumEnemys;i++) {
 	if (Feindesliste[i].warten > 0) Feindesliste[i].warten--;
 	if (Feindesliste[i].firewait > 0) Feindesliste[i].firewait--;
       }
 
+      MoveBullets();      /* Bullets entsprechend ihrer Geschwindigkeit weiterbewegen */
+      ExplodeBlasts();      /* Blasts in der Explosionsphase weiterbewegen */
 
-      /* Bullets entsprechend ihrer Geschwindigkeit weiterbewegen */
-      MoveBullets();
-
-      /* Blasts in der Explosionsphase weiterbewegen */
-      ExplodeBlasts();
-
-
-      /* Einen Ausschnitt aus der Gesamtlevelkarte machen */
-      GetView();
+      GetView();      /* Einen Ausschnitt aus der Gesamtlevelkarte machen */
 
       GetInternFenster();
       PutInternFenster();
@@ -373,24 +254,11 @@ int main(void)
       for (i=0;i<MAXBULLETS;i++) CheckBulletCollisions(i);
       PutMessages();
 
-      printf("\nvoid main(void): PutMessages() ist zumindest ohne Probleme wieder zurueckgekehrt.");
-
-      /* Wenn vorhanden: Joystick einlesen */
-      JoystickControl();
-
-      /* Gemaess den gedrueckten Tasten die Geschwindigkeit veraendern */
-      MoveInfluence();
-
-
-      MoveEnemys();			/* Auch die Feinde bewegen */
-
-
-      /* Bei animierten Influencer die Phasen weiterzaehlen */
-      AnimateInfluence();
-
-      /* Bei den Feinden auch Phasen weiterzaehlen */
-
-      AnimateEnemys();
+      JoystickControl(); // Wenn vorhanden: Joystick einlesen 
+      MoveInfluence();   // Gemaess den gedrueckten Tasten die Geschwindigkeit veraendern 
+      MoveEnemys();	 // Auch die Feinde bewegen 
+      AnimateInfluence();  // Bei animierten Influencer die Phasen weiterzaehlen 
+      AnimateEnemys();   // Bei den Feinden auch Phasen weiterzaehlen 
 
       /* Raeder bremsen die Fahrt des Influencers erheblich */
       printf("\nvoid main(void): SpeedX ist jetzt: %d.",SpeedX);
@@ -404,10 +272,8 @@ int main(void)
       Me.pos.y+=SpeedY;
       AdjustSpeed();
 
-      /* Testen ob der Weg nicht durch Mauern verstellt ist */
-      BounceInfluencer();
+      BounceInfluencer();       /* Testen ob der Weg nicht durch Mauern verstellt ist */
       InfluenceEnemyCollision();
-
       RotateBulletColor();
 
       if( CurLevel->empty == 2) {
@@ -1101,5 +967,44 @@ void ShowHighscoreList(void){
   keyboard_init();
   
 }
+
+void UpdateCountersForThisFrame(void){
+  // Here are some things, that were previously done by some periodic interrupt function
+  ThisMessageTime++;
+  if (Me.firewait > 0) Me.firewait--;
+  if ( ShipEmptyCounter > 1 ) ShipEmptyCounter --;
+  if ( WaitElevatorCounter > 0) WaitElevatorCounter --;
+  if ( CurLevel->empty > 2) CurLevel->empty--;
+  if(RealScore > ShowScore) ShowScore++;
+  if(RealScore < ShowScore) ShowScore--;
+  if (InterruptInfolineUpdate) {
+    UpdateInfoline();
+    SetInfoline();
+  }
+  // This is the end of the things, that were previously done by periodic interrupt
+} // void UpdateCountersForThisFrame(void)
+
+
+//
+// This function is for stability while working with the SVGALIB, which otherwise would
+// be inconvenient if not dangerous in the following respect:  When SVGALIB has switched to
+// graphic mode and has grabbed the keyboard in raw mode and the program gets stuck, the 
+// console will NOT be returned to normal, the keyboard will remain useless and login from
+// outside and shutting down or reseting the console will be the only way to avoid a hard
+// reset!
+// Therefore this function is introduced.  When Paradroid starts up, the operating system is
+// instructed to generate a signal ALARM after a specified time has passed.  This signal will
+// be handled by this function, which in turn restores to console to normal and resets the
+// yiff sound server access if applicable. (All this is done via calling Terminate of course.)
+//                                                                           jp, 10.04.2002
+//
+
+static void timeout(int sig)
+{
+  printf("\n\nstatic void timeout(int sig): Automatic termination after %d seconds.\n\n", AutoTerminationTime);
+  Terminate(0);
+} // static void timeout(int sig)
+
+
 
 #undef _paraplus_c

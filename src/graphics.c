@@ -260,27 +260,6 @@ int InitLevelColorTable(void){
 * $Function----------------------------------------------------------*/
 void SetLevelColor(int ColorEntry){
 
-  //
-  // THIS CRAP WAS IN BEFORE THE PORT
-  //
-  // int ColorSeg=FP_SEG(LevelColorArray);
-  // int ColorOfs=FP_OFF(LevelColorArray)+ColorEntry*3*FARBENPROLEVEL;
-	//	asm{
-	//	push es
-	//	mov ax,1012h
-	//	mov bx,FIRSTBLOCKCOLOR
-	//	mov cx,FARBENPROLEVEL
-	//	mov dx,ColorSeg
-	//	mov es,dx
-	//	mov dx,ColorOfs
-	//	int 10h
-	//	pop es
-	//}
-
-  //
-  // NOW WE USE INSTEAD THE FOLLOWING
-  //
-
   SetColors(FIRSTBLOCKCOLOR,FARBENPROLEVEL,LevelColorArray+ColorEntry*3*FARBENPROLEVEL);
 
 } // void SetLevelColor(int ColorEntry)
@@ -288,11 +267,11 @@ void SetLevelColor(int ColorEntry){
 /*@Function============================================================
 @Desc: LadeLBMBild(char*,unsigned char*,int):
 
-		Diese Prozedur ist fuer das laden ganzer IFF/ILBM-Bilder zust„ndig. Zuerst
-	   wird ausreichend Speicher reserviert, dann die Bilddatei in den Speicher
-	   geladen. Das decodiieren der eigentlichen Bilddaten uebernimmt dann eine
-	   Assemblerroutine. Erst wenn das Bild fertig im Bildschirmspeicher steht
-	   werden die Farbinformationen eingetragen.
+Diese Prozedur ist fuer das laden ganzer IFF/ILBM-Bilder zust„ndig. Zuerst
+wird ausreichend Speicher reserviert, dann die Bilddatei in den Speicher
+geladen. Das decodiieren der eigentlichen Bilddaten uebernimmt dann eine
+Assemblerroutine. Erst wenn das Bild fertig im Bildschirmspeicher steht
+werden die Farbinformationen eingetragen.
 	
 @Ret: none
 @Int:
@@ -830,28 +809,9 @@ void ClearGraphMem(unsigned char* screen){
 @Int:
 * $Function----------------------------------------------------------*/
 void SetPalCol(unsigned int palpos, unsigned char rot, unsigned char gruen, unsigned char blau ){
-
-  printf("\nvoid SetPalCol(...): Real function called.");
-
-  //
-  // THIS CRAP WAS IN BEFORE THE PORT!!!!!!!
-  //
-  //	asm{
-  //		mov ax, 1010h
-  //		mov bx,palpos
-  //		mov ch,gruen
-  //		mov dh,rot
-  //		mov cl,blau
-  //		int 10h
-  //	}
-
-  //
-  // NOW WE DO IT LIKE THIS:
-  //
-
+  // printf("\nvoid SetPalCol(...): Real function called.");
   vga_setpalette(palpos,rot,gruen,blau);
-
-  printf("\nvoid SetPalCol(...): Usual end of function reached.");
+  // printf("\nvoid SetPalCol(...): Usual end of function reached.");
 } // void SetPalCol(...)
 
 /*@Function============================================================
@@ -862,112 +822,10 @@ void SetPalCol(unsigned int palpos, unsigned char rot, unsigned char gruen, unsi
 * $Function----------------------------------------------------------*/
 void SetPalCol2(unsigned int palpos, color Farbwert)
 {
-  //
-  // THIS CRAP WAS IN BEFORE THE PORT!!!!!!!
-  //
-  //	asm{
-  //		mov ax, 1010h
-  //		mov bx, palpos
-  //		mov ch, Farbwert.gruen
-  //		mov dh, Farbwert.gruen
-  //		mov cl, Farbwert.blau
-  //		int 10h
-  //	}
-
-  //
-  // NOW WE DO IT LIKE THIS:
-  //
-
   vga_setpalette(palpos,Farbwert.rot,Farbwert.gruen,Farbwert.blau);
-
 } // void SetPalCol2(...)
 
 		
-/* **********************************************************************
-	Sichert den Videomodus, der zu Beginn des Programms gesetzt ist.
-	**********************************************************************/
-void SaveVideoMode(void){
-	int MemoryRequest;
-	int BufferSeg;
-	int BufferOfs;
-
-	/* Videomodus sichern */
-	//	asm{
-	//	mov ax,0F00h;
-	//	int 10h;
-	//	mov VideoMode,al;
-	//}		
-
-	/* Bereichsgr"o"se ermitteln, den der Speicherpuffer haben mu"s */
-	//asm{
-	//	mov ax,1C00h
-	//	mov cx,0111b;
-	//	int 10h;
-	//	mov MemoryRequest,bx;
-	//	cmp al,1Ch;
-	//	jne SeriousError1;
-	//}
-	/* Bereich in den Puffer sichern */
-	//	VideoSavePointer=MyMalloc(MemoryRequest*64);
-	//	BufferSeg=FP_SEG(VideoSavePointer);
-	//	BufferOfs=FP_OFF(VideoSavePointer);
-	//	asm{
-	//		mov ax,1C01h
-	//		mov cx,0111b;
-	//		mov bx,BufferSeg;
-	//		mov es,bx;
-	//		mov bx,BufferOfs;
-	//		int 10h;
-	//		cmp al,1Ch;
-	//		jne SeriousError2;
-	//	}
-	//	return;
-
-	/* Fehlerbehandlung */
-	//SeriousError1:;
-	//	printf(" Unable to determine Videostatussavebuffersize !\n");
-	//	Terminate(-1);
-	//riousError2:;
-	//	printf(" Unable to save Videostatus !\n");
-	//	Terminate(-1);
-} // void SaveVideoMode(void)
-
-/* **********************************************************************
-	Restauriert den Videomodus, der zu Angang des Programms gesetzt war.
-	**********************************************************************/
-void RestoreVideoMode(void){
-	int BufferSeg;
-	int BufferOfs;
-
-	//	SetVideoMode(VideoMode);
-
-	/* Aus dem Speicherpuffer wieder in die Register ect. restaurieren */
-	//	BufferOfs=FP_OFF(VideoSavePointer);
-	//	BufferSeg=FP_SEG(VideoSavePointer);
-	//	asm{
-	//		mov ax,1C02h;
-	//		mov cx,0111b;
-	//		mov bx,BufferSeg;
-	//		mov es,bx;
-	//		mov bx,BufferOfs;
-	//		int 10h;
-	//		cmp al,1Ch;
-	//		jne SeriousError3;
-	//	}
-
-	/* Eine ordentliche Schrift installieren f"ur den Textmodus */
-	//	asm{
-	//		mov ax,1112h;
-	//		mov bl,0;
-	//		int 10h;
-	//	}
-		  
-	//	return;
-	//SeriousError3:;
-	//	printf(" Unable to restore Videostatus !\n");
-	//	getchar();
-} // void RestoreVideoMode(void)
-
 /* **********************************************************************
    Diese Funktion bringt ein Flimmer auf den Schirm
 **********************************************************************/

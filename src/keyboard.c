@@ -30,9 +30,20 @@
 #include "global.h"
 #include "proto.h"
 
-// Die Definition f"ur eine Message kann ruhig lokal hier stehen, da sie
-// nur innerhalb des Moduls gebraucht wird.
+// Before the port to Linux, a (non-periodic) interrupt updated several global variables,
+// that should reflect the keyboard status.  This was a rather crude solution, since some
+// keystrokes tended to get missed if too many keys were pressed simulaneously.
+//
+// But now we've got the svgalib functionality anyway, which does a far better job:  The
+// svgalib has certain functions to immediately report the status of a give key.  The old
+// global variables could now be replaced by functions of the same name, that do not contain
+// the status of the previous interrupt call, but that gain the information about the current
+// status directly from the keyboard!  Long live the linux kernel and the svgalib!
+//                                                                          jp, 10.04.2002
 
+void ClearKbState(void) {
+  keyboard_clearstate();  // This resets the state of all keys when keyboard in raw mode
+} // void ClearKbState(void)
 
 int LeftPressed(void){
   keyboard_update();
