@@ -249,11 +249,11 @@ void Init_Joy (void)
 
   if (SDL_InitSubSystem (SDL_INIT_JOYSTICK) == -1)
     {
-      fprintf(stderr, "Couldn't initialize SDL-Joystick: %s\n",SDL_GetError());
-      Terminate(ERR);
-    } else
+      DebugPrintf (0, "Warning: Couldn't initialize SDL-Joystick: %s\n", SDL_GetError());
+      return;
+    } 
+  else
       DebugPrintf(1, "\nSDL Joystick initialisation successful.\n");
-
 
   DebugPrintf (1, " %d Joysticks found!\n", num_joy = SDL_NumJoysticks ());
 
