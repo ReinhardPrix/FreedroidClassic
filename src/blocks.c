@@ -2732,35 +2732,75 @@ init_obstacle_data( void )
   obstacle_map [ ISO_GREY_WALL_END_S ] . filename = "iso_walls_0008.png" ;
 
 
+
+
   obstacle_map [ ISO_BRICK_WALL_H ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_BRICK_WALL_H ] . block_area_parm_1 = 1.2 ;
   obstacle_map [ ISO_BRICK_WALL_H ] . block_area_parm_2 = 1.2 ;
-  obstacle_map [ ISO_BRICK_WALL_H ] . filename = "iso_walls_0009.png" ;
+  obstacle_map [ ISO_BRICK_WALL_H ] . filename = "iso_brick_wall_0001.png" ;
   obstacle_map [ ISO_BRICK_WALL_V ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_BRICK_WALL_V ] . block_area_parm_1 = 1.2 ;
   obstacle_map [ ISO_BRICK_WALL_V ] . block_area_parm_2 = 1.2 ;
-  obstacle_map [ ISO_BRICK_WALL_V ] . filename = "iso_walls_0010.png" ;
+  obstacle_map [ ISO_BRICK_WALL_V ] . filename = "iso_brick_wall_0002.png" ;
   obstacle_map [ ISO_BRICK_WALL_END ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_BRICK_WALL_END ] . block_area_parm_1 = 1.2 ;
   obstacle_map [ ISO_BRICK_WALL_END ] . block_area_parm_2 = 1.2 ;
-  obstacle_map [ ISO_BRICK_WALL_END ] . filename = "iso_walls_0011.png" ;
+  obstacle_map [ ISO_BRICK_WALL_END ] . filename = "iso_brick_wall_0003.png" ;
 
   obstacle_map [ ISO_BRICK_WALL_CORNER_1 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_BRICK_WALL_CORNER_1 ] . block_area_parm_1 = 1.2 ;
   obstacle_map [ ISO_BRICK_WALL_CORNER_1 ] . block_area_parm_2 = 1.2 ;
-  obstacle_map [ ISO_BRICK_WALL_CORNER_1 ] . filename = "iso_walls_0012.png" ;
+  obstacle_map [ ISO_BRICK_WALL_CORNER_1 ] . filename = "iso_brick_wall_0004.png" ;
   obstacle_map [ ISO_BRICK_WALL_CORNER_2 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_BRICK_WALL_CORNER_2 ] . block_area_parm_1 = 1.2 ;
   obstacle_map [ ISO_BRICK_WALL_CORNER_2 ] . block_area_parm_2 = 1.2 ;
-  obstacle_map [ ISO_BRICK_WALL_CORNER_2 ] . filename = "iso_walls_0013.png" ;
+  obstacle_map [ ISO_BRICK_WALL_CORNER_2 ] . filename = "iso_brick_wall_0005.png" ;
   obstacle_map [ ISO_BRICK_WALL_CORNER_3 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_BRICK_WALL_CORNER_3 ] . block_area_parm_1 = 1.2 ;
   obstacle_map [ ISO_BRICK_WALL_CORNER_3 ] . block_area_parm_2 = 1.2 ;
-  obstacle_map [ ISO_BRICK_WALL_CORNER_3 ] . filename = "iso_walls_0014.png" ;
+  obstacle_map [ ISO_BRICK_WALL_CORNER_3 ] . filename = "iso_brick_wall_0006.png" ;
   obstacle_map [ ISO_BRICK_WALL_CORNER_4 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_BRICK_WALL_CORNER_4 ] . block_area_parm_1 = 1.2 ;
   obstacle_map [ ISO_BRICK_WALL_CORNER_4 ] . block_area_parm_2 = 1.2 ;
-  obstacle_map [ ISO_BRICK_WALL_CORNER_4 ] . filename = "iso_walls_0015.png" ;
+  obstacle_map [ ISO_BRICK_WALL_CORNER_4 ] . filename = "iso_brick_wall_0007.png" ;
+
+  obstacle_map [ ISO_BRICK_WALL_JUNCTION_1 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_BRICK_WALL_JUNCTION_1 ] . block_area_parm_1 = 1.2 ;
+  obstacle_map [ ISO_BRICK_WALL_JUNCTION_1 ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_BRICK_WALL_JUNCTION_1 ] . filename = "iso_brick_wall_0008.png" ;
+  obstacle_map [ ISO_BRICK_WALL_JUNCTION_2 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_BRICK_WALL_JUNCTION_2 ] . block_area_parm_1 = 1.2 ;
+  obstacle_map [ ISO_BRICK_WALL_JUNCTION_2 ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_BRICK_WALL_JUNCTION_2 ] . filename = "iso_brick_wall_0009.png" ;
+  obstacle_map [ ISO_BRICK_WALL_JUNCTION_3 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_BRICK_WALL_JUNCTION_3 ] . block_area_parm_1 = 1.2 ;
+  obstacle_map [ ISO_BRICK_WALL_JUNCTION_3 ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_BRICK_WALL_JUNCTION_3 ] . filename = "iso_brick_wall_0010.png" ;
+  obstacle_map [ ISO_BRICK_WALL_JUNCTION_4 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_BRICK_WALL_JUNCTION_4 ] . block_area_parm_1 = 1.2 ;
+  obstacle_map [ ISO_BRICK_WALL_JUNCTION_4 ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_BRICK_WALL_JUNCTION_4 ] . filename = "iso_brick_wall_0011.png" ;
+
+  obstacle_map [ ISO_BRICK_WALL_CRACKED_1 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_BRICK_WALL_CRACKED_1 ] . block_area_parm_1 = 1.2 ;
+  obstacle_map [ ISO_BRICK_WALL_CRACKED_1 ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_BRICK_WALL_CRACKED_1 ] . filename = "iso_brick_wall_0012.png" ;
+  obstacle_map [ ISO_BRICK_WALL_CRACKED_2 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_BRICK_WALL_CRACKED_2 ] . block_area_parm_1 = 1.2 ;
+  obstacle_map [ ISO_BRICK_WALL_CRACKED_2 ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_BRICK_WALL_CRACKED_2 ] . filename = "iso_brick_wall_0013.png" ;
+  
+  obstacle_map [ ISO_BRICK_WALL_RUBBLE_1 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_BRICK_WALL_RUBBLE_1 ] . block_area_parm_1 = 1.2 ;
+  obstacle_map [ ISO_BRICK_WALL_RUBBLE_1 ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_BRICK_WALL_RUBBLE_1 ] . filename = "iso_brick_wall_0014.png" ;
+  obstacle_map [ ISO_BRICK_WALL_RUBBLE_2 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_BRICK_WALL_RUBBLE_2 ] . block_area_parm_1 = 1.2 ;
+  obstacle_map [ ISO_BRICK_WALL_RUBBLE_2 ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_BRICK_WALL_RUBBLE_2 ] . filename = "iso_brick_wall_0015.png" ;
+
+
+
 
   obstacle_map [ ISO_BLOOD_1 ] . block_area_type = COLLISION_TYPE_NONE ;
   obstacle_map [ ISO_BLOOD_1 ] . block_area_parm_1 = 1.0 ;
