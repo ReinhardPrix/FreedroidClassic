@@ -397,6 +397,11 @@ check_for_cheat_keys( void )
 	    Me [ 0 ] . AllMissions [ 0 ] . MissionWasAssigned = TRUE ;
 	    Me [ 0 ] . AllMissions [ 0 ] . MissionIsComplete = TRUE ;
 	}
+	if ( APressed() )
+	{
+	    Me [ 0 ] . AllMissions [ 0 ] . MissionWasAssigned = TRUE ;
+	    Me [ 0 ] . AllMissions [ 0 ] . MissionIsComplete = FALSE ;
+	}
     }
     if ( Number1Pressed() )
     {
@@ -404,6 +409,11 @@ check_for_cheat_keys( void )
 	{
 	    Me [ 0 ] . AllMissions [ 1 ] . MissionWasAssigned = TRUE ;
 	    Me [ 0 ] . AllMissions [ 1 ] . MissionIsComplete = TRUE ;
+	}
+	if ( APressed() )
+	{
+	    Me [ 0 ] . AllMissions [ 1 ] . MissionWasAssigned = TRUE ;
+	    Me [ 0 ] . AllMissions [ 1 ] . MissionIsComplete = FALSE ;
 	}
     }
     if ( Number2Pressed() )
@@ -413,6 +423,11 @@ check_for_cheat_keys( void )
 	    Me [ 0 ] . AllMissions [ 2 ] . MissionWasAssigned = TRUE ;
 	    Me [ 0 ] . AllMissions [ 2 ] . MissionIsComplete = TRUE ;
 	}
+	if ( APressed() )
+	{
+	    Me [ 0 ] . AllMissions [ 2 ] . MissionWasAssigned = TRUE ;
+	    Me [ 0 ] . AllMissions [ 2 ] . MissionIsComplete = FALSE ;
+	}
     }
     if ( Number3Pressed() )
     {
@@ -420,6 +435,11 @@ check_for_cheat_keys( void )
 	{
 	    Me [ 0 ] . AllMissions [ 3 ] . MissionWasAssigned = TRUE ;
 	    Me [ 0 ] . AllMissions [ 3 ] . MissionIsComplete = TRUE ;
+	}
+	if ( APressed() )
+	{
+	    Me [ 0 ] . AllMissions [ 3 ] . MissionWasAssigned = TRUE ;
+	    Me [ 0 ] . AllMissions [ 3 ] . MissionIsComplete = FALSE ;
 	}
     }
     if ( Number4Pressed() )
@@ -429,6 +449,11 @@ check_for_cheat_keys( void )
 	    Me [ 0 ] . AllMissions [ 4 ] . MissionWasAssigned = TRUE ;
 	    Me [ 0 ] . AllMissions [ 4 ] . MissionIsComplete = TRUE ;
 	}
+	if ( APressed() )
+	{
+	    Me [ 0 ] . AllMissions [ 4 ] . MissionWasAssigned = TRUE ;
+	    Me [ 0 ] . AllMissions [ 4 ] . MissionIsComplete = FALSE ;
+	}
     }
     if ( Number5Pressed() )
     {
@@ -436,6 +461,11 @@ check_for_cheat_keys( void )
 	{
 	    Me [ 0 ] . AllMissions [ 5 ] . MissionWasAssigned = TRUE ;
 	    Me [ 0 ] . AllMissions [ 5 ] . MissionIsComplete = TRUE ;
+	}
+	if ( APressed() )
+	{
+	    Me [ 0 ] . AllMissions [ 5 ] . MissionWasAssigned = TRUE ;
+	    Me [ 0 ] . AllMissions [ 5 ] . MissionIsComplete = FALSE ;
 	}
     }
 
@@ -488,8 +518,16 @@ ReactToSpecialKeys(void)
   // there (they are most convenient for debug purposes, yet
   // they can't be used for 'cheating' in the normal sense).
   //
-  if ( QPressed() && CtrlWasPressed() )
-    Terminate (OK);
+  if ( QPressed() )
+  {
+      if ( CtrlWasPressed() )
+	  Terminate (OK);
+      else
+      {
+	  quest_browser_interface ( );
+	  while ( QPressed() ) ;
+      }
+  }
   if ( DPressed() && CtrlWasPressed() ) 
     Me[0].energy = 0;
 

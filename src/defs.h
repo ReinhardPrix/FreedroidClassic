@@ -306,6 +306,7 @@ enum
 #define CHAT_DIALOG_BACKGROUND_PICTURE_CODE 26
 #define CHAT_DIALOG_BACKGROUND_EXCERPT_CODE 27
 #define TAKEOVER_BACKGROUND_CODE 28
+#define QUEST_BROWSER_BACKGROUND_CODE 29
 
 #define NEW_MISSION             "ReturnOfTux.mission"
 
@@ -687,6 +688,7 @@ enum
 #define MAX_INFLU_POSITION_HISTORY 10000
 #define MAX_MISSIONS_IN_GAME 10         // how many missions can there be at most in Freedroid
 #define MAX_MISSION_TRIGGERED_ACTIONS 10
+#define MAX_MISSION_DESCRIPTION_TEXTS 10
 
 #define MAX_LEVELS		39   	// how many map levels are allowed in one ship
 

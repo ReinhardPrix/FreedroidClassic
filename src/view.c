@@ -219,65 +219,6 @@ Error loading flag image.",
 }; // void blit_tux_status_flags ( void )
 
 /* ----------------------------------------------------------------------
- * This function should display the currently assigned/unassigned mission
- * and all that directly over the combat screen without interrupting the
- * game in any other way.
- * ---------------------------------------------------------------------- */
-void 
-ShowMissionCompletitionMessages( void )
-{
-    int MissNum;
-    
-    //--------------------
-    // If the log is not set to visible right now, we do not need to 
-    // do anything more
-    //
-    if ( GameConfig.Mission_Log_Visible == FALSE ) return;
-    if ( GameConfig.Mission_Log_Visible_Time >= GameConfig.Mission_Log_Visible_Max_Time ) return;
-    
-    SetCurrentFont ( FPS_Display_BFont );
-
-    //--------------------
-    // At this point we know, that the quest log is desired and
-    // therefore we display it in-game:
-    //
-    SDL_SetClipRect( Screen , NULL );
-    DisplayText( "\n   See quest log: \n" , User_Rect.x , User_Rect.y , &User_Rect );
-    
-    for ( MissNum = 0 ; MissNum < MAX_MISSIONS_IN_GAME; MissNum ++ )
-    {
-	// In case the mission does not exist at all, we need not do anything more...
-	if ( Me[0].AllMissions[ MissNum ].MissionExistsAtAll != TRUE ) continue;
-	
-	// In case the mission was not yet assigned, we need not do anything more...
-	// if ( Me[0].AllMissions[ MissNum ].MissionWasAssigned != TRUE ) continue;
-	
-	// In case the message is rather old, we need not do anything more...
-	// if ( Me[0].AllMissions[ MissNum ].MissionLastStatusChangeTime > 1000 ) continue;
-	
-	// At this point we know, that the mission has recently been completed or failed
-	
-	if ( Me[0].AllMissions[ MissNum ].MissionIsComplete == TRUE )
-	{
-	    DisplayText( "\n* Mission completed: " , -1 , -1 , &User_Rect );
-	}
-	else if ( Me[0].AllMissions[ MissNum ].MissionWasFailed == TRUE )
-	{
-	    DisplayText( "\n* Mission failed: " , -1 , -1 , &User_Rect );
-	}
-	else if ( ! Me[0].AllMissions[ MissNum ].MissionWasAssigned == TRUE )
-	{
-	    DisplayText( "\n* Mission not yet assigned: " , -1 , -1 , &User_Rect );
-	}
-	else 
-	    DisplayText( "\n* Mission assigned: " , -1 , -1 , &User_Rect );
-	
-	DisplayText( Me[0].AllMissions[ MissNum ].MissionName , -1 , -1 , &User_Rect );
-	
-    }
-}; // void ShowMissionCompletitionMessages( void )
-
-/* ----------------------------------------------------------------------
  * This function displays an item at the current mouse cursor position.
  * The typical crosshair cursor is assumed.  The item is centered around
  * this crosshair cursor, depending on item size.
@@ -499,7 +440,7 @@ ShowCombatScreenTexts ( int mask )
 	}
     }
     
-    ShowMissionCompletitionMessages();
+    classic_show_mission_list ( );
 
     DisplayBigScreenMessage( );
 

@@ -272,6 +272,16 @@ EXTERN int LoadGame( void );
 EXTERN int DeleteGame( void );
 EXTERN void LoadAndShowStats ( char* CoreFilename );
 
+// mission.c 
+#undef EXTERN
+#ifdef _mission_c
+#define EXTERN
+#else
+#define EXTERN extern
+#endif
+EXTERN void classic_show_mission_list ( void );
+EXTERN void quest_browser_interface ( void );
+
 // map.c 
 #undef EXTERN
 #ifdef _map_c
