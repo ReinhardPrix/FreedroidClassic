@@ -22,11 +22,9 @@
  *  MA  02111-1307  USA
  *
  */
-
 /* ----------------------------------------------------------------------
  * This file contains all the define-constants and macros
  * ---------------------------------------------------------------------- */
-
 /*
  * This file has been checked for remnants of german documentation.
  * If you still find some german documentation anywhere in here, please
@@ -237,21 +235,12 @@ enum
 //--------------------
 // dimensions of the droids as required for functions NotPassable() and CheckEnemyCollsion() )
 //
-
-//NORMALISATION #define DRUIDRADIUSX		((10*2)/64.0)
-// #define DRUIDRADIUSX		(18/64.0)
-//NORMALISATION #define DRUIDRADIUSY		((10*2)/64.0)
-// #define DRUIDRADIUSY		(18/64.0)
-// #define DRUIDRADIUSXY	        ((7*2)/64.0)
 #define DRUIDRADIUSXY	        (7*2/64.0)
 #define BULLET_BULLET_COLLISION_DIST (10/64.0)
-// #define BULLET_BULLET_COLLISION_DIST (8.0/64.0)
-// #define BULLET_BULLET_COLLISION_DIST (4.0/64.0)
 
 //--------------------
 // Some definitions for the menus
 //
-
 #define SINGLE_PLAYER_MENU_POINTER_POS_X (INITIAL_BLOCK_WIDTH/2)
 enum
   { NEW_GAME_POSITION=1, SHOW_HISCORE_POSITION=2,
@@ -363,7 +352,7 @@ enum _sounds
 #define TUX_SWING_PHASES 	7
 #define TUX_BREATHE_PHASES 	5
 #define TUX_GOT_HIT_PHASES      3
-#define TUX_MODELS              5
+#define TUX_MODELS              6
 
 #define WAIT_LEVELEMPTY		18	// time in frames to wait before removing the light in an empty level
 
