@@ -1605,9 +1605,7 @@ AnalyzePlayersMouseClick ( int PlayerNum )
   // so only new target will be set and return without attack motion.
   //
   if  ( ( ! LivingDroidBelowMouseCursor ( PlayerNum ) ) && 
-	( ! CrushableBoxBelowMouseCursor ( PlayerNum ) ) && 
-	( ! ServerThinksShiftWasPressed ( PlayerNum ) ) 
-	)
+	( ! CrushableBoxBelowMouseCursor ( PlayerNum ) ) )
     {
       Me [ PlayerNum ] . mouse_move_target . x = 
 	Me [ PlayerNum ] . pos . x + ( (float) ServerThinksInputAxisX ( PlayerNum ) ) / (float) Block_Width ;
@@ -1619,7 +1617,7 @@ AnalyzePlayersMouseClick ( int PlayerNum )
       return; // no attack motion since no target given!!
     }
 
-  if ( ( CrushableBoxBelowMouseCursor ( PlayerNum ) ) && ( ! ServerThinksShiftWasPressed ( PlayerNum ) ) )
+  if ( CrushableBoxBelowMouseCursor ( PlayerNum ) )
     {
 
       Me [ PlayerNum ] . mouse_move_target . x = 
@@ -1639,7 +1637,7 @@ AnalyzePlayersMouseClick ( int PlayerNum )
     }
 
 
-  if ( ( LivingDroidBelowMouseCursor ( PlayerNum ) ) && ( ! ServerThinksShiftWasPressed ( PlayerNum ) ) ) 
+  if ( LivingDroidBelowMouseCursor ( PlayerNum ) )
     {
       //--------------------
       // We assign the target robot of the coming attack operation.

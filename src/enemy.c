@@ -1626,6 +1626,24 @@ MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int TargetPlayer , int 
 	  ThisRobot -> PrivatePathway [ 0 ] . y = ThisRobot -> pos.y + RotatedStepVector . y ;
 	  break;
 	}
+      /*
+	if ( ThisRobot -> last_combat_step > 0.20 )
+	{
+	ThisRobot -> last_combat_step = 0 ; 
+	if ( ItemMap [ Druidmap [ ThisRobot -> type ] . weapon_item . type ] . item_gun_angle_change != 0 )
+	{
+	MoveInCloserForOrAwayFromMeleeCombat ( ThisRobot , TargetPlayer , enemynum , (+1) );
+	} // if a melee weapon is given.
+	else if (dist2 < 1.5)
+	{
+	MoveInCloserForOrAwayFromMeleeCombat ( ThisRobot , TargetPlayer , enemynum , (-1) );
+	} // else the case, that no melee weapon 
+	}
+	else
+	{
+	ThisRobot -> last_combat_step += Frame_Time ();
+	}
+      */
     }
 
   //--------------------
