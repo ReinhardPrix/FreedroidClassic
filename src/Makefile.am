@@ -1,5 +1,7 @@
      ## Process this file with automake to produce Makefile.in
 
+AM_CFLAGS=@CFLAGS@
+
 bin_PROGRAMS = freedroid
 
 freedroid_SOURCES = menu.c graphics.c  map.c   init.c  ship.c \
