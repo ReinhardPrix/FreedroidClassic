@@ -743,6 +743,7 @@ ShowCharacterScreen ( void )
   static SDL_Surface *CharacterScreenImage = NULL;
   char *fpath;
   char fname[]="character.png";
+  char CharText[1000];
 
   DebugPrintf (2, "\nvoid ShowInventoryMessages( ... ): Function call confirmed.");
 
@@ -779,7 +780,7 @@ ShowCharacterScreen ( void )
     }
 
   //--------------------
-  // At this point we know, that the inventory screen is desired and must be
+  // At this point we know, that the character screen is desired and must be
   // displayed in-game:
   //
   // Therefore we split the screen to half, so that one half can be used for 
@@ -792,6 +793,43 @@ ShowCharacterScreen ( void )
   // SDL_SetClipRect( Screen, &InventoryRect );
   SDL_SetClipRect( Screen, NULL );
   SDL_BlitSurface ( CharacterScreenImage , NULL , Screen , &CharacterRect );
+
+  //--------------------
+  // Now we can start to fill in the character values:
+  // Strength, Dex, ...
+  //
+  sprintf( CharText , "%d", Me.Strength );
+  DisplayText( CharText , 100 + CharacterRect.x , 143 + CharacterRect.y , &CharacterRect );
+  sprintf( CharText , "%d", Me.Strength );
+  DisplayText( CharText , 148 + CharacterRect.x , 143 + CharacterRect.y , &CharacterRect );
+
+  sprintf( CharText , "%d", Me.Magic );
+  DisplayText( CharText , 100 + CharacterRect.x , 171 + CharacterRect.y , &CharacterRect );
+  sprintf( CharText , "%d", Me.Magic );
+  DisplayText( CharText , 148 + CharacterRect.x , 171 + CharacterRect.y , &CharacterRect );
+
+  sprintf( CharText , "%d", Me.Dexterity );
+  DisplayText( CharText , 100 + CharacterRect.x , 200 + CharacterRect.y , &CharacterRect );
+  sprintf( CharText , "%d", Me.Dexterity );
+  DisplayText( CharText , 148 + CharacterRect.x , 200 + CharacterRect.y , &CharacterRect );
+
+  sprintf( CharText , "%d", Me.Vitality );
+  DisplayText( CharText , 100 + CharacterRect.x , 227 + CharacterRect.y , &CharacterRect );
+  sprintf( CharText , "%d", Me.Vitality );
+  DisplayText( CharText , 148 + CharacterRect.x , 227 + CharacterRect.y , &CharacterRect );
+
+  Me.Experience = RealScore;
+  sprintf( CharText , "%6ld", Me.Experience ); // this should be the real score, sooner or later
+  DisplayText( CharText , 250 + CharacterRect.x ,  58 + CharacterRect.y , &CharacterRect );
+  // sprintf( CharText , "%d", Me.Vitality );
+  // DisplayText( CharText , 148 + CharacterRect.x , 227 + CharacterRect.y , &CharacterRect );
+
+  sprintf( CharText , "%d", (int) Druidmap[ DRUID001 ].maxenergy );
+  DisplayText( CharText , 95 + CharacterRect.x , 293 + CharacterRect.y , &CharacterRect );
+
+  sprintf( CharText , "%d", (int) Me.energy );
+  DisplayText( CharText , 143 + CharacterRect.x , 293 + CharacterRect.y , &CharacterRect );
+
 
   //--------------------
   // Finally, we want the part of the screen we have been editing to become

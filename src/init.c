@@ -1525,6 +1525,10 @@ InitNewMissionList ( char *MissionName )
   Me.MissionTimeElapsed=0;
   Me.Current_Victim_Resistance_Factor=1;
   Me.FramesOnThisLevel=0;
+  Me.Vitality = 15;
+  Me.Strength = 15;
+  Me.Dexterity = 15;
+  Me.Magic = 15;
 
   ShuffleEnemys(); // NOTE: THIS REQUIRES CurLevel TO BE INITIALIZED
 
