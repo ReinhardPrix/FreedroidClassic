@@ -657,7 +657,9 @@ Sorry...\n\
   // 
   // So now we can add some text the enemys says.  That might be fun.
   //
-  if ( ( AllEnemys[Enum].TextVisibleTime < GameConfig.WantedTextVisibleTime ) && GameConfig.All_Texts_Switch )
+  if ( (x == -1)
+       && ( AllEnemys[Enum].TextVisibleTime < GameConfig.WantedTextVisibleTime )
+       && GameConfig.All_Texts_Switch )
     {
       PutStringFont ( ne_screen , FPS_Display_BFont , 
 		      User_Rect.x+(User_Rect.w/2) + Block_Width/3 + (AllEnemys[Enum].pos.x - Me.pos.x) * Block_Width , 
