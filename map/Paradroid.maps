@@ -32,16 +32,14 @@ send a short notice (not too large files attached) to the freedroid project.
 
 freedroid-discussion@lists.sourceforge.net
 
---------------------
-At first we need to give the header information about the ship as a whole.
-Then we will come to each level individually
 Area name="U.S.S. Paradroid"
 
-Levelnumber: 0
+  Levelnumber: 0
 xlen of this level: 38
 ylen of this level: 16
 color of this level: 0
 Name of this level=maintenance
+Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
  33  33  33  33  33  33  33  33   7  10  10  10  10  10  10  10  10  10  10  10  10  10  10   8  10   9  33  33  33  33  33  33  33  33  33  33  33  33 
@@ -170,6 +168,7 @@ xlen of this level: 48
 ylen of this level: 16
 color of this level: 5
 Name of this level=engeneering
+Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
  33  33  33  33   7  10  10  10  10  10  10  10  10  10  10  10  10  10  10   8  10  10  10  10  10   9  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
@@ -298,6 +297,7 @@ xlen of this level: 18
 ylen of this level: 11
 color of this level: 3
 Name of this level=robostores
+Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
   7  10  10  10  10  10  10   9  33  33  33  33  33  33  33  33  33  33 
@@ -421,6 +421,7 @@ xlen of this level: 31
 ylen of this level: 13
 color of this level: 0
 Name of this level=quarterd
+Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
   7  10  10  10  10  10  10   9  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
@@ -546,6 +547,7 @@ xlen of this level: 32
 ylen of this level: 13
 color of this level: 4
 Name of this level=repairs
+Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
   7  10  10  10  10  10  10   9  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
@@ -671,6 +673,7 @@ xlen of this level: 38
 ylen of this level: 15
 color of this level: 1
 Name of this level=staterooms
+Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
   7  10  10  10  10   9  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
@@ -798,6 +801,7 @@ xlen of this level: 38
 ylen of this level: 15
 color of this level: 3
 Name of this level=stores
+Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
   7  10  10  10  10  10  10   8  10   9  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
@@ -925,6 +929,7 @@ xlen of this level: 38
 ylen of this level: 15
 color of this level: 2
 Name of this level=research
+Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
   7  10  10  10  10  10  10  10  10  10  10  10  10  10  10   9  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
@@ -1052,6 +1057,7 @@ xlen of this level: 38
 ylen of this level: 12
 color of this level: 0
 Name of this level=bridge
+Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
   7  10  10  10  10  10  10  10   8  10  10  10  10  10  10  10   8  10  10   9  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
@@ -1176,6 +1182,7 @@ xlen of this level: 20
 ylen of this level: 8
 color of this level: 3
 Name of this level=observation
+Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
   7  10  10  10  10   9  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
@@ -1296,6 +1303,7 @@ xlen of this level: 22
 ylen of this level: 5
 color of this level: 4
 Name of this level=airlock
+Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
   7  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   9 
@@ -1413,6 +1421,7 @@ xlen of this level: 34
 ylen of this level: 15
 color of this level: 1
 Name of this level=reactor
+Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
   7  10  10  10  10  10  10  10  10  10  10  10   8  10  10  10  10  10  10  10  10  10  10  10  10   8  10  10  10  10  10  10  10   9 
@@ -1540,6 +1549,7 @@ xlen of this level: 34
 ylen of this level: 16
 color of this level: 0
 Name of this level=upper cargo
+Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
   7  10  10  10  10  10  10  10  10  10  10  10  10  10   8  10  10  10  10  10  10  10  10  10  10  10  10  10   8  10  10  10  10   9 
@@ -1668,6 +1678,7 @@ xlen of this level: 34
 ylen of this level: 16
 color of this level: 2
 Name of this level=mid carga
+Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
   7  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   9 
@@ -1796,6 +1807,7 @@ xlen of this level: 26
 ylen of this level: 16
 color of this level: 1
 Name of this level=vehicle hold
+Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
   7  10  10  10  10  10   8  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   9 
@@ -1924,6 +1936,7 @@ xlen of this level: 10
 ylen of this level: 15
 color of this level: 5
 Name of this level=shuttle bay
+Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
   7  10  10  10  10  10  10  10  10   9 

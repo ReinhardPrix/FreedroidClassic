@@ -44,7 +44,9 @@
 
 #include "maped.h"
 
+#define AREA_NAME_STRING "Area name=\""
 #define LEVEL_NAME_STRING "Name of this level="
+#define LEVEL_ENTER_COMMENT_STRING "Comment of the Influencer on entering this level=\""
 #define BACKGROUND_SONG_NAME_STRING "Name of background song for this level="
 
 symtrans Translator[ NUM_MAP_BLOCKS ] = {
@@ -329,7 +331,7 @@ LoadShip (char *filename)
   //--------------------
   // Now we read the shipname information from the loaded data
   //
-  curShip.AreaName = ReadAndMallocStringFromData ( ShipData , "Area name=\"", "\"" ) ;
+  curShip.AreaName = ReadAndMallocStringFromData ( ShipData , AREA_NAME_STRING , "\"" ) ;
 
   //--------------------
   // Now we count the number of levels and remember their start-addresses.
@@ -357,7 +359,6 @@ LoadShip (char *filename)
 
       TranslateMap (curShip.AllLevels[i]);
 
-      // curShip.AllLevels[i]->Background_Song_Name = "ELYSIUM.MOD";
     }
 
   return OK;
@@ -465,6 +466,9 @@ char *StructToMem(Level Lev)
   strcpy(LevelMem, linebuf);
   strcat(LevelMem, LEVEL_NAME_STRING );
   strcat(LevelMem, Lev->Levelname );
+  strcat(LevelMem, "\n" );
+  strcat(LevelMem, LEVEL_ENTER_COMMENT_STRING );
+  strcat(LevelMem, Lev->Level_Enter_Comment );
   strcat(LevelMem, "\n" );
   strcat(LevelMem, BACKGROUND_SONG_NAME_STRING );
   strcat(LevelMem, Lev->Background_Song_Name );
@@ -619,7 +623,11 @@ send a short notice (not too large files attached) to the freedroid project.\n\
 freedroid-discussion@lists.sourceforge.net\n\
 \n";
   fwrite ( MapHeaderString , strlen( MapHeaderString), sizeof(char), ShipFile);  
-  
+
+  // Now we write the area name back into the file
+  fwrite ( AREA_NAME_STRING , strlen( AREA_NAME_STRING ), sizeof(char), ShipFile);  
+  fwrite ( curShip.AreaName , strlen( curShip.AreaName ), sizeof(char), ShipFile);  
+  fwrite( "\"\n\n  ", strlen( "\"\n\n  " ) , sizeof(char) , ShipFile );
 
   /* Save all Levels */
   
@@ -745,24 +753,9 @@ LevelToStruct (char *data)
   DebugPrintf( 2 , "\nylen of this level: %d ", loadlevel->ylen );
   DebugPrintf( 2 , "\ncolor of this level: %d ", loadlevel->ylen );
 
-  /*
-  DataPointer = strstr( data , LEVEL_NAME_STRING );
-  if ( DataPointer == NULL )
-    {
-      DebugPrintf( 0 , "\nNo levelname entry found! Terminating! ");
-      Terminate(ERR);
-    }
-  DataPointer += strlen ( LEVEL_NAME_STRING );
-  LevelNameLength = strstr ( DataPointer , "\n" ) - DataPointer ;
-  loadlevel->Levelname=MyMalloc ( LevelNameLength + 10 );
-  strncpy ( loadlevel->Levelname , DataPointer, LevelNameLength );
-  loadlevel->Levelname[LevelNameLength]=0;
-  */
-
   loadlevel->Levelname = ReadAndMallocStringFromData ( data , LEVEL_NAME_STRING , "\n" );
   loadlevel->Background_Song_Name = ReadAndMallocStringFromData ( data , BACKGROUND_SONG_NAME_STRING , "\n" );
-  // loadlevel->Background_Song_Name = "The_Last_V8.mod";
-
+  loadlevel->Level_Enter_Comment = ReadAndMallocStringFromData ( data , LEVEL_ENTER_COMMENT_STRING , "\n" );
 
   // find the map data
   // NOTE, that we here only set up a pointer to the map data

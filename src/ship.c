@@ -176,7 +176,7 @@ EnterLift (void)
 
     }				/* if neuer Level */
 
-  LeaveLiftSound ();
+  LeaveLiftSound ( );
   ClearGraphMem ( );
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
 
@@ -191,6 +191,8 @@ EnterLift (void)
   while (SpacePressed ()) ;
 
   Me.status = MOBILE;
+  Me.TextVisibleTime=0;
+  Me.TextToBeDisplayed=CurLevel->Level_Enter_Comment;
 
   DebugPrintf (2, "\nvoid EnterLift(void): Usual end of function reached.");
 }	/* EnterLift */

@@ -47,6 +47,9 @@ void Show_Mission_Instructions_Menu (void);
 void Show_Waypoints(void);
 void Level_Editor(void);
 
+EXTERN int MyCursorX;
+EXTERN int MyCursorY;
+
 /*@Function============================================================
 @Desc: This function prepares the screen for the big Escape menu and 
        its submenus.  This means usual content of the screen, i.e. the 
@@ -1646,7 +1649,7 @@ Level_Editor(void)
   char* OldMapPointer;
 
   enum
-    { SAVE_LEVEL_POSITION=1, CHANGE_LEVEL_POSITION, CHANGE_TILE_SET_POSITION, CHANGE_SIZE_X, CHANGE_SIZE_Y, SET_LEVEL_NAME , SET_BACKGROUND_SONG_NAME , QUIT_LEVEL_EDITOR_POSITION };
+    { SAVE_LEVEL_POSITION=1, CHANGE_LEVEL_POSITION, CHANGE_TILE_SET_POSITION, CHANGE_SIZE_X, CHANGE_SIZE_Y, SET_LEVEL_NAME , SET_BACKGROUND_SONG_NAME , SET_LEVEL_COMMENT, QUIT_LEVEL_EDITOR_POSITION };
 
   while ( !Done )
     {
@@ -1968,7 +1971,9 @@ Level_Editor(void)
 				"Level name: %s" , CurLevel->Levelname );
 	  CenteredPrintString ( ne_screen ,  10*FontHeight(Menu_BFont),    
 				"Background music file name: %s" , CurLevel->Background_Song_Name );
-	  CenteredPutString   ( ne_screen ,  11*FontHeight(Menu_BFont),    
+	  CenteredPrintString ( ne_screen ,  11*FontHeight(Menu_BFont),    
+				"Set Level Comment: %s" , CurLevel->Level_Enter_Comment );
+	  CenteredPutString   ( ne_screen ,  12*FontHeight(Menu_BFont),    
 				"Quit Level Editor");
 	  
 	  SDL_Flip ( ne_screen );
@@ -2019,6 +2024,14 @@ Level_Editor(void)
 		  CenteredPutString ( ne_screen ,  12*FontHeight(Menu_BFont), "Please enter new music file name:");
 		  SDL_Flip( ne_screen );
 		  CurLevel->Background_Song_Name=GetString( 100 , FALSE );
+		  Weiter=!Weiter;
+		  break;
+		case SET_LEVEL_COMMENT:
+		  while (EnterPressed() || SpacePressed() ) ;
+		  CenteredPutString ( ne_screen ,  12*FontHeight(Menu_BFont), "Please enter new level comment:\n");
+		  SDL_Flip( ne_screen );
+		  MyCursorX=15; MyCursorY=440;
+		  CurLevel->Level_Enter_Comment=GetString( 100 , FALSE );
 		  Weiter=!Weiter;
 		  break;
 		case QUIT_LEVEL_EDITOR_POSITION:
