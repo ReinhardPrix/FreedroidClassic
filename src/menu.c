@@ -47,7 +47,7 @@ void Show_Mission_Instructions_Menu (void);
 void Show_Waypoints(void);
 void Level_Editor(void);
 
-#define FIRST_MENU_ITEM_POS_X (2*Block_Width)
+#define FIRST_MENU_ITEM_POS_X (2*INITIAL_BLOCK_WIDTH)
 #define FIRST_MENU_ITEM_POS_Y (USERFENSTERPOSY + FontHeight(Menu_BFont))
 #define OPTIONS_MENU_ITEM_POS_X (UserCenter_x - 120)
 #define FIRST_MIS_SELECT_ITEM_POS_X (0.0*Block_Width)
@@ -1137,20 +1137,58 @@ Highlight_Current_Block(void)
   for (i=0; i<Block_Width; i++)
     {
       // This draws a (double) line at the upper border of the current block
-      putpixel( ne_screen , i + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height , HIGHLIGHTCOLOR );
-      putpixel( ne_screen , i + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + 1, HIGHLIGHTCOLOR );
+      putpixel( ne_screen , 
+		i + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , 
+		USER_FENSTER_CENTER_Y + ( rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height , 
+		HIGHLIGHTCOLOR );
+      putpixel( ne_screen , 
+		i + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , 
+		USER_FENSTER_CENTER_Y + ( rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + 1 , 
+		HIGHLIGHTCOLOR );
 
       // This draws a line at the lower border of the current block
-      putpixel( ne_screen , i + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y + 0.5 ) * Block_Height -1, HIGHLIGHTCOLOR );
-      putpixel( ne_screen , i + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y + 0.5 ) * Block_Height -2, HIGHLIGHTCOLOR );
+      putpixel( ne_screen , 
+		i + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , 
+		USER_FENSTER_CENTER_Y + ( rintf(Me.pos.y)-Me.pos.y + 0.5 ) * Block_Height - 1, 
+		HIGHLIGHTCOLOR );
+      putpixel( ne_screen , 
+		i + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , 
+		USER_FENSTER_CENTER_Y + ( rintf(Me.pos.y)-Me.pos.y + 0.5 ) * Block_Height - 2, 
+		HIGHLIGHTCOLOR );
 
       // This draws a line at the left border of the current block
-      putpixel( ne_screen , 0 + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , HIGHLIGHTCOLOR );
-      putpixel( ne_screen , 1 + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , HIGHLIGHTCOLOR );
+      putpixel( ne_screen , 
+		0 + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , 
+		USER_FENSTER_CENTER_Y + ( rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , 
+		// User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , 
+		HIGHLIGHTCOLOR );
+      putpixel( ne_screen , 
+		1 + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , 
+		USER_FENSTER_CENTER_Y + ( rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , 
+		// User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , 
+		HIGHLIGHTCOLOR );
 
       // This draws a line at the right border of the current block
-      putpixel( ne_screen , -1 + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x + 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , HIGHLIGHTCOLOR );
-      putpixel( ne_screen , -2 + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x + 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , HIGHLIGHTCOLOR );
+      putpixel( ne_screen , 
+		-1 + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x + 0.5) * Block_Width , 
+		USER_FENSTER_CENTER_Y + ( rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , 
+		// User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , 
+		HIGHLIGHTCOLOR );
+      putpixel( ne_screen , 
+		-2 + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x + 0.5) * Block_Width , 
+		USER_FENSTER_CENTER_Y + ( rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , 
+		// User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , 
+		HIGHLIGHTCOLOR );
+
+      /*
+	      TargetRectangle.x = USER_FENSTER_CENTER_X 
+		+ ( -Me.pos.x+col-0.5 )*Block_Width;
+	      TargetRectangle.y = USER_FENSTER_CENTER_Y
+		+ ( -Me.pos.y+line-0.5 )*Block_Height;
+	      SDL_BlitSurface( MapBlockSurfacePointer[ CurLevel->color ][MapBrick] , NULL ,
+ 			       ne_screen, &TargetRectangle);
+      */
+
 
     }
 
@@ -1179,8 +1217,11 @@ Show_Waypoints(void)
 	  
   SDL_LockSurface( ne_screen );
 
-  for (wp=0; wp<CurLevel->num_waypoints; wp++)
+  // for (wp=0; wp<CurLevel->num_waypoints; wp++)
+  for (wp=0; wp < MAXWAYPOINTS; wp++)
     {
+
+      if ( CurLevel->AllWaypoints[wp].x == 0 ) continue;
 
       //--------------------
       // Draw the cross in the middle of the middle of the tile
@@ -1189,24 +1230,24 @@ Show_Waypoints(void)
 	{
 	  // This draws a (double) line at the upper border of the current block
 	  x = i + User_Rect.x+(User_Rect.w/2)- (( Me.pos.x)-CurLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
-	  y = i + User_Rect.y+User_Rect.h/2 - (( Me.pos.y)-CurLevel->AllWaypoints[wp].y + 0.5) * Block_Height;
+	  y = i + USER_FENSTER_CENTER_Y - (( Me.pos.y)-CurLevel->AllWaypoints[wp].y + 0.5) * Block_Height;
 	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
 	  putpixel( ne_screen , x , y , HIGHLIGHTCOLOR );
 
 		    
 	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me.pos.x )-CurLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
-	  y = i + User_Rect.y+User_Rect.h/2- (( Me.pos.y)-CurLevel->AllWaypoints[wp].y + 0.5) * Block_Height + 1;
+	  y = i + USER_FENSTER_CENTER_Y - (( Me.pos.y)-CurLevel->AllWaypoints[wp].y + 0.5) * Block_Height + 1;
 	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
 	  putpixel( ne_screen , x , y , HIGHLIGHTCOLOR );
 	  
 	  // This draws a line at the lower border of the current block
 	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me.pos.x)-CurLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
-	  y = -i + User_Rect.y + User_Rect.h/2 - (( Me.pos.y )-CurLevel->AllWaypoints[wp].y - 0.5 ) * Block_Height -1;
+	  y = -i + USER_FENSTER_CENTER_Y - (( Me.pos.y )-CurLevel->AllWaypoints[wp].y - 0.5 ) * Block_Height -1;
 	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
 	  putpixel( ne_screen , x , y , HIGHLIGHTCOLOR );
 
 	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me.pos.x)-CurLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
-	  y = -i + User_Rect.y + User_Rect.h/2 - ((Me.pos.y)-CurLevel->AllWaypoints[wp].y - 0.5 ) * Block_Height -2;
+	  y = -i + USER_FENSTER_CENTER_Y - ((Me.pos.y)-CurLevel->AllWaypoints[wp].y - 0.5 ) * Block_Height -2;
 	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
 	  putpixel( ne_screen , x , y , HIGHLIGHTCOLOR );
 	  
@@ -1259,6 +1300,7 @@ Level_Editor(void)
   char* OldMapPointer;
   bool key_pressed;
   SDL_Rect rect;
+  int KeymapOffset = 15;
 
   enum { 
     SAVE_LEVEL_POSITION=1, 
@@ -1289,12 +1331,14 @@ Level_Editor(void)
 	  Highlight_Current_Block();
 	  Show_Waypoints();
 
-	  CenteredPutString ( ne_screen ,  1*FontHeight(Menu_BFont),    "LEVEL EDITOR");
+	  // CenteredPutString ( ne_screen ,  1*FontHeight(Menu_BFont),    "LEVEL EDITOR");
+	  LeftPutString ( ne_screen ,  3*FontHeight(Menu_BFont),    "Press F1 for keymap");
 	  SDL_Flip( ne_screen );
 
 	  //--------------------
 	  // If the user of the Level editor pressed some cursor keys, move the
 	  // highlited filed (that is Me.pos) accordingly. This is done here:
+	  //
 	  if (LeftPressed()) 
 	    {
 	      if ( rintf(Me.pos.x) > 0 ) Me.pos.x-=1;
@@ -1314,6 +1358,27 @@ Level_Editor(void)
 	    {
 	      if ( rintf(Me.pos.y) < CurLevel->ylen-1 ) Me.pos.y+=1;
 	      while (DownPressed());
+	    }
+
+	  if ( F1Pressed() )
+	    {
+	      k=3;
+	      SDL_BlitSurface ( console_bg_pic2 , NULL, ne_screen, NULL);
+	      CenteredPutString   ( ne_screen ,  (k)*FontHeight(Menu_BFont), "Level Editor Keymap"); k+=2;
+	      // DisplayText ("Use cursor keys to move around.", 1, 2 *FontHeight(Menu_BFont), NULL );
+	      PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "Use cursor keys to move around." ); k++;
+	      PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "Use number pad to plant walls." ); k++;
+	      PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "Use shift and number pad to plant extras." ); k++;
+	      PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "R...Refresh, 1-5...Blocktype 1-5, L...Lift" ); k++;
+	      PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "F...Fine grid" ); k+=2;
+	      PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "I...zoom INTO the map" ); k++;
+	      PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "O...zoom OUT of the map" ); k+=2;
+	      PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "P...toggle wayPOINT on/off" ); k++;
+	      PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont) , "C...start/end waypoint CONNECTION" ); k++;
+
+	      SDL_Flip ( ne_screen );
+	      while ( !SpacePressed() );
+	      while ( SpacePressed() );
 	    }
 
 	  //--------------------
@@ -1355,7 +1420,7 @@ Level_Editor(void)
 	  // If the person using the level editor pressed w, the waypoint is
 	  // toggled on the current square.  That means either removed or added.
 	  // And in case of removal, also the connections must be removed.
-	  if (WPressed())
+	  if (PPressed())
 	    {
 	      // find out if there is a waypoint on the current square
 	      for (i=0 ; i < MAXWAYPOINTS ; i++)
@@ -1387,7 +1452,11 @@ Level_Editor(void)
 		  // seek a free position
 		  for ( i = 0 ; i < MAXWAYPOINTS ; i++ )
 		    {
-		      if ( CurLevel->AllWaypoints[i].x == 0 ) break;
+		      if ( CurLevel->AllWaypoints[i].x == 0 ) 
+			{
+			  DebugPrintf( 0 , "\nFree waypoint entry found.  Index == %d." , i );
+			  break;
+			}
 		    }
 		  if ( i == MAXWAYPOINTS )
 		    {
@@ -1405,9 +1474,9 @@ Level_Editor(void)
 
 		}
 
-	      printf("\n\n  i is now: %d ", i ); fflush(stdout);
+	      // printf("\n\n  i is now: %d ", i ); fflush(stdout);
 
-	      while ( WPressed() );
+	      while ( PPressed() );
 	    }
 
 	  // If the person using the level editor presses C that indicated he/she wants
@@ -1583,7 +1652,15 @@ Level_Editor(void)
 
 	  key_pressed = FALSE;
 
-	  SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
+	  // SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
+
+	  Fill_Rect (User_Rect, Black);
+	  Assemble_Combat_Picture ( ONLY_SHOW_MAP );
+	  Highlight_Current_Block();
+	  Show_Waypoints();
+	  
+
+	  CenteredPutString ( ne_screen ,  1*FontHeight(Menu_BFont),    "LEVEL EDITOR");
 
 	  // Highlight currently selected option with an influencer before it
 	  PutInfluence( FIRST_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y+(MenuPosition-1.5)*fheight);
