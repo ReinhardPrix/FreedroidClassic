@@ -4050,7 +4050,7 @@ Item as gun: weapon requires both hands="yes"
 
 // Item No. 100
 ** Start of new item specification subsection **
-Item name="Dummy Entry For Replacement"
+Item name="Kevins Data Cube"
 Position_X=244
 Position_Y=260
 Item can be applied in combat="no"
@@ -4064,10 +4064,10 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_7.png"
+File or directory name for inventory image="inventory_image_data_cube.png"
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=50
-Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
+Item description text="This data cube contains confidential government data on the installations around the colony.  Kevin hopes, that when the data is evaluated properly, a way out of the current crisis of the colony might be found.  However, the amount of data is so vast, it can only be evaluated properly using a large cluster of computers.  The red guard complex is said to store a suitable infrastructure for this purpose."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
