@@ -47,6 +47,10 @@ typedef struct
   char *MessageText;
 }
 message, Message;
+
+#define SETTINGS_STRUCTURE_RAW_DATA_STRING "\nSettings Raw Data:\n"
+#define END_OF_SETTINGS_DATA_STRING "\nEnd of Settings File.\n"
+
 #define MESPOSX 0
 #define MESPOSY 64
 #define MESHOEHE 8
@@ -124,7 +128,7 @@ MyMemmem ( unsigned char *haystack, size_t haystacklen, unsigned char *needle, s
 
 
 /* ----------------------------------------------------------------------
- * This function looks for a sting begin indicator and takes the string
+ * This function looks for a string begin indicator and takes the string
  * from after there up to a sting end indicator and mallocs memory for
  * it, copys it there and returns it.
  * The original source string specified should in no way be modified.
@@ -885,6 +889,148 @@ Teleport (int LNum, int X, int Y)
 }; // void Teleport( ... ) 
 
 /* ----------------------------------------------------------------------
+ * This function saves GameConfig struct in freedroid.config the user's home
+ * directory.
+ * ---------------------------------------------------------------------- */
+void
+SaveSettings()
+{
+  FILE *SettingsFile;
+  char *SettingsHeaderString;
+  char *homedir;
+  char filename[1000];
+
+  if ( (homedir = getenv("HOME")) == NULL )
+    {
+      DebugPrintf ( 0 , "ERROR saving settings: Environment does not contain HOME variable... \n\
+I need to know that for saving. Abort.\n");
+      Terminate( ERR );
+      return;
+    }
+
+  //Create a filename
+  sprintf( filename , "%s/%s", homedir, "freedroid.config" );
+
+  //Try to open file
+  if( ( SettingsFile = fopen(filename, "w")) == NULL) {
+    printf("\n\nError opening save game file for writing...\n\nTerminating...\n\n");
+    Terminate(ERR);
+    return;
+  }
+
+  SettingsHeaderString="\n\
+----------------------------------------------------------------------\n\
+ *\n\
+ *   Copyright (c) 1994, 2002 Johannes Prix\n\
+ *   Copyright (c) 1994, 2002 Reinhard Prix\n\
+ *\n\
+ *\n\
+ *  This file is part of Freedroid\n\
+ *\n\
+ *  Freedroid is free software; you can redistribute it and/or modify\n\
+ *  it under the terms of the GNU General Public License as published by\n\
+ *  the Free Software Foundation; either version 2 of the License, or\n\
+ *  (at your option) any later version.\n\
+ *\n\
+ *  Freedroid is distributed in the hope that it will be useful,\n\
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of\n\
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n\
+ *  GNU General Public License for more details.\n\
+ *\n\
+ *  You should have received a copy of the GNU General Public License\n\
+ *  along with Freedroid; see the file COPYING. If not, write to the \n\
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, \n\
+ *  MA  02111-1307  USA\n\
+ *\n\
+----------------------------------------------------------------------\n\
+\n\
+This file contains user game settings. \n\
+If you have questions concerning Freedroid, please send mail to:\n\
+\n\
+freedroid-discussion@lists.sourceforge.net\n\
+\n";
+
+  fwrite (SettingsHeaderString, strlen( SettingsHeaderString), sizeof(char), SettingsFile);
+  fwrite ( SETTINGS_STRUCTURE_RAW_DATA_STRING , strlen( SETTINGS_STRUCTURE_RAW_DATA_STRING ),
+    sizeof(char), SettingsFile );
+
+  // Now the actual data
+  fwrite ( &(GameConfig) , sizeof( configuration_for_freedroid ) , sizeof( char ) , SettingsFile );
+
+  fwrite ( END_OF_SETTINGS_DATA_STRING , strlen( END_OF_SETTINGS_DATA_STRING ),
+	   sizeof(char), SettingsFile );
+
+  if( fclose( SettingsFile ) == EOF)
+  {
+      printf("\n\nClosing of settings file failed in SaveSettings...\n\nTerminating\n\n");
+      Terminate(ERR);
+      return;
+  }
+
+  printf("\nSuccessfully saved settings file (freedroid.config) in home directory.\n");
+
+};
+
+/* ----------------------------------------------------------------------
+ * This function loads GameConfig struct in freedroid.config the user's home
+ * directory.
+ * ---------------------------------------------------------------------- */
+void
+LoadSettings()
+{
+  FILE *SettingsFile;
+  char *homedir;
+  char *SettingsData;
+  char filename[1000];
+
+  unsigned char* SettingsRawDataPointer;
+
+  // get home-directory to load from
+  if ( (homedir = getenv("HOME")) == NULL )
+  {
+      DebugPrintf (0, "ERROR loading settings: Environment does not contain HOME variable... \n\
+I need to know that for loading.\n");
+      return;
+  }
+
+  //--------------------
+  // First, we must determine the savedgame data file name
+  //
+  sprintf (filename, "%s/%s", homedir, "freedroid.config");
+
+
+
+  if ((SettingsFile = fopen ( filename , "r")) == NULL)
+  {
+    printf ("Settings file cannot be opened, returning from LoadSettings()...");
+    return;
+  }
+  fclose (SettingsFile);
+
+  //--------------------
+  // Now we can read the whole savegame data into memory with one big flush
+  //
+  SettingsData = ReadAndMallocAndTerminateFile( filename , END_OF_SETTINGS_DATA_STRING ) ;
+
+  //----------------------------------------------------------------------------
+  // We assume, that our target strings will be found, so we give 300000 as the search area
+  // length, since we do not know it exactly
+  //
+  SettingsRawDataPointer = MyMemmem( SettingsData , 300000 , SETTINGS_STRUCTURE_RAW_DATA_STRING ,
+				       strlen ( SETTINGS_STRUCTURE_RAW_DATA_STRING ) );
+
+  SettingsRawDataPointer += strlen ( SETTINGS_STRUCTURE_RAW_DATA_STRING ) ;
+  memcpy( &GameConfig, SettingsRawDataPointer , sizeof ( configuration_for_freedroid ) );
+
+  //Structure's theme_subpath is a pointer - it might point somewhere strange!
+  //I will have to load and save this separately...but for now just set it to default
+  GameConfig.Theme_SubPath = "lanzz_theme/";
+
+  printf ("\nSuccessfully loaded settings file (freedroid.config) in home directory\n");
+
+};
+
+/* ----------------------------------------------------------------------
  * This function is used for terminating freedroid.  It will close
  * the SDL submodules and exit.
  * ---------------------------------------------------------------------- */
@@ -894,6 +1040,9 @@ Terminate (int ExitCode)
   DebugPrintf (2, "\nvoid Terminate(int ExitStatus) was called....");
   printf("\n----------------------------------------------------------------------");
   printf("\nTermination of Freedroid initiated...");
+
+  SaveSettings();
+
   // printf("\nUnallocation all resouces...");
 
   // free the allocated surfaces...
