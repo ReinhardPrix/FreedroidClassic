@@ -1373,10 +1373,10 @@ Terminate (int ExitCode)
   printf ("GameOver : %i\n", GameOver);
   // keyboard_close ();
   // vga_setmode (TEXT);
+  
   SDL_Quit();
   exit (ExitCode);
   return;
-
 }				// void Terminate(int ExitCode)
 
 

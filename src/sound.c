@@ -149,7 +149,7 @@ YIFF_Server_Check_Events(void)
       else if (event.type == YDisconnect)
 	{
 	  // Got disconnected.
-	  printf (
+	  fprintf (stderr, 
 		  "\n\
 \n\
 ----------------------------------------------------------------------\n\
@@ -170,7 +170,7 @@ Sorry...\n\
       else if (event.type == YShutdown)
 	{
 	  // Server shutdown. 
-	  printf (
+	  fprintf (stderr, 
 		  "\n\
 \n\
 ----------------------------------------------------------------------\n\
@@ -351,7 +351,7 @@ Switch_Background_Music_To (int Tune)
        &BackgroundMusic_sndobj_attrib))
     {
 
-      fprintf(stderr,"\n\
+      fprintf(stderr, "\n\
 \n\
 ----------------------------------------------------------------------\n\
 Freedroid has encountered a problem:  The YIFF sound server has reported,\n\

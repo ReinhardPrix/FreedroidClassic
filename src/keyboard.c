@@ -127,8 +127,10 @@ keyboard_update(void)
 	  break;
 	  /* Look for a keypress */
 	case SDL_KEYDOWN:
-	  printf("\nSLD_KEYDOWN event detected...");
-	  fflush(stdout);
+
+	  // printf("\nSLD_KEYDOWN event detected...");
+	  // fflush(stdout);
+
 	  // Check for some additional modifiers and set flags accordingly
 	  if ( event.key.keysym.mod & (KMOD_LSHIFT | KMOD_RSHIFT) )
 	    ShiftWasPressedInAddition=TRUE;
@@ -298,8 +300,9 @@ keyboard_update(void)
 	  /* and y velocity variables. But we must also be       */
 	  /* careful not to zero the velocities when we shouldn't*/
 	case SDL_KEYUP:
-	  printf("\nSLD_KEYUP event detected...");
-	  fflush(stdout);
+
+	  // printf("\nSLD_KEYUP event detected...");
+	  // fflush(stdout);
 
 	  // Check for some additional modifiers and set flags accordingly
 	  if ( event.key.keysym.mod & (KMOD_LSHIFT | KMOD_RSHIFT) )

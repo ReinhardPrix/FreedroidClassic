@@ -400,7 +400,8 @@ Init_Video (void)
   Uint32 flags;  /* flags for SDL video mode */
 
   /* Initialize the SDL library */
-  if ( SDL_Init (SDL_INIT_VIDEO | SDL_INIT_TIMER) == -1 ) 
+  // if ( SDL_Init (SDL_INIT_VIDEO | SDL_INIT_TIMER) == -1 ) 
+  if ( SDL_Init (SDL_INIT_VIDEO) == -1 ) 
     {
       fprintf(stderr, "Couldn't initialize SDL: %s\n",SDL_GetError());
       Terminate(ERR);
