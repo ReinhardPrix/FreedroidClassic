@@ -151,21 +151,6 @@ EXTERN int MergeBlockToWindow (register unsigned char *source,
 
 EXTERN void GetDigits (void);
 
-EXTERN void DisplayBlock (int x, int y,
-			  unsigned char *block,
-			  int len, int height, unsigned char *screen);
-
-
-EXTERN void DisplayMergeBlock (int x, int y,
-			       unsigned char *block,
-			       int len, int height, unsigned char *screen);
-
-EXTERN void CopyMergeBlock (unsigned char *target,
-			    unsigned char *source, int mem);
-
-EXTERN int MergeBlockToWindow (unsigned char *,
-			       unsigned char *, int WinLineLen, int check);
-
 /* graphics.c */
 #undef EXTERN
 #ifdef _graphics_c

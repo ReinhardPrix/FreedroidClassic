@@ -248,7 +248,7 @@ AnimateRefresh (void)
       /* Inneres Refresh animieren */
       for (j = 0; j < 4; j++)
 	{
-	  // MergeBlockToWindow (MapBlocks + (unsigned) (I_REFRESH1 + InnerPhase) * BLOCKMEM, MapBlocks + (unsigned) (REFRESH1 + j) * BLOCKMEM, Block_Width, FALSE);
+	  ;  /* nix hier noch... */
 	}			/* for */
 
     }				/* for */

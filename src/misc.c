@@ -55,7 +55,6 @@ message, Message;
 #define MESBAR_MEM MESBARBREITE*MESHOEHE+1000
 
 void CreateMessageBar (char *MText);
-void CleanMessageLine (void);
 void AdvanceQueue (void);
 
 unsigned char *MessageBar;
@@ -717,7 +716,7 @@ PutMessages (void)
   if (Working && (ThisMessageTime > MaxMessageTime))
     {
       AdvanceQueue ();
-      CleanMessageLine ();
+      //      CleanMessageLine ();
       Working = FALSE;		// inactive
       ThisMessageTime = 0;	// Counter init.
       return;
@@ -745,7 +744,7 @@ PutMessages (void)
 	}
 
       ThisMessageTime = 0;	/* initialize counter  */
-      CleanMessageLine ();	/* delete line */
+      //      CleanMessageLine ();	/* delete line */
       Working = TRUE;		/* activated */
     }
 
@@ -759,38 +758,13 @@ PutMessages (void)
       if (MesPos > (MESBARBREITE - 2))
 	MesPos = MESBARBREITE - 2;
 
-      // 
-      // SINCE 'REALSCREEN' NO LONGER RELEVANT, A NEW ROUTINE HAS TO BE FOUND FOR THE PORT
-      //
-      //    for(i=0;i<MESHOEHE;i++) {
-      //      memcpy(
-      //             RealScreen+MESPOSX+MESBARBREITE-MesPos+(MESPOSY+i)*SCREENBREITE,
-      //             MessageBar+i*MESBARBREITE,
-      //             MesPos
-      //            );
-      //    } /* for */
-
-      //
-      // THIS IS THE NEW ROUTINE.
-      //
       for (i = 0; i < MESHOEHE; i++)
 	{
-	  // PORT REINHARDS NEW GRAPHICS ENGINE vga_drawscansegment (MessageBar + i * MESBARBREITE, MESPOSX - MesPos, MESPOSY + i, MesPos);
+	  ;
 	}
     }	/* if aktiv + Message there */
 }	/* Put Messages */
 
-/*@Function============================================================
-@Desc: CleanMessageLine: deleted the message line on screen
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-CleanMessageLine (void)
-{
-  // memset (RealScreen + MESPOSX + MESPOSY * SCREENBREITE, 0, SCREENBREITE * MESHOEHE);
-}
 
 /*@Function============================================================
 @Desc: This function prepares the graphics for the next message to
@@ -838,11 +812,6 @@ CreateMessageBar (char *MText)
 		  (Data70Pointer + Worktext[i] * 8 * 8 + j * 8), 8);
 	}
     }
-
-// display the message at the lower border and then cut it
-//      gotoxy(1,4);
-//      printf("%s",MText);
-//      memcpy(MessageBar,RealScreen+3*8*SCREENBREITE,8*SCREENBREITE);
 
   DebugPrintf
     ("\nvoid CreateMessageBar(char* MText): end of function reached.");
