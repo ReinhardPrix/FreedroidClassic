@@ -65,6 +65,7 @@ void Credits_Menu (void);
 void Options_Menu (void);
 void Show_Highscore_Menu (void);
 void Show_Mission_Instructions_Menu (void);
+void Show_Waypoints(void);
 void Level_Editor(void);
 
 int New_Game_Requested=FALSE;
@@ -1520,6 +1521,62 @@ Highlight_Current_Block(void)
   SDL_UnlockSurface( ne_screen );
 } // void Highlight_Current_Block(void)
 
+/*@Function============================================================
+@Desc: This function is used by the Level Editor integrated into 
+       freedroid.  It marks all waypoints with a cross.
+
+@Ret:  none
+* $Function----------------------------------------------------------*/
+void 
+Show_Waypoints(void)
+{
+  int wp;
+  int i;
+  int x;
+  int y;
+  
+
+  // return;
+
+  SDL_LockSurface( ne_screen );
+  
+
+  for (wp=0; wp<MAXWAYPOINTS; wp++)
+    {
+
+      if ( CurLevel->AllWaypoints[wp].x == 0) continue;
+
+      for (i= Block_Width/4; i<3 * Block_Width / 4; i++)
+	{
+	  // This draws a (double) line at the upper border of the current block
+	  x = i + User_Rect.x+(User_Rect.w/2)- (( Me.pos.x)-CurLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
+	  y = i + User_Rect.y+User_Rect.h/2 - (( Me.pos.y)-CurLevel->AllWaypoints[wp].y + 0.5) * Block_Height;
+	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
+	  putpixel( ne_screen , x , y , HIGHLIGHTCOLOR );
+
+		    
+	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me.pos.x )-CurLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
+	  y = i + User_Rect.y+User_Rect.h/2- (( Me.pos.y)-CurLevel->AllWaypoints[wp].y + 0.5) * Block_Height + 1;
+	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
+	  putpixel( ne_screen , x , y , HIGHLIGHTCOLOR );
+	  
+	  // This draws a line at the lower border of the current block
+	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me.pos.x)-CurLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
+	  y = -i + User_Rect.y + User_Rect.h/2 - (( Me.pos.y )-CurLevel->AllWaypoints[wp].y - 0.5 ) * Block_Height -1;
+	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
+	  putpixel( ne_screen , x , y , HIGHLIGHTCOLOR );
+
+	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me.pos.x)-CurLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
+	  y = -i + User_Rect.y + User_Rect.h/2 - ((Me.pos.y)-CurLevel->AllWaypoints[wp].y - 0.5 ) * Block_Height -2;
+	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
+	  putpixel( ne_screen , x , y , HIGHLIGHTCOLOR );
+	  
+	}
+
+    }
+  SDL_UnlockSurface( ne_screen );
+
+} // void Show_Waypoints(void);
 
 /*@Function============================================================
 @Desc: This function is provides the Level Editor integrated into 
@@ -1556,6 +1613,7 @@ Level_Editor(void)
 	  ClearUserFenster();
 	  Assemble_Combat_Picture ( ONLY_SHOW_MAP );
 	  Highlight_Current_Block();
+	  Show_Waypoints();
 
 	  CenteredPutString ( ne_screen ,  1*FontHeight(Menu_BFont),    "LEVEL EDITOR");
 	  SDL_Flip( ne_screen );
