@@ -99,6 +99,7 @@ Get_Robot_Data ( void* DataPointer )
 #define SENSOR2_BEGIN_STRING "Sensor 2 of this droid : "
 #define SENSOR3_BEGIN_STRING "Sensor 3 of this droid : "
 #define ARMAMENT_BEGIN_STRING "Armament of this droid : "
+#define ADVANCED_FIGHTING_BEGIN_STRING "Advanced Fighting present in this droid : "
 #define NOTES_BEGIN_STRING "Notes concerning this droid : "
 
 
@@ -460,6 +461,19 @@ Get_Robot_Data ( void* DataPointer )
 	  printf("\nDroid armament entry found!  It reads: %d" , Druidmap[RobotIndex].armament );
 	}
 
+      // Now we read in the AdvancedFighing flag of this droid type
+      if ( (ValuePointer = strstr ( RobotPointer, ADVANCED_FIGHTING_BEGIN_STRING ) ) == NULL )
+	{
+	  printf("\nERROR! NO ADVANCED FIGHTING ENTRY FOUND! TERMINATING!");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  ValuePointer += strlen ( ADVANCED_FIGHTING_BEGIN_STRING );
+	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].AdvancedFighting );
+	  printf("\nDroid AdvancedFighting entry found!  It reads: %d" , Druidmap[RobotIndex].AdvancedFighting );
+	}
+
       // Now we read in the notes concerning this droid.  We consider as notes all the rest of the
       // line after the NOTES_BEGIN_STRING until the "\n" is found.
       if ( (ValuePointer = strstr ( RobotPointer, NOTES_BEGIN_STRING )) == NULL )
@@ -727,6 +741,7 @@ InitNewMission ( char *MissionName )
   char *LiftnamePointer;
   char *CrewnamePointer;
   char *GameDataNamePointer;
+  char *StartPointPointer;
   char Shipname[2000];
   char Liftname[2000];
   char Crewname[2000];
@@ -735,6 +750,11 @@ InitNewMission ( char *MissionName )
   int CrewnameLength;
   int LiftnameLength;
   int GameDataNameLength;
+  int NumberOfStartPoints=0;
+  int RealStartPoint=0;
+  int StartingLevel=0;
+  int StartingXPos=0;
+  int StartingYPos=0;
   // char filename[]=MAP_DIR "game.dat";
   // #define END_OF_GAME_DAT_STRING "*** End of game.dat File ***"
 #define END_OF_MISSION_DATA_STRING "*** End of Mission File ***"
@@ -743,6 +763,7 @@ InitNewMission ( char *MissionName )
 #define ELEVATORNAME_INDICATION_STRING "Lift file to use for this mission: "
 #define CREWNAME_INDICATION_STRING "Crew file to use for this mission: "
 #define GAMEDATANAME_INDICATION_STRING "Physics ('game.dat') file to use for this mission: "
+#define MISSION_START_POINT_STRING "Possible Start Point : "
 
   DebugPrintf ("\nvoid InitNewMission( char *MissionName ): real function call confirmed...");
   printf("\nA new mission is being initialized from file %s." , MissionName );
@@ -961,6 +982,62 @@ InitNewMission ( char *MissionName )
       Terminate (-1);
     }
 
+  //--------------------
+  // Now we read all the possible starting points for the
+  // current mission file, so that we know where to place the
+  // influencer at the beginning of the mission.
+  StartPointPointer=MainMissionPointer;
+  while ( ( StartPointPointer = strstr ( StartPointPointer, MISSION_START_POINT_STRING )) != NULL )
+    {
+      NumberOfStartPoints++;
+      StartPointPointer+=strlen( MISSION_START_POINT_STRING );
+      printf("\nFound another starting point entry!");
+    }
+  printf("\nFound %d different starting points for the mission in the mission file.", NumberOfStartPoints );
+
+  RealStartPoint = MyRandom ( NumberOfStartPoints -1 ) + 1;
+  printf("\nRealStartPoint: %d." , RealStartPoint);
+
+  StartPointPointer=MainMissionPointer;
+  for ( i=0 ; i<RealStartPoint; i++ )
+    {
+      StartPointPointer = strstr ( StartPointPointer , MISSION_START_POINT_STRING );
+      StartPointPointer += strlen ( MISSION_START_POINT_STRING );
+    }
+  StartPointPointer = strstr( StartPointPointer , "Level=" ) + strlen( "Level=" );
+  sscanf( StartPointPointer , "%d" , &StartingLevel );
+  CurLevel = curShip.AllLevels[ StartingLevel ];
+  StartPointPointer = strstr( StartPointPointer , "XPos=" ) + strlen( "XPos=" );
+  sscanf( StartPointPointer , "%d" , &StartingXPos );
+  Me.pos.x=StartingXPos;
+  StartPointPointer = strstr( StartPointPointer , "YPos=" ) + strlen( "YPos=" );
+  sscanf( StartPointPointer , "%d" , &StartingYPos );
+  Me.pos.y=StartingYPos;
+  printf("\nFinal starting position: Level=%d XPos=%d YPos=%d." , StartingLevel, StartingXPos, StartingYPos );
+  
+  if ( NumberOfStartPoints == 0 )
+    {
+      printf("\n\nERROR! NOT EVEN ONE SINGLE STARTING POINT ENTRY FOUND!  TERMINATING!");
+      Terminate(ERR);
+    }
+
+  // Now that we know how many different starting points there are, we can randomly select
+  // one of them
+
+
+  if ( ( StartPointPointer = strstr ( MainMissionPointer, MISSION_START_POINT_STRING )) == NULL )
+    {
+      printf("\nERROR! NO MISSION START POINT STRING FOUND! TERMINATING!");
+      Terminate(ERR);
+    }
+  else
+    {
+      StartPointPointer += strlen ( MISSION_START_POINT_STRING ) +1;
+      printf("\nMission Start Point string found!");
+    }
+
+
+
   /* Reactivate the light on alle Levels, that might have been dark */
   for (i = 0; i < curShip.num_levels; i++)
     curShip.AllLevels[i]->empty = FALSE;
@@ -987,21 +1064,23 @@ InitNewMission ( char *MissionName )
   Me.autofire = FALSE;
   Me.status = MOBILE;
   Me.phase = 0;
-  i = MyRandom (3);  /* chose one out of 4 possible start positions */
+
+  /*
+  i = MyRandom (3);  // chose one out of 4 possible start positions 
   switch (i)
     {
     case 0:
       CurLevel = curShip.AllLevels[4];
-  Me.pos.x = 1;
-  Me.pos.y = 1;
+      Me.pos.x = 1;
+      Me.pos.y = 1;
       break;
-
-    case 1:
+      
+      case 1:
       CurLevel = curShip.AllLevels[5];
-  Me.pos.x = 3;
-  Me.pos.y = 1;
+      Me.pos.x = 3;
+      Me.pos.y = 1;
       break;
-
+      
     case 2:
       CurLevel = curShip.AllLevels[6];
   Me.pos.x = 2;
@@ -1019,8 +1098,8 @@ InitNewMission ( char *MissionName )
 	("\n InitNewGame(): MyRandom() failed  Terminating...\n");
       Terminate (ERR);
       break;
-    } /* switch */
-
+    } // switch 
+  */
 
   /* Set colors of current level NOTE: THIS REQUIRES CurLevel TO BE INITIALIZED */
   SetLevelColor (CurLevel->color); 

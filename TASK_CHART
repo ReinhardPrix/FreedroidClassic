@@ -11,7 +11,7 @@ jp
 
 The list of things I'm going to work on next:
 
-0.   Correct the console text display
+DONE Correct the console text display
 
 DONE Rescaling of Map should be working for Level Editor but not
      for real game
