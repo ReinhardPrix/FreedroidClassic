@@ -1,0 +1,18 @@
+#-*- mode: text -*-
+Bugs
+----
+- (jp?,rp): Spielfenster zu weit oben 
+- (rp): Takeover graphic zu weit oben...
+- (rp): Invincible mode sollte auch Burn-out ueberleben
+- funktioniert Energy-charger??
+- Druidmap.notes sollten besser von file eingelesen werden oder
+  zumindest in paravars.h (statt direkt in InitParaplus())
+- PORT: use vga_screenoff/on() anstatt MonitorSignalUnterbrechung...?
+- small errors in maps (wrong corners etc..)
+
+Missing features
+-----------------
+- use multitasking (fork()) for background processes... (update counters etc)
+- mouse-support (should be good with touchstick on laptop!)
+- (rp): PORT maped 
+- include GNU-type configure 
