@@ -1284,16 +1284,17 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , Enemy ChatDroid 
 	    //
 	    MenuSelection --;
 	}
-	if ( ( MenuSelection >= MAX_ANSWERS_PER_PERSON - 2 ) || ( MenuSelection < 0 ) )
+	if ( ( MenuSelection >= MAX_ANSWERS_PER_PERSON ) || ( MenuSelection < 0 ) )
 	{
-	    MenuSelection = MAX_REPLIES_PER_OPTION -1 ;
+	    DebugPrintf ( 0 , "%s: Error: MenuSelection %i out of range!\n" , __FUNCTION__, MenuSelection );
+	    MenuSelection = END_ANSWER ;
 	}
 	
 	ProcessThisChatOption ( MenuSelection , PlayerNum , ChatPartnerCode , ChatDroid );
 	
 	if ( ! ChatDroid -> is_friendly ) return ;
 	
-	if ( ( MenuSelection >= MAX_ANSWERS_PER_PERSON - 1 ) || ( MenuSelection < 0 ) )
+	if ( MenuSelection == END_ANSWER )
 	{
 	    return;
 	}
