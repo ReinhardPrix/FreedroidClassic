@@ -266,10 +266,10 @@ Takeover (int enemynum)
 	{
 	  // SwitchBackgroundMusicTo (SILENCE);
 	  Takeover_Game_Won_Sound ();
-	  if (Me[0].type == DRUID001)
+	  if ( Me [ 0 ] . type == DRUID001 )
 	    {
-	      RejectEnergy = Me[0].energy;
-	      PreTakeEnergy = Me[0].energy;
+	      RejectEnergy = Me [ 0 ] . energy;
+	      PreTakeEnergy = Me [ 0 ] . energy;
 	    }
 
 	  //--------------------
@@ -277,8 +277,8 @@ Takeover (int enemynum)
 	  // other droid, since all previous damage must be due to fighting damage,
 	  // and this is exactly the sort of damage can usually be cured in refreshes.
 	  //
-	  Me[0].energy += AllEnemys[enemynum].energy;
-	  Me[0].health += Druidmap[OpponentType].maxenergy;
+	  Me [ 0 ] . energy += AllEnemys [ enemynum ] . energy;
+	  Me [ 0 ] . health += Druidmap [ OpponentType ] . maxenergy;
 
 	  //--------------------
 	  // We provide some security agains too high energy/health values gained

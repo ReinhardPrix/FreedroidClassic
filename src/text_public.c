@@ -1476,6 +1476,25 @@ The item specification of an item in freedroid.ruleset should contain an \n\
 answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
 					 PLEASE_INFORM, IS_FATAL );
 	    }
+
+	  // Now we read in if this weapons (strictly) requires both hands for usage
+	  YesNoString = ReadAndMallocStringFromData ( ItemPointer , "Item as gun: weapon requires both hands=\"" , "\"" ) ;
+	  if ( strcmp( YesNoString , "yes" ) == 0 )
+	    {
+	      ItemMap [ ItemIndex ] . item_gun_requires_both_hands = TRUE;
+	    }
+	  else if ( strcmp( YesNoString , "no" ) == 0 )
+	    {
+	      ItemMap [ ItemIndex ] . item_gun_requires_both_hands = FALSE;
+	    }
+	  else
+	    {
+	      GiveStandardErrorMessage ( "Get_Item_Data(...)" , "\
+The item specification of an item in freedroid.ruleset should contain an \n\
+answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
+					 PLEASE_INFORM, IS_FATAL );
+	    }; 
+
 	}
       else
 	{
@@ -1497,6 +1516,7 @@ answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
 	  ItemMap [ ItemIndex ] . item_gun_bullet_image_type = 0 ; 
 	  ItemMap [ ItemIndex ] . item_gun_bullet_lifetime = 0 ;
 	  ItemMap [ ItemIndex ] . item_gun_use_ammunition = 0 ;
+	  ItemMap [ ItemIndex ] . item_gun_requires_both_hands = TRUE ;
 	}
 
 	  // Now we read in the armour value of this item as armour or shield or whatever
@@ -1921,7 +1941,18 @@ Common factor for all melee weapons damage values: 1.0\n\n\n" ) ;
       fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
 
       //--------------------
-      // We write out en of 'weapons' part...
+      // We write out if this weapon strictly requires both hands for usage...
+      //
+      sprintf ( linebuf , "Item as gun: weapon requires both hands=\"" );
+      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+      if ( ItemMap [ i ] . item_gun_requires_both_hands )
+	sprintf ( linebuf , "yes\"\n" ) ;	
+      else
+	sprintf ( linebuf , "no\"\n" ) ;	
+      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+
+      //--------------------
+      // We write out the ene of 'weapons' part...
       //
       sprintf ( linebuf , "----- end of part only relevant for weapons -----\n" ) ;
       fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
