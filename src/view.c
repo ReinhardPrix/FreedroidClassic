@@ -375,6 +375,11 @@ ShowItemAlarm( void )
  *     to also cause an SDL_Update of the portion of the screen
  *     that has been modified
  *
+ * (*) ONLY_SHOW_MAP_AND_TEXT = 4: This flag indicates, that only
+ *     the map and also info like the current coordinate position
+ *     should be entered into the Screen.  This flag is mainly
+ *     used for the level editor.
+ *
  * ----------------------------------------------------------------- */
 void
 Assemble_Combat_Picture (int mask)
@@ -435,33 +440,41 @@ Assemble_Combat_Picture (int mask)
       return;
     }
 
-  // At this point we know that now only the map is to be drawn.
-  // so we start drawing the rest of the INTERIOR of the combat window:
-
-  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+  if ( ! ( mask & ONLY_SHOW_MAP_AND_TEXT ) )
     {
-      PutItem( i );
-    }
+      //--------------------
+      // At this point we know that now only the map is to be drawn.
+      // so we start drawing the rest of the INTERIOR of the combat window:
+      
+      for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+	{
+	  PutItem( i );
+	}
+      
+      for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
+	PutEnemy (i , -1 , -1 );
+      
+      //--------------------
+      // Now we blit all the player tuxes...
+      //
+      for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ )
+	{
+	  if (Me [ PlayerNum ].energy > 0)
+	    PutInfluence ( -1 , -1 , PlayerNum ); // this blits player 0 
+	}
+      
+      for (i = 0; i < (MAXBULLETS); i++)
+	if (AllBullets[i].type != OUT)
+	  PutBullet (i);
+      
+      for (i = 0; i < (MAXBLASTS); i++)
+	if (AllBlasts[i].type != OUT)
+	  PutBlast (i);
 
-  for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
-    PutEnemy (i , -1 , -1 );
+      ShowAutomapData();
 
-  //--------------------
-  // Now we blit all the player tuxes...
-  //
-  for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ )
-    {
-      if (Me [ PlayerNum ].energy > 0)
-	PutInfluence ( -1 , -1 , PlayerNum ); // this blits player 0 
-    }
-
-  for (i = 0; i < (MAXBULLETS); i++)
-    if (AllBullets[i].type != OUT)
-      PutBullet (i);
-
-  for (i = 0; i < (MAXBLASTS); i++)
-    if (AllBlasts[i].type != OUT)
-      PutBlast (i);
+    } // ! ONLY_SHOW_MAP_AND_TEXT
+      
 
   if ( GameConfig.Draw_Framerate )
     {
@@ -471,7 +484,7 @@ Assemble_Combat_Picture (int mask)
 	  FPS_Displayed=(int)(1.0/Frame_Time());
 	  TimeSinceLastFPSUpdate=0;
 	}
-
+      
       PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x , 
 		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
 		       "FPS: %d " , FPS_Displayed );
@@ -491,7 +504,7 @@ Assemble_Combat_Picture (int mask)
 		       "Resistance: %f " , (Me[0].Current_Victim_Resistance_Factor) );
     }
 
-  if ( GameConfig.Draw_Position )
+  if ( GameConfig.Draw_Position || ( mask & ONLY_SHOW_MAP_AND_TEXT ) )
     {
       PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x+2*User_Rect.w/3 , 
 		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
@@ -512,14 +525,21 @@ Assemble_Combat_Picture (int mask)
 		       "Time to hold out still: %2d:%2d " , minutes , seconds );
     }
 
-  ShowAutomapData();
-  ShowItemAlarm();
   ShowMissionCompletitionMessages();
-  ShowCharacterScreen ( );
-  ShowSkillsScreen ( );
-  ManageInventoryScreen ( );
-  ShowQuickInventory ();
-  DisplayButtons( );
+
+  //--------------------
+  // Here are some more things, that are not needed in the level editor
+  // view...
+  //
+  if ( ! ( mask & ONLY_SHOW_MAP_AND_TEXT ) )
+    {
+      ShowItemAlarm();
+      ShowCharacterScreen ( );
+      ShowSkillsScreen ( );
+      ManageInventoryScreen ( );
+      ShowQuickInventory ();
+      DisplayButtons( );
+    }
 
   if ( ServerMode )
     CenteredPrintStringFont ( Screen , Menu_BFont , SCREEN_HEIGHT/2 , " S E R V E R ! ! ! " );

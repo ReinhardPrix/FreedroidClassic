@@ -255,7 +255,7 @@ Level_Editor(void)
 	  BlockY=rintf(Me[0].pos.y);
 	  
 	  ClearUserFenster();
-	  Assemble_Combat_Picture ( ONLY_SHOW_MAP );
+	  Assemble_Combat_Picture ( ONLY_SHOW_MAP_AND_TEXT );
 	  Highlight_Current_Block();
 	  Show_Waypoints();
 
