@@ -100,6 +100,7 @@ button index given exceeds the number of buttons defined in freedroid.\n\
 \n\
 Freedroid will terminate now to draw attention to the problem...\n\
 ----------------------------------------------------------------------\n" );
+      Terminate ( ERR );
     }
 
   //--------------------
@@ -1012,6 +1013,31 @@ Teleport (int LNum, int X, int Y, int PlayerNum , int Shuffling )
       Me [ PlayerNum ] . pos . y = Y;
       Me [ PlayerNum ] . pos . z = array_num; 
 
+      //--------------------
+      // We add some sanity check against teleporting to non-allowed
+      // locations (like outside of map that is)
+      //
+      if ( ( LNum < 0 ) || ( Me [ PlayerNum ] . pos . x < 0 ) || ( Me [ PlayerNum ] . pos . y < 0 ) ||
+	   ( LNum >= curShip.num_levels ) || 
+	   ( Me [ PlayerNum ] . pos . x >= curShip.AllLevels[ array_num ] -> xlen ) ||
+	   ( Me [ PlayerNum ] . pos . y >= curShip.AllLevels[ array_num ] -> ylen ) )
+	{
+	  fprintf (stderr, "\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+A Teleport was requested, but the location to teleport to lies outside\n\
+the bounds of this 'ship' which means the current collection of levels.\n\
+This is a severe error.  Please report the bug to the Freedroid team\n\
+as always best via e-mail to freedroid-discussion@lists.sourceforge.net\n\
+Thanks a lot.\n\
+\n\
+The given target location was: lev=%d x=%d y=%d.\n\
+Freedroid will terminate now to draw attention to the problem...\n\
+----------------------------------------------------------------------\n" ,
+LNum , X , Y );
+	  Terminate ( ERR );
+	}
+
       // turn off all blasts and bullets from the old level
       for (i = 0; i < MAXBLASTS; i++)
 	AllBlasts[i].type = OUT;
@@ -1035,6 +1061,11 @@ Teleport (int LNum, int X, int Y, int PlayerNum , int Shuffling )
       Me [ PlayerNum ] . pos . x = X ;
       Me [ PlayerNum ] . pos . y = Y ;
     }
+
+  
+  Me [ PlayerNum ] . mouse_move_target . x = ( -1 ) ;
+  Me [ PlayerNum ] . mouse_move_target . y = ( -1 ) ;
+  Me [ PlayerNum ] . mouse_move_target . z = ( -1 ) ;
 
   LeaveLiftSound ();
 

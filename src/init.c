@@ -1768,7 +1768,6 @@ InitNewMissionList ( char *MissionName )
   Me [ 0 ] . teleport_anchor . x = Me [ 0 ] . pos . x ;
   Me [ 0 ] . teleport_anchor . y = Me [ 0 ] . pos . y ;
   Me [ 0 ] . teleport_anchor . z = Me [ 0 ] . pos . z ;
-
   
   DebugPrintf ( 1 , "\nFinal starting position: Level=%d XPos=%d YPos=%d." , StartingLevel, StartingXPos, StartingYPos );
   
