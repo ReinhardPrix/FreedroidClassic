@@ -2844,6 +2844,86 @@ init_obstacle_data( void )
   obstacle_map [ ISO_W_CHAIR ] . is_smashable = TRUE ;
   obstacle_map [ ISO_W_CHAIR ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_W_CHAIR ] . filename = "iso_chairs_0012.png";
+  
+  obstacle_map [ ISO_SOFFA_1 ] . block_area_type = COLLISION_TYPE_RECTANGLE;
+  obstacle_map [ ISO_SOFFA_1 ] . block_area_parm_1 = 1.0;
+  obstacle_map [ ISO_SOFFA_1 ] . block_area_parm_2 = 1.0;
+  obstacle_map [ ISO_SOFFA_1 ] . block_vision_too = FALSE;
+  obstacle_map [ ISO_SOFFA_1 ] . filename = "iso_chairs_0013.png";
+  
+  obstacle_map [ ISO_SOFFA_2 ] . block_area_type = COLLISION_TYPE_RECTANGLE;
+  obstacle_map [ ISO_SOFFA_2 ] . block_area_parm_1 = 1.0;
+  obstacle_map [ ISO_SOFFA_2 ] . block_area_parm_2 = 1.0;
+  obstacle_map [ ISO_SOFFA_2 ] . block_vision_too = FALSE;
+  obstacle_map [ ISO_SOFFA_2 ] . filename = "iso_chairs_0014.png";
+  
+  obstacle_map [ ISO_SOFFA_3 ] . block_area_type = COLLISION_TYPE_RECTANGLE;
+  obstacle_map [ ISO_SOFFA_3 ] . block_area_parm_1 = 1.0;
+  obstacle_map [ ISO_SOFFA_3 ] . block_area_parm_2 = 1.0;
+  obstacle_map [ ISO_SOFFA_3 ] . block_vision_too = FALSE;
+  obstacle_map [ ISO_SOFFA_3 ] . filename = "iso_chairs_0015.png";
+  
+  obstacle_map [ ISO_SOFFA_4 ] . block_area_type = COLLISION_TYPE_RECTANGLE;
+  obstacle_map [ ISO_SOFFA_4 ] . block_area_parm_1 = 1.0;
+  obstacle_map [ ISO_SOFFA_4 ] . block_area_parm_2 = 1.0;
+  obstacle_map [ ISO_SOFFA_4 ] . block_vision_too = FALSE;
+  obstacle_map [ ISO_SOFFA_4 ] . filename = "iso_chairs_0016.png";
+  
+  obstacle_map [ ISO_SOFFA_CORNER_1 ] . block_area_type = COLLISION_TYPE_RECTANGLE;
+  obstacle_map [ ISO_SOFFA_CORNER_1 ] . block_area_parm_1 = 1.0;
+  obstacle_map [ ISO_SOFFA_CORNER_1 ] . block_area_parm_2 = 1.0;
+  obstacle_map [ ISO_SOFFA_CORNER_1 ] . block_vision_too = FALSE;
+  obstacle_map [ ISO_SOFFA_CORNER_1 ] . filename = "iso_chairs_0017.png";
+  
+  obstacle_map [ ISO_SOFFA_CORNER_2 ] . block_area_type = COLLISION_TYPE_RECTANGLE;
+  obstacle_map [ ISO_SOFFA_CORNER_2 ] . block_area_parm_1 = 1.0;
+  obstacle_map [ ISO_SOFFA_CORNER_2 ] . block_area_parm_2 = 1.0;
+  obstacle_map [ ISO_SOFFA_CORNER_2 ] . block_vision_too = FALSE;
+  obstacle_map [ ISO_SOFFA_CORNER_2 ] . filename = "iso_chairs_0018.png";
+
+  obstacle_map [ ISO_SOFFA_CORNER_3 ] . block_area_type = COLLISION_TYPE_RECTANGLE;
+  obstacle_map [ ISO_SOFFA_CORNER_3 ] . block_area_parm_1 = 1.0;
+  obstacle_map [ ISO_SOFFA_CORNER_3 ] . block_area_parm_2 = 1.0;
+  obstacle_map [ ISO_SOFFA_CORNER_3 ] . block_vision_too = FALSE;
+  obstacle_map [ ISO_SOFFA_CORNER_3 ] . filename = "iso_chairs_0019.png";
+  
+  obstacle_map [ ISO_SOFFA_CORNER_4 ] . block_area_type = COLLISION_TYPE_RECTANGLE;
+  obstacle_map [ ISO_SOFFA_CORNER_4 ] . block_area_parm_1 = 1.0;
+  obstacle_map [ ISO_SOFFA_CORNER_4 ] . block_area_parm_2 = 1.0;
+  obstacle_map [ ISO_SOFFA_CORNER_4 ] . block_vision_too = FALSE;
+  obstacle_map [ ISO_SOFFA_CORNER_4 ] . filename = "iso_chairs_0020.png";
+
+  
+  obstacle_map [ ISO_SOFFA_CORNER_PLANT_1 ] . block_area_type = COLLISION_TYPE_RECTANGLE;
+  obstacle_map [ ISO_SOFFA_CORNER_PLANT_1 ] . block_area_parm_1 = 1.0;
+  obstacle_map [ ISO_SOFFA_CORNER_PLANT_1 ] . block_area_parm_2 = 1.0;
+  obstacle_map [ ISO_SOFFA_CORNER_PLANT_1 ] . block_vision_too = FALSE;
+  obstacle_map [ ISO_SOFFA_CORNER_PLANT_1 ] . filename = "iso_chairs_0021.png";
+  
+  obstacle_map [ ISO_SOFFA_CORNER_PLANT_2 ] . block_area_type = COLLISION_TYPE_RECTANGLE;
+  obstacle_map [ ISO_SOFFA_CORNER_PLANT_2 ] . block_area_parm_1 = 1.0;
+  obstacle_map [ ISO_SOFFA_CORNER_PLANT_2 ] . block_area_parm_2 = 1.0;
+  obstacle_map [ ISO_SOFFA_CORNER_PLANT_2 ] . block_vision_too = FALSE;
+  obstacle_map [ ISO_SOFFA_CORNER_PLANT_2 ] . filename = "iso_chairs_0022.png";
+
+  obstacle_map [ ISO_SOFFA_CORNER_PLANT_3 ] . block_area_type = COLLISION_TYPE_RECTANGLE;
+  obstacle_map [ ISO_SOFFA_CORNER_PLANT_3 ] . block_area_parm_1 = 1.0;
+  obstacle_map [ ISO_SOFFA_CORNER_PLANT_3 ] . block_area_parm_2 = 1.0;
+  obstacle_map [ ISO_SOFFA_CORNER_PLANT_3 ] . block_vision_too = FALSE;
+  obstacle_map [ ISO_SOFFA_CORNER_PLANT_3 ] . filename = "iso_chairs_0023.png";
+  
+  obstacle_map [ ISO_SOFFA_CORNER_PLANT_4 ] . block_area_type = COLLISION_TYPE_RECTANGLE;
+  obstacle_map [ ISO_SOFFA_CORNER_PLANT_4 ] . block_area_parm_1 = 1.0;
+  obstacle_map [ ISO_SOFFA_CORNER_PLANT_4 ] . block_area_parm_2 = 1.0;
+  obstacle_map [ ISO_SOFFA_CORNER_PLANT_4 ] . block_vision_too = FALSE;
+  obstacle_map [ ISO_SOFFA_CORNER_PLANT_4 ] . filename = "iso_chairs_0024.png";
+  
+  
+  
+  
+  
+  
+  
   obstacle_map [ ISO_N_DESK ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_N_DESK ] . block_area_parm_1 = 0.4 ;
   obstacle_map [ ISO_N_DESK ] . block_area_parm_2 = 1.0 ;
