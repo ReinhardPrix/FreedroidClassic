@@ -1026,6 +1026,9 @@ AttackInfluence (int enemynum)
       AllBullets[j].owner_pos = & ( ThisRobot->pos );
       AllBullets[j].ignore_wall_collisions = 
 	ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_bullet_ignore_wall_collisions;
+      memset( AllBullets[j].total_miss_hit , UNCHECKED , MAX_ENEMYS_ON_SHIP );
+      AllBullets[j].miss_hit_influencer = FALSE;
+      AllBullets[j].to_hit = 40;
 
       // Now we set the damage of this bullet to the correct value
       AllBullets[j].damage = ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].base_item_gun_damage;
@@ -1149,7 +1152,9 @@ AttackInfluence (int enemynum)
       AllBullets[j].owner_pos = & ( ThisRobot->pos );
       AllBullets[j].ignore_wall_collisions = 
 	ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_bullet_ignore_wall_collisions;
-
+      memset( AllBullets[j].total_miss_hit , UNCHECKED , MAX_ENEMYS_ON_SHIP );
+      AllBullets[j].miss_hit_influencer = FALSE;
+      AllBullets[j].to_hit = 40;
 
 }   /* AttackInfluence */
 

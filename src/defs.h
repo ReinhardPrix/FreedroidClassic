@@ -424,6 +424,10 @@ enum _directions
 // #define MAX_STEPS_IN_GIVEN_COURSE 1000
 #define MAX_STEPS_IN_GIVEN_COURSE 100
 
+#define UNCHECKED 0
+#define HIT 1
+#define MISS 2
+
 
 
 #define BREMSDREHUNG 3		// STUPID AND SHOULD BE REMOVED
