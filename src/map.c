@@ -279,7 +279,7 @@ AnimateTeleports (void)
 
   DebugPrintf (2, "\nvoid AnimateRefresh(void):  real function call confirmed.");
 
-  InnerWaitCounter += Frame_Time () * 10;
+  InnerWaitCounter += Frame_Time () * 30;
 
   // if( (((int)rintf(InnerWaitCounter)) % INNER_REFRESH_COUNTER) == 0) {
   // InnerPhase ++;
