@@ -424,9 +424,11 @@ Assemble_Combat_Picture (int mask)
   int minutes;
   int seconds;
   int MapInsertNr;
+  float ResizeFactor;
   static float TimeSinceLastFPSUpdate=10;
   static int FPS_Displayed=1;
   SDL_Rect TargetRectangle;
+  SDL_Surface *TempRescaledInsert = NULL ;
   Level DisplayLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
 
 #define UPDATE_FPS_HOW_OFTEN 0.75
@@ -475,8 +477,21 @@ Assemble_Combat_Picture (int mask)
 	+ ( - Me [ 0 ] . pos . x + DisplayLevel->MapInsertList [ MapInsertNr ] . pos . x - 0.5 ) * Block_Width;
       TargetRectangle.y = UserCenter_y
 	+ ( - Me [ 0 ] . pos . y + DisplayLevel->MapInsertList [ MapInsertNr ] . pos . y - 0.5 ) * Block_Height;
-      SDL_BlitSurface( AllMapInserts [ DisplayLevel->MapInsertList [ MapInsertNr ] . type ] . insert_surface , NULL ,
-		       Screen, &TargetRectangle);
+
+      if ( Block_Width != INITIAL_BLOCK_WIDTH )
+	{
+	  ResizeFactor = (float)Block_Width / INITIAL_BLOCK_WIDTH  ;
+	  TempRescaledInsert =	      
+	    zoomSurface ( AllMapInserts [ DisplayLevel->MapInsertList [ MapInsertNr ] . type ] . insert_surface , 
+			  ResizeFactor , ResizeFactor , 0 );
+	  SDL_BlitSurface( TempRescaledInsert , NULL , Screen , &TargetRectangle );
+	  SDL_FreeSurface( TempRescaledInsert );
+	}
+      else
+	{
+	  SDL_BlitSurface( AllMapInserts [ DisplayLevel->MapInsertList [ MapInsertNr ] . type ] . insert_surface , NULL ,
+			   Screen, &TargetRectangle);
+	}
     }
 
 
