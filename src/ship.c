@@ -687,7 +687,9 @@ void
 show_droid_info (int droidtype, int page)
 {
   char InfoText[1000];
-
+  char None[20] = "none";
+  char *ItemName;
+  int type;
   SDL_SetClipRect ( Screen , NULL );
   DisplayImage ( find_file( NE_CONSOLE_BG_PIC2_FILE , GRAPHICS_DIR, FALSE) );
   DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
@@ -704,19 +706,24 @@ Class : %s\n\
 Height : %f\n\
 Weight: %f \n\
 Drive : %s \n\
-Brain : %s", Druidmap[Me.type].druidname, Classname[Druidmap[Me.type].class],
+Brain : %s", Druidmap[droidtype].druidname, Classname[Druidmap[Me.type].class],
 	       droidtype+1, Classes[Druidmap[droidtype].class],
 	       Druidmap[droidtype].height, Druidmap[droidtype].weight,
 	       ItemMap [ Druidmap[ droidtype ].drive_item.type ].ItemName,
 	       Brainnames[ Druidmap[droidtype].brain ]);
       break;
     case 1:
+      if ( (type = Druidmap[droidtype].weapon_item.type) >= 0)
+	ItemName = ItemMap[type].ItemName;
+      else 
+	ItemName = None;
+
       sprintf( InfoText , "\
 Unit type %s - %s\n\
 Armamant : %s\n\
 Sensors  1: %s\n          2: %s\n          3: %s", Druidmap[droidtype].druidname,
 	       Classname[Druidmap[droidtype].class],
-	       ItemMap[ Druidmap[droidtype].weapon_item.type ].ItemName,
+	       ItemName,
 	       Sensornames[ Druidmap[droidtype].sensor1 ],
 	       Sensornames[ Druidmap[droidtype].sensor2 ],
 	       Sensornames[ Druidmap[droidtype].sensor3 ]);
