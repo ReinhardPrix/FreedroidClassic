@@ -2807,7 +2807,7 @@ PerformTuxAttackRaw ( int player_num , int use_mouse_cursor_for_targeting )
 	    // (this is because later angle is written over Me[..].angle
 	    //
 	    angle = Me [ player_num ] . angle ;
-	    DebugPrintf ( -4 , "\n%s(): defaulting to PREVIOUS ANGLE!" , __FUNCTION__ );
+	    DebugPrintf ( 1 , "\n%s(): defaulting to PREVIOUS ANGLE!" , __FUNCTION__ );
 	}
     }
     else
