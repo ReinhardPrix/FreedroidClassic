@@ -959,7 +959,7 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
     //
     if ( ( !ForceDrop ) && ( DropDecision < 100 - ITEM_DROP_PERCENTAGE ) )
     {
-	DropItemAt( level_num , ITEM_MONEY , x , y , -1 , -1 , TreasureChestRange , 1 );
+	DropItemAt( ITEM_MONEY , level_num , x , y , -1 , -1 , TreasureChestRange , 1 );
 	return;
     }
     

@@ -530,6 +530,8 @@ hmmm... either the surface has been freed and the pointer moved cleanly to NULL\
   SDL_FreeSurface ( our_image -> surface );
   our_image -> surface = NULL ;
 
+  open_gl_check_error_status ( __FUNCTION__ );
+
 #endif
 
 }; // void make_texture_out_of_surface ( iso_image* our_image )
