@@ -3716,6 +3716,7 @@ handle_player_examine_command ( int player_num )
     char game_message_text[ 10000 ] ;
     int final_bot_found=(-1);
     int chat_section;
+    Level obstacle_level;
 
     //--------------------
     // The highest priority is other droids and characters.  If one
@@ -3752,11 +3753,30 @@ handle_player_examine_command ( int player_num )
     if ( obstacle_index != (-1) )
     {
 	our_obstacle = & ( curShip . AllLevels [ Me [ player_num ] . pos . z ] -> obstacle_list [ obstacle_index ] ) ;
-	sprintf ( game_message_text , "Examining %s. (obs type %d).  %s" , 
-		  obstacle_map [ our_obstacle -> type ] . obstacle_short_name , 
-		  our_obstacle -> type , 
-		  obstacle_map [ our_obstacle -> type ] . obstacle_long_description ) ;
-	append_new_game_message ( game_message_text );
+
+	//--------------------
+	// Now if the obstacle has an individual description text, then we can 
+	// use that for the obstacle examination result.  Otherwise we'll revert
+	// to the generic description text for the obstacle type of this obstacle.
+	//
+	if ( our_obstacle -> description_index >= 0 )
+	{
+	    obstacle_level = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
+	    
+	    sprintf ( game_message_text , "Examining %s. (obs type %d).  %s" , 
+		      obstacle_map [ our_obstacle -> type ] . obstacle_short_name , 
+		      our_obstacle -> type , 
+		      obstacle_level -> obstacle_description_list [ our_obstacle -> description_index ] ) ;
+	    append_new_game_message ( game_message_text );
+	}
+	else
+	{
+	    sprintf ( game_message_text , "Examining %s. (obs type %d).  %s" , 
+		      obstacle_map [ our_obstacle -> type ] . obstacle_short_name , 
+		      our_obstacle -> type , 
+		      obstacle_map [ our_obstacle -> type ] . obstacle_long_description ) ;
+	    append_new_game_message ( game_message_text );
+	}
 	return;
     }
 
