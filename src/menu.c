@@ -344,7 +344,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
   int NumberOfOptionsGiven;
   int first_menu_item_pos_y;
   int MenuPosX[] = { 260 , 260 , 260 , 260 , 260 , 260 , 260 , 260 , 260 , 260 } ;
-  int MenuPosY[] = {  80 , 120 , 160 , 200 , 240 , 280 , 320 , 360 , 400 , 440 } ;
+  int MenuPosY[] = {  90 , 130 , 170 , 210 , 250 , 290 , 330 , 370 , 410 , 450 } ;
 
   //--------------------
   // At first we hide the mouse cursor, so that there can not be any
@@ -1233,14 +1233,12 @@ On_Screen_Display_Options_Menu (void)
 
 }; // On_Screen_Display_Options_Menu
 
-/*@Function============================================================
-@Desc: This function provides a the options menu.  This menu is a 
-       submenu of the big EscapeMenu.  Here you can change sound vol.,
-       gamma correction, fullscreen mode, display of FPS and such
-       things.
-
-@Ret:  none
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function provides a the options menu.  This menu is a 
+ * submenu of the big EscapeMenu.  Here you can change sound vol.,
+ * gamma correction, fullscreen mode, display of FPS and such
+ * things.
+ * ---------------------------------------------------------------------- */
 void
 Droid_Talk_Options_Menu (void)
 {
@@ -2009,7 +2007,7 @@ enum
 void
 Credits_Menu (void)
 {
-  while( SpacePressed() || EnterPressed() ) ; /* wait for key release */
+  while( SpacePressed() || EscapePressed() ) ; /* wait for key release */
 
   // InitiateMenu();
       
@@ -2026,9 +2024,11 @@ Credits_Menu (void)
   SDL_Flip( Screen );
 
   // Wait until the user does SOMETHING
-  getchar_raw();
+  // getchar_raw();
+  while ( !SpacePressed() && !EscapePressed() );
+  while( SpacePressed() || EscapePressed() ) ; /* wait for key release */
 
-} // Credits_Menu
+}; // void Credits_Menu(void)
 
 /*@Function============================================================
 @Desc: This function provides the details of a mission that has been

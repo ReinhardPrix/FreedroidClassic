@@ -2140,7 +2140,7 @@ ThouArtDefeated (void)
 
   GameOver = TRUE;
 
-  while ( ( SDL_GetTicks() - now < 10000 * WAIT_AFTER_KILLED ) && ( GameOver == TRUE ) )
+  while ( ( SDL_GetTicks() - now < 1000 * WAIT_AFTER_KILLED ) && ( GameOver == TRUE ) )
     {
       StartTakingTimeForFPSCalculation(); 
 

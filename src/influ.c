@@ -295,6 +295,12 @@ MoveInfluence ( int PlayerNum )
       //
       if ( Me [ PlayerNum ] . mouse_move_target . x == ( -1 ) )
 	{
+	  
+	  /*
+
+	  Now we disable all cursor-key based movement.  This is the RPG branch,
+	  and a mouse will be required here...
+
 	  if ( ServerThinksUpPressed ( PlayerNum ) )
 	    Me [ PlayerNum ] .speed.y -= accel;
 	  if ( ServerThinksDownPressed ( PlayerNum ) )
@@ -303,6 +309,9 @@ MoveInfluence ( int PlayerNum )
 	    Me [ PlayerNum ] .speed.x -= accel;
 	  if ( ServerThinksRightPressed ( PlayerNum ) )
 	    Me [ PlayerNum ] .speed.x += accel;
+
+	  */
+
 	}
       else
       //--------------------
@@ -382,11 +391,13 @@ MoveInfluence ( int PlayerNum )
 	  Me [ PlayerNum ] .status = TRANSFERMODE;
 	  TransferCounter = 0;
 	}
+
       if ( ( ServerThinksSpacePressed ( PlayerNum ) ) && ( ServerThinksNoDirectionPressed ( PlayerNum ) ) &&
 	   ( Me [ PlayerNum ] .status != WEAPON ) && ( Me [ PlayerNum ] .status != TRANSFERMODE ) )
 	TransferCounter += Frame_Time();
 
-      if ( ( ServerThinksSpacePressed ( PlayerNum ) || ServerThinksAxisIsActive ( PlayerNum ) ) && 
+      // if ( ( ServerThinksSpacePressed ( PlayerNum ) || ServerThinksAxisIsActive ( PlayerNum ) ) && 
+      if ( ( ServerThinksAxisIsActive ( PlayerNum ) ) && 
 	   ( ! ServerThinksNoDirectionPressed ( PlayerNum ) ) &&
 	   ( Me [ PlayerNum ] .status != TRANSFERMODE ) )
 	Me [ PlayerNum ] .status = WEAPON ;
@@ -1431,7 +1442,10 @@ FireBullet ( int PlayerNum )
   // and then of course also subtract a certain fee from the remaining weapon
   // duration in the course of the swing/hit
   //
-  Fire_Bullet_Sound ( guntype );
+  DebugPrintf ( 0 , "\nWeapon_item: %d guntype: %d . " ,  Me [ PlayerNum ] . weapon_item . type , guntype );
+
+  if ( Me [ PlayerNum ] . weapon_item . type != (-1) ) Fire_Bullet_Sound ( guntype );
+  else Fire_Bullet_Sound ( LASER_SWORD_1 );
   DamageItem ( & ( Me [ PlayerNum ] . weapon_item  ) );
 
   //--------------------

@@ -265,7 +265,7 @@ Sorry for interrupting your game.  \n\
   //
   if ( With_Waiting )
     {
-      while ( SoundChannelList[ Newest_Sound_Channel ] && !EscapePressed() );
+      while ( SoundChannelList[ Newest_Sound_Channel ] && !EscapePressed() && !SpacePressed() );
       //--------------------
       // In case escape was pressed, the currently playing voice sample must
       // be terminated immediately.
@@ -275,7 +275,7 @@ Sorry for interrupting your game.  \n\
 	  Mix_HaltChannel( Newest_Sound_Channel );
 	}
     }
-  while ( EscapePressed() );
+  while ( EscapePressed() || SpacePressed() );
   
   //--------------------
   // Now the channel has finished playing (or we have stopped it) and
@@ -1136,6 +1136,9 @@ Fire_Bullet_Sound (int BulletType)
       Play_Sound ( FIRE_BULLET_PLASMA_PISTOL_SOUND );
       break;
 
+    case LASER_SWORD_1:
+    case LASER_AXE:
+    case LASER_SWORD_2:
     default:
       Play_Sound ( FIRE_BULLET_SWORD_SOUND );
       break;

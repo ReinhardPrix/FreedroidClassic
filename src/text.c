@@ -121,6 +121,34 @@ GetChatWindowInput( SDL_Surface* Background , SDL_Rect* Chat_Window_Pointer )
 }; // char* GetChatWindowInput( void )
 
 /* ----------------------------------------------------------------------
+ * This function displays a subtitle for the ChatWithFriendlyDroid interface,
+ * so that you can also understand everything with sound disabled.
+ * ---------------------------------------------------------------------- */
+void
+DisplaySubtitle( char* SubtitleText , void* Background )
+{
+  SDL_Rect Subtitle_Window;
+
+  //--------------------
+  // First we define our subtitle window.
+  //
+  Subtitle_Window.x= 15; Subtitle_Window.y=435; Subtitle_Window.w=600; Subtitle_Window.h=44;
+
+  //--------------------
+  // Now we need to clear this window, cause there might still be some
+  // garbage from the previous subtitle in there...
+  //
+  SDL_BlitSurface ( Background , &Subtitle_Window , Screen , &Subtitle_Window );
+
+  //--------------------
+  // Now we can display the text and update the screen...
+  //
+  DisplayTextWithScrolling ( SubtitleText , Subtitle_Window.x , Subtitle_Window.y , &Subtitle_Window , Background );
+  SDL_UpdateRect ( Screen , Subtitle_Window.x , Subtitle_Window.y , Subtitle_Window.w , Subtitle_Window.h );
+
+}; // void DisplaySubtitle( char* SubtitleText , void* Background )
+
+/* ----------------------------------------------------------------------
  * This function does the communication routine when the influencer in
  * transfer mode touched a friendly droid.
  * ---------------------------------------------------------------------- */
@@ -245,7 +273,8 @@ the things soul may finally rest.\n\
       SDL_Flip( Screen );
       
       // All droid chat should be done in the paradroid font I would say...
-      SetCurrentFont( Para_BFont );
+      // SetCurrentFont( Para_BFont );
+      SetCurrentFont( FPS_Display_BFont );
       
       // We print out a little greeting message...
       // DisplayTextWithScrolling ( 
@@ -254,7 +283,7 @@ the things soul may finally rest.\n\
       
       ChatMenuTexts [ 0 ] = " Who are you? " ;
       ChatMenuTexts [ 1 ] = " What can you tell me about this place? " ;
-      ChatMenuTexts [ 2 ] = " Where can I get better equippment? " ;
+      ChatMenuTexts [ 2 ] = " Where can I get better equipment? " ;
       ChatMenuTexts [ 3 ] = " I have problems with my controls. " ;
 
       ChatMenuTexts [ 4 ] = " What can you tell me about the MS? " ;
@@ -271,7 +300,9 @@ the things soul may finally rest.\n\
       Me [ 0 ] . Chandra_Chat_Flags[ 6 ] = 0 ;
       Me [ 0 ] . Chandra_Chat_Flags[ 7 ] = 1 ;
       
+      DisplaySubtitle( " Welcome Traveller! " , Background );
       PlayOnceNeededSoundSample( "Chandra_Welcome_Traveller_0.wav" , TRUE );
+      
 
       while (1)
 	{
@@ -283,31 +314,45 @@ the things soul may finally rest.\n\
 	    {
 	    case 1:
 	      PlayOnceNeededSoundSample( "Tux_Chandra_Who_Are_You_0.wav" , TRUE );
+	      DisplaySubtitle( " My name is Chandra. " , Background );
 	      PlayOnceNeededSoundSample( "Chandra_My_Name_Is_0.wav" , TRUE );
 	      Me [ 0 ] . Chandra_Chat_Flags[ 0 ] = 0 ;
 	      break;
 	    case 2:
 	      PlayOnceNeededSoundSample( "Tux_Chandra_What_Can_Place_0.wav" , TRUE );
+	      DisplaySubtitle( " This place is owned by refugees like me, who hide from the MS. " , Background );
 	      PlayOnceNeededSoundSample( "Chandra_This_Place_Consists_0.wav" , TRUE );
+	      DisplaySubtitle( " Formerly this was a camp of the resistance movement. " , Background );
 	      PlayOnceNeededSoundSample( "Chandra_Formerly_This_Was_0.wav" , TRUE );
+	      DisplaySubtitle( " But they have left long ago. " , Background );
 	      PlayOnceNeededSoundSample( "Chandra_But_They_Have_0.wav" , TRUE );
 	      Me [ 0 ] . Chandra_Chat_Flags[ 1 ] = 0 ;
 	      Me [ 0 ] . Chandra_Chat_Flags[ 4 ] = 1 ;
 	      break;
 	    case 3:
 	      PlayOnceNeededSoundSample( "Tux_Chandra_Where_Can_I_0.wav" , TRUE );
+	      DisplaySubtitle( " You might try it at the shop. " , Background );
 	      PlayOnceNeededSoundSample( "Chandra_You_Might_Try_0.wav" , TRUE );
+	      DisplaySubtitle( " They have all kinds of equipment there. " , Background );
 	      PlayOnceNeededSoundSample( "Chandra_They_Have_All_0.wav" , TRUE );
+	      DisplaySubtitle( " Talk to Mr. Stone, the shop bot. " , Background );
 	      PlayOnceNeededSoundSample( "Chandra_Talk_To_The_0.wav" , TRUE );
 	      break;
 	    case 4:
 	      PlayOnceNeededSoundSample( "Tux_Chandra_I_Need_Help_0.wav" , TRUE );
+	      DisplaySubtitle( " Use the left mouse button to move around, talk to friends or attack enemies. " , Background );
 	      PlayOnceNeededSoundSample( "Chandra_Controls_1.wav" , TRUE );
+	      DisplaySubtitle( " Hold down the left mouse button to keep moving. " , Background );
 	      PlayOnceNeededSoundSample( "Chandra_Controls_2.wav" , TRUE );
+	      DisplaySubtitle( " If you press the shift button in addition to the left mouse button, you will only attack and not move. " , Background );
 	      PlayOnceNeededSoundSample( "Chandra_Controls_3.wav" , TRUE );
+	      DisplaySubtitle( " Use the right mouse button to activate your currently readied skill or spell. " , Background );
 	      PlayOnceNeededSoundSample( "Chandra_Controls_4.wav" , TRUE );
+	      DisplaySubtitle( " Use the I key to open or close the inventory screen. " , Background );
 	      PlayOnceNeededSoundSample( "Chandra_Controls_5.wav" , TRUE );
+	      DisplaySubtitle( " Use the C key to open or close the character screen. " , Background );
 	      PlayOnceNeededSoundSample( "Chandra_Controls_6.wav" , TRUE );
+	      DisplaySubtitle( " Use the S key to open or close the skills screen. " , Background );
 	      PlayOnceNeededSoundSample( "Chandra_Controls_7.wav" , TRUE );
 	      break;
 	    case 5:
