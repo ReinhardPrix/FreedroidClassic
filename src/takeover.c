@@ -346,6 +346,7 @@ Takeover ( int enemynum )
 	    // fight from that nicer state, maybe on the Tux side, this time :)
 	    //
 	    AllEnemys [ enemynum ] . is_friendly = TRUE ;
+	    AllEnemys [ enemynum ] . has_been_taken_over = TRUE ; 
 	    if ( AllEnemys [ enemynum ] .  stick_to_waypoint_system_by_default )
 		AllEnemys [ enemynum ] . combat_state = MOVE_ALONG_RANDOM_WAYPOINTS ;
 	    else

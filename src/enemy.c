@@ -354,6 +354,7 @@ ClearEnemys ( void )
 	our_bot -> Parameter2 = 0;
 	our_bot -> marker = 0;
 	our_bot -> is_friendly = 0;
+	our_bot -> has_been_taken_over = FALSE ;  // has the Tux made this a friendly bot via takeover subgame?
 	our_bot -> attack_target_type = ATTACK_TARGET_IS_NOTHING ;
 	our_bot -> attack_target_index = (-1) ;
 	our_bot -> TextVisibleTime = 0;
@@ -1371,7 +1372,6 @@ void
 InitiateDeathOfEnemy ( Enemy ThisRobot )
 {
     char game_message_text [ 5000 ] ;
-    int reward;
 
     DebugPrintf ( 1 , "\n%s():  another death of a bot/human initiated..." , __FUNCTION__ );
 
@@ -1383,9 +1383,16 @@ InitiateDeathOfEnemy ( Enemy ThisRobot )
     {
 	Activate_Conservative_Frame_Computation();
 	PlayOnceNeededSoundSample( "Tux_Why_Did_I_0.wav" , FALSE , TRUE );
+
+	sprintf ( game_message_text , "Your friend %s has died." ,
+		  Druidmap [ ThisRobot -> type ] . druidname );
+	append_new_game_message ( game_message_text );
+
     }
     else
     {
+
+	/*
 	//--------------------
 	// The Tux gains experience from this, only for non-friends
 	//
@@ -1394,6 +1401,8 @@ InitiateDeathOfEnemy ( Enemy ThisRobot )
 	sprintf ( game_message_text , "For defeating your enemy, you receive %d experience." ,
 		  reward );
 	append_new_game_message ( game_message_text );
+	*/
+
     }
     
     ThisRobot -> Status = OUT;

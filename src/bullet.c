@@ -835,56 +835,61 @@ check_bullet_player_collisions ( bullet* CurBullet , int num )
 void
 check_bullet_enemy_collisions ( bullet* CurBullet , int num )
 {
-  int i;
-  double xdist, ydist;
-  int level = CurBullet -> pos.z ;
-  static int FBTZaehler = 0;
-  enemy* ThisRobot;
-  char game_message_text[5000];
+    int i;
+    double xdist, ydist;
+    int level = CurBullet -> pos.z ;
+    static int FBTZaehler = 0;
+    enemy* ThisRobot;
+    char game_message_text[5000];
+    int reward;
 
-  //--------------------
-  // Check for collision with enemys
-  //
-  ThisRobot = & ( AllEnemys [ 0 ] ) ;
-  ThisRobot -- ;
-  for (i = 0; i < Number_Of_Droids_On_Ship; i++)
+    //--------------------
+    // Check for collision with enemys
+    //
+    ThisRobot = & ( AllEnemys [ 0 ] ) ;
+    ThisRobot -- ;
+    for ( i = 0; i < Number_Of_Droids_On_Ship; i++ )
     {
-      ThisRobot ++ ;
-      if ( ThisRobot -> Status == OUT || ThisRobot -> pos . z != level)
-	continue;
-      
-      xdist = CurBullet->pos.x - ThisRobot -> pos . x;
-      ydist = CurBullet->pos.y - ThisRobot -> pos . y;
-      
-      if ( (xdist * xdist + ydist * ydist) < DRUIDHITDIST2 )
+	ThisRobot ++ ;
+	if ( ThisRobot -> Status == OUT || ThisRobot -> pos . z != level)
+	    continue;
+	
+	xdist = CurBullet->pos.x - ThisRobot -> pos . x;
+	ydist = CurBullet->pos.y - ThisRobot -> pos . y;
+	
+	if ( (xdist * xdist + ydist * ydist) < DRUIDHITDIST2 )
 	{
 #ifdef USE_MISS_HIT_ARRAYS
-	  if ( CurBullet->total_miss_hit[ i ] == UNCHECKED )
+	    if ( CurBullet->total_miss_hit[ i ] == UNCHECKED )
 	    {
-	      if ( MyRandom ( 100 ) < CurBullet->to_hit + Druidmap [ ThisRobot -> type ] . getting_hit_modifier )
+		if ( MyRandom ( 100 ) < CurBullet->to_hit + Druidmap [ ThisRobot -> type ] . getting_hit_modifier )
 		{
-		  CurBullet->total_miss_hit[ i ] = HIT;
+		    CurBullet->total_miss_hit[ i ] = HIT;
 #endif
-		  //--------------------
-		  // The enemy who was hit, loses some energy, depending on the bullet, and 
-		  // also gets stunned from the hit, which only means that the enemy can't
-		  // fire immediately now but takes (double?) normal time for the next shot.
-		  //
-		  ThisRobot -> energy -= CurBullet->damage;		  
-		  enemy_spray_blood ( ThisRobot ) ;
-
-		  //--------------------
-		  // If it was a friend, and the bullet came from Tux, the friend
-		  // might now become very angry...
-		  //
-		  if ( CurBullet -> mine ) 
-		  {
-		      robot_group_turn_hostile ( i );
-		      if ( ThisRobot -> energy < 0 )
-		      {
-			  sprintf ( game_message_text , "%s was destroyed by your bullet." ,
-				    Druidmap [ ThisRobot -> type ] . druidname );
-			  append_new_game_message ( game_message_text );
+		    //--------------------
+		    // The enemy who was hit, loses some energy, depending on the bullet, and 
+		    // also gets stunned from the hit, which only means that the enemy can't
+		    // fire immediately now but takes (double?) normal time for the next shot.
+		    //
+		    ThisRobot -> energy -= CurBullet->damage;		  
+		    enemy_spray_blood ( ThisRobot ) ;
+		    
+		    //--------------------
+		    // If it was a friend, and the bullet came from Tux, the friend
+		    // might now become very angry...
+		    //
+		    if ( CurBullet -> mine ) 
+		    {
+			robot_group_turn_hostile ( i );
+			if ( ThisRobot -> energy < 0 )
+			{
+			    reward = Druidmap [ ThisRobot -> type ] . experience_reward;
+			    Me [ 0 ] . Experience += reward;
+			    sprintf ( game_message_text , 
+				      "%s was destroyed by your bullet.  For defeating your enemy, you receive %d experience." ,
+				      Druidmap [ ThisRobot -> type ] . druidname , 
+				      reward );
+			    append_new_game_message ( game_message_text );
 		      }
 		  }
 		  else

@@ -798,6 +798,7 @@ typedef struct
     double Parameter2;            // This contains special information for AdvancedCommand
     
     int is_friendly;              // is this a friendly droid or is it a MS controlled one?
+    int has_been_taken_over;      // has the Tux made this a friendly bot via takeover subgame?
     int attack_target_type ;      // attack NOTHING, PLAYER12345, or BOT
     int attack_target_index ;     // index of player or of enemy or eventually also (-1) in case there is no target
     int attack_run_only_when_direct_line; // require direct line to target before switching into attach run mode
