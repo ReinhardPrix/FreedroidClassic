@@ -125,6 +125,7 @@ read_variable (char *data, char *var_name, char *fmt, void *var)
 #define TAKEOVER_ACTIVATES           "TakeoverActivates"
 #define SHOW_DECALS                  "ShowDecals"
 #define ALL_MAP_VISIBLE              "AllMapVisible"
+#define VID_SCALE_FACTOR             "Vid_ScaleFactor"
 
 /*----------------------------------------------------------------------
  * LoadGameConfig(): load saved options from config-file
@@ -216,6 +217,7 @@ Cannot Load or Save settings.\n");
   read_variable (data, TAKEOVER_ACTIVATES,       "%d", &GameConfig.TakeoverActivates);
   read_variable (data, SHOW_DECALS,              "%d", &GameConfig.ShowDecals);
   read_variable (data, ALL_MAP_VISIBLE,          "%d", &GameConfig.AllMapVisible);
+  read_variable (data, VID_SCALE_FACTOR,         "%d", &GameConfig.vid_ScaleFactor);
 
   free (data);
 
@@ -260,6 +262,7 @@ SaveGameConfig (void)
   fprintf (fp, "%s = %d\n", TAKEOVER_ACTIVATES, GameConfig.TakeoverActivates);
   fprintf (fp, "%s = %d\n", SHOW_DECALS, GameConfig.ShowDecals);
   fprintf (fp, "%s = %d\n", ALL_MAP_VISIBLE, GameConfig.AllMapVisible);
+  fprintf (fp, "%s = %f\n", VID_SCALE_FACTOR, GameConfig.vid_ScaleFactor);
 
   fclose (fp);
   return (OK);

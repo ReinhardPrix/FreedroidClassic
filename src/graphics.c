@@ -43,6 +43,8 @@
 #include "text.h"
 #include "SDL_rotozoom.h"
 
+const SDL_VideoInfo *vid_info;/* info about current video mode */
+
 void PutPixel (SDL_Surface * surface, int x, int y, Uint32 pixel);
 int Load_Fonts (void);
 SDL_Surface *Load_Block (char *fpath, int line, int col, SDL_Rect * block, int flags);
@@ -270,10 +272,10 @@ DrawLineBetweenTiles( float x1 , float y1 , float x2 , float y2 , int Color )
 	  y2=tmp;
 	}
 
-      for ( i=0 ; i < (y2 - y1) * Block_Width ; i++ )
+      for ( i=0 ; i < (y2 - y1) * Block_Rect.w ; i++ )
 	{
-	  pixx = User_Rect.x + User_Rect.w/2 - Block_Width * (Me.pos.x - x1 );
-	  pixy = USER_FENSTER_CENTER_Y - Block_Height * (Me.pos.y - y1 ) + i ;
+	  pixx = User_Rect.x + User_Rect.w/2 - Block_Rect.w * (Me.pos.x - x1 );
+	  pixy = UserCenter_y - Block_Rect.h * (Me.pos.y - y1 ) + i ;
 	  if ( (pixx <= User_Rect.x) || 
 	       (pixx >= User_Rect.x + User_Rect.w -1) || 
 	       (pixy <= User_Rect.y ) || 
@@ -300,10 +302,10 @@ DrawLineBetweenTiles( float x1 , float y1 , float x2 , float y2 , int Color )
   // SDL_LockSurface( ne_screen );
 
   slope = ( y2 - y1 ) / (x2 - x1) ;
-  for ( i=0 ; i<(x2-x1)*Block_Width ; i++ )
+  for ( i=0 ; i<(x2-x1)*Block_Rect.w ; i++ )
     {
-      pixx=User_Rect.x + User_Rect.w/2 - Block_Width * (Me.pos.x - x1 ) + i;
-      pixy= USER_FENSTER_CENTER_Y - Block_Height * (Me.pos.y - y1 ) + i * slope ;
+      pixx=User_Rect.x + User_Rect.w/2 - Block_Rect.w * (Me.pos.x - x1 ) + i;
+      pixy= UserCenter_y - Block_Rect.h * (Me.pos.y - y1 ) + i * slope ;
       if ( (pixx <= User_Rect.x) || 
 	   (pixx >= User_Rect.x + User_Rect.w -1) || 
 	   (pixy <= User_Rect.y ) || 
@@ -407,12 +409,19 @@ void DisplayImage( char *datafile )
  * the combat picture to a new scale.  The new scale is relative to the
  * standard scale with means scale=1 is 64x64 tile size.
  *
+ * in the first call we assume the Block_Rect to be the original game-size
+ * and store this value for future rescalings
  ----------------------------------------------------------------------*/
 void 
 SetCombatScaleTo(float scale)
 {
   int i, j;
+  static SDL_Rect origBlock;
+  static bool firstcall = TRUE;
   SDL_Surface *tmp;
+
+  if (firstcall) Copy_Rect (Block_Rect, origBlock);   // keep that as a backup
+  firstcall = FALSE;
 
   for ( j=0 ; j < NUM_COLORS ; j++ )
     for ( i = 0 ; i < NUM_MAP_BLOCKS ; i++ )
@@ -427,9 +436,8 @@ SetCombatScaleTo(float scale)
 	SDL_FreeSurface(tmp); // free the old surface
       }
 
-
-  Block_Width = INITIAL_BLOCK_WIDTH * scale;
-  Block_Height= INITIAL_BLOCK_HEIGHT* scale;
+  Copy_Rect (origBlock, Block_Rect);   // always scale with respect to original size!
+  ScaleRect(Block_Rect, scale);
 
   return;
 
@@ -555,7 +563,6 @@ InitPictures (void)
   char *fpath;
   int line, col, i;
   BFont_Info *oldfont;
-  SDL_Rect StdBlock, DigitBlock;
   SDL_Surface *tmp_surf;
   char fname[500];
 
@@ -566,17 +573,10 @@ InitPictures (void)
 
   oldfont = GetCurrentFont ();
 
-  // Important: Global variable containing the _actual_ block-sizes
-  Block_Width = INITIAL_BLOCK_WIDTH;
-  Block_Height = INITIAL_BLOCK_HEIGHT;
-
-  Set_Rect (StdBlock, 0, 0, Block_Width, Block_Height);
-  Set_Rect (DigitBlock, 0,0,INITIAL_DIGIT_WIDTH, INITIAL_DIGIT_HEIGHT);
-
   Load_Fonts ();
 
   SetCurrentFont (FPS_Display_BFont);
-  printf_SDL (ne_screen, User_Rect.x + 50, SCREENHEIGHT - 100, "Loading Theme config ...");
+  printf_SDL (ne_screen, User_Rect.x + 50, Screen_Rect.h - 100, "Loading Theme config ...");
 
   LoadThemeConfigurationFile();
 
@@ -590,7 +590,7 @@ InitPictures (void)
     for (col = 0; col < NUM_MAP_BLOCKS; col ++)
       {
 	FreeIfUsed (MapBlockSurfacePointer[line][col]);
-	MapBlockSurfacePointer[line][col] = Load_Block (NULL, line, col, &StdBlock,0);
+	MapBlockSurfacePointer[line][col] = Load_Block (NULL, line, col, &Block_Rect,0);
 	OrigMapBlockSurfacePointer[line][col] = MapBlockSurfacePointer[line][col];
       }
   printf_SDL (ne_screen, -1, -1, ".");
@@ -601,10 +601,10 @@ InitPictures (void)
     {
       FreeIfUsed (InfluencerSurfacePointer[col]);
       FreeIfUsed (EnemySurfacePointer[col]);
-      InfluencerSurfacePointer[col] = Load_Block (NULL, 0, col, &StdBlock, 0);
+      InfluencerSurfacePointer[col] = Load_Block (NULL, 0, col, &Block_Rect, 0);
       /* Influence pics are only used in _internal_ blits ==> clear per-surf alpha */
       SDL_SetAlpha (InfluencerSurfacePointer[col], 0, 0); 
-      EnemySurfacePointer[col] = Load_Block (NULL, 1, col, &StdBlock, 0);
+      EnemySurfacePointer[col] = Load_Block (NULL, 1, col, &Block_Rect, 0);
     }
 
   //  SDL_SetAlpha( Me.pic, SDL_SRCALPHA, SDL_ALPHA_OPAQUE);
@@ -617,7 +617,7 @@ InitPictures (void)
     for (col = 0; col < Bulletmap[line].phases; col ++)
       {
 	FreeIfUsed (Bulletmap[line].SurfacePointer[col]);
-	Bulletmap[line].SurfacePointer[col] = Load_Block (NULL, line, col, &StdBlock, 0);
+	Bulletmap[line].SurfacePointer[col] = Load_Block (NULL, line, col, &Block_Rect, 0);
       }
   printf_SDL (ne_screen, -1, -1, ".");
 
@@ -628,7 +628,7 @@ InitPictures (void)
     for (col = 0; col < Blastmap[line].phases; col ++)
       {
 	FreeIfUsed (Blastmap[line].SurfacePointer[col]);
-	Blastmap[line].SurfacePointer[col] = Load_Block (NULL, line, col, &StdBlock, 0);
+	Blastmap[line].SurfacePointer[col] = Load_Block (NULL, line, col, &Block_Rect, 0);
       }
   printf_SDL (ne_screen, -1, -1, ".");
   //---------- get Digit blocks
@@ -637,9 +637,9 @@ InitPictures (void)
   for (col = 0; col < 10; col++)
     {
       FreeIfUsed (InfluDigitSurfacePointer[col]);
-      InfluDigitSurfacePointer[col] = Load_Block (NULL, 0, col, &DigitBlock, 0);
+      InfluDigitSurfacePointer[col] = Load_Block (NULL, 0, col, &Digit_Rect, 0);
       FreeIfUsed (EnemyDigitSurfacePointer[col]);
-      EnemyDigitSurfacePointer[col] = Load_Block (NULL, 0, col + 10, &DigitBlock, 0);
+      EnemyDigitSurfacePointer[col] = Load_Block (NULL, 0, col + 10, &Digit_Rect, 0);
     }
   printf_SDL (ne_screen, -1, -1, ".");
 
@@ -656,7 +656,7 @@ InitPictures (void)
   if (first_call)
     {
       //  create the local influ-pic storage by reading a  dummy-block 
-      tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, screen_bpp, 0, 0, 0, 0);
+      tmp_surf = SDL_CreateRGBSurface( 0 , Block_Rect.w, Block_Rect.h, screen_bpp, 0, 0, 0, 0);
       Me.pic = SDL_DisplayFormatAlpha( tmp_surf ); 
       SDL_FreeSurface (tmp_surf);
       
@@ -717,8 +717,8 @@ InitPictures (void)
       else
 	{
 	  Load_Block (fpath, 0, 0, NULL, INIT_ONLY);
-	  Decal_pics[0] = Load_Block (NULL, 0, 0, &StdBlock, 0);
-	  Decal_pics[1] = Load_Block (NULL, 0, 1, &StdBlock, 0);
+	  Decal_pics[0] = Load_Block (NULL, 0, 0, &Block_Rect, 0);
+	  Decal_pics[1] = Load_Block (NULL, 0, 1, &Block_Rect, 0);
 	}
 
     } // if first_call
@@ -855,8 +855,6 @@ Load_Block (char *fpath, int line, int col, SDL_Rect * block, int flags)
 void
 Init_Video (void)
 {
-  const SDL_VideoInfo *vid_info;
-  SDL_Rect **vid_modes;
   char vid_driver[81];
   Uint32 flags;  /* flags for SDL video mode */
   char *fpath;
@@ -887,10 +885,8 @@ Init_Video (void)
   vid_info = SDL_GetVideoInfo (); /* just curious */
   SDL_VideoDriverName (vid_driver, 80);
   
-  flags = SDL_SWSURFACE | SDL_HWPALETTE ;
+  flags = SDL_HWSURFACE | SDL_DOUBLEBUF;
   if (GameConfig.UseFullscreen) flags |= SDL_FULLSCREEN;
-
-  vid_modes = SDL_ListModes (NULL, SDL_SWSURFACE);
 
   if (vid_info->wm_available)  /* if there's a window-manager */
     {
@@ -899,27 +895,18 @@ Init_Video (void)
       if (fpath) SDL_WM_SetIcon( IMG_Load (fpath), NULL);
     }
 
-
-  /* 
-   * currently only the simple 320x200 mode is supported for 
-   * simplicity, as all our graphics are in this format
-   * once this is up and running, we'll provide others modes
-   * as well.
-   */
   screen_bpp = 16; /* start with the simplest */
 
-  #define SCALE_FACTOR 2
-
-  if( !(ne_screen = SDL_SetVideoMode ( SCREENLEN, SCREENHEIGHT , 0 , flags)) )
+  if( !(ne_screen = SDL_SetVideoMode ( Screen_Rect.w, Screen_Rect.h , 0 , flags)) )
     {
-      fprintf(stderr, "Couldn't set (2*) 320x240*SCALE_FACTOR video mode: %s\n",
-	      SDL_GetError()); 
+      DebugPrintf (0, "ERORR: Couldn't set %d x %d video mode. SDL: %s\n",
+		   Screen_Rect.w, Screen_Rect.h, SDL_GetError()); 
       exit(-1);
     }
 
-  ne_vid_info = SDL_GetVideoInfo (); /* info about current video mode */
+  vid_info = SDL_GetVideoInfo (); /* info about current video mode */
 
-  TransparentPixel = SDL_MapRGB(ne_screen->format, 0, 0, 0); // colorkey = black at the mo
+  DebugPrintf(1, "Got video mode: ");
 
   SDL_SetGamma( 1 , 1 , 1 );
   GameConfig.Current_Gamma_Correction=1;

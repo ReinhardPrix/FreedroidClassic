@@ -309,8 +309,8 @@ DisplayText (char *Text, int startx, int starty, const SDL_Rect *clip)
       clip = & Temp_Clipping_Rect;
       Temp_Clipping_Rect.x=0;
       Temp_Clipping_Rect.y=0;
-      Temp_Clipping_Rect.w=SCREENLEN;
-      Temp_Clipping_Rect.h=SCREENHEIGHT;
+      Temp_Clipping_Rect.w=Screen_Rect.w;
+      Temp_Clipping_Rect.h=Screen_Rect.h;
     }
 
 
@@ -465,8 +465,8 @@ GetString (int MaxLen, int echo)
   y0 = MyCursorY;
   height = FontHeight (GetCurrentFont());
   
-  store = SDL_CreateRGBSurface(0, SCREENLEN, height, screen_bpp, 0, 0, 0, 0);
-  Set_Rect (store_rect, x0, y0, SCREENLEN, height);
+  store = SDL_CreateRGBSurface(0, Screen_Rect.w, height, screen_bpp, 0, 0, 0, 0);
+  Set_Rect (store_rect, x0, y0, Screen_Rect.w, height);
   SDL_BlitSurface (ne_screen, &store_rect, store, NULL);
 
   /* Speicher fuer Eingabe reservieren */

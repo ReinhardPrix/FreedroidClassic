@@ -56,12 +56,6 @@ void CreateWaypoint (level *level, int BlockX, int BlockY);
 void GraphicsSound_Options_Menu (void);
 void On_Screen_Display_Options_Menu (void);
 
-#define FIRST_MENU_ITEM_POS_X (2*INITIAL_BLOCK_WIDTH)
-#define FIRST_MENU_ITEM_POS_Y (USERFENSTERPOSY + FontHeight(Menu_BFont))
-#define OPTIONS_MENU_ITEM_POS_X (UserCenter_x - 120)
-#define FIRST_MIS_SELECT_ITEM_POS_X 0.0
-#define FIRST_MIS_SELECT_ITEM_POS_Y (USERFENSTERPOSY + FontHeight(Menu_BFont))
-
 EXTERN int MyCursorX;
 EXTERN int MyCursorY;
 
@@ -164,19 +158,19 @@ EscapeMenu (void)
       key = FALSE;
       SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
 
-      PutInfluence (FIRST_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y + (MenuPosition-1.5)*fheight);
+      PutInfluence (Menu_Rect.x, Menu_Rect.y + (MenuPosition-1.5)*fheight);
 
 
       pos = 0;
 
-      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X,FIRST_MENU_ITEM_POS_Y+(pos++)*fheight, "Back to Game");
-      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X,FIRST_MENU_ITEM_POS_Y+(pos++)*fheight,"Graphics & Sound" );
-      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X,FIRST_MENU_ITEM_POS_Y+(pos++)*fheight,"On-Screen Displays" );
-      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X,FIRST_MENU_ITEM_POS_Y+(pos++)*fheight,"Legacy Options");
-      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X,FIRST_MENU_ITEM_POS_Y+(pos++)*fheight, "Level Editor");
-      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X,FIRST_MENU_ITEM_POS_Y+(pos++)*fheight, "Highscores");
-      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X,FIRST_MENU_ITEM_POS_Y +(pos++)*fheight, "Credits");
-      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X,FIRST_MENU_ITEM_POS_Y +(pos++)*fheight, "Quit Game");
+      PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight, "Back to Game");
+      PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight,"Graphics & Sound" );
+      PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight,"On-Screen Displays" );
+      PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight,"Legacy Options");
+      PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight, "Level Editor");
+      PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight, "Highscores");
+      PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y +(pos++)*fheight, "Credits");
+      PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y +(pos++)*fheight, "Quit Game");
 
       SDL_Flip( ne_screen );
 
@@ -311,28 +305,28 @@ enum
 
 
 
-      PutInfluence( FIRST_MENU_ITEM_POS_X,
-		    FIRST_MENU_ITEM_POS_Y + ( MenuPosition - 1.5 ) *fheight);
+      PutInfluence( Menu_Rect.x,
+		    Menu_Rect.y + ( MenuPosition - 1.5 ) *fheight);
       pos = 0;
 
-      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+(pos++)*fheight, 
+      PutString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+(pos++)*fheight, 
 		 "Set to Strictly Classic");
 
-      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+(pos++)*fheight, window_string);
-      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+(pos++)*fheight, theme_string);
+      PutString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+(pos++)*fheight, window_string);
+      PutString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+(pos++)*fheight, theme_string);
 
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+(pos++)*fheight,
+      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+(pos++)*fheight,
 		   "Droid Talk : %s", GameConfig.Droid_Talk ? "ON" : "OFF");
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+(pos++)*fheight,
+      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+(pos++)*fheight,
 		   "Show Decals : %s", GameConfig.ShowDecals ? "ON" : "OFF");
 
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+(pos++)*fheight,
+      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+(pos++)*fheight,
 		   "All Map Visible: %s", GameConfig.AllMapVisible ? "ON" : "OFF");
 
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+(pos++)*fheight,
+      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+(pos++)*fheight,
 		   "Transfer = Activate: %s", GameConfig.TakeoverActivates ? "YES":"NO" );
 
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+(pos++)*fheight, 
+      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+(pos++)*fheight, 
 		   "Back");
 
       SDL_Flip( ne_screen );
@@ -523,17 +517,17 @@ enum
       key = FALSE;
       SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
 
-      PutInfluence (FIRST_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+ (MenuPosition-1.5)*fheight);
+      PutInfluence (Menu_Rect.x, Menu_Rect.y+ (MenuPosition-1.5)*fheight);
 
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+0*fheight, 
+      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+0*fheight, 
 		   "Background Music: %1.2f" , GameConfig.Current_BG_Music_Volume );
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+1*fheight,  
+      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+1*fheight,  
 		   "Sound Effects: %1.2f", GameConfig.Current_Sound_FX_Volume );
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+2*fheight,  
+      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+2*fheight,  
 		   "Gamma: %1.2f", GameConfig.Current_Gamma_Correction );
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+3*fheight, 
+      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+3*fheight, 
 		   "Fullscreen Mode: %s", GameConfig.UseFullscreen ? "ON" : "OFF");
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+4*fheight, "Back");
+      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+4*fheight, "Back");
       SDL_Flip( ne_screen );
 
       while (!key)
@@ -676,18 +670,18 @@ enum
       key = FALSE;
       SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
       
-      PutInfluence (FIRST_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y + (MenuPosition-1.5)*fheight);
+      PutInfluence (Menu_Rect.x, Menu_Rect.y + (MenuPosition-1.5)*fheight);
 
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+0*fheight, 
+      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+0*fheight, 
 		   "Show Position: %s", GameConfig.Draw_Position ? "ON" : "OFF");
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+1*fheight,
+      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+1*fheight,
 		   "Show Framerate: %s", GameConfig.Draw_Framerate? "ON" : "OFF");
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+2*fheight,
+      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+2*fheight,
 		   "Show Energy: %s", GameConfig.Draw_Energy? "ON" : "OFF");
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+3*fheight,
+      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+3*fheight,
 		   "Show DeathCount: %s", GameConfig.Draw_DeathCount ? "ON" : "OFF");
 
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+4*fheight, "Back");
+      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+4*fheight, "Back");
 
       SDL_Flip( ne_screen );
 
@@ -769,7 +763,7 @@ Credits_Menu (void)
   SDL_Rect screen;
   h = FontHeight(Menu_BFont);
   
-  Copy_Rect (Full_Screen_Rect, screen);
+  Copy_Rect (Screen_Rect, screen);
   SDL_SetClipRect( ne_screen, NULL );
   DisplayImage ( find_file(CREDITS_PIC_FILE, GRAPHICS_DIR, NO_THEME, CRITICAL) );
   MakeGridOnScreen (&screen);
@@ -828,57 +822,57 @@ Highlight_Current_Block(void)
 
   SDL_LockSurface( ne_screen );
 
-  for (i=0; i<Block_Width; i++)
+  for (i=0; i<Block_Rect.w; i++)
     {
       // This draws a (double) line at the upper border of the current block
       putpixel( ne_screen , 
-		i + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , 
-		USER_FENSTER_CENTER_Y + ( rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height , 
+		i + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Rect.w , 
+		UserCenter_y + ( rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Rect.h , 
 		HIGHLIGHTCOLOR );
       putpixel( ne_screen , 
-		i + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , 
-		USER_FENSTER_CENTER_Y + ( rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + 1 , 
+		i + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Rect.w , 
+		UserCenter_y + ( rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Rect.h + 1 , 
 		HIGHLIGHTCOLOR );
 
       // This draws a line at the lower border of the current block
       putpixel( ne_screen , 
-		i + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , 
-		USER_FENSTER_CENTER_Y + ( rintf(Me.pos.y)-Me.pos.y + 0.5 ) * Block_Height - 1, 
+		i + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Rect.w , 
+		UserCenter_y + ( rintf(Me.pos.y)-Me.pos.y + 0.5 ) * Block_Rect.h - 1, 
 		HIGHLIGHTCOLOR );
       putpixel( ne_screen , 
-		i + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , 
-		USER_FENSTER_CENTER_Y + ( rintf(Me.pos.y)-Me.pos.y + 0.5 ) * Block_Height - 2, 
+		i + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Rect.w , 
+		UserCenter_y + ( rintf(Me.pos.y)-Me.pos.y + 0.5 ) * Block_Rect.h - 2, 
 		HIGHLIGHTCOLOR );
 
       // This draws a line at the left border of the current block
       putpixel( ne_screen , 
-		0 + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , 
-		USER_FENSTER_CENTER_Y + ( rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , 
-		// User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , 
+		0 + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Rect.w , 
+		UserCenter_y + ( rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Rect.h + i , 
+		// User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Rect.h + i , 
 		HIGHLIGHTCOLOR );
       putpixel( ne_screen , 
-		1 + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , 
-		USER_FENSTER_CENTER_Y + ( rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , 
-		// User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , 
+		1 + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Rect.w , 
+		UserCenter_y + ( rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Rect.h + i , 
+		// User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Rect.h + i , 
 		HIGHLIGHTCOLOR );
 
       // This draws a line at the right border of the current block
       putpixel( ne_screen , 
-		-1 + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x + 0.5) * Block_Width , 
-		USER_FENSTER_CENTER_Y + ( rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , 
-		// User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , 
+		-1 + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x + 0.5) * Block_Rect.w , 
+		UserCenter_y + ( rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Rect.h + i , 
+		// User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Rect.h + i , 
 		HIGHLIGHTCOLOR );
       putpixel( ne_screen , 
-		-2 + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x + 0.5) * Block_Width , 
-		USER_FENSTER_CENTER_Y + ( rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , 
-		// User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , 
+		-2 + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x + 0.5) * Block_Rect.w , 
+		UserCenter_y + ( rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Rect.h + i , 
+		// User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Rect.h + i , 
 		HIGHLIGHTCOLOR );
 
       /*
-	      TargetRectangle.x = USER_FENSTER_CENTER_X 
-		+ ( -Me.pos.x+col-0.5 )*Block_Width;
-	      TargetRectangle.y = USER_FENSTER_CENTER_Y
-		+ ( -Me.pos.y+line-0.5 )*Block_Height;
+	      TargetRectangle.x = UserCenter_x 
+		+ ( -Me.pos.x+col-0.5 )*Block_Rect.w;
+	      TargetRectangle.y = UserCenter_y
+		+ ( -Me.pos.y+line-0.5 )*Block_Rect.h;
 	      SDL_BlitSurface( MapBlockSurfacePointer[ CurLevel->color ][MapBrick] , NULL ,
  			       ne_screen, &TargetRectangle);
       */
@@ -917,28 +911,28 @@ Show_Waypoints(void)
       //--------------------
       // Draw the cross in the middle of the middle of the tile
       //
-      for (i= Block_Width/4; i<3 * Block_Width / 4; i++)
+      for (i= Block_Rect.w/4; i<3 * Block_Rect.w / 4; i++)
 	{
 	  // This draws a (double) line at the upper border of the current block
-	  x = i + User_Rect.x+(User_Rect.w/2)- (( Me.pos.x)-this_wp->x + 0.5) * Block_Width;
-	  y = i + USER_FENSTER_CENTER_Y - (( Me.pos.y)-this_wp->y + 0.5) * Block_Height;
+	  x = i + User_Rect.x+(User_Rect.w/2)- (( Me.pos.x)-this_wp->x + 0.5) * Block_Rect.w;
+	  y = i + UserCenter_y - (( Me.pos.y)-this_wp->y + 0.5) * Block_Rect.h;
 	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
 	  putpixel( ne_screen , x , y , HIGHLIGHTCOLOR );
 
 		    
-	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me.pos.x )-this_wp->x + 0.5) * Block_Width;
-	  y = i + USER_FENSTER_CENTER_Y - (( Me.pos.y)-this_wp->y + 0.5) * Block_Height + 1;
+	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me.pos.x )-this_wp->x + 0.5) * Block_Rect.w;
+	  y = i + UserCenter_y - (( Me.pos.y)-this_wp->y + 0.5) * Block_Rect.h + 1;
 	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
 	  putpixel( ne_screen , x , y , HIGHLIGHTCOLOR );
 	  
 	  // This draws a line at the lower border of the current block
-	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me.pos.x)-this_wp->x + 0.5) * Block_Width;
-	  y = -i + USER_FENSTER_CENTER_Y - (( Me.pos.y )-this_wp->y - 0.5 ) * Block_Height -1;
+	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me.pos.x)-this_wp->x + 0.5) * Block_Rect.w;
+	  y = -i + UserCenter_y - (( Me.pos.y )-this_wp->y - 0.5 ) * Block_Rect.h -1;
 	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
 	  putpixel( ne_screen , x , y , HIGHLIGHTCOLOR );
 
-	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me.pos.x)-this_wp->x + 0.5) * Block_Width;
-	  y = -i + USER_FENSTER_CENTER_Y - ((Me.pos.y)-this_wp->y - 0.5 ) * Block_Height -2;
+	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me.pos.x)-this_wp->x + 0.5) * Block_Rect.w;
+	  y = -i + UserCenter_y - ((Me.pos.y)-this_wp->y - 0.5 ) * Block_Rect.h -2;
 	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
 	  putpixel( ne_screen , x , y , HIGHLIGHTCOLOR );
 	  
@@ -988,7 +982,7 @@ LevelEditor(void)
   int KeymapOffset = 15;
   
   Copy_Rect (User_Rect, rect);
-  Copy_Rect (Full_Screen_Rect, User_Rect);  /// level editor can use the full screen!
+  Copy_Rect (Screen_Rect, User_Rect);  /// level editor can use the full screen!
 
   while ( !Done )
     {
@@ -1286,28 +1280,28 @@ LevelEditMenu (void)
       SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
       usleep(50);
 
-      PutInfluence (FIRST_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y + (MenuPosition-1.5)*fheight);
+      PutInfluence (Menu_Rect.x, Menu_Rect.y + (MenuPosition-1.5)*fheight);
 
       CenteredPutString ( ne_screen ,  1*FontHeight(Menu_BFont),    "LEVEL EDITOR");
 
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 0*fheight, 
+      PrintString (ne_screen, OptionsMenu_Rect.x-xoffs, Menu_Rect.y + 0*fheight, 
 		   "Quit Level Editor");
 
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 1*fheight, 
+      PrintString (ne_screen, OptionsMenu_Rect.x-xoffs, Menu_Rect.y + 1*fheight, 
 		   "Current: %d.  Level +/-" , CurLevel->levelnum );
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 2*fheight, 
+      PrintString (ne_screen, OptionsMenu_Rect.x-xoffs, Menu_Rect.y + 2*fheight, 
 		   "Change level color: %s", ColorNames[CurLevel->color]);
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 3*fheight, 
+      PrintString (ne_screen, OptionsMenu_Rect.x-xoffs, Menu_Rect.y + 3*fheight, 
 		   "Levelsize in X: %d.  -/+" , CurLevel->xlen );
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 4*fheight, 
+      PrintString (ne_screen, OptionsMenu_Rect.x-xoffs, Menu_Rect.y + 4*fheight, 
 		   "Levelsize in Y: %d.  -/+" , CurLevel->ylen );
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 5*fheight, 
+      PrintString (ne_screen, OptionsMenu_Rect.x-xoffs, Menu_Rect.y + 5*fheight, 
 		   "Level name: %s" , CurLevel->Levelname );
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 6*fheight, 
+      PrintString (ne_screen, OptionsMenu_Rect.x-xoffs, Menu_Rect.y + 6*fheight, 
 		   "Background music: %s" , CurLevel->Background_Song_Name );
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 7*fheight, 
+      PrintString (ne_screen, OptionsMenu_Rect.x-xoffs, Menu_Rect.y + 7*fheight, 
 		   "Level Comment: %s" , CurLevel->Level_Enter_Comment );
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 8*fheight, 
+      PrintString (ne_screen, OptionsMenu_Rect.x-xoffs, Menu_Rect.y + 8*fheight, 
 		   "Save ship as  'Testship.shp'");
 
       SDL_Flip ( ne_screen );
@@ -1344,7 +1338,7 @@ LevelEditMenu (void)
 		{
 		  MenuItemSelectedSound();
 		  DisplayText ("New level name: ",
-			       FIRST_MENU_ITEM_POS_X-50, FIRST_MENU_ITEM_POS_X+ 5*fheight, 
+			       Menu_Rect.x-50, Menu_Rect.x+ 5*fheight, 
 			       &Full_User_Rect);
 		  SDL_Flip( ne_screen );
 		  CurLevel->Levelname = GetString(15, 2);
@@ -1356,7 +1350,7 @@ LevelEditMenu (void)
 		{
 		  MenuItemSelectedSound();
 		  DisplayText ("Bg music filename: ", 
-			       FIRST_MENU_ITEM_POS_X-50, FIRST_MENU_ITEM_POS_X+ 5*fheight, 
+			       Menu_Rect.x-50, Menu_Rect.x+ 5*fheight, 
 			       &Full_User_Rect);
 		  SDL_Flip( ne_screen );
 		  CurLevel->Background_Song_Name=GetString(20, 2);
@@ -1367,7 +1361,7 @@ LevelEditMenu (void)
 		{
 		  MenuItemSelectedSound();
 		  DisplayText ("New level-comment :",
-			       FIRST_MENU_ITEM_POS_X-50, FIRST_MENU_ITEM_POS_X+ 5*fheight, 
+			       Menu_Rect.x-50, Menu_Rect.x+ 5*fheight, 
 			       &Full_User_Rect);
 		  SDL_Flip( ne_screen );
 		  CurLevel->Level_Enter_Comment=GetString(15 , FALSE );

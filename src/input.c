@@ -128,6 +128,9 @@ ReactToSpecialKeys(void)
   if ( KeyIsPressedR ('p') )
     Pause ();
 
+  if (KeyIsPressedR (SDLK_F12) )
+    TakeScreenshot();
+
 } // void ReactToSpecialKeys(void)
 
 int 
@@ -268,8 +271,8 @@ keyboard_update(void)
 	  break;
 
 	case SDL_MOUSEMOTION:
-	  input_axis.x = event.button.x - USER_FENSTER_CENTER_X + 16; 
-	  input_axis.y = event.button.y - USER_FENSTER_CENTER_Y + 16; 	  
+	  input_axis.x = event.button.x - UserCenter_x + 16; 
+	  input_axis.y = event.button.y - UserCenter_y + 16; 	  
 
 	  last_mouse_event = SDL_GetTicks ();
 

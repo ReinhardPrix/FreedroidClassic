@@ -511,6 +511,7 @@ char usage_string[] =
                     [-f|--fullscreen] [-w|--window]\n\
                     [-j|--sensitivity]\n\
                     [-d|--debug=LEVEL]\n\
+                    [-r|--scale=RESOLUTION_SCALE]\n\
 \n\
 Please report bugs on our sourceforge-website:\n\
 http://sourceforge.net/projects/freedroid/\n\n";
@@ -526,16 +527,17 @@ parse_command_line (int argc, char *const argv[])
   int timeout_time;		/* timeout to restore text-mode */
 
   static struct option long_options[] = {
-    {"version", 0, 0, 'v'},
-    {"help", 	0, 0, 'h'},
-    {"nosound", 0, 0, 'q'},
-    {"sound", 	0, 0, 's'},
-    {"timeout", 1, 0, 't'},
-    {"debug", 	2, 0, 'd'},
-    {"window",  0, 0, 'w'},
-    {"fullscreen",0,0,'f'},
-    {"sensitivity",1,0,'j'},
-    { 0, 	0, 0,  0}
+    {"version", 	0, 0, 'v'},
+    {"help", 		0, 0, 'h'},
+    {"nosound", 	0, 0, 'q'},
+    {"sound", 		0, 0, 's'},
+    {"timeout", 	1, 0, 't'},
+    {"debug", 		2, 0, 'd'},
+    {"window",  	0, 0, 'w'},
+    {"fullscreen",	0, 0, 'f'},
+    {"sensitivity",	1, 0, 'j'},
+    {"scale",		1, 0, 'r'},
+    { 0, 		0, 0,  0}
   };
 
   //   sound_on=TRUE;
@@ -592,6 +594,10 @@ parse_command_line (int argc, char *const argv[])
 	    debug_level = 1;
 	  else
 	    debug_level = atoi (optarg);
+	  break;
+
+	case 'r':
+	  GameConfig.vid_ScaleFactor = atof(optarg);
 	  break;
 
 	case 'f':
@@ -910,6 +916,7 @@ InitFreedroid (int argc, char *const argv[])
   GameConfig.TakeoverActivates = TRUE;  
   GameConfig.ShowDecals = TRUE;
   GameConfig.AllMapVisible = TRUE;    // classic setting: map always visible
+  GameConfig.vid_ScaleFactor = 1.0;   // overall scaling of _all_ graphics (e.g. for 320x200 displays)
 
   // now load saved options from the config-file
   LoadGameConfig ();
@@ -995,7 +1002,7 @@ Title ( char *MissionBriefingPointer )
   SDL_SetClipRect ( ne_screen, NULL );
   ReadValueFromString (MissionBriefingPointer, BRIEFING_TITLE_PICTURE_STRING, "%s", Buffer);
   DisplayImage ( find_file(Buffer, GRAPHICS_DIR, NO_THEME, CRITICAL) );
-  MakeGridOnScreen( (SDL_Rect*) &Full_Screen_Rect );
+  MakeGridOnScreen( (SDL_Rect*) &Screen_Rect );
   Me.status=BRIEFING;
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE ); 
   SDL_Flip (ne_screen);

@@ -28,13 +28,6 @@
  *           and take into account the AC-defined conditionals
  */
 
-
-
-/* 
- * well, for the time being we actually don't care too much about the 
- * AC-defined conditionals and pretend it's standard linux
- */
-
 #include "config.h"
 
 #include <stdio.h>

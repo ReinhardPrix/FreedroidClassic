@@ -36,14 +36,24 @@
 #define EXTERN extern
 
 EXTERN char ConfigDir[255];
-EXTERN SDL_Rect User_Rect;
-EXTERN const SDL_Rect Classic_User_Rect;
-EXTERN const SDL_Rect Full_User_Rect;
 
-EXTERN const SDL_Rect Full_Screen_Rect;
-EXTERN const SDL_Rect Menu_Rect;
-EXTERN const SDL_Rect Portrait_Rect;
-EXTERN const SDL_Rect Cons_Droid_Rect;
+EXTERN SDL_Rect Block_Rect;
+EXTERN SDL_Rect Screen_Rect;
+EXTERN SDL_Rect User_Rect;
+EXTERN SDL_Rect Classic_User_Rect;
+EXTERN SDL_Rect Full_User_Rect;
+EXTERN SDL_Rect Banner_Rect;
+EXTERN SDL_Rect Portrait_Rect;
+EXTERN SDL_Rect Cons_Droid_Rect;
+EXTERN SDL_Rect Menu_Rect;
+EXTERN SDL_Rect OptionsMenu_Rect;
+EXTERN SDL_Rect Digit_Rect;
+
+EXTERN SDL_Rect Cons_Header_Rect;
+EXTERN SDL_Rect Cons_Menu_Rect;
+EXTERN SDL_Rect Cons_Text_Rect;
+EXTERN SDL_Rect Cons_Menu_Rects[4];
+
 
 EXTERN float LastRefreshSound;
 EXTERN float LastGotIntoBlastSound;
@@ -166,18 +176,13 @@ EXTERN SDL_Surface *OrigMapBlockSurfacePointer[ NUM_COLORS ][ NUM_MAP_BLOCKS ]; 
 
 EXTERN int BannerIsDestroyed;
 
-EXTERN int Block_Width;
-EXTERN int Block_Height;
-
 EXTERN int First_Digit_Pos_X;
 EXTERN int First_Digit_Pos_Y;
 EXTERN int Second_Digit_Pos_X;
 EXTERN int Second_Digit_Pos_Y;
 EXTERN int Third_Digit_Pos_X;
 EXTERN int Third_Digit_Pos_Y;
-EXTERN const SDL_VideoInfo *ne_vid_info;/* info about current video mode */
 EXTERN int screen_bpp; 			/* bits per pixel */
-EXTERN Uint32 TransparentPixel;           // pixel-value of our transparent color
 
 EXTERN SDL_Surface *banner_pic;      /* the banner pic */
 EXTERN SDL_Surface *pic999;

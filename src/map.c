@@ -1286,8 +1286,8 @@ MoveLevelDoors (void)
 
       Pos = &(CurLevel->map[doory][doorx]);
 
-      // NORMALISATION doorx = doorx * Block_Width + Block_Width / 2;
-      // NORMALISATION doory = doory * Block_Height + Block_Height / 2;
+      // NORMALISATION doorx = doorx * Block_Rect.w + Block_Rect.w / 2;
+      // NORMALISATION doory = doory * Block_Rect.h + Block_Rect.h / 2;
 
       /* first check Influencer gegen Tuer */
       xdist = Me.pos.x - doorx;
@@ -1310,10 +1310,10 @@ MoveLevelDoors (void)
 		continue;
 
 	      xdist = abs (AllEnemys[j].pos.x - doorx);
-	      if (xdist < Block_Width)
+	      if (xdist < Block_Rect.w)
 		{
 		  ydist = abs (AllEnemys[j].pos.y - doory);
-		  if (ydist < Block_Height)
+		  if (ydist < Block_Rect.h)
 		    {
 		      dist2 = xdist * xdist + ydist * ydist;
 		      if (dist2 < DOOROPENDIST2)
@@ -1440,8 +1440,8 @@ IsPassable (float x, float y, int Checkpos)
 	  ret = CENTER;
 	  break;
 	}
-      //NORMALISATION      if (fx > (Block_Width - KONSOLEPASS_X))
-      if (fx > (1 - KONSOLEPASS_X))
+      //NORMALISATION      if (fx > (Block_Rect.w - KONSOLEPASS_X))
+      if (fx > (1.0 - KONSOLEPASS_X))
 	ret = CENTER;
       else
 	ret = -1;
@@ -1465,7 +1465,7 @@ IsPassable (float x, float y, int Checkpos)
 	  ret = CENTER;
 	  break;
 	}
-      //NORMALISATION if (fy > (Block_Height - KONSOLEPASS_Y))
+      //NORMALISATION if (fy > (Block_Rect.h - KONSOLEPASS_Y))
       if (fy > (1 - KONSOLEPASS_Y))
 	ret = CENTER;
       else
@@ -1485,7 +1485,7 @@ IsPassable (float x, float y, int Checkpos)
       break;
 
     case H_WALL:
-      //NORMALISATION if ((fy < WALLPASS) || (fy > Block_Height - WALLPASS))
+      //NORMALISATION if ((fy < WALLPASS) || (fy > Block_Rect.h - WALLPASS))
       if ((fy < WALLPASS) || (fy > 1 - WALLPASS))
 	ret = CENTER;
       else
@@ -1493,7 +1493,7 @@ IsPassable (float x, float y, int Checkpos)
       break;
 
     case V_WALL:
-      //NORMALISATION if ((fx < WALLPASS) || (fx > Block_Width - WALLPASS))
+      //NORMALISATION if ((fx < WALLPASS) || (fx > Block_Rect.w - WALLPASS))
       if ((fx < WALLPASS) || (fx > 1 - WALLPASS))
 	ret = CENTER;
       else
@@ -1501,9 +1501,9 @@ IsPassable (float x, float y, int Checkpos)
       break;
 
     case ECK_RO:
-      //NORMALISATION if ((fx > Block_Width - WALLPASS) || (fy < WALLPASS) ||
+      //NORMALISATION if ((fx > Block_Rect.w - WALLPASS) || (fy < WALLPASS) ||
       if ((fx > 1 - WALLPASS) || (fy < WALLPASS) ||
-	  //NORMALISATION ((fx < WALLPASS) && (fy > Block_Height - WALLPASS)))
+	  //NORMALISATION ((fx < WALLPASS) && (fy > Block_Rect.h - WALLPASS)))
 	  ((fx < WALLPASS) && (fy > 1 - WALLPASS)))
 	ret = CENTER;
       else
@@ -1511,7 +1511,7 @@ IsPassable (float x, float y, int Checkpos)
       break;
 
     case ECK_RU:
-      //NORMALISATION if ((fx > Block_Width - WALLPASS) || (fy > Block_Height - WALLPASS) ||
+      //NORMALISATION if ((fx > Block_Rect.w - WALLPASS) || (fy > Block_Rect.h - WALLPASS) ||
       if ((fx > 1 - WALLPASS) || (fy > 1 - WALLPASS) ||
 	  ((fx < WALLPASS) && (fy < WALLPASS)))
 	ret = CENTER;
@@ -1520,9 +1520,9 @@ IsPassable (float x, float y, int Checkpos)
       break;
 
     case ECK_LU:
-      //NORMALISATION if ((fx < WALLPASS) || (fy > Block_Height - WALLPASS) ||
+      //NORMALISATION if ((fx < WALLPASS) || (fy > Block_Rect.h - WALLPASS) ||
       if ((fx < WALLPASS) || (fy > 1 - WALLPASS) ||
-	  //NORMALISATION ((fx > Block_Width - WALLPASS) && (fy < WALLPASS)))
+	  //NORMALISATION ((fx > Block_Rect.w - WALLPASS) && (fy < WALLPASS)))
 	  ((fx > 1 - WALLPASS) && (fy < WALLPASS)))
 	ret = CENTER;
       else
@@ -1531,7 +1531,7 @@ IsPassable (float x, float y, int Checkpos)
 
     case ECK_LO:
       if ((fx < WALLPASS) || (fy < WALLPASS) ||
-	  //NORMALISATION ((fx > Block_Width - WALLPASS) && (fy > Block_Height - WALLPASS)))
+	  //NORMALISATION ((fx > Block_Rect.w - WALLPASS) && (fy > Block_Rect.h - WALLPASS)))
 	  ((fx > 1 - WALLPASS) && (fy > 1 - WALLPASS)))
 	ret = CENTER;
       else
@@ -1540,9 +1540,9 @@ IsPassable (float x, float y, int Checkpos)
 
     case T_O:
       if ((fy < WALLPASS) ||
-	  //NORMALISATION ((fy > Block_Height - WALLPASS) &&
+	  //NORMALISATION ((fy > Block_Rect.h - WALLPASS) &&
 	  ((fy > 1 - WALLPASS) &&
-	   //NORMALISATION ((fx < WALLPASS) || (fx > Block_Width - WALLPASS))))
+	   //NORMALISATION ((fx < WALLPASS) || (fx > Block_Rect.w - WALLPASS))))
 	   ((fx < WALLPASS) || (fx > 1 - WALLPASS))))
 	ret = CENTER;
       else
@@ -1550,10 +1550,10 @@ IsPassable (float x, float y, int Checkpos)
       break;
 
     case T_R:
-      //NORMALISATION if ((fx > Block_Width - WALLPASS) ||
+      //NORMALISATION if ((fx > Block_Rect.w - WALLPASS) ||
       if ((fx > 1 - WALLPASS) ||
 	  ((fx < WALLPASS) &&
-	   //NORMALISATION ((fy < WALLPASS) || (fy > Block_Height - WALLPASS))))
+	   //NORMALISATION ((fy < WALLPASS) || (fy > Block_Rect.h - WALLPASS))))
 	   ((fy < WALLPASS) || (fy > 1 - WALLPASS))))
 	ret = CENTER;
       else
@@ -1561,10 +1561,10 @@ IsPassable (float x, float y, int Checkpos)
       break;
 
     case T_U:
-      //NORMALISATION if ((fy > Block_Height - WALLPASS) ||
+      //NORMALISATION if ((fy > Block_Rect.h - WALLPASS) ||
       if ((fy > 1 - WALLPASS) ||
 	  ((fy < WALLPASS) &&
-	   //NORMALISATION ((fx < WALLPASS) || (fx > Block_Width - WALLPASS))))
+	   //NORMALISATION ((fx < WALLPASS) || (fx > Block_Rect.w - WALLPASS))))
 	   ((fx < WALLPASS) || (fx > 1 - WALLPASS))))
 	ret = CENTER;
       else
@@ -1573,9 +1573,9 @@ IsPassable (float x, float y, int Checkpos)
 
     case T_L:
       if ((fx < WALLPASS) ||
-	  //NORMALISATION ((fx > Block_Width - WALLPASS) &&
+	  //NORMALISATION ((fx > Block_Rect.w - WALLPASS) &&
 	  ((fx > 1 - WALLPASS) &&
-	   //NORMALISATION ((fy < WALLPASS) || (fy > Block_Height - WALLPASS))))
+	   //NORMALISATION ((fy < WALLPASS) || (fy > Block_Rect.h - WALLPASS))))
 	   ((fy < WALLPASS) || (fy > 1 - WALLPASS))))
 	ret = CENTER;
       else
@@ -1599,9 +1599,9 @@ IsPassable (float x, float y, int Checkpos)
 	}
 
       /* pruefen, ob Rand der Tuer angefahren */
-      //NORMALISATION if (((fx < H_RANDBREITE) || (fx > (Block_Width - H_RANDBREITE)))
+      //NORMALISATION if (((fx < H_RANDBREITE) || (fx > (Block_Rect.w - H_RANDBREITE)))
       if (((fx < H_RANDBREITE) || (fx > (1 - H_RANDBREITE)))
-	  //NORMALISATION && ((fy >= H_RANDSPACE) && (fy <= (Block_Height - H_RANDSPACE))))
+	  //NORMALISATION && ((fy >= H_RANDSPACE) && (fy <= (Block_Rect.h - H_RANDSPACE))))
 	  && ((fy >= H_RANDSPACE) && (fy <= (1 - H_RANDSPACE))))
 	{
 	  /* DRUIDS: Nur bei Fahrt durch Tuer wegstossen */
@@ -1613,7 +1613,7 @@ IsPassable (float x, float y, int Checkpos)
 		case RECHTSOBEN:
 		case RECHTSUNTEN:
 		case RECHTS:
-		  //NORMALISATION if (fx > Block_Width - H_RANDBREITE)
+		  //NORMALISATION if (fx > Block_Rect.w - H_RANDBREITE)
 		  if (fx > 1 - H_RANDBREITE)
 		    ret = LINKS;
 		  else
@@ -1639,7 +1639,7 @@ IsPassable (float x, float y, int Checkpos)
 	{			/* mitten in der Tuer */
 	  if ((MapBrick == H_GANZTUERE) || (MapBrick == H_HALBTUERE3))
 	    ret = CENTER;	/* Tuer offen */
-	  //NORMALISATION else if ((fy < TUERBREITE) || (fy > Block_Height - TUERBREITE))
+	  //NORMALISATION else if ((fy < TUERBREITE) || (fy > Block_Rect.h - TUERBREITE))
 	  else if ((fy < TUERBREITE) || (fy > 1 - TUERBREITE))
 	    ret = CENTER;	/* Tuer zu, aber noch nicht ganz drin */
 	  else
@@ -1664,9 +1664,9 @@ IsPassable (float x, float y, int Checkpos)
 	}
 
       /* pruefen , ob Rand der Tuer angefahren */
-      //NORMALISATION if ((fy < V_RANDBREITE || fy > (Block_Height - V_RANDBREITE)) &&
+      //NORMALISATION if ((fy < V_RANDBREITE || fy > (Block_Rect.h - V_RANDBREITE)) &&
       if ((fy < V_RANDBREITE || fy > (1 - V_RANDBREITE)) &&
-	  //NORMALISATION (fx >= V_RANDSPACE && fx <= (Block_Width - V_RANDSPACE)))
+	  //NORMALISATION (fx >= V_RANDSPACE && fx <= (Block_Rect.w - V_RANDSPACE)))
 	  (fx >= V_RANDSPACE && fx <= ( 1 - V_RANDSPACE)))
 	{
 
@@ -1687,7 +1687,7 @@ IsPassable (float x, float y, int Checkpos)
 		case RECHTSUNTEN:
 		case LINKSUNTEN:
 		case UNTEN:
-		  //NORMALISATION if (fy > Block_Height - V_RANDBREITE)
+		  //NORMALISATION if (fy > Block_Rect.h - V_RANDBREITE)
 		  if (fy > 1 - V_RANDBREITE)
 		    ret = OBEN;
 		  else
@@ -1705,7 +1705,7 @@ IsPassable (float x, float y, int Checkpos)
 	{			/* mitten in die tuer */
 	  if ((MapBrick == V_GANZTUERE) || (MapBrick == V_HALBTUERE3))
 	    ret = CENTER;	/* Tuer offen */
-	  //NORMALISATION else if ((fx < TUERBREITE) || (fx > Block_Width - TUERBREITE))
+	  //NORMALISATION else if ((fx < TUERBREITE) || (fx > Block_Rect.w - TUERBREITE))
 	  else if ((fx < TUERBREITE) || (fx > 1 - TUERBREITE))
 	    ret = CENTER;	/* tuer zu, aber noch nicht ganz dort */
 	  else

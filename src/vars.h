@@ -32,15 +32,29 @@
  */
 
 // this defines our "Userfenster"
+SDL_Rect Block_Rect = {0, 0, 64, 64};
+SDL_Rect Screen_Rect = {0, 0, 640, 480};
 SDL_Rect User_Rect = {0, 0, 0, 0};
-const SDL_Rect Classic_User_Rect = {USERFENSTERPOSX, USERFENSTERPOSY, 
-			     USERFENSTERBREITE, USERFENSTERHOEHE };
-const SDL_Rect Full_User_Rect = {0, BANNER_HEIGHT, 640, 480 - BANNER_HEIGHT};
+SDL_Rect Classic_User_Rect = {64, 170, 9*64, 4*64}; 
+SDL_Rect Full_User_Rect = {0, 64, 640, 480 - 64};
+SDL_Rect Banner_Rect = {0, 0, 640, 64 };
+SDL_Rect Portrait_Rect = {0, 0, 132, 180};  // for droid-pic display in console
+SDL_Rect Cons_Droid_Rect = {30, 190, 132, 180};
 
-const SDL_Rect Full_Screen_Rect = { 0, 0, SCREENLEN, SCREENHEIGHT };
+SDL_Rect Menu_Rect = {2*64, 180, 640 - 3*64, 480 - 64};
+SDL_Rect OptionsMenu_Rect = {232, 0, 0, 0};
 
-const SDL_Rect Portrait_Rect = {0, 0, 132, 180};  // for droid-pic display in console
-const SDL_Rect Cons_Droid_Rect = {30, 190, 132, 180};
+SDL_Rect Digit_Rect = {0, 0, 16, 18};
+
+SDL_Rect Cons_Header_Rect = {75, 64+40, 640 - 80, 135 - 64};
+SDL_Rect Cons_Menu_Rect = {60, 180, 100, 256};
+SDL_Rect Cons_Text_Rect = {180, 180, 640-185, 480 - 185}; 
+SDL_Rect Cons_Menu_Rects[4] = {
+  {60, 180 + 0*64, 100, 62},
+  {60, 181 + 1*64, 100, 62},
+  {60, 181 + 2*64, 100, 62},
+  {60, 181 + 3*64, 100, 62} };
+
 
 int ShipEmptyCounter = 0;	/* counter to Message: you have won(this ship */
 

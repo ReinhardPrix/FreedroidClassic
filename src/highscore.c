@@ -207,7 +207,7 @@ ShowHighscores (void)
 
   fpath = find_file (HS_BACKGROUND_FILE, GRAPHICS_DIR, NO_THEME, WARNONLY);
   if(fpath) DisplayImage (fpath);
-  MakeGridOnScreen ( (SDL_Rect*) & Full_Screen_Rect );
+  MakeGridOnScreen ( (SDL_Rect*) & Screen_Rect );
   DisplayBanner( NULL , NULL , BANNER_FORCE_UPDATE );
 
   prev_font = GetCurrentFont();
@@ -215,7 +215,7 @@ ShowHighscores (void)
 
   len = CharWidth (GetCurrentFont(), '9'); 
 
-  x0 = SCREENLEN/8;
+  x0 = Screen_Rect.w/8;
   x1 = x0 + 3*len;
   x2 = x1 + 9*len;
   x3 = x2 + MAX_NAME_LEN*len;

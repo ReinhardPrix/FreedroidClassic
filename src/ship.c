@@ -61,16 +61,6 @@ extern bool show_cursor;
 #define MENUTEXT_X	(132 + USERFENSTERPOSX + 5 )
 
 
-SDL_Rect Cons_Header_Rect = {75, BANNER_HEIGHT+40, SCREENLEN - 80, 135 - BANNER_HEIGHT};
-SDL_Rect Cons_Menu_Rect = {60, 180, 100, 256};
-SDL_Rect Cons_Text_Rect = {180, 180, SCREENLEN-185, SCREENHEIGHT - 185}; 
-
-SDL_Rect Cons_Menu_Rects[4] = {
-  {60, 180 + 0*64, 100, 62},
-  {60, 181 + 1*64, 100, 62},
-  {60, 181 + 2*64, 100, 62},
-  {60, 181 + 3*64, 100, 62} };
-
 SDL_Rect up_rect;
 SDL_Rect down_rect;
 SDL_Rect left_rect;
@@ -536,8 +526,8 @@ CursorIsOnRect (SDL_Rect *rect)
 {
   point CurPos;
 
-  CurPos.x = input_axis.x + (USER_FENSTER_CENTER_X - 16);
-  CurPos.y = input_axis.y + (USER_FENSTER_CENTER_Y - 16);
+  CurPos.x = input_axis.x + (UserCenter_x - 16);
+  CurPos.y = input_axis.y + (UserCenter_y - 16);
 
   if ( (CurPos.x >= rect->x) && (CurPos.x <= rect->x + rect->w) )
     if ( (CurPos.y >= rect->y) && (CurPos.y <= rect->y + rect->h) )
@@ -832,7 +822,6 @@ show_droid_portrait (SDL_Rect dst, int droid_type, float cycle_time, int flags)
       // now see if its a jpg, then we add some transparency by color-keying:
       if (IMG_isJPG(packed_portraits[droid_type]))
 	{
-	  // non SDL_SetColorKey (tmp, SDL_SRCCOLORKEY|SDL_RLEACCEL, TransparentPixel);
 	  droid_pics = SDL_DisplayFormat (tmp);
 	} // else assume it's png ;)
       else

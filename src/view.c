@@ -135,8 +135,8 @@ Assemble_Combat_Picture (int mask)
 	    }
 	  
 	  MapBrick = GetMapBrick( CurLevel, col , line );
-	  TargetRectangle.x = USER_FENSTER_CENTER_X + (int)rint( (-Me.pos.x+1.0*col-0.5 )*Block_Width);
-	  TargetRectangle.y = USER_FENSTER_CENTER_Y + (int)rint( (-Me.pos.y+1.0*line-0.5 )*Block_Height);
+	  TargetRectangle.x = UserCenter_x + (int)rint( (-Me.pos.x+1.0*col-0.5 )*Block_Rect.w);
+	  TargetRectangle.y = UserCenter_y + (int)rint( (-Me.pos.y+1.0*line-0.5 )*Block_Rect.h);
 	  SDL_BlitSurface( MapBlockSurfacePointer[CurLevel->color][MapBrick], NULL, ne_screen, &TargetRectangle);
 	}			// for(col) 
     }				// for(line) 
@@ -257,9 +257,9 @@ PutInfluence ( int x, int y)
   SDL_Rect Text_Rect;
   float rest, filt;
 
-  Text_Rect.x=User_Rect.x+(User_Rect.w/2) + Block_Width/3;
-  Text_Rect.y=User_Rect.y+(User_Rect.h/2) - Block_Height/2;
-  Text_Rect.w=User_Rect.w/2 - Block_Width/3;
+  Text_Rect.x=User_Rect.x+(User_Rect.w/2) + Block_Rect.w/3;
+  Text_Rect.y=User_Rect.y+(User_Rect.h/2) - Block_Rect.h/2;
+  Text_Rect.w=User_Rect.w/2 - Block_Rect.w/3;
   Text_Rect.h=User_Rect.h/2;
 
   DebugPrintf (2, "\nvoid PutInfluence(void): real function call confirmed.");
@@ -322,8 +322,8 @@ PutInfluence ( int x, int y)
 
   if ( x == -1 ) 
     {
-      dst.x=USER_FENSTER_CENTER_X - Block_Width/2;
-      dst.y=USER_FENSTER_CENTER_Y - Block_Height/2;
+      dst.x=UserCenter_x - Block_Rect.w/2;
+      dst.y=UserCenter_y - Block_Rect.h/2;
     }
   else
     {
@@ -343,11 +343,11 @@ PutInfluence ( int x, int y)
   if ( ( x == (-1) ) && ( Me.TextVisibleTime < GameConfig.WantedTextVisibleTime ) && GameConfig.Droid_Talk )
     {
       //      PutStringFont ( ne_screen , FPS_Display_BFont , 
-      //		      User_Rect.x+(User_Rect.w/2) + Block_Width/3 , 
-      //		      User_Rect.y+(User_Rect.h/2) - Block_Height/2 ,  
+      //		      User_Rect.x+(User_Rect.w/2) + Block_Rect.w/3 , 
+      //		      User_Rect.y+(User_Rect.h/2) - Block_Rect.h/2 ,  
       //		      Me.TextToBeDisplayed );
       SetCurrentFont( FPS_Display_BFont );
-      DisplayText( Me.TextToBeDisplayed , User_Rect.x+(User_Rect.w/2) + Block_Width/3 , User_Rect.y+(User_Rect.h/2) - Block_Height/2 , &Text_Rect );
+      DisplayText( Me.TextToBeDisplayed , User_Rect.x+(User_Rect.w/2) + Block_Rect.w/3 , User_Rect.y+(User_Rect.h/2) - Block_Rect.h/2 , &Text_Rect );
     }
 
   DebugPrintf (2, "\nvoid PutInfluence(void): enf of function reached.");
@@ -415,10 +415,10 @@ Sorry...\n\
 
   if ( x == (-1) ) 
     {
-      TargetRectangle.x=USER_FENSTER_CENTER_X+ 
-	( (-Me.pos.x+AllEnemys[Enum].pos.x ) ) * Block_Width  -Block_Width/2;
-      TargetRectangle.y=USER_FENSTER_CENTER_Y+ 
-	( (-Me.pos.y+AllEnemys[Enum].pos.y ) ) * Block_Height -Block_Height/2;
+      TargetRectangle.x=UserCenter_x+ 
+	( (-Me.pos.x+AllEnemys[Enum].pos.x ) ) * Block_Rect.w  -Block_Rect.w/2;
+      TargetRectangle.y=UserCenter_y+ 
+	( (-Me.pos.y+AllEnemys[Enum].pos.y ) ) * Block_Rect.h -Block_Rect.h/2;
     }
   else
     {
@@ -434,10 +434,10 @@ Sorry...\n\
   // the combat window, else we blit to the given location.
   if ( x == (-1) )
     {
-      TargetRectangle.x=USER_FENSTER_CENTER_X - 
-	(Me.pos.x-AllEnemys[Enum].pos.x) * Block_Width + First_Digit_Pos_X  - Block_Width/2; 
-      TargetRectangle.y=USER_FENSTER_CENTER_Y - 
-	(Me.pos.y-AllEnemys[Enum].pos.y) * Block_Height + First_Digit_Pos_Y - Block_Height/2;
+      TargetRectangle.x=UserCenter_x - 
+	(Me.pos.x-AllEnemys[Enum].pos.x) * Block_Rect.w + First_Digit_Pos_X  - Block_Rect.w/2; 
+      TargetRectangle.y=UserCenter_y - 
+	(Me.pos.y-AllEnemys[Enum].pos.y) * Block_Rect.h + First_Digit_Pos_Y - Block_Rect.h/2;
     }
   else
     {
@@ -449,10 +449,10 @@ Sorry...\n\
   
   if ( x == (-1) )
     {
-  TargetRectangle.x=USER_FENSTER_CENTER_X - 
-    (Me.pos.x-AllEnemys[Enum].pos.x)*Block_Height + Second_Digit_Pos_X - Block_Width/2;
-  TargetRectangle.y=USER_FENSTER_CENTER_Y - 
-    (Me.pos.y-AllEnemys[Enum].pos.y)*Block_Height + Second_Digit_Pos_Y - Block_Height/2 ;
+  TargetRectangle.x=UserCenter_x - 
+    (Me.pos.x-AllEnemys[Enum].pos.x)*Block_Rect.h + Second_Digit_Pos_X - Block_Rect.w/2;
+  TargetRectangle.y=UserCenter_y - 
+    (Me.pos.y-AllEnemys[Enum].pos.y)*Block_Rect.h + Second_Digit_Pos_Y - Block_Rect.h/2 ;
     }
   else
     {
@@ -464,8 +464,8 @@ Sorry...\n\
 
   if ( x == (-1) )
     {
-      TargetRectangle.x=USER_FENSTER_CENTER_X - (Me.pos.x-AllEnemys[Enum].pos.x)*Block_Width - Block_Width/2 + Third_Digit_Pos_X ;
-      TargetRectangle.y=USER_FENSTER_CENTER_Y - (Me.pos.y-AllEnemys[Enum].pos.y)*Block_Width - Block_Height/2 + Third_Digit_Pos_Y;
+      TargetRectangle.x=UserCenter_x - (Me.pos.x-AllEnemys[Enum].pos.x)*Block_Rect.w - Block_Rect.w/2 + Third_Digit_Pos_X ;
+      TargetRectangle.y=UserCenter_y - (Me.pos.y-AllEnemys[Enum].pos.y)*Block_Rect.w - Block_Rect.h/2 + Third_Digit_Pos_Y;
     }
   else
     {
@@ -487,8 +487,8 @@ Sorry...\n\
        && GameConfig.Droid_Talk )
     {
       PutStringFont ( ne_screen , FPS_Display_BFont , 
-		      User_Rect.x+(User_Rect.w/2) + Block_Width/3 + (AllEnemys[Enum].pos.x - Me.pos.x) * Block_Width , 
-		      User_Rect.y+(User_Rect.h/2) - Block_Height/2 + (AllEnemys[Enum].pos.y - Me.pos.y) * Block_Height ,  
+		      User_Rect.x+(User_Rect.w/2) + Block_Rect.w/3 + (AllEnemys[Enum].pos.x - Me.pos.x) * Block_Rect.w , 
+		      User_Rect.y+(User_Rect.h/2) - Block_Rect.h/2 + (AllEnemys[Enum].pos.y - Me.pos.y) * Block_Rect.h ,  
 		      AllEnemys[Enum].TextToBeDisplayed );
     }
 
@@ -510,8 +510,8 @@ PutAshes (float x, float y)
   if (!GameConfig.ShowDecals)
     return;
 
-  dst.x = USER_FENSTER_CENTER_X + ( -Me.pos.x + x ) * Block_Width  -Block_Width/2;
-  dst.y = USER_FENSTER_CENTER_Y + ( -Me.pos.y + y ) * Block_Height -Block_Height/2;
+  dst.x = UserCenter_x + ( -Me.pos.x + x ) * Block_Rect.w  -Block_Rect.w/2;
+  dst.y = UserCenter_y + ( -Me.pos.y + y ) * Block_Rect.h -Block_Rect.h/2;
   SDL_BlitSurface( Decal_pics[0], NULL , ne_screen, &dst);
 
   return;
@@ -586,28 +586,28 @@ PutBullet (int BulletNummer)
     }
 
   // WARNING!!! PAY ATTENTION HERE!! After the rotozoom was applied to the image, it is NO
-  // LONGER of dimension Block_Width times Block_Height, but of the dimesions of the smallest
-  // rectangle containing the full rotated Block_Height x Block_Width rectangle!!!
+  // LONGER of dimension Block_Rect.w times Block_Rect.h, but of the dimesions of the smallest
+  // rectangle containing the full rotated Block_Rect.h x Block_Rect.w rectangle!!!
   // This has to be taken into account when calculating the target position for the 
   // blit of these surfaces!!!!
-  TargetRectangle.x = USER_FENSTER_CENTER_X
-    - (Me.pos.x-CurBullet->pos.x)*Block_Width-CurBullet->SurfacePointer[ PhaseOfBullet ]->w/2;
-  TargetRectangle.y = USER_FENSTER_CENTER_Y
-    - (Me.pos.y-CurBullet->pos.y)*Block_Width-CurBullet->SurfacePointer[ PhaseOfBullet ]->h/2;
+  TargetRectangle.x = UserCenter_x
+    - (Me.pos.x-CurBullet->pos.x)*Block_Rect.w-CurBullet->SurfacePointer[ PhaseOfBullet ]->w/2;
+  TargetRectangle.y = UserCenter_y
+    - (Me.pos.y-CurBullet->pos.y)*Block_Rect.w-CurBullet->SurfacePointer[ PhaseOfBullet ]->h/2;
 
   SDL_BlitSurface( CurBullet->SurfacePointer[ PhaseOfBullet ] , NULL, ne_screen , &TargetRectangle );
 #else
   tmp = rotozoomSurface( Bulletmap[CurBullet->type].SurfacePointer[ PhaseOfBullet ] , CurBullet->angle , 1.0 , FALSE );
 
   // WARNING!!! PAY ATTENTION HERE!! After the rotozoom was applied to the image, it is NO
-  // LONGER of dimension Block_Width times Block_Height, but of the dimesions of the smallest
-  // rectangle containing the full rotated Block_Height x Block_Width rectangle!!!
+  // LONGER of dimension Block_Rect.w times Block_Rect.h, but of the dimesions of the smallest
+  // rectangle containing the full rotated Block_Rect.h x Block_Rect.w rectangle!!!
   // This has to be taken into account when calculating the target position for the 
   // blit of these surfaces!!!!
-  TargetRectangle.x = USER_FENSTER_CENTER_X
-    - (Me.pos.x-CurBullet->pos.x)*Block_Width-CurBullet->SurfacePointer[ PhaseOfBullet ]->w/2;
-  TargetRectangle.y = USER_FENSTER_CENTER_Y
-    - (Me.pos.y-CurBullet->pos.y)*Block_Width-CurBullet->SurfacePointer[ PhaseOfBullet ]->h/2;
+  TargetRectangle.x = UserCenter_x
+    - (Me.pos.x-CurBullet->pos.x)*Block_Rect.w-CurBullet->SurfacePointer[ PhaseOfBullet ]->w/2;
+  TargetRectangle.y = UserCenter_y
+    - (Me.pos.y-CurBullet->pos.y)*Block_Rect.w-CurBullet->SurfacePointer[ PhaseOfBullet ]->h/2;
 
   SDL_BlitSurface( tmp , NULL, ne_screen , &TargetRectangle );
   SDL_FreeSurface( tmp );
@@ -635,8 +635,8 @@ PutBlast (int BlastNummer)
     return;
 
   
-  TargetRectangle.x=USER_FENSTER_CENTER_X - (Me.pos.x - CurBlast->PX)*Block_Width  -Block_Width/2;
-  TargetRectangle.y=USER_FENSTER_CENTER_Y - (Me.pos.y - CurBlast->PY)*Block_Height -Block_Height/2;
+  TargetRectangle.x=UserCenter_x - (Me.pos.x - CurBlast->PX)*Block_Rect.w  -Block_Rect.w/2;
+  TargetRectangle.y=UserCenter_y - (Me.pos.y - CurBlast->PY)*Block_Rect.h -Block_Rect.h/2;
   // SDL_BlitSurface( ne_blocks, 
   // Blastmap[CurBlast->type].block + ((int) floorf(CurBlast->phase)), ne_screen , &TargetRectangle);
   SDL_BlitSurface( Blastmap[CurBlast->type].SurfacePointer[ (int)floorf(CurBlast->phase) ] , NULL , ne_screen , &TargetRectangle);
@@ -776,7 +776,7 @@ DisplayBanner (const char* left, const char* right,  int flags )
 
       // finally update the whole top status box
       if ( !(flags & BANNER_NO_SDL_UPDATE ) )
-	SDL_UpdateRect( ne_screen, 0, 0, BANNER_WIDTH , BANNER_HEIGHT );
+	SDL_UpdateRect( ne_screen, 0, 0, Banner_Rect.w , Banner_Rect.h );
       BannerIsDestroyed=FALSE;
       return;
     } /* if */

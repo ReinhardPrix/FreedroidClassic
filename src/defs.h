@@ -46,6 +46,9 @@
 #define UserCenter_x (User_Rect.x + User_Rect.w/2)
 #define UserCenter_y (User_Rect.y + User_Rect.h/2)
 
+#define ScaleRect(rect,scale) do {\
+(rect).x *= scale; (rect).y *= scale; (rect).w *= scale; (rect).h *= scale; } while(0)
+
 #define Set_Rect(rect, xx, yy, ww, hh) do {\
 (rect).x = (xx); (rect).y = (yy); (rect).w = (ww); (rect).h = (hh); } while(0)
 
@@ -171,24 +174,7 @@ enum _alertnames {
 // **********************************************************************
 // Constants about the size (and mem?) of pixmaps
 
-#define INITIAL_BLOCK_WIDTH	64
-#define INITIAL_BLOCK_HEIGHT	64
-
-#define INITIAL_DIGIT_WIDTH 16
-#define INITIAL_DIGIT_HEIGHT 18
-
 #define DIGITNUMBER 10
-
-#define SCALE_FACTOR  2 /* scale-factor between actually displayed screen and 320x220 */
-#define SCREENLEN		(320*SCALE_FACTOR)
-#define SCREENHEIGHT		(240*SCALE_FACTOR)
-
-#define USERFENSTERHOEHE 	4*INITIAL_BLOCK_HEIGHT
-#define USERFENSTERBREITE 	9*INITIAL_BLOCK_WIDTH
-#define USERFENSTERPOSX 	( (SCREENLEN-USERFENSTERBREITE) / 2)
-#define USERFENSTERPOSY 	( 2*(SCREENHEIGHT-USERFENSTERHOEHE)/3 )
-#define USER_FENSTER_CENTER_X (USERFENSTERPOSX + (USERFENSTERBREITE/2))
-#define USER_FENSTER_CENTER_Y (USERFENSTERPOSY + (USERFENSTERHOEHE/2))
 
 /* Startpos + dimesnions of Banner-Texts */
 #define LEFT_INFO_X 	(13*2)
@@ -198,8 +184,6 @@ enum _alertnames {
 #define LEFT_TEXT_LEN 10
 #define RIGHT_TEXT_LEN 6
 #define TEXT_STRETCH 1.2
-#define BANNER_WIDTH		SCREENLEN
-#define BANNER_HEIGHT		64
 
 
 #define BULLET_BULLET_COLLISION_DIST (10.0/64.0)

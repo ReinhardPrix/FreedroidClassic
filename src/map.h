@@ -36,33 +36,24 @@
 #define CREW_LINE_LEN			MAX_TYPES_ON_LEVEL * 3 + 20
 
 /* Distance, where door opens */
-//NORMALISATION #define DOOROPENDIST2 	(Block_Height + Block_Width)*(Block_Width + Block_Height)/4
-// #define DOOROPENDIST2 	(((Block_Height + Block_Width)*(Block_Width + Block_Height)/4)/64.0)
+//NORMALISATION #define DOOROPENDIST2 	(Block_Rect.h + Block_Rect.w)*(Block_Rect.w + Block_Rect.h)/4
+// #define DOOROPENDIST2 	(((Block_Rect.h + Block_Rect.w)*(Block_Rect.w + Block_Rect.h)/4)/64.0)
 #define DOOROPENDIST2 1
 
 /* Randbreite der Wand */
-// NORMALISATION #define WALLPASS		4
 #define WALLPASS (4.0/64.0)
 
 /* Randbreite der Konsolen */
-//NORMALISATION #define KONSOLEPASS_X 	(Block_Width/2 + 4)
-#define KONSOLEPASS_X 	((INITIAL_BLOCK_WIDTH/2 + 4)/64.0)
-//NORMALISATION #define KONSOLEPASS_Y 	(Block_Height/2 	+4)
-#define KONSOLEPASS_Y 	((INITIAL_BLOCK_HEIGHT/2 + 4)/64.0)
+#define KONSOLEPASS_X 	0.5625
+#define KONSOLEPASS_Y 	0.5625
 
 /* Breite der Tueren freien Raumes vor Tuer*/
-//NORMALISATION #define TUERBREITE	6
 #define TUERBREITE	(6/64.0)
 
 /* Rand der offenen Tueren */
-//NORMALISATION #define V_RANDSPACE		WALLPASS
 #define V_RANDSPACE		WALLPASS
-//NORMALISATION #define V_RANDBREITE		5
 #define V_RANDBREITE		(5/64.0)
-
-//NORMALISATION #define H_RANDSPACE		WALLPASS
 #define H_RANDSPACE		WALLPASS
-//NORMALISATION #define H_RANDBREITE		5
 #define H_RANDBREITE		(5/64.0)
 
 #define WAYPOINT_CHAR		'x'
