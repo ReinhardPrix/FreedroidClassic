@@ -387,23 +387,23 @@ UpdateAllCharacterStats ( void )
     {
       if ( ItemMap[ Me.weapon_item.type ].item_gun_angle_change != 0 )
 	{
-	  Me.Base_Damage = Me.weapon_item.damage * 
+	  Me.base_damage = Me.weapon_item.damage * 
 	    ( Me.Strength + 100.0) / 100.0 ;
-	  Me.Damage_Modifier = Me.weapon_item.damage_modifier * 
+	  Me.damage_modifier = Me.weapon_item.damage_modifier * 
 	    ( Me.Strength + 100.0) / 100.0 ;
 	}
       else
 	{
-	  Me.Base_Damage = Me.weapon_item.damage * 
+	  Me.base_damage = Me.weapon_item.damage * 
 	    ( Me.Dexterity + 100.0) / 100.0 ;
-	  Me.Damage_Modifier = Me.weapon_item.damage_modifier * 
+	  Me.damage_modifier = Me.weapon_item.damage_modifier * 
 	    ( Me.Dexterity + 100.0) / 100.0 ;
 	}
     }
   else
     {
-      Me.Base_Damage = 0;
-      Me.Damage_Modifier = 0;
+      Me.base_damage = 0;
+      Me.damage_modifier = 0;
     }
   // ... and also armour class
   Me.AC = ( Me.Dexterity - 15 ) * AC_GAIN_PER_DEX_POINT;
@@ -573,7 +573,7 @@ ShowCharacterScreen ( void )
   sprintf( CharText , "%d", (int) Me.mana );
   DisplayText( CharText , 143 + CharacterRect.x , 318 + CharacterRect.y , &CharacterRect );
 
-  sprintf( CharText , "%d-%d", (int) Me.Base_Damage , (int) Me.Base_Damage + (int) Me.Damage_Modifier );
+  sprintf( CharText , "%d-%d", (int) Me.base_damage , (int) Me.base_damage + (int) Me.damage_modifier );
   DisplayText( CharText , DAMAGE_X + CharacterRect.x , DAMAGE_Y + CharacterRect.y , &CharacterRect );
 
   // sprintf( CharText , "%d", (int) Me.RechargeTimeModifier );

@@ -391,8 +391,8 @@ typedef struct
   int Vitality;  // character Vitality value = 'cloaking field maximum strength'
   long Experience; // character Experience = 'spare droid elements found'
   int PointsToDistribute; // these are the points that are available to distribute upon the character stats
-  float Base_Damage; // the current damage the influencer does
-  float Damage_Modifier; // the modifier to the damage the influencer currently does
+  float base_damage; // the current damage the influencer does
+  float damage_modifier; // the modifier to the damage the influencer currently does
   float AC; // the current Armour Class of the influencer
   // float RechargeTimeModifier; // the factor to be multiplied to the recharge time (times 100 for % notation)
   // float RechargeTime; // the actual minimum time to wait for the influencer between shots

@@ -343,9 +343,9 @@ NoInfluBulletOnWay (void)
 void
 AnimateInfluence (void)
 {
-#define TOTAL_SWING_TIME 0.7
+#define TOTAL_SWING_TIME 0.35
 #define FULL_BREATHE_TIME 3
-#define TOTAL_STUNNED_TIME 1.0
+#define TOTAL_STUNNED_TIME 0.35
 
   if ( Me.got_hit_time != (-1) )
     {
@@ -749,6 +749,8 @@ FireBullet (void)
   moderately_finepoint speed;
   int max_val;
   float OffsetFactor;
+  moderately_finepoint Weapon_Target_Vector;
+  float angle;
 
   // If the current overtaken droid doesn't have a weapon at all, just return
   if ( Me.weapon_item.type == (-1) ) return;
@@ -771,11 +773,53 @@ FireBullet (void)
   if (Me.firewait > 0)
     return;
 
-  // make the sound of a fired bullet
+  //--------------------
+  // We should always make the sound of a fired bullet (or weapon swing)
+  //
   Fire_Bullet_Sound ( guntype );
 
+  //--------------------
+  // We always start the weapon application cycle, i.e. change of tux
+  // motion phases
+  //
+  // But it the currently used weapon is a melee weapon, the tux no longer
+  // generates a bullet, but rather does his weapon swinging motion and
+  // only the damage is done to the robots in the area of effect
+  //
   Me.weapon_swing_time = 0;
-  return;
+  if ( ItemMap [ Me.weapon_item.type ].item_gun_angle_change != 0 )
+    {
+      //--------------------
+      // Since a melee weapon is swung, we calculate where the point
+      // of the weapon should be finally hitting and do some damage
+      // to all the enemys in that area.
+      //
+      angle = - ( atan2 ( input_axis.y,  input_axis.x ) * 180 / M_PI + 90 );
+      Weapon_Target_Vector.x = 0;
+      Weapon_Target_Vector.y = - 0.7;
+      RotateVectorByAngle ( & Weapon_Target_Vector , angle );
+      Weapon_Target_Vector.x += Me.pos.x;
+      Weapon_Target_Vector.y += Me.pos.y;
+      
+      for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i ++ )
+	{
+	  if ( AllEnemys[i].Status == OUT ) continue;
+	  if ( AllEnemys[i].levelnum != CurLevel->levelnum ) continue;
+	  if ( fabsf ( AllEnemys[i].pos.x - Weapon_Target_Vector.x ) > 0.5 ) continue;
+	  if ( fabsf ( AllEnemys[i].pos.y - Weapon_Target_Vector.y ) > 0.5 ) continue;
+	  AllEnemys[ i ].energy -= Me.base_damage + MyRandom( Me.damage_modifier );
+	}
+      
+      //--------------------
+      // Finally we add a new wait-counter, so that bullets or swings
+      // cannot be started in too rapid succession.  
+      // 
+      // And then we can return, for real bullet generation isn't required in
+      // our case here.
+      //
+      Me.firewait = ItemMap[ Me.weapon_item.type ].item_gun_recharging_time;
+      return;
+    }
 
   // search for the next free bullet list entry
   for (i = 0; i < (MAXBULLETS); i++)
@@ -799,7 +843,7 @@ FireBullet (void)
   // Previously, we had the damage done only dependant upon the weapon used.  Now
   // the damage value is taken directly from the character stats, and the UpdateAll...stats
   // has to do the right computation and updating of this value.  hehe. very conventient.
-  CurBullet->damage = Me.Base_Damage + MyRandom( Me.Damage_Modifier);
+  CurBullet->damage = Me.base_damage + MyRandom( Me.damage_modifier);
   CurBullet->mine = TRUE;
   CurBullet->owner = -1;
   CurBullet->bullet_lifetime = ItemMap[ Me.weapon_item.type ].item_gun_bullet_lifetime;
