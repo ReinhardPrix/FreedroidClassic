@@ -24,14 +24,19 @@ Outstanding release-critical bugs (priority: high)
   -> use RLE acceleration?
   -> use double-buffer + HWSURF + SDL_Flip() to avoid flicker/shearing?
 
-- implement the 'Alert' feature of the original version
-
 - playtest on a _really_ slow machine...
 
-- check and adjust 614 parameters (too fast shot-rate!)
+- check and adjust 614 parameters (too fast shot-rate!) and  Alert params (->freedroid.rules)
 
-- more flexible theme-handling to allow new themes to be added more easily...
+- add explosion-decals ? (switchable)
 
+- fix bug of exploding enemy (somewhere?) after restarting Mission...
+
+- allow original background fieps-pieps instead of music (switchable)
+
+- steal the 'Metal Edition' as an additional theme?
+
+- accelerate explosions, make sure blast-duration is not theme-configurable
 
 Outstanding normal bugs (priority: normal)
 ------------------------------------------
@@ -342,4 +347,10 @@ Resolved bugs
 - in ThouArtDefeated: need to use a png-pic of 999 for transparency!
   (done)
 - adapt LevelEditor to new waypoint/connections scheme
+  (done)
+- more flexible theme-handling to allow new themes to be added more easily...
+  (done)
+- add options-switch for takeover=activate (purist's choice ;)
+  (done)
+- implement the 'Alert' feature of the original version
   (done)
