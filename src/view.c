@@ -1570,11 +1570,13 @@ There was a rotation model type given, that exceeds the number of rotation model
       //
       //      if ( enemy_iso_images[ RotationModel ] [ RotationIndex ] -> w != Block_Width )
       // {
+
 	  TargetRectangle.x -= ( enemy_iso_images[ RotationModel ] [ RotationIndex ] . surface -> w ) / 2 ;
 	  TargetRectangle.y -= ( enemy_iso_images[ RotationModel ] [ RotationIndex ] . surface -> h ) / 2 ;
 	  TargetRectangle.w = enemy_iso_images[ RotationModel ] [ RotationIndex ] . surface -> w;
 	  TargetRectangle.h = enemy_iso_images[ RotationModel ] [ RotationIndex ] . surface -> h;
 	  // }
+
       
       if ( AllEnemys[Enum].paralysation_duration_left != 0 ) 
 	{
@@ -1593,7 +1595,8 @@ There was a rotation model type given, that exceeds the number of rotation model
 	}
       else
 	{
-	  SDL_BlitSurface( enemy_iso_images[ RotationModel ] [ RotationIndex ] . surface , NULL , Screen, &TargetRectangle);
+	  blit_iso_image_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] , AllEnemys [ Enum ] . pos . x , AllEnemys [ Enum ] . pos . y );
+	  // SDL_BlitSurface( enemy_iso_images[ RotationModel ] [ RotationIndex ] . surface , NULL , Screen, &TargetRectangle);
 	}
     }
   else

@@ -147,7 +147,7 @@ EXTERN void Load_Bullet_Surfaces (void);
 EXTERN void Load_Blast_Surfaces (void);
 EXTERN void load_all_isometric_floor_tiles ( void );
 EXTERN void load_all_obstacles ( void );
-
+EXTERN void blit_iso_image_to_map_position ( iso_image our_iso_image , float pos_x , float pos_y );
 
 // graphics.c 
 #undef EXTERN

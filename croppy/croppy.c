@@ -498,8 +498,8 @@ write_offset_file ( )
   int default_center_x = 120;
   int default_center_y = 240;
   FILE *OffsetFile;  // to this file we will save all the ship data...
-#define END_STRING "\n ** End of 3d_image file ** \n\n"
-#define START_STRING "\n ** Start of 3d_image file ** \n\n"
+
+#define OFFSET_EXPLANATION_STRING "FreedroidRPG uses isometric viewpoint and at the same time images of various sizes for objects within the game.  To determine the correct location for each of these images in the main game screen, FreedroidRPG must somehow know where the 'origin' of the object in question is within the given graphics file.  This is what these offset files are for:  They describe how much and in which direction the top left corner of the visible object is shifted away from the 'origin' or rather 'feet point' of the object in the image displayed.\n\n"
 
   //--------------------
   // Now we must determine the output filename
@@ -522,19 +522,31 @@ write_offset_file ( )
     // return ERR;
   }
 
-  fwrite ( START_STRING , strlen( START_STRING ), 
+  fwrite ( "\n\n" , strlen( "\n\n" ), 
 	   sizeof(char), OffsetFile );
 
-  sprintf ( linebuf , "\nOffsetX=%d\n" , cut_left - default_center_x );
+  fwrite ( START_OF_OFFSET_FILE_STRING , strlen( START_OF_OFFSET_FILE_STRING ), 
+	   sizeof(char), OffsetFile );
+
+  fwrite ( START_OF_OFFSET_EXPLANATION_STRING , strlen( START_OF_OFFSET_EXPLANATION_STRING ), 
+	   sizeof(char), OffsetFile );
+
+  sprintf ( linebuf , "\n%s%d\n" , OFFSET_FILE_OFFSETX_STRING , cut_left - default_center_x );
   fwrite ( linebuf , strlen( linebuf ), sizeof(char), OffsetFile);  
 
-  sprintf ( linebuf , "\nOffsetY=%d\n" , cut_up - default_center_y );
+  sprintf ( linebuf , "\n%s%d\n" , OFFSET_FILE_OFFSETY_STRING , cut_up - default_center_y );
   fwrite ( linebuf , strlen( linebuf ), sizeof(char), OffsetFile);  
 
   sprintf ( linebuf , "\nGraphicsFileName=%s\n" , input_filename );
   fwrite ( linebuf , strlen( linebuf ), sizeof(char), OffsetFile);  
 
-  fwrite ( END_STRING , strlen( END_STRING ), 
+  fwrite ( "\n\n" , strlen( "\n\n" ), 
+	   sizeof(char), OffsetFile );
+
+  fwrite ( END_OF_OFFSET_FILE_STRING , strlen( END_OF_OFFSET_FILE_STRING ), 
+	   sizeof(char), OffsetFile );
+
+  fwrite ( "\n\n" , strlen( "\n\n" ), 
 	   sizeof(char), OffsetFile );
 
   if( fclose( OffsetFile ) == EOF) 

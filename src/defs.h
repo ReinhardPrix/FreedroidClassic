@@ -146,6 +146,10 @@ enum _spell_names
 #define FILENAME_LEN	5000
 #define SHIP_EXT	".shp"
 
+#define END_OF_OFFSET_FILE_STRING "** End of iso_image offset file **"
+#define START_OF_OFFSET_FILE_STRING "** Start of iso_image offset file **"
+#define OFFSET_FILE_OFFSETX_STRING "OffsetX="
+#define OFFSET_FILE_OFFSETY_STRING "OffsetY="
 
 #define JOY_MAX_VAL 32767     // maximal amplitude of joystick axis values
 

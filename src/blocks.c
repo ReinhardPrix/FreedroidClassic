@@ -367,10 +367,121 @@ This error indicates some installation problem with freedroid.",
  *
  *
  * ---------------------------------------------------------------------- */
+void
+blit_iso_image_to_map_position ( iso_image our_iso_image , float pos_x , float pos_y ){
+
+  SDL_Rect target_rectangle;
+
+  target_rectangle . x = 
+    translate_map_point_to_screen_pixel ( pos_x , pos_y , TRUE ) + 
+    our_iso_image . offset_x ;
+  target_rectangle . y = 
+    translate_map_point_to_screen_pixel ( pos_x , pos_y , FALSE ) +
+    our_iso_image . offset_y ;
+
+  SDL_BlitSurface( our_iso_image . surface , NULL , Screen, &target_rectangle );
+
+};
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+get_offset_for_iso_image_from_file_and_path ( char* fpath , iso_image* our_iso_image )
+{
+  char offset_file_name[10000];
+  FILE *OffsetFile; 
+  char* offset_data;
+  //--------------------
+  // Now we try to load the associated offset file, that we'll be needing
+  // in order to properly fine-position the image later when blitting is to
+  // a map location.
+  //
+  strcpy ( offset_file_name , fpath );
+  offset_file_name [ strlen ( offset_file_name ) - 4 ] = 0 ;
+  strcat ( offset_file_name , ".offset" );
+
+  //--------------------
+  // Let's see if we can find an offset file...
+  //
+  if ( ( OffsetFile = fopen ( offset_file_name , "r") ) == NULL )
+    {
+      DebugPrintf ( 0 , "\nSeeking to gain offset from file names '%s'." , offset_file_name );
+      GiveStandardErrorMessage ( "get_offset_for_iso_image_from_file_and_path(...)" , "\
+Freedroid was unable to open a given offset file for an isometric image.\n\
+Since the offset could not be obtained from the offset file, some default\n\
+values will be used instead.  This can lead to minor positioning pertubations\n\
+in graphics displayed, but FreedroidRPG will continue to work.",
+				 NO_NEED_TO_INFORM, IS_WARNING_ONLY );
+      our_iso_image -> offset_x = - INITIAL_BLOCK_WIDTH/2 ;
+      our_iso_image -> offset_y = - INITIAL_BLOCK_HEIGHT/2 ;
+      return ;
+    }
+  else
+    {
+      DebugPrintf ( 1 , "\nThe offset file seems to be there at least.....");
+    }
+
+  //--------------------
+  // So at this point we can be certain, that the offset file is there.
+  // That means, that we can now use the (otherwise terminating) read-and-malloc-...
+  // functions.
+  //
+  offset_data = ReadAndMallocAndTerminateFile( offset_file_name , END_OF_OFFSET_FILE_STRING ) ;
+
+  ReadValueFromString( offset_data ,  OFFSET_FILE_OFFSETX_STRING , "%d" , 
+		       & ( our_iso_image -> offset_x ) , offset_data + 30000 );
+
+  ReadValueFromString( offset_data ,  OFFSET_FILE_OFFSETY_STRING , "%d" , 
+		       & ( our_iso_image -> offset_y ) , offset_data + 30000 );
+
+
+}; // void get_offset_for_iso_image_from_file_and_path ( fpath , our_iso_image )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+get_iso_image_from_file_and_path ( char* fpath , iso_image* our_iso_image ) 
+{
+  SDL_Surface* Whole_Image;
+
+  //--------------------
+  // First we (try to) load the image given in the parameter
+  // from hard disk into memory and convert it to the right
+  // format for fast blitting later.
+  //
+  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+  if ( Whole_Image == NULL )
+    {
+      fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
+      GiveStandardErrorMessage ( "get_iso_image_from_file_and_path (...)" , "\
+Freedroid was unable to load a certain image file from hard disk into memory.\n\
+This error indicates some installation problem with freedroid.",
+				 PLEASE_INFORM, IS_FATAL );
+    }
+  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
+  our_iso_image -> surface = SDL_DisplayFormatAlpha( Whole_Image ); // now we have an alpha-surf of right size
+  SDL_SetColorKey( our_iso_image -> surface , 0 , 0 ); // this should clear any color key in the dest surface
+  SDL_FreeSurface( Whole_Image );
+
+  //--------------------
+  // Now that we have loaded the image, it's time to get the proper
+  // offset information for it.
+  //
+  get_offset_for_iso_image_from_file_and_path ( fpath , our_iso_image );
+
+}; // void get_iso_image_from_file_and_path ( char* fpath , iso_image* our_iso_image ) 
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
 void 
 LoadAndPrepareEnemyRotationModelNr ( int ModelNr )
 {
-  SDL_Surface* Whole_Image;
   char ConstructedFileName[5000];
   int i;
   char *fpath;
@@ -421,12 +532,16 @@ Freedroid received a rotation model number that does not exist!",
   //
   for ( i=0 ; i < ROTATION_ANGLES_PER_ROTATION_MODEL ; i++ )
     {
+
       sprintf ( ConstructedFileName , "droids/%s/ingame_%04d.png" , PrefixToFilename [ ModelNr ] ,
 		( ModelMultiplier [ ModelNr ] * i ) + 1 );
       DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
-      // fpath = find_file ( "rotation_models/anim0001.png" , GRAPHICS_DIR, FALSE );
       fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
+
+      get_iso_image_from_file_and_path ( fpath , & ( enemy_iso_images [ ModelNr ] [ i ] ) ) ;
       
+      /*
+
       Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
       if ( Whole_Image == NULL )
 	{
@@ -444,6 +559,8 @@ This error indicates some installation problem with freedroid.",
       SDL_SetColorKey( enemy_iso_images [ ModelNr ] [ i ] . surface , 0 , 0 ); // this should clear any color key in the dest surface
       
       SDL_FreeSurface( Whole_Image );
+
+      */
   
     }    
 
