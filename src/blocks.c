@@ -1342,6 +1342,7 @@ load_all_obstacles ( void )
       obstacle_map [ i ] . block_area_parm_2 = 0.25 ;
       obstacle_map [ i ] . is_smashable = FALSE ;
       obstacle_map [ i ] . drop_random_treasure = FALSE ;
+      obstacle_map [ i ] . needs_pre_put = FALSE ;
     }
 
   obstacle_map [ ISO_V_WALL ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
@@ -1374,14 +1375,19 @@ load_all_obstacles ( void )
 
   obstacle_map [ ISO_REFRESH_1 ] . block_area_type = COLLISION_TYPE_NONE ;
   obstacle_map [ ISO_REFRESH_1 ] . is_smashable = FALSE ;
+  obstacle_map [ ISO_REFRESH_1 ] . needs_pre_put = TRUE ;
   obstacle_map [ ISO_REFRESH_2 ] . block_area_type = COLLISION_TYPE_NONE ;
   obstacle_map [ ISO_REFRESH_2 ] . is_smashable = FALSE ;
+  obstacle_map [ ISO_REFRESH_2 ] . needs_pre_put = TRUE ;
   obstacle_map [ ISO_REFRESH_3 ] . block_area_type = COLLISION_TYPE_NONE ;
   obstacle_map [ ISO_REFRESH_3 ] . is_smashable = FALSE ;
+  obstacle_map [ ISO_REFRESH_3 ] . needs_pre_put = TRUE ;
   obstacle_map [ ISO_REFRESH_4 ] . block_area_type = COLLISION_TYPE_NONE ;
   obstacle_map [ ISO_REFRESH_4 ] . is_smashable = FALSE ;
+  obstacle_map [ ISO_REFRESH_4 ] . needs_pre_put = TRUE ;
   obstacle_map [ ISO_REFRESH_5 ] . block_area_type = COLLISION_TYPE_NONE ;
   obstacle_map [ ISO_REFRESH_5 ] . is_smashable = FALSE ;
+  obstacle_map [ ISO_REFRESH_5 ] . needs_pre_put = TRUE ;
 
 
   obstacle_map [ ISO_TELEPORTER_1 ] . block_area_type = COLLISION_TYPE_NONE ;

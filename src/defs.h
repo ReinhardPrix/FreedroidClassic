@@ -866,10 +866,15 @@ enum
 
 enum
 {
+  //--------------------
+  // These obstacles currently don't have a blender file in the cvs tree,
+  // but their meaning should be fairly obvious:
+  //
   ISO_ERROR_BRICK = 0 ,
   ISO_V_WALL = 1 ,
   ISO_H_WALL = 2 ,
 
+  ISO_ERROR_UNUSED = 3 ,
   ISO_CRUDE_BLOCK = 4 ,
 
   ISO_H_DOOR_000_OPEN = 6,
@@ -884,6 +889,10 @@ enum
   ISO_V_DOOR_075_OPEN = 14,
   ISO_V_DOOR_100_OPEN = 15,
 
+  //--------------------
+  // These obstacles are generated from 'iso_refresh_and_teleport.blend' file
+  // in the cvs rep.
+  //
   ISO_TELEPORTER_1 = 16,
   ISO_TELEPORTER_2 = 17,
   ISO_TELEPORTER_3 = 18,
@@ -896,6 +905,10 @@ enum
   ISO_REFRESH_4 = 24,
   ISO_REFRESH_5 = 25,
 
+  //--------------------
+  // These obstacles currently don't have a blender file in the cvs tree,
+  // but their meaning should be fairly obvious:
+  //
   ISO_H_DOOR_LOCKED = 26,
   ISO_V_DOOR_LOCKED = 27,
 
@@ -909,9 +922,12 @@ enum
   ISO_AUTOGUN_E = 34,
   ISO_AUTOGUN_S = 35,
 
+  //--------------------
+  // These obstacles are generated from 'iso_cave_walls.blend' file
+  // in the cvs rep.
+  //
   ISO_CAVE_WALL_H = 36,
   ISO_CAVE_WALL_V = 37,
-
   ISO_CAVE_CORNER_NE = 38,
   ISO_CAVE_CORNER_SE = 39,
   ISO_CAVE_CORNER_NW = 40,
@@ -924,6 +940,10 @@ enum
   ISO_CONSOLE_N = 45,
   ISO_CONSOLE_W = 46,
 
+  //--------------------
+  // These obstacles are generated from 'iso_pillars_and_barrels.blend' file
+  // in the cvs rep.
+  //
   ISO_BLOCK_1 = 47 ,
   ISO_BLOCK_2 = 48 ,
   ISO_BLOCK_3 = 49 ,
@@ -933,13 +953,18 @@ enum
   ISO_BARREL_3 = 52 ,
   ISO_BARREL_4 = 53 ,
 
-  ISO_ALERT = 54 ,
+  ISO_ALERT = 54 ,  // it actually looks more like a street lantern right now, but that's no problem
 
   ISO_ENHANCER_RU = 57 ,
   ISO_ENHANCER_LU = 56 ,
   ISO_ENHANCER_RD = 58 ,
   ISO_ENHANCER_LD = 55 ,
 
+  //--------------------
+  // These obstacles are generated from 'commercial_models_for_fences.blend' file
+  // which is currently not in the cvs rep. for licensing issues, but I'll send a
+  // version to any Freedroid co-worker involved with the graphics
+  //
   ISO_V_WOOD_FENCE = 59 ,
   ISO_H_WOOD_FENCE = 60 , 
   ISO_V_DENSE_FENCE = 61 ,
@@ -949,6 +974,11 @@ enum
   ISO_V_WIRE_FENCE = 65 ,
   ISO_H_WIRE_FENCE = 66 ,
 
+  //--------------------
+  // These obstacles are generated from 'commercial_models_for_furniture.blend' file
+  // which is currently not in the cvs rep. for licensing issues, but I'll send a
+  // version to any Freedroid co-worker involved with the graphics
+  //
   ISO_N_TOILET_SMALL = 67 ,
   ISO_E_TOILET_SMALL ,
   ISO_S_TOILET_SMALL ,
@@ -970,6 +1000,11 @@ enum
   ISO_S_SCHOOL_CHAIR ,
   ISO_W_SCHOOL_CHAIR ,
 
+  //--------------------
+  // These obstacles are generated from 'commercial_models_for_furniture2.blend' file
+  // which is currently not in the cvs rep. for licensing issues, but I'll send a
+  // version to any Freedroid co-worker involved with the graphics
+  //
   ISO_N_BED = 87 ,
   ISO_E_BED ,
   ISO_S_BED ,
@@ -987,7 +1022,12 @@ enum
   ISO_S_FULL_PARK_BENCH ,
   ISO_W_FULL_PARK_BENCH ,
 
-  ISO_H_BATHTUB , 
+  //--------------------
+  // These obstacles are generated from 'commercial_models_for_furniture3.blend' file
+  // which is currently not in the cvs rep. for licensing issues, but I'll send a
+  // version to any Freedroid co-worker involved with the graphics
+  //
+  ISO_H_BATHTUB = 103 , 
   ISO_V_BATHTUB ,
   ISO_H_WASHTUB , 
   ISO_V_WASHTUB ,

@@ -262,6 +262,7 @@ typedef struct
   float block_area_parm_1;
   float block_area_parm_2;
   int is_smashable;
+  int needs_pre_put; // this is a special property for obstacles, that can be stepped on, like a rug or floor plate.
   int drop_random_treasure;
 }
 obstacle_spec, *Obstacle_spec;

@@ -1051,7 +1051,36 @@ set_up_ordered_blitting_list ( int mask )
  * blit all the objects according to the blitting list set up.
  * ---------------------------------------------------------------------- */
 void
-blit_all_objects_according_to_blitting_list ( int mask )
+blit_preput_objects_according_to_blitting_list ( int mask )
+{
+  int i;
+
+  for ( i = 0 ; i < MAX_ELEMENTS_IN_BLITTING_LIST ; i ++ )
+    {
+      if ( blitting_list [ i ] . element_type == BLITTING_TYPE_NONE ) break;
+      if ( blitting_list [ i ] . element_type != BLITTING_TYPE_OBSTACLE ) continue ;
+      if ( ! obstacle_map [ ( (obstacle*)  blitting_list [ i ] . element_pointer ) -> type ] . needs_pre_put ) continue ;
+
+      //--------------------
+      // So now we know that we must blit this one obstacle...
+      //
+      if ( ! ( mask & OMIT_OBSTACLES ) ) 
+	{
+	  if ( mask & ZOOM_OUT )
+	    blit_one_obstacle_zoomed ( (obstacle*)  blitting_list [ i ] . element_pointer );
+	  else
+	    blit_one_obstacle ( (obstacle*)  blitting_list [ i ] . element_pointer );
+	}
+    }
+
+}; // void blit_preput_objects_according_to_blitting_list ( ... )
+
+/* ----------------------------------------------------------------------
+ * Now that the blitting list has finally been assembled, we can start to
+ * blit all the objects according to the blitting list set up.
+ * ---------------------------------------------------------------------- */
+void
+blit_nonpreput_objects_according_to_blitting_list ( int mask )
 {
   int i;
 
@@ -1061,6 +1090,8 @@ blit_all_objects_according_to_blitting_list ( int mask )
       switch ( blitting_list [ i ] . element_type )
 	{
 	case BLITTING_TYPE_OBSTACLE:
+
+	  if ( obstacle_map [ ( (obstacle*)  blitting_list [ i ] . element_pointer ) -> type ] . needs_pre_put ) break ;
 	  if ( ! ( mask & OMIT_OBSTACLES ) ) 
 	    {
 	      if ( mask & ZOOM_OUT )
@@ -1097,7 +1128,7 @@ The blitting list contained an illegal blitting object type.",
 	}
     }
 
-}; // void blit_all_objects_according_to_blitting_list ( void )
+}; // void blit_nonpreput_objects_according_to_blitting_list ( ... )
 
 /* ----------------------------------------------------------------------
  *
@@ -1155,6 +1186,10 @@ AssembleCombatPicture (int mask)
 
   isometric_show_floor_around_tux_without_doublebuffering ( mask );
 
+  set_up_ordered_blitting_list ( mask );
+
+  blit_preput_objects_according_to_blitting_list ( mask );
+
   if ( mask & SHOW_ITEMS )
     {
       for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
@@ -1169,7 +1204,7 @@ AssembleCombatPicture (int mask)
 
   set_up_ordered_blitting_list ( mask );
 
-  blit_all_objects_according_to_blitting_list ( mask );
+  blit_nonpreput_objects_according_to_blitting_list ( mask );
 
   if (mask & ONLY_SHOW_MAP) 
     {
