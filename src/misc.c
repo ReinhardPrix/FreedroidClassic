@@ -213,6 +213,7 @@ Armageddon (void)
     for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
       {
 	Feindesliste[i].energy = 0;
+	Feindesliste[i].Status = OUT;
       }
 } // void Armageddon(void)
 

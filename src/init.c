@@ -71,20 +71,20 @@
 
 
 char EndTitleText1[] =
-"Congratulations!!\n\nIt seems that you have made it!\n  The Ship is clear.\n\n At the moment, this is the end of you classical Paradroid Clone FreeDroid.  However we are looking forward to writing a new and different story line, introduce more new concepts, features and sounds.\n\n If you enjoyed the game and would like to contribute, contact one of the developers. \n\n Also if you would like to donate something to help keep alive the FreeDroid development, please also contact the developers.\n\n  Since we have not yet written something new, we can not launch the second part of the game now.\n\n What we can do is inform you about the concept of the new story-line and the features we plan to introduce sooner or later:\n\n After this preview of the coming storyline is over, the game will be restarted.\n You however have made it, but if you want, you can restart from the beginning nevertheless.\n\n  Press Space Bar to See the new story line.\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n";
+"Congratulations!!\n\nIt seems that you have made it!  The Ship is clear.\n\n At the moment, this is the end of FreeDroid.  However we are looking forward to writing a new and different story line, introduce more new concepts, features and sounds.\n\n If you enjoyed the game and would like to contribute, contact one of the developers. \n\n Also if you would like to donate something to help keep alive the FreeDroid development, please also contact the developers.\n\n  Since we have not yet written something new, we can not launch the second part of the game now.\n\n What we can do is inform you about the concept of the new story-line and the features we plan to introduce sooner or later:\n\n After this preview of the coming storyline is over, the game will be restarted.\n You however have made it, but if you want, you can restart from the beginning nevertheless.\n\n  Press Space Bar to\nrestart Freedroid from the beginning. \n \n \n ";
 
 char EndTitleText2[] =
-"In the year 2400 in a far distant galaxy strange civilisation has been enslaved by an all-mighty Software Corporation named 'MegaSoft' and called MS for short.  This came to be as follows:  At first all the druids of that civilisation were running a MS Operating System which turned out to be a trojan horse and led to the revolution and the enslavement of men.  By virtue of the tremendous wealth the Corporation had accumulated it was able to break all resistances and ban all other operating systems forever, using the druids with their MS Operating System to enforce the oppression with military strength.\n\n  However not all is yet lost:\nA small group of rebels has managed to create a new 'influence device' running the latest Linux 28.32.199 kernel.  The rebels will soon be spotted and can not hope to withstand an open attack.  The Influence device must be beamed aboard an unmanned transport ship that could evacuate the rebel group.  In the first episode, the rebel influence device is beamed aboard the robo freighter and must eliminate all of the robot crew running the MS operating system.  After this is done, the rebels can beam aboard and make their escape to some distant planet from where they can prepare their next steps to free the world from oppression.\n\n Press Space Bar to relauch the original Freedroid game\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n";
+"In the year 2400 in a far distant galaxy strange civilisation has been enslaved by an all-mighty Software Corporation named 'MegaSoft' and called MS for short.  This came to be as follows:  At first all the druids of that civilisation were running a MS Operating System which turned out to be a trojan horse and led to the revolution and the enslavement of men.  By virtue of the tremendous wealth the Corporation had accumulated it was able to break all resistances and ban all other operating systems forever, using the druids with their MS Operating System to enforce the oppression with military strength.\n\n  However not all is yet lost:\nA small group of rebels has managed to create a new 'influence device' running the latest Linux 28.32.199 kernel.  The rebels will soon be spotted and can not hope to withstand an open attack.  The Influence device must be beamed aboard an unmanned transport ship that could evacuate the rebel group.  In the first episode, the rebel influence device is beamed aboard the robo freighter and must eliminate all of the robot crew running the MS operating system.  After this is done, the rebels can beam aboard and make their escape to some distant planet from where they can prepare their next steps to free the world from oppression.\n\n Press Space Bar to relauch the original Freedroid game \n \n \n ";
 
 char TitleText1[] =
-  "A fleet of Robo-freighters on\nits way to the Beta Ceti system\nreported entering an uncharted field\nof asteroids. Each ship carries a\ncargo of battle droids to reinforce\nthe outworld defences.\nTwo distress beacons have been\ndiscovered. Similar Messages were\nstored on each. The ships had been\nbombarded by a powerful radionic\nbeam from one of the asteroids.\nAll of the robots on the ships,\nincluding those in storage, became\nhyper-active. The crews report an\nattack by droids, isolating them on\nthe bridge. They cannot reach the\nshuttle and can hold out for only a\ncouple more hours.\n Since these beacons were located\ntwo days ago, we can only fear the\nworst.\n Some of the fleet was last seen\nheading for enemy space. In enemy\nhands the droids can be used against\nour forces.\nDocking would be impossible but\nwe can beam aboard a prototype\nInfluence Device.";
+  "A fleet of Robo-freighters on its way to the Beta Ceti system reported entering an uncharted field of asteroids. Each ship carries a cargo of battle droids to reinforce the outworld defences. Two distress beacons have been discovered. Similar Messages were stored on each. The ships had been bombarded by a powerful radionic beam from one of the asteroids. All of the robots on the ships, including those in storage, became hyper-active. The crews report an attack by droids, isolating them on the bridge. They cannot reach the shuttle and can hold out for only a couple more hours.  Since these beacons were located two days ago, we can only fear the worst.  Some of the fleet was last seen heading for enemy space. In enemy hands the droids can be used against our forces. Docking would be impossible but we can beam aboard a prototype Influence Device. \n \n ";
 
 
 char TitleText2[] =
-  "The 001 Influence Device consists\nof a helmet, which, when placed\nover a robots control unit can halt\nthe normal activities of that robot\nfor a short time. The helmet has\nits own energy supply and powers\nthe robot itself, at an upgraded\ncapability. The helmet also uses\nan energy cloak for protection of\nthe host.\nThe helmet is fitted with twin\nlasers mounted in a turret. These\ncan be focussed on any target inside\na range of eight metres.\nMost of the device's resources are\nchannelled towards holding control\nof the host robot, as it attempts\nto resume 'normal' operation.\nIt is therefore necessary to change\nthe host robot often to prevent the\ndevice from burning out. Transfer\nto a new robot requires the device\nto drain its host of energy in order\nto take ist over. Failure to achieve\ntransfer results in the device being\na free agent once more.\n\n        Press fire to play";
+  "The 001 Influence Device consists of a helmet, which, when placed over a robots control unit can halt the normal activities of that robot for a short time. The helmet has its own energy supply and powers the robot itself, at an upgraded capability. The helmet also uses an energy cloak for protection of the host. The helmet is fitted with twin lasers mounted in a turret. These can be focussed on any target inside a range of eight metres. Most of the device's resources are channelled towards holding control of the host robot, as it attempts to resume 'normal' operation. It is therefore necessary to change the host robot often to prevent the device from burning out. Transfer to a new robot requires the device to drain its host of energy in order to take ist over. Failure to achieve transfer results in the device being a free agent once more.\n\n        Press fire to play\n \n ";
 
 char TitleText3[] =
-  "An Influence Device can transmitt\nconsole. A small-scale plan of the\nwhole deck is available, as well\nas a side elevation of the ship.\nRobots are represented on-screen\nas a symbol showing a three-digit\nnumber. The first digit shown is\nthe important one, the class of the\nrobot. It denotes the strength also.\nTo find out more about any given\nrobot, use the robot enquiry system\nat a console. Only data about units\nof a lower class than your current\nhost is available, since it is the\nhost's security clearance which is\nused to acces the console. \n  \n  \n  \n Press fire to play";
+  "An Influence Device can transmitt console. A small-scale plan of the whole deck is available, as well as a side elevation of the ship. Robots are represented on-screen as a symbol showing a three-digit number. The first digit shown is the important one, the class of the robot. It denotes the strength also. To find out more about any given robot, use the robot enquiry system at a console. Only data about units of a lower class than your current host is available, since it is the host's security clearance which is used to acces the console. \n  \n  \n  \n Press fire to play\n \n ";
 
 
 /* -----------------------------------------------------------------
@@ -418,53 +418,53 @@ InitParaplus (void)
   Mobilecolor.rot = 63;
 
   Druidmap[DRUID001].notes =
-    "robot activity\ninfluence device. This\nhelmet is self-powered\nand will control any\nrobot for a short time.\nLasers are turret‹mounted.\n";
+    "robot activity influence device. This helmet is self-powered and will control any robot for a short time. Lasers are turret‹mounted. ";
   Druidmap[DRUID123].notes =
-    "simpe rubbish\ndiposal robot. Common\ndevice in most space\ncraft to maintain a clean\nship.\n";
+    "simpe rubbish diposal robot. Common device in most space craft to maintain a clean ship. ";
   Druidmap[DRUID139].notes =
-    "created by Dr.\nMasternak to clean up\nlarge heaps of rubbish.\nIts large scoop is used to\ncollect rubbish. It is\nthen crushed internally.\n";
+    "created by Dr. Masternak to clean up large heaps of rubbish. Its large scoop is used to collect rubbish. It is then crushed internally. ";
   Druidmap[DRUID247].notes =
-    "light duty servant\nrobot. One of the first\nto use the anti-grav\nsystem.\n";
+    "light duty servant robot. One of the first to use the anti-grav system. ";
   Druidmap[DRUID249].notes =
-    "cheaper version of\nthe anti-grav servant\nrobot.\n";
+    "cheaper version of the anti-grav servant robot. ";
   Druidmap[DRUID296].notes =
-    "this robot is used\nmainly for serving drinks.\nA tray is mounted on the\nhead. Built by Orchard\nand Marsden Enterprises.\n";
+    "this robot is used mainly for serving drinks. A tray is mounted on the head. Built by Orchard and Marsden Enterprises. ";
   Druidmap[DRUID302].notes =
-    "common device\nfor moving small\npackages. Clamp is\nmounted on the lower\nbody.\n";
+    "common device for moving small packages. Clamp is mounted on the lower body. ";
   Druidmap[DRUID329].notes =
-    "early type\nmessenger robot. Large\nwheels impede motion on\nsmall craft.an";
+    "early type messenger robot. Large wheels impede motion on small craft.an";
   Druidmap[DRUID420].notes =
-    "slow maintenance\nrobot. Confined to drive\nmaintenance during flight.\n";
+    "slow maintenance robot. Confined to drive maintenance during flight. ";
   Druidmap[DRUID476].notes =
-    "ship maintenance\nrobot. Fitted with\nmultiple arms to carry\nout repairs to the ship\nefficiently. All craft\nbuilt after the Jupiter‹incident are supplied\nwith a team of these.\n";
+    "ship maintenance robot. Fitted with multiple arms to carry out repairs to the ship efficiently. All craft built after the Jupiter‹incident are supplied with a team of these. ";
   Druidmap[DRUID493].notes =
-    "slave maintenance\ndroid. Standard version\nwill carry its own\ntoolbox.\n";
+    "slave maintenance droid. Standard version will carry its own toolbox. ";
   Druidmap[DRUID516].notes =
-    "early crew droid.\nAble to carry out simple\nflight checks only. No\nlonger supplied.\n";
+    "early crew droid. Able to carry out simple flight checks only. No longer supplied. ";
   Druidmap[DRUID571].notes =
-    "standard crew\ndroid. Supplied with the\nship.\n";
+    "standard crew droid. Supplied with the ship. ";
   Druidmap[DRUID598].notes =
-    "a highly\nsophisticated device.\nAble to control the\nRobo-Freighter on its\nown.\n";
+    "a highly sophisticated device. Able to control the Robo-Freighter on its own. ";
   Druidmap[DRUID614].notes =
-    "low security\nsentinel droid. Used to\nprotect areas of the ship\nfrom intruders. A slow\nbut sure device.\n";
+    "low security sentinel droid. Used to protect areas of the ship from intruders. A slow but sure device. ";
   Druidmap[DRUID615].notes =
-    "sophisticated\nsentinel droid. Only 2000\nbuilt by the Nicholson\nCompany. these are now\nvery rare.";
+    "sophisticated sentinel droid. Only 2000 built by the Nicholson Company. these are now very rare.";
   Druidmap[DRUID629].notes =
-    "low sentinel\ndroid. Lasers are built\ninto the turret. These\nare mounted on a small\ntank body. May be fitted\nwith an auto-cannon on‹the Gillen version.\n";
+    "low sentinel droid. Lasers are built into the turret. These are mounted on a small tank body. May be fitted with an auto-cannon on‹the Gillen version. ";
   Druidmap[DRUID711].notes =
-    "heavy duty battle\ndroid. Disruptor is built\ninto the head. One of the\nfirst in service with the\nMilitary.\n";
+    "heavy duty battle droid. Disruptor is built into the head. One of the first in service with the Military. ";
   Druidmap[DRUID742].notes =
-    "this version is\nthe one mainly used by\nthe Military.\n";
+    "this version is the one mainly used by the Military. ";
   Druidmap[DRUID751].notes =
-    "very heavy duty\nbattle droid. Only a few\nhave so far entered\nservice. These are the\nmost powerful battle\nunits ever built.\n";
+    "very heavy duty battle droid. Only a few have so far entered service. These are the most powerful battle units ever built. ";
   Druidmap[DRUID821].notes =
-    "a very reliable\nanti-grav unit is fitted\ninto this droid. It will\npatrol the ship and\neliminate intruders as\nsoon as detected by‹powerful sensors.\n";
+    "a very reliable anti-grav unit is fitted into this droid. It will patrol the ship and eliminate intruders as soon as detected by‹powerful sensors. ";
   Druidmap[DRUID834].notes =
-    "early type\nanti-grav security droid.\nFitted with an\nover-driven anti-grav unit.\nThis droid is very fast\nbut is not reliable.\n";
+    "early type anti-grav security droid. Fitted with an over-driven anti-grav unit. This droid is very fast but is not reliable. ";
   Druidmap[DRUID883].notes =
-    "this droid was\ndesigned from archive\ndata. For some unknown\nreason it instils great\nfear in Human\nadversaries.\n";
+    "this droid was designed from archive data. For some unknown reason it instils great fear in Human adversaries. ";
   Druidmap[DRUID999].notes =
-    "experimental\ncommand cyborg. Fitted\nwith a new tipe of\nbrain. Mounted on a\nsecurity droid anti-grav\nunit for convenience.‹warning: the influence\ndevice may not control a\nprimode brain for long.\n";
+    "experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience.‹warning: the influence device may not control a primode brain for long. ";
   IntroMSG1 =
     "Dies symbolisiert den Text, der zu Beginn des Spiels ausgegeben werden soll. Nach einer gewissen Zeit soll der Text nach unten weiterscrolloen und zwar in einer moeglichst fliessenden Form.";
 

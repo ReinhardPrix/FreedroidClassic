@@ -361,8 +361,6 @@ EXTERN void ClearUserFenster (void);
 EXTERN void StoreTextEnvironment (void);
 EXTERN void RestoreTextEnvironment (void);
 
-
-
 EXTERN int InitParaplusFont (void);
 
 EXTERN void SetTextColor (unsigned bg, unsigned fg);
@@ -380,13 +378,12 @@ EXTERN void DisplayChar (unsigned char Zeichen, unsigned char *screen);
 EXTERN int ScrollText (char *text, int startx, int starty, int EndLine);
 
 EXTERN void CheckUmbruch (void);
+EXTERN void ImprovedCheckUmbruch(char *);
 EXTERN void MakeUmbruch (void);
 EXTERN int FensterVoll (void);
 EXTERN char *PreviousLine (char *textstart, char *text);
 EXTERN char *NextLine (char *text);
 EXTERN char *GetString (int);
-
-
 
 /* rahmen.c */
 #undef EXTERN

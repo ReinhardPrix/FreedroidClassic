@@ -317,7 +317,7 @@ SetTextCursor (int x, int y)
 int
 ScrollText (char *Text, int startx, int starty, int EndLine)
 {
-  int lines = 0;		/* Anzahl der Textzeilen */
+  int Number_Of_Line_Feeds = 0;		/* Anzahl der Textzeilen */
   long TextHeight;		/* Hoehe des Gesamt-Textes in Pixel */
   char *textpt;			/* bewegl. Textpointer */
   int InsertLine = starty;
@@ -331,10 +331,10 @@ ScrollText (char *Text, int startx, int starty, int EndLine)
   textpt = Text;
   while (*textpt++)
     if (*textpt == '\n')
-      lines++;
+      Number_Of_Line_Feeds++;
 
   /* Texthoehe berechnen */
-  TextHeight = lines * (FONTHOEHE + ZEILENABSTAND);
+  TextHeight = ( Number_Of_Line_Feeds+ strlen(Text)/CharsPerLine ) * (FONTHOEHE + ZEILENABSTAND);
 
   while (!SpacePressed () && ((InsertLine + TextHeight) > EndLine))
     {
@@ -441,12 +441,14 @@ DisplayText (char *Text,
       /* Normales Zeichen ausgeben: */
       DisplayChar (*tmp, screen);
       tmp++;
+      
+      // CheckUmbruch ();		/* dont write over RightBorder */
+      ImprovedCheckUmbruch(tmp);
 
-      CheckUmbruch ();		/* dont write over RightBorder */
     } // while !FensterVoll()
   DebugPrintf
     ("\nvoid DisplayText(...): Funktionsende ordnungsgemaess erreicht.");
-}				// void DisplayText(...)
+} // void DisplayText(...)
 
 /*@Function============================================================
 @Desc: 
@@ -552,8 +554,50 @@ DisplayChar (unsigned char Zeichen, unsigned char *screen)
 void
 CheckUmbruch (void)
 {
-  if (MyCursorX > LeftTextBorder + CharsPerLine * FONTBREITE)
+  if (MyCursorX > LeftTextBorder + (CharsPerLine-2) * FONTBREITE)
     MakeUmbruch ();
+} // void CheckUmbruch(void)
+
+
+/*@Function============================================================
+  @Desc: This function checks if the next word still fits in this line
+  of text and initiates a carriage return/line feed if not.
+  Very handy and convenient, for that means it is no longer nescessary
+  to enter \n in the text every time its time for a newline. cool.
+  
+  The function could perhaps still need a little improvement.  But for
+  now its good enough and improvement enough in comparison to the old
+  CheckUmbruch function above.
+
+  @Ret: 
+  @Int:
+* $Function----------------------------------------------------------*/
+void
+ImprovedCheckUmbruch (char* Resttext)
+{
+  int i;
+#define MAX_WORD_LENGTH 100
+
+  if (MyCursorX > LeftTextBorder + (CharsPerLine-2) * FONTBREITE)
+    MakeUmbruch ();
+
+  // In case of a space, see if the next word will still fit on the line
+  // and do a carriage return/line feed if not
+  if ( *Resttext == ' ' ) {
+    for (i=1;i<MAX_WORD_LENGTH;i++) 
+      {
+	if ( (Resttext[i] != ' ') && (Resttext[i] != 0) )
+	  { 
+	    if ( MyCursorX+i*FONTBREITE > LeftTextBorder + (CharsPerLine-3) * FONTBREITE ) 
+	      {
+		MakeUmbruch();
+		return;
+	      }
+	  }
+	else return;
+      }
+  }
+
 } // void CheckUmbruch(void)
 
 
