@@ -3168,7 +3168,7 @@ init_obstacle_data( void )
   // -------------------------------------------------------------------
   // START OF SOME SIDEWALK PIECES
   // I hope I got the collisions right, and what is pre_put?? heh..
-  
+  /*
   obstacle_map [ ISO_SIDEWALK_1 ] . block_area_type = COLLISION_TYPE_NONE ;
   obstacle_map [ ISO_SIDEWALK_1 ] . block_area_parm_1 = 1.0 ;
   obstacle_map [ ISO_SIDEWALK_1 ] . block_area_parm_2 = 1.0 ;
@@ -3273,7 +3273,7 @@ init_obstacle_data( void )
   obstacle_map [ ISO_SIDEWALK_INNER_CORNER_4 ] . block_area_parm_2 = 1.0 ;
   obstacle_map [ ISO_SIDEWALK_INNER_CORNER_4 ] . filename = "iso_sidewalk_0020.png";
   obstacle_map [ ISO_SIDEWALK_INNER_CORNER_4 ] . needs_pre_put = TRUE;
-    
+  */
   // END OF SIDEWALKS 
   
   
@@ -3528,6 +3528,23 @@ init_obstacle_data( void )
   obstacle_map [ ISO_OUTER_WALL_CORNER_4 ] . block_area_parm_1 = 1.0 ;
   obstacle_map [ ISO_OUTER_WALL_CORNER_4 ] . block_area_parm_2 = 1.0 ;
   obstacle_map [ ISO_OUTER_WALL_CORNER_4 ] . filename = "iso_outer_walls_0016.png" ;
+
+  obstacle_map [ ISO_OUTER_WALL_SMALL_CORNER_1 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_OUTER_WALL_SMALL_CORNER_1 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_SMALL_CORNER_1 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_SMALL_CORNER_1 ] . filename = "iso_outer_walls_0017.png" ;
+  obstacle_map [ ISO_OUTER_WALL_SMALL_CORNER_2 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_OUTER_WALL_SMALL_CORNER_2 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_SMALL_CORNER_2 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_SMALL_CORNER_2 ] . filename = "iso_outer_walls_0018.png" ;
+  obstacle_map [ ISO_OUTER_WALL_SMALL_CORNER_3 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_OUTER_WALL_SMALL_CORNER_3 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_SMALL_CORNER_3 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_SMALL_CORNER_3 ] . filename = "iso_outer_walls_0019.png" ;
+  obstacle_map [ ISO_OUTER_WALL_SMALL_CORNER_4 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_OUTER_WALL_SMALL_CORNER_4 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_SMALL_CORNER_4 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_OUTER_WALL_SMALL_CORNER_4 ] . filename = "iso_outer_walls_0020.png" ;
 
 
   obstacle_map [ ISO_OUTER_DOOR_V_00 ] . block_area_parm_1 = standard_wall_thickness ;
