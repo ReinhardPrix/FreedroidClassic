@@ -715,86 +715,10 @@ GreatDruidShow (void)
 void
 ShowDeckMap (Level deck)
 {
-  int i, j;
-  SDL_Surface *tmp;
-  SDL_Surface *zwisch;
-  float ResizeFactor;
-
-  ResizeFactor=0.5;
 
   ClearUserFenster ();
 
-  // SDL_SetColorKey( ne_blocks , 0 , 0 );
-  tmp=zoomSurface( ne_blocks , ResizeFactor , ResizeFactor , 0 );
-
-  SDL_SaveBMP ( tmp, "../graphics/debugSmall.bmp");
-  
-  zwisch=ne_blocks;
-  ne_blocks=tmp;
-
-  for (i=0; i< NUM_MAP_BLOCKS ; i++)
-    {
-      ne_map_block[i].x *= ResizeFactor;
-      ne_map_block[i].y *= ResizeFactor;
-      ne_map_block[i].w *= ResizeFactor;
-      ne_map_block[i].h *= ResizeFactor;
-    }
-
-  for (i=0; i< DROID_PHASES ; i++)
-    {
-      ne_influ_block[i].x *= ResizeFactor;
-      ne_influ_block[i].y *= ResizeFactor;
-      ne_influ_block[i].w *= ResizeFactor;
-      ne_influ_block[i].h *= ResizeFactor;
-    }
-
-  for (i=0; i< DROID_PHASES ; i++)
-    {
-      ne_droid_block[i].x *= ResizeFactor;
-      ne_droid_block[i].y *= ResizeFactor;
-      ne_droid_block[i].w *= ResizeFactor;
-      ne_droid_block[i].h *= ResizeFactor;
-    }
-
-  for (i=0; i < ALLBULLETTYPES; i++)
-    for (j=0; j < Bulletmap[i].phases; j++)
-      {
-	Bulletmap[i].block[j].x *= ResizeFactor;
-	Bulletmap[i].block[j].y *= ResizeFactor;
-	Bulletmap[i].block[j].w *= ResizeFactor; 
-	Bulletmap[i].block[j].h *= ResizeFactor;
-      }
-
-  for (i=0; i < ALLBLASTTYPES; i++)
-    for (j=0; j < Bulletmap[i].phases; j++)
-      {
-	Blastmap[i].block[j].x *= ResizeFactor;
-	Blastmap[i].block[j].y *= ResizeFactor;
-	Blastmap[i].block[j].w *= ResizeFactor; 
-	Blastmap[i].block[j].h *= ResizeFactor;
-      }
-
-  for (i=0; i< DIGITNUMBER ; i++)
-    {
-      ne_digit_block[i].x *= ResizeFactor;
-      ne_digit_block[i].y *= ResizeFactor;
-      ne_digit_block[i].w *= ResizeFactor;
-      ne_digit_block[i].h *= ResizeFactor;
-    }
-
-  Block_Width *= ResizeFactor;
-  Block_Height *= ResizeFactor;
-
-  printf("\nDigit_Length: %d " , Digit_Length );
-  printf("\nDigit_Pos_X: %d " , Digit_Pos_X );
-
-  Digit_Length *= ResizeFactor;
-  Digit_Height *= ResizeFactor;
-  Digit_Pos_X *= ResizeFactor;
-  Digit_Pos_Y *= ResizeFactor;
-
-  printf("\nDigit_Length: %d " , Digit_Length );
-  printf("\nDigit_Pos_X: %d " , Digit_Pos_X );
+  SetCombatScaleTo( 0.5 );
 
   Assemble_Combat_Picture( 0 );
 

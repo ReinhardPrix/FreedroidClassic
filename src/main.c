@@ -97,6 +97,7 @@ int framenr = 0;
 int SkipAFewFrames = 0;
 long Overall_Frames_Displayed=0;
 float Overall_Average=0.041;
+float CurrentCombatScaleFactor=1;
 
 int TestSound (void);
 void CalibratedDelay (long);
@@ -223,8 +224,6 @@ main (int argc, char *const argv[])
   int Robot_Counter;
   int AllRobotsDead;
 
-  Block_Width=INITIAL_BLOCK_WIDTH;
-  Block_Height=INITIAL_BLOCK_HEIGHT;
   GameOver = FALSE;
   QuitProgram = FALSE;
   Conceptview = FALSE;
@@ -313,6 +312,20 @@ main (int argc, char *const argv[])
 	    EscapeMenu ();
 	  if ( PPressed () )
 	    Pause ();
+
+	  if ( OPressed () )
+	    {
+	      if (CurrentCombatScaleFactor > 0.5 )
+		CurrentCombatScaleFactor -= 0.5;
+	      SetCombatScaleTo (CurrentCombatScaleFactor);
+	      while (OPressed());
+	    }
+	  if ( IPressed () )
+	    {
+	      CurrentCombatScaleFactor += 0.5;
+	      SetCombatScaleTo (CurrentCombatScaleFactor);
+	      while (IPressed());
+	    }
 
 	  if (ShipEmptyCounter == 1)
 	    GameOver = TRUE;

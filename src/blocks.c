@@ -159,7 +159,6 @@ ne_get_digit_blocks (char *picfile, int num_blocks, int blocks_per_line,
 
   ret = (SDL_Rect*)MyMalloc(num_blocks*sizeof(SDL_Rect));
 
-
   /* now copy the individual map-blocks into ne_blocks */
   for (i=0; i < num_blocks; i++)
     {
@@ -174,6 +173,7 @@ ne_get_digit_blocks (char *picfile, int num_blocks, int blocks_per_line,
       ret[i].h = INITIAL_DIGIT_HEIGHT;
       SDL_BlitSurface (tmp, &rect, ne_blocks, &ret[i]);
     }
+
   SDL_FreeSurface (tmp);
 
   Digit_Length=INITIAL_DIGIT_LENGTH;
@@ -187,10 +187,8 @@ ne_get_digit_blocks (char *picfile, int num_blocks, int blocks_per_line,
 } /* ne_get_digit_blocks() */
 
 SDL_Rect *
-ne_get_rahmen_block (char *picfile, int num_blocks, int blocks_per_line,
-	       int source_line, int target_line)
+ne_get_rahmen_block (char *picfile)
 {
-  int i;
   SDL_Surface *tmp;
   SDL_Rect rect, *ret;
 
@@ -201,26 +199,21 @@ ne_get_rahmen_block (char *picfile, int num_blocks, int blocks_per_line,
       Terminate (ERR);
     }
 
-  if (!blocks_per_line) /* only one line here */
-    blocks_per_line = num_blocks;
-
-  ret = (SDL_Rect*)MyMalloc(num_blocks*sizeof(SDL_Rect));
+  ret = (SDL_Rect*)MyMalloc(sizeof(SDL_Rect));
 
 
-  /* now copy the individual map-blocks into ne_blocks */
-  for (i=0; i < num_blocks; i++)
-    {
-      rect.x = (i%blocks_per_line)*(RAHMENBREITE);
-      rect.y = (source_line+i/blocks_per_line)*(Block_Height+2);
-      rect.w = RAHMENBREITE;
-      rect.h = RAHMENHOEHE;
-      
-      ret[i].x = i*RAHMENBREITE;
-      ret[i].y = target_line*Block_Height;
-      ret[i].w = RAHMENBREITE;
-      ret[i].h = RAHMENHOEHE;
-      SDL_BlitSurface (tmp, &rect, ne_blocks, &ret[i]);
-    }
+  /* now copy the block to ne_static  */
+  rect.x = 0;
+  rect.y = 0;
+  rect.w = RAHMENBREITE;
+  rect.h = RAHMENHOEHE;
+  
+  ret[0].x = 0;
+  ret[0].y = 0;
+  ret[0].w = RAHMENBREITE;
+  ret[0].h = RAHMENHOEHE;
+  SDL_BlitSurface (tmp, &rect, ne_static, &ret[0]);
+
   SDL_FreeSurface (tmp);
 
   return (ret);

@@ -41,6 +41,7 @@
 #include "map.h"
 #include "text.h"
 #include "colodefs.h"
+#include "SDL_rotozoom.h"
 
 extern int TimerFlag;
 
@@ -141,6 +142,113 @@ void replace_color (SDL_Surface *surf, SDL_Color src, SDL_Color dst)
   return;
 }
 
+/*
+----------------------------------------------------------------------
+@Desc: This function initializes ALL the graphics again, propably after 
+they have been destroyed by resizing operations.
+This is done via freeing the old structures and starting the classical
+allocations routine again.
+
+@Ret: TRUE/FALSE, same as InitPictures() returns
+
+----------------------------------------------------------------------
+*/
+int
+ReInitPictures (void)
+{
+  SDL_FreeSurface( ne_blocks );
+  SDL_FreeSurface( ne_static );
+
+  return (InitPictures());
+} // int ReInitPictures(void)
+
+
+void 
+SetCombatScaleTo(float ResizeFactor)
+{
+  int i, j;
+  SDL_Surface *tmp;
+  SDL_Surface *zwisch;
+
+  // just to be sure, reset the size of the graphics
+  ReInitPictures();
+
+  //--------------------
+  // now to the resizing of all combat elements
+  // and the corresponding rectangle entries...
+
+  // SDL_SetColorKey( ne_blocks , 0 , 0 );
+  tmp=zoomSurface( ne_blocks , ResizeFactor , ResizeFactor , 0 );
+  SDL_FreeSurface( ne_blocks );
+  ne_blocks=tmp;
+
+  for (i=0; i< NUM_MAP_BLOCKS ; i++)
+    {
+      ne_map_block[i].x *= ResizeFactor;
+      ne_map_block[i].y *= ResizeFactor;
+      ne_map_block[i].w *= ResizeFactor;
+      ne_map_block[i].h *= ResizeFactor;
+    }
+
+  for (i=0; i< DROID_PHASES ; i++)
+    {
+      ne_influ_block[i].x *= ResizeFactor;
+      ne_influ_block[i].y *= ResizeFactor;
+      ne_influ_block[i].w *= ResizeFactor;
+      ne_influ_block[i].h *= ResizeFactor;
+    }
+
+  for (i=0; i< DROID_PHASES ; i++)
+    {
+      ne_droid_block[i].x *= ResizeFactor;
+      ne_droid_block[i].y *= ResizeFactor;
+      ne_droid_block[i].w *= ResizeFactor;
+      ne_droid_block[i].h *= ResizeFactor;
+    }
+
+  for (i=0; i < ALLBULLETTYPES; i++)
+    for (j=0; j < Bulletmap[i].phases; j++)
+      {
+	Bulletmap[i].block[j].x *= ResizeFactor;
+	Bulletmap[i].block[j].y *= ResizeFactor;
+	Bulletmap[i].block[j].w *= ResizeFactor; 
+	Bulletmap[i].block[j].h *= ResizeFactor;
+      }
+
+  for (i=0; i < ALLBLASTTYPES; i++)
+    for (j=0; j < Blastmap[i].phases; j++)
+      {
+	Blastmap[i].block[j].x *= ResizeFactor;
+	Blastmap[i].block[j].y *= ResizeFactor;
+	Blastmap[i].block[j].w *= ResizeFactor; 
+	Blastmap[i].block[j].h *= ResizeFactor;
+      }
+
+  for (i=0; i< DIGITNUMBER ; i++)
+    {
+      ne_digit_block[i].x *= ResizeFactor;
+      ne_digit_block[i].y *= ResizeFactor;
+      ne_digit_block[i].w *= ResizeFactor;
+      ne_digit_block[i].h *= ResizeFactor;
+    }
+
+  Block_Width *= ResizeFactor;
+  Block_Height *= ResizeFactor;
+
+  // printf("\nDigit_Length: %d " , Digit_Length );
+  // printf("\nDigit_Pos_X: %d " , Digit_Pos_X );
+
+  Digit_Length *= ResizeFactor;
+  Digit_Height *= ResizeFactor;
+  Digit_Pos_X *= ResizeFactor;
+  Digit_Pos_Y *= ResizeFactor;
+
+  // printf("\nDigit_Length: %d " , Digit_Length );
+  //  printf("\nDigit_Pos_X: %d " , Digit_Pos_X );
+
+  SDL_SaveBMP ( tmp, "../graphics/debugSmall.bmp");
+
+} // void SetCombatScaleTo(float new_scale);
 
 /*-----------------------------------------------------------------
  * @Desc: get the pics for: druids, bullets, blasts
@@ -157,19 +265,24 @@ InitPictures (void)
 {
   int i;
   SDL_Surface *tmp;
+  SDL_Surface *tmp2;
   int block_line = 0;   /* keep track of line in ne_blocks we're writing */
+
+  Block_Width=INITIAL_BLOCK_WIDTH;
+  Block_Height=INITIAL_BLOCK_HEIGHT;
+
 
   /* 
      create the internal storage for all our blocks 
   */
   tmp = SDL_CreateRGBSurface(0, NUM_MAP_BLOCKS*Block_Width,
 			     12*Block_Height, ne_bpp, 0, 0, 0, 0);
-  if (tmp == NULL)
+  tmp2 = SDL_CreateRGBSurface(0, SCREENBREITE, SCREENHOEHE, ne_bpp, 0, 0, 0, 0);
+  if ( (tmp == NULL) || (tmp2 == NULL) )
     {
       printf ("\nCould not create ne_blocks surface: %s\n", SDL_GetError());
       return (FALSE);
     }
-
 
   /* 
    * convert this to display format for fast blitting 
@@ -180,10 +293,23 @@ InitPictures (void)
       printf ("\nSDL_DisplayFormat() has failed: %s\n", SDL_GetError());
       return (FALSE);
     }
+
+  ne_static = SDL_DisplayFormat(tmp2);  /* the second surface is copied !*/
+  if (ne_static == NULL) 
+    {
+      printf ("\nSDL_DisplayFormat() has failed: %s\n", SDL_GetError());
+      return (FALSE);
+    }
   SDL_FreeSurface (tmp); /* and free the old one */
 
   /* set the transparent color */
   if (SDL_SetColorKey(ne_blocks, SDL_SRCCOLORKEY, ne_transp_key) == -1 )
+    {
+      fprintf (stderr, "Transp setting by SDL_SetColorKey() failed: %s \n",
+	       SDL_GetError());
+      return (FALSE);
+    }
+  if (SDL_SetColorKey(ne_static, SDL_SRCCOLORKEY, ne_transp_key) == -1 )
     {
       fprintf (stderr, "Transp setting by SDL_SetColorKey() failed: %s \n",
 	       SDL_GetError());
@@ -215,7 +341,7 @@ InitPictures (void)
   ne_digit_block =
     ne_get_digit_blocks (NE_DIGIT_BLOCK_FILE, DIGITNUMBER, DIGITNUMBER, 0, block_line++);
 
-  ne_rahmen_block = ne_get_rahmen_block ( NE_RAHMEN_BLOCK_FILE, 1, 1, 0, block_line++);
+  ne_rahmen_block = ne_get_rahmen_block ( NE_RAHMEN_BLOCK_FILE );
   
   // console picture need not be rendered fast or something.  This
   // really has time, so we load it as a surface and do not take the

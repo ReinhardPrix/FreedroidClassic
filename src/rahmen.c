@@ -197,7 +197,7 @@ DisplayRahmen ( int flags )
       TargetRectangle.x=0;
       TargetRectangle.y=0;
       SDL_SetClipRect( ne_screen , NULL );  // this unsets the clipping rectangle
-      SDL_BlitSurface( ne_blocks , ne_rahmen_block , ne_screen , &TargetRectangle );
+      SDL_BlitSurface( ne_static , ne_rahmen_block , ne_screen , &TargetRectangle );
 
       // Now the text should be ready and its
       // time to display it...

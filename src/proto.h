@@ -149,9 +149,7 @@ EXTERN SDL_Rect *ne_get_digit_blocks (char *picfile, int num_blocks,
 				int blocks_per_line, int source_line,
 				int target_line);
 
-EXTERN SDL_Rect *ne_get_rahmen_block (char *picfile, int num_blocks,
-				int blocks_per_line, int source_line,
-				int target_line);
+EXTERN SDL_Rect *ne_get_rahmen_block (char *picfile);
 
 EXTERN unsigned char *GetBlocks (char *picfile, int line, int num);
 EXTERN int MergeBlockToWindow (register unsigned char *source,
@@ -191,6 +189,8 @@ EXTERN int MergeBlockToWindow (unsigned char *,
 EXTERN void replace_color (SDL_Surface *surf, SDL_Color src, SDL_Color dst);
 EXTERN void DisplayImage(char *file_name);
 EXTERN void MakeGridOnScreen(void);
+EXTERN void SetCombatScaleTo(float);
+EXTERN int ReInitPictures (void);
 EXTERN int InitPictures (void);
 EXTERN void SetColors (int FirstCol, int PalAnz, char *PalPtr);
 EXTERN void SetPalCol (unsigned int palpos, unsigned char rot,

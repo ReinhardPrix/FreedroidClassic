@@ -178,7 +178,8 @@ EXTERN const SDL_VideoInfo *ne_vid_info;    /* info about current video mode */
 EXTERN color ne_transp_rgb;                /* RGB of transparent color */
 EXTERN int ne_bpp; 			   /* bits per pixel */
 EXTERN Uint32 ne_transp_key;               /* key of transparent color */
-EXTERN SDL_Surface *ne_blocks;             /* here we collect all game blocks */
+EXTERN SDL_Surface *ne_blocks;             /* here we collect all combat game blocks */
+EXTERN SDL_Surface *ne_static;             /* here we collect all non-resizable game blocks */
 EXTERN SDL_Rect *ne_map_block; 			/* arrays of block positions */
 EXTERN SDL_Rect *ne_droid_block;
 EXTERN SDL_Rect *ne_influ_block;

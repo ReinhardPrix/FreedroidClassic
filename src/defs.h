@@ -122,7 +122,7 @@ enum
 #define BULLET_BULLET_COLLISION_DIST (10/64.0)
 
 /* Dimension eines Blasts */
-#define BLASTRADIUS		(((INITIAL_BLOCK_WIDTH/3)*2)/64.0)
+#define BLASTRADIUS		( ( INITIAL_BLOCK_WIDTH/64.0 ) * 0.4 )
 
 // **********************************************************************
 //
