@@ -272,7 +272,8 @@ keys pressed and also adjusts his status and current "phase" of his rotation.
 void
 MoveInfluence (void)
 {
-  float accel = Druidmap[Me.type].accel;
+  // float accel = Druidmap[Me.type].accel;
+  float accel = ItemMap[ Druidmap[Me.type].drive_item ].item_drive_accel;
   float planned_step_x;
   float planned_step_y;
   static float TransferCounter = 0;
@@ -519,11 +520,12 @@ CheckInfluenceWallCollisions (void)
   finepoint lastpos;
   int res; 
   int NumberOfShifts=0;
-  int safty_sx = 0, safty_sy = 0;	/* wegstoss - Geschwindigkeiten (falls noetig) */
+  int safty_sx = 0, safty_sy = 0;	// pushback speed -- if nescessary
   int NorthSouthAxisBlocked=FALSE;
   int EastWestAxisBlocked=FALSE;
   int H_Door_Sliding_Active = FALSE;
-  
+  // double maxspeed = Druidmap[Me.type].maxspeed;
+  double maxspeed = ItemMap [ Druidmap[Me.type].drive_item ].item_drive_maxspeed ;
 
   int crashx = FALSE, crashy = FALSE;	/* Merker wo kollidiert wurde */
 
@@ -547,8 +549,8 @@ CheckInfluenceWallCollisions (void)
       // At first we just check in which directions (from the last position)
       // the ways are blocked and in which directions the ways are open.
       //
-      if ( ! ( ( DruidPassable(lastpos.x , lastpos.y + Druidmap[Me.type].maxspeed * Frame_Time() ) != CENTER ) ||
-	       ( DruidPassable(lastpos.x , lastpos.y - Druidmap[Me.type].maxspeed * Frame_Time() ) != CENTER ) ) )
+      if ( ! ( ( DruidPassable(lastpos.x , lastpos.y + maxspeed * Frame_Time() ) != CENTER ) ||
+	       ( DruidPassable(lastpos.x , lastpos.y - maxspeed * Frame_Time() ) != CENTER ) ) )
 	{
 	  DebugPrintf(1, "\nNorth-south-Axis seems to be free.");
 	  NorthSouthAxisBlocked = FALSE;
@@ -558,8 +560,8 @@ CheckInfluenceWallCollisions (void)
 	  NorthSouthAxisBlocked = TRUE;
 	}
 
-      if ( ( DruidPassable(lastpos.x + Druidmap[Me.type].maxspeed * Frame_Time() , lastpos.y ) == CENTER ) &&
-	   ( DruidPassable(lastpos.x - Druidmap[Me.type].maxspeed * Frame_Time() , lastpos.y ) == CENTER ) )
+      if ( ( DruidPassable(lastpos.x + maxspeed * Frame_Time() , lastpos.y ) == CENTER ) &&
+	   ( DruidPassable(lastpos.x - maxspeed * Frame_Time() , lastpos.y ) == CENTER ) )
 	{
 	  EastWestAxisBlocked = FALSE;
 	}
@@ -800,7 +802,8 @@ CheckInfluenceWallCollisions (void)
 void
 AdjustSpeed (void)
 {
-  double maxspeed = Druidmap[Me.type].maxspeed;
+  // double maxspeed = Druidmap[Me.type].maxspeed;
+  double maxspeed = ItemMap [ Druidmap[Me.type].drive_item ].item_drive_maxspeed ;
   if (Me.speed.x > maxspeed)
     Me.speed.x = maxspeed;
   if (Me.speed.x < (-maxspeed))

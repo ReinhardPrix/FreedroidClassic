@@ -209,6 +209,9 @@ typedef struct
   int New_Drive_Type_After_Installation;
   double energy_gain_uppon_application_in_combat;
   double item_weight;
+  double item_drive_maxspeed;	// how fast can this item go used as the drive of the droid
+  double item_drive_accel;	// as drive, how fast can you accelerate with this item
+  
   int picture_number;
   char* MaximumSpeed; 
   // SDL_Surface* SurfacePointer;  // items don't each have individual pictures...
@@ -223,9 +226,9 @@ typedef struct
 typedef struct
 {
   char *druidname;
-  double maxspeed;		/* the maximum of speed it can go */
+  // double maxspeed;		/* the maximum of speed it can go */
+  // double accel;			/* its acceleration */
   int class;
-  double accel;			/* its acceleration */
   double maxenergy;		/* the maximum energy the batteries can carry */
   double lose_health;		/* the energy/time the duid loses under influence-control */
   int gun;			/* Which gun does this druid use */
@@ -234,12 +237,13 @@ typedef struct
   int score;			/* score for the elimination of one droid of this type */
   double height;                // the height of this droid  
   double weight;                // the weight of this droid
-  int drive;
+  // int drive;
   int brain;
   int sensor1;
   int sensor2;
   int sensor3;
   int armament;
+  int drive_item;
   int AdvancedBehaviour;        // Does this droid behave better that in the original paradroid?
   int CallForHelpAfterSufferingHit;  // Does this droid request help from the next console so soon as it is
                                      // hit by a bullet of some type?

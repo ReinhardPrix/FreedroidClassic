@@ -713,7 +713,8 @@ GreatDruidShow (void)
 		   Classes[Druidmap[Infodroid].class] ,
 		   Druidmap[Infodroid].height ,
 		   Druidmap[Infodroid].weight ,
-		   Drivenames[ Druidmap[Infodroid].drive ] ,
+		   // Drivenames[ Druidmap[Infodroid].drive ] ,
+		   ItemMap [ Druidmap[ Infodroid ].drive_item ].ItemName ,
 		   Brainnames[ Druidmap[Infodroid].brain ] );
 
 	  DisplayText (InfoText, MENUTEXT_X, USERFENSTERPOSY + FontHeight (Menu_BFont),

@@ -149,6 +149,8 @@ Item installation changes weapon into new value=-1
 Item installation changes drive into new value=-1
 Energy gain on application in combat=35
 Item weight=0.4
+Item drive maxspeed=0
+Item drive acceleration=0
 Picture number=0
 ** End of new item specification subsection **
 
@@ -161,6 +163,8 @@ Item installation changes weapon into new value=-1
 Item installation changes drive into new value=-1
 Energy gain on application in combat=70
 Item weight=0.6
+Item drive maxspeed=0
+Item drive acceleration=0
 Picture number=0
 ** End of new item specification subsection **
 
@@ -173,6 +177,8 @@ Item installation changes weapon into new value=-1
 Item installation changes drive into new value=-1
 Energy gain on application in combat=105
 Item weight=0.8
+Item drive maxspeed=0
+Item drive acceleration=0
 Picture number=0
 ** End of new item specification subsection **
 
@@ -185,6 +191,8 @@ Item installation changes weapon into new value=2
 Item installation changes drive into new value=-1
 Energy gain on application in combat=60
 Item weight=0.8
+Item drive maxspeed=0
+Item drive acceleration=0
 Picture number=2
 ** End of new item specification subsection **
 
@@ -197,6 +205,8 @@ Item installation changes weapon into new value=-1
 Item installation changes drive into new value=-1
 Energy gain on application in combat=60
 Item weight=0.8
+Item drive maxspeed=0
+Item drive acceleration=0
 Picture number=3
 ** End of new item specification subsection **
 
@@ -209,6 +219,8 @@ Item installation changes weapon into new value=-1
 Item installation changes drive into new value=2
 Energy gain on application in combat=60
 Item weight=0.8
+Item drive maxspeed=7
+Item drive acceleration=6
 Picture number=4
 ** End of new item specification subsection **
 
@@ -221,7 +233,65 @@ Item installation changes weapon into new value=-1
 Item installation changes drive into new value=-1
 Energy gain on application in combat=0
 Item weight=0.0
+Item drive maxspeed=0
+Item drive acceleration=0
 Picture number=1
+** End of new item specification subsection **
+
+// Item No. 7
+** Start of new item specification subsection **
+Item name="Droid Wheel Drive Class Alpha"
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item installation changes weapon into new value=-1
+Item installation changes drive into new value=4
+Energy gain on application in combat=60
+Item weight=0.8
+Item drive maxspeed=2
+Item drive acceleration=3
+Picture number=4
+** End of new item specification subsection **
+
+// Item No. 8
+** Start of new item specification subsection **
+Item name="Droid Tri-pedal Drive Class Alpha"
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item installation changes weapon into new value=-1
+Item installation changes drive into new value=4
+Energy gain on application in combat=60
+Item weight=0.8
+Item drive maxspeed=3
+Item drive acceleration=3
+Picture number=4
+** End of new item specification subsection **
+
+// Item No. 9
+** Start of new item specification subsection **
+Item name="Droid Wheel Bi-pedal Class Alpha"
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item installation changes weapon into new value=-1
+Item installation changes drive into new value=4
+Energy gain on application in combat=60
+Item weight=0.8
+Item drive maxspeed=2
+Item drive acceleration=3
+Picture number=4
+** End of new item specification subsection **
+
+// Item No. 10
+** Start of new item specification subsection **
+Item name="Droid Tracks Drive Class Alpha"
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item installation changes weapon into new value=-1
+Item installation changes drive into new value=4
+Energy gain on application in combat=60
+Item weight=0.8
+Item drive maxspeed=2
+Item drive acceleration=6
+Picture number=4
 ** End of new item specification subsection **
 
 *** End of item data section: ***
@@ -265,6 +335,7 @@ Sensor 1 of this droid : 0
 Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
+Drive item=5
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -289,6 +360,7 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 2
 Sensor 3 of this droid : 0
 Armament of this droid : 0
+Drive item=10
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -313,6 +385,7 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
+Drive item=10
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -337,6 +410,7 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
+Drive item=5
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -361,6 +435,7 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
+Drive item=8
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -385,6 +460,7 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
+Drive item=10
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -409,6 +485,7 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
+Drive item=5
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -433,6 +510,7 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
+Drive item=7
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -457,6 +535,7 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
+Drive item=10
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -481,6 +560,7 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 2
 Sensor 3 of this droid : 0
 Armament of this droid : 1
+Drive item=5
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -505,6 +585,7 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
+Drive item=5
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -529,6 +610,7 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
+Drive item=9
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -553,6 +635,7 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
+Drive item=9
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -577,6 +660,7 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
+Drive item=9
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -601,6 +685,7 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 3
 Sensor 3 of this droid : 0
 Armament of this droid : 2
+Drive item=9
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -625,6 +710,7 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 2
 Sensor 3 of this droid : 0
 Armament of this droid : 1
+Drive item=5
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -649,6 +735,7 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 3
 Sensor 3 of this droid : 0
 Armament of this droid : 1
+Drive item=10
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -673,6 +760,7 @@ Sensor 1 of this droid : 4
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 0
 Armament of this droid : 3
+Drive item=9
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -697,6 +785,7 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 0
 Armament of this droid : 3
+Drive item=9
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -721,6 +810,7 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 1
+Drive item=9
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -745,6 +835,7 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 2
 Armament of this droid : 1
+Drive item=5
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -769,6 +860,7 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 0
 Armament of this droid : 1
+Drive item=5
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -793,6 +885,7 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 0
 Armament of this droid : 4
+Drive item=7
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -817,6 +910,7 @@ Sensor 1 of this droid : 2
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
 Armament of this droid : 1
+Drive item=5
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -840,6 +934,7 @@ Brain of this droid : 2
 Sensor 1 of this droid : 2
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
+Drive item=9
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
@@ -865,6 +960,7 @@ Sensor 1 of this droid : 2
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
 Armament of this droid : 1
+Drive item=5
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -889,6 +985,7 @@ Sensor 1 of this droid : 2
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
 Armament of this droid : 1
+Drive item=5
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -913,6 +1010,7 @@ Sensor 1 of this droid : 2
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
 Armament of this droid : 1
+Drive item=5
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -937,6 +1035,7 @@ Sensor 1 of this droid : 2
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
 Armament of this droid : 1
+Drive item=5
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -961,6 +1060,7 @@ Sensor 1 of this droid : 2
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
 Armament of this droid : 1
+Drive item=5
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -985,6 +1085,7 @@ Sensor 1 of this droid : 2
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
 Armament of this droid : 1
+Drive item=5
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1009,6 +1110,7 @@ Sensor 1 of this droid : 2
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
 Armament of this droid : 1
+Drive item=5
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1033,6 +1135,7 @@ Sensor 1 of this droid : 2
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
 Armament of this droid : 1
+Drive item=5
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -1057,6 +1160,7 @@ Sensor 1 of this droid : 2
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
 Armament of this droid : 1
+Drive item=5
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0

@@ -371,6 +371,14 @@ Sorry...\n\
       ReadValueFromString( ItemPointer ,  "Item weight=" , "%lf" , 
 			   &ItemMap[ItemIndex].item_weight , EndOfItemData );
 
+      // Now we read in the maxspeed you can go with this item as drive
+      ReadValueFromString( ItemPointer ,  "Item drive maxspeed=" , "%lf" , 
+			   &ItemMap[ItemIndex].item_drive_maxspeed , EndOfItemData );
+
+      // Now we read in the acceleration you will have with this item as drive
+      ReadValueFromString( ItemPointer ,  "Item drive acceleration=" , "%lf" , 
+			   &ItemMap[ItemIndex].item_drive_accel , EndOfItemData );
+
       // Now we read in the number of the picture to be used for this item
       ReadValueFromString( ItemPointer ,  "Picture number=" , "%d" , 
 			   &ItemMap[ItemIndex].picture_number , EndOfItemData );
@@ -606,6 +614,7 @@ Get_Robot_Data ( void* DataPointer )
 #define SENSOR2_BEGIN_STRING "Sensor 2 of this droid : "
 #define SENSOR3_BEGIN_STRING "Sensor 3 of this droid : "
 #define ARMAMENT_BEGIN_STRING "Armament of this droid : "
+#define DRIVE_ITEM_BEGIN_STRING "Drive item="
 #define ADVANCED_FIGHTING_BEGIN_STRING "Advanced Fighting present in this droid : "
 #define IS_HUMAN_SPECIFICATION_STRING "Is this 'droid' a human : "
 #define GO_REQUEST_REINFORCEMENTS_BEGIN_STRING "Going to request reinforcements typical for this droid : "
@@ -671,16 +680,16 @@ Get_Robot_Data ( void* DataPointer )
 	ReadAndMallocStringFromData ( RobotPointer , DROIDNAME_BEGIN_STRING , "\n" ) ;
 
       // Now we read in the maximal speed this droid can go. 
-      ReadValueFromString( RobotPointer , MAXSPEED_BEGIN_STRING , "%lf" , 
-			   &Druidmap[RobotIndex].maxspeed , EndOfDataPointer );
+      // ReadValueFromString( RobotPointer , MAXSPEED_BEGIN_STRING , "%lf" , 
+      // &Druidmap[RobotIndex].maxspeed , EndOfDataPointer );
 
       // Now we read in the class of this droid.
       ReadValueFromString( RobotPointer , CLASS_BEGIN_STRING , "%d" , 
 			   &Druidmap[RobotIndex].class , EndOfDataPointer );
 
       // Now we read in the maximal acceleration this droid can go. 
-      ReadValueFromString( RobotPointer , ACCELERATION_BEGIN_STRING , "%lf" , 
-			   &Druidmap[RobotIndex].accel , EndOfDataPointer );
+      // ReadValueFromString( RobotPointer , ACCELERATION_BEGIN_STRING , "%lf" , 
+      // &Druidmap[RobotIndex].accel , EndOfDataPointer );
 
       // Now we read in the maximal energy this droid can store. 
       ReadValueFromString( RobotPointer , MAXENERGY_BEGIN_STRING , "%lf" , 
@@ -715,8 +724,8 @@ Get_Robot_Data ( void* DataPointer )
 			   &Druidmap[RobotIndex].weight, EndOfDataPointer );
 
       // Now we read in the drive of this droid of this type
-      ReadValueFromString( RobotPointer , DRIVE_BEGIN_STRING , "%d" , 
-			   &Druidmap[RobotIndex].drive, EndOfDataPointer );
+      // ReadValueFromString( RobotPointer , DRIVE_BEGIN_STRING , "%d" , 
+      // &Druidmap[RobotIndex].drive, EndOfDataPointer );
 
       // Now we read in the brain of this droid of this type
       ReadValueFromString( RobotPointer , BRAIN_BEGIN_STRING , "%d" , 
@@ -733,6 +742,10 @@ Get_Robot_Data ( void* DataPointer )
       // Now we read in the armament of this droid type
       ReadValueFromString( RobotPointer , ARMAMENT_BEGIN_STRING , "%d" , 
 			   &Druidmap[RobotIndex].armament , EndOfDataPointer );
+
+      // Now we read in the drive item of this droid type
+      ReadValueFromString( RobotPointer , DRIVE_ITEM_BEGIN_STRING , "%d" , 
+			   &Druidmap[RobotIndex].drive_item , EndOfDataPointer );
 
       // Now we read in the AdvancedFighing flag of this droid type
       ReadValueFromString( RobotPointer , ADVANCED_FIGHTING_BEGIN_STRING , "%d" , 
@@ -761,8 +774,8 @@ Get_Robot_Data ( void* DataPointer )
 
   for ( i=0; i< Number_Of_Droid_Types ; i++ ) 
     {
-      Druidmap[i].maxspeed *= maxspeed_calibrator;
-      Druidmap[i].accel *= acceleration_calibrator;
+      // Druidmap[i].maxspeed *= maxspeed_calibrator;
+      // Druidmap[i].accel *= acceleration_calibrator;
       Druidmap[i].maxenergy *= maxenergy_calibrator;
       Druidmap[i].lose_health *= energyloss_calibrator;
       Druidmap[i].aggression *= aggression_calibrator;
