@@ -716,12 +716,12 @@ open_gl_check_error_status ( char* name_of_calling_function  )
 	case GL_INVALID_ENUM:
 	    fprintf ( stderr , "\nCheck occured in function: %s." , name_of_calling_function );
 	    GiveStandardErrorMessage ( __FUNCTION__  , 
-				       "Error code GL_INVALID_ENUM received!", PLEASE_INFORM, IS_FATAL );
+				       "Error code GL_INVALID_ENUM received!", PLEASE_INFORM, IS_WARNING_ONLY );
 	    break;
 	case GL_INVALID_VALUE:
 	    fprintf ( stderr , "\nCheck occured in function: %s." , name_of_calling_function );
 	    GiveStandardErrorMessage ( __FUNCTION__  , 
-				       "Error code GL_INVALID_VALUE received!", PLEASE_INFORM, IS_FATAL );
+				       "Error code GL_INVALID_VALUE received!", PLEASE_INFORM, IS_WARNING_ONLY );
 	    break;
 	case GL_INVALID_OPERATION:
 	    fprintf ( stderr , "\nCheck occured in function: %s." , name_of_calling_function );
@@ -827,25 +827,29 @@ safely_set_some_open_gl_flags_and_shade_model ( void )
     //  be enourmous!  So don't change too much inside of quick loops
     //  if it can be avoided.)
     //
-    glDisable ( GL_BLEND );
-    glDisable ( GL_DITHER );
-    glDisable ( GL_FOG );
-    glDisable ( GL_LIGHTING );
-    glDisable ( GL_TEXTURE_1D );
-    glDisable ( GL_TEXTURE_2D );
-    glDisable ( GL_TEXTURE_3D_EXT );
-    glShadeModel ( GL_FLAT );
+    glDisable ( GL_BLEND );  // this is OK, according to docu...
+    glDisable ( GL_DITHER );  // this is OK, according to docu...
+    glDisable ( GL_FOG );  // this is OK, according to docu...
+    glDisable ( GL_LIGHTING );  // this is OK, according to docu...
+    glDisable ( GL_TEXTURE_1D );  // this is OK, according to docu...
+    glDisable ( GL_TEXTURE_2D );  // this is OK, according to docu...
+    glShadeModel ( GL_FLAT );  // this is OK, according to docu...
+    //--------------------
+    // This might be causing some invalid enums on some Microsoft GDI
+    // OpenGL 'driver' or driver-wannabe.  Therefore we skip doing this...
+    //
+    // glDisable ( GL_TEXTURE_3D_EXT );
     
     //--------------------
     // We disable depth test for all purposes.
     //
-    glDisable( GL_DEPTH_TEST );
+    glDisable( GL_DEPTH_TEST );  // this is OK, according to docu...
     
     //--------------------
     // The default output method will be alpha test with threshold 0.5.
     //
-    glEnable( GL_ALPHA_TEST );  
-    glAlphaFunc ( GL_GREATER , 0.5 ) ;
+    glEnable( GL_ALPHA_TEST );  // this is OK, according to docu...
+    glAlphaFunc ( GL_GREATER , 0.5 ) ;  // this is OK, according to docu...
 
     open_gl_check_error_status ( __FUNCTION__ );
 

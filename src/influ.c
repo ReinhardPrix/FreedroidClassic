@@ -141,19 +141,30 @@ tux_friction_with_air ( int player_num )
 int
 find_free_floor_items_index ( int levelnum ) 
 {
-  int i;
-  Level DropLevel = curShip . AllLevels [ levelnum ] ;
-
-  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+    int i;
+    Level DropLevel = curShip . AllLevels [ levelnum ] ;
+    
+    for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
     {
-      if ( DropLevel -> ItemList [ i ] . type == ( -1 ) ) return ( i ) ;
+	if ( DropLevel -> ItemList [ i ] . type == ( -1 ) ) return ( i ) ;
     }
+    
+    //--------------------
+    // Now at this point we know, that we didn't succeed in finding a 
+    // free index for new items on the floor of this level.  Ok.  No need
+    // to panic.  We can overwrite one old item anyway.  In the mass of
+    // items lying around, it shouldn't become apparent anyway, provided
+    // we don't overwrite the same position again and again.  A bit of 
+    // randomisation should do the trick...
+    //
+    // GiveStandardErrorMessage ( __FUNCTION__  , "FreedroidRPG failed to find a free items index for an item it wanted to put on the floor.\nThis case means that there are too many items on the floor of this level for the current game engine.\nA constant needs to be raised or the engine improved.", PLEASE_INFORM, IS_FATAL );
+    //
+    i = MyRandom ( MAX_ITEMS_PER_LEVEL - 2 );
+    DebugPrintf ( 1 , "\n%s():  NOTE:  lots of items on the floor of this level.  Overwriting position %d." ,
+		  __FUNCTION__ , i ) ;
 
-  GiveStandardErrorMessage ( __FUNCTION__  , "FreedroidRPG failed to find a free items index for an item it wanted to put on the floor.\nThis case means that there are too many items on the floor of this level for the current game engine.\nA constant needs to be raised or the engine improved.",
-			     PLEASE_INFORM, IS_FATAL );
-
-  return ( 0 ) ;
-  
+    return ( i ) ;
+    
 }; // int find_free_floor_items_index ( int levelnum ) 
 
 /* ----------------------------------------------------------------------

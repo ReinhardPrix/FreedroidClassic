@@ -784,9 +784,7 @@ ShowDroidPicture (int PosX, int PosY, int Number )
     SDL_Rect target;
     char ConstructedFileName[5000];
     char* fpath;
-    
     static char LastImageSeriesPrefix[1000] = "NONE_AT_ALL";
-    
 #define NUMBER_OF_IMAGES_IN_DROID_PORTRAIT_ROTATION 32
     static SDL_Surface *DroidRotationSurfaces[ NUMBER_OF_IMAGES_IN_DROID_PORTRAIT_ROTATION ] = { NULL } ;
     SDL_Surface *Whole_Image;
