@@ -707,7 +707,7 @@ Drive : %s \n\
 Brain : %s", Druidmap[Me.type].druidname, Classname[Druidmap[Me.type].class],
 	       droidtype+1, Classes[Druidmap[droidtype].class],
 	       Druidmap[droidtype].height, Druidmap[droidtype].weight,
-	       ItemMap [ Druidmap[ droidtype ].drive_item ].ItemName,
+	       ItemMap [ Druidmap[ droidtype ].drive_item.type ].ItemName,
 	       Brainnames[ Druidmap[droidtype].brain ]);
       break;
     case 1:
@@ -716,7 +716,7 @@ Unit type %s - %s\n\
 Armamant : %s\n\
 Sensors  1: %s\n          2: %s\n          3: %s", Druidmap[droidtype].druidname,
 	       Classname[Druidmap[droidtype].class],
-	       ItemMap[ Druidmap[droidtype].weapon_item ].ItemName,
+	       ItemMap[ Druidmap[droidtype].weapon_item.type ].ItemName,
 	       Sensornames[ Druidmap[droidtype].sensor1 ],
 	       Sensornames[ Druidmap[droidtype].sensor2 ],
 	       Sensornames[ Druidmap[droidtype].sensor3 ]);

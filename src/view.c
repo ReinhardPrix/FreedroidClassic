@@ -47,6 +47,7 @@
 #include "map.h"
 #include "proto.h"
 #include "colodefs.h"
+#include "items.h"
 
 #include "SDL_rotozoom.h"
 
@@ -358,7 +359,7 @@ Assemble_Combat_Picture (int mask)
     }
 
   ShowMissionCompletitionMessages();
-  ShowInventoryScreen ( );
+  ManageInventoryScreen ( );
   ShowCharacterScreen ( );
 
   if ( GameConfig.Inventory_Visible ) 
@@ -979,6 +980,127 @@ Sorry...\n\
   SDL_FreeSurface(tmp);
 
   DebugPrintf (2, "\nvoid ShowRobotPicture(...): Usual end of function reached.");
-}				// void ShowRobotPicture(...)
+}; // void ShowRobotPicture ( ... )
+
+
+/* ----------------------------------------------------------------------
+ * This function displays the inventory screen and also fills in all the
+ * items the influencer is carrying in his inventory and also all the 
+ * items the influencer is fitted with.
+ * ---------------------------------------------------------------------- */
+void
+ShowInventoryScreen( void )
+{
+  static SDL_Surface *InventoryImage = NULL;
+  char *fpath;
+  char fname[]="inventory.png";
+  SDL_Rect TargetRect;
+  int SlotNum;
+
+  // --------------------
+  // Some things like the loading of the inventory and initialisation of the
+  // inventory rectangle need to be done only once at the first call of this
+  // function. 
+  //
+  if ( InventoryImage == NULL )
+    {
+      // SDL_FillRect( Screen, & InventoryRect , 0x0FFFFFF );
+      fpath = find_file ( fname , GRAPHICS_DIR, FALSE);
+      InventoryImage = IMG_Load( fpath );
+      //--------------------
+      // We define the right side of the user screen as the rectangle
+      // for our inventory screen.
+      //
+      InventoryRect.x = 0;
+      InventoryRect.y = User_Rect.y;
+      InventoryRect.w = SCREENLEN/2;
+      InventoryRect.h = User_Rect.h;
+    }
+
+  //--------------------
+  // At this point we know, that the inventory screen is desired and must be
+  // displayed in-game:
+  //
+  // Into this inventory rectangle we draw the inventory mask
+  //
+  SDL_SetClipRect( Screen, NULL );
+  SDL_BlitSurface ( InventoryImage , NULL , Screen , &InventoryRect );
+
+  //--------------------
+  // Now we display the item in the influencer drive slot
+  //
+  TargetRect.x = InventoryRect.x + 240;
+  TargetRect.y = InventoryRect.y + 93;
+  SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].drive_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+  
+  //--------------------
+  // Now we display the item in the influencer weapon slot
+  //
+  TargetRect.x = InventoryRect.x + 20;
+  TargetRect.y = InventoryRect.y + 10;
+  SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].weapon_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+  
+  //--------------------
+  // Now we display the item in the influencer armour slot
+  //
+  TargetRect.x = InventoryRect.x + ARMOUR_POS_X ;
+  TargetRect.y = InventoryRect.y + ARMOUR_POS_Y ;
+  SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].armour_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+  
+  //--------------------
+  // Now we display the item in the influencer shield slot
+  //
+  TargetRect.x = InventoryRect.x + SHIELD_POS_X ;
+  TargetRect.y = InventoryRect.y + SHIELD_POS_Y ;
+  SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].shield_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+  
+  //--------------------
+  // Now we display the item in the influencer special slot
+  //
+  TargetRect.x = InventoryRect.x + SPECIAL_POS_X ;
+  TargetRect.y = InventoryRect.y + SPECIAL_POS_Y ;
+  SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].special_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+  
+  //--------------------
+  // Now we display the item in the influencers aux1 slot
+  //
+  TargetRect.x = InventoryRect.x + AUX1_POS_X ;
+  TargetRect.y = InventoryRect.y + AUX1_POS_Y ;
+  SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].aux1_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+  
+  //--------------------
+  // Now we display the item in the influencers aux2 slot
+  //
+  TargetRect.x = InventoryRect.x + AUX2_POS_X ;
+  TargetRect.y = InventoryRect.y + AUX2_POS_Y ;
+  SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].aux2_item.type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+  
+
+  //--------------------
+  // Now we display all the items the influencer is carrying with him
+  //
+  for ( SlotNum = 0 ; SlotNum < MAX_ITEMS_IN_INVENTORY; SlotNum ++ )
+    {
+      // In case the item does not exist at all, we need not do anything more...
+      if ( Me.Inventory[ SlotNum ].type == ( -1 ) ) 
+	{
+	  // DisplayText( "\n--- Slot empty ---" , -1 , -1 , &InventoryRect );
+	  continue;
+	}
+
+      // In case the item is currently held in hand, we need not do anything more HERE ...
+      if ( Me.Inventory[ SlotNum ].currently_held_in_hand == TRUE )
+	{
+	  continue;
+	}
+
+      TargetRect.x = 16 + 32 * Me.Inventory[ SlotNum ].inventory_position.x;
+      TargetRect.y = User_Rect.y - 64 + 480 - 16 - 32 * 6 + 32 * Me.Inventory[ SlotNum ].inventory_position.y;
+      
+      SDL_BlitSurface( ItemImageList[ ItemMap[ Me.Inventory[ SlotNum ].type ].picture_number ].Surface , NULL , Screen , &TargetRect );
+
+    }
+}; // void ShowInventoryScreen( void )
+
 
 #undef _view_c

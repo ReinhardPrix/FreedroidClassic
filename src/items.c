@@ -36,31 +36,35 @@
 #include "global.h"
 #include "proto.h"
 
-#define ARMOUR_RECT_WIDTH 64
-#define ARMOUR_RECT_HEIGHT 64
-#define ARMOUR_POS_X 22
-#define ARMOUR_POS_Y 81
+#include "items.h"
 
-#define SHIELD_RECT_WIDTH 64
-#define SHIELD_RECT_HEIGHT 64
-#define SHIELD_POS_X 240
-#define SHIELD_POS_Y 16
+/* ----------------------------------------------------------------------
+ * This function COPIES an item from the source location to the destination
+ * location.  The source location is then marked as unused inventory 
+ * entry.
+ * ---------------------------------------------------------------------- */
+void
+CopyItem( item* SourceItem , item* DestItem )
+{
 
-#define SPECIAL_RECT_WIDTH 32
-#define SPECIAL_RECT_HEIGHT 32
-#define SPECIAL_POS_X 93
-#define SPECIAL_POS_Y 29
+  memcpy ( DestItem, SourceItem, sizeof ( item ));
 
-#define AUX1_RECT_WIDTH 32
-#define AUX1_RECT_HEIGHT 32
-#define AUX1_POS_X 99
-#define AUX1_POS_Y 104
+}; // void MoveItem( item* SourceItem , item* DestItem )
 
-#define AUX2_RECT_WIDTH 32
-#define AUX2_RECT_HEIGHT 32
-#define AUX2_POS_X 191
-#define AUX2_POS_Y 108
+/* ----------------------------------------------------------------------
+ * This function MOVES an item from the source location to the destination
+ * location.  The source location is then marked as unused inventory 
+ * entry.
+ * ---------------------------------------------------------------------- */
+void
+MoveItem( item* SourceItem , item* DestItem )
+{
 
+  memcpy ( DestItem, SourceItem, sizeof ( item ));
+  
+  SourceItem->type = (-1) ;
+
+}; // void MoveItem( item* SourceItem , item* DestItem )
 
 void
 ApplyItemFromInventory( int ItemNum )
@@ -533,7 +537,9 @@ DropHeldItemToWeaponSlot ( void )
   InvPos = GetHeldItemInventoryIndex( );
 
   // Now the item is installed into the weapon slot of the influencer
-  Druidmap[ DRUID001 ].weapon_item = Me.Inventory[ InvPos ].type;
+  
+  // Druidmap[ DRUID001 ].weapon_item = Me.Inventory[ InvPos ].type;
+  CopyItem( &(Me.Inventory[ InvPos ]) , &(Druidmap[ DRUID001 ].weapon_item) );
 
   // Now the item is removed from inventory and no longer held in hand as well...
   Me.Inventory[ InvPos ].type = ( -1 );
@@ -549,7 +555,8 @@ DropHeldItemToDriveSlot ( void )
   InvPos = GetHeldItemInventoryIndex( );
 
   // Now the item is installed into the weapon slot of the influencer
-  Druidmap[ DRUID001 ].drive_item = Me.Inventory[ InvPos ].type;
+  // Druidmap[ DRUID001 ].drive_item = Me.Inventory[ InvPos ].type;
+  CopyItem( &(Me.Inventory[ InvPos ]) , &(Druidmap[ DRUID001 ].drive_item) );
 
   // Now the item is removed from inventory and no longer held in hand as well...
   Me.Inventory[ InvPos ].type = ( -1 );
@@ -565,7 +572,8 @@ DropHeldItemToArmourSlot ( void )
   InvPos = GetHeldItemInventoryIndex( );
 
   // Now the item is installed into the weapon slot of the influencer
-  Druidmap[ DRUID001 ].armour_item = Me.Inventory[ InvPos ].type;
+  // Druidmap[ DRUID001 ].armour_item = Me.Inventory[ InvPos ].type;
+  CopyItem ( &(Me.Inventory[ InvPos ]) , &(Druidmap[ DRUID001 ].armour_item) );
 
   // Now the item is removed from inventory and no longer held in hand as well...
   Me.Inventory[ InvPos ].type = ( -1 );
@@ -581,7 +589,8 @@ DropHeldItemToShieldSlot ( void )
   InvPos = GetHeldItemInventoryIndex( );
 
   // Now the item is installed into the weapon slot of the influencer
-  Druidmap[ DRUID001 ].shield_item = Me.Inventory[ InvPos ].type;
+  // Druidmap[ DRUID001 ].shield_item = Me.Inventory[ InvPos ].type;
+  CopyItem ( &(Me.Inventory[ InvPos ]) , &(Druidmap[ DRUID001 ].shield_item) );
 
   // Now the item is removed from inventory and no longer held in hand as well...
   Me.Inventory[ InvPos ].type = ( -1 );
@@ -597,7 +606,8 @@ DropHeldItemToSpecialSlot ( void )
   InvPos = GetHeldItemInventoryIndex( );
 
   // Now the item is installed into the weapon slot of the influencer
-  Druidmap[ DRUID001 ].special_item = Me.Inventory[ InvPos ].type;
+  // Druidmap[ DRUID001 ].special_item = Me.Inventory[ InvPos ].type;
+  CopyItem( &( Me.Inventory[ InvPos ] ) , &( Druidmap[ DRUID001 ].special_item) );
 
   // Now the item is removed from inventory and no longer held in hand as well...
   Me.Inventory[ InvPos ].type = ( -1 );
@@ -613,7 +623,8 @@ DropHeldItemToAux1Slot ( void )
   InvPos = GetHeldItemInventoryIndex( );
 
   // Now the item is installed into the weapon slot of the influencer
-  Druidmap[ DRUID001 ].aux1_item = Me.Inventory[ InvPos ].type;
+  // Druidmap[ DRUID001 ].aux1_item = Me.Inventory[ InvPos ].type;
+  CopyItem( &( Me.Inventory[ InvPos ] ) , &( Druidmap[ DRUID001 ].aux1_item) );
 
   // Now the item is removed from inventory and no longer held in hand as well...
   Me.Inventory[ InvPos ].type = ( -1 );
@@ -629,7 +640,8 @@ DropHeldItemToAux2Slot ( void )
   InvPos = GetHeldItemInventoryIndex( );
 
   // Now the item is installed into the weapon slot of the influencer
-  Druidmap[ DRUID001 ].aux2_item = Me.Inventory[ InvPos ].type;
+  // Druidmap[ DRUID001 ].aux2_item = Me.Inventory[ InvPos ].type;
+  CopyItem( &( Me.Inventory[ InvPos ] ) , &( Druidmap[ DRUID001 ].aux2_item) );
 
   // Now the item is removed from inventory and no longer held in hand as well...
   Me.Inventory[ InvPos ].type = ( -1 );
@@ -691,14 +703,9 @@ DropHeldItemToInventory( void )
  * actions in the invenotry screen.
  * ---------------------------------------------------------------------- */
 void 
-ShowInventoryScreen ( void )
+ManageInventoryScreen ( void )
 {
-  int SlotNum;
-  static SDL_Rect InventoryRect;
   SDL_Rect TargetRect;
-  static SDL_Surface *InventoryImage = NULL;
-  char *fpath;
-  char fname[]="inventory.png";
   static int Item_Held_In_Hand = -1 ;
   static int MouseButtonPressedPreviousFrame = FALSE;
   point CurPos;
@@ -721,125 +728,11 @@ ShowInventoryScreen ( void )
   //
   if ( GameConfig.Inventory_Visible == FALSE ) return;
 
-  // --------------------
-  // Some things like the loading of the inventory and initialisation of the
-  // inventory rectangle need to be done only once at the first call of this
-  // function. 
-  //
-  if ( InventoryImage == NULL )
-    {
-      // SDL_FillRect( Screen, & InventoryRect , 0x0FFFFFF );
-      fpath = find_file ( fname , GRAPHICS_DIR, FALSE);
-      InventoryImage = IMG_Load( fpath );
-      //--------------------
-      // We define the right side of the user screen as the rectangle
-      // for our inventory screen.
-      //
-      InventoryRect.x = 0;
-      InventoryRect.y = User_Rect.y;
-      InventoryRect.w = SCREENLEN/2;
-      InventoryRect.h = User_Rect.h;
-    }
-
   //--------------------
-  // At this point we know, that the inventory screen is desired and must be
-  // displayed in-game:
+  // Next we display all the inventory screen and we also fill in all
+  // the pictures for the items the influencer is currently fitted with.
   //
-  // Into this inventory rectangle we draw the inventory mask
-  //
-  SDL_SetClipRect( Screen, NULL );
-  SDL_BlitSurface ( InventoryImage , NULL , Screen , &InventoryRect );
-
-  //--------------------
-  // Now we display the item in the influencer drive slot
-  //
-  TargetRect.x = InventoryRect.x + 240;
-  TargetRect.y = InventoryRect.y + 93;
-  TargetRect.w = 50;
-  TargetRect.h = 50;
-  SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].drive_item ].picture_number ].Surface , NULL , Screen , &TargetRect );
-  
-  //--------------------
-  // Now we display the item in the influencer weapon slot
-  //
-  TargetRect.x = InventoryRect.x + 20;
-  TargetRect.y = InventoryRect.y + 10;
-  TargetRect.w = 50;
-  TargetRect.h = 50;
-  SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].weapon_item ].picture_number ].Surface , NULL , Screen , &TargetRect );
-  
-  //--------------------
-  // Now we display the item in the influencer armour slot
-  //
-  TargetRect.x = InventoryRect.x + ARMOUR_POS_X ;
-  TargetRect.y = InventoryRect.y + ARMOUR_POS_Y ;
-  TargetRect.w = 50;
-  TargetRect.h = 50;
-  SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].armour_item ].picture_number ].Surface , NULL , Screen , &TargetRect );
-  
-  //--------------------
-  // Now we display the item in the influencer shield slot
-  //
-  TargetRect.x = InventoryRect.x + SHIELD_POS_X ;
-  TargetRect.y = InventoryRect.y + SHIELD_POS_Y ;
-  TargetRect.w = 50;
-  TargetRect.h = 50;
-  SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].shield_item ].picture_number ].Surface , NULL , Screen , &TargetRect );
-  
-  //--------------------
-  // Now we display the item in the influencer special slot
-  //
-  TargetRect.x = InventoryRect.x + SPECIAL_POS_X ;
-  TargetRect.y = InventoryRect.y + SPECIAL_POS_Y ;
-  TargetRect.w = 50;
-  TargetRect.h = 50;
-  SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].special_item ].picture_number ].Surface , NULL , Screen , &TargetRect );
-  
-  //--------------------
-  // Now we display the item in the influencers aux1 slot
-  //
-  TargetRect.x = InventoryRect.x + AUX1_POS_X ;
-  TargetRect.y = InventoryRect.y + AUX1_POS_Y ;
-  TargetRect.w = 50;
-  TargetRect.h = 50;
-  SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].aux1_item ].picture_number ].Surface , NULL , Screen , &TargetRect );
-  
-  //--------------------
-  // Now we display the item in the influencers aux2 slot
-  //
-  TargetRect.x = InventoryRect.x + AUX2_POS_X ;
-  TargetRect.y = InventoryRect.y + AUX2_POS_Y ;
-  TargetRect.w = 50;
-  TargetRect.h = 50;
-  SDL_BlitSurface( ItemImageList[ ItemMap[ Druidmap[ Me.type ].aux2_item ].picture_number ].Surface , NULL , Screen , &TargetRect );
-  
-
-  //--------------------
-  // Now we display all the items the influencer is carrying with him
-  //
-  for ( SlotNum = 0 ; SlotNum < MAX_ITEMS_IN_INVENTORY; SlotNum ++ )
-    {
-      // In case the item does not exist at all, we need not do anything more...
-      if ( Me.Inventory[ SlotNum ].type == ( -1 ) ) 
-	{
-	  // DisplayText( "\n--- Slot empty ---" , -1 , -1 , &InventoryRect );
-	  continue;
-	}
-
-      // In case the item is currently held in hand, we need not do anything more HERE ...
-      if ( Me.Inventory[ SlotNum ].currently_held_in_hand == TRUE )
-	{
-	  continue;
-	}
-
-      TargetRect.x = 16 + 32 * Me.Inventory[ SlotNum ].inventory_position.x;
-      TargetRect.y = User_Rect.y - 64 + 480 - 16 - 32 * 6 + 32 * Me.Inventory[ SlotNum ].inventory_position.y;
-      TargetRect.w = 50;
-      TargetRect.h = 50;
-
-      SDL_BlitSurface( ItemImageList[ ItemMap[ Me.Inventory[ SlotNum ].type ].picture_number ].Surface , NULL , Screen , &TargetRect );
-    }
-
+  ShowInventoryScreen();
 
   //--------------------
   // If the user now presses the mouse button and it was not pressed before,
@@ -1083,7 +976,7 @@ ShowInventoryScreen ( void )
 
 
   MouseButtonPressedPreviousFrame = axis_is_active;
-}; // void ShowInventoryScreen ( void );
+}; // void ManageInventoryScreen ( void );
 
 /* ----------------------------------------------------------------------
  * This function display the character screen.
@@ -1092,11 +985,11 @@ void
 ShowCharacterScreen ( void )
 {
   static SDL_Rect CharacterRect;
-  SDL_Rect TargetRect;
   static SDL_Surface *CharacterScreenImage = NULL;
   char *fpath;
   char fname[]="character.png";
   char CharText[1000];
+  SDL_Rect TargetRect;
 
   DebugPrintf (2, "\nvoid ShowInventoryMessages( ... ): Function call confirmed.");
 

@@ -110,6 +110,7 @@ EXTERN void PutItem (int);
 EXTERN void PutBlast (int);
 EXTERN void PutEnemy (int Enum, int x , int y );
 EXTERN void ShowRobotPicture (int PosX, int PosY, int Number);
+EXTERN void ShowInventoryScreen ( void );
 
 
 /* blocks.c */
@@ -243,7 +244,7 @@ EXTERN void DropHeldItemToWeaponSlot ( void );
 EXTERN void DropHeldItemToDriveSlot ( void );
 EXTERN void DropHeldItemToInventory( void );
 EXTERN void DropHeldItemToTheFloor ( void );
-EXTERN void ShowInventoryScreen ( void );
+EXTERN void ManageInventoryScreen ( void );
 EXTERN void ShowCharacterScreen ( void );
 
 /* input.c */
