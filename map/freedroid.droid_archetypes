@@ -1297,7 +1297,7 @@ Notes concerning this droid : This is a dark Apprentice of the evil MS Super-Cor
 
 ** Start of new Robot: ** 
 Droidname: PRO
-Droid portrait file name (without extension) to use="CHA"
+Droid portrait file name (without extension) to use="Chandra"
 Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
 Maximum speed of this droid: 6.1
 Class of this droid: 18
@@ -1344,7 +1344,7 @@ Notes concerning this droid : This is a typical professor/sage character of some
 
 ** Start of new Robot: ** 
 Droidname: GUA
-Droid portrait file name (without extension) to use="CHA"
+Droid portrait file name (without extension) to use="Chandra"
 Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
 Maximum speed of this droid: 6.1
 Class of this droid: 18
@@ -1391,7 +1391,7 @@ Notes concerning this droid : This is a typical red (male) guard/fighter charact
 
 ** Start of new Robot: ** 
 Droidname: WOR
-Droid portrait file name (without extension) to use="CHA"
+Droid portrait file name (without extension) to use="Chandra"
 Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
 Maximum speed of this droid: 6.1
 Class of this droid: 18
@@ -1438,7 +1438,7 @@ Notes concerning this droid : This is a typical professor/sage character of some
 
 ** Start of new Robot: ** 
 Droidname: GUB
-Droid portrait file name (without extension) to use="CHA"
+Droid portrait file name (without extension) to use="Chandra"
 Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
 Maximum speed of this droid: 6.1
 Class of this droid: 18
@@ -1485,7 +1485,7 @@ Notes concerning this droid : This is a typical blue (male) guard/fighter charac
 
 ** Start of new Robot: ** 
 Droidname: GUG
-Droid portrait file name (without extension) to use="CHA"
+Droid portrait file name (without extension) to use="Chandra"
 Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
 Maximum speed of this droid: 6.1
 Class of this droid: 18

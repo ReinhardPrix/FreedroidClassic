@@ -45,28 +45,28 @@ LIBS="$LIBS $SDL_LIBS"
 
 
 #AC_CHECK_LIB([SDL], [SDL_Init],, 
-#	AC_MSG_ERROR([SDL library needed for Freedroid!
+#	AC_MSG_ERROR([SDL library needed for FreedroidRPG!
 #see http://www.libsdl.org/]))
 
 
 AC_CHECK_LIB([jpeg], [jpeg_start_compress],,
-	AC_MSG_ERROR([libjpeg needed to run Freedroid!
+	AC_MSG_ERROR([libjpeg needed to run FreedroidRPG!
 see http://www.ijg.org/]))
 
 AC_CHECK_LIB([z], [compress],,
-	AC_MSG_ERROR([zlib is needed to run Freedroid!
+	AC_MSG_ERROR([zlib is needed to run FreedroidRPG!
 see http://www.gzip.org/zlib/]))
 
 AC_CHECK_LIB([png], [png_read_png],,
-	AC_MSG_ERROR([libpng needed to run Freedroid
+	AC_MSG_ERROR([libpng needed to run FreedroidRPG
 see http://www.libpng.org/pub/png/libpng.html]))
 
 AC_CHECK_LIB([SDL_image], [IMG_LoadJPG_RW],,
-	AC_MSG_ERROR([SDL_image library needed for Freedroid!
+	AC_MSG_ERROR([SDL_image library needed for FreedroidRPG!
 see http://www.libsdl.org/]))
 
 AC_CHECK_LIB([SDL_net], [SDLNet_Init],,
-	AC_MSG_ERROR([SDL_net library needed for Freedroid!
+	AC_MSG_ERROR([SDL_net library needed for FreedroidRPG!
 see http://www.libsdl.org/]))
 
 

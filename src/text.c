@@ -875,19 +875,28 @@ ERROR LOADING BACKGROUND IMAGE FILE!",
     }
 
   //--------------------
-  // All droid chat should be done in the paradroid font I would say...
-  //
-  // SetCurrentFont( Para_BFont );
-  //
-  // Or better we stick to the small font?
+  // We select small font for the menu interaction...
   //
   SetCurrentFont( FPS_Display_BFont );
 
+  //--------------------
+  // At first we try to load the image, that is named after this
+  // chat section.  If that succeeds, perfect.  If not, we'll revert
+  // to a default image.
+  //
   strcpy( fname, "droids/" );
-  strcat( fname, Druidmap[ ChatDroid -> type ].portrait_filename_without_ext );
+  // strcat( fname, Druidmap[ ChatDroid -> type ].portrait_filename_without_ext );
+  strcat( fname, ChatDroid -> dialog_section_name );
   strcat( fname , ".png" );
   fpath = find_file (fname, GRAPHICS_DIR, FALSE);
   Small_Droid = IMG_Load (fpath) ;
+  if ( Small_Droid == NULL )
+    {
+      strcpy( fname, "droids/" );
+      strcat( fname, "DefaultPortrait.png" );
+      fpath = find_file (fname, GRAPHICS_DIR, FALSE);
+      Small_Droid = IMG_Load (fpath) ;
+    }
   if ( Small_Droid == NULL )
     {
       fprintf( stderr, "\n\nfpath: %s \n" , fpath );

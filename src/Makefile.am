@@ -1,8 +1,8 @@
      ## Process this file with automake to produce Makefile.in
 
-bin_PROGRAMS = freedroid
+bin_PROGRAMS = freedroidRPG
 
-freedroid_SOURCES = menu.c shop.c network.c items.c character.c skills.c saveloadgame.c \
+freedroidRPG_SOURCES = menu.c shop.c network.c items.c character.c skills.c saveloadgame.c \
 	leveleditor.c blocks.c  graphics.c  map.c   init.c  ship.c \
 	takeover.c bullet.c  influ.c     misc.c  text.c  sound.c \
 	enemy.c   input.c  main.c  rahmen.c view.c BFont.c \
