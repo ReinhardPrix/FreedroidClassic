@@ -361,7 +361,7 @@ EnterKonsole (void)
 	  // else {
 	  // if ( CurrentCombatScaleFactor != 0.5 ) SetCombatScaleTo( CurrentCombatScaleFactor );
 	  // }
-	  SetCombatScaleTo( 1 );
+	  SetCombatScaleTo(1.0);
 	  while ( SpacePressed() ); /* but also wait for the release before going on..*/
 	}
       if ((ConsoleMenuPos == 3) & (SpacePressed ()))

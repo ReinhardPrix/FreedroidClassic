@@ -377,35 +377,33 @@ ReInitPictures (void)
 /*----------------------------------------------------------------------
  * This function resizes all blocks and structures involved in assembling
  * the combat picture to a new scale.  The new scale is relative to the
- * standard scale with means 64x64 tile size.
+ * standard scale with means scale=1 is 64x64 tile size.
  *
  ----------------------------------------------------------------------*/
 void 
-SetCombatScaleTo(float ResizeFactor)
+SetCombatScaleTo(float scale)
 {
   int i, j;
   SDL_Surface *tmp;
 
-  // CenteredPutString   ( ne_screen ,  User_Rect.y+User_Rect.h-FontHeight(Menu_BFont), "Rescaling...");
-
-  // just to be sure, reset the size of the graphics
-  ReInitPictures();
-
   for ( j=0 ; j < NUM_COLORS ; j++ )
-    {
-      for ( i = 0 ; i < NUM_MAP_BLOCKS ; i++ )
-	{
-	  tmp = MapBlockSurfacePointer[j][i]; // store the surface pointer for freeing it soon
-	  MapBlockSurfacePointer[j][i]=zoomSurface( MapBlockSurfacePointer[j][i] , ResizeFactor , ResizeFactor , 0 );
-	  SDL_FreeSurface( tmp ); // free the old surface
-	  tmp = MapBlockSurfacePointer[j][i]; // store the surface pointer for freeing it soon
-	  MapBlockSurfacePointer[j][i]=SDL_DisplayFormat( MapBlockSurfacePointer[j][i] );
-	  SDL_FreeSurface( tmp ); // free the old surface
-	}
-    }
+    for ( i = 0 ; i < NUM_MAP_BLOCKS ; i++ )
+      {
+	// if there's already a rescaled version, free it
+	if (MapBlockSurfacePointer[j][i] != OrigMapBlockSurfacePointer[j][i])
+	  SDL_FreeSurface (MapBlockSurfacePointer[j][i]);
+	// then zoom..
+	tmp = zoomSurface(OrigMapBlockSurfacePointer[j][i], scale, scale, 0);  
+	// and optimize
+	MapBlockSurfacePointer[j][i]=SDL_DisplayFormat (tmp);
+	SDL_FreeSurface(tmp); // free the old surface
+      }
 
-  Block_Width *= ResizeFactor;
-  Block_Height *= ResizeFactor;
+
+  Block_Width = INITIAL_BLOCK_WIDTH * scale;
+  Block_Height= INITIAL_BLOCK_HEIGHT* scale;
+
+  return;
 
 } // void SetCombatScaleTo(float new_scale);
 
@@ -851,6 +849,9 @@ Load_MapBlock_Surfaces( void )
 	  Target.h=Block_Height;
 	  SDL_BlitSurface ( Whole_Image , &Source , MapBlockSurfacePointer[ color ][i] , &Target );
 	  SDL_SetAlpha( MapBlockSurfacePointer[ color ][i] , 0 , 0 );
+	  OrigMapBlockSurfacePointer[color][i] = MapBlockSurfacePointer[ color ][i];
+	  // unzoomed original map-blocks
+
 	}
       SDL_FreeSurface( tmp_surf );
     }
