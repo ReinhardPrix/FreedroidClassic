@@ -1085,7 +1085,7 @@ Init_Video (void)
   SDL_VideoDriverName (vid_driver, 80);
   
   flags = SDL_SWSURFACE | SDL_HWPALETTE ;
-  if (fullscreen_on) flags |= SDL_FULLSCREEN;
+  if (GameConfig.UseFullscreen) flags |= SDL_FULLSCREEN;
 
   vid_modes = SDL_ListModes (NULL, SDL_SWSURFACE);
 

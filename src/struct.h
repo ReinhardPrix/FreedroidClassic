@@ -76,7 +76,8 @@ typedef struct
   int StandardInfluencerMessages_On_Off;
   int Mouse_Input_Permitted;
   char Theme_SubPath[100];  // pathname relative to graphics, where theme-graphics are found
-  int FullUserRect;   // use "full" or "classic" (=small) User_Rect
+  bool FullUserRect;   // use "full" or "classic" (=small) User_Rect
+  bool UseFullscreen;	/* toggle for use of fullscreen vs. X11-window */
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
 

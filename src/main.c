@@ -66,10 +66,10 @@ main (int argc, char *const argv[])
   GameOver = FALSE;
   QuitProgram = FALSE;
 
-  sound_on = TRUE;	 /* default value, can be overridden by command-line */
   debug_level = 0;       /* 0=no debug 1=first debug level (at the moment=all) */
-  fullscreen_on = TRUE; /* use X11-window or full screen */
+
   joy_sensitivity = 1;
+  sound_on = TRUE;	 /* default value, can be overridden by command-line */
   mouse_control = TRUE;
   /*
    *  Parse command line and set global switches 

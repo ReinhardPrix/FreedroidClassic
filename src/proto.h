@@ -317,7 +317,7 @@ EXTERN int NoDirectionPressed (void);
 #define EXTERN extern
 #endif
 
-EXTERN void InitiateMenu( void );
+EXTERN void InitiateMenu (bool with_droids);
 EXTERN void QuitGameMenu (void);
 EXTERN void MissionSelectMenu (void);
 EXTERN void Cheatmenu (void);

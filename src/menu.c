@@ -36,6 +36,8 @@
 #include "struct.h"
 #include "global.h"
 #include "proto.h"
+#include "map.h"
+
 
 void Single_Player_Menu (void);
 void Multi_Player_Menu (void);
@@ -67,7 +69,7 @@ int fheight;  // font height of Menu-font
 @Ret: none
 * $Function----------------------------------------------------------*/
 void 
-InitiateMenu( void )
+InitiateMenu (bool with_droids)
 {
   //--------------------
   // Here comes the standard initializer for all the menus and submenus
@@ -80,7 +82,11 @@ InitiateMenu( void )
   Me.status=MENU;
   ClearGraphMem();
   DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
-  Assemble_Combat_Picture ( 0 );
+  if (with_droids)
+    Assemble_Combat_Picture (0);
+  else
+    Assemble_Combat_Picture (ONLY_SHOW_MAP);
+
   SDL_SetClipRect( ne_screen, NULL );
   MakeGridOnScreen( NULL );
   
@@ -95,13 +101,13 @@ InitiateMenu( void )
 
   return;
 
-} // void InitiateMenu(void)
+} // void InitiateMenu (bool with_droids)
 
 
 void 
 QuitGameMenu (void)
 {
-  InitiateMenu ();
+  InitiateMenu (TRUE);
 
   PutString (ne_screen, User_Rect.x + User_Rect.w/10, 
 	      User_Rect.y + User_Rect.h/2, "Do you really want to quit? (y/n) ");
@@ -171,8 +177,6 @@ Cheatmenu (void)
       printf_SDL (ne_screen, -1, -1, " m. Map of Deck xy\n");
       printf_SDL (ne_screen, -1, -1, " s. Sound: %s",
 		  sound_on ? "ON\n" : "OFF\n");
-      printf_SDL (ne_screen, -1, -1, " x. Fullscreen : %s",
-		  fullscreen_on ? "ON\n" : "OFF\n");
       printf_SDL (ne_screen, -1, -1, " w. Print current waypoints\n");
       printf_SDL (ne_screen, -1, -1, " z. change Zoom factor\n");
       printf_SDL (ne_screen, -1, -1, " f. Freeze on this positon: %s",
@@ -349,10 +353,6 @@ Cheatmenu (void)
 	  getchar_raw ();
 	  break;
 
-	case 'x': /* toggle fullscreen - mode */
-	  fullscreen_on = !fullscreen_on;
-	  break;
-	  
 	case 'w':  /* print waypoint info of current level */
 	  WpList = CurLevel->AllWaypoints;
 	  for (i=0; i<MAXWAYPOINTS && WpList[i].x; i++)
@@ -433,7 +433,7 @@ EscapeMenu (void)
   char window_string[40];
   int i;
 
-  InitiateMenu();
+  InitiateMenu(TRUE);
   
   while ( EscapePressed() );
 
@@ -494,7 +494,7 @@ EscapeMenu (void)
 		  else
 		    Copy_Rect (Classic_User_Rect, User_Rect);
 
-		  InitiateMenu ();
+		  InitiateMenu (TRUE);
 		  break;
 
 		case SET_THEME:
@@ -516,7 +516,7 @@ EscapeMenu (void)
 		  // should be simply setting a flag for each of the bullets:
 		  for ( i = 0 ; i < MAXBULLETS ; i++ )
 		    AllBullets[i].Surfaces_were_generated = FALSE ;
-		  InitiateMenu();
+		  InitiateMenu (TRUE);
 		  break;
 
 		case OPTIONS:
@@ -611,7 +611,7 @@ enum
       PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+2*fheight,  
 		   "Gamma: %1.2f", GameConfig.Current_Gamma_Correction );
       PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+3*fheight, 
-		   "Fullscreen Mode: %s", fullscreen_on ? "ON" : "OFF");
+		   "Fullscreen Mode: %s", GameConfig.UseFullscreen ? "ON" : "OFF");
       PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+4*fheight, "Back");
       SDL_Flip( ne_screen );
 
@@ -694,7 +694,7 @@ enum
 		{
 		case SET_FULLSCREEN_FLAG:
 		  SDL_WM_ToggleFullScreen (ne_screen);
-		  fullscreen_on = !fullscreen_on;
+		  GameConfig.UseFullscreen = !GameConfig.UseFullscreen;
 		  break;
 
 		case BACK:
@@ -788,15 +788,15 @@ enum
 		{
 		case SHOW_POSITION:
 		  GameConfig.Draw_Position=!GameConfig.Draw_Position;
-		  InitiateMenu();
+		  InitiateMenu (TRUE);
 		  break;
 		case SHOW_FRAMERATE:
 		  GameConfig.Draw_Framerate=!GameConfig.Draw_Framerate;
-		  InitiateMenu();
+		  InitiateMenu (TRUE);
 		  break;
 		case SHOW_ENERGY:
 		  GameConfig.Draw_Energy=!GameConfig.Draw_Energy;
-		  InitiateMenu();
+		  InitiateMenu (TRUE);
 		  break;
 		case BACK:
 		  finished = TRUE;
@@ -1252,17 +1252,21 @@ Level_Editor(void)
   char* NumericInputString;
   char* OldMapPointer;
   bool key_pressed;
+  SDL_Rect rect;
 
   enum { 
     SAVE_LEVEL_POSITION=1, 
     CHANGE_LEVEL_POSITION, 
-    CHANGE_TILE_SET_POSITION, 
+    CHANGE_COLOR,
     CHANGE_SIZE_X, 
     CHANGE_SIZE_Y, 
     SET_LEVEL_NAME, 
     SET_BACKGROUND_SONG_NAME, 
     SET_LEVEL_COMMENT, 
     BACK};
+  
+  Copy_Rect (User_Rect, rect);
+  Copy_Rect (Full_User_Rect, User_Rect);
 
   while ( !Done )
     {
@@ -1555,10 +1559,6 @@ Level_Editor(void)
 	    }
 	  if (SpacePressed())
 	    CurLevel->map[BlockY][BlockX]=FLOOR;	            	      	    
-	  if (QPressed())
-	    {
-	      Terminate(0);
-	    }
 
 	} // while (!EscapePressed())
       while( EscapePressed() );
@@ -1566,10 +1566,12 @@ Level_Editor(void)
       // After Level editing is done and escape has been pressed, 
       // display the Menu with level save options and all that.
 
+      InitiateMenu (FALSE);
       while (!Weiter)
 	{
 	  int xoffs = 110;
 	  key_pressed = FALSE;
+
 	  SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
 
 	  // Highlight currently selected option with an influencer before it
@@ -1580,7 +1582,7 @@ Level_Editor(void)
 	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 1*fheight, 
 		       "Current: %d.  Level +/-" , CurLevel->levelnum );
 	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 2*fheight, 
-		       "Change tile set (color)");
+		       "Change level color: %s", ColorNames[CurLevel->color]);
 	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 3*fheight, 
 		       "Levelsize in X: %d.  -/+" , CurLevel->xlen );
 	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 4*fheight, 
@@ -1621,7 +1623,7 @@ Level_Editor(void)
 		      break;
 		    case CHANGE_LEVEL_POSITION: 
 		      break;
-		    case CHANGE_TILE_SET_POSITION: 
+		    case CHANGE_COLOR:
 		      break;
 		    case SET_LEVEL_NAME:
 		      ClearUserFenster();
@@ -1690,7 +1692,7 @@ Level_Editor(void)
 		      SetCombatScaleTo ( CurrentCombatScaleFactor );
 		      break;
 		  
-		    case CHANGE_TILE_SET_POSITION:
+		    case CHANGE_COLOR:
 		      if ( RightPressed() && (CurLevel->color  < 6 ) )
 			{
 			  CurLevel->color++;
@@ -1701,7 +1703,7 @@ Level_Editor(void)
 			  CurLevel->color--;
 			  while (LeftPressed());
 			}
-		      Teleport ( CurLevel->levelnum , Me.pos.x , Me.pos.y ); 
+		      InitiateMenu (FALSE);
 		      break;
 		    case CHANGE_SIZE_X:
 		      if ( RightPressed() )
@@ -1776,6 +1778,8 @@ Level_Editor(void)
 	} // while !Weiter
       
     } // while (!Done)
+
+  Copy_Rect (rect, User_Rect);
 
   ClearGraphMem();
   return;

@@ -172,7 +172,7 @@ UpdateHighscores (void)
 
   tsec = time (NULL);
   timeinfo = gmtime (&tsec);
-  sprintf (new_entry->date, "[%d/%d/%02d]", timeinfo->tm_mday, timeinfo->tm_mon,
+  sprintf (new_entry->date, "%02d/%02d/%02d", timeinfo->tm_mday, timeinfo->tm_mon +1,
 	   timeinfo->tm_year-100); 
 
   new_entry->score = score;

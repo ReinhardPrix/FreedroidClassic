@@ -576,10 +576,10 @@ parse_command_line (int argc, char *const argv[])
 	  break;
 
 	case 'f':
-	  fullscreen_on = TRUE;
+	  GameConfig.UseFullscreen = TRUE;
 	  break;
 	case 'w':
-	  fullscreen_on = FALSE;
+	  GameConfig.UseFullscreen = FALSE;
 	  break;
 
 	default:
@@ -891,10 +891,11 @@ InitFreedroid (void)
   GameConfig.Influencer_Blast_Text=TRUE;
   GameConfig.Draw_Framerate=TRUE;
   GameConfig.Draw_Energy=TRUE;
-  GameConfig.Draw_Position=TRUE;
+  GameConfig.Draw_Position=FALSE;
   // this is the "classic" version, so defaults are set on "classic"
   sprintf (GameConfig.Theme_SubPath, "classic_theme/");
   GameConfig.FullUserRect = FALSE;
+  GameConfig.UseFullscreen = FALSE;
 
   // now load saved options from the config-file
   LoadGameConfig ();
@@ -1168,7 +1169,7 @@ CheckIfMissionIsComplete (void)
 
   EndTitle();
 
-  UpdateHighscores();
+  //  UpdateHighscores();
 
   GameOver = TRUE;
   
