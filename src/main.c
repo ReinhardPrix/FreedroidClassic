@@ -450,6 +450,16 @@ UpdateCountersForThisFrame ( int player_num )
 	}
     }
 
+    //--------------------
+    // On some maps, the Tux will have no enemies.  Therefore it would
+    // make sense that (for better gameplay) the running bar does not
+    // run out.
+    //
+    if ( curShip . AllLevels [ Me [ player_num ] . pos . z ] -> infinite_running_on_this_level )
+    {
+	Me [ player_num ] . running_power = Me [ player_num ] . max_running_power ;
+    }
+
 }; // void UpdateCountersForThisFrame(...) 
 
 #undef _main_c

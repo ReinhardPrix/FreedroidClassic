@@ -807,7 +807,7 @@ to blit the 'experience countdown' bar.  Graphics will be suppressed for now..."
 }; // void blit_experience_countdown_bars ( void )
 
 /* ----------------------------------------------------------------------
- *
+ * The tux has a limited running ability.
  *
  * ---------------------------------------------------------------------- */
 void
@@ -819,16 +819,6 @@ blit_running_power_bars ( void )
     static Uint32 un_running_power_rect_color = 0 ;
     static Uint32 rest_running_power_rect_color = 0 ;
     static Uint32 infinite_running_power_rect_color = 0 ;
-
-    //--------------------
-    // On some maps, the Tux will have no enemies.  Therefore it would
-    // make sense that (for better gameplay) the running bar does not
-    // run out.
-    //
-    if ( curShip . AllLevels [ Me [ 0 ] . pos . z ] -> infinite_running_on_this_level )
-    {
-	Me [ 0 ] . running_power = Me [ 0 ] . max_running_power ;
-    }
 
     //--------------------
     // At game startup, it might be that an uninitialized Tux (with 0 in the

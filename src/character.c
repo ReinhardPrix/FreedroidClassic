@@ -889,13 +889,16 @@ ShowCharacterScreen ( void )
     
     sprintf( CharText , " %d%%", (int) Me [ 0 ] . lv_1_bot_will_hit_percentage );
     DisplayText( CharText , LV_1_BOT_HITS_CHANCE_X + CharacterRect.x , LV_1_BOT_HITS_CHANCE_Y + CharacterRect.y , &CharacterRect );
-    
+
+    //--------------------
+    // We fill in the numbers for the current running power.
+    //
     sprintf( CharText , "%3d", (int) Me [ 0 ] . max_running_power );
     DisplayText( CharText , 223 + CharacterRect.x , 275 + CharacterRect.y , &CharacterRect );
-    
     sprintf( CharText , "%3d", (int) Me [ 0 ] . running_power );
     DisplayText( CharText , 269 + CharacterRect.x , 275 + CharacterRect.y , &CharacterRect );
-    
+
+
     sprintf( CharText , "%3d", (int) Me [ 0 ] . resist_disruptor );
     DisplayText( CharText , 269 + CharacterRect.x , 305 + CharacterRect.y , &CharacterRect );
     
