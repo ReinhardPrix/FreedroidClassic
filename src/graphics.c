@@ -344,6 +344,61 @@ Slow_CreateAlphaCombinedSurface ( SDL_Surface* FirstSurface , SDL_Surface* Secon
 }; // SDL_Surface* Slow_CreateAlphaCombinedSurface ( SDL_Surface* FirstBlit , SDL_Surface* SecondBlit )
 
 /* ----------------------------------------------------------------------
+ * This function can be used to create a new surface that has a certain
+ * color filter applied to it.  The default so far will be that the blue
+ * color filter will be applied.
+ * ---------------------------------------------------------------------- */
+SDL_Surface* 
+CreateBlueColorFilteredSurface ( SDL_Surface* FirstSurface )
+{
+  SDL_Surface* ThirdSurface; // this will be the surface we return to the calling function.
+  int x , y ; // for processing through the surface...
+  Uint8 red, green, blue;
+  float alpha3 ;
+
+  //--------------------
+  // First we check for null surfaces given...
+  //
+  if ( FirstSurface == NULL )
+    {
+      DebugPrintf ( 0 , "\nERROR in SDL_Surface* CreateBlueColorFilteredSurface ( ... ) : NULL PARAMETER GIVEN.\n" );
+      Terminate ( ERR );
+    }
+
+  //--------------------
+  // Now we create a new surface, best in display format with alpha channel
+  // ready to be blitted.
+  //
+  ThirdSurface = SDL_DisplayFormatAlpha ( FirstSurface );
+
+  //--------------------
+  // Now we start to process through the whole surface and examine each
+  // pixel.
+  //
+  for ( y = 0 ; y < FirstSurface -> h ; y ++ )
+    {
+      for ( x = 0 ; x < FirstSurface -> w ; x ++ )
+	{
+
+	  alpha3 = GetAlphaComponent ( FirstSurface , x , y ); 
+
+	  red =  0;
+	  green = 0;
+	  blue =  ( GetBlueComponent ( FirstSurface , x , y ) + 
+		    GetRedComponent ( FirstSurface , x , y ) + 
+		    GetGreenComponent ( FirstSurface , x , y ) ) / 3 ;
+
+	  putpixel ( ThirdSurface , x , y , 
+		     SDL_MapRGBA ( ThirdSurface -> format , red , green , blue , alpha3 ) ) ;
+
+	}
+    }
+
+  return ( ThirdSurface );
+
+}; // SDL_Surface* CreateBlueColorFilteredSurface ( SDL_Surface* FirstSurface )
+
+/* ----------------------------------------------------------------------
  * If you have two SDL surfaces with alpha channel (i.e. each pixel has
  * it's own alpha value) and you blit one surface over some background
  * and then the other surface over that, the result is the same, as if
