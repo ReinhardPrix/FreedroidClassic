@@ -2826,7 +2826,21 @@ ProcessAttackStateMachine ( int enemynum )
 	
 	if ( ! EnemyOfTuxCloseToThisRobot ( ThisRobot , & vect_to_target ) ) 
 	{
-	    ThisRobot -> combat_state = MOVE_ALONG_RANDOM_WAYPOINTS ;
+	    //--------------------
+	    // Once all the enemies of the Tux have been defeated, the
+	    // bot can switch back to 'normal' state.  But that means
+	    // different things for different bots...
+	    //
+	    if ( ThisRobot -> stick_to_waypoint_system_by_default )
+	    {
+		ThisRobot -> combat_state = TURN_THOWARDS_NEXT_WAYPOINT ;
+		ThisRobot -> persuing_given_course = FALSE ;
+	    }
+	    else
+	    {
+		ThisRobot -> combat_state = WAYPOINTLESS_WANDERING ;
+		ThisRobot -> persuing_given_course = TRUE ;
+	    }
 	    return;
 	}
     }

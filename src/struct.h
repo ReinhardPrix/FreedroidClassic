@@ -337,38 +337,38 @@ typedef struct
 
 typedef struct
 {
-  char* bonus_name;
-  int base_bonus_to_dex;
-  int modifier_to_bonus_to_dex;
-  int base_bonus_to_str;
-  int modifier_to_bonus_to_str;
-  int base_bonus_to_vit;
-  int modifier_to_bonus_to_vit;
-  int base_bonus_to_mag;
-  int modifier_to_bonus_to_mag;
-  int base_bonus_to_all_attributes;
-  int modifier_to_bonus_to_all_attributes;
-
-  int base_bonus_to_life;
-  int modifier_to_bonus_to_life;
-  int base_bonus_to_force;
-  int modifier_to_bonus_to_force;
-
-  int base_bonus_to_tohit;
-  int modifier_to_bonus_to_tohit;
-  int base_bonus_to_ac_or_damage; // this is a percentage
-  int modifier_to_bonus_to_ac_or_damage; // this is a percentage
-
-  int base_bonus_to_resist_fire;  // this is a percentage
-  int modifier_to_bonus_to_resist_fire;  // this is a percentage
-  int base_bonus_to_resist_electricity; // this is a percentage
-  int modifier_to_bonus_to_resist_electricity; // this is a percentage
-  int base_bonus_to_resist_force; // this is a percentage
-  int modifier_to_bonus_to_resist_force; // this is a percentage
-  // int freezing_time_in_seconds;
-  int dummy_value;
-  int affix_level; // the level of this affix (i.e. to which level items it can be attached or not)
-  float price_factor;
+    char* bonus_name;
+    int base_bonus_to_dex;
+    int modifier_to_bonus_to_dex;
+    int base_bonus_to_str;
+    int modifier_to_bonus_to_str;
+    int base_bonus_to_vit;
+    int modifier_to_bonus_to_vit;
+    int base_bonus_to_mag;
+    int modifier_to_bonus_to_mag;
+    int base_bonus_to_all_attributes;
+    int modifier_to_bonus_to_all_attributes;
+    
+    int base_bonus_to_life;
+    int modifier_to_bonus_to_life;
+    int base_bonus_to_force;
+    int modifier_to_bonus_to_force;
+    
+    int base_bonus_to_tohit;
+    int modifier_to_bonus_to_tohit;
+    int base_bonus_to_ac_or_damage; // this is a percentage
+    int modifier_to_bonus_to_ac_or_damage; // this is a percentage
+    
+    int base_bonus_to_resist_fire;  // this is a percentage
+    int modifier_to_bonus_to_resist_fire;  // this is a percentage
+    int base_bonus_to_resist_electricity; // this is a percentage
+    int modifier_to_bonus_to_resist_electricity; // this is a percentage
+    int base_bonus_to_resist_force; // this is a percentage
+    int modifier_to_bonus_to_resist_force; // this is a percentage
+    // int freezing_time_in_seconds;
+    int light_bonus_value;
+    int affix_level; // the level of this affix (i.e. to which level items it can be attached or not)
+    float price_factor;
 } item_bonus , *Item_bonus;
 
 typedef struct
@@ -551,7 +551,7 @@ typedef struct
     int mouse_move_target_combo_action_type; // what extra action has to be done upon arrival?
     int mouse_move_target_combo_action_parameter; // extra data to use for the combo action
     
-    int dummy;
+    int light_bonus_from_tux ;
 
     double health;		  // the max. possible energy in the moment 
     float maxenergy; // current top limit for the influencers energy

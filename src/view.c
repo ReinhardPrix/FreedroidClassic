@@ -1252,7 +1252,8 @@ update_light_list ( int player_num )
     //
     light_sources [ 0 ] . x = Me [ player_num ] . pos . x ;
     light_sources [ 0 ] . y = Me [ player_num ] . pos . y ;
-    light_source_strengthes [ 0 ] = light_level -> light_radius_bonus ;
+    light_source_strengthes [ 0 ] = 
+	light_level -> light_radius_bonus + Me [ player_num ] . light_bonus_from_tux  ;
     //--------------------
     // We must not in any case tear a hole into the beginning of
     // the list though...

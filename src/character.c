@@ -387,29 +387,46 @@ AddInfluencerItemAttributeBonus( item* BonusItem )
 void
 AddInfluencerItemSecondaryBonus( item* BonusItem )
 {
-  //--------------------
-  // In case of no item, the thing to do is pretty easy...
-  //
-  if ( BonusItem->type == ( -1 ) ) return;
-
-  //--------------------
-  // In case of present suffix or prefix modifiers, we need to apply the suffix...
-  //
-  if ( ( ( BonusItem->suffix_code != ( -1 ) ) || ( BonusItem->prefix_code != ( -1 ) ) ) &&
-       BonusItem->is_identified )
+    //--------------------
+    // In case of no item, the thing to do is pretty easy...
+    //
+    if ( BonusItem->type == ( -1 ) ) return;
+    
+    //--------------------
+    // In case of present suffix or prefix modifiers, we need to apply the suffix...
+    //
+    if ( ( ( BonusItem->suffix_code != ( -1 ) ) || ( BonusItem->prefix_code != ( -1 ) ) ) &&
+	 BonusItem->is_identified )
     {
+	
+	//--------------------
+	// Some modifiers might not be random at all but fixed to the 
+	// item prefix or item suffix.  In that case, we must get the
+	// modifier strength from the suffix/prefix spec itself...
+	//
+	if ( BonusItem -> suffix_code != ( -1 ) )
+	    Me [ 0 ] . light_bonus_from_tux += SuffixList [ BonusItem -> suffix_code ] . light_bonus_value ;
+	if ( BonusItem -> prefix_code != ( -1 ) )
+	    Me [ 0 ] . light_bonus_from_tux += PrefixList [ BonusItem -> prefix_code ] . light_bonus_value ;
 
-      Me[0].to_hit    += BonusItem->bonus_to_tohit ;
-      Me[0].maxmana   += BonusItem->bonus_to_force ;
-      Me[0].maxenergy += BonusItem->bonus_to_life ; 
-      Me[0].Vitality  += BonusItem->bonus_to_vit ;
+	//--------------------
+	// Now we can apply the modifiers, that have been generated from
+	// the suffix spec and then (with some randomness) written into the
+	// item itself.  In that case we won't need the suffix- or 
+	// prefix-lists here...
+	//
+	Me [ 0 ] . to_hit    += BonusItem -> bonus_to_tohit ;
+	Me [ 0 ] . maxmana   += BonusItem -> bonus_to_force ;
+	Me [ 0 ] . maxenergy += BonusItem -> bonus_to_life ; 
+	Me [ 0 ] . Vitality  += BonusItem -> bonus_to_vit ;
+	
+	Me [ 0 ] . resist_force       += BonusItem -> bonus_to_resist_force ;
+	Me [ 0 ] . resist_fire        += BonusItem -> bonus_to_resist_fire ;
+	Me [ 0 ] . resist_electricity += BonusItem -> bonus_to_resist_electricity ;
 
-      Me[0].resist_force       += BonusItem->bonus_to_resist_force ;
-      Me[0].resist_fire        += BonusItem->bonus_to_resist_fire ;
-      Me[0].resist_electricity += BonusItem->bonus_to_resist_electricity ;
-
-      // if ( ItemMap [ BonusItem->type ] . can_be_installed_in_weapon_slot )
-      // Me[0].freezing_enemys_property += BonusItem->freezing_time_in_seconds;
+	
+	// if ( ItemMap [ BonusItem->type ] . can_be_installed_in_weapon_slot )
+	// Me[0].freezing_enemys_property += BonusItem->freezing_time_in_seconds;
     }
 
 }; // void AddInfluencerItemSecondaryBonus( item* BonusItem )
@@ -699,6 +716,7 @@ UpdateAllCharacterStats ( int PlayerNum )
     // So at this point we can finally apply all the modifiers to the influencers
     // SECONDARY stats due to 'magical' items and spells and the like
     //
+    Me [ PlayerNum ] . light_bonus_from_tux = 0 ;
     AddInfluencerItemSecondaryBonus( & Me [ PlayerNum ] . armour_item );
     AddInfluencerItemSecondaryBonus( & Me [ PlayerNum ] . weapon_item );
     AddInfluencerItemSecondaryBonus( & Me [ PlayerNum ] . drive_item );
