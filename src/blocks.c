@@ -1008,213 +1008,220 @@ This error indicates some installation problem with freedroid.",
 void 
 LoadAndPrepareEnemyRotationModelNr ( int ModelNr )
 {
-  char ConstructedFileName[5000];
-  int i, j;
-  char *fpath;
-  static int FirstCallEver = TRUE ;
-  static int EnemyFullyPrepared [ ENEMY_ROTATION_MODELS_AVAILABLE ] ;
-  int source_direction_code;
-
-  //--------------------
-  // Maybe this function has just been called for the first time ever.
-  // Then of course we need to initialize the array, that is used for
-  // keeping track of the currently loaded enemy rotation surfaces.
-  // This we do here.
-  //
-  if ( FirstCallEver )
+    char ConstructedFileName[5000];
+    int i, j;
+    char *fpath;
+    static int FirstCallEver = TRUE ;
+    static int EnemyFullyPrepared [ ENEMY_ROTATION_MODELS_AVAILABLE ] ;
+    int source_direction_code;
+    
+    //--------------------
+    // Maybe this function has just been called for the first time ever.
+    // Then of course we need to initialize the array, that is used for
+    // keeping track of the currently loaded enemy rotation surfaces.
+    // This we do here.
+    //
+    if ( FirstCallEver )
     {
-      for ( i = 0 ; i < ENEMY_ROTATION_MODELS_AVAILABLE ; i ++ )
+	for ( i = 0 ; i < ENEMY_ROTATION_MODELS_AVAILABLE ; i ++ )
 	{
-	  EnemyFullyPrepared [ i ] = FALSE ;
+	    EnemyFullyPrepared [ i ] = FALSE ;
 	}
-      FirstCallEver = FALSE ;
+	FirstCallEver = FALSE ;
     }
-
-  //--------------------
-  // Now a sanity check against using rotation types, that don't exist
-  // in Freedroid RPG at all!
-  //
-  if ( ( ModelNr < 0 ) || ( ModelNr >= ENEMY_ROTATION_MODELS_AVAILABLE ) )
+    
+    //--------------------
+    // Now a sanity check against using rotation types, that don't exist
+    // in Freedroid RPG at all!
+    //
+    if ( ( ModelNr < 0 ) || ( ModelNr >= ENEMY_ROTATION_MODELS_AVAILABLE ) )
     {
-      fprintf ( stderr , "\n\nModelNr=%d.\n\n" , ModelNr );
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
+	fprintf ( stderr , "\n\nModelNr=%d.\n\n" , ModelNr );
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
 Freedroid received a rotation model number that does not exist!",
-				 PLEASE_INFORM, IS_FATAL );
+				   PLEASE_INFORM, IS_FATAL );
     }
-
-  //--------------------
-  // Now we can check if the given rotation model type was perhaps already
-  // allocated and loaded and fully prepared.  Then of course we need not 
-  // do anything here...  Otherwise we can have trust and mark it as loaded
-  // already...
-  //
-  if ( EnemyFullyPrepared [ ModelNr ] ) return;
-  EnemyFullyPrepared [ ModelNr ] = TRUE;
-  Activate_Conservative_Frame_Computation();
-
-  //--------------------
-  // Maybe we got an image collection file for this enemy?  Then
-  // of course we'll use it and not bother with anything else...
-  //
-  // if ( ( ModelNr == 1 ) || ( ModelNr == 2 ) || ( ModelNr == 3 ) || ( ModelNr == 4 ) || ( ModelNr == 6 ) || ( ModelNr == 14 ) || ( ModelNr == 24 ) || ( ModelNr == 25 ) || ( ModelNr == 26 ) || ( ModelNr == 27 ) || ( ModelNr == 31 ) )
-  if ( Druidmap [ ModelNr ] . use_image_archive_file )
-  {
-      grab_enemy_images_from_archive ( ModelNr );
-      return ;
-  }
-
-  //--------------------
-  // Now that we have the classic ball-shaped design completely done,
-  // we can start doing something new:  Let's try to use some pre-rotated
-  // enemy surfaces for a change.  That might work out to be cool.
-  //
-  for ( i = 0 ; i < ROTATION_ANGLES_PER_ROTATION_MODEL ; i ++ )
+    
+    //--------------------
+    // Now we can check if the given rotation model type was perhaps already
+    // allocated and loaded and fully prepared.  Then of course we need not 
+    // do anything here...  Otherwise we can have trust and mark it as loaded
+    // already...
+    //
+    if ( EnemyFullyPrepared [ ModelNr ] ) return;
+    EnemyFullyPrepared [ ModelNr ] = TRUE;
+    Activate_Conservative_Frame_Computation();
+    
+    //--------------------
+    // Maybe we got an image collection file for this enemy?  Then
+    // of course we'll use it and not bother with anything else...
+    //
+    if ( Druidmap [ ModelNr ] . use_image_archive_file )
     {
-      //--------------------
-      // If we don't have full animation cycles for this enemy yet, then of course we
-      // just load the old image, using the old file name.
-      //
-      if ( ! Druidmap [ ModelNr ] . use_image_archive_file )
+	grab_enemy_images_from_archive ( ModelNr );
+	return ;
+    }
+    
+    //--------------------
+    // Now that we have the classic ball-shaped design completely done,
+    // we can start doing something new:  Let's try to use some pre-rotated
+    // enemy surfaces for a change.  That might work out to be cool.
+    //
+    for ( i = 0 ; i < ROTATION_ANGLES_PER_ROTATION_MODEL ; i ++ )
+    {
+	//--------------------
+	// If we don't have full animation cycles for this enemy yet, then of course we
+	// just load the old image, using the old file name.
+	//
+	if ( ! Druidmap [ ModelNr ] . use_image_archive_file )
 	{
-	  sprintf ( ConstructedFileName , "droids/%s/ingame_%04d.png" , PrefixToFilename [ ModelNr ] ,
-		    ( ModelMultiplier [ ModelNr ] * i ) + 1 );
-	  DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
-	  fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
-	  get_iso_image_from_file_and_path ( fpath , & ( enemy_iso_images [ ModelNr ] [ i ] [ 0 ] ) , TRUE ) ;
-
-	  //--------------------
-	  // Newly, we also make textures out of all enemy surfaces...
-	  // This will prove to be very handy for purposes of color filtered
-	  // output and such things...
-	  //
-	  make_texture_out_of_surface ( & ( enemy_iso_images [ ModelNr ] [ i ] [ 0 ] ) ) ;
+	    sprintf ( ConstructedFileName , "droids/%s/ingame_%04d.png" , PrefixToFilename [ ModelNr ] ,
+		      ( ModelMultiplier [ ModelNr ] * i ) + 1 );
+	    DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
+	    fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
+	    get_iso_image_from_file_and_path ( fpath , & ( enemy_iso_images [ ModelNr ] [ i ] [ 0 ] ) , TRUE ) ;
+	    
+	    //--------------------
+	    // Newly, we also make textures out of all enemy surfaces...
+	    // This will prove to be very handy for purposes of color filtered
+	    // output and such things...
+	    //
+	    make_texture_out_of_surface ( & ( enemy_iso_images [ ModelNr ] [ i ] [ 0 ] ) ) ;
 	}
-      //--------------------
-      // But if we have an animation, maybe not complete animation but at least walkcycle 
-      // and the like, then we can start loading these images.
-      //
-      else
+	//--------------------
+	// But if we have an animation, maybe not complete animation but at least walkcycle 
+	// and the like, then we can start loading these images.
+	//
+	else
 	{
-	  for ( j = 0 ; j < last_stand_animation_image [ ModelNr ] ; j ++ )
+	    for ( j = 0 ; j < last_stand_animation_image [ ModelNr ] ; j ++ )
 	    {
-	      //--------------------
-	      // Depending on which file numbering convention is being used
-	      // for this model as far as directioning is concerned, we set
-	      // the proper direction number for the files on disk.  302 uses
-	      // the classical Tux direction number codes while the other ones
-	      // use the old one-image-animation direction codes for enemies.
-	      //
-	      if ( ( ModelNr == 6 ) || ( ModelNr == 14 ) || ( ModelNr == 24 ) || ( ModelNr == 25 ) || ( ModelNr == 26 ) || ( ModelNr == 27 ) || ( ModelNr == 31 ) )
-		source_direction_code = ModelMultiplier [ ModelNr ] * i * 2 ;
-	      else
-		source_direction_code = ( ModelMultiplier [ ModelNr ] * i ) + 0 ;
-
-	      //--------------------
-	      // Now we can proceed to load the images for each animation phase
-	      // asdf
-	      //
-	      if ( j + 1 <= last_walk_animation_image [ ModelNr ] )
+		//--------------------
+		// Depending on which file numbering convention is being used
+		// for this model as far as directioning is concerned, we set
+		// the proper direction number for the files on disk.  302 uses
+		// the classical Tux direction number codes while the other ones
+		// use the old one-image-animation direction codes for enemies.
+		//
+		if ( ( ModelNr == 6 ) || ( ModelNr == 14 ) || ( ModelNr == 24 ) || ( ModelNr == 25 ) || ( ModelNr == 26 ) || ( ModelNr == 27 ) || ( ModelNr == 31 ) )
+		    source_direction_code = ModelMultiplier [ ModelNr ] * i * 2 ;
+		else
+		    source_direction_code = ( ModelMultiplier [ ModelNr ] * i ) + 0 ;
+		
+		//--------------------
+		// Now we can proceed to load the images for each animation phase
+		// asdf
+		//
+		if ( j + 1 <= last_walk_animation_image [ ModelNr ] )
 		{
-		  sprintf ( ConstructedFileName , "droids/%s/walk_%02d_%04d.png" , PrefixToFilename [ ModelNr ] ,
-			    source_direction_code , j + 1 );
+		    sprintf ( ConstructedFileName , "droids/%s/walk_%02d_%04d.png" , 
+			      PrefixToFilename [ ModelNr ] ,
+			      source_direction_code , j + 1 );
 		}
-	      else if ( j + 1 <= last_attack_animation_image [ ModelNr ] )
+		else if ( j + 1 <= last_attack_animation_image [ ModelNr ] )
 		{
-		  //--------------------
-		  // If there is no attack animation cycle yet, then we need to use the first
-		  // walk animation image for the attack cycle and that's it.
-		  // But if there is some animation done and available, then we can use these
-		  // images of course.
-		  //
-		  if ( use_default_attack_image [ ModelNr ] )
+		    //--------------------
+		    // If there is no attack animation cycle yet, then we need to use the first
+		    // walk animation image for the attack cycle and that's it.
+		    // But if there is some animation done and available, then we can use these
+		    // images of course.
+		    //
+		    if ( use_default_attack_image [ ModelNr ] )
 		    {
-		      sprintf ( ConstructedFileName , "droids/%s/walk_%02d_0001.png" , PrefixToFilename [ ModelNr ] ,
-				source_direction_code );
+			sprintf ( ConstructedFileName , "droids/%s/walk_%02d_0001.png" , 
+				  PrefixToFilename [ ModelNr ] ,
+				  source_direction_code );
 		    }
-		  else
+		    else
 		    {
-		      sprintf ( ConstructedFileName , "droids/%s/attack_%02d_%04d.png" , PrefixToFilename [ ModelNr ] ,
-				source_direction_code , j + 1 + 1 - first_attack_animation_image [ ModelNr ] );
-		    }
-		}
-	      else if ( j + 1 <= last_gethit_animation_image [ ModelNr ] )
-		{
-		  //--------------------
-		  // If there is no gethit animation cycle yet, then we need to use the first
-		  // walk animation image for the attack cycle and that's it.
-		  // But if there is some animation done and available, then we can use these
-		  // images of course.
-		  //
-		  if ( use_default_gethit_image [ ModelNr ] )
-		    {
-		      sprintf ( ConstructedFileName , "droids/%s/walk_%02d_0001.png" , PrefixToFilename [ ModelNr ] ,
-				source_direction_code );
-		    }
-		  else
-		    {
-		      sprintf ( ConstructedFileName , "droids/%s/gethit_%02d_%04d.png" , PrefixToFilename [ ModelNr ] ,
-				source_direction_code , j + 1 + 1 - first_gethit_animation_image [ ModelNr ] );
+			sprintf ( ConstructedFileName , "droids/%s/attack_%02d_%04d.png" , 
+				  PrefixToFilename [ ModelNr ] ,
+				  source_direction_code , j + 1 + 1 - first_attack_animation_image [ ModelNr ] );
 		    }
 		}
-	      else if ( j + 1 <= last_death_animation_image [ ModelNr ] )
+		else if ( j + 1 <= last_gethit_animation_image [ ModelNr ] )
 		{
-		  //--------------------
-		  // If there is no gethit animation cycle yet, then we need to use the first
-		  // walk animation image for the attack cycle and that's it.
-		  // But if there is some animation done and available, then we can use these
-		  // images of course.
-		  //
-		  if ( use_default_death_image [ ModelNr ] )
+		    //--------------------
+		    // If there is no gethit animation cycle yet, then we need to use the first
+		    // walk animation image for the attack cycle and that's it.
+		    // But if there is some animation done and available, then we can use these
+		    // images of course.
+		    //
+		    if ( use_default_gethit_image [ ModelNr ] )
 		    {
-		      sprintf ( ConstructedFileName , "droids/default_dead_body_%02d_0001.png" , 
-				ModelMultiplier [ ModelNr ] * i * 2 );
+			sprintf ( ConstructedFileName , "droids/%s/walk_%02d_0001.png" , 
+				  PrefixToFilename [ ModelNr ] ,
+				  source_direction_code );
 		    }
-		  else
+		    else
 		    {
-		      sprintf ( ConstructedFileName , "droids/%s/death_%02d_%04d.png" , PrefixToFilename [ ModelNr ] ,
-				source_direction_code , j + 1 + 1 - first_death_animation_image [ ModelNr ] );
-		      DebugPrintf ( 1 , "\nj=%d, i=%d, death_file_name=%s." , j , i , ConstructedFileName );
+			sprintf ( ConstructedFileName , "droids/%s/gethit_%02d_%04d.png" , 
+				  PrefixToFilename [ ModelNr ] ,
+				  source_direction_code , j + 1 + 1 - first_gethit_animation_image [ ModelNr ] );
 		    }
 		}
-	      else if ( j + 1 <= last_stand_animation_image [ ModelNr ] )
+		else if ( j + 1 <= last_death_animation_image [ ModelNr ] )
 		{
-		  //--------------------
-		  // If there is no stand animation cycle yet, then we need to use the first
-		  // walk animation image for the stand cycle and that's it.
-		  // But if there is some animation done and available, then we can use these
-		  // images of course.
-		  //
-		  if ( use_default_stand_image [ ModelNr ] )
+		    //--------------------
+		    // If there is no gethit animation cycle yet, then we need to use the first
+		    // walk animation image for the attack cycle and that's it.
+		    // But if there is some animation done and available, then we can use these
+		    // images of course.
+		    //
+		    if ( use_default_death_image [ ModelNr ] )
 		    {
-		      sprintf ( ConstructedFileName , "droids/%s/walk_%02d_0001.png" , PrefixToFilename [ ModelNr ] ,
-				source_direction_code );
+			sprintf ( ConstructedFileName , "droids/default_dead_body_%02d_0001.png" , 
+				  ModelMultiplier [ ModelNr ] * i * 2 );
 		    }
-		  else
+		    else
 		    {
-		      sprintf ( ConstructedFileName , "droids/%s/stand_%02d_%04d.png" , PrefixToFilename [ ModelNr ] ,
-				source_direction_code , j + 1 + 1 - first_stand_animation_image [ ModelNr ] );
+			sprintf ( ConstructedFileName , "droids/%s/death_%02d_%04d.png" , 
+				  PrefixToFilename [ ModelNr ] ,
+				  source_direction_code , j + 1 + 1 - first_death_animation_image [ ModelNr ] );
+			DebugPrintf ( 1 , "\nj=%d, i=%d, death_file_name=%s." , j , i , ConstructedFileName );
 		    }
 		}
-	      else
+		else if ( j + 1 <= last_stand_animation_image [ ModelNr ] )
 		{
-		  fprintf ( stderr , "\n\nModelNr=%d.\nj=%d.\n" , ModelNr , j );
-		  GiveStandardErrorMessage ( __FUNCTION__  , "\
+		    //--------------------
+		    // If there is no stand animation cycle yet, then we need to use the first
+		    // walk animation image for the stand cycle and that's it.
+		    // But if there is some animation done and available, then we can use these
+		    // images of course.
+		    //
+		    if ( use_default_stand_image [ ModelNr ] )
+		    {
+			sprintf ( ConstructedFileName , "droids/%s/walk_%02d_0001.png" , 
+				  PrefixToFilename [ ModelNr ] ,
+				  source_direction_code );
+		    }
+		    else
+		    {
+			sprintf ( ConstructedFileName , "droids/%s/stand_%02d_%04d.png" , 
+				  PrefixToFilename [ ModelNr ] ,
+				  source_direction_code , j + 1 + 1 - first_stand_animation_image [ ModelNr ] );
+		    }
+		}
+		else
+		{
+		    fprintf ( stderr , "\n\nModelNr=%d.\nj=%d.\n" , ModelNr , j );
+		    GiveStandardErrorMessage ( __FUNCTION__  , "\
 Freedroid received a rotation model number that does not exist!",
-					     PLEASE_INFORM, IS_FATAL );
+					       PLEASE_INFORM, IS_FATAL );
 		}
-	      
-	      
-	      DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
-	      fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
-	      get_iso_image_from_file_and_path ( fpath , & ( enemy_iso_images [ ModelNr ] [ i ] [ j ] ) , TRUE ) ;
-
-	      //--------------------
-	      // Newly, we also make textures out of all enemy surfaces...
-	      // This will prove to be very handy for purposes of color filtered
-	      // output and such things...
-	      //
-	      make_texture_out_of_surface ( & ( enemy_iso_images [ ModelNr ] [ i ] [ j ] ) ) ;
-
+		
+		
+		DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
+		fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
+		get_iso_image_from_file_and_path ( fpath , & ( enemy_iso_images [ ModelNr ] [ i ] [ j ] ) , TRUE ) ;
+		
+		//--------------------
+		// Newly, we also make textures out of all enemy surfaces...
+		// This will prove to be very handy for purposes of color filtered
+		// output and such things...
+		//
+		make_texture_out_of_surface ( & ( enemy_iso_images [ ModelNr ] [ i ] [ j ] ) ) ;
+		
 	    }
 	}
     }    

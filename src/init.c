@@ -79,34 +79,35 @@ clear_out_arrays_for_fresh_game ( void )
 void 
 ShowStartupPercentage ( int Percentage )
 {
-  SDL_Rect Bar_Rect;
-  Uint32 FillColor = SDL_MapRGB( Screen->format, 0 , 255 , 0 ) ; 
-
+    SDL_Rect Bar_Rect;
+    Uint32 FillColor = SDL_MapRGB( Screen->format, 0 , 255 , 0 ) ; 
+    
 #if __WIN32__
-  if ( use_open_gl)
-      blit_special_background ( FREEDROID_LOADING_PICTURE_CODE );
+    if ( use_open_gl)
+	blit_special_background ( FREEDROID_LOADING_PICTURE_CODE );
 #endif
-
-  Bar_Rect . x = 200 ;
-  Bar_Rect . y = 200 ;
-  Bar_Rect . w = 2 * Percentage ;
-  Bar_Rect . h = 30 ;
-  our_SDL_fill_rect_wrapper ( Screen , & Bar_Rect , FillColor ) ;
-
-  Bar_Rect . x = 200 + 2 * Percentage ;
-  Bar_Rect . y = 200 ;
-  Bar_Rect . w = 200 - 2 * Percentage ;
-  Bar_Rect . h = 30 ;
-  our_SDL_fill_rect_wrapper ( Screen , & Bar_Rect , 0 ) ;
-
-  SDL_SetClipRect( Screen , NULL );
-
-  PrintString ( Screen , 200 + 80 , 200 + 4 , "%d%%", Percentage ) ;
-
-  our_SDL_update_rect_wrapper ( Screen , 200 , 200 , 200 , 30  ) ;
-
-  DebugPrintf ( 1 , "\nNow at percentage: %d." , Percentage );
-
+    
+    Bar_Rect . x = 200 * SCREEN_WIDTH / 640 ;
+    Bar_Rect . y = 200 * SCREEN_HEIGHT / 480 ;
+    Bar_Rect . w = 2 * Percentage * SCREEN_WIDTH / 640 ;
+    Bar_Rect . h = 30 * SCREEN_HEIGHT / 480 ;
+    our_SDL_fill_rect_wrapper ( Screen , & Bar_Rect , FillColor ) ;
+    
+    Bar_Rect . x = ( 200 + 2 * Percentage ) * SCREEN_WIDTH / 640 ;
+    Bar_Rect . y = 200 * SCREEN_HEIGHT / 480 ;
+    Bar_Rect . w = ( 200 - 2 * Percentage ) * SCREEN_WIDTH / 640 ;
+    Bar_Rect . h = 30 * SCREEN_HEIGHT / 480 ;
+    our_SDL_fill_rect_wrapper ( Screen , & Bar_Rect , 0 ) ;
+    
+    SDL_SetClipRect( Screen , NULL );
+    
+    PrintString ( Screen , ( 200 + 80 ) * SCREEN_WIDTH / 640 , 
+		  ( 200 + 4 ) * SCREEN_HEIGHT / 480 , "%d%%", Percentage ) ;
+    
+    our_SDL_update_rect_wrapper ( Screen , 200 , 200 , 200 , 30  ) ;
+    
+    DebugPrintf ( 1 , "\nNow at percentage: %d." , Percentage );
+    
 }; // void ShowStartupPercentage ( int Percentage )
 
 /* ----------------------------------------------------------------------

@@ -127,8 +127,8 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
 
     { NULL , "mouse_buttons/GoLevelNorthButton.png"           , { SCREEN_WIDTH-50-6 , SCREEN_HEIGHT-50-8 , 25 ,  25 } } ,
     { NULL , "mouse_buttons/GoLevelSouthButton.png"           , { SCREEN_WIDTH-50-6 , SCREEN_HEIGHT-4-25 , 25 ,  25 } } ,
-    { NULL , "mouse_buttons/GoLevelEastButton.png"            , { SCREEN_WIDTH-25-4 , 437 , 25 , 25 } } ,
-    { NULL , "mouse_buttons/GoLevelWestButton.png"            , { SCREEN_WIDTH-75-8 , 437 ,  0 , 0 } } ,
+    { NULL , "mouse_buttons/GoLevelEastButton.png"            , { SCREEN_WIDTH-25-4 , SCREEN_HEIGHT-43 , 25 , 25 } } ,
+    { NULL , "mouse_buttons/GoLevelWestButton.png"            , { SCREEN_WIDTH-75-8 , SCREEN_HEIGHT-43 ,  0 , 0 } } ,
     { NULL , "mouse_buttons/ExportThisLevelButton.png"        , { SCREEN_WIDTH-60 , 90 , 0,  0 } } ,
     { NULL , "mouse_buttons/LevelEditorSaveShipButton.png"    , { SCREEN_WIDTH-90 , 90 , 0 ,  0 } } ,
     { NULL , "mouse_buttons/LevelEditorZoomInButton.png"      , { 30 , 90 , 0 ,  0 } } ,
