@@ -1,4 +1,4 @@
-
+% -*- mode: flyspell; mode: fill -*-
 ----------------------------------------------------------------------
  *
  *   Copyright (c) 1994, 2003, 2004 Johannes Prix
@@ -33,15 +33,13 @@ BEGIN OF AUTORS NOTES
 This character is "SPENCER", one of the most important characters of old town.
 His most important features are, that he can check through for quests done and maybe bring you into the Town Guard.
 
-
-
 END OF AUTORS NOTES
 
 
 Beginning of new chat dialog for character="XXXXX"
 
 New Option Nr=0  OptionText=" Hi!  I'm new here. "
-OptionSample="Tux_Hi_Im_New_0.wav"
+OptionSample="Spencer/Tux_hi_im_new.wav"
 PositionX=63  PositionY=228  
 Subtitle="Hello!  I'm Spencer.  I'm the manager of this town while our chief is not here.  Is there anything I can help you with?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -53,7 +51,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=1  OptionText="I need to get into the citadel."
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+OptionSample="Spencer/Tux_i_need_to.wav"
 PositionX=158  PositionY=302  
 Subtitle="Sorry, but the citadel is off limits to you.  Only members of the guard of the old town are permitted to enter."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -64,7 +62,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=2  OptionText="What must I do to become a member of the guard."
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+OptionSample="Spencer/Tux_what_must_i.wav"
 PositionX=246  PositionY=365  
 ChangeOption=2 ChangeToValue=0
 ChangeOption=3 ChangeToValue=1
@@ -74,7 +72,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=3  OptionText="What about some money instead?"
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+OptionSample="Spencer/Tux_what_about_some.wav"
 PositionX=196  PositionY=430  
 Subtitle="For 15 million bucks, no less, hehe."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -99,7 +97,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=5  OptionText="Maybe I could help somehow?"
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+OptionSample="Spencer/Tux_maybe_i_could.wav"
 PositionX=437  PositionY=53  
 Subtitle="That would be most kind of you, but I doubt that you will be able to clear out the warehouse for us."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -117,7 +115,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=6  OptionText="How is it going?"
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+OptionSample="Spencer/Tux_how_is_it.wav"
 PositionX=134  PositionY=116  
 ChangeOption=6 ChangeToValue=1
 OnCondition="MissionAssigned:5" JumpToOption=7 ElseGoto=4
@@ -186,7 +184,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=12  OptionText="Have I done enough quests to become a guard member now?"
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+OptionSample="Spencer/Tux_have_i_done.wav"
 PositionX=368  PositionY=402  
 ChangeOption=12 ChangeToValue=1
 OnCondition="MissionComplete:1" JumpToOption=13 ElseGoto=14
@@ -447,7 +445,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=37  OptionText="I've heard Richard obtained new information on the colony."
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+OptionSample="Spencer/Tux_ive_heard_richard.wav"
 PositionX=289  PositionY=512  
 Subtitle="Yes, that's right and in fact it might be crucial.  The data on the cube he obtained indicates the existence of a secret experimental facility on this world."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -464,7 +462,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=38  OptionText="I'd like to participate in this operation."
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+OptionSample="Spencer/Tux_id_like_to.wav"
 PositionX=371  PositionY=529  
 Subtitle="That's most kind of you to volunteer.  So far, I've sent two scouts into the area.  They have found the facility entrance and unlocked the gate."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -482,7 +480,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=39  OptionText="OK.  I'll be careful.  But I'll do it."
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+OptionSample="Spencer/Tux_ok_ill_be.wav"
 PositionX=464  PositionY=510  
 Subtitle="Good.  The base entrance is somewhat hidden in the caves to the northwest.  Best use the north gate out of town, then head west."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -498,8 +496,8 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=40  OptionText="I don't feel like doing it now.  I'll rather prepare some more."
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+New Option Nr=40  OptionText="I don't feel like doing it now.  I'd rather prepare some more."
+OptionSample="Spencer/Tux_i_dont_feel.wav"
 PositionX=462  PositionY=578  
 Subtitle="Good.  You should be well prepared if you intend to go."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -520,7 +518,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 ----------------------------------------------------------------------
 
 New Option Nr=99  OptionText="I'll be going then."
-OptionSample="Tux_Ill_Be_Back_0.wav"
+OptionSample="Spencer/Tux_ill_be_going.wav"
 PositionX=250  PositionY=260  
 Subtitle="See you later."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
