@@ -3157,6 +3157,10 @@ IsPassable ( float x , float y , int z , int Checkpos)
     case FLOOR_CARPET_R:
     case FLOOR_CARPET_U:
     case FLOOR_CARPET_D:
+    case FLOOR_CAVE_L:
+    case FLOOR_CAVE_R:
+    case FLOOR_CAVE_U:
+    case FLOOR_CAVE_D:
     case FLOOR_CARPET:
     case FINE_GRID:
     case LIFT:
