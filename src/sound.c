@@ -75,26 +75,43 @@ int channels = 0;         // 0=mono 1=stereo
 int format = AFMT_U8;
 int rate = 8000;
 
-char BlastSoundSampleFilename[]="/../sound/BlastSound1.wav";
-char CollisionSoundSampleFilename[]="/../sound/CollisionSound1.wav";
-char FireSoundSampleFilename[]="/../sound/FireSound1.wav";
-char GotIntoBlastSoundSampleFilename[]="/../sound/GotIntoBlastSound.wav";
-char MoveElevatorSoundSampleFilename[]="/../sound/MoveElevatorSound.wav";
-char RefreshSoundSampleFilename[]="/../sound/RefreshSound.wav";
-char LeaveElevatorSoundSampleFilename[]="/../sound/LeaveElevatorSound3.wav";
-char EnterElevatorSoundSampleFilename[]="/../sound/EnterElevatorSound2.wav";
-char ThouArtDefeatedSoundSampleFilename[]="/../sound/ThouArtDefeatedSound2.wav";
-// char BackgroundMusicSampleFilename[]="/../sound/BackgroundMusic1.wav";
-char* ExpandedBlastSoundSampleFilename;
-char* ExpandedCollisionSoundSampleFilename;
-char* ExpandedFireSoundSampleFilename;
-char* ExpandedBackgroundMusicSampleFilename;
-char* ExpandedGotIntoBlastSoundSampleFilename;
-char* ExpandedMoveElevatorSoundSampleFilename;
-char* ExpandedRefreshSoundSampleFilename;
-char* ExpandedLeaveElevatorSoundSampleFilename;
-char* ExpandedEnterElevatorSoundSampleFilename;
-char* ExpandedThouArtDefeatedSoundSampleFilename;
+
+// The following is the definition of the sound file names used in freedroid
+// DO NOT EVER CHANGE THE ORDER OF APPEARENCE IN THIS LIST PLEASE!!!!!
+// The order of appearance here should match the order of appearance 
+// in the SoundSampleFilenames definition
+
+enum _sounds {
+  ERRORSOUND=0,
+  BACKGROUND_MUSIC_SOUND,
+  BLASTSOUND,
+  COLLISIONSOUND,
+  FIRESOUND,
+  GOT_INTO_BLAST_SOUND,
+  MOVE_ELEVATOR_SOUND,
+  REFRESH_SOUND,
+  LEAVE_ELEVATOR_SOUND,
+  ENTER_ELEVATOR_SOUND,
+  THOU_ART_DEFEATED_SOUND,
+  GOT_HIT_SOUND,
+};
+
+#define ALL_SOUNDS 12
+char *SoundSampleFilenames[ALL_SOUNDS] = {
+  "/../sound/ERRORSOUND_NILL",
+  "/../sound/BackgroundMusic1.wav",
+  "/../sound/BlastSound1.wav",
+  "/../sound/CollisionSound1.wav",
+  "/../sound/FireSound1.wav",
+  "/../sound/GotIntoBlastSound.wav",
+  "/../sound/MoveElevatorSound1.wav",
+  "/../sound/RefreshSound.wav",
+  "/../sound/LeaveElevatorSound3.wav",
+  "/../sound/EnterElevatorSound2.wav",
+  "/../sound/ThouArtDefeatedSound2.wav",
+  "/../sound/GotHitSound.wav"
+};
+char *ExpandedSoundSampleFilenames[ALL_SOUNDS];
 
 long BlastSoundSampleLength=0;
 long CollisionSoundSampleLength=0;
@@ -256,7 +273,6 @@ void StartSound(int Tune){
 void CrySound(void)
 {
 
-  //	MakeSound(&CryTune1);
 }
 
 
@@ -266,18 +282,19 @@ void Play_YIFF_BackgroundMusic(int Tune){
 
   printf("\nvoid Play_YIFF_BackgroundMusic(int Tune):  Real function call confirmed.\n");
 
-  if( YGetSoundObjectAttributes( BackgroundMusic_con, ExpandedBackgroundMusicSampleFilename, 
+  if( YGetSoundObjectAttributes( BackgroundMusic_con, ExpandedSoundSampleFilenames[BACKGROUND_MUSIC_SOUND], 
 				 &BackgroundMusic_sndobj_attrib ) )
     {
       // Can't get sound object attributes.
       fprintf( stderr, "\nvoid Play_YIFF_BackgroundMusic(int Tune): %s: Error: Missing or corrupt.\n", 
-	       ExpandedBackgroundMusicSampleFilename );
+	       ExpandedSoundSampleFilenames[BACKGROUND_MUSIC_SOUND] );
       printf(" CWD: %s \n\n",getcwd(NULL,0));
       Terminate(ERR);
     }
   else
     {
-      BackgroundMusic_play_id = YStartPlaySoundObjectSimple( BackgroundMusic_con, ExpandedBackgroundMusicSampleFilename );
+      BackgroundMusic_play_id = YStartPlaySoundObjectSimple( BackgroundMusic_con, 
+							     ExpandedSoundSampleFilenames[BACKGROUND_MUSIC_SOUND] );
 
       Music_Parameters.repeats=0;
       Music_Parameters.total_repeats=-1; // -1 here means to repeat indefinately
@@ -304,6 +321,12 @@ void Play_YIFF_Server_Sound(int Tune){
   printf("\nvoid Play_YIFF_Server_Sound(int Tune):  Real function call confirmed.");
   printf("\nvoid Play_YIFF_Server_Sound(int Tune):  Playback is about to start!");
 
+
+  play_id = YStartPlaySoundObjectSimple( BackgroundMusic_con, ExpandedSoundSampleFilenames[Tune] );
+
+  return;
+
+
   if (Tune == FIRESOUND) {
     // TEST   if( YGetSoundObjectAttributes( con, ExpandedFireSoundSampleFilename, &sndobj_attrib ) )
     //    if( YGetSoundObjectAttributes( BackgroundMusic_con, ExpandedFireSoundSampleFilename, &sndobj_attrib ) )
@@ -317,57 +340,10 @@ void Play_YIFF_Server_Sound(int Tune){
     //    else
     //      {
     //TEST	play_id = YStartPlaySoundObjectSimple( con, ExpandedFireSoundSampleFilename );
-    play_id = YStartPlaySoundObjectSimple( BackgroundMusic_con, ExpandedFireSoundSampleFilename );
+    // play_id = YStartPlaySoundObjectSimple( BackgroundMusic_con, ExpandedFireSoundSampleFilename );
     //      }
   }
 
-
-
-  if (Tune == COLLISIONSOUND) {
-    //TEST play_id = YStartPlaySoundObjectSimple( con, ExpandedCollisionSoundSampleFilename );
-    play_id = YStartPlaySoundObjectSimple( BackgroundMusic_con, ExpandedCollisionSoundSampleFilename );
-    // write(handle, CollisionSoundSamplePointer, FragmentRoundUp(CollisionSoundSampleLength));
-  }
-
-  if (Tune == BLASTSOUND) {
-    // play_id = YStartPlaySoundObjectSimple( con, ExpandedBlastSoundSampleFilename );
-    play_id = YStartPlaySoundObjectSimple( BackgroundMusic_con, ExpandedBlastSoundSampleFilename );
-  }
-
-  if (Tune == ENTER_ELEVATOR_SOUND) {
-    // play_id = YStartPlaySoundObjectSimple( con, ExpandedBlastSoundSampleFilename );
-    play_id = YStartPlaySoundObjectSimple( BackgroundMusic_con, ExpandedEnterElevatorSoundSampleFilename );
-  }
-
-  if (Tune == LEAVE_ELEVATOR_SOUND) {
-    // play_id = YStartPlaySoundObjectSimple( con, ExpandedBlastSoundSampleFilename );
-    play_id = YStartPlaySoundObjectSimple( BackgroundMusic_con, ExpandedLeaveElevatorSoundSampleFilename );
-  }
-
-  if (Tune == MOVE_ELEVATOR_SOUND) {
-    // play_id = YStartPlaySoundObjectSimple( con, ExpandedBlastSoundSampleFilename );
-    play_id = YStartPlaySoundObjectSimple( BackgroundMusic_con, ExpandedMoveElevatorSoundSampleFilename );
-  }
-
-  if (Tune == GOT_INTO_BLAST_SOUND) {
-    // play_id = YStartPlaySoundObjectSimple( con, ExpandedBlastSoundSampleFilename );
-    play_id = YStartPlaySoundObjectSimple( BackgroundMusic_con, ExpandedGotIntoBlastSoundSampleFilename );
-  }
-
-  if (Tune == ENTER_ELEVATOR_SOUND) {
-    // play_id = YStartPlaySoundObjectSimple( con, ExpandedBlastSoundSampleFilename );
-    play_id = YStartPlaySoundObjectSimple( BackgroundMusic_con, ExpandedEnterElevatorSoundSampleFilename );
-  }
-
-  if (Tune == REFRESH_SOUND) {
-    // play_id = YStartPlaySoundObjectSimple( con, ExpandedBlastSoundSampleFilename );
-    play_id = YStartPlaySoundObjectSimple( BackgroundMusic_con, ExpandedRefreshSoundSampleFilename );
-  }
-
-  if (Tune == THOU_ART_DEFEATED_SOUND) {
-    // play_id = YStartPlaySoundObjectSimple( con, ExpandedBlastSoundSampleFilename );
-    play_id = YStartPlaySoundObjectSimple( BackgroundMusic_con, ExpandedThouArtDefeatedSoundSampleFilename );
-  }
 
 #endif /* HAVE_LIBY2 */
 
@@ -392,20 +368,14 @@ int Init_YIFF_Sound_Server(void){
   // definition.
 #if HAVE_LIBY2
   
+  int i;
+
   // Because the yiff does not nescessarily have the same origin for relative paths as paradroid does,
   // is is nescessary to first translate our path names to absolute pathnames.  This is done here:
-  ExpandedBlastSoundSampleFilename=ExpandFilename(BlastSoundSampleFilename);
-  ExpandedCollisionSoundSampleFilename=ExpandFilename(CollisionSoundSampleFilename);
-  ExpandedFireSoundSampleFilename=ExpandFilename(FireSoundSampleFilename);
-  //  ExpandedBackgroundMusicSampleFilename=ExpandFilename(BackgroundMusicSampleFilename);
-  ExpandedBackgroundMusicSampleFilename=ExpandFilename( PARADROID_ORIGINAL_TITLE_MUSIC );
-  ExpandedGotIntoBlastSoundSampleFilename=ExpandFilename( GotIntoBlastSoundSampleFilename );
-  ExpandedMoveElevatorSoundSampleFilename=ExpandFilename( MoveElevatorSoundSampleFilename );
-  ExpandedRefreshSoundSampleFilename=ExpandFilename( RefreshSoundSampleFilename );
-  ExpandedLeaveElevatorSoundSampleFilename=ExpandFilename( LeaveElevatorSoundSampleFilename );
-  ExpandedEnterElevatorSoundSampleFilename=ExpandFilename( EnterElevatorSoundSampleFilename );
-  ExpandedThouArtDefeatedSoundSampleFilename=ExpandFilename( ThouArtDefeatedSoundSampleFilename );
 
+  for ( i=0; i < ALL_SOUNDS ; i++ ) {
+    ExpandedSoundSampleFilenames[i] = ExpandFilename( SoundSampleFilenames[i] );
+  }
 
   // Now a new connection to the yiff server can be opend.  The first argument to open is not NULL,
   // therefore a yiff server will be started even if none is running!!  great!!
@@ -667,5 +637,18 @@ void BounceSound(void){
   Play_YIFF_Server_Sound(COLLISIONSOUND);
   
 } // void BounceSound(void)
+
+/*@Function============================================================
+@Desc: 
+
+@Ret: 
+@Int:
+* $Function----------------------------------------------------------*/
+void DruidBlastSound(void){
+
+  Play_YIFF_Server_Sound(BLASTSOUND);
+  
+} // void BounceSound(void)
+
 
 #undef _sound_c

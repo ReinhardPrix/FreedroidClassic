@@ -254,9 +254,7 @@ EXTERN void EnterElevatorSound(void);
 EXTERN void LeaveElevatorSound(void);
 EXTERN void FireBulletSound(void);
 EXTERN void BounceSound(void);
-EXTERN int InitModPlayer(void);
-EXTERN void StopModPlayer(void);
-EXTERN void PlayMod(char *modfile);
+EXTERN void DruidBlastSound(void);
 
 /* keyboard.c */
 #undef EXTERN

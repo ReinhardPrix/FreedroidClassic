@@ -132,7 +132,9 @@ void StartBlast(int x, int y, int type)
    NewBlast->phase=0;
 
 
-   if (type == DRUIDBLAST) Play_YIFF_Server_Sound(BLASTSOUND);
+   if (type == DRUIDBLAST) {
+     DruidBlastSound();
+   }
 
 } /* StartBlast */
 

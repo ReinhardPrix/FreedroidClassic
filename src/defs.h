@@ -57,18 +57,6 @@
 #define ERR 	-1
 #define OK		0
 
-#define ERRORSOUND 0
-#define BLASTSOUND 1
-#define FIRESOUND 2
-#define COLLISIONSOUND 3
-#define ENTER_ELEVATOR_SOUND 4
-#define LEAVE_ELEVATOR_SOUND 5
-#define MOVE_ELEVATOR_SOUND 6
-#define GOT_INTO_BLAST_SOUND 7
-#define REFRESH_SOUND 8
-#define GOT_HIT_SOUND 9
-#define THOU_ART_DEFEATED_SOUND 10
-
 /* Konstanten fuer die Dateinamen */
 /*
 #define SHIPNAME "./map/ship1" 
@@ -120,8 +108,6 @@
 #define DATA70ZEICHENSATZ          "../graphics/para8x8.fnt"
 #define SHIPNAME                   "../map/ship1" 
 #define COLORFILE                  "../map/levels.col"
-
-#define PARADROID_ORIGINAL_TITLE_MUSIC "/../sound/Paradroid_8000.wav" // do not add a leading . in this filename!!!
 
 /* Konstanten die unmittelbar die Hardware betreffen */
 #define SCREENADDRESS		0xa000	/* screen - data */
