@@ -351,6 +351,16 @@ Load_Enemy_Surfaces( void )
       SDL_FreeSurface( tmp_surf );
     }
   SDL_FreeSurface( Whole_Image );
+
+  //--------------------
+  // Now that we have our enemy surfaces ready, we can create some modified
+  // copies of those surfaces but this a color filter applied to them...
+  //
+  for ( i=0 ; i < DROID_PHASES + DEAD_DROID_PHASES ; i++ )
+    {
+      BlueEnemySurfacePointer [ i ] = CreateBlueColorFilteredSurface ( EnemySurfacePointer [ i ] );
+    }
+
 }; // void LoadEnemySurfaces( void )
 
 

@@ -204,6 +204,7 @@ EXTERN SDL_Surface *Screen;   /* the graphics display */
 EXTERN SDL_Surface *SkillIconSurfacePointer[ NUMBER_OF_SKILLS ]; // A pointer all skill icon surfaces
 EXTERN SDL_Surface *EnemySurfacePointer[ DROID_PHASES + DEAD_DROID_PHASES ];   // A pointer to the surfaces containing the pictures of the
                                                // enemys in different phases of rotation
+EXTERN SDL_Surface *BlueEnemySurfacePointer[ DROID_PHASES + DEAD_DROID_PHASES ];   // A pointer to the surfaces containing the pictures of the
 EXTERN SDL_Surface *InfluencerSurfacePointer[ DROID_PHASES + DEAD_DROID_PHASES ];   // A pointer to the surfaces containing the pictures of the
                                                // influencer in different phases of rotation
 EXTERN SDL_Surface *TuxWorkingCopy [ MAX_PLAYERS ][ TUX_BREATHE_PHASES + TUX_SWING_PHASES + TUX_GOT_HIT_PHASES ];   // A pointer to the surfaces containing the tux
