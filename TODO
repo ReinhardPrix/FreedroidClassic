@@ -19,7 +19,8 @@ Outstanding release-critical bugs (priority: high)
        jp: --> couldn't reproduce this with 20 fps on Irenes maching
                perhaps it was due to the "level gray"-change delay?!?
        rp: nope. Recently reproduced: jumped across a wall inside
-       level after a melee
+           level after a melee
+       jp: --> damn!
 
 - The console picture, i.e. the picture for the menu at the console is a terrible mess.
   Someone must sooner or later set up something more proper for the ne_cons.bmp file

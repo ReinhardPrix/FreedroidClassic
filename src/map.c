@@ -1146,12 +1146,15 @@ GetLiftConnections (char *filename)
 
   Data = ReadAndMallocAndTerminateFile( fpath , END_OF_LIFT_DATA_STRING ) ;
 
+  /*
   if ( (EntryPointer = strstr( Data , START_OF_LIFT_RECTANGLE_DATA_STRING ) ) == NULL )
     {
       DebugPrintf ( 0 , "\nERROR!  START OF LIFT RECTANGLE DATA STRING NOT FOUND!  Terminating...");
       Terminate(ERR);
     }
+  */
 
+  EntryPointer = LocateStringInData ( Data , START_OF_LIFT_RECTANGLE_DATA_STRING );
   EndOfLiftRectangleSection = LocateStringInData ( Data , "*** End of elevator rectangles ***" );
 
 

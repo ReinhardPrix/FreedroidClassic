@@ -201,7 +201,29 @@ ReadAndMallocAndTerminateFile( char* filename , char* File_End_String )
   // Read the whole theme data to memory 
   if ((DataFile = fopen ( filename , "r")) == NULL)
     {
-      DebugPrintf ( 0 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : Error opening file.... ");
+      fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+In function 'char* ReadAndMallocAndTerminateFile ( char* filename ):\n\
+\n\
+Freedroid was unable to open a given text file, that should be there and\n\
+should be accessible.\n\
+\n\
+This might be due to a wrong file name in a mission file, a wrong filename\n\
+in the source or a serious bug in the source.\n\
+\n\
+The file that couldn't be located was: %s\n\
+\n\
+Please check that your external text files are properly set up.\n\
+\n\
+Please also don't forget, that you might have to run 'make install'\n\
+again after you've made modifications to the data files in the source tree.\n\
+\n\
+Freedroid will terminate now to draw attention to the data problem it could\n\
+not resolve.... Sorry, if that interrupts a major game of yours.....\n\
+----------------------------------------------------------------------\n\
+\n" , filename );
       Terminate(ERR);
     }
   else
@@ -243,7 +265,31 @@ ReadAndMallocAndTerminateFile( char* filename , char* File_End_String )
 
   if ( (ReadPointer = strstr( Data , File_End_String ) ) == NULL )
     {
-      DebugPrintf ( 0 , "\nERROR!  END OF FILE STRING NOT FOUND!  Terminating...");
+      fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+In function 'char* ReadAndMallocAndTerminateFile ( char* filename ):\n\
+\n\
+Freedroid was unable to find the string, that should terminate the given\n\
+file within this file.\n\
+\n\
+This might be due to a corrupt text file on disk that does not confirm to\n\
+the file standards of this version of freedroid or (less likely) to a serious\n\
+bug in the reading function.\n\
+\n\
+The file that is concerned is: %s\n\
+The string, that could not be located was: %s\n\
+\n\
+Please check that your external text files are properly set up.\n\
+\n\
+Please also don't forget, that you might have to run 'make install'\n\
+again after you've made modifications to the data files in the source tree.\n\
+\n\
+Freedroid will terminate now to draw attention to the data problem it could\n\
+not resolve.... Sorry, if that interrupts a major game of yours.....\n\
+----------------------------------------------------------------------\n\
+\n" , filename , File_End_String );
       Terminate(ERR);
     }
   else

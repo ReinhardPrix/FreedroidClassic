@@ -64,12 +64,13 @@ Mission Name: Invading Asteroid Command Central
 +++ At first we specify the other files, that also contain essential
 +++ information about this mission, e.g. maps and droids and that
 +++
-Physics ('game.dat') file to use for this mission: game.dat
+Physics ('game.dat') file to use for this mission: freedroid.ruleset
 Ship file to use for this mission: Asteroid.maps
 Lift file to use for this mission: Invading_Asteroid_Command_Central.elevators
 Crew file to use for this mission: Invading_Asteroid_Command_Central.droids
 Lifts On file to use for this mission: asteroid_on.bmp
 Lifts Off file to use for this mission: asteroid_off.bmp
+After completing this mission, load mission : Paradroid.mission
 
 +++
 +++ For the asteroid command central invasion mission, 
@@ -95,7 +96,9 @@ Mission target is to reach level : -1
 Mission target is to reach X-Pos : -1
 Mission target is to reach Y-Pos : -1
 Mission target is to live for how many seconds : -1
-After completing this mission, load mission : Paradroid.mission
+
+*** End of Mission Target ***
+
 
 ----------------------------------------------------------------------
 
