@@ -159,8 +159,20 @@ Load_Item_Surfaces( void )
   ItemImageList[ 26 ].inv_size.y = 2;
   ItemImageList[ 27 ].inv_size.x = 1;
   ItemImageList[ 27 ].inv_size.y = 1;
-  ItemImageList[ 28 ].inv_size.x = 2;
+  ItemImageList[ 28 ].inv_size.x = 1;
   ItemImageList[ 28 ].inv_size.y = 2;
+  ItemImageList[ 29 ].inv_size.x = 1;
+  ItemImageList[ 29 ].inv_size.y = 1;
+  ItemImageList[ 30 ].inv_size.x = 1;
+  ItemImageList[ 30 ].inv_size.y = 1;
+  ItemImageList[ 31 ].inv_size.x = 2;
+  ItemImageList[ 31 ].inv_size.y = 3;
+  ItemImageList[ 32 ].inv_size.x = 2;
+  ItemImageList[ 32 ].inv_size.y = 2;
+  ItemImageList[ 33 ].inv_size.x = 2;
+  ItemImageList[ 33 ].inv_size.y = 2;
+  ItemImageList[ 34 ].inv_size.x = 2;
+  ItemImageList[ 34 ].inv_size.y = 2;
 
   fpath = find_file ( NE_ITEMS_BLOCK_FILE , GRAPHICS_DIR, TRUE);
 
@@ -433,7 +445,11 @@ Update_Tux_Working_Copy ( void )
 			    SDL_MapRGB( TuxWorkingCopy[i]->format, 255, 0, 255) ); 
 	}
     }
-  
+
+  //--------------------
+  // Next we blit the weapon (and arms) of the tux
+  //
+
   // DebugPrintf( 0 , "\nWeapon item type : %d ." , Me.weapon_item.type );
 
   if ( ( Me.weapon_item.type == (-1) ) || ( Me.weapon_item.currently_held_in_hand ) )
@@ -441,6 +457,13 @@ Update_Tux_Working_Copy ( void )
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
 	  SDL_BlitSurface ( TuxMotionArchetypes[4][i] , NULL , TuxWorkingCopy[i] , NULL );
+	}
+    }
+  else if ( Me.weapon_item.type == ITEM_STAFF )
+    {
+      for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
+	{
+	  SDL_BlitSurface ( TuxMotionArchetypes[1][i] , NULL , TuxWorkingCopy[i] , NULL );
 	}
     }
   else if ( ItemMap [ Me.weapon_item.type ].item_gun_angle_change == 0 )

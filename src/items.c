@@ -251,7 +251,7 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
   switch ( MyRandom ( TreasureChestRange ) )
     {
     case 0:
-      switch ( MyRandom ( 6 ) )
+      switch ( MyRandom ( 7 ) )
 	{
 	case 0:
 	  DropItemAt( ITEM_ANTIGRAV_ALPHA , x , y , Pre , Suf , TreasureChestRange );
@@ -272,6 +272,9 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
 	  DropItemAt( ITEM_SHORT_SWORD , x , y , Pre , Suf , TreasureChestRange );
 	  break;
 	case 6:
+	  DropItemAt( ITEM_DAGGER , x , y , Pre , Suf , TreasureChestRange );
+	  break;
+	case 7:
 	  DropItemAt( ITEM_CAP , x , y , Pre , Suf , TreasureChestRange );
 	  break;
 	}

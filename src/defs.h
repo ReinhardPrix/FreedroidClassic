@@ -70,6 +70,8 @@
 #define ITEM_HUNTERS_BOW 03
 #define ITEM_WHEELS 07
 #define ITEM_CAP 20
+#define ITEM_STAFF 39
+#define ITEM_DAGGER 37
 
 #define WAR_BOT 1
 #define SNIPER_BOT 2
