@@ -34,8 +34,10 @@ BEGIN OF AUTORS NOTES
 
 
 
+
 You can use this text field to make some notes on anything.  These otes will get saved with the dialog.
 This is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.
+
 
 
 
@@ -164,13 +166,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=18  OptionText="What has happend since then?"
-OptionSample=""
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=248  PositionY=306  
 Subtitle="During your time in stasis, the MS took over the government.  The few existing rebels were quickly executed."
-ReplySample="Sorry_No_Voice_Sampe_Yet_0.wav
-"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="So they had the galaxy under control.  But then it happened:  Their machines went completely out of control and attacked everyone.  That's what we call the 'Great Assault'."
-ReplySample="Sorry_No_Voice_Sampe_Yet_0.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=19 ChangeToValue=1
 ChangeOption=17 ChangeToValue=1
 ChangeOption=9 ChangeToValue=1

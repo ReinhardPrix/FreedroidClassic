@@ -32,8 +32,10 @@ freedroid-discussion@lists.sourceforge.net
 BEGIN OF AUTORS NOTES
 
 
+
 You can use this text field to make some notes on anything.  These otes will get saved with the dialog.
 This is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.
+
 
 
 END OF AUTORS NOTES
@@ -43,7 +45,7 @@ Beginning of new chat dialog for character="XXXXX"
 
 New Option Nr=0  OptionText="THIS WILL NEVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
-PositionX=60  PositionY=60  
+PositionX=67  PositionY=238  
 Subtitle="Hey you!  Linarian!  What do you want here?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
@@ -56,8 +58,8 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=1  OptionText="Just taking a look around."
-OptionSample="Tux_RMS_Why_Did_The_0.wav"
-PositionX=90  PositionY=60  
+OptionSample="Guards/Tux_just_taking_a_look_around.wav"
+PositionX=255  PositionY=99  
 Subtitle="Ok!  But don't make any trouble!  Or you'll be in trouble!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
@@ -69,8 +71,8 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=2  OptionText="I'd like to get into town."
-OptionSample="Tux_RMS_Why_Did_The_0.wav"
-PositionX=120  PositionY=60  
+OptionSample="Guards/Tux_Id_like_to_get_into_town.wav"
+PositionX=260  PositionY=296  
 Subtitle="Ok!  But don't make any trouble!  Or you'll be in trouble!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
@@ -82,8 +84,8 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=3  OptionText="I'm here to assassinate your leader and you won't stop me!"
-OptionSample="Tux_RMS_Why_Did_The_0.wav"
-PositionX=150  PositionY=60  
+OptionSample="Guards/Tux_Im_here_to_assassinate.wav"
+PositionX=184  PositionY=196  
 Subtitle="Ok Linarian!  You wanted it that way!  And I don't like Penguins anyway!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
@@ -97,11 +99,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=99  OptionText="I'll be going then."
-OptionSample="Tux_Ill_Be_Back_0.wav"
-PositionX=330  PositionY=330  
+OptionSample="Guards/Tux_Ill_be_going_then.wav"
+PositionX=395  PositionY=219  
 Subtitle="Mhmmm."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=1
+ChangeOption=99 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
