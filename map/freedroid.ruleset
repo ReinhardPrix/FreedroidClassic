@@ -2787,7 +2787,7 @@ Chance of this robot scoring a hit=60
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
-Individual shape of this droid or just -1 for classic ball shaped : 1
+Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : simpe rubbish diposal robot. Common device in most space craft to maintain a clean ship. 
 
@@ -2827,7 +2827,7 @@ Chance of this robot scoring a hit=60
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
-Individual shape of this droid or just -1 for classic ball shaped : 0
+Individual shape of this droid or just -1 for classic ball shaped : 1
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : created by Dr. Masternak to clean up large heaps of rubbish. Its large scoop is used to collect rubbish. It is then crushed internally. 
 
@@ -2867,7 +2867,7 @@ Chance of this robot scoring a hit=80
 Chance modifier, that this robot gets hit=20
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
-Individual shape of this droid or just -1 for classic ball shaped : 0
+Individual shape of this droid or just -1 for classic ball shaped : 2
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : light duty servant robot. One of the first to use the anti-grav system. 
 
@@ -2907,7 +2907,7 @@ Chance of this robot scoring a hit=82
 Chance modifier, that this robot gets hit=10
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
-Individual shape of this droid or just -1 for classic ball shaped : 0
+Individual shape of this droid or just -1 for classic ball shaped : 3
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : cheaper version of the anti-grav servant robot. 
 
@@ -2947,7 +2947,7 @@ Chance of this robot scoring a hit=80
 Chance modifier, that this robot gets hit=20
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
-Individual shape of this droid or just -1 for classic ball shaped : 0
+Individual shape of this droid or just -1 for classic ball shaped : 4
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : light duty servant robot. One of the first to use the anti-grav system. 
 
@@ -2987,7 +2987,7 @@ Chance of this robot scoring a hit=85
 Chance modifier, that this robot gets hit=15
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
-Individual shape of this droid or just -1 for classic ball shaped : 0
+Individual shape of this droid or just -1 for classic ball shaped : 5
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : this robot is used mainly for serving drinks. A tray is mounted on the head. Built by Orchard and Marsden Enterprises. 
 
@@ -3067,7 +3067,7 @@ Chance of this robot scoring a hit=85
 Chance modifier, that this robot gets hit=-25
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
-Individual shape of this droid or just -1 for classic ball shaped : 0
+Individual shape of this droid or just -1 for classic ball shaped : 6
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : common device for moving small packages. Clamp is mounted on the lower body. 
 

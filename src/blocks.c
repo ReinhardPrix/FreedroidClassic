@@ -363,6 +363,25 @@ Load_Enemy_Surfaces( void )
   int i;
   int j;
   char *fpath;
+  char *PrefixToFilename[ ENEMY_ROTATION_MODELS_AVAILABLE ];
+  int ModelMultiplier[ ENEMY_ROTATION_MODELS_AVAILABLE ];
+
+  PrefixToFilename [ 0 ] = "999" ;
+  ModelMultiplier [ 0 ] = 5 ;
+  PrefixToFilename [ 1 ] = "139" ;
+  ModelMultiplier [ 1 ] = 5 ;
+  PrefixToFilename [ 2 ] = "247" ;
+  ModelMultiplier [ 2 ] = 5 ;
+  PrefixToFilename [ 3 ] = "249" ;
+  ModelMultiplier [ 3 ] = 5 ;
+  PrefixToFilename [ 4 ] = "296" ;
+  ModelMultiplier [ 4 ] = 5 ;
+  PrefixToFilename [ 5 ] = "302" ;
+  ModelMultiplier [ 5 ] = 5 ;
+  PrefixToFilename [ 6 ] = "420" ;
+  ModelMultiplier [ 6 ] = 5 ;
+  PrefixToFilename [ 7 ] = "476" ;
+  ModelMultiplier [ 7 ] = 5 ;
 
   fpath = find_file ( NE_DROID_BLOCK_FILE , GRAPHICS_DIR, TRUE);
 
@@ -412,7 +431,7 @@ Load_Enemy_Surfaces( void )
       //
       for ( i=0 ; i < ROTATION_ANGLES_PER_ROTATION_MODEL ; i++ )
 	{
-	  sprintf ( ConstructedFileName , "rotation_models/anim_%02d_%04d.png" , j , i + 1 );
+	  sprintf ( ConstructedFileName , "rotation_models/%s_%04d.png" , PrefixToFilename [ j ] , ( ModelMultiplier[j] * i) + 1 );
 	  DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
 	  // fpath = find_file ( "rotation_models/anim0001.png" , GRAPHICS_DIR, FALSE );
 	  fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
@@ -438,7 +457,7 @@ to the graphics loading problem it could not resolve.\n\
 Sorry...\n\
 ----------------------------------------------------------------------\n\
 \n" , fpath );
-	      Terminate(ERR);
+	      // Terminate(ERR);
 	    }
 	  
 	  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
