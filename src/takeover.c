@@ -664,8 +664,10 @@ ShowPlayground ()
   //  SDL_SetColorKey (ne_screen, 0, 0);
   SDL_SetClipRect (ne_screen , &User_Rect);
 
-  //  Fill_Rect (User_Rect, to_bg_color);
-  SDL_BlitSurface (to_background, NULL, ne_screen, NULL);
+  if (to_background)
+    SDL_BlitSurface (to_background, NULL, ne_screen, NULL);
+  else
+    Fill_Rect (User_Rect, to_bg_color);  /* fallback if now background pic found */
 
   PutInfluence (xoffs + DruidStart[YourColor].x,
 		yoffs + DruidStart[YourColor].y);
