@@ -1,2 +1,28 @@
-Johannes Prix <johannes.prix@kfunigraz.ac.at>
-Reinhard Prix <R.Prix@maths.soton.ac.uk>
+-*- mode: text -*-
+This is intended to be an exhaustive list (as far as possible) of
+substantial contributions to Freedroid, which includes either sending
+patches, graphics or new missions/levels/maps.
+Please contact one of the authors if you think you have been omitted. 
+We also thank everyone who has sent bug-reports, but unfortunatly it
+would be too excessive to list these contributions individually here
+as well.
+
+Authors  (main code + "classic theme")
+-------
+Johannes Prix <johannesprix@users.sourceforge.net>
+Reinhard Prix <rprix@users.sourceforge.net>
+
+additional artwork
+------------------
+* Bastian Salmela <bastian.salmela@hel.fi>
+  3D Blender graphics design. Title, robots-pics and various backgrounds
+
+Patches
+-------
+* Tanel Kylaots <mou@tdl.ee>
+  Nighthawk-type mouse control (based on his patch)
+
+additional Themes
+-----------------
+* lanzz   <lanzz@lanzz.org>
+
