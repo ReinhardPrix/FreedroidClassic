@@ -64,7 +64,6 @@
 
 #define FENSTEROFF 		FALSE
 #define ENERGIEBALKENOFF 	TRUE
-#define REDRAW001OFF 		FALSE
 #define USEINTSOFF 		FALSE
 
 /* Scroll- Fenster */
@@ -232,12 +231,7 @@ main (int argc, char *const argv[])
   /* Initialisieren der globalen Variablen und Arrays */
   InitParaplus ();
 
-#if REDRAW001OFF == 0
   RedrawInfluenceNumber ();
-#endif
-
-  DebugPrintf
-    ("\nvoid main(void): Vor Beginn der !QuitProgram - Schreife....\n");
 
   while (!QuitProgram)
     {
@@ -246,9 +240,6 @@ main (int argc, char *const argv[])
       InitNewGame ();
 
       GameOver = FALSE;
-
-      DebugPrintf
-	("void main(void): Vor Beginn der !GameOver && !QuitProgram - Schleife....\n");
 
       while (!GameOver && !QuitProgram)
 	{
@@ -266,29 +257,17 @@ main (int argc, char *const argv[])
 
 	  UpdateCountersForThisFrame ();
 
-
-	  DebugPrintf
-	    ("void main(void): Innerhalb der !GameOver && !QuitProgram - Schleife....\n");
-	  keyboard_update ();
-
-	  if ( QPressed() )
-	    {
-	      DebugPrintf
-		("\n*****************************************************");
-	      DebugPrintf
-		("\nvoid main(void): Termination cause of Q-Pressing!!!!!");
-	      DebugPrintf
-		("\n*****************************************************\n\n");
-	      Terminate (0);
-	    }
+	  if ( QPressed() ) /* user asked for quit */
+	    Terminate (OK);
 	  if ( DPressed() )
 	    Me.energy = 0;
 	  if ( LPressed() ) 
-	      ShowHighscoreList ();
+	    ShowHighscoreList ();
 	  if ( IPressed() )
 	    ShowDebugInfos ();
-	  if ( CPressed() && Alt_Was_Pressed() && Ctrl_Was_Pressed() && Shift_Was_Pressed() ) 
-	      Cheatmenu ();
+	  if ( CPressed() && Alt_Was_Pressed()
+	       && Ctrl_Was_Pressed() && Shift_Was_Pressed() ) 
+	    Cheatmenu ();
 	  if ( EscapePressed() )
 	    EscapeMenu ();
 	  if ( PPressed () )
@@ -327,7 +306,8 @@ main (int argc, char *const argv[])
 	  
 	  YIFF_Server_Check_Events ();
 
-	  UpdateInfoline ();
+	  SetInfoline (NULL, NULL); /* put up default infos: MODE  -- SCORE */
+
 	  for (i = 0; i < MAXBULLETS; i++)
 	    CheckBulletCollisions (i);
 	  PutMessages ();
@@ -349,9 +329,6 @@ main (int argc, char *const argv[])
 	  DebugPrintf ("\nvoid main: Me.speed.x nach REIBUNG ist jetzt: ");
 	  DebugPrintfFloat (Me.speed.x);
 
-	  // gl_printf( -1 , -1 , "\nmain: Me.energy:%f!" , Me.energy );
-	  // gl_printf(-1,-1,"\nmain: speed:%f/%f!", Me.speed.x, Me.speed.y);
-	  // gl_printf(-1,-1,"\nmain: phase:%f!", Me.phase );
 
 	  /* Influencedruid nach der momentanen Geschwindigkeit weiterbewegen */
 	  Me.pos.x += Me.speed.x * Frame_Time ();
@@ -398,26 +375,12 @@ main (int argc, char *const argv[])
 		(now.tv_sec - onehundredframetimestamp.tv_sec) * 1000000 +
 		(now.tv_usec - onehundredframetimestamp.tv_usec);
 	      framenr = 0;
-	      // printf("\n Current Frame_Time: %f.", Frame_Time());
 	    }
 
 	  FPSover1 = 1000000 * 1 / (float) oneframedelay;
 	  FPSover10 = 1000000 * 10 / (float) tenframedelay;
 	  FPSover100 = 1000000 * 100 / (float) onehundredframedelay;
 
-	  // gl_printf(1,30,"   1fr: %d ms FPS1: %f \n",oneframedelay,FPSover1);
-	  // gl_printf(-1,-1," 10fr: %d ms FPS10: %f \n",tenframedelay, (1/FPSover10) );
-	  // gl_printf( -1 , -1 , " Overall: %f \n" , Overall_Average );
-	  //       gl_printf(1,35,"100fr: %d ms FPS100: %f \n",onehundredframedelay,FPSover100);
-	  // gl_printf( -1 , -1 , "Frame_Time(): %f \n" , Frame_Time() );
-	  // gl_printf(-1,-1,"sec : %d usec : %d \n",now.tv_sec,now.tv_usec);
-	  // gl_printf(-1,-1,"sec : %d usec : %d \n",onehundredframetimestamp.tv_sec,onehundredframetimestamp.tv_usec);
-	  // gl_printf(-1,-1,"sec : %d usec : %d \n",now.tv_sec-onehundredframetimestamp.tv_sec,now.tv_usec-onehundredframetimestamp.tv_usec);
-	  //      gl_printf(-1,-1,"sec : %d \n",onehundredframedelay);
-	  // gl_printf(-1,-1,"sec : %d \n",framenr % 100);
-
-	  // gl_printf(-1,-1,"%f\n",oneframetimestamp);
-	  //      gl_printf(-1,-1,ltoa((long)onehundredframedelay,Dummystring,10));
 	} /* while !GameOver */
     } /* while !QuitProgram */
   Terminate (0);
@@ -442,9 +405,8 @@ ThouArtDefeated (void)
 
   for (i = 0; i < WAIT_AFTER_KILLED; i++)
     {
-      UpdateInfoline();
-      SetInfoline();
-      DisplayRahmen (RealScreen);
+      DisplayRahmen (Outline320x200);
+      SetInfoline(NULL, NULL);
       GetInternFenster (SHOW_ALL);
       PutInternFenster (TRUE);
       ExplodeBlasts ();
@@ -615,8 +577,7 @@ Pause (void)
   int Pause = TRUE;
 
   Me.status = PAUSE;
-  SetInfoline ();
-  UpdateInfoline ();
+  SetInfoline (NULL, NULL);
   GetView ();
   GetInternFenster (SHOW_ALL);
   PutInternFenster (TRUE);
@@ -635,8 +596,7 @@ Pause (void)
       if (CPressed ())
 	{
 	  Me.status = CHEESE;
-	  SetInfoline ();
-	  UpdateInfoline ();
+	  SetInfoline (NULL, NULL);
 	  GetView ();
 	  GetInternFenster (SHOW_ALL);
 	  PutInternFenster (TRUE);
@@ -645,8 +605,7 @@ Pause (void)
 	  while ( SpacePressed() ); /* then wait for Space released */
 	  
 	  Me.status = PAUSE;       /* return to normal PAUSE */
-	  SetInfoline ();
-	  UpdateInfoline ();
+	  SetInfoline (NULL, NULL);
 	} /* if (CPressed) */
 
       if ( SpacePressed() )
@@ -661,13 +620,19 @@ Pause (void)
 
 } /* Pause () */
 
+/*-----------------------------------------------------------------
+ * 
+ * 
+ * 
+ *-----------------------------------------------------------------*/
 void
 UpdateCountersForThisFrame (void)
 {
   // The next couter counts the frames displayed by freedroid during this
   // whole run!!  DO NOT RESET THIS COUNTER WHEN THE GAME RESTARTS!!
   Overall_Frames_Displayed++;
-  Overall_Average = (Overall_Average*(Overall_Frames_Displayed-1) + Frame_Time()) / Overall_Frames_Displayed;
+  Overall_Average = (Overall_Average*(Overall_Frames_Displayed-1)
+		     + Frame_Time()) / Overall_Frames_Displayed;
 
   // Here are some things, that were previously done by some periodic */
   // interrupt function
@@ -693,8 +658,6 @@ UpdateCountersForThisFrame (void)
     ShowScore++;
   if (RealScore < ShowScore)
     ShowScore--;
-  UpdateInfoline ();
-  SetInfoline ();
 
 } /* UpdateCountersForThisFrame() */
 
