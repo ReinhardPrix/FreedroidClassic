@@ -472,6 +472,7 @@ EXTERN void AttackInfluence (int enemynum);
 EXTERN void AnimateEnemys (void);
 EXTERN void ClearEnemys (void);
 EXTERN int ClassOfDruid (int druidtype);
+EXTERN void SwapEnemys ( int First , int Second ) ;
 
 /* ship.c */
 #undef EXTERN
@@ -569,6 +570,7 @@ EXTERN void SendPlayerItemDropToServer ( int PositionCode , float x , float y ) 
 EXTERN void SendPlayerItemMoveToServer ( int SourcePositionCode , int DestPositionCode , int inv_x , int inv_y ) ;
 EXTERN void PrintServerStatusInformation ( void ) ;
 EXTERN void SendPeriodicServerMessagesToAllClients ( void );
+EXTERN void SendEnemySwapSignalToClient ( int , int , int ) ;
 
 /* takeover.c */
 #undef EXTERN

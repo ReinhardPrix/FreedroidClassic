@@ -317,12 +317,6 @@ typedef struct
 
 typedef struct
 {
-  Uint8 storebyte;
-} automap_tile , *Automap_tile;
-
-
-typedef struct
-{
   // Here are the rather short-lived properties of the item
   finepoint pos;
   int type;

@@ -761,26 +761,81 @@ SelectNextWaypointAdvanced ( int EnemyNum )
 }; // void MoveThisRobotAdvanced ( int EnemyNum )
 
 /* ----------------------------------------------------------------------
+ * This function swaps two enemys in the AllEnemys array.
+ * ---------------------------------------------------------------------- */
+void
+SwapEnemys ( int First , int Second ) 
+{
+  enemy Zwisch;
+
+  memcpy ( &Zwisch , & ( AllEnemys[ First ] ) , sizeof( enemy ) );
+  memcpy ( & ( AllEnemys[ First ] ) , & ( AllEnemys [ Second ] ) , sizeof( enemy ) );
+  memcpy ( & ( AllEnemys[ Second ] ) , & Zwisch , sizeof( enemy ) );
+
+}; // void SwapEnemys ( int First , int Second ) 
+
+/* ----------------------------------------------------------------------
  * In order to make sure that dead robots are blitted first, we swap them
  * to the beginning of the AllEnemys array.
  * ---------------------------------------------------------------------- */
 void
 SwapThisRobotToFrontPosition ( enemy* ThisRobot )
 {
-  int i;
-  enemy Zwisch;
+  int i, j;
 
-  return; // for now disabled...
+  //--------------------
+  // This function is only for servers and single player games...
+  //
+  if ( ClientMode ) return; 
 
   for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i++ )
     {
       if ( AllEnemys[ i ] .Status != OUT )
 	{
+
+	  //--------------------
+	  // Now we find out the number of the second robot for the
+	  // swap operation, so that we can send it to the client later.
+	  //
+	  for ( j = 0 ; j < Number_Of_Droids_On_Ship ; j ++ )
+	    {
+	      if ( & ( AllEnemys [ j ] ) == ThisRobot ) break;
+	    }
+	  if ( i == j ) return ; // in this case, no swap is at all nescessary and no signal as well...
+	  if ( j == Number_Of_Droids_On_Ship )
+	    {
+	      DebugPrintf ( 0 , "\nSEVERE ERROR IN SwapThisRobotToFrontPosition ( enemy* ThisRobot )! \nTerminatin..." );
+	      Terminate ( ERR ) ;
+	    }
+
+	  //--------------------
+	  // Now if this is the server, it must inform the clients
+	  // about the recent swap in the enemy array.
+	  //
+	  if ( ServerMode && ( ! ClientMode ) ) 
+	    {
+	      SendEnemySwapSignalToClient ( 0 , i , j );
+	    }
+
+	  //--------------------
+	  // Finally, the swap operation should be done on the server too...
+	  //
+	  SwapEnemys ( i , j ) ;
+
+	  /*
 	  memcpy ( &Zwisch , & ( AllEnemys[ i ] ) , sizeof( enemy ) );
 	  memcpy ( & ( AllEnemys[ i ] ) , ThisRobot , sizeof( enemy ) );
 	  memcpy ( ThisRobot , & Zwisch , sizeof( enemy ) );
+	  */
+
+	  //--------------------
+	  // And of course we return, cause further swapping after that does
+	  // not seem to make sense.
+	  //
+	  return;
 	}
     }
+
 }; // void SwapThisRobotToFrontPosition ( enemy* ThisRobot )
 
 
@@ -882,7 +937,7 @@ MoveThisEnemy( int EnemyNum )
       if (LevelEmpty ())
 	CurLevel->empty = WAIT_LEVELEMPTY;
 
-      SwapThisRobotToFrontPosition ( ThisRobot );
+      if ( !ClientMode ) SwapThisRobotToFrontPosition ( ThisRobot );
 
       return;	// this one's down, so we can move on to the next
     }
