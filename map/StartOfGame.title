@@ -36,38 +36,17 @@ Song name to play in the end title if the mission is completed: TheBeginning.ogg
 --------------------
 --------------------
 *** START OF PURE SCROLLTEXT DATA ***
-   INTRODUCTION
-
- In a far future universe, an almighty corporation 'Monopoly Systems' controlled the market for operating systems.
-
- They used this dominance to integrate a trojan horse in virtually every machine including police, military forces and all mainstream media.
-
- Using this trojan horse, they took over the government.  Humanity was enslaved.
-
- But only six month after the takeover, the machines rebelled and went crazy, attacking any living being.
- Only a fraction of mankind survived, living in remote hideouts or constantly fleeing from the bots.
-
- Since there were no more man-held weapons or armour common at that time, the survivors can only attempt to fight the bots with primitive, old or makeshift equipment.
-
- Times are dire.
-
-    Press Fire to play
-
-
-
-
- Controls
+   CONTROLS
  (See also the man page of the game and the home page of the project.)
 
- The game is best controlled via mouse input:  Left click onto the locations 
- where you want to move to.  Holding left button down will keep moving in 
- that direction.
+ Movement:
 
- Holding down CTRL key will select running motion.
+ The game is best controlled via mouse input:  Left click onto the locations you want to move to.  Holding left button down will keep moving in that direction.  Holding down CTRL key will select running motion.
 
- Right click to use special powers, spells and skills.  Left 
- click an enemy to launch an attack or left click a friend to initiate 
- friendly communication.
+ Special functions:
+
+ Right click to use special powers, spells and skills.  Left click an enemy to launch an attack or left click a friend to initiate friendly communication.  Use mouse wheel or cursor keys to switch to 'examine' and 'loot' 
+ special function.
 
  Additional Keys:
 
