@@ -522,6 +522,16 @@ update_all_primary_stats ( int PlayerNum )
     AddInfluencerItemAttributeBonus( & Me [ PlayerNum ] . special_item );
     AddInfluencerItemAttributeBonus( & Me [ PlayerNum ] . aux1_item );
     AddInfluencerItemAttributeBonus( & Me [ PlayerNum ] . aux2_item );
+
+    //--------------------
+    // Maybe there is some boost from a potion or magic spell going on right
+    // now...
+    //
+    if ( Me [ 0 ] . dexterity_bonus_end_date > Me [ 0 ] . current_game_date )
+	Me [ 0 ] . Dexterity += Me [ 0 ] . current_dexterity_bonus ;
+    if ( Me [ 0 ] . power_bonus_end_date > Me [ 0 ] . current_game_date )
+	Me [ 0 ] . Strength += Me [ 0 ] . current_power_bonus ;
+
 }; // void update_all_primary_stats ( int PlayerNum )
 
 /* ----------------------------------------------------------------------

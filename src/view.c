@@ -128,6 +128,112 @@ enum
 };
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+blit_tux_status_flags ( void )
+{
+    static int first_call = TRUE ;
+    int i;
+    static iso_image power_flags [ 16 ] ;
+    static iso_image dexterity_flags [ 16 ] ;
+    int target_time;
+    char constructed_filename[2000];
+    char* fpath;
+
+    //--------------------
+    // On the first function call ever, we load the surfaces for the
+    // flags into memory.
+    //
+    if ( first_call )
+    {
+	for ( i = 0 ; i < 16 ; i ++ )
+	{
+	    sprintf ( constructed_filename , "tux_flags/flag_power_%04d.png" , i + 1 );
+	    fpath = find_file ( constructed_filename , GRAPHICS_DIR, FALSE );
+	    get_iso_image_from_file_and_path ( fpath , & ( power_flags [ i ] ) , TRUE ) ;
+	    if ( power_flags [ i ] . surface == NULL ) 
+	    {
+		fprintf ( stderr , "\nFull path used: %s." , fpath );
+		GiveStandardErrorMessage ( __FUNCTION__ , "\
+Error loading flag image.",
+					   PLEASE_INFORM, IS_FATAL );
+	    }
+
+	    if ( use_open_gl )
+	    {
+		DebugPrintf ( 2 , "\nTexture made from flag surface..." );
+		make_texture_out_of_surface ( & ( power_flags [ i ] ) ) ;
+	    }
+	}	
+
+	for ( i = 0 ; i < 16 ; i ++ )
+	{
+	    sprintf ( constructed_filename , "tux_flags/flag_dexterity_%04d.png" , i + 1 );
+	    fpath = find_file ( constructed_filename , GRAPHICS_DIR, FALSE );
+	    get_iso_image_from_file_and_path ( fpath , & ( dexterity_flags [ i ] ) , TRUE ) ;
+	    if ( dexterity_flags [ i ] . surface == NULL ) 
+	    {
+		fprintf ( stderr , "\nFull path used: %s." , fpath );
+		GiveStandardErrorMessage ( __FUNCTION__ , "\
+Error loading flag image.",
+					   PLEASE_INFORM, IS_FATAL );
+	    }
+
+	    if ( use_open_gl )
+	    {
+		DebugPrintf ( 2 , "\nTexture made from flag surface..." );
+		make_texture_out_of_surface ( & ( dexterity_flags [ i ] ) ) ;
+	    }
+	}	
+
+	first_call = FALSE ;
+    }
+
+    //--------------------
+    // We can now blit the flags...
+    //
+    target_time = ( (int) (Me [ 0 ] . current_game_date * 10 ) ) % 16 ;
+    if ( target_time < 0 ) target_time = 0 ;
+    if ( target_time >= 16 ) target_time = 0 ;
+
+    if ( Me [ 0 ] . power_bonus_end_date > Me [ 0 ] . current_game_date )
+    {
+	if ( use_open_gl )
+	{
+	    blit_open_gl_texture_to_map_position ( power_flags [ target_time ] , 
+						   Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , 
+						   1.0 , 1.0 , 1.0 ,
+						   FALSE , FALSE );
+	}
+	else
+	{
+	    blit_iso_image_to_map_position ( power_flags [ target_time ] , 
+					     Me [ 0 ] . pos . x , Me [ 0 ] . pos . y );
+	}
+    }
+    else if ( Me [ 0 ] . dexterity_bonus_end_date > Me [ 0 ] . current_game_date )
+    {
+	if ( use_open_gl )
+	{
+	    blit_open_gl_texture_to_map_position ( dexterity_flags [ target_time ] , 
+						   Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , 
+						   1.0 , 1.0 , 1.0 ,
+						   FALSE , FALSE );
+	}
+	else
+	{
+	    blit_iso_image_to_map_position ( dexterity_flags [ target_time ] , 
+					     Me [ 0 ] . pos . x , Me [ 0 ] . pos . y );
+	}
+    }
+
+
+
+}; // void blit_tux_status_flags ( void )
+
+/* ----------------------------------------------------------------------
  * This function should display the currently assigned/unassigned mission
  * and all that directly over the combat screen without interrupting the
  * game in any other way.
@@ -3297,6 +3403,12 @@ blit_tux ( int x , int y , int player_num )
 	DisplayText( Me [ player_num ] . TextToBeDisplayed , UserCenter_x + 21 ,
 		     UserCenter_y - 32 , &Text_Rect );
     }
+
+    //--------------------
+    // Maybe there are some status flags active associated with
+    // the Tux...
+    //
+    blit_tux_status_flags ( );
     
     DebugPrintf (2, "\nvoid blit_tux(void): enf of function reached.");
 

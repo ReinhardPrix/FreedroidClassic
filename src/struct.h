@@ -549,6 +549,10 @@ typedef struct
 
     float current_game_date;      // seconds since game start, will be printed as a different 'date'
                                   // inside the game, like 14:23 is afternoon
+    int current_power_bonus;
+    float power_bonus_end_date;
+    int current_dexterity_bonus;
+    float dexterity_bonus_end_date;
 
     finepoint speed;		  // the current speed of the druid 
     gps pos;		          // current position in the whole ship 

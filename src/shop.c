@@ -247,6 +247,9 @@ AssembleItemListForTradeCharacter ( item* ListToBeFilled , int ShopCharacterCode
 	ListPointer->type = ITEM_FULL_MANA_POTION; ListPointer++;
 	ListPointer->type = ITEM_RUNNING_POWER_POTION; ListPointer++;
 
+	ListPointer->type = ITEM_TEMP_STRENGTH_POTION; ListPointer++;
+	ListPointer->type = ITEM_TEMP_DEXTERITY_POTION; ListPointer++;
+
 	ListPointer->type = ITEM_EATING_FORK; ListPointer++;
 	ListPointer->type = ITEM_EATING_PLATE; ListPointer++;
 	ListPointer->type = ITEM_DRINKING_MUG; ListPointer++;

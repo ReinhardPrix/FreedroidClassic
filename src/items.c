@@ -1626,6 +1626,16 @@ ApplyItem( item* CurItem )
 	Me [ 0 ] . running_power = Me [ 0 ] . max_running_power;
 	Me [ 0 ] . running_must_rest = FALSE ;
     }
+    else if ( CurItem->type == ITEM_TEMP_STRENGTH_POTION )
+    {
+	Me [ 0 ] . current_power_bonus = 30 ;
+	Me [ 0 ] . power_bonus_end_date = Me [ 0 ] . current_game_date + 2.0 * 60 ; 
+    }
+    else if ( CurItem->type == ITEM_TEMP_DEXTERITY_POTION )
+    {
+	Me [ 0 ] . current_dexterity_bonus = 30 ;
+	Me [ 0 ] . dexterity_bonus_end_date = Me [ 0 ] . current_game_date + 2.0 * 60 ; 
+    }
     else if ( CurItem->type == ITEM_MAP_MAKER_SIMPLE )
     {
 	Me [ 0 ] . map_maker_is_present = TRUE ;

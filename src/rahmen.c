@@ -214,6 +214,16 @@ exist really (i.e. has a type = (-1) ).",
 		strcat( ItemDescText , linebuf );
 		break;
 		
+	    case ITEM_TEMP_STRENGTH_POTION:
+		sprintf( linebuf , "Temporary Boost to Strength\n" );
+		strcat( ItemDescText , linebuf );
+		break;
+		
+	    case ITEM_TEMP_DEXTERITY_POTION:
+		sprintf( linebuf , "Temporary Boost to Dexterity\n" );
+		strcat( ItemDescText , linebuf );
+		break;
+		
 	    case ITEM_MAP_MAKER_SIMPLE:
 		sprintf( linebuf , "To implant the automap device\n" );
 		strcat( ItemDescText , linebuf );
