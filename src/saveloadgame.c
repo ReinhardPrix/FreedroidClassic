@@ -377,8 +377,10 @@ The game however could NOT be saved.\n\
       if ( AllBullets[ i ].angle_change_rate != 0 ) DeleteBullet( i , FALSE );
     }
 
+  Switch_Background_Music_To( curShip.AllLevels[ Me[0].pos.z ]->Background_Song_Name );
 
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): end of function reached.");
+
   return OK;
 }; // int LoadGame ( void ) 
 

@@ -242,7 +242,7 @@ But to ensure smooth gameplay even with missing sound files, there is an option\
 to have freedroid either ignore the missing dialog sound samples or to terminate\n\
 on encountering a missing sound sample.\n\
 This option is set to " 
-	       , SoundSampleFileName );
+	       , fpath );
 
       if ( GameConfig.terminate_on_missing_speech_sample )
 	{
@@ -453,15 +453,15 @@ Sorry...\n\
       strcpy ( Temp_Filename , "effects/" );
       strcat ( Temp_Filename , SoundSampleFilenames[ i ] );
       fpath = find_file ( Temp_Filename , SOUND_DIR, FALSE);
-      Loaded_WAV_Files[ i ] = Mix_LoadWAV(fpath);
-      if ( Loaded_WAV_Files[i] == NULL )
+      Loaded_WAV_Files [ i ] = Mix_LoadWAV ( fpath ) ;
+      if ( Loaded_WAV_Files [ i ] == NULL )
 	{
 	  fprintf (stderr,
 		   "\n\
 \n\
 ----------------------------------------------------------------------\n\
 Freedroid has encountered a problem:\n\
-The a SDL MIXER WAS UNABLE TO LOAD A CERTAIN SOUND EFFECT FILE INTO MEMORY.\n\
+The SDL MIXER WAS UNABLE TO LOAD A CERTAIN SOUND EFFECT FILE INTO MEMORY.\n\
 \n\
 The name of the problematic file is:\n\
 %s \n\
@@ -476,7 +476,7 @@ not complain any more.  But for now Freedroid will terminate to draw attention \
 to the sound problem it could not resolve.\n\
 Sorry...\n\
 ----------------------------------------------------------------------\n\
-\n" , SoundSampleFilenames[ i ]);
+\n" , fpath );
 	  Terminate (ERR);
 	} // if ( !Loaded_WAV...
       else
@@ -519,7 +519,7 @@ not complain any more.  But for now Freedroid will terminate to draw attention \
 to the sound problem it could not resolve.\n\
 Sorry...\n\
 ----------------------------------------------------------------------\n\
-\n" , MOD_Music_SampleFilenames[ i ] , Mix_GetError() );
+\n" , fpath , Mix_GetError() );
 	  Terminate (ERR);
 	} // if ( !Loaded_MOD...
       else

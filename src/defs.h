@@ -226,7 +226,7 @@ enum
 #endif
 
 #define GRAPHICS_DIR		"graphics/"
-#define SOUND_DIR		"sound/"
+#define SOUND_DIR		"sounds/"
 #define MAP_DIR			"map/"
 
 #define NE_DROID_BLOCK_FILE	"droids.png"

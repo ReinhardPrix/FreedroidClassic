@@ -872,6 +872,7 @@ enum
   { 
     SAVE_GAME_POSITION=1,
     // SINGLE_PLAYER_POSITION, 
+    RESUME_GAME_POSITION,
     OPTIONS_POSITION, 
     SET_THEME,
     LEVEL_EDITOR_POSITION, 
@@ -910,15 +911,13 @@ enum
       else
 	strcat (theme_string, "unknown");
 
-      MenuTexts[1]="Single Player";
-
       MenuTexts[0]="Save Game";
-      MenuTexts[1]="Options";
-      MenuTexts[2]=theme_string;
-      MenuTexts[3]="Level Editor";
-      MenuTexts[4]="Load Game";
-      MenuTexts[5]="Quit Game";
-      MenuTexts[6]="";
+      MenuTexts[1]="Resume Game";
+      MenuTexts[2]="Options";
+      MenuTexts[3]=theme_string;
+      MenuTexts[4]="Level Editor";
+      MenuTexts[5]="Load Game";
+      MenuTexts[6]="Quit Game";
       MenuTexts[7]="";
       MenuTexts[8]="";
       MenuTexts[9]="";
@@ -927,7 +926,8 @@ enum
 
       switch (MenuPosition) 
 	{
-	case (-1):
+	case ( -1 ) :
+	case ( RESUME_GAME_POSITION ) :
 	  Weiter=!Weiter;
 	  break;
 	  /*

@@ -1660,7 +1660,8 @@ AnimateEnemys (void)
     {
       /* ignore enemys that are dead or on other levels or dummys */
       // if (AllEnemys[i].type == DEBUG_ENEMY) continue;
-      if (AllEnemys[i].pos.z != CurLevel->levelnum)
+      // if (AllEnemys[i].pos.z != CurLevel->levelnum)
+      if ( AllEnemys[i].pos.z != Me [ 0 ] . pos . z )
 	continue;
       if (AllEnemys[i].Status == OUT)
 	{
