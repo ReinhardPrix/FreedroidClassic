@@ -420,7 +420,7 @@ void Title(void)
 #endif
 
   // LadeLBMBild(TITELBILD1,RealScreen,FALSE);	/* Titelbild laden */
-  Load_PCX_Image( TITELBILD1_PCX , RealScreen , FALSE );	/* Titelbild laden */
+  Load_PCX_Image( TITELBILD1_PCX , RealScreen , TRUE );	/* Titelbild laden */
 
   while (!SpacePressed()) JoystickControl();
 	

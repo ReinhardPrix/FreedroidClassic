@@ -27,6 +27,7 @@
  * Desc:  all functions dealing with sound are contained in this file.
  *
  *----------------------------------------------------------------------*/
+
 #include <config.h>
 
 #ifndef _sound_c
@@ -46,25 +47,25 @@
 
 #include "defs.h"
 
+
 // Leave the following lines in.  They are for the yiff sound server!!
 #if HAVE_LIBY2
 #include <Y2/Y.h>         //  Basic Y types and constants. 
 #include <Y2/Ylib.h>      //  YLib functions and structs. 
 #endif 
+
 /* Change this to the address and port of the Y server you want
  * to connect to. Note that 127.0.0.1 is a symbolic address
  * meaning `localhost'.
  */
 #define CON_ARG             "127.0.0.1:9433"
-
 // Thanks a lot for leaving the above lines in.  They are for the yiff sound server!!
+
 
 #include "struct.h"
 #include "global.h"
 #include "proto.h"
 
-
-// unsigned char* data;
 
 int handle = -1;
 int setting = 0x000C000D; // 12 fragments size 8kb
@@ -75,10 +76,6 @@ int rate = 8000;
 char BlastSoundSampleFilename[]="/../sound/BlastSound1.wav";
 char CollisionSoundSampleFilename[]="/../sound/CollisionSound1.wav";
 char FireSoundSampleFilename[]="/../sound/FireSound1.wav";
-
-// char BlastSoundSampleFilename[]="/sound/BlastSound1.wav";
-// char CollisionSoundSampleFilename[]="/sound/CollisionSound1.wav";
-// char FireSoundSampleFilename[]="/sound/FireSound1.wav";
 // char BackgroundMusicSampleFilename[]="/../sound/BackgroundMusic1.wav";
 char* ExpandedBlastSoundSampleFilename;
 char* ExpandedCollisionSoundSampleFilename;
@@ -125,120 +122,12 @@ void ExitProc() {
   }
 }
 
-typedef struct{
-  int car_att;
-  int car_dec;
-  int car_sus;
-  int car_rel;
-  int car_wel;
-  int car_tre;
-  int car_vib;
-  int car_ton;
-  int car_hue;
-  int car_zei;
-  int car_dae;
-  int car_amp;
-  
-  int mod_att;
-  int mod_dec;
-  int mod_sus;
-  int mod_rel;
-  int mod_wel;
-  int mod_tre;
-  int mod_vib;
-  int mod_ton;
-  int mod_hue;
-  int mod_zei;
-  int mod_dae;
-  int mod_amp;
-  
-  int freq;
-  int okt;
-  int verb;
-  int rueck;
-}tune;	
-
-tune GotIntoBlastTune={12,6,15, 1,0,FALSE,FALSE,FALSE,TRUE,11,0,0,
-		       12,2,15,15,0,FALSE,FALSE,FALSE,TRUE, 1,0,0,
-		       100,0,TRUE,6};
-
-tune MoveElevatorTune={15,3,8,3,0,TRUE,TRUE,TRUE,TRUE,11,0,0,
-                       8,8,8,8,0,TRUE,TRUE,TRUE,TRUE,1,0,0,
-                       500,1,0,4};
-
-tune OvertakeTune={5,4,12,4,3,FALSE,FALSE,FALSE,FALSE,9,0,0,
-		   13,3,8,2,2,TRUE,TRUE,TRUE,FALSE,1,10,0,
-		   300,1,0,0};
-
-tune CryTune1={3,4,6,3,3,TRUE,TRUE,FALSE,FALSE,3,0,0,
-	       5,5,7,9,3,TRUE,TRUE,FALSE,TRUE,11,0,0,
-	       400,0,TRUE,5};
-
-/* Neu ! */
-tune CryTune2={7,8,4,5,2,TRUE,TRUE,FALSE,FALSE,4,5,0,
-	       3,6,7,3,0,TRUE,TRUE,FALSE,FALSE,7,0,0,
-	       300,3,FALSE,5};
-
-/* Neu ! */
-tune StartOrLiftverlTune={13,4,8,5,2,TRUE,TRUE,FALSE,FALSE,9,0,0,
-			  2,5,7,3,1,TRUE,TRUE,FALSE,FALSE,4,0,0,
-			  400,2,FALSE,4};
-
-/* Neu ! Nr. 8 */								  
-tune TankenTune={7,4,8,5,1,TRUE,TRUE,FALSE,FALSE,2,0,0,
-		 13,5,7,3,0,TRUE,TRUE,FALSE,FALSE,5,0,0,
-		 400,2,TRUE,2};
-
-
-tune HitHimTune1={6,6,7,5,0,FALSE,FALSE,FALSE,FALSE,5,0,0,
-		  8,8,3,2,1,FALSE,FALSE,FALSE,FALSE,2,0,0,
-		  200,3,TRUE,7};
-
-tune AllSounds[]={ { 12,6,15, 1,0,FALSE,FALSE,FALSE,TRUE,11,0,0,
-		     12,2,15,15,0,FALSE,FALSE,FALSE,TRUE, 1,0,0,
-		     700,0,FALSE,6},
-		   {	15,6,15,1,0,FALSE,FALSE,FALSE,FALSE,11,0,0,
-			13,8,8,8,0,FALSE,FALSE,FALSE,FALSE, 1,0,0,
-			700,0,FALSE,4},
-                   {	15,4,15,0,0,FALSE,FALSE,FALSE,TRUE,11,0,3,
-			15,7,12,0,2,FALSE,FALSE,FALSE,TRUE, 1,0,3,
-			700,0,FALSE,2},
-		   { 9,2,4,15,0,FALSE,FALSE,FALSE,FALSE,1,0,0,
-		     15,6,15,0,0,FALSE,FALSE,FALSE,FALSE,2,0,0,
-		     700,0,FALSE,7},
-		   {	12,6,15, 1,0,FALSE,FALSE,FALSE,TRUE,11,0,0,
-         	       	12,2,15,15,0,FALSE,FALSE,FALSE,TRUE, 1,0,0,
-			100,0,TRUE,6},
-                   {	15,3,8,3,0,TRUE,TRUE,TRUE,TRUE,11,0,0,
-			8,8,8,8,0,TRUE,TRUE,TRUE,TRUE,1,0,0,
-			500,1,0,4},
-                   { 5,4,12,4,3,FALSE,FALSE,FALSE,FALSE,9,0,0,
-		     13,3,8,2,2,TRUE,TRUE,TRUE,FALSE,1,10,0,
-		     300,1,0,0},
-		   {	3,4,6,3,3,TRUE,TRUE,FALSE,FALSE,3,0,0,
-			5,5,7,9,3,TRUE,TRUE,FALSE,TRUE,11,0,0,
-			400,0,TRUE,5},
-		   { 7,8,4,5,2,TRUE,TRUE,FALSE,FALSE,4,5,0,
-		     3,6,7,3,0,TRUE,TRUE,FALSE,FALSE,7,0,0,
-		     300,3,FALSE,5},
-		   { 13,4,8,5,2,TRUE,TRUE,FALSE,FALSE,9,0,0,
-		     2,5,7,3,1,TRUE,TRUE,FALSE,FALSE,4,0,0,
-		     400,2,FALSE,4},
-		   { 7,4,8,5,1,TRUE,TRUE,FALSE,FALSE,2,0,0,
-		     13,5,7,3,0,TRUE,TRUE,FALSE,FALSE,5,0,0,
-		     400,2,TRUE,2},
-		   { 6,6,7,5,0,FALSE,FALSE,FALSE,FALSE,5,0,0,
-		     8,8,3,2,1,FALSE,FALSE,FALSE,FALSE,2,0,0,
-		     200,3,TRUE,7}
-};
-
-
 int i;
 unsigned char* ptr;
 unsigned char v = 128;
 int SampleLaenge;
 
-void MakeSound(tune* ThisTune);
+// void MakeSound(tune* ThisTune);
 long FragmentRoundUp(long FormerLength);
 
 long FragmentRoundUp(long FormerLength){
@@ -437,31 +326,8 @@ void StartSound(int Tune){
 void CrySound(void)
 {
 
-	MakeSound(&CryTune1);
+  //	MakeSound(&CryTune1);
 }
-
-
-/* **********************************************************************
-   Diese Funktion erzeugt einen Ton mittels FM-Soundgeneratoren.
-   Der Parameter ist ein Pointer auf eine Struktur, die die Tondaten
-   enth"alt.
-   ********************************************************************** */
-
-void MakeSound(tune* ThisTune){
-
-  printf("\nvoid MakeSound(tune* ThisTune):  Real function call confirmed.");
-
-  // printf("\n Attention!  Playback is about to start!");
-
-  // write(handle, data, 22050*4L);
-
-  //write(handle, data+0x2C, FragmentRoundUp(SampleLaenge));
-
-  // write(handle, data, FragmentRoundUp(SampleLaenge));
-
-  // printf("\n Attention!  Data have been written!");
-
-} // void MakeSound(tune* ThisTune)
 
 
 void Play_YIFF_BackgroundMusic(int Tune){
@@ -738,7 +604,7 @@ void GotHitSound(void){
 void GotIntoBlastSound(void){
 
   /* Sound "uber FM-Generatoren */
-  MakeSound(&GotIntoBlastTune);
+  // MakeSound(&GotIntoBlastTune);
   /* oder "uber MOD-Abspielroutine */
   return;
 } // void GotIntoBlastSound(void)
@@ -753,7 +619,7 @@ void RefreshSound(void){
 
   /* Sound "uber FM-Generatoren */
   //	MakeSound(&MoveElevatorTune);
-  MakeSound(&TankenTune);
+  // MakeSound(&TankenTune);
   /* oder "uber MOD-Abspielroutine */
   return;
 } // void RefreshSound(void)
@@ -768,7 +634,7 @@ void RefreshSound(void){
 void MoveElevatorSound(void){
 
   /* Sound "uber FM-Generatoren */
-  MakeSound(&MoveElevatorTune);
+  // MakeSound(&MoveElevatorTune);
   /* oder "uber MOD-Abspielroutine */
   return;
 } // void MoveElevatorSound(void)
@@ -783,7 +649,7 @@ void MoveElevatorSound(void){
 void EnterElevatorSound(void){
 
   /* Sound "uber FM-Generatoren */
-  MakeSound(&MoveElevatorTune);
+  // MakeSound(&MoveElevatorTune);
   /* oder "uber MOD-Abspielroutine */
   return;
 } // void EnterElevatorSound(void)
@@ -798,7 +664,7 @@ void EnterElevatorSound(void){
 void LeaveElevatorSound(void){
 
 	/* Sound "uber FM-Generatoren */
-	MakeSound(&MoveElevatorTune);
+  // MakeSound(&MoveElevatorTune);
 	/* oder "uber MOD-Abspielroutine */
 	return;
 }
@@ -828,70 +694,5 @@ void BounceSound(void){
   Play_YIFF_Server_Sound(COLLISIONSOUND);
   
 } // void BounceSound(void)
-
-/*@Function============================================================
-@Desc: InitModPlayer():		initialisiert die mod-play Funktionen
-
-@Ret: int ERR/OK
-@Int:
-* $Function----------------------------------------------------------*/
-int InitModPlayer(void)
-{
-  //	static AllreadyInitialized=0;
-  //	
-  //	if (!AllreadyInitialized) modinit(); else {
-  //		printf(" MODPLAYER ALLREADY INITIALIZED.\n");
-  //		getchar();
-  //		return OK;
-  //	}
-  //	AllreadyInitialized=1;
-  return OK;
-} // void InitModPlayer(void)
-
-/*@Function============================================================
-@Desc: PlayMod();
-
-@Ret: void
-@Int:
-* $Function----------------------------------------------------------*/
-void PlayMod(char *modfile)
-{
-  //	int mix, stat, pro, loop;
-  //	char ch;
-  //	char pasc_md[200];		/* Pascal has other strings than C !! */
-  //
-  //	if( !ModPlayerOn ) return;
-  //	
-  //	mix = 10000;
-  //	pro = 0;
-  //	loop = 0;
-  //	
-  //	modvolume(255, 255, 255, 255);
-  //
-  //	pasc_md[0] = strlen(modfile);
-  //	strcpy(&(pasc_md[1]), modfile);
-  //	
-  //	modsetup(&stat, Device, mix, pro, loop, pasc_md);
-  //	if( stat != 0) printf("Mod: %s	stat: %d", pasc_md, stat);
-  //	
-  //	if( stat != 0 ) {
-  //		printf("\nModfile-error !!");
-  //		return;
-  //	}
-  //	
-  //	return;
-}
-
-/*@Function============================================================
-@Desc: StopModPlayer();		stoppt den Mod-Player
-
-@Ret: void
-@Int:
-* $Function----------------------------------------------------------*/
-void StopModPlayer(void)
-{
-  //	if( ModPlayerOn ) modstop();
-
-} /* StopModPlayer */
 
 #undef _sound_c
