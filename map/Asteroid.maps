@@ -155,8 +155,8 @@ ob_type=1 ob_x=60.00 ob_y=13.50 ob_na=-1
 ob_type=2 ob_x=59.50 ob_y=14.00 ob_na=-1 
 ob_type=2 ob_x=60.50 ob_y=14.00 ob_na=-1 
 ob_type=2 ob_x=76.50 ob_y=14.00 ob_na=-1 
-ob_type=21 ob_x=45.50 ob_y=14.50 ob_na=-1 
-ob_type=21 ob_x=47.50 ob_y=14.50 ob_na=-1 
+ob_type=23 ob_x=45.50 ob_y=14.50 ob_na=-1 
+ob_type=23 ob_x=47.50 ob_y=14.50 ob_na=-1 
 ob_type=1 ob_x=51.00 ob_y=14.50 ob_na=-1 
 ob_type=1 ob_x=59.00 ob_y=14.50 ob_na=-1 
 ob_type=2 ob_x=58.50 ob_y=15.00 ob_na=-1 
@@ -194,7 +194,7 @@ ob_type=1 ob_x=29.00 ob_y=16.50 ob_na=-1
 ob_type=1 ob_x=40.00 ob_y=16.50 ob_na=-1 
 ob_type=2 ob_x=45.50 ob_y=17.00 ob_na=-1 
 ob_type=2 ob_x=46.50 ob_y=17.00 ob_na=-1 
-ob_type=21 ob_x=47.50 ob_y=16.50 ob_na=-1 
+ob_type=23 ob_x=47.50 ob_y=16.50 ob_na=-1 
 ob_type=2 ob_x=49.50 ob_y=17.00 ob_na=-1 
 ob_type=1 ob_x=51.00 ob_y=16.50 ob_na=-1 
 ob_type=2 ob_x=50.50 ob_y=17.00 ob_na=-1 
@@ -204,7 +204,7 @@ ob_type=1 ob_x=63.00 ob_y=16.50 ob_na=-1
 ob_type=2 ob_x=63.50 ob_y=17.00 ob_na=-1 
 ob_type=1 ob_x=74.00 ob_y=16.50 ob_na=-1 
 ob_type=2 ob_x=73.50 ob_y=17.00 ob_na=-1 
-ob_type=19 ob_x=14.50 ob_y=17.50 ob_na=-1 
+ob_type=18 ob_x=14.50 ob_y=17.50 ob_na=-1 
 ob_type=1 ob_x=20.00 ob_y=17.50 ob_na=-1 
 ob_type=1 ob_x=24.00 ob_y=17.50 ob_na=-1 
 ob_type=1 ob_x=29.00 ob_y=17.50 ob_na=-1 
@@ -259,7 +259,7 @@ ob_type=2 ob_x=21.50 ob_y=20.00 ob_na=-1
 ob_type=2 ob_x=22.50 ob_y=20.00 ob_na=-1 
 ob_type=1 ob_x=24.00 ob_y=19.50 ob_na=-1 
 ob_type=2 ob_x=23.50 ob_y=20.00 ob_na=-1 
-ob_type=21 ob_x=24.50 ob_y=19.50 ob_na=-1 
+ob_type=23 ob_x=24.50 ob_y=19.50 ob_na=-1 
 ob_type=49 ob_x=27.50 ob_y=19.50 ob_na=-1 
 ob_type=1 ob_x=44.00 ob_y=19.50 ob_na=-1 
 ob_type=1 ob_x=48.00 ob_y=19.50 ob_na=-1 
@@ -277,10 +277,10 @@ ob_type=1 ob_x=55.00 ob_y=20.50 ob_na=-1
 ob_type=1 ob_x=57.00 ob_y=20.50 ob_na=-1 
 ob_type=1 ob_x=65.00 ob_y=20.50 ob_na=-1 
 ob_type=1 ob_x=72.00 ob_y=20.50 ob_na=-1 
-ob_type=19 ob_x=13.50 ob_y=21.50 ob_na=-1 
+ob_type=18 ob_x=13.50 ob_y=21.50 ob_na=-1 
 ob_type=11 ob_x=16.00 ob_y=21.50 ob_na=-1 
 ob_type=11 ob_x=44.00 ob_y=21.50 ob_na=-1 
-ob_type=15 ob_x=48.00 ob_y=21.50 ob_na=-1 
+ob_type=11 ob_x=48.00 ob_y=21.50 ob_na=-1 
 ob_type=44 ob_x=53.75 ob_y=21.50 ob_na=-1 
 ob_type=1 ob_x=55.00 ob_y=21.50 ob_na=-1 
 ob_type=1 ob_x=57.00 ob_y=21.50 ob_na=-1 
@@ -364,7 +364,7 @@ ob_type=2 ob_x=19.50 ob_y=27.00 ob_na=-1
 ob_type=2 ob_x=20.50 ob_y=27.00 ob_na=-1 
 ob_type=1 ob_x=25.00 ob_y=26.50 ob_na=-1 
 ob_type=46 ob_x=28.25 ob_y=26.50 ob_na=-1 
-ob_type=21 ob_x=29.50 ob_y=26.50 ob_na=-1 
+ob_type=23 ob_x=29.50 ob_y=26.50 ob_na=-1 
 ob_type=44 ob_x=30.75 ob_y=26.50 ob_na=-1 
 ob_type=1 ob_x=35.00 ob_y=26.50 ob_na=-1 
 ob_type=2 ob_x=35.50 ob_y=27.00 ob_na=-1 
@@ -409,8 +409,8 @@ ob_type=11 ob_x=21.00 ob_y=29.50 ob_na=-1
 ob_type=11 ob_x=24.00 ob_y=29.50 ob_na=-1 
 ob_type=1 ob_x=43.00 ob_y=29.50 ob_na=-1 
 ob_type=1 ob_x=50.00 ob_y=29.50 ob_na=-1 
-ob_type=21 ob_x=50.50 ob_y=29.50 ob_na=-1 
-ob_type=21 ob_x=51.50 ob_y=29.50 ob_na=-1 
+ob_type=23 ob_x=50.50 ob_y=29.50 ob_na=-1 
+ob_type=23 ob_x=51.50 ob_y=29.50 ob_na=-1 
 ob_type=1 ob_x=53.00 ob_y=29.50 ob_na=-1 
 ob_type=1 ob_x=57.00 ob_y=29.50 ob_na=-1 
 ob_type=1 ob_x=65.00 ob_y=29.50 ob_na=-1 
@@ -491,7 +491,7 @@ ob_type=1 ob_x=31.00 ob_y=32.50 ob_na=-1
 ob_type=2 ob_x=30.50 ob_y=33.00 ob_na=-1 
 ob_type=1 ob_x=35.00 ob_y=32.50 ob_na=-1 
 ob_type=1 ob_x=40.00 ob_y=32.50 ob_na=-1 
-ob_type=19 ob_x=40.50 ob_y=32.50 ob_na=-1 
+ob_type=18 ob_x=40.50 ob_y=32.50 ob_na=-1 
 ob_type=1 ob_x=42.00 ob_y=32.50 ob_na=-1 
 ob_type=1 ob_x=57.00 ob_y=32.50 ob_na=-1 
 ob_type=1 ob_x=14.00 ob_y=33.50 ob_na=-1 
@@ -510,7 +510,7 @@ ob_type=2 ob_x=55.50 ob_y=34.00 ob_na=-1
 ob_type=1 ob_x=57.00 ob_y=33.50 ob_na=-1 
 ob_type=2 ob_x=56.50 ob_y=34.00 ob_na=-1 
 ob_type=1 ob_x=14.00 ob_y=34.50 ob_na=-1 
-ob_type=19 ob_x=15.50 ob_y=34.50 ob_na=-1 
+ob_type=18 ob_x=15.50 ob_y=34.50 ob_na=-1 
 ob_type=11 ob_x=18.00 ob_y=34.50 ob_na=-1 
 ob_type=1 ob_x=35.00 ob_y=34.50 ob_na=-1 
 ob_type=1 ob_x=40.00 ob_y=34.50 ob_na=-1 
@@ -558,7 +558,7 @@ ob_type=2 ob_x=18.50 ob_y=38.00 ob_na=-1
 ob_type=2 ob_x=19.50 ob_y=38.00 ob_na=-1 
 ob_type=2 ob_x=20.50 ob_y=38.00 ob_na=-1 
 ob_type=11 ob_x=45.00 ob_y=37.50 ob_na=-1 
-ob_type=19 ob_x=46.50 ob_y=37.50 ob_na=-1 
+ob_type=18 ob_x=46.50 ob_y=37.50 ob_na=-1 
 ob_type=1 ob_x=49.00 ob_y=37.50 ob_na=-1 
 ob_type=1 ob_x=53.00 ob_y=37.50 ob_na=-1 
 ob_type=1 ob_x=21.00 ob_y=38.50 ob_na=-1 
@@ -627,11 +627,11 @@ ob_type=29 ob_x=28.75 ob_y=42.50 ob_na=-1
 ob_type=1 ob_x=30.00 ob_y=42.50 ob_na=-1 
 ob_type=1 ob_x=34.00 ob_y=42.50 ob_na=-1 
 ob_type=11 ob_x=43.00 ob_y=42.50 ob_na=-1 
-ob_type=21 ob_x=44.50 ob_y=42.50 ob_na=-1 
+ob_type=23 ob_x=44.50 ob_y=42.50 ob_na=-1 
 ob_type=1 ob_x=46.00 ob_y=42.50 ob_na=-1 
 ob_type=1 ob_x=53.00 ob_y=42.50 ob_na=-1 
 ob_type=1 ob_x=18.00 ob_y=43.50 ob_na=-1 
-ob_type=21 ob_x=18.50 ob_y=43.50 ob_na=-1 
+ob_type=23 ob_x=18.50 ob_y=43.50 ob_na=-1 
 ob_type=11 ob_x=21.00 ob_y=43.50 ob_na=-1 
 ob_type=44 ob_x=28.75 ob_y=43.50 ob_na=-1 
 ob_type=1 ob_x=30.00 ob_y=43.50 ob_na=-1 
@@ -776,12 +776,12 @@ ob_type=6 ob_x=24.50 ob_y=52.00 ob_na=-1
 ob_type=1 ob_x=26.00 ob_y=51.50 ob_na=-1 
 ob_type=2 ob_x=25.50 ob_y=52.00 ob_na=-1 
 ob_type=1 ob_x=42.00 ob_y=51.50 ob_na=-1 
-ob_type=21 ob_x=42.50 ob_y=51.50 ob_na=-1 
+ob_type=23 ob_x=42.50 ob_y=51.50 ob_na=-1 
 ob_type=11 ob_x=45.00 ob_y=51.50 ob_na=-1 
 ob_type=1 ob_x=53.00 ob_y=51.50 ob_na=-1 
 ob_type=1 ob_x=66.00 ob_y=51.50 ob_na=-1 
 ob_type=1 ob_x=42.00 ob_y=52.50 ob_na=-1 
-ob_type=21 ob_x=42.50 ob_y=52.50 ob_na=-1 
+ob_type=23 ob_x=42.50 ob_y=52.50 ob_na=-1 
 ob_type=11 ob_x=45.00 ob_y=52.50 ob_na=-1 
 ob_type=1 ob_x=53.00 ob_y=52.50 ob_na=-1 
 ob_type=1 ob_x=66.00 ob_y=52.50 ob_na=-1 
@@ -800,19 +800,11 @@ ob_type=11 ob_x=42.00 ob_y=55.50 ob_na=-1
 ob_type=11 ob_x=45.00 ob_y=55.50 ob_na=-1 
 ob_type=1 ob_x=53.00 ob_y=55.50 ob_na=-1 
 ob_type=1 ob_x=66.00 ob_y=55.50 ob_na=-1 
-ob_type=2 ob_x=13.50 ob_y=57.00 ob_na=-1 
-ob_type=2 ob_x=14.50 ob_y=57.00 ob_na=-1 
-ob_type=2 ob_x=15.50 ob_y=57.00 ob_na=-1 
-ob_type=2 ob_x=16.50 ob_y=57.00 ob_na=-1 
-ob_type=2 ob_x=17.50 ob_y=57.00 ob_na=-1 
-ob_type=2 ob_x=18.50 ob_y=57.00 ob_na=-1 
-ob_type=2 ob_x=19.50 ob_y=57.00 ob_na=-1 
 ob_type=11 ob_x=42.00 ob_y=56.50 ob_na=-1 
 ob_type=11 ob_x=45.00 ob_y=56.50 ob_na=-1 
 ob_type=1 ob_x=53.00 ob_y=56.50 ob_na=-1 
 ob_type=1 ob_x=66.00 ob_y=56.50 ob_na=-1 
-ob_type=21 ob_x=13.50 ob_y=57.50 ob_na=-1 
-ob_type=1 ob_x=20.00 ob_y=57.50 ob_na=-1 
+ob_type=23 ob_x=13.50 ob_y=57.50 ob_na=-1 
 ob_type=1 ob_x=42.00 ob_y=57.50 ob_na=-1 
 ob_type=2 ob_x=42.50 ob_y=58.00 ob_na=-1 
 ob_type=2 ob_x=43.50 ob_y=58.00 ob_na=-1 
@@ -820,20 +812,17 @@ ob_type=1 ob_x=45.00 ob_y=57.50 ob_na=-1
 ob_type=2 ob_x=44.50 ob_y=58.00 ob_na=-1 
 ob_type=1 ob_x=53.00 ob_y=57.50 ob_na=-1 
 ob_type=1 ob_x=66.00 ob_y=57.50 ob_na=-1 
-ob_type=1 ob_x=20.00 ob_y=58.50 ob_na=-1 
 ob_type=1 ob_x=42.00 ob_y=58.50 ob_na=-1 
-ob_type=21 ob_x=42.50 ob_y=58.50 ob_na=-1 
+ob_type=23 ob_x=42.50 ob_y=58.50 ob_na=-1 
 ob_type=11 ob_x=45.00 ob_y=58.50 ob_na=-1 
 ob_type=1 ob_x=53.00 ob_y=58.50 ob_na=-1 
 ob_type=1 ob_x=66.00 ob_y=58.50 ob_na=-1 
-ob_type=11 ob_x=20.00 ob_y=59.50 ob_na=-1 
 ob_type=49 ob_x=22.50 ob_y=59.50 ob_na=-1 
 ob_type=1 ob_x=42.00 ob_y=59.50 ob_na=-1 
 ob_type=11 ob_x=45.00 ob_y=59.50 ob_na=-1 
 ob_type=1 ob_x=53.00 ob_y=59.50 ob_na=-1 
 ob_type=1 ob_x=66.00 ob_y=59.50 ob_na=-1 
 ob_type=29 ob_x=13.25 ob_y=60.50 ob_na=-1 
-ob_type=1 ob_x=20.00 ob_y=60.50 ob_na=-1 
 ob_type=1 ob_x=42.00 ob_y=60.50 ob_na=-1 
 ob_type=2 ob_x=42.50 ob_y=61.00 ob_na=-1 
 ob_type=2 ob_x=43.50 ob_y=61.00 ob_na=-1 
@@ -848,24 +837,13 @@ ob_type=2 ob_x=51.50 ob_y=61.00 ob_na=-1
 ob_type=1 ob_x=53.00 ob_y=60.50 ob_na=-1 
 ob_type=2 ob_x=52.50 ob_y=61.00 ob_na=-1 
 ob_type=1 ob_x=66.00 ob_y=60.50 ob_na=-1 
-ob_type=2 ob_x=13.50 ob_y=62.00 ob_na=-1 
-ob_type=2 ob_x=14.50 ob_y=62.00 ob_na=-1 
-ob_type=2 ob_x=15.50 ob_y=62.00 ob_na=-1 
-ob_type=2 ob_x=16.50 ob_y=62.00 ob_na=-1 
-ob_type=2 ob_x=17.50 ob_y=62.00 ob_na=-1 
-ob_type=2 ob_x=18.50 ob_y=62.00 ob_na=-1 
-ob_type=1 ob_x=20.00 ob_y=61.50 ob_na=-1 
-ob_type=2 ob_x=19.50 ob_y=62.00 ob_na=-1 
 ob_type=1 ob_x=53.00 ob_y=61.50 ob_na=-1 
 ob_type=1 ob_x=66.00 ob_y=61.50 ob_na=-1 
-ob_type=21 ob_x=13.50 ob_y=62.50 ob_na=-1 
-ob_type=1 ob_x=20.00 ob_y=62.50 ob_na=-1 
+ob_type=23 ob_x=13.50 ob_y=62.50 ob_na=-1 
 ob_type=1 ob_x=53.00 ob_y=62.50 ob_na=-1 
 ob_type=1 ob_x=66.00 ob_y=62.50 ob_na=-1 
-ob_type=1 ob_x=20.00 ob_y=63.50 ob_na=-1 
 ob_type=1 ob_x=53.00 ob_y=63.50 ob_na=-1 
 ob_type=1 ob_x=66.00 ob_y=63.50 ob_na=-1 
-ob_type=11 ob_x=20.00 ob_y=64.50 ob_na=-1 
 ob_type=1 ob_x=53.00 ob_y=64.50 ob_na=-1 
 ob_type=2 ob_x=53.50 ob_y=65.00 ob_na=-1 
 ob_type=2 ob_x=54.50 ob_y=65.00 ob_na=-1 
@@ -895,24 +873,10 @@ ob_type=2 ob_x=76.50 ob_y=65.00 ob_na=-1
 ob_type=54 ob_x=13.50 ob_y=65.50 ob_na=-1 
 ob_type=49 ob_x=14.50 ob_y=65.50 ob_na=-1 
 ob_type=28 ob_x=15.50 ob_y=65.75 ob_na=-1 
-ob_type=1 ob_x=20.00 ob_y=65.50 ob_na=-1 
-ob_type=2 ob_x=13.50 ob_y=67.00 ob_na=-1 
-ob_type=2 ob_x=14.50 ob_y=67.00 ob_na=-1 
-ob_type=2 ob_x=15.50 ob_y=67.00 ob_na=-1 
-ob_type=2 ob_x=16.50 ob_y=67.00 ob_na=-1 
-ob_type=2 ob_x=17.50 ob_y=67.00 ob_na=-1 
-ob_type=2 ob_x=18.50 ob_y=67.00 ob_na=-1 
-ob_type=1 ob_x=20.00 ob_y=66.50 ob_na=-1 
-ob_type=2 ob_x=19.50 ob_y=67.00 ob_na=-1 
-ob_type=21 ob_x=13.50 ob_y=67.50 ob_na=-1 
-ob_type=1 ob_x=20.00 ob_y=67.50 ob_na=-1 
-ob_type=11 ob_x=20.00 ob_y=68.50 ob_na=-1 
-ob_type=1 ob_x=20.00 ob_y=69.50 ob_na=-1 
-ob_type=1 ob_x=20.00 ob_y=70.50 ob_na=-1 
+ob_type=23 ob_x=13.50 ob_y=67.50 ob_na=-1 
 ob_type=54 ob_x=13.50 ob_y=71.50 ob_na=-1 
 ob_type=49 ob_x=14.50 ob_y=71.50 ob_na=-1 
 ob_type=28 ob_x=15.50 ob_y=71.75 ob_na=-1 
-ob_type=1 ob_x=20.00 ob_y=71.50 ob_na=-1 
 ob_type=2 ob_x=68.50 ob_y=72.00 ob_na=-1 
 ob_type=2 ob_x=69.50 ob_y=72.00 ob_na=-1 
 ob_type=2 ob_x=70.50 ob_y=72.00 ob_na=-1 
@@ -922,14 +886,6 @@ ob_type=2 ob_x=73.50 ob_y=72.00 ob_na=-1
 ob_type=2 ob_x=74.50 ob_y=72.00 ob_na=-1 
 ob_type=2 ob_x=75.50 ob_y=72.00 ob_na=-1 
 ob_type=2 ob_x=76.50 ob_y=72.00 ob_na=-1 
-ob_type=2 ob_x=13.50 ob_y=73.00 ob_na=-1 
-ob_type=2 ob_x=14.50 ob_y=73.00 ob_na=-1 
-ob_type=2 ob_x=15.50 ob_y=73.00 ob_na=-1 
-ob_type=2 ob_x=16.50 ob_y=73.00 ob_na=-1 
-ob_type=2 ob_x=17.50 ob_y=73.00 ob_na=-1 
-ob_type=2 ob_x=18.50 ob_y=73.00 ob_na=-1 
-ob_type=1 ob_x=20.00 ob_y=72.50 ob_na=-1 
-ob_type=2 ob_x=19.50 ob_y=73.00 ob_na=-1 
 ob_type=2 ob_x=29.50 ob_y=73.00 ob_na=-1 
 ob_type=2 ob_x=30.50 ob_y=73.00 ob_na=-1 
 ob_type=2 ob_x=31.50 ob_y=73.00 ob_na=-1 
@@ -946,19 +902,19 @@ ob_type=2 ob_x=41.50 ob_y=73.00 ob_na=-1
 ob_type=2 ob_x=42.50 ob_y=73.00 ob_na=-1 
 ob_type=2 ob_x=43.50 ob_y=73.00 ob_na=-1 
 ob_type=2 ob_x=44.50 ob_y=73.00 ob_na=-1 
-ob_type=6 ob_x=45.50 ob_y=73.00 ob_na=-1 
+ob_type=10 ob_x=45.50 ob_y=73.00 ob_na=-1 
 ob_type=2 ob_x=46.50 ob_y=73.00 ob_na=-1 
 ob_type=1 ob_x=68.00 ob_y=72.50 ob_na=-1 
-ob_type=19 ob_x=69.50 ob_y=72.50 ob_na=-1 
+ob_type=18 ob_x=69.50 ob_y=72.50 ob_na=-1 
 ob_type=1 ob_x=71.00 ob_y=72.50 ob_na=-1 
 ob_type=48 ob_x=73.50 ob_y=72.50 ob_na=-1 
 ob_type=49 ob_x=76.50 ob_y=72.50 ob_na=-1 
 ob_type=1 ob_x=29.00 ob_y=73.50 ob_na=-1 
-ob_type=21 ob_x=29.50 ob_y=73.50 ob_na=-1 
+ob_type=23 ob_x=29.50 ob_y=73.50 ob_na=-1 
 ob_type=1 ob_x=35.00 ob_y=73.50 ob_na=-1 
-ob_type=21 ob_x=35.50 ob_y=73.50 ob_na=-1 
+ob_type=23 ob_x=35.50 ob_y=73.50 ob_na=-1 
 ob_type=1 ob_x=41.00 ob_y=73.50 ob_na=-1 
-ob_type=21 ob_x=41.50 ob_y=73.50 ob_na=-1 
+ob_type=23 ob_x=41.50 ob_y=73.50 ob_na=-1 
 ob_type=1 ob_x=47.00 ob_y=73.50 ob_na=-1 
 ob_type=27 ob_x=68.00 ob_y=73.50 ob_na=1 
 ob_type=1 ob_x=71.00 ob_y=73.50 ob_na=-1 
@@ -982,7 +938,7 @@ ob_type=1 ob_x=35.00 ob_y=76.50 ob_na=-1
 ob_type=1 ob_x=41.00 ob_y=76.50 ob_na=-1 
 ob_type=1 ob_x=47.00 ob_y=76.50 ob_na=-1 
 ob_type=1 ob_x=68.00 ob_y=76.50 ob_na=-1 
-ob_type=19 ob_x=69.50 ob_y=76.50 ob_na=-1 
+ob_type=18 ob_x=69.50 ob_y=76.50 ob_na=-1 
 ob_type=1 ob_x=71.00 ob_y=76.50 ob_na=-1 
 ob_type=1 ob_x=30.98 ob_y=30.53 ob_na=-1 
 ob_type=1 ob_x=27.98 ob_y=32.53 ob_na=-1 
@@ -1026,7 +982,7 @@ ob_type=1 ob_x=19.98 ob_y=30.47 ob_na=-1
 ob_type=1 ob_x=16.01 ob_y=30.50 ob_na=-1 
 ob_type=72 ob_x=16.53 ob_y=30.38 ob_na=-1 
 ob_type=42 ob_x=18.59 ob_y=30.53 ob_na=-1 
-ob_type=21 ob_x=17.55 ob_y=30.64 ob_na=-1 
+ob_type=23 ob_x=17.55 ob_y=30.64 ob_na=-1 
 ob_type=80 ob_x=49.62 ob_y=17.23 ob_na=-1 
 ob_type=77 ob_x=49.66 ob_y=17.80 ob_na=-1 
 ob_type=76 ob_x=51.45 ob_y=16.25 ob_na=-1 
@@ -1050,8 +1006,6 @@ ob_type=94 ob_x=49.03 ob_y=57.82 ob_na=-1
 ob_type=94 ob_x=49.09 ob_y=54.06 ob_na=-1 
 ob_type=71 ob_x=42.44 ob_y=59.62 ob_na=-1 
 ob_type=99 ob_x=47.42 ob_y=76.13 ob_na=-1 
-ob_type=100 ob_x=16.47 ob_y=73.31 ob_na=-1 
-ob_type=100 ob_x=14.44 ob_y=73.32 ob_na=-1 
 ob_type=87 ob_x=35.97 ob_y=40.60 ob_na=-1 
 ob_type=79 ob_x=34.34 ob_y=42.69 ob_na=-1 
 ob_type=78 ob_x=35.12 ob_y=42.61 ob_na=-1 
@@ -1096,22 +1050,6 @@ ob_type=1 ob_x=13.00 ob_y=28.50 ob_na=-1
 ob_type=1 ob_x=13.00 ob_y=29.50 ob_na=-1 
 ob_type=1 ob_x=13.00 ob_y=30.50 ob_na=-1 
 ob_type=1 ob_x=13.00 ob_y=31.50 ob_na=-1 
-ob_type=1 ob_x=13.00 ob_y=57.50 ob_na=-1 
-ob_type=1 ob_x=13.00 ob_y=58.50 ob_na=-1 
-ob_type=1 ob_x=13.00 ob_y=59.50 ob_na=-1 
-ob_type=1 ob_x=13.00 ob_y=60.50 ob_na=-1 
-ob_type=1 ob_x=13.00 ob_y=61.50 ob_na=-1 
-ob_type=1 ob_x=13.00 ob_y=62.50 ob_na=-1 
-ob_type=1 ob_x=13.00 ob_y=63.50 ob_na=-1 
-ob_type=1 ob_x=13.00 ob_y=64.50 ob_na=-1 
-ob_type=1 ob_x=13.00 ob_y=65.50 ob_na=-1 
-ob_type=1 ob_x=13.00 ob_y=66.50 ob_na=-1 
-ob_type=1 ob_x=13.00 ob_y=67.50 ob_na=-1 
-ob_type=1 ob_x=13.00 ob_y=68.50 ob_na=-1 
-ob_type=1 ob_x=13.00 ob_y=69.50 ob_na=-1 
-ob_type=1 ob_x=13.00 ob_y=70.50 ob_na=-1 
-ob_type=1 ob_x=13.00 ob_y=71.50 ob_na=-1 
-ob_type=1 ob_x=13.00 ob_y=72.50 ob_na=-1 
 ob_type=2 ob_x=11.58 ob_y=22.03 ob_na=-1 
 ob_type=1 ob_x=5.00 ob_y=13.50 ob_na=-1 
 ob_type=1 ob_x=6.00 ob_y=13.50 ob_na=-1 
@@ -1670,7 +1608,7 @@ ob_type=2 ob_x=78.50 ob_y=65.00 ob_na=-1
 ob_type=2 ob_x=77.50 ob_y=72.00 ob_na=-1 
 ob_type=2 ob_x=78.50 ob_y=72.00 ob_na=-1 
 ob_type=1 ob_x=78.00 ob_y=72.50 ob_na=-1 
-ob_type=21 ob_x=78.50 ob_y=72.50 ob_na=-1 
+ob_type=23 ob_x=78.50 ob_y=72.50 ob_na=-1 
 ob_type=1 ob_x=78.00 ob_y=73.50 ob_na=-1 
 ob_type=1 ob_x=78.00 ob_y=74.50 ob_na=-1 
 ob_type=1 ob_x=78.00 ob_y=75.50 ob_na=-1 
@@ -2017,7 +1955,7 @@ ob_type=1 ob_x=45.00 ob_y=12.50 ob_na=-1
 ob_type=2 ob_x=45.50 ob_y=13.00 ob_na=-1 
 ob_type=1 ob_x=47.00 ob_y=12.50 ob_na=-1 
 ob_type=2 ob_x=46.50 ob_y=13.00 ob_na=-1 
-ob_type=22 ob_x=47.50 ob_y=12.50 ob_na=-1 
+ob_type=23 ob_x=47.50 ob_y=12.50 ob_na=-1 
 ob_type=1 ob_x=49.00 ob_y=12.50 ob_na=-1 
 ob_type=2 ob_x=49.50 ob_y=13.00 ob_na=-1 
 ob_type=1 ob_x=61.00 ob_y=12.50 ob_na=-1 
@@ -2264,7 +2202,7 @@ ob_type=1 ob_x=18.00 ob_y=7.50 ob_na=-1
 ob_type=1 ob_x=29.00 ob_y=7.50 ob_na=-1 
 ob_type=2 ob_x=34.50 ob_y=8.00 ob_na=-1 
 ob_type=2 ob_x=35.50 ob_y=8.00 ob_na=-1 
-ob_type=22 ob_x=36.50 ob_y=7.50 ob_na=-1 
+ob_type=23 ob_x=36.50 ob_y=7.50 ob_na=-1 
 ob_type=2 ob_x=38.50 ob_y=8.00 ob_na=-1 
 ob_type=1 ob_x=18.00 ob_y=8.50 ob_na=-1 
 ob_type=2 ob_x=18.50 ob_y=9.00 ob_na=-1 
@@ -2422,6 +2360,70 @@ ob_type=1 ob_x=84.00 ob_y=10.50 ob_na=-1
 ob_type=1 ob_x=85.00 ob_y=10.50 ob_na=-1 
 ob_type=1 ob_x=86.00 ob_y=10.50 ob_na=-1 
 ob_type=47 ob_x=82.50 ob_y=7.50 ob_na=-1 
+ob_type=119 ob_x=20.50 ob_y=73.50 ob_na=-1 
+ob_type=117 ob_x=20.50 ob_y=72.50 ob_na=-1 
+ob_type=117 ob_x=20.50 ob_y=71.50 ob_na=-1 
+ob_type=117 ob_x=20.50 ob_y=70.50 ob_na=-1 
+ob_type=117 ob_x=20.50 ob_y=69.50 ob_na=-1 
+ob_type=117 ob_x=20.50 ob_y=67.50 ob_na=-1 
+ob_type=117 ob_x=20.50 ob_y=65.50 ob_na=-1 
+ob_type=117 ob_x=20.50 ob_y=63.50 ob_na=-1 
+ob_type=117 ob_x=20.50 ob_y=62.50 ob_na=-1 
+ob_type=117 ob_x=20.50 ob_y=60.50 ob_na=-1 
+ob_type=117 ob_x=20.50 ob_y=58.50 ob_na=-1 
+ob_type=117 ob_x=20.50 ob_y=57.50 ob_na=-1 
+ob_type=118 ob_x=20.50 ob_y=56.50 ob_na=-1 
+ob_type=116 ob_x=19.50 ob_y=56.50 ob_na=-1 
+ob_type=116 ob_x=18.50 ob_y=56.50 ob_na=-1 
+ob_type=116 ob_x=17.50 ob_y=56.50 ob_na=-1 
+ob_type=116 ob_x=16.50 ob_y=56.50 ob_na=-1 
+ob_type=116 ob_x=15.50 ob_y=56.50 ob_na=-1 
+ob_type=116 ob_x=14.50 ob_y=56.50 ob_na=-1 
+ob_type=116 ob_x=13.50 ob_y=56.50 ob_na=-1 
+ob_type=120 ob_x=12.50 ob_y=56.50 ob_na=-1 
+ob_type=117 ob_x=12.50 ob_y=57.50 ob_na=-1 
+ob_type=117 ob_x=12.50 ob_y=58.50 ob_na=-1 
+ob_type=117 ob_x=12.50 ob_y=59.50 ob_na=-1 
+ob_type=117 ob_x=12.50 ob_y=60.50 ob_na=-1 
+ob_type=117 ob_x=12.50 ob_y=62.50 ob_na=-1 
+ob_type=117 ob_x=12.50 ob_y=63.50 ob_na=-1 
+ob_type=117 ob_x=12.50 ob_y=64.50 ob_na=-1 
+ob_type=117 ob_x=12.50 ob_y=65.50 ob_na=-1 
+ob_type=117 ob_x=12.50 ob_y=67.50 ob_na=-1 
+ob_type=117 ob_x=12.50 ob_y=68.50 ob_na=-1 
+ob_type=117 ob_x=12.50 ob_y=69.50 ob_na=-1 
+ob_type=117 ob_x=12.50 ob_y=70.50 ob_na=-1 
+ob_type=117 ob_x=12.50 ob_y=71.50 ob_na=-1 
+ob_type=117 ob_x=12.50 ob_y=72.50 ob_na=-1 
+ob_type=121 ob_x=12.50 ob_y=73.50 ob_na=-1 
+ob_type=116 ob_x=13.50 ob_y=73.50 ob_na=-1 
+ob_type=116 ob_x=14.50 ob_y=73.50 ob_na=-1 
+ob_type=116 ob_x=15.50 ob_y=73.50 ob_na=-1 
+ob_type=116 ob_x=16.50 ob_y=73.50 ob_na=-1 
+ob_type=116 ob_x=17.50 ob_y=73.50 ob_na=-1 
+ob_type=116 ob_x=18.50 ob_y=73.50 ob_na=-1 
+ob_type=116 ob_x=19.50 ob_y=73.50 ob_na=-1 
+ob_type=11 ob_x=20.50 ob_y=64.50 ob_na=-1 
+ob_type=11 ob_x=20.50 ob_y=68.50 ob_na=-1 
+ob_type=11 ob_x=20.50 ob_y=59.50 ob_na=-1 
+ob_type=123 ob_x=12.50 ob_y=66.50 ob_na=-1 
+ob_type=116 ob_x=13.50 ob_y=66.50 ob_na=-1 
+ob_type=116 ob_x=14.50 ob_y=66.50 ob_na=-1 
+ob_type=116 ob_x=15.50 ob_y=66.50 ob_na=-1 
+ob_type=116 ob_x=16.50 ob_y=66.50 ob_na=-1 
+ob_type=116 ob_x=17.50 ob_y=66.50 ob_na=-1 
+ob_type=116 ob_x=18.50 ob_y=66.50 ob_na=-1 
+ob_type=116 ob_x=19.50 ob_y=66.50 ob_na=-1 
+ob_type=125 ob_x=20.50 ob_y=66.50 ob_na=-1 
+ob_type=123 ob_x=12.50 ob_y=61.50 ob_na=-1 
+ob_type=116 ob_x=13.50 ob_y=61.50 ob_na=-1 
+ob_type=116 ob_x=14.50 ob_y=61.50 ob_na=-1 
+ob_type=116 ob_x=15.50 ob_y=61.50 ob_na=-1 
+ob_type=116 ob_x=16.50 ob_y=61.50 ob_na=-1 
+ob_type=116 ob_x=17.50 ob_y=61.50 ob_na=-1 
+ob_type=116 ob_x=18.50 ob_y=61.50 ob_na=-1 
+ob_type=116 ob_x=19.50 ob_y=61.50 ob_na=-1 
+ob_type=125 ob_x=20.50 ob_y=61.50 ob_na=-1 
 End of obstacle data
 Start of pure map label information for this level
 label.pos.x=48 label.pos.y=21 label.label_name="StoneStartGameSquare"
@@ -2462,6 +2464,7 @@ End of pure statement information for this level
 Start of pure items information for this level
 New item: type=19  X=16.326372  Y=62.438004  AC=2  DoDamage=0  ModifyDamage=0  MaxDur=11  CurDur=5.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 New item: type=39  X=30.116034  Y=74.320068  AC=0  DoDamage=2  ModifyDamage=3  MaxDur=80  CurDur=51.249691  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
+New item: type=11  X=22.000000  Y=3.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=18  CurDur=17.000000  Gold=0  Multiplicity=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 End of pure items information for this level
 Start of pure chest item information for this level
 End of pure chest item information for this level
@@ -2499,7 +2502,7 @@ Nr.= 29 x=  37 y=  46	 connections:   28  27  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 30 x=  59 y=  66	 connections:    8  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 31 x=  64 y=  79	 connections:   32  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 32 x=  66 y=  77	 connections:   31  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 33 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 33 x=  13 y=  68	 connections:   59  58  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 34 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 35 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 36 x=  43 y=  28	 connections:   37  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
@@ -2524,9 +2527,9 @@ Nr.= 54 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 55 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 56 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 57 x=  20 y=  68	 connections:   58  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 58 x=  18 y=  68	 connections:   57  59  60  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 59 x=  16 y=  70	 connections:   58  60  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 60 x=  13 y=  67	 connections:   59  58  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 58 x=  18 y=  68	 connections:   57  59  33  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 59 x=  16 y=  70	 connections:   58  33  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 60 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 61 x=  24 y=  40	 connections:   62  63  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 62 x=  27 y=  43	 connections:   65  61  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 63 x=  21 y=  43	 connections:   65  61  64  -1  -1  -1  -1  -1  -1  -1  -1  -1
@@ -8789,7 +8792,7 @@ ob_type=1 ob_x=35.00 ob_y=25.50 ob_na=-1
 ob_type=2 ob_x=34.50 ob_y=26.00 ob_na=-1 
 ob_type=1 ob_x=40.00 ob_y=25.50 ob_na=-1 
 ob_type=56 ob_x=42.50 ob_y=25.50 ob_na=-1 
-ob_type=22 ob_x=44.50 ob_y=25.50 ob_na=-1 
+ob_type=24 ob_x=44.50 ob_y=25.50 ob_na=-1 
 ob_type=57 ob_x=46.50 ob_y=25.50 ob_na=-1 
 ob_type=1 ob_x=50.00 ob_y=25.50 ob_na=-1 
 ob_type=2 ob_x=30.50 ob_y=27.00 ob_na=-1 
@@ -8802,8 +8805,8 @@ ob_type=1 ob_x=50.00 ob_y=26.50 ob_na=-1
 ob_type=1 ob_x=30.00 ob_y=27.50 ob_na=-1 
 ob_type=2 ob_x=29.50 ob_y=28.00 ob_na=-1 
 ob_type=1 ob_x=40.00 ob_y=27.50 ob_na=-1 
-ob_type=22 ob_x=42.50 ob_y=27.50 ob_na=-1 
-ob_type=22 ob_x=46.50 ob_y=27.50 ob_na=-1 
+ob_type=24 ob_x=42.50 ob_y=27.50 ob_na=-1 
+ob_type=24 ob_x=46.50 ob_y=27.50 ob_na=-1 
 ob_type=31 ob_x=48.75 ob_y=27.50 ob_na=-1 
 ob_type=1 ob_x=50.00 ob_y=27.50 ob_na=-1 
 ob_type=1 ob_x=29.00 ob_y=28.50 ob_na=-1 
@@ -8813,7 +8816,7 @@ ob_type=1 ob_x=50.00 ob_y=28.50 ob_na=-1
 ob_type=1 ob_x=29.00 ob_y=29.50 ob_na=-1 
 ob_type=1 ob_x=40.00 ob_y=29.50 ob_na=-1 
 ob_type=55 ob_x=42.50 ob_y=29.50 ob_na=-1 
-ob_type=22 ob_x=44.50 ob_y=29.50 ob_na=-1 
+ob_type=24 ob_x=44.50 ob_y=29.50 ob_na=-1 
 ob_type=58 ob_x=46.50 ob_y=29.50 ob_na=-1 
 ob_type=1 ob_x=50.00 ob_y=29.50 ob_na=-1 
 ob_type=1 ob_x=29.00 ob_y=30.50 ob_na=-1 
@@ -9045,7 +9048,7 @@ ob_type=1 ob_x=45.00 ob_y=89.50 ob_na=-1
 ob_type=2 ob_x=45.50 ob_y=90.00 ob_na=-1 
 ob_type=1 ob_x=47.00 ob_y=89.50 ob_na=-1 
 ob_type=2 ob_x=46.50 ob_y=90.00 ob_na=-1 
-ob_type=22 ob_x=47.50 ob_y=89.50 ob_na=-1 
+ob_type=24 ob_x=47.50 ob_y=89.50 ob_na=-1 
 ob_type=1 ob_x=49.00 ob_y=89.50 ob_na=-1 
 ob_type=2 ob_x=49.50 ob_y=90.00 ob_na=-1 
 ob_type=1 ob_x=61.00 ob_y=89.50 ob_na=-1 
@@ -9292,7 +9295,7 @@ ob_type=1 ob_x=18.00 ob_y=84.50 ob_na=-1
 ob_type=1 ob_x=29.00 ob_y=84.50 ob_na=-1 
 ob_type=2 ob_x=34.50 ob_y=85.00 ob_na=-1 
 ob_type=2 ob_x=35.50 ob_y=85.00 ob_na=-1 
-ob_type=22 ob_x=36.50 ob_y=84.50 ob_na=-1 
+ob_type=24 ob_x=36.50 ob_y=84.50 ob_na=-1 
 ob_type=2 ob_x=38.50 ob_y=85.00 ob_na=-1 
 ob_type=1 ob_x=18.00 ob_y=85.50 ob_na=-1 
 ob_type=2 ob_x=18.50 ob_y=86.00 ob_na=-1 
@@ -9341,6 +9344,70 @@ ob_type=1 ob_x=62.00 ob_y=87.50 ob_na=-1
 ob_type=2 ob_x=61.50 ob_y=88.00 ob_na=-1 
 ob_type=1 ob_x=75.00 ob_y=87.50 ob_na=-1 
 ob_type=2 ob_x=75.50 ob_y=88.00 ob_na=-1 
+ob_type=36 ob_x=77.50 ob_y=0.50 ob_na=-1 
+ob_type=36 ob_x=78.50 ob_y=0.50 ob_na=-1 
+ob_type=36 ob_x=79.50 ob_y=0.50 ob_na=-1 
+ob_type=36 ob_x=80.50 ob_y=0.50 ob_na=-1 
+ob_type=36 ob_x=81.50 ob_y=0.50 ob_na=-1 
+ob_type=36 ob_x=82.50 ob_y=0.50 ob_na=-1 
+ob_type=36 ob_x=83.50 ob_y=0.50 ob_na=-1 
+ob_type=36 ob_x=84.50 ob_y=0.50 ob_na=-1 
+ob_type=36 ob_x=85.50 ob_y=0.50 ob_na=-1 
+ob_type=36 ob_x=86.50 ob_y=0.50 ob_na=-1 
+ob_type=36 ob_x=87.50 ob_y=0.50 ob_na=-1 
+ob_type=36 ob_x=88.50 ob_y=0.50 ob_na=-1 
+ob_type=36 ob_x=89.50 ob_y=0.50 ob_na=-1 
+ob_type=115 ob_x=80.67 ob_y=45.40 ob_na=-1 
+ob_type=114 ob_x=82.66 ob_y=52.14 ob_na=-1 
+ob_type=1 ob_x=84.00 ob_y=88.50 ob_na=-1 
+ob_type=1 ob_x=85.00 ob_y=88.50 ob_na=-1 
+ob_type=1 ob_x=86.00 ob_y=88.50 ob_na=-1 
+ob_type=1 ob_x=84.00 ob_y=89.50 ob_na=-1 
+ob_type=1 ob_x=85.00 ob_y=89.50 ob_na=-1 
+ob_type=1 ob_x=86.00 ob_y=89.50 ob_na=-1 
+ob_type=2 ob_x=77.50 ob_y=81.00 ob_na=-1 
+ob_type=2 ob_x=78.50 ob_y=81.00 ob_na=-1 
+ob_type=2 ob_x=79.50 ob_y=81.00 ob_na=-1 
+ob_type=2 ob_x=80.50 ob_y=81.00 ob_na=-1 
+ob_type=2 ob_x=81.50 ob_y=81.00 ob_na=-1 
+ob_type=2 ob_x=82.50 ob_y=81.00 ob_na=-1 
+ob_type=2 ob_x=83.50 ob_y=81.00 ob_na=-1 
+ob_type=2 ob_x=84.50 ob_y=81.00 ob_na=-1 
+ob_type=2 ob_x=85.50 ob_y=81.00 ob_na=-1 
+ob_type=2 ob_x=77.50 ob_y=82.00 ob_na=-1 
+ob_type=2 ob_x=78.50 ob_y=82.00 ob_na=-1 
+ob_type=2 ob_x=79.50 ob_y=82.00 ob_na=-1 
+ob_type=2 ob_x=80.50 ob_y=82.00 ob_na=-1 
+ob_type=2 ob_x=81.50 ob_y=82.00 ob_na=-1 
+ob_type=2 ob_x=82.50 ob_y=82.00 ob_na=-1 
+ob_type=2 ob_x=83.50 ob_y=82.00 ob_na=-1 
+ob_type=2 ob_x=84.50 ob_y=82.00 ob_na=-1 
+ob_type=1 ob_x=86.00 ob_y=81.50 ob_na=-1 
+ob_type=2 ob_x=77.50 ob_y=83.00 ob_na=-1 
+ob_type=2 ob_x=78.50 ob_y=83.00 ob_na=-1 
+ob_type=2 ob_x=79.50 ob_y=83.00 ob_na=-1 
+ob_type=2 ob_x=80.50 ob_y=83.00 ob_na=-1 
+ob_type=2 ob_x=81.50 ob_y=83.00 ob_na=-1 
+ob_type=2 ob_x=82.50 ob_y=83.00 ob_na=-1 
+ob_type=2 ob_x=83.50 ob_y=83.00 ob_na=-1 
+ob_type=1 ob_x=85.00 ob_y=82.50 ob_na=-1 
+ob_type=1 ob_x=86.00 ob_y=82.50 ob_na=-1 
+ob_type=1 ob_x=84.00 ob_y=83.50 ob_na=-1 
+ob_type=1 ob_x=85.00 ob_y=83.50 ob_na=-1 
+ob_type=1 ob_x=86.00 ob_y=83.50 ob_na=-1 
+ob_type=1 ob_x=84.00 ob_y=84.50 ob_na=-1 
+ob_type=1 ob_x=85.00 ob_y=84.50 ob_na=-1 
+ob_type=1 ob_x=86.00 ob_y=84.50 ob_na=-1 
+ob_type=1 ob_x=84.00 ob_y=85.50 ob_na=-1 
+ob_type=1 ob_x=85.00 ob_y=85.50 ob_na=-1 
+ob_type=1 ob_x=86.00 ob_y=85.50 ob_na=-1 
+ob_type=1 ob_x=84.00 ob_y=86.50 ob_na=-1 
+ob_type=1 ob_x=85.00 ob_y=86.50 ob_na=-1 
+ob_type=1 ob_x=86.00 ob_y=86.50 ob_na=-1 
+ob_type=1 ob_x=84.00 ob_y=87.50 ob_na=-1 
+ob_type=1 ob_x=85.00 ob_y=87.50 ob_na=-1 
+ob_type=1 ob_x=86.00 ob_y=87.50 ob_na=-1 
+ob_type=47 ob_x=82.50 ob_y=84.50 ob_na=-1 
 ob_type=36 ob_x=0.50 ob_y=0.50 ob_na=-1 
 ob_type=36 ob_x=1.50 ob_y=0.50 ob_na=-1 
 ob_type=36 ob_x=2.50 ob_y=0.50 ob_na=-1 
@@ -9484,70 +9551,6 @@ ob_type=1 ob_x=10.00 ob_y=84.50 ob_na=-1
 ob_type=1 ob_x=10.00 ob_y=85.50 ob_na=-1 
 ob_type=1 ob_x=10.00 ob_y=86.50 ob_na=-1 
 ob_type=1 ob_x=10.00 ob_y=87.50 ob_na=-1 
-ob_type=36 ob_x=77.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=78.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=79.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=80.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=81.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=82.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=83.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=84.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=85.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=86.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=87.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=88.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=89.50 ob_y=0.50 ob_na=-1 
-ob_type=115 ob_x=80.67 ob_y=45.40 ob_na=-1 
-ob_type=114 ob_x=82.66 ob_y=52.14 ob_na=-1 
-ob_type=1 ob_x=84.00 ob_y=88.50 ob_na=-1 
-ob_type=1 ob_x=85.00 ob_y=88.50 ob_na=-1 
-ob_type=1 ob_x=86.00 ob_y=88.50 ob_na=-1 
-ob_type=1 ob_x=84.00 ob_y=89.50 ob_na=-1 
-ob_type=1 ob_x=85.00 ob_y=89.50 ob_na=-1 
-ob_type=1 ob_x=86.00 ob_y=89.50 ob_na=-1 
-ob_type=2 ob_x=77.50 ob_y=81.00 ob_na=-1 
-ob_type=2 ob_x=78.50 ob_y=81.00 ob_na=-1 
-ob_type=2 ob_x=79.50 ob_y=81.00 ob_na=-1 
-ob_type=2 ob_x=80.50 ob_y=81.00 ob_na=-1 
-ob_type=2 ob_x=81.50 ob_y=81.00 ob_na=-1 
-ob_type=2 ob_x=82.50 ob_y=81.00 ob_na=-1 
-ob_type=2 ob_x=83.50 ob_y=81.00 ob_na=-1 
-ob_type=2 ob_x=84.50 ob_y=81.00 ob_na=-1 
-ob_type=2 ob_x=85.50 ob_y=81.00 ob_na=-1 
-ob_type=2 ob_x=77.50 ob_y=82.00 ob_na=-1 
-ob_type=2 ob_x=78.50 ob_y=82.00 ob_na=-1 
-ob_type=2 ob_x=79.50 ob_y=82.00 ob_na=-1 
-ob_type=2 ob_x=80.50 ob_y=82.00 ob_na=-1 
-ob_type=2 ob_x=81.50 ob_y=82.00 ob_na=-1 
-ob_type=2 ob_x=82.50 ob_y=82.00 ob_na=-1 
-ob_type=2 ob_x=83.50 ob_y=82.00 ob_na=-1 
-ob_type=2 ob_x=84.50 ob_y=82.00 ob_na=-1 
-ob_type=1 ob_x=86.00 ob_y=81.50 ob_na=-1 
-ob_type=2 ob_x=77.50 ob_y=83.00 ob_na=-1 
-ob_type=2 ob_x=78.50 ob_y=83.00 ob_na=-1 
-ob_type=2 ob_x=79.50 ob_y=83.00 ob_na=-1 
-ob_type=2 ob_x=80.50 ob_y=83.00 ob_na=-1 
-ob_type=2 ob_x=81.50 ob_y=83.00 ob_na=-1 
-ob_type=2 ob_x=82.50 ob_y=83.00 ob_na=-1 
-ob_type=2 ob_x=83.50 ob_y=83.00 ob_na=-1 
-ob_type=1 ob_x=85.00 ob_y=82.50 ob_na=-1 
-ob_type=1 ob_x=86.00 ob_y=82.50 ob_na=-1 
-ob_type=1 ob_x=84.00 ob_y=83.50 ob_na=-1 
-ob_type=1 ob_x=85.00 ob_y=83.50 ob_na=-1 
-ob_type=1 ob_x=86.00 ob_y=83.50 ob_na=-1 
-ob_type=1 ob_x=84.00 ob_y=84.50 ob_na=-1 
-ob_type=1 ob_x=85.00 ob_y=84.50 ob_na=-1 
-ob_type=1 ob_x=86.00 ob_y=84.50 ob_na=-1 
-ob_type=1 ob_x=84.00 ob_y=85.50 ob_na=-1 
-ob_type=1 ob_x=85.00 ob_y=85.50 ob_na=-1 
-ob_type=1 ob_x=86.00 ob_y=85.50 ob_na=-1 
-ob_type=1 ob_x=84.00 ob_y=86.50 ob_na=-1 
-ob_type=1 ob_x=85.00 ob_y=86.50 ob_na=-1 
-ob_type=1 ob_x=86.00 ob_y=86.50 ob_na=-1 
-ob_type=1 ob_x=84.00 ob_y=87.50 ob_na=-1 
-ob_type=1 ob_x=85.00 ob_y=87.50 ob_na=-1 
-ob_type=1 ob_x=86.00 ob_y=87.50 ob_na=-1 
-ob_type=47 ob_x=82.50 ob_y=84.50 ob_na=-1 
 End of obstacle data
 Start of pure map label information for this level
 label.pos.x=44 label.pos.y=27 label.label_name="NewTuxStartGameSquare"
@@ -9598,8 +9601,6 @@ New item: type=12  X=44.000000  Y=52.000000  AC=0  DoDamage=8  ModifyDamage=8  M
 New item: type=20  X=45.000000  Y=23.000000  AC=5  DoDamage=0  ModifyDamage=0  MaxDur=12  CurDur=7.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 New item: type=19  X=42.000000  Y=22.000000  AC=1  DoDamage=0  ModifyDamage=0  MaxDur=17  CurDur=11.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 New item: type=25  X=48.000000  Y=19.000000  AC=6  DoDamage=0  ModifyDamage=0  MaxDur=18  CurDur=10.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
-New item: type=11  X=22.000000  Y=80.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=18  CurDur=17.000000  Gold=0  Multiplicity=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
-New item: type=19  X=6.000000  Y=2.000000  AC=5  DoDamage=0  ModifyDamage=0  MaxDur=16  CurDur=10.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 End of pure items information for this level
 Start of pure chest item information for this level
 New item: type=27  X=40.250000  Y=28.500000  AC=0  DoDamage=2  ModifyDamage=5  MaxDur=20  CurDur=20.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
@@ -10960,19 +10961,19 @@ Name of this level=airlock
 Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=Hardcore-Theme.mod
 beginning_of_map
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   6   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   6   4   4   4   4   4   4   4   4   4   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   6   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   6   4   4   4   6   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1 
-  4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   6   4   4   4   4   6   4   4   4   6   6   4   4   4   4   4   4   4   6   4   4   4   4   4   4   1   1   1   1   1   1   1   1 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   6   4   4   4   4   4   6   4   4   4   4   4   4   1   1   1   1   1   1   1   1 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   4   6   6   6   6   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   4   4   4   1 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   4   4   6   6   6   6   6   6   6   6   6   6   6   6   6   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   4   4   1   1 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   6   6   6   6   6   6   6   6   6   6   6   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   4   4   1   1 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   7   7   7   7   7   6   6   6   6   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   7   7   7   7   7   7   7   7   6   4   6   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   4   6   6   7   7   7   7   8   8   8   7   7   7   6   4   6   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   6   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
+ 31  31  31   4   4   4   4   4   4   4   4   4   6   4   4   6   4   4   4   4   4   4   4   4   4   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
+ 31  31  31   4   4   4   4   4   6   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   6   4   4   4   6   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1 
+ 31  31  31   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   6   4   4   4   4   6   4   4   4   6   6   4   4   4   4   4   4   4   6   4   4   4   4   4   4   1   1   1   1   1   1   1   1 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   6   4   4   4   4   4   6   4   4   4   4   4   4   1   1   1   1   1   1   1   1 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   4   6   6   6   6   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   4   4   4   1 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   6   6   4   4   6   6   6   6   6   6   6   6   6   6   6   6   6   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   4   4   1   1 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   6   4   4   6   6   6   6   6   6   6   6   6   6   6   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   4   4   1   1 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   7   7   7   7   7   6   6   6   6   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   7   7   7   7   7   7   7   7   6   4   6   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   6   6   4   6   6   7   7   7   7   8   8   8   7   7   7   6   4   6   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1 
   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   7   7   7   7   8   8   8   8   8   8   7   7   6   6   6   6   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   6   4   4   4   6   4   6   4   6   6   4   4   4   6   4   4   4   6   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1 
   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   7   7   7   7   8   8   8   8   8   8   8   8   8   7   6   6   6   6   6   4   4   4   4   4   4   4   4   4   6   6   4   4   6   4   6   6   6   6   4   6   6   6   4   4   6   6   6   4   6   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1 
   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   7   7   7   8   8   8   8   8   8   8   8   8   8   7   7   7   6   6   6   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   6   4   6   6   4   4   6   4   4   4   6   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1 
@@ -11417,80 +11418,6 @@ ob_type=1 ob_x=84.00 ob_y=75.50 ob_na=-1
 ob_type=1 ob_x=82.00 ob_y=76.50 ob_na=-1 
 ob_type=1 ob_x=83.00 ob_y=76.50 ob_na=-1 
 ob_type=1 ob_x=84.00 ob_y=76.50 ob_na=-1 
-ob_type=1 ob_x=82.00 ob_y=11.50 ob_na=-1 
-ob_type=1 ob_x=83.00 ob_y=11.50 ob_na=-1 
-ob_type=1 ob_x=84.00 ob_y=11.50 ob_na=-1 
-ob_type=1 ob_x=82.00 ob_y=12.50 ob_na=-1 
-ob_type=1 ob_x=83.00 ob_y=12.50 ob_na=-1 
-ob_type=1 ob_x=84.00 ob_y=12.50 ob_na=-1 
-ob_type=2 ob_x=82.50 ob_y=4.00 ob_na=-1 
-ob_type=2 ob_x=83.50 ob_y=4.00 ob_na=-1 
-ob_type=2 ob_x=84.50 ob_y=4.00 ob_na=-1 
-ob_type=2 ob_x=85.50 ob_y=4.00 ob_na=-1 
-ob_type=2 ob_x=86.50 ob_y=4.00 ob_na=-1 
-ob_type=2 ob_x=87.50 ob_y=4.00 ob_na=-1 
-ob_type=2 ob_x=88.50 ob_y=4.00 ob_na=-1 
-ob_type=2 ob_x=89.50 ob_y=4.00 ob_na=-1 
-ob_type=1 ob_x=82.00 ob_y=4.50 ob_na=-1 
-ob_type=2 ob_x=83.50 ob_y=5.00 ob_na=-1 
-ob_type=2 ob_x=84.50 ob_y=5.00 ob_na=-1 
-ob_type=2 ob_x=85.50 ob_y=5.00 ob_na=-1 
-ob_type=2 ob_x=86.50 ob_y=5.00 ob_na=-1 
-ob_type=2 ob_x=87.50 ob_y=5.00 ob_na=-1 
-ob_type=2 ob_x=88.50 ob_y=5.00 ob_na=-1 
-ob_type=2 ob_x=89.50 ob_y=5.00 ob_na=-1 
-ob_type=1 ob_x=82.00 ob_y=5.50 ob_na=-1 
-ob_type=1 ob_x=83.00 ob_y=5.50 ob_na=-1 
-ob_type=2 ob_x=84.50 ob_y=6.00 ob_na=-1 
-ob_type=2 ob_x=85.50 ob_y=6.00 ob_na=-1 
-ob_type=2 ob_x=86.50 ob_y=6.00 ob_na=-1 
-ob_type=2 ob_x=87.50 ob_y=6.00 ob_na=-1 
-ob_type=2 ob_x=88.50 ob_y=6.00 ob_na=-1 
-ob_type=2 ob_x=89.50 ob_y=6.00 ob_na=-1 
-ob_type=1 ob_x=82.00 ob_y=6.50 ob_na=-1 
-ob_type=1 ob_x=83.00 ob_y=6.50 ob_na=-1 
-ob_type=1 ob_x=84.00 ob_y=6.50 ob_na=-1 
-ob_type=2 ob_x=87.50 ob_y=7.00 ob_na=-1 
-ob_type=2 ob_x=88.50 ob_y=7.00 ob_na=-1 
-ob_type=2 ob_x=89.50 ob_y=7.00 ob_na=-1 
-ob_type=1 ob_x=82.00 ob_y=7.50 ob_na=-1 
-ob_type=1 ob_x=83.00 ob_y=7.50 ob_na=-1 
-ob_type=1 ob_x=84.00 ob_y=7.50 ob_na=-1 
-ob_type=1 ob_x=90.00 ob_y=7.50 ob_na=-1 
-ob_type=1 ob_x=82.00 ob_y=8.50 ob_na=-1 
-ob_type=1 ob_x=83.00 ob_y=8.50 ob_na=-1 
-ob_type=1 ob_x=84.00 ob_y=8.50 ob_na=-1 
-ob_type=1 ob_x=90.00 ob_y=8.50 ob_na=-1 
-ob_type=2 ob_x=89.50 ob_y=9.00 ob_na=-1 
-ob_type=1 ob_x=82.00 ob_y=9.50 ob_na=-1 
-ob_type=1 ob_x=83.00 ob_y=9.50 ob_na=-1 
-ob_type=1 ob_x=84.00 ob_y=9.50 ob_na=-1 
-ob_type=1 ob_x=89.00 ob_y=9.50 ob_na=-1 
-ob_type=1 ob_x=82.00 ob_y=10.50 ob_na=-1 
-ob_type=1 ob_x=83.00 ob_y=10.50 ob_na=-1 
-ob_type=1 ob_x=84.00 ob_y=10.50 ob_na=-1 
-ob_type=2 ob_x=87.50 ob_y=11.00 ob_na=-1 
-ob_type=1 ob_x=89.00 ob_y=10.50 ob_na=-1 
-ob_type=2 ob_x=88.50 ob_y=11.00 ob_na=-1 
-ob_type=47 ob_x=85.50 ob_y=7.50 ob_na=-1 
-ob_type=1 ob_x=87.00 ob_y=7.50 ob_na=-1 
-ob_type=1 ob_x=87.00 ob_y=8.50 ob_na=-1 
-ob_type=1 ob_x=87.00 ob_y=9.50 ob_na=-1 
-ob_type=1 ob_x=87.00 ob_y=10.50 ob_na=-1 
-ob_type=37 ob_x=3.50 ob_y=0.50 ob_na=-1 
-ob_type=37 ob_x=3.50 ob_y=1.50 ob_na=-1 
-ob_type=37 ob_x=3.50 ob_y=2.50 ob_na=-1 
-ob_type=37 ob_x=3.50 ob_y=3.50 ob_na=-1 
-ob_type=37 ob_x=3.50 ob_y=4.50 ob_na=-1 
-ob_type=37 ob_x=3.50 ob_y=5.50 ob_na=-1 
-ob_type=37 ob_x=3.50 ob_y=6.50 ob_na=-1 
-ob_type=37 ob_x=3.50 ob_y=8.50 ob_na=-1 
-ob_type=37 ob_x=3.50 ob_y=7.50 ob_na=-1 
-ob_type=37 ob_x=3.50 ob_y=9.50 ob_na=-1 
-ob_type=37 ob_x=3.50 ob_y=10.50 ob_na=-1 
-ob_type=37 ob_x=3.50 ob_y=11.50 ob_na=-1 
-ob_type=37 ob_x=3.50 ob_y=12.50 ob_na=-1 
-ob_type=37 ob_x=3.50 ob_y=12.50 ob_na=-1 
 ob_type=37 ob_x=3.50 ob_y=13.50 ob_na=-1 
 ob_type=37 ob_x=3.50 ob_y=14.50 ob_na=-1 
 ob_type=37 ob_x=3.50 ob_y=15.50 ob_na=-1 
@@ -11648,6 +11575,80 @@ ob_type=37 ob_x=3.50 ob_y=87.50 ob_na=-1
 ob_type=37 ob_x=3.50 ob_y=87.50 ob_na=-1 
 ob_type=37 ob_x=3.50 ob_y=88.50 ob_na=-1 
 ob_type=37 ob_x=3.50 ob_y=89.50 ob_na=-1 
+ob_type=37 ob_x=3.50 ob_y=0.50 ob_na=-1 
+ob_type=37 ob_x=3.50 ob_y=1.50 ob_na=-1 
+ob_type=37 ob_x=3.50 ob_y=2.50 ob_na=-1 
+ob_type=37 ob_x=3.50 ob_y=3.50 ob_na=-1 
+ob_type=37 ob_x=3.50 ob_y=4.50 ob_na=-1 
+ob_type=37 ob_x=3.50 ob_y=5.50 ob_na=-1 
+ob_type=37 ob_x=3.50 ob_y=6.50 ob_na=-1 
+ob_type=37 ob_x=3.50 ob_y=8.50 ob_na=-1 
+ob_type=37 ob_x=3.50 ob_y=7.50 ob_na=-1 
+ob_type=37 ob_x=3.50 ob_y=9.50 ob_na=-1 
+ob_type=37 ob_x=3.50 ob_y=10.50 ob_na=-1 
+ob_type=37 ob_x=3.50 ob_y=11.50 ob_na=-1 
+ob_type=37 ob_x=3.50 ob_y=12.50 ob_na=-1 
+ob_type=37 ob_x=3.50 ob_y=12.50 ob_na=-1 
+ob_type=1 ob_x=82.00 ob_y=11.50 ob_na=-1 
+ob_type=1 ob_x=83.00 ob_y=11.50 ob_na=-1 
+ob_type=1 ob_x=84.00 ob_y=11.50 ob_na=-1 
+ob_type=1 ob_x=82.00 ob_y=12.50 ob_na=-1 
+ob_type=1 ob_x=83.00 ob_y=12.50 ob_na=-1 
+ob_type=1 ob_x=84.00 ob_y=12.50 ob_na=-1 
+ob_type=2 ob_x=82.50 ob_y=4.00 ob_na=-1 
+ob_type=2 ob_x=83.50 ob_y=4.00 ob_na=-1 
+ob_type=2 ob_x=84.50 ob_y=4.00 ob_na=-1 
+ob_type=2 ob_x=85.50 ob_y=4.00 ob_na=-1 
+ob_type=2 ob_x=86.50 ob_y=4.00 ob_na=-1 
+ob_type=2 ob_x=87.50 ob_y=4.00 ob_na=-1 
+ob_type=2 ob_x=88.50 ob_y=4.00 ob_na=-1 
+ob_type=2 ob_x=89.50 ob_y=4.00 ob_na=-1 
+ob_type=1 ob_x=82.00 ob_y=4.50 ob_na=-1 
+ob_type=2 ob_x=83.50 ob_y=5.00 ob_na=-1 
+ob_type=2 ob_x=84.50 ob_y=5.00 ob_na=-1 
+ob_type=2 ob_x=85.50 ob_y=5.00 ob_na=-1 
+ob_type=2 ob_x=86.50 ob_y=5.00 ob_na=-1 
+ob_type=2 ob_x=87.50 ob_y=5.00 ob_na=-1 
+ob_type=2 ob_x=88.50 ob_y=5.00 ob_na=-1 
+ob_type=2 ob_x=89.50 ob_y=5.00 ob_na=-1 
+ob_type=1 ob_x=82.00 ob_y=5.50 ob_na=-1 
+ob_type=1 ob_x=83.00 ob_y=5.50 ob_na=-1 
+ob_type=2 ob_x=84.50 ob_y=6.00 ob_na=-1 
+ob_type=2 ob_x=85.50 ob_y=6.00 ob_na=-1 
+ob_type=2 ob_x=86.50 ob_y=6.00 ob_na=-1 
+ob_type=2 ob_x=87.50 ob_y=6.00 ob_na=-1 
+ob_type=2 ob_x=88.50 ob_y=6.00 ob_na=-1 
+ob_type=2 ob_x=89.50 ob_y=6.00 ob_na=-1 
+ob_type=1 ob_x=82.00 ob_y=6.50 ob_na=-1 
+ob_type=1 ob_x=83.00 ob_y=6.50 ob_na=-1 
+ob_type=1 ob_x=84.00 ob_y=6.50 ob_na=-1 
+ob_type=2 ob_x=87.50 ob_y=7.00 ob_na=-1 
+ob_type=2 ob_x=88.50 ob_y=7.00 ob_na=-1 
+ob_type=2 ob_x=89.50 ob_y=7.00 ob_na=-1 
+ob_type=1 ob_x=82.00 ob_y=7.50 ob_na=-1 
+ob_type=1 ob_x=83.00 ob_y=7.50 ob_na=-1 
+ob_type=1 ob_x=84.00 ob_y=7.50 ob_na=-1 
+ob_type=1 ob_x=90.00 ob_y=7.50 ob_na=-1 
+ob_type=1 ob_x=82.00 ob_y=8.50 ob_na=-1 
+ob_type=1 ob_x=83.00 ob_y=8.50 ob_na=-1 
+ob_type=1 ob_x=84.00 ob_y=8.50 ob_na=-1 
+ob_type=1 ob_x=90.00 ob_y=8.50 ob_na=-1 
+ob_type=2 ob_x=89.50 ob_y=9.00 ob_na=-1 
+ob_type=1 ob_x=82.00 ob_y=9.50 ob_na=-1 
+ob_type=1 ob_x=83.00 ob_y=9.50 ob_na=-1 
+ob_type=1 ob_x=84.00 ob_y=9.50 ob_na=-1 
+ob_type=1 ob_x=89.00 ob_y=9.50 ob_na=-1 
+ob_type=1 ob_x=82.00 ob_y=10.50 ob_na=-1 
+ob_type=1 ob_x=83.00 ob_y=10.50 ob_na=-1 
+ob_type=1 ob_x=84.00 ob_y=10.50 ob_na=-1 
+ob_type=2 ob_x=87.50 ob_y=11.00 ob_na=-1 
+ob_type=1 ob_x=89.00 ob_y=10.50 ob_na=-1 
+ob_type=2 ob_x=88.50 ob_y=11.00 ob_na=-1 
+ob_type=47 ob_x=85.50 ob_y=7.50 ob_na=-1 
+ob_type=1 ob_x=87.00 ob_y=7.50 ob_na=-1 
+ob_type=1 ob_x=87.00 ob_y=8.50 ob_na=-1 
+ob_type=1 ob_x=87.00 ob_y=9.50 ob_na=-1 
+ob_type=1 ob_x=87.00 ob_y=10.50 ob_na=-1 
 End of obstacle data
 Start of pure map label information for this level
 label.pos.x=46 label.pos.y=35 label.label_name="571PlagueBot1StartGameSquare"
@@ -16448,96 +16449,96 @@ Name of this level=New Level just created...
 Comment of the Influencer on entering this level="This is a new level...
 Name of background song for this level=NOWHERE.MOD
 beginning_of_map
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   4   6   6   6   6   4   6   6   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   6   6   6   6   6   6   6   6   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   6   6   6   6   4   4   4   4   4   4   6   6   6   6   6   6   6   6   6   6   7   7   7   7   7   7   7   7   7   7   7   6   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   7   7   7   7   7   7   7   6   6   6   6   6   6   4   4   6   6   6   6   6   6   6   6   6   6   6   7   7   7   7   7   7   7   7   7   7   7   7   7   7   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   7   7   7   7   7   7   7   7   7   6   6   6   6   6   6   6   6   6   6   6   6   6   6   7   7   7   7   7   7   7   8   8   8   8   8   8   8   8   7   7   7   7   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   7   7   7   7   8   8   8   8   8   7   7   7   6   6   6   6   6   6   6   6   6   7   7   7   7   7   7   7   8   8   8   8   9   9   9   9   8   8   8   8   7   7   7   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   7   7   8   8   8   8   8   8   8   8   7   7   7   6   6   6   6   6   6   7   7   7   7   7   7   8   8   8   8   9   9   9   9   9   9   9   9   8   8   8   8   7   7   7   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   7   8   7   8   8   9   8   9   9   8   8   7   7   6   6   7   7   6   7   7   7   7   7   8   8   8   9   9   9   9   9   9   9   9   9   9   9   8   8   8   8   8   7   7   7   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   8   8   8   8   8   9   9   9   8   9   8   8   8   7   7   7   7   7   6   7   7   7   8   8   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   8   8   7   7   7   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   7   8   8   8   8   9   9   9   9   9   9   8   8   7   7   7   7   7   7   7   8   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   8   8   7   7   7   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   7   7   7   8   8   8   9   9   9   9   9   8   8   8   8   8   7   8   8   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   7   7   7   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   7   7   7   7   7   7   8   8   8   8   9   8   8   9   9   9   8   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   8   7   7   7   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   7   7   7   7   7   7   7   8   9   8   8   8   9   9   8   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   8   7   7   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   7   7   7   7   8   8   8   8   8   8   8   8   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   8   7   7   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   6   6   6   7   7   7   7   8   8   8   8   8   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   7   7   7   6   6   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   7   7   7   7   7   7   8   8   8   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   7   7   7   6   6   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   7   7   7   7   8   8   8   8   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   7   7   6   6   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   7   7   7   7   8   8   7   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   7   7   6   6   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   7   7   7   7   7   8   8   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   7   7   6   6   6   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   7   7   7   7   8   8   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   7   7   6   6   6   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   7   7   8   8   8   8   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   7   7   6   6   6   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   4   6   7   7   7   8   8   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   7   7   6   6   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   7   7   7   8   8   8   8   8   8   8   8   8   9   9   9   9   9   9   9   8   8   7   7   6   6   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   7   7   7   8   8   8   8   8   8   8   8   8   9   9   9   9   9   8   8   8   7   7   6   6   6   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   7   7   7   7   8   8   8   8   8   8   8   9   8   8   8   9   8   8   8   7   7   6   6   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
-  4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   7   7   7   7   7   7   7   7   7   8   8   8   8   8   8   8   8   8   7   6   6   6   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   7   7   7   7   7   7   7   7   7   8   8   8   8   8   8   7   7   6   6   6   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   7   7   7   7   7   7   8   8   8   7   7   7   6   6   6   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   6   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   7   7   7   7   7   7   7   7   7   6   6   6   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   7   7   7   7   7   7   7   7   6   6   6   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   7   7   7   7   7   7   6   6   6   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   6   6   6   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
-  4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   6   6   4   4   4   4   4   4   4   4   4   4   4   4   6   6   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
-  4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
-  4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   6   6   4   4   4   4   4   4   4   4   4   4   6   6   6   6   4   6   6   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
-  4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   6   6   6   6   6   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
-  4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   6   6   6   6   6   6   6   6   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   6   6   6   6   6   6   6   6   6   4   4   4   4   6   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   7   7   7   7   7   7   7   7   7   6   6   6   6   6   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
-  4   4   4   4   4   4   4   4   4   4   6   6   4   4   4   4   4   4   4   4   6   6   7   7   7   7   7   7   7   7   7   7   6   6   6   6   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   4   4   4 
-  4   4   4   4   4   4   4   4   4   6   6   4   4   4   4   4   4   4   4   6   6   6   7   7   7   9   8   8   7   7   7   7   6   6   6   6   4   4   4   4   4   4   4   4   4   4   6   4   4   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   7   7   7   8   9   9   9   8   7   6   6   6   6   6   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   7   7   8   7   7   7   8   6   6   6   6   6   6   6   6   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   7   7   8   8   9   9   8   7   7   6   6   6   6   6   6   4   4   4   4   4   4   4   4   4   4   6   6   4   4   4   4   4   4   6   6   6   6   6   6   6   6   6   6   6   6   6   6   6   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   6   7   7   8   8   9   8   7   7   6   6   6   6   6   6   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   6   6   4   6   6   6   6   6   6   6   6   7   7   7   7   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4  26 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   6   7   7   7   7   7   7   7   6   6   6   6   6   6   6   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   6   6   6   6   6   7   7   7   7   7   7   7   7   7   7   7   7   7   6   6   4   4   4   4   4   4   4   4   4   4   4   6   4   4   6   6 
-  4   4   4   4   4   4   6   4   4   4   4   4   6   6   6   6   6   6   6   6   6   6   7   7   7   7   7   7   6   6   6   6   6   6   6   4   4   4   4   4   4   4   4   4   4   6   6   4   6   6   6   6   6   6   6   7   6   7   7   7   7   7   7   7   7   7   7   8   8   7   7   7   7   6   4   4   4   4   4   4   4   4   4   4   4   4   6   6   4   6 
-  4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   7   7   7   7   6   6   6   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   6   6   6   7   7   7   7   7   7   7   9   9   9   8   8   7   7   7   7   7   6   4   4   4   4   4   4   4   4   4   4   4   6   4   6   7 
-  4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   6   6   6   6   6   4   4   4   4   4   4   4   4   6   4   4   4   6   4   4   4   4   6   6   6   6   7   7   7   7   7   8   8   8   8   8   8   8   8   8   9   9   8   8   7   7   7   6   4   4   4   4   4   6   4   4   4   4   6   4   6   6   7 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   7   7   7   7   9   8   8   9   9   8   8   8   8   9   8   8   8   9   9   8   9   7   7   7   6   4   4   4   4   6   4   4   4   4   6   6   6   7   8 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   7   7   7   9   8   8   9   9   9   9   9   9   9   8   8   9   8   8   9   8   8   7   7   7   6   4   4   4   4   4   4   4   4  26   6   6   7   7   7 
-  4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   7   7   7   8   8   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   8   8   7   7   7   6   4   4   4   4   4   4   4   4   6   6   7   8   7   8 
-  4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   7   7   7   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   8   8   7   7   7   6   4   4   4   4   4   4  26   6   7   7   8   8   8 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   7   7   7   8   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   8   7   7   7   6   4   4   6   4   4   4   6   6   7   8   8   7   8 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   7   7   7   9   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   8   7   7   7   6   4   4   4   4   4  26   6   7   7   8   9   8   8 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   7   7   7   8   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   8   7   7   7   6   4   6   4   4   4   6   6   7   8   7   8   7   9 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   7   7   9   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   7   7   6   4   4   4   4  26   6   6   7   8   8   7   9   9 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   7   7   9   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   9   7   7   6   4   4   4   4   6   6   7   7   8   9   7   9   9 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   7   7   8   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   7   7   6   4   4   4   4   6   6   7   7   9   9   9   9   9 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   7   7   8   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   7   7   6   4   4   4  26   6   6   7   8   9   8   9   9   8 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   7   7   7   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   9   7   7   6   4   4   4  23   6   6   7   8   9   9   9   9   8 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   7   9   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   9   7   7   7   4   4   4   4   6   6   7   8   8   8   7   8   8 
-  4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   6   6   6   6   6   7   7   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   7   7   7   4   4   4   4   6   7   7   8   8   8   8   7   8 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   6   6   6   6   6   7   7   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   9   7   7   4   4   4   4   6   7   7   8   8   8   7   8   8 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   7   7   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   9   7   7   4   6   4   4   6   6   7   8   8   8   8   8   7 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   7   7   8   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   7   7   7   7   4   4   6   4   6   6   7   7   8   7   7   8   8 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   7   7   8   9   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   7   7   7   7   4   4   6   4   6   6   6   7   7   8   8   7   7 
-  4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   6   6   7   7   8   9   9   8   9   9   9   9   9   9   9   9   9   9   9   9   9   8   7   7   7   6   4   4   4   4   6   4   6   7   7   7   7   7   6 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   6   6   6   8   8   9   8   9   9   9   9   9   9   9   9   9   9   9   9   8   9   7   7   7   6   4   4   4   4   6   6   6   7   7   7   6   6   6 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   7   7   9   8   9   9   8   8   8   9   9   9   9   9   9   9   9   9   8   9   7   7   6   6   4   4   4   4   6   6   6   6   7   7   6   4   6 
-  4   4   4   4   4   4   4   4   6   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   7   7   8   8   8   9   9   9   9   9   9   9   9   9   9   8   8   9   7   7   7   6   6   4   4   4   4  23   6   6   6   6   6   6   6   6 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   6   4   4   4   6   7   7   7   9   8   8   8   8   8   9   9   9   9   9   8   8   7   7   7   7   6   6   4   4   4   4   4   4  23   6   6   6   6   4   6  24 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   7   7   7   7   9   9   9   8   8   8   9   8   8   9   7   7   7   7   6   6   4   4   4   4   4   4   4   4   6   6   6   6   6  24   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   6   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   6   4   4   4   4   4   4   4   4   4   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   6   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   6   4   4   4   6   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1 
-  4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   6   4   4   4   4   6   4   4   4   6   6   4   4   4   4   4   4   4   6   4   4   4   4   4   4   1   1   1   1   1   1   1   1 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   6   4   4   4   4   4   6   4   4   4   4   4   4   1   1   1   1   1   1   1   1 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   4   6   6   6   6   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   4   4   4   1 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   4   4   6   6   6   6   6   6   6   6   6   6   6   6   6   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   4   4   1   1 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   6   6   6   6   6   6   6   6   6   6   6   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   4   4   1   1 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   7   7   7   7   7   6   6   6   6   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   7   7   7   7   7   7   7   7   6   4   6   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   4   6   6   7   7   7   7   8   8   8   7   7   7   6   4   6   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   4   6   6   6   6   4   6   6   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   6   6   6   6   6   6   6   6   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   6   6   6   6   4   4   4   4   4   4   6   6   6   6   6   6   6   6   6   6   7   7   7   7   7   7   7   7   7   7   7   6   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   7   7   7   7   7   7   7   6   6   6   6   6   6   4   4   6   6   6   6   6   6   6   6   6   6   6   7   7   7   7   7   7   7   7   7   7   7   7   7   7   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   7   7   7   7   7   7   7   7   7   6   6   6   6   6   6   6   6   6   6   6   6   6   6   7   7   7   7   7   7   7   8   8   8   8   8   8   8   8   7   7   7   7   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   7   7   7   7   8   8   8   8   8   7   7   7   6   6   6   6   6   6   6   6   6   7   7   7   7   7   7   7   8   8   8   8   9   9   9   9   8   8   8   8   7   7   7   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   7   7   8   8   8   8   8   8   8   8   7   7   7   6   6   6   6   6   6   7   7   7   7   7   7   8   8   8   8   9   9   9   9   9   9   9   9   8   8   8   8   7   7   7   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   7   8   7   8   8   9   8   9   9   8   8   7   7   6   6   7   7   6   7   7   7   7   7   8   8   8   9   9   9   9   9   9   9   9   9   9   9   8   8   8   8   8   7   7   7   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   8   8   8   8   8   9   9   9   8   9   8   8   8   7   7   7   7   7   6   7   7   7   8   8   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   8   8   7   7   7   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   7   8   8   8   8   9   9   9   9   9   9   8   8   7   7   7   7   7   7   7   8   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   8   8   7   7   7   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   7   7   7   8   8   8   9   9   9   9   9   8   8   8   8   8   7   8   8   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   7   7   7   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   7   7   7   7   7   7   8   8   8   8   9   8   8   9   9   9   8   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   8   7   7   7   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   7   7   7   7   7   7   7   8   9   8   8   8   9   9   8   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   8   7   7   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   7   7   7   7   8   8   8   8   8   8   8   8   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   8   7   7   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   6   6   6   7   7   7   7   8   8   8   8   8   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   7   7   7   6   6   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   7   7   7   7   7   7   8   8   8   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   7   7   7   6   6   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   7   7   7   7   8   8   8   8   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   7   7   6   6   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   7   7   7   7   8   8   7   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   7   7   6   6   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   7   7   7   7   7   8   8   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   7   7   6   6   6   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   7   7   7   7   8   8   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   7   7   6   6   6   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   7   7   8   8   8   8   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   7   7   6   6   6   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   4   6   7   7   7   8   8   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   7   7   6   6   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   7   7   7   8   8   8   8   8   8   8   8   8   9   9   9   9   9   9   9   8   8   7   7   6   6   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   7   7   7   8   8   8   8   8   8   8   8   8   9   9   9   9   9   8   8   8   7   7   6   6   6   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   7   7   7   7   8   8   8   8   8   8   8   9   8   8   8   9   8   8   8   7   7   6   6   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
+ 31  31  31   4   4   4   4   4   4   4   4   4   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   7   7   7   7   7   7   7   7   7   8   8   8   8   8   8   8   8   8   7   6   6   6   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   7   7   7   7   7   7   7   7   7   8   8   8   8   8   8   7   7   6   6   6   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   7   7   7   7   7   7   8   8   8   7   7   7   6   6   6   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   6   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   7   7   7   7   7   7   7   7   7   6   6   6   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   7   7   7   7   7   7   7   7   6   6   6   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   7   7   7   7   7   7   6   6   6   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   6   6   6   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
+ 31  31  31   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   6   6   4   4   4   4   4   4   4   4   4   4   4   4   6   6   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
+ 31  31  31   4   4   4   4   4   6   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
+ 31  31  31   4   4   4   4   4   6   4   4   4   4   4   4   4   6   6   4   4   4   4   4   4   4   4   4   4   6   6   6   6   4   6   6   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
+ 31  31  31   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   6   6   6   6   6   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
+ 31  31  31   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   6   6   6   6   6   6   6   6   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   6   6   6   6   6   6   6   6   6   4   4   4   4   6   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   7   7   7   7   7   7   7   7   7   6   6   6   6   6   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1 
+ 31  31  31   4   4   4   4   4   4   4   6   6   4   4   4   4   4   4   4   4   6   6   7   7   7   7   7   7   7   7   7   7   6   6   6   6   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   4   4   4 
+ 31  31  31   4   4   4   4   4   4   6   6   4   4   4   4   4   4   4   4   6   6   6   7   7   7   9   8   8   7   7   7   7   6   6   6   6   4   4   4   4   4   4   4   4   4   4   6   4   4   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   4   4   4   4 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   7   7   7   8   9   9   9   8   7   6   6   6   6   6   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   4   4   4   4   4 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   7   7   8   7   7   7   8   6   6   6   6   6   6   6   6   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   7   7   8   8   9   9   8   7   7   6   6   6   6   6   6   4   4   4   4   4   4   4   4   4   4   6   6   4   4   4   4   4   4   6   6   6   6   6   6   6   6   6   6   6   6   6   6   6   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   6   7   7   8   8   9   8   7   7   6   6   6   6   6   6   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   6   6   4   6   6   6   6   6   6   6   6   7   7   7   7   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4  26 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   6   7   7   7   7   7   7   7   6   6   6   6   6   6   6   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   6   6   6   6   6   7   7   7   7   7   7   7   7   7   7   7   7   7   6   6   4   4   4   4   4   4   4   4   4   4   4   6   4   4   6   6 
+ 31  31  31   4   4   4   6   4   4   4   4   4   6   6   6   6   6   6   6   6   6   6   7   7   7   7   7   7   6   6   6   6   6   6   6   4   4   4   4   4   4   4   4   4   4   6   6   4   6   6   6   6   6   6   6   7   6   7   7   7   7   7   7   7   7   7   7   8   8   7   7   7   7   6   4   4   4   4   4   4   4   4   4   4   4   4   6   6   4   6 
+ 31  31  31   4   4   6   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   7   7   7   7   6   6   6   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   6   6   6   7   7   7   7   7   7   7   9   9   9   8   8   7   7   7   7   7   6   4   4   4   4   4   4   4   4   4   4   4   6   4   6   7 
+ 31  31  31   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   6   6   6   6   6   4   4   4   4   4   4   4   4   6   4   4   4   6   4   4   4   4   6   6   6   6   7   7   7   7   7   8   8   8   8   8   8   8   8   8   9   9   8   8   7   7   7   6   4   4   4   4   4   6   4   4   4   4   6   4   6   6   7 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   7   7   7   7   9   8   8   9   9   8   8   8   8   9   8   8   8   9   9   8   9   7   7   7   6   4   4   4   4   6   4   4   4   4   6   6   6   7   8 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   7   7   7   9   8   8   9   9   9   9   9   9   9   8   8   9   8   8   9   8   8   7   7   7   6   4   4   4   4   4   4   4   4  26   6   6   7   7   7 
+ 31  31  31   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   7   7   7   8   8   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   8   8   7   7   7   6   4   4   4   4   4   4   4   4   6   6   7   8   7   8 
+ 31  31  31   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   7   7   7   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   8   8   7   7   7   6   4   4   4   4   4   4  26   6   7   7   8   8   8 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   7   7   7   8   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   8   7   7   7   6   4   4   6   4   4   4   6   6   7   8   8   7   8 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   7   7   7   9   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   8   7   7   7   6   4   4   4   4   4  26   6   7   7   8   9   8   8 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   7   7   7   8   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   8   7   7   7   6   4   6   4   4   4   6   6   7   8   7   8   7   9 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   7   7   9   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   7   7   6   4   4   4   4  26   6   6   7   8   8   7   9   9 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   7   7   9   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   9   7   7   6   4   4   4   4   6   6   7   7   8   9   7   9   9 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   7   7   8   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   7   7   6   4   4   4   4   6   6   7   7   9   9   9   9   9 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   7   7   8   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   7   7   6   4   4   4  26   6   6   7   8   9   8   9   9   8 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   7   7   7   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   9   7   7   6   4   4   4  23   6   6   7   8   9   9   9   9   8 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   7   9   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   9   7   7   7   4   4   4   4   6   6   7   8   8   8   7   8   8 
+ 31  31  31   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   6   6   6   6   6   7   7   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   7   7   7   4   4   4   4   6   7   7   8   8   8   8   7   8 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   6   6   6   6   6   7   7   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   9   7   7   4   4   4   4   6   7   7   8   8   8   7   8   8 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   7   7   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   8   9   7   7   4   6   4   4   6   6   7   8   8   8   8   8   7 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   7   7   8   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   7   7   7   7   4   4   6   4   6   6   7   7   8   7   7   8   8 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   7   7   8   9   8   9   9   9   9   9   9   9   9   9   9   9   9   9   9   8   7   7   7   7   4   4   6   4   6   6   6   7   7   8   8   7   7 
+ 31  31  31   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   6   6   7   7   8   9   9   8   9   9   9   9   9   9   9   9   9   9   9   9   9   8   7   7   7   6   4   4   4   4   6   4   6   7   7   7   7   7   6 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   6   6   6   8   8   9   8   9   9   9   9   9   9   9   9   9   9   9   9   8   9   7   7   7   6   4   4   4   4   6   6   6   7   7   7   6   6   6 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   7   7   9   8   9   9   8   8   8   9   9   9   9   9   9   9   9   9   8   9   7   7   6   6   4   4   4   4   6   6   6   6   7   7   6   4   6 
+ 31  31  31   4   4   4   4   4   6   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   7   7   8   8   8   9   9   9   9   9   9   9   9   9   9   8   8   9   7   7   7   6   6   4   4   4   4  23   6   6   6   6   6   6   6   6 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   6   4   4   4   6   7   7   7   9   8   8   8   8   8   9   9   9   9   9   8   8   7   7   7   7   6   6   4   4   4   4   4   4  23   6   6   6   6   4   6  24 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   7   7   7   7   9   9   9   8   8   8   9   8   8   9   7   7   7   7   6   6   4   4   4   4   4   4   4   4   6   6   6   6   6  24   4 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   6   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
+ 31  31  31   4   4   4   4   4   4   4   4   4   6   4   4   6   4   4   4   4   4   4   4   4   4   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
+ 31  31  31   4   4   4   4   4   6   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   6   4   4   4   6   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1 
+ 31  31  31   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   6   4   4   4   4   6   4   4   4   6   6   4   4   4   4   4   4   4   6   4   4   4   4   4   4   1   1   1   1   1   1   1   1 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   6   4   4   4   4   4   6   4   4   4   4   4   4   1   1   1   1   1   1   1   1 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   4   6   6   6   6   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   4   4   4   1 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   6   6   4   4   6   6   6   6   6   6   6   6   6   6   6   6   6   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   4   4   1   1 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   6   4   4   6   6   6   6   6   6   6   6   6   6   6   6   6   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   4   4   1   1 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   7   7   7   7   7   6   6   6   6   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   7   7   7   7   7   7   7   7   6   4   6   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1 
+ 31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   6   6   4   6   6   7   7   7   7   8   8   8   7   7   7   6   4   6   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1 
 End of pure map information for this level
 Begin of obstacle data
 ob_type=36 ob_x=11.50 ob_y=0.50 ob_na=-1 
@@ -17024,6 +17025,7 @@ Start of pure statement information for this level
 End of pure statement information for this level
 
 Start of pure items information for this level
+New item: type=19  X=83.000000  Y=2.000000  AC=5  DoDamage=0  ModifyDamage=0  MaxDur=16  CurDur=10.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 End of pure items information for this level
 Start of pure chest item information for this level
 End of pure chest item information for this level
@@ -17731,179 +17733,103 @@ Name of this level=New Level just created...
 Comment of the Influencer on entering this level="This is a new level...
 Name of background song for this level=NOWHERE.MOD
 beginning_of_map
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   6 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   6   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
+ 31  31  31  31  31  31  31   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+ 31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  31   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  31   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  31   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  31   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  31   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  31   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  31   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  31   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  31   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  31   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  31   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  31   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  31   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  31   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  31   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  31   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  31   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  31   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  31   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  31   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  31   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  31   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  31   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  1  31   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  31   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  1  31   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  31   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  1  31   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  31   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+ 31  31   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  31   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+ 31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31  31   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   6 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   6   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   6   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   6   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   6   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   6   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   6   6   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   6   6   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   6   4   4   4   4   4   6 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   6   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   6   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   6   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   6   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   6   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   6   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   6   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   6 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   6   4   4   6   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   6   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4  31  31  31   4   4   4   4   4   4   4   4   4   4 
 End of pure map information for this level
 Begin of obstacle data
-ob_type=40 ob_x=0.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=1.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=2.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=3.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=4.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=5.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=6.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=7.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=8.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=9.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=10.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=11.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=12.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=13.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=14.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=15.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=16.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=17.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=18.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=19.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=20.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=21.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=22.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=23.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=24.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=25.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=26.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=27.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=28.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=29.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=30.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=31.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=32.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=33.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=34.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=35.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=36.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=37.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=38.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=39.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=40.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=41.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=42.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=43.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=44.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=45.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=46.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=47.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=48.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=49.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=50.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=51.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=52.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=53.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=54.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=55.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=56.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=57.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=58.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=59.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=60.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=61.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=62.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=63.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=64.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=65.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=66.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=67.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=68.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=69.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=70.50 ob_y=0.50 ob_na=-1 
-ob_type=36 ob_x=71.50 ob_y=0.50 ob_na=-1 
 ob_type=36 ob_x=72.50 ob_y=0.50 ob_na=-1 
 ob_type=36 ob_x=73.50 ob_y=0.50 ob_na=-1 
 ob_type=36 ob_x=74.50 ob_y=0.50 ob_na=-1 
 ob_type=36 ob_x=75.50 ob_y=0.50 ob_na=-1 
 ob_type=36 ob_x=76.50 ob_y=0.50 ob_na=-1 
-ob_type=37 ob_x=0.50 ob_y=1.50 ob_na=-1 
-ob_type=37 ob_x=0.50 ob_y=2.50 ob_na=-1 
-ob_type=37 ob_x=0.50 ob_y=3.50 ob_na=-1 
-ob_type=37 ob_x=0.50 ob_y=4.50 ob_na=-1 
 ob_type=37 ob_x=0.50 ob_y=5.50 ob_na=-1 
 ob_type=37 ob_x=0.50 ob_y=6.50 ob_na=-1 
 ob_type=37 ob_x=0.50 ob_y=7.50 ob_na=-1 
@@ -17921,15 +17847,6 @@ ob_type=37 ob_x=0.50 ob_y=18.50 ob_na=-1
 ob_type=37 ob_x=0.50 ob_y=19.50 ob_na=-1 
 ob_type=37 ob_x=0.50 ob_y=20.50 ob_na=-1 
 ob_type=37 ob_x=0.50 ob_y=21.50 ob_na=-1 
-ob_type=37 ob_x=0.50 ob_y=22.50 ob_na=-1 
-ob_type=37 ob_x=0.50 ob_y=23.50 ob_na=-1 
-ob_type=37 ob_x=0.50 ob_y=24.50 ob_na=-1 
-ob_type=37 ob_x=0.50 ob_y=25.50 ob_na=-1 
-ob_type=37 ob_x=0.50 ob_y=26.50 ob_na=-1 
-ob_type=37 ob_x=0.50 ob_y=27.50 ob_na=-1 
-ob_type=37 ob_x=0.50 ob_y=28.50 ob_na=-1 
-ob_type=37 ob_x=0.50 ob_y=29.50 ob_na=-1 
-ob_type=37 ob_x=0.50 ob_y=30.50 ob_na=-1 
 ob_type=37 ob_x=0.50 ob_y=31.50 ob_na=-1 
 ob_type=37 ob_x=0.50 ob_y=32.50 ob_na=-1 
 ob_type=37 ob_x=0.50 ob_y=33.50 ob_na=-1 
@@ -18093,6 +18010,210 @@ ob_type=37 ob_x=80.50 ob_y=84.50 ob_na=-1
 ob_type=37 ob_x=80.50 ob_y=86.50 ob_na=-1 
 ob_type=37 ob_x=80.50 ob_y=87.50 ob_na=-1 
 ob_type=37 ob_x=80.50 ob_y=88.50 ob_na=-1 
+ob_type=37 ob_x=80.50 ob_y=89.50 ob_na=-1 
+ob_type=37 ob_x=80.50 ob_y=89.50 ob_na=-1 
+ob_type=120 ob_x=2.50 ob_y=2.50 ob_na=-1 
+ob_type=117 ob_x=2.50 ob_y=3.50 ob_na=-1 
+ob_type=117 ob_x=2.50 ob_y=4.50 ob_na=-1 
+ob_type=117 ob_x=2.50 ob_y=5.50 ob_na=-1 
+ob_type=117 ob_x=2.50 ob_y=6.50 ob_na=-1 
+ob_type=117 ob_x=2.50 ob_y=7.50 ob_na=-1 
+ob_type=117 ob_x=2.50 ob_y=8.50 ob_na=-1 
+ob_type=117 ob_x=2.50 ob_y=9.50 ob_na=-1 
+ob_type=117 ob_x=2.50 ob_y=10.50 ob_na=-1 
+ob_type=117 ob_x=2.50 ob_y=11.50 ob_na=-1 
+ob_type=117 ob_x=2.50 ob_y=12.50 ob_na=-1 
+ob_type=117 ob_x=2.50 ob_y=13.50 ob_na=-1 
+ob_type=117 ob_x=2.50 ob_y=14.50 ob_na=-1 
+ob_type=117 ob_x=2.50 ob_y=15.50 ob_na=-1 
+ob_type=117 ob_x=2.50 ob_y=16.50 ob_na=-1 
+ob_type=117 ob_x=2.50 ob_y=17.50 ob_na=-1 
+ob_type=117 ob_x=2.50 ob_y=18.50 ob_na=-1 
+ob_type=117 ob_x=2.50 ob_y=19.50 ob_na=-1 
+ob_type=117 ob_x=2.50 ob_y=20.50 ob_na=-1 
+ob_type=117 ob_x=2.50 ob_y=21.50 ob_na=-1 
+ob_type=117 ob_x=2.50 ob_y=22.50 ob_na=-1 
+ob_type=117 ob_x=2.50 ob_y=23.50 ob_na=-1 
+ob_type=117 ob_x=2.50 ob_y=25.50 ob_na=-1 
+ob_type=117 ob_x=2.50 ob_y=26.50 ob_na=-1 
+ob_type=117 ob_x=2.50 ob_y=27.50 ob_na=-1 
+ob_type=121 ob_x=2.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=3.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=4.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=5.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=7.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=8.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=9.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=11.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=12.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=13.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=14.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=15.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=16.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=17.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=18.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=19.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=20.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=21.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=22.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=23.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=24.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=25.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=26.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=27.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=28.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=29.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=30.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=31.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=32.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=33.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=34.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=35.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=36.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=37.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=38.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=39.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=40.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=41.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=42.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=43.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=44.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=45.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=46.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=47.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=48.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=49.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=50.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=51.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=52.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=53.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=54.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=55.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=56.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=57.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=58.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=59.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=60.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=61.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=62.50 ob_y=28.50 ob_na=-1 
+ob_type=119 ob_x=63.50 ob_y=28.50 ob_na=-1 
+ob_type=117 ob_x=63.50 ob_y=27.50 ob_na=-1 
+ob_type=117 ob_x=63.50 ob_y=26.50 ob_na=-1 
+ob_type=117 ob_x=63.50 ob_y=25.50 ob_na=-1 
+ob_type=117 ob_x=63.50 ob_y=24.50 ob_na=-1 
+ob_type=117 ob_x=63.50 ob_y=23.50 ob_na=-1 
+ob_type=117 ob_x=63.50 ob_y=22.50 ob_na=-1 
+ob_type=117 ob_x=63.50 ob_y=21.50 ob_na=-1 
+ob_type=117 ob_x=63.50 ob_y=20.50 ob_na=-1 
+ob_type=117 ob_x=63.50 ob_y=19.50 ob_na=-1 
+ob_type=117 ob_x=63.50 ob_y=18.50 ob_na=-1 
+ob_type=117 ob_x=63.50 ob_y=17.50 ob_na=-1 
+ob_type=117 ob_x=63.50 ob_y=16.50 ob_na=-1 
+ob_type=117 ob_x=63.50 ob_y=15.50 ob_na=-1 
+ob_type=117 ob_x=63.50 ob_y=14.50 ob_na=-1 
+ob_type=117 ob_x=63.50 ob_y=13.50 ob_na=-1 
+ob_type=117 ob_x=63.50 ob_y=12.50 ob_na=-1 
+ob_type=117 ob_x=63.50 ob_y=11.50 ob_na=-1 
+ob_type=117 ob_x=63.50 ob_y=10.50 ob_na=-1 
+ob_type=117 ob_x=63.50 ob_y=9.50 ob_na=-1 
+ob_type=117 ob_x=63.50 ob_y=8.50 ob_na=-1 
+ob_type=117 ob_x=63.50 ob_y=7.50 ob_na=-1 
+ob_type=117 ob_x=63.50 ob_y=6.50 ob_na=-1 
+ob_type=117 ob_x=63.50 ob_y=5.50 ob_na=-1 
+ob_type=117 ob_x=63.50 ob_y=4.50 ob_na=-1 
+ob_type=117 ob_x=63.50 ob_y=3.50 ob_na=-1 
+ob_type=116 ob_x=3.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=4.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=5.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=6.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=7.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=8.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=9.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=10.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=11.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=12.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=13.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=14.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=15.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=16.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=17.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=18.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=19.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=20.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=21.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=22.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=23.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=24.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=25.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=26.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=27.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=28.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=29.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=30.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=31.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=32.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=33.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=34.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=35.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=36.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=37.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=38.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=39.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=40.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=41.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=42.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=43.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=44.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=45.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=46.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=47.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=48.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=49.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=50.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=51.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=52.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=53.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=54.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=55.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=56.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=57.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=58.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=59.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=60.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=61.50 ob_y=2.50 ob_na=-1 
+ob_type=116 ob_x=62.50 ob_y=2.50 ob_na=-1 
+ob_type=118 ob_x=63.50 ob_y=2.50 ob_na=-1 
+ob_type=120 ob_x=6.50 ob_y=5.50 ob_na=-1 
+ob_type=117 ob_x=6.50 ob_y=6.50 ob_na=-1 
+ob_type=116 ob_x=7.50 ob_y=5.50 ob_na=-1 
+ob_type=116 ob_x=8.50 ob_y=5.50 ob_na=-1 
+ob_type=116 ob_x=9.50 ob_y=5.50 ob_na=-1 
+ob_type=118 ob_x=10.50 ob_y=5.50 ob_na=-1 
+ob_type=117 ob_x=10.50 ob_y=6.50 ob_na=-1 
+ob_type=117 ob_x=10.50 ob_y=7.50 ob_na=-1 
+ob_type=117 ob_x=10.50 ob_y=8.50 ob_na=-1 
+ob_type=117 ob_x=6.50 ob_y=8.50 ob_na=-1 
+ob_type=117 ob_x=6.50 ob_y=7.50 ob_na=-1 
+ob_type=121 ob_x=6.50 ob_y=9.50 ob_na=-1 
+ob_type=119 ob_x=10.50 ob_y=9.50 ob_na=-1 
+ob_type=19 ob_x=8.50 ob_y=7.50 ob_na=-1 
+ob_type=123 ob_x=2.50 ob_y=24.50 ob_na=-1 
+ob_type=124 ob_x=6.50 ob_y=24.50 ob_na=-1 
+ob_type=118 ob_x=10.50 ob_y=24.50 ob_na=-1 
+ob_type=117 ob_x=10.50 ob_y=25.50 ob_na=-1 
+ob_type=117 ob_x=10.50 ob_y=26.50 ob_na=-1 
+ob_type=117 ob_x=10.50 ob_y=27.50 ob_na=-1 
+ob_type=122 ob_x=10.50 ob_y=28.50 ob_na=-1 
+ob_type=122 ob_x=6.50 ob_y=28.50 ob_na=-1 
+ob_type=116 ob_x=3.50 ob_y=24.50 ob_na=-1 
+ob_type=116 ob_x=5.50 ob_y=24.50 ob_na=-1 
+ob_type=116 ob_x=7.50 ob_y=24.50 ob_na=-1 
+ob_type=116 ob_x=9.50 ob_y=24.50 ob_na=-1 
+ob_type=117 ob_x=6.50 ob_y=25.50 ob_na=-1 
+ob_type=117 ob_x=6.50 ob_y=26.50 ob_na=-1 
+ob_type=117 ob_x=6.50 ob_y=27.50 ob_na=-1 
+ob_type=6 ob_x=4.50 ob_y=24.50 ob_na=-1 
+ob_type=6 ob_x=8.50 ob_y=24.50 ob_na=-1 
 End of obstacle data
 Start of pure map label information for this level
 End of pure map label information for this level
