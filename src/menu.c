@@ -685,6 +685,19 @@ Sell_Items( void )
 
 }; // void Sell_Items( void )
 
+/* ----------------------------------------------------------------------
+ * 
+ *
+ * ---------------------------------------------------------------------- */
+int
+MouseCursorIsOverMenuItem( first_menu_item_pos_y )
+{
+  int h = FontHeight ( GetCurrentFont() );
+  
+  return ( ( ( GetMousePos_y () + 16 - first_menu_item_pos_y ) / h ) + 1 );
+
+}; // void MouseCursorIsOverMenuItem( first_menu_item_pos_y )
+
 
 /* ----------------------------------------------------------------------
  * This function performs a menu for the player to select from, using the
@@ -742,11 +755,6 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char*
 
       SDL_Flip( Screen );
   
-      // Wait until the user does SOMETHING
-  
-      while( !SpacePressed() && !EnterPressed() && !UpPressed()
-	     && !DownPressed() && !EscapePressed() ) ;
-
       if ( EscapePressed() )
 	{
 	  while ( EscapePressed() );
@@ -770,6 +778,12 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char*
 	  if ( MenuPosition < NumberOfOptionsGiven ) MenuPosition++;
 	  MoveMenuPositionSound();
 	  while (DownPressed());
+	}
+
+      if ( ( MouseCursorIsOverMenuItem( first_menu_item_pos_y ) >= 1 ) &&
+	   ( MouseCursorIsOverMenuItem( first_menu_item_pos_y ) <= NumberOfOptionsGiven ) )
+	{
+	  MenuPosition = MouseCursorIsOverMenuItem( first_menu_item_pos_y );
 	}
     }
 
@@ -882,6 +896,7 @@ InitiateMenu( char* BackgroundToUse )
     {
       DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
       Assemble_Combat_Picture ( 0 );
+      MakeGridOnScreen( NULL );
     }
   else
     {
@@ -889,7 +904,6 @@ InitiateMenu( char* BackgroundToUse )
     }
 
   SDL_SetClipRect( Screen, NULL );
-  MakeGridOnScreen( NULL );
 } // void InitiateMenu(void)
 
 /*@Function============================================================
@@ -1323,7 +1337,7 @@ enum
   };
   int Weiter = 0;
   int MenuPosition=1;
-  int key;
+  char* MenuTexts[10];
 
   Me.status=MENU;
 
@@ -1337,72 +1351,43 @@ enum
 
   while (!Weiter)
     {
-      //--------------------
-      // We display some background image and we also set the correct
-      // font for the very startup menu
-      //
-      DisplayImage (find_file (NE_TITLE_PIC_FILE, GRAPHICS_DIR, FALSE));
       SetCurrentFont ( Menu_BFont );
 
-      //--------------------
-      // we highlight the currently selected option with an 
-      // influencer to the left before it
-      //
-      PutInfluence( FIRST_MIS_SELECT_ITEM_POS_X , 
-		    FIRST_MIS_SELECT_ITEM_POS_Y + ( MenuPosition - 1.5 ) * (FontHeight( Menu_BFont )) );
+      MenuTexts[0]="Single Player";
+      MenuTexts[1]="Multi Player";
+      MenuTexts[2]="Credits";
+      MenuTexts[3]="Exit Freedroid";
+      MenuTexts[4]="";
+      MenuTexts[5]="";
+      MenuTexts[6]="";
+      MenuTexts[7]="";
+      MenuTexts[8]="";
+      MenuTexts[9]="";
 
-      // CenteredPutString (Screen ,  FIRST_MIS_SELECT_ITEM_POS_Y -2*FontHeight(GetCurrentFont()), "Mission Selection Menu");
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NE_TITLE_PIC_FILE );
 
-      CenteredPutString (Screen ,  FIRST_MIS_SELECT_ITEM_POS_Y + 0 * FontHeight(GetCurrentFont()) , "Single Player");
-      CenteredPutString (Screen ,  FIRST_MIS_SELECT_ITEM_POS_Y + 1 * FontHeight(GetCurrentFont()) , "Multi Player");
-      CenteredPutString (Screen ,  FIRST_MIS_SELECT_ITEM_POS_Y + 2 * FontHeight(GetCurrentFont()) , "Credits");
-      CenteredPutString (Screen ,  FIRST_MIS_SELECT_ITEM_POS_Y + 3 * FontHeight(GetCurrentFont()) , "Exit Freedroid" );
-
-      SDL_Flip( Screen );
-
-      // Wait until the user does SOMETHING
-
-      key = getchar_raw ();
-      if ( (key == SDLK_RETURN) || (key == SDLK_SPACE))
+      switch (MenuPosition) 
 	{
-	  MenuItemSelectedSound();
-	  switch (MenuPosition) 
-	    {
-
-	    case SINGLE_PLAYER_POSITION:
-	      // InitNewMissionList ( NEW_MISSION );
-	      Weiter = Single_Player_Menu ( );
-	      break;
-	    case MULTI_PLAYER_POSITION:
-	      DisplayImage (find_file (NE_TITLE_PIC_FILE, GRAPHICS_DIR, FALSE));
-	      SetCurrentFont ( Menu_BFont );
-	      Multi_Player_Menu();
-	      break;
-	    case CREDITS_POSITION:
-	      Credits_Menu();
-	      break;
-	    case EXIT_FREEDROID_POSITION:
-	      Terminate( OK );
-	      break;
-	    default: 
-	      break;
-	    } 
-	  // Weiter=!Weiter;
-	}
-      if ( key == SDLK_UP )
-	{
-	  if (MenuPosition > 1) MenuPosition--;
-	  MoveMenuPositionSound();
-	}
-      if ( key == SDLK_DOWN )
-	{
-	  if ( MenuPosition < EXIT_FREEDROID_POSITION ) MenuPosition++;
-	  MoveMenuPositionSound();
-	}
-      if ( key == SDLK_ESCAPE )
-	{
+	case SINGLE_PLAYER_POSITION:
+	  // InitNewMissionList ( NEW_MISSION );
+	  Weiter = Single_Player_Menu ( );
+	  break;
+	case MULTI_PLAYER_POSITION:
+	  DisplayImage (find_file (NE_TITLE_PIC_FILE, GRAPHICS_DIR, FALSE));
+	  SetCurrentFont ( Menu_BFont );
+	  Multi_Player_Menu();
+	  break;
+	case CREDITS_POSITION:
+	  Credits_Menu();
+	  break;
+	case (-1):
+	case EXIT_FREEDROID_POSITION:
 	  Terminate( OK );
-	}
+	  break;
+	default: 
+	  break;
+	} 
+
     }
 
   ClearGraphMem();
