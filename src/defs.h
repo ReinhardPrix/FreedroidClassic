@@ -91,7 +91,8 @@ enum
 #define NE_CONSOLEN_PIC_FILE    "ne_cons.png" 
 #define NE_BANNER_BLOCK_FILE    "ne_rahmen.gif"
 #define NE_TITLE_PIC_FILE       "ne_title.jpg"
-#define NE_CONSOLE_BG_PIC_FILE  "console_bg.jpg"
+#define NE_CONSOLE_BG_PIC1_FILE  "console_bg1.jpg"
+#define NE_CONSOLE_BG_PIC2_FILE  "console_bg2.jpg"
 #define NE_CREDITS_PIC_FILE     "ne_credits.jpg"
 
 #define STANDARD_MISSION        "Paradroid.mission"

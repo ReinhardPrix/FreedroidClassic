@@ -386,7 +386,7 @@ PaintConsoleMenu (void)
   ClearGraphMem ();
 
   SDL_SetClipRect ( ne_screen , NULL );
-  DisplayImage ( find_file( NE_CONSOLE_BG_PIC_FILE , GRAPHICS_DIR, FALSE) );
+  DisplayImage ( find_file( NE_CONSOLE_BG_PIC1_FILE , GRAPHICS_DIR, FALSE) );
 
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
 
@@ -461,7 +461,7 @@ GreatDruidShow (void)
 	  // SetTextColor (208, BANNER_VIOLETT );	// RED // YELLOW
 
 	  SDL_SetClipRect ( ne_screen , NULL );
-	  DisplayImage ( find_file( NE_CONSOLE_BG_PIC_FILE , GRAPHICS_DIR, FALSE) );
+	  DisplayImage ( find_file( NE_CONSOLE_BG_PIC2_FILE , GRAPHICS_DIR, FALSE) );
 	  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
 
 
@@ -533,7 +533,7 @@ GreatDruidShow (void)
       // ClearUserFenster ();
 
       SDL_SetClipRect ( ne_screen , NULL );
-      DisplayImage ( find_file( NE_CONSOLE_BG_PIC_FILE , GRAPHICS_DIR, FALSE) );
+      DisplayImage ( find_file( NE_CONSOLE_BG_PIC2_FILE , GRAPHICS_DIR, FALSE) );
       DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
 
 
@@ -594,7 +594,7 @@ GreatDruidShow (void)
       // SetTextColor (208, BANNER_VIOLETT );	// BLACK and VIOLETT
 
       SDL_SetClipRect ( ne_screen , NULL );
-      DisplayImage ( find_file( NE_CONSOLE_BG_PIC_FILE , GRAPHICS_DIR, FALSE) );
+      DisplayImage ( find_file( NE_CONSOLE_BG_PIC2_FILE , GRAPHICS_DIR, FALSE) );
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
 
 
@@ -649,7 +649,7 @@ GreatDruidShow (void)
       // ClearUserFenster ();
 
       SDL_SetClipRect ( ne_screen , NULL );
-      DisplayImage ( find_file( NE_CONSOLE_BG_PIC_FILE , GRAPHICS_DIR, FALSE) );
+      DisplayImage ( find_file( NE_CONSOLE_BG_PIC2_FILE , GRAPHICS_DIR, FALSE) );
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
 
 
@@ -806,14 +806,11 @@ NoKeyPressed (void)
 void
 ClearUserFenster (void)
 {
-  SDL_Rect ClearingRectangle;
+  SDL_Rect tmp;
   
-  ClearingRectangle.x=USERFENSTERPOSX;
-  ClearingRectangle.y=USERFENSTERPOSY;
-  ClearingRectangle.w=USERFENSTERBREITE;
-  ClearingRectangle.h=USERFENSTERHOEHE;
+  Copy_Rect (User_Rect, tmp)
 
-  SDL_FillRect( ne_screen , &ClearingRectangle, 0 );
+  SDL_FillRect( ne_screen , &tmp, 0 );
   return;
 
 } // void ClearUserFenster(void)
