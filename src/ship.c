@@ -157,28 +157,29 @@ EnterLift (void)
 	}
 
       
+      CurLevel = curShip.AllLevels[array_num];
+
+      // redistribute the enemys around the level
+      ShuffleEnemys ();
+
+      // set the position of the influencer to the correct locatiohn
+      Me.pos.x =
+	curShip.AllLifts[curLift].x; 
+      Me.pos.y =
+	curShip.AllLifts[curLift].y; 
+
       // We reset the time on this level and the position history
       Me.FramesOnThisLevel=0;
       for ( i = 0 ; i < MAX_INFLU_POSITION_HISTORY ; i++ ) 
 	{
-	  Me.Position_History[ i ].x = 0;
-	  Me.Position_History[ i ].y = 0;
+	  Me.Position_History[ i ].x = Me.pos.x;
+	  Me.Position_History[ i ].y = Me.pos.y;
 	}
 
-      CurLevel = curShip.AllLevels[array_num];
-
-      /* Enemys gut verteilen: */
-      ShuffleEnemys ();
-
-      /* Position des Influencer richtig setzen */
-      Me.pos.x =
-	curShip.AllLifts[curLift].x; //NORMALISATION * Block_Width + Block_Width / 2;
-      Me.pos.y =
-	curShip.AllLifts[curLift].y; //NORMALISATION* Block_Height + Block_Height / 2;
-
-      /* Alle Blasts und Bullets loeschen */
+      // delete all bullets and blasts
       for (i = 0; i < MAXBLASTS; i++)
-	AllBlasts[i].type = OUT;
+	// AllBlasts[i].type = OUT;
+	DeleteBlast( i );
       for (i = 0; i < MAXBULLETS; i++)
 	{
 	  // AllBullets[i].type = OUT;
@@ -186,10 +187,8 @@ EnterLift (void)
 	  // Never remove bullets any other way than via DeleteBullet or you will
 	  // get SEGFAULTS!!!!!!!!!!
 	  DeleteBullet ( i ) ;
-	  
 	}
-
-    }				/* if neuer Level */
+    } // if real level change has occured
 
   LeaveLiftSound ( );
   ClearGraphMem ( );
@@ -197,7 +196,7 @@ EnterLift (void)
 
   // UnfadeLevel ();
 
-  /* Wenn Level leer: grau faerben */
+  // if the level is empty, let's color it in gray
   if (CurLevel->empty)
     LevelGrauFaerben ();
 

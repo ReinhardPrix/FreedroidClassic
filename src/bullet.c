@@ -379,6 +379,8 @@ CheckBulletCollisions (int num)
 	{
 	  if (i == num) continue;  // never check for collision with youself.. ;)
 	  if (AllBullets[i].type == OUT) continue; // never check for collisions with dead bullets.. 
+	  if (AllBullets[i].type == FLASH) continue; // never check for collisions with flashes bullets.. 
+
 	  if ( fabsf(AllBullets[i].pos.x-CurBullet->pos.x) > BULLET_BULLET_COLLISION_DIST ) continue;
 	  if ( fabsf(AllBullets[i].pos.y-CurBullet->pos.y) > BULLET_BULLET_COLLISION_DIST ) continue;
 	  // it seems like we have a collision of two bullets!
