@@ -2867,7 +2867,7 @@ handle_player_identification_command( int player_num )
     point Inv_GrabLoc;
     point CurPos;
     int Grabbed_InvPos = (-1) ;
-    int SpellCost = SpellSkillMap [ SPELL_IDENTIFY_SKILL ] . mana_cost_table [ Me[ 0 ] . spellcasting_skill ] ;
+    int SpellCost = SpellSkillMap [ SPELL_IDENTIFY_SKILL ] . mana_cost_table [ Me [ 0 ] . spellcasting_skill ] ;
 
     //--------------------
     // If the inventory sceen isn't open at all, then we can cancel

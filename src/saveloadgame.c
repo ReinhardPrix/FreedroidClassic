@@ -520,6 +520,7 @@ LoadGame( void )
     // placing the influencer or some bullets outside the map even!
     //
     Activate_Conservative_Frame_Computation();
+    global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
     
     ShowSaveLoadGameProgressMeter( 0 , FALSE )  ;
     

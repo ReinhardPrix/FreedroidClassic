@@ -1442,6 +1442,7 @@ PrepareStartOfNewCharacter ( void )
     ThisMessageTime = 0;
     LevelDoorsNotMovedTime = 0.0;
     RespectVisibilityOnMap = TRUE ;
+    global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
     
     //--------------------
     // We mark all the big screen messages for this character
@@ -1775,6 +1776,7 @@ InitFreedroid ( void )
     // That will cause the memory to be allocated later...
     //
     Bulletmap = NULL;  
+    global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
 
     //--------------------
     // We set these dummy values, so that when the title plays (and banner and

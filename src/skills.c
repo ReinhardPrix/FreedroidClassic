@@ -793,6 +793,8 @@ HandleCurrentlyActivatedSkill( int player_num )
 	case SPELL_IDENTIFY_SKILL:
 	    if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	    {
+
+		/*
 		if ( !MouseCursorIsInInvRect( GetMousePos_x()  , 
 					 GetMousePos_y()  ) 
 		     || ( ! GameConfig.Inventory_Visible ) )
@@ -803,6 +805,9 @@ HandleCurrentlyActivatedSkill( int player_num )
 		    //
 		    PlayOnceNeededSoundSample ( "../effects/Tux_I_Can_Only_0.wav" , FALSE , FALSE );
 		}
+		*/
+		global_ingame_mode = GLOBAL_INGAME_MODE_IDENTIFY ;
+
 	    }
 	    break;
 	case SPELL_POISON_BOLT:

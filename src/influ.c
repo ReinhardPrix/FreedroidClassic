@@ -3424,13 +3424,34 @@ AnalyzePlayersMouseClick ( int player_num )
 {
     DebugPrintf ( 2 , "\n===> void AnalyzePlayersMouseClick ( int player_num ) : real function call confirmed. " ) ;
 
-    if ( ButtonPressWasNotMeantAsFire( player_num ) ) return;
+    switch ( global_ingame_mode )
+    {
+	case GLOBAL_INGAME_MODE_IDENTIFY:
+	    handle_player_identification_command( 0 );
+	    global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
 
-    check_for_chests_to_open ( player_num , closed_chest_below_mouse_cursor ( player_num ) ) ;
+	    //--------------------
+	    // To stop any movement, we wait for the release of the 
+	    // mouse button.
+	    //
+	    while ( SpacePressed() );
+	    Activate_Conservative_Frame_Computation();
 
-    check_for_barrels_to_smash ( player_num , smashable_barrel_below_mouse_cursor ( player_num ) ) ;
-
-    check_for_droids_to_attack_or_talk_with ( player_num ) ;
+	    break;
+	case GLOBAL_INGAME_MODE_NORMAL:
+	    if ( ButtonPressWasNotMeantAsFire( player_num ) ) return;
+	    check_for_chests_to_open ( player_num , closed_chest_below_mouse_cursor ( player_num ) ) ;
+	    check_for_barrels_to_smash ( player_num , smashable_barrel_below_mouse_cursor ( player_num ) ) ;
+	    check_for_droids_to_attack_or_talk_with ( player_num ) ;
+	    break;
+	default:
+	    DebugPrintf ( -4 , "\n%s(): global_ingame_mode: %d." , __FUNCTION__ , 
+			  global_ingame_mode );
+	    GiveStandardErrorMessage ( __FUNCTION__  , 
+				       "Illegal global ingame mode encountered!" ,
+				       PLEASE_INFORM, IS_FATAL );
+	    break;
+    }
 
     
 }; // void AnalyzePlayersMouseClick ( int player_num )

@@ -166,6 +166,13 @@ enum
 
 #define MAX_ACTIVE_SPELLS 100
 
+
+enum _global_ingame_modes
+{
+    GLOBAL_INGAME_MODE_IDENTIFY = 7123 ,
+    GLOBAL_INGAME_MODE_NORMAL = 7124 
+};
+
 enum _spell_names
 {
   SPELL_TRANSFERMODE = 0, // 0

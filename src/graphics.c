@@ -291,8 +291,24 @@ Error loading flag image.",
     //
     if ( use_open_gl )
     {
-	blit_open_gl_texture_to_screen_position ( mouse_cursors [ 0 ] , 
-						  GetMousePos_x () , GetMousePos_y () , TRUE );
+	switch ( global_ingame_mode )
+	{
+	    case GLOBAL_INGAME_MODE_IDENTIFY :
+		blit_open_gl_texture_to_screen_position ( mouse_cursors [ 1 ] , 
+							  GetMousePos_x () , GetMousePos_y () , TRUE );
+		break;
+	    case GLOBAL_INGAME_MODE_NORMAL:
+		blit_open_gl_texture_to_screen_position ( mouse_cursors [ 0 ] , 
+							  GetMousePos_x () , GetMousePos_y () , TRUE );
+		break;
+	    default:
+		DebugPrintf ( -4 , "\n%s(): global_ingame_mode: %d." , __FUNCTION__ , 
+			      global_ingame_mode );
+		GiveStandardErrorMessage ( __FUNCTION__  , 
+					   "Illegal global ingame mode encountered!" ,
+					   PLEASE_INFORM, IS_FATAL );
+		break;
+	}
     }
     else
     {

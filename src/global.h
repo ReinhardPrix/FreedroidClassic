@@ -192,6 +192,8 @@ EXTERN int SkipAFewFrames;
 EXTERN int global_ignore_doors_for_collisions_flag;
 EXTERN int global_check_for_light_only_collisions_flag;
 
+EXTERN int global_ingame_mode ;
+
 #undef EXTERN
 #ifdef _view_c
 #define EXTERN
