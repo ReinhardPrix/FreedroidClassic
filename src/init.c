@@ -1244,8 +1244,12 @@ char usage_string[] =
                     [-j|--sensitivity]\n\
                     [-d|--debug=LEVEL]\n\
 \n\
-Please report bugs on our sourceforge-website:\n\
-http://sourceforge.net/projects/freedroid/\n\n";
+Please report bugs either by entering them into the bug-tracking\n\
+system on our sourceforge-website via this link:\n\n\
+http://sourceforge.net/projects/freedroid/\n\n\
+Or even better, report them by sending e-mail to:\n\n\
+freedroid-discussion@lists.sourceforge.net\n\n\
+Thanks a lot in advance, the Freedroid dev team.\n\n";
 
 /* -----------------------------------------------------------------
  *  parse command line arguments and set global switches 

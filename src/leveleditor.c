@@ -38,6 +38,8 @@
 
 void Show_Waypoints( int PrintConnectionList );
 void LevelEditor(void);
+Level CreateNewMapLevel( void );
+void SetLevelInterfaces ( void );
 
 EXTERN char Previous_Mission_Name[1000];
 
@@ -52,8 +54,349 @@ enum
     JUMP_TARGET_EAST ,
     JUMP_TARGET_WEST ,
     EXPORT_THIS_LEVEL , 
+    REPORT_INTERFACE_INCONSISTENCIES , 
     QUIT_THRESHOLD_EDITOR_POSITION
   };
+
+enum
+  { 
+    SAVE_LEVEL_POSITION=1, 
+    CHANGE_LEVEL_POSITION, 
+    CHANGE_TILE_SET_POSITION, 
+    CHANGE_SIZE_X, 
+    CHANGE_SIZE_Y, 
+    SET_LEVEL_NAME , 
+    SET_BACKGROUND_SONG_NAME , 
+    SET_LEVEL_COMMENT, 
+    ADD_NEW_LEVEL , 
+    SET_LEVEL_INTERFACE_POSITION , 
+    QUIT_LEVEL_EDITOR_POSITION 
+};
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+int
+DoLevelEditorMainMenu ( Level CurLevel )
+{
+  char* MenuTexts[ 20 ];
+  char Options [ 20 ] [1000];
+  int Weiter = FALSE ;
+  int MenuPosition=1;
+  int Done=FALSE;
+  int i;
+  char* OldMapPointer;
+
+  while (!Weiter)
+    {
+      
+      InitiateMenu( NULL );
+      
+      MenuTexts[ 0 ] = "Save whole ship to 'Testship.shp'" ;
+      sprintf( Options [ 0 ] , "Current: %d.  Level Up/Down" , CurLevel->levelnum );
+      MenuTexts[ 1 ] = Options [ 0 ];
+      MenuTexts[ 2 ] = "Change tile set" ;
+      sprintf( Options [ 1 ] , "Levelsize in X: %d.  Shrink/Enlarge" , CurLevel->xlen );
+      MenuTexts[ 3 ] = Options [ 1 ];
+      sprintf( Options [ 2 ] , "Levelsize in Y: %d.  Shrink/Enlarge" , CurLevel->ylen  );
+      MenuTexts[ 4 ] = Options [ 2 ] ;
+      sprintf( Options [ 3 ] , "Level name: %s" , CurLevel->Levelname );
+      MenuTexts[ 5 ] = Options [ 3 ] ;
+      sprintf( Options [ 4 ] , "Background music file name: %s" , CurLevel->Background_Song_Name );
+      MenuTexts[ 6 ] = Options [ 4 ] ;
+      sprintf( Options [ 5 ] , "Set Level Comment: %s" , CurLevel->Level_Enter_Comment );
+      MenuTexts[ 7 ] = Options [ 5 ] ;
+      MenuTexts[ 8 ] = "Add completely new level" ; 
+      MenuTexts[ 9 ] = "Set Level Interfaces" ;
+      MenuTexts[ 10 ] = "Quit Level Editor" ;
+      MenuTexts[ 11 ] = "" ;
+	  
+
+
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL , FPS_Display_BFont );
+      
+      while (EnterPressed() || SpacePressed() );
+      
+      switch (MenuPosition) 
+	{
+	  
+	case (-1):
+	  while ( EscapePressed() );
+	  Weiter=!Weiter;
+	  if ( CurrentCombatScaleFactor != 1 ) SetCombatScaleTo( 1 );
+	  break;
+	case SAVE_LEVEL_POSITION:
+	  while (EnterPressed() || SpacePressed() ) ;
+	  SaveShip("Testship.shp");
+	  CenteredPutString ( Screen ,  11*FontHeight(Menu_BFont),    "Your ship was saved...");
+	  SDL_Flip ( Screen );
+	  while (!EnterPressed() && !SpacePressed() ) ;
+	  while (EnterPressed() || SpacePressed() ) ;
+	  // Weiter=!Weiter;
+	  break;
+	case CHANGE_LEVEL_POSITION: 
+	  // if ( CurLevel->levelnum ) Teleport ( CurLevel->levelnum-1 , Me[0].pos.x , Me[0].pos.y ); 
+	  while (EnterPressed() || SpacePressed() ) ;
+	  break;
+	case CHANGE_TILE_SET_POSITION: 
+	  while (EnterPressed() || SpacePressed() ) ;
+	  break;
+	case SET_LEVEL_NAME:
+	  while (EnterPressed() || SpacePressed() ) ;
+	  CenteredPutString ( Screen ,  12*FontHeight(Menu_BFont), "Please enter new level name:");
+	  SDL_Flip( Screen );
+	  CurLevel->Levelname=GetString( 100 , FALSE );
+	  Weiter=!Weiter;
+	  break;
+	case SET_BACKGROUND_SONG_NAME:
+	  while (EnterPressed() || SpacePressed() ) ;
+	  CenteredPutString ( Screen ,  12*FontHeight(Menu_BFont), "Please enter new music file name:");
+	  SDL_Flip( Screen );
+	  CurLevel->Background_Song_Name=GetString( 100 , FALSE );
+	  Weiter=!Weiter;
+	  break;
+	case SET_LEVEL_COMMENT:
+	  while (EnterPressed() || SpacePressed() ) ;
+	  CenteredPutString ( Screen ,  12*FontHeight(Menu_BFont), "Please enter new level comment:\n");
+	  SDL_Flip( Screen );
+	  SetTextCursor( 15 , 440 );
+	  CurLevel->Level_Enter_Comment=GetString( 100 , FALSE );
+	  Weiter=!Weiter;
+	  break;
+	case ADD_NEW_LEVEL:
+	  while (EnterPressed() || SpacePressed() ) ;
+	  curShip.AllLevels[ curShip.num_levels ] = CreateNewMapLevel();
+	  curShip.num_levels ++ ;
+	  CenteredPutString ( Screen ,  12*FontHeight(Menu_BFont), "New level has been added!");
+	  SDL_Flip( Screen );
+	  while (!SpacePressed() && !EnterPressed() );
+	  while (EnterPressed() || SpacePressed() ) ;
+	  SetTextCursor( 15 , 440 );
+	  Weiter=!Weiter;
+	  break;
+	case SET_LEVEL_INTERFACE_POSITION:
+	  while (EnterPressed() || SpacePressed() ) ;
+	  Weiter=!Weiter;
+	  SetLevelInterfaces ( );
+	  break;
+	case QUIT_LEVEL_EDITOR_POSITION:
+	  while (EnterPressed() || SpacePressed() ) ;
+	  Weiter=!Weiter;
+	  Done=TRUE;
+	  SetCombatScaleTo( 1 );
+	  break;
+	default: 
+	  break;
+	  
+	} // switch
+      
+	  // If the user of the level editor pressed left or right, that should have
+	  // an effect IF he/she is a the change level menu point
+
+      if (LeftPressed() || RightPressed() ) 
+	{
+	  switch (MenuPosition)
+	    {
+	      
+	    case CHANGE_LEVEL_POSITION:
+	      if ( LeftPressed() )
+		{
+		  if ( CurLevel->levelnum > 0 )
+		    Teleport ( CurLevel->levelnum -1 , 3 , 3 , 0 , TRUE );
+		  while (LeftPressed());
+		}
+	      if ( RightPressed() )
+		{
+		  if ( CurLevel->levelnum < curShip.num_levels -1 )
+		    Teleport ( CurLevel->levelnum +1 , 3 , 3 , 0 , TRUE );
+		  while (RightPressed());
+		}
+	      if ( CurrentCombatScaleFactor != 1 ) SetCombatScaleTo ( CurrentCombatScaleFactor );
+	      break;
+	      
+	    case CHANGE_TILE_SET_POSITION:
+	      if ( RightPressed() && (CurLevel->color  < 6 ) )
+		{
+		  CurLevel->color++;
+		  while (RightPressed());
+		}
+	      if ( LeftPressed() && (CurLevel->color > 0) )
+		{
+		  CurLevel->color--;
+		  while (LeftPressed());
+		}
+	      Teleport ( CurLevel->levelnum , Me[0].pos.x , Me[0].pos.y , 0 , TRUE ); 
+	      break;
+	    case CHANGE_SIZE_X:
+	      if ( RightPressed() )
+		{
+		  CurLevel->xlen++;
+		  // In case of enlargement, we need to do more:
+		  for ( i = 0 ; i < CurLevel->ylen ; i++ )
+		    {
+		      OldMapPointer=CurLevel->map[i];
+		      CurLevel->map[i] = MyMalloc( CurLevel->xlen +1) ;
+		      memcpy( CurLevel->map[i] , OldMapPointer , CurLevel->xlen-1 );
+		      // We don't want to fill the new area with junk, do we? So we set it VOID
+		      CurLevel->map[ i ] [ CurLevel->xlen-1 ] = VOID;  
+		    }
+		  while (RightPressed());
+		}
+	      if ( LeftPressed() )
+		{
+		  CurLevel->xlen--; // making it smaller is always easy:  just modify the value for size
+		  // allocation of new memory or things like that are not nescessary.
+		  while (LeftPressed());
+		}
+	      break;
+	      
+	    case CHANGE_SIZE_Y:
+	      if ( RightPressed() )
+		{
+		  
+		  //--------------------
+		  // The enlargement of levels in y direction is limited by a constant
+		  // defined in defs.h.  This is carefully checked or no operation at
+		  // all will be performed.
+		  //
+		  if ( (CurLevel->ylen)+1 < MAX_MAP_LINES )
+		    {
+		      CurLevel->ylen++;
+		      // In case of enlargement, we need to do more:
+		      CurLevel->map[ CurLevel->ylen-1 ] = MyMalloc( CurLevel->xlen +1) ;
+		      // We don't want to fill the new area with junk, do we? So we set it VOID
+		      memset( CurLevel->map[ CurLevel->ylen-1 ] , VOID , CurLevel->xlen );
+		    }
+		  while (RightPressed());
+		}
+	      
+	      if ( LeftPressed() )
+		{
+		  CurLevel->ylen--; // making it smaller is always easy:  just modify the value for size
+		  // allocation of new memory or things like that are not nescessary.
+		  while (LeftPressed());
+		}
+	      break;
+	      
+	    }
+	} // if LeftPressed || RightPressed
+      
+    }
+
+  return ( Done );
+
+}; // void DoLevelEditorMainMenu ( Level CurLevel );
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void 
+ShowLevelEditorKeymap ( void )
+{
+  int k=1;
+
+  // SDL_BlitSurface ( console_bg_pic2 , NULL, ne_screen, NULL);
+  DisplayImage (find_file ( NE_CONSOLE_BG_PIC1_FILE, GRAPHICS_DIR, FALSE));
+#define KeymapOffset 15
+  CenteredPutString   ( Screen ,  (k)*FontHeight(Menu_BFont), "Level Editor Keymap"); k+=1;
+  PutString ( Screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "Use cursor keys to move around." ); k++;
+  PutString ( Screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "Use number pad to plant walls." ); k++;
+  PutString ( Screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "Use SHIFT and number pad to plant extras." ); k++;
+  PutString ( Screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "Use CTRL and number pad for more extras." ); k++;
+  PutString ( Screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "R...Refresh, 1-5...Blocktype 1-5, L...Lift, F...Fine grid" ); k++;
+  PutString ( Screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "D/SHIFT+D/CTRL+D...(Locked) Doors, A...Alert" ); k++;
+  PutString ( Screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "E...Enter tile by number, Space/Enter...Floor" ); k++; 
+  
+  PutString ( Screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "I/O...zoom INTO/OUT OF the map" ); k+=1;
+  PutString ( Screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "W...toggle wayPOINT on/off" ); k++;
+  PutString ( Screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "C...start/end waypoint CONNECTION" ); k+=2;
+  PutString ( Screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "For more keys see our home page" ); k++;
+  
+  SDL_Flip ( Screen );
+  while ( !SpacePressed() && !EscapePressed() );
+  while ( SpacePressed() || EscapePressed() );
+  
+}; // void ShowLevelEditorKeymap ( void )
+
+/* ----------------------------------------------------------------------
+ * The levels in Freedroid may be connected into one big map by simply
+ * 'gluing' then together, i.e. we define some interface areas to the
+ * sides of a map and when the Tux passes these areas, he'll be silently
+ * put into another map without much fuss.  This operation is performed
+ * silently and the two maps must be synchronized in this interface area
+ * so the map change doesn't become apparend to the player.  Part of this
+ * synchronisation, namely copying the map tiles to the other map, is 
+ * done automatically, but some inconsistencies like non-matching map
+ * sizes or non-symmetric jump directions (i.e. not back and forth but
+ * back and forth-to-somewhere else) are not resolved automatically.
+ * Instead, a report on inconsistencies will be created and the person
+ * editing the map can then resolve the inconsistencies manually in one
+ * fashion or the other.
+ * ---------------------------------------------------------------------- */
+void
+ReportInconsistenciesForLevel ( int LevelNum )
+{
+  int TargetLevel;
+  SDL_Rect ReportRect;
+
+  ReportRect.x = 20;
+  ReportRect.y = 20;
+  ReportRect.w = 600;
+  ReportRect.h = 440;
+
+  AssembleCombatPicture ( ONLY_SHOW_MAP_AND_TEXT | SHOW_GRID );
+
+  DisplayText ( "\nThe list of inconsistencies of the jump interfaces for this level:\n\n" ,
+		ReportRect.x, ReportRect.y + FontHeight ( GetCurrentFont () ) , &ReportRect);
+
+  if ( curShip.AllLevels [ LevelNum ] -> jump_target_north != (-1) ) 
+    {
+      TargetLevel = curShip.AllLevels [ LevelNum ] -> jump_target_north ;
+      if ( curShip.AllLevels [ TargetLevel ] -> jump_target_south != LevelNum )
+	{
+	  DisplayText ( "BACK-FORTH-MISMATCH: North doesn't lead back here (yet)!\n" ,
+			-1 , -1 , &ReportRect);
+	}
+    }
+  if ( curShip.AllLevels [ LevelNum ] -> jump_target_south != (-1) ) 
+    {
+      TargetLevel = curShip.AllLevels [ LevelNum ] -> jump_target_south ;
+      if ( curShip.AllLevels [ TargetLevel ] -> jump_target_north != LevelNum )
+	{
+	  DisplayText ( "BACK-FORTH-MISMATCH: South doesn't lead back here (yet)!\n" ,
+			-1 , -1 , &ReportRect);
+	}
+    }
+  if ( curShip.AllLevels [ LevelNum ] -> jump_target_east != (-1) ) 
+    {
+      TargetLevel = curShip.AllLevels [ LevelNum ] -> jump_target_east ;
+      if ( curShip.AllLevels [ TargetLevel ] -> jump_target_west != LevelNum )
+	{
+	  DisplayText ( "BACK-FORTH-MISMATCH: East doesn't lead back here (yet)!\n" ,
+			-1 , -1 , &ReportRect);
+	}
+    }
+  if ( curShip.AllLevels [ LevelNum ] -> jump_target_west != (-1) ) 
+    {
+      TargetLevel = curShip.AllLevels [ LevelNum ] -> jump_target_west ;
+      if ( curShip.AllLevels [ TargetLevel ] -> jump_target_east != LevelNum )
+	{
+	  DisplayText ( "BACK-FORTH-MISMATCH: West doesn't lead back here (yet)!\n" ,
+			-1 , -1 , &ReportRect);
+	}
+    }
+  DisplayText ( "\nNO OTHER BACK-FORTH-MISMATCH ERRORS other than those listed above\n\n" ,
+		-1 , -1 , &ReportRect);
+
+  DisplayText ( "\n\n--- End of List --- Press Space to return to menu ---\n" ,
+		-1 , -1 , &ReportRect);
+
+  
+  SDL_Flip ( Screen );
+
+}; // void ReportInconsistenciesForLevel ( int LevelNum )
 
 /* ----------------------------------------------------------------------
  * When we connect two maps smoothly together, we want an area in both
@@ -228,7 +571,6 @@ SetLevelInterfaces ( void )
   int Weiter = FALSE;
   int MenuPosition = 1 ;
   char Options [ 20 ] [ 500 ] ;
-  int i;
 
   while (!Weiter)
     {
@@ -252,8 +594,9 @@ SetLevelInterfaces ( void )
       sprintf( Options [ 7 ] , "Jump target west: %d.  Up/Down" , CurLevel->jump_target_west );
       MenuTexts [ 7 ] = Options [ 7 ] ;
       MenuTexts [ 8 ] = "Export this level to other target levels" ;
-      MenuTexts [ 9 ] = "Quit Threshold Editor" ;
-      MenuTexts [ 10 ] = "" ;
+      MenuTexts [ 9 ] = "Report interface inconsistencies";
+      MenuTexts [ 10 ] = "Quit Threshold Editor" ;
+      MenuTexts [ 11 ] = "" ;
 
       MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL , FPS_Display_BFont );
       
@@ -272,6 +615,13 @@ SetLevelInterfaces ( void )
 	  ExportLevelInterface ( Me [ 0 ] . pos . z );
 	  // Weiter=!Weiter;
 	  break;
+	case REPORT_INTERFACE_INCONSISTENCIES:
+	  while (EnterPressed() || SpacePressed() ) ;
+	  ReportInconsistenciesForLevel ( 0 );
+	  while ( !EnterPressed() && !SpacePressed() ) ;
+	  while (EnterPressed() || SpacePressed() ) ;
+	  break;
+
 	case QUIT_THRESHOLD_EDITOR_POSITION:
 	  while (EnterPressed() || SpacePressed() ) ;
 	  Weiter=!Weiter;
@@ -399,15 +749,6 @@ SetLevelInterfaces ( void )
       
     }
 
-  //--------------------
-  // Now that we leave the threshold editor again, we may well already
-  // synchronize the maps again (for now)
-  //
-  for ( i = 0 ; i < curShip.num_levels ; i ++ )
-    {
-      ExportLevelInterface ( i );
-    }
-  
 }; // void SetLevelInterfaces ( void )
 
 /* ----------------------------------------------------------------------
@@ -454,6 +795,18 @@ CreateNewMapLevel( void )
       NewLevel->StatementList[ i ].y = ( -1 ) ;
       NewLevel->StatementList[ i ].Statement_Text = "No Statement loaded." ;
     }
+
+  //--------------------
+  // Now we initialize the level jump interface variables with 'empty' values
+  //
+  NewLevel->jump_target_north = (-1) ;
+  NewLevel->jump_target_south = (-1) ;
+  NewLevel->jump_target_east = (-1) ;
+  NewLevel->jump_target_west = (-1) ;
+  NewLevel->jump_threshold_north = (-1) ;
+  NewLevel->jump_threshold_south = (-1) ;
+  NewLevel->jump_threshold_east = (-1) ;
+  NewLevel->jump_threshold_west = (-1) ;
 
   //--------------------
   // First we initialize the codepanel arrays with 'empty' information
@@ -729,31 +1082,20 @@ LevelEditor(void)
   int BlockY=rintf(Me[0].pos.y);
   int Done=FALSE;
   int Weiter=FALSE;
-  int MenuPosition=1;
   int i,j,k;
   int SpecialMapValue;
   int NewItemCode;
   int OriginWaypoint = (-1);
   char* NumericInputString;
   char* NewCommentOnThisSquare;
-  char* OldMapPointer;
   char linebuf[10000];
   int MapInsertNr;
-  char* MenuTexts[ 20 ];
-  char Options0[1000];
-  char Options1[1000];
-  char Options2[1000];
-  char Options3[1000];
-  char Options4[1000];
-  char Options5[1000];
 
   char VanishingMessage[10000]="Hello";
   float VanishingMessageDisplayTime = 0;
   long OldTicks;
 
   SDL_Rect Editor_Window;
-  enum
-    { SAVE_LEVEL_POSITION=1, CHANGE_LEVEL_POSITION, CHANGE_TILE_SET_POSITION, CHANGE_SIZE_X, CHANGE_SIZE_Y, SET_LEVEL_NAME , SET_BACKGROUND_SONG_NAME , SET_LEVEL_COMMENT, ADD_NEW_LEVEL , SET_LEVEL_INTERFACE_POSITION , QUIT_LEVEL_EDITOR_POSITION };
   
   Editor_Window.x=User_Rect.x;
   Editor_Window.y=User_Rect.y;  
@@ -842,29 +1184,9 @@ LevelEditor(void)
 	      while (DownPressed());
 	    }
 
-	  if ( F1Pressed() )
+	  if ( F1Pressed() ) 
 	    {
-	      k=1;
-	      // SDL_BlitSurface ( console_bg_pic2 , NULL, ne_screen, NULL);
-	      DisplayImage (find_file ( NE_CONSOLE_BG_PIC1_FILE, GRAPHICS_DIR, FALSE));
-#define KeymapOffset 15
-	      CenteredPutString   ( Screen ,  (k)*FontHeight(Menu_BFont), "Level Editor Keymap"); k+=1;
-	      PutString ( Screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "Use cursor keys to move around." ); k++;
-	      PutString ( Screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "Use number pad to plant walls." ); k++;
-	      PutString ( Screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "Use SHIFT and number pad to plant extras." ); k++;
-	      PutString ( Screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "Use CTRL and number pad for more extras." ); k++;
-	      PutString ( Screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "R...Refresh, 1-5...Blocktype 1-5, L...Lift, F...Fine grid" ); k++;
-	      PutString ( Screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "D/SHIFT+D/CTRL+D...(Locked) Doors, A...Alert" ); k++;
-	      PutString ( Screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "E...Enter tile by number, Space/Enter...Floor" ); k++; 
-	      
-	      PutString ( Screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "I/O...zoom INTO/OUT OF the map" ); k+=1;
-	      PutString ( Screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "W...toggle wayPOINT on/off" ); k++;
-	      PutString ( Screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "C...start/end waypoint CONNECTION" ); k+=2;
-	      PutString ( Screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "For more keys see our home page" ); k++;
-
-	      SDL_Flip ( Screen );
-	      while ( !SpacePressed() && !EscapePressed() );
-	      while ( SpacePressed() || EscapePressed() );
+	      ShowLevelEditorKeymap ();
 	    }
 
 	  //--------------------
@@ -1379,202 +1701,9 @@ LevelEditor(void)
       //--------------------
       // After Level editing is done and escape has been pressed, 
       // display the Menu with level save options and all that.
+      //
+      Done = DoLevelEditorMainMenu ( CurLevel );
 
-      while (!Weiter)
-	{
-
-	  InitiateMenu( NULL );
-
-	  MenuTexts[ 0 ] = "Save whole ship to 'Testship.shp'" ;
-	  sprintf( Options0 , "Current: %d.  Level Up/Down" , CurLevel->levelnum );
-	  MenuTexts[ 1 ] = Options0;
-	  MenuTexts[ 2 ] = "Change tile set" ;
-	  sprintf( Options1 , "Levelsize in X: %d.  Shrink/Enlarge" , CurLevel->xlen );
-	  MenuTexts[ 3 ] = Options1;
-	  sprintf( Options2 , "Levelsize in Y: %d.  Shrink/Enlarge" , CurLevel->ylen  );
-	  MenuTexts[ 4 ] = Options2;
-	  sprintf( Options3 , "Level name: %s" , CurLevel->Levelname );
-	  MenuTexts[ 5 ] = Options3;
-	  sprintf( Options4 , "Background music file name: %s" , CurLevel->Background_Song_Name );
-	  MenuTexts[ 6 ] = Options4;
-	  sprintf( Options5 , "Set Level Comment: %s" , CurLevel->Level_Enter_Comment );
-	  MenuTexts[ 7 ] = Options5;
-	  MenuTexts[ 8 ] = "Add completely new level" ; 
-	  MenuTexts[ 9 ] = "Set Level Interfaces" ;
-	  MenuTexts[ 10 ] = "Quit Level Editor" ;
-	  MenuTexts[ 11 ] = "" ;
-
-
-
-	  MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL , FPS_Display_BFont );
-
-	  while (EnterPressed() || SpacePressed() );
-
-	  switch (MenuPosition) 
-	    {
-	      
-	    case (-1):
-	      while ( EscapePressed() );
-	      Weiter=!Weiter;
-	      if ( CurrentCombatScaleFactor != 1 ) SetCombatScaleTo( 1 );
-	      break;
-	    case SAVE_LEVEL_POSITION:
-	      while (EnterPressed() || SpacePressed() ) ;
-	      SaveShip("Testship.shp");
-	      CenteredPutString ( Screen ,  11*FontHeight(Menu_BFont),    "Your ship was saved...");
-	      SDL_Flip ( Screen );
-	      while (!EnterPressed() && !SpacePressed() ) ;
-	      while (EnterPressed() || SpacePressed() ) ;
-	      // Weiter=!Weiter;
-	      break;
-	    case CHANGE_LEVEL_POSITION: 
-	      // if ( CurLevel->levelnum ) Teleport ( CurLevel->levelnum-1 , Me[0].pos.x , Me[0].pos.y ); 
-	      while (EnterPressed() || SpacePressed() ) ;
-	      break;
-	    case CHANGE_TILE_SET_POSITION: 
-	      while (EnterPressed() || SpacePressed() ) ;
-	      break;
-		case SET_LEVEL_NAME:
-		  while (EnterPressed() || SpacePressed() ) ;
-		  CenteredPutString ( Screen ,  12*FontHeight(Menu_BFont), "Please enter new level name:");
-		  SDL_Flip( Screen );
-		  CurLevel->Levelname=GetString( 100 , FALSE );
-		  Weiter=!Weiter;
-		  break;
-		case SET_BACKGROUND_SONG_NAME:
-		  while (EnterPressed() || SpacePressed() ) ;
-		  CenteredPutString ( Screen ,  12*FontHeight(Menu_BFont), "Please enter new music file name:");
-		  SDL_Flip( Screen );
-		  CurLevel->Background_Song_Name=GetString( 100 , FALSE );
-		  Weiter=!Weiter;
-		  break;
-		case SET_LEVEL_COMMENT:
-		  while (EnterPressed() || SpacePressed() ) ;
-		  CenteredPutString ( Screen ,  12*FontHeight(Menu_BFont), "Please enter new level comment:\n");
-		  SDL_Flip( Screen );
-		  SetTextCursor( 15 , 440 );
-		  CurLevel->Level_Enter_Comment=GetString( 100 , FALSE );
-		  Weiter=!Weiter;
-		  break;
-		case ADD_NEW_LEVEL:
-		  while (EnterPressed() || SpacePressed() ) ;
-		  curShip.AllLevels[ curShip.num_levels ] = CreateNewMapLevel();
-		  curShip.num_levels ++ ;
-		  CenteredPutString ( Screen ,  12*FontHeight(Menu_BFont), "New level has been added!");
-		  SDL_Flip( Screen );
-		  while (!SpacePressed() && !EnterPressed() );
-		  while (EnterPressed() || SpacePressed() ) ;
-		  SetTextCursor( 15 , 440 );
-		  Weiter=!Weiter;
-		  break;
-		case SET_LEVEL_INTERFACE_POSITION:
-		  while (EnterPressed() || SpacePressed() ) ;
-		  Weiter=!Weiter;
-		  SetLevelInterfaces ( );
-		  break;
-		case QUIT_LEVEL_EDITOR_POSITION:
-		  while (EnterPressed() || SpacePressed() ) ;
-		  Weiter=!Weiter;
-		  Done=TRUE;
-		  SetCombatScaleTo( 1 );
-		  break;
-		default: 
-		  break;
-
-		} // switch
-
-	  // If the user of the level editor pressed left or right, that should have
-	  // an effect IF he/she is a the change level menu point
-
-	  if (LeftPressed() || RightPressed() ) 
-	    {
-	      switch (MenuPosition)
-		{
-
-		case CHANGE_LEVEL_POSITION:
-		  if ( LeftPressed() )
-		    {
-		      if ( CurLevel->levelnum > 0 )
-			Teleport ( CurLevel->levelnum -1 , 3 , 3 , 0 , TRUE );
-		      while (LeftPressed());
-		    }
-		  if ( RightPressed() )
-		    {
-		      if ( CurLevel->levelnum < curShip.num_levels -1 )
-			Teleport ( CurLevel->levelnum +1 , 3 , 3 , 0 , TRUE );
-		      while (RightPressed());
-		    }
-		  if ( CurrentCombatScaleFactor != 1 ) SetCombatScaleTo ( CurrentCombatScaleFactor );
-		  break;
-		  
-		case CHANGE_TILE_SET_POSITION:
-		  if ( RightPressed() && (CurLevel->color  < 6 ) )
-		    {
-		      CurLevel->color++;
-		      while (RightPressed());
-		    }
-		  if ( LeftPressed() && (CurLevel->color > 0) )
-		    {
-		      CurLevel->color--;
-		      while (LeftPressed());
-		    }
-		  Teleport ( CurLevel->levelnum , Me[0].pos.x , Me[0].pos.y , 0 , TRUE ); 
-		  break;
-		case CHANGE_SIZE_X:
-		  if ( RightPressed() )
-		    {
-		      CurLevel->xlen++;
-		      // In case of enlargement, we need to do more:
-		      for ( i = 0 ; i < CurLevel->ylen ; i++ )
-			{
-			  OldMapPointer=CurLevel->map[i];
-			  CurLevel->map[i] = MyMalloc( CurLevel->xlen +1) ;
-			  memcpy( CurLevel->map[i] , OldMapPointer , CurLevel->xlen-1 );
-			  // We don't want to fill the new area with junk, do we? So we set it VOID
-			  CurLevel->map[ i ] [ CurLevel->xlen-1 ] = VOID;  
-			}
-		      while (RightPressed());
-		    }
-		  if ( LeftPressed() )
-		    {
-		      CurLevel->xlen--; // making it smaller is always easy:  just modify the value for size
-		                        // allocation of new memory or things like that are not nescessary.
-		      while (LeftPressed());
-		    }
-		  break;
-		  
-		case CHANGE_SIZE_Y:
-		  if ( RightPressed() )
-		    {
-
-		      //--------------------
-		      // The enlargement of levels in y direction is limited by a constant
-		      // defined in defs.h.  This is carefully checked or no operation at
-		      // all will be performed.
-		      //
-		      if ( (CurLevel->ylen)+1 < MAX_MAP_LINES )
-			{
-			  CurLevel->ylen++;
-			  // In case of enlargement, we need to do more:
-			  CurLevel->map[ CurLevel->ylen-1 ] = MyMalloc( CurLevel->xlen +1) ;
-			  // We don't want to fill the new area with junk, do we? So we set it VOID
-			  memset( CurLevel->map[ CurLevel->ylen-1 ] , VOID , CurLevel->xlen );
-			}
-		      while (RightPressed());
-		    }
-
-		  if ( LeftPressed() )
-		    {
-		      CurLevel->ylen--; // making it smaller is always easy:  just modify the value for size
-		                        // allocation of new memory or things like that are not nescessary.
-		      while (LeftPressed());
-		    }
-		  break;
-		  
-		}
-	    } // if LeftPressed || RightPressed
-
-	}
       
     } // while (!Done)
 
