@@ -547,6 +547,9 @@ GetInventorySquare_y( int y )
 
 /* ----------------------------------------------------------------------
  * This function gives the item type of the currently held item.  
+ *
+ * THIS IS NOT NOT NOT THE PICTURE NUMBER, BUT THE ITEM TYPE!!!!
+ *
  * ---------------------------------------------------------------------- */
 int
 GetHeldItemCode ( void )
@@ -974,6 +977,8 @@ DropHeldItemToInventory( void )
   point CurPos;
   item* DropItemPointer;
   int FreeInvIndex;
+  int i;
+  item Temp;
 
   FreeInvIndex = GetFreeInventoryIndex( );
 
@@ -1005,13 +1010,81 @@ DropHeldItemToInventory( void )
       Me.Inventory[ FreeInvIndex ].inventory_position.x = GetInventorySquare_x ( CurPos.x ) ;
       Me.Inventory[ FreeInvIndex ].inventory_position.y = GetInventorySquare_y ( CurPos.y ) ;
       Me.Inventory[ FreeInvIndex ].currently_held_in_hand = FALSE;
+
+      // --------------------
+      // Now that we know that the item could be dropped directly to inventory 
+      // without swapping any paces, we can as well make the item
+      // 'not held in hand' immediately and return
+      //
+      DropItemPointer->currently_held_in_hand = FALSE ;
+      Item_Held_In_Hand = ( -1 );
+      return;
     }
+  else
+    {
+      //--------------------
+      // So the item could not be placed into inventory directly, but maybe
+      // it can be placed there if we swap our dropitem with some other item.
+      // Let's test this opportunity here.
+      //
+      for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+	{
+	  CopyItem ( & ( Me.Inventory[ i ] ) , & ( Temp ) );
+	  
+	  //--------------------
+	  // FIRST: Security check against segfaults:  It might happen that we 
+	  // delete the Dropitem itself while trying several items as candidates
+	  // for removal.  This would cause testing dropability with a -1 item
+	  // type and a SEGFAULT would result...
+	  //
+	  if ( & ( Me.Inventory[ i ] ) == DropItemPointer ) continue;
+
+
+
+	  Me.Inventory[ i ].type = ( -1 ) ;
+
+	  if ( ItemCanBeDroppedInInv ( DropItemPointer->type , GetInventorySquare_x ( CurPos.x ) , 
+				       GetInventorySquare_y ( CurPos.y ) ) )
+	    {
+	      //--------------------
+	      // So if with the removed item Nr. i putting of the DropItem is 
+	      // suddenly possible, then we make a held item on the floor out
+	      // of it.  The other removed item can stay removed, since it will
+	      // be overwritten anyway and a copy is now on the floor.
+	      Item_Held_In_Hand = ItemMap[ Temp.type ].picture_number;
+	      MakeHeldFloorItemOutOf( &( Temp ) );
+
+	      //--------------------
+	      // Otherwise we just need to add the new item for the inventory
+	      // grid as usual
+	      CopyItem( DropItemPointer , &( Me.Inventory[ FreeInvIndex ] ) );
+	      DeleteItem( DropItemPointer );
+	      Me.Inventory[ FreeInvIndex ].inventory_position.x = GetInventorySquare_x ( CurPos.x ) ;
+	      Me.Inventory[ FreeInvIndex ].inventory_position.y = GetInventorySquare_y ( CurPos.y ) ;
+	      Me.Inventory[ FreeInvIndex ].currently_held_in_hand = FALSE;
+
+	      // And of course the item is no longer held in hand as well
+	      DropItemPointer->currently_held_in_hand = FALSE ;
+	      return;
+	    }
+
+
+	  //--------------------
+	  // But if even the removal of one item was not enough, so that the new
+	  // item would fit into the inventory, then of course we should re-add the
+	  // removed item to the inventory, so that no other items get lost.
+	  //
+	  CopyItem ( & ( Temp ) , & ( Me.Inventory[ i ] ) );
+
+	} // for: try all items if removal is the solution
+    } // if not immediately place findable
 
   // --------------------
-  // Now that we know the inventory index, we can as well make the item
-  // 'not held in hand' immediately.
-  //
-  DropItemPointer->currently_held_in_hand = FALSE ;
+  // So at this point we know, that even the removal of other items was not the 
+  // solution.  So the item cannot be put into inventory, even at best attampts
+  // to do so.  What a pitty.
+  
+  Item_Held_In_Hand = ItemMap[ GetHeldItemCode( ) ].picture_number;
 
 }; // void DropHeldItemToInventory( void )
 
@@ -1052,10 +1125,10 @@ ManageInventoryScreen ( void )
 
       if ( ( axis_is_active ) && ( !MouseButtonPressedPreviousFrame ) && ( Item_Held_In_Hand == (-1) ) )
 	{
-	  DebugPrintf( 0 , "\nCollecting items for direct addition to the invenotry without grabbing." );
+	  // DebugPrintf( 1 , "\nCollecting items for direct addition to the invenotry without grabbing." );
 	  MapPositionOfMouse.x = Me.pos.x + (CurPos.x - UserCenter_x) / (float) Block_Width;
 	  MapPositionOfMouse.y = Me.pos.y + (CurPos.y - UserCenter_y) / (float) Block_Height;
-	  DebugPrintf( 0  , "\nMouse in map at: %f %f." , MapPositionOfMouse.x , MapPositionOfMouse.y );
+	  // DebugPrintf( 1  , "\nMouse in map at: %f %f." , MapPositionOfMouse.x , MapPositionOfMouse.y );
 	  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i++ )
 	    {
 	      if ( CurLevel->ItemList[ i ].type == (-1) ) continue;
@@ -1271,8 +1344,8 @@ ManageInventoryScreen ( void )
       if ( CursorIsInInventoryGrid( CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 0 , "\nItem dropped in inventory window!" );
-	  DropHeldItemToInventory( );
 	  Item_Held_In_Hand = ( -1 );
+	  DropHeldItemToInventory( );
 	}
 
       //--------------------
@@ -1282,8 +1355,8 @@ ManageInventoryScreen ( void )
       if ( CursorIsInUserRect ( CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 0 , "\nItem dropped onto the floor of the combat window!" );
-	  DropHeldItemToTheFloor( );
 	  Item_Held_In_Hand = ( -1 );
+	  DropHeldItemToTheFloor( );
 	}
 
       //--------------------
