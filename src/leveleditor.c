@@ -4456,123 +4456,123 @@ The label just entered did already exist on this map!  Deleting old entry in fav
 void 
 LevelEditor(void)
 {
-  int BlockX = rintf( Me [ 0 ] . pos . x + 0.5 );
-  int BlockY = rintf( Me [ 0 ] . pos . y + 0.5 );
-  int Done = FALSE;
-  int Weiter = FALSE;
-  int i ;
-  char linebuf[10000];
-  long OldTicks;
-  Level EditLevel;
-  char* NewCommentOnThisSquare;
-  int LeftMousePressedPreviousFrame = FALSE;
-  int RightMousePressedPreviousFrame = FALSE;
-  moderately_finepoint TargetSquare;
-  int new_x, new_y;
-  int current_mark_index ;
-  int j;
-  int main_menu_requested;
-
-  //--------------------
-  // We initialize some arrays with info for proper handling
-  // of the level editor selection bar later...
-  //
-  update_number_of_walls ( );
-
-  //--------------------
-  // We set the Tux position to something 'round'.
-  //
-  Me [ 0 ] . pos . x = rintf ( Me [ 0 ] . pos . x ) + 0.5 ;
-  Me [ 0 ] . pos . y = rintf ( Me [ 0 ] . pos . y ) + 0.5 ;
-
-  //--------------------
-  // We disable all the 'screens' so that we have full view on the
-  // map for the purpose of level editing.
-  //
-  GameConfig.Inventory_Visible = FALSE;
-  GameConfig.CharacterScreen_Visible = FALSE;
-  GameConfig.SkillScreen_Visible = FALSE;
-  RespectVisibilityOnMap = FALSE ;
-
-  //--------------------
-  // We init the 'vanishing message' structs, so that there is always
-  // something to display, and we set the time to 'out of date' already.
-  //
-  EditLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
-  strcpy ( VanishingMessage , "Hello" );
-  VanishingMessageDisplayTime = 0 ;
-
-  //--------------------
-  // For drawing new waypoints, we init this.
-  //
-  OriginWaypoint = (-1);
-
-  while ( !Done )
+    int BlockX = rintf( Me [ 0 ] . pos . x + 0.5 );
+    int BlockY = rintf( Me [ 0 ] . pos . y + 0.5 );
+    int Done = FALSE;
+    int Weiter = FALSE;
+    int i ;
+    char linebuf[10000];
+    long OldTicks;
+    Level EditLevel;
+    char* NewCommentOnThisSquare;
+    int LeftMousePressedPreviousFrame = FALSE;
+    int RightMousePressedPreviousFrame = FALSE;
+    moderately_finepoint TargetSquare;
+    int new_x, new_y;
+    int current_mark_index ;
+    int j;
+    int main_menu_requested;
+    
+    //--------------------
+    // We initialize some arrays with info for proper handling
+    // of the level editor selection bar later...
+    //
+    update_number_of_walls ( );
+    
+    //--------------------
+    // We set the Tux position to something 'round'.
+    //
+    Me [ 0 ] . pos . x = rintf ( Me [ 0 ] . pos . x ) + 0.5 ;
+    Me [ 0 ] . pos . y = rintf ( Me [ 0 ] . pos . y ) + 0.5 ;
+    
+    //--------------------
+    // We disable all the 'screens' so that we have full view on the
+    // map for the purpose of level editing.
+    //
+    GameConfig.Inventory_Visible = FALSE;
+    GameConfig.CharacterScreen_Visible = FALSE;
+    GameConfig.SkillScreen_Visible = FALSE;
+    RespectVisibilityOnMap = FALSE ;
+    
+    //--------------------
+    // We init the 'vanishing message' structs, so that there is always
+    // something to display, and we set the time to 'out of date' already.
+    //
+    EditLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
+    strcpy ( VanishingMessage , "Hello" );
+    VanishingMessageDisplayTime = 0 ;
+    
+    //--------------------
+    // For drawing new waypoints, we init this.
+    //
+    OriginWaypoint = (-1);
+    
+    while ( !Done )
     {
-      Weiter=FALSE;
-      OldTicks = SDL_GetTicks ( ) ;
-      main_menu_requested = FALSE ;
-      while ( ( !Done ) && ( ! main_menu_requested ) )
+	Weiter=FALSE;
+	OldTicks = SDL_GetTicks ( ) ;
+	main_menu_requested = FALSE ;
+	while ( ( !Done ) && ( ! main_menu_requested ) )
 	{
-	  //--------------------
-	  // Even the level editor might be fast or slow or too slow, so we'd like to 
-	  // know speed in here too, so that we can identify possible unnescessary lags
-	  // and then maybe do something about them...
-	  //
-	  ComputeFPSForThisFrame();
-	  if ( SkipAFewFrames ) SkipAFewFrames--;
-	  StartTakingTimeForFPSCalculation(); 
+	    //--------------------
+	    // Even the level editor might be fast or slow or too slow, so we'd like to 
+	    // know speed in here too, so that we can identify possible unnescessary lags
+	    // and then maybe do something about them...
+	    //
+	    ComputeFPSForThisFrame();
+	    if ( SkipAFewFrames ) SkipAFewFrames--;
+	    StartTakingTimeForFPSCalculation(); 
+	    
+	    //--------------------
+	    // Maybe the cursor has moved into the top bar with the selection tab?
+	    // In that case we might want to change the appearance of the mouse 
+	    // cursor a bit, like to arrow shape or something, for conveninet selection...
+	    //
+	    if ( GetMousePos_y() < 130 )
+		set_mouse_cursor_to_shape ( MOUSE_CURSOR_ARROW_SHAPE ) ;
+	    else
+		set_mouse_cursor_to_shape ( MOUSE_CURSOR_CROSSHAIR_SHAPE ) ;
 
-	  //--------------------
-	  // Maybe the cursor has moved into the top bar with the selection tab?
-	  // In that case we might want to change the appearance of the mouse 
-	  // cursor a bit, like to arrow shape or something, for conveninet selection...
-	  //
-	  if ( GetMousePos_y() < 130 )
-	      set_mouse_cursor_to_shape ( MOUSE_CURSOR_ARROW_SHAPE ) ;
-	  else
-	      set_mouse_cursor_to_shape ( MOUSE_CURSOR_CROSSHAIR_SHAPE ) ;
-
-	  //--------------------
-	  // Also in the Level-Editor, there is no need to go at full framerate...
-	  // We can do with less, cause there are no objects supposed to be 
-	  // moving fluently anyway.  Therefore we introduce some rest for the CPU.
-	  //
-	  if ( ! GameConfig . hog_CPU ) SDL_Delay (3);
-
-	  BlockX = rintf ( Me [ 0 ] . pos . x - 0.5 );
-	  BlockY = rintf ( Me [ 0 ] . pos . y - 0.5 );
-	  
-	  EditLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;	  
-	  GetAllAnimatedMapTiles ( EditLevel );
-
-	  //--------------------
-	  // If the cursor is close to the currently marked obstacle, we leave everything as it
-	  // is.  (There might be some human choice made here already.)
-	  // Otherwise we just select the next best obstacle as the new marked obstacle.
-	  //
-	  if ( level_editor_marked_obstacle != NULL ) 
+	    //--------------------
+	    // Also in the Level-Editor, there is no need to go at full framerate...
+	    // We can do with less, cause there are no objects supposed to be 
+	    // moving fluently anyway.  Therefore we introduce some rest for the CPU.
+	    //
+	    if ( ! GameConfig . hog_CPU ) SDL_Delay (3);
+	    
+	    BlockX = rintf ( Me [ 0 ] . pos . x - 0.5 );
+	    BlockY = rintf ( Me [ 0 ] . pos . y - 0.5 );
+	    
+	    EditLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;	  
+	    GetAllAnimatedMapTiles ( EditLevel );
+	    
+	    //--------------------
+	    // If the cursor is close to the currently marked obstacle, we leave everything as it
+	    // is.  (There might be some human choice made here already.)
+	    // Otherwise we just select the next best obstacle as the new marked obstacle.
+	    //
+	    if ( level_editor_marked_obstacle != NULL ) 
 	    {
-	      // if ( ( fabsf ( level_editor_marked_obstacle -> pos . x - Me [ 0 ] . pos . x ) >= 0.98 ) ||
-	      // ( fabsf ( level_editor_marked_obstacle -> pos . y - Me [ 0 ] . pos . y ) >= 0.98 ) )
-	      //level_editor_marked_obstacle = NULL ;
-	      if ( ! marked_obstacle_is_glued_to_here ( EditLevel , Me [ 0 ] . pos . x , Me [ 0 ] . pos . y ) )
-		level_editor_marked_obstacle = NULL ;
+		// if ( ( fabsf ( level_editor_marked_obstacle -> pos . x - Me [ 0 ] . pos . x ) >= 0.98 ) ||
+		// ( fabsf ( level_editor_marked_obstacle -> pos . y - Me [ 0 ] . pos . y ) >= 0.98 ) )
+		//level_editor_marked_obstacle = NULL ;
+		if ( ! marked_obstacle_is_glued_to_here ( EditLevel , Me [ 0 ] . pos . x , Me [ 0 ] . pos . y ) )
+		    level_editor_marked_obstacle = NULL ;
 	    }
-	  else
+	    else
 	    {
-	      if ( EditLevel -> map [ BlockY ] [ BlockX ] . obstacles_glued_to_here [ 0 ] != (-1) )
+		if ( EditLevel -> map [ BlockY ] [ BlockX ] . obstacles_glued_to_here [ 0 ] != (-1) )
 		{
-		  level_editor_marked_obstacle = & ( EditLevel -> obstacle_list [ EditLevel -> map [ BlockY ] [ BlockX ] . obstacles_glued_to_here [ 0 ] ] ) ;
-		  DebugPrintf ( 0 , "\nObstacle marked now!" );
+		    level_editor_marked_obstacle = & ( EditLevel -> obstacle_list [ EditLevel -> map [ BlockY ] [ BlockX ] . obstacles_glued_to_here [ 0 ] ] ) ;
+		    DebugPrintf ( 0 , "\nObstacle marked now!" );
 		}
-	      else
+		else
 		{
-		  level_editor_marked_obstacle = NULL ;
-		  DebugPrintf ( 0 , "\nNo obstacle marked now!" );
+		    level_editor_marked_obstacle = NULL ;
+		    DebugPrintf ( 0 , "\nNo obstacle marked now!" );
 		}
 	    }
-
+	    
 	  VanishingMessageDisplayTime += ( SDL_GetTicks ( ) - OldTicks ) / 1000.0 ;
 	  OldTicks = SDL_GetTicks ( ) ;
 

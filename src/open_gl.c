@@ -1199,8 +1199,6 @@ blit_zoomed_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , fl
 	glBlendFunc( GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA );
     }
     
-    
-    
     //--------------------
     // But for the rest of the drawing function, the peripherals and other
     // things that are to be blitted after that, we should not forget to

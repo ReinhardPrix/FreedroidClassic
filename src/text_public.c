@@ -64,13 +64,11 @@ MyMalloc ( long Mamount )
 	Terminate(ERR);
     }
 
-/*
-    total_so_far += Mamount ;
-    if ( Mamount > 10000 )
-    {
-	DebugPrintf ( -4 , "\n%s(): big malloc: %ld. total: %ld " , __FUNCTION__ , Mamount , total_so_far );
-    }
-*/
+    // total_so_far += Mamount ;
+    // if ( Mamount > 10000 )
+    // {
+    // DebugPrintf ( -4 , "\n%s(): big malloc: %ld. total: %ld " , __FUNCTION__ , Mamount , total_so_far );
+    // }
   
     return Mptr;
 

@@ -140,37 +140,37 @@ static const char *arrow_mouse_cursor[] = {
 static SDL_Cursor *
 init_system_cursor(const char *image[])
 {
-  int i, row, col;
-  Uint8 data[4*32];
-  Uint8 mask[4*32];
-  int hot_x, hot_y;
+    int i, row, col;
+    Uint8 data[4*32];
+    Uint8 mask[4*32];
+    int hot_x, hot_y;
 
-  i = -1;
-  for ( row=0; row<32; ++row ) {
-    for ( col=0; col<32; ++col ) {
-      if ( col % 8 ) {
-        data[i] <<= 1;
-        mask[i] <<= 1;
-      } else {
-        ++i;
-        data[i] = mask[i] = 0;
-      }
-      switch (image[4+row][col]) {
-        case 'X':
-          data[i] |= 0x01;
-          mask[i] |= 0x01;
-          break;
-        case '.':
-          mask[i] |= 0x01;
-          break;
-        case ' ':
-          break;
-      }
+    i = -1;
+    for ( row=0; row<32; ++row ) {
+	for ( col=0; col<32; ++col ) {
+	    if ( col % 8 ) {
+		data[i] <<= 1;
+		mask[i] <<= 1;
+	    } else {
+		++i;
+		data[i] = mask[i] = 0;
+	    }
+	    switch (image[4+row][col]) {
+		case 'X':
+		    data[i] |= 0x01;
+		    mask[i] |= 0x01;
+		    break;
+		case '.':
+		    mask[i] |= 0x01;
+		    break;
+		case ' ':
+		    break;
+	    }
+	}
     }
-  }
-  sscanf(image[4+row], "%d,%d", &hot_x, &hot_y);
-  return SDL_CreateCursor(data, mask, 32, 32, hot_x, hot_y);
-};
+    sscanf(image[4+row], "%d,%d", &hot_x, &hot_y);
+    return SDL_CreateCursor( data , mask , 32 , 32 , hot_x , hot_y );
+}; // static SDL_Cursor *init_system_cursor(const char *image[])
 
 /* ----------------------------------------------------------------------
  * The shape of the mouse cursor might be changed in the course of the
@@ -181,16 +181,23 @@ init_system_cursor(const char *image[])
 void
 set_mouse_cursor_to_shape ( int given_shape ) 
 {
+    static void* current_cursor = NULL ;
+
+    if ( current_cursor != NULL )
+	SDL_FreeCursor ( current_cursor );
+
     switch ( given_shape )
     {
 	case MOUSE_CURSOR_CROSSHAIR_SHAPE:
 	    // SDL_SetCursor( init_system_cursor( crosshair_mouse_cursor ) );
 	    // current_mouse_cursor_shape = MOUSE_CURSOR_CROSSHAIR_SHAPE ;
-	    SDL_SetCursor( init_system_cursor( arrow_mouse_cursor ) );
+	    current_cursor = init_system_cursor( arrow_mouse_cursor ) ;
+	    SDL_SetCursor( current_cursor ) ;
 	    current_mouse_cursor_shape = MOUSE_CURSOR_ARROW_SHAPE ;
 	    break;
 	case MOUSE_CURSOR_ARROW_SHAPE:
-	    SDL_SetCursor( init_system_cursor( arrow_mouse_cursor ) );
+	    current_cursor = init_system_cursor( arrow_mouse_cursor ) ;
+	    SDL_SetCursor( current_cursor ) ;
 	    current_mouse_cursor_shape = MOUSE_CURSOR_ARROW_SHAPE ;
 	    break;
 	default:
