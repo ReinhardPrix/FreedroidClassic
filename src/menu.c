@@ -227,11 +227,11 @@ Cheatmenu (void)
 	case 'r': /* change to new robot type */
 	  printf ("\nType number of new robot: ");
 	  input = GetString (40, 1);
-	  for (i = 0; i < ALLDRUIDTYPES; i++)
+	  for (i = 0; i < Number_Of_Droid_Types ; i++)
 	    if (!strcmp (Druidmap[i].druidname, input))
 	      break;
 
-	  if (i == ALLDRUIDTYPES)
+	  if ( i == Number_Of_Droid_Types )
 	    {
 	      printf ("\nUnrecognized robot-type: %s\n", input);
 	      getchar_raw ();

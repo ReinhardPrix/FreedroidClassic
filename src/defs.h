@@ -275,12 +275,11 @@ enum _directions
 #define MAXENERGIEBALKENLAENGE 160
 #define ENERGIEPOSY 180
 
-/* Maximale Anzahl von ... */
+/* Maximal number of ... */
 
 #define BLOCKANZAHL 		43
 #define NUM_MAP_BLOCKS		BLOCKANZAHL  /* total number of map-blocks */
 
-#define ALLDRUIDTYPES		24	/* number of druid-models that exist */
 #define ALLBULLETTYPES		4	/* number of bullet-types */
 #define ALLBLASTTYPES		2	/* number of different exposions */
 

@@ -60,6 +60,7 @@ Get_Robot_Data ( void* DataPointer )
   char *RobotPointer;
   char *ValuePointer;  // we use ValuePointer while RobotPointer stays still to allow for
                        // interchanging of the order of appearance of parameters in the game.dat file
+  char *CountRobotsPointer;
   int StringLength;
   int i;
 
@@ -195,6 +196,24 @@ Get_Robot_Data ( void* DataPointer )
 
 
   printf("\n\nStarting to read Robot data...\n\n");
+  //--------------------
+  // At first, we must allocate memory for the droid specifications.
+  // How much?  That depends on the number of droids defined in game.dat.
+  // So we have to count those first.  ok.  lets do it.
+
+  CountRobotsPointer=RobotPointer;
+  Number_Of_Droid_Types=0;
+  while ( ( CountRobotsPointer = strstr ( CountRobotsPointer, NEW_ROBOT_BEGIN_STRING)) != NULL)
+    {
+      CountRobotsPointer += strlen ( NEW_ROBOT_BEGIN_STRING );
+      Number_Of_Droid_Types++;
+    }
+  // Not that we know how many robots are defined in game.dat, we can allocate
+  // a fitting amount of memory.
+  i=sizeof(druidspec);
+  Druidmap = malloc ( i * (Number_Of_Droid_Types + 1) + 1 );
+  printf("\n\nWE HAVE COUNTED %d DIFFERENT DRUID TYPES IN game.dat.\nMEMORY HAS BEEN ALLOCATED.\nTHE READING CAN BEGIN.\n" , Number_Of_Droid_Types );
+
   //--------------------
   //Now we start to read the values for each robot:
   //Of which parts is it composed, which stats does it have?
@@ -469,7 +488,7 @@ Get_Robot_Data ( void* DataPointer )
   printf("\n\nThat must have been the last robot.  We're reading the robot data.");
   printf("\n\nApplying the calibration factors to all droids...");
 
-  for ( i=0; i<ALLDRUIDTYPES; i++ ) 
+  for ( i=0; i< Number_Of_Droid_Types ; i++ ) 
     {
       Druidmap[i].maxspeed *= maxspeed_calibrator;
       Druidmap[i].accel *= acceleration_calibrator;

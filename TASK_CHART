@@ -11,6 +11,9 @@ jp
 
 The list of things I'm going to work on next:
 
+-3. Remove the limitation to ALLDRUIDTYPES druid types
+    via dynamically allocating memory.
+
 (?) Add instructions for using the Level editor in Freedroid perhaps on the home page
 
 -2. Split the home page up into an internal manual html file and a leveleditor manual html file

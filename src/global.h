@@ -74,11 +74,13 @@ EXTERN int ThisMessageTime;
 
 EXTERN FCU AllFCUs[];
 EXTERN influence_t Me;		/* the influence data */
-EXTERN druidspec Druidmap[ALLDRUIDTYPES];	/* map of druid specifications */
+// EXTERN druidspec Druidmap[ALLDRUIDTYPES];	/* map of druid specifications */
+EXTERN Druidspec Druidmap;     
 EXTERN bulletspec Bulletmap[ALLBULLETTYPES];	/* map of gun specs */
 EXTERN blastspec Blastmap[ALLBLASTTYPES];
 #endif
 
+EXTERN int Number_Of_Droid_Types;
 EXTERN int InitBars;
 EXTERN int PreTakeEnergy;
 EXTERN int QuitProgram;
@@ -167,7 +169,6 @@ EXTERN unsigned char *LevelColorArray;
 EXTERN int *CRTC;
 EXTERN unsigned char *Data70Pointer;
 
-#ifdef NEW_ENGINE
 EXTERN int Block_Width;
 EXTERN int Block_Height;
 EXTERN int Digit_Length;
@@ -186,7 +187,6 @@ EXTERN SDL_Rect *ne_influ_block;
 EXTERN SDL_Rect *ne_digit_block;
 EXTERN SDL_Rect *ne_rahmen_block;
 EXTERN SDL_Surface *ne_console_surface;
-#endif
 
 
 #undef EXTERN

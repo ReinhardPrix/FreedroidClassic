@@ -388,7 +388,7 @@ PutEnemy (int Enum , int x , int y)
 
   // We check for incorrect droid types, which sometimes might occor, especially after
   // heavy editing of the crew initialisation functions ;)
-  if ( AllEnemys[Enum].type >= ALLDRUIDTYPES )
+  if ( AllEnemys[Enum].type >= Number_Of_Droid_Types )
     {
       fprintf(stderr, "\n\
 \n\

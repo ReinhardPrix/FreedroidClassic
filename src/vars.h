@@ -246,8 +246,7 @@ FCU AllFCUs[] = {
   {"Battle1234AD"}
 };
 
-
-druidspec Druidmap[ALLDRUIDTYPES];
+Druidspec Druidmap;
 
 #define BULLET_SPEED_CALIBRATOR (1)
 bulletspec Bulletmap[ALLBULLETTYPES] = {
