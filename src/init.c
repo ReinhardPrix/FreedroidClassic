@@ -1362,8 +1362,8 @@ InitNewMission ( char *MissionName )
   SetLevelColor (CurLevel->color); 
 
   /* set correct Influ color */
-  SetPalCol (INFLUENCEFARBWERT, Mobilecolor.rot, Mobilecolor.gruen,
-	       Mobilecolor.blau);
+  // SetPalCol (INFLUENCEFARBWERT, Mobilecolor.rot, Mobilecolor.gruen,
+  // Mobilecolor.blau);
 
   ShuffleEnemys(); // NOTE: THIS REQUIRES CurLevel TO BE INITIALIZED
 
@@ -1423,15 +1423,6 @@ InitFreedroid (void)
 
   MinMessageTime = 55;
   MaxMessageTime = 850;
-
-  /* Color values for the function SetColors */
-  Transfercolor.gruen = 13;
-  Transfercolor.blau = 13;
-  Transfercolor.rot = 63;
-  Mobilecolor.gruen = 63;
-  Mobilecolor.blau = 63;
-  Mobilecolor.rot = 63;
-
 
   CurLevel = NULL; // please leave this here BEFORE InitPictures
 

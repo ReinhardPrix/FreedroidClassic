@@ -305,32 +305,22 @@ PutInfluence ( int x, int y)
       TargetRectangle.y=y ;
     }
 
-  /*
-   * Farbe des Influencers (15) richtig setzen
-   */
-
-#define SET_INFLU_COLOR_EVERY_FRAME
-#ifdef SET_INFLU_COLOR_EVERY_FRAME
-  if ((Me.status == TRANSFERMODE) && ( (Me.energy*100 / Druidmap[Me.type].maxenergy) > BLINKENERGY))
-    SetPalCol (INFLUENCEFARBWERT, Transfercolor.rot, Transfercolor.gruen,
-	       Transfercolor.blau);
-
-  if (((Me.status == MOBILE) || (Me.status == WEAPON) ) && ( (Me.energy*100 / Druidmap[Me.type].maxenergy) > BLINKENERGY))
-    SetPalCol (INFLUENCEFARBWERT, Mobilecolor.rot, Mobilecolor.gruen,
-	       Mobilecolor.blau);
-
-  if (((Me.status == WEAPON) || (Me.status == WEAPON) ) && ( (Me.energy*100 / Druidmap[Me.type].maxenergy) > BLINKENERGY))
-    SetPalCol (INFLUENCEFARBWERT, Mobilecolor.rot, Mobilecolor.gruen,
-	       Mobilecolor.blau);
-#endif
-
+  //--------------------
+  // Maybe the influencer is fading due to low energy?
+  // to achive this, is might be nescessary to add some 
+  // alpha to the ne_blocks surface, that will later be
+  // removed again.  We do this here:
+  //
   
 #define alpha_offset 80
   if ( ( (Me.energy*100/Druidmap[Me.type].maxenergy) <= BLINKENERGY) && ( x == (-1) ) ) 
     {
 
       // In case of low energy, do the fading effect...
-      alpha_value = (int) ( ( 256 - alpha_offset ) * fabsf( 0.5 * Me.MissionTimeElapsed - floor( 0.5 * Me.MissionTimeElapsed ) - 0.5 ) + ( alpha_offset ) );
+      alpha_value = (int) ( ( 256 - alpha_offset ) * 
+			    fabsf( 0.5 * Me.MissionTimeElapsed - floor( 0.5 * Me.MissionTimeElapsed ) - 0.5 ) + 
+			    ( alpha_offset ) );
+
       SDL_SetAlpha( ne_blocks , SDL_SRCALPHA , alpha_value );
 
       // ... and also maybe start a new cry-sound
@@ -339,6 +329,19 @@ PutInfluence ( int x, int y)
 	{
 	  Me.LastCrysoundTime = 0;
 	  CrySound();
+	}
+    }
+
+  //--------------------
+  // In case of transfer mode, we produce the transfer mode sound
+  // but of course only in some periodic intervall...
+
+  if ( Me.status == TRANSFERMODE )
+    {
+      if ( Me.LastTransferSoundTime > TRANSFER_SOUND_INTERVAL )
+	{
+	  Me.LastTransferSoundTime = 0;
+	  TransferSound();
 	}
     }
 

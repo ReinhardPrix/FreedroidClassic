@@ -161,8 +161,9 @@ enum
 #define DRUIDRADIUSY		(18/64.0)
 // #define DRUIDRADIUSXY	        ((7*2)/64.0)
 #define DRUIDRADIUSXY	        (7*2/64.0)
-// #define BULLET_BULLET_COLLISION_DIST (10/64.0)
-#define BULLET_BULLET_COLLISION_DIST (8.0/64.0)
+#define BULLET_BULLET_COLLISION_DIST (10/64.0)
+// #define BULLET_BULLET_COLLISION_DIST (8.0/64.0)
+// #define BULLET_BULLET_COLLISION_DIST (4.0/64.0)
 
 /* Dimension eines Blasts */
 #define BLASTRADIUS		( ( INITIAL_BLOCK_WIDTH/64.0 ) * 0.4 )
@@ -210,10 +211,12 @@ enum _sounds
   FIRE_BULLET_SINGLE_PULSE_SOUND,
   FIRE_BULLET_MILITARY_SOUND,
   FIRE_BULLET_FLASH_SOUND,
-  CRY_SOUND
+  CRY_SOUND,
+  TRANSFER_SOUND
 };
 
 #define CRY_SOUND_INTERVAL 2
+#define TRANSFER_SOUND_INTERVAL 1.1
 
 
 // **********************************************************************

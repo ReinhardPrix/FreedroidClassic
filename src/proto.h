@@ -232,6 +232,7 @@ EXTERN void StartSound (int);
 EXTERN void GotHitSound (void);
 EXTERN void GotIntoBlastSound (void);
 EXTERN void CrySound (void);
+EXTERN void TransferSound (void);
 EXTERN void RefreshSound (void);
 EXTERN void MoveLiftSound (void);
 EXTERN void MenuItemSelectedSound (void);

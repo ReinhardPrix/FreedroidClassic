@@ -337,8 +337,8 @@ CheckBulletCollisions (int num)
 	{
 	  if (i == num) continue;  // never check for collision with youself.. ;)
 	  if (AllBullets[i].type == OUT) continue; // never check for collisions with dead bullets.. 
-	  if ( abs(AllBullets[i].pos.x-CurBullet->pos.x) > BULLET_BULLET_COLLISION_DIST ) continue;
-	  if ( abs(AllBullets[i].pos.y-CurBullet->pos.y) > BULLET_BULLET_COLLISION_DIST ) continue;
+	  if ( fabsf(AllBullets[i].pos.x-CurBullet->pos.x) > BULLET_BULLET_COLLISION_DIST ) continue;
+	  if ( fabsf(AllBullets[i].pos.y-CurBullet->pos.y) > BULLET_BULLET_COLLISION_DIST ) continue;
 	  // it seems like we have a collision of two bullets!
 	  // both will be deleted and replaced by blasts..
 	  DebugPrintf (1, "\nBullet-Bullet-Collision detected...");

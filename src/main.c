@@ -153,8 +153,6 @@ UpdateCountersForThisFrame (void)
   int i;
 
 
-  Me.MissionTimeElapsed += Frame_Time();
-
     // if (ShipEmptyCounter == 1) GameOver = TRUE;
 
   LastBlastHit++;
@@ -172,6 +170,9 @@ UpdateCountersForThisFrame (void)
   LastGotIntoBlastSound += Frame_Time ();
   LastRefreshSound += Frame_Time ();
   Me.LastCrysoundTime += Frame_Time ();
+  Me.MissionTimeElapsed += Frame_Time();
+  Me.LastTransferSoundTime += Frame_Time();
+
 
   if ( SkipAFewFrames ) SkipAFewFrames--;
 

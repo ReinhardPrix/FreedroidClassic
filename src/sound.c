@@ -45,7 +45,7 @@
 // The order of appearance here should match the order of appearance 
 // in the enum-Environment located in defs.h!
 
-#define ALL_SOUNDS 25
+#define ALL_SOUNDS 26
 char *SoundSampleFilenames[ALL_SOUNDS] = {
   SOUND_DIR "ERRORSOUND_NILL",
   SOUND_DIR "Combat_Background_Music.wav",
@@ -71,7 +71,8 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
   SOUND_DIR "Fire_Bullet_Single_Pulse_Sound_0.wav",
   SOUND_DIR "Fire_Bullet_Military_Sound_0.wav",
   SOUND_DIR "Fire_Bullet_Flash_Sound_0.wav",
-  SOUND_DIR "Cry_Sound_0.wav"
+  SOUND_DIR "Cry_Sound_0.wav",
+  SOUND_DIR "Takeover_Sound_0.wav"
 };
 
 #ifdef HAVE_LIBSDL_MIXER
@@ -279,6 +280,18 @@ CrySound (void)
 /*@Function============================================================
 @Desc: 
 
+@Ret: 
+@Int:
+* $Function----------------------------------------------------------*/
+void
+TransferSound (void)
+{
+  Play_Sound ( TRANSFER_SOUND );
+}
+
+/*@Function============================================================
+@Desc: 
+
 This function is intended to provide a convenient way of switching
 between different backround sounds in freedroid.
 If no background sound was yet running, the function should start playing
@@ -419,7 +432,8 @@ with game performance in any way.  I think this is really not dangerous.\n\
     } // if ( ... = -1
   else
     {
-      DebugPrintf (1, "\nSuccessfully playing file %s.", SoundSampleFilenames[ Tune ]);
+      DebugPrintf( 2 , "\nSuccessfully playing file %s.", SoundSampleFilenames[ Tune ]);
+      // DebugPrintf (1, "\nSuccessfully playing file %s.", SoundSampleFilenames[ Tune ]);
     }
 
 #endif // HAVE_LIBSDL_MIXER

@@ -103,9 +103,6 @@ EXTERN int NumEnemys;
 EXTERN Level CurLevel;		/* the current level data */
 EXTERN ship curShip;		/* the current ship-data */
 
-EXTERN color Transfercolor;
-EXTERN color Mobilecolor;
-
 EXTERN bullet AllBullets[MAXBULLETS + 10];
 EXTERN blast AllBlasts[MAXBLASTS + 10];
 EXTERN int KeyCode;

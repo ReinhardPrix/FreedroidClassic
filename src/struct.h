@@ -124,7 +124,7 @@ druidspec, *Druidspec;
 typedef struct
 {
   int type;			/* what kind of druid is this ? */
-  byte status;			/* attacking, defense, dead, ... */
+  int status;			/* attacking, defense, dead, ... */
   finepoint speed;		/* the current speed of the druid */
   finepoint pos;		/* current position in level levelnum */
   double health;			/* the max. possible energy in the moment */
@@ -141,6 +141,7 @@ typedef struct
   float MissionTimeElapsed;
   int Marker;                   // In case you've taken over a marked droid, this will contain the marker
   float LastCrysoundTime;
+  float LastTransferSoundTime;
 }
 influence_t, *Influence_t;
 
