@@ -811,17 +811,31 @@ add_loaded_image_to_output_file ( void )
     Sint16 img_ylen;
     Sint16 img_x_offs;
     Sint16 img_y_offs;
+    Sint16 orig_img_xlen;
+    Sint16 orig_img_ylen;
     unsigned char r_comp, g_comp, b_comp, a_comp;
 
     img_xlen = input_surface -> w ;
     img_ylen = input_surface -> h ;
     img_x_offs = offset_iso_image . offset_x ;
     img_y_offs = offset_iso_image . offset_y ;
+    orig_img_xlen = offset_iso_image . original_image_width ;
+    orig_img_ylen = offset_iso_image . original_image_height ;
 
     fwrite ( & ( img_xlen ) , 1 , sizeof ( Sint16 ) , output_file );
     fwrite ( & ( img_ylen ) , 1 , sizeof ( Sint16 ) , output_file );
     fwrite ( & ( img_x_offs ) , 1 , sizeof ( Sint16 ) , output_file );
     fwrite ( & ( img_y_offs ) , 1 , sizeof ( Sint16 ) , output_file );
+
+    //--------------------
+    // If we've padded the image, we need to write down the original
+    // image height and width in the image collection file too...
+    //
+    if ( open_gl_sized_images )
+    {
+	fwrite ( & ( orig_img_xlen ) , 1 , sizeof ( Sint16 ) , output_file );
+	fwrite ( & ( orig_img_ylen ) , 1 , sizeof ( Sint16 ) , output_file );
+    }
 
     //--------------------
     // Now we can save the image data...
@@ -843,6 +857,33 @@ add_loaded_image_to_output_file ( void )
     } 
     
 }; // void add_loaded_image_to_output_file ( void )
+
+/* ----------------------------------------------------------------------
+ * This function flips a given SDL_Surface around the x-axis, i.e. up-down.
+ * 
+ * This is particularly nescessary, since OpenGL has a different native
+ * coordinate system than SDL and therefore images often appear flipped
+ * around if one doesn't counter this effect with OpenGL by flipping the
+ * images just once more in the same fashion.  That is what this function
+ * does.
+ * ---------------------------------------------------------------------- */
+void
+flip_image_horizontally ( SDL_Surface* tmp1 ) 
+{
+  int x , y ;
+  Uint32 temp;
+
+  for ( y = 0 ; y < ( tmp1 -> h ) / 2 ; y ++ )
+    {
+      for ( x = 0 ; x < (tmp1 -> w ) ; x ++ )
+	{
+	  temp = GetPixel ( tmp1 , x , y ) ;
+	  PutPixel ( tmp1 , x , y , GetPixel ( tmp1 , x , ( tmp1 -> h - y - 1 ) ) ) ;
+	  PutPixel ( tmp1 , x , ( tmp1 -> h - y - 1 ) , temp ) ;
+	}
+    }
+}; // void flip_image_horizontally ( SDL_Surface* tmp1 ) 
+
 
 /* -----------------------------------------------------------------
  * This function is the heart of the game.  It contains the main
@@ -879,6 +920,36 @@ main (int argc, char *const argv[])
     else
 	DebugPrintf( 0 , "\nOpening output file successful...\n" );
 
+    //--------------------
+    // Now a new feature:  We write down some header information into
+    // the newly created file.  This will help the main program to 
+    // distinguish the image collection format and add security against
+    // various errors.
+    //
+    if ( ! strncmp ( "iso" , current_file_series_prefix , 3 ) )
+    {
+	fwrite ( "tuxX" , 1 , strlen ( "tuxX" ) , output_file );
+    }
+    else
+    {
+	fwrite ( "eneX" , 1 , strlen ( "eneX" ) , output_file );
+    }
+    if ( open_gl_sized_images )
+    {
+	fwrite ( "oglX" , 1 , strlen ( "oglX" ) , output_file );
+    }
+    else
+    {
+	fwrite ( "sdlX" , 1 , strlen ( "sdlX" ) , output_file );
+    }
+    
+    //--------------------
+    // At this point (when reading the file in the game) the file format
+    // is clear, so we may do some case-dependent writing into the post-header
+    // area here already without getting into trouble...
+    //
+    
+
     for ( j = 0 ; j < all_object_directions ; j ++ )
     {
 	for ( i = 0 ; i < max_object_phases ; i ++ )
@@ -913,7 +984,12 @@ main (int argc, char *const argv[])
 	    //
 	    if ( open_gl_sized_images )
 	    {
+		offset_iso_image . original_image_width = input_surface -> w ;
+		offset_iso_image . original_image_height = input_surface -> h ;
+
+		flip_image_horizontally ( input_surface ) ;
 		input_surface = pad_image_for_texture ( input_surface ) ;
+		flip_image_horizontally ( input_surface ) ;
 		DebugPrintf ( 0 , "\nImage padded to match powers of two." );
 	    }
 	    
