@@ -1,5 +1,6 @@
 
 ----------------------------------------------------------------------
+
 This file was generated using the Freedroid level editor.
 Please feel free to make any modifications you like, but in order for you
 to have an easier time, it is recommended that you use the Freedroid level
@@ -328,11 +329,11 @@ begin_waypoints
 Nr.=  0 x=   1 y=   1	 connections:  1 17  2 
 Nr.=  1 x=  12 y=   1	 connections:  0  3 
 Nr.=  2 x=   3 y=   3	 connections:  3 15  0 
-Nr.=  3 x=  12 y=   3	 connections:  1  6 19 
+Nr.=  3 x=  12 y=   3	 connections:  1  6 
 Nr.=  4 x=  16 y=   3	 connections:  7  5 
 Nr.=  5 x=  25 y=   3	 connections:  4 
-Nr.=  6 x=  10 y=   5	 connections:  7  9  3 19 
-Nr.=  7 x=  16 y=   5	 connections:  6  4 19 
+Nr.=  6 x=  10 y=   5	 connections:  7  9  3 
+Nr.=  7 x=  16 y=   5	 connections:  6  4 
 Nr.=  8 x=   8 y=   7	 connections:  9 
 Nr.=  9 x=  10 y=   7	 connections:  8 11  6 10 
 Nr.= 10 x=  36 y=   7	 connections:  9 
@@ -344,7 +345,6 @@ Nr.= 15 x=   3 y=  11	 connections:  2 17 16
 Nr.= 16 x=  11 y=  11	 connections: 18 15 13 
 Nr.= 17 x=   1 y=  13	 connections: 18  0 15 
 Nr.= 18 x=  11 y=  13	 connections: 17 16 
-Nr.= 19 x=  13 y=   5	 connections:  6  3  7 
 end_level
 ----------------------------------------------------------------------
 Levelnumber: 8
