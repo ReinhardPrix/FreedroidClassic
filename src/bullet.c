@@ -128,7 +128,7 @@ StartBlast (float x, float y, int type)
       break;
 
   /* keinen gefunden: nimm den ersten */
-  if (i == MAXBLASTS)
+  if (i >= MAXBLASTS)
     i = 0;
 
   /* Get Pointer to it: more comfortable */

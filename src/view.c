@@ -154,10 +154,9 @@ RecFlashFill (int LX, int LY, int Color, unsigned char *Parameter_Screen, int SB
 void
 Assemble_Combat_Picture (int mask)
 {
-  Blast CurBlast = &(AllBlasts[0]);
   int MapBrick;
   int line, col;
-  int i, j;
+  int i;
   SDL_Rect TargetRectangle;
 
   DebugPrintf ("\nvoid Assemble_Combat_Picture(...): Real function call confirmed.");
@@ -169,6 +168,7 @@ Assemble_Combat_Picture (int mask)
   // * THE COMBATSCREENSIZE COULD *EASYLY* BE CHANGED WITHOUT HAVING TO CHANGE THE CODE!!!
   // 
 
+  SDL_SetColorKey (ne_screen, 0, 0);
   SDL_SetClipRect (ne_screen , &User_Rect);
 
   for (line = 0; line < CurLevel->ylen ; line++)
@@ -186,6 +186,13 @@ Assemble_Combat_Picture (int mask)
 	    }			// if !INVISIBLE_BRICK 
 	}			// for(col) 
     }				// for(line) 
+
+  if (SDL_SetColorKey(ne_blocks, SDL_SRCCOLORKEY, ne_transp_key) == -1 )
+    {
+      fprintf (stderr, "Transp setting by SDL_SetColorKey() failed: %s \n",
+	       SDL_GetError());
+      Terminate(ERR);
+    }
 
 
   if (mask & ONLY_SHOW_MAP) 
@@ -214,6 +221,14 @@ Assemble_Combat_Picture (int mask)
     if (AllBlasts[i].type != OUT)
       PutBlast (i);
 
+  if ( Draw_Framerate )
+    {
+      PrintStringFont( ne_screen , FPS_Display_BFont , User_Rect.x , 
+		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
+		       "FPS: %d " , (int) (1.00/Frame_Time()) );
+    }
+
+
   // At this point we are done with the drawing procedure
   // and all that remains to be done is updating the screen.
   // Depending on where we did our modifications, we update
@@ -223,35 +238,6 @@ Assemble_Combat_Picture (int mask)
     {
       SDL_UpdateRect( ne_screen , User_Rect.x , User_Rect.y , User_Rect.w , User_Rect.h );
     }
-
-  return;  // for now
-
-
-  // DIRTY CODE:  CHECKING COLLISIONS WITHIN THE
-  // DRAWING ROUTINE:  THAT REMAINS HERE JUST FOR
-  // RECYCLING PURPOSES
-
-  // Sofortiger Check auf Bullet-Blast-Kollisionen
-  for (j = 0; j < MAXBLASTS; j++)
-    {
-      /* check Blast-Bullet Collisions and kill hit Bullets */
-      for (i = 0; i < MAXBULLETS; i++)
-	{
-	  if (AllBullets[i].type == OUT)
-	    continue;
-	  if (CurBlast->phase > 4)
-	    break;
-
-	  if (abs (AllBullets[i].pos.x - CurBlast->PX) < BLASTRADIUS)
-	    if (abs (AllBullets[i].pos.y - CurBlast->PY) < BLASTRADIUS)
-	      {
-		/* KILL Bullet silently */
-		AllBullets[i].type = OUT;
-		AllBullets[i].mine = FALSE;
-	      }
-	}			/* for */
-      CurBlast++;
-    }				/* for */
 
   DebugPrintf ("\nvoid Assemble_Combat_Picture(...): end of function reached.");
 

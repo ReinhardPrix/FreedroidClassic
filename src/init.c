@@ -203,7 +203,7 @@ InitNewGame (void)
   LastRefreshSound = 2;
   PlusExtentionsOn = FALSE;
   ThisMessageTime = 0;
-  Draw_Framerate=FALSE;
+  Draw_Framerate=TRUE;
   Draw_Energy=FALSE;
 
 

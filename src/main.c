@@ -277,7 +277,10 @@ main (int argc, char *const argv[])
 	  if (framenr % 10 == 1)
 	    gettimeofday (&tenframetimestamp, NULL);
 	  if (framenr % 100 == 1)
-	    gettimeofday (&onehundredframetimestamp, NULL);
+	    {
+	      gettimeofday (&onehundredframetimestamp, NULL);
+	      printf("\n%f",1/Frame_Time());
+	    }
 #endif
 
 	  UpdateCountersForThisFrame ();

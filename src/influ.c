@@ -811,6 +811,11 @@ ExplodeInfluencer (void)
       counter = 0;
       while (AllBlasts[counter++].type != OUT);
       counter -= 1;
+      if (counter >= MAXBLASTS)
+	{
+	  printf("\n\nWent out of blasts in ExplodeInfluencer...\n\n");
+	  Terminate(ERR);
+	}
       AllBlasts[counter].type = DRUIDBLAST;
       AllBlasts[counter].PX =
 	Me.pos.x - DRUIDRADIUSX / 2 + MyRandom (10)*0.05;
