@@ -310,18 +310,12 @@ Get_Item_Data ( char* DataPointer )
   // in advance.  We count already, though it's not yet dynamic memory that is used.
   //
   Number_Of_Item_Types = CountStringOccurences ( DataPointer , NEW_ITEM_TYPE_BEGIN_STRING ) ;
-  if ( Number_Of_Item_Types < MAX_ITEM_TYPES_IN_GAME )
-    {
-      DebugPrintf ( 1 , "\nWe have counted %d different item types in the game data file.\n" , Number_Of_Item_Types );
-    }
-  else
-    {
-      fprintf ( stderr, "\n\nNumber_Of_Item_Types: '%d'.\n" , Number_Of_Item_Types );
-      GiveStandardErrorMessage ( "Get_Item_Data(...)" , "\
-There seem to be more item definitions in freedroid.item_archetypes\n\
-than the maximum allowance for item types in the ALL_ITEMS constant.",
-				 PLEASE_INFORM, IS_FATAL );
-    }
+
+  //--------------------
+  // Now that we know how many item archetypes there are, we can allocate the proper
+  // amount of memory for this information.
+  //
+  ItemMap = (itemspec*) MyMalloc ( sizeof ( itemspec ) * ( Number_Of_Item_Types + 1 ) );
 
   //--------------------
   // Now we start to read the values for each bullet type:
