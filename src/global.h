@@ -216,6 +216,7 @@ EXTERN SDL_Surface *ne_static;          /* here we collect all non-resizable blo
 EXTERN SDL_Surface *ne_console_surface;
 EXTERN SDL_Surface *ship_off_pic;    	/* Side-view of ship: lights off */
 EXTERN SDL_Surface *ship_on_pic;	/* Side-view of ship: lights on */
+EXTERN SDL_Surface *banner_pic;
 
 EXTERN SDL_Rect level_rect[MAX_LEVELS]; /* rect's of levels in side-view */
 EXTERN SDL_Rect liftrow_rect[MAX_LIFT_ROWS]; /* the lift-row rect's in side-view*/
