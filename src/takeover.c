@@ -182,9 +182,11 @@ Takeover (int enemynum)
      for use as background in transparent version of Takeover-game */
   //  GetInternFenster (SHOW_MAP);
 
-  SetUserfenster (TO_BG_COLOR, RealScreen);  /* set takeover color */
+  DisplayRahmen (Outline320x200);
+  SetUserfenster (TO_BG_COLOR, Outline320x200);  /* set takeover color */
 
-  Me.status = MOBILE;
+  Me.status = MOBILE; /* the new status _after_ the takeover game */
+
   SetPalCol (INFLUENCEFARBWERT, Mobilecolor.rot, Mobilecolor.gruen,
 	     Mobilecolor.blau);
 
@@ -280,8 +282,7 @@ Takeover (int enemynum)
 	  usleep (30000);
 	  waiter--;
 	  RollToColors ();
-	  SetInfoline ();
-	  strcpy (LeftInfo, message);	/* eigene Message anzeigen */
+	  SetInfoline( message, NULL);	/* eigene Message anzeigen */
 	  ShowPlayground ();
 	} /* WHILE waiter */
 
@@ -310,7 +311,7 @@ ChooseColor (void)
 {
   int countdown = 100;  /* duration in 1/10 seconds given for color choosing */
   int ColorChosen = FALSE;
-  char dummy[80];
+  char count_text[80];
   
   Uint32 prev_count_tick, count_tick_len;
 
@@ -343,9 +344,10 @@ ChooseColor (void)
 	}
 
       countdown--;		/* Count down */
-      strcpy (LeftInfo, "Color? ");
-      strcat (LeftInfo, itoa (countdown, dummy, 10));
-      ShowPlayground ();
+      sprintf (count_text, "Color? %d", countdown);
+
+      SetInfoline (count_text, NULL);
+      ShowPlayground (); 
 
 
       if (countdown == 0)
@@ -367,7 +369,7 @@ void
 PlayGame (void)
 {
   int countdown = 100;   /* lenght of Game in 1/10 seconds */
-  char dummy[80];
+  char count_text[80];
   int FinishTakeover = FALSE;
   int row;
 
@@ -396,13 +398,23 @@ PlayGame (void)
       up   = up   | UpPressed(); 
       down = down | DownPressed();
       set  = set  | SpacePressed();
+
+
+      /* allow for a WIN-key that give immedate victory */
+      if ( WPressed () && Ctrl_Was_Pressed () && Alt_Was_Pressed () )
+	{
+	  LeaderColor = YourColor;   /* simple as that */
+	  return;  /* leave now, to avoid changing of LeaderColor! */
+	} 
+	
       
       if ( cur_time > prev_count_tick + count_tick_len ) /* time to count 1 down */
 	{
 	  prev_count_tick += count_tick_len;  /* set for next countdown tick */
 	  countdown--;
-	  strcpy (LeftInfo, "Finish-");
-	  strcat (LeftInfo, itoa (countdown, dummy, 10));
+	  sprintf (count_text, "Finish-%d", countdown);
+	  SetInfoline (count_text, NULL);
+
 	  RollToColors ();
 	  if (countdown == 0)
 	    FinishTakeover = TRUE;
@@ -684,7 +696,12 @@ GetTakeoverGraphics (void)
 }				// int GetTakeoverGraphics(void)
 
 /*-----------------------------------------------------------------
- * @Desc: displays complete current Playground
+ * @Desc: prepares _and displays_ (via PrepareScaledSurface(TRUE)
+ *        the current Playground
+ *
+ *   NOTE: this function should only change the USERFENSTER part
+ *         of Outline320x200 !!
+ *         so that we can do Infoline-setting before this
  *
  * @Ret: void
  *
@@ -702,16 +719,12 @@ ShowPlayground (void)
 
   static unsigned char *WorkBlock = NULL;
 
-  DebugPrintf ("\nShowPlayground: Funktion echt aufgerufen.");
 
   if (WorkBlock == NULL)
     WorkBlock = MyMalloc (BLOCKMEM + 10);
 
-  SetUserfenster (TO_BG_COLOR, InternalScreen);
-  DisplayRahmen(InternalScreen);
+  SetUserfenster (TO_BG_COLOR, Outline320x200);
 
-  UpdateInfoline ();
-  DebugPrintf ("\nShowPlayground(): first UpdateInfoline() survived");
   curx = USERFENSTERPOSX + LEFT_OFFS_X;
   cury = USERFENSTERPOSY + LEFT_OFFS_Y;
 
@@ -729,36 +742,36 @@ ShowPlayground (void)
   caps_y = CurCapsuleStart[GELB].y + caps_row * (CAPSULE_HEIGHT + 1);
 
   DisplayMergeBlock (curx, cury, ToGroundBlocks + GELB_OBEN * GROUNDBLOCKMEM,
-		     GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, InternalScreen);
+		     GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, Outline320x200);
 
   cury += GROUNDBLOCKHEIGHT;
   tmp = ToGroundBlocks + GELB_MITTE * GROUNDBLOCKMEM;
   for (i = 0; i < 12; i++, cury += GROUNDBLOCKHEIGHT)
     {
       DisplayMergeBlock (curx, cury, tmp, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT,
-			 InternalScreen);
+			 Outline320x200);
       if ((caps_row == i) || (i == 11 && caps_row == 12))
 	{
 	  DisplayMergeBlock (caps_x, caps_y,
 			     CapsuleBlocks,
-			     CAPSULE_LEN, CAPSULE_HEIGHT, InternalScreen);
+			     CAPSULE_LEN, CAPSULE_HEIGHT, Outline320x200);
 	}			/* if */
     }				/* for i=1 to 12 */
 
   DisplayMergeBlock (curx, cury, ToGroundBlocks + GELB_UNTEN * GROUNDBLOCKMEM,
-		     GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, InternalScreen);
+		     GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, Outline320x200);
 
   /* Mittlere Saeule */
   curx = USERFENSTERPOSX + MID_OFFS_X;
   cury = USERFENSTERPOSY + MID_OFFS_Y;
 
   DisplayMergeBlock (curx, cury, ToLeaderBlock,
-		     LEADERBLOCKLEN, LEADERBLOCKHEIGHT, InternalScreen);
+		     LEADERBLOCKLEN, LEADERBLOCKHEIGHT, Outline320x200);
 
   cury += LEADERBLOCKHEIGHT;
   for (i = 0; i < 12; i++, cury += COLUMNBLOCKHEIGHT)
     DisplayMergeBlock (curx, cury, ToColumnBlock,
-		       COLUMNBLOCKLEN, COLUMNBLOCKHEIGHT, InternalScreen);
+		       COLUMNBLOCKLEN, COLUMNBLOCKHEIGHT, Outline320x200);
 
   /* rechte Saeule */
   curx = USERFENSTERPOSX + RIGHT_OFFS_X;
@@ -779,7 +792,7 @@ ShowPlayground (void)
 
   DisplayMergeBlock (curx, cury,
 		     ToGroundBlocks + VIOLETT_OBEN * GROUNDBLOCKMEM,
-		     GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, InternalScreen);
+		     GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, Outline320x200);
 
   cury += GROUNDBLOCKHEIGHT;
 
@@ -787,32 +800,32 @@ ShowPlayground (void)
   for (i = 0; i < 12; i++, cury += GROUNDBLOCKHEIGHT)
     {
       DisplayMergeBlock (curx, cury, tmp, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT,
-			 InternalScreen);
+			 Outline320x200);
       if ((caps_row == i) || (i == 11 && caps_row == 12))
 	DisplayMergeBlock (caps_x, caps_y,
 			   CapsuleBlocks + CAPSULE_MEM,
-			   CAPSULE_LEN, CAPSULE_HEIGHT, InternalScreen);
+			   CAPSULE_LEN, CAPSULE_HEIGHT, Outline320x200);
     }				/* for */
 
   DisplayMergeBlock (curx, cury,
 		     ToGroundBlocks + VIOLETT_UNTEN * GROUNDBLOCKMEM,
-		     GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, InternalScreen);
+		     GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, Outline320x200);
 
   /* Fill the Leader-LED with its color */
   DisplayMergeBlock (LEADERLEDX, LEADERLEDY,
 		     FillBlocks + LeaderColor * FILLBLOCKMEM, FILLBLOCKLEN,
-		     FILLBLOCKHEIGHT, InternalScreen);
+		     FILLBLOCKHEIGHT, Outline320x200);
 
   DisplayMergeBlock (LEADERLEDX, LEADERLEDY + FILLBLOCKHEIGHT,
 		     FillBlocks + LeaderColor * FILLBLOCKMEM, FILLBLOCKLEN,
-		     FILLBLOCKHEIGHT, InternalScreen);
+		     FILLBLOCKHEIGHT, Outline320x200);
 
 
   /* Fill the Display Column with its colors */
   for (i = 0; i < NUM_LINES; i++)
     DisplayMergeBlock (LEDCOLUMNX, LEDCOLUMNY + i * (FILLBLOCKHEIGHT + 1),
 		       FillBlocks + DisplayColumn[i] * FILLBLOCKMEM,
-		       FILLBLOCKLEN, FILLBLOCKHEIGHT, InternalScreen);
+		       FILLBLOCKLEN, FILLBLOCKHEIGHT, Outline320x200);
 
   /* Show the yellow playground */
   for (i = 0; i < NUM_LAYERS - 1; i++)
@@ -822,7 +835,7 @@ ShowPlayground (void)
 			   PlaygroundStart[GELB].y + j * TO_BLOCKHEIGHT,
 			   ToGameBlocks +
 			   ToPlayground[GELB][i][j] * TO_BLOCKMEM,
-			   TO_BLOCKLEN, TO_BLOCKHEIGHT, InternalScreen);
+			   TO_BLOCKLEN, TO_BLOCKHEIGHT, Outline320x200);
       }
 
   /* Show the violett playground */
@@ -837,7 +850,7 @@ ShowPlayground (void)
 			     ToGameBlocks +
 			     ToPlayground[VIOLETT][i][j] * TO_BLOCKMEM +
 			     TO_BLOCKS * TO_BLOCKMEM, TO_BLOCKLEN,
-			     TO_BLOCKHEIGHT, InternalScreen);
+			     TO_BLOCKHEIGHT, Outline320x200);
 	}			/* for lines */
     }				/* for layers */
 
@@ -858,13 +871,13 @@ ShowPlayground (void)
 			       LeftCapsulesStart[color].y +
 			       i * (CAPSULE_HEIGHT),
 			       CapsuleBlocks + color * CAPSULE_MEM,
-			       CAPSULE_LEN, CAPSULE_HEIGHT, InternalScreen);
+			       CAPSULE_LEN, CAPSULE_HEIGHT, Outline320x200);
 	  else
 	    DisplayMergeBlock (LeftCapsulesStart[color].x,
 			       LeftCapsulesStart[color].y +
 			       i * (CAPSULE_HEIGHT),
 			       CapsuleBlocks + TO_COLORS * CAPSULE_MEM,
-			       CAPSULE_LEN, CAPSULE_HEIGHT, InternalScreen);
+			       CAPSULE_LEN, CAPSULE_HEIGHT, Outline320x200);
 	}			/* for capsules */
     }				/* for opponent */
 
@@ -893,7 +906,7 @@ ShowPlayground (void)
     CopyMergeBlock (WorkBlock, LeftDruid, BLOCKMEM);
 
   DisplayMergeBlock (DruidStart[GELB].x, DruidStart[GELB].y,
-		     WorkBlock, BLOCKBREITE, BLOCKHOEHE - 5, InternalScreen);
+		     WorkBlock, BLOCKBREITE, BLOCKHOEHE - 5, Outline320x200);
 
   memset (WorkBlock, TRANSPARENTCOLOR, BLOCKMEM);
 
@@ -902,15 +915,12 @@ ShowPlayground (void)
 
 
   DisplayMergeBlock (DruidStart[VIOLETT].x, DruidStart[VIOLETT].y,
-		     WorkBlock, BLOCKBREITE, BLOCKHOEHE - 5, InternalScreen);
+		     WorkBlock, BLOCKBREITE, BLOCKHOEHE - 5, Outline320x200);
 
-  /* Finally, display the final InternalScreen on the RealScreen */
-  SwapScreen ();
 
-  DebugPrintf
-    ("\nvoid ShowPlayground(void): Funktionsende ordnungsgemaess erreicht....");
+  PrepareScaledSurface(TRUE);  /* this updates the actually displayed screen */
 
-  PrepareScaledSurface(TRUE);
+  return;
 }				/* ShowPlayground */
 
 
