@@ -1214,21 +1214,36 @@ is a severe bug in the reading function.",
 void
 get_standard_iso_floor_tile_size ( void )
 {
-  SDL_Surface *standard_floor_tile;
+    SDL_Surface *standard_floor_tile;
 
-  standard_floor_tile = our_IMG_load_wrapper( find_file ( "floor_tiles/iso_miscellaneous_floor_0000.png" , GRAPHICS_DIR, FALSE ) );
-  if ( standard_floor_tile == NULL )
+    standard_floor_tile = our_IMG_load_wrapper( find_file ( "floor_tiles/iso_miscellaneous_floor_0000.png" , GRAPHICS_DIR, FALSE ) );
+    if ( standard_floor_tile == NULL )
     {
-      fprintf( stderr, "\n\nSDL_GetError: %s \n" , SDL_GetError() );
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
+	fprintf( stderr, "\n\nSDL_GetError: %s \n" , SDL_GetError() );
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
 UNABLE TO LOAD STANDARD TILE!",
-				 PLEASE_INFORM, IS_FATAL );
+				   PLEASE_INFORM, IS_FATAL );
     }
+    
+    //--------------------
+    // Warning!  The standard tile sizes should be a multiple of 2 in
+    //           both directions to prevent jittering from numerical 
+    //           rounding.
+    //
+    //           They also should be a bit less than a real tile size
+    //           to hide some of the gap from the shading and anti-aliasing
+    //           of the rendering process.
+    //
+    if ( standard_floor_tile -> w % 2 )
+	iso_floor_tile_width  = standard_floor_tile -> w - 3;
+    else
+	iso_floor_tile_width  = standard_floor_tile -> w - 2;
+    if ( standard_floor_tile -> h % 2 )
+	iso_floor_tile_height = standard_floor_tile -> h - 3;
+    else
+	iso_floor_tile_height = standard_floor_tile -> h - 2;
 
-  iso_floor_tile_width  = standard_floor_tile -> w - 2;
-  iso_floor_tile_height = standard_floor_tile -> h - 2;
-
-  SDL_FreeSurface ( standard_floor_tile );
+    SDL_FreeSurface ( standard_floor_tile );
 
 }; // void get_standard_iso_floor_tile_size ( void )
 

@@ -575,22 +575,69 @@ ShowCombatScreenTexts ( int mask )
 }; // void ShowCombatScreenTexts ( int mask )
 
 /* ----------------------------------------------------------------------
+ * When blitting the floor to the screen, we can of course use the map
+ * position of each map tile to compute the right position.  That is what
+ * the blit_this_floor_tile_to_screen(...) function does.
  *
+ * However, there are some drawbacks to this method:  Due to rounding 
+ * inaccuracies, a certain small but still noticable 'jitter' may occur,
+ * meaning that the relative position of images on the screen may vary
+ * by -1/+1 pixel to each other.  Some people obviously have good eyes :)
+ *
+ * So that is why there is also an alternative that will work around this
+ * problem, that will use sums instead of products to locate the right
+ * position in pixels on the screen for blitting the next floor tile.
  *
  * ---------------------------------------------------------------------- */
 void
 blit_this_floor_tile_to_screen ( iso_image our_floor_iso_image ,
 				 float our_col, float our_line )
 {
-  if ( use_open_gl )
+    if ( use_open_gl )
     {
-      blit_open_gl_texture_to_map_position ( our_floor_iso_image , our_col , our_line , 1.0 , 1.0 , 1.0 , FALSE , FALSE) ;
+	blit_open_gl_texture_to_map_position ( our_floor_iso_image , our_col , our_line , 1.0 , 1.0 , 1.0 , FALSE , FALSE) ;
     }
-  else
+    else
     {
-      blit_iso_image_to_map_position ( our_floor_iso_image , our_col , our_line ) ;
+	blit_iso_image_to_map_position ( our_floor_iso_image , our_col , our_line ) ;
     }
 }; // void blit_this_floor_tile_to_screen ( iso_image our_floor_iso_image , float our_col, float our_line )
+
+/* ----------------------------------------------------------------------
+ * When blitting the floor to the screen, we can of course use the map
+ * position of each map tile to compute the right position.  That is what
+ * the blit_this_floor_tile_to_screen(...) function does.
+ *
+ * However, there are some drawbacks to this method:  Due to rounding 
+ * inaccuracies, a certain small but still noticable 'jitter' may occur,
+ * meaning that the relative position of images on the screen may vary
+ * by -1/+1 pixel to each other.  Some people obviously have good eyes :)
+ *
+ * So that is why there is also an alternative that will work around this
+ * problem, that will use sums instead of products to locate the right
+ * position in pixels on the screen for blitting the next floor tile.
+ *
+ * This is the alternative method using offsets instead...
+ *
+ * ---------------------------------------------------------------------- */
+void
+blit_this_floor_tile_to_screen_using_offset ( iso_image our_floor_iso_image ,
+					      int offs_x, int offs_y )
+{
+    offs_x += our_floor_iso_image . offset_x ;
+    offs_y += our_floor_iso_image . offset_y ;
+  
+    if ( use_open_gl )
+    {
+	// blit_open_gl_texture_to_map_position ( our_floor_iso_image , our_col , our_line , 1.0 , 1.0 , 1.0 , FALSE , FALSE) ;
+	blit_open_gl_texture_to_screen_position ( our_floor_iso_image , offs_x , offs_y , TRUE ) ;
+    }
+    else
+    {
+	// blit_iso_image_to_map_position ( our_floor_iso_image , our_col , our_line ) ;
+	blit_iso_image_to_screen_position ( our_floor_iso_image , offs_x , offs_y );
+    }
+}; // void blit_this_floor_tile_to_screen_using_offset ( .... )
 
 /* ----------------------------------------------------------------------
  * This function should assemble the pure floor tiles that will be visible
@@ -602,7 +649,9 @@ isometric_show_floor_around_tux_without_doublebuffering ( int mask )
 {
     int LineStart, LineEnd, ColStart, ColEnd , line, col, MapBrick;
     Level DisplayLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
-    
+    point next_pixel_position_for_floor_tile;
+    point initial_rectangle;
+
     //--------------------
     // Maybe we should be using a more elegant function here, that will automatically
     // compute the right amount of squares to blit in each direction from the known amount
@@ -650,9 +699,34 @@ isometric_show_floor_around_tux_without_doublebuffering ( int mask )
 	{
 	    for ( col = ColStart ; col < ColEnd ; col++ )
 	    {
-		MapBrick = GetMapBrick( DisplayLevel, col , line ) ;
+		MapBrick = GetMapBrick ( DisplayLevel, col , line ) ;
+/*
+		//--------------------
+		// To prevent jitter, we compute the offset with floats once and
+		// after that, we only do relative manipulations...
+		//
+		if ( ( line == LineStart ) && ( col == ColStart ) )
+		{
+		    initial_rectangle . x = 
+			translate_map_point_to_screen_pixel ( ((float)col)+0.5 , ((float)line) +0.5 , TRUE );
+		    initial_rectangle . y = 
+			translate_map_point_to_screen_pixel ( ((float)col)+0.5 , ((float)line) +0.5 , FALSE );
+		    // DebugPrintf ( -4 , "\nInitial position: %d %d." , initial_rectangle . x , initial_rectangle . y );
+		}
+		next_pixel_position_for_floor_tile . x = initial_rectangle . x -
+		    ( ( line - LineStart ) * ( iso_floor_tile_width / 2 ) ) +
+		    ( ( col - ColStart ) * ( iso_floor_tile_width / 2 ) );
+		next_pixel_position_for_floor_tile . y = initial_rectangle . y +
+		    ( ( line - LineStart ) * ( iso_floor_tile_height / 2 ) ) +
+		    ( ( col - ColStart ) * ( iso_floor_tile_height / 2 ) );
+
+		blit_this_floor_tile_to_screen_using_offset ( 
+		    floor_iso_images [ MapBrick % ALL_ISOMETRIC_FLOOR_TILES ] , 
+		    next_pixel_position_for_floor_tile . x , next_pixel_position_for_floor_tile . y );
+*/
 		blit_this_floor_tile_to_screen ( floor_iso_images [ MapBrick % ALL_ISOMETRIC_FLOOR_TILES ] , 
-						 ((float)col)+0.5 , ((float)line) +0.5 );
+		((float)col)+0.5 , ((float)line) +0.5 );
+		
 	    }		// for(col) 
 	}		// for(line) 
     }

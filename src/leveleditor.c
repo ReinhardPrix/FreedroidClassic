@@ -3091,148 +3091,149 @@ SetLevelInterfaces ( void )
 void
 CreateNewMapLevel( void )
 {
-  Level NewLevel;
-  int i, k, l ;
-  
-  //--------------------
-  // Get the memory for one level 
-  //
-  NewLevel = (Level) MyMalloc ( sizeof ( level ) );
-
-  DebugPrintf (0, "\n-----------------------------------------------------------------");
-  DebugPrintf (0, "\nStarting to create and add a completely new level to the ship.");
-
-  //--------------------
-  // Now we proceed in the order of the struct 'level' in the
-  // struct.h file so that we can easily verify if we've handled
-  // all the data structure or left something out which could
-  // be terrible!
-  //
-  NewLevel -> levelnum = curShip.num_levels;
-  NewLevel -> xlen = 90;
-  NewLevel -> ylen = 90;
-  NewLevel -> light_radius_bonus = 1;
-  NewLevel -> Levelname = "New Level just created..." ;
-  NewLevel->Background_Song_Name = "NOWHERE.MOD" ;
-  NewLevel->Level_Enter_Comment = "This is a new level..." ;
-  //--------------------
-  // Now we initialize the statement array with 'empty' values
-  //
-  for ( i = 0 ; i < MAX_STATEMENTS_PER_LEVEL ; i ++ )
+    Level NewLevel;
+    int i, k, l ;
+    
+    //--------------------
+    // Get the memory for one level 
+    //
+    NewLevel = (Level) MyMalloc ( sizeof ( level ) );
+    
+    DebugPrintf (0, "\n-----------------------------------------------------------------");
+    DebugPrintf (0, "\nStarting to create and add a completely new level to the ship.");
+    
+    //--------------------
+    // Now we proceed in the order of the struct 'level' in the
+    // struct.h file so that we can easily verify if we've handled
+    // all the data structure or left something out which could
+    // be terrible!
+    //
+    NewLevel -> levelnum = curShip.num_levels ;
+    NewLevel -> xlen = 90 ;
+    NewLevel -> ylen = 90 ;
+    NewLevel -> light_radius_bonus = 1 ;
+    NewLevel -> minimum_light_value = 13 ;
+    NewLevel -> Levelname = "New Level just created..." ;
+    NewLevel -> Background_Song_Name = "TheBeginning.ogg" ;
+    NewLevel -> Level_Enter_Comment = "This is a new level..." ;
+    //--------------------
+    // Now we initialize the statement array with 'empty' values
+    //
+    for ( i = 0 ; i < MAX_STATEMENTS_PER_LEVEL ; i ++ )
     {
-      NewLevel -> StatementList [ i ] . x = ( -1 ) ;
-      NewLevel -> StatementList [ i ] . y = ( -1 ) ;
-      NewLevel -> StatementList [ i ] . Statement_Text = "No Statement loaded." ;
+	NewLevel -> StatementList [ i ] . x = ( -1 ) ;
+	NewLevel -> StatementList [ i ] . y = ( -1 ) ;
+	NewLevel -> StatementList [ i ] . Statement_Text = "No Statement loaded." ;
     }
-  //--------------------
-  // Now we initialize the obstacle name list with 'empty' values
-  //
-  for ( i = 0 ; i < MAX_OBSTACLE_NAMES_PER_LEVEL ; i ++ )
+    //--------------------
+    // Now we initialize the obstacle name list with 'empty' values
+    //
+    for ( i = 0 ; i < MAX_OBSTACLE_NAMES_PER_LEVEL ; i ++ )
     {
-      NewLevel -> obstacle_name_list [ i ] = NULL ;
+	NewLevel -> obstacle_name_list [ i ] = NULL ;
     }
-  //--------------------
-  // First we initialize the floor with 'empty' values
-  //
-  for ( i = 0 ; i < NewLevel -> ylen ; i ++ )
+    //--------------------
+    // First we initialize the floor with 'empty' values
+    //
+    for ( i = 0 ; i < NewLevel -> ylen ; i ++ )
     {
-      NewLevel -> map [ i ] = MyMalloc ( NewLevel -> xlen * sizeof ( map_tile ) ) ;
-      for ( k = 0 ; k < NewLevel -> xlen ; k ++ )
+	NewLevel -> map [ i ] = MyMalloc ( NewLevel -> xlen * sizeof ( map_tile ) ) ;
+	for ( k = 0 ; k < NewLevel -> xlen ; k ++ )
 	{
-	  NewLevel -> map [ i ] [ k ] . floor_value = ISO_FLOOR_SAND ;
-	  for ( l = 0 ; l < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; l ++ )
+	    NewLevel -> map [ i ] [ k ] . floor_value = ISO_FLOOR_SAND ;
+	    for ( l = 0 ; l < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; l ++ )
 	    {
-	      NewLevel -> map [ i ] [ k ] . obstacles_glued_to_here [ l ] = (-1) ;
+		NewLevel -> map [ i ] [ k ] . obstacles_glued_to_here [ l ] = (-1) ;
 	    }
 	}
     }
-  //--------------------
-  // Now we initialize the level jump interface variables with 'empty' values
-  //
-  NewLevel->jump_target_north = (-1) ;
-  NewLevel->jump_target_south = (-1) ;
-  NewLevel->jump_target_east = (-1) ;
-  NewLevel->jump_target_west = (-1) ;
-  NewLevel->jump_threshold_north = (-1) ;
-  NewLevel->jump_threshold_south = (-1) ;
-  NewLevel->jump_threshold_east = (-1) ;
-  NewLevel->jump_threshold_west = (-1) ;
-  //--------------------
-  // Now we initialize the map obstacles with 'empty' information
-  //
-  for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
+    //--------------------
+    // Now we initialize the level jump interface variables with 'empty' values
+    //
+    NewLevel->jump_target_north = (-1) ;
+    NewLevel->jump_target_south = (-1) ;
+    NewLevel->jump_target_east = (-1) ;
+    NewLevel->jump_target_west = (-1) ;
+    NewLevel->jump_threshold_north = (-1) ;
+    NewLevel->jump_threshold_south = (-1) ;
+    NewLevel->jump_threshold_east = (-1) ;
+    NewLevel->jump_threshold_west = (-1) ;
+    //--------------------
+    // Now we initialize the map obstacles with 'empty' information
+    //
+    for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
     {
-      NewLevel -> obstacle_list [ i ] . type = ( -1 ) ;
-      NewLevel -> obstacle_list [ i ] . pos . x = ( -1 ) ;
-      NewLevel -> obstacle_list [ i ] . pos . y = ( -1 ) ;
-      NewLevel -> obstacle_list [ i ] . name_index = ( -1 ) ;
+	NewLevel -> obstacle_list [ i ] . type = ( -1 ) ;
+	NewLevel -> obstacle_list [ i ] . pos . x = ( -1 ) ;
+	NewLevel -> obstacle_list [ i ] . pos . y = ( -1 ) ;
+	NewLevel -> obstacle_list [ i ] . name_index = ( -1 ) ;
     }
-  for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
+    for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
     {
-      NewLevel -> obstacle_list [ i ] . type = ( -1 ) ;
-      NewLevel -> obstacle_list [ i ] . pos . x = ( -1 ) ;
-      NewLevel -> obstacle_list [ i ] . pos . y = ( -1 ) ;
-      NewLevel -> obstacle_list [ i ] . name_index = ( -1 ) ;
+	NewLevel -> obstacle_list [ i ] . type = ( -1 ) ;
+	NewLevel -> obstacle_list [ i ] . pos . x = ( -1 ) ;
+	NewLevel -> obstacle_list [ i ] . pos . y = ( -1 ) ;
+	NewLevel -> obstacle_list [ i ] . name_index = ( -1 ) ;
     }
-  //--------------------
-  // This should initialize the lists with the refreshed and other
-  // animated map tiles...
-  //
-  GetAllAnimatedMapTiles ( NewLevel ) ;
-  //--------------------
-  // Now we initialize the map labels array with 'empty' information
-  //
-  for ( i = 0 ; i < MAX_MAP_LABELS_PER_LEVEL ; i ++ )
+    //--------------------
+    // This should initialize the lists with the refreshed and other
+    // animated map tiles...
+    //
+    GetAllAnimatedMapTiles ( NewLevel ) ;
+    //--------------------
+    // Now we initialize the map labels array with 'empty' information
+    //
+    for ( i = 0 ; i < MAX_MAP_LABELS_PER_LEVEL ; i ++ )
     {
-      NewLevel -> labels [ i ] . pos . x = ( -1 ) ;
-      NewLevel -> labels [ i ] . pos . y = ( -1 ) ;
-      NewLevel -> labels [ i ] . label_name = "no_label_defined" ;
+	NewLevel -> labels [ i ] . pos . x = ( -1 ) ;
+	NewLevel -> labels [ i ] . pos . y = ( -1 ) ;
+	NewLevel -> labels [ i ] . label_name = "no_label_defined" ;
     }
-  //--------------------
-  // Now we add empty waypoint information...
-  //
-  NewLevel -> num_waypoints = 0 ;
-  for ( i = 0 ; i < MAXWAYPOINTS ; i++ )
+    //--------------------
+    // Now we add empty waypoint information...
+    //
+    NewLevel -> num_waypoints = 0 ;
+    for ( i = 0 ; i < MAXWAYPOINTS ; i++ )
     {
-      NewLevel -> AllWaypoints [ i ] . x = 0 ;
-      NewLevel -> AllWaypoints [ i ] . y = 0 ;
-
-      for ( k = 0 ; k < MAX_WP_CONNECTIONS ; k++ )
+	NewLevel -> AllWaypoints [ i ] . x = 0 ;
+	NewLevel -> AllWaypoints [ i ] . y = 0 ;
+	
+	for ( k = 0 ; k < MAX_WP_CONNECTIONS ; k++ )
 	{
-	  NewLevel -> AllWaypoints [ i ] . connections [ k ] = -1 ;
+	    NewLevel -> AllWaypoints [ i ] . connections [ k ] = -1 ;
 	}
     }
-  //--------------------
-  // First we initialize the items arrays with 'empty' information
-  //
-  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+    //--------------------
+    // First we initialize the items arrays with 'empty' information
+    //
+    for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
     {
-      NewLevel -> ItemList [ i ] . pos.x = ( -1 ) ;
-      NewLevel -> ItemList [ i ] . pos.y = ( -1 ) ;
-      NewLevel -> ItemList [ i ] . type = ( -1 ) ;
-      NewLevel -> ItemList [ i ] . currently_held_in_hand = FALSE;
-
-      NewLevel -> OldItemList [ i ] . pos.x = ( -1 ) ;
-      NewLevel -> OldItemList [ i ] . pos.y = ( -1 ) ;
-      NewLevel -> OldItemList [ i ] . type = ( -1 ) ;
-      NewLevel -> OldItemList [ i ] . currently_held_in_hand = FALSE;
+	NewLevel -> ItemList [ i ] . pos.x = ( -1 ) ;
+	NewLevel -> ItemList [ i ] . pos.y = ( -1 ) ;
+	NewLevel -> ItemList [ i ] . type = ( -1 ) ;
+	NewLevel -> ItemList [ i ] . currently_held_in_hand = FALSE;
+	
+	NewLevel -> OldItemList [ i ] . pos.x = ( -1 ) ;
+	NewLevel -> OldItemList [ i ] . pos.y = ( -1 ) ;
+	NewLevel -> OldItemList [ i ] . type = ( -1 ) ;
+	NewLevel -> OldItemList [ i ] . currently_held_in_hand = FALSE;
     }
-  //--------------------
-  // Now we initialize the chest items arrays with 'empty' information
-  //
-  for ( i = 0 ; i < MAX_CHEST_ITEMS_PER_LEVEL ; i ++ )
+    //--------------------
+    // Now we initialize the chest items arrays with 'empty' information
+    //
+    for ( i = 0 ; i < MAX_CHEST_ITEMS_PER_LEVEL ; i ++ )
     {
-      NewLevel->ChestItemList[ i ].pos.x = ( -1 ) ;
-      NewLevel->ChestItemList[ i ].pos.y = ( -1 ) ;
-      NewLevel->ChestItemList[ i ].type = ( -1 ) ;
-      NewLevel->ChestItemList[ i ].currently_held_in_hand = FALSE;
+	NewLevel -> ChestItemList [ i ] . pos . x = ( -1 ) ;
+	NewLevel -> ChestItemList [ i ] . pos . y = ( -1 ) ;
+	NewLevel -> ChestItemList [ i ] . type = ( -1 ) ;
+	NewLevel -> ChestItemList [ i ] . currently_held_in_hand = FALSE ;
     }
-
-  curShip . AllLevels [ curShip.num_levels ] = NewLevel ;
-  curShip . num_levels ++ ;
-
-  glue_obstacles_to_floor_tiles_for_level ( NewLevel -> levelnum );
-
+    
+    curShip . AllLevels [ curShip.num_levels ] = NewLevel ;
+    curShip . num_levels ++ ;
+    
+    glue_obstacles_to_floor_tiles_for_level ( NewLevel -> levelnum );
+    
 }; // void CreateNewMapLevel( void )
 
 /* ----------------------------------------------------------------------
