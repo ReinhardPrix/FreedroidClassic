@@ -266,6 +266,7 @@ typedef struct
 typedef struct
 {
   char *druidname;
+  char *portrait_filename_without_ext;
   int class;
   double maxenergy;		/* the maximum energy the batteries can carry */
   double lose_health;		/* the energy/time the duid loses under influence-control */

@@ -1,9 +1,3 @@
-/*----------------------------------------------------------------------
- *
- * Desc: the paraplus initialisation routines
- *
- *----------------------------------------------------------------------*/
-
 /* 
  *
  *   Copyright (c) 1994, 2002 Johannes Prix
@@ -28,6 +22,13 @@
  *  MA  02111-1307  USA
  *
  */
+
+/*----------------------------------------------------------------------
+ *
+ * Desc: the paraplus initialisation routines
+ *
+ *----------------------------------------------------------------------*/
+
 #define _init_c
 
 #include "system.h"
@@ -822,6 +823,7 @@ Get_Robot_Data ( void* DataPointer )
 #define ROBOT_SECTION_END_STRING "*** End of Robot Data Section: ***" 
 #define NEW_ROBOT_BEGIN_STRING "** Start of new Robot: **" 
 #define DROIDNAME_BEGIN_STRING "Droidname: "
+#define PORTRAIT_FILENAME_WITHOUT_EXT "Droid portrait file name (without extension) to use=\""
 #define MAXSPEED_BEGIN_STRING "Maximum speed of this droid: "
 #define CLASS_BEGIN_STRING "Class of this droid: "
 #define ACCELERATION_BEGIN_STRING "Maximum acceleration of this droid: "
@@ -909,6 +911,13 @@ Get_Robot_Data ( void* DataPointer )
       // line with the DROIDNAME_BEGIN_STRING until the "\n" is found.
       Druidmap[RobotIndex].druidname =
 	ReadAndMallocStringFromData ( RobotPointer , DROIDNAME_BEGIN_STRING , "\n" ) ;
+
+      // Now we read in the file name of the portrait file for this droid.  
+      // Is should be enclosed in double-quotes.
+      Druidmap[RobotIndex].portrait_filename_without_ext =
+	ReadAndMallocStringFromData ( RobotPointer , PORTRAIT_FILENAME_WITHOUT_EXT , "\"" ) ;
+
+      // #define PORTRAIT_FILENAME_WITHOUT_EXT "Droid portrait file name (without extension) to use=\""
 
       // Now we read in the maximal speed this droid can go. 
       // ReadValueFromString( RobotPointer , MAXSPEED_BEGIN_STRING , "%lf" , 
