@@ -218,6 +218,26 @@ Sorry...\n\
     }
 
   //--------------------
+  // Maybe it's a special unique plugin, then we print out this items use
+  //
+  if ( ( CurItem->type == ITEM_START_PLUGIN_WARRIOR ) && ( !ForShop ) )
+    {
+      sprintf( linebuf , "\nFreezes targets after melee hit" );
+      strcat( ItemDescText , linebuf );
+    }
+  if ( ( CurItem->type == ITEM_START_PLUGIN_SNIPER ) && ( !ForShop ) )
+    {
+      sprintf( linebuf , "\nAdds double damage to ranged attacks" );
+      strcat( ItemDescText , linebuf );
+    }
+  if ( ( CurItem->type == ITEM_START_PLUGIN_HACKER ) && ( !ForShop ) )
+    {
+      sprintf( linebuf , "\nAdds two levels to all spells" );
+      strcat( ItemDescText , linebuf );
+    }
+
+
+  //--------------------
   // If the item has some suffixes, we describe these as well, but ONLY IF
   // THE ITEM HAS BEEN IDENTIFIED YET of course.
   //

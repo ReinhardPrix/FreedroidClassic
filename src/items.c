@@ -977,6 +977,11 @@ ApplyItem( item* CurItem )
       Me[0].health += 25;
       Me[0].energy += 25;
     }
+  else if ( CurItem->type == ITEM_MEDIUM_HEALTH_POTION )
+    {
+      Me[0].health += 50;
+      Me[0].energy += 50;
+    }
   else if ( CurItem->type == ITEM_FULL_HEALTH_POTION )
     {
       Me[0].health += Me[0].maxenergy;
@@ -985,6 +990,10 @@ ApplyItem( item* CurItem )
   else if ( CurItem->type == ITEM_SMALL_MANA_POTION )
     {
       Me[0].mana += 25;
+    }
+  else if ( CurItem->type == ITEM_MEDIUM_MANA_POTION )
+    {
+      Me[0].mana += 50;
     }
   else if ( CurItem->type == ITEM_FULL_MANA_POTION )
     {

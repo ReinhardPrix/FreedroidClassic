@@ -473,6 +473,23 @@ AddInfluencerItemAttributeBonus( item* BonusItem )
   if ( BonusItem->type == ( -1 ) ) return;
 
   //--------------------
+  // In case of a unique special plugin, we do the nescessary modification
+  // here...
+  //
+  if ( BonusItem->type == ITEM_START_PLUGIN_WARRIOR )
+    {
+      Me [ 0 ] . freezing_melee_targets = 7 ;
+    }
+  if ( BonusItem->type == ITEM_START_PLUGIN_SNIPER )
+    {
+      Me [ 0 ] . double_ranged_damage = TRUE ;
+    }
+  if ( BonusItem->type == ITEM_START_PLUGIN_HACKER )
+    {
+      Me [ 0 ] . spell_level_bonus = 2 ;
+    }
+
+  //--------------------
   // In case of a suffix modifier, we need to apply the suffix...
   //
   if ( ( ( BonusItem->suffix_code != ( -1 ) ) || ( BonusItem->prefix_code != ( -1 ) ) ) &&
@@ -556,6 +573,11 @@ UpdateAllCharacterStats ( int PlayerNum )
   Me [ PlayerNum ] .Magic = Me [ PlayerNum ] .base_magic;
   Me [ PlayerNum ] .Vitality = Me [ PlayerNum ] .base_vitality;
 
+  Me [ PlayerNum ] . freezing_melee_targets = 0;
+  Me [ PlayerNum ] . double_ranged_damage = FALSE;
+  Me [ PlayerNum ] . spell_level_bonus = 0 ;
+
+
   //--------------------
   // Now we add all bonuses to the influencers PRIMARY stats
   //
@@ -597,6 +619,16 @@ UpdateAllCharacterStats ( int PlayerNum )
 	    ( Me [ PlayerNum ] .Dexterity + 100.0) / 100.0 ;
 	  Me [ PlayerNum ] .damage_modifier = Me [ PlayerNum ] .weapon_item.damage_modifier * 
 	    ( Me [ PlayerNum ] .Dexterity + 100.0) / 100.0 ;
+
+	  //--------------------
+	  // Maybe there is a plugin for double damage present ?
+	  //
+	  if ( Me [ PlayerNum ] . double_ranged_damage != 0 )
+	    {
+	      Me [ PlayerNum ] .base_damage *= 2;
+	      Me [ PlayerNum ] .damage_modifier *= 2;
+	    }
+
 	}
     }
   else
