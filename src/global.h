@@ -112,7 +112,7 @@ EXTERN enemy AllEnemys[ MAX_ENEMYS_ON_SHIP ];
 EXTERN network_enemy NetworkAllEnemys[ MAX_ENEMYS_ON_SHIP ];
 EXTERN event_trigger AllEventTriggers[ MAX_EVENT_TRIGGERS ];
 EXTERN triggered_action AllTriggeredActions[ MAX_TRIGGERED_ACTIONS_IN_GAME ];
-EXTERN char ServerName[ 1000 ];
+EXTERN char ServerName[ 10000 ];
 
 EXTERN int NumEnemys;
 

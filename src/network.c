@@ -42,7 +42,10 @@
 
 #include "SDL_net.h"
 
-#define FREEDROID_NET_PORT (5676)
+#define FREEDROID_NET_PORT (5674)
+
+#define PERIODIC_MESSAGE_DEBUG 2 
+#define SERVER_SEND_DEBUG 2 
 
 Uint16 port = FREEDROID_NET_PORT;
 Uint32 ipaddr;
@@ -60,6 +63,7 @@ int len;
 typedef struct
 {
   int status;			/* attacking, defense, dead, ... */
+  int8_t phase;                  // the current phase of motion
   finepoint speed;		/* the current speed of the druid */
   gps pos;		        /* current position in the whole ship */
   double health;		/* the max. possible energy in the moment */
@@ -77,17 +81,17 @@ player_engram PlayerEngram [ MAX_PLAYERS ] ;
 //
 typedef struct
 {
-  int EnemyIndex; // this is an information not included in the original data!!!
-                  // but it's required, so that the client knows what to do with
-                  // this enemy.
+  int16_t EnemyIndex; // this is an information not included in the original data!!!
+                      // but it's required, so that the client knows what to do with
+                      // this enemy.
 
-  int type;			// the number of the droid specifications in Druidmap 
-  int Status;			// current status like OUT=TERMINATED or not OUT
+  int8_t type;			// the number of the droid specifications in Druidmap 
+  int8_t Status;		// current status like OUT=TERMINATED or not OUT
   gps pos;		        // coordinates of the current position in the level
   finepoint speed;		// current speed  
-  double energy;		// current energy of this droid
-  double feindphase;		// current phase of rotation of this droid
-  char friendly;
+  int16_t energy;		// current energy of this droid
+  int8_t feindphase;		// current phase of rotation of this droid
+  int8_t friendly;
 
 }
 enemy_engram, *Enemy_Engram;
@@ -134,6 +138,8 @@ enum
     PLAYER_DELETE_ALL_YOUR_ENEMYS,
 
     SERVER_ACCEPT_THIS_KEYBOARD_EVENT ,
+    SERVER_ACCEPT_THIS_MOUSE_BUTTON_EVENT ,
+
     NUMBER_OF_KNOWN_COMMANDS
 
   };
@@ -144,6 +150,9 @@ typedef struct
 {
   TCPsocket ThisPlayersSocketAtTheServer; // this is for the server too
   int command_buffer_fill_status;
+  int server_mouse_button;
+  int server_mouse_x;
+  int server_mouse_y;
   int network_status;
   unsigned char server_keyboard [ MAX_KEYCODES ] ;
 }
@@ -267,6 +276,78 @@ Sorry...\n\
 }; // void Init_Network(void)
 
 /* ----------------------------------------------------------------------
+ * This function reports what the server thinks that the mouse cursor
+ * location was at the last button press/release.
+ * If not in server mode, this function returns just the local mouse
+ * cursor location.
+ * ---------------------------------------------------------------------- */
+int
+ServerThinksInputAxisX ( int PlayerNum )
+{
+
+  if ( ServerMode ) 
+    {
+      return ( AllPlayers [ PlayerNum ] . server_mouse_x );
+    }
+  else 
+    {
+      if ( PlayerNum == 0 )
+	return ( input_axis . x ) ;
+      else
+	return ( FALSE );
+    }
+
+}; // int ServerThinksInputAxisX ( int Playernum )
+
+/* ----------------------------------------------------------------------
+ * This function reports what the server thinks that the mouse cursor
+ * location was at the last button press/release.
+ * If not in server mode, this function returns just the local mouse
+ * cursor location.
+ * ---------------------------------------------------------------------- */
+int
+ServerThinksInputAxisY ( int PlayerNum )
+{
+
+  if ( ServerMode ) 
+    {
+      return ( AllPlayers [ PlayerNum ] . server_mouse_y );
+    }
+  else 
+    {
+      if ( PlayerNum == 0 )
+	return ( input_axis . y ) ;
+      else
+	return ( FALSE );
+    }
+
+}; // int ServerThinksInputAxisY ( int Playernum )
+
+/* ----------------------------------------------------------------------
+ * This function reports if the server thinks that the cursor right key
+ * was pressed or not.  If not in server mode, this function returns just
+ * the local keyboard status.
+ * ---------------------------------------------------------------------- */
+int
+ServerThinksAxisIsActive ( int PlayerNum )
+{
+
+  if ( ServerMode ) 
+    {
+      return ( AllPlayers [ PlayerNum ] . server_mouse_button );
+    }
+  else 
+    {
+      if ( PlayerNum == 0 )
+	return ( axis_is_active ) ;
+      else
+	return ( FALSE );
+    }
+
+}; // int ServerThinksRightPressed ( int Playernum )
+
+
+/* ----------------------------------------------------------------------
  * This function reports if the server thinks that the cursor right key
  * was pressed or not.  If not in server mode, this function returns just
  * the local keyboard status.
@@ -361,6 +442,60 @@ ServerThinksDownPressed ( int PlayerNum )
 
 }; // int ServerThinksDownPressed ( int Playernum )
 
+/* ----------------------------------------------------------------------
+ * This function reports if the server thinks that the cursor down key
+ * was pressed or not.  If not in server mode, this function returns just
+ * the local keyboard status.
+ * ---------------------------------------------------------------------- */
+int
+ServerThinksSpacePressed ( int PlayerNum )
+{
+
+  if ( ServerMode ) 
+    {
+      return ( AllPlayers [ PlayerNum ] . server_keyboard [ SDLK_SPACE ] );
+    }
+  else 
+    {
+      if ( PlayerNum == 0 )
+	return ( SpacePressed ( ) ) ;
+      else
+	return ( FALSE );
+    }
+
+}; // int ServerThinksDownPressed ( int Playernum )
+
+/* ----------------------------------------------------------------------
+ * This function checks whether the server thinks some direction key was 
+ * pressed or not. 
+ * In case of a direction key pressed, FALSE will be returned, otherwise
+ * TRUE of course.
+ * ---------------------------------------------------------------------- */
+int
+ServerThinksNoDirectionPressed ( int PlayerNum )
+{
+  if ( ServerMode ) 
+    {
+      if ( ( ServerThinksAxisIsActive ( PlayerNum ) && 
+	     ( ServerThinksInputAxisX ( PlayerNum ) || 
+	       ServerThinksInputAxisY ( PlayerNum ) ) ) ||
+	   ServerThinksDownPressed ( PlayerNum ) || 
+	   ServerThinksUpPressed ( PlayerNum ) || 
+	   ServerThinksLeftPressed ( PlayerNum ) || 
+	   ServerThinksRightPressed ( PlayerNum ) )
+	return ( FALSE );
+      else
+	return ( TRUE );
+    }
+  else 
+    {
+      if ( PlayerNum == 0 )
+	return ( NoDirectionPressed ( ) ) ;
+      else
+	return ( FALSE );
+    }
+
+}; // int NoDirectionPressed( void )
 
 /* ----------------------------------------------------------------------
  * This function creates a copy of the Me structure, that is reduced to
@@ -403,6 +538,7 @@ PreparePlayerEngramForPlayer ( PlayerNum )
   int i;
 
   PlayerEngram [ 0 ] . status    = Me [ PlayerNum ] . status ;
+  PlayerEngram [ 0 ] . phase     = Me [ PlayerNum ] . phase ;
   PlayerEngram [ 0 ] . speed . x = Me [ PlayerNum ] . speed . x ;
   PlayerEngram [ 0 ] . speed . y = Me [ PlayerNum ] . speed . y ;
   PlayerEngram [ 0 ] . pos . x   = Me [ PlayerNum ] . pos . x ;
@@ -424,6 +560,7 @@ PreparePlayerEngramForPlayer ( PlayerNum )
 	{
 	  
 	  PlayerEngram [ WriteIndex ] . status    = Me [ i ] . status ;
+	  PlayerEngram [ WriteIndex ] . phase     = Me [ i ] . phase ;
 	  PlayerEngram [ WriteIndex ] . speed . x = Me [ i ] . speed . x ;
 	  PlayerEngram [ WriteIndex ] . speed . y = Me [ i ] . speed . y ;
 	  PlayerEngram [ WriteIndex ] . pos . x   = Me [ i ] . pos . x ;
@@ -504,6 +641,7 @@ EnforceServersPlayerEngram ( void )
     {
 	  
       Me [ PlayerNum ] . status    = PlayerEngram [ PlayerNum ] . status    ;
+      Me [ PlayerNum ] . phase     = PlayerEngram [ PlayerNum ] . phase     ;
       Me [ PlayerNum ] . speed . x = PlayerEngram [ PlayerNum ] . speed . x ;
       Me [ PlayerNum ] . speed . y = PlayerEngram [ PlayerNum ] . speed . y ;
       Me [ PlayerNum ] . pos . x   = PlayerEngram [ PlayerNum ] . pos . x   ;
@@ -738,7 +876,7 @@ SendFullMeUpdateToClient ( int PlayerNum )
   network_command LocalCommandBuffer;
 
   // print out the message
-  DebugPrintf ( 0 , "\nSending full me update to client in command form.\n" ) ;
+  DebugPrintf ( SERVER_SEND_DEBUG , "\nSending full me update to client in command form.\n" ) ;
   len = sizeof ( NetworkMe ) ; // the amount of bytes in the data buffer
 
   //--------------------
@@ -803,7 +941,7 @@ SendFullPlayerEngramToClient ( int PlayerNum )
   network_command LocalCommandBuffer;
 
   // print out the message
-  DebugPrintf ( 0 , "\nSending full player engram to client in command form.\n" ) ;
+  DebugPrintf ( SERVER_SEND_DEBUG , "\nSending full player engram to client in command form.\n" ) ;
   len = sizeof ( PlayerEngram ) ; // the amount of bytes in the data buffer
 
   //--------------------
@@ -834,7 +972,7 @@ SendFullPlayerEngramToClient ( int PlayerNum )
   //--------------------
   // Now we print out the success or return value of the sending operation
   //
-  DebugPrintf ( 0 , "\nSending Full PlayerEngram returned : %d . " , CommunicationResult );
+  DebugPrintf ( SERVER_SEND_DEBUG , "\nSending Full PlayerEngram returned : %d . " , CommunicationResult );
   if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
     {
       fprintf(stderr, "\n\
@@ -868,7 +1006,7 @@ SendFullEnemyEngramToClient ( int PlayerNum )
   network_command LocalCommandBuffer;
 
   // print out the message
-  DebugPrintf ( 0 , "\nSending full player engram to client in command form.\n" ) ;
+  DebugPrintf ( SERVER_SEND_DEBUG , "\nSending full player engram to client in command form.\n" ) ;
   len = sizeof ( EnemyEngram ) ; // the amount of bytes in the data buffer
 
   //--------------------
@@ -899,7 +1037,7 @@ SendFullEnemyEngramToClient ( int PlayerNum )
   //--------------------
   // Now we print out the success or return value of the sending operation
   //
-  DebugPrintf ( 0 , "\nSending Full PlayerEngram returned : %d . " , CommunicationResult );
+  DebugPrintf ( SERVER_SEND_DEBUG , "\nSending Full PlayerEngram returned : %d . " , CommunicationResult );
   if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
     {
       fprintf(stderr, "\n\
@@ -935,7 +1073,7 @@ SendEnemyUpdateEngramToClient ( int PlayerNum )
   network_command LocalCommandBuffer;
 
   // print out the message
-  DebugPrintf ( 0 , "\nSending enemy update engram to client in command form.\n" ) ;
+  DebugPrintf ( SERVER_SEND_DEBUG , "\nSending enemy update engram to client in command form.\n" ) ;
 
   for ( EnemyIndex = 0 ; EnemyIndex < MAX_ENEMYS_ON_SHIP ; EnemyIndex ++ )
     {
@@ -978,7 +1116,7 @@ SendEnemyUpdateEngramToClient ( int PlayerNum )
   //--------------------
   // Now we print out the success or return value of the sending operation
   //
-  DebugPrintf ( 0 , "\nSending Full PlayerEngram returned : %d . " , CommunicationResult );
+  DebugPrintf ( SERVER_SEND_DEBUG , "\nSending enemy update engram returned : %d . " , CommunicationResult );
   if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
     {
       fprintf(stderr, "\n\
@@ -1276,12 +1414,35 @@ void
 ConnectToFreedroidServer ( void )
 {
   int UsedSockets;
+  Uint32 ServerIpAddress;
 
-  // Resolve the argument into an IPaddress type
-  if( SDLNet_ResolveHost( &ip , "localhost" , port ) == ( -1 ) )
+  //--------------------
+  // If nothing at all was typed in for the server name, then we will try
+  // to use the local host.
+  //
+  DebugPrintf ( 0 , "\n Servername received : %s." , ServerName ) ;
+  if ( strlen ( ServerName ) == 0 ) strcpy ( ServerName , "localhost" ) ;
+
+  //--------------------
+  // Now we try to resolve the given server name into an IPaddress type
+  //
+  if( SDLNet_ResolveHost( &ip , ServerName , port ) == ( -1 ) )
     {
-      DebugPrintf( 0 , "\n--------------------\nERROR!!! SDLNet_ResolveHost: %s\n--------------------\n " ,
-		   SDLNet_GetError ( ) ) ;
+      fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+The SDL NET SUBSYSTEM COULD NOT RESOLVE THE HOSTNAME %s.\n\
+\n\
+The reason for this as reportet by the SDL Net is as follows:\n\
+%s\n\
+\n\
+Freedroid will terminate now to draw attention \n\
+to the network code problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , ServerName , SDLNet_GetError ( ) );
+
       Terminate ( ERR );
     }
   else
@@ -1290,16 +1451,45 @@ ConnectToFreedroidServer ( void )
     }
   
   // open the server socket
+  ServerIpAddress = SDL_SwapBE32 ( ip.host ) ;
   sock = SDLNet_TCP_Open( &ip ) ;
   if( ! sock )
     {
-      DebugPrintf( 0 , "\n--------------------\nERROR!!! SDLNet_TCP_Open: %s\n--------------------\n" , 
-		   SDLNet_GetError ( ) ) ;
+      fprintf( stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+The SDL NET SUBSYSTEM COULD NOT OPEN A TCP CONNECTION TO THE SERVER\n\
+WITH THE RESOLVED IP ADDRESS : %d.%d.%d.%d port %hu\n\
+The reason for this as reportet by the SDL Net is as follows:\n\
+%s\n\
+\n\
+Freedroid will terminate now to draw attention \n\
+to the network code problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , 
+	       ServerIpAddress >> 24 ,
+	       ( ServerIpAddress >> 16) &0xff ,
+	       ( ServerIpAddress >> 8 ) &0xff ,
+	       ServerIpAddress &0xff ,
+	       ip.port,
+	       SDLNet_GetError ( ) );
+      // printf("Accepted a connection from %d.%d.%d.%d port %hu\n",
+      // DebugPrintf( 0 , "\n--------------------\nERROR!!! SDLNet_TCP_Open: %s\n--------------------\n" , 
+      // SDLNet_GetError ( ) ) ;
       Terminate ( ERR );
     }
   else
     {
-      DebugPrintf( 0 , "\n--------------------\nSDLNet_TCP_Open was successful...\n--------------------\n " );
+      DebugPrintf( 0 , "\n--------------------\nSDLNet_TCP_Open was successful...\n" );
+      DebugPrintf( 0 , "Connected to Server %d.%d.%d.%d at port %hu\n--------------------\n"  , 
+		   ServerIpAddress >> 24 ,
+		   ( ServerIpAddress >> 16) &0xff ,
+		   ( ServerIpAddress >> 8 ) &0xff ,
+		   ServerIpAddress &0xff ,
+		   ip.port,
+		   SDLNet_GetError ( ) );
     }
 
   //--------------------
@@ -1614,9 +1804,48 @@ ExecutePlayerCommand ( int PlayerNum )
 	  Terminate ( ERR ) ;
 	  break;
 	}
-      // switch( event.key.keysym.sym )
+      break;
 
-      // Terminate ( ERR );
+    case SERVER_ACCEPT_THIS_MOUSE_BUTTON_EVENT:
+      DebugPrintf ( 0 , "\nSERVER_ACCEPT_THIS_MOUSE_BUTTON_EVENT command received..." );
+
+      KeyEventPointer = ( SDL_Event* ) CommandFromPlayer [ PlayerNum ] . command_data_buffer ;
+      
+      switch ( KeyEventPointer -> type )
+	{
+	case SDL_MOUSEBUTTONDOWN:
+	  //--------------------
+	  // In case the client just reportet a mouse button being pressed, we enter
+	  // this change into the server mouse button pressing table for this
+	  // client.
+	  //
+	  DebugPrintf ( 0 , "\nMOUSE BUTTON EVENT: Mouse button down received... " );
+	  AllPlayers [ PlayerNum ] . server_mouse_button = TRUE ;
+	  AllPlayers [ PlayerNum ] . server_mouse_x = KeyEventPointer -> button.x - UserCenter_x + 16 ;
+	  AllPlayers [ PlayerNum ] . server_mouse_y = KeyEventPointer -> button.y - UserCenter_y + 16 ;
+	  break;
+	case SDL_MOUSEBUTTONUP:
+	  //--------------------
+	  // In case the client just reportet a mouse button being released, we enter
+	  // this change into the server mouse button pressing table for this
+	  // client.
+	  //
+	  DebugPrintf ( 0 , "\nMOUSE BUTTON EVENT: Mouse button up received... " );
+	  AllPlayers [ PlayerNum ] . server_mouse_button = FALSE ;
+	  AllPlayers [ PlayerNum ] . server_mouse_x = KeyEventPointer -> button.x ;
+	  AllPlayers [ PlayerNum ] . server_mouse_y = KeyEventPointer -> button.y ;
+	  break;
+
+	default:
+	  //--------------------
+	  // There should no be any other mouse button events than buttons being pressed
+	  // or buttons being released.  It some other event is sent, this is assumed to
+	  // be a major error and terminates the server.
+	  //
+	  DebugPrintf ( 0 , "\nMOUSE BUTTON EVENT DATA RECEIVED IS BULLSHIT!! TERMINATING... " );
+	  Terminate ( ERR ) ;
+	  break;
+	}
       break;
 
     case PLAYER_TELL_ME_YOUR_NAME:
@@ -1807,19 +2036,19 @@ ServerSendMessageToAllClients ( char ServerMessage[1024] )
 
   MessageLength = strlen ( ServerMessage );
 
-  DebugPrintf( 0 , "\n--------------------" ) ;
-  DebugPrintf( 0 , "\nSending message to all clinets: %s." , ServerMessage );
-  DebugPrintf( 0 , "\nMessage length is found to be : %d." , MessageLength );
+  DebugPrintf( SERVER_SEND_DEBUG , "\n--------------------" ) ;
+  DebugPrintf( SERVER_SEND_DEBUG , "\nSending message to all clinets: %s." , ServerMessage );
+  DebugPrintf( SERVER_SEND_DEBUG , "\nMessage length is found to be : %d." , MessageLength );
 
   for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ )
     {
       if ( AllPlayers [ PlayerNum ] . ThisPlayersSocketAtTheServer )
 	{
-	  DebugPrintf( 0 , "\nNow sending to Player %d." , PlayerNum );
+	  DebugPrintf( SERVER_SEND_DEBUG , "\nNow sending to Player %d." , PlayerNum );
 	  
 	  BytesSent = SDLNet_TCP_Send( AllPlayers [ PlayerNum ] . ThisPlayersSocketAtTheServer, 
 				       ServerMessage , MessageLength ) ;
-	  DebugPrintf( 0 , "\nNumber of Bytes sent to Player %d : %d." , PlayerNum , BytesSent );
+	  DebugPrintf( SERVER_SEND_DEBUG , "\nNumber of Bytes sent to Player %d : %d." , PlayerNum , BytesSent );
 
 	}
     }
@@ -2057,6 +2286,66 @@ Sorry...\n\
 }; // void SendPlayerKeyboardEventToServer ( void )
 
 /* ----------------------------------------------------------------------
+ * This function sends a mouse button event to the server in command form.
+ * ---------------------------------------------------------------------- */
+void
+SendPlayerMouseButtonEventToServer ( SDL_Event event )
+{
+  int CommunicationResult;
+  int len;
+  network_command LocalCommandBuffer;
+
+  // print out the message
+  DebugPrintf ( 0 , "\nSending keyboard event to server in command form. " ) ;
+  len = sizeof ( event ) ; // the amount of bytes in the data buffer
+
+  //--------------------
+  // We check against sending too long messages to the server.
+  //
+  if ( len >= COMMAND_BUFFER_MAXLEN )
+    {
+      DebugPrintf ( 0 , "\nAttempted to send too long keyboard event to server... Terminating..." );
+      Terminate ( ERR ) ;
+    }
+
+  //--------------------
+  // Now we prepare our command buffer.
+  //
+  LocalCommandBuffer . command_code = SERVER_ACCEPT_THIS_MOUSE_BUTTON_EVENT ;
+  LocalCommandBuffer . data_chunk_length = len ;
+  memcpy ( LocalCommandBuffer . command_data_buffer , & ( event ) , sizeof ( event ) );
+
+  CommunicationResult = SDLNet_TCP_Send ( sock , 
+					  & ( LocalCommandBuffer ) , 
+					  2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length ); 
+
+  //--------------------
+  // Now we print out the success or return value of the sending operation
+  //
+  DebugPrintf ( 0 , "\nSending mouse button event to server returned : %d . " , CommunicationResult );
+  if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
+    {
+      fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+The SDL NET COULD NOT SEND A MOUSE BUTTON EVENT TO THE SERVER SUCCESSFULLY\n\
+in the function void SendTextMessageToServer ( char* message ).\n\
+\n\
+The cause of this problem as reportet by the SDL_net was: \n\
+%s\n\
+\n\
+Freedroid will terminate now to draw attention \n\
+to the networking problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , SDLNet_GetError ( ) ) ;
+      Terminate(ERR);
+    }
+
+}; // void SendPlayerMouseButtonEventToServer ( void )
+
+/* ----------------------------------------------------------------------
  * This prints out the server status.  Well, it will print anyway, but
  * only the server will know the full and correct information.
  * ---------------------------------------------------------------------- */
@@ -2088,26 +2377,24 @@ void
 SendPeriodicServerMessagesToAllClients ( void )
 {
   int PlayerNum;
-
   static int DelayCounter = 0;
 
+#define SEND_PACKET_ON_EVERY_FRAME_CONG_MOD ( 10 )
+
   DelayCounter ++ ;
-
-#define SEND_PACKET_ON_EVERY_FRAME_CONG_MOD (20)
-
   if ( DelayCounter < SEND_PACKET_ON_EVERY_FRAME_CONG_MOD ) return;
 
   DelayCounter = 0;
 
 
-  DebugPrintf( 0 , "\n--------------------" ) ;
-  DebugPrintf( 0 , "\nSending periodic server messages to all clinets...." );
+  DebugPrintf( PERIODIC_MESSAGE_DEBUG , "\n--------------------" ) ;
+  DebugPrintf( PERIODIC_MESSAGE_DEBUG , "\nSending periodic server messages to all clinets...." );
 
   for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ )
     {
       if ( AllPlayers [ PlayerNum ] . ThisPlayersSocketAtTheServer )
 	{
-	  DebugPrintf( 0 , "\nNow sending periodic server message to Player %d." , PlayerNum );
+	  DebugPrintf( SERVER_SEND_DEBUG , "\nNow sending periodic server message to Player %d." , PlayerNum );
 	  
 	  SendFullPlayerEngramToClient ( PlayerNum ) ;
 

@@ -1198,6 +1198,9 @@ keyboard_update(void)
 	  
 	  /* Mouse control */
 	case SDL_MOUSEBUTTONDOWN:
+
+	  if ( ( ClientMode ) && ( ! ServerMode ) ) SendPlayerMouseButtonEventToServer ( event );
+
 	  if ( event.button.button == SDL_BUTTON_LEFT )
 	    {
 	      CurrentlySpacePressed = TRUE;
@@ -1210,6 +1213,9 @@ keyboard_update(void)
 	  break;
 
         case SDL_MOUSEBUTTONUP:
+
+	  if ( ( ClientMode ) && ( ! ServerMode ) ) SendPlayerMouseButtonEventToServer ( event );
+
 	  if (event.button.button == SDL_BUTTON_LEFT)
 	    {
 	      CurrentlySpacePressed = FALSE;
@@ -1784,13 +1790,11 @@ TabPressed (void)
   return CurrentlyTabPressed;
 }				// int WPressed(void)
 
-/*@Function============================================================
-  @Desc: Diese Funktion ermittelt, ob irgend eine Richtungstaste gedrueckt ist
-  
-  @Ret: wenn eine Richtungstaste gedrueckt ist FALSE
-  ansonsten TRUE 
-* $Function----------------------------------------------------------*/
-
+/* ----------------------------------------------------------------------
+ * This function checks whether some direction key was pressed or not.
+ * In case of a direction key pressed, FALSE will be returned, otherwise
+ * TRUE of course.
+ * ---------------------------------------------------------------------- */
 int
 NoDirectionPressed (void)
 {
@@ -1799,7 +1803,7 @@ NoDirectionPressed (void)
     return ( FALSE );
   else
     return ( TRUE );
-} // int NoDirectionPressed(void)
+}; // int NoDirectionPressed( void )
 
 
 int

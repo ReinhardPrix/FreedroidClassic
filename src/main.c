@@ -46,7 +46,7 @@ int ThisMessageTime;
 float LastGotIntoBlastSound = 2;
 float LastRefreshSound = 2;
 
-void UpdateCountersForThisFrame (void);
+void UpdateCountersForThisFrame ( int PlayerNum ) ;
 
 /* -----------------------------------------------------------------
  * This function is the heart of the game.  It contains the main
@@ -100,16 +100,15 @@ main (int argc, char *const argv[])
 
 	  StartTakingTimeForFPSCalculation(); 
 
-	  UpdateCountersForThisFrame ();
+	  for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ ) 
+	    UpdateCountersForThisFrame ( PlayerNum ) ;
 
 	  CollectAutomapData (); // this is a pure client issue.  Only do it for the main player...
 
 	  ReactToSpecialKeys();
 
 	  for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ ) 
-	    {
 	      MoveLevelDoors ( PlayerNum ) ; // this is also a pure client issue, but done for all players...
-	    }
 
 	  for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ ) 
 	    CheckForTriggeredEventsAndStatements ( PlayerNum ) ;
@@ -177,75 +176,92 @@ main (int argc, char *const argv[])
  * function.
  * ----------------------------------------------------------------- */
 void
-UpdateCountersForThisFrame (void)
+UpdateCountersForThisFrame ( int PlayerNum )
 {
   static long Overall_Frames_Displayed=0;
   int i;
 
-  GameConfig.Mission_Log_Visible_Time += Frame_Time();
-  GameConfig.Inventory_Visible_Time += Frame_Time();
-  // if (ShipEmptyCounter == 1) GameOver = TRUE;
-
-  LastBlastHit++;
-
-  Total_Frames_Passed_In_Mission++;
-  Me[0].FramesOnThisLevel++;
-  // The next couter counts the frames displayed by freedroid during this
-  // whole run!!  DO NOT RESET THIS COUNTER WHEN THE GAME RESTARTS!!
-  Overall_Frames_Displayed++;
-  Overall_Average = (Overall_Average*(Overall_Frames_Displayed-1)
-		     + Frame_Time()) / Overall_Frames_Displayed;
-
-  // Here are some things, that were previously done by some periodic */
-  // interrupt function
-  ThisMessageTime++;
-
-  LastGotIntoBlastSound += Frame_Time ();
-  LastRefreshSound += Frame_Time ();
-  Me[0].LastCrysoundTime += Frame_Time ();
-  Me[0].MissionTimeElapsed += Frame_Time();
-  Me[0].LastTransferSoundTime += Frame_Time();
-  Me[0].TextVisibleTime += Frame_Time();
-  if ( Me[0].weapon_swing_time != (-1) ) Me[0].weapon_swing_time += Frame_Time();
-  if ( Me[0].got_hit_time != (-1) ) Me[0].got_hit_time += Frame_Time();
-
-  LevelDoorsNotMovedTime += Frame_Time();
-
-  if ( SkipAFewFrames ) SkipAFewFrames--;
-
-  if ( Me[0].firewait > 0 )
+  //--------------------
+  // First we do all the updated, that need to be done only once
+  // indepentent of the player number...  These are typically some
+  // things, that the client can do without any info from the 
+  // server.
+  //
+  if ( PlayerNum == 0 )
     {
-      Me[0].firewait-=Frame_Time();
-      if (Me[0].firewait < 0) Me[0].firewait=0;
+      GameConfig.Mission_Log_Visible_Time += Frame_Time();
+      GameConfig.Inventory_Visible_Time += Frame_Time();
+      // if (ShipEmptyCounter == 1) GameOver = TRUE;
+      LastBlastHit++;
+      Total_Frames_Passed_In_Mission++;
+
+      // The next couter counts the frames displayed by freedroid during this
+      // whole run!!  DO NOT RESET THIS COUNTER WHEN THE GAME RESTARTS!!
+      Overall_Frames_Displayed++;
+      Overall_Average = (Overall_Average*(Overall_Frames_Displayed-1)
+			 + Frame_Time()) / Overall_Frames_Displayed;
+
+      // Here are some things, that were previously done by some periodic */
+      // interrupt function
+      ThisMessageTime++;
+
+      LastGotIntoBlastSound += Frame_Time ();
+      LastRefreshSound += Frame_Time ();
+
+      LevelDoorsNotMovedTime += Frame_Time();
+      if ( SkipAFewFrames ) SkipAFewFrames--;
+
+      if (ShipEmptyCounter > 1)
+	ShipEmptyCounter--;
+      if (CurLevel->empty > 2)
+	CurLevel->empty--;
+
+      for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
+	{
+	  
+	  if (AllEnemys[i].Status == OUT ) continue;
+	  
+	  if (AllEnemys[i].warten > 0) 
+	    {
+	      AllEnemys[i].warten -= Frame_Time() ;
+	      if (AllEnemys[i].warten < 0) AllEnemys[i].warten = 0;
+	    }
+	  
+	  if (AllEnemys[i].firewait > 0) 
+	    {
+	      AllEnemys[i].firewait -= Frame_Time() ;
+	      if (AllEnemys[i].firewait <= 0) AllEnemys[i].firewait=0;
+	    }
+	  
+	  AllEnemys[i].TextVisibleTime += Frame_Time();
+	} // for (i=0;...
+
+    }; // things that need to be done only once per program, not per player
+
+  //--------------------
+  // Now we do all the things, that need to be updated for each connected
+  // player separatedly.
+  //
+  Me [ PlayerNum ] .FramesOnThisLevel++;
+
+  Me [ PlayerNum ] .LastCrysoundTime += Frame_Time ();
+  Me [ PlayerNum ] .MissionTimeElapsed += Frame_Time();
+  Me [ PlayerNum ] .LastTransferSoundTime += Frame_Time();
+  Me [ PlayerNum ] .TextVisibleTime += Frame_Time();
+
+  if ( Me [ PlayerNum ] .weapon_swing_time != (-1) ) Me [ PlayerNum ] .weapon_swing_time += Frame_Time();
+  if ( Me [ PlayerNum ] .got_hit_time != (-1) ) Me [ PlayerNum ] .got_hit_time += Frame_Time();
+
+  if ( Me [ PlayerNum ] .firewait > 0 )
+    {
+      Me [ PlayerNum ] .firewait-=Frame_Time();
+      if (Me [ PlayerNum ] .firewait < 0) Me [ PlayerNum ] .firewait=0;
     }
-  if (ShipEmptyCounter > 1)
-    ShipEmptyCounter--;
-  if (CurLevel->empty > 2)
-    CurLevel->empty--;
-  if (Me[0].Experience > ShowScore)
+
+  if (Me [ PlayerNum ] .Experience > ShowScore)
     ShowScore++;
-  if (Me[0].Experience < ShowScore)
+  if (Me [ PlayerNum ] .Experience < ShowScore)
     ShowScore--;
-
-  for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
-    {
-
-      if (AllEnemys[i].Status == OUT ) continue;
-
-      if (AllEnemys[i].warten > 0) 
-	{
-	  AllEnemys[i].warten -= Frame_Time() ;
-	  if (AllEnemys[i].warten < 0) AllEnemys[i].warten = 0;
-	}
-
-      if (AllEnemys[i].firewait > 0) 
-	{
-	  AllEnemys[i].firewait -= Frame_Time() ;
-	  if (AllEnemys[i].firewait <= 0) AllEnemys[i].firewait=0;
-	}
-
-      AllEnemys[i].TextVisibleTime += Frame_Time();
-    } // for (i=0;...
 
 } /* UpdateCountersForThisFrame() */
 

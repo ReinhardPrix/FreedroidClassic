@@ -73,7 +73,7 @@ EXTERN void AdjustSpeed ( int PlayerNum ) ;
 EXTERN void CheckInfluenceWallCollisions ( int PlayerNum ) ;
 EXTERN void InfluenceFrictionWithAir ( int PlayerNum ) ;
 EXTERN void CheckEnergieLevel (void);
-EXTERN void AnimateInfluence (void);
+EXTERN void AnimateInfluence ( int PlayerNum ) ;
 EXTERN void CheckInfluenceEnemyCollision (void);
 EXTERN void RefreshInfluencer (void);
 EXTERN void ExplodeInfluencer (void);
@@ -86,7 +86,7 @@ EXTERN void ExplodeInfluencer (void);
 #define EXTERN extern
 #endif
 EXTERN void RotateVectorByAngle ( moderately_finepoint* vector , float rot_angle );
-EXTERN void FireBullet (void);
+EXTERN void FireBullet ( int PlayerNum ) ;
 EXTERN void MoveBullets (void);
 EXTERN void DeleteBullet (int num , int StartBlast );
 EXTERN void StartBlast ( float x , float y , int level , int type );
@@ -542,10 +542,15 @@ EXTERN void DisplayBanner (const char* left, const char* right, int flags );
 #define EXTERN extern
 #endif
 EXTERN void Init_Network ( void ) ;
-EXTERN int ServerThinksRightPressed ( int PlayerNum );
-EXTERN int ServerThinksLeftPressed ( int PlayerNum );
-EXTERN int ServerThinksUpPressed ( int PlayerNum );
-EXTERN int ServerThinksDownPressed ( int PlayerNum );
+EXTERN int ServerThinksInputAxisX ( int PlayerNum ) ;
+EXTERN int ServerThinksInputAxisY ( int PlayerNum ) ;
+EXTERN int ServerThinksAxisIsActive ( int PlayerNum ) ;
+EXTERN int ServerThinksRightPressed ( int PlayerNum ) ;
+EXTERN int ServerThinksLeftPressed ( int PlayerNum ) ;
+EXTERN int ServerThinksUpPressed ( int PlayerNum ) ;
+EXTERN int ServerThinksDownPressed ( int PlayerNum ) ;
+EXTERN int ServerThinksSpacePressed ( int PlayerNum ) ;
+EXTERN int ServerThinksNoDirectionPressed ( int PlayerNum ) ;
 EXTERN void OpenTheServerSocket ( void ) ;
 EXTERN void AcceptConnectionsFromClients ( void ) ;
 EXTERN void ConnectToFreedroidServer ( void );
@@ -555,7 +560,8 @@ EXTERN void DisconnectAllRemoteClinets ( void );
 EXTERN void ServerSendMessageToAllClients ( char ServerMessage[1024] );
 EXTERN void ListenForServerMessages ( void ) ;
 EXTERN void SendTextMessageToServer ( char* message );
-EXTERN void SendPlayerKeyboardEventToServer ( SDL_Event event );
+EXTERN void SendPlayerKeyboardEventToServer ( SDL_Event event ) ;
+EXTERN void SendPlayerMouseButtonEventToServer ( SDL_Event event ) ;
 EXTERN void PrintServerStatusInformation ( void ) ;
 EXTERN void SendPeriodicServerMessagesToAllClients ( void );
 

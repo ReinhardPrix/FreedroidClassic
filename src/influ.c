@@ -163,17 +163,15 @@ CheckIfCharacterIsStillOk ( int PlayerNum )
 }; // void CheckIfCharacterIsStillOk ( int PlayerNum ) 
 
 
-/*@Function============================================================
-@Desc: This function moves the influencer, adjusts his speed according to
-keys pressed and also adjusts his status and current "phase" of his rotation.
-
-@Ret: none
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function moves the influencer, adjusts his speed according to
+ * keys pressed and also adjusts his status and current "phase" of his 
+ * rotation.
+ * ---------------------------------------------------------------------- */
 void
 MoveInfluence ( int PlayerNum )
 {
-  // float accel = Druidmap[Me [ PlayerNum ] .type].accel;
-  float accel; //  = ItemMap[ Me [ PlayerNum ] .drive_item.type ].item_drive_accel;
+  float accel;
   float planned_step_x;
   float planned_step_y;
   static float TransferCounter = 0;
@@ -214,7 +212,7 @@ MoveInfluence ( int PlayerNum )
   // drive unit present!!!  Otherwise only a comment will be
   // printed out!!
   //
-  if ( Me [ PlayerNum ] .drive_item.type != (-1) )
+  if ( Me [ PlayerNum ] . drive_item . type != (-1) )
     {
       if ( ServerThinksUpPressed ( PlayerNum ) )
 	Me [ PlayerNum ] .speed.y -= accel;
@@ -231,8 +229,7 @@ MoveInfluence ( int PlayerNum )
       Me [ PlayerNum ] .TextToBeDisplayed = "Can't go anywhere far without at least some drive! Sorry...";
     }
 
-
-  if (!SpacePressed ())
+  if ( ! ServerThinksSpacePressed ( PlayerNum ) )
     Me [ PlayerNum ] .status = MOBILE;
 
   if (TransferCounter == 1)
@@ -243,34 +240,37 @@ MoveInfluence ( int PlayerNum )
 
   HandleCurrentlyActivatedSkill();
 
-  if ( (SpacePressed ()) && (NoDirectionPressed ()) &&
-       (Me [ PlayerNum ] .status != WEAPON) && (Me [ PlayerNum ] .status != TRANSFERMODE) )
+  if ( ( ServerThinksSpacePressed ( PlayerNum ) ) && ( ServerThinksNoDirectionPressed ( PlayerNum ) ) &&
+       ( Me [ PlayerNum ] .status != WEAPON ) && ( Me [ PlayerNum ] .status != TRANSFERMODE ) )
     TransferCounter += Frame_Time();
 
-  if ( (SpacePressed ()) && (!NoDirectionPressed () ) &&
-       (Me [ PlayerNum ] .status != TRANSFERMODE) )
-    Me [ PlayerNum ] .status = WEAPON;
+  if ( ( ServerThinksSpacePressed ( PlayerNum ) || ServerThinksAxisIsActive ( PlayerNum ) ) && 
+       ( ! ServerThinksNoDirectionPressed ( PlayerNum ) ) &&
+       ( Me [ PlayerNum ] .status != TRANSFERMODE ) )
+    Me [ PlayerNum ] .status = WEAPON ;
 
   // --------------------
   // What is this code good for??
   // stop_influencer = FALSE ;
   //
-  if (stop_influencer)
+  if ( stop_influencer )
     {
-      Me [ PlayerNum ] .speed.x = 0.0;
-      Me [ PlayerNum ] .speed.y = 0.0;
-      if (SpacePressed())
+      Me [ PlayerNum ] . speed.x = 0.0;
+      Me [ PlayerNum ] . speed.y = 0.0;
+      if ( ServerThinksSpacePressed ( PlayerNum ) || ServerThinksAxisIsActive ( PlayerNum ) )
 	{
-	  Me [ PlayerNum ] .firewait = 0;
-	  FireBullet ();
+	  Me [ PlayerNum ] . firewait = 0;
+	  FireBullet ( PlayerNum );
 	}
     }
   else
     {
-
-      if ((SpacePressed ()) && (!NoDirectionPressed ()) && (Me [ PlayerNum ] .status == WEAPON)
-	  && (Me [ PlayerNum ] .firewait == 0) && (NoInfluBulletOnWay ()))
-	FireBullet ();
+      if ( ( ServerThinksSpacePressed ( PlayerNum ) || ServerThinksAxisIsActive ( PlayerNum ) ) && 
+	   ( ! ServerThinksNoDirectionPressed ( PlayerNum ) ) && 
+	   ( Me [ PlayerNum ] . status == WEAPON ) && 
+	   ( Me [ PlayerNum ] . firewait == 0 ) && 
+	   ( NoInfluBulletOnWay ( ) ) )
+	FireBullet ( PlayerNum );
     }
 
   InfluenceFrictionWithAir ( PlayerNum ) ; // The influ should lose some of his speed when no key is pressed
@@ -355,6 +355,7 @@ Sorry...\n\
     default:
       break;
     }
+
   Me [ PlayerNum ] .pos.x += planned_step_x;
   Me [ PlayerNum ] .pos.y += planned_step_y;
 
@@ -363,7 +364,7 @@ Sorry...\n\
   //
   ActSpecialField ( PlayerNum ) ;
 
-  AnimateInfluence ();	// move the "phase" of influencers rotation
+  AnimateInfluence ( PlayerNum ) ;	// move the "phase" of influencers rotation
 
 }; // void MoveInfluence( void );
 
@@ -398,63 +399,63 @@ NoInfluBulletOnWay (void)
  * fast. 
  * ---------------------------------------------------------------------- */
 void
-AnimateInfluence (void)
+AnimateInfluence ( int PlayerNum )
 {
 #define TOTAL_SWING_TIME 0.35
 #define FULL_BREATHE_TIME 3
 #define TOTAL_STUNNED_TIME 0.35
 
-  if ( Me[0].got_hit_time != (-1) )
+  if ( Me [ PlayerNum ] .got_hit_time != (-1) )
     {
-      Me[0].phase = TUX_SWING_PHASES + TUX_BREATHE_PHASES + 
-	( Me[0].got_hit_time * TUX_GOT_HIT_PHASES * 1.0 / TOTAL_STUNNED_TIME ) ;
-      if ( Me[0].got_hit_time > TOTAL_STUNNED_TIME ) Me[0].got_hit_time = (-1) ;
+      Me [ PlayerNum ] .phase = TUX_SWING_PHASES + TUX_BREATHE_PHASES + 
+	( Me [ PlayerNum ] .got_hit_time * TUX_GOT_HIT_PHASES * 1.0 / TOTAL_STUNNED_TIME ) ;
+      if ( Me [ PlayerNum ] .got_hit_time > TOTAL_STUNNED_TIME ) Me [ PlayerNum ] .got_hit_time = (-1) ;
     }
-  else if ( Me[0].weapon_swing_time == (-1) )
+  else if ( Me [ PlayerNum ] .weapon_swing_time == (-1) )
     {
-      Me[0].phase = ( (int) ( Me[0].MissionTimeElapsed * TUX_BREATHE_PHASES / FULL_BREATHE_TIME ) ) % TUX_BREATHE_PHASES ;
+      Me [ PlayerNum ] .phase = ( (int) ( Me [ PlayerNum ] .MissionTimeElapsed * TUX_BREATHE_PHASES / FULL_BREATHE_TIME ) ) % TUX_BREATHE_PHASES ;
     }
   else
     {
-      Me[0].phase = ( TUX_BREATHE_PHASES + ( Me[0].weapon_swing_time * TUX_SWING_PHASES * 1.0 / TOTAL_SWING_TIME ) ) ;
-      if ( Me[0].weapon_swing_time > TOTAL_SWING_TIME ) Me[0].weapon_swing_time = (-1) ;
-      if (((int) (Me[0].phase)) >= TUX_SWING_PHASES + TUX_BREATHE_PHASES )
+      Me [ PlayerNum ] .phase = ( TUX_BREATHE_PHASES + ( Me [ PlayerNum ] .weapon_swing_time * TUX_SWING_PHASES * 1.0 / TOTAL_SWING_TIME ) ) ;
+      if ( Me [ PlayerNum ] .weapon_swing_time > TOTAL_SWING_TIME ) Me [ PlayerNum ] .weapon_swing_time = (-1) ;
+      if (((int) (Me [ PlayerNum ] .phase)) >= TUX_SWING_PHASES + TUX_BREATHE_PHASES )
 	{
-	  Me[0].phase = 0;
+	  Me [ PlayerNum ] .phase = 0;
 	}
 
     }
 
-  if (((int) (Me[0].phase)) >= TUX_SWING_PHASES + TUX_BREATHE_PHASES + TUX_GOT_HIT_PHASES )
+  if (((int) (Me [ PlayerNum ] .phase)) >= TUX_SWING_PHASES + TUX_BREATHE_PHASES + TUX_GOT_HIT_PHASES )
     {
-      Me[0].phase = 0;
+      Me [ PlayerNum ] .phase = 0;
     }
 
   /*
-  Me[0].phase +=
-    (Me[0].energy / ( Me[0].maxenergy)) * Frame_Time () *
+  Me [ PlayerNum ] .phase +=
+    (Me [ PlayerNum ] .energy / ( Me [ PlayerNum ] .maxenergy)) * Frame_Time () *
     DROID_PHASES * 3;
   */
 
   /*
-  if (Me[0].type != DRUID001)
+  if (Me [ PlayerNum ] .type != DRUID001)
     {
-      Me[0].phase +=
-	(Me[0].energy / (Druidmap[Me[0].type].maxenergy + Druidmap[DRUID001].maxenergy)) * Frame_Time () *
+      Me [ PlayerNum ] .phase +=
+	(Me [ PlayerNum ] .energy / (Druidmap[Me [ PlayerNum ] .type].maxenergy + Druidmap[DRUID001].maxenergy)) * Frame_Time () *
 	DROID_PHASES * 3;
     }
   else
     {
-      Me[0].phase +=
-	(Me[0].energy / (Druidmap[DRUID001].maxenergy)) * Frame_Time () *
+      Me [ PlayerNum ] .phase +=
+	(Me [ PlayerNum ] .energy / (Druidmap[DRUID001].maxenergy)) * Frame_Time () *
 	DROID_PHASES * 3;
     }
   */
 
   /*
-  if (((int) rintf (Me[0].phase)) >= DROID_PHASES)
+  if (((int) rintf (Me [ PlayerNum ] .phase)) >= DROID_PHASES)
     {
-      Me[0].phase = 0;
+      Me [ PlayerNum ] .phase = 0;
     }
   */
 }; // void AnimateInfluence ( void )
@@ -808,12 +809,12 @@ CheckInfluenceEnemyCollision (void)
  * the influencer can't fire for this reason or another right now...
  * ---------------------------------------------------------------------- */
 void
-FireBullet (void)
+FireBullet ( int PlayerNum )
 {
   int i = 0;
   Bullet CurBullet = NULL;  // the bullet we're currentl dealing with
-  int guntype = ItemMap[ Me[0].weapon_item.type ].item_gun_bullet_image_type;   // which gun do we have ? 
-  double BulletSpeed = ItemMap[ Me[0].weapon_item.type ].item_gun_speed;
+  int guntype = ItemMap[ Me [ PlayerNum ] . weapon_item.type ].item_gun_bullet_image_type;   // which gun do we have ? 
+  double BulletSpeed = ItemMap[ Me [ PlayerNum ] . weapon_item.type ].item_gun_speed;
   double speed_norm;
   moderately_finepoint speed;
   int max_val;
@@ -821,9 +822,10 @@ FireBullet (void)
   moderately_finepoint Weapon_Target_Vector;
   float angle;
 
-  // If the currently overtaken droid doesn't have a weapon at all, just return
-  // if ( Me[0].weapon_item.type == (-1) ) return;
+  DebugPrintf ( 0 , "\n===> void FireBullet ( int PlayerNum ) : real function call confirmed. " ) ;
 
+  // If the currently overtaken droid doesn't have a weapon at all, just return
+  // if ( Me [ PlayerNum ] .weapon_item.type == (-1) ) return;
 
   // If the influencer is holding something from the inventory
   // menu via the mouse, also just return
@@ -835,12 +837,26 @@ FireBullet (void)
   //
   // And for the character screen, do a similar thing
   //
+
+  /*
   if ( axis_is_active && GameConfig.Inventory_Visible && ! CursorIsInUserRect( GetMousePos_x() , GetMousePos_y() ) ) return;
   if ( axis_is_active && GameConfig.CharacterScreen_Visible && ! CursorIsInUserRect( GetMousePos_x() , GetMousePos_y() ) ) return;
+  */
+
+  if ( ServerThinksAxisIsActive ( PlayerNum ) && 
+       GameConfig.Inventory_Visible && 
+       ! CursorIsInUserRect( ServerThinksInputAxisX ( PlayerNum ) , ServerThinksInputAxisY ( PlayerNum ) ) ) 
+    return;
+
+  if ( ServerThinksAxisIsActive ( PlayerNum ) && 
+       GameConfig.CharacterScreen_Visible && 
+       ! CursorIsInUserRect( ServerThinksInputAxisX ( PlayerNum ) , ServerThinksInputAxisY ( PlayerNum ) ) ) 
+    return;
+
   if ( GameConfig.CharacterScreen_Visible && GameConfig.Inventory_Visible ) return;
 
   // If influencer hasn't recharged yet, fireing is impossible, we're done here and return
-  if (Me[0].firewait > 0)
+  if ( Me [ PlayerNum ] .firewait > 0 )
     return;
 
   //--------------------
@@ -856,9 +872,9 @@ FireBullet (void)
   // generates a bullet, but rather does his weapon swinging motion and
   // only the damage is done to the robots in the area of effect
   //
-  Me[0].weapon_swing_time = 0;
-  if ( ( ItemMap [ Me[0].weapon_item.type ].item_gun_angle_change != 0 ) ||
-       ( Me[0].weapon_item.type == (-1) ) )
+  Me [ PlayerNum ] . weapon_swing_time = 0;
+  if ( ( ItemMap [ Me [ PlayerNum ] . weapon_item . type ] . item_gun_angle_change != 0 ) ||
+       ( Me [ PlayerNum ] . weapon_item . type == (-1) ) )
     {
       //--------------------
       // Since a melee weapon is swung, which may be only influencers fists,
@@ -866,23 +882,30 @@ FireBullet (void)
       // of the weapon should be finally hitting and do some damage
       // to all the enemys in that area.
       //
-      angle = - ( atan2 ( input_axis.y,  input_axis.x ) * 180 / M_PI + 90 );
-      Weapon_Target_Vector.x = 0;
-      Weapon_Target_Vector.y = - 1.0;
+      angle = - ( atan2 ( ServerThinksInputAxisY ( PlayerNum ) + 16 ,  
+			  ServerThinksInputAxisX ( PlayerNum ) + 16 ) * 180 / M_PI + 90 );
+      DebugPrintf( 0 , "\n===> Fire Bullet: angle=%f. " , angle ) ;
+      DebugPrintf( 0 , "\n===> Fire Bullet: InpAxis: X=%d Y=%d . " , 
+		   ServerThinksInputAxisX ( PlayerNum ) , 
+		   ServerThinksInputAxisY ( PlayerNum ) ) ;
+      Weapon_Target_Vector.x = 0 ;
+      Weapon_Target_Vector.y = - 1.0 ;
       RotateVectorByAngle ( & Weapon_Target_Vector , angle );
-      Weapon_Target_Vector.x += Me[0].pos.x;
-      Weapon_Target_Vector.y += Me[0].pos.y;
+      Weapon_Target_Vector.x += Me [ PlayerNum ] . pos . x;
+      Weapon_Target_Vector.y += Me [ PlayerNum ] . pos . y;
+      DebugPrintf( 0 , "\n===> Fire Bullet target: x=%f, y=%f. " , Weapon_Target_Vector.x , Weapon_Target_Vector.y ) ;
       
       for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i ++ )
 	{
-	  if ( AllEnemys[i].Status == OUT ) continue;
-	  if ( AllEnemys[i].pos.z != CurLevel->levelnum ) continue;
-	  if ( fabsf ( AllEnemys[i].pos.x - Weapon_Target_Vector.x ) > 0.5 ) continue;
-	  if ( fabsf ( AllEnemys[i].pos.y - Weapon_Target_Vector.y ) > 0.5 ) continue;
-	  AllEnemys[ i ].energy -= Me[0].base_damage + MyRandom( Me[0].damage_modifier );
-	  AllEnemys[ i ].firewait = 
-	    2 * ItemMap [ Druidmap [ AllEnemys[ i ].type ].weapon_item.type ].item_gun_recharging_time ;
-	  PlayEnemyGotHitSound ( Druidmap [ AllEnemys [ i ] . type ].Got_Hit_Sound_Type );
+	  if ( AllEnemys [ i ] . Status == OUT ) continue;
+	  if ( AllEnemys [ i ] . pos . z != Me [ PlayerNum ] . pos . z ) continue;
+	  if ( fabsf ( AllEnemys [ i ] . pos . x - Weapon_Target_Vector.x ) > 0.5 ) continue;
+	  if ( fabsf ( AllEnemys [ i ] . pos . y - Weapon_Target_Vector.y ) > 0.5 ) continue;
+	  AllEnemys[ i ] . energy -= Me [ PlayerNum ] .base_damage + MyRandom( Me [ PlayerNum ] .damage_modifier );
+	  AllEnemys[ i ] . firewait = 
+	    2 * ItemMap [ Druidmap [ AllEnemys [ i ] . type ] . weapon_item.type ] . item_gun_recharging_time ;
+	  PlayEnemyGotHitSound ( Druidmap [ AllEnemys [ i ] . type ] . Got_Hit_Sound_Type );
+	  DebugPrintf( 0 , "\n===> Fire Bullet hit something.... melee ... " ) ;
 	}
 
       //--------------------
@@ -899,10 +922,10 @@ FireBullet (void)
       // And then we can return, for real bullet generation isn't required in
       // our case here.
       //
-      if ( Me[0].weapon_item.type != (-1) )
-	Me[0].firewait = ItemMap[ Me[0].weapon_item.type ].item_gun_recharging_time;
+      if ( Me [ PlayerNum ] .weapon_item.type != ( -1 ) )
+	Me [ PlayerNum ] .firewait = ItemMap[ Me [ PlayerNum ] .weapon_item.type ].item_gun_recharging_time;
       else
-	Me[0].firewait = 0.5;
+	Me [ PlayerNum ] .firewait = 0.5;
 
       return;
     }
@@ -921,52 +944,53 @@ FireBullet (void)
   if (CurBullet == NULL)
     CurBullet = &AllBullets[0];
 
-  CurBullet->pos.x = Me[0].pos.x;
-  CurBullet->pos.y = Me[0].pos.y;
-  CurBullet->pos.z = Me[0].pos.z;
+  CurBullet->pos.x = Me [ PlayerNum ] .pos.x;
+  CurBullet->pos.y = Me [ PlayerNum ] .pos.y;
+  CurBullet->pos.z = Me [ PlayerNum ] .pos.z;
   CurBullet->type = guntype;
 
   //--------------------
   // Previously, we had the damage done only dependant upon the weapon used.  Now
   // the damage value is taken directly from the character stats, and the UpdateAll...stats
   // has to do the right computation and updating of this value.  hehe. very conventient.
-  CurBullet->damage = Me[0].base_damage + MyRandom( Me[0].damage_modifier);
+  CurBullet->damage = Me [ PlayerNum ] .base_damage + MyRandom( Me [ PlayerNum ] .damage_modifier);
   CurBullet->mine = TRUE;
   CurBullet->owner = -1;
-  CurBullet->bullet_lifetime = ItemMap[ Me[0].weapon_item.type ].item_gun_bullet_lifetime;
-  CurBullet->angle_change_rate = ItemMap[ Me[0].weapon_item.type ].item_gun_angle_change;
-  CurBullet->fixed_offset = ItemMap[ Me[0].weapon_item.type ].item_gun_fixed_offset;
-  CurBullet->ignore_wall_collisions = ItemMap[ Me[0].weapon_item.type ].item_gun_bullet_ignore_wall_collisions;
-  CurBullet->owner_pos = & ( Me[0].pos );
+  CurBullet->bullet_lifetime = ItemMap[ Me [ PlayerNum ] .weapon_item.type ].item_gun_bullet_lifetime;
+  CurBullet->angle_change_rate = ItemMap[ Me [ PlayerNum ] .weapon_item.type ].item_gun_angle_change;
+  CurBullet->fixed_offset = ItemMap[ Me [ PlayerNum ] .weapon_item.type ].item_gun_fixed_offset;
+  CurBullet->ignore_wall_collisions = ItemMap[ Me [ PlayerNum ] .weapon_item.type ].item_gun_bullet_ignore_wall_collisions;
+  CurBullet->owner_pos = & ( Me [ PlayerNum ] .pos );
   CurBullet->time_in_frames = 0;
   CurBullet->time_in_seconds = 0;
   CurBullet->was_reflected = FALSE;
-  CurBullet->reflect_other_bullets = ItemMap[ Me[0].weapon_item.type ].item_gun_bullet_reflect_other_bullets;
-  CurBullet->pass_through_explosions = ItemMap[ Me[0].weapon_item.type ].item_gun_bullet_pass_through_explosions;
-  CurBullet->pass_through_hit_bodies = ItemMap[ Me[0].weapon_item.type ].item_gun_bullet_pass_through_hit_bodies;
+  CurBullet->reflect_other_bullets = ItemMap[ Me [ PlayerNum ] .weapon_item.type ].item_gun_bullet_reflect_other_bullets;
+  CurBullet->pass_through_explosions = ItemMap[ Me [ PlayerNum ] .weapon_item.type ].item_gun_bullet_pass_through_explosions;
+  CurBullet->pass_through_hit_bodies = ItemMap[ Me [ PlayerNum ] .weapon_item.type ].item_gun_bullet_pass_through_hit_bodies;
   CurBullet->miss_hit_influencer = UNCHECKED ;
   memset( CurBullet->total_miss_hit , UNCHECKED , MAX_ENEMYS_ON_SHIP );
-  CurBullet->to_hit = Me[0].to_hit;
-  Me[0].firewait = ItemMap[ Me[0].weapon_item.type ].item_gun_recharging_time;
+  CurBullet->to_hit = Me [ PlayerNum ] .to_hit;
+  Me [ PlayerNum ] .firewait = ItemMap[ Me [ PlayerNum ] .weapon_item.type ].item_gun_recharging_time;
 
   speed.x = 0.0;
   speed.y = 0.0;
 
-  if (DownPressed ())
+  if ( ServerThinksDownPressed ( PlayerNum ) )
     speed.y = 1.0;
-  if (UpPressed ())
+  if ( ServerThinksUpPressed ( PlayerNum ) )
     speed.y = -1.0;
-  if (LeftPressed ())
+  if ( ServerThinksLeftPressed ( PlayerNum ) )
     speed.x = -1.0;
-  if (RightPressed ())
+  if ( ServerThinksRightPressed ( PlayerNum ) )
     speed.x = 1.0;
 
   /* if using a joystick/mouse, allow exact directional shots! */
-  if ( axis_is_active )
+  if ( ServerThinksAxisIsActive ( PlayerNum ) )
     {
-      max_val = max (abs(input_axis.x), abs(input_axis.y));
-      speed.x = 1.0*input_axis.x/max_val;
-      speed.y = 1.0*input_axis.y/max_val;
+      max_val = max ( abs( ServerThinksInputAxisX ( PlayerNum ) ) , 
+		      abs( ServerThinksInputAxisY ( PlayerNum ) ) );
+      speed.x = 1.0 * ServerThinksInputAxisX ( PlayerNum ) / max_val ;
+      speed.y = 1.0 * ServerThinksInputAxisY ( PlayerNum ) / max_val ;
     }
 
   //--------------------
@@ -975,7 +999,7 @@ FireBullet (void)
   // and not start in this direction, but rather somewhat 'before' it,
   // so that the rotation will hit the target later.
   //
-  RotateVectorByAngle ( & speed , ItemMap[ Me[0].weapon_item.type ].item_gun_start_angle_modifier );
+  RotateVectorByAngle ( & speed , ItemMap[ Me [ PlayerNum ] .weapon_item.type ].item_gun_start_angle_modifier );
 
   speed_norm = sqrt (speed.x * speed.x + speed.y * speed.y);
   CurBullet->speed.x = (speed.x/speed_norm);
@@ -1007,7 +1031,7 @@ FireBullet (void)
   // CurBullet->pos.y += 0.5 ;
 
   return;
-}; // FireBullet 
+}; // void FireBullet ( int PlayerNum )
 
 /* ----------------------------------------------------------------------
  * This function does all the things needed, when the influencer is on
