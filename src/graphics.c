@@ -939,7 +939,8 @@ MakeGridOnScreen( SDL_Rect* GridRectangle )
  * display the title image and perhaps also for displaying the ship
  * and that.
  * ---------------------------------------------------------------------- */
-void DisplayImage( char *datafile )
+void 
+DisplayImage( char *datafile )
 {
   SDL_Surface *image;
   

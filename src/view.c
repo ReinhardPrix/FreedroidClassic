@@ -1498,9 +1498,7 @@ Resolving part string to index failed!",
   // phase any more for all tux parts now that we've introduced a walk cycle.
   //
   our_phase = (int) Me [ player_num ] . phase ;
-
-  if ( use_walk_cycle_for_part [ part_index ] [ motion_class ] )
-    // if ( ( ( part_index == 8 ) || ( part_index == 9 ) || ( part_index == 3 ) || ( part_index == 5 ) || ( part_index == 4 ) || ( part_index == 2 ) || ( part_index == 1 ) || ( part_index == 7 ) ) && ( Me [ player_num ] . weapon_swing_time < 0 ) )
+  if ( ( use_walk_cycle_for_part [ part_index ] [ motion_class ] ) && ( Me [ player_num ] . weapon_swing_time < 0 ) )
     {
       our_phase = (int) Me [ player_num ] . walk_cycle_phase ;
 
@@ -1642,7 +1640,7 @@ void
 iso_put_all_tux_parts_for_sword_motion ( int x , int y , int player_num , int rotation_index )
 {
 
-  DebugPrintf ( 0 , "\nDirection given: %d." , rotation_index );
+  // DebugPrintf ( 0 , "\nDirection given: %d." , rotation_index );
   // DebugPrintf ( 0 , "\nphase: %d." , (int) Me [ player_num ] . phase );
 
   switch ( rotation_index )

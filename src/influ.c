@@ -631,19 +631,7 @@ move_tux_thowards_mouse_move_target ( int player_num )
   if ( Me [ player_num ] . status == OUT ) return;
   // if ( Me [ player_num ] . energy <= 0 ) return;
 
-  if ( Me [ player_num ] .drive_item.type != (-1) )
-    {
-      accel = ItemMap[ Me [ player_num ] .drive_item.type ].item_drive_accel * Frame_Time( ) ;
-    }
-  else
-    {
-      accel = TUX_ACCEL_WITHOUT_DRIVE_ITEM * Frame_Time( ) ;
-    }
-
-  // accel *= 20.0 ; // we give the Tux unlimited acceleration...
-
   accel = 5.0 * Frame_Time() ;
-
 
   //--------------------
   // Let's do some mathematics:  We compute how far we have to go still

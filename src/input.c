@@ -778,15 +778,17 @@ ReactToSpecialKeys(void)
   if ( LeftPressed() )
     {
       Me [ 0 ] . mouse_move_target . x = Me [ 0 ] . pos . x - 4.5 ;
-      Me [ 0 ] . mouse_move_target . y = Me [ 0 ] . pos . y ; 
-      // Me [ 0 ] . mouse_move_target . z = Me [ 0 ] . pos . z ;
+      if ( Me [ 0 ] . mouse_move_target . y == (-1) ) 
+	Me [ 0 ] . mouse_move_target . y = Me [ 0 ] . pos . y ;
+      Me [ 0 ] . mouse_move_target . z = Me [ 0 ] . pos . z ;
       Me [ 0 ] . mouse_move_target_is_enemy = (-1) ;
     }
   if ( RightPressed() )
     {
       Me [ 0 ] . mouse_move_target . x = Me [ 0 ] . pos . x + 4.5 ;
-      Me [ 0 ] . mouse_move_target . y = Me [ 0 ] . pos . y ; 
-      // Me [ 0 ] . mouse_move_target . z = Me [ 0 ] . pos . z ;
+      if ( Me [ 0 ] . mouse_move_target . y == (-1) ) 
+	Me [ 0 ] . mouse_move_target . y = Me [ 0 ] . pos . y ;
+      Me [ 0 ] . mouse_move_target . z = Me [ 0 ] . pos . z ;
       Me [ 0 ] . mouse_move_target_is_enemy = (-1) ;
     }
   if ( UpPressed() )
@@ -794,13 +796,13 @@ ReactToSpecialKeys(void)
       Me [ 0 ] . mouse_move_target . y = Me [ 0 ] . pos . y - 3.5 ; 
       if ( Me [ 0 ] . mouse_move_target . x == (-1) ) 
 	Me [ 0 ] . mouse_move_target . x = Me [ 0 ] . pos . x ;
+      Me [ 0 ] . mouse_move_target . z = Me [ 0 ] . pos . z ;
       Me [ 0 ] . mouse_move_target_is_enemy = (-1) ;
     }
   if ( DownPressed() )
     {
-      // Me [ 0 ] . mouse_move_target . x = Me [ 0 ] . pos . x + 4 ;
       Me [ 0 ] . mouse_move_target . y = Me [ 0 ] . pos . y + 3.5 ; 
-      // Me [ 0 ] . mouse_move_target . z = Me [ 0 ] . pos . z ;
+      Me [ 0 ] . mouse_move_target . z = Me [ 0 ] . pos . z ;
       if ( Me [ 0 ] . mouse_move_target . x == (-1) ) 
 	Me [ 0 ] . mouse_move_target . x = Me [ 0 ] . pos . x ;
       Me [ 0 ] . mouse_move_target_is_enemy = (-1) ;
