@@ -1380,7 +1380,8 @@ CheckIfMissionIsComplete (void)
   //--------------------
   // We set up a cheat code, so that one can easily 'complete' a mission
   //
-  if ( MPressed() )
+  if ( MPressed() && Alt_Was_Pressed()
+       && Ctrl_Was_Pressed() && Shift_Was_Pressed() )
     {
       EndTitle();
       InitNewMission ( NextMissionName);
