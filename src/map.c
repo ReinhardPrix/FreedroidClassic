@@ -597,12 +597,98 @@ generate_wallobstacles_from_level_map ( int level_num )
     {
       for ( x = 0 ; x < loadlevel -> xlen ; x++ )
 	{
-	  if ( IsWallBlock ( loadlevel -> map [ y ] [ x ] ) ) 
+	  switch ( loadlevel -> map [ y ] [ x ] )
 	    {
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = 4 ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
+	    case H_WALL:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = 2 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 1.0 ;
 	      obstacle_counter ++ ;
+	      break;
+	    case V_WALL:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = 1 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 1.0 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
+	      obstacle_counter ++ ;
+	      break;
+	    case CORNER_LD:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = 1 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 1.0 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
+	      obstacle_counter ++ ;
+	      break;
+	    case CORNER_RD:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = 1 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 1.0 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
+	      obstacle_counter ++ ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = 2 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 1.0 ;
+	      obstacle_counter ++ ;
+	      break;
+	    case CORNER_RU:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = 2 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 1.0 ;
+	      obstacle_counter ++ ;
+	      break;
+	    case CORNER_LU:
+	      break;
+	    case T_D:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = 1 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 1.0 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
+	      obstacle_counter ++ ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = 2 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 1.0 ;
+	      obstacle_counter ++ ;
+	      break;
+	    case T_U:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = 2 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 1.0 ;
+	      obstacle_counter ++ ;
+	      break;
+	    case T_R:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = 1 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 1.0 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
+	      obstacle_counter ++ ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = 2 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 1.0 ;
+	      obstacle_counter ++ ;
+	      break;
+	    case T_L:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = 1 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 1.0 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
+	      obstacle_counter ++ ;
+	      break;
+	    case H_SHUT_DOOR:
+	    case H_HALF_DOOR1:
+	    case H_HALF_DOOR2:
+	    case H_HALF_DOOR3:
+	    case H_OPEN_DOOR:
+	      break;
+	    case V_SHUT_DOOR:
+	    case V_HALF_DOOR1:
+	    case V_HALF_DOOR2:
+	    case V_HALF_DOOR3:
+	    case V_OPEN_DOOR:
+	      break;
+
+	    default:
+	      if ( IsWallBlock ( loadlevel -> map [ y ] [ x ] ) ) 
+		{
+		  loadlevel -> obstacle_list [ obstacle_counter ] . type = 4 ;
+		  loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
+		  loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5;
+		  obstacle_counter ++ ;
+		}
+	      break;
 	    }
 	}
     }
