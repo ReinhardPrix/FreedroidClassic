@@ -763,12 +763,12 @@ Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=60
 Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=12
+Item as defensive item: base_ac_bonus=33
 Item as defensive item: ac_bonus_modifier=6
 Base item duration=30 plus duration modifier=15
 Picture number=23
 Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
-Base list price=12500
+Base list price=1001
 Item description text="Defense is acquired at a high level with this durable piece of armor."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
@@ -802,7 +802,7 @@ Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=1
+Item as defensive item: base_ac_bonus=3
 Item as defensive item: ac_bonus_modifier=2
 Base item duration=10 plus duration modifier=8
 Picture number=24
@@ -1192,7 +1192,7 @@ Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=2
+Item as defensive item: base_ac_bonus=8
 Item as defensive item: ac_bonus_modifier=4
 Base item duration=20 plus duration modifier=10
 Picture number=39
@@ -1231,7 +1231,7 @@ Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=8
+Item as defensive item: base_ac_bonus=13
 Item as defensive item: ac_bonus_modifier=4
 Base item duration=30 plus duration modifier=10
 Picture number=40
@@ -1270,7 +1270,7 @@ Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=10
+Item as defensive item: base_ac_bonus=18
 Item as defensive item: ac_bonus_modifier=6
 Base item duration=30 plus duration modifier=10
 Picture number=26
@@ -1348,8 +1348,8 @@ Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=25
 Dexterity minimum required to wear/wield this item=25
 Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=8
-Item as defensive item: ac_bonus_modifier=7
+Item as defensive item: base_ac_bonus=12
+Item as defensive item: ac_bonus_modifier=4
 Base item duration=25 plus duration modifier=10
 Picture number=43
 Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
@@ -1738,8 +1738,8 @@ Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=3
-Item as defensive item: ac_bonus_modifier=6
+Item as defensive item: base_ac_bonus=6
+Item as defensive item: ac_bonus_modifier=4
 Base item duration=10 plus duration modifier=8
 Picture number=6
 Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
@@ -2011,8 +2011,8 @@ Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=4
-Item as defensive item: ac_bonus_modifier=5
+Item as defensive item: base_ac_bonus=5
+Item as defensive item: ac_bonus_modifier=3
 Base item duration=18 plus duration modifier=10
 Picture number=36
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
@@ -2128,8 +2128,8 @@ Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=4
-Item as defensive item: ac_bonus_modifier=5
+Item as defensive item: base_ac_bonus=18
+Item as defensive item: ac_bonus_modifier=4
 Base item duration=18 plus duration modifier=10
 Picture number=36
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
@@ -2206,8 +2206,8 @@ Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=8
-Item as defensive item: ac_bonus_modifier=10
+Item as defensive item: base_ac_bonus=13
+Item as defensive item: ac_bonus_modifier=3
 Base item duration=38 plus duration modifier=20
 Picture number=37
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
@@ -2245,8 +2245,8 @@ Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=45
 Dexterity minimum required to wear/wield this item=30
 Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=14
-Item as defensive item: ac_bonus_modifier=7
+Item as defensive item: base_ac_bonus=20
+Item as defensive item: ac_bonus_modifier=4
 Base item duration=35 plus duration modifier=20
 Picture number=44
 Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
