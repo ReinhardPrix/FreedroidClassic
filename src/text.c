@@ -1463,12 +1463,12 @@ DialogPartnersTurnToEachOther ( Enemy ChatDroid )
     {
       StartTakingTimeForFPSCalculation();       
 
+      AssembleCombatPicture ( 0 ); 
+      SDL_Flip ( Screen );
+
       OldAngle = ChatDroid -> current_angle;
 
       ChatDroid -> current_angle = OldAngle + TurningDirection * Frame_Time() * TURN_SPEED ;
-
-      AssembleCombatPicture ( 0 ); 
-      SDL_Flip ( Screen );
 
       //--------------------
       // In case of positive turning direction, we wait, till our angle is greater

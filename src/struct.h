@@ -419,6 +419,7 @@ typedef struct
   int sensor1;
   int sensor2;
   int sensor3;
+  float range_of_vision;
 
   int monster_level;
   int forced_magic_items;
@@ -634,6 +635,7 @@ typedef struct
   int Status;			// current status like OUT=TERMINATED or not OUT
 
   int combat_state;             // UNAWARE_OF_TUX, BACK_OFF_AFTER_GETTING_HIT, MAKE_ATTACK_RUN, SEEK_BETTER_POSITION...
+  float state_timeout;          // when will this state automatically time out...
 
   float frozen;                 // is this droid currently frozen and for how long will it stay this way?
   float poison_duration_left;   // is this droid currently poisoned and for how long will it stay this way?

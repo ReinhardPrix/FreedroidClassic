@@ -756,9 +756,11 @@ enum _status
 enum _enemy_combat_state_machine_states
 {
   UNAWARE_OF_TUX = 2, 
-  BACK_OFF_AFTER_GETTING_HIT, 
+  STOP_AND_EYE_TUX,
   MAKE_ATTACK_RUN, 
-  SEEK_BETTER_POSITION
+  HUNTING_TUX, 
+  // BACK_OFF_AFTER_GETTING_HIT, 
+  SEEK_BETTER_POSITION,
 };
 
 //--------------------

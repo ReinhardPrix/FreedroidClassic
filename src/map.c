@@ -2462,6 +2462,7 @@ ReviveAllDroidsOnShip ( void )
       AllEnemys[i].Status = MOBILE; // !OUT;
       AllEnemys[i].has_greeted_influencer = FALSE ;
       AllEnemys[i].combat_state = UNAWARE_OF_TUX ;
+      AllEnemys[i].state_timeout = 0 ;
     }
 }; // void ReviveAllDroidsOnShip ( void )
 

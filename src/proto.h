@@ -61,6 +61,7 @@ EXTERN void PlayATitleFile ( char* Filename );
 #else
 #define EXTERN extern
 #endif
+EXTERN void PerformTuxAttackRaw ( int PlayerNum ) ;
 EXTERN void CheckForJumpThresholds ( int PlayerNum );
 EXTERN int isignf (float);
 EXTERN void InitInfluPositionHistory( int PlayerNum );
