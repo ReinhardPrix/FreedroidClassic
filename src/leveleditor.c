@@ -179,6 +179,92 @@ MoveMapLabelsSouthOf ( int FromWhere , int ByWhat , Level EditLevel )
 }; // void MoveMapLabelsSouthOf ( int FromWhere , int ByWhat , Level EditLevel)
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+move_obstacles_east_of ( float from_where , float by_what , Level edit_level )
+{
+  int i;
+
+  for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
+    {
+      //--------------------
+      // Maybe the obstacle entry isn't used at all.  That's the simplest
+      // case...: do nothing.
+      //
+      if ( edit_level -> obstacle_list [ i ] . type <= ( -1 ) ) continue;
+      if ( edit_level -> obstacle_list [ i ] . pos . x <= ( -1 ) ) continue;
+      
+      //--------------------
+      // Maybe the obstacle is right on the spot where it must be deleted
+      // because the floor under it will move out.
+      //
+      if ( ( edit_level -> obstacle_list [ i ] . pos . x >= from_where ) &&
+	   ( edit_level -> obstacle_list [ i ] . pos . x <= from_where - by_what ) )
+	{
+	  delete_obstacle ( edit_level , & ( edit_level -> obstacle_list [ i ] ) ) ;
+	  i -- ; 
+	  DebugPrintf ( 0 , "\nRemoved another obstacle in resizing operation." );
+	  continue;
+	}
+
+      //--------------------
+      // Now at this point we can be sure that the obstacle just needs to be 
+      // moved a bit.  That shouldn't be too hard to do...
+      //
+      if ( edit_level -> obstacle_list [ i ] . pos . x > from_where )
+	edit_level -> obstacle_list [ i ] . pos . x += by_what ;
+    }
+  
+  glue_obstacles_to_floor_tiles_for_level ( edit_level -> levelnum ) ;
+  
+}; // void move_obstacles_east_of ( float from_where , float by_what , Level edit_level )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+move_obstacles_south_of ( float from_where , float by_what , Level edit_level )
+{
+  int i;
+
+  for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
+    {
+      //--------------------
+      // Maybe the obstacle entry isn't used at all.  That's the simplest
+      // case...: do nothing.
+      //
+      if ( edit_level -> obstacle_list [ i ] . type <= ( -1 ) ) continue;
+      // if ( edit_level -> obstacle_list [ i ] . pos . y <= ( -1 ) ) continue;
+      
+      //--------------------
+      // Maybe the obstacle is right on the spot where it must be deleted
+      // because the floor under it will move out.
+      //
+      if ( ( edit_level -> obstacle_list [ i ] . pos . y >= from_where ) &&
+	   ( edit_level -> obstacle_list [ i ] . pos . y <= from_where - by_what ) )
+	{
+	  delete_obstacle ( edit_level , & ( edit_level -> obstacle_list [ i ] ) ) ;
+	  i -- ;
+	  DebugPrintf ( 0 , "\nRemoved another obstacle in resizing operation." );
+	  continue;
+	}
+
+      //--------------------
+      // Now at this point we can be sure that the obstacle just needs to be 
+      // moved a bit.  That shouldn't be too hard to do...
+      //
+      if ( edit_level -> obstacle_list [ i ] . pos . y > from_where )
+	edit_level -> obstacle_list [ i ] . pos . y += by_what ;
+    }
+  
+  glue_obstacles_to_floor_tiles_for_level ( edit_level -> levelnum ) ;
+  
+}; // void move_obstacles_south_of ( float from_where , float by_what , Level edit_level )
+
+/* ----------------------------------------------------------------------
  * When new lines are inserted into the map, the map labels east of this
  * line must move too with the rest of the map.  This function sees to it.
  * ---------------------------------------------------------------------- */
@@ -513,6 +599,8 @@ MoveWaypointsEastOf ( int FromWhere , int ByWhat , Level EditLevel )
 void
 InsertLineVerySouth ( Level EditLevel )
 {
+  int i;
+  int j;
 
   //--------------------
   // The enlargement of levels in y direction is limited by a constant
@@ -523,9 +611,23 @@ InsertLineVerySouth ( Level EditLevel )
     {
       EditLevel->ylen++;
       // In case of enlargement, we need to do more:
-      EditLevel->map[ EditLevel->ylen-1 ] = MyMalloc( EditLevel->xlen +1) ;
+      EditLevel->map[ EditLevel->ylen-1 ] = MyMalloc( ( EditLevel->xlen + 1 ) * sizeof ( map_tile ) ) ;
       // We don't want to fill the new area with junk, do we? So we make it floor tiles
-      memset( EditLevel->map[ EditLevel->ylen-1 ] , FLOOR , EditLevel->xlen );
+
+      //--------------------
+      // Now we insert the new line.  But we can't just initialize it with memset like
+      // earlier, but instead this has to be done with more care, using the map_tile
+      // structures.
+      //
+      //memset( EditLevel->map[ EditLevel->ylen-1 ] , FLOOR , EditLevel->xlen );
+      for ( i = 0 ; i < EditLevel->xlen ; i ++ )
+	{
+	  EditLevel->map[ EditLevel->ylen-1 ] [ i ] . floor_value = ISO_FLOOR_SAND ;
+	  for ( j = 0 ; j < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; j ++ )
+	    {
+	      EditLevel->map[ EditLevel->ylen-1 ] [ i ] . obstacles_glued_to_here [ j ] = (-1) ;
+	    }
+	}
     }
 
 }; // void InsertLineVerySouth ( Level EditLevel )
@@ -545,7 +647,7 @@ InsertColumnVeryEast ( Level EditLevel )
     {
       OldMapPointer=EditLevel->map[i];
       EditLevel->map[i] = MyMalloc ( sizeof ( map_tile ) * ( EditLevel->xlen +1) ) ;
-      memcpy( EditLevel->map[i] , OldMapPointer , EditLevel->xlen-1 );
+      memcpy( EditLevel -> map [ i ] , OldMapPointer , ( EditLevel -> xlen - 1 ) * sizeof ( map_tile ) );
       // We don't want to fill the new area with junk, do we? So we make it floor tiles
       EditLevel->map[ i ] [ EditLevel->xlen-1 ] . floor_value = FLOOR;  
     }
@@ -584,12 +686,13 @@ InsertColumnEasternInterface( Level EditLevel )
       //
       memmove ( & ( EditLevel->map [ i ] [ EditLevel->xlen - EditLevel->jump_threshold_east - 1 ] ) ,
 		& ( EditLevel->map [ i ] [ EditLevel->xlen - EditLevel->jump_threshold_east - 2 ] ) ,
-		EditLevel->jump_threshold_east );
+		EditLevel->jump_threshold_east * sizeof ( map_tile ) );
       EditLevel->map [ i ] [ EditLevel->xlen - EditLevel->jump_threshold_east - 1 ] . floor_value = FLOOR ;
     }
 
   MoveWaypointsEastOf ( EditLevel->xlen - EditLevel->jump_threshold_east - 1 , +1 , EditLevel ) ;
   MoveMapLabelsEastOf ( EditLevel->xlen - EditLevel->jump_threshold_east - 1 , +1 , EditLevel ) ;
+  move_obstacles_east_of ( EditLevel->xlen - EditLevel->jump_threshold_east - 1.0 , +1 , EditLevel ) ;
 
 }; // void InsertColumnEasternInterface( EditLevel );
 
@@ -608,6 +711,14 @@ RemoveColumnEasternInterface( Level EditLevel )
   if ( EditLevel -> jump_threshold_east <= 0 ) return;
 
   //--------------------
+  // First we move the obstacles, cause they will be glued and moved and doing that should
+  // be done before the floor to glue them to vanishes in the very east.
+  //
+  // But of course we should glue once more later...
+  //
+  move_obstacles_east_of ( EditLevel->xlen - EditLevel->jump_threshold_east + 1.0 , -1 , EditLevel ) ;
+
+  //--------------------
   // Now the new memory and everything is done.  All we
   // need to do is move the information to the east
   //
@@ -619,7 +730,7 @@ RemoveColumnEasternInterface( Level EditLevel )
       //
       memmove ( & ( EditLevel->map [ i ] [ EditLevel->xlen - EditLevel->jump_threshold_east - 1 ] ) ,
 		& ( EditLevel->map [ i ] [ EditLevel->xlen - EditLevel->jump_threshold_east - 0 ] ) ,
-		EditLevel->jump_threshold_east - 0 );
+		EditLevel->jump_threshold_east * sizeof ( map_tile ) );
       // EditLevel->map [ i ] [ EditLevel->xlen - EditLevel->jump_threshold_east - 1 ] = FLOOR ;
     }
 
@@ -628,7 +739,9 @@ RemoveColumnEasternInterface( Level EditLevel )
   MoveWaypointsEastOf ( EditLevel->xlen - EditLevel->jump_threshold_east + 1 , -1 , EditLevel ) ;
   MoveMapLabelsEastOf ( EditLevel->xlen - EditLevel->jump_threshold_east + 1 , -1 , EditLevel ) ;
 
-}; // void InsertColumnEasternInterface( EditLevel );
+  glue_obstacles_to_floor_tiles_for_level ( EditLevel -> levelnum );
+
+}; // void RemoveColumnEasternInterface( Level EditLevel );
 
 /* ----------------------------------------------------------------------
  * Self-explanatory.
@@ -758,6 +871,9 @@ InsertLineSouthernInterface ( Level EditLevel )
   //
   MoveWaypointsSouthOf ( EditLevel -> ylen - 1 - EditLevel -> jump_threshold_south , +1 , EditLevel ) ;
   MoveMapLabelsSouthOf ( EditLevel -> ylen - 1 - EditLevel -> jump_threshold_south , +1 , EditLevel ) ;
+  move_obstacles_south_of ( EditLevel -> ylen - 1 - EditLevel -> jump_threshold_south , +1 , EditLevel ) ;
+
+  glue_obstacles_to_floor_tiles_for_level ( EditLevel -> levelnum );
 
 }; // void InsertLineSouthernInterface ( EditLevel )
 
@@ -775,6 +891,14 @@ RemoveLineSouthernInterface ( Level EditLevel )
   if ( EditLevel -> jump_threshold_south <= 0 ) return;
 
   //--------------------
+  // First we move the obstacles, cause they will be glued and moved and doing that should
+  // be done before the floor to glue them to vanishes in the very south.
+  //
+  // But of course we should glue once more later...
+  //
+  move_obstacles_south_of ( EditLevel -> ylen - 0 - EditLevel -> jump_threshold_south , -1 , EditLevel ) ;
+
+  //--------------------
   // Now we do some swapping of lines
   //
   for ( i = EditLevel -> ylen - 1 - EditLevel -> jump_threshold_south ; 
@@ -789,6 +913,8 @@ RemoveLineSouthernInterface ( Level EditLevel )
   //
   MoveWaypointsSouthOf ( EditLevel -> ylen - 0 - EditLevel -> jump_threshold_south , -1 , EditLevel ) ;
   MoveMapLabelsSouthOf ( EditLevel -> ylen - 0 - EditLevel -> jump_threshold_south , -1 , EditLevel ) ;
+
+  glue_obstacles_to_floor_tiles_for_level ( EditLevel -> levelnum );
 
 }; // void RemoveLineSouthernInterface ( EditLevel )
 
@@ -2891,38 +3017,6 @@ delete_obstacle ( level* EditLevel , obstacle* our_obstacle )
 Unable to find the obstacle in question within the obstacle list!",
 				 PLEASE_INFORM , IS_FATAL );
     }
-
-  /*
-  //--------------------
-  // Now we can eliminate all the glue...
-  //
-  for ( xtile = 0 ; xtile < EditLevel -> xlen ; xtile ++ )
-    {
-      for ( ytile = 0 ; ytile < EditLevel -> ylen ; ytile ++ )
-	{
-	  for ( i = 0 ; i < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; i ++ )
-	    if ( EditLevel -> map [ ytile ] [ xtile ] . obstacles_glued_to_here [ i ] == 
-		 obstacle_index )
-	      {
-		EditLevel -> map [ ytile ] [ xtile ] . obstacles_glued_to_here [ i ] = (-1) ;
-		//--------------------
-		// Maybe there are other obstacles glued to here.  Then we need to fill the
-		// gap in the glue array that we have just created.
-		//
-		for ( j = i ; j < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE - 1 ; j ++ )
-		  {
-		    if ( EditLevel -> map [ ytile ] [ xtile ] . obstacles_glued_to_here [ j + 1 ] != (-1) )
-		      {
-			EditLevel -> map [ ytile ] [ xtile ] . obstacles_glued_to_here [ j ] = 
-			  EditLevel -> map [ ytile ] [ xtile ] . obstacles_glued_to_here [ j + 1 ] ;
-			EditLevel -> map [ ytile ] [ xtile ] . obstacles_glued_to_here [ j + 1 ] = (-1) ;
-		      }
-		  }
-		
-	      }
-	}
-    }
-  */
 
   //--------------------
   // And of course we must not forget to delete the obstalce itself
