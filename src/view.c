@@ -1454,7 +1454,23 @@ PutItem( int ItemNumber )
   Item CurItem = &ItemLevel -> ItemList [ ItemNumber ] ;
   SDL_Rect TargetRectangle;
   
-  if ( CurItem->type == ( -1 ) ) return;
+  if ( CurItem->type == ( -1 ) ) 
+    {
+      return;
+      fprintf( stderr, "\n\nItemNumber '%d'\n" , ItemNumber );
+      GiveStandardErrorMessage ( "PutItem(...)" , "\
+There was -1 item type given to blit.  This must be a mistake! ",
+				 PLEASE_INFORM, IS_FATAL );
+    }
+
+  if ( ItemMap[ CurItem->type ].picture_number >= NUMBER_OF_ITEM_PICTURES ) 
+    {
+      fprintf( stderr, "\n\nItemMap[ CurItem->type ].picture_number '%d'\n" , ItemMap[ CurItem->type ].picture_number );
+      GiveStandardErrorMessage ( "PutItem(...)" , "\
+There was an item type given, that exceeds the range of item images loaded.",
+				 PLEASE_INFORM, IS_FATAL );
+    }
+
 
   // We don't blit any item, that we're currently holding in our hand, do we?
   if ( CurItem->currently_held_in_hand == TRUE ) return;

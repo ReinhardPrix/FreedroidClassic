@@ -1053,6 +1053,14 @@ ApplyItem( item* CurItem )
     {
       Me[0].mana += Me[0].maxmana;
     }
+  else if ( CurItem->type == ITEM_VMX_GAS_GRANADE )
+    {
+      RadialVMXWave ( Me [ 0 ] . pos , FALSE );
+    }
+  else if ( CurItem->type == ITEM_EMP_SHOCK_GRANADE )
+    {
+      RadialEMPWave ( Me [ 0 ] . pos , FALSE );
+    }
   else if ( CurItem->type == ITEM_SPELLBOOK_OF_HEALING )
     {
       Me [ 0 ] . SkillLevel [ 3 ] ++ ;
@@ -1084,7 +1092,9 @@ ApplyItem( item* CurItem )
   // evaporize after the first application.  Therefore we delete the item from the inventory list.
   //
 
-  DeleteItem ( CurItem );
+  if ( CurItem->multiplicity > 1 )
+    CurItem->multiplicity--;
+  else DeleteItem ( CurItem );
 
 }; // void ApplyItemFromInventory( int ItemNum )
 
@@ -2642,7 +2652,6 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
 	      TargetItemIndex = FindFirstInventoryIndexWithItemType ( ItemPointer->type , PLAYER_NR_0 );
 	      Me [ PLAYER_NR_0 ] . Inventory [ TargetItemIndex ] . multiplicity += ItemPointer->multiplicity;
 	      PlayItemSound( ItemMap[ ItemPointer->type ].sound_number );
-	      // Me[0].Gold += ItemPointer->gold_amount;
 	      DeleteItem( ItemPointer );
 	      return;
 	    }

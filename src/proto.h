@@ -330,6 +330,8 @@ EXTERN void ShowCharacterScreen ( void );
 #else
 #define EXTERN extern
 #endif
+EXTERN void RadialVMXWave ( gps ExpCenter , int SpellCostsMana );
+EXTERN void RadialEMPWave ( gps ExpCenter , int SpellCostsMana );
 EXTERN void ClearDetectedItemList( int PlayerNum );
 EXTERN void ShowSkillsScreen ( void );
 EXTERN void HandleCurrentlyActivatedSkill( void );

@@ -2497,6 +2497,10 @@ LevelEditor(void)
   Level EditLevel;
   char* NewCommentOnThisSquare;
 
+  GameConfig.Inventory_Visible = FALSE;
+  GameConfig.CharacterScreen_Visible = FALSE;
+  GameConfig.SkillScreen_Visible = FALSE;
+
   EditLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
 
   strcpy ( VanishingMessage , "Hello" );

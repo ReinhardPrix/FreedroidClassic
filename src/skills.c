@@ -344,17 +344,17 @@ ForceExplosionCircle ( gps ExpCenter )
  * This function handles the ForceExplosionCircle skill.
  * ---------------------------------------------------------------------- */
 void
-RadialEMPWave ( gps ExpCenter )
+RadialEMPWave ( gps ExpCenter , int SpellCostsMana )
 {
   int SpellCost = ManaCostTable [ SPELL_RADIAL_EMP_WAVE ][ Me[ 0 ]. spellcasting_skill ] ;
   int i;
 
-  if ( Me[0].mana >= SpellCost )
+  if ( ( Me[0].mana >= SpellCost ) || !SpellCostsMana )
     {
       //--------------------
       // For now, this spell is for free!! gratis!! yeah!! oh groovy!
       //
-      Me[0].mana -= SpellCost;
+      if ( SpellCostsMana ) Me[0].mana -= SpellCost;
       //
       PlaySound ( SPELL_FORCETOENERGY_SOUND_0 ) ;
 
@@ -375,7 +375,6 @@ RadialEMPWave ( gps ExpCenter )
       AllActiveSpells [ i ] . spell_center . y = Me [ 0 ] . pos . y;
       AllActiveSpells [ i ] . spell_radius = 0.3 ;
       AllActiveSpells [ i ] . spell_age = 0 ; 
-      
     }
   else
     {
@@ -389,17 +388,17 @@ RadialEMPWave ( gps ExpCenter )
  * This function handles the ForceExplosionCircle skill.
  * ---------------------------------------------------------------------- */
 void
-RadialVMXWave ( gps ExpCenter )
+RadialVMXWave ( gps ExpCenter , int SpellCostsMana )
 {
   int SpellCost = ManaCostTable [ SPELL_RADIAL_VMX_WAVE ][ Me[ 0 ]. spellcasting_skill ] ;
   int i;
 
-  if ( Me[0].mana >= SpellCost )
+  if ( ( Me[0].mana >= SpellCost ) || !SpellCostsMana ) 
     {
       //--------------------
       // For now, this spell is for free!! gratis!! yeah!! oh groovy!
       //
-      Me[0].mana -= SpellCost;
+      if ( SpellCostsMana ) Me[0].mana -= SpellCost;
       //
       PlaySound ( SPELL_FORCETOENERGY_SOUND_0 ) ;
 
@@ -609,7 +608,7 @@ HandleCurrentlyActivatedSkill( void )
 	{
 	  if ( CursorIsInUserRect ( GetMousePos_x() + 16 , GetMousePos_y() + 16) )
 	    {
-	      RadialEMPWave ( Me [ 0 ] . pos );
+	      RadialEMPWave ( Me [ 0 ] . pos , TRUE );
 	    }
 	}
       break;
@@ -618,7 +617,7 @@ HandleCurrentlyActivatedSkill( void )
 	{
 	  if ( CursorIsInUserRect ( GetMousePos_x() + 16 , GetMousePos_y() + 16) )
 	    {
-	      RadialVMXWave ( Me [ 0 ] . pos );
+	      RadialVMXWave ( Me [ 0 ] . pos , TRUE );
 	    }
 	}
       break;

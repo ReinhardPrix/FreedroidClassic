@@ -282,6 +282,15 @@ ReactToSpecialKeys(void)
   static int SPressed_LastFrame;
   static int LPressed_LastFrame;
   static int TabPressed_LastFrame;
+  static int Number1PressedLastFrame;
+  static int Number2PressedLastFrame;
+  static int Number3PressedLastFrame;
+  static int Number4PressedLastFrame;
+  static int Number5PressedLastFrame;
+  static int Number6PressedLastFrame;
+  static int Number7PressedLastFrame;
+  static int Number8PressedLastFrame;
+  static int Number9PressedLastFrame;
   influence_t Zwisch_Me;
   char MessageBuffer[1024];
 
@@ -339,32 +348,96 @@ ReactToSpecialKeys(void)
 	  // CurLevel = curShip.AllLevels[ Me[ 0 ].levelnum ];
 	  // Teleport ( 
 	}
-      else Quick_ApplyItem ( 1 );
+      else 
+	{
+	  if ( !Number1PressedLastFrame ) Quick_ApplyItem ( 1 );
+	}
+      Number1PressedLastFrame = TRUE;
+    }
+  else
+    {
+      Number1PressedLastFrame = FALSE;
     }
 
   if ( Number2Pressed() )
-    Quick_ApplyItem ( 2 );
+    {
+      if ( !Number2PressedLastFrame ) Quick_ApplyItem ( 2 );
+      Number2PressedLastFrame = TRUE;
+    }
+  else
+    {
+      Number2PressedLastFrame = FALSE;
+    }
 
   if ( Number3Pressed() )
-    Quick_ApplyItem ( 3 );
+    {
+      if ( !Number3PressedLastFrame ) Quick_ApplyItem ( 3 );
+      Number3PressedLastFrame = TRUE;
+    }
+  else
+    {
+      Number3PressedLastFrame = FALSE;
+    }
 
   if ( Number4Pressed() )
-    Quick_ApplyItem ( 4 );
+    {
+      if ( !Number4PressedLastFrame ) Quick_ApplyItem ( 4 );
+      Number4PressedLastFrame = TRUE;
+    }
+  else
+    {
+      Number4PressedLastFrame = FALSE;
+    }
 
   if ( Number5Pressed() )
-    Quick_ApplyItem ( 5 );
+    {
+      if ( !Number5PressedLastFrame ) Quick_ApplyItem ( 5 );
+      Number5PressedLastFrame = TRUE;
+    }
+  else
+    {
+      Number5PressedLastFrame = FALSE;
+    }
 
   if ( Number6Pressed() )
-    Quick_ApplyItem ( 6 );
+    {
+      if ( !Number6PressedLastFrame ) Quick_ApplyItem ( 6 );
+      Number6PressedLastFrame = TRUE;
+    }
+  else
+    {
+      Number6PressedLastFrame = FALSE;
+    }
 
   if ( Number7Pressed() )
-    Quick_ApplyItem ( 7 );
+    {
+      if ( !Number7PressedLastFrame ) Quick_ApplyItem ( 7 );
+      Number7PressedLastFrame = TRUE;
+    }
+  else
+    {
+      Number7PressedLastFrame = FALSE;
+    }
 
   if ( Number8Pressed() )
-    Quick_ApplyItem ( 8 );
+    {
+      if ( !Number8PressedLastFrame ) Quick_ApplyItem ( 8 );
+      Number8PressedLastFrame = TRUE ;
+   }
+  else
+    {
+      Number8PressedLastFrame = FALSE;
+    }
 
   if ( Number9Pressed() )
-    Quick_ApplyItem ( 9 );
+    {
+      if ( !Number9PressedLastFrame ) Quick_ApplyItem ( 9 );
+      Number9PressedLastFrame = TRUE;
+    }
+  else
+    {
+      Number9PressedLastFrame = FALSE;
+    }
 
   //--------------------
   // For debugging purposes, we introduce a key, that causes several 
