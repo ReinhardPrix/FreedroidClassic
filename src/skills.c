@@ -130,7 +130,8 @@ DetectItemsSpell ( void )
 	    }
 	}
 
-      Play_Spell_ForceToEnergy_Sound( );
+      // Play_Spell_ForceToEnergy_Sound( );
+      Play_Spell_DetectItems_Sound( );
 
     }
   else

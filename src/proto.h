@@ -254,6 +254,7 @@ EXTERN void PlayLevelCommentSound ( int levelnum );
 EXTERN void PlayEnemyGotHitSound ( int enemytype );
 EXTERN void BulletReflectedSound (void);
 EXTERN void Play_Spell_ForceToEnergy_Sound( void );
+EXTERN void Play_Spell_DetectItems_Sound( void );
 
 // items.c
 #undef EXTERN
