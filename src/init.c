@@ -1871,7 +1871,6 @@ InitFreedroid ( void )
   Me [ 0 ] . energy = 1 ;
   Me [ 0 ] . maxenergy = 10 ;
 
-
   //--------------------
   // It might happen, that the uninitialized AllBullets array contains a 1
   // somewhere and that the bullet is deleted and the surface freed, where
@@ -1892,13 +1891,13 @@ InitFreedroid ( void )
 
   global_ignore_doors_for_collisions_flag = FALSE ;
 
-  Overall_Average=0.041;
+  Overall_Average = 0.041 ;
   SkipAFewFrames = 0;
-  Me[0].TextVisibleTime = 0;
-  Me[0].readied_skill = 0;
-  Me[0].walk_cycle_phase = 0 ;
+  Me [ 0 ] . TextVisibleTime = 0;
+  Me [ 0 ] . readied_skill = 0;
+  Me [ 0 ] . walk_cycle_phase = 0 ;
   CurLevel = NULL;  // please leave this here.  It indicates, that the map is not yet initialized!!!
-  Me[0].TextToBeDisplayed = "Linux Kernel booted.  001 transfer-tech modules loaded.  System up and running.";
+  Me [ 0 ] . TextToBeDisplayed = "Linux Kernel booted.  001 transfer-tech modules loaded.  System up and running.";
   
   // --------------------
   //
@@ -2042,14 +2041,6 @@ ThouArtDefeated (void)
     GameConfig . Inventory_Visible = FALSE;
     GameConfig . CharacterScreen_Visible = FALSE;
     GameConfig . Mission_Log_Visible = FALSE;
-
-    //--------------------
-    // The automap doesn't need to be shown any more and also when
-    // the next game starts up (on the same level as right now) there
-    // should not be any automap info remaining...
-    //
-    clear_automap_texture_completely (  ) ;
-
     ThouArtDefeatedSound ( ) ;
     ExplodeInfluencer ( ) ;
     now = SDL_GetTicks ( ) ;
@@ -2058,14 +2049,22 @@ ThouArtDefeated (void)
     // Now that the influencer is dead, all this precious items
     // spring off of him...
     //
-    DropItemAt ( Me[0].weapon_item.type , Me[0].pos.x - 0.5 , Me[0].pos.y - 0.5 , -1 , -1 , 0 , 1 );
-    DropItemAt ( Me[0].drive_item.type  , Me[0].pos.x + 0.5 , Me[0].pos.y - 0.5 , -1 , -1 , 0 , 1 );
-    DropItemAt ( Me[0].shield_item.type , Me[0].pos.x + 0.5 , Me[0].pos.y + 0.5 , -1 , -1 , 0 , 1 );
-    DropItemAt ( Me[0].armour_item.type , Me[0].pos.x - 0.5 , Me[0].pos.y + 0.5 , -1 , -1 , 0 , 1 );
-    DropItemAt ( Me[0].special_item.type , Me[0].pos.x - 0.5 , Me[0].pos.y , -1 , -1 , 0 , 1 );
-    DropItemAt ( Me[0].aux1_item.type , Me[0].pos.x + 0.5 , Me[0].pos.y , -1 , -1 , 0 , 1 );
-    DropItemAt ( Me[0].aux2_item.type , Me[0].pos.x , Me[0].pos.y - 0.5 , -1 , -1 , 0 , 1 );
-    DropItemAt ( ITEM_MONEY , Me[0].pos.x , Me[0].pos.y , -1 , -1 , 0 , 1 );
+    DropItemAt ( Me [ 0 ] . weapon_item  . type , 
+		 Me [ 0 ] . pos . x - 0.5 , Me [ 0 ] . pos . y - 0.5 , -1 , -1 , 0 , 1 );
+    DropItemAt ( Me [ 0 ] . drive_item   . type , 
+		 Me [ 0 ] . pos . x + 0.5 , Me [ 0 ] . pos . y - 0.5 , -1 , -1 , 0 , 1 );
+    DropItemAt ( Me [ 0 ] . shield_item  . type , 
+		 Me [ 0 ] . pos . x + 0.5 , Me [ 0 ] . pos . y + 0.5 , -1 , -1 , 0 , 1 );
+    DropItemAt ( Me [ 0 ] . armour_item  . type , 
+		 Me [ 0 ] . pos . x - 0.5 , Me [ 0 ] . pos . y + 0.5 , -1 , -1 , 0 , 1 );
+    DropItemAt ( Me [ 0 ] . special_item . type , 
+		 Me [ 0 ] . pos . x - 0.5 , Me [ 0 ] . pos . y       , -1 , -1 , 0 , 1 );
+    DropItemAt ( Me [ 0 ] . aux1_item    . type , 
+		 Me [ 0 ] . pos . x + 0.5 , Me [ 0 ] . pos . y       , -1 , -1 , 0 , 1 );
+    DropItemAt ( Me [ 0 ] . aux2_item    . type , 
+		 Me [ 0 ] . pos . x       , Me [ 0 ] . pos . y - 0.5 , -1 , -1 , 0 , 1 );
+    DropItemAt ( ITEM_MONEY                     , 
+		 Me [ 0 ] . pos . x       , Me [ 0 ] . pos . y       , -1 , -1 , 0 , 1 );
     
     GameOver = TRUE;
     
@@ -2089,6 +2088,13 @@ ThouArtDefeated (void)
 	
     }
     
+    //--------------------
+    // The automap doesn't need to be shown any more and also when
+    // the next game starts up (on the same level as right now) there
+    // should not be any automap info remaining...
+    //
+    clear_automap_texture_completely (  ) ;
+
     DebugPrintf (2, "\nvoid ThouArtDefeated(void): Usual end of function reached.");
     DebugPrintf (1, "\n\n DefeatedDone \n\n");
 

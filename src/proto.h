@@ -35,6 +35,20 @@
 #define EXTERN extern
 #endif
 
+
+// automap.c
+#undef EXTERN
+#ifdef _automap_c
+#define EXTERN
+#else
+#define EXTERN extern
+#endif
+EXTERN void set_up_texture_for_automap ( void );
+EXTERN void show_automap_data_ogl ( void );
+EXTERN void show_automap_data_sdl ( void );
+EXTERN void insert_old_map_info_into_texture ( void );
+
+
 // init.c
 #undef EXTERN
 #ifdef _init_c
