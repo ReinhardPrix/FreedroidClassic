@@ -71,12 +71,26 @@ int
 MouseCursorIsOverMenuItem( int first_menu_item_pos_y , int h )
 {
   // int h = FontHeight ( GetCurrentFont() );
-  
+  int PureFraction;
+
   //--------------------
   // The value of GetMousePos_y() NOT YET corrected for 16 pixels!!
   // Therefore we can write:
   //
-  return ( ( ( GetMousePos_y () + 16 - first_menu_item_pos_y ) / h ) + 1 );
+  
+  PureFraction = ( GetMousePos_y () + 16 - first_menu_item_pos_y ) / h ;
+
+  //--------------------
+  // Now it can be that the pure difference is negative or that it is positive.
+  // However we should not always round thowards zero here, but rather always to
+  // the next LOWER integer!  This will be done here:
+  //
+  if ( ( GetMousePos_y () + 16 - first_menu_item_pos_y ) < 0 )
+    PureFraction--;
+  else
+    PureFraction++;
+
+  return ( PureFraction );
 
 }; // void MouseCursorIsOverMenuItem( first_menu_item_pos_y )
 
@@ -439,7 +453,15 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
   int MenuOptionLineRequirement[20] ;
   SDL_Rect Choice_Window;
   SDL_Rect HighlightRect;
-  int MaxLinesInMenuRectangle;
+  int 
+MaxLinesInMenuRectangle;
+  int OptionOffset = 0 ;
+  int SpaceUsedSoFar;
+  int BreakOffCauseAllDisplayed ;
+  int BreakOffCauseNoRoom ;
+  int LastOptionVisible;
+  int MenuLineOfMouseCursor;
+  int ThisOptionEnd;
 
   //--------------------
   // Now we set some viable choice window and we compute the maximum number of lines
@@ -447,6 +469,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
   //
   Choice_Window . x = 35; Choice_Window . y = 340; Choice_Window . w = 640 - 70; Choice_Window . h = 110;
   MaxLinesInMenuRectangle = Choice_Window . h / ( FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) ;
+  MaxLinesInMenuRectangle = 5;
   DebugPrintf ( 0 , "\nComputed number of lines in choice window at most: %d." , MaxLinesInMenuRectangle );
 
   //--------------------
@@ -507,35 +530,82 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
   else SetCurrentFont ( (BFont_Info*) MenuFont );
   h = FontHeight ( GetCurrentFont() );
 
+  OptionOffset = 0 ;
   while ( 1 )
     {
 
       RestoreMenuBackground ();
 
       //--------------------
-      // We highlight the currently selected option with an 
-      // influencer to the left and right of it.
+      // Now that we have a new choice window, we should automatically compute the right
+      // positions for the various chat alternatives.
       //
-      // PutInfluence( MenuPosX[ MenuPosition -1 ] , MenuPosY[ MenuPosition -1 ] + (h/2) , 0 );
+      // BUT THIS TIME WE WILL TAKE INTO ACCOUNT THE GIVEN OPTION OFFSET!!!
+      //
+      for ( i = OptionOffset ; i < NumberOfOptionsGiven ; i++ )
+	{
+	  MenuPosX[ i ]  = Choice_Window . x ;
+	  MenuPosY[ i ]  = Choice_Window . y ;
+	  // + i * Choice_Window .h / NumberOfOptionsGiven ;
+	  for ( j = OptionOffset ; j < i ; j ++ )
+	    {
+	      MenuPosY[ i ] += MenuOptionLineRequirement [ j ] * ( FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) ;
+	    }
+	}
+
+      //--------------------
+      // We highlight the currently selected option with a highlighting rectangle
       //
       HighlightRect.x = MenuPosX[ MenuPosition -1 ] - 0 * h ;
       HighlightRect.y = MenuPosY[ MenuPosition -1 ] ;
       HighlightRect.w = TextWidth ( MenuTexts [ MenuPosition - 1 ] ) + 0 * h ;
-      HighlightRect.h = MenuOptionLineRequirement [ MenuPosition - 1 ] * ( FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) ;	    
+      HighlightRect.h = MenuOptionLineRequirement [ MenuPosition - 1 ] * 
+	( FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) ;	    
       HighlightRectangle ( Screen , HighlightRect );
 
-      for ( i = 0 ; i < 10 ; i ++ )
+      //--------------------
+      // We blit to the screen all the options that are not empty and that still fit
+      // onto the screen
+      //
+      SpaceUsedSoFar = 0 ;
+      for ( i = OptionOffset ; i < 10 ; i ++ )
 	{
-	  if ( strlen( MenuTexts[ i ] ) == 0 ) continue;
+	  //--------------------
+	  // If all has been displayed already, we quit blitting...
+	  //
+	  if ( strlen( MenuTexts[ i ] ) == 0 ) 
+	    {
+	      BreakOffCauseAllDisplayed = TRUE ;
+	      BreakOffCauseNoRoom = FALSE ;
+	      LastOptionVisible = i ;
+	      break;
+	    }
+	  //--------------------
+	  // If there is not enough room any more, we quit blitting...
+	  //
+	  if ( ( MaxLinesInMenuRectangle - SpaceUsedSoFar ) < MenuOptionLineRequirement [ i ] ) 
+	    {
+	      BreakOffCauseAllDisplayed = FALSE ;
+	      BreakOffCauseNoRoom = TRUE ;
+	      LastOptionVisible = i ;
+	      break;
+	    }
+
+	  //--------------------
+	  // Now that we know, that there is enough room, we can blit the next menu option.
+	  //
 	  DisplayText ( MenuTexts[i] , MenuPosX[i] , MenuPosY[i] , &Choice_Window );
+	  SpaceUsedSoFar += MenuOptionLineRequirement [ i ] ;
 	}
+
+      if ( BreakOffCauseNoRoom ) ShowGenericButtonFromList ( SCROLL_DIALOG_MENU_DOWN_BUTTON );
+      if ( OptionOffset ) ShowGenericButtonFromList ( SCROLL_DIALOG_MENU_UP_BUTTON );
 
       SDL_Flip( Screen );
   
       if ( EscapePressed() )
 	{
 	  while ( EscapePressed() );
-	  // MenuItemDeselectedSound();
 
 	  RestoreMenuBackground ();
 	  SDL_Flip( Screen );
@@ -563,44 +633,109 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
 	  return ( MenuPosition );
 
 	}
+
       if ( axis_is_active )
 	{
 	  while ( EnterPressed() || SpacePressed() ); // || RightPressed() || LeftPressed() );
+
 	  //--------------------
-	  // Only if the mouse click really occured within the menu, we will interpret
-	  // it as menu choice.  Otherwise it will be just ignored.
+	  // First we see if there was perhaps a click on one of the active scroll buttons
 	  //
-	  if ( MouseCursorIsOverMenuItem( MenuPosY [ 0 ] , MenuPosY [ 1 ] - MenuPosY [ 0 ] ) == MenuPosition )
+	  if ( ( CursorIsOnButton ( SCROLL_DIALOG_MENU_DOWN_BUTTON , GetMousePos_x () + 16 , GetMousePos_y () + 16 ) ) &&
+	       ( BreakOffCauseNoRoom ) )
 	    {
-	      SDL_ShowCursor( SDL_ENABLE );
-	      RestoreMenuBackground ();
-	      SDL_Flip( Screen );
-	      return ( MenuPosition );
+	      OptionOffset ++ ;
+	    }
+	  else if ( ( CursorIsOnButton ( SCROLL_DIALOG_MENU_UP_BUTTON , GetMousePos_x () + 16 , GetMousePos_y () + 16 ) ) &&
+	       ( OptionOffset ) )
+	    {
+	      OptionOffset -- ;
+	    }
+	  //--------------------
+	  // If not, then maybe it was a click into the options window.  That alone
+	  // would be enough to call it a valid user decision.
+	  //
+	  else
+	    {
+	      //--------------------
+	      // Now if the click has occured within the lines of the menu, we will count
+	      // this as a valid choice of the user.
+	      //
+	      MenuLineOfMouseCursor = 
+		MouseCursorIsOverMenuItem ( MenuPosY [ OptionOffset ] , FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) ;
+	      if ( ( MenuLineOfMouseCursor >= 1 ) && ( MenuLineOfMouseCursor <= MaxLinesInMenuRectangle ) )
+		{
+		  SDL_ShowCursor( SDL_ENABLE );
+		  RestoreMenuBackground ();
+		  SDL_Flip( Screen );
+		  return ( MenuPosition );
+		}
 	    }
 	  
 	}
       if ( UpPressed() || MouseWheelUpPressed() ) 
 	{
-	  if (MenuPosition > 1) MenuPosition--;
-	  MoveMenuPositionSound();
-	  HighlightRect.x = MenuPosX[ MenuPosition-1 ] + 2 * h ; 
-	  HighlightRect.y = MenuPosY[ MenuPosition-1 ] ;
-	  SDL_WarpMouse ( HighlightRect.x , HighlightRect.y );
+	  if (MenuPosition > OptionOffset + 1 ) 
+	    {
+	      SDL_WarpMouse ( GetMousePos_x () , MenuPosY [ MenuPosition - 2 ] ) ;
+	      MoveMenuPositionSound();	    
+	    }
+	  else if ( OptionOffset > 0 ) 
+	    {
+	      OptionOffset -- ; 
+	      MoveMenuPositionSound();	    
+	    }
+
 	  while (UpPressed());
 	}
       if ( DownPressed() || MouseWheelDownPressed() ) 
 	{
-	  if ( MenuPosition < NumberOfOptionsGiven ) MenuPosition++;
+	  if ( MenuPosition < LastOptionVisible ) 
+	    { 
+	      SDL_WarpMouse ( GetMousePos_x () , MenuPosY [ MenuPosition ] );
+	    }
+	  else
+	    {
+	      if ( BreakOffCauseNoRoom ) OptionOffset++;
+	      SDL_WarpMouse ( GetMousePos_x () , MenuPosY [ MenuPosition - 1 ] );
+	    }
 	  MoveMenuPositionSound();
-	  HighlightRect.x = MenuPosX[ MenuPosition-1 ] + 2 * h ; 
-	  HighlightRect.y = MenuPosY[ MenuPosition-1 ] ;
-	  SDL_WarpMouse ( HighlightRect.x , HighlightRect.y );
 	  while (DownPressed());
 	}
 
+      //--------------------
+      // Only if the mouse position really lies within the menu, we will interpret
+      // it as menu choice.  Otherwise it will be just ignored.
+      //
+      MenuLineOfMouseCursor = 
+	MouseCursorIsOverMenuItem ( MenuPosY [ 0 ] , FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) ;
+
+      //--------------------
+      // If the mouse cursor was on one of the possible lines, than we can try to translate
+      // it into a real menu position
+      //
+      if ( ( MenuLineOfMouseCursor >= 0 ) && ( MenuLineOfMouseCursor <= MaxLinesInMenuRectangle ) )
+	{
+	  ThisOptionEnd = MenuPosY [ 0 ] ;
+	  for ( i = OptionOffset ; i <= LastOptionVisible ; i ++ )
+	    {
+	      
+	      ThisOptionEnd += MenuOptionLineRequirement [ i ] * ( FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) ;
+
+	      if ( GetMousePos_y () + 16 < ThisOptionEnd )
+		{
+		  MenuPosition = i + 1 ; // MouseCursorIsOverMenuItem( MenuPosY [ 0 ] , MenuPosY [ 1 ] - MenuPosY [ 0 ] );
+		  break;
+		}
+	    }
+
+	  /*
       MenuPosition = MouseCursorIsOverMenuItem( MenuPosY [ 0 ] , MenuPosY [ 1 ] - MenuPosY [ 0 ] );
-      if ( MenuPosition < 1 ) MenuPosition = 1 ;
-      if ( MenuPosition > NumberOfOptionsGiven ) MenuPosition = NumberOfOptionsGiven ;
+	  */
+	}
+
+      if ( MenuPosition < OptionOffset + 1 ) MenuPosition = OptionOffset + 1 ;
+      if ( MenuPosition > LastOptionVisible ) MenuPosition = LastOptionVisible ;
 
     }
 

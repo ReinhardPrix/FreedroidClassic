@@ -2054,7 +2054,7 @@ ImprovedCheckUmbruch (char* Resttext, const SDL_Rect *clip)
   // In case of a space, see if the next word will still fit on the line
   // and do a carriage return/line feed if not
   if ( *Resttext == ' ' ) {
-    for ( i = 1 ; i  <MAX_WORD_LENGTH ; i ++ ) 
+    for ( i = 1 ; i < MAX_WORD_LENGTH ; i ++ ) 
       {
 	if ( (Resttext[i] != ' ') && (Resttext[i] != '\n') && (Resttext[i] != 0) )
 	  { 
