@@ -1370,15 +1370,17 @@ Level_Editor(void)
 	      PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "Use number pad to plant walls." ); k++;
 	      PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "Use shift and number pad to plant extras." ); k++;
 	      PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "R...Refresh, 1-5...Blocktype 1-5, L...Lift" ); k++;
-	      PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "F...Fine grid" ); k+=2;
-	      PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "I...zoom INTO the map" ); k++;
-	      PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "O...zoom OUT of the map" ); k+=2;
+	      PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "F...Fine grid, T/SHIFT + T...Doors" ); k++;
+	      PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "M...Alert, E...Enter tile by number" ); k++; 
+	      PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "Space/Enter...Floor" ); k+=2;
+	      
+	      PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "I/O...zoom INTO/OUT OF the map" ); k+=2;
 	      PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "P...toggle wayPOINT on/off" ); k++;
-	      PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont) , "C...start/end waypoint CONNECTION" ); k++;
+	      PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "C...start/end waypoint CONNECTION" ); k++;
 
 	      SDL_Flip ( ne_screen );
-	      while ( !SpacePressed() );
-	      while ( SpacePressed() );
+	      while ( !SpacePressed() && !EscapePressed() );
+	      while ( SpacePressed() || EscapePressed() );
 	    }
 
 	  //--------------------
@@ -1620,7 +1622,7 @@ Level_Editor(void)
 	    {
 	      CurLevel->map[BlockY][BlockX]=ECK_RO;
 	    }
-	  if (APressed())
+	  if ( MPressed() )
 	    {
 	      CurLevel->map[BlockY][BlockX]=ALERT;	      
 	    }
@@ -1628,7 +1630,7 @@ Level_Editor(void)
 	    {
 	      CurLevel->map[BlockY][BlockX]=REFRESH1;	            
 	    }
-	  if (DPressed())
+	  if (TPressed())
 	    {
 	      if (Shift_Was_Pressed())
 		CurLevel->map[BlockY][BlockX]=V_ZUTUERE;	            	      
