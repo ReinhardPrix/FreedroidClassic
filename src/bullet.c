@@ -527,6 +527,7 @@ CheckBulletCollisions (int num)
 		      // start anew to recover his weapon from the previous shot
 		      //
 		      Me.firewait = ItemMap[ Me.weapon_item.type ].item_gun_recharging_time;
+		      Me.got_hit_time = 0;
 
 		      // GotHitSound ();
 		      Influencer_Scream_Sound ( );

@@ -185,6 +185,7 @@ UpdateCountersForThisFrame (void)
   Me.LastTransferSoundTime += Frame_Time();
   Me.TextVisibleTime += Frame_Time();
   if ( Me.weapon_swing_time != (-1) ) Me.weapon_swing_time += Frame_Time();
+  if ( Me.got_hit_time != (-1) ) Me.got_hit_time += Frame_Time();
 
   LevelDoorsNotMovedTime += Frame_Time();
 
