@@ -180,7 +180,7 @@ parse_command_line (int argc, char *const argv[])
 	  /* version statement -v or --version
 	   * following gnu-coding standards for command line interfaces */
 	case 'v':
-	  // printf (PACKAGE_STRING); 
+	  printf (PACKAGE_STRING); 
 	  printf (copyright);
 	  exit (0);
 	  break;
