@@ -407,6 +407,8 @@ LoadAllStaticWavFiles( void )
   int i;
   char Temp_Filename[5000];
 
+  if ( !sound_on ) return;
+
   //--------------------
   // Now that the audio channel is opend, its time to load all the
   // WAV files into memory, something we NEVER did while using the yiff,
@@ -458,6 +460,8 @@ LoadAllStaticModFiles( void )
   char *fpath;
   int i;
   char Temp_Filename[5000];
+
+  if ( !sound_on ) return;
 
   Loaded_MOD_Files[0]=NULL;
   for (i = 1; i < ALL_MOD_MUSICS; i++)

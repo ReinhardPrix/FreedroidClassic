@@ -132,6 +132,7 @@ AC_CONFIG_FILES([Makefile
 		graphics/items/laser_sword_red/Makefile 
 		graphics/items/laser_sword_yellow/Makefile 
 		graphics/items/monkey_wrench/Makefile 
+		graphics/items/map_maker/Makefile 
 		graphics/items/plasma_double/Makefile 
 		graphics/items/plasma_grenade/Makefile 
 		graphics/items/plasma_single/Makefile 

@@ -2079,6 +2079,28 @@ Base list price=18
 Item description text="These dilitium crystals are used as energy source in many modern electricity or heat based devices.  Energy is extracted from the crystal by making use of the energy contained in the order of the crystal molecules.  This principle has allowed to build devices that while consuming a lot of energy do not need to be connected to a power line."
 ** End of new item specification subsection **
 
+// Item No. 75
+** Start of new item specification subsection **
+Item name="Map Maker"
+Item can be applied in combat="no"
+Item can be installed in influ="no"
+Item can be installed in slot with name="none"
+Item uses rotation series with prefix="map_maker"
+Item can be bought in shop="no"
+Items of this type collect together in inventory="no"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=-1 plus duration modifier=0
+Picture number=33
+Rotation model number=0
+Sound number=4
+Base list price=18
+Item description text="This small device automatically collects data about the area within a range of 7 times 7 meters and draws a small-scale plan of the immediate surroundings.  Because of it's very tiny display, it needs to be held closely to the eye and the image will then be projected directly into the eyeball of the user.  Still, the collected map data will be split up by the device into several sectors for convenient viewing."
+** End of new item specification subsection **
+
 // Item No. 10000 LAST ITEM !!! DUMMY ENTRY!!!!
 ** Start of new item specification subsection **
 Item name="ITEM CODE ERROR ITEM"
