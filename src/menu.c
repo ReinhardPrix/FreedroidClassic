@@ -143,6 +143,13 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char*
     }
   NumberOfOptionsGiven = i;
 
+  //--------------------
+  // In those cases where we don't reset the menu position upon 
+  // initalization of the menu, we must check for menu positions
+  // outside the bounds of the current menu.
+  //
+  if ( MenuPosition > NumberOfOptionsGiven ) MenuPosition = 1 ; 
+
   first_menu_item_pos_y = ( SCREEN_HEIGHT - NumberOfOptionsGiven * h ) / 2 ;
 
   //--------------------
@@ -2072,6 +2079,11 @@ Credits_Menu (void)
    ARTWORK:\n\n\
                                       Bastian Salmela\n\n\
                                       Lanzz\n\n\n\
+   STORY AND CHARACTERS:\n\n\
+                                      Willian Eugene Frazier\n\n\
+                                      Pete Spicer\n\n\
+                                      Nathan Jamison\n\n\
+                                      Johannes Prix\n\n\n\
    LEVEL DESIGN:\n\n\
                                       Johannes Prix\n\n\n\
    MOD COMPOSERS:\n\n\
