@@ -696,9 +696,15 @@ GetPixel (SDL_Surface * Surface, Sint32 X, Sint32 Y)
   Uint32 Bpp;
 
   if (X < 0)
-    puts ("x too small in GetPixel!");
+    {
+      DebugPrintf ( 1 , "x too small in GetPixel!" );
+      return -1;
+    }
   if (X >= Surface->w)
-    puts ("x too big in GetPixel!");
+    {
+      DebugPrintf ( 1 , "x too big in GetPixel!" );
+      return -1;
+    }
 
   Bpp = Surface->format->BytesPerPixel;
 

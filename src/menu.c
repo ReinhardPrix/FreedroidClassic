@@ -1174,6 +1174,7 @@ enum
     OPTIONS_POSITION, 
     LEVEL_EDITOR_POSITION, 
     LOAD_GAME_POSITION,
+    NEW_GAME_POSITION,
     QUIT_POSITION
   };
 
@@ -1203,8 +1204,9 @@ enum
       MenuTexts[2]="Options";
       MenuTexts[3]="Level Editor";
       MenuTexts[4]="Load Game";
-      MenuTexts[5]="Quit Game";
-      MenuTexts[6]="";
+      MenuTexts[5]="New Game";
+      MenuTexts[6]="Quit";
+      MenuTexts[7]="";
 
       MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , NE_TITLE_PIC_FILE , NULL );
 
@@ -1226,6 +1228,11 @@ enum
 	  break;
 	case LOAD_GAME_POSITION:
 	  LoadGame(  );
+	  Weiter = TRUE;
+	  break;
+	case NEW_GAME_POSITION:
+	  Me [ 0 ] . energy = 100 ;
+	  GameOver = TRUE ;
 	  Weiter = TRUE;
 	  break;
 	case SAVE_GAME_POSITION:
