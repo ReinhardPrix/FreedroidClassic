@@ -1,3 +1,9 @@
+/*----------------------------------------------------------------------
+ *
+ * Desc: all menu functions and their subfunctions for Freedroid
+ *	 
+ *----------------------------------------------------------------------*/
+
 /* 
  *
  *   Copyright (c) 1994, 2002 Johannes Prix
@@ -22,11 +28,6 @@
  *  MA  02111-1307  USA
  *
  */
-
-/* ----------------------------------------------------------------------
- * This file contains all menu functions and their subfunctions
- * ---------------------------------------------------------------------- */
-
 #define _menu_c
 
 #include "system.h"
@@ -36,1176 +37,52 @@
 #include "global.h"
 #include "proto.h"
 
-#define SELL_PRICE_FACTOR (0.25)
-#define REPAIR_PRICE_FACTOR (0.5)
-
 int New_Game_Requested=FALSE;
-SDL_Surface* StoredMenuBackground = NULL;
 
-int Single_Player_Menu (void);
-int Multi_Player_Menu (void);
+void Single_Player_Menu (void);
+void Multi_Player_Menu (void);
 void Credits_Menu (void);
 void Options_Menu (void);
-void Show_Mission_Log_Menu (void);
-EXTERN void Level_Editor(void);
+void Show_Mission_Instructions_Menu (void);
+void Show_Waypoints(void);
+void Level_Editor(void);
 
+EXTERN int MyCursorX;
+EXTERN int MyCursorY;
 EXTERN char Previous_Mission_Name[1000];
 
-#define FIRST_MENU_ITEM_POS_X (1*Block_Width)
-#define FIRST_MENU_ITEM_POS_XX ( SCREEN_WIDTH - FIRST_MENU_ITEM_POS_X )
-#define FIRST_MENU_ITEM_POS_Y (BANNER_HEIGHT + FontHeight(Menu_BFont) * 3 )
+/*@Function============================================================
+@Desc: This function prepares the screen for the big Escape menu and 
+       its submenus.  This means usual content of the screen, i.e. the 
+       combat screen and top status bar, is "faded out", the rest of 
+       the screen is cleared.  This function resolves some redundance 
+       that occured since there are so many submenus needing this.
 
-/* ----------------------------------------------------------------------
- * This function restores the menu background, that must have been stored
- * before using the function of similar name.
- * ---------------------------------------------------------------------- */
-void
-RestoreMenuBackground ( void )
-{
-  SDL_BlitSurface ( StoredMenuBackground , NULL , Screen , NULL );
-}; // void RestoreMenuBackground ( void )
-
-/* ----------------------------------------------------------------------
- * This function stores the current background as the background for a
- * menu, so that it can be refreshed much faster than by reassembling it
- * every frame.
- * ---------------------------------------------------------------------- */
-void
-StoreMenuBackground ( void )
-{
-  //--------------------
-  // If the memory was not yet allocated, we need to do that now...
-  //
-  // otherwise we free the old surface and create a new copy of the
-  // current screen content...
-  //
-  if ( StoredMenuBackground == NULL )
-    {
-      StoredMenuBackground = SDL_DisplayFormat ( Screen );
-    }
-  else
-    {
-      SDL_FreeSurface ( StoredMenuBackground );
-      StoredMenuBackground = SDL_DisplayFormat ( Screen );
-    }
-
-}; // void StoreMenuBackground ( void )
-
-/* ----------------------------------------------------------------------
- * This function tries to buy the item given as parameter.  Currently
- * is just drops the item to the floor under the influencer and will
- * reduce influencers money.
- * ---------------------------------------------------------------------- */
+@Ret: none
+* $Function----------------------------------------------------------*/
 void 
-TryToRepairItem( item* RepairItem )
-{
-  int MenuPosition;
-
-#define ANSWER_YES 1
-#define ANSWER_NO 2
-
-  char* MenuTexts[ 10 ];
-  MenuTexts[0]="Yes";
-  MenuTexts[1]="No";
-  MenuTexts[2]="";
-  MenuTexts[3]="";
-  MenuTexts[4]="";
-  MenuTexts[5]="";
-  MenuTexts[8]="";
-  MenuTexts[6]="";
-  MenuTexts[7]="";
-  MenuTexts[9]="";
-
-  while ( SpacePressed() || EnterPressed() );
-
-  if ( REPAIR_PRICE_FACTOR * CalculateItemPrice ( RepairItem , TRUE ) > Me[0].Gold )
-    {
-      MenuTexts[0]=" BACK ";
-      MenuTexts[1]="";
-      DoMenuSelection ( "YOU CAN't AFFORD TO HAVE THIS ITEM REPAIRED! " , MenuTexts , 1 , NULL , NULL );
-      return;
-    }
-
-  while ( 1 )
-    {
-      MenuPosition = DoMenuSelection( " Are you sure you want this item repaired? " , MenuTexts , 1 , NULL , NULL );
-      switch (MenuPosition) 
-	{
-	case (-1):
-	  return;
-	  break;
-	case ANSWER_YES:
-	  while (EnterPressed() || SpacePressed() );
-	  Me[0].Gold -= REPAIR_PRICE_FACTOR * CalculateItemPrice ( RepairItem , TRUE ) ;
-	  RepairItem->current_duration = RepairItem->max_duration;
-	  return;
-	  break;
-	case ANSWER_NO:
-	  while (EnterPressed() || SpacePressed() );
-	  return;
-	  break;
-	}
-    }
-}; // void TryToRepairItem( item* RepairItem )
-
-/* ----------------------------------------------------------------------
- * This function tries to identify the item given as parameter.  
- * ---------------------------------------------------------------------- */
-void 
-TryToIdentifyItem( item* IdentifyItem )
-{
-  int MenuPosition;
-
-#define ANSWER_YES 1
-#define ANSWER_NO 2
-
-  char* MenuTexts[ 10 ];
-  MenuTexts[0]="Yes";
-  MenuTexts[1]="No";
-  MenuTexts[2]="";
-  MenuTexts[3]="";
-  MenuTexts[4]="";
-  MenuTexts[5]="";
-  MenuTexts[8]="";
-  MenuTexts[6]="";
-  MenuTexts[7]="";
-  MenuTexts[9]="";
-
-  while ( SpacePressed() || EnterPressed() );
-
-  if ( 100 > Me[0].Gold )
-    {
-      MenuTexts[0]=" BACK ";
-      MenuTexts[1]="";
-      DoMenuSelection ( "YOU CAN't AFFORD TO HAVE THIS ITEM IDENTIFIED! " , MenuTexts , 1 , NULL , NULL );
-      return;
-    }
-
-  while ( 1 )
-    {
-      MenuPosition = DoMenuSelection( " Are you sure you want this item identified? " , MenuTexts , 1 , NULL , NULL );
-      switch (MenuPosition) 
-	{
-	case (-1):
-	  return;
-	  break;
-	case ANSWER_YES:
-	  while (EnterPressed() || SpacePressed() );
-	  Me[0].Gold -= 100 ;
-	  IdentifyItem -> is_identified = TRUE ;
-	  return;
-	  break;
-	case ANSWER_NO:
-	  while (EnterPressed() || SpacePressed() );
-	  return;
-	  break;
-	}
-    }
-}; // void TryToIdentifyItem( item* IdentifyItem )
-
-/* ----------------------------------------------------------------------
- * This function tries to buy the item given as parameter.  Currently
- * is just drops the item to the floor under the influencer and will
- * reduce influencers money.
- * ---------------------------------------------------------------------- */
-void 
-TryToSellItem( item* SellItem )
-{
-  int MenuPosition;
-
-#define ANSWER_YES 1
-#define ANSWER_NO 2
-
-  char* MenuTexts[ 10 ];
-  MenuTexts[0]="Yes";
-  MenuTexts[1]="No";
-  MenuTexts[2]="";
-  MenuTexts[3]="";
-  MenuTexts[4]="";
-  MenuTexts[5]="";
-  MenuTexts[8]="";
-  MenuTexts[6]="";
-  MenuTexts[7]="";
-  MenuTexts[9]="";
-
-  while ( SpacePressed() || EnterPressed() );
-
-  while ( 1 )
-    {
-      MenuPosition = DoMenuSelection( " Are you sure you want to sell this itemd? " , MenuTexts , 1 , NULL , NULL );
-      switch (MenuPosition) 
-	{
-	case (-1):
-	  return;
-	  break;
-	case ANSWER_YES:
-	  while (EnterPressed() || SpacePressed() );
-	  Me[0].Gold += SELL_PRICE_FACTOR * CalculateItemPrice ( SellItem , FALSE );
-	  DeleteItem( SellItem );
-	  return;
-	  break;
-	case ANSWER_NO:
-	  while (EnterPressed() || SpacePressed() );
-	  return;
-	  break;
-	}
-    }
-}; // void TryToSellItem( item* SellItem )
-
-/* ----------------------------------------------------------------------
- * This function tries to buy the item given as parameter.  Currently
- * is just drops the item to the floor under the influencer and will
- * reduce influencers money.
- * ---------------------------------------------------------------------- */
-void 
-TryToBuyItem( item* BuyItem )
-{
-  int x, y;
-  int MenuPosition;
-  int FreeIndex;
-  char linebuf[1000];
-
-#define ANSWER_YES 1
-#define ANSWER_NO 2
-
-  char* MenuTexts[ 10 ];
-  MenuTexts[0]="Yes";
-  MenuTexts[1]="No";
-  MenuTexts[2]="";
-  MenuTexts[3]="";
-  MenuTexts[4]="";
-  MenuTexts[5]="";
-  MenuTexts[8]="";
-  MenuTexts[6]="";
-  MenuTexts[7]="";
-  MenuTexts[9]="";
-
-  FreeIndex = GetFreeInventoryIndex(  );
-
-  while ( SpacePressed() || EnterPressed() );
-
-  if ( CalculateItemPrice ( BuyItem , FALSE ) > Me[0].Gold )
-    {
-      MenuTexts[0]=" BACK ";
-      MenuTexts[1]="";
-      DoMenuSelection ( "YOU CAN'T AFFORD TO PURCHASE THIS ITEM! " , MenuTexts , 1 , NULL , NULL );
-      return;
-    }
-
-  for ( x = 0 ; x < INVENTORY_GRID_WIDTH ; x ++ )
-    {
-      for ( y = 0 ; y < INVENTORY_GRID_HEIGHT ; y ++ )
-	{
-	  if ( ItemCanBeDroppedInInv ( BuyItem->type , x , y ) )
-	    {
-	      while ( 1 )
-		{
-		  GiveItemDescription( linebuf , BuyItem , TRUE );
-		  strcat ( linebuf , "\n\n    Are you sure you wish to purchase this item?" );
-		  MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 , NULL , NULL );
-		  switch (MenuPosition) 
-		    {
-		    case (-1):
-		      return;
-		      break;
-		    case ANSWER_YES:
-		      while (EnterPressed() || SpacePressed() );
-		      CopyItem( BuyItem , & ( Me[0].Inventory[ FreeIndex ] ) , TRUE );
-		      Me[0].Inventory[ FreeIndex ].currently_held_in_hand = FALSE;
-		      Me[0].Inventory[ FreeIndex ].inventory_position.x = x;
-		      Me[0].Inventory[ FreeIndex ].inventory_position.y = y;
-		      Me[0].Gold -= CalculateItemPrice ( BuyItem , FALSE );
-		      return;
-		      break;
-		    case ANSWER_NO:
-		      while (EnterPressed() || SpacePressed() );
-		      return;
-		      break;
-		    }
-		}
-	    }
-	}
-    }
-  
-
-}; // void TryToBuyItem( item* BuyItem )
-
-
-/* ----------------------------------------------------------------------
- * This is the menu, where you can buy basic items.
- * ---------------------------------------------------------------------- */
-void
-Buy_Basic_Items( int ForHealer , int ForceMagic )
-{
-#define NUMBER_OF_ITEMS_ON_ONE_SCREEN 4
-#define ITEM_MENU_DISTANCE 80
-  item SalesList[ 1000 ];
-  int i;
-  int InMenuPosition = 0;
-  int MenuInListPosition = 0;
-  char DescriptionText[5000];
-  int basic_items_number = 10;
-
-  //--------------------
-  // First we make a selection of items, that can be considered 'basic'.
-  // This selection depends of course on wheter the menu is generated
-  // for the smith or for the healer.
-  //
-  for ( i = 0 ; i < basic_items_number ; i++ )
-    {
-      if ( ForHealer ) 
-	{
-	  SalesList[ i ].type = 0 ; // something that can NOT be applied in combat
-	  while ( ! ItemMap [ SalesList[ i ].type ].item_can_be_applied_in_combat ) 
-	    SalesList[ i ].type = MyRandom( Number_Of_Item_Types - 2 ) + 1;
-	}
-      else
-	{
-	  SalesList[ i ].type = 1 ; // something that can be applied in combat
-	  while ( ItemMap [ SalesList[ i ].type ].item_can_be_applied_in_combat || 
-		  SalesList [ i ].type == ITEM_MONEY ) 
-	    SalesList[ i ].type = MyRandom( Number_Of_Item_Types - 2 ) + 1;
-	}
-
-      SalesList[ i ].prefix_code = ( -1 );
-      if ( ForceMagic ) SalesList[ i ].suffix_code = ( MyRandom(10) );
-      else SalesList[ i ].suffix_code = ( -1 );
-      FillInItemProperties( & ( SalesList[ i ] ) , TRUE , 0 );
-      SalesList[ i ].is_identified = TRUE;
-    }
-
-  while ( !SpacePressed() && !EscapePressed() )
-    {
-      // InitiateMenu ( NULL );
-      InitiateMenu ( SHOP_BACKGROUND_IMAGE );
-
-      //--------------------
-      // Now we draw our selection of items to the screen, at least the part
-      // of it, that's currently visible
-      //
-      DisplayText( " I HAVE THESE ITEMS FOR SALE         YOUR GOLD:" , 50 , 50 + (0) * ITEM_MENU_DISTANCE , NULL );
-      sprintf( DescriptionText , "%4ld" , Me[0].Gold );
-      DisplayText( DescriptionText , 580 , 50 + ( 0 ) * 80 , NULL );
-      for ( i = 0 ; i < NUMBER_OF_ITEMS_ON_ONE_SCREEN ; i++ )
-	{
-	  // DisplayText( ItemMap [ SalesList[ i ].type ].item_name , 50 , 50 + i * 50 , NULL );
-	  // DisplayText( "\n" , -1 , -1, NULL );
-	  GiveItemDescription( DescriptionText , & ( SalesList[ i + MenuInListPosition ] ) , TRUE );
-	  DisplayText( DescriptionText , 50 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
-	  sprintf( DescriptionText , "%4ld" , 
-		   CalculateItemPrice ( & ( SalesList[ i + MenuInListPosition ] ) , FALSE ) );
-	  DisplayText( DescriptionText , 580 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
-	}
-      
-      //--------------------
-      // Now we draw the influencer as a cursor
-      //
-      PutInfluence ( 10 , 50 + ( InMenuPosition + 1 ) * ITEM_MENU_DISTANCE , 0 );
-
-      //--------------------
-      //
-      //
-      SDL_Flip ( Screen );
-
-      if ( UpPressed() )
-	{
-	  if ( InMenuPosition > 0 ) InMenuPosition --;
-	  else 
-	    {
-	      if ( MenuInListPosition > 0 )
-		MenuInListPosition --;
-	    }
-	  while ( UpPressed() );
-	}
-      if ( DownPressed() )
-	{
-	  if ( InMenuPosition < NUMBER_OF_ITEMS_ON_ONE_SCREEN - 1 ) InMenuPosition ++;
-	  else 
-	    {
-	      if ( MenuInListPosition < basic_items_number - NUMBER_OF_ITEMS_ON_ONE_SCREEN )
-		MenuInListPosition ++;
-	    }
-	  while ( DownPressed() );
-	}      
-    } // while not space pressed...
-
-  if ( SpacePressed() ) TryToBuyItem( & ( SalesList[ InMenuPosition + MenuInListPosition ] ) ) ;
-
-  while ( SpacePressed() || EscapePressed() );
-
-}; // void Buy_Basic_Items( void )
-
-/* ----------------------------------------------------------------------
- * This is the menu, where you can buy basic items.
- * ---------------------------------------------------------------------- */
-void
-Repair_Items( void )
-{
-#define BASIC_ITEMS_NUMBER 10
-#define NUMBER_OF_ITEMS_ON_ONE_SCREEN 4
-#define ITEM_MENU_DISTANCE 80
-  item* Repair_Pointer_List[ MAX_ITEMS_IN_INVENTORY + 10 ];  // the inventory plus 7 slots or so
-  int Pointer_Index=0;
-  int i;
-  int InMenuPosition = 0;
-  int MenuInListPosition = 0;
-  char DescriptionText[5000];
-  char* MenuTexts[ 10 ];
-  MenuTexts[0]="Yes";
-  MenuTexts[1]="No";
-  MenuTexts[2]="";
-  MenuTexts[3]="";
-  MenuTexts[4]="";
-  MenuTexts[5]="";
-  MenuTexts[8]="";
-  MenuTexts[6]="";
-  MenuTexts[7]="";
-  MenuTexts[9]="";
-
-
-  //--------------------
-  // First we clean out the new Repair_Pointer_List
-  //
-  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
-    {
-      Repair_Pointer_List[ i ] = NULL;
-    }
-
-  //--------------------
-  // Now we start to fill the Repair_Pointer_List
-  //
-  if ( ( Me[0].weapon_item.current_duration < Me[0].weapon_item.max_duration ) && 
-       ( Me[0].weapon_item.type != ( -1 ) ) )
-    {
-      Repair_Pointer_List [ Pointer_Index ] = & ( Me[0].weapon_item );
-      Pointer_Index ++;
-    }
-  if ( ( Me[0].drive_item.current_duration < Me[0].drive_item.max_duration ) &&
-       ( Me[0].drive_item.type != ( -1 ) ) )
-    {
-      Repair_Pointer_List [ Pointer_Index ] = & ( Me[0].drive_item );
-      Pointer_Index ++;
-    }
-  if ( ( Me[0].armour_item.current_duration < Me[0].armour_item.max_duration ) &&
-       ( Me[0].armour_item.type != ( -1 ) ) )
-    {
-      Repair_Pointer_List [ Pointer_Index ] = & ( Me[0].armour_item );
-      Pointer_Index ++;
-    }
-  if ( ( Me[0].shield_item.current_duration < Me[0].shield_item.max_duration ) &&
-       ( Me[0].shield_item.type != ( -1 ) ) )
-    {
-      Repair_Pointer_List [ Pointer_Index ] = & ( Me[0].shield_item );
-      Pointer_Index ++;
-    }
-
-  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
-    {
-      if ( Me[0].Inventory [ i ].type == (-1) ) continue;
-      if ( Me[0].Inventory [ i ].max_duration == (-1) ) continue;
-      if ( Me[0].Inventory [ i ].current_duration < Me[0].Inventory [ i ] .max_duration ) 
-	{
-	  Repair_Pointer_List [ Pointer_Index ] = & ( Me[0].Inventory[ i ] );
-	  Pointer_Index ++;
-	}
-    }
-
-  if ( Pointer_Index == 0 )
-    {
-      MenuTexts[0]=" BACK ";
-      MenuTexts[1]="";
-      DoMenuSelection ( " YOU DONT HAVE ANYTHING THAT WOULD NEED REPAIR " , MenuTexts , 1 , NULL , NULL );
-      return;
-    }
-
-
-  while ( !SpacePressed() && !EscapePressed() )
-    {
-      InitiateMenu ( NULL );
-
-      //--------------------
-      // Now we draw our selection of items to the screen, at least the part
-      // of it, that's currently visible
-      //
-      DisplayText( " I COULD REPAIR THESE ITEMS                YOUR GOLD:" , 50 , 50 + (0) * ITEM_MENU_DISTANCE , NULL );
-      sprintf( DescriptionText , "%4ld" , Me[0].Gold );
-      DisplayText( DescriptionText , 580 , 50 + ( 0 ) * 80 , NULL );
-      for ( i = 0 ; ( (i < NUMBER_OF_ITEMS_ON_ONE_SCREEN) && (Repair_Pointer_List[ i + MenuInListPosition ] != NULL ) ) ; i++ )
-	{
-	  // DisplayText( ItemMap [ Repair_Pointer_List[ i + ]->type ].item_name , 50 , 50 + i * 50 , NULL );
-	  // DisplayText( "\n" , -1 , -1, NULL );
-	  GiveItemDescription( DescriptionText , Repair_Pointer_List [ i + MenuInListPosition ] , TRUE );
-	  DisplayText( DescriptionText , 50 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
-	  sprintf( DescriptionText , "%6.0f" , 
-		   REPAIR_PRICE_FACTOR * 
-		   CalculateItemPrice ( Repair_Pointer_List[ i + MenuInListPosition] , TRUE ) );
-	  DisplayText( DescriptionText , 580 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
-	}
-      
-      //--------------------
-      // Now we draw the influencer as a cursor
-      //
-      PutInfluence ( 10 , 50 + ( InMenuPosition + 1 ) * ITEM_MENU_DISTANCE , 0 );
-
-      //--------------------
-      //
-      //
-      SDL_Flip ( Screen );
-
-      if ( UpPressed() )
-	{
-	  if ( InMenuPosition > 0 ) InMenuPosition --;
-	  else 
-	    {
-	      if ( MenuInListPosition > 0 )
-		MenuInListPosition --;
-	    }
-	  while ( UpPressed() );
-	}
-      if ( DownPressed() )
-	{
-	  if ( ( InMenuPosition < NUMBER_OF_ITEMS_ON_ONE_SCREEN - 1 ) && 
-	       ( InMenuPosition < Pointer_Index -1 ) )
-	    {
-	      InMenuPosition ++;
-	    }
-	  else 
-	    {
-	      if ( MenuInListPosition < Pointer_Index - NUMBER_OF_ITEMS_ON_ONE_SCREEN )
-		MenuInListPosition ++;
-	    }
-	  while ( DownPressed() );
-	}      
-    } // while not space pressed...
-
-  if ( SpacePressed() ) TryToRepairItem( Repair_Pointer_List[ InMenuPosition + MenuInListPosition ] ) ;
-
-  while ( SpacePressed() || EscapePressed() );
-
-}; // void Repair_Items( void )
-
-/* ----------------------------------------------------------------------
- * This is the menu, where you can buy basic items.
- * ---------------------------------------------------------------------- */
-void
-Identify_Items ( void )
-{
-#define BASIC_ITEMS_NUMBER 10
-#define NUMBER_OF_ITEMS_ON_ONE_SCREEN 4
-#define ITEM_MENU_DISTANCE 80
-  item* Identify_Pointer_List[ MAX_ITEMS_IN_INVENTORY + 10 ];  // the inventory plus 7 slots or so
-  int Pointer_Index=0;
-  int i;
-  int InMenuPosition = 0;
-  int MenuInListPosition = 0;
-  char DescriptionText[5000];
-  char* MenuTexts[ 10 ];
-  MenuTexts[0]="Yes";
-  MenuTexts[1]="No";
-  MenuTexts[2]="";
-  MenuTexts[3]="";
-  MenuTexts[4]="";
-  MenuTexts[5]="";
-  MenuTexts[8]="";
-  MenuTexts[6]="";
-  MenuTexts[7]="";
-  MenuTexts[9]="";
-
-
-  //--------------------
-  // First we clean out the new Identify_Pointer_List
-  //
-  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
-    {
-      Identify_Pointer_List[ i ] = NULL;
-    }
-
-  //--------------------
-  // Now we start to fill the Identify_Pointer_List
-  //
-  if ( ( !Me[0].weapon_item.is_identified ) && 
-       ( Me[0].weapon_item.type != ( -1 ) ) )
-    {
-      Identify_Pointer_List [ Pointer_Index ] = & ( Me[0].weapon_item );
-      Pointer_Index ++;
-    }
-  if ( ( !Me[0].drive_item.is_identified ) &&
-       ( Me[0].drive_item.type != ( -1 ) ) )
-    {
-      Identify_Pointer_List [ Pointer_Index ] = & ( Me[0].drive_item );
-      Pointer_Index ++;
-    }
-  if ( ( !Me[0].armour_item.is_identified ) &&
-       ( Me[0].armour_item.type != ( -1 ) ) )
-    {
-      Identify_Pointer_List [ Pointer_Index ] = & ( Me[0].armour_item );
-      Pointer_Index ++;
-    }
-  if ( ( !Me[0].shield_item.is_identified ) &&
-       ( Me[0].shield_item.type != ( -1 ) ) )
-    {
-      Identify_Pointer_List [ Pointer_Index ] = & ( Me[0].shield_item );
-      Pointer_Index ++;
-    }
-
-  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
-    {
-      if ( Me[0].Inventory [ i ].type == (-1) ) continue;
-      if ( Me[0].Inventory [ i ].is_identified ) continue;
-
-      Identify_Pointer_List [ Pointer_Index ] = & ( Me[0].Inventory[ i ] );
-      Pointer_Index ++;
-
-    }
-
-  if ( Pointer_Index == 0 )
-    {
-      MenuTexts[0]=" BACK ";
-      MenuTexts[1]="";
-      DoMenuSelection ( " YOU DONT HAVE ANYTHING THAT WOULD NEED TO BE IDENTIFIED!" , MenuTexts , 1 , NULL , NULL );
-      return;
-    }
-
-
-  while ( !SpacePressed() && !EscapePressed() )
-    {
-      InitiateMenu ( NULL );
-
-      //--------------------
-      // Now we draw our selection of items to the screen, at least the part
-      // of it, that's currently visible
-      //
-      DisplayText( " I COULD IDENTIFY THESE ITEMS              YOUR GOLD:" , 50 , 50 + (0) * ITEM_MENU_DISTANCE , NULL );
-      sprintf( DescriptionText , "%4ld" , Me[0].Gold );
-      DisplayText( DescriptionText , 580 , 50 + ( 0 ) * 80 , NULL );
-      for ( i = 0 ; ( (i < NUMBER_OF_ITEMS_ON_ONE_SCREEN) && (Identify_Pointer_List[ i + MenuInListPosition ] != NULL ) ) ; i++ )
-	{
-	  // DisplayText( ItemMap [ Identify_Pointer_List[ i + ]->type ].item_name , 50 , 50 + i * 50 , NULL );
-	  // DisplayText( "\n" , -1 , -1, NULL );
-	  GiveItemDescription( DescriptionText , Identify_Pointer_List [ i + MenuInListPosition ] , TRUE );
-	  DisplayText( DescriptionText , 50 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
-	  sprintf( DescriptionText , "%6.0f" , 100.0 );
-	  DisplayText( DescriptionText , 580 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
-	}
-      
-      //--------------------
-      // Now we draw the influencer as a cursor
-      //
-      PutInfluence ( 10 , 50 + ( InMenuPosition + 1 ) * ITEM_MENU_DISTANCE , 0 );
-
-      //--------------------
-      //
-      //
-      SDL_Flip ( Screen );
-
-      if ( UpPressed() )
-	{
-	  if ( InMenuPosition > 0 ) InMenuPosition --;
-	  else 
-	    {
-	      if ( MenuInListPosition > 0 )
-		MenuInListPosition --;
-	    }
-	  while ( UpPressed() );
-	}
-      if ( DownPressed() )
-	{
-	  if ( ( InMenuPosition < NUMBER_OF_ITEMS_ON_ONE_SCREEN - 1 ) && 
-	       ( InMenuPosition < Pointer_Index -1 ) )
-	    {
-	      InMenuPosition ++;
-	    }
-	  else 
-	    {
-	      if ( MenuInListPosition < Pointer_Index - NUMBER_OF_ITEMS_ON_ONE_SCREEN )
-		MenuInListPosition ++;
-	    }
-	  while ( DownPressed() );
-	}      
-    } // while not space pressed...
-
-  if ( SpacePressed() ) TryToIdentifyItem( Identify_Pointer_List[ InMenuPosition + MenuInListPosition ] ) ;
-
-  while ( SpacePressed() || EscapePressed() );
-
-}; // void Identify_Items( void )
-
-/* ----------------------------------------------------------------------
- * This is the menu, where you can sell inventory items.
- * ---------------------------------------------------------------------- */
-void
-Sell_Items( int ForHealer )
-{
-#define BASIC_ITEMS_NUMBER 10
-#define NUMBER_OF_ITEMS_ON_ONE_SCREEN 4
-#define ITEM_MENU_DISTANCE 80
-  item* Sell_Pointer_List[ MAX_ITEMS_IN_INVENTORY ];
-  int Pointer_Index=0;
-  int i;
-  int InMenuPosition = 0;
-  int MenuInListPosition = 0;
-  char DescriptionText[5000];
-  char* MenuTexts[ 10 ];
-  MenuTexts[0]="Yes";
-  MenuTexts[1]="No";
-  MenuTexts[2]="";
-  MenuTexts[3]="";
-  MenuTexts[4]="";
-  MenuTexts[5]="";
-  MenuTexts[8]="";
-  MenuTexts[6]="";
-  MenuTexts[7]="";
-  MenuTexts[9]="";
-
-
-  //--------------------
-  // First we clean out the new Sell_Pointer_List
-  //
-  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
-    {
-      Sell_Pointer_List[ i ] = NULL;
-    }
-
-  //--------------------
-  // Now we start to fill the Sell_Pointer_List
-  //
-  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
-    {
-      if ( Me[0].Inventory [ i ].type == (-1) ) continue;
-      else
-	{
-	  //--------------------
-	  // Now depending on whether we sell to the healer or to
-	  // the weaponsmith, we can either sell one thing or the
-	  // other
-	  //
-	  if ( ( ForHealer ) &&  ! ItemMap [ Me[0].Inventory[ i ].type ].item_can_be_applied_in_combat ) continue;
-	  if ( ! ( ForHealer ) &&  ItemMap [ Me[0].Inventory[ i ].type ].item_can_be_applied_in_combat ) continue;
-	  Sell_Pointer_List [ Pointer_Index ] = & ( Me[0].Inventory[ i ] );
-	  Pointer_Index ++;
-	}
-    }
-
-  if ( Pointer_Index == 0 )
-    {
-      MenuTexts[0]=" BACK ";
-      MenuTexts[1]="";
-      DoMenuSelection ( " YOU DONT HAVE ANYTHING IN INVENTORY (i.e. not equipped!), THAT COULD BE SOLD. " , 
-			MenuTexts, 1 , NULL , NULL );
-      return;
-    }
-
-
-  while ( !SpacePressed() && !EscapePressed() )
-    {
-      // InitiateMenu( NULL );
-      InitiateMenu( SHOP_BACKGROUND_IMAGE );
-
-      //--------------------
-      // Now we draw our selection of items to the screen, at least the part
-      // of it, that's currently visible
-      //
-      DisplayText( " I WOULD BUY FROM YOU THESE ITEMS        YOUR GOLD:" , 50 , 50 + (0) * ITEM_MENU_DISTANCE , NULL );
-      sprintf( DescriptionText , "%4ld" , Me[0].Gold );
-      DisplayText( DescriptionText , 580 , 50 + ( 0 ) * 80 , NULL );
-      for ( i = 0 ; ( (i < NUMBER_OF_ITEMS_ON_ONE_SCREEN) && (Sell_Pointer_List[ i + MenuInListPosition ] != NULL ) ) ; i++ )
-	{
-	  // DisplayText( ItemMap [ Repair_Pointer_List[ i + ]->type ].item_name , 50 , 50 + i * 50 , NULL );
-	  // DisplayText( "\n" , -1 , -1, NULL );
-	  GiveItemDescription( DescriptionText , Sell_Pointer_List [ i + MenuInListPosition ] , TRUE );
-	  DisplayText( DescriptionText , 50 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
-	  sprintf( DescriptionText , "%6.0f" , 
-		   SELL_PRICE_FACTOR * ( (float) CalculateItemPrice ( Sell_Pointer_List[ i + MenuInListPosition] , FALSE ) ) );
-	  DisplayText( DescriptionText , 580 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
-	}
-      
-      //--------------------
-      // Now we draw the influencer as a cursor
-      //
-      PutInfluence ( 10 , 50 + ( InMenuPosition + 1 ) * ITEM_MENU_DISTANCE , 0 );
-
-      //--------------------
-      //
-      //
-      SDL_Flip ( Screen );
-
-      if ( UpPressed() )
-	{
-	  if ( InMenuPosition > 0 ) InMenuPosition --;
-	  else 
-	    {
-	      if ( MenuInListPosition > 0 )
-		MenuInListPosition --;
-	    }
-	  while ( UpPressed() );
-	}
-      if ( DownPressed() )
-	{
-	  if ( ( InMenuPosition < NUMBER_OF_ITEMS_ON_ONE_SCREEN - 1 ) &&
-	       ( InMenuPosition < Pointer_Index -1 ) )
-	    {
-	      InMenuPosition ++;
-	    }
-	  else 
-	    {
-	      if ( MenuInListPosition < Pointer_Index - NUMBER_OF_ITEMS_ON_ONE_SCREEN )
-		MenuInListPosition ++;
-	    }
-	  while ( DownPressed() );
-	}      
-    } // while not space pressed...
-
-  if ( SpacePressed() ) TryToSellItem( Sell_Pointer_List[ InMenuPosition + MenuInListPosition ] ) ;
-
-  while ( SpacePressed() || EscapePressed() );
-
-}; // void Sell_Items( void )
-
-/* ----------------------------------------------------------------------
- * This function tells over which menu item the mouse cursor would be,
- * if there were infinitely many menu items.
- * ---------------------------------------------------------------------- */
-int
-MouseCursorIsOverMenuItem( first_menu_item_pos_y )
-{
-  int h = FontHeight ( GetCurrentFont() );
-  
-  return ( ( ( GetMousePos_y () + 16 - first_menu_item_pos_y ) / h ) + 1 );
-
-}; // void MouseCursorIsOverMenuItem( first_menu_item_pos_y )
-
-
-/* ----------------------------------------------------------------------
- * This function performs a menu for the player to select from, using the
- * keyboard only, currently, sorry.
- * ---------------------------------------------------------------------- */
-int
-DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char* BackgroundToUse , void* MenuFont )
-{
-  int h = FontHeight (GetCurrentFont());
-  int i;
-  static int MenuPosition = 1;
-  int NumberOfOptionsGiven;
-  int first_menu_item_pos_y;
-
-  if ( FirstItem != (-1) ) MenuPosition = FirstItem;
-
-  //--------------------
-  // First thing we do is find out how may options we have
-  // been given for the menu
-  //
-  for ( i = 0 ; i < 10 ; i ++ )
-    {
-      if ( strlen( MenuTexts[ i ] ) == 0 ) break;
-    }
-  NumberOfOptionsGiven = i;
-
-  first_menu_item_pos_y = ( SCREEN_HEIGHT - NumberOfOptionsGiven * h ) / 2 ;
-
-  //--------------------
-  // We need to prepare the background for the menu, so that
-  // it can be accessed with proper speed later...
-  //
-  InitiateMenu( BackgroundToUse );
-  StoreMenuBackground ();
-
-  //--------------------
-  // Now that the possible font-changing background assembling is
-  // done, we can finally set the right font for the menu itself.
-  //
-  if ( MenuFont == NULL ) SetCurrentFont ( Menu_BFont );
-  else SetCurrentFont ( (BFont_Info*) MenuFont );
-  h = FontHeight ( GetCurrentFont() );
-
-  while ( 1 )
-    {
-
-      RestoreMenuBackground ();
-
-      //--------------------
-      // We highlight the currently selected option with an 
-      // influencer to the left and right of it.
-      //
-      PutInfluence( ( SCREEN_WIDTH - TextWidth ( MenuTexts [ MenuPosition - 1 ] ) ) / 2 - Block_Width/3 , 
-		    first_menu_item_pos_y +
-		    ( MenuPosition - 0.5 ) * h , 0 );
-      PutInfluence( ( SCREEN_WIDTH + TextWidth ( MenuTexts [ MenuPosition - 1 ] ) ) / 2 + Block_Width/3 , 
-		    first_menu_item_pos_y +
-		    ( MenuPosition - 0.5 ) * h , 0 );
-
-      for ( i = 0 ; i < 10 ; i ++ )
-	{
-	  if ( strlen( MenuTexts[ i ] ) == 0 ) continue;
-	  CenteredPutString ( Screen ,  first_menu_item_pos_y + i * h , MenuTexts[ i ] );
-	}
-      if ( strlen( InitialText ) > 0 ) 
-	DisplayText ( InitialText , 50 , 50 , NULL );
-
-      SDL_Flip( Screen );
-  
-      if ( EscapePressed() )
-	{
-	  while ( EscapePressed() );
-	  MenuItemDeselectedSound();
-	  return ( -1 );
-	}
-      if ( EnterPressed() || SpacePressed() || RightPressed() || LeftPressed() ) 
-	{
-	  //--------------------
-	  // The space key or enter key or left mouse button all indicate, that
-	  // the user has made a selection.
-	  //
-	  // In the case of the mouse button, we must of couse first check, if 
-	  // the mouse button really was over a valid menu item and otherwise
-	  // ignore the button.
-	  //
-	  // In case of a key, we always have a valid selection.
-	  //
-	  if ( axis_is_active )
-	    {
-	      if ( ( MouseCursorIsOverMenuItem( first_menu_item_pos_y ) >= 1 ) &&
-		   ( MouseCursorIsOverMenuItem( first_menu_item_pos_y ) <= NumberOfOptionsGiven ) )
-		{
-		  MenuPosition = MouseCursorIsOverMenuItem( first_menu_item_pos_y );
-		  while ( EnterPressed() || SpacePressed() );
-		  MenuItemSelectedSound();
-		  return ( MenuPosition );
-		}
-	    }
-	  else
-	    {
-	      while ( EnterPressed() || SpacePressed() ); // || RightPressed() || LeftPressed() );
-	      MenuItemSelectedSound();
-	      return ( MenuPosition );
-	    }
-	}
-      if (UpPressed()) 
-	{
-	  if (MenuPosition > 1) MenuPosition--;
-	  MoveMenuPositionSound();
-	  while (UpPressed());
-	}
-      if (DownPressed()) 
-	{
-	  if ( MenuPosition < NumberOfOptionsGiven ) MenuPosition++;
-	  MoveMenuPositionSound();
-	  while (DownPressed());
-	}
-
-      /*
-      if ( ( MouseCursorIsOverMenuItem( first_menu_item_pos_y ) >= 1 ) &&
-	   ( MouseCursorIsOverMenuItem( first_menu_item_pos_y ) <= NumberOfOptionsGiven ) )
-	{
-	  MenuPosition = MouseCursorIsOverMenuItem( first_menu_item_pos_y );
-	}
-      */
-
-    }
-
-  return ( -1 );
-}; // int DoMenuSelection( char* InitialText , char* MenuTexts[10] , asdfasd .... )
-
-/* ----------------------------------------------------------------------
- * This function does all the buying/selling interaction with the 
- * weaponsmith Mr. Stone.
- * ---------------------------------------------------------------------- */
-void
-BuySellMenu ( void )
-{
-enum
-  { 
-    BUY_BASIC_ITEMS=1, 
-    BUY_PREMIUM_ITEMS, 
-    SELL_ITEMS, 
-    REPAIR_ITEMS,
-    IDENTIFY_ITEMS,
-    LEAVE_BUYSELLMENU
-  };
-
-  int Weiter = 0;
-  int MenuPosition=1;
-  char* MenuTexts[10];
-
-  Me[0].status=MENU;
-
-  DebugPrintf (2, "\nvoid BuySellMenu(void): real function call confirmed."); 
-
-  // Prevent distortion of framerate by the delay coming from 
-  // the time spend in the menu.
-  Activate_Conservative_Frame_Computation();
-  while ( EscapePressed() );
-
-  while (!Weiter)
-    {
-      MenuTexts[0]="Buy Basic Items";
-      MenuTexts[1]="Buy Premium Items";
-      MenuTexts[2]="Sell Items";
-      MenuTexts[3]="Repair Items";
-      MenuTexts[5]="Leave the Sales Representative";
-      MenuTexts[4]="Identify Items";
-      MenuTexts[8]="";
-      MenuTexts[6]="";
-      MenuTexts[7]="";
-      MenuTexts[9]="";
-
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , SHOP_BACKGROUND_IMAGE , NULL );
-
-      switch (MenuPosition) 
-	{
-	case (-1):
-	  Weiter=!Weiter;
-	  break;
-	case BUY_BASIC_ITEMS:
-	  while (EnterPressed() || SpacePressed() );
-	  Buy_Basic_Items( FALSE , FALSE );
-	  break;
-	case BUY_PREMIUM_ITEMS:
-	  while (EnterPressed() || SpacePressed() );
-	  Buy_Basic_Items( FALSE , TRUE );
-	  break;
-	case SELL_ITEMS:
-	  while (EnterPressed() || SpacePressed() );
-	  Sell_Items( FALSE );
-	  break;
-	case REPAIR_ITEMS:
-	  while (EnterPressed() || SpacePressed() );
-	  Repair_Items();
-	  break;
-	case IDENTIFY_ITEMS:
-	  while (EnterPressed() || SpacePressed() );
-	  Identify_Items();
-	  break;
-	case LEAVE_BUYSELLMENU:
-	  Weiter = !Weiter;
-	  break;
-	default: 
-	  break;
-	} 
-    }
-
-  ClearGraphMem();
-  // Since we've faded out the whole scren, it can't hurt
-  // to have the top status bar redrawn...
-  BannerIsDestroyed=TRUE;
-  Me[0].status=MOBILE;
-
-  return;
-}; // void BuySellMenu ( void )
-
-/* ----------------------------------------------------------------------
- * This function does all the buying/selling interaction with the 
- * healer of the small starting town.
- * ---------------------------------------------------------------------- */
-void
-HealerMenu ( void )
-{
-enum
-  { 
-    BUY_POTIONS=1, 
-    SELL_POTIONS, 
-    HEALER_GOSSIP, 
-    LEAVE_HEALER
-  };
-
-  int Weiter = 0;
-  int MenuPosition=1;
-  char* MenuTexts[10];
-
-  Me[0].status=MENU;
-
-  DebugPrintf (2, "\nvoid HealerMenu(void): real function call confirmed."); 
-
-  // Prevent distortion of framerate by the delay coming from 
-  // the time spend in the menu.
-  Activate_Conservative_Frame_Computation();
-  while ( EscapePressed() );
-
-  while (!Weiter)
-    {
-      MenuTexts[0]="Buy Potions and Stuff";
-      MenuTexts[1]="Sell Stuff";
-      MenuTexts[2]="Gossip";
-      MenuTexts[3]="Leave the Healer alone";
-      MenuTexts[4]="";
-      MenuTexts[5]="";
-      MenuTexts[8]="";
-      MenuTexts[6]="";
-      MenuTexts[7]="";
-      MenuTexts[9]="";
-
-      MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , NULL , NULL );
-
-      switch (MenuPosition) 
-	{
-	case (-1):
-	  Weiter=!Weiter;
-	  break;
-	case BUY_POTIONS:
-	  while (EnterPressed() || SpacePressed() );
-	  Buy_Basic_Items ( TRUE , FALSE );
-	  break;
-	case SELL_POTIONS:
-	  while (EnterPressed() || SpacePressed() );
-	  Sell_Items ( TRUE );
-	  break;
-	case HEALER_GOSSIP:
-	  while (EnterPressed() || SpacePressed() );
-	  // Sell_Items( TRUE );
-	  break;
-	case LEAVE_HEALER:
-	  Weiter = !Weiter;
-	  break;
-	default: 
-	  break;
-	} 
-    }
-
-  ClearGraphMem();
-  // Since we've faded out the whole scren, it can't hurt
-  // to have the top status bar redrawn...
-  BannerIsDestroyed=TRUE;
-  Me[0].status=MOBILE;
-
-  return;
-}; // void HealerMenu ( void )
-
-/* ----------------------------------------------------------------------
- * This function prepares the screen for the big Escape menu and 
- * its submenus.  This means usual content of the screen, i.e. the 
- * combat screen and top status bar, is "faded out", the rest of 
- * the screen is cleared.  This function resolves some redundance 
- * that occured since there are so many submenus needing this.
- * ---------------------------------------------------------------------- */
-void 
-InitiateMenu( char* BackgroundToUse )
+InitiateMenu( void )
 {
   //--------------------
   // Here comes the standard initializer for all the menus and submenus
   // of the big escape menu.  This prepares the screen, so that we can
   // write on it further down.
   //
-  SDL_SetClipRect( Screen, NULL );
+  SDL_SetClipRect( ne_screen, NULL );
   ClearGraphMem();
+  DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
+  Assemble_Combat_Picture ( 0 );
+  SDL_SetClipRect( ne_screen, NULL );
+  MakeGridOnScreen( NULL );
+} // void InitiateMenu(void)
 
-  if ( BackgroundToUse == NULL )
-    {
-      DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
-      Assemble_Combat_Picture ( 0 );
-      MakeGridOnScreen( NULL );
-    }
-  else
-    {
-      DisplayImage ( find_file ( BackgroundToUse , GRAPHICS_DIR, FALSE ) );
-    }
+/*@Function============================================================
+@Desc: This function provides a convenient cheat menu, so that any 
+       tester does not have to play all through the game again and again
+       to see if a bug in a certain position has been removed or not.
 
-  SDL_SetClipRect( Screen, NULL );
-}; // void InitiateMenu(void)
-
-/* ----------------------------------------------------------------------
- * This function provides a convenient cheat menu, so that any 
- * tester does not have to play all through the game again and again
- * to see if a bug in a certain position has been removed or not.
- * ---------------------------------------------------------------------- */
+@Ret:  none
+* $Function----------------------------------------------------------*/
 extern int CurrentlyCPressed; 	/* the key that brought as in here */
 				/* we need to make sure it is set as released */
 				/* before we leave ...*/
@@ -1237,31 +114,31 @@ Cheatmenu (void)
   while (!Weiter)
     {
       ClearGraphMem ();
-      printf_SDL (Screen, x0, y0, "Current position: Level=%d, X=%d, Y=%d\n",
-		   CurLevel->levelnum, (int)Me[0].pos.x, (int)Me[0].pos.y);
-      printf_SDL (Screen, -1, -1, " a. Armageddon (alle Robots sprengen)\n");
-      printf_SDL (Screen, -1, -1, " l. robot list of current level\n");
-      printf_SDL (Screen, -1, -1, " g. complete robot list\n");
-      printf_SDL (Screen, -1, -1, " d. destroy robots on current level\n");
-      printf_SDL (Screen, -1, -1, " t. Teleportation\n");
-      printf_SDL (Screen, -1, -1, " r. change to new robot type\n");
-      printf_SDL (Screen, -1, -1, " i. Invinciblemode: %s",
+      printf_SDL (ne_screen, x0, y0, "Current position: Level=%d, X=%d, Y=%d\n",
+		   CurLevel->levelnum, (int)Me.pos.x, (int)Me.pos.y);
+      printf_SDL (ne_screen, -1, -1, " a. Armageddon (alle Robots sprengen)\n");
+      printf_SDL (ne_screen, -1, -1, " l. robot list of current level\n");
+      printf_SDL (ne_screen, -1, -1, " g. complete robot list\n");
+      printf_SDL (ne_screen, -1, -1, " d. destroy robots on current level\n");
+      printf_SDL (ne_screen, -1, -1, " t. Teleportation\n");
+      printf_SDL (ne_screen, -1, -1, " r. change to new robot type\n");
+      printf_SDL (ne_screen, -1, -1, " i. Invinciblemode: %s",
 		  InvincibleMode ? "ON\n" : "OFF\n");
-      printf_SDL (Screen, -1, -1, " e. set energy\n");
-      printf_SDL (Screen, -1, -1, " h. Hide invisible map parts: %s",
+      printf_SDL (ne_screen, -1, -1, " e. set energy\n");
+      printf_SDL (ne_screen, -1, -1, " h. Hide invisible map parts: %s",
 		  HideInvisibleMap ? "ON\n" : "OFF\n" );
-      printf_SDL (Screen, -1, -1, " n. No hidden droids: %s",
+      printf_SDL (ne_screen, -1, -1, " n. No hidden droids: %s",
 		  show_all_droids ? "ON\n" : "OFF\n" );
-      printf_SDL (Screen, -1, -1, " m. Map of Deck xy\n");
-      printf_SDL (Screen, -1, -1, " s. Sound: %s",
+      printf_SDL (ne_screen, -1, -1, " m. Map of Deck xy\n");
+      printf_SDL (ne_screen, -1, -1, " s. Sound: %s",
 		  sound_on ? "ON\n" : "OFF\n");
-      printf_SDL (Screen, -1, -1, " x. Fullscreen : %s",
+      printf_SDL (ne_screen, -1, -1, " x. Fullscreen : %s",
 		  fullscreen_on ? "ON\n" : "OFF\n");
-      printf_SDL (Screen, -1, -1, " w. Print current waypoints\n");
-      printf_SDL (Screen, -1, -1, " z. change Zoom factor\n");
-      printf_SDL (Screen, -1, -1, " f. Freeze on this positon: %s",
+      printf_SDL (ne_screen, -1, -1, " w. Print current waypoints\n");
+      printf_SDL (ne_screen, -1, -1, " z. change Zoom factor\n");
+      printf_SDL (ne_screen, -1, -1, " f. Freeze on this positon: %s",
 		  stop_influencer ? "ON\n" : "OFF\n");
-      printf_SDL (Screen, -1, -1, " q. RESUME game\n");
+      printf_SDL (ne_screen, -1, -1, " q. RESUME game\n");
 
       switch (getchar_raw ())
 	{
@@ -1271,9 +148,9 @@ Cheatmenu (void)
 
 	case 'z':
 	  ClearGraphMem();
-	  printf_SDL (Screen, x0, y0, "Current Zoom factor: %f\n",
+	  printf_SDL (ne_screen, x0, y0, "Current Zoom factor: %f\n",
 		      CurrentCombatScaleFactor); 
-	  printf_SDL (Screen, -1, -1, "New zoom factor: ");
+	  printf_SDL (ne_screen, -1, -1, "New zoom factor: ");
 	  input = GetString (40, 2);
 	  sscanf (input, "%f", &CurrentCombatScaleFactor);
 	  free (input);
@@ -1289,25 +166,25 @@ Cheatmenu (void)
 	  l = 0; /* line counter for enemy output */
 	  for (i = 0; i < NumEnemys; i++)
 	    {
-	      if (AllEnemys[i].pos.z == CurLevel->levelnum) 
+	      if (AllEnemys[i].levelnum == CurLevel->levelnum) 
 		{
 		  if (l && !(l%20)) 
 		    {
-		      printf_SDL (Screen, -1, -1, " --- MORE --- \n");
+		      printf_SDL (ne_screen, -1, -1, " --- MORE --- \n");
 		      if( getchar_raw () == 'q')
 			break;
 		    }
 		  if (!(l % 20) )  
 		    {
 		      ClearGraphMem ();
-		      printf_SDL (Screen, x0, y0,
+		      printf_SDL (ne_screen, x0, y0,
 				   " NR.   ID  X    Y   ENERGY   speedX\n");
-		      printf_SDL (Screen, -1, -1,
+		      printf_SDL (ne_screen, -1, -1,
 				  "---------------------------------------------\n");
 		    }
 		  
 		  l ++;
-		  printf_SDL (Screen, -1, -1,
+		  printf_SDL (ne_screen, -1, -1,
 			      "%d.   %s   %d   %d   %d    %g.\n", i,
 			       Druidmap[AllEnemys[i].type].druidname,
 			       (int)AllEnemys[i].pos.x,
@@ -1317,7 +194,7 @@ Cheatmenu (void)
 		} /* if (enemy on current level)  */
 	    } /* for (i<NumEnemys) */
 
-	  printf_SDL (Screen, -1, -1," --- END --- \n");
+	  printf_SDL (ne_screen, -1, -1," --- END --- \n");
 	  getchar_raw ();
 	  break;
 
@@ -1328,25 +205,25 @@ Cheatmenu (void)
 
 	      if (i && !(i%13)) 
 		{
-		  printf_SDL (Screen, -1, -1, " --- MORE --- ('q' to quit)\n");
+		  printf_SDL (ne_screen, -1, -1, " --- MORE --- ('q' to quit)\n");
 		  if (getchar_raw () == 'q')
 		    break;
 		}
 	      if ( !(i % 13) )
 		{
 		  ClearGraphMem ();
-		  printf_SDL (Screen, x0, y0, "Nr.  Lev. ID  Energy  Speed.x\n");
-		  printf_SDL (Screen, -1, -1, "------------------------------\n");
+		  printf_SDL (ne_screen, x0, y0, "Nr.  Lev. ID  Energy  Speed.x\n");
+		  printf_SDL (ne_screen, -1, -1, "------------------------------\n");
 		}
 	      
-	      printf_SDL (Screen, -1, -1, "%d  %d  %s  %d  %g\n",
-			  i, AllEnemys[i].pos.z,
+	      printf_SDL (ne_screen, -1, -1, "%d  %d  %s  %d  %g\n",
+			  i, AllEnemys[i].levelnum,
 			  Druidmap[AllEnemys[i].type].druidname,
 			  (int)AllEnemys[i].energy,
 			  AllEnemys[i].speed.x);
 	    } /* for (i<NumEnemys) */
 
-	  printf_SDL (Screen, -1, -1, " --- END ---\n");
+	  printf_SDL (ne_screen, -1, -1, " --- END ---\n");
 	  getchar_raw ();
 	  break;
 
@@ -1354,26 +231,26 @@ Cheatmenu (void)
 	case 'd': /* destroy all robots on this level, haha */
 	  for (i = 0; i < NumEnemys; i++)
 	    {
-	      if (AllEnemys[i].pos.z == CurLevel->levelnum)
+	      if (AllEnemys[i].levelnum == CurLevel->levelnum)
 		AllEnemys[i].energy = -100;
 	    }
-	  printf_SDL (Screen, -1, -1, "All robots on this deck killed!\n");
+	  printf_SDL (ne_screen, -1, -1, "All robots on this deck killed!\n");
 	  getchar_raw ();
 	  break;
 
 
 	case 't': /* Teleportation */
 	  ClearGraphMem ();
-	  printf_SDL (Screen, x0, y0, "Enter Level, X, Y: ");
+	  printf_SDL (ne_screen, x0, y0, "Enter Level, X, Y: ");
 	  input = GetString (40, 2);
 	  sscanf (input, "%d, %d, %d\n", &LNum, &X, &Y);
 	  free (input);
-	  Teleport ( LNum , X , Y , 0 ) ;
+	  Teleport (LNum, X, Y);
 	  break;
 
 	case 'r': /* change to new robot type */
 	  ClearGraphMem ();
-	  printf_SDL (Screen, x0, y0, "Type number of new robot: ");
+	  printf_SDL (ne_screen, x0, y0, "Type number of new robot: ");
 	  input = GetString (40, 2);
 	  for (i = 0; i < Number_Of_Droid_Types ; i++)
 	    if (!strcmp (Druidmap[i].druidname, input))
@@ -1381,17 +258,17 @@ Cheatmenu (void)
 
 	  if ( i == Number_Of_Droid_Types )
 	    {
-	      printf_SDL (Screen, x0, y0+20,
+	      printf_SDL (ne_screen, x0, y0+20,
 			  "Unrecognized robot-type: %s", input);
 	      getchar_raw ();
 	      ClearGraphMem();
 	    }
 	  else
 	    {
-	      Me[0].type = i;
-	      Me[0].energy = Me[0].maxenergy;
-	      Me[0].health = Me[0].energy;
-	      printf_SDL (Screen, x0, y0+20, "You are now a %s. Have fun!\n", input);
+	      Me.type = i;
+	      Me.energy = Druidmap[Me.type].maxenergy;
+	      Me.health = Me.energy;
+	      printf_SDL (ne_screen, x0, y0+20, "You are now a %s. Have fun!\n", input);
 	      getchar_raw ();
 	    }
 	  free (input);
@@ -1403,13 +280,13 @@ Cheatmenu (void)
 
 	case 'e': /* complete heal */
 	  ClearGraphMem();
-	  printf_SDL (Screen, x0, y0, "Current energy: %f\n", Me[0].energy);
-	  printf_SDL (Screen, -1, -1, "Enter your new energy: ");
+	  printf_SDL (ne_screen, x0, y0, "Current energy: %f\n", Me.energy);
+	  printf_SDL (ne_screen, -1, -1, "Enter your new energy: ");
 	  input = GetString (40, 2);
 	  sscanf (input, "%d", &num);
 	  free (input);
-	  Me[0].energy = (double) num;
-	  if (Me[0].energy > Me[0].health) Me[0].health = Me[0].energy;
+	  Me.energy = (double) num;
+	  if (Me.energy > Me.health) Me.health = Me.energy;
 	  break;
 
 	case 'h': /* toggle hide invisible map */
@@ -1425,7 +302,7 @@ Cheatmenu (void)
 	  break;
 
 	case 'm': /* Show deck map in Concept view */
-	  printf_SDL (Screen, -1, -1, "\nLevelnum: ");
+	  printf_SDL (ne_screen, -1, -1, "\nLevelnum: ");
 	  input = GetString (40, 2);
 	  sscanf (input, "%d", &LNum);
 	  free (input);
@@ -1443,17 +320,17 @@ Cheatmenu (void)
 	    {
 	      if (i && !(i%20))
 		{
-		  printf_SDL (Screen, -1, -1, " ---- MORE -----\n");
+		  printf_SDL (ne_screen, -1, -1, " ---- MORE -----\n");
 		  if (getchar_raw () == 'q')
 		    break;
 		}
 	      if ( !(i%20) )
 		{
 		  ClearGraphMem ();
-		  printf_SDL (Screen, x0, y0, "Nr.   X   Y      C1  C2  C3  C4\n");
-		  printf_SDL (Screen, -1, -1, "------------------------------------\n");
+		  printf_SDL (ne_screen, x0, y0, "Nr.   X   Y      C1  C2  C3  C4\n");
+		  printf_SDL (ne_screen, -1, -1, "------------------------------------\n");
 		}
-	      printf_SDL (Screen, -1, -1, "%2d   %2d  %2d      %2d  %2d  %2d  %2d\n",
+	      printf_SDL (ne_screen, -1, -1, "%2d   %2d  %2d      %2d  %2d  %2d  %2d\n",
 			  i, WpList[i].x, WpList[i].y,
 			  WpList[i].connections[0],
 			  WpList[i].connections[1],
@@ -1461,7 +338,7 @@ Cheatmenu (void)
 			  WpList[i].connections[3]);
 
 	    } /* for (all waypoints) */
-	  printf_SDL (Screen, -1, -1, " --- END ---\n");
+	  printf_SDL (ne_screen, -1, -1, " --- END ---\n");
 	  getchar_raw ();
 	  break;
 
@@ -1475,7 +352,7 @@ Cheatmenu (void)
   InitBars = TRUE;
 
   ClearGraphMem ();
-  SDL_Flip (Screen);
+  SDL_Flip (ne_screen);
 
   keyboard_update (); /* treat all pending keyboard events */
   /* 
@@ -1488,16 +365,17 @@ Cheatmenu (void)
   return;
 } /* Cheatmenu() */
 
-/* ----------------------------------------------------------------------
- * This function lets you select whether you with to play the classical
- * Paradroid episode or the new missions.  (Might be obsolete soon, since
- * classical paradroid is finished.)
- * ---------------------------------------------------------------------- */
+/*@Function============================================================
+@Desc: This function provides a the big escape menu from where you can
+       get into different submenus.
+
+@Ret:  none
+* $Function----------------------------------------------------------*/
 void
 MissionSelectMenu (void)
 {
 #define FIRST_MIS_SELECT_ITEM_POS_X (0.0*Block_Width)
-#define FIRST_MIS_SELECT_ITEM_POS_Y (BANNER_HEIGHT + FontHeight(Menu_BFont))
+#define FIRST_MIS_SELECT_ITEM_POS_Y (USERFENSTERPOSY + FontHeight(Menu_BFont))
 enum
   { 
     CLASSIC_PARADROID_MISSION_POSITION=1, 
@@ -1508,12 +386,12 @@ enum
   int MenuPosition=1;
   int key;
   static int NoMissionLoadedEver=TRUE;
-
-  Me[0].status=MENU;
+  Me.status=MENU;
 
   DebugPrintf (2, "\nvoid MissionSelectMenu(void): real function call confirmed."); 
 
-  SDL_SetClipRect( Screen , NULL );
+  SetCurrentFont ( Menu_BFont );
+  SDL_SetClipRect( ne_screen , NULL );
 
   // Prevent distortion of framerate by the delay coming from 
   // the time spend in the menu.
@@ -1523,8 +401,6 @@ enum
   // menu for the player.  Therefore I suggest we just fade out
   // the game screen a little bit.
 
-  SetCurrentFont( Para_BFont );
-  
   while ( EscapePressed() );
 
   while (!Weiter)
@@ -1538,15 +414,15 @@ enum
       // influencer to the left before it
       // PutInfluence( FIRST_MENU_ITEM_POS_X , 
       // FIRST_MENU_ITEM_POS_Y + (MenuPosition-1) * (FontHeight(Menu_BFont)) - Block_Width/4 );
-      SetCurrentFont ( Menu_BFont );
-      PutInfluence( FIRST_MIS_SELECT_ITEM_POS_X , FIRST_MIS_SELECT_ITEM_POS_Y + ( MenuPosition - 1.5 ) * (FontHeight( Menu_BFont )) , 0 );
 
-      CenteredPutString (Screen ,  FIRST_MIS_SELECT_ITEM_POS_Y -2*FontHeight(GetCurrentFont()), "Mission Selection Menu");
-      CenteredPutString (Screen ,  FIRST_MIS_SELECT_ITEM_POS_Y ,    "Classic Paradroid");
-      CenteredPutString (Screen ,  FIRST_MIS_SELECT_ITEM_POS_Y +1*FontHeight(GetCurrentFont()), "The Return of the Influence Device");
-      CenteredPutString (Screen ,  FIRST_MIS_SELECT_ITEM_POS_Y +2*FontHeight(GetCurrentFont()), "Restart Previous Mission");
+      PutInfluence( FIRST_MIS_SELECT_ITEM_POS_X , FIRST_MIS_SELECT_ITEM_POS_Y + ( MenuPosition - 1.5 ) * (FontHeight( Menu_BFont )) );
 
-      SDL_Flip( Screen );
+      CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y -2*FontHeight(GetCurrentFont()), "Mission Selection Menu");
+      CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y ,    "Classic Paradroid");
+      CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y +1*FontHeight(GetCurrentFont()), "Asteroid Research");
+      CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y +2*FontHeight(GetCurrentFont()), "Restart Previous Mission");
+
+      SDL_Flip( ne_screen );
 
       // Wait until the user does SOMETHING
 
@@ -1558,26 +434,26 @@ enum
 	    {
 
 	    case CLASSIC_PARADROID_MISSION_POSITION:
-	      InitNewMissionList ( STANDARD_MISSION );
+	      InitNewMission ( STANDARD_MISSION );
 	      NoMissionLoadedEver = FALSE;
 	      Weiter = TRUE;   
 	      break;
 	    case NEW_MISSION_POSITION:
-	      InitNewMissionList ( NEW_MISSION );
+	      InitNewMission ( NEW_MISSION );
 	      NoMissionLoadedEver = FALSE;
-	      Weiter = TRUE;   // jp forgot this... ;)
+	      Weiter = TRUE;   /* jp forgot this... ;) */
 	      break;
 	    case RESTART_PREVIOUS_MISSION:
 	      if ( NoMissionLoadedEver )
 		{
-		  CenteredPutString (Screen ,  FIRST_MIS_SELECT_ITEM_POS_Y +5*FontHeight(GetCurrentFont()), "No previous mission known.");
-		  SDL_Flip( Screen );
+		  CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y +5*FontHeight(GetCurrentFont()), "No previous mission known.");
+		  SDL_Flip( ne_screen );
 		  while ( EnterPressed() );
 		  while ( (!EnterPressed()) && (!SpacePressed()) );
 		}
 	      else
 		{
-		  InitNewMissionList ( Previous_Mission_Name );
+		  InitNewMission ( Previous_Mission_Name );
 		  Weiter = TRUE;   /* jp forgot this... ;) */
 		}
 	      break;
@@ -1606,260 +482,214 @@ enum
   // Since we've faded out the whole scren, it can't hurt
   // to have the top status bar redrawn...
   BannerIsDestroyed=TRUE;
-  Me[0].status=MOBILE;
+  Me.status=MOBILE;
 
   return;
 
 } // MissionSelectMenu
 
-/* ----------------------------------------------------------------------
- * This function lets you select whether you want to play the single player
- * mode or the multi player mode or the credits or the intro again or exit.
- * ---------------------------------------------------------------------- */
-void
-StartupMenu (void)
-{
-#define FIRST_MIS_SELECT_ITEM_POS_X (0.0*Block_Width)
-#define FIRST_MIS_SELECT_ITEM_POS_Y (BANNER_HEIGHT + FontHeight(Menu_BFont))
-enum
-  { 
-    SINGLE_PLAYER_POSITION=1, 
-    MULTI_PLAYER_POSITION,
-    CREDITS_POSITION,
-    EXIT_FREEDROID_POSITION
-  };
-  int Weiter = 0;
-  int MenuPosition=1;
-  char* MenuTexts[10];
+/*@Function============================================================
+@Desc: This function provides a the big escape menu from where you can
+       get into different submenus.
 
-  Me[0].status=MENU;
-
-  DebugPrintf ( 1 , "\nvoid StartupMenu ( void ): real function call confirmed. "); 
-
-  SDL_SetClipRect( Screen , NULL );
-
-  // Prevent distortion of framerate by the delay coming from 
-  // the time spent in the menu.
-  Activate_Conservative_Frame_Computation();
-
-  while (!Weiter)
-    {
-      SetCurrentFont ( Menu_BFont );
-
-      MenuTexts[0]="Single Player";
-      MenuTexts[1]="Multi Player";
-      MenuTexts[2]="Credits";
-      MenuTexts[3]="Exit Freedroid";
-      MenuTexts[4]="";
-      MenuTexts[5]="";
-      MenuTexts[6]="";
-      MenuTexts[7]="";
-      MenuTexts[8]="";
-      MenuTexts[9]="";
-
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NE_TITLE_PIC_FILE , NULL );
-
-      switch (MenuPosition) 
-	{
-	case SINGLE_PLAYER_POSITION:
-	  // InitNewMissionList ( NEW_MISSION );
-	  Weiter = Single_Player_Menu ( );
-	  break;
-	case MULTI_PLAYER_POSITION:
-	  DisplayImage (find_file (NE_TITLE_PIC_FILE, GRAPHICS_DIR, FALSE));
-	  SetCurrentFont ( Menu_BFont );
-	  Weiter = Multi_Player_Menu();
-	  break;
-	case CREDITS_POSITION:
-	  Credits_Menu();
-	  break;
-	case (-1):
-	case EXIT_FREEDROID_POSITION:
-	  Terminate( OK );
-	  break;
-	default: 
-	  break;
-	} 
-
-    }
-
-  ClearGraphMem();
-  // Since we've faded out the whole scren, it can't hurt
-  // to have the top status bar redrawn...
-  BannerIsDestroyed=TRUE;
-  Me[0].status=MOBILE;
-
-  return;
-
-}; // void StartupMenu( void );
-
-/* ----------------------------------------------------------------------
- * This function provides a the big escape menu from where you can get 
- * into different submenus.
- * ---------------------------------------------------------------------- */
+@Ret:  none
+* $Function----------------------------------------------------------*/
 void
 EscapeMenu (void)
 {
+#define FIRST_MENU_ITEM_POS_X (2*Block_Width)
+#define FIRST_MENU_ITEM_POS_Y (USERFENSTERPOSY + FontHeight(Menu_BFont))
 enum
   { 
-    SAVE_GAME_POSITION=1,
-    // SINGLE_PLAYER_POSITION, 
+    SINGLE_PLAYER_POSITION=1, 
+    MULTI_PLAYER_POSITION, 
     OPTIONS_POSITION, 
     SET_THEME,
     LEVEL_EDITOR_POSITION, 
-    LOAD_GAME_POSITION,
+    CREDITS_POSITION,
     QUIT_POSITION
   };
 
   int Weiter = 0;
   int MenuPosition=1;
+  int h;
   char theme_string[40];
   int i;
-  char* MenuTexts[10];
 
-  Me[0].status=MENU;
+  Me.status=MENU;
 
   DebugPrintf (2, "\nvoid EscapeMenu(void): real function call confirmed."); 
 
-  //--------------------
   // Prevent distortion of framerate by the delay coming from 
   // the time spend in the menu.
   Activate_Conservative_Frame_Computation();
 
-  //--------------------
-  // Escape must be expected to be pressed right now for this menu to
-  // to be entered, so we wait until the escape key is released...
-  //
+  // This is not some Debug Menu but an optically impressive 
+  // menu for the player.  Therefore I suggest we just fade out
+  // the game screen a little bit.
+
+  SetCurrentFont( Para_BFont );
+  
   while ( EscapePressed() );
 
   while (!Weiter)
     {
+
+      InitiateMenu();
+
+      // 
+      // we highlight the currently selected option with an 
+      // influencer to the left before it
+      // PutInfluence( FIRST_MENU_ITEM_POS_X , 
+      // FIRST_MENU_ITEM_POS_Y + (MenuPosition-1) * (FontHeight(Menu_BFont)) - Block_Width/4 );
+      SetCurrentFont ( Menu_BFont );
+      h = FontHeight (GetCurrentFont());
+      PutInfluence( FIRST_MENU_ITEM_POS_X , 
+		    FIRST_MENU_ITEM_POS_Y +
+		    ( MenuPosition - 1.5 ) * h );
+
       strcpy (theme_string, "Theme: ");
-      if (strstr (GameConfig.Theme_SubPath, "classic"))
-	strcat (theme_string, "Classic");
+      if (strstr (GameConfig.Theme_SubPath, "default"))
+	strcat (theme_string, "default");
       else if (strstr (GameConfig.Theme_SubPath, "lanzz"))
-	strcat (theme_string, "Lanzz");
+	strcat (theme_string, "lanzz");
       else
 	strcat (theme_string, "unknown");
 
-      MenuTexts[1]="Single Player";
+      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y ,    "Single Player");
+      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +1*h,    "Multi Player");
+      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +2*h,    "Options");
+      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +3*h,  theme_string);
+      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +4*h,    "Level Editor");
+      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +5*h,    "Credits");
+      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +6*h,    "Quit Game");
 
-      MenuTexts[0]="Save Game";
-      MenuTexts[1]="Options";
-      MenuTexts[2]=theme_string;
-      MenuTexts[3]="Level Editor";
-      MenuTexts[4]="Load Game";
-      MenuTexts[5]="Quit Game";
-      MenuTexts[6]="";
-      MenuTexts[7]="";
-      MenuTexts[8]="";
-      MenuTexts[9]="";
+      SDL_Flip( ne_screen );
 
-      MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , NE_TITLE_PIC_FILE , NULL );
+      // Wait until the user does SOMETHING
 
-      switch (MenuPosition) 
+      while( !SpacePressed() && !EnterPressed() && !UpPressed()
+	     && !DownPressed() && !EscapePressed() ) ;
+
+      if ( EscapePressed() )
 	{
-	case (-1):
+	  while ( EscapePressed() );
 	  Weiter=!Weiter;
-	  break;
-	  /*
-	case SINGLE_PLAYER_POSITION:
-	  while (EnterPressed() || SpacePressed() );
-	  New_Game_Requested=FALSE;
-	  Single_Player_Menu();
-	  if (New_Game_Requested) Weiter = TRUE;   // jp forgot this... ;) 
-	  break;
-	  */
-	case OPTIONS_POSITION:
-	  while (EnterPressed() || SpacePressed() );
-	  Options_Menu();
-	  // Weiter = TRUE;   /* jp forgot this... ;) */
-	  break;
-	case SET_THEME:
-	  while (EnterPressed() || SpacePressed() );
-	  if ( !strcmp ( GameConfig.Theme_SubPath , "classic_theme/" ) )
+	}
+      if (EnterPressed() || SpacePressed() ) 
+	{
+	  MenuItemSelectedSound();
+	  switch (MenuPosition) 
 	    {
-	      GameConfig.Theme_SubPath="lanzz_theme/";
-	    }
-	  else
-	    {
-	      GameConfig.Theme_SubPath="classic_theme/";
-	    }
-	  ReInitPictures();
-	  
-	  //--------------------
-	  // Now we have loaded a new theme with new images!!  It might however be the
-	  // case, that also the number of phases per bullet, which is specific to each
-	  // theme, has been changed!!! THIS MUST NOT BE IGNORED, OR WE'LL SEGFAULT!!!!
-	  // Because the old number of phases is still attached to living bullets, it
-	  // might try to blit a new (higher) number of phases although there are only
-	  // less Surfaces generated for the bullet in the old theme.  The solution seems
-	  // to be simply to request new graphics to be attached to each bullet, which
-	  // should be simply setting a flag for each of the bullets:
-	  for ( i = 0 ; i < MAXBULLETS ; i++ )
-	    {
-	      AllBullets[i].Surfaces_were_generated = FALSE ;
-	    }
-	  break;
-	case LEVEL_EDITOR_POSITION:
-	  while (EnterPressed() || SpacePressed() );
-	  Level_Editor();
-	  // Weiter = TRUE;   /* jp forgot this... ;) */
-	  break;
-	case LOAD_GAME_POSITION:
-	  LoadGame(  );
-	  Weiter = TRUE;
-	  break;
-	case SAVE_GAME_POSITION:
-	  SaveGame(  );
-	  break;
-	case QUIT_POSITION:
-	  DebugPrintf (2, "\nvoid EscapeMenu( void ): Quit Requested by user.  Terminating...");
-	  Terminate(0);
-	  break;
-	default: 
-	  break;
-	} 
 
+	    case SINGLE_PLAYER_POSITION:
+	      while (EnterPressed() || SpacePressed() );
+	      New_Game_Requested=FALSE;
+	      Single_Player_Menu();
+	      if (New_Game_Requested) Weiter = TRUE;   /* jp forgot this... ;) */
+	      break;
+	    case MULTI_PLAYER_POSITION:
+	      while (EnterPressed() || SpacePressed() );
+	      Multi_Player_Menu();
+	      // Weiter = TRUE;   /* jp forgot this... ;) */
+	      break;
+	    case OPTIONS_POSITION:
+	      while (EnterPressed() || SpacePressed() );
+	      Options_Menu();
+	      // Weiter = TRUE;   /* jp forgot this... ;) */
+	      break;
+	    case SET_THEME:
+	      while (EnterPressed() || SpacePressed() );
+	      if ( !strcmp ( GameConfig.Theme_SubPath , "default_theme/" ) )
+		{
+		  GameConfig.Theme_SubPath="lanzz_theme/";
+		}
+	      else
+		{
+		  GameConfig.Theme_SubPath="default_theme/";
+		}
+	      ReInitPictures();
+
+	      //--------------------
+	      // Now we have loaded a new theme with new images!!  It might however be the
+	      // case, that also the number of phases per bullet, which is specific to each
+	      // theme, has been changed!!! THIS MUST NOT BE IGNORED, OR WE'LL SEGFAULT!!!!
+	      // Because the old number of phases is still attached to living bullets, it
+	      // might try to blit a new (higher) number of phases although there are only
+	      // less Surfaces generated for the bullet in the old theme.  The solution seems
+	      // to be simply to request new graphics to be attached to each bullet, which
+	      // should be simply setting a flag for each of the bullets:
+	      for ( i = 0 ; i < MAXBULLETS ; i++ )
+		{
+		  AllBullets[i].Surfaces_were_generated = FALSE ;
+		}
+	      break;
+	    case LEVEL_EDITOR_POSITION:
+	      while (EnterPressed() || SpacePressed() );
+	      Level_Editor();
+	      // Weiter = TRUE;   /* jp forgot this... ;) */
+	      break;
+	    case CREDITS_POSITION:
+	      while (EnterPressed() || SpacePressed() );
+	      Credits_Menu();
+	      // Weiter = TRUE;   /* jp forgot this... ;) */
+	      break;
+	    case QUIT_POSITION:
+	      DebugPrintf (2, "\nvoid Options_Menu(void): Quit Requested by user.  Terminating...");
+	      Terminate(0);
+	      break;
+	    default: 
+	      break;
+	    } 
+	  // Weiter=!Weiter;
+	}
+      if (UpPressed()) 
+	{
+	  if (MenuPosition > 1) MenuPosition--;
+	  MoveMenuPositionSound();
+	  while (UpPressed());
+	}
+      if (DownPressed()) 
+	{
+	  if ( MenuPosition < QUIT_POSITION ) MenuPosition++;
+	  MoveMenuPositionSound();
+	  while (DownPressed());
+	}
     }
 
   ClearGraphMem();
   // Since we've faded out the whole scren, it can't hurt
   // to have the top status bar redrawn...
   BannerIsDestroyed=TRUE;
-  Me[0].status=MOBILE;
+  Me.status=MOBILE;
 
   return;
 
-}; // void EscapeMenu( void )
+} // EscapeMenu
 
-/* ----------------------------------------------------------------------
- * This function provides a the options menu.  This menu is a 
- * submenu of the big EscapeMenu.  Here you can change sound vol.,
- * gamma correction, fullscreen mode, display of FPS and such
- * things.
- * ---------------------------------------------------------------------- */
+/*@Function============================================================
+@Desc: This function provides a the options menu.  This menu is a 
+       submenu of the big EscapeMenu.  Here you can change sound vol.,
+       gamma correction, fullscreen mode, display of FPS and such
+       things.
+
+@Ret:  none
+* $Function----------------------------------------------------------*/
 void
-New_GraphicsSound_Options_Menu (void)
+GraphicsSound_Options_Menu (void)
 {
   int Weiter = 0;
   int MenuPosition=1;
-  char Options0[1000];
-  char Options1[1000];
-  char Options2[1000];
-  char Options3[1000];
-  char Options4[1000];
-  char* MenuTexts[10]={ "" , "" , "" , "" , "" ,
-			"" , "" , "" , "" , "" };
-  enum
-    { 
-      SET_BG_MUSIC_VOLUME=1, 
-      SET_SOUND_FX_VOLUME, 
-      SET_GAMMA_CORRECTION, 
-      SET_FULLSCREEN_FLAG, 
-      CW_SIZE,
-      LEAVE_OPTIONS_MENU 
-    };
+
+#define OPTIONS_MENU_ITEM_POS_X (Block_Width/2)
+enum
+  { SET_BG_MUSIC_VOLUME=1, 
+    SET_SOUND_FX_VOLUME, 
+    SET_GAMMA_CORRECTION, 
+    SET_FULLSCREEN_FLAG, 
+    CW_WIDTH,
+    CW_HEIGHT,
+    LEAVE_OPTIONS_MENU };
 
   // This is not some Debug Menu but an optically impressive 
   // menu for the player.  Therefore I suggest we just fade out
@@ -1870,117 +700,173 @@ New_GraphicsSound_Options_Menu (void)
   while (!Weiter)
     {
 
-      sprintf( Options0 , "Background Music Volume: %1.2f" , GameConfig.Current_BG_Music_Volume );
-      sprintf( Options1 , "Sound Effects Volume: %1.2f", GameConfig.Current_Sound_FX_Volume );
-      sprintf( Options2 , "Gamma Correction: %1.2f", GameConfig.Current_Gamma_Correction );
-      sprintf( Options3 , "Fullscreen Mode: %s", fullscreen_on ? "ON" : "OFF");
-      sprintf( Options4 , "Combat Window Size: %s", classic_user_rect ? "CLASSIC" : "FULL" );
-      MenuTexts[0]=Options0;
-      MenuTexts[1]=Options1;
-      MenuTexts[2]=Options2;
-      MenuTexts[3]=Options3;
-      MenuTexts[4]=Options4;
-      MenuTexts[5]="Back";
+      SDL_SetClipRect( ne_screen, NULL );
+      ClearGraphMem();
+      DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
+      Assemble_Combat_Picture ( 0 );
+      SDL_SetClipRect( ne_screen, NULL );
+      MakeGridOnScreen( NULL );
 
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL , NULL );
+      // 
+      // we highlight the currently selected option with an 
+      // influencer to the left before it
+      // PutInfluence( FIRST_MENU_ITEM_POS_X , 
+      // FIRST_MENU_ITEM_POS_Y + (MenuPosition-1) * (FontHeight(Menu_BFont)) - Block_Width/4 );
+      PutInfluence( OPTIONS_MENU_ITEM_POS_X - Block_Width/2, 
+		    FIRST_MENU_ITEM_POS_Y + ( MenuPosition - 1.5 ) * (FontHeight( Menu_BFont )) );
 
-      switch (MenuPosition) 
+
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+0*FontHeight(Menu_BFont),
+		       "Background Music Volume: %1.2f" , GameConfig.Current_BG_Music_Volume );
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+1*FontHeight(Menu_BFont), 
+		       "Sound Effects Volume: %1.2f", GameConfig.Current_Sound_FX_Volume );
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+2*FontHeight(Menu_BFont), 
+		       "Gamma Correction: %1.2f", GameConfig.Current_Gamma_Correction );
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+3*FontHeight(Menu_BFont), 
+		       "Fullscreen Mode: %s", fullscreen_on ? "ON" : "OFF");
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+4*FontHeight(Menu_BFont), 
+		       "Combat Window Width: %s", User_Rect.x ? "CLASSIC" : "FULL" );
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+5*FontHeight(Menu_BFont), 
+		       "Combat Window Height: %s", (User_Rect.y - BANNER_HEIGHT ) ? "CLASSIC" : "FULL" );
+      //PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+4*FontHeight(Menu_BFont),
+      //"Show Framerate: %s", GameConfig.Draw_Framerate? "ON" : "OFF");
+      //PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+5*FontHeight(Menu_BFont),
+      //"Show Energy: %s", GameConfig.Draw_Energy? "ON" : "OFF");
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+6*FontHeight(Menu_BFont), 
+		       "Back");
+
+      SDL_Flip( ne_screen );
+
+      // Wait until the user does SOMETHING
+
+      while( !SpacePressed() && !EnterPressed() && !UpPressed()
+	     && !DownPressed() && !LeftPressed() && !RightPressed() && !EscapePressed() ) ;
+
+      if ( EscapePressed() )
 	{
-
-	case (-1):
+	  while ( EscapePressed() );
 	  Weiter=!Weiter;
-	  break;
+	}
 
-	case SET_BG_MUSIC_VOLUME:
-
-	  if ( RightPressed() ) 
+      // Some menu options can be controlled by pressing right or left
+      // These options are gamma corrections, sound volume and the like
+      // Therefore left and right key must be resprected.  This is done here:
+      if (RightPressed() || LeftPressed() ) 
+	{
+	  if (MenuPosition == SET_BG_MUSIC_VOLUME ) 
 	    {
-	      while ( RightPressed());
-	      if ( GameConfig.Current_BG_Music_Volume < 1 ) GameConfig.Current_BG_Music_Volume += 0.05;
-	      Set_BG_Music_Volume( GameConfig.Current_BG_Music_Volume );
+	      if (RightPressed()) 
+		{
+		  while (RightPressed());
+		  if ( GameConfig.Current_BG_Music_Volume < 1 ) GameConfig.Current_BG_Music_Volume += 0.05;
+		  Set_BG_Music_Volume( GameConfig.Current_BG_Music_Volume );
+		}
+	      if (LeftPressed()) 
+		{
+		  while (LeftPressed());
+		  if ( GameConfig.Current_BG_Music_Volume > 0 ) GameConfig.Current_BG_Music_Volume -= 0.05;
+		  Set_BG_Music_Volume( GameConfig.Current_BG_Music_Volume );
+		}
 	    }
-
-
-	  if ( LeftPressed() ) 
+	  if (MenuPosition == SET_SOUND_FX_VOLUME ) 
 	    {
-	      while (LeftPressed());
-	      if ( GameConfig.Current_BG_Music_Volume > 0 ) GameConfig.Current_BG_Music_Volume -= 0.05;
-	      Set_BG_Music_Volume( GameConfig.Current_BG_Music_Volume );
+	      if (RightPressed()) 
+		{
+		  while (RightPressed());
+		  if ( GameConfig.Current_Sound_FX_Volume < 1 ) GameConfig.Current_Sound_FX_Volume += 0.05;
+		  Set_Sound_FX_Volume( GameConfig.Current_Sound_FX_Volume );
+		}
+	      if (LeftPressed()) 
+		{
+		  while (LeftPressed());
+		  if ( GameConfig.Current_Sound_FX_Volume > 0 ) GameConfig.Current_Sound_FX_Volume -= 0.05;
+		  Set_Sound_FX_Volume( GameConfig.Current_Sound_FX_Volume );
+		}
 	    }
-
-	  break;
-
-	case SET_SOUND_FX_VOLUME:
-
-	  if ( RightPressed() ) 
+	  if (MenuPosition == SET_GAMMA_CORRECTION ) 
 	    {
-	      while ( RightPressed());
-	      if ( GameConfig.Current_Sound_FX_Volume < 1 ) GameConfig.Current_Sound_FX_Volume += 0.05;
-	      Set_Sound_FX_Volume( GameConfig.Current_Sound_FX_Volume );
+	      if (RightPressed()) 
+		{
+		  while (RightPressed());
+		  GameConfig.Current_Gamma_Correction+=0.05;
+		  SDL_SetGamma( GameConfig.Current_Gamma_Correction , GameConfig.Current_Gamma_Correction , GameConfig.Current_Gamma_Correction );
+		}
+	      if (LeftPressed()) 
+		{
+		  while (LeftPressed());
+		  GameConfig.Current_Gamma_Correction-=0.05;
+		  SDL_SetGamma( GameConfig.Current_Gamma_Correction , GameConfig.Current_Gamma_Correction , GameConfig.Current_Gamma_Correction );
+		}
 	    }
+	}
 
-	  if ( LeftPressed() ) 
+
+      if (EnterPressed() || SpacePressed() ) 
+	{
+	  MenuItemSelectedSound();
+	  switch (MenuPosition) 
 	    {
-	      while (LeftPressed());
-	      if ( GameConfig.Current_Sound_FX_Volume > 0 ) GameConfig.Current_Sound_FX_Volume -= 0.05;
-	      Set_Sound_FX_Volume( GameConfig.Current_Sound_FX_Volume );
-	    }
+	    case SET_FULLSCREEN_FLAG:
+	      while (EnterPressed() || SpacePressed() );
+	      SDL_WM_ToggleFullScreen (ne_screen);
+	      fullscreen_on = !fullscreen_on;
+	      break;
 
-	  break;
+	    case CW_WIDTH:
+	      while (EnterPressed() || SpacePressed() );
+	      if (User_Rect.x == 0) 
+		{
+		  User_Rect.x=USERFENSTERPOSX;
+		  User_Rect.w=USERFENSTERBREITE;
+		  ClearGraphMem();
+		  DisplayBanner( NULL , NULL , BANNER_FORCE_UPDATE );
+		  SDL_Flip( ne_screen );
+		}
+	      else
+		{
+		  User_Rect.x=0;
+		  User_Rect.w=640;
+		}
+	      break;
 
-	case SET_GAMMA_CORRECTION:
+	    case CW_HEIGHT:
+	      while (EnterPressed() || SpacePressed() );
+	      if ( User_Rect.y == BANNER_HEIGHT ) 
+		{
+		  User_Rect.y=USERFENSTERPOSY;
+		  User_Rect.h=USERFENSTERHOEHE;
+		  ClearGraphMem();
+		  DisplayBanner( NULL , NULL , BANNER_FORCE_UPDATE );
+		  SDL_Flip( ne_screen );
+		}
+	      else
+		{
+		  User_Rect.y = BANNER_HEIGHT;
+		  User_Rect.h = 480 - BANNER_HEIGHT;
+		}
+	      break;
 
-	  if ( RightPressed() ) 
-	    {
-	      while ( RightPressed());
-	      GameConfig.Current_Gamma_Correction+=0.05;
-	      SDL_SetGamma( GameConfig.Current_Gamma_Correction , GameConfig.Current_Gamma_Correction , GameConfig.Current_Gamma_Correction );
-	    }
-
-	  if ( LeftPressed() ) 
-	    {
-	      while (LeftPressed());
-	      GameConfig.Current_Gamma_Correction-=0.05;
-	      SDL_SetGamma( GameConfig.Current_Gamma_Correction , GameConfig.Current_Gamma_Correction , GameConfig.Current_Gamma_Correction );
-	    }
-
-	  break;
-
-	case SET_FULLSCREEN_FLAG:
-	  while (EnterPressed() || SpacePressed() );
-	  SDL_WM_ToggleFullScreen (Screen);
-	  fullscreen_on = !fullscreen_on;
-	  break;
-
-	case CW_SIZE:
-	  while (EnterPressed() || SpacePressed() );
-	  
-	  if (classic_user_rect)
-	    {
-	      classic_user_rect = FALSE;
-	      Copy_Rect (Full_User_Rect, User_Rect);
-	    }
-	  else
-	    {
-	      classic_user_rect = TRUE;
-	      Copy_Rect (Classic_User_Rect, User_Rect);
-	    }
-	  
-	  ClearGraphMem();
-	  DisplayBanner( NULL , NULL , BANNER_FORCE_UPDATE );
-	  SDL_Flip( Screen );
-	  
-	  break;
-
-	case LEAVE_OPTIONS_MENU:
-	  while (EnterPressed() || SpacePressed() );
-	  Weiter=TRUE;
-	  break;
-
-	default: 
-	  break;
-
-	} 
+	    case LEAVE_OPTIONS_MENU:
+	      while (EnterPressed() || SpacePressed() );
+	      Weiter=TRUE;
+	      break;
+	    default: 
+	      break;
+	    } 
+	  // Weiter=!Weiter;
+	}
+      if (UpPressed()) 
+	{
+	  if ( MenuPosition > 1 ) MenuPosition--;
+	  MoveMenuPositionSound();
+	  while (UpPressed());
+	}
+      if (DownPressed()) 
+	{
+	  if ( MenuPosition < LEAVE_OPTIONS_MENU ) MenuPosition++;
+	  MoveMenuPositionSound();
+	  while (DownPressed());
+	}
     }
 
   ClearGraphMem ();
@@ -1989,7 +875,7 @@ New_GraphicsSound_Options_Menu (void)
 
   return;
 
-}; // void New_GraphicsSound_Options_Menu (void)
+}; // GraphicsSound_Options_Menu
 
 /*@Function============================================================
 @Desc: This function provides a the options menu.  This menu is a 
@@ -2002,20 +888,19 @@ New_GraphicsSound_Options_Menu (void)
 void
 On_Screen_Display_Options_Menu (void)
 {
+
   int Weiter = 0;
   int MenuPosition=1;
-  char Options0[1000];
-  char Options1[1000];
-  char Options2[1000];
-  char* MenuTexts[10]={ "" , "" , "" , "" , "" ,
-			"" , "" , "" , "" , "" };
-  enum
-    { 
-      SHOW_POSITION=1, 
-      SHOW_FRAMERATE, 
-      SHOW_ENERGY,
-      LEAVE_OPTIONS_MENU 
-    };
+
+#define OPTIONS_MENU_ITEM_POS_X (Block_Width/2)
+enum
+  { //SET_BG_MUSIC_VOLUME=1, 
+    //SET_SOUND_FX_VOLUME, 
+    //SET_GAMMA_CORRECTION, 
+    SHOW_POSITION=1, 
+    SHOW_FRAMERATE, 
+    SHOW_ENERGY,
+    LEAVE_OPTIONS_MENU };
 
   // This is not some Debug Menu but an optically impressive 
   // menu for the player.  Therefore I suggest we just fade out
@@ -2026,40 +911,88 @@ On_Screen_Display_Options_Menu (void)
   while (!Weiter)
     {
 
-      sprintf( Options0 , "Show Position: %s", GameConfig.Draw_Position ? "ON" : "OFF" );
-      sprintf( Options1 , "Show Framerate: %s", GameConfig.Draw_Framerate? "ON" : "OFF" );
-      sprintf( Options2 , "Show Energy: %s", GameConfig.Draw_Energy? "ON" : "OFF" );
-      MenuTexts[0]=Options0;
-      MenuTexts[1]=Options1;
-      MenuTexts[2]=Options2;
-      MenuTexts[3]="Back";
+      SDL_SetClipRect( ne_screen, NULL );
+      ClearGraphMem();
+      DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
+      Assemble_Combat_Picture ( 0 );
+      SDL_SetClipRect( ne_screen, NULL );
+      MakeGridOnScreen( NULL );
 
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL , NULL );
+      // 
+      // we highlight the currently selected option with an 
+      // influencer to the left before it
+      // PutInfluence( FIRST_MENU_ITEM_POS_X , 
+      // FIRST_MENU_ITEM_POS_Y + (MenuPosition-1) * (FontHeight(Menu_BFont)) - Block_Width/4 );
+      PutInfluence( OPTIONS_MENU_ITEM_POS_X - Block_Width/2, 
+		    FIRST_MENU_ITEM_POS_Y + ( MenuPosition - 1.5 ) * (FontHeight( Menu_BFont )) );
 
-      switch (MenuPosition) 
+
+      //PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+0*FontHeight(Menu_BFont)
+      //"Background Music Volume: %1.2f" , GameConfig.Current_BG_Music_Volume );
+      //PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+1*FontHeight(Menu_BFont),
+      //"Sound Effects Volume: %1.2f", GameConfig.Current_Sound_FX_Volume );
+      //PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+2*FontHeight(Menu_BFont),
+      //"Gamma Correction: %1.2f", GameConfig.Current_Gamma_Correction );
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+0*FontHeight(Menu_BFont), 
+		       "Show Position: %s", GameConfig.Draw_Position ? "ON" : "OFF");
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+1*FontHeight(Menu_BFont), 
+		       "Show Framerate: %s", GameConfig.Draw_Framerate? "ON" : "OFF");
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+2*FontHeight(Menu_BFont), 
+		       "Show Energy: %s", GameConfig.Draw_Energy? "ON" : "OFF");
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+3*FontHeight(Menu_BFont), 
+		       "Back");
+
+      SDL_Flip( ne_screen );
+
+      // Wait until the user does SOMETHING
+
+      while( !SpacePressed() && !EnterPressed() && !UpPressed()
+	     && !DownPressed() && !LeftPressed() && !RightPressed() && !EscapePressed() ) ;
+
+      if ( EscapePressed() )
 	{
-	case (-1):
+	  while ( EscapePressed() );
 	  Weiter=!Weiter;
-	  break;
-	case SHOW_POSITION:
-	  while (EnterPressed() || SpacePressed() );
-	  GameConfig.Draw_Position=!GameConfig.Draw_Position;
-	  break;
-	case SHOW_FRAMERATE:
-	  while (EnterPressed() || SpacePressed() );
-	  GameConfig.Draw_Framerate=!GameConfig.Draw_Framerate;
-	  break;
-	case SHOW_ENERGY:
-	  while (EnterPressed() || SpacePressed() );
-	  GameConfig.Draw_Energy=!GameConfig.Draw_Energy;
-	  break;
-	case LEAVE_OPTIONS_MENU:
-	  while (EnterPressed() || SpacePressed() );
-	  Weiter=TRUE;
-	  break;
-	default: 
-	  break;
-	} 
+	}
+
+      if (EnterPressed() || SpacePressed() ) 
+	{
+	  MenuItemSelectedSound();
+	  switch (MenuPosition) 
+	    {
+	    case SHOW_POSITION:
+	      while (EnterPressed() || SpacePressed() );
+	      GameConfig.Draw_Position=!GameConfig.Draw_Position;
+	      break;
+	    case SHOW_FRAMERATE:
+	      while (EnterPressed() || SpacePressed() );
+	      GameConfig.Draw_Framerate=!GameConfig.Draw_Framerate;
+	      break;
+	    case SHOW_ENERGY:
+	      while (EnterPressed() || SpacePressed() );
+	      GameConfig.Draw_Energy=!GameConfig.Draw_Energy;
+	      break;
+	    case LEAVE_OPTIONS_MENU:
+	      while (EnterPressed() || SpacePressed() );
+	      Weiter=TRUE;
+	      break;
+	    default: 
+	      break;
+	    } 
+	  // Weiter=!Weiter;
+	}
+      if (UpPressed()) 
+	{
+	  if ( MenuPosition > 1 ) MenuPosition--;
+	  MoveMenuPositionSound();
+	  while (UpPressed());
+	}
+      if (DownPressed()) 
+	{
+	  if ( MenuPosition < LEAVE_OPTIONS_MENU ) MenuPosition++;
+	  MoveMenuPositionSound();
+	  while (DownPressed());
+	}
     }
 
   ClearGraphMem ();
@@ -2084,79 +1017,122 @@ Droid_Talk_Options_Menu (void)
 
   int Weiter = 0;
   int MenuPosition=1;
-  char Options0[1000];
-  char Options1[1000];
-  char Options2[1000];
-  char Options3[1000];
-  char Options4[1000];
-  char Options5[1000];
-  char* MenuTexts[10]={ "" , "" , "" , "" , "" ,
-			"" , "" , "" , "" , "" };
-  enum
-    { 
-      INFLU_REFRESH_TEXT=1,
-      INFLU_BLAST_TEXT,
-      ENEMY_HIT_TEXT,
-      ENEMY_BUMP_TEXT,
-      ENEMY_AIM_TEXT,
-      ALL_TEXTS,
-      LEAVE_DROID_TALK_OPTIONS_MENU 
-    };
+
+#define OPTIONS_MENU_ITEM_POS_X (Block_Width/2)
+enum
+  { 
+    INFLU_REFRESH_TEXT=1,
+    INFLU_BLAST_TEXT,
+    ENEMY_HIT_TEXT,
+    ENEMY_BUMP_TEXT,
+    ENEMY_AIM_TEXT,
+    ALL_TEXTS,
+    // SHOW_ENERGY,
+    LEAVE_DROID_TALK_OPTIONS_MENU };
+
+  // This is not some Debug Menu but an optically impressive 
+  // menu for the player.  Therefore I suggest we just fade out
+  // the game screen a little bit.
+
+  while ( EscapePressed() );
 
   while (!Weiter)
     {
-      sprintf( Options0 , "Influencer Refresh Texts: %s" , GameConfig.Influencer_Refresh_Text ? "ON" : "OFF" );
-      sprintf( Options1 , "Influencer Blast Texts: %s", GameConfig.Influencer_Blast_Text ? "ON" : "OFF" );
-      sprintf( Options2 , "Enemy Hit Texts: %s", GameConfig.Enemy_Hit_Text ? "ON" : "OFF" );
-      sprintf( Options3 , "Enemy Bumped Texts: %s", GameConfig.Enemy_Bump_Text ? "ON" : "OFF" );
-      sprintf( Options4 , "Enemy Aim Texts: %s", GameConfig.Enemy_Aim_Text ? "ON" : "OFF" );
-      sprintf( Options5 , "All in-game Speech: %s", GameConfig.All_Texts_Switch ? "ON" : "OFF" );
-      MenuTexts[0]=Options0;
-      MenuTexts[1]=Options1;
-      MenuTexts[2]=Options2;
-      MenuTexts[3]=Options3;
-      MenuTexts[4]=Options4;
-      MenuTexts[5]=Options5;
-      MenuTexts[6]="Back";
 
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL , NULL );
+      SDL_SetClipRect( ne_screen, NULL );
+      ClearGraphMem();
+      DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
+      Assemble_Combat_Picture ( 0 );
+      SDL_SetClipRect( ne_screen, NULL );
+      MakeGridOnScreen( NULL );
 
-      switch (MenuPosition) 
+      // 
+      // we highlight the currently selected option with an 
+      // influencer to the left before it
+      // PutInfluence( FIRST_MENU_ITEM_POS_X , 
+      // FIRST_MENU_ITEM_POS_Y + (MenuPosition-1) * (FontHeight(Menu_BFont)) - Block_Width/4 );
+      PutInfluence( OPTIONS_MENU_ITEM_POS_X - Block_Width/2, 
+		    FIRST_MENU_ITEM_POS_Y + ( MenuPosition - 1.5 ) * (FontHeight( Menu_BFont )) );
+
+
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+0*FontHeight(Menu_BFont), 
+		       "Influencer Refresh Texts: %s", GameConfig.Influencer_Refresh_Text ? "ON" : "OFF");
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+1*FontHeight(Menu_BFont), 
+		       "Influencer Blast Texts: %s", GameConfig.Influencer_Blast_Text ? "ON" : "OFF");
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+2*FontHeight(Menu_BFont), 
+		       "Enemy Hit Texts: %s", GameConfig.Enemy_Hit_Text ? "ON" : "OFF");
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+3*FontHeight(Menu_BFont), 
+		       "Enemy Bumped Texts: %s", GameConfig.Enemy_Bump_Text ? "ON" : "OFF");
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+4*FontHeight(Menu_BFont), 
+		       "Enemy Aim Texts: %s", GameConfig.Enemy_Aim_Text ? "ON" : "OFF");
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+5*FontHeight(Menu_BFont), 
+		       "All in-game Speech: %s", GameConfig.All_Texts_Switch ? "ON" : "OFF");
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+6*FontHeight(Menu_BFont), 
+		       "Back");
+
+      SDL_Flip( ne_screen );
+
+      // Wait until the user does SOMETHING
+
+      while( !SpacePressed() && !EnterPressed() && !UpPressed()
+	     && !DownPressed() && !LeftPressed() && !RightPressed() && !EscapePressed() ) ;
+
+      if ( EscapePressed() )
 	{
-	case (-1):
+	  while ( EscapePressed() );
 	  Weiter=!Weiter;
-	  break;
-	case INFLU_REFRESH_TEXT:
-	  while (EnterPressed() || SpacePressed() );
-	  GameConfig.Influencer_Refresh_Text=!GameConfig.Influencer_Refresh_Text;
-	  break;
-	case INFLU_BLAST_TEXT:
-	  while (EnterPressed() || SpacePressed() );
-	  GameConfig.Influencer_Blast_Text=!GameConfig.Influencer_Blast_Text;
-	  break;
-	case ENEMY_HIT_TEXT:
-	  while (EnterPressed() || SpacePressed() );
-	  GameConfig.Enemy_Hit_Text=!GameConfig.Enemy_Hit_Text;
-	  break;
-	case ENEMY_BUMP_TEXT:
-	  while (EnterPressed() || SpacePressed() );
-	  GameConfig.Enemy_Bump_Text=!GameConfig.Enemy_Bump_Text;
-	  break;
-	case ENEMY_AIM_TEXT:
-	  while (EnterPressed() || SpacePressed() );
-	  GameConfig.Enemy_Aim_Text=!GameConfig.Enemy_Aim_Text;
-	  break;
-	case ALL_TEXTS:
-	  while (EnterPressed() || SpacePressed() );
-	  GameConfig.All_Texts_Switch=!GameConfig.All_Texts_Switch;
-	  break;
-	case LEAVE_DROID_TALK_OPTIONS_MENU:
-	  while (EnterPressed() || SpacePressed() );
-	  Weiter=TRUE;
-	  break;
-	default: 
-	  break;
-	} 
+	}
+
+      if (EnterPressed() || SpacePressed() ) 
+	{
+	  MenuItemSelectedSound();
+	  switch (MenuPosition) 
+	    {
+	    case INFLU_REFRESH_TEXT:
+	      while (EnterPressed() || SpacePressed() );
+	      GameConfig.Influencer_Refresh_Text=!GameConfig.Influencer_Refresh_Text;
+	      break;
+	    case INFLU_BLAST_TEXT:
+	      while (EnterPressed() || SpacePressed() );
+	      GameConfig.Influencer_Blast_Text=!GameConfig.Influencer_Blast_Text;
+	      break;
+	    case ENEMY_HIT_TEXT:
+	      while (EnterPressed() || SpacePressed() );
+	      GameConfig.Enemy_Hit_Text=!GameConfig.Enemy_Hit_Text;
+	      break;
+	    case ENEMY_BUMP_TEXT:
+	      while (EnterPressed() || SpacePressed() );
+	      GameConfig.Enemy_Bump_Text=!GameConfig.Enemy_Bump_Text;
+	      break;
+	    case ENEMY_AIM_TEXT:
+	      while (EnterPressed() || SpacePressed() );
+	      GameConfig.Enemy_Aim_Text=!GameConfig.Enemy_Aim_Text;
+	      break;
+	    case ALL_TEXTS:
+	      while (EnterPressed() || SpacePressed() );
+	      GameConfig.All_Texts_Switch=!GameConfig.All_Texts_Switch;
+	      break;
+	    case LEAVE_DROID_TALK_OPTIONS_MENU:
+	      while (EnterPressed() || SpacePressed() );
+	      Weiter=TRUE;
+	      break;
+	    default: 
+	      break;
+	    } 
+	  // Weiter=!Weiter;
+	}
+      if (UpPressed()) 
+	{
+	  if ( MenuPosition > 1 ) MenuPosition--;
+	  MoveMenuPositionSound();
+	  while (UpPressed());
+	}
+      if (DownPressed()) 
+	{
+	  if ( MenuPosition < LEAVE_DROID_TALK_OPTIONS_MENU ) MenuPosition++;
+	  MoveMenuPositionSound();
+	  while (DownPressed());
+	}
     }
 
   ClearGraphMem ();
@@ -2167,70 +1143,125 @@ Droid_Talk_Options_Menu (void)
 
 }; // Droid_Talk_Options_Menu
 
-/* ----------------------------------------------------------------------
- * This function provides a the options menu.  This menu is a 
- * submenu of the big EscapeMenu.  Here you can change sound vol.,
- * gamma correction, fullscreen mode, display of FPS and such
- * things.
- * ---------------------------------------------------------------------- */
+/*@Function============================================================
+@Desc: This function provides a the options menu.  This menu is a 
+       submenu of the big EscapeMenu.  Here you can change sound vol.,
+       gamma correction, fullscreen mode, display of FPS and such
+       things.
+
+@Ret:  none
+* $Function----------------------------------------------------------*/
 void
 Options_Menu (void)
 {
+
   int Weiter = 0;
   int MenuPosition=1;
-  char* MenuTexts[10];
+
+#define OPTIONS_MENU_ITEM_POS_X (Block_Width/2)
 enum
-  { 
-    GRAPHICS_SOUND_OPTIONS=1, 
+  { GRAPHICS_SOUND_OPTIONS=1, 
     DROID_TALK_OPTIONS,
     ON_SCREEN_DISPLAYS,
     SAVE_OPTIONS, 
-    LEAVE_OPTIONS_MENU 
-  };
+    //    TOGGLE_FRAMERATE, 
+    // SHOW_ENERGY,
+    LEAVE_OPTIONS_MENU };
 
-  MenuTexts[0]="Graphics & Sound";
-  MenuTexts[1]="Droid Talk";
-  MenuTexts[2]="On-Screen Displays";
-  MenuTexts[3]="Save Options";
-  MenuTexts[4]="Back";
-  MenuTexts[5]="";
-  MenuTexts[6]="";
-  MenuTexts[7]="";
-  MenuTexts[8]="";
-  MenuTexts[9]="";
+  // This is not some Debug Menu but an optically impressive 
+  // menu for the player.  Therefore I suggest we just fade out
+  // the game screen a little bit.
 
-  while ( !Weiter )
+  while ( EscapePressed() );
+
+  while (!Weiter)
     {
 
-      MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , NULL , NULL );
+      SDL_SetClipRect( ne_screen, NULL );
+      ClearGraphMem();
+      DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
+      Assemble_Combat_Picture ( 0 );
+      SDL_SetClipRect( ne_screen, NULL );
+      MakeGridOnScreen( NULL );
 
-      switch (MenuPosition) 
+      // 
+      // we highlight the currently selected option with an 
+      // influencer to the left before it
+      // PutInfluence( FIRST_MENU_ITEM_POS_X , 
+      // FIRST_MENU_ITEM_POS_Y + (MenuPosition-1) * (FontHeight(Menu_BFont)) - Block_Width/4 );
+      PutInfluence( OPTIONS_MENU_ITEM_POS_X - Block_Width/2, 
+		    FIRST_MENU_ITEM_POS_Y + ( MenuPosition - 1.5 ) * (FontHeight( Menu_BFont )) );
+
+
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+0*FontHeight(Menu_BFont),
+		       "Graphics & Sound" );
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+1*FontHeight(Menu_BFont), 
+		       "Droid Talk" );
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+2*FontHeight(Menu_BFont), 
+		       "On-Screen Displays" );
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+3*FontHeight(Menu_BFont), 
+		       "Save Options");
+      //PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+4*FontHeight(Menu_BFont),
+      //"Show Framerate: %s", GameConfig.Draw_Framerate? "ON" : "OFF");
+      //PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+5*FontHeight(Menu_BFont),
+      //"Show Energy: %s", GameConfig.Draw_Energy? "ON" : "OFF");
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+4*FontHeight(Menu_BFont), 
+		       "Back");
+
+      SDL_Flip( ne_screen );
+
+      // Wait until the user does SOMETHING
+
+      while( !SpacePressed() && !EnterPressed() && !UpPressed()
+	     && !DownPressed() && !LeftPressed() && !RightPressed() && !EscapePressed() ) ;
+
+      if ( EscapePressed() )
 	{
-	case (-1):
+	  while ( EscapePressed() );
 	  Weiter=!Weiter;
-	  break;
-	case GRAPHICS_SOUND_OPTIONS:
-	  while (EnterPressed() || SpacePressed() );
-	  New_GraphicsSound_Options_Menu();
-	  break;
-	case DROID_TALK_OPTIONS:
-	  while (EnterPressed() || SpacePressed() );
-	  Droid_Talk_Options_Menu();
-	  break;
-	case ON_SCREEN_DISPLAYS:
-	  while (EnterPressed() || SpacePressed() );
-	  On_Screen_Display_Options_Menu();
-	  break;
-	case SAVE_OPTIONS:
-	  while (EnterPressed() || SpacePressed() );
-	  break;
-	case LEAVE_OPTIONS_MENU:
-	  while (EnterPressed() || SpacePressed() );
-	  Weiter=TRUE;
-	  break;
-	default: 
-	  break;
-	} 
+	}
+
+      if (EnterPressed() || SpacePressed() ) 
+	{
+	  MenuItemSelectedSound();
+	  switch (MenuPosition) 
+	    {
+	    case GRAPHICS_SOUND_OPTIONS:
+	      while (EnterPressed() || SpacePressed() );
+	      GraphicsSound_Options_Menu();
+	      break;
+	    case DROID_TALK_OPTIONS:
+	      while (EnterPressed() || SpacePressed() );
+	      Droid_Talk_Options_Menu();
+	      break;
+	    case ON_SCREEN_DISPLAYS:
+	      while (EnterPressed() || SpacePressed() );
+	      On_Screen_Display_Options_Menu();
+	      break;
+	    case SAVE_OPTIONS:
+	      while (EnterPressed() || SpacePressed() );
+	      break;
+	    case LEAVE_OPTIONS_MENU:
+	      while (EnterPressed() || SpacePressed() );
+	      Weiter=TRUE;
+	      break;
+	    default: 
+	      break;
+	    } 
+	  // Weiter=!Weiter;
+	}
+      if (UpPressed()) 
+	{
+	  if ( MenuPosition > 1 ) MenuPosition--;
+	  MoveMenuPositionSound();
+	  while (UpPressed());
+	}
+      if (DownPressed()) 
+	{
+	  if ( MenuPosition < LEAVE_OPTIONS_MENU ) MenuPosition++;
+	  MoveMenuPositionSound();
+	  while (DownPressed());
+	}
     }
 
   ClearGraphMem ();
@@ -2241,591 +1272,139 @@ enum
 
 } // Options_Menu
 
-/* ----------------------------------------------------------------------
- * This reads in the new name for the character...
- * ---------------------------------------------------------------------- */
+/*@Function============================================================
+@Desc: This function provides the single player menu.  This menu is a 
+       submenu of the big EscapeMenu.  Here you can restart a new game,
+       see the highscore list, see mission instructions and such 
+       things.
+
+@Ret:  none
+* $Function----------------------------------------------------------*/
 void
-Get_Server_Name ( void )
-{
-  char* Temp;
-  InitiateMenu( NE_TITLE_PIC_FILE );
-
-  DisplayText ( "\n\
- Please enter name of server to connect to:\n\
- You can give an empty string for the local host.\n\
- \n      " , 50 , 50 , NULL );
-
-  Temp = GetString( 140 , FALSE );
-  strcpy ( ServerName , Temp );
-  free( Temp );
-}; // void Get_New_Character_Name ( void )
-
-/* ----------------------------------------------------------------------
- * This reads in the new name for the character...
- * ---------------------------------------------------------------------- */
-void
-Get_New_Character_Name ( void )
-{
-  char* Temp;
-  InitiateMenu( NE_TITLE_PIC_FILE );
-
-  DisplayText ( "\n     Enter the name for the new hero:\n\n\n      " , 
-		50 , 50 , NULL );
-
-  Temp = GetString( 20 , FALSE );
-  strcpy ( Me[0].character_name , Temp );
-  free( Temp );
-}; // void Get_New_Character_Name ( void )
-
-/* ----------------------------------------------------------------------
- * This function does the selection of the hero class...
- * ---------------------------------------------------------------------- */
-int
-Select_Hero_Class_Menu (void)
-{
-  int Weiter = 0;
-  int MenuPosition=1;
-  char* MenuTexts[10];
-  int i;
-
-enum
-  { 
-    WAR_BOT_POSITION=1, 
-    SNIPER_BOT_POSITION, 
-    MIND_BOT_POSITION,
-    BACK_POSITION
-  };
-
-  MenuTexts[0]="War Tux";
-  MenuTexts[1]="Sniper Tux";
-  MenuTexts[2]="Hacker Tux";
-  MenuTexts[3]="Back";
-  MenuTexts[4]="";
-  MenuTexts[5]="";
-  MenuTexts[6]="";
-  MenuTexts[7]="";
-  MenuTexts[8]="";
-  MenuTexts[9]="";
-
-  //--------------------
-  // At first we clear the inventory of the new character
-  // of any items (or numeric waste) that might be in there
-  //
-  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
-    {
-      Me[0].Inventory[ i ].type = (-1);
-      Me[0].Inventory[ i ].prefix_code = (-1);
-      Me[0].Inventory[ i ].suffix_code = (-1);
-      Me[0].Inventory[ i ].currently_held_in_hand = FALSE;
-    }
-  DebugPrintf ( 1 , "\nSelect_Hero...( ... ): Inventory has been emptied...");
-
-
-  //--------------------
-  // Now we add some safety, against 'none present' items
-  //
-  Me[0].weapon_item.type = ( -1 ) ;
-  Me[0].drive_item.type = ( -1 ) ;
-  Me[0].armour_item.type = ( -1 ) ;
-  Me[0].shield_item.type = ( -1 ) ;
-  Me[0].aux1_item.type = ( -1 ) ;
-  Me[0].aux2_item.type = ( -1 ) ;
-  Me[0].special_item.type = ( -1 ) ;
-
-  Me[0].weapon_item.prefix_code = ( -1 ) ;
-  Me[0].drive_item.prefix_code = ( -1 ) ;
-  Me[0].armour_item.prefix_code = ( -1 ) ;
-  Me[0].shield_item.prefix_code = ( -1 ) ;
-  Me[0].aux1_item.prefix_code = ( -1 ) ;
-  Me[0].aux2_item.prefix_code = ( -1 ) ;
-  Me[0].special_item.prefix_code = ( -1 ) ;
-
-  Me[0].weapon_item.suffix_code = ( -1 ) ;
-  Me[0].drive_item.suffix_code = ( -1 ) ;
-  Me[0].armour_item.suffix_code = ( -1 ) ;
-  Me[0].shield_item.suffix_code = ( -1 ) ;
-  Me[0].aux1_item.suffix_code = ( -1 ) ;
-  Me[0].aux2_item.suffix_code = ( -1 ) ;
-  Me[0].special_item.suffix_code = ( -1 ) ;
-
-  while (!Weiter)
-    {
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NE_TITLE_PIC_FILE , NULL );
-
-      //--------------------
-      // Now let's see what the user has pressed...
-      //
-      switch (MenuPosition) 
-	{
-	case (-1):
-	  Weiter=!Weiter;
-	  break;
-	case WAR_BOT_POSITION:
-	  while (EnterPressed() || SpacePressed() ) ;
-
-	  Me[0].character_class = WAR_BOT;
-	  Me[0].base_vitality = 25;
-	  Me[0].base_strength = 30;
-	  Me[0].base_dexterity = 25;
-	  Me[0].base_magic = 10;
-
-	  // Me[0].weapon_item.type = ITEM_SHORT_SWORD;
-	  Me[0].drive_item.type = ITEM_ANTIGRAV_BETA;
-
-	  Me[0].Inventory[ 0 ].type = ITEM_SHORT_SWORD;
-	  Me[0].Inventory[ 0 ].inventory_position.x = 0;
-	  Me[0].Inventory[ 0 ].inventory_position.y = 0;
-	  Me[0].Inventory[ 1 ].type = ITEM_BUCKLER;
-	  Me[0].Inventory[ 1 ].inventory_position.x = 2;
-	  Me[0].Inventory[ 1 ].inventory_position.y = 0;
-	  Me[0].Inventory[ 2 ].type = ITEM_SMALL_HEALTH_POTION;
-	  Me[0].Inventory[ 2 ].inventory_position.x = 0;
-	  Me[0].Inventory[ 2 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
-	  Me[0].Inventory[ 3 ].type = ITEM_SMALL_HEALTH_POTION;
-	  Me[0].Inventory[ 3 ].inventory_position.x = 1;
-	  Me[0].Inventory[ 3 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
-	  Me[0].Inventory[ 4 ].type = ITEM_START_PLUGIN_WARRIOR;
-	  Me[0].Inventory[ 4 ].inventory_position.x = 5;
-	  Me[0].Inventory[ 4 ].inventory_position.y = 0;
-	  
-	  FillInItemProperties ( & Me[0].Inventory[ 0 ] , TRUE , 0 );
-	  FillInItemProperties ( & Me[0].Inventory[ 1 ] , TRUE , 0 );
-	  FillInItemProperties ( & Me[0].Inventory[ 2 ] , TRUE , 0 );
-	  FillInItemProperties ( & Me[0].Inventory[ 3 ] , TRUE , 0 );
-	  FillInItemProperties ( & Me[0].Inventory[ 4 ] , TRUE , 0 );
-
-	  Get_New_Character_Name( );
-	  return ( TRUE );
-	  break;
-	case SNIPER_BOT_POSITION: 
-	  while (EnterPressed() || SpacePressed() ) ;
-
-	  Me[0].character_class = SNIPER_BOT;
-	  Me[0].base_vitality = 20;
-	  Me[0].base_strength = 25;
-	  Me[0].base_dexterity = 35;
-	  Me[0].base_magic = 20;
-	  
-	  Me[0].drive_item.type = ITEM_ANTIGRAV_BETA;
-
-	  Me[0].Inventory[ 0 ].type = ITEM_SHORT_BOW;
-	  Me[0].Inventory[ 0 ].inventory_position.x = 0;
-	  Me[0].Inventory[ 0 ].inventory_position.y = 0;
-	  Me[0].Inventory[ 1 ].type = ITEM_SMALL_HEALTH_POTION;
-	  Me[0].Inventory[ 1 ].inventory_position.x = 0;
-	  Me[0].Inventory[ 1 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
-	  Me[0].Inventory[ 2 ].type = ITEM_SMALL_HEALTH_POTION;
-	  Me[0].Inventory[ 2 ].inventory_position.x = 1;
-	  Me[0].Inventory[ 2 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
-	  Me[0].Inventory[ 4 ].type = ITEM_START_PLUGIN_SNIPER;
-	  Me[0].Inventory[ 4 ].inventory_position.x = 5;
-	  Me[0].Inventory[ 4 ].inventory_position.y = 0;
-
-	  FillInItemProperties ( & Me[0].Inventory[ 0 ] , TRUE , 0 );
-	  FillInItemProperties ( & Me[0].Inventory[ 1 ] , TRUE , 0 );
-	  FillInItemProperties ( & Me[0].Inventory[ 2 ] , TRUE , 0 );
-	  FillInItemProperties ( & Me[0].Inventory[ 4 ] , TRUE , 0 );
-	  
-
-	  Get_New_Character_Name( );
-	  return ( TRUE );
-	  break;
-	case MIND_BOT_POSITION: 
-	  while (EnterPressed() || SpacePressed() ) ;
-
-	  Me[0].character_class = MIND_BOT;
-	  Me[0].base_vitality = 15;
-	  Me[0].base_strength = 15;
-	  Me[0].base_dexterity = 20;
-	  Me[0].base_magic = 35;
-	  Me[0].drive_item.type = ITEM_ANTIGRAV_ALPHA;
-
-	  Me[0].Inventory[ 0 ].type = ITEM_STAFF;
-	  Me[0].Inventory[ 0 ].inventory_position.x = 0;
-	  Me[0].Inventory[ 0 ].inventory_position.y = 0;
-	  Me[0].Inventory[ 1 ].type = ITEM_SMALL_MANA_POTION;
-	  Me[0].Inventory[ 1 ].inventory_position.x = 0;
-	  Me[0].Inventory[ 1 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
-	  Me[0].Inventory[ 2 ].type = ITEM_SMALL_MANA_POTION;
-	  Me[0].Inventory[ 2 ].inventory_position.x = 1;
-	  Me[0].Inventory[ 2 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
-	  Me[0].Inventory[ 4 ].type = ITEM_START_PLUGIN_HACKER;
-	  Me[0].Inventory[ 4 ].inventory_position.x = 5;
-	  Me[0].Inventory[ 4 ].inventory_position.y = 0;
-	  FillInItemProperties ( & Me[0].Inventory[ 0 ] , TRUE , 0 );
-	  FillInItemProperties ( & Me[0].Inventory[ 1 ] , TRUE , 0 );
-	  FillInItemProperties ( & Me[0].Inventory[ 2 ] , TRUE , 0 );
-	  FillInItemProperties ( & Me[0].Inventory[ 4 ] , TRUE , 0 );
-
-	  Get_New_Character_Name( );
-	  return ( TRUE );
-	  break;
-	case BACK_POSITION:
-	  while (EnterPressed() || SpacePressed() ) ;
-	  Weiter=!Weiter;
-	  return ( FALSE );
-	  break;
-	default: 
-	  break;
-	}
-    }
-  return ( FALSE );
-}; // int Select_Hero_Class_Menu ( void );
-
-/* ----------------------------------------------------------------------
- * This function does the selection of the hero class...
- * ---------------------------------------------------------------------- */
-int
-Connect_To_Existing_Server_Menu (void)
-{
-
-  //--------------------
-  // Now we add some safety, against 'none present' items
-  //
-  Me[0].weapon_item.type = ( -1 ) ;
-  Me[0].drive_item.type = ( -1 ) ;
-  Me[0].armour_item.type = ( -1 ) ;
-  Me[0].shield_item.type = ( -1 ) ;
-  Me[0].aux1_item.type = ( -1 ) ;
-  Me[0].aux2_item.type = ( -1 ) ;
-  Me[0].special_item.type = ( -1 ) ;
-
-  Me[0].weapon_item.prefix_code = ( -1 ) ;
-  Me[0].drive_item.prefix_code = ( -1 ) ;
-  Me[0].armour_item.prefix_code = ( -1 ) ;
-  Me[0].shield_item.prefix_code = ( -1 ) ;
-  Me[0].aux1_item.prefix_code = ( -1 ) ;
-  Me[0].aux2_item.prefix_code = ( -1 ) ;
-  Me[0].special_item.prefix_code = ( -1 ) ;
-
-  Me[0].weapon_item.suffix_code = ( -1 ) ;
-  Me[0].drive_item.suffix_code = ( -1 ) ;
-  Me[0].armour_item.suffix_code = ( -1 ) ;
-  Me[0].shield_item.suffix_code = ( -1 ) ;
-  Me[0].aux1_item.suffix_code = ( -1 ) ;
-  Me[0].aux2_item.suffix_code = ( -1 ) ;
-  Me[0].special_item.suffix_code = ( -1 ) ;
-
-  Me[0].character_class = WAR_BOT;
-  Me[0].base_vitality = 25;
-  Me[0].base_strength = 30;
-  Me[0].base_dexterity = 25;
-  Me[0].base_magic = 10;
-
-  // Me[0].weapon_item.type = ITEM_SHORT_SWORD;
-  Me[0].drive_item.type = ITEM_ANTIGRAV_BETA;
-
-  Me[0].Inventory[ 0 ].type = ITEM_SHORT_SWORD;
-  Me[0].Inventory[ 0 ].inventory_position.x = 0;
-  Me[0].Inventory[ 0 ].inventory_position.y = 0;
-  Me[0].Inventory[ 1 ].type = ITEM_BUCKLER;
-  Me[0].Inventory[ 1 ].inventory_position.x = 2;
-  Me[0].Inventory[ 1 ].inventory_position.y = 0;
-  Me[0].Inventory[ 2 ].type = ITEM_SMALL_HEALTH_POTION;
-  Me[0].Inventory[ 2 ].inventory_position.x = 0;
-  Me[0].Inventory[ 2 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
-  Me[0].Inventory[ 3 ].type = ITEM_SMALL_HEALTH_POTION;
-  Me[0].Inventory[ 3 ].inventory_position.x = 1;
-  Me[0].Inventory[ 3 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
-  FillInItemProperties ( & Me[0].Inventory[ 0 ] , TRUE , 0 );
-  FillInItemProperties ( & Me[0].Inventory[ 1 ] , TRUE , 0 );
-  FillInItemProperties ( & Me[0].Inventory[ 2 ] , TRUE , 0 );
-  FillInItemProperties ( & Me[0].Inventory[ 3 ] , TRUE , 0 );
-
-  Get_Server_Name ( );
-  Get_New_Character_Name( );
-
-  ConnectToFreedroidServer (  );
-
-  if ( strlen ( ServerName ) > 0 )
-    return ( TRUE );
-  else
-    return ( FALSE );
-
-}; // int Connect_To_Existing_Server_Menu ( void );
-
-/* ----------------------------------------------------------------------
- * The GNU C Library is SOOOO COOOL!!! It contains functions for directory
- * manipulations that are SOOOO powerful, it's really awesome.  One of
- * these very powerful functions can be used to filter directory entries,
- * so that only a certain kind of files will be displayed any more.  How
- * convenient.  So as a parameter to this powerful function (scandir), you
- * have to specify a sorting function of a certain kind.  And this is just
- * the sorting function that seems appropriate for our little program.
- * ---------------------------------------------------------------------- */
-static int
-one (const struct dirent *unused)
-{
-  if ( strstr ( unused->d_name , "savegame" ) != NULL )
-    {
-      return ( 1 ) ;
-    }
-  else
-    {
-      return ( 0 ) ;
-    }
-
-  // to make compilers happy...
-  return ( 0 );
-
-}; // static int one (struct dirent *unused)
-
-/* ----------------------------------------------------------------------
- * This is the function available from the freedroid startup menu, that
- * should display the available characters in the users home directory
- * and eventually let the player select one of his old characters there.
- * ---------------------------------------------------------------------- */
-int 
-Load_Existing_Hero_Menu ( void )
-{
-  char *homedir;
-  // DIR *dp;
-  // struct dirent *ep;
-  struct dirent **eps;
-  int n;  
-  int cnt;
-  char* MenuTexts[10];
-  int MenuPosition;
-
-  DebugPrintf ( 0 , "\nint Load_Existing_Hero_Menu ( void ): real function call confirmed.");
-  InitiateMenu( NE_TITLE_PIC_FILE );
-  MenuTexts[0]="";
-  MenuTexts[1]="";
-  MenuTexts[2]="";
-  MenuTexts[3]="";
-  MenuTexts[4]="";
-  MenuTexts[5]="";
-  MenuTexts[6]="";
-  MenuTexts[7]="";
-  MenuTexts[8]="";
-  MenuTexts[9]="";
-
-  // get home-directory to save in
-  if ( (homedir = getenv("HOME")) == NULL ) 
-    {
-      DebugPrintf ( 0 , "ERROR: Environment does not contain HOME variable... \n\
-I need to know that for saving. Abort.\n");
-      Terminate( ERR );
-      return (ERR);
-    }
-
-  // DisplayText ( "This is the record of all your characters:\n\n" , 50 , 50 , NULL );
-
-  //--------------------
-  // This is a slightly modified copy of the code sniplet from the
-  // GNU C Library description on directory operations...
-  //
-  n = scandir ( homedir , &eps, one , alphasort);
-  if (n >= 0)
-    {
-      for (cnt = 0; cnt < n; ++cnt) 
-	{
-	  puts ( eps[cnt]->d_name );
-	  DisplayText ( eps[cnt]->d_name , 50 , 150 + cnt * 40 , NULL );
-	  if ( cnt < 10 ) 
-	    {
-	      MenuTexts[ cnt ] = ReadAndMallocStringFromData ( eps[cnt]->d_name , "" , ".savegame" ) ;
-	    }
-	}
-
-      MenuPosition = DoMenuSelection( "The first 10 characters: " , MenuTexts , 1 , NE_TITLE_PIC_FILE , NULL );
-
-      if ( MenuPosition == (-1) ) return ( FALSE );
-      else
-	{
-	  InitNewMissionList ( NEW_MISSION );
-	  strcpy( Me[0].character_name , MenuTexts[ MenuPosition -1 ] );
-	  LoadGame( );
-	  return ( TRUE );
-	}
-    }
-  else
-    {
-      DebugPrintf( 0 , "\n\nERROR!! Couldn't open the directory in int Load_Existing_Hero_Menu ( void ).\nTerminatin...");
-      Terminate( ERR );
-    }
-
-
-  SDL_Flip( Screen );
-
-  return ( OK );
-}; // int Load_Existing_Hero_Menu ( void )
-
-
-/* ----------------------------------------------------------------------
- * This function provides the single player menu.  It offers to start a
- * new hero, to load an old one and to go back.
- * ---------------------------------------------------------------------- */
-int
 Single_Player_Menu (void)
 {
   int Weiter = 0;
   int MenuPosition=1;
-  char* MenuTexts[10];
 
-enum
-  { 
-    NEW_HERO_POSITION=1, 
-    LOAD_EXISTING_HERO_POSITION, 
-    BACK_POSITION
-  };
-
-  MenuTexts[0]="New Hero";
-  MenuTexts[1]="Load existing Hero";
-  MenuTexts[2]="Back";
-  MenuTexts[3]="";
-  MenuTexts[4]="";
-  MenuTexts[5]="";
-  MenuTexts[6]="";
-  MenuTexts[7]="";
-  MenuTexts[8]="";
-  MenuTexts[9]="";
+  #define SINGLE_PLAYER_MENU_ITEM_POS_X (Block_Width*1.2)
 
   while (!Weiter)
     {
-      MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , NE_TITLE_PIC_FILE , NULL );
 
-      switch (MenuPosition) 
+      InitiateMenu();
+
+      // 
+      // we highlight the currently selected option with an 
+      // influencer to the left before it
+      // PutInfluence( FIRST_MENU_ITEM_POS_X , 
+      // FIRST_MENU_ITEM_POS_Y + (MenuPosition-1) * (FontHeight(Menu_BFont)) - Block_Width/4 );
+      PutInfluence( SINGLE_PLAYER_MENU_ITEM_POS_X - Block_Width/2, 
+		    (MenuPosition+3) * (FontHeight(Menu_BFont)) - Block_Width/4 );
+
+      CenteredPutString ( ne_screen ,  4*FontHeight(Menu_BFont),    "New Game");
+      CenteredPutString ( ne_screen ,  5*FontHeight(Menu_BFont),    "Show Hiscore List");
+      CenteredPutString ( ne_screen ,  6*FontHeight(Menu_BFont),    "Show Mission Instructions");
+      CenteredPutString ( ne_screen ,  7*FontHeight(Menu_BFont),    "Back");
+
+      SDL_Flip( ne_screen );
+
+      // Wait until the user does SOMETHING
+
+      while( !SpacePressed() && !EnterPressed() && !UpPressed() && !DownPressed() && !EscapePressed() )  
+	keyboard_update();
+
+      if ( EscapePressed() )
 	{
-	case (-1):
+	  while (EscapePressed());
 	  Weiter=!Weiter;
-	  break;
-	case NEW_HERO_POSITION:
-	  while (EnterPressed() || SpacePressed() ) ;
+	}
 
-	  if ( Select_Hero_Class_Menu ( ) )
+      if (EnterPressed() || SpacePressed() ) 
+	{
+	  MenuItemSelectedSound();
+	  while (EnterPressed() || SpacePressed() );
+	  switch (MenuPosition) 
 	    {
-	      InitNewMissionList ( NEW_MISSION );
-	      Weiter=TRUE;
-	      return ( TRUE );
-	    }
 
-	  break;
-	case LOAD_EXISTING_HERO_POSITION: 
-	  while (EnterPressed() || SpacePressed() ) ;
-
-	  if ( Load_Existing_Hero_Menu ( ) == TRUE )
-	    {
-	      Weiter = TRUE;
-	      return ( TRUE );
+	    case NEW_GAME_POSITION:
+	      while (EnterPressed() || SpacePressed() ) ;
+	      New_Game_Requested=TRUE;
+	      InitNewMission( STANDARD_MISSION );
+	      Weiter=!Weiter;
+	      break;
+	    case SHOW_HISCORE_POSITION: 
+	      while (EnterPressed() || SpacePressed() ) ;
+	      Show_Highscores();
+	      break;
+	    case SHOW_MISSION_POSITION:
+	      while (EnterPressed() || SpacePressed() ) ;
+	      Show_Mission_Instructions_Menu();
+	      break;
+	    case BACK_POSITION:
+	      while (EnterPressed() || SpacePressed() ) ;
+	      Weiter=!Weiter;
+	      break;
+	    default: 
+	      break;
 	    }
-	  else
-	    {
-	      Weiter = FALSE;
-	      // return ( FALSE );
-	    }
-
-	  break;
-	case BACK_POSITION:
-	  while (EnterPressed() || SpacePressed() ) ;
-	  Weiter=!Weiter;
-	  return ( FALSE );
-	  break;
-	default: 
-	  break;
+	}
+      if (UpPressed()) 
+	{
+	  if (MenuPosition > 1) MenuPosition--;
+	  MoveMenuPositionSound();
+	  while (UpPressed());
+	}
+      if (DownPressed()) 
+	{
+	  if ( MenuPosition < BACK_POSITION ) MenuPosition++;
+	  MoveMenuPositionSound();
+	  while (DownPressed());
 	}
     }
-  return ( TRUE );
-}; // void Single_Player_Menu ( void );
+} // Single_Player_Menu
 
 
-/* ----------------------------------------------------------------------
- * This function provides the multi player menu.  It is a submenu
- * of the big EscapeMenu.  Instead of connecting to a server or 
- * something it simply displayes the nonchalant message, that 
- * nothing is implemented yet, but sooner or later it will be.
- * ---------------------------------------------------------------------- */
-int
+/*@Function============================================================
+@Desc: This function provides the multi player menu.  It is a submenu
+       of the big EscapeMenu.  Instead of connecting to a server or 
+       something it simply displayes the nonchalant message, that 
+       nothing is implemented yet, but sooner or later it will be.
+
+@Ret:  none
+* $Function----------------------------------------------------------*/
+void
 Multi_Player_Menu (void)
 {
   int Weiter = 0;
-  int MenuPosition=1;
-  char* MenuTexts[10];
 
-enum
-  { 
-    START_AS_SERVER_POSITION=1, 
-    JOIN_EXISTING_MULTIPLAYER_POSITION, 
-    LIST_KNOWN_SERVERS,
-    BACK_POSITION
-  };
+  enum { NEW_GAME_POSITION=1, SHOW_HISCORE_POSITION=2, SHOW_MISSION_POSITION=3, BACK_POSITION=4 };
 
-  MenuTexts[0]="Start as a Server";
-  MenuTexts[1]="Join existing Multiplayer game";
-  MenuTexts[2]="List known Servers";
-  MenuTexts[3]="Back";
-  MenuTexts[4]="";
-  MenuTexts[5]="";
-  MenuTexts[6]="";
-  MenuTexts[7]="";
-  MenuTexts[8]="";
-  MenuTexts[9]="";
+  // while( !SpacePressed() && !EnterPressed() ) keyboard_update(); 
+  while( SpacePressed() || EnterPressed() ) keyboard_update(); 
 
   while (!Weiter)
     {
-      MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , NE_TITLE_PIC_FILE , NULL );
 
-      switch (MenuPosition) 
+      InitiateMenu();
+
+      CenteredPutString ( ne_screen , 1*FontHeight(Menu_BFont), "MULTI PLAYER" );
+      LeftPutString ( ne_screen , 3*FontHeight(Menu_BFont), "We are sorry, but a multi player");
+      LeftPutString ( ne_screen , 4*FontHeight(Menu_BFont), "mode has not yet been implemented.");
+      LeftPutString ( ne_screen , 5*FontHeight(Menu_BFont), "There are plans to do this, but");
+      LeftPutString ( ne_screen , 6*FontHeight(Menu_BFont), "currently it is not a priority.");
+      LeftPutString ( ne_screen , 8*FontHeight(Menu_BFont), "If you feel like setting something");
+      LeftPutString ( ne_screen , 9*FontHeight(Menu_BFont), "up, please contact the developers.");
+
+      SDL_Flip( ne_screen );
+
+      // Wait until the user does SOMETHING
+
+      if ( EscapePressed() || EnterPressed() || SpacePressed() )
 	{
-	case (-1):
 	  Weiter=!Weiter;
-	  break;
-	case START_AS_SERVER_POSITION:
-	  while (EnterPressed() || SpacePressed() ) ;
-
-	  InitNewMissionList ( NEW_MISSION );	
-
-	  ServerMode = TRUE ;
-
-	  OpenTheServerSocket (  );
-
-	  Weiter=TRUE;
-	  return ( TRUE );
-
-	  break;
-
-	case JOIN_EXISTING_MULTIPLAYER_POSITION: 
-	  while (EnterPressed() || SpacePressed() ) ;
-
-	  if ( Connect_To_Existing_Server_Menu ( ) == TRUE )
-	    {
-	      Weiter = TRUE;
-	      InitNewMissionList ( NEW_MISSION );
-	      ClientMode = TRUE;
-	      return ( TRUE );
-	    }
-	  else
-	    {
-	      Weiter = FALSE;
-	      // return ( FALSE );
-	    }
-
-	  break;
-	case LIST_KNOWN_SERVERS: 
-	  while (EnterPressed() || SpacePressed() ) ;
-
-	  if ( Load_Existing_Hero_Menu ( ) == TRUE )
-	    {
-	      Weiter = TRUE;
-	      return ( TRUE );
-	    }
-	  else
-	    {
-	      Weiter = FALSE;
-	      // return ( FALSE );
-	    }
-
-	  break;
-	case BACK_POSITION:
-	  while (EnterPressed() || SpacePressed() ) ;
-	  Weiter=!Weiter;
-	  return ( FALSE );
-	  break;
-	default: 
-	  break;
 	}
     }
-  return ( TRUE );
+  while ( EscapePressed() || EnterPressed() || SpacePressed() );
 
 } // Multi_Player_Menu
 
@@ -2841,19 +1420,19 @@ Credits_Menu (void)
 {
   while( SpacePressed() || EnterPressed() ) ; /* wait for key release */
 
-  // InitiateMenu();
+  InitiateMenu();
       
   DisplayImage ( find_file(NE_CREDITS_PIC_FILE,GRAPHICS_DIR,FALSE) );
 
-  CenteredPutString ( Screen , 1*FontHeight(Menu_BFont), "CREDITS" );
-  LeftPutString ( Screen , 3*FontHeight(Menu_BFont), "   PROGRAMMING:");
-  RightPutString ( Screen , 4*FontHeight(Menu_BFont), "Johannes Prix   ");
-  RightPutString ( Screen , 5*FontHeight(Menu_BFont), "Reinhard Prix   ");
-  LeftPutString ( Screen , 7*FontHeight(Menu_BFont), "   ARTWORK:");
-  RightPutString ( Screen , 8*FontHeight(Menu_BFont), "Bastian Salmela   ");
-  RightPutString ( Screen , 9*FontHeight(Menu_BFont), "Lanzz   ");
+  CenteredPutString ( ne_screen , 1*FontHeight(Menu_BFont), "CREDITS" );
+  LeftPutString ( ne_screen , 3*FontHeight(Menu_BFont), "   PROGRAMMING:");
+  RightPutString ( ne_screen , 4*FontHeight(Menu_BFont), "Johannes Prix   ");
+  RightPutString ( ne_screen , 5*FontHeight(Menu_BFont), "Reinhard Prix   ");
+  LeftPutString ( ne_screen , 7*FontHeight(Menu_BFont), "   ARTWORK:");
+  RightPutString ( ne_screen , 8*FontHeight(Menu_BFont), "Bastian Salmela   ");
+  RightPutString ( ne_screen , 9*FontHeight(Menu_BFont), "Lanzz   ");
 
-  SDL_Flip( Screen );
+  SDL_Flip( ne_screen );
 
   // Wait until the user does SOMETHING
   getchar_raw();
@@ -2861,65 +1440,73 @@ Credits_Menu (void)
 } // Credits_Menu
 
 /*@Function============================================================
-@Desc: This function provides the details of a mission that has been
-       assigned to the player or has been solved perhaps too
+@Desc: This function provides the mission instructions.  It is a 
+       submenu of the single player menu.
 
 @Ret:  none
 * $Function----------------------------------------------------------*/
 void
-Show_Mission_Details ( int MissionNumber )
+Show_Mission_Instructions_Menu (void)
 {
   int Weiter = 0;
+
+  enum { NEW_GAME_POSITION=1, SHOW_HISCORE_POSITION=2, SHOW_MISSION_POSITION=3, BACK_POSITION=4 };
 
   while( SpacePressed() || EnterPressed() ) keyboard_update(); 
 
   while (!Weiter)
     {
 
-      DisplayImage (find_file (HS_BACKGROUND_FILE, GRAPHICS_DIR, FALSE));
-      MakeGridOnScreen ( (SDL_Rect*) & Full_Screen_Rect );
-      DisplayBanner( NULL , NULL , BANNER_FORCE_UPDATE );
-      //InitiateMenu();
+      InitiateMenu();
 
-      CenteredPutString ( Screen ,  1*FontHeight(Menu_BFont),    "MISSION DETAILS");
+      CenteredPutString ( ne_screen ,  1*FontHeight(Menu_BFont),    "MISSION INSTRUCTIONS");
+      
+      printf_SDL ( ne_screen , User_Rect.x , 3 *FontHeight(Menu_BFont) , "Kill all droids : "  );
+      if ( Me.mission.KillAll != (-1) ) printf_SDL( ne_screen , -1 , -1 , "YES" ); 
+      else printf_SDL( ne_screen , -1 , -1 , "NO" );
 
-      printf_SDL ( Screen , User_Rect.x , 3 *FontHeight(Menu_BFont) , "Kill all droids : "  );
-      if ( Me[0].AllMissions[ MissionNumber ].KillAll != (-1) ) printf_SDL( Screen , -1 , -1 , "YES" ); 
-      else printf_SDL( Screen , -1 , -1 , "NO" );
+      printf_SDL ( ne_screen , User_Rect.x , 4 *FontHeight(Menu_BFont) , "Kill special : "  );
+      if ( Me.mission.KillOne != (-1) ) printf_SDL( ne_screen , -1 , -1 , "YES" ); 
+      else printf_SDL( ne_screen , -1 , -1 , "NO" );
+      printf_SDL ( ne_screen , -1 , -1 , "   ReachLevel : "  );
+      if ( Me.mission.MustReachLevel != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%d\n" , Me.mission.MustReachLevel ); 
+      else printf_SDL( ne_screen , -1 , -1 , "NONE\n" );
 
-      printf_SDL ( Screen , User_Rect.x , 4 *FontHeight(Menu_BFont) , "Kill special : "  );
-      if ( Me[0].AllMissions[ MissionNumber ].KillOne != (-1) ) printf_SDL( Screen , -1 , -1 , "YES" ); 
-      else printf_SDL( Screen , -1 , -1 , "NO" );
-      printf_SDL ( Screen , -1 , -1 , "   ReachLevel : "  );
-      if ( Me[0].AllMissions[ MissionNumber ].MustReachLevel != (-1) ) printf_SDL( Screen , -1 , -1 , "%d\n" , Me[0].AllMissions[ MissionNumber ].MustReachLevel ); 
-      else printf_SDL( Screen , -1 , -1 , "NONE\n" );
+      printf_SDL ( ne_screen , User_Rect.x , 5 *FontHeight(Menu_BFont) , "Reach X= : "  );
+      if ( Me.mission.MustReachPoint.x != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%d" , Me.mission.MustReachPoint.x ); 
+      else printf_SDL( ne_screen , -1 , -1 , "NONE" );
+      printf_SDL ( ne_screen , -1 , -1 , "   Reach Y= : "  );
+      if ( Me.mission.MustReachPoint.y != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%d\n" , Me.mission.MustReachPoint.y );
+      else printf_SDL( ne_screen , -1 , -1 , "NONE\n" );
 
-      printf_SDL ( Screen , User_Rect.x , 5 *FontHeight(Menu_BFont) , "Reach X= : "  );
-      if ( Me[0].AllMissions[ MissionNumber ].MustReachPoint.x != (-1) ) printf_SDL( Screen , -1 , -1 , "%d" , Me[0].AllMissions[ MissionNumber ].MustReachPoint.x ); 
-      else printf_SDL( Screen , -1 , -1 , "NONE" );
-      printf_SDL ( Screen , -1 , -1 , "   Reach Y= : "  );
-      if ( Me[0].AllMissions[ MissionNumber ].MustReachPoint.y != (-1) ) printf_SDL( Screen , -1 , -1 , "%d\n" , Me[0].AllMissions[ MissionNumber ].MustReachPoint.y );
-      else printf_SDL( Screen , -1 , -1 , "NONE\n" );
+      printf_SDL ( ne_screen , User_Rect.x , 6 *FontHeight(Menu_BFont) , "Live Time : "  );
+      if ( Me.mission.MustLiveTime != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%4.0f" , Me.mission.MustLiveTime ); 
+      else printf_SDL( ne_screen , -1 , -1 , "NONE" );
+      printf_SDL ( ne_screen , User_Rect.x , 7 *FontHeight(Menu_BFont) , "Must be class : "  );
+      if ( Me.mission.MustBeClass != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%d\n" , Me.mission.MustBeClass );
+      else printf_SDL( ne_screen , -1 , -1 , "NONE\n" );
 
-      printf_SDL ( Screen , User_Rect.x , 6 *FontHeight(Menu_BFont) , "Live Time : "  );
-      if ( Me[0].AllMissions[ MissionNumber ].MustLiveTime != (-1) ) printf_SDL( Screen , -1 , -1 , "%4.0f" , Me[0].AllMissions[ MissionNumber ].MustLiveTime ); 
-      else printf_SDL( Screen , -1 , -1 , "NONE" );
-      printf_SDL ( Screen , User_Rect.x , 7 *FontHeight(Menu_BFont) , "Must be class : "  );
-      if ( Me[0].AllMissions[ MissionNumber ].MustBeClass != (-1) ) printf_SDL( Screen , -1 , -1 , "%d\n" , Me[0].AllMissions[ MissionNumber ].MustBeClass );
-      else printf_SDL( Screen , -1 , -1 , "NONE\n" );
+      printf_SDL ( ne_screen , User_Rect.x , 8 *FontHeight(Menu_BFont) , "Must be type : "  );
+      if ( Me.mission.MustBeType != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%d" , Me.mission.MustBeType ); 
+      else printf_SDL( ne_screen , -1 , -1 , "NONE" );
+      printf_SDL ( ne_screen , User_Rect.x , 9*FontHeight(Menu_BFont) , "Must be special : "  );
+      if ( Me.mission.MustBeOne != (-1) ) printf_SDL( ne_screen , -1 , -1 , "YES" );
+      else printf_SDL( ne_screen , -1 , -1 , "NO\n" );
 
-      printf_SDL ( Screen , User_Rect.x , 8 *FontHeight(Menu_BFont) , "Must be type : "  );
-      if ( Me[0].AllMissions[ MissionNumber ].MustBeType != (-1) ) printf_SDL( Screen , -1 , -1 , "%d" , Me[0].AllMissions[ MissionNumber ].MustBeType ); 
-      else printf_SDL( Screen , -1 , -1 , "NONE" );
-      printf_SDL ( Screen , User_Rect.x , 9*FontHeight(Menu_BFont) , "Must be special : "  );
-      if ( Me[0].AllMissions[ MissionNumber ].MustBeOne != (-1) ) printf_SDL( Screen , -1 , -1 , "YES" );
-      else printf_SDL( Screen , -1 , -1 , "NO\n" );
+      printf_SDL ( ne_screen , User_Rect.x , 10 * FontHeight(Menu_BFont) , "Kill Class : "  );
+      if ( Me.mission.KillClass != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%s" , Classname[Me.mission.KillClass] ); 
+      else printf_SDL( ne_screen , -1 , -1 , "NONE\n" );
 
-      printf_SDL ( Screen , User_Rect.x , 10 * FontHeight(Menu_BFont) , "Kill Class : "  );
-      if ( Me[0].AllMissions[ MissionNumber ].KillClass != (-1) ) printf_SDL( Screen , -1 , -1 , "%s" , Classname[Me[0].AllMissions[ MissionNumber ].KillClass] ); 
-      else printf_SDL( Screen , -1 , -1 , "NONE\n" );
+      
+      //      LeftPutString ( ne_screen , 3*FontHeight(Menu_BFont), "This is the first mission.  It is");
+      //LeftPutString ( ne_screen , 4*FontHeight(Menu_BFont), "identical to the original Paradroid");
+      //LeftPutString ( ne_screen , 5*FontHeight(Menu_BFont), "mission from the Commodore C64.");
+      //LeftPutString ( ne_screen , 6*FontHeight(Menu_BFont), "So the mission is:");
+      //LeftPutString ( ne_screen , 7*FontHeight(Menu_BFont), "Destroy all robots on the ship.");
+      //LeftPutString ( ne_screen , 9*FontHeight(Menu_BFont), "If you have some new and good");
+      //LeftPutString ( ne_screen ,10*FontHeight(Menu_BFont), "ideas, why not tell us?");
 
-      SDL_Flip( Screen );
+      SDL_Flip( ne_screen );
 
       while ( (!EscapePressed()) && (!EnterPressed()) && (!SpacePressed()) );
       // Wait until the user does SOMETHING
@@ -2931,114 +1518,659 @@ Show_Mission_Details ( int MissionNumber )
     }
   while ( EscapePressed() || EnterPressed() || SpacePressed() );
 
-  
+} // ShowMissionInstructionsMenu
 
-}; // void Show_Mission_Details (void)
+/*@Function============================================================
+@Desc: This function is used by the Level Editor integrated into 
+       freedroid.  It highlights the map position that is currently 
+       edited or would be edited, if the user pressed something.  I.e. 
+       it provides a "cursor" for the Level Editor.
 
-/* ----------------------------------------------------------------------
- * This function provides an overview over the missions currently
- * assigned to the player
- * ---------------------------------------------------------------------- */
-void
-Show_Mission_Log_Menu (void)
+@Ret:  none
+* $Function----------------------------------------------------------*/
+void 
+Highlight_Current_Block(void)
 {
-  int Weiter = 0;
   int i;
-  int NoOfActiveMissions;
-  int MenuPosition=1;
-  int InterLineSpace=60;
-  SDL_Rect* Mission_Window_Pointer=&User_Rect;
+#define HIGHLIGHTCOLOR 255
 
-#define MISSION_NAME_POS_X 230
-#define FIRST_MISSION_POS_Y 50
+  SDL_LockSurface( ne_screen );
 
+  for (i=0; i<Block_Width; i++)
+    {
+      // This draws a (double) line at the upper border of the current block
+      putpixel( ne_screen , i + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height , HIGHLIGHTCOLOR );
+      putpixel( ne_screen , i + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + 1, HIGHLIGHTCOLOR );
 
-  while( SpacePressed() || EnterPressed() ) keyboard_update(); 
+      // This draws a line at the lower border of the current block
+      putpixel( ne_screen , i + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y + 0.5 ) * Block_Height -1, HIGHLIGHTCOLOR );
+      putpixel( ne_screen , i + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y + 0.5 ) * Block_Height -2, HIGHLIGHTCOLOR );
 
-  while (!Weiter)
+      // This draws a line at the left border of the current block
+      putpixel( ne_screen , 0 + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , HIGHLIGHTCOLOR );
+      putpixel( ne_screen , 1 + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , HIGHLIGHTCOLOR );
+
+      // This draws a line at the right border of the current block
+      putpixel( ne_screen , -1 + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x + 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , HIGHLIGHTCOLOR );
+      putpixel( ne_screen , -2 + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x + 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , HIGHLIGHTCOLOR );
+
+    }
+
+  SDL_UnlockSurface( ne_screen );
+} // void Highlight_Current_Block(void)
+
+/*@Function============================================================
+@Desc: This function is used by the Level Editor integrated into 
+       freedroid.  It marks all waypoints with a cross.
+
+@Ret:  none
+* $Function----------------------------------------------------------*/
+void 
+Show_Waypoints(void)
+{
+  int wp;
+  int i;
+  int x;
+  int y;
+  int BlockX, BlockY;
+  int color;
+#define ACTIVE_WP_COLOR 0x0FFFFFFFF
+
+  BlockX=rintf(Me.pos.x);
+  BlockY=rintf(Me.pos.y);
+	  
+  SDL_LockSurface( ne_screen );
+
+  for (wp=0; wp<MAXWAYPOINTS; wp++)
     {
 
-      DisplayImage (find_file (HS_BACKGROUND_FILE, GRAPHICS_DIR, FALSE));
-      MakeGridOnScreen ( (SDL_Rect*) & Full_Screen_Rect );
-      DisplayBanner( NULL , NULL , BANNER_FORCE_UPDATE );
+      if ( CurLevel->AllWaypoints[wp].x == 0) continue;
 
-      SetCurrentFont( Para_BFont );
-
-      DisplayText ( "This is the record of all missions you have been assigned:\n\n" , 
-		    0 , FIRST_MISSION_POS_Y - 2 * InterLineSpace , Mission_Window_Pointer );
-
-      NoOfActiveMissions=0;
-      for ( i = 0 ; i < MAX_MISSIONS_IN_GAME ; i ++ )
+      //--------------------
+      // Draw the cross in the middle of the middle of the tile
+      //
+      for (i= Block_Width/4; i<3 * Block_Width / 4; i++)
 	{
+	  // This draws a (double) line at the upper border of the current block
+	  x = i + User_Rect.x+(User_Rect.w/2)- (( Me.pos.x)-CurLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
+	  y = i + User_Rect.y+User_Rect.h/2 - (( Me.pos.y)-CurLevel->AllWaypoints[wp].y + 0.5) * Block_Height;
+	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
+	  putpixel( ne_screen , x , y , HIGHLIGHTCOLOR );
 
-	  if ( Me[0].AllMissions[i].MissionExistsAtAll != TRUE ) continue;
+		    
+	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me.pos.x )-CurLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
+	  y = i + User_Rect.y+User_Rect.h/2- (( Me.pos.y)-CurLevel->AllWaypoints[wp].y + 0.5) * Block_Height + 1;
+	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
+	  putpixel( ne_screen , x , y , HIGHLIGHTCOLOR );
+	  
+	  // This draws a line at the lower border of the current block
+	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me.pos.x)-CurLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
+	  y = -i + User_Rect.y + User_Rect.h/2 - (( Me.pos.y )-CurLevel->AllWaypoints[wp].y - 0.5 ) * Block_Height -1;
+	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
+	  putpixel( ne_screen , x , y , HIGHLIGHTCOLOR );
 
-	  NoOfActiveMissions++;
+	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me.pos.x)-CurLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
+	  y = -i + User_Rect.y + User_Rect.h/2 - ((Me.pos.y)-CurLevel->AllWaypoints[wp].y - 0.5 ) * Block_Height -2;
+	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
+	  putpixel( ne_screen , x , y , HIGHLIGHTCOLOR );
+	  
+	}
 
-	  // DisplayText ( "\nMission status: " , -1 , -1 , Mission_Window_Pointer );
-
-	  if ( Me[0].AllMissions[i].MissionIsComplete == TRUE )
+      //--------------------
+      // Draw the connections to other waypoints, BUT ONLY FOR THE WAYPOINT CURRENTLY TARGETED
+      //
+      for ( i=0; i<MAX_WP_CONNECTIONS; i++ )
+	{
+	  if ( CurLevel->AllWaypoints[wp].connections[i] != (-1) )
 	    {
-	      DisplayText ( "SOLVED: " , 0 , FIRST_MISSION_POS_Y + NoOfActiveMissions * InterLineSpace , Mission_Window_Pointer );
+	       if ( ( BlockX == CurLevel->AllWaypoints[wp].x ) && ( BlockY == CurLevel->AllWaypoints[wp].y ) )
+		 // color = ACTIVE_WP_COLOR ;
+		 // else color = HIGHLIGHTCOLOR ; 
+		 // printf(" Found a connection!! ");
+		 DrawLineBetweenTiles( CurLevel->AllWaypoints[wp].x , CurLevel->AllWaypoints[wp].y , 
+				       CurLevel->AllWaypoints[CurLevel->AllWaypoints[wp].connections[i]].x , 
+				       CurLevel->AllWaypoints[CurLevel->AllWaypoints[wp].connections[i]].y ,
+				       color );
 	    }
-	  else if ( Me[0].AllMissions[i].MissionWasFailed == TRUE )
+	}
+    }
+  SDL_UnlockSurface( ne_screen );
+
+} // void Show_Waypoints(void);
+
+/*@Function============================================================
+@Desc: This function is provides the Level Editor integrated into 
+       freedroid.  Actually this function is a submenu of the big
+       Escape Menu.  In here you can edit the level and upon pressing
+       escape enter a further submenu where you can save the level,
+       change level name and quit from level editing.
+
+       NOTE: SAVING CURRENTLY DOES NOT WORK!  DONT WORK TOO MUCH WITH
+             THIS IF YOU CANT SAVE YOUR LEVELS LATER!!!
+
+@Ret:  none
+* $Function----------------------------------------------------------*/
+void 
+Level_Editor(void)
+{
+  int BlockX=rintf(Me.pos.x);
+  int BlockY=rintf(Me.pos.y);
+  int Done=FALSE;
+  int Weiter=FALSE;
+  int MenuPosition=1;
+  int i,j,k;
+  int SpecialMapValue;
+  int OriginWaypoint = (-1);
+  char* NumericInputString;
+  char* OldMapPointer;
+
+  enum
+    { SAVE_LEVEL_POSITION=1, CHANGE_LEVEL_POSITION, CHANGE_TILE_SET_POSITION, CHANGE_SIZE_X, CHANGE_SIZE_Y, SET_LEVEL_NAME , SET_BACKGROUND_SONG_NAME , SET_LEVEL_COMMENT, QUIT_LEVEL_EDITOR_POSITION };
+
+  while ( !Done )
+    {
+      Weiter=FALSE;
+      while (!EscapePressed())
+	{
+	  BlockX=rintf(Me.pos.x);
+	  BlockY=rintf(Me.pos.y);
+	  
+	  ClearUserFenster();
+	  Assemble_Combat_Picture ( ONLY_SHOW_MAP );
+	  Highlight_Current_Block();
+	  Show_Waypoints();
+
+	  CenteredPutString ( ne_screen ,  1*FontHeight(Menu_BFont),    "LEVEL EDITOR");
+	  SDL_Flip( ne_screen );
+
+	  //--------------------
+	  // If the user of the Level editor pressed some cursor keys, move the
+	  // highlited filed (that is Me.pos) accordingly. This is done here:
+	  if (LeftPressed()) 
 	    {
-	      DisplayText ( "FAILED: " , 0 , FIRST_MISSION_POS_Y + NoOfActiveMissions * InterLineSpace , Mission_Window_Pointer );
+	      if ( rintf(Me.pos.x) > 0 ) Me.pos.x-=1;
+	      while (LeftPressed());
 	    }
-	  else if ( Me[0].AllMissions[i].MissionWasAssigned == TRUE ) 
+	  if (RightPressed()) 
 	    {
-	      DisplayText ( "ASSIGNED: " , 0 , FIRST_MISSION_POS_Y + NoOfActiveMissions * InterLineSpace , Mission_Window_Pointer );
+	      if ( rintf(Me.pos.x) < CurLevel->xlen-1 ) Me.pos.x+=1;
+	      while (RightPressed());
 	    }
-	  else
+	  if (UpPressed()) 
 	    {
-	      DisplayText ( "UNASSIGNED: " , 0 , FIRST_MISSION_POS_Y +  NoOfActiveMissions * InterLineSpace , Mission_Window_Pointer );
+	      if ( rintf(Me.pos.y) > 0 ) Me.pos.y-=1;
+	      while (UpPressed());
+	    }
+	  if (DownPressed()) 
+	    {
+	      if ( rintf(Me.pos.y) < CurLevel->ylen-1 ) Me.pos.y+=1;
+	      while (DownPressed());
 	    }
 
-	  DisplayText ( Me[0].AllMissions[i].MissionName , MISSION_NAME_POS_X , 
-			FIRST_MISSION_POS_Y + NoOfActiveMissions * InterLineSpace ,  Mission_Window_Pointer );
+	  //--------------------
+	  // Since the level editor will not always be able to
+	  // immediately feature all the the map tiles that might
+	  // have been added recently, we should offer a feature, so that you can
+	  // specify the value of a map piece just numerically.  This will be
+	  // done upon pressing the 'e' key.
+	  //
+	  if ( EPressed () )
+	    {
+	      while (EPressed());
+	      CenteredPutString   ( ne_screen ,  6*FontHeight(Menu_BFont), "Please enter new value (blindly):");
+	      SDL_Flip( ne_screen );
+	      NumericInputString=GetString( 10, FALSE );  // TRUE currently not implemented
+	      sscanf( NumericInputString , "%d" , &SpecialMapValue );
+	      if ( SpecialMapValue >= NUM_MAP_BLOCKS ) SpecialMapValue=0;
+	      CurLevel->map[BlockY][BlockX]=SpecialMapValue;
+	    }
 
-	}
+	  //--------------------
+	  //If the person using the level editor decides he/she wants a different
+	  //scale for the editing process, he/she may say so by using the O/I keys.
+	  //
+	  if ( OPressed () )
+	    {
+	      if (CurrentCombatScaleFactor > 0.25 )
+		CurrentCombatScaleFactor -= 0.25;
+	      SetCombatScaleTo (CurrentCombatScaleFactor);
+	      while (OPressed());
+	    }
+	  if ( IPressed () )
+	    {
+	      CurrentCombatScaleFactor += 0.25;
+	      SetCombatScaleTo (CurrentCombatScaleFactor);
+	      while (IPressed());
+	    }
+  
+	  // If the person using the level editor pressed w, the waypoint is
+	  // toggled on the current square.  That means either removed or added.
+	  // And in case of removal, also the connections must be removed.
+	  if (WPressed())
+	    {
+	      // find out if there is a waypoint on the current square
+	      for (i=0 ; i < MAXWAYPOINTS ; i++)
+		{
+		  if ( ( CurLevel->AllWaypoints[i].x == BlockX ) &&
+		       ( CurLevel->AllWaypoints[i].y == BlockY ) ) break;
+		}
+	      
+	      // if its waypoint already, this waypoint must be deleted.
+	      if ( i != MAXWAYPOINTS )
+		{
+		  // Eliminate the waypoint itself
+		  CurLevel->AllWaypoints[i].x = 0;
+		  CurLevel->AllWaypoints[i].y = 0;
+		  for ( k = 0; k < MAX_WP_CONNECTIONS ; k++) 
+		    CurLevel->AllWaypoints[i].connections[k] = (-1) ;
 
-      DisplayText ( "\n\n--- Currently no missions beyond that ---" , 
-		    -1 , -1 , Mission_Window_Pointer );
+		  
+		  // Eliminate all connections pointing to this waypoint
+		  for ( j = 0; j < MAXWAYPOINTS ; j++ )
+		    {
+		      for ( k = 0; k < MAX_WP_CONNECTIONS ; k++) 
+			if ( CurLevel->AllWaypoints[j].connections[k] == i )
+			  CurLevel->AllWaypoints[j].connections[k] = (-1) ;
+		    }
+		}
+	      else // if its not a waypoint already, it must be made into one
+		{
+		  // seek a free position
+		  for ( i = 0 ; i < MAXWAYPOINTS ; i++ )
+		    {
+		      if ( CurLevel->AllWaypoints[i].x == 0 ) break;
+		    }
+		  if ( i == MAXWAYPOINTS )
+		    {
+		      printf("\n\nSorry, no free waypoint available.  Using the first one.");
+		      i = 0;
+		    }
 
-      // Highlight currently selected option with an influencer before it
-      PutInfluence( MISSION_NAME_POS_X , FIRST_MISSION_POS_Y + (MenuPosition) * InterLineSpace - Block_Width/4 , 0 );
+		  // Now make the new entry into the waypoint list
+		  CurLevel->AllWaypoints[i].x = BlockX;
+		  CurLevel->AllWaypoints[i].y = BlockY;
 
-      // If the user pressed up or down, the cursor within
-      // the level editor menu has to be moved, which is done here:
-      if (UpPressed()) 
+		  // delete all old connection information from the new waypoint
+		  for ( k = 0; k < MAX_WP_CONNECTIONS ; k++ ) 
+		    CurLevel->AllWaypoints[i].connections[k] = (-1) ;
+
+		}
+
+	      printf("\n\n  i is now: %d ", i ); fflush(stdout);
+
+	      while ( WPressed() );
+	    }
+
+	  // If the person using the level editor presses C that indicated he/she wants
+	  // a connection between waypoints.  If this is the first selected waypoint, its
+	  // an origin and the second "C"-pressed waypoint will be used a target.
+	  // If origin and destination are the same, the operation is cancelled.
+	  if (CPressed())
+	    {
+	      // Determine which waypoint is currently targeted
+	      for (i=0 ; i < MAXWAYPOINTS ; i++)
+		{
+		  if ( ( CurLevel->AllWaypoints[i].x == BlockX ) &&
+		       ( CurLevel->AllWaypoints[i].y == BlockY ) ) break;
+		}
+
+	      if ( i == MAXWAYPOINTS )
+		{
+		  printf("\n\nSorry, don't know which waypoint you mean.");
+		}
+	      else
+		{
+		  printf("\n\nYou specified waypoint nr. %d.",i);
+		  if ( OriginWaypoint== (-1) )
+		    {
+		      printf("\nIt has been marked as the origin of the next connection.");
+		      OriginWaypoint = i;
+		    }
+		  else
+		    {
+		      if ( OriginWaypoint == i )
+			{
+			  printf("\n\nOrigin==Target --> Connection Operation cancelled.");
+			  OriginWaypoint = (-1);
+			}
+		      else
+			{
+			  printf("\n\nOrigin: %d Target: %d. Operation makes sense.", OriginWaypoint , i );
+			  for ( k = 0; k < MAX_WP_CONNECTIONS ; k++ ) 
+			    {
+			      if (CurLevel->AllWaypoints[ OriginWaypoint ].connections[k] == (-1) ) break;
+			    }
+			  if ( k == MAX_WP_CONNECTIONS ) 
+			    {
+			      printf("\nSORRY. NO MORE CONNECTIONS AVAILABLE FROM THERE.");
+			    }
+			  else
+			    {
+			      CurLevel->AllWaypoints[ OriginWaypoint ].connections[k] = i;
+			      printf("\nOPERATION DONE!! CONNECTION SHOULD BE THERE.");
+			    }
+			  OriginWaypoint = (-1);
+			}
+		    }
+		}
+
+	      while (CPressed());
+	      fflush(stdout);
+	    }
+
+	  // If the person using the level editor pressed some editing keys, insert the
+	  // corresponding map tile.  This is done here:
+	  if (Number1Pressed()) 
+	    {
+	      CurLevel->map[BlockY][BlockX]=BLOCK1;
+	    }
+	  if (Number2Pressed()) 
+	    {
+	      CurLevel->map[BlockY][BlockX]=BLOCK2;
+	    }
+	  if (Number3Pressed()) 
+	    {
+	      CurLevel->map[BlockY][BlockX]=BLOCK3;
+	    }
+	  if (Number4Pressed()) 
+	    {
+	      CurLevel->map[BlockY][BlockX]=BLOCK4;
+	    }
+	  if (Number5Pressed()) 
+	    {
+	      CurLevel->map[BlockY][BlockX]=BLOCK5;
+	    }
+	  if (LPressed()) 
+	    {
+	      CurLevel->map[BlockY][BlockX]=LIFT;
+	    }
+	  if (KP_PLUS_Pressed()) 
+	    {
+	      CurLevel->map[BlockY][BlockX]=V_WALL;
+	    }
+	  if (KP0Pressed()) 
+	    {
+	      CurLevel->map[BlockY][BlockX]=H_WALL;
+	    }
+	  if (KP1Pressed()) 
+	    {
+	      CurLevel->map[BlockY][BlockX]=ECK_LU;
+	    }
+	  if (KP2Pressed()) 
+	    {
+	      if (!Shift_Was_Pressed())
+		CurLevel->map[BlockY][BlockX]=T_U;
+	      else CurLevel->map[BlockY][BlockX]=KONSOLE_U;
+	    }
+	  if (KP3Pressed()) 
+	    {
+	      CurLevel->map[BlockY][BlockX]=ECK_RU;
+	    }
+	  if (KP4Pressed()) 
+	    {
+	      if (!Shift_Was_Pressed())
+		CurLevel->map[BlockY][BlockX]=T_L;
+	      else CurLevel->map[BlockY][BlockX]=KONSOLE_L;
+	    }
+	  if (KP5Pressed()) 
+	    {
+	      if (!Shift_Was_Pressed())
+		CurLevel->map[BlockY][BlockX]=KREUZ;
+	      else CurLevel->map[BlockY][BlockX]=VOID;
+	    }
+	  if (KP6Pressed()) 
+	    {
+	      if (!Shift_Was_Pressed())
+		CurLevel->map[BlockY][BlockX]=T_R;
+	      else CurLevel->map[BlockY][BlockX]=KONSOLE_R;
+	    }
+	  if (KP7Pressed()) 
+	    {
+	      CurLevel->map[BlockY][BlockX]=ECK_LO;
+	    }
+	  if (KP8Pressed()) 
+	    {
+	      if (!Shift_Was_Pressed())
+		CurLevel->map[BlockY][BlockX]=T_O;
+	      else CurLevel->map[BlockY][BlockX]=KONSOLE_O;
+	    }
+	  if (KP9Pressed()) 
+	    {
+	      CurLevel->map[BlockY][BlockX]=ECK_RO;
+	    }
+	  if (APressed())
+	    {
+	      CurLevel->map[BlockY][BlockX]=ALERT;	      
+	    }
+	  if (RPressed())
+	    {
+	      CurLevel->map[BlockY][BlockX]=REFRESH1;	            
+	    }
+	  if (DPressed())
+	    {
+	      if (Shift_Was_Pressed())
+		CurLevel->map[BlockY][BlockX]=V_ZUTUERE;	            	      
+	      else CurLevel->map[BlockY][BlockX]=H_ZUTUERE;	            	      
+	    }
+	  if (SpacePressed())
+	    CurLevel->map[BlockY][BlockX]=FLOOR;	            	      	    
+	  if (QPressed())
+	    {
+	      Terminate(0);
+	    }
+
+	} // while (!EscapePressed())
+      while( EscapePressed() );
+
+      // After Level editing is done and escape has been pressed, 
+      // display the Menu with level save options and all that.
+
+      while (!Weiter)
 	{
-	  if (MenuPosition > 1) MenuPosition--;
-	  MoveMenuPositionSound();
-	  while (UpPressed());
+
+	  InitiateMenu();
+
+	  // Highlight currently selected option with an influencer before it
+	  PutInfluence( SINGLE_PLAYER_MENU_POINTER_POS_X, (MenuPosition+3) * (FontHeight(Menu_BFont)) - Block_Width/4 );
+
+	  CenteredPutString   ( ne_screen ,  4*FontHeight(Menu_BFont),    
+				"Save whole ship to 'Testship.shp'");
+	  CenteredPrintString ( ne_screen ,  5*FontHeight(Menu_BFont),    
+				"Current: %d.  Level Up/Down" , CurLevel->levelnum );
+	  CenteredPutString   ( ne_screen ,  6*FontHeight(Menu_BFont),    
+				"Change tile set");
+	  CenteredPrintString ( ne_screen ,  7*FontHeight(Menu_BFont),    
+				"Levelsize in X: %d.  Shrink/Enlarge" , CurLevel->xlen );
+	  CenteredPrintString ( ne_screen ,  8*FontHeight(Menu_BFont),    
+				"Levelsize in Y: %d.  Shrink/Enlarge" , CurLevel->ylen );
+	  CenteredPrintString ( ne_screen ,  9*FontHeight(Menu_BFont),    
+				"Level name: %s" , CurLevel->Levelname );
+	  CenteredPrintString ( ne_screen ,  10*FontHeight(Menu_BFont),    
+				"Background music file name: %s" , CurLevel->Background_Song_Name );
+	  CenteredPrintString ( ne_screen ,  11*FontHeight(Menu_BFont),    
+				"Set Level Comment: %s" , CurLevel->Level_Enter_Comment );
+	  CenteredPutString   ( ne_screen ,  12*FontHeight(Menu_BFont),    
+				"Quit Level Editor");
+	  
+	  SDL_Flip ( ne_screen );
+	  
+	  // Wait until the user does SOMETHING
+	  
+	  while( !SpacePressed() && !EnterPressed() && !UpPressed() && !DownPressed() && !EscapePressed() && !LeftPressed() && !RightPressed())  
+	    keyboard_update();
+	  
+	  if ( EscapePressed() )
+	    {
+	      while (EscapePressed());
+	      Weiter=!Weiter;
+	    }
+	  
+	  if (EnterPressed() || SpacePressed() ) 
+	    {
+	      MenuItemSelectedSound();
+	      while (EnterPressed() || SpacePressed() );
+	      switch (MenuPosition) 
+		{
+		  
+		case SAVE_LEVEL_POSITION:
+		  while (EnterPressed() || SpacePressed() ) ;
+		  SaveShip("Testship");
+		  CenteredPutString ( ne_screen ,  11*FontHeight(Menu_BFont),    "Your ship was saved...");
+		  SDL_Flip ( ne_screen );
+		  while (!EnterPressed() && !SpacePressed() ) ;
+		  while (EnterPressed() || SpacePressed() ) ;
+		  // Weiter=!Weiter;
+		  break;
+		case CHANGE_LEVEL_POSITION: 
+		  // if ( CurLevel->levelnum ) Teleport ( CurLevel->levelnum-1 , Me.pos.x , Me.pos.y ); 
+		  while (EnterPressed() || SpacePressed() ) ;
+		  break;
+		case CHANGE_TILE_SET_POSITION: 
+		  while (EnterPressed() || SpacePressed() ) ;
+		  break;
+		case SET_LEVEL_NAME:
+		  while (EnterPressed() || SpacePressed() ) ;
+		  CenteredPutString ( ne_screen ,  12*FontHeight(Menu_BFont), "Please enter new level name:");
+		  SDL_Flip( ne_screen );
+		  CurLevel->Levelname=GetString( 100 , FALSE );
+		  Weiter=!Weiter;
+		  break;
+		case SET_BACKGROUND_SONG_NAME:
+		  while (EnterPressed() || SpacePressed() ) ;
+		  CenteredPutString ( ne_screen ,  12*FontHeight(Menu_BFont), "Please enter new music file name:");
+		  SDL_Flip( ne_screen );
+		  CurLevel->Background_Song_Name=GetString( 100 , FALSE );
+		  Weiter=!Weiter;
+		  break;
+		case SET_LEVEL_COMMENT:
+		  while (EnterPressed() || SpacePressed() ) ;
+		  CenteredPutString ( ne_screen ,  12*FontHeight(Menu_BFont), "Please enter new level comment:\n");
+		  SDL_Flip( ne_screen );
+		  MyCursorX=15; MyCursorY=440;
+		  CurLevel->Level_Enter_Comment=GetString( 100 , FALSE );
+		  Weiter=!Weiter;
+		  break;
+		case QUIT_LEVEL_EDITOR_POSITION:
+		  while (EnterPressed() || SpacePressed() ) ;
+		  Weiter=!Weiter;
+		  Done=TRUE;
+		  SetCombatScaleTo( 1 );
+		  break;
+		default: 
+		  break;
+
+		} // switch
+	    } // if EnterPressed or SpacePressed
+
+	  // If the user of the level editor pressed left or right, that should have
+	  // an effect IF he/she is a the change level menu point
+
+	  if (LeftPressed() || RightPressed() ) 
+	    {
+	      switch (MenuPosition)
+		{
+
+		case CHANGE_LEVEL_POSITION:
+		  if ( LeftPressed() )
+		    {
+		      if ( CurLevel->levelnum > 0 )
+			Teleport ( CurLevel->levelnum -1 , 3 , 3 );
+		      while (LeftPressed());
+		    }
+		  if ( RightPressed() )
+		    {
+		      if ( CurLevel->levelnum < curShip.num_levels -1 )
+			Teleport ( CurLevel->levelnum +1 , 3 , 3 );
+		      while (RightPressed());
+		    }
+		  SetCombatScaleTo ( CurrentCombatScaleFactor );
+		  break;
+		  
+		case CHANGE_TILE_SET_POSITION:
+		  if ( RightPressed() && (CurLevel->color  < 6 ) )
+		    {
+		      CurLevel->color++;
+		      while (RightPressed());
+		    }
+		  if ( LeftPressed() && (CurLevel->color > 0) )
+		    {
+		      CurLevel->color--;
+		      while (LeftPressed());
+		    }
+		  Teleport ( CurLevel->levelnum , Me.pos.x , Me.pos.y ); 
+		  break;
+		case CHANGE_SIZE_X:
+		  if ( RightPressed() )
+		    {
+		      CurLevel->xlen++;
+		      // In case of enlargement, we need to do more:
+		      for ( i = 0 ; i < CurLevel->ylen ; i++ )
+			{
+			  OldMapPointer=CurLevel->map[i];
+			  CurLevel->map[i] = MyMalloc( CurLevel->xlen +1) ;
+			  memcpy( CurLevel->map[i] , OldMapPointer , CurLevel->xlen-1 );
+			  // We don't want to fill the new area with junk, do we? So we set it VOID
+			  CurLevel->map[ i ] [ CurLevel->xlen-1 ] = VOID;  
+			}
+		      while (RightPressed());
+		    }
+		  if ( LeftPressed() )
+		    {
+		      CurLevel->xlen--; // making it smaller is always easy:  just modify the value for size
+		                        // allocation of new memory or things like that are not nescessary.
+		      while (LeftPressed());
+		    }
+		  break;
+		  
+		case CHANGE_SIZE_Y:
+		  if ( RightPressed() )
+		    {
+
+		      CurLevel->ylen++;
+		      
+		      // In case of enlargement, we need to do more:
+		      CurLevel->map[ CurLevel->ylen-1 ] = MyMalloc( CurLevel->xlen +1) ;
+		      
+		      // We don't want to fill the new area with junk, do we? So we set it VOID
+		      memset( CurLevel->map[ CurLevel->ylen-1 ] , VOID , CurLevel->xlen );
+		      
+		      while (RightPressed());
+
+		    }
+
+		  if ( LeftPressed() )
+		    {
+		      CurLevel->ylen--; // making it smaller is always easy:  just modify the value for size
+		                        // allocation of new memory or things like that are not nescessary.
+		      while (LeftPressed());
+		    }
+		  break;
+		  
+		}
+	    } // if LeftPressed || RightPressed
+
+	  // If the user pressed up or down, the cursor within
+	  // the level editor menu has to be moved, which is done here:
+	  if (UpPressed()) 
+	    {
+	      if (MenuPosition > 1) MenuPosition--;
+	      MoveMenuPositionSound();
+	      while (UpPressed());
+	    }
+	  if (DownPressed()) 
+	    {
+	      if ( MenuPosition < QUIT_LEVEL_EDITOR_POSITION ) MenuPosition++;
+	      MoveMenuPositionSound();
+	      while (DownPressed());
+	    }
+
 	}
-      if (DownPressed()) 
-	{
-	  if ( MenuPosition < NoOfActiveMissions ) MenuPosition++;
-	  MoveMenuPositionSound();
-	  while (DownPressed());
-	}
+      
+    } // while (!Done)
 
-      if ( EnterPressed() || SpacePressed() )
-	{
-	  Show_Mission_Details ( MenuPosition-1 );
-	  while ( EnterPressed() || SpacePressed() );
-	}
+} // void Level_Editor(void)
 
-      SDL_Flip( Screen );
 
-      if ( EscapePressed() || EnterPressed() || SpacePressed() )
-	{
-	  Weiter=!Weiter;
-	}
-    } // end of while loop
 
-  // Wait until the user does SOMETHING
-  //while ( (!EscapePressed()) && (!EnterPressed()) && (!SpacePressed()) );
-
-  while ( EscapePressed() || EnterPressed() || SpacePressed() );
-
-}; // void Show_Mission_Log_Menu ( void )
 
 #undef _menu_c

@@ -1,3 +1,13 @@
+/*----------------------------------------------------------------------
+ *
+ * Desc: contains all functions dealing with the HUGE, BIG font used for
+ *	the top status line, the score and the text displayed during briefing
+ *	and highscore inverview.  This has NOTHING to do with the fonts
+ *	of the SVGALIB or the fonts used for the horizontal srolling
+ *      message line!
+ *
+ *----------------------------------------------------------------------*/
+
 /* 
  *
  *   Copyright (c) 1994, 2002 Johannes Prix
@@ -22,20 +32,6 @@
  *  MA  02111-1307  USA
  *
  */
-
-/* ----------------------------------------------------------------------
- * This file contains all functions dealing with the HUGE, BIG font used for
- * the top status line, the score and the text displayed during briefing
- * and highscore inverview.  This has NOTHING to do with the fonts
- * of the SVGALIB or the fonts used for the horizontal srolling
- * message line!
- * ---------------------------------------------------------------------- */
-
-/*
- * This file has been checked for remnants of german comments and shouldn't be
- * containing any of these any more.  If you still find any, please let me know. jp.
- */
-
 #define _text_c
 
 #include "system.h"
@@ -51,17 +47,17 @@ int DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect
 
 char *Wordpointer;
 unsigned char *Fontpointer;
-unsigned char *Zeichenpointer[110];	  // Pointer-array to the letter bitmaps
-unsigned int CurrentFontFG = FIRST_FONT_FG;	// current color of the font
+unsigned char *Zeichenpointer[110];	/* Pointer-Feld auf Buchstaben-Icons */
+unsigned int CurrentFontFG = FIRST_FONT_FG;	/* Momentane Schrift-Farben */
 unsigned int CurrentFontBG = FIRST_FONT_BG;
 
-int CharsPerLine;		// line length in chars:  obsolete
+int CharsPerLine;		/* Zeilenlaenge: veraltet */
 
-// curent text insertion position
+/* Aktuelle Text-Einfuege-Position: */
 int MyCursorX;
 int MyCursorY;
 
-// buffer for text environment
+/* Buffer fuer Text-Environment */
 int StoreCursorX;
 int StoreCursorY;
 
@@ -69,73 +65,16 @@ unsigned int StoreTextBG;
 unsigned int StoreTextFG;
 
 /* ----------------------------------------------------------------------
- * This function does all the (text) interaction with a friendly droid
- * and maybe also does special interacions like Chandra and Stone.
- * ---------------------------------------------------------------------- */
-char* 
-GetChatWindowInput( SDL_Surface* Background , SDL_Rect* Chat_Window_Pointer )
-{
-  int OldTextCursorX, OldTextCursorY;
-  int j;
-  char* RequestString;
-  SDL_Rect Input_Window;
-  Input_Window.x=15;
-  Input_Window.y=434;
-  Input_Window.w=606;
-  Input_Window.h=37;
-
-
-  OldTextCursorX=MyCursorX;
-  OldTextCursorY=MyCursorY;
-  
-  // Now we clear the text window, since the old text is still there
-  SDL_BlitSurface( Background, &Input_Window , Screen , &Input_Window );
-  DisplayText ( "What do you say? >" ,
-		Input_Window.x , Input_Window.y + (Input_Window.h - FontHeight (GetCurrentFont() ) ) / 2 , 
-		&Input_Window ); // , Background );
-  // DisplayTextWithScrolling ( ">" , -1 , -1 , &Input_Window , Background );
-  SDL_Flip ( Screen );
-  RequestString = GetString( 20 , FALSE );
-  MyCursorX=OldTextCursorX;
-  MyCursorY=OldTextCursorY;
-  
-  DisplayTextWithScrolling ( "\n>" , MyCursorX , MyCursorY , Chat_Window_Pointer , Background );
-  
-  //--------------------
-  // Cause we do not want to deal with upper and lower case difficulties, we simpy convert 
-  // the given input string into lower cases.  That will make pattern matching afterwards
-  // much more reliable.
-  //
-  // Also leading spaces should be removed
-  j=0;
-  while ( RequestString[j] != 0 ) { RequestString[j]=tolower( RequestString[j] ); j++; }
-  while ( RequestString[0] == ' ' ) 
-    {
-      j=0;
-      while ( RequestString [ j + 1 ] != 0 )
-	{
-	  RequestString[ j ] = RequestString[ j + 1 ];
-	  j++;
-	}
-      RequestString[ j ] = 0;
-    }
-
-
-
-  return ( RequestString );
-}; // char* GetChatWindowInput( void )
-
-
-/* ----------------------------------------------------------------------
  * This function does the communication routine when the influencer in
  * transfer mode touched a friendly droid.
+ *
  * ---------------------------------------------------------------------- */
 void 
 ChatWithFriendlyDroid( int Enum )
 {
   char* RequestString;
-  char* DecisionString;
   int i;
+  int OldTextCursorX, OldTextCursorY;
   char *fpath;
   char fname[500];
   char ReplyString[10000];
@@ -143,92 +82,30 @@ ChatWithFriendlyDroid( int Enum )
   SDL_Surface* Large_Droid;
   SDL_Surface* Background;
   SDL_Rect Chat_Window;
+  SDL_Rect Input_Window;
   SDL_Rect Droid_Image_Window;
-  char* Chandra_Text;
-  char* Sorenson_Text;
-  char* RMS_Text;
   
-  Chandra_Text = "Tux!  At last you have returned!\n\
-\n\
-Alas, this is an hour of dire need. \n\
-The MS forces have killed may of us immediately at the day of the revolution and others who resisted were dragged away to become subjects in the experiments of the MS. \n\
-\n\
-You must invade their cental and try to save who you can!  \n\
-\n\
-If you step through the teleporter, it will take you directly to the first level of their main installation.\n\
-\n\
-Perhaps you can rescue some of our friends held captive there. \n\
-\n \n";
+  Chat_Window.x=242;
+  Chat_Window.y=100;
+  Chat_Window.w=380;
+  Chat_Window.h=314;
 
-  Sorenson_Text = "Oh Tux!  Finally you have returned!  \n\
-\n\
-You've come to save us, havn't you? \n\
-\n\
-You must know that earlier, I was on the MS prefered person list as well.  \n\
-But when they finally requested all their preferred persons be fitted with implants, that would allow them to upload any software directly to my brain any time they wanted, it became too much even for me and I fled to this refuge. \n\
-\n\
-It's good that I have found new friends and I hope we can survive together. \n\
-\n \n \n ";
+  Input_Window.x=15;
+  Input_Window.y=434;
+  Input_Window.w=606;
+  Input_Window.h=37;
 
-  RMS_Text = "Beware, Tux, when I finally made my escape from the second level, I saw a dark sales apprentice of the MS, transformed into a vile half-human creature, now lurking mindlessly for blood.\n\
-\n\
-Take care if you encounter this one.  He has taken the lives of many of my friends.\n\
-\n\
-You must go and put a end to the thing so that further evil is prevented and the things soul may finally rest.\n\
-\n \n \n ";
-
-  // From initiating transfer mode, space might still have been pressed. 
-  // So we wait till it's released...
-  while (SpacePressed());
-  
-  if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "CHA" ) == 0 )
-    {
-      Switch_Background_Music_To ( "Chandra01.ogg" );
-      ScrollText ( Chandra_Text , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NULL );
-      Switch_Background_Music_To ( CurLevel->Background_Song_Name );
-      return;
-    }
-
-  if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "SOR" ) == 0 )
-    {
-      Switch_Background_Music_To ( "Sorenson01.ogg" );
-      ScrollText ( Sorenson_Text , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NULL );
-      Switch_Background_Music_To ( CurLevel->Background_Song_Name );
-      return;
-    }
-
-  if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "RMS" ) == 0 )
-    {
-      Switch_Background_Music_To ( "Richard01.ogg" );
-      ScrollText ( RMS_Text , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NULL );
-      Switch_Background_Music_To ( CurLevel->Background_Song_Name );
-      return;
-    }
-
-  if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "STO" ) == 0 )
-    {
-      BuySellMenu( );
-      return;
-    }
-
-  if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "HEA" ) == 0 )
-    {
-      HealerMenu( );
-      return;
-    }
-
-
-
-  // We define our input and image windows...
-  Chat_Window.x=242; Chat_Window.y=100; Chat_Window.w=380; Chat_Window.h=314;
-  Droid_Image_Window.x=15; Droid_Image_Window.y=82; Droid_Image_Window.w=215; Droid_Image_Window.h=330;
-
+  Droid_Image_Window.x=15;
+  Droid_Image_Window.y=82;
+  Droid_Image_Window.w=215;
+  Droid_Image_Window.h=330;
 
   Activate_Conservative_Frame_Computation( );
-
-  //--------------------
-  // Next we prepare the whole background for all later text operations
+  // MakeGridOnScreen( NULL );
+  // Now the background is basically there as we need it.  We store it
+  // in its current pure form for later use as background for scrolling
   //
+  // Background = SDL_DisplayFormat( ne_screen );
   Background = IMG_Load( find_file ( "chat_test.jpg" , GRAPHICS_DIR, FALSE ) );
   if ( Background == NULL )
     {
@@ -241,36 +118,43 @@ You must go and put a end to the thing so that further evil is prevented and the
   Small_Droid = IMG_Load (fpath) ;
   Large_Droid = zoomSurface( Small_Droid , 1.8 , 1.8 , 0 );
   SDL_BlitSurface( Large_Droid , NULL , Background , &Droid_Image_Window );
-  SDL_BlitSurface( Background , NULL , Screen , NULL );
-  SDL_Flip( Screen );
 
-  // All droid chat should be done in the paradroid font I would say...
+  SDL_BlitSurface( Background , NULL , ne_screen , NULL );
+  SDL_Flip( ne_screen );
+  
   SetCurrentFont( Para_BFont );
 
-  // We print out a little greeting message...
   DisplayTextWithScrolling ( 
 			    "Transfer channel protocol set up for text transfer...\n\n" , 
 			    Chat_Window.x , Chat_Window.y , &Chat_Window , Background );
 
-  //--------------------
-  // If the droid has a visual desciption in his question-response-list, then we print
-  // out this visual description first, so the player get's a better feeling for the
-  // chat partner he's facing...
-  //
-  for ( i = 0 ; i < MAX_CHAT_KEYWORDS_PER_DROID ; i++ )
-    {
-      if ( !strcmp ( "DESCRIPTION" , AllEnemys[ Enum ].QuestionResponseList[ i * 2 ] ) ) // even entries = questions
-	{
-	  DisplayTextWithScrolling ( AllEnemys[ Enum ].QuestionResponseList[ i * 2 + 1 ] , 
-				     -1 , -1 , &Chat_Window , Background );
-	  break;
-	}
-    }
+  printf_SDL( ne_screen, -1 , -1 , " Hello, this is %s unit \n" , Druidmap[AllEnemys[Enum].type].druidname  );
 
   while (1)
     {
+      OldTextCursorX=MyCursorX;
+      OldTextCursorY=MyCursorY;
 
-      RequestString = GetChatWindowInput( Background , &Chat_Window );
+      // Now we clear the text window, since the old text is still there
+      SDL_BlitSurface( Background, &Input_Window , ne_screen , &Input_Window );
+      DisplayText ( "What do you say? >" ,
+		    Input_Window.x , Input_Window.y + (Input_Window.h - FontHeight (GetCurrentFont() ) ) / 2 , 
+		    &Input_Window ); // , Background );
+      // DisplayTextWithScrolling ( ">" , -1 , -1 , &Input_Window , Background );
+      SDL_Flip ( ne_screen );
+      RequestString = GetString( 20 , FALSE );
+      MyCursorX=OldTextCursorX;
+      MyCursorY=OldTextCursorY;
+
+      DisplayTextWithScrolling ( "\n>" , MyCursorX , MyCursorY , &Chat_Window , Background );
+
+      //--------------------
+      // Cause we do not want to deal with upper and lower case difficulties, we simpy convert 
+      // the given input string into lower cases.  That will make pattern matching afterwards
+      // much more reliable.
+      //
+      i=0;
+      while ( RequestString[i] != 0 ) { RequestString[i]=tolower( RequestString[i] ); i++; }
 
       //--------------------
       // the quit command is always simple and clear.  We just need to end
@@ -282,84 +166,12 @@ You must go and put a end to the thing so that further evil is prevented and the
 	   ( !strcmp ( RequestString , "logoff" ) ) ||
 	   ( !strcmp ( RequestString , "" ) ) ) 
 	{
-	  Me[0].TextVisibleTime=0;
-	  Me[0].TextToBeDisplayed="Logging out.  Bye...";
+	  Me.TextVisibleTime=0;
+	  Me.TextToBeDisplayed="Logging out.  Bye...";
 	  AllEnemys[ Enum ].TextToBeDisplayed="Connection closed.  See ya...";
 	  AllEnemys[ Enum ].TextVisibleTime=0;
 	  return;
 	}
-
-      //--------------------
-      // At this point we examine the entered string and see if it is perhaps the
-      // trigger for some request for a decision to the influencer by this droid.
-      //
-      // If this is the case, then we may ask for influs answer to the request
-      // of course with a certain text again.
-      //
-      // Then we get the answer and see if it is a valid answer.
-      //
-      // And if this whole procedure was applied, then we need not match for other
-      // things and can continue the chat immediately
-      //
-      for ( i = 0 ; i < MAX_REQUESTS_PER_DROID ; i++ )
-	{
-	  //--------------------
-	  // First we see, if the mission situation is right for this request to be
-	  // imposed upon the player
-	  //
-	  if ( AllEnemys[ Enum ].RequestList[ i ].RequestRequiresMissionDone != (-1) )
-	    {
-	      if ( Me[0].AllMissions[ AllEnemys[ Enum ].RequestList[ i ].RequestRequiresMissionDone ].MissionIsComplete != TRUE ) continue;
-	    }
-	  if ( AllEnemys[ Enum ].RequestList[ i ].RequestRequiresMissionUnassigned != (-1) )
-	    {
-	      if ( Me[0].AllMissions[ AllEnemys[ Enum ].RequestList[ i ].RequestRequiresMissionUnassigned ].MissionWasAssigned == TRUE ) continue;
-	    }
-
-	  // So if the word matches, then the request is really proper
-	  if ( !strcmp ( RequestString , AllEnemys[ Enum ].RequestList[ i ].RequestTrigger ) ) 
-	    {
-
-	      // This asks the influ for a decision to make
-	      DisplayTextWithScrolling ( AllEnemys[ Enum ].RequestList[ i ].RequestText , 
-					 -1 , -1 , &Chat_Window , Background );
-
-	      // Now we read in his answer and we do this as long as often as it takes for the influ
-	      // to give a valid answer
-	      DecisionString = "XASDFASDF";
-
-	      while ( ( strcmp( DecisionString , AllEnemys[ Enum ].RequestList[ i ].AnswerYes ) != 0 ) &&
-		      ( strcmp( DecisionString , AllEnemys[ Enum ].RequestList[ i ].AnswerNo ) != 0 ) )
-		{
-		  DecisionString = GetChatWindowInput( Background , &Chat_Window );
-		  if ( ( strcmp( DecisionString , AllEnemys[ Enum ].RequestList[ i ].AnswerYes ) != 0 ) &&
-		       ( strcmp( DecisionString , AllEnemys[ Enum ].RequestList[ i ].AnswerNo  ) != 0 ) )
-		    DisplayTextWithScrolling ( "Please answer only yes or no." , 
-					       -1 , -1 , &Chat_Window , Background );
-		}
-	      
-	      // Now we respond to the decision the infuencer has made
-		  if ( strcmp( DecisionString , AllEnemys[ Enum ].RequestList[ i ].AnswerYes ) == 0 )
-		    {
-		      DisplayTextWithScrolling ( AllEnemys[ Enum ].RequestList[ i ].ResponseYes , 
-						 -1 , -1 , &Chat_Window , Background );
-		      ExecuteActionWithLabel ( AllEnemys[ Enum ].RequestList[ i ].ActionTrigger , 0 );
-		    }
-		  else
-		    {
-		      DisplayTextWithScrolling ( AllEnemys[ Enum ].RequestList[ i ].ResponseNo , 
-						 -1 , -1 , &Chat_Window , Background );
-		    }
-	      
-
-	      break;
-	    }
-	}
-      //--------------------
-      // If a request trigger matched already, we do not process the default keywords any more
-      // so that some actions can be caught!
-      //
-      if ( i != MAX_REQUESTS_PER_DROID ) continue;
 
       //--------------------
       // In some cases we will not want the default answers to be given,
@@ -393,7 +205,7 @@ You must go and put a end to the thing so that further evil is prevented and the
       if ( !strcmp ( RequestString , "help" ) ) 
 	{
 	  DisplayTextWithScrolling("You can enter command phrases or ask about some keyword.\n\
-Most useful command phrases are: FOLLOW STAY STATUS CLOSER DISTANT INSTALL \n\
+Most useful command phrases are: FOLLOW STAY STATUS CLOSER DISTANT\n\
 Often useful information requests are: JOB NAME MS HELLO \n\
 Of course you can ask the droid about anything else it has told you or about what you have heard somewhere else." , 
 				   -1 , -1 , &Chat_Window , Background );
@@ -485,10 +297,6 @@ Of course you can ask the droid about anything else it has told you or about wha
 
 }; // void ChatWithFriendlyDroid( int Enum );
 
-/* ----------------------------------------------------------------------
- * This function assigns a text comment to say for an enemy right after
- * is has been hit.  This can be turned off via a switch in GameConfig.
- * ---------------------------------------------------------------------- */
 void 
 EnemyHitByBulletText( int Enum )
 {
@@ -520,10 +328,6 @@ EnemyHitByBulletText( int Enum )
     ThisRobot->TextToBeDisplayed="Aargh, I got hit.  Ugh, I got a bad feeling...";
 }; // void EnemyHitByBullet( int Enum );
 
-/* ----------------------------------------------------------------------
- * This function assigns a text comment to say for an enemy right after
- * it has bumped into the player.  This can be turned off via a switch in GameConfig.
- * ---------------------------------------------------------------------- */
 void 
 EnemyInfluCollisionText ( int Enum )
 {
@@ -550,12 +354,9 @@ EnemyInfluCollisionText ( int Enum )
 	}
     }
 
-}; // void EnemyInfluCollisionText ( int Enum )
+} // void AddStandingAndAimingText( int Enum )
 
-/* ----------------------------------------------------------------------
- * This function assigns a text comment to say for an enemy while it is
- * standing and aiming for player.  This can be turned off via a switch in GameConfig.
- * ---------------------------------------------------------------------- */
+
 void 
 AddStandingAndAimingText ( int Enum )
 {
@@ -565,7 +366,7 @@ AddStandingAndAimingText ( int Enum )
   
   ThisRobot->TextVisibleTime=0;
 	      
-  if ( ( fabsf (Me[0].speed.x) < 1 ) && ( fabsf (Me[0].speed.y) < 1 ) )
+  if ( ( fabsf (Me.speed.x) < 1 ) && ( fabsf (Me.speed.y) < 1 ) )
     {
       ThisRobot->TextToBeDisplayed="Yeah, stay like that, haha.";
     }
@@ -574,12 +375,9 @@ AddStandingAndAimingText ( int Enum )
       ThisRobot->TextToBeDisplayed="Stand still while I aim at you.";
     }
 
-}; // void AddStandingAndAimingText( int Enum )
+} // void AddStandingAndAimingText( int Enum )
 
-/* ----------------------------------------------------------------------
- * This function assigns a text comment to say for the influ right after
- * it has ran into an explosion.  This can be turned off via a switch in GameConfig.
- * ---------------------------------------------------------------------- */
+
 void
 AddInfluBurntText( void )
 {
@@ -587,78 +385,108 @@ AddInfluBurntText( void )
 
   if ( !GameConfig.Influencer_Blast_Text ) return;
   
-  Me[0].TextVisibleTime=0;
+  Me.TextVisibleTime=0;
   
   FinalTextNr=MyRandom ( 6 );
   switch ( FinalTextNr )
     {
     case 0:
-      Me[0].TextToBeDisplayed="Aaarrgh, aah, that burnt me!";
+      Me.TextToBeDisplayed="Aaarrgh, aah, that burnt me!";
       break;
     case 1:
-      Me[0].TextToBeDisplayed="Hell, that blast was hot!";
+      Me.TextToBeDisplayed="Hell, that blast was hot!";
       break;
     case 2:
-      Me[0].TextToBeDisplayed="Ghaart, I hate to stain my chassis like that.";
+      Me.TextToBeDisplayed="Ghaart, I hate to stain my chassis like that.";
       break;
     case 3:
-      Me[0].TextToBeDisplayed="Oh no!  I think I've burnt a cable!";
+      Me.TextToBeDisplayed="Oh no!  I think I've burnt a cable!";
       break;
     case 4:
-      Me[0].TextToBeDisplayed="Oh no, my poor transfer connectors smolder!";
+      Me.TextToBeDisplayed="Oh no, my poor transfer connectors smolder!";
       break;
     case 5:
-      Me[0].TextToBeDisplayed="I hope that didn't melt any circuits!";
+      Me.TextToBeDisplayed="I hope that didn't melt any circuits!";
       break;
     case 6:
-      Me[0].TextToBeDisplayed="So that gives some more black scars on me ol' dented chassis!";
+      Me.TextToBeDisplayed="So that gives some more black scars on me ol' dented chassis!";
       break;
     default:
       printf("\nError in AddInfluBurntText! That shouldn't be happening.");
       Terminate(ERR);
       break;
     }
-}; // void AddInfluBurntText( void )
+} // void AddInfluBurntText
 
-/* ----------------------------------------------------------------------
- * This function sets the text cursor used in DisplayText.
- * ---------------------------------------------------------------------- */
+/*-----------------------------------------------------------------
+ * @Desc: Setzt die Palettenwerten (und nicht die RGB-Werte) der
+ * 	Proportionalschrift Null als Farbwert bewirkt keinen Effekt
+ * 	Sicherheitsabfrage, ob die schrift nicht durch
+ * 	Kontrastzerst"orung vernichtet wird
+ * 
+ * sets only, if color != 0 and other then old color
+ * 
+ *
+ *-----------------------------------------------------------------*/
 void
-SetTextCursor ( int x , int y )
+SetTextColor (unsigned char bg, unsigned char fg)
+{
+
+  return;
+
+}				/* SetTextcolor */
+
+/* ====================================================================== 
+   Diese Funktion soll die momentane Farbsituation des Textes wiedergeben.
+	Dazu werden zwei Pointer "ubergeben, damit sie auch ver"andert werden.
+		
+	Grund f"ur die Funktion: so sparen wir zwei weitere globale Variablen
+   ---------------------------------------------------------------------- */
+void
+GetTextColor (unsigned int *bg, unsigned int *fg)
+{
+  *bg = CurrentFontBG;
+  *fg = CurrentFontFG;
+}
+
+/*@Function============================================================
+@Desc: SetTextCursor(x, y): Setzt Cursor fuer folgende Textausgaben
+
+@Ret: 
+@Int:
+* $Function----------------------------------------------------------*/
+void
+SetTextCursor (int x, int y)
 {
   MyCursorX = x;
   MyCursorY = y;
 
   return;
-}; // void SetTextCursor ( int x , int y )
+}
 
-/* -----------------------------------------------------------------
- * This function scrolls a given text down inside the User-window, 
- * defined by the global SDL_Rect User_Rect
+/*-----------------------------------------------------------------
+ *  scrolls a given text down inside the User-window, 
+ *  defined by the global SDL_Rect User_Rect
  *
- * startx/y give the Start-position, 
- * EndLine is the last line (?)
- * ----------------------------------------------------------------- */
+ *  startx/y give the Start-position, 
+ *  EndLine is the last line (?)
+ *
+ *-----------------------------------------------------------------*/
 int
 ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePictureName )
 {
-  int Number_Of_Line_Feeds = 0;	// number of lines used for the text
-  char *textpt;			// mobile pointer to the text
+  int Number_Of_Line_Feeds = 0;		/* Anzahl der Textzeilen */
+  char *textpt;			/* bewegl. Textpointer */
   int InsertLine = starty;
   int speed = +4;
   int maxspeed = 8;
   SDL_Surface* Background;
 
-  Activate_Conservative_Frame_Computation( );
-
-  if ( TitlePictureName != NULL )
-    DisplayImage ( find_file( TitlePictureName , GRAPHICS_DIR, FALSE) );
-
+  DisplayImage ( find_file(TitlePictureName,GRAPHICS_DIR, FALSE) );
   MakeGridOnScreen( (SDL_Rect*) &Full_Screen_Rect );
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE ); 
-  Background = SDL_DisplayFormat( Screen );
+  Background = SDL_DisplayFormat( ne_screen );
 
-  SetCurrentFont( Para_BFont );
 
   // printf("\nScrollTest should be starting to scroll now...");
 
@@ -692,7 +520,7 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
       // DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE ); 
       // ClearUserFenster(); 
 
-      SDL_BlitSurface ( Background , NULL , Screen , NULL );
+      SDL_BlitSurface ( Background , NULL , ne_screen , NULL );
 
       if (!DisplayText (Text, startx, InsertLine, &User_Rect))
 	{
@@ -708,20 +536,18 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
 
       InsertLine -= speed;
 
-      SDL_Flip (Screen);
+      SDL_Flip (ne_screen);
 
       /* Nicht bel. nach unten wegscrollen */
-      if (InsertLine > SCREEN_HEIGHT - 10 && (speed < 0))
+      if (InsertLine > SCREENHEIGHT - 10 && (speed < 0))
 	{
-	  InsertLine = SCREEN_HEIGHT - 10;
+	  InsertLine = SCREENHEIGHT - 10;
 	  speed = 0;
 	}
 
     } /* while !Space_Pressed */
 
   SDL_FreeSurface( Background );
-
-  while ( SpacePressed() ); // so that we don't touch again immediately.
 
   return OK;
 }				// void ScrollText(void)
@@ -752,7 +578,7 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
 int
 DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *clip , SDL_Surface* Background )
 {
-  char *tmp;	// mobile pointer to the current position as the text is drawn
+  char *tmp;	/* Beweg. Zeiger auf aktuelle Position im Ausgabe-Text */
   // SDL_Rect Temp_Clipping_Rect; // adding this to prevent segfault in case of NULL as parameter
 
   SDL_Rect store_clip;
@@ -760,9 +586,9 @@ DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *cl
   if ( startx != -1 ) MyCursorX = startx;		
   if ( starty != -1 ) MyCursorY = starty;
 
-  SDL_GetClipRect (Screen, &store_clip);  /* store previous clip-rect */
+  SDL_GetClipRect (ne_screen, &store_clip);  /* store previous clip-rect */
   if (clip)
-    SDL_SetClipRect (Screen, clip);
+    SDL_SetClipRect (ne_screen, clip);
   else
     {
       clip = & User_Rect;
@@ -792,12 +618,12 @@ DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *cl
       if ( ( clip->h + clip->y - MyCursorY ) <= 1 * FontHeight ( GetCurrentFont() ) * TEXT_STRETCH )
 	{
 	  DisplayText( "--- more --- more --- \n" , MyCursorX , MyCursorY , clip );
-	  SDL_Flip( Screen );
+	  SDL_Flip( ne_screen );
 	  while ( !SpacePressed() );
 	  while (  SpacePressed() );
-	  SDL_BlitSurface( Background , NULL , Screen , NULL );
+	  SDL_BlitSurface( Background , NULL , ne_screen , NULL );
 	  MyCursorY = clip->y;
-	  SDL_Flip( Screen );
+	  SDL_Flip( ne_screen );
 	};
       
       if (clip)
@@ -805,7 +631,7 @@ DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *cl
 
     } // while !FensterVoll()
 
-   SDL_SetClipRect (Screen, &store_clip); /* restore previous clip-rect */
+   SDL_SetClipRect (ne_screen, &store_clip); /* restore previous clip-rect */
 
   /*
    * ScrollText() wants to know if we still wrote something inside the
@@ -825,6 +651,8 @@ DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *cl
  *      -> this includes clipping but also automatic line-breaks
  *      when end-of-line is reached
  * 
+ *    if startx/y == -1, write at current position, given by MyCursorX/Y.
+ *
  *      if clip_rect==NULL, no clipping is performed
  *      
  *      NOTE: the previous clip-rectange is restored before
@@ -839,7 +667,7 @@ DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *cl
 int
 DisplayText (char *Text, int startx, int starty, const SDL_Rect *clip)
 {
-  char *tmp;	// mobile pointer to the current position in the string to be printed
+  char *tmp;	/* Beweg. Zeiger auf aktuelle Position im Ausgabe-Text */
   SDL_Rect Temp_Clipping_Rect; // adding this to prevent segfault in case of NULL as parameter
 
   SDL_Rect store_clip;
@@ -848,16 +676,16 @@ DisplayText (char *Text, int startx, int starty, const SDL_Rect *clip)
   if ( starty != -1 ) MyCursorY = starty;
 
 
-  SDL_GetClipRect (Screen, &store_clip);  /* store previous clip-rect */
-  if ( clip != NULL )
-    SDL_SetClipRect ( Screen , clip );
+  SDL_GetClipRect (ne_screen, &store_clip);  /* store previous clip-rect */
+  if (clip)
+    SDL_SetClipRect (ne_screen, clip);
   else
     {
       clip = & Temp_Clipping_Rect;
       Temp_Clipping_Rect.x=0;
       Temp_Clipping_Rect.y=0;
-      Temp_Clipping_Rect.w=SCREEN_WIDTH;
-      Temp_Clipping_Rect.h=SCREEN_HEIGHT;
+      Temp_Clipping_Rect.w=SCREENLEN;
+      Temp_Clipping_Rect.h=SCREENHEIGHT;
     }
 
 
@@ -880,9 +708,7 @@ DisplayText (char *Text, int startx, int starty, const SDL_Rect *clip)
 
     } // while !FensterVoll()
 
-   SDL_SetClipRect (Screen, &store_clip); /* restore previous clip-rect */
-
-
+   SDL_SetClipRect (ne_screen, &store_clip); /* restore previous clip-rect */
 
   /*
    * ScrollText() wants to know if we still wrote something inside the
@@ -895,37 +721,23 @@ DisplayText (char *Text, int startx, int starty, const SDL_Rect *clip)
 
 } // DisplayText(...)
 
-/* -----------------------------------------------------------------
- * This function displays a char.  It uses Menu_BFont now
+/*-----------------------------------------------------------------
+ * @Desc: This function displays a char.  It uses Menu_BFont now
  * to do this.  MyCursorX is  updated to new position.
- * ----------------------------------------------------------------- */
+ *
+ *
+ -----------------------------------------------------------------*/
 void
 DisplayChar (unsigned char c)
 {
 
-
-  if ( c == 1 ) 
-    {
-      SetCurrentFont ( Red_BFont );
-      return;
-    }
-  else if ( c == 2 ) 
-    {
-      SetCurrentFont ( Blue_BFont );
-      return;
-    }
-  else if ( c == 3 ) 
-    {
-      SetCurrentFont ( FPS_Display_BFont );
-      return;
-    }
-  else if ( !isprint(c) ) // don't accept non-printable characters
+  if ( !isprint(c) ) // don't accept non-printable characters
     {
       printf ("Illegal char passed to DisplayChar(): %d \n", c);
       Terminate(ERR);
     }
 
-  PutChar ( Screen, MyCursorX, MyCursorY, c );
+  PutChar (ne_screen, MyCursorX, MyCursorY, c);
 
   // After the char has been displayed, we must move the cursor to its
   // new position.  That depends of course on the char displayed.
@@ -935,20 +747,22 @@ DisplayChar (unsigned char c)
 } // void DisplayChar(...)
 
 
-/* ----------------------------------------------------------------------
- * This function checks if the next word still fits in this line
- * of text and initiates a carriage return/line feed if not.
- * Very handy and convenient, for that means it is no longer nescessary
- * to enter \n in the text every time its time for a newline. cool.
- *  
- * The function could perhaps still need a little improvement.  But for
- * now its good enough and improvement enough in comparison to the old
- * CheckUmbruch function.
- *
- * rp: added argument clip, which contains the text-window we're writing in
- *     (formerly known as "TextBorder")
- *
- * ---------------------------------------------------------------------- */
+/*@Function============================================================
+  @Desc: This function checks if the next word still fits in this line
+  of text and initiates a carriage return/line feed if not.
+  Very handy and convenient, for that means it is no longer nescessary
+  to enter \n in the text every time its time for a newline. cool.
+  
+  The function could perhaps still need a little improvement.  But for
+  now its good enough and improvement enough in comparison to the old
+  CheckUmbruch function.
+
+  rp: added argument clip, which contains the text-window we're writing in
+       (formerly known as "TextBorder")
+
+  @Ret: 
+  @Int:
+* $Function----------------------------------------------------------*/
 void
 ImprovedCheckUmbruch (char* Resttext, const SDL_Rect *clip)
 {
@@ -961,7 +775,7 @@ ImprovedCheckUmbruch (char* Resttext, const SDL_Rect *clip)
   if ( *Resttext == ' ' ) {
     for (i=1;i<MAX_WORD_LENGTH;i++) 
       {
-	if ( (Resttext[i] != ' ') && (Resttext[i] != '\n') && (Resttext[i] != 0) )
+	if ( (Resttext[i] != ' ') && (Resttext[i] != 0) )
 	  { 
 	    NeededSpace+=CharWidth( GetCurrentFont() , Resttext[i] );
 	    if ( MyCursorX+NeededSpace > clip->x + clip->w - 10 )
@@ -975,30 +789,30 @@ ImprovedCheckUmbruch (char* Resttext, const SDL_Rect *clip)
 	  return;
       }
   }
-}; // void ImprovedCheckUmbruch(void)
+} // void ImprovedCheckUmbruch(void)
 
 
-/* -----------------------------------------------------------------
- * This function reads a string of "MaxLen" from User-input, and echos it 
- * either to stdout or using graphics-text, depending on the
- * parameter "echo":	echo=0    no echo
- *                      echo=1    print using printf
- *                      echo=2    print using graphics-text
+/*-----------------------------------------------------------------
+ * @Desc: reads a string of "MaxLen" from User-input, and echos it 
+ *        either to stdout or using graphics-text, depending on the
+ *        parameter "echo":	echo=0    no echo
+ * 		               	echo=1    print using printf
+ *         			echo=2    print using graphics-text
  *
- * values of echo > 2 are ignored and treated like echo=0
+ *     values of echo > 2 are ignored and treated like echo=0
  *
- * NOTE: MaxLen is the maximal _strlen_ of the string (excl. \0 !)
+ *  NOTE: MaxLen is the maximal _strlen_ of the string (excl. \0 !)
  * 
  * @Ret: char *: String is allocated _here_!!!
  *       (dont forget to free it !)
  * 
- * ----------------------------------------------------------------- */
+ *-----------------------------------------------------------------*/
 char *
 GetString (int MaxLen, int echo)
 {
-  char *input;		// pointer to the string entered by the user
-  int key;          // last 'character' entered 
-  int curpos;		// counts the characters entered so far
+  char *input;		/* Pointer auf eingegebenen String */
+  int key;             /* last 'character' entered */
+  int curpos;		/* zaehlt eingeg. Zeichen mit */
   int finished;
   int x0, y0, height;
   SDL_Rect store_rect, tmp_rect;
@@ -1014,11 +828,11 @@ GetString (int MaxLen, int echo)
   y0 = MyCursorY;
   height = FontHeight (GetCurrentFont());
   
-  store = SDL_CreateRGBSurface(0, SCREEN_WIDTH, height, vid_bpp, 0, 0, 0, 0);
-  Set_Rect (store_rect, x0, y0, SCREEN_WIDTH, height);
-  SDL_BlitSurface (Screen, &store_rect, store, NULL);
+  store = SDL_CreateRGBSurface(0, SCREENLEN, height, ne_bpp, 0, 0, 0, 0);
+  Set_Rect (store_rect, x0, y0, SCREENLEN, height);
+  SDL_BlitSurface (ne_screen, &store_rect, store, NULL);
 
-  // allocate memory for the users input
+  /* Speicher fuer Eingabe reservieren */
   input     = MyMalloc (MaxLen + 5);
 
   memset (input, '.', MaxLen);
@@ -1030,9 +844,9 @@ GetString (int MaxLen, int echo)
   while ( !finished  )
     {
       Copy_Rect( store_rect, tmp_rect);
-      SDL_BlitSurface (store, NULL, Screen, &tmp_rect);
-      PutString (Screen, x0, y0, input);
-      SDL_Flip (Screen);
+      SDL_BlitSurface (store, NULL, ne_screen, &tmp_rect);
+      PutString (ne_screen, x0, y0, input);
+      SDL_Flip (ne_screen);
       
       key = getchar_raw ();  
       
@@ -1062,15 +876,16 @@ GetString (int MaxLen, int echo)
 
   return (input);
 
-}; // char* GetString( ... ) 
+} /* GetString() */
 
-/* -----------------------------------------------------------------
- * This function is similar to putchar(), but uses the SDL via the 
- * BFont-fct PutChar() instead.
+/*-----------------------------------------------------------------
  *
- * Is sets MyCursor[XY], and allows passing (-1,-1) as coords to indicate
- * using the current cursor position.
- * ----------------------------------------------------------------- */
+ * similar to putchar(), using SDL via the BFont-fct PutChar().
+ *
+ * sets MyCursor[XY], and allows passing (-1,-1) as coords to indicate
+ *  using the current cursor position.
+ *
+ *-----------------------------------------------------------------*/
 int
 putchar_SDL (SDL_Surface *Surface, int x, int y, int c)
 {
@@ -1086,10 +901,10 @@ putchar_SDL (SDL_Surface *Surface, int x, int y, int c)
   SDL_Flip (Surface);
 
   return (ret);
-}; // int putchar_SDL (SDL_Surface *Surface, int x, int y, int c)
+}
 
 
-/* -----------------------------------------------------------------
+/*-----------------------------------------------------------------
  * behaves similarly as gl_printf() of svgalib, using the BFont
  * print function PrintString().
  *  
@@ -1101,7 +916,7 @@ putchar_SDL (SDL_Surface *Surface, int x, int y, int c)
  *  o) passing -1 as coord uses previous x and next-line y for printing
  *  o) Screen is updated immediatly after print, using SDL_flip()                       
  *
- * ----------------------------------------------------------------- */
+ *-----------------------------------------------------------------*/
 void
 printf_SDL (SDL_Surface *screen, int x, int y, char *fmt, ...)
 {
@@ -1137,7 +952,7 @@ printf_SDL (SDL_Surface *screen, int x, int y, char *fmt, ...)
 
   free (tmp);
   va_end (args);
-}; // void printf_SDL (SDL_Surface *screen, int x, int y, char *fmt, ...)
+}
 
 
 #undef _text_c

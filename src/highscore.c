@@ -58,9 +58,6 @@ Init_Highscores (void)
       Highscores[i]->mission = -1;
     }
 
-  /* choose a font for highscore displaying... */
-  Highscore_BFont = Para_BFont;
-
   return;
 } /* Init_Highscores */
 
@@ -79,14 +76,14 @@ update_highscores (void)
   struct tm *timeinfo;
   time_t tsec;
 
-  if (Me[0].Experience <= 0)  /* don't even bother.. */
+  if (RealScore <= 0)  /* don't even bother.. */
     return;
 
-  Me[0].status = DEBRIEFING;
+  Me.status = DEBRIEFING;
 
   /* now find out the position of player's score in list */
   entry = 0;
-  while (Highscores[entry]->score >= Me[0].Experience )
+  while (Highscores[entry]->score >= RealScore )
     entry ++;
 
   if (entry == num_highscores) /* sorry, you didnt' make it */
@@ -106,8 +103,8 @@ update_highscores (void)
   SetCurrentFont (Highscore_BFont);
 
   MakeGridOnScreen ( NULL );
-  printf_SDL (Screen, User_Rect.x, User_Rect.y, "Great Score !\n");
-  printf_SDL (Screen, -1, -1, "Enter your name: ");
+  printf_SDL (ne_screen, User_Rect.x, User_Rect.y, "Great Score !\n");
+  printf_SDL (ne_screen, -1, -1, "Enter your name: ");
   tmp_name = GetString (MAX_NAME_LEN, 2);
   strcpy (new_entry->name, tmp_name);
   free (tmp_name);
@@ -117,7 +114,7 @@ update_highscores (void)
   sprintf (new_entry->date, "[%d/%d/%02d]", timeinfo->tm_mday, timeinfo->tm_mon,
 	   timeinfo->tm_year-100); 
 
-  new_entry->score = Me[0].Experience;
+  new_entry->score = RealScore;
   Highscores[entry] = new_entry;
 
   SetCurrentFont (prev_font);
@@ -150,25 +147,25 @@ Show_Highscores (void)
 
   len = CharWidth (GetCurrentFont(), '9'); 
 
-  x0 = SCREEN_WIDTH/8;
+  x0 = SCREENLEN/8;
   x1 = x0 + 3*len;
   x2 = x1 + 9*len;
   x3 = x2 + MAX_NAME_LEN*len;
   y0 = 80;  
   height = FontHeight (GetCurrentFont());
 
-  CenteredPrintString (Screen, y0, "Top %d  freedom fighters\n", num_highscores);
+  CenteredPrintString (ne_screen, y0, "Top %d  freedom fighters\n", num_highscores);
   
   for (i=0; i<num_highscores; i++)
     {
-      PrintString (Screen, x0, y0 + (i+2)*height, "%d", i+1);
+      PrintString (ne_screen, x0, y0 + (i+2)*height, "%d", i+1);
       if (Highscores[i]->score >= 0)
-	PrintString (Screen, x1, y0 + (i+2)*height, "%s", Highscores[i]->date);
-      PrintString (Screen, x2, y0 + (i+2)*height,  "%s", Highscores[i]->name);
+	PrintString (ne_screen, x1, y0 + (i+2)*height, "%s", Highscores[i]->date);
+      PrintString (ne_screen, x2, y0 + (i+2)*height,  "%s", Highscores[i]->name);
       if (Highscores[i]->score >= 0)
-	PrintString (Screen, x3, y0 + (i+2)*height, "%ld", Highscores[i]->score);
+	PrintString (ne_screen, x3, y0 + (i+2)*height, "%ld", Highscores[i]->score);
     }
-  SDL_Flip (Screen);
+  SDL_Flip (ne_screen);
   
   getchar_raw ();
 
