@@ -417,7 +417,7 @@ enum _non_player_characters
 #define MAX_MAP_INSERTS         6
 #define MAX_MAP_INSERTS_PER_LEVEL 20
 
-#define MAX_MOUSE_PRESS_BUTTONS 52
+#define MAX_MOUSE_PRESS_BUTTONS 58
 enum
   { 
     CHA_BUTTON, 
@@ -471,7 +471,13 @@ enum
     BUY_100_BUTTON,
     SELL_BUTTON,
     SELL_10_BUTTON,
-    SELL_100_BUTTON
+    SELL_100_BUTTON,
+    TAKE_BUTTON,
+    TAKE_10_BUTTON,
+    TAKE_100_BUTTON,
+    PUT_BUTTON,
+    PUT_10_BUTTON,
+    PUT_100_BUTTON
   };
 
 
@@ -723,6 +729,28 @@ enum _networking_status
 // states as well...
 // 
 #define OUT TERMINATED	
+
+//--------------------
+// For shop interfaces and chest interfaces we need some constants to
+// transmit the intended shop/chest action.
+//
+enum
+  {
+    DO_NOTHING = -1 , 
+    BUY_1_ITEM = 1 , 
+    BUY_10_ITEMS = 2 , 
+    BUY_100_ITEMS = 3 , 
+    SELL_1_ITEM = 4 , 
+    SELL_10_ITEMS = 5 , 
+    SELL_100_ITEMS = 6 , 
+    PUT_1_ITEM = 6 , 
+    PUT_10_ITEMS = 7 , 
+    PUT_100_ITEMS = 8 , 
+    TAKE_1_ITEM = 9 , 
+    TAKE_10_ITEMS = 10 , 
+    TAKE_100_ITEMS = 11
+  };
+
 
 //--------------------
 // some constants intended to make the map tiles numbers somewhat

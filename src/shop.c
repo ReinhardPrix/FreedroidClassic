@@ -58,25 +58,107 @@ typedef struct
 }
 shop_decision, *Shop_decision;
 
-enum
-  {
-    DO_NOTHING = -1 , 
-    BUY_1_ITEM = 1 , 
-    BUY_10_ITEMS = 2 , 
-    BUY_100_ITEMS = 3 , 
-    SELL_1_ITEM = 4 , 
-    SELL_10_ITEMS = 5 , 
-    SELL_100_ITEMS = 6 , 
-    PUT_1_ITEM = 6 , 
-    PUT_10_ITEMS = 7 , 
-    PUT_100_ITEMS = 8 , 
-    TAKE_1_ITEM = 9 , 
-    TAKE_10_ITEMS = 10 , 
-    TAKE_100_ITEMS = 11
-  };
-
 SDL_Rect ShopItemRowRect;
 SDL_Rect TuxItemRowRect;
+
+/* ----------------------------------------------------------------------
+ * This function tries to buy the item given as parameter.  Currently
+ * is just drops the item to the floor under the influencer and will
+ * reduce influencers money.
+ * ---------------------------------------------------------------------- */
+int 
+TryToPutItem( item* SellItem , int AmountToSellAtMost )
+{
+  int i;
+  int FreeIndex;
+
+  while ( SpacePressed() || EnterPressed() );
+
+  if ( AmountToSellAtMost > SellItem -> multiplicity )
+    AmountToSellAtMost = SellItem -> multiplicity ;
+
+  //--------------------
+  // At first we try to see if we can just add the multiplicity of the item in question
+  // to the existing multiplicity of an item of the same type
+  //
+  if ( ItemMap [ SellItem->type ] . item_group_together_in_inventory )
+    {
+      for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+	{
+	  if ( curShip . AllLevels [ Me [ 0 ] . pos . z ] -> ChestItemList [ i ] . type == SellItem->type )
+	    {
+	      while ( 1 )
+		{
+		  while (EnterPressed() || SpacePressed() );
+
+		  PlayItemSound( ItemMap[ SellItem->type ].sound_number );
+
+		  //--------------------
+		  // We add the multiplicity to the one of the similar item found in the 
+		  // box.
+		  //
+		  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> ChestItemList [ i ] . multiplicity +=
+		    AmountToSellAtMost;
+
+		  //--------------------
+		  // Depending on whether all has been put or just a small part of it,
+		  // we either just reduce multiplicity or completely delete the item 
+		  // on the part of the giving side.
+		  //
+		  if ( AmountToSellAtMost < SellItem->multiplicity )
+		    SellItem->multiplicity -= AmountToSellAtMost;
+		  else DeleteItem( SellItem );
+
+		  return ( TRUE );
+		}
+	    }
+	}
+    }
+
+  //--------------------
+  // Not that we know that there is no item of the desired form present in
+  // the container already, we will try to find a new item entry that we can
+  // use for our purposes.
+  //
+  FreeIndex = (-1) ;
+  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+    {
+      if ( curShip . AllLevels [ Me [ 0 ] . pos . z ] -> ChestItemList [ i ] . type == (-1) )
+	{
+	  FreeIndex = i ;
+	  break;
+	}
+    }
+
+  //--------------------
+  // If no free index was found, then of course we must cancel the whole 
+  // operation.
+  //
+  if ( FreeIndex == (-1) )
+    {
+      GiveStandardErrorMessage ( "TryToPutItem( ... )" , "\
+The function used to put items into chests and containers encountered the\n\
+case that there was no more room in the list of items in containers of this\n\
+level.  We didn't think that this case would ever be reached, so we also didn't\n\
+suitably handle it for now, i.e. we'll just quit, though it might be easy to\n\
+write some suitable code here...",
+				 PLEASE_INFORM, IS_FATAL );
+      return ( FALSE );
+    }
+
+  //--------------------
+  // Now we know that we have found a useable chest item index here
+  // and we can take full advantage of it now.
+  //
+  CopyItem ( SellItem , & ( curShip . AllLevels [ Me [ 0 ] . pos . z ] -> ChestItemList [ i ] ) , TRUE );
+  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> ChestItemList [ i ] . multiplicity = AmountToSellAtMost;
+  if ( AmountToSellAtMost < SellItem->multiplicity )
+    SellItem->multiplicity -= AmountToSellAtMost;
+  else DeleteItem( SellItem );
+  
+  return ( TRUE );
+
+}; // void TryToPutItem( ... )
 
 /* ----------------------------------------------------------------------
  * At some points in the game, like when at the shop interface or at the
@@ -171,6 +253,55 @@ AssemblePointerListForItemShow ( item** ItemPointerListPointer , int IncludeWorn
   return ( NumberOfItems );
   
 }; // void AssemblePointerListForItemShow ( .. )
+  
+/* ----------------------------------------------------------------------
+ * Before we enter the chest put/take interface menu, we must assemble
+ * the list of pointers to the items currently in this chest.  An item
+ * is in the chest at x/y if it's in the chest-item-list of the current
+ * players level and if it's coordinates are those of the current players
+ * chest.
+ * ---------------------------------------------------------------------- */
+int
+AssemblePointerListForChestShow ( item** ItemPointerListPointer , int PlayerNum )
+{
+  int i;
+  item** CurrentItemPointer;
+  int NumberOfItems = 0 ;
+
+  //--------------------
+  // First we clean out the new Show_Pointer_List
+  //
+  CurrentItemPointer = ItemPointerListPointer ;
+  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+    {
+      *CurrentItemPointer = NULL;
+      CurrentItemPointer++;
+    }
+
+  //--------------------
+  // Now we start to fill the Show_Pointer_List with the items
+  // currently equipped, if that is what is desired by parameters...
+  //
+  CurrentItemPointer = ItemPointerListPointer;
+
+  //--------------------
+  // Now we start to fill the Show_Pointer_List with the items in the
+  // pure unequipped inventory
+  //
+  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+    {
+      if ( curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] -> ChestItemList [ i ] . type == (-1) ) continue;
+      else
+	{
+	  *CurrentItemPointer = & ( curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] -> ChestItemList [ i ] );
+	  CurrentItemPointer ++;
+	  NumberOfItems ++;
+	}
+    }
+  
+  return ( NumberOfItems );
+  
+}; // void AssemblePointerListForChestShow ( .. )
   
 /* ----------------------------------------------------------------------
  * Maybe the user has clicked right onto the item overview row.  Then of
@@ -272,17 +403,11 @@ ShowRescaledItem ( int position , int TuxItemRow , item* ShowItem )
 int
 GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVENTORY ] , 
 		     int NumberOfItemsInTuxRow , item* TuxItemsList[ MAX_ITEMS_IN_INVENTORY] , 
-		     shop_decision* ShopOrder )
+		     shop_decision* ShopOrder , int ShowChestButtons )
 {
-  // int ItemType;
   int Displacement=0;
   bool finished = FALSE;
   static int WasPressed = FALSE ;
-  // item* TuxItemsList[ MAX_ITEMS_IN_INVENTORY ];
-  // int NumberOfItems;
-  int PasswordIndex = (-1) ;
-  // int ClearanceIndex = (-1) ;
-  int IdentifyAllowed = FALSE ;
   char* MenuTexts[ 10 ];
   int i;
   int ClickTarget;
@@ -335,6 +460,8 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
       MenuTexts[1]="";
       DoMenuSelection ( " YOU DONT HAVE ANYTHING IN INVENTORY, THAT COULD BE VIEWED. " , 
 			MenuTexts, 1 , NULL , NULL );
+      ShopOrder -> item_selected = -1 ;
+      ShopOrder -> shop_command = DO_NOTHING ;
       return (-1) ;
     }
 
@@ -393,30 +520,48 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 
       if ( ItemIndex >= 0 )
 	{
-	  ShowGenericButtonFromList ( BUY_BUTTON );
+	  if ( ShowChestButtons ) ShowGenericButtonFromList ( TAKE_BUTTON );
+	  else ShowGenericButtonFromList ( BUY_BUTTON );
 	  BuyButtonActive = TRUE; 
 	  SellButtonActive = FALSE ;
 	  Sell10ButtonActive = FALSE ;
 	  Sell100ButtonActive = FALSE ;
 	  if ( ItemMap [ ShowPointerList [ ItemIndex ] -> type ] . item_group_together_in_inventory )
 	    {
-	      ShowGenericButtonFromList ( BUY_10_BUTTON );
-	      ShowGenericButtonFromList ( BUY_100_BUTTON );
+	      if ( ShowChestButtons )
+		{
+		  ShowGenericButtonFromList ( TAKE_10_BUTTON );
+		  ShowGenericButtonFromList ( TAKE_100_BUTTON );
+		}
+	      else
+		{
+		  ShowGenericButtonFromList ( BUY_10_BUTTON );
+		  ShowGenericButtonFromList ( BUY_100_BUTTON );
+		}
 	      Buy10ButtonActive = TRUE ;
 	      Buy100ButtonActive = TRUE ;
 	    }
 	}
       else if ( TuxItemIndex >= 0 )
 	{
-	  ShowGenericButtonFromList ( SELL_BUTTON );
+	  if ( ShowChestButtons ) ShowGenericButtonFromList ( PUT_BUTTON );
+	  else ShowGenericButtonFromList ( SELL_BUTTON );
 	  SellButtonActive = TRUE; 
 	  BuyButtonActive = FALSE ;
 	  Buy10ButtonActive = FALSE ;
 	  Buy100ButtonActive = FALSE ;
 	  if ( ItemMap [ TuxItemsList [ TuxItemIndex ] -> type ] . item_group_together_in_inventory )
 	    {
-	      ShowGenericButtonFromList ( SELL_10_BUTTON );
-	      ShowGenericButtonFromList ( SELL_100_BUTTON );
+	      if ( ShowChestButtons ) 
+		{
+		  ShowGenericButtonFromList ( PUT_10_BUTTON );
+		  ShowGenericButtonFromList ( PUT_100_BUTTON );
+		}
+	      else
+		{
+		  ShowGenericButtonFromList ( SELL_10_BUTTON );
+		  ShowGenericButtonFromList ( SELL_100_BUTTON );
+		}
 	      Sell10ButtonActive = TRUE; 
 	      Sell100ButtonActive = TRUE; 
 	    }
@@ -441,21 +586,6 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
       */
 
       SDL_Flip( Screen );
-
-      //--------------------
-      // Now we see if identification of the current item is allowed
-      // or not.
-      //
-      IdentifyAllowed = FALSE ;
-      if ( PasswordIndex >= 0 )
-	{
-	  if ( ! strcmp ( Me [ 0 ] . password_list [ PasswordIndex ] , "Tux Idenfity" ) )
-	    {
-	      IdentifyAllowed = TRUE ;
-	    }
-	}
-
-      // ItemType = ShowPointerList [ ItemIndex ] -> type ;
 
       if (SpacePressed() || EscapePressed() || axis_is_active )
 	{
@@ -943,13 +1073,6 @@ TryToRepairItem( item* RepairItem )
   MenuTexts[0]="Yes";
   MenuTexts[1]="No";
   MenuTexts[2]="";
-  MenuTexts[3]="";
-  MenuTexts[4]="";
-  MenuTexts[5]="";
-  MenuTexts[8]="";
-  MenuTexts[6]="";
-  MenuTexts[7]="";
-  MenuTexts[9]="";
 
   while ( SpacePressed() || EnterPressed() );
 
@@ -1003,13 +1126,6 @@ TryToIdentifyItem( item* IdentifyItem )
   MenuTexts[0]="Yes";
   MenuTexts[1]="No";
   MenuTexts[2]="";
-  MenuTexts[3]="";
-  MenuTexts[4]="";
-  MenuTexts[5]="";
-  MenuTexts[8]="";
-  MenuTexts[6]="";
-  MenuTexts[7]="";
-  MenuTexts[9]="";
 
   while ( SpacePressed() || EnterPressed() );
 
@@ -1118,6 +1234,129 @@ TryToSellItem( item* SellItem , int WithBacktalk , int AmountToSellAtMost )
 }; // void TryToSellItem( item* SellItem )
 
 /* ----------------------------------------------------------------------
+ * This function tries to put an item into the inventory, either by adding
+ * this items multiplicity to the multiplicity of an already present item
+ * of the very same type or by allocating a new inventory item for this
+ * new item and putting it there.
+ *
+ * In the case that both methods couldn't succeed, a FALSE value is 
+ * returned to let the caller know, that this procedure has failed.
+ * Otherwise TRUE will indicate that everything is ok and went well.
+ * ---------------------------------------------------------------------- */
+int
+TryToIntegrateItemIntoInventory ( item* BuyItem , int AmountToBuyAtMost )
+{
+  int x, y;
+  int FreeIndex;
+  char linebuf[1000];
+  int i;
+  char* MenuTexts[ 10 ];
+
+  //--------------------
+  // At first we try to see if we can just add the multiplicity of the item in question
+  // to the existing multiplicity of an item of the same type
+  //
+  if ( ItemMap [ BuyItem->type ] . item_group_together_in_inventory )
+    {
+      for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+	{
+	  if ( Me [ 0 ] . Inventory [ i ] . type == BuyItem->type )
+	    {
+	      while ( 1 )
+		{
+		  while (EnterPressed() || SpacePressed() );
+		  Me [ 0 ] . Inventory [ i ] . multiplicity += AmountToBuyAtMost ;
+
+		  //--------------------
+		  // This is new.  I hope it's not dangerous.
+		  //
+		  if ( AmountToBuyAtMost >= BuyItem->multiplicity )
+		    DeleteItem ( BuyItem );
+		  else
+		    BuyItem->multiplicity -= AmountToBuyAtMost ;
+		  return ( TRUE );
+		}
+	    }
+	}
+    }
+
+  //--------------------
+  // Now we must find out if there is an inventory position where we can put the
+  // item in question.
+  //
+  FreeIndex = GetFreeInventoryIndex(  );
+
+  for ( x = 0 ; x < INVENTORY_GRID_WIDTH ; x ++ )
+    {
+      for ( y = 0 ; y < INVENTORY_GRID_HEIGHT ; y ++ )
+	{
+	  if ( ItemCanBeDroppedInInv ( BuyItem->type , x , y ) )
+	    {
+	      while ( 1 )
+		{
+		  while (EnterPressed() || SpacePressed() );
+
+		  CopyItem( BuyItem , & ( Me[0].Inventory[ FreeIndex ] ) , FALSE );
+		  Me[0].Inventory[ FreeIndex ] . multiplicity = AmountToBuyAtMost ;
+
+		  Me[0].Inventory[ FreeIndex ].currently_held_in_hand = FALSE;
+		  Me[0].Inventory[ FreeIndex ].inventory_position.x = x;
+		  Me[0].Inventory[ FreeIndex ].inventory_position.y = y;
+
+		  // Me[0].Gold -= CalculateItemPrice ( BuyItem , FALSE );
+		  // Play_Shop_ItemBoughtSound( );
+
+		  //--------------------
+		  // This is new.  I hope it's not dangerous.
+		  if ( BuyItem -> multiplicity <= AmountToBuyAtMost ) DeleteItem ( BuyItem );
+		  else BuyItem -> multiplicity -= AmountToBuyAtMost ;
+
+		  return ( TRUE );
+		}
+	    }
+	}
+    }
+
+  //--------------------
+  // If this point is ever reached, we know that an item has been selected 
+  // for buying and could be bought, if only ONE HAD ENOUGH ROOM IN INVENTORY!!
+  // Therefore a message must be displayed, saying what the problem is.
+  //
+  PlayOnceNeededSoundSample ( "Tux_Hold_On_I_0.wav" , FALSE );
+  MenuTexts[0]=" BACK ";
+  MenuTexts[1]="";
+  GiveItemDescription( linebuf , BuyItem , TRUE );
+  strcat ( linebuf , "\n\n   No room for this item in inventory!" );
+  DoMenuSelection( linebuf , MenuTexts , 1 , NULL , NULL );
+  return ( FALSE );
+
+}; // void TryToIntegrateItemIntoInventory ( item* BuyItem , int AmountToBuyAtMost )
+
+/* ----------------------------------------------------------------------
+ * This function tries to buy the item given as parameter.  Currently
+ * is just drops the item to the floor under the influencer and will
+ * reduce influencers money.
+ * ---------------------------------------------------------------------- */
+void 
+TryToTakeItem( item* BuyItem , int AmountToBuyAtMost )
+{
+  int StoredItemType;
+
+  StoredItemType = BuyItem -> type ;
+
+  //--------------------
+  // We prevent some take-put-cheating here.  For buying items this must
+  // NOT be done.
+  //
+  if ( AmountToBuyAtMost >= BuyItem -> multiplicity ) AmountToBuyAtMost = BuyItem -> multiplicity ;
+
+  if ( TryToIntegrateItemIntoInventory ( BuyItem , AmountToBuyAtMost ) )
+    {
+      PlayItemSound( ItemMap[ StoredItemType ].sound_number );
+    }
+}; // void TryToTakeItem( item* BuyItem , int AmountToBuyAtMost )
+
+/* ----------------------------------------------------------------------
  * This function tries to buy the item given as parameter.  Currently
  * is just drops the item to the floor under the influencer and will
  * reduce influencers money.
@@ -1125,11 +1364,9 @@ TryToSellItem( item* SellItem , int WithBacktalk , int AmountToSellAtMost )
 void 
 TryToBuyItem( item* BuyItem , int WithBacktalk , int AmountToBuyAtMost )
 {
-  int x, y;
-  int MenuPosition;
   int FreeIndex;
   char linebuf[1000];
-  int i;
+  float PotentialPrice;
 
 #define ANSWER_YES 1
 #define ANSWER_NO 2
@@ -1162,131 +1399,22 @@ TryToBuyItem( item* BuyItem , int WithBacktalk , int AmountToBuyAtMost )
     }
 
   //--------------------
-  // At first we try to see if we can just add the multiplicity of the item in question
-  // to the existing multiplicity of an item of the same type
+  // In the case that the item could be afforded in theory, we need to
+  // calculate the price, then have the item integrated into the inventory
+  // if that's possible, and if so, subtract the items price from the
+  // current gold.
   //
-  if ( ItemMap [ BuyItem->type ] . item_group_together_in_inventory )
+  PotentialPrice = CalculateItemPrice ( BuyItem , FALSE );
+
+  if ( TryToIntegrateItemIntoInventory ( BuyItem , AmountToBuyAtMost ) )
     {
-      for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
-	{
-	  if ( Me [ 0 ] . Inventory [ i ] . type == BuyItem->type )
-	    {
-	      while ( 1 )
-		{
-		  if ( WithBacktalk )
-		    {
-		      GiveItemDescription( linebuf , BuyItem , TRUE );
-		      strcat ( linebuf , "\n\n    Are you sure you wish to purchase this item?" );
-		      MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 , NULL , NULL );
-		      switch (MenuPosition) 
-			{
-			case (-1):
-			  return;
-			  break;
-			case ANSWER_YES:
-			  while (EnterPressed() || SpacePressed() );
-			  Me [ 0 ] . Inventory [ i ] . multiplicity += BuyItem -> multiplicity ;
-			  Me[0].Gold -= CalculateItemPrice ( BuyItem , FALSE );
-			  Play_Shop_ItemBoughtSound( );
-			  //--------------------
-			  // This is new.  I hope it's not dangerous.
-			  DeleteItem ( BuyItem );
-			  return;
-			  break;
-			case ANSWER_NO:
-			  while (EnterPressed() || SpacePressed() );
-			  return;
-			  break;
-			}
-		    }
-		  else
-		    {
-		      while (EnterPressed() || SpacePressed() );
-		      Me [ 0 ] . Inventory [ i ] . multiplicity += BuyItem -> multiplicity ;
-		      Me[0].Gold -= CalculateItemPrice ( BuyItem , FALSE );
-		      Play_Shop_ItemBoughtSound( );
-		      //--------------------
-		      // This is new.  I hope it's not dangerous.
-		      DeleteItem ( BuyItem );
-		      return;
-		    }
-		}
-	    }
-	}
+      Me[0].Gold -= CalculateItemPrice ( BuyItem , FALSE );
+      Play_Shop_ItemBoughtSound( );
     }
-
-  //--------------------
-  // Now we must find out if there is an inventory position where we can put the
-  // item in question.
-  //
-
-  for ( x = 0 ; x < INVENTORY_GRID_WIDTH ; x ++ )
+  else
     {
-      for ( y = 0 ; y < INVENTORY_GRID_HEIGHT ; y ++ )
-	{
-	  if ( ItemCanBeDroppedInInv ( BuyItem->type , x , y ) )
-	    {
-	      while ( 1 )
-		{
-		  if ( WithBacktalk )
-		    {
-		      GiveItemDescription( linebuf , BuyItem , TRUE );
-		      strcat ( linebuf , "\n\n    Are you sure you wish to purchase this item?" );
-		      MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 , NULL , NULL );
-		      switch (MenuPosition) 
-			{
-			case (-1):
-			  return;
-			  break;
-			case ANSWER_YES:
-			  while (EnterPressed() || SpacePressed() );
-			  CopyItem( BuyItem , & ( Me[0].Inventory[ FreeIndex ] ) , TRUE );
-			  Me[0].Inventory[ FreeIndex ].currently_held_in_hand = FALSE;
-			  Me[0].Inventory[ FreeIndex ].inventory_position.x = x;
-			  Me[0].Inventory[ FreeIndex ].inventory_position.y = y;
-			  Me[0].Gold -= CalculateItemPrice ( BuyItem , FALSE );
-			  Play_Shop_ItemBoughtSound( );
-			  //--------------------
-			  // This is new.  I hope it's not dangerous.
-			  DeleteItem ( BuyItem );
-			  return;
-			  break;
-			case ANSWER_NO:
-			  while (EnterPressed() || SpacePressed() );
-			  return;
-			  break;
-			}
-		    }
-		  else
-		    {
-		      while (EnterPressed() || SpacePressed() );
-		      CopyItem( BuyItem , & ( Me[0].Inventory[ FreeIndex ] ) , TRUE );
-		      Me[0].Inventory[ FreeIndex ].currently_held_in_hand = FALSE;
-		      Me[0].Inventory[ FreeIndex ].inventory_position.x = x;
-		      Me[0].Inventory[ FreeIndex ].inventory_position.y = y;
-		      Me[0].Gold -= CalculateItemPrice ( BuyItem , FALSE );
-		      Play_Shop_ItemBoughtSound( );
-		      //--------------------
-		      // This is new.  I hope it's not dangerous.
-		      DeleteItem ( BuyItem );
-		      return;
-		    }
-		}
-	    }
-	}
+      // bad luck.  couldn't store item in inventory, so no price paid...
     }
-
-  //--------------------
-  // If this point is ever reached, we know that an item has been selected 
-  // for buying and could be bought, if only ONE HAD ENOUGH ROOM IN INVENTORY!!
-  // Therefore a message must be displayed, saying what the problem is.
-  //
-  PlayOnceNeededSoundSample ( "Tux_Hold_On_I_0.wav" , FALSE );
-  MenuTexts[0]=" BACK ";
-  MenuTexts[1]="";
-  GiveItemDescription( linebuf , BuyItem , TRUE );
-  strcat ( linebuf , "\n\n   No room for this item in inventory!" );
-  DoMenuSelection( linebuf , MenuTexts , 1 , NULL , NULL );
 
 }; // void TryToBuyItem( item* BuyItem )
 
@@ -1305,7 +1433,6 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
   item* Buy_Pointer_List[ MAX_ITEMS_IN_INVENTORY ];
   item* TuxItemsList[ MAX_ITEMS_IN_INVENTORY ];
   int i;
-  char DescriptionText[5000];
   int ItemSelected=0;
   shop_decision ShopOrder;
   int NumberOfItemsInTuxRow=0;
@@ -1404,12 +1531,11 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
   //
   while ( ItemSelected != (-1) )
     {
-      sprintf( DescriptionText , " I HAVE THESE ITEMS FOR SALE         YOUR GOLD:  %4ld" , Me[0].Gold );
 
       NumberOfItemsInTuxRow = AssemblePointerListForItemShow ( &( TuxItemsList[0]), FALSE, 0 );
 
       ItemSelected = GreatShopInterface ( NUMBER_OF_ITEMS_IN_SHOP , Buy_Pointer_List , 
-					  NumberOfItemsInTuxRow , TuxItemsList , &(ShopOrder) );
+					  NumberOfItemsInTuxRow , TuxItemsList , &(ShopOrder) , FALSE );
 
       switch ( ShopOrder . shop_command )
 	{
@@ -1477,14 +1603,6 @@ Repair_Items( void )
   MenuTexts[0]="Yes";
   MenuTexts[1]="No";
   MenuTexts[2]="";
-  MenuTexts[3]="";
-  MenuTexts[4]="";
-  MenuTexts[5]="";
-  MenuTexts[8]="";
-  MenuTexts[6]="";
-  MenuTexts[7]="";
-  MenuTexts[9]="";
-
 
   //--------------------
   // First we clean out the new Repair_Pointer_List
@@ -1575,14 +1693,6 @@ Identify_Items ( void )
   MenuTexts[0]="Yes";
   MenuTexts[1]="No";
   MenuTexts[2]="";
-  MenuTexts[3]="";
-  MenuTexts[4]="";
-  MenuTexts[5]="";
-  MenuTexts[8]="";
-  MenuTexts[6]="";
-  MenuTexts[7]="";
-  MenuTexts[9]="";
-
 
   //--------------------
   // First we clean out the new Identify_Pointer_List
@@ -1765,9 +1875,6 @@ enum
       MenuTexts[5]="Leave the Sales Representative";
       MenuTexts[4]="Identify Items";
       MenuTexts[8]="";
-      MenuTexts[6]="";
-      MenuTexts[7]="";
-      MenuTexts[9]="";
 
       // MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , SHOP_BACKGROUND_IMAGE , NULL );
       MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , SHOP_BACKGROUND_IMAGE , Menu_Filled_BFont );
@@ -1849,11 +1956,6 @@ enum
       MenuTexts[2]="Gossip";
       MenuTexts[3]="Leave the Healer alone";
       MenuTexts[4]="";
-      MenuTexts[5]="";
-      MenuTexts[8]="";
-      MenuTexts[6]="";
-      MenuTexts[7]="";
-      MenuTexts[9]="";
 
       MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , NULL , NULL );
 
@@ -1890,6 +1992,62 @@ enum
 
   return;
 }; // void HealerMenu ( void )
+
+/* ----------------------------------------------------------------------
+ * When the Tux opens a chest map tile, then there should be an interface
+ * where the Tux can put in stuff and take out stuff from the chest, 
+ * which is exactly what this function is supposed to do.
+ * ---------------------------------------------------------------------- */
+void
+EnterChest (void)
+{
+  int ItemSelected = 0 ;
+  int NumberOfItemsInTuxRow = 0 ;
+  int NumberOfItemsInChest = 0 ;
+  item* Buy_Pointer_List[ MAX_ITEMS_IN_INVENTORY ];
+  item* TuxItemsList[ MAX_ITEMS_IN_INVENTORY ];
+  shop_decision ShopOrder;
+
+  Activate_Conservative_Frame_Computation();
+
+  while ( ItemSelected != (-1) )
+    {
+      
+      NumberOfItemsInTuxRow = AssemblePointerListForItemShow ( &( TuxItemsList[0]), FALSE , 0 );
+      NumberOfItemsInChest = AssemblePointerListForChestShow ( &( Buy_Pointer_List[0]), 0 );
+
+      ItemSelected = GreatShopInterface ( NumberOfItemsInChest , Buy_Pointer_List , 
+					  NumberOfItemsInTuxRow , TuxItemsList , &(ShopOrder) , TRUE );
+
+      if ( ItemSelected == (-1) ) ShopOrder . shop_command = DO_NOTHING ;
+
+      switch ( ShopOrder . shop_command )
+	{
+	case BUY_1_ITEM:
+	  TryToTakeItem( Buy_Pointer_List[ ShopOrder . item_selected ] , 1 ) ;
+	  break;
+	case BUY_10_ITEMS:
+	  TryToTakeItem( Buy_Pointer_List[ ShopOrder . item_selected ] , 10 ) ;
+	  break;
+	case BUY_100_ITEMS:
+	  TryToTakeItem( Buy_Pointer_List[ ShopOrder . item_selected ] , 100 ) ;
+	  break;
+	case SELL_1_ITEM:
+	  TryToPutItem( TuxItemsList[ ShopOrder . item_selected ] , 1 ) ;
+	  break;
+	case SELL_10_ITEMS:
+	  TryToPutItem( TuxItemsList[ ShopOrder . item_selected ] , 10 ) ;
+	  break;
+	case SELL_100_ITEMS:
+	  TryToPutItem( TuxItemsList[ ShopOrder . item_selected ] , 100 ) ;
+	  break;
+	default:
+	  
+	  break;
+	};
+    }
+
+}; // void EnterChest (void)
 
 
 #undef _shop_c

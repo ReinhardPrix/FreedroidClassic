@@ -108,7 +108,14 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "mouse_buttons/Buy100Button.png"                 , { 487 , 375 , 120 ,  37 } } ,
     { NULL , "mouse_buttons/SellButton.png"                   , { 233 , 375 , 120 ,  37 } } ,
     { NULL , "mouse_buttons/Sell10Button.png"                 , { 360 , 375 , 120 ,  37 } } ,
-    { NULL , "mouse_buttons/Sell100Button.png"                , { 487 , 375 , 120 ,  37 } } 
+    { NULL , "mouse_buttons/Sell100Button.png"                , { 487 , 375 , 120 ,  37 } } ,
+
+    { NULL , "mouse_buttons/TakeButton.png"                    , { 233 , 375 , 120 ,  37 } } ,
+    { NULL , "mouse_buttons/Take10Button.png"                  , { 360 , 375 , 120 ,  37 } } ,
+    { NULL , "mouse_buttons/Take100Button.png"                 , { 487 , 375 , 120 ,  37 } } ,
+    { NULL , "mouse_buttons/PutButton.png"                     , { 233 , 375 , 120 ,  37 } } ,
+    { NULL , "mouse_buttons/Put10Button.png"                   , { 360 , 375 , 120 ,  37 } } ,
+    { NULL , "mouse_buttons/Put100Button.png"                  , { 487 , 375 , 120 ,  37 } } 
 
   }; // AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] 
 

@@ -551,11 +551,13 @@ EXTERN void DisplayBanner (const char* left, const char* right, int flags );
 #else
 #define EXTERN extern
 #endif
+EXTERN int AssemblePointerListForChestShow ( item** ItemPointerListPointer , int PlayerNum );
 EXTERN int AssemblePointerListForItemShow ( item** ItemPointerListPointer , int IncludeWornItems, int PlayerNum );
 EXTERN void Buy_Basic_Items( int ForHealer , int ForceMagic );
 EXTERN void Sell_Items( int ForHealer );
 EXTERN void Repair_Items( void );
 EXTERN void Identify_Items ( void );
+EXTERN void EnterChest (void);
 
 // network.c 
 #undef EXTERN

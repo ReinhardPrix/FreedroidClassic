@@ -144,13 +144,6 @@ PutSecurityButtonsAndClearance ( int ClearanceIndex )
     }
 }; // void PutSecurityButtonsAndClearance ( int ClearanceIndex )
 
-
-void
-EnterChest (void)
-{
-
-}; // void EnterChest (void)
-
 /* ----------------------------------------------------------------------
  * This function does all console duties.
  * This means the following:

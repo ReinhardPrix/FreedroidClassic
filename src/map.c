@@ -1815,6 +1815,66 @@ freedroid-discussion@lists.sourceforge.net\n\
 
 }; // int SaveShip ( char* filename )
 
+void
+ReadInOneItem ( char* ItemPointer , char* ItemsSectionEnd , Item TargetItem )
+{
+
+  ReadValueFromString( ItemPointer , ITEM_CODE_STRING , "%d" , 
+		       &(TargetItem -> type) , ItemsSectionEnd );
+  ReadValueFromString( ItemPointer , ITEM_POS_X_STRING , "%lf" , 
+		       &(TargetItem -> pos.x) , ItemsSectionEnd );
+  ReadValueFromString( ItemPointer , ITEM_POS_Y_STRING , "%lf" , 
+		       &(TargetItem -> pos.y) , ItemsSectionEnd );
+  ReadValueFromString( ItemPointer , ITEM_AC_BONUS_STRING , "%d" , 
+		       &( TargetItem -> ac_bonus ) , ItemsSectionEnd );
+  ReadValueFromString( ItemPointer , ITEM_DAMAGE_STRING , "%d" , 
+		       &( TargetItem -> damage ) , ItemsSectionEnd );
+  ReadValueFromString( ItemPointer , ITEM_DAMAGE_MODIFIER_STRING , "%d" , 
+		       &( TargetItem -> damage_modifier ) , ItemsSectionEnd );
+  ReadValueFromString( ItemPointer , ITEM_MAX_DURATION_STRING , "%d" , 
+		       &( TargetItem -> max_duration ) , ItemsSectionEnd );
+  ReadValueFromString( ItemPointer , ITEM_CUR_DURATION_STRING , "%f" , 
+		       &( TargetItem -> current_duration ) , ItemsSectionEnd );
+  ReadValueFromString( ItemPointer , ITEM_GOLD_AMOUNT_STRING , "%d" , 
+		       &( TargetItem -> gold_amount ) , ItemsSectionEnd );
+  ReadValueFromString( ItemPointer , ITEM_MULTIPLICITY_STRING , "%d" , 
+		       &( TargetItem -> multiplicity ) , ItemsSectionEnd );
+  ReadValueFromString( ItemPointer , ITEM_PREFIX_CODE_STRING , "%d" , 
+		       &( TargetItem -> prefix_code ) , ItemsSectionEnd );
+  ReadValueFromString( ItemPointer , ITEM_SUFFIX_CODE_STRING , "%d" , 
+		       &( TargetItem -> suffix_code ) , ItemsSectionEnd );
+  // Now we read in the boni to the primary stats (attributes)
+  ReadValueFromString( ItemPointer , ITEM_BONUS_TO_STR_STRING , "%d" , 
+		       &( TargetItem -> bonus_to_str ) , ItemsSectionEnd );
+  ReadValueFromString( ItemPointer , ITEM_BONUS_TO_DEX_STRING , "%d" , 
+		       &( TargetItem -> bonus_to_dex ) , ItemsSectionEnd );
+  ReadValueFromString( ItemPointer , ITEM_BONUS_TO_MAG_STRING , "%d" , 
+		       &( TargetItem -> bonus_to_mag ) , ItemsSectionEnd );
+  ReadValueFromString( ItemPointer , ITEM_BONUS_TO_VIT_STRING , "%d" , 
+		       &( TargetItem -> bonus_to_vit ) , ItemsSectionEnd );
+  ReadValueFromString( ItemPointer , ITEM_BONUS_TO_ALLATT_STRING , "%d" , 
+		       &( TargetItem -> bonus_to_all_attributes ) , ItemsSectionEnd );
+  // Now we read in the boni for the secondary stats
+  ReadValueFromString( ItemPointer , ITEM_BONUS_TO_LIFE_STRING , "%d" , 
+		       &( TargetItem -> bonus_to_life ) , ItemsSectionEnd );
+  ReadValueFromString( ItemPointer , ITEM_BONUS_TO_FORCE_STRING , "%d" , 
+		       &( TargetItem -> bonus_to_force ) , ItemsSectionEnd );
+  ReadValueFromString( ItemPointer , ITEM_BONUS_TO_TOHIT_STRING , "%d" , 
+		       &( TargetItem -> bonus_to_tohit ) , ItemsSectionEnd );
+  ReadValueFromString( ItemPointer , ITEM_BONUS_TO_ACDAM_STRING , "%d" , 
+		       &( TargetItem -> bonus_to_ac_or_damage ) , ItemsSectionEnd );
+  // Now we read in the boni for resistances
+  ReadValueFromString( ItemPointer , ITEM_BONUS_TO_RESELE_STRING , "%d" , 
+		       &( TargetItem -> bonus_to_resist_electricity ) , ItemsSectionEnd );
+  ReadValueFromString( ItemPointer , ITEM_BONUS_TO_RESFIR_STRING , "%d" , 
+		       &( TargetItem -> bonus_to_resist_fire ) , ItemsSectionEnd );
+  ReadValueFromString( ItemPointer , ITEM_BONUS_TO_RESFOR_STRING , "%d" , 
+		       &( TargetItem -> bonus_to_resist_force ) , ItemsSectionEnd );
+  DebugPrintf( 1 , "\nPosX=%f PosY=%f Item=%d" , TargetItem -> pos.x , 
+	       TargetItem -> pos.y , TargetItem -> type );
+  
+}; // void ReadInOneItem ( ItemPointer , &(loadlevel->ItemList[ i ]) )
+
 //----------------------------------------------------------------------
 // From here on we take apart the items section of the loaded level...
 //----------------------------------------------------------------------
@@ -1855,68 +1915,61 @@ DecodeItemSectionOfThisLevel ( Level loadlevel , char* data )
   for ( i = 0 ; i < NumberOfItemsInThisLevel ; i ++ )
     {
       ItemPointer = strstr ( ItemPointer + 1 , ITEM_CODE_STRING );
-      ReadValueFromString( ItemPointer , ITEM_CODE_STRING , "%d" , 
-			   &(loadlevel->ItemList[ i ].type) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_POS_X_STRING , "%lf" , 
-			   &(loadlevel->ItemList[ i ].pos.x) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_POS_Y_STRING , "%lf" , 
-			   &(loadlevel->ItemList[ i ].pos.y) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_AC_BONUS_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].ac_bonus ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_DAMAGE_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].damage ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_DAMAGE_MODIFIER_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].damage_modifier ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_MAX_DURATION_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].max_duration ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_CUR_DURATION_STRING , "%f" , 
-			   &( loadlevel->ItemList[ i ].current_duration ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_GOLD_AMOUNT_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].gold_amount ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_MULTIPLICITY_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].multiplicity ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_PREFIX_CODE_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].prefix_code ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_SUFFIX_CODE_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].suffix_code ) , ItemsSectionEnd );
-      // Now we read in the boni to the primary stats (attributes)
-      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_STR_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].bonus_to_str ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_DEX_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].bonus_to_dex ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_MAG_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].bonus_to_mag ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_VIT_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].bonus_to_vit ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_ALLATT_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].bonus_to_all_attributes ) , ItemsSectionEnd );
-      // Now we read in the boni for the secondary stats
-      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_LIFE_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].bonus_to_life ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_FORCE_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].bonus_to_force ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_TOHIT_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].bonus_to_tohit ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_ACDAM_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].bonus_to_ac_or_damage ) , ItemsSectionEnd );
-      // Now we read in the boni for resistances
-      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_RESELE_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].bonus_to_resist_electricity ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_RESFIR_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].bonus_to_resist_fire ) , ItemsSectionEnd );
-      ReadValueFromString( ItemPointer , ITEM_BONUS_TO_RESFOR_STRING , "%d" , 
-			   &( loadlevel->ItemList[ i ].bonus_to_resist_force ) , ItemsSectionEnd );
+      ReadInOneItem ( ItemPointer , ItemsSectionEnd , &(loadlevel->ItemList[ i ]) );
+    }
+  
+  // Now we repair the damage done to the loaded level data
+  ItemsSectionEnd[0]=Preserved_Letter;
+}; // void DecodeItemSectionOfThisLevel ( Level loadlevel , char* data )
 
-      DebugPrintf( 1 , "\nPosX=%f PosY=%f Item=%d" , loadlevel->ItemList[ i ].pos.x , 
-		   loadlevel->ItemList[ i ].pos.y , loadlevel->ItemList[ i ].type );
+//----------------------------------------------------------------------
+// From here on we take apart the chest items section of the loaded level...
+//----------------------------------------------------------------------
+void
+DecodeChestItemSectionOfThisLevel ( Level loadlevel , char* data )
+{
+  int i;
+  char Preserved_Letter;
+  int NumberOfItemsInThisLevel;
+  char* ItemPointer;
+  char* ItemsSectionBegin;
+  char* ItemsSectionEnd;
+
+  //--------------------
+  // First we initialize the items arrays with 'empty' information
+  //
+  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+    {
+      loadlevel->ChestItemList[ i ].pos.x = ( -1 ) ;
+      loadlevel->ChestItemList[ i ].pos.y = ( -1 ) ;
+      loadlevel->ChestItemList[ i ].type = ( -1 ) ;
+      loadlevel->ChestItemList[ i ].currently_held_in_hand = FALSE;
+    }
+
+  // We look for the beginning and end of the items section
+  ItemsSectionBegin = LocateStringInData( data , CHEST_ITEMS_SECTION_BEGIN_STRING );
+  ItemsSectionEnd = LocateStringInData( data , CHEST_ITEMS_SECTION_END_STRING );
+
+  // We add a terminator at the end of the items section, but ONLY TEMPORARY.  
+  // The damage will be restored later!
+  Preserved_Letter=ItemsSectionEnd[0];
+  ItemsSectionEnd[0]=0;
+  NumberOfItemsInThisLevel = CountStringOccurences ( ItemsSectionBegin , ITEM_CODE_STRING ) ;
+  DebugPrintf( 0 , "\nNumber of chest items found in this level : %d." , NumberOfItemsInThisLevel );
+
+  // Now we decode all the item information
+  ItemPointer=ItemsSectionBegin;
+  for ( i = 0 ; i < NumberOfItemsInThisLevel ; i ++ )
+    {
+      ItemPointer = strstr ( ItemPointer + 1 , ITEM_CODE_STRING );
+      ReadInOneItem ( ItemPointer , ItemsSectionEnd , &(loadlevel->ItemList[ i ]) );
     }
   
   // Now we repair the damage done to the loaded level data
   ItemsSectionEnd[0]=Preserved_Letter;
 
-  fflush(stdout);
+}; // void DecodeChestItemSectionOfThisLevel ( Level loadlevel , char* data )
 
-}; // void DecodeItemSectionOfThisLevel ( Level loadlevel , char* data )
 
 /* ----------------------------------------------------------------------
  * This function is for LOADING map data!
@@ -1991,6 +2044,8 @@ DecodeLoadedLeveldata ( char *data )
   DecodeBigMapInsertsOfThisLevel ( loadlevel , DataPointer );
 
   DecodeItemSectionOfThisLevel ( loadlevel , data );
+
+  DecodeChestItemSectionOfThisLevel ( loadlevel , data );
 
   //--------------------
   // find the map data
