@@ -36,20 +36,20 @@
 #define TO_BG_COLOR			63
 
 /* Timing parameters */
-#define COLOR_COUNTDOWN		100		/* Zeit zum Farbe auswaehlen */
-#define GAME_COUNTDOWN		100		/* Zeit fuer das Spiel */
-#define CAPSULE_COUNTDOWN	 40		/* 1/10 sec. Lebensdauer einer Kapsel */
+#define COLOR_COUNTDOWN		100	/* Zeit zum Farbe auswaehlen */
+#define GAME_COUNTDOWN		100	/* Zeit fuer das Spiel */
+#define CAPSULE_COUNTDOWN	 40	/* 1/10 sec. Lebensdauer einer Kapsel */
 
-#define WAIT_MOVEMENT		0		/* 1/18 sekunden Bewegungsgeschw. */
-#define WAIT_COLOR_ROTATION	2		/* 1/18 sekunden aktive-Kabel */
-#define WAIT_AFTER_GAME		2*18		/* Wait after a deadlock */
+#define WAIT_MOVEMENT		0	/* 1/18 sekunden Bewegungsgeschw. */
+#define WAIT_COLOR_ROTATION	2	/* 1/18 sekunden aktive-Kabel */
+#define WAIT_AFTER_GAME		2*18	/* Wait after a deadlock */
 
 /* Position of Leader-Led */
-#define LEADERLEDX		USERFENSTERPOSX + 141
+#define LEADERLEDX		USERFENSTERPOSX + 136
 #define LEADERLEDY		83
 
 /* Start-pos of Led-column */
-#define LEDCOLUMNX		USERFENSTERPOSX + 141 
+#define LEDCOLUMNX		USERFENSTERPOSX + 136
 #define LEDCOLUMNY		99
 
 /* Dimensions of a capsule */
@@ -58,29 +58,29 @@
 #define CAPSULE_MEM		CAPSULE_HEIGHT*CAPSULE_LEN
 
 /* Positions of Druid-pictures */
-#define GELB_DRUID_X		45 + USERFENSTERPOSX
+#define GELB_DRUID_X		40 + USERFENSTERPOSX
 #define GELB_DRUID_Y		0 + USERFENSTERPOSY
-#define VIOLETT_DRUID_X		225+ USERFENSTERPOSX
+#define VIOLETT_DRUID_X		220+ USERFENSTERPOSX
 #define VIOLETT_DRUID_Y		GELB_DRUID_Y
 
 /* Left-Capsules positions */
 #define GELB_LEFT_CAPSULES_X	0   + USERFENSTERPOSX
 #define GELB_LEFT_CAPSULES_Y	27  + USERFENSTERPOSY
-#define VIOLETT_LEFT_CAPSULES_X	288 + USERFENSTERPOSX
+#define VIOLETT_LEFT_CAPSULES_X	USERFENSTERPOSX+USERFENSTERBREITE-CAPSULE_LEN
 #define VIOLETT_LEFT_CAPSULES_Y	27  + USERFENSTERPOSY
 
 /* start-pos of Current Capsule */
-#define GELB_CUR_CAPSULE_X	31  + USERFENSTERPOSX
+#define GELB_CUR_CAPSULE_X	26  + USERFENSTERPOSX
 #define GELB_CUR_CAPSULE_Y	19  + USERFENSTERPOSY
-#define VIOLETT_CUR_CAPSULE_X	260 + USERFENSTERPOSX
+#define VIOLETT_CUR_CAPSULE_X	255 + USERFENSTERPOSX
 #define VIOLETT_CUR_CAPSULE_Y	19  + USERFENSTERPOSY
 
 #define MAX_CAPSULES		13	/* a 999 has 13 !!! */
 
 /* Start-Pos of playground */
-#define GELB_PLAYGROUND_X	38  + USERFENSTERPOSX
+#define GELB_PLAYGROUND_X	33  + USERFENSTERPOSX
 #define GELB_PLAYGROUND_Y	26  + USERFENSTERPOSY
-#define VIOLETT_PLAYGROUND_X	260 + USERFENSTERPOSX
+#define VIOLETT_PLAYGROUND_X	255 + USERFENSTERPOSX
 #define VIOLETT_PLAYGROUND_Y	26  + USERFENSTERPOSY
 
 /* Dimensions of the fill-blocks (in led-column */
@@ -99,13 +99,13 @@
 #define LEADERBLOCKLEN		30
 #define LEADERBLOCKHEIGHT	19
 
-#define LEFT_OFFS_X		15		/* Offset der linken "Saeule" */
+#define LEFT_OFFS_X		10	/* Offset der linken "Saeule" */
 #define LEFT_OFFS_Y		15
 
-#define MID_OFFS_X		134		/* -- mittleren -- */
+#define MID_OFFS_X		129	/* -- mittleren -- */
 #define MID_OFFS_Y		8
 
-#define RIGHT_OFFS_X		260		/* -- rechten --- */
+#define RIGHT_OFFS_X		255	/* -- rechten --- */
 #define RIGHT_OFFS_Y		15
 
 enum _groundblocks {

@@ -831,25 +831,25 @@ void FlashWindow(int Flashcolor){
   memset(InternWindow,Flashcolor,INTERNBREITE*INTERNHOEHE*BLOCKBREITE*BLOCKHOEHE);
 } // void FlashWindow(int Flashcolor)
 
-/*@Function============================================================
-@Desc: void SetUserfenster(int color): Setzt die Hintergrundfarbe fuer das
-				Userfenster
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void SetUserfenster(int color, unsigned char *screen)
+/*-----------------------------------------------------------------
+ * @Desc: Setzt die Hintergrundfarbe fuer das Userfenster using glvga
+ * @Ret: void
+ *
+ *-----------------------------------------------------------------*/
+void
+SetUserfenster (int color, unsigned char *screen)
 {
-	int row;
-	unsigned char *screenstart =
-		screen + USERFENSTERPOSY*SCREENLEN + USERFENSTERPOSX;
-		
-	for(row =0; row<USERFENSTERHOEHE; row++) {
-		memset(screenstart, color, USERFENSTERBREITE);
-		screenstart += SCREENLEN;
-	}
+  int row;
+  int x0 = USERFENSTERPOSX;
+  int x1 = x0 + USERFENSTERBREITE;
+  int y0 = USERFENSTERPOSY;
+  int y1 = y0 + USERFENSTERHOEHE;
 
-	return;
-}
+  for (row = y0; row < y1; row++) 
+    gl_hline(x0, row, x1, color);
+  
+  return;
+} 
 
 /* **********************************************************************
    Diese Funktion zeigt einen Robotter an

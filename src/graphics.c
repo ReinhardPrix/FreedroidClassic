@@ -269,13 +269,11 @@ void SwapScreen(void)
   }
 } // void SwapScreen(void)
 
-/*@Function============================================================
-@Desc: MemSearch(): Sucht Binary-Area zwischen SStart und SEnd nach
-SString ab. liefer Pointer auf gef. String oder NULL
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/*-----------------------------------------------------------------
+ * @Desc: 
+ * @Ret: 
+ *
+ *-----------------------------------------------------------------*/
 void ClearVGAScreen(void)
 {
   char* LocalBlackLinePointer;

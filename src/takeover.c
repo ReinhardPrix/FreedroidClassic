@@ -33,6 +33,7 @@
 
 #define _takeover_c
 
+#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -183,9 +184,6 @@ Takeover (int enemynum)
   /* Tastaturwiederholrate richtig setzen */
   SetTypematicRate(TYPEMATIC_FAST);
 	
-  /* Userfenster faerben */
-  SetUserfenster(TO_BG_COLOR, RealScreen);
-	
   /* Warte, bis User Space auslaesst */
   while( SpacePressed() ) {
     JoystickControl();
@@ -193,6 +191,9 @@ Takeover (int enemynum)
   }
 
   while( !FinishTakeover ) {
+	
+    /* Userfenster faerben */
+    SetUserfenster(TO_BG_COLOR, RealScreen);
 	
     /* Init Color-column and Capsule-Number for each opponenet and your color */
     for( row=0; row<NUM_LINES; row++) {
