@@ -39,8 +39,9 @@ typedef char bool;
 #define _BOOL
 #endif
 
+#ifdef HAVE_LIBGL
 #include <GL/gl.h>
-#include <GL/glu.h>
+#endif
 
 typedef struct
 {
@@ -256,8 +257,11 @@ typedef struct
   SDL_Surface* zoomed_out_surface;
   int texture_width;
   int texture_height;
+
+#ifdef HAVE_LIBGL
   GLuint texture;  // this is to store an open_gl texture...
-  
+#endif
+
 }
 iso_image, *Iso_image;
 

@@ -707,8 +707,7 @@ PutPixel (SDL_Surface * surface, int x, int y, Uint32 pixel)
     {
       if ( surface == Screen ) 
 	{
-	  glRasterPos2i( x , y ) ;
-	  glDrawPixels( 1 , 1, GL_RGBA , GL_UNSIGNED_BYTE , & pixel );
+	  PutPixel_open_gl ( x , y , pixel ) ;
 	  return;
 	}
     }

@@ -36,8 +36,9 @@
 #include "proto.h"
 #include "SDL_rotozoom.h"
 
+#ifdef HAVE_LIBGL
 #include <GL/gl.h>
-#include <GL/glu.h>
+#endif 
 
 /* ----------------------------------------------------------------------
  *
@@ -61,12 +62,14 @@ our_SDL_flip_wrapper ( SDL_Surface *screen )
 int
 our_SDL_blit_surface_wrapper(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect)
 {
+#ifdef HAVE_LIBGL
   int bytes;
   int target_x, target_y ;
+#endif
 
   if ( use_open_gl )
     {
-
+#ifdef HAVE_LIBGL
       if ( src == NULL ) 
 	{
 	  DebugPrintf ( -1 , "\nNull source surface received. --> doing nothing." );
@@ -163,6 +166,7 @@ our_SDL_blit_surface_wrapper(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *d
 	}
 
       return SDL_BlitSurface ( src, srcrect, dst, dstrect);
+#endif
     }
   else
     {
@@ -197,10 +201,13 @@ our_SDL_update_rect_wrapper ( SDL_Surface *screen, Sint32 x, Sint32 y, Sint32 w,
 int 
 our_SDL_fill_rect_wrapper (SDL_Surface *dst, SDL_Rect *dstrect, Uint32 color)
 {
+#ifdef HAVE_LIBGL
   Uint8 r , g , b , a ;
+#endif
 
   if ( use_open_gl )
     {
+#ifdef HAVE_LIBGL
       if ( dst == Screen )
 	{
 	  SDL_GetRGBA( color, Screen -> format , &r, &g, &b, &a);
@@ -227,6 +234,7 @@ our_SDL_fill_rect_wrapper (SDL_Surface *dst, SDL_Rect *dstrect, Uint32 color)
 	    }
 	  return ( 0 );
 	}
+#endif
     }
 
   return ( SDL_FillRect ( dst, dstrect, color) ) ;
@@ -400,6 +408,9 @@ pad_image_for_texture ( SDL_Surface* our_surface )
 void
 make_texture_out_of_surface ( iso_image* our_image ) 
 {
+
+#ifdef HAVE_LIBGL
+
   SDL_Surface* right_sized_image ;
 
   //--------------------
@@ -457,14 +468,26 @@ make_texture_out_of_surface ( iso_image* our_image )
 
   SDL_FreeSurface ( right_sized_image );
 
+#endif
+
 }; // void make_texture_out_of_surface ( & ( floor_iso_images [ tile_type ] ) ) 
 
 /* ----------------------------------------------------------------------
  * Initialize the OpenGL interface.
  * ---------------------------------------------------------------------- */
+#ifdef HAVE_LIBGL
 int 
 initGL( GLvoid )
 {
+#else
+int 
+initGL( void )
+{
+#endif
+
+
+#ifdef HAVE_LIBGL
+
   //--------------------
   // Set up the screne, viewport matrix, coordinate system and all that...
   //
@@ -502,6 +525,8 @@ initGL( GLvoid )
   glEnable( GL_ALPHA_TEST );  
   glAlphaFunc ( GL_GREATER , 0.5 ) ;
   
+#endif
+
   return( TRUE );
 
 }; // int initGL( GLvoid )
@@ -513,6 +538,9 @@ initGL( GLvoid )
 void
 blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our_col , float our_line ) 
 {
+
+#ifdef HAVE_LIBGL
+
   SDL_Rect target_rectangle;
   float texture_start_y;
   float texture_end_y;
@@ -610,6 +638,8 @@ blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our
   glEnable( GL_ALPHA_TEST );  
   glAlphaFunc ( GL_GREATER , 0.5 ) ;
   
+#endif
+
 }; // void blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our_col , float our_line ) 
 
 /* ----------------------------------------------------------------------
@@ -619,6 +649,9 @@ blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our
 void
 blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x , int y ) 
 {
+
+#ifdef HAVE_LIBGL
+
   SDL_Rect target_rectangle;
   float texture_start_y;
   float texture_end_y;
@@ -673,7 +706,237 @@ blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x 
   glVertex2i( image_end_x , image_start_y );
   glEnd( );
 
+#endif
+
 }; // void blit_open_gl_texture_to_pixel_position ( iso_image our_floor_iso_image , int x, int y ) 
 
+/* ----------------------------------------------------------------------
+ * This function restores the menu background, that must have been stored
+ * before using the function of similar name.
+ * ---------------------------------------------------------------------- */
+void
+RestoreMenuBackground ( void )
+{
+  if ( use_open_gl )
+    {
+#ifdef HAVE_LIBGL
+      glRasterPos2i( 1 , 1 ) ; 
+      glDrawPixels( 640, 479, GL_RGB, GL_UNSIGNED_BYTE, (GLvoid*) StoredMenuBackground );
+      return ;
+#endif
+    }
+  else
+    {
+      our_SDL_blit_surface_wrapper ( StoredMenuBackground , NULL , Screen , NULL );
+    }
+}; // void RestoreMenuBackground ( void )
+
+/* ----------------------------------------------------------------------
+ * This function stores the current background as the background for a
+ * menu, so that it can be refreshed much faster than by reassembling it
+ * every frame.
+ * ---------------------------------------------------------------------- */
+void
+StoreMenuBackground ( void )
+{
+  static int first_call = TRUE ;
+
+  if ( first_call )
+    {
+      StoredMenuBackground = NULL ;
+      first_call = FALSE ;
+    }
+
+
+  if ( use_open_gl )
+    {
+#ifdef HAVE_LIBGL
+      //--------------------
+      // WARNING!  WE ARE USING THE SDL_SURFACE* here much like a char*!!!
+      // BEWARE!
+      //
+      if ( StoredMenuBackground == NULL )
+	{
+
+	}
+      else
+	{
+	  // free ( StoredMenuBackground ) ;
+	}
+
+      StoredMenuBackground = malloc ( 641 * 481 * 4 ) ;
+
+      glReadPixels( 1 , 1, 639, 479, GL_RGB, GL_UNSIGNED_BYTE, (GLvoid*) StoredMenuBackground );
+#endif
+    }
+  else
+    {
+      //--------------------
+      // If the memory was not yet allocated, we need to do that now...
+      //
+      // otherwise we free the old surface and create a new copy of the
+      // current screen content...
+      //
+      if ( StoredMenuBackground == NULL )
+	{
+	  StoredMenuBackground = our_SDL_display_format_wrapper ( Screen );
+	}
+      else
+	{
+	  SDL_FreeSurface ( StoredMenuBackground );
+	  StoredMenuBackground = our_SDL_display_format_wrapper ( Screen );
+	}
+    }
+
+}; // void StoreMenuBackground ( void )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+blit_open_gl_light_radius ( void )
+{
+
+#ifdef HAVE_LIBGL
+
+  static int first_call = TRUE ;
+  int i, j ;
+  char* fpath;
+  char constructed_file_name[2000];
+  int our_height, our_width, our_max_height, our_max_width;
+  int light_strength;
+  moderately_finepoint target_pos;
+  static int pos_x_grid [ (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2) ] [ (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2 ) ] ;
+  static int pos_y_grid [ (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2) ] [ (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2 ) ] ;
+  static SDL_Rect target_rectangle;
+  int chunk_size_x;
+  int chunk_size_y;
+  int window_offset_x;
+  int light_bonus = curShip . AllLevels [ Me [ 0 ] . pos . z ] -> light_radius_bonus ;
+  SDL_Surface* tmp;
+
+  //--------------------
+  // At first we need to enable texture mapping for all of the following.
+  // Without that, we'd just get (faster, but plain white) rectangles.
+  //
+  glEnable( GL_TEXTURE_2D );
+  //--------------------
+  // We disable depth test for all purposes.
+  //
+  glDisable(GL_DEPTH_TEST);
+
+  //--------------------
+  // We will use the 'GL_REPLACE' texturing environment or get 
+  // unusable (and slow) results.
+  //
+  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL );
+  glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND );
+  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
+
+  //--------------------
+  // Blending can be used, if there is no suitable alpha checking so that
+  // I could get it to work right....
+  //
+  // But alpha check functions ARE a bit faster, even on my hardware, so
+  // let's stick with that possibility for now, especially with the floor.
+  //
+  glDisable( GL_ALPHA_TEST );  
+  glEnable(GL_BLEND);
+  glBlendFunc( GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA );
+
+  //--------------------
+  // If the darkenss chunks have not yet been loaded, we load them...
+  //
+  if ( first_call )
+    {
+      first_call = FALSE;
+      for ( i = 0 ; i < NUMBER_OF_SHADOW_IMAGES ; i ++ )
+	{
+	  sprintf ( constructed_file_name , "light_radius_chunks/iso_light_radius_darkness_%04d.png" , i + 1 );
+	  fpath = find_file ( constructed_file_name , GRAPHICS_DIR , FALSE );
+	  get_iso_image_from_file_and_path ( fpath , & ( light_radius_chunk [ i ] ) ) ;
+	  tmp = light_radius_chunk [ i ] . surface ;
+	  light_radius_chunk [ i ] . surface = SDL_DisplayFormatAlpha ( light_radius_chunk [ i ] . surface ) ; 
+	  SDL_FreeSurface ( tmp ) ;
+	  make_texture_out_of_surface ( & ( light_radius_chunk [ i ] ) ) ;
+	}
+
+      pos_x_grid [ 0 ] [ 0 ] = translate_map_point_to_screen_pixel ( Me [ 0 ] . pos . x - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , Me [ 0 ] . pos . y - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , TRUE ) - 10 ;
+      pos_y_grid [ 0 ] [ 0 ] = translate_map_point_to_screen_pixel ( Me [ 0 ] . pos . x - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , Me [ 0 ] . pos . y - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , FALSE ) - 42 ;
+
+      chunk_size_x = 26 /2 + 1 ;
+      chunk_size_y = 14 /2 ; 
+
+      for ( i = 0 ; i < (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2) ; i ++ )
+	{
+	  for ( j = 0 ; j < (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2) ; j ++ )
+	    {
+	      pos_x_grid [ i ] [ j ] = pos_x_grid [ 0 ] [ 0 ] + ( i - j ) * chunk_size_x ;
+	      pos_y_grid [ i ] [ j ] = pos_y_grid [ 0 ] [ 0 ] + ( i + j ) * chunk_size_y ;
+	    }
+	}
+    }
+
+  //--------------------
+  // Now it's time to apply the light radius
+  //
+  our_max_width = FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2 ;
+  our_max_height = our_max_width;
+
+  window_offset_x = - ( SCREEN_WIDTH / 2 ) + UserCenter_x ;
+
+  for ( our_height = 0 ; our_height < our_max_height ; our_height ++ )
+    {
+      for ( our_width = 0 ; our_width < our_max_width ; our_width ++ )
+	{
+	  if ( our_width % LIGHT_RADIUS_CRUDENESS_FACTOR ) continue;
+	  if ( our_height % LIGHT_RADIUS_CRUDENESS_FACTOR ) continue;
+
+	  target_pos . x = Me [ 0 ] . pos . x - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) + our_width * LIGHT_RADIUS_CHUNK_SIZE ;
+	  target_pos . y = Me [ 0 ] . pos . y - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) + our_height * LIGHT_RADIUS_CHUNK_SIZE;
+	  light_strength = (int) ( sqrt ( ( Me [ 0 ] . pos . x - target_pos . x ) * ( Me [ 0 ] . pos . x - target_pos . x ) + ( Me [ 0 ] . pos . y - target_pos . y ) * ( Me [ 0 ] . pos . y - target_pos . y ) ) * 4.0 ) - light_bonus ;
+	  if ( light_strength >= NUMBER_OF_SHADOW_IMAGES ) light_strength = NUMBER_OF_SHADOW_IMAGES -1 ;
+	  if ( light_strength <= 0 ) continue ;
+
+	  // blit_iso_image_to_map_position ( light_radius_chunk [ light_strength ] , target_pos . x , target_pos . y );
+	  target_rectangle . x = pos_x_grid [ our_width ] [ our_height ] + window_offset_x ;
+	  target_rectangle . y = pos_y_grid [ our_width ] [ our_height ] ;
+
+	  blit_open_gl_texture_to_screen_position ( light_radius_chunk [ light_strength ] , target_rectangle . x , target_rectangle . y ) ;
+	}
+    }
+
+  //--------------------
+  // But for the rest of the drawing function, the peripherals and other
+  // things that are to be blitted after that, we should not forget to
+  // disable the texturing things again, or HORRIBLE framerates will result...
+  //
+  // So we revert everything that we might have touched to normal state.
+  //
+  glDisable( GL_TEXTURE_2D );
+  glDisable( GL_BLEND );
+  glEnable( GL_ALPHA_TEST );  
+  glAlphaFunc ( GL_GREATER , 0.5 ) ;
+  
+#endif
+
+}; // void blit_open_gl_light_radius ( void )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+PutPixel_open_gl ( int x, int y, Uint32 pixel)
+{
+
+#ifdef HAVE_LIBGL
+  glRasterPos2i( x , y ) ;
+  glDrawPixels( 1 , 1, GL_RGBA , GL_UNSIGNED_BYTE , & pixel );
+#endif
+
+}; // void PutPixel_open_gl ( x , y , pixel ) ;
 
 #undef _open_gl_c

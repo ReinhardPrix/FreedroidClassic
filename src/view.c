@@ -1272,7 +1272,7 @@ show_obstacle_labels ( int mask )
  *
  * ---------------------------------------------------------------------- */
 void
-blit_light_radius ( void )
+blit_classic_SDL_light_radius( void )
 {
   static int first_call = TRUE ;
   int i, j ;
@@ -1291,40 +1291,6 @@ blit_light_radius ( void )
   SDL_Surface* tmp;
 
   //--------------------
-  // At first we need to enable texture mapping for all of the following.
-  // Without that, we'd just get (faster, but plain white) rectangles.
-  //
-  glEnable( GL_TEXTURE_2D );
-  //--------------------
-  // We disable depth test for all purposes.
-  //
-  glDisable(GL_DEPTH_TEST);
-
-
-
-  //--------------------
-  // We will use the 'GL_REPLACE' texturing environment or get 
-  // unusable (and slow) results.
-  //
-  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL );
-  glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND );
-  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
-  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
-
-  //--------------------
-  // Blending can be used, if there is no suitable alpha checking so that
-  // I could get it to work right....
-  //
-  // But alpha check functions ARE a bit faster, even on my hardware, so
-  // let's stick with that possibility for now, especially with the floor.
-  //
-  glDisable( GL_ALPHA_TEST );  
-  glEnable(GL_BLEND);
-  glBlendFunc( GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA );
-
-
-
-  //--------------------
   // If the darkenss chunks have not yet been loaded, we load them...
   //
   if ( first_call )
@@ -1338,11 +1304,6 @@ blit_light_radius ( void )
 	  tmp = light_radius_chunk [ i ] . surface ;
 	  light_radius_chunk [ i ] . surface = SDL_DisplayFormatAlpha ( light_radius_chunk [ i ] . surface ) ; 
 	  SDL_FreeSurface ( tmp ) ;
-
-	  if ( use_open_gl )
-	    {
-	      make_texture_out_of_surface ( & ( light_radius_chunk [ i ] ) ) ;
-	    }
 	}
 
       pos_x_grid [ 0 ] [ 0 ] = translate_map_point_to_screen_pixel ( Me [ 0 ] . pos . x - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , Me [ 0 ] . pos . y - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , TRUE ) - 10 ;
@@ -1355,21 +1316,6 @@ blit_light_radius ( void )
 	{
 	  for ( j = 0 ; j < (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2) ; j ++ )
 	    {
-	      /*
-	      //--------------------
-	      // This case handles the assembly of the first row of chunks (southward movement)
-	      //
-	      if ( ( j == 0 ) && ( i > 0 ) )
-		{
-		  pos_x_grid [ i ] [ j ] = pos_x_grid [ i-1 ] [ j ] + chunk_size_x ;
-		  pos_y_grid [ i ] [ j ] = pos_y_grid [ i-1 ] [ j ] + chunk_size_y ;
-		}
-	      else if ( i > 0 )
-		{
-		  pos_x_grid [ i ] [ j ] = -0 + pos_x_grid [ i ] [ j-1 ] - chunk_size_x + 0 ;
-		  pos_y_grid [ i ] [ j ] = +0 + pos_y_grid [ i ] [ j-1 ] + chunk_size_y + 0 ;
-		}
-	      */
 	      pos_x_grid [ i ] [ j ] = pos_x_grid [ 0 ] [ 0 ] + ( i - j ) * chunk_size_x ;
 	      pos_y_grid [ i ] [ j ] = pos_y_grid [ 0 ] [ 0 ] + ( i + j ) * chunk_size_y ;
 	    }
@@ -1402,35 +1348,31 @@ blit_light_radius ( void )
 	  target_rectangle . x = pos_x_grid [ our_width ] [ our_height ] + window_offset_x ;
 	  target_rectangle . y = pos_y_grid [ our_width ] [ our_height ] ;
 
-	  if ( use_open_gl ) // use_open_gl )
-	    {
-	      blit_open_gl_texture_to_screen_position ( light_radius_chunk [ light_strength ] , target_rectangle . x , target_rectangle . y ) ;
-	      // blit_open_gl_texture_to_map_position ( light_radius_chunk [ light_strength ] , Me [ 0 ] . pos . x + ((float)our_width)/5.0 , Me [ 0 ] . pos . y + ((float)our_height)/5.0 ) ;
-	    }
-	  else
-	    {
-	      our_SDL_blit_surface_wrapper( light_radius_chunk [ light_strength ] . surface , NULL , Screen, &target_rectangle );
-	    }
-	  
+	  our_SDL_blit_surface_wrapper( light_radius_chunk [ light_strength ] . surface , NULL , Screen, &target_rectangle );
 	}
     }
+}; // void blit_classic_SDL_light_radius( void )
 
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+blit_light_radius ( void )
+{
 
+  if ( use_open_gl )
+    {
+      blit_open_gl_light_radius ();
+    }
+  else
+    {
+      blit_classic_SDL_light_radius();
+    }
 
-
-  //--------------------
-  // But for the rest of the drawing function, the peripherals and other
-  // things that are to be blitted after that, we should not forget to
-  // disable the texturing things again, or HORRIBLE framerates will result...
-  //
-  // So we revert everything that we might have touched to normal state.
-  //
-  glDisable( GL_TEXTURE_2D );
-  glDisable( GL_BLEND );
-  glEnable( GL_ALPHA_TEST );  
-  glAlphaFunc ( GL_GREATER , 0.5 ) ;
-  
 }; // void blit_light_radius ( void )
+
+
 
 /* -----------------------------------------------------------------
  * This function assembles the contents of the combat window 
@@ -1457,13 +1399,14 @@ AssembleCombatPicture (int mask)
   int i;
   // SDL_Surface* right_sized_image ;
 
+  /*
   if ( use_open_gl )
     {
       // glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
       glClearColor( 0.0f, 0.0f, 1.0f, 0.0f );
       glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
     }
-
+  */
 
   SDL_SetColorKey (Screen, 0, 0);
   // SDL_SetAlpha( Screen , 0 , SDL_ALPHA_OPAQUE ); 

@@ -1307,8 +1307,46 @@ InitVideo (void)
 
   vid_bpp = 16; /* start with the simplest */
   
+
+  //--------------------
+  // Here we introduce some warning output in case open_gl output is
+  // requested while the game was compiled without having the GL libs...
+  //
+  // The solution in this case is to force open_gl switch off again and
+  // to (forcefully) print out a warning message about this!
+  //
   if ( use_open_gl )
     {
+#ifndef HAVE_LIBGL
+      DebugPrintf ( -100 , 
+"\n**********************************************************************\
+\n*\
+\n*  W  A  R  N  I  N  G    !  !  ! \
+\n*\
+\n* You have requested OpenGL output via command line switch (-o parameter)\
+\n* but you (or someone else) compiled this version of FreedroidRPG without\
+\n* having the nescessary OpenGL libraries on your (his/her) system. \
+\n*\
+\n* FreedroidRPG will now fallback to normal SDL output (which might be a\
+\n* lot slower than the OpenGL method.\n\
+\n*\
+\n* You might try setting appropriate speed optimisation parameters in the\
+\n* 'performance tweaks' menu, in case you run into speed trouble.\
+\n*\
+\n* If you prefer to use OpenGL output, please make sure that you have \
+\n* libGL installed on your system and recompile FreedroidRPG.\
+\n*\
+\n***********************************************************************\
+\n" );
+      use_open_gl = FALSE ;
+#endif
+    }
+
+  if ( use_open_gl )
+    {
+
+#ifdef HAVE_LIBGL
+
       /* the flags to pass to SDL_SetVideoMode */
       video_flags  = SDL_OPENGL;          /* Enable OpenGL in SDL */
       video_flags |= SDL_GL_DOUBLEBUFFER; /* Enable double buffering */
@@ -1348,6 +1386,8 @@ InitVideo (void)
 
       /* Enable Texture Mapping ( NEW ) */
       // glEnable( GL_TEXTURE_2D );
+
+#endif
 
     }
   else

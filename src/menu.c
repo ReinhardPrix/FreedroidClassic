@@ -37,7 +37,6 @@
 #include "proto.h"
 
 int New_Game_Requested=FALSE;
-SDL_Surface* StoredMenuBackground = NULL;
 
 int Single_Player_Menu (void);
 int Multi_Player_Menu (void);
@@ -96,76 +95,6 @@ MouseCursorIsOverMenuItem( int first_menu_item_pos_y , int h )
   return ( PureFraction );
 
 }; // void MouseCursorIsOverMenuItem( first_menu_item_pos_y )
-
-
-/* ----------------------------------------------------------------------
- * This function restores the menu background, that must have been stored
- * before using the function of similar name.
- * ---------------------------------------------------------------------- */
-void
-RestoreMenuBackground ( void )
-{
-  if ( use_open_gl )
-    {
-      glRasterPos2i( 1 , 1 ) ; 
-      glDrawPixels( 640, 479, GL_RGB, GL_UNSIGNED_BYTE, (GLvoid*) StoredMenuBackground );
-      return ;
-    }
-  else
-    {
-      our_SDL_blit_surface_wrapper ( StoredMenuBackground , NULL , Screen , NULL );
-    }
-}; // void RestoreMenuBackground ( void )
-
-/* ----------------------------------------------------------------------
- * This function stores the current background as the background for a
- * menu, so that it can be refreshed much faster than by reassembling it
- * every frame.
- * ---------------------------------------------------------------------- */
-void
-StoreMenuBackground ( void )
-{
-
-  if ( use_open_gl )
-    {
-      //--------------------
-      // WARNING!  WE ARE USING THE SDL_SURFACE* here much like a char*!!!
-      // BEWARE!
-      //
-      if ( StoredMenuBackground == NULL )
-	{
-
-	}
-      else
-	{
-	  // free ( StoredMenuBackground ) ;
-	}
-
-      StoredMenuBackground = malloc ( 641 * 481 * 4 ) ;
-
-      glReadPixels( 1 , 1, 639, 479, GL_RGB, GL_UNSIGNED_BYTE, (GLvoid*) StoredMenuBackground );
-
-    }
-  else
-    {
-      //--------------------
-      // If the memory was not yet allocated, we need to do that now...
-      //
-      // otherwise we free the old surface and create a new copy of the
-      // current screen content...
-      //
-      if ( StoredMenuBackground == NULL )
-	{
-	  StoredMenuBackground = our_SDL_display_format_wrapper ( Screen );
-	}
-      else
-	{
-	  SDL_FreeSurface ( StoredMenuBackground );
-	  StoredMenuBackground = our_SDL_display_format_wrapper ( Screen );
-	}
-    }
-
-}; // void StoreMenuBackground ( void )
 
 /* ----------------------------------------------------------------------
  * This function performs a menu for the player to select from, using the
