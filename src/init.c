@@ -1788,7 +1788,8 @@ InitNewMissionList ( char *MissionName )
   DebriefingText =
     ReadAndMallocStringFromData ( MainMissionPointer , MISSION_ENDTITLE_BEGIN_STRING , MISSION_ENDTITLE_END_STRING ) ;
 
-  ResolveMapLabelOnShip ( "TuxStartGameSquare" , &StartPosition );
+  // ResolveMapLabelOnShip ( "TuxStartGameSquare" , &StartPosition );
+  ResolveMapLabelOnShip ( "NewTuxStartGameSquare" , &StartPosition );
   Me [ 0 ] . pos . x = StartPosition . x ;
   Me [ 0 ] . pos . y = StartPosition . y ;
   Me [ 0 ] . pos . z = StartPosition . level ;
