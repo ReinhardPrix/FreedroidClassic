@@ -194,7 +194,7 @@ ShowInventoryMessages( void )
   SDL_Rect InventoryRect;
   SDL_Surface *InventoryImage;
   char *fpath;
-  char fname[]="ne_inventory.png";
+  char fname[]="inventory.png";
 
   DebugPrintf (2, "\nvoid ShowInventoryMessages( ... ): Function call confirmed.");
 
