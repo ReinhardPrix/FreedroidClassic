@@ -841,12 +841,12 @@ GreatDruidShow (void)
 }				/* GreatDruidShow() */
 
 
-/*@Function============================================================
-@Desc: Zeigt eine Verkleinerung des momentanen Decks auf dem RealScreen
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/*-----------------------------------------------------------------
+ * @Desc: Displays the concept view of Level "deck" in Userfenster
+ * 	  
+ *	Note: we no longer wait here for a key-press, but return
+ *            immediately 
+ *-----------------------------------------------------------------*/
 void
 ShowDeckMap (Level deck)
 {
@@ -854,12 +854,6 @@ ShowDeckMap (Level deck)
   int LX;
   int LY;
 
-  DebugPrintf ("\nvoid ShowDeckMap(Level deck): Function call confirmed.");
-
-  DebugPrintf
-    ("\nvoid ShowDeckMap(Level deck): Printing map via printf!.\n\n");
-
-  // Darstellung der Miniaturkarte
   LX = USERFENSTERPOSX;
   LY = USERFENSTERPOSY;
 
@@ -868,42 +862,19 @@ ShowDeckMap (Level deck)
     {
       for (j = 0; j < deck->xlen; j++)
 	{
-	  printf ("%3d ",
-		  GetMapBrick (deck, j * BLOCKBREITE, i * BLOCKHOEHE));
 	  SmallBlock (LX, LY,
 		      GetMapBrick (deck, j * BLOCKBREITE, i * BLOCKHOEHE),
 		      RealScreen, SCREENBREITE);
-	  LX += 8;
-	}
+	  LX += 8;  /* looks like that's our "small block" width */
+	} /* for (j<xlen) */
+
       LX = USERFENSTERPOSX;
       LY += 8;
-      DebugPrintf (" . \n");
-    }
+    } /* for (i<xlen) */
 
   PrepareScaledSurface();
 
-  // Vorbeugung gegen vorzeitiges Verlassen
-  // PORT KillTastaturPuffer();
-  while (SpacePressed ())
-    {
-      JoystickControl ();
-      keyboard_update ();
-    }
-  while (!SpacePressed ())
-    {
-      JoystickControl ();
-      keyboard_update ();
-      if (QPressed ())
-	Terminate (0);
-    }
-  while (SpacePressed ())
-    {
-      JoystickControl ();
-      keyboard_update ();
-    }
-  DebugPrintf
-    ("\nvoid ShowDeckMap(Level deck): Usual end of function reached.");
-}				// void ShowDeckMap(Level deck)
+} /* ShowDeckMap() */
 
 
 /*@Function============================================================

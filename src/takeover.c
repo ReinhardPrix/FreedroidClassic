@@ -238,14 +238,9 @@ Takeover (int enemynum)
 
       ShowPlayground ();
 
-      DebugPrintf
-	("\nvoid Takeover(int enemynum): Erstmalige Darstellung ist erfolgt.");
-
       ChooseColor ();
 
       PlayGame ();
-
-      DebugPrintf ("\nTakeover(): PlayGame() ist wieder zurueckgekehrt.");
 
       /* Ausgang beurteilen und returnen */
       if (InvincibleMode || (LeaderColor == YourColor))
@@ -293,9 +288,7 @@ Takeover (int enemynum)
 	  message = "Deadlock";
 	}			/* LeadColor == REMIS */
 
-      DebugPrintf ("\nTakeover(): now calling RedrawInfluenceNumber()");
       RedrawInfluenceNumber ();
-      DebugPrintf ("\nTakeover(): survived RedrawInfluenceNumber()");
 
       /* Feind in jedem Fall ausschalten */
       Feindesliste[enemynum].Status = OUT;
@@ -305,24 +298,15 @@ Takeover (int enemynum)
       waiter = WAIT_AFTER_GAME;
       while (waiter != 0)
 	{
-	  // usleep (30000);	/* Dies soll eine Wartezeit von 3/100stel Sekunden bringen... */
+  // usleep (30000);	/* Dies soll eine Wartezeit von 3/100stel Sekunden bringen... */
 
 	  waiter--;
 	  RollToColors ();
-	  DebugPrintf ("\nTakeover(): calling SetInfoline()");
 	  SetInfoline ();
-	  DebugPrintf ("\nTakeover(): survived SetInfoline()");
-
 	  strcpy (LeftInfo, message);	/* eigene Message anzeigen */
-	  DebugPrintf ("\nTakeover(): survived strcpy");
-
 	  ShowPlayground ();
-	  DebugPrintf
-	    ("\nvoid Takeover(int EnemyNum): Mitten in der Endschleife.");
 	}			/* while waiter */
     }				/* while !FinishTakeover */
-
-  DebugPrintf ("Takeover(): just left main-loop FinishTakeover=TRUE");
 
   /* Tastaturwiederholung wieder auf langsam setzen */
   SetTypematicRate (TYPEMATIC_SLOW);
@@ -330,22 +314,16 @@ Takeover (int enemynum)
   /* Die Rahmenupdatefunktion kann wieder aktiviert werden. */
   InterruptInfolineUpdate = 1;
 
-  DebugPrintf
-    ("\nvoid Takeover(int enemynum): Funktionsende ordnungsgemaess erreicht....");
-
   ClearVGAScreen ();
 
   Switch_Background_Music_To (COMBAT_BACKGROUND_MUSIC_SOUND);
-  DebugPrintf
-    ("\nvoid Takeover(int enemynum):  Takeover background music stopped.");
 
   if (LeaderColor == YourColor)
     return TRUE;
   else
     return FALSE;
 
-  DebugPrintf ("rp: Takeover game finished ok!");
-}				// void Takeover(int enemynum)
+} /* Takeover() */
 
 
 /*@Function============================================================
@@ -373,7 +351,7 @@ ChooseColor (void)
 
   while (!ColorChosen)
     {
-      usleep (30000);		/* Dies soll eine Wartezeit von 3/100stel Sekunden bringen... */
+      //      usleep (30000);
 
       countdown--;		/* Count down */
 
@@ -419,12 +397,11 @@ ChooseColor (void)
 }				// void ChooseColor(void)
 
 
-/*@Function============================================================
-@Desc: PlayGame(): the heart of the game
-
-@Ret:  void
-@Int:
-* $Function----------------------------------------------------------*/
+/*-----------------------------------------------------------------
+ * @Desc: the acutal Takeover game-playing is done here
+ *
+ *
+ *-----------------------------------------------------------------*/
 void
 PlayGame (void)
 {
@@ -434,8 +411,6 @@ PlayGame (void)
   int waiter = 0;
   int row;
 
-  DebugPrintf ("\nvoid PlayGame(void): real function call confirmed.");
-
   while (!FinishTakeover)
     {
       keyboard_update ();
@@ -443,12 +418,10 @@ PlayGame (void)
       if (WPressed ())
 	{
 	  LeaderColor = YourColor;
-	  DebugPrintf
-	    ("\nvoid PlayGame(void): Cheat invoked!  Funktion will return now....");
 	  return;
 	}
 
-      usleep (30000);		/* Wartezeit von 3/100stel Sekunden.. */
+      //      usleep (15000);	
 
       countdown--;
 
@@ -467,14 +440,7 @@ PlayGame (void)
       if (QPressed ())
 	FinishTakeover = TRUE;
 
-
-      DebugPrintf
-	("\nvoid PlayGame(void): EnemyMovements wird aufgerufen.....");
-
       EnemyMovements ();
-
-      DebugPrintf
-	("\nvoid PlayGame(void): EnemyMovements erfolgreich zuruckgekehrt.....");
 
       JoystickControl ();
 
@@ -514,7 +480,7 @@ PlayGame (void)
 	      CapsuleCountdown[YourColor][row] = CAPSULE_COUNTDOWN * 2;
 
 	      Takeover_Set_Capsule_Sound ();
-	    }			/* if (row > 0 && ... ) */
+	    }	/* if (row > 0 && ... ) */
 	}
 
       ProcessCapsules ();	/* count down the lifetime of the capsules */
@@ -528,14 +494,14 @@ PlayGame (void)
 
       ShowPlayground ();
 
-    }				/* while !FinishTakeover */
+    }	/* while !FinishTakeover */
 
   /* Schluss- Countdown */
   countdown = CAPSULE_COUNTDOWN + 10;
 
   while (countdown--)
     {
-      usleep (30000);		/* Dies soll eine Wartezeit von 3/100stel Sekunden bringen... */
+      //      usleep (15000);	
 
       RollToColors ();
 
@@ -550,11 +516,12 @@ PlayGame (void)
       ProcessDisplayColumn ();
 
       ShowPlayground ();
-    }				/* while .. */
+    }	/* while (countdown) */
 
-  DebugPrintf
-    ("\nvoid PlayGame(void): Funktionsende ordnungsgemaess erreicht....");
-}				/* PlayGame() */
+
+  return;
+
+} /* PlayGame() */
 
 /*@Function============================================================
 @Desc: void RollToColors():

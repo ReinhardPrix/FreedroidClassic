@@ -51,8 +51,6 @@
 
 #define COL_SPEED		3	/* wegstossen bei enemy-enemy collision */
 
-/* Distance, where to attack Influencer */
-// #define FIREDIST2                            INTERNBREITE*INTERNHOEHE*BLOCKBREITE*BLOCKHOEHE/4
 #define FIREDIST2	(INTERNBREITE*BLOCKBREITE/2)*(INTERNBREITE*BLOCKBREITE/2)+(INTERNHOEHE*BLOCKHOEHE/2)*(INTERNHOEHE*BLOCKHOEHE/2)
 
 void PermanentHealRobots (void);
@@ -83,19 +81,16 @@ PermanentHealRobots (void)
     }
 }
 
-/*@Function============================================================
-@Desc: InitEnenmys(): initialisiert Feindesliste vollstaendig
-
-@Ret: void
-@Int:
-* $Function----------------------------------------------------------*/
+/*-----------------------------------------------------------------
+ * @Desc: initialisiert Feindesliste vollstaendig
+ * 
+ *
+ *-----------------------------------------------------------------*/
 void
 InitEnemys (void)
 {
   int i;
   int type;
-
-  DebugPrintf ("\nvoid InitEnemys(void): real function call confirmed....:");
 
   for (i = 0; i < NumEnemys; i++)
     {
@@ -106,21 +101,19 @@ InitEnemys (void)
   /* und gut umruehren */
   ShuffleEnemys ();
 
-  DebugPrintf ("\nvoid InitEnemys(void): end of function reached.");
-}				/* InitEnemys */
+  return;
 
-/*@Function============================================================
-@Desc: ClearEnemys(): setzt Feindesliste - Array auf 000...
+} /* InitEnemys */
 
-@Ret: void
-@Int:
-* $Function----------------------------------------------------------*/
+/*-----------------------------------------------------------------
+ * @Desc: setzt Feindesliste - Array auf 0
+ *
+ *
+ *-----------------------------------------------------------------*/
 void
 ClearEnemys (void)
 {
   int i;
-
-  DebugPrintf ("\nvoid ClearEnemys(void): real function call confirmed...:");
 
   for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
     {
@@ -132,17 +125,16 @@ ClearEnemys (void)
       Feindesliste[i].warten = Feindesliste[i].firewait = 0;
     }
 
-  DebugPrintf ("\nvoid ClearEnemys(void): end of function reached...:");
+  return;
 
-}				// void ClearEnemys(void)
+} /*  ClearEnemys() */
 
 
-/*@Function============================================================
-@Desc: ShuffleEnemys(): Vermischt enemys in CurLevel auf die Waypoints
-		
-@Ret: void
-@Int:
-* $Function----------------------------------------------------------*/
+/*-----------------------------------------------------------------
+ * @Desc: Vermischt enemys in CurLevel auf die Waypoints
+ *
+ *
+ *-----------------------------------------------------------------*/
 void
 ShuffleEnemys (void)
 {
@@ -175,10 +167,10 @@ ShuffleEnemys (void)
 	}
 
       Feindesliste[i].pos.x =
-	(CurLevel->AllWaypoints[wp].x) * BLOCKBREITE + BLOCKBREITE / 2;
+	Grob2Fein (CurLevel->AllWaypoints[wp].x);
 
       Feindesliste[i].pos.y =
-	(CurLevel->AllWaypoints[wp].y) * BLOCKHOEHE + BLOCKHOEHE / 2;
+	Grob2Fein (CurLevel->AllWaypoints[wp].y);
 
       Feindesliste[i].lastwaypoint = wp;
       Feindesliste[i].nextwaypoint = wp;
@@ -317,8 +309,6 @@ MoveEnemys (void)
 	  while ( (trywp = WpList[nextwp].
 		   connections[MyRandom (MAX_WP_CONNECTIONS - 1)]) == -1);
 
-
-
 	  /* setze neuen Waypoint */
 	  Feindesliste[i].nextwaypoint = trywp;
 	}			/* if */
@@ -427,8 +417,6 @@ AttackInfluence (int enemynum)
       AllBullets[j].pos.y = Feindesliste[enemynum].pos.y;
 
       /* Bullets so abfeuern, dass sie nicht den Schuetzen treffen */
-      // AllBullets[j].pos.x+=isignf(AllBullets[j].speed.x)*BLOCKBREITE/2;
-      // AllBullets[j].pos.y+=isignf(AllBullets[j].speed.y)*BLOCKHOEHE/2;
       AllBullets[j].pos.x +=
 	(AllBullets[j].speed.x) / abs (Bulletmap[guntype].speed) *
 	BLOCKBREITE / 2;
@@ -436,8 +424,10 @@ AttackInfluence (int enemynum)
 	(AllBullets[j].speed.y) / abs (Bulletmap[guntype].speed) *
 	BLOCKHOEHE / 2;
 
-      // The following lines could be improved: Use not the sign, but only the fraction of the maxspeed times constant!
-      // SINCE WE CAN ASSUME HIGH FRAMERATE DISABLE THIS CRAP! Within one frame, the robot cant move into its own bullet.
+      // The following lines could be improved: Use not the sign, but only */
+      // the fraction of the maxspeed times constant!
+      // SINCE WE CAN ASSUME HIGH FRAMERATE DISABLE THIS CRAP! Within one */
+      // frame, the robot cant move into its own bullet.
       // AllBullets[j].pos.x+=isignf(Feindesliste[enemynum].speed.x)*BLOCKBREITE/2;      
       // AllBullets[j].pos.y+=isignf(Feindesliste[enemynum].speed.y)*BLOCKHOEHE/2;
 

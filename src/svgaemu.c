@@ -272,7 +272,7 @@ void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
 void 
 gl_printf(int x, int y, const char *fmt,...)
 {
-
+  return;
 }
 
 void gl_expandfont(int fw, int fh, int c, void *sfdp, void *dfdp)
@@ -437,7 +437,7 @@ int vga_setmode(int mode)
   Uint32 flags;  /* flags for SDL video mode */
 
   flags = SDL_SWSURFACE | SDL_HWPALETTE ;
-  if (use_fullscreen) flags |= SDL_FULLSCREEN;
+  if (fullscreen_on) flags |= SDL_FULLSCREEN;
 
   SDL_WM_SetCaption("FreeDroid", "");
   SDL_WM_SetIcon(SDL_LoadBMP("../graphics/paraicon.bmp"), NULL);

@@ -40,18 +40,20 @@
 
 #include <stdio.h>
 #include <math.h>
+#include <stdlib.h>
+#include <string.h>
+
 
 #include "defs.h"
 #include "struct.h"
 #include "global.h"
 #include "proto.h"
 
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/*-----------------------------------------------------------------
+ * @Desc: display the mini-block number "BlockN" at position (LX, LY)
+ * 	  on "*Screen" of width "SBreite"
+ *
+ *-----------------------------------------------------------------*/
 void
 SmallBlock (int LX, int LY, int BlockN, unsigned char *Parameter_Screen, int SBreite)
 {
@@ -83,8 +85,7 @@ SmallBlock (int LX, int LY, int BlockN, unsigned char *Parameter_Screen, int SBr
 
   Unlock_SDL_Screen();
 
-  DebugPrintf("\nvoid SmallBlock(...): usual end of function reached.");
-} // void SmallBlock(...)
+} /* SmallBlock() */
 
 /*@Function============================================================
 @Desc: 
