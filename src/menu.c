@@ -1608,7 +1608,7 @@ Thanks you.\n");
     ClearGraphMem ();
     DisplayBanner ( ) ;
     
-}; // void New_Graphics_Options_Menu (void)
+}; // void Change_Screen_Resolution_Menu ( void )
 
 /* ----------------------------------------------------------------------
  * This function provides a the options menu.  This menu is a 
@@ -1617,7 +1617,7 @@ Thanks you.\n");
  * things.
  * ---------------------------------------------------------------------- */
 void
-New_Graphics_Options_Menu (void)
+Graphics_Options_Menu (void)
 {
     int Weiter = 0;
     int MenuPosition=1;
@@ -1625,6 +1625,7 @@ New_Graphics_Options_Menu (void)
     char Options1[1000];
     char Options2[1000];
     char Options3[1000];
+    char Options4[1000];
     char* MenuTexts[10];
     enum
 	{ 
@@ -1632,6 +1633,7 @@ New_Graphics_Options_Menu (void)
 	    SET_FULLSCREEN_FLAG, 
 	    CHANGE_SCREEN_RESOLUTION,
 	    SET_SHOW_BLOOD_FLAG,
+	    SET_AUTOMAP_SCALE,
 	    LEAVE_OPTIONS_MENU 
 	};
     
@@ -1648,12 +1650,15 @@ New_Graphics_Options_Menu (void)
 	sprintf( Options2 , "Change Screen Resolution" );
 	sprintf( Options3 , "Show Blood: %s", 
 		 GameConfig . show_blood ? "YES" : "NO" );
+	sprintf( Options4 , "Automap Scale: %2.1f", 
+		 GameConfig . automap_display_scale );
 	MenuTexts[0]=Options0;
 	MenuTexts[1]=Options1;
 	MenuTexts[2]=Options2;
 	MenuTexts[3]=Options3;
-	MenuTexts[4]="Back";
-	MenuTexts[5]="";
+	MenuTexts[4]=Options4;
+	MenuTexts[5]="Back";
+	MenuTexts[6]="";
 	
 	MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , -1 , NULL );
 	
@@ -1715,6 +1720,23 @@ Thanks you.\n");
 		GameConfig . show_blood = !GameConfig . show_blood;
 		break;
 		
+	    case SET_AUTOMAP_SCALE:
+		if ( RightPressed() ) 
+		{
+		    while ( RightPressed() );
+		    if ( GameConfig . automap_display_scale < 9.1 )
+			GameConfig . automap_display_scale += 1.0 ;
+		}
+		
+		if ( LeftPressed() ) 
+		{
+		    while (LeftPressed());
+		    if ( GameConfig . automap_display_scale >= 1.9 ) ;
+		    GameConfig . automap_display_scale -= 1.0 ;
+		}
+		
+		break;
+		
 	    case LEAVE_OPTIONS_MENU:
 		while (EnterPressed() || SpacePressed() );
 		Weiter=TRUE;
@@ -1729,7 +1751,7 @@ Thanks you.\n");
     ClearGraphMem ();
     DisplayBanner ( ) ;
     
-}; // void New_Graphics_Options_Menu (void)
+}; // void Graphics_Options_Menu (void)
 
 /* ----------------------------------------------------------------------
  * This function provides a the options menu.  This menu is a 
@@ -1738,117 +1760,117 @@ Thanks you.\n");
  * things.
  * ---------------------------------------------------------------------- */
 void
-New_Sound_Options_Menu (void)
+Sound_Options_Menu (void)
 {
-  int Weiter = 0;
-  int MenuPosition=1;
-  char Options0[1000];
-  char Options1[1000];
-  char Options2[1000];
-  char Options3[1000];
-  char* MenuTexts[10];
-  enum
-    { 
-      SET_BG_MUSIC_VOLUME=1, 
-      SET_SOUND_FX_VOLUME, 
-      SET_TERMINATE_ON_MISSING_FLAG,
-      SET_SHOW_SUBTITLE_FLAG,
-      LEAVE_OPTIONS_MENU 
-    };
-
-  // This is not some Debug Menu but an optically impressive 
-  // menu for the player.  Therefore I suggest we just fade out
-  // the game screen a little bit.
-
-  while ( EscapePressed() );
-
-  while (!Weiter)
+    int Weiter = 0;
+    int MenuPosition=1;
+    char Options0[1000];
+    char Options1[1000];
+    char Options2[1000];
+    char Options3[1000];
+    char* MenuTexts[10];
+    enum
+	{ 
+	    SET_BG_MUSIC_VOLUME=1, 
+	    SET_SOUND_FX_VOLUME, 
+	    SET_TERMINATE_ON_MISSING_FLAG,
+	    SET_SHOW_SUBTITLE_FLAG,
+	    LEAVE_OPTIONS_MENU 
+	};
+    
+    // This is not some Debug Menu but an optically impressive 
+    // menu for the player.  Therefore I suggest we just fade out
+    // the game screen a little bit.
+    
+    while ( EscapePressed() );
+    
+    while (!Weiter)
     {
-
-      sprintf ( Options0 , "Background Music Volume: %1.2f" , GameConfig.Current_BG_Music_Volume );
-      sprintf ( Options1 , "Sound Effects Volume: %1.2f", GameConfig.Current_Sound_FX_Volume );
-      sprintf( Options2 , "Terminate On Missing Sample: %s", 
-	       GameConfig.terminate_on_missing_speech_sample ? "YES" : "NO" );
-      sprintf( Options3 , "Show Subtitles in Dialogs: %s", 
-	       GameConfig.show_subtitles_in_dialogs ? "YES" : "NO" );
-      MenuTexts [ 0 ] = Options0;
-      MenuTexts [ 1 ] = Options1;
-      MenuTexts [ 2 ] = Options2;
-      MenuTexts [ 3 ] = Options3;
-      MenuTexts [ 4 ] = "Back";
-      MenuTexts [ 5 ] = "";
-
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , -1 , NULL );
-
-      switch (MenuPosition) 
+	
+	sprintf ( Options0 , "Background Music Volume: %1.2f" , GameConfig.Current_BG_Music_Volume );
+	sprintf ( Options1 , "Sound Effects Volume: %1.2f", GameConfig.Current_Sound_FX_Volume );
+	sprintf( Options2 , "Terminate On Missing Sample: %s", 
+		 GameConfig.terminate_on_missing_speech_sample ? "YES" : "NO" );
+	sprintf( Options3 , "Show Subtitles in Dialogs: %s", 
+		 GameConfig.show_subtitles_in_dialogs ? "YES" : "NO" );
+	MenuTexts [ 0 ] = Options0;
+	MenuTexts [ 1 ] = Options1;
+	MenuTexts [ 2 ] = Options2;
+	MenuTexts [ 3 ] = Options3;
+	MenuTexts [ 4 ] = "Back";
+	MenuTexts [ 5 ] = "";
+	
+	MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , -1 , NULL );
+	
+	switch (MenuPosition) 
 	{
-
-	case (-1):
-	  Weiter=!Weiter;
-	  break;
-
-	case SET_BG_MUSIC_VOLUME:
-
-	  if ( RightPressed() ) 
-	    {
-	      while ( RightPressed());
-	      if ( GameConfig.Current_BG_Music_Volume < 1 ) GameConfig.Current_BG_Music_Volume += 0.05;
-	      SetBGMusicVolume( GameConfig.Current_BG_Music_Volume );
-	    }
-
-
-	  if ( LeftPressed() ) 
-	    {
-	      while (LeftPressed());
-	      if ( GameConfig.Current_BG_Music_Volume > 0 ) GameConfig.Current_BG_Music_Volume -= 0.05;
-	      SetBGMusicVolume( GameConfig.Current_BG_Music_Volume );
-	    }
-
-	  break;
-
-	case SET_SOUND_FX_VOLUME:
-
-	  if ( RightPressed() ) 
-	    {
-	      while ( RightPressed());
-	      if ( GameConfig.Current_Sound_FX_Volume < 1 ) GameConfig.Current_Sound_FX_Volume += 0.05;
-	      SetSoundFXVolume( GameConfig.Current_Sound_FX_Volume );
-	    }
-
-	  if ( LeftPressed() ) 
-	    {
-	      while (LeftPressed());
-	      if ( GameConfig.Current_Sound_FX_Volume > 0 ) GameConfig.Current_Sound_FX_Volume -= 0.05;
-	      SetSoundFXVolume( GameConfig.Current_Sound_FX_Volume );
-	    }
-
-	  break;
-
-	case SET_TERMINATE_ON_MISSING_FLAG:
-	  while (EnterPressed() || SpacePressed() );
-	  GameConfig.terminate_on_missing_speech_sample = !GameConfig.terminate_on_missing_speech_sample;
-	  break;
-
-	case SET_SHOW_SUBTITLE_FLAG:
-	  while (EnterPressed() || SpacePressed() );
-	  GameConfig.show_subtitles_in_dialogs = !GameConfig.show_subtitles_in_dialogs;
-	  break;
-
-	case LEAVE_OPTIONS_MENU:
-	  while (EnterPressed() || SpacePressed() );
-	  Weiter=TRUE;
-	  break;
-
-	default: 
-	  break;
-
+	    
+	    case (-1):
+		Weiter=!Weiter;
+		break;
+		
+	    case SET_BG_MUSIC_VOLUME:
+		
+		if ( RightPressed() ) 
+		{
+		    while ( RightPressed());
+		    if ( GameConfig.Current_BG_Music_Volume < 1 ) GameConfig.Current_BG_Music_Volume += 0.05;
+		    SetBGMusicVolume( GameConfig.Current_BG_Music_Volume );
+		}
+		
+		
+		if ( LeftPressed() ) 
+		{
+		    while (LeftPressed());
+		    if ( GameConfig.Current_BG_Music_Volume > 0 ) GameConfig.Current_BG_Music_Volume -= 0.05;
+		    SetBGMusicVolume( GameConfig.Current_BG_Music_Volume );
+		}
+		
+		break;
+		
+	    case SET_SOUND_FX_VOLUME:
+		
+		if ( RightPressed() ) 
+		{
+		    while ( RightPressed());
+		    if ( GameConfig.Current_Sound_FX_Volume < 1 ) GameConfig.Current_Sound_FX_Volume += 0.05;
+		    SetSoundFXVolume( GameConfig.Current_Sound_FX_Volume );
+		}
+		
+		if ( LeftPressed() ) 
+		{
+		    while (LeftPressed());
+		    if ( GameConfig.Current_Sound_FX_Volume > 0 ) GameConfig.Current_Sound_FX_Volume -= 0.05;
+		    SetSoundFXVolume( GameConfig.Current_Sound_FX_Volume );
+		}
+		
+		break;
+		
+	    case SET_TERMINATE_ON_MISSING_FLAG:
+		while (EnterPressed() || SpacePressed() );
+		GameConfig.terminate_on_missing_speech_sample = !GameConfig.terminate_on_missing_speech_sample;
+		break;
+		
+	    case SET_SHOW_SUBTITLE_FLAG:
+		while (EnterPressed() || SpacePressed() );
+		GameConfig.show_subtitles_in_dialogs = !GameConfig.show_subtitles_in_dialogs;
+		break;
+		
+	    case LEAVE_OPTIONS_MENU:
+		while (EnterPressed() || SpacePressed() );
+		Weiter=TRUE;
+		break;
+		
+	    default: 
+		break;
+		
 	} 
     }
-
-  ClearGraphMem ();
-  DisplayBanner ( );
-
-}; // void New_Sound_Options_Menu (void)
+    
+    ClearGraphMem ();
+    DisplayBanner ( );
+    
+}; // void Sound_Options_Menu (void)
 
 /* ----------------------------------------------------------------------
  * This function provides a the options menu.  This menu is a 
@@ -2278,11 +2300,11 @@ enum
 	  break;
 	case GRAPHICS_OPTIONS:
 	  while (EnterPressed() || SpacePressed() );
-	  New_Graphics_Options_Menu();
+	  Graphics_Options_Menu();
 	  break;
 	case SOUND_OPTIONS:
 	  while (EnterPressed() || SpacePressed() );
-	  New_Sound_Options_Menu();
+	  Sound_Options_Menu();
 	  break;
 	case DROID_TALK_OPTIONS:
 	  while (EnterPressed() || SpacePressed() );

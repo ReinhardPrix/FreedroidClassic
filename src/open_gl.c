@@ -711,40 +711,40 @@ open_gl_check_error_status ( char* name_of_calling_function  )
 	    // All is well.  No messages need to be generated...
 	    break;
 	case GL_INVALID_ENUM:
-	    fprintf ( stderr , "\ncalling function was: %s." , name_of_calling_function );
+	    fprintf ( stderr , "\nCheck occured in function: %s." , name_of_calling_function );
 	    GiveStandardErrorMessage ( __FUNCTION__  , 
 				       "Error code GL_INVALID_ENUM received!", PLEASE_INFORM, IS_FATAL );
 	    
 	    break;
 	case GL_INVALID_VALUE:
-	    fprintf ( stderr , "\ncalling function was: %s." , name_of_calling_function );
+	    fprintf ( stderr , "\nCheck occured in function: %s." , name_of_calling_function );
 	    GiveStandardErrorMessage ( __FUNCTION__  , 
 				       "Error code GL_INVALID_VALUE received!", PLEASE_INFORM, IS_FATAL );
 	    
 	    break;
 	case GL_INVALID_OPERATION:
-	    fprintf ( stderr , "\ncalling function was: %s." , name_of_calling_function );
+	    fprintf ( stderr , "\nCheck occured in function: %s." , name_of_calling_function );
 	    GiveStandardErrorMessage ( __FUNCTION__  , 
 				       "Error code GL_INVALID_OPERATION received!", PLEASE_INFORM, IS_FATAL );
 	    break;
 	case GL_STACK_OVERFLOW:
-	    fprintf ( stderr , "\ncalling function was: %s." , name_of_calling_function );
+	    fprintf ( stderr , "\nCheck occured in function: %s." , name_of_calling_function );
 	    GiveStandardErrorMessage ( __FUNCTION__  , 
 				       "Error code GL_STACK_OVERFLOW received!", PLEASE_INFORM, IS_FATAL );
 	    break;
 	case GL_STACK_UNDERFLOW:
-	    fprintf ( stderr , "\ncalling function was: %s." , name_of_calling_function );
+	    fprintf ( stderr , "\nCheck occured in function: %s." , name_of_calling_function );
 	    GiveStandardErrorMessage ( __FUNCTION__  , 
 				       "Error code GL_STACK_UNDERFLOW received!", PLEASE_INFORM, IS_FATAL );
 	    break;
 	case GL_OUT_OF_MEMORY:
-	    fprintf ( stderr , "\ncalling function was: %s." , name_of_calling_function );
+	    fprintf ( stderr , "\nCheck occured in function: %s." , name_of_calling_function );
 	    GiveStandardErrorMessage ( __FUNCTION__  , 
-				       "Error code GL_OUT_OF_MEMORY received!", PLEASE_INFORM, IS_WARNING_ONLY );
+				       "Error code GL_OUT_OF_MEMORY received!", PLEASE_INFORM, IS_FATAL );
 	    // raise ( SIGSEGV );
 	    break;
 	default:
-	    fprintf ( stderr , "\ncalling function was: %s." , name_of_calling_function );
+	    fprintf ( stderr , "\nCheck occured in function: %s." , name_of_calling_function );
 	    GiveStandardErrorMessage ( __FUNCTION__  , 
 				       "Unhandled error code received!", PLEASE_INFORM, IS_FATAL );
 	    break;

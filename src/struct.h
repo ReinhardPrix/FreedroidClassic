@@ -121,6 +121,7 @@ typedef struct
     int screen_height;
     int next_time_width_of_screen;
     int next_time_height_of_screen;
+    float automap_display_scale ;
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
 

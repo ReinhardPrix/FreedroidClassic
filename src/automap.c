@@ -635,11 +635,11 @@ show_automap_data_ogl ( float scale_factor )
     //
     blit_semitransparent_open_gl_texture_to_screen_position ( 
 	tux_on_the_map_iso_image , 
-	- ( tux_on_the_map_iso_image . original_image_width / 2 ) 
+	// - ( tux_on_the_map_iso_image . original_image_width / 2 ) 
 	+ ( GameConfig . screen_width / 2 ) 
 	- GameConfig . automap_manual_shift_x ,
 
-	- ( tux_on_the_map_iso_image . original_image_height / 2 )
+	- ( tux_on_the_map_iso_image . original_image_height / 4 )
 	+ ( GameConfig . screen_height / 2 ) 
 	+ 50 * scale_factor 
 	- GameConfig . automap_manual_shift_y , 1.0 );
