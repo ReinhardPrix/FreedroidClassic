@@ -165,10 +165,6 @@ Level=7
 Maximum number of Random Droids=0
 Minimum number of Random Droids=0
 Allowed Type of Random Droid for this level: 139
-Allowed Type of Random Droid for this level: 629
-Allowed Type of Random Droid for this level: 711
-Allowed Type of Random Droid for this level: 742
-Allowed Type of Random Droid for this level: 751
 
 SpecialForce: Type=GUA X=11 Y=9 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="MERStartGameSquare" RushTux="no" DialogSectionToUse="MER" ShortLabel="Merlin -- Mainframe Administrator"
 
@@ -190,6 +186,14 @@ SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1
 SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="TempleWayLayBot1StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Basic Temple Bot"
 SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="TempleWayLayBot2StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Basic Temple Bot"
 
+SpecialForce: Type=302 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="302StingerBot1StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Stinger Bot"
+SpecialForce: Type=302 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="302StingerBot2StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Stinger Bot"
+SpecialForce: Type=302 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="302StingerBot3StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Stinger Bot"
+SpecialForce: Type=302 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="302StingerBot4StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Stinger Bot"
+SpecialForce: Type=302 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="302StingerBot5StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Stinger Bot"
+SpecialForce: Type=302 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="302StingerBot6StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Stinger Bot"
+SpecialForce: Type=302 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="302StingerBot7StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Stinger Bot"
+
 ** End of this levels droid data **
 
 ** Beginning of new Level **
@@ -197,14 +201,19 @@ Level=9
 Maximum number of Random Droids=0
 Minimum number of Random Droids=0
 Allowed Type of Random Droid for this level: 571
-Allowed Type of Random Droid for this level: 598
-Allowed Type of Random Droid for this level: 614
 
 SpecialForce: Type=247 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="JackGuard1StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Mean Bone Crusher"
 SpecialForce: Type=249 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="JackGuard2StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Vile Sniper"
 SpecialForce: Type=247 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="JackGuard3StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Mean Bone Crusher"
 SpecialForce: Type=249 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="JackGuard4StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Vile Sniper"
 
+SpecialForce: Type=GUA X=10 Y=3 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="MSAreaGuard1StartGameSquare" RushTux="no" DialogSectionToUse="StandardMSFacilityGateGuard" ShortLabel="Old Town Gate Guard"
+SpecialForce: Type=GUA X=10 Y=3 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="MSAreaGuard2StartGameSquare" RushTux="no" DialogSectionToUse="StandardMSFacilityGateGuard" ShortLabel="Old Town Gate Guard"
+SpecialForce: Type=GUA X=10 Y=3 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="MSAreaGuardChiefStartGameSquare" RushTux="yes" DialogSectionToUse="MSFacilityGateGuardLeader" ShortLabel="Old Town Gate Guard"
+
+SpecialForce: Type=751 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="751DestructorBot1StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Vile Sniper"
+SpecialForce: Type=751 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="751DestructorBot2StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Mean Bone Crusher"
+SpecialForce: Type=751 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="751DestructorBot3StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Vile Sniper"
 
 ** End of this levels droid data **
 
@@ -213,9 +222,6 @@ Level=10
 Maximum number of Random Droids=0
 Minimum number of Random Droids=0
 Allowed Type of Random Droid for this level: 123
-Allowed Type of Random Droid for this level: 139
-Allowed Type of Random Droid for this level: 247
-Allowed Type of Random Droid for this level: 249
 
 ** End of this levels droid data **
 
@@ -224,11 +230,6 @@ Level=11
 Maximum number of Random Droids=0
 Minimum number of Random Droids=0
 Allowed Type of Random Droid for this level: 123
-Allowed Type of Random Droid for this level: 139
-Allowed Type of Random Droid for this level: 247
-Allowed Type of Random Droid for this level: 249
-Allowed Type of Random Droid for this level: 296
-Allowed Type of Random Droid for this level: 302
 
 SpecialForce: Type=GUA X=10 Y=3 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="OldTownGateGuard2StartGameSquare" RushTux="no" DialogSectionToUse="StandardOldTownGateGuard" ShortLabel="Old Town Gate Guard"
 SpecialForce: Type=GUA X=10 Y=3 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="OldTownGateGuard1StartGameSquare" RushTux="no" DialogSectionToUse="StandardOldTownGateGuard" ShortLabel="Old Town Gate Guard"
@@ -308,6 +309,21 @@ SpecialForce: Type=493 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1
 ** End of this levels droid data **
 
 ** Beginning of new Level **
+Level=20
+Maximum number of Random Droids=0
+Minimum number of Random Droids=0
+Allowed Type of Random Droid for this level: 751
+
+SpecialForce: Type=296 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="296CrawlerBot1StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Crawler Bot"
+SpecialForce: Type=296 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="296CrawlerBot2StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Crawler Bot"
+SpecialForce: Type=296 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="296CrawlerBot3StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Crawler Bot"
+SpecialForce: Type=296 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="296CrawlerBot4StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Crawler Bot"
+SpecialForce: Type=296 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="296CrawlerBot5StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Crawler Bot"
+SpecialForce: Type=296 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="296CrawlerBot6StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Crawler Bot"
+
+** End of this levels droid data **
+
+** Beginning of new Level **
 Level=22
 Maximum number of Random Droids=0
 Minimum number of Random Droids=0
@@ -321,10 +337,41 @@ SpecialForce: Type=476 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1
 
 ** End of this levels droid data **
 
+** Beginning of new Level **
+Level=24
+Maximum number of Random Droids=0
+Minimum number of Random Droids=0
+Allowed Type of Random Droid for this level: 751
 
+SpecialForce: Type=516 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="516CaveTroll1StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Cave Troll"
+SpecialForce: Type=516 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="516CaveTroll2StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Cave Troll"
+SpecialForce: Type=516 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="516CaveTroll3StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Cave Troll"
+SpecialForce: Type=516 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="516CaveTroll4StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Cave Troll"
+SpecialForce: Type=516 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="516CaveTroll5StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Cave Troll"
+SpecialForce: Type=516 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="516CaveTroll6StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Cave Troll"
+SpecialForce: Type=516 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="516CaveTroll7StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Cave Troll"
+SpecialForce: Type=516 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="516CaveTroll8StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Cave Troll"
+SpecialForce: Type=516 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="516CaveTroll9StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Cave Troll"
+SpecialForce: Type=516 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="516CaveTroll10StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Cave Troll"
+SpecialForce: Type=516 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="516CaveTroll11StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Cave Troll"
+SpecialForce: Type=516 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="516CaveTroll12StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Cave Troll"
+SpecialForce: Type=516 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="516CaveTroll13StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Cave Troll"
+SpecialForce: Type=516 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="516CaveTroll14StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Cave Troll"
 
+** End of this levels droid data **
 
+** Beginning of new Level **
+Level=28
+Maximum number of Random Droids=0
+Minimum number of Random Droids=0
+Allowed Type of Random Droid for this level: 751
 
+SpecialForce: Type=999 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="MSExecutioner1StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="MS Executioner Bot"
+SpecialForce: Type=999 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="MSExecutioner2StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="MS Executioner Bot"
+SpecialForce: Type=999 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="MSExecutioner3StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="MS Executioner Bot"
+SpecialForce: Type=999 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="MSExecutioner4StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="MS Executioner Bot"
+
+** End of this levels droid data **
 
 
 //----------------------------------------------------------------------

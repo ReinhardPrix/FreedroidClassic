@@ -1168,8 +1168,12 @@ ResolveDialogSectionToChatFlagsIndex ( Enemy ChatDroid )
   if ( strcmp ( ChatDroid -> dialog_section_name , "Spencer" ) == 0 ) return PERSON_SPENCER;
   if ( strcmp ( ChatDroid -> dialog_section_name , "Darwin" ) == 0 ) return PERSON_DARWIN;
   if ( strcmp ( ChatDroid -> dialog_section_name , "Melfis" ) == 0 ) return PERSON_MELFIS;
+
   if ( strcmp ( ChatDroid -> dialog_section_name , "StandardOldTownGateGuard" ) == 0 ) return PERSON_STANDARD_OLD_TOWN_GATE_GUARD;
   if ( strcmp ( ChatDroid -> dialog_section_name , "OldTownGateGuardLeader" ) == 0 ) return PERSON_OLD_TOWN_GATE_GUARD_LEADER;
+  if ( strcmp ( ChatDroid -> dialog_section_name , "StandardMSFacilityGateGuard" ) == 0 ) return PERSON_STANDARD_MS_FACILITY_GATE_GUARD;
+  if ( strcmp ( ChatDroid -> dialog_section_name , "MSFacilityGateGuardLeader" ) == 0 ) return PERSON_MS_FACILITY_GATE_GUARD_LEADER;
+
   if ( strcmp ( ChatDroid -> dialog_section_name , "HEA" ) == 0 ) return PERSON_HEA;
 
   GiveStandardErrorMessage ( "ResolveDialogSectionToChatFlagsIndex(...)" , "\
