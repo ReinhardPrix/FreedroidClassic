@@ -1585,6 +1585,18 @@ AssembleCombatPicture (int mask)
   int i;
   int item_under_cursor = get_floor_item_index_under_mouse_cursor ( 0 );
 
+  //--------------------
+  // Within all of this display code, we only check for LIGHT as far
+  // as 'passability' is concerned.  Outside of this function, we'll
+  // always check for real material collisions.  Accordingly we set
+  // and unset the following flag at the beginning/ending of this
+  // function respectively.
+  // (I know that this is not considered a perfectly 'clean' method,
+  //  but since collision checks are _most_ time-critical, I think
+  //  we can live with it this time...)
+  //
+  global_check_for_light_only_collisions_flag = TRUE ;
+
   isometric_show_floor_around_tux_without_doublebuffering ( mask );
 
   set_up_ordered_blitting_list ( mask );
@@ -1618,6 +1630,19 @@ AssembleCombatPicture (int mask)
       // of course we must check if we should update the screen too.
       if ( mask & DO_SCREEN_UPDATE ) 
 	our_SDL_update_rect_wrapper( Screen , User_Rect.x , User_Rect.y , User_Rect.w , User_Rect.h );
+
+      //--------------------
+      // Within all of this display code, we only check for LIGHT as far
+      // as 'passability' is concerned.  Outside of this function, we'll
+      // always check for real material collisions.  Accordingly we set
+      // and unset the following flag at the beginning/ending AND OF COURSE
+      // AT ANY RETURN COMMAND of this
+      // function respectively.
+      // (I know that this is not considered a perfectly 'clean' method,
+      //  but since collision checks are _most_ time-critical, I think
+      //  we can live with it this time...)
+      //
+      global_check_for_light_only_collisions_flag = FALSE ;
       return;
     }
 
@@ -1672,6 +1697,19 @@ AssembleCombatPicture (int mask)
     {
       our_SDL_update_rect_wrapper( Screen , User_Rect.x , User_Rect.y , User_Rect.w , User_Rect.h );
     }
+
+  //--------------------
+  // Within all of this display code, we only check for LIGHT as far
+  // as 'passability' is concerned.  Outside of this function, we'll
+  // always check for real material collisions.  Accordingly we set
+  // and unset the following flag at the beginning/ending AND OF COURSE
+  // AT ANY RETURN COMMAND of this
+  // function respectively.
+  // (I know that this is not considered a perfectly 'clean' method,
+  //  but since collision checks are _most_ time-critical, I think
+  //  we can live with it this time...)
+  //
+  global_check_for_light_only_collisions_flag = FALSE ;
 
 }; // void AssembleCombatPicture(...)
 

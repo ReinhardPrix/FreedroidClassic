@@ -3229,6 +3229,10 @@ position_collides_with_this_obstacle ( float x , float y , obstacle* our_obstacl
   //
   if ( obstacle_map [ obs_type ] . block_area_type == COLLISION_TYPE_NONE )
     return ( FALSE );
+
+  if ( ( ! obstacle_map [ obs_type ] . block_vision_too ) && ( global_check_for_light_only_collisions_flag ) )
+    return ( FALSE );
+
   /*
   if ( obstacle_map [ obs_type ] . block_area_type != COLLISION_TYPE_RECTANGLE )
     {

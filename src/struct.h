@@ -281,6 +281,7 @@ typedef struct
 {
   iso_image image;
   int block_area_type;
+  int block_vision_too;
   float block_area_parm_1;
   float block_area_parm_2;
   float upper_border ;

@@ -965,7 +965,7 @@ enum
   ISO_BARREL_3 = 52 ,
   ISO_BARREL_4 = 53 ,
 
-  ISO_ALERT = 54 ,  // it actually looks more like a street lantern right now, but that's no problem
+  ISO_LAMP = 54 ,  
 
   ISO_ENHANCER_RU = 57 ,
   ISO_ENHANCER_LU = 56 ,

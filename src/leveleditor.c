@@ -2598,7 +2598,7 @@ HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
   if (APressed())
     {
       GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_OBSTACLES ;
-      FirstBlock = Highlight = ISO_ALERT ;
+      FirstBlock = Highlight = ISO_LAMP ;
     }
   if (RPressed())
     {
