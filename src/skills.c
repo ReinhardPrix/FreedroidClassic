@@ -888,6 +888,12 @@ HandleCurrentlyActivatedSkill( int player_num )
 		}
 	    }
 	    break;
+	case SPELL_EXTRACT_PLASMA_TRANSISTORS : /*handle them by doing nothing so as to avoid a warning message*/
+	case  SPELL_EXTRACT_SUPERCONDUCTORS : 
+	case  SPELL_EXTRACT_ANTIMATTER_CONVERTERS : 
+	case SPELL_EXTRACT_ENTROPY_INVERTERS : 
+	case  SPELL_EXTRACT_TACHYON_CONDENSATORS : break;
+
 	default:
 	    fprintf( stderr, "\n\nMe [ 0 ] . readied_skill: %d \n" , Me [ 0 ] . readied_skill );
 	    GiveStandardErrorMessage ( __FUNCTION__  , "\
