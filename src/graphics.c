@@ -740,7 +740,7 @@ Load_Digit_Surfaces( void )
       SDL_SetColorKey( InfluDigitSurfacePointer[i] , 0 , 0 ); // this should clear any color key in the dest surface
       // Now we can copy the image Information
       Source.x=i*( INITIAL_DIGIT_LENGTH + 2 );
-      Source.y=0*( INITIAL_DIGIT_HEIGHT + 2);
+      Source.y=1*( INITIAL_DIGIT_HEIGHT + 2);
       Source.w=INITIAL_DIGIT_LENGTH;
       Source.h=INITIAL_DIGIT_HEIGHT;
       Target.x=0;
@@ -760,7 +760,7 @@ Load_Digit_Surfaces( void )
       // SDL_SetColorKey( EnemyDigitSurfacePointer[i] , 0 , 0 ); // this should clear any color key in the dest surface
       // Now we can copy the image Information
       Source.x=(i+10)*( INITIAL_DIGIT_LENGTH + 2 );
-      Source.y=0*( INITIAL_DIGIT_HEIGHT + 2);
+      Source.y=1*( INITIAL_DIGIT_HEIGHT + 2);
       Source.w=INITIAL_DIGIT_LENGTH;
       Source.h=INITIAL_DIGIT_HEIGHT;
       Target.x=0;

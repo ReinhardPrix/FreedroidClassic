@@ -1170,7 +1170,7 @@ InitFreedroid (void)
   GameConfig.Enemy_Aim_Text=TRUE;
   GameConfig.Influencer_Refresh_Text=FALSE;
   GameConfig.Influencer_Blast_Text=TRUE;
-  GameConfig.Theme_SubPath="lanzz_theme/";
+  GameConfig.Theme_SubPath="classic_theme/";
   GameConfig.FullUserRect = TRUE;
   Copy_Rect(Full_User_Rect, User_Rect);
 
