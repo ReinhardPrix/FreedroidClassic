@@ -136,6 +136,13 @@ GetCurrentLift (void)
   gx = rintf(Me.pos.x);
   gy = rintf(Me.pos.y);
 
+  DebugPrintf( 1 , "\nint GetCurrentLift( void ): curlev=%d gx=%d gy=%d" , curlev, gx, gy );
+  DebugPrintf( 1 , "\nint GetCurrentLift( void ): List of elevators:\n");
+  for (i = 0; i < curShip.num_lifts; i++)
+    {
+      DebugPrintf( 1 , "\nIndex=%d level=%d gx=%d gy=%d" , i , curShip.AllLifts[i].level , curShip.AllLifts[i].x , curShip.AllLifts[i].y );
+    }
+
   for (i = 0; i < curShip.num_lifts; i++)
     {
       if (curShip.AllLifts[i].level != curlev)
@@ -149,7 +156,7 @@ GetCurrentLift (void)
     return -1;
   else
     return i;
-}				/* GetCurrentLift */
+}; // GetCurrentLift 
 
 
 /*@Function============================================================
