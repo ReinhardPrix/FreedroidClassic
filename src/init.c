@@ -262,6 +262,7 @@ Get_Item_Data ( char* DataPointer )
 #define ITEM_CAN_BE_INSTALLED_IN_ARMOUR_SLOT "Item can be installed in armour slot=\""
 #define ITEM_CAN_BE_INSTALLED_IN_SHIELD_SLOT "Item can be installed in shield slot=\""
 #define ITEM_CAN_BE_INSTALLED_IN_SPECIAL_SLOT "Item can be installed in special slot=\""
+#define ITEM_CAN_BE_INSTALLED_IN_AUX_SLOT "Item can be installed in aux slot=\""
 
 #define ITEM_RECHARGE_TIME_BEGIN_STRING "Time is takes to recharge this bullet/weapon in seconds :"
 #define ITEM_SPEED_BEGIN_STRING "Flying speed of this bullet type :"
@@ -493,6 +494,37 @@ Sorry...\n\
       else if ( strcmp( YesNoString , "no" ) == 0 )
 	{
 	  ItemMap[ItemIndex].item_can_be_installed_in_special_slot = FALSE;
+	}
+      else
+	{
+	  fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+The item specification of an item in freedroid.ruleset should contain an \n\
+answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.\n\
+\n\
+This indicated a corrupted freedroid.ruleset file with an error at least in\n\
+the item specification section.  Please correct the error or send mail to the\n\
+freedroid development team.\n\
+\n\
+But for now Freedroid will terminate to draw attention \n\
+to the initialisation problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" );
+	  Terminate( ERR );
+	}
+
+      // Now we read in if this item can be installed in special slot
+      YesNoString = ReadAndMallocStringFromData ( ItemPointer , ITEM_CAN_BE_INSTALLED_IN_AUX_SLOT , "\"" ) ;
+      if ( strcmp( YesNoString , "yes" ) == 0 )
+	{
+	  ItemMap[ItemIndex].item_can_be_installed_in_aux_slot = TRUE;
+	}
+      else if ( strcmp( YesNoString , "no" ) == 0 )
+	{
+	  ItemMap[ItemIndex].item_can_be_installed_in_aux_slot = FALSE;
 	}
       else
 	{
@@ -795,6 +827,11 @@ Get_Robot_Data ( void* DataPointer )
 #define ARMAMENT_BEGIN_STRING "Armament of this droid : "
 #define DRIVE_ITEM_BEGIN_STRING "Drive item="
 #define WEAPON_ITEM_BEGIN_STRING "Weapon item="
+#define SHIELD_ITEM_BEGIN_STRING "Shield item="
+#define ARMOUR_ITEM_BEGIN_STRING "Armour item="
+#define AUX1_ITEM_BEGIN_STRING "Aux1 item="
+#define AUX2_ITEM_BEGIN_STRING "Aux2 item="
+#define SPECIAL_ITEM_BEGIN_STRING "Special item="
 #define ADVANCED_FIGHTING_BEGIN_STRING "Advanced Fighting present in this droid : "
 #define IS_HUMAN_SPECIFICATION_STRING "Is this 'droid' a human : "
 #define GO_REQUEST_REINFORCEMENTS_BEGIN_STRING "Going to request reinforcements typical for this droid : "
@@ -930,6 +967,26 @@ Get_Robot_Data ( void* DataPointer )
       // Now we read in the weapon item of this droid type
       ReadValueFromString( RobotPointer , WEAPON_ITEM_BEGIN_STRING , "%d" , 
 			   &Druidmap[RobotIndex].weapon_item , EndOfDataPointer );
+
+      // Now we read in the shield item of this droid type
+      ReadValueFromString( RobotPointer , SHIELD_ITEM_BEGIN_STRING , "%d" , 
+			   &Druidmap[RobotIndex].shield_item , EndOfDataPointer );
+
+      // Now we read in the armour item of this droid type
+      ReadValueFromString( RobotPointer , ARMOUR_ITEM_BEGIN_STRING , "%d" , 
+			   &Druidmap[RobotIndex].armour_item , EndOfDataPointer );
+
+      // Now we read in the aux1 item of this droid type
+      ReadValueFromString( RobotPointer , AUX1_ITEM_BEGIN_STRING , "%d" , 
+			   &Druidmap[RobotIndex].aux1_item , EndOfDataPointer );
+
+      // Now we read in the aux2 item of this droid type
+      ReadValueFromString( RobotPointer , AUX2_ITEM_BEGIN_STRING , "%d" , 
+			   &Druidmap[RobotIndex].aux2_item , EndOfDataPointer );
+
+      // Now we read in the special item of this droid type
+      ReadValueFromString( RobotPointer , SPECIAL_ITEM_BEGIN_STRING , "%d" , 
+			   &Druidmap[RobotIndex].special_item , EndOfDataPointer );
 
       // Now we read in the AdvancedFighing flag of this droid type
       ReadValueFromString( RobotPointer , ADVANCED_FIGHTING_BEGIN_STRING , "%d" , 
