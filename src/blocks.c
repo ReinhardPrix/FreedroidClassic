@@ -537,7 +537,25 @@ Homemade_Update_Tux_Working_Copy ( int PlayerNum )
       TuxWorkingCopy [ PlayerNum ] [i] = tmp;
     }
 
-  if ( ( Me[0].special_item.type != (-1) ) && ( ! Me[0].special_item.currently_held_in_hand ) )
+  if ( ( ( Me[0].special_item.type == ( ITEM_IRON_HAT ) ) || ( Me[0].special_item.type == ( ITEM_SMALL_HELM ) ) ) && ( ! Me[0].special_item.currently_held_in_hand ) )
+    {
+      for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
+	{
+	  tmp = CreateAlphaCombinedSurface ( TuxWorkingCopy [ PlayerNum ] [i] , TuxMotionArchetypes[9][i] );
+	  SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] );
+	  TuxWorkingCopy [ PlayerNum ] [i] = tmp;
+	}
+    }
+  else if ( ( Me[0].special_item.type == ITEM_IRON_HELM ) && ( ! Me[0].special_item.currently_held_in_hand ) )
+    {
+      for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
+	{
+	  tmp = CreateAlphaCombinedSurface ( TuxWorkingCopy [ PlayerNum ] [i] , TuxMotionArchetypes[10][i] );
+	  SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] );
+	  TuxWorkingCopy [ PlayerNum ] [i] = tmp;
+	}
+    }
+  else if ( ( Me[0].special_item.type != (-1) ) && ( ! Me[0].special_item.currently_held_in_hand ) )
     {
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{

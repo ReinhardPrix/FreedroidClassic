@@ -209,7 +209,7 @@ the things soul may finally rest.\n\
       // Now that the SOR has made his first speech, the tux will be
       // assigned the (second and third) mission.
       //
-      AssignMission ( 2 );
+      AssignMission ( 3 );
       AssignMission ( 1 );
       return;
 
@@ -225,7 +225,7 @@ the things soul may finally rest.\n\
       // Now that the RMS has made his first speech, the tux will be
       // assigned the (fourth) mission.
       //
-      AssignMission ( 3 );
+      AssignMission ( 2 );
       return;
     }
 

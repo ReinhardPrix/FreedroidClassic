@@ -437,8 +437,8 @@ ShowSkillsScreen ( void )
   SkillName[  5 ] = "Remote Strike";
   SkillName[  6 ] = "Cold Bolt";
   SkillName[  7 ] = "Mana Shield";
-  SkillName[  8 ] = "Holy Bolt";
-  SkillName[  9 ] = "Poison Bolt";
+  SkillName[  8 ] = "Poison Bolt";
+  SkillName[  9 ] = "Stone Curse";
 
   SkillName[ 10 ] = "Detect Stuff";
   SkillName[ 11 ] = "Force Explosion Circle";
