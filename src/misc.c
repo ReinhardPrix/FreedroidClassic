@@ -477,10 +477,10 @@ void PutMessages(void)
   message* LQueue;					/* Bewegl. Queue-Pointer */
   int i;
 
+  if (!PlusExtentionsOn) return;
+  
   printf("\nvoid PutMessages(void): Funktion wurde echt aufgerufen.");
 
-  //  if (!PlusExtentionsOn) return;
-  
   if (!Queue) return;						/* nichts liegt an */
   if (!Working) ThisMessageTime = 0;  /* inaktiv, aber Queue->reset time */
 	

@@ -434,66 +434,67 @@ DisplayMergeBlock (int x, int y, unsigned char *block,
 @Ret: void
 @Int:
 * $Function----------------------------------------------------------*/
-void CopyMergeBlock(unsigned char *target, unsigned char *source, int mem)
+void 
+CopyMergeBlock(unsigned char *target, unsigned char *source, int mem)
 {
-	register int i;
+  int i;
 
-	for( i=0; i<mem; i++, source++, target++)
-		if( *source != TRANSPARENTCOLOR ) *target = *source;
-
+  for( i=0; i<mem; i++, source++, target++)
+    if( *source != TRANSPARENTCOLOR ) *target = *source;
+  
 } /* Copy merge Block */
 	
 
 /*@Function============================================================
 @Desc: MergeBlockToWindow(source, target, linelen)
-			This copies a block from memory (sequentially stored)
-			to a "window": All lines under each other, "invisible" points
-			are left out (TRANSPARENTCOLOR).
-			It must	know the length of a window-line.
+This copies a block from memory (sequentially stored)
+to a "window": All lines under each other, "invisible" points
+are left out (TRANSPARENTCOLOR).
+It must	know the length of a window-line.
 
-			int check: TRUE/FALSE: Bullet-Collisionen checken
+int check: TRUE/FALSE: Bullet-Collisionen checken
 			
 @Ret: TRUE/FALSE: BulletCollision
 @Int:
 * $Function----------------------------------------------------------*/
 int MergeBlockToWindow(
-	register unsigned char *source,
-	register unsigned char *target,
-	int WinLineLen,		/* in pixel ! */
-	int check)
+		       register unsigned char *source,
+		       register unsigned char *target,
+		       int WinLineLen,		/* in pixel ! */
+		       int check)
 {
-	register int i, j;
-	int ret=FALSE;
-	register int lineskip = WinLineLen - BLOCKBREITE;
+  register int i, j;
+  int ret=FALSE;
+  register int lineskip = WinLineLen - BLOCKBREITE;
 
-	if (check) {
-		for(i=0; i<BLOCKHOEHE; i++, target += lineskip)
-			for(j=0; j<BLOCKBREITE; j++) {
-				if( *source != TRANSPARENTCOLOR) {
-					if (*target == BULLETCOLOR) ret=TRUE;
-					*target++ = *source++;
-				} else {
-					target++;
-					source++;
-				}
-			}
+  if (check) {
+    for(i=0; i<BLOCKHOEHE; i++, target += lineskip)
+      for(j=0; j<BLOCKBREITE; j++) {
+	if( *source != TRANSPARENTCOLOR) {
+	  if (*target == BULLETCOLOR) ret=TRUE;
+	  *target++ = *source++;
 	} else {
-		for(i=0; i<BLOCKHOEHE; i++, target += lineskip)
-			for(j=0; j<BLOCKBREITE; j++) {
-						
-				if( *source != TRANSPARENTCOLOR) {
-					*target++ = *source++;
-				}
-				else {
-					target++;
-					source++;
-				}
-			}
-	} /* if else */
+	  target++;
+	  source++;
+	}
+      }
+  } else {
+    for(i=0; i<BLOCKHOEHE; i++, target += lineskip)
+      for(j=0; j<BLOCKBREITE; j++) {
 	
-	return (ret);
-	
-} /* MergeBlockto.. */
+	if( *source != TRANSPARENTCOLOR) {
+	  *target++ = *source++;
+	}
+	else {
+	  target++;
+	  source++;
+	}
+      }
+  } /* if else */
+  
+  return (ret);
+  
+} // int MergeBlockToWindow(...)
 
 
 

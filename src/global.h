@@ -81,7 +81,7 @@ EXTERN int HideInvisibleMap;
 EXTERN int PlusExtentionsOn;
 EXTERN int Alert;
 EXTERN int ThisShip;
-EXTERN long RealScore;
+EXTERN float RealScore;
 EXTERN long ShowScore;
 EXTERN long HighestScoreOfDay;
 EXTERN long LowestScoreOfDay;

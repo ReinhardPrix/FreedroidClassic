@@ -183,7 +183,8 @@ void DisplayRahmen(unsigned char *screen)
   // unsigned int bg;
   // unsigned int fg;
   
-  DisplayBlock(0, 0, RahmenPicture, RAHMENBREITE, RAHMENHOEHE, screen);
+  // DisplayBlock(0, 0, RahmenPicture, RAHMENBREITE, RAHMENHOEHE, screen);
+  DisplayMergeBlock( 0 , 0 , RahmenPicture , RAHMENBREITE , RAHMENHOEHE , screen);
 
   /*	GetTextColor(&bg,&fg);
 	SetTextColor(FONT_WHITE,FONT_RED);    */    /* BG: Rahmenwei"s FG: FONT_RED */
