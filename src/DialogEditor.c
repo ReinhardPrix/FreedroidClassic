@@ -3987,3 +3987,4 @@ main( int argc, char *argv[] )
 
 
 #undef DIALOG_EDITOR
+// vim: ts=8 sw=2
