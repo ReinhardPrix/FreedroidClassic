@@ -472,6 +472,7 @@ typedef struct
   int FramesOnThisLevel;        // how many frames has the influ spent on this level already?
   
   int readied_skill; // which skill does the influencer currently have readied?
+  int SkillLevel[ NUMBER_OF_SKILL_ICONS ];
 
   item Inventory[ MAX_ITEMS_IN_INVENTORY ];
   item weapon_item;
