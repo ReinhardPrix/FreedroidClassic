@@ -1972,6 +1972,7 @@ enum
 	  Me.Strength = 30;
 	  Me.Dexterity = 25;
 	  Me.Magic = 10;
+	  Druidmap [ Me.type ].weapon_item.type = ITEM_SHORT_SWORD;
 
 	  Get_New_Character_Name( );
 	  return ( TRUE );
@@ -1984,6 +1985,7 @@ enum
 	  Me.Strength = 25;
 	  Me.Dexterity = 35;
 	  Me.Magic = 20;
+	  Druidmap [ Me.type ].weapon_item.type = ITEM_SHORT_BOW;
 
 	  Get_New_Character_Name( );
 	  return ( TRUE );
@@ -1996,6 +1998,7 @@ enum
 	  Me.Strength = 15;
 	  Me.Dexterity = 20;
 	  Me.Magic = 35;
+	  Me.weapon_item.type = ITEM_SHORT_BOW;
 
 	  Get_New_Character_Name( );
 	  return ( TRUE );

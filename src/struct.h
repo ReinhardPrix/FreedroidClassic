@@ -380,7 +380,10 @@ typedef struct
   char* TextToBeDisplayed;
   float Current_Victim_Resistance_Factor;
   int FramesOnThisLevel;        // how many frames has the influ spent on this level already?
+
   item Inventory[ MAX_ITEMS_IN_INVENTORY ];
+  item weapon_item;
+
   int KillRecord[ 1000 ];      // how many ( of the first 1000 monster types) have been killed yet?
 }
 influence_t, *Influence_t;

@@ -49,6 +49,8 @@
 
 #define ITEM_MONEY 6
 #define ITEM_HEALTH_POTION 1
+#define ITEM_SHORT_SWORD 27
+#define ITEM_SHORT_BOW 22
 
 #define WAR_BOT 1
 #define SNIPER_BOT 2
