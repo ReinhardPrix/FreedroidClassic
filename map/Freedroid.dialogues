@@ -1113,9 +1113,9 @@ ChangeOption=8 ChangeToValue=0 ; // don't say this twice in one dialog
 
 New Option Nr=9 OptionText="Where can I get a weapon?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="A weapon you will need.  But I have none to give you."
+Subtitle="A weapon you will need.  There should be one in the chest to the east."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Take a look around outside this temple.  Maybe you can find something suitable there."
+Subtitle="Also don't forget to take a look into the chest on the south wall.  I've got a spare antigrav pad in there that you can use.  That will speed you up a lot."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=9 ChangeToValue=0 ; // don't say this twice in one dialog
 
@@ -1225,6 +1225,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="And also because I think that biological life forms must stick together, or they will all be swept away by a mass of bots and their completely automated battle ships."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=16 ChangeToValue=0 ; // allow to guess on the great assault
+ChangeOption=9 ChangeToValue=1 ; // allow to ask for weapon and equipment
 
 ----------------------------------------------------------------------
 
@@ -1232,7 +1233,7 @@ New Option Nr=17 OptionText="What became of MS Software company after that?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Well, after The Great Assault, these guys were the very first to bite into the dust."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="The help calls from their planet echoes throughout the universe.  I think no living being exists any more even close to their planet."
+Subtitle="Zillions of help calls from their planet were sent into the universe.  I think no living being exists any more even close to their planet."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="And now the planet is a dead tomb, probably the most dangerous place one could ever be."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -1242,17 +1243,13 @@ ChangeOption=17 ChangeToValue=0 ; // allow to guess on the great assault
 
 New Option Nr=99 OptionText="Thanks for the help.  I'll be going now.";
 OptionSample="Tux_Ill_Be_Back_0.wav"
-Subtitle="I am glad if I could help you along."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Please let me know if anything of your memory should return."
+Subtitle="I am glad if I could help you along.  Please let me know if anything of your memory should return."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="I would be glad if I could learn some more about this alien race.  And maybe from a more reliable source than the crazy sectarians."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Also you should be careful around here.  Best head straight for our town."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="And don't go too deep into the tunnels.  There are many bots lurking in there."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I wish you the best of luck."
+Subtitle="And don't go too deep into the tunnels.  There are many bots lurking in there.  I wish you the best of luck."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=1 ; // 
 

@@ -1893,7 +1893,7 @@ InitNewMissionList ( char *MissionName )
   Me[0].base_skill_level [ 2 ] = 1;
   Me[0].base_skill_level [ 3 ] = 1;
   Me[0].base_skill_level [ 4 ] = 1;
-  Me[0].base_skill_level [ 5 ] = 1;
+  Me[0].base_skill_level [ 5 ] = 0;  // teleport home disabled for consistency...
   Me[0].base_skill_level [ 6 ] = 1;
   Me[0].base_skill_level [ 7 ] = 1;
   Me[0].base_skill_level [ 8 ] = 1;

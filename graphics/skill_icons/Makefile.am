@@ -1,4 +1,4 @@
-skill_iconsdir = $(pkgdatadir)/graphics/lanzz_theme
+skill_iconsdir = $(pkgdatadir)/graphics/skill_icons
 
 skill_icons_DATA = *.png
 
