@@ -373,13 +373,13 @@ Assemble_Combat_Picture (int mask)
   if (Me.energy > 0)
     PutInfluence ();
 
-  SDL_Flip ( ne_screen );
-
-  return;  // for now
-
   for (i = 0; i < (MAXBULLETS); i++)
     if (AllBullets[i].type != OUT)
       PutBullet (i);
+
+  SDL_Flip ( ne_screen );
+
+  return;  // for now
 
 
   for (i = 0; i < (MAXBLASTS); i++)
@@ -826,6 +826,68 @@ PutEnemy (int Enum)
 @Ret: void
 @Int:
 * $Function----------------------------------------------------------*/
+#ifdef NEW_ENGINE
+void
+PutBullet (int BulletNummer)
+{
+  Bullet CurBullet = &AllBullets[BulletNummer];
+  unsigned char *bulletpic;
+  SDL_Rect TargetRectangle;
+
+  DebugPrintf
+    ("\nvoid PutBullet(int BulletNummer): real function call confirmed.\n");
+
+#if BULLETOFF == 1
+  return;
+#endif
+
+  bulletpic = Bulletmap[CurBullet->type].picpointer +
+    CurBullet->phase * BLOCKMEM;
+
+  /*
+   * Wenn ein FLASH gestartet ist, wird einfach der ganze Screen
+   * zuerst schwarz, dann weiss geschaltet
+   */
+  if (CurBullet->type == FLASH)
+    {
+      // Now the whole window will be filled with either white
+      // or black each frame until the flash is over.  (Flash 
+      // deletion after some time is done in CheckBulletCollisions.)
+      if ( (CurBullet->time_in_frames % 2) == 1)
+	{
+	  FlashWindow (0);
+	  return;
+	}
+      if ( (CurBullet->time_in_frames % 2) == 0)
+	{
+	  FlashWindow (15);
+	  return;
+	}
+    } // if type == FLASH
+
+
+  /*
+  if (PutObject (CurBullet->pos.x, CurBullet->pos.y, bulletpic, TRUE) == TRUE)
+    {
+      // Bullet-Bullet Collision: Bullet loeschen 
+      CurBullet->type = OUT;
+      CurBullet->mine = FALSE;
+
+      // Druid-Blast dort erzeugen: killt zweites Bullet 
+      StartBlast (CurBullet->pos.x, CurBullet->pos.y, DRUIDBLAST);
+    }	// if 
+  */
+
+  TargetRectangle.x=USER_FENSTER_CENTER_X-Me.pos.x+CurBullet->pos.x-BLOCKBREITE/2;
+  TargetRectangle.y=USER_FENSTER_CENTER_Y-Me.pos.y+CurBullet->pos.y-BLOCKHOEHE/2;
+
+  SDL_BlitSurface( ne_blocks , Bulletmap[CurBullet->type].block + CurBullet->phase, ne_screen , &TargetRectangle );
+
+  DebugPrintf
+    ("\nvoid PutBullet(int BulletNummer): end of function reched.\n");
+
+}	/* PutBullet */
+#else
 void
 PutBullet (int BulletNummer)
 {
@@ -878,6 +940,7 @@ PutBullet (int BulletNummer)
     ("\nvoid PutBullet(int BulletNummer): end of function reched.\n");
 
 }	/* PutBullet */
+#endif
 
 /*@Function============================================================
 @Desc:  PutBlast: setzt das Blast BlastNummer ins InternWindow
