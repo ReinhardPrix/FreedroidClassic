@@ -356,6 +356,8 @@ enum _sounds
 
 #define MAX_PLAYERS             5
 
+#define MAX_MAP_INSERTS         2
+
 #define EL_BLOCK_LEN		8
 #define EL_BLOCK_HEIGHT		8
 #define EL_BLOCK_MEM 		EL_BLOCK_LEN * EL_BLOCK_HEIGHT

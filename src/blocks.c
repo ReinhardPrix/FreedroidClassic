@@ -619,6 +619,56 @@ Load_Tux_Surfaces( void )
 }; // void Load_Tux_Surfaces( void )
 
 /* ----------------------------------------------------------------------
+ * This function creates all the surfaces, that are nescessary to store
+ * the big map inserts, that might add some spice to the otherwise rather
+ * monotonous rooms and halls of the freedroid maps.
+ * ---------------------------------------------------------------------- */
+void 
+Load_Big_Map_Insert_Surfaces( void )
+{
+  int i ;
+  char *fpath;
+
+  for ( i = 0 ; i < MAX_MAP_INSERTS ; i ++ )
+    {
+
+      fpath = find_file ( AllMapInserts [ i ] . map_insert_file_name , GRAPHICS_DIR , FALSE );
+      AllMapInserts [ i ] . insert_surface = IMG_Load( fpath );
+
+      //--------------------
+      // Now we check if the file has been loaded successfully, or otherwise
+      // we print out an error message...
+      //
+      if ( ! AllMapInserts [ i ] . insert_surface )
+	{
+	  fprintf( stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+Freedroid was unable to load a big graphics insert from the hard disk\n\
+into memory.\n\
+\n\
+The full path name of the file, that could not be loaded was : \n\
+%s\n\
+\n\
+This error indicates some installation problem with freedroid.\n\
+Please contact the developers, as always freedroid-discussion@lists.sourceforge.net.\n\
+Thanks a lot.\n\
+\n\
+But for now Freedroid will terminate to draw attention \n\
+to the graphics loading problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , fpath );
+	  Terminate(ERR);
+
+	}
+
+    }
+	  
+}; // void Load_Big_Map_Insert_Surfaces( void )
+
+/* ----------------------------------------------------------------------
  * This function creates all the surfaces, that are nescessary to blit a
  * digit.
  * ---------------------------------------------------------------------- */

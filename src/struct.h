@@ -134,9 +134,18 @@ typedef struct
 }
 grob_point, *grob_Point;
 
-
 typedef grob_point vect;
 typedef grob_Point Vect;
+
+typedef struct
+{
+  char* map_insert_name;
+  char* map_insert_file_name;
+  grob_point map_insert_size_in_blocks; // how many blocks does this big map insert cover?
+  SDL_Surface* insert_surface;
+}
+map_insert_spec, *Map_Insert_Spec;
+
 
 typedef struct
 {
