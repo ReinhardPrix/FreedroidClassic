@@ -39,6 +39,18 @@
 #include "items.h"
 
 /* ----------------------------------------------------------------------
+ * This function DELETES an item from the source location.
+ * ---------------------------------------------------------------------- */
+void
+DeleteItem( item* Item )
+{
+
+  Item->type = -1 ;
+  Item->currently_held_in_hand = FALSE;
+
+}; // void DeleteItem( item* Item )
+
+/* ----------------------------------------------------------------------
  * This function COPIES an item from the source location to the destination
  * location.  The source location is then marked as unused inventory 
  * entry.
@@ -433,19 +445,28 @@ GetHeldItemCode ( void )
   //
   for ( InvPos = 0 ; InvPos < MAX_ITEMS_IN_INVENTORY ; InvPos ++ )
     {
-      if ( Me.Inventory[ InvPos ].currently_held_in_hand ) break;
+      if ( Me.Inventory[ InvPos ].currently_held_in_hand ) 
+	{
+	  return ( Me.Inventory[ InvPos ].type );
+	}
     }
-  if ( InvPos >=  MAX_ITEMS_IN_INVENTORY )
+
+  if ( Druidmap[ Me.type ].weapon_item.currently_held_in_hand ) 
     {
-      // DebugPrintf( 0 , "\nNo item in inventory seems to be currently held in hand...");
-      return ( -1 );
+      return ( Druidmap[ Me.type ].weapon_item.type );
     }
-  else
-    {
-      // DebugPrintf( 0 , "\nInventory item index %d was held in hand." , InvPos );
-    }
+
+  //--------------------
+  // If we ever reach this point, that means that the held items code
+  // could not be correctly computed, which should mean a reason to
+  // terminate immediately with severe error
+  //
+
+  DebugPrintf( 0 , "\nint GetHeldItemCode ( void ):  COULDN't FIND HELD ITEM!! " );
+  // Terminate( ERR );
+  return ( -1 );
   
-  return ( Me.Inventory[ InvPos ].type );
+  
 }; // int GetHeldItemCode ( void )
 
 /* ----------------------------------------------------------------------
@@ -540,10 +561,12 @@ DropHeldItemToWeaponSlot ( void )
   
   // Druidmap[ DRUID001 ].weapon_item = Me.Inventory[ InvPos ].type;
   CopyItem( &(Me.Inventory[ InvPos ]) , &(Druidmap[ DRUID001 ].weapon_item) );
+  Druidmap[ DRUID001 ].weapon_item.currently_held_in_hand = FALSE;
 
   // Now the item is removed from inventory and no longer held in hand as well...
-  Me.Inventory[ InvPos ].type = ( -1 );
-  Me.Inventory[ InvPos ].currently_held_in_hand = FALSE;
+  // Me.Inventory[ InvPos ].type = ( -1 );
+  // Me.Inventory[ InvPos ].currently_held_in_hand = FALSE;
+  DeleteItem( &Me.Inventory[ InvPos ] );
 
 }; // void DropHeldItemToWeaponSlot ( void )
 
@@ -649,6 +672,82 @@ DropHeldItemToAux2Slot ( void )
 
 }; // void DropHeldItemToAux2Slot ( void )
 
+item* GetHeldItemPointer( void )
+{
+  int InvIndex;
+
+  InvIndex = GetHeldItemInventoryIndex(  );
+
+  if ( InvIndex != (-1) )
+    {
+      DebugPrintf( 0 , "\nitem* GetHeldItemPointer( void ) : An item in inventory was held in hand.  Good.");
+      return ( & ( Me.Inventory[ InvIndex ] ) );
+    } 
+  else if ( Druidmap[ Me.type ].weapon_item.currently_held_in_hand )
+    {
+      DebugPrintf( 0 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
+      return ( & ( Druidmap[ Me.type ].weapon_item ) );
+    }
+  else
+    {
+      DebugPrintf( 0 , "\nitem* GetHeldItemPointer( void ) : NO ITEM AT ALL SEEMS TO HAVE BEEN HELD IN HAND!!");
+      return ( NULL );
+    }
+
+  
+}; // item* GetHeldItemPointer( void )
+
+/* ----------------------------------------------------------------------
+ * This function looks for a free inventory index.  Since there are more
+ * inventory indices than squares in the inventory grid, the function 
+ * should always be able to find a free invenotry index.  If not, this is
+ * considered a severe program error, which will cause immediate 
+ * termination of FreeDroid.
+ * ---------------------------------------------------------------------- */
+int 
+GetFreeInventoryIndex( void )
+{
+  int InvPos;
+
+  // --------------------
+  // We find out the first free inventory index:
+  //
+  for ( InvPos = 0 ; InvPos < MAX_ITEMS_IN_INVENTORY ; InvPos ++ )
+    {
+      if ( Me.Inventory[ InvPos ].type == (-1) ) 
+	{
+	  return ( InvPos );
+	}
+    }
+
+  // --------------------
+  // If this point is reached, the severe error mentioned above has
+  // occured, an error message must be printed out and the program
+  // must be terminated.
+  //
+  fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a severe problem:\n\
+A FREE INVENTORY INDEX POSITION COULD NOT BE FOUND.\n\
+\n\
+This is an internal error, that must never happen unless there are\n\
+severe bugs in the inventory system.\n\
+\n\
+If you receive this error, PLEASE INFORM THE FREEDROID DEVELOPERS ABOUT IT!!\n\
+Thanks a lot!!!\n\
+\n\
+For now Freedroid will terminate to draw attention \n\
+to the internal problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" );
+  Terminate(ERR);
+
+  // to make compilers happy...
+  return ( 0 ); 
+}; // int GetFreeInventoryIndex( void )
+
 /* ----------------------------------------------------------------------
  * If an item is held and then clicked again in the inventory field, this
  * item should be dropped into the inventory field, provided there is room
@@ -659,19 +758,21 @@ void
 DropHeldItemToInventory( void )
 {
   point CurPos;
-  int InvPos;
+  item* DropItemPointer;
+  int FreeInvIndex;
+
+  FreeInvIndex = GetFreeInventoryIndex( );
 
   // --------------------
-  // First we find out the inventory index of the item we want to
-  // drop
+  // First we find out which item we want to drop into the inventory
   //
-  InvPos = GetHeldItemInventoryIndex(  );
-
-  if ( InvPos == (-1) )
+  DropItemPointer = GetHeldItemPointer(  );
+  if ( DropItemPointer == NULL )
     {
       DebugPrintf( 0 , "\nNo item in inventory seems to be currently held in hand...");
       return;
-    }
+    } 
+  
 
   // --------------------
   // Now we want to drop the item to the right location again.
@@ -679,21 +780,24 @@ DropHeldItemToInventory( void )
   // depends as well on current mouse cursor location as well as the
   // size of the dropped item.
   //
-  CurPos.x = GetMousePos_x() + 16 - ( 16 * ItemImageList[ ItemMap[ Me.Inventory[ InvPos ].type ].picture_number ].inv_size.x - 16 ) ;
-  CurPos.y = GetMousePos_y() + 16 - ( 16 * ItemImageList[ ItemMap[ Me.Inventory[ InvPos ].type ].picture_number ].inv_size.y - 16 ) ;
+  CurPos.x = GetMousePos_x() + 16 - ( 16 * ItemImageList[ ItemMap[ DropItemPointer->type ].picture_number ].inv_size.x - 16 ) ;
+  CurPos.y = GetMousePos_y() + 16 - ( 16 * ItemImageList[ ItemMap[ DropItemPointer->type ].picture_number ].inv_size.y - 16 ) ;
 
-  if ( ItemCanBeDroppedInInv ( Me.Inventory[ InvPos ].type , GetInventorySquare_x ( CurPos.x ) , 
+  if ( ItemCanBeDroppedInInv ( DropItemPointer->type , GetInventorySquare_x ( CurPos.x ) , 
 			       GetInventorySquare_y ( CurPos.y ) ) )
     {
-      Me.Inventory[ InvPos ].inventory_position.x = GetInventorySquare_x ( CurPos.x ) ;
-      Me.Inventory[ InvPos ].inventory_position.y = GetInventorySquare_y ( CurPos.y ) ;
+      CopyItem( DropItemPointer , &( Me.Inventory[ FreeInvIndex ] ) );
+      DeleteItem( DropItemPointer );
+      Me.Inventory[ FreeInvIndex ].inventory_position.x = GetInventorySquare_x ( CurPos.x ) ;
+      Me.Inventory[ FreeInvIndex ].inventory_position.y = GetInventorySquare_y ( CurPos.y ) ;
+      Me.Inventory[ FreeInvIndex ].currently_held_in_hand = FALSE;
     }
 
   // --------------------
   // Now that we know the inventory index, we can as well make the item
   // 'not held in hand' immediately.
   //
-  Me.Inventory[ InvPos ].currently_held_in_hand = FALSE ;
+  DropItemPointer->currently_held_in_hand = FALSE ;
 
 }; // void DropHeldItemToInventory( void )
 
@@ -756,7 +860,7 @@ ManageInventoryScreen ( void )
 	    {
 	      // Nothing grabbed, so we need not do anything more here..
 	      Item_Held_In_Hand = ( -1 );
-	      DebugPrintf( 0 , "\nGrabbing FAILED!" );
+	      DebugPrintf( 0 , "\nGrabbing in INVENTORY grid FAILED!" );
 	    }
 	  else
 	    {
@@ -767,6 +871,26 @@ ManageInventoryScreen ( void )
 	      //
 	      Item_Held_In_Hand = ItemMap[ Me.Inventory[ Grabbed_InvPos ].type ].picture_number ;
 	      Me.Inventory[ Grabbed_InvPos ].currently_held_in_hand = TRUE;
+	    }
+	}
+      else if ( CursorIsInWeaponRect( CurPos.x , CurPos.y ) )
+	{
+	  DebugPrintf( 0 , "\nGrabbing in weapons rect!" );
+	  if ( Druidmap[ Me.type ].weapon_item.type > 0 )
+	    {
+	      //--------------------
+	      // At this point we know, that we have just grabbed something from the weapon rect
+	      // So we set, that something should be displayed in the 'hand', and it should of
+	      // course be the image of the item grabbed from inventory.
+	      //
+	      Item_Held_In_Hand = ItemMap[ Druidmap [ Me.type ].weapon_item.type ].picture_number ;
+	      Druidmap[ Me.type ].weapon_item.currently_held_in_hand = TRUE;
+	    }
+	  else
+	    {
+	      // Nothing grabbed, so we need not do anything more here..
+	      Item_Held_In_Hand = ( -1 );
+	      DebugPrintf( 0 , "\nGrabbing in WEAPON rect FAILED!" );
 	    }
 	}
       goto NoMoreGrabbing;
@@ -817,7 +941,8 @@ ManageInventoryScreen ( void )
 	{
 	  DebugPrintf( 0 , "\nItem dropped onto the weapons rectangle!" );
 	  DebugPrintf( 0 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
-	  if ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_weapon_slot )
+	  if ( ( GetHeldItemCode() != (-1) ) &&
+	       ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_weapon_slot ) )
 	    {
 	      DropHeldItemToWeaponSlot ( );
 	      Item_Held_In_Hand = ( -1 );

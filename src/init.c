@@ -1021,6 +1021,9 @@ Get_Robot_Data ( void* DataPointer )
       Druidmap[i].lose_health *= energyloss_calibrator;
       Druidmap[i].aggression *= aggression_calibrator;
       Druidmap[i].score *= score_calibrator;
+
+      Druidmap[i].weapon_item.currently_held_in_hand = FALSE ;
+
     }
 
 
