@@ -58,9 +58,8 @@ part_group_strings [ ALL_PART_GROUPS ] =
     "" 
   };
 
-#define ALL_TUX_PARTS 12
 #define ALL_TUX_MOTION_CLASSES 2
-iso_image loaded_tux_images [ ALL_TUX_PARTS ] [ TUX_TOTAL_PHASES ] [ MAX_TUX_DIRECTIONS ] ;
+iso_image loaded_tux_images [ ALL_PART_GROUPS ] [ TUX_TOTAL_PHASES ] [ MAX_TUX_DIRECTIONS ] ;
 
 int use_walk_cycle_for_part [ ALL_PART_GROUPS ] [ ALL_TUX_MOTION_CLASSES ] = 
 { 
@@ -2204,14 +2203,18 @@ clear_all_loaded_tux_images ( int with_free )
     int i;
     int j;
     int k;
+
+    //--------------------
+    // We clear the Tux part strings
+    //
+    for ( i = 0 ; i < ALL_PART_GROUPS ; i ++ )
+    {
+	strcpy ( previous_part_strings [ i ] , NOT_LOADED_MARKER );
+    }
     
-    strcpy ( previous_part_strings [ 0 ] , NOT_LOADED_MARKER );
-    strcpy ( previous_part_strings [ 1 ] , NOT_LOADED_MARKER );
-    strcpy ( previous_part_strings [ 2 ] , NOT_LOADED_MARKER );
-    strcpy ( previous_part_strings [ 3 ] , NOT_LOADED_MARKER );
-    strcpy ( previous_part_strings [ 4 ] , NOT_LOADED_MARKER );
-    strcpy ( previous_part_strings [ 5 ] , NOT_LOADED_MARKER );
-    
+    //--------------------
+    // We clear all the surfaces currently in use
+    //
     for ( i = 0 ; i < ALL_PART_GROUPS ; i ++ )
     {
 	for ( j = 0 ; j < TUX_TOTAL_PHASES ; j ++ )
@@ -2366,6 +2369,7 @@ grab_tux_images_from_archive ( int tux_part_group , int motion_class , char* par
     FILE *DataFile;
     char constructed_filename[10000];
     char* fpath;
+    size_t chunks_read;
 
     Sint16 img_xlen;
     Sint16 img_ylen;
@@ -2422,7 +2426,15 @@ This indicates a serious bug in this installation of Freedroid.",
 		
 		loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface = 
 		    SDL_CreateRGBSurface ( SDL_SWSURFACE , img_xlen , img_ylen, 32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000 ) ;
-		fread ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface -> pixels , 4 * img_xlen * img_ylen , 1 , DataFile ) ;
+		chunks_read = fread ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface -> pixels , 4 * img_xlen * img_ylen , 1 , DataFile ) ;
+		if ( chunks_read < 1 )
+		{
+		    fprintf( stderr, "\n\ntux_part_group: %d, our_phase: %d rotation_index: %d\n" , 
+			     tux_part_group, our_phase , rotation_index );
+		    GiveStandardErrorMessage ( __FUNCTION__  , "\
+Reading the image archive file met an unexpected lack of read data.",
+					       PLEASE_INFORM, IS_FATAL );
+		}
 
 		//--------------------
 		// Depending on whether this is supposed to work with faster but less
