@@ -213,11 +213,12 @@ main (int argc, char * argv[])
  * function.
  * ----------------------------------------------------------------- */
 void
-UpdateCountersForThisFrame ( int PlayerNum )
+UpdateCountersForThisFrame ( int player_num )
 {
   static long Overall_Frames_Displayed=0;
   int i;
   Level item_level = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
+  float my_speed ;
 
   //--------------------
   // First we do all the updated, that need to be done only once
@@ -225,7 +226,7 @@ UpdateCountersForThisFrame ( int PlayerNum )
   // things, that the client can do without any info from the 
   // server.
   //
-  if ( PlayerNum == 0 )
+  if ( player_num == 0 )
     {
       GameConfig.Mission_Log_Visible_Time += Frame_Time();
       GameConfig.Inventory_Visible_Time += Frame_Time();
@@ -327,20 +328,40 @@ UpdateCountersForThisFrame ( int PlayerNum )
   // Now we do all the things, that need to be updated for each connected
   // player separatedly.
   //
-  Me [ PlayerNum ] . FramesOnThisLevel++;
+  Me [ player_num ] . FramesOnThisLevel++;
 
-  Me [ PlayerNum ] . LastCrysoundTime += Frame_Time ();
-  Me [ PlayerNum ] . MissionTimeElapsed += Frame_Time();
-  Me [ PlayerNum ] . LastTransferSoundTime += Frame_Time();
-  Me [ PlayerNum ] . TextVisibleTime += Frame_Time();
+  Me [ player_num ] . LastCrysoundTime += Frame_Time ();
+  Me [ player_num ] . MissionTimeElapsed += Frame_Time();
+  Me [ player_num ] . LastTransferSoundTime += Frame_Time();
+  Me [ player_num ] . TextVisibleTime += Frame_Time();
 
-  if ( Me [ PlayerNum ] . weapon_swing_time != (-1) ) Me [ PlayerNum ] . weapon_swing_time += Frame_Time();
-  if ( Me [ PlayerNum ] . got_hit_time != (-1) ) Me [ PlayerNum ] . got_hit_time += Frame_Time();
-
-  if ( Me [ PlayerNum ] . firewait > 0 )
+  //--------------------
+  // We take care of the running stamina...
+  //
+  my_speed = sqrt ( Me [ player_num ] . speed . x * Me [ player_num ] . speed . x +
+		    Me [ player_num ] . speed . y * Me [ player_num ] . speed . y ) ;
+  if ( my_speed >= ( TUX_WALKING_SPEED + TUX_RUNNING_SPEED ) * 0.5 )
     {
-      Me [ PlayerNum ] . firewait -= Frame_Time ( ) ;
-      if ( Me [ PlayerNum ] . firewait < 0 ) Me [ PlayerNum ] . firewait = 0 ;
+      Me [ player_num ] . running_power -= Frame_Time() * 5.0 ;
+    }
+  else
+    {
+      Me [ player_num ] . running_power += Frame_Time() * 5.0 ;
+      if ( Me [ player_num ] . running_power > Me [ player_num ] . max_running_power )
+	Me [ player_num ] . running_power = Me [ player_num ] . max_running_power ;
+
+      if ( Me [ player_num ] . running_power >= 20 )
+      Me [ player_num ] . running_must_rest = FALSE ;
+    }
+
+
+  if ( Me [ player_num ] . weapon_swing_time != (-1) ) Me [ player_num ] . weapon_swing_time += Frame_Time();
+  if ( Me [ player_num ] . got_hit_time != (-1) ) Me [ player_num ] . got_hit_time += Frame_Time();
+
+  if ( Me [ player_num ] . firewait > 0 )
+    {
+      Me [ player_num ] . firewait -= Frame_Time ( ) ;
+      if ( Me [ player_num ] . firewait < 0 ) Me [ player_num ] . firewait = 0 ;
     }
   // DebugPrintf ( -1000 , "\nfirewait; %f." , Me [ 0 ] . firewait );
 
@@ -351,11 +372,11 @@ UpdateCountersForThisFrame ( int PlayerNum )
   //
   for ( i = 0 ; i < MAX_LEVELS ; i ++ )
     {
-      if ( Me [ PlayerNum ] . pos . z != i )
+      if ( Me [ player_num ] . pos . z != i )
 	{
-	  if ( Me [ PlayerNum ] . time_since_last_visit_or_respawn [ i ] > (-1) )
+	  if ( Me [ player_num ] . time_since_last_visit_or_respawn [ i ] > (-1) )
 	    {
-	      Me [ PlayerNum ] . time_since_last_visit_or_respawn [ i ] += Frame_Time() ;
+	      Me [ player_num ] . time_since_last_visit_or_respawn [ i ] += Frame_Time() ;
 	    }
 
 	  //--------------------

@@ -981,7 +981,8 @@ move_tux_thowards_raw_position ( int player_num , float x , float y )
   // Now depending on whether the running key is pressed or not,
   // we have the Tux go on running speed or on walking speed.
   //
-  if ( LeftCtrlPressed() )
+  if ( Me [ player_num ] . running_power <= 0 ) Me [ player_num ] . running_must_rest = TRUE ;
+  if ( LeftCtrlPressed() && ( ! Me [ player_num ] . running_must_rest ) )
     { 
       planned_step . x = RemainingWay . x * TUX_RUNNING_SPEED / length ;
       planned_step . y = RemainingWay . y * TUX_RUNNING_SPEED / length ;
@@ -1866,6 +1867,7 @@ AnimateInfluence ( int player_num )
 		{
 		  play_sample_using_WAV_cache( "../effects/tux_footstep.wav" , FALSE , FALSE );
 		  step_countdown -= STEP_TIME ;
+		  // Me [ player_num ] . running_power -= STEP_TIME * 2.0 ;
 		}
 	    }
 

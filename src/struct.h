@@ -524,6 +524,7 @@ typedef struct
   double mana;                    // current mana level 
   float max_running_power;
   float running_power;
+  int running_must_rest;
 
   Sint16 LastMouse_X;             // mostly for other players:  Where was the last mouseclick...
   Sint16 LastMouse_Y;             // mostly for other players:  Where was the last mouseclick...
