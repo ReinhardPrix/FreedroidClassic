@@ -4,10 +4,19 @@ Rough overview of involved developers and their attributed tasks :
 jp
 --
 - "low level" graphics (svgalib) and sound functions
-- ...
+- sound issues, all of them.
+- more doku!
+- Web-page admin
 
 rp
 --
 - cvs archive mangagement
 - Takeover game
-- ...
+- map-editor (maped)
+- Automake/configure/Makefile 
+
+
+limo
+----
+- play& find bugs? ;-)
+- ... ?
