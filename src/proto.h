@@ -241,6 +241,7 @@ EXTERN void Takeover_Game_Lost_Sound (void);
 EXTERN void PlayGreetingSound ( int SoundCode );
 EXTERN void PlayItemSound ( int SoundCode );
 EXTERN void PlayLevelCommentSound ( int levelnum );
+EXTERN void PlayEnemyGotHitSound ( int enemytype );
 
 
 // items.c

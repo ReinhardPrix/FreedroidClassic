@@ -45,7 +45,7 @@
 // The order of appearance here should match the order of appearance 
 // in the enum-Environment located in defs.h!
 
-#define ALL_SOUNDS 54
+#define ALL_SOUNDS 55
 char *SoundSampleFilenames[ALL_SOUNDS] = {
    "ERRORSOUND_NILL.NOWAV",
    "Combat_Background_Music.wav",
@@ -61,6 +61,7 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
    "EnterElevator_Sound_0.wav",
    "ThouArtDefeated_Sound_0.wav",
    "Got_Hit_Sound_0.wav",
+   "Enemy_Got_Hit_Sound_0.wav",
    "TakeoverSetCapsule_Sound_0.wav",
    "Menu_Item_Selected_Sound_1.wav",
    "Menu_Item_Deselected_Sound_0.wav",
@@ -984,6 +985,10 @@ DruidBlastSound (void)
 }; // void DruidBlastSound (void)
 
 
+/* ----------------------------------------------------------------------
+ * 
+ *
+ * ---------------------------------------------------------------------- */
 void 
 PlayLevelCommentSound ( int levelnum )
 {
@@ -1000,5 +1005,28 @@ PlayLevelCommentSound ( int levelnum )
       break;
     };
 }; // void PlayLevelCommentSound ( int levelnum )
+
+/* ----------------------------------------------------------------------
+ * Whenever an enemy is hit by the tux with a melee weapon, then the
+ * following sound is played...
+ * ---------------------------------------------------------------------- */
+void 
+PlayEnemyGotHitSound ( int enemytype )
+{
+  switch ( enemytype )
+    {
+    case -1:
+      // Don't play anything at all...
+      break;
+    case 0:
+      // Play a grunting enemy got hit sound...
+      Play_Sound ( ENEMY_GOT_HIT_SOUND_0 );
+      break;
+    default: 
+      break;
+    };
+}; // void PlayLevelCommentSound ( int levelnum )
+
+
 
 #undef _sound_c

@@ -739,14 +739,10 @@ PutEnemy (int Enum , int x , int y)
   int phase;
   int alpha_value;
   int i;
-  int HumanModifier;
   SDL_Rect TargetRectangle;
   point UpperLeftBlitCorner;
 
   DebugPrintf (3, "\nvoid PutEnemy(int Enum): real function call confirmed...\n");
-
-  if ( Druidmap[AllEnemys[ Enum ].type ].IsHuman ) HumanModifier =  'A' - '1' - 13;
-  else HumanModifier = 0;
 
   /* if enemy is on other level, return */
   if (AllEnemys[Enum].levelnum != CurLevel->levelnum)
@@ -813,6 +809,7 @@ Sorry...\n\
 
   TargetRectangle.x = UpperLeftBlitCorner.x ;
   TargetRectangle.y = UpperLeftBlitCorner.y ;
+  // DebugPrintf( 0 , "X: %d." , TargetRectangle.x ); fflush(stdout);
 
   if ( AllEnemys[Enum].Friendly == 0 ) 
     {
