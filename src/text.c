@@ -569,7 +569,7 @@ ChatWithFriendlyDroid( int Enum )
 	    case (-1):
 	    default:
 	      PlayOnceNeededSoundSample( "Tux_See_You_Later_0.wav" , TRUE );
-	      PlayOnceNeededSoundSample( "SOR_I_Hope_You_0.wav" , TRUE );
+	      PlayOnceNeededSoundSample( "SOR_I_Hope_You_0.wav" , FALSE ); // we do not need to wait here...
 	      return;
 	      break;
 	    }
@@ -727,7 +727,7 @@ ChatWithFriendlyDroid( int Enum )
 	    case (-1):
 	    default:
 	      PlayOnceNeededSoundSample( "Tux_See_You_Later_0.wav" , TRUE );
-	      PlayOnceNeededSoundSample( "STO_Goodbye_Love_0.wav" , TRUE );
+	      PlayOnceNeededSoundSample( "STO_Goodbye_Love_0.wav" , FALSE ); // we do not need to wait here...
 	      return;
 	      break;
 	    }

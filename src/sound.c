@@ -132,6 +132,7 @@ Mix_Music *Loaded_MOD_Files[ALL_MOD_MUSICS] =
 #endif
 
 char SoundChannelList[5000];
+Mix_Chunk* List_Of_Sustained_Release_WAV_Files[5000];
 
 //----------------------------------------------------------------------
 // We want to know in certain cases if a channel has finished playback
@@ -147,8 +148,28 @@ char SoundChannelList[5000];
 //
 // ---------------------------------------------------------------------
 void channelDone(int channel) {
+
   DebugPrintf( 0 , "\nCALLBACK FUNCTION INVOKED:  channel %d finished playback.\n" , channel );
+
+  //--------------------
+  // Maybe the PlayOnceNeededSoundSample function was called with argument 'non-wait',
+  // which means that it allocated a chunk and started playing, but was unable to free
+  // this chunk again, since it of course was not done playing by then.
+  //
+  // In this case we must do the unallocation work here, since now we
+  // know that the appropriate channel has stopped playing.
+  //
+  if ( SoundChannelList[ channel ] == 2 ) 
+    {
+      DebugPrintf( 0 , "\nCALLBACK FUNCTION:  Detected soundchannel for sustained release.... freeing chunk..." );
+      Mix_FreeChunk ( List_Of_Sustained_Release_WAV_Files[ channel ] );
+    }
+
+  //--------------------
+  // Now we can safely mark the channel as unused again
+  //
   SoundChannelList[ channel ] = 0;
+
 }; // void channelDone(int channel) {
 
 //----------------------------------------------------------------------
@@ -255,6 +276,7 @@ But for now Freedroid will terminate to draw attention to the sound problem it \
 could not resolve, as you requested via the option mentioned above. Sorry...\n\
 ----------------------------------------------------------------------\n\
 \n" );
+	  Terminate( ERR );
 	}
       else
 	{
@@ -279,8 +301,8 @@ the rest of the speech samples from our web page (hopefully soon).\n\
 	      while ( ( SDL_GetTicks() - simulated_playback_starting_time < 7 * 1000 ) && 
 		      !EscapePressed() && !SpacePressed() );
 
+	      while ( EscapePressed() || SpacePressed() );
 	    }
-	  while ( EscapePressed() || SpacePressed() );
 
 	  //--------------------
 	  // Now we must return, since we do not want to 'free' the sound sample, that
@@ -345,15 +367,31 @@ Sorry for interrupting your game.  \n\
       if ( EscapePressed() || SpacePressed() )
 	{
 	  Mix_HaltChannel( Newest_Sound_Channel );
+	  while ( EscapePressed() || SpacePressed() );
+
+	  //--------------------
+	  // Now the channel has finished playing (or we have stopped it) and
+	  // now we can unallocate the resources used by it...
+	  //
+	  Mix_FreeChunk ( One_Shot_WAV_File );
+	  
 	}
     }
-  while ( EscapePressed() || SpacePressed() );
-  
-  //--------------------
-  // Now the channel has finished playing (or we have stopped it) and
-  // now we can unallocate the resources used by it...
-  //
-  Mix_FreeChunk ( One_Shot_WAV_File );
+  else
+    {
+      //--------------------
+      // Otherwise, if there was no 'With_Waiting' flag set, 
+      // we do nothing here, cause we can't halt the channel and 
+      // we also can't free the channel, that is still playing.
+      //
+      // All we will do is set the channels flag to 2, so that the
+      // callback function will know what to do when called:  TO
+      // FREE THE SOUND CHUNK!
+      //
+      SoundChannelList[ Newest_Sound_Channel ] = 2;
+      List_Of_Sustained_Release_WAV_Files[ Newest_Sound_Channel ] = One_Shot_WAV_File ;
+    }
+
 
 #endif // HAVE_LIBSDL_MIXER
 
