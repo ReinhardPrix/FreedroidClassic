@@ -45,10 +45,10 @@
 // SDL_Surface *screen;
 // SDL_Surface *ScaledSurface;
 
-/*
- * Set the pixel at (x, y) to the given value
- * NOTE: The surface must be locked before calling this!
- */
+/*-----------------------------------------------------------------
+ * please document !!
+ * 
+ *-----------------------------------------------------------------*/
 void 
 PrepareScaledSurface(int With_Screen_Update)
 {
@@ -59,16 +59,10 @@ PrepareScaledSurface(int With_Screen_Update)
   unsigned char *pSecond;
   unsigned char pix;
 
-  DebugPrintf("\n\nvoid PrepareScaledSurface(void):  New function call confirmed...");
-
   Lock_SDL_Screen();
   SDL_LockSurface( ScaledSurface );
 
-  DebugPrintf("\n\nvoid PrepareScaledSurface(void):  Screens are locked...");
-
   bpp  = screen->format->BytesPerPixel;
-
-  DebugPrintf("\n\nvoid PrepareScaledSurface(void):  bpp have been determined...");
 
   /* Here s is the address to the pixel source */
   // s = (Uint8 *)screen->pixels;
@@ -84,13 +78,12 @@ PrepareScaledSurface(int With_Screen_Update)
       switch ( SCALE_FACTOR ) 
 	{
 	case 1:
-
-	  printf("\n\nvoid PrepareScaledSurface(): Unhandled SCALE_FACTOR...\n\nTerminating...\n\n");
+	  printf
+	    ("\n\nPrepareScaledSurface(): Unhandled SCALE_FACTOR...\n");
 	  Terminate(ERR);
 	  break;
 
 	case 2:
-
 	  for (j=0; j<SCREENHOEHE; j++)
 	    {
 	      for (i=0; i<SCREENBREITE; i++)
@@ -115,61 +108,54 @@ PrepareScaledSurface(int With_Screen_Update)
 	  break;
 
 	case 3:
-
-	  printf("\n\nvoid PrepareScaledSurface(): Unhandled SCALE_FACTOR...\n\nTerminating...\n\n");
+	  printf("\n\nPrepareScaledSurface(): Unhandled SCALE_FACTOR...\n");
 	  Terminate(ERR);
 	  break;
-
+	  
 	default:
-
-	  printf("\n\nvoid PrepareScaledSurface(): Unhandled SCALE_FACTOR...\n\nTerminating...\n\n");
+	  printf("\n\nPrepareScaledSurface(): Unhandled SCALE_FACTOR...\n");
 	  Terminate(ERR);
-
 	  break;
-	}
-
+	} /* switch (SCALE_FACTOR) */
+      
       break;
       
     case 2:
-
-      printf("\n\nvoid PrepareScaledSurface(void):  Unhandled bpp!...\n\n Terminating...\n\n");
+      printf("\n\nPrepareScaledSurface(void): Unhandled bpp!...\n");
       Terminate(ERR);
       break;
       
     case 3:
-
-      printf("\n\nvoid PrepareScaledSurface(void):  Unhandled bpp!...\n\n Terminating...\n\n");
+      printf("\n\nPrepareScaledSurface(void):  Unhandled bpp!...\n");
       Terminate(ERR);
       break;
       
     case 4:
-
-      printf("\n\nvoid PrepareScaledSurface(void):  Unhandled bpp!...\n\n Terminating...\n\n");
+      printf("\n\nPrepareScaledSurface(void):  Unhandled bpp!...\n");
       Terminate(ERR);
       break;
-
-    }
-
-  DebugPrintf("\n\nvoid PrepareScaledSurface(void):  Memory has been copied...");
+    } /* switch (bpp) */
 
   Unlock_SDL_Screen();
   SDL_UnlockSurface( ScaledSurface );
 
-  DebugPrintf("\n\nvoid PrepareScaledSurface(void):  Screens have been unlocked again...");
-
   if (Draw_Framerate)
-    {
-      PrintStringFont (ScaledSurface , Font1, 0, RAHMENHOEHE*2 , "FPS: %d", 
-		       5*(int)(rintf(0.2/Frame_Time())) );
-    }
+    PrintStringFont (ScaledSurface , Font1, 0, RAHMENHOEHE*2 , "FPS: %d", 
+		     5*(int)(rintf(0.2/Frame_Time())) );
+
 
   if (With_Screen_Update) Update_SDL_Screen();
 
-  DebugPrintf("\n\nvoid PrepareScaledSurface(void):  End of function has been reached...");
 
-} // void PrepareScaledSurface(void)
+  return;
+
+} // PrepareScaledSurface()
 
 
+/*-----------------------------------------------------------------
+ * 
+ * 
+ *-----------------------------------------------------------------*/
 void 
 Lock_SDL_Screen(void)
 {
@@ -180,7 +166,7 @@ Lock_SDL_Screen(void)
       return;
     }
   }
-} // void Lock_SDL_Screen
+} // Lock_SDL_Screen ()
 
 void
 Unlock_SDL_Screen(void)
@@ -623,12 +609,6 @@ vga_white(void)
   return 0;
 }
 
-void 
-vga_waitretrace(void)
-{
-
-};
-    
 int 
 vga_getdefaultmode(void)
 {
