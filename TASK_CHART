@@ -73,7 +73,7 @@ more detailed list of planned activities:
 *) "clean-up" code, esp. get rid of all the obsolete "Screens"..
 *) Takeover game: rahmen, points etc + Keyboard-sensitivity better
 *) have a look at Map-editor and save-function
-*) putting cvs compression hint on homepage
+
 *) Add the Homepage-Makefile into the general autoconf/automake machinery
 --> Perhaps get the save routine in the leveleditor to work?? just a suggestion
 
