@@ -968,6 +968,7 @@ ManageInventoryScreen ( void )
 	      // course be the image of the item grabbed from inventory.
 	      //
 	      Item_Held_In_Hand = ItemMap[ Me.Inventory[ Grabbed_InvPos ].type ].picture_number ;
+	      PlayItemSound( ItemMap[ Me.Inventory[ Grabbed_InvPos ].type ].sound_number );
 	      Me.Inventory[ Grabbed_InvPos ].currently_held_in_hand = TRUE;
 	    }
 	}

@@ -216,6 +216,7 @@ EXTERN void Takeover_Set_Capsule_Sound (void);
 EXTERN void Takeover_Game_Won_Sound (void);
 EXTERN void Takeover_Game_Deadlock_Sound (void);
 EXTERN void Takeover_Game_Lost_Sound (void);
+EXTERN void PlayItemSound ( int SoundCode );
 
 
 // items.c

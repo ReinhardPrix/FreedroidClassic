@@ -45,7 +45,7 @@
 // The order of appearance here should match the order of appearance 
 // in the enum-Environment located in defs.h!
 
-#define ALL_SOUNDS 31
+#define ALL_SOUNDS 36
 char *SoundSampleFilenames[ALL_SOUNDS] = {
    "ERRORSOUND_NILL.NOWAV",
    "Combat_Background_Music.wav",
@@ -77,7 +77,12 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
    "Takeover_Sound_0.wav",
    "Mission_Status_Change_Sound_0.wav",
    "Item_Taken_Sound_0.wav",
-   "ICantCarryAnyMore_Sound_0.wav"
+   "ICantCarryAnyMore_Sound_0.wav",
+   "Item_Drop_Sound_0.wav",
+   "Item_Drop_Sound_1.wav",
+   "Item_Drop_Sound_2.wav",
+   "Item_Drop_Sound_3.wav",
+   "Item_Drop_Sound_4.wav"
 };
 
 #ifdef HAVE_LIBSDL_MIXER
@@ -340,6 +345,37 @@ CrySound (void)
 {
   Play_Sound ( CRY_SOUND );
 }
+
+/*@Function============================================================
+@Desc: 
+
+@Ret: 
+@Int:
+* $Function----------------------------------------------------------*/
+void
+PlayItemSound ( int SoundCode )
+{
+  switch ( SoundCode )
+    {
+    case 0:
+      Play_Sound( ITEM_DROP_SOUND_0 );
+      break;
+    case 1:
+      Play_Sound( ITEM_DROP_SOUND_1 );
+      break;
+    case 2:
+      Play_Sound( ITEM_DROP_SOUND_2 );
+      break;
+    case 3:
+      Play_Sound( ITEM_DROP_SOUND_3 );
+      break;
+    case 4:
+      Play_Sound( ITEM_DROP_SOUND_4 );
+      break;
+    default:
+      break;
+    }
+};
 
 void
 ItemTakenSound (void)
