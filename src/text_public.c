@@ -1175,7 +1175,6 @@ Get_Item_Data ( char* DataPointer )
 
 #define ITEM_CAN_BE_INSTALLED_IN_SLOT_WITH_NAME "Item can be installed in slot with name=\""
 #define ITEM_ROTATION_SERIES_NAME_PREFIX "Item uses rotation series with prefix=\""
-#define ITEM_CAN_BE_BOUGHT_IN_SHOP "Item can be bought in shop=\""
 #define ITEM_GROUP_TOGETHER_IN_INVENTORY "Items of this type collect together in inventory=\""
 
 #define ITEM_GUN_IGNORE_WALL "Item as gun: ignore collisions with wall=\""
@@ -1341,26 +1340,6 @@ answer for the slot installation possiblieties, that was neither
       // that this item is going to use.
       //
       ItemMap [ ItemIndex ] . item_rotation_series_prefix = ReadAndMallocStringFromData ( ItemPointer , ITEM_ROTATION_SERIES_NAME_PREFIX , "\"" ) ;
-
-      //--------------------
-      // Now we read in if this item can bought in shops
-      //
-      YesNoString = ReadAndMallocStringFromData ( ItemPointer , ITEM_CAN_BE_BOUGHT_IN_SHOP , "\"" ) ;
-      if ( strcmp( YesNoString , "yes" ) == 0 )
-	{
-	  ItemMap[ItemIndex].item_can_be_bought_in_shop = TRUE;
-	}
-      else if ( strcmp( YesNoString , "no" ) == 0 )
-	{
-	  ItemMap[ItemIndex].item_can_be_bought_in_shop = FALSE;
-	}
-      else
-	{
-	  GiveStandardErrorMessage ( "Get_Item_Data(...)" , "\
-The item specification of an item in freedroid.ruleset should contain an \n\
-answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
-				     PLEASE_INFORM, IS_FATAL );
-	}
 
       //--------------------
       // Now we read in if this item will group together in inventory
@@ -1587,10 +1566,6 @@ answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
       ReadValueFromString( ItemPointer ,  "Picture number=" , "%d" , 
 			   &ItemMap[ItemIndex].picture_number , EndOfItemData );
 
-      // Now we read in the number of the rotation sequence to use for this item
-      ReadValueFromString( ItemPointer ,  "Rotation model number=" , "%d" , 
-			   &ItemMap[ItemIndex].rotation_model_number , EndOfItemData );
-
       // Now we read in the number of the sound to be used for this item
       ReadValueFromString( ItemPointer ,  "Sound number=" , "%d" , 
 			   &ItemMap[ItemIndex].sound_number , EndOfItemData );
@@ -1704,8 +1679,8 @@ freedroid-discussion@lists.sourceforge.net\n\
 \n\
 *** Start of item data section: ***\n\
 \n\
-Common factor for all ranged weapons bullet speed values: 2.0\n\
-Common factor for all ranged weapons bullet damage values: 2.0\n\
+Common factor for all ranged weapons bullet speed values: 1.0\n\
+Common factor for all ranged weapons bullet damage values: 1.0\n\
 Common factor for all melee weapons damage values: 1.0\n\n\n" ) ;
   fwrite ( linebuf , strlen( linebuf ), sizeof ( char ), SaveGameFile );  
 
@@ -1788,17 +1763,6 @@ Common factor for all melee weapons damage values: 1.0\n\n\n" ) ;
       fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
 
       //--------------------
-      // We write out can be bought in shop...
-      //
-      sprintf ( linebuf , "Item can be bought in shop=\"" ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-      if ( ItemMap [ i ] . item_can_be_bought_in_shop )
-	sprintf ( linebuf , "yes\"\n" ) ;	
-      else
-	sprintf ( linebuf , "no\"\n" ) ;	
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
       // We write out collect together in inventory...
       //
       sprintf ( linebuf , "Items of this type collect together in inventory=\"" ) ;
@@ -1838,12 +1802,6 @@ Common factor for all melee weapons damage values: 1.0\n\n\n" ) ;
       // We write out picture number....
       //
       sprintf ( linebuf , "Picture number=%d\n" , ItemMap [ i ] . picture_number ) ;
-      fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
-
-      //--------------------
-      // We write out rotation model number....
-      //
-      sprintf ( linebuf , "Rotation model number=%d\n" , ItemMap [ i ] . rotation_model_number ) ;
       fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
 
       //--------------------

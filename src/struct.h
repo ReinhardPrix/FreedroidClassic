@@ -318,7 +318,6 @@ typedef struct
   int item_can_be_installed_in_special_slot;
   int item_can_be_installed_in_aux_slot;
 
-  int item_can_be_bought_in_shop;
   int item_group_together_in_inventory;
 
   // How good is the item as drive???
@@ -334,7 +333,6 @@ typedef struct
   int    base_item_gun_damage; //	damage done by this bullettype 
   int    item_gun_damage_modifier; // modifier to the damage done by this bullettype 
   double item_gun_bullet_lifetime;      // how long does a 'bullet' from this gun type live?
-  // int    item_gun_bullet_can_be_reflected; // can bullets of this type be reflected by other bullets?
   int    item_gun_bullet_reflect_other_bullets; // can this 'bullet' reflect other bullets
   int    item_gun_bullet_pass_through_explosions; // can this 'bullet' reflect other bullets
   int    item_gun_bullet_pass_through_hit_bodies; // does this bullet go through hit bodies (e.g. like a laser sword)
@@ -361,7 +359,6 @@ typedef struct
 
   // Which picture to use for this item, when it's lying on the floor?
   int picture_number;
-  int rotation_model_number;
   int sound_number;
   int base_list_price;         // the base price of this item at the shop
 
