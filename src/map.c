@@ -1037,20 +1037,23 @@ int IsVisible(Point objpos){
  * $Author$
  *
  * $Log$
- * Revision 1.4  1993/08/08 21:00:19  prix
- * Wed Aug 04 12:44:47 1993: added include of global.h
- * Wed Aug 04 15:06:42 1993: KONSOLEN richtig passable
- * Thu Aug 05 11:03:16 1993: Walls und Konsolen in DruidPassable bedacht
- * Thu Aug 05 11:20:21 1993: added ECK_RO
- * Thu Aug 05 11:34:44 1993: added ECKEN to DruidPassable
- * Fri Aug 06 14:14:23 1993: added T Kollision checkin in DruidPassable
- * Fri Aug 06 15:38:27 1993: modified LoadMap: dont load from disk but from memory
- * Fri Aug 06 16:12:04 1993: writing LoadShip
- * Sat Aug 07 14:51:01 1993: added GetMapBrick()
- * Sat Aug 07 14:54:21 1993: added calls to GetMapBrick()
- * Sat Aug 07 15:20:35 1993: added ActSpecialField()
- * Sat Aug 07 16:05:32 1993: added Elevator-load to LoadShip
- * Sun Aug 08 16:59:37 1993: DruidPassable verbessert
+ * Revision 1.5  1993/10/02 16:23:07  prix
+ * Sun Aug 08 17:18:44 1993: Merged DruidPassable and IsPassable( old: NotPassable)
+ * Sun Aug 08 18:12:31 1993: written GetCurrentElevator()
+ * Sun Aug 08 22:31:17 1993: added code to read in Waypoint-data in LoadMap()
+ * Mon Aug 09 17:52:15 1993: init of wp-list
+ * Mon Aug 09 20:01:11 1993: level->empty init
+ * Wed Aug 11 20:08:42 1993: Lift to enter only in center of Block
+ * Sat Aug 21 14:44:12 1993: new Ship-loading functions from maped imported
+ * Sat Aug 21 14:54:42 1993: written GetElevatorConnections
+ * Sat Aug 21 15:24:45 1993: written TranslateMap()
+ * Tue Aug 24 09:49:25 1993: written AnimateRefresh()
+ * Tue Aug 24 10:00:50 1993: call GetRefreshes
+ * Tue Aug 24 17:19:10 1993: moved IsVisible to here
+ * Wed Aug 25 18:36:21 1993: writing GetCrew()
+ * Sat Sep 18 12:44:43 1993: Refreshes langsameer
+ * Sat Sep 18 17:44:56 1993: InnerRefresh wird nun animiert
+ * Sat Oct 02 12:22:20 1993: dont call GetCrew() in LoadShip, but in InitNewGame()
  *
  * Revision 1.5  1993/10/02  16:23:07  prix
  * Sun Aug 08 17:18:44 1993: Merged DruidPassable and IsPassable( old: NotPassable)
