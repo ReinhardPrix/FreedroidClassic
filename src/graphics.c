@@ -1135,10 +1135,7 @@ InitPictures (void)
 
   ShowStartupPercentage ( 60 ) ; 
 
-  DebugPrintf( 2 , "\nvoid InitPictures(void): preparing to load bullet file." );
-  DebugPrintf( 1 , "\nvoid InitPictures(void): Number_Of_Bullet_Types : %d." , Number_Of_Bullet_Types );
-
-  Load_Bullet_Surfaces();
+  Load_Digit_Surfaces();
 
   ShowStartupPercentage ( 65 ) ; 
 
@@ -1166,7 +1163,10 @@ InitPictures (void)
 
   DebugPrintf( 2 , "\nvoid InitPictures(void): preparing to load blast image file." );
 
-  Load_Digit_Surfaces();
+  DebugPrintf( 2 , "\nvoid InitPictures(void): preparing to load bullet file." );
+  DebugPrintf( 1 , "\nvoid InitPictures(void): Number_Of_Bullet_Types : %d." , Number_Of_Bullet_Types );
+
+  Load_Bullet_Surfaces();
 
   ShowStartupPercentage ( 84 ) ; 
 
