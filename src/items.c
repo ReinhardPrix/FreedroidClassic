@@ -574,7 +574,6 @@ item types.  This indicates a severe bug in Freedroid.",
 
   FillInItemProperties ( & ( CurLevel->ChestItemList[ i ] ) , FALSE , TreasureChestRange );
 
-
   PlayItemSound( ItemMap[ ItemType ].sound_number );
 
 }; // void DropChestItemAt( int ItemType , int x , int y , int prefix , int suffix , int TreasureChestRange )
@@ -1346,6 +1345,10 @@ CountItemtypeInInventory( int Itemtype , int PlayerNum )
   return NumberOfItemsFound;
 }; // int CountItemtypeInInventory( int Itemtype , int PlayerNum )
 
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
 int
 FindFirstInventoryIndexWithItemType ( int Itemtype , int PlayerNum )
 {
@@ -2729,28 +2732,43 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
   //
   if ( ( Me [ 0 ] . weapon_item . type == (-1) ) && ( ItemMap [ ItemPointer -> type ] . item_can_be_installed_in_weapon_slot ) )
     {
-      raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . weapon_item ) , Inv_Loc );
-      return;
+      if ( ItemUsageRequirementsMet( ItemPointer , TRUE ) )
+	{
+	  raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . weapon_item ) , Inv_Loc );
+	  return;
+	}
     }
   if ( ( Me [ 0 ] . shield_item . type == (-1) ) && ( ItemMap [ ItemPointer -> type ] . item_can_be_installed_in_shield_slot ) )
     {
-      raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . shield_item ) , Inv_Loc );
-      return;
+      if ( ItemUsageRequirementsMet( ItemPointer , TRUE ) )
+	{
+	  raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . shield_item ) , Inv_Loc );
+	  return;
+	}
     }
   if ( ( Me [ 0 ] . armour_item . type == (-1) ) && ( ItemMap [ ItemPointer -> type ] . item_can_be_installed_in_armour_slot ) )
     {
-      raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . armour_item ) , Inv_Loc );
-      return;
+      if ( ItemUsageRequirementsMet( ItemPointer , TRUE ) )
+	{
+	  raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . armour_item ) , Inv_Loc );
+	  return;
+	}
     }
   if ( ( Me [ 0 ] . drive_item . type == (-1) ) && ( ItemMap [ ItemPointer -> type ] . item_can_be_installed_in_drive_slot ) )
     {
-      raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . drive_item ) , Inv_Loc );
-      return;
+      if ( ItemUsageRequirementsMet( ItemPointer , TRUE ) )
+	{
+	  raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . drive_item ) , Inv_Loc );
+	  return;
+	}
     }
   if ( ( Me [ 0 ] . special_item . type == (-1) ) && ( ItemMap [ ItemPointer -> type ] . item_can_be_installed_in_special_slot ) )
     {
-      raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . special_item ) , Inv_Loc );
-      return;
+      if ( ItemUsageRequirementsMet( ItemPointer , TRUE ) )
+	{
+	  raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . special_item ) , Inv_Loc );
+	  return;
+	}
     }
   
   
