@@ -502,10 +502,20 @@ AssembleCombatPicture (int mask)
   // going to have larger levels and we don't want to do 100x100 cyles
   // for nothing each frame.
   //
-  LineStart = Me [ 0 ] . pos . y - 7 ;
-  LineEnd = Me [ 0 ] . pos . y + 7 ;
-  ColStart = Me [ 0 ] . pos . x - 7 ;
-  ColEnd = Me [ 0 ] . pos . x + 7 ;
+  if ( Block_Width == INITIAL_BLOCK_WIDTH )
+    {
+      LineStart = Me [ 0 ] . pos . y - 7 ;
+      LineEnd = Me [ 0 ] . pos . y + 7 ;
+      ColStart = Me [ 0 ] . pos . x - 7 ;
+      ColEnd = Me [ 0 ] . pos . x + 7 ;
+    }
+  else
+    {
+      LineStart = -5 ;
+      LineEnd = DisplayLevel->xlen + 5 ;
+      ColStart = -5 ;
+      ColEnd = DisplayLevel->ylen + 5 ;
+    }
                          
   SDL_SetClipRect (Screen , &User_Rect);
 
