@@ -706,7 +706,7 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
   switch ( MyRandom ( TreasureChestRange ) )
     {
     case 0:
-      switch ( MyRandom ( 12 ) )
+      switch ( MyRandom ( 13 ) )
 	{
 	case 0:
 	  drop_item_type = ITEM_TRACKS ;
@@ -760,10 +760,14 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
 	  drop_item_type = ITEM_CLUB ;
 	  drop_item_multiplicity =  1 ;
 	  break;
+	case 13:
+	  drop_item_type = ITEM_SHOES ;
+	  drop_item_multiplicity =  1 ;
+	  break;
 	} // inner switch
       break;
     case 1:
-      switch ( MyRandom ( 11 ) )
+      switch ( MyRandom ( 12 ) )
 	{
 	case 0:
 	  drop_item_type = ITEM_WHEELS ;
@@ -812,6 +816,10 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
 	case 11:
 	  drop_item_type = ITEM_MACE ;
 	  drop_item_multiplicity = 1 ;
+	  break;
+	case 12:
+	  drop_item_type = ITEM_BOOTS ;
+	  drop_item_multiplicity =  1 ;
 	  break;
 	} // inner switch
       break;

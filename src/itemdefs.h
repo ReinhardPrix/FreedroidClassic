@@ -55,6 +55,9 @@
 #define ITEM_TRIPEDAL 8
 #define ITEM_WHEELS 07
 
+#define ITEM_SHOES 5
+#define ITEM_BOOTS 11
+
 #define ITEM_BUCKLER 19
 #define ITEM_SMALL_SHIELD 43
 #define ITEM_STANDARD_SHIELD 33

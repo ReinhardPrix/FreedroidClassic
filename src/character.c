@@ -68,6 +68,9 @@ float AC_Gain_Per_Dex_Point[]={     -1 ,     1 ,         1  ,        1 };
 #define AC_X 260
 #define AC_Y 171
 
+#define LV_1_BOT_HITS_CHANCE_X 254
+#define LV_1_BOT_HITS_CHANCE_Y 249
+
 #define MELEE_SKILL_X 130
 #define MELEE_SKILL_Y 346
 #define RANGED_SKILL_X 130
@@ -585,6 +588,12 @@ UpdateAllCharacterStats ( int PlayerNum )
   AddInfluencerItemSecondaryBonus( & Me [ PlayerNum ] .aux1_item );
   AddInfluencerItemSecondaryBonus( & Me [ PlayerNum ] .aux2_item );
 
+  //--------------------
+  // Now that the defence stat is computed, we can compute the chance, that
+  // a randomly chosen lv. 1 bot will hit the Tux in any given strike...
+  //
+  Me [ PlayerNum ] . lv_1_bot_will_hit_percentage =
+    ( int ) ( exp ( - 0.03 * ( (float) Me [ PlayerNum ] . AC ) ) * 100.0 );
 
 }; // void UpdateAllCharacterStats ( void )
 
@@ -714,6 +723,9 @@ ShowCharacterScreen ( void )
 
   sprintf( CharText , "%d", (int) Me[0].AC );
   DisplayText( CharText , AC_X + CharacterRect.x , AC_Y + CharacterRect.y , &CharacterRect );
+
+  sprintf( CharText , " %d%%", (int) Me [ 0 ] . lv_1_bot_will_hit_percentage );
+  DisplayText( CharText , LV_1_BOT_HITS_CHANCE_X + CharacterRect.x , LV_1_BOT_HITS_CHANCE_Y + CharacterRect.y , &CharacterRect );
 
   //--------------------
   // Now we print out the current skill levels in hacking skill, 

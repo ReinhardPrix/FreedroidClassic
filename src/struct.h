@@ -545,6 +545,7 @@ typedef struct
   float damage_modifier; // the modifier to the damage the influencer currently does
   float AC; // the current Armour Class of the influencer
   float to_hit;
+  int lv_1_bot_will_hit_percentage; // percentage chance that a random lv 1 bot will hit
   int resist_force;        // percentage to reduce from force damage
   int resist_fire;         // percentage to reduce from fire damage
   int resist_electricity;  // percentage to reduce from electricity damage

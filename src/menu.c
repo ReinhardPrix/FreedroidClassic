@@ -1967,7 +1967,7 @@ PrepareNewHero (void)
   Me[0].character_class = WAR_BOT;
   Me[0].base_vitality = 10;
   Me[0].base_strength = 10;
-  Me[0].base_dexterity = 10;
+  Me[0].base_dexterity = 15;
   Me[0].base_magic = 40;
 
   Get_New_Character_Name( );
