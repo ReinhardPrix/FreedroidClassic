@@ -62,8 +62,6 @@
 #include <time.h>
 #include <signal.h>
 #include <unistd.h>
-#include <signal.h>
-#include <time.h>
 #include <vga.h>
 #include <vgagl.h>
 #include <vgakeyboard.h>

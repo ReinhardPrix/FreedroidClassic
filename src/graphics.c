@@ -130,7 +130,7 @@ void Load_PCX_Image(char* PCX_Filename,unsigned char* Screen,int LoadPal)
 {
   FILE *file;
   void *image;
-  int i, j;
+  int i;
   unsigned short int length, height;
   unsigned char palette[768];
 
@@ -169,16 +169,6 @@ void Load_PCX_Image(char* PCX_Filename,unsigned char* Screen,int LoadPal)
   if (Screen == RealScreen) {
     gl_clearscreen(0);
     gl_putbox(0,0,length,height,image);
-    /*
-    for (i=0; i<height; i++)
-      {
-	for(j=0; j<length; j++)
-	  {
-	    vga_setcolor(((char*)image)[i*height+j]);
-	    vga_drawpixel(j,i);
-	  }
-      }
-    */
   } else {
     memcpy( Screen, image , length*height );
   } 
@@ -989,7 +979,7 @@ void SetPalCol2(unsigned int palpos, color Farbwert)
 void Flimmern(void){
   int i;
   unsigned char* Screenptr;
-  unsigned char* Junkptr;
+  //  unsigned char* Junkptr;
   
   printf("\nvoid Flimmern(void): Real function call confirmed.");
 

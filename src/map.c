@@ -557,6 +557,8 @@ int TranslateMap(Level Lev)
   int environs; // encodes the "Wall-environment" of a "+"
   int NewBlock;  // Neuen "Eck-Block" in den wir KREUZ verwandeln
 
+  DebugPrintf("\nint TranslateMap(Level Lev): real function call confirmed.");
+
   /* Erste Runde: transpose these ascii -mapdata to internal numbers for map */
   for( row=0; row<ydim; row++) {
     for(col=0; col<xdim; col++) {
@@ -618,6 +620,7 @@ int TranslateMap(Level Lev)
       case 0x1111: NewBlock = KREUZ; break;
       default: 
 	printf("\nMap-panic. TranslateMap() is messed up!\n"); 
+	DebugPrintf("\nint TranslateMap(Level Lev): end of function reached.");
 	return(ERR);
 	break;
       } // switch(environs)
@@ -625,6 +628,7 @@ int TranslateMap(Level Lev)
     } /* for(col) */
   } /* for(row) */
 
+  DebugPrintf("\nint TranslateMap(Level Lev): end of function reached.");
   return OK;
 } // int Translate Map(Level lev)
 

@@ -178,7 +178,7 @@ shieldspec AllShields[]={
 
 
 #define ROBOT_SPEED_CALIBRATOR 20
-#define ROBOT_ACCEL_CALIBRATOR 30
+#define ROBOT_ACCEL_CALIBRATOR 10
 druidspec Druidmap[ALLDRUIDTYPES]={
 /*
                                      accel.    lose_health          aggr.  fl.imm.

@@ -842,19 +842,16 @@ void SetUserfenster(int color, unsigned char *screen)
 #define ROBOTBILDHOEHE SCREENHOEHE/3
 #define ROBOTBILDBREITE SCREENBREITE/8
 
-void ShowRobotPicture(int PosX,int PosY, int Number, unsigned char* Screen){
-  int j;
+void 
+ShowRobotPicture(int PosX,int PosY, int Number, unsigned char* Screen)
+{
 
   printf("\nvoid ShowRobotPicture(...): Function call confirmed.");
 
   gl_putbox(PosX, PosY, DRUIDIMAGE_LENGTH, DRUIDIMAGE_HEIGHT, Druidmap[Number].image );
 
-  //  for(j=0;j<ROBOTBILDHOEHE;j++){
-    // PORT memcpy(Screen+PosX+(PosY+j)*SCREENBREITE,Robotptr+((Number/8)+j)*
-    // PORT	     SCREENBREITE+(Number % 8)*ROBOTBILDBREITE,ROBOTBILDBREITE);
-  //}
-
   printf("\nvoid ShowRobotPicture(...): Usual end of function reached.");
+
 } // void ShowRobotPicture(...)
 
 #undef _view_c

@@ -81,7 +81,7 @@ void AutoFireBullet(void){
   int j,i;
   int TargetNum= -1;
   signed long BestDist=200000;
-  int enemynum, guntype;
+  int guntype;
   int xdist, ydist;
   signed long LDist,LXDist,LYDist;
   
@@ -101,7 +101,6 @@ void AutoFireBullet(void){
     if (LDist <= 0) { printf(" ERROR determination of LDist !!."); getchar(); Terminate(-1); }
     if ( LDist < BestDist) {
       TargetNum=i;
-      enemynum=i;
       BestDist=LDist;
     }
   }
@@ -115,8 +114,8 @@ void AutoFireBullet(void){
 
   FireBulletSound();
 
-  xdist=Feindesliste[enemynum].pos.x-Me.pos.x;
-  ydist=Feindesliste[enemynum].pos.y-Me.pos.y;
+  xdist=Feindesliste[TargetNum].pos.x-Me.pos.x;
+  ydist=Feindesliste[TargetNum].pos.y-Me.pos.y;
 
   // Sicherheit gegen Divisionen durch Null !!!!
   if (xdist == 0) xdist=2;
@@ -610,7 +609,7 @@ void FireBullet(void){
   int guntype = Druidmap[Me.type].gun;	/* which gun do we have ? */
   int BulletSpeedX = Bulletmap[guntype].speed;
   int BulletSpeedY = Bulletmap[guntype].speed;
-  int firedir;
+  int firedir=LINKS;
 
 /* Wenn noch kein Schuss loesbar ist sofort zurueck */
   if (Me.firewait > 0) return;

@@ -255,6 +255,7 @@ EXTERN void LeaveElevatorSound(void);
 EXTERN void FireBulletSound(void);
 EXTERN void BounceSound(void);
 EXTERN void DruidBlastSound(void);
+EXTERN void ThouArtDefeatedSound(void);
 
 /* keyboard.c */
 #undef EXTERN
