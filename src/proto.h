@@ -130,11 +130,6 @@ EXTERN void SmallBullet (int, int, int, int, unsigned char *, int);
 
 EXTERN void GetMapBlocks (void);
 
-EXTERN void IsolateBlock (unsigned char *screen,
-			  unsigned char *target,
-			  int BlockEckLinks,
-			  int BlockEckOben, int Blockbreite, int Blockhoehe);
-
 EXTERN SDL_Rect *ne_get_blocks (char *picfile, int num_blocks,
 				int blocks_per_line, int source_line,
 				int target_line);
@@ -342,7 +337,7 @@ EXTERN void EscapeMenu (void);
 #else
 #define EXTERN extern
 #endif
-
+EXTERN char * find_file (char *fname, char *datadir, int use_theme);
 EXTERN void CheckForTriggeredEvents ( void );
 EXTERN void Pause (void);
 EXTERN void ComputeFPSForThisFrame(void);

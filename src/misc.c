@@ -75,6 +75,41 @@ Uint32 Ten_Frame_SDL_Ticks;
 Uint32 Onehundred_Frame_SDL_Ticks;
 int framenr = 0;
 
+/*-----------------------------------------------------------------
+ * find a given filename in data-dir, using theme subdir if required
+ *
+ * if you pass NULL as datadir, it will be ignored
+ *
+ * returns pointer to _static_ string array File_Path, which 
+ * contains the full pathname of the file.
+ *
+ * !! therefore do never try to free the returned string!!
+ *
+ *-----------------------------------------------------------------*/
+char *
+find_file (char *fname, char *datadir, int use_theme)
+{
+  static char File_Path[5000];   /* hope this will be enough */
+
+
+  if (datadir)
+    strcpy (File_Path, datadir);
+      
+  if (use_theme)
+    strcat (File_Path, GameConfig.Theme_SubPath);
+
+  if (!fname)
+    {
+      printf ("\nError. find_file() called with empty filename!\n");
+      return (NULL);
+    }
+  else
+    strcat (File_Path, fname);
+
+  return (File_Path);
+	
+} /* find_file */
+
 /*@Function============================================================
 @Desc: realise Pause-Mode: the game process is halted,
        while the graphics and animations are not.  This mode 
