@@ -203,14 +203,13 @@ enum
 #define MAP_DIR			"map/"
 
 #define NE_DROID_BLOCK_FILE	"droids.png"
-// #define NE_DROID_BLOCK_FILE	"droids.alpha.png"
-// #define NE_DROID_BLOCK_FILE	"droids.colorkey.png"
 #define NE_BULLET_BLOCK_FILE 	"bullet.png"
 #define NE_BLAST_BLOCK_FILE 	"blast.png"
 #define NE_DIGIT_BLOCK_FILE     "digits.gif"
 #define NE_ITEMS_BLOCK_FILE     "items.png"
 #define MOUSE_CURSOR_BLOCK_FILE "mouse_move_cursor.png"
-#define NE_SKILL_ICON_FILE      "skills.png"
+#define SKILL_ICON_FILE         "skills.png"
+#define SKILL_LEVEL_BUTTON_FILE "skill_buttons.png"
 #define SHOP_BACKGROUND_IMAGE   "shoppe.jpg"
 
 #define NE_CONSOLE_PIC_FILE    "console_fg.png" 
@@ -237,6 +236,8 @@ enum
 //--------------------
 // Constants about the size (and mem?) of pixmaps
 //
+#define SKILL_LEVEL_BUTTON_HEIGHT 32
+#define SKILL_LEVEL_BUTTON_WIDTH 30
 
 #define INITIAL_BLOCK_WIDTH	64
 #define INITIAL_BLOCK_HEIGHT	64
