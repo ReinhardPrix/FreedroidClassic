@@ -946,13 +946,18 @@ LoadThemeConfigurationFile(void)
   char *EndOfThemesBlastData;
   char *EndOfThemesDigitData;
   int BulletIndex;
+  int NumberOfBulletTypesInConfigFile=0;
   
 #define END_OF_THEME_DATA_STRING "**** End of theme data section ****"
 #define END_OF_THEME_BLAST_DATA_STRING "*** End of themes blast data section ***" 
 #define END_OF_THEME_BULLET_DATA_STRING "*** End of themes bullet data section ***" 
 #define END_OF_THEME_DIGIT_DATA_STRING "*** End of themes digit data section ***" 
 
+
   fpath = find_file ("config.theme", GRAPHICS_DIR, TRUE);
+
+  DebugPrintf ( 0 , "\nvoid LoadThemeConfigurationFile(void):  using file name %s to load config.  Commencing...\n " 
+		, fpath );
 
   Data = ReadAndMallocAndTerminateFile( fpath , END_OF_THEME_DATA_STRING ) ;
 
@@ -999,8 +1004,13 @@ LoadThemeConfigurationFile(void)
 Freedroid has encountered a problem:\n\
 In function 'char* LoadThemeConfigurationFile ( ... ):\n\
 \n\
-There was a specification for the number of phases in a bullet type\n\
-that does not at all exist in the ruleset.\n\
+The theme configuration file seems to be BOGUS!!!\n\
+The number of bullettypes mentioned therein does not match the number\n\
+of bullettypes mentioned in the freedroid.ruleset file!!!\n\
+\n\
+Either there was a specification for the number of phases in a bullet type\n\
+that does not at all exist in the ruleset or an existing bullettype has not\n\
+been assigned a number of phases in the themes config file.\n\
 \n\
 This might indicate that either the ruleset file is corrupt or the \n\
 theme.config configuration file is corrupt or (less likely) that there\n\
@@ -1022,7 +1032,45 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
       ReadValueFromString( ReadPointer , "and number of phase changes per second=" , "%lf" , 
 			   &Bulletmap[BulletIndex].phase_changes_per_second , EndOfThemesBulletData );
       ReadPointer++;
+      NumberOfBulletTypesInConfigFile ++;
     }
+  //--------------------
+  // LEAVE THIS SECURITY CHECK IN HERE!!!! IT IS VITAL!!!
+  // *ALSO* LEAVE IN THE SECURITY CHECK ABOVE!!! PLEASE!!!
+  //
+  if ( NumberOfBulletTypesInConfigFile != Number_Of_Bullet_Types )
+    {
+      fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+In function 'char* LoadThemeConfigurationFile ( ... ):\n\
+\n\
+The theme configuration file seems to be COMPLETELY BOGUS!!!\n\
+The number of bullettypes mentioned therein does not match the number\n\
+of bullettypes mentioned in the freedroid.ruleset file!!!\n\
+\n\
+Either there was a specification for the number of phases in a bullet type\n\
+that does not at all exist in the ruleset or an existing bullettype has not\n\
+been assigned a number of phases in the themes config file.\n\
+\n\
+This might indicate that either the ruleset file is corrupt or the \n\
+theme.config configuration file is corrupt or (less likely) that there\n\
+is a severe bug in the reading function.\n\
+\n\
+Please check that your theme and ruleset files are properly set up.\n\
+\n\
+Please also don't forget, that you might have to run 'make install'\n\
+again after you've made modifications to the data files in the source tree.\n\
+\n\
+Freedroid will terminate now to draw attention to the data problem it could\n\
+not resolve.... Sorry, if that interrupts a major game of yours.....\n\
+----------------------------------------------------------------------\n\
+\n" );
+	  Terminate(ERR);
+	}
+
+
   
   // --------------------
   // Also decidable from the theme is where in the robot to
@@ -1161,10 +1209,10 @@ InitPictures (void)
 
   ShowStartupPercentage ( 80 ) ; 
 
-  DebugPrintf( 2 , "\nvoid InitPictures(void): preparing to load blast image file." );
+  DebugPrintf( 0 , "\nvoid InitPictures(void): preparing to load blast image file." );
 
-  DebugPrintf( 2 , "\nvoid InitPictures(void): preparing to load bullet file." );
-  DebugPrintf( 1 , "\nvoid InitPictures(void): Number_Of_Bullet_Types : %d." , Number_Of_Bullet_Types );
+  DebugPrintf( 0 , "\nvoid InitPictures(void): preparing to load bullet file." );
+  DebugPrintf( 0 , "\nvoid InitPictures(void): Number_Of_Bullet_Types : %d." , Number_Of_Bullet_Types );
 
   Load_Bullet_Surfaces();
 

@@ -2029,8 +2029,8 @@ enum
 void
 Credits_Menu (void)
 {
-  BFont_Info* Credits_BFont = FPS_Display_BFont;
-  int i;
+  // BFont_Info* Credits_BFont = FPS_Display_BFont;
+  // int i;
   char* CreditsText = "\n\n\n\
                                             CREDITS\n\n\n\
    PROGRAMMING:\n\n\
@@ -2134,7 +2134,7 @@ Credits_Menu (void)
 
   // Wait until the user does SOMETHING
   // getchar_raw();
-  while ( !SpacePressed() && !EscapePressed() );
+  // while ( !SpacePressed() && !EscapePressed() );
   while( SpacePressed() || EscapePressed() ) ; /* wait for key release */
 
 }; // void Credits_Menu(void)

@@ -445,6 +445,7 @@ enum _non_player_characters
     PERSON_CHA = 0,
     PERSON_SOR,
     PERSON_RMS,
+    PERSON_STO,
     PERSON_DIX,
     PERSON_PEN,
     PERSON_614,

@@ -648,6 +648,81 @@ ChatWithFriendlyDroid( int Enum )
       return; 
     } // 614 character dialog
 
+  if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "STO" ) == 0 )
+    {
+      //--------------------
+      // Now we do the dialog with STO...
+      //
+      PrepareMultipleChoiceDialog( Enum );
+
+      DialogMenuTexts [ 0 ] = " Hi!  I'm new here. " ;
+      DialogMenuTexts [ 1 ] = " I would like to by some equippment." ; 
+      DialogMenuTexts [ 2 ] = " I would like to get rid of some stuff. " ;
+      DialogMenuTexts [ 3 ] = " Can you identify some of the items I found?" ;
+      DialogMenuTexts [ 4 ] = " Some of my things could need repair." ;
+      DialogMenuTexts [ END_ANSWER ] = " END ";
+      
+      GiveSubtitleNSample( " Welcome Traveller! " , "Chandra_Welcome_Traveller_0.wav" );
+
+      while (1)
+	{
+	  
+	  // MenuSelection = ChatDoMenuSelection ( "What will you say?" , MenuTexts , 1 , NULL , FPS_Display_BFont );
+	  MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , DialogMenuTexts , Me[0].Chat_Flags [ PERSON_STO ]  , 1 , NULL , FPS_Display_BFont );
+	  
+	  switch( MenuSelection )
+	    {
+	    case 1:
+	      PlayOnceNeededSoundSample( "Tux_Hi_Im_New_Here_0.wav" , TRUE );
+	      Me [ 0 ] . Chat_Flags [ PERSON_STO ] [ 0 ] = 0 ; // don't say this twice...
+	      GiveSubtitleNSample( "Welcome to this camp!  I'm Ms. Stone.  I run this shop." , "STO_Welcome_To_This_0.wav" );
+	      Me [ 0 ] . Chat_Flags [ PERSON_STO ] [ 1 ] = 1 ; // allow for all shopping options...
+	      Me [ 0 ] . Chat_Flags [ PERSON_STO ] [ 2 ] = 1 ; // allow for all shopping options...
+	      Me [ 0 ] . Chat_Flags [ PERSON_STO ] [ 3 ] = 1 ; // allow for all shopping options...
+	      Me [ 0 ] . Chat_Flags [ PERSON_STO ] [ 4 ] = 1 ; // allow for all shopping options...
+	      break;
+	    case 2:
+	      PlayOnceNeededSoundSample( "Tux_STO_I_Would_Like_0.wav" , TRUE );
+	      GiveSubtitleNSample( "Good!  Here is the selection of items I have for sale." , "STO_Good_Here_Is_0.wav" );
+	      GiveSubtitleNSample( "Sorry, but you can't afford this item." , 
+				   "STO_You_Cant_Buy_0.wav" );
+	      break;
+	    case 3:
+	      PlayOnceNeededSoundSample( "Tux_STO_I_Would_Rid_0.wav" , TRUE );
+	      GiveSubtitleNSample( "Good!  Let's see what you have." , "STO_Good_Lets_See_0.wav" );
+	      GiveSubtitleNSample( "Sorry, but you don't have anything I'd be interested in." , 
+				   "STO_Sorry_But_You_0.wav" );
+	      break;
+	    case 4:
+	      PlayOnceNeededSoundSample( "Tux_STO_Can_You_Identify_0.wav" , TRUE );
+	      GiveSubtitleNSample( "Which of your items do you want me to identify?" , "STO_Which_Of_Your_0.wav" );
+	      GiveSubtitleNSample( "You don't have anything that would need to be identified." , "STO_You_Dont_Have_0.wav" );
+	      GiveSubtitleNSample( "Sorry, but you can't afford to have this item identified." , 
+				   "STO_You_Cant_Identified_0.wav" );
+	      break;
+	    case 5: 
+	      PlayOnceNeededSoundSample( "Tux_STO_Some_Of_My_0.wav" , TRUE );
+	      GiveSubtitleNSample( "Which of your items do you want me to repair?" , "STO_Which_Of_Repair_0.wav" );
+	      GiveSubtitleNSample( "Sorry, but you don't have anything that would need repair." , "STO_Sorry_But_Repair_0.wav" );
+	      GiveSubtitleNSample( "Sorry, but you can't afford to have this item repaired." , 
+				   "STO_You_Cant_Identified_0.wav" );
+	      break;
+	    case ( MAX_ANSWERS_PER_PERSON ):
+	    case (-1):
+	    default:
+	      PlayOnceNeededSoundSample( "Tux_See_You_Later_0.wav" , TRUE );
+	      return;
+	      break;
+	    }
+	}
+
+      //--------------------
+      // Since there won't be anyone else to talk to when already having
+      // talked to the STO, we can safely return here.
+      //
+      return; 
+    } // STO character dialog
+
   if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "PEN" ) == 0 )
     {
       //--------------------

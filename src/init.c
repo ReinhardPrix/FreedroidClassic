@@ -163,7 +163,7 @@ Get_Bullet_Data ( char* DataPointer )
   BulletPointer = LocateStringInData ( DataPointer , BULLET_SECTION_BEGIN_STRING );
   EndOfBulletData = LocateStringInData ( DataPointer , BULLET_SECTION_END_STRING );
 
-  DebugPrintf (2, "\n\nStarting to read bullet data...\n\n");
+  DebugPrintf ( 1 , "\n\nStarting to read bullet data...\n\n");
   //--------------------
   // At first, we must allocate memory for the droid specifications.
   // How much?  That depends on the number of droids defined in freedroid.ruleset.
@@ -181,9 +181,9 @@ Get_Bullet_Data ( char* DataPointer )
   if ( Bulletmap == NULL )
     {
       i=sizeof(bulletspec);
-      Bulletmap = MyMalloc ( i * (Number_Of_Bullet_Types + 1) + 1 );
-      DebugPrintf (1, "\nWe have counted %d different bullet types in the game data file." , Number_Of_Bullet_Types );
-      DebugPrintf (1, "\nMEMORY HAS BEEN ALLOCATED.\nTHE READING CAN BEGIN.\n" );
+      Bulletmap = MyMalloc ( i * ( Number_Of_Bullet_Types + 1 ) + 1 );
+      DebugPrintf ( 1 , "\nvoid Get_Bullet_Data( char* DatapPointer ) : We have counted %d different bullet types in the game data file." , Number_Of_Bullet_Types );
+      // DebugPrintf ( 0 , "\nMEMORY HAS BEEN ALLOCATED.\nTHE READING CAN BEGIN.\n" );
       // getchar();
     }
 
@@ -1132,6 +1132,9 @@ Init_Game_Data ( char * Datafilename )
 
   /* Read the whole game data to memory */
   fpath = find_file (Datafilename, MAP_DIR, FALSE);
+
+  DebugPrintf ( 0 , "\nvoid Init_Game_Data:  Data will be taken from file : %s.  Commencing... \n" ,
+		Datafilename );
 
   Data = ReadAndMallocAndTerminateFile( fpath , END_OF_GAME_DAT_STRING ) ;
 

@@ -260,10 +260,11 @@ Load_Bullet_Surfaces( void )
 
   for ( i=0 ; i < Number_Of_Bullet_Types ; i++ )
     {
+      tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, BulletImageHeightTable[ i ], vid_bpp, 0, 0, 0, 0);
+      SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
+
       for ( j=0 ; j < Bulletmap[i].phases ; j++ )
 	{
-	  tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, BulletImageHeightTable[ i ], vid_bpp, 0, 0, 0, 0);
-	  SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
 	  Bulletmap[i].SurfacePointer[j] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
 	  SDL_SetColorKey( Bulletmap[i].SurfacePointer[j] , 0 , 0 ); // this should clear any color key in the dest surface
 	  // Now we can copy the image Information
@@ -276,13 +277,15 @@ Load_Bullet_Surfaces( void )
 	  Target.y = 0;
 	  Target.w = 0; // Block_Width;
 	  Target.h = 0; // Block_Height;
-	  SDL_BlitSurface ( Whole_Image , &Source , Bulletmap[i].SurfacePointer[j] , &Target );
+	  // SDL_BlitSurface ( Whole_Image , &Source , Bulletmap[i].SurfacePointer[j] , &Target );
+	  SDL_BlitSurface ( Whole_Image , &Source , Bulletmap[i].SurfacePointer[j] , NULL );
 	  SDL_SetAlpha( Bulletmap[i].SurfacePointer[j] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-	  SDL_FreeSurface( tmp_surf );
 	}
       RowTop += BulletImageHeightTable[ i ] + 2;
+      SDL_FreeSurface( tmp_surf );
     }
   SDL_FreeSurface( Whole_Image );
+
 }; // void Load_Bullet_Surfaces( void )
 
 

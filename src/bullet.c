@@ -56,7 +56,7 @@ RotateVectorByAngle ( moderately_finepoint* vector , float rot_angle )
 
   rad_angle = rot_angle * ( M_PI / 180.0 ) ; // / 180 );
   
-  DebugPrintf( 1 , "\n RAD_ANGLE : %f " , rad_angle );
+  DebugPrintf( 2 , "\n RAD_ANGLE : %f " , rad_angle );
   new_vect.x =  sin( rad_angle ) * vector->y + cos( rad_angle ) * vector->x;
   new_vect.y =  cos( rad_angle ) * vector->y - sin( rad_angle ) * vector->x;
   vector->x = new_vect.x;
