@@ -1083,7 +1083,7 @@ blit_all_objects_according_to_blitting_list ( int mask )
 	    }
 	  break;
 	case BLITTING_TYPE_BULLET:
-	  PutBullet ( blitting_list [ i ] . code_number ); 
+	  PutBullet ( blitting_list [ i ] . code_number , mask ); 
 	  break;
 	case BLITTING_TYPE_BLAST:
 	  if ( ! ( mask & OMIT_BLASTS ) )
@@ -2097,9 +2097,9 @@ There was a droid type on this level, that does not really exist.",
  * array. Everything else is computed in here.
  * ---------------------------------------------------------------------- */
 void
-PutBullet (int BulletNummer)
+PutBullet ( int Bullet_number , int mask )
 {
-  Bullet CurBullet = &AllBullets[BulletNummer];
+  Bullet CurBullet = &AllBullets[Bullet_number];
   int PhaseOfBullet;
   int direction_index;
 
@@ -2142,7 +2142,10 @@ There was a bullet to be blitted of a type that does not really exist.",
   while ( direction_index < 0  ) direction_index += BULLET_DIRECTIONS ; // just to make sure... a modulo ROTATION_ANGLES_PER_ROTATION_MODEL operation can't hurt
   while ( direction_index >= BULLET_DIRECTIONS ) direction_index -= BULLET_DIRECTIONS ; // just to make sure... a modulo ROTATION_ANGLES_PER_ROTATION_MODEL operation can't hurt
 
-  blit_iso_image_to_map_position ( Bulletmap [ CurBullet -> type ] . image [ direction_index ] [ PhaseOfBullet ] , CurBullet -> pos . x , CurBullet -> pos . y );
+  if ( mask & ZOOM_OUT )
+    blit_zoomed_iso_image_to_map_position ( & ( Bulletmap [ CurBullet -> type ] . image [ direction_index ] [ PhaseOfBullet ] ) , CurBullet -> pos . x , CurBullet -> pos . y );
+  else
+    blit_iso_image_to_map_position ( Bulletmap [ CurBullet -> type ] . image [ direction_index ] [ PhaseOfBullet ] , CurBullet -> pos . x , CurBullet -> pos . y );
 
 }; // void PutBullet (int Bulletnumber )
 
@@ -2423,9 +2426,9 @@ function used for this did not succeed.",
  * the AllBlasts array.
  * ---------------------------------------------------------------------- */
 void
-PutBlast (int BlastNummer)
+PutBlast (int Blast_number)
 {
-  Blast CurBlast = &AllBlasts[BlastNummer];
+  Blast CurBlast = &AllBlasts[Blast_number];
   SDL_Rect TargetRectangle;
 
   // If the blast is already long dead, we need not do anything else here
@@ -2452,7 +2455,7 @@ exist at all.",
   SDL_BlitSurface( Blastmap[CurBlast->type].SurfacePointer[ (int)floorf(CurBlast->phase) ] , 
 		   NULL , Screen , &TargetRectangle);
 
-};  // void PutBlast(int BlastNummer)
+};  // void PutBlast(int Blast_number)
 
 /* ----------------------------------------------------------------------
  * This function fills the combat window with one single color, given as

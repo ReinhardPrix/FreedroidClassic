@@ -115,7 +115,7 @@ EXTERN void ShowPosition (void);
 EXTERN void DisplayItemImageAtMouseCursor( int ItemImageCode );
 EXTERN void AssembleCombatPicture (int );
 EXTERN void PutInfluence (int , int , int );
-EXTERN void PutBullet (int);
+EXTERN void PutBullet ( int Bullet_number , int mask );
 EXTERN void PutItem ( int ItemNumber , int mask );
 EXTERN void PutBlast (int);
 EXTERN void PutEnemy (int Enum, int x , int y , int mask );
