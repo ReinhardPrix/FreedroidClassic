@@ -1066,25 +1066,25 @@ ChatWithFriendlyDroid( int Enum )
 	    {
 	    case 1:
 	      PlayOnceNeededSoundSample( "Tux_Hi_Im_New_0.wav" , TRUE );
-	      GiveSubtitleNSample( "Welcome them!  I called RMS.  I used to be a well-known programmer." , 
-				   "RMS_Oh_Yes_0.wav" );
+	      GiveSubtitleNSample( "Welcome them!  I'm called RMS.  I used to be a well-known programmer." , 
+				   "RMS_Welcome_Then_Im_0.wav" );
 	      GiveSubtitleNSample( "Alas, that time is long gone now.  The MS have recursively erased all my code throughout the universe." , 
-				   "RMS_You_Are_The_0.wav" );
+				   "RMS_Alas_That_Time_0.wav" );
 	      GiveSubtitleNSample( "Some local copies I still have, but they are incomplete and outdated." , 
-				   "RMS_Chandra_Told_Me_0.wav" );
+				   "RMS_Some_Local_Copies_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 0 ] = 0 ; // don't say this twice...
 	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 1 ] = 1 ; // this should allow to ask 'so?'
 	      break;
 	    case 2:
 	      PlayOnceNeededSoundSample( "Tux_RMS_Why_Did_The_0.wav" , TRUE );
 	      GiveSubtitleNSample( "One of the main pillars of the power of the MS is their software monopoly." , 
-				   "RMS_After_The_Revolution_0.wav" );
-	      GiveSubtitleNSample( "This monopoly they started to enforce after they had taken over the government." , 
-				   "RMS_Most_Of_My_0.wav" );
-	      GiveSubtitleNSample( "And to enforce it, they installed bots in every corner of the universe to erase all non-MS code." , 
-				   "RMS_Among_Them_Is_0.wav" );
+				   "RMS_One_Of_The_0.wav" );
+	      GiveSubtitleNSample( "This monopoly they started to enforce by law after they had taken over the government." , 
+				   "RMS_This_Monopoly_They_0.wav" );
+	      GiveSubtitleNSample( "And now they have installed bots in every corner of the universe to erase all non-MS code." , 
+				   "RMS_And_Now_They_0.wav" );
 	      GiveSubtitleNSample( "And particularly free code they like to erase the most." , 
-				   "RMS_Now_Here_Is_0.wav" );
+				   "RMS_And_Particularly_Free_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 1 ] = 0 ; // don't say this twice in one dialog
 	      break;
 	    case 3:
@@ -1124,6 +1124,7 @@ ChatWithFriendlyDroid( int Enum )
 	    case (-1):
 	    default:
 	      PlayOnceNeededSoundSample( "Tux_Ill_Be_Back_0.wav" , TRUE );
+	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 1 ] = 1 ; // reallow to ask why the ms erased his code
 	      return;
 	      break;
 	    }
