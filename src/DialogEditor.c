@@ -39,6 +39,7 @@
 #include "struct.h"
 
 #define MAX_TEXT_ENTRIES_VISIBLE 7
+#define WINDOW_WARNINGS_DEBUG 2
 
 int Number_Of_Item_Types = 0 ;
 itemspec* ItemMap;
@@ -101,8 +102,8 @@ GtkAccelGroup *accel_group;
 //--------------------
 // Here come some variables from the 'gui_graph' module...
 //
-GtkWidget *graph;       // Drawing Area
-GdkPixmap *surface;     // Drawing surface
+GtkWidget *graph = NULL + 1 ;       // Drawing Area
+GdkPixmap *surface = NULL + 1 ;     // Drawing surface
 
 //--------------------
 // This we need for the file open/load/save dialogs...
@@ -111,6 +112,8 @@ GtkWidget *filew;
 
 int currently_mouse_grabbed_option = (-1) ;
 char LastUsedFileName[10000] = "UNDEFINED_FILENAME.dialog" ;
+
+static int graph_has_been_created = FALSE ;
 
 typedef struct
 {
@@ -3559,12 +3562,14 @@ gui_create_authors_notes_part ( GtkWidget* paned )
   GtkWidget *scrolledwindow;
   GtkTooltips *tooltips = gtk_tooltips_new ();  
 
+  DebugPrintf ( WINDOW_WARNINGS_DEBUG , "\ngui_create_authors_notes_part(...):  now creating scrollwindow....." );
+
   //--------------------
   // Now we create the right scrollwindow
   //
   scrolledwindow = gtk_scrolled_window_new (NULL, NULL);
   gtk_widget_ref (scrolledwindow);
-  gtk_object_set_data_full (GTK_OBJECT (window), "scrolledwindow[i]1", scrolledwindow, (GtkDestroyNotify) gtk_widget_unref);
+  gtk_object_set_data_full ( GTK_OBJECT ( scrolledwindow ) , "scrolledwindow[i]1", scrolledwindow, (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (scrolledwindow);
       
   // gtk_box_pack_start ( GTK_BOX ( option_hbox ), scrolledwindow, TRUE, TRUE, 0);
@@ -3573,12 +3578,14 @@ gui_create_authors_notes_part ( GtkWidget* paned )
 
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow), GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
 
+  DebugPrintf ( WINDOW_WARNINGS_DEBUG , "\ngui_create_authors_notes_part(...):  now creating new 'text' for authors notes....." );
+
   //--------------------
   // Now we create the right box text for each reply sample file name entry
   //
   authors_notes_entry = gtk_text_new (NULL, NULL);
   gtk_widget_ref (authors_notes_entry);
-  gtk_object_set_data_full (GTK_OBJECT (window), "authors_notes_entry", authors_notes_entry, (GtkDestroyNotify) gtk_widget_unref);
+  gtk_object_set_data_full ( GTK_OBJECT ( authors_notes_entry ), "authors_notes_entry", authors_notes_entry, (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (authors_notes_entry);
   gtk_container_add (GTK_CONTAINER (scrolledwindow), authors_notes_entry);
   GTK_WIDGET_SET_FLAGS (authors_notes_entry, GTK_CAN_DEFAULT);
@@ -3603,6 +3610,13 @@ gui_create_graph_window ( GtkWidget* paned )
   // initialize members to sane values
   surface = NULL;
     
+  //--------------------
+  // We set a flag to show, that the graph has been initialized
+  // now and therefore drawing may be done...
+  //
+  graph_has_been_created = TRUE ;
+  DebugPrintf ( WINDOW_WARNINGS_DEBUG , "\ngui_create_graph_window:  now starting 'draw_area_new()'." );
+
   // create drawing area for the graph
   graph = gtk_drawing_area_new ();
   gtk_drawing_area_size (GTK_DRAWING_AREA (graph), 200, 450);
@@ -3612,6 +3626,33 @@ gui_create_graph_window ( GtkWidget* paned )
   gtk_widget_show (graph);
   gtk_widget_grab_focus (graph);
     
+  DebugPrintf ( WINDOW_WARNINGS_DEBUG , "\ngui_create_graph_window:  now setting events..." );
+
+  //--------------------
+  // This function call should make GTK raise events when some low-level
+  // events occur.  Otherwise these events whould not cause any implication.
+  // But we want to handle those events, and we do it via the event handlers
+  // set up above.
+  //
+  gtk_widget_set_events ( graph , GDK_EXPOSURE_MASK
+			  | GDK_LEAVE_NOTIFY_MASK
+			  | GDK_BUTTON_PRESS_MASK
+			  | GDK_BUTTON_RELEASE_MASK 
+			  | GDK_POINTER_MOTION_MASK
+			  | GDK_KEY_PRESS
+			  | GDK_POINTER_MOTION_HINT_MASK);
+
+  DebugPrintf ( WINDOW_WARNINGS_DEBUG , "\ngui_create_graph_window:  now 'realizing' graph widget..." );
+
+  //--------------------
+  // WARNING!  
+  // The graph widget must be realized before any 
+  // color arrangement can succeed!!
+  //
+  gtk_widget_realize ( graph );
+
+  DebugPrintf ( WINDOW_WARNINGS_DEBUG , "\ngui_create_graph_window:  now going into the clear graph thing..." );
+
   gui_clear_graph_window ( );
 
   //--------------------
@@ -3637,36 +3678,10 @@ gui_create_graph_window ( GtkWidget* paned )
   // gtk_widget_set_events (graph, GDK_EXPOSURE_MASK | GDK_LEAVE_NOTIFY_MASK | GDK_BUTTON_PRESS_MASK |
   // GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_KEY_PRESS_MASK);
 
-
-  //--------------------
-  // This function call should make GTK raise events when some low-level
-  // events occur.  Otherwise these events whould not cause any implication.
-  // But we want to handle those events, and we do it via the event handlers
-  // set up above.
-  //
-  gtk_widget_set_events ( graph , GDK_EXPOSURE_MASK
-			  | GDK_LEAVE_NOTIFY_MASK
-			  | GDK_BUTTON_PRESS_MASK
-			  | GDK_BUTTON_RELEASE_MASK 
-			  | GDK_POINTER_MOTION_MASK
-			  | GDK_KEY_PRESS
-			  | GDK_POINTER_MOTION_HINT_MASK);
-
   // gtk_widget_set_events (graph, GDK_EXPOSURE_MASK | GDK_LEAVE_NOTIFY_MASK | GDK_BUTTON_PRESS_MASK |
   // GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_KEY_PRESS_MASK);
 
-  //--------------------
-  // Maybe this is a good place to set up the color map for
-  // drawing arrows and that later...
-  //
-  // gui_set_up_color_arrangements ( wnd ) ;
-  
-  //--------------------
-  // WARNING!  
-  // The graph widget must be realized before any 
-  // color arrangement can succeed!!
-  //
-  gtk_widget_realize ( graph );
+  DebugPrintf ( WINDOW_WARNINGS_DEBUG , "\ngui_create_graph_window:  starting color arrangements..." );
 
   //--------------------
   // Now that the graph widget has been realized, we
@@ -3674,7 +3689,10 @@ gui_create_graph_window ( GtkWidget* paned )
   //
   gui_set_up_color_arrangements ( graph ) ;
 
-}
+  DebugPrintf ( WINDOW_WARNINGS_DEBUG , "\ngui_create_graph_window:  creation of graph now finished." );
+
+}; // void gui_create_graph_window ( GtkWidget* paned )
+
 
 /* ----------------------------------------------------------------------
  * This is the main function of our dialog editor.  But this time it does
@@ -3735,7 +3753,11 @@ main( int argc, char *argv[] )
   // Now 
   gui_create_graph_window ( vpaned );
   
+  DebugPrintf ( WINDOW_WARNINGS_DEBUG , "\nmain:  now starting to create 'authors notes' part...." );
+
   gui_create_authors_notes_part ( vpaned );
+
+  DebugPrintf ( WINDOW_WARNINGS_DEBUG , "\nmain:  now setting up the 'bottom line' part...." );
 
   //--------------------
   // Not it might be a good time to add the status bar on the very bottom of the
@@ -3743,11 +3765,15 @@ main( int argc, char *argv[] )
   //
   gui_create_bottom_line( );
 
+  DebugPrintf ( WINDOW_WARNINGS_DEBUG , "\nmain:  now getting ready for 'show_all'...." );
+
   //--------------------
   // Now that the main window has been assembled completely, we can start to
   // show it and all it's content to the user.
   //
   gtk_widget_show_all (wnd);
+
+  DebugPrintf ( WINDOW_WARNINGS_DEBUG , "\nmain:  Ok.  Starting main loop and that's it from here..." );
 
   //--------------------
   // At this point all should be set up.  The editing machine is ready to be
