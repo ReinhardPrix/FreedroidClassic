@@ -266,7 +266,8 @@ AddInfluencerItemAttributeBonus( item* BonusItem )
   //--------------------
   // In case of a suffix modifier, we need to apply the suffix...
   //
-  if ( ( BonusItem->suffix_code != ( -1 ) ) || ( BonusItem->prefix_code != ( -1 ) ) )
+  if ( ( ( BonusItem->suffix_code != ( -1 ) ) || ( BonusItem->prefix_code != ( -1 ) ) ) &&
+       BonusItem -> is_identified )
     {
       Me.Strength  += BonusItem->bonus_to_str + BonusItem->bonus_to_all_attributes ;
       Me.Dexterity += BonusItem->bonus_to_dex + BonusItem->bonus_to_all_attributes ;
@@ -291,8 +292,10 @@ AddInfluencerItemSecondaryBonus( item* BonusItem )
   //--------------------
   // In case of present suffix or prefix modifiers, we need to apply the suffix...
   //
-  if ( ( BonusItem->suffix_code != ( -1 ) ) || ( BonusItem->prefix_code != ( -1 ) ) )
+  if ( ( ( BonusItem->suffix_code != ( -1 ) ) || ( BonusItem->prefix_code != ( -1 ) ) ) &&
+       BonusItem->is_identified )
     {
+
       Me.to_hit    += BonusItem->bonus_to_tohit ;
       Me.maxmana   += BonusItem->bonus_to_force ;
       Me.maxenergy += BonusItem->bonus_to_life ; 

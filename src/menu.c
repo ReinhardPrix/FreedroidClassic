@@ -80,7 +80,7 @@ TryToRepairItem( item* RepairItem )
 
   while ( SpacePressed() || EnterPressed() );
 
-  if ( REPAIR_PRICE_FACTOR * CalculateItemPrice ( RepairItem , TRUE ) )
+  if ( REPAIR_PRICE_FACTOR * CalculateItemPrice ( RepairItem , TRUE ) > Me.Gold )
     {
       MenuTexts[0]=" BACK ";
       MenuTexts[1]="";
@@ -109,6 +109,61 @@ TryToRepairItem( item* RepairItem )
 	}
     }
 }; // void TryToRepairItem( item* RepairItem )
+
+/* ----------------------------------------------------------------------
+ * This function tries to identify the item given as parameter.  
+ * ---------------------------------------------------------------------- */
+void 
+TryToIdentifyItem( item* IdentifyItem )
+{
+  int MenuPosition;
+
+#define ANSWER_YES 1
+#define ANSWER_NO 2
+
+  char* MenuTexts[ 10 ];
+  MenuTexts[0]="Yes";
+  MenuTexts[1]="No";
+  MenuTexts[2]="";
+  MenuTexts[3]="";
+  MenuTexts[4]="";
+  MenuTexts[5]="";
+  MenuTexts[8]="";
+  MenuTexts[6]="";
+  MenuTexts[7]="";
+  MenuTexts[9]="";
+
+  while ( SpacePressed() || EnterPressed() );
+
+  if ( 100 > Me.Gold )
+    {
+      MenuTexts[0]=" BACK ";
+      MenuTexts[1]="";
+      DoMenuSelection ( "YOU CAN't AFFORD TO HAVE THIS ITEM IDENTIFIED! " , MenuTexts , 1 , NULL );
+      return;
+    }
+
+  while ( 1 )
+    {
+      MenuPosition = DoMenuSelection( " Are you sure you want this item identified? " , MenuTexts , 1 , NULL );
+      switch (MenuPosition) 
+	{
+	case (-1):
+	  return;
+	  break;
+	case ANSWER_YES:
+	  while (EnterPressed() || SpacePressed() );
+	  Me.Gold -= 100 ;
+	  IdentifyItem -> is_identified = TRUE ;
+	  return;
+	  break;
+	case ANSWER_NO:
+	  while (EnterPressed() || SpacePressed() );
+	  return;
+	  break;
+	}
+    }
+}; // void TryToIdentifyItem( item* IdentifyItem )
 
 /* ----------------------------------------------------------------------
  * This function tries to buy the item given as parameter.  Currently
@@ -278,6 +333,7 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
       if ( ForceMagic ) SalesList[ i ].suffix_code = ( MyRandom(10) );
       else SalesList[ i ].suffix_code = ( -1 );
       FillInItemProperties( & ( SalesList[ i ] ) , TRUE , 0 );
+      SalesList[ i ].is_identified = TRUE;
     }
 
   while ( !SpacePressed() && !EscapePressed() )
@@ -489,6 +545,152 @@ Repair_Items( void )
   while ( SpacePressed() || EscapePressed() );
 
 }; // void Repair_Items( void )
+
+/* ----------------------------------------------------------------------
+ * This is the menu, where you can buy basic items.
+ * ---------------------------------------------------------------------- */
+void
+Identify_Items ( void )
+{
+#define BASIC_ITEMS_NUMBER 10
+#define NUMBER_OF_ITEMS_ON_ONE_SCREEN 4
+#define ITEM_MENU_DISTANCE 80
+  item* Identify_Pointer_List[ MAX_ITEMS_IN_INVENTORY + 10 ];  // the inventory plus 7 slots or so
+  int Pointer_Index=0;
+  int i;
+  int InMenuPosition = 0;
+  int MenuInListPosition = 0;
+  char DescriptionText[5000];
+  char* MenuTexts[ 10 ];
+  MenuTexts[0]="Yes";
+  MenuTexts[1]="No";
+  MenuTexts[2]="";
+  MenuTexts[3]="";
+  MenuTexts[4]="";
+  MenuTexts[5]="";
+  MenuTexts[8]="";
+  MenuTexts[6]="";
+  MenuTexts[7]="";
+  MenuTexts[9]="";
+
+
+  //--------------------
+  // First we clean out the new Identify_Pointer_List
+  //
+  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+    {
+      Identify_Pointer_List[ i ] = NULL;
+    }
+
+  //--------------------
+  // Now we start to fill the Identify_Pointer_List
+  //
+  if ( ( !Me.weapon_item.is_identified ) && 
+       ( Me.weapon_item.type != ( -1 ) ) )
+    {
+      Identify_Pointer_List [ Pointer_Index ] = & ( Me.weapon_item );
+      Pointer_Index ++;
+    }
+  if ( ( !Me.drive_item.is_identified ) &&
+       ( Me.drive_item.type != ( -1 ) ) )
+    {
+      Identify_Pointer_List [ Pointer_Index ] = & ( Me.drive_item );
+      Pointer_Index ++;
+    }
+  if ( ( !Me.armour_item.is_identified ) &&
+       ( Me.armour_item.type != ( -1 ) ) )
+    {
+      Identify_Pointer_List [ Pointer_Index ] = & ( Me.armour_item );
+      Pointer_Index ++;
+    }
+  if ( ( !Me.shield_item.is_identified ) &&
+       ( Me.shield_item.type != ( -1 ) ) )
+    {
+      Identify_Pointer_List [ Pointer_Index ] = & ( Me.shield_item );
+      Pointer_Index ++;
+    }
+
+  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+    {
+      if ( Me.Inventory [ i ].type == (-1) ) continue;
+      if ( Me.Inventory [ i ].is_identified ) continue;
+
+      Identify_Pointer_List [ Pointer_Index ] = & ( Me.Inventory[ i ] );
+      Pointer_Index ++;
+
+    }
+
+  if ( Pointer_Index == 0 )
+    {
+      MenuTexts[0]=" BACK ";
+      MenuTexts[1]="";
+      DoMenuSelection ( " YOU DONT HAVE ANYTHING THAT WOULD NEED TO BE IDENTIFIED!" , MenuTexts , 1 , NULL );
+      return;
+    }
+
+
+  while ( !SpacePressed() && !EscapePressed() )
+    {
+      InitiateMenu ( NULL );
+
+      //--------------------
+      // Now we draw our selection of items to the screen, at least the part
+      // of it, that's currently visible
+      //
+      DisplayText( " I COULD IDENTIFY THESE ITEMS              YOUR GOLD:" , 50 , 50 + (0) * ITEM_MENU_DISTANCE , NULL );
+      sprintf( DescriptionText , "%4ld" , Me.Gold );
+      DisplayText( DescriptionText , 580 , 50 + ( 0 ) * 80 , NULL );
+      for ( i = 0 ; ( (i < NUMBER_OF_ITEMS_ON_ONE_SCREEN) && (Identify_Pointer_List[ i + MenuInListPosition ] != NULL ) ) ; i++ )
+	{
+	  // DisplayText( ItemMap [ Identify_Pointer_List[ i + ]->type ].ItemName , 50 , 50 + i * 50 , NULL );
+	  // DisplayText( "\n" , -1 , -1, NULL );
+	  GiveItemDescription( DescriptionText , Identify_Pointer_List [ i + MenuInListPosition ] , TRUE );
+	  DisplayText( DescriptionText , 50 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
+	  sprintf( DescriptionText , "%6.0f" , 100.0 );
+	  DisplayText( DescriptionText , 580 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
+	}
+      
+      //--------------------
+      // Now we draw the influencer as a cursor
+      //
+      PutInfluence ( 10 , 50 + ( InMenuPosition + 1 ) * ITEM_MENU_DISTANCE );
+
+      //--------------------
+      //
+      //
+      SDL_Flip ( Screen );
+
+      if ( UpPressed() )
+	{
+	  if ( InMenuPosition > 0 ) InMenuPosition --;
+	  else 
+	    {
+	      if ( MenuInListPosition > 0 )
+		MenuInListPosition --;
+	    }
+	  while ( UpPressed() );
+	}
+      if ( DownPressed() )
+	{
+	  if ( ( InMenuPosition < NUMBER_OF_ITEMS_ON_ONE_SCREEN - 1 ) && 
+	       ( InMenuPosition < Pointer_Index -1 ) )
+	    {
+	      InMenuPosition ++;
+	    }
+	  else 
+	    {
+	      if ( MenuInListPosition < Pointer_Index - NUMBER_OF_ITEMS_ON_ONE_SCREEN )
+		MenuInListPosition ++;
+	    }
+	  while ( DownPressed() );
+	}      
+    } // while not space pressed...
+
+  if ( SpacePressed() ) TryToIdentifyItem( Identify_Pointer_List[ InMenuPosition + MenuInListPosition ] ) ;
+
+  while ( SpacePressed() || EscapePressed() );
+
+}; // void Identify_Items( void )
 
 /* ----------------------------------------------------------------------
  * This is the menu, where you can sell inventory items.
@@ -739,6 +941,7 @@ enum
     BUY_PREMIUM_ITEMS, 
     SELL_ITEMS, 
     REPAIR_ITEMS,
+    IDENTIFY_ITEMS,
     LEAVE_BUYSELLMENU
   };
 
@@ -761,8 +964,8 @@ enum
       MenuTexts[1]="Buy Premium Items";
       MenuTexts[2]="Sell Items";
       MenuTexts[3]="Repair Items";
-      MenuTexts[4]="Leave the Sales Representative";
-      MenuTexts[5]="";
+      MenuTexts[5]="Leave the Sales Representative";
+      MenuTexts[4]="Identify Items";
       MenuTexts[8]="";
       MenuTexts[6]="";
       MenuTexts[7]="";
@@ -790,6 +993,10 @@ enum
 	case REPAIR_ITEMS:
 	  while (EnterPressed() || SpacePressed() );
 	  Repair_Items();
+	  break;
+	case IDENTIFY_ITEMS:
+	  while (EnterPressed() || SpacePressed() );
+	  Identify_Items();
 	  break;
 	case LEAVE_BUYSELLMENU:
 	  Weiter = !Weiter;

@@ -439,6 +439,18 @@ ReactToSpecialKeys(void)
   //
   if ( IPressed() )
     {
+      if ( Shift_Was_Pressed() )
+	{
+	  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ ) Me.Inventory[i].is_identified = TRUE;
+	  Me.weapon_item.is_identified = TRUE;
+	  Me.shield_item.is_identified = TRUE;
+	  Me.armour_item.is_identified = TRUE;
+	  Me.special_item.is_identified = TRUE;
+	  Me.aux1_item.is_identified = TRUE;
+	  Me.aux2_item.is_identified = TRUE;
+	  Me.drive_item.is_identified = TRUE;
+	}
+
       if ( !IPressed_LastFrame ) 
 	{
 	  GameConfig.Inventory_Visible_Time = 0;
