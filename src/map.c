@@ -84,36 +84,36 @@ GetMapBrick (Level deck, float x, float y)
    * not an exact foating point division!  Beware of "improvements" here!!!
    */
 
-  if (((int) rintf (y)) / BLOCKHOEHE >= deck->ylen)
+  if (((int) rintf (y)) / Block_Height >= deck->ylen)
     {
       printf
 	("\nunsigned char GetMapBrick(Level deck, float x, float y): Fehler1! Terminiere...");
       return VOID;
       Terminate (-1);
     }
-  if (((int) rintf (x)) / BLOCKBREITE >= deck->xlen)
+  if (((int) rintf (x)) / Block_Width >= deck->xlen)
     {
       printf
 	("\nunsigned char GetMapBrick(Level deck, float x, float y): Fehler2! Terminiere...");
       return VOID;
       Terminate (-1);
     }
-  if (((int) rintf (y)) / BLOCKHOEHE < 0)
+  if (((int) rintf (y)) / Block_Height < 0)
     {
       printf
 	("\nunsigned char GetMapBrick(Level deck, float x, float y): Fehler3! Terminiere...");
       return VOID;
       Terminate (-1);
     }
-  if (((int) rintf (x)) / BLOCKBREITE < 0)
+  if (((int) rintf (x)) / Block_Width < 0)
     {
       printf
 	("\nunsigned char GetMapBrick(Level deck, float x, float y): Fehler4! Terminiere...");
       return VOID;
       Terminate (-1);
     }
-  return deck->map[((int) rintf (y)) / BLOCKHOEHE][((int) rintf (x)) /
-						   BLOCKBREITE];
+  return deck->map[((int) rintf (y)) / Block_Height][((int) rintf (x)) /
+						   Block_Width];
 } /* GetMapBrick() */
 
 /*@Function============================================================
@@ -172,8 +172,8 @@ ActSpecialField (float x, float y)
 	    (Me.speed.x == 0) && (Me.speed.y == 0)))
 	break;
 
-      cx = (((int) rintf (x)) % BLOCKBREITE) - BLOCKBREITE / 2;
-      cy = (((int) rintf (y)) % BLOCKHOEHE) - BLOCKHOEHE / 2;
+      cx = (((int) rintf (x)) % Block_Width) - Block_Width / 2;
+      cy = (((int) rintf (y)) % Block_Height) - Block_Height / 2;
 
       /* Lift nur betreten, wenn ca. im Zentrum */
       if ((cx * cx + cy * cy) < DRUIDRADIUSX * DRUIDRADIUSX)
@@ -254,7 +254,7 @@ AnimateRefresh (void)
 			      (unsigned) (I_REFRESH1 + InnerPhase) * BLOCKMEM,
 			      MapBlocks + (unsigned) (REFRESH1 +
 						      j) * BLOCKMEM,
-			      BLOCKBREITE, FALSE);
+			      Block_Width, FALSE);
 	}			/* for */
 
     }				/* for */
@@ -1028,8 +1028,8 @@ MoveLevelDoors (void)
 
       Pos = &(CurLevel->map[doory][doorx]);
 
-      doorx = doorx * BLOCKBREITE + BLOCKBREITE / 2;
-      doory = doory * BLOCKHOEHE + BLOCKHOEHE / 2;
+      doorx = doorx * Block_Width + Block_Width / 2;
+      doory = doory * Block_Height + Block_Height / 2;
 
       /* first check Influencer gegen Tuer */
       xdist = Me.pos.x - doorx;
@@ -1052,10 +1052,10 @@ MoveLevelDoors (void)
 		continue;
 
 	      xdist = abs (Feindesliste[j].pos.x - doorx);
-	      if (xdist < BLOCKBREITE)
+	      if (xdist < Block_Width)
 		{
 		  ydist = abs (Feindesliste[j].pos.y - doory);
-		  if (ydist < BLOCKHOEHE)
+		  if (ydist < Block_Height)
 		    {
 		      dist2 = xdist * xdist + ydist * ydist;
 		      if (dist2 < DOOROPENDIST2)
@@ -1148,8 +1148,8 @@ IsPassable (int x, int y, int Checkpos)
 
   MapBrick = GetMapBrick (CurLevel, (float) x, (float) y);
 
-  fx = x % BLOCKBREITE;
-  fy = y % BLOCKHOEHE;
+  fx = x % Block_Width;
+  fy = y % Block_Height;
 
   switch (MapBrick)
     {
@@ -1178,7 +1178,7 @@ IsPassable (int x, int y, int Checkpos)
 	  ret = CENTER;
 	  break;
 	}
-      if (fx > (BLOCKBREITE - KONSOLEPASS_X))
+      if (fx > (Block_Width - KONSOLEPASS_X))
 	ret = CENTER;
       else
 	ret = -1;
@@ -1202,7 +1202,7 @@ IsPassable (int x, int y, int Checkpos)
 	  ret = CENTER;
 	  break;
 	}
-      if (fy > (BLOCKHOEHE - KONSOLEPASS_Y))
+      if (fy > (Block_Height - KONSOLEPASS_Y))
 	ret = CENTER;
       else
 	ret = -1;
@@ -1221,29 +1221,29 @@ IsPassable (int x, int y, int Checkpos)
       break;
 
     case H_WALL:
-      if ((fy < WALLPASS) || (fy > BLOCKHOEHE - WALLPASS))
+      if ((fy < WALLPASS) || (fy > Block_Height - WALLPASS))
 	ret = CENTER;
       else
 	ret = -1;
       break;
 
     case V_WALL:
-      if ((fx < WALLPASS) || (fx > BLOCKBREITE - WALLPASS))
+      if ((fx < WALLPASS) || (fx > Block_Width - WALLPASS))
 	ret = CENTER;
       else
 	ret = -1;
       break;
 
     case ECK_RO:
-      if ((fx > BLOCKBREITE - WALLPASS) || (fy < WALLPASS) ||
-	  ((fx < WALLPASS) && (fy > BLOCKHOEHE - WALLPASS)))
+      if ((fx > Block_Width - WALLPASS) || (fy < WALLPASS) ||
+	  ((fx < WALLPASS) && (fy > Block_Height - WALLPASS)))
 	ret = CENTER;
       else
 	ret = -1;
       break;
 
     case ECK_RU:
-      if ((fx > BLOCKBREITE - WALLPASS) || (fy > BLOCKHOEHE - WALLPASS) ||
+      if ((fx > Block_Width - WALLPASS) || (fy > Block_Height - WALLPASS) ||
 	  ((fx < WALLPASS) && (fy < WALLPASS)))
 	ret = CENTER;
       else
@@ -1251,8 +1251,8 @@ IsPassable (int x, int y, int Checkpos)
       break;
 
     case ECK_LU:
-      if ((fx < WALLPASS) || (fy > BLOCKHOEHE - WALLPASS) ||
-	  ((fx > BLOCKBREITE - WALLPASS) && (fy < WALLPASS)))
+      if ((fx < WALLPASS) || (fy > Block_Height - WALLPASS) ||
+	  ((fx > Block_Width - WALLPASS) && (fy < WALLPASS)))
 	ret = CENTER;
       else
 	ret = -1;
@@ -1260,7 +1260,7 @@ IsPassable (int x, int y, int Checkpos)
 
     case ECK_LO:
       if ((fx < WALLPASS) || (fy < WALLPASS) ||
-	  ((fx > BLOCKBREITE - WALLPASS) && (fy > BLOCKHOEHE - WALLPASS)))
+	  ((fx > Block_Width - WALLPASS) && (fy > Block_Height - WALLPASS)))
 	ret = CENTER;
       else
 	ret = -1;
@@ -1268,26 +1268,26 @@ IsPassable (int x, int y, int Checkpos)
 
     case T_O:
       if ((fy < WALLPASS) ||
-	  ((fy > BLOCKHOEHE - WALLPASS) &&
-	   ((fx < WALLPASS) || (fx > BLOCKBREITE - WALLPASS))))
+	  ((fy > Block_Height - WALLPASS) &&
+	   ((fx < WALLPASS) || (fx > Block_Width - WALLPASS))))
 	ret = CENTER;
       else
 	ret = -1;
       break;
 
     case T_R:
-      if ((fx > BLOCKBREITE - WALLPASS) ||
+      if ((fx > Block_Width - WALLPASS) ||
 	  ((fx < WALLPASS) &&
-	   ((fy < WALLPASS) || (fy > BLOCKHOEHE - WALLPASS))))
+	   ((fy < WALLPASS) || (fy > Block_Height - WALLPASS))))
 	ret = CENTER;
       else
 	ret = -1;
       break;
 
     case T_U:
-      if ((fy > BLOCKHOEHE - WALLPASS) ||
+      if ((fy > Block_Height - WALLPASS) ||
 	  ((fy < WALLPASS) &&
-	   ((fx < WALLPASS) || (fx > BLOCKBREITE - WALLPASS))))
+	   ((fx < WALLPASS) || (fx > Block_Width - WALLPASS))))
 	ret = CENTER;
       else
 	ret = -1;
@@ -1295,8 +1295,8 @@ IsPassable (int x, int y, int Checkpos)
 
     case T_L:
       if ((fx < WALLPASS) ||
-	  ((fx > BLOCKBREITE - WALLPASS) &&
-	   ((fy < WALLPASS) || (fy > BLOCKHOEHE - WALLPASS))))
+	  ((fx > Block_Width - WALLPASS) &&
+	   ((fy < WALLPASS) || (fy > Block_Height - WALLPASS))))
 	ret = CENTER;
       else
 	ret = -1;
@@ -1319,8 +1319,8 @@ IsPassable (int x, int y, int Checkpos)
 	}
 
       /* pruefen, ob Rand der Tuer angefahren */
-      if (((fx < H_RANDBREITE) || (fx > (BLOCKBREITE - H_RANDBREITE)))
-	  && ((fy >= H_RANDSPACE) && (fy <= (BLOCKHOEHE - H_RANDSPACE))))
+      if (((fx < H_RANDBREITE) || (fx > (Block_Width - H_RANDBREITE)))
+	  && ((fy >= H_RANDSPACE) && (fy <= (Block_Height - H_RANDSPACE))))
 	{
 	  /* DRUIDS: Nur bei Fahrt durch Tuer wegstossen */
 	  if ((Checkpos != CENTER) && (Checkpos != LIGHT)
@@ -1331,7 +1331,7 @@ IsPassable (int x, int y, int Checkpos)
 		case RECHTSOBEN:
 		case RECHTSUNTEN:
 		case RECHTS:
-		  if (fx > BLOCKBREITE - H_RANDBREITE)
+		  if (fx > Block_Width - H_RANDBREITE)
 		    ret = LINKS;
 		  else
 		    ret = -1;
@@ -1356,7 +1356,7 @@ IsPassable (int x, int y, int Checkpos)
 	{			/* mitten in der Tuer */
 	  if ((MapBrick == H_GANZTUERE) || (MapBrick == H_HALBTUERE3))
 	    ret = CENTER;	/* Tuer offen */
-	  else if ((fy < TUERBREITE) || (fy > BLOCKHOEHE - TUERBREITE))
+	  else if ((fy < TUERBREITE) || (fy > Block_Height - TUERBREITE))
 	    ret = CENTER;	/* Tuer zu, aber noch nicht ganz drin */
 	  else
 	    ret = -1;		/* an geschlossener tuer */
@@ -1380,8 +1380,8 @@ IsPassable (int x, int y, int Checkpos)
 	}
 
       /* pruefen , ob Rand der Tuer angefahren */
-      if ((fy < V_RANDBREITE || fy > (BLOCKHOEHE - V_RANDBREITE)) &&
-	  (fx >= V_RANDSPACE && fx <= (BLOCKBREITE - V_RANDSPACE)))
+      if ((fy < V_RANDBREITE || fy > (Block_Height - V_RANDBREITE)) &&
+	  (fx >= V_RANDSPACE && fx <= (Block_Width - V_RANDSPACE)))
 	{
 
 	  /* DRUIDS: bei Fahrt durch Tuer wegstossen */
@@ -1401,7 +1401,7 @@ IsPassable (int x, int y, int Checkpos)
 		case RECHTSUNTEN:
 		case LINKSUNTEN:
 		case UNTEN:
-		  if (fy > BLOCKHOEHE - V_RANDBREITE)
+		  if (fy > Block_Height - V_RANDBREITE)
 		    ret = OBEN;
 		  else
 		    ret = -1;
@@ -1418,7 +1418,7 @@ IsPassable (int x, int y, int Checkpos)
 	{			/* mitten in die tuer */
 	  if ((MapBrick == V_GANZTUERE) || (MapBrick == V_HALBTUERE3))
 	    ret = CENTER;	/* Tuer offen */
-	  else if ((fx < TUERBREITE) || (fx > BLOCKBREITE - TUERBREITE))
+	  else if ((fx < TUERBREITE) || (fx > Block_Width - TUERBREITE))
 	    ret = CENTER;	/* tuer zu, aber noch nicht ganz dort */
 	  else
 	    ret = -1;		/* an geschlossener Tuer */

@@ -38,7 +38,7 @@
 #include "proto.h"
 #include "text.h"
 #include "ship.h"
-
+#include "SDL_rotozoom.h"
 
 int NoKeyPressed (void);
 
@@ -176,9 +176,9 @@ EnterElevator (void)
 
       /* Position des Influencer richtig setzen */
       Me.pos.x =
-	curShip.AllElevators[curElev].x * BLOCKBREITE + BLOCKBREITE / 2;
+	curShip.AllElevators[curElev].x * Block_Width + Block_Width / 2;
       Me.pos.y =
-	curShip.AllElevators[curElev].y * BLOCKHOEHE + BLOCKHOEHE / 2;
+	curShip.AllElevators[curElev].y * Block_Height + Block_Height / 2;
 
       /* Alle Blasts und Bullets loeschen */
       for (i = 0; i < MAXBLASTS; i++)
@@ -423,14 +423,14 @@ PaintConsoleMenu (void)
   SDL_BlitSurface( ne_console_surface , &SourceRectangle , ne_screen , &TargetRectangle );
 
   /*
-  DisplayMergeBlock (MENUITEMPOSX, MENUITEMPOSY + FONTHOEHE + BLOCKHOEHE - 4,
+  DisplayMergeBlock (MENUITEMPOSX, MENUITEMPOSY + FONTHOEHE + Block_Height - 4,
 		     MenuItemPointer,
 		     MENUITEMLENGTH, MENUITEMHEIGHT, Outline320x200);
 
 
   DisplayMergeBlock (MENUITEMPOSX + 10, MENUITEMPOSY + FONTHOEHE,
 		     Influencepointer + BLOCKMEM * ((int) rintf (Me.phase)),
-		     BLOCKBREITE, BLOCKHOEHE, Outline320x200);
+		     Block_Width, Block_Height, Outline320x200);
   */
 
   // SetTextColor (bg, fg); /* restore text color settings */
@@ -715,20 +715,30 @@ GreatDruidShow (void)
 void
 ShowDeckMap (Level deck)
 {
-  int i, j;
-  int LX;
-  int LY;
+  int i;
   SDL_Surface *tmp;
+  SDL_Surface *zwisch;
+  float ResizeFactor;
 
-
-  LX = USERFENSTERPOSX;
-  LY = USERFENSTERPOSY;
+  ResizeFactor=0.25;
 
   ClearUserFenster ();
 
+  tmp=zoomSurface( ne_blocks , ResizeFactor , ResizeFactor , 0 );
+  zwisch=ne_blocks;
+  ne_blocks=tmp;
+
+  for (i=0; i< NUM_MAP_BLOCKS ; i++)
+    {
+      ne_map_block[i].x *= ResizeFactor;
+      ne_map_block[i].y *= ResizeFactor;
+      ne_map_block[i].w *= ResizeFactor;
+      ne_map_block[i].h *= ResizeFactor;
+    }
 
   PrepareScaledSurface(TRUE);
 
+  // ne_blocks=zwisch;
 } /* ShowDeckMap() */
 
 

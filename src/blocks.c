@@ -52,7 +52,7 @@ void
 SmallBlock (int LX, int LY, int BlockN, unsigned char *Parameter_Screen, int SBreite)
 {
   int i, j;
-  unsigned char *source = MapBlocks + BLOCKBREITE * BLOCKHOEHE * BlockN;
+  unsigned char *source = MapBlocks + Block_Width * Block_Height * BlockN;
   unsigned char *target = Parameter_Screen + LY * SBreite + LX;
 
   if (Parameter_Screen == RealScreen)
@@ -72,7 +72,7 @@ SmallBlock (int LX, int LY, int BlockN, unsigned char *Parameter_Screen, int SBr
 	  source += 4;
 	}
       target += SBreite - 8;
-      source += 4 * BLOCKBREITE - 4 * 8;
+      source += 4 * Block_Width - 4 * 8;
     }
 
 } /* SmallBlock() */
@@ -95,11 +95,11 @@ SmallBlast (int LX, int LY, int BlastT, int phase, unsigned char *Parameter_Scre
     {
       for (j = 0; j < 8; j++)
 	if (*
-	    (Blastmap[BlastT].picpointer + j * 4 + i * BLOCKBREITE * 4 +
+	    (Blastmap[BlastT].picpointer + j * 4 + i * Block_Width * 4 +
 	     phase * BLOCKMEM) != TRANSPARENTCOLOR)
 	  Parameter_Screen[LX - DIGITLENGTH / 2 + j +
 		 (LY + i - DIGITHEIGHT / 2) * SBreite] =
-	    *(Blastmap[BlastT].picpointer + j * 4 + i * BLOCKBREITE * 4 +
+	    *(Blastmap[BlastT].picpointer + j * 4 + i * Block_Width * 4 +
 	      phase * BLOCKMEM);
     }
 }
@@ -124,7 +124,7 @@ SmallBullet (int LX, int LY, int BulletT, int phase, unsigned char *Parameter_Sc
       for (j = 0; j < 8; j++)
 	{
 	  if (*
-	      (Bulletmap[BulletT].picpointer + j * 4 + i * BLOCKBREITE * 4 +
+	      (Bulletmap[BulletT].picpointer + j * 4 + i * Block_Width * 4 +
 	       phase * BLOCKMEM) != TRANSPARENTCOLOR)
 	    {
 	      if ((unsigned char)
@@ -134,7 +134,7 @@ SmallBullet (int LX, int LY, int BulletT, int phase, unsigned char *Parameter_Sc
 	      Parameter_Screen[LX - DIGITLENGTH / 2 + j +
 		     (LY + i - DIGITHEIGHT / 2) * SBreite] =
 		*(Bulletmap[BulletT].picpointer + j * 4 +
-		  i * BLOCKBREITE * 4 + phase * BLOCKMEM);
+		  i * Block_Width * 4 + phase * BLOCKMEM);
 	    }
 	}
     }
@@ -185,7 +185,7 @@ SmallEnemy (int LX, int LY, int enemyclass, unsigned char *Parameter_Screen,
 		 (LY + i - DIGITHEIGHT / 2) * SBreite] =
 	    Digitpointer[enemyclass * DIGITLENGTH * DIGITHEIGHT +
 			 i * DIGITLENGTH + j];
-//                                      Enemypointer[j*4+i*BLOCKBREITE*4];
+//                                      Enemypointer[j*4+i*Block_Width*4];
     }
 }
 
@@ -506,12 +506,12 @@ MergeBlockToWindow (register unsigned char *source, register unsigned char *targ
 {
   register int i, j;
   int ret = FALSE;
-  register int lineskip = WinLineLen - BLOCKBREITE;
+  register int lineskip = WinLineLen - Block_Width;
 
   if (check)
     {
-      for (i = 0; i < BLOCKHOEHE; i++, target += lineskip)
-	for (j = 0; j < BLOCKBREITE; j++)
+      for (i = 0; i < Block_Height; i++, target += lineskip)
+	for (j = 0; j < Block_Width; j++)
 	  {
 	    if (*source != TRANSPARENTCOLOR)
 	      {
@@ -528,8 +528,8 @@ MergeBlockToWindow (register unsigned char *source, register unsigned char *targ
     }
   else
     {
-      for (i = 0; i < BLOCKHOEHE; i++, target += lineskip)
-	for (j = 0; j < BLOCKBREITE; j++)
+      for (i = 0; i < Block_Height; i++, target += lineskip)
+	for (j = 0; j < Block_Width; j++)
 	  {
 
 	    if (*source != TRANSPARENTCOLOR)

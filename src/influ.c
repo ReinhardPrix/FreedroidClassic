@@ -687,9 +687,9 @@ InfluenceEnemyCollision (void)
       xdist = Me.pos.x - Feindesliste[i].pos.x;
       ydist = Me.pos.y - Feindesliste[i].pos.y;
 
-      if (abs (xdist) > BLOCKBREITE)
+      if (abs (xdist) > Block_Width)
 	continue;
-      if (abs (ydist) > BLOCKHOEHE)
+      if (abs (ydist) > Block_Height)
 	continue;
 
       dist2 = (long) xdist *xdist + ydist * ydist;
@@ -869,16 +869,16 @@ FireBullet (void)
 
   /* Um Selbstabschuss zu verhindern Bullet weiterbewegen */
 
-  CurBullet->pos.x += isignf (CurBullet->speed.x) * BLOCKBREITE / 2;
-  CurBullet->pos.y += isignf (CurBullet->speed.y) * BLOCKHOEHE / 2;
+  CurBullet->pos.x += isignf (CurBullet->speed.x) * Block_Width / 2;
+  CurBullet->pos.y += isignf (CurBullet->speed.y) * Block_Height / 2;
 
   //  CurBullet->pos.x += Me.speed.x * Frame_Time();
   //  CurBullet->pos.y += Me.speed.y * Frame_Time();
 
   if ((fabsf (BulletSpeedX) < 13) && (fabsf (BulletSpeedY) < 13))
     {
-      CurBullet->pos.x += isignf (CurBullet->speed.x) * BLOCKBREITE / 3;
-      CurBullet->pos.y += isignf (CurBullet->speed.y) * BLOCKHOEHE / 3;
+      CurBullet->pos.x += isignf (CurBullet->speed.x) * Block_Width / 3;
+      CurBullet->pos.y += isignf (CurBullet->speed.y) * Block_Height / 3;
     }
 
   /*

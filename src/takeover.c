@@ -928,7 +928,7 @@ ShowPlayground (void)
     CopyMergeBlock (WorkBlock, LeftDruid, BLOCKMEM);
 
   DisplayMergeBlock (DruidStart[GELB].x, DruidStart[GELB].y,
-		     WorkBlock, BLOCKBREITE, BLOCKHOEHE - 5, Outline320x200);
+		     WorkBlock, Block_Width, Block_Height - 5, Outline320x200);
 
   memset (WorkBlock, TRANSPARENTCOLOR, BLOCKMEM);
 
@@ -937,7 +937,7 @@ ShowPlayground (void)
 
 
   DisplayMergeBlock (DruidStart[VIOLETT].x, DruidStart[VIOLETT].y,
-		     WorkBlock, BLOCKBREITE, BLOCKHOEHE - 5, Outline320x200);
+		     WorkBlock, Block_Width, Block_Height - 5, Outline320x200);
 
 
   PrepareScaledSurface(TRUE);  /* this updates the actually displayed screen */

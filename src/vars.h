@@ -82,7 +82,7 @@ Elevators are also entered via transfer mode if you stand still on the elevaor.\
 char Text1[] =
   "Clear the freighter of Robots by\ndestroying them with twin lasers\nor by transferring control to them.\n\nControl is by Joystick and also\nby Keyboard as follows:\n\nAny time Joystick moves and holding\nfirebutton down will allow use of\nlifts and consoles. Diese Nachricht\nist noch nicht lang genug, und daher\nschreibe ich jetzt ein Par Extrazeilen, die, wenn \nsie nicht mehr am Bildschirm\nzu sehen sind von der Textausgaberoutine\nnicht mehr angezeigt werden.";
 
-int Shieldcolors[BLOCKBREITE];
+int Shieldcolors[Block_Width];
 
 int ShipEmptyCounter = 0;	/* counter to Message: you have won(this ship */
 int TimerFlag = FALSE;		/* the internal timer */

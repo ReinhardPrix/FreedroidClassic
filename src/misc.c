@@ -559,7 +559,7 @@ Cheatmenu (void)
 void
 EscapeMenu (void)
 {
-#define FIRST_MENU_ITEM_POS_X (2*BLOCKBREITE)
+#define FIRST_MENU_ITEM_POS_X (2*Block_Width)
 #define FIRST_MENU_ITEM_POS_Y (USERFENSTERPOSY + FontHeight(Menu_BFont))
 enum
   { 
@@ -604,7 +604,7 @@ enum
       // we highlight the currently selected option with an 
       // influencer to the left before it
       // PutInfluence( FIRST_MENU_ITEM_POS_X , 
-      // FIRST_MENU_ITEM_POS_Y + (MenuPosition-1) * (FontHeight(Menu_BFont)) - BLOCKBREITE/4 );
+      // FIRST_MENU_ITEM_POS_Y + (MenuPosition-1) * (FontHeight(Menu_BFont)) - Block_Width/4 );
       PutInfluence( FIRST_MENU_ITEM_POS_X , 
 		    FIRST_MENU_ITEM_POS_Y + ( MenuPosition - 1.5 ) * (FontHeight( Menu_BFont )) );
 
@@ -697,7 +697,7 @@ Options_Menu (void)
   int Weiter = 0;
   int MenuPosition=1;
 
-#define OPTIONS_MENU_ITEM_POS_X (BLOCKBREITE/2)
+#define OPTIONS_MENU_ITEM_POS_X (Block_Width/2)
 enum
   { SET_BG_MUSIC_VOLUME=1, 
     SET_SOUND_FX_VOLUME, 
@@ -724,8 +724,8 @@ enum
       // we highlight the currently selected option with an 
       // influencer to the left before it
       // PutInfluence( FIRST_MENU_ITEM_POS_X , 
-      // FIRST_MENU_ITEM_POS_Y + (MenuPosition-1) * (FontHeight(Menu_BFont)) - BLOCKBREITE/4 );
-      PutInfluence( OPTIONS_MENU_ITEM_POS_X - BLOCKBREITE/2, 
+      // FIRST_MENU_ITEM_POS_Y + (MenuPosition-1) * (FontHeight(Menu_BFont)) - Block_Width/4 );
+      PutInfluence( OPTIONS_MENU_ITEM_POS_X - Block_Width/2, 
 		    FIRST_MENU_ITEM_POS_Y + ( MenuPosition - 1.5 ) * (FontHeight( Menu_BFont )) );
 
 
@@ -879,8 +879,8 @@ Single_Player_Menu (void)
       MakeGridOnScreen( Outline320x200 );
 
       // Highlight currently selected option with an influencer before it
-      DisplayMergeBlock( SINGLE_PLAYER_MENU_POINTER_POS_X, (MenuPosition+3) * (FontHeight(Menu_BFont)/2) - BLOCKBREITE/4, 
-			 Influencepointer, BLOCKBREITE, BLOCKHOEHE, RealScreen );
+      DisplayMergeBlock( SINGLE_PLAYER_MENU_POINTER_POS_X, (MenuPosition+3) * (FontHeight(Menu_BFont)/2) - Block_Width/4, 
+			 Influencepointer, Block_Width, Block_Height, RealScreen );
 
       PrepareScaledSurface(FALSE);
 
@@ -976,13 +976,13 @@ Show_Highscore_Menu (void)
 
       CenteredPutString (ScaledSurface, 1*FontHeight(Menu_BFont), "Highscore list:" );
 
-      PrintStringFont (ScaledSurface , Menu_BFont, 2*BLOCKBREITE , 4*FontHeight(Menu_BFont),    
+      PrintStringFont (ScaledSurface , Menu_BFont, 2*Block_Width , 4*FontHeight(Menu_BFont),    
 		       "Highest score: %10s : %6.2f" , HighestName, HighestScoreOfDay );
 
-      PrintStringFont (ScaledSurface , Menu_BFont, 2*BLOCKBREITE , 5*FontHeight(Menu_BFont),
+      PrintStringFont (ScaledSurface , Menu_BFont, 2*Block_Width , 5*FontHeight(Menu_BFont),
 		       "Great score: %10s : %6.2f" , GreatScoreName,  GreatScore);
 
-      PrintStringFont (ScaledSurface , Menu_BFont, 2*BLOCKBREITE , 6*FontHeight(Menu_BFont),
+      PrintStringFont (ScaledSurface , Menu_BFont, 2*Block_Width , 6*FontHeight(Menu_BFont),
 		       " Lowest Score:  %10s : %6.2f", LowestName,   LowestScoreOfDay);
 
       // LeftPutString (ScaledSurface , 9*FontHeight(Menu_BFont), "We are looking forward so seeing");
@@ -1113,20 +1113,20 @@ Highlight_Current_Block(void)
 {
   int i;
 
-  for (i=0; i<BLOCKBREITE; i++)
+  for (i=0; i<Block_Width; i++)
     {
       // This draws a line at the upper border of the current block
-      InternWindow[(INTERNHOEHE-1)*(BLOCKHOEHE/2)*INTERNBREITE*BLOCKBREITE+
-		   (INTERNBREITE-1)*(BLOCKBREITE/2)+i]=BULLETCOLOR;
+      InternWindow[(INTERNHOEHE-1)*(Block_Height/2)*INTERNBREITE*Block_Width+
+		   (INTERNBREITE-1)*(Block_Width/2)+i]=BULLETCOLOR;
       // This draws a line at the lower border of the current block
-      InternWindow[(INTERNHOEHE+1)*(BLOCKHOEHE/2)*INTERNBREITE*BLOCKBREITE+
-		   (INTERNBREITE-1)*(BLOCKBREITE/2)+i]=BULLETCOLOR;
+      InternWindow[(INTERNHOEHE+1)*(Block_Height/2)*INTERNBREITE*Block_Width+
+		   (INTERNBREITE-1)*(Block_Width/2)+i]=BULLETCOLOR;
       // This draws a line at the left border of the current block
-      InternWindow[(INTERNHOEHE-1)*(BLOCKHOEHE/2)*INTERNBREITE*BLOCKBREITE+
-		   (INTERNBREITE-1)*(BLOCKBREITE/2)+i*INTERNBREITE*BLOCKBREITE]=BULLETCOLOR;
+      InternWindow[(INTERNHOEHE-1)*(Block_Height/2)*INTERNBREITE*Block_Width+
+		   (INTERNBREITE-1)*(Block_Width/2)+i*INTERNBREITE*Block_Width]=BULLETCOLOR;
       // This draws a line at the right border of the current block
-      InternWindow[(INTERNHOEHE-1)*(BLOCKHOEHE/2)*INTERNBREITE*BLOCKBREITE+
-		   (INTERNBREITE+1)*(BLOCKBREITE/2)+i*INTERNBREITE*BLOCKBREITE]=BULLETCOLOR;
+      InternWindow[(INTERNHOEHE-1)*(Block_Height/2)*INTERNBREITE*Block_Width+
+		   (INTERNBREITE+1)*(Block_Width/2)+i*INTERNBREITE*Block_Width]=BULLETCOLOR;
     }
 }
 
@@ -1149,8 +1149,8 @@ Level_Editor(void)
       Weiter=FALSE;
       while (!EscapePressed())
 	{
-	  BlockX=(int)(floor(Me.pos.x/BLOCKBREITE));
-	  BlockY=(int)(floor(Me.pos.y/BLOCKHOEHE));
+	  BlockX=(int)(floor(Me.pos.x/Block_Width));
+	  BlockY=(int)(floor(Me.pos.y/Block_Height));
 	  
 	  GetView();
 	  Assemble_Combat_Picture ( SHOW_MAP );
@@ -1164,22 +1164,22 @@ Level_Editor(void)
 	  // highlited filed (that is Me.pos) accordingly. This is done here:
 	  if (LeftPressed()) 
 	    {
-	      Me.pos.x-=BLOCKBREITE;
+	      Me.pos.x-=Block_Width;
 	      while (LeftPressed());
 	    }
 	  if (RightPressed()) 
 	    {
-	      Me.pos.x+=BLOCKBREITE;
+	      Me.pos.x+=Block_Width;
 	      while (RightPressed());
 	    }
 	  if (UpPressed()) 
 	    {
-	      Me.pos.y-=BLOCKHOEHE;
+	      Me.pos.y-=Block_Height;
 	      while (UpPressed());
 	    }
 	  if (DownPressed()) 
 	    {
-	      Me.pos.y+=BLOCKHOEHE;
+	      Me.pos.y+=Block_Height;
 	      while (DownPressed());
 	    }
 	  
@@ -1264,8 +1264,8 @@ Level_Editor(void)
 	  MakeGridOnScreen( Outline320x200 );
 
 	  // Highlight currently selected option with an influencer before it
-	  DisplayMergeBlock( SINGLE_PLAYER_MENU_POINTER_POS_X, (MenuPosition+3) * (FontHeight(Menu_BFont)/2) - BLOCKBREITE/4, 
-			     Influencepointer, BLOCKBREITE, BLOCKHOEHE, RealScreen );
+	  DisplayMergeBlock( SINGLE_PLAYER_MENU_POINTER_POS_X, (MenuPosition+3) * (FontHeight(Menu_BFont)/2) - Block_Width/4, 
+			     Influencepointer, Block_Width, Block_Height, RealScreen );
 	  
 	  PrepareScaledSurface(FALSE);
 

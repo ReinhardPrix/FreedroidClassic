@@ -36,14 +36,14 @@
 #define CREW_LINE_LEN			MAX_TYPES_ON_LEVEL * 3 + 20
 
 /* Distance, where door opens */
-#define DOOROPENDIST2 	(BLOCKHOEHE + BLOCKBREITE)*(BLOCKBREITE + BLOCKHOEHE)/4
+#define DOOROPENDIST2 	(Block_Height + Block_Width)*(Block_Width + Block_Height)/4
 
 /* Randbreite der Wand */
 #define WALLPASS		4
 
 /* Randbreite der Konsolen */
-#define KONSOLEPASS_X 	(BLOCKBREITE/2 + 4)
-#define KONSOLEPASS_Y 	(BLOCKHOEHE/2 	+4)
+#define KONSOLEPASS_X 	(Block_Width/2 + 4)
+#define KONSOLEPASS_Y 	(Block_Height/2 	+4)
 
 /* Breite der Tueren freien Raumes vor Tuer*/
 #define TUERBREITE	6

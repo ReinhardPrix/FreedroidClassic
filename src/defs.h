@@ -55,12 +55,12 @@ enum
 // **********************************************************************
 // Konstants about the size (and mem?) of pixmaps
 
-#define BLOCKBREITE 		64
-#define BLOCK_WIDTH		BLOCKBREITE
+#define Block_Width 		64
+#define BLOCK_WIDTH		Block_Width
 
-#define BLOCKHOEHE 		64
-#define BLOCK_HEIGHT		BLOCKHOEHE
-#define BLOCKMEM  		BLOCKBREITE*BLOCKHOEHE
+#define Block_Height 		64
+#define BLOCK_HEIGHT		Block_Height
+#define BLOCKMEM  		Block_Width*Block_Height
 
 #define DIGITLENGTH (8*2)
 #define DIGITHEIGHT (9*2)
@@ -80,8 +80,8 @@ enum
 #define INTERNBREITE 		13
 #define INTERNHOEHE 		7
 
-#define USERFENSTERHOEHE 	VIEWHOEHE*BLOCKHOEHE
-#define USERFENSTERBREITE 	VIEWBREITE*BLOCKBREITE
+#define USERFENSTERHOEHE 	VIEWHOEHE*Block_Height
+#define USERFENSTERBREITE 	VIEWBREITE*Block_Width
 #define USERFENSTERPOSX 	( (SCREENBREITE-USERFENSTERBREITE) / 2)
 #define USERFENSTERPOSY 	( (SCREENHOEHE-USERFENSTERHOEHE) )
 #define USER_FENSTER_CENTER_X (USERFENSTERPOSX + (USERFENSTERBREITE/2))
@@ -94,7 +94,7 @@ enum
 			   actually displayed screen shall be bigger than the 320x200 window. */
 
 #define RAHMENBREITE		SCREENBREITE
-#define RAHMENHOEHE		BLOCKHOEHE
+#define RAHMENHOEHE		Block_Height
 
 /* Startpos + lens of Rahmen-Texts */
 #define LEFT_INFO_X 	(12*2)
@@ -118,13 +118,13 @@ enum
 #define BULLET_BULLET_COLLISION_DIST 10
 
 /* Dimension eines Blasts */
-#define BLASTRADIUS		((BLOCKBREITE/3)*2)
+#define BLASTRADIUS		((Block_Width/3)*2)
 
 // **********************************************************************
 //
 //
 
-#define SINGLE_PLAYER_MENU_POINTER_POS_X (BLOCKBREITE/2)
+#define SINGLE_PLAYER_MENU_POINTER_POS_X (Block_Width/2)
 enum
   { NEW_GAME_POSITION=1, SHOW_HISCORE_POSITION=2,
     SHOW_MISSION_POSITION=3, BACK_POSITION=4 };
@@ -264,9 +264,9 @@ enum _directions
 
 /* Koordinaten der Bloecke die isoliert werden sollen */
 #define INFLUENCEBLOCKPOSITIONX 0
-#define INFLUENCEBLOCKPOSITIONY 0	/* BLOCKHOEHE */
-#define BULLETBLOCKPOSITIONY 0	/* (BLOCKHOEHE*4) */
-#define BLASTBLOCKPOSITIONY 0	/* (BLOCKHOEHE*3) */
+#define INFLUENCEBLOCKPOSITIONY 0	/* Block_Height */
+#define BULLETBLOCKPOSITIONY 0	/* (Block_Height*4) */
+#define BLASTBLOCKPOSITIONY 0	/* (Block_Height*3) */
 
 // #define STARTENERGIE 100
 #define ENERGIEBALKENBREITE 15
@@ -312,28 +312,28 @@ enum _directions
 #define MAX_REFRESHES_ON_LEVEL	10
 
 /* Macros */
-#define GrobX (Me.pos.x / BLOCKBREITE)
-#define GrobY (Me.pos.y / BLOCKHOEHE)
-#define FeinX (Me.pos.x%BLOCKBREITE)
-#define FeinY (Me.pos.y%BLOCKHOEHE)
+#define GrobX (Me.pos.x / Block_Width)
+#define GrobY (Me.pos.y / Block_Height)
+#define FeinX (Me.pos.x%Block_Width)
+#define FeinY (Me.pos.y%Block_Height)
 
-#define CLFeinY ((Me.pos.y+BLOCKHOEHE/2) % BLOCKHOEHE)
-#define CLGrobY ((Me.pos.y+BLOCKHOEHE/2) / BLOCKHOEHE)
-#define CLFeinX ((Me.pos.x+BLOCKBREITE/2) % BLOCKHOEHE)
-#define CLGrobX ((Me.pos.x+BLOCKBREITE/2) / BLOCKHOEHE)
+#define CLFeinY ((Me.pos.y+Block_Height/2) % Block_Height)
+#define CLGrobY ((Me.pos.y+Block_Height/2) / Block_Height)
+#define CLFeinX ((Me.pos.x+Block_Width/2) % Block_Height)
+#define CLGrobX ((Me.pos.x+Block_Width/2) / Block_Height)
 
 
 /* 
  * these macros are a bit of a hack, as they will work correctly only
- * as long as BLOCKBREITE = BLOCKHOEHE
+ * as long as Block_Width = Block_Height
  * but the handling of the grob/fein coordinates should be changed anyway
  * in the longer term...
  */
 #define Grob2Fein(grob) 	\
- ((grob)* BLOCKBREITE + BLOCKBREITE / 2)
+ ((grob)* Block_Width + Block_Width / 2)
 
 #define Fein2Grob(fein)		\
-  ((int)(fein) / BLOCKBREITE)
+  ((int)(fein) / Block_Width)
 
 #define BREMSDREHUNG 3		/* warte 3*, bevor Influencer weitergedreht wird */
 

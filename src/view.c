@@ -73,7 +73,7 @@ char *Affected;
 int
 Cent (int Val)
 {
-  Val = Val - (Val % BLOCKBREITE) + BLOCKBREITE / 2;
+  Val = Val - (Val % Block_Width) + Block_Width / 2;
   return Val;
 }
 
@@ -98,7 +98,7 @@ RecFlashFill (int LX, int LY, int Color, unsigned char *Parameter_Screen, int SB
 //      getchar();
 
   // Dieses Feld als Wirkungsbereich kenntzeichnen
-  Affected[LY / BLOCKHOEHE * CurLevel->xlen + LX / BLOCKBREITE] = TRUE;
+  Affected[LY / Block_Height * CurLevel->xlen + LX / Block_Width] = TRUE;
 
   // Dieses Feld anf"ullen
   for (i = LY / 4 - ((LY / 4) % 8); i < (LY / 4 - ((LY / 4) % 8) + 8); i++)
@@ -109,29 +109,29 @@ RecFlashFill (int LX, int LY, int Color, unsigned char *Parameter_Screen, int SB
 
   // Feld rechts davon anf"ullen
   if ((*(Parameter_Screen + i * SBreite + LX / 4 + 8) != Color) &&
-      (IsPassable (Cent (LX + BLOCKBREITE), Cent (LY), CENTER) == CENTER))
-    RecFlashFill (LX + BLOCKBREITE, LY, Color, Parameter_Screen, SBreite);
+      (IsPassable (Cent (LX + Block_Width), Cent (LY), CENTER) == CENTER))
+    RecFlashFill (LX + Block_Width, LY, Color, Parameter_Screen, SBreite);
 
   // Feld links davon anf"ullen
-  if (LX > BLOCKBREITE)
+  if (LX > Block_Width)
     {
       if ((*(Parameter_Screen + i * SBreite + LX / 4 - 8) != Color) &&
-	  (IsPassable (Cent (LX - BLOCKBREITE), Cent (LY), CENTER) == CENTER))
-	RecFlashFill (LX - BLOCKBREITE, LY, Color, Parameter_Screen, SBreite);
+	  (IsPassable (Cent (LX - Block_Width), Cent (LY), CENTER) == CENTER))
+	RecFlashFill (LX - Block_Width, LY, Color, Parameter_Screen, SBreite);
     }
 
   // Feld oben davon anf"ullen
-  if ((i > 8) && (LY > BLOCKHOEHE))
+  if ((i > 8) && (LY > Block_Height))
     {
       if ((*(Parameter_Screen + (i - 8) * SBreite + LX / 4) != Color) &&
-	  (IsPassable (Cent (LX), Cent (LY - BLOCKHOEHE), CENTER) == CENTER))
-	RecFlashFill (LX, LY - BLOCKHOEHE, Color, Parameter_Screen, SBreite);
+	  (IsPassable (Cent (LX), Cent (LY - Block_Height), CENTER) == CENTER))
+	RecFlashFill (LX, LY - Block_Height, Color, Parameter_Screen, SBreite);
     }
 
   // Feld unten davon anf"ullen
   if ((*(Parameter_Screen + (i + 8) * SBreite + LX / 4) != Color) &&
-      (IsPassable (Cent (LX), Cent (LY + BLOCKHOEHE), CENTER) == CENTER))
-    RecFlashFill (LX, LY + BLOCKHOEHE, Color, Parameter_Screen, SBreite);
+      (IsPassable (Cent (LX), Cent (LY + Block_Height), CENTER) == CENTER))
+    RecFlashFill (LX, LY + Block_Height, Color, Parameter_Screen, SBreite);
 }
 
 /*
@@ -190,8 +190,8 @@ Assemble_Combat_Picture (int mask)
 	{
 	  if ((MapBrick = CurLevel->map[line][col]) != INVISIBLE_BRICK)
 	    {
-	      TargetRectangle.x=USER_FENSTER_CENTER_X-Me.pos.x+col*BLOCKBREITE;
-	      TargetRectangle.y=USER_FENSTER_CENTER_Y-Me.pos.y+line*BLOCKHOEHE;
+	      TargetRectangle.x=USER_FENSTER_CENTER_X-Me.pos.x+col*Block_Width;
+	      TargetRectangle.y=USER_FENSTER_CENTER_Y-Me.pos.y+line*Block_Height;
 	      SDL_BlitSurface(ne_blocks, ne_map_block+MapBrick, ne_screen, &TargetRectangle);
 	    }			// if !INVISIBLE_BRICK 
 	}			// for(col) 
@@ -292,8 +292,8 @@ GetConceptInternFenster (void)
       for (j = 0; j < CurLevel->xlen; j++)
 	{
 	  SmallBlock (LX, LY,
-		      GetMapBrick (CurLevel, j * BLOCKBREITE, i * BLOCKHOEHE),
-		      OutputPointer, INTERNBREITE * BLOCKBREITE);
+		      GetMapBrick (CurLevel, j * Block_Width, i * Block_Height),
+		      OutputPointer, INTERNBREITE * Block_Width);
 	  LX += 8;
 	}
       LX = 0;
@@ -311,14 +311,14 @@ GetConceptInternFenster (void)
 	continue;
       SmallEnemy (Feindesliste[i].pos.x / 4, Feindesliste[i].pos.y / 4,
 		  Druidmap[Feindesliste[i].type].class, OutputPointer,
-		  INTERNBREITE * BLOCKBREITE);
+		  INTERNBREITE * Block_Width);
     }
 
   // Darstellen des Influencers, wenn er nicht schon vernichtet wurde
   if (Me.energy > 0)
     SmallEnemy (((int) Me.pos.x) / 4, ((int) Me.pos.y) / 4,
 		-10 + Druidmap[Me.type].class, OutputPointer,
-		INTERNBREITE * BLOCKBREITE);
+		INTERNBREITE * Block_Width);
 
   // Darstellen der Blasts
   for (i = 0; i < MAXBLASTS; i++)
@@ -327,7 +327,7 @@ GetConceptInternFenster (void)
 	continue;
       SmallBlast (AllBlasts[i].PX / 4, AllBlasts[i].PY / 4, AllBlasts[i].type,
 		  AllBlasts[i].phase, OutputPointer,
-		  INTERNBREITE * BLOCKBREITE);
+		  INTERNBREITE * Block_Width);
     }
 
   // Darstellen der Bullets
@@ -356,13 +356,13 @@ GetConceptInternFenster (void)
 	    {
 	      RecFlashFill (AllBullets[i].pos.x, AllBullets[i].pos.y,
 			    FLASHCOLOR1, OutputPointer,
-			    INTERNBREITE * BLOCKBREITE);
+			    INTERNBREITE * Block_Width);
 	    }
 	  if ( (AllBullets[i].time_in_frames % 2) == 0)
 	    {
 	      RecFlashFill (AllBullets[i].pos.x, AllBullets[i].pos.y,
 			    FLASHCOLOR2, OutputPointer,
-			    INTERNBREITE * BLOCKBREITE);
+			    INTERNBREITE * Block_Width);
 	    }
 
 	  /*
@@ -375,8 +375,8 @@ GetConceptInternFenster (void)
 	      if (Feindesliste[j].levelnum != CurLevel->levelnum)
 		continue;
 	      if (Affected
-		  [(int)(((int) (rintf (Feindesliste[j].pos.x)) / BLOCKBREITE) +
-		   ((int) (rintf (Feindesliste[j].pos.y)) / BLOCKHOEHE) *
+		  [(int)(((int) (rintf (Feindesliste[j].pos.x)) / Block_Width) +
+		   ((int) (rintf (Feindesliste[j].pos.y)) / Block_Height) *
 		   CurLevel->xlen )]
 		  && (!Druidmap[ Feindesliste[j].type ].flashimmune))
 		{
@@ -385,8 +385,8 @@ GetConceptInternFenster (void)
 	    }
 
 	  if (!InvincibleMode && !Druidmap[Me.type].flashimmune &&
-	      Affected[((int) Me.pos.x) / BLOCKBREITE +
-		       ((int) Me.pos.y) / BLOCKHOEHE * CurLevel->xlen])
+	      Affected[((int) Me.pos.x) / Block_Width +
+		       ((int) Me.pos.y) / Block_Height * CurLevel->xlen])
 	    Me.energy -= Bulletmap[FLASH].damage / 2;
 
 	  free (Affected);
@@ -395,7 +395,7 @@ GetConceptInternFenster (void)
 	{
 	  SmallBullet (AllBullets[i].pos.x / 4, AllBullets[i].pos.y / 4,
 		       AllBullets[i].type, AllBullets[i].phase, OutputPointer,
-		       INTERNBREITE * BLOCKBREITE);
+		       INTERNBREITE * Block_Width);
 	}
     }
   return;
@@ -419,8 +419,8 @@ PutInfluence ( int x, int y)
 
   if ( x == -1 ) 
     {
-      TargetRectangle.x=USER_FENSTER_CENTER_X - BLOCKBREITE/2;
-      TargetRectangle.y=USER_FENSTER_CENTER_Y - BLOCKHOEHE/2;
+      TargetRectangle.x=USER_FENSTER_CENTER_X - Block_Width/2;
+      TargetRectangle.y=USER_FENSTER_CENTER_Y - Block_Height/2;
     }
   else
     {
@@ -436,8 +436,8 @@ PutInfluence ( int x, int y)
   // COMPUTED ANEW!!!!
   if ( x == -1 ) 
     {
-      TargetRectangle.x=USER_FENSTER_CENTER_X - BLOCKBREITE/2 + DIGIT_POS_X;
-      TargetRectangle.y=USER_FENSTER_CENTER_Y - BLOCKHOEHE/2 + DIGIT_POS_Y;
+      TargetRectangle.x=USER_FENSTER_CENTER_X - Block_Width/2 + DIGIT_POS_X;
+      TargetRectangle.y=USER_FENSTER_CENTER_Y - Block_Height/2 + DIGIT_POS_Y;
     }
   else
     {
@@ -451,8 +451,8 @@ PutInfluence ( int x, int y)
   // COMPUTED ANEW!!!!
   if ( x == -1 ) 
     {
-      TargetRectangle.x=USER_FENSTER_CENTER_X - BLOCKBREITE/2 + DIGIT_POS_X + DIGITLENGTH;
-      TargetRectangle.y=USER_FENSTER_CENTER_Y - BLOCKHOEHE/2 + DIGIT_POS_Y;
+      TargetRectangle.x=USER_FENSTER_CENTER_X - Block_Width/2 + DIGIT_POS_X + DIGITLENGTH;
+      TargetRectangle.y=USER_FENSTER_CENTER_Y - Block_Height/2 + DIGIT_POS_Y;
     }
   else
     {
@@ -466,8 +466,8 @@ PutInfluence ( int x, int y)
   // COMPUTED ANEW!!!!
   if ( x == -1 ) 
     {
-      TargetRectangle.x=USER_FENSTER_CENTER_X - BLOCKBREITE/2 + DIGIT_POS_X + 2*DIGITLENGTH;
-      TargetRectangle.y=USER_FENSTER_CENTER_Y - BLOCKHOEHE/2 + DIGIT_POS_Y;
+      TargetRectangle.x=USER_FENSTER_CENTER_X - Block_Width/2 + DIGIT_POS_X + 2*DIGITLENGTH;
+      TargetRectangle.y=USER_FENSTER_CENTER_Y - Block_Height/2 + DIGIT_POS_Y;
     }
   else
     {
@@ -540,25 +540,25 @@ PutEnemy (int Enum)
   druidname = Druidmap[Feindesliste[Enum].type].druidname;
   phase = Feindesliste[Enum].feindphase;
 
-  TargetRectangle.x=USER_FENSTER_CENTER_X-Me.pos.x+Feindesliste[Enum].pos.x-BLOCKBREITE/2;
-  TargetRectangle.y=USER_FENSTER_CENTER_Y-Me.pos.y+Feindesliste[Enum].pos.y-BLOCKHOEHE/2;
-  // TargetRectangle.w=BLOCKBREITE;
-  // TargetRectangle.h=BLOCKHOEHE;
+  TargetRectangle.x=USER_FENSTER_CENTER_X-Me.pos.x+Feindesliste[Enum].pos.x-Block_Width/2;
+  TargetRectangle.y=USER_FENSTER_CENTER_Y-Me.pos.y+Feindesliste[Enum].pos.y-Block_Height/2;
+  // TargetRectangle.w=Block_Width;
+  // TargetRectangle.h=Block_Height;
 
   SDL_BlitSurface(ne_blocks , ne_droid_block+phase, ne_screen, &TargetRectangle);
 
   // Now the numbers should be blittet.
 
-  TargetRectangle.x=USER_FENSTER_CENTER_X-Me.pos.x+Feindesliste[Enum].pos.x-BLOCKBREITE/2 + DIGIT_POS_X;
-  TargetRectangle.y=USER_FENSTER_CENTER_Y-Me.pos.y+Feindesliste[Enum].pos.y-BLOCKHOEHE/2 + DIGIT_POS_Y;
+  TargetRectangle.x=USER_FENSTER_CENTER_X-Me.pos.x+Feindesliste[Enum].pos.x-Block_Width/2 + DIGIT_POS_X;
+  TargetRectangle.y=USER_FENSTER_CENTER_Y-Me.pos.y+Feindesliste[Enum].pos.y-Block_Height/2 + DIGIT_POS_Y;
   SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Feindesliste[Enum].type].druidname[0]-'1'+11) , 
 		   ne_screen, &TargetRectangle );
-  TargetRectangle.x=USER_FENSTER_CENTER_X-Me.pos.x+Feindesliste[Enum].pos.x-BLOCKBREITE/2 + DIGIT_POS_X + DIGITLENGTH-1;
-  TargetRectangle.y=USER_FENSTER_CENTER_Y-Me.pos.y+Feindesliste[Enum].pos.y-BLOCKHOEHE/2 + DIGIT_POS_Y;
+  TargetRectangle.x=USER_FENSTER_CENTER_X-Me.pos.x+Feindesliste[Enum].pos.x-Block_Width/2 + DIGIT_POS_X + DIGITLENGTH-1;
+  TargetRectangle.y=USER_FENSTER_CENTER_Y-Me.pos.y+Feindesliste[Enum].pos.y-Block_Height/2 + DIGIT_POS_Y;
   SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Feindesliste[Enum].type].druidname[1]-'1'+11) , 
 		   ne_screen, &TargetRectangle );
-  TargetRectangle.x=USER_FENSTER_CENTER_X-Me.pos.x+Feindesliste[Enum].pos.x-BLOCKBREITE/2 + DIGIT_POS_X + 2*(DIGITLENGTH-1);
-  TargetRectangle.y=USER_FENSTER_CENTER_Y-Me.pos.y+Feindesliste[Enum].pos.y-BLOCKHOEHE/2 + DIGIT_POS_Y;
+  TargetRectangle.x=USER_FENSTER_CENTER_X-Me.pos.x+Feindesliste[Enum].pos.x-Block_Width/2 + DIGIT_POS_X + 2*(DIGITLENGTH-1);
+  TargetRectangle.y=USER_FENSTER_CENTER_Y-Me.pos.y+Feindesliste[Enum].pos.y-Block_Height/2 + DIGIT_POS_Y;
   SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Feindesliste[Enum].type].druidname[2]-'1'+11) , 
 		   ne_screen, &TargetRectangle );
 
@@ -624,8 +624,8 @@ PutBullet (int BulletNummer)
     }	// if 
   */
 
-  TargetRectangle.x=USER_FENSTER_CENTER_X-Me.pos.x+CurBullet->pos.x-BLOCKBREITE/2;
-  TargetRectangle.y=USER_FENSTER_CENTER_Y-Me.pos.y+CurBullet->pos.y-BLOCKHOEHE/2;
+  TargetRectangle.x=USER_FENSTER_CENTER_X-Me.pos.x+CurBullet->pos.x-Block_Width/2;
+  TargetRectangle.y=USER_FENSTER_CENTER_Y-Me.pos.y+CurBullet->pos.y-Block_Height/2;
 
   SDL_BlitSurface( ne_blocks , Bulletmap[CurBullet->type].block + CurBullet->phase, ne_screen , &TargetRectangle );
 
@@ -657,8 +657,8 @@ PutBlast (int BlastNummer)
   if (CurBlast->type == OUT)
     return;
 
-  TargetRectangle.x=USER_FENSTER_CENTER_X - Me.pos.x + CurBlast->PX -BLOCKBREITE/2;
-  TargetRectangle.y=USER_FENSTER_CENTER_Y - Me.pos.y + CurBlast->PY -BLOCKHOEHE/2;
+  TargetRectangle.x=USER_FENSTER_CENTER_X - Me.pos.x + CurBlast->PX -Block_Width/2;
+  TargetRectangle.y=USER_FENSTER_CENTER_Y - Me.pos.y + CurBlast->PY -Block_Height/2;
   SDL_BlitSurface( ne_blocks, Blastmap[CurBlast->type].block + ((int) rintf(CurBlast->phase)), ne_screen , &TargetRectangle);
 
 
@@ -705,17 +705,17 @@ PutObject (int x, int y, unsigned char *pic, int check)
 
   /* Offset des Exakten Bildmittelpunktes abzueglich der Eckenverschiebung */
   InternWindowOffset =
-    (INTERNHOEHE) * BLOCKHOEHE / 2 * BLOCKBREITE * INTERNBREITE +
-    INTERNBREITE * BLOCKBREITE / 2 - BLOCKBREITE / 2 -
-    BLOCKBREITE * INTERNBREITE * BLOCKHOEHE / 2;
+    (INTERNHOEHE) * Block_Height / 2 * Block_Width * INTERNBREITE +
+    INTERNBREITE * Block_Width / 2 - Block_Width / 2 -
+    Block_Width * INTERNBREITE * Block_Height / 2;
 
   /* Verschiebung zum Influencer  (linkes oberes Eck !!) */
-  InternWindowOffset += ((((int) Me.pos.y) % BLOCKHOEHE) - BLOCKHOEHE / 2) *
-    BLOCKBREITE * INTERNBREITE +
-    (((int) Me.pos.x) % BLOCKBREITE) - BLOCKBREITE / 2;
+  InternWindowOffset += ((((int) Me.pos.y) % Block_Height) - Block_Height / 2) *
+    Block_Width * INTERNBREITE +
+    (((int) Me.pos.x) % Block_Width) - Block_Width / 2;
 
   /* relative Verschiebung des Objekts zum Influencer */
-  InternWindowOffset += DifY * BLOCKBREITE * INTERNBREITE + DifX;
+  InternWindowOffset += DifY * Block_Width * INTERNBREITE + DifX;
 
   /* center of screen */
   target = InternWindow + InternWindowOffset;
@@ -735,7 +735,7 @@ PutObject (int x, int y, unsigned char *pic, int check)
     ("\nint PutObject(...): usual end of function reached.\n");
 
   Return_Value=(MergeBlockToWindow
-	  (source, target, INTERNBREITE * BLOCKBREITE, check));
+	  (source, target, INTERNBREITE * Block_Width, check));
 
   DebugPrintf
     ("\nint PutObject(...): usual end of function reached.\n");
@@ -784,7 +784,7 @@ FlashWindow (int Flashcolor)
    * auf den gew"unschten Wert gesetzt werden
    */
   memset (InternWindow, Flashcolor,
-	  INTERNBREITE * INTERNHOEHE * BLOCKBREITE * BLOCKHOEHE);
+	  INTERNBREITE * INTERNHOEHE * Block_Width * Block_Height);
 }				// void FlashWindow(int Flashcolor)
 
 /*-----------------------------------------------------------------

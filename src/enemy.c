@@ -47,7 +47,7 @@
 
 #define COL_SPEED		3	/* wegstossen bei enemy-enemy collision */
 
-#define FIREDIST2	(INTERNBREITE*BLOCKBREITE/2)*(INTERNBREITE*BLOCKBREITE/2)+(INTERNHOEHE*BLOCKHOEHE/2)*(INTERNHOEHE*BLOCKHOEHE/2)
+#define FIREDIST2	(INTERNBREITE*Block_Width/2)*(INTERNBREITE*Block_Width/2)+(INTERNHOEHE*Block_Height/2)*(INTERNHOEHE*Block_Height/2)
 
 // void PermanentHealRobots (void);
 
@@ -417,17 +417,17 @@ AttackInfluence (int enemynum)
       /* Bullets so abfeuern, dass sie nicht den Schuetzen treffen */
       AllBullets[j].pos.x +=
 	(AllBullets[j].speed.x) / abs (Bulletmap[guntype].speed) *
-	BLOCKBREITE / 2;
+	Block_Width / 2;
       AllBullets[j].pos.y +=
 	(AllBullets[j].speed.y) / abs (Bulletmap[guntype].speed) *
-	BLOCKHOEHE / 2;
+	Block_Height / 2;
 
       // The following lines could be improved: Use not the sign, but only */
       // the fraction of the maxspeed times constant!
       // SINCE WE CAN ASSUME HIGH FRAMERATE DISABLE THIS CRAP! Within one */
       // frame, the robot cant move into its own bullet.
-      // AllBullets[j].pos.x+=isignf(Feindesliste[enemynum].speed.x)*BLOCKBREITE/2;      
-      // AllBullets[j].pos.y+=isignf(Feindesliste[enemynum].speed.y)*BLOCKHOEHE/2;
+      // AllBullets[j].pos.x+=isignf(Feindesliste[enemynum].speed.x)*Block_Width/2;      
+      // AllBullets[j].pos.y+=isignf(Feindesliste[enemynum].speed.y)*Block_Height/2;
 
       /* Dem Bullettype entsprechend lange warten vor naechstem Schuss */
 
