@@ -825,6 +825,10 @@ ERROR:  UNKNOWN ITEM STRING GIVEN AS ITEM TO DELETE FROM INVENTORY!",
       DeleteAllInventoryItemsOfType( TempValue , 0 );      
 
     }
+  else if ( ! strcmp ( ExtraCommandString , "CompletelyHealTux" ) )
+    {
+	Me [ 0 ] . energy = Me [ 0 ] . maxenergy ;
+    }
   else 
     {
       fprintf( stderr, "\n\nExtraCommandString: %s \n" , ExtraCommandString );
