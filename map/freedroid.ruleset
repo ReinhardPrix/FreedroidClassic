@@ -73,7 +73,7 @@ Common factor for all bullet's damage values: 1.0
 
 // this is the influencers small double shot
 ** Start of new bullet specification subsection **
-Time is takes to recharge this bullet/weapon in seconds : 0.9
+Time is takes to recharge this bullet/weapon in seconds : 0.95
 Flying speed of this bullet type : 8.0
 Damage cause by a hit of this bullet type : 25
 Number of different phases that were designed for this bullet type : SEE CONFIG.THEME FILE
@@ -93,7 +93,7 @@ Type of blast this bullet causes when crashing e.g. against a wall : 0
 
 // this is the double 821 military shot
 ** Start of new bullet specification subsection **
-Time is takes to recharge this bullet/weapon in seconds : 1.2
+Time is takes to recharge this bullet/weapon in seconds : 1.4
 Flying speed of this bullet type : 8.0
 Damage cause by a hit of this bullet type : 55
 Number of different phases that were designed for this bullet type : SEE CONFIG.THEME FILE

@@ -81,17 +81,10 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
 Mix_Chunk *Loaded_WAV_Files[ALL_SOUNDS];
 #endif
 
-
-#define ALL_MOD_MUSICS 7
-
+#define ALL_MOD_MUSICS 2
 char *MOD_Music_SampleFilenames[ALL_MOD_MUSICS] = {
   "ERRORSOUND_NILL.NOMOD",
-  "A_City_at_Night.mod",
-  "AnarchyMenu1.mod",
-  "Beachhead_2.mod",
-  "Agony-Highlands2.mod",
-  "AnarchyMenu10.mod",
-  "The_Last_V8.mod"
+  "A_City_at_Night.mod"
 };
 
 #ifdef HAVE_LIBSDL_MIXER
