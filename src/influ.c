@@ -956,9 +956,14 @@ CheckInfluenceEnemyCollision (void)
 	  //--------------------
 	  // we invert the speed vector of the influencer
 	  //
-	  Me[0].speed.x = -Me[0].speed.x;
-	  Me[0].speed.y = -Me[0].speed.y;
+	  Me[0].speed.x = -Me[0].speed.x * 0.25 ;
+	  Me[0].speed.y = -Me[0].speed.y * 0.25 ;
 	  
+	  /*
+	    This old code has cause the annoying collision behavious.  Maybe we
+	    dont need this at all any more right now, so let's try without.  I hope
+	    no occasions of getting 'sucked in' occur with it.
+
 	  if (Me[0].speed.x != 0)
 	    Me[0].speed.x +=
 	      COLLISION_PUSHSPEED * (Me[0].speed.x / fabsf (Me[0].speed.x));
@@ -969,7 +974,8 @@ CheckInfluenceEnemyCollision (void)
 	      COLLISION_PUSHSPEED * (Me[0].speed.y / fabsf (Me[0].speed.y));
 	  else if (ydist)
 	    Me[0].speed.y = COLLISION_PUSHSPEED * (ydist / fabsf (ydist));
-	  
+	  */
+
 	  // move the influencer a little bit out of the enemy AND the enemy a little bit out of the influ
 	  max_step_size = ((Frame_Time()) < ( MAXIMAL_STEP_SIZE ) ? (Frame_Time()) : ( MAXIMAL_STEP_SIZE )) ; 
 	  Me[0].pos.x += copysignf( max_step_size , Me[0].pos.x - AllEnemys[i].pos.x ) ;
