@@ -897,6 +897,7 @@ ActSpecialField ( int PlayerNum )
     case CHEST_L:
     case CHEST_U:
     case CHEST_D:
+      /*
       if ( ( Me [ 0 ] . readied_skill == SPELL_LOOT_CHEST_OR_DEAD_BODY ) &&
 	   ( PlayerNum == 0 ) &&
 	   ( MouseRightPressed() ) && 
@@ -905,6 +906,7 @@ ActSpecialField ( int PlayerNum )
 	  EnterChest ( ) ;
 	  DebugPrintf ( 2 , "\nvoid ActSpecialField(int x, int y):  Back from EnterChest().\n");
 	}
+      */
       break;
 
       /*

@@ -1121,6 +1121,10 @@ Get_Robot_Data ( void* DataPointer )
       ReadValueFromString( RobotPointer , "Range of vision of this droid=" , "%f" , 
 			   &Druidmap[RobotIndex].range_of_vision , EndOfDataPointer );
 
+      // Now we read in range of vision of this droid
+      ReadValueFromString( RobotPointer , "Minimal distance hostile bots are tolerated=" , "%f" , 
+			   &Druidmap[RobotIndex].minimal_range_hostile_bots_are_ignored , EndOfDataPointer );
+
       // Now we read in the flash immunity of this droid.
       ReadValueFromString( RobotPointer , FLASHIMMUNE_BEGIN_STRING , "%d" , 
 			   &Druidmap[RobotIndex].flashimmune , EndOfDataPointer );

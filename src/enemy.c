@@ -1416,6 +1416,7 @@ int
 EnemyOfTuxCloseToThisRobot ( Enemy ThisRobot , moderately_finepoint* vect_to_target )
 {
   int j;
+  float IgnoreRange = Druidmap [ ThisRobot -> type ] . minimal_range_hostile_bots_are_ignored;
 
   for ( j = 0 ; j < Number_Of_Droids_On_Ship ; j++ )
     {
@@ -1425,16 +1426,16 @@ EnemyOfTuxCloseToThisRobot ( Enemy ThisRobot , moderately_finepoint* vect_to_tar
       if ( DirectLineWalkable ( ThisRobot -> pos . x , ThisRobot -> pos . y , 
 				AllEnemys [ j ] . pos . x , AllEnemys [ j ] . pos . y , 
 				ThisRobot -> pos . z ) != TRUE ) continue;
-      
       if ( sqrt ( ( ThisRobot -> pos . x - AllEnemys[ j ] . pos . x ) *
 		  ( ThisRobot -> pos . x - AllEnemys[ j ] . pos . x ) +
 		  ( ThisRobot -> pos . y - AllEnemys[ j ] . pos . y ) *
-		  ( ThisRobot -> pos . y - AllEnemys[ j ] . pos . y ) ) > 6 ) continue;
+		  ( ThisRobot -> pos . y - AllEnemys[ j ] . pos . y ) ) > IgnoreRange ) continue;
 
       // At this point we have found our target
       vect_to_target -> x = AllEnemys [ j ] . pos . x - ThisRobot -> pos . x ;
       vect_to_target -> y = AllEnemys [ j ] . pos . y - ThisRobot -> pos . y ;
       DebugPrintf( 0 , "\nPOSSIBLE TARGET FOR FRIENDLY DROID FOUND!!!\n");
+      DebugPrintf( 0 , "\nIt is: %s.\n", ThisRobot -> dialog_section_name );
       return ( TRUE );
     }
   return ( FALSE );
@@ -1450,6 +1451,7 @@ DetermineVectorToShotTarget( enemy* ThisRobot , moderately_finepoint* vect_to_ta
 {
   int j;
   int TargetPlayerNum;
+  float IgnoreRange = Druidmap [ ThisRobot -> type ] . minimal_range_hostile_bots_are_ignored;
 
   if ( ThisRobot->is_friendly == TRUE )
     {
@@ -1463,11 +1465,16 @@ DetermineVectorToShotTarget( enemy* ThisRobot , moderately_finepoint* vect_to_ta
 	  if ( DirectLineWalkable ( ThisRobot -> pos . x , ThisRobot -> pos . y , 
 				    AllEnemys [ j ] . pos . x , AllEnemys [ j ] . pos . y , 
 				    ThisRobot -> pos . z ) != TRUE ) continue;
+	  if ( sqrt ( ( ThisRobot -> pos . x - AllEnemys[ j ] . pos . x ) *
+		      ( ThisRobot -> pos . x - AllEnemys[ j ] . pos . x ) +
+		      ( ThisRobot -> pos . y - AllEnemys[ j ] . pos . y ) *
+		      ( ThisRobot -> pos . y - AllEnemys[ j ] . pos . y ) ) > IgnoreRange ) continue;
 
 	  // At this point we have found our target
 	  vect_to_target -> x = AllEnemys [ j ] . pos . x - ThisRobot -> pos . x ;
 	  vect_to_target -> y = AllEnemys [ j ] . pos . y - ThisRobot -> pos . y ;
 	  DebugPrintf( 0 , "\nPOSSIBLE TARGET FOR FRIENDLY DROID FOUND!!!\n");
+	  DebugPrintf( 0 , "\nIt is a good target for: %s.\n", ThisRobot -> dialog_section_name );
 	  break;
 	}
 
@@ -1808,7 +1815,7 @@ ProcessAttackStateMachine (int enemynum)
   //
   TargetIsEnemy = DetermineVectorToShotTarget ( ThisRobot , & vect_to_target ) ;
 
-  if ( ThisRobot -> is_friendly && TargetIsEnemy && ( sqrt ( vect_to_target.x * vect_to_target.x + vect_to_target.y * vect_to_target.x  ) < 6 ) )
+  if ( ThisRobot -> is_friendly && TargetIsEnemy && ( sqrt ( vect_to_target.x * vect_to_target.x + vect_to_target.y * vect_to_target.x  ) < Druidmap [ ThisRobot -> type ] . minimal_range_hostile_bots_are_ignored ) )
     ThisRobot -> combat_state = FIGHT_ON_TUX_SIDE ;
 
   // vect_to_target.x = 1;

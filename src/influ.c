@@ -985,6 +985,8 @@ CheckInfluenceEnemyCollision (void)
 	continue;
       if ( AllEnemys[i].type == ( -1 ) )
 	continue;
+      if ( AllEnemys[i].Status == OUT )
+	continue;
 
       //--------------------
       // We determine the distance and back out immediately if there
@@ -1005,18 +1007,6 @@ CheckInfluenceEnemyCollision (void)
       dist2 = sqrt( (xdist * xdist) + (ydist * ydist) );
       if ( dist2 > 2 * Druid_Radius_X )
 	continue;
-
-      if ( AllEnemys[i].Status == OUT )
-	{
-	  if ( ( Me [ 0 ] . readied_skill == SPELL_LOOT_CHEST_OR_DEAD_BODY ) &&
-	       ( MouseRightPressed() ) )
-	    {
-	      EnterChest();
-	      return;
-	    }
-	  continue;
-	}
-
 
       //--------------------
       // At this point we know, that the influencer *has* collided with some
@@ -1255,12 +1245,13 @@ FireTuxRangedWeaponRaw ( int PlayerNum , int weapon_item_type , int bullet_image
   int i = 0;
   Bullet CurBullet = NULL;  // the bullet we're currentl dealing with
   // int bullet_image_type = ItemMap[ weapon_item_type ].item_gun_bullet_image_type;   // which gun do we have ? 
-  double BulletSpeed = ItemMap[ weapon_item_type ].item_gun_speed;
+  double BulletSpeed = ItemMap [ weapon_item_type ] . item_gun_speed;
   double speed_norm;
   moderately_finepoint speed;
   int max_val;
   float OffsetFactor;
 
+#define FIRE_TUX_RANGED_WEAPON_RAW_DEBUG 0 
   //--------------------
   // search for the next free bullet list entry
   //
@@ -1272,9 +1263,17 @@ FireTuxRangedWeaponRaw ( int PlayerNum , int weapon_item_type , int bullet_image
 	  break;
 	}
     }
-  // didn't find any free bullet entry? --> take the first
+  //--------------------
+  // didn't find any free bullet entry? --> take the first and issue a warning...
+  //
   if (CurBullet == NULL)
-    CurBullet = &AllBullets[0];
+    {      
+      CurBullet = &AllBullets[0];
+      GiveStandardErrorMessage ( "FireTuxRangedWeaponRaw(...)" , "\
+There seems to be no more free bullet entry to fire the shot of the Tux...\n\
+This is very strange.  Well, we'll overwrite the first entry and continue.",
+				 NO_NEED_TO_INFORM, IS_WARNING_ONLY );
+    }
 
   //--------------------
   // Now that we have found a fresh and new bullet entry, we can start
@@ -1328,7 +1327,7 @@ FireTuxRangedWeaponRaw ( int PlayerNum , int weapon_item_type , int bullet_image
   //
   Me [ PlayerNum ] . firewait *= RangedRechargeMultiplierTable [ Me [ PlayerNum ] . ranged_weapon_skill ] ;
 
-
+  /*
   speed.x = 0.0;
   speed.y = 0.0;
 
@@ -1341,14 +1340,23 @@ FireTuxRangedWeaponRaw ( int PlayerNum , int weapon_item_type , int bullet_image
   if ( ServerThinksRightPressed ( PlayerNum ) )
     speed.x = 1.0;
 
-  /* if using a joystick/mouse, allow exact directional shots! */
+    // if using a joystick/mouse, allow exact directional shots! 
   if ( ServerThinksAxisIsActive ( PlayerNum ) || ForceMouseUse )
     {
       max_val = max ( abs( ServerThinksInputAxisX ( PlayerNum ) ) , 
 		      abs( ServerThinksInputAxisY ( PlayerNum ) ) );
       speed.x = 1.0 * ServerThinksInputAxisX ( PlayerNum ) / max_val ;
       speed.y = 1.0 * ServerThinksInputAxisY ( PlayerNum ) / max_val ;
-    }
+
+      DebugPrintf( FIRE_TUX_RANGED_WEAPON_RAW_DEBUG , 
+      "\nFireTuxRangedWeaponRaw(...) : Server thinks axis: (%d/%d)." , ServerThinksInputAxisX ( PlayerNum ) , ServerThinksInputAxisX ( PlayerNum ) );
+      }
+  */
+  
+  max_val = max ( abs( ServerThinksInputAxisX ( PlayerNum ) ) , 
+		  abs( ServerThinksInputAxisY ( PlayerNum ) ) );
+  speed.x = 1.0 * ServerThinksInputAxisX ( PlayerNum ) / max_val ;
+  speed.y = 1.0 * ServerThinksInputAxisY ( PlayerNum ) / max_val ;
 
   //--------------------
   // It might happen, that this is not a normal shot, but rather the
@@ -1356,11 +1364,14 @@ FireTuxRangedWeaponRaw ( int PlayerNum , int weapon_item_type , int bullet_image
   // and not start in this direction, but rather somewhat 'before' it,
   // so that the rotation will hit the target later.
   //
-  RotateVectorByAngle ( & speed , ItemMap[ weapon_item_type ].item_gun_start_angle_modifier );
+  RotateVectorByAngle ( & speed , ItemMap[ weapon_item_type ] . item_gun_start_angle_modifier );
 
   speed_norm = sqrt (speed.x * speed.x + speed.y * speed.y);
   CurBullet->speed.x = (speed.x/speed_norm);
   CurBullet->speed.y = (speed.y/speed_norm);
+
+  DebugPrintf( FIRE_TUX_RANGED_WEAPON_RAW_DEBUG , 
+	       "\nFireTuxRangedWeaponRaw(...) : speed_norm = %f." , speed_norm );
 
   //--------------------
   // Now we determine the angle of rotation to be used for
@@ -1369,8 +1380,10 @@ FireTuxRangedWeaponRaw ( int PlayerNum , int weapon_item_type , int bullet_image
   
   CurBullet->angle= - ( atan2 (speed.y,  speed.x) * 180 / M_PI + 90 );
 
-  DebugPrintf( 1 , "\nFireTuxRangedWeaponRaw(...) : Phase of bullet=%d." , CurBullet->phase );
-  DebugPrintf( 1 , "\nFireTuxRangedWeaponRaw(...) : angle of bullet=%f." , CurBullet->angle );
+  DebugPrintf( FIRE_TUX_RANGED_WEAPON_RAW_DEBUG , 
+	       "\nFireTuxRangedWeaponRaw(...) : Phase of bullet=%d." , CurBullet->phase );
+  DebugPrintf( FIRE_TUX_RANGED_WEAPON_RAW_DEBUG , 
+	       "\nFireTuxRangedWeaponRaw(...) : angle of bullet=%f." , CurBullet->angle );
   
   CurBullet->speed.x *= BulletSpeed;
   CurBullet->speed.y *= BulletSpeed;
@@ -1382,6 +1395,12 @@ FireTuxRangedWeaponRaw ( int PlayerNum , int weapon_item_type , int bullet_image
   if ( CurBullet->angle_change_rate == 0 ) OffsetFactor = 0.5; else OffsetFactor = 1;
   CurBullet->pos.x += OffsetFactor * (CurBullet->speed.x/BulletSpeed);
   CurBullet->pos.y += OffsetFactor * (CurBullet->speed.y/BulletSpeed);
+
+  DebugPrintf( FIRE_TUX_RANGED_WEAPON_RAW_DEBUG , 
+	       "\nFireTuxRangedWeaponRaw(...) : final position of bullet = (%f/%f)." , CurBullet->pos . x , CurBullet->pos . y );
+  DebugPrintf( FIRE_TUX_RANGED_WEAPON_RAW_DEBUG , 
+	       "\nFireTuxRangedWeaponRaw(...) : BulletSpeed=%f." , BulletSpeed );
+  
   // CurBullet->pos.x += 0.5 ;
   // CurBullet->pos.y += 0.5 ;
 
@@ -1460,7 +1479,7 @@ PerformTuxAttackRaw ( int PlayerNum )
   moderately_finepoint Weapon_Target_Vector;
   int i;
 
-#define PERFORM_TUX_ATTACK_RAW_DEBUG 1 
+#define PERFORM_TUX_ATTACK_RAW_DEBUG 0
 
   //--------------------
   // We should always make the sound of a fired bullet (or weapon swing)
@@ -1553,7 +1572,7 @@ PerformTuxAttackRaw ( int PlayerNum )
       return;
     }
 
-  FireTuxRangedWeaponRaw ( PlayerNum , Me [ PlayerNum ] .weapon_item.type , guntype, FALSE , 0 , 0 , 0 , 0 , -1 ) ;
+  FireTuxRangedWeaponRaw ( PlayerNum , Me [ PlayerNum ] . weapon_item . type , guntype, FALSE , 0 , 0 , 0 , 0 , -1 ) ;
 
 }; // void PerformTuxAttackRaw ( int PlayerNum ) ;
 

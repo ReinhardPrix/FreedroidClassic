@@ -420,6 +420,7 @@ typedef struct
   int sensor2;
   int sensor3;
   float range_of_vision;
+  float minimal_range_hostile_bots_are_ignored;
 
   int monster_level;
   int forced_magic_items;

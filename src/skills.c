@@ -530,6 +530,8 @@ HandleCurrentlyActivatedSkill( void )
 {
   static int RightPressedPreviousFrame = 0;
   moderately_finepoint TargetPoint;
+  int i;
+  float xdist, ydist, dist2;
 
   switch ( Me [ 0 ] . readied_skill )
     {
@@ -563,7 +565,59 @@ HandleCurrentlyActivatedSkill( void )
       PerformTuxAttackRaw ( 0 ) ;      
       break;
     case SPELL_LOOT_CHEST_OR_DEAD_BODY:
+      //--------------------
+      // If the right mouse button wasn't pressed at all, then there
+      // is nothing to do here...
+      //
+      if ( ! MouseRightPressed() ) break;
+      
+      //--------------------
+      // Maybe we're standing right on a chest field.  That is the
+      // easiest case.  Then we just need to open the chest.
+      //
+      switch ( GetMapBrick ( curShip.AllLevels [ Me [ 0 ] . pos . z ] ,
+			     Me [ 0 ] . pos . x , 
+			     Me [ 0 ] . pos . y ) ) 
+	{
+	case CHEST_R:
+	case CHEST_L:
+	case CHEST_U:
+	case CHEST_D:
+	  EnterChest();
+	  return;
+	default:
+	  break;
+	}
+      
+      //--------------------
+      // Now we check if maybe a dead body is close and if then
+      // the player meant to loot this dead body...
+      //
+      for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
+	{
+	  //--------------------
+	  // ignore enemy that are not on this level or dead 
+	  //
+	  if ( AllEnemys[i].pos.z != CurLevel->levelnum )
+	    continue;
+	  if ( AllEnemys[i].type == ( -1 ) )
+	    continue;
+	  //--------------------
+	  // We determine the distance and back out immediately if there
+	  // is still one whole square distance or even more...
+	  //
+	  xdist = Me[0].pos.x - AllEnemys[i].pos.x;
+	  ydist = Me[0].pos.y - AllEnemys[i].pos.y;
+	  dist2 = sqrt( (xdist * xdist) + (ydist * ydist) );
+	  if ( dist2 < 2 * Druid_Radius_X )
+	    {
+	      EnterChest();
+	      return;
+	    }
+	}
+      PlayOnceNeededSoundSample ( "../effects/I_See_No_Chest_Sound_0.wav" , FALSE );      
       break;
+
     case SPELL_TRANSFERMODE:
       if (MouseRightPressed() == 1)
 	Me[0].status = TRANSFERMODE;

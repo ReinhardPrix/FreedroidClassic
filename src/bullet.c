@@ -716,6 +716,16 @@ CheckBulletCollisions (int num)
 		      //
 		      AllEnemys[i].energy -= CurBullet->damage;
 
+		      //--------------------
+		      // If it was a friend, and the bullet came from Tux, the friend
+		      // might now become very angry...
+		      //
+		      if ( CurBullet -> mine ) 
+			{
+			  AllEnemys [ i ] . is_friendly = FALSE ;
+			  AllEnemys [ i ] . combat_state = MAKE_ATTACK_RUN ;
+			}
+
 		      AllEnemys[i].frozen += CurBullet->freezing_level;
 
 		      AllEnemys[i].poison_duration_left += CurBullet->poison_duration;
