@@ -74,7 +74,9 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "MapSecurityButtonLeft.png"        , { 280 , 425 ,  30 ,  50 } } ,
     { NULL , "MapSecurityButtonRight.png"       , { 440 , 425 ,  30 ,  50 } } ,
     { NULL , "MapRequestEnergyRation_green.png" , { 200 ,  60 , 100 ,  50 } } ,
-    { NULL , "MapRequestEnergyRation_red.png"   , { 200 ,  60 , 100 ,  50 } }
+    { NULL , "MapRequestEnergyRation_red.png"   , { 200 ,  60 , 100 ,  50 } } ,
+    { NULL , "MapReadEmail_green.png"           , { 350 ,  60 , 100 ,  50 } } ,
+    { NULL , "MapReadEmail_red.png"             , { 350 ,  60 , 100 ,  50 } }
   }; // AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] 
 
 /* ----------------------------------------------------------------------

@@ -51,7 +51,48 @@ int NoKeyPressed (void);
 // EXTERN SDL_Surface *console_pic;
 SDL_Surface *console_pic = NULL ;
 
+char *EmailText1 = "Freedroid Installation 
+======================
 
+[ 0) if you have downloaded your source from the cvs-archive 
+   you have to start by typing `./autogen.sh']
+
+1) autogen will run `./configure' - you don't need to
+2) type `make' to compile the package
+
+3)a) type `make install'. By default this will try to install in 
+   /usr/local/, in which case you have to be root to do that.
+   You can instead specify `--prefix=<yourdir>' to `configure', in
+   which case `make install' will install in <yourdir>.
+
+ALTERNATIVELY:
+
+3)b) you can run the game locally by typing: 
+   `cd src' followed by `./freedroid'
+
+If you don't have sound or SDL-sound installed, you might have to run
+freedroid with the command-line option `-q'.
+
+Have fun!
+Reinhard
+
+If you have problems with the compilation/installation, please send me an email:
+rprix@users.sourceforge.net
+or report bugs on the sourceforge website:
+http://sourceforge.net/projects/freedroid/";
+
+char *EmailText2 = "
+ The freedroid project is looking for a content writer, who could set up additional characters, plot and multiple-choice styled dialogs for the freedroid RPG branch.
+
+The story is a science-fiction one and in short goes like this:
+The MS has enslaved a far distant universe. The Tux, not natively belonging into this world arrives accidentially during a magnetic storm. He finds himself in a former resistance camp, having lost his memory. He should try to get in contact with the resistance to help him return to his native home plane of existence. (or somewhat like this). Adventures and missions will involve fighting the MS machines but also talking to other characters and helping the resistance (or the MS?).
+
+Not much expertise needed, but perhaps experience with (computer) role playing games. Some familiarity with C would help, since the dialogs will be integrated directly into the C code unless we decide to take them out into separate structures and files. Maybe some idea of open source and the MS in the real world would also be good.
+
+If you are interested, please email to
+freedroid-discussion@lists.sourceforge.net. (You can expect approval of your message shortly.) You also might check out the cvs source code directly. The latest release of the rpg branch does not contain appropriate examples of what the dialogs look like.
+
+";
 /*-----------------------------------------------------------------
  * This function does all the work when we enter a lift
  *-----------------------------------------------------------------*/
@@ -916,8 +957,23 @@ ShowDeckMap (Level deck)
   int PasswordIndex = -1 ;
   int UnlockAllowed = FALSE ;
   int GunOnOffAllowed = FALSE ;
+  int ReadEmailAllowed = FALSE ;
   int EnergyRate;
   char EnergyRationString[100];
+  char* MenuTexts[ 10 ];
+  int MenuPosition;
+
+  MenuTexts[0]="";
+  MenuTexts[1]="";
+  MenuTexts[2]="";
+  MenuTexts[3]="";
+  MenuTexts[4]="";
+  MenuTexts[5]="";
+  MenuTexts[8]="";
+  MenuTexts[6]="";
+  MenuTexts[7]="";
+  MenuTexts[9]="";
+
 
   tmp.x=Me[0].pos.x;
   tmp.y=Me[0].pos.y;
@@ -936,6 +992,7 @@ ShowDeckMap (Level deck)
       //
       UnlockAllowed = FALSE ;
       GunOnOffAllowed = FALSE ;
+      ReadEmailAllowed = FALSE ;
       if ( PasswordIndex != (-1) )
 	{
 	  if ( ! strcmp ( Me [ 0 ] . password_list [ PasswordIndex ] , "Tux Dummy1" )  )
@@ -946,6 +1003,10 @@ ShowDeckMap (Level deck)
 	    {
 	      GunOnOffAllowed = TRUE ;
 	    } 
+	  if ( ! strcmp ( Me [ 0 ] . password_list [ PasswordIndex ] , "Tux Himself" )  )
+	    {
+	      ReadEmailAllowed = TRUE ;
+	    }
 	}
       if ( ClearanceIndex < 0 ) EnergyRate = 0 ; // no energy except with clearance
       else EnergyRate = (int)Druidmap [ Me [ 0 ] . clearance_list [ ClearanceIndex ] ] . maxenergy ;
@@ -1044,6 +1105,36 @@ ShowDeckMap (Level deck)
 		      ClearanceIndex = (-1) ; // do not ever leave the allowed range, so do this to be safe!
 		    }
 		}
+	    }
+	  else if ( CursorIsOnButton( MAP_READ_EMAIL_GREEN_BUTTON , 
+				      GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) )
+	    {
+	      if ( ReadEmailAllowed )
+		{
+		  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Browsing_Information_0.wav" , FALSE );		  
+		  if ( ! strcmp ( Me [ 0 ] . password_list [ PasswordIndex ] , "Tux Himself" )  )
+		    {
+		      MenuTexts[ 0 ] = "Welcome Tux!" ;
+		      MenuTexts[ 1 ] = "Hi guys!" ;
+		      MenuTexts[ 2 ] = "BACK" ;
+		      while ( SpacePressed() );
+		      MenuPosition = DoMenuSelection ( "\n    Select message to read " , MenuTexts , 1 , NULL , NULL );
+		      switch ( MenuPosition )
+			{
+			case 0:
+			case 1:
+			  ScrollText ( EmailText1 , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NE_TITLE_PIC_FILE );
+			  break;
+			case 2:
+			  ScrollText ( EmailText2 , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NE_TITLE_PIC_FILE );
+			  break;
+			default:
+			  break;
+			}
+		    }
+		}
+	      else
+		PlayOnceNeededSoundSample ( "../effects/CONSOLE_Permission_Denied_0.wav" , FALSE );		  
 	    }
 	  else if ( CursorIsOnButton( MAP_SECURITYLEFT_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) )
 	    {
@@ -1205,6 +1296,9 @@ ShowDeckMap (Level deck)
 	{
 	  ShowGenericButtonFromList ( MAP_GUNONOFF_BUTTON_YELLOW );
 	}
+
+      if ( ReadEmailAllowed ) ShowGenericButtonFromList ( MAP_READ_EMAIL_GREEN_BUTTON );
+      else ShowGenericButtonFromList ( MAP_READ_EMAIL_RED_BUTTON );
 
       //--------------------
       // Now we print out the energy ration request button and energy amout
