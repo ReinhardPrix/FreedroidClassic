@@ -481,7 +481,7 @@ examine_input_surface ( void )
 	}
     }
 
-  DebugPrintf ( 0 , "\nAmount cropped on side N/S/E/W: %d/%d/%d/%d." , 
+  DebugPrintf ( 1 , "\nAmount cropped on side N/S/E/W: %d/%d/%d/%d." , 
 		cut_up , cut_down , cut_right , cut_left );
 
 }; // void examine_input_surface ( void )
@@ -500,8 +500,10 @@ write_offset_file ( )
   // Now the center of the object, what position in the png 
   // file does it have?
   //
-  int default_center_x = 359;
-  int default_center_y = 436;
+  // int default_center_x = 359;
+  // int default_center_y = 436;
+  int default_center_x = 98;
+  int default_center_y = 167;
 
   FILE *OffsetFile;  // to this file we will save all the ship data...
 
@@ -562,7 +564,7 @@ write_offset_file ( )
       // return ERR;
     }
 
-  DebugPrintf( 0 , "\nSaving of '.offset' file successful.\n" );
+  DebugPrintf( 1 , "\nSaving of '.offset' file successful.\n" );
 
 }; // void write_offset_file ( ) 
 
@@ -578,7 +580,7 @@ copy_and_crop_input_file ( )
   sprintf ( parameter_buf , "mogrify -crop %dx%d+%d+%d %s" , input_surface->w - cut_left - cut_right ,
 	    input_surface->h - cut_up - cut_down , cut_left , cut_up , input_filename );
 
-  DebugPrintf ( 0 , "\nNow executing command : %s\n" , parameter_buf );
+  DebugPrintf ( 1 , "\nNow executing command : %s\n" , parameter_buf );
 
   system ( parameter_buf );
 
