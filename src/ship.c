@@ -243,8 +243,8 @@ ShowElevators (void)
   SDL_BlitSurface( tmp , &SourceRectangle, ne_screen , &TargetRectangle );
   
 
-  AlleLevelsGleichFaerben ();
-  AlleElevatorsGleichFaerben ();
+  // AlleLevelsGleichFaerben ();
+  // AlleElevatorsGleichFaerben ();
 
   HilightLevel (curLevel);
 
@@ -684,7 +684,7 @@ ShowDeckMap (Level deck)
 
   ClearUserFenster ();
 
-  SetCombatScaleTo( 0.5 );
+  SetCombatScaleTo( 0.25 );
 
   Assemble_Combat_Picture( 0 );
 
@@ -704,12 +704,7 @@ ShowDeckMap (Level deck)
 void
 AlleLevelsGleichFaerben (void)
 {
-  int i;
-
-  for (i = 0; i < curShip.num_levels; i++)
-    SetPalCol (EL_FIRST_LEVEL_COLOR + i, 0, 0, 30);
-
-  return;
+  ShowElevators();
 } /* void AlleLevelsGleichFaerben() */
 
 
@@ -740,14 +735,32 @@ AlleElevatorsGleichFaerben (void)
 @Int:
 * $Function----------------------------------------------------------*/
 void
-HilightLevel (int Levelnummer)
+HilightLevel (int Levelnumber)
 {
-  int rot = 47;
-  int gruen = 63;
-  int blau = 33;
+  SDL_Rect SourceRectangle;
+  SDL_Rect TargetRectangle;
+  SDL_Surface *tmp;
+  char* Levelname;
 
-  SetPalCol ( EL_FIRST_LEVEL_COLOR + Levelnummer, rot, gruen, blau);
-}
+  Levelname=malloc(100);
+  sprintf( Levelname , GRAPHICS_DIR "ne_level_%d.gif", Levelnumber );
+  printf("\n\nHighlightLevel: The Filename is: %s.\n\n" , Levelname );
+
+  SourceRectangle.x=0;
+  SourceRectangle.y=0;
+  SourceRectangle.w=USERFENSTERBREITE;
+  SourceRectangle.h=USERFENSTERHOEHE;
+  TargetRectangle.x=USERFENSTERPOSX;
+  TargetRectangle.y=USERFENSTERPOSY;
+
+  tmp= IMG_Load ( Levelname );
+  SDL_BlitSurface( tmp , &SourceRectangle, ne_screen , &TargetRectangle );
+
+  free( Levelname );
+
+  SDL_Flip( ne_screen );
+
+} // void HilightLevel (int Levelnumber)
 
 /*@Function============================================================
 @Desc: 

@@ -645,13 +645,15 @@ Sorry...\n\
       Terminate (ERR);
     }
   
+
   SourceRectangle.x=0;
   SourceRectangle.y=0;
   SourceRectangle.w=USERFENSTERBREITE;
   if ( tmp->w > 200 ) 
     {
+      SDL_SetClipRect( ne_screen , NULL );
       TargetRectangle.x=0;
-      TargetRectangle.y=BANNER_WIDTH;
+      TargetRectangle.y=BANNER_HEIGHT;
       SourceRectangle.h=SCREENHOEHE-BANNER_HEIGHT;
     }
   else 
