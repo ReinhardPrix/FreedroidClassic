@@ -1189,6 +1189,13 @@ InitNewMission ( char *MissionName )
   // Now we read in the mission targets for this mission
   // Several different targets may be specified simultaneously
   //
+
+  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  // jp seems to have forgotten to initialise MissionTargetPointer here...
+  // we propose this temporary fix to make it run:
+  MissionTargetPointer = StartPointPointer;
+  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
   ReadValueFromString( MissionTargetPointer , MISSION_TARGET_KILL_ALL_STRING , "%d" , 
 		       &Me.mission.KillAll , EndOfMissionTargetPointer );
 
@@ -1308,7 +1315,8 @@ InitFreedroid (void)
   GameConfig.Enemy_Aim_Text=TRUE;
   GameConfig.Influencer_Refresh_Text=FALSE;
   GameConfig.Influencer_Blast_Text=TRUE;
-  GameConfig.Theme_SubPath="lanzz_theme/";
+  GameConfig.Theme_SubPath="default_theme/";
+  //GameConfig.Theme_SubPath="lanzz_theme/";
 
   Init_Video ();
 
