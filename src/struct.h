@@ -423,6 +423,7 @@ typedef struct
   int8_t status;			/* attacking, defense, dead, ... */
   finepoint speed;		/* the current speed of the druid */
   gps pos;		        /* current position in the whole ship */
+  gps teleport_anchor;          // where from have you last teleported home
   double health;		/* the max. possible energy in the moment */
   double energy;		/* current energy level */
   double mana;                  // current mana level 
@@ -501,6 +502,7 @@ typedef struct
   int8_t status;			/* attacking, defense, dead, ... */
   finepoint speed;		/* the current speed of the druid */
   gps pos;		        /* current position in the whole ship */
+  gps teleport_anchor;          // where from have you last teleported home?
   double health;		/* the max. possible energy in the moment */
   double energy;		/* current energy level */
   double mana;                  // current mana level 

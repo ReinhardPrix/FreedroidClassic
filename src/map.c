@@ -351,6 +351,19 @@ ActSpecialField ( int PlayerNum )
   //
   if ( Me [ PlayerNum ] . status == OUT ) return;
 
+  //--------------------
+  // If the player is on the one special teleporter square, that gets
+  // the player teleported back to where he came from, we will teleport
+  // him back there...
+  //
+  if ( ( ((int) rintf(Me[0].pos.x) ) == 3 ) &&
+       ( ((int) rintf(Me[0].pos.y) ) == 7 ) &&
+       ( ((int) rintf(Me[0].pos.z) ) == 0 ) )
+    {
+      Teleport ( (int) Me[0].teleport_anchor.z , (int) Me[0].teleport_anchor.x , (int) Me[0].teleport_anchor.y , 0 );
+    }
+
+
   SpecialFieldLevel = curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] ;
 
   MapBrick = GetMapBrick ( SpecialFieldLevel , x , y ) ;
