@@ -42,13 +42,15 @@
 
 Uint32 cur_time;  		/* current time in ms */
 
-unsigned char *ToPlaygroundBlock;
-unsigned char *ToGroundBlocks;
-unsigned char *ToColumnBlock;
-unsigned char *ToLeaderBlock;
-unsigned char *FillBlocks;
-unsigned char *CapsuleBlocks;
-unsigned char *ToGameBlocks;
+SDL_Surface *to_blocks;      /* the global surface containing all game-blocks */
+
+/* the rectangles containing the blocks */
+SDL_Rect FillBlocks[NUM_FILL_BLOCKS];
+SDL_Rect CapsuleBlocks[NUM_CAPS_BLOCKS];
+SDL_Rect ToGameBlocks[NUM_TO_BLOCKS];
+SDL_Rect ToGroundBlocks[NUM_GROUND_BLOCKS];
+SDL_Rect ToColumnBlock;
+SDL_Rect ToLeaderBlock;
 
 /* Class seperation of the blocks */
 int BlockClass[TO_BLOCKS] = {
@@ -130,21 +132,6 @@ void RollToColors (void);
 void
 InitTakeover (void)
 {
-  if (RealScreen == NULL)
-    RealScreen = malloc (64010);
-
-  if (InternalScreen == NULL)
-    InternalScreen =
-      (unsigned char *) MyMalloc ((size_t) SCREENLEN * SCREENHEIGHT);
-
-  if (InternalScreen == NULL)
-    {
-      DebugPrintf ("\nvoid InitTakeover(void): Fatal Error: No memory !");
-      getchar ();
-
-      Terminate (-1);
-    }
-
   if (GetTakeoverGraphics () != OK)
     {
       DebugPrintf ("Error !");
@@ -177,8 +164,6 @@ Takeover (int enemynum)
 
   while (SpacePressed ()) ;  /* make sure space is release before proceed */
 
-  return TRUE;   // until this works properly
-
   Switch_Background_Music_To (TAKEOVER_BACKGROUND_MUSIC_SOUND);
 
   /* Get a new Internfenster without any robots, blasts bullets etc
@@ -190,8 +175,7 @@ Takeover (int enemynum)
 
   Me.status = MOBILE; /* the new status _after_ the takeover game */
 
-  SetPalCol (INFLUENCEFARBWERT, Mobilecolor.rot, Mobilecolor.gruen,
-	     Mobilecolor.blau);
+  //  SetPalCol (INFLUENCEFARBWERT, Mobilecolor.rot, Mobilecolor.gruen,Mobilecolor.blau);
 
   while (!FinishTakeover)
     {
@@ -609,113 +593,67 @@ EnemyMovements (void)
 int
 GetTakeoverGraphics (void)
 {
-#ifdef NEW_ENGINE
-  return (OK);
-#else
+  int i,j;
+  int curx = 0, cury = 0;
+  int block;
+  
+  to_blocks = IMG_Load (TO_BLOCK_FILE);
 
-  unsigned char *tmp;
-  int i, j;
-  int curx, cury;
+  /* Set the fill-blocks */
+  for (i=0; i<NUM_FILL_BLOCKS; i++,curx += FILL_BLOCK_LEN + 2)
+    Set_Rect (FillBlocks[i], curx, cury, FILL_BLOCK_LEN, FILL_BLOCK_HEIGHT);
 
-  /* Get Playground background image */
-/*    Load_PCX_Image (PLAYGROUND_FILE_PCX, InternalScreen, FALSE); */
-
-/*    ToPlaygroundBlock = (unsigned char*) MyMalloc (USERFENSTERHOEHE*USERFENSTERBREITE + 10); */
-/*    IsolateBlock (InternalScreen, ToPlaygroundBlock, 0, 0, USERFENSTERBREITE, */
-/*  		USERFENSTERHOEHE); */
-
-  /* Get the elements */
-  Load_PCX_Image (ELEMENTS_FILE_PCX, InternalScreen, FALSE);
-
+  /* Set the capsule Blocks */
+  for (i = 0; i < NUM_CAPS_BLOCKS; i++, curx += CAPSULE_LEN + 2)
+    Set_Rect (CapsuleBlocks[i], curx, cury, CAPSULE_LEN, CAPSULE_HEIGHT);
+  
   curx = 0;
-  cury = 0;			/* readpos in pic */
-
-  /* Get the fill-blocks */
-  FillBlocks = (unsigned char *) MyMalloc (3 * FILLBLOCKMEM + 10);
-  IsolateBlock (InternalScreen, FillBlocks, curx, cury, FILLBLOCKLEN,
-		FILLBLOCKHEIGHT);
-  curx += FILLBLOCKLEN + 1;
-
-  IsolateBlock (InternalScreen, FillBlocks + FILLBLOCKMEM, curx, cury,
-		FILLBLOCKLEN, FILLBLOCKHEIGHT);
-  curx += FILLBLOCKLEN + 1;
-
-  IsolateBlock (InternalScreen, FillBlocks + 2 * FILLBLOCKMEM, curx, cury,
-		FILLBLOCKLEN, FILLBLOCKHEIGHT);
-  curx += FILLBLOCKLEN + 1;
-
-
-  /* Get the capsule Blocks */
-  CapsuleBlocks = (unsigned char *) MyMalloc (3 * CAPSULE_MEM + 10);
-  for (i = 0; i < 3; i++)
-    {
-      IsolateBlock (InternalScreen, CapsuleBlocks + i * CAPSULE_MEM,
-		    curx, cury, CAPSULE_LEN, CAPSULE_HEIGHT);
-      curx += CAPSULE_LEN + 1;
-    }
-
-  curx = 0;
-  cury += FILLBLOCKHEIGHT + 1;
+  cury += FILL_BLOCK_HEIGHT + 2;
 
   /* get the game-blocks */
-
-  ToGameBlocks = (unsigned char *) MyMalloc (4 * TO_BLOCKS * TO_BLOCKMEM);
-
-  tmp = ToGameBlocks;
+  block = 0;
   for (j = 0; j < 4; j++)
     {
-
       for (i = 0; i < 7; i++)
 	{
-	  IsolateBlock (InternalScreen, tmp, curx, cury, TO_BLOCKLEN,
-			TO_BLOCKHEIGHT);
-	  tmp += TO_BLOCKMEM;
-	  curx += TO_BLOCKLEN + 1;
+	  Set_Rect (ToGameBlocks[block], curx, cury, TO_BLOCKLEN,TO_BLOCKHEIGHT);
+	  block++;
+	  curx += TO_BLOCKLEN + 2;
 	}
 
       curx = 0;
-      cury += TO_BLOCKHEIGHT + 1;
+      cury += TO_BLOCKHEIGHT + 2;
 
       for (i = 0; i < 4; i++)
 	{
-	  IsolateBlock (InternalScreen, tmp, curx, cury, TO_BLOCKLEN,
-			TO_BLOCKHEIGHT);
-	  tmp += TO_BLOCKMEM;
-	  curx += TO_BLOCKLEN + 1;
+	  Set_Rect (ToGameBlocks[block], curx, cury, TO_BLOCKLEN,TO_BLOCKHEIGHT);
+	  block ++;
+	  curx += TO_BLOCKLEN + 2;
 	}
 
       curx = 0;
-      cury += TO_BLOCKHEIGHT + 1;
+      cury += TO_BLOCKHEIGHT + 2;
     }
-
 
   /* Get the ground, column and leader blocks */
-  ToGroundBlocks =
-    (unsigned char *) MyMalloc (6 * GROUNDBLOCKLEN * GROUNDBLOCKHEIGHT + 10);
-  tmp = ToGroundBlocks;
-  for (i = 0; i < 6; i++, tmp += GROUNDBLOCKLEN * GROUNDBLOCKHEIGHT)
+  for (i = 0; i < NUM_GROUND_BLOCKS; i++)
     {
-      IsolateBlock (InternalScreen, tmp, curx, cury, GROUNDBLOCKLEN,
-		    GROUNDBLOCKHEIGHT);
-      curx += GROUNDBLOCKLEN + 1;
+      Set_Rect (ToGroundBlocks[i], curx, cury, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT);
+      curx += GROUNDBLOCKLEN + 2;
     }
-  cury += GROUNDBLOCKHEIGHT + 1;
+  cury += GROUNDBLOCKHEIGHT + 2;
   curx = 0;
 
-  ToColumnBlock =
-    (unsigned char *) MyMalloc (COLUMNBLOCKLEN * COLUMNBLOCKHEIGHT + 10);
-  IsolateBlock (InternalScreen, ToColumnBlock, curx, cury, COLUMNBLOCKLEN,
-		COLUMNBLOCKHEIGHT);
-  curx += COLUMNBLOCKLEN + 1;
+  Set_Rect (ToColumnBlock, curx, cury, COLUMNBLOCKLEN, COLUMNBLOCKHEIGHT);
+		
+  curx += COLUMNBLOCKLEN + 2;
 
-  ToLeaderBlock =
-    (unsigned char *) MyMalloc (LEADERBLOCKLEN * LEADERBLOCKHEIGHT + 10);
-  IsolateBlock (InternalScreen, ToLeaderBlock, curx, cury, LEADERBLOCKLEN,
-		LEADERBLOCKHEIGHT);
+  Set_Rect (ToLeaderBlock, curx, cury, LEADERBLOCKLEN, LEADERBLOCKHEIGHT);
+
+  //  SDL_SaveBMP(to_blocks, "to_test.bmp");
 
   return OK;
 
-#endif
 }				// int GetTakeoverGraphics(void)
 
 /*-----------------------------------------------------------------
@@ -732,181 +670,161 @@ GetTakeoverGraphics (void)
 void
 ShowPlayground (void)
 {
+#ifdef NEW_ENGINE
   int i, j;
-  int color, opponent;
+  int color, player;
   unsigned char *LeftDruid, *RightDruid;
   unsigned char *Enemypic;
   register int curx, cury;
   unsigned char *tmp;
   int caps_row, caps_x, caps_y;	/* Play-capsule state */
-
+  SDL_Rect Target_Rect;
   static unsigned char *WorkBlock = NULL;
 
-
-  if (WorkBlock == NULL)
-    WorkBlock = MyMalloc (BLOCKMEM + 10);
+  SDL_SetColorKey (ne_screen, 0, 0);
+  SDL_SetClipRect (ne_screen , &User_Rect);
 
   SetUserfenster ( TO_BG_COLOR );
 
-  curx = USERFENSTERPOSX + LEFT_OFFS_X;
-  cury = USERFENSTERPOSY + LEFT_OFFS_Y;
-
   if (YourColor == GELB)
-    opponent = YOU;
+    player = YOU;
   else
-    opponent = ENEMY;
+    player = ENEMY;
 
-  if (NumCapsules[opponent] > 0)
+  if (NumCapsules[player] > 0)
     caps_row = CapsuleCurRow[GELB];
   else
     caps_row = -1;
 
-  caps_x = CurCapsuleStart[GELB].x;
-  caps_y = CurCapsuleStart[GELB].y + caps_row * (CAPSULE_HEIGHT + 1);
 
-  DisplayMergeBlock (curx, cury, ToGroundBlocks + GELB_OBEN * GROUNDBLOCKMEM,
-		     GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, Outline320x200);
+  Set_Rect (Target_Rect, User_Rect.x + LEFT_OFFS_X, User_Rect.y + LEFT_OFFS_Y,
+	    User_Rect.w, User_Rect.h);
 
-  cury += GROUNDBLOCKHEIGHT;
-  tmp = ToGroundBlocks + GELB_MITTE * GROUNDBLOCKMEM;
-  for (i = 0; i < 12; i++, cury += GROUNDBLOCKHEIGHT)
+  SDL_BlitSurface (to_blocks, &ToGroundBlocks[GELB_OBEN],
+		   ne_screen, &Target_Rect);
+
+  Target_Rect.y += GROUNDBLOCKHEIGHT;
+
+  for (i = 0; i < 12; i++)
     {
-      DisplayMergeBlock (curx, cury, tmp, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT,
-			 Outline320x200);
-      if ((caps_row == i) || (i == 11 && caps_row == 12))
-	{
-	  DisplayMergeBlock (caps_x, caps_y,
-			     CapsuleBlocks,
-			     CAPSULE_LEN, CAPSULE_HEIGHT, Outline320x200);
-	}			/* if */
+      SDL_BlitSurface (to_blocks, &ToGroundBlocks[GELB_MITTE],
+		       ne_screen, &Target_Rect);
+
+      Target_Rect.y += GROUNDBLOCKHEIGHT;
     }				/* for i=1 to 12 */
 
-  DisplayMergeBlock (curx, cury, ToGroundBlocks + GELB_UNTEN * GROUNDBLOCKMEM,
-		     GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, Outline320x200);
+  SDL_BlitSurface (to_blocks, &ToGroundBlocks[GELB_UNTEN],
+		   ne_screen, &Target_Rect);
+
 
   /* Mittlere Saeule */
-  curx = USERFENSTERPOSX + MID_OFFS_X;
-  cury = USERFENSTERPOSY + MID_OFFS_Y;
+  Set_Rect (Target_Rect, User_Rect.x + MID_OFFS_X, User_Rect.y + MID_OFFS_Y,0, 0);
+  SDL_BlitSurface (to_blocks, &ToLeaderBlock,
+		   ne_screen, &Target_Rect);
 
-  DisplayMergeBlock (curx, cury, ToLeaderBlock,
-		     LEADERBLOCKLEN, LEADERBLOCKHEIGHT, Outline320x200);
+  Target_Rect.y += LEADERBLOCKHEIGHT;
+  for (i = 0; i < 12; i++, Target_Rect.y += COLUMNBLOCKHEIGHT)
+    SDL_BlitSurface (to_blocks, &ToColumnBlock,
+		     ne_screen, &Target_Rect);
 
-  cury += LEADERBLOCKHEIGHT;
-  for (i = 0; i < 12; i++, cury += COLUMNBLOCKHEIGHT)
-    DisplayMergeBlock (curx, cury, ToColumnBlock,
-		       COLUMNBLOCKLEN, COLUMNBLOCKHEIGHT, Outline320x200);
 
   /* rechte Saeule */
-  curx = USERFENSTERPOSX + RIGHT_OFFS_X;
-  cury = USERFENSTERPOSY + RIGHT_OFFS_Y;
+  Set_Rect (Target_Rect, User_Rect.x + RIGHT_OFFS_X, User_Rect.y + RIGHT_OFFS_Y,0, 0);
 
-  if (opponent == YOU)
-    opponent = ENEMY;
+  if (player == YOU)
+    player = ENEMY;
   else
-    opponent = YOU;
+    player = YOU;
 
-  if (NumCapsules[opponent] > 0)
+  if (NumCapsules[player] > 0)
     caps_row = CapsuleCurRow[VIOLETT];
   else
     caps_row = -1;
 
-  caps_x = CurCapsuleStart[VIOLETT].x;
-  caps_y = CurCapsuleStart[VIOLETT].y + caps_row * (CAPSULE_HEIGHT + 1);
+  SDL_BlitSurface (to_blocks, &ToGroundBlocks[VIOLETT_OBEN],
+		   ne_screen, &Target_Rect);
+  Target_Rect.y += GROUNDBLOCKHEIGHT;
 
-  DisplayMergeBlock (curx, cury,
-		     ToGroundBlocks + VIOLETT_OBEN * GROUNDBLOCKMEM,
-		     GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, Outline320x200);
+  for (i = 0; i < 12; i++, Target_Rect.y += GROUNDBLOCKHEIGHT)
+    SDL_BlitSurface (to_blocks, &ToGroundBlocks[VIOLETT_MITTE],
+		     ne_screen, &Target_Rect);
 
-  cury += GROUNDBLOCKHEIGHT;
-
-  tmp = ToGroundBlocks + VIOLETT_MITTE * GROUNDBLOCKMEM;
-  for (i = 0; i < 12; i++, cury += GROUNDBLOCKHEIGHT)
-    {
-      DisplayMergeBlock (curx, cury, tmp, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT,
-			 Outline320x200);
-      if ((caps_row == i) || (i == 11 && caps_row == 12))
-	DisplayMergeBlock (caps_x, caps_y,
-			   CapsuleBlocks + CAPSULE_MEM,
-			   CAPSULE_LEN, CAPSULE_HEIGHT, Outline320x200);
-    }				/* for */
-
-  DisplayMergeBlock (curx, cury,
-		     ToGroundBlocks + VIOLETT_UNTEN * GROUNDBLOCKMEM,
-		     GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, Outline320x200);
+  SDL_BlitSurface (to_blocks, &ToGroundBlocks[VIOLETT_UNTEN],
+		   ne_screen, &Target_Rect);
 
   /* Fill the Leader-LED with its color */
-  DisplayMergeBlock (LEADERLEDX, LEADERLEDY,
-		     FillBlocks + LeaderColor * FILLBLOCKMEM, FILLBLOCKLEN,
-		     FILLBLOCKHEIGHT, Outline320x200);
-
-  DisplayMergeBlock (LEADERLEDX, LEADERLEDY + FILLBLOCKHEIGHT,
-		     FillBlocks + LeaderColor * FILLBLOCKMEM, FILLBLOCKLEN,
-		     FILLBLOCKHEIGHT, Outline320x200);
-
+  Set_Rect (Target_Rect, LEADERLED_X, LEADERLED_Y, 0, 0);
+  SDL_BlitSurface (to_blocks, &FillBlocks[LeaderColor],
+		   ne_screen, &Target_Rect);
+  Target_Rect.y += FILL_BLOCK_HEIGHT;
+  SDL_BlitSurface (to_blocks, &FillBlocks[LeaderColor],
+		   ne_screen, &Target_Rect);
 
   /* Fill the Display Column with its colors */
   for (i = 0; i < NUM_LINES; i++)
-    DisplayMergeBlock (LEDCOLUMNX, LEDCOLUMNY + i * (FILLBLOCKHEIGHT + 1),
-		       FillBlocks + DisplayColumn[i] * FILLBLOCKMEM,
-		       FILLBLOCKLEN, FILLBLOCKHEIGHT, Outline320x200);
+    {
+      Set_Rect (Target_Rect, LEDCOLUMN_X, LEDCOLUMN_Y + i*(FILL_BLOCK_HEIGHT+2),
+		0, 0);
+      SDL_BlitSurface (to_blocks, &FillBlocks[DisplayColumn[i]],
+		       ne_screen, &Target_Rect);
+    }
+
 
   /* Show the yellow playground */
   for (i = 0; i < NUM_LAYERS - 1; i++)
     for (j = 0; j < NUM_LINES; j++)
       {
-	DisplayMergeBlock (PlaygroundStart[GELB].x + i * TO_BLOCKLEN,
-			   PlaygroundStart[GELB].y + j * TO_BLOCKHEIGHT,
-			   ToGameBlocks +
-			   ToPlayground[GELB][i][j] * TO_BLOCKMEM,
-			   TO_BLOCKLEN, TO_BLOCKHEIGHT, Outline320x200);
+	Set_Rect (Target_Rect, PlaygroundStart[GELB].x + i * TO_BLOCKLEN,
+		  PlaygroundStart[GELB].y + j * TO_BLOCKHEIGHT, 0, 0);
+	SDL_BlitSurface (to_blocks, &ToGameBlocks[ToPlayground[GELB][i][j]],
+			 ne_screen, &Target_Rect);
       }
 
+
   /* Show the violett playground */
-  curx = PlaygroundStart[VIOLETT].x - TO_BLOCKLEN;
-
-  for (i = 0; i < NUM_LAYERS - 1; i++, curx -= TO_BLOCKLEN)
-    {
-      cury = PlaygroundStart[VIOLETT].y;
-      for (j = 0; j < NUM_LINES; j++, cury += TO_BLOCKHEIGHT)
-	{
-	  DisplayMergeBlock (curx, cury,
-			     ToGameBlocks +
-			     ToPlayground[VIOLETT][i][j] * TO_BLOCKMEM +
-			     TO_BLOCKS * TO_BLOCKMEM, TO_BLOCKLEN,
-			     TO_BLOCKHEIGHT, Outline320x200);
-	}			/* for lines */
-    }				/* for layers */
-
+  for (i = 0; i < NUM_LAYERS - 1; i++)
+    for (j = 0; j < NUM_LINES; j++)
+      {
+	Set_Rect (Target_Rect,
+		  PlaygroundStart[VIOLETT].x +(NUM_LAYERS-i-2)*TO_BLOCKLEN,
+		  PlaygroundStart[VIOLETT].y + j * TO_BLOCKHEIGHT, 0, 0);
+	SDL_BlitSurface (to_blocks, 
+			 &ToGameBlocks[ToPlayground[VIOLETT][i][j]+TO_BLOCKS],
+			 ne_screen, &Target_Rect);
+      }
 
   /* Show the capsules left for each player */
-
-  for (opponent = 0; opponent < 2; opponent++)
+  for (player = 0; player < 2; player++)
     {
-      if (opponent == YOU)
+      if (player == YOU)
 	color = YourColor;
       else
 	color = OpponentColor;
 
-      for (i = 0; i < MAX_CAPSULES; i++)
+      Set_Rect (Target_Rect, CurCapsuleStart[color].x, 
+		CurCapsuleStart[color].y + CapsuleCurRow[color]*(CAPSULE_HEIGHT+2),
+		0,0);
+      if (NumCapsules[player])
+	SDL_BlitSurface (to_blocks, &CapsuleBlocks[color], ne_screen, &Target_Rect);
+
+
+      for (i = 0; i < NumCapsules[player]-1; i++)
 	{
-	  if (i < NumCapsules[opponent] - 1)
-	    DisplayMergeBlock (LeftCapsulesStart[color].x,
-			       LeftCapsulesStart[color].y +
-			       i * (CAPSULE_HEIGHT),
-			       CapsuleBlocks + color * CAPSULE_MEM,
-			       CAPSULE_LEN, CAPSULE_HEIGHT, Outline320x200);
-	  else
-	    DisplayMergeBlock (LeftCapsulesStart[color].x,
-			       LeftCapsulesStart[color].y +
-			       i * (CAPSULE_HEIGHT),
-			       CapsuleBlocks + TO_COLORS * CAPSULE_MEM,
-			       CAPSULE_LEN, CAPSULE_HEIGHT, Outline320x200);
-	}			/* for capsules */
-    }				/* for opponent */
+	  Set_Rect (Target_Rect, LeftCapsulesStart[color].x,
+		    LeftCapsulesStart[color].y + i*CAPSULE_HEIGHT, 0, 0);
+	  SDL_BlitSurface (to_blocks, &CapsuleBlocks[color],
+			   ne_screen, &Target_Rect);
+	} /* for capsules */
+    } /* for player */
+
+  SDL_Flip (ne_screen);
+
+  return;
+#else
 
 
-  /* Display the two opponents */
-  if (OpponentType == -1)
+  /* Display the two players */
+  if (PlayerType == -1)
     Enemypic = NULL;
 
     // NONSENSE FROM THE OLD ENGINE   else Enemypic = FeindZusammenstellen (Druidmap[OpponentType].druidname, 0);
@@ -944,6 +862,8 @@ ShowPlayground (void)
   PrepareScaledSurface(TRUE);  /* this updates the actually displayed screen */
 
   return;
+
+#endif
 }				/* ShowPlayground */
 
 

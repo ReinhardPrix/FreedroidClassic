@@ -25,10 +25,48 @@
 #ifndef _takeover_h
 #define _takeover_h
 
+#ifndef _defs_h
+#include "defs.h"    // we need this here for path defines
+#endif
+
+
 /* Background-color of takeover-game */
 #define TO_BG_COLOR			63
 
-/* Timing parameters */
+/* File containing the Takeover-blocks */
+#define TO_BLOCK_FILE		GRAPHICS_DIR "to_elem.jpg"
+
+/* --------------- individual block dimensions --------------- */
+
+/* Dimensions of the game-blocks */
+#define TO_BLOCKS		11	/* anzahl versch. Game- blocks */
+#define NUM_TO_BLOCKS		4*TO_BLOCKS  /* total number of takover blocks */
+#define TO_ELEMENTS		 6
+#define TO_BLOCKLEN		2*32	/* dimension of a Game- block */
+#define TO_BLOCKHEIGHT	 	2*8
+
+/* Dimensions of the fill-blocks (in led-column */
+#define NUM_FILL_BLOCKS		3   // yellow, violett and black
+#define FILL_BLOCK_LEN		2*16
+#define FILL_BLOCK_HEIGHT  	2*7
+
+/* Dimensions of a capsule */
+#define NUM_CAPS_BLOCKS		3  // yellow, violett and red (?what for)
+#define CAPSULE_LEN		2*7
+#define CAPSULE_HEIGHT		2*7
+
+/* Dimensions of ground-, column- und leader blocks */
+#define NUM_GROUND_BLOCKS	6
+#define GROUNDBLOCKLEN		2*23
+#define GROUNDBLOCKHEIGHT	2*8
+
+#define COLUMNBLOCKLEN		2*30
+#define COLUMNBLOCKHEIGHT	2*8
+
+#define LEADERBLOCKLEN		2*30
+#define LEADERBLOCKHEIGHT	2*19
+
+/* --------------- Timing parameters --------------- */
 #define COLOR_COUNTDOWN		100	/* Zeit zum Farbe auswaehlen */
 #define GAME_COUNTDOWN		100	/* Zeit fuer das Spiel */
 #define CAPSULE_COUNTDOWN	 40	/* 1/10 sec. Lebensdauer einer Kapsel */
@@ -39,69 +77,53 @@
 
 #define TO_TICK_LENGTH		40     /* Time in ms between ticks */
 
+
+/* --------------- Playground layout --------------- */
+
 /* Position of Leader-Led */
-#define LEADERLEDX		USERFENSTERPOSX + 136
-#define LEADERLEDY		83
+#define LEADERLED_X		2*136 + USERFENSTERPOSX 
+#define LEADERLED_Y		2*11 + USERFENSTERPOSY
 
 /* Start-pos of Led-column */
-#define LEDCOLUMNX		USERFENSTERPOSX + 136
-#define LEDCOLUMNY		99
-
-/* Dimensions of a capsule */
-#define CAPSULE_LEN		7
-#define CAPSULE_HEIGHT		7
-#define CAPSULE_MEM		CAPSULE_HEIGHT*CAPSULE_LEN
+#define LEDCOLUMN_X		2*136 + USERFENSTERPOSX 
+#define LEDCOLUMN_Y		2*27 + USERFENSTERPOSY 
 
 /* Positions of Druid-pictures */
-#define GELB_DRUID_X		40 + USERFENSTERPOSX
+#define GELB_DRUID_X		2*40 + USERFENSTERPOSX
 #define GELB_DRUID_Y		0 + USERFENSTERPOSY
-#define VIOLETT_DRUID_X		220+ USERFENSTERPOSX
+#define VIOLETT_DRUID_X		2*220+ USERFENSTERPOSX
 #define VIOLETT_DRUID_Y		GELB_DRUID_Y
 
 /* Left-Capsules positions */
 #define GELB_LEFT_CAPSULES_X	0   + USERFENSTERPOSX
-#define GELB_LEFT_CAPSULES_Y	27  + USERFENSTERPOSY
-#define VIOLETT_LEFT_CAPSULES_X	USERFENSTERPOSX+USERFENSTERBREITE-CAPSULE_LEN
-#define VIOLETT_LEFT_CAPSULES_Y	27  + USERFENSTERPOSY
+#define GELB_LEFT_CAPSULES_Y	2*27  + USERFENSTERPOSY
+#define VIOLETT_LEFT_CAPSULES_X	USERFENSTERPOSX + RIGHT_OFFS_X + COLUMNBLOCKLEN
+#define VIOLETT_LEFT_CAPSULES_Y	2*27  + USERFENSTERPOSY
 
 /* start-pos of Current Capsule */
-#define GELB_CUR_CAPSULE_X	26  + USERFENSTERPOSX
-#define GELB_CUR_CAPSULE_Y	19  + USERFENSTERPOSY
-#define VIOLETT_CUR_CAPSULE_X	255 + USERFENSTERPOSX
-#define VIOLETT_CUR_CAPSULE_Y	19  + USERFENSTERPOSY
+#define GELB_CUR_CAPSULE_X	2*26  + USERFENSTERPOSX
+#define GELB_CUR_CAPSULE_Y	2*19  + USERFENSTERPOSY
+#define VIOLETT_CUR_CAPSULE_X	2*255 + USERFENSTERPOSX
+#define VIOLETT_CUR_CAPSULE_Y	2*19  + USERFENSTERPOSY
 
 #define MAX_CAPSULES		13	/* a 999 has 13 !!! */
 
 /* Start-Pos of playground */
-#define GELB_PLAYGROUND_X	33  + USERFENSTERPOSX
-#define GELB_PLAYGROUND_Y	26  + USERFENSTERPOSY
-#define VIOLETT_PLAYGROUND_X	255 + USERFENSTERPOSX
-#define VIOLETT_PLAYGROUND_Y	26  + USERFENSTERPOSY
+#define GELB_PLAYGROUND_X	2*33  + USERFENSTERPOSX
+#define GELB_PLAYGROUND_Y	2*26  + USERFENSTERPOSY
+#define VIOLETT_PLAYGROUND_X	2*159 + USERFENSTERPOSX
+#define VIOLETT_PLAYGROUND_Y	2*26  + USERFENSTERPOSY
 
-/* Dimensions of the fill-blocks (in led-column */
-#define FILLBLOCKLEN		16
-#define FILLBLOCKHEIGHT  	7
-#define FILLBLOCKMEM		FILLBLOCKLEN*FILLBLOCKHEIGHT
+#define LEFT_OFFS_X		2*10	/* Offset der linken "Saeule" */
+#define LEFT_OFFS_Y		2*15
 
-/* Dimensions of ground-, column- und leader blocks */
-#define GROUNDBLOCKLEN		23
-#define GROUNDBLOCKHEIGHT	8
-#define GROUNDBLOCKMEM		GROUNDBLOCKHEIGHT*GROUNDBLOCKLEN
+#define MID_OFFS_X		2*129	/* -- mittleren -- */
+#define MID_OFFS_Y		2*8
 
-#define COLUMNBLOCKLEN		30
-#define COLUMNBLOCKHEIGHT	8
+#define RIGHT_OFFS_X		2*255	/* -- rechten --- */
+#define RIGHT_OFFS_Y		2*15
 
-#define LEADERBLOCKLEN		30
-#define LEADERBLOCKHEIGHT	19
 
-#define LEFT_OFFS_X		10	/* Offset der linken "Saeule" */
-#define LEFT_OFFS_Y		15
-
-#define MID_OFFS_X		129	/* -- mittleren -- */
-#define MID_OFFS_Y		8
-
-#define RIGHT_OFFS_X		255	/* -- rechten --- */
-#define RIGHT_OFFS_Y		15
 
 enum _groundblocks
 {
@@ -112,13 +134,6 @@ enum _groundblocks
   VIOLETT_MITTE,
   VIOLETT_UNTEN
 };
-
-/* Dimensions of the game-blocks */
-#define TO_BLOCKS		11	/* anzahl versch. Game- blocks */
-#define TO_ELEMENTS		 6
-#define TO_BLOCKLEN		32	/* dimension of a Game- block */
-#define TO_BLOCKHEIGHT	 	8
-#define TO_BLOCKMEM 		TO_BLOCKLEN*TO_BLOCKHEIGHT
 
 /* the flag of an active Elements (has to be added to Element) */
 #define ACTIVE_OFFSET		2*TO_BLOCKS

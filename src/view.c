@@ -590,14 +590,14 @@ FlashWindow (int Flashcolor)
 void
 SetUserfenster (int color)
 {
-  SDL_Rect LocalRectangle;
+  SDL_Rect tmp;
 
-  LocalRectangle.x=USERFENSTERPOSX;
-  LocalRectangle.y=USERFENSTERPOSY;
-  LocalRectangle.w=USERFENSTERBREITE;
-  LocalRectangle.h=USERFENSTERHOEHE;
+  printf ("\nSetUserfenster() called!");
 
-  SDL_FillRect( ne_screen , &LocalRectangle, color );
+  Set_Rect (tmp, User_Rect.x, User_Rect.y, User_Rect.w, User_Rect.h);
+
+  SDL_FillRect( ne_screen , &tmp, color );
+
   return;
 }				/* SetUserFenster() */
 

@@ -360,7 +360,7 @@ InitPictures (void)
   // For debuggin purposes of the image loading procedure an
   // image of the filled ne_blocks surface is saved to a file...
 
-  SDL_SaveBMP (ne_blocks, "debug.bmp");
+  //  SDL_SaveBMP (ne_blocks, "debug.bmp");
 
   return (TRUE);
 }

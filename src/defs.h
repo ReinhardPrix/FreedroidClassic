@@ -33,7 +33,13 @@
 #ifndef _defs_h
 #define _defs_h
 
+#ifndef _colodefs_h
 #include "colodefs.h"
+#endif
+
+
+#define Set_Rect(rect, xx, yy, ww, hh) {\
+(rect).x = (xx); (rect).y = (yy); (rect).w = (ww); (rect).h = (hh); }
 
 // **********************************************************************
 // Constants influencing code generation and
