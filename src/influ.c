@@ -701,7 +701,7 @@ AnimateInfluence ( int PlayerNum )
 	{
 	  my_speed = sqrt ( Me [ PlayerNum ] . speed . x * Me [ PlayerNum ] . speed . x +
 			    Me [ PlayerNum ] . speed . y * Me [ PlayerNum ] . speed . y ) ;
-	  Me [ PlayerNum ] . walk_cycle_phase += Frame_Time() * 8.0 * my_speed ;
+	  Me [ PlayerNum ] . walk_cycle_phase += Frame_Time() * 10.0 * my_speed ;
 	  if ( Me [ PlayerNum ] . walk_cycle_phase > 25.0 ) Me [ PlayerNum ] . walk_cycle_phase = 15.0 ;
 	}
 

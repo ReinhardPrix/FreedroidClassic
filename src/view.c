@@ -1521,8 +1521,8 @@ iso_put_all_tux_parts_in_direction ( int x , int y , int PlayerNum , int rotatio
     case 14:
     case 15:
       iso_put_tux_feet ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_part ( "weaponarm" , x , y , PlayerNum , rotation_index );
       iso_put_tux_weapon ( x , y , PlayerNum , rotation_index );
+      iso_put_tux_part ( "weaponarm" , x , y , PlayerNum , rotation_index );
       iso_put_tux_torso ( x , y , PlayerNum , rotation_index );
       iso_put_tux_shieldarm ( x , y , PlayerNum , rotation_index );
       iso_put_tux_head ( x , y , PlayerNum , rotation_index );
@@ -1538,9 +1538,9 @@ iso_put_all_tux_parts_in_direction ( int x , int y , int PlayerNum , int rotatio
       iso_put_tux_feet ( x , y , PlayerNum , rotation_index );
       iso_put_tux_shieldarm ( x , y , PlayerNum , rotation_index );
       iso_put_tux_torso ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_part ( "weaponarm" , x , y , PlayerNum , rotation_index );
-      iso_put_tux_weapon ( x , y , PlayerNum , rotation_index );
       iso_put_tux_head ( x , y , PlayerNum , rotation_index );
+      iso_put_tux_weapon ( x , y , PlayerNum , rotation_index );
+      iso_put_tux_part ( "weaponarm" , x , y , PlayerNum , rotation_index );
       break;
 
     default:
@@ -1593,24 +1593,6 @@ iso_put_tux ( int x , int y , int PlayerNum )
 	  angle = Me [ PlayerNum ] . angle ;
 	}
     }
-
-  //
-  // But currently, we use as the angle the current location of the mouse on the local
-  // client for the first player,
-  // but for other players, we use the last known mouse possision as reported by the server
-  //
-  // if ( PlayerNum == 0 ) 
-  //  {
-  //     // angle = - ( atan2 ( input_axis.y,  input_axis.x ) * 180 / M_PI + 90 );
-  //    angle = - ( atan2 ( input_axis.y,  input_axis.x ) * 180 / M_PI + 90 );
-  //     angle += 360 / ( 2 * MAX_TUX_DIRECTIONS );
-  //    while ( angle < 0 ) angle += 360;
-  //     // DebugPrintf ( 0 , "\nAngle is now: %f." , angle );
-  //  }
-  // else
-  //  {
-  //     angle = - ( atan2 ( Me [ PlayerNum ] . LastMouse_Y ,  Me [ PlayerNum ] . LastMouse_X ) * 180 / M_PI + 90 );
-  //  }
 
   //--------------------
   // From the angle we can compute the index to use...
