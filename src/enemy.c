@@ -1713,12 +1713,19 @@ AnimateEnemys (void)
 int
 ClassOfDruid (int druidtype)
 {
-  char classnumber[2];
+  /*
+    This does not work with characters being used also as droid digits.
 
-  classnumber[0] = Druidmap[druidtype].druidname[0];	/* first digit is class */
-  classnumber[1] = '\0';
+    char classnumber[2];
 
-  return (atoi (classnumber));
+    classnumber[0] = Druidmap[druidtype].druidname[0];	// first digit is class 
+    classnumber[1] = '\0';
+  
+    return (atoi (classnumber));
+  */
+
+  return ( Druidmap [ druidtype ] . class ) ;
+
 }; // ClassOfDruid 
 
 #undef _enemy_c
