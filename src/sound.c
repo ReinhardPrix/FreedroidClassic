@@ -173,7 +173,7 @@ void YIFF_Server_Check_Events(void){
       if( (event.type == YSoundObjectKill) && (event.kill.yid == play_id) )
 	{
 	  // Our play has stopped. 
-	  printf("Done playing.\n");
+	  DebugPrintf("Done playing.\n");
 	}
       // Server disconnected us? 
       else if(event.type == YDisconnect)
@@ -371,8 +371,8 @@ void Play_YIFF_Server_Sound(int Tune){
   // definition.
 #if HAVE_LIBY2
 
-  printf("\nvoid Play_YIFF_Server_Sound(int Tune):  Real function call confirmed.");
-  printf("\nvoid Play_YIFF_Server_Sound(int Tune):  Playback is about to start!");
+  DebugPrintf("\nvoid Play_YIFF_Server_Sound(int Tune):  Real function call confirmed.");
+  DebugPrintf("\nvoid Play_YIFF_Server_Sound(int Tune):  Playback is about to start!");
 
 
   play_id = YStartPlaySoundObjectSimple( BackgroundMusic_con, ExpandedSoundSampleFilenames[Tune] );

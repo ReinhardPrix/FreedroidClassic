@@ -43,6 +43,9 @@
 #define MEMDEBUG
 #define SOUND
 
+enum { SHOW_ALL=0, SHOW_MAP=1 };
+
+
 // For development purposes, the sound will not be activated unless the following definition is made
 // #undef PARADROID_SOUND_SUPPORT_ON
 #define PARADROID_SOUND_SUPPORT_ON

@@ -105,7 +105,7 @@ EXTERN void RotateBulletColor(void);
 EXTERN void GetView(void);
 EXTERN void ShowPosition(void);
 EXTERN void DisplayView(void);
-EXTERN void GetInternFenster(void);
+EXTERN void GetInternFenster(int mask);
 EXTERN void PutInfluence(void);
 EXTERN void PutBullet(int);
 EXTERN void PutBlast(int);

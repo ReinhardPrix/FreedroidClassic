@@ -180,6 +180,9 @@ Takeover (int enemynum)
       DebugPrintf("\nvoid Takeover(int enemynum):  Takeover background music started...");
     }
 
+  /* Get a new Internfenster without any robots, blasts bullets etc
+     for use as background in trasparent version of Takeover-game */
+  GetInternFenster (SHOW_MAP);
 
   /* Damit es zu keinen St"orungen durch die Rahmenupdatefunktion im Interrupt
      kommt, wird diese Funktion tempor"ar desaktiviert. */
@@ -711,7 +714,9 @@ ShowPlayground (void)
   DebugPrintf("\nShowPlayground: Funktion echt aufgerufen.");
 
   if (WorkBlock == NULL) WorkBlock = MyMalloc(BLOCKMEM+10);
-	
+
+  PutInternFenster();  /* restore current Game-view (for transparancy) */
+
   UpdateInfoline();
   DebugPrintf("\nShowPlayground(): first UpdateInfoline() survived");
   curx = USERFENSTERPOSX + LEFT_OFFS_X;
@@ -726,36 +731,36 @@ ShowPlayground (void)
   caps_x = CurCapsuleStart[GELB].x;
   caps_y = CurCapsuleStart[GELB].y + caps_row*(CAPSULE_HEIGHT+1);
 	
-  DisplayBlock( curx, cury, ToGroundBlocks + GELB_OBEN*GROUNDBLOCKMEM,
+  DisplayMergeBlock( curx, cury, ToGroundBlocks + GELB_OBEN*GROUNDBLOCKMEM,
 		     GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
  	
   cury += GROUNDBLOCKHEIGHT;
   tmp = ToGroundBlocks + GELB_MITTE*GROUNDBLOCKMEM;
   for (i=0; i<12 ; i++, cury += GROUNDBLOCKHEIGHT) 
     {
-      DisplayBlock(curx, cury,tmp, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
+      DisplayMergeBlock(curx, cury,tmp, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
       if ( (caps_row == i) || (i==11 && caps_row == 12) )
 	{
-	  DisplayBlock (caps_x, caps_y,
+	  DisplayMergeBlock (caps_x, caps_y,
 			CapsuleBlocks,
 			CAPSULE_LEN, CAPSULE_HEIGHT,
 			RealScreen);
 	} /* if */
     } /* for i=1 to 12 */
 
-  DisplayBlock (curx, cury, ToGroundBlocks + GELB_UNTEN*GROUNDBLOCKMEM,
+  DisplayMergeBlock (curx, cury, ToGroundBlocks + GELB_UNTEN*GROUNDBLOCKMEM,
 		     GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
 
   /* Mittlere Saeule */
   curx = USERFENSTERPOSX + MID_OFFS_X;
   cury = USERFENSTERPOSY + MID_OFFS_Y;
 
-  DisplayBlock (curx, cury, ToLeaderBlock,
+  DisplayMergeBlock (curx, cury, ToLeaderBlock,
 		     LEADERBLOCKLEN, LEADERBLOCKHEIGHT, RealScreen);
 
   cury += LEADERBLOCKHEIGHT;
   for( i=0; i<12; i++, cury += COLUMNBLOCKHEIGHT)
-    DisplayBlock (curx, cury, ToColumnBlock,
+    DisplayMergeBlock (curx, cury, ToColumnBlock,
 		       COLUMNBLOCKLEN, COLUMNBLOCKHEIGHT, RealScreen);
 
   /* rechte Saeule */
@@ -771,37 +776,37 @@ ShowPlayground (void)
   caps_x = CurCapsuleStart[VIOLETT].x;
   caps_y = CurCapsuleStart[VIOLETT].y + caps_row*(CAPSULE_HEIGHT+1);
 	
-  DisplayBlock(curx, cury, ToGroundBlocks + VIOLETT_OBEN*GROUNDBLOCKMEM, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
+  DisplayMergeBlock(curx, cury, ToGroundBlocks + VIOLETT_OBEN*GROUNDBLOCKMEM, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
 							
   cury += GROUNDBLOCKHEIGHT;
 	
   tmp = ToGroundBlocks+VIOLETT_MITTE*GROUNDBLOCKMEM;
   for( i=0; i<12; i++, cury += GROUNDBLOCKHEIGHT ) {
-    DisplayBlock(curx, cury,tmp, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
+    DisplayMergeBlock(curx, cury,tmp, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
     if( (caps_row == i) || (i==11 && caps_row == 12) ) 	
-      DisplayBlock(caps_x, caps_y,
+      DisplayMergeBlock(caps_x, caps_y,
 		   CapsuleBlocks + CAPSULE_MEM,
 		   CAPSULE_LEN, CAPSULE_HEIGHT,
 		   RealScreen);
   } /* for */
   
-  DisplayBlock(curx, cury, ToGroundBlocks + VIOLETT_UNTEN*GROUNDBLOCKMEM, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
+  DisplayMergeBlock(curx, cury, ToGroundBlocks + VIOLETT_UNTEN*GROUNDBLOCKMEM, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT, RealScreen);
 
   /* Fill the Leader-LED with its color */
-  DisplayBlock (LEADERLEDX, LEADERLEDY, FillBlocks+LeaderColor*FILLBLOCKMEM,
+  DisplayMergeBlock (LEADERLEDX, LEADERLEDY, FillBlocks+LeaderColor*FILLBLOCKMEM,
 		FILLBLOCKLEN, FILLBLOCKHEIGHT,RealScreen);
 		
-  DisplayBlock(LEADERLEDX, LEADERLEDY+FILLBLOCKHEIGHT,FillBlocks+LeaderColor*FILLBLOCKMEM,FILLBLOCKLEN, FILLBLOCKHEIGHT,RealScreen);
+  DisplayMergeBlock(LEADERLEDX, LEADERLEDY+FILLBLOCKHEIGHT,FillBlocks+LeaderColor*FILLBLOCKMEM,FILLBLOCKLEN, FILLBLOCKHEIGHT,RealScreen);
 
   
   /* Fill the Display Column with its colors */
   for( i=0; i<NUM_LINES; i++) 			
-    DisplayBlock(LEDCOLUMNX, LEDCOLUMNY+i*(FILLBLOCKHEIGHT+1),	FillBlocks+DisplayColumn[i]*FILLBLOCKMEM,FILLBLOCKLEN, FILLBLOCKHEIGHT,RealScreen);
+    DisplayMergeBlock(LEDCOLUMNX, LEDCOLUMNY+i*(FILLBLOCKHEIGHT+1),	FillBlocks+DisplayColumn[i]*FILLBLOCKMEM,FILLBLOCKLEN, FILLBLOCKHEIGHT,RealScreen);
 
   /* Show the yellow playground */
   for( i=0; i<NUM_LAYERS-1; i++ )
     for( j=0; j<NUM_LINES; j++ ) {
-      DisplayBlock(PlaygroundStart[GELB].x + i*TO_BLOCKLEN,PlaygroundStart[GELB].y + j*TO_BLOCKHEIGHT,ToGameBlocks + ToPlayground[GELB][i][j] * TO_BLOCKMEM,TO_BLOCKLEN, TO_BLOCKHEIGHT,RealScreen);
+      DisplayMergeBlock(PlaygroundStart[GELB].x + i*TO_BLOCKLEN,PlaygroundStart[GELB].y + j*TO_BLOCKHEIGHT,ToGameBlocks + ToPlayground[GELB][i][j] * TO_BLOCKMEM,TO_BLOCKLEN, TO_BLOCKHEIGHT,RealScreen);
     }
 
   /* Show the violett playground */
@@ -810,7 +815,7 @@ ShowPlayground (void)
   for( i=0; i<NUM_LAYERS-1; i++, curx -= TO_BLOCKLEN ) {
     cury = PlaygroundStart[VIOLETT].y;		
     for( j=0; j<NUM_LINES; j++, cury += TO_BLOCKHEIGHT ) {
-      DisplayBlock(curx, cury, 
+      DisplayMergeBlock(curx, cury, 
 			ToGameBlocks + ToPlayground[VIOLETT][i][j] * TO_BLOCKMEM + TO_BLOCKS*TO_BLOCKMEM,
 		   TO_BLOCKLEN, TO_BLOCKHEIGHT,
 		   RealScreen);
@@ -826,23 +831,18 @@ ShowPlayground (void)
     
     for( i=0; i<MAX_CAPSULES; i++ ) {
       if( i < NumCapsules[opponent]-1 )
-	DisplayBlock(
-		     LeftCapsulesStart[color].x,
+	DisplayMergeBlock(LeftCapsulesStart[color].x,
 		     LeftCapsulesStart[color].y + i*(CAPSULE_HEIGHT),
 		     CapsuleBlocks+ color*CAPSULE_MEM,
 		     CAPSULE_LEN, CAPSULE_HEIGHT,
 		     RealScreen);
       else
-	DisplayBlock(
-		     LeftCapsulesStart[color].x,
+	DisplayMergeBlock(LeftCapsulesStart[color].x,
 		     LeftCapsulesStart[color].y + i*(CAPSULE_HEIGHT),
 		     CapsuleBlocks + TO_COLORS*CAPSULE_MEM,
 		     CAPSULE_LEN, CAPSULE_HEIGHT,
 		     RealScreen);
-      
-
     } /* for capsules */
-    
   } /* for opponent */
 
 	
@@ -860,23 +860,23 @@ ShowPlayground (void)
   }
 
   /* Show Druid - pictures */
-  memset(WorkBlock, TO_BG_COLOR, BLOCKMEM);
+  memset(WorkBlock, TRANSPARENTCOLOR, BLOCKMEM);
   
   if( LeftDruid != NULL )
     CopyMergeBlock(WorkBlock, LeftDruid, BLOCKMEM);
 
-  DisplayBlock(DruidStart[GELB].x, DruidStart[GELB].y ,
+  DisplayMergeBlock(DruidStart[GELB].x, DruidStart[GELB].y ,
 	       WorkBlock,
 	       BLOCKBREITE, BLOCKHOEHE-5,
 	       RealScreen);
 
-  memset(WorkBlock, TO_BG_COLOR, BLOCKMEM);
+  memset(WorkBlock, TRANSPARENTCOLOR, BLOCKMEM);
 	
   if( RightDruid != NULL )
     CopyMergeBlock(WorkBlock, RightDruid, BLOCKMEM);
 
 		
-  DisplayBlock(DruidStart[VIOLETT].x, DruidStart[VIOLETT].y,
+  DisplayMergeBlock(DruidStart[VIOLETT].x, DruidStart[VIOLETT].y,
 	       WorkBlock,
 	       BLOCKBREITE, BLOCKHOEHE-5,
 	       RealScreen);

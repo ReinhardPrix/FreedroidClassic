@@ -204,7 +204,7 @@ void JoystickControl(void){
 	//	}
 	//NoJoy:
 	//	gotoxy(4,4);
-	//	printf(" No Joystick - kein Spieleadapter angeschlossen \n");
+	//	DebugPrintf(" No Joystick - kein Spieleadapter angeschlossen \n");
 	//	getchar();
 	//	GameAdapterPresent=FALSE;
 	//

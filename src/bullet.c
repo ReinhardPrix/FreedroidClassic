@@ -183,7 +183,7 @@ int GetDirection(point robo,point bul){
 	if ((robo.x>bul.x) && (robo.y<bul.y)) return 2;
 	if ((robo.x>bul.x) && (robo.y>bul.y)) return 3;
 	if ((robo.x==bul.x) && (robo.y==bul.y)) {
-		printf(" Center hit directy!");
+		DebugPrintf(" Center hit directy!");
 		getchar();
 	}
 	return 0;

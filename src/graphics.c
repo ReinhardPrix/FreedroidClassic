@@ -101,7 +101,7 @@ readpcx(FILE *file, char *palette,unsigned short int *length,
   /* Check if this file is in pcx format */
   if((header.signature!=0x0a)||(header.version!=5)) 
     {
-      printf("\nvoid* readpcx(...): ERROR in header-signature!\n");
+      DebugPrintf("\nvoid* readpcx(...): ERROR in header-signature!\n");
       DebugPrintf("\nvoid* readpcx(...):  ERROR: end of function reached....");
       return(NULL);
     }
@@ -138,13 +138,13 @@ void Load_PCX_Image(char* PCX_Filename,unsigned char* Screen,int LoadPal)
   DebugPrintf("\nvoid Load_PCX_Image(...):  Real function call confirmed...");
 
   if ((file=fopen(PCX_Filename , "r")) == NULL) {
-    printf("\nLoad_PCX_Image(...): Can't open file!\n");
+    DebugPrintf("\nLoad_PCX_Image(...): Can't open file!\n");
     Terminate(ERR);
   }
 
   if ((image=readpcx(file,palette,&length,&height))==NULL)
     {
-      printf("\nLoad_PCX_Image(...): Error loading file!\n");
+      DebugPrintf("\nLoad_PCX_Image(...): Error loading file!\n");
       Terminate(ERR);
     }
 
@@ -158,7 +158,7 @@ void Load_PCX_Image(char* PCX_Filename,unsigned char* Screen,int LoadPal)
   printf("\nLoad_PCX_Image(...): Image is %dx%d sized.\n",length,height);
 
   if ( (length>320) || (height>200) ) {
-    printf("Image is too big!\n");
+    DebugPrintf("Image is too big!\n");
     Terminate(ERR);
   }
 
@@ -467,7 +467,7 @@ void LadeLBMBild(char* LBMDateiname,unsigned char* Screen,int LoadPal)
   if( fstat(fileno(BildDateihandle), &stbuf) == EOF) Terminate(-1);
 
   if( (BildDateiPointer = (char*) MyMalloc((size_t)stbuf.st_size + 10)) == NULL) {
-    printf("\nOut of Memory in LadeLBMBild()");
+    DebugPrintf("\nOut of Memory in LadeLBMBild()");
     getchar();
     Terminate(-1);
   }
@@ -539,14 +539,14 @@ void LadeLBMBild(char* LBMDateiname,unsigned char* Screen,int LoadPal)
 void Set_SVGALIB_Video_ON(void) {
   int vgamode;
 
-  printf("\n\n    Die SVGALIB wird nun initialisiert.... gleich gehts los.... \n\n");
+  DebugPrintf("\n\n    Die SVGALIB wird nun initialisiert.... gleich gehts los.... \n\n");
   //  getchar();
   vga_init();
   vgamode=vga_getdefaultmode();
   if ((vgamode == -1) || (vga_getmodeinfo(vgamode)->bytesperpixel != 1)) vgamode = G320x200x256;
   
   if (!vga_hasmode(vgamode)) {
-    printf("Mode not available.\n");
+    DebugPrintf("Mode not available.\n");
     exit(1);
   }
 
@@ -558,9 +558,9 @@ void Set_SVGALIB_Video_ON(void) {
   gl_setwritemode(FONT_COMPRESSED + WRITEMODE_OVERWRITE);
   gl_setfontcolors(0, vga_white());
   // Initiate raw keyboard access...
-  printf("\n\n    Die Tastatur wird nun fuer die svgalib initialisiert.... gleich gehts los!\n");
+  DebugPrintf("\n\n    Die Tastatur wird nun fuer die svgalib initialisiert.... gleich gehts los!\n");
   if (keyboard_init()) {
-    printf("FEHLER! FEHLER! Keyboard konnte nicht initialisiert werden!!!!!");
+    DebugPrintf("FEHLER! FEHLER! Keyboard konnte nicht initialisiert werden!!!!!");
     Terminate(ERR);
   }
   // Translate to 4 keypad cursor keys, and unify enter key. 
@@ -573,10 +573,10 @@ void Set_SVGALIB_Video_ON(void) {
 
 void Set_SVGALIB_Video_OFF(void) {
 
-  printf("\nvoid Set_SVGALIB_Video_OFF(void): shutting svga-keyboard back to normal.....\n");
+  DebugPrintf("\nvoid Set_SVGALIB_Video_OFF(void): shutting svga-keyboard back to normal.....\n");
   keyboard_close();
 
-  printf("\nvoid Set_SVGALIB_Video_OFF(void): shutting console back to text mode....\n");
+  DebugPrintf("\nvoid Set_SVGALIB_Video_OFF(void): shutting console back to text mode....\n");
   vga_setmode(TEXT);
 
 } // Set_SVGALIB_Video_OFF(void)
@@ -596,7 +596,7 @@ void UnfadeLevel(void)
   if (CurLevel->empty) Color=PD_DARK;
 	
   GetView();
-  GetInternFenster();
+  GetInternFenster(SHOW_ALL);
   PutInternFenster();
 	
   /* Speicher reservieren */
@@ -836,11 +836,11 @@ void LadeZeichensatz(char* Zeichensatzname)
 
   /* Eventuell Report erstatten das der Zeichensatz installiert ist */
 #ifdef REPORTDEBUG
-  printf("\nvoid LadeZeichensatz(char* Zeichensatzname): Der Zeichensatz ist installiert ! ");
+  DebugPrintf("\nvoid LadeZeichensatz(char* Zeichensatzname): Der Zeichensatz ist installiert ! ");
 #endif
 
   if (Data70Pointer) {
-    printf(" Der Zeichensatz war schon installiert !.\n");
+    DebugPrintf(" Der Zeichensatz war schon installiert !.\n");
     getchar();
     Terminate(-1);
   }
@@ -936,12 +936,12 @@ void
 ClearGraphMem(unsigned char* screen)
 {
 
-  printf("\nvoid ClearGraphMem(unsigned char* screen): Real function called.");
+  DebugPrintf("\nvoid ClearGraphMem(unsigned char* screen): Real function called.");
   
   if (screen == RealScreen) vga_clear();
   else memset( screen , 0 , SCREENBREITE*SCREENHOEHE );
 
-  printf("\nvoid ClearGraphMem(unsigned char* screen): Usual end of function reached.");
+  DebugPrintf("\nvoid ClearGraphMem(unsigned char* screen): Usual end of function reached.");
 
 } // void ClearGraphMem(unsigned char* screen)
 
@@ -954,9 +954,9 @@ ClearGraphMem(unsigned char* screen)
 @Int:
 * $Function----------------------------------------------------------*/
 void SetPalCol(unsigned int palpos, unsigned char rot, unsigned char gruen, unsigned char blau ){
-  // printf("\nvoid SetPalCol(...): Real function called.");
+  // DebugPrintf("\nvoid SetPalCol(...): Real function called.");
   vga_setpalette(palpos,rot,gruen,blau);
-  // printf("\nvoid SetPalCol(...): Usual end of function reached.");
+  // DebugPrintf("\nvoid SetPalCol(...): Usual end of function reached.");
 } // void SetPalCol(...)
 
 /*@Function============================================================
@@ -984,7 +984,7 @@ void Flimmern(void){
   unsigned char* Screenptr;
   //  unsigned char* Junkptr;
   
-  printf("\nvoid Flimmern(void): Real function call confirmed.");
+  DebugPrintf("\nvoid Flimmern(void): Real function call confirmed.");
 
   Screenptr=RealScreen;
 
@@ -1071,7 +1071,7 @@ void Flimmern(void){
 #ifndef FLIMMERN2
 #ifndef FLIMMERN1
   /* Wenn "uberhaupt keine der angebotenen Varianten genommen wurde */
-  printf(" Warning: No Flimmern at all !\n");
+  DebugPrintf(" Warning: No Flimmern at all !\n");
   getchar();
 #endif
 #endif

@@ -98,7 +98,7 @@ void AutoFireBullet(void){
     LXDist=(Feindesliste[i].pos.x-Me.pos.x);
     LYDist=(Feindesliste[i].pos.y-Me.pos.y);
     LDist=LXDist*LXDist + LYDist*LYDist;
-    if (LDist <= 0) { printf(" ERROR determination of LDist !!."); getchar(); Terminate(-1); }
+    if (LDist <= 0) { DebugPrintf(" ERROR determination of LDist !!."); getchar(); Terminate(-1); }
     if ( LDist < BestDist) {
       TargetNum=i;
       BestDist=LDist;
@@ -440,7 +440,7 @@ void BounceInfluencer(void)
     break;
     
   default:
-    printf("Illegal return value from DruidPassable() ");
+    DebugPrintf("Illegal return value from DruidPassable() ");
     Terminate(-1);
     break;
     
@@ -500,7 +500,7 @@ void ExplodeInfluencer(void)
 	
   Me.status = OUT;
 
-  printf("\nvoid ExplodeInfluencer(void): Real function call confirmed.");
+  DebugPrintf("\nvoid ExplodeInfluencer(void): Real function call confirmed.");
 
   /* ein paar versetze Explosionen */
   for(i = 0; i<4; i++) {
@@ -514,7 +514,7 @@ void ExplodeInfluencer(void)
     AllBlasts[counter].phase = i;
   }
   
-  printf("\nvoid ExplodeInfluencer(void): Usual end of function reached.");
+  DebugPrintf("\nvoid ExplodeInfluencer(void): Usual end of function reached.");
 } /* ExplodeInfluencer */
 
 /*@Function============================================================

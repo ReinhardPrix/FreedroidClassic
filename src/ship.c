@@ -105,7 +105,7 @@ void EnterElevator(void)
   int curLevel;
   int curElev, upElev, downElev, row;
 
-  printf("\nvoid EnterElevator(void): Function call confirmed.");
+  DebugPrintf("\nvoid EnterElevator(void): Function call confirmed.");
 
   curLevel = CurLevel->levelnum;
 
@@ -234,7 +234,7 @@ void EnterElevator(void)
     keyboard_update();
   }
     
-  printf("\nvoid EnterElevator(void): Usual end of function reached.");
+  DebugPrintf("\nvoid EnterElevator(void): Usual end of function reached.");
 } /* EnterElevator */
 
 /*@Function============================================================
@@ -427,7 +427,7 @@ void EnterKonsole(void)
       DebugPrintf("\nvoid EnterKonsole(void):  Console background music stopped.");
     }
 
-  printf("\nvoid EnterKonsole(void): Normal end of function reached.\n\n");
+  DebugPrintf("\nvoid EnterKonsole(void): Normal end of function reached.\n\n");
 } // void EnterKonsole(void)
 
 /*@Function============================================================
@@ -532,7 +532,7 @@ void GreatDruidShow(void){
   int Infodroid;
   char PassOn=0;
   
-  printf("\nvoid GreadDruidShow(void): Function call confirmed.");
+  DebugPrintf("\nvoid GreadDruidShow(void): Function call confirmed.");
 
   /* Warte, bis User Space auslaesst */
   while( SpacePressed() ) {
@@ -606,7 +606,7 @@ void GreatDruidShow(void){
 	  keyboard_update();
 	}
 	SetTextBorder(0, 0, SCREENBREITE, SCREENHOEHE, 40);			
-	printf("\nvoid GreadDruidShow(void): Alternate end of function reached via Space0.");
+	DebugPrintf("\nvoid GreadDruidShow(void): Alternate end of function reached via Space0.");
 	return;
       }
 
@@ -661,7 +661,7 @@ void GreatDruidShow(void){
 	KillTastaturPuffer();
 	while (SpacePressed()) JoystickControl();
 	SetTextBorder(0, 0, SCREENBREITE, SCREENHOEHE, 40);			
-	printf("\nvoid GreadDruidShow(void): Alternate end of function reached via Space1.");
+	DebugPrintf("\nvoid GreadDruidShow(void): Alternate end of function reached via Space1.");
 	return;
       }
     }
@@ -710,7 +710,7 @@ void GreatDruidShow(void){
 	KillTastaturPuffer();
 	while (SpacePressed()) JoystickControl();
 	SetTextBorder(0, 0, SCREENBREITE, SCREENHOEHE, 40);			
-	printf("\nvoid GreadDruidShow(void): Alternate end of function reached via Space2.");
+	DebugPrintf("\nvoid GreadDruidShow(void): Alternate end of function reached via Space2.");
 	return;
       }
     }
@@ -751,13 +751,13 @@ void GreatDruidShow(void){
 	KillTastaturPuffer();
 	while (SpacePressed()) JoystickControl();
 	SetTextBorder(0, 0, SCREENBREITE, SCREENHOEHE, 40);			
-	printf("\nvoid GreadDruidShow(void): End of function reached.");
+	DebugPrintf("\nvoid GreadDruidShow(void): End of function reached.");
 	return;
       }
     }
   }   /* for */
 	
-  printf("\nvoid GreadDruidShow(void): End of function reached.");
+  DebugPrintf("\nvoid GreadDruidShow(void): End of function reached.");
 } /* GreatDruidShow() */
 
 
@@ -772,9 +772,9 @@ void ShowDeckMap(Level deck){
   int LX;
   int LY;
 
-  printf("\nvoid ShowDeckMap(Level deck): Function call confirmed.");
+  DebugPrintf("\nvoid ShowDeckMap(Level deck): Function call confirmed.");
 
-  printf("\nvoid ShowDeckMap(Level deck): Printing map via printf!.\n\n");
+  DebugPrintf("\nvoid ShowDeckMap(Level deck): Printing map via printf!.\n\n");
 
   // Darstellung der Miniaturkarte
   LX=USERFENSTERPOSX;
@@ -790,7 +790,7 @@ void ShowDeckMap(Level deck){
     }
     LX=USERFENSTERPOSX;
     LY+=8;
-    printf(" . \n");
+    DebugPrintf(" . \n");
   }
 	
   // Vorbeugung gegen vorzeitiges Verlassen
@@ -808,7 +808,7 @@ void ShowDeckMap(Level deck){
     JoystickControl();  
     keyboard_update();
   }
-  printf("\nvoid ShowDeckMap(Level deck): Usual end of function reached.");
+  DebugPrintf("\nvoid ShowDeckMap(Level deck): Usual end of function reached.");
 } // void ShowDeckMap(Level deck)
 
 
@@ -829,7 +829,7 @@ void AlleLevelsGleichFaerben(void){
   if (!FarbFeldPointer) {
     FarbFeldPointer=MyMalloc(32*3);
     if (!FarbFeldPointer) {
-      printf(" Kein Speicher fuer AlleLev.");
+      DebugPrintf(" Kein Speicher fuer AlleLev.");
       Terminate(-1);
     }
   }
@@ -860,7 +860,7 @@ void AlleElevatorsGleichFaerben(void){
   //	if (!FarbFeldPointer) {
   //		FarbFeldPointer=MyMalloc(32*3);
   //		if (!FarbFeldPointer) {
-  //			printf(" Kein Speicher fuer AlleLev.");
+  //			DebugPrintf(" Kein Speicher fuer AlleLev.");
   //			Terminate(-1);
   //		}
   //	}
@@ -1010,14 +1010,14 @@ NoKeyPressed(void)
 void ClearUserFenster(void){
   int i;
 
-  printf("\nvoid ClearUserFenster(void): Real function called.");
+  DebugPrintf("\nvoid ClearUserFenster(void): Real function called.");
 
   for (i=USERFENSTERPOSY;i<(USERFENSTERPOSY+USERFENSTERHOEHE);i++){
     gl_hline(USERFENSTERPOSX,i,USERFENSTERPOSX+USERFENSTERBREITE,KON_BG_COLOR);
     // memset(RealScreen+i*SCREENBREITE+USERFENSTERPOSX,USERFENSTERBREITE,KON_BG_COLOR);
   }
 
-  printf("\nvoid ClearUserFenster(void): End of function reached.");
+  DebugPrintf("\nvoid ClearUserFenster(void): End of function reached.");
 
 } // void ClearUserFenster(void)
 

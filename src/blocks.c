@@ -65,7 +65,7 @@ void SmallBlock(int LX,int LY, int BlockN,unsigned char* Screen,int SBreite)
   unsigned char *source=MapBlocks+BLOCKBREITE*BLOCKHOEHE*BlockN;
   unsigned char *target=Screen+LY*SBreite+LX;
 
-  //printf("\nvoid SmallBlock(...): Function call confirmed.");
+  //DebugPrintf("\nvoid SmallBlock(...): Function call confirmed.");
   if (LX>USERFENSTERPOSX+USERFENSTERBREITE) return;
   for(i=0;i<8;i++) {
     for(j=0;j<8;j++) {
@@ -83,7 +83,7 @@ void SmallBlock(int LX,int LY, int BlockN,unsigned char* Screen,int SBreite)
     source+=4*BLOCKBREITE-4*8;
   }
 
-  //printf("\nvoid SmallBlock(...): Usual end of function reached.");
+  //DebugPrintf("\nvoid SmallBlock(...): Usual end of function reached.");
 } // void SmallBlock(...)
 
 /*@Function============================================================
@@ -271,13 +271,13 @@ void GetShieldBlocks(void){
 
   // Sicherheitsabfrage gegen doppeltes initialisieren
   if (ShieldBlocks) {
-    printf(" Die Schildbloecke waren schon initialisiert !");
+    DebugPrintf(" Die Schildbloecke waren schon initialisiert !");
     getchar();
     Terminate(ERR);
   }
 
   if (!(ShieldBlocks=MyMalloc(4*BLOCKMEM+10))){
-    printf(" Keine Memory fuer ShieldBlocks !.");
+    DebugPrintf(" Keine Memory fuer ShieldBlocks !.");
     getchar();
     Terminate(ERR);
   }

@@ -6,18 +6,18 @@ blocks.c,496
 #define DIGITNUMBER 53,1750
 #define DIGITMEM 54,1773
 void SmallBlock(62,1993
-void SmallBlast(95,2939
-void SmallBullet(114,3529
-void SmallEnemy(153,4793
-void GetDigits(170,5365
-IsolateBlock 201,6240
-void GetMapBlocks(224,6780
-void GetShieldBlocks(269,7993
-unsigned char *GetBlocks(309,9123
-DisplayBlock 340,9929
-DisplayMergeBlock 387,10979
-CopyMergeBlock(438,12147
-int MergeBlockToWindow(460,12842
+void SmallBlast(95,2949
+void SmallBullet(114,3539
+void SmallEnemy(153,4803
+void GetDigits(170,5375
+IsolateBlock 201,6250
+void GetMapBlocks(224,6790
+void GetShieldBlocks(269,8003
+unsigned char *GetBlocks(309,9143
+DisplayBlock 340,9949
+DisplayMergeBlock 387,10999
+CopyMergeBlock(438,12167
+int MergeBlockToWindow(460,12862
 
 bullet.c,309
 #define _bullet_c34,1121
@@ -29,8 +29,8 @@ void StartBlast(112,3159
 void ExplodeBlasts(146,3927
 void DeleteBlast(169,4623
 int GetDirection(179,4861
-CheckBulletCollisions(200,5475
-void CheckBlastCollisions(266,7607
+CheckBulletCollisions(200,5480
+void CheckBlastCollisions(266,7612
 
 enemy.c,400
 #define _enemy_c36,1333
@@ -42,44 +42,44 @@ void PermanentHealRobots(68,2139
 InitEnemys(89,2751
 void ClearEnemys(113,3353
 void ShuffleEnemys(139,4145
-void MoveEnemys(199,5547
-void AttackInfluence(305,9248
-int EnemyEnemyCollision(412,13123
-void AnimateEnemys(485,15175
-int ClassOfDruid(524,16536
+void MoveEnemys(199,5552
+void AttackInfluence(305,9263
+int EnemyEnemyCollision(412,13143
+void AnimateEnemys(485,15195
+int ClassOfDruid(524,16556
 
 graphics.c,909
 #define _graphics_c35,1244
 extern int TimerFlag;55,1568
 void readpcximage(59,1671
 readpcx(90,2459
-void Load_PCX_Image(130,3778
-int InitPictures(191,5522
-void SwapScreen(264,8026
-void ClearVGAScreen(278,8340
-unsigned char* MemSearch(308,9070
-void SetColors(355,10305
-void Monitorsignalunterbrechung(374,10784
-int InitPalette(390,11170
-int InitLevelColorTable(403,11506
-void SetLevelColor(424,12163
-void LadeLBMBild(442,12877
-void Set_SVGALIB_Video_ON(539,15450
-void Set_SVGALIB_Video_OFF(574,16667
-void UnfadeLevel(590,17130
-void FadeLevel(621,17925
-void FadeColors1(667,18931
-void FadeColors2(704,19867
-void WaitVRetrace(765,21142
-void LadeZeichensatz(783,21618
-void RotateColors(862,23698
-void LevelGrauFaerben(926,25232
-ClearGraphMem(936,25461
-void SetPalCol(956,26057
-void SetPalCol2(968,26519
-#define BLANKBREITE 979,26872
-#define FLIMMERN4980,26895
-void Flimmern(982,26914
+void Load_PCX_Image(130,3783
+int InitPictures(191,5542
+void SwapScreen(264,8046
+void ClearVGAScreen(278,8360
+unsigned char* MemSearch(308,9090
+void SetColors(355,10325
+void Monitorsignalunterbrechung(374,10804
+int InitPalette(390,11190
+int InitLevelColorTable(403,11526
+void SetLevelColor(424,12183
+void LadeLBMBild(442,12897
+void Set_SVGALIB_Video_ON(539,15475
+void Set_SVGALIB_Video_OFF(574,16712
+void UnfadeLevel(590,17185
+void FadeLevel(621,17988
+void FadeColors1(667,18994
+void FadeColors2(704,19930
+void WaitVRetrace(765,21205
+void LadeZeichensatz(783,21681
+void RotateColors(862,23771
+void LevelGrauFaerben(926,25305
+ClearGraphMem(936,25534
+void SetPalCol(956,26140
+void SetPalCol2(968,26612
+#define BLANKBREITE 979,26965
+#define FLIMMERN4980,26988
+void Flimmern(982,27007
 
 influ.c,720
 #define _influ_c34,1167
@@ -92,19 +92,19 @@ influ.c,720
 int isignf(58,1733
 signed long MyAbs(69,1994
 void AutoFireBullet(80,2272
-void MoveInfluence(189,5740
-int NoInfluBulletOnWay(264,8032
-void AnimateInfluence(285,8551
-#define CRYWAITTIME 318,9425
-void BounceInfluencer(356,10483
-void AdjustSpeed(456,13090
-void Reibung(474,13685
-void ExplodeInfluencer(496,14291
-void InfluenceEnemyCollision(526,15129
-void FireBullet(606,17515
-void RefreshInfluencer(744,21507
-void BounceLoseEnergy(772,22289
-void PermanentLoseEnergy(797,23197
+void MoveInfluence(189,5745
+int NoInfluBulletOnWay(264,8037
+void AnimateInfluence(285,8556
+#define CRYWAITTIME 318,9430
+void BounceInfluencer(356,10488
+void AdjustSpeed(456,13100
+void Reibung(474,13695
+void ExplodeInfluencer(496,14301
+void InfluenceEnemyCollision(526,15149
+void FireBullet(606,17535
+void RefreshInfluencer(744,21527
+void BounceLoseEnergy(772,22309
+void PermanentLoseEnergy(797,23217
 
 keyboard.c,401
 #define _keyboard_c33,1137
@@ -121,7 +121,7 @@ int WPressed(135,3645
 int NoDirectionPressed(151,4101
 int SetTypematicRate(165,4654
 void JoystickControl(179,4960
-void KillTastaturPuffer(285,8158
+void KillTastaturPuffer(285,8163
 
 map.c,542
 #define _map_c36,1335
@@ -131,20 +131,20 @@ int GetCurrentElevator(125,3709
 void ActSpecialField(152,4379
 void AnimateRefresh(207,5722
 int LoadShip(253,6994
-Level LevelToStruct(338,9278
-int GetDoors(417,11183
-int GetWaypoints(458,12176
-int GetRefreshes(496,13043
-int IsWallBlock(529,13887
-int TranslateMap(557,14429
-int GetElevatorConnections(650,17592
-int GetCrew(691,18760
-void MoveLevelDoors(783,21311
-int DruidPassable(852,23319
-int IsPassable(892,24652
-int IsVisible(1157,30693
+Level LevelToStruct(338,9298
+int GetDoors(417,11203
+int GetWaypoints(458,12196
+int GetRefreshes(496,13063
+int IsWallBlock(529,13907
+int TranslateMap(557,14449
+int GetElevatorConnections(650,17617
+int GetCrew(691,18785
+void MoveLevelDoors(783,21336
+int DruidPassable(852,23344
+int IsPassable(892,24677
+int IsVisible(1157,30718
 
-misc.c,911
+misc.c,907
 #define _misc_c33,1120
 #define QUEUEDEBUG37,1183
 #define MESPOSX 39,1203
@@ -158,27 +158,27 @@ int VectsHaveBeenTurned=73,1884
 unsigned char* MessageBar;74,1911
 message* Queue=75,1938
 void gotoxy(82,2114
-void DebugPrintf(86,2146
-int MyRandom(94,2307
-void reverse(120,3116
-char* itoa(133,3381
-char *ltoa(152,3748
-void Armageddon(171,4228
-void Teleport(190,4784
-void Cheatmenu(242,6204
-InsertNewMessage(397,10842
-void Terminate(420,11574
-void KillQueue(438,11984
-void AdvanceQueue(449,12274
-void PutMessages(473,12859
-void CleanMessageLine(580,15928
-void CreateMessageBar(591,16201
-InsertMessage(639,17608
-void* MyMalloc(671,18688
-void DirToVect(690,19237
-long my_sqrt(748,20166
-int my_abs(791,20991
-void ShowDebugInfos(803,21235
+void DebugPrintf 86,2146
+int MyRandom(106,2600
+void reverse(132,3409
+char* itoa(145,3674
+char *ltoa(164,4041
+void Armageddon(183,4521
+void Teleport(202,5077
+Cheatmenu(255,6503
+InsertNewMessage(416,11272
+void Terminate(439,12004
+void KillQueue(457,12419
+void AdvanceQueue(468,12709
+void PutMessages(492,13304
+void CleanMessageLine(599,16393
+void CreateMessageBar(610,16666
+InsertMessage(658,18093
+void* MyMalloc(690,19173
+void DirToVect(709,19722
+long my_sqrt(767,20656
+int my_abs(810,21481
+void ShowDebugInfos(822,21725
 
 para.c,1298
 #define _paraplus_c33,1091
@@ -213,12 +213,12 @@ float FPSover100=108,2862
 int framenr=109,2883
 float Frame_Time(125,3403
 int main(139,3740
-void ThouArtDefeated(301,9909
-void ThouArtVictorious(342,10895
-void Debriefing(355,11296
-void Pause(448,14542
-void ShowHighscoreList(494,15700
-void UpdateCountersForThisFrame(526,16746
+void ThouArtDefeated(301,9942
+void ThouArtVictorious(342,10946
+void Debriefing(355,11352
+void Pause(448,14608
+void ShowHighscoreList(494,15774
+void UpdateCountersForThisFrame(526,16820
 
 parainit.c,452
 #define _parainit_c33,1111
@@ -232,12 +232,12 @@ char TitleText1[73,1808
 char TitleText2[76,2714
 char TitleText3[78,3642
 timeout 95,5256
-char copyright[101,5384
-char usage_string[109,5688
-parse_command_line 119,6129
-void InitNewGame(190,7517
-void InitParaplus(346,11146
-void Title(525,19290
+char copyright[101,5389
+char usage_string[109,5693
+parse_command_line 119,6134
+void InitNewGame(190,7525
+void InitParaplus(346,11154
+void Title(525,19383
 
 paratext.c,1195
 #define _paratext_c36,1356
@@ -267,19 +267,19 @@ extern int TimerFlag;97,2822
 void StoreTextEnvironment(106,3095
 void RestoreTextEnvironment(122,3629
 int InitParaplusFont(138,4141
-void SetTextColor(182,5533
-void GetTextColor(221,6800
-void SetTextBorder(237,7204
-void ClearTextBorder(261,7762
-void SetTextCursor(282,8382
-int ScrollText(295,8667
-void DisplayText(356,10286
-void DisplayWord(415,12094
-void DisplayChar(443,12798
-void CheckUmbruch(494,14380
-void MakeUmbruch(506,14652
-int FensterVoll(518,14914
-char* GetString(530,15314
+void SetTextColor(182,5538
+void GetTextColor(221,6810
+void SetTextBorder(237,7214
+void ClearTextBorder(261,7772
+void SetTextCursor(282,8392
+int ScrollText(295,8677
+void DisplayText(356,10296
+void DisplayWord(415,12114
+void DisplayChar(443,12823
+void CheckUmbruch(494,14420
+void MakeUmbruch(506,14692
+int FensterVoll(518,14954
+char* GetString(530,15354
 
 rahmen.c,428
 #define _rahmen_c34,1164
@@ -304,20 +304,20 @@ int WaitElevatorCounter 59,1549
 byte ElevatorRaster[62,1580
 byte ElevatorColors[78,3067
 void EnterElevator(102,4804
-void ShowElevators(246,8621
-void EnterKonsole(321,10508
-void PaintConsoleMenu(440,13901
-void GreatDruidShow(530,16791
-void ShowDeckMap(770,24403
-void AlleLevelsGleichFaerben(822,25759
-void AlleElevatorsGleichFaerben(851,26536
-void HilightLevel(899,27678
-void HilightElevator(913,27980
-void SetElColor(928,28386
-int LevelEmpty(947,28821
-int ShipEmpty(974,29367
-NoKeyPressed(993,29727
-void ClearUserFenster(1010,30169
+void ShowElevators(246,8631
+void EnterKonsole(321,10518
+void PaintConsoleMenu(440,13916
+void GreatDruidShow(530,16806
+void ShowDeckMap(770,24448
+void AlleLevelsGleichFaerben(822,25824
+void AlleElevatorsGleichFaerben(851,26606
+void HilightLevel(899,27753
+void HilightElevator(913,28055
+void SetElColor(928,28461
+int LevelEmpty(947,28896
+int ShipEmpty(974,29442
+NoKeyPressed(993,29802
+void ClearUserFenster(1010,30244
 
 sound.c,1868
 #define _sound_c35,1154
@@ -359,25 +359,25 @@ unsigned char v 148,4200
 int SampleLaenge;149,4223
 long FragmentRoundUp(154,4319
 void YIFF_Server_Check_Events(164,4499
-char *ExpandFilename(204,5530
-void YIFF_Server_Close_Connections(218,5886
-void StartSound(253,7067
-void CrySound(263,7297
-Switch_Background_Music_To(286,7868
-void Play_YIFF_Server_Sound(366,10511
-void GotHitSound(584,17975
-void GotIntoBlastSound(597,18239
-void RefreshSound(610,18532
-void MoveElevatorSound(624,18807
-void ThouArtDefeatedSound(635,19086
-void EnterElevatorSound(646,19373
-void LeaveElevatorSound(660,19667
-void FireBulletSound(674,19961
-Takeover_Set_Capsule_Sound(688,20233
-void BounceSound(702,20526
-void DruidBlastSound(714,20791
+char *ExpandFilename(204,5535
+void YIFF_Server_Close_Connections(218,5891
+void StartSound(253,7072
+void CrySound(263,7302
+Switch_Background_Music_To(286,7873
+void Play_YIFF_Server_Sound(366,10516
+void GotHitSound(584,18010
+void GotIntoBlastSound(597,18274
+void RefreshSound(610,18567
+void MoveElevatorSound(624,18842
+void ThouArtDefeatedSound(635,19121
+void EnterElevatorSound(646,19408
+void LeaveElevatorSound(660,19702
+void FireBulletSound(674,19996
+Takeover_Set_Capsule_Sound(688,20268
+void BounceSound(702,20561
+void DruidBlastSound(714,20826
 
-takeover.c,1135
+takeover.c,1136
 #define _takeover_c34,1167
 unsigned char *ToPlaygroundBlock;49,1413
 unsigned char *ToGroundBlocks;50,1447
@@ -403,21 +403,21 @@ int OpponentType;115,3062
 int DisplayColumn[118,3147
 playground_t ToPlayground;123,3275
 InitTakeover 137,3550
-Takeover 167,4220
-void ChooseColor(326,8534
-void PlayGame(387,9928
-void RollToColors(508,13096
-EnemyMovements 529,13660
-int GetTakeoverGraphics(593,15213
-ShowPlayground 692,18194
-ClearPlayground 876,23996
-InventPlayground 902,24629
-ProcessPlayground 1057,28580
-void ProcessDisplayColumn(1157,30836
-void ProcessCapsules(1231,33088
-int IsActive(1258,33774
+Takeover 167,4230
+void ChooseColor(333,8911
+void PlayGame(394,10320
+void RollToColors(515,13493
+EnemyMovements 536,14067
+int GetTakeoverGraphics(600,15620
+ShowPlayground 699,18601
+ClearPlayground 893,24962
+InventPlayground 919,25595
+ProcessPlayground 1074,29546
+void ProcessDisplayColumn(1174,31802
+void ProcessCapsules(1248,34054
+int IsActive(1275,34740
 
-view.c,781
+view.c,776
 #define _view_c43,1511
 #define INFLUENCEOFF 46,1567
 #define BULLETOFF	47,1592
@@ -428,20 +428,20 @@ int Cent(79,2237
 void RecFlashFill(90,2480
 unsigned char *FeindZusammenstellen(146,3991
 void GetView(169,4579
-void DisplayView(234,6454
-void GetInternFenster(255,6990
-void GetConceptInternFenster(336,9301
-void PutInfluence(432,12494
-void PutEnemy(490,14234
-void PutBullet(543,15911
-void PutBlast(628,18020
-int PutObject(656,18842
-void PutInternFenster(711,20615
-void RedrawInfluenceNumber(762,22103
-void DrawDigit(786,22736
-void RotateBulletColor(805,23129
-void FlashWindow(826,23709
-SetUserfenster 840,24219
-#define ROBOTBILDHOEHE 866,25153
-#define ROBOTBILDBREITE 867,25190
-ShowRobotPicture(870,25236
+void DisplayView(234,6464
+GetInternFenster 259,7120
+void GetConceptInternFenster(345,9410
+void PutInfluence(441,12603
+void PutEnemy(499,14353
+void PutBullet(552,16030
+void PutBlast(637,18139
+int PutObject(665,18961
+void PutInternFenster(720,20739
+void RedrawInfluenceNumber(771,22232
+void DrawDigit(795,22865
+void RotateBulletColor(814,23258
+void FlashWindow(835,23838
+SetUserfenster 849,24348
+#define ROBOTBILDHOEHE 879,25254
+#define ROBOTBILDBREITE 880,25291
+ShowRobotPicture(883,25337

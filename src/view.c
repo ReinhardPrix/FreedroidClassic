@@ -174,7 +174,7 @@ void GetView(void)
   signed int mapX0, mapY0;
   signed int mapX, mapY;	/* The map-coordinates, which are to be copied */
 
-  printf("\nvoid GetView(void): Funktion echt aufgerufen.");
+  DebugPrintf("\nvoid GetView(void): Funktion echt aufgerufen.");
   printf("\nvoid GetView(void): CurLevel->xlen: %d. CurLevel->ylen: %d.",CurLevel->xlen,CurLevel->ylen);
 
   me_gx = Me.pos.x / BLOCKBREITE;
@@ -218,7 +218,7 @@ void GetView(void)
     } /* for col */
   } /* for line */
 
-  printf("\nvoid GetView(void): Funktionsende ordnungsgemaess erreicht.");
+  DebugPrintf("\nvoid GetView(void): Funktionsende ordnungsgemaess erreicht.");
   return;
 } /* GetView */
 
@@ -236,23 +236,27 @@ void DisplayView(void)
 	int i;
 	int ii;
 
-	printf(" Das Interne Fenster sieht wie folgt aus:\n");
+	DebugPrintf(" Das Interne Fenster sieht wie folgt aus:\n");
    for(i=0;i<INTERNHOEHE;i++) {
    	for(ii=0;ii<INTERNBREITE;ii++) {
       	printf("%u-",View[i][ii]);
       }
-      printf("\n");
+      DebugPrintf("\n");
    }
 }
 
 
-/*@Function============================================================
-@Desc: Diese Prozedur setzt das Bild im Speicher zusammen, damit es dann
-von PutInternFenster in den Bildschirmspeicher kopiert werden kann.
-
-@Ret: none
-* $Function----------------------------------------------------------*/
-void GetInternFenster(void)
+/*-----------------------------------------------------------------
+ * @Desc: Diese Prozedur setzt das Bild im Speicher zusammen, damit
+ * 	es dann von PutInternFenster in den Bildschirmspeicher kopiert
+ * 	werden kann.
+ * Param: mask= SHOW_ALL:   display all entities
+ *              SHOW_MAP:    display only map
+ *
+ * @Ret: none
+ *-----------------------------------------------------------------*/
+void
+GetInternFenster (int mask)
 {
   Blast CurBlast = &(AllBlasts[0]);
   int MapBrick;
@@ -263,7 +267,7 @@ void GetInternFenster(void)
   unsigned char *target;
   
   target=InternWindow;
-  printf("\nvoid GetInternFenster(void) wurde ECHT aufgerufen.\n");
+  DebugPrintf("\nvoid GetInternFenster(void) wurde ECHT aufgerufen.\n");
   
   memset(target, 1 , INTERNHOEHE*INTERNBREITE*BLOCKMEM);
 
@@ -272,22 +276,31 @@ void GetInternFenster(void)
     return;
   }
 		
-  for (line=0;line<(INTERNHOEHE);line++) {
-    for (col=0;col<(INTERNBREITE);col++) {
-      if( (MapBrick=View[line][col]) != INVISIBLE_BRICK) {
-	source = MapBlocks + MapBrick*BLOCKMEM;
-	for(i=0; i<BLOCKHOEHE; i++) {
-	  memcpy(target, source, BLOCKBREITE);
-	  target += INTERNBREITE*BLOCKBREITE;
-	  source += BLOCKBREITE;
-	}
-      } else //
-	target += INTERNBREITE*BLOCKMEM;
-      if(col<INTERNBREITE-1) target-=INTERNBREITE*BLOCKMEM-BLOCKBREITE;
-    } // for(col=0...
-    target-=(INTERNBREITE-1)*BLOCKBREITE;
-  } // for (line=0...
-  DebugPrintf("\nvoid GetInternFenster(void): Doppelfor-Schleife scheint abgearbeitet zu sein...\n");
+  for (line=0;line<(INTERNHOEHE);line++) 
+    {
+      for (col=0;col<(INTERNBREITE);col++) 
+	{
+	  if ((MapBrick=View[line][col]) != INVISIBLE_BRICK) 
+	    {
+	      source = MapBlocks + MapBrick*BLOCKMEM;
+	      for(i=0; i<BLOCKHOEHE; i++) 
+		{
+		  memcpy(target, source, BLOCKBREITE);
+		  target += INTERNBREITE*BLOCKBREITE;
+		  source += BLOCKBREITE;
+		}
+	    } /* if !INVISIBLE_BRICK */
+	  else 
+	    {
+	      target += INTERNBREITE*BLOCKMEM;
+	    }
+	  if(col<INTERNBREITE-1) target-=INTERNBREITE*BLOCKMEM-BLOCKBREITE;
+	} /* for(col) */
+      target-=(INTERNBREITE-1)*BLOCKBREITE;
+    } /* for(line) */
+
+  if (mask == SHOW_MAP) /* we want only the map, nothing else */
+    return;
 
 
 #if ENEMYOFF == 0
@@ -322,7 +335,7 @@ void GetInternFenster(void)
      } /* for */
      CurBlast++;
    } /* for */
-  printf("\nvoid GetInternFenster(void): Ende der Funktion fehlerfrei erreicht...\n");
+  DebugPrintf("\nvoid GetInternFenster(void): Ende der Funktion fehlerfrei erreicht...\n");
 } // void GetInternFenster(void) 
 
 /*@Function============================================================
@@ -443,7 +456,7 @@ void PutInfluence(void)
   int i,j;
   static int BeamDelay=1;
 
-  printf("\nvoid PutInfluence(void): REAL function called.");
+  DebugPrintf("\nvoid PutInfluence(void): REAL function called.");
 
 
   source = Influencepointer+((int)rintf(Me.phase))*BLOCKMEM;
@@ -478,7 +491,7 @@ void PutInfluence(void)
     }
     if (BeamDelay) BeamDelay--; else {	BeamLine--; BeamDelay=1; }
   }
-  printf("\nvoid PutInfluence(void): REAL function ended.");
+  DebugPrintf("\nvoid PutInfluence(void): REAL function ended.");
 }  // void PutInfluence(void)
 
 /*@Function============================================================
@@ -689,7 +702,7 @@ int PutObject(int x, int y, unsigned char *pic, int check)
 	if( (target < InternWindow) ||
 		(target > InternWindow + INTERNBREITE*INTERNHOEHE*BLOCKMEM-BLOCKMEM) ) {
 		gotoxy(1,1);
-		printf("Memory violation by PutObject !!!");
+		DebugPrintf("Memory violation by PutObject !!!");
 		getchar();
 		return FALSE;
 	}
@@ -718,7 +731,7 @@ void PutInternFenster(void)
 
   unsigned char *source;
 
-  printf("void PutInternFenster(void) wurde ECHT aufgerufen..."); 
+  DebugPrintf("void PutInternFenster(void) wurde ECHT aufgerufen..."); 
 
   if (Conceptview) {
     for(i=0;i<USERFENSTERHOEHE;i++) {
@@ -845,16 +858,20 @@ SetUserfenster (int color, unsigned char *screen)
   int y0 = USERFENSTERPOSY;
   int y1 = y0 + USERFENSTERHOEHE;
 
-  if (screen == RealScreen) {
-    for (row = y0; row < y1; row++) 
-      gl_hline(x0, row, x1, color);
-  } else 
+  if (screen == RealScreen) 
+    {
+      for (row = y0; row < y1; row++) 
+	gl_hline(x0, row, x1, color);
+    }
+  else 
     {
       for (row=0; row < USERFENSTERHOEHE; row++ ) 
-	memset( screen + USERFENSTERPOSX + (USERFENSTERPOSY + row) * SCREENBREITE , color, USERFENSTERBREITE );
+	memset (screen + USERFENSTERPOSX +
+		(USERFENSTERPOSY + row) * SCREENBREITE,
+		color, USERFENSTERBREITE );
     }
   return;
-} // void SetUserFenster (int color, unsigned char *screen)
+} /* SetUserFenster */
 
 /* **********************************************************************
    Diese Funktion zeigt einen Robotter an
@@ -870,13 +887,13 @@ void
 ShowRobotPicture(int PosX,int PosY, int Number, unsigned char* Screen)
 {
 
-  printf("\nvoid ShowRobotPicture(...): Function call confirmed.");
+  DebugPrintf("\nvoid ShowRobotPicture(...): Function call confirmed.");
 
   // Is the following line a reason for segfaults?  I turn is of for test purposes
   // gl_putbox(PosX, PosY, DRUIDIMAGE_LENGTH, DRUIDIMAGE_HEIGHT, Druidmap[Number].image );
   DisplayBlock( PosX , PosY , Druidmap[Number].image , DRUIDIMAGE_LENGTH , DRUIDIMAGE_HEIGHT , Screen );
 
-  printf("\nvoid ShowRobotPicture(...): Usual end of function reached.");
+  DebugPrintf("\nvoid ShowRobotPicture(...): Usual end of function reached.");
 
 } // void ShowRobotPicture(...)
 

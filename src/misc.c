@@ -83,9 +83,21 @@ void gotoxy(int x, int y){
 
 };
 
-void DebugPrintf(char *Print_String){
-  
-  printf(Print_String);
+void DebugPrintf (char *Print_String)
+{
+  static int first_time=TRUE;
+  FILE *debugfile;
+
+  if (first_time)   /* make sure the first call deletes previous log-file */
+    {
+      debugfile=fopen("debug.out", "w");    
+      first_time = FALSE;
+    }
+  else
+    debugfile=fopen("debug.out", "a");    
+
+  fprintf(debugfile, Print_String);
+  fclose(debugfile);
 };
 
 // This Function is for the PORT!!!!
@@ -426,7 +438,7 @@ InsertNewMessage(void)
 * $Function----------------------------------------------------------*/
 void Terminate(int ExitCode){
 
-  printf("\nvoid Terminate(int ExitStatus) wurde aufgerufen....\n");
+  DebugPrintf("\nvoid Terminate(int ExitStatus) wurde aufgerufen....\n");
   printf("GameOver : %i\n",GameOver);
   keyboard_close();
   vga_setmode(TEXT);
@@ -456,7 +468,7 @@ void KillQueue(void)
 void AdvanceQueue(void) {
   message *tmp;
 	
-  printf("\nvoid AdvanceQueue(void): Funktion wurde echt aufgerufen.");
+  DebugPrintf("\nvoid AdvanceQueue(void): Funktion wurde echt aufgerufen.");
 
   if( Queue == NULL) return;
 	
@@ -467,7 +479,7 @@ void AdvanceQueue(void) {
 
   free(tmp);
 
-  printf("\nvoid AdvanceQueue(void): Funktion hat ihr natuerliches Ende erfolgreich erreicht....");
+  DebugPrintf("\nvoid AdvanceQueue(void): Funktion hat ihr natuerliches Ende erfolgreich erreicht....");
 } // void AdvanceQueue(void)
 	
 
@@ -486,7 +498,7 @@ void PutMessages(void)
 
   if (!PlusExtentionsOn) return;
   
-  printf("\nvoid PutMessages(void): Funktion wurde echt aufgerufen.");
+  DebugPrintf("\nvoid PutMessages(void): Funktion wurde echt aufgerufen.");
 
   if (!Queue) return;						/* nichts liegt an */
   if (!Working) ThisMessageTime = 0;  /* inaktiv, aber Queue->reset time */
@@ -502,17 +514,17 @@ void PutMessages(void)
   LQueue=Queue;
   i=0;
   gotoxy(1,5);
-  printf("\nvoid PutMessages(void): This is the Queue of Messages:\n");
+  DebugPrintf("\nvoid PutMessages(void): This is the Queue of Messages:\n");
   while	(LQueue != NULL) {
     if ((LQueue->MessageText) == NULL) {
-      printf("\nvoid PutMessages(void): ERROR: Textpointer is NULL !!!!!!\n");
+      DebugPrintf("\nvoid PutMessages(void): ERROR: Textpointer is NULL !!!!!!\n");
       getchar();
     }
     printf("%d. '%s' %d\n",i,LQueue->MessageText,LQueue->MessageCreated);
     i++;
     LQueue=LQueue->NextMessage;
   }
-  printf(" NULL reached !\n");
+  DebugPrintf(" NULL reached !\n");
 #endif
 
 	
@@ -600,11 +612,11 @@ void CreateMessageBar(char* MText)
   char Worktext[42];
   int i,j;
 
-  printf("\nvoid CreateMessageBar(char* MText): Funktion echt aufgerufen.");
+  DebugPrintf("\nvoid CreateMessageBar(char* MText): Funktion echt aufgerufen.");
 
   // "Uberl"angen checken
   if (strlen(MText)>40) {
-    printf("\nvoid CreateMessageBar(char* MText): Message hat mehr als 40 Zeichen !.\n");
+    DebugPrintf("\nvoid CreateMessageBar(char* MText): Message hat mehr als 40 Zeichen !.\n");
     getchar();
     Terminate(ERR);
   }
@@ -612,7 +624,7 @@ void CreateMessageBar(char* MText)
   // Speicher anfordern, wenn noch keiner da
   if (MessageBar == NULL)
     if((MessageBar=MyMalloc(MESBAR_MEM)) == NULL) {
-      printf("\nvoid CreateMessageBar(char* MText): Bekomme keinen Speicher fuer MessageBar !!\n");
+      DebugPrintf("\nvoid CreateMessageBar(char* MText): Bekomme keinen Speicher fuer MessageBar !!\n");
       getchar();
       Terminate(ERR);
     }
@@ -633,7 +645,7 @@ void CreateMessageBar(char* MText)
 //	printf("%s",MText);
 //	memcpy(MessageBar,RealScreen+3*8*SCREENBREITE,8*SCREENBREITE);
 
-  printf("\nvoid CreateMessageBar(char* MText): Funktion hat ihr natuerliches Ende erreicht.");
+  DebugPrintf("\nvoid CreateMessageBar(char* MText): Funktion hat ihr natuerliches Ende erreicht.");
 }  // void CreateMessageBar(char* MText)
 
 /*@Function============================================================
@@ -739,7 +751,7 @@ void DirToVect(int dir, Vect vector) {
 			
 				
 		default:
-			printf("illegal direction in VectToDir() !");
+			DebugPrintf("illegal direction in VectToDir() !");
 			vector->x = vector->y = 0;
 			return;
 	} /* switch */

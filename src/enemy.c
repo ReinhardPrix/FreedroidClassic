@@ -159,7 +159,7 @@ void ShuffleEnemys(void)
 		if( nth_enemy < wp_num ) wp = nth_enemy;
 		else {
 			gotoxy(1,1);
-			printf("\nWeniger waypoints als \n Gegner hier !!");
+			DebugPrintf("\nWeniger waypoints als \n Gegner hier !!");
 			getchar();
 			return;
 		}
@@ -260,7 +260,7 @@ void MoveEnemys(void){
     }
 
     /* Endannaeherung aktuellen waypoint und anvisieren des naechsten */
-    printf("/* Endannaeherung aktuellen waypoint und anvisieren des naechsten */");
+    DebugPrintf("/* Endannaeherung aktuellen waypoint und anvisieren des naechsten */");
     if ( abs(Restweg.x) < Druidmap[Feindesliste[i].type].maxspeed * Frame_Time() ) {
       Feindesliste[i].pos.x = nextwp_pos.x;
       Feindesliste[i].speed.x = 0;
@@ -276,7 +276,7 @@ void MoveEnemys(void){
       Feindesliste[i].warten = MyRandom(ENEMYMAXWAIT)*18;
       
       /* suche moegliche Verbindung von hier */
-      printf("/* suche moegliche Verbindung von hier */");
+      DebugPrintf("/* suche moegliche Verbindung von hier */");
       PossibleConnections = -1;
       while((PossibleConnections < MAX_WP_CONNECTIONS) && 
 	    (WpList[nextwp].connections[++PossibleConnections] != -1) );
@@ -343,7 +343,7 @@ void AttackInfluence(int enemynum)
 	}
       if (j==MAXBULLETS) 
 	{
-	  printf("\nvoid AttackInfluencer(void):  Ran out of Bullets.... Terminating....");
+	  DebugPrintf("\nvoid AttackInfluencer(void):  Ran out of Bullets.... Terminating....");
 	  Terminate(ERR);
 	}
 

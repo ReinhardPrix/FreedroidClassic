@@ -146,7 +146,7 @@ int InitParaplusFont(void){
   if( InternalScreen == NULL ) 
     InternalScreen = (unsigned char*)MyMalloc(SCREENHOEHE*SCREENBREITE);
   if( InternalScreen == NULL) {
-    printf("No memory left !!");
+    DebugPrintf("No memory left !!");
     Terminate(-1);
   }
 	
@@ -188,7 +188,7 @@ void SetTextColor(unsigned bg, unsigned fg)
   
   /* Sicherheitsabrage bez. Schriftzerst"orung durch Kontrastausl"oschung */
   if ( (bg == LastFg) || (bg == fg) ) {
-    printf("\nvoid SetTextColor(...): WARNING ! Die Schrift wird durch diesen Aufruf vernichtet !\n");
+    DebugPrintf("\nvoid SetTextColor(...): WARNING ! Die Schrift wird durch diesen Aufruf vernichtet !\n");
     getchar();
     Terminate(ERR);
   }
@@ -363,7 +363,7 @@ void DisplayText(
 {
   char *tmp; /* Beweg. Zeiger auf aktuelle Position im Ausgabe-Text */
 
-  printf("\nvoid DisplayText(...): Funktion echt aufgerufen.");
+  DebugPrintf("\nvoid DisplayText(...): Funktion echt aufgerufen.");
 
   MyCursorX = startx;		/* akt. Schreib-Position */
   MyCursorY = starty;
@@ -403,7 +403,7 @@ void DisplayText(
 
     CheckUmbruch();		/* dont write over RightBorder */
   } /* while Fenster nicht voll */
-  printf("\nvoid DisplayText(...): Funktionsende ordnungsgemaess erreicht.");
+  DebugPrintf("\nvoid DisplayText(...): Funktionsende ordnungsgemaess erreicht.");
 } // void DisplayText(...)
 
 /*@Function============================================================
@@ -416,7 +416,7 @@ void DisplayWord(char* Worttext){
 	int i;
 
 	gotoxy(1,1);
-	printf("\nDisplayWord() called !!!");
+	DebugPrintf("\nDisplayWord() called !!!");
 	getchar();
 	
 	if (FensterVoll()) return;
@@ -447,7 +447,7 @@ void DisplayChar(unsigned char Zeichen, unsigned char *screen){
   
   unsigned char *target;	/* Pointer auf Ausgabeposition am Screen */
 
-  // printf("\nvoid DisplayChar(...): Real function call confirmed.");
+  // DebugPrintf("\nvoid DisplayChar(...): Real function call confirmed.");
   
   if (Zeichen == '\n') {
     MakeUmbruch();
@@ -455,7 +455,7 @@ void DisplayChar(unsigned char Zeichen, unsigned char *screen){
   }
 
   if( (Zeichen < ' ') || (Zeichen > 131)) {
-    printf("Illegal Char an DisplayChar() uebergeben!");
+    DebugPrintf("Illegal Char an DisplayChar() uebergeben!");
     getchar();
     return;
   }
@@ -480,7 +480,7 @@ void DisplayChar(unsigned char Zeichen, unsigned char *screen){
 	
   MyCursorX += FONTBREITE*(1+ZLen); /* Intern-Cursor weiterbewegen */
 
-  // printf("\nvoid DisplayChar(...): Usual end of function reached.");
+  // DebugPrintf("\nvoid DisplayChar(...): Usual end of function reached.");
   
   return;
 } // void DisplayChar(...)
@@ -544,13 +544,13 @@ char* GetString(int MaxLen){
 	
   /* Speicher fuer Eingabe reservieren */
   if( (instring = MyMalloc(MaxLen + 10)) == NULL) {
-    printf("\nNo Memory left !!");
+    DebugPrintf("\nNo Memory left !!");
     getchar();
     Terminate(-1);
   }
   /* LoeschString reservieren */
   if( (loeschstring=MyMalloc(2*MaxLen)) == NULL) {
-    printf("\nNo Memory left !!");
+    DebugPrintf("\nNo Memory left !!");
     getchar();
     Terminate(-1);
   }

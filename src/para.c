@@ -170,7 +170,7 @@ int main(int argc, char * const argv[])
 	
     GameOver = FALSE;
 		
-    printf("void main(void): Vor Beginn der !GameOver && !QuitProgram - Schleife....\n");
+    DebugPrintf("void main(void): Vor Beginn der !GameOver && !QuitProgram - Schleife....\n");
 
     while (!GameOver && !QuitProgram) {
 
@@ -183,16 +183,16 @@ int main(int argc, char * const argv[])
       UpdateCountersForThisFrame();
 
 	
-      printf("void main(void): Innerhalb der !GameOver && !QuitProgram - Schleife....\n");
+      DebugPrintf("void main(void): Innerhalb der !GameOver && !QuitProgram - Schleife....\n");
       keyboard_update();
       DisplayRahmen(RealScreen);
 
       // usleep(20000);  //  This should cause a little delay to make the game more playable
 
       if(keyboard_keypressed(SCANCODE_Q)) {
-	printf("\n*****************************************************");
-	printf("\nvoid main(void): Termination cause of Q-Pressing!!!!!");
-	printf("\n*****************************************************\n\n");
+	DebugPrintf("\n*****************************************************");
+	DebugPrintf("\nvoid main(void): Termination cause of Q-Pressing!!!!!");
+	DebugPrintf("\n*****************************************************\n\n");
 	Terminate(0);
       }
       if(keyboard_keypressed(SCANCODE_D)) Me.energy=0; 
@@ -219,7 +219,7 @@ int main(int argc, char * const argv[])
 
       GetView();      /* Einen Ausschnitt aus der Gesamtlevelkarte machen */
 
-      GetInternFenster();
+      GetInternFenster(SHOW_ALL);
       
       PutInternFenster();
 
@@ -301,7 +301,7 @@ int main(int argc, char * const argv[])
 void ThouArtDefeated(void){
   int i,j;
 
-  printf("\nvoid ThouArtDefeated(void): Real function call confirmed.");
+  DebugPrintf("\nvoid ThouArtDefeated(void): Real function call confirmed.");
   Me.status=TERMINATED;
   ThouArtDefeatedSound();
   ExplodeInfluencer();
@@ -310,7 +310,7 @@ void ThouArtDefeated(void){
     //		UpdateInfoline();
     //		SetInfoline();
     DisplayRahmen(RealScreen);
-    GetInternFenster();
+    GetInternFenster(SHOW_ALL);
     PutInternFenster();
     ExplodeBlasts();
     MoveBullets();
@@ -330,7 +330,7 @@ void ThouArtDefeated(void){
 
   GameOver = TRUE;
   
-  printf("\nvoid ThouArtDefeated(void): Usual end of function reached.");
+  DebugPrintf("\nvoid ThouArtDefeated(void): Usual end of function reached.");
 } // void ThouArtDefeated(void)
 
 /*@Function============================================================
@@ -345,7 +345,7 @@ void ThouArtVictorious(void){
 	
   KillTastaturPuffer();
   ClearUserFenster();
-  printf(" BRAVO ! Sie haben es geschafft ! ");
+  DebugPrintf(" BRAVO ! Sie haben es geschafft ! ");
   getchar();
 }
 
@@ -359,7 +359,7 @@ void Debriefing(void){
   HallElement* SaveHallptr=Hallptr;
   int DebriefColor;
 
-  printf("\nvoid Debriefing(void): Real function call confirmed.");
+  DebugPrintf("\nvoid Debriefing(void): Real function call confirmed.");
 
   DebriefColor=FONT_WHITE;
 
@@ -434,7 +434,7 @@ void Debriefing(void){
     getchar();
   }
 
-  printf("\nvoid Debriefing(void): Usual end of function reached.");
+  DebugPrintf("\nvoid Debriefing(void): Usual end of function reached.");
 }  // void Debriefing(void)
 
 // This function does the Pause-Mode, which means, that the game process is halted,
@@ -460,7 +460,7 @@ void Pause(void){
     RotateBulletColor();
     AnimateEnemys();
     GetView();
-    GetInternFenster();
+    GetInternFenster(SHOW_ALL);
     PutInternFenster();
     //PORT	    if (kbhit()) taste=getch();
     if (CPressed()) {

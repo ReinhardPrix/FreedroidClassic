@@ -94,7 +94,7 @@ char TitleText3[]="An Influence Device can transmitt\nconsole. A small-scale pla
 static void 
 timeout (int sig)
 {
-  printf("\n\nstatic void timeout(int sig): Automatic termination NOW!!");
+  DebugPrintf("\n\nstatic void timeout(int sig): Automatic termination NOW!!");
   Terminate(0);
 } /* timeout */
 
@@ -379,25 +379,25 @@ void InitParaplus(void) {
   
   HideInvisibleMap=TRUE;         /* Hide invisible map-parts */
 	
-  printf("\nvoid InitParaplus(void): Highscorevariablen wurden erfolgreich initialisiert...");
+  DebugPrintf("\nvoid InitParaplus(void): Highscorevariablen wurden erfolgreich initialisiert...");
 
   /* Initialisieren der CRTC Portadresse */
   //PORT CRTC=(int*)MK_FP(0,0x0463);
 
 
   if (InitLevelColorTable() == FALSE) {
-    printf(" Kann Farben nicht initialisieren !");
+    DebugPrintf(" Kann Farben nicht initialisieren !");
     getchar();
     Terminate(0);
   }
  
   if (InitParaplusFont() == ERR) {
-    printf(" Kann Schrift nicht initialisieren !");
+    DebugPrintf(" Kann Schrift nicht initialisieren !");
     getchar();
     Terminate(ERR);
   }
 
-  printf("\nvoid InitParaplus(void): Farben- und Fontinitialisierung zumindest fehlerfrei ueberwunden....");
+  DebugPrintf("\nvoid InitParaplus(void): Farben- und Fontinitialisierung zumindest fehlerfrei ueberwunden....");
 
   MinMessageTime=55;
   MaxMessageTime=850;
@@ -441,41 +441,41 @@ void InitParaplus(void) {
   /* Sounds on/off */
   ModPlayerOn = FALSE;
 
-  printf("\nvoid InitParaplus(void): Textmeldungsvariablen wurden erfolgreich initialisiert....");
+  DebugPrintf("\nvoid InitParaplus(void): Textmeldungsvariablen wurden erfolgreich initialisiert....");
 
   /* ScreenPointer setzen */
   // PORT RealScreen = MK_FP(SCREENADDRESS, 0);
   RealScreen = malloc( SCREENBREITE * SCREENHOEHE + 10);
   InternalScreen = (unsigned char*) malloc( SCREENHOEHE * SCREENBREITE +10 );
 
-  printf("\nvoid InitParaplus(void): Realscreen und Internalscreen haben erfolgreich Speicher erhalten....");
+  DebugPrintf("\nvoid InitParaplus(void): Realscreen und Internalscreen haben erfolgreich Speicher erhalten....");
 
   /* Zufallsgenerator initialisieren */
   //PORT MyRandomize();
 		
   if( LoadShip(SHIPNAME) == ERR) {
-    printf("Error in LoadShip");
+    DebugPrintf("Error in LoadShip");
     Terminate(-1);
   }
 
-  printf("\nvoid InitParaplus(void): LoadShip(...) ist erfolgreich zurueckgekehrt....");
+  DebugPrintf("\nvoid InitParaplus(void): LoadShip(...) ist erfolgreich zurueckgekehrt....");
 	
   /* Now fill the pictures correctly to the structs */
   if (!InitPictures()) {	/* Fehler aufgetreten */
     return;
   }
 
-  printf("\nvoid InitParaplus(void): InitPictures(void) ist erfolgreich zurueckgekehrt....");
+  DebugPrintf("\nvoid InitParaplus(void): InitPictures(void) ist erfolgreich zurueckgekehrt....");
 	
   /* Init the Takeover- Game */
   InitTakeover();
 
-  printf("\nvoid InitParaplus(void): InitTakeover(void) ist erfolgreich zurueckgekehrt....");
+  DebugPrintf("\nvoid InitParaplus(void): InitTakeover(void) ist erfolgreich zurueckgekehrt....");
 	
   /* Die Zahlen, mit denen die Robotkennungen erzeugt werden einlesen */
   GetDigits(); 
 
-  printf("\nvoid InitParaplus(void): GetDigits(void) ist erfolgreich zurueckgekehrt....");
+  DebugPrintf("\nvoid InitParaplus(void): GetDigits(void) ist erfolgreich zurueckgekehrt....");
 	
   /* InternWindow */
   /* wenn moeglich: Speicher sparen und mit InternalScreen ueberlappen: */
@@ -485,23 +485,23 @@ void InitParaplus(void) {
     if( (InternWindow =
 	 (unsigned char*)
 	 MyMalloc(INTERNBREITE*INTERNHOEHE*BLOCKMEM+100)) == NULL) {
-      printf("\nFatal: Out of Memory for InternWindow.");
+      DebugPrintf("\nFatal: Out of Memory for InternWindow.");
       getchar();
       Terminate(-1);
     }
   }
 
-  printf("\nvoid InitParaplus(void): InternWindow wurde erfolgreich initialisiert....");
+  DebugPrintf("\nvoid InitParaplus(void): InternWindow wurde erfolgreich initialisiert....");
 
   /* eigenen Zeichensatz installieren */
   LadeZeichensatz(DATA70ZEICHENSATZ);
 
-  printf("\nvoid InitParaplus(void): Zeichensatz wurde erfolgreich geladen....");
+  DebugPrintf("\nvoid InitParaplus(void): Zeichensatz wurde erfolgreich geladen....");
 
   // Initialisieren der Schildbilder
   GetShieldBlocks();
 
-  printf("\nvoid InitParaplus(void): GetShieldBlocks(void) ist fehlerfrei zurueckgekehrt....");
+  DebugPrintf("\nvoid InitParaplus(void): GetShieldBlocks(void) ist fehlerfrei zurueckgekehrt....");
 
   /* richtige Paletten-Werte einstellen */
   InitPalette();
@@ -510,7 +510,7 @@ void InitParaplus(void) {
   SetTypematicRate(TYPEMATIC_SLOW);
 
   /* Initialisierung beendet. Monitor wird aktiviert. */
-  printf("\nvoid InitParaplus(void): Funktionsende fehlerfrei erreicht....");
+  DebugPrintf("\nvoid InitParaplus(void): Funktionsende fehlerfrei erreicht....");
 
 } // void InitParaplus(void)
 

@@ -270,7 +270,7 @@ int LoadShip(char *shipname)
 
   /* Read the whole ship-data to memory */
   if( (ShipFile = fopen(filename, "r")) == NULL) {
-    printf("\nint LoadShip(char *shipname): Error opening file.... ");
+    DebugPrintf("\nint LoadShip(char *shipname): Error opening file.... ");
     getchar();
     return ERR;
   }
@@ -278,12 +278,12 @@ int LoadShip(char *shipname)
 	
 
   if( fstat(fileno(ShipFile), &stbuf) == EOF) {
-    printf("\nint LoadShip(char* shipname): Error fstat-ing File....");
+    DebugPrintf("\nint LoadShip(char* shipname): Error fstat-ing File....");
     return ERR;
   }
 
   if( (ShipData = (char *)malloc(stbuf.st_size + 10)) == NULL) {
-    printf("\nint LoadShip(char *shipname): Out of Memory? ");
+    DebugPrintf("\nint LoadShip(char *shipname): Out of Memory? ");
     getchar();
     return ERR;
   }
@@ -317,7 +317,7 @@ int LoadShip(char *shipname)
 
   /* Get the elevator connections */
   if( GetElevatorConnections(shipname) == ERR) {
-    printf("\nErr in GetElevatorConnections ");
+    DebugPrintf("\nErr in GetElevatorConnections ");
     getchar();
     return ERR;
   }
@@ -626,7 +626,7 @@ int TranslateMap(Level Lev)
 	// full cross
       case 0x1111: NewBlock = KREUZ; break;
       default: 
-	printf("\nMap-panic. TranslateMap() is messed up!\n"); 
+	DebugPrintf("\nMap-panic. TranslateMap() is messed up!\n"); 
 	DebugPrintf("\nint TranslateMap(Level Lev): end of function reached.");
 	return(ERR);
 	break;
@@ -1166,7 +1166,7 @@ int IsVisible(Finepoint objpos){
   int influ_x = Me.pos.x;
   int influ_y = Me.pos.y;
 
-  printf("\nint IsVisible(Point objpos): Funktion echt aufgerufen.");
+  DebugPrintf("\nint IsVisible(Point objpos): Funktion echt aufgerufen.");
 
   a_x = influ_x -objpos->x;
   a_y = influ_y -objpos->y;
@@ -1188,11 +1188,11 @@ int IsVisible(Finepoint objpos){
     testpos.y += step.y;
 
     if( IsPassable(testpos.x, testpos.y, LIGHT) != CENTER ) {
-      printf("\nint IsVisible(Point objpos): Funktionsende erreicht.");
+      DebugPrintf("\nint IsVisible(Point objpos): Funktionsende erreicht.");
       return FALSE;
     }
   }
-  printf("\nint IsVisible(Point objpos): Funktionsende erreicht.");
+  DebugPrintf("\nint IsVisible(Point objpos): Funktionsende erreicht.");
 	
   return TRUE;
 } // int IsVisible(Point objpos)
