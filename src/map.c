@@ -1049,29 +1049,9 @@ TranslateToHumanReadable ( char* HumanReadable , unsigned char* MapInfo, int Lin
 
   for (col = 0; col < LineLength; col++)
     {
-
-      /*
-      for (i = 0; (i < INVISIBLE_BRICK) && (Translator[i].intern != MapInfo[col] ); i++);
-      
-      if ( i == INVISIBLE_BRICK )
-	{
-	  printf ("\nIn TranslateToHumanReadable: Unknown map-char: %d\nWriting '+' for it.\n",
-		  MapInfo[col]);
-	  HumanReadable[col] = '+';
-	  // Terminate (ERR);
-	}
-      else
-	{
-	  printf("\nSuccessfully interpreting: %d\n", MapInfo[col] );
-	  HumanReadable[col] = Translator[i].ascii;
-	}
-      */
       sprintf( Buffer , "%3d " , MapInfo[col] );
       strcat ( HumanReadable , Buffer );
-
     }
-
-
 
 } // void TranslateToHumanReadable( ... )
 
@@ -1150,11 +1130,15 @@ GetLiftConnections (char *filename)
   int RectIndex;
   int ElevatorIndex;
   char* EndOfLiftRectangleSection;
+  char* EndOfLiftConnectionData;
   Lift CurLift;
 
-#define END_OF_LIFT_DATA_STRING "*** End of Lift Data ***"
+#define END_OF_LIFT_DATA_STRING "*** End of elevator specification file ***"
 #define START_OF_LIFT_DATA_STRING "*** Beginning of Lift Data ***"
 #define START_OF_LIFT_RECTANGLE_DATA_STRING "*** Beginning of elevator rectangles ***"
+#define END_OF_LIFT_CONNECTION_DATA_STRING "*** End of Lift Connection Data ***"
+
+
 
   /* Now get the lift-connection data from "FILE.elv" file */
 
@@ -1222,36 +1206,21 @@ GetLiftConnections (char *filename)
       Terminate(ERR);
     }
 
+  EndOfLiftConnectionData = LocateStringInData ( Data , END_OF_LIFT_CONNECTION_DATA_STRING );
+  EntryPointer = Data;
 
   while ( ( EntryPointer = strstr( EntryPointer , "Label=" ) ) != NULL )
     {
-      EntryPointer += strlen ("Label=");
-      sscanf( EntryPointer , "%d" , &Label );
+      ReadValueFromString( EntryPointer , "Label=" , "%d" , &Label , EndOfLiftConnectionData );
       CurLift = &(curShip.AllLifts[Label]);
+      EntryPointer++; // to avoid doubly taking this entry
 
-      EntryPointer = strstr( EntryPointer , "Deck=" ) ;
-      EntryPointer += strlen ("Deck=");
-      sscanf( EntryPointer , "%d" , &(CurLift->level) );
-      
-      EntryPointer = strstr( EntryPointer , "PosX=" ) ;
-      EntryPointer += strlen ("PosX=");
-      sscanf( EntryPointer , "%d" , &(CurLift->x) );
-      
-      EntryPointer = strstr( EntryPointer , "PosY=" ) ;
-      EntryPointer += strlen ("PosY=");
-      sscanf( EntryPointer , "%d" , &(CurLift->y) );
-      
-      EntryPointer = strstr( EntryPointer , "LevelUp=" ) ;
-      EntryPointer += strlen ("LevelUp=");
-      sscanf( EntryPointer , "%d" , &(CurLift->up) );
-      
-      EntryPointer = strstr( EntryPointer , "LevelDown=" ) ;
-      EntryPointer += strlen ("LevelDown=");
-      sscanf( EntryPointer , "%d" , &(CurLift->down) );
-      
-      EntryPointer = strstr( EntryPointer , "LiftRow=" ) ;
-      EntryPointer += strlen ("LiftRow=");
-      sscanf( EntryPointer , "%d" , &(CurLift->lift_row) );
+      ReadValueFromString( EntryPointer , "Deck=" , "%d" , &(CurLift->level) , EndOfLiftConnectionData );
+      ReadValueFromString( EntryPointer , "PosX=" , "%d" , &(CurLift->x) , EndOfLiftConnectionData );
+      ReadValueFromString( EntryPointer , "PosY=" , "%d" , &(CurLift->y) , EndOfLiftConnectionData );
+      ReadValueFromString( EntryPointer , "LevelUp=" , "%d" , &(CurLift->up) , EndOfLiftConnectionData );
+      ReadValueFromString( EntryPointer , "LevelDown=" , "%d" , &(CurLift->down) , EndOfLiftConnectionData );
+      ReadValueFromString( EntryPointer , "LiftRow=" , "%d" , &(CurLift->lift_row) , EndOfLiftConnectionData );
       
     }
 

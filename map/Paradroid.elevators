@@ -147,5 +147,6 @@ Label=27 Deck= 7 PosX=19 PosY= 5 LevelUp=-1 LevelDown=26 LiftRow=6
 Label=28 Deck= 7 PosX=27 PosY= 7 LevelUp=29 LevelDown=-1 LiftRow=7
 Label=29 Deck= 8 PosX=33 PosY=10 LevelUp=-1 LevelDown=28 LiftRow=7
 
-*** End of Lift Data ***
+*** End of Lift Connection Data ***
 
+*** End of elevator specification file ***
