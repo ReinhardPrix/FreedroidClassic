@@ -9,6 +9,9 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.2  2002/05/17 13:09:12  rprix
+ * removed all the nasty ^M 's at the line-endings...
+ *
  * Revision 1.1  2002/05/17 06:24:34  jprix
  * Forgot to add the (slighly modified, but otherwise old) maped.h too :-)
  *
@@ -252,3 +255,4 @@ extern Level CurLevel;
 
 
 #endif
+
