@@ -79,14 +79,14 @@ update_highscores (void)
   struct tm *timeinfo;
   time_t tsec;
 
-  if (Me.Experience <= 0)  /* don't even bother.. */
+  if (Me[0].Experience <= 0)  /* don't even bother.. */
     return;
 
-  Me.status = DEBRIEFING;
+  Me[0].status = DEBRIEFING;
 
   /* now find out the position of player's score in list */
   entry = 0;
-  while (Highscores[entry]->score >= Me.Experience )
+  while (Highscores[entry]->score >= Me[0].Experience )
     entry ++;
 
   if (entry == num_highscores) /* sorry, you didnt' make it */
@@ -117,7 +117,7 @@ update_highscores (void)
   sprintf (new_entry->date, "[%d/%d/%02d]", timeinfo->tm_mday, timeinfo->tm_mon,
 	   timeinfo->tm_year-100); 
 
-  new_entry->score = Me.Experience;
+  new_entry->score = Me[0].Experience;
   Highscores[entry] = new_entry;
 
   SetCurrentFont (prev_font);

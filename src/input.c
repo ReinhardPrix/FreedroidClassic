@@ -36,8 +36,10 @@
 #include "proto.h"
 
 point CurrentMouseAbsPos;
-int CurrentlyMouseRightPressed=0;
+
 SDL_Event event;
+
+int CurrentlyMouseRightPressed=0;
 int ShiftWasPressedInAddition=FALSE;
 int CtrlWasPressedInAddition=FALSE;
 int AltWasPressedInAddition=FALSE;
@@ -266,34 +268,53 @@ ReactToSpecialKeys(void)
   static int CPressed_LastFrame;
   static int SPressed_LastFrame;
   static int TabPressed_LastFrame;
+  influence_t Zwisch_Me;
+  char MessageBuffer[1024];
 
   if ( QPressed() ) /* user asked for quit */
     Terminate (OK);
   if ( DPressed() )
-    Me.energy = 0;
+    Me[0].energy = 0;
 
   if ( F1Pressed() )
-    Me.readied_skill = 0;
+    Me[0].readied_skill = 0;
 
   if ( F2Pressed() )
-    Me.readied_skill = 1;
+    Me[0].readied_skill = 1;
 
   if ( F3Pressed() )
-    Me.readied_skill = 2;
+    Me[0].readied_skill = 2;
 
   if ( F4Pressed() )
-    Me.readied_skill = 3;
+    Me[0].readied_skill = 3;
 
   if ( F5Pressed() )
-    Me.readied_skill = 4;
+    Me[0].readied_skill = 4;
 
   if ( F6Pressed() )
-    Me.readied_skill = 5;
+    Me[0].readied_skill = 5;
 
   // THIS REMAINS DISABLED... if ( Number0Pressed() ) Quick_ApplyItem ( 0 );
 
   if ( Number1Pressed() )
-    Quick_ApplyItem ( 1 );
+    {
+      if ( Shift_Was_Pressed () )
+	{
+	  memcpy ( & ( Zwisch_Me ) , & ( Me [ 0 ] ) , sizeof ( Me[ 0 ] ) );
+	  memcpy ( & ( Me [ 0 ] ) , & ( Me [ 1 ] ) , sizeof ( Me[ 0 ] ) );
+	  memcpy ( & ( Me [ 1 ] ) , & ( Zwisch_Me ) , sizeof ( Me[ 0 ] ) );
+	  while ( Number1Pressed() );
+	  Activate_Conservative_Frame_Computation ( );
+
+	  //--------------------
+	  // When switching between players, we must of course also reset the 
+	  // current level...
+	  //
+	  // CurLevel = curShip.AllLevels[ Me[ 0 ].levelnum ];
+	  // Teleport ( 
+	}
+      else Quick_ApplyItem ( 1 );
+    }
 
   if ( Number2Pressed() )
     Quick_ApplyItem ( 2 );
@@ -343,26 +364,6 @@ ReactToSpecialKeys(void)
 	  DebugPrintf( 0 , "\nitem_can_be_installed_in_drive_slot: %d " , ItemMap[ i ].item_can_be_installed_in_drive_slot );
 	  DebugPrintf( 0 , "\nbase_item_gun_damage: %d " , ItemMap[ i ].base_item_gun_damage );
 	  DebugPrintf( 0 , "\nitem_gun_recharging_time: %f " , ItemMap[ i ].item_gun_recharging_time );
-
-/*
-  int New_Laser_Type_After_Installation;
-  int New_Drive_Type_After_Installation;
-  double energy_gain_uppon_application_in_combat;
-  double item_weight;
-
-  // How good is the item as drive???
-  double item_drive_maxspeed;	// how fast can this item go used as the drive of the droid
-  double item_drive_accel;	// as drive, how fast can you accelerate with this item
-
-  // How good is the item as weapon???
-  double item_gun_speed;			// speed of the bullet 
-  int item_gun_blast;			// which blast does this bullet create 
-  int item_gun_oneshotonly;	        // if this is set, there is only 1 shot 
-
-  // Which picture to use for this item, when it's lying on the floor?
-  int picture_number;
-*/
-
 	}
 
 
@@ -391,6 +392,18 @@ ReactToSpecialKeys(void)
     }
 
   //--------------------
+  // For debugging purposes as well, the F key will print out information
+  // about all players currently known.  This can be used as well from the
+  // server as from each of the client.
+  //
+  if ( FPressed ( ) )
+    {
+      Activate_Conservative_Frame_Computation ( ) ;
+      PrintServerStatusInformation ( ) ;
+      while ( FPressed ( ) );
+    }
+
+  //--------------------
   // We assign the L key to turn on/off the quest log i.e. mission log
   //
   if ( LPressed() )
@@ -407,8 +420,8 @@ ReactToSpecialKeys(void)
       for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i++ )
 	{
 	  if ( CurLevel->ItemList[ i ].type == (-1) ) continue;
-	  if ( ( fabsf( Me.pos.x - CurLevel->ItemList[ i ].pos.x ) < 0.25 ) &&
-	       ( fabsf( Me.pos.y - CurLevel->ItemList[ i ].pos.y ) < 0.25 ) )
+	  if ( ( fabsf( Me[0].pos.x - CurLevel->ItemList[ i ].pos.x ) < 0.25 ) &&
+	       ( fabsf( Me[0].pos.y - CurLevel->ItemList[ i ].pos.y ) < 0.25 ) )
 	    break;
 	}
 
@@ -443,14 +456,14 @@ ReactToSpecialKeys(void)
     {
       if ( Shift_Was_Pressed() )
 	{
-	  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ ) Me.Inventory[i].is_identified = TRUE;
-	  Me.weapon_item.is_identified = TRUE;
-	  Me.shield_item.is_identified = TRUE;
-	  Me.armour_item.is_identified = TRUE;
-	  Me.special_item.is_identified = TRUE;
-	  Me.aux1_item.is_identified = TRUE;
-	  Me.aux2_item.is_identified = TRUE;
-	  Me.drive_item.is_identified = TRUE;
+	  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ ) Me[0].Inventory[i].is_identified = TRUE;
+	  Me[0].weapon_item.is_identified = TRUE;
+	  Me[0].shield_item.is_identified = TRUE;
+	  Me[0].armour_item.is_identified = TRUE;
+	  Me[0].special_item.is_identified = TRUE;
+	  Me[0].aux1_item.is_identified = TRUE;
+	  Me[0].aux2_item.is_identified = TRUE;
+	  Me[0].drive_item.is_identified = TRUE;
 	}
 
       if ( !IPressed_LastFrame ) 
@@ -485,7 +498,7 @@ ReactToSpecialKeys(void)
     }
 
   //--------------------
-  // We assign the C key to turn on/off the character screen
+  // We assign the Tab key to turn on/off the auto map
   //
   if ( TabPressed() )
     {
@@ -501,34 +514,53 @@ ReactToSpecialKeys(void)
       TabPressed_LastFrame = FALSE;
     }
 
-
-
+  //--------------------
+  // We assign the G key to send greetings either to the server
+  // or from the server to all players.
+  //
   if ( GPressed () )
     {
-      Me.TextToBeDisplayed="Hello!  Greetings to all other Freedom Fighters.";
-      Me.TextVisibleTime=0;
-    }
-  
-  // To debug the Debriefing() I added a function to add or subtract
-  // a thousand points of score via numerical keyboard functions.
-  // Activate this if you want to test that.  
+      Me[0].TextToBeDisplayed="Hello!  Greetings to the Server.";
+      Me[0].TextVisibleTime=0;
 
+      if ( ! ServerMode )
+	{
+	  sprintf ( MessageBuffer , "\nThis is a message from Player '%s'. " , Me[0].character_name );
+	  // Send1024MessageToServer ( MessageBuffer );
+	  SendTextMessageToServer ( MessageBuffer );
+	}
+      else
+	{
+	  ServerSendMessageToAllClients ( "\nThis is a message from the server to all clients. " );
+	}
+    }
+
+  //--------------------
+  // To debug the rising in levels and the addition of points
+  // I added a feature to quickly gain experience points and
+  // levels via the numbers 0 , 1 and 2 on the numerical keyboard.
+  // 
   if ( KP0Pressed() )
     {
       while (KP0Pressed());
-      Me.Experience-=1000;
+      Me[0].Experience-=1000;
     }
   if ( KP1Pressed() )
     {
       while (KP1Pressed());
-      Me.Experience+=1000;
+      Me[0].Experience+=1000;
     }
   if ( KP2Pressed() )
     {
       while (KP2Pressed());
-      Me.Experience *= 2;
+      Me[0].Experience *= 2;
     }
 
+  //--------------------
+  // To quicksave and quickload in a convenient way, I added
+  // a keybinding of save and load game functions to the 3 and 4
+  // keys on the numerical keyboard.
+  //
   if ( KP3Pressed() )
     {
       while (KP3Pressed());
@@ -540,35 +572,33 @@ ReactToSpecialKeys(void)
       LoadGame();
     }
 
-  /*
-  if ( KP8Pressed() )
-    {
-      LoadGame(  );
-      while ( KP8Pressed(  ) );
-    }
-
-  if ( KP9Pressed() )
-    {
-      SaveGame(  );
-      while ( KP9Pressed(  ) );
-    }
-  */
-  
+  //--------------------
+  // To test various things, there is of course a cheat menu
+  // added to the game.  This cheat menu can be reached by pressing
+  // a combination of keys, intended to be so complicated, that the
+  // users are unlikely to find out about it just by trying out.
+  // Of course they will learn about it if they look at the source,
+  // but hey, then you can outright modify the source, so why bother
+  // to make it any more complicated.
+  //
   if ( CPressed() && Alt_Was_Pressed()
        && Ctrl_Was_Pressed() && Shift_Was_Pressed() ) 
     Cheatmenu ();
+
+  //--------------------
+  // The 'Esc' key is assigned to the big main menu, the so called
+  // Escape Menu.
+  //
   if ( EscapePressed() )
     EscapeMenu ();
+
+  //--------------------
+  // The 'P' key is assigned to pause mode.
+  //
   if ( PPressed () )
     Pause ();
   
-  if ( UPressed () )
-    {
-      InitNewMissionList ( STANDARD_MISSION ) ;
-      while (UPressed());
-    }
-  
-} // void ReactToSpecialKeys(void)
+}; // void ReactToSpecialKeys(void)
 
 int
 Shift_Was_Pressed(void)
@@ -603,6 +633,9 @@ keyboard_update(void)
 	  break;
 	  /* Look for a keypress */
 	case SDL_KEYDOWN:
+
+	  if ( ( ClientMode ) && ( ! ServerMode ) ) SendPlayerKeyboardEventToServer ( event );
+
 	  // printf("\nSLD_KEYDOWN event detected...");
 	  // fflush(stdout);
 
@@ -851,6 +884,8 @@ keyboard_update(void)
 	  /* and y velocity variables. But we must also be       */
 	  /* careful not to zero the velocities when we shouldn't*/
 	case SDL_KEYUP:
+
+	  if ( ( ClientMode ) && ( ! ServerMode ) ) SendPlayerKeyboardEventToServer ( event );
 
 	  // printf("\nSLD_KEYUP event detected...");
 	  // fflush(stdout);
@@ -1516,7 +1551,7 @@ RightPressed (void)
 {
   keyboard_update ();
   return CurrentlyRightPressed;
-}				// int RightPressed(void)
+}; // int RightPressed(void)
 
 int
 UpPressed (void)

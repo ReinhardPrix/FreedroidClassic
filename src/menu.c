@@ -42,7 +42,7 @@
 int New_Game_Requested=FALSE;
 
 int Single_Player_Menu (void);
-void Multi_Player_Menu (void);
+int Multi_Player_Menu (void);
 void Credits_Menu (void);
 void Options_Menu (void);
 void Show_Mission_Log_Menu (void);
@@ -80,7 +80,7 @@ TryToRepairItem( item* RepairItem )
 
   while ( SpacePressed() || EnterPressed() );
 
-  if ( REPAIR_PRICE_FACTOR * CalculateItemPrice ( RepairItem , TRUE ) > Me.Gold )
+  if ( REPAIR_PRICE_FACTOR * CalculateItemPrice ( RepairItem , TRUE ) > Me[0].Gold )
     {
       MenuTexts[0]=" BACK ";
       MenuTexts[1]="";
@@ -98,7 +98,7 @@ TryToRepairItem( item* RepairItem )
 	  break;
 	case ANSWER_YES:
 	  while (EnterPressed() || SpacePressed() );
-	  Me.Gold -= REPAIR_PRICE_FACTOR * CalculateItemPrice ( RepairItem , TRUE ) ;
+	  Me[0].Gold -= REPAIR_PRICE_FACTOR * CalculateItemPrice ( RepairItem , TRUE ) ;
 	  RepairItem->current_duration = RepairItem->max_duration;
 	  return;
 	  break;
@@ -135,7 +135,7 @@ TryToIdentifyItem( item* IdentifyItem )
 
   while ( SpacePressed() || EnterPressed() );
 
-  if ( 100 > Me.Gold )
+  if ( 100 > Me[0].Gold )
     {
       MenuTexts[0]=" BACK ";
       MenuTexts[1]="";
@@ -153,7 +153,7 @@ TryToIdentifyItem( item* IdentifyItem )
 	  break;
 	case ANSWER_YES:
 	  while (EnterPressed() || SpacePressed() );
-	  Me.Gold -= 100 ;
+	  Me[0].Gold -= 100 ;
 	  IdentifyItem -> is_identified = TRUE ;
 	  return;
 	  break;
@@ -202,7 +202,7 @@ TryToSellItem( item* SellItem )
 	  break;
 	case ANSWER_YES:
 	  while (EnterPressed() || SpacePressed() );
-	  Me.Gold += SELL_PRICE_FACTOR * CalculateItemPrice ( SellItem , FALSE );
+	  Me[0].Gold += SELL_PRICE_FACTOR * CalculateItemPrice ( SellItem , FALSE );
 	  DeleteItem( SellItem );
 	  return;
 	  break;
@@ -246,7 +246,7 @@ TryToBuyItem( item* BuyItem )
 
   while ( SpacePressed() || EnterPressed() );
 
-  if ( CalculateItemPrice ( BuyItem , FALSE ) > Me.Gold )
+  if ( CalculateItemPrice ( BuyItem , FALSE ) > Me[0].Gold )
     {
       MenuTexts[0]=" BACK ";
       MenuTexts[1]="";
@@ -272,11 +272,11 @@ TryToBuyItem( item* BuyItem )
 		      break;
 		    case ANSWER_YES:
 		      while (EnterPressed() || SpacePressed() );
-		      CopyItem( BuyItem , & ( Me.Inventory[ FreeIndex ] ) , TRUE );
-		      Me.Inventory[ FreeIndex ].currently_held_in_hand = FALSE;
-		      Me.Inventory[ FreeIndex ].inventory_position.x = x;
-		      Me.Inventory[ FreeIndex ].inventory_position.y = y;
-		      Me.Gold -= CalculateItemPrice ( BuyItem , FALSE );
+		      CopyItem( BuyItem , & ( Me[0].Inventory[ FreeIndex ] ) , TRUE );
+		      Me[0].Inventory[ FreeIndex ].currently_held_in_hand = FALSE;
+		      Me[0].Inventory[ FreeIndex ].inventory_position.x = x;
+		      Me[0].Inventory[ FreeIndex ].inventory_position.y = y;
+		      Me[0].Gold -= CalculateItemPrice ( BuyItem , FALSE );
 		      return;
 		      break;
 		    case ANSWER_NO:
@@ -346,7 +346,7 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
       // of it, that's currently visible
       //
       DisplayText( " I HAVE THESE ITEMS FOR SALE         YOUR GOLD:" , 50 , 50 + (0) * ITEM_MENU_DISTANCE , NULL );
-      sprintf( DescriptionText , "%4ld" , Me.Gold );
+      sprintf( DescriptionText , "%4ld" , Me[0].Gold );
       DisplayText( DescriptionText , 580 , 50 + ( 0 ) * 80 , NULL );
       for ( i = 0 ; i < NUMBER_OF_ITEMS_ON_ONE_SCREEN ; i++ )
 	{
@@ -362,7 +362,7 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
       //--------------------
       // Now we draw the influencer as a cursor
       //
-      PutInfluence ( 10 , 50 + ( InMenuPosition + 1 ) * ITEM_MENU_DISTANCE );
+      PutInfluence ( 10 , 50 + ( InMenuPosition + 1 ) * ITEM_MENU_DISTANCE , 0 );
 
       //--------------------
       //
@@ -436,38 +436,38 @@ Repair_Items( void )
   //--------------------
   // Now we start to fill the Repair_Pointer_List
   //
-  if ( ( Me.weapon_item.current_duration < Me.weapon_item.max_duration ) && 
-       ( Me.weapon_item.type != ( -1 ) ) )
+  if ( ( Me[0].weapon_item.current_duration < Me[0].weapon_item.max_duration ) && 
+       ( Me[0].weapon_item.type != ( -1 ) ) )
     {
-      Repair_Pointer_List [ Pointer_Index ] = & ( Me.weapon_item );
+      Repair_Pointer_List [ Pointer_Index ] = & ( Me[0].weapon_item );
       Pointer_Index ++;
     }
-  if ( ( Me.drive_item.current_duration < Me.drive_item.max_duration ) &&
-       ( Me.drive_item.type != ( -1 ) ) )
+  if ( ( Me[0].drive_item.current_duration < Me[0].drive_item.max_duration ) &&
+       ( Me[0].drive_item.type != ( -1 ) ) )
     {
-      Repair_Pointer_List [ Pointer_Index ] = & ( Me.drive_item );
+      Repair_Pointer_List [ Pointer_Index ] = & ( Me[0].drive_item );
       Pointer_Index ++;
     }
-  if ( ( Me.armour_item.current_duration < Me.armour_item.max_duration ) &&
-       ( Me.armour_item.type != ( -1 ) ) )
+  if ( ( Me[0].armour_item.current_duration < Me[0].armour_item.max_duration ) &&
+       ( Me[0].armour_item.type != ( -1 ) ) )
     {
-      Repair_Pointer_List [ Pointer_Index ] = & ( Me.armour_item );
+      Repair_Pointer_List [ Pointer_Index ] = & ( Me[0].armour_item );
       Pointer_Index ++;
     }
-  if ( ( Me.shield_item.current_duration < Me.shield_item.max_duration ) &&
-       ( Me.shield_item.type != ( -1 ) ) )
+  if ( ( Me[0].shield_item.current_duration < Me[0].shield_item.max_duration ) &&
+       ( Me[0].shield_item.type != ( -1 ) ) )
     {
-      Repair_Pointer_List [ Pointer_Index ] = & ( Me.shield_item );
+      Repair_Pointer_List [ Pointer_Index ] = & ( Me[0].shield_item );
       Pointer_Index ++;
     }
 
   for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
     {
-      if ( Me.Inventory [ i ].type == (-1) ) continue;
-      if ( Me.Inventory [ i ].max_duration == (-1) ) continue;
-      if ( Me.Inventory [ i ].current_duration < Me.Inventory [ i ] .max_duration ) 
+      if ( Me[0].Inventory [ i ].type == (-1) ) continue;
+      if ( Me[0].Inventory [ i ].max_duration == (-1) ) continue;
+      if ( Me[0].Inventory [ i ].current_duration < Me[0].Inventory [ i ] .max_duration ) 
 	{
-	  Repair_Pointer_List [ Pointer_Index ] = & ( Me.Inventory[ i ] );
+	  Repair_Pointer_List [ Pointer_Index ] = & ( Me[0].Inventory[ i ] );
 	  Pointer_Index ++;
 	}
     }
@@ -490,7 +490,7 @@ Repair_Items( void )
       // of it, that's currently visible
       //
       DisplayText( " I COULD REPAIR THESE ITEMS                YOUR GOLD:" , 50 , 50 + (0) * ITEM_MENU_DISTANCE , NULL );
-      sprintf( DescriptionText , "%4ld" , Me.Gold );
+      sprintf( DescriptionText , "%4ld" , Me[0].Gold );
       DisplayText( DescriptionText , 580 , 50 + ( 0 ) * 80 , NULL );
       for ( i = 0 ; ( (i < NUMBER_OF_ITEMS_ON_ONE_SCREEN) && (Repair_Pointer_List[ i + MenuInListPosition ] != NULL ) ) ; i++ )
 	{
@@ -507,7 +507,7 @@ Repair_Items( void )
       //--------------------
       // Now we draw the influencer as a cursor
       //
-      PutInfluence ( 10 , 50 + ( InMenuPosition + 1 ) * ITEM_MENU_DISTANCE );
+      PutInfluence ( 10 , 50 + ( InMenuPosition + 1 ) * ITEM_MENU_DISTANCE , 0 );
 
       //--------------------
       //
@@ -585,37 +585,37 @@ Identify_Items ( void )
   //--------------------
   // Now we start to fill the Identify_Pointer_List
   //
-  if ( ( !Me.weapon_item.is_identified ) && 
-       ( Me.weapon_item.type != ( -1 ) ) )
+  if ( ( !Me[0].weapon_item.is_identified ) && 
+       ( Me[0].weapon_item.type != ( -1 ) ) )
     {
-      Identify_Pointer_List [ Pointer_Index ] = & ( Me.weapon_item );
+      Identify_Pointer_List [ Pointer_Index ] = & ( Me[0].weapon_item );
       Pointer_Index ++;
     }
-  if ( ( !Me.drive_item.is_identified ) &&
-       ( Me.drive_item.type != ( -1 ) ) )
+  if ( ( !Me[0].drive_item.is_identified ) &&
+       ( Me[0].drive_item.type != ( -1 ) ) )
     {
-      Identify_Pointer_List [ Pointer_Index ] = & ( Me.drive_item );
+      Identify_Pointer_List [ Pointer_Index ] = & ( Me[0].drive_item );
       Pointer_Index ++;
     }
-  if ( ( !Me.armour_item.is_identified ) &&
-       ( Me.armour_item.type != ( -1 ) ) )
+  if ( ( !Me[0].armour_item.is_identified ) &&
+       ( Me[0].armour_item.type != ( -1 ) ) )
     {
-      Identify_Pointer_List [ Pointer_Index ] = & ( Me.armour_item );
+      Identify_Pointer_List [ Pointer_Index ] = & ( Me[0].armour_item );
       Pointer_Index ++;
     }
-  if ( ( !Me.shield_item.is_identified ) &&
-       ( Me.shield_item.type != ( -1 ) ) )
+  if ( ( !Me[0].shield_item.is_identified ) &&
+       ( Me[0].shield_item.type != ( -1 ) ) )
     {
-      Identify_Pointer_List [ Pointer_Index ] = & ( Me.shield_item );
+      Identify_Pointer_List [ Pointer_Index ] = & ( Me[0].shield_item );
       Pointer_Index ++;
     }
 
   for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
     {
-      if ( Me.Inventory [ i ].type == (-1) ) continue;
-      if ( Me.Inventory [ i ].is_identified ) continue;
+      if ( Me[0].Inventory [ i ].type == (-1) ) continue;
+      if ( Me[0].Inventory [ i ].is_identified ) continue;
 
-      Identify_Pointer_List [ Pointer_Index ] = & ( Me.Inventory[ i ] );
+      Identify_Pointer_List [ Pointer_Index ] = & ( Me[0].Inventory[ i ] );
       Pointer_Index ++;
 
     }
@@ -638,7 +638,7 @@ Identify_Items ( void )
       // of it, that's currently visible
       //
       DisplayText( " I COULD IDENTIFY THESE ITEMS              YOUR GOLD:" , 50 , 50 + (0) * ITEM_MENU_DISTANCE , NULL );
-      sprintf( DescriptionText , "%4ld" , Me.Gold );
+      sprintf( DescriptionText , "%4ld" , Me[0].Gold );
       DisplayText( DescriptionText , 580 , 50 + ( 0 ) * 80 , NULL );
       for ( i = 0 ; ( (i < NUMBER_OF_ITEMS_ON_ONE_SCREEN) && (Identify_Pointer_List[ i + MenuInListPosition ] != NULL ) ) ; i++ )
 	{
@@ -653,7 +653,7 @@ Identify_Items ( void )
       //--------------------
       // Now we draw the influencer as a cursor
       //
-      PutInfluence ( 10 , 50 + ( InMenuPosition + 1 ) * ITEM_MENU_DISTANCE );
+      PutInfluence ( 10 , 50 + ( InMenuPosition + 1 ) * ITEM_MENU_DISTANCE , 0 );
 
       //--------------------
       //
@@ -733,7 +733,7 @@ Sell_Items( int ForHealer )
   //
   for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
     {
-      if ( Me.Inventory [ i ].type == (-1) ) continue;
+      if ( Me[0].Inventory [ i ].type == (-1) ) continue;
       else
 	{
 	  //--------------------
@@ -741,9 +741,9 @@ Sell_Items( int ForHealer )
 	  // the weaponsmith, we can either sell one thing or the
 	  // other
 	  //
-	  if ( ( ForHealer ) &&  ! ItemMap [ Me.Inventory[ i ].type ].item_can_be_applied_in_combat ) continue;
-	  if ( ! ( ForHealer ) &&  ItemMap [ Me.Inventory[ i ].type ].item_can_be_applied_in_combat ) continue;
-	  Sell_Pointer_List [ Pointer_Index ] = & ( Me.Inventory[ i ] );
+	  if ( ( ForHealer ) &&  ! ItemMap [ Me[0].Inventory[ i ].type ].item_can_be_applied_in_combat ) continue;
+	  if ( ! ( ForHealer ) &&  ItemMap [ Me[0].Inventory[ i ].type ].item_can_be_applied_in_combat ) continue;
+	  Sell_Pointer_List [ Pointer_Index ] = & ( Me[0].Inventory[ i ] );
 	  Pointer_Index ++;
 	}
     }
@@ -768,7 +768,7 @@ Sell_Items( int ForHealer )
       // of it, that's currently visible
       //
       DisplayText( " I WOULD BUY FROM YOU THESE ITEMS        YOUR GOLD:" , 50 , 50 + (0) * ITEM_MENU_DISTANCE , NULL );
-      sprintf( DescriptionText , "%4ld" , Me.Gold );
+      sprintf( DescriptionText , "%4ld" , Me[0].Gold );
       DisplayText( DescriptionText , 580 , 50 + ( 0 ) * 80 , NULL );
       for ( i = 0 ; ( (i < NUMBER_OF_ITEMS_ON_ONE_SCREEN) && (Sell_Pointer_List[ i + MenuInListPosition ] != NULL ) ) ; i++ )
 	{
@@ -784,7 +784,7 @@ Sell_Items( int ForHealer )
       //--------------------
       // Now we draw the influencer as a cursor
       //
-      PutInfluence ( 10 , 50 + ( InMenuPosition + 1 ) * ITEM_MENU_DISTANCE );
+      PutInfluence ( 10 , 50 + ( InMenuPosition + 1 ) * ITEM_MENU_DISTANCE , 0 );
 
       //--------------------
       //
@@ -881,7 +881,7 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char*
       // influencer to the left before it
       PutInfluence( FIRST_MENU_ITEM_POS_X , 
 		    first_menu_item_pos_y +
-		    ( MenuPosition - 0.5 ) * h );
+		    ( MenuPosition - 0.5 ) * h , 0 );
 
       for ( i = 0 ; i < 10 ; i ++ )
 	{
@@ -949,7 +949,7 @@ enum
   int MenuPosition=1;
   char* MenuTexts[10];
 
-  Me.status=MENU;
+  Me[0].status=MENU;
 
   DebugPrintf (2, "\nvoid BuySellMenu(void): real function call confirmed."); 
 
@@ -1010,7 +1010,7 @@ enum
   // Since we've faded out the whole scren, it can't hurt
   // to have the top status bar redrawn...
   BannerIsDestroyed=TRUE;
-  Me.status=MOBILE;
+  Me[0].status=MOBILE;
 
   return;
 }; // void BuySellMenu ( void )
@@ -1034,7 +1034,7 @@ enum
   int MenuPosition=1;
   char* MenuTexts[10];
 
-  Me.status=MENU;
+  Me[0].status=MENU;
 
   DebugPrintf (2, "\nvoid HealerMenu(void): real function call confirmed."); 
 
@@ -1087,7 +1087,7 @@ enum
   // Since we've faded out the whole scren, it can't hurt
   // to have the top status bar redrawn...
   BannerIsDestroyed=TRUE;
-  Me.status=MOBILE;
+  Me[0].status=MOBILE;
 
   return;
 }; // void HealerMenu ( void )
@@ -1165,7 +1165,7 @@ Cheatmenu (void)
     {
       ClearGraphMem ();
       printf_SDL (Screen, x0, y0, "Current position: Level=%d, X=%d, Y=%d\n",
-		   CurLevel->levelnum, (int)Me.pos.x, (int)Me.pos.y);
+		   CurLevel->levelnum, (int)Me[0].pos.x, (int)Me[0].pos.y);
       printf_SDL (Screen, -1, -1, " a. Armageddon (alle Robots sprengen)\n");
       printf_SDL (Screen, -1, -1, " l. robot list of current level\n");
       printf_SDL (Screen, -1, -1, " g. complete robot list\n");
@@ -1216,7 +1216,7 @@ Cheatmenu (void)
 	  l = 0; /* line counter for enemy output */
 	  for (i = 0; i < NumEnemys; i++)
 	    {
-	      if (AllEnemys[i].levelnum == CurLevel->levelnum) 
+	      if (AllEnemys[i].pos.z == CurLevel->levelnum) 
 		{
 		  if (l && !(l%20)) 
 		    {
@@ -1267,7 +1267,7 @@ Cheatmenu (void)
 		}
 	      
 	      printf_SDL (Screen, -1, -1, "%d  %d  %s  %d  %g\n",
-			  i, AllEnemys[i].levelnum,
+			  i, AllEnemys[i].pos.z,
 			  Druidmap[AllEnemys[i].type].druidname,
 			  (int)AllEnemys[i].energy,
 			  AllEnemys[i].speed.x);
@@ -1281,7 +1281,7 @@ Cheatmenu (void)
 	case 'd': /* destroy all robots on this level, haha */
 	  for (i = 0; i < NumEnemys; i++)
 	    {
-	      if (AllEnemys[i].levelnum == CurLevel->levelnum)
+	      if (AllEnemys[i].pos.z == CurLevel->levelnum)
 		AllEnemys[i].energy = -100;
 	    }
 	  printf_SDL (Screen, -1, -1, "All robots on this deck killed!\n");
@@ -1295,7 +1295,7 @@ Cheatmenu (void)
 	  input = GetString (40, 2);
 	  sscanf (input, "%d, %d, %d\n", &LNum, &X, &Y);
 	  free (input);
-	  Teleport (LNum, X, Y);
+	  Teleport ( LNum , X , Y , 0 ) ;
 	  break;
 
 	case 'r': /* change to new robot type */
@@ -1315,9 +1315,9 @@ Cheatmenu (void)
 	    }
 	  else
 	    {
-	      Me.type = i;
-	      Me.energy = Me.maxenergy;
-	      Me.health = Me.energy;
+	      Me[0].type = i;
+	      Me[0].energy = Me[0].maxenergy;
+	      Me[0].health = Me[0].energy;
 	      printf_SDL (Screen, x0, y0+20, "You are now a %s. Have fun!\n", input);
 	      getchar_raw ();
 	    }
@@ -1330,13 +1330,13 @@ Cheatmenu (void)
 
 	case 'e': /* complete heal */
 	  ClearGraphMem();
-	  printf_SDL (Screen, x0, y0, "Current energy: %f\n", Me.energy);
+	  printf_SDL (Screen, x0, y0, "Current energy: %f\n", Me[0].energy);
 	  printf_SDL (Screen, -1, -1, "Enter your new energy: ");
 	  input = GetString (40, 2);
 	  sscanf (input, "%d", &num);
 	  free (input);
-	  Me.energy = (double) num;
-	  if (Me.energy > Me.health) Me.health = Me.energy;
+	  Me[0].energy = (double) num;
+	  if (Me[0].energy > Me[0].health) Me[0].health = Me[0].energy;
 	  break;
 
 	case 'h': /* toggle hide invisible map */
@@ -1436,7 +1436,7 @@ enum
   int key;
   static int NoMissionLoadedEver=TRUE;
 
-  Me.status=MENU;
+  Me[0].status=MENU;
 
   DebugPrintf (2, "\nvoid MissionSelectMenu(void): real function call confirmed."); 
 
@@ -1466,7 +1466,7 @@ enum
       // PutInfluence( FIRST_MENU_ITEM_POS_X , 
       // FIRST_MENU_ITEM_POS_Y + (MenuPosition-1) * (FontHeight(Menu_BFont)) - Block_Width/4 );
       SetCurrentFont ( Menu_BFont );
-      PutInfluence( FIRST_MIS_SELECT_ITEM_POS_X , FIRST_MIS_SELECT_ITEM_POS_Y + ( MenuPosition - 1.5 ) * (FontHeight( Menu_BFont )) );
+      PutInfluence( FIRST_MIS_SELECT_ITEM_POS_X , FIRST_MIS_SELECT_ITEM_POS_Y + ( MenuPosition - 1.5 ) * (FontHeight( Menu_BFont )) , 0 );
 
       CenteredPutString (Screen ,  FIRST_MIS_SELECT_ITEM_POS_Y -2*FontHeight(GetCurrentFont()), "Mission Selection Menu");
       CenteredPutString (Screen ,  FIRST_MIS_SELECT_ITEM_POS_Y ,    "Classic Paradroid");
@@ -1533,7 +1533,7 @@ enum
   // Since we've faded out the whole scren, it can't hurt
   // to have the top status bar redrawn...
   BannerIsDestroyed=TRUE;
-  Me.status=MOBILE;
+  Me[0].status=MOBILE;
 
   return;
 
@@ -1559,7 +1559,7 @@ enum
   int MenuPosition=1;
   char* MenuTexts[10];
 
-  Me.status=MENU;
+  Me[0].status=MENU;
 
   DebugPrintf ( 1 , "\nvoid StartupMenu ( void ): real function call confirmed. "); 
 
@@ -1595,7 +1595,7 @@ enum
 	case MULTI_PLAYER_POSITION:
 	  DisplayImage (find_file (NE_TITLE_PIC_FILE, GRAPHICS_DIR, FALSE));
 	  SetCurrentFont ( Menu_BFont );
-	  Multi_Player_Menu();
+	  Weiter = Multi_Player_Menu();
 	  break;
 	case CREDITS_POSITION:
 	  Credits_Menu();
@@ -1614,7 +1614,7 @@ enum
   // Since we've faded out the whole scren, it can't hurt
   // to have the top status bar redrawn...
   BannerIsDestroyed=TRUE;
-  Me.status=MOBILE;
+  Me[0].status=MOBILE;
 
   return;
 
@@ -1644,7 +1644,7 @@ enum
   int i;
   char* MenuTexts[10];
 
-  Me.status=MENU;
+  Me[0].status=MENU;
 
   DebugPrintf (2, "\nvoid EscapeMenu(void): real function call confirmed."); 
 
@@ -1748,7 +1748,7 @@ enum
   // Since we've faded out the whole scren, it can't hurt
   // to have the top status bar redrawn...
   BannerIsDestroyed=TRUE;
-  Me.status=MOBILE;
+  Me[0].status=MOBILE;
 
   return;
 
@@ -1796,9 +1796,9 @@ enum
       // we highlight the currently selected option with an 
       // influencer to the left before it
       // PutInfluence( FIRST_MENU_ITEM_POS_X , 
-      // FIRST_MENU_ITEM_POS_Y + (MenuPosition-1) * (FontHeight(Menu_BFont)) - Block_Width/4 );
+      // FIRST_MENU_ITEM_POS_Y + (MenuPosition-1) * (FontHeight(Menu_BFont)) - Block_Width/4 , 0 );
       PutInfluence( OPTIONS_MENU_ITEM_POS_X - Block_Width/2, 
-		    FIRST_MENU_ITEM_POS_Y + ( MenuPosition - 1.5 ) * (FontHeight( Menu_BFont )) );
+		    FIRST_MENU_ITEM_POS_Y + ( MenuPosition - 1.5 ) * (FontHeight( Menu_BFont )) , 0 );
 
 
       PrintStringFont (Screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+0*FontHeight(Menu_BFont),
@@ -2204,6 +2204,23 @@ enum
  * This reads in the new name for the character...
  * ---------------------------------------------------------------------- */
 void
+Get_Server_Name ( void )
+{
+  char* Temp;
+  InitiateMenu( NE_TITLE_PIC_FILE );
+
+  DisplayText ( "\n Please enter name of server to connect to:\n\n\n      " , 
+		50 , 50 , NULL );
+
+  Temp = GetString( 40 , FALSE );
+  strcpy ( ServerName , Temp );
+  free( Temp );
+}; // void Get_New_Character_Name ( void )
+
+/* ----------------------------------------------------------------------
+ * This reads in the new name for the character...
+ * ---------------------------------------------------------------------- */
+void
 Get_New_Character_Name ( void )
 {
   char* Temp;
@@ -2213,7 +2230,7 @@ Get_New_Character_Name ( void )
 		50 , 50 , NULL );
 
   Temp = GetString( 20 , FALSE );
-  strcpy ( Me.character_name , Temp );
+  strcpy ( Me[0].character_name , Temp );
   free( Temp );
 }; // void Get_New_Character_Name ( void )
 
@@ -2253,10 +2270,10 @@ enum
   //
   for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
     {
-      Me.Inventory[ i ].type = (-1);
-      Me.Inventory[ i ].prefix_code = (-1);
-      Me.Inventory[ i ].suffix_code = (-1);
-      Me.Inventory[ i ].currently_held_in_hand = FALSE;
+      Me[0].Inventory[ i ].type = (-1);
+      Me[0].Inventory[ i ].prefix_code = (-1);
+      Me[0].Inventory[ i ].suffix_code = (-1);
+      Me[0].Inventory[ i ].currently_held_in_hand = FALSE;
     }
   DebugPrintf ( 1 , "\nSelect_Hero...( ... ): Inventory has been emptied...");
 
@@ -2264,29 +2281,29 @@ enum
   //--------------------
   // Now we add some safety, against 'none present' items
   //
-  Me.weapon_item.type = ( -1 ) ;
-  Me.drive_item.type = ( -1 ) ;
-  Me.armour_item.type = ( -1 ) ;
-  Me.shield_item.type = ( -1 ) ;
-  Me.aux1_item.type = ( -1 ) ;
-  Me.aux2_item.type = ( -1 ) ;
-  Me.special_item.type = ( -1 ) ;
+  Me[0].weapon_item.type = ( -1 ) ;
+  Me[0].drive_item.type = ( -1 ) ;
+  Me[0].armour_item.type = ( -1 ) ;
+  Me[0].shield_item.type = ( -1 ) ;
+  Me[0].aux1_item.type = ( -1 ) ;
+  Me[0].aux2_item.type = ( -1 ) ;
+  Me[0].special_item.type = ( -1 ) ;
 
-  Me.weapon_item.prefix_code = ( -1 ) ;
-  Me.drive_item.prefix_code = ( -1 ) ;
-  Me.armour_item.prefix_code = ( -1 ) ;
-  Me.shield_item.prefix_code = ( -1 ) ;
-  Me.aux1_item.prefix_code = ( -1 ) ;
-  Me.aux2_item.prefix_code = ( -1 ) ;
-  Me.special_item.prefix_code = ( -1 ) ;
+  Me[0].weapon_item.prefix_code = ( -1 ) ;
+  Me[0].drive_item.prefix_code = ( -1 ) ;
+  Me[0].armour_item.prefix_code = ( -1 ) ;
+  Me[0].shield_item.prefix_code = ( -1 ) ;
+  Me[0].aux1_item.prefix_code = ( -1 ) ;
+  Me[0].aux2_item.prefix_code = ( -1 ) ;
+  Me[0].special_item.prefix_code = ( -1 ) ;
 
-  Me.weapon_item.suffix_code = ( -1 ) ;
-  Me.drive_item.suffix_code = ( -1 ) ;
-  Me.armour_item.suffix_code = ( -1 ) ;
-  Me.shield_item.suffix_code = ( -1 ) ;
-  Me.aux1_item.suffix_code = ( -1 ) ;
-  Me.aux2_item.suffix_code = ( -1 ) ;
-  Me.special_item.suffix_code = ( -1 ) ;
+  Me[0].weapon_item.suffix_code = ( -1 ) ;
+  Me[0].drive_item.suffix_code = ( -1 ) ;
+  Me[0].armour_item.suffix_code = ( -1 ) ;
+  Me[0].shield_item.suffix_code = ( -1 ) ;
+  Me[0].aux1_item.suffix_code = ( -1 ) ;
+  Me[0].aux2_item.suffix_code = ( -1 ) ;
+  Me[0].special_item.suffix_code = ( -1 ) ;
 
   while (!Weiter)
     {
@@ -2303,31 +2320,31 @@ enum
 	case WAR_BOT_POSITION:
 	  while (EnterPressed() || SpacePressed() ) ;
 
-	  Me.character_class = WAR_BOT;
-	  Me.base_vitality = 25;
-	  Me.base_strength = 30;
-	  Me.base_dexterity = 25;
-	  Me.base_magic = 10;
+	  Me[0].character_class = WAR_BOT;
+	  Me[0].base_vitality = 25;
+	  Me[0].base_strength = 30;
+	  Me[0].base_dexterity = 25;
+	  Me[0].base_magic = 10;
 
-	  // Me.weapon_item.type = ITEM_SHORT_SWORD;
-	  Me.drive_item.type = ITEM_ANTIGRAV_BETA;
+	  // Me[0].weapon_item.type = ITEM_SHORT_SWORD;
+	  Me[0].drive_item.type = ITEM_ANTIGRAV_BETA;
 
-	  Me.Inventory[ 0 ].type = ITEM_SHORT_SWORD;
-	  Me.Inventory[ 0 ].inventory_position.x = 0;
-	  Me.Inventory[ 0 ].inventory_position.y = 0;
-	  Me.Inventory[ 1 ].type = ITEM_BUCKLER;
-	  Me.Inventory[ 1 ].inventory_position.x = 2;
-	  Me.Inventory[ 1 ].inventory_position.y = 0;
-	  Me.Inventory[ 2 ].type = ITEM_SMALL_HEALTH_POTION;
-	  Me.Inventory[ 2 ].inventory_position.x = 0;
-	  Me.Inventory[ 2 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
-	  Me.Inventory[ 3 ].type = ITEM_SMALL_HEALTH_POTION;
-	  Me.Inventory[ 3 ].inventory_position.x = 1;
-	  Me.Inventory[ 3 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
-	  FillInItemProperties ( & Me.Inventory[ 0 ] , TRUE , 0 );
-	  FillInItemProperties ( & Me.Inventory[ 1 ] , TRUE , 0 );
-	  FillInItemProperties ( & Me.Inventory[ 2 ] , TRUE , 0 );
-	  FillInItemProperties ( & Me.Inventory[ 3 ] , TRUE , 0 );
+	  Me[0].Inventory[ 0 ].type = ITEM_SHORT_SWORD;
+	  Me[0].Inventory[ 0 ].inventory_position.x = 0;
+	  Me[0].Inventory[ 0 ].inventory_position.y = 0;
+	  Me[0].Inventory[ 1 ].type = ITEM_BUCKLER;
+	  Me[0].Inventory[ 1 ].inventory_position.x = 2;
+	  Me[0].Inventory[ 1 ].inventory_position.y = 0;
+	  Me[0].Inventory[ 2 ].type = ITEM_SMALL_HEALTH_POTION;
+	  Me[0].Inventory[ 2 ].inventory_position.x = 0;
+	  Me[0].Inventory[ 2 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
+	  Me[0].Inventory[ 3 ].type = ITEM_SMALL_HEALTH_POTION;
+	  Me[0].Inventory[ 3 ].inventory_position.x = 1;
+	  Me[0].Inventory[ 3 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
+	  FillInItemProperties ( & Me[0].Inventory[ 0 ] , TRUE , 0 );
+	  FillInItemProperties ( & Me[0].Inventory[ 1 ] , TRUE , 0 );
+	  FillInItemProperties ( & Me[0].Inventory[ 2 ] , TRUE , 0 );
+	  FillInItemProperties ( & Me[0].Inventory[ 3 ] , TRUE , 0 );
 
 	  Get_New_Character_Name( );
 	  return ( TRUE );
@@ -2335,26 +2352,26 @@ enum
 	case SNIPER_BOT_POSITION: 
 	  while (EnterPressed() || SpacePressed() ) ;
 
-	  Me.character_class = SNIPER_BOT;
-	  Me.base_vitality = 20;
-	  Me.base_strength = 25;
-	  Me.base_dexterity = 35;
-	  Me.base_magic = 20;
+	  Me[0].character_class = SNIPER_BOT;
+	  Me[0].base_vitality = 20;
+	  Me[0].base_strength = 25;
+	  Me[0].base_dexterity = 35;
+	  Me[0].base_magic = 20;
 	  
-	  Me.drive_item.type = ITEM_ANTIGRAV_BETA;
+	  Me[0].drive_item.type = ITEM_ANTIGRAV_BETA;
 
-	  Me.Inventory[ 0 ].type = ITEM_SHORT_BOW;
-	  Me.Inventory[ 0 ].inventory_position.x = 0;
-	  Me.Inventory[ 0 ].inventory_position.y = 0;
-	  Me.Inventory[ 1 ].type = ITEM_SMALL_HEALTH_POTION;
-	  Me.Inventory[ 1 ].inventory_position.x = 0;
-	  Me.Inventory[ 1 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
-	  Me.Inventory[ 2 ].type = ITEM_SMALL_HEALTH_POTION;
-	  Me.Inventory[ 2 ].inventory_position.x = 1;
-	  Me.Inventory[ 2 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
-	  FillInItemProperties ( & Me.Inventory[ 0 ] , TRUE , 0 );
-	  FillInItemProperties ( & Me.Inventory[ 1 ] , TRUE , 0 );
-	  FillInItemProperties ( & Me.Inventory[ 2 ] , TRUE , 0 );
+	  Me[0].Inventory[ 0 ].type = ITEM_SHORT_BOW;
+	  Me[0].Inventory[ 0 ].inventory_position.x = 0;
+	  Me[0].Inventory[ 0 ].inventory_position.y = 0;
+	  Me[0].Inventory[ 1 ].type = ITEM_SMALL_HEALTH_POTION;
+	  Me[0].Inventory[ 1 ].inventory_position.x = 0;
+	  Me[0].Inventory[ 1 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
+	  Me[0].Inventory[ 2 ].type = ITEM_SMALL_HEALTH_POTION;
+	  Me[0].Inventory[ 2 ].inventory_position.x = 1;
+	  Me[0].Inventory[ 2 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
+	  FillInItemProperties ( & Me[0].Inventory[ 0 ] , TRUE , 0 );
+	  FillInItemProperties ( & Me[0].Inventory[ 1 ] , TRUE , 0 );
+	  FillInItemProperties ( & Me[0].Inventory[ 2 ] , TRUE , 0 );
 
 	  Get_New_Character_Name( );
 	  return ( TRUE );
@@ -2362,25 +2379,25 @@ enum
 	case MIND_BOT_POSITION: 
 	  while (EnterPressed() || SpacePressed() ) ;
 
-	  Me.character_class = MIND_BOT;
-	  Me.base_vitality = 15;
-	  Me.base_strength = 15;
-	  Me.base_dexterity = 20;
-	  Me.base_magic = 35;
-	  Me.drive_item.type = ITEM_ANTIGRAV_ALPHA;
+	  Me[0].character_class = MIND_BOT;
+	  Me[0].base_vitality = 15;
+	  Me[0].base_strength = 15;
+	  Me[0].base_dexterity = 20;
+	  Me[0].base_magic = 35;
+	  Me[0].drive_item.type = ITEM_ANTIGRAV_ALPHA;
 
-	  Me.Inventory[ 0 ].type = ITEM_STAFF;
-	  Me.Inventory[ 0 ].inventory_position.x = 0;
-	  Me.Inventory[ 0 ].inventory_position.y = 0;
-	  Me.Inventory[ 1 ].type = ITEM_SMALL_MANA_POTION;
-	  Me.Inventory[ 1 ].inventory_position.x = 0;
-	  Me.Inventory[ 1 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
-	  Me.Inventory[ 2 ].type = ITEM_SMALL_MANA_POTION;
-	  Me.Inventory[ 2 ].inventory_position.x = 1;
-	  Me.Inventory[ 2 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
-	  FillInItemProperties ( & Me.Inventory[ 0 ] , TRUE , 0 );
-	  FillInItemProperties ( & Me.Inventory[ 1 ] , TRUE , 0 );
-	  FillInItemProperties ( & Me.Inventory[ 2 ] , TRUE , 0 );
+	  Me[0].Inventory[ 0 ].type = ITEM_STAFF;
+	  Me[0].Inventory[ 0 ].inventory_position.x = 0;
+	  Me[0].Inventory[ 0 ].inventory_position.y = 0;
+	  Me[0].Inventory[ 1 ].type = ITEM_SMALL_MANA_POTION;
+	  Me[0].Inventory[ 1 ].inventory_position.x = 0;
+	  Me[0].Inventory[ 1 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
+	  Me[0].Inventory[ 2 ].type = ITEM_SMALL_MANA_POTION;
+	  Me[0].Inventory[ 2 ].inventory_position.x = 1;
+	  Me[0].Inventory[ 2 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
+	  FillInItemProperties ( & Me[0].Inventory[ 0 ] , TRUE , 0 );
+	  FillInItemProperties ( & Me[0].Inventory[ 1 ] , TRUE , 0 );
+	  FillInItemProperties ( & Me[0].Inventory[ 2 ] , TRUE , 0 );
 
 	  Get_New_Character_Name( );
 	  return ( TRUE );
@@ -2396,6 +2413,78 @@ enum
     }
   return ( FALSE );
 }; // int Select_Hero_Class_Menu ( void );
+
+/* ----------------------------------------------------------------------
+ * This function does the selection of the hero class...
+ * ---------------------------------------------------------------------- */
+int
+Connect_To_Existing_Server_Menu (void)
+{
+
+  //--------------------
+  // Now we add some safety, against 'none present' items
+  //
+  Me[0].weapon_item.type = ( -1 ) ;
+  Me[0].drive_item.type = ( -1 ) ;
+  Me[0].armour_item.type = ( -1 ) ;
+  Me[0].shield_item.type = ( -1 ) ;
+  Me[0].aux1_item.type = ( -1 ) ;
+  Me[0].aux2_item.type = ( -1 ) ;
+  Me[0].special_item.type = ( -1 ) ;
+
+  Me[0].weapon_item.prefix_code = ( -1 ) ;
+  Me[0].drive_item.prefix_code = ( -1 ) ;
+  Me[0].armour_item.prefix_code = ( -1 ) ;
+  Me[0].shield_item.prefix_code = ( -1 ) ;
+  Me[0].aux1_item.prefix_code = ( -1 ) ;
+  Me[0].aux2_item.prefix_code = ( -1 ) ;
+  Me[0].special_item.prefix_code = ( -1 ) ;
+
+  Me[0].weapon_item.suffix_code = ( -1 ) ;
+  Me[0].drive_item.suffix_code = ( -1 ) ;
+  Me[0].armour_item.suffix_code = ( -1 ) ;
+  Me[0].shield_item.suffix_code = ( -1 ) ;
+  Me[0].aux1_item.suffix_code = ( -1 ) ;
+  Me[0].aux2_item.suffix_code = ( -1 ) ;
+  Me[0].special_item.suffix_code = ( -1 ) ;
+
+  Me[0].character_class = WAR_BOT;
+  Me[0].base_vitality = 25;
+  Me[0].base_strength = 30;
+  Me[0].base_dexterity = 25;
+  Me[0].base_magic = 10;
+
+  // Me[0].weapon_item.type = ITEM_SHORT_SWORD;
+  Me[0].drive_item.type = ITEM_ANTIGRAV_BETA;
+
+  Me[0].Inventory[ 0 ].type = ITEM_SHORT_SWORD;
+  Me[0].Inventory[ 0 ].inventory_position.x = 0;
+  Me[0].Inventory[ 0 ].inventory_position.y = 0;
+  Me[0].Inventory[ 1 ].type = ITEM_BUCKLER;
+  Me[0].Inventory[ 1 ].inventory_position.x = 2;
+  Me[0].Inventory[ 1 ].inventory_position.y = 0;
+  Me[0].Inventory[ 2 ].type = ITEM_SMALL_HEALTH_POTION;
+  Me[0].Inventory[ 2 ].inventory_position.x = 0;
+  Me[0].Inventory[ 2 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
+  Me[0].Inventory[ 3 ].type = ITEM_SMALL_HEALTH_POTION;
+  Me[0].Inventory[ 3 ].inventory_position.x = 1;
+  Me[0].Inventory[ 3 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
+  FillInItemProperties ( & Me[0].Inventory[ 0 ] , TRUE , 0 );
+  FillInItemProperties ( & Me[0].Inventory[ 1 ] , TRUE , 0 );
+  FillInItemProperties ( & Me[0].Inventory[ 2 ] , TRUE , 0 );
+  FillInItemProperties ( & Me[0].Inventory[ 3 ] , TRUE , 0 );
+
+  Get_Server_Name ( );
+  Get_New_Character_Name( );
+
+  ConnectToFreedroidServer (  );
+
+  if ( strlen ( ServerName ) > 0 )
+    return ( TRUE );
+  else
+    return ( FALSE );
+
+}; // int Connect_To_Existing_Server_Menu ( void );
 
 /* ----------------------------------------------------------------------
  * The GNU C Library is SOOOO COOOL!!! It contains functions for directory
@@ -2487,7 +2576,7 @@ I need to know that for saving. Abort.\n");
       else
 	{
 	  InitNewMissionList ( NEW_MISSION );
-	  strcpy( Me.character_name , MenuTexts[ MenuPosition -1 ] );
+	  strcpy( Me[0].character_name , MenuTexts[ MenuPosition -1 ] );
 	  LoadGame( );
 	  return ( TRUE );
 	}
@@ -2582,24 +2671,30 @@ enum
 }; // void Single_Player_Menu ( void );
 
 
-/*@Function============================================================
-@Desc: This function provides the single player menu.  This menu is a 
-       submenu of the big EscapeMenu.  Here you can restart a new game,
-       see the highscore list, see mission instructions and such 
-       things.
-
-@Ret:  none
-* $Function----------------------------------------------------------*/
-void
-Old_Single_Player_Menu (void)
+/* ----------------------------------------------------------------------
+ * This function provides the multi player menu.  It is a submenu
+ * of the big EscapeMenu.  Instead of connecting to a server or 
+ * something it simply displayes the nonchalant message, that 
+ * nothing is implemented yet, but sooner or later it will be.
+ * ---------------------------------------------------------------------- */
+int
+Multi_Player_Menu (void)
 {
   int Weiter = 0;
   int MenuPosition=1;
   char* MenuTexts[10];
 
-  MenuTexts[0]="New Game";
-  MenuTexts[1]="Show Highscores";
-  MenuTexts[2]="Show Mission Details";
+enum
+  { 
+    START_AS_SERVER_POSITION=1, 
+    JOIN_EXISTING_MULTIPLAYER_POSITION, 
+    LIST_KNOWN_SERVERS,
+    BACK_POSITION
+  };
+
+  MenuTexts[0]="Start as a Server";
+  MenuTexts[1]="Join existing Multiplayer game";
+  MenuTexts[2]="List known Servers";
   MenuTexts[3]="Back";
   MenuTexts[4]="";
   MenuTexts[5]="";
@@ -2610,82 +2705,69 @@ Old_Single_Player_Menu (void)
 
   while (!Weiter)
     {
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NE_TITLE_PIC_FILE );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , NE_TITLE_PIC_FILE );
 
       switch (MenuPosition) 
 	{
 	case (-1):
 	  Weiter=!Weiter;
 	  break;
-	case NEW_GAME_POSITION:
+	case START_AS_SERVER_POSITION:
 	  while (EnterPressed() || SpacePressed() ) ;
-	  New_Game_Requested=TRUE;
-	  InitNewMissionList ( STANDARD_MISSION );
-	  Weiter=!Weiter;
+
+	  InitNewMissionList ( NEW_MISSION );	
+
+	  ServerMode = TRUE ;
+
+	  OpenTheServerSocket (  );
+
+	  Weiter=TRUE;
+	  return ( TRUE );
+
 	  break;
-	case SHOW_HISCORE_POSITION: 
+
+	case JOIN_EXISTING_MULTIPLAYER_POSITION: 
 	  while (EnterPressed() || SpacePressed() ) ;
-	  Show_Highscores();
+
+	  if ( Connect_To_Existing_Server_Menu ( ) == TRUE )
+	    {
+	      Weiter = TRUE;
+	      InitNewMissionList ( NEW_MISSION );
+	      ClientMode = TRUE;
+	      return ( TRUE );
+	    }
+	  else
+	    {
+	      Weiter = FALSE;
+	      // return ( FALSE );
+	    }
+
 	  break;
-	case SHOW_MISSION_POSITION:
+	case LIST_KNOWN_SERVERS: 
 	  while (EnterPressed() || SpacePressed() ) ;
-	  Show_Mission_Log_Menu();
+
+	  if ( Load_Existing_Hero_Menu ( ) == TRUE )
+	    {
+	      Weiter = TRUE;
+	      return ( TRUE );
+	    }
+	  else
+	    {
+	      Weiter = FALSE;
+	      // return ( FALSE );
+	    }
+
 	  break;
 	case BACK_POSITION:
 	  while (EnterPressed() || SpacePressed() ) ;
 	  Weiter=!Weiter;
+	  return ( FALSE );
 	  break;
 	default: 
 	  break;
 	}
     }
-}; // void Old_Single_Player_Menu ( void );
-
-
-/*@Function============================================================
-@Desc: This function provides the multi player menu.  It is a submenu
-       of the big EscapeMenu.  Instead of connecting to a server or 
-       something it simply displayes the nonchalant message, that 
-       nothing is implemented yet, but sooner or later it will be.
-
-@Ret:  none
-* $Function----------------------------------------------------------*/
-void
-Multi_Player_Menu (void)
-{
-  int Weiter = 0;
-
-  enum { NEW_GAME_POSITION=1, SHOW_HISCORE_POSITION=2, SHOW_MISSION_POSITION=3, BACK_POSITION=4 };
-
-  // while( !SpacePressed() && !EnterPressed() ) keyboard_update(); 
-  while( SpacePressed() || EnterPressed() ) keyboard_update(); 
-
-  while (!Weiter)
-    {
-
-      // InitiateMenu();
-
-      CenteredPutString ( Screen , 1*FontHeight(Menu_BFont), "MULTI PLAYER" );
-      LeftPutString ( Screen , 3*FontHeight(Menu_BFont), "We are sorry, but multi player mode");
-      LeftPutString ( Screen , 4*FontHeight(Menu_BFont), "is not operational yet.");
-      LeftPutString ( Screen , 6*FontHeight(Menu_BFont), "We'd like to see this functional in");
-      LeftPutString ( Screen , 7*FontHeight(Menu_BFont), "version 1.0, but we won't make any");
-      LeftPutString ( Screen , 8*FontHeight(Menu_BFont), "promises, since we've never done any");
-      LeftPutString ( Screen , 9*FontHeight(Menu_BFont), "networking code before.");
-
-      LeftPutString ( Screen ,11*FontHeight(Menu_BFont), "Advice or code sniplets or any help");
-      LeftPutString ( Screen ,12*FontHeight(Menu_BFont), "would be welcome.");
-
-      SDL_Flip( Screen );
-
-      // Wait until the user does SOMETHING
-
-      if ( EscapePressed() || EnterPressed() || SpacePressed() )
-	{
-	  Weiter=!Weiter;
-	}
-    }
-  while ( EscapePressed() || EnterPressed() || SpacePressed() );
+  return ( TRUE );
 
 } // Multi_Player_Menu
 
@@ -2744,39 +2826,39 @@ Show_Mission_Details ( int MissionNumber )
       CenteredPutString ( Screen ,  1*FontHeight(Menu_BFont),    "MISSION DETAILS");
 
       printf_SDL ( Screen , User_Rect.x , 3 *FontHeight(Menu_BFont) , "Kill all droids : "  );
-      if ( Me.AllMissions[ MissionNumber ].KillAll != (-1) ) printf_SDL( Screen , -1 , -1 , "YES" ); 
+      if ( Me[0].AllMissions[ MissionNumber ].KillAll != (-1) ) printf_SDL( Screen , -1 , -1 , "YES" ); 
       else printf_SDL( Screen , -1 , -1 , "NO" );
 
       printf_SDL ( Screen , User_Rect.x , 4 *FontHeight(Menu_BFont) , "Kill special : "  );
-      if ( Me.AllMissions[ MissionNumber ].KillOne != (-1) ) printf_SDL( Screen , -1 , -1 , "YES" ); 
+      if ( Me[0].AllMissions[ MissionNumber ].KillOne != (-1) ) printf_SDL( Screen , -1 , -1 , "YES" ); 
       else printf_SDL( Screen , -1 , -1 , "NO" );
       printf_SDL ( Screen , -1 , -1 , "   ReachLevel : "  );
-      if ( Me.AllMissions[ MissionNumber ].MustReachLevel != (-1) ) printf_SDL( Screen , -1 , -1 , "%d\n" , Me.AllMissions[ MissionNumber ].MustReachLevel ); 
+      if ( Me[0].AllMissions[ MissionNumber ].MustReachLevel != (-1) ) printf_SDL( Screen , -1 , -1 , "%d\n" , Me[0].AllMissions[ MissionNumber ].MustReachLevel ); 
       else printf_SDL( Screen , -1 , -1 , "NONE\n" );
 
       printf_SDL ( Screen , User_Rect.x , 5 *FontHeight(Menu_BFont) , "Reach X= : "  );
-      if ( Me.AllMissions[ MissionNumber ].MustReachPoint.x != (-1) ) printf_SDL( Screen , -1 , -1 , "%d" , Me.AllMissions[ MissionNumber ].MustReachPoint.x ); 
+      if ( Me[0].AllMissions[ MissionNumber ].MustReachPoint.x != (-1) ) printf_SDL( Screen , -1 , -1 , "%d" , Me[0].AllMissions[ MissionNumber ].MustReachPoint.x ); 
       else printf_SDL( Screen , -1 , -1 , "NONE" );
       printf_SDL ( Screen , -1 , -1 , "   Reach Y= : "  );
-      if ( Me.AllMissions[ MissionNumber ].MustReachPoint.y != (-1) ) printf_SDL( Screen , -1 , -1 , "%d\n" , Me.AllMissions[ MissionNumber ].MustReachPoint.y );
+      if ( Me[0].AllMissions[ MissionNumber ].MustReachPoint.y != (-1) ) printf_SDL( Screen , -1 , -1 , "%d\n" , Me[0].AllMissions[ MissionNumber ].MustReachPoint.y );
       else printf_SDL( Screen , -1 , -1 , "NONE\n" );
 
       printf_SDL ( Screen , User_Rect.x , 6 *FontHeight(Menu_BFont) , "Live Time : "  );
-      if ( Me.AllMissions[ MissionNumber ].MustLiveTime != (-1) ) printf_SDL( Screen , -1 , -1 , "%4.0f" , Me.AllMissions[ MissionNumber ].MustLiveTime ); 
+      if ( Me[0].AllMissions[ MissionNumber ].MustLiveTime != (-1) ) printf_SDL( Screen , -1 , -1 , "%4.0f" , Me[0].AllMissions[ MissionNumber ].MustLiveTime ); 
       else printf_SDL( Screen , -1 , -1 , "NONE" );
       printf_SDL ( Screen , User_Rect.x , 7 *FontHeight(Menu_BFont) , "Must be class : "  );
-      if ( Me.AllMissions[ MissionNumber ].MustBeClass != (-1) ) printf_SDL( Screen , -1 , -1 , "%d\n" , Me.AllMissions[ MissionNumber ].MustBeClass );
+      if ( Me[0].AllMissions[ MissionNumber ].MustBeClass != (-1) ) printf_SDL( Screen , -1 , -1 , "%d\n" , Me[0].AllMissions[ MissionNumber ].MustBeClass );
       else printf_SDL( Screen , -1 , -1 , "NONE\n" );
 
       printf_SDL ( Screen , User_Rect.x , 8 *FontHeight(Menu_BFont) , "Must be type : "  );
-      if ( Me.AllMissions[ MissionNumber ].MustBeType != (-1) ) printf_SDL( Screen , -1 , -1 , "%d" , Me.AllMissions[ MissionNumber ].MustBeType ); 
+      if ( Me[0].AllMissions[ MissionNumber ].MustBeType != (-1) ) printf_SDL( Screen , -1 , -1 , "%d" , Me[0].AllMissions[ MissionNumber ].MustBeType ); 
       else printf_SDL( Screen , -1 , -1 , "NONE" );
       printf_SDL ( Screen , User_Rect.x , 9*FontHeight(Menu_BFont) , "Must be special : "  );
-      if ( Me.AllMissions[ MissionNumber ].MustBeOne != (-1) ) printf_SDL( Screen , -1 , -1 , "YES" );
+      if ( Me[0].AllMissions[ MissionNumber ].MustBeOne != (-1) ) printf_SDL( Screen , -1 , -1 , "YES" );
       else printf_SDL( Screen , -1 , -1 , "NO\n" );
 
       printf_SDL ( Screen , User_Rect.x , 10 * FontHeight(Menu_BFont) , "Kill Class : "  );
-      if ( Me.AllMissions[ MissionNumber ].KillClass != (-1) ) printf_SDL( Screen , -1 , -1 , "%s" , Classname[Me.AllMissions[ MissionNumber ].KillClass] ); 
+      if ( Me[0].AllMissions[ MissionNumber ].KillClass != (-1) ) printf_SDL( Screen , -1 , -1 , "%s" , Classname[Me[0].AllMissions[ MissionNumber ].KillClass] ); 
       else printf_SDL( Screen , -1 , -1 , "NONE\n" );
 
       SDL_Flip( Screen );
@@ -2831,21 +2913,21 @@ Show_Mission_Log_Menu (void)
       for ( i = 0 ; i < MAX_MISSIONS_IN_GAME ; i ++ )
 	{
 
-	  if ( Me.AllMissions[i].MissionExistsAtAll != TRUE ) continue;
+	  if ( Me[0].AllMissions[i].MissionExistsAtAll != TRUE ) continue;
 
 	  NoOfActiveMissions++;
 
 	  // DisplayText ( "\nMission status: " , -1 , -1 , Mission_Window_Pointer );
 
-	  if ( Me.AllMissions[i].MissionIsComplete == TRUE )
+	  if ( Me[0].AllMissions[i].MissionIsComplete == TRUE )
 	    {
 	      DisplayText ( "SOLVED: " , 0 , FIRST_MISSION_POS_Y + NoOfActiveMissions * InterLineSpace , Mission_Window_Pointer );
 	    }
-	  else if ( Me.AllMissions[i].MissionWasFailed == TRUE )
+	  else if ( Me[0].AllMissions[i].MissionWasFailed == TRUE )
 	    {
 	      DisplayText ( "FAILED: " , 0 , FIRST_MISSION_POS_Y + NoOfActiveMissions * InterLineSpace , Mission_Window_Pointer );
 	    }
-	  else if ( Me.AllMissions[i].MissionWasAssigned == TRUE ) 
+	  else if ( Me[0].AllMissions[i].MissionWasAssigned == TRUE ) 
 	    {
 	      DisplayText ( "ASSIGNED: " , 0 , FIRST_MISSION_POS_Y + NoOfActiveMissions * InterLineSpace , Mission_Window_Pointer );
 	    }
@@ -2854,7 +2936,7 @@ Show_Mission_Log_Menu (void)
 	      DisplayText ( "UNASSIGNED: " , 0 , FIRST_MISSION_POS_Y +  NoOfActiveMissions * InterLineSpace , Mission_Window_Pointer );
 	    }
 
-	  DisplayText ( Me.AllMissions[i].MissionName , MISSION_NAME_POS_X , 
+	  DisplayText ( Me[0].AllMissions[i].MissionName , MISSION_NAME_POS_X , 
 			FIRST_MISSION_POS_Y + NoOfActiveMissions * InterLineSpace ,  Mission_Window_Pointer );
 
 	}
@@ -2863,7 +2945,7 @@ Show_Mission_Log_Menu (void)
 		    -1 , -1 , Mission_Window_Pointer );
 
       // Highlight currently selected option with an influencer before it
-      PutInfluence( MISSION_NAME_POS_X , FIRST_MISSION_POS_Y + (MenuPosition) * InterLineSpace - Block_Width/4 );
+      PutInfluence( MISSION_NAME_POS_X , FIRST_MISSION_POS_Y + (MenuPosition) * InterLineSpace - Block_Width/4 , 0 );
 
       // If the user pressed up or down, the cursor within
       // the level editor menu has to be moved, which is done here:

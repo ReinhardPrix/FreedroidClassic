@@ -111,21 +111,23 @@
   ((int)(fein) / INITIAL_BLOCK_WIDTH)
 
 /* Macros */
-#define GrobX (Me.pos.x / INITIAL_BLOCK_WIDTH)
-#define GrobY (Me.pos.y / INITIAL_BLOCK_HEIGHT)
-#define FeinX (Me.pos.x%INITIAL_BLOCK_WIDTH)
-#define FeinY (Me.pos.y%INITIAL_BLOCK_HEIGHT)
+#define GrobX (Me[0].pos.x / INITIAL_BLOCK_WIDTH)
+#define GrobY (Me[0].pos.y / INITIAL_BLOCK_HEIGHT)
+#define FeinX (Me[0].pos.x%INITIAL_BLOCK_WIDTH)
+#define FeinY (Me[0].pos.y%INITIAL_BLOCK_HEIGHT)
 
-#define CLFeinY ((Me.pos.y+INITIAL_BLOCK_HEIGHT/2) % INITIAL_BLOCK_HEIGHT)
-#define CLGrobY ((Me.pos.y+INITIAL_BLOCK_HEIGHT/2) / INITIAL_BLOCK_HEIGHT)
-#define CLFeinX ((Me.pos.x+INITIAL_BLOCK_WIDTH/2) % INITIAL_BLOCK_HEIGHT)
-#define CLGrobX ((Me.pos.x+INITIAL_BLOCK_WIDTH/2) / INITIAL_BLOCK_HEIGHT)
+#define CLFeinY ((Me[0].pos.y+INITIAL_BLOCK_HEIGHT/2) % INITIAL_BLOCK_HEIGHT)
+#define CLGrobY ((Me[0].pos.y+INITIAL_BLOCK_HEIGHT/2) / INITIAL_BLOCK_HEIGHT)
+#define CLFeinX ((Me[0].pos.x+INITIAL_BLOCK_WIDTH/2) % INITIAL_BLOCK_HEIGHT)
+#define CLGrobX ((Me[0].pos.x+INITIAL_BLOCK_WIDTH/2) / INITIAL_BLOCK_HEIGHT)
 
 //--------------------
 // Constants influencing code generation and
 // constants defining flags for some functions:
 //
 #define USE_SDL_FRAMERATE
+
+#define MAX_CHARACTER_NAME_LENGTH (25)
 
 //--------------------
 // Highscore related defines 
@@ -348,6 +350,8 @@ enum _sounds
 
 #define NUM_EL_BLOCKS		17
 
+#define MAX_PLAYERS             5
+
 #define EL_BLOCK_LEN		8
 #define EL_BLOCK_HEIGHT		8
 #define EL_BLOCK_MEM 		EL_BLOCK_LEN * EL_BLOCK_HEIGHT
@@ -546,6 +550,19 @@ enum _status
   BRIEFING,
   MENU
 };
+
+//--------------------
+// The possible networking statuses of clients.
+//
+enum _networking_status
+  {
+    NETWORK_ERROR = 0 ,
+    UNCONNECTED , 
+    CONNECTION_FRESHLY_OPENED ,
+    NAME_HAS_BEEN_TRANSMITTED , 
+    GAME_ON
+  };
+
 
 #define DECKCOMPLETEBONUS 500
 

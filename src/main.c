@@ -56,6 +56,7 @@ int
 main (int argc, char *const argv[])
 {
   int i;
+  int PlayerNum;
 
   GameOver = FALSE;
   QuitProgram = FALSE;
@@ -86,51 +87,70 @@ main (int argc, char *const argv[])
 
       GameOver = FALSE;
 
-      while (!GameOver && !QuitProgram)
+      while ( (!GameOver && !QuitProgram) || ServerMode )
 	{
+
+	  if ( ServerMode ) AcceptConnectionsFromClients ( ) ;
+
+	  if ( ServerMode ) ListenToAllRemoteClients ( ) ; 
+
+	  if ( ClientMode ) ListenForServerMessages ( ) ;
+
+	  if ( ServerMode ) SendPeriodicServerMessagesToAllClients (  ) ;
 
 	  StartTakingTimeForFPSCalculation(); 
 
 	  UpdateCountersForThisFrame ();
 
-	  CollectAutomapData ();
+	  CollectAutomapData (); // this is a pure client issue.  Only do it for the main player...
 
 	  ReactToSpecialKeys();
 
-	  MoveLevelDoors ();	
+	  for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ ) 
+	    {
+	      MoveLevelDoors ( PlayerNum ) ; // this is also a pure client issue, but done for all players...
+	    }
 
-	  CheckForTriggeredEventsAndStatements();
+	  for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ ) 
+	    CheckForTriggeredEventsAndStatements ( PlayerNum ) ;
 
-	  AnimateRefresh ();	
+	  AnimateRefresh (); // this is a pure client issue.  Not dependent upon the players.
 
-	  AnimateTeleports ();	
+	  AnimateTeleports (); // this is a pure client issue.  Not dependent upon the players.
 
 	  ExplodeBlasts ();	// move blasts to the right current "phase" of the blast
 
-	  MoveBullets ();   // please leave this in front of graphics output, so that time_in_frames always starts with 1
-
-	  Update_Tux_Working_Copy ();
+	  //--------------------
+	  // Now, for multiplayer, we update all player images...
+	  //
+	  for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ )
+	    Update_Tux_Working_Copy ( PlayerNum ); // do this for player Nr. 
 
 	  // Assemble_Combat_Picture ( DO_SCREEN_UPDATE ); 
 	  Assemble_Combat_Picture ( 0 ); 
 
-	  DisplayBanner (NULL, NULL,  0 );
+	  MoveBullets ();   // please leave this in front of graphics output, so that time_in_frames always starts with 1
+
+	  DisplayBanner (NULL, NULL,  0 ); // this is a pure client issue
 
 	  SDL_Flip ( Screen );
 
 	  for (i = 0; i < MAXBULLETS; i++) CheckBulletCollisions (i);
 
-	  MoveInfluence ();	// change Influ-speed depending on keys pressed, but
+	  if ( ! ClientMode )
+	    for ( i = 0 ; i < MAX_PLAYERS ; i ++ ) MoveInfluence ( i );	// change Influ-speed depending on keys pressed, but
 	                        // also change his status and position and "phase" of rotation
 
-	  UpdateAllCharacterStats ( );
+	  // MoveInfluence ( 0 ) ; // for now, we move only influence nr. 0 
+
+	  UpdateAllCharacterStats ( 0 );
 
 	  // Move_Influencers_Friends (); // Transport followers to next level
 
-	  MoveEnemys ();	// move all the enemys:
+	  if ( ! ClientMode ) MoveEnemys ();	// move all the enemys:
 	                        // also do attacks on influ and also move "phase" or their rotation
 
-	  CheckInfluenceWallCollisions ();	// test if influs way is blocked by walls...
+	  for ( i = 0 ; i < MAX_PLAYERS ; i ++ ) CheckInfluenceWallCollisions ( i );	// test if influs way is blocked by walls...
 
 	  CheckInfluenceEnemyCollision ();
 
@@ -148,7 +168,7 @@ main (int argc, char *const argv[])
     } /* while !QuitProgram */
   Terminate (0);
   return (0);
-}				// void main(void)
+}; // void main ( void )
 
 /* -----------------------------------------------------------------
  * This function updates counters and is called ONCE every frame.
@@ -169,7 +189,7 @@ UpdateCountersForThisFrame (void)
   LastBlastHit++;
 
   Total_Frames_Passed_In_Mission++;
-  Me.FramesOnThisLevel++;
+  Me[0].FramesOnThisLevel++;
   // The next couter counts the frames displayed by freedroid during this
   // whole run!!  DO NOT RESET THIS COUNTER WHEN THE GAME RESTARTS!!
   Overall_Frames_Displayed++;
@@ -182,29 +202,29 @@ UpdateCountersForThisFrame (void)
 
   LastGotIntoBlastSound += Frame_Time ();
   LastRefreshSound += Frame_Time ();
-  Me.LastCrysoundTime += Frame_Time ();
-  Me.MissionTimeElapsed += Frame_Time();
-  Me.LastTransferSoundTime += Frame_Time();
-  Me.TextVisibleTime += Frame_Time();
-  if ( Me.weapon_swing_time != (-1) ) Me.weapon_swing_time += Frame_Time();
-  if ( Me.got_hit_time != (-1) ) Me.got_hit_time += Frame_Time();
+  Me[0].LastCrysoundTime += Frame_Time ();
+  Me[0].MissionTimeElapsed += Frame_Time();
+  Me[0].LastTransferSoundTime += Frame_Time();
+  Me[0].TextVisibleTime += Frame_Time();
+  if ( Me[0].weapon_swing_time != (-1) ) Me[0].weapon_swing_time += Frame_Time();
+  if ( Me[0].got_hit_time != (-1) ) Me[0].got_hit_time += Frame_Time();
 
   LevelDoorsNotMovedTime += Frame_Time();
 
   if ( SkipAFewFrames ) SkipAFewFrames--;
 
-  if ( Me.firewait > 0 )
+  if ( Me[0].firewait > 0 )
     {
-      Me.firewait-=Frame_Time();
-      if (Me.firewait < 0) Me.firewait=0;
+      Me[0].firewait-=Frame_Time();
+      if (Me[0].firewait < 0) Me[0].firewait=0;
     }
   if (ShipEmptyCounter > 1)
     ShipEmptyCounter--;
   if (CurLevel->empty > 2)
     CurLevel->empty--;
-  if (Me.Experience > ShowScore)
+  if (Me[0].Experience > ShowScore)
     ShowScore++;
-  if (Me.Experience < ShowScore)
+  if (Me[0].Experience < ShowScore)
     ShowScore--;
 
   for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)

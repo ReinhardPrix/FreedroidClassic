@@ -97,25 +97,25 @@ SDL_Rect SkillScreenRect;
  * This function handles the ForceExplosionCircle skill.
  * ---------------------------------------------------------------------- */
 void
-ForceExplosionCircle ( finepoint ExpCenter )
+ForceExplosionCircle ( gps ExpCenter )
 {
-  if ( Me.mana >= 3 )
+  if ( Me[0].mana >= 3 )
     {
-      Me.mana -= 3;
-      StartBlast ( ExpCenter.x + 1 , ExpCenter.y , DRUIDBLAST );
-      StartBlast ( ExpCenter.x - 1 , ExpCenter.y , DRUIDBLAST );
-      StartBlast ( ExpCenter.x     , ExpCenter.y - 1 , DRUIDBLAST );
-      StartBlast ( ExpCenter.x     , ExpCenter.y + 1 , DRUIDBLAST );
+      Me[0].mana -= 3;
+      StartBlast ( ExpCenter.x + 1   , ExpCenter.y       , ExpCenter.z , DRUIDBLAST );
+      StartBlast ( ExpCenter.x - 1   , ExpCenter.y       , ExpCenter.z , DRUIDBLAST );
+      StartBlast ( ExpCenter.x       , ExpCenter.y - 1   , ExpCenter.z , DRUIDBLAST );
+      StartBlast ( ExpCenter.x       , ExpCenter.y + 1   , ExpCenter.z , DRUIDBLAST );
 
-      StartBlast ( ExpCenter.x + 0.5 , ExpCenter.y + 0.5 , DRUIDBLAST );
-      StartBlast ( ExpCenter.x - 0.5 , ExpCenter.y + 0.5 , DRUIDBLAST );
-      StartBlast ( ExpCenter.x + 0.5 , ExpCenter.y - 0.5 , DRUIDBLAST );
-      StartBlast ( ExpCenter.x - 0.5 , ExpCenter.y - 0.5 , DRUIDBLAST );
+      StartBlast ( ExpCenter.x + 0.5 , ExpCenter.y + 0.5 , ExpCenter.z , DRUIDBLAST );
+      StartBlast ( ExpCenter.x - 0.5 , ExpCenter.y + 0.5 , ExpCenter.z , DRUIDBLAST );
+      StartBlast ( ExpCenter.x + 0.5 , ExpCenter.y - 0.5 , ExpCenter.z , DRUIDBLAST );
+      StartBlast ( ExpCenter.x - 0.5 , ExpCenter.y - 0.5 , ExpCenter.z , DRUIDBLAST );
     }
   else
     {
-      Me.TextVisibleTime = 0;
-      Me.TextToBeDisplayed = "Not enough force left within me.";
+      Me[0].TextVisibleTime = 0;
+      Me[0].TextToBeDisplayed = "Not enough force left within me.";
     }
 }; // void ForceExplosionCircle ( finepoint ExpCenter )
 
@@ -123,26 +123,26 @@ ForceExplosionCircle ( finepoint ExpCenter )
  * This function handles the ForceExplosionCircle skill.
  * ---------------------------------------------------------------------- */
 void
-ForceExplosionRay ( finepoint ExpCenter , point TargetVector )
+ForceExplosionRay ( gps ExpCenter , point TargetVector )
 {
   int i ;
   moderately_finepoint step;
 
-  if ( Me.mana >= 5 )
+  if ( Me[0].mana >= 5 )
     {
-      Me.mana -= 5;
+      Me[0].mana -= 5;
       step.x = ( TargetVector.x * 0.25 ) / Block_Width;
       step.y = ( TargetVector.y * 0.25 ) / Block_Height;
 
       for ( i = 1 ; i < 5 ; i ++ )
 	{
-	  StartBlast ( ExpCenter.x + i * step.x , ExpCenter.y + i * step.y , DRUIDBLAST );
+	  StartBlast ( ExpCenter.x + i * step.x , ExpCenter.y + i * step.y , ExpCenter.z , DRUIDBLAST );
 	}
     }
   else
     {
-      Me.TextVisibleTime = 0;
-      Me.TextToBeDisplayed = "Not enough force left within me.";
+      Me[0].TextVisibleTime = 0;
+      Me[0].TextToBeDisplayed = "Not enough force left within me.";
     }
 }; // void ForceExplosionCircle ( finepoint ExpCenter )
 
@@ -153,15 +153,15 @@ void
 ForceToEnergyConversion ( void )
 {
 
-  if ( Me.mana >= 10 )
+  if ( Me[0].mana >= 10 )
     {
-      Me.mana   -= 10;
-      Me.energy += 10;
+      Me[0].mana   -= 10;
+      Me[0].energy += 10;
     }
   else
     {
-      Me.TextVisibleTime = 0;
-      Me.TextToBeDisplayed = "Not enough force left within me.";
+      Me[0].TextVisibleTime = 0;
+      Me[0].TextToBeDisplayed = "Not enough force left within me.";
     }
 
 }; // void ForceExplosionCircle ( finepoint ExpCenter )
@@ -175,30 +175,30 @@ HandleCurrentlyActivatedSkill( void )
 {
   static int RightPressedPreviousFrame=0;
 
-  if ( Me.readied_skill == 0 )
+  if ( Me[0].readied_skill == 0 )
     {
       if (MouseRightPressed() == 1)
-	Me.status = TRANSFERMODE;
+	Me[0].status = TRANSFERMODE;
     }
-  else if ( Me.readied_skill == 1 )
+  else if ( Me[0].readied_skill == 1 )
     {
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	{
 	  if ( CursorIsInUserRect ( GetMousePos_x() + 16 , GetMousePos_y() + 16) )
-	    ForceExplosionCircle( Me.pos );
+	    ForceExplosionCircle( Me[0].pos );
 	}
     }
-  else if ( Me.readied_skill == 2 )
+  else if ( Me[0].readied_skill == 2 )
     {
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	{
 	  if ( CursorIsInUserRect ( GetMousePos_x() + 16 , GetMousePos_y() + 16) )
 	    {
-	      ForceExplosionRay ( Me.pos , input_axis );
+	      ForceExplosionRay ( Me[0].pos , input_axis );
 	    }
 	}
     }
-  else if ( Me.readied_skill == 3 )
+  else if ( Me[0].readied_skill == 3 )
     {
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	{
@@ -347,7 +347,7 @@ ShowSkillsScreen ( void )
   // Name, Class, Level, Exp, Strength, Dex, ...
   //
 
-  switch ( Me.character_class )
+  switch ( Me[0].character_class )
     {
     case WAR_BOT:
       // DisplayText( "War Bot" , CLASS_X + SkillScreenRect.x , 18 + SkillScreenRect.y , &SkillScreenRect );
@@ -364,7 +364,7 @@ ShowSkillsScreen ( void )
       break;
     }
 
-  sprintf( CharText , "%d", (int) Me.AC );
+  sprintf( CharText , "%d", (int) Me[0].AC );
   DisplayText( CharText , AC_X + SkillScreenRect.x , AC_Y + SkillScreenRect.y , &SkillScreenRect );
 
   //--------------------
@@ -374,7 +374,7 @@ ShowSkillsScreen ( void )
   if ( ( CursorIsOnWhichSkillButton ( CurPos.x , CurPos.y ) != ( -1 ) ) &&
        axis_is_active &&
        ! MouseButtonPressedPreviousFrame )
-    Me.readied_skill = CursorIsOnWhichSkillButton ( CurPos.x , CurPos.y );
+    Me[0].readied_skill = CursorIsOnWhichSkillButton ( CurPos.x , CurPos.y );
 
 
   //--------------------

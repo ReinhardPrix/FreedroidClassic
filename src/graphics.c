@@ -157,8 +157,8 @@ DrawLineBetweenTiles( float x1 , float y1 , float x2 , float y2 , int Color )
 
       for ( i=0 ; i < (y2 - y1) * Block_Width ; i++ )
 	{
-	  pixx=User_Rect.x + User_Rect.w/2 - Block_Width * (Me.pos.x - x1 );
-	  pixy=User_Rect.y + User_Rect.h/2 - Block_Height * (Me.pos.y - y1 ) + i ;
+	  pixx=User_Rect.x + User_Rect.w/2 - Block_Width * (Me[0].pos.x - x1 );
+	  pixy=User_Rect.y + User_Rect.h/2 - Block_Height * (Me[0].pos.y - y1 ) + i ;
 	  if ( (pixx <= User_Rect.x) || 
 	       (pixx >= User_Rect.x + User_Rect.w -1) || 
 	       (pixy <= User_Rect.y ) || 
@@ -188,8 +188,8 @@ DrawLineBetweenTiles( float x1 , float y1 , float x2 , float y2 , int Color )
   slope = ( y2 - y1 ) / (x2 - x1) ;
   for ( i=0 ; i<(x2-x1)*Block_Width ; i++ )
     {
-      pixx=User_Rect.x + User_Rect.w/2 - Block_Width * (Me.pos.x - x1 ) + i;
-      pixy=User_Rect.y + User_Rect.h/2 - Block_Height * (Me.pos.y - y1 ) + i * slope ;
+      pixx=User_Rect.x + User_Rect.w/2 - Block_Width * (Me[0].pos.x - x1 ) + i;
+      pixy=User_Rect.y + User_Rect.h/2 - Block_Height * (Me[0].pos.y - y1 ) + i * slope ;
       if ( (pixx <= User_Rect.x) || 
 	   (pixx >= User_Rect.x + User_Rect.w -1) || 
 	   (pixy <= User_Rect.y ) || 

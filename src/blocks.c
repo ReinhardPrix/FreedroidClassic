@@ -397,45 +397,45 @@ Load_Influencer_Surfaces( void )
  * the alternative tux character.
  * ---------------------------------------------------------------------- */
 void 
-Update_Tux_Working_Copy ( void )
+Update_Tux_Working_Copy ( int PlayerNum )
 {
   int i;
-  static int Previous_weapon_item = (-2) ;
-  static int Previous_shield_item = (-2) ;
-  static int Previous_special_item = (-2) ;
-  static int Previous_armour_item = (-2) ; 
+  static int Previous_weapon_item  [ MAX_PLAYERS ] = { -2 , -2 , -2 , -2 , -2 } ;
+  static int Previous_shield_item  [ MAX_PLAYERS ] = { -2 , -2 , -2 , -2 , -2 } ;
+  static int Previous_special_item [ MAX_PLAYERS ] = { -2 , -2 , -2 , -2 , -2 } ;
+  static int Previous_armour_item  [ MAX_PLAYERS ] = { -2 , -2 , -2 , -2 , -2 } ; 
 
-  if ( ( Previous_weapon_item == Me.weapon_item.type ) &&
-       ( Previous_shield_item == Me.shield_item.type ) &&
-       ( Previous_armour_item == Me.armour_item.type ) &&
-       ( Previous_special_item == Me.special_item.type ) )
+  if ( ( Previous_weapon_item  [ PlayerNum ] == Me [ PlayerNum ] . weapon_item. type ) &&
+       ( Previous_shield_item  [ PlayerNum ] == Me [ PlayerNum ] . shield_item. type ) &&
+       ( Previous_armour_item  [ PlayerNum ] == Me [ PlayerNum ] . armour_item.type  ) &&
+       ( Previous_special_item [ PlayerNum ] == Me [ PlayerNum ] . special_item.type ) )
     {
       return;
     }
   else
     {
-      Previous_weapon_item  = Me.weapon_item.type  ;
-      Previous_shield_item  = Me.shield_item.type  ;
-      Previous_armour_item  = Me.armour_item.type  ;
-      Previous_special_item = Me.special_item.type ; 
+      Previous_weapon_item  [ PlayerNum ] = Me [ PlayerNum ] . weapon_item. type ;
+      Previous_shield_item  [ PlayerNum ] = Me [ PlayerNum ] . shield_item. type  ;
+      Previous_armour_item  [ PlayerNum ] = Me [ PlayerNum ] . armour_item. type  ;
+      Previous_special_item [ PlayerNum ] = Me [ PlayerNum ] . special_item.type ; 
     }
     
   //--------------------
   // First we blit the chest and feet of the influencer, paying attention to the currently
   // equipped armour
   //
-  if ( Me.armour_item.type == (-1) ) 
+  if ( Me[0].armour_item.type == (-1) ) 
     {
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
-	  SDL_FreeSurface ( TuxWorkingCopy[i] );
-	  TuxWorkingCopy [ i ] = SDL_DisplayFormatAlpha( TuxMotionArchetypes[7][i] );
+	  SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] );
+	  TuxWorkingCopy [ PlayerNum ]  [ i ] = SDL_DisplayFormatAlpha( TuxMotionArchetypes[7][i] );
 	  // We need to do this twice
 
 	  /*
 	  SDL_SetAlpha( TuxMotionArchetypes[7][i] , 0 , SDL_ALPHA_OPAQUE );
 	  SDL_SetColorKey ( TuxMotionArchetypes[7][i] , 0 , SDL_MapRGB( TuxMotionArchetypes[7][i]->format, 255, 0, 255) ); 
-	  SDL_BlitSurface ( TuxMotionArchetypes[7][i] , NULL , TuxWorkingCopy[i] , NULL );
+	  SDL_BlitSurface ( TuxMotionArchetypes[7][i] , NULL , TuxWorkingCopy [ PlayerNum ] [i] , NULL );
 	  */
 	}
     }
@@ -443,14 +443,14 @@ Update_Tux_Working_Copy ( void )
     {
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
-	  SDL_FreeSurface ( TuxWorkingCopy[i] );
-	  TuxWorkingCopy [ i ] = SDL_DisplayFormatAlpha( TuxMotionArchetypes[8][i] );
+	  SDL_FreeSurface ( TuxWorkingCopy [ PlayerNum ] [i] );
+	  TuxWorkingCopy [ PlayerNum ]  [ i ] = SDL_DisplayFormatAlpha( TuxMotionArchetypes[8][i] );
 
 	  // again, twice
 	  /*
 	  SDL_SetAlpha( TuxMotionArchetypes[8][i] , 0 , SDL_ALPHA_OPAQUE );
 	  SDL_SetColorKey ( TuxMotionArchetypes[8][i] , 0 , SDL_MapRGB( TuxMotionArchetypes[8][i]->format, 255, 0, 255) ); 
-	  SDL_BlitSurface ( TuxMotionArchetypes[8][i] , NULL , TuxWorkingCopy[i] , NULL );
+	  SDL_BlitSurface ( TuxMotionArchetypes[8][i] , NULL , TuxWorkingCopy [ PlayerNum ] [i] , NULL );
 	  */
 	}
     }
@@ -459,33 +459,33 @@ Update_Tux_Working_Copy ( void )
   // Next we blit the weapon (and arms) of the tux
   //
 
-  // DebugPrintf( 0 , "\nWeapon item type : %d ." , Me.weapon_item.type );
+  // DebugPrintf( 0 , "\nWeapon item type : %d ." , Me[0].weapon_item.type );
 
-  if ( ( Me.weapon_item.type == (-1) ) || ( Me.weapon_item.currently_held_in_hand ) )
+  if ( ( Me[0].weapon_item.type == (-1) ) || ( Me[0].weapon_item.currently_held_in_hand ) )
     {
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
 	  SDL_SetAlpha( TuxMotionArchetypes[4][i] , 0 , SDL_ALPHA_OPAQUE );
 	  SDL_SetColorKey ( TuxMotionArchetypes[4][i] , SDL_SRCCOLORKEY , SDL_MapRGB( TuxMotionArchetypes[4][i]->format, 255, 0, 255) ); 
-	  SDL_BlitSurface ( TuxMotionArchetypes[4][i] , NULL , TuxWorkingCopy[i] , NULL );
+	  SDL_BlitSurface ( TuxMotionArchetypes[4][i] , NULL , TuxWorkingCopy [ PlayerNum ] [i] , NULL );
 	}
     }
-  else if ( Me.weapon_item.type == ITEM_STAFF )
+  else if ( Me[0].weapon_item.type == ITEM_STAFF )
     {
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
 	  SDL_SetAlpha( TuxMotionArchetypes[1][i] , 0 , SDL_ALPHA_OPAQUE );
 	  SDL_SetColorKey ( TuxMotionArchetypes[1][i] , SDL_SRCCOLORKEY , SDL_MapRGB( TuxMotionArchetypes[1][i]->format, 255, 0, 255) ); 
-	  SDL_BlitSurface ( TuxMotionArchetypes[1][i] , NULL , TuxWorkingCopy[i] , NULL );
+	  SDL_BlitSurface ( TuxMotionArchetypes[1][i] , NULL , TuxWorkingCopy [ PlayerNum ] [i] , NULL );
 	}
     }
-  else if ( ItemMap [ Me.weapon_item.type ].item_gun_angle_change == 0 )
+  else if ( ItemMap [ Me[0].weapon_item.type ].item_gun_angle_change == 0 )
     {
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
 	  SDL_SetAlpha( TuxMotionArchetypes[2][i] , 0 , SDL_ALPHA_OPAQUE );
 	  SDL_SetColorKey ( TuxMotionArchetypes[2][i] , SDL_SRCCOLORKEY , SDL_MapRGB( TuxMotionArchetypes[2][i]->format, 255, 0, 255) ); 
-	  SDL_BlitSurface ( TuxMotionArchetypes[2][i] , NULL , TuxWorkingCopy[i] , NULL );
+	  SDL_BlitSurface ( TuxMotionArchetypes[2][i] , NULL , TuxWorkingCopy [ PlayerNum ] [i] , NULL );
 	}
     }
   else
@@ -494,7 +494,7 @@ Update_Tux_Working_Copy ( void )
 	{
 	  SDL_SetAlpha( TuxMotionArchetypes[0][i] , 0 , SDL_ALPHA_OPAQUE );
 	  SDL_SetColorKey ( TuxMotionArchetypes[0][i] , SDL_SRCCOLORKEY , SDL_MapRGB( TuxMotionArchetypes[0][i]->format, 255, 0, 255) ); 
-	  SDL_BlitSurface ( TuxMotionArchetypes[0][i] , NULL , TuxWorkingCopy[i] , NULL );
+	  SDL_BlitSurface ( TuxMotionArchetypes[0][i] , NULL , TuxWorkingCopy [ PlayerNum ] [i] , NULL );
 	}
     }
 
@@ -502,7 +502,7 @@ Update_Tux_Working_Copy ( void )
   //--------------------
   // Now we blit the shields OVER it.
   //
-  if ( ( Me.shield_item.type != (-1) ) && ( ! Me.shield_item.currently_held_in_hand ) )
+  if ( ( Me[0].shield_item.type != (-1) ) && ( ! Me[0].shield_item.currently_held_in_hand ) )
     {
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
@@ -510,7 +510,7 @@ Update_Tux_Working_Copy ( void )
 	  // SDL_SetColorKey ( TuxMotionArchetypes[3][i] , SDL_SRCCOLORKEY, SDL_MapRGB( TuxMotionArchetypes[3][i]->format, 255, 0, 255) ); 
 	  // SDL_SetAlpha( TuxMotionArchetypes[3][i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
 	  SDL_SetColorKey ( TuxMotionArchetypes[3][i] , SDL_SRCCOLORKEY , SDL_MapRGB( TuxMotionArchetypes[3][i]->format, 255, 0, 255) ); 
-	  SDL_BlitSurface ( TuxMotionArchetypes[3][i] , NULL , TuxWorkingCopy[i] , NULL );
+	  SDL_BlitSurface ( TuxMotionArchetypes[3][i] , NULL , TuxWorkingCopy [ PlayerNum ] [i] , NULL );
 	}
     }
   
@@ -523,17 +523,17 @@ Update_Tux_Working_Copy ( void )
     {
       SDL_SetAlpha( TuxMotionArchetypes[6][i] , 0 , SDL_ALPHA_OPAQUE );
       SDL_SetColorKey ( TuxMotionArchetypes[6][i] , SDL_SRCCOLORKEY , SDL_MapRGB( TuxMotionArchetypes[6][i]->format, 255, 0, 255) ); 
-      SDL_BlitSurface ( TuxMotionArchetypes[6][i] , NULL , TuxWorkingCopy[i] , NULL );
+      SDL_BlitSurface ( TuxMotionArchetypes[6][i] , NULL , TuxWorkingCopy [ PlayerNum ] [i] , NULL );
     }
 
-  if ( ( Me.special_item.type != (-1) ) && ( ! Me.special_item.currently_held_in_hand ) )
+  if ( ( Me[0].special_item.type != (-1) ) && ( ! Me[0].special_item.currently_held_in_hand ) )
     {
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
 	  SDL_SetAlpha( TuxMotionArchetypes[5][i] , 0 , SDL_ALPHA_OPAQUE );
 	  SDL_SetColorKey ( TuxMotionArchetypes[5][i] , SDL_SRCCOLORKEY , 
 			    SDL_MapRGB( TuxMotionArchetypes[5][i]->format, 255, 0, 255) ); 
-	  SDL_BlitSurface ( TuxMotionArchetypes[5][i] , NULL , TuxWorkingCopy[i] , NULL );
+	  SDL_BlitSurface ( TuxMotionArchetypes[5][i] , NULL , TuxWorkingCopy [ PlayerNum ] [i] , NULL );
 	}
     }
   
@@ -554,6 +554,7 @@ Load_Tux_Surfaces( void )
   int i;
   char *fpath;
   int j;
+  int PlayerNum;
 
 #define TUX_WIDTH 130
 #define TUX_HEIGHT 130
@@ -595,8 +596,18 @@ Load_Tux_Surfaces( void )
 	  Target.h=Block_Height;
 	  SDL_BlitSurface ( Whole_Image , &Source , TuxMotionArchetypes[j][i] , &Target );
 	  SDL_SetAlpha( TuxMotionArchetypes[j][i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-	  if ( j == 7 ) TuxWorkingCopy[i] = SDL_DisplayFormatAlpha( TuxMotionArchetypes[j][i] );
 	  SDL_FreeSurface( tmp_surf );
+
+	  //--------------------
+	  // And at this point, we also initialize the Tux working copys, so we
+	  // won't run into trouble with uninitialized working copys later.
+	  //
+	  if ( j == 7 ) 
+	    {
+	      for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ )
+		TuxWorkingCopy [ PlayerNum ] [i] = SDL_DisplayFormatAlpha( TuxMotionArchetypes[j][i] );
+	    }
+
 	}
     }
 

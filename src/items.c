@@ -493,13 +493,13 @@ DamageItem( item* CurItem )
 void 
 DamageAllEquipment( void )
 {
-  DamageItem( & ( Me.weapon_item ) );
-  DamageItem( & ( Me.armour_item ) );
-  DamageItem( & ( Me.shield_item ) );
-  DamageItem( & ( Me.drive_item ) );
-  DamageItem( & ( Me.special_item ) );
-  DamageItem( & ( Me.aux1_item ) );
-  DamageItem( & ( Me.aux2_item ) );
+  DamageItem( & ( Me[0].weapon_item ) );
+  DamageItem( & ( Me[0].armour_item ) );
+  DamageItem( & ( Me[0].shield_item ) );
+  DamageItem( & ( Me[0].drive_item ) );
+  DamageItem( & ( Me[0].special_item ) );
+  DamageItem( & ( Me[0].aux1_item ) );
+  DamageItem( & ( Me[0].aux2_item ) );
 }; // void DamageAllEquipment( void )
 
 void
@@ -523,8 +523,8 @@ MakeHeldFloorItemOutOf( item* SourceItem )
   //
   CopyItem( SourceItem , &(CurLevel->ItemList[ i ]) , FALSE );
 
-  CurLevel->ItemList[ i ].pos.x = Me.pos.x;
-  CurLevel->ItemList[ i ].pos.y = Me.pos.y;
+  CurLevel->ItemList[ i ].pos.x = Me[0].pos.x;
+  CurLevel->ItemList[ i ].pos.y = Me[0].pos.y;
   CurLevel->ItemList[ i ].currently_held_in_hand = TRUE;
   
   Item_Held_In_Hand = ItemMap [ CurLevel->ItemList[ i ].type ].picture_number ;
@@ -550,7 +550,7 @@ GetHeldItemInventoryIndex( void )
   //
   for ( InvPos = 0 ; InvPos < MAX_ITEMS_IN_INVENTORY ; InvPos ++ )
     {
-      if ( Me.Inventory[ InvPos ].currently_held_in_hand && ( Me.Inventory[ InvPos ].type > 0 ) ) 
+      if ( Me[0].Inventory[ InvPos ].currently_held_in_hand && ( Me[0].Inventory[ InvPos ].type > 0 ) ) 
 	{
 	  return ( InvPos );
 	}
@@ -579,42 +579,42 @@ item* GetHeldItemPointer( void )
   if ( InvIndex != (-1) )
     {
       // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in inventory was held in hand.  Good.");
-      return ( & ( Me.Inventory[ InvIndex ] ) );
+      return ( & ( Me[0].Inventory[ InvIndex ] ) );
     } 
-  else if ( Me.weapon_item.currently_held_in_hand > 0 )
+  else if ( Me[0].weapon_item.currently_held_in_hand > 0 )
     {
       // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
-      return ( & ( Me.weapon_item ) );
+      return ( & ( Me[0].weapon_item ) );
     }
-  else if ( Me.drive_item.currently_held_in_hand > 0 )
+  else if ( Me[0].drive_item.currently_held_in_hand > 0 )
     {
       // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
-      return ( & ( Me.drive_item ) );
+      return ( & ( Me[0].drive_item ) );
     }
-  else if ( Me.shield_item.currently_held_in_hand > 0 )
+  else if ( Me[0].shield_item.currently_held_in_hand > 0 )
     {
       // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
-      return ( & ( Me.shield_item ) );
+      return ( & ( Me[0].shield_item ) );
     }
-  else if ( Me.armour_item.currently_held_in_hand > 0 )
+  else if ( Me[0].armour_item.currently_held_in_hand > 0 )
     {
       // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
-      return ( & ( Me.armour_item ) );
+      return ( & ( Me[0].armour_item ) );
     }
-  else if ( Me.special_item.currently_held_in_hand > 0 )
+  else if ( Me[0].special_item.currently_held_in_hand > 0 )
     {
       // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
-      return ( & ( Me.special_item ) );
+      return ( & ( Me[0].special_item ) );
     }
-  else if ( Me.aux1_item.currently_held_in_hand > 0 )
+  else if ( Me[0].aux1_item.currently_held_in_hand > 0 )
     {
       // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
-      return ( & ( Me.aux1_item ) );
+      return ( & ( Me[0].aux1_item ) );
     }
-  else if ( Me.aux2_item.currently_held_in_hand > 0 )
+  else if ( Me[0].aux2_item.currently_held_in_hand > 0 )
     {
       // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
-      return ( & ( Me.aux2_item ) );
+      return ( & ( Me[0].aux2_item ) );
     }
   else
     {
@@ -705,7 +705,7 @@ Quick_ApplyItem( int ItemKey )
   // it...
   //
 
-  ApplyItem ( & ( Me.Inventory[ FoundItemNr ] ) );
+  ApplyItem ( & ( Me[0].Inventory[ FoundItemNr ] ) );
 
 }; // void Quick_ApplyItem( item* CurItem )
 
@@ -723,8 +723,8 @@ ApplyItem( item* CurItem )
 
   if ( ItemMap[ CurItem->type ].item_can_be_applied_in_combat == FALSE ) 
     {
-      Me.TextVisibleTime = 0;
-      Me.TextToBeDisplayed = "I can't use this item here.";
+      Me[0].TextVisibleTime = 0;
+      Me[0].TextToBeDisplayed = "I can't use this item here.";
       return;
     }
 
@@ -735,25 +735,25 @@ ApplyItem( item* CurItem )
   //
   if ( CurItem->type == ITEM_SMALL_HEALTH_POTION )
     {
-      Me.health += 25;
-      Me.energy += 25;
+      Me[0].health += 25;
+      Me[0].energy += 25;
     }
   else if ( CurItem->type == ITEM_FULL_HEALTH_POTION )
     {
-      Me.health += Me.maxenergy;
-      Me.energy += Me.maxenergy;
+      Me[0].health += Me[0].maxenergy;
+      Me[0].energy += Me[0].maxenergy;
     }
   else if ( CurItem->type == ITEM_SMALL_MANA_POTION )
     {
-      Me.mana += 25;
+      Me[0].mana += 25;
     }
   else if ( CurItem->type == ITEM_FULL_MANA_POTION )
     {
-      Me.mana += Me.maxmana;
+      Me[0].mana += Me[0].maxmana;
     }
 
-  if ( Me.energy > Me.maxenergy ) Me.energy = Me.maxenergy ;
-  if ( Me.mana > Me.maxmana ) Me.mana = Me.maxmana ;
+  if ( Me[0].energy > Me[0].maxenergy ) Me[0].energy = Me[0].maxenergy ;
+  if ( Me[0].mana > Me[0].maxmana ) Me[0].mana = Me[0].maxmana ;
 
   PlayItemSound( ItemMap[ CurItem->type ].sound_number );
 
@@ -779,16 +779,16 @@ Inv_Pos_Is_Free( int x , int y )
 
   for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY; i++ )
     {
-      if ( Me.Inventory[ i ].type == ( -1 ) ) continue;
-      if ( Me.Inventory[ i ].currently_held_in_hand ) continue;
+      if ( Me[0].Inventory[ i ].type == ( -1 ) ) continue;
+      if ( Me[0].Inventory[ i ].currently_held_in_hand ) continue;
 
-      // for ( item_height = 0 ; item_height < ItemSizeTable[ Me.Inventory[ i ].type ].y ; item_height ++ )
-      for ( item_height = 0 ; item_height < ItemImageList[ ItemMap[ Me.Inventory[ i ].type ].picture_number ].inv_size.y ; item_height ++ )
+      // for ( item_height = 0 ; item_height < ItemSizeTable[ Me[0].Inventory[ i ].type ].y ; item_height ++ )
+      for ( item_height = 0 ; item_height < ItemImageList[ ItemMap[ Me[0].Inventory[ i ].type ].picture_number ].inv_size.y ; item_height ++ )
 	{
-	  for ( item_width = 0 ; item_width < ItemImageList[ ItemMap[ Me.Inventory[ i ].type ].picture_number ].inv_size.x ; item_width ++ )
+	  for ( item_width = 0 ; item_width < ItemImageList[ ItemMap[ Me[0].Inventory[ i ].type ].picture_number ].inv_size.x ; item_width ++ )
 	    {
-	      if ( ( ( Me.Inventory[ i ].inventory_position.x + item_width ) == x ) &&
-		   ( ( Me.Inventory[ i ].inventory_position.y + item_height ) == y ) )
+	      if ( ( ( Me[0].Inventory[ i ].inventory_position.x + item_width ) == x ) &&
+		   ( ( Me[0].Inventory[ i ].inventory_position.y + item_height ) == y ) )
 		return ( FALSE );
 	    }
 	}
@@ -813,14 +813,14 @@ GetInventoryItemAt ( int x , int y )
   
   for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY; i++ )
     {
-      if ( Me.Inventory[ i ].type == ( -1 ) ) continue;
+      if ( Me[0].Inventory[ i ].type == ( -1 ) ) continue;
 
-      for ( item_height = 0 ; item_height < ItemImageList[ ItemMap[ Me.Inventory[ i ].type ].picture_number ].inv_size.y ; item_height ++ )
+      for ( item_height = 0 ; item_height < ItemImageList[ ItemMap[ Me[0].Inventory[ i ].type ].picture_number ].inv_size.y ; item_height ++ )
 	{
-	  for ( item_width = 0 ; item_width < ItemImageList[ ItemMap[ Me.Inventory[ i ].type ].picture_number ].inv_size.x ; item_width ++ )
+	  for ( item_width = 0 ; item_width < ItemImageList[ ItemMap[ Me[0].Inventory[ i ].type ].picture_number ].inv_size.x ; item_width ++ )
 	    {
-	      if ( ( ( Me.Inventory[ i ].inventory_position.x + item_width ) == x ) &&
-		   ( ( Me.Inventory[ i ].inventory_position.y + item_height ) == y ) )
+	      if ( ( ( Me[0].Inventory[ i ].inventory_position.x + item_width ) == x ) &&
+		   ( ( Me[0].Inventory[ i ].inventory_position.y + item_height ) == y ) )
 		{
 		  return ( i );
 		}
@@ -1169,14 +1169,14 @@ DropHeldItemToTheFloor ( void )
   // Now we enter the item into the item list of this level
   //
   CopyItem( DropItemPointer , &(CurLevel->ItemList[ i ]) , TRUE );
-  // CurLevel->ItemList[ i ].pos.x = Me.pos.x;
-  // CurLevel->ItemList[ i ].pos.y = Me.pos.y;
-  CurLevel->ItemList[ i ].pos.x = Me.pos.x + (GetMousePos_x() + 16 - UserCenter_x) / (float) Block_Width;
-  CurLevel->ItemList[ i ].pos.y = Me.pos.y + (GetMousePos_y() + 16 - UserCenter_y) / (float) Block_Height; 
+  // CurLevel->ItemList[ i ].pos.x = Me[0].pos.x;
+  // CurLevel->ItemList[ i ].pos.y = Me[0].pos.y;
+  CurLevel->ItemList[ i ].pos.x = Me[0].pos.x + (GetMousePos_x() + 16 - UserCenter_x) / (float) Block_Width;
+  CurLevel->ItemList[ i ].pos.y = Me[0].pos.y + (GetMousePos_y() + 16 - UserCenter_y) / (float) Block_Height; 
   CurLevel->ItemList[ i ].currently_held_in_hand = FALSE;
-  // CurLevel->ItemList[ i ].type = Me.Inventory[ InvPos ].type;
+  // CurLevel->ItemList[ i ].type = Me[0].Inventory[ InvPos ].type;
   
-  // Me.Inventory[ InvPos ].type = ( -1 );
+  // Me[0].Inventory[ InvPos ].type = ( -1 );
   DeleteItem( DropItemPointer );
 
 }; // void DropHeldItemToTheFloor ( void )
@@ -1188,17 +1188,17 @@ DropHeldItemToTheFloor ( void )
 int 
 ItemUsageRequirementsMet( item* UseItem , int MakeSound )
 {
-  if ( Me.Strength < ItemMap[ UseItem->type ].item_require_strength )
+  if ( Me[0].Strength < ItemMap[ UseItem->type ].item_require_strength )
     {
       if ( MakeSound ) Not_Enough_Power_Sound( );
       return ( FALSE );
     }
-  if ( Me.Dexterity < ItemMap[ UseItem->type ].item_require_dexterity )
+  if ( Me[0].Dexterity < ItemMap[ UseItem->type ].item_require_dexterity )
     {
       if ( MakeSound ) Not_Enough_Dist_Sound( );
       return ( FALSE );
     }
-  if ( Me.Magic < ItemMap[ UseItem->type ].item_require_magic )
+  if ( Me[0].Magic < ItemMap[ UseItem->type ].item_require_magic )
     {
       return ( FALSE );
     }
@@ -1292,7 +1292,7 @@ GetFreeInventoryIndex( void )
   //
   for ( InvPos = 0 ; InvPos < MAX_ITEMS_IN_INVENTORY ; InvPos ++ )
     {
-      if ( Me.Inventory[ InvPos ].type == (-1) ) 
+      if ( Me[0].Inventory[ InvPos ].type == (-1) ) 
 	{
 	  return ( InvPos );
 	}
@@ -1366,11 +1366,11 @@ DropHeldItemToInventory( void )
   if ( ItemCanBeDroppedInInv ( DropItemPointer->type , GetInventorySquare_x ( CurPos.x ) , 
 			       GetInventorySquare_y ( CurPos.y ) ) )
     {
-      CopyItem( DropItemPointer , &( Me.Inventory[ FreeInvIndex ] ) , TRUE );
+      CopyItem( DropItemPointer , &( Me[0].Inventory[ FreeInvIndex ] ) , TRUE );
       DeleteItem( DropItemPointer );
-      Me.Inventory[ FreeInvIndex ].inventory_position.x = GetInventorySquare_x ( CurPos.x ) ;
-      Me.Inventory[ FreeInvIndex ].inventory_position.y = GetInventorySquare_y ( CurPos.y ) ;
-      Me.Inventory[ FreeInvIndex ].currently_held_in_hand = FALSE;
+      Me[0].Inventory[ FreeInvIndex ].inventory_position.x = GetInventorySquare_x ( CurPos.x ) ;
+      Me[0].Inventory[ FreeInvIndex ].inventory_position.y = GetInventorySquare_y ( CurPos.y ) ;
+      Me[0].Inventory[ FreeInvIndex ].currently_held_in_hand = FALSE;
 
       // --------------------
       // Now that we know that the item could be dropped directly to inventory 
@@ -1390,7 +1390,7 @@ DropHeldItemToInventory( void )
       //
       for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
 	{
-	  CopyItem ( & ( Me.Inventory[ i ] ) , & ( Temp ) , FALSE );
+	  CopyItem ( & ( Me[0].Inventory[ i ] ) , & ( Temp ) , FALSE );
 	  
 	  //--------------------
 	  // FIRST: Security check against segfaults:  It might happen that we 
@@ -1398,11 +1398,11 @@ DropHeldItemToInventory( void )
 	  // for removal.  This would cause testing dropability with a -1 item
 	  // type and a SEGFAULT would result...
 	  //
-	  if ( & ( Me.Inventory[ i ] ) == DropItemPointer ) continue;
+	  if ( & ( Me[0].Inventory[ i ] ) == DropItemPointer ) continue;
 
 
 
-	  Me.Inventory[ i ].type = ( -1 ) ;
+	  Me[0].Inventory[ i ].type = ( -1 ) ;
 
 	  if ( ItemCanBeDroppedInInv ( DropItemPointer->type , GetInventorySquare_x ( CurPos.x ) , 
 				       GetInventorySquare_y ( CurPos.y ) ) )
@@ -1418,11 +1418,11 @@ DropHeldItemToInventory( void )
 	      //--------------------
 	      // Otherwise we just need to add the new item for the inventory
 	      // grid as usual
-	      CopyItem( DropItemPointer , &( Me.Inventory[ FreeInvIndex ] ) , TRUE );
+	      CopyItem( DropItemPointer , &( Me[0].Inventory[ FreeInvIndex ] ) , TRUE );
 	      DeleteItem( DropItemPointer );
-	      Me.Inventory[ FreeInvIndex ].inventory_position.x = GetInventorySquare_x ( CurPos.x ) ;
-	      Me.Inventory[ FreeInvIndex ].inventory_position.y = GetInventorySquare_y ( CurPos.y ) ;
-	      Me.Inventory[ FreeInvIndex ].currently_held_in_hand = FALSE;
+	      Me[0].Inventory[ FreeInvIndex ].inventory_position.x = GetInventorySquare_x ( CurPos.x ) ;
+	      Me[0].Inventory[ FreeInvIndex ].inventory_position.y = GetInventorySquare_y ( CurPos.y ) ;
+	      Me[0].Inventory[ FreeInvIndex ].currently_held_in_hand = FALSE;
 
 	      // And of course the item is no longer held in hand as well
 	      DropItemPointer->currently_held_in_hand = FALSE ;
@@ -1435,7 +1435,7 @@ DropHeldItemToInventory( void )
 	  // item would fit into the inventory, then of course we should re-add the
 	  // removed item to the inventory, so that no other items get lost.
 	  //
-	  CopyItem ( & ( Temp ) , & ( Me.Inventory[ i ] ) , FALSE );
+	  CopyItem ( & ( Temp ) , & ( Me[0].Inventory[ i ] ) , FALSE );
 
 	} // for: try all items if removal is the solution
     } // if not immediately place findable
@@ -1475,13 +1475,13 @@ ShowQuickInventory ( void )
     {
       PutCharFont ( Screen , FPS_Display_BFont , SCREENLEN - 32 , 100 + i * 32 , '1' + i );
       if ( ( ( Index = GetInventoryItemAt ( i , INVENTORY_GRID_HEIGHT -1 ) ) != (-1) ) &&
-	   ( Me.Inventory[ Index ].inventory_position.x == i ) &&
-	   ( Me.Inventory[ Index ].inventory_position.y == INVENTORY_GRID_HEIGHT -1 ) )
+	   ( Me[0].Inventory[ Index ].inventory_position.x == i ) &&
+	   ( Me[0].Inventory[ Index ].inventory_position.y == INVENTORY_GRID_HEIGHT -1 ) )
 	{
 	  TargetRect.x = SCREENLEN - 32 ;
 	  TargetRect.y = 100 + i * 32 ;
       
-	  SDL_BlitSurface( ItemImageList[ ItemMap[ Me.Inventory[ Index ].type ].picture_number ].Surface , 
+	  SDL_BlitSurface( ItemImageList[ ItemMap[ Me[0].Inventory[ Index ].type ].picture_number ].Surface , 
 			   NULL , Screen , &TargetRect );
 	  
 	}
@@ -1530,12 +1530,12 @@ ManageInventoryScreen ( void )
       if ( ( axis_is_active ) && ( !MouseButtonPressedPreviousFrame ) && ( Item_Held_In_Hand == (-1) ) )
 	{
 	  // DebugPrintf( 1 , "\nCollecting items for direct addition to the invenotry without grabbing." );
-	  MapPositionOfMouse.x = Me.pos.x + (CurPos.x - UserCenter_x) / (float) Block_Width;
-	  MapPositionOfMouse.y = Me.pos.y + (CurPos.y - UserCenter_y) / (float) Block_Height;
+	  MapPositionOfMouse.x = Me[0].pos.x + (CurPos.x - UserCenter_x) / (float) Block_Width;
+	  MapPositionOfMouse.y = Me[0].pos.y + (CurPos.y - UserCenter_y) / (float) Block_Height;
 
 	  // We only take items, when they are close enough 
-	  if ( ( fabsf( MapPositionOfMouse.x - Me.pos.x ) < ITEM_TAKE_DIST ) &&
-	       ( fabsf( MapPositionOfMouse.y - Me.pos.y ) < ITEM_TAKE_DIST ) )
+	  if ( ( fabsf( MapPositionOfMouse.x - Me[0].pos.x ) < ITEM_TAKE_DIST ) &&
+	       ( fabsf( MapPositionOfMouse.y - Me[0].pos.y ) < ITEM_TAKE_DIST ) )
 	    {
 	      // DebugPrintf( 1  , "\nMouse in map at: %f %f." , MapPositionOfMouse.x , MapPositionOfMouse.y );
 	      for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i++ )
@@ -1605,114 +1605,114 @@ ManageInventoryScreen ( void )
 	      // So we set, that something should be displayed in the 'hand', and it should of
 	      // course be the image of the item grabbed from inventory.
 	      //
-	      Item_Held_In_Hand = ItemMap[ Me.Inventory[ Grabbed_InvPos ].type ].picture_number ;
-	      PlayItemSound( ItemMap[ Me.Inventory[ Grabbed_InvPos ].type ].sound_number );
-	      Me.Inventory[ Grabbed_InvPos ].currently_held_in_hand = TRUE;
+	      Item_Held_In_Hand = ItemMap[ Me[0].Inventory[ Grabbed_InvPos ].type ].picture_number ;
+	      PlayItemSound( ItemMap[ Me[0].Inventory[ Grabbed_InvPos ].type ].sound_number );
+	      Me[0].Inventory[ Grabbed_InvPos ].currently_held_in_hand = TRUE;
 	    }
 	}
       else if ( CursorIsInWeaponRect( CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 0 , "\nGrabbing in weapons rect!" );
-	  if ( Me.weapon_item.type > 0 )
+	  if ( Me[0].weapon_item.type > 0 )
 	    {
 	      //--------------------
 	      // At this point we know, that we have just grabbed something from the weapon rect
 	      // So we set, that something should be displayed in the 'hand', and it should of
 	      // course be the image of the item grabbed from inventory.
 	      //
-	      Item_Held_In_Hand = ItemMap[ Me.weapon_item.type ].picture_number ;
-	      Me.weapon_item.currently_held_in_hand = TRUE;
+	      Item_Held_In_Hand = ItemMap[ Me[0].weapon_item.type ].picture_number ;
+	      Me[0].weapon_item.currently_held_in_hand = TRUE;
 	    }
 	}
       else if ( CursorIsInDriveRect( CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 0 , "\nGrabbing in drive rect!" );
-	  if ( Me.drive_item.type > 0 )
+	  if ( Me[0].drive_item.type > 0 )
 	    {
 	      //--------------------
 	      // At this point we know, that we have just grabbed something from the weapon rect
 	      // So we set, that something should be displayed in the 'hand', and it should of
 	      // course be the image of the item grabbed from inventory.
 	      //
-	      Item_Held_In_Hand = ItemMap[ Me.drive_item.type ].picture_number ;
-	      Me.drive_item.currently_held_in_hand = TRUE;
+	      Item_Held_In_Hand = ItemMap[ Me[0].drive_item.type ].picture_number ;
+	      Me[0].drive_item.currently_held_in_hand = TRUE;
 	    }
 	}
       else if ( CursorIsInShieldRect( CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 0 , "\nGrabbing in shield rect!" );
-	  if ( Me.shield_item.type > 0 )
+	  if ( Me[0].shield_item.type > 0 )
 	    {
 	      //--------------------
 	      // At this point we know, that we have just grabbed something from the weapon rect
 	      // So we set, that something should be displayed in the 'hand', and it should of
 	      // course be the image of the item grabbed from inventory.
 	      //
-	      Item_Held_In_Hand = ItemMap[ Me.shield_item.type ].picture_number ;
-	      Me.shield_item.currently_held_in_hand = TRUE;
+	      Item_Held_In_Hand = ItemMap[ Me[0].shield_item.type ].picture_number ;
+	      Me[0].shield_item.currently_held_in_hand = TRUE;
 	    }
 	}
       else if ( CursorIsInArmourRect( CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 0 , "\nGrabbing in armour rect!" );
-	  if ( Me.armour_item.type > 0 )
+	  if ( Me[0].armour_item.type > 0 )
 	    {
 	      //--------------------
 	      // At this point we know, that we have just grabbed something from the weapon rect
 	      // So we set, that something should be displayed in the 'hand', and it should of
 	      // course be the image of the item grabbed from inventory.
 	      //
-	      Item_Held_In_Hand = ItemMap[ Me.armour_item.type ].picture_number ;
-	      Me.armour_item.currently_held_in_hand = TRUE;
+	      Item_Held_In_Hand = ItemMap[ Me[0].armour_item.type ].picture_number ;
+	      Me[0].armour_item.currently_held_in_hand = TRUE;
 	    }
 	}
       else if ( CursorIsInSpecialRect( CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 0 , "\nGrabbing in special rect!" );
-	  if ( Me.special_item.type > 0 )
+	  if ( Me[0].special_item.type > 0 )
 	    {
 	      //--------------------
 	      // At this point we know, that we have just grabbed something from the weapon rect
 	      // So we set, that something should be displayed in the 'hand', and it should of
 	      // course be the image of the item grabbed from inventory.
 	      //
-	      Item_Held_In_Hand = ItemMap[ Me.special_item.type ].picture_number ;
-	      Me.special_item.currently_held_in_hand = TRUE;
+	      Item_Held_In_Hand = ItemMap[ Me[0].special_item.type ].picture_number ;
+	      Me[0].special_item.currently_held_in_hand = TRUE;
 	    }
 	}
       else if ( CursorIsInAux1Rect( CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 0 , "\nGrabbing in aux1 rect!" );
-	  if ( Me.aux1_item.type > 0 )
+	  if ( Me[0].aux1_item.type > 0 )
 	    {
 	      //--------------------
 	      // At this point we know, that we have just grabbed something from the weapon rect
 	      // So we set, that something should be displayed in the 'hand', and it should of
 	      // course be the image of the item grabbed from inventory.
 	      //
-	      Item_Held_In_Hand = ItemMap[ Me.aux1_item.type ].picture_number ;
-	      Me.aux1_item.currently_held_in_hand = TRUE;
+	      Item_Held_In_Hand = ItemMap[ Me[0].aux1_item.type ].picture_number ;
+	      Me[0].aux1_item.currently_held_in_hand = TRUE;
 	    }
 	}
       else if ( CursorIsInAux2Rect( CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 0 , "\nGrabbing in aux1 rect!" );
-	  if ( Me.aux2_item.type > 0 )
+	  if ( Me[0].aux2_item.type > 0 )
 	    {
 	      //--------------------
 	      // At this point we know, that we have just grabbed something from the weapon rect
 	      // So we set, that something should be displayed in the 'hand', and it should of
 	      // course be the image of the item grabbed from inventory.
 	      //
-	      Item_Held_In_Hand = ItemMap[ Me.aux2_item.type ].picture_number ;
-	      Me.aux2_item.currently_held_in_hand = TRUE;
+	      Item_Held_In_Hand = ItemMap[ Me[0].aux2_item.type ].picture_number ;
+	      Me[0].aux2_item.currently_held_in_hand = TRUE;
 	    }
 	}
       else if ( CursorIsInUserRect( CurPos.x , CurPos.y ) )
 	{
 	  DebugPrintf( 0 , "\nGrabbing in user rect!" );
-	  MapPositionOfMouse.x = Me.pos.x + (CurPos.x - UserCenter_x) / (float) Block_Width;
-	  MapPositionOfMouse.y = Me.pos.y + (CurPos.y - UserCenter_y) / (float) Block_Height;
+	  MapPositionOfMouse.x = Me[0].pos.x + (CurPos.x - UserCenter_x) / (float) Block_Width;
+	  MapPositionOfMouse.y = Me[0].pos.y + (CurPos.y - UserCenter_y) / (float) Block_Height;
 	  DebugPrintf( 0  , "\nMouse in map at: %f %f." , MapPositionOfMouse.x , MapPositionOfMouse.y );
 	  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i++ )
 	    {
@@ -1789,7 +1789,7 @@ ManageInventoryScreen ( void )
 		{
 		  Item_Held_In_Hand = ( -1 );
 		  // DropHeldItemToWeaponSlot ( );
-		  DropHeldItemToSlot ( & ( Me.weapon_item ) );
+		  DropHeldItemToSlot ( & ( Me[0].weapon_item ) );
 		}
 	    }
 	  else
@@ -1813,7 +1813,7 @@ ManageInventoryScreen ( void )
 		{
 		  Item_Held_In_Hand = ( -1 );
 		  // DropHeldItemToDriveSlot ( );
-		  DropHeldItemToSlot ( & ( Me.drive_item ) );
+		  DropHeldItemToSlot ( & ( Me[0].drive_item ) );
 		}
 	    }
 	  else
@@ -1837,7 +1837,7 @@ ManageInventoryScreen ( void )
 		{
 		  Item_Held_In_Hand = ( -1 );
 		  // DropHeldItemToArmourSlot ( );
-		  DropHeldItemToSlot ( & ( Me.armour_item ) );
+		  DropHeldItemToSlot ( & ( Me[0].armour_item ) );
 		}
 	    }
 	  else
@@ -1861,7 +1861,7 @@ ManageInventoryScreen ( void )
 		{
 		  Item_Held_In_Hand = ( -1 );
 		  // DropHeldItemToShieldSlot ( );
-		  DropHeldItemToSlot ( & ( Me.shield_item ) );
+		  DropHeldItemToSlot ( & ( Me[0].shield_item ) );
 		}
 	    }
 	  else
@@ -1885,7 +1885,7 @@ ManageInventoryScreen ( void )
 		{
 		  Item_Held_In_Hand = ( -1 );
 		  // DropHeldItemToSpecialSlot ( );
-		  DropHeldItemToSlot ( & ( Me.special_item ) );
+		  DropHeldItemToSlot ( & ( Me[0].special_item ) );
 		}
 	    }
 	  else
@@ -1909,7 +1909,7 @@ ManageInventoryScreen ( void )
 		{
 		  Item_Held_In_Hand = ( -1 );
 		  // DropHeldItemToAux1Slot ( );
-		  DropHeldItemToSlot ( & ( Me.aux1_item ) );
+		  DropHeldItemToSlot ( & ( Me[0].aux1_item ) );
 		}
 	    }
 	  else
@@ -1933,7 +1933,7 @@ ManageInventoryScreen ( void )
 		{
 		  Item_Held_In_Hand = ( -1 );
 		  // DropHeldItemToAux2Slot ( );
-		  DropHeldItemToSlot ( & ( Me.aux2_item ) );
+		  DropHeldItemToSlot ( & ( Me[0].aux2_item ) );
 		}
 	    }
 	  else
@@ -1993,7 +1993,7 @@ ManageInventoryScreen ( void )
 	      //--------------------
 	      // At this point we know, that we have just applied something from the inventory
 	      //
-	      ApplyItem( & ( Me.Inventory[ Grabbed_InvPos ] ) );
+	      ApplyItem( & ( Me[0].Inventory[ Grabbed_InvPos ] ) );
 	    }
 	}
     }
@@ -2036,7 +2036,7 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
       if ( ItemPointer->type == ITEM_MONEY )
 	{
 	  PlayItemSound( ItemMap[ ItemPointer->type ].sound_number );
-	  Me.Gold += ItemPointer->gold_amount;
+	  Me[0].Gold += ItemPointer->gold_amount;
 	  DeleteItem( ItemPointer );
 	  return;
 	}
@@ -2046,7 +2046,7 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
       // find a free position in the inventory list
       for ( InvPos = 0 ; InvPos < MAX_ITEMS_IN_INVENTORY ; InvPos++ )
 	{
-	  if ( Me.Inventory [ InvPos ].type == (-1) ) break;
+	  if ( Me[0].Inventory [ InvPos ].type == (-1) ) break;
 	}
       
 
@@ -2064,8 +2064,8 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
 		      if ( !Inv_Pos_Is_Free( Inv_Loc.x + item_width , 
 					     Inv_Loc.y + item_height ) )
 			{
-			  Me.Inventory[ InvPos ].inventory_position.x = -1;
-			  Me.Inventory[ InvPos ].inventory_position.y = -1;
+			  Me[0].Inventory[ InvPos ].inventory_position.x = -1;
+			  Me[0].Inventory[ InvPos ].inventory_position.y = -1;
 			  goto This_Is_No_Possible_Location;
 			}
 		    }
@@ -2073,8 +2073,8 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
 	      // if ( !Inv_Pos_Is_Free( Inv_Loc.x , Inv_Loc.y ) ) continue;
 	      
 	      // At this point we know we have reached a position where we can plant this item.
-	      Me.Inventory[ InvPos ].inventory_position.x = Inv_Loc.x;
-	      Me.Inventory[ InvPos ].inventory_position.y = Inv_Loc.y;
+	      Me[0].Inventory[ InvPos ].inventory_position.x = Inv_Loc.x;
+	      Me[0].Inventory[ InvPos ].inventory_position.y = Inv_Loc.y;
 	      DebugPrintf( 0 , "FINE INVENTORY POSITION FOUND!!");
 	      goto Inv_Loc_Found;
 	      
@@ -2086,25 +2086,25 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
       
     Inv_Loc_Found:
       
-      if ( ( InvPos == MAX_ITEMS_IN_INVENTORY ) || ( Me.Inventory[ InvPos ].inventory_position.x == (-1) ) )
+      if ( ( InvPos == MAX_ITEMS_IN_INVENTORY ) || ( Me[0].Inventory[ InvPos ].inventory_position.x == (-1) ) )
 	{
-	  Me.TextVisibleTime = 0;
-	  Me.TextToBeDisplayed = "I can't carry any more.";
+	  Me[0].TextVisibleTime = 0;
+	  Me[0].TextToBeDisplayed = "I can't carry any more.";
 	  CantCarrySound();
 	  // can't take any more items,
 	}
       else
 	{
 	  // We announce that we have taken the item
-	  Me.TextVisibleTime = 0;
+	  Me[0].TextVisibleTime = 0;
 	  sprintf( TempText , "Item taken: %s." , ItemMap[ ItemPointer->type ].ItemName );
-	  Me.TextToBeDisplayed=MyMalloc( strlen( TempText ) + 1 );
-	  strcpy ( Me.TextToBeDisplayed , TempText );
+	  Me[0].TextToBeDisplayed=MyMalloc( strlen( TempText ) + 1 );
+	  strcpy ( Me[0].TextToBeDisplayed , TempText );
 	  
 	  // We add the new item to the inventory
-	  CopyItem( ItemPointer , & ( Me.Inventory[ InvPos ] ) , FALSE );
-	  Me.Inventory[ InvPos ].inventory_position.x = Inv_Loc.x;
-	  Me.Inventory[ InvPos ].inventory_position.y = Inv_Loc.y;
+	  CopyItem( ItemPointer , & ( Me[0].Inventory[ InvPos ] ) , FALSE );
+	  Me[0].Inventory[ InvPos ].inventory_position.x = Inv_Loc.x;
+	  Me[0].Inventory[ InvPos ].inventory_position.y = Inv_Loc.y;
 
 	  // We make the sound of an item being taken
 	  PlayItemSound( ItemMap[ ItemPointer->type ].sound_number );

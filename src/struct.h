@@ -91,8 +91,6 @@ typedef struct
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
 
-
-
 typedef struct
 {
   int x;
@@ -404,10 +402,10 @@ druidspec, *Druidspec;
 typedef struct
 {
   int type;			/* what kind of druid is this ? */
-  int character_class; // is this unit a FIGHTER=WAR_BOT, or MAGE=MIND_BOT or ROGUE=SNIPER_BOT character
+  int character_class;          // is this unit a FIGHTER=WAR_BOT, or MAGE=MIND_BOT or ROGUE=SNIPER_BOT character
   int status;			/* attacking, defense, dead, ... */
   finepoint speed;		/* the current speed of the druid */
-  finepoint pos;		/* current position in level levelnum */
+  gps pos;		        /* current position in the whole ship */
   double health;		/* the max. possible energy in the moment */
   double energy;		/* current energy level */
   double mana;                  // current mana level 
@@ -419,10 +417,82 @@ typedef struct
   float got_hit_time;           // how long stunned now since the last time tux got hit 
 
   int autofire;			/* Status of the Firecontrolautomatics */
-  int vneut;			/* Status of Velocityneutralizer for the gun */
-  int MyFCU;			/* FCU (Fire Control Unit) installed */
-  int MyShield;			/* Shield device installed */
-  int Shield[4];		/* Status of Partial Shields */
+  int Strength;  // character Strength value = 'power supply max. capacity'
+  int Magic;     // character Magic value = 
+  int Dexterity; // character Dexterity value = 'power redistribution speed'
+  int base_vitality;  // character Vitality value = 'cloaking field maximum strength'
+  int base_strength;  // character Strength value = 'power supply max. capacity'
+  int base_magic;     // character Magic value = 
+  int base_dexterity; // character Dexterity value = 'power redistribution speed'
+  int Vitality;  // character Vitality value = 'cloaking field maximum strength'
+  long Experience; // character Experience = 'spare droid elements found'
+  int PointsToDistribute; // these are the points that are available to distribute upon the character stats
+  float base_damage; // the current damage the influencer does
+  float damage_modifier; // the modifier to the damage the influencer currently does
+  float AC; // the current Armour Class of the influencer
+  // float RechargeTimeModifier; // the factor to be multiplied to the recharge time (times 100 for % notation)
+  // float RechargeTime; // the actual minimum time to wait for the influencer between shots
+  float to_hit;
+  int resist_force;        // percentage to reduce from force damage
+  int resist_fire;         // percentage to reduce from fire damage
+  int resist_electricity;  // percentage to reduce from electricity damage
+  float maxenergy; // current top limit for the influencers energy
+  float maxmana;   // current top limit for the influencers magic power
+  int exp_level;       // which 'experience level' is the influencer currenly at?
+  long ExpRequired;    // how much experience required for the next level?
+  long Gold;
+  char character_name[ MAX_CHARACTER_NAME_LENGTH ];
+  mission AllMissions[ MAX_MISSIONS_IN_GAME ];         // What must be done to fullfill this mission?
+  int Marker;                   // In case you've taken over a marked droid, this will contain the marker
+  float LastCrysoundTime;
+  float LastTransferSoundTime;
+  float TextVisibleTime;
+  char* TextToBeDisplayed;
+  float Current_Victim_Resistance_Factor;
+  int FramesOnThisLevel;        // how many frames has the influ spent on this level already?
+  
+  int readied_skill; // which skill does the influencer currently have readied?
+
+  item Inventory[ MAX_ITEMS_IN_INVENTORY ];
+  item weapon_item;
+  item drive_item;
+  item armour_item;
+  item shield_item;
+  item special_item;
+  item aux1_item;
+  item aux2_item;
+
+  unsigned char HaveBeenToLevel[ MAX_LEVELS ]; // record of the levels the player has visited yet.
+
+  //--------------------
+  // THE FOLLOWING ARE INFORMATIONS, THAT ARE HUGE AND THAT ALSO DO NOT NEED
+  // TO BE COMMUNICATED FROM THE CLIENT TO THE SERVER OR VICE VERSA
+  //
+  int KillRecord[ 1000 ];      // how many ( of the first 1000 monster types) have been killed yet?
+  automap_tile Automap[200][200]; // this is the data for the automatic map
+  gps Position_History_Ring_Buffer[ MAX_INFLU_POSITION_HISTORY ];
+}
+influence_t, *Influence_t;
+
+
+typedef struct
+{
+  int type;			/* what kind of druid is this ? */
+  int character_class;          // is this unit a FIGHTER=WAR_BOT, or MAGE=MIND_BOT or ROGUE=SNIPER_BOT character
+  int status;			/* attacking, defense, dead, ... */
+  finepoint speed;		/* the current speed of the druid */
+  gps pos;		        /* current position in the whole ship */
+  double health;		/* the max. possible energy in the moment */
+  double energy;		/* current energy level */
+  double mana;                  // current mana level 
+
+  double firewait;		// time remaining, until the weapon is ready to fire again...
+  double phase;			// the current phase of animation 
+  float weapon_swing_time;	// How long is the current weapon swing in progress (in seconds of course) 
+  float MissionTimeElapsed;
+  float got_hit_time;           // how long stunned now since the last time tux got hit 
+
+  int autofire;			/* Status of the Firecontrolautomatics */
   int Strength;  // character Strength value = 'power supply max. capacity'
   int Magic;     // character Magic value = 
   int Dexterity; // character Dexterity value = 'power redistribution speed'
@@ -448,7 +518,6 @@ typedef struct
   long ExpRequired;    // how much experience required for the next level?
   long Gold;
   char character_name[25];
-  gps Position_History_Ring_Buffer[ MAX_INFLU_POSITION_HISTORY ];
   mission AllMissions[ MAX_MISSIONS_IN_GAME ];         // What must be done to fullfill this mission?
   int Marker;                   // In case you've taken over a marked droid, this will contain the marker
   float LastCrysoundTime;
@@ -469,11 +538,18 @@ typedef struct
   item aux1_item;
   item aux2_item;
 
-  int KillRecord[ 1000 ];      // how many ( of the first 1000 monster types) have been killed yet?
-  int HaveBeenToLevel[ MAX_LEVELS ]; // record of the levels the player has visited yet.
-  automap_tile Automap[200][200]; // this is the data for the automatic map
+  unsigned char HaveBeenToLevel[ MAX_LEVELS ]; // record of the levels the player has visited yet.
+
+  //--------------------
+  // THE FOLLOWING ARE INFORMATIONS, THAT ARE HUGE AND THAT ALSO DO NOT NEED
+  // TO BE COMMUNICATED FROM THE CLIENT TO THE SERVER OR VICE VERSA
+  //
+  // int KillRecord[ 1000 ];      // how many ( of the first 1000 monster types) have been killed yet?
+  // automap_tile Automap[200][200]; // this is the data for the automatic map
+  // gps Position_History_Ring_Buffer[ MAX_INFLU_POSITION_HISTORY ];
 }
-influence_t, *Influence_t;
+network_influence_t, *Network_Influence_t;
+
 
 typedef struct
 {
@@ -491,8 +567,45 @@ typedef struct
 typedef struct
 {
   int type;			// the number of the droid specifications in Druidmap 
-  int levelnum;			// level where this droid is located on the ship
-  finepoint pos;		// coordinates of the current position in the level
+  gps pos;		        // coordinates of the current position in the level
+  finepoint speed;		// current speed  
+  double energy;		// current energy of this droid
+  double feindphase;		// current phase of rotation of this droid
+
+  int nextwaypoint;		// the next waypoint target
+  int lastwaypoint;		// the waypoint from whence this robot just came
+  int Status;			// current status like OUT=TERMINATED or not OUT
+  double warten;		// time till the droid will start to move again
+  double firewait;		// time this robot still takes until it's gun/weapon will be fully reloaded
+  int CompletelyFixed;          // set this flat to make the robot entirely immobile
+  int FollowingInflusTail;      // does this robot follow influs tail? (trott behind him? )
+  int SpecialForce;             // This flag will exclude the droid from initial shuffling of droids
+  int Marker;                   // This provides a marker for special mission targets
+  int AdvancedCommand;          // An advanced command that modifies the behaviour of the droid (in new missions)
+  double Parameter1;            // This contains special information for AdvancedCommand
+  double Parameter2;            // This contains special information for AdvancedCommand
+  int Friendly;                 // is this a friendly droid or is it a MS controlled one?
+  int persuing_given_course;    // is this robot persuing a given course via PersueGivenCourse( EnemyNum )?
+  int StayHowManyFramesBehind;  // how many frames shall this droid trott behind the influ when follwing his tail?
+  int StayHowManySecondsBehind;  // how many seconds shall this droid trott behind the influ when follwing his tail?
+  int has_greeted_influencer;
+
+  //--------------------
+  // FROM HERE ON, THERE IS ONLY INFORMATION, THAT DOES NOT NEED TO BE
+  // COMMUNICATED BETWEEN THE CLIENT AND THE SERVER
+  //
+  float TextVisibleTime;
+  char* TextToBeDisplayed;
+  moderately_finepoint PrivatePathway[ MAX_STEPS_IN_GIVEN_COURSE ];
+  char* QuestionResponseList[ MAX_CHAT_KEYWORDS_PER_DROID * 2 ];  // even indices for keywords, odd for answers 
+  request RequestList[ MAX_REQUESTS_PER_DROID ];
+}
+enemy, *Enemy;
+
+typedef struct
+{
+  int type;			// the number of the droid specifications in Druidmap 
+  gps pos;		        // coordinates of the current position in the level
   finepoint speed;		// current speed  
   double energy;		// current energy of this droid
   double feindphase;		// current phase of rotation of this droid
@@ -512,18 +625,19 @@ typedef struct
   int persuing_given_course;    // is this robot persuing a given course via PersueGivenCourse( EnemyNum )?
   int StayHowManyFramesBehind;  // how many frames shall this droid trott behind the influ when follwing his tail?
   int StayHowManySecondsBehind;  // how many seconds shall this droid trott behind the influ when follwing his tail?
-  // point PrivatePathway[ MAX_STEPS_IN_GIVEN_COURSE ];
-  moderately_finepoint PrivatePathway[ MAX_STEPS_IN_GIVEN_COURSE ];
-  float TextVisibleTime;
-  char* TextToBeDisplayed;
   int has_greeted_influencer;
-  int NumberOfPeriodicSpecialStatements;
-  char **PeriodicSpecialStatements;
-  char* QuestionResponseList[ MAX_CHAT_KEYWORDS_PER_DROID * 2 ];  // even indices for keywords, odd for answers 
 
-  request RequestList[ MAX_REQUESTS_PER_DROID ];
+  //--------------------
+  // FROM HERE ON, THERE IS ONLY INFORMATION, THAT DOES NOT NEED TO BE
+  // COMMUNICATED BETWEEN THE CLIENT AND THE SERVER
+  //
+  // float TextVisibleTime;
+  // char* TextToBeDisplayed;
+  // moderately_finepoint PrivatePathway[ MAX_STEPS_IN_GIVEN_COURSE ];
+  // char* QuestionResponseList[ MAX_CHAT_KEYWORDS_PER_DROID * 2 ];  // even indices for keywords, odd for answers 
+  // request RequestList[ MAX_REQUESTS_PER_DROID ];
 }
-enemy, *Enemy;
+network_enemy, *Network_Enemy;
 
 typedef struct
 {
@@ -536,7 +650,8 @@ bulletspec, *Bulletspec;
 
 typedef struct
 {
-  finepoint pos;
+  // finepoint pos;
+  gps pos;
   moderately_finepoint speed;
   int type;
   byte phase;
@@ -561,7 +676,7 @@ typedef struct
   // these are values only of relevance in case of a melee weapon
   double angle_change_rate;
   float fixed_offset;
-  finepoint* owner_pos;
+  gps* owner_pos;
 
   // these are technical parameters, not for the game behaviour
   SDL_Surface *SurfacePointer[ MAX_PHASES_IN_A_BULLET ];
@@ -581,9 +696,8 @@ blastspec, *Blastspec;
 
 typedef struct
 {
-  moderately_finepoint pos;
-  // double PX;			/* PosX */
-  // double PY;			/* PosY */
+  // moderately_finepoint pos;
+  gps pos;
   int type;
   double phase;
   int MessageWasDone;

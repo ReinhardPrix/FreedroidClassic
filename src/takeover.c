@@ -161,7 +161,7 @@ Takeover (int enemynum)
   
   //  Fill_Rect (User_Rect, to_bg_color);
 
-  Me.status = MOBILE; /* the new status _after_ the takeover game */
+  Me[0].status = MOBILE; /* the new status _after_ the takeover game */
 
   show_droid_info ( AllEnemys[enemynum].type, 0 );
   key = 0;
@@ -186,7 +186,7 @@ Takeover (int enemynum)
       
       DroidNum = enemynum;
       OpponentType = AllEnemys[enemynum].type;
-      NumCapsules[YOU] = 3 + ClassOfDruid (Me.type);
+      NumCapsules[YOU] = 3 + ClassOfDruid (Me[0].type);
       NumCapsules[ENEMY] = 4 + ClassOfDruid (OpponentType);
 
       InventPlayground ();
@@ -202,27 +202,27 @@ Takeover (int enemynum)
 	{
 	  Switch_Background_Music_To (SILENCE);
 	  Takeover_Game_Won_Sound ();
-	  if (Me.type == DRUID001)
+	  if (Me[0].type == DRUID001)
 	    {
-	      RejectEnergy = Me.energy;
-	      PreTakeEnergy = Me.energy;
+	      RejectEnergy = Me[0].energy;
+	      PreTakeEnergy = Me[0].energy;
 	    }
 
 	  // We provide some security agains too high energy/health values gained
 	  // by very rapid successions of successful takeover attempts
-	  if (Me.energy > Druidmap[DRUID001].maxenergy) Me.energy = Druidmap[DRUID001].maxenergy;
-	  if (Me.health > Druidmap[DRUID001].maxenergy) Me.health = Druidmap[DRUID001].maxenergy;
+	  if (Me[0].energy > Druidmap[DRUID001].maxenergy) Me[0].energy = Druidmap[DRUID001].maxenergy;
+	  if (Me[0].health > Druidmap[DRUID001].maxenergy) Me[0].health = Druidmap[DRUID001].maxenergy;
 
 	  // We allow to gain the current energy/full health that was still in the 
 	  // other droid, since all previous damage must be due to fighting damage,
 	  // and this is exactly the sort of damage can usually be cured in refreshes.
-	  Me.energy += AllEnemys[enemynum].energy;
-	  Me.health += Druidmap[OpponentType].maxenergy;
+	  Me[0].energy += AllEnemys[enemynum].energy;
+	  Me[0].health += Druidmap[OpponentType].maxenergy;
 
-	  Me.type = AllEnemys[enemynum].type;
-	  Me.Marker = AllEnemys[enemynum].Marker;
+	  Me[0].type = AllEnemys[enemynum].type;
+	  Me[0].Marker = AllEnemys[enemynum].Marker;
 
-	  Me.Experience += Druidmap[OpponentType].score;
+	  Me[0].Experience += Druidmap[OpponentType].score;
 	  if (LeaderColor != YourColor)	/* only won because of InvincibleMode */
 	    message = "You cheat";
 	  else				/* won the proper way */
@@ -234,16 +234,16 @@ Takeover (int enemynum)
 	{
 	  Switch_Background_Music_To (SILENCE);
 	  Takeover_Game_Lost_Sound ();
-	  if (Me.type != DRUID001)
+	  if (Me[0].type != DRUID001)
 	    {
 	      message = "Rejected";
-	      Me.type = DRUID001;
-	      Me.energy = RejectEnergy;
+	      Me[0].type = DRUID001;
+	      Me[0].energy = RejectEnergy;
 	    }
 	  else
 	    {
 	      message = "Burnt Out";
-	      Me.energy = 0;
+	      Me[0].energy = 0;
 	    }
 	  FinishTakeover = TRUE;
 	}			/* LeadColor == OpponentColor */
@@ -668,7 +668,7 @@ ShowPlayground ()
     Fill_Rect (User_Rect, to_bg_color);  /* fallback if now background pic found */
 
   PutInfluence (xoffs + DruidStart[YourColor].x,
-		yoffs + DruidStart[YourColor].y);
+		yoffs + DruidStart[YourColor].y, 0 );
 
   if (AllEnemys[DroidNum].Status != OUT)
     PutEnemy (DroidNum, xoffs + DruidStart[!YourColor].x,
@@ -1169,7 +1169,7 @@ ProcessDisplayColumn (void)
   // depend on the details of the final takeover score.  Therefore we set this
   // resistance factor variable here.
   //
-  Me.Current_Victim_Resistance_Factor = 0.2 * ( (float) 12 - abs( ViolettCounter- GelbCounter ) );
+  Me[0].Current_Victim_Resistance_Factor = 0.2 * ( (float) 12 - abs( ViolettCounter- GelbCounter ) );
 
   return;
 }; // void ProcessDisplayColumn 

@@ -68,10 +68,10 @@ EXTERN float GetInfluPositionHistoryX( int Index );
 EXTERN float GetInfluPositionHistoryY( int Index );
 EXTERN float GetInfluPositionHistoryZ( int Index );
 // EXTERN void Move_Influencers_Friends ( void );
-EXTERN void MoveInfluence (void);
-EXTERN void AdjustSpeed (void);
-EXTERN void CheckInfluenceWallCollisions (void);
-EXTERN void InfluenceFrictionWithAir (void);
+EXTERN void MoveInfluence ( int PlayerNum ) ;
+EXTERN void AdjustSpeed ( int PlayerNum ) ;
+EXTERN void CheckInfluenceWallCollisions ( int PlayerNum ) ;
+EXTERN void InfluenceFrictionWithAir ( int PlayerNum ) ;
 EXTERN void CheckEnergieLevel (void);
 EXTERN void AnimateInfluence (void);
 EXTERN void CheckInfluenceEnemyCollision (void);
@@ -89,7 +89,7 @@ EXTERN void RotateVectorByAngle ( moderately_finepoint* vector , float rot_angle
 EXTERN void FireBullet (void);
 EXTERN void MoveBullets (void);
 EXTERN void DeleteBullet (int num , int StartBlast );
-EXTERN void StartBlast (float x, float y, int type);
+EXTERN void StartBlast ( float x , float y , int level , int type );
 EXTERN void ExplodeBlasts (void);
 EXTERN void DeleteBlast (int num);
 EXTERN void CheckBulletCollisions (int num);
@@ -106,7 +106,7 @@ EXTERN void Fill_Rect (SDL_Rect rect, SDL_Color color);
 EXTERN void ShowPosition (void);
 EXTERN void DisplayItemImageAtMouseCursor( int ItemImageCode );
 EXTERN void Assemble_Combat_Picture (int );
-EXTERN void PutInfluence (int , int );
+EXTERN void PutInfluence (int , int , int );
 EXTERN void PutBullet (int);
 EXTERN void PutItem (int);
 EXTERN void PutBlast (int);
@@ -128,7 +128,7 @@ EXTERN void Load_SkillIcon_Surfaces (void);
 EXTERN void Load_MapBlock_Surfaces (void);
 EXTERN void Load_Enemy_Surfaces (void);
 EXTERN void Load_Influencer_Surfaces (void);
-EXTERN void Update_Tux_Working_Copy ( void );
+EXTERN void Update_Tux_Working_Copy ( int PlayerNum );
 EXTERN void Load_Tux_Surfaces( void );
 EXTERN void Load_Digit_Surfaces (void);
 EXTERN void Load_Bullet_Surfaces (void);
@@ -183,7 +183,7 @@ EXTERN void Smash_Box ( float x , float y );
 EXTERN void AnimateTeleports (void);
 EXTERN unsigned char GetMapBrick (Level deck, float x, float y);
 EXTERN int GetCurrentLift (void);
-EXTERN void ActSpecialField (float, float);
+EXTERN void ActSpecialField ( int PlayerNum ) ;
 
 EXTERN int LoadShip (char *filename);
 EXTERN int SaveShip(char *filename);
@@ -193,10 +193,10 @@ EXTERN int GetLiftConnections (char *shipname);
 EXTERN int GetCrew (char *shipname);
 
 EXTERN void AnimateRefresh (void);
-EXTERN void MoveLevelDoors (void);
-EXTERN int IsPassable (float x, float y, int Checkpos);
-EXTERN int DruidPassable (float x, float y);
-EXTERN int IsVisible (Finepoint objpos);
+EXTERN void MoveLevelDoors ( int PlayerNum ) ;
+EXTERN int IsPassable ( float x , float y , int z , int Checkpos ) ;
+EXTERN int DruidPassable ( float x , float y , int z );
+EXTERN int IsVisible ( GPS objpos);
 EXTERN int TranslateMap (Level Lev);
 
 /* sound.c  OR nosound.c */
@@ -294,8 +294,9 @@ EXTERN void DropRandomItem( float x , float y , int TreasureChestRange , int For
 #else
 #define EXTERN extern
 #endif
+EXTERN void InitiateNewCharacter ( int PlayerNum , int CharacterClass );
 EXTERN void DisplayButtons( void );
-EXTERN void UpdateAllCharacterStats ( void );
+EXTERN void UpdateAllCharacterStats ( int PlayerNum );
 EXTERN void ShowCharacterScreen ( void );
 
 // skills.c
@@ -431,7 +432,7 @@ EXTERN void ReadValueFromString( char* SearchBeginPointer , char* ValuePreceedTe
 EXTERN char* ReadAndMallocAndTerminateFile( char* filename , char* File_End_String ) ;
 EXTERN char* LocateStringInData ( char* SearchBeginPointer, char* SearchTextPointer ) ;
 EXTERN char * find_file (char *fname, char *datadir, int use_theme);
-EXTERN void CheckForTriggeredEventsAndStatements ( void );
+EXTERN void CheckForTriggeredEventsAndStatements ( int PlayerNum );
 EXTERN void Pause (void);
 EXTERN void ComputeFPSForThisFrame(void);
 EXTERN void StartTakingTimeForFPSCalculation(void);
@@ -442,7 +443,7 @@ EXTERN void DebugPrintf (int db_level, char *fmt, ...);
 EXTERN void gotoxy (int, int);
 EXTERN int MyRandom (int);
 EXTERN void Armageddon (void);
-EXTERN void Teleport (int LNum, int X, int Y);
+EXTERN void Teleport ( int LNum , int X , int Y , int PlayerNum ) ;
 EXTERN void SaveSettings (void);
 EXTERN void LoadSettings (void);
 EXTERN void InsertNewMessage (void);
@@ -450,8 +451,8 @@ EXTERN void Terminate (int);
 EXTERN void *MyMalloc (long);
 EXTERN void ShowDebugInfos (void);
 EXTERN int GiveNumberToThisActionLabel ( char* ActionLabel );
-EXTERN void ExecuteActionWithLabel ( char* ActionLabel );
-EXTERN void ExecuteEvent ( int EventNumber );
+EXTERN void ExecuteActionWithLabel ( char* ActionLabel , int PlayerNum ) ;
+EXTERN void ExecuteEvent ( int EventNumber , int PlayerNum );
 
 /* enemy.c */
 #undef EXTERN
@@ -461,7 +462,7 @@ EXTERN void ExecuteEvent ( int EventNumber );
 #define EXTERN extern
 #endif
 EXTERN void Enemy_Post_Bullethit_Behaviour( int EnemyNum );
-EXTERN void ShuffleEnemys (void);
+EXTERN void ShuffleEnemys ( int LevelNum );
 EXTERN int CheckEnemyEnemyCollision (int enemynum);
 EXTERN void MoveEnemys (void);
 EXTERN void AttackInfluence (int enemynum);
@@ -531,6 +532,32 @@ EXTERN int putchar_SDL (SDL_Surface *Surface, int x, int y, int c);
 #endif
 EXTERN void GiveItemDescription ( char* ItemDescText , item* CurItem , int ForShop );
 EXTERN void DisplayBanner (const char* left, const char* right, int flags );
+
+
+// network.c 
+#undef EXTERN
+#ifdef _network_c
+#define EXTERN
+#else
+#define EXTERN extern
+#endif
+EXTERN void Init_Network ( void ) ;
+EXTERN int ServerThinksRightPressed ( int PlayerNum );
+EXTERN int ServerThinksLeftPressed ( int PlayerNum );
+EXTERN int ServerThinksUpPressed ( int PlayerNum );
+EXTERN int ServerThinksDownPressed ( int PlayerNum );
+EXTERN void OpenTheServerSocket ( void ) ;
+EXTERN void AcceptConnectionsFromClients ( void ) ;
+EXTERN void ConnectToFreedroidServer ( void );
+EXTERN void Send1024MessageToServer ( char message[1024] );
+EXTERN void ListenToAllRemoteClients ( void );
+EXTERN void DisconnectAllRemoteClinets ( void );
+EXTERN void ServerSendMessageToAllClients ( char ServerMessage[1024] );
+EXTERN void ListenForServerMessages ( void ) ;
+EXTERN void SendTextMessageToServer ( char* message );
+EXTERN void SendPlayerKeyboardEventToServer ( SDL_Event event );
+EXTERN void PrintServerStatusInformation ( void ) ;
+EXTERN void SendPeriodicServerMessagesToAllClients ( void );
 
 /* takeover.c */
 #undef EXTERN

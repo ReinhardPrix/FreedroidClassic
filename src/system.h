@@ -68,3 +68,7 @@
 #include "SDL_mixer.h"
 #endif
 
+#ifdef HAVE_LIBSDL_NET
+#include "SDL_net.h"
+#endif
+
