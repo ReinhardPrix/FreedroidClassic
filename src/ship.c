@@ -89,8 +89,7 @@ rprix@users.sourceforge.net\n\
 or report bugs on the sourceforge website:\n\
 http://sourceforge.net/projects/freedroid/";
 
-char *EmailText2 = "\
- The freedroid project is looking for a content writer, who could set up additional characters, plot and multiple-choice styled dialogs for the freedroid RPG branch.\n\
+char *EmailText2 = "The freedroid project is looking for a content writer, who could set up additional characters, plot and multiple-choice styled dialogs for the freedroid RPG branch.\n\
 \n\
 The story is a science-fiction one and in short goes like this:\n\
 The MS has enslaved a far distant universe. The Tux, not natively belonging into this world arrives accidentially during a magnetic storm. He finds himself in a former resistance camp, having lost his memory. He should try to get in contact with the resistance to help him return to his native home plane of existence. (or somewhat like this). Adventures and missions will involve fighting the MS machines but also talking to other characters and helping the resistance (or the MS?).\n\

@@ -1599,7 +1599,7 @@ PutMouseMoveCursor ( void )
 void
 iso_put_tux_part ( char* part_string , int x , int y , int PlayerNum , int rotation_index )
 {
-#define ALL_TUX_PARTS 6
+#define ALL_TUX_PARTS 7
 #define ALL_TUX_PHASES 15
   static iso_image tmp [ ALL_TUX_PARTS ] [ ALL_TUX_PHASES ] [ MAX_TUX_DIRECTIONS ] ;
   static int first_call = TRUE;
@@ -1659,8 +1659,13 @@ Empty part string received!",
     {
       part_index = 5 ;
     }
+  else if ( ! strcmp ( part_string , "helm1" ) )
+    {
+      part_index = 6 ;
+    }
   else
     {
+      fprintf ( stderr , "Part string: %s " , part_string );
       GiveStandardErrorMessage ( "iso_put_tux(...)" , "\
 Resolving part string to index failed!",
 				 PLEASE_INFORM, IS_FATAL );
@@ -1691,6 +1696,20 @@ Unable to load tux part!",
     }
 
 }; // void iso_put_tux_part ( char* part_string , int x , int y , int PlayerNum )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+iso_put_tux_head ( int x , int y , int PlayerNum , int rotation_index )
+{
+  if ( Me [ PlayerNum ] . special_item . type == (-1) )
+    iso_put_tux_part ( "head" , x , y , PlayerNum , rotation_index );
+  else
+    iso_put_tux_part ( "helm1" , x , y , PlayerNum , rotation_index );
+
+}; // void iso_put_tux_head ( int x , int y , int PlayerNum , int rotation_index )
 
 /*----------------------------------------------------------------------
  * This function should blit the isometric version of the Tux to the
@@ -1735,16 +1754,12 @@ iso_put_tux ( int x , int y , int PlayerNum )
   while ( rotation_index < 0 ) rotation_index += MAX_TUX_DIRECTIONS;
 
   iso_put_tux_part ( "feet" , x , y , PlayerNum , rotation_index );
-
   iso_put_tux_part ( "torso" , x , y , PlayerNum , rotation_index );
-
   iso_put_tux_part ( "weaponarm" , x , y , PlayerNum , rotation_index );
-
   iso_put_tux_part ( "shieldarm" , x , y , PlayerNum , rotation_index );
-
   iso_put_tux_part ( "mace" , x , y , PlayerNum , rotation_index );
 
-  iso_put_tux_part ( "head" , x , y , PlayerNum , rotation_index );
+  iso_put_tux_head ( x , y , PlayerNum , rotation_index );
 
 }; // void iso_put_tux ( int x , int y , int PlayerNum )
 

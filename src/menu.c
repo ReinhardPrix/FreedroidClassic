@@ -2529,7 +2529,7 @@ freedroid-discussion@lists.sourceforge.net\n\n\
 For the reason of spam-protection, your post maybe be held for some time for approval of the list moderator, before it is let through.  You can subscribe via the sourceforge project page of FreedroidRPG to gain direct access.\n\n\
 \n\
 Thank you,\n\n\
-                The FreedroidRPG dev team.\
+                The FreedroidRPG dev team.\n\
                                       \n\n\n\n\n";
 
   while ( SpacePressed() || EscapePressed() ) ; 
