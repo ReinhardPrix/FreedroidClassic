@@ -55,10 +55,17 @@
 #define DAMAGE_X 260
 #define DAMAGE_Y 228
 
+#define AC_X 260
+#define AC_Y 171
+
 #define CHARACTERRECT_X (SCREENLEN/2)
 #define CHARACTERRECT_Y (User_Rect.y)
 #define CHARACTERRECT_W (SCREENLEN/2)
 #define CHARACTERRECT_H (User_Rect.h)
+
+#define ENERGY_GAIN_PER_VIT_POINT 10
+#define DAMAGE_GAIN_PER_STR_POINT 10
+#define AC_GAIN_PER_DEX_POINT 10
 
 /* ----------------------------------------------------------------------
  * This function checks if a given screen position lies within the 
@@ -125,8 +132,35 @@ CursorIsOnVitButton( int x , int y )
 void 
 UpdateAllCharacterStats ( void )
 {
-  Druidmap[ DRUID001 ].maxenergy = 100 + (Me.Vitality - 15) * 10;
-  Me.Damage = ItemMap[ Druidmap[ Me.type ].weapon_item.type ].item_gun_damage + (Me.Strength - 15) * 10;
+
+  //--------------------
+  // First we compute the maximum energy of the influencer
+  //
+  Druidmap[ DRUID001 ].maxenergy = 100 + (Me.Vitality - 15) * ENERGY_GAIN_PER_VIT_POINT;
+  
+  //--------------------
+  // Now we compute the damage the influecer can do
+  //
+  if ( Druidmap[ Me.type ].weapon_item.type == (-1) )
+    {
+      Me.Damage = ItemMap[ Druidmap[ Me.type ].weapon_item.type ].item_gun_damage + 
+	(Me.Strength - 15) * DAMAGE_GAIN_PER_STR_POINT;
+    }
+  else
+    {
+      Me.Damage = 0;
+    }
+
+  //--------------------
+  // Now we compute the armour class of the influecer
+  //
+  Me.AC = (Me.Dexterity - 15) * AC_GAIN_PER_DEX_POINT;
+  if ( Druidmap[ Me.type ].armour_item.type != (-1) )
+    {
+      // DebugPrintf( 2 , "\nAn armour is beeing used!!!, type = %d" , Druidmap[ Me.type ].armour_item.type);
+      // DebugPrintf( 2 , "\nAC bonus = %f" , ItemMap[ Druidmap[ Me.type ].armour_item.type ].item_armour_ac_bonus );
+      Me.AC += ItemMap[ Druidmap[ Me.type ].armour_item.type ].item_armour_ac_bonus;
+    }
 
 }; // void UpdateAllCharacterStats ( void )
 
@@ -242,6 +276,9 @@ ShowCharacterScreen ( void )
   sprintf( CharText , "%d", (int) Me.Damage );
   DisplayText( CharText , DAMAGE_X + CharacterRect.x , DAMAGE_Y + CharacterRect.y , &CharacterRect );
 
+  sprintf( CharText , "%d", (int) Me.AC );
+  DisplayText( CharText , AC_X + CharacterRect.x , AC_Y + CharacterRect.y , &CharacterRect );
+
   //--------------------
   // It might be the case, that the character has some points to distribute upon the character
   // stats.  Then of course, we must display the plus button instead of all character 'now' values
@@ -281,10 +318,11 @@ ShowCharacterScreen ( void )
 	{
 	  Me.Vitality++;
 	  Me.PointsToDistribute--;
+	  Me.health += ENERGY_GAIN_PER_VIT_POINT;
+	  Me.energy += ENERGY_GAIN_PER_VIT_POINT;
 	}
     }
 
-  UpdateAllCharacterStats ( );
   //--------------------
   // Finally, we want the part of the screen we have been editing to become
   // visible and therefore we must updated it here, since it is currently not

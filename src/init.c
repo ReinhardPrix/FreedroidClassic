@@ -587,6 +587,10 @@ Sorry...\n\
       ReadValueFromString( ItemPointer ,  "Item as gun: bullet_image_type=" , "%d" , 
 			   &ItemMap[ItemIndex].item_gun_bullet_image_type , EndOfItemData );
 
+      // Now we read in the armour value of this item as armour
+      ReadValueFromString( ItemPointer ,  "Item as armour: ac_bonus=" , "%lf" , 
+			   &ItemMap[ItemIndex].item_armour_ac_bonus , EndOfItemData );
+
 
 
 
