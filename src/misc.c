@@ -125,7 +125,12 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "mouse_buttons/GoLevelSouthButton.png"           , { 233 , 480-20 , 160 ,  20 } } ,
     { NULL , "mouse_buttons/GoLevelEastButton.png"            , { 640-20 , (480-160)/2 , 20 , 160 } } ,
     { NULL , "mouse_buttons/GoLevelWestButton.png"            , { 0+16 , (480-160)/2 ,  20 , 160 } } ,
-    { NULL , "mouse_buttons/ExportThisLevelButton.png"           , { 0 , 480-40 , 160 ,  20 } } ,
+    { NULL , "mouse_buttons/ExportThisLevelButton.png"        , { 0 , 480-40 , 160 ,  20 } } ,
+    { NULL , "mouse_buttons/LevelEditorSaveShipButton.png"    , { 0 , 90 , 0 ,  0 } } ,
+    { NULL , "mouse_buttons/LevelEditorZoomInButton.png"      , { 40 , 90 , 0 ,  0 } } ,
+    { NULL , "mouse_buttons/LevelEditorZoomOutButton.png"     , { 80 , 90 , 0 ,  0 } } ,
+    { NULL , "mouse_buttons/LevelEditorRecursiveFillButton.png" , { 120 , 90 , 0 ,  0 } } ,
+    { NULL , "mouse_buttons/LevelEditorQuitButton.png"        , { 640-31 , 90 , 0 ,  0 } } ,
 
     { NULL , "backgrounds/SaveGameBanner.png"                 , { (640-200)/2 , (480-50)/2 , 200 , 50 } } ,
     { NULL , "backgrounds/LoadGameBanner.png"                 , { (640-200)/2 , (480-50)/2 , 200 , 50 } } ,
@@ -280,6 +285,22 @@ This is an indication of a severe bug/installation problem of freedroid.",
 	}
       AllMousePressButtons[ ButtonIndex ] . button_surface = SDL_DisplayFormat ( tmp );
       SDL_FreeSurface ( tmp );
+    }
+
+  //--------------------
+  // Maybe we had '0' entries for the height or width of this button in the list.
+  // This means that we will take the real width and the real height from the image
+  // and overwrite the 0 entries with this.
+  //
+  if ( AllMousePressButtons[ ButtonIndex ] . button_rect . w == ( 0 ) )
+    {
+      AllMousePressButtons[ ButtonIndex ] . button_rect . w =
+	AllMousePressButtons[ ButtonIndex ] . button_surface -> w ;
+    }
+  if ( AllMousePressButtons[ ButtonIndex ] . button_rect . h == ( 0 ) )
+    {
+      AllMousePressButtons[ ButtonIndex ] . button_rect . h =
+	AllMousePressButtons[ ButtonIndex ] . button_surface -> h ;
     }
 
   //--------------------

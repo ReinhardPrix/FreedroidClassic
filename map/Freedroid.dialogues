@@ -1,8 +1,7 @@
 
-----------------------------------------------------------------------
+ * ----------------------------------------------------------------------
  *
  *   Copyright (c) 1994, 2002, 2003 the Freedroid dev team
- *
  *
  *  This file is part of Freedroid
  *
@@ -21,7 +20,7 @@
  *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
  *  MA  02111-1307  USA
  *
-----------------------------------------------------------------------
+ * ----------------------------------------------------------------------
 
 This is a dialogue data file for Freedroid RPG.
 
@@ -31,6 +30,8 @@ This is a dialogue data file for Freedroid RPG.
 
 Beginning of new chat dialog for character="614"
 
+----------------------------------------------------------------------
+
 New Option Nr=0 OptionText=" Who are you? "
 OptionSample="Tux_614_Who_Are_You_0.wav"
 Subtitle="I am a 614 security bot, once one of the best-selling products of the Nicolson company ever. "
@@ -38,11 +39,15 @@ ReplySample="614_I_Am_A_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=4 ChangeToValue=1
 
+----------------------------------------------------------------------
+
 New Option Nr=1 OptionText=" Have you detected any MS activity?" 
 OptionSample="Tux_614_Have_You_Detected_0.wav"
 Subtitle="No.  The MS Bots have not shown up within the last 24 hours. "
 ReplySample="614_No_The_MS_0.wav"
 ChangeOption=1 ChangeToValue=0
+
+----------------------------------------------------------------------
 
 New Option Nr=2 OptionText=" What can you tell me about the 614 type? " 
 OptionSample="Tux_614_What_Can_You_0.wav"
@@ -56,6 +61,8 @@ Subtitle="So don't worry.  I'm still in pretty good shape."
 ReplySample="614_But_Dont_Worry_0.wav"
 ChangeOption=2 ChangeToValue=0
 
+----------------------------------------------------------------------
+
 New Option Nr=3 OptionText=" What are your orders?" 
 OptionSample="Tux_614_What_Are_Your_0.wav"
 Subtitle="My orders are to protect the living beings in this camp from attacks by MS bots."
@@ -63,6 +70,8 @@ ReplySample="614_My_Orders_Are_0.wav"
 Subtitle="This has top priority.  There are no other priorities."
 ReplySample="614_This_Has_Top_0.wav"
 ChangeOption=3 ChangeToValue=0
+
+----------------------------------------------------------------------
 
 New Option Nr=4 OptionText="Why are you not hostile as all the other bots?" 
 OptionSample="Tux_614_What_Are_Your_0.wav"
@@ -75,17 +84,22 @@ ReplySample="614_This_Has_Top_0.wav"
 ChangeOption=4 ChangeToValue=0
 ChangeOption=5 ChangeToValue=1
 
+----------------------------------------------------------------------
+
 New Option Nr=5 OptionText="Who is working on that?" 
 OptionSample="Tux_614_What_Are_Your_0.wav"
 Subtitle="Mostly the RMS and his colleagues."
 ReplySample="614_Mostly_The_RMS_0.wav"
 ChangeOption=5 ChangeToValue=0
 
+----------------------------------------------------------------------
+
 New Option Nr=99 OptionText=" END "
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
-
 Subtitle="See you later!"
 ReplySample="Tux_See_You_Later_0.wav"
+
+----------------------------------------------------------------------
       
 End of chat dialog for character="614"
 
@@ -274,7 +288,6 @@ ChangeOption=13 ChangeToValue=0 ;
 
 ----------------------------------------------------------------------
 
-
 New Option Nr=99 OptionText=" END "
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 Subtitle="See you later!"
@@ -294,6 +307,8 @@ Beginning of new chat dialog for character="Benjamin"
 // BEN person for short.
 // This should be a teacher of ranged weapon combat.
       
+----------------------------------------------------------------------
+
 New Option Nr=0 OptionText=" Hello! "
 OptionSample="Tux_Hi_Im_New_0.wav"
 Subtitle=" Hello. " 
@@ -423,10 +438,8 @@ DoSomethingExtra="IncreaseRangedWeaponSkill"
 
 New Option Nr=99 OptionText=" END "
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
-
 Subtitle="See you later!"
 ReplySample="Tux_See_You_Later_0.wav"
-
 Subtitle="NO_SUBTITLE_AND_NO_WAITING_EITHER"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 
@@ -438,6 +451,8 @@ End of chat dialog for character="Benjamin"
 
 Beginning of new chat dialog for character="Chandra"
 
+----------------------------------------------------------------------
+
 New Option Nr=0 
 OptionText=" Hi!  I'm new here. " 
 OptionSample="Tux_Hi_Im_New_0.wav"
@@ -446,6 +461,8 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
 ChangeOption=2 ChangeToValue=1
+
+----------------------------------------------------------------------
 
 New Option Nr=1 
 OptionText=" What can you tell me about this place? " 
@@ -459,6 +476,8 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=4 ChangeToValue=1
 
+----------------------------------------------------------------------
+
 New Option Nr=2 
 OptionText=" Where can I get better equipment? " 
 OptionSample="Tux_Chandra_Where_Can_I_0.wav"
@@ -467,6 +486,8 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle=" Mrs. Stone always has a good range of equipment there. "
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
+
+----------------------------------------------------------------------
 
 New Option Nr=4 
 OptionText=" What can you tell me about the MS? " 
@@ -486,6 +507,8 @@ ChangeOption=6 ChangeToValue=1
 ChangeOption=7 ChangeToValue=0
 ChangeOption=4 ChangeToValue=0
 
+----------------------------------------------------------------------
+
 New Option Nr=5 OptionText="Why haven't you joined with the other settlements to fight the bots?" 
 OptionSample="Tux_Chandra_Wouldnt_That_Mean_0.wav"
 Subtitle="Fighting the bots is not so easy.  They are numerous and some of them are hard to defeat. "
@@ -500,6 +523,8 @@ Subtitle="But with their makeshift devices, this is not even worth trying."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=0
 
+----------------------------------------------------------------------
+
 New Option Nr=6 OptionText=" I want to leave this place." 
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="You mean this town?  The gate is on the south side of the city.  You can't miss it."
@@ -507,12 +532,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=6 ChangeToValue=0
 ChangeOption=7 ChangeToValue=1
 
-ChangeOption=10 ChangeToValue=1
-ChangeOption=11 ChangeToValue=1
-ChangeOption=12 ChangeToValue=1
-ChangeOption=13 ChangeToValue=1
-ChangeOption=14 ChangeToValue=1
-ChangeOption=15 ChangeToValue=1
+----------------------------------------------------------------------
 
 New Option Nr=7 OptionText="No, I meant I would like to leave this planet."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -520,6 +540,8 @@ Subtitle="Sorry, but that's impossible.  Noone can get away from this place.  Ev
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=7 ChangeToValue=0
 ChangeOption=8 ChangeToValue=1
+
+----------------------------------------------------------------------
 
 New Option Nr=8 OptionText="I will find a way to get away from here." 
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -539,6 +561,8 @@ Subtitle="And that's the reason why noone, human or linarian, can ever get out o
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=8 ChangeToValue=0
 ChangeOption=9 ChangeToValue=1
+
+----------------------------------------------------------------------
 
 New Option Nr=9 OptionText="Do you think they would let me join the guard of this town?" 
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -576,6 +600,8 @@ Beginning of new chat dialog for character="Doc Moore"
 // Here comes the dialog interface for conversation with Doc Moore, the
 // only medic within the old town.
 //
+
+----------------------------------------------------------------------
       
 New Option Nr=0 OptionText=" Hello! "
 OptionSample="Tux_Hi_Im_New_0.wav"
@@ -664,6 +690,8 @@ End of chat dialog for character="Doc Moore"
 
 Beginning of new chat dialog for character="STO"
 
+----------------------------------------------------------------------
+
 New Option Nr=0 OptionText=" Hi!  I'm new here. " 
 OptionSample="Tux_Hi_Im_New_0.wav"
 ChangeOption=0 ChangeToValue=0
@@ -675,6 +703,8 @@ ChangeOption=3 ChangeToValue=0 // no identify
 ChangeOption=4 ChangeToValue=0 // no repair
 ChangeOption=5 ChangeToValue=0 // I disable magic stuff now...  We havn't decided about 'magic stuff' issues...
 
+----------------------------------------------------------------------
+
 New Option Nr=1 OptionText="I would like to trade with you." 
 OptionSample="Tux_STO_I_Would_Like_0.wav"
 Subtitle="Good!  Here is the selection of items I have for sale."
@@ -682,43 +712,48 @@ ReplySample="STO_Good_Here_Is_0.wav"
 DoSomethingExtra="InitTradeWithCharacter:STO" 
 Do---SomethingExtra="Buy_Basic_Items" 
 
+----------------------------------------------------------------------
+
 New Option Nr=2 OptionText=" I would like to get rid of some stuff. "
 OptionSample="Tux_STO_I_Would_Rid_0.wav"
 Subtitle="Good!  Let's see what you have."
 ReplySample="STO_Good_Lets_See_0.wav"
-
 DoSomethingExtra="Sell_Items" 
+
+----------------------------------------------------------------------
 
 New Option Nr=3 OptionText=" Can you identify some of the items I found?" 
 OptionSample="Tux_STO_Can_You_Identify_0.wav"
 Subtitle="Which of your items do you want me to identify?"
 ReplySample="STO_Which_Of_Your_0.wav"
-
 DoSomethingExtra="Identify_Items" 
+
+----------------------------------------------------------------------
 
 New Option Nr=4 OptionText=" Some of my things could need repair." 
 OptionSample="Tux_STO_Some_Of_My_0.wav"
 Subtitle="Which of your items do you want me to repair?"
 ReplySample="STO_Which_Of_Repair_0.wav"
-
 DoSomethingExtra="Repair_Items" 
+
+----------------------------------------------------------------------
 
 New Option Nr=5 OptionText=" Do you also have some magical stuff?" 
 OptionSample="Tux_STO_Do_You_Also_0.wav"
 Subtitle="Sure.  But this will be a bit more expensive."
 ReplySample="STO_Sure_But_This_0.wav"
-
 DoSomethingExtra="Buy_Magical_Items" 
 
 ----------------------------------------------------------------------
 
 New Option Nr=99 OptionText=" END "
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
-
 Subtitle="See you later."	      
 ReplySample="Tux_See_You_Later_0.wav"
 Subtitle="NO_SUBTITLE_AND_NO_WAITING_EITHER"
 ReplySample="STO_Goodbye_Love_0.wav"
+
+----------------------------------------------------------------------
 
 End of chat dialog for character="STO"
 
@@ -727,6 +762,8 @@ End of chat dialog for character="STO"
 ----------------------------------------------------------------------
 
 Beginning of new chat dialog for character="DIX"
+
+----------------------------------------------------------------------
 
 New Option Nr=0  OptionText=" Hi!  I'm new here. " 
 OptionSample="Tux_Hi_Im_New_0.wav"
@@ -792,6 +829,12 @@ ChangeOption=99 ChangeToValue=1
 ----------------------------------------------------------------------
 
 New Option Nr=5  OptionText=" I have found your toolset. Here you are. " 
+Subtitle="Oh great!  How did you manage to get that?  Well anyway, thanks a lot."
+ReplySample="DIX_Oh_Great_How_0.wav"
+Subtitle="With this I'll be able to fix the damage at the teleporters immediately."
+ReplySample="DIX_With_This_Ill_0.wav"
+Subtitle="Here, take these 100 bucks as a reward.  And no be gone, I got to work."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 //--------------------
 // At this point we know the Tux has completed the mission and
 // should get his reward.
@@ -804,14 +847,6 @@ DoSomethingExtra="AddBigScreenMessageBUT_WITH_TERMINATION_CHARACTER_PLEASE:Toolb
 DoSomethingExtra="AddExperienceBonus:600"
 DoSomethingExtra="AddGold:100"
 ChangeOption=5 ChangeToValue=0
-
-Subtitle="Oh great!  How did you manage to get that?  Well anyway, thanks a lot."
-ReplySample="DIX_Oh_Great_How_0.wav"
-Subtitle="With this I'll be able to fix the damage at the teleporters immediately."
-ReplySample="DIX_With_This_Ill_0.wav"
-Subtitle="Here, take these 100 bucks as a reward.  And no be gone, I got to work."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
- // GiveSubtitleNSample( "All that is left to do is convey a message to the other cities with our teleporter calibration." , "DIX_All_That_Is_0.wav" );
 
 ----------------------------------------------------------------------
 
@@ -860,8 +895,9 @@ New Option Nr=99 OptionText=" END "
 OptionSample="Tux_See_You_Later_0.wav"
 ChangeOption=1 ChangeToValue=1
 
-End of chat dialog for character="DIX"
+----------------------------------------------------------------------
 
+End of chat dialog for character="DIX"
 
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
@@ -869,16 +905,9 @@ End of chat dialog for character="DIX"
 
 Beginning of new chat dialog for character="Sorenson"
 
-  //**********************************************************************
-  // Here comes the dialog interface for conversation with SORENSON, the
-  // SOR person for short.
-  //
-  // This should be a teacher of magical abilities.
-  // She does not assign any quests so far.
-  //
-  // Also the speaker for Sorensons voice has left us for Finland,
-  // so please be careful about making modifications here.  
-  //
+This should be a teacher of magical abilities.
+
+----------------------------------------------------------------------
       
 New Option Nr=0 OptionText=" Hi!  I'm new here. "
 OptionSample="Tux_Hi_Im_New_0.wav"
@@ -1150,6 +1179,8 @@ DoSomethingExtra="IncreaseMeleeWeaponSkill"
 
 New Option Nr=99 OptionText=" END ";
 OptionSample="Tux_See_You_Later_0.wav"
+
+----------------------------------------------------------------------
 
 End of chat dialog for character="PEN"
 
@@ -1837,6 +1868,8 @@ End of chat dialog for character="Michelangelo"
 
 Beginning of new chat dialog for character="Skippy"
 
+----------------------------------------------------------------------
+
 New Option Nr=0 OptionText=" Hi!  I'm new here. " 
 OptionSample="Tux_Hi_Im_New_0.wav"
 ChangeOption=0 ChangeToValue=0
@@ -1850,11 +1883,15 @@ ChangeOption=1 ChangeToValue=1
 ChangeOption=2 ChangeToValue=1
 ChangeOption=3 ChangeToValue=1
 
+----------------------------------------------------------------------
+
 New Option Nr=1 OptionText="Show me some of those map-making devices." 
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Good!  Here is the selection of items I have for sale."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 DoSomethingExtra="InitTradeWithCharacter:Skippy" 
+
+----------------------------------------------------------------------
 
 New Option Nr=2 OptionText="How do I activate such a map-making device?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -1868,6 +1905,8 @@ Subtitle="The data will then be projected directly into your eye.  (Use the Tab 
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 
+----------------------------------------------------------------------
+
 New Option Nr=3 OptionText="You said you make those devices yourself?  How can you do that?" 
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Oh, I've always been a geek.  And I've managed to retrieve some plans from before the Great Assault."
@@ -1877,6 +1916,8 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="The only source of these devices is here.  It's me!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
+
+----------------------------------------------------------------------
 
 New Option Nr=99 OptionText=" END "
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
@@ -1888,6 +1929,8 @@ ChangeOption=1 ChangeToValue=1
 ChangeOption=2 ChangeToValue=1
 ChangeOption=3 ChangeToValue=1
 
+----------------------------------------------------------------------
+
 End of chat dialog for character="Skippy"
 
 ----------------------------------------------------------------------
@@ -1895,6 +1938,8 @@ End of chat dialog for character="Skippy"
 ----------------------------------------------------------------------
 
 Beginning of new chat dialog for character="Duncan"
+
+----------------------------------------------------------------------
 
 New Option Nr=0 OptionText=" Hi!  I'm new here. " 
 OptionSample="Tux_Hi_Im_New_0.wav"
@@ -1908,11 +1953,15 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=1
 ChangeOption=2 ChangeToValue=1
 
+----------------------------------------------------------------------
+
 New Option Nr=1 OptionText="Show me some of your grenades." 
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Grenades are vital for survival round here.  You really should buy some."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 DoSomethingExtra="InitTradeWithCharacter:Duncan" 
+
+----------------------------------------------------------------------
 
 New Option Nr=2 OptionText="I've heard such gas grenades can cause skin iritations.  Is that true?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -1924,6 +1973,8 @@ Subtitle="Apart from that, none of my customers have ever complained about skin 
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 
+----------------------------------------------------------------------
+
 New Option Nr=99 OptionText=" END "
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 Subtitle="See you later."	      
@@ -1933,6 +1984,8 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=1
 ChangeOption=2 ChangeToValue=1
 ChangeOption=3 ChangeToValue=1
+
+----------------------------------------------------------------------
 
 End of chat dialog for character="Duncan"
 

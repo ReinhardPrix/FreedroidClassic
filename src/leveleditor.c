@@ -97,6 +97,27 @@ enum
   };
 
 /* ----------------------------------------------------------------------
+ * ---------------------------------------------------------------------- */
+void
+ZoomIn( void )
+{
+  CurrentCombatScaleFactor += 0.25;
+  SetCombatScaleTo (CurrentCombatScaleFactor);
+  while (IPressed());
+}; // void ZoomIn( void )
+
+/* ----------------------------------------------------------------------
+ * ---------------------------------------------------------------------- */
+void
+ZoomOut( void )
+{
+  if (CurrentCombatScaleFactor > 0.25 )
+    CurrentCombatScaleFactor -= 0.25;
+  SetCombatScaleTo (CurrentCombatScaleFactor);
+  while (OPressed());
+}; // void ZoomOut( void )
+
+/* ----------------------------------------------------------------------
  * This function shall determine, whether a given left mouse click was in 
  * given rect or not.
  * ---------------------------------------------------------------------- */
@@ -2734,7 +2755,7 @@ LevelEditor(void)
     {
       Weiter=FALSE;
       OldTicks = SDL_GetTicks ( ) ;
-      while (!EscapePressed())
+      while ( ( ! EscapePressed() ) && ( !Done ) )
 	{
 	  //--------------------
 	  // Also in the Level-Editor, there is no need to go at full framerate...
@@ -2796,6 +2817,12 @@ LevelEditor(void)
 	  if ( EditLevel -> jump_target_west >= 0 )
 	    ShowGenericButtonFromList ( GO_LEVEL_WEST_BUTTON );
 	  ShowGenericButtonFromList ( EXPORT_THIS_LEVEL_BUTTON );
+
+	  ShowGenericButtonFromList ( LEVEL_EDITOR_SAVE_SHIP_BUTTON );
+	  ShowGenericButtonFromList ( LEVEL_EDITOR_ZOOM_IN_BUTTON );
+	  ShowGenericButtonFromList ( LEVEL_EDITOR_ZOOM_OUT_BUTTON );
+	  ShowGenericButtonFromList ( LEVEL_EDITOR_RECURSIVE_FILL_BUTTON );
+	  ShowGenericButtonFromList ( LEVEL_EDITOR_QUIT_BUTTON );
 
 	  //--------------------
 	  // Now that everything is blitted and printed, we may update the screen again...
@@ -2905,18 +2932,10 @@ LevelEditor(void)
 	  // If the person using the level editor decides he/she wants a different
 	  // scale for the editing process, he/she may say so by using the O/I keys.
 	  //
-	  if ( OPressed () )
-	    {
-	      if (CurrentCombatScaleFactor > 0.25 )
-		CurrentCombatScaleFactor -= 0.25;
-	      SetCombatScaleTo (CurrentCombatScaleFactor);
-	      while (OPressed());
-	    }
+	  if ( OPressed () ) ZoomOut();
 	  if ( IPressed () )
 	    {
-	      CurrentCombatScaleFactor += 0.25;
-	      SetCombatScaleTo (CurrentCombatScaleFactor);
-	      while (IPressed());
+	      ZoomIn();
 	    }
   
 	  //--------------------
@@ -3013,6 +3032,36 @@ LevelEditor(void)
 		{
 		  ExportLevelInterface ( Me [ 0 ] . pos . z );
 		}
+	      else if ( CursorIsOnButton ( LEVEL_EDITOR_SAVE_SHIP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+		{
+		  SaveShip("Testship.shp");
+		  CenteredPutString ( Screen ,  11*FontHeight(Menu_BFont),    "Your ship was saved...");
+		  SDL_Flip ( Screen );
+		  while (!EnterPressed() && !SpacePressed() ) ;
+		  while (EnterPressed() || SpacePressed() ) ;
+		}
+	      else if ( CursorIsOnButton ( LEVEL_EDITOR_ZOOM_IN_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+		{
+		  ZoomIn();
+		}
+	      else if ( CursorIsOnButton ( LEVEL_EDITOR_ZOOM_OUT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+		{
+		  ZoomOut();
+		}
+	      else if ( CursorIsOnButton ( LEVEL_EDITOR_RECURSIVE_FILL_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+		{
+		  RecFillMap ( EditLevel , BlockY , BlockX , Highlight );
+		}
+	      else if ( CursorIsOnButton ( LEVEL_EDITOR_QUIT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+		{
+		  Weiter=!Weiter;
+		  Done=TRUE;
+		  SetCombatScaleTo( 1 );
+		  Me [ 0 ] . mouse_move_target . x = Me [ 0 ] . pos . x ;
+		  Me [ 0 ] . mouse_move_target . y = Me [ 0 ] . pos . y ;
+		  Me [ 0 ] . mouse_move_target . z = Me [ 0 ] . pos . z ;
+		  Me [ 0 ] . mouse_move_target_is_enemy = ( -1 ) ;
+		}
 	      else
 		{
 		  //--------------------
@@ -3061,7 +3110,7 @@ LevelEditor(void)
       // After Level editing is done and escape has been pressed, 
       // display the Menu with level save options and all that.
       //
-      Done = DoLevelEditorMainMenu ( EditLevel );
+      if ( !Done ) Done = DoLevelEditorMainMenu ( EditLevel );
       
     } // while (!Done)
 

@@ -1252,7 +1252,7 @@ enum
 	case LEVEL_EDITOR_POSITION:
 	  while (EnterPressed() || SpacePressed() );
 	  LevelEditor();
-	  // Weiter = TRUE;   /* jp forgot this... ;) */
+	  Weiter = TRUE;  
 	  break;
 	case LOAD_GAME_POSITION:
 	  LoadGame(  );

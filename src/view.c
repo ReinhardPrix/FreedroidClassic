@@ -485,10 +485,11 @@ ShowCombatScreenTexts ( int mask )
       PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x , 
 		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
 		       "FPS: %d " , FPS_Displayed );
-
+      /*
       PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x + 100, 
 		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
 		       "Axis: %d %d" , input_axis.x, input_axis.y);
+      */
     }
 
   if ( GameConfig.Draw_Energy )

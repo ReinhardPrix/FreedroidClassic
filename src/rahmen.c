@@ -433,6 +433,7 @@ ShowCurrentSkill( void )
   LoadOneSkillSurfaceIfNotYetLoaded ( Me[0].readied_skill );
   SDL_BlitSurface ( SpellSkillMap [ Me[0].readied_skill ] . spell_skill_icon_surface , NULL , Screen , &Target_Rect );
 
+  /*
   //--------------------
   // Here we also check for possible mouse clicks on the skill icon.  In this
   // case we activate or deactivate the skill screen.
@@ -444,6 +445,7 @@ ShowCurrentSkill( void )
        axis_is_active &&
        !Mouse_Button_Pressed_Previous_Frame )
     GameConfig.SkillScreen_Visible = ! GameConfig.SkillScreen_Visible;
+  */
 
   Mouse_Button_Pressed_Previous_Frame = axis_is_active;
 
