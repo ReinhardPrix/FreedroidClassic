@@ -330,7 +330,7 @@ Load_Skill_Level_Button_Surfaces( void )
 				   vid_bpp , 0 , 0 , 0 , 0 );
   SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
 
-  for ( j=0 ; j < NUMBER_OF_SKILL_LEVELS ; j++ )
+  for ( j = 0 ; j < NUMBER_OF_SKILL_PAGES ; j++ )
     {
       Source.x = j * ( SKILL_LEVEL_BUTTON_WIDTH );
       Source.y = i * ( SKILL_LEVEL_BUTTON_HEIGHT );

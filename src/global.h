@@ -161,8 +161,7 @@ EXTERN int Item_Held_In_Hand;
 EXTERN point InventorySize;
 
 EXTERN iso_image MouseCursorImageList[ NUMBER_OF_MOUSE_CURSOR_PICTURES ];
-// EXTERN SDL_Surface* SpellLevelButtonImageList[ NUMBER_OF_SKILL_LEVELS ];
-EXTERN iso_image SpellLevelButtonImageList[ NUMBER_OF_SKILL_LEVELS ];
+EXTERN iso_image SpellLevelButtonImageList[ NUMBER_OF_SKILL_PAGES ];
 
 EXTERN double Conveyor_Belt_Speed;
 EXTERN int Number_Of_Droids_On_Ship;

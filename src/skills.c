@@ -875,7 +875,7 @@ CursorIsOnWhichSkillButton( int x , int y )
  * spell level button.
  * ---------------------------------------------------------------------- */
 int
-CursorIsOnWhichSpellLevelButton( int x , int y )
+CursorIsOnWhichSpellPageButton( int x , int y )
 {
   int i;
 
@@ -897,7 +897,7 @@ CursorIsOnWhichSpellLevelButton( int x , int y )
   // is hovering, since we know that it is hitting, horizontally
   // at least, the row of skill icons.
   //
-  for ( i = 0 ; i < 10 ; i ++ )
+  for ( i = 0 ; i < NUMBER_OF_SKILL_PAGES ; i ++ )
     {
       if ( x < SkillScreenRect.x + SPELL_LEVEL_BUTTONS_X + ( i + 1 ) * SPELL_LEVEL_BUTTON_WIDTH ) 
 	return i;
@@ -1032,7 +1032,7 @@ ShowSkillsScreen ( void )
   SDL_Rect SpellLevelRect;
   int SkillSubsetMap [ NUMBER_OF_SKILLS ] ;
   int SkillOfThisSlot;
-  point SkillRectLocations [ NUMBER_OF_SKILLS_PER_SKILL_LEVEL ] =
+  point SkillRectLocations [ NUMBER_OF_SKILLS_PER_SKILL_PAGE ] =
     { { SkillScreenRect.x + 17 , SkillScreenRect.y + FIRST_SKILLRECT_Y + 0 * ( 64 + INTER_SKILLRECT_DIST ) + 3 } , 
       { SkillScreenRect.x + 17 , SkillScreenRect.y + FIRST_SKILLRECT_Y + 1 * ( 64 + INTER_SKILLRECT_DIST ) + 3 } , 
       { SkillScreenRect.x + 17 , SkillScreenRect.y + FIRST_SKILLRECT_Y + 2 * ( 64 + INTER_SKILLRECT_DIST ) + 2 } , 
@@ -1100,14 +1100,14 @@ ShowSkillsScreen ( void )
   // are not class-specific, like in diablo or something, but this is our first
   // approach to the topic after all.... :)
   //
-  for ( i = 0 ; i < NUMBER_OF_SKILLS_PER_SKILL_LEVEL ; i ++ )
+  for ( i = 0 ; i < NUMBER_OF_SKILLS_PER_SKILL_PAGE ; i ++ )
     {
       ButtonRect.x = SkillRectLocations [ i ] . x ;
       ButtonRect.y = SkillRectLocations [ i ] . y ; 
       ButtonRect.w = 64;
       ButtonRect.h = 64;
 
-      SkillOfThisSlot = SkillSubsetMap [ i + NUMBER_OF_SKILLS_PER_SKILL_LEVEL * GameConfig.spell_level_visible ] ;
+      SkillOfThisSlot = SkillSubsetMap [ i + NUMBER_OF_SKILLS_PER_SKILL_PAGE * GameConfig.spell_level_visible ] ;
       if ( SkillOfThisSlot < 0 ) continue;
 
       LoadOneSkillSurfaceIfNotYetLoaded ( SkillOfThisSlot );
@@ -1152,9 +1152,9 @@ ShowSkillsScreen ( void )
        ! MouseButtonPressedPreviousFrame )
     {
       if ( SkillSubsetMap [ CursorIsOnWhichSkillButton ( CurPos.x , CurPos.y ) + 
-			    NUMBER_OF_SKILLS_PER_SKILL_LEVEL * GameConfig.spell_level_visible ] >= 0 ) 
+			    NUMBER_OF_SKILLS_PER_SKILL_PAGE * GameConfig.spell_level_visible ] >= 0 ) 
 	Me[0].readied_skill = SkillSubsetMap [ CursorIsOnWhichSkillButton ( CurPos.x , CurPos.y ) + 
-					       NUMBER_OF_SKILLS_PER_SKILL_LEVEL * GameConfig.spell_level_visible ] ;
+					       NUMBER_OF_SKILLS_PER_SKILL_PAGE * GameConfig.spell_level_visible ] ;
     }
   
   if ( CursorIsOnButton ( OPEN_CLOSE_SKILL_EXPLANATION_BUTTON , CurPos.x , CurPos.y ) &&
@@ -1169,11 +1169,11 @@ ShowSkillsScreen ( void )
   // button.  In this case of course we must set a different skill/spell level
   // as the currently visible spell level.
   //
-  if ( ( CursorIsOnWhichSpellLevelButton ( CurPos.x , CurPos.y ) != ( -1 ) ) &&
+  if ( ( CursorIsOnWhichSpellPageButton ( CurPos.x , CurPos.y ) != ( -1 ) ) &&
        axis_is_active &&
        ! MouseButtonPressedPreviousFrame )
     {
-      GameConfig.spell_level_visible = CursorIsOnWhichSpellLevelButton ( CurPos.x , CurPos.y );
+      GameConfig.spell_level_visible = CursorIsOnWhichSpellPageButton ( CurPos.x , CurPos.y );
     }
 
 
@@ -1184,8 +1184,6 @@ ShowSkillsScreen ( void )
   // pressed later.
   //
   MouseButtonPressedPreviousFrame = axis_is_active;
-
-  
 
 }; // ShowSkillsScreen ( void )
 

@@ -2535,7 +2535,7 @@ enum
 
   while (!Weiter)
     {
-      MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , NE_TITLE_PIC_BACKGROUND_CODE , NULL );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , NE_TITLE_PIC_BACKGROUND_CODE , Menu_BFont );
 
       switch (MenuPosition) 
 	{

@@ -364,7 +364,7 @@ int SpellHitPercentageTable [  ] =
 
 spell_skill_spec SpellSkillMap[ NUMBER_OF_SKILLS ] = {
   { 0 , "Takeover/Talk/Loot"     , "TakeoverTalkSkill.png"     , UNLOADED_ISO_IMAGE , { 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 } ,
-  "This is the Takeover and Talk skill.  The Tux is gifted with an innert ability to hack any machine in no time.  To make use of this ability, select this skill.  When a machine is close enough and this skill is activated by holding down the right mouse button, the takeover process will be initiated." } ,
+  "This is the Takeover and Talk skill.  The Tux is gifted with an innert ability to hack any machine in no time.  To make use of this ability, select this skill.  When a machine is close enough and this skill is activated by holding down the right mouse button, the takeover process will be initiated." } , 
   { 0 , "Loot Chest/Body"        , "ChestAndDeadBodyLoot.png"  , UNLOADED_ISO_IMAGE , { 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 } ,
   "This is the skill you must ready in order to open chests or search dead bodies.  To do this, just ready the skill and stand in front of the chest or over the dead body and press the right mouse button to open the chest/corpse looting interface." } ,
   { 0 , "Repair Skill"           , "RepairSkill.png"           , UNLOADED_ISO_IMAGE , { 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 } ,
@@ -450,31 +450,7 @@ spell_skill_spec SpellSkillMap[ NUMBER_OF_SKILLS ] = {
   { 1 , "Unused spell Nr. 38"    , "NoSkillAvailable.png"      , UNLOADED_ISO_IMAGE , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } ,
   "This is a skill" } ,
   { 1 , "Unused spell Nr. 39"    , "NoSkillAvailable.png"      , UNLOADED_ISO_IMAGE , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } ,
-  "This is a skill" } ,
-
-  { 1 , "Unused spell Nr. 40"    , "NoSkillAvailable.png"      , UNLOADED_ISO_IMAGE , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } ,
-  "This is a skill" } ,
-  { 1 , "Unused spell Nr. 41"    , "NoSkillAvailable.png"      , UNLOADED_ISO_IMAGE , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } ,
-  "This is a skill" } ,
-  { 1 , "Unused spell Nr. 42"    , "NoSkillAvailable.png"      , UNLOADED_ISO_IMAGE , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } ,
-  "This is a skill" } ,
-  { 1 , "Unused spell Nr. 43"    , "NoSkillAvailable.png"      , UNLOADED_ISO_IMAGE , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } ,
-  "This is a skill" } ,
-  { 1 , "Unused spell Nr. 44"    , "NoSkillAvailable.png"      , UNLOADED_ISO_IMAGE , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } ,
-  "This is a skill" } ,
-
-  { 1 , "Unused spell Nr. 45"    , "NoSkillAvailable.png"      , UNLOADED_ISO_IMAGE , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } ,
-  "This is a skill" } ,
-  { 1 , "Unused spell Nr. 46"    , "NoSkillAvailable.png"      , UNLOADED_ISO_IMAGE , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } ,
-  "This is a skill" } ,
-  { 1 , "Unused spell Nr. 47"    , "NoSkillAvailable.png"      , UNLOADED_ISO_IMAGE , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } ,
-  "This is a skill" } ,
-  { 1 , "Unused spell Nr. 48"    , "NoSkillAvailable.png"      , UNLOADED_ISO_IMAGE , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } ,
-  "This is a skill" } ,
-  { 1 , "Unused spell Nr. 49"    , "NoSkillAvailable.png"      , UNLOADED_ISO_IMAGE , { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } ,
-  "This is a skill" } 
-
-}; // SpellSkillSpec SpellSkillMap[ NUMBER_OF_SKILLS ] = {
+  "This is a skill" } };
 
 Druidspec Druidmap;
 
