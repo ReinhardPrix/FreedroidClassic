@@ -785,6 +785,17 @@ void
 AssignMission( int MissNum )
 {
     int j;
+
+    //--------------------
+    // First some sanity check for the mission number received.
+    //
+    if ( ( MissNum < 0 ) || ( MissNum >= MAX_MISSIONS_IN_GAME ) )
+    {
+	fprintf ( stderr , "\nmission number: %d." , MissNum ) ;
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
+There was a mission number received that is outside the range of allowed values.",
+				   PLEASE_INFORM, IS_FATAL );
+    }
     
     Mission_Status_Change_Sound ( );
     GameConfig.Mission_Log_Visible = TRUE;
