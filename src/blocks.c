@@ -388,9 +388,17 @@ Update_Tux_Working_Copy ( void )
 {
   int i;
 
-  if ( Me.weapon_item.type == (-1) ) return;
+  DebugPrintf( 0 , "\nWeapon item type : %d ." , Me.weapon_item.type );
 
-  if ( ItemMap [ Me.weapon_item.type ].item_gun_angle_change == 0 )
+  if ( ( Me.weapon_item.type == (-1) ) || ( Me.weapon_item.currently_held_in_hand ) )
+    {
+      for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
+	{
+	  SDL_FreeSurface ( TuxWorkingCopy[i] );
+	  TuxWorkingCopy [ i ] = SDL_DisplayFormatAlpha( TuxMotionArchetypes[3][i] );
+	}
+    }
+  else if ( ItemMap [ Me.weapon_item.type ].item_gun_angle_change == 0 )
     {
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
