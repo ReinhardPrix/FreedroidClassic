@@ -235,18 +235,21 @@ typedef struct
 
   // How good is the item as weapon???
   double item_gun_recharging_time;       // time until the next shot can be made, measures in seconds
+  int    item_gun_bullet_image_type;       // which type of image to use for displaying this bullet
+  int    item_gun_oneshotonly;	        /* if this is set, there is only 1 shot */
+  int    item_gun_blast;			/* which blast does this bullet create */
   double item_gun_speed; // how fast should a bullet move straightforward?
+  int    base_item_gun_damage; //	damage done by this bullettype 
+  int    item_gun_damage_modifier; // modifier to the damage done by this bullettype 
+  double item_gun_bullet_lifetime;      // how long does a 'bullet' from this gun type live?
+  int    item_gun_bullet_can_be_reflected; // can bullets of this type be reflected by other bullets?
+  int    item_gun_bullet_reflect_other_bullets; // can this 'bullet' reflect other bullets
+  int    item_gun_bullet_ignore_wall_collisions; // can this bullet pass through walls and map barriers?
+
+  // the following values have only relevance in case of a melee weapon
   double item_gun_angle_change;	// how fast to do a melee weapon swing
   double item_gun_start_angle_modifier;	// where to start with a melee weapon swing
-  int base_item_gun_damage; //	damage done by this bullettype 
-  int item_gun_damage_modifier; // modifier to the damage done by this bullettype 
-  int item_gun_blast;			/* which blast does this bullet create */
-  int item_gun_oneshotonly;	        /* if this is set, there is only 1 shot */
-  int item_gun_bullet_image_type;       // which type of image to use for displaying this bullet
-  int item_gun_bullet_can_be_reflected; // can the bullets of this type be reflected?
-  int item_gun_bullet_reflect_other_bullets; // can the bullets of this type be reflected?
   double item_gun_fixed_offset;         // how far away from the swinger should a melee weapon swing occur?
-  double item_gun_bullet_lifetime;      // how long does a 'bullet' from this gun type live?
 
   // how good is the item as armour or shield or other protection???
   int base_ac_bonus;
@@ -435,7 +438,7 @@ typedef struct
 {
   finepoint pos;
   finepoint speed;
-  byte type;
+  int type;
   byte phase;
   int damage; // damage done by this particular bullet 
   int time_in_frames;    // how long does the bullet exist, measured in number of frames
@@ -443,10 +446,16 @@ typedef struct
   double bullet_lifetime; // how long can this bullet exist at most
   signed char mine;
   int owner;
-  finepoint* owner_pos;
   double angle;
+
+  int ignore_wall_collisions;
+
+  // these are values only of relevance in case of a melee weapon
   double angle_change_rate;
   float fixed_offset;
+  finepoint* owner_pos;
+
+  // these are technical parameters, not for the game behaviour
   SDL_Surface *SurfacePointer[ MAX_PHASES_IN_A_BULLET ];
   int Surfaces_were_generated; // 
 }

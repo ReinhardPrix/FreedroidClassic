@@ -58,6 +58,7 @@ Buy_Basic_Items( void )
 {
 #define BASIC_ITEMS_NUMBER 10
 #define NUMBER_OF_ITEMS_ON_ONE_SCREEN 4
+#define ITEM_MENU_DISTANCE 80
   item SalesList[ BASIC_ITEMS_NUMBER ];
   int i;
   int InMenuPosition = 0;
@@ -81,21 +82,24 @@ Buy_Basic_Items( void )
       // Now we draw our selection of items to the screen, at least the part
       // of it, that's currently visible
       //
+      DisplayText( " I HAVE THESE ITEMS FOR SALE         YOUR GOLD:" , 50 , 50 + (0) * ITEM_MENU_DISTANCE , NULL );
+      sprintf( DescriptionText , "%4ld" , Me.Gold );
+      DisplayText( DescriptionText , 580 , 50 + ( 0 ) * 80 , NULL );
       for ( i = 0 ; i < NUMBER_OF_ITEMS_ON_ONE_SCREEN ; i++ )
 	{
 	  // DisplayText( ItemMap [ SalesList[ i ].type ].ItemName , 50 , 50 + i * 50 , NULL );
 	  // DisplayText( "\n" , -1 , -1, NULL );
 	  GiveItemDescription( DescriptionText , & ( SalesList[ i + MenuInListPosition ] ) , TRUE );
-	  DisplayText( DescriptionText , 50 , 50 + i * 80 , NULL );
+	  DisplayText( DescriptionText , 50 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
 	  sprintf( DescriptionText , "%4ld" , 
 		   CalculateItemPrice ( & ( SalesList[ i + MenuInListPosition ] ) ) );
-	  DisplayText( DescriptionText , 580 , 50 + i * 80 , NULL );
+	  DisplayText( DescriptionText , 580 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
 	}
       
       //--------------------
       // Now we draw the influencer as a cursor
       //
-      PutInfluence ( 10 , 50 + InMenuPosition * 80 );
+      PutInfluence ( 10 , 50 + ( InMenuPosition + 1 ) * ITEM_MENU_DISTANCE );
 
       //--------------------
       //

@@ -318,6 +318,7 @@ I need to know that for loading. Abort.\n");
   for ( i = 0 ; i < MAXBULLETS ; i++ )
     {
       AllBullets[ i ].Surfaces_were_generated = FALSE;
+      if ( AllBullets[ i ].angle_change_rate != 0 ) DeleteBullet( i , FALSE );
     }
 
 

@@ -261,6 +261,8 @@ Get_Item_Data ( char* DataPointer )
 #define ITEM_CAN_BE_INSTALLED_IN_SPECIAL_SLOT "Item can be installed in special slot=\""
 #define ITEM_CAN_BE_INSTALLED_IN_AUX_SLOT "Item can be installed in aux slot=\""
 
+#define ITEM_GUN_IGNORE_WALL "Item as gun: ignore collisions with wall=\""
+
 #define ITEM_RECHARGE_TIME_BEGIN_STRING "Time is takes to recharge this bullet/weapon in seconds :"
 #define ITEM_SPEED_BEGIN_STRING "Flying speed of this bullet type :"
 #define ITEM_DAMAGE_BEGIN_STRING "Damage cause by a hit of this bullet type :"
@@ -594,6 +596,37 @@ Sorry...\n\
 			   &ItemMap[ItemIndex].item_gun_fixed_offset , EndOfItemData );
       ReadValueFromString( ItemPointer ,  "Item as gun: modifier for starting angle=" , "%lf" , 
 			   &ItemMap[ItemIndex].item_gun_start_angle_modifier , EndOfItemData );
+
+      // Now we read in if this item can be installed in special slot
+      YesNoString = ReadAndMallocStringFromData ( ItemPointer , ITEM_GUN_IGNORE_WALL , "\"" ) ;
+      if ( strcmp( YesNoString , "yes" ) == 0 )
+	{
+	  ItemMap[ItemIndex].item_gun_bullet_ignore_wall_collisions = TRUE;
+	}
+      else if ( strcmp( YesNoString , "no" ) == 0 )
+	{
+	  ItemMap[ItemIndex].item_gun_bullet_ignore_wall_collisions = FALSE;
+	}
+      else
+	{
+	  fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+The item specification of an item in freedroid.ruleset should contain an \n\
+answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.\n\
+\n\
+This indicated a corrupted freedroid.ruleset file with an error at least in\n\
+the item specification section.  Please correct the error or send mail to the\n\
+freedroid development team.\n\
+\n\
+But for now Freedroid will terminate to draw attention \n\
+to the initialisation problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" );
+	  Terminate( ERR );
+	}
 
       // Now we read in the recharging time this weapon will need
       ReadValueFromString( ItemPointer ,  "Item as gun: recharging time=" , "%lf" , 
