@@ -542,6 +542,131 @@ ClearUserFenster (void)
 
 } // void ClearUserFenster(void)
 
+/* ---------------------------------------------------------------------- 
+ * This function should check if the mouse cursor is currently on the 
+ * 'left' arrow button in the great droid show or not.
+ * ---------------------------------------------------------------------- */
+int
+CursorIsOnLeftButton ( void )
+{
+  point CurPos;
+  SDL_Rect dst;
+  int lineskip;
+
+  lineskip = FontHeight (GetCurrentFont()) * TEXT_STRETCH;
+
+  CurPos.x = input_axis.x + ( USER_FENSTER_CENTER_X ) ;
+  CurPos.y = input_axis.y + ( USER_FENSTER_CENTER_Y ) ;
+
+  DebugPrintf( 1 , "\nCursor position: %d %d ." , CurPos.x , CurPos.y );
+
+  // Set_Rect(dst, Cons_Menu_Rect.x + Cons_Menu_Rect.w /2, Cons_Menu_Rect.y - lineskip, 23, 32);
+  Set_Rect(dst, Cons_Text_Rect.x + Cons_Text_Rect.w - 2*lineskip, Cons_Menu_Rect.y - 1.2*lineskip, 23, 32);
+
+  if ( ( CurPos.x >= dst.x ) && ( CurPos.x <= dst.x + dst.w ) )
+    {
+      DebugPrintf( 1 , "\nCursor might be on left button.");
+      if ( ( CurPos.y >= dst.y ) && 
+	   ( CurPos.y <= dst.y + dst.h ) )
+	{
+	  DebugPrintf( 1 , "\nCursor might IS on left button.");
+	  return( TRUE );
+	}
+    }
+
+  return( FALSE );
+
+}; // int CursorIsOnLeftButton ( void )
+
+/* ---------------------------------------------------------------------- 
+ * This function should check if the mouse cursor is currently on the 
+ * 'right' arrow button in the great droid show or not.
+ * ---------------------------------------------------------------------- */
+int
+CursorIsOnRightButton ( void )
+{
+  point CurPos;
+  SDL_Rect dst;
+  int lineskip = FontHeight (GetCurrentFont()) * TEXT_STRETCH;
+
+  CurPos.x = input_axis.x + ( USER_FENSTER_CENTER_X ) ;
+  CurPos.y = input_axis.y + ( USER_FENSTER_CENTER_Y ) ;
+
+  Set_Rect(dst, Cons_Text_Rect.x + Cons_Text_Rect.w-1.5*lineskip,Cons_Menu_Rect.y - 1.2*lineskip, 23, 32);
+
+  if ( ( CurPos.x >= dst.x ) && ( CurPos.x <= dst.x + dst.w ) )
+    {
+      DebugPrintf( 1 , "\nCursor might be on right button.");
+      if ( ( CurPos.y >= dst.y ) && 
+	   ( CurPos.y <= dst.y + dst.h ) )
+	{
+	  DebugPrintf( 1 , "\nCursor might IS on right button.");
+	  return( TRUE );
+	}
+    }
+  return( FALSE );
+
+}; // int CursorIsOnRightButton ( void )
+
+/* ---------------------------------------------------------------------- 
+ * This function should check if the mouse cursor is currently on the 
+ * 'up' arrow button in the great droid show or not.
+ * ---------------------------------------------------------------------- */
+int
+CursorIsOnUpButton ( void )
+{
+  point CurPos;
+  SDL_Rect dst;
+  int lineskip = FontHeight (GetCurrentFont()) * TEXT_STRETCH;
+
+  CurPos.x = input_axis.x + ( USER_FENSTER_CENTER_X ) ;
+  CurPos.y = input_axis.y + ( USER_FENSTER_CENTER_Y ) ;
+
+  Set_Rect(dst, Cons_Menu_Rect.x + Cons_Menu_Rect.w /2, Cons_Menu_Rect.y - 1.5*lineskip, 32, 23);  
+
+  if ( ( CurPos.x >= dst.x ) && ( CurPos.x <= dst.x + dst.w ) )
+    {
+      DebugPrintf( 1 , "\nCursor might be on up button.");
+      if ( ( CurPos.y >= dst.y ) && 
+	   ( CurPos.y <= dst.y + dst.h ) )
+	{
+	  DebugPrintf( 1 , "\nCursor might IS on up button.");
+	  return( TRUE );
+	}
+    }
+  return( FALSE );
+
+}; // int CursorIsOnUpButton ( void )
+
+/* ---------------------------------------------------------------------- 
+ * This function should check if the mouse cursor is currently on the 
+ * 'down' arrow button in the great droid show or not.
+ * ---------------------------------------------------------------------- */
+int
+CursorIsOnDownButton ( void )
+{
+  point CurPos;
+  SDL_Rect dst;
+  int lineskip = FontHeight (GetCurrentFont()) * TEXT_STRETCH;
+
+  CurPos.x = input_axis.x + ( USER_FENSTER_CENTER_X ) ;
+  CurPos.y = input_axis.y + ( USER_FENSTER_CENTER_Y ) ;
+
+  Set_Rect(dst, Cons_Menu_Rect.x + Cons_Menu_Rect.w /2, Cons_Menu_Rect.y - lineskip, 32, 232);  
+
+  if ( ( CurPos.x >= dst.x ) && ( CurPos.x <= dst.x + dst.w ) )
+    {
+      DebugPrintf( 1 , "\nCursor might be on down button.");
+      if ( ( CurPos.y >= dst.y ) && 
+	   ( CurPos.y <= dst.y + dst.h ) )
+	{
+	  DebugPrintf( 1 , "\nCursor might IS on down button.");
+	  return( TRUE );
+	}
+    }
+  return( FALSE );
+
+}; // int CursorIsOnDownButton ( void )
 
 /* ----------------------------------------------------------------------
  * This function does the robot show when the user has selected robot
@@ -570,8 +695,35 @@ GreatDruidShow (void)
 
       if (SpacePressed() || EscapePressed())
 	{
+	  if ( CursorIsOnLeftButton () )
+	    {
+	      if (page > 0) page --;
+	      MoveMenuPositionSound();
+	      key_pressed = TRUE;
+	    }
+	  else if ( CursorIsOnRightButton () )
+	    {
+	      if (page < 2) page ++;
+	      MoveMenuPositionSound();
+	      key_pressed = TRUE;
+	    }
+	  else if ( CursorIsOnUpButton () )
+	    {
+	      if (droidtype < Me.type) droidtype ++;	      
+	      MoveMenuPositionSound();
+	      key_pressed = TRUE;
+	    }
+	  else if ( CursorIsOnDownButton () )
+	    {
+	      if (droidtype > 0) droidtype --;
+	      MoveMenuPositionSound();
+	      key_pressed = TRUE;
+	    }
+	  else
+	    {
+	      finished = TRUE;
+	    }
 	  while (SpacePressed() ||EscapePressed());
-	  finished = TRUE;
 	}
 
       if (UpPressed() || WheelUpPressed())
