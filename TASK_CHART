@@ -11,7 +11,7 @@ jp
 
 The list of things I'm going to work on next:
 DONE Take a look at the possibilities of the SDL Library BFont
-IN PROGRESS.. Use these possibilities to write a better Options menu
+DONE Use these possibilities to write a better Options menu
 DONE Include a LEVELEDITOR option in the options menu
 DONE Include GAMMA correction option in the options menu
 DONE Include Sound Volume correction in the options menu
@@ -23,22 +23,22 @@ DONE write the bg music volume adjustment code
 DONE write the sound fx volume adjustment code
 DONE write the multiplayer menu code
 DONE Test if the time-distortion with space happens also in other window managers
-
-6. Make a new attempt on dumping the yiff.  This time i'll 
-   try to be more clever ;-)
-7. Make an attempt on highlighting fields to pioneer for the
+DONE Make an attempt on highlighting fields to pioneer for the
    leveleditor I would like to see conveniently integrated into the game
    sooner or later.
-8. Add the original energy-upload-function from the C64 classical game start
-   to Freedroid (instead of BeamLine perhaps...)
-9. Add more documentation concerning framerate calculation
-?. Try to locate the bug in the influ-wall collision routines that dump the
-   influ completely far away (several blocks) and sometimes even outside the ship!
-?. Try to start level editing functions in FreeDroid and perhaps merge
+DONE Try to locate the bug in the influ-wall collision routines that dump the
+     influ completely far away (several blocks) and sometimes even outside the ship!
+IN PROGRESS... Try to start level editing functions in FreeDroid and perhaps merge
    the maped functions somehow into the main code in a leveled.c file or so.
+
+?. Add the original energy-upload-function from the C64 classical game start
+   to Freedroid (instead of BeamLine perhaps...)
+?. Add more documentation concerning framerate calculation
 ?. Make an attemt to change to TrueColor mode (that means all image-operations have
    to be set to word pointers or whatever two bytes are called)
 ?. Clean up the Concole text descriptions
+(?). Make a new attempt on dumping the yiff.  This time i'll 
+     try to be more clever ;-)  But only if SDL performs as good as the yiff.
 
 rp
 --

@@ -228,8 +228,17 @@ MoveInfluence (void)
   static float TransferCounter = 0;
   /* zum Bremsen der Drehung, wenn man auf der Taste bleibt: */
   static int counter = -1;
+  int i;
 
   DebugPrintf ("\nvoid MoveInfluence(void):  Real function call confirmed.");
+
+  for (i=0; i<10; i++)
+    {
+      Me.Position_History[10-i].x=Me.Position_History[9-i].x;
+      Me.Position_History[10-i].y=Me.Position_History[9-i].y;
+    }
+  Me.Position_History[0].x=Me.pos.x;
+  Me.Position_History[0].y=Me.pos.y;
 
   counter++;
   counter %= BREMSDREHUNG;	/* Wird mal vom Druid abhaengen */
@@ -432,7 +441,8 @@ BounceInfluencer (void)
   float SX = Me.speed.x * Frame_Time ();
   float SY = Me.speed.y * Frame_Time ();
   finepoint lastpos;
-  int res;			/* Ergebnis aus DruidPassable() */
+  int res; /* Ergebnis aus DruidPassable() */
+  int NumberOfShifts=0;
   int safty_sx = 0, safty_sy = 0;	/* wegstoss - Geschwindigkeiten (falls noetig) */
 
   int crashx = FALSE, crashy = FALSE;	/* Merker wo kollidiert wurde */
@@ -449,14 +459,15 @@ BounceInfluencer (void)
 
       /* Festellen, in welcher Richtung die Mauer lag,
          und den Influencer entsprechend stoppen */
-      if (SX && (DruidPassable (lastpos.x + SX, lastpos.y) != CENTER))
+      if (rintf(SX) && (DruidPassable (lastpos.x + SX, lastpos.y) != CENTER))
 	{
 	  crashx = TRUE;	/* In X wurde gecrasht */
 	  sign = (SX < 0) ? -1 : 1;
 	  SX = abs (SX);
+	  NumberOfShifts=0;
 	  while (--SX
 		 && (DruidPassable (lastpos.x + sign * SX, lastpos.y) !=
-		     CENTER));
+		     CENTER) && (NumberOfShifts++ < 4));
 	  Me.pos.x = lastpos.x + SX * sign;
 	  Me.speed.x = 0;
 
@@ -464,14 +475,15 @@ BounceInfluencer (void)
 	  safty_sx = (-1) * sign * PUSHSPEED;
 	}
 
-      if (SY && (DruidPassable (lastpos.x, lastpos.y + SY) != CENTER))
+      if (rintf(SY) && (DruidPassable (lastpos.x, lastpos.y + SY) != CENTER))
 	{
 	  crashy = TRUE;	/* in Y wurde gecrasht */
 	  sign = (SY < 0) ? -1 : 1;
 	  SY = abs (SY);
+	  NumberOfShifts=0;
 	  while (--SY
 		 && (DruidPassable (lastpos.x, lastpos.y + sign * SY) !=
-		     CENTER));
+		     CENTER) && (NumberOfShifts++ < 4));
 	  Me.pos.y = lastpos.y + SY * sign;
 	  Me.speed.y = 0;
 
@@ -485,13 +497,13 @@ BounceInfluencer (void)
 	  if (crashx)
 	    {
 	      Me.speed.x = safty_sx;
-	      Me.pos.x += Me.speed.x;
+	      Me.pos.x += Me.speed.x * Frame_Time() ;
 	    }
 
 	  if (crashy)
 	    {
 	      Me.speed.y = safty_sy;
-	      Me.pos.y += Me.speed.y;
+	      Me.pos.y += Me.speed.y * Frame_Time() ;
 	    }
 	}
 
@@ -500,22 +512,22 @@ BounceInfluencer (void)
       /* Von Tuerrand wegschubsen */
     case OBEN:
       Me.speed.y = -PUSHSPEED;
-      Me.pos.y += Me.speed.y;
+      Me.pos.y += Me.speed.y; // * Frame_Time();
       break;
 
     case UNTEN:
       Me.speed.y = PUSHSPEED;
-      Me.pos.y += Me.speed.y;
+      Me.pos.y += Me.speed.y; // * Frame_Time() ;
       break;
 
     case RECHTS:
       Me.speed.x = PUSHSPEED;
-      Me.pos.x += Me.speed.x;
+      Me.pos.x += Me.speed.x; // * Frame_Time() ;
       break;
 
     case LINKS:
       Me.speed.x = -PUSHSPEED;
-      Me.pos.x += Me.speed.x;
+      Me.pos.x += Me.speed.x; // * Frame_Time() ;
       break;
 
       /* Not blocked at all ! */
@@ -527,8 +539,25 @@ BounceInfluencer (void)
       Terminate (-1);
       break;
 
-    }				/* switch */
-}				/* BounceInfluencer */
+    } /* switch */
+
+  // This old bouncing code is no longer working in all cases due to bigger numbers
+  // and frame_rate dependence.  I therefore introduce some extra security:  Obviously
+  // if the influencer is blocked FOR THE SECOND TIME, then the throw-back-algorithm
+  // above HAS FAILED.  The absolutely fool-proof and secure handling is now done by
+  // simply reverting to the last influ coordinated, where influ was NOT BLOCKED.
+  // For this reason, a history of influ-coordinates has been introduced.  This will all
+  // be done here and now:
+
+  if ( (DruidPassable (Me.pos.x, Me.pos.y) != CENTER) && 
+       (DruidPassable (Me.Position_History[0].x, Me.Position_History[0].y) != CENTER) &&
+       (DruidPassable (Me.Position_History[1].x, Me.Position_History[1].y) != CENTER) )
+    {
+      Me.pos.x=Me.Position_History[2].x;
+      Me.pos.y=Me.Position_History[2].y;
+    }
+
+} /* BounceInfluencer */
 
 /*@Function============================================================
 @Desc: Dies Prozedur passt die momentane Geschwindigkeit an die Hoechst-

@@ -136,6 +136,7 @@ typedef struct
   int MyFCU;			/* FCU (Fire Control Unit) installed */
   int MyShield;			/* Shield device installed */
   int Shield[4];		/* Status of Partial Shields */
+  finepoint Position_History[11]; // History of the places the influ has been during the last 10 frames
 }
 influence_t, *Influence_t;
 

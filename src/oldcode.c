@@ -548,3 +548,124 @@ Play_YIFF_Server_Sound (int Tune)
 #endif /* HAVE_LIBY2 */
 
 }  // void Play_YIFF_Server_Sound(int Tune)
+
+
+/*@Function============================================================
+@Desc: BounceInfluencer: prueft Kollisionen mit Tueren und Mauer
+       mit DruidPassable() und wirft Influencer
+       entsprechend zurueck
+
+NEW: This functions HAS to take into account the current framerate!
+     
+
+@Ret: void
+@Int:
+* $Function----------------------------------------------------------*/
+void
+BounceInfluencer (void)
+{
+  int sign;
+  float SX = Me.speed.x * Frame_Time ();
+  float SY = Me.speed.y * Frame_Time ();
+  finepoint lastpos;
+  int res; /* Ergebnis aus DruidPassable() */
+  int NumberOfShifts=0;
+  int safty_sx = 0, safty_sy = 0;	/* wegstoss - Geschwindigkeiten (falls noetig) */
+
+  int crashx = FALSE, crashy = FALSE;	/* Merker wo kollidiert wurde */
+
+  lastpos.x = Me.pos.x - SX;
+  lastpos.y = Me.pos.y - SY;
+
+  res = DruidPassable (Me.pos.x, Me.pos.y);
+
+  switch (res)
+    {
+    case -1:
+      /* Influence ist blockiert: zurueckwerfen */
+
+      /* Festellen, in welcher Richtung die Mauer lag,
+         und den Influencer entsprechend stoppen */
+      if (SX && (DruidPassable (lastpos.x + SX, lastpos.y) != CENTER))
+	{
+	  crashx = TRUE;	/* In X wurde gecrasht */
+	  sign = (SX < 0) ? -1 : 1;
+	  SX = abs (SX);
+	  NumberOfShifts=0;
+	  while (--SX
+		 && (DruidPassable (lastpos.x + sign * SX, lastpos.y) !=
+		     CENTER) && (NumberOfShifts++ < 4));
+	  Me.pos.x = lastpos.x + SX * sign;
+	  Me.speed.x = 0;
+
+	  /* falls Influencer weggestossen werden muss ! */
+	  safty_sx = (-1) * sign * PUSHSPEED;
+	}
+
+      if (SY && (DruidPassable (lastpos.x, lastpos.y + SY) != CENTER))
+	{
+	  crashy = TRUE;	/* in Y wurde gecrasht */
+	  sign = (SY < 0) ? -1 : 1;
+	  SY = abs (SY);
+	  NumberOfShifts=0;
+	  while (--SY
+		 && (DruidPassable (lastpos.x, lastpos.y + sign * SY) !=
+		     CENTER) && (NumberOfShifts++ < 4));
+	  Me.pos.y = lastpos.y + SY * sign;
+	  Me.speed.y = 0;
+
+	  /* Falls Influencer weggestossen werden muss */
+	  safty_sy = (-1) * sign * PUSHSPEED;
+	}
+
+      /* Hat das nichts geholfen, noch etwas wegschubsen */
+      if (DruidPassable (Me.pos.x, Me.pos.y) != CENTER)
+	{
+	  if (crashx)
+	    {
+	      Me.speed.x = safty_sx;
+	      Me.pos.x += Me.speed.x * Frame_Time() ;
+	    }
+
+	  if (crashy)
+	    {
+	      Me.speed.y = safty_sy;
+	      Me.pos.y += Me.speed.y * Frame_Time() ;
+	    }
+	}
+
+      break;
+
+      /* Von Tuerrand wegschubsen */
+    case OBEN:
+      Me.speed.y = -PUSHSPEED;
+      Me.pos.y += Me.speed.y * Frame_Time() ;
+      break;
+
+    case UNTEN:
+      Me.speed.y = PUSHSPEED;
+      Me.pos.y += Me.speed.y * Frame_Time() ;
+      break;
+
+    case RECHTS:
+      Me.speed.x = PUSHSPEED;
+      Me.pos.x += Me.speed.x * Frame_Time() ;
+      break;
+
+    case LINKS:
+      Me.speed.x = -PUSHSPEED;
+      Me.pos.x += Me.speed.x * Frame_Time() ;
+      break;
+
+      /* Not blocked at all ! */
+    case CENTER:
+      break;
+
+    default:
+      DebugPrintf ("Illegal return value from DruidPassable() ");
+      Terminate (-1);
+      break;
+
+    }				/* switch */
+}				/* BounceInfluencer */
+
