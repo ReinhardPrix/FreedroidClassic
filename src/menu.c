@@ -327,9 +327,8 @@ ChatDoMenuSelectionFlagged( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER
 	}
     }
 
-
   return ( MenuSelection );
-};
+}; // int ChatDoMenuSelectionFlagged( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON] , ... 
 
 /* ----------------------------------------------------------------------
  * This function performs a menu for the player to select from, using the
@@ -343,8 +342,13 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
   static int MenuPosition = 1;
   int NumberOfOptionsGiven;
   int first_menu_item_pos_y;
+#define ITEM_DIST 50
   int MenuPosX[] = { 260 , 260 , 260 , 260 , 260 , 260 , 260 , 260 , 260 , 260 } ;
-  int MenuPosY[] = {  90 , 130 , 170 , 210 , 250 , 290 , 330 , 370 , 410 , 450 } ;
+  int MenuPosY[] = {  90 , 90 + 1 * ITEM_DIST , 90 + 2 * ITEM_DIST , 90 + 3 * ITEM_DIST , 90 + 4 * ITEM_DIST , 
+      90 + 5 * ITEM_DIST , 90 + 6 * ITEM_DIST , 90 + 7 * ITEM_DIST , 90 + 8 * ITEM_DIST , 90 + 9 * ITEM_DIST } ;
+  SDL_Rect Choice_Window;
+
+  Choice_Window.x= 260; Choice_Window.y=60; Choice_Window.w=640 - 10 - 260; Choice_Window.h= 480 - 60;
 
   //--------------------
   // At first we hide the mouse cursor, so that there can not be any
@@ -396,7 +400,8 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
       for ( i = 0 ; i < 10 ; i ++ )
 	{
 	  if ( strlen( MenuTexts[ i ] ) == 0 ) continue;
-	  PutString ( Screen ,  MenuPosX[i] , MenuPosY[i] , MenuTexts[ i ] );
+	  // PutString ( Screen ,  MenuPosX[i] , MenuPosY[i] , MenuTexts[ i ] );
+	  DisplayText ( MenuTexts[i] , MenuPosX[i] , MenuPosY[i] , &Choice_Window );
 	}
       if ( strlen( InitialText ) > 0 ) 
 	DisplayText ( InitialText , 50 , 50 , NULL );

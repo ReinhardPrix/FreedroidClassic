@@ -530,8 +530,6 @@ ChatWithFriendlyDroid( int Enum )
 	      PlayOnceNeededSoundSample( "Tux_SOR_I_Want_Learn_0.wav" , TRUE );
 	      if ( Me [ 0 ] . Gold < 100 )
 		{
-		  Me [ 0 ] . points_to_distribute -= 5;
-		  Me [ 0 ] . spellcasting_skill ++;
 		  GiveSubtitleNSample( "You don't haven enough bucks on you!  Come back when you have the money." , 
 				       "SOR_You_Dont_Money_0.wav" );
 		}
@@ -750,12 +748,12 @@ ChatWithFriendlyDroid( int Enum )
 
       DialogMenuTexts [ 0 ] = " Hi!  I'm new here. " ;
       DialogMenuTexts [ 1 ] = " Do you also train fighters?" ; 
-      DialogMenuTexts [ 2 ] = " Melee weapons level 1 (cost 20 skill points)" ;
-      DialogMenuTexts [ 3 ] = " Melee weapons level 2 (cost 30 skill points)" ;
+      DialogMenuTexts [ 2 ] = " Melee weapons level 1 (cost: 10 skill points 100 bucks)" ;
+      DialogMenuTexts [ 3 ] = " Melee weapons level 2 " ;
       DialogMenuTexts [ 4 ] = " BACK ";
       DialogMenuTexts [ 5 ] = " Can you bring me in contact with the resistance?" ; 
       DialogMenuTexts [ END_ANSWER ] = " END ";
-      
+
       // GiveSubtitleNSample( " Welcome Traveller! " , "Chandra_Welcome_Traveller_0.wav" );
 
       while (1)
@@ -777,6 +775,20 @@ ChatWithFriendlyDroid( int Enum )
 	      PlayOnceNeededSoundSample( "Tux_PEN_Do_You_Also_0.wav" , TRUE );
 	      GiveSubtitleNSample( "Well, I don't do that for a living, but I certainly could.  But not for free." , "PEN_Well_I_Dont_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 1 ] = 0 ; // allow to ask for training possibilities
+
+	      /*
+	      if ( Me [ 0 ] . melee_weapon_skill == 0 )
+		{
+		  //--------------------
+		  // Only absolute melee-weaklings can receive training here
+		  //
+		  Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 2 ] = 1 ; // allow training request 1
+		}
+	      else 
+		{
+		Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 2 ] = 0 ; // disallow training request 1
+		}
+	      */
 	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 2 ] = 1 ; // allow training request 1
 	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 3 ] = 1 ; // allow training request 2
 	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 4 ] = 1 ; // allow back from training requests
@@ -784,16 +796,50 @@ ChatWithFriendlyDroid( int Enum )
 	      break;
 	    case 3:
 	      PlayOnceNeededSoundSample( "Tux_PEN_I_Want_To_0.wav" , TRUE ); // ... to become more adapt with melee weapon
-	      GiveSubtitleNSample( "The most important thing about melee combat is how you are holding your weapon." , "PEN_The_Most_Important_0.wav" );
-	      GiveSubtitleNSample( "Hold it too laxly and you will loose it, hold it too firmly and your movements will be uncontrolled." , "PEN_Hold_It_Too_0.wav" );
-	      GiveSubtitleNSample( "Now, you've already improved a lot.  Come back when you want to learn more." , "PEN_Now_Youve_Already_0.wav" );
-	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 2 ] = 0 ; // don't say this twice...
-	      Me [ 0 ] . melee_weapon_skill ++ ; // you should have learned something here.
+	      
+	      if ( Me [ 0 ] . melee_weapon_skill == 0 )
+		{
+		  //--------------------
+		  // Only absolute melee-weaklings can receive training here
+		  //
+
+
+		  if ( Me [ 0 ] . Gold < 100 )
+		    {
+		      GiveSubtitleNSample( "You don't haven enough bucks on you!  Come back when you have the money." , 
+					   "PEN_You_Dont_Money_0.wav" );
+		    }
+		  else if ( Me [ 0 ] . points_to_distribute >= 10 )
+		    {
+		      Me [ 0 ] . points_to_distribute -= 10;
+		      Me [ 0 ] . melee_weapon_skill ++ ; // you should have learned something here.
+		      Me [ 0 ] . Gold -= 100;
+
+		      GiveSubtitleNSample( "Good decision!" , "PEN_Good_Decision_0.wav" );
+		      GiveSubtitleNSample( "The most important thing about melee combat is how you are holding your weapon." , "PEN_The_Most_Important_0.wav" );
+		      GiveSubtitleNSample( "Hold it too laxly and you will loose it, hold it too firmly and your movements will be uncontrolled." , "PEN_Hold_It_Too_0.wav" );
+		      GiveSubtitleNSample( "Now, you've already improved a lot.  Come back when you want to learn more." , "PEN_Now_Youve_Already_0.wav" );
+		    }
+		  else
+		    {
+		      GiveSubtitleNSample( "You don't have enough experience.  I can't teach you anything more right now." , 
+					   "PEN_You_Dont_Have_0.wav" );
+		      GiveSubtitleNSample( "First collect more experience.  Then we can go on." , 
+					   "PEN_First_Collect_More_0.wav" );
+		    }
+		}
+	      else
+		{
+		  GiveSubtitleNSample( "You already know the basics of melee combat!" , "PEN_You_Already_Know_0.wav" );
+		}
+	      // Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 2 ] = 0 ; // don't say this twice...
 	      break;
 	    case 4:
 	      PlayOnceNeededSoundSample( "Tux_PEN_I_Want_Master_0.wav" , TRUE ); // ... to become a master of melee weapon
-	      GiveSubtitleNSample( "You should first learn the basics of melee combat.  Only then you can become a master of melee." , "PEN_You_Should_First_0.wav" );
-	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 3 ] = 0 ; // don't say this twice...
+	      GiveSubtitleNSample( "Haha!" , "PEN_Haha_0.wav" );
+	      GiveSubtitleNSample( "You're very ambitious.  I like that.  But I can't help you there." , "PEN_Youre_Very_Ambitious_0.wav" );
+	      GiveSubtitleNSample( "To become more adapt, you must see a real teacher of melee weapons.  And there is none in this town, I'm sorry." , "PEN_To_Become_More_0.wav" );
+	      // Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 3 ] = 0 ; // don't say this twice...
 	      break;
 	    case 5:
 	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 2 ] = 0 ; // disallow training request 1
@@ -838,14 +884,37 @@ ChatWithFriendlyDroid( int Enum )
       DialogMenuTexts [ 4 ] = " Sorry, this does not really sound like something I could do." ; 
       DialogMenuTexts [ 5 ] = " I have found your toolset. Here you are. " ; 
       DialogMenuTexts [ 6 ] = " Where do all these teleporters lead to?" ; 
+      DialogMenuTexts [ 7 ] = " About this toolset you're missing..." ; 
       DialogMenuTexts [ END_ANSWER ] = " END ";
 
       if ( CountItemtypeInInventory( ITEM_DIXONS_TOOLBOX , 0 ) )
-	Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 5 ] = 1 ; 
-      else
-	Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 5 ] = 0 ; 
+	{
+	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 5 ] = 1 ; 
 
-      // GiveSubtitleNSample( " Welcome Traveller! " , "Chandra_Welcome_Traveller_0.wav" );
+	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 1 ] = FALSE ; // we allow to ask naively...
+	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 2 ] = FALSE ; // we allow to ask naively...
+	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 3 ] = FALSE ; // we allow to ask naively...
+	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 4 ] = FALSE ; // we allow to ask naively...
+	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 6 ] = FALSE ; // we allow to ask naively...
+	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 7 ] = FALSE ; // we allow to ask naively...
+	}
+      else
+	{
+	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 5 ] = 0 ; 
+
+	  if ( ( Me [ 0 ] . AllMissions [ 4 ] . MissionWasAssigned == TRUE ) &&
+	       ( Me [ 0 ] . AllMissions [ 4 ] . MissionIsComplete == FALSE ) )
+	    {
+	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 7 ] = TRUE ; // we allow to ask directly for the toolset...
+
+	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 1 ] = FALSE ; // we allow to ask naively...
+	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 2 ] = FALSE ; // we allow to ask naively...
+	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 3 ] = FALSE ; // we allow to ask naively...
+	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 4 ] = FALSE ; // we allow to ask naively...
+	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 5 ] = FALSE ; // we allow to ask naively...
+	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 6 ] = FALSE ; // we allow to ask naively...
+	    }
+	}
 
       while (1)
 	{
@@ -863,12 +932,22 @@ ChatWithFriendlyDroid( int Enum )
 	      break;
 	    case 2:
 	      PlayOnceNeededSoundSample( "Tux_DIX_Is_Everything_Alright_0.wav" , TRUE );
-	      GiveSubtitleNSample( "On the contrary!  Well, I'm still working on it, but I'm not making much progress." , "DIX_On_The_Contrary_0.wav" );
-	      GiveSubtitleNSample( "It's a pitty.  If I only had my old toolkit, I could fix this problem in a minute." , "DIX_Its_A_Pitty_0.wav" );
-	      GiveSubtitleNSample( "But it's gone.  It all happened down in the maintainance tunnels when I was surprised by some rouge bots." , "DIX_It_All_Happend_0.wav" );
-	      GiveSubtitleNSample( "I must have lost it down there and we had to seal the entrance." , "DIX_I_Must_Have_0.wav" );
-	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 1 ] = 0 ; // don't say this twice...
-	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 2 ] = 1 ; // now you can offer help...
+	      if ( Me [ 0 ] . AllMissions [ 4 ] . MissionIsComplete == FALSE )
+		{
+		  GiveSubtitleNSample( "On the contrary!  Well, I'm still working on it, but I'm not making much progress." , "DIX_On_The_Contrary_0.wav" );
+		  GiveSubtitleNSample( "It's a pitty.  If I only had my old toolkit, I could fix this problem in a minute." , "DIX_Its_A_Pitty_0.wav" );
+		  GiveSubtitleNSample( "But it's gone.  It all happened down in the maintainance tunnels when I was surprised by some rouge bots." , "DIX_It_All_Happend_0.wav" );
+		  GiveSubtitleNSample( "I must have lost it down there and we had to seal the entrance." , "DIX_I_Must_Have_0.wav" );
+		  Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 1 ] = 0 ; // don't say this twice...
+		  Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 2 ] = 1 ; // now you can offer help...
+		}
+	      else
+		{
+		  GiveSubtitleNSample( "Basically the teleporter system is now working again." , "DIX_Basically_The_Teleporter_0.wav" );
+		  GiveSubtitleNSample( "But it's still locked since we don't have the calibration data from the other cities." , "DIX_But_Its_Still_0.wav" );
+		  GiveSubtitleNSample( "Someone needs to go there and collect them by hand.  But that's none of my problems." , "DIX_Someone_Needs_To_0.wav" );
+		  GiveSubtitleNSample( "The person responsible for this part is Arlas, but he isn't in town right now.  So there's nothing we could do." , "DIX_The_Person_Responsible_0.wav" );
+		}
 	      break;
 	    case 3:
 	      PlayOnceNeededSoundSample( "Tux_DIX_Maybe_I_Can_0.wav" , TRUE );
@@ -896,7 +975,7 @@ ChatWithFriendlyDroid( int Enum )
 	      AssignMission ( 4 ); // this should assign the toolbox mission...
 	      break;
 	    case 5:
-	      PlayOnceNeededSoundSample( "Tux_Hi_Im_New_0.wav" , TRUE );
+	      PlayOnceNeededSoundSample( "Tux_DIX_Sorry_This_Does_0.wav" , TRUE );
 	      GiveSubtitleNSample( "Maybe it's better this way.  No use to have you torn apart by those rogue bots." , "DIX_Maybe_Its_Better_0.wav" );
 	      GiveSubtitleNSample( "Perhaps later, when you feel more like it, you might want to still give it a try." , "DIX_Perhaps_Later_When_0.wav" );
 	      GiveSubtitleNSample( "You know, just tell me in case you change your mind some time." , "DIX_You_Know_Just_0.wav" );
@@ -916,7 +995,17 @@ ChatWithFriendlyDroid( int Enum )
 
 	      GiveSubtitleNSample( "Oh great!  How did you manage to get that?  Well anyway, thanks a lot." , "DIX_Oh_Great_How_0.wav" );
 	      GiveSubtitleNSample( "With this I'll be able to fix the damage at the teleporters immediately." , "DIX_With_This_Ill_0.wav" );
-	      GiveSubtitleNSample( "All that is left to do is convey a message to the other cities with our teleporter calibration." , "DIX_All_That_Is_0.wav" );
+	      // GiveSubtitleNSample( "All that is left to do is convey a message to the other cities with our teleporter calibration." , "DIX_All_That_Is_0.wav" );
+	      break;
+	    case 8:
+	      //--------------------
+	      // At this point we know the Tux has completed the mission and
+	      // should get his reward.
+	      //
+	      PlayOnceNeededSoundSample( "Tux_DIX_About_This_Toolset_0.wav" , TRUE );
+	      GiveSubtitleNSample( "Yes, have you found it?" , "DIX_Have_You_Found_0.wav" );
+	      PlayOnceNeededSoundSample( "Tux_DIX_No_I_Havent_0.wav" , TRUE );
+	      GiveSubtitleNSample( "Keep searching.  I really need this toolset!" , "DIX_Keep_Searching_I_0.wav" );
 	      break;
 	    case ( MAX_ANSWERS_PER_PERSON ):
 	    case (-1):
