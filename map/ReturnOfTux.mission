@@ -73,11 +73,11 @@ Mission Name: The Outbreak
 +++
 Physics ('game.dat') file to use for this mission: freedroid.ruleset
 Ship file to use for this mission: Asteroid.maps
-Lift file to use for this mission: CleanPrivateGoodsStorageCellar.elevators
-Crew file to use for this mission: CleanPrivateGoodsStorageCellar.droids
+Lift file to use for this mission: ReturnOfTux.elevators
+Crew file to use for this mission: ReturnOfTux.droids
 Lifts On file to use for this mission: asteroid_on.png
 Lifts Off file to use for this mission: asteroid_off.png
-After completing this mission, load mission : CleanPrivateQuartersDeck.mission
+After completing this mission, load mission : ReturnOfTux.mission
 
 Influs mission start comment="Linux Kernel booted.  001 transfer-tech modules loaded.  System up and running.";
 
