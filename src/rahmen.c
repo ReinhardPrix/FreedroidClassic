@@ -1040,6 +1040,11 @@ ShowCurrentTextWindow ( void )
 	   if ( Me[0].armour_item.type > 0 )
 	   GiveItemDescription ( ItemDescText , & ( Me[0].armour_item) , FALSE );
 	}
+      else if ( CursorIsOnButton ( HELMET_RECT_BUTTON , CurPos.x , CurPos.y ) )
+	{
+	   if ( Me[0].special_item.type > 0 )
+	   GiveItemDescription ( ItemDescText , & ( Me[0].special_item) , FALSE );
+	}
       else if ( CursorIsOnButton ( AUX1_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
 	   if ( Me[0].aux1_item.type > 0 )
@@ -1049,11 +1054,6 @@ ShowCurrentTextWindow ( void )
 	{
 	   if ( Me[0].aux2_item.type > 0 )
 	   GiveItemDescription ( ItemDescText , & ( Me[0].aux2_item) , FALSE );
-	}
-      else if ( CursorIsOnButton ( HELMET_RECT_BUTTON , CurPos.x , CurPos.y ) )
-	{
-	   if ( Me[0].special_item.type > 0 )
-	   GiveItemDescription ( ItemDescText , & ( Me[0].special_item) , FALSE );
 	}
 
     } // if nothing is 'held in hand' && inventory-screen visible

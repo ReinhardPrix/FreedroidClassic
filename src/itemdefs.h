@@ -193,8 +193,8 @@
 // will ALSO be used to show this weapon, since the shield-hand
 // is also needed to wield such a thing.
 //
-#define WEAPON_RECT_WIDTH 64
-#define WEAPON_RECT_HEIGHT 64
+#define WEAPON_RECT_WIDTH 67
+#define WEAPON_RECT_HEIGHT 112
 #define WEAPON_RECT_X 21
 #define WEAPON_RECT_Y 117
 
@@ -202,8 +202,8 @@
 // The armour rectangle is where you can place some armour
 // for the body of the Tux.
 //
-#define ARMOUR_RECT_WIDTH 64
-#define ARMOUR_RECT_HEIGHT 64
+#define ARMOUR_RECT_WIDTH 66
+#define ARMOUR_RECT_HEIGHT 92
 #define ARMOUR_POS_X 129
 #define ARMOUR_POS_Y 90
 
@@ -213,8 +213,8 @@
 // again, to indicate, that no shield can be used in conjunction with
 // such a 2-handed weapon.
 //
-#define SHIELD_RECT_WIDTH 64
-#define SHIELD_RECT_HEIGHT 64
+#define SHIELD_RECT_WIDTH 67
+#define SHIELD_RECT_HEIGHT 112
 #define SHIELD_POS_X 237
 #define SHIELD_POS_Y 116
 
