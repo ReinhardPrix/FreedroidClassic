@@ -72,7 +72,7 @@ part_group_strings [ ALL_PART_GROUPS ] =
 
 #define ALL_TUX_PARTS 12
 #define ALL_TUX_MOTION_CLASSES 2
-  static iso_image loaded_tux_images [ ALL_TUX_PARTS ] [ TUX_TOTAL_PHASES ] [ MAX_TUX_DIRECTIONS ] ;
+iso_image loaded_tux_images [ ALL_TUX_PARTS ] [ TUX_TOTAL_PHASES ] [ MAX_TUX_DIRECTIONS ] ;
 
 int use_walk_cycle_for_part [ ALL_PART_GROUPS ] [ ALL_TUX_MOTION_CLASSES ] = 
   { 
@@ -1509,8 +1509,6 @@ AssembleCombatPicture (int mask)
       glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
     }
   */
-  // SDL_SetColorKey (Screen, 0, 0);
-  // SDL_SetAlpha( Screen , 0 , SDL_ALPHA_OPAQUE ); 
 
   isometric_show_floor_around_tux_without_doublebuffering ( mask );
 
@@ -1727,24 +1725,17 @@ get_current_phase ( int tux_part_group , int player_num , int motion_class )
 
 }; // int get_current_phase ( int tux_part_group , int player_num ) 
 
-/*----------------------------------------------------------------------
- * This function should blit the isometric version of the Tux to the
- * screen.
- *----------------------------------------------------------------------*/
-void
-iso_put_tux_part ( int tux_part_group , char* part_string , int x , int y , int player_num , int rotation_index )
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+int
+get_motion_class ( player_num ) 
 {
-  char* fpath;
-  char constructed_filename[5000];
+  int weapon_type = Me [ player_num ] . weapon_item . type ;
+  int motion_class;
   int i;
-  int our_phase = 0 ;
-  int motion_class = 0 ;
-  int weapon_type ;
 
-  //--------------------
-  // Now we find out which weapon class to use in this case.
-  //
-  weapon_type = Me [ player_num ] . weapon_item . type ;
   if ( weapon_type == (-1) )
     {
       motion_class = 0 ;
@@ -1768,6 +1759,55 @@ iso_put_tux_part ( int tux_part_group , char* part_string , int x , int y , int 
 	  clear_all_loaded_tux_images ( TRUE ) ;
 	}
     }
+
+  return ( motion_class );
+
+}; // int get_motion_class ( player_num ) 
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+make_sure_tux_image_is_loaded ( int tux_part_group , int our_phase , int rotation_index , int motion_class , char* part_string )
+{
+  static char constructed_filename[5000];
+  char* fpath;
+
+  //--------------------
+  // Now if the iso_image we want to blit right now has not yet been loaded,
+  // then we need to do something about is and at least attempt to load the
+  // surface
+  //
+  if ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface == NULL )
+    {
+      //--------------------
+      // Either we load all missing images at once or we just load the one missing
+      // image right now and the next one when we come to it.
+      //
+      sprintf ( constructed_filename , "tux_motion_parts/%s/%s%s_%02d_%04d.png" , motion_class_string[motion_class] , part_group_strings [ tux_part_group ] , part_string , rotation_index , our_phase + 1 );
+      fpath = find_file ( constructed_filename , GRAPHICS_DIR, FALSE );
+      get_iso_image_from_file_and_path ( fpath , & ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] ) ) ;
+      strcpy ( previously_used_part_strings [ tux_part_group ] , part_string );
+    }
+
+}; // void make_sure_tux_image_is_loaded ( int tux_part_group , int our_phase , int rotation_index )
+
+/*----------------------------------------------------------------------
+ * This function should blit the isometric version of the Tux to the
+ * screen.
+ *----------------------------------------------------------------------*/
+void
+iso_put_tux_part ( int tux_part_group , char* part_string , int x , int y , int player_num , int rotation_index )
+{
+  int i;
+  int our_phase = 0 ;
+  int motion_class;
+
+  //--------------------
+  // Now we find out which weapon class to use in this case.
+  //
+  motion_class = get_motion_class ( player_num ) ;
 
   //--------------------
   // If some part string given is unlike the part string we were using so
@@ -1796,18 +1836,7 @@ Empty part string received!",
   //
   our_phase = get_current_phase ( tux_part_group , player_num , motion_class ) ;
 
-  //--------------------
-  // Now if the iso_image we want to blit right now has not yet been loaded,
-  // then we need to do something about is and at least attempt to load the
-  // surface
-  //
-  if ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface == NULL )
-    {
-      sprintf ( constructed_filename , "tux_motion_parts/%s/%s%s_%02d_%04d.png" , motion_class_string[motion_class] , part_group_strings [ tux_part_group ] , part_string , rotation_index , our_phase + 1 );
-      fpath = find_file ( constructed_filename , GRAPHICS_DIR, FALSE );
-      get_iso_image_from_file_and_path ( fpath , & ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] ) ) ;
-      strcpy ( previously_used_part_strings [ tux_part_group ] , part_string );
-    }
+  make_sure_tux_image_is_loaded ( tux_part_group , our_phase , rotation_index , motion_class , part_string );
 
   //--------------------
   // Now everything should be loaded correctly and we just need to blit the Tux.  Anything

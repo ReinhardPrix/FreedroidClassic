@@ -41,7 +41,8 @@
 
 #define COL_SPEED		3	
 
-void ProcessAttackStateMachine (int enemynum);
+void ProcessAttackStateMachine ( int enemynum );
+void AnimateEnemys ( void );
 
 /* ----------------------------------------------------------------------
  * In the very beginning of each game, it is not enough to just place the
@@ -1195,6 +1196,15 @@ MoveEnemys ( void )
   //
   PermanentHealRobots ();  // enemy robots heal as time passes...
 
+  //--------------------
+  // Some robots like 302 are already partly animated.  These robots
+  // must be shifted in phase properly...
+  //
+  AnimateEnemys ();
+
+  //--------------------
+  // Now the pure movement stuff..
+  //
   for (i = 0; i < Number_Of_Droids_On_Ship ; i++)
      {
        ThisRobot = & AllEnemys[ i ];
@@ -2344,5 +2354,60 @@ CheckEnemyEnemyCollision (int enemynum)
 
   return FALSE;
 }; // int CheckEnemyEnemyCollision
+
+/* ----------------------------------------------------------------------
+ * This function does the rotation of the enemys according to their 
+ * current energy level.
+ * ---------------------------------------------------------------------- */
+void
+AnimateEnemys (void)
+{
+  int i;
+  enemy* our_enemy;
+
+  // for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
+  for (i = 0; i < Number_Of_Droids_On_Ship ; i++)
+    {
+      
+      our_enemy = & ( AllEnemys [ i ] ) ;
+
+      /* ignore enemys that are dead or on other levels or dummys */
+      // if (AllEnemys[i].type == DEBUG_ENEMY) continue;
+      // if (AllEnemys[i].pos.z != CurLevel->levelnum)
+      if ( our_enemy -> pos . z != Me [ 0 ] . pos . z )
+	continue;
+
+      if ( our_enemy -> Status == OUT)
+	{
+	  our_enemy -> phase = DROID_PHASES ;
+	  continue;
+	}
+
+      if ( our_enemy -> energy <= 0 ) 
+	{
+	  DebugPrintf( 1 , "\nAnimateEnemys: WARNING: Enemy with negative energy encountered.  Phase correction forced..." );
+	  our_enemy -> phase = 0 ;
+	}
+      else
+	{
+	  our_enemy -> phase +=
+	    ( our_enemy -> energy / Druidmap [ our_enemy -> type ] . maxenergy ) *
+	    Frame_Time () * DROID_PHASES * 2.5;
+	}
+
+      if ( our_enemy -> phase >= DROID_PHASES)
+	{
+	  our_enemy -> phase = 0;
+	}
+
+      if ( our_enemy -> animation_phase > 0 )
+	{
+	  our_enemy -> animation_phase += Frame_Time() * 15 ;
+	  if ( our_enemy -> animation_phase >= phases_in_enemy_animation [ our_enemy -> type ] )
+	    our_enemy -> animation_phase = 0 ;
+	}
+
+    }
+}; // void AnimateEnemys ( void )
 
 #undef _enemy_c
