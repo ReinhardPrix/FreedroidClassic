@@ -109,12 +109,12 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 148 , 244 ,  35 ,  35 } } ,
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 404 , 244 ,  35 ,  35 } } ,
 
-    { NULL , "mouse_buttons/buy_button.png"                   , { 193 , 102 ,  60 ,  60 } } ,
-    { NULL , "mouse_buttons/sell_button.png"                  , { 193 , 185 ,  60 ,  60 } } ,
+    { NULL , "mouse_buttons/buy_button.png"                   , { 199 ,  98 ,  47 ,  47 } } ,
+    { NULL , "mouse_buttons/sell_button.png"                  , { 199 , 153 ,  47 ,  47 } } ,
     { NULL , "mouse_buttons/get_button.png"                   , { 193 , 102 ,  60 ,  60 } } ,
     { NULL , "mouse_buttons/put_button.png"                   , { 193 , 185 ,  60 ,  60 } } ,
-    { NULL , "mouse_buttons/repair_button.png"                , { 330 , 350 , 120 ,  37 } } ,
-    { NULL , "mouse_buttons/identify_button.png"              , { 420 , 350 , 120 ,  37 } } ,
+    { NULL , "mouse_buttons/repair_button.png"                , { 199 , 225 ,  47 ,  47 } } ,
+    { NULL , "mouse_buttons/identify_button.png"              , { 199 , 275 ,  47 ,  47 } } ,
 
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 320 + 11 , 449 , 297 , 25 } } ,
 
@@ -140,10 +140,10 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "mouse_buttons/LevelEditorToggleTuxButtonOff.png"        , { 210 , 90 , 0 ,  0 } } ,
     { NULL , "mouse_buttons/LevelEditorToggleEnemiesButton.png"    , { 240 , 90 , 0 ,  0 } } ,
     { NULL , "mouse_buttons/LevelEditorToggleEnemiesButtonOff.png"    , { 240 , 90 , 0 ,  0 } } ,
-	{ NULL , "mouse_buttons/LevelEditorToggleObstaclesButton.png"  , { 270 , 90 , 0 ,  0 } } , 
-	{ NULL , "mouse_buttons/LevelEditorToggleObstaclesButtonOff.png"  , { 270 , 90 , 0 ,  0 } } , 
-	{ NULL , "mouse_buttons/LevelEditorToggleTooltipsButton.png"  , { 300 , 90 , 0 ,  0 } } , 
-	{ NULL , "mouse_buttons/LevelEditorToggleTooltipsButtonOff.png"  , { 300 , 90 , 0 ,  0 } } , 
+    { NULL , "mouse_buttons/LevelEditorToggleObstaclesButton.png"  , { 270 , 90 , 0 ,  0 } } , 
+    { NULL , "mouse_buttons/LevelEditorToggleObstaclesButtonOff.png"  , { 270 , 90 , 0 ,  0 } } , 
+    { NULL , "mouse_buttons/LevelEditorToggleTooltipsButton.png"  , { 300 , 90 , 0 ,  0 } } , 
+    { NULL , "mouse_buttons/LevelEditorToggleTooltipsButtonOff.png"  , { 300 , 90 , 0 ,  0 } } , 
 
     { NULL , "mouse_buttons/LevelEditorNextItemGroup.png"     , { 55 + 64 * 8 , 32+5*66 , 0 ,  0 } } ,
     { NULL , "mouse_buttons/LevelEditorPrevItemGroup.png"     , { 55          , 32+5*66 , 0 ,  0 } } ,
