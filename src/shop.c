@@ -1298,8 +1298,8 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
 {
 
 #define FIXED_SHOP_INVENTORY TRUE
-  // #define NUMBER_OF_ITEMS_IN_SHOP 17
-#define NUMBER_OF_ITEMS_IN_SHOP 4
+#define NUMBER_OF_ITEMS_IN_SHOP 17
+  // #define NUMBER_OF_ITEMS_IN_SHOP 4
 
   item SalesList[ MAX_ITEMS_IN_INVENTORY ];
   item* Buy_Pointer_List[ MAX_ITEMS_IN_INVENTORY ];
@@ -1310,8 +1310,7 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
   shop_decision ShopOrder;
   int NumberOfItemsInTuxRow=0;
 
-  /*
-  int LargeShopInventory[ NUMBER_OF_ITEMS_IN_SHOP ] = 
+  int StandardShopInventory[ NUMBER_OF_ITEMS_IN_SHOP ] = 
     { 
       ITEM_SMALL_HEALTH_POTION,
       ITEM_SMALL_MANA_POTION,
@@ -1337,8 +1336,8 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
       ITEM_SMALL_HELM,
       
     };
-  */
 
+  /*
   int StandardShopInventory [ NUMBER_OF_ITEMS_IN_SHOP ] =
     {
       ITEM_SMALL_HEALTH_POTION,
@@ -1346,6 +1345,7 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
       ITEM_MEDIUM_HEALTH_POTION,
       ITEM_MEDIUM_MANA_POTION
     };
+  */
 
   //--------------------
   // First we make a selection of items, that can be considered 'basic'.

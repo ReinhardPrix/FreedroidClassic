@@ -701,22 +701,17 @@ ShowItemPicture (int PosX, int PosY, int Number )
   SDL_Rect target;
   char ConstructedFileName[5000];
   char* fpath;
-  // static int LastImageSeriesLoaded = ( -1 );
-  // int CurrentImageSeries;
-
   static char LastImageSeriesPrefix[1000] = "NONE_AT_ALL";
-
+  static int NumberOfImagesInPreviousRotation = 0 ;
+  static int NumberOfImagesInThisRotation = 0 ;
 #define NUMBER_OF_IMAGES_IN_ITEM_ROTATION 16
-  static SDL_Surface *ItemRotationSurfaces[ NUMBER_OF_IMAGES_IN_ITEM_ROTATION ] = { NULL } ;
+#define MAX_NUMBER_OF_IMAGES_IN_ITEM_ROTATION 100
+  static SDL_Surface *ItemRotationSurfaces[ MAX_NUMBER_OF_IMAGES_IN_ITEM_ROTATION ] = { NULL } ;
   SDL_Surface *Whole_Image;
   int i;
   int RotationIndex;
 
-  DebugPrintf (2, "\nvoid ShowItemPicture(...): Function call confirmed.");
-
-  // CurrentImageSeries = ItemMap[ Number ] . rotation_model_number ;
-
-  // if ( CurrentImageSeries == (-1) ) return;
+  // DebugPrintf (2, "\nvoid ShowItemPicture(...): Function call confirmed.");
 
   if ( !strcmp ( ItemMap[ Number ] . item_rotation_series_prefix , "NONE_AVAILABLE_YET" ) )
     return; // later this should be a default-correction instead
@@ -731,7 +726,7 @@ ShowItemPicture (int PosX, int PosY, int Number )
       //
       if ( ItemRotationSurfaces[ 0 ] != NULL )
 	{
-	  for ( i = 1 ; i < NUMBER_OF_IMAGES_IN_ITEM_ROTATION ; i ++ )
+	  for ( i = 0 ; i < NumberOfImagesInPreviousRotation ; i ++ )
 	    {
 	      SDL_FreeSurface ( ItemRotationSurfaces[ i ] ) ;
 	    }
@@ -740,7 +735,7 @@ ShowItemPicture (int PosX, int PosY, int Number )
       //--------------------
       // Now we can start to load the whole series into memory
       //
-      for ( i=0 ; i < NUMBER_OF_IMAGES_IN_ITEM_ROTATION ; i++ )
+      for ( i=0 ; i < MAX_NUMBER_OF_IMAGES_IN_ITEM_ROTATION ; i++ )
 	{
 	  if ( !strcmp ( ItemMap[ Number ] . item_rotation_series_prefix , "NONE_AVAILABLE_YET" ) )
 	    {
@@ -761,17 +756,47 @@ ShowItemPicture (int PosX, int PosY, int Number )
 	    }
 	  //--------------------
 	  // But at this point, we should have found the image!!
-	  // Otherwise a severe error has occured...
+	  // or if not, this maybe indicates that we have reached the
+	  // last image in the image series...
 	  //
 	  if ( Whole_Image == NULL )
 	    {
-	      fprintf( stderr, "\n\nfpath: %s. \n" , fpath );
-	      GiveStandardErrorMessage ( "ShowItemPicture(...)" , "\
-Freedroid was unable to load an image of a rotated item into memory.\n\
+	      NumberOfImagesInThisRotation = i ;
+	      NumberOfImagesInPreviousRotation = NumberOfImagesInThisRotation ;
+	      DebugPrintf ( 0 , "\nDONE LOADING ITEM IMAGE SERIES.  Loaded %d images into memory." , 
+			    NumberOfImagesInThisRotation );
+
+	      //--------------------
+	      // Maybe we've received the nothing loaded case even on the first attempt
+	      // to load something.  This of course would mean a severe error in Freedroid!
+	      //
+	      if ( NumberOfImagesInThisRotation <= 0 )
+		{
+		  fprintf( stderr, "\n\nfpath: %s. \n" , fpath );
+		  GiveStandardErrorMessage ( "ShowItemPicture(...)" , "\
+Freedroid was unable to load even one image of a rotated item image series into memory.\n\
 This error indicates some installation problem with freedroid.",
-					 PLEASE_INFORM, IS_FATAL );
+					     PLEASE_INFORM, IS_FATAL );
+		}
+
+	      break;
 	    }
 	  
+	  //--------------------
+	  // Also we must check for our upper bound of the list of 
+	  // item images.  This will most likely never be exceeded, but it
+	  // can hurt to just be on the safe side.
+	  //
+	  if ( i >= MAX_NUMBER_OF_IMAGES_IN_ITEM_ROTATION -2 )
+	    {
+	      fprintf( stderr, "\n\nfpath: %s. \n" , fpath );
+	      GiveStandardErrorMessage ( "ShowItemPicture(...)" , "\
+Freedroid was encountered more item images in an item rotation image series\n\
+than it is able to handle.  This is a very strange error.  Someone has been\n\
+trying to make the ultra-fine item rotation series.  Strange.",
+					 PLEASE_INFORM, IS_FATAL );
+	    }
+
 	  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
 	  ItemRotationSurfaces[i] = SDL_DisplayFormatAlpha( Whole_Image ); // now we have an alpha-surf of right size
 	  SDL_SetColorKey( ItemRotationSurfaces[i] , 0 , 0 ); // this should clear any color key in the dest surface
@@ -784,9 +809,9 @@ This error indicates some installation problem with freedroid.",
 
     }
 
-  RotationIndex = ( SDL_GetTicks() / 50 ) ;
+  RotationIndex = ( SDL_GetTicks() / 70 ) ;
 
-  RotationIndex = RotationIndex - ( RotationIndex / NUMBER_OF_IMAGES_IN_ITEM_ROTATION ) * NUMBER_OF_IMAGES_IN_ITEM_ROTATION ;
+  RotationIndex = RotationIndex - ( RotationIndex / NumberOfImagesInThisRotation ) * NumberOfImagesInThisRotation ;
 
   tmp = ItemRotationSurfaces[ RotationIndex ] ;
 

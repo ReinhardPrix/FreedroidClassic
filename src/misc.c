@@ -994,8 +994,10 @@ Teleport (int LNum, float X, float Y, int PlayerNum , int Shuffling , int WithSo
 
       //--------------------
       // In case a real level change has happend,
-      // we need to do a lot of work:
+      // we need to do a lot of work.  Therefore we start by activating
+      // the conservative frame time computation to avoid a 'jump'.
       //
+      Activate_Conservative_Frame_Computation();
 
       // I think this is for the unlikely case of misordered levels in 
       // the ship file used for this game?!
@@ -1063,7 +1065,10 @@ This indicates an error in the map system of Freedroid.",
       Me [ PlayerNum ] . pos . y = Y ;
     }
 
-  
+  //--------------------
+  // We reset the mouse move target, cause the old target
+  // still referred to the old level...
+  //
   Me [ PlayerNum ] . mouse_move_target . x = ( -1 ) ;
   Me [ PlayerNum ] . mouse_move_target . y = ( -1 ) ;
   Me [ PlayerNum ] . mouse_move_target . z = ( -1 ) ;
@@ -1078,7 +1083,8 @@ This indicates an error in the map system of Freedroid.",
     {
       PlayLevelCommentSound ( CurLevel->levelnum );
       Me [ PlayerNum ] . HaveBeenToLevel [ CurLevel->levelnum ] = TRUE;
-      if ( array_num != 0 ) ShuffleEnemys ( array_num );
+      // if ( array_num != 0 ) ShuffleEnemys ( array_num );
+      if ( ( LNum != 0 ) && ( Shuffling ) ) ShuffleEnemys ( array_num );
     }
 
   // UnfadeLevel ();
