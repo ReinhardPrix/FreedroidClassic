@@ -237,6 +237,9 @@ typedef struct
   int item_gun_oneshotonly;	        /* if this is set, there is only 1 shot */
   int item_gun_bullet_image_type;       // which type of image to use for displaying this bullet
 
+  // how good is the item as armour???
+  double item_armour_ac_bonus;
+
   // Which picture to use for this item, when it's lying on the floor?
   int picture_number;
   int sound_number;
@@ -314,7 +317,8 @@ typedef struct
   int Vitality;  // character Vitality value = 'cloaking field maximum strength'
   long Experience; // character Experience = 'spare droid elements found'
   int PointsToDistribute; // these are the points that are available to distribute upon the character stats
-  float Damage; // 
+  float Damage; // the current damage the influencer does
+  float AC; // the current Armour Class of the influencer
   gps Position_History_Ring_Buffer[ MAX_INFLU_POSITION_HISTORY ];
   mission AllMissions[ MAX_MISSIONS_IN_GAME ];         // What must be done to fullfill this mission?
   float MissionTimeElapsed;

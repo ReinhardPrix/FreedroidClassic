@@ -163,6 +163,7 @@ Item as gun: damage of bullets=1
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=0
+Item as armour: ac_bonus=0
 Picture number=7 // this is the pure transparent 1x1 inventory square!!!
 Sound number=0 
 ** End of new item specification subsection **
@@ -190,6 +191,7 @@ Item as gun: damage of bullets=1
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=0
+Item as armour: ac_bonus=0
 Picture number=0
 Sound number=1
 ** End of new item specification subsection **
@@ -217,6 +219,7 @@ Item as gun: damage of bullets=1
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=0
+Item as armour: ac_bonus=0
 Picture number=0
 Sound number=2 
 ** End of new item specification subsection **
@@ -244,6 +247,7 @@ Item as gun: damage of bullets=25
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=0
+Item as armour: ac_bonus=0
 Picture number=9
 Sound number=3 
 ** End of new item specification subsection **
@@ -271,6 +275,7 @@ Item as gun: damage of bullets=1
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=0
+Item as armour: ac_bonus=0
 Picture number=3
 Sound number=4
 ** End of new item specification subsection **
@@ -298,6 +303,7 @@ Item as gun: damage of bullets=1
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=0
+Item as armour: ac_bonus=0
 Picture number=4
 Sound number=1 
 ** End of new item specification subsection **
@@ -325,6 +331,7 @@ Item as gun: damage of bullets=1
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=0
+Item as armour: ac_bonus=0
 Picture number=1
 Sound number=2 
 ** End of new item specification subsection **
@@ -352,6 +359,7 @@ Item as gun: damage of bullets=1
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=0
+Item as armour: ac_bonus=0
 Picture number=5
 Sound number=3 
 ** End of new item specification subsection **
@@ -379,6 +387,7 @@ Item as gun: damage of bullets=1
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=0
+Item as armour: ac_bonus=0
 Picture number=8
 Sound number=4 
 ** End of new item specification subsection **
@@ -406,6 +415,7 @@ Item as gun: damage of bullets=1
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=0
+Item as armour: ac_bonus=0
 Picture number=10
 Sound number=4 
 ** End of new item specification subsection **
@@ -433,6 +443,7 @@ Item as gun: damage of bullets=1
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=0
+Item as armour: ac_bonus=0
 Picture number=11
 Sound number=0 
 ** End of new item specification subsection **
@@ -460,6 +471,7 @@ Item as gun: damage of bullets=1
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=0
+Item as armour: ac_bonus=0
 Picture number=4
 Sound number=0 
 ** End of new item specification subsection **
@@ -487,6 +499,7 @@ Item as gun: damage of bullets=40
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=5
+Item as armour: ac_bonus=0
 Picture number=2
 Sound number=0 
 ** End of new item specification subsection **
@@ -514,6 +527,7 @@ Item as gun: damage of bullets=80
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=4
+Item as armour: ac_bonus=0
 Picture number=12
 Sound number=0 
 ** End of new item specification subsection **
@@ -541,6 +555,7 @@ Item as gun: damage of bullets=40
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=3
+Item as armour: ac_bonus=0
 Picture number=13
 Sound number=0 
 ** End of new item specification subsection **
@@ -568,6 +583,7 @@ Item as gun: damage of bullets=55
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=2
+Item as armour: ac_bonus=0
 Picture number=9
 Sound number=0 
 ** End of new item specification subsection **
@@ -595,6 +611,7 @@ Item as gun: damage of bullets=40
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=1
+Item as armour: ac_bonus=0
 Picture number=14
 Sound number=0 
 ** End of new item specification subsection **
@@ -622,6 +639,7 @@ Item as gun: damage of bullets=80
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=4
+Item as armour: ac_bonus=0
 Picture number=12
 Sound number=0 
 ** End of new item specification subsection **
@@ -649,6 +667,7 @@ Item as gun: damage of bullets=80
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=4
+Item as armour: ac_bonus=100
 Picture number=15
 Sound number=0 
 ** End of new item specification subsection **
@@ -676,6 +695,7 @@ Item as gun: damage of bullets=80
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=4
+Item as armour: ac_bonus=0
 Picture number=6
 Sound number=0 
 ** End of new item specification subsection **
@@ -703,6 +723,7 @@ Item as gun: damage of bullets=80
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=4
+Item as armour: ac_bonus=0
 Picture number=16
 Sound number=0 
 ** End of new item specification subsection **
@@ -730,6 +751,7 @@ Item as gun: damage of bullets=80
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=4
+Item as armour: ac_bonus=0
 Picture number=17
 Sound number=0 
 ** End of new item specification subsection **
