@@ -2,63 +2,6 @@
  * $Source$
  *
  * @Desc:  all functions dealing with sound are contained in this file.
- *	 
- * 	
- * $Revision$
- *
- * $State$
- *
- * $Author$
- *
- * $Log$
- * Revision 1.15  1997/06/09 23:08:59  jprix
- * Blast phases now adapted to the current framerate.  New constant for speed of animation independant of framerate.
- *
- * Revision 1.14  1997/06/09 19:44:13  jprix
- * Improved the Title.
- *
- * Revision 1.13  1997/06/09 13:01:29  jprix
- * Bullet position and speed now also as float.  Program still functionin. Heeyooh! Great!
- *
- * Revision 1.12  1997/06/08 21:22:44  jprix
- * Makefile modifiet to generate para with sound per default. Alternative target is now paranosound.
- *
- * Revision 1.11  1997/06/08 18:46:11  jprix
- * Sound server should be working perfectly now.  Background music was also activated.
- * Background music file and new fire sound added.
- * Soundserver is currently activated by default. (rp shound install a yiff soon! it's great.)
- *
- * Revision 1.10  1997/06/08 16:33:10  jprix
- * Eliminated all warnings, that resulted from the new -Wall gcc flag.
- *
- *
- * Revision 1.9  1997/06/08 14:49:40  jprix
- * Added file FILES describing the files of this project.
- * Added more doku while writing the files description.
- * Added -Wall compilerflag for maximal generation of sane warnings.
- *
- * Revision 1.8  1997/06/05 23:47:38  jprix
- * added some doku.  cleaned out some old doku and old code, that was allready commented out.
- *
- * Revision 1.7  1997/06/05 23:09:01  jprix
- * Project can now be compiled and run entirely without any yiff installation.
- *
- * Revision 1.6  1997/06/05 09:24:15  jprix
- * yiff server access introduced to the project. (This version was not compilable without YIFF. SORRY!)
- *
- * Revision 1.5  2002/04/08 19:19:09  rp
- * Johannes latest (and last) non-cvs version to be checked in. 
- * Added graphics,sound,map-subdirs. Sound support using ALSA started.
- *
- * Revision 1.5  1997/05/31 13:30:32  rprix
- * Further update by johannes. (sent to me in tar.gz)
- *
- * Revision 1.2  1994/06/19  16:41:10  prix
- * Sat Jun 04 08:42:14 1994: ??
- *
- * Revision 1.1  1993/05/23  21:05:16  prix
- * Initial revision
- *
  *
  *-@Header------------------------------------------------------------*/
 
