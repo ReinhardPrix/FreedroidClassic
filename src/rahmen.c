@@ -779,8 +779,9 @@ ShowCurrentTextWindow ( void )
 	  if ( ( fabsf( MapPositionOfMouse.x - AllEnemys[ i ].pos.x ) < 0.5 ) &&
 	       ( fabsf( MapPositionOfMouse.y - AllEnemys[ i ].pos.y ) < 0.5 ) )
 	    {
-	      GiveDroidDescription ( ItemDescText , &( AllEnemys[ i ]) );
+	      // GiveDroidDescription ( ItemDescText , &( AllEnemys[ i ]) );
 	      // strcpy( ItemDescText , ItemMap[ CurLevel->ItemList[ i ].type ].item_name );
+	      strcpy( ItemDescText , AllEnemys[ i ].short_description_text );
 	    }
 	}
     }

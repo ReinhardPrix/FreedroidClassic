@@ -161,6 +161,7 @@ enum _spell_names
 
 #define MAX_CHARACTER_NAME_LENGTH (25)
 #define MAX_LENGTH_FOR_DIALOG_SECTION_NAME 100
+#define MAX_LENGTH_OF_SHORT_DESCRIPTION_STRING 200
 
 //--------------------
 // Highscore related defines 

@@ -2512,6 +2512,7 @@ GetThisLevelsSpecialForces ( char* SearchPointer , int OurLevelNumber , int Free
   char* YesNoString;
   location StartupLocation;
   char* DialogSection;
+  char* ShortDescription;
 
   while ( ( SearchPointer = strstr ( SearchPointer , SPECIAL_FORCE_INDICATION_STRING)) != NULL)
     {
@@ -2605,6 +2606,21 @@ the dialog section name for one special force droid/character.",
 	}
       strcpy ( AllEnemys[ FreeAllEnemysPosition ].dialog_section_name , DialogSection );
       free ( DialogSection );
+
+      ShortDescription = 
+	ReadAndMallocStringFromData ( SearchPointer , "ShortLabel=\"" , "\"" ) ;
+      if ( strlen ( DialogSection ) >= MAX_LENGTH_OF_SHORT_DESCRIPTION_STRING )
+	{
+	  GiveStandardErrorMessage ( "GetThisLevelsSpecialForces(...)" , "\
+The short description specification string for a bot was too large.\n\
+This indicated a corrupted ReturnOfTux.droids file with an error when specifying\n\
+the dialog section name for one special force droid/character.",
+				     PLEASE_INFORM, IS_FATAL );
+	}
+      strcpy ( AllEnemys[ FreeAllEnemysPosition ].short_description_text , ShortDescription );
+      free ( ShortDescription );
+
+      
 
       AllEnemys[ FreeAllEnemysPosition ].type = ListIndex;
       AllEnemys[ FreeAllEnemysPosition ].pos.z = OurLevelNumber;
@@ -2726,11 +2742,11 @@ game data file with all droid type specifications.",
 
     }  // while (enemy-limit of this level not reached) 
 
+  strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "No Description For This One" );
+
   SearchPointer=SectionPointer;
 
   GetThisLevelsSpecialForces ( SearchPointer , OurLevelNumber , FreeAllEnemysPosition , EndOfThisLevelData );
-
-
 
 }; // void GetThisLevelsDroids( char* SectionPointer )
 

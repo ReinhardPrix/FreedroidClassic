@@ -647,6 +647,7 @@ typedef struct
   double Parameter2;            // This contains special information for AdvancedCommand
   int is_friendly;                 // is this a friendly droid or is it a MS controlled one?
   char dialog_section_name[ MAX_LENGTH_FOR_DIALOG_SECTION_NAME ]; // This should indicate one of the many sections of the Freedroid.dialogues file
+  char short_description_text[ MAX_LENGTH_OF_SHORT_DESCRIPTION_STRING ]; // This should indicate one of the many sections of the Freedroid.dialogues file
   int will_rush_tux;            // will this robot approach the Tux on sight and open communication?
   int persuing_given_course;    // is this robot persuing a given course via PersueGivenCourse( EnemyNum )?
   int StayHowManyFramesBehind;  // how many frames shall this droid trott behind the influ when follwing his tail?
