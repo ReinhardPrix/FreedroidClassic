@@ -330,6 +330,93 @@ Buy_Basic_Items( void )
  * This is the menu, where you can buy basic items.
  * ---------------------------------------------------------------------- */
 void
+Buy_Premium_Items( void )
+{
+#define BASIC_ITEMS_NUMBER 10
+#define NUMBER_OF_ITEMS_ON_ONE_SCREEN 4
+#define ITEM_MENU_DISTANCE 80
+  item SalesList[ BASIC_ITEMS_NUMBER ];
+  int i;
+  int InMenuPosition = 0;
+  int MenuInListPosition = 0;
+  char DescriptionText[5000];
+
+  //--------------------
+  // First we make a selection of items, that can be considered 'basic'
+  //
+  for ( i = 0 ; i < BASIC_ITEMS_NUMBER ; i++ )
+    {
+      SalesList[ i ].type = MyRandom( Number_Of_Item_Types - 2 ) + 1;
+      SalesList[ i ].prefix_code = ( -1 );
+      SalesList[ i ].suffix_code = ( MyRandom(10) );
+      FillInItemProperties( & ( SalesList[ i ] ) , TRUE );
+    }
+
+  while ( !SpacePressed() && !EscapePressed() )
+    {
+      InitiateMenu ( NULL );
+
+      //--------------------
+      // Now we draw our selection of items to the screen, at least the part
+      // of it, that's currently visible
+      //
+      DisplayText( " I HAVE THESE ITEMS FOR SALE         YOUR GOLD:" , 50 , 50 + (0) * ITEM_MENU_DISTANCE , NULL );
+      sprintf( DescriptionText , "%4ld" , Me.Gold );
+      DisplayText( DescriptionText , 580 , 50 + ( 0 ) * 80 , NULL );
+      for ( i = 0 ; i < NUMBER_OF_ITEMS_ON_ONE_SCREEN ; i++ )
+	{
+	  // DisplayText( ItemMap [ SalesList[ i ].type ].ItemName , 50 , 50 + i * 50 , NULL );
+	  // DisplayText( "\n" , -1 , -1, NULL );
+	  GiveItemDescription( DescriptionText , & ( SalesList[ i + MenuInListPosition ] ) , TRUE );
+	  DisplayText( DescriptionText , 50 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
+	  sprintf( DescriptionText , "%4ld" , 
+		   CalculateItemPrice ( & ( SalesList[ i + MenuInListPosition ] ) , FALSE ) );
+	  DisplayText( DescriptionText , 580 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
+	}
+      
+      //--------------------
+      // Now we draw the influencer as a cursor
+      //
+      PutInfluence ( 10 , 50 + ( InMenuPosition + 1 ) * ITEM_MENU_DISTANCE );
+
+      //--------------------
+      //
+      //
+      SDL_Flip ( Screen );
+
+      if ( UpPressed() )
+	{
+	  if ( InMenuPosition > 0 ) InMenuPosition --;
+	  else 
+	    {
+	      if ( MenuInListPosition > 0 )
+		MenuInListPosition --;
+	    }
+	  while ( UpPressed() );
+	}
+      if ( DownPressed() )
+	{
+	  if ( InMenuPosition < NUMBER_OF_ITEMS_ON_ONE_SCREEN - 1 ) InMenuPosition ++;
+	  else 
+	    {
+	      if ( MenuInListPosition < BASIC_ITEMS_NUMBER - NUMBER_OF_ITEMS_ON_ONE_SCREEN )
+		MenuInListPosition ++;
+	    }
+	  while ( DownPressed() );
+	}      
+    } // while not space pressed...
+
+  if ( SpacePressed() ) TryToBuyItem( & ( SalesList[ InMenuPosition + MenuInListPosition ] ) ) ;
+
+  while ( SpacePressed() || EscapePressed() );
+
+}; // void Buy_Premium_Items( void )
+
+
+/* ----------------------------------------------------------------------
+ * This is the menu, where you can buy basic items.
+ * ---------------------------------------------------------------------- */
+void
 Repair_Items( void )
 {
 #define BASIC_ITEMS_NUMBER 10
@@ -748,6 +835,7 @@ enum
 	  break;
 	case BUY_PREMIUM_ITEMS:
 	  while (EnterPressed() || SpacePressed() );
+	  Buy_Premium_Items();
 	  break;
 	case SELL_ITEMS:
 	  while (EnterPressed() || SpacePressed() );
