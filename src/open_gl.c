@@ -1563,49 +1563,53 @@ RestoreMenuBackground ( int backup_slot )
 void
 StoreMenuBackground ( int backup_slot )
 {
-  static int first_call = TRUE ;
+    static int first_call = TRUE ;
 
-  if ( first_call )
+    if ( first_call )
     {
-      StoredMenuBackground [ 0 ] = NULL ;
-      StoredMenuBackground [ 1 ] = NULL ;
-      first_call = FALSE ;
+	StoredMenuBackground [ 0 ] = NULL ;
+	StoredMenuBackground [ 1 ] = NULL ;
+	first_call = FALSE ;
     }
-
-  if ( use_open_gl )
+    
+    if ( use_open_gl )
     {
 #ifdef HAVE_LIBGL
-      //--------------------
-      // WARNING!  WE ARE USING THE SDL_SURFACE* here much like a char*!!!
-      // BEWARE!
-      //
-      if ( StoredMenuBackground [ backup_slot ] == NULL )
+	//--------------------
+	// WARNING!  WE ARE USING THE SDL_SURFACE* here much like a char*!!!
+	// BEWARE!
+	//
+	// Also note, that we allocate +2 width and height to be on the safe
+	// side concerning rounding issues and the size of the final read-pixel
+	// data...
+	//
+	if ( StoredMenuBackground [ backup_slot ] == NULL )
 	{
-	  StoredMenuBackground [ backup_slot ] = malloc ( 641 * 481 * 4 ) ;
+	    StoredMenuBackground [ backup_slot ] = malloc ( ( SCREEN_WIDTH + 2 ) * ( SCREEN_HEIGHT + 2 ) * 4 ) ;
 	}
-
-      glReadPixels( 0 , 1, 640, 479, GL_RGB, GL_UNSIGNED_BYTE, (GLvoid*) ( StoredMenuBackground [ backup_slot ] ) );
+	
+	glReadPixels( 0 , 1, SCREEN_WIDTH , SCREEN_HEIGHT-1 , GL_RGB, GL_UNSIGNED_BYTE, (GLvoid*) ( StoredMenuBackground [ backup_slot ] ) );
 #endif
     }
-  else
+    else
     {
-      //--------------------
-      // If the memory was not yet allocated, we need to do that now...
-      //
-      // otherwise we free the old surface and create a new copy of the
-      // current screen content...
-      //
-      if ( StoredMenuBackground [ backup_slot ] == NULL )
+	//--------------------
+	// If the memory was not yet allocated, we need to do that now...
+	//
+	// otherwise we free the old surface and create a new copy of the
+	// current screen content...
+	//
+	if ( StoredMenuBackground [ backup_slot ] == NULL )
 	{
-	  StoredMenuBackground [ backup_slot ] = our_SDL_display_format_wrapper ( Screen );
+	    StoredMenuBackground [ backup_slot ] = our_SDL_display_format_wrapper ( Screen );
 	}
-      else
+	else
 	{
-	  SDL_FreeSurface ( StoredMenuBackground [ backup_slot ] );
-	  StoredMenuBackground [ backup_slot ] = our_SDL_display_format_wrapper ( Screen );
+	    SDL_FreeSurface ( StoredMenuBackground [ backup_slot ] );
+	    StoredMenuBackground [ backup_slot ] = our_SDL_display_format_wrapper ( Screen );
 	}
     }
-
+    
 }; // void StoreMenuBackground ( int backup_slot )
 
 /* ----------------------------------------------------------------------

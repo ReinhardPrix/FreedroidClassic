@@ -224,22 +224,10 @@ void
 print_trace ( int signum )
 {
 
-    if ( signum == SIGSEGV )
-    {
-	fprintf ( stderr , "print_trace:  received SIGSEGV!\n" );
-    }
-    else if ( signum == SIGFPE )
-	fprintf ( stderr , "print_trace:  received SIGFPE!\n" );
-    else
-    {
-    	fprintf ( stderr , "print_trace:  received UNKNOWN SIGNAL!  ERROR! \n" );
-	Terminate ( ERR );
-    }
-
 #ifndef __WIN32__
 
-    fprintf ( stderr , "print_trace:  Now attempting backtrace from within the code!\n" );
-    fprintf ( stderr , "print_trace:  Allowing a maximum of %d function calls on the stack!\n" , MAX_CALLS_IN_BACKTRACE );
+    // fprintf ( stderr , "print_trace:  Now attempting backtrace from within the code!\n" );
+    // fprintf ( stderr , "print_trace:  Allowing a maximum of %d function calls on the stack!\n" , MAX_CALLS_IN_BACKTRACE );
     
     //--------------------
     // We attempt to get a backtrace of all function calls so far, even
@@ -273,6 +261,18 @@ print_trace ( int signum )
     free ( backtrace_strings );
 
 #endif
+
+    if ( signum == SIGSEGV )
+    {
+	fprintf ( stderr , "\n%s():  received SIGSEGV!\n" , __FUNCTION__ );
+    }
+    else if ( signum == SIGFPE )
+	fprintf ( stderr , "\n%s():  received SIGFPE!\n" , __FUNCTION__ );
+    else
+    {
+    	fprintf ( stderr , "\n%s():  received UNKNOWN SIGNAL!  ERROR! \n" , __FUNCTION__ );
+	Terminate ( ERR );
+    }
 
     Terminate ( ERR );
 
