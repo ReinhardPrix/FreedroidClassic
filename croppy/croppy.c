@@ -41,6 +41,7 @@ int cut_left;
 int cut_right;
 int cut_up;
 int cut_down;
+int no_graphics_output = TRUE ;
 
 char copyright[] = "\nCopyright (C) 2002 Johannes Prix, Reinhard Prix\n\
 Freedroid comes with NO WARRANTY to the extent permitted by law.\n\
@@ -50,21 +51,19 @@ For more information about these matters, see the file named COPYING.\n";
 
 
 char usage_string[] =
-  "Usage: freedroid [-v|--version] \n\
-                    [-q|--nosound] \n\
-                    [-s|--sound] \n\
-                    [-f|--fullscreen] [-w|--window]\n\
-                    [-j|--sensitivity]\n\
+  "Usage: croppy    [-v|--version] \n\
+                    [-i|--input_file] \n\
+                    [-n|--nographicsoutput] (default!)\n\
+                    [-g|--graphicsoutput] \n\
                     [-d|--debug=LEVEL]\n\
 \n\
-Please report bugs either by entering them into the bug-tracking\n\
-system on our sourceforge-website via this link:\n\n\
-http://sourceforge.net/projects/freedroid/\n\n\
-Or even better, report them by sending e-mail to:\n\n\
+EXAMPLE:  croppy -i my_test_file.png\n\
+\n\
+Please report bugs by sending e-mail to:\n\n\
 freedroid-discussion@lists.sourceforge.net\n\n\
 Thanks a lot in advance, the Freedroid dev team.\n\n";
 
-int debug_level = 1;
+int debug_level = 0 ;
 int vid_bpp;
 
 /* ----------------------------------------------------------------------
@@ -190,17 +189,18 @@ ParseCommandLine (int argc, char *const argv[])
 
   static struct option long_options[] = 
     {
-      { "version",     0, 0,  'v' },
-      { "help",        0, 0,  'h' },
-      { "input_file",  required_argument , 0,  'i' },
-      { "output_file", required_argument , 0,  'o' },
-      { "debug",       2, 0,  'd' },
-      {  0,            0, 0,   0  }
+      { "version",          0, 0,  'v' },
+      { "help",             0, 0,  'h' },
+      { "nographicsoutput", 0, 0,  'n' },
+      { "graphicsoutput",   0, 0,  'g' },
+      { "input_file",       required_argument , 0,  'i' },
+      { "debug",            2, 0,  'd' },
+      {  0,                 0, 0,   0  }
   };
 
   while (1)
     {
-      c = getopt_long (argc, argv, "vi:o:h?d::", long_options, NULL);
+      c = getopt_long (argc, argv, "gnvi:h?d::", long_options, NULL);
       if (c == -1)
 	break;
 
@@ -209,8 +209,8 @@ ParseCommandLine (int argc, char *const argv[])
 	  // version statement -v or --version
 	  // following gnu-coding standards for command line interfaces 
 	case 'v':
-	  printf ("\nFreedroid Croppy Tool, Version 1.0.\n" );
-	  printf (copyright);
+	  DebugPrintf ( 0 , "\nFreedroid Croppy Tool, Version 1.0.\n" );
+	  DebugPrintf ( 0 , copyright );
 	  exit (0);
 	  break;
 
@@ -220,28 +220,15 @@ ParseCommandLine (int argc, char *const argv[])
 	  exit (0);
 	  break;
 
-	case 'q':
-	  // sound_on = FALSE;
-	  break;
-
-	case 'o':
-	  if ( optarg )
-	    {
-	      output_filename = optarg;
-	      printf ("\nOutput file name set to : %s " , output_filename );
-	    }
-	  else
-	    {
-	      printf ("\nERROR! -o specified, but no output file given... Exiting.\n" );
-	      exit ( 0 );
-	    }
+	case 'g':
+	  no_graphics_output = FALSE ;
 	  break;
 
 	case 'i':
 	  if ( optarg )
 	    {
 	      input_filename = optarg;
-	      printf ("\nInput file name set to : %s " , input_filename );
+	      DebugPrintf ( 1 , "\nInput file name set to : %s " , input_filename );
 	    }
 	  else
 	    {
@@ -266,11 +253,6 @@ ParseCommandLine (int argc, char *const argv[])
   if ( input_filename == NULL )
     {
       DebugPrintf ( 0 , "\nERROR:  No input file specified... Terminating... " );
-      Terminate ( ERR );
-    }
-  if ( output_filename == NULL )
-    {
-      DebugPrintf ( 0 , "\nERROR:  No output file specified... Terminating... " );
       Terminate ( ERR );
     }
 
@@ -330,14 +312,16 @@ InitVideo (void)
 
   #define SCALE_FACTOR 2
 
-  if( !(Screen = SDL_SetVideoMode ( SCREEN_WIDTH, SCREEN_HEIGHT , 0 , flags)) )
+  if ( !no_graphics_output )
     {
-      fprintf(stderr, "Couldn't set (2*) 320x240*SCALE_FACTOR video mode: %s\n",
-	      SDL_GetError()); 
-      exit(-1);
+      if( !(Screen = SDL_SetVideoMode ( SCREEN_WIDTH, SCREEN_HEIGHT , 0 , flags)) )
+	{
+	  fprintf(stderr, "Couldn't set (2*) 320x240*SCALE_FACTOR video mode: %s\n",
+		  SDL_GetError()); 
+	  exit(-1);
+	}
+      SDL_Flip ( Screen ) ;
     }
-
-  SDL_Flip ( Screen ) ;
 
   vid_info = SDL_GetVideoInfo (); /* info about current video mode */
 
@@ -355,18 +339,6 @@ create_output_surface ( void )
   SDL_Rect target_rect;
   SDL_Rect source_rect;
 
-  /*
-  output_surface = SDL_CreateRGBSurface( 
-					 Uint32 flags, 
-					 int width, 
-					 int height, 
-					 int depth, 
-					 Uint32 Rmask, 
-					 Uint32 Gmask, 
-					 Uint32 Bmask, 
-					 Uint32 Amask);
-  */
-
   output_surface = SDL_CreateRGBSurface( 
 					 input_surface -> flags, 
 					 input_surface -> w - cut_left - cut_right , 
@@ -378,7 +350,7 @@ create_output_surface ( void )
 					 input_surface -> format -> Amask);
 
 
-  DebugPrintf ( 0 , "\nNew surface was created with dimensions:  %d:%d. " ,
+  DebugPrintf ( 1 , "\nNew surface was created with dimensions:  %d:%d. " ,
 		output_surface -> w , output_surface-> h );
 
   //--------------------
@@ -411,6 +383,8 @@ examine_input_surface ( void )
   int line_not_empty = FALSE;
   int i , j ;
 
+#define INPUT_EXAM_DEBUG 1 
+
   //--------------------
   // Now we examine the left side..
   //
@@ -422,14 +396,14 @@ examine_input_surface ( void )
 	  if ( GetAlphaComponent ( input_surface , i , j ) != 0 )
 	    {
 	      column_not_empty = TRUE ;
-	      DebugPrintf ( 0 , "\nFound alpha value of %d at location (%d/%d)." , 
+	      DebugPrintf ( INPUT_EXAM_DEBUG , "\nFound alpha value of %d at location (%d/%d)." , 
 			    GetAlphaComponent ( input_surface , i , j ) , i , j );
 	    }
 	}
       if ( column_not_empty ) 
 	{
-	  DebugPrintf ( 0 , "\nEnd of excessive space on left side found." );
-	  DebugPrintf ( 0 , "\n%d columns of pixels can be cropped away..." , i );
+	  DebugPrintf ( INPUT_EXAM_DEBUG , "\nEnd of excessive space on left side found." );
+	  DebugPrintf ( INPUT_EXAM_DEBUG , "\n%d columns of pixels can be cropped away..." , i );
 	  cut_left = i ; 
 	  break;
 	}
@@ -446,14 +420,14 @@ examine_input_surface ( void )
 	  if ( GetAlphaComponent ( input_surface , input_surface->w - i - 1 , j ) != 0 )
 	    {
 	      column_not_empty = TRUE ;
-	      DebugPrintf ( 0 , "\nFound alpha value of %d at location (%d/%d)." , 
+	      DebugPrintf ( INPUT_EXAM_DEBUG , "\nFound alpha value of %d at location (%d/%d)." , 
 			    GetAlphaComponent ( input_surface , input_surface->w - i - 1 , j ) , input_surface->w - i - 1 , j );
 	    }
 	}
       if ( column_not_empty ) 
 	{
-	  DebugPrintf ( 0 , "\nEnd of excessive space on right side found." );
-	  DebugPrintf ( 0 , "\n%d columns of pixels can be cropped away..." , i );
+	  DebugPrintf ( INPUT_EXAM_DEBUG , "\nEnd of excessive space on right side found." );
+	  DebugPrintf ( INPUT_EXAM_DEBUG , "\n%d columns of pixels can be cropped away..." , i );
 	  cut_right = i ; 
 	  break;
 	}
@@ -470,14 +444,14 @@ examine_input_surface ( void )
 	  if ( GetAlphaComponent ( input_surface , j , i ) != 0 )
 	    {
 	      line_not_empty = TRUE ;
-	      DebugPrintf ( 0 , "\nFound alpha value of %d at location (%d/%d)." , 
+	      DebugPrintf ( INPUT_EXAM_DEBUG , "\nFound alpha value of %d at location (%d/%d)." , 
 			    GetAlphaComponent ( input_surface , j , i ) , j , i );
 	    }
 	}
       if ( line_not_empty ) 
 	{
-	  DebugPrintf ( 0 , "\nEnd of excessive space on upper side found." );
-	  DebugPrintf ( 0 , "\n%d lines of pixels can be cropped away..." , i );
+	  DebugPrintf ( INPUT_EXAM_DEBUG , "\nEnd of excessive space on upper side found." );
+	  DebugPrintf ( INPUT_EXAM_DEBUG , "\n%d lines of pixels can be cropped away..." , i );
 	  cut_up = i ; 
 	  break;
 	}
@@ -494,18 +468,21 @@ examine_input_surface ( void )
 	  if ( GetAlphaComponent ( input_surface , j , input_surface -> h - i - 1 ) != 0 )
 	    {
 	      line_not_empty = TRUE ;
-	      DebugPrintf ( 0 , "\nFound alpha value of %d at location (%d/%d)." , 
+	      DebugPrintf ( INPUT_EXAM_DEBUG , "\nFound alpha value of %d at location (%d/%d)." , 
 			    GetAlphaComponent ( input_surface , j , input_surface -> h - i - 1 ) , j , input_surface -> h - i - 1 );
 	    }
 	}
       if ( line_not_empty ) 
 	{
-	  DebugPrintf ( 0 , "\nEnd of excessive space on lower side found." );
-	  DebugPrintf ( 0 , "\n%d lines of pixels can be cropped away..." , i );
+	  DebugPrintf ( INPUT_EXAM_DEBUG , "\nEnd of excessive space on lower side found." );
+	  DebugPrintf ( INPUT_EXAM_DEBUG , "\n%d lines of pixels can be cropped away..." , i );
 	  cut_down = i ; 
 	  break;
 	}
     }
+
+  DebugPrintf ( INPUT_EXAM_DEBUG , "\nAmount cropped on side N/S/E/W: %d/%d/%d/%d." , 
+		cut_up , cut_down , cut_right , cut_left );
 
 }; // void examine_input_surface ( void )
 
@@ -562,10 +539,12 @@ write_offset_file ( )
 
   if( fclose( OffsetFile ) == EOF) 
     {
-      printf("\n\nClosing of save game file failed in Offset...\n\nTerminating\n\n");
+      printf("\n\nClosing of .offset file failed...\n\nTerminating\n\n");
       Terminate(ERR);
       // return ERR;
     }
+
+  DebugPrintf( 0 , "\nSaving of '.offset' file successful.\n" );
 
 }; // void write_offset_file ( ) 
 
@@ -581,7 +560,7 @@ copy_and_crop_input_file ( )
   sprintf ( parameter_buf , "mogrify -crop %dx%d+%d+%d %s" , input_surface->w - cut_left - cut_right ,
 	    input_surface->h - cut_up - cut_down , cut_left , cut_up , input_filename );
 
-  DebugPrintf ( 0 , "\nNow executing command : %s\n" , "mogrify" , parameter_buf );
+  DebugPrintf ( 0 , "\nNow executing command : %s\n" , parameter_buf );
 
   system ( parameter_buf );
 
@@ -596,15 +575,17 @@ main (int argc, char *const argv[])
 {
   SDL_Rect fill_rect ;
 
-  printf ( "\nFreedroidRPG 'Croppy' Tool, starting to read command line....\n" );
+#define MAIN_DEBUG 1 
+
+  DebugPrintf ( MAIN_DEBUG , "\nFreedroidRPG 'Croppy' Tool, starting to read command line....\n" );
 
   ParseCommandLine (argc, argv); 
 
-  printf ( "\nFreedroidRPG 'Croppy' Tool, initializing video....\n" );
+  DebugPrintf ( MAIN_DEBUG , "\nFreedroidRPG 'Croppy' Tool, initializing video....\n" );
 
   InitVideo () ;
 
-  printf ( "\nFreedroidRPG 'Croppy' Tool, now loading input file...\n" );
+  DebugPrintf ( MAIN_DEBUG , "\nFreedroidRPG 'Croppy' Tool, now loading input file...\n" );
 
   input_surface = IMG_Load ( input_filename ) ;
   if ( input_surface == NULL )
@@ -613,20 +594,24 @@ main (int argc, char *const argv[])
       DebugPrintf ( 0 , "\nFile name was : %s . " , input_filename );
       Terminate ( ERR );
     }
-  SDL_BlitSurface ( input_surface , NULL , Screen , NULL ) ;
-  SDL_Flip ( Screen );
 
-  MyWait ( 1.2 ) ;
+  if ( !no_graphics_output )
+    {
+      SDL_BlitSurface ( input_surface , NULL , Screen , NULL ) ;
+      SDL_Flip ( Screen );
+      MyWait ( 1.2 ) ;
+    }
 
-  printf ( "\nFreedroidRPG 'Croppy' Tool, now examining and cropping surface...\n" );
+  DebugPrintf ( MAIN_DEBUG , "\nFreedroidRPG 'Croppy' Tool, now examining and cropping surface...\n" );
 
   examine_input_surface ( );
 
-  printf ( "\nFreedroidRPG 'Croppy' Tool, now cropping surface...\n" );
+  DebugPrintf ( MAIN_DEBUG , "\nFreedroidRPG 'Croppy' Tool, now cropping surface...\n" );
 
-  create_output_surface ( ) ; 
+  if ( !no_graphics_output )
+    create_output_surface ( ) ; 
 
-  printf ( "\nFreedroidRPG 'Croppy' Tool, now saving output surface...\n" );
+  DebugPrintf ( MAIN_DEBUG , "\nFreedroidRPG 'Croppy' Tool, now saving output surface...\n" );
 
   // save_output_surface ( ) ;
   
@@ -634,26 +619,30 @@ main (int argc, char *const argv[])
 
   write_offset_file ( ) ;
 
-  // SDL_FillRect( Screen , NULL , 0x0FFFF );
-  background_surface = IMG_Load ( background_filename ) ;
-  if ( background_surface == NULL )
+  if ( !no_graphics_output )
     {
-      DebugPrintf ( 0 , "\n\nERROR:  Unable to load background file... " );
-      DebugPrintf ( 0 , "\nFile name was : %s . " , background_filename );
-      Terminate ( ERR );
+      // SDL_FillRect( Screen , NULL , 0x0FFFF );
+      background_surface = IMG_Load ( background_filename ) ;
+      if ( background_surface == NULL )
+	{
+	  DebugPrintf ( 0 , "\n\nERROR:  Unable to load background file... " );
+	  DebugPrintf ( 0 , "\nFile name was : %s . " , background_filename );
+	  Terminate ( ERR );
+	}
+      SDL_BlitSurface ( background_surface , NULL , Screen , NULL ) ;
+      fill_rect.x = 0 ;  fill_rect.y = 0 ; fill_rect.w = output_surface->w ; fill_rect.h = output_surface->h ;
+      SDL_FillRect( Screen , &fill_rect , 0x00 );
+      SDL_BlitSurface ( output_surface , NULL , Screen , NULL );
+      SDL_Flip ( Screen );
+
+      MyWait( 1.1 );
     }
-  SDL_BlitSurface ( background_surface , NULL , Screen , NULL ) ;
-  fill_rect.x = 0 ;  fill_rect.y = 0 ; fill_rect.w = output_surface->w ; fill_rect.h = output_surface->h ;
-  SDL_FillRect( Screen , &fill_rect , 0x00 );
-  SDL_BlitSurface ( output_surface , NULL , Screen , NULL );
 
-  SDL_Flip ( Screen );
+  DebugPrintf ( MAIN_DEBUG , "\nCroppy finished.  Exiting...\n\n" );
 
-  MyWait( 1.1 );
+  // Terminate ( OK );
 
-  printf ( "\nCroppy finished.  Exiting...\n\n" );
-
-  Terminate ( OK );
+  DebugPrintf ( 0 , "\n" );
 
   return ( 0 );
 
