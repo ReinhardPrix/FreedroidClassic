@@ -1118,7 +1118,7 @@ InitFreedroid (void)
   SkipAFewFrames = 0;
   Me.TextVisibleTime = 0;
   // Me.TextToBeDisplayed = "Hello, I'm 001.";
-  Me.TextToBeDisplayed = "Linux Kernel loaded.  001 transfer module loaded.  Systems up and running.";
+  Me.TextToBeDisplayed = "Linux Kernel booted.  001 transfer-tech modules loaded.  System up and running.";
 
   GameConfig.WantedTextVisibleTime = 3;
   GameConfig.Draw_Framerate=FALSE;

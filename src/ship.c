@@ -377,11 +377,14 @@ PaintConsoleMenu (void)
 
   ClearGraphMem ();
 
+  SDL_SetClipRect ( ne_screen , NULL );
+  DisplayImage ( find_file( NE_CONSOLE_BG_PIC_FILE , GRAPHICS_DIR, FALSE) );
+
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
 
   /* Userfenster faerben */
   // SetUserfenster (KON_BG_COLOR, Outline320x200);
-  SetUserfenster ( 208 );
+  // SetUserfenster ( 208 );
 
   /* Konsolen-Menue Farbe setzen */
   // SetTextColor (KON_BG_COLOR, KON_TEXT_COLOR);
@@ -448,6 +451,11 @@ GreatDruidShow (void)
 
 	  ClearUserFenster( );
 	  // SetTextColor (208, BANNER_VIOLETT );	// RED // YELLOW
+
+	  SDL_SetClipRect ( ne_screen , NULL );
+	  DisplayImage ( find_file( NE_CONSOLE_BG_PIC_FILE , GRAPHICS_DIR, FALSE) );
+
+
 	  strcpy (InfoText, "Unit type ");
 	  strcat (InfoText, Druidmap[Infodroid].druidname);
 	  strcat (InfoText, " - ");
@@ -510,9 +518,13 @@ GreatDruidShow (void)
 
       //      ClearGraphMem( Outline320x200 );
       //      DisplayBanner( Outline320x200 );
-      ClearUserFenster( );
+      // ClearUserFenster( );
       SetTextColor (208, BANNER_VIOLETT );	// RED // YELLOW
       // ClearUserFenster ();
+
+      SDL_SetClipRect ( ne_screen , NULL );
+      DisplayImage ( find_file( NE_CONSOLE_BG_PIC_FILE , GRAPHICS_DIR, FALSE) );
+
 
       sprintf( InfoText , "Unit type %s - %s" , Druidmap[Infodroid].druidname , Classname[Druidmap[Infodroid].class] );
 
@@ -567,7 +579,10 @@ GreatDruidShow (void)
       // ClearGraphMem( Outline320x200 );
       // DisplayBanner( Outline320x200 );
       ClearUserFenster( );
-      SetTextColor (208, BANNER_VIOLETT );	// BLACK and VIOLETT
+      // SetTextColor (208, BANNER_VIOLETT );	// BLACK and VIOLETT
+
+      SDL_SetClipRect ( ne_screen , NULL );
+      DisplayImage ( find_file( NE_CONSOLE_BG_PIC_FILE , GRAPHICS_DIR, FALSE) );
 
       sprintf( InfoText , "Unit type %s - %s" , Druidmap[Infodroid].druidname , Classname[Druidmap[Infodroid].class] );
 
@@ -614,9 +629,13 @@ GreatDruidShow (void)
 
       //      ClearGraphMem( Outline320x200 );
       //      DisplayBanner( Outline320x200 );
-      ClearUserFenster( );
+
+      // ClearUserFenster( );
       SetTextColor (208, BANNER_VIOLETT );	// RED // YELLOW
       // ClearUserFenster ();
+
+      SDL_SetClipRect ( ne_screen , NULL );
+      DisplayImage ( find_file( NE_CONSOLE_BG_PIC_FILE , GRAPHICS_DIR, FALSE) );
 
       sprintf( InfoText , "Unit type %s - %s" , Druidmap[Infodroid].druidname , Classname[Druidmap[Infodroid].class] );
 
