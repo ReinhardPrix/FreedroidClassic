@@ -256,22 +256,6 @@ PaintConsoleMenu (int menu_pos)
 }; // void PaintConsoleMenu ( int MenuPos )
 
 /* ----------------------------------------------------------------------
- * This function is intended to show some buttons (with an arrow pointing
- * left and with an arrow pointing right and perhaps also with arrows
- * pointing up or down) so that one can easily navigate through the droid
- * show in the console most conveniently never needing anything but the
- * mouse.
- * ---------------------------------------------------------------------- */
-void
-ShowLeftRightDroidshowButtons ( void )
-{
-  ShowGenericButtonFromList ( UP_BUTTON );
-  ShowGenericButtonFromList ( DOWN_BUTTON );
-  ShowGenericButtonFromList ( LEFT_BUTTON );
-  ShowGenericButtonFromList ( RIGHT_BUTTON );
-}; // void ShowLeftRightDroidshowButtons ( void )
-
-/* ----------------------------------------------------------------------
  * This function does the robot show when the user has selected robot
  * show from the console menu.
  * ---------------------------------------------------------------------- */
@@ -346,7 +330,7 @@ GreatDruidShow (void)
 	      MoveMenuPositionSound();
 	      Displacement -= FontHeight ( GetCurrentFont () );
 	    }
-	  else if ( CursorIsOnButton( ITEM_BROWSER_EXIT_BUTTON , GetMousePos_x( ) + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y( ) + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed )
+	  else if ( CursorIsOnButton( DRUID_SHOW_EXIT_BUTTON , GetMousePos_x( ) + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y( ) + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed )
 	    {
 	      finished = TRUE;
 	      while (SpacePressed() ||EscapePressed());
@@ -1089,7 +1073,6 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , int backgro
 
   if ( ShowArrows ) 
     {
-      // ShowLeftRightDroidshowButtons (  );
       ShowGenericButtonFromList ( UP_BUTTON );
       ShowGenericButtonFromList ( DOWN_BUTTON );
     }

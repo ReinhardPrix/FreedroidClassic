@@ -96,12 +96,12 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
 
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 280 ,  44 ,  37 ,  37 } } ,
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 536 ,  44 ,  37 ,  37 } } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 200 , 310 ,  54 ,  54 } } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 201 , 340 ,  47 ,  47 } } ,
 
-    { NULL , "mouse_buttons/LeftShopButton.png"               , {  10 , 420 ,  40 ,  40 } } ,
-    { NULL , "mouse_buttons/RightShopButton.png"              , { 600 , 420 ,  40 ,  40 } } ,
-    { NULL , "mouse_buttons/LeftShopButton.png"               , {  10 ,  20 ,  40 ,  40 } } ,
-    { NULL , "mouse_buttons/RightShopButton.png"              , { 600 ,  20 ,  40 ,  40 } } ,
+    { NULL , "mouse_buttons/LeftShopButton.png"               , {  22 , 447 ,  26 ,  26 } } ,
+    { NULL , "mouse_buttons/RightShopButton.png"              , { 576 , 447 ,  26 ,  26 } } ,
+    { NULL , "mouse_buttons/LeftShopButton.png"               , {   5 ,  16 ,  26 ,  26 } } ,
+    { NULL , "mouse_buttons/RightShopButton.png"              , { 580 ,  13 ,  26 ,  26 } } ,
     { NULL , "mouse_buttons/LeftShopButton.png"               , {  10 ,  20 ,  40 ,  40 } } ,
     { NULL , "mouse_buttons/RightShopButton.png"              , { 600 ,  20 ,  40 ,  40 } } ,
 
@@ -169,6 +169,11 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
 
     { NULL , "mouse_buttons/arrow_up_for_scroll_text.png"     , { 575 , 10 , 73 , 98 } } ,
     { NULL , "mouse_buttons/arrow_down_for_scroll_text.png"   , { 575 , 480-10-98 , 73 , 98 } } ,
+
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 607 , 99 , 26 , 26 } } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 607 , 347 , 26 , 26 } } ,
+
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 202 , 312 , 47 , 47 } } ,
 
   }; // AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] 
 

@@ -567,6 +567,14 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
   while (!finished)
     {
 
+      //--------------------
+      // We limit the 'displacement', i.e. how far up and down one can
+      // scroll the text of the item description up and down a bit, so
+      // it cannot be scrolled away ad infinitum...
+      //
+      if ( Displacement < -500 ) Displacement = -500 ;
+      if ( Displacement > 50 ) Displacement = 50 ;
+
       SDL_Delay (1);
       ShopOrder -> shop_command = DO_NOTHING ;
 
@@ -575,9 +583,9 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
       // interface...
       //
       if ( ItemIndex >= 0 )
-	ShowItemInfo ( ShowPointerList [ ItemIndex ] , Displacement , TRUE , ITEM_BROWSER_SHOP_BACKGROUND_CODE , FALSE );
+	ShowItemInfo ( ShowPointerList [ ItemIndex ] , Displacement , FALSE , ITEM_BROWSER_SHOP_BACKGROUND_CODE , FALSE );
       else if ( TuxItemIndex >= 0 )
-	ShowItemInfo ( TuxItemsList [ TuxItemIndex ] , Displacement , TRUE , ITEM_BROWSER_SHOP_BACKGROUND_CODE , FALSE );
+	ShowItemInfo ( TuxItemsList [ TuxItemIndex ] , Displacement , FALSE , ITEM_BROWSER_SHOP_BACKGROUND_CODE , FALSE );
       else blit_special_background ( ITEM_BROWSER_SHOP_BACKGROUND_CODE );
 
       for ( i = 0 ; i < RowLength ; i++ )
@@ -607,11 +615,11 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	  HighlightRectangle ( Screen , HighlightRect );
 	}
 
-      ShowGenericButtonFromList ( LEFT_SHOP_BUTTON );
-      ShowGenericButtonFromList ( RIGHT_SHOP_BUTTON );
+      // ShowGenericButtonFromList ( LEFT_SHOP_BUTTON );
+      // ShowGenericButtonFromList ( RIGHT_SHOP_BUTTON );
 
-      ShowGenericButtonFromList ( LEFT_TUX_SHOP_BUTTON );
-      ShowGenericButtonFromList ( RIGHT_TUX_SHOP_BUTTON );
+      // ShowGenericButtonFromList ( LEFT_TUX_SHOP_BUTTON );
+      // ShowGenericButtonFromList ( RIGHT_TUX_SHOP_BUTTON );
 
       if ( ItemIndex >= 0 )
 	{
@@ -660,12 +668,12 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 
       if (SpacePressed() || EscapePressed() || axis_is_active )
 	{
-	  if ( CursorIsOnButton( UP_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed )
+	  if ( CursorIsOnButton( DESCRIPTION_WINDOW_UP_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed )
 	    {
 	      MoveMenuPositionSound();
 	      Displacement += FontHeight ( GetCurrentFont () );
 	    }
-	  else if ( CursorIsOnButton( DOWN_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed )
+	  else if ( CursorIsOnButton( DESCRIPTION_WINDOW_DOWN_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed )
 	    {
 	      MoveMenuPositionSound();
 	      Displacement -= FontHeight ( GetCurrentFont () );
@@ -680,7 +688,11 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	      if ( 0 < RowStart ) 
 		{
 		  RowStart --;
-		  if ( ( ItemIndex != (-1) ) && ( ItemIndex >= RowStart + RowLength ) ) ItemIndex --;
+		  if ( ( ItemIndex != (-1) ) && ( ItemIndex >= RowStart + RowLength ) ) 
+		    {
+		      Displacement = 0 ;
+		      ItemIndex --;
+		    }
 		}
 	      MoveMenuPositionSound();
 	      while (SpacePressed() ||EscapePressed());
@@ -690,7 +702,11 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	      if ( RowStart + RowLength < NumberOfItems ) 
 		{
 		  RowStart ++;
-		  if ( ( ItemIndex != (-1) ) && ( ItemIndex < RowStart ) ) ItemIndex++;
+		  if ( ( ItemIndex != (-1) ) && ( ItemIndex < RowStart ) ) 
+		    {
+		      Displacement = 0 ;
+		      ItemIndex++;
+		    }
 		}
 	      MoveMenuPositionSound();
 	      while (SpacePressed() ||EscapePressed());
@@ -700,7 +716,11 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	      if ( 0 < TuxRowStart ) 
 		{
 		  TuxRowStart --;
-		  if ( ( TuxItemIndex != (-1) ) && ( TuxItemIndex >= TuxRowStart + TuxRowLength ) ) TuxItemIndex --;
+		  if ( ( TuxItemIndex != (-1) ) && ( TuxItemIndex >= TuxRowStart + TuxRowLength ) ) 
+		    {
+		      Displacement = 0 ;
+		      TuxItemIndex --;
+		    }
 		}
 	      MoveMenuPositionSound();
 	      while (SpacePressed() ||EscapePressed());
@@ -710,7 +730,11 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	      if ( TuxRowStart + TuxRowLength < NumberOfItemsInTuxRow ) 
 		{
 		  TuxRowStart ++;
-		  if ( ( TuxItemIndex != (-1) ) && ( TuxItemIndex < TuxRowStart ) ) TuxItemIndex ++ ;
+		  if ( ( TuxItemIndex != (-1) ) && ( TuxItemIndex < TuxRowStart ) ) 
+		    {
+		      TuxItemIndex ++ ;
+		      Displacement = 0 ;
+		    }
 		}
 	      MoveMenuPositionSound();
 	      while (SpacePressed() ||EscapePressed());
@@ -721,6 +745,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 		{
 		  ItemIndex = RowStart + ClickTarget ;
 		  TuxItemIndex = (-1) ;
+		  Displacement = 0 ;
 		}
 	    }
 	  else if ( ( ( ClickTarget = ClickWasOntoItemRowPosition ( GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y , TRUE ) ) >= 0 ) && axis_is_active && !WasPressed )
@@ -729,6 +754,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 		{
 		  TuxItemIndex = TuxRowStart + ClickTarget ;
 		  ItemIndex = (-1) ;
+		  Displacement = 0 ;
 		}
 	    }
 	  else if ( CursorIsOnButton( BUY_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed )

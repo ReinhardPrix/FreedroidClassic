@@ -559,6 +559,11 @@ enum
     SCROLL_TEXT_UP_BUTTON,
     SCROLL_TEXT_DOWN_BUTTON,
 
+    DESCRIPTION_WINDOW_UP_BUTTON , 
+    DESCRIPTION_WINDOW_DOWN_BUTTON , 
+
+    DRUID_SHOW_EXIT_BUTTON , 
+
     //--------------------
     // Please leave this here as the last entry, since it conveniently and
     // automatically counts the number of buttons defined.  Other buttons
