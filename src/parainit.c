@@ -3,49 +3,34 @@
  * Desc: the paraplus initialisation routines
  *
  *----------------------------------------------------------------------*/
+
 /* 
  *
  *   Copyright (c) 1994, 2002 Johannes Prix
  *   Copyright (c) 1994, 2002 Reinhard Prix
  *
  *
- *  This file is part of FreeDroid
+ *  This file is part of Freedroid
  *
- *  FreeDroid is free software; you can redistribute it and/or modify
+ *  Freedroid is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  FreeDroid is distributed in the hope that it will be useful,
+ *  Freedroid is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with FreeDroid; see the file COPYING. If not, write to the 
+ *  along with Freedroid; see the file COPYING. If not, write to the 
  *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
  *  MA  02111-1307  USA
  *
  */
-
-#include <config.h>
-
 #define _parainit_c
 
-#define TITLE_EIN
-
-#undef MODSCHASEIN
-#undef NOJUNKWHILEINIT
-
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <sys/time.h>
-#include <signal.h>
-#include <unistd.h>
-#include <signal.h>
-#include <sys/stat.h>
-#include <getopt.h>
+#include "system.h"
 
 #include "defs.h"
 #include "struct.h"
@@ -55,6 +40,13 @@
 
 // #include "paravars.h"
 #include "ship.h"
+
+
+#define TITLE_EIN
+
+#undef MODSCHASEIN
+#undef NOJUNKWHILEINIT
+
 
 #define FENSTEROFF 		FALSE
 #define USEINTSOFF 		FALSE
@@ -66,7 +58,7 @@
 
 
 char EndTitleText1[] =
-"Congratulations!!\n\nIt seems that you have made it!  The Ship is clear.\n\n At the moment, this is the end of FreeDroid.  However we are looking forward to writing a new and different story line, introduce more new concepts, features and sounds.\n\n If you enjoyed the game and would like to contribute, contact one of the developers. \n\n Also if you would like to donate something to help keep alive the FreeDroid development, please also contact the developers.\n\n  Since we have not yet written something new, we can not launch the second part of the game now.\n\n What we can do is inform you about the concept of the new story-line and the features we plan to introduce sooner or later:\n\n After this preview of the coming storyline is over, the game will be restarted.\n You however have made it, but if you want, you can restart from the beginning nevertheless.\n\n  Press Space Bar to\nrestart Freedroid from the beginning. \n \n \n ";
+"Congratulations!!\n\nIt seems that you have made it!  The Ship is clear.\n\n At the moment, this is the end of Freedroid.  However we are looking forward to writing a new and different story line, introduce more new concepts, features and sounds.\n\n If you enjoyed the game and would like to contribute, contact one of the developers. \n\n Also if you would like to donate something to help keep alive the Freedroid development, please also contact the developers.\n\n  Since we have not yet written something new, we can not launch the second part of the game now.\n\n What we can do is inform you about the concept of the new story-line and the features we plan to introduce sooner or later:\n\n After this preview of the coming storyline is over, the game will be restarted.\n You however have made it, but if you want, you can restart from the beginning nevertheless.\n\n  Press Space Bar to\nrestart Freedroid from the beginning. \n \n \n ";
 
 char EndTitleText2[] =
 "In the year 2400 in a far distant galaxy strange civilisation has been enslaved by an all-mighty Software Corporation named 'MegaSoft' and called MS for short.  This came to be as follows:  At first all the druids of that civilisation were running a MS Operating System which turned out to be a trojan horse and led to the revolution and the enslavement of men.  By virtue of the tremendous wealth the Corporation had accumulated it was able to break all resistances and ban all other operating systems forever, using the druids with their MS Operating System to enforce the oppression with military strength.\n\n  However not all is yet lost:\nA small group of rebels has managed to create a new 'influence device' running the latest Linux 28.32.199 kernel.  The rebels will soon be spotted and can not hope to withstand an open attack.  The Influence device must be beamed aboard an unmanned transport ship that could evacuate the rebel group.  In the first episode, the rebel influence device is beamed aboard the robo freighter and must eliminate all of the robot crew running the MS operating system.  After this is done, the rebels can beam aboard and make their escape to some distant planet from where they can prepare their next steps to free the world from oppression.\n\n Press Space Bar to relauch the original Freedroid game \n \n \n ";
@@ -132,8 +124,8 @@ timeout (int sig)
 }				/* timeout */
 
 char copyright[] = "\nCopyright (C) 2002 Johannes Prix, Reinhard Prix\n\
-FreeDroid comes with NO WARRANTY to the extent permitted by law.\n\
-You may redistribute copies of FreeDroid\n\
+Freedroid comes with NO WARRANTY to the extent permitted by law.\n\
+You may redistribute copies of Freedroid\n\
 under the terms of the GNU General Public License.\n\
 For more information about these matters, see the file named COPYING.\n";
 

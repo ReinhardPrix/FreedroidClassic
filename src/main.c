@@ -3,39 +3,46 @@
  * Desc: the main program
  *
  *----------------------------------------------------------------------*/
+
 /* 
  *
  *   Copyright (c) 1994, 2002 Johannes Prix
  *   Copyright (c) 1994, 2002 Reinhard Prix
  *
  *
- *  This file is part of FreeDroid
+ *  This file is part of Freedroid
  *
- *  FreeDroid is free software; you can redistribute it and/or modify
+ *  Freedroid is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
- *  FreeDroid is distributed in the hope that it will be useful,
+ *  Freedroid is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with FreeDroid; see the file COPYING. If not, write to the 
+ *  along with Freedroid; see the file COPYING. If not, write to the 
  *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
  *  MA  02111-1307  USA
  *
  */
-#include <config.h>
-
 #define _paraplus_c
 
-/* *********************************************************************** */
-/* ************  P R AE P R O Z E S S O R D I R E K T I V E N  ************ */
-/* *********************************************************************** */
+#include "system.h"
 
-// Die folgenden Schalter schalten Debugmeldungen in gewissen speziellen Funktionen aus oder ein
+#include "defs.h"
+#include "struct.h"
+#include "global.h"
+#include "proto.h"
+#include "paratext.h"
+#include "paravars.h"
+#include "ship.h"
+
+
+// Die folgenden Schalter schalten Debugmeldungen in gewissen speziellen */
+// Funktionen aus oder ein
 #undef DEBUG_MYRANDOM
 
 /* Schalter fuer die bedingte Kompilierung */
@@ -54,23 +61,6 @@
 #undef MODSCHASEIN
 #undef NOJUNKWHILEINIT
 
-
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <sys/time.h>
-#include <signal.h>
-#include <unistd.h>
-#include <sys/stat.h>
-#include <sys/time.h>
-
-#include "defs.h"
-#include "struct.h"
-#include "global.h"
-#include "proto.h"
-#include "paratext.h"
-#include "paravars.h"
-#include "ship.h"
 
 #define MOVEENEMYSOFF 		FALSE
 #define ANIMATEENEMYSOFF 	FALSE

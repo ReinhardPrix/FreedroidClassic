@@ -4,9 +4,6 @@
 /*   BFONT.h v. 1.0.3 - Billi Font Library by Diego Billi   */
 /*                                                          */
 /************************************************************/
-
-#include "SDL.h"
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -101,7 +98,6 @@ void LeftPrintStringFont      (SDL_Surface *Surface, BFont_Info *Font, int y,  c
 
 void JustifiedPrintString     (SDL_Surface *Surface, int y, char *fmt, ...);
 void JustifiedPrintStringFont (SDL_Surface *Surface, BFont_Info *Font,  int y, char *fmt, ...);
-
 
 /* Returns a new font colored with the color (r,g,b) */
 BFont_Info * SetFontColor(BFont_Info *Font,Uint8 r, Uint8 g, Uint8 b);

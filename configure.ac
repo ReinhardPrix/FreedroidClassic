@@ -39,7 +39,7 @@ AC_FUNC_MALLOC
 AC_TYPE_SIGNAL
 AC_CHECK_FUNCS([alarm getcwd gettimeofday memset sqrt strstr])
 
-CPPFLAGS="$CPPFLAGS -I/usr/include/SDL"
+# CPPFLAGS="$CPPFLAGS -I/usr/include/SDL"
 CFLAGS="$CFLAGS -Wall" 
 
 AC_CONFIG_FILES([Makefile src/Makefile])
