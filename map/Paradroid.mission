@@ -68,9 +68,6 @@ Physics ('game.dat') file to use for this mission: freedroid.ruleset
 Ship file to use for this mission: Paradroid.maps
 Lift file to use for this mission: Paradroid.elevators
 Crew file to use for this mission: Paradroid.droids
-Lifts On file to use for this mission: ship_on.png
-Lifts Off file to use for this mission: ship_off.png
-After completing this mission, load mission : CleanPrivateGoodsStorageCellar.mission
 
 Influs mission start comment="Ok. I'm on board.  Let's get to work."
 
