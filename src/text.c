@@ -1577,7 +1577,7 @@ Null as title picture name received.",
 	    speed = -maxspeed;
 	}
 
-      usleep (30000);
+      SDL_Delay (30);
 
       our_SDL_blit_surface_wrapper ( Background , NULL , Screen , NULL );
 

@@ -253,7 +253,7 @@ ERROR LOADING SELECTION KNOB IMAGE FILE!",
       
 
       left_mouse_pressed_previous_frame = axis_is_active ;
-      usleep ( 20 );
+      SDL_Delay (1);
     }
 
 

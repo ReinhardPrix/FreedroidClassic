@@ -81,7 +81,7 @@ DoAllMovementAndAnimations ( void )
  * game loop.
  * ----------------------------------------------------------------- */
 int
-main (int argc, char *const argv[])
+main (int argc, char * argv[])
 {
   int i;
   int PlayerNum;
@@ -168,7 +168,7 @@ main (int argc, char *const argv[])
 
 	  CheckIfMissionIsComplete (); 
 
-	  if ( ! GameConfig.hog_CPU ) usleep ( 2 ); // we allow the CPU to also do something else..
+	  if ( ! GameConfig.hog_CPU ) SDL_Delay (1); // we allow the CPU to also do something else..
 
 	  ComputeFPSForThisFrame();
 

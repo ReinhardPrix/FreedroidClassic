@@ -464,7 +464,7 @@ ItemDropFromLevelEditor( void )
 
       our_SDL_flip_wrapper( Screen );
 
-      while ( ! SpacePressed() ) usleep ( 2 );
+      while ( ! SpacePressed() ) SDL_Delay(1);
 
       if ( CursorIsOnButton ( LEVEL_EDITOR_NEXT_ITEM_GROUP_BUTTON ,
 			      GetMousePos_x()+16 , GetMousePos_y()+16 ) )
@@ -3286,7 +3286,7 @@ LevelEditor(void)
 	  // We can do with less, cause there are no objects supposed to be 
 	  // moving fluently anyway.  Therefore we introduce some rest for the CPU.
 	  //
-	  usleep ( 2 );
+	  SDL_Delay (1);
 
 	  BlockX = rintf ( Me [ 0 ] . pos . x - 0.5 );
 	  BlockY = rintf ( Me [ 0 ] . pos . y - 0.5 );

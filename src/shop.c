@@ -595,7 +595,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
   while (!finished)
     {
 
-      usleep ( 35 );
+      SDL_Delay (1);
       ShopOrder -> shop_command = DO_NOTHING ;
 
       //--------------------

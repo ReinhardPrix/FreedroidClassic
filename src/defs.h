@@ -50,8 +50,12 @@
 #define ERR 	-1
 #define OK		0
 
+#ifndef max
 #define max(x,y) ((x) < (y) ? (y) : (x) ) 
+#endif
+#ifndef min
 #define min(x,y) ((x) > (y) ? (y) : (x) ) 
+#endif
 
 #define USE_SDL_FRAMERATE
 
@@ -235,11 +239,11 @@ enum
 
 //--------------------
 // Constants for Paths and names of Data-files
-// the root "DATADIR" should be defined in the Makefile as $(pkgdatadir)
+// the root "FD_DATADIR" should be defined in the Makefile as $(pkgdatadir)
 // if not, we set it here:
 //
-#ifndef DATADIR
-#define DATADIR ".."   // our local fallback
+#ifndef FD_DATADIR
+#define FD_DATADIR ".."   // our local fallback
 #endif
 
 #define GRAPHICS_DIR		"graphics/"

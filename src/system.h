@@ -65,12 +65,6 @@
 
 #include <signal.h>
 
-#ifdef HAVE_GETOPT_H
-#include <getopt.h>
-#else
-#include "mac-osx/getopt.h"
-#endif
-
 #ifdef HAVE_SYS_SOUNDCARD_H
 #include <sys/soundcard.h>
 #endif
@@ -87,7 +81,7 @@
 #include <ctype.h>
 
 #ifdef HAVE_DIRENT_H
-#include <dirent.h>
+#include "dirent.h"
 #endif
 
 #include "SDL.h"
@@ -101,6 +95,8 @@
 #include "SDL_net.h"
 #endif
 
-#ifdef HAVE_GL_GL_H
+#ifdef HAVE_LIBGL
 #include "GL/gl.h"
 #endif
+
+

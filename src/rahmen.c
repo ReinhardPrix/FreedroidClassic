@@ -499,9 +499,9 @@ blit_energy_o_meter( void )
 {
   SDL_Surface* tmp;
   char *fpath;
-  static iso_image speed_meter_iso_image = { NULL , 0 , 0 , NULL , 0 , 0 , 0 } ;
-  static iso_image SpeedMeterEnergyArrowImage = { NULL , 0 , 0 , NULL , 0 , 0 , 0 } ;
-  static iso_image SpeedMeterManaArrowImage = { NULL , 0 , 0 , NULL , 0 , 0 , 0 } ;
+  static iso_image speed_meter_iso_image;
+  static iso_image SpeedMeterEnergyArrowImage;
+  static iso_image SpeedMeterManaArrowImage;
   static SDL_Surface *SpeedOMeterWorkingCopy = NULL;
   static SDL_Rect SpeedMeterRect;
   static int Previous_Energy = - 1234; // a completely unrealistic value;
@@ -511,6 +511,10 @@ blit_energy_o_meter( void )
   point PivotPosition = { 42 , 49 };
   SDL_Surface *RotatedArrow; // this will be blitted into the speed-o-meter working copy
   SDL_Rect ArrowRect;
+
+  memset (&speed_meter_iso_image, 0, sizeof (iso_image));
+  memset (&SpeedMeterEnergyArrowImage, 0, sizeof(iso_image));
+  memset (&SpeedMeterManaArrowImage, 0, sizeof(iso_image));
 
   //--------------------
   // At first we read in the raw images for the speed-o-meter and 

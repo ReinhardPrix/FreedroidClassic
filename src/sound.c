@@ -1057,24 +1057,11 @@ LoadAndFadeInBackgroundMusic ( void )
   Loaded_MOD_Files [ 0 ] = Mix_LoadMUS( fpath );
   if ( Loaded_MOD_Files[ 0 ] == NULL )
     {
-      fprintf ( stderr , "\n\nThe original name given was: %s." , NewMusicTargetFileName );
-      fprintf ( stderr , "\nfpath: '%s' Mix_GetError(): %s.\n" , fpath , Mix_GetError() );
-      GiveStandardErrorMessage ( "LoadAndFadeInBackgroundMusic(...)" , "\
-The SDL MIXER WAS UNABLE TO LOAD A CERTAIN MOD FILE INTO MEMORY.\n\
-\n\
-Please check that the file is present within your Freedroid installation.\n\
-\n\
-If you for some reason cannot get sound output ready, \n\
-you can choose to play without sound.\n\
-\n\
-If you want this, use the appropriate command line option and Freedroid will \n\
-not complain any more.",
-				 NO_NEED_TO_INFORM, IS_FATAL );
-    } // if ( !Loaded_MOD...
-  else
-    {
-      DebugPrintf ( 1 , "\nSuccessfully loaded file %s.", fpath );
+      DebugPrintf (0, "The music file %s could not be loaded!\n" , NewMusicTargetFileName );
+      return;
     }
+  else
+    DebugPrintf ( 1 , "\nSuccessfully loaded file %s.", fpath );
 
   // MOD_Music_Channel = Mix_PlayMusic ( Loaded_MOD_Files[ Tune ] , -1 );
   // MOD_Music_Channel = Mix_PlayMusic ( Loaded_MOD_Files[ 0 ] , -1 );
@@ -1083,7 +1070,6 @@ not complain any more.",
   Mix_VolumeMusic ( (int) rintf( GameConfig.Current_BG_Music_Volume * MIX_MAX_VOLUME ) );
 
 #endif // HAVE_LIBSDL_MIXER
-
 }; // void LoadAndFadeInBackgroundMusic ( void )
 
 /* ----------------------------------------------------------------------

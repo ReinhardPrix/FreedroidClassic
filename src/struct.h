@@ -27,6 +27,7 @@
 #define _struct_h
 
 #include "system.h"
+#include "defs.h"
 
 #ifndef _BYTE
 typedef unsigned char byte;
@@ -480,9 +481,9 @@ druidspec, *Druidspec;
 
 typedef struct
 {
-  int8_t type;			/* what kind of druid is this ? */
-  int8_t character_class;          // is this unit a FIGHTER=WAR_BOT, or MAGE=MIND_BOT or ROGUE=SNIPER_BOT character
-  int8_t status;			/* attacking, defense, dead, ... */
+  Sint8 type;			/* what kind of druid is this ? */
+  Sint8 character_class;          // is this unit a FIGHTER=WAR_BOT, or MAGE=MIND_BOT or ROGUE=SNIPER_BOT character
+  Sint8 status;			/* attacking, defense, dead, ... */
   finepoint speed;		/* the current speed of the druid */
   gps pos;		        /* current position in the whole ship */
   gps teleport_anchor;          // where from have you last teleported home
@@ -491,8 +492,8 @@ typedef struct
   double health;		/* the max. possible energy in the moment */
   double energy;		/* current energy level */
   double mana;                  // current mana level 
-  int16_t LastMouse_X;          // mostly for other players:  Where was the last mouseclick...
-  int16_t LastMouse_Y;          // mostly for other players:  Where was the last mouseclick...
+  Sint16 LastMouse_X;          // mostly for other players:  Where was the last mouseclick...
+  Sint16 LastMouse_Y;          // mostly for other players:  Where was the last mouseclick...
 
   double firewait;		// time remaining, until the weapon is ready to fire again...
   double phase;			// the current phase of animation 
@@ -577,9 +578,9 @@ influence_t, *Influence_t;
 
 typedef struct
 {
-  int8_t type;			/* what kind of druid is this ? */
-  int8_t character_class;          // is this unit a FIGHTER=WAR_BOT, or MAGE=MIND_BOT or ROGUE=SNIPER_BOT character
-  int8_t status;			/* attacking, defense, dead, ... */
+  Sint8 type;			/* what kind of druid is this ? */
+  Sint8 character_class;          // is this unit a FIGHTER=WAR_BOT, or MAGE=MIND_BOT or ROGUE=SNIPER_BOT character
+  Sint8 status;			/* attacking, defense, dead, ... */
   finepoint speed;		/* the current speed of the druid */
   gps pos;		        /* current position in the whole ship */
   gps teleport_anchor;          // where from have you last teleported home?

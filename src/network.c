@@ -104,15 +104,15 @@ item_engram ItemEngram [ MAX_ITEMS_PER_LEVEL ] ;
 //
 typedef struct
 {
-  int8_t status;			/* attacking, defense, dead, ... */
-  int8_t phase;                 // the current phase of motion
+  Sint8 status;			/* attacking, defense, dead, ... */
+  Sint8 phase;                 // the current phase of motion
   finepoint speed;		/* the current speed of the druid */
   gps pos;		        /* current position in the whole ship */
   double health;		/* the max. possible energy in the moment */
   double energy;		/* current energy level */
   double mana;                  // current mana level 
-  int16_t LastMouse_X;          // mostly for other players:  Where was the last mouseclick...
-  int16_t LastMouse_Y;          // mostly for other players:  Where was the last mouseclick...
+  Sint16 LastMouse_X;          // mostly for other players:  Where was the last mouseclick...
+  Sint16 LastMouse_Y;          // mostly for other players:  Where was the last mouseclick...
 }
 player_engram, *Player_Engram;
 
@@ -168,17 +168,17 @@ enemy_swap_signal EnemySwapSignal;
 //
 typedef struct
 {
-  int16_t EnemyIndex; // this is an information not included in the original data!!!
+  Sint16 EnemyIndex; // this is an information not included in the original data!!!
                       // but it's required, so that the client knows what to do with
                       // this enemy.
 
-  int8_t type;			// the number of the droid specifications in Druidmap 
-  int8_t Status;		// current status like OUT=TERMINATED or not OUT
+  Sint8 type;			// the number of the droid specifications in Druidmap 
+  Sint8 Status;		// current status like OUT=TERMINATED or not OUT
   gps pos;		        // coordinates of the current position in the level
   finepoint speed;		// current speed  
-  int16_t energy;		// current energy of this droid
-  int8_t phase;		// current phase of rotation of this droid
-  int8_t friendly;
+  Sint16 energy;		// current energy of this droid
+  Sint8 phase;		// current phase of rotation of this droid
+  Sint8 friendly;
 
 }
 enemy_engram, *Enemy_Engram;
@@ -187,10 +187,10 @@ enemy_engram EnemyEngram [ MAX_ENEMYS_ON_SHIP ] ;
 
 typedef struct
 {
-  int16_t BlastIndex;
+  Sint16 BlastIndex;
 
   gps pos;
-  int16_t type;
+  Sint16 type;
   double phase;
   // int MessageWasDone; // we won't need to send this over the line...
 }
@@ -205,11 +205,11 @@ blast_engram BlastEngram [ MAXBLASTS ] ;
 //
 typedef struct
 {
-  int16_t BulletIndex; // this is an information not included in the original data!!!
+  Sint16 BulletIndex; // this is an information not included in the original data!!!
                       // but it's required, so that the client knows what to do with
                       // this enemy.
 
-  int8_t type;			// the number of the droid specifications in Druidmap 
+  Sint8 type;			// the number of the droid specifications in Druidmap 
   gps pos;		        // coordinates of the current position in the level
   finepoint speed;		// current speed  
   byte phase;

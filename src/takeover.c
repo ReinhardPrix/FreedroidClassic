@@ -314,18 +314,10 @@ Takeover (int enemynum)
 	      AllEnemys[enemynum].energy = Druidmap [ AllEnemys[enemynum].type ] . maxenergy ;
 	    }
 	}
-
-      //        /* Wait a turn */ */
-      //        waiter = WAIT_AFTER_GAME; */
-      //       while (waiter != 0) */
-      //  	{ */
-      //  	  usleep (30000); */
-      // 	  waiter--; */
-
-  	  ShowPlayground ();
-  	  to_show_banner (message, NULL);
-	  our_SDL_flip_wrapper (Screen);
-	  // 	} /* WHILE waiter */ */
+      
+      ShowPlayground ();
+      to_show_banner (message, NULL);
+      our_SDL_flip_wrapper (Screen);
 
     }	/* while !FinishTakeover */
 

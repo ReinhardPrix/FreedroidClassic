@@ -150,7 +150,7 @@ EnterConsole (void)
     {
       PaintConsoleMenu (menu_pos);
       our_SDL_flip_wrapper (Screen);
-      usleep(2);
+      SDL_Delay (1);
 
       if ( DownPressed() || MouseWheelDownPressed() ) 
 	{
@@ -328,7 +328,7 @@ GreatDruidShow (void)
 
   while (!finished)
     {
-      usleep ( 2 );
+      SDL_Delay (1);
 
       //--------------------
       // We show all the info and the buttons that should be in this
@@ -465,7 +465,7 @@ GreatItemShow ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVENTOR
 
   while (!finished)
     {
-      usleep ( 100 );
+      SDL_Delay (1);
 
       //--------------------
       // We show all the info and the buttons that should be in this

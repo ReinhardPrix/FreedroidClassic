@@ -6,10 +6,7 @@
 
 */
 
-#ifdef WIN32
-#include <windows.h>
-#endif
-
+#include "proto.h"
 #include "SDL_rotozoom.h"
 
 #define MAX(a,b)    (((a) > (b)) ? (a) : (b))

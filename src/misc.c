@@ -307,8 +307,6 @@ unsigned char *MessageBar;
 message *Queue = NULL;
 // int ThisMessageTime=0;               /* Counter fuer Message-Timing */
 
-struct timeval now, oneframetimestamp, tenframetimestamp,
-  onehundredframetimestamp, differenz;
 long oneframedelay = 0;
 long tenframedelay = 0;
 long onehundredframedelay = 0;
@@ -325,7 +323,7 @@ char *homedir = NULL;
 char ConfigDir[255]="\0";
 
 /* -----------------------------------------------------------------
- * find a given filename in subdir relative to DATADIR, 
+ * find a given filename in subdir relative to FD_DATADIR, 
  * using theme subdir if use_theme==TRUE
  *
  * if you pass NULL as subdir, it will be ignored
@@ -388,7 +386,7 @@ This is indicates a severe bug in Freedroid.",  PLEASE_INFORM, IS_FATAL );
       if (i==0)
 	strcpy (File_Path, "..");   /* first try local subdirs */
       if (i==1)
-	strcpy (File_Path, DATADIR); /* then the DATADIR */
+	strcpy (File_Path, FD_DATADIR); /* then the DATADIR */
 
       strcat (File_Path, "/");
       strcat (File_Path, subdir);
@@ -421,7 +419,7 @@ This is indicates a severe bug in Freedroid.",  PLEASE_INFORM, IS_FATAL );
 }; // char * find_file ( ... )
 
 /* -----------------------------------------------------------------
- * find a given filename in subdir relative to DATADIR, 
+ * find a given filename in subdir relative to FD_DATADIR, 
  * using theme subdir if use_theme==TRUE
  *
  * if you pass NULL as subdir, it will be ignored
@@ -485,7 +483,7 @@ This is indicates a severe bug in Freedroid.",
       if (i==0)
 	strcpy (File_Path, "..");   /* first try local subdirs */
       if (i==1)
-	strcpy (File_Path, DATADIR); /* then the DATADIR */
+	strcpy (File_Path, FD_DATADIR); /* then the FD_DATADIR */
 
       strcat (File_Path, "/");
       strcat (File_Path, subdir);
@@ -566,7 +564,7 @@ Pause (void)
       // During the Pause mode, there is again no need to hog the CPU and to 
       // go at full force.  We introduce some rest for the CPU here...
       //
-      usleep(50);
+      SDL_Delay (1);
 
     } /* while (Pause) */
   SetNewBigScreenMessage( "" );
@@ -1147,8 +1145,11 @@ LoadGameConfig (void)
 
   // first we need the user's homedir for loading/saving stuff
   if ( (homedir = getenv("HOME")) == NULL )
-    DebugPrintf ( 0 , "WARNING: Environment does not contain HOME variable...\n\
+    {
+      DebugPrintf ( 0 , "WARNING: Environment does not contain HOME variable...\n\
 Cannot Load or Save settings.\n");
+      homedir = ".";
+    }
 
   sprintf (ConfigDir, "%s/.freedroid_rpg", homedir);
   
@@ -1159,14 +1160,19 @@ You seem not to have the directory %s in your home directory.\n\
 This directory is used by freedroid to store saved games and your personal settings.\n\
 So I'll try to create it now...\n\
 ----------------------------------------------------------------------\n", ConfigDir);
-      if (mkdir (ConfigDir, S_IREAD|S_IWRITE|S_IEXEC) == -1)
-	{
-	  DebugPrintf ( 0 , "\n----------------------------------------------------------------------\n\
+#if __WIN32__
+    _mkdir (ConfigDir);
+    DebugPrintf (1, "ok\n");
+    return (OK);
+#else
+    if (mkdir (ConfigDir, S_IREAD|S_IWRITE|S_IEXEC) == -1)
+      {
+	DebugPrintf ( 0 , "\n----------------------------------------------------------------------\n\
 WARNING: Failed to create config-dir: %s. Giving up...\n\
 You settings will not be loaded but the default values will be used instead...\n\
 ----------------------------------------------------------------------\n", ConfigDir);
-	  return (ERR);
-	}
+	return (ERR);
+      }
       else
 	{
 	  // --------------------
@@ -1176,7 +1182,9 @@ You settings will not be loaded but the default values will be used instead...\n
 	  DebugPrintf ( 1 , "ok\n" );
 	  return (OK); 
 	}
+#endif
     }
+
 
   sprintf (fname, "%s/config", ConfigDir);
   if( (config = fopen (fname, "r")) == NULL)

@@ -38,6 +38,8 @@
 #include "ship.h"
 #include "fenv.h"
 
+#include "getopt.h"
+
 void Init_Game_Data( char* Datafilename );
 void Get_Bullet_Data ( char* DataPointer );
 extern int feenableexcept (int TheExceptionFlags );
@@ -972,26 +974,6 @@ Init_Game_Data ( char * Datafilename )
 
 }; // int Init_Game_Data ( void )
 
-/* -----------------------------------------------------------------
- * This function is for stability while working with the SVGALIB, which otherwise would
- * be inconvenient if not dangerous in the following respect:  When SVGALIB has switched to
- * graphic mode and has grabbed the keyboard in raw mode and the program gets stuck, the 
- * console will NOT be returned to normal, the keyboard will remain useless and login from
- * outside and shutting down or reseting the console will be the only way to avoid a hard
- * reset!
- * Therefore this function is introduced.  When Paradroid starts up, the operating system is
- * instructed to generate a signal ALARM after a specified time has passed.  This signal will
- * be handled by this function, which in turn restores to console to normal and resets the
- * yiff sound server access if applicable. (All this is done via calling Terminate
- * of course.) 
- * -----------------------------------------------------------------*/
-static void
-timeout (int sig)
-{
-  DebugPrintf (2, "\n\nstatic void timeout(int sig): Automatic termination NOW!!");
-  Terminate (0);
-}; // static void timeout (int sig)
-
 char copyright[] = "\nCopyright (C) 2003 Johannes Prix, Reinhard Prix\n\
 Freedroid comes with NO WARRANTY to the extent permitted by law.\n\
 You may redistribute copies of Freedroid\n\
@@ -1022,7 +1004,6 @@ void
 ParseCommandLine (int argc, char *const argv[])
 {
   int c;
-  int timeout_time;		/* timeout to restore text-mode */
 
   static struct option long_options[] = {
     {"version",     0, 0,  'v'},
@@ -1031,7 +1012,6 @@ ParseCommandLine (int argc, char *const argv[])
     {"no_open_gl",  0, 0,  'n'},
     {"nosound",     0, 0,  'q'},
     {"sound", 	    0, 0,  's'},
-    {"timeout",     1, 0,  't'},
     {"debug", 	    2, 0,  'd'},
     {"window",      0, 0,  'w'},
     {"fullscreen",  0, 0,  'f'},
@@ -1077,14 +1057,6 @@ ParseCommandLine (int argc, char *const argv[])
 	  sound_on = TRUE;
 	  break;
 
-	case 't':
-	  timeout_time = atoi (optarg);
-	  if (timeout_time > 0)
-	    {
-	      signal (SIGALRM, timeout);
-	      alarm (timeout_time);	/* Terminate after some seconds for safety. */
-	    }
-	  break;
 	case 'j':
 	  joy_sensitivity = atoi (optarg);
 	  if (joy_sensitivity < 0 || joy_sensitivity > 32)

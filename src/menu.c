@@ -36,6 +36,8 @@
 #include "global.h"
 #include "proto.h"
 
+#include "scandir.h"
+
 int New_Game_Requested=FALSE;
 
 int Single_Player_Menu (void);
@@ -297,7 +299,7 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , char* B
       // At this the while (1) overloop ends.  But for the menu, we really do not
       // need to hog the CPU.  Therefore some waiting should be introduced here.
       //
-      usleep ( 50 );
+      SDL_Delay (1);
     }
 
   SDL_ShowCursor( SDL_ENABLE );
