@@ -200,6 +200,7 @@ EXTERN int SaveShip(char *filename);
 EXTERN int GetDoors (Level Lev);
 EXTERN int GetAutoguns (Level Lev);
 EXTERN int GetRefreshes (Level Lev);
+EXTERN int GetTeleports (Level Lev);
 EXTERN int GetLiftConnections (char *shipname);
 EXTERN int GetCrew (char *shipname);
 

@@ -68,38 +68,115 @@ ExportLevelInterface ( int LevelNum )
   int AreaWidth;
   int AreaHeight;
   int TargetLevel;
-  int x , y;
+  int y;
   int TargetStartLine;
 
+
+  //--------------------
+  // First we see if we need to copy the northern interface region
+  // into another map.
+  //
   TargetLevel = curShip.AllLevels [ LevelNum ] -> jump_target_north ;
-
-  if ( TargetLevel == (-1) ) return;
-
-  //--------------------
-  // First we find out the dimensions of the area we want to copy
-  //
-  if ( curShip . AllLevels [ LevelNum ] -> xlen < curShip . AllLevels [ TargetLevel ] -> xlen )
-    AreaWidth = curShip . AllLevels [ LevelNum ] -> xlen;
-  else 
-    AreaWidth = curShip . AllLevels [ TargetLevel ] -> xlen ;
-
-  AreaHeight = curShip . AllLevels [ LevelNum ] -> jump_threshold_north;
- 
-  if ( AreaHeight <= 0 ) return;
-
-  TargetStartLine = ( curShip . AllLevels [ TargetLevel ] -> ylen ) - 1 ;
-
-  //--------------------
-  // Now we can start to make the copy...
-  //
-  for ( x = 0 ; x < AreaWidth ; x ++ )
+  if ( TargetLevel != (-1) ) 
     {
+      //--------------------
+      // First we find out the dimensions of the area we want to copy
+      //
+      if ( curShip . AllLevels [ LevelNum ] -> xlen < curShip . AllLevels [ TargetLevel ] -> xlen )
+	AreaWidth = curShip . AllLevels [ LevelNum ] -> xlen;
+      else 
+	AreaWidth = curShip . AllLevels [ TargetLevel ] -> xlen ;
+      
+      AreaHeight = curShip . AllLevels [ LevelNum ] -> jump_threshold_north;
+      
+      if ( AreaHeight <= 0 ) return;
+      
+      TargetStartLine = ( curShip . AllLevels [ TargetLevel ] -> ylen ) - 1 ;
+
+      //--------------------
+      // Now we can start to make the copy...
+      //
       for ( y = 0 ; y < AreaHeight ; y ++ )
 	{
 	  memcpy ( curShip . AllLevels [ TargetLevel ] -> map[ TargetStartLine - y ] ,
 		   curShip . AllLevels [ LevelNum ] -> map[ AreaHeight-1 - y ] ,
 		   AreaWidth ) ;
 	}
+      GetDoors ( curShip . AllLevels [ TargetLevel ] );
+      GetRefreshes ( curShip . AllLevels [ TargetLevel ] );
+      GetTeleports ( curShip . AllLevels [ TargetLevel ] );
+    }
+
+  //--------------------
+  // Now we see if we need to copy the eastern interface region
+  // into another map.
+  //
+  TargetLevel = curShip.AllLevels [ LevelNum ] -> jump_target_east ;
+  if ( TargetLevel != (-1) ) 
+    {
+      //--------------------
+      // First we find out the dimensions of the area we want to copy
+      //
+      if ( curShip . AllLevels [ LevelNum ] -> ylen < curShip . AllLevels [ TargetLevel ] -> ylen )
+	AreaHeight = curShip . AllLevels [ LevelNum ] -> ylen;
+      else 
+	AreaHeight = curShip . AllLevels [ TargetLevel ] -> ylen ;
+      
+      AreaWidth = curShip . AllLevels [ LevelNum ] -> jump_threshold_east;
+      
+      if ( AreaWidth <= 0 ) return;
+      
+      TargetStartLine = ( curShip . AllLevels [ TargetLevel ] -> ylen ) - 1 ;
+
+      //--------------------
+      // Now we can start to make the copy...
+      //
+      for ( y = 0 ; y < AreaHeight ; y ++ )
+	{
+	  memcpy ( curShip . AllLevels [ TargetLevel ] -> map[ y ] ,
+		   (curShip . AllLevels [ LevelNum ] -> map[ y ]) + 
+		    curShip . AllLevels [ LevelNum ] -> xlen - 0 - AreaWidth ,
+		   AreaWidth ) ;
+	}
+      GetDoors ( curShip . AllLevels [ TargetLevel ] );
+      GetRefreshes ( curShip . AllLevels [ TargetLevel ] );
+      GetTeleports ( curShip . AllLevels [ TargetLevel ] );
+    }
+
+  //--------------------
+  // Now we see if we need to copy the western interface region
+  // into another map.
+  //
+  TargetLevel = curShip.AllLevels [ LevelNum ] -> jump_target_west ;
+  if ( TargetLevel != (-1) ) 
+    {
+      //--------------------
+      // First we find out the dimensions of the area we want to copy
+      //
+      if ( curShip . AllLevels [ LevelNum ] -> ylen < curShip . AllLevels [ TargetLevel ] -> ylen )
+	AreaHeight = curShip . AllLevels [ LevelNum ] -> ylen;
+      else 
+	AreaHeight = curShip . AllLevels [ TargetLevel ] -> ylen ;
+      
+      AreaWidth = curShip . AllLevels [ LevelNum ] -> jump_threshold_west;
+      
+      if ( AreaWidth <= 0 ) return;
+      
+      TargetStartLine = ( curShip . AllLevels [ TargetLevel ] -> ylen ) - 1 ;
+
+      //--------------------
+      // Now we can start to make the copy...
+      //
+      for ( y = 0 ; y < AreaHeight ; y ++ )
+	{
+	  memcpy ( ( curShip . AllLevels [ TargetLevel ] -> map[ y ] ) + 
+		   curShip . AllLevels [ TargetLevel ] -> xlen - 0 - AreaWidth,
+		   ( curShip . AllLevels [ LevelNum ] -> map[ y ] ) + 0 , 
+		   AreaWidth ) ;
+	}
+      GetDoors ( curShip . AllLevels [ TargetLevel ] );
+      GetRefreshes ( curShip . AllLevels [ TargetLevel ] );
+      GetTeleports ( curShip . AllLevels [ TargetLevel ] );
     }
 
 }; // void SynchronizeLevelInterfaces ( void )
