@@ -263,6 +263,154 @@ RemoveColumnWesternInterface( Level CurLevel )
 }; // void RemoveColumnWesternInterface( Level CurLevel )
 
 /* ----------------------------------------------------------------------
+ * Self-Explanatory.
+ * ---------------------------------------------------------------------- */
+void
+InsertLineSouthernInterface ( Level CurLevel )
+{
+  char* temp;
+  int i;
+
+  //--------------------
+  // First a sanity check for existing interface
+  //
+  if ( CurLevel -> jump_threshold_south <= 0 ) return;
+
+  //--------------------
+  // We build upon the existing code again.
+  //
+  InsertLineVerySouth( CurLevel );
+  
+  //--------------------
+  // Now we do some swapping of lines
+  //
+  temp = CurLevel -> map [ CurLevel -> ylen - 1 ] ;
+
+  for ( i = 0 ; i < CurLevel -> jump_threshold_south ; i ++ )
+    {
+      CurLevel -> map [ CurLevel -> ylen - i - 1 ] = 
+	CurLevel -> map [ CurLevel -> ylen - i - 2 ] ;
+    }
+  CurLevel -> map [ CurLevel -> ylen - 1 - CurLevel -> jump_threshold_south ] = temp ;
+
+}; // void InsertLineSouthernInterface ( CurLevel )
+
+/* ----------------------------------------------------------------------
+ * Self-Explanatory.
+ * ---------------------------------------------------------------------- */
+void
+RemoveLineSouthernInterface ( Level CurLevel )
+{
+  int i;
+
+  //--------------------
+  // First a sanity check for existing interface
+  //
+  if ( CurLevel -> jump_threshold_south <= 0 ) return;
+
+  //--------------------
+  // Now we do some swapping of lines
+  //
+  for ( i = CurLevel -> ylen - 1 - CurLevel -> jump_threshold_south ; 
+	i < CurLevel -> ylen - 1 ; i ++ )
+    {
+      CurLevel -> map [ i ] = CurLevel -> map [ i + 1 ] ;
+    }
+  CurLevel -> ylen -- ;
+
+}; // void RemoveLineSouthernInterface ( CurLevel )
+
+/* ----------------------------------------------------------------------
+ * Self-Explanatory.
+ * ---------------------------------------------------------------------- */
+void
+InsertLineNorthernInterface ( Level CurLevel )
+{
+  int OldSouthernInterface;
+
+  //--------------------
+  // First a sanity check for existing interface
+  //
+  if ( CurLevel -> jump_threshold_north <= 0 ) return;
+
+  //--------------------
+  // We shortly change the southern interface to reuse the code for there
+  //
+  OldSouthernInterface = CurLevel -> jump_threshold_south;
+
+  CurLevel -> jump_threshold_south = CurLevel -> ylen - CurLevel -> jump_threshold_north - 0 ;
+  InsertLineSouthernInterface ( CurLevel );
+
+  CurLevel -> jump_threshold_south = OldSouthernInterface ;
+
+}; // void InsertLineNorthernInterface ( CurLevel )
+
+/* ----------------------------------------------------------------------
+ * Self-Explanatory.
+ * ---------------------------------------------------------------------- */
+void
+RemoveLineNorthernInterface ( Level CurLevel )
+{
+  int OldSouthernInterface;
+
+  //--------------------
+  // First a sanity check for existing interface
+  //
+  if ( CurLevel -> jump_threshold_north <= 0 ) return;
+
+  //--------------------
+  // We shortly change the southern interface to reuse the code for there
+  //
+  OldSouthernInterface = CurLevel -> jump_threshold_south;
+
+  CurLevel -> jump_threshold_south = CurLevel -> ylen - CurLevel -> jump_threshold_north - 1 ;
+  RemoveLineSouthernInterface ( CurLevel );
+
+  CurLevel -> jump_threshold_south = OldSouthernInterface ;
+
+}; // void RemoveLineNorthernInterface ( Level CurLevel )
+
+/* ----------------------------------------------------------------------
+ * Self-Explanatory.
+ * ---------------------------------------------------------------------- */
+void
+InsertLineVeryNorth ( Level CurLevel )
+{
+  int OldSouthernInterface;
+
+  //--------------------
+  // We shortly change the southern interface to reuse the code for there
+  //
+  OldSouthernInterface = CurLevel -> jump_threshold_south;
+
+  CurLevel -> jump_threshold_south = CurLevel -> ylen - 0 ;
+  InsertLineSouthernInterface ( CurLevel );
+
+  CurLevel -> jump_threshold_south = OldSouthernInterface ;
+
+}; // void InsertLineVeryNorth ( CurLevel )
+
+/* ----------------------------------------------------------------------
+ * Self-Explanatory.
+ * ---------------------------------------------------------------------- */
+void
+RemoveLineVeryNorth ( Level CurLevel )
+{
+  int OldSouthernInterface;
+
+  //--------------------
+  // We shortly change the southern interface to reuse the code for there
+  //
+  OldSouthernInterface = CurLevel -> jump_threshold_south;
+
+  CurLevel -> jump_threshold_south = CurLevel -> ylen - 1 ;
+  RemoveLineSouthernInterface ( CurLevel );
+
+  CurLevel -> jump_threshold_south = OldSouthernInterface ;
+
+}; // void RemoveLineVeryNorth ( Level CurLevel )
+
+/* ----------------------------------------------------------------------
  * This a a menu interface to allow to edit the level dimensions in a
  * convenient way, i.e. so that little stupid copying work or things like
  * that have to be done and more time can be spent creating game material.
@@ -355,6 +503,45 @@ EditLevelDimensions ( void )
 	    {
 	      CurLevel->ylen--; // making it smaller is always easy:  just modify the value for size
 	      // allocation of new memory or things like that are not nescessary.
+	      while (LeftPressed());
+	    }
+	  break;
+
+	case INSERTREMOVE_LINE_SOUTHERN_INTERFACE:
+	  if ( RightPressed() )
+	    {
+	      InsertLineSouthernInterface ( CurLevel );
+	      while (RightPressed());
+	    }
+	  if ( LeftPressed() )
+	    {
+	      RemoveLineSouthernInterface ( CurLevel );
+	      while (LeftPressed());
+	    }
+	  break;
+
+	case INSERTREMOVE_LINE_NORTHERN_INTERFACE:
+	  if ( RightPressed() )
+	    {
+	      InsertLineNorthernInterface ( CurLevel );
+	      while (RightPressed());
+	    }
+	  if ( LeftPressed() )
+	    {
+	      RemoveLineNorthernInterface ( CurLevel );
+	      while (LeftPressed());
+	    }
+	  break;
+
+	case INSERTREMOVE_LINE_VERY_NORTH:
+	  if ( RightPressed() )
+	    {
+	      InsertLineVeryNorth ( CurLevel );
+	      while (RightPressed());
+	    }
+	  if ( LeftPressed() )
+	    {
+	      RemoveLineVeryNorth ( CurLevel );
 	      while (LeftPressed());
 	    }
 	  break;
