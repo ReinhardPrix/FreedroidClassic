@@ -566,7 +566,7 @@ UnfadeLevel (void)
     Color = PD_DARK;
 
   GetView ();
-  GetInternFenster (SHOW_ALL);
+  Assemble_Combat_Picture (SHOW_ALL);
   PutInternFenster (TRUE);
 
   /* Speicher reservieren */

@@ -325,9 +325,9 @@ main (int argc, char *const argv[])
 	  MoveBullets ();   
 	  ExplodeBlasts ();	/* Blasts in der Explosionsphase weiterbewegen */
 
-	  GetView ();		/* Einen Ausschnitt aus der Gesamtlevelkarte machen */
+	  GetView();		/* Einen Ausschnitt aus der Gesamtlevelkarte machen */
 
-	  GetInternFenster (SHOW_ALL);
+	  Assemble_Combat_Picture ( SHOW_ALL );
 
 	  PutInternFenster ( TRUE );
 	  
@@ -458,7 +458,7 @@ ThouArtDefeated (void)
     {
       DisplayRahmen (Outline320x200);
       SetInfoline(NULL, NULL);
-      GetInternFenster (SHOW_ALL);
+      Assemble_Combat_Picture (SHOW_ALL);
       PutInternFenster (TRUE);
       ExplodeBlasts ();
       MoveBullets ();
@@ -629,7 +629,7 @@ Pause (void)
   Me.status = PAUSE;
   SetInfoline (NULL, NULL);
   GetView ();
-  GetInternFenster (SHOW_ALL);
+  Assemble_Combat_Picture (SHOW_ALL);
   PutInternFenster (TRUE);
 
   while ( Pause )
@@ -640,7 +640,7 @@ Pause (void)
       RotateBulletColor ();
       AnimateEnemys ();
       GetView ();
-      GetInternFenster (SHOW_ALL);
+      Assemble_Combat_Picture (SHOW_ALL);
       PutInternFenster (TRUE);
 
       if (CPressed ())
@@ -648,7 +648,7 @@ Pause (void)
 	  Me.status = CHEESE;
 	  SetInfoline (NULL, NULL);
 	  GetView ();
-	  GetInternFenster (SHOW_ALL);
+	  Assemble_Combat_Picture (SHOW_ALL);
 	  PutInternFenster (TRUE);
 
 	  while (!SpacePressed ()); /* stay CHEESE until Space pressed */

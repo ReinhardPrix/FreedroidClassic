@@ -312,7 +312,7 @@ DisplayView (void)
  * @Ret: none
  *-----------------------------------------------------------------*/
 void
-GetInternFenster (int mask)
+Assemble_Combat_Picture (int mask)
 {
   Blast CurBlast = &(AllBlasts[0]);
   int MapBrick;
