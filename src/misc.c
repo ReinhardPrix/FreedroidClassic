@@ -1531,8 +1531,7 @@ PutMessages (void)
       //
       for (i = 0; i < MESHOEHE; i++)
 	{
-	  vga_drawscansegment (MessageBar + i * MESBARBREITE,
-			       MESPOSX - MesPos, MESPOSY + i, MesPos);
+	  // PORT REINHARDS NEUE ENGINE vga_drawscansegment (MessageBar + i * MESBARBREITE, MESPOSX - MesPos, MESPOSY + i, MesPos);
 	}
     }				/* if aktiv + Message da */
 

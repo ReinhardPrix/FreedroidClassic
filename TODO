@@ -14,11 +14,15 @@ Outstanding release-critical bugs (priority: high)
 
 Outstanding normal bugs (priority: normal)
 ------------------------------------------
-- wenn man ganz am rechts unteren Rand einer rechteckigen Kartenform
-  steht wird die Framerate nachweislich bei mir HALBIERT!  Das liegt
-  an den vielen IsVisible-Abfragen, die scheinbar irgendwo aus der
-  Karte hinaus im Speicher die Sichtbarkeit uberpruefen.  Sehr
-  fragwuerdig. 
+- (DONE) (jp:) wenn man ganz am rechts unteren Rand einer rechteckigen Kartenform
+               steht wird die Framerate nachweislich bei mir HALBIERT!  Das liegt
+               an den vielen IsVisible-Abfragen, die scheinbar irgendwo aus der
+               Karte hinaus im Speicher die Sichtbarkeit uberpruefen.  Sehr 
+               fragwuerdig
+         (jp:) appearently this bug has been resolved somewhere since it was encounteres
+               while using SVGALIB and might have been resolved with the new and corrected
+               get-ship-routines of rp or so.  At least this bug cannot be found on my
+               machine any more.
 
 Outstanding tuning/design bugs and general TODO (priority: low)
 --------------------------------------------------------------

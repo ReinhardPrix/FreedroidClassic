@@ -745,7 +745,7 @@ SetPalCol (unsigned int palpos, unsigned char rot, unsigned char gruen,
 void
 SetPalCol2 (unsigned int palpos, color Farbwert)
 {
-  vga_setpalette (palpos, Farbwert.rot, Farbwert.gruen, Farbwert.blau);
+  // PORT REINHARDS NEUE ENGINE vga_setpalette (palpos, Farbwert.rot, Farbwert.gruen, Farbwert.blau);
 }				// void SetPalCol2(...)
 
 
