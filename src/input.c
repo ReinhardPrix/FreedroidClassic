@@ -460,9 +460,8 @@ ReactToSpecialKeys(void)
 
       for ( i = 0 ; i < Number_Of_Item_Types ; i ++ )
 	{
-	  if ( ItemMap[ i ].item_name == NULL ) continue;
+	  if ( ItemMap[ i ] . item_name == NULL ) continue;
 	  DebugPrintf( 0 , "\n\nitem_name: %s " , ItemMap[ i ].item_name );
-	  DebugPrintf( 0 , "\nitem_class: %s " , ItemMap[ i ].item_class );
 	  DebugPrintf( 0 , "\nitem_can_be_applied_in_combat: %d " , ItemMap[ i ].item_can_be_applied_in_combat );
 	  DebugPrintf( 0 , "\nitem_can_be_installed_in_influ: %d " , ItemMap[ i ].item_can_be_installed_in_influ );
 	  DebugPrintf( 0 , "\nitem_can_be_installed_in_weapon_slot: %d " , ItemMap[ i ].item_can_be_installed_in_weapon_slot );

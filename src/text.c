@@ -162,6 +162,7 @@ ResolveDialogSectionToChatFlagsIndex ( char* SectionName )
   if ( strcmp ( SectionName , "Michelangelo" ) == 0 ) return PERSON_MICHELANGELO;
   if ( strcmp ( SectionName , "Skippy" ) == 0 ) return PERSON_SKIPPY;
   if ( strcmp ( SectionName , "StandardOldTownGateGuard" ) == 0 ) return PERSON_STANDARD_OLD_TOWN_GATE_GUARD;
+  if ( strcmp ( SectionName , "StandardNewTownGateGuard" ) == 0 ) return PERSON_STANDARD_NEW_TOWN_GATE_GUARD;
   if ( strcmp ( SectionName , "OldTownGateGuardLeader" ) == 0 ) return PERSON_OLD_TOWN_GATE_GUARD_LEADER;
   if ( strcmp ( SectionName , "StandardMSFacilityGateGuard" ) == 0 ) return PERSON_STANDARD_MS_FACILITY_GATE_GUARD;
   if ( strcmp ( SectionName , "MSFacilityGateGuardLeader" ) == 0 ) return PERSON_MS_FACILITY_GATE_GUARD_LEADER;
