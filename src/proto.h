@@ -177,6 +177,7 @@ EXTERN int LoadGame( void );
 #else
 #define EXTERN extern
 #endif
+EXTERN void Smash_Box ( float x , float y );
 EXTERN void AnimateTeleports (void);
 EXTERN unsigned char GetMapBrick (Level deck, float x, float y);
 EXTERN int GetCurrentLift (void);

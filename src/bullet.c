@@ -256,28 +256,11 @@ StartBlast (float x, float y, int type)
 {
   int i;
   Blast NewBlast;
-  int map_x, map_y;
 
   //--------------------
-  // first we see if there are any destructible map tiles, that need to
-  // be destructed this way...
-  //
-  map_x=(int)rintf(x);
-  map_y=(int)rintf(y);
-
-  if ( CurLevel->map[ map_y ][ map_x ] == BOX_4 ) 
-    {
-      CurLevel->map[ map_y ][ map_x ] = FLOOR;
-      StartBlast( map_x , map_y , DRUIDBLAST );
-      DropRandomItem( map_x , map_y , 1 , FALSE , FALSE );
-    }
-
-  if ( ( CurLevel->map[ map_y ][ map_x ] == BOX_1 ) ||
-       ( CurLevel->map[ map_y ][ map_x ] == BOX_2 ) ||
-       ( CurLevel->map[ map_y ][ map_x ] == BOX_3 ) )
-    {
-      CurLevel->map[ map_y ][ map_x ]++;
-    }
+  // Maybe there is a box under the blast.  In this case, the box will
+  // get smashed and perhaps an item will drop.
+  Smash_Box ( x , y );
 
   // find out the position of the next free blast
   for (i = 0; i < MAXBLASTS; i++)

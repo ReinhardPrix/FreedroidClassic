@@ -95,6 +95,39 @@ void GetThisLevelsDroids( char* SectionPointer );
 Level Decode_Loaded_Leveldata ( char *data );
 
 /* ----------------------------------------------------------------------
+ * When one of the box tiles gets hit, e.g. by a blast exploding on the
+ * tile or a influencer melee hit on the tile, then the box explodes,
+ * possibly leaving some goods behind.
+ * ---------------------------------------------------------------------- */
+void 
+Smash_Box ( float x , float y )
+{
+  int map_x, map_y;
+
+  map_x=(int)rintf(x);
+  map_y=(int)rintf(y);
+
+  //--------------------
+  // first we see if there are any destructible map tiles, that need to
+  // be destructed this way...
+  //
+  switch ( CurLevel->map[ map_y ][ map_x ] )
+    { 
+    case BOX_4:
+    case BOX_3:
+    case BOX_2:
+    case BOX_1:
+      CurLevel->map[ map_y ][ map_x ] = FLOOR;
+      StartBlast( map_x , map_y , DRUIDBLAST );
+      DropRandomItem( map_x , map_y , 1 , FALSE , FALSE );
+      break;
+    default:
+      break;
+    }
+
+}; // void Smash_Box ( float x , float y );
+
+/* ----------------------------------------------------------------------
  * This function returns the map brick code of the tile that occupies the
  * given position.
  * ---------------------------------------------------------------------- */
