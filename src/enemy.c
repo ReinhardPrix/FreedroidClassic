@@ -940,6 +940,7 @@ RawSetNewRandomWaypoint ( Enemy ThisRobot )
     if (  num_conn == 0 ) // no connections found!
     {
 	fprintf ( stderr , "\nThe offending waypoint nr. is: %d.", nextwp );
+	fprintf ( stderr , "\nThe map level in question got nr.: %d.", ThisRobot -> pos . z );
 	GiveStandardErrorMessage ( __FUNCTION__  , "\
 There was a droid on a waypoint, that apparently has no connections to other waypoints...\n\
 This is an error in the waypoint structure of this level.",

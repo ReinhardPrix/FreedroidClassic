@@ -2885,11 +2885,10 @@ Credits_Menu (void)
   char* CreditsText = "\n\n\n\
                                             CREDITS\n\n\n\
    PROGRAMMING:\n\n\
-                                      Johannes Prix\n\n\
+                                      Johannes Prix, ICQ: 327392941\n\n\
                                       Reinhard Prix\n\n\n\
    ADDITIONAL PROGRAMMING:\n\n\
-                                      Simon Newton\n\n\
-                                      Leslie Viljonen\n\n\n\
+                                      Simon Newton\n\n\n\
    PROFILING AND TESTING:\n\n\
                                       Ryan 'simcop2387' Voots\n\n\
                                       Andrew A. Gill\n\n\
