@@ -2344,7 +2344,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_0.png"
+File or directory name for inventory image="inventory_image_1.png"
 Item uses drop sound with filename="drop_potion_sound.wav"
 Base list price=150
 Item description text="These small containers hold purified running strength.  Each capsule can be used only once, but multiple of those items can be grouped together like one item in inventory."
