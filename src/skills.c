@@ -82,6 +82,10 @@
 #define INV_BUTTON_WIDTH 38
 #define INV_BUTTON_HEIGHT 22
 
+#define SPELL_LEVEL_BUTTONS_X 10
+#define SPELL_LEVEL_BUTTONS_Y 413
+#define SPELL_LEVEL_BUTTON_WIDTH 30
+
 SDL_Rect SkillScreenRect;
 
 /* ----------------------------------------------------------------------
@@ -290,7 +294,7 @@ HandleCurrentlyActivatedSkill( void )
 
 /* ----------------------------------------------------------------------
  * This function checks if a given screen position lies within the 
- * strength plus button or not
+ * one of the skill icons and returns the number of that skill icon.
  * ---------------------------------------------------------------------- */
 int
 CursorIsOnWhichSkillButton( int x , int y )
@@ -330,6 +334,44 @@ CursorIsOnWhichSkillButton( int x , int y )
 
 
 /* ----------------------------------------------------------------------
+ * This function checks if a given screen position lies within 
+ * one of the spell level buttons and returns the number of that 
+ * spell level button.
+ * ---------------------------------------------------------------------- */
+int
+CursorIsOnWhichSpellLevelButton( int x , int y )
+{
+  int i;
+
+  //--------------------
+  // First we check if the cursor is in at least horizontally
+  // and vertically in the line with the spell level buttons.
+  //
+  if ( x > SkillScreenRect.x + SPELL_LEVEL_BUTTONS_X + 300 ) return ( -1 );
+  if ( x < SkillScreenRect.x + SPELL_LEVEL_BUTTONS_X       ) return ( -1 );
+  if ( y > SkillScreenRect.y + SPELL_LEVEL_BUTTONS_Y + 32  ) return ( -1 );
+  if ( y < SkillScreenRect.y + SPELL_LEVEL_BUTTONS_Y       ) return ( -1 );
+
+#define SPELL_LEVEL_BUTTONS_X 10
+#define SPELL_LEVEL_BUTTONS_Y 413
+#define SPELL_LEVEL_BUTTON_WIDTH 30
+
+  //--------------------
+  // Now we can check on which skill rectangle exactly the cursor
+  // is hovering, since we know that it is hitting, horizontally
+  // at least, the row of skill icons.
+  //
+  for ( i = 0 ; i < 10 ; i ++ )
+    {
+      if ( x < SkillScreenRect.x + SPELL_LEVEL_BUTTONS_X + ( i + 1 ) * SPELL_LEVEL_BUTTON_WIDTH ) 
+	return i;
+    }
+
+  return ( -1 );
+}; // int CursorIsOnWhichSpellLevelButton( int x , int y )
+
+
+/* ----------------------------------------------------------------------
  * This function displays the skills screen.
  * ---------------------------------------------------------------------- */
 void 
@@ -344,6 +386,7 @@ ShowSkillsScreen ( void )
   point CurPos;
   int i;
   char* SkillName[ NUMBER_OF_SKILLS ];
+  SDL_Rect SpellLevelRect;
 
   SkillName[ 0 ] = "Takeover/Talk Skill";
   SkillName[ 1 ] = "Force Explosion Circle";
@@ -398,6 +441,15 @@ ShowSkillsScreen ( void )
   SDL_BlitSurface ( SkillScreenImage , NULL , Screen , &SkillScreenRect );
 
   //--------------------
+  // According to the page in the spell book currently opened,
+  // we draw a 'button' or activation mark over the appropriate spot
+  //
+  SpellLevelRect.x = SkillScreenRect.x + SPELL_LEVEL_BUTTONS_X + 
+    SPELL_LEVEL_BUTTON_WIDTH * GameConfig.spell_level_visible ;
+  SpellLevelRect.y = SkillScreenRect.y + SPELL_LEVEL_BUTTONS_Y ;
+  SDL_BlitSurface ( SpellLevelButtonImageList[ GameConfig.spell_level_visible ] , NULL , Screen , &SpellLevelRect );
+
+  //--------------------
   // Now we fill in the skills available to this bot.  ( For now, these skills 
   // are not class-specific, like in diablo or something, but this is our first
   // approach to the topic after all.... :)
@@ -430,13 +482,26 @@ ShowSkillsScreen ( void )
     }
 
   //--------------------
-  // It might be the case, that the character has some points to distribute upon the character
-  // stats.  Then of course, we must display the plus button instead of all character 'now' values
+  // Now we see if perhaps the player has just clicked on one of the skills
+  // available to this class.  In this case of course we must set a different
+  // skill/spell as the currently activated skill/spell.
   //
   if ( ( CursorIsOnWhichSkillButton ( CurPos.x , CurPos.y ) != ( -1 ) ) &&
        axis_is_active &&
        ! MouseButtonPressedPreviousFrame )
     Me[0].readied_skill = CursorIsOnWhichSkillButton ( CurPos.x , CurPos.y );
+
+  //--------------------
+  // Now we see if perhaps the player has just clicked on another skill level
+  // button.  In this case of course we must set a different skill/spell level
+  // as the currently visible spell level.
+  //
+  if ( ( CursorIsOnWhichSpellLevelButton ( CurPos.x , CurPos.y ) != ( -1 ) ) &&
+       axis_is_active &&
+       ! MouseButtonPressedPreviousFrame )
+    {
+      GameConfig.spell_level_visible = CursorIsOnWhichSpellLevelButton ( CurPos.x , CurPos.y );
+    }
 
 
   //--------------------

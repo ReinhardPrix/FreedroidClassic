@@ -15,11 +15,14 @@ The list of things I'm going to work on next:
 THESE ITEMS HAVE FIRST PRIORITY:
 --------------------------------
 
-* Add in-game help upon pressing F1
-* Drop a note at the FreeDiablo and FreeDiabloII sourceforge project,
-  that they can use our code, if they want to
-* Add X-tra items of two types ( minor accessory , major accessory )
-  instead of 
+* Add different spell levels and make them accessible from the
+  spell/skill screen.
+
+* Make boxes possible attack targets
+
+* Add some handling for the communication with shop-owners and
+  also something suitable for the takeover touch process.
+
 
 THESE ITEMS ARE OF SECOND PRIORITY:
 -----------------------------------

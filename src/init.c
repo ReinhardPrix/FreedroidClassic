@@ -1776,10 +1776,7 @@ InitNewMissionList ( char *MissionName )
     }
   Me[0].SkillLevel [ 0 ] = 1 ;
   Me[0].base_skill_level [ 0 ] = 1;
-
-  // strcpy ( Me[0].character_name , "R2D2 v.0.8.5." );
-  // strcpy ( Me[0].character_name , "character_name" );
-  // strcpy ( Me[0].class_name , "Force bot" );
+  GameConfig.spell_level_visible = 0;
 
   UpdateAllCharacterStats( 0 );
 

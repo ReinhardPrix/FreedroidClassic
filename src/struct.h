@@ -88,6 +88,7 @@ typedef struct
   float SkillScreen_Visible_Time;
   float SkillScreen_Visible_Max_Time;
   int Automap_Visible;
+  int spell_level_visible;
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
 
