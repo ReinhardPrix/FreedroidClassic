@@ -245,7 +245,7 @@ enum
 #endif
 
 #define GRAPHICS_DIR		"graphics/"
-#define SOUND_DIR		"sounds/"
+#define SOUND_DIR		"sound/"
 #define MAP_DIR			"map/"
 
 #define NE_DROID_BLOCK_FILE	"droids.png"
@@ -282,7 +282,7 @@ enum
 #define RED_FONT_FILE 		"font/font05_red.png"
 #define BLUE_FONT_FILE 		"font/font05_white.png"
 #define FPS_FONT_FILE 		"font/font05.png"
-#define ICON_FILE		"font/paraicon.bmp"
+#define ICON_FILE		"paraicon.bmp"
 
 
 //--------------------

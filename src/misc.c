@@ -52,50 +52,50 @@ message, Message;
 
 mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
   {
-    { NULL , "CHAButton.png"                    , { 600 , 430 ,  38 ,  22 } } ,
-    { NULL , "INVButton.png"                    , { 600 , 400 ,  38 ,  22 } } ,
-    { NULL , "SKIButton.png"                    , { 600 , 370 ,  38 ,  22 } } ,
-    { NULL , "PlusButton.png"                   , { 600 , 430 ,  38 ,  22 } } ,
-    { NULL , "UPButton.png"                     , { 580 , 180 ,  50 , 100 } } ,
-    { NULL , "DOWNButton.png"                   , { 580 , 330 ,  50 , 100 } } ,
-    { NULL , "LEFTButton.png"                   , { 300 ,   5 , 100 ,  50 } } ,
-    { NULL , "RIGHTButton.png"                  , { 450 ,   5 , 100 ,  50 } } ,
-    { NULL , "MapExitButton.png"                , {  50 ,   5 , 100 ,  50 } } ,
-    { NULL , "MapUnlockDoorButton_gray.png"     , { 200 ,   5 , 100 ,  50 } } ,
-    { NULL , "MapUnlockDoorButton_yellow.png"   , { 200 ,   5 , 100 ,  50 } } ,
-    { NULL , "MapUnlockDoorButton_red.png"      , { 200 ,   5 , 100 ,  50 } } ,
-    { NULL , "MapGunOnOffButton_gray.png"       , { 350 ,   5 , 100 ,  50 } } ,
-    { NULL , "MapGunOnOffButton_yellow.png"     , { 350 ,   5 , 100 ,  50 } } ,
-    { NULL , "MapGunOnOffButton_red.png"        , { 350 ,   5 , 100 ,  50 } } ,
-    { NULL , "MapSecurityButtonMiddle.png"      , {  40 , 425 , 120 ,  50 } } ,
-    { NULL , "MapSecurityButtonLeft.png"        , {   5 , 425 ,  30 ,  50 } } ,
-    { NULL , "MapSecurityButtonRight.png"       , { 170 , 425 ,  30 ,  50 } } ,
-    { NULL , "MapPasswordButtonMiddle.png"      , { 310 , 425 , 120 ,  50 } } ,
-    { NULL , "MapSecurityButtonLeft.png"        , { 280 , 425 ,  30 ,  50 } } ,
-    { NULL , "MapSecurityButtonRight.png"       , { 440 , 425 ,  30 ,  50 } } ,
-    { NULL , "MapRequestEnergyRation_green.png" , { 200 ,  60 , 100 ,  50 } } ,
-    { NULL , "MapRequestEnergyRation_red.png"   , { 200 ,  60 , 100 ,  50 } } ,
-    { NULL , "MapReadEmail_green.png"           , { 350 ,  60 , 100 ,  50 } } ,
-    { NULL , "MapReadEmail_red.png"             , { 350 ,  60 , 100 ,  50 } } ,
+    { NULL , "mouse_buttons/CHAButton.png"                    , { 600 , 430 ,  38 ,  22 } } ,
+    { NULL , "mouse_buttons/INVButton.png"                    , { 600 , 400 ,  38 ,  22 } } ,
+    { NULL , "mouse_buttons/SKIButton.png"                    , { 600 , 370 ,  38 ,  22 } } ,
+    { NULL , "mouse_buttons/PlusButton.png"                   , { 600 , 430 ,  38 ,  22 } } ,
+    { NULL , "mouse_buttons/UPButton.png"                     , { 580 , 180 ,  50 , 100 } } ,
+    { NULL , "mouse_buttons/DOWNButton.png"                   , { 580 , 330 ,  50 , 100 } } ,
+    { NULL , "mouse_buttons/LEFTButton.png"                   , { 300 ,   5 , 100 ,  50 } } ,
+    { NULL , "mouse_buttons/RIGHTButton.png"                  , { 450 ,   5 , 100 ,  50 } } ,
+    { NULL , "mouse_buttons/MapExitButton.png"                , {  50 ,   5 , 100 ,  50 } } ,
+    { NULL , "mouse_buttons/MapUnlockDoorButton_gray.png"     , { 200 ,   5 , 100 ,  50 } } ,
+    { NULL , "mouse_buttons/MapUnlockDoorButton_yellow.png"   , { 200 ,   5 , 100 ,  50 } } ,
+    { NULL , "mouse_buttons/MapUnlockDoorButton_red.png"      , { 200 ,   5 , 100 ,  50 } } ,
+    { NULL , "mouse_buttons/MapGunOnOffButton_gray.png"       , { 350 ,   5 , 100 ,  50 } } ,
+    { NULL , "mouse_buttons/MapGunOnOffButton_yellow.png"     , { 350 ,   5 , 100 ,  50 } } ,
+    { NULL , "mouse_buttons/MapGunOnOffButton_red.png"        , { 350 ,   5 , 100 ,  50 } } ,
+    { NULL , "mouse_buttons/MapSecurityButtonMiddle.png"      , {  40 , 425 , 120 ,  50 } } ,
+    { NULL , "mouse_buttons/MapSecurityButtonLeft.png"        , {   5 , 425 ,  30 ,  50 } } ,
+    { NULL , "mouse_buttons/MapSecurityButtonRight.png"       , { 170 , 425 ,  30 ,  50 } } ,
+    { NULL , "mouse_buttons/MapPasswordButtonMiddle.png"      , { 310 , 425 , 120 ,  50 } } ,
+    { NULL , "mouse_buttons/MapSecurityButtonLeft.png"        , { 280 , 425 ,  30 ,  50 } } ,
+    { NULL , "mouse_buttons/MapSecurityButtonRight.png"       , { 440 , 425 ,  30 ,  50 } } ,
+    { NULL , "mouse_buttons/MapRequestEnergyRation_green.png" , { 200 ,  60 , 100 ,  50 } } ,
+    { NULL , "mouse_buttons/MapRequestEnergyRation_red.png"   , { 200 ,  60 , 100 ,  50 } } ,
+    { NULL , "mouse_buttons/MapReadEmail_green.png"           , { 350 ,  60 , 100 ,  50 } } ,
+    { NULL , "mouse_buttons/MapReadEmail_red.png"             , { 350 ,  60 , 100 ,  50 } } ,
 
-    { NULL , "MapGunTypeButton1_red.png"        , { 570 ,  64 ,  64 ,  64 } } ,
-    { NULL , "MapGunTypeButton2_red.png"        , { 570 , 128 ,  64 ,  64 } } ,
-    { NULL , "MapGunTypeButton3_red.png"        , { 570 , 192 ,  64 ,  64 } } ,
-    { NULL , "MapGunTypeButton4_red.png"        , { 570 , 256 ,  64 ,  64 } } ,
-    { NULL , "MapGunOnButton_gray.png"          , { 500 ,   5 , 100 ,  50 } } ,
-    { NULL , "MapGunOnButton_yellow.png"        , { 500 ,   5 , 100 ,  50 } } ,
-    { NULL , "MapGunOnButton_red.png"           , { 500 ,   5 , 100 ,  50 } } ,
-    { NULL , "MapGunTypeButton1_yellow.png"     , { 570 ,  64 ,  64 ,  64 } } ,
-    { NULL , "MapGunTypeButton2_yellow.png"     , { 570 , 128 ,  64 ,  64 } } ,
-    { NULL , "MapGunTypeButton3_yellow.png"     , { 570 , 192 ,  64 ,  64 } } ,
-    { NULL , "MapGunTypeButton4_yellow.png"     , { 570 , 256 ,  64 ,  64 } } ,
+    { NULL , "mouse_buttons/MapGunTypeButton1_red.png"        , { 570 ,  64 ,  64 ,  64 } } ,
+    { NULL , "mouse_buttons/MapGunTypeButton2_red.png"        , { 570 , 128 ,  64 ,  64 } } ,
+    { NULL , "mouse_buttons/MapGunTypeButton3_red.png"        , { 570 , 192 ,  64 ,  64 } } ,
+    { NULL , "mouse_buttons/MapGunTypeButton4_red.png"        , { 570 , 256 ,  64 ,  64 } } ,
+    { NULL , "mouse_buttons/MapGunOnButton_gray.png"          , { 500 ,   5 , 100 ,  50 } } ,
+    { NULL , "mouse_buttons/MapGunOnButton_yellow.png"        , { 500 ,   5 , 100 ,  50 } } ,
+    { NULL , "mouse_buttons/MapGunOnButton_red.png"           , { 500 ,   5 , 100 ,  50 } } ,
+    { NULL , "mouse_buttons/MapGunTypeButton1_yellow.png"     , { 570 ,  64 ,  64 ,  64 } } ,
+    { NULL , "mouse_buttons/MapGunTypeButton2_yellow.png"     , { 570 , 128 ,  64 ,  64 } } ,
+    { NULL , "mouse_buttons/MapGunTypeButton3_yellow.png"     , { 570 , 192 ,  64 ,  64 } } ,
+    { NULL , "mouse_buttons/MapGunTypeButton4_yellow.png"     , { 570 , 256 ,  64 ,  64 } } ,
 
-    { NULL , "ConsoleIdentifyButton_green.png"  , {  50 ,  60 , 100 ,  50 } } ,
-    { NULL , "ConsoleIdentifyButton_red.png"    , {  50 ,  60 , 100 ,  50 } } ,
-    { NULL , "ConsoleIdentifyButton_yellow.png" , {  50 ,  60 , 100 ,  50 } } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"        , { 280 ,  44 ,  37 ,  37 } } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"        , { 536 ,  44 ,  37 ,  37 } } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"        , {  94 ,  94 ,  54 ,  54 } } 
+    { NULL , "mouse_buttons/ConsoleIdentifyButton_green.png"  , {  50 ,  60 , 100 ,  50 } } ,
+    { NULL , "mouse_buttons/ConsoleIdentifyButton_red.png"    , {  50 ,  60 , 100 ,  50 } } ,
+    { NULL , "mouse_buttons/ConsoleIdentifyButton_yellow.png" , {  50 ,  60 , 100 ,  50 } } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 280 ,  44 ,  37 ,  37 } } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 536 ,  44 ,  37 ,  37 } } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , {  94 ,  94 ,  54 ,  54 } } 
 
   }; // AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] 
 
@@ -631,6 +631,10 @@ This is indicates a severe bug in Freedroid.",
 	{
 	  fclose (fp);
 	  break;
+	}
+      else
+	{
+	  DebugPrintf( 1 , "\nfind_file could not succeed with LOCAL path: %s." , File_Path );
 	}
     } /* for i */
 

@@ -1,4 +1,4 @@
-musicdir = $(pkgdatadir)/sounds/music
+musicdir = $(pkgdatadir)/sound/music
 
 music_DATA = *.mod *.MOD *.sid *.wav
 

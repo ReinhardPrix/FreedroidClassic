@@ -1,4 +1,4 @@
-effectsdir = $(pkgdatadir)/sounds/effects
+effectsdir = $(pkgdatadir)/sound/effects
 
 effects_DATA = *.wav
 

@@ -1,4 +1,4 @@
-speechesdir = $(pkgdatadir)/sounds/speeches
+speechesdir = $(pkgdatadir)/sound/speeches
 
 # speeches_DATA = *.ogg *.txt
 speeches_DATA = 
