@@ -1,9 +1,3 @@
-/*----------------------------------------------------------------------
- *
- * Desc: all the define-constants and macros
- *
- *----------------------------------------------------------------------*/
-
 /* 
  *
  *   Copyright (c) 1994, 2002 Johannes Prix
@@ -29,7 +23,15 @@
  *
  */
 
+/* ----------------------------------------------------------------------
+ * This file contains all the define-constants and macros
+ * ---------------------------------------------------------------------- */
 
+/*
+ * This file has been checked for remnants of german documentation.
+ * If you still find some german documentation anywhere in here, please
+ * let me know.  Thanks a lot.
+ */
 #ifndef _defs_h
 #define _defs_h
 
@@ -46,15 +48,15 @@
 (dst).x = (src).x; (dst).y = (src).y; (dst).w = (src).w; (dst).h = (src).h; }
 
 
-// **********************************************************************
+//--------------------
 // Constants influencing code generation and
 // constants defining flags for some functions:
-
+//
 #define USE_SDL_FRAMERATE
 
-/* ************************************************************
- * Highscore related defines 
- *************************************************************/
+//--------------------
+// Highscore related defines 
+// 
 #define HS_BACKGROUND_FILE     "transfer.jpg"
 #define HS_EMPTY_ENTRY  "--- empty ---"
 #define MAX_NAME_LEN 	15     /* max len of highscore name entry */
@@ -70,10 +72,11 @@ enum
 { ONLY_SHOW_MAP = 1 , DO_SCREEN_UPDATE = 2 };
 
 
-// **********************************************************************
+//--------------------
 // Constants for Paths and names of Data-files
 // the root "DATADIR" should be defined in the Makefile as $(pkgdatadir)
 // if not, we set it here:
+//
 #ifndef DATADIR
 #define DATADIR ".."   // our local fallback
 #endif
@@ -105,8 +108,9 @@ enum
 #define ICON_FILE		"paraicon.bmp"
 
 
-// **********************************************************************
+//--------------------
 // Constants about the size (and mem?) of pixmaps
+//
 
 #define INITIAL_BLOCK_WIDTH	64
 #define INITIAL_BLOCK_HEIGHT	64
@@ -148,12 +152,17 @@ enum
 
 
 
-/* Menu in Konsole */
+//--------------------
+// Definitions for the menu inside the in-game console
+//
 #define MENUITEMHEIGHT 		77
 #define MENUITEMLENGTH 		50*2
 #define MENUITEMMEM 		(MENUITEMLENGTH * MENUITEMHEIGHT)
 
-/* Dimensionen der Druids (fuer NotPassable() and CheckEnemyCollsion() ) */
+//--------------------
+// dimensions of the droids as required for functions NotPassable() and CheckEnemyCollsion() )
+//
+
 //NORMALISATION #define DRUIDRADIUSX		((10*2)/64.0)
 // #define DRUIDRADIUSX		(18/64.0)
 //NORMALISATION #define DRUIDRADIUSY		((10*2)/64.0)
@@ -164,8 +173,8 @@ enum
 // #define BULLET_BULLET_COLLISION_DIST (8.0/64.0)
 // #define BULLET_BULLET_COLLISION_DIST (4.0/64.0)
 
-// **********************************************************************
-//
+//--------------------
+// Some definitions for the menus
 //
 
 #define SINGLE_PLAYER_MENU_POINTER_POS_X (INITIAL_BLOCK_WIDTH/2)
@@ -173,12 +182,12 @@ enum
   { NEW_GAME_POSITION=1, SHOW_HISCORE_POSITION=2,
     SHOW_MISSION_POSITION=3, BACK_POSITION=4 };
 
-
-
+//--------------------
 // The following is the definition of the sound file names used in freedroid
 // DO NOT EVER CHANGE THE ORDER OF APPEARENCE IN THIS LIST PLEASE!!!!!
 // The order of appearance here should match the order of appearance 
 // in the SoundSampleFilenames definition located in sound.c!
+//
 
 #define COMBAT_BACKGROUND_MUSIC_SOUND "The_Last_V8.mod"
 // #define TAKEOVER_BACKGROUND_MUSIC_SOUND "The_Last_V8.mod"
@@ -223,6 +232,7 @@ enum _sounds
   ITEM_TAKEN_SOUND
 };
 
+//--------------------
 // The sounds when the influencers energy is low or when he is in transfer mode
 // occur periodically.  These constants specify which intervals are to be used
 // for these periodic happenings...
@@ -230,7 +240,8 @@ enum _sounds
 #define TRANSFER_SOUND_INTERVAL 1.1
 
 
-// **********************************************************************
+//--------------------
+//
 
 #define TRUE (1==1)
 #define FALSE (1==0)
@@ -238,7 +249,10 @@ enum _sounds
 #define ERR 	-1
 #define OK		0
 
-/* Ship-Elevator Picture */
+//--------------------
+// Ship-Elevator pictures
+//
+
 #define NUM_EL_BLOCKS		17
 
 #define EL_BLOCK_LEN		8
@@ -257,9 +271,10 @@ enum _sounds
 #define ENEMYPHASES 		8
 #define DROID_PHASES            ENEMYPHASES
 
-#define WAIT_LEVELEMPTY		18	/* warte bevor Graufaerben */
+#define WAIT_LEVELEMPTY		18	// time in frames to wait before removing the light in an empty level
+
 #define WAIT_AFTER_KILLED	1.5  // time to wait and still display pictures after the destruction of 
-                                   // the players droid.  This is now measured in seconds and can be a float
+                                 // the players droid.  This is now measured in seconds and can be a float
 #define WAIT_SHIPEMPTY		20
 #define WAIT_TRANSFERMODE	0.3	/* this is a "float" indicating the number of seconds the influence 
 					   stand still with space pressed, before switching into transfermode 
@@ -271,7 +286,9 @@ enum _sounds
                                   // the final wait time is a random number within [0,ENEMYMAXWAIT].
 #define FLASH_DURATION_IN_SECONDS 0.1
 
-/* direction definitions (fireing bullets and testing blockedness of positions) */
+//--------------------
+// direction definitions (fireing bullets and testing blockedness of positions) 
+//
 enum _directions
 {
   OBEN = 0,
@@ -287,7 +304,9 @@ enum _directions
 };
 
 
-/* Maximal number of ... */
+//--------------------
+// Maximal number of ...
+//
 
 #define NUM_MAP_BLOCKS		70  /* total number of map-blocks */
 #define NUM_COLORS              7   // how many different level colorings?/different tilesets?
@@ -301,19 +320,23 @@ enum _directions
 #define ROBOT_MAX_WAIT_BETWEEN_SHOTS 5  // how long shoud each droid wait at most until
                                         // is considers fireing again?
 
-/* Map-related defines:
-	WARNING leave them here, they are required in struct.h
-*/
+//--------------------
+// Map- and levelrelated defines
+// WARNING leave them here, they are required in struct.h
+//
+
 #define MAX_WP_CONNECTIONS 	12
 #define MAXMAPLINES 		50
+#define MAX_STATEMENTS_PER_LEVEL 30
+#define MAX_CODEPANELS_PER_LEVEL 30
+
 #define MAX_ENEMYS_ON_SHIP	1000
 #define MAX_REQUESTS_PER_DROID 5
 #define MAX_CHAT_KEYWORDS_PER_DROID 30
 #define MAX_INFLU_POSITION_HISTORY 10000
 #define MAX_MISSIONS_IN_GAME 10         // how many missions can there be at most in Freedroid
 #define MAX_MISSION_TRIGGERED_ACTIONS 10
-#define MAX_STATEMENTS_PER_LEVEL 30
-#define MAX_CODEPANELS_PER_LEVEL 30
+
 #define MAX_ITEMS_PER_LEVEL 30
 #define MAX_ITEMS_IN_INVENTORY 10
 #define NUMBER_OF_ITEM_PICTURES 20
@@ -362,13 +385,15 @@ enum _directions
 #define Fein2Grob(fein)		\
   ((int)(fein) / INITIAL_BLOCK_WIDTH)
 
-#define BREMSDREHUNG 3		/* warte 3*, bevor Influencer weitergedreht wird */
+#define BREMSDREHUNG 3		// STUPID AND SHOULD BE REMOVED
 
-/* Wegstossgeschw. von Tueren u.ae. */
+//--------------------
 // NORMALISATION #define PUSHSPEED 2
-#define PUSHSPEED 2
+#define PUSHSPEED 2 // speed at which influ will be pushed away from doors and such...
 
-/* Schusstypen */
+//--------------------
+// bullet types
+//
 enum _bullets
 {
   PULSE=0,
@@ -380,7 +405,9 @@ enum _bullets
 };
 
 
-/* Explosionstypen */
+//--------------------
+// explosion types
+//
 enum _explosions
 {
   BULLETBLAST=0,
@@ -390,7 +417,9 @@ enum _explosions
 
 #define BLINKENERGY 25
 
-/* Druidtypen */
+//--------------------
+// droid types
+//
 enum _druids
 {
   DRUID001 = 0,			/* You will know why are the numbers there, when you */
@@ -420,7 +449,9 @@ enum _druids
   DEBUG_ENEMY = 24
 };
 
-/* Status- Werte der Druids */
+//--------------------
+// possible states of the influencer as displayed in the top status banner
+//
 enum _status
 {
   MOBILE,
@@ -441,9 +472,18 @@ enum _status
 
 #define DECKCOMPLETEBONUS 500
 
-#define OUT TERMINATED		/* Type fuer inaktive Dinge */
+//--------------------
+// inactive things are assigned the status of 'out' which is somewhat
+// dangerous, since it corresponds to 12 or so and this a value that 
+// might well be used at some point as a normal index for the possible
+// states as well...
+// 
+#define OUT TERMINATED	
 
-/* Konstanten die die Kartenwerte anschaulich machen */
+//--------------------
+// some constants intended to make the map tiles numbers somewhat
+// more intuitive for case-separation and such things...
+//
 enum
 {
   FLOOR = 0,
