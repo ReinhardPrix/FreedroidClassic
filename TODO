@@ -6,6 +6,7 @@
 Bugs
 ----
 - Refresh: zaehlt Punkte ins negative, und zieht generell irre viel ab, is das ok?
+  NEE.  Das mit dem negativen ist ok.  Der Rest sollte soeben behoben worden sein...
 
 - Schuss nach Rechts-Unten geht nicht
 
@@ -17,7 +18,7 @@ Bugs
 
 - Laufschrift gehoert zu Paradroid-'extensions'
 
-- (rp) Invincible mode: versagt manchmal (Schuesse/collisions)
+- (rp) Invincible mode: versagt manchmal (collisions)
 
 - (rp) put all "cheat"-keys in cheat-menu (some are still accessible outside)
 

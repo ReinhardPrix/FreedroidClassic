@@ -1009,35 +1009,17 @@ void Flimmern(void){
 #ifdef FLIMMERN4
   /* vertical close Userfenster */
   for(i=0; i<(USERFENSTERHOEHE/2); i++) {
-    memset(Screenptr+(i+USERFENSTERPOSY)*SCREENBREITE+USERFENSTERPOSX,
-	   0,USERFENSTERBREITE);
-    memset(Screenptr+(USERFENSTERPOSY+USERFENSTERHOEHE-i)*SCREENBREITE
-	   +USERFENSTERPOSX,
-	   0, USERFENSTERBREITE);
+    vga_drawline(USERFENSTERPOSX,USERFENSTERPOSY+i,USERFENSTERPOSX+USERFENSTERBREITE,USERFENSTERPOSY+i);
+    vga_drawline(USERFENSTERPOSX,USERFENSTERPOSY+USERFENSTERHOEHE-i,USERFENSTERPOSX+USERFENSTERBREITE,USERFENSTERPOSY+USERFENSTERHOEHE-i);
     usleep(200);
   }
-  
 	
   /* make the central line white */
-  
-  // This is off in Flimmern4
-  Junkptr = Screenptr +
-    (USERFENSTERPOSY+USERFENSTERHOEHE/2)*SCREENBREITE+USERFENSTERPOSX;
-  /*	memset( Junkptr, FONT_WHITE, USERFENSTERBREITE);
-   */
-  usleep(50000);
-  
-  /* horizontal close userfenster */
-  
-  for(i=0; i<USERFENSTERBREITE/2-2; i++) {
-    *(Junkptr + i) = 0;
-    *(Junkptr + USERFENSTERBREITE - i) = 0;
-    usleep(100);
+  for(i=0; i<USERFENSTERBREITE/2 + 1; i++) {
+    vga_drawpixel(USERFENSTERPOSX+i,USERFENSTERPOSY+USERFENSTERHOEHE/2);
+    vga_drawpixel(USERFENSTERPOSX+USERFENSTERBREITE-i,USERFENSTERPOSY+USERFENSTERHOEHE/2);
+    usleep(20);
   }
-  
-  usleep(30000);
-  /* Clear the rest */
-  memset(Junkptr, 0, USERFENSTERBREITE);
   
   return;
 #endif
@@ -1053,6 +1035,7 @@ void Flimmern(void){
 #endif
 #endif
 #endif
+
 }
 #undef _graphics_c
 
