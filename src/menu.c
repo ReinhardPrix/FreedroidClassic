@@ -62,9 +62,9 @@ EXTERN void Level_Editor(void);
  * if there were infinitely many menu items.
  * ---------------------------------------------------------------------- */
 int
-MouseCursorIsOverMenuItem( first_menu_item_pos_y )
+MouseCursorIsOverMenuItem( int first_menu_item_pos_y , int h )
 {
-  int h = FontHeight ( GetCurrentFont() );
+  // int h = FontHeight ( GetCurrentFont() );
   
   //--------------------
   // The value of GetMousePos_y() NOT YET corrected for 16 pixels!!
@@ -130,7 +130,9 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char*
   // ambiguity whether to think of the tux cursor or the mouse cursor
   // to be the pointer we use.
   //
-  SDL_ShowCursor( SDL_DISABLE );
+  // SDL_ShowCursor( SDL_DISABLE );
+  //
+  SDL_ShowCursor( SDL_ENABLE );
 
   if ( FirstItem != (-1) ) MenuPosition = FirstItem;
 
@@ -254,14 +256,24 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char*
 	{
 	  if (MenuPosition > 1) MenuPosition--;
 	  MoveMenuPositionSound();
+	  HighlightRect.x = 320 ; // ( TextWidth ( MenuTexts [ MenuPosition - 1 ] ) ) / 2 ;
+	  HighlightRect.y = first_menu_item_pos_y + ( MenuPosition - 1 ) * h ;
+	  SDL_WarpMouse ( HighlightRect.x , HighlightRect.y );
 	  while (UpPressed());
 	}
       if ( DownPressed() || MouseWheelDownPressed() ) 
 	{
 	  if ( MenuPosition < NumberOfOptionsGiven ) MenuPosition++;
 	  MoveMenuPositionSound();
+	  HighlightRect.x = 320 ; // ( TextWidth ( MenuTexts [ MenuPosition - 1 ] ) ) / 2 ;
+	  HighlightRect.y = first_menu_item_pos_y + ( MenuPosition - 1 ) * h ;
+	  SDL_WarpMouse ( HighlightRect.x , HighlightRect.y );
 	  while (DownPressed());
 	}
+
+      MenuPosition = MouseCursorIsOverMenuItem( first_menu_item_pos_y , h );
+      if ( MenuPosition < 1 ) MenuPosition = 1 ;
+      if ( MenuPosition > NumberOfOptionsGiven ) MenuPosition = NumberOfOptionsGiven ;
 
       //--------------------
       // At this the while (1) overloop ends.  But for the menu, we really do not
@@ -375,7 +387,9 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
   // ambiguity whether to think of the tux cursor or the mouse cursor
   // to be the pointer we use.
   //
-  SDL_ShowCursor( SDL_DISABLE );
+  // SDL_ShowCursor( SDL_DISABLE );
+  //
+  SDL_ShowCursor( SDL_ENABLE );
 
   if ( FirstItem != (-1) ) MenuPosition = FirstItem;
 
@@ -478,14 +492,24 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
 	{
 	  if (MenuPosition > 1) MenuPosition--;
 	  MoveMenuPositionSound();
+	  HighlightRect.x = MenuPosX[ MenuPosition-1 ] + 2 * h ; 
+	  HighlightRect.y = MenuPosY[ MenuPosition-1 ] ;
+	  SDL_WarpMouse ( HighlightRect.x , HighlightRect.y );
 	  while (UpPressed());
 	}
       if ( DownPressed() || MouseWheelDownPressed() ) 
 	{
 	  if ( MenuPosition < NumberOfOptionsGiven ) MenuPosition++;
 	  MoveMenuPositionSound();
+	  HighlightRect.x = MenuPosX[ MenuPosition-1 ] + 2 * h ; 
+	  HighlightRect.y = MenuPosY[ MenuPosition-1 ] ;
+	  SDL_WarpMouse ( HighlightRect.x , HighlightRect.y );
 	  while (DownPressed());
 	}
+
+      MenuPosition = MouseCursorIsOverMenuItem( MenuPosY [ 0 ] , MenuPosY [ 1 ] - MenuPosY [ 0 ] );
+      if ( MenuPosition < 1 ) MenuPosition = 1 ;
+      if ( MenuPosition > NumberOfOptionsGiven ) MenuPosition = NumberOfOptionsGiven ;
 
     }
 
