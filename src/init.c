@@ -47,6 +47,7 @@
 void Init_Game_Data( char* Datafilename );
 void Get_Bullet_Data ( char* DataPointer );
 char* DebriefingText;
+char* DebriefingSong;
 char* NextMissionName;
 
 /*@Function============================================================
@@ -797,6 +798,7 @@ InitNewMission ( char *MissionName )
 
 #define END_OF_MISSION_DATA_STRING "*** End of Mission File ***"
 #define MISSION_BRIEFING_BEGIN_STRING "** Start of Mission Briefing Text Section **"
+#define MISSION_ENDTITLE_SONG_NAME_STRING "Song name to play in the end title if the mission is completed: "
 #define EVENT_SECTION_BEGIN_STRING "** Start of Mission Event Section **"
 #define SHIPNAME_INDICATION_STRING "Ship file to use for this mission: "
 #define ELEVATORNAME_INDICATION_STRING "Lift file to use for this mission: "
@@ -950,9 +952,11 @@ InitNewMission ( char *MissionName )
     }
 
   //--------------------
-  // Now its time to get the shipname from the mission file and
-  // read the ship file into the right memory structures
+  // Now its time to get the debriefing text from the mission file so that it
+  // can be used, if the mission is completed and also the end title music name
+  // must be read in as well
   //
+  DebriefingSong = ReadAndMallocStringFromData ( MainMissionPointer , MISSION_ENDTITLE_SONG_NAME_STRING , "\n" ) ;
   DebriefingText =
     ReadAndMallocStringFromData ( MainMissionPointer , MISSION_ENDTITLE_BEGIN_STRING , MISSION_ENDTITLE_END_STRING ) ;
 
@@ -1282,7 +1286,7 @@ EndTitle (void)
 
   DebugPrintf (2, "\nvoid EndTitle(void): real function call confirmed...:");
 
-  Switch_Background_Music_To (CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC);
+  Switch_Background_Music_To ( DebriefingSong );
 
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
 
