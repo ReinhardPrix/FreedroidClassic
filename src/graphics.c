@@ -44,6 +44,77 @@
 #include "SDL_rotozoom.h"
 
 
+
+
+void 
+DrawLineBetweenTiles( float x1 , float y1 , float x2 , float y2 , int Color )
+{
+  int i;
+  int pixx;
+  int pixy;
+  float tmp;
+  float slope;
+
+  if ( (x1 == x2) && (y1 == y2) ) return; // nothing is to be done here
+
+
+  if (x1 == x2) // infinite slope!! special case, that must be caught!
+    {
+
+      if (y1 > y2) // in this case, just interchange 1 and 2
+	{
+	  tmp = y1;
+	  y1=y2;
+	  y2=tmp;
+	}
+
+      for ( i=0 ; i < (y2 - y1) * Block_Width ; i++ )
+	{
+	  pixx=User_Rect.x + User_Rect.w/2 - Block_Width * (Me.pos.x - x1 );
+	  pixy=User_Rect.y + User_Rect.h/2 - Block_Height * (Me.pos.y - y1 ) + i ;
+	  if ( (pixx <= User_Rect.x) || 
+	       (pixx >= User_Rect.x + User_Rect.w -1) || 
+	       (pixy <= User_Rect.y ) || 
+	       (pixy >= User_Rect.y + User_Rect.h -1) ) continue; 
+	  putpixel( ne_screen , pixx , pixy , Color );
+	  putpixel( ne_screen , pixx-1 , pixy , Color );
+	}
+      return; 
+    }
+
+  if (x1 > x2) // in this case, just interchange 1 and 2
+    {
+      tmp = x1;
+      x1=x2;
+      x2=tmp;
+      tmp = y1;
+      y1=y2;
+      y2=tmp;
+    }
+
+  //--------------------
+  // Now we start the drawing process
+  //
+  // SDL_LockSurface( ne_screen );
+
+  slope = ( y2 - y1 ) / (x2 - x1) ;
+  for ( i=0 ; i<(x2-x1)*Block_Width ; i++ )
+    {
+      pixx=User_Rect.x + User_Rect.w/2 - Block_Width * (Me.pos.x - x1 ) + i;
+      pixy=User_Rect.y + User_Rect.h/2 - Block_Height * (Me.pos.y - y1 ) + i * slope ;
+      if ( (pixx <= User_Rect.x) || 
+	   (pixx >= User_Rect.x + User_Rect.w -1) || 
+	   (pixy <= User_Rect.y ) || 
+	   (pixy >= User_Rect.y + User_Rect.h -1) ) continue; 
+      putpixel( ne_screen , pixx , pixy , Color );
+      putpixel( ne_screen , pixx , pixy -1 , Color );
+    }
+
+  // SDL_UnlockSurface( ne_screen );
+
+} // void DrawLineBetweenTiles
+
+
 /*-----------------------------------------------------------------
  * This function saves a screenshot to disk.
  * The screenshots are names "Screenshot_XX.bmp" where XX is a
