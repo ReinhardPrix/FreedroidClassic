@@ -107,7 +107,7 @@ enum
 
 /* Menu in Konsole */
 #define MENUITEMHEIGHT 		77
-#define MENUITEMLENGTH 		50
+#define MENUITEMLENGTH 		50*2
 #define MENUITEMMEM 		(MENUITEMLENGTH * MENUITEMHEIGHT)
 
 /* Dimensionen der Druids (fuer NotPassable() and CheckEnemyCollsion() ) */

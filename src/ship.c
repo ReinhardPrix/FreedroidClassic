@@ -51,7 +51,7 @@ void AlleElevatorsGleichFaerben (void);
 void PaintConsoleMenu (void);
 
 int WaitElevatorCounter = 0;
-
+int ConsoleMenuPos=0;
 
 
 /*-----------------------------------------------------------------
@@ -271,7 +271,6 @@ This function runs the consoles. This means the following duties:
 void
 EnterKonsole (void)
 {
-  int MenuPoint = 0;
   int ReenterGame = 0;
   int TasteOK;
 
@@ -285,23 +284,7 @@ EnterKonsole (void)
 
   while (SpacePressed ());  /* wait for user to release Space */
 
-  /* Gleich zu Beginn die Farben richtig setzten */
-  if (MenuPoint == 0)
-    SetPalCol (M1C, HR, HG, HB);
-  else
-    SetPalCol (M1C, GR, GG, GB);
-  if (MenuPoint == 1)
-    SetPalCol (M2C, HR, HG, HB);
-  else
-    SetPalCol (M2C, GR, GG, GB);
-  if (MenuPoint == 2)
-    SetPalCol (M3C, HR, HG, HB);
-  else
-    SetPalCol (M3C, GR, GG, GB);
-  if (MenuPoint == 3)
-    SetPalCol (M4C, HR, HG, HB);
-  else
-    SetPalCol (M4C, GR, GG, GB);
+  ConsoleMenuPos=0;
 
   /* Gesamtkonsolenschleife */
 
@@ -317,12 +300,12 @@ EnterKonsole (void)
 	{
 	  if (UpPressed ())
 	    {
-	      MenuPoint--;
+	      ConsoleMenuPos--;
 	      TasteOK = 1;
 	    }
 	  if (DownPressed ())
 	    {
-	      MenuPoint++;
+	      ConsoleMenuPos++;
 	      TasteOK = 1;
 	    }
 	  if (SpacePressed ())
@@ -330,35 +313,17 @@ EnterKonsole (void)
 	}
 
       /* Verhindern, da"s der Menucursor das Menu verl"a"st */
-      if (MenuPoint < 0)
-	MenuPoint = 0;
-      if (MenuPoint > 3)
-	MenuPoint = 3;
-
-      /* Anzeigen des aktuellen Menupunktes durch Palettenwertsetzen */
-      if (MenuPoint == 0)
-	SetPalCol (M1C, HR, HG, HB);
-      else
-	SetPalCol (M1C, GR, GG, GB);
-      if (MenuPoint == 1)
-	SetPalCol (M2C, HR, HG, HB);
-      else
-	SetPalCol (M2C, GR, GG, GB);
-      if (MenuPoint == 2)
-	SetPalCol (M3C, HR, HG, HB);
-      else
-	SetPalCol (M3C, GR, GG, GB);
-      if (MenuPoint == 3)
-	SetPalCol (M4C, HR, HG, HB);
-      else
-	SetPalCol (M4C, GR, GG, GB);
+      if (ConsoleMenuPos < 0)
+	ConsoleMenuPos = 0;
+      if (ConsoleMenuPos > 3)
+	ConsoleMenuPos = 3;
 
       /* gew"ahlte Menupunkte betreten */
-      if ((MenuPoint == 0) & (SpacePressed ()))
+      if ((ConsoleMenuPos == 0) & (SpacePressed ()))
 	ReenterGame = TRUE;
-      if ((MenuPoint == 1) & (SpacePressed ()))
+      if ((ConsoleMenuPos == 1) & (SpacePressed ()))
 	GreatDruidShow ();
-      if ((MenuPoint == 2) & (SpacePressed ()))
+      if ((ConsoleMenuPos == 2) & (SpacePressed ()))
 	{
 	  ShowDeckMap (CurLevel);
 	  /* this is not very elegant at the moment, but it works ok.. */
@@ -366,7 +331,7 @@ EnterKonsole (void)
 	  while (!SpacePressed () ); /* and wait for another space before leaving */
 	  while ( SpacePressed() ); /* but also wait for the release before going on..*/
 	}
-      if ((MenuPoint == 3) & (SpacePressed ()))
+      if ((ConsoleMenuPos == 3) & (SpacePressed ()))
 	{
 	  while (SpacePressed ());
 	  ShowElevators ();
@@ -381,7 +346,6 @@ EnterKonsole (void)
   Me.status = MOBILE;
   /* Die Textfarben wieder setzen wie sie vorher waren */
   SetTextColor (FONT_WHITE, FONT_RED);	/* BG: Rahmenwei"s FG: FONT_RED */
-  // SetInfoline (NULL, NULL);
 
   while (SpacePressed ());
 
@@ -450,7 +414,7 @@ PaintConsoleMenu (void)
    *
    */
 
-  SourceRectangle.x=0;
+  SourceRectangle.x=(MENUITEMLENGTH+2)*ConsoleMenuPos;
   SourceRectangle.y=0;
   SourceRectangle.w=MENUITEMLENGTH;
   SourceRectangle.h=USERFENSTERHOEHE;
