@@ -1048,6 +1048,7 @@ ShowInventoryScreen( void )
 {
   static SDL_Surface *InventoryImage = NULL;
   static SDL_Surface *TransparentPlateImage = NULL;
+  SDL_Surface *tmp;
   char *fpath;
   char fname[]="inventory.png";
   char fname2[]="TransparentPlate.png";
@@ -1064,10 +1065,14 @@ ShowInventoryScreen( void )
     {
       // SDL_FillRect( Screen, & InventoryRect , 0x0FFFFFF );
       fpath = find_file ( fname , GRAPHICS_DIR, FALSE);
-      InventoryImage = IMG_Load( fpath );
+      tmp = IMG_Load( fpath );
+      InventoryImage = SDL_DisplayFormat ( tmp );
+      SDL_FreeSurface ( tmp );
 
       fpath = find_file ( fname2 , GRAPHICS_DIR, FALSE);
-      TransparentPlateImage = IMG_Load( fpath );
+      tmp = IMG_Load( fpath );
+      TransparentPlateImage = SDL_DisplayFormatAlpha ( tmp );
+      SDL_FreeSurface ( tmp );
 
       //--------------------
       // We define the right side of the user screen as the rectangle
