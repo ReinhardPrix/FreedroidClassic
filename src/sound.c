@@ -45,7 +45,7 @@
 // The order of appearance here should match the order of appearance 
 // in the enum-Environment located in defs.h!
 
-#define ALL_SOUNDS 59
+#define ALL_SOUNDS 63
 char *SoundSampleFilenames[ALL_SOUNDS] = {
    "ERRORSOUND_NILL.NOWAV",
    "Combat_Background_Music.wav",
@@ -105,7 +105,11 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
    "Influencer_Scream_Sound_3.wav",
    "Influencer_Scream_Sound_4.wav",
    "Spell_ForceToEnergy_Sound_0.wav",
-   "Spell_DetectItems_Sound_0.wav"
+   "Spell_DetectItems_Sound_0.wav",
+   "Shop_ItemSoldSound_0.wav",
+   "Shop_ItemBoughtSound_0.wav",
+   "Shop_ItemRepairedSound_0.wav",
+   "Shop_ItemIdentifiedSound_0.wav"
 };
 
 #ifdef HAVE_LIBSDL_MIXER
@@ -377,6 +381,42 @@ CrySound (void)
 {
   Play_Sound ( CRY_SOUND );
 }
+
+/* ----------------------------------------------------------------------
+ * When an Item is sold, this voice sample will be played...
+ * ---------------------------------------------------------------------- */
+void
+Play_Shop_ItemSoldSound( )
+{
+  Play_Sound ( SHOP_ITEM_SOLD_SOUND_0 ) ;
+};  // void Play_Shop_ItemSoldSound( )
+
+/* ----------------------------------------------------------------------
+ * When an Item is bought, this voice sample will be played...
+ * ---------------------------------------------------------------------- */
+void
+Play_Shop_ItemBoughtSound( )
+{
+  Play_Sound ( SHOP_ITEM_BOUGHT_SOUND_0 ) ;
+};  // void Play_Shop_ItemBoughtSound( )
+
+/* ----------------------------------------------------------------------
+ * When an Item is repaired, this voice sample will be played...
+ * ---------------------------------------------------------------------- */
+void
+Play_Shop_ItemRepairedSound( )
+{
+  Play_Sound ( SHOP_ITEM_REPAIRED_SOUND_0 ) ;
+};  // void Play_Shop_ItemRepairedSound( )
+
+/* ----------------------------------------------------------------------
+ * When an Item is identified, this voice sample will be played...
+ * ---------------------------------------------------------------------- */
+void
+Play_Shop_ItemIdentifiedSound( )
+{
+  Play_Sound ( SHOP_ITEM_IDENTIFIED_SOUND_0 ) ;
+};  // void Play_Shop_ItemIdentifiedSound( )
 
 /* ----------------------------------------------------------------------
  * When a Force-To-Energy Spell is invoked successfully, then this sound

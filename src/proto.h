@@ -255,6 +255,10 @@ EXTERN void PlayEnemyGotHitSound ( int enemytype );
 EXTERN void BulletReflectedSound (void);
 EXTERN void Play_Spell_ForceToEnergy_Sound( void );
 EXTERN void Play_Spell_DetectItems_Sound( void );
+EXTERN void Play_Shop_ItemSoldSound( void );
+EXTERN void Play_Shop_ItemBoughtSound( void );
+EXTERN void Play_Shop_ItemRepairedSound( void );
+EXTERN void Play_Shop_ItemIdentifiedSound( void );
 
 // items.c
 #undef EXTERN

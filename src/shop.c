@@ -369,6 +369,7 @@ TryToRepairItem( item* RepairItem )
 	  while (EnterPressed() || SpacePressed() );
 	  Me[0].Gold -= REPAIR_PRICE_FACTOR * CalculateItemPrice ( RepairItem , TRUE ) ;
 	  RepairItem->current_duration = RepairItem->max_duration;
+	  Play_Shop_ItemRepairedSound( );
 	  return;
 	  break;
 	case ANSWER_NO:
@@ -428,6 +429,7 @@ TryToIdentifyItem( item* IdentifyItem )
 	  while (EnterPressed() || SpacePressed() );
 	  Me[0].Gold -= 100 ;
 	  IdentifyItem -> is_identified = TRUE ;
+	  Play_Shop_ItemIdentifiedSound( );
 
 	  MenuTexts[0]=" BACK ";
 	  MenuTexts[1]="";
@@ -487,6 +489,7 @@ TryToSellItem( item* SellItem )
 	  while (EnterPressed() || SpacePressed() );
 	  Me[0].Gold += SELL_PRICE_FACTOR * CalculateItemPrice ( SellItem , FALSE );
 	  DeleteItem( SellItem );
+	  Play_Shop_ItemSoldSound( );
 	  return;
 	  break;
 	case ANSWER_NO:
@@ -562,6 +565,7 @@ TryToBuyItem( item* BuyItem )
 		      Me[0].Inventory[ FreeIndex ].inventory_position.x = x;
 		      Me[0].Inventory[ FreeIndex ].inventory_position.y = y;
 		      Me[0].Gold -= CalculateItemPrice ( BuyItem , FALSE );
+		      Play_Shop_ItemBoughtSound( );
 		      return;
 		      break;
 		    case ANSWER_NO:
