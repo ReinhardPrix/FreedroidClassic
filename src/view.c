@@ -656,14 +656,19 @@ PutInfluence (void)
 
   DebugPrintf ("\nvoid PutInfluence(void): REAL function called.");
 
-  // source = Influencepointer + ((int) rintf (Me.phase)) * BLOCKMEM;
-
-  // PutObject (Me.pos.x, Me.pos.y, source, FALSE);
-
   TargetRectangle.x=USER_FENSTER_CENTER_X - BLOCKBREITE/2;
   TargetRectangle.y=USER_FENSTER_CENTER_Y - BLOCKHOEHE/2;
 
   SDL_BlitSurface( ne_blocks , ne_influ_block+((int) rintf (Me.phase)), ne_screen, &TargetRectangle );
+
+  // SDL_BlitSurface( ne_blocks , ne_digit_block+(Druidmap[Me.type].druidname[0]-'1') , ne_screen, &TargetRectangle );
+  TargetRectangle.x += DIGIT_POS_X;
+  TargetRectangle.y += DIGIT_POS_Y;
+  SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Me.type].druidname[0]-'1'+1) , ne_screen, &TargetRectangle );
+  TargetRectangle.x += DIGITLENGTH;
+  SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Me.type].druidname[1]-'1'+1) , ne_screen, &TargetRectangle );
+  TargetRectangle.x += DIGITLENGTH;
+  SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Me.type].druidname[2]-'1'+1) , ne_screen, &TargetRectangle );
 
   DebugPrintf ("\nvoid PutInfluence(void): REAL function ended.");
 
@@ -748,11 +753,22 @@ PutEnemy (int Enum)
 
   TargetRectangle.x=USER_FENSTER_CENTER_X-Me.pos.x+Feindesliste[Enum].pos.x-BLOCKBREITE/2;
   TargetRectangle.y=USER_FENSTER_CENTER_Y-Me.pos.y+Feindesliste[Enum].pos.y-BLOCKHOEHE/2;
+  // TargetRectangle.w=BLOCKBREITE;
+  // TargetRectangle.h=BLOCKHOEHE;
 
   SDL_BlitSurface(ne_blocks , ne_droid_block+phase, ne_screen, &TargetRectangle);
 
-  // Now the numbers should be blittet.  But since they are not even read in,
-  // I will leave that for now... 
+  // Now the numbers should be blittet.
+
+  TargetRectangle.x=USER_FENSTER_CENTER_X-Me.pos.x+Feindesliste[Enum].pos.x-BLOCKBREITE/2 + DIGIT_POS_X;
+  TargetRectangle.y=USER_FENSTER_CENTER_Y-Me.pos.y+Feindesliste[Enum].pos.y-BLOCKHOEHE/2 + DIGIT_POS_Y;
+  SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Feindesliste[Enum].type].druidname[0]-'1'+11) , ne_screen, &TargetRectangle );
+  TargetRectangle.x += DIGITLENGTH-1;
+  SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Feindesliste[Enum].type].druidname[1]-'1'+11) , ne_screen, &TargetRectangle );
+  TargetRectangle.x += DIGITLENGTH-1;
+  SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Feindesliste[Enum].type].druidname[2]-'1'+11) , ne_screen, &TargetRectangle );
+
+
 
   DebugPrintf ("\nvoid PutEnemy(int Enum): ENEMY HAS BEEN PUT --> usual end of function reached.\n");
 

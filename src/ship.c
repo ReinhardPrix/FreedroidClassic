@@ -445,6 +445,75 @@ PaintConsoleMenu (void)
   char MenuText[200];
   // unsigned int fg, bg;
 
+#ifdef NEW_ENGINE
+
+  SDL_Rect SourceRectangle;
+  SDL_Rect TargetRectangle;
+
+
+  ClearGraphMem (Outline320x200);
+  // GetTextColor (&bg, &fg);	/* store text color settings */
+
+  DisplayRahmen (Outline320x200);
+  SetInfoline (NULL, NULL);
+
+  /* Userfenster faerben */
+  // SetUserfenster (KON_BG_COLOR, Outline320x200);
+  SetUserfenster (208, Outline320x200);
+
+  /* Konsolen-Menue Farbe setzen */
+  // SetTextColor (KON_BG_COLOR, KON_TEXT_COLOR);
+  SetTextColor (208, RAHMEN_VIOLETT );	// RED // YELLOW
+
+  strcpy (MenuText, "Unit type ");
+  strcat (MenuText, Druidmap[Me.type].druidname);
+  strcat (MenuText, " - ");
+  strcat (MenuText, Classname[Druidmap[Me.type].class]);
+  DisplayText (MenuText, USERFENSTERPOSX, USERFENSTERPOSY, Outline320x200, FALSE);
+
+  SetTextBorder (MENUTEXT_X, USERFENSTERPOSY,
+		 USERFENSTERPOSX + USERFENSTERBREITE,
+		 USERFENSTERPOSY + USERFENSTERHOEHE, 30);
+
+  strcpy (MenuText, "\nAccess granted.\nShip : ");
+  strcat (MenuText, Shipnames[ThisShip]);
+  strcat (MenuText, "\nDeck : ");
+  strcat (MenuText, Decknames[CurLevel->levelnum]);
+  strcat (MenuText, "\n\nAlert: ");
+  strcat (MenuText, Alertcolor[Alert]);
+
+  DisplayText (MenuText, MENUTEXT_X, USERFENSTERPOSY + 15, Outline320x200,
+	       FALSE);
+
+  SetTextBorder (0, 0, SCREENBREITE, SCREENHOEHE, 40);
+
+  /*
+   * Hier werden die Icons des Menus ausgegeben
+   *
+   */
+
+  SourceRectangle.x=0;
+  SourceRectangle.y=0;
+  SourceRectangle.w=MENUITEMLENGTH;
+  SourceRectangle.h=USERFENSTERHOEHE;
+  TargetRectangle.x=MENUITEMPOSX;
+  TargetRectangle.y=MENUITEMPOSY;
+  SDL_BlitSurface( ne_console_surface , &SourceRectangle , ne_screen , &TargetRectangle );
+
+  /*
+  DisplayMergeBlock (MENUITEMPOSX, MENUITEMPOSY + FONTHOEHE + BLOCKHOEHE - 4,
+		     MenuItemPointer,
+		     MENUITEMLENGTH, MENUITEMHEIGHT, Outline320x200);
+
+
+  DisplayMergeBlock (MENUITEMPOSX + 10, MENUITEMPOSY + FONTHOEHE,
+		     Influencepointer + BLOCKMEM * ((int) rintf (Me.phase)),
+		     BLOCKBREITE, BLOCKHOEHE, Outline320x200);
+  */
+
+  // SetTextColor (bg, fg); /* restore text color settings */
+#else
+
   ClearGraphMem (Outline320x200);
   // GetTextColor (&bg, &fg);	/* store text color settings */
 
@@ -498,6 +567,7 @@ PaintConsoleMenu (void)
 
   // SetTextColor (bg, fg); /* restore text color settings */
 
+#endif
   return;
 }	// PaintConsoleMenu ()
 

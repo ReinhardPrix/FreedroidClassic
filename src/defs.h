@@ -101,6 +101,8 @@ enum _sounds
 #define NE_BLAST_BLOCK_FILE 	"../graphics/blast.bmp"
 #define NE_FRAME_FILE		"../graphics/rahmen.bmp"
 #define NE_ELEVATOR_PIC_FILE    "../graphics/ship.bmp"
+#define NE_CONSOLEN_PIC_FILE    "../graphics/ne_cons.bmp" // "../graphics/console.bmp"
+#define NE_DIGIT_BLOCK_FILE     "../graphics/digits.bmp"
 #else
 
 #define PALBILD_PCX                "../graphics/palbild.bmp"
@@ -148,6 +150,9 @@ enum _sounds
 #define DIGITHEIGHT 9
 #define DIGITNUMBER 22
 #define DIGITMEM DIGITHEIGHT*DIGITLENGTH*DIGITNUMBER
+#define NUMBEROFS 		5+12*BLOCKBREITE
+#define DIGIT_POS_X 5
+#define DIGIT_POS_Y 12
 
 /* Rahmen */
 #define RAHMENBREITE		SCREENBREITE
@@ -207,7 +212,6 @@ enum _sounds
 #define ALLCLASSNAMES 		11
 #define ALLSHIPS 		4
 
-#define NUMBEROFS 		5+12*BLOCKBREITE
 #define ENEMYPHASES 		8
 #define DROID_PHASES            ENEMYPHASES
 

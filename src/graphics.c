@@ -256,7 +256,14 @@ InitPictures (void)
     Blastmap[i].block =
       ne_get_blocks (NE_BLAST_BLOCK_FILE, Blastmap[i].phases, 0, i, block_line++);
 
+  ne_digit_block =
+    ne_get_digit_blocks (NE_DIGIT_BLOCK_FILE, DIGITNUMBER, DIGITNUMBER, 0, block_line++);
 
+  
+  // console picture need not be rendered fast or something.  This
+  // really has time, so we load it as a surface and do not take the
+  // elements apart (they dont have typical block format either)
+  ne_console_surface=SDL_LoadBMP( NE_CONSOLEN_PIC_FILE );
 
 
 
@@ -793,9 +800,6 @@ void
 SetPalCol (unsigned int palpos, unsigned char rot, unsigned char gruen,
 	   unsigned char blau)
 {
-#ifdef NEW_ENGINE
-  return;
-#else
   SDL_Color ThisOneColor;
 
   ThisOneColor.r=rot;
@@ -806,25 +810,16 @@ SetPalCol (unsigned int palpos, unsigned char rot, unsigned char gruen,
   // DebugPrintf("\nvoid SetPalCol(...): Real function called.");
   // vga_setpalette (palpos, rot, gruen, blau);
 
+#ifdef NEW_ENGINE
+  SDL_SetColors( ne_screen , &ThisOneColor, palpos, 1 );
+  // SDL_SetColors( ne_blocks , &ThisOneColor, palpos, 1 );
+#else
   SDL_SetColors( ScaledSurface , &ThisOneColor, palpos, 1 );
+#endif // !NEW_ENGINE
 
   // SDL_SetColors( screen , &ThisOneColor, palpos, 1 );
   // DebugPrintf("\nvoid SetPalCol(...): Usual end of function reached.");
-#endif // !NEW_ENGINE
 }				// void SetPalCol(...)
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-SetPalCol2 (unsigned int palpos, color Farbwert)
-{
-  // PORT REINHARDS NEUE ENGINE vga_setpalette (palpos, Farbwert.rot, Farbwert.gruen, Farbwert.blau);
-}				// void SetPalCol2(...)
-
 
 /*-----------------------------------------------------------------
  *   Diese Funktion bringt ein Flimmer auf den Schirm

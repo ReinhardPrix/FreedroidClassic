@@ -378,6 +378,10 @@ DisplayText (char *Text,
 {
   char *tmp;	/* Beweg. Zeiger auf aktuelle Position im Ausgabe-Text */
 
+#ifdef NEW_ENGINE
+  return;
+#endif
+
   MyCursorX = startx;		/* akt. Schreib-Position */
   MyCursorY = starty;
 

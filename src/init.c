@@ -293,7 +293,7 @@ InitNewGame (void)
     ("\nvoid InitNewGame(void): The title signaton has been successfully displayed...:");
 
   /* Farben des aktuellen Levels einstellen */
-  SetLevelColor (CurLevel->color);  // internally deactivated for new engine
+  SetLevelColor (CurLevel->color); 
 
   /* Den Rahmen fuer das Spiel anzeigen */
   ClearVGAScreen ();

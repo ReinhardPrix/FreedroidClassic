@@ -186,7 +186,6 @@ EXTERN void ClearVGAScreen (void);
 EXTERN void SetColors (int FirstCol, int PalAnz, char *PalPtr);
 EXTERN void SetPalCol (unsigned int palpos, unsigned char rot,
 		       unsigned char gruen, unsigned char blau);
-EXTERN void SetPalCol2 (unsigned int palpos, color Farbwert);
 EXTERN int InitLevelColorTable (void);
 EXTERN int InitPalette (void);
 EXTERN void SetLevelColor (int);

@@ -354,6 +354,47 @@ ne_get_blocks (char *picfile, int num_blocks, int blocks_per_line,
 
 } /* ne_get_blocks() */
 
+SDL_Rect *
+ne_get_digit_blocks (char *picfile, int num_blocks, int blocks_per_line,
+	       int source_line, int target_line)
+{
+  int i;
+  SDL_Surface *tmp;
+  SDL_Rect rect, *ret;
+
+  /* Load the map-block BMP file into the appropriate surface */
+  if( !(tmp = SDL_LoadBMP(picfile) ))
+    {
+      fprintf(stderr, "Couldn't load %s: %s\n", picfile, SDL_GetError());
+      Terminate (ERR);
+    }
+
+  if (!blocks_per_line) /* only one line here */
+    blocks_per_line = num_blocks;
+
+  ret = (SDL_Rect*)MyMalloc(num_blocks*sizeof(SDL_Rect));
+
+
+  /* now copy the individual map-blocks into ne_blocks */
+  for (i=0; i < num_blocks; i++)
+    {
+      rect.x = (i%blocks_per_line)*(DIGITLENGTH);
+      rect.y = (source_line+i/blocks_per_line)*(BLOCK_HEIGHT+1);
+      rect.w = DIGITLENGTH-1;
+      rect.h = DIGITHEIGHT;
+      
+      ret[i].x = i*DIGITLENGTH;
+      ret[i].y = target_line*BLOCK_HEIGHT;
+      ret[i].w = DIGITLENGTH;
+      ret[i].h = DIGITHEIGHT;
+      SDL_BlitSurface (tmp, &rect, ne_blocks, &ret[i]);
+    }
+  SDL_FreeSurface (tmp);
+
+  return (ret);
+
+} /* ne_get_digit_blocks() */
+
 #endif // NEW_ENGINE
 
 /*@Function============================================================
