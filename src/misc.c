@@ -9,30 +9,6 @@
  *
  * $Author$
  *
- * $Log$
- * Revision 1.8  1997/06/06 09:31:37  jprix
- * Cheatmenu() repaired, brought more structure to the svgalib videomode calls.
- *
- * Revision 1.7  1997/06/05 09:24:15  jprix
- * Habe YIFF Soundserver eingebaut, doch derweil bleibt er noch durch einen bedingten Compilierungsschalter deaktiviert, weil er bei euch nicht laufen wird.  He. Ich war grad in irgendeiner Form von vi gefangen! Hilfe! Bis der Soundserver aber wirklich geht, wird es noch ein Bischen dauern.  Er ist aber Klasse und das wird sicher toll.  Bis bald, Johannes.
- *
- * Revision 1.6  2002/04/08 19:19:09  rp
- * Johannes latest (and last) non-cvs version to be checked in. Added graphics,sound,map-subdirs. Sound support using ALSA started.
- *
- * Revision 1.5  1997/05/31 13:30:31  rprix
- * Further update by johannes. (sent to me in tar.gz)
- *
- * Revision 1.2  1994/06/19  16:25:08  prix
- * Sat May 21 14:27:44 1994: PutMessages written
- * Sat May 21 17:29:48 1994: Arbeit an PutMessages
- * Sat May 21 17:53:41 1994: Testversion (very very alpha
- * Sat May 21 18:03:46 1994: InsertMessage hinzugef"ugt
- * Tue Jun 14 10:16:33 1994: Terminate() is now in this module
- * Wed Jun 15 13:27:09 1994: CheatMenu transported to here
- *
- * Revision 1.1  1993/07/29  17:28:56  prix
- * Initial revision
- *
  *
  *-@Header------------------------------------------------------------*/
 
@@ -89,16 +65,16 @@ message* Queue=NULL;
 	Diese Funktion l"oscht alle Roboter auf dem momentanen Level
 	**********************************************************************/
 void Armageddon(void){
-	int i;
-	char ATaste=' ';
-
-	gotoxy(0,0);
-	printf(" Really kill all droids on ship (y/n) ?");
-	while ( (ATaste!='y') && (ATaste!='n') ) ATaste=getchar();
-	if (ATaste == 'n') return;
-	for (i=0;i<MAX_ENEMYS_ON_SHIP;i++){
-		Feindesliste[i].energy=0;
-	}
+  int i;
+  char ATaste=' ';
+	
+  gl_printf(-1,-1,"\nKill all droids on ship (y/n) ?");
+  while ( (ATaste!='y') && (ATaste!='n') ) ATaste=getchar();
+  if (ATaste == 'n') return;
+  else
+    for (i=0;i<MAX_ENEMYS_ON_SHIP;i++){
+      Feindesliste[i].energy=0;
+    }
 }
 
 /* **********************************************************************
@@ -161,107 +137,149 @@ int curLevel=LNum;
 	**********************************************************************/
 void Cheatmenu(void){
   char CTaste=' ';
+  char *userInput;
+  int vgamode;
+  char NewRoboType[80]; // name of new influencer robot-type, i.e. "123"
   int Weiter=0;
   int LNum,X,Y,i,RN,dummy;
-  
-  Set_SVGALIB_Video_OFF();
-  
-  gotoxy(1,1);
-  printf("*******************************\n");
-  printf(" ----  C H E A T M E N U  ----\n");
-  printf("-------------------------------\n\n");
-  printf(" a. Armageddon (alle Robots sprengen)\n");
-  printf(" l. Robotliste von einem Deck\n");
-  printf(" g. Gesamtrobotliste\n");
-  printf(" r. Robotvernichtung dieses Deck\n");
-  printf(" t. Teleportation\n");
-  printf(" w. Neuer Wirt\n\n");
-  printf(" i. Invinciblemode ");
-  if (InvincibleMode) printf("aus\n"); else printf("ein\n");
-  printf(" v. Volle Energie\n");
-  printf(" b. Blinkenergie\n");
-  printf(" c. Conceptview auf %d\n",!Conceptview);
-  printf(" m. Map von Deck xy\n");
-	
-  printf("\n <SPACE> RESUME game\n");
+  int X0=20, Y0=5;   // startpos for gl_- text writing
+  keyboard_close();  // return to normal keyboard operation
 
+  //  gotoxy(1,1);
+  //  vgamode = vga_getcurrentmode();
+  //  vga_setmode(TEXT);
+
+  // rp: try out the gl-textfunctions
   while (!Weiter) {
+    vga_clear();
+    gl_setfont(8, 8, gl_font8x8);
+    gl_setwritemode(FONT_COMPRESSED + WRITEMODE_OVERWRITE);
+    gl_setfontcolors(0, vga_white());
+
+    gl_printf(X0,Y0, "*******************************\n");
+    gl_printf(-1,-1, " ----  C H E A T M E N U  ----\n");
+    gl_printf(-1,-1, "-------------------------------\n\n");
+    gl_printf(-1,-1, " a. Armageddon (alle Robots sprengen)\n");
+    gl_printf(-1,-1, " l. Robotliste von einem Deck\n");
+    gl_printf(-1,-1, " g. Gesamtrobotliste\n");
+    gl_printf(-1,-1, " r. Robotvernichtung dieses Deck\n");
+    gl_printf(-1,-1, " t. Teleportation\n");
+    gl_printf(-1,-1, " w. Wechsle Robo-typ\n\n");
+    gl_printf(-1,-1, " i. Invinciblemode: %s\n",InvincibleMode?"ON":"OFF");
+    gl_printf(-1,-1, " v. Volle Energie\n");
+    gl_printf(-1,-1, " b. Blinkenergie\n");
+    gl_printf(-1,-1, " c. Conceptview: %s\n",Conceptview?"ON":"OFF");
+    gl_printf(-1,-1, " m. Map von Deck xy\n");
+    gl_printf(-1,-1, "\n q. RESUME game\n");
+
     CTaste=getchar();
     switch (CTaste) {
     case 'a': Weiter=1; Armageddon(); break;
-    case 'l': {
-      gotoxy(1,1);
-      printf("NR.\tID\tX\tY\tENERGY.\n");
+    case 'l': 
+      vga_clear();
+      gl_printf(X0,Y0,"NR.\tID\tX\tY\tENERGY.\n");
       for(i=0;i<MAX_ENEMYS_ON_SHIP;i++){
 	if (Feindesliste[i].levelnum==CurLevel->levelnum)
-	  printf("%d.\t%s\t%d\t%d\t%d.\n",i,
-		 Druidmap[Feindesliste[i].type].druidname,
-		 Feindesliste[i].pos.x,
-		 Feindesliste[i].pos.y,
-		 Feindesliste[i].energy);
+	  gl_printf(-1,-1,"%d.\t%s\t%d\t%d\t%d.\n",i,
+		    Druidmap[Feindesliste[i].type].druidname,
+		    Feindesliste[i].pos.x, Feindesliste[i].pos.y,
+		    Feindesliste[i].energy);
       }
-      while (!SpacePressed) JoystickControl();
-      Weiter=1;
+      getchar();
       break;
-    }
-    case '3': Weiter=1; break;
-    case 'r': {
-      Weiter=1;
+    case 'r': 
       for(i=0;i<MAX_ENEMYS_ON_SHIP;i++){
 	if (Feindesliste[i].levelnum==CurLevel->levelnum) Feindesliste[i].energy=0;
       }
+      gl_printf(-1,-1,"All robots on this deck killed!");
+      getchar();
       break;
-    }
-    case 'g': {
-      Weiter=1;
-      gotoxy(1,1);
-      printf("Nr.\tLev.\tID\tEnergy\n");
-      for(i=0;i<MAX_ENEMYS_ON_SHIP;i++){
-	printf("%d\t%d\t%s\t%d\n",i,Feindesliste[i].levelnum,Druidmap[Feindesliste[i].type].druidname,Feindesliste[i].energy);
-	if ((i%22)==0) {
-	  printf(" --- MORE --- \n");
+
+    case 'g': 
+      vga_clear();
+      gl_printf(X0,Y0,"Nr.\tLev.\tID\tEnergy\n");
+      for(i=0;i<NumEnemys;i++){
+	gl_printf(-1,-1,"%d\t%d\t%s\t%d\n",
+	       i,Feindesliste[i].levelnum,
+	       Druidmap[Feindesliste[i].type].druidname,
+	       Feindesliste[i].energy);
+	if ((i%22)==0 && i>0) {
+	  gl_printf(-1,-1," --- MORE --- \n");
 	  getchar();
+	  vga_clear();
+	  gl_printf(X0,Y0,"Nr.\tLev.\tID\tEnergy\n");
 	}
       }
       break;
-    }
-    case 't': {
-      Weiter=1;
-      printf(" Bitte Levelnummer, Grobwert X und Grobwert Y :");
-      scanf("%d %d %d",&LNum,&X,&Y);
+
+    case 't': 
+      gl_printf(-1,-1,"\n Enter Levelnummer, X-Pos, Y-Pos: ");
+      scanf("%d, %d, %d",&LNum,&X,&Y);
+      getchar();  // remove the cr from input
+      vga_clear();
       Teleport(LNum,X,Y);
+      gl_printf(1,1,"This is your position on level %d.\n",LNum);
+      gl_printf(-1,-1,"Press key to continue");
+      getchar();
       break;
-    }
-    case 'w': {
-      Weiter=1;
-      printf(" Nummer (nicht der Name):");
-      scanf("%d",&Me.type);
-      Me.energy=Druidmap[Me.type].maxenergy;
-      Me.health= STARTENERGIE; // Druidmap[OpponentType].maxenergy;
-      RedrawInfluenceNumber();
+
+    case 'w': 
+      gl_printf(-1,-1,"\nTypennummer ihres neuen robos: ");
+      scanf("%s",NewRoboType);
+      getchar();  // remove cr from input
+      for(i=0; i<ALLDRUIDTYPES; i++) {
+	if( !strcmp(Druidmap[i].druidname,NewRoboType) ) break;
+      }
+      if( i == ALLDRUIDTYPES ) {
+	gl_printf(-1,-1,"\nUnrecognized robot-type: %s\n", NewRoboType);
+	getchar();
+      }  else {
+	Me.type = i;
+	Me.energy=Druidmap[Me.type].maxenergy;
+	Me.health= STARTENERGIE; // Druidmap[OpponentType].maxenergy;
+	gl_printf(-1,-1,"\nYou are now a %s. Have fun!\n", NewRoboType);
+	getchar();
+	RedrawInfluenceNumber();
+      }
       break;
-    }
-    case 'i': Weiter=1; InvincibleMode = !InvincibleMode; break;
-    case 'v': Weiter=1; Me.energy=Druidmap[Me.type].maxenergy; Me.health=Me.energy; break;
-    case 'b': Weiter=1; Me.energy=1; break; 
-    case 'c': Conceptview=!Conceptview; Weiter=1; break;
+    
+    case 'i': InvincibleMode = !InvincibleMode; break;
+    case 'v': 
+      Me.energy=Druidmap[Me.type].maxenergy; 
+      Me.health=Me.energy;
+      gl_printf(-1,-1,"\nSie sind wieder gesund!");
+      getchar();
+      break;
+    case 'b': 
+      Me.energy=1; 
+      gl_printf(-1,-1,"\nSie sind jetzt ziemlich schwach!");
+      getchar();
+      break; 
+    case 'c': Conceptview=!Conceptview; break;
     case 'm':
-      printf("\nLevelnum:");
-      scanf("%d", &LNum);
+      gl_printf(-1,-1,"\nLevelnum:");
+      scanf("%d", &LNum); getchar();
+      // this function works in raw-kb mode, so we switch again
+      keyboard_init();
       ShowDeckMap(curShip.AllLevels[LNum]);
+      keyboard_close();
       break;
       
-    case ' ': Weiter=1; break;
+    case ' ': 
+    case 'q':
+      Weiter=1; break;
     }
   }
-  
-  Set_SVGALIB_Video_ON();
-  
-  //	ClearGraphMem(RealScreen);
-  //	DisplayRahmen(RealScreen);
-	
+  ClearGraphMem(RealScreen);
+  DisplayRahmen(RealScreen);
   InitBars=TRUE;
-} // void Cheatmenu(void)
+
+  vga_clear();
+  keyboard_init();   // return to raw keyboard mode
+  //  vga_setmode(vgamode);  // return to VGA mode
+  
+  return;
+}
 
 
 /*@Function============================================================
@@ -296,25 +314,35 @@ void Terminate(int ExitCode){
   //
 
   printf("\nvoid Terminate(int ExitStatus) wurde aufgerufen....\n");
-
-  printf("\nvoid Terminate(int ExitStatus): shutting svga-keyboard back to normal.....\n");
+  printf("GameOver : %i\n",GameOver);
+  printf("Diese Meldung wurde durch PRINTF ausgegeben VOR dem Umschalten auf Textmode.\n");
   keyboard_close();
-
-  printf("\nvoid Terminate(int ExitStatus): shutting console back to text mode....\n");
   vga_setmode(TEXT);
-
-  printf("\nvoid Terminate(int ExitStatus): closing down connection to the YIFF sound server....\n");
-  YIFF_Server_Close_Connections();
-
-  printf("\nvoid Terminate(int ExitStatus): Terminating....\n");
-  printf("\n");
+  printf("Diese Meldung wurde durch PRINTF ausgegeben NACH dem Umschalten auf Textmode.\n");
   exit(ExitCode);
   return;
 
-  //#ifdef MODSCHASEIN	
-  // PORT StopModPlayer();
-  //#endif
+  //
+  // THIS WAS IN BEFORE THE PORT AND WILL NO LONGER BE EXECUTED,
+  // EVEN IF IT IS NOT COMMENTED OUT
+  //
 
+  if (ExitCode) getchar();
+  /* Interruptvektoren wieder restaurieren */
+  RestoreIntVects();
+  /* Soundblaster soll keine Toene mehr spucken */
+  // PORT sbfm_silence();
+#ifdef MODSCHASEIN	
+  // PORT StopModPlayer();
+#endif
+  /* Videomodus wieder restaurieren */
+  RestoreVideoMode();
+  
+  /* Tastaturwiederholung wieder schnell setzen */
+  SetTypematicRate(TYPEMATIC_FAST);
+  
+  /* Zur"uck nach DOS */
+  exit(ExitCode);
 } // void Terminate(int ExitCode)
 
 
