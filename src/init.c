@@ -1360,8 +1360,9 @@ Get_Mission_Targets( char* MissionTargetPointer )
       Me[0].AllMissions[ MissionTargetIndex ].MissionWasFailed = FALSE;
       Me[0].AllMissions[ MissionTargetIndex ].MissionWasAssigned = FALSE;
 
-      Me[0].AllMissions[ MissionTargetIndex ].MissionName = 
-	ReadAndMallocStringFromData ( MissionTargetPointer , MISSION_TARGET_NAME_INITIALIZER , "\"" ) ;
+      // Me[0].AllMissions[ MissionTargetIndex ].MissionName = 
+      // ReadAndMallocStringFromData ( MissionTargetPointer , MISSION_TARGET_NAME_INITIALIZER , "\"" ) ;
+      strcpy ( Me[0].AllMissions[ MissionTargetIndex ].MissionName , ReadAndMallocStringFromData ( MissionTargetPointer , MISSION_TARGET_NAME_INITIALIZER , "\"" ) ) ;
 
       //--------------------
       // No we read in if this mission should be assigned to the influencer
@@ -2191,7 +2192,7 @@ CheckIfMissionIsComplete (void)
        && Ctrl_Was_Pressed() && Shift_Was_Pressed() )
     {
       EndTitle();
-      InitNewMissionList ( NextMissionName);
+      InitNewMissionList ( NextMissionName );
     }
   #define MIS_COMPLETE_DEBUG 3
 

@@ -36,8 +36,6 @@
 #include "global.h"
 #include "proto.h"
 
-// SDL_Surface* StoredMenuBackground = NULL;
-
 #define FIRST_MENU_ITEM_POS_X (1*Block_Width)
 #define FIRST_MENU_ITEM_POS_XX ( SCREEN_WIDTH - FIRST_MENU_ITEM_POS_X )
 #define FIRST_MENU_ITEM_POS_Y (BANNER_HEIGHT + FontHeight(Menu_BFont) * 3 )

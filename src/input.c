@@ -273,6 +273,7 @@ ReactToSpecialKeys(void)
   static int IPressed_LastFrame;
   static int CPressed_LastFrame;
   static int SPressed_LastFrame;
+  static int LPressed_LastFrame;
   static int TabPressed_LastFrame;
   influence_t Zwisch_Me;
   char MessageBuffer[1024];
@@ -412,11 +413,13 @@ ReactToSpecialKeys(void)
   //--------------------
   // We assign the L key to turn on/off the quest log i.e. mission log
   //
-  if ( LPressed() )
+  if ( LPressed() && ( !LPressed_LastFrame ) )
     {
       GameConfig.Mission_Log_Visible_Time = 0;
       GameConfig.Mission_Log_Visible = !GameConfig.Mission_Log_Visible;
     }
+  LPressed_LastFrame = LPressed();
+  
 
   //--------------------
   // We assign the Space key to turn off all windows and quest log

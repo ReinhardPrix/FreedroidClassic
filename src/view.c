@@ -268,7 +268,7 @@ ShowMissionCompletitionMessages( void )
       if ( Me[0].AllMissions[ MissNum ].MissionExistsAtAll != TRUE ) continue;
 
       // In case the mission was not yet assigned, we need not do anything more...
-      if ( Me[0].AllMissions[ MissNum ].MissionWasAssigned != TRUE ) continue;
+      // if ( Me[0].AllMissions[ MissNum ].MissionWasAssigned != TRUE ) continue;
 
       // In case the message is rather old, we need not do anything more...
       // if ( Me[0].AllMissions[ MissNum ].MissionLastStatusChangeTime > 1000 ) continue;
@@ -281,10 +281,14 @@ ShowMissionCompletitionMessages( void )
 	}
       else if ( Me[0].AllMissions[ MissNum ].MissionWasFailed == TRUE )
 	{
-	  DisplayText( "\n* Mission completed: " , -1 , -1 , &User_Rect );
+	  DisplayText( "\n* Mission failed: " , -1 , -1 , &User_Rect );
 	}
-      else
-	  DisplayText( "\n* Mission assigned: " , -1 , -1 , &User_Rect );
+      else if ( ! Me[0].AllMissions[ MissNum ].MissionWasAssigned == TRUE )
+	{
+	  DisplayText( "\n* Mission not yet assigned: " , -1 , -1 , &User_Rect );
+	}
+      else 
+	DisplayText( "\n* Mission assigned: " , -1 , -1 , &User_Rect );
 
       DisplayText( Me[0].AllMissions[ MissNum ].MissionName , -1 , -1 , &User_Rect );
 

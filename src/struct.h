@@ -157,7 +157,8 @@ map_insert, *Map_Insert;
 
 typedef struct
 {
-  char* MissionName;  // this should be the name of the mission, currently uninitialized
+  // char* MissionName;  // this should be the name of the mission, currently uninitialized
+  char MissionName[500];  // this should be the name of the mission, currently uninitialized
   int MissionWasAssigned; // has be influencer been assigned to this mission? , currently uninitialized
   int MissionIsComplete; // has the mission been completed?
   int MissionWasFailed; // has the mission been failed?
