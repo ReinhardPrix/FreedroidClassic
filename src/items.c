@@ -759,8 +759,60 @@ DropHeldItemToTheFloor ( void )
 
 }; // void DropHeldItemToTheFloor ( void )
 
+/* ----------------------------------------------------------------------
+ * This function checks if the usage requirements for a given item are
+ * met by the influencer or not.
+ * ---------------------------------------------------------------------- */
+int 
+ItemUsageRequirementsMet( item* UseItem , int MakeSound )
+{
+  if ( Me.Strength < ItemMap[ UseItem->type ].item_require_strength )
+    {
+      if ( MakeSound ) Not_Enough_Power_Sound( );
+      return ( FALSE );
+    }
+  if ( Me.Dexterity < ItemMap[ UseItem->type ].item_require_dexterity )
+    {
+      if ( MakeSound ) Not_Enough_Dist_Sound( );
+      return ( FALSE );
+    }
+  if ( Me.Magic < ItemMap[ UseItem->type ].item_require_magic )
+    {
+      return ( FALSE );
+    }
+  return ( TRUE );
+}; // int ItemUsageRequirementsMet( item* UseItem )
+
+/* ----------------------------------------------------------------------
+ * This function checks, if the influencer mets the requirements of the
+ * item currently held in hand by the player/influencer.  Which item this
+ * is will be found out by the function.
+ * ---------------------------------------------------------------------- */
+int 
+HeldItemUsageRequirementsMet( void )
+{
+  item* DropItemPointer;
+
+  // --------------------
+  // First we find out which item we want to check
+  //
+  DropItemPointer = GetHeldItemPointer(  );
+  if ( DropItemPointer == NULL )
+    {
+      DebugPrintf( 0 , "\nvoid HeldItemUsageRequirementsMet ( void ) : No item in inventory seems to be currently held in hand...");
+      return ( FALSE ) ;
+    } 
+  
+  return ( ItemUsageRequirementsMet ( DropItemPointer , TRUE ) );
+};
+
+/* ----------------------------------------------------------------------
+ * This function installs an item into a slot.  The given parameter is 
+ * only the slot where this item should be installed.  The source item
+ * will be found out from inside this function.  Very convenient.
+ * ---------------------------------------------------------------------- */
 void
-DropHeldItemToWeaponSlot ( void )
+DropHeldItemToSlot ( item* SlotItem )
 {
   item* DropItemPointer;
 
@@ -770,7 +822,7 @@ DropHeldItemToWeaponSlot ( void )
   DropItemPointer = GetHeldItemPointer(  );
   if ( DropItemPointer == NULL )
     {
-      DebugPrintf( 0 , "\nvoid DropHeldItemToWeaponSlot ( void ) : No item in inventory seems to be currently held in hand...");
+      DebugPrintf( 0 , "\nvoid DropHeldItemToSlot ( void ) : No item in inventory seems to be currently held in hand...");
       return;
     } 
 
@@ -784,265 +836,23 @@ DropHeldItemToWeaponSlot ( void )
   // But this may only be done of course, if the 'old item' is not
   // the item we want to put there itself!!!!  HAHAHAHA!!!!
   //
-  if ( ( Druidmap[ DRUID001 ].weapon_item.type != (-1) ) &&
-       ( Druidmap[ DRUID001 ].weapon_item.currently_held_in_hand == FALSE ) )
-    MakeHeldFloorItemOutOf( &( Druidmap[ DRUID001 ].weapon_item ) );
+  if ( ( SlotItem->type != (-1) ) &&
+       ( SlotItem->currently_held_in_hand == FALSE ) )
+    MakeHeldFloorItemOutOf( SlotItem );
 
   //--------------------
   // Now the item is installed into the weapon slot of the influencer
   
   // Druidmap[ DRUID001 ].weapon_item = Me.Inventory[ InvPos ].type;
-  CopyItem( DropItemPointer , &(Druidmap[ DRUID001 ].weapon_item) );
-  Druidmap[ DRUID001 ].weapon_item.currently_held_in_hand = FALSE;
+  CopyItem( DropItemPointer , SlotItem );
+  SlotItem->currently_held_in_hand = FALSE;
 
   // Now the item is removed from the source location and no longer held in hand as well, 
   // but of course only if it is not the same as the original item
-  if ( DropItemPointer != &(Druidmap[ DRUID001 ].weapon_item) )
+  if ( DropItemPointer != SlotItem )
     DeleteItem( DropItemPointer );
 
-}; // void DropHeldItemToWeaponSlot ( void )
-
-void
-DropHeldItemToDriveSlot ( void )
-{
-  item* DropItemPointer;
-
-  // --------------------
-  // First we find out which item we want to drop into the weapon slot
-  //
-  DropItemPointer = GetHeldItemPointer(  );
-  if ( DropItemPointer == NULL )
-    {
-      DebugPrintf( 0 , "\nvoid DropHeldItemToWeaponSlot ( void ) : No item in inventory seems to be currently held in hand...");
-      return;
-    } 
-
-  //--------------------
-  // If there is an old item in the slot, we make a held item on the
-  // floor out of it and also set the HeldItemType accordingly, so that
-  // after the new item was placed successfully, the old item will
-  // be out of all inventory slots, but still in the hand of the 
-  // player and ready to be put somewhere else
-  //
-  //
-  // But this may only be done of course, if the 'old item' is not
-  // the item we want to put there itself!!!!  HAHAHAHA!!!!
-  //.currently_held_in_hand
-  if ( ( Druidmap[ DRUID001 ].drive_item.type != (-1) ) &&
-       ( Druidmap[ DRUID001 ].drive_item.currently_held_in_hand == FALSE ) )
-    MakeHeldFloorItemOutOf( &( Druidmap[ DRUID001 ].drive_item ) );
-
-  // Now the item is installed into the drive slot of the influencer
-  CopyItem( DropItemPointer , &(Druidmap[ DRUID001 ].drive_item) );
-  Druidmap[ DRUID001 ].drive_item.currently_held_in_hand = FALSE;
-
-  // Now the item is removed from the source location and no longer held in hand as well, 
-  // but of course only if it is not the same as the original item
-  if ( DropItemPointer != &(Druidmap[ DRUID001 ].drive_item) )
-    DeleteItem( DropItemPointer );
-
-}; // void DropHeldItemToDriveSlot ( void )
-
-void
-DropHeldItemToArmourSlot ( void )
-{
-  item* DropItemPointer;
-
-  // --------------------
-  // First we find out which item we want to drop into the weapon slot
-  //
-  DropItemPointer = GetHeldItemPointer(  );
-  if ( DropItemPointer == NULL )
-    {
-      DebugPrintf( 0 , "\nvoid DropHeldItemToWeaponSlot ( void ) : No item in inventory seems to be currently held in hand...");
-      return;
-    } 
-
-  //--------------------
-  // If there is an old item in the slot, we make a held item on the
-  // floor out of it and also set the HeldItemType accordingly, so that
-  // after the new item was placed successfully, the old item will
-  // be out of all inventory slots, but still in the hand of the 
-  // player and ready to be put somewhere else
-  //
-  // But this may only be done of course, if the 'old item' is not
-  // the item we want to put there itself!!!!  HAHAHAHA!!!!
-  //
-  if ( ( Druidmap[ DRUID001 ].armour_item.type != (-1) ) &&
-       ( Druidmap[ DRUID001 ].armour_item.currently_held_in_hand == FALSE ) )
-    MakeHeldFloorItemOutOf( &( Druidmap[ DRUID001 ].armour_item ) );
-
-  // Now the item is installed into the weapon slot of the influencer
-  // Druidmap[ DRUID001 ].armour_item = Me.Inventory[ InvPos ].type;
-  CopyItem ( DropItemPointer , &(Druidmap[ DRUID001 ].armour_item) );
-  Druidmap[ DRUID001 ].armour_item.currently_held_in_hand = FALSE;
-
-  // Now the item is removed from the source location and no longer held in hand as well, 
-  // but of course only if it is not the same as the original item
-  if ( DropItemPointer != &(Druidmap[ DRUID001 ].armour_item) )
-    DeleteItem( DropItemPointer );
-
-}; // void DropHeldItemToArmourSlot ( void )
-
-void
-DropHeldItemToShieldSlot ( void )
-{
-  item* DropItemPointer;
-
-  // --------------------
-  // First we find out which item we want to drop into the weapon slot
-  //
-  DropItemPointer = GetHeldItemPointer(  );
-  if ( DropItemPointer == NULL )
-    {
-      DebugPrintf( 0 , "\nvoid DropHeldItemToWeaponSlot ( void ) : No item in inventory seems to be currently held in hand...");
-      return;
-    } 
-
-  //--------------------
-  // If there is an old item in the slot, we make a held item on the
-  // floor out of it and also set the HeldItemType accordingly, so that
-  // after the new item was placed successfully, the old item will
-  // be out of all inventory slots, but still in the hand of the 
-  // player and ready to be put somewhere else
-  //
-  // But this may only be done of course, if the 'old item' is not
-  // the item we want to put there itself!!!!  HAHAHAHA!!!!
-  //
-  if ( ( Druidmap[ DRUID001 ].shield_item.type != (-1) ) &&
-       ( Druidmap[ DRUID001 ].shield_item.currently_held_in_hand == FALSE ) )
-    MakeHeldFloorItemOutOf( &( Druidmap[ DRUID001 ].shield_item ) );
-
-  // Now the item is installed into the weapon slot of the influencer
-  CopyItem ( DropItemPointer , &(Druidmap[ DRUID001 ].shield_item) );
-  Druidmap[ DRUID001 ].shield_item.currently_held_in_hand = FALSE;
-
-  // Now the item is removed from the source location and no longer held in hand as well, 
-  // but of course only if it is not the same as the original item
-  if ( DropItemPointer != &(Druidmap[ DRUID001 ].shield_item) )
-    DeleteItem( DropItemPointer );
-
-}; // void DropHeldItemToShieldSlot ( void )
-
-void
-DropHeldItemToSpecialSlot ( void )
-{
-  item* DropItemPointer;
-
-  // --------------------
-  // First we find out which item we want to drop into the weapon slot
-  //
-  DropItemPointer = GetHeldItemPointer(  );
-  if ( DropItemPointer == NULL )
-    {
-      DebugPrintf( 0 , "\nvoid DropHeldItemToWeaponSlot ( void ) : No item in inventory seems to be currently held in hand...");
-      return;
-    } 
-
-  //--------------------
-  // If there is an old item in the slot, we make a held item on the
-  // floor out of it and also set the HeldItemType accordingly, so that
-  // after the new item was placed successfully, the old item will
-  // be out of all inventory slots, but still in the hand of the 
-  // player and ready to be put somewhere else
-  //
-  // But this may only be done of course, if the 'old item' is not
-  // the item we want to put there itself!!!!  HAHAHAHA!!!!
-  //
-  if ( ( Druidmap[ DRUID001 ].special_item.type != (-1) ) &&
-       ( Druidmap[ DRUID001 ].special_item.currently_held_in_hand == FALSE ) )
-    MakeHeldFloorItemOutOf( &( Druidmap[ DRUID001 ].special_item ) );
-
-  // Now the item is installed into the weapon slot of the influencer
-  CopyItem( DropItemPointer , &( Druidmap[ DRUID001 ].special_item) );
-  Druidmap[ DRUID001 ].special_item.currently_held_in_hand = FALSE;
-
-  // Now the item is removed from the source location and no longer held in hand as well, 
-  // but of course only if it is not the same as the original item
-  if ( DropItemPointer != &(Druidmap[ DRUID001 ].special_item) )
-    DeleteItem( DropItemPointer );
-
-}; // void DropHeldItemToSpecialSlot ( void )
-
-void
-DropHeldItemToAux1Slot ( void )
-{
-  item* DropItemPointer;
-
-  // --------------------
-  // First we find out which item we want to drop into the weapon slot
-  //
-  DropItemPointer = GetHeldItemPointer(  );
-  if ( DropItemPointer == NULL )
-    {
-      DebugPrintf( 0 , "\nvoid DropHeldItemToWeaponSlot ( void ) : No item in inventory seems to be currently held in hand...");
-      return;
-    } 
-
-  //--------------------
-  // If there is an old item in the slot, we make a held item on the
-  // floor out of it and also set the HeldItemType accordingly, so that
-  // after the new item was placed successfully, the old item will
-  // be out of all inventory slots, but still in the hand of the 
-  // player and ready to be put somewhere else
-  //
-  // But this may only be done of course, if the 'old item' is not
-  // the item we want to put there itself!!!!  HAHAHAHA!!!!
-  //
-  if ( ( Druidmap[ DRUID001 ].aux1_item.type != (-1) ) &&
-       ( Druidmap[ DRUID001 ].aux1_item.currently_held_in_hand == FALSE ) )
-    MakeHeldFloorItemOutOf( &( Druidmap[ DRUID001 ].aux1_item ) );
-
-  // Now the item is installed into the weapon slot of the influencer
-  CopyItem( DropItemPointer , &( Druidmap[ DRUID001 ].aux1_item) );
-  Druidmap[ DRUID001 ].aux1_item.currently_held_in_hand = FALSE;
-
-  // Now the item is removed from the source location and no longer held in hand as well, 
-  // but of course only if it is not the same as the original item
-  if ( DropItemPointer != &(Druidmap[ DRUID001 ].aux1_item) )
-    DeleteItem( DropItemPointer );
-
-}; // void DropHeldItemToAux1Slot ( void )
-
-void
-DropHeldItemToAux2Slot ( void )
-{
-  item* DropItemPointer;
-
-  // --------------------
-  // First we find out which item we want to drop into the weapon slot
-  //
-  DropItemPointer = GetHeldItemPointer(  );
-  if ( DropItemPointer == NULL )
-    {
-      DebugPrintf( 0 , "\nvoid DropHeldItemToWeaponSlot ( void ) : No item in inventory seems to be currently held in hand...");
-      return;
-    } 
-
-  //--------------------
-  // If there is an old item in the slot, we make a held item on the
-  // floor out of it and also set the HeldItemType accordingly, so that
-  // after the new item was placed successfully, the old item will
-  // be out of all inventory slots, but still in the hand of the 
-  // player and ready to be put somewhere else
-  //
-  // But this may only be done of course, if the 'old item' is not
-  // the item we want to put there itself!!!!  HAHAHAHA!!!!
-  //
-  if ( ( Druidmap[ DRUID001 ].aux2_item.type != (-1) ) && 
-       ( Druidmap[ DRUID001 ].aux2_item.currently_held_in_hand == FALSE ) )
-    MakeHeldFloorItemOutOf( &( Druidmap[ DRUID001 ].aux2_item ) );
-
-  // Now the item is installed into the weapon slot of the influencer
-  CopyItem( DropItemPointer , &( Druidmap[ DRUID001 ].aux2_item) );
-  Druidmap[ DRUID001 ].aux2_item.currently_held_in_hand = FALSE;
-
-  // Now the item is removed from the source location and no longer held in hand as well, 
-  // but of course only if it is not the same as the original item
-  if ( DropItemPointer != &(Druidmap[ DRUID001 ].aux2_item) )
-    DeleteItem( DropItemPointer );
-
-}; // void DropHeldItemToAux2Slot ( void )
+}; // void DropHeldItemToSlot ( item* SlotItem )
 
 /* ----------------------------------------------------------------------
  * This function looks for a free inventory index.  Since there are more
@@ -1510,8 +1320,12 @@ ManageInventoryScreen ( void )
 	  if ( ( GetHeldItemCode() != (-1) ) &&
 	       ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_weapon_slot ) )
 	    {
-	      Item_Held_In_Hand = ( -1 );
-	      DropHeldItemToWeaponSlot ( );
+	      if ( HeldItemUsageRequirementsMet(  ) )
+		{
+		  Item_Held_In_Hand = ( -1 );
+		  // DropHeldItemToWeaponSlot ( );
+		  DropHeldItemToSlot ( & ( Druidmap [ Me.type ].weapon_item ) );
+		}
 	    }
 	  else
 	    {
@@ -1530,8 +1344,12 @@ ManageInventoryScreen ( void )
 	  if ( ( GetHeldItemCode() != (-1) ) &&
 	       ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_drive_slot ) )
 	    {
-	      Item_Held_In_Hand = ( -1 );
-	      DropHeldItemToDriveSlot ( );
+	      if ( HeldItemUsageRequirementsMet(  ) )
+		{
+		  Item_Held_In_Hand = ( -1 );
+		  // DropHeldItemToDriveSlot ( );
+		  DropHeldItemToSlot ( & ( Druidmap [ Me.type ].drive_item ) );
+		}
 	    }
 	  else
 	    {
@@ -1550,8 +1368,12 @@ ManageInventoryScreen ( void )
 	  if ( ( GetHeldItemCode() != (-1) ) &&
 	       ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_armour_slot ) )
 	    {
-	      Item_Held_In_Hand = ( -1 );
-	      DropHeldItemToArmourSlot ( );
+	      if ( HeldItemUsageRequirementsMet(  ) )
+		{
+		  Item_Held_In_Hand = ( -1 );
+		  // DropHeldItemToArmourSlot ( );
+		  DropHeldItemToSlot ( & ( Druidmap [ Me.type ].armour_item ) );
+		}
 	    }
 	  else
 	    {
@@ -1570,8 +1392,12 @@ ManageInventoryScreen ( void )
 	  if ( ( GetHeldItemCode() != (-1) ) &&
 	       ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_shield_slot ) )
 	    {
-	      Item_Held_In_Hand = ( -1 );
-	      DropHeldItemToShieldSlot ( );
+	      if ( HeldItemUsageRequirementsMet(  ) )
+		{
+		  Item_Held_In_Hand = ( -1 );
+		  // DropHeldItemToShieldSlot ( );
+		  DropHeldItemToSlot ( & ( Druidmap [ Me.type ].shield_item ) );
+		}
 	    }
 	  else
 	    {
@@ -1590,8 +1416,12 @@ ManageInventoryScreen ( void )
 	  if ( ( GetHeldItemCode() != (-1) ) &&
 	       ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_special_slot ) )
 	    {
-	      Item_Held_In_Hand = ( -1 );
-	      DropHeldItemToSpecialSlot ( );
+	      if ( HeldItemUsageRequirementsMet(  ) )
+		{
+		  Item_Held_In_Hand = ( -1 );
+		  // DropHeldItemToSpecialSlot ( );
+		  DropHeldItemToSlot ( & ( Druidmap [ Me.type ].special_item ) );
+		}
 	    }
 	  else
 	    {
@@ -1610,8 +1440,12 @@ ManageInventoryScreen ( void )
 	  if ( ( GetHeldItemCode() != (-1) ) &&
 	       ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_aux_slot ) )
 	    {
-	      Item_Held_In_Hand = ( -1 );
-	      DropHeldItemToAux1Slot ( );
+	      if ( HeldItemUsageRequirementsMet(  ) )
+		{
+		  Item_Held_In_Hand = ( -1 );
+		  // DropHeldItemToAux1Slot ( );
+		  DropHeldItemToSlot ( & ( Druidmap [ Me.type ].aux1_item ) );
+		}
 	    }
 	  else
 	    {
@@ -1630,8 +1464,12 @@ ManageInventoryScreen ( void )
 	  if ( ( GetHeldItemCode() != (-1) ) &&
 	       ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_aux_slot ) )
 	    {
-	      Item_Held_In_Hand = ( -1 );
-	      DropHeldItemToAux2Slot ( );
+	      if ( HeldItemUsageRequirementsMet(  ) )
+		{
+		  Item_Held_In_Hand = ( -1 );
+		  // DropHeldItemToAux2Slot ( );
+		  DropHeldItemToSlot ( & ( Druidmap [ Me.type ].aux2_item ) );
+		}
 	    }
 	  else
 	    {

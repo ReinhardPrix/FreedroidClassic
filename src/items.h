@@ -29,10 +29,10 @@
  * ---------------------------------------------------------------------- */
 
 
-#define BANNER_TEXT_RECT_X 170
+#define BANNER_TEXT_RECT_X 160
 #define BANNER_TEXT_RECT_Y 10
-#define BANNER_TEXT_RECT_W 300
-#define BANNER_TEXT_RECT_H 70
+#define BANNER_TEXT_RECT_W 320
+#define BANNER_TEXT_RECT_H 90
 
 
 #define ARMOUR_RECT_WIDTH 64

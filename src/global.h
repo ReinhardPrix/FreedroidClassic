@@ -161,6 +161,7 @@ EXTERN int MinMessageTime;
 EXTERN BFont_Info *Menu_BFont;
 EXTERN BFont_Info *Para_BFont;
 EXTERN BFont_Info *FPS_Display_BFont;
+EXTERN BFont_Info *Red_BFont;
 EXTERN BFont_Info *Highscore_BFont;
 EXTERN float Overall_Average;
 EXTERN int SkipAFewFrames;

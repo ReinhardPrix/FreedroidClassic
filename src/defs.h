@@ -145,6 +145,7 @@ enum
 
 #define PARA_FONT_FILE 		"parafont.png"
 #define MENU_FONT_FILE 		"ArialGold.png"
+#define RED_FONT_FILE 		"redfont.png"
 #define FPS_FONT_FILE 		"font05.png"
 #define ICON_FILE		"paraicon.bmp"
 
@@ -187,7 +188,7 @@ enum
 #define RIGHT_TEXT_LEN 6
 #define TEXT_STRETCH 1.2
 #define BANNER_WIDTH		SCREENLEN
-#define BANNER_HEIGHT		INITIAL_BLOCK_HEIGHT
+#define BANNER_HEIGHT		( INITIAL_BLOCK_HEIGHT+15 )
 
 
 
@@ -276,7 +277,9 @@ enum _sounds
   ITEM_DROP_SOUND_4,
   ITEM_DROP_SOUND_5,
   FIRST_CONTACT_SOUND_0,
-  FIRST_CONTACT_SOUND_1
+  FIRST_CONTACT_SOUND_1,
+  NOT_ENOUGH_POWER_SOUND,
+  NOT_ENOUGH_DIST_SOUND
 };
 
 //--------------------
@@ -384,7 +387,7 @@ enum _directions
 #define MAX_MISSIONS_IN_GAME 10         // how many missions can there be at most in Freedroid
 #define MAX_MISSION_TRIGGERED_ACTIONS 10
 
-#define MAX_ITEMS_PER_LEVEL 30
+#define MAX_ITEMS_PER_LEVEL 300
 #define MAX_ITEMS_IN_INVENTORY 100
 #define INVENTORY_GRID_WIDTH 9
 #define INVENTORY_GRID_HEIGHT 6
