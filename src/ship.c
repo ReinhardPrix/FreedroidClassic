@@ -705,8 +705,8 @@ ShowItemPicture (int PosX, int PosY, int Number )
 
   // DebugPrintf (2, "\nvoid ShowItemPicture(...): Function call confirmed.");
 
-  if ( !strcmp ( ItemMap[ Number ] . item_rotation_series_prefix , "NONE_AVAILABLE_YET" ) )
-    return; // later this should be a default-correction instead
+  // if ( !strcmp ( ItemMap[ Number ] . item_rotation_series_prefix , "NONE_AVAILABLE_YET" ) )
+  // return; // later this should be a default-correction instead
 
   //--------------------
   // Maybe we have to reload the whole image series
@@ -729,12 +729,12 @@ ShowItemPicture (int PosX, int PosY, int Number )
       //
       for ( i=0 ; i < MAX_NUMBER_OF_IMAGES_IN_ITEM_ROTATION ; i++ )
 	{
-	  if ( !strcmp ( ItemMap[ Number ] . item_rotation_series_prefix , "NONE_AVAILABLE_YET" ) )
-	    {
-	      Terminate ( ERR );
-	    }
-	  else
-	    {
+	  // if ( !strcmp ( ItemMap[ Number ] . item_rotation_series_prefix , "NONE_AVAILABLE_YET" ) )
+	  // {
+	  // Terminate ( ERR );
+	  // }
+	  //  else
+	  // {
 	      //--------------------
 	      // At first we will try to find some item rotation models in the
 	      // new directory structure.
@@ -774,7 +774,8 @@ ShowItemPicture (int PosX, int PosY, int Number )
 		  fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
 		  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
 		}
-	    }
+	      // }
+
 	  //--------------------
 	  // But at this point, we should have found the image!!
 	  // or if not, this maybe indicates that we have reached the

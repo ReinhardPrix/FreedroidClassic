@@ -184,6 +184,7 @@ AC_CONFIG_FILES([Makefile
 		graphics/items/track_drive/Makefile 
 		graphics/items/vmx_grenade/Makefile 
 		graphics/items/warrior_wristband/Makefile 
+		graphics/items/NONE_AVAILABLE_YET/Makefile 
                 graphics/tux_motion_parts/Makefile])
 
 AC_OUTPUT
