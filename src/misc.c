@@ -116,7 +116,7 @@ ReadAndMallocAndTerminateFile( char* filename , char* File_End_String )
       DebugPrintf ( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : fstating file succeeded...");
     }
 
-  if ((Data = (char *) MyMalloc (stbuf.st_size + 64*2 + 100 )) == NULL)
+  if ((Data = (char *) MyMalloc (stbuf.st_size + 64*2 + 10000 )) == NULL)
     {
       DebugPrintf ( 0 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : Out of Memory? ");
       Terminate(ERR);
@@ -145,6 +145,7 @@ ReadAndMallocAndTerminateFile( char* filename , char* File_End_String )
     }
   else
     {
+      // ReadPointer+=strlen( File_End_String ) + 1; // no need to destroy the end pointer :-)
       ReadPointer[0]=0; // we want to handle the file like a string, even if it is not zero
                        // terminated by nature.  We just have to add the zero termination.
     }

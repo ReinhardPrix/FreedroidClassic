@@ -851,6 +851,7 @@ InitNewMission ( char *MissionName )
   char *StartPointPointer;
   char *MissionTargetPointer;
   char *NextMissionNamePointer;
+  char *EndOfMissionTargetPointer;
   char Shipname[2000];
   char Liftname[2000];
   char Crewname[2000];
@@ -891,6 +892,7 @@ InitNewMission ( char *MissionName )
 #define MISSION_TARGET_MUST_BE_CLASS_STRING "Mission target is to become class : "
 #define MISSION_TARGET_MUST_BE_TYPE_STRING "Mission target is to become type : "
 #define MISSION_TARGET_MUST_BE_ONE_STRING "Mission target is to overtake a droid with marker : "
+#define END_OF_MISSION_TARGET_STRING "*** End of Mission Target ***"
 #define NEXT_MISSION_NAME_STRING "After completing this mission, load mission : "
 
 
@@ -943,6 +945,7 @@ InitNewMission ( char *MissionName )
   fpath = find_file (MissionName, MAP_DIR, FALSE);
 
   MainMissionPointer = ReadAndMallocAndTerminateFile( fpath , END_OF_MISSION_DATA_STRING ) ;
+  EndOfMissionTargetPointer = LocateStringInData ( MainMissionPointer , END_OF_MISSION_TARGET_STRING ) ;
 
   //--------------------
   //Now the mission file is read into memory
@@ -951,16 +954,8 @@ InitNewMission ( char *MissionName )
   //doing the briefing things...
 
   // Now we search for the beginning of the WHOLE event section within the mission file
-  if ( ( EventSectionPointer = strstr ( MainMissionPointer, EVENT_SECTION_BEGIN_STRING )) == NULL )
-    {
-      DebugPrintf (1, "\nERROR! NO MISSION EVENT SECTION BEGIN STRING FOUND! TERMINATING!");
-      Terminate(ERR);
-    }
-  else
-    {
-      EventSectionPointer += strlen ( EVENT_SECTION_BEGIN_STRING ) +1;
-      DebugPrintf (1, "\nMission Briefing begin BIG section found!");
-    }
+
+  EventSectionPointer = LocateStringInData ( MainMissionPointer , EVENT_SECTION_BEGIN_STRING );
 
   /* Title and Explanation of controls and such... */
   Get_Mission_Events ( EventSectionPointer );
@@ -972,16 +967,7 @@ InitNewMission ( char *MissionName )
   //
 
   // Now we search for the beginning of the mission briefing big section NOT subsection
-  if ( ( BriefingSectionPointer = strstr ( MainMissionPointer, MISSION_BRIEFING_BEGIN_STRING )) == NULL )
-    {
-      DebugPrintf (1, "\nERROR! NO MISSION BRIEFING BEGIN STRING FOUND! TERMINATING!");
-      Terminate(ERR);
-    }
-  else
-    {
-      BriefingSectionPointer += strlen ( MISSION_BRIEFING_BEGIN_STRING ) +1;
-      DebugPrintf (2, "\nMission Briefing begin BIG section found!");
-    }
+  BriefingSectionPointer = LocateStringInData ( MainMissionPointer , MISSION_BRIEFING_BEGIN_STRING );
 
   /* Title and Explanation of controls and such... */
   Title ( BriefingSectionPointer );
@@ -1196,140 +1182,39 @@ InitNewMission ( char *MissionName )
   // one of them
 
 
-  if ( ( StartPointPointer = strstr ( MainMissionPointer, MISSION_START_POINT_STRING )) == NULL )
-    {
-      DebugPrintf (1, "\nERROR! NO MISSION START POINT STRING FOUND! TERMINATING!");
-      Terminate(ERR);
-    }
-  else
-    {
-      StartPointPointer += strlen ( MISSION_START_POINT_STRING ) +1;
-      DebugPrintf (2, "\nMission Start Point string found!");
-    }
-
+  StartPointPointer = LocateStringInData ( MainMissionPointer , MISSION_START_POINT_STRING );
+  StartPointPointer += strlen ( MISSION_START_POINT_STRING ) +1;
+  
   //--------------------
   // Now we read in the mission targets for this mission
   // Several different targets may be specified simultaneously
   //
-  if ( ( MissionTargetPointer = strstr ( MainMissionPointer, MISSION_TARGET_KILL_ALL_STRING )) == NULL )
-    {
-      DebugPrintf (1, "\nERROR! NO MISSION TARGET KILLALL ENTRY FOUND! TERMINATING!");
-      Terminate(ERR);
-    }
-  else
-    {
-      MissionTargetPointer += strlen ( MISSION_TARGET_KILL_ALL_STRING );
-      sscanf ( MissionTargetPointer , "%d" , &Me.mission.KillAll );
-      // DebugPrintf (1, "\nMission target killall entry found!  It reads: %d" , Me.mission.KillAll );
-    }
+  ReadValueFromString( MissionTargetPointer , MISSION_TARGET_KILL_ALL_STRING , "%d" , 
+		       &Me.mission.KillAll , EndOfMissionTargetPointer );
 
-  if ( ( MissionTargetPointer = strstr ( MainMissionPointer, MISSION_TARGET_KILL_CLASS_STRING )) == NULL )
-    {
-      DebugPrintf (1, "\nERROR! NO MISSION TARGET KILLALL CLASS ENTRY FOUND! TERMINATING!");
-      Terminate(ERR);
-    }
-  else
-    {
-      MissionTargetPointer += strlen ( MISSION_TARGET_KILL_CLASS_STRING );
-      sscanf ( MissionTargetPointer , "%d" , &Me.mission.KillClass );
-      // DebugPrintf (1, "\nMission target killclass entry found!  It reads: %d" , Me.mission.KillClass );
-    }
+  ReadValueFromString( MissionTargetPointer , MISSION_TARGET_KILL_CLASS_STRING , "%d" , 
+		       &Me.mission.KillClass , EndOfMissionTargetPointer );
 
-  if ( ( MissionTargetPointer = strstr ( MainMissionPointer, MISSION_TARGET_KILL_ONE_STRING )) == NULL )
-    {
-      DebugPrintf (1, "\nERROR! NO MISSION TARGET KILLONE ENTRY FOUND! TERMINATING!");
-      Terminate(ERR);
-    }
-  else
-    {
-      MissionTargetPointer += strlen ( MISSION_TARGET_KILL_ONE_STRING );
-      sscanf ( MissionTargetPointer , "%d" , &Me.mission.KillOne );
-      // DebugPrintf (1, "\nMission target killone entry found!  It reads: %d" , Me.mission.KillOne );
-    }
+  ReadValueFromString( MissionTargetPointer , MISSION_TARGET_KILL_ONE_STRING , "%d" , 
+		       &Me.mission.KillOne , EndOfMissionTargetPointer );
 
-  if ( ( MissionTargetPointer = strstr ( MainMissionPointer, MISSION_TARGET_MUST_BE_CLASS_STRING )) == NULL )
-    {
-      DebugPrintf (1, "\nERROR! NO MISSION TARGET MUST BE CLASS ENTRY FOUND! TERMINATING!");
-      Terminate(ERR);
-    }
-  else
-    {
-      MissionTargetPointer += strlen ( MISSION_TARGET_MUST_BE_CLASS_STRING );
-      sscanf ( MissionTargetPointer , "%d" , &Me.mission.MustBeClass );
-      // DebugPrintf (1, "\nMission target MustBeClass entry found!  It reads: %d" , Me.mission.MustBeClass );
-    }
+  ReadValueFromString( MissionTargetPointer , MISSION_TARGET_MUST_BE_CLASS_STRING , "%d" , 
+		       &Me.mission.MustBeClass , EndOfMissionTargetPointer );
 
-  if ( ( MissionTargetPointer = strstr ( MainMissionPointer, MISSION_TARGET_MUST_BE_TYPE_STRING )) == NULL )
-    {
-      DebugPrintf (1, "\nERROR! NO MISSION TARGET MUST BE TYPE ENTRY FOUND! TERMINATING!");
-      Terminate(ERR);
-    }
-  else
-    {
-      MissionTargetPointer += strlen ( MISSION_TARGET_MUST_BE_TYPE_STRING );
-      sscanf ( MissionTargetPointer , "%d" , &Me.mission.MustBeType );
-      // DebugPrintf (1, "\nMission target MustBeType entry found!  It reads: %d" , Me.mission.MustBeType );
-    }
+  ReadValueFromString( MissionTargetPointer , MISSION_TARGET_MUST_BE_TYPE_STRING , "%d" , 
+		       &Me.mission.MustBeType , EndOfMissionTargetPointer );
 
-  if ( ( MissionTargetPointer = strstr ( MainMissionPointer, MISSION_TARGET_MUST_BE_ONE_STRING )) == NULL )
-    {
-      DebugPrintf (1, "\nERROR! NO MISSION TARGET MUST BE ONE ENTRY FOUND! TERMINATING!");
-      Terminate(ERR);
-    }
-  else
-    {
-      MissionTargetPointer += strlen ( MISSION_TARGET_MUST_BE_ONE_STRING );
-      sscanf ( MissionTargetPointer , "%d" , &Me.mission.MustBeOne );
-      // DebugPrintf (1, "\nMission target MustBeOne entry found!  It reads: %d" , Me.mission.MustBeOne );
-    }
+  ReadValueFromString( MissionTargetPointer , MISSION_TARGET_MUST_BE_ONE_STRING , "%d" , 
+		       &Me.mission.MustBeOne , EndOfMissionTargetPointer );
 
-  if ( ( MissionTargetPointer = strstr ( MainMissionPointer, MISSION_TARGET_MUST_REACH_LEVEL_STRING )) == NULL )
-    {
-      DebugPrintf (1, "\nERROR! NO MISSION TARGET MUST REACH LEVEL ENTRY FOUND! TERMINATING!");
-      Terminate(ERR);
-    }
-  else
-    {
-      MissionTargetPointer += strlen ( MISSION_TARGET_MUST_REACH_LEVEL_STRING );
-      sscanf ( MissionTargetPointer , "%d" , &Me.mission.MustReachLevel );
-      // DebugPrintf (1, "\nMission target MustReachLevel entry found!  It reads: %d" , Me.mission.MustReachLevel );
-    }
+  ReadValueFromString( MissionTargetPointer , MISSION_TARGET_MUST_REACH_POINT_X_STRING , "%d" , 
+		       &Me.mission.MustReachPoint.x , EndOfMissionTargetPointer );
 
-  if ( ( MissionTargetPointer = strstr ( MainMissionPointer, MISSION_TARGET_MUST_REACH_POINT_X_STRING )) == NULL )
-    {
-      DebugPrintf (1, "\nERROR! NO MISSION TARGET MUST REACH X ENTRY FOUND! TERMINATING!");
-      Terminate(ERR);
-    }
-  else
-    {
-      MissionTargetPointer += strlen ( MISSION_TARGET_MUST_REACH_POINT_X_STRING );
-      sscanf ( MissionTargetPointer , "%d" , &Me.mission.MustReachPoint.x );
-      // DebugPrintf (1, "\nMission target MustReachPoint.x entry found!  It reads: %d" , Me.mission.MustReachPoint.x );
-    }
+  ReadValueFromString( MissionTargetPointer , MISSION_TARGET_MUST_REACH_POINT_Y_STRING , "%d" , 
+		       &Me.mission.MustReachPoint.y , EndOfMissionTargetPointer );
 
-  if ( ( MissionTargetPointer = strstr ( MainMissionPointer, MISSION_TARGET_MUST_REACH_POINT_Y_STRING )) == NULL )
-    {
-      DebugPrintf (1, "\nERROR! NO MISSION TARGET MUST REACH Y ENTRY FOUND! TERMINATING!");
-      Terminate(ERR);
-    }
-  else
-    {
-      MissionTargetPointer += strlen ( MISSION_TARGET_MUST_REACH_POINT_Y_STRING );
-      sscanf ( MissionTargetPointer , "%d" , &Me.mission.MustReachPoint.y );
-      // DebugPrintf (1, "\nMission target MustReachPoint.y entry found!  It reads: %d" , Me.mission.MustReachPoint.y );
-    }
-
-  if ( ( MissionTargetPointer = strstr ( MainMissionPointer, MISSION_TARGET_MUST_LIVE_TIME_STRING )) == NULL )
-    {
-      DebugPrintf (1, "\nERROR! NO MISSION TARGET MUST LIVE TIME ENTRY FOUND! TERMINATING!");
-      Terminate(ERR);
-    }
-  else
-    {
-      MissionTargetPointer += strlen ( MISSION_TARGET_MUST_LIVE_TIME_STRING );
-      sscanf ( MissionTargetPointer , "%lf" , &Me.mission.MustLiveTime );
-      // DebugPrintf (1, "\nMission target MustLiveTime entry found!  It reads: %f" , Me.mission.MustLiveTime );
-    }
+  ReadValueFromString( MissionTargetPointer , MISSION_TARGET_MUST_LIVE_TIME_STRING , "%lf" , 
+		       &Me.mission.MustLiveTime , EndOfMissionTargetPointer );
 
   //--------------------
   // After the mission targets have been successfully loaded now,
