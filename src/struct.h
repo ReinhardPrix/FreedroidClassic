@@ -458,6 +458,8 @@ typedef struct
   double maxspeed;
   double accel;
 
+  float physical_damage;          // the amount of physical (base) damage an attack of this bot will do
+
   int aggression;		/* The aggressiveness of this druidtype */
   int flashimmune;		/* is the droid immune to FLASH-bullets */
   int score;			/* score for the elimination of one droid of this type */

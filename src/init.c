@@ -626,6 +626,7 @@ Get_Robot_Data ( void* DataPointer )
 #define LOSEHEALTH_BEGIN_STRING "Rate of energyloss under influence control: "
 #define GUN_BEGIN_STRING "Weapon type this droid uses: "
 #define AGGRESSION_BEGIN_STRING "Aggression rate of this droid: "
+#define BASE_PHYSICAL_DAMAGE_BEGIN_STRING "Physical (base) damage an attack of this droid will do: "
 #define FLASHIMMUNE_BEGIN_STRING "Is this droid immune to disruptor blasts? "
 #define SCORE_BEGIN_STRING "Score gained for destroying one of this type: "
 #define HEIGHT_BEGIN_STRING "Height of this droid : "
@@ -772,6 +773,10 @@ Get_Robot_Data ( void* DataPointer )
       // Now we read in the aggression rate of this droid.
       ReadValueFromString( RobotPointer , AGGRESSION_BEGIN_STRING , "%d" , 
 			   &Druidmap[RobotIndex].aggression , EndOfDataPointer );
+
+      // Now we read in the aggression rate of this droid.
+      ReadValueFromString( RobotPointer , BASE_PHYSICAL_DAMAGE_BEGIN_STRING , "%f" , 
+			   & Druidmap [ RobotIndex ] . physical_damage , EndOfDataPointer );
 
       // Now we read in range of vision of this droid
       ReadValueFromString( RobotPointer , "Range of vision of this droid=" , "%f" , 

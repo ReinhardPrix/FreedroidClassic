@@ -1470,28 +1470,21 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 
       if ( ThisRobot -> is_friendly )
 	{
-
-	  //--------------------
-	  // 
 	  DebugPrintf ( -3 , "\nATTACK OF A FRIENDLY DROID DETECTED!  --> hurting enemies..." );
-	  
-	  target_robot = & ( AllEnemys [ 0 ] ) ;
-	  for ( j = 0 ; j < Number_Of_Droids_On_Ship ; j ++ )
+	  for ( j = 0 , target_robot = & ( AllEnemys [ 0 ] ) ; j < Number_Of_Droids_On_Ship ; j ++ , target_robot ++ )
 	    {
-	      if ( target_robot -> pos . z != ThisRobot -> pos . z ) continue;
 	      if ( target_robot -> Status == OUT ) continue ;
-	      if ( fabsf ( target_robot -> pos . x - ThisRobot -> pos . x ) > 2.5 ) continue;
+	      if ( target_robot -> pos . z != ThisRobot -> pos . z ) continue;
+	      if ( fabsf ( (float) ( target_robot -> pos . x - ThisRobot -> pos . x ) ) > 2.5 ) continue;
 	      if ( fabsf ( target_robot -> pos . y - ThisRobot -> pos . y ) > 2.5 ) continue;
 	      if ( target_robot == ThisRobot ) continue;
-
-	      target_robot -> energy -= 100 ; 
-
-	      target_robot ++ ;
+	      DebugPrintf ( -3 , "\nATTACK OF A FRIENDLY DROID DETECTED!  APPLYING DAMAGE!" );
+	      target_robot -> energy -= Druidmap [ ThisRobot -> type ] . physical_damage ; 
 	    }
 	}
       else
 	{
-	  Me [ 0 ] . energy -= 10 ;
+	  Me [ 0 ] . energy -= Druidmap [ ThisRobot -> type ] . physical_damage ;
 	}
 
       play_death_sound_for_bot ( ThisRobot );
