@@ -72,10 +72,10 @@ int channels = 0;         // 0=mono 1=stereo
 int format = AFMT_U8;
 int rate = 8000;
 
-char BlastSoundSampleFilename[]="/sound/BlastSound1.wav";
-char CollisionSoundSampleFilename[]="/sound/CollisionSound1.wav";
-char FireSoundSampleFilename[]="/sound/FireSound1.wav";
-// char BackgroundMusicSampleFilename[]="/sound/BackgroundMusic1.wav";
+char BlastSoundSampleFilename[]="/../sound/BlastSound1.wav";
+char CollisionSoundSampleFilename[]="/../sound/CollisionSound1.wav";
+char FireSoundSampleFilename[]="/../sound/FireSound1.wav";
+// char BackgroundMusicSampleFilename[]="/../sound/BackgroundMusic1.wav";
 char* ExpandedBlastSoundSampleFilename;
 char* ExpandedCollisionSoundSampleFilename;
 char* ExpandedFireSoundSampleFilename;
