@@ -169,7 +169,7 @@ map_insert, *Map_Insert;
 
 typedef struct
 {
-  char* LabelName;
+  char* label_name;
   grob_point pos; // how many blocks does this big map insert cover?
 }
 map_label, *Map_Label;

@@ -36,7 +36,7 @@
 #include "global.h"
 #include "proto.h"
 
-void Show_Waypoints( int PrintConnectionList );
+void ShowWaypoints( int PrintConnectionList );
 void LevelEditor(void);
 Level CreateNewMapLevel( void );
 void SetLevelInterfaces ( void );
@@ -1592,6 +1592,73 @@ CreateNewMapLevel( void )
 }; // Level CreateNewMapLevel( void )
 
 /* ----------------------------------------------------------------------
+ * Now we print out the codepanel information about this tile
+ * just in case it is really a codepanel.
+ * ---------------------------------------------------------------------- */
+void
+PrintCodepanelInformationOfThisSquare ( Level EditLevel )
+{
+  int CodepanelIndex;
+  char PanelText[5000]="";
+
+  switch ( EditLevel->map [ (int)rintf( Me[0].pos.y) ] [ (int)rintf( Me[0].pos.x ) ] )
+    {
+    case CODEPANEL_L:
+    case CODEPANEL_R:
+    case CODEPANEL_U:
+    case CODEPANEL_D:
+
+      for ( CodepanelIndex = 0 ; CodepanelIndex < MAX_CODEPANELS_PER_LEVEL ; CodepanelIndex ++ )
+	{
+	  if ( ( ( (int) rintf( Me[0].pos.x ) ) == EditLevel->CodepanelList[ CodepanelIndex ].x ) && 
+	       ( ( (int) rintf( Me[0].pos.y ) ) == EditLevel->CodepanelList[ CodepanelIndex ].y ) )
+	    break;
+	}
+
+      if ( CodepanelIndex >= MAX_CODEPANELS_PER_LEVEL )
+	{
+	  sprintf( PanelText , "\nWARNING!  Either no codepanel code present or last entry used.\n" );
+	}
+      else
+	{
+	  sprintf( PanelText , "\nCode Panel Information: \n Codeword=\"%s\"." , 
+		   EditLevel->CodepanelList[ CodepanelIndex ].Secret_Code );
+	}
+
+      DisplayText ( PanelText , User_Rect.x , User_Rect.y , &User_Rect );
+      break;
+    default:
+      break;
+    }
+}; // void PrintCodepanelInformationOfThisSquare ( Level EditLevel )
+
+
+/* ----------------------------------------------------------------------
+ * Now we print out the map label information about this map location.
+ * ---------------------------------------------------------------------- */
+void
+PrintMapLabelInformationOfThisSquare ( Level EditLevel )
+{
+  int MapLabelIndex;
+  char PanelText[5000]="";
+
+  for ( MapLabelIndex = 0 ; MapLabelIndex < MAX_MAP_LABELS_PER_LEVEL ; MapLabelIndex ++ )
+    {
+      if ( ( ( (int) rintf( Me[0].pos.x ) ) == EditLevel -> labels [ MapLabelIndex ] . pos . x ) && 
+	   ( ( (int) rintf( Me[0].pos.y ) ) == EditLevel -> labels [ MapLabelIndex ] . pos . y ) )
+	break;
+    }
+  
+  if ( MapLabelIndex >= MAX_MAP_LABELS_PER_LEVEL ) return;
+
+  sprintf( PanelText , "\n Map Label Information: \n label_name=\"%s\"." , 
+	   EditLevel -> labels [ MapLabelIndex ] . label_name );
+  
+  DisplayText ( PanelText , User_Rect.x , User_Rect.y , &User_Rect );
+
+}; // void PrintMapLabelInformationOfThisSquare ( Level EditLevel )
+
+/* ----------------------------------------------------------------------
  * This function is used by the Level Editor integrated into 
  * freedroid.  It highlights the map position that is currently 
  * edited or would be edited, if the user pressed something.  I.e. 
@@ -1601,8 +1668,6 @@ void
 Highlight_Current_Block(void)
 {
   int i;
-  char PanelText[5000]="";
-  int Codepanel_Index;
   Level EditLevel;
 
   EditLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
@@ -1639,35 +1704,10 @@ Highlight_Current_Block(void)
   // Now we print out the codepanel information about this tile
   // just in case it is really a codepanel.
   //
-  switch ( EditLevel->map [ (int)rintf( Me[0].pos.y) ] [ (int)rintf( Me[0].pos.x ) ] )
-    {
-    case CODEPANEL_L:
-    case CODEPANEL_R:
-    case CODEPANEL_U:
-    case CODEPANEL_D:
+  PrintCodepanelInformationOfThisSquare ( EditLevel );
 
-      for ( Codepanel_Index = 0 ; Codepanel_Index < MAX_CODEPANELS_PER_LEVEL ; Codepanel_Index ++ )
-	{
-	  if ( ( ( (int) rintf( Me[0].pos.x ) ) == EditLevel->CodepanelList[ Codepanel_Index ].x ) && 
-	       ( ( (int) rintf( Me[0].pos.y ) ) == EditLevel->CodepanelList[ Codepanel_Index ].y ) )
-	    break;
-	}
+  PrintMapLabelInformationOfThisSquare ( EditLevel );
 
-      if ( Codepanel_Index >= MAX_CODEPANELS_PER_LEVEL )
-	{
-	  sprintf( PanelText , "\nWARNING!  Either no codepanel code present or last entry used.\n" );
-	}
-      else
-	{
-	  sprintf( PanelText , "\nCode Panel Information: \n Codeword=\"%s\"." , 
-		   EditLevel->CodepanelList[ Codepanel_Index ].Secret_Code );
-	}
-
-      DisplayText ( PanelText , User_Rect.x , User_Rect.y , &User_Rect );
-      break;
-    default:
-      break;
-    }
 } // void Highlight_Current_Block(void)
 
 /* ----------------------------------------------------------------------
@@ -1675,7 +1715,7 @@ Highlight_Current_Block(void)
  * freedroid.  It marks all waypoints with a cross.
  * ---------------------------------------------------------------------- */
 void 
-Show_Waypoints( int PrintConnectionList )
+ShowWaypoints( int PrintConnectionList )
 {
   int wp;
   int i;
@@ -1779,7 +1819,91 @@ Show_Waypoints( int PrintConnectionList )
     }
   SDL_UnlockSurface( Screen );
 
-} // void Show_Waypoints(void);
+} // void ShowWaypoints( int PrintConnectionList );
+
+/* ----------------------------------------------------------------------
+ * This function is used by the Level Editor integrated into 
+ * freedroid.  It marks all places that have a label attached to them.
+ * ---------------------------------------------------------------------- */
+void 
+ShowMapLabels( void )
+{
+  int LabelNr;
+  int i , x , y;
+  int BlockX, BlockY;
+  Level EditLevel;
+
+  EditLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
+
+  // #define LABEL_COLOR 0x0FFFFFFFF
+
+  BlockX = rintf (Me[0].pos.x);
+  BlockY = rintf (Me[0].pos.y);
+	  
+  SDL_LockSurface( Screen );
+
+  for (LabelNr=0; LabelNr<MAXWAYPOINTS; LabelNr++)
+    {
+
+      if ( EditLevel->labels[LabelNr].pos.x == (-1) ) continue;
+
+      //--------------------
+      // Draw the cross in the middle of the middle of the tile
+      //
+      for (i= Block_Width/4; i<3 * Block_Width / 4; i++)
+	{
+	  // This draws the left border of our square marker
+	  x = Block_Width/4 + User_Rect.x+(User_Rect.w/2)- (( Me[0].pos.x)-EditLevel->labels[LabelNr].pos.x + 0.5) * Block_Width;
+	  y = i + User_Rect.y+User_Rect.h/2 - (( Me[0].pos.y)-EditLevel->labels[LabelNr].pos.y + 0.5) * Block_Height;
+	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
+	  putpixel( Screen , x , y , HIGHLIGHTCOLOR );
+
+		    
+	  x = Block_Width/4 + User_Rect.x + (User_Rect.w/2) - (( Me[0].pos.x )-EditLevel->labels[LabelNr].pos.x + 0.5) * Block_Width + 1 ;
+	  y = i + User_Rect.y + User_Rect.h/2- (( Me[0].pos.y)-EditLevel->labels[LabelNr].pos.y + 0.5) * Block_Height ;
+	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
+	  putpixel( Screen , x , y , HIGHLIGHTCOLOR );
+	  
+	  // This draws the right border of our square marker
+	  x = 3*Block_Width/4 + User_Rect.x + (User_Rect.w/2) - (( Me[0].pos.x)-EditLevel->labels[LabelNr].pos.x + 0.5) * Block_Width;
+	  y = -i + User_Rect.y + User_Rect.h/2 - (( Me[0].pos.y )-EditLevel->labels[LabelNr].pos.y - 0.5 ) * Block_Height -1;
+	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
+	  putpixel( Screen , x , y , HIGHLIGHTCOLOR );
+
+	  x = 3*Block_Width/4 + User_Rect.x + (User_Rect.w/2) - (( Me[0].pos.x)-EditLevel->labels[LabelNr].pos.x + 0.5) * Block_Width + 1 ;
+	  y = -i + User_Rect.y + User_Rect.h/2 - ((Me[0].pos.y)-EditLevel->labels[LabelNr].pos.y - 0.5 ) * Block_Height ;
+	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
+	  putpixel( Screen , x , y , HIGHLIGHTCOLOR );
+	  
+	  // This draws the upper border of our square marker
+	  x = i + User_Rect.x+(User_Rect.w/2)- (( Me[0].pos.x)-EditLevel->labels[LabelNr].pos.x + 0.5) * Block_Width;
+	  y = Block_Height/4 + User_Rect.y+User_Rect.h/2 - (( Me[0].pos.y)-EditLevel->labels[LabelNr].pos.y + 0.5) * Block_Height;
+	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
+	  putpixel( Screen , x , y , HIGHLIGHTCOLOR );
+		    
+	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me[0].pos.x )-EditLevel->labels[LabelNr].pos.x + 0.5) * Block_Width;
+	  y = Block_Height/4 + User_Rect.y + User_Rect.h/2- (( Me[0].pos.y)-EditLevel->labels[LabelNr].pos.y + 0.5) * Block_Height + 1;
+	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
+	  putpixel( Screen , x , y , HIGHLIGHTCOLOR );
+	  
+	  // This draws the lower border of our square marker
+	  x = i + User_Rect.x+(User_Rect.w/2)- (( Me[0].pos.x)-EditLevel->labels[LabelNr].pos.x + 0.5) * Block_Width;
+	  y = 3*Block_Height/4 + User_Rect.y+User_Rect.h/2 - (( Me[0].pos.y)-EditLevel->labels[LabelNr].pos.y + 0.5) * Block_Height;
+	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
+	  putpixel( Screen , x , y , HIGHLIGHTCOLOR );
+		    
+	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me[0].pos.x )-EditLevel->labels[LabelNr].pos.x + 0.5) * Block_Width;
+	  y = 3*Block_Height/4 + User_Rect.y + User_Rect.h/2- (( Me[0].pos.y)-EditLevel->labels[LabelNr].pos.y + 0.5) * Block_Height + 1;
+	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
+	  putpixel( Screen , x , y , HIGHLIGHTCOLOR );
+	  
+	}
+	      
+    }
+
+  SDL_UnlockSurface( Screen );
+
+} // void ShowMapLabels( void );
 
 /* ----------------------------------------------------------------------
  *
@@ -1947,7 +2071,7 @@ HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
 	EditLevel->map[BlockY][BlockX]=FLOOR;	            	      	    
     }
   
-}; // void 
+}; // void HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
 
 /* ----------------------------------------------------------------------
  *
@@ -2170,6 +2294,144 @@ ToggleWaypointConnection ( Level EditLevel , int BlockX , int BlockY )
 }; // void ToggleWaypointConnection ( Level EditLevel , int BlockX , int BlockY )
 
 /* ----------------------------------------------------------------------
+ * With the 'P' key, you can edit the codepanel codeword attached to any 
+ * codepanel.  Of course the cursor must be positioned at this codepanel
+ * so the feature can work.  This function does all this.
+ * ---------------------------------------------------------------------- */
+void 
+EditCodepanelData ( Level EditLevel )
+{
+  char* NewCommentOnThisSquare;
+  int i;
+
+  while (PPressed());
+  SetCurrentFont( FPS_Display_BFont );
+
+  // First we check if we really are directly on a codepanel:
+  switch ( EditLevel->map [ (int)rintf( Me[0].pos.y) ] [ (int)rintf( Me[0].pos.x ) ] )
+    {
+    case CODEPANEL_L:
+    case CODEPANEL_R:
+    case CODEPANEL_U:
+    case CODEPANEL_D:
+      
+      // If yes, we ask for the new codepanel keyword
+      DisplayText ( "\n Please enter new codepanel codeword: \n" , -1 , -1 , &User_Rect );
+      SDL_Flip( Screen );
+      NewCommentOnThisSquare = GetString( 1000, FALSE );  // TRUE currently not implemented
+      
+      // Now we see if a codepanel entry is existing already for this square
+      for ( i = 0 ; i < MAX_CODEPANELS_PER_LEVEL ; i ++ )
+	{
+	  if ( ( EditLevel->CodepanelList[ i ].x == (int)rintf( Me[0].pos.x) ) &&
+	       ( EditLevel->CodepanelList[ i ].y == (int)rintf( Me[0].pos.y) ) ) break;
+	}
+      if ( i >= MAX_CODEPANELS_PER_LEVEL ) 
+	{
+	  DisplayText ( "\nNo existing codepanel entry found...\n" , -1 , -1 , &User_Rect );
+	  i=0;
+	  for ( i = 0 ; i < MAX_CODEPANELS_PER_LEVEL ; i ++ )
+	    {
+	      if ( EditLevel->CodepanelList[ i ].x == (-1) )
+		break;
+	    }
+	  if ( i >= MAX_CODEPANELS_PER_LEVEL )
+	    {
+	      DisplayText ( "\nNo more free codepanel entry found... using first\n" , -1 , -1 , &User_Rect );
+	      i = 0;
+	    }
+	  else
+	    {
+	      DisplayText ( "\nUsing new codepanel list entry...\n" , -1 , -1 , &User_Rect );
+	    }
+	  // Terminate( ERR );
+	}
+      else
+	{
+	  DisplayText ( "\nOverwriting existing codepanel list entry...\n" , -1 , -1 , &User_Rect );
+	  
+	}
+      EditLevel->CodepanelList[ i ].Secret_Code = NewCommentOnThisSquare;
+      EditLevel->CodepanelList[ i ].x = rintf( Me[0].pos.x );
+      EditLevel->CodepanelList[ i ].y = rintf( Me[0].pos.y );
+      
+      
+      SDL_Flip ( Screen );
+      getchar_raw();
+      
+      break;
+    default:
+      DisplayText ( "\nBut you are not on a codepanel!!\n" , -1 , -1 , &User_Rect );
+      SDL_Flip( Screen );
+      getchar_raw();
+      break;
+    }
+  
+}; // void EditCodepanelData ( EditLevel )
+
+/* ----------------------------------------------------------------------
+ * With the 'M' key, you can edit the map labels.
+ * The label will be assumed to be directly under the map cursor.
+ * ---------------------------------------------------------------------- */
+void 
+EditMapLabelData ( Level EditLevel )
+{
+  char* NewCommentOnThisSquare;
+  int i;
+
+  while (PPressed());
+  SetCurrentFont( FPS_Display_BFont );
+
+  //--------------------
+  // We ask for the new map label
+  //
+  DisplayText ( "\n Please enter new label for this map position: \n" , -1 , -1 , &User_Rect );
+  SDL_Flip( Screen );
+  NewCommentOnThisSquare = GetString( 1000, FALSE );  // TRUE currently not implemented
+  
+  //--------------------
+  // Now we see if a map label entry is existing already for this spot
+  //
+  for ( i = 0 ; i < MAX_MAP_LABELS_PER_LEVEL ; i ++ )
+    {
+      if ( ( EditLevel -> labels [ i ] . pos . x == (int)rintf( Me[0].pos.x) ) &&
+	   ( EditLevel -> labels [ i ] . pos . y == (int)rintf( Me[0].pos.y) ) ) break;
+    }
+  if ( i >= MAX_MAP_LABELS_PER_LEVEL ) 
+    {
+      DisplayText ( "\nNo existing map label entry found...\n" , -1 , -1 , &User_Rect );
+      i=0;
+      for ( i = 0 ; i < MAX_MAP_LABELS_PER_LEVEL ; i ++ )
+	{
+	  if ( EditLevel -> labels [ i ] . pos . x == (-1) )
+	    break;
+	}
+      if ( i >= MAX_CODEPANELS_PER_LEVEL )
+	{
+	  DisplayText ( "\nNo more free map label entry found... using first on instead ...\n" , -1 , -1 , &User_Rect );
+	  i = 0;
+	}
+      else
+	{
+	  DisplayText ( "\nUsing new map label list entry...\n" , -1 , -1 , &User_Rect );
+	}
+      // Terminate( ERR );
+    }
+  else
+    {
+      DisplayText ( "\nOverwriting existing codepanel list entry...\n" , -1 , -1 , &User_Rect );
+      
+    }
+  EditLevel -> labels [ i ] . label_name = NewCommentOnThisSquare;
+  EditLevel -> labels [ i ] . pos . x = rintf( Me[0].pos.x );
+  EditLevel -> labels [ i ] . pos . y = rintf( Me[0].pos.y );
+  
+  SDL_Flip ( Screen );
+  getchar_raw();
+  
+}; // void EditMapLabelData ( EditLevel )
+
+/* ----------------------------------------------------------------------
  * This function is provides the Level Editor integrated into 
  * freedroid.  Actually this function is a submenu of the big
  * Escape Menu.  In here you can edit the level and, upon pressing
@@ -2187,11 +2449,11 @@ LevelEditor(void)
   int SpecialMapValue;
   int NewItemCode;
   char* NumericInputString;
-  char* NewCommentOnThisSquare;
   char linebuf[10000];
   long OldTicks;
   SDL_Rect Editor_Window;
   Level EditLevel;
+  char* NewCommentOnThisSquare;
 
   EditLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
 
@@ -2232,7 +2494,8 @@ LevelEditor(void)
 	  ClearUserFenster();
 	  AssembleCombatPicture ( ONLY_SHOW_MAP_AND_TEXT | SHOW_GRID );
 	  Highlight_Current_Block();
-	  Show_Waypoints( FALSE );
+	  ShowWaypoints( FALSE );
+	  ShowMapLabels( );
 	  
 	  SetCurrentFont ( FPS_Display_BFont ) ;
 
@@ -2240,7 +2503,7 @@ LevelEditor(void)
 	  // Now we print out the current status directly onto the window:
 	  //
 	  CenteredPutString ( Screen ,  0*FontHeight( GetCurrentFont () ),    "LEVEL EDITOR");
-	  LeftPutString   ( Screen ,  (1)*FontHeight(Menu_BFont), "F1...Level Editor Keymap"); 
+	  RightPutString   ( Screen ,  (1)*FontHeight(Menu_BFont), "F1...Level Editor Keymap"); 
 
 	  if ( OriginWaypoint == ( -1 ) )
 	    {
@@ -2311,72 +2574,13 @@ LevelEditor(void)
 	  // codepanel.  Of course the cursor must be positioned at this codepanel
 	  // so the feature can work.
 	  //
-	  if ( PPressed () )
-	    {
-	      while (PPressed());
-	      SetCurrentFont( FPS_Display_BFont );
+	  if ( PPressed () ) EditCodepanelData ( EditLevel );
 
-	      // First we check if we really are directly on a codepanel:
-	      switch ( EditLevel->map [ (int)rintf( Me[0].pos.y) ] [ (int)rintf( Me[0].pos.x ) ] )
-		{
-		case CODEPANEL_L:
-		case CODEPANEL_R:
-		case CODEPANEL_U:
-		case CODEPANEL_D:
-
-		  // If yes, we ask for the new codepanel keyword
-		  DisplayText ( "\n Please enter new codepanel codeword: \n" , -1 , -1 , &User_Rect );
-		  SDL_Flip( Screen );
-		  NewCommentOnThisSquare = GetString( 1000, FALSE );  // TRUE currently not implemented
-
-		  // Now we see if a codepanel entry is existing already for this square
-		  for ( i = 0 ; i < MAX_CODEPANELS_PER_LEVEL ; i ++ )
-		    {
-		      if ( ( EditLevel->CodepanelList[ i ].x == (int)rintf( Me[0].pos.x) ) &&
-			   ( EditLevel->CodepanelList[ i ].y == (int)rintf( Me[0].pos.y) ) ) break;
-		    }
-		  if ( i >= MAX_CODEPANELS_PER_LEVEL ) 
-		    {
-		      DisplayText ( "\nNo existing codepanel entry found...\n" , -1 , -1 , &User_Rect );
-		      i=0;
-		      for ( i = 0 ; i < MAX_CODEPANELS_PER_LEVEL ; i ++ )
-			{
-			  if ( EditLevel->CodepanelList[ i ].x == (-1) )
-			    break;
-			}
-		      if ( i >= MAX_CODEPANELS_PER_LEVEL )
-			{
-			  DisplayText ( "\nNo more free codepanel entry found... using first\n" , -1 , -1 , &User_Rect );
-			  i = 0;
-			}
-		      else
-			{
-			  DisplayText ( "\nUsing new codepanel list entry...\n" , -1 , -1 , &User_Rect );
-			}
-		      // Terminate( ERR );
-		    }
-		  else
-		    {
-		      DisplayText ( "\nOverwriting existing codepanel list entry...\n" , -1 , -1 , &User_Rect );
-
-		    }
-		  EditLevel->CodepanelList[ i ].Secret_Code = NewCommentOnThisSquare;
-		  EditLevel->CodepanelList[ i ].x = rintf( Me[0].pos.x );
-		  EditLevel->CodepanelList[ i ].y = rintf( Me[0].pos.y );
-
-
-		  SDL_Flip ( Screen );
-		  getchar_raw();
-		  
-		  break;
-		default:
-		  DisplayText ( "\nBut you are not on a codepanel!!\n" , -1 , -1 , &User_Rect );
-		  SDL_Flip( Screen );
-		  getchar_raw();
-		  break;
-		}
-	      
-	    }
+	  //--------------------
+	  // With the 'M' key, you can edit the current map label.
+	  // The label will be assumed to be directly under the cursor.
+	  //
+	  if ( MPressed () ) EditMapLabelData ( EditLevel );
 
 	  //--------------------
 	  // Since the level editor will not always be able to

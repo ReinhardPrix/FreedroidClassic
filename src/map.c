@@ -50,8 +50,7 @@
 #define LEVEL_ENTER_COMMENT_STRING "Comment of the Influencer on entering this level=\""
 #define BACKGROUND_SONG_NAME_STRING "Name of background song for this level="
 #define MAP_END_STRING "End of pure map information for this level"
-#define STATEMENT_BEGIN_STRING "Start of pure statement information for this level"
-#define STATEMENT_END_STRING "End of pure statement information for this level"
+
 #define ITEMS_SECTION_BEGIN_STRING "Start of pure items information for this level"
 #define ITEMS_SECTION_END_STRING "End of pure items information for this level"
 #define ITEM_CODE_STRING "New item: type="
@@ -77,9 +76,18 @@
 #define ITEM_BONUS_TO_RESELE_STRING " ResEle="
 #define ITEM_BONUS_TO_RESFIR_STRING " ResFir="
 #define ITEM_BONUS_TO_RESFOR_STRING " ResFor="
+
+#define STATEMENT_BEGIN_STRING "Start of pure statement information for this level"
+#define STATEMENT_END_STRING "End of pure statement information for this level"
 #define X_POSITION_OF_STATEMENT_STRING "PosX="
 #define Y_POSITION_OF_STATEMENT_STRING "PosY="
 #define STATEMENT_ITSELF_ANNOUNCE_STRING "Statement=\""
+
+#define MAP_LABEL_BEGIN_STRING "Start of pure map label information for this level"
+#define MAP_LABEL_END_STRING "End of pure map label information for this level"
+#define X_POSITION_OF_LABEL_STRING "label.pos.x="
+#define Y_POSITION_OF_LABEL_STRING "label.pos.y="
+#define LABEL_ITSELF_ANNOUNCE_STRING "label.label_name=\""
 
 #define CODEPANEL_SECTION_BEGIN_STRING "Start of pure codepanel information for this level"
 #define CODEPANEL_SECTION_END_STRING "End of pure codepanel information for this level"
@@ -310,6 +318,71 @@ DecodeCodepanelsOfThisLevel ( Level loadlevel , char* DataPointer )
   CodepanelSectionEnd[0]=PreservedLetter;
 
 }; // void DecodeCodepanelsOfThisLevel ( Level loadlevel , char* DataPointer );
+
+
+/* ----------------------------------------------------------------------
+ * Next we extract the map labels of this level WITHOUT destroying
+ * or damaging the data in the process!
+ * ---------------------------------------------------------------------- */
+void 
+DecodeMapLabelsOfThisLevel ( Level loadlevel , char* DataPointer )
+{
+  int i;
+  char PreservedLetter;
+  char* MapLabelPointer;
+  char* MapLabelSectionBegin;
+  char* MapLabelSectionEnd;
+  int NumberOfMapLabelsInThisLevel;
+
+  //--------------------
+  // First we initialize the map labels array with 'empty' information
+  //
+  for ( i = 0 ; i < MAX_MAP_LABELS_PER_LEVEL ; i ++ )
+    {
+      loadlevel -> labels [ i ] . pos . x = ( -1 ) ;
+      loadlevel -> labels [ i ] . pos . y = ( -1 ) ;
+      loadlevel -> labels [ i ] . label_name = "no_label_defined" ;
+    }
+
+  //--------------------
+  // Now we look for the beginning and end of the map labels section
+  //
+  MapLabelSectionBegin = LocateStringInData( DataPointer , MAP_LABEL_BEGIN_STRING );
+  MapLabelSectionEnd = LocateStringInData( DataPointer , MAP_LABEL_END_STRING );
+
+  //--------------------
+  // We add a terminator at the end, but ONLY TEMPORARY.  The damage will be restored later!
+  //
+  PreservedLetter=MapLabelSectionEnd[0];
+  MapLabelSectionEnd[0]=0;
+  NumberOfMapLabelsInThisLevel = CountStringOccurences ( MapLabelSectionBegin , LABEL_ITSELF_ANNOUNCE_STRING ) ;
+  DebugPrintf( 0 , "\nNumber of map labels found in this level : %d." , NumberOfMapLabelsInThisLevel );
+
+  //--------------------
+  // Now we decode all the map label information
+  //
+  MapLabelPointer=MapLabelSectionBegin;
+  for ( i = 0 ; i < NumberOfMapLabelsInThisLevel ; i ++ )
+    {
+      MapLabelPointer = strstr ( MapLabelPointer + 1 , X_POSITION_OF_LABEL_STRING );
+      ReadValueFromString( MapLabelPointer , X_POSITION_OF_LABEL_STRING , "%d" , 
+			   &(loadlevel->labels[ i ].pos.x) , MapLabelSectionEnd );
+      ReadValueFromString( MapLabelPointer , Y_POSITION_OF_LABEL_STRING , "%d" , 
+			   &(loadlevel->labels[ i ].pos.y) , MapLabelSectionEnd );
+      loadlevel->labels[ i ].label_name = 
+	ReadAndMallocStringFromData ( MapLabelPointer , LABEL_ITSELF_ANNOUNCE_STRING , "\"" ) ;
+
+      DebugPrintf( 1 , "\npos.x=%d pos.y=%d label_name=\"%s\"" , loadlevel->labels[ i ].pos.x , 
+		   loadlevel->labels[ i ].pos.y , loadlevel->labels[ i ].label_name );
+    }
+
+  //--------------------
+  // Now we repair the damage done to the loaded level data
+  //
+  MapLabelSectionEnd[0]=PreservedLetter;
+
+}; // void DecodeMapLabelsOfThisLevel ( Level loadlevel , char* DataPointer );
+
 
 /* ----------------------------------------------------------------------
  * This function returns TRUE for blocks classified as "Walls" and false
@@ -911,12 +984,97 @@ void CheckWaypointIntegrity(Level Lev)
 
 }; // void CheckWaypointIntegrity(Level Lev)
 
+/* ----------------------------------------------------------------------
+ * This function adds the statement data of this level to the chunk of 
+ * data that will be written out to a file later.
+ * ---------------------------------------------------------------------- */
+void
+EncodeMapLabelsOfThisLevel ( char* LevelMem , Level Lev )
+{
+  int i;
+  char linebuf[5000];	  
+
+  //--------------------
+  // Now we write out a marker at the end of the map data.  This marker is not really
+  // vital for reading in the file again, but it adds clearness to the files structure.
+  //
+  strcat(LevelMem, MAP_LABEL_BEGIN_STRING);
+  strcat(LevelMem, "\n");
+
+  for ( i = 0 ; i < MAX_MAP_LABELS_PER_LEVEL ; i ++ )
+    {
+      if ( Lev -> labels [ i ] . pos . x == (-1) ) continue;
+
+      strcat( LevelMem , X_POSITION_OF_LABEL_STRING );
+      sprintf( linebuf , "%d " , Lev -> labels [ i ] . pos . x );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , Y_POSITION_OF_LABEL_STRING );
+      sprintf( linebuf , "%d " , Lev -> labels [ i ] . pos . y );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , LABEL_ITSELF_ANNOUNCE_STRING );
+      strcat( LevelMem , Lev -> labels [ i ] . label_name );
+      strcat( LevelMem , "\"\n" );
+    }
+  
+  //--------------------
+  // Now we write out a marker at the end of the map data.  This marker is not really
+  // vital for reading in the file again, but it adds clearness to the files structure.
+  //
+  strcat(LevelMem, MAP_LABEL_END_STRING);
+  strcat(LevelMem, "\n");
+  
+}; // void EncodeMapLabelsOfThisLevel ( char* LevelMem , Level Lev )
+		
+/* ----------------------------------------------------------------------
+ * This function adds the statement data of this level to the chunk of 
+ * data that will be written out to a file later.
+ * ---------------------------------------------------------------------- */
+void
+EncodeStatementsOfThisLevel ( char* LevelMem , Level Lev )
+{
+  int i;
+  char linebuf[5000];	  
+
+  //--------------------
+  // Now we write out a marker at the end of the map data.  This marker is not really
+  // vital for reading in the file again, but it adds clearness to the files structure.
+  //
+  strcat(LevelMem, STATEMENT_BEGIN_STRING);
+  strcat(LevelMem, "\n");
+
+  for ( i = 0 ; i < MAX_STATEMENTS_PER_LEVEL ; i ++ )
+    {
+      if ( Lev->StatementList[ i ].x == (-1) ) continue;
+
+      strcat( LevelMem , X_POSITION_OF_STATEMENT_STRING );
+      sprintf( linebuf , "%d " , Lev->StatementList[ i ].x );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , Y_POSITION_OF_STATEMENT_STRING );
+      sprintf( linebuf , "%d " , Lev->StatementList[ i ].y );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , STATEMENT_ITSELF_ANNOUNCE_STRING );
+      strcat( LevelMem , Lev->StatementList[ i ].Statement_Text );
+      strcat( LevelMem , "\"\n" );
+    }
+  
+  //--------------------
+  // Now we write out a marker at the end of the map data.  This marker is not really
+  // vital for reading in the file again, but it adds clearness to the files structure.
+  //
+  strcat(LevelMem, STATEMENT_END_STRING);
+  strcat(LevelMem, "\n");
+  
+}; // void EncodeStatementsOfThisLevel ( char* LevelMem , Level Lev )
 		
 /* ----------------------------------------------------------------------
  * This function generates savable text out of the current lavel data
  * ---------------------------------------------------------------------- */
 char *
-Encode_Level_For_Saving(Level Lev)
+EncodeLevelForSaving(Level Lev)
 {
   char *LevelMem;
   int i, j;
@@ -997,38 +1155,10 @@ jump target west: %d\n",
   // vital for reading in the file again, but it adds clearness to the files structure.
   strcat(LevelMem, MAP_END_STRING);
   strcat(LevelMem, "\n");
-  
-  //--------------------
-  // Now we write out a marker at the end of the map data.  This marker is not really
-  // vital for reading in the file again, but it adds clearness to the files structure.
-  //
-  strcat(LevelMem, STATEMENT_BEGIN_STRING);
-  strcat(LevelMem, "\n");
 
-  for ( i = 0 ; i < MAX_STATEMENTS_PER_LEVEL ; i ++ )
-    {
-      if ( Lev->StatementList[ i ].x == (-1) ) continue;
+  EncodeMapLabelsOfThisLevel ( LevelMem , Lev );
 
-      strcat( LevelMem , X_POSITION_OF_STATEMENT_STRING );
-      sprintf( linebuf , "%d " , Lev->StatementList[ i ].x );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , Y_POSITION_OF_STATEMENT_STRING );
-      sprintf( linebuf , "%d " , Lev->StatementList[ i ].y );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , STATEMENT_ITSELF_ANNOUNCE_STRING );
-      strcat( LevelMem , Lev->StatementList[ i ].Statement_Text );
-      strcat( LevelMem , "\"\n" );
-    }
-  
-  //--------------------
-  // Now we write out a marker at the end of the map data.  This marker is not really
-  // vital for reading in the file again, but it adds clearness to the files structure.
-  //
-  strcat(LevelMem, STATEMENT_END_STRING);
-  strcat(LevelMem, "\n");
-  
+  EncodeStatementsOfThisLevel ( LevelMem , Lev );
 
   //--------------------
   // Now we write out a marker to announce the beginning of the codepanel data
@@ -1279,7 +1409,7 @@ jump target west: %d\n",
   /* all ok : */
   return LevelMem;
   
-}; // char *Encode_Level_For_Saving ( Level Lev )
+}; // char *EncodeLevelForSaving ( Level Lev )
 
 
 /* ----------------------------------------------------------------------
@@ -1397,7 +1527,7 @@ freedroid-discussion@lists.sourceforge.net\n\
       // Now comes the real saving part FOR ONE LEVEL.  First THE LEVEL is packed into a string and
       // then this string is wirtten to the file.  easy. simple.
       //
-      LevelMem = Encode_Level_For_Saving (curShip.AllLevels[array_num]);
+      LevelMem = EncodeLevelForSaving (curShip.AllLevels[array_num]);
       fwrite(LevelMem, strlen(LevelMem), sizeof(char), ShipFile);
     
       free(LevelMem);
@@ -1494,6 +1624,8 @@ DecodeLoadedLeveldata ( char *data )
   loadlevel->Background_Song_Name = ReadAndMallocStringFromData ( data , BACKGROUND_SONG_NAME_STRING , "\n" );
   loadlevel->Level_Enter_Comment = ReadAndMallocStringFromData ( data , LEVEL_ENTER_COMMENT_STRING , "\n" );
 
+  DecodeMapLabelsOfThisLevel ( loadlevel , DataPointer );
+
   //--------------------
   // Next we extract the statments of the influencer on this level WITHOUT destroying
   // or damaging the data in the process!
@@ -1560,13 +1692,6 @@ DecodeLoadedLeveldata ( char *data )
   // Now we repair the damage done to the loaded level data
   //
   MapInsertSectionEnd[0]=Preserved_Letter;
-
-
-
-
-  
-
-
 
   //----------------------------------------------------------------------
   // From here on we take apart the items section of the loaded level...
