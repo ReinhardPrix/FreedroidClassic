@@ -1353,6 +1353,22 @@ ShowCurrentTextWindow ( void )
     Banner_Text_Rect . w = LOWER_BANNER_TEXT_RECT_W;
     Banner_Text_Rect . h = LOWER_BANNER_TEXT_RECT_H;
 
+    //--------------------
+    // Now we add some extra correction, so that the banner rectangle can not
+    // reach outside of the visible screen...
+    //
+    if ( Banner_Text_Rect . x + Banner_Text_Rect . w > GameConfig . screen_width )
+    {
+	Banner_Text_Rect . x = GameConfig . screen_width - Banner_Text_Rect . w ;
+    }
+    if ( Banner_Text_Rect . y + Banner_Text_Rect . h > GameConfig . screen_height )
+    {
+	Banner_Text_Rect . y = GameConfig . screen_height - Banner_Text_Rect . h ;
+    }
+
+    //--------------------
+    // Now we can start to draw the rectangle
+    //
     SDL_SetClipRect( Screen , NULL );  // this unsets the clipping rectangle
     if ( strlen( ItemDescText ) > 1 )
     {
