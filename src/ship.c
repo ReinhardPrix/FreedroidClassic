@@ -518,6 +518,10 @@ EnterKonsole (void)
 
   ConsoleMenuPos=0;
 
+  text_offs = 137;
+  Set_Rect (Console_Rect, User_Rect.x + text_offs,  User_Rect.y,
+	    User_Rect.w-text_offs, User_Rect.h);
+
   /* Gesamtkonsolenschleife */
 
   while (!ReenterGame)
