@@ -29,45 +29,54 @@ If you have questions concerning FreedroidRPG, please send mail to:
 
 freedroid-discussion@lists.sourceforge.net
 
+BEGIN OF AUTORS NOTES
+
+
+
+
+You can use this text field to make some notes on anything.  These otes will get saved with the dialog.
+This is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.
+
+
+
+
+END OF AUTORS NOTES
+
+
 Beginning of new chat dialog for character="XXXXX"
 
 New Option Nr=0  OptionText=" Hi!  I'm new here. "
 OptionSample="Tux_Hi_Im_New_0.wav"
 PositionX=63  PositionY=228  
-Subtitle="Hello!  I'm Spencer."
+Subtitle="Hello!  I'm Spencer.  I'm the manager of this town while our chief is not here.  Is there anything I can help you with?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
+ChangeOption=4 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 New Option Nr=1  OptionText="I need to get into the citadel."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=131  PositionY=225  
-Subtitle="Sorry, but the citadel is off limits to you."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Only members of the guard of the old town are permittet to enter."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="And you aren't a member of our guard."
+Subtitle="Sorry, but the citadel is off limits to you.  Only members of the guard of the old town are permitted to enter."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 New Option Nr=2  OptionText="What must I do to become a member of the guard."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=205  PositionY=227  
-Subtitle="This is not so easy."
+Subtitle="This is not so easy.  At first you will have to find someone who is willing to back you."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="At first you will have to find someone who is willing to back you."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="This must be an established guard member already."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="And if your backer then recommends you to me, I'll consider accepting you for our guard."
+Subtitle="This must be an established guard member already.  And if your backer then recommends you to me, I'll consider accepting you for our guard."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
-ChangeOption=3 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
@@ -79,6 +88,38 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="But I can't promise you anything for it."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=4  OptionText="How is it going?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=133  PositionY=161  
+Subtitle="These are bad times.  The MS machines threaten to overrun our defenses.  "
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="We've tried to get rid of the problem by sendind a group of our men into a large warehouse where many bots are still lurking."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="We wanted to blow the place up, and we even had some help, a guy from outside.  But he was an MS agent, led the troup into a trap and everyone was slain."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=5 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=5  OptionText="Maybe I could help somehow?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=191  PositionY=99  
+Subtitle="That would be most kind of you, but I doubt that you will be able to clear out the warehouse for us."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="But since you are said to be powerful and a former enemy, I'll once more put trust into a stranger."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I've unlocked the accessway to the warehouse.  It's to the north of this town, somewhat hidden in the woods northeast."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I wish you the best of luck."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+DoSomethingExtra="AssignMission:5"
+DoSomethingExtra="ExecuteActionWithLabel:open_warehouse_access_door"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
@@ -88,6 +129,7 @@ PositionX=291  PositionY=291
 Subtitle="See you later."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
