@@ -36,13 +36,18 @@ or would you prefer to stick to acion/arcade contents?  Comments?  Addisions?  j
 
 --------------------
 
-Game Extension:  Friendly droids  :  Existence
+Game Extension:  Friendly droids  :  Existence is done.  Chatting and giving commands 
+instead of taking them over when touching them in transfer mode should come next.
+
 
 Game Extension:  Friendly droids  :  Shops and Chatting
 
+Game Extension:  Resizing of combat window, movable objects like boxes or crates a chair
+or a table, a toilet, searchable objects like a bookshelf and dead bodies of robots or
+scientists and other floor textures
 
-
-
+Game Extension:  Conveyor belts for multiple directions, especially in very long rooms
+and halls.
 
 --------------------
 
@@ -58,11 +63,13 @@ the action continues a usual).
 --------------------
 
 Game Extension:  New Weapon:  Homing missiles
+Depreciated by Lanzz
+
+Game Extension:  Lightning ray:  Yes, we really could draw the whole ray in a flashy 
+lightning-shape.  I think I know already a way how we could implement that.  Multiple 
+phases possible of course.
 
 Game Extension:  New Weapon:  Lasers
-
-Game Extension:  New Weapon:  Exterminator
-
 
 --------------------
 
