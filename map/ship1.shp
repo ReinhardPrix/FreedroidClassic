@@ -1,8 +1,8 @@
-0
-38
-16
-0
-map
+Levelnumber: 0
+xlen of this level: 38
+ylen of this level: 16
+color of this level: 0
+beginning_of_map
 ''''''''+--------------+-+''''''''''''
 +-------+..x.x.....x...=x|''''''''''''
 |...3..a|...1.+---+"---+.|''''''''''''
@@ -38,12 +38,12 @@ wp
 14 	 10 	 -1 	 -1 	 
 17 	 13 	 -1 	 -1 	 
 16 	 -1 	 -1 	 -1 	 
-end
-1
-48
-16
-5
-map
+end_of_level
+Levelnumber: 1
+xlen of this level: 48
+ylen of this level: 16
+color of this level: 5
+beginning_of_map
 ''''+--------------+-----+''''''''''''''''''''''
 +---+..............|x...x|''''''''''''''''''''''
 |a(.|..............|.....|''''''''''''''''''''''
@@ -75,12 +75,12 @@ wp
 -1 	 -1 	 -1 	 -1 	 
 -1 	 -1 	 -1 	 -1 	 
 -1 	 -1 	 -1 	 -1 	 
-end
-2
-18
-11
-3
-map
+end_of_level
+Levelnumber: 2
+xlen of this level: 18
+ylen of this level: 11
+color of this level: 3
+beginning_of_map
 +------+''''''''''
 |....x]+-----+''''
 |o....++@...@|''''
@@ -101,12 +101,12 @@ wp
 4 	 -1 	 -1 	 -1 	 
 1 	 7 	 -1 	 -1 	 
 6 	 -1 	 -1 	 -1 	 
-end
-3
-31
-13
-0
-map
+end_of_level
+Levelnumber: 3
+xlen of this level: 31
+ylen of this level: 13
+color of this level: 0
+beginning_of_map
 +------+'''''''''''''''''''''''
 |......+-------+'''''''''''''''
 |......|@.....@|'''''''''''''''
@@ -137,12 +137,12 @@ wp
 12 	 -1 	 -1 	 -1 	 
 5 	 15 	 -1 	 -1 	 
 14 	 6 	 -1 	 -1 	 
-end
-4
-32
-13
-4
-map
+end_of_level
+Levelnumber: 4
+xlen of this level: 32
+ylen of this level: 13
+color of this level: 4
+beginning_of_map
 +------+''''''''''''''''''''''''
 |....x.+---------+''''''''''''''
 |......|@.......@|''''''''''''''
@@ -171,12 +171,12 @@ wp
 10 	 12 	 -1 	 -1 	 
 4 	 11 	 13 	 -1 	 
 12 	 5 	 -1 	 -1 	 
-end
-5
-38
-15
-1
-map
+end_of_level
+Levelnumber: 5
+xlen of this level: 38
+ylen of this level: 15
+color of this level: 1
+beginning_of_map
 +----+''''''''''''''''''''''''''''''''
 |a(..+---+''''''''''''''''''''''''''''
 |[...|(((+-+---------+''''''''''''''''
@@ -217,12 +217,12 @@ wp
 22 	 20 	 9 	 -1 	 
 16 	 21 	 -1 	 -1 	 
 0 	 -1 	 -1 	 -1 	 
-end
-6
-38
-15
-3
-map
+end_of_level
+Levelnumber: 6
+xlen of this level: 38
+ylen of this level: 15
+color of this level: 3
+beginning_of_map
 +------+-+''''''''''''''''''''''''''''
 |x.....=x+---+''''''''''''''''''''''''
 |......|.|...+-+-----+''''''''''''''''
@@ -257,12 +257,12 @@ wp
 14 	 -1 	 -1 	 -1 	 
 17 	 -1 	 -1 	 -1 	 
 14 	 16 	 -1 	 -1 	 
-end
-7
-38
-15
-2
-map
+end_of_level
+Levelnumber: 7
+xlen of this level: 38
+ylen of this level: 15
+color of this level: 2
+beginning_of_map
 +--------------+''''''''''''''''''''''
 |x..........x..|''''''''''''''''''''''
 |...1....1.....+--+-+------+''''''''''
@@ -298,12 +298,12 @@ wp
 18 	 15 	 13 	 -1 	 
 18 	 0 	 -1 	 -1 	 
 17 	 16 	 -1 	 -1 	 
-end
-8
-38
-12
-0
-map
+end_of_level
+Levelnumber: 8
+xlen of this level: 38
+ylen of this level: 12
+color of this level: 0
+beginning_of_map
 +-------+-------+--+''''''''''''''''''
 |x......=x.....x=x]|''''''''''''''''''
 +-------+.+----"+..+-------+''''''''''
@@ -330,12 +330,12 @@ wp
 7 	 9 	 8 	 -1 	 
 -1 	 -1 	 -1 	 -1 	 
 -1 	 -1 	 -1 	 -1 	 
-end
-9
-20
-8
-3
-map
+end_of_level
+Levelnumber: 9
+xlen of this level: 20
+ylen of this level: 8
+color of this level: 3
+beginning_of_map
 +----+''''''''''''''
 |o...|''''''''''''''
 +----+''''''''''''''
@@ -350,12 +350,12 @@ wp
 0 	 4 	 3 	 -1 	 
 2 	 -1 	 -1 	 -1 	 
 1 	 2 	 -1 	 -1 	 
-end
-10
-22
-5
-4
-map
+end_of_level
+Levelnumber: 10
+xlen of this level: 22
+ylen of this level: 5
+color of this level: 4
+beginning_of_map
 +--------------------+
 |.......5.5.(x...x@.@|
 |ox.........x.....x..|
@@ -367,12 +367,12 @@ wp
 3 	 4 	 -1 	 -1 	 
 2 	 4 	 0 	 -1 	 
 1 	 3 	 2 	 -1 	 
-end
-11
-34
-15
-1
-map
+end_of_level
+Levelnumber: 11
+xlen of this level: 34
+ylen of this level: 15
+color of this level: 1
+beginning_of_map
 +-----------+------------+-------+
 |.......x...=...........x=......x|
 |...........+----------+.|.......|
@@ -407,12 +407,12 @@ wp
 14 	 12 	 8 	 1 	 
 17 	 13 	 -1 	 -1 	 
 16 	 -1 	 -1 	 -1 	 
-end
-12
-34
-16
-0
-map
+end_of_level
+Levelnumber: 12
+xlen of this level: 34
+ylen of this level: 16
+color of this level: 0
+beginning_of_map
 +-------------+-------------+----+
 |a............|x...........x|...2|
 |[............|.............|.333|
@@ -450,12 +450,12 @@ wp
 11 	 16 	 -1 	 -1 	 
 12 	 19 	 -1 	 -1 	 
 14 	 18 	 -1 	 -1 	 
-end
-13
-34
-16
-2
-map
+end_of_level
+Levelnumber: 13
+xlen of this level: 34
+ylen of this level: 16
+color of this level: 2
+beginning_of_map
 +--------------------------------+
 |.x..x.......x..................x|
 |x..............x............x.x.|
@@ -490,12 +490,12 @@ wp
 13 	 6 	 12 	 11 	 
 16 	 7 	 -1 	 -1 	 
 15 	 3 	 -1 	 -1 	 
-end
-14
-26
-16
-1
-map
+end_of_level
+Levelnumber: 14
+xlen of this level: 26
+ylen of this level: 16
+color of this level: 1
+beginning_of_map
 +-----+------------------+
 |.x.x.=.x.......x........|
 |.....=....+-+...........|
@@ -527,12 +527,12 @@ wp
 10 	 12 	 6 	 13 	 
 3 	 11 	 13 	 10 	 
 12 	 7 	 10 	 11 	 
-end
-15
-10
-15
-5
-map
+end_of_level
+Levelnumber: 15
+xlen of this level: 10
+ylen of this level: 15
+color of this level: 5
+beginning_of_map
 +--------+
 |x.....x.|
 |........|
@@ -557,4 +557,5 @@ wp
 6 	 3 	 7 	 -1 	 
 5 	 7 	 2 	 -1 	 
 4 	 6 	 5 	 -1 	 
-end
+end_of_level
+

@@ -303,7 +303,11 @@ LoadShip (char *shipname)
 
   fread (ShipData, (size_t) 64, (size_t) (stbuf.st_size / 64 + 1), ShipFile);
 
-  /*  count the number of levels and remember their start-addresses */
+  /* 
+   *  Now we count the number of levels and remember their start-addresses.
+   *  This is done by searching for the LEVEL_END_STRING again and again
+   *  until it is no longer found in the ship file.  good.
+   */
   level_anz = 0;
   endpt = ShipData;
   LevelStart[level_anz] = ShipData;
@@ -508,13 +512,16 @@ int SaveShip(char *shipname)
 
 /*@Function============================================================
  * @Desc: Level LevelToStruct(char *data):
- * 	Extrahiert die Daten aus *data und schreibt sie in eine
- *	Level-struct:
- *	Map- Daten noch NICHT in interne Werte uebersetzt
- *	Doors and Waypoints Arrays initialisiert
+ * 	This function extracts the data from *data and writes them 
+ *      into a Level-struct:
+ *
+ *	NOTE:  Here, the map-data are NOT yet translated to their 
+ *             their internal values, like "VOID", "H_GANZTUERE" and
+ *             all the other values from the defs.h file.
+ *
+ *	Doors and Waypoints Arrays are initialized too
  *
  *	@Ret:  Level or NULL
- *	@Int:
 * $Function----------------------------------------------------------*/
 Level
 LevelToStruct (char *data)
@@ -532,12 +539,27 @@ LevelToStruct (char *data)
 
   loadlevel->empty = FALSE;
 
+  printf("\n----------------------------------------------------------------------\n\
+Starting to process information for another level:\n");
+
   /* Read Header Data: levelnum and x/ylen */
-  sscanf (data, "%u %u %u %u",
+  sscanf (data, "Levelnumber: %u \n xlen of this level: %u \n ylen of this level: %u \n color of this level: %u",
 	  &(loadlevel->levelnum), &(loadlevel->xlen),
 	  &(loadlevel->ylen), &(loadlevel->color));
 
-  /* find Map-data */
+  printf("\nLevelnumber : %d ", loadlevel->levelnum );
+  printf("\nxlen of this level: %d ", loadlevel->xlen );
+  printf("\nylen of this level: %d ", loadlevel->ylen );
+  printf("\ncolor of this level: %d ", loadlevel->ylen );
+
+  // find the map data
+  // NOTE, that we here only set up a pointer to the map data
+  // as they are stored in the file.  This is NOT the same format
+  // as the map data stored internally for the game, but rather
+  // an easily human readable format with acceptable ascii 
+  // characters.  The transformation into game-usable data is
+  // done in a later step outside of this function!
+  //
   if ((map_begin = strstr (data, MAP_BEGIN_STRING)) == NULL)
     return NULL;
 

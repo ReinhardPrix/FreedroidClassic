@@ -11,6 +11,22 @@ jp
 
 The list of things I'm going to work on next:
 
+1. Get the Level Editor save function to work properly:
+   1.a Analyze the LoadShip function
+   1.b Write down some doku for myself about how ship data are composed
+   1.c Get the Level Editor working again
+
+2. Write a new ship/area for testing purposes: "The mining community"
+   2.a One deck at least.
+   2.b A second deck
+   2.c One elevator connecting them
+   2.d Draw a side elevation of the mining asteroid
+
+3. Introduce new robots and new fighting behaviour
+   3.a Changing of waypoints not randomly but decision as demanded
+       by the combat situation
+   3.b Movement to new waypoint immediately if threatened by enemy fire
+
 (?) Try to introduce an external file for game constants so that mods can be
     made without looking into the code.
 

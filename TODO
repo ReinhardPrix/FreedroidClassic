@@ -15,9 +15,6 @@ Outstanding release-critical bugs (priority: high)
 - (jp) Before any release the levelcolor changing procedure must be rearranged to work
        well together with the combat screen resizing code
 
-- Incredible file sizes of ne_....bmp files should be reduced, e.g. by using gif file
-  format instead, to reduce package size.
-
 - The console picture, i.e. the picture for the menu at the console is a terrible mess.
   Someone must sooner or later set up something more proper for the ne_cons.bmp file
   containing the different phases of the console before any new release can be shipped.
@@ -82,8 +79,8 @@ Wishlist
   freedroid@....
 
 - (jp) add more sounds:  
-  Eventuell waere auch gut fuer jeden Level (oder jede Levelfarbe)
-  eine eigene Hintergrundmusik  zu verwenden.
+  We might use a new sound file for every different level. That would be
+  nice.  But where to get that?
 
 - save highscores to disk
 
@@ -97,6 +94,8 @@ Wishlist
 
 Resolved bugs
 -------------
+- DONE  Incredible file sizes of ne_....bmp files should be reduced, e.g. by using gif file
+        format instead, to reduce package size.
 - DONE  Robots now "jitter" until they reach their waypoint: adapt to new
         coordinate-treatment: 
   (jp:) This does only happen with "slow" machines.  I had that too at
