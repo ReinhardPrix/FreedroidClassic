@@ -478,6 +478,20 @@ HandleCurrentlyActivatedSkill( void )
 	    }
 	}
     }
+  else if ( Me[0].readied_skill == SPELL_REPAIR_SKILL )
+    {
+      if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
+	{
+	  if ( !CursorIsInInvRect( GetMousePos_x() + 16 , GetMousePos_y() + 16 ) || !GameConfig.Inventory_Visible )
+	    {
+	      //--------------------
+	      // Do nothing here.  The right mouse click while in inventory screen
+	      // will be handled in the inventory screen management function.
+	      //
+	      PlayOnceNeededSoundSample ( "../effects/Tux_I_Can_Only_0.wav" , FALSE );      
+	    }
+	}
+    }
   else if ( Me[0].readied_skill == SPELL_POISON_BOLT )
     {
       if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )

@@ -142,6 +142,38 @@ GetPositionCode ( Item ItemPointer )
 }; // int GetPositionCode ( Item ItemPointer ) 
 
 /* ----------------------------------------------------------------------
+ * This function does the home made item repair, i.e. the item repair via
+ * the repair skill in contrast to the item repair via the shop, which of
+ * course works much better.
+ * ---------------------------------------------------------------------- */
+void
+HomeMadeItemRepair ( Item RepairItem ) 
+{
+  //--------------------
+  // At this point we know, that we have just selected an item
+  // for home-made repair.
+  //
+  if ( RepairItem->max_duration == (-1) )
+    {
+      PlayOnceNeededSoundSample ( "../effects/Tux_Item_Cant_Be_0.wav" , FALSE );
+    }
+  else
+    {
+      if ( RepairItem -> max_duration <= 3 ) 
+	{
+	  PlayOnceNeededSoundSample ( "../effects/Tux_Item_Too_Fragile_0.wav" , FALSE );	  
+	}
+      else
+	{
+	  RepairItem->max_duration *= 0.5 ;
+	  RepairItem->current_duration = RepairItem->max_duration;
+	  // Play_Shop_ItemRepairedSound( );
+	  PlayOnceNeededSoundSample ( "../effects/Tux_This_Quick_Fix_0.wav" , FALSE );	  
+	}
+    }
+}; // void HomeMadeItemRepair ( Item RepairItem ) 
+
+/* ----------------------------------------------------------------------
  * Same as GetPositionCode makes a position code out of a pointer, we now
  * want to it the other way around and find a pointer to a given position
  * code and player number.
@@ -1161,6 +1193,20 @@ CursorIsInUserRect( int x , int y )
   if ( y < User_Rect.y ) return ( FALSE );
   return ( TRUE );
 }; // int CursorIsInUserRect( int x , int y )
+
+/* ----------------------------------------------------------------------
+ * This function checks if a given screen position lies within the user
+ * i.e. combat rectangle or not.
+ * ---------------------------------------------------------------------- */
+int 
+CursorIsInInvRect( int x , int y )
+{
+  if ( x > InventoryRect.x + InventoryRect.w ) return ( FALSE );
+  if ( x < InventoryRect.x ) return ( FALSE );
+  if ( y > InventoryRect.y + InventoryRect.h ) return ( FALSE );
+  if ( y < InventoryRect.y ) return ( FALSE );
+  return ( TRUE );
+}; // int CursorIsInInvRect( int x , int y )
 
 /* ----------------------------------------------------------------------
  * This function checks if a given screen position lies within the small
@@ -2422,29 +2468,103 @@ ManageInventoryScreen ( void )
   
   if ( MouseRightPressed ( ) && ( !RightPressedPreviousFrame ) )
     {
-      if ( CursorIsInInventoryGrid( CurPos.x , CurPos.y ) )
+      if ( Me [ 0 ] . readied_skill != SPELL_REPAIR_SKILL )
 	{
-	  Inv_GrabLoc.x = GetInventorySquare_x ( CurPos.x );
-	  Inv_GrabLoc.y = GetInventorySquare_y ( CurPos.y );
-
-	  DebugPrintf( 0 , "\nApplying item at inv-pos: %d %d." , Inv_GrabLoc.x , Inv_GrabLoc.y );
+	  if ( CursorIsInInventoryGrid( CurPos.x , CurPos.y ) )
+	    {
+	      Inv_GrabLoc.x = GetInventorySquare_x ( CurPos.x );
+	      Inv_GrabLoc.y = GetInventorySquare_y ( CurPos.y );
 	      
-	  Grabbed_InvPos = GetInventoryItemAt ( Inv_GrabLoc.x , Inv_GrabLoc.y );
-	  DebugPrintf( 0 , "\nApplying inventory entry no.: %d." , Grabbed_InvPos );
-
-	  if ( Grabbed_InvPos == (-1) )
-	    {
-	      // Nothing grabbed, so we need not do anything more here..
-	      DebugPrintf( 0 , "\nApplying in INVENTORY grid FAILED:  NO ITEM AT THIS POSITION FOUND!" );
-	    }
-	  else
-	    {
-	      //--------------------
-	      // At this point we know, that we have just applied something from the inventory
-	      //
-	      ApplyItem( & ( Me[0].Inventory[ Grabbed_InvPos ] ) );
+	      DebugPrintf( 0 , "\nApplying item at inv-pos: %d %d." , Inv_GrabLoc.x , Inv_GrabLoc.y );
+	      
+	      Grabbed_InvPos = GetInventoryItemAt ( Inv_GrabLoc.x , Inv_GrabLoc.y );
+	      DebugPrintf( 0 , "\nApplying inventory entry no.: %d." , Grabbed_InvPos );
+	      
+	      if ( Grabbed_InvPos == (-1) )
+		{
+		  // Nothing grabbed, so we need not do anything more here..
+		  DebugPrintf( 0 , "\nApplying in INVENTORY grid FAILED:  NO ITEM AT THIS POSITION FOUND!" );
+		}
+	      else
+		{
+		  //--------------------
+		  // At this point we know, that we have just applied something from the inventory
+		  //
+		  ApplyItem( & ( Me[0].Inventory[ Grabbed_InvPos ] ) );
+		}
 	    }
 	}
+      else
+	{
+	  //--------------------
+	  // Here we know, that the repair skill is selected, therefore we try to 
+	  // repair the item currently under the mouse cursor.
+	  //
+	  if ( CursorIsInInventoryGrid( CurPos.x , CurPos.y ) )
+	    {
+	      Inv_GrabLoc.x = GetInventorySquare_x ( CurPos.x );
+	      Inv_GrabLoc.y = GetInventorySquare_y ( CurPos.y );
+	      
+	      DebugPrintf( 0 , "\nTrying to repair item at inv-pos: %d %d." , Inv_GrabLoc.x , Inv_GrabLoc.y );
+	      
+	      Grabbed_InvPos = GetInventoryItemAt ( Inv_GrabLoc.x , Inv_GrabLoc.y );
+	      DebugPrintf( 0 , "\nTrying to repair inventory entry no.: %d." , Grabbed_InvPos );
+	      
+	      if ( Grabbed_InvPos == (-1) )
+		{
+		  // Nothing grabbed, so we need not do anything more here..
+		  DebugPrintf( 0 , "\nRepairing in INVENTORY grid FAILED:  NO ITEM AT THIS POSITION FOUND!" );
+		}
+	      else
+		{
+		  HomeMadeItemRepair ( & ( Me[0].Inventory[ Grabbed_InvPos ] ) ) ;
+		}
+	    }
+	  else if ( CursorIsInWeaponRect ( CurPos.x , CurPos.y ) )
+	    {
+	      DebugPrintf( 0 , "\nItem repair requested for the weapons rectangle!" );
+	      if ( Me [ 0 ] . weapon_item . type != (-1) )
+		HomeMadeItemRepair ( & ( Me [ 0 ] . weapon_item ) );
+	    }
+	  else if ( CursorIsInDriveRect ( CurPos.x , CurPos.y ) )
+	    {
+	      DebugPrintf( 0 , "\nItem repair requested for the drive rectangle!" );
+	      if ( Me [ 0 ] . drive_item . type != (-1) )
+		HomeMadeItemRepair ( & ( Me [ 0 ] . drive_item ) );
+	    }
+	  else if ( CursorIsInShieldRect ( CurPos.x , CurPos.y ) )
+	    {
+	      DebugPrintf( 0 , "\nItem repair requested for the shield rectangle!" );
+	      if ( Me [ 0 ] . shield_item . type != (-1) )
+		HomeMadeItemRepair ( & ( Me [ 0 ] . shield_item ) );
+	    }
+	  else if ( CursorIsInArmourRect ( CurPos.x , CurPos.y ) )
+	    {
+	      DebugPrintf( 0 , "\nItem repair requested for the armour rectangle!" );
+	      if ( Me [ 0 ] . armour_item . type != (-1) )
+		HomeMadeItemRepair ( & ( Me [ 0 ] . armour_item ) );
+	    }
+	  else if ( CursorIsInSpecialRect ( CurPos.x , CurPos.y ) )
+	    {
+	      DebugPrintf( 0 , "\nItem repair requested for the special rectangle!" );
+	      if ( Me [ 0 ] . special_item . type != (-1) )
+		HomeMadeItemRepair ( & ( Me [ 0 ] . special_item ) );
+	    }
+	  else if ( CursorIsInAux1Rect ( CurPos.x , CurPos.y ) )
+	    {
+	      DebugPrintf( 0 , "\nItem repair requested for the Aux1 rectangle!" );
+	      if ( Me [ 0 ] . aux1_item . type != (-1) )
+		HomeMadeItemRepair ( & ( Me [ 0 ] . aux1_item ) );
+	    }
+	  else if ( CursorIsInAux2Rect ( CurPos.x , CurPos.y ) )
+	    {
+	      DebugPrintf( 0 , "\nItem repair requested for the Aux2 rectangle!" );
+	      if ( Me [ 0 ] . aux2_item . type != (-1) )
+		HomeMadeItemRepair ( & ( Me [ 0 ] . aux2_item ) );
+	    }
+
+	}
+
     }
 
   //--------------------
@@ -2573,10 +2693,8 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
 	      DestCode = GetPositionCode ( & ( Me [ 0 ] . Inventory [ InvPos ] ) ) ;
 	      SendPlayerItemMoveToServer ( SourceCode , DestCode , Inv_Loc.x , Inv_Loc.y ) ;
 	    }
-  
 	}
     }
-  
   
 }; // void AddFloorItemDirectlyToInventory( item* ItemPointer )
 
