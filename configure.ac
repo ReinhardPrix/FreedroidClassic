@@ -1,5 +1,5 @@
 # Process this file with autoconf to produce a configure script.
-AC_INIT(FreeDroid, 0.6.0, r.prix@maths.soton.ac.uk, freedroid)
+AC_INIT(FreeDroid, 0.7.0, r.prix@maths.soton.ac.uk, freedroid)
 
 #once Johannes has updated his autoconf, we'll enforce version 2.53
 # this is necessary to get the PACKAGE_STRING #defines included in config.h.in
@@ -17,9 +17,6 @@ AC_PROG_CC
 # Checks for libraries.
 AC_CHECK_LIB([Y2], [YOpenConnection])
 AC_CHECK_LIB([m], [sin])
-AC_CHECK_LIB([vga], [vga_init])
-AC_CHECK_LIB([vgagl], [gl_clearscreen])
-AC_CHECK_LIB([SDLmain], [main])
 AC_CHECK_LIB([SDL], [main])
 AC_CHECK_LIB([SDL_image], [main])
 
