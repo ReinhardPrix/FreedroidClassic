@@ -358,6 +358,10 @@ InitPictures (void)
   int i;
   SDL_Surface *tmp;
   SDL_Surface *tmp2;
+  SDL_Surface *tmp3;
+  SDL_Surface *tmp4;
+  SDL_Rect Source_Rectangle;
+  SDL_Rect Destination_Rectangle;
   int block_line = 0;   /* keep track of line in ne_blocks we're writing */
   char PicturePath[5000];
 
@@ -451,8 +455,59 @@ InitPictures (void)
   strcat( PicturePath , NE_BULLET_BLOCK_FILE );
 
   for (i=0; i < ALLBULLETTYPES; i++)
-    Bulletmap[i].block =
-      ne_get_blocks ( PicturePath , Bulletmap[i].phases, 0, i, block_line++);
+    {
+      // This is the old command to read in all the rotated pictures of this bullet
+      // It should soon be no longer nescessary to read more than one type in, but
+      // it doesn't hurt and for now we can leave it as it is
+      Bulletmap[i].block =
+	ne_get_blocks ( PicturePath , Bulletmap[i].phases, 0, i, block_line++);
+
+
+      // Now that the Bullets of this type have been read in (not all of them),
+      // we generate rotated images.
+      /*
+      if (SDL_SetColorKey(ne_blocks, SDL_SRCCOLORKEY, 0x0FF00FF ) == -1 )
+	{
+	  fprintf (stderr, "Transp setting by SDL_SetColorKey() for rotating the bullets failed: %s \n",
+		   SDL_GetError());
+	  Terminate(ERR);
+	}
+
+      tmp3 = SDL_CreateRGBSurface(0, Block_Width , Block_Height , ne_bpp, 0, 0, 0, 0);
+
+      Source_Rectangle.x=0;
+      Source_Rectangle.y= (block_line -1) * Block_Height ;
+      Source_Rectangle.w=Block_Width;
+      Source_Rectangle.h=Block_Height;
+      Destination_Rectangle.x=0;
+      Destination_Rectangle.y=0;
+      Destination_Rectangle.w=Block_Width;
+      Destination_Rectangle.h=Block_Height;
+      SDL_BlitSurface ( ne_blocks , &Source_Rectangle , tmp3 , &Destination_Rectangle );
+      
+      tmp4 = rotozoomSurface( tmp3 , -45, 1.0 , FALSE );
+
+      Source_Rectangle.x=0;
+      Source_Rectangle.y=0;
+      Source_Rectangle.w=Block_Width;
+      Source_Rectangle.h=Block_Height;
+      Destination_Rectangle.y= (block_line -1) * Block_Height ;
+      Destination_Rectangle.x= Block_Width;
+      Destination_Rectangle.w=Block_Width;
+      Destination_Rectangle.h=Block_Height;
+
+      if (SDL_SetColorKey( tmp4 , SDL_SRCCOLORKEY, 0x0FF00FF ) == -1 )
+	{
+	  fprintf (stderr, "Transp setting by SDL_SetColorKey() for rotating the bullets failed: %s \n",
+		   SDL_GetError());
+	  Terminate(ERR);
+	}
+      SDL_BlitSurface ( tmp4 , &Source_Rectangle , ne_blocks , &Destination_Rectangle );
+      */
+    }
+
+
+
 
   // We set the correct path to the blast file for this theme and load it
   strcpy( PicturePath , GRAPHICS_DIR );
