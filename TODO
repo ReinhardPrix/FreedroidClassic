@@ -39,7 +39,7 @@ Outstanding tuning/design bugs and general TODO (priority: low)
 
 - Highscore list + Debriefing ordentlich
 
-- Console
+- (DONE) Console
 
 - Lift-entry: man muss zu lange auf Space sein bis man in den Lift
   kommt. Das "Lift-fahren" ist auch zu schwerfaellig.

@@ -248,15 +248,6 @@ keyboard_update(void)
 	      break;
 	    case SDLK_p:
 	      CurrentlyPPressed=TRUE;
-
-	      Screenshoot_Filename=malloc(100);
-	      printf("\n\nScreenshoot function called.\n\n");
-	      sprintf( Screenshoot_Filename , "Screenshot_%d.bmp", Number_Of_Screenshot );
-	      printf("\n\nScreenshoot function: The Filename is: %s.\n\n" , Screenshoot_Filename );
-	      SDL_SaveBMP( ScaledSurface , Screenshoot_Filename );
-	      Number_Of_Screenshot++;
-	      free(Screenshoot_Filename);
-
 	      break;
 	    case SDLK_q:
 	      CurrentlyQPressed=TRUE;
@@ -266,6 +257,15 @@ keyboard_update(void)
 	      break;
 	    case SDLK_s:
 	      CurrentlySPressed=TRUE;
+
+	      Screenshoot_Filename=malloc(100);
+	      printf("\n\nScreenshoot function called.\n\n");
+	      sprintf( Screenshoot_Filename , "Screenshot_%d.bmp", Number_Of_Screenshot );
+	      printf("\n\nScreenshoot function: The Filename is: %s.\n\n" , Screenshoot_Filename );
+	      SDL_SaveBMP( ScaledSurface , Screenshoot_Filename );
+	      Number_Of_Screenshot++;
+	      free(Screenshoot_Filename);
+
 	      break;
 	    case SDLK_t:
 	      CurrentlyTPressed=TRUE;

@@ -1,7 +1,7 @@
 # Process this file with autoconf to produce a configure script.
 AC_INIT([src/main.c])
 
-AM_INIT_AUTOMAKE(freedroid, 0.7.2)
+AM_INIT_AUTOMAKE(freedroid, 0.7.1)
 
 #once Johannes has updated his autoconf, we'll enforce version 2.53
 # this is necessary to get the PACKAGE_STRING #defines included in config.h.in
