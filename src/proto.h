@@ -412,7 +412,7 @@ EXTERN int DisplayText (char *text, int startx, int starty, const SDL_Rect *clip
 
 EXTERN void DisplayChar (unsigned char c);
 EXTERN int ScrollText (char *Text, SDL_Rect *rect , int SecondsMinimumDuration );
-EXTERN void ImprovedCheckUmbruch(char *text, const SDL_Rect *clip);
+EXTERN bool linebreak_needed (char *textpos , const SDL_Rect *clip);
 EXTERN char *PreviousLine (char *textstart, char *text);
 EXTERN char *NextLine (char *text);
 EXTERN char *GetString (int MaxLen, int echo);

@@ -200,6 +200,11 @@ EXTERN SDL_Surface *ne_console_surface;
 EXTERN SDL_Surface *ne_console_bg_pic1;
 EXTERN SDL_Surface *ne_console_bg_pic2;
 
+EXTERN SDL_Surface *arrow_up;
+EXTERN SDL_Surface *arrow_down;
+EXTERN SDL_Surface *arrow_right;
+EXTERN SDL_Surface *arrow_left;
+
 EXTERN SDL_Surface *ship_off_pic;    	/* Side-view of ship: lights off */
 EXTERN SDL_Surface *ship_on_pic;	/* Side-view of ship: lights on */
 

@@ -1004,7 +1004,7 @@ InitPictures (void)
   SDL_FreeSurface (tmp2);
   printf_SDL (ne_screen, -1, -1, ".");
 
-  // the very first time this can't be donw here, because we first need to read
+  // the very first time this can't be done here, because we first need to read
   // the mission data. Nevertheless we need this here, in case the tile-set is changed
   if (ship_off_filename)
     {
@@ -1012,6 +1012,13 @@ InitPictures (void)
       ship_on_pic = IMG_Load (find_file (ship_on_filename, GRAPHICS_DIR, TRUE));
       printf_SDL (ne_screen, -1, -1, ".");
     }
+
+
+  arrow_up = IMG_Load (find_file ("arrow_up.png", GRAPHICS_DIR, FALSE) );
+  arrow_down = IMG_Load (find_file ("arrow_down.png", GRAPHICS_DIR, FALSE) );
+  arrow_right = IMG_Load (find_file ("arrow_right.png", GRAPHICS_DIR, FALSE) );
+  arrow_left = IMG_Load (find_file ("arrow_left.png", GRAPHICS_DIR, FALSE) );
+
 
   GetTakeoverGraphics();
   printf_SDL (ne_screen, -1, -1, " ok\n");

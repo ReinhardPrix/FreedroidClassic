@@ -371,11 +371,11 @@ Get_Robot_Data ( void* DataPointer )
 			   &Druidmap[RobotIndex].score, EndOfDataPointer );
 
       // Now we read in the height of this droid of this type
-      ReadValueFromString( RobotPointer , HEIGHT_BEGIN_STRING , "%lf" , 
+      ReadValueFromString( RobotPointer , HEIGHT_BEGIN_STRING , "%f" , 
 			   &Druidmap[RobotIndex].height, EndOfDataPointer );
 
       // Now we read in the weight of this droid type
-      ReadValueFromString( RobotPointer , WEIGHT_BEGIN_STRING , "%lf" , 
+      ReadValueFromString( RobotPointer , WEIGHT_BEGIN_STRING , "%d" , 
 			   &Druidmap[RobotIndex].weight, EndOfDataPointer );
 
       // Now we read in the drive of this droid of this type

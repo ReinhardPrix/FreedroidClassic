@@ -43,8 +43,6 @@
 #include "text.h"
 #include "SDL_rotozoom.h"
 
-int DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *clip , SDL_Surface* Background );
-
 char *Wordpointer;
 unsigned char *Fontpointer;
 unsigned char *Zeichenpointer[110];	/* Pointer-Feld auf Buchstaben-Icons */
@@ -331,98 +329,6 @@ ScrollText (char *Text, SDL_Rect *rect, int SecondsMinimumDuration )
 }				// void ScrollText(void)
 
 /*-----------------------------------------------------------------
- * This function is much like DisplayText, but with the main difference,
- * that in case of the whole clipping window filled, the function will
- * display a ---more--- line, wait for a key and then scroll the text
- * further up.
- *
- * @Desc: prints *Text beginning at positions startx/starty, 
- * 
- *	and respecting the text-borders set by clip_rect
- *      -> this includes clipping but also automatic line-breaks
- *      when end-of-line is reached
- * 
- *      if clip_rect==NULL, no clipping is performed
- *      
- *      NOTE: the previous clip-rectange is restored before
- *            the function returns!
- *
- *      NOTE2: this function _does not_ update the screen
- *
- * @Ret: TRUE if some characters where written inside the clip rectangle
- *       FALSE if not (used by ScrollText to know if Text has been scrolled
- *             out of clip-rect completely)
- *-----------------------------------------------------------------*/
-int
-DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *clip , SDL_Surface* Background )
-{
-  char *tmp;	/* Beweg. Zeiger auf aktuelle Position im Ausgabe-Text */
-  // SDL_Rect Temp_Clipping_Rect; // adding this to prevent segfault in case of NULL as parameter
-
-  SDL_Rect store_clip;
-
-  if ( startx != -1 ) MyCursorX = startx;		
-  if ( starty != -1 ) MyCursorY = starty;
-
-  SDL_GetClipRect (ne_screen, &store_clip);  /* store previous clip-rect */
-  if (clip)
-    SDL_SetClipRect (ne_screen, clip);
-  else
-    {
-      clip = & User_Rect;
-    }
-
-
-  tmp = Text;			/* running text-pointer */
-
-  while ( *tmp && (MyCursorY < clip->y + clip->h) )
-    {
-      if ( *tmp == '\n' )
-	{
-	  MyCursorX = clip->x;
-	  MyCursorY += FontHeight ( GetCurrentFont() ) * TEXT_STRETCH;
-
-	}
-      else
-	DisplayChar (*tmp);
-      tmp++;
-
-      //--------------------
-      // Here we plant in the question for ---more--- and a key to be pressed,
-      // before we clean the screen and restart displaying text from the top
-      // of the given Clipping rectangle
-      //
-      // if ( ( clip->h + clip->y - MyCursorY ) <= 2 * FontHeight ( GetCurrentFont() ) * TEXT_STRETCH )
-      if ( ( clip->h + clip->y - MyCursorY ) <= 1 * FontHeight ( GetCurrentFont() ) * TEXT_STRETCH )
-	{
-	  DisplayText( "--- more --- more --- \n" , MyCursorX , MyCursorY , clip );
-	  SDL_Flip( ne_screen );
-	  while ( !SpacePressed() );
-	  while (  SpacePressed() );
-	  SDL_BlitSurface( Background , NULL , ne_screen , NULL );
-	  MyCursorY = clip->y;
-	  SDL_Flip( ne_screen );
-	};
-      
-      if (clip)
-	ImprovedCheckUmbruch(tmp, clip);   /* dont write over right border */
-
-    } // while !FensterVoll()
-
-   SDL_SetClipRect (ne_screen, &store_clip); /* restore previous clip-rect */
-
-  /*
-   * ScrollText() wants to know if we still wrote something inside the
-   * clip-rectangle, of if the Text has been scrolled out
-   */
-   if ( clip && ((MyCursorY < clip->y) || (starty > clip->y + clip->h) ))
-     return FALSE;  /* no text was written inside clip */
-   else
-     return TRUE; 
-
-};
-
-/*-----------------------------------------------------------------
  * @Desc: prints *Text beginning at positions startx/starty, 
  * 
  *	and respecting the text-borders set by clip_rect
@@ -480,8 +386,13 @@ DisplayText (char *Text, int startx, int starty, const SDL_Rect *clip)
 
       tmp++;
 
-      if (clip)
-	ImprovedCheckUmbruch(tmp, clip);   /* dont write over right border */
+      if (clip && linebreak_needed (tmp, clip))
+	{
+	  tmp ++;  // skip the space when doing line-breaks !
+	  MyCursorX = clip->x;
+	  MyCursorY += FontHeight (GetCurrentFont()) * TEXT_STRETCH;
+	}
+	
 
     } // while !FensterVoll()
 
@@ -526,47 +437,54 @@ DisplayChar (unsigned char c)
 
 /*@Function============================================================
   @Desc: This function checks if the next word still fits in this line
-  of text and initiates a carriage return/line feed if not.
-  Very handy and convenient, for that means it is no longer nescessary
-  to enter \n in the text every time its time for a newline. cool.
-  
-  The function could perhaps still need a little improvement.  But for
-  now its good enough and improvement enough in comparison to the old
-  CheckUmbruch function.
+  of text or if we need a linebreak:
+  returns TRUE if linebreak is needed, FALSE otherwise
 
+  NOTE: this function only does something if *textpos is pointing on a space, 
+   i.e. a word-beginning, otherwise it just returns TRUE
+  
   rp: added argument clip, which contains the text-window we're writing in
        (formerly known as "TextBorder")
 
   @Ret: 
   @Int:
 * $Function----------------------------------------------------------*/
-void
-ImprovedCheckUmbruch (char* Resttext, const SDL_Rect *clip)
+bool
+linebreak_needed (char *textpos , const SDL_Rect *clip)
 {
-  int i;
-  int NeededSpace=0;
-#define MAX_WORD_LENGTH 100
+  int w;
+  int NeededSpace;
+  char *pointer;
+
+  // sanity check
+  if (textpos == NULL)
+    {
+      DebugPrintf (0, "ERROR: linebreak_needed() called with NULL pointer! \n");
+      Terminate(ERR);
+    }
+
+  // only relevant if we're at the beginning of a word
+  if ( *textpos != ' ')  
+    return (FALSE);
 
   // In case of a space, see if the next word will still fit on the line
   // and do a carriage return/line feed if not
-  if ( *Resttext == ' ' ) {
-    for (i=1;i<MAX_WORD_LENGTH;i++) 
-      {
-	if ( (Resttext[i] != ' ') && (Resttext[i] != 0) )
-	  { 
-	    NeededSpace+=CharWidth( GetCurrentFont() , Resttext[i] );
-	    if ( MyCursorX+NeededSpace > clip->x + clip->w - 10 )
-	      {
-		MyCursorX = clip->x;
-		MyCursorY += FontHeight ( GetCurrentFont() ) * TEXT_STRETCH;
-		return;
-	      }
-	  }
-	else 
-	  return;
-      }
-  }
-} // void ImprovedCheckUmbruch(void)
+  NeededSpace = 0;
+  pointer = textpos + 1;
+
+  while ( (*pointer != ' ') && (*pointer != '\0') && (*pointer != '\n') )
+    {
+      w = CharWidth( GetCurrentFont(), *pointer );
+      NeededSpace += w;
+      if ( MyCursorX+NeededSpace > clip->x + clip->w - w )
+	return (TRUE);
+      
+      pointer ++;
+    } // while
+
+  return (FALSE);
+  
+} // bool linebreak_needed
 
 
 /*-----------------------------------------------------------------

@@ -126,8 +126,8 @@ typedef struct
   int aggression;		/* The aggressiveness of this druidtype */
   int flashimmune;		/* is the droid immune to FLASH-bullets */
   int score;			/* score for the elimination of one droid of this type */
-  double height;                // the height of this droid  
-  double weight;                // the weight of this droid
+  float height;                // the height of this droid  
+  int weight;                // the weight of this droid
   int drive;
   int brain;
   int sensor1;
