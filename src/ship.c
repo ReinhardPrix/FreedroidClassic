@@ -132,6 +132,8 @@ EnterElevator (void)
 
   DebugPrintf ("\nvoid EnterElevator(void): Function call confirmed.");
 
+  Me.status= ELEVATOR;
+  UpdateInfoline();
   curLevel = CurLevel->levelnum;
 
   if ((curElev = GetCurrentElevator ()) == -1)
@@ -281,6 +283,8 @@ EnterElevator (void)
       JoystickControl ();
       keyboard_update ();
     }
+
+  Me.status = MOBILE;
 
   DebugPrintf ("\nvoid EnterElevator(void): Usual end of function reached.");
 }				/* EnterElevator */

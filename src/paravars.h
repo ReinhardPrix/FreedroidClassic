@@ -49,6 +49,7 @@ char *InfluenceModeNames[] = {
   "Terminated",
   "Pause",
   "Cheese",
+  "Elevator",
   NULL
 };
 

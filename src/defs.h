@@ -373,7 +373,8 @@ enum _status
   DEBRIEFING,
   TERMINATED,
   PAUSE,
-  CHEESE
+  CHEESE,
+  ELEVATOR
 };
 
 
