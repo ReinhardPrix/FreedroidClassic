@@ -609,7 +609,7 @@ enum
 
 // #define TUX_MODELS              9
 #define TUX_MODELS              13
-#define MAX_TUX_DIRECTIONS      8
+#define MAX_TUX_DIRECTIONS      16
 #define BULLET_DIRECTIONS      8
 
 #define WAIT_LEVELEMPTY		18	// time in frames to wait before removing the light in an empty level
