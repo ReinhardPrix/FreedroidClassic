@@ -61,7 +61,6 @@ extern bool show_cursor;
 
 
 SDL_Rect Cons_Header_Rect = {75, BANNER_HEIGHT+40, SCREENLEN - 80, 135 - BANNER_HEIGHT};
-SDL_Rect Cons_Droid_Rect = {32, 180, 132, 180};
 SDL_Rect Cons_Menu_Rect = {60, 180, 100, 256};
 SDL_Rect Cons_Text_Rect = {180, 180, SCREENLEN-185, SCREENHEIGHT - 185}; 
 

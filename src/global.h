@@ -43,6 +43,7 @@ EXTERN const SDL_Rect Full_User_Rect;
 EXTERN const SDL_Rect Full_Screen_Rect;
 EXTERN const SDL_Rect Menu_Rect;
 EXTERN const SDL_Rect Droid_Pic_Rect;
+EXTERN const SDL_Rect Cons_Droid_Rect;
 
 EXTERN float LastRefreshSound;
 EXTERN float LastGotIntoBlastSound;
@@ -75,7 +76,6 @@ EXTERN Bulletspec Bulletmap;
 EXTERN blastspec Blastmap[ALLBLASTTYPES];
 #endif
 
-EXTERN const SDL_Rect Cons_Droid_Rect;
 EXTERN int Number_Of_Droid_Types;
 EXTERN int PreTakeEnergy;
 EXTERN int QuitProgram;
