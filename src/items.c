@@ -206,7 +206,6 @@ Sorry if that stops a major game of yours....\n\
 void
 DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , int ForceDrop )
 {
-  int Rand;
   int Suf; int Pre;
   int DropDecision;
 

@@ -398,8 +398,10 @@ EXTERN int NoDirectionPressed (void);
 #else
 #define EXTERN extern
 #endif
+EXTERN int DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char* BackgroundToUse );
 EXTERN void StartupMenu (void);
 EXTERN void BuySellMenu ( void );
+EXTERN void HealerMenu ( void );
 EXTERN void InitiateMenu( char* BackgroundToUse );
 EXTERN void MissionSelectMenu (void);
 EXTERN void Cheatmenu (void);
