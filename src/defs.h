@@ -310,7 +310,7 @@ enum _directions
 #define MAX_INFLU_POSITION_HISTORY 10000
 #define MAX_MISSIONS_IN_GAME 10         // how many missions can there be at most in Freedroid
 #define MAX_MISSION_TRIGGERED_ACTIONS 10
-#define MAX_STATEMENTS_PER_LEVEL 7
+#define MAX_STATEMENTS_PER_LEVEL 30
 
 #define MAX_LIFTS	 	50  	/* actually the entries to the lifts */
 #define MAX_LEVELS		29   	/* don't change this easily */

@@ -342,6 +342,10 @@ Start of pure statement information for this level
 PosX=1 PosY=1 Statement="This must be the upper left corner of the room."
 PosX=1 PosY=2 Statement="I must be close to the upper left corner of the room."
 PosX=2 PosY=1 Statement="I must be close to the upper left corner of the room."
+PosX=5 PosY=7 Statement="I'm sure this door could be locked/unlocked by using the right code on that panel."
+PosX=10 PosY=7 Statement="This barrier is scarred from lots of bullet holes and plasma burns."
+PosX=6 PosY=6 Statement="This is a teleportation device.  Maybe Dr. Chandra can teleport me out this way?"
+PosX=8 PosY=6 Statement="Hey, there's a penguin command clone running on this console!  Or is that a game at all?"
 End of pure statement information for this level
 wp
 Nr.=  0 x=   1 y=   1	 connections:    1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1

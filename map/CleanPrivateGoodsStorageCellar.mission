@@ -193,22 +193,8 @@ Delete the event trigger after it has been triggered=-1
 
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
-Influencer must be at X=10 Y=7 Lev=2
-Event Action to be triggered by this trigger="barrier_bullet_comment"
-Delete the event trigger after it has been triggered=-1
-* End of this Event Trigger Subsection *
-
-// This is a pure location trigger.  Copy and adapt is as you feel like it.
-* Start of an Event Trigger Subsection *
 Influencer must be at X=19 Y=5 Lev=2
 Event Action to be triggered by this trigger="stay_with_first_mission_comment"
-Delete the event trigger after it has been triggered=-1
-* End of this Event Trigger Subsection *
-
-// This is a pure location trigger.  Copy and adapt is as you feel like it.
-* Start of an Event Trigger Subsection *
-Influencer must be at X=6 Y=6 Lev=2
-Event Action to be triggered by this trigger="teleport_not_working_comment"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
 
@@ -236,30 +222,6 @@ Action is mission assignment=-1
 
 //--------------------
 // Now the influencer makes simple comments without any other implication
-
-* Start of an Event Action Subsection *
-Action label for this action="remind"
-Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
-Action is Influencer say="Don't forget to close the barrier behind me again!"
-Action is mission assignment=-1
-* End of this Event Action Subsection *
-
-
-* Start of an Event Action Subsection *
-Action label for this action="barrier_bullet_comment"
-Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
-Action is Influencer say="This barrier is scarred from lots of bullet holes!"
-Action is mission assignment=-1
-* End of this Event Action Subsection *
-
-
-* Start of an Event Action Subsection *
-Action label for this action="teleport_not_working_comment"
-Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
-Action is Influencer say="This teleportation device is not yet functional!"
-Action is mission assignment=-1
-* End of this Event Action Subsection *
-
 
 * Start of an Event Action Subsection *
 Action label for this action="stay_with_first_mission_comment"
