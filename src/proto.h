@@ -408,8 +408,6 @@ EXTERN void EnemyHitByBulletText( int Enum );
 EXTERN void EnemyInfluCollisionText ( int Enum );
 EXTERN void AddInfluBurntText( void );
 EXTERN void AddStandingAndAimingText ( int Enum );
-EXTERN void SetTextColor (unsigned char bg, unsigned char fg);
-EXTERN void GetTextColor (unsigned int *bg, unsigned int *fg);
 
 EXTERN void SetTextCursor (int x, int y);
 EXTERN void SetLineLength (int);

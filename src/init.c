@@ -1419,8 +1419,6 @@ InitNewMissionList ( char *MissionName )
   // show the banner for the game
   ClearGraphMem();
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
-
-  SetTextColor (FONT_WHITE, FONT_RED);
   InitBars = TRUE;
 
   Switch_Background_Music_To ( CurLevel->Background_Song_Name );
@@ -1662,8 +1660,6 @@ Title ( char *MissionBriefingPointer )
   // ClearGraphMem ();
   // DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE ); 
 
-  // SetTextColor (FONT_BLACK, FONT_RED);
-
   // SetCurrentFont( FPS_Display_BFont );
   SetCurrentFont( Para_BFont );
 
@@ -1717,8 +1713,6 @@ EndTitle (void)
   Switch_Background_Music_To ( DebriefingSong );
 
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
-
-  SetTextColor (FONT_BLACK, FONT_RED);
 
   // SetCurrentFont( FPS_Display_BFont );
   SetCurrentFont( Para_BFont );
