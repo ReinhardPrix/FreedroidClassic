@@ -119,6 +119,7 @@ DeleteBullet (int Bulletnumber)
       for ( i=0 ; i < Bulletmap[ CurBullet->type ].phases ; i++ )
 	{
 	  SDL_FreeSurface( CurBullet->SurfacePointer[i] );
+	  CurBullet->SurfacePointer[i] = NULL;
 	}
       CurBullet->Surfaces_were_generated = FALSE;
     }
@@ -336,8 +337,9 @@ CheckBulletCollisions (int num)
 	  
 	  // The bullet has hit.  The damage has been calculated.  Now it can be disabled.
 	  // ATTENTION!  These instructions belong here and must not be moved up.
-	  CurBullet->type = OUT;
-	  CurBullet->mine = FALSE;
+	  // CurBullet->type = OUT;
+	  // CurBullet->mine = FALSE;
+	  DeleteBullet( num );
 	  return;			/* Bullet ist hin */
 	}
       

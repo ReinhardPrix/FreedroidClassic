@@ -688,6 +688,16 @@ PutBullet (int BulletNummer)
   TargetRectangle.y = USER_FENSTER_CENTER_Y
     - (Me.pos.y-CurBullet->pos.y)*Block_Width-Block_Height/2;
 
+
+
+  PhaseOfBullet = (CurBullet->time_in_seconds * Bulletmap[ CurBullet->type ].phase_changes_per_second );
+
+  PhaseOfBullet = PhaseOfBullet % Bulletmap[CurBullet->type].phases ;
+
+  // DebugPrintf( 0 , "\nPhaseOfBullet: %d.", PhaseOfBullet );
+
+#define ONE_ROTATION_ONLY
+#ifdef ONE_ROTATION_ONLY
   //--------------------
   // Maybe it's the first time this bullet is displayed.  But then, the images
   // of the rotated bullet in all phases are not yet attached to the bullet.
@@ -704,18 +714,12 @@ PutBullet (int BulletNummer)
       DebugPrintf( 0 , "\nvoid PutBullet(i): This was the first time for this bullet, so images were generated... angle=%f" , CurBullet->angle);
       CurBullet->Surfaces_were_generated=TRUE;
     }
-
-  PhaseOfBullet = (CurBullet->time_in_seconds * Bulletmap[ CurBullet->type ].phase_changes_per_second );
-
-  PhaseOfBullet = PhaseOfBullet % Bulletmap[CurBullet->type].phases ;
-
-  // DebugPrintf( 0 , "\nPhaseOfBullet: %d.", PhaseOfBullet );
-
+  SDL_BlitSurface( CurBullet->SurfacePointer[ PhaseOfBullet ] , NULL, ne_screen , &TargetRectangle );
+#else
   tmp = rotozoomSurface( Bulletmap[CurBullet->type].SurfacePointer[ PhaseOfBullet ] , CurBullet->angle , 1.0 , FALSE );
-
   SDL_BlitSurface( tmp , NULL, ne_screen , &TargetRectangle );
-  // SDL_BlitSurface( CurBullet->SurfacePointer[ PhaseOfBullet ] , NULL, ne_screen , &TargetRectangle );
   SDL_FreeSurface( tmp );
+#endif
 
   DebugPrintf (2, "\nvoid PutBullet(int BulletNummer): end of function reched.\n");
 
