@@ -1839,6 +1839,12 @@ ProcessAttackStateMachine (int enemynum)
     case MOVE_ALONG_RANDOM_WAYPOINTS:
       ThisRobot->TextToBeDisplayed = "state:  Unaware of Tux." ;
       break;
+    case TURN_THOWARDS_NEXT_WAYPOINT:
+      ThisRobot->TextToBeDisplayed = "state:  Turn thowards next WP." ;
+      break;
+    case RUSH_TUX_ON_SIGHT_AND_OPEN_TALK:
+      ThisRobot->TextToBeDisplayed = "state:  Rush Tux on Sight and open Talk." ;
+      break;
     case STOP_AND_EYE_TUX:
       ThisRobot->TextToBeDisplayed = "state:  Stop and Eye Tux." ;
       break;
@@ -1865,6 +1871,18 @@ ProcessAttackStateMachine (int enemynum)
   //
   if ( ThisRobot -> AdvancedCommand == 1 ) ThisRobot -> combat_state = RELENTLESS_FIRE_TO_GIVEN_POSITION ;
 
+  if ( ThisRobot->AdvancedCommand == 2 ) 
+    {
+      TeleportToClosestWaypoint ( ThisRobot );
+      ThisRobot->AdvancedCommand = 0;
+    }
+
+  if ( ThisRobot -> will_rush_tux )
+    {
+      ThisRobot -> combat_state = RUSH_TUX_ON_SIGHT_AND_OPEN_TALK ;
+      ThisRobot -> will_rush_tux = FALSE ;
+    }
+
   //--------------------
   // determine the distance vector to the target of this shot.  The target
   // depends of course on wheter it's a friendly device or a hostile device.
@@ -1882,22 +1900,51 @@ ProcessAttackStateMachine (int enemynum)
 
   TargetPlayer = ClosestVisiblePlayer ( ThisRobot ) ;
 
-  if ( ThisRobot -> combat_state == MOVE_ALONG_RANDOM_WAYPOINTS )
+  if ( ThisRobot -> combat_state == RUSH_TUX_ON_SIGHT_AND_OPEN_TALK )
     {
 
-      // MoveThisEnemy ( enemynum ); // this will now be done in the attack state machine...
+      if ( IsVisible ( & ( ThisRobot -> pos ) , 0 ) )
+	{
+	  ThisRobot -> persuing_given_course = TRUE ;
+	  ThisRobot -> PrivatePathway [ 0 ] . x = Me [ 0 ] . pos . x ;
+	  ThisRobot -> PrivatePathway [ 0 ] . y = Me [ 0 ] . pos . y ;
+
+	  if ( sqrt ( ( ThisRobot -> pos . x - Me [ 0 ] . pos . x ) * ( ThisRobot -> pos . x - Me [ 0 ] . pos . x ) +
+		      ( ThisRobot -> pos . y - Me [ 0 ] . pos . y ) * ( ThisRobot -> pos . y - Me [ 0 ] . pos . y ) ) < 1 )
+	    {
+	      ChatWithFriendlyDroid ( ThisRobot );
+	      ThisRobot -> will_rush_tux = FALSE ;
+	      ThisRobot -> persuing_given_course = FALSE ; 
+	      ThisRobot -> combat_state = TURN_THOWARDS_NEXT_WAYPOINT ;
+	    }
+	}
 
       MoveThisRobotThowardsHisCurrentTarget( enemynum );
 
+      /*
       if ( RemainingDistanceToNextWaypoint ( ThisRobot ) < 0.1 ) 
 	{
 	  SelectNextWaypointAdvanced( enemynum );
 	  ThisRobot -> combat_state = TURN_THOWARDS_NEXT_WAYPOINT ;
 	  return;
 	}
+      */
 
       DetermineAngleOfFacing ( enemynum );
+      
+      return;
 
+    }
+  else if ( ThisRobot -> combat_state == MOVE_ALONG_RANDOM_WAYPOINTS )
+    {
+      MoveThisRobotThowardsHisCurrentTarget( enemynum );
+      if ( RemainingDistanceToNextWaypoint ( ThisRobot ) < 0.1 ) 
+	{
+	  SelectNextWaypointAdvanced( enemynum );
+	  ThisRobot -> combat_state = TURN_THOWARDS_NEXT_WAYPOINT ;
+	  return;
+	}
+      DetermineAngleOfFacing ( enemynum );
 
       //--------------------
       // In case that the enemy droid isn't even aware of Tux and

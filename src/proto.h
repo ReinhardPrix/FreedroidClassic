@@ -541,6 +541,7 @@ EXTERN void DisplayBanner (const char* left, const char* right, int flags );
 #else
 #define EXTERN extern
 #endif
+EXTERN void ShowRescaledItem ( int position , int TuxItemRow , item* ShowItem );
 EXTERN int TryToIntegrateItemIntoInventory ( item* BuyItem , int AmountToBuyAtMost );
 EXTERN int AssemblePointerListForChestShow ( item** ItemPointerListPointer , int PlayerNum );
 EXTERN int AssemblePointerListForItemShow ( item** ItemPointerListPointer , int IncludeWornItems, int PlayerNum );

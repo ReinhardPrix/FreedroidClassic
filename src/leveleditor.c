@@ -2913,6 +2913,7 @@ LevelEditor(void)
 	  ShowGenericButtonFromList ( LEVEL_EDITOR_RECURSIVE_FILL_BUTTON );
 	  ShowGenericButtonFromList ( LEVEL_EDITOR_NEW_MAP_LABEL_BUTTON );
 	  ShowGenericButtonFromList ( LEVEL_EDITOR_NEW_ITEM_BUTTON );
+	  ShowGenericButtonFromList ( LEVEL_EDITOR_LEVEL_RESIZE_BUTTON );
 	  ShowGenericButtonFromList ( LEVEL_EDITOR_KEYMAP_BUTTON );
 	  ShowGenericButtonFromList ( LEVEL_EDITOR_QUIT_BUTTON );
 
@@ -3150,6 +3151,10 @@ LevelEditor(void)
 	      else if ( CursorIsOnButton ( LEVEL_EDITOR_NEW_ITEM_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
 		{
 		  ItemDropFromLevelEditor(  );
+		}
+	      else if ( CursorIsOnButton ( LEVEL_EDITOR_LEVEL_RESIZE_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+		{
+		  EditLevelDimensions (  );
 		}
 	      else if ( CursorIsOnButton ( LEVEL_EDITOR_KEYMAP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
 		{

@@ -1974,12 +1974,14 @@ PrepareStartOfNewCharacter ( void )
   FillInItemProperties ( & ( Me[0].weapon_item ) , TRUE , 0 );
   FillInItemProperties ( & ( Me[0].drive_item ) , TRUE , 0 );
 
+
   DebugPrintf ( 0 , "\nPrepareStartOfNewCharacter:  Shuffling droids on all %d levels!" , curShip.num_levels );
   for ( i = 0 ; i < curShip.num_levels ; i ++ )
     {
       // ShuffleEnemys( Me[0].pos.z ); // NOTE: THIS REQUIRES CurLevel TO BE INITIALIZED !! --> NOT ANY MORE!!!
       ShuffleEnemys( i ); // NOTE: THIS REQUIRES CurLevel TO BE INITIALIZED !! --> NOT ANY MORE!!!
     }
+
 
   //--------------------
   // Now we start those missions, that are to be assigned automatically to the

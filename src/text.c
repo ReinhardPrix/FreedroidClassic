@@ -1248,10 +1248,10 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , Enemy ChatDroid 
       // we won't do the first selection, but instead immediately call the very first
       // dialog option and then continue with normal dialog.
       //
-      if ( ChatDroid -> will_rush_tux )
+      if ( ChatDroid -> combat_state == RUSH_TUX_ON_SIGHT_AND_OPEN_TALK )
 	{
 	  MenuSelection = 1 ;
-	  ChatDroid -> will_rush_tux = FALSE ;
+	  ChatDroid -> combat_state = TURN_THOWARDS_NEXT_WAYPOINT ;
 	}
       else
 	MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , DialogMenuTexts , Me [ PlayerNum ] . Chat_Flags [ ChatPartnerCode ]  , 1 , NULL , FPS_Display_BFont );
