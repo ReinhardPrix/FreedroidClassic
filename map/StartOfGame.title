@@ -77,6 +77,7 @@ Song name to play in the end title if the mission is completed: TheBeginning.ogg
  L ... Show Quest Status Log
  T ... Toggle wall transparency
  P ... Turn on/off Pause Mode
+ A ... Hold down 'A' to attack and not move
  Tab ... Turn on/off automap display
  LEFT SHIFT ... make item names flash up, so that no items can be
     missed easily
