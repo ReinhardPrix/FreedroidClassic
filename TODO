@@ -15,10 +15,6 @@ Outstanding release-critical bugs (priority: high)
   ---> has already been removed.  That was only a symtom while I was
        extending.  Problem is fixed I think.
 
-- (jp) Before any release the levelcolor changing procedure must be rearranged to work
-       well together with the combat screen resizing code
-  ---> Done.
-
 - The console picture, i.e. the picture for the menu at the console is a terrible mess.
   Someone must sooner or later set up something more proper for the ne_cons.bmp file
   containing the different phases of the console before any new release can be shipped.
@@ -33,11 +29,6 @@ Outstanding normal bugs (priority: normal)
 ------------------------------------------
 - (rp) Joystick shooting should determine direction more precisely
        (difficult to shoot "straight")
-
-- (jp) leaving level-editor in zoom-factor!= 1 is not restored when
-       going back to game
-       (Going back to game is a "development feature, that should of
-        course not be present in the real game.)
 
 - (jp) level-empty switch to grey is too slow and causes a "jump"
        this should only be a shift of a vector (ne_screen) and not take any
@@ -85,6 +76,16 @@ Wishlist
 
 Resolved bugs
 -------------
+- DONE Before any release the levelcolor changing procedure must be rearranged to work
+       well together with the combat screen resizing code
+  ---> Done.
+
+- DONE leaving level-editor in zoom-factor!= 1 is not restored when
+       going back to game
+       (Going back to game is a "development feature, that should of
+        course not be present in the real game.)
+       ---> Problem has been removed nevertheless.
+
 -  DONE We really should have a "dat" file, where the constants involving
         only the game physics are stored, so that people can write their
         own "mods" and also transfer their mods to new versions of freed.

@@ -256,9 +256,30 @@ SetCombatScaleTo(float ResizeFactor)
   // and the corresponding rectangle entries...
 
   // SDL_SetColorKey( ne_blocks , 0 , 0 );
+
+  if (SDL_SetColorKey(ne_blocks, SDL_SRCCOLORKEY, 0x00000100 ) == -1 )
+    {
+      fprintf (stderr, "Transp setting by SDL_SetColorKey() failed: %s \n",
+	       SDL_GetError());
+      Terminate(ERR);
+    }
+
   tmp=zoomSurface( ne_blocks , ResizeFactor , ResizeFactor , 0 );
   SDL_FreeSurface( ne_blocks );
-  ne_blocks=tmp;
+  ne_blocks = SDL_DisplayFormat(tmp);  /* the surface is copied !*/
+  if (ne_blocks == NULL) 
+    {
+      DebugPrintf (1, "\nSDL_DisplayFormat() has failed: %s\n", SDL_GetError());
+      Terminate(ERR);
+    }
+  SDL_FreeSurface( tmp );
+  /* set the transparent color */
+  if (SDL_SetColorKey(ne_blocks, SDL_SRCCOLORKEY, ne_transp_key) == -1 )
+    {
+      fprintf (stderr, "Transp setting by SDL_SetColorKey() failed: %s \n",
+	       SDL_GetError());
+      Terminate(ERR);
+    }
 
   for (i=0; i< NUM_MAP_BLOCKS ; i++)
     {

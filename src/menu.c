@@ -1608,6 +1608,7 @@ Level_Editor(void)
 		  while (EnterPressed() || SpacePressed() ) ;
 		  Weiter=!Weiter;
 		  Done=TRUE;
+		  SetCombatScaleTo( 1 );
 		  break;
 		default: 
 		  break;
