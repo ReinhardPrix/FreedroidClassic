@@ -253,7 +253,7 @@ Takeover (int enemynum)
       /* don't display enemy if we're finished */
       if (FinishTakeover) 
 	{
-	  AllEnemys[enemynum].Status = OUT;
+	  AllEnemys[enemynum].status = OUT;
 	  AllEnemys[enemynum].energy = -1.0;  /* to be sure */
 	  OpponentType = -1;	/* dont display enemy any more */
 	}
@@ -666,7 +666,7 @@ ShowPlayground ()
   PutInfluence (xoffs + DruidStart[YourColor].x,
 		yoffs + DruidStart[YourColor].y);
 
-  if (AllEnemys[DroidNum].Status != OUT)
+  if (AllEnemys[DroidNum].status != OUT)
     PutEnemy (DroidNum, xoffs + DruidStart[!YourColor].x,
 	      yoffs + DruidStart[!YourColor].y);
 

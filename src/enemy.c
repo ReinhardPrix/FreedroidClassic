@@ -113,10 +113,9 @@ PermanentHealRobots (void)
 {
   int i;
 
-  // for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
   for (i = 0; i < NumEnemys; i++)
     {
-      if (AllEnemys[i].Status == OUT)
+      if (AllEnemys[i].status == OUT || AllEnemys[i].energy <= 0.0)
 	continue;
       if (AllEnemys[i].energy < Druidmap[AllEnemys[i].type].maxenergy)
 	AllEnemys[i].energy += Druidmap[AllEnemys[i].type].lose_health * Frame_Time();
@@ -137,13 +136,13 @@ ClearEnemys (void)
   for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
     {
       AllEnemys[i].type = -1;
-      AllEnemys[i].levelnum = AllEnemys[i].energy = 0;
+      AllEnemys[i].levelnum = -1;
       AllEnemys[i].phase = 0;
       AllEnemys[i].nextwaypoint = AllEnemys[i].lastwaypoint = 0;
-      AllEnemys[i].Status = OUT;
+      AllEnemys[i].status = OUT;
       AllEnemys[i].warten = 0;
       AllEnemys[i].firewait = 0;
-      AllEnemys[i].energy = 0;
+      AllEnemys[i].energy = -1;
       AllEnemys[i].TextVisibleTime = 0;
       AllEnemys[i].TextToBeDisplayed = "";
     }
@@ -168,6 +167,7 @@ ShuffleEnemys (void)
   int wp = 0;
   finepoint influ_coord;
 
+
   /* Anzahl der Waypoints auf CurLevel abzaehlen */
   wp_num = 0;
 
@@ -177,9 +177,9 @@ ShuffleEnemys (void)
     }
 
   nth_enemy = 0;
-  for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
+  for (i = 0; i < NumEnemys ; i++)
     {
-      if (AllEnemys[i].Status == OUT || AllEnemys[i].levelnum != curlevel)
+      if (AllEnemys[i].status == OUT || AllEnemys[i].levelnum != curlevel)
 	continue;		/* dont handle dead enemys or on other level */
 
 
@@ -199,7 +199,7 @@ ShuffleEnemys (void)
       AllEnemys[i].lastwaypoint = wp;
       AllEnemys[i].nextwaypoint = wp;
 
-    }/* for (MAX_ENEMYS_ON_SHIP) */
+    }/* for NumEnemys */
 
   /* enemys ein bisschen sich selbst ueberlassen */
 
@@ -313,11 +313,10 @@ CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLe
 
   for ( i = 0 ; i < Steps ; i++ )
     {
-      // for ( j = 0 ; j < MAX_ENEMYS_ON_SHIP ; j ++ )
       for ( j = 0 ; j < NumEnemys ; j ++ )
 	{
 	  if ( AllEnemys[j].levelnum != OurLevel ) continue;
-	  if ( AllEnemys[j].Status == OUT ) continue;
+	  if ( AllEnemys[j].status == OUT ) continue;
 	  if ( AllEnemys[j].energy <= 0 ) continue;
 	  if ( j == ExceptedDroid ) continue;
 
@@ -558,7 +557,7 @@ MoveThisEnemy( int EnemyNum )
     return;
 
   // ignore dead robots as well...
-  if ( ThisRobot->Status == OUT ) 
+  if ( ThisRobot->status == OUT ) 
     return;
 
   // Now check if the robot is still alive
@@ -566,7 +565,7 @@ MoveThisEnemy( int EnemyNum )
   // explosion and all that...
   if ( ThisRobot->energy <= 0)
     {
-      ThisRobot->Status = OUT;
+      ThisRobot->status = OUT;
       RealScore += Druidmap[ ThisRobot->type ].score;
       StartBlast ( ThisRobot->pos.x, ThisRobot->pos.y, DRUIDBLAST);
       if (LevelEmpty ())
@@ -621,7 +620,7 @@ MoveEnemys (void)
        if (Druidmap[AllEnemys[i].type].aggression)
 	 AttackInfluence (i);
 
-    }	/* for (MAX_ENEMYS_ON_SHIP) */
+     }	/* for NumEnemys */
 
 } /* MoveEnemys() */
 
@@ -652,7 +651,7 @@ AttackInfluence (int enemynum)
   if ( ThisRobot->levelnum != CurLevel->levelnum) return;
 
   // ignore dead robots as well...
-  if ( ThisRobot->Status == OUT ) return;
+  if ( ThisRobot->status == OUT ) return;
 
   xdist = Me.pos.x - ThisRobot->pos.x;
   ydist = Me.pos.y - ThisRobot->pos.y;
@@ -770,11 +769,10 @@ CheckEnemyEnemyCollision (int enemynum)
   check_x = AllEnemys[enemynum].pos.x;
   check_y = AllEnemys[enemynum].pos.y;
 
-  // for (i = 0; i < MAX_ENEMYS_ON_SHIP	; i++)
   for (i = 0; i < NumEnemys ; i++)
     {
       // check only collisions of LIVING enemys on this level
-      if (AllEnemys[i].Status == OUT || AllEnemys[i].levelnum != curlev)
+      if (AllEnemys[i].status == OUT || AllEnemys[i].levelnum != curlev)
 	continue;
       // dont check yourself...
       if (i == enemynum)
@@ -844,7 +842,6 @@ AnimateEnemys (void)
 {
   int i;
 
-  // for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
   for (i = 0; i < NumEnemys; i++)
     {
       //      if (AllEnemys[i].type == DRUID598)
@@ -859,7 +856,7 @@ AnimateEnemys (void)
       // if (AllEnemys[i].type == DEBUG_ENEMY) continue;
       if (AllEnemys[i].levelnum != CurLevel->levelnum)
 	continue;
-      if (AllEnemys[i].Status == OUT)
+      if (AllEnemys[i].status == OUT)
 	continue;
 
       // AllEnemys[i].feindrehcode+=AllEnemys[i].energy;

@@ -466,7 +466,7 @@ LevelEmpty (void)
 
   for (i = 0; i < NumEnemys; i++)
     {
-      if ((AllEnemys[i].Status != OUT) && (AllEnemys[i].levelnum == levelnum))
+      if ((AllEnemys[i].status != OUT) && (AllEnemys[i].levelnum == levelnum))
 	return FALSE;
     }
 

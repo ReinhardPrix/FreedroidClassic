@@ -117,7 +117,7 @@ Assemble_Combat_Picture (int mask)
   // At this point we know that now only the map is to be drawn.
   // so we start drawing the rest of the INTERIOR of the combat window:
 
-  for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
+  for (i = 0; i < NumEnemys ; i++)
     PutEnemy (i , -1 , -1 );
 
   if (Me.energy > 0)
@@ -323,7 +323,7 @@ PutEnemy (int Enum , int x , int y)
     }
 
   // if this enemy is dead, we need not do anything more here
-  if (AllEnemys[Enum].Status == OUT)
+  if (AllEnemys[Enum].status == OUT)
     {
       DebugPrintf (3, "\nvoid PutEnemy(int Enum): STATUS==OUT --> usual end of function reached.\n");
       return;

@@ -67,8 +67,10 @@ MoveBullets (void)
   Bullet CurBullet;
 
   /* Bewegung der Bullets */
-  for (CurBullet = AllBullets, i = 0; i < MAXBULLETS; CurBullet++, i++)
+  for (i = 0; i < MAXBULLETS; i++)
     {
+      CurBullet = &AllBullets[i];
+
       if ( (CurBullet->type == OUT) )
 	continue;
 
@@ -307,11 +309,13 @@ CheckBulletCollisions (int num)
       if ( CurBullet->time_in_frames != 1 ) 
 	break; // we only do the damage once and thats at frame nr. 1 of the flash
       
-      // for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
       for (i = 0; i < NumEnemys; i++)
 	{
-	  if ( IsVisible (&AllEnemys[i].pos) &
-	       (!Druidmap[AllEnemys[i].type].flashimmune) )
+	  // !! dont't forget: Only droids on our level are harmed!! (bugfix)
+	  if (AllEnemys[i].levelnum != level)
+	    continue;
+
+	  if ( IsVisible (&AllEnemys[i].pos) & (!Druidmap[AllEnemys[i].type].flashimmune) )
 	    {
 	      AllEnemys[i].energy -= Bulletmap[FLASH].damage;
 	      // Since the enemy just got hit, it might as well say so :)
@@ -319,6 +323,8 @@ CheckBulletCollisions (int num)
 	    }
 	}
       
+      // droids with flash are always flash-immune! 
+      // -> we don't get hurt by our own flashes!
       if (!InvincibleMode && !Druidmap[Me.type].flashimmune)
 	Me.energy -= Bulletmap[FLASH].damage ;
       
@@ -378,7 +384,7 @@ CheckBulletCollisions (int num)
 	      // check for collision with enemys
 	  for (i = 0; i < NumEnemys; i++)
 	    {
-	      if (AllEnemys[i].Status == OUT || AllEnemys[i].levelnum != level)
+	      if (AllEnemys[i].status == OUT || AllEnemys[i].levelnum != level)
 		continue;
 	  
 	      xdist = CurBullet->pos.x - AllEnemys[i].pos.x;
@@ -473,7 +479,7 @@ CheckBlastCollisions (int num)
   /* Check Blast-Enemy Collisions and smash energy of hit enemy */
   for (i = 0; i < NumEnemys; i++)
     {
-      if ((AllEnemys[i].Status == OUT)
+      if ((AllEnemys[i].status == OUT)
 	  || (AllEnemys[i].levelnum != level))
 	continue;
 

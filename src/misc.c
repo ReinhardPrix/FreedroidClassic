@@ -848,10 +848,10 @@ Armageddon (void)
 {
   int i;
 
-  for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
+  for (i = 0; i < NumEnemys; i++)
     {
       AllEnemys[i].energy = 0;
-      AllEnemys[i].Status = OUT;
+      AllEnemys[i].status = OUT;
     }
 } // void Armageddon(void)
 

@@ -1142,7 +1142,7 @@ CheckIfMissionIsComplete (void)
 {
   int Robot_Counter;
 
-  for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
+  for ( Robot_Counter=0 ; Robot_Counter < NumEnemys ; Robot_Counter++ )
     if ( AllEnemys[Robot_Counter].energy > 0 )
       return;
 

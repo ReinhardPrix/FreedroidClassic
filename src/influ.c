@@ -738,12 +738,12 @@ CheckInfluenceEnemyCollision (void)
 
   // return;
 
-  for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
+  for (i = 0; i < NumEnemys ; i++)
     {
       /* ignore enemy that are not on this level or dead */
       if (AllEnemys[i].levelnum != CurLevel->levelnum)
 	continue;
-      if (AllEnemys[i].Status == OUT)
+      if (AllEnemys[i].status == OUT)
 	continue;
 
       xdist = Me.pos.x - AllEnemys[i].pos.x;

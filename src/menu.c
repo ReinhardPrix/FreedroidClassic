@@ -242,7 +242,7 @@ Cheatmenu (void)
 	  break;
 
 	case 'g': /* complete robot list of this ship */
-	  for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
+	  for (i = 0; i < NumEnemys ; i++)
 	    {
 	      if ( AllEnemys[i].type == (-1) ) continue;
 

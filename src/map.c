@@ -1353,7 +1353,7 @@ GetCrew (char *filename)
       type = AllEnemys[i].type;
       if ( type == (-1) ) continue;  // Do nothing to unused entries
       AllEnemys[i].energy = Druidmap[type].maxenergy;
-      AllEnemys[i].Status = MOBILE;
+      AllEnemys[i].status = MOBILE;
       NumEnemys++;
     }
 
@@ -1445,7 +1445,7 @@ GetThisLevelsDroids( char* SectionPointer )
     {
       for ( FreeAllEnemysPosition=0 ; FreeAllEnemysPosition < MAX_ENEMYS_ON_SHIP ; FreeAllEnemysPosition++ )
 	{
-	  if ( AllEnemys[ FreeAllEnemysPosition ].Status == OUT ) break;
+	  if ( AllEnemys[ FreeAllEnemysPosition ].status == OUT ) break;
 	}
       if ( FreeAllEnemysPosition == MAX_ENEMYS_ON_SHIP )
 	{
@@ -1455,7 +1455,7 @@ GetThisLevelsDroids( char* SectionPointer )
 
       AllEnemys[ FreeAllEnemysPosition ].type = ListOfTypesAllowed[MyRandom (DifferentRandomTypes-1)];
       AllEnemys[ FreeAllEnemysPosition ].levelnum = OurLevelNumber;
-      AllEnemys[ FreeAllEnemysPosition ].Status = MOBILE;
+      AllEnemys[ FreeAllEnemysPosition ].status = MOBILE;
 
     }  // while (enemy-limit of this level not reached) 
 
@@ -1521,7 +1521,7 @@ MoveLevelDoors (void)
 	  for (j = 0; j < NumEnemys; j++)
 	    {
 	      /* ignore druids that are dead or on other levels */
-	      if (AllEnemys[j].Status == OUT ||
+	      if (AllEnemys[j].status == OUT ||
 		  AllEnemys[j].levelnum != CurLevel->levelnum)
 		continue;
 

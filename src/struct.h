@@ -169,7 +169,7 @@ typedef struct
   double phase;		        /* gibt die Phase an in der der Feind gedreht ist */
   int nextwaypoint;		/* gibt den naechsten Zielpunkt an */
   int lastwaypoint;		/* Waypoint, von dem ausgegangen wurde */
-  int Status;			/* gibt z.B. an ob der Robotter abgeschossen wurde */
+  int status;			/* gibt z.B. an ob der Robotter abgeschossen wurde */
   double warten;		// time till the droid will start to move again
   byte passable;		/* Zeit (counter), in der druid passable ist */
   double firewait;		/* gibt die Zeit bis zum naechsten Schuss an */
@@ -201,12 +201,12 @@ typedef struct
   byte type;
   byte phase;
   int time_in_frames;    // how long does the bullet exist, measured in number of frames
-  double time_in_seconds; // how long does the bullet exist in seconds
-  signed char mine;
+  float time_in_seconds; // how long does the bullet exist in seconds
+  bool mine;
   int owner;
-  double angle;
+  float angle;
+  int Surfaces_were_generated; 
   SDL_Surface *SurfacePointer[ MAX_PHASES_IN_A_BULLET ];
-  int Surfaces_were_generated; // 
 }
 bullet, *Bullet;
 

@@ -197,7 +197,7 @@ UpdateCountersForThisFrame (void)
   for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
     {
 
-      if (AllEnemys[i].Status == OUT ) continue;
+      if (AllEnemys[i].status == OUT ) continue;
 
       if (AllEnemys[i].warten > 0) 
 	{
