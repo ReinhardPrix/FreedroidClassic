@@ -143,13 +143,15 @@ void channelDone(int channel) {
 void
 PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting , int no_double_catching ) 
 {
-    //--------------------
-    // These variables will always be needed!
-    //
     int simulated_playback_starting_time;
     static char PreviousFileName [1000]="HalloHallo";
     static Uint32 PreviousStartTicks = 0 ;
     Uint32 TicksNow;
+    // This code searches for different kinds of 
+    int i;
+    int pathlen;
+    char *extension;
+    char *extensions[] = { ".spx", ".ogg", ".wav", NULL };  // Extensions to try for audio
     
     //--------------------
     // These variables will only be needed when compiling with sound!
@@ -160,7 +162,7 @@ PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting , int no
     char Temp_Filename[5000];
     char* fpath="no_fpath_has_been_set";
 #endif
-    
+
     //--------------------
     // In case the same sample is played again and again in a very
     // short time, we might refuse operation here, since this could
@@ -248,15 +250,9 @@ PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting , int no
     //  
     if ( strcmp ( SoundSampleFileName , "Sorry_No_Voice_Sample_Yet_0.wav" ) )
     {
-	// This code searches for different kinds of 
-	int i;
-	int pathlen;
-	char *extension;
-	char *extensions[] = { ".spx", ".ogg", ".wav", NULL };  // Extensions to try for audio
+	pathlen = strlen ( Temp_Filename );
 	
-	pathlen = strlen(Temp_Filename);
-	
-	if(strcmp(Temp_Filename+pathlen-4, ".wav") == 0)
+	if ( strcmp ( Temp_Filename + pathlen - 4 , ".wav" ) == 0)
 	{
 	    extension = Temp_Filename + pathlen - 4;
 	}
@@ -268,7 +264,7 @@ PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting , int no
 	i = 0;
 	while ( extensions [ i ] != NULL)
 	{
-	    strcpy(extension, extensions[i]);
+	    strcpy ( extension, extensions [ i ] );
 	    fpath = find_file_silent ( Temp_Filename , SOUND_DIR, FALSE);
 	    //--------------------
 	    // find_file_silent may return a NULL pointer, in case the file name
@@ -280,6 +276,13 @@ PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting , int no
 		if ( One_Shot_WAV_File != NULL )
 		{
 		    break;
+		}
+		else
+		{
+		    GiveStandardErrorMessage ( __FUNCTION__  , "\
+Corrupt sound file encountered!  The file is there, \n\
+but the SDL MIXER was unable to LOAD it.",
+					       NO_NEED_TO_INFORM , IS_WARNING_ONLY );
 		}
 	    }
 
@@ -302,8 +305,7 @@ PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting , int no
 	{
 	    fprintf( stderr, "\n\nSoundSampleFileName: '%s'" , SoundSampleFileName );
 	    GiveStandardErrorMessage ( __FUNCTION__  , "\
-There seems to be a sound file missing or corrupt.  The SDL MIXER\n\
-was unable to it.",
+There seems to be a sound file missing.",
 				       NO_NEED_TO_INFORM, GameConfig.terminate_on_missing_speech_sample );
 	}
 	

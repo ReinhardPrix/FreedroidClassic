@@ -788,6 +788,9 @@ find_file_silent (char *fname, char *subdir, int use_theme)
     int i;
     static char File_Path[5000];   /* hope this will be enough */
     FILE *fp;  // this is the file we want to find?
+
+    DebugPrintf ( 2 , "\n%s(): received fname=%s subdir=%s use_theme=%d." ,
+		  __FUNCTION__ , fname , subdir , use_theme );
     
     if (!fname)
     {
@@ -802,20 +805,20 @@ This is indicates a severe bug in Freedroid.",  PLEASE_INFORM, IS_FATAL );
     for ( i = 0 ; i < 2 ; i++ )
     {
 	if (i==0)
-	    strcpy (File_Path, "..");   /* first try local subdirs */
+	    strcpy (File_Path, "..");   // first try local subdirs 
 	if (i==1)
-	    strcpy (File_Path, FD_DATADIR); /* then the DATADIR */
+	    strcpy (File_Path, FD_DATADIR); // then the DATADIR 
 	
 	strcat (File_Path, "/");
 	strcat (File_Path, subdir);
 	strcat (File_Path, "/");
 	
-	if (use_theme)
-	    strcat (File_Path, GameConfig.Theme_SubPath);
+	if ( use_theme )
+	    strcat ( File_Path , GameConfig . Theme_SubPath );
 	
-	strcat (File_Path, fname);
+	strcat ( File_Path , fname );
 	
-	if ( (fp = fopen (File_Path, "rb")) != NULL)  /* found it? */
+	if ( ( fp = fopen ( File_Path , "rb" ) ) != NULL )  // found it? 
 	{
 	    fclose (fp);
 	    break;
@@ -826,13 +829,18 @@ This is indicates a severe bug in Freedroid.",  PLEASE_INFORM, IS_FATAL );
 	    // This is the *silent* version of the find-file function,
 	    // so we don't do anything here...
 	    //
-	    return ( NULL );
+	    if ( i >= 1 )
+	    {
+		DebugPrintf ( 1 , "\n%s(): returning NULL!" , __FUNCTION__ );
+		return ( NULL );
+	    }
 	}
     } // for i 
     
     // DebugPrintf( 0 , "\nfind_file determined file path: %s." , File_Path );
     
-    return (File_Path);
+    DebugPrintf ( 2 , "\n%s(): returning suposedly non-NULL!" , __FUNCTION__ );
+    return ( File_Path );
     
 }; // char * find_file_silent ( ... )
 

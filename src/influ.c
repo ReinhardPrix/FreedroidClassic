@@ -634,6 +634,8 @@ correct_tux_position_according_to_jump_thresholds ( int player_num )
 		   curShip.AllLevels [ JumpTarget ] -> ylen - 0 - JumpStartThreshold - SafetyBonus ,
 		   player_num , 
 		   SHUFFLE_WHEN_CROSSING , FALSE ) ; 
+
+	DebugPrintf ( LEVEL_JUMP_DEBUG , "\nReally doing it now.  Need to check the running target still..." );
 	
 	//--------------------
 	// We try to translate the mouse move target to the new levels
@@ -665,6 +667,8 @@ correct_tux_position_according_to_jump_thresholds ( int player_num )
 	    }
 	    
 	}
+
+	DebugPrintf ( LEVEL_JUMP_DEBUG , "\nOk.  Jump done.  returning..." );
 	
 	return;
 	
@@ -696,6 +700,8 @@ correct_tux_position_according_to_jump_thresholds ( int player_num )
 		   player_num , 
 		   SHUFFLE_WHEN_CROSSING , FALSE ) ; 
 	
+	DebugPrintf ( LEVEL_JUMP_DEBUG , "\nReally doing it now.  Need to check the running target still..." );
+
 	//--------------------
 	// We try to translate the mouse move target to the new levels
 	// coordinates (if it was a SIMPLE mouse move, NOT if it was a
@@ -729,6 +735,8 @@ correct_tux_position_according_to_jump_thresholds ( int player_num )
 	    
 	}
 	
+	DebugPrintf ( LEVEL_JUMP_DEBUG , "\nOk.  Jump done.  returning..." );
+
 	return;
     }
     
@@ -758,6 +766,8 @@ correct_tux_position_according_to_jump_thresholds ( int player_num )
 		   player_num , 
 		   SHUFFLE_WHEN_CROSSING , FALSE ) ; 
 	
+	DebugPrintf ( LEVEL_JUMP_DEBUG , "\nReally doing it now.  Need to check the running target still..." );
+
 	//--------------------
 	// We try to translate the mouse move target to the new levels
 	// coordinates (if it was a SIMPLE mouse move, NOT if it was a
@@ -791,6 +801,8 @@ correct_tux_position_according_to_jump_thresholds ( int player_num )
 	    
 	}
 	
+	DebugPrintf ( LEVEL_JUMP_DEBUG , "\nOk.  Jump done.  returning..." );
+
 	return;
     }
     
@@ -816,6 +828,8 @@ correct_tux_position_according_to_jump_thresholds ( int player_num )
 		   player_num , 
 		   SHUFFLE_WHEN_CROSSING , FALSE ) ; 
 	
+	DebugPrintf ( LEVEL_JUMP_DEBUG , "\nReally doing it now.  Need to check the running target still..." );
+
 	//--------------------
 	// We try to translate the mouse move target to the new levels
 	// coordinates (if it was a SIMPLE mouse move, NOT if it was a
@@ -847,6 +861,8 @@ correct_tux_position_according_to_jump_thresholds ( int player_num )
 	    
 	}
 	
+	DebugPrintf ( LEVEL_JUMP_DEBUG , "\nOk.  Jump done.  returning..." );
+
 	return;
 	
     }
