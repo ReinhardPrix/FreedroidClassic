@@ -306,8 +306,8 @@ SpecialForce: Type=247 X=38 Y=11 Fixed=0 Marker=22 AdvancedCommand=2 Parameter1=
 SpecialForce: Type=139 X=38 Y=11 Fixed=0 Marker=23 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level9Trotter1StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Trotter Bot"
 SpecialForce: Type=247 X=38 Y=11 Fixed=0 Marker=23 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level9Trotter2StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Trotter Bot"
 
-SpecialForce: Type=139 X=38 Y=11 Fixed=0 Marker=24 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level9Wanderer1StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Wandering Bot"
-S*8pecialForce: Type=247 X=38 Y=11 Fixed=0 Marker=24 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level9Wanderer2StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Wandering Bot"
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=24 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level9Wanderer1StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Wandering Bot"
+S*8pecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=24 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level9Wanderer2StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Wandering Bot"
 
 ** End of this levels droid data **
 
@@ -329,6 +329,25 @@ SpecialForce: Type=571 X=38 Y=11 Fixed=0 Marker=13 AdvancedCommand=2 Parameter1=
 SpecialForce: Type=571 X=38 Y=11 Fixed=0 Marker=13 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="571PlagueBot5StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Plague Bot"
 SpecialForce: Type=571 X=38 Y=11 Fixed=0 Marker=13 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="571PlagueBot6StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Plague Bot"
 SpecialForce: Type=571 X=38 Y=11 Fixed=0 Marker=13 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="571PlagueBot7StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Plague Bot"
+
+SpecialForce: Type=329 X=38 Y=11 Fixed=0 Marker=30 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level10Lurker1StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Lurking Bot"
+SpecialForce: Type=420 X=38 Y=11 Fixed=0 Marker=30 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level10Lurker2StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Lurking Bot"
+SpecialForce: Type=329 X=38 Y=11 Fixed=0 Marker=30 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level10Lurker3StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Lurking Bot"
+SpecialForce: Type=420 X=38 Y=11 Fixed=0 Marker=30 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level10Lurker4StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Lurking Bot"
+
+SpecialForce: Type=329 X=38 Y=11 Fixed=0 Marker=31 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level10Stalker1StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Stalker Bot"
+SpecialForce: Type=302 X=38 Y=11 Fixed=0 Marker=31 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level10Stalker2StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Stalker Bot"
+SpecialForce: Type=249 X=38 Y=11 Fixed=0 Marker=31 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level10Stalker3StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Stalker Bot"
+
+SpecialForce: Type=139 X=38 Y=11 Fixed=0 Marker=32 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level10Trotter1StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Trotter Bot"
+SpecialForce: Type=247 X=38 Y=11 Fixed=0 Marker=32 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level10Trotter2StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Trotter Bot"
+
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=33 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level10Wanderer1StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Wandering Bot"
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=33 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level10Wanderer2StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Wandering Bot"
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=33 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level10Wanderer3StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Wandering Bot"
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=33 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level10Wanderer4StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Wandering Bot"
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=33 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level10Wanderer5StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Wandering Bot"
+
 
 ** End of this levels droid data **
 
@@ -352,6 +371,17 @@ SpecialForce: Type=329 X=38 Y=11 Fixed=0 Marker=15 AdvancedCommand=2 Parameter1=
 SpecialForce: Type=329 X=38 Y=11 Fixed=0 Marker=15 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="329RoadTroll4StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Road Troll Bot"
 
 SpecialForce: Type=420 X=38 Y=11 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="420LoneWolf1StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Lone Wolf Bot"
+
+SpecialForce: Type=329 X=38 Y=11 Fixed=0 Marker=35 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level11Stalker1StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Stalker Bot"
+SpecialForce: Type=302 X=38 Y=11 Fixed=0 Marker=35 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level11Stalker2StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Stalker Bot"
+SpecialForce: Type=249 X=38 Y=11 Fixed=0 Marker=35 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level11Stalker3StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Stalker Bot"
+SpecialForce: Type=247 X=38 Y=11 Fixed=0 Marker=35 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level11Stalker4StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Stalker Bot"
+
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=36 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level11Wanderer1StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Wandering Bot"
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=36 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level11Wanderer2StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Wandering Bot"
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=36 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level11Wanderer3StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Wandering Bot"
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=36 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level11Wanderer4StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Wandering Bot"
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=36 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level11Wanderer5StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Wandering Bot"
 
 ** End of this levels droid data **
 
@@ -438,11 +468,19 @@ SpecialForce: Type=493 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1
 
 SpecialForce: Type=329 X=38 Y=11 Fixed=0 Marker=25 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level16Lurker1StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Lurking Bot"
 SpecialForce: Type=420 X=38 Y=11 Fixed=0 Marker=25 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level16Lurker2StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Lurking Bot"
+SpecialForce: Type=329 X=38 Y=11 Fixed=0 Marker=30 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level16Lurker3StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Lurking Bot"
+SpecialForce: Type=420 X=38 Y=11 Fixed=0 Marker=30 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level16Lurker4StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Lurking Bot"
 
 SpecialForce: Type=329 X=38 Y=11 Fixed=0 Marker=27 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level16Stalker1StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Stalker Bot"
 SpecialForce: Type=302 X=38 Y=11 Fixed=0 Marker=27 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level16Stalker2StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Stalker Bot"
 SpecialForce: Type=249 X=38 Y=11 Fixed=0 Marker=27 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level16Stalker3StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Stalker Bot"
 SpecialForce: Type=247 X=38 Y=11 Fixed=0 Marker=27 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level16Stalker4StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Stalker Bot"
+
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=34 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level16Wanderer1StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Wandering Bot"
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=34 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level16Wanderer2StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Wandering Bot"
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=34 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level16Wanderer3StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Wandering Bot"
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=34 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level16Wanderer4StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Wandering Bot"
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=34 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level16Wanderer5StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Wandering Bot"
 
 
 ** End of this levels droid data **
