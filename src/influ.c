@@ -543,6 +543,17 @@ CheckInfluenceWallCollisions (void)
       if ( EastWestAxisBlocked && NorthSouthAxisBlocked )
 	{
 	  printf("\nBOTH AXES BLOCKED... Corner handling activated...");
+	  // in case both axes were blocked, we must be at a corner.  
+	  // both axis-blocked-routines have been executed, so the speed has
+	  // been set to absolutely zero and we are at the previous position.
+	  //
+	  // But perhaps everything would be fine,
+	  // if we just restricted ourselves to moving in only ONE direction.
+	  // try if this would make sense...
+	  // (Of course we may only move into the one direction that is free)
+	  //
+	  if ( DruidPassable( Me.pos.x + SX , Me.pos.y ) == CENTER ) Me.pos.x += SX;
+	  if ( DruidPassable( Me.pos.x , Me.pos.y +SY ) == CENTER ) Me.pos.y += SY;
 	}
 
       // Here I introduce some extra security as a fallback:  Obviously

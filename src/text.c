@@ -165,7 +165,8 @@ ScrollText (char *Text, int startx, int starty, int EndLine)
 
       usleep (30000);
 
-      ClearUserFenster(); 
+      DisplayImage ( NE_TITLE_PIC_FILE );
+      // ClearUserFenster(); 
 
       if (!DisplayText (Text, startx, InsertLine, &User_Rect))
 	break;  /* Text has been scrolled outside User_Rect */

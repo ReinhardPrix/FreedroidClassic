@@ -1269,7 +1269,8 @@ IsPassable (float x, float y, int Checkpos)
       break;
 
     case ECK_LU:
-      if ((fx < WALLPASS) || (fy > Block_Height - WALLPASS) ||
+      //NORMALISATION if ((fx < WALLPASS) || (fy > Block_Height - WALLPASS) ||
+      if ((fx < WALLPASS) || (fy > 1 - WALLPASS) ||
 	  //NORMALISATION ((fx > Block_Width - WALLPASS) && (fy < WALLPASS)))
 	  ((fx > 1 - WALLPASS) && (fy < WALLPASS)))
 	ret = CENTER;

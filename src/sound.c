@@ -84,16 +84,9 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
   SOUND_DIR "Fire_Bullet_Flash_Sound_0.wav"
 };
 
-char *ExpandedSoundSampleFilenames[ALL_SOUNDS];
-
 #ifdef HAS_SDL_SOUND
 Mix_Chunk *Loaded_WAV_Files[ALL_SOUNDS];
 #endif
-
-int Background_Music_Channel = -1;
-
-// This wills soon go out...
-char *ExpandFilename(char *LocalFilename);
 
 void 
 Init_Audio(void)
@@ -118,23 +111,6 @@ Init_Audio(void)
   Current_Sound_FX_Volume=1.0;
 
   if ( !sound_on ) return;
-
-
-  /* Because the yiff does not nescessarily have the same origin for */
-  /* relative paths as paradroid does, it is nescessary to first translate */
-  /* our path names to absolute pathnames.  */
-  // Also is the yiff is not used at all, the expanded file names cannot
-  // hurt at all, since they are convenient for the SDL MIXER too.
-
-  /* RP: Sorry to interfere here, but pathnames are now absolute by
-   * default, so this should no longer be used
-
-  for (i = 0; i < ALL_SOUNDS; i++)
-    {
-      ExpandedSoundSampleFilenames[i] =
-	ExpandFilename (SoundSampleFilenames[i]);
-    }
-  */
 
 
   // Now SDL_AUDIO is initialized here:
@@ -162,7 +138,7 @@ Sorry...\n\
       Terminate(ERR);
     } else
       {
-	// printf("\nSDL Audio initialisation successful.\n");
+	printf("\nSDL Audio initialisation successful.\n");
       }
 
   // Now that we have initialized the audio SubSystem, we must open
@@ -193,7 +169,7 @@ Sorry...\n\
     }
   else 
     {
-      // printf("\nSuccessfully opened SDL audio channel." );
+      printf("\nSuccessfully opened SDL audio channel." );
     }
 
   // Now that the audio channel is opend, its time to load all the
@@ -231,12 +207,13 @@ Sorry...\n\
 	} // if ( !Loaded_WAV...
       else
 	{
-	  // printf("\nSuccessfully loaded file %s.", SoundSampleFilenames[i]);
+	  printf("\nSuccessfully loaded file %s.", SoundSampleFilenames[i]);
 	}
     } // for (i=0; ...
 
 
-  printf("done.");
+  // printf("done.");
+  // fflush(stdout);
 #endif // HAVE_SDL_MIXER
 } // void InitAudio(void)
 
@@ -283,33 +260,6 @@ Set_Sound_FX_Volume(float NewVolume)
 #endif // HAS_SDL_SOUND
 
 } // void Set_BG_Music_Volume(float NewVolume)
-
-/*@Function============================================================
-  @Desc: When accessing the yiff sound server, we need to supply absolute path
-  names or relativ ones from some freely configurable directorys in yiffconfig.
-  Of course we will take the secure path and supply absolute pathnames, for we
-  do NOT know how the yiff is configured on each system.
-  Therefore it is nescessary to expand relative pathnames into absolute ones.
-  This function is supposed to do this. 
-
-  @Ret: 
-  @Int:
-  * $Function----------------------------------------------------------*/
-char *
-ExpandFilename (char *LocalFilename)
-{
-  char *tmp;
-
-  tmp = malloc (strlen (LocalFilename) + strlen (getcwd (NULL, 0)) + 1);
-  strcpy (tmp, getcwd (NULL, 0));
-
-  /* cut out the "/src" at the end of the sting, that is, make it */
-  /* 4 chars shorter */
-  /* tmp[strlen(tmp)-4]=0 */
-
-  strcat (tmp, LocalFilename);
-  return (tmp);
-}				// char *ExpandFilename(char *LocalFilename){
 
 
 /*@Function============================================================
@@ -360,21 +310,72 @@ Switch_Background_Music_To (int Tune)
   return;
 #else
 
+static int Background_Music_Channel = -1;
+
+
   if ( !sound_on ) return;
 
-  // Here comes the SDL-BASED Background music code:
+  printf("\n\nBACKGROUND_MUSIC_CHANNEL IS NOW: %d ", Background_Music_Channel );
+  printf("\nSoundfile to be played: %s ", SoundSampleFilenames[Tune] );
 
   if ( Background_Music_Channel >= 0 )
     {
+      //printf("\nOld Background music channel has been halted.");
+      // fflush(stdout);
       Mix_HaltChannel( Background_Music_Channel );
-      // printf("\nOld Background music channel has been halted.");
       Background_Music_Channel = -1;
     }
 
+
   if (Background_Music_Channel < 0)
     {
-      Background_Music_Channel = Mix_PlayChannel(-1, Loaded_WAV_Files[ Tune ], -1);
+      printf("\nNew Background music ist being initiated....");
+      fflush(stdout);
+      Background_Music_Channel = Mix_PlayChannel( -1, Loaded_WAV_Files[ Tune ], -1 );
+      // Play_Sound ( Tune );
+
+      /*
+      if ( Background_Music_Channel == -1 )
+	{
+	  fprintf (stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+The a SDL MIXER WAS UNABLE TO PLAY A CERTAIN FILE LOADED INTO MEMORY.\n\
+\n\
+The name of the problematic file is:\n\
+%s \n\
+\n\
+Analysis of the error has returned the following explanation through SDL:\n\
+%s \n\
+The most likely cause for the problem however is, that too many sounds\n\
+have been played in too rapid succession, which should be caught.\n\
+If the problem persists, please inform the developers about it.\n\
+\n\
+In the meantime you can choose to play without sound.\n\
+\n\
+If you want this, use the appropriate command line option and Freedroid will \n\
+not complain any more. \n\
+\n\
+This error is not really fatal, but on the other hand in this case the\n\
+file to be played is a file of background music, where it really shoudlnt\n\
+happen that no channels are available.\n\
+\n\
+Freedroid will therefore now be terminated now to draw attention \n\
+to this sound problem.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , SoundSampleFilenames[ Tune ] , Mix_GetError() );
+	  Terminate (ERR);
+	}
+      else
+	{
+	  printf("\nSuccessfully playing file %s.", SoundSampleFilenames[ Tune ]);
+	}
+      */
     }
+
+  // Play_Sound ( Tune );
 
 #endif // HAS_SDL_SOUND
 
@@ -405,7 +406,7 @@ Play_Sound (int Tune)
 \n\
 ----------------------------------------------------------------------\n\
 Freedroid has encountered a problem:\n\
-The a SDL MIXER WAS UNABLE TO PLAY A CERTAIN FILE LOADES INTO MEMORY.\n\
+The a SDL MIXER WAS UNABLE TO PLAY A CERTAIN FILE LOADED INTO MEMORY.\n\
 \n\
 The name of the problematic file is:\n\
 %s \n\
@@ -672,7 +673,8 @@ BounceSound (void)
 {
   if (!sound_on) return;
 
-  Play_Sound (COLLISIONSOUND);
+  // Play_Sound (COMBAT_BACKGROUND_MUSIC_SOUND );
+  Play_Sound ( COLLISIONSOUND );
 
 }				// void BounceSound(void)
 

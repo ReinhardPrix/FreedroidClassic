@@ -86,6 +86,7 @@ enum
 
 #define MENU_FONT_FILE 		GRAPHICS_DIR "para_font_for_BFont_01.png"
 #define PARA_FONT_FILE		GRAPHICS_DIR "para_font_for_BFont_01.png"
+#define FPS_FONT_FILE		GRAPHICS_DIR "para_font_for_BFont_01.png"
 #define ICON_FILE		GRAPHICS_DIR "paraicon.bmp"
 
 
@@ -334,7 +335,7 @@ enum _directions
 
 /* Wegstossgeschw. von Tueren u.ae. */
 // NORMALISATION #define PUSHSPEED 2
-#define PUSHSPEED 20
+#define PUSHSPEED 2
 
 /* Schusstypen */
 enum _bullets

@@ -498,7 +498,9 @@ Title (void)
 {
   int ScrollEndLine = USERFENSTERPOSY;	/* Endpunkt des Scrollens */
 
-  Switch_Background_Music_To (CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC);
+  Play_Sound ( CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC );
+  Switch_Background_Music_To ( CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC );
+  // Switch_Background_Music_To ( COMBAT_BACKGROUND_MUSIC_SOUND );
 
   DisplayImage ( NE_TITLE_PIC_FILE );
 
@@ -507,11 +509,10 @@ Title (void)
   while (!SpacePressed ());
   while (SpacePressed());
 
-  ClearGraphMem ();
-
   Me.status=BRIEFING;
 
-  DisplayRahmen( RAHMEN_FORCE_UPDATE ); 
+  // ClearGraphMem ();
+  // DisplayRahmen( RAHMEN_FORCE_UPDATE ); 
 
   SetTextColor (FONT_BLACK, FONT_RED);
 
@@ -519,6 +520,10 @@ Title (void)
   ScrollText (TitleText2, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
   ScrollText (TitleText3, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
   ScrollText (TitleText4, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
+
+  ClearGraphMem ();
+  DisplayRahmen( RAHMEN_FORCE_UPDATE ); 
+  SDL_Flip( ne_screen );
 
   return;
 

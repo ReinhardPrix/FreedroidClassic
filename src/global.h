@@ -135,6 +135,7 @@ EXTERN int MaxMessageTime;
 EXTERN int MinMessageTime;
 EXTERN BFont_Info *Menu_BFont;
 EXTERN BFont_Info *Para_BFont;
+EXTERN BFont_Info *FPS_Display_BFont;
 
 
 #undef EXTERN

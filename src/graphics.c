@@ -510,6 +510,13 @@ Init_Video (void)
     } else
       printf("\nSDL Para Font initialisation successful.\n");
 
+  if ( ( FPS_Display_BFont = LoadFont ( FPS_FONT_FILE) ) == NULL )
+    {
+      fprintf(stderr, "\n\nCouldn't initialize Font.\n\nTerminating...\n\n");
+      Terminate(ERR);
+    } else
+      printf("\nSDL FPS Display Font initialisation successful.\n");
+
   SetCurrentFont(Menu_BFont);
 
   vid_info = SDL_GetVideoInfo (); /* just curious */
@@ -730,6 +737,9 @@ ClearGraphMem ( void )
   // top of the screen surely is destroyed.  We inform the
   // DisplayRahmen function of the matter...
   RahmenIsDestroyed=TRUE;
+
+  // 
+  SDL_SetClipRect( ne_screen, NULL );
 
   // Now we fill the screen with black color...
   SDL_FillRect( ne_screen , NULL , 0 );
