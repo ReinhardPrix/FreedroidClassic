@@ -173,7 +173,7 @@ DirectLineWalkable( float x1 , float y1 , float x2 , float y2 , int z )
     step.x = (x2 - x1) / ( float ) Steps;
     step.y = (y2 - y1) / ( float ) Steps;
     
-    DebugPrintf( 2 , "\n%s():  step.x=%f step.y=%f." , __FUNCTION__ , step.x , step.y );
+    // DebugPrintf( 2 , "\n%s():  step.x=%f step.y=%f." , __FUNCTION__ , step.x , step.y );
     
     //--------------------
     // We start from position (x1, y1)

@@ -273,7 +273,8 @@ void drawISOYZQuad(int x, int y, int z, int h, int d) {
  * c1 : the fill color
  * c1 : the background color
  * ---------------------------------------------------------------------- */
-void drawIsoEnergyBar(int dir, int x, int y, int z, int h, int d, int length, float fill, myColor *c1, myColor *c2  ) {
+void 
+drawIsoEnergyBar(int dir, int x, int y, int z, int h, int d, int length, float fill, myColor *c1, myColor *c2  ) {
 	int l = (int) (fill * length) ;
 	int l2 = (int) length * (1.0-fill) ;
 	int lcos, lsin, l2cos, l2sin ;
@@ -2114,6 +2115,13 @@ blit_open_gl_stretched_texture_light_radius ( void )
     local_iso_image . offset_x = 0 ;    
     local_iso_image . offset_y = 0 ;
 
+    //--------------------
+    // Linear Filtering is slow and maybe not nescessary here, so we
+    // stick to the faster 'nearest' variant.
+    //
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+    
     glEnable ( GL_BLEND ) ;
     glDisable( GL_ALPHA_TEST );  
     // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );

@@ -1683,7 +1683,10 @@ get_light_strength ( moderately_finepoint target_pos )
     int i;
     float xdist;
     float ydist;
-    
+    float tol_x;
+    float tol_y;
+    float light_vec_len;
+
     //--------------------
     // Now that the light sources array is fully set up, we can start
     // to compute the individual light strength at any given position
@@ -1726,8 +1729,26 @@ get_light_strength ( moderately_finepoint target_pos )
  	     ( final_darkness + light_source_strengthes [ i ] ) *  
   	     ( final_darkness + light_source_strengthes [ i ] ) )
 	{
-	    final_darkness = (int) ( sqrt ( xdist * xdist + 
-					    ydist * ydist ) * 4.0 ) 
+
+	    //--------------------
+	    // Let's try something different here:  We now do some passability
+	    // checking as well!  Cool!  But only for the very first light source
+	    //
+	    light_vec_len = sqrt ( xdist * xdist + ydist * ydist );
+	    if ( i == 0 ) 
+	    {
+		if ( light_vec_len > 0.5 )
+		{
+		    tol_x =  ( xdist / light_vec_len ) * 0.4 ;
+		    tol_y =  ( ydist / light_vec_len ) * 0.4 ;
+
+		    if ( ! DirectLineWalkable( Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , 
+					       target_pos . x + tol_x , target_pos . y + tol_y , 
+					       Me [ 0 ] . pos . z ) )
+			continue;
+		}
+	    }
+	    final_darkness = (int) ( light_vec_len * 4.0 ) 
 		- light_source_strengthes [ i ] ;
 	}
     }
@@ -2114,13 +2135,17 @@ AssembleCombatPicture ( int mask )
 		PutItem ( i , mask , PUT_NO_THROWN_ITEMS , FALSE ); 
 	}
     }
-    // if ( ! GameConfig . skip_light_radius ) blit_light_radius();
-    
-    set_up_ordered_blitting_list ( mask );
-    
-    blit_nonpreput_objects_according_to_blitting_list ( mask );
-    
-    if ( ! GameConfig . skip_light_radius ) blit_light_radius();
+
+    if ( use_open_gl )
+    {
+	if ( ! GameConfig . skip_light_radius ) blit_light_radius();
+	blit_nonpreput_objects_according_to_blitting_list ( mask );
+    }
+    else
+    {
+	blit_nonpreput_objects_according_to_blitting_list ( mask );
+	if ( ! GameConfig . skip_light_radius ) blit_light_radius();
+    }
   
     PutMiscellaneousSpellEffects ( );
     

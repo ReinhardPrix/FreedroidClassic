@@ -1617,185 +1617,186 @@ streamline_tux_intermediate_course ( int player_num )
 int
 recursive_find_walkable_point ( float x1 , float y1 , float x2 , float y2 , int recursion_depth ) 
 {
-  moderately_finepoint ordered_moves[4];
-  int i;
-
+    moderately_finepoint ordered_moves[4];
+    int i;
+    
 #define MAX_RECUSION_DEPTH 50
-
-  //--------------------
-  // At first we mark the current position as processed...
-  //
-  recursion_grid [ (int) x1 ] [ (int) y1 ] = TILE_IS_PROCESSED ;
-  
-  //--------------------
-  // Maybe the recursion is too deep already.  Then we just return and report
-  // failure.
-  //
-  if ( recursion_depth > MAX_RECUSION_DEPTH )
-    return ( FALSE );
-
-  //--------------------
-  // If we can reach the final destination from here, then there is no need to
-  // go any further, but instead we select the current position as the preliminary
-  // walkable target for the Tux.
-  //
-  if ( ( tux_can_walk_this_line ( 0 , x1, y1 , x2 , y2 ) ) &&
-       ( CheckIfWayIsFreeOfDroidsWithoutTuxchecking ( x1 , y1 , x2 , y2 , Me [ 0 ] . pos . z , (enemy*) NULL ) ) ) 
+    
+    //--------------------
+    // At first we mark the current position as processed...
+    //
+    recursion_grid [ (int) x1 ] [ (int) y1 ] = TILE_IS_PROCESSED ;
+    
+    //--------------------
+    // Maybe the recursion is too deep already.  Then we just return and report
+    // failure.
+    //
+    if ( recursion_depth > MAX_RECUSION_DEPTH )
+	return ( FALSE );
+    
+    //--------------------
+    // If we can reach the final destination from here, then there is no need to
+    // go any further, but instead we select the current position as the preliminary
+    // walkable target for the Tux.
+    //
+    if ( ( tux_can_walk_this_line ( 0 , x1, y1 , x2 , y2 ) ) &&
+	 ( CheckIfWayIsFreeOfDroidsWithoutTuxchecking ( x1 , y1 , x2 , y2 , Me [ 0 ] . pos . z , (enemy*) NULL ) ) ) 
     {
-      //--------------------
-      // If the current position is still directly reachable for the Tux, we set it
-      // as our target and return
-      //
-      DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nRecursion has found the final target! --> start to set up course..." );
-      Me [ 0 ] . next_intermediate_point [ 0 ] . x = x2 ;
-      Me [ 0 ] . next_intermediate_point [ 0 ] . y = y2 ;
-      Me [ 0 ] . next_intermediate_point [ 1 ] . x = x1 ;
-      Me [ 0 ] . next_intermediate_point [ 1 ] . y = y1 ;
-      next_index_to_set_up = 2 ;
-      return ( TRUE ) ;
+	//--------------------
+	// If the current position is still directly reachable for the Tux, we set it
+	// as our target and return
+	//
+	DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nRecursion has found the final target! --> start to set up course..." );
+	Me [ 0 ] . next_intermediate_point [ 0 ] . x = x2 ;
+	Me [ 0 ] . next_intermediate_point [ 0 ] . y = y2 ;
+	Me [ 0 ] . next_intermediate_point [ 1 ] . x = x1 ;
+	Me [ 0 ] . next_intermediate_point [ 1 ] . y = y1 ;
+	next_index_to_set_up = 2 ;
+	return ( TRUE ) ;
     }
-
-  //--------------------
-  // So at this point we know, that the current position is not one from where
-  // we would be able to reach our goal.
-  //
-  // Therefore we will try other positions that might bring us more luck, but 
-  // we only try such positions, as we can reach from here...
-  //
-  // And also we will try the 'more promising' directions before the 'less promising'
-  // ones...
-  //
-  if ( fabsf ( x1-x2 ) >= fabsf ( y1-y2 ) )
+    
+    //--------------------
+    // So at this point we know, that the current position is not one from where
+    // we would be able to reach our goal.
+    //
+    // Therefore we will try other positions that might bring us more luck, but 
+    // we only try such positions, as we can reach from here...
+    //
+    // And also we will try the 'more promising' directions before the 'less promising'
+    // ones...
+    //
+    if ( fabsf ( x1-x2 ) >= fabsf ( y1-y2 ) )
     {
-      //--------------------
-      // More prority on x move into the right direction, least
-      // priority on x move into the wrong direction.
-      //
-      if ( x1 <= x2 )
+	//--------------------
+	// More prority on x move into the right direction, least
+	// priority on x move into the wrong direction.
+	//
+	if ( x1 <= x2 )
 	{
-	  ordered_moves [ 0 ] . x =  1.0 ;
-	  ordered_moves [ 0 ] . y =  0.0 ;
-	  ordered_moves [ 3 ] . x = -1.0 ;
-	  ordered_moves [ 3 ] . y =  0.0 ;
+	    ordered_moves [ 0 ] . x =  1.0 ;
+	    ordered_moves [ 0 ] . y =  0.0 ;
+	    ordered_moves [ 3 ] . x = -1.0 ;
+	    ordered_moves [ 3 ] . y =  0.0 ;
 	}
-      else
+	else
 	{
-	  ordered_moves [ 3 ] . x =  1.0 ;
-	  ordered_moves [ 3 ] . y =  0.0 ;
-	  ordered_moves [ 0 ] . x = -1.0 ;
-	  ordered_moves [ 0 ] . y =  0.0 ;
+	    ordered_moves [ 3 ] . x =  1.0 ;
+	    ordered_moves [ 3 ] . y =  0.0 ;
+	    ordered_moves [ 0 ] . x = -1.0 ;
+	    ordered_moves [ 0 ] . y =  0.0 ;
 	}
-      if ( y1 <= y2 )
+	if ( y1 <= y2 )
 	{
-	  ordered_moves [ 2 ] . x =  0.0 ;
-	  ordered_moves [ 2 ] . y =  1.0 ;
-	  ordered_moves [ 1 ] . x =  0.0 ;
-	  ordered_moves [ 1 ] . y = -1.0 ;
+	    ordered_moves [ 2 ] . x =  0.0 ;
+	    ordered_moves [ 2 ] . y =  1.0 ;
+	    ordered_moves [ 1 ] . x =  0.0 ;
+	    ordered_moves [ 1 ] . y = -1.0 ;
 	}
-      else
+	else
 	{
-	  ordered_moves [ 1 ] . x =  0.0 ;
-	  ordered_moves [ 1 ] . y =  1.0 ;
-	  ordered_moves [ 2 ] . x =  0.0 ;
-	  ordered_moves [ 2 ] . y = -1.0 ;
-	}
-    }
-  else
-    {
-      //--------------------
-      // More prority on x move into the right direction, least
-      // priority on x move into the wrong direction.
-      //
-      if ( x1 <= x2 )
-	{
-	  ordered_moves [ 1 ] . x =  1.0 ;
-	  ordered_moves [ 1 ] . y =  0.0 ;
-	  ordered_moves [ 2 ] . x = -1.0 ;
-	  ordered_moves [ 2 ] . y =  0.0 ;
-	}
-      else
-	{
-	  ordered_moves [ 2 ] . x =  1.0 ;
-	  ordered_moves [ 2 ] . y =  0.0 ;
-	  ordered_moves [ 1 ] . x = -1.0 ;
-	  ordered_moves [ 1 ] . y =  0.0 ;
-	}
-      if ( y1 <= y2 )
-	{
-	  ordered_moves [ 0 ] . x =  0.0 ;
-	  ordered_moves [ 0 ] . y =  1.0 ;
-	  ordered_moves [ 3 ] . x =  0.0 ;
-	  ordered_moves [ 3 ] . y = -1.0 ;
-	}
-      else
-	{
-	  ordered_moves [ 3 ] . x =  0.0 ;
-	  ordered_moves [ 3 ] . y =  1.0 ;
-	  ordered_moves [ 0 ] . x =  0.0 ;
-	  ordered_moves [ 0 ] . y = -1.0 ;
+	    ordered_moves [ 1 ] . x =  0.0 ;
+	    ordered_moves [ 1 ] . y =  1.0 ;
+	    ordered_moves [ 2 ] . x =  0.0 ;
+	    ordered_moves [ 2 ] . y = -1.0 ;
 	}
     }
-
-
-  //--------------------
-  // Now that we have set up our walk preferences, we can start to try out the directions we have...
-  //
-
-  for ( i = 0 ; i < 4 ; i ++ )
+    else
     {
-      if ( ( recursion_grid 
-	     [ (int) ( x1 + ordered_moves [ i ] . x ) ] 
-	     [ (int) ( y1 + ordered_moves [ i ] . y ) ] == TILE_IS_UNPROCESSED ) &&
-	   ( tux_can_walk_this_line ( 0 , x1, y1 , 
-				      x1 + ordered_moves [ i ] . x , 
-				      y1 + ordered_moves [ i ] . y ) ) )
+	//--------------------
+	// More prority on x move into the right direction, least
+	// priority on x move into the wrong direction.
+	//
+	if ( x1 <= x2 )
 	{
-	  if ( ( CheckIfWayIsFreeOfDroidsWithoutTuxchecking ( x1 , y1 , 
-							  x1 + ordered_moves [ i ] . x , 
-							  y1 + ordered_moves [ i ] . y , 
-							  Me [ 0 ] . pos . z , (enemy*) NULL ) ) )
+	    ordered_moves [ 1 ] . x =  1.0 ;
+	    ordered_moves [ 1 ] . y =  0.0 ;
+	    ordered_moves [ 2 ] . x = -1.0 ;
+	    ordered_moves [ 2 ] . y =  0.0 ;
+	}
+	else
+	{
+	    ordered_moves [ 2 ] . x =  1.0 ;
+	    ordered_moves [ 2 ] . y =  0.0 ;
+	    ordered_moves [ 1 ] . x = -1.0 ;
+	    ordered_moves [ 1 ] . y =  0.0 ;
+	}
+	if ( y1 <= y2 )
+	{
+	    ordered_moves [ 0 ] . x =  0.0 ;
+	    ordered_moves [ 0 ] . y =  1.0 ;
+	    ordered_moves [ 3 ] . x =  0.0 ;
+	    ordered_moves [ 3 ] . y = -1.0 ;
+	}
+	else
+	{
+	    ordered_moves [ 3 ] . x =  0.0 ;
+	    ordered_moves [ 3 ] . y =  1.0 ;
+	    ordered_moves [ 0 ] . x =  0.0 ;
+	    ordered_moves [ 0 ] . y = -1.0 ;
+	}
+    }
+    
+    
+    //--------------------
+    // Now that we have set up our walk preferences, we can start to try out the directions we have...
+    //
+    
+    for ( i = 0 ; i < 4 ; i ++ )
+    {
+	if ( ( recursion_grid 
+	       [ (int) ( x1 + ordered_moves [ i ] . x ) ] 
+	       [ (int) ( y1 + ordered_moves [ i ] . y ) ] == TILE_IS_UNPROCESSED ) &&
+	     ( tux_can_walk_this_line ( 0 , x1, y1 , 
+					x1 + ordered_moves [ i ] . x , 
+					y1 + ordered_moves [ i ] . y ) ) )
+	{
+	    if ( ( CheckIfWayIsFreeOfDroidsWithoutTuxchecking ( x1 , y1 , 
+								x1 + ordered_moves [ i ] . x , 
+								y1 + ordered_moves [ i ] . y , 
+								Me [ 0 ] . pos . z , (enemy*) NULL ) ) )
 	    {
-	  
-	      last_sight_contact . x = x1 ;
-	      last_sight_contact . y = y1 ;
-	  
-	      if ( recursive_find_walkable_point ( rintf ( x1 + ordered_moves [ i ] . x + 0.5 ) - 0.5 , 
-						   rintf ( y1 + ordered_moves [ i ] . y + 0.5 ) - 0.5 , x2 , y2 , recursion_depth + 1 ) )
+		
+		last_sight_contact . x = x1 ;
+		last_sight_contact . y = y1 ;
+		
+		if ( recursive_find_walkable_point ( rintf ( x1 + ordered_moves [ i ] . x + 0.5 ) - 0.5 , 
+						     rintf ( y1 + ordered_moves [ i ] . y + 0.5 ) - 0.5 , 
+						     x2 , y2 , recursion_depth + 1 ) )
 		{
-	      
-		  //--------------------
-		  // If there is still sight contact to the waypoint closer to the target, we just set this
-		  // waypoint.
-		  // Otherwise we set THE NEXT WAYPOINT.
-		  //
-		  Me [ 0 ] . next_intermediate_point [ next_index_to_set_up ] . x = x1 + ordered_moves [ i ] . x ;
-		  Me [ 0 ] . next_intermediate_point [ next_index_to_set_up ] . y = y1 + ordered_moves [ i ] . y ;
-		  
-		  DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nAdded another Tux waypoint entry..." );
-		  next_index_to_set_up++;
-		  
-		  if ( next_index_to_set_up >= MAX_INTERMEDIATE_WAYPOINTS_FOR_TUX )
+		    
+		    //--------------------
+		    // If there is still sight contact to the waypoint closer to the target, we just set this
+		    // waypoint.
+		    // Otherwise we set THE NEXT WAYPOINT.
+		    //
+		    Me [ 0 ] . next_intermediate_point [ next_index_to_set_up ] . x = x1 + ordered_moves [ i ] . x ;
+		    Me [ 0 ] . next_intermediate_point [ next_index_to_set_up ] . y = y1 + ordered_moves [ i ] . y ;
+		    
+		    DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nAdded another Tux waypoint entry..." );
+		    next_index_to_set_up++;
+		    
+		    if ( next_index_to_set_up >= MAX_INTERMEDIATE_WAYPOINTS_FOR_TUX )
 		    {
-		      DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nERROR!  Ran out of tux waypoints even with solutionfound!" );
-		      clear_out_intermediate_points ( 0 ) ;
-		      return ( FALSE );
+			DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nERROR!  Ran out of tux waypoints even with solutionfound!" );
+			clear_out_intermediate_points ( 0 ) ;
+			return ( FALSE );
 		    }
-		  
-		  return ( TRUE ) ;
-		  
+		    
+		    return ( TRUE ) ;
+		    
 		}
 	    }
 	}
     }
-
-
-  // DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nBad luck in all 4 directions!" );
-  bad_luck_in_4_directions_counter ++ ;
-
-  //--------------------
-  // Here we know, that we didn't have any success finding some possible point...
-  //
-  return ( FALSE );
+    
+    
+    // DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nBad luck in all 4 directions!" );
+    bad_luck_in_4_directions_counter ++ ;
+    
+    //--------------------
+    // Here we know, that we didn't have any success finding some possible point...
+    //
+    return ( FALSE );
 
 }; // int recursive_find_walkable_point ( float x1 , float y1 , float x2 , float y2 ) 
 
@@ -1806,20 +1807,20 @@ recursive_find_walkable_point ( float x1 , float y1 , float x2 , float y2 , int 
 void
 clear_out_intermediate_points ( int player_num )
 {
-  int i;
-
-  //--------------------
-  // We clear out the waypoint list for the Tux and initialize the 
-  // very first entry.
-  //
-  for ( i = 0 ; i < MAX_INTERMEDIATE_WAYPOINTS_FOR_TUX ; i ++ )
+    int i;
+    
+    //--------------------
+    // We clear out the waypoint list for the Tux and initialize the 
+    // very first entry.
+    //
+    for ( i = 0 ; i < MAX_INTERMEDIATE_WAYPOINTS_FOR_TUX ; i ++ )
     {
-      Me [ player_num ] . next_intermediate_point [ i ] . x = (-1) ;
-      Me [ player_num ] . next_intermediate_point [ i ] . y = (-1) ;
+	Me [ player_num ] . next_intermediate_point [ i ] . x = (-1) ;
+	Me [ player_num ] . next_intermediate_point [ i ] . y = (-1) ;
     }
-  Me [ player_num ] . next_intermediate_point [ 0 ] . x = Me [ 0 ] . pos . x ;
-  Me [ player_num ] . next_intermediate_point [ 0 ] . y = Me [ 0 ] . pos . y ;
-
+    Me [ player_num ] . next_intermediate_point [ 0 ] . x = Me [ 0 ] . pos . x ;
+    Me [ player_num ] . next_intermediate_point [ 0 ] . y = Me [ 0 ] . pos . y ;
+    
 }; // void clear_out_intermediate_points ( int player_num )
 
 /* ----------------------------------------------------------------------
