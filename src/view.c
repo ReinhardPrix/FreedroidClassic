@@ -998,10 +998,13 @@ void
 ShowInventoryScreen( void )
 {
   static SDL_Surface *InventoryImage = NULL;
+  static SDL_Surface *TransparentPlateImage = NULL;
   char *fpath;
   char fname[]="inventory.png";
+  char fname2[]="TransparentPlate.png";
   SDL_Rect TargetRect;
   int SlotNum;
+  int i , j ;
 
   // --------------------
   // Some things like the loading of the inventory and initialisation of the
@@ -1013,6 +1016,10 @@ ShowInventoryScreen( void )
       // SDL_FillRect( Screen, & InventoryRect , 0x0FFFFFF );
       fpath = find_file ( fname , GRAPHICS_DIR, FALSE);
       InventoryImage = IMG_Load( fpath );
+
+      fpath = find_file ( fname2 , GRAPHICS_DIR, FALSE);
+      TransparentPlateImage = IMG_Load( fpath );
+
       //--------------------
       // We define the right side of the user screen as the rectangle
       // for our inventory screen.
@@ -1119,6 +1126,17 @@ ShowInventoryScreen( void )
       if ( Me.Inventory[ SlotNum ].currently_held_in_hand == TRUE )
 	{
 	  continue;
+	}
+
+      for ( i = 0 ; i < ItemImageList[ ItemMap[ Me.Inventory[ SlotNum ].type ].picture_number ].inv_size.y ; i++ )
+	{
+	  for ( j = 0 ; j < ItemImageList[ ItemMap[ Me.Inventory[ SlotNum ].type ].picture_number ].inv_size.x ; j++ )
+	    {
+	      TargetRect.x = 16 + 32 * ( Me.Inventory[ SlotNum ].inventory_position.x + j );
+	      TargetRect.y = User_Rect.y - 64 + 480 - 16 - 32 * 6 + 32 * ( Me.Inventory[ SlotNum ].inventory_position.y + i );
+	    
+	      SDL_BlitSurface( TransparentPlateImage , NULL , Screen , &TargetRect );
+	    }
 	}
 
       TargetRect.x = 16 + 32 * Me.Inventory[ SlotNum ].inventory_position.x;

@@ -748,11 +748,11 @@ DropHeldItemToTheFloor ( void )
   // Now we enter the item into the item list of this level
   //
   CopyItem( DropItemPointer , &(CurLevel->ItemList[ i ]) );
-  CurLevel->ItemList[ i ].pos.x = Me.pos.x;
-  CurLevel->ItemList[ i ].pos.y = Me.pos.y;
-  CurLevel->ItemList[ i ].currently_held_in_hand = FALSE;
   // CurLevel->ItemList[ i ].pos.x = Me.pos.x;
   // CurLevel->ItemList[ i ].pos.y = Me.pos.y;
+  CurLevel->ItemList[ i ].pos.x = Me.pos.x + (GetMousePos_x() + 16 - UserCenter_x) / (float) Block_Width;
+  CurLevel->ItemList[ i ].pos.y = Me.pos.y + (GetMousePos_y() + 16 - UserCenter_y) / (float) Block_Height; 
+  CurLevel->ItemList[ i ].currently_held_in_hand = FALSE;
   // CurLevel->ItemList[ i ].type = Me.Inventory[ InvPos ].type;
   
   // Me.Inventory[ InvPos ].type = ( -1 );

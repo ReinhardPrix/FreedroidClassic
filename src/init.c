@@ -1516,10 +1516,12 @@ InitNewMissionList ( char *MissionName )
   PlusExtentionsOn = FALSE;
   ThisMessageTime = 0;
   LevelDoorsNotMovedTime = 0.0;
-  GameConfig.Draw_Framerate=TRUE;
-  // GameConfig.Draw_Energy=FALSE;
-  GameConfig.Draw_Energy=TRUE;
-  GameConfig.Draw_Position=TRUE;
+  // GameConfig.Draw_Framerate=TRUE;
+  GameConfig.Draw_Framerate=FALSE;
+  GameConfig.Draw_Energy=FALSE;
+  // GameConfig.Draw_Energy=TRUE;
+  // GameConfig.Draw_Position=TRUE;
+  GameConfig.Draw_Position=FALSE;
 
   RealScore = 0; // This should be done at the end of the highscore list procedure
   ShowScore = 0; // This should be done at the end of the highscore list procedure
