@@ -72,9 +72,14 @@ SpecialForce: Type=614 X=19 Y=9 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 
 SpecialForce: Type=PRO X=26 Y=18 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="RichardStartGameSquare" RushTux="no" DialogSectionToUse="RMS" ShortLabel="Richard -- Programmer"
 
 //--------------------
-// This is Dixon 'DIX', who escaped from the second level
+// This is Dixon 'DIX', who maintains the teleporter system of the colony
 //
 SpecialForce: Type=GUA X=29 Y=27 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="DixonStartGameSquare" RushTux="no" DialogSectionToUse="DIX" ShortLabel="Dixon -- Teleport Administrator"
+
+//--------------------
+// This is Michelangelo, who cooks for half the community
+//
+SpecialForce: Type=WOR X=29 Y=27 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="MichelangeloStartGameSquare" RushTux="no" DialogSectionToUse="Michelangelo" ShortLabel="Michelangelo -- Colony Cook"
 
 //--------------------
 // This is Pendragon 'PEN', who can train you in the fighting arts.

@@ -800,6 +800,10 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
 	{
 	  TempValue = ITEM_DIXONS_TOOLBOX;
 	}
+      else if ( !strcmp ( ExtraCommandString + strlen ( "DeleteAllInventoryItemsOfType:" ) , "ITEM_RED_DILITIUM_CRYSTAL" ) )
+	{
+	  TempValue = ITEM_RED_DILITIUM_CRYSTAL;
+	}
       else
 	{
 	  fprintf( stderr, "\n\nErrorneous string: %s \n" , 
@@ -1177,6 +1181,7 @@ ResolveDialogSectionToChatFlagsIndex ( Enemy ChatDroid )
   if ( strcmp ( ChatDroid -> dialog_section_name , "Spencer" ) == 0 ) return PERSON_SPENCER;
   if ( strcmp ( ChatDroid -> dialog_section_name , "Darwin" ) == 0 ) return PERSON_DARWIN;
   if ( strcmp ( ChatDroid -> dialog_section_name , "Melfis" ) == 0 ) return PERSON_MELFIS;
+  if ( strcmp ( ChatDroid -> dialog_section_name , "Michelangelo" ) == 0 ) return PERSON_MICHELANGELO;
 
   if ( strcmp ( ChatDroid -> dialog_section_name , "StandardOldTownGateGuard" ) == 0 ) return PERSON_STANDARD_OLD_TOWN_GATE_GUARD;
   if ( strcmp ( ChatDroid -> dialog_section_name , "OldTownGateGuardLeader" ) == 0 ) return PERSON_OLD_TOWN_GATE_GUARD_LEADER;
@@ -1301,7 +1306,7 @@ ChatWithFriendlyDroid( Enemy ChatDroid )
   ChatFlagsIndex = ResolveDialogSectionToChatFlagsIndex ( ChatDroid ) ;
 
   //--------------------
-  // Now we do the dialog with DIX...
+  // Now we do the dialog with Dixon, the teleporter service man...
   //
   if ( CountItemtypeInInventory( ITEM_DIXONS_TOOLBOX , 0 ) )
     {
@@ -1332,7 +1337,31 @@ ChatWithFriendlyDroid( Enemy ChatDroid )
 	}
     }
   
-  
+  //--------------------
+  // Now we prepare the dialog with Michelangelo, the colony cook...
+  //
+
+  if ( ( Me [ 0 ] . AllMissions [ 5 ] . MissionWasAssigned ) &&
+       ( !Me [ 0 ] . AllMissions [ 5 ] . MissionIsComplete ) )
+    {
+      
+      if ( CountItemtypeInInventory( ITEM_RED_DILITIUM_CRYSTAL , 0 ) )
+	{
+	  Me [ 0 ] . Chat_Flags [ PERSON_MICHELANGELO ]  [ 7 ] = TRUE ; // we allow to give the crystals...
+	}
+      else
+	{
+	  Me [ 0 ] . Chat_Flags [ PERSON_MICHELANGELO ]  [ 6 ] = TRUE ; // we allow to report no success yet...
+	}
+    }
+  if ( Me [ 0 ] . AllMissions [ 5 ] . MissionIsComplete )
+    {
+      Me [ 0 ] . Chat_Flags [ PERSON_MICHELANGELO ]  [ 8 ] = TRUE ; // we allow to ask for reward again...
+    }
+
+  //--------------------
+  // Now we prepare dialog with RMS, the programmer...
+  //
   if ( ( Me [ 0 ] . AllMissions [ 1 ] . MissionWasAssigned == TRUE ) &&
        ( Me [ 0 ] . AllMissions [ 1 ] . MissionIsComplete == FALSE ) )
     {

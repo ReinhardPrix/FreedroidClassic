@@ -1533,8 +1533,10 @@ ShowDeckMap (Level deck)
       //
 
       ClearUserFenster();
+      RespectVisibilityOnMap = FALSE;
       AssembleCombatPicture( ONLY_SHOW_MAP );
-      
+      RespectVisibilityOnMap = TRUE;
+
       ShowGenericButtonFromList ( MAP_EXIT_BUTTON );
 
       if ( SelectedFunction != UNLOCK_FUNCTION ) 

@@ -137,6 +137,7 @@ AC_CONFIG_FILES([Makefile
 		graphics/items/plasma_single/Makefile 
 		graphics/items/plasma_transistor/Makefile 
 		graphics/items/plasma_triple/Makefile 
+		graphics/items/red_dilitium_crystal/Makefile 
 		graphics/items/small_shield/Makefile 
 		graphics/items/sniper_wristband/Makefile 
 		graphics/items/standard_shield/Makefile 
