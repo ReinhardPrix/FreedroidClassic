@@ -1,14 +1,3 @@
-/*----------------------------------------------------------------------
- * Desc: contains block operating functions, that is when you want to
- * 	put something on the visible screen
- *      of the paradroid, DO NOT DO IT YOURSELF!  Use one of the functions
- *	in here.
- *      These functions already take into acount the position of the paradoid,
- * 	so you do not have to worry about where to put anything, and only have
- *	to supply map coordinates.  Very handy.
- *
- *----------------------------------------------------------------------*/
-
 /* 
  *
  *   Copyright (c) 1994, 2002 Johannes Prix
@@ -33,6 +22,17 @@
  *  MA  02111-1307  USA
  *
  */
+
+/* ----------------------------------------------------------------------
+ * Desc: contains block operating functions, that is when you want to
+ * 	put something on the visible screen
+ *      of the paradroid, DO NOT DO IT YOURSELF!  Use one of the functions
+ *	in here.
+ *      These functions already take into acount the position of the paradoid,
+ * 	so you do not have to worry about where to put anything, and only have
+ *	to supply map coordinates.  Very handy.
+ * ---------------------------------------------------------------------- */
+
 #define _blocks_c
 
 #include "system.h"
@@ -159,6 +159,24 @@ Load_Item_Surfaces( void )
   ItemImageList[ 10 ].inv_size.y = 2;
   ItemImageList[ 11 ].inv_size.x = 2;
   ItemImageList[ 11 ].inv_size.y = 2;
+  ItemImageList[ 12 ].inv_size.x = 2;
+  ItemImageList[ 12 ].inv_size.y = 2;
+  ItemImageList[ 13 ].inv_size.x = 2;
+  ItemImageList[ 13 ].inv_size.y = 2;
+  ItemImageList[ 14 ].inv_size.x = 2;
+  ItemImageList[ 14 ].inv_size.y = 2;
+  ItemImageList[ 15 ].inv_size.x = 2;
+  ItemImageList[ 15 ].inv_size.y = 2;
+  ItemImageList[ 16 ].inv_size.x = 2;
+  ItemImageList[ 16 ].inv_size.y = 2;
+  ItemImageList[ 17 ].inv_size.x = 2;
+  ItemImageList[ 17 ].inv_size.y = 2;
+  ItemImageList[ 18 ].inv_size.x = 2;
+  ItemImageList[ 18 ].inv_size.y = 2;
+  ItemImageList[ 19 ].inv_size.x = 2;
+  ItemImageList[ 19 ].inv_size.y = 2;
+  ItemImageList[ 20 ].inv_size.x = 2;
+  ItemImageList[ 20 ].inv_size.y = 2;
 
 
 

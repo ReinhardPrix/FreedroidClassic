@@ -514,6 +514,28 @@ Item as gun: bullet_image_type=1
 Picture number=14
 ** End of new item specification subsection **
 
+// Item No. 13
+** Start of new item specification subsection **
+Item name="The Super Exterminator!!!"
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item can be installed in drive slot="no"
+Item can be installed in weapon slot="yes"
+Item installation changes weapon into new value=2
+Item installation changes drive into new value=-1
+Energy gain on application in combat=60
+Item weight=0.8
+Item drive maxspeed=0
+Item drive acceleration=0
+Item as gun: recharging time=0.15
+Item as gun: speed of bullets=8.0
+Item as gun: damage of bullets=80
+Item as gun: blast type to create=1
+Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=4
+Picture number=12
+** End of new item specification subsection **
+
 
 *** End of item data section: ***
 
