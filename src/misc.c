@@ -9,21 +9,6 @@
  *
  * $Author$
  *
- * $Log$
- * Revision 1.4  2002/04/08 09:53:13  rp
- * Johannes' initial linux PORT
- *
- * Revision 1.2  1994/06/19  16:25:08  prix
- * Sat May 21 14:27:44 1994: PutMessages written
- * Sat May 21 17:29:48 1994: Arbeit an PutMessages
- * Sat May 21 17:53:41 1994: Testversion (very very alpha
- * Sat May 21 18:03:46 1994: InsertMessage hinzugef"ugt
- * Tue Jun 14 10:16:33 1994: Terminate() is now in this module
- * Wed Jun 15 13:27:09 1994: CheatMenu transported to here
- *
- * Revision 1.1  1993/07/29  17:28:56  prix
- * Initial revision
- *
  *
  *-@Header------------------------------------------------------------*/
 
@@ -80,16 +65,16 @@ message* Queue=NULL;
 	Diese Funktion l"oscht alle Roboter auf dem momentanen Level
 	**********************************************************************/
 void Armageddon(void){
-	int i;
-	char ATaste=' ';
-
-	gotoxy(0,0);
-	printf(" Really kill all droids on ship (y/n) ?");
-	while ( (ATaste!='y') && (ATaste!='n') ) ATaste=getchar();
-	if (ATaste == 'n') return;
-	for (i=0;i<MAX_ENEMYS_ON_SHIP;i++){
-		Feindesliste[i].energy=0;
-	}
+  int i;
+  char ATaste=' ';
+	
+  gl_printf(-1,-1,"\nKill all droids on ship (y/n) ?");
+  while ( (ATaste!='y') && (ATaste!='n') ) ATaste=getchar();
+  if (ATaste == 'n') return;
+  else
+    for (i=0;i<MAX_ENEMYS_ON_SHIP;i++){
+      Feindesliste[i].energy=0;
+    }
 }
 
 /* **********************************************************************
@@ -151,101 +136,146 @@ int curLevel=LNum;
 		* Ausgabe einer Gesamtrobotliste
 	**********************************************************************/
 void Cheatmenu(void){
-	char CTaste=' ';
-	int Weiter=0;
-	int LNum,X,Y,i,RN,dummy;
+  char CTaste=' ';
+  char *userInput;
+  int vgamode;
+  char NewRoboType[80]; // name of new influencer robot-type, i.e. "123"
+  int Weiter=0;
+  int LNum,X,Y,i,RN,dummy;
+  int X0=20, Y0=5;   // startpos for gl_- text writing
+  keyboard_close();  // return to normal keyboard operation
 
-	gotoxy(1,1);
-	printf("*******************************\n");
-	printf(" ----  C H E A T M E N U  ----\n");
-	printf("-------------------------------\n\n");
-	printf(" a. Armageddon (alle Robots sprengen)\n");
-	printf(" l. Robotliste von einem Deck\n");
-	printf(" g. Gesamtrobotliste\n");
-	printf(" r. Robotvernichtung dieses Deck\n");
-	printf(" t. Teleportation\n");
-	printf(" w. Neuer Wirt\n\n");
-	printf(" i. Invinciblemode ");
- 	if (InvincibleMode) printf("aus\n"); else printf("ein\n");
-	printf(" v. Volle Energie\n");
-	printf(" b. Blinkenergie\n");
-	printf(" c. Conceptview auf %d\n",!Conceptview);
-	printf(" m. Map von Deck xy\n");
-	
-	printf("\n <SPACE> RESUME game\n");
+  //  gotoxy(1,1);
+  //  vgamode = vga_getcurrentmode();
+  //  vga_setmode(TEXT);
 
-	while (!Weiter) {
-		CTaste=getchar();
-		switch (CTaste) {
-			case 'a': Weiter=1; Armageddon(); break;
-			case 'l': {
-				gotoxy(1,1);
-				printf("NR.\tID\tX\tY\tENERGY.\n");
-				for(i=0;i<MAX_ENEMYS_ON_SHIP;i++){
-					if (Feindesliste[i].levelnum==CurLevel->levelnum)
-						printf("%d.\t%s\t%d\t%d\t%d.\n",i,
-							Druidmap[Feindesliste[i].type].druidname,
-							Feindesliste[i].pos.x,
-							Feindesliste[i].pos.y,
-							Feindesliste[i].energy);
-				}
-				while (!SpacePressed) JoystickControl();
-				Weiter=1;
-				break;
-			}
-			case '3': Weiter=1; break;
-			case 'r': {
-				Weiter=1;
-				for(i=0;i<MAX_ENEMYS_ON_SHIP;i++){
-					if (Feindesliste[i].levelnum==CurLevel->levelnum) Feindesliste[i].energy=0;
-				}
-				break;
-			}
-			case 'g': {
-				Weiter=1;
-				gotoxy(1,1);
-				printf("Nr.\tLev.\tID\tEnergy\n");
-				for(i=0;i<MAX_ENEMYS_ON_SHIP;i++){
-					printf("%d\t%d\t%s\t%d\n",i,Feindesliste[i].levelnum,Druidmap[Feindesliste[i].type].druidname,Feindesliste[i].energy);
-					if ((i%22)==0) {
-						printf(" --- MORE --- \n");
-						getchar();
-					}
-				}
-				break;
-			}
-			case 't': {
-				Weiter=1;
-				printf(" Bitte Levelnummer, Grobwert X und Grobwert Y :");
-				scanf("%d %d %d",&LNum,&X,&Y);
-				Teleport(LNum,X,Y);
-				break;
-			}
-			case 'w': {
-				Weiter=1;
-				printf(" Nummer (nicht der Name):");
-				scanf("%d",&Me.type);
-				Me.energy=Druidmap[Me.type].maxenergy;
-				Me.health= STARTENERGIE; // Druidmap[OpponentType].maxenergy;
-				RedrawInfluenceNumber();
-				break;
-			}
-			case 'i': Weiter=1; InvincibleMode = !InvincibleMode; break;
-			case 'v': Weiter=1; Me.energy=Druidmap[Me.type].maxenergy; Me.health=Me.energy; break;
-			case 'b': Weiter=1; Me.energy=1; break; 
-			case 'c': Conceptview=!Conceptview; Weiter=1; break;
-			case 'm':
-				printf("\nLevelnum:");
-				scanf("%d", &LNum);
-				ShowDeckMap(curShip.AllLevels[LNum]);
-				break;
-				
-			case ' ': Weiter=1; break;
-		}
+  // rp: try out the gl-textfunctions
+  while (!Weiter) {
+    vga_clear();
+    gl_setfont(8, 8, gl_font8x8);
+    gl_setwritemode(FONT_COMPRESSED + WRITEMODE_OVERWRITE);
+    gl_setfontcolors(0, vga_white());
+
+    gl_printf(X0,Y0, "*******************************\n");
+    gl_printf(-1,-1, " ----  C H E A T M E N U  ----\n");
+    gl_printf(-1,-1, "-------------------------------\n\n");
+    gl_printf(-1,-1, " a. Armageddon (alle Robots sprengen)\n");
+    gl_printf(-1,-1, " l. Robotliste von einem Deck\n");
+    gl_printf(-1,-1, " g. Gesamtrobotliste\n");
+    gl_printf(-1,-1, " r. Robotvernichtung dieses Deck\n");
+    gl_printf(-1,-1, " t. Teleportation\n");
+    gl_printf(-1,-1, " w. Wechsle Robo-typ\n\n");
+    gl_printf(-1,-1, " i. Invinciblemode: %s\n",InvincibleMode?"ON":"OFF");
+    gl_printf(-1,-1, " v. Volle Energie\n");
+    gl_printf(-1,-1, " b. Blinkenergie\n");
+    gl_printf(-1,-1, " c. Conceptview: %s\n",Conceptview?"ON":"OFF");
+    gl_printf(-1,-1, " m. Map von Deck xy\n");
+    gl_printf(-1,-1, "\n q. RESUME game\n");
+
+    CTaste=getchar();
+    switch (CTaste) {
+    case 'a': Weiter=1; Armageddon(); break;
+    case 'l': 
+      vga_clear();
+      gl_printf(X0,Y0,"NR.\tID\tX\tY\tENERGY.\n");
+      for(i=0;i<MAX_ENEMYS_ON_SHIP;i++){
+	if (Feindesliste[i].levelnum==CurLevel->levelnum)
+	  gl_printf(-1,-1,"%d.\t%s\t%d\t%d\t%d.\n",i,
+		    Druidmap[Feindesliste[i].type].druidname,
+		    Feindesliste[i].pos.x, Feindesliste[i].pos.y,
+		    Feindesliste[i].energy);
+      }
+      getchar();
+      break;
+    case 'r': 
+      for(i=0;i<MAX_ENEMYS_ON_SHIP;i++){
+	if (Feindesliste[i].levelnum==CurLevel->levelnum) Feindesliste[i].energy=0;
+      }
+      gl_printf(-1,-1,"All robots on this deck killed!");
+      getchar();
+      break;
+
+    case 'g': 
+      vga_clear();
+      gl_printf(X0,Y0,"Nr.\tLev.\tID\tEnergy\n");
+      for(i=0;i<MAX_ENEMYS_ON_SHIP;i++){
+	gl_printf(-1,-1,"%d\t%d\t%s\t%d\n",
+	       i,Feindesliste[i].levelnum,
+	       Druidmap[Feindesliste[i].type].druidname,
+	       Feindesliste[i].energy);
+	if ((i%22)==0) {
+	  gl_printf(-1,-1," --- MORE --- \n");
+	  getchar();
+	  vga_clear();
+	  gl_printf(X0,Y0,"Nr.\tLev.\tID\tEnergy\n");
 	}
-	ClearGraphMem(RealScreen);
-	DisplayRahmen(RealScreen);
-	InitBars=TRUE;
+      }
+      break;
+
+    case 't': 
+      gl_printf(-1,-1,"\n Enter Levelnummer, X-Pos, Y-Pos: ");
+      scanf("%d, %d, %d",&LNum,&X,&Y);
+      getchar();  // remove the cr from input
+      vga_clear();
+      Teleport(LNum,X,Y);
+      gl_printf(1,1,"This is your position on level %d.\n",LNum);
+      gl_printf(-1,-1,"Press key to continue");
+      getchar();
+      break;
+
+    case 'w': 
+      gl_printf(-1,-1,"\nTypennummer ihres neuen robos: ");
+      scanf("%s",NewRoboType);
+      getchar();  // remove cr from input
+      for(i=0; i<ALLDRUIDTYPES; i++) {
+	if( !strcmp(Druidmap[i].druidname,NewRoboType) ) break;
+      }
+      if( i == ALLDRUIDTYPES ) {
+	gl_printf(-1,-1,"\nUnrecognized robot-type: %s\n", NewRoboType);
+	getchar();
+      }  else {
+	Me.type = i;
+	Me.energy=Druidmap[Me.type].maxenergy;
+	Me.health= STARTENERGIE; // Druidmap[OpponentType].maxenergy;
+	gl_printf(-1,-1,"\nYou are now a %s. Have fun!\n", NewRoboType);
+	getchar();
+	RedrawInfluenceNumber();
+      }
+      break;
+    
+    case 'i': InvincibleMode = !InvincibleMode; break;
+    case 'v': 
+      Me.energy=Druidmap[Me.type].maxenergy; 
+      Me.health=Me.energy;
+      gl_printf(-1,-1,"\nSie sind wieder gesund!");
+      getchar();
+      break;
+    case 'b': 
+      Me.energy=1; 
+      gl_printf(-1,-1,"\nSie sind jetzt ziemlich schwach!");
+      getchar();
+      break; 
+    case 'c': Conceptview=!Conceptview; break;
+    case 'm':
+      gl_printf(-1,-1,"\nLevelnum:");
+      scanf("%d", &LNum);
+      ShowDeckMap(curShip.AllLevels[LNum]);
+      break;
+      
+    case ' ': 
+    case 'q':
+      Weiter=1; break;
+    }
+  }
+  ClearGraphMem(RealScreen);
+  DisplayRahmen(RealScreen);
+  InitBars=TRUE;
+
+  vga_clear();
+  keyboard_init();   // return to raw keyboard mode
+  //  vga_setmode(vgamode);  // return to VGA mode
+  
+  return;
 }
 
 
