@@ -1222,7 +1222,7 @@ prepare_text_window_content ( char* ItemDescText )
 	    best_banner_pos_x = translate_map_point_to_screen_pixel ( 
 		CurLevel -> ItemList [ index_of_floor_item_below_mouse_cursor ] . pos . x , 
 		CurLevel -> ItemList [ index_of_floor_item_below_mouse_cursor ] . pos . y  ,
-		TRUE ) + 30 ;
+		TRUE ) + 80 ;
 	    best_banner_pos_y = translate_map_point_to_screen_pixel ( 
 		CurLevel -> ItemList [ index_of_floor_item_below_mouse_cursor ] . pos . x , 
 		CurLevel -> ItemList [ index_of_floor_item_below_mouse_cursor ] . pos . y  ,
