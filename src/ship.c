@@ -239,11 +239,11 @@ ShowLifts (int level, int liftrow)
 
   /* First blit ship "lights off" */
   Copy_Rect (User_Rect, dst);
-  SDL_SetClipRect (ne_screen, &dst);
+  SDL_SetClipRect (Screen, &dst);
   Copy_Rect (User_Rect, dst);
   dst.x += xoffs;
   dst.y += yoffs;
-  SDL_BlitSurface (ship_off_pic, NULL, ne_screen, &dst);
+  SDL_BlitSurface (ship_off_pic, NULL, Screen, &dst);
   
   if (level >= 0)
     for (i=0; i<curShip.num_level_rects[level]; i++)
@@ -252,7 +252,7 @@ ShowLifts (int level, int liftrow)
 	Copy_Rect (src, dst);
 	dst.x += User_Rect.x + xoffs;   /* offset respective to User-Rectangle */
 	dst.y += User_Rect.y + yoffs; 
-	SDL_BlitSurface (ship_on_pic, &src, ne_screen, &dst);
+	SDL_BlitSurface (ship_on_pic, &src, Screen, &dst);
       }
 
   if (liftrow >=0)
@@ -261,10 +261,10 @@ ShowLifts (int level, int liftrow)
       Copy_Rect (src, dst);
       dst.x += User_Rect.x + xoffs;   /* offset respective to User-Rectangle */
       dst.y += User_Rect.y + yoffs; 
-      SDL_BlitSurface (ship_on_pic, &src, ne_screen, &dst);
+      SDL_BlitSurface (ship_on_pic, &src, Screen, &dst);
     }
 
-  SDL_Flip (ne_screen);
+  SDL_Flip (Screen);
 
   SDL_FreeSurface( ship_off_pic );
   SDL_FreeSurface( ship_on_pic );
@@ -310,8 +310,8 @@ EnterItemIdentificationBooth (void)
       Terminate(ERR);
     }
 
-  SDL_BlitSurface( Background , NULL , ne_screen , NULL );
-  SDL_Flip( ne_screen );
+  SDL_BlitSurface( Background , NULL , Screen , NULL );
+  SDL_Flip( Screen );
   
   SetCurrentFont( Para_BFont );
 
@@ -369,7 +369,7 @@ EnterCodepanel (void)
   if ( Codepanel_Index == MAX_CODEPANELS_PER_LEVEL )
     {
       DisplayText ( "\nLast codepanel entry used or no codepanel entry present!!" , 100 , 100 , &User_Rect );
-      SDL_Flip ( ne_screen );
+      SDL_Flip ( Screen );
       getchar_raw();
       Codepanel_Index = 0;
     }
@@ -387,8 +387,8 @@ EnterCodepanel (void)
       Terminate(ERR);
     }
 
-  SDL_BlitSurface( Background , NULL , ne_screen , NULL );
-  SDL_Flip( ne_screen );
+  SDL_BlitSurface( Background , NULL , Screen , NULL );
+  SDL_Flip( Screen );
   
   SetCurrentFont( Para_BFont );
 
@@ -473,7 +473,7 @@ EnterCodepanel (void)
 	  DisplayTextWithScrolling ( 
 				    "\nAccess granted ! ! " , 
 				    -1 , -1 , &Chat_Window , Background );
-	  SDL_Flip( ne_screen );
+	  SDL_Flip( Screen );
 	  while (!SpacePressed());
 	  while (SpacePressed());
 	  
@@ -527,7 +527,7 @@ EnterKonsole (void)
     {
 
       PaintConsoleMenu ();
-      SDL_Flip (ne_screen);
+      SDL_Flip (Screen);
 
       /* Nichts tun bis eine vern"unftige Taste gedr"uckt wurde */
       TasteOK = 0;
@@ -594,7 +594,7 @@ EnterKonsole (void)
   Me.status = MOBILE;
   ClearGraphMem ( );
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
-  SDL_Flip( ne_screen );
+  SDL_Flip( Screen );
 
   while (SpacePressed ());
 
@@ -625,7 +625,7 @@ PaintConsoleMenu (void)
 
   ClearGraphMem ();
 
-  SDL_SetClipRect ( ne_screen , NULL );
+  SDL_SetClipRect ( Screen , NULL );
   DisplayImage ( find_file( NE_CONSOLE_BG_PIC1_FILE , GRAPHICS_DIR, FALSE) );
 
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
@@ -656,7 +656,7 @@ PaintConsoleMenu (void)
   SourceRectangle.h=USERFENSTERHOEHE;
   TargetRectangle.x=MENUITEMPOSX;
   TargetRectangle.y=MENUITEMPOSY;
-  SDL_BlitSurface( ne_console_surface , &SourceRectangle , ne_screen , &TargetRectangle );
+  SDL_BlitSurface( ne_console_surface , &SourceRectangle , Screen , &TargetRectangle );
 
   return;
 }	// PaintConsoleMenu ()
@@ -691,7 +691,7 @@ GreatDruidShow (void)
       while ( !LeaveThisInformationPart )
 	{
 
-	  SDL_SetClipRect ( ne_screen , NULL );
+	  SDL_SetClipRect ( Screen , NULL );
 	  DisplayImage ( find_file( NE_CONSOLE_BG_PIC2_FILE , GRAPHICS_DIR, FALSE) );
 	  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
 
@@ -714,7 +714,7 @@ GreatDruidShow (void)
 		       &Menu_Rect);
 
 
-	  SDL_Flip (ne_screen);
+	  SDL_Flip (Screen);
 
 	  PassOn = 0;
 	  while (!PassOn)
@@ -773,7 +773,7 @@ GreatDruidShow (void)
       while ( !LeaveThisInformationPart )
 	{
 	  ClearUserFenster( );
-	  SDL_SetClipRect ( ne_screen , NULL );
+	  SDL_SetClipRect ( Screen , NULL );
 	  DisplayImage ( find_file( NE_CONSOLE_BG_PIC2_FILE , GRAPHICS_DIR, FALSE) );
 	  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
 	  
@@ -796,7 +796,7 @@ GreatDruidShow (void)
 	  DisplayText (InfoText, MENUTEXT_X, USERFENSTERPOSY + FontHeight (Menu_BFont),
 		       &Menu_Rect);
 	  
-	  SDL_Flip (ne_screen);
+	  SDL_Flip (Screen);
 	  
 	  PassOn = 0;
 	  while (!PassOn)
@@ -853,7 +853,7 @@ GreatDruidShow (void)
       LeaveThisInformationPart = FALSE;
       while ( !LeaveThisInformationPart )
 	{
-	  SDL_SetClipRect ( ne_screen , NULL );
+	  SDL_SetClipRect ( Screen , NULL );
 	  DisplayImage ( find_file( NE_CONSOLE_BG_PIC2_FILE , GRAPHICS_DIR, FALSE) );
 	  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
 	  
@@ -870,7 +870,7 @@ GreatDruidShow (void)
 	  DisplayText (InfoText, MENUTEXT_X, USERFENSTERPOSY + FontHeight (Menu_BFont),
 		       &Menu_Rect);
 	  
-	  SDL_Flip (ne_screen);
+	  SDL_Flip (Screen);
       
 	  PassOn = 0;
 	  while (!PassOn)
@@ -944,7 +944,7 @@ ShowDeckMap (Level deck)
 
   Assemble_Combat_Picture( ONLY_SHOW_MAP );
 
-  SDL_Flip (ne_screen);
+  SDL_Flip (Screen);
 
   Me.pos.x=tmp.x;
   Me.pos.y=tmp.y;
@@ -1044,7 +1044,7 @@ ClearUserFenster (void)
   
   Copy_Rect (User_Rect, tmp)
 
-  SDL_FillRect( ne_screen , &tmp, 0 );
+  SDL_FillRect( Screen , &tmp, 0 );
   return;
 
 } // void ClearUserFenster(void)

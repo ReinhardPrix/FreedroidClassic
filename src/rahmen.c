@@ -197,8 +197,8 @@ DisplayBanner (const char* left, const char* right,  int flags )
        (strcmp( right_box , previous_right_box )) )
     {
       // Redraw the whole background of the top status bar
-      SDL_SetClipRect( ne_screen , NULL );  // this unsets the clipping rectangle
-      SDL_BlitSurface( banner_pic, NULL, ne_screen , NULL);
+      SDL_SetClipRect( Screen , NULL );  // this unsets the clipping rectangle
+      SDL_BlitSurface( banner_pic, NULL, Screen , NULL);
 
       // Now the text should be ready and its
       // time to display it...
@@ -206,17 +206,17 @@ DisplayBanner (const char* left, const char* right,  int flags )
 	   (strcmp( right_box , previous_right_box )) ||
 	   ( flags & BANNER_FORCE_UPDATE ) )
 	{
-	  PrintStringFont ( ne_screen, Para_BFont,
+	  PrintStringFont ( Screen, Para_BFont,
 			    LEFT_INFO_X , LEFT_INFO_Y , left_box );
 	  strcpy( previous_left_box , left_box );
-	  PrintStringFont ( ne_screen, Para_BFont,
+	  PrintStringFont ( Screen, Para_BFont,
 			    RIGHT_INFO_X , RIGHT_INFO_Y , right_box );
 	  strcpy( previous_right_box , right_box );
 	}
 
       // finally update the whole top status box
       if ( !(flags & BANNER_NO_SDL_UPDATE ) )
-	SDL_UpdateRect( ne_screen, 0, 0, BANNER_WIDTH , BANNER_HEIGHT );
+	SDL_UpdateRect( Screen, 0, 0, BANNER_WIDTH , BANNER_HEIGHT );
       BannerIsDestroyed=FALSE;
       return;
     } /* if */

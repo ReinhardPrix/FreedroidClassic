@@ -62,27 +62,27 @@ Highlight_Current_Block(void)
   // At first we draw all the four lines that make up the 
   // cursor in the level editor
   //
-  SDL_LockSurface( ne_screen );
+  SDL_LockSurface( Screen );
   for (i=0; i<Block_Width; i++)
     {
       // This draws a (double) line at the upper border of the current block
-      putpixel( ne_screen , i + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height , HIGHLIGHTCOLOR );
-      putpixel( ne_screen , i + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + 1, HIGHLIGHTCOLOR );
+      putpixel( Screen , i + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height , HIGHLIGHTCOLOR );
+      putpixel( Screen , i + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + 1, HIGHLIGHTCOLOR );
 
       // This draws a line at the lower border of the current block
-      putpixel( ne_screen , i + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y + 0.5 ) * Block_Height -1, HIGHLIGHTCOLOR );
-      putpixel( ne_screen , i + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y + 0.5 ) * Block_Height -2, HIGHLIGHTCOLOR );
+      putpixel( Screen , i + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y + 0.5 ) * Block_Height -1, HIGHLIGHTCOLOR );
+      putpixel( Screen , i + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y + 0.5 ) * Block_Height -2, HIGHLIGHTCOLOR );
 
       // This draws a line at the left border of the current block
-      putpixel( ne_screen , 0 + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , HIGHLIGHTCOLOR );
-      putpixel( ne_screen , 1 + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , HIGHLIGHTCOLOR );
+      putpixel( Screen , 0 + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , HIGHLIGHTCOLOR );
+      putpixel( Screen , 1 + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x - 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , HIGHLIGHTCOLOR );
 
       // This draws a line at the right border of the current block
-      putpixel( ne_screen , -1 + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x + 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , HIGHLIGHTCOLOR );
-      putpixel( ne_screen , -2 + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x + 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , HIGHLIGHTCOLOR );
+      putpixel( Screen , -1 + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x + 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , HIGHLIGHTCOLOR );
+      putpixel( Screen , -2 + User_Rect.x + (User_Rect.w/2) + (rintf(Me.pos.x)-Me.pos.x + 0.5) * Block_Width , User_Rect.y + User_Rect.h/2 + (rintf(Me.pos.y)-Me.pos.y - 0.5 ) * Block_Height + i , HIGHLIGHTCOLOR );
 
     }
-  SDL_UnlockSurface( ne_screen );
+  SDL_UnlockSurface( Screen );
 
   //--------------------
   // Now we print out the codepanel information about this tile
@@ -142,7 +142,7 @@ Show_Waypoints(void)
   BlockX=rintf(Me.pos.x);
   BlockY=rintf(Me.pos.y);
 	  
-  SDL_LockSurface( ne_screen );
+  SDL_LockSurface( Screen );
 
   for (wp=0; wp<MAXWAYPOINTS; wp++)
     {
@@ -158,24 +158,24 @@ Show_Waypoints(void)
 	  x = i + User_Rect.x+(User_Rect.w/2)- (( Me.pos.x)-CurLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
 	  y = i + User_Rect.y+User_Rect.h/2 - (( Me.pos.y)-CurLevel->AllWaypoints[wp].y + 0.5) * Block_Height;
 	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
-	  putpixel( ne_screen , x , y , HIGHLIGHTCOLOR );
+	  putpixel( Screen , x , y , HIGHLIGHTCOLOR );
 
 		    
 	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me.pos.x )-CurLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
 	  y = i + User_Rect.y+User_Rect.h/2- (( Me.pos.y)-CurLevel->AllWaypoints[wp].y + 0.5) * Block_Height + 1;
 	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
-	  putpixel( ne_screen , x , y , HIGHLIGHTCOLOR );
+	  putpixel( Screen , x , y , HIGHLIGHTCOLOR );
 	  
 	  // This draws a line at the lower border of the current block
 	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me.pos.x)-CurLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
 	  y = -i + User_Rect.y + User_Rect.h/2 - (( Me.pos.y )-CurLevel->AllWaypoints[wp].y - 0.5 ) * Block_Height -1;
 	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
-	  putpixel( ne_screen , x , y , HIGHLIGHTCOLOR );
+	  putpixel( Screen , x , y , HIGHLIGHTCOLOR );
 
 	  x = i + User_Rect.x + (User_Rect.w/2) - (( Me.pos.x)-CurLevel->AllWaypoints[wp].x + 0.5) * Block_Width;
 	  y = -i + User_Rect.y + User_Rect.h/2 - ((Me.pos.y)-CurLevel->AllWaypoints[wp].y - 0.5 ) * Block_Height -2;
 	  if ( ( x < User_Rect.x ) || ( x > User_Rect.x + User_Rect.w ) || ( y < User_Rect. y) || ( y > User_Rect.y + User_Rect.h ) ) continue;
-	  putpixel( ne_screen , x , y , HIGHLIGHTCOLOR );
+	  putpixel( Screen , x , y , HIGHLIGHTCOLOR );
 	  
 	}
 
@@ -192,9 +192,9 @@ Show_Waypoints(void)
 		  // color = ACTIVE_WP_COLOR ;
 		  // else color = HIGHLIGHTCOLOR ; 
 		  // printf(" Found a connection!! ");
-		  // printf_SDL ( ne_screen  , 100 , 100 , "Waypoint connection to: " );
+		  // printf_SDL ( Screen  , 100 , 100 , "Waypoint connection to: " );
 		  
-		  SDL_UnlockSurface( ne_screen );
+		  SDL_UnlockSurface( Screen );
 
 		  sprintf ( TextAddition , "To: X=%d Y=%d    " , 
 			    CurLevel->AllWaypoints[CurLevel->AllWaypoints[wp].connections[i]].x , 
@@ -204,7 +204,7 @@ Show_Waypoints(void)
 
 		  DisplayText ( ConnectionText , User_Rect.x , User_Rect.y , &User_Rect );
 
-		  SDL_LockSurface( ne_screen );
+		  SDL_LockSurface( Screen );
 
 		  DrawLineBetweenTiles( CurLevel->AllWaypoints[wp].x , CurLevel->AllWaypoints[wp].y , 
 					CurLevel->AllWaypoints[CurLevel->AllWaypoints[wp].connections[i]].x , 
@@ -214,7 +214,7 @@ Show_Waypoints(void)
 	    }
 	}
     }
-  SDL_UnlockSurface( ne_screen );
+  SDL_UnlockSurface( Screen );
 
 } // void Show_Waypoints(void);
 
@@ -269,8 +269,8 @@ Level_Editor(void)
 	  Highlight_Current_Block();
 	  Show_Waypoints();
 
-	  CenteredPutString ( ne_screen ,  1*FontHeight(Menu_BFont),    "LEVEL EDITOR");
-	  SDL_Flip( ne_screen );
+	  CenteredPutString ( Screen ,  1*FontHeight(Menu_BFont),    "LEVEL EDITOR");
+	  SDL_Flip( Screen );
 
 	  //--------------------
 	  // If the user of the Level editor pressed some cursor keys, move the
@@ -305,9 +305,9 @@ Level_Editor(void)
 	    {
 	      while (SPressed());
 	      SetCurrentFont( FPS_Display_BFont );
-	      // CenteredPutString   ( ne_screen ,  6*FontHeight(Menu_BFont), "Please enter new value (blindly):");
+	      // CenteredPutString   ( Screen ,  6*FontHeight(Menu_BFont), "Please enter new value (blindly):");
 	      DisplayText ( "\n Please enter comment below: \n" , -1 , -1 , &User_Rect );
-	      SDL_Flip( ne_screen );
+	      SDL_Flip( Screen );
 	      NewCommentOnThisSquare = GetString( 1000, FALSE );  // TRUE currently not implemented
 	      for ( i = 0 ; i < MAX_STATEMENTS_PER_LEVEL ; i ++ )
 		{
@@ -317,7 +317,7 @@ Level_Editor(void)
 		{
 		  DisplayText ( "\nNo more free comment position.  Using first. " , -1 , -1 , &User_Rect );
 		  i=0;
-		  SDL_Flip ( ne_screen );
+		  SDL_Flip ( Screen );
 		  getchar_raw();
 		  // Terminate( ERR );
 		}
@@ -347,7 +347,7 @@ Level_Editor(void)
 
 		  // If yes, we ask for the new codepanel keyword
 		  DisplayText ( "\n Please enter new codepanel codeword: \n" , -1 , -1 , &User_Rect );
-		  SDL_Flip( ne_screen );
+		  SDL_Flip( Screen );
 		  NewCommentOnThisSquare = GetString( 1000, FALSE );  // TRUE currently not implemented
 
 		  // Now we see if a codepanel entry is existing already for this square
@@ -386,13 +386,13 @@ Level_Editor(void)
 		  CurLevel->CodepanelList[ i ].y = rintf( Me.pos.y );
 
 
-		  SDL_Flip ( ne_screen );
+		  SDL_Flip ( Screen );
 		  getchar_raw();
 		  
 		  break;
 		default:
 		  DisplayText ( "\nBut you are not on a codepanel!!\n" , -1 , -1 , &User_Rect );
-		  SDL_Flip( ne_screen );
+		  SDL_Flip( Screen );
 		  getchar_raw();
 		  break;
 		}
@@ -409,8 +409,8 @@ Level_Editor(void)
 	  if ( EPressed () )
 	    {
 	      while (EPressed());
-	      CenteredPutString   ( ne_screen ,  6*FontHeight(Menu_BFont), "Please enter new value (blindly):");
-	      SDL_Flip( ne_screen );
+	      CenteredPutString   ( Screen ,  6*FontHeight(Menu_BFont), "Please enter new value (blindly):");
+	      SDL_Flip( Screen );
 	      NumericInputString=GetString( 10, FALSE );  // TRUE currently not implemented
 	      sscanf( NumericInputString , "%d" , &SpecialMapValue );
 	      if ( SpecialMapValue >= NUM_MAP_BLOCKS ) SpecialMapValue=0;
@@ -424,8 +424,8 @@ Level_Editor(void)
 	  if ( GPressed () )
 	    {
 	      while ( GPressed() );
-	      CenteredPutString   ( ne_screen ,  6*FontHeight(Menu_BFont), "Please enter code of new item:");
-	      SDL_Flip( ne_screen );
+	      CenteredPutString   ( Screen ,  6*FontHeight(Menu_BFont), "Please enter code of new item:");
+	      SDL_Flip( Screen );
 	      NumericInputString=GetString( 10, FALSE );  // TRUE currently not implemented
 	      sscanf( NumericInputString , "%d" , &NewItemCode );
 	      if ( SpecialMapValue >= Number_Of_Item_Types ) NewItemCode=0;
@@ -436,8 +436,8 @@ Level_Editor(void)
 		}
 	      if ( ItemIndex >= MAX_ITEMS_PER_LEVEL )
 		{
-		  CenteredPutString   ( ne_screen ,  8*FontHeight(Menu_BFont), "Item maximum for level reached.");
-		  CenteredPutString   ( ne_screen ,  9*FontHeight(Menu_BFont), "--> Overwriting first item.");
+		  CenteredPutString   ( Screen ,  8*FontHeight(Menu_BFont), "Item maximum for level reached.");
+		  CenteredPutString   ( Screen ,  9*FontHeight(Menu_BFont), "--> Overwriting first item.");
 		  ItemIndex = 0;
 		}
 	      CurLevel->ItemList[ ItemIndex ].pos.x = rintf( Me.pos.x );
@@ -755,7 +755,7 @@ Level_Editor(void)
 	  sprintf( linebuf, "Quit Level Editor" );
 	  DisplayText ( linebuf , User_Rect.x , 12*FontHeight(Menu_BFont), &Editor_Window );
 
-	  SDL_Flip ( ne_screen );
+	  SDL_Flip ( Screen );
 	  
 	  // Wait until the user does SOMETHING
 	  
@@ -778,8 +778,8 @@ Level_Editor(void)
 		case SAVE_LEVEL_POSITION:
 		  while (EnterPressed() || SpacePressed() ) ;
 		  SaveShip("Testship");
-		  CenteredPutString ( ne_screen ,  11*FontHeight(Menu_BFont),    "Your ship was saved...");
-		  SDL_Flip ( ne_screen );
+		  CenteredPutString ( Screen ,  11*FontHeight(Menu_BFont),    "Your ship was saved...");
+		  SDL_Flip ( Screen );
 		  while (!EnterPressed() && !SpacePressed() ) ;
 		  while (EnterPressed() || SpacePressed() ) ;
 		  // Weiter=!Weiter;
@@ -793,22 +793,22 @@ Level_Editor(void)
 		  break;
 		case SET_LEVEL_NAME:
 		  while (EnterPressed() || SpacePressed() ) ;
-		  CenteredPutString ( ne_screen ,  12*FontHeight(Menu_BFont), "Please enter new level name:");
-		  SDL_Flip( ne_screen );
+		  CenteredPutString ( Screen ,  12*FontHeight(Menu_BFont), "Please enter new level name:");
+		  SDL_Flip( Screen );
 		  CurLevel->Levelname=GetString( 100 , FALSE );
 		  Weiter=!Weiter;
 		  break;
 		case SET_BACKGROUND_SONG_NAME:
 		  while (EnterPressed() || SpacePressed() ) ;
-		  CenteredPutString ( ne_screen ,  12*FontHeight(Menu_BFont), "Please enter new music file name:");
-		  SDL_Flip( ne_screen );
+		  CenteredPutString ( Screen ,  12*FontHeight(Menu_BFont), "Please enter new music file name:");
+		  SDL_Flip( Screen );
 		  CurLevel->Background_Song_Name=GetString( 100 , FALSE );
 		  Weiter=!Weiter;
 		  break;
 		case SET_LEVEL_COMMENT:
 		  while (EnterPressed() || SpacePressed() ) ;
-		  CenteredPutString ( ne_screen ,  12*FontHeight(Menu_BFont), "Please enter new level comment:\n");
-		  SDL_Flip( ne_screen );
+		  CenteredPutString ( Screen ,  12*FontHeight(Menu_BFont), "Please enter new level comment:\n");
+		  SDL_Flip( Screen );
 		  SetTextCursor( 15 , 440 );
 		  CurLevel->Level_Enter_Comment=GetString( 100 , FALSE );
 		  Weiter=!Weiter;

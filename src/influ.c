@@ -1080,7 +1080,7 @@ FireBullet (void)
   DebugPrintf( 1 , "\nFireBullet(...) : Phase of bullet=%d." , CurBullet->phase );
   DebugPrintf( 1 , "\nFireBullet(...) : angle of bullet=%f." , CurBullet->angle );
   
-  //  printf_SDL(ne_screen, User_Rect.x, User_Rect.y, "Bullet speed: %g %g ",
+  //  printf_SDL(Screen, User_Rect.x, User_Rect.y, "Bullet speed: %g %g ",
   //	     CurBullet->speed.x, CurBullet->speed.y);
   //  getchar_raw();
 

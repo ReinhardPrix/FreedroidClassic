@@ -86,12 +86,12 @@ GetChatWindowInput( SDL_Surface* Background , SDL_Rect* Chat_Window_Pointer )
   OldTextCursorY=MyCursorY;
   
   // Now we clear the text window, since the old text is still there
-  SDL_BlitSurface( Background, &Input_Window , ne_screen , &Input_Window );
+  SDL_BlitSurface( Background, &Input_Window , Screen , &Input_Window );
   DisplayText ( "What do you say? >" ,
 		Input_Window.x , Input_Window.y + (Input_Window.h - FontHeight (GetCurrentFont() ) ) / 2 , 
 		&Input_Window ); // , Background );
   // DisplayTextWithScrolling ( ">" , -1 , -1 , &Input_Window , Background );
-  SDL_Flip ( ne_screen );
+  SDL_Flip ( Screen );
   RequestString = GetString( 20 , FALSE );
   MyCursorX=OldTextCursorX;
   MyCursorY=OldTextCursorY;
@@ -171,8 +171,8 @@ ChatWithFriendlyDroid( int Enum )
   Small_Droid = IMG_Load (fpath) ;
   Large_Droid = zoomSurface( Small_Droid , 1.8 , 1.8 , 0 );
   SDL_BlitSurface( Large_Droid , NULL , Background , &Droid_Image_Window );
-  SDL_BlitSurface( Background , NULL , ne_screen , NULL );
-  SDL_Flip( ne_screen );
+  SDL_BlitSurface( Background , NULL , Screen , NULL );
+  SDL_Flip( Screen );
 
   // All droid chat should be done in the paradroid font I would say...
   SetCurrentFont( Para_BFont );
@@ -643,7 +643,7 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
   DisplayImage ( find_file(TitlePictureName,GRAPHICS_DIR, FALSE) );
   MakeGridOnScreen( (SDL_Rect*) &Full_Screen_Rect );
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE ); 
-  Background = SDL_DisplayFormat( ne_screen );
+  Background = SDL_DisplayFormat( Screen );
 
 
   // printf("\nScrollTest should be starting to scroll now...");
@@ -678,7 +678,7 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
       // DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE ); 
       // ClearUserFenster(); 
 
-      SDL_BlitSurface ( Background , NULL , ne_screen , NULL );
+      SDL_BlitSurface ( Background , NULL , Screen , NULL );
 
       if (!DisplayText (Text, startx, InsertLine, &User_Rect))
 	{
@@ -694,7 +694,7 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
 
       InsertLine -= speed;
 
-      SDL_Flip (ne_screen);
+      SDL_Flip (Screen);
 
       /* Nicht bel. nach unten wegscrollen */
       if (InsertLine > SCREENHEIGHT - 10 && (speed < 0))
@@ -744,9 +744,9 @@ DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *cl
   if ( startx != -1 ) MyCursorX = startx;		
   if ( starty != -1 ) MyCursorY = starty;
 
-  SDL_GetClipRect (ne_screen, &store_clip);  /* store previous clip-rect */
+  SDL_GetClipRect (Screen, &store_clip);  /* store previous clip-rect */
   if (clip)
-    SDL_SetClipRect (ne_screen, clip);
+    SDL_SetClipRect (Screen, clip);
   else
     {
       clip = & User_Rect;
@@ -776,12 +776,12 @@ DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *cl
       if ( ( clip->h + clip->y - MyCursorY ) <= 1 * FontHeight ( GetCurrentFont() ) * TEXT_STRETCH )
 	{
 	  DisplayText( "--- more --- more --- \n" , MyCursorX , MyCursorY , clip );
-	  SDL_Flip( ne_screen );
+	  SDL_Flip( Screen );
 	  while ( !SpacePressed() );
 	  while (  SpacePressed() );
-	  SDL_BlitSurface( Background , NULL , ne_screen , NULL );
+	  SDL_BlitSurface( Background , NULL , Screen , NULL );
 	  MyCursorY = clip->y;
-	  SDL_Flip( ne_screen );
+	  SDL_Flip( Screen );
 	};
       
       if (clip)
@@ -789,7 +789,7 @@ DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *cl
 
     } // while !FensterVoll()
 
-   SDL_SetClipRect (ne_screen, &store_clip); /* restore previous clip-rect */
+   SDL_SetClipRect (Screen, &store_clip); /* restore previous clip-rect */
 
   /*
    * ScrollText() wants to know if we still wrote something inside the
@@ -832,9 +832,9 @@ DisplayText (char *Text, int startx, int starty, const SDL_Rect *clip)
   if ( starty != -1 ) MyCursorY = starty;
 
 
-  SDL_GetClipRect (ne_screen, &store_clip);  /* store previous clip-rect */
+  SDL_GetClipRect (Screen, &store_clip);  /* store previous clip-rect */
   if ( clip != NULL )
-    SDL_SetClipRect ( ne_screen , clip );
+    SDL_SetClipRect ( Screen , clip );
   else
     {
       clip = & Temp_Clipping_Rect;
@@ -864,7 +864,7 @@ DisplayText (char *Text, int startx, int starty, const SDL_Rect *clip)
 
     } // while !FensterVoll()
 
-   SDL_SetClipRect (ne_screen, &store_clip); /* restore previous clip-rect */
+   SDL_SetClipRect (Screen, &store_clip); /* restore previous clip-rect */
 
 
 
@@ -893,7 +893,7 @@ DisplayChar (unsigned char c)
       Terminate(ERR);
     }
 
-  PutChar (ne_screen, MyCursorX, MyCursorY, c);
+  PutChar (Screen, MyCursorX, MyCursorY, c);
 
   // After the char has been displayed, we must move the cursor to its
   // new position.  That depends of course on the char displayed.
@@ -984,7 +984,7 @@ GetString (int MaxLen, int echo)
   
   store = SDL_CreateRGBSurface(0, SCREENLEN, height, ne_bpp, 0, 0, 0, 0);
   Set_Rect (store_rect, x0, y0, SCREENLEN, height);
-  SDL_BlitSurface (ne_screen, &store_rect, store, NULL);
+  SDL_BlitSurface (Screen, &store_rect, store, NULL);
 
   // allocate memory for the users input
   input     = MyMalloc (MaxLen + 5);
@@ -998,9 +998,9 @@ GetString (int MaxLen, int echo)
   while ( !finished  )
     {
       Copy_Rect( store_rect, tmp_rect);
-      SDL_BlitSurface (store, NULL, ne_screen, &tmp_rect);
-      PutString (ne_screen, x0, y0, input);
-      SDL_Flip (ne_screen);
+      SDL_BlitSurface (store, NULL, Screen, &tmp_rect);
+      PutString (Screen, x0, y0, input);
+      SDL_Flip (Screen);
       
       key = getchar_raw ();  
       

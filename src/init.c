@@ -1738,9 +1738,9 @@ Title ( char *MissionBriefingPointer )
 
   TitlePictureName = ReadAndMallocStringFromData ( MissionBriefingPointer, BRIEFING_TITLE_PICTURE_STRING , "\n" ) ;
 
-  SDL_SetClipRect ( ne_screen, NULL );
+  SDL_SetClipRect ( Screen, NULL );
   // DisplayImage ( find_file(TitlePictureName, GRAPHICS_DIR, FALSE) );
-  // SDL_Flip (ne_screen);
+  // SDL_Flip (Screen);
 
   Me.status=BRIEFING;
 
@@ -1776,7 +1776,7 @@ Title ( char *MissionBriefingPointer )
 
   ClearGraphMem ();
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE ); 
-  SDL_Flip( ne_screen );
+  SDL_Flip( Screen );
 
   return;
 
