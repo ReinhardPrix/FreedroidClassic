@@ -80,8 +80,9 @@ EXTERN void RefreshInfluencer (void);
 EXTERN void ExplodeInfluencer (void);
 EXTERN int translate_map_point_to_screen_pixel ( float x_map_pos , float y_map_pos , int give_x );
 EXTERN int translate_map_point_to_zoomed_screen_pixel ( float x_map_pos , float y_map_pos , int give_x );
-EXTERN void blit_zoomed_iso_image_to_map_position ( iso_image* our_iso_image , float pos_x , float pos_y );
 EXTERN float translate_pixel_to_map_location ( int PlayerNum , float axis_x , float axis_y , int give_x ) ;
+EXTERN float translate_pixel_to_zoomed_map_location ( int PlayerNum , float axis_x , float axis_y , int give_x );
+EXTERN void blit_zoomed_iso_image_to_map_position ( iso_image* our_iso_image , float pos_x , float pos_y );
 
 // bullet.c 
 #undef EXTERN
@@ -514,7 +515,7 @@ void PaintConsoleMenu (int menu_pos);
 #else
 #define EXTERN extern
 #endif
-EXTERN void show_backgrounded_label_at_map_position ( char* LabelText , float fill_status , float pos_x , float pos_y );
+EXTERN void show_backgrounded_label_at_map_position ( char* LabelText , float fill_status , float pos_x , float pos_y , int zoom_is_on );
 EXTERN char * GetEditableStringInPopupWindow ( int MaxLen , char* PopupWindowTitle , char* DefaultString );
 EXTERN void GiveMouseAlertWindow ( char* WindowText ) ;
 EXTERN void CutDownStringToMaximalSize ( char* StringToCut , int LengthInPixels );

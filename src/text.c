@@ -93,12 +93,20 @@ show_backgrounded_label_at_pixel_position ( char* LabelText , float fill_status 
  *
  * ---------------------------------------------------------------------- */
 void
-show_backgrounded_label_at_map_position ( char* LabelText , float fill_status , float pos_x , float pos_y )
+show_backgrounded_label_at_map_position ( char* LabelText , float fill_status , float pos_x , float pos_y , int zoom_is_on )
 {
   int pixel_x, pixel_y;
   
-  pixel_x = translate_map_point_to_screen_pixel ( pos_x , pos_y , TRUE );
-  pixel_y = translate_map_point_to_screen_pixel ( pos_x , pos_y , FALSE );
+  if ( zoom_is_on )
+    {
+      pixel_x = translate_map_point_to_zoomed_screen_pixel ( pos_x , pos_y , TRUE );
+      pixel_y = translate_map_point_to_zoomed_screen_pixel ( pos_x , pos_y , FALSE );
+    }
+  else
+    {
+      pixel_x = translate_map_point_to_screen_pixel ( pos_x , pos_y , TRUE );
+      pixel_y = translate_map_point_to_screen_pixel ( pos_x , pos_y , FALSE );
+    }
   show_backgrounded_label_at_pixel_position ( LabelText , fill_status , pixel_x , pixel_y );
 
 }; // void show_backgrounded_label_at_map_position ( char* LabelText , float fill_status , float pos_x , float pos_y )

@@ -3461,7 +3461,7 @@ LevelEditor(void)
 		GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_OBSTACLES ;
 	      else if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_OBSTACLES )
 		GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_FLOOR ;
-	      while ( OPressed() );
+	      while ( FPressed() );
 	      Highlight = 0 ;
 	    }
 
@@ -3565,11 +3565,21 @@ LevelEditor(void)
 	  // First we find out which map square the player MIGHT wish us to operate on
 	  // via a POTENTIAL mouse click
 	  //
-	  TargetSquare . x = translate_pixel_to_map_location ( 0 , (float) GetMousePos_x ( ) + 16.0 - ( SCREEN_WIDTH / 2 ) , 
-							       (float) GetMousePos_y ( ) + 16.0 - ( SCREEN_HEIGHT / 2 ), TRUE );
-	  TargetSquare . y = translate_pixel_to_map_location ( 0 , (float) GetMousePos_x ( ) + 16.0 - ( SCREEN_WIDTH / 2 ), 
-							       (float) GetMousePos_y ( ) + 16.0 - ( SCREEN_HEIGHT / 2 ), FALSE );
-		  
+	  if ( GameConfig . zoom_is_on )
+	    {
+	      TargetSquare . x = translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x ( ) + 16.0 - ( SCREEN_WIDTH / 2 ) , 
+								   (float) GetMousePos_y ( ) + 16.0 - ( SCREEN_HEIGHT / 2 ), TRUE );
+	      TargetSquare . y = translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x ( ) + 16.0 - ( SCREEN_WIDTH / 2 ), 
+								   (float) GetMousePos_y ( ) + 16.0 - ( SCREEN_HEIGHT / 2 ), FALSE );
+	    }
+	  else
+	    {
+	      TargetSquare . x = translate_pixel_to_map_location ( 0 , (float) GetMousePos_x ( ) + 16.0 - ( SCREEN_WIDTH / 2 ) , 
+								   (float) GetMousePos_y ( ) + 16.0 - ( SCREEN_HEIGHT / 2 ), TRUE );
+	      TargetSquare . y = translate_pixel_to_map_location ( 0 , (float) GetMousePos_x ( ) + 16.0 - ( SCREEN_WIDTH / 2 ), 
+								   (float) GetMousePos_y ( ) + 16.0 - ( SCREEN_HEIGHT / 2 ), FALSE );
+	    }
+
 	  if ( axis_is_active && !LeftMousePressedPreviousFrame )
 	    {
 	      if ( ClickWasInEditorBannerRect() )

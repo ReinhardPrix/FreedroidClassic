@@ -1625,6 +1625,26 @@ translate_pixel_to_map_location ( int PlayerNum , float axis_x , float axis_y , 
 
 /* ----------------------------------------------------------------------
  *
+ *
+ * ---------------------------------------------------------------------- */
+float
+translate_pixel_to_zoomed_map_location ( int PlayerNum , float axis_x , float axis_y , int give_x ) 
+{
+  if ( give_x )
+    {
+      return ( Me [ PlayerNum ] . pos . x + ( FIXED_ZOOM_OUT_FACT * axis_x / ((float)iso_floor_tile_width) ) + ( FIXED_ZOOM_OUT_FACT * axis_y / ((float)iso_floor_tile_height) ) ) ;
+      // return ( ( axis_x / ISO_WIDTH ) + ( axis_y / ISO_HEIGHT ) ) ;
+    }
+  else
+    {
+      return ( Me [ PlayerNum ] . pos . y - ( FIXED_ZOOM_OUT_FACT * axis_x / ((float)iso_floor_tile_width) ) + ( FIXED_ZOOM_OUT_FACT * axis_y / ((float)iso_floor_tile_height) ) ) ;
+      // return ( - ( axis_x / ISO_WIDTH ) + ( axis_y / ISO_HEIGHT ) ) ;
+    }
+	      
+}; // int translate_pixel_to_zoomed_map_location ( int PlayerNum , int axis_x , int axis_y , int give_x ) 
+
+/* ----------------------------------------------------------------------
+ *
  * 
  * ---------------------------------------------------------------------- */
 int

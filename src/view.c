@@ -1116,11 +1116,12 @@ show_obstacle_labels ( int mask )
 	{
 	  show_backgrounded_label_at_map_position ( EditLevel -> obstacle_name_list [ EditLevel -> obstacle_list [ i ] . name_index ]  ,
 						    0 , EditLevel -> obstacle_list [ i ] . pos . x , 
-						    EditLevel -> obstacle_list [ i ] . pos . y );
+						    EditLevel -> obstacle_list [ i ] . pos . y ,
+						    mask & ZOOM_OUT );
 	}
     }
 
-  show_backgrounded_label_at_map_position ( "This is a test" , 0 , Me [ 0 ] . pos . x + 1 , Me [ 0 ] . pos . y + 1 );
+  show_backgrounded_label_at_map_position ( "This is a test" , 0 , Me [ 0 ] . pos . x + 1 , Me [ 0 ] . pos . y + 1 , mask & ZOOM_OUT );
 
 }; // void show_obstacle_labels ( int mask )
 
