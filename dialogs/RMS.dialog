@@ -31,16 +31,10 @@ freedroid-discussion@lists.sourceforge.net
 
 BEGIN OF AUTORS NOTES
 
+This is the 'Richard' (RMS) character.  Currently he's positioned right inside the guardhouse.  
 
-
-
-You can use this text field to make some notes on ANYTHING.  
-It's purely for the author's reference.  Tahisafsd asdfasdf asdfasdf.
-The game engine will ignore this entry.
-
-
-
-
+* He is sort of a chief of this liberation movement.  Alas, he doesn't have a mission to assign to the player yet, but instead he'll inform the player, that he's reached the end of the current FreedroidRPG story line.
+* He will also explain some basics about the ideas of the Free Software Movement, of course in very basic terms, since this game is also intended for people never having heard of 'Linux' or Free Software and don't know what 'Programming' is.
 
 END OF AUTORS NOTES
 
@@ -202,6 +196,10 @@ PositionX=361  PositionY=264
 Subtitle="While not as interesting as your other question, this one certainly is of even greater importance."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="But the mission I'd like to assign you now is not yet done in this version of FreedroidRPG.  But don't worry.  I think some free software developers are working on it while we speak :)"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="But you guessed it:  This is the end of the current storyline of the FreedroidRPG game.  If you would like to help expand the game some more, that's most appreciated.  Just contact the developers."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="They should be able to help you set up your systems and answer any technical questions you might have."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=12 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
