@@ -626,6 +626,7 @@ EXTERN void ExecuteActionWithLabel ( char* ActionLabel , int player_num ) ;
 EXTERN void ExecuteEvent ( int EventNumber , int player_num );
 EXTERN char *va (char *format, ...);
 EXTERN Sint16 ReadSint16 (void * memory);
+EXTERN void endian_swap(char * pdata, size_t dsize, size_t nelements);
 
 // enemy.c 
 #undef EXTERN

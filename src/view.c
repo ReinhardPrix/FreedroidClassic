@@ -2208,7 +2208,7 @@ grab_tux_images_from_archive ( int tux_part_group , int motion_class , char* par
     int rotation_index;
     int our_phase ;
     FILE *DataFile;
-    void* tmp_buff;
+    char* tmp_buff;
     char archive_type_string [ 5 ] = { 0 , 0 , 0 , 0 , 0 } ;
     char ogl_support_string [ 5 ] = { 0 , 0 , 0 , 0 , 0 } ;
     char *DataBuffer, *ptr;
@@ -2341,6 +2341,10 @@ Received some non-positive Tux surface dimensions.  That's a bug for sure!",
 		tmp_buff = MyMalloc ( tmplen ) ;
 		memcpy ( tmp_buff , ptr, tmplen );
 		ptr += tmplen;
+#               ifdef __APPLE_CC__
+		endian_swap ( tmp_buff, 4, img_xlen * img_ylen);
+#               endif
+
 		
 		if ( ptr - DataBuffer > filelen )
 		  {
@@ -2547,7 +2551,7 @@ This indicates a serious bug in this installation of Freedroid.",
     {
 	DebugPrintf( -4 , "\nenemy_model_nr=%d." , enemy_model_nr );
 	GiveStandardErrorMessage ( __FUNCTION__  , "\
-The number of images found in the image collection to bigger than currently allowed.",
+The number of images found in the image collection is bigger than currently allowed.",
 				   PLEASE_INFORM, IS_FATAL );
     }
 
@@ -2584,6 +2588,10 @@ The number of images found in the image collection to bigger than currently allo
 	    tmplen = 4 * img_xlen * img_ylen;
 	    memcpy ( dest, ptr, tmplen );
 	    ptr += tmplen;
+#           ifdef __APPLE_CC__
+	    endian_swap ( dest, 4, img_xlen * img_ylen);
+#           endif
+
 
 	    //--------------------
 	    // Depending on whether this is supposed to work with faster but less
