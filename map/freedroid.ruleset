@@ -55,7 +55,8 @@ That will not cause any problems.
 Energy-Loss-factor for Collisions of Influ with hostile robots=1.0
 
 Radius of explosions (as far as damage is concerned) in multiples of tiles=0.3
-Amount of damage done by contact to a blast per second of time=15.0
+A**mount of damage done by contact to a blast per second of time=15.0
+Amount of damage done by contact to a blast per second of time=2.0
 
 'Radius' of droids in x direction=0.3
 'Radius' of droids in y direction=0.3
@@ -764,7 +765,7 @@ Item as gun: pass through hit bodies="yes"
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=35 plus duration modifier=10
-Picture number=21
+Picture number=20
 Sound number=0 
 Base list price=350
 ** End of new item specification subsection **
@@ -929,7 +930,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=10
 Item as defensive item: ac_bonus_modifier=6
 Base item duration=30 plus duration modifier=10
-Picture number=23
+Picture number=26
 Sound number=5
 Base list price=300
 ** End of new item specification subsection **
@@ -1011,7 +1012,7 @@ Item as gun: pass through hit bodies="yes"
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
-Picture number=19
+Picture number=21
 Sound number=0 
 Base list price=120
 ** End of new item specification subsection **
@@ -1263,7 +1264,7 @@ Base list price=90
 
 // Item No. 44
 ** Start of new item specification subsection **
-Item name="Source Book"
+Item name="Source Book of the Healing spell"
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -1280,7 +1281,7 @@ Base list price=1000
 
 // Item No. 45
 ** Start of new item specification subsection **
-Item name="Modern Source Book"
+Item name="Modern Source Book of Teleport Home"
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -1297,7 +1298,24 @@ Base list price=1000
 
 // Item No. 46
 ** Start of new item specification subsection **
-Item name="Modern Source Book"
+Item name="Modern Source Book of Explosion Circle"
+Item can be applied in combat="yes"
+Item can be installed in influ="no"
+Item can be installed in slot with name="none"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=-1 plus duration modifier=0
+Picture number=33
+Sound number=5 
+Base list price=1000
+** End of new item specification subsection **
+
+// Item No. 47
+** Start of new item specification subsection **
+Item name="Modern Source Book of Explosion Ray"
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
