@@ -409,6 +409,7 @@ void PaintConsoleMenu (void);
 #define EXTERN extern
 #endif
 
+EXTERN void EnemyInfluCollisionText ( int Enum );
 EXTERN void AddInfluBurntText( void );
 EXTERN void AddStandingAndAimingText ( int Enum );
 EXTERN void SetTextColor (unsigned char bg, unsigned char fg);

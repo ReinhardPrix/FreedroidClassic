@@ -142,6 +142,7 @@ typedef struct
   float Mission_Time_Must_Have_Passed;
   float Mission_Time_Must_Not_Have_Passed;
 
+  int DeleteTriggerAfterExecution;
   // And now of course which event to trigger!!!!
   // Thats propably the most important information at all!!!
   int EventNumber;

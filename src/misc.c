@@ -808,6 +808,14 @@ ExecuteEvent ( int EventNumber )
 	}
     }
 
+  // Does the trigger make the influencer say something?
+  if ( AllTriggeredActions[ EventNumber ].InfluencerSaySomething != -1 )
+    {
+      //YES. So we need to output his sentence as usual
+      Me.TextVisibleTime=0;
+      Me.TextToBeDisplayed=AllTriggeredActions[ EventNumber ].InfluencerSayText;
+    }
+
   AllTriggeredActions[0].ChangeMapLocation.y=0;
 
 
@@ -853,8 +861,12 @@ CheckForTriggeredEvents ( void )
 	}
 
       // printf("\nWARNING!! INFLU NOW IS AT SOME TRIGGER POINT OF SOME LOCATION-TRIGGERED EVENT!!!");
-      ExecuteEvent( i );
+      ExecuteEvent( AllEventTriggers[i].EventNumber );
 
+      if ( AllEventTriggers[i].DeleteTriggerAfterExecution != (-1) )
+	{
+	  AllEventTriggers[i].EventNumber = (-1); // That should prevent the event from being executed again.
+	}
     }
 
 }; // CheckForTriggeredEvents (void )

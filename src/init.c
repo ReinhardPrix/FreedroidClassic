@@ -127,6 +127,313 @@ Get_Bullet_Data ( char* DataPointer )
 } // void Get_Bullet_Data ( char* DataPointer );
 
 
+/*
+----------------------------------------------------------------------
+
+----------------------------------------------------------------------
+*/
+
+void 
+Get_Mission_Events ( char* EventSectionPointer )
+{
+  char *SayString;
+  char *EventPointer;
+  char *ValuePointer;  // we use ValuePointer while EventPointer stays still to allow for
+                       // interchanging of the order of appearance of parameters in the game.dat file
+  int i;
+  int EventActionNumber;
+  int EventTriggerNumber;
+
+#define EVENT_TRIGGER_BEGIN_STRING "* Start of an Event Trigger Subsection *"
+#define EVENT_TRIGGER_END_STRING "* End of this Event Trigger Subsection *"
+#define EVENT_ACTION_BEGIN_STRING "* Start of an Event Action Subsection *"
+#define EVENT_ACTION_END_STRING "* End of this Event Action Subsection *"
+
+#define EVENT_ACTION_MAPCHANGE_POS_X_STRING "Action is mapchange at positionX="
+#define EVENT_ACTION_MAPCHANGE_POS_Y_STRING "Action is mapchange at positionY="
+#define EVENT_ACTION_MAPCHANGE_MAPLEVEL_STRING "Action is mapchange at maplevel="
+#define EVENT_ACTION_MAPCHANGE_TO_WHAT_STRING "Action is change map there to new value="
+#define EVENT_ACTION_INFLUENCER_SAY_SOMETHING "Action is Influencer saying something="
+#define EVENT_ACTION_INFLUENCER_SAY_TEXT "Action is Influencer saying the following text=\""
+#define EVENT_ACTION_INDEX_NUMBER_TO_USE_STRING "ACTION INDEX NUMBER TO USE="
+
+#define EVENT_TRIGGER_POS_X_STRING "Influencer must be at x-coordinate="
+#define EVENT_TRIGGER_POS_Y_STRING "Influencer must be at y-coordinate="
+#define EVENT_TRIGGER_POS_MAPLEVEL_STRING "Influencer must be at maplevel="
+#define EVENT_TRIGGER_WHICH_ACTION_STRING "Event Action to be triggered by this trigger="
+#define EVENT_TRIGGER_DELETED_AFTER_TRIGGERING "Delete the event trigger after it has been triggered="
+
+  // Delete all events and event triggers
+  for ( i = 0 ; i < MAX_EVENT_TRIGGERS ; i++ )
+    {
+      AllEventTriggers[i].Influ_Must_Be_At_Level=-1;
+      AllEventTriggers[i].Influ_Must_Be_At_Point.x=-1;
+      AllEventTriggers[i].Influ_Must_Be_At_Point.y=-1;
+      
+      // Maybe the event is triggered by time
+      AllEventTriggers[i].Mission_Time_Must_Have_Passed=-1;
+      AllEventTriggers[i].Mission_Time_Must_Not_Have_Passed=-1;
+      
+      // And now of course which event to trigger!!!!
+      // Thats propably the most important information at all!!!
+      AllEventTriggers[i].EventNumber=-1;
+    }
+  for ( i = 0 ; i < MAX_TRIGGERED_ACTIONS ; i++ )
+    {
+      // Maybe the triggered event consists of the influencer saying something
+      AllTriggeredActions[i].InfluencerSaySomething=-1;
+      AllTriggeredActions[i].InfluencerSayText="";
+      // Maybe the triggered event consists of the map beeing changed at some tile
+      AllTriggeredActions[i].ChangeMap=-1;
+      AllTriggeredActions[i].ChangeMapLevel=-1;
+      AllTriggeredActions[i].ChangeMapLocation.x=-1;
+      AllTriggeredActions[i].ChangeMapLocation.y=-1;
+      AllTriggeredActions[i].ChangeMapTo=-1;
+      // Maybe the triggered event consists of ??????
+    }
+
+
+  //--------------------
+  // At first we decode ALL THE EVENT ACTIONS not the TRIGGERS!!!!
+  //
+  EventPointer=EventSectionPointer;
+  EventActionNumber=0;
+  while ( ( EventPointer = strstr ( EventPointer , EVENT_ACTION_BEGIN_STRING ) ) != NULL)
+    {
+      DebugPrintf(1, "\nBegin of a new Event Action Section found. Good. ");
+      EventPointer += strlen( EVENT_ACTION_BEGIN_STRING ) + 1;
+
+      if ( ( strstr ( EventSectionPointer , EVENT_ACTION_END_STRING ) ) == NULL)
+	{
+	  DebugPrintf(1, "\n\nEnd of Event Action Section string not found...\n\nTerminating...\n\n");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  DebugPrintf (2, "\n\nEnd of this Event Action Section found. Good.");  
+	  fflush(stdout);
+	}
+  
+      DebugPrintf (2, "\n\nStarting to read details of this event action section\n\n");
+
+      //--------------------
+      // Now we decode the details of this event action section
+      //
+
+      // FIRST OF ALL, WE NEED TO KNOW AT WHICH INDEX WE MUST MODIFY OUR STRUTURE.
+      // SO FIRST WE READ IN THE EVENT ACTIONS INDEX NUMBER
+      if ( (ValuePointer = strstr ( EventPointer, EVENT_ACTION_INDEX_NUMBER_TO_USE_STRING )) == NULL )
+	{
+	  DebugPrintf(1, "\nERROR! NO EVENT ACTION INDEX NUMBER TO USE ENTRY FOUND! TERMINATING!");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  ValuePointer += strlen ( EVENT_ACTION_INDEX_NUMBER_TO_USE_STRING );
+	  sscanf ( ValuePointer , "%d" , &EventActionNumber );
+	  DebugPrintf( 0 , "\nNEW EVENT ACTION NUMBER=%d" , EventActionNumber );
+	}
+
+      // Now we read in the map changing position in x coordinates
+      if ( (ValuePointer = strstr ( EventPointer, EVENT_ACTION_MAPCHANGE_POS_X_STRING )) == NULL )
+	{
+	  DebugPrintf(1, "\nERROR! NO EVENT ACTION MAPCHANGE POSITION X ENTRY FOUND! TERMINATING!");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  ValuePointer += strlen ( EVENT_ACTION_MAPCHANGE_POS_X_STRING );
+	  sscanf ( ValuePointer , "%d" , &AllTriggeredActions[ EventActionNumber ].ChangeMapLocation.x );
+	  DebugPrintf( 0 , "\nMapchange at position x=%d" , AllTriggeredActions[ EventActionNumber].ChangeMapLocation.x );
+	}
+
+      // Now we read in the map changing position in y coordinates
+      if ( (ValuePointer = strstr ( EventPointer, EVENT_ACTION_MAPCHANGE_POS_Y_STRING )) == NULL )
+	{
+	  DebugPrintf(1, "\nERROR! NO EVENT ACTION MAPCHANGE POSITION Y ENTRY FOUND! TERMINATING!");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  ValuePointer += strlen ( EVENT_ACTION_MAPCHANGE_POS_Y_STRING );
+	  sscanf ( ValuePointer , "%d" , &AllTriggeredActions[ EventActionNumber ].ChangeMapLocation.y );
+	  DebugPrintf( 0 , "\nMapchange at position y=%d" , AllTriggeredActions[ EventActionNumber].ChangeMapLocation.y );
+	}
+
+      // Now we read in the map changing position level
+      if ( (ValuePointer = strstr ( EventPointer, EVENT_ACTION_MAPCHANGE_MAPLEVEL_STRING )) == NULL )
+	{
+	  DebugPrintf(1, "\nERROR! NO EVENT ACTION MAPCHANGE MAPLEVEL ENTRY FOUND! TERMINATING!");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  ValuePointer += strlen ( EVENT_ACTION_MAPCHANGE_MAPLEVEL_STRING );
+	  sscanf ( ValuePointer , "%d" , &AllTriggeredActions[ EventActionNumber ].ChangeMapLevel );
+	  DebugPrintf( 0 , "\nMapchange at Level=%d" , AllTriggeredActions[ EventActionNumber].ChangeMapLevel );
+	}
+
+      // Now we read in the new value for that map tile
+      if ( (ValuePointer = strstr ( EventPointer, EVENT_ACTION_MAPCHANGE_TO_WHAT_STRING )) == NULL )
+	{
+	  DebugPrintf(1, "\nERROR! NO EVENT ACTION MAPCHANGE TO WHAT ENTRY FOUND! TERMINATING!");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  ValuePointer += strlen ( EVENT_ACTION_MAPCHANGE_TO_WHAT_STRING );
+	  sscanf ( ValuePointer , "%d" , &AllTriggeredActions[ EventActionNumber ].ChangeMapTo );
+	  DebugPrintf( 0 , "\nChange map to new value that is=%d" , AllTriggeredActions[ EventActionNumber].ChangeMapTo );
+	}
+
+      // Now we read in if the influencer is to say something
+      if ( (ValuePointer = strstr ( EventPointer, EVENT_ACTION_INFLUENCER_SAY_SOMETHING )) == NULL )
+	{
+	  DebugPrintf(1, "\nERROR! NO EVENT ACTION INFLUENCER SAY SOMETHING ENTRY FOUND! TERMINATING!");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  ValuePointer += strlen ( EVENT_ACTION_INFLUENCER_SAY_SOMETHING );
+	  sscanf ( ValuePointer , "%d" , &AllTriggeredActions[ EventActionNumber ].InfluencerSaySomething );
+	  DebugPrintf( 0 , "\nInfluencer say something at tiggering of event is=%d" , AllTriggeredActions[ EventActionNumber].InfluencerSaySomething );
+	}
+
+      // Now we read in if the text for the influencer to say
+      if ( (ValuePointer = strstr ( EventPointer, EVENT_ACTION_INFLUENCER_SAY_TEXT )) == NULL )
+	{
+	  DebugPrintf(1, "\nERROR! NO EVENT ACTION INFLUENCER SAY TEXT ENTRY FOUND! TERMINATING!");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  ValuePointer += strlen ( EVENT_ACTION_INFLUENCER_SAY_TEXT );
+	  SayString = strstr( ValuePointer , "\"" );
+	  if (SayString == NULL )
+	    {
+	      DebugPrintf(1, "\nERROR! INFLUENCER SAY TEXT STRING NOT TERMINATED!!!! TERMINATING!");
+	      Terminate(ERR);
+	    }
+	  // Now we allocate memory and copy the string...
+	  AllTriggeredActions[ EventActionNumber ].InfluencerSayText=MyMalloc( SayString - ValuePointer + 10 );
+	  strncpy ( AllTriggeredActions[ EventActionNumber ].InfluencerSayText , ValuePointer, SayString - ValuePointer );
+	  AllTriggeredActions[ EventActionNumber ].InfluencerSayText[SayString - ValuePointer ] = 0;
+
+	  DebugPrintf( 0 , "\nInfluencer say text is:%s" , AllTriggeredActions[ EventActionNumber].InfluencerSayText );
+	}
+
+    } // While Event action begin string found...
+
+
+  DebugPrintf (0, "\nThat must have been the last Event Action section.\nWe can now start with the Triggers. Good.");  
+
+
+  //----------------------------------------------------------------------
+
+  //--------------------
+  // Now we decode ALL THE EVENT TRIGGERS not the ACTIONS!!!!
+  //
+  EventPointer=EventSectionPointer;
+  EventTriggerNumber=0;
+  while ( ( EventPointer = strstr ( EventPointer , EVENT_TRIGGER_BEGIN_STRING ) ) != NULL)
+    {
+      DebugPrintf(1, "\nBegin of a new Event Trigger Section found. Good. ");
+      EventPointer += strlen( EVENT_TRIGGER_BEGIN_STRING ) + 1;
+
+      if ( ( strstr ( EventSectionPointer , EVENT_TRIGGER_END_STRING ) ) == NULL)
+	{
+	  DebugPrintf(1, "\n\nEnd of Event Trigger Section string not found...\n\nTerminating...\n\n");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  DebugPrintf (2, "\n\nEnd of this Event Trigger Section found. Good.");  
+	  fflush(stdout);
+	}
+  
+      DebugPrintf (2, "\n\nStarting to read details of this event trigger section\n\n");
+
+      //--------------------
+      // Now we decode the details of this event trigger section
+      //
+
+      // Now we read in the triggering position in x coordinates
+      if ( (ValuePointer = strstr ( EventPointer, EVENT_TRIGGER_POS_X_STRING )) == NULL )
+	{
+	  DebugPrintf(1, "\nERROR! NO EVENT TRIGGER POSITION X ENTRY FOUND! TERMINATING!");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  ValuePointer += strlen ( EVENT_TRIGGER_POS_X_STRING );
+	  sscanf ( ValuePointer , "%d" , &AllEventTriggers[ EventTriggerNumber ].Influ_Must_Be_At_Point.x );
+	  DebugPrintf( 0 , "\nEvent Trigger Position x is=%d" , AllEventTriggers[ EventTriggerNumber ].Influ_Must_Be_At_Point.x );
+	}
+
+      // Now we read in the triggering position in x coordinates
+      if ( (ValuePointer = strstr ( EventPointer, EVENT_TRIGGER_POS_Y_STRING )) == NULL )
+	{
+	  DebugPrintf(1, "\nERROR! NO EVENT TRIGGER POSITION Y ENTRY FOUND! TERMINATING!");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  ValuePointer += strlen ( EVENT_TRIGGER_POS_Y_STRING );
+	  sscanf ( ValuePointer , "%d" , &AllEventTriggers[ EventTriggerNumber ].Influ_Must_Be_At_Point.y );
+	  DebugPrintf( 0 , "\nEvent Trigger Position x is=%d" , AllEventTriggers[ EventTriggerNumber ].Influ_Must_Be_At_Point.y );
+	}
+
+      // Now we read in the triggering position in levels
+      if ( (ValuePointer = strstr ( EventPointer, EVENT_TRIGGER_POS_MAPLEVEL_STRING )) == NULL )
+	{
+	  DebugPrintf(1, "\nERROR! NO EVENT TRIGGER POSITION MAPLEVEL ENTRY FOUND! TERMINATING!");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  ValuePointer += strlen ( EVENT_TRIGGER_POS_MAPLEVEL_STRING );
+	  sscanf ( ValuePointer , "%d" , &AllEventTriggers[ EventTriggerNumber ].Influ_Must_Be_At_Level );
+	  DebugPrintf( 0 , "\nEvent Trigger Position Level is=%d" , AllEventTriggers[ EventTriggerNumber ].Influ_Must_Be_At_Level );
+	}
+
+      // Now we read whether or not to delete the trigger after being triggers
+      if ( (ValuePointer = strstr ( EventPointer, EVENT_TRIGGER_DELETED_AFTER_TRIGGERING )) == NULL )
+	{
+	  DebugPrintf(1, "\nERROR! NO EVENT TRIGGER DELETE AFTER TRIGGERING ENTRY FOUND! TERMINATING!");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  ValuePointer += strlen ( EVENT_TRIGGER_DELETED_AFTER_TRIGGERING );
+	  sscanf ( ValuePointer , "%d" , &AllEventTriggers[ EventTriggerNumber ].DeleteTriggerAfterExecution );
+	  DebugPrintf( 0 , "\nEvent Trigger Deleted after execution is=%d" , AllEventTriggers[ EventTriggerNumber ].DeleteTriggerAfterExecution );
+	}
+
+      // Now we read in the action to be invoked by this trigger
+      if ( (ValuePointer = strstr ( EventPointer, EVENT_TRIGGER_WHICH_ACTION_STRING )) == NULL )
+	{
+	  DebugPrintf(1, "\nERROR! NO EVENT TO TRIGGER ENTRY FOUND! TERMINATING!");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  ValuePointer += strlen ( EVENT_TRIGGER_WHICH_ACTION_STRING );
+	  sscanf ( ValuePointer , "%d" , &AllEventTriggers[ EventTriggerNumber ].EventNumber );
+	  DebugPrintf( 0 , "\nEvent Trigger causes Action number is=%d" , AllEventTriggers[ EventTriggerNumber ].EventNumber );
+	}
+
+      EventTriggerNumber++;
+    } // While Event trigger begin string found...
+
+
+  DebugPrintf (0, "\nThat must have been the last Event Trigger section.\nWe are DONE HERE!!! Good.");  
+
+
+
+
+} // void Get_Mission_Events ( char* EventSectionPointer );
+
+
 /*@Function============================================================
 @Desc: This function loads all the constant variables of the game from
        a dat file, that should be optimally human readable.
@@ -800,6 +1107,7 @@ InitNewMission ( char *MissionName )
   FILE *MissionFile;
   char *MainMissionPointer;
   char *BriefingSectionPointer;
+  char *EventSectionPointer;
   char *EndPointer;
   char *ShipnamePointer;
   char *ShipOnPointer;
@@ -833,6 +1141,7 @@ InitNewMission ( char *MissionName )
 
 #define END_OF_MISSION_DATA_STRING "*** End of Mission File ***"
 #define MISSION_BRIEFING_BEGIN_STRING "** Start of Mission Briefing Text Section **"
+#define EVENT_SECTION_BEGIN_STRING "** Start of Mission Event Section **"
 #define SHIPNAME_INDICATION_STRING "Ship file to use for this mission: "
 #define ELEVATORNAME_INDICATION_STRING "Lift file to use for this mission: "
 #define CREWNAME_INDICATION_STRING "Crew file to use for this mission: "
@@ -877,47 +1186,6 @@ InitNewMission ( char *MissionName )
   ShowScore = 0; // This should be done at the end of the highscore list procedure
   KillQueue (); // This has NO meaning right now...
   InsertMessage (" Game on!  Good Luck,,."); // this also has NO meaning right now
-
-  // Delete all events and event triggers
-  for ( i = 0 ; i < MAX_EVENT_TRIGGERS ; i++ )
-    {
-      AllEventTriggers[i].Influ_Must_Be_At_Level=-1;
-      AllEventTriggers[i].Influ_Must_Be_At_Point.x=-1;
-      AllEventTriggers[i].Influ_Must_Be_At_Point.y=-1;
-      
-      // Maybe the event is triggered by time
-      AllEventTriggers[i].Mission_Time_Must_Have_Passed=-1;
-      AllEventTriggers[i].Mission_Time_Must_Not_Have_Passed=-1;
-      
-      // And now of course which event to trigger!!!!
-      // Thats propably the most important information at all!!!
-      AllEventTriggers[i].EventNumber=-1;
-    }
-  for ( i = 0 ; i < MAX_TRIGGERED_ACTIONS ; i++ )
-    {
-      // Maybe the triggered event consists of the influencer saying something
-      AllTriggeredActions[i].InfluencerSaySomething=-1;
-      AllTriggeredActions[i].InfluencerSayText="";
-      // Maybe the triggered event consists of the map beeing changed at some tile
-      AllTriggeredActions[i].ChangeMap=-1;
-      AllTriggeredActions[i].ChangeMapLevel=-1;
-      AllTriggeredActions[i].ChangeMapLocation.x=-1;
-      AllTriggeredActions[i].ChangeMapLocation.y=-1;
-      AllTriggeredActions[i].ChangeMapTo=-1;
-      // Maybe the triggered event consists of ??????
-    }
-
-  // For Testing purposes we now define an event "by hand", just for test:
-  //
-  AllEventTriggers[0].Influ_Must_Be_At_Point.x=6;
-  AllEventTriggers[0].Influ_Must_Be_At_Point.y=2;
-  AllEventTriggers[0].EventNumber=0;
-
-  AllTriggeredActions[0].ChangeMapLocation.x=6;
-  AllTriggeredActions[0].ChangeMapLocation.y=0;
-  AllTriggeredActions[0].ChangeMapLevel=4;
-  AllTriggeredActions[0].ChangeMapTo=0;
-
 
   /* Delete all bullets and blasts */
   for (i = 0; i < MAXBULLETS; i++)
@@ -980,7 +1248,7 @@ InitNewMission ( char *MissionName )
                        // terminated by nature.  We just have to add the zero termination.
     }
 
-  // printf("\n\nvoid InitNewMission: The content of the read file: \n%s" , MainMissionPointer );
+  DebugPrintf( 2, "\n\nvoid InitNewMission: The content of the read file: \n%s" , MainMissionPointer );
 
   //--------------------
   //Now the mission file is read into memory
@@ -988,7 +1256,28 @@ InitNewMission ( char *MissionName )
   //in the body of the mission file.  We start with 
   //doing the briefing things...
 
-  // First we search for the beginning of the mission briefing big section NOT subsection
+  // Now we search for the beginning of the WHOLE event section within the mission file
+  if ( ( EventSectionPointer = strstr ( MainMissionPointer, EVENT_SECTION_BEGIN_STRING )) == NULL )
+    {
+      DebugPrintf (1, "\nERROR! NO MISSION EVENT SECTION BEGIN STRING FOUND! TERMINATING!");
+      Terminate(ERR);
+    }
+  else
+    {
+      EventSectionPointer += strlen ( EVENT_SECTION_BEGIN_STRING ) +1;
+      DebugPrintf (1, "\nMission Briefing begin BIG section found!");
+    }
+
+  /* Title and Explanation of controls and such... */
+  Get_Mission_Events ( EventSectionPointer );
+  DebugPrintf (2, "\nvoid InitNewMission(void): The title signaton has been successfully displayed...:");
+
+  //--------------------
+  // First we extract the game physics file name from the
+  // mission file and load the game data.
+  //
+
+  // Now we search for the beginning of the mission briefing big section NOT subsection
   if ( ( BriefingSectionPointer = strstr ( MainMissionPointer, MISSION_BRIEFING_BEGIN_STRING )) == NULL )
     {
       DebugPrintf (1, "\nERROR! NO MISSION BRIEFING BEGIN STRING FOUND! TERMINATING!");
@@ -1002,7 +1291,7 @@ InitNewMission ( char *MissionName )
 
   /* Title and Explanation of controls and such... */
   Title ( BriefingSectionPointer );
-  DebugPrintf (2, "\nvoid InitNewGame(void): The title signaton has been successfully displayed...:");
+  DebugPrintf (2, "\nvoid InitNewMission(void): The title signaton has been successfully displayed...:");
 
   //--------------------
   // First we extract the game physics file name from the
@@ -1744,8 +2033,8 @@ CheckIfMissionIsComplete (void)
 	       ( AllEnemys[Robot_Counter].Status != OUT ) && 
 	       ( AllEnemys[Robot_Counter].Marker == Me.mission.KillOne ) )
 	    {
-	      DebugPrintf (1, "\nOne of the marked droids is still alive...");
-	      fflush(stdout);
+	      DebugPrintf ( 2, "\nOne of the marked droids is still alive...");
+	      // fflush(stdout);
 	      return;
 	    }
 	}
@@ -1757,7 +2046,7 @@ CheckIfMissionIsComplete (void)
 	{
 	  if ( AllEnemys[Robot_Counter].energy > 0 ) 
 	    {
-	      // DebugPrintf (1, "\nThere are some robots still alive, and you should kill them all...");
+	      DebugPrintf (2, "\nThere are some robots still alive, and you should kill them all...");
 	      // fflush(stdout);
 	      return;
 	    }
@@ -1772,9 +2061,9 @@ CheckIfMissionIsComplete (void)
 	       ( AllEnemys[Robot_Counter].Status != OUT ) && 
 	       ( Druidmap[AllEnemys[Robot_Counter].type].class == Me.mission.KillClass ) ) 
 	    {
-	      // DebugPrintf (1, "\nOne of that class is still alive: Nr=%d Lev=%d X=%f Y=%f." , 
-	      // Robot_Counter , AllEnemys[Robot_Counter].levelnum , 
-	      // AllEnemys[Robot_Counter].pos.x , AllEnemys[Robot_Counter].pos.y );
+	      DebugPrintf (2, "\nOne of that class is still alive: Nr=%d Lev=%d X=%f Y=%f." , 
+			   Robot_Counter , AllEnemys[Robot_Counter].levelnum , 
+			   AllEnemys[Robot_Counter].pos.x , AllEnemys[Robot_Counter].pos.y );
 	      return;
 	    }
 	}

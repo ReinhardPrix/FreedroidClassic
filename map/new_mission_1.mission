@@ -67,7 +67,7 @@ Lifts Off file to use for this mission: asteroid_off.bmp
 P**ossible Start Point : Level=4 XPos=1 YPos=1
 P**ossible Start Point : Level=5 XPos=5 YPos=5
 P**ossible Start Point : Level=6 XPos=3 YPos=3
-Possible Start Point : Level=7 XPos=3 YPos=7
+Possible Start Point : Level=7 XPos=8 YPos=7
 Mission target is to kill all droids : -1
 Mission target is to kill class of droids : -1
 Mission target is to kill droids with marker : 1
@@ -79,7 +79,95 @@ Mission target is to reach X-Pos : -1
 Mission target is to reach Y-Pos : -1
 Mission target is to live for how many seconds : -1
 After completing this mission, load mission : new_mission_2.mission
+
+----------------------------------------------------------------------
+
+** Start of Mission Event Section **
+
+* Start of an Event Trigger Subsection *
+Influencer must be at x-coordinate=5
+Influencer must be at y-coordinate=7
+Influencer must be at maplevel=7
+Event Action to be triggered by this trigger=0
+Delete the event trigger after it has been triggered=1
+* End of this Event Trigger Subsection *
+
+* Start of an Event Trigger Subsection *
+Influencer must be at x-coordinate=2
+Influencer must be at y-coordinate=7
+Influencer must be at maplevel=7
+Event Action to be triggered by this trigger=2
+Delete the event trigger after it has been triggered=1
+* End of this Event Trigger Subsection *
+
+* Start of an Event Trigger Subsection *
+Influencer must be at x-coordinate=2
+Influencer must be at y-coordinate=8
+Influencer must be at maplevel=7
+Event Action to be triggered by this trigger=2
+Delete the event trigger after it has been triggered=1
+* End of this Event Trigger Subsection *
+
+* Start of an Event Trigger Subsection *
+Influencer must be at x-coordinate=2
+Influencer must be at y-coordinate=6
+Influencer must be at maplevel=7
+Event Action to be triggered by this trigger=2
+Delete the event trigger after it has been triggered=1
+* End of this Event Trigger Subsection *
+
+* Start of an Event Trigger Subsection *
+Influencer must be at x-coordinate=3
+Influencer must be at y-coordinate=6
+Influencer must be at maplevel=7
+Event Action to be triggered by this trigger=2
+Delete the event trigger after it has been triggered=1
+* End of this Event Trigger Subsection *
+
+* Start of an Event Trigger Subsection *
+Influencer must be at x-coordinate=3
+Influencer must be at y-coordinate=8
+Influencer must be at maplevel=7
+Event Action to be triggered by this trigger=2
+Delete the event trigger after it has been triggered=1
+* End of this Event Trigger Subsection *
+
+* Start of an Event Action Subsection *
+ACTION INDEX NUMBER TO USE=0
+Action is mapchange at positionX=4
+Action is mapchange at positionY=7
+Action is mapchange at maplevel=7
+Action is change map there to new value=0
+Action is Influencer saying something=1
+Action is Influencer saying the following text="Thanks for removing the barrier!"
+* End of this Event Action Subsection *
+
+* Start of an Event Action Subsection *
+ACTION INDEX NUMBER TO USE=1
+Action is mapchange at positionX=-1
+Action is mapchange at positionY=-1
+Action is mapchange at maplevel=-1
+Action is change map there to new value=-1
+Action is Influencer saying something=1
+Action is Influencer saying the following text="Don't forget to close the barrier behind me again!"
+* End of this Event Action Subsection *
+
+* Start of an Event Action Subsection *
+ACTION INDEX NUMBER TO USE=2
+Action is mapchange at positionX=4
+Action is mapchange at positionY=7
+Action is mapchange at maplevel=7
+Action is change map there to new value=23
+Action is Influencer saying something=-1
+Action is Influencer saying the following text=""
+* End of this Event Action Subsection *
+
+** End of Mission Event Section **
+
+----------------------------------------------------------------------
+
 ** Start of Mission Briefing Text Section **
+
 * New Mission Briefing Text Subsection *
 It's the the year 2400.  
 All of human civilisation has been enslaved throughout the galaxy by an all-mighty Software Corporation named 'MegaSoft'.

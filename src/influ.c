@@ -833,11 +833,11 @@ CheckInfluenceEnemyCollision (void)
 	      else if (ydist)
 		Me.speed.y = COLLISION_PUSHSPEED * (ydist / fabsf (ydist));
 
-	      /* den Influencer etwas aus dem Feind hinausschieben */
+	      // move the influencer a little bit out of the enemy
 	      Me.pos.x += Me.speed.x * Frame_Time ();
 	      Me.pos.y += Me.speed.y * Frame_Time ();
 
-	      /* etwaige Wand - collisionen beruecksichtigen */
+	      // there might be walls close too, so lets check again for collisions with them
 	      CheckInfluenceWallCollisions ();
 
 	      BounceSound ();
@@ -855,8 +855,8 @@ CheckInfluenceEnemyCollision (void)
 	      AllEnemys[i].lastwaypoint = swap;
 
 	      // Add some funny text!
-	      AllEnemys[i].TextToBeDisplayed="Hey, I'm from MS! Walk outa my way!";
-	      AllEnemys[i].TextVisibleTime=0;
+	      EnemyInfluCollisionText ( i );
+
 	    }
 	  BounceLoseEnergy (i);	/* someone loses energy ! */
 
@@ -1075,6 +1075,8 @@ void
 BounceLoseEnergy (int enemynum)
 {
   int enemytype = AllEnemys[enemynum].type;
+
+  if ( AllEnemys[enemynum].Friendly ) return;
 
   if (Me.type <= enemytype)
     {

@@ -77,6 +77,25 @@ unsigned int StoreTextFG;
 
 
 void 
+EnemyInfluCollisionText ( int Enum )
+{
+  Enemy ThisRobot=&AllEnemys[ Enum ];
+
+  ThisRobot->TextVisibleTime=0;
+	      
+  if ( ThisRobot->Friendly )
+    {
+      ThisRobot->TextToBeDisplayed="Ah, good, that we have an open collision avoiding standard, isn't it.";
+    }
+  else
+    {
+      ThisRobot->TextToBeDisplayed="Hey, I'm from MS! Walk outa my way!";
+    }
+
+} // void AddStandingAndAimingText( int Enum )
+
+
+void 
 AddStandingAndAimingText ( int Enum )
 {
   Enemy ThisRobot=&AllEnemys[ Enum ];
