@@ -290,7 +290,7 @@ ob_type=1 ob_x=14.00 ob_y=33.50 ob_na=-1 ob_de=-1
 ob_type=1 ob_x=18.00 ob_y=33.50 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=19.00 ob_y=33.50 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=14.00 ob_y=34.50 ob_na=-1 ob_de=-1 
-ob_type=18 ob_x=15.50 ob_y=34.50 ob_na=-1 ob_de=-1 
+ob_type=16 ob_x=15.50 ob_y=34.50 ob_na=-1 ob_de=-1 
 ob_type=11 ob_x=18.00 ob_y=34.50 ob_na=-1 ob_de=-1 
 ob_type=2 ob_x=39.50 ob_y=35.00 ob_na=-1 ob_de=-1 
 ob_type=26 ob_x=40.50 ob_y=35.00 ob_na=2 ob_de=-1 
@@ -317,7 +317,7 @@ ob_type=1 ob_x=44.00 ob_y=36.50 ob_na=-1 ob_de=-1
 ob_type=1 ob_x=45.00 ob_y=36.50 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=49.00 ob_y=36.50 ob_na=-1 ob_de=-1 
 ob_type=11 ob_x=45.00 ob_y=37.50 ob_na=-1 ob_de=-1 
-ob_type=18 ob_x=46.50 ob_y=37.50 ob_na=-1 ob_de=-1 
+ob_type=16 ob_x=46.50 ob_y=37.50 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=49.00 ob_y=37.50 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=44.00 ob_y=38.50 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=45.00 ob_y=38.50 ob_na=-1 ob_de=-1 
@@ -461,7 +461,7 @@ ob_type=2 ob_x=74.50 ob_y=72.00 ob_na=-1 ob_de=-1
 ob_type=2 ob_x=75.50 ob_y=72.00 ob_na=-1 ob_de=-1 
 ob_type=2 ob_x=76.50 ob_y=72.00 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=68.00 ob_y=72.50 ob_na=-1 ob_de=-1 
-ob_type=18 ob_x=69.50 ob_y=72.50 ob_na=-1 ob_de=-1 
+ob_type=16 ob_x=69.50 ob_y=72.50 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=71.00 ob_y=72.50 ob_na=-1 ob_de=-1 
 ob_type=48 ob_x=73.50 ob_y=72.50 ob_na=-1 ob_de=-1 
 ob_type=49 ob_x=76.50 ob_y=72.50 ob_na=-1 ob_de=-1 
@@ -475,7 +475,7 @@ ob_type=2 ob_x=70.50 ob_y=75.00 ob_na=-1 ob_de=-1
 ob_type=27 ob_x=68.00 ob_y=75.50 ob_na=0 ob_de=-1 
 ob_type=1 ob_x=71.00 ob_y=75.50 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=68.00 ob_y=76.50 ob_na=-1 ob_de=-1 
-ob_type=18 ob_x=69.50 ob_y=76.50 ob_na=-1 ob_de=-1 
+ob_type=16 ob_x=69.50 ob_y=76.50 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=71.00 ob_y=76.50 ob_na=-1 ob_de=-1 
 ob_type=2 ob_x=21.54 ob_y=27.03 ob_na=-1 ob_de=-1 
 ob_type=2 ob_x=22.54 ob_y=27.03 ob_na=-1 ob_de=-1 
@@ -516,7 +516,7 @@ ob_type=116 ob_x=17.05 ob_y=72.41 ob_na=-1 ob_de=-1
 ob_type=116 ob_x=18.00 ob_y=72.37 ob_na=-1 ob_de=-1 
 ob_type=11 ob_x=20.10 ob_y=64.50 ob_na=-1 ob_de=-1 
 ob_type=11 ob_x=20.08 ob_y=68.52 ob_na=-1 ob_de=-1 
-ob_type=15 ob_x=20.13 ob_y=59.41 ob_na=-1 ob_de=-1 
+ob_type=11 ob_x=20.13 ob_y=59.41 ob_na=-1 ob_de=-1 
 ob_type=116 ob_x=15.31 ob_y=66.66 ob_na=-1 ob_de=-1 
 ob_type=116 ob_x=16.29 ob_y=66.62 ob_na=-1 ob_de=-1 
 ob_type=116 ob_x=19.97 ob_y=66.43 ob_na=-1 ob_de=-1 
@@ -1157,7 +1157,7 @@ ob_type=251 ob_x=43.50 ob_y=75.00 ob_na=-1 ob_de=-1
 ob_type=253 ob_x=44.50 ob_y=75.00 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=45.00 ob_y=75.50 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=45.00 ob_y=76.50 ob_na=-1 ob_de=-1 
-ob_type=9 ob_x=41.50 ob_y=75.00 ob_na=-1 ob_de=-1 
+ob_type=10 ob_x=41.50 ob_y=75.00 ob_na=-1 ob_de=-1 
 ob_type=2 ob_x=27.50 ob_y=72.00 ob_na=-1 ob_de=-1 
 ob_type=2 ob_x=28.50 ob_y=72.00 ob_na=-1 ob_de=-1 
 ob_type=2 ob_x=30.50 ob_y=72.00 ob_na=-1 ob_de=-1 
@@ -1352,8 +1352,8 @@ ob_type=226 ob_x=14.68 ob_y=70.26 ob_na=-1 ob_de=-1
 ob_type=198 ob_x=16.50 ob_y=67.38 ob_na=-1 ob_de=-1 
 ob_type=270 ob_x=13.71 ob_y=71.29 ob_na=-1 ob_de=-1 
 ob_type=246 ob_x=33.39 ob_y=58.27 ob_na=-1 ob_de=0 
-ob_type=246 ob_x=53.88 ob_y=65.95 ob_na=-1 ob_de=-1 
-ob_type=246 ob_x=56.94 ob_y=65.94 ob_na=-1 ob_de=-1 
+ob_type=246 ob_x=53.88 ob_y=65.95 ob_na=-1 ob_de=2 
+ob_type=246 ob_x=56.94 ob_y=65.94 ob_na=-1 ob_de=1 
 ob_type=157 ob_x=39.05 ob_y=70.50 ob_na=-1 ob_de=-1 
 ob_type=157 ob_x=39.03 ob_y=71.49 ob_na=-1 ob_de=-1 
 ob_type=157 ob_x=39.08 ob_y=69.52 ob_na=-1 ob_de=-1 
@@ -2058,7 +2058,7 @@ ob_type=52 ob_x=39.50 ob_y=12.50 ob_na=-1 ob_de=-1
 ob_type=51 ob_x=40.50 ob_y=12.50 ob_na=-1 ob_de=-1 
 ob_type=51 ob_x=42.50 ob_y=11.50 ob_na=-1 ob_de=-1 
 ob_type=53 ob_x=40.50 ob_y=11.50 ob_na=-1 ob_de=-1 
-ob_type=24 ob_x=36.50 ob_y=7.50 ob_na=-1 ob_de=-1 
+ob_type=25 ob_x=36.50 ob_y=7.50 ob_na=-1 ob_de=-1 
 ob_type=2 ob_x=38.50 ob_y=9.00 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=38.00 ob_y=12.50 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=38.00 ob_y=11.50 ob_na=-1 ob_de=-1 
@@ -2341,6 +2341,8 @@ End of pure obstacle label information for this level
 
 Start of pure obstacle description information for this level
 obstacle_description.index=0 obstacle_description_text="The sign reads;  'Don't step on the lawn.'"
+obstacle_description.index=1 obstacle_description_text="The sign reads; Restricted Area.  Guard Members only.  Trespassers will be persecuted."
+obstacle_description.index=2 obstacle_description_text="The sign reads; Restricted Area.  Guard Members only.  Trespassers will be persecuted."
 obstacle_description.index=31 obstacle_description_text="These monitors show scanning results for all visitors wanting to enter the town.  You're lucky;  You're not being considered a terrorist.  For now."
 obstacle_description.index=32 obstacle_description_text="These monitors show scanning results for all visitors wanting to enter the town.  You're lucky;  You're not being considered a terrorist.  For now."
 obstacle_description.index=33 obstacle_description_text="These monitors show scanning results for all visitors wanting to enter the town.  You're lucky;  You're not being considered a terrorist.  For now."
@@ -8528,7 +8530,7 @@ ob_type=117 ob_x=66.50 ob_y=89.50 ob_na=-1 ob_de=-1
 ob_type=117 ob_x=70.50 ob_y=83.50 ob_na=-1 ob_de=-1 
 ob_type=117 ob_x=70.50 ob_y=84.50 ob_na=-1 ob_de=-1 
 ob_type=117 ob_x=70.50 ob_y=85.50 ob_na=-1 ob_de=-1 
-ob_type=20 ob_x=68.50 ob_y=84.50 ob_na=-1 ob_de=-1 
+ob_type=18 ob_x=68.50 ob_y=84.50 ob_na=-1 ob_de=-1 
 ob_type=26 ob_x=68.50 ob_y=86.50 ob_na=-1 ob_de=-1 
 ob_type=116 ob_x=67.50 ob_y=86.50 ob_na=-1 ob_de=-1 
 ob_type=116 ob_x=69.50 ob_y=86.50 ob_na=-1 ob_de=-1 
@@ -8544,8 +8546,8 @@ ob_type=116 ob_x=75.50 ob_y=86.50 ob_na=-1 ob_de=-1
 ob_type=26 ob_x=76.50 ob_y=86.50 ob_na=-1 ob_de=-1 
 ob_type=26 ob_x=72.50 ob_y=86.50 ob_na=-1 ob_de=-1 
 ob_type=122 ob_x=74.50 ob_y=86.50 ob_na=-1 ob_de=-1 
-ob_type=20 ob_x=72.50 ob_y=84.50 ob_na=-1 ob_de=-1 
-ob_type=20 ob_x=76.50 ob_y=84.50 ob_na=-1 ob_de=-1 
+ob_type=18 ob_x=72.50 ob_y=84.50 ob_na=-1 ob_de=-1 
+ob_type=18 ob_x=76.50 ob_y=84.50 ob_na=-1 ob_de=-1 
 ob_type=243 ob_x=60.98 ob_y=87.05 ob_na=-1 ob_de=-1 
 ob_type=241 ob_x=60.40 ob_y=83.51 ob_na=-1 ob_de=-1 
 ob_type=247 ob_x=15.87 ob_y=89.84 ob_na=-1 ob_de=-1 
