@@ -545,6 +545,8 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
     int BuyButtonActive = FALSE ;
     int SellButtonActive = FALSE ;
     
+    make_sure_system_mouse_cursor_is_turned_on();
+
     //--------------------
     // We add some secutiry against indexing beyond the
     // range of items given in the list.
