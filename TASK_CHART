@@ -11,14 +11,26 @@ jp
 
 The list of things I'm going to work on next:
 
+1.   Introduce questioning screen at the beginning asking 
+     which mission to load ClassicParadroid/New
+
+(?). Put combat background music to play into the ship file
+     for every deck.
+
 (?). Restore the animation of Refreshes
 
 (?). Speed up the loading and interpreting time for the map file
 
 DONE Correct the aggression of droids
 
-(?). Introduce a flag for new and advanced combat behaviour for 
-     some new robots, that have to be devised still
+DONE Introduce a flag for new and advanced combat behaviour
+     some new robots
+
+2. Read in the flag for new and advanced combat behaviour
+
+3. Implement the new and advanced combat behaviour:
+   * Analyze current state and set flags: WILL_BE_HIT_BY_BULLET, HAVE_DIRECT_LINE_OF_FIRE, HAVE_BETTER_WAYPOINT
+   * Fireing state machine && Movement state machine: both independent decision processes
 
 (?). Adapt the crew file format, so that you can enter types by
      their names instead of their numbers

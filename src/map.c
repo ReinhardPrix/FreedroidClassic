@@ -493,13 +493,15 @@ char *StructToMem(Level Lev)
       // if ( Lev->AllWaypoints[i].x == 0 ) continue;
 
       if (i>=MAXWAYPOINTS) sprintf(linebuf, "Nr.=%2d \t x=%4d \t y=%4d", i, 0 , 0 );
-      else sprintf(linebuf, "Nr.=%2d \t x=%4d \t y=%4d", i, Lev->AllWaypoints[i].x , Lev->AllWaypoints[i].y );
+      else sprintf(linebuf, "Nr.=%3d x=%4d y=%4d", i, Lev->AllWaypoints[i].x , Lev->AllWaypoints[i].y );
       strcat( LevelMem, linebuf );
+      strcat( LevelMem, "\t connections: ");
+
       for( j=0; j<MAX_WP_CONNECTIONS; j++) 
       // for( j=0; j< 12 ; j++)  THIS LINE IS FOR FORMAT CHANGES IN LEVEL FILE.  VERY HANDY.
 	{
 	  if ( (i>=MAXWAYPOINTS) || (j >= MAX_WP_CONNECTIONS ) ) sprintf(linebuf, "con=%3d \t ", -1 );
-	  else sprintf(linebuf, "con=%3d \t ", Lev->AllWaypoints[i].connections[j]);
+	  else sprintf(linebuf, " %3d", Lev->AllWaypoints[i].connections[j]);
 	  strcat(LevelMem, linebuf);
 	} /* for connections */
       strcat(LevelMem, "\n");
@@ -614,6 +616,7 @@ int SaveShip(char *shipname)
 
 /*@Function============================================================
  * @Desc: Level LevelToStruct(char *data):
+ *      This function is for LOADING map data!
  * 	This function extracts the data from *data and writes them 
  *      into a Level-struct:
  *
@@ -636,6 +639,8 @@ LevelToStruct (char *data)
   int nr, x, y;
   int k;
   int connection;
+  char ThisLine[1000];
+  char* ThisLinePointer;
 
   /* Get the memory for one level */
   loadlevel = (Level) MyMalloc (sizeof (level));
@@ -687,26 +692,29 @@ Starting to process information for another level:\n");
   for (i=0; i<MAXWAYPOINTS ; i++)
     {
       WaypointPointer = strstr ( WaypointPointer , "\n" ) +1;
-      sscanf( WaypointPointer , "Nr.=%2d" , &nr);
-      WaypointPointer = strstr ( WaypointPointer , "x=" ) +2;
-      sscanf( WaypointPointer , "%4d" , &x );
-      WaypointPointer = strstr ( WaypointPointer , "y=" ) +2;
-      sscanf( WaypointPointer , "%4d" , &y );
+
+      strncpy (ThisLine , WaypointPointer , strstr( WaypointPointer , "\n") - WaypointPointer + 2);
+      ThisLine[strstr( WaypointPointer , "\n") - WaypointPointer + 1 ]=0;
+      sscanf( ThisLine , "Nr.=%d \t x=%d \t y=%d" , &nr , &x , &y );
       // printf("\n Values: nr=%d, x=%d, y=%d" , nr , x , y );
+
+      loadlevel->AllWaypoints[i].x=x;
+      loadlevel->AllWaypoints[i].y=y;
+
+      ThisLinePointer = strstr ( ThisLine , "connections: " ) +strlen("connections: ");
 
       for ( k=0 ; k<MAX_WP_CONNECTIONS ; k++ )
 	{
-	  WaypointPointer = strstr ( WaypointPointer , "con=" ) +4;
-	  sscanf( WaypointPointer , "%4d" , &connection );
-	  
+	  sscanf( ThisLinePointer , "%4d" , &connection );
 	  // printf(", con=%d" , connection );
-	  loadlevel->AllWaypoints[i].x=x;
-	  loadlevel->AllWaypoints[i].y=y;
 	  loadlevel->AllWaypoints[i].connections[k]=connection;
+	  ThisLinePointer+=4;
 	}
 
       // getchar();
     }
+
+  
 
   // NumWaypoints = GetWaypoints (loadlevel);
   /* Get Refreshes */
