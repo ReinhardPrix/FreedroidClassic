@@ -470,25 +470,14 @@ Load_MapBlock_Surfaces( void )
   int color;
   char *fpath;
 
-  char *ColoredBlockFiles[] = {
-    "block_red.png",
-    "block_yellow.png",
-    "block_green.png",
-    "block_gray.png",
-    "block_blue.png",
-    "block_turquoise.png",
-    "block_dark.png",
-    NULL
-  }; 
+  char *fname = "map_blocks.png";
 
   Block_Width=INITIAL_BLOCK_WIDTH;
   Block_Height=INITIAL_BLOCK_HEIGHT;
   
+  fpath = find_file ( fname, GRAPHICS_DIR, TRUE);
   for ( color = 0 ; color < NUM_COLORS ; color ++ )
     {
-
-      fpath = find_file ( ColoredBlockFiles[ color ] , GRAPHICS_DIR, TRUE);
-
       Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
       SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
       
@@ -499,8 +488,8 @@ Load_MapBlock_Surfaces( void )
 	  MapBlockSurfacePointer[ color ][i] = SDL_DisplayFormat( tmp_surf ); // now we have an alpha-surf of right size
 	  SDL_SetColorKey( MapBlockSurfacePointer[ color ][i] , 0 , 0 ); // this should clear any color key in the dest surface
 	  // Now we can copy the image Information
-	  Source.x=(i%9)*(Block_Height+2);
-	  Source.y=(i/9)*(Block_Width+2);
+	  Source.x=i*(Block_Height+2);
+	  Source.y=color*(Block_Width+2);
 	  Source.w=Block_Width;
 	  Source.h=Block_Height;
 	  Target.x=0;
