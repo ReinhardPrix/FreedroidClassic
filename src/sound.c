@@ -45,7 +45,7 @@
 // The order of appearance here should match the order of appearance 
 // in the enum-Environment located in defs.h!
 
-#define ALL_SOUNDS 46
+#define ALL_SOUNDS 53
 char *SoundSampleFilenames[ALL_SOUNDS] = {
    "ERRORSOUND_NILL.NOWAV",
    "Combat_Background_Music.wav",
@@ -62,7 +62,8 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
    "ThouArtDefeated_Sound_0.wav",
    "Got_Hit_Sound_0.wav",
    "TakeoverSetCapsule_Sound_0.wav",
-   "Menu_Item_Selected_Sound_0.wav",
+   "Menu_Item_Selected_Sound_1.wav",
+   "Menu_Item_Deselected_Sound_0.wav",
    "Move_Menu_Position_Sound_0.wav",
    "Takeover_Game_Won_Sound_0.wav",
    "Takeover_Game_Deadlock_Sound_0.wav",
@@ -73,6 +74,9 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
    "Fire_Bullet_Flash_Sound_0.wav",
    "Fire_Bullet_Exterminator_Sound_0.wav",
    "Fire_Bullet_Laser_Rifle_Sound_0.wav",
+   "Fire_Bullet_Single_Laser_Sound_0.wav",
+   "Fire_Bullet_Plasma_Pistol_Sound_0.wav",
+   "Fire_Bullet_Sword_Sound_0.wav",
    "Cry_Sound_0.wav",
    "Takeover_Sound_0.wav",
    "Mission_Status_Change_Sound_0.wav",
@@ -84,6 +88,9 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
    "Item_Drop_Sound_3.wav",
    "Item_Drop_Sound_4.wav",
    "Item_Drop_Sound_5.wav",
+   "Item_Armour_Put_Sound_0.wav",
+   "Item_Wheels_Put_Sound_0.wav",
+   "Item_Range_Weapon_Put_Sound_0.wav",
    "First_Contact_Sound_0.wav",
    "First_Contact_Sound_1.wav",
    "Not_Enough_Power_Sound_0.wav",
@@ -433,6 +440,15 @@ PlayItemSound ( int SoundCode )
     case 4:
       Play_Sound( ITEM_DROP_SOUND_4 );
       break;
+    case 5:
+      Play_Sound( ITEM_ARMOUR_PUT_SOUND );
+      break;
+    case 6:
+      Play_Sound( ITEM_WHEELS_PUT_SOUND );
+      break;
+    case 7:
+      Play_Sound( ITEM_RANGE_WEAPON_PUT_SOUND );
+      break;
     default:
       break;
     }
@@ -744,7 +760,23 @@ MenuItemSelectedSound (void)
   if (!sound_on) return;
 
   Play_Sound ( MENU_ITEM_SELECTED_SOUND );
-}				// void MoveLiftSound(void)
+
+}; // void MenuItemSelectedSound ( void )
+
+/*@Function============================================================
+@Desc: 
+
+@Ret: 
+@Int:
+* $Function----------------------------------------------------------*/
+void
+MenuItemDeselectedSound (void)
+{
+  if (!sound_on) return;
+
+  Play_Sound ( MENU_ITEM_DESELECTED_SOUND );
+
+}; // void MenuItemSelectedSound ( void )
 
 /*@Function============================================================
 @Desc: 
@@ -821,32 +853,43 @@ Fire_Bullet_Sound (int BulletType)
 
   switch (BulletType)
     {
-      case PULSE:
-	Play_Sound ( FIRE_BULLET_PULSE_SOUND );
-	break;
+    case PULSE:
+      Play_Sound ( FIRE_BULLET_PULSE_SOUND );
+      break;
 
-      case SINGLE_PULSE:
-	Play_Sound ( FIRE_BULLET_SINGLE_PULSE_SOUND );
-	break;
+    case SINGLE_PULSE:
+      Play_Sound ( FIRE_BULLET_SINGLE_PULSE_SOUND );
+      break;
 
-      case MILITARY:
-	Play_Sound ( FIRE_BULLET_MILITARY_SOUND );
-	break;
+    case MILITARY:
+      Play_Sound ( FIRE_BULLET_MILITARY_SOUND );
+      break;
 
-      case FLASH:
-	Play_Sound ( FIRE_BULLET_FLASH_SOUND );
-	break;
+    case FLASH:
+      Play_Sound ( FIRE_BULLET_FLASH_SOUND );
+      break;
 
-      case EXTERMINATOR:
-	Play_Sound ( FIRE_BULLET_EXTERMINATOR_SOUND );
-	break;
+    case EXTERMINATOR:
+      Play_Sound ( FIRE_BULLET_EXTERMINATOR_SOUND );
+      break;
 
-      case LASER_RIFLE:
-	Play_Sound ( FIRE_BULLET_LASER_RIFLE_SOUND );
-	break;
+    case LASER_RIFLE:
+      Play_Sound ( FIRE_BULLET_LASER_RIFLE_SOUND );
+      break;
 
+    case SINGLE_LASER:
+      Play_Sound ( FIRE_BULLET_SINGLE_LASER_SOUND );
+      break;
+
+    case PLASMA_PISTOL:
+      Play_Sound ( FIRE_BULLET_PLASMA_PISTOL_SOUND );
+      break;
+
+    default:
+      Play_Sound ( FIRE_BULLET_SWORD_SOUND );
+      break;
     }
-}				// void FireBulletSound(void)
+}; // void FireBulletSound(void)
 
 
 /*@Function============================================================
@@ -861,7 +904,8 @@ Takeover_Set_Capsule_Sound (void)
   if (!sound_on) return;
 
   Play_Sound (TAKEOVER_SET_CAPSULE_SOUND);
-}				// void FireBulletSound(void)
+
+}; // void Takeover_Set_Capsule_Sound ( void )
 
 /*@Function============================================================
 @Desc: 
@@ -875,7 +919,8 @@ Takeover_Game_Won_Sound (void)
   if (!sound_on) return;
 
   Play_Sound ( TAKEOVER_GAME_WON_SOUND );
-}; // void FireBulletSound(void)
+
+}; // void Takeover_Game_Won_Sound ( void ) 
 
 /*@Function============================================================
 @Desc: 
@@ -889,7 +934,8 @@ Takeover_Game_Deadlock_Sound (void)
   if (!sound_on) return;
 
   Play_Sound ( TAKEOVER_GAME_DEADLOCK_SOUND );
-}				// void FireBulletSound(void)
+
+}; // void Takeover_Game_Deadlock_Sound ( void )
 
 /*@Function============================================================
 @Desc: 
@@ -903,7 +949,7 @@ Takeover_Game_Lost_Sound (void)
   if (!sound_on) return;
 
   Play_Sound ( TAKEOVER_GAME_LOST_SOUND );
-}				// void FireBulletSound(void)
+}; // void Takeover_Game_Lost_Sound ( void )
 
 
 /*@Function============================================================
@@ -917,10 +963,9 @@ BounceSound (void)
 {
   if (!sound_on) return;
 
-  // Play_Sound (COMBAT_BACKGROUND_MUSIC_SOUND );
   Play_Sound ( COLLISIONSOUND );
 
-}				// void BounceSound(void)
+}; // void BounceSound ( void )
 
 /*@Function============================================================
 @Desc: 
@@ -935,7 +980,7 @@ DruidBlastSound (void)
 
   Play_Sound (BLASTSOUND);
 
-}				// void BounceSound(void)
+}; // void DruidBlastSound (void)
 
 
 #undef _sound_c

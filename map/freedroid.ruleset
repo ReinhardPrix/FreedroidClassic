@@ -259,7 +259,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=14
-Sound number=3 
+Sound number=7
 Base list price=350
 ** End of new item specification subsection **
 
@@ -331,7 +331,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=30 plus duration modifier=20
 Picture number=5
-Sound number=3 
+Sound number=6
 Base list price=100
 ** End of new item specification subsection **
 
@@ -439,7 +439,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=14
-Sound number=0 
+Sound number=7
 Base list price=600
 ** End of new item specification subsection **
 
@@ -471,7 +471,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=14
-Sound number=0 
+Sound number=7
 Base list price=0
 ** End of new item specification subsection **
 
@@ -535,7 +535,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=14
-Sound number=0 
+Sound number=7
 Base list price=0
 ** End of new item specification subsection **
 
@@ -567,7 +567,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=14
-Sound number=0 
+Sound number=7
 Base list price=250
 ** End of new item specification subsection **
 
@@ -599,7 +599,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=12
-Sound number=0 
+Sound number=7
 Base list price=0
 ** End of new item specification subsection **
 
@@ -616,7 +616,7 @@ Item as defensive item: base_ac_bonus=20
 Item as defensive item: ac_bonus_modifier=8
 Base item duration=30 plus duration modifier=15
 Picture number=23
-Sound number=0 
+Sound number=5
 Base list price=0
 ** End of new item specification subsection **
 
@@ -699,7 +699,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=18
-Sound number=0 
+Sound number=7
 Base list price=0
 ** End of new item specification subsection **
 
@@ -731,7 +731,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=18
-Sound number=0 
+Sound number=7
 Base list price=0
 ** End of new item specification subsection **
 
@@ -782,7 +782,7 @@ Item as defensive item: base_ac_bonus=3
 Item as defensive item: ac_bonus_modifier=4
 Base item duration=18 plus duration modifier=1
 Picture number=15
-Sound number=0 
+Sound number=5
 Base list price=40
 ** End of new item specification subsection **
 
@@ -896,7 +896,7 @@ Item as defensive item: base_ac_bonus=2
 Item as defensive item: ac_bonus_modifier=4
 Base item duration=20 plus duration modifier=10
 Picture number=15
-Sound number=0 
+Sound number=5
 Base list price=75
 ** End of new item specification subsection **
 
@@ -913,7 +913,7 @@ Item as defensive item: base_ac_bonus=8
 Item as defensive item: ac_bonus_modifier=4
 Base item duration=30 plus duration modifier=10
 Picture number=15
-Sound number=0 
+Sound number=5
 Base list price=200
 ** End of new item specification subsection **
 
@@ -930,7 +930,7 @@ Item as defensive item: base_ac_bonus=10
 Item as defensive item: ac_bonus_modifier=6
 Base item duration=30 plus duration modifier=10
 Picture number=15
-Sound number=0 
+Sound number=5
 Base list price=300
 ** End of new item specification subsection **
 
@@ -979,7 +979,7 @@ Item as defensive item: base_ac_bonus=20
 Item as defensive item: ac_bonus_modifier=7
 Base item duration=25 plus duration modifier=10
 Picture number=6
-Sound number=0 
+Sound number=7
 Base list price=0
 ** End of new item specification subsection **
 
