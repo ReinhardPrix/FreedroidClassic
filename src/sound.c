@@ -32,6 +32,17 @@
 #define _sound_c
 #endif
 
+/* 
+ * we can do sound-compilation if and only if _both_ the 
+ * SDL_mixer library _and_ the header file are present !!
+ */
+#if (defined HAVE_SDL_SDL_MIXER_H) && (defined HAVE_LIBSDL_MIXER)
+#define HAS_SDL_SOUND
+#else
+#undef HAS_SDL_SOUND
+#endif
+
+
 #include "system.h"
 
 #include "defs.h"
@@ -76,7 +87,10 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
 
 char *ExpandedSoundSampleFilenames[ALL_SOUNDS];
 
+#ifdef HAS_SDL_SOUND
 Mix_Chunk *Loaded_WAV_Files[ALL_SOUNDS];
+#endif
+
 int Background_Music_Channel = -1;
 
 // This wills soon go out...
@@ -85,6 +99,9 @@ char *ExpandFilename(char *LocalFilename);
 void 
 Init_Audio(void)
 {
+#ifndef HAS_SDL_SOUND  
+  return;
+#else
   int i;
   int audio_rate = 22050;
   Uint16 audio_format = AUDIO_S16; 
@@ -194,6 +211,7 @@ Sorry...\n\
 	}
     } // for (i=0; ...
 
+#endif // HAVE_SDL_MIXER
 } // void InitAudio(void)
 
 
@@ -205,7 +223,9 @@ int SampleLaenge;
 void 
 Set_BG_Music_Volume(float NewVolume)
 {
-
+#ifndef HAS_SDL_SOUND
+  return;
+#else
   if ( !sound_on ) return;
 
   // Set the volume IN the loaded files, if SDL is used...
@@ -215,13 +235,15 @@ Set_BG_Music_Volume(float NewVolume)
     }
 
   Switch_Background_Music_To ( COMBAT_BACKGROUND_MUSIC_SOUND );
-
+#endif // HAS_SDL_SOUND
 } // void Set_BG_Music_Volume(float NewVolume)
 
 void 
 Set_Sound_FX_Volume(float NewVolume)
 {
-
+#ifndef HAS_SDL_SOUND
+  return;
+#else
   if ( !sound_on ) return;
 
   // Set the volume IN the loaded files, if SDL is used...
@@ -231,6 +253,8 @@ Set_Sound_FX_Volume(float NewVolume)
     {
       Mix_VolumeChunk( Loaded_WAV_Files[i], (int) rintf(NewVolume* MIX_MAX_VOLUME) );
     }
+
+#endif // HAS_SDL_SOUND
 
 } // void Set_BG_Music_Volume(float NewVolume)
 
@@ -306,6 +330,9 @@ Technical details:
 void
 Switch_Background_Music_To (int Tune)
 {
+#ifndef HAS_SDL_SOUND
+  return;
+#else
 
   if ( !sound_on ) return;
 
@@ -323,6 +350,8 @@ Switch_Background_Music_To (int Tune)
       Background_Music_Channel = Mix_PlayChannel(-1, Loaded_WAV_Files[ Tune ], -1);
     }
 
+#endif // HAS_SDL_SOUND
+
 } // void Switch_Background_Music_To(int Tune)
 
 
@@ -335,6 +364,9 @@ Switch_Background_Music_To (int Tune)
 void
 Play_Sound (int Tune)
 {
+#ifndef HAS_SDL_SOUND
+  return;
+#else
   int Newest_Sound_Channel=0;
 
   if ( !sound_on ) return;
@@ -372,6 +404,8 @@ with game performance in any way.  I think this is really not dangerous.\n\
     {
       printf("\nSuccessfully playing file %s.", ExpandedSoundSampleFilenames[ Tune ]);
     }
+
+#endif // HAS_SDL_SOUND
   
 }  // void Play_Sound(int Tune)
 
