@@ -114,6 +114,82 @@ int CurrentlyEscapePressed=0;
 int CurrentlyBackspacePressed=0;
 
 
+void 
+UnsetAllKeys( void )
+{
+  CurrentlyEnterPressed=0;
+  CurrentlySpacePressed=0;
+  CurrentlyLeftPressed=0;
+  CurrentlyRightPressed=0;
+  CurrentlyUpPressed=0;
+  CurrentlyDownPressed=0;
+  Currently0Pressed=0;
+  Currently1Pressed=0;
+  Currently2Pressed=0;
+  Currently3Pressed=0;
+  Currently4Pressed=0;
+  Currently5Pressed=0;
+  Currently6Pressed=0;
+  Currently7Pressed=0;
+  Currently8Pressed=0;
+  Currently9Pressed=0;
+  CurrentlyAPressed=0;
+  CurrentlyBPressed=0;
+  CurrentlyCPressed=0;
+  CurrentlyDPressed=0;
+  CurrentlyEPressed=0;
+  CurrentlyFPressed=0;
+  CurrentlyGPressed=0;
+  CurrentlyHPressed=0;
+  CurrentlyIPressed=0;
+  CurrentlyJPressed=0;
+  CurrentlyKPressed=0;
+  CurrentlyLPressed=0;
+  CurrentlyMPressed=0;
+  CurrentlyNPressed=0;
+  CurrentlyOPressed=0;
+  CurrentlyPPressed=0;
+  CurrentlyQPressed=0;
+  CurrentlyRPressed=0;
+  CurrentlySPressed=0;
+  CurrentlyTPressed=0;
+  CurrentlyUPressed=0;
+  CurrentlyVPressed=0;
+  CurrentlyWPressed=0;
+  CurrentlyXPressed=0;
+  CurrentlyYPressed=0;
+  CurrentlyZPressed=0;
+  CurrentlyKP_PLUS_Pressed=0;
+  CurrentlyKP_MINUS_Pressed=0;
+  CurrentlyKP_MULTIPLY_Pressed=0;
+  CurrentlyKP_DIVIDE_Pressed=0;
+  CurrentlyKP_ENTER_Pressed=0;
+  CurrentlyKP0Pressed=0;
+  CurrentlyKP1Pressed=0;
+  CurrentlyKP2Pressed=0;
+  CurrentlyKP3Pressed=0;
+  CurrentlyKP4Pressed=0;
+  CurrentlyKP5Pressed=0;
+  CurrentlyKP6Pressed=0;
+  CurrentlyKP7Pressed=0;
+  CurrentlyKP8Pressed=0;
+  CurrentlyKP9Pressed=0;
+  CurrentlyF1Pressed=0;
+  CurrentlyF2Pressed=0;
+  CurrentlyF3Pressed=0;
+  CurrentlyF4Pressed=0;
+  CurrentlyF5Pressed=0;
+  CurrentlyF6Pressed=0;
+  CurrentlyF7Pressed=0;
+  CurrentlyF8Pressed=0;
+  CurrentlyF9Pressed=0;
+  CurrentlyF10Pressed=0;
+  CurrentlyF11Pressed=0;
+  CurrentlyF12Pressed=0;
+  CurrentlyEscapePressed=0;
+  CurrentlyBackspacePressed=0;
+}; // void UnsetAllKeys( void )
+
 // grob_point ItemSizeTable[ ALL_ITEMS ];
 
 int 
@@ -1084,6 +1160,10 @@ getchar_raw (void)
 	}
       else if (event.type == SDL_KEYUP)
 	{
+
+	  UnsetAllKeys ();  // we don't want to get any 'stuck' keys, and after entering
+	                    // text, I'm sure no key still has to be pressed...
+
 	  // do nothing here, but don't push this event either
 	}
       else
