@@ -72,14 +72,13 @@ int channels = 0;         // 0=mono 1=stereo
 int format = AFMT_U8;
 int rate = 8000;
 
-/*
-	char BlastSoundSampleFilename[]="/../sound/BlastSound1.wav";
-	char CollisionSoundSampleFilename[]="/../sound/CollisionSound1.wav";
-	char FireSoundSampleFilename[]="/../sound/FireSound1.wav";
-*/
-char BlastSoundSampleFilename[]="/sound/BlastSound1.wav";
-char CollisionSoundSampleFilename[]="/sound/CollisionSound1.wav";
-char FireSoundSampleFilename[]="/sound/FireSound1.wav";
+char BlastSoundSampleFilename[]="/../sound/BlastSound1.wav";
+char CollisionSoundSampleFilename[]="/../sound/CollisionSound1.wav";
+char FireSoundSampleFilename[]="/../sound/FireSound1.wav";
+
+// char BlastSoundSampleFilename[]="/sound/BlastSound1.wav";
+// char CollisionSoundSampleFilename[]="/sound/CollisionSound1.wav";
+// char FireSoundSampleFilename[]="/sound/FireSound1.wav";
 // char BackgroundMusicSampleFilename[]="/../sound/BackgroundMusic1.wav";
 char* ExpandedBlastSoundSampleFilename;
 char* ExpandedCollisionSoundSampleFilename;
@@ -373,6 +372,10 @@ char *ExpandFilename(char *LocalFilename){
 
   tmp=malloc(strlen(LocalFilename)+strlen(getcwd(NULL,0)) + 1);
   strcpy(tmp,getcwd(NULL,0));
+
+  // cut out the "/src" at the end of the sting, that is, make it 4 chars shorter
+  // tmp[strlen(tmp)-4]=0;
+
   strcat(tmp,LocalFilename);
   return(tmp);
 } // char *ExpandFilename(char *LocalFilename){

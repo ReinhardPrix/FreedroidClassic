@@ -114,7 +114,7 @@
 #define SHIPNAME                   "../map/ship1" 
 #define COLORFILE                  "../map/levels.col"
 
-#define PARADROID_ORIGINAL_TITLE_MUSIC "../sound/Paradroid_8000.wav" // do not add a leading . in this filename!!!
+#define PARADROID_ORIGINAL_TITLE_MUSIC "/../sound/Paradroid_8000.wav" // do not add a leading . in this filename!!!
 
 /* Konstanten die unmittelbar die Hardware betreffen */
 #define SCREENADDRESS		0xa000	/* screen - data */

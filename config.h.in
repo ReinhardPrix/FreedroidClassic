@@ -1,96 +1,81 @@
-/* config.h.in.  Generated from configure.ac by autoheader.  */
+/* config.h.in.  Generated automatically from configure.ac by autoheader.  */
 
-/* Define to 1 if you have the `alarm' function. */
+/* Define if you have the `alarm' function. */
 #undef HAVE_ALARM
 
-/* Define to 1 if you have the <fcntl.h> header file. */
+/* Define if you have the <fcntl.h> header file. */
 #undef HAVE_FCNTL_H
 
-/* Define to 1 if you have the `getcwd' function. */
+/* Define if you have the `getcwd' function. */
 #undef HAVE_GETCWD
 
-/* Define to 1 if you have the `gettimeofday' function. */
+/* Define if you have the `gettimeofday' function. */
 #undef HAVE_GETTIMEOFDAY
 
-/* Define to 1 if you have the <inttypes.h> header file. */
+/* Define if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
 
-/* Define to 1 if you have the `m' library (-lm). */
+/* Define if you have the `m' library (-lm). */
 #undef HAVE_LIBM
 
-/* Define to 1 if you have the `vga' library (-lvga). */
+/* Define if you have the `vga' library (-lvga). */
 #undef HAVE_LIBVGA
 
-/* Define to 1 if you have the `vgagl' library (-lvgagl). */
+/* Define if you have the `vgagl' library (-lvgagl). */
 #undef HAVE_LIBVGAGL
 
-/* Define to 1 if you have the `Y2' library (-lY2). */
+/* Define if you have the `Y2' library (-lY2). */
 #undef HAVE_LIBY2
 
-/* Define to 1 if your system has a working `malloc' function. */
+/* Define if your system has a working `malloc' function. */
 #undef HAVE_MALLOC
 
-/* Define to 1 if you have the <memory.h> header file. */
+/* Define if you have the <memory.h> header file. */
 #undef HAVE_MEMORY_H
 
-/* Define to 1 if you have the `memset' function. */
+/* Define if you have the `memset' function. */
 #undef HAVE_MEMSET
 
-/* Define to 1 if you have the `sqrt' function. */
+/* Define if you have the `sqrt' function. */
 #undef HAVE_SQRT
 
-/* Define to 1 if you have the <stdint.h> header file. */
+/* Define if you have the <stdint.h> header file. */
 #undef HAVE_STDINT_H
 
-/* Define to 1 if you have the <stdlib.h> header file. */
+/* Define if you have the <stdlib.h> header file. */
 #undef HAVE_STDLIB_H
 
-/* Define to 1 if you have the <strings.h> header file. */
+/* Define if you have the <strings.h> header file. */
 #undef HAVE_STRINGS_H
 
-/* Define to 1 if you have the <string.h> header file. */
+/* Define if you have the <string.h> header file. */
 #undef HAVE_STRING_H
 
-/* Define to 1 if you have the `strstr' function. */
+/* Define if you have the `strstr' function. */
 #undef HAVE_STRSTR
 
-/* Define to 1 if you have the <sys/ioctl.h> header file. */
+/* Define if you have the <sys/ioctl.h> header file. */
 #undef HAVE_SYS_IOCTL_H
 
-/* Define to 1 if you have the <sys/stat.h> header file. */
+/* Define if you have the <sys/stat.h> header file. */
 #undef HAVE_SYS_STAT_H
 
-/* Define to 1 if you have the <sys/types.h> header file. */
+/* Define if you have the <sys/types.h> header file. */
 #undef HAVE_SYS_TYPES_H
 
-/* Define to 1 if you have the <unistd.h> header file. */
+/* Define if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H
 
 /* Name of package */
 #undef PACKAGE
 
-/* Define to the address where bug reports for this package should be sent. */
-#undef PACKAGE_BUGREPORT
-
-/* Define to the full name of this package. */
-#undef PACKAGE_NAME
-
-/* Define to the full name and version of this package. */
-#undef PACKAGE_STRING
-
-/* Define to the one symbol short name of this package. */
-#undef PACKAGE_TARNAME
-
-/* Define to the version of this package. */
-#undef PACKAGE_VERSION
-
 /* Define as the return type of signal handlers (`int' or `void'). */
 #undef RETSIGTYPE
 
-/* Define to 1 if you have the ANSI C header files. */
+/* Define if you have the ANSI C header files. */
 #undef STDC_HEADERS
 
-/* Define to 1 if you can safely include both <sys/time.h> and <time.h>. */
+/* Define if you can safely include both <sys/time.h> and <time.h>. */
 #undef TIME_WITH_SYS_TIME
 
 /* Version number of package */
