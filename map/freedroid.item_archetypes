@@ -770,7 +770,7 @@ Item as gun: weapon requires both hands="yes"
 
 // Item No. 18
 ** Start of new item specification subsection **
-Item name="Droid Plating"
+Item name="Red Guard's Heavy Robe"
 Position_X=456
 Position_Y=202
 Item can be applied in combat="no"
@@ -778,7 +778,7 @@ Item can be installed in influ="yes"
 Item can be installed in slot with name="armour"
 Item uses rotation series with prefix="green_armour"
 Items of this type collect together in inventory="no"
-Strength minimum required to wear/wield this item=60
+Strength minimum required to wear/wield this item=40
 Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=33
@@ -1290,7 +1290,7 @@ Item as gun: weapon requires both hands="yes"
 
 // Item No. 31
 ** Start of new item specification subsection **
-Item name="Leather Armour"
+Item name="Red Guard's Light Robe"
 Position_X=458
 Position_Y=154
 Item can be applied in combat="no"
