@@ -1,3 +1,9 @@
+/*----------------------------------------------------------------------
+ *
+ * Desc: functions for keyboard and joystick handling
+ *
+ *----------------------------------------------------------------------*/
+
 /* 
  *
  *   Copyright (c) 1994, 2002 Johannes Prix
@@ -22,10 +28,6 @@
  *  MA  02111-1307  USA
  *
  */
-/* ----------------------------------------------------------------------
- * This file contains (all) functions for keyboard and joystick handling
- * ---------------------------------------------------------------------- */
-
 #define _input_c
 
 #include "system.h"
@@ -35,11 +37,18 @@
 #include "global.h"
 #include "proto.h"
 
-point CurrentMouseAbsPos;
+#ifndef SDL_BUTTON_WHEELUP 
+#define SDL_BUTTON_WHEELUP 4
+#endif
+#ifndef SDL_BUTTON_WHEELDOWN
+#define SDL_BUTTON_WHEELDOWN 5
+#endif
 
-SDL_Event event;
+int WheelUpEvents=0;    // count number of not read-out wheel events
+int WheelDownEvents=0;
 
 int CurrentlyMouseRightPressed=0;
+SDL_Event event;
 int ShiftWasPressedInAddition=FALSE;
 int CtrlWasPressedInAddition=FALSE;
 int AltWasPressedInAddition=FALSE;
@@ -113,110 +122,7 @@ int CurrentlyF10Pressed=0;
 int CurrentlyF11Pressed=0;
 int CurrentlyF12Pressed=0;
 int CurrentlyEscapePressed=0;
-int CurrentlyTabPressed=0;
-int CurrentlyShiftPressed=0;
 int CurrentlyBackspacePressed=0;
-
-
-void 
-UnsetAllKeys( void )
-{
-  CurrentlyEnterPressed=0;
-  CurrentlySpacePressed=0;
-  CurrentlyLeftPressed=0;
-  CurrentlyRightPressed=0;
-  CurrentlyUpPressed=0;
-  CurrentlyDownPressed=0;
-  Currently0Pressed=0;
-  Currently1Pressed=0;
-  Currently2Pressed=0;
-  Currently3Pressed=0;
-  Currently4Pressed=0;
-  Currently5Pressed=0;
-  Currently6Pressed=0;
-  Currently7Pressed=0;
-  Currently8Pressed=0;
-  Currently9Pressed=0;
-  CurrentlyAPressed=0;
-  CurrentlyBPressed=0;
-  CurrentlyCPressed=0;
-  CurrentlyDPressed=0;
-  CurrentlyEPressed=0;
-  CurrentlyFPressed=0;
-  CurrentlyGPressed=0;
-  CurrentlyHPressed=0;
-  CurrentlyIPressed=0;
-  CurrentlyJPressed=0;
-  CurrentlyKPressed=0;
-  CurrentlyLPressed=0;
-  CurrentlyMPressed=0;
-  CurrentlyNPressed=0;
-  CurrentlyOPressed=0;
-  CurrentlyPPressed=0;
-  CurrentlyQPressed=0;
-  CurrentlyRPressed=0;
-  CurrentlySPressed=0;
-  CurrentlyTPressed=0;
-  CurrentlyUPressed=0;
-  CurrentlyVPressed=0;
-  CurrentlyWPressed=0;
-  CurrentlyXPressed=0;
-  CurrentlyYPressed=0;
-  CurrentlyZPressed=0;
-  CurrentlyKP_PLUS_Pressed=0;
-  CurrentlyKP_MINUS_Pressed=0;
-  CurrentlyKP_MULTIPLY_Pressed=0;
-  CurrentlyKP_DIVIDE_Pressed=0;
-  CurrentlyKP_ENTER_Pressed=0;
-  CurrentlyKP0Pressed=0;
-  CurrentlyKP1Pressed=0;
-  CurrentlyKP2Pressed=0;
-  CurrentlyKP3Pressed=0;
-  CurrentlyKP4Pressed=0;
-  CurrentlyKP5Pressed=0;
-  CurrentlyKP6Pressed=0;
-  CurrentlyKP7Pressed=0;
-  CurrentlyKP8Pressed=0;
-  CurrentlyKP9Pressed=0;
-  CurrentlyF1Pressed=0;
-  CurrentlyF2Pressed=0;
-  CurrentlyF3Pressed=0;
-  CurrentlyF4Pressed=0;
-  CurrentlyF5Pressed=0;
-  CurrentlyF6Pressed=0;
-  CurrentlyF7Pressed=0;
-  CurrentlyF8Pressed=0;
-  CurrentlyF9Pressed=0;
-  CurrentlyF10Pressed=0;
-  CurrentlyF11Pressed=0;
-  CurrentlyF12Pressed=0;
-  CurrentlyEscapePressed=0;
-  CurrentlyBackspacePressed=0;
-}; // void UnsetAllKeys( void )
-
-// grob_point ItemSizeTable[ ALL_ITEMS ];
-
-int 
-GetMousePos_x(void)
-{
-  return( CurrentMouseAbsPos.x );
-};
-
-//
-int 
-GetMousePos_y(void)
-{
-  return( CurrentMouseAbsPos.y );
-};
-
-// 
-int 
-GetMouseRightButton( void )
-{
-  return( CurrentlyMouseRightPressed );
-};
-
-
 
 int sgn (int x)
 {
@@ -257,388 +163,59 @@ void Init_Joy (void)
   return;
 }
 
-/* ----------------------------------------------------------------------
- * This function does the reactions to keypresses of the player other
- * than pressing cursor keys.
- * ---------------------------------------------------------------------- */
+
 void 
 ReactToSpecialKeys(void)
 {
-  int i;
-  static int IPressed_LastFrame;
-  static int CPressed_LastFrame;
-  static int SPressed_LastFrame;
-  static int TabPressed_LastFrame;
-  influence_t Zwisch_Me;
-  char MessageBuffer[1024];
-
   if ( QPressed() ) /* user asked for quit */
     Terminate (OK);
   if ( DPressed() )
-    Me[0].energy = 0;
+    Me.energy = 0;
 
-  if ( F1Pressed() )
-    Me[0].readied_skill = 0;
-
-  if ( F2Pressed() )
-    Me[0].readied_skill = 1;
-
-  if ( F3Pressed() )
-    Me[0].readied_skill = 2;
-
-  if ( F4Pressed() )
-    Me[0].readied_skill = 3;
-
-  if ( F5Pressed() )
-    Me[0].readied_skill = 4;
-
-  if ( F6Pressed() )
-    Me[0].readied_skill = 5;
-
-  // THIS REMAINS DISABLED... if ( Number0Pressed() ) Quick_ApplyItem ( 0 );
-
-  if ( Number1Pressed() )
-    {
-      if ( Shift_Was_Pressed () )
-	{
-	  memcpy ( & ( Zwisch_Me ) , & ( Me [ 0 ] ) , sizeof ( Me[ 0 ] ) );
-	  memcpy ( & ( Me [ 0 ] ) , & ( Me [ 1 ] ) , sizeof ( Me[ 0 ] ) );
-	  memcpy ( & ( Me [ 1 ] ) , & ( Zwisch_Me ) , sizeof ( Me[ 0 ] ) );
-	  while ( Number1Pressed() );
-	  Activate_Conservative_Frame_Computation ( );
-
-	  //--------------------
-	  // When switching between players, we must of course also reset the 
-	  // current level...
-	  //
-	  // CurLevel = curShip.AllLevels[ Me[ 0 ].levelnum ];
-	  // Teleport ( 
-	}
-      else Quick_ApplyItem ( 1 );
-    }
-
-  if ( Number2Pressed() )
-    Quick_ApplyItem ( 2 );
-
-  if ( Number3Pressed() )
-    Quick_ApplyItem ( 3 );
-
-  if ( Number4Pressed() )
-    Quick_ApplyItem ( 4 );
-
-  if ( Number5Pressed() )
-    Quick_ApplyItem ( 5 );
-
-  if ( Number6Pressed() )
-    Quick_ApplyItem ( 6 );
-
-  if ( Number7Pressed() )
-    Quick_ApplyItem ( 7 );
-
-  if ( Number8Pressed() )
-    Quick_ApplyItem ( 8 );
-
-  if ( Number9Pressed() )
-    Quick_ApplyItem ( 9 );
-
-  //--------------------
-  // For debugging purposes, we introduce a key, that causes several 
-  // values to be printed out.  This MUST be removed for the next release.
-  //
-  if ( MPressed() )
-    {
-
-      for ( i=0 ; i < MAX_STATEMENTS_PER_LEVEL ; i ++ )
-	{
-	  DebugPrintf( 1 , "\nPosX: %d PosY: %d Statement: %s" , CurLevel->StatementList[ i ].x ,
-		       CurLevel->StatementList[ i ].x , CurLevel->StatementList[ i ].Statement_Text );
-	}
-
-      for ( i=0 ; i < ALL_ITEMS ; i ++ )
-	{
-	  if ( ItemMap[ i ].item_name == NULL ) continue;
-	  DebugPrintf( 0 , "\n\nitem_name: %s " , ItemMap[ i ].item_name );
-	  DebugPrintf( 0 , "\nitem_class: %s " , ItemMap[ i ].item_class );
-	  DebugPrintf( 0 , "\nitem_can_be_applied_in_combat: %d " , ItemMap[ i ].item_can_be_applied_in_combat );
-	  DebugPrintf( 0 , "\nitem_can_be_installed_in_influ: %d " , ItemMap[ i ].item_can_be_installed_in_influ );
-	  DebugPrintf( 0 , "\nitem_can_be_installed_in_weapon_slot: %d " , ItemMap[ i ].item_can_be_installed_in_weapon_slot );
-	  DebugPrintf( 0 , "\nitem_can_be_installed_in_drive_slot: %d " , ItemMap[ i ].item_can_be_installed_in_drive_slot );
-	  DebugPrintf( 0 , "\nbase_item_gun_damage: %d " , ItemMap[ i ].base_item_gun_damage );
-	  DebugPrintf( 0 , "\nitem_gun_recharging_time: %f " , ItemMap[ i ].item_gun_recharging_time );
-	}
-
-
-      for ( i=0 ; i < Number_Of_Droid_Types ; i ++ )
-	{
-
-	  if ( Druidmap[ i ].druidname == NULL ) continue;
-	  DebugPrintf( 0 , "\n\ndruidname: %s " , Druidmap[ i ].druidname );
-
-	  if ( Druidmap[ i ].drive_item.type != (-1 ) )
-	    DebugPrintf( 0 , "\ndrive_item: %d (%s)" , 
-			 Druidmap[ i ].drive_item.type , ItemMap[ Druidmap[ i ].drive_item.type ].item_name );
-	  else DebugPrintf( 0 , "\ndrive_item: NONE " );
-
-	  DebugPrintf( 0 , "\nweapon_item: %d " , Druidmap[ i ].weapon_item.type );
-	  fflush( stdout );
-	  if ( Druidmap[ i ].weapon_item.type != (-1 ) )
-	    DebugPrintf( 0 , "\nweapon_item: %d (%s) " , 
-			 Druidmap[ i ].weapon_item.type , ItemMap[ Druidmap[ i ].weapon_item.type ].item_name );
-	  else DebugPrintf( 0 , "\nweapon_item: NONE" );
-
-	}
-
-
-      while ( MPressed() );
-    }
-
-  //--------------------
-  // For debugging purposes as well, the F key will print out information
-  // about all players currently known.  This can be used as well from the
-  // server as from each of the client.
-  //
-  if ( FPressed ( ) )
-    {
-      Activate_Conservative_Frame_Computation ( ) ;
-      PrintServerStatusInformation ( ) ;
-      while ( FPressed ( ) );
-    }
-
-  //--------------------
-  // We assign the L key to turn on/off the quest log i.e. mission log
-  //
-  if ( LPressed() )
-    {
-      GameConfig.Mission_Log_Visible_Time = 0;
-      GameConfig.Mission_Log_Visible = !GameConfig.Mission_Log_Visible;
-    }
-
-  //--------------------
-  // We assign the Space key to turn off all windows and quest log
-  // and also when the Tux is dead, there shouldn't be any windows any more.
-  //
-  if ( ( SpacePressed( ) && !axis_is_active ) ||
-       ( Me[0].energy <= 0 ) )
-    {
-      GameConfig.Mission_Log_Visible = FALSE ; 
-      GameConfig.SkillScreen_Visible = FALSE ;
-      GameConfig.CharacterScreen_Visible = FALSE ;
-      GameConfig.Inventory_Visible = FALSE ;
-    }
-
-  //--------------------
-  // We assign the T key to taking an item from the floor
-  //
-  if ( TPressed() )
-    {
-      for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i++ )
-	{
-	  if ( CurLevel->ItemList[ i ].type == (-1) ) continue;
-	  if ( ( fabsf( Me[0].pos.x - CurLevel->ItemList[ i ].pos.x ) < 0.25 ) &&
-	       ( fabsf( Me[0].pos.y - CurLevel->ItemList[ i ].pos.y ) < 0.25 ) )
-	    break;
-	}
-
-      if ( i < MAX_ITEMS_PER_LEVEL )
-	{
-	  AddFloorItemDirectlyToInventory( &( CurLevel->ItemList[ i ] ) );
-	}
-    }
-
-  //--------------------
-  // We assign the I key to turn on/off the inventory log 
-  //
-  if ( SPressed() )
-    {
-      if ( !SPressed_LastFrame ) 
-	{
-	  GameConfig.SkillScreen_Visible_Time = 0;
-	  GameConfig.SkillScreen_Visible = !GameConfig.SkillScreen_Visible;
-	  if ( GameConfig.SkillScreen_Visible ) GameConfig.CharacterScreen_Visible = FALSE ;
-	}
-
-      SPressed_LastFrame = TRUE;
-    }
-  else
-    {
-      SPressed_LastFrame = FALSE;
-    }
-
-  //--------------------
-  // We assign the I key to turn on/off the inventory log 
-  //
-  if ( IPressed() )
-    {
-      if ( Shift_Was_Pressed() )
-	{
-	  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ ) Me[0].Inventory[i].is_identified = TRUE;
-	  Me[0].weapon_item.is_identified = TRUE;
-	  Me[0].shield_item.is_identified = TRUE;
-	  Me[0].armour_item.is_identified = TRUE;
-	  Me[0].special_item.is_identified = TRUE;
-	  Me[0].aux1_item.is_identified = TRUE;
-	  Me[0].aux2_item.is_identified = TRUE;
-	  Me[0].drive_item.is_identified = TRUE;
-	}
-
-      if ( !IPressed_LastFrame ) 
-	{
-	  GameConfig.Inventory_Visible_Time = 0;
-	  GameConfig.Inventory_Visible = !GameConfig.Inventory_Visible;
-	}
-
-      IPressed_LastFrame = TRUE;
-    }
-  else
-    {
-      IPressed_LastFrame = FALSE;
-    }
-
-  //--------------------
-  // We assign the C key to turn on/off the character screen
-  //
-  if ( CPressed() )
-    {
-      if ( !CPressed_LastFrame ) 
-	{
-	  GameConfig.CharacterScreen_Visible_Time = 0;
-	  GameConfig.CharacterScreen_Visible = !GameConfig.CharacterScreen_Visible;
-	  if ( GameConfig.CharacterScreen_Visible ) GameConfig.SkillScreen_Visible = FALSE ;
-	}
-
-      CPressed_LastFrame = TRUE;
-    }
-  else
-    {
-      CPressed_LastFrame = FALSE;
-    }
-
-  //--------------------
-  // We assign the Tab key to turn on/off the auto map
-  //
-  if ( TabPressed() )
-    {
-      if ( !TabPressed_LastFrame ) 
-	{
-	  GameConfig.Automap_Visible = !GameConfig.Automap_Visible;
-	}
-
-      TabPressed_LastFrame = TRUE;
-    }
-  else
-    {
-      TabPressed_LastFrame = FALSE;
-    }
-
-  //--------------------
-  // We assign the G key to send greetings either to the server
-  // or from the server to all players.
-  //
   if ( GPressed () )
     {
-      Me[0].TextToBeDisplayed="Hello!  Greetings to the Server.";
-      Me[0].TextVisibleTime=0;
-
-      if ( ! ServerMode )
-	{
-	  sprintf ( MessageBuffer , "\nThis is a message from Player '%s'. " , Me[0].character_name );
-	  // Send1024MessageToServer ( MessageBuffer );
-	  SendTextMessageToServer ( MessageBuffer );
-	}
-      else
-	{
-	  ServerSendMessageToAllClients ( "\nThis is a message from the server to all clients. " );
-	}
+      Me.TextToBeDisplayed="Hello!  Greetings to all other Freedom Fighters.";
+      Me.TextVisibleTime=0;
     }
-
-  //--------------------
-  // To debug the rising in levels and the addition of points
-  // I added a feature to quickly gain experience points and
-  // levels via the numbers 0 , 1 and 2 on the numerical keyboard.
-  // 
+  
+  // To debug the Debriefing() I added a function to add or subtract
+  // a thousand points of score via numerical keyboard functions.
+  // Activate this if you want to test that.  
+  
   if ( KP0Pressed() )
     {
       while (KP0Pressed());
-      Me[0].Experience-=1000;
+      RealScore-=1000;
     }
   if ( KP1Pressed() )
     {
       while (KP1Pressed());
-      Me[0].Experience+=1000;
+      RealScore+=1000;
     }
-  if ( KP2Pressed() )
-    {
-      while (KP2Pressed());
-      Me[0].Experience *= 2;
-    }
-
-  //--------------------
-  // To quicksave and quickload in a convenient way, I added
-  // a keybinding of save and load game functions to the 3 and 4
-  // keys on the numerical keyboard.
-  //
-  if ( KP3Pressed() )
-    {
-      while (KP3Pressed());
-      SaveGame();
-    }
-  if ( KP4Pressed() )
-    {
-      while ( KP4Pressed() );
-      LoadGame();
-    }
-
-  //--------------------
-  // To test various things, there is of course a cheat menu
-  // added to the game.  This cheat menu can be reached by pressing
-  // a combination of keys, intended to be so complicated, that the
-  // users are unlikely to find out about it just by trying out.
-  // Of course they will learn about it if they look at the source,
-  // but hey, then you can outright modify the source, so why bother
-  // to make it any more complicated.
-  //
+  
+  
   if ( CPressed() && Alt_Was_Pressed()
        && Ctrl_Was_Pressed() && Shift_Was_Pressed() ) 
     Cheatmenu ();
-
-  //--------------------
-  // The 'Esc' key is assigned to the big main menu, the so called
-  // Escape Menu.
-  //
   if ( EscapePressed() )
     EscapeMenu ();
-
-  //--------------------
-  // The 'P' key is assigned to pause mode.
-  //
   if ( PPressed () )
     Pause ();
   
-}; // void ReactToSpecialKeys(void)
+  if ( UPressed () )
+    {
+      InitNewMission ( STANDARD_MISSION ) ;
+      while (UPressed());
+    }
+  
+} // void ReactToSpecialKeys(void)
 
-/* ----------------------------------------------------------------------
- * Two functions are important concerning the SHIFT keys:  One says if
- * the shift key has been pressed during the previous key-down event
- * and the other one just reports if the shift key is pressed currently.
- * These two functions should not be mixed up!!!!!!!!!!!!!!!!!!!!!!!!!!
- * ---------------------------------------------------------------------- */
 int
 Shift_Was_Pressed(void)
 {
   return (ShiftWasPressedInAddition);  
-};
+}
 
-int
-Shift_Is_Pressed(void)
-{
-  keyboard_update ();
-  return ( CurrentlyShiftPressed );  
-};
-
-/* ----------------------------------------------------------------------
- *
- *
- * ---------------------------------------------------------------------- */
 int
 Ctrl_Was_Pressed(void)
 {
@@ -666,9 +243,6 @@ keyboard_update(void)
 	  break;
 	  /* Look for a keypress */
 	case SDL_KEYDOWN:
-
-	  if ( ( ClientMode ) && ( ! ServerMode ) ) SendPlayerKeyboardEventToServer ( event );
-
 	  // printf("\nSLD_KEYDOWN event detected...");
 	  // fflush(stdout);
 
@@ -902,15 +476,6 @@ keyboard_update(void)
 	    case SDLK_ESCAPE:
 	      CurrentlyEscapePressed=TRUE;
 	      break;
-	    case SDLK_TAB:
-	      CurrentlyTabPressed=TRUE;
-	      break;
-	    case SDLK_RSHIFT:
-	      CurrentlyShiftPressed=TRUE;
-	      break;
-	    case SDLK_LSHIFT:
-	      CurrentlyShiftPressed=TRUE;
-	      break;
 	    default:
 	      /*
 		printf("\n\nUnhandled keystroke!! Terminating...\n\n");
@@ -923,8 +488,6 @@ keyboard_update(void)
 	  /* and y velocity variables. But we must also be       */
 	  /* careful not to zero the velocities when we shouldn't*/
 	case SDL_KEYUP:
-
-	  if ( ( ClientMode ) && ( ! ServerMode ) ) SendPlayerKeyboardEventToServer ( event );
 
 	  // printf("\nSLD_KEYUP event detected...");
 	  // fflush(stdout);
@@ -1157,15 +720,6 @@ keyboard_update(void)
 	    case SDLK_ESCAPE:
 	      CurrentlyEscapePressed=FALSE;
 	      break;
-	    case SDLK_TAB:
-	      CurrentlyTabPressed=FALSE;
-	      break;
-	    case SDLK_RSHIFT:
-	      CurrentlyShiftPressed=FALSE;
-	      break;
-	    case SDLK_LSHIFT:
-	      CurrentlyShiftPressed=FALSE;
-	      break;
 	    default:
 	      break;
 	    }
@@ -1234,33 +788,33 @@ keyboard_update(void)
 	      // of the mouse cursor, but rather in the center of the 32x32 pixel mouse
 	      // cursor, we need to correct the given axis a little (16 pixels) bit.
 	      //
-	      input_axis.x = event.button.x - UserCenter_x + 16; 
-	      input_axis.y = event.button.y - UserCenter_y + 16; 	  
-	      CurrentMouseAbsPos.x = event.button.x;
-	      CurrentMouseAbsPos.y = event.button.y;
+	      input_axis.x = event.button.x - USER_FENSTER_CENTER_X + 16; 
+	      input_axis.y = event.button.y - USER_FENSTER_CENTER_Y + 16; 	  
 	    }
 	  break;
 	  
 	  /* Mouse control */
 	case SDL_MOUSEBUTTONDOWN:
-
-	  if ( ( ClientMode ) && ( ! ServerMode ) ) SendPlayerMouseButtonEventToServer ( event );
-
-	  if ( event.button.button == SDL_BUTTON_LEFT )
+	  if (event.button.button == SDL_BUTTON_LEFT)
 	    {
 	      CurrentlySpacePressed = TRUE;
 	      axis_is_active = TRUE;
 	    }
 
-	  if ( event.button.button == SDL_BUTTON_RIGHT )
+	  if (event.button.button == SDL_BUTTON_RIGHT)
 	    CurrentlyMouseRightPressed = TRUE;
-	  
+
+	  // wheel events are immediately released, so we rather
+	  // count the number of not yet read-out events
+	  if (event.button.button == SDL_BUTTON_WHEELUP)
+	    WheelUpEvents ++;
+
+	  if (event.button.button == SDL_BUTTON_WHEELDOWN)
+	    WheelDownEvents ++;
+
 	  break;
 
         case SDL_MOUSEBUTTONUP:
-
-	  if ( ( ClientMode ) && ( ! ServerMode ) ) SendPlayerMouseButtonEventToServer ( event );
-
 	  if (event.button.button == SDL_BUTTON_LEFT)
 	    {
 	      CurrentlySpacePressed = FALSE;
@@ -1311,14 +865,6 @@ getchar_raw (void)
 	  if ( event.key.keysym.mod & KMOD_SHIFT ) Returnkey = toupper( (int)event.key.keysym.sym );
 	  return ( Returnkey );
 	}
-      else if (event.type == SDL_KEYUP)
-	{
-
-	  UnsetAllKeys ();  // we don't want to get any 'stuck' keys, and after entering
-	                    // text, I'm sure no key still has to be pressed...
-
-	  // do nothing here, but don't push this event either
-	}
       else
 	{
 	  SDL_PushEvent (&event);  /* put this event back into the queue */
@@ -1330,6 +876,33 @@ getchar_raw (void)
 
 } /* getchar_raw() */
 
+// forget the wheel-counters
+void
+ResetMouseWheel (void)
+{
+  WheelUpEvents = WheelDownEvents = 0;
+  return;
+}
+
+int
+WheelUpPressed (void)
+{
+  keyboard_update();
+  if (WheelUpEvents)
+    return (WheelUpEvents--);
+  else
+    return (FALSE);
+}
+
+int
+WheelDownPressed (void)
+{
+  keyboard_update();
+  if (WheelDownEvents)
+    return (WheelDownEvents--);
+  else
+    return (FALSE);
+}
 
 int 
 KP_PLUS_Pressed (void)
@@ -1602,7 +1175,7 @@ RightPressed (void)
 {
   keyboard_update ();
   return CurrentlyRightPressed;
-}; // int RightPressed(void)
+}				// int RightPressed(void)
 
 int
 UpPressed (void)
@@ -1828,18 +1401,13 @@ EscapePressed (void)
   return CurrentlyEscapePressed;
 }				// int WPressed(void)
 
-int
-TabPressed (void)
-{
-  keyboard_update ();
-  return CurrentlyTabPressed;
-}				// int WPressed(void)
+/*@Function============================================================
+  @Desc: Diese Funktion ermittelt, ob irgend eine Richtungstaste gedrueckt ist
+  
+  @Ret: wenn eine Richtungstaste gedrueckt ist FALSE
+  ansonsten TRUE 
+* $Function----------------------------------------------------------*/
 
-/* ----------------------------------------------------------------------
- * This function checks whether some direction key was pressed or not.
- * In case of a direction key pressed, FALSE will be returned, otherwise
- * TRUE of course.
- * ---------------------------------------------------------------------- */
 int
 NoDirectionPressed (void)
 {
@@ -1848,14 +1416,13 @@ NoDirectionPressed (void)
     return ( FALSE );
   else
     return ( TRUE );
-}; // int NoDirectionPressed( void )
+} // int NoDirectionPressed(void)
 
 
 int
 MouseRightPressed(void)
 {
-  // keyboard_update();  // DON'T UPDATE HERE, OR SOMETHING GOES WRONG WITH KEEPING TRACK
-  // OF MOUSE STATUS IN THE PREVIOUS FRAMES!!!!
+  keyboard_update();
   return CurrentlyMouseRightPressed;
 }
 

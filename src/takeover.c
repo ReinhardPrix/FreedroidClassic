@@ -307,6 +307,8 @@ ChooseColor (void)
 
   prev_count_tick = SDL_GetTicks ();
 
+  ResetMouseWheel ();  // forget about previous wheel events
+
   while (!ColorChosen)
     {
       /* wait for next countdown tick */
@@ -314,12 +316,12 @@ ChooseColor (void)
 
       prev_count_tick += count_tick_len; /* set for next tick */
       
-      if (RightPressed ())
+      if (RightPressed () || WheelDownPressed ())
 	{
 	  YourColor = VIOLETT;
 	  OpponentColor = GELB;
 	}
-      if (LeftPressed ())
+      if (LeftPressed () || WheelUpPressed ())
 	{
 	  YourColor = GELB;
 	  OpponentColor = VIOLETT;
@@ -368,17 +370,21 @@ PlayGame (void)
 
   int up, down, set; 
   int up_counter, down_counter; 
+  int wheel_up, wheel_down;
 
   count_tick_len = 100;   /* countdown in 1/10 second steps */
   move_tick_len  = 60;    /* allow motion at this tick-speed in ms */
   
   up = down = set = FALSE;
   up_counter = down_counter = 0;
+  wheel_up = wheel_down = 0;
 
   wait_move_ticks = 2;  
 
   prev_count_tick = prev_move_tick = SDL_GetTicks (); /* start tick clock */
   
+  ResetMouseWheel ();  // forget about previous wheel events
+
   while (!FinishTakeover)
     {
       cur_time = SDL_GetTicks ();
@@ -387,9 +393,12 @@ PlayGame (void)
        * here we register if there have been key-press events in the
        * "waiting period" between move-ticks :
        */
-      up   = up   | UpPressed(); 
-      down = down | DownPressed();
-      set  = set  | SpacePressed();
+      up   = up  || UpPressed();
+      down = down || DownPressed();
+      set  = set  || SpacePressed();
+
+      if (WheelUpPressed()) wheel_up ++;
+      if (WheelDownPressed()) wheel_down ++;
 
       if (!up) up_counter = 0;    /* reset counters for released keys */
       if (!down) down_counter =0;
@@ -422,9 +431,9 @@ PlayGame (void)
 	  prev_move_tick += move_tick_len; /* set for next motion tick */
 	  EnemyMovements ();
 
-	  if (up)
+	  if (up || wheel_up)
 	    {
-	      if (!up_counter || (up_counter > wait_move_ticks) )
+	      if (wheel_up || !up_counter || (up_counter > wait_move_ticks) )
 		{
 		  CapsuleCurRow[YourColor]--;
 		  if (CapsuleCurRow[YourColor] < 1)
@@ -432,10 +441,11 @@ PlayGame (void)
 		}
 	      up = FALSE;  
 	      up_counter ++;
+	      if (wheel_up) wheel_up --;
 	    }
-	  if (down)
+	  if (down || wheel_down)
 	    {
-	      if (!down_counter || (down_counter > wait_move_ticks))
+	      if (wheel_down || !down_counter || (down_counter > wait_move_ticks))
 		{
 		  CapsuleCurRow[YourColor]++;
 		  if (CapsuleCurRow[YourColor] > NUM_LINES)
@@ -443,6 +453,7 @@ PlayGame (void)
 		}
 	      down = FALSE;
 	      down_counter ++;
+	      if (wheel_down) wheel_down --;
 	    }
 
 	  if ( set && (NumCapsules[YOU] > 0))

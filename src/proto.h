@@ -222,6 +222,9 @@ EXTERN void Takeover_Game_Lost_Sound (void);
 #else
 #define EXTERN extern
 #endif
+EXTERN void ResetMouseWheel (void);
+EXTERN int WheelUpPressed(void);
+EXTERN int WheelDownPressed(void);
 EXTERN int MouseRightPressed(void);
 EXTERN void Init_Joy(void);
 EXTERN void ReactToSpecialKeys(void);
