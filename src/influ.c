@@ -817,6 +817,51 @@ CheckInfluenceEnemyCollision (void)
 }; // void CheckInfluenceEnemyCollision( void )
 
 /* ----------------------------------------------------------------------
+ * This function checks if there is some living droid below the current
+ * mouse cursor. 
+ * This function is useful for determining if a mouse-button-press was
+ * meant as a mouse-indicated move instruction was given or rather a 
+ * weapon swing/weapon fire command was meant by the player.
+ * ---------------------------------------------------------------------- */
+int 
+LivingDroidBelowMouseCursor ( int PlayerNum )
+{
+  int i;
+  float Mouse_Blocks_X, Mouse_Blocks_Y;
+
+  Mouse_Blocks_X = (float)ServerThinksInputAxisX ( PlayerNum ) / (float)Block_Width ;
+  Mouse_Blocks_Y = (float)ServerThinksInputAxisY ( PlayerNum ) / (float)Block_Height ;
+
+  // for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
+  for (i = 0; i < Number_Of_Droids_On_Ship; i++)
+    {
+      if (AllEnemys[i].Status == OUT)
+	continue;
+      if (AllEnemys[i].pos.z != Me[ PlayerNum ] . pos . z )
+	continue;
+      if ( fabsf (AllEnemys[i].pos.x - ( Me[ PlayerNum ] . pos . x + Mouse_Blocks_X ) ) >= 0.5 )
+	continue;
+      if ( fabsf (AllEnemys[i].pos.y - ( Me[ PlayerNum ] . pos . y + Mouse_Blocks_Y ) ) >= 0.5 )
+	continue;
+      
+
+
+      //--------------------
+      // So this must be a possible target for the next weapon swing.  Yes, there
+      // is some living droid beneath the mouse cursor.
+      //
+      return ( TRUE );
+    }
+
+  //--------------------
+  // It seems that we were unable to locate a living droid under the mouse 
+  // cursor.  So we return, giving this very same message.
+  //
+  return ( FALSE );
+
+}; // int LivingDroidBelowMouseCursor ( int PlayerNum )
+
+/* ----------------------------------------------------------------------
  * This function fires a bullet from the influencer in some direction, or
  * at least it TRIES to fire a bullet from the influencer, cause maybe
  * the influencer can't fire for this reason or another right now...
@@ -872,6 +917,20 @@ FireBullet ( int PlayerNum )
   // of course not fire any weapon or something but rather return immediately.
   //
   if ( ( GameConfig.CharacterScreen_Visible || GameConfig.SkillScreen_Visible ) && GameConfig.Inventory_Visible ) return;
+
+  //--------------------
+  // NOW THE NEW MOUSE MOVE:  IF THERE IS NO ENEMY BELOW THE MOUSE CURSOR, WE INTERPRET
+  // NOT THE FIREING INTENTION ANY MORE, BUT RATHER THE (MOUSE-)MOVE INTENTION TO THAT
+  // LOCATION, SO THAT MOVING NO LONGER STRICTLY REQUIRED KEYBOARD USAGE.
+  //
+  if ( ( ! LivingDroidBelowMouseCursor ( PlayerNum ) ) )
+    {
+      //--------------------
+      // Later, we will add the new mouse move intention at this point
+      //
+      return;
+    }
+
 
   // If influencer hasn't recharged yet, fireing is impossible, we're done here and return
   if ( Me [ PlayerNum ] .firewait > 0 )
