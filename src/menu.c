@@ -99,50 +99,15 @@ MouseCursorIsOverMenuItem( int first_menu_item_pos_y , int h )
 }; // void MouseCursorIsOverMenuItem( first_menu_item_pos_y )
 
 /* ----------------------------------------------------------------------
- * This function performs a menu for the player to select from, using the
- * keyboard only, currently, sorry.
+ *
+ *
  * ---------------------------------------------------------------------- */
-int
-DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , int background_code , void* MenuFont )
+void
+print_menu_text ( char* InitialText , char* MenuTexts[] , int first_menu_item_pos_y , int background_code , void* MenuFont ) 
 {
+  char open_gl_string[2000];
   int h = FontHeight (GetCurrentFont());
   int i;
-  static int MenuPosition = 1;
-  int NumberOfOptionsGiven;
-  int first_menu_item_pos_y;
-  SDL_Rect HighlightRect;
-  int MenuWithFileInformation = FALSE;
-  char open_gl_string[2000];
-
-  //--------------------
-  // At first we hide the mouse cursor, so that there can not be any
-  // ambiguity whether to think of the tux cursor or the mouse cursor
-  // to be the pointer we use.
-  //
-  // SDL_ShowCursor( SDL_DISABLE );
-  //
-  SDL_ShowCursor( SDL_ENABLE );
-
-  if ( FirstItem != (-1) ) MenuPosition = FirstItem;
-
-  //--------------------
-  // First thing we do is find out how may options we have
-  // been given for the menu
-  //
-  for ( i = 0 ; TRUE ; i ++ )
-    {
-      if ( strlen( MenuTexts[ i ] ) == 0 ) break;
-    }
-  NumberOfOptionsGiven = i;
-
-  //--------------------
-  // In those cases where we don't reset the menu position upon 
-  // initalization of the menu, we must check for menu positions
-  // outside the bounds of the current menu.
-  //
-  if ( MenuPosition > NumberOfOptionsGiven ) MenuPosition = 1 ; 
-
-  first_menu_item_pos_y = ( SCREEN_HEIGHT - NumberOfOptionsGiven * h ) / 2 ;
 
   //--------------------
   // We need to prepare the background for the menu, so that
@@ -170,11 +135,6 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , int bac
       LeftPutString( Screen , SCREEN_HEIGHT - FontHeight ( GetCurrentFont() ) , open_gl_string );
       SetCurrentFont ( MenuFont );
     }
-  else if ( ( ! strcmp ( InitialText , LOAD_EXISTING_HERO_STRING ) ) ||
-	    ( ! strcmp ( InitialText , DELETE_EXISTING_HERO_STRING ) ) )
-    {
-      MenuWithFileInformation = TRUE ;
-    }
 
   //--------------------
   // Now that the possible font-changing background assembling is
@@ -197,12 +157,79 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , int bac
 	DisplayText ( InitialText , 50 , 50 , NULL );
     }
   
-  StoreMenuBackground ( 0 );
+}; // void print_menu_text ( ... )
+
+/* ----------------------------------------------------------------------
+ * This function performs a menu for the player to select from, using the
+ * keyboard only, currently, sorry.
+ * ---------------------------------------------------------------------- */
+int
+DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , int background_code , void* MenuFont )
+{
+  int h = FontHeight (GetCurrentFont());
+  int i;
+  static int MenuPosition = 1;
+  int NumberOfOptionsGiven;
+  SDL_Rect HighlightRect;
+  int first_menu_item_pos_y;
+
+  //--------------------
+  // At first we show the mouse cursor...
+  //
+  SDL_ShowCursor( SDL_ENABLE );
+
+  //--------------------
+  // Some menus are intended to start with the default setting of the
+  // first menu option selected.  However this is not always desired.
+  // It might happen, that a submenu returns to the upper menu and then
+  // the upper menu should not be reset to the first position selected.
+  // For this case we have some special '-1' entry reserved as the marked
+  // menu entry.  This means, taht the menu position from last time will
+  // simply be re-used.
+  //
+  if ( FirstItem != (-1) ) MenuPosition = FirstItem;
+
+  //--------------------
+  // First thing we do is find out how may options we have
+  // been given for the menu
+  //
+  for ( i = 0 ; TRUE ; i ++ )
+    {
+      if ( strlen( MenuTexts[ i ] ) == 0 ) break;
+    }
+  NumberOfOptionsGiven = i;
+
+  //--------------------
+  // In those cases where we don't reset the menu position upon 
+  // initalization of the menu, we must check for menu positions
+  // outside the bounds of the current menu.
+  //
+  if ( MenuPosition > NumberOfOptionsGiven ) MenuPosition = 1 ; 
+
+  first_menu_item_pos_y = ( SCREEN_HEIGHT - NumberOfOptionsGiven * h ) / 2 ;
+
+  print_menu_text ( InitialText , MenuTexts , first_menu_item_pos_y , background_code , MenuFont ) ;
+
+  if ( ! use_open_gl ) StoreMenuBackground ( 0 );
 
   while ( 1 )
     {
-      RestoreMenuBackground ( 0 );
-      if ( MenuWithFileInformation )
+      //--------------------
+      // We write out the normal text of the menu, either by doing it once more
+      // in the open_gl case or by restoring what we have saved earlier, in the 
+      // SDL output case.
+      //
+      if ( ! use_open_gl ) 
+	RestoreMenuBackground ( 0 );
+      else
+	print_menu_text ( InitialText , MenuTexts , FirstItem , background_code , MenuFont ) ;
+
+      //--------------------
+      // Maybe we should display some thumbnails with the saved games entries?
+      // But this will only apply for the load_hero and the delete_hero menus...
+      //
+      if ( ( ! strcmp ( InitialText , LOAD_EXISTING_HERO_STRING ) ) ||
+	   ( ! strcmp ( InitialText , DELETE_EXISTING_HERO_STRING ) ) )
 	{
 	  //--------------------
 	  // We load the thumbnail, or at least we try to do it...
@@ -210,6 +237,11 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , int bac
 	  LoadAndShowThumbnail ( MenuTexts [ MenuPosition - 1 ] );
 	  LoadAndShowStats ( MenuTexts [ MenuPosition - 1 ] );
 	}
+
+      //--------------------
+      // Depending on what highlight method has been used, we so some highlighting
+      // of the currently selected menu options location on the screen...
+      //
       HighlightRect.x = ( SCREEN_WIDTH - TextWidth ( MenuTexts [ MenuPosition - 1 ] ) ) / 2 - h ;
       HighlightRect.y = first_menu_item_pos_y + ( MenuPosition - 1 ) * h ;
       HighlightRect.w = TextWidth ( MenuTexts [ MenuPosition - 1 ] ) + 2 * h ;
@@ -229,8 +261,15 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , int bac
 	    DisplayText ( InitialText , 50 , 50 , NULL );
 	}
 
+      //--------------------
+      // Image should be ready now, so we can show it...
+      //
       our_SDL_flip_wrapper( Screen );
   
+      //--------------------
+      // Now it's time to handle the possible keyboard and mouse 
+      // input from the user...
+      //
       if ( EscapePressed() )
 	{
 	  while ( EscapePressed() );
@@ -863,7 +902,7 @@ InitiateMenu( int background_code )
   // write on it further down.
   //
   SDL_SetClipRect( Screen, NULL );
-  ClearGraphMem();
+  // ClearGraphMem();
 
   if ( background_code == ( -1 ) )
     {
@@ -2572,7 +2611,8 @@ enum
   MenuTexts[4]="";
 
   GiveMouseAlertWindow ( "\nW A R N I N G !\n\nMultiplayer and network play is still very much experimental code.\nCurrently we are not continuing the networking code, simply because our team does not have enough manpower for this additional task and because it slows down development of new features of the single player game a lot." ) ;
-
+  SetCurrentFont ( Menu_BFont );
+  
   while (!Weiter)
     {
       MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , NE_TITLE_PIC_BACKGROUND_CODE , NULL );
