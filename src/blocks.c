@@ -428,10 +428,14 @@ Update_Tux_Working_Copy ( void )
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
 	  SDL_FreeSurface ( TuxWorkingCopy[i] );
-	  TuxWorkingCopy [ i ] = SDL_DisplayFormat( TuxMotionArchetypes[7][i] );
-	  SDL_SetAlpha( TuxWorkingCopy[i] , 0 , SDL_ALPHA_TRANSPARENT );
-	  SDL_SetColorKey ( TuxWorkingCopy[i] , SDL_SRCCOLORKEY, 
-			    SDL_MapRGB( TuxWorkingCopy[i]->format, 255, 0, 255) ); 
+	  TuxWorkingCopy [ i ] = SDL_DisplayFormatAlpha( TuxMotionArchetypes[7][i] );
+	  // We need to do this twice
+
+	  /*
+	  SDL_SetAlpha( TuxMotionArchetypes[7][i] , 0 , SDL_ALPHA_OPAQUE );
+	  SDL_SetColorKey ( TuxMotionArchetypes[7][i] , 0 , SDL_MapRGB( TuxMotionArchetypes[7][i]->format, 255, 0, 255) ); 
+	  SDL_BlitSurface ( TuxMotionArchetypes[7][i] , NULL , TuxWorkingCopy[i] , NULL );
+	  */
 	}
     }
   else 
@@ -439,10 +443,14 @@ Update_Tux_Working_Copy ( void )
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
 	  SDL_FreeSurface ( TuxWorkingCopy[i] );
-	  TuxWorkingCopy [ i ] = SDL_DisplayFormat( TuxMotionArchetypes[8][i] );
-	  SDL_SetAlpha( TuxWorkingCopy[i] , 0 , SDL_ALPHA_TRANSPARENT );
-	  SDL_SetColorKey ( TuxWorkingCopy[i] , SDL_SRCCOLORKEY, 
-			    SDL_MapRGB( TuxWorkingCopy[i]->format, 255, 0, 255) ); 
+	  TuxWorkingCopy [ i ] = SDL_DisplayFormatAlpha( TuxMotionArchetypes[8][i] );
+
+	  // again, twice
+	  /*
+	  SDL_SetAlpha( TuxMotionArchetypes[8][i] , 0 , SDL_ALPHA_OPAQUE );
+	  SDL_SetColorKey ( TuxMotionArchetypes[8][i] , 0 , SDL_MapRGB( TuxMotionArchetypes[8][i]->format, 255, 0, 255) ); 
+	  SDL_BlitSurface ( TuxMotionArchetypes[8][i] , NULL , TuxWorkingCopy[i] , NULL );
+	  */
 	}
     }
 
@@ -456,6 +464,8 @@ Update_Tux_Working_Copy ( void )
     {
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
+	  SDL_SetAlpha( TuxMotionArchetypes[4][i] , 0 , SDL_ALPHA_OPAQUE );
+	  SDL_SetColorKey ( TuxMotionArchetypes[4][i] , SDL_SRCCOLORKEY , SDL_MapRGB( TuxMotionArchetypes[4][i]->format, 255, 0, 255) ); 
 	  SDL_BlitSurface ( TuxMotionArchetypes[4][i] , NULL , TuxWorkingCopy[i] , NULL );
 	}
     }
@@ -463,6 +473,8 @@ Update_Tux_Working_Copy ( void )
     {
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
+	  SDL_SetAlpha( TuxMotionArchetypes[1][i] , 0 , SDL_ALPHA_OPAQUE );
+	  SDL_SetColorKey ( TuxMotionArchetypes[1][i] , SDL_SRCCOLORKEY , SDL_MapRGB( TuxMotionArchetypes[1][i]->format, 255, 0, 255) ); 
 	  SDL_BlitSurface ( TuxMotionArchetypes[1][i] , NULL , TuxWorkingCopy[i] , NULL );
 	}
     }
@@ -470,6 +482,8 @@ Update_Tux_Working_Copy ( void )
     {
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
+	  SDL_SetAlpha( TuxMotionArchetypes[2][i] , 0 , SDL_ALPHA_OPAQUE );
+	  SDL_SetColorKey ( TuxMotionArchetypes[2][i] , SDL_SRCCOLORKEY , SDL_MapRGB( TuxMotionArchetypes[2][i]->format, 255, 0, 255) ); 
 	  SDL_BlitSurface ( TuxMotionArchetypes[2][i] , NULL , TuxWorkingCopy[i] , NULL );
 	}
     }
@@ -477,6 +491,8 @@ Update_Tux_Working_Copy ( void )
     {
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
+	  SDL_SetAlpha( TuxMotionArchetypes[0][i] , 0 , SDL_ALPHA_OPAQUE );
+	  SDL_SetColorKey ( TuxMotionArchetypes[0][i] , SDL_SRCCOLORKEY , SDL_MapRGB( TuxMotionArchetypes[0][i]->format, 255, 0, 255) ); 
 	  SDL_BlitSurface ( TuxMotionArchetypes[0][i] , NULL , TuxWorkingCopy[i] , NULL );
 	}
     }
@@ -490,7 +506,9 @@ Update_Tux_Working_Copy ( void )
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
 	  SDL_SetAlpha( TuxMotionArchetypes[3][i] , 0 , SDL_ALPHA_OPAQUE );
-	  SDL_SetColorKey ( TuxMotionArchetypes[3][i] , SDL_SRCCOLORKEY, SDL_MapRGB( TuxMotionArchetypes[3][i]->format, 255, 0, 255) ); 
+	  // SDL_SetColorKey ( TuxMotionArchetypes[3][i] , SDL_SRCCOLORKEY, SDL_MapRGB( TuxMotionArchetypes[3][i]->format, 255, 0, 255) ); 
+	  // SDL_SetAlpha( TuxMotionArchetypes[3][i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+	  SDL_SetColorKey ( TuxMotionArchetypes[3][i] , SDL_SRCCOLORKEY , SDL_MapRGB( TuxMotionArchetypes[3][i]->format, 255, 0, 255) ); 
 	  SDL_BlitSurface ( TuxMotionArchetypes[3][i] , NULL , TuxWorkingCopy[i] , NULL );
 	}
     }
@@ -503,7 +521,7 @@ Update_Tux_Working_Copy ( void )
   for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
     {
       SDL_SetAlpha( TuxMotionArchetypes[6][i] , 0 , SDL_ALPHA_OPAQUE );
-      SDL_SetColorKey ( TuxMotionArchetypes[6][i] , SDL_SRCCOLORKEY, SDL_MapRGB( TuxMotionArchetypes[6][i]->format, 255, 0, 255) ); 
+      SDL_SetColorKey ( TuxMotionArchetypes[6][i] , SDL_SRCCOLORKEY , SDL_MapRGB( TuxMotionArchetypes[6][i]->format, 255, 0, 255) ); 
       SDL_BlitSurface ( TuxMotionArchetypes[6][i] , NULL , TuxWorkingCopy[i] , NULL );
     }
 
@@ -512,7 +530,7 @@ Update_Tux_Working_Copy ( void )
       for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
 	{
 	  SDL_SetAlpha( TuxMotionArchetypes[5][i] , 0 , SDL_ALPHA_OPAQUE );
-	  SDL_SetColorKey ( TuxMotionArchetypes[5][i] , SDL_SRCCOLORKEY, 
+	  SDL_SetColorKey ( TuxMotionArchetypes[5][i] , SDL_SRCCOLORKEY , 
 			    SDL_MapRGB( TuxMotionArchetypes[5][i]->format, 255, 0, 255) ); 
 	  SDL_BlitSurface ( TuxMotionArchetypes[5][i] , NULL , TuxWorkingCopy[i] , NULL );
 	}
@@ -543,7 +561,8 @@ Load_Tux_Surfaces( void )
   fpath = find_file ( NE_DROID_BLOCK_FILE , GRAPHICS_DIR, TRUE);
 
   Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
-  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
+  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE ); // this should 
+  SDL_SetColorKey( Whole_Image , 0 , 0 ); // this should clear any color key in the source surface
 
   for ( j = 0 ; j < TUX_MODELS ; j ++ )
     {
@@ -551,8 +570,19 @@ Load_Tux_Surfaces( void )
 	{
 	  tmp_surf = SDL_CreateRGBSurface( 0 , TUX_WIDTH , TUX_HEIGHT , vid_bpp , 0 , 0 , 0 , 0 );
 	  SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
-	  TuxMotionArchetypes[j][i] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
-	  SDL_SetColorKey( TuxMotionArchetypes[j][i] , 0 , 0 ); // this should clear any color key in the dest surface
+	  
+	  switch ( j )
+	    {
+	    case 7:
+	    case 8:
+	      TuxMotionArchetypes[j][i] = SDL_DisplayFormat( tmp_surf ); // now we have an alpha-surf of right size
+	      break;
+	    default:
+	      TuxMotionArchetypes[j][i] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
+	    }
+	  SDL_SetColorKey ( TuxMotionArchetypes[j][i] , SDL_SRCCOLORKEY, 
+			    SDL_MapRGB( TuxMotionArchetypes[j][i]->format, 255, 0, 255) ); 
+	  // SDL_SetColorKey( TuxMotionArchetypes[j][i] , 0 , 0 ); // this should clear any color key in the dest surface
 	  // Now we can copy the image Information
 	  Source.x=i*( TUX_WIDTH  + 2 );
 	  Source.y=( 1 + j ) * ( TUX_HEIGHT + 2 ) ;
@@ -564,7 +594,7 @@ Load_Tux_Surfaces( void )
 	  Target.h=Block_Height;
 	  SDL_BlitSurface ( Whole_Image , &Source , TuxMotionArchetypes[j][i] , &Target );
 	  SDL_SetAlpha( TuxMotionArchetypes[j][i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-	  if ( j == 0 ) TuxWorkingCopy[i] = SDL_DisplayFormatAlpha( TuxMotionArchetypes[j][i] );
+	  if ( j == 7 ) TuxWorkingCopy[i] = SDL_DisplayFormatAlpha( TuxMotionArchetypes[j][i] );
 	  SDL_FreeSurface( tmp_surf );
 	}
     }

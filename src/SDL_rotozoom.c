@@ -602,6 +602,8 @@ SDL_Surface *rotozoomSurface(SDL_Surface * src, double angle, double zoom, int s
      * Determine if source surface is 32bit or 8bit 
      */
     is32bit = (src->format->BitsPerPixel == 32);
+    // ATTENTION!! HACKING THIS!!! jp, 10.8.2002
+    // is32bit = 0;
     if ((is32bit) || (src->format->BitsPerPixel == 8)) {
 	/*
 	 * Use source surface 'as is' 

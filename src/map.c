@@ -133,7 +133,19 @@ CollectAutomapData ( void )
 {
   int x , y ;
   finepoint ObjPos;
+  static int TimePassed;
 
+  //--------------------
+  // Checking the whole map for passablility will surely take a lot
+  // of computation.  Therefore we only do this once every second of
+  // real time.
+  //
+  if ( TimePassed == (int) Me.MissionTimeElapsed ) return;
+  TimePassed = (int) Me.MissionTimeElapsed;
+
+  //--------------------
+  // Now we do the actual checking for visible wall components.
+  //
   for ( y = 0 ; y < CurLevel->ylen ; y ++ )
     {
       for ( x = 0 ; x < CurLevel->xlen ; x ++ )
