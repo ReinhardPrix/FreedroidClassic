@@ -567,7 +567,6 @@ void
 GreatItemShow (void)
 {
   int ItemType;
-  // int page;
   int Displacement=0;
   bool finished = FALSE;
   static int WasPressed = FALSE ;
@@ -641,7 +640,6 @@ GreatItemShow (void)
 	}
 
       ItemType = ShowPointerList [ ItemIndex ] -> type ;
-      // ItemType = Me [ 0 ] . clearance_list [ ClearanceIndex ] ;
 
       if (SpacePressed() || EscapePressed() || axis_is_active )
 	{
@@ -666,7 +664,6 @@ GreatItemShow (void)
 	  else if ( CursorIsOnButton( UP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
 	    {
 	      MoveMenuPositionSound();
-	      // if (page < 2) page ++;
 	      Displacement += FontHeight ( GetCurrentFont () );
 	    }
 	  else if ( CursorIsOnButton( DOWN_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
@@ -754,14 +751,12 @@ GreatItemShow (void)
 	{
 	  MoveMenuPositionSound();
 	  while (RightPressed());
-	  // if (page < 2) page ++;
 	  Displacement += FontHeight ( GetCurrentFont () );
 	}
       if (LeftPressed() )
 	{
 	  MoveMenuPositionSound();
 	  while (LeftPressed());
-	  // if (page > 0) page --;
 	  Displacement -= FontHeight ( GetCurrentFont () );
 	}
 
@@ -827,16 +822,14 @@ Notes: %s", Druidmap[droidtype].druidname , Classname[Druidmap[droidtype].class]
     default:
       sprintf (InfoText, "ERROR: Page not implemented!! \nPlease report bug!");
       break;
-    } /* switch (page) */
+    } // switch (page) 
 
   SetCurrentFont( Para_BFont );
   DisplayText (InfoText, Cons_Text_Rect.x, Cons_Text_Rect.y, &Cons_Text_Rect);
 
   if ( ShowArrows ) ShowLeftRightDroidshowButtons (  );
 
-  // SDL_Flip (Screen);
-
-} /* show_droid_info */
+}; // void show_droid_info ( ... )
 
 
 /* ----------------------------------------------------------------------
@@ -1001,15 +994,10 @@ show_item_info ( item* ShowItem , int Displacement , char ShowArrows )
 {
   char InfoText[10000];
   char TextChunk[2000];
-  // char None[20] = "none";
-  // char *item_name;
-  // int type;
 
   SDL_SetClipRect ( Screen , NULL );
 
   DisplayImage ( find_file( ITEM_BROWESER_BG_PIC_FILE , GRAPHICS_DIR, FALSE) );
-
-  // DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
 
   // ShowItemPicture ( Cons_Menu_Rect.x, Cons_Menu_Rect.y, ShowItem->type );
   ShowItemPicture ( 45 , 190 , ShowItem->type );
@@ -1067,8 +1055,6 @@ Speed / Acceleration: %d / %d \n",
       ShowGenericButtonFromList ( UP_BUTTON );
       ShowGenericButtonFromList ( DOWN_BUTTON );
     }
-
-  // SDL_Flip (Screen);
 
 }; // void show_item_info ( ... )
 
