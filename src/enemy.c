@@ -3071,13 +3071,10 @@ CheckEnemyEnemyCollision ( int enemynum )
     check_y = OurBot -> pos . y ;
     
     //--------------------
-    // Now we check through all the other enemys on the ship if there is
-    // perhaps a collision with them...
+    // Now we check through all the other enemys on this level if 
+    // there is perhaps a collision with them...
     //
-    
-    // for (i = 0; i < MAX_ENEMYS_ON_SHIP	; i++)
-    // for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i++)
-    for ( i = first_index_of_bot_on_level [ OurBot -> pos . z ] ; i <= first_index_of_bot_on_level [ OurBot -> pos . z ] ; i++)
+    for ( i = first_index_of_bot_on_level [ OurBot -> pos . z ] ; i <= last_index_of_bot_on_level [ OurBot -> pos . z ] ; i++)
     {
 	// check only collisions of LIVING enemys on this level
 	if ( AllEnemys [ i ] . Status == OUT )
