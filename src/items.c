@@ -1264,7 +1264,7 @@ DropHeldItemToSlot ( item* SlotItem )
 
   //--------------------
   // Now the item is installed into the weapon slot of the influencer
-  
+  //
   CopyItem( DropItemPointer , SlotItem , TRUE );
   SlotItem->currently_held_in_hand = FALSE;
 

@@ -514,9 +514,9 @@ LoadShip (char *filename)
 
   for (i = 0; i < curShip.num_levels; i++)
     {
-      curShip.AllLevels[i] = Decode_Loaded_Leveldata (LevelStart[i]);
+      curShip . AllLevels [ i ] = Decode_Loaded_Leveldata ( LevelStart [ i ] );
 
-      TranslateMap (curShip.AllLevels[i]);
+      TranslateMap ( curShip . AllLevels [ i ] ) ;
 
     }
 
@@ -1057,7 +1057,7 @@ freedroid-discussion@lists.sourceforge.net\n\
  * @Ret:  Level or NULL
  * ---------------------------------------------------------------------- */
 Level
-Decode_Loaded_Leveldata (char *data)
+Decode_Loaded_Leveldata ( char *data )
 {
   Level loadlevel;
   char *pos;
