@@ -196,7 +196,7 @@ ChangeOption=1 ChangeToValue=1
 ChangeOption=2 ChangeToValue=1
 ChangeOption=3 ChangeToValue=1
 ChangeOption=4 ChangeToValue=1
-ChangeOption=5 ChangeToValue=1
+ChangeOption=5 ChangeToValue=0 // I disable magic stuff now...  We havn't decided about 'magic stuff' issues...
 
 New Option Nr=1 OptionText=" I would like to buy some equippment." 
 OptionSample="Tux_STO_I_Would_Like_0.wav"
