@@ -246,6 +246,8 @@ SetCombatScaleTo(float ResizeFactor)
   int i, j;
   SDL_Surface *tmp;
 
+  CenteredPutString   ( ne_screen ,  User_Rect.y+User_Rect.h-FontHeight(Menu_BFont), "Rescaling...");
+
   // just to be sure, reset the size of the graphics
   ReInitPictures();
 
@@ -316,7 +318,7 @@ SetCombatScaleTo(float ResizeFactor)
   Digit_Pos_X *= ResizeFactor;
   Digit_Pos_Y *= ResizeFactor;
 
-  SDL_SaveBMP ( tmp, "../graphics/debugSmall.bmp");
+  // SDL_SaveBMP ( tmp, "../graphics/debugSmall.bmp");
 
 } // void SetCombatScaleTo(float new_scale);
 

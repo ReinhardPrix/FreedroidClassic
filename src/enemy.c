@@ -370,6 +370,103 @@ AttackInfluence (int enemynum)
 
   dist2 = sqrt(xdist * xdist + ydist * ydist);
 
+  //--------------------
+  // If some special command was given, like 
+  // ATTACK_FIXED_MAP_POSITION, then we do the following:
+  //
+  if ( AllEnemys[enemynum].AdvancedCommand == 1 )
+    {
+      if (AllEnemys[enemynum].firewait) return;  // can't fire:  gun not yet reloaded...
+
+
+      xdist = AllEnemys[enemynum].Parameter1 - AllEnemys[enemynum].pos.x;
+      ydist = AllEnemys[enemynum].Parameter2 - AllEnemys[enemynum].pos.y;
+
+      Fire_Bullet_Sound ( guntype );
+
+      // find a bullet entry, that isn't currently used... 
+      for (j = 0; j < MAXBULLETS; j++)
+	{
+	  if (AllBullets[j].type == OUT)
+	    break;
+	}
+      if (j == MAXBULLETS)
+	{
+	  DebugPrintf
+	    ("\nvoid AttackInfluencer(void):  Ran out of Bullets.... Terminating....");
+	  Terminate (ERR);
+	}
+
+      /* Schussrichtung festlegen */
+      if (fabsf (xdist) > fabsf (ydist))
+	{
+	  AllBullets[j].speed.x = Bulletmap[guntype].speed;
+	  AllBullets[j].speed.y = ydist * AllBullets[j].speed.x / xdist;
+	  if (xdist < 0)
+	    {
+	      AllBullets[j].speed.x = -AllBullets[j].speed.x;
+	      AllBullets[j].speed.y = -AllBullets[j].speed.y;
+	    }
+	}
+
+      if (fabsf (xdist) < fabsf (ydist))
+	{
+	  AllBullets[j].speed.y = Bulletmap[guntype].speed;
+	  AllBullets[j].speed.x = xdist * AllBullets[j].speed.y / ydist;
+	  if (ydist < 0)
+	    {
+	      AllBullets[j].speed.x = -AllBullets[j].speed.x;
+	      AllBullets[j].speed.y = -AllBullets[j].speed.y;
+	    }
+	}
+
+      /* Schussphase festlegen ( ->phase=Schussbild ) */
+      AllBullets[j].phase = NOSTRAIGHTDIR;
+      if ( fabsf (xdist) / fabsf (ydist) > (3/2.0) )
+	AllBullets[j].phase = RECHTS;
+      if ( fabsf (ydist) / fabsf (xdist) > (3/2.0) )
+	AllBullets[j].phase = OBEN;
+      if (AllBullets[j].phase == NOSTRAIGHTDIR)
+	{
+	  if (((xdist < 0) && (ydist < 0)) || ((xdist > 0) && (ydist > 0)))
+	    AllBullets[j].phase = RECHTSUNTEN;
+	  else
+	    AllBullets[j].phase = RECHTSOBEN;
+	}
+
+      /* Bullets im Zentrum des Schuetzen starten */
+      AllBullets[j].pos.x = AllEnemys[enemynum].pos.x;
+      AllBullets[j].pos.y = AllEnemys[enemynum].pos.y;
+
+      /* Bullets so abfeuern, dass sie nicht den Schuetzen treffen */
+      AllBullets[j].pos.x +=
+	(AllBullets[j].speed.x) / fabsf (Bulletmap[guntype].speed) * 0.5;
+      AllBullets[j].pos.y +=
+	(AllBullets[j].speed.y) / fabsf (Bulletmap[guntype].speed) * 0.5;
+
+      // The following lines could be improved: Use not the sign, but only */
+      // the fraction of the maxspeed times constant!
+      // SINCE WE CAN ASSUME HIGH FRAMERATE DISABLE THIS CRAP! Within one */
+      // frame, the robot cant move into its own bullet.
+      // AllBullets[j].pos.x+=isignf(AllEnemys[enemynum].speed.x)*Block_Width/2;      
+      // AllBullets[j].pos.y+=isignf(AllEnemys[enemynum].speed.y)*Block_Height/2;
+
+      /* Dem Bullettype entsprechend lange warten vor naechstem Schuss */
+
+      AllEnemys[enemynum].firewait = Bulletmap[Druidmap[AllEnemys[enemynum].type].gun].recharging_time ;
+
+      /* Bullettype gemaes dem ueblichen guntype fuer den robottyp setzen */
+      AllBullets[j].type = guntype;
+
+      return;
+    }
+
+
+
+  //--------------------
+  // From here on, it's classical Paradroid robot behaviour concerning fireing....
+  //
+
   /* Only fire, if the influencer is in range.... */
   if ((dist2 < FIREDIST2) &&
       (!AllEnemys[enemynum].firewait) &&
@@ -386,7 +483,7 @@ AttackInfluence (int enemynum)
 
       Fire_Bullet_Sound ( guntype );
 
-      /* Einen bulleteintragg suchen, der noch nicht belegt ist */
+      // find a bullet entry, that isn't currently used... 
       for (j = 0; j < MAXBULLETS; j++)
 	{
 	  if (AllBullets[j].type == OUT)

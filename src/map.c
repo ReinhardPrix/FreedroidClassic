@@ -1436,24 +1436,74 @@ Sorry...\n\
 	}
 
       SearchPointer = strstr ( SearchPointer , "X=" );
+      if ( SearchPointer == NULL )
+	{
+	  printf("\nERROR reading .droids file:  X= string not found for special force...Terminating...");
+	  Terminate(ERR);
+	}
       SearchPointer += strlen ( "X=" );
       sscanf ( SearchPointer , "%lf" , &AllEnemys[ FreeAllEnemysPosition ].pos.x );
       printf("\nX= entry for this special force found!  It reads: %f" , AllEnemys[ FreeAllEnemysPosition ].pos.x );
       
       SearchPointer = strstr ( SearchPointer , "Y=" );
+      if ( SearchPointer == NULL )
+	{
+	  printf("\nERROR reading .droids file:  Y= string not found for special force...Terminating...");
+	  Terminate(ERR);
+	}
       SearchPointer += strlen ( "Y=" );
       sscanf ( SearchPointer , "%lf" , &AllEnemys[ FreeAllEnemysPosition ].pos.y );
       printf("\nY= entry for this special force found!  It reads: %f" , AllEnemys[ FreeAllEnemysPosition ].pos.y );
       
       SearchPointer = strstr ( SearchPointer , "Fixed=" );
+      if ( SearchPointer == NULL )
+	{
+	  printf("\nERROR reading .droids file:  Fixed= string not found for special force...Terminating...");
+	  Terminate(ERR);
+	}
       SearchPointer += strlen ( "Fixed=" );
       sscanf ( SearchPointer , "%d" , &AllEnemys[ FreeAllEnemysPosition ].CompletelyFixed );
       printf("\nFixed entry for this special force found!  It reads: %d" , AllEnemys[ FreeAllEnemysPosition ].CompletelyFixed );
       
       SearchPointer = strstr ( SearchPointer , "Marker=" );
+      if ( SearchPointer == NULL )
+	{
+	  printf("\nERROR reading .droids file:  Marker= string not found for special force...Terminating...");
+	  Terminate(ERR);
+	}
       SearchPointer += strlen ( "Marker=" );
       sscanf ( SearchPointer , "%d" , &AllEnemys[ FreeAllEnemysPosition ].Marker );
       printf("\nFixed entry for this special force found!  It reads: %d" , AllEnemys[ FreeAllEnemysPosition ].Marker );
+      
+      SearchPointer = strstr ( SearchPointer , "AdvancedCommand=" );
+      if ( SearchPointer == NULL )
+	{
+	  printf("\nERROR reading .droids file:  AdvancedCommand= string not found for special force...Terminating...");
+	  Terminate(ERR);
+	}
+      SearchPointer += strlen ( "AdvancedCommand=" );
+      sscanf ( SearchPointer , "%d" , &AllEnemys[ FreeAllEnemysPosition ].AdvancedCommand );
+      printf("\nAdvancedCommand entry for this special force found!  It reads: %d" , AllEnemys[ FreeAllEnemysPosition ].AdvancedCommand );
+      
+      SearchPointer = strstr ( SearchPointer , "Parameter1=" );
+      if ( SearchPointer == NULL )
+	{
+	  printf("\nERROR reading .droids file:  Parameter1= string not found for special force...Terminating...");
+	  Terminate(ERR);
+	}
+      SearchPointer += strlen ( "Parameter1=" );
+      sscanf ( SearchPointer , "%lf" , &AllEnemys[ FreeAllEnemysPosition ].Parameter1 );
+      printf("\nParameter2 entry for this special force found!  It reads: %f" , AllEnemys[ FreeAllEnemysPosition ].Parameter1 );
+      
+      SearchPointer = strstr ( SearchPointer , "Parameter2=" );
+      if ( SearchPointer == NULL )
+	{
+	  printf("\nERROR reading .droids file:  Parameter2= string not found for special force...Terminating...");
+	  Terminate(ERR);
+	}
+      SearchPointer += strlen ( "Parameter2=" );
+      sscanf ( SearchPointer , "%lf" , &AllEnemys[ FreeAllEnemysPosition ].Parameter2 );
+      printf("\nParameter2 entry for this special force found!  It reads: %f" , AllEnemys[ FreeAllEnemysPosition ].Parameter2 );
       
       AllEnemys[ FreeAllEnemysPosition ].type = ListIndex;
       AllEnemys[ FreeAllEnemysPosition ].levelnum = OurLevelNumber;

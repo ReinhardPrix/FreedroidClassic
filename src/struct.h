@@ -161,6 +161,9 @@ typedef struct
   int CompletelyFixed;          // set this flat to make the robot entirely immobile
   int SpecialForce;             // This flag will exclude the droid from initial shuffling of droids
   int Marker;                   // This provides a marker for special mission targets
+  int AdvancedCommand;          // An advanced command that modifies the behaviour of the droid (in new missions)
+  double Parameter1;            // This contains special information for AdvancedCommand
+  double Parameter2;            // This contains special information for AdvancedCommand
 }
 enemy, *Enemy;
 

@@ -1503,13 +1503,14 @@ Level_Editor(void)
 		  // Weiter=!Weiter;
 		  break;
 		case CHANGE_LEVEL_POSITION: 
+		  // if ( CurLevel->levelnum ) Teleport ( CurLevel->levelnum-1 , Me.pos.x , Me.pos.y ); 
 		  while (EnterPressed() || SpacePressed() ) ;
 		  break;
 		case CHANGE_TILE_SET_POSITION: 
-		  if ( CurLevel->color  < 6 )
-		    CurLevel->color++;
-		  else 
-		    CurLevel->color=0;
+		  // if ( CurLevel->color  < 6 )
+		  // CurLevel->color++;
+		  // else 
+		  // CurLevel->color=0;
 		  // SetCombatScaleTo ( 1 );
 		  // Teleport ( CurLevel->levelnum , Me.pos.x , Me.pos.y ); // thats just to ensure new tileset is read in
 		  // SetCombatScaleTo ( CurrentCombatScaleFactor );
@@ -1527,23 +1528,52 @@ Level_Editor(void)
 		  break;
 		default: 
 		  break;
-		}
-	    }
+
+		} // switch
+	    } // if EnterPressed or SpacePressed
 
 	  // If the user of the level editor pressed left or right, that should have
 	  // an effect IF he/she is a the change level menu point
-	  if ( LeftPressed() )
+
+	  if (LeftPressed() || RightPressed() ) 
 	    {
-	      if ( CurLevel->levelnum > 0 )
-		Teleport ( CurLevel->levelnum -1 , 3 , 3 );
-	      while (LeftPressed());
-	    }
-	  if ( RightPressed() )
-	    {
-	      if ( CurLevel->levelnum < curShip.num_levels -1 )
-		Teleport ( CurLevel->levelnum +1 , 3 , 3 );
-	      while (RightPressed());
-	    }
+	      switch (MenuPosition)
+		{
+
+		case CHANGE_LEVEL_POSITION:
+		  if ( LeftPressed() )
+		    {
+		      if ( CurLevel->levelnum > 0 )
+			Teleport ( CurLevel->levelnum -1 , 3 , 3 );
+		      while (LeftPressed());
+		    }
+		  if ( RightPressed() )
+		    {
+		      if ( CurLevel->levelnum < curShip.num_levels -1 )
+			Teleport ( CurLevel->levelnum +1 , 3 , 3 );
+		      while (RightPressed());
+		    }
+		  SetCombatScaleTo ( CurrentCombatScaleFactor );
+		  break;
+		  
+		case CHANGE_TILE_SET_POSITION:
+		  if ( RightPressed() && (CurLevel->color  < 6 ) )
+		    {
+		      CurLevel->color++;
+		      while (RightPressed());
+		    }
+		  if ( LeftPressed() && (CurLevel->color > 0) )
+		    {
+		      CurLevel->color--;
+		      while (LeftPressed());
+		    }
+		  
+		  Teleport ( CurLevel->levelnum , Me.pos.x , Me.pos.y ); // thats just to ensure new tileset is read in
+		  SetCombatScaleTo ( CurrentCombatScaleFactor );
+		  break;
+		  
+		}
+	    } // if LeftPressed || RightPressed
 
 	  // If the user pressed up or down, the cursor within
 	  // the level editor menu has to be moved, which is done here:
