@@ -3030,6 +3030,9 @@ Credits_Menu (void)
                                         of kahvi collective\n\
                                       (www.atl3.com/stud)\n\
                                       (www.kahvi.org)\n\n\n\
+   SOUND EFFECTS:\n\n\
+                                      Johannes Prix\n\n\
+                                      Chris Hoeppner\n\n\n\
    VOICES:\n\n\
                                       Tiina Heinonen\n\n\
                                       Doris Stubenrauch\n\n\

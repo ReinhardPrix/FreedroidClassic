@@ -283,6 +283,10 @@ item_bonus PrefixList[] = {
       0 ,  0 ,  0 ,  0 ,   0 ,   0 ,   0 ,   0 , 00 , 00 , 00 , 00 , 
       00 , 00 , 00 , 00 ,  0 ,    0,     3.0 }  ,
     
+//--------------------
+// LEAVE THIS HERE AS THE LAST ENTRY OF THE LIST.  IT'S
+// USED AS A TERMINATION CHARACTER WHEN THE LIST IS EVALUATED.
+//
     { "*** END OF PREFIX LIST ***"                 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,   0 ,   0 ,
       0 ,  0 ,  0 ,  0 ,   0 ,   0 ,   0 ,   0 , 00 , 00 , 00 , 00 , 
       00 , 00 , 00 , 00 ,  0 ,    0,     1.0 }  
@@ -470,6 +474,10 @@ item_bonus SuffixList[] = {
     00 , 00 , 00 , 00 ,  0 ,  2 , 16.0 },
 
 
+//--------------------
+// LEAVE THIS HERE AS THE LAST ENTRY OF THE LIST.  IT'S
+// USED AS A TERMINATION CHARACTER WHEN THE LIST IS EVALUATED.
+//
   { "*** END OF SUFFIX LIST ***"     ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,   0 ,   0 , 
     00 , 00 ,  0 ,  0 ,   0 ,   0 ,  0 , 0 ,  0 , 00 , 00 , 00 ,
     00 , 00 , 00 , 00 ,  0 ,  0 ,  1.0 }
