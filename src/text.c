@@ -62,8 +62,6 @@ int BigScreenMessageIndex = 0 ;
 char BigScreenMessage[ MAX_BIG_SCREEN_MESSAGES ] [ 5000 ];
 float BigScreenMessageDuration[ MAX_BIG_SCREEN_MESSAGES ] = { 10000, 10000, 10000, 10000, 10000 } ;
 
-SDL_Surface* Dialog_Screen_Background = NULL ;
-
 dialogue_option ChatRoster[MAX_DIALOGUE_OPTIONS_IN_ROSTER];
 
 #define PUSH_ROSTER 2
@@ -387,33 +385,36 @@ RestoreChatVariableToInitialValue( int PlayerNum )
  * so that you can also understand everything with sound disabled.
  * ---------------------------------------------------------------------- */
 void
-DisplaySubtitle( char* SubtitleText , void* SubtitleBackground )
+DisplaySubtitle( char* SubtitleText , int subtitle_background )
 {
   SDL_Rect Subtitle_Window;
 
   //--------------------
   // If the user has disabled the subtitles in the dialogs, we need
   // not do anything and just return...
-  //
-  if ( !GameConfig.show_subtitles_in_dialogs ) return;
+  // 
+  if ( ! GameConfig . show_subtitles_in_dialogs ) return;
 
   //--------------------
   // First we define our subtitle window.  We formerly had a small
   // narrow subtitle window of a format like this:
   //
-  // Subtitle_Window.x= 15; Subtitle_Window.y=435; Subtitle_Window.w=600; Subtitle_Window.h=44;
-  // 
-  // But now we have a new subtitle window for Bastians reshaped chat interface:
-  //
-  Subtitle_Window . x = 260; Subtitle_Window . y = 42; Subtitle_Window . w = 337 ; Subtitle_Window . h = 216;
+  Subtitle_Window . x = CHAT_SUBDIALOG_WINDOW_X; 
+  Subtitle_Window . y = CHAT_SUBDIALOG_WINDOW_Y; 
+  Subtitle_Window . w = CHAT_SUBDIALOG_WINDOW_W;
+  Subtitle_Window . h = CHAT_SUBDIALOG_WINDOW_H;
 
   //--------------------
   // Now we need to clear this window, cause there might still be some
   // garbage from the previous subtitle in there...
   //
   // our_SDL_blit_surface_wrapper ( SubtitleBackground , &Subtitle_Window , Screen , &Subtitle_Window );
-  our_SDL_fill_rect_wrapper ( Screen , &Subtitle_Window , 0 );
+
+  // our_SDL_fill_rect_wrapper ( Screen , &Subtitle_Window , 0 );
+
   // our_SDL_fill_rect_wrapper (SDL_Surface *dst, SDL_Rect *dstrect, Uint32 color)
+
+  blit_special_background ( CHAT_DIALOG_BACKGROUND_EXCERPT_CODE ) ;
 
   //--------------------
   // Now we can display the text and update the screen...
@@ -435,7 +436,7 @@ GiveSubtitleNSample( char* SubtitleText , char* SampleFilename )
 
   if ( strcmp ( SubtitleText , "NO_SUBTITLE_AND_NO_WAITING_EITHER" ) )
     {
-      DisplaySubtitle ( SubtitleText , Dialog_Screen_Background );
+      DisplaySubtitle ( SubtitleText , CHAT_DIALOG_BACKGROUND_PICTURE_CODE );
       PlayOnceNeededSoundSample( SampleFilename , TRUE , FALSE );
     }
   else
@@ -744,44 +745,13 @@ PrepareMultipleChoiceDialog ( Enemy ChatDroid )
   char *fpath;
   char fname[500];
 
-  // #define CHAT_BACKGROUND_IMAGE_FILE "backgrounds/chat_test.jpg" 
-  // #define CHAT_BACKGROUND_IMAGE_FILE "backgrounds/chat_test2.jpg" 
-#define CHAT_BACKGROUND_IMAGE_FILE "backgrounds/conversation.jpg"
-
   //--------------------
   // This is the droid window we used before Bastian reshaped
   // the chat interface:
   //
-  // Droid_Image_Window.x=15; Droid_Image_Window.y=82; Droid_Image_Window.w=215; Droid_Image_Window.h=330;
-  // 
-  // But now we have a different chat window format:
-  //
   Droid_Image_Window . x = 48; Droid_Image_Window . y = 44; Droid_Image_Window . w = 130; Droid_Image_Window . h = 172;
 
   Activate_Conservative_Frame_Computation( );
-
-  //--------------------
-  // Next we prepare the whole background for all later text operations
-  //
-  if ( Dialog_Screen_Background == NULL )
-    Dialog_Screen_Background = our_IMG_load_wrapper( find_file ( CHAT_BACKGROUND_IMAGE_FILE , GRAPHICS_DIR, FALSE ) );
-  else
-    {
-      //--------------------
-      // when there is still an old surface present, it might be tainted and we 
-      // therefore generate a new fresh one without the image of the previous
-      // discussion partner on it.
-      //
-      SDL_FreeSurface( Dialog_Screen_Background );
-      Dialog_Screen_Background = our_IMG_load_wrapper( find_file ( CHAT_BACKGROUND_IMAGE_FILE , GRAPHICS_DIR, FALSE ) );
-    }
-  if ( Dialog_Screen_Background == NULL )
-    {
-      fprintf( stderr, "\n\nSDL_GetError: %s \n" , SDL_GetError() );
-      GiveStandardErrorMessage ( "PrepareMultipleChoiceDialog(...)" , "\
-ERROR LOADING BACKGROUND IMAGE FILE!",
-				 PLEASE_INFORM, IS_FATAL );
-    }
 
   //--------------------
   // We select small font for the menu interaction...
@@ -832,8 +802,10 @@ chat interface of Freedroid.  But:  Loading this file has failed.",
     {
       Droid_Image_Window . x = 48; Droid_Image_Window . y = 44; // Droid_Image_Window . w = 130; Droid_Image_Window . h = 172;
     }
-  our_SDL_blit_surface_wrapper( Large_Droid , NULL , Dialog_Screen_Background , &Droid_Image_Window );
-  our_SDL_blit_surface_wrapper( Dialog_Screen_Background , NULL , Screen , NULL );
+
+  blit_special_background ( CHAT_DIALOG_BACKGROUND_PICTURE_CODE );
+  // our_SDL_blit_surface_wrapper ( Large_Droid , NULL , Screen , &Droid_Image_Window );
+
   our_SDL_flip_wrapper( Screen );
 
   SDL_FreeSurface( Small_Droid );

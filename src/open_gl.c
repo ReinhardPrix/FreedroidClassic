@@ -209,8 +209,8 @@ our_SDL_fill_rect_wrapper (SDL_Surface *dst, SDL_Rect *dstrect, Uint32 color)
 	      glBegin(GL_QUADS);
 	      glVertex2i( 0       , 480 );
 	      glVertex2i( 0       ,   0 );
-	      glVertex2i( 0 + 639 ,   0 );
-	      glVertex2i( 0 + 639 , 480 );
+	      glVertex2i( 0 + 640 ,   0 );
+	      glVertex2i( 0 + 640 , 480 );
 	      glEnd( );
 	    }
 	  else
@@ -1615,7 +1615,9 @@ GL_HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area , unsigned char r ,
 #define MOUSE_BUTTON_INV_BACKGROUND_PICTURE "mouse_buttons/INVButton.png"           
 #define MOUSE_BUTTON_SKI_BACKGROUND_PICTURE "mouse_buttons/SKIButton.png"           
 #define MOUSE_BUTTON_PLUS_BACKGROUND_PICTURE "mouse_buttons/PLUSButton.png"          
-#define ALL_KNOWN_BACKGROUNDS 20
+#define CHAT_BACKGROUND_IMAGE_FILE "backgrounds/conversation.jpg"
+
+#define ALL_KNOWN_BACKGROUNDS 22
 
 static iso_image our_backgrounds [ ALL_KNOWN_BACKGROUNDS ] ;
 static int backgrounds_should_be_loaded_now = TRUE;
@@ -1628,6 +1630,8 @@ static int backgrounds_should_be_loaded_now = TRUE;
 void 
 blit_special_background ( int background_code )
 {
+  SDL_Surface* tmp_surf_1;
+  SDL_Rect src_rect;
   static char* background_filenames [ ALL_KNOWN_BACKGROUNDS ] = { INVENTORY_SCREEN_BACKGROUND_FILE ,  // 0
 								  CHARACTER_SCREEN_BACKGROUND_FILE ,  // 1 
 								  SKILL_SCREEN_BACKGROUND_FILE ,      // 2
@@ -1647,7 +1651,9 @@ blit_special_background ( int background_code )
 								  MOUSE_BUTTON_CHA_BACKGROUND_PICTURE , // 16
 								  MOUSE_BUTTON_INV_BACKGROUND_PICTURE , // 17
 								  MOUSE_BUTTON_SKI_BACKGROUND_PICTURE , // 18 
-								  MOUSE_BUTTON_PLUS_BACKGROUND_PICTURE } ; // 19
+								  MOUSE_BUTTON_PLUS_BACKGROUND_PICTURE , // 19
+								  CHAT_BACKGROUND_IMAGE_FILE ,        // 20
+								  CHAT_BACKGROUND_IMAGE_FILE      } ; // 21
 
   SDL_Rect our_background_rects [ ALL_KNOWN_BACKGROUNDS ] = { { 0 , 0 , 0 , 0 } ,               // 0
 							      { CHARACTERRECT_X , 0 , 0 , 0 } , // 1 
@@ -1669,7 +1675,12 @@ blit_special_background ( int background_code )
 							      { 560 , 434 ,  38 ,  45 } ,       // 16
 							      { 600 , 420 ,  38 ,  40 } ,       // 17 
 							      { 590 , 376 ,  38 ,  47 } ,       // 18
-							      { 560 , 434 ,  38 ,  45 } } ;     // 19
+							      { 560 , 434 ,  38 ,  45 } ,       // 19
+                                                              { 0 , 0 , 0 , 0 } ,               // 20
+                                                              { CHAT_SUBDIALOG_WINDOW_X , 
+								CHAT_SUBDIALOG_WINDOW_Y , 
+								CHAT_SUBDIALOG_WINDOW_W , 
+								CHAT_SUBDIALOG_WINDOW_H } } ;             // 21
   int i;
   char *fpath;
   
@@ -1685,6 +1696,41 @@ blit_special_background ( int background_code )
 
 	  fpath = find_file ( background_filenames [ i ] , GRAPHICS_DIR , FALSE );
 	  get_iso_image_from_file_and_path ( fpath , & ( our_backgrounds [ i ] ) , FALSE ) ;
+
+	  //--------------------
+	  // For the dialog, we need not only the dialog background, but also some smaller
+	  // parts of the background image, so we can re-do the background part that is in
+	  // the dialog partners chat output window.  We don't make a separate image on disk
+	  // but rather extract the info inside the code.  That makes for easier adaption
+	  // of the window dimensions from inside the code...
+	  //
+	  if ( i == CHAT_DIALOG_BACKGROUND_EXCERPT_CODE )
+	    {
+	      tmp_surf_1 = SDL_CreateRGBSurface ( SDL_SWSURFACE , CHAT_SUBDIALOG_WINDOW_W , CHAT_SUBDIALOG_WINDOW_H , 
+						  32 , 0x000000ff , 0x0000ff00 , 0x00ff0000 , 0xff000000 );
+
+	      src_rect . x = CHAT_SUBDIALOG_WINDOW_X ;
+	      src_rect . w = CHAT_SUBDIALOG_WINDOW_W ;
+	      src_rect . h = CHAT_SUBDIALOG_WINDOW_H ;
+	      //--------------------
+	      // With OpenGL, the image is flipped at this point already, so we
+	      // just copy the image in flipped form, cause later it should be 
+	      // flipped anyway.  Cool, eh?  Of course this way only the location
+	      // of the rectangle has to be adapted a bit...
+	      //
+	      if ( use_open_gl )
+		{
+		  src_rect . y = 480 - CHAT_SUBDIALOG_WINDOW_Y - CHAT_SUBDIALOG_WINDOW_H ;
+		}
+	      else
+		{
+		  src_rect . y = CHAT_SUBDIALOG_WINDOW_Y ;
+		}
+
+	      SDL_BlitSurface ( our_backgrounds [ i ] . surface , &src_rect , tmp_surf_1 , NULL );
+	      SDL_FreeSurface ( our_backgrounds [ i ] . surface ) ;
+	      our_backgrounds [ i ] . surface = SDL_DisplayFormat ( tmp_surf_1 );
+	    }
 
 	  if ( use_open_gl )
 	    {
