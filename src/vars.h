@@ -177,8 +177,15 @@ obstacle_spec obstacle_map [ NUMBER_OF_OBSTACLE_TYPES ] =
     { { NULL , 0 , 0 , NULL } , COLLISION_TYPE_RECTANGLE , 1.2 , 0.25 , FALSE , FALSE , FALSE , "iso_obstacle_0112.png" },
     { { NULL , 0 , 0 , NULL } , COLLISION_TYPE_RECTANGLE , 1.2 , 0.25 , FALSE , FALSE , FALSE , "iso_obstacle_0113.png" },
     { { NULL , 0 , 0 , NULL } , COLLISION_TYPE_RECTANGLE , 1.2 , 0.25 , FALSE , FALSE , FALSE , "iso_obstacle_0114.png" },
-    { { NULL , 0 , 0 , NULL } , COLLISION_TYPE_RECTANGLE , 1.2 , 0.25 , FALSE , FALSE , FALSE , "iso_obstacle_0115.png" }
+    { { NULL , 0 , 0 , NULL } , COLLISION_TYPE_RECTANGLE , 1.2 , 0.25 , FALSE , FALSE , FALSE , "iso_obstacle_0115.png" },
+    { { NULL , 0 , 0 , NULL } , COLLISION_TYPE_RECTANGLE , 1.2 , 0.25 , FALSE , FALSE , FALSE , "iso_obstacle_0116.png" },
+    { { NULL , 0 , 0 , NULL } , COLLISION_TYPE_RECTANGLE , 1.2 , 0.25 , FALSE , FALSE , FALSE , "iso_obstacle_0117.png" },
+    { { NULL , 0 , 0 , NULL } , COLLISION_TYPE_RECTANGLE , 1.2 , 0.25 , FALSE , FALSE , FALSE , "iso_obstacle_0118.png" },
+    { { NULL , 0 , 0 , NULL } , COLLISION_TYPE_RECTANGLE , 1.2 , 0.25 , FALSE , FALSE , FALSE , "iso_obstacle_0119.png" },
+    { { NULL , 0 , 0 , NULL } , COLLISION_TYPE_RECTANGLE , 1.2 , 0.25 , FALSE , FALSE , FALSE , "iso_obstacle_0120.png" },
+    { { NULL , 0 , 0 , NULL } , COLLISION_TYPE_RECTANGLE , 1.2 , 0.25 , FALSE , FALSE , FALSE , "iso_obstacle_0121.png" }
   };
+
 
 item_image_spec ItemImageList[ NUMBER_OF_ITEM_PICTURES ] = {
   { { 1 , 1 } , NULL } ,  { { 2 , 2 } , NULL } ,  { { 2 , 2 } , NULL } ,  { { 2 , 2 } , NULL } , // 0-3

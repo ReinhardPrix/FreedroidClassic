@@ -1111,7 +1111,6 @@ InitPictures (void)
   // bitmap
   //
   get_standard_iso_floor_tile_size ();
-
   
   // Loading all these pictures might take a while...
   // and we do not want do deal with huge frametimes, which
