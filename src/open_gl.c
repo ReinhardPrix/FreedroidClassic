@@ -519,6 +519,61 @@ Ran out of initialized texture positions to use for new textures.",
 }; // void make_texture_out_of_surface ( & ( floor_iso_images [ tile_type ] ) ) 
 
 /* ----------------------------------------------------------------------
+ * This function checks the error status of the OpenGL driver.  An error
+ * will produce at least a warning message, maybe even program termination
+ * if the errors are really severe.
+ * ---------------------------------------------------------------------- */
+void
+open_gl_check_error_status ( void )
+{
+#ifdef HAVE_LIBGL
+  
+  switch ( glGetError( ) )
+    {
+    case GL_NO_ERROR:
+      //--------------------
+      // All is well.  No messages need to be generated...
+      break;
+    case GL_INVALID_ENUM:
+      GiveStandardErrorMessage ( "open_gl_check_error_status(...)" , "\
+Error code GL_INVALID_ENUM received!",
+				 PLEASE_INFORM, IS_FATAL );
+      break;
+    case GL_INVALID_VALUE:
+      GiveStandardErrorMessage ( "open_gl_check_error_status(...)" , "\
+Error code GL_INVALID_VALUE received!",
+				 PLEASE_INFORM, IS_FATAL );
+      break;
+    case GL_INVALID_OPERATION:
+      GiveStandardErrorMessage ( "open_gl_check_error_status(...)" , "\
+Error code GL_INVALID_OPERATION received!",
+				 PLEASE_INFORM, IS_FATAL );
+      break;
+    case GL_STACK_OVERFLOW:
+      GiveStandardErrorMessage ( "open_gl_check_error_status(...)" , "\
+Error code GL_STACK_OVERFLOW received!",
+				 PLEASE_INFORM, IS_FATAL );
+      break;
+    case GL_STACK_UNDERFLOW:
+      GiveStandardErrorMessage ( "open_gl_check_error_status(...)" , "\
+Error code GL_STACK_UNDERFLOW received!",
+				 PLEASE_INFORM, IS_FATAL );
+      break;
+    case GL_OUT_OF_MEMORY:
+      GiveStandardErrorMessage ( "open_gl_check_error_status(...)" , "\
+Error code GL_OUT_OF_MEMORY received!",
+				 PLEASE_INFORM, IS_FATAL );
+      break;
+    default:
+      GiveStandardErrorMessage ( "open_gl_check_error_status(...)" , "\
+Unhandled error code received!",
+				 PLEASE_INFORM, IS_FATAL );
+      break;
+    }
+#endif
+};
+
+/* ----------------------------------------------------------------------
  * Initialize the OpenGL interface.
  * ---------------------------------------------------------------------- */
 #ifdef HAVE_LIBGL

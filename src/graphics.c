@@ -1355,6 +1355,7 @@ InitVideo (void)
   Uint32 video_flags = 0 ;  // flags for SDL video mode 
   int video_mode_ok_check_result ;
   char *fpath;
+  int buffer_size , depth_size, red_size, green_size, blue_size, alpha_size ;
 
   //--------------------
   // Initialize the SDL library 
@@ -1438,6 +1439,8 @@ InitVideo (void)
       if ( vid_info->blit_hw )
 	video_flags |= SDL_HWACCEL;
       
+      open_gl_check_error_status ( );
+
       /* Sets up OpenGL double buffering */
       if ( SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 ) )
 	{
@@ -1445,6 +1448,8 @@ InitVideo (void)
 Unable to set SDL_GL_DOUBLEBUFFER attribute!",
 				     PLEASE_INFORM, IS_FATAL );
 	}
+
+      open_gl_check_error_status ( );
 
       //--------------------
       // First we check to see if the mode we wish to set is really supported.  If it
@@ -1459,18 +1464,20 @@ SDL reported, that the video mode mentioned above is not supported UNDER ANY BIT
 				     PLEASE_INFORM, IS_FATAL );
 	  break;
 	default:
+	  DebugPrintf ( -4 , "\nTesting if color depth %d bits is available... " , vid_bpp );
 	  if ( video_mode_ok_check_result == vid_bpp )
 	    {
-	      DebugPrintf ( -4 , "\nVideo mode requested seems to be available in this color depth..." );
+	      DebugPrintf ( -4 , "YES." );
 	    }
 	  else
 	    {
-	      DebugPrintf ( -4 , "\nTesting if color depth %d bits is available... " , vid_bpp );
-	      DebugPrintf ( -4 , "\nThe closest we will get is %d bits per pixel." , video_mode_ok_check_result );
+	      DebugPrintf ( -4 , "NO! \nThe closest we will get is %d bits per pixel." , video_mode_ok_check_result );
+	      /*
 	      GiveStandardErrorMessage ( "InitVideo(...)" , "\
 SDL reported, that the video mode mentioned \nabove is not supported UNDER THE COLOR DEPTH MENTIONED ABOVE!\n\
 We'll be using the alternate color depth given above instead...",
 					 PLEASE_INFORM, IS_WARNING_ONLY );
+	      */
 	      vid_bpp = video_mode_ok_check_result ;
 	    }
 	}
@@ -1486,16 +1493,36 @@ We'll be using the alternate color depth given above instead...",
 	  fprintf( stderr,  "Video mode set failed: %s\n", SDL_GetError( ) );
 	  Terminate ( ERR ) ;
 	}
+      else
+	{
+	  SDL_GL_GetAttribute( SDL_GL_BUFFER_SIZE , & buffer_size);
+	  SDL_GL_GetAttribute( SDL_GL_RED_SIZE , & red_size);
+	  SDL_GL_GetAttribute( SDL_GL_GREEN_SIZE , & green_size);
+	  SDL_GL_GetAttribute( SDL_GL_BLUE_SIZE , & blue_size);
+	  SDL_GL_GetAttribute( SDL_GL_ALPHA_SIZE , & alpha_size);
+	  SDL_GL_GetAttribute( SDL_GL_DEPTH_SIZE , & depth_size);
+	  fprintf( stderr , "\n\nvideo mode set (bpp=%d RGBA=%d%d%d%d depth=%d)" ,
+		   buffer_size , red_size, green_size, blue_size, alpha_size, depth_size );
+	}
       
+      open_gl_check_error_status ( );
+
       //--------------------
       // Since we want to use openGl, it might be good to check the OpenGL vendor string
       // provided by the graphics driver.  Let's see...
       //
-      fprintf( stderr , "\nUse of OpenGL for graphics output has been requested.\nYour GL_VENDOR string seems to be: %s\n", glGetString( GL_VENDOR ) );
+      fprintf( stderr , "\n-OpenGL-------------------------------------------------------" );
+      fprintf( stderr , "\nVendor     : %s", glGetString( GL_VENDOR ) );
+      fprintf( stderr , "\nRenderer   : %s", glGetString( GL_RENDERER ) );
+      fprintf( stderr , "\nVersion    : %s", glGetString( GL_VERSION ) );
+      // fprintf( stderr , "\nExtentions : %s", glGetString( GL_EXTENSIONS ) );
+      fprintf( stderr , "\n\n" );
 
       /* initialize OpenGL */
       initGL( );
       
+      open_gl_check_error_status ( );
+
       /* resize the initial window */
       // resizeWindow( SCREEN_WIDTH, SCREEN_HEIGHT );
 
@@ -1530,7 +1557,7 @@ We'll be using the alternate color depth given above instead...",
   //
   if ( vid_info->wm_available )  /* if there's a window-manager */
     {
-      SDL_WM_SetCaption ("Freedroid", "");
+      SDL_WM_SetCaption ("FreedroidRPG", "");
       fpath = find_file (ICON_FILE, GRAPHICS_DIR, FALSE);
       SDL_WM_SetIcon( our_IMG_load_wrapper (fpath), NULL);
     }
