@@ -1121,11 +1121,13 @@ This indicates an error in the map system of Freedroid.",
       //--------------------
       // Since we've moved to a new level, we might also say so, a message like
       // "Entering ThisAndThat..." should appear in bold font on the screen.
-      //
-      strcpy ( entering_message , "Entering " );
-      strcat ( entering_message , curShip . AllLevels [ Me [ 0 ] . pos . z ] -> Levelname );
-      SetNewBigScreenMessage ( entering_message );
+      // although only if a level name is set
 
+      if (strcmp(curShip . AllLevels [ Me [ 0 ] . pos . z ] -> Levelname, "") ) {
+        strcpy ( entering_message , "Entering " );
+        strcat ( entering_message , curShip . AllLevels [ Me [ 0 ] . pos . z ] -> Levelname );
+        SetNewBigScreenMessage ( entering_message );
+      }
     }
   else
     {
