@@ -125,6 +125,8 @@ AC_CONFIG_FILES([Makefile
 		graphics/items/dixons_toolbox/Makefile 
 		graphics/items/emp_grenade/Makefile 
 		graphics/items/energy_capsule/Makefile 
+		graphics/items/eating_plate/Makefile 
+		graphics/items/eating_fork/Makefile 
 		graphics/items/entropy_inverter/Makefile 
 		graphics/items/green_armour/Makefile 
 		graphics/items/hacker_wristband/Makefile 

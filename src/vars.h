@@ -69,7 +69,8 @@ item_image_spec ItemImageList[ NUMBER_OF_ITEM_PICTURES ] = {
   { { 1 , 1 } , NULL } ,  { { 1 , 1 } , NULL } ,  { { 1 , 1 } , NULL } ,  { { 1 , 1 } , NULL } , // 48-51
   { { 1 , 1 } , NULL } ,  { { 1 , 1 } , NULL } ,  { { 1 , 1 } , NULL } ,  { { 1 , 1 } , NULL } , // 52-55
   { { 1 , 1 } , NULL } ,  { { 1 , 1 } , NULL } ,  { { 2 , 2 } , NULL } ,  { { 1 , 1 } , NULL } , // 56-59
-  { { 1 , 1 } , NULL } ,  { { 1 , 1 } , NULL } ,  { { 1 , 1 } , NULL } ,  { { 1 , 1 } , NULL }   // 60-63
+  { { 1 , 1 } , NULL } ,  { { 1 , 1 } , NULL } ,  { { 1 , 1 } , NULL } ,  { { 1 , 1 } , NULL } , // 60-63
+  { { 1 , 1 } , NULL } ,  { { 1 , 1 } , NULL } ,  { { 1 , 1 } , NULL } ,  { { 1 , 1 } , NULL }   // 64-67
 } ;
 
 /*
