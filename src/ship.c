@@ -718,25 +718,14 @@ ShowDeckMap (Level deck)
   int i, j;
   int LX;
   int LY;
+  SDL_Surface *tmp;
+
 
   LX = USERFENSTERPOSX;
   LY = USERFENSTERPOSY;
 
   ClearUserFenster ();
 
-  for (i = 0; i < deck->ylen; i++)
-    {
-      for (j = 0; j < deck->xlen; j++)
-	{
-	  SmallBlock (LX, LY,
-		      GetMapBrick (deck, j * BLOCKBREITE, i * BLOCKHOEHE),
-		      RealScreen, SCREENBREITE);
-	  LX += 8;  /* looks like that's our "small block" width */
-	} /* for (j<xlen) */
-
-      LX = USERFENSTERPOSX;
-      LY += 8;
-    } /* for (i<xlen) */
 
   PrepareScaledSurface(TRUE);
 
