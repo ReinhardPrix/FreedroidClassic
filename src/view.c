@@ -83,10 +83,8 @@ Assemble_Combat_Picture (int mask)
 
   DebugPrintf (2, "\nvoid Assemble_Combat_Picture(...): Real function call confirmed.");
   
-  // Recently there were complaints about garbage outside the ship.  This was because
-  // outside the ship, nothing was blittet.  Now the blitting starts at -5 tiles outside
-  // the ship and ends +5 tiles outside the other end of the ship.  That should do it.
-  //
+  // blitting starts at -5 tiles outside the ship and ends +5 tiles outside the other end of the ship.  
+  //That should do it.
 
   SDL_SetClipRect (ne_screen , &User_Rect);
 
@@ -94,15 +92,10 @@ Assemble_Combat_Picture (int mask)
     {
       for (col = -5; col < CurLevel->xlen + 5; col++)
 	{
-	  if ((MapBrick = GetMapBrick( CurLevel, col , line )) != INVISIBLE_BRICK)
-	    {
-	      TargetRectangle.x = USER_FENSTER_CENTER_X 
-		+ (int)rint( (-Me.pos.x+1.0*col-0.5 )*Block_Width);
-	      TargetRectangle.y = USER_FENSTER_CENTER_Y
-		+ (int)rint( (-Me.pos.y+1.0*line-0.5 )*Block_Height);
-	      SDL_BlitSurface( MapBlockSurfacePointer[ CurLevel->color ][MapBrick] , NULL ,
- 			       ne_screen, &TargetRectangle);
-	    }			// if !INVISIBLE_BRICK 
+	  MapBrick = GetMapBrick( CurLevel, col , line );
+	  TargetRectangle.x = USER_FENSTER_CENTER_X + (int)rint( (-Me.pos.x+1.0*col-0.5 )*Block_Width);
+	  TargetRectangle.y = USER_FENSTER_CENTER_Y + (int)rint( (-Me.pos.y+1.0*line-0.5 )*Block_Height);
+	  SDL_BlitSurface( MapBlockSurfacePointer[CurLevel->color][MapBrick], NULL, ne_screen, &TargetRectangle);
 	}			// for(col) 
     }				// for(line) 
 
@@ -125,7 +118,7 @@ Assemble_Combat_Picture (int mask)
 
   if ( GameConfig.Draw_Position )
     {
-      PrintStringFont( ne_screen , FPS_Display_BFont , Full_User_Rect.x+2*Full_User_Rect.w/3 , 
+      PrintStringFont( ne_screen , FPS_Display_BFont , Full_User_Rect.x+Full_User_Rect.w/6 , 
 		       Full_User_Rect.y+Full_User_Rect.h - FontHeight( FPS_Display_BFont ), 
 		       "GPS: X=%d Y=%d Lev=%d" , (int) rintf(Me.pos.x) , (int) rintf(Me.pos.y) , 
 		       CurLevel->levelnum );
@@ -152,8 +145,15 @@ Assemble_Combat_Picture (int mask)
 	{
 	  PrintStringFont( ne_screen , FPS_Display_BFont , Full_User_Rect.x+Full_User_Rect.w/2 , 
 			   Full_User_Rect.y+Full_User_Rect.h - FontHeight( FPS_Display_BFont ), 
-			   "Energy: %d " , (int) (Me.energy) );
+			   "Energy: %d" , (int)Me.energy);
 	}
+      if (GameConfig.Draw_DeathCount)
+	{
+	  PrintStringFont( ne_screen , FPS_Display_BFont , Full_User_Rect.x+2*Full_User_Rect.w/3 , 
+			   Full_User_Rect.y+Full_User_Rect.h - FontHeight( FPS_Display_BFont ), 
+			   "Deathcount: %d", (int)DeathCount );
+	}
+
 
       SDL_SetClipRect (ne_screen, &User_Rect);
 
@@ -289,7 +289,7 @@ PutInfluence ( int x, int y)
   // Maybe the influencer has something to say :)
   // so let him say it..
   //
-  if ( ( x == (-1) ) && ( Me.TextVisibleTime < GameConfig.WantedTextVisibleTime ) && GameConfig.All_Texts_Switch )
+  if ( ( x == (-1) ) && ( Me.TextVisibleTime < GameConfig.WantedTextVisibleTime ) && GameConfig.Droid_Talk )
     {
       //      PutStringFont ( ne_screen , FPS_Display_BFont , 
       //		      User_Rect.x+(User_Rect.w/2) + Block_Width/3 , 
@@ -444,7 +444,7 @@ Sorry...\n\
   //
   if ( (x == -1)
        && ( AllEnemys[Enum].TextVisibleTime < GameConfig.WantedTextVisibleTime )
-       && GameConfig.All_Texts_Switch )
+       && GameConfig.Droid_Talk )
     {
       PutStringFont ( ne_screen , FPS_Display_BFont , 
 		      User_Rect.x+(User_Rect.w/2) + Block_Width/3 + (AllEnemys[Enum].pos.x - Me.pos.x) * Block_Width , 

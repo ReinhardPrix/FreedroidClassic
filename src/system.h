@@ -59,6 +59,7 @@
 #include <errno.h>
 #include <stdarg.h>
 #include <ctype.h>
+
 #include <dirent.h>
 
 #include "SDL.h"
@@ -66,9 +67,5 @@
 
 #ifdef HAVE_LIBSDL_MIXER
 #include "SDL_mixer.h"
-#endif
-
-#ifdef HAVE_LIBSDL_NET
-#include "SDL_net.h"
 #endif
 

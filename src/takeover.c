@@ -227,6 +227,11 @@ Takeover (int enemynum)
 	  Me.type = AllEnemys[enemynum].type;
 
 	  RealScore += Druidmap[OpponentType].score;
+
+	  DeathCount += OpponentType * OpponentType;   // quadratic "importance", max=529
+
+	  AllEnemys[enemynum].status = OUT; // removed droid silently (no blast!)
+
 	  if (LeaderColor != YourColor)	/* only won because of InvincibleMode */
 	    message = "You cheat";
 	  else				/* won the proper way */
@@ -236,6 +241,9 @@ Takeover (int enemynum)
 	}				/* LeaderColor == YourColor */
       else if (LeaderColor == OpponentColor)
 	{
+	  // you lost, but enemy is killed too --> blast it!
+	  AllEnemys[enemynum].energy = -1.0;  /* to be sure */
+
 	  Takeover_Game_Lost_Sound ();
 	  if (Me.type != DRUID001)
 	    {
@@ -256,14 +264,6 @@ Takeover (int enemynum)
 	  message = "Deadlock";
 	}			/* LeadColor == REMIS */
 
-      /* don't display enemy if we're finished */
-      if (FinishTakeover) 
-	{
-	  AllEnemys[enemynum].status = OUT;
-	  AllEnemys[enemynum].energy = -1.0;  /* to be sure */
-	  OpponentType = -1;	/* dont display enemy any more */
-	}
-      
       DisplayBanner (message, NULL , 0 );	
       ShowPlayground ();
       now = SDL_GetTicks();
@@ -644,7 +644,7 @@ GetTakeoverGraphics (void)
 
   Set_Rect (ToLeaderBlock, curx, cury, LEADERBLOCKLEN, LEADERBLOCKHEIGHT);
 
-  return OK;
+  return(OK);
 }				// int GetTakeoverGraphics(void)
 
 /*-----------------------------------------------------------------

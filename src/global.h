@@ -50,7 +50,7 @@ EXTERN float LastGotIntoBlastSound;
 EXTERN float FPSover1;
 EXTERN float FPSover10;
 EXTERN float FPSover100;
-EXTERN char *Alertcolor[ALLALERTCOLORS];
+EXTERN char *Alertcolor[AL_LAST];
 EXTERN char *Shipnames[ALLSHIPS];
 EXTERN char *Classname[];
 EXTERN char *Classes[];
@@ -82,7 +82,11 @@ EXTERN int QuitProgram;
 EXTERN int GameOver;
 EXTERN int InvincibleMode;
 EXTERN int HideInvisibleMap;
-EXTERN int Alert;
+EXTERN int AlertLevel;
+EXTERN int AlertThreshold; // threshold for FIRST Alert-color (yellow), the others are 2*, 3*..
+EXTERN float AlertBonusPerSec; // bonus/sec for FIRST Alert-color, the others are 2*, 3*,...
+EXTERN float DeathCount;   // a cumulative/draining counter of kills->determines Alert!
+EXTERN float DeathCountDrainSpeed;  // drain per second
 EXTERN float RealScore;
 EXTERN long ShowScore;
 
@@ -143,6 +147,7 @@ EXTERN SDL_Color Black;
 #else
 #define EXTERN extern
 #endif
+EXTERN themelist_t AllThemes;
 EXTERN SDL_Cursor *crosshair_cursor;
 EXTERN SDL_Cursor  *arrow_cursor;
 EXTERN int Number_Of_Bullet_Types;

@@ -193,7 +193,7 @@ ReadAndMallocStringFromData ( char* SearchString , char* StartIndicationString ,
 
   if ( (SearchPointer = strstr ( SearchString , StartIndicationString )) == NULL )
     {
-      fprintf(stderr, "\n\
+      DebugPrintf (0, "\n\
 \n\
 ----------------------------------------------------------------------\n\
 Freedroid has encountered a problem:\n\
@@ -223,7 +223,7 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
       // Now we move to the end with the end pointer
       if ( (EndOfStringPointer = strstr( SearchPointer , EndIndicationString ) ) == NULL )
 	{
-	  fprintf(stderr, "\n\
+	  DebugPrintf (0, "\n\
 \n\
 ----------------------------------------------------------------------\n\
 Freedroid has encountered a problem:\n\
@@ -303,7 +303,7 @@ ReadAndMallocAndTerminateFile( char* filename , char* File_End_String )
   // Read the whole theme data to memory 
   if ((DataFile = fopen ( filename , "r")) == NULL)
     {
-      fprintf(stderr, "\n\
+      DebugPrintf (0, "\n\
 \n\
 ----------------------------------------------------------------------\n\
 Freedroid has encountered a problem:\n\
@@ -367,7 +367,7 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
 
   if ( (ReadPointer = strstr( Data , File_End_String ) ) == NULL )
     {
-      fprintf(stderr, "\n\
+      DebugPrintf (0, "\n\
 \n\
 ----------------------------------------------------------------------\n\
 Freedroid has encountered a problem:\n\
@@ -423,7 +423,7 @@ LocateStringInData ( char* SearchBeginPointer, char* SearchTextPointer )
 
   if ( ( temp = strstr ( SearchBeginPointer , SearchTextPointer ) ) == NULL)
     {
-      fprintf(stderr, "\n\
+      DebugPrintf (0, "\n\
 \n\
 ----------------------------------------------------------------------\n\
 Freedroid has encountered a problem:\n\
@@ -455,69 +455,29 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
 };
 
 
-/*
-----------------------------------------------------------------------
-This function should analyze a given passage of text, locate an 
-indicator for a value, and read in the value.
-
-----------------------------------------------------------------------
-*/
+/*----------------------------------------------------------------------
+  find label in data and read stuff after label into dst using the FormatString
+----------------------------------------------------------------------*/
 void
-ReadValueFromString( char* SearchBeginPointer , char* ValuePreceedText , char* FormatString , void* TargetValue , char* EndOfSearchSectionPointer )
+ReadValueFromString (char* data, char* label, char* FormatString, void* dst)
 {
-  char OldTerminaterCharValue;
-  char* SourceLocation;
+  char *pos;
 
-  // We shortly make a termination char into the string.
-  OldTerminaterCharValue=EndOfSearchSectionPointer[0];
-  EndOfSearchSectionPointer[0]=0;
+  // Now we locate the label in data and position pointer right after the label
+  pos = LocateStringInData (data, label); // ..will Terminate itself if not found...
+  pos += strlen (label);
 
-  // Now we locate the spot, where we finally will find our value
-  SourceLocation = LocateStringInData ( SearchBeginPointer , ValuePreceedText );
-  SourceLocation += strlen ( ValuePreceedText );
-
-  //--------------------
-  // Attention!!! 
-  // Now we try to read in the value!!!
-  if ( sscanf ( SourceLocation , FormatString , TargetValue ) == EOF )
+  if ( sscanf (pos, FormatString, dst) == EOF )
     {
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-In function 'void ReadValueFromString ( .... ):\n\
-\n\
-Freedroid has tried to read a value conformant to the format string %s.\n\
-\n\
-But the reading via sscanf didn't work.\n\
-\n\
-This might be indicating that the data, most likely from an external\n\
-data file, was corrupt.\n\
-\n\
-Also a serious bug in the reading function might (less likely) be a cause for the problem.\n\
-\n\
-The text that should be preceeding the real value was: %s\n\
-\n\
-Please check that your external text files are properly set up.\n\
-\n\
-Please also don't forget, that you might have to run 'make install'\n\
-again after you've made modifications to the data files in the source tree.\n\
-\n\
-Freedroid will terminate now to draw attention to the data problem it could\n\
-not resolve.... Sorry, if that interrupts a major game of yours.....\n\
-----------------------------------------------------------------------\n\
-\n" , FormatString , ValuePreceedText );
+      DebugPrintf (0, "\n ERROR: ReadValueFromString(): could not read value %s of label %s with format %s\n", 
+		   pos, FormatString, label ); 
       Terminate(ERR);
     }
   else
-    {
-      DebugPrintf( 2 , "\nvoid ReadValueFromString ( .... ) : value read in successfully.");
-    }
-  
+    DebugPrintf( 2 , "\nvoid ReadValueFromString ( .... ) : value read in successfully.");
 
-  // Now that we are done, we restore the given SearchArea to former glory
-  EndOfSearchSectionPointer[0]=OldTerminaterCharValue;
-};
+  return;
+}
 
 /*-----------------------------------------------------------------
  * find a given filename in subdir relative to DATADIR, 
@@ -541,7 +501,7 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
 char *
 find_file (char *fname, char *subdir, int use_theme, int critical)
 {
-  static char File_Path[5000];   /* hope this will be enough */
+  static char File_Path[500];   /* hope this will be enough */
   FILE *fp;  // this is the file we want to find?
   int i;
   bool found = FALSE;
@@ -573,7 +533,10 @@ find_file (char *fname, char *subdir, int use_theme, int critical)
       strcat (File_Path, "/");
 
       if (use_theme == USE_THEME)
-	strcat (File_Path, GameConfig.Theme_SubPath);
+	{
+	  strcat (File_Path, GameConfig.Theme_Name);
+	  strcat (File_Path, "_theme/");
+	}
 
       strcat (File_Path, fname);
       
@@ -586,19 +549,23 @@ find_file (char *fname, char *subdir, int use_theme, int critical)
 	}
     } /* for i */
 
-  if (found)
-    return (File_Path);
-  else
+  if (!found)
     { // how critical is this file for the game:
       switch (critical)
 	{
 	case WARNONLY:
-	  DebugPrintf (0, "WARNING: file %s not found. \n", fname);
+	  DebugPrintf (0, "WARNING: file %s not found ", fname);
+	  if (use_theme == USE_THEME)
+	    DebugPrintf (0, " in theme-dir: graphics/%s_theme/ \n", GameConfig.Theme_Name);
+	  else DebugPrintf (0, "\n");
 	  return (NULL);
 	case IGNORE:
 	  return (NULL);
 	case CRITICAL:
-	  DebugPrintf (0, "ERROR: file %s not found, cannot run without it!\n", fname);
+	  DebugPrintf (0, "ERROR: file %s not found ", fname);
+	  if (use_theme == USE_THEME)
+	    DebugPrintf (0, " in theme-dir: graphics/%s_theme/ \n", GameConfig.Theme_Name);
+	  DebugPrintf (0, "...cannot run without it!\n");
 	  Terminate (ERR);
 	default:
 	  DebugPrintf (0, "ERROR in find_file(): Code should never reach this line!! Harakiri\n");
@@ -606,10 +573,7 @@ find_file (char *fname, char *subdir, int use_theme, int critical)
 	}
     }
 
-  DebugPrintf (0, "ERROR in find_file(): Code should never reach this line!! Harakiri\n");
-  Terminate (ERR);
-
-  return (NULL);  // just to keep the compiler quiet ;)
+  return (File_Path);  
 
 } /* find_file */
 
@@ -825,16 +789,14 @@ void
 DebugPrintf (int db_level, char *fmt, ...)
 {
   va_list args;
-  char *tmp;
+  static char buffer[5000+1];
   va_start (args, fmt);
 
   if (db_level <= debug_level)
     {
-      tmp = (char *) MyMalloc (1000000 + 1);
-      vsprintf (tmp, fmt, args);
-      fprintf (stderr, tmp);
-
-      free (tmp);
+      vsnprintf (buffer, 5000, fmt, args);
+      fprintf (stderr, buffer);
+      fflush (stderr);
     }
 
   va_end (args);

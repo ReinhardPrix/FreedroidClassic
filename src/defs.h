@@ -33,10 +33,14 @@
 #ifndef _defs_h
 #define _defs_h
 
+#define MAX_THEMES  100
+
 #define JOY_MAX_VAL 32767     // maximal amplitude of joystick axis values
 
 #define RESET 0x01
 #define UPDATE 0x02
+#define INIT_ONLY 0x04
+
 #define DROID_ROTATION_TIME 3.0
 
 
@@ -108,6 +112,16 @@ enum
 // The flags for AssembleCombatWindow are:
 enum
 { ONLY_SHOW_MAP = 1 , DO_SCREEN_UPDATE = 2 };
+
+// symbolic Alert-names
+enum _alertnames {
+  AL_GREEN = 0,
+  AL_YELLOW,
+  AL_AMBER,
+  AL_RED,
+  AL_LAST 
+};
+
 
 
 // **********************************************************************
@@ -223,6 +237,7 @@ enum _sounds
   ENDCOUNTDOWN_SOUND,
   INFLUEXPLOSION_SOUND,
   WHITE_NOISE,
+  ALERT_SOUND,
   ALL_SOUNDS   // marks the last entry always!
 };
 
@@ -290,8 +305,6 @@ enum _directions
 #define NUM_MAP_BLOCKS		51  // total number of map-blocks 
 #define NUM_COLORS              7   // how many different level colorings?/different tilesets?
 
-#define ALLALERTCOLORS 		3
-
 // #define ALLBULLETTYPES		4	/* number of bullet-types */
 #define ALLBLASTTYPES		2	/* number of different exposions */
 
@@ -323,7 +336,8 @@ enum _directions
 
 #define MAXWAYPOINTS 		100
 #define MAX_DOORS_ON_LEVEL 	60
-#define MAX_REFRESHES_ON_LEVEL	39
+#define MAX_REFRESHES_ON_LEVEL	40
+#define MAX_ALERTS_ON_LEVEL	40
 #define MAX_TELEPORTERS_ON_LEVEL	10
 
 #define MAX_PHASES_IN_A_BULLET 12
@@ -416,13 +430,16 @@ enum _status
 enum
 {
   FLOOR = 0,
-  ECK_LU,        T_U,          ECK_RU,       T_L,          KREUZ,       T_R,    ECK_LO,  T_O,    ECK_RO,
-  H_WALL=10,     V_WALL,       ALERT,        BLOCK1,       BLOCK2,      BLOCK3, BLOCK4,  BLOCK5,
-  H_ZUTUERE=18,  H_HALBTUERE1, H_HALBTUERE2, H_HALBTUERE3, H_GANZTUERE,
-  KONSOLE_L=23,  KONSOLE_R,    KONSOLE_O,    KONSOLE_U,
-  V_ZUTUERE=27,  V_HALBTUERE1, V_HALBTUERE2, V_HALBTUERE3, V_GANZTUERE,
-  LIFT=32,       VOID,         REFRESH1,     REFRESH2,     REFRESH3,    REFRESH4,
-  TELE_1=38,     TELE_2,       TELE_3,       TELE_4,       INVISIBLE_BRICK,     FINE_GRID
+  ECK_LU = 1,   T_U,          ECK_RU,       T_L,          KREUZ,       T_R,    ECK_LO,  T_O,    ECK_RO,
+  H_WALL =10,   V_WALL,       UNUSED1,      BLOCK1,       BLOCK2,      BLOCK3, BLOCK4,  BLOCK5,
+  H_ZUTUERE=18, H_HALBTUERE1, H_HALBTUERE2, H_HALBTUERE3, H_GANZTUERE,
+  KONSOLE_L=23, KONSOLE_R,    KONSOLE_O,    KONSOLE_U,
+  V_ZUTUERE=27, V_HALBTUERE1, V_HALBTUERE2, V_HALBTUERE3, V_GANZTUERE,
+  LIFT = 32,    VOID = 33,
+  REFRESH1=34,  REFRESH2,     REFRESH3,    REFRESH4,   
+  ALERT_GREEN=38, ALERT_YELLOW, ALERT_AMBER, ALERT_RED, 
+  UNUSED2 = 43,   FINE_GRID,
+  NUM_MAP_TILES
 };
 
 

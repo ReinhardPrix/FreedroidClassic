@@ -49,34 +49,8 @@
 #define LEVEL_ENTER_COMMENT_STRING "Comment of the Influencer on entering this level=\""
 #define BACKGROUND_SONG_NAME_STRING "Name of background song for this level="
 
-symtrans Translator[ NUM_MAP_BLOCKS ] = {
-  {'.', FLOOR},
-  {'\'', VOID},
-  {'x', FLOOR},			/* A waypoint is invisible */
-  {'+', KREUZ},
-  {'-', H_WALL},
-  {'|', V_WALL},
-  {'"', H_ZUTUERE},
-  {'=', V_ZUTUERE},
-  {'[', KONSOLE_L},
-  {']', KONSOLE_R},
-  {'(', KONSOLE_O},
-  {')', KONSOLE_U},
-  {'o', LIFT},
-  {'@', REFRESH1},
-  {'a', ALERT},
-  {'1', BLOCK1},
-  {'2', BLOCK2},
-  {'3', BLOCK3},
-  {'4', BLOCK4},
-  {'5', BLOCK5},
-  {0, -1}			// marks the end
-};
-
 void ResetLevelMap (Level Lev);
 void GetThisLevelsDroids( char* SectionPointer );
-
-
 
 /*@Function============================================================
   @Desc: unsigned char GetMapBrick(Level deck, float x, float y): liefert
@@ -165,22 +139,28 @@ ActSpecialField (float x, float y)
   switch (MapBrick)
     {
     case LIFT:
-      if ( (Me.status != ACTIVATE) || (myspeed2 > 1) )
+      if ( myspeed2 > 1.0 )
 	break;
 
-      cx = rintf(x) - x ;
-      cy = rintf(y) - y ;
+      if ( (Me.status == ACTIVATE) || (GameConfig.TakeoverActivates && (Me.status==TRANSFERMODE)) )
+	{
+	  cx = rintf(x) - x ;
+	  cy = rintf(y) - y ;
 
-      /* Lift nur betreten, wenn ca. im Zentrum */
-      if ((cx * cx + cy * cy) < Droid_Radius * Droid_Radius)
-	EnterLift ();
+	  /* Lift nur betreten, wenn ca. im Zentrum */
+	  if ((cx * cx + cy * cy) < Droid_Radius * Droid_Radius)
+	    EnterLift ();
+	}
+
       break;
 
     case KONSOLE_R:
     case KONSOLE_L:
     case KONSOLE_O:
     case KONSOLE_U:
-      if (Me.status == ACTIVATE && (myspeed2 < 1) )
+      if (myspeed2 > 1.0)
+	break;
+      if ( (Me.status == ACTIVATE) || (GameConfig.TakeoverActivates && (Me.status==TRANSFERMODE)))
 	{
 	  EnterKonsole ();
 	  DebugPrintf (2, "\nvoid ActSpecialField(int x, int y):  Back from EnterKonsole().\n");
@@ -232,7 +212,7 @@ AnimateRefresh (void)
     {
       x = CurLevel->refreshes[i].x;
       y = CurLevel->refreshes[i].y;
-      if (x == 0 || y == 0)
+      if (x == -1 || y == -1)
 	break;
 
       CurLevel->map[y][x] = (((int) rintf (InnerWaitCounter)) % 4) + REFRESH1;
@@ -240,53 +220,16 @@ AnimateRefresh (void)
       /* Inneres Refresh animieren */
       for (j = 0; j < 4; j++)
 	{
-	  ;  /* nix hier noch... */
+	  ;  /* nix hier noch... */ // FIXME
 	}			/* for */
 
     }				/* for */
 
   DebugPrintf (2, "\nvoid AnimateRefresh(void):  end of function reached.");
 
+  return;
+
 }				/* AnimateRefresh */
-
-/*@Function============================================================
-@Desc: 	AnimateRefresh():
-
-@Ret: void
-@Int:
-* $Function----------------------------------------------------------*/
-void
-AnimateTeleports (void)
-{
-  static float InnerWaitCounter = 0;
-  static int InnerPhase = 0;	/* Zaehler fuer innere Phase */
-  int i, x, y;
-
-  DebugPrintf (2, "\nvoid AnimateRefresh(void):  real function call confirmed.");
-
-  InnerWaitCounter += Frame_Time () * 30;
-
-  // if( (((int)rintf(InnerWaitCounter)) % INNER_REFRESH_COUNTER) == 0) {
-  // InnerPhase ++;
-  // InnerPhase %= INNER_PHASES;
-
-  InnerPhase = (((int) rintf (InnerWaitCounter)) % INNER_PHASES);
-
-
-  for (i = 0; i < MAX_TELEPORTERS_ON_LEVEL; i++)
-    {
-      x = CurLevel->teleporters[i].x;
-      y = CurLevel->teleporters[i].y;
-      if (x == 0 || y == 0)
-	break;
-
-      CurLevel->map[y][x] = (((int) rintf (InnerWaitCounter)) % 4) + TELE_1;
-
-    }				/* for */
-
-  DebugPrintf (2, "\nvoid AnimateRefresh(void):  end of function reached.");
-
-}; // void AnimateTeleports ( void )
 
 /*@Function============================================================
 @Desc: 	LoadShip(): loads the data for a whole ship
@@ -313,7 +256,7 @@ LoadShip (char *filename)
   //--------------------
   // Now we read the shipname information from the loaded data
   //
-  curShip.AreaName = ReadAndMallocStringFromData ( ShipData , AREA_NAME_STRING , "\"" ) ;
+  ReadValueFromString(ShipData, AREA_NAME_STRING, "%s", curShip.AreaName);
 
   //--------------------
   // Now we count the number of levels and remember their start-addresses.
@@ -347,70 +290,11 @@ LoadShip (char *filename)
       InterpretMap (curShip.AllLevels[i]); // initialize doors, refreshes and lifts
     }
 
+  free (ShipData);
+
   return OK;
 
 } /* LoadShip () */
-
-/*@Function============================================================
-@Desc: This function is intended to eliminate leading -1 entries before
-       real entries in the waypoint connection structure.
-
-       Such leading -1 entries might cause problems later, because some
-       Enemy-Movement routines expect that the "real" entries are the
-       first entries in the connection list.
-
-@Ret:  none
-* $Function----------------------------------------------------------*/
-void CheckWaypointIntegrity(Level Lev)
-{
-  int i, j , k , l ;
-
-  for ( i = 0 ; i < MAXWAYPOINTS ; i++ )
-    {
-      // Search for the first -1 entry:  j contains this number
-      for ( j = 0 ; j < MAX_WP_CONNECTIONS ; j++ )
-	{
-	  if (Lev->AllWaypoints[i].connections[j] == -1 ) break;
-	}
-
-      // have only non-(-1)-entries?  then we needn't do anything.
-      if ( j == MAX_WP_CONNECTIONS ) continue;
-      // have only one (-1) entry in the last position?  then we needn't do anything.
-      if ( j == MAX_WP_CONNECTIONS - 1 ) continue;
-      
-      // search for the next non-(-1)-entry AFTER the -1 entry fount first
-      for ( k = j + 1 ; k < MAX_WP_CONNECTIONS ; k ++ )
-	{
-	  if (Lev->AllWaypoints[i].connections[k] != -1 ) break;
-	}
-      
-      // none found? -- that would be good.  no corrections nescessary.  we can go.
-      if ( k == MAX_WP_CONNECTIONS ) continue;
-
-      // At this point we have found a non-(-1)-entry after a -1 entry.  that means work!!
-
-      DebugPrintf( 0 , "\n WARNING!! INCONSISTENSY FOUNT ON LEVEL %d!! " , Lev->levelnum );
-      DebugPrintf( 0 , "\n NUMBER OF LEADING -1 ENTRIES: %d!! " , k-j );
-      DebugPrintf( 0 , "\n COMPENSATION ACTIVATED..." );
-
-      // So we move the later waypoints just right over the existing leading -1 entries
-
-      for ( l = j ; l < MAX_WP_CONNECTIONS-(k-j) ; l++ )
-	{
-	  Lev->AllWaypoints[i].connections[l]=Lev->AllWaypoints[i].connections[l+(k-j)];
-	}
-
-      // So the block of leading -1 entries has been eliminated
-      // BUT:  This may have introduced double entries of waypoints, e.g. if there was a -1
-      // at the start and all other entries filled!  WE DO NOT HANDLE THIS CASE.  SORRY.
-      // Also there might be a second sequence of -1 entries followed by another non-(-1)-entry
-      // sequence.  SORRY, THAT CASE WILL ALSO NOT BE HANDLES SEPARATELY.  Maybe later.
-      // For now this function will do perfectly well as it is now.
-
-    }
-
-}; // void CheckWaypointIntegrity(Level Lev)
-
 		
 /*@Function============================================================
 @Desc: char *StructToMem(Level Lev):
@@ -474,12 +358,7 @@ char *StructToMem(Level Lev)
   }
 
   // --------------------  
-  // The next thing we must do is write the waypoints of this level also
-  // to disk.
-
-  // There might be LEADING -1 entries in front of other connection entries.
-  // This is unwanted and shall be corrected here.
-  //  CheckWaypointIntegrity( Lev );
+  // The next thing we must do is write the waypoints of this level 
 
   strcat(LevelMem, WP_BEGIN_STRING);
   strcat(LevelMem, "\n");
@@ -558,7 +437,6 @@ int SaveShip(char *shipname)
   //
   MapHeaderString="\n\
 ----------------------------------------------------------------------\n\
-\n\
 This file was generated using the Freedroid level editor.\n\
 Please feel free to make any modifications you like, but in order for you\n\
 to have an easier time, it is recommended that you use the Freedroid level\n\
@@ -651,10 +529,6 @@ freedroid-discussion@lists.sourceforge.net\n\
  *      This function is for LOADING map data!
  * 	This function extracts the data from *data and writes them 
  *      into a Level-struct:
- *
- *	NOTE:  Here, the map-data are NOT yet translated to their 
- *             their internal values, like "VOID", "H_GANZTUERE" and
- *             all the other values from the defs.h file.
  *
  *	Doors and Waypoints Arrays are initialized too
  *
@@ -799,7 +673,7 @@ GetDoors (Level Lev)
 
   /* init Doors- Array to 0 */
   for (i = 0; i < MAX_DOORS_ON_LEVEL; i++)
-    Lev->doors[i].x = Lev->doors[i].y = 0;
+    Lev->doors[i].x = Lev->doors[i].y = -1;
 
   /* now find the doors */
   for (line = 0; line < ylen; line++)
@@ -862,9 +736,9 @@ GetRefreshes (Level Lev)
   xlen = Lev->xlen;
   ylen = Lev->ylen;
 
-  /* init refreshes array to 0 */
+  /* init refreshes array to -1 */
   for (i = 0; i < MAX_REFRESHES_ON_LEVEL; i++)
-    Lev->refreshes[i].x = Lev->refreshes[i].y = 0;
+    Lev->refreshes[i].x = Lev->refreshes[i].y = -1;
 
   /* now find all the refreshes */
   for (row = 0; row < ylen; row++)
@@ -884,7 +758,7 @@ Freedroid has encountered a problem:\n\
 The number of refreshes found in level %d seems to be greater than the number\n\
 of refreshes currently allowed in a freedroid map.\n\
 \n\
-The constant for the maximum number of doors currently is set to %d in the\n\
+The constant for the maximum number of refreshes currently is set to %d in the\n\
 freedroid defs.h file.  You can enlarge the constant there, then start make\n\
 and make install again, and the map will be loaded without complaint.\n\
 \n\
@@ -907,14 +781,11 @@ Sorry...\n\
 }				// int GetRefreshed(Level lev)
 
 
-/*@Function============================================================
-@Desc: This function initialized the array of Teleports for animation
-       within the level
-
-@Ret: Number of refreshes found or ERR
-* $Function----------------------------------------------------------*/
-int
-GetTeleports (Level Lev)
+//----------------------------------------------------------------------
+// Find all alerts on this level and initialize their position-array
+//----------------------------------------------------------------------
+void
+GetAlerts (Level Lev)
 {
   int i, row, col;
   int xlen, ylen;
@@ -923,48 +794,37 @@ GetTeleports (Level Lev)
   xlen = Lev->xlen;
   ylen = Lev->ylen;
 
-  // init teleporters array to 0 
-  for (i = 0; i < MAX_TELEPORTERS_ON_LEVEL; i++)
-    Lev->teleporters[i].x = Lev->teleporters[i].y = 0;
+  // init alert array to -1 
+  for (i = 0; i < MAX_ALERTS_ON_LEVEL; i++)
+    Lev->alerts[i].x = Lev->alerts[i].y = -1;
 
-  // now find all the teleporters 
+  // now find all the alerts
   for (row = 0; row < ylen; row++)
     for (col = 0; col < xlen; col++)
       {
-	if (Lev->map[row][col] == TELE_1 )
+	if (Lev->map[row][col] == ALERT_GREEN)
 	  {
-	    Lev->teleporters[curref].x = col;
-	    Lev->teleporters[curref++].y = row;
+	    Lev->alerts[curref].x = col;
+	    Lev->alerts[curref++].y = row;
 
-	    if (curref > MAX_TELEPORTERS_ON_LEVEL)
+	    if (curref > MAX_ALERTS_ON_LEVEL)
 	      {
-		fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The number of teleporters found in level %d seems to be greater than the number\n\
-of teleporters currently allowed in a freedroid map.\n\
-\n\
-The constant for the maximum number of doors currently is set to %d in the\n\
-freedroid defs.h file.  You can enlarge the constant there, then start make\n\
-and make install again, and the map will be loaded without complaint.\n\
-\n\
-The constant in defs.h is names 'MAX_TELEPORTERS_ON_LEVEL'.  If you received this \n\
-message, please also tell the developers of the freedroid project, that they\n\
-should enlarge the constant in all future versions as well.\n\
-\n\
-Thanks a lot.\n\
-\n\
-But for now Freedroid will terminate to draw attention to this small map problem.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , Lev->levelnum , MAX_TELEPORTERS_ON_LEVEL );
-		Terminate(ERR);
+		DebugPrintf(0, "WARNING: more alert-tiles found on level %d than allowed (%d)!!",
+			    Lev->levelnum, MAX_ALERTS_ON_LEVEL);
+		DebugPrintf(0, "Remaining Alerts will be inactive... \n");
+		break;
 	      }
-	  }			/* if */
-      }				/* for */
-  return curref;
-}; // int GetTeleports(Level lev)
+	  }    // if alert found
+
+      }	// for cols
+
+  return;
+
+} // int GetAlerts()
+
+
+
+
 
 
 /*======================================================================
@@ -1035,11 +895,12 @@ ResetLevelMap (Level Lev)
 	    case REFRESH4:
 	      Lev->map[i][col]=REFRESH1;
 	      break;
-	    case TELE_1:
-	    case TELE_2:
-	    case TELE_3:
-	    case TELE_4:
-	      Lev->map[i][col]=TELE_1;
+
+	    case ALERT_GREEN:
+	    case ALERT_YELLOW:
+	    case ALERT_AMBER:
+	    case ALERT_RED:
+	      Lev->map[i][col] = ALERT_GREEN;
 	      break;
 	    default:
 	      break;
@@ -1048,7 +909,8 @@ ResetLevelMap (Level Lev)
     }
 
   return;
-}
+
+} // ResetLevelMap
 
 
 
@@ -1067,8 +929,8 @@ InterpretMap (Level Lev)
   // Get Refreshes 
   GetRefreshes ( Lev );
 
-  // Get Refreshes 
-  GetTeleports ( Lev );
+  // Get Alerts
+  GetAlerts (Lev);
 
   return(OK);
 }		
@@ -1128,13 +990,13 @@ GetLiftConnections (char *filename)
   //
   while ( ( EntryPointer = strstr( EntryPointer , "Elevator Number=" ) ) != NULL )
     {
-      ReadValueFromString( EntryPointer , "Elevator Number=" , "%d" , &ElevatorIndex , EndOfLiftRectangleSection );
+      ReadValueFromString (EntryPointer, "Elevator Number=", "%d", &ElevatorIndex);
       EntryPointer ++;
 
-      ReadValueFromString( EntryPointer , "ElRowX=" , "%d" , &curShip.LiftRow_Rect[ ElevatorIndex ].x , EndOfLiftRectangleSection );
-      ReadValueFromString( EntryPointer , "ElRowY=" , "%d" , &curShip.LiftRow_Rect[ ElevatorIndex ].y , EndOfLiftRectangleSection );
-      ReadValueFromString( EntryPointer , "ElRowW=" , "%d" , &curShip.LiftRow_Rect[ ElevatorIndex ].w , EndOfLiftRectangleSection );
-      ReadValueFromString( EntryPointer , "ElRowH=" , "%d" , &curShip.LiftRow_Rect[ ElevatorIndex ].h , EndOfLiftRectangleSection );
+      ReadValueFromString (EntryPointer, "ElRowX=", "%d", &curShip.LiftRow_Rect[ ElevatorIndex ].x);
+      ReadValueFromString (EntryPointer, "ElRowY=", "%d", &curShip.LiftRow_Rect[ ElevatorIndex ].y);
+      ReadValueFromString (EntryPointer, "ElRowW=", "%d", &curShip.LiftRow_Rect[ ElevatorIndex ].w);
+      ReadValueFromString (EntryPointer, "ElRowH=", "%d", &curShip.LiftRow_Rect[ ElevatorIndex ].h);
     }
 
   //--------------------
@@ -1149,20 +1011,17 @@ GetLiftConnections (char *filename)
   
   while ( ( EntryPointer = strstr( EntryPointer , "DeckNr=" ) ) != NULL )
     {
-      ReadValueFromString( EntryPointer , "DeckNr=" , "%d" , &DeckIndex , EndOfDeckRectangleSection );
-      ReadValueFromString( EntryPointer , "RectNumber=" , "%d" , &RectIndex , EndOfDeckRectangleSection );
+      ReadValueFromString (EntryPointer, "DeckNr=", "%d", &DeckIndex);
+      ReadValueFromString (EntryPointer, "RectNumber=", "%d", &RectIndex);
       EntryPointer ++;  // to prevent doubly taking this entry
       
       curShip.num_level_rects[ DeckIndex ] ++; // count the number of rects for this deck one up
 
-      ReadValueFromString( EntryPointer , "DeckX=" , "%d" , &curShip.Level_Rects[ DeckIndex ][ RectIndex ].x , EndOfDeckRectangleSection );
-      ReadValueFromString( EntryPointer , "DeckY=" , "%d" , &curShip.Level_Rects[ DeckIndex ][ RectIndex ].y , EndOfDeckRectangleSection );
-      ReadValueFromString( EntryPointer , "DeckW=" , "%d" , &curShip.Level_Rects[ DeckIndex ][ RectIndex ].w , EndOfDeckRectangleSection );
-      ReadValueFromString( EntryPointer , "DeckH=" , "%d" , &curShip.Level_Rects[ DeckIndex ][ RectIndex ].h , EndOfDeckRectangleSection );
-
+      ReadValueFromString (EntryPointer, "DeckX=", "%d", &curShip.Level_Rects[DeckIndex][RectIndex].x);
+      ReadValueFromString (EntryPointer, "DeckY=", "%d", &curShip.Level_Rects[DeckIndex][RectIndex].y);
+      ReadValueFromString (EntryPointer, "DeckW=", "%d", &curShip.Level_Rects[DeckIndex][RectIndex].w);
+      ReadValueFromString (EntryPointer, "DeckH=", "%d", &curShip.Level_Rects[DeckIndex][RectIndex].h);
     }
-
-  
 
   //--------------------
   //
@@ -1178,17 +1037,16 @@ GetLiftConnections (char *filename)
 
   while ( ( EntryPointer = strstr( EntryPointer , "Label=" ) ) != NULL )
     {
-      ReadValueFromString( EntryPointer , "Label=" , "%d" , &Label , EndOfLiftConnectionData );
+      ReadValueFromString (EntryPointer, "Label=", "%d", &Label);
       CurLift = &(curShip.AllLifts[Label]);
       EntryPointer++; // to avoid doubly taking this entry
 
-      ReadValueFromString( EntryPointer , "Deck=" , "%d" , &(CurLift->level) , EndOfLiftConnectionData );
-      ReadValueFromString( EntryPointer , "PosX=" , "%d" , &(CurLift->x) , EndOfLiftConnectionData );
-      ReadValueFromString( EntryPointer , "PosY=" , "%d" , &(CurLift->y) , EndOfLiftConnectionData );
-      ReadValueFromString( EntryPointer , "LevelUp=" , "%d" , &(CurLift->up) , EndOfLiftConnectionData );
-      ReadValueFromString( EntryPointer , "LevelDown=" , "%d" , &(CurLift->down) , EndOfLiftConnectionData );
-      ReadValueFromString( EntryPointer , "LiftRow=" , "%d" , &(CurLift->lift_row) , EndOfLiftConnectionData );
-      
+      ReadValueFromString (EntryPointer, "Deck=", "%d", &(CurLift->level));
+      ReadValueFromString (EntryPointer, "PosX=", "%d", &(CurLift->x));
+      ReadValueFromString (EntryPointer, "PosY=", "%d", &(CurLift->y));
+      ReadValueFromString (EntryPointer, "LevelUp=", "%d", &(CurLift->up));
+      ReadValueFromString (EntryPointer, "LevelDown=", "%d", &(CurLift->down));
+      ReadValueFromString (EntryPointer, "LiftRow=", "%d", &(CurLift->lift_row));
     }
 
   curShip.num_lifts = Label;
@@ -1304,16 +1162,13 @@ GetThisLevelsDroids( char* SectionPointer )
   EndOfThisLevelData[0]=0;
 
   // Now we read in the level number for this level
-  ReadValueFromString( SectionPointer , DROIDS_LEVEL_INDICATION_STRING , "%d" , &OurLevelNumber , 
-		       EndOfThisLevelData );
+  ReadValueFromString (SectionPointer, DROIDS_LEVEL_INDICATION_STRING, "%d", &OurLevelNumber);
 
   // Now we read in the maximal number of random droids for this level
-  ReadValueFromString( SectionPointer , DROIDS_MAXRAND_INDICATION_STRING , "%d" , &MaxRand , 
-		       EndOfThisLevelData );
+  ReadValueFromString (SectionPointer, DROIDS_MAXRAND_INDICATION_STRING, "%d", &MaxRand);
 
   // Now we read in the minimal number of random droids for this level
-  ReadValueFromString( SectionPointer , DROIDS_MINRAND_INDICATION_STRING , "%d" , &MinRand , 
-		       EndOfThisLevelData );
+  ReadValueFromString (SectionPointer, DROIDS_MINRAND_INDICATION_STRING, "%d", &MinRand);
 
   DifferentRandomTypes=0;
   SearchPointer = SectionPointer;
@@ -1406,7 +1261,7 @@ MoveLevelDoors (void)
       doory = (CurLevel->doors[i].y);
 
       /* Keine weiteren Tueren */
-      if (doorx == 0 && doory == 0)
+      if (doorx == -1 && doory == -1)
 	break;
 
       Pos = &(CurLevel->map[doory][doorx]);
@@ -1545,15 +1400,14 @@ IsPassable (float x, float y, int Checkpos)
     case REFRESH2:
     case REFRESH3:
     case REFRESH4:
-    case TELE_1:
-    case TELE_2:
-    case TELE_3:
-    case TELE_4:
     case FINE_GRID:
       ret = CENTER;		/* these are passable */
       break;
 
-    case ALERT:
+    case ALERT_GREEN:
+    case ALERT_YELLOW:
+    case ALERT_AMBER:
+    case ALERT_RED:
       if (Checkpos == LIGHT)
 	ret = CENTER;
       else

@@ -137,7 +137,6 @@ EXTERN void white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout);
 #else
 #define EXTERN extern
 #endif
-EXTERN void AnimateTeleports (void);
 EXTERN unsigned char GetMapBrick (Level deck, float x, float y);
 EXTERN int GetCurrentLift (void);
 EXTERN void ActSpecialField (float, float);
@@ -243,7 +242,7 @@ EXTERN int SaveGameConfig (void);
 EXTERN int sign (float x);
 EXTERN char* ReadAndMallocStringFromData ( char* SearchString , char* StartIndicationString , char* EndIndicationString );
 EXTERN int CountStringOccurences ( char* SearchString , char* TargetString ) ;
-EXTERN void ReadValueFromString( char* SearchBeginPointer , char* ValuePreceedText , char* FormatString , void* TargetValue , char* EndOfSearchSectionPointer );
+EXTERN void ReadValueFromString(char* data, char* label, char* FormatString, void* dst);
 EXTERN char* ReadAndMallocAndTerminateFile( char* filename , char* File_End_String ) ;
 EXTERN char* LocateStringInData ( char* SearchBeginPointer, char* SearchTextPointer ) ;
 EXTERN char* find_file (char *fname, char *subdir, int use_theme, int critical);
@@ -293,6 +292,7 @@ EXTERN void show_droid_info (int droidtype, int page, int flags);
 EXTERN void show_droid_portrait (SDL_Rect dst, int droid_type, float cycle_time, int flags);
 void ShowLifts (int level, int liftrow);
 void PaintConsoleMenu (int pos,int flag);
+void AlertLevelWarning (void);
 
 /* text.c */
 #undef EXTERN

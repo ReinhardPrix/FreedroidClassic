@@ -571,12 +571,15 @@ MoveThisEnemy( int EnemyNum )
     {
       ThisRobot->status = OUT;
       RealScore += Druidmap[ ThisRobot->type ].score;
+
+      DeathCount += ThisRobot->type * ThisRobot->type;   // quadratic "importance", max=529
+
       StartBlast ( ThisRobot->pos.x, ThisRobot->pos.y, DRUIDBLAST);
       if (LevelEmpty ())
 	{
 
 	  RealScore += DECKCOMPLETEBONUS;
-	  ShowScore += DECKCOMPLETEBONUS;
+	  //	  ShowScore += DECKCOMPLETEBONUS;  // FIXME: ?? why not count up as usual?
 
 	  CurLevel->empty = TRUE;
 	  CurLevel->timer = WAIT_LEVELEMPTY;

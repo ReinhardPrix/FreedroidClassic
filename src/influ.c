@@ -912,6 +912,9 @@ RefreshInfluencer (void)
     {
       Me.energy += REFRESH_ENERGY * Frame_Time () * 5;
       RealScore -= REFRESH_ENERGY * Frame_Time () * 10;
+
+      if (RealScore < 0) RealScore = 0; // don't go negative...
+
       if (Me.energy > Me.health)
 	Me.energy = Me.health;
 
@@ -924,7 +927,7 @@ RefreshInfluencer (void)
       //--------------------
       // since robots like the refresh, the influencer might also say so...
       //
-      if ( GameConfig.Influencer_Refresh_Text )
+      if ( GameConfig.Droid_Talk)
 	{
 	  Me.TextToBeDisplayed="Ahhh, that feels so good...";
 	  Me.TextVisibleTime=0;
@@ -934,7 +937,7 @@ RefreshInfluencer (void)
     {
       //--------------------
       // If nothing more is to be had, the influencer might also say so...
-      if ( GameConfig.Influencer_Refresh_Text )
+      if ( GameConfig.Droid_Talk)
 	{
 	  Me.TextToBeDisplayed="Oh, it seems that was it again.";
 	  Me.TextVisibleTime=0;

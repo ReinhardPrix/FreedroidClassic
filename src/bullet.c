@@ -141,6 +141,8 @@ DeleteBullet (int Bulletnumber)
   CurBullet->pos.y = -1;
   CurBullet->angle = 0;
 
+  return;
+
 }; // void DeleteBullet(int Bulletnumber)
 
 /*@Function============================================================

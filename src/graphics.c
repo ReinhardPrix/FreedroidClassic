@@ -44,7 +44,7 @@
 
 void PutPixel (SDL_Surface * surface, int x, int y, Uint32 pixel);
 int Load_Fonts (void);
-SDL_Surface *Load_Block (char *fpath, int line, int col, SDL_Rect * block);
+SDL_Surface *Load_Block (char *fpath, int line, int col, SDL_Rect * block, int flags);
 SDL_RWops *load_raw_pic (char *fpath);
 
 /* XPM */
@@ -469,11 +469,9 @@ LoadThemeConfigurationFile(void)
 #define BLAST_ONE_NUMBER_OF_PHASES_STRING "How many phases in Blast one :"
 #define BLAST_TWO_NUMBER_OF_PHASES_STRING "How many phases in Blast two :"
 
-  ReadValueFromString( Data , BLAST_ONE_NUMBER_OF_PHASES_STRING , "%d" , 
-		       &Blastmap[0].phases , EndOfThemesBlastData );
+  ReadValueFromString (Data, BLAST_ONE_NUMBER_OF_PHASES_STRING, "%d", &Blastmap[0].phases);
 
-  ReadValueFromString( Data , BLAST_TWO_NUMBER_OF_PHASES_STRING , "%d" , 
-		       &Blastmap[1].phases , EndOfThemesBlastData );
+  ReadValueFromString (Data, BLAST_TWO_NUMBER_OF_PHASES_STRING, "%d", &Blastmap[1].phases);
 
   //--------------------
   // Now we read in the total time amount for each animation
@@ -481,22 +479,19 @@ LoadThemeConfigurationFile(void)
 #define BLAST_ONE_TOTAL_AMOUNT_OF_TIME_STRING "Time in seconds for the hole animation of blast one :"
 #define BLAST_TWO_TOTAL_AMOUNT_OF_TIME_STRING "Time in seconds for the hole animation of blast two :"
 
-  ReadValueFromString( Data , BLAST_ONE_TOTAL_AMOUNT_OF_TIME_STRING , "%lf" , 
-		       &Blastmap[0].total_animation_time , EndOfThemesBlastData );
+  ReadValueFromString (Data, BLAST_ONE_TOTAL_AMOUNT_OF_TIME_STRING, "%lf", &Blastmap[0].total_animation_time);
 
-  ReadValueFromString( Data , BLAST_TWO_TOTAL_AMOUNT_OF_TIME_STRING , "%lf" , 
-		       &Blastmap[1].total_animation_time , EndOfThemesBlastData );
+  ReadValueFromString (Data, BLAST_TWO_TOTAL_AMOUNT_OF_TIME_STRING, "%lf", &Blastmap[1].total_animation_time);
 
   //--------------------
   // Next we read in the number of phases that are to be used for each bullet type
   ReadPointer = Data ;
   while ( ( ReadPointer = strstr ( ReadPointer , "For Bullettype Nr.=" ) ) != NULL )
     {
-      ReadValueFromString( ReadPointer , "For Bullettype Nr.=" , "%d" , &BulletIndex , EndOfThemesBulletData );
+      ReadValueFromString (ReadPointer, "For Bullettype Nr.=", "%d", &BulletIndex);
       if ( BulletIndex >= Number_Of_Bullet_Types )
 	{
-	  fprintf(stderr, "\n\
-\n\
+	  DebugPrintf (0, "\n\n\
 ----------------------------------------------------------------------\n\
 Freedroid has encountered a problem:\n\
 In function 'char* LoadThemeConfigurationFile ( ... ):\n\
@@ -519,10 +514,9 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
 \n" );
 	  Terminate(ERR);
 	}
-      ReadValueFromString( ReadPointer , "we will use number of phases=" , "%d" , 
-			   &Bulletmap[BulletIndex].phases , EndOfThemesBulletData );
-      ReadValueFromString( ReadPointer , "and number of phase changes per second=" , "%lf" , 
-			   &Bulletmap[BulletIndex].phase_changes_per_second , EndOfThemesBulletData );
+      ReadValueFromString (ReadPointer, "we will use number of phases=", "%d", &Bulletmap[BulletIndex].phases);
+      ReadValueFromString (ReadPointer, "and number of phase changes per second=", "%lf", 
+			   &Bulletmap[BulletIndex].phase_changes_per_second);
       ReadPointer++;
     }
   
@@ -538,20 +532,18 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
 #define DIGIT_THREE_POSITION_X_STRING "Third digit x :"
 #define DIGIT_THREE_POSITION_Y_STRING "Third digit y :"
 
-  ReadValueFromString( Data , DIGIT_ONE_POSITION_X_STRING , "%d" , 
-		       &First_Digit_Pos_X , EndOfThemesDigitData );
-  ReadValueFromString( Data , DIGIT_ONE_POSITION_Y_STRING , "%d" , 
-		       &First_Digit_Pos_Y , EndOfThemesDigitData );
+  ReadValueFromString (Data, DIGIT_ONE_POSITION_X_STRING, "%d", &First_Digit_Pos_X);
+  ReadValueFromString (Data, DIGIT_ONE_POSITION_Y_STRING, "%d", &First_Digit_Pos_Y);
 
-  ReadValueFromString( Data , DIGIT_TWO_POSITION_X_STRING , "%d" , 
-		       &Second_Digit_Pos_X , EndOfThemesDigitData );
-  ReadValueFromString( Data , DIGIT_TWO_POSITION_Y_STRING , "%d" , 
-		       &Second_Digit_Pos_Y , EndOfThemesDigitData );
+  ReadValueFromString (Data, DIGIT_TWO_POSITION_X_STRING, "%d", &Second_Digit_Pos_X);
+  ReadValueFromString (Data, DIGIT_TWO_POSITION_Y_STRING, "%d", &Second_Digit_Pos_Y);
 
-  ReadValueFromString( Data , DIGIT_THREE_POSITION_X_STRING , "%d" , 
-		       &Third_Digit_Pos_X , EndOfThemesDigitData );
-  ReadValueFromString( Data , DIGIT_THREE_POSITION_Y_STRING , "%d" , 
-		       &Third_Digit_Pos_Y , EndOfThemesDigitData );
+  ReadValueFromString (Data, DIGIT_THREE_POSITION_X_STRING, "%d", &Third_Digit_Pos_X);
+  ReadValueFromString (Data, DIGIT_THREE_POSITION_Y_STRING, "%d", &Third_Digit_Pos_Y);
+
+  free (Data);
+
+  return;
 
 }; // void LoadThemeConfigurationFile ( void )
 
@@ -602,63 +594,61 @@ InitPictures (void)
   printf_SDL (ne_screen, User_Rect.x + 50, -1, "Loading image data ");
   //---------- get Map blocks
   fpath = find_file (MAP_BLOCK_FILE, GRAPHICS_DIR, USE_THEME, CRITICAL);
-  Load_Block (fpath, 0, 0, NULL);	/* init function */
+  Load_Block (fpath, 0, 0, NULL, INIT_ONLY);	/* init function */
   for (line = 0; line < NUM_COLORS; line ++)
     for (col = 0; col < NUM_MAP_BLOCKS; col ++)
       {
 	FreeIfUsed (MapBlockSurfacePointer[line][col]);
-	MapBlockSurfacePointer[line][col] = Load_Block (NULL, line, col, &StdBlock);
+	MapBlockSurfacePointer[line][col] = Load_Block (NULL, line, col, &StdBlock,0);
 	OrigMapBlockSurfacePointer[line][col] = MapBlockSurfacePointer[line][col];
       }
   printf_SDL (ne_screen, -1, -1, ".");
   //---------- get Droid-model  blocks
   fpath = find_file (DROID_BLOCK_FILE, GRAPHICS_DIR, USE_THEME, CRITICAL);
-  Load_Block (fpath, 0, 0, NULL);
+  Load_Block (fpath, 0, 0, NULL, INIT_ONLY);
   for (col = 0; col < DROID_PHASES; col ++) 
     {
       FreeIfUsed (InfluencerSurfacePointer[col]);
       FreeIfUsed (EnemySurfacePointer[col]);
-      InfluencerSurfacePointer[col] = Load_Block (NULL, 0, col, &StdBlock);
+      InfluencerSurfacePointer[col] = Load_Block (NULL, 0, col, &StdBlock, 0);
       /* Influence pics are only used in _internal_ blits ==> clear per-surf alpha */
       SDL_SetAlpha (InfluencerSurfacePointer[col], 0, 0); 
-      EnemySurfacePointer[col] = Load_Block (NULL, 1, col, &StdBlock);
+      EnemySurfacePointer[col] = Load_Block (NULL, 1, col, &StdBlock, 0);
     }
-  // now create the local influ-pic storage by reading a  dummy-block 
-  tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, screen_bpp, 0, 0, 0, 0);
-  Me.pic = SDL_DisplayFormatAlpha( tmp_surf ); 
+
   //  SDL_SetAlpha( Me.pic, SDL_SRCALPHA, SDL_ALPHA_OPAQUE);
 
   printf_SDL (ne_screen, -1, -1, ".");
   //---------- get Bullet blocks
   fpath = find_file (BULLET_BLOCK_FILE, GRAPHICS_DIR, USE_THEME, CRITICAL);
-  Load_Block (fpath, 0, 0, NULL);
+  Load_Block (fpath, 0, 0, NULL, INIT_ONLY);
   for (line = 0; line < Number_Of_Bullet_Types; line ++)
     for (col = 0; col < Bulletmap[line].phases; col ++)
       {
 	FreeIfUsed (Bulletmap[line].SurfacePointer[col]);
-	Bulletmap[line].SurfacePointer[col] = Load_Block (NULL, line, col, &StdBlock);
+	Bulletmap[line].SurfacePointer[col] = Load_Block (NULL, line, col, &StdBlock, 0);
       }
   printf_SDL (ne_screen, -1, -1, ".");
 
   //---------- get Blast blocks
   fpath = find_file (BLAST_BLOCK_FILE, GRAPHICS_DIR, USE_THEME, CRITICAL);
-  Load_Block (fpath, 0, 0, NULL);	
+  Load_Block (fpath, 0, 0, NULL, INIT_ONLY);	
   for (line = 0; line <  ALLBLASTTYPES; line ++)
     for (col = 0; col < Blastmap[line].phases; col ++)
       {
 	FreeIfUsed (Blastmap[line].SurfacePointer[col]);
-	Blastmap[line].SurfacePointer[col] = Load_Block (NULL, line, col, &StdBlock);
+	Blastmap[line].SurfacePointer[col] = Load_Block (NULL, line, col, &StdBlock, 0);
       }
   printf_SDL (ne_screen, -1, -1, ".");
   //---------- get Digit blocks
   fpath = find_file (DIGIT_BLOCK_FILE, GRAPHICS_DIR, USE_THEME, CRITICAL);
-  Load_Block (fpath, 0, 0, NULL);
+  Load_Block (fpath, 0, 0, NULL, INIT_ONLY);
   for (col = 0; col < 10; col++)
     {
       FreeIfUsed (InfluDigitSurfacePointer[col]);
-      InfluDigitSurfacePointer[col] = Load_Block (NULL, 0, col, &DigitBlock);
+      InfluDigitSurfacePointer[col] = Load_Block (NULL, 0, col, &DigitBlock, 0);
       FreeIfUsed (EnemyDigitSurfacePointer[col]);
-      EnemyDigitSurfacePointer[col] = Load_Block (NULL, 0, col + 10, &DigitBlock);
+      EnemyDigitSurfacePointer[col] = Load_Block (NULL, 0, col + 10, &DigitBlock, 0);
     }
   printf_SDL (ne_screen, -1, -1, ".");
 
@@ -674,18 +664,24 @@ InitPictures (void)
   // the following are not theme-specific and are therefore only loaded once!
   if (first_call)
     {
+      //  create the local influ-pic storage by reading a  dummy-block 
+      tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, screen_bpp, 0, 0, 0, 0);
+      Me.pic = SDL_DisplayFormatAlpha( tmp_surf ); 
+      SDL_FreeSurface (tmp_surf);
+      
+      // takeover pics
       fpath = find_file (TAKEOVER_BG_PIC_FILE, GRAPHICS_DIR, NO_THEME, CRITICAL);
-      takeover_bg_pic = Load_Block (fpath, 0, 0, NULL);
+      takeover_bg_pic = Load_Block (fpath, 0, 0, NULL, 0);
       // cursor shapes
       arrow_cursor = init_system_cursor (arrow_xpm);
       crosshair_cursor = init_system_cursor (crosshair_xpm);
       //---------- get Console pictures
       fpath = find_file (CONSOLE_PIC_FILE, GRAPHICS_DIR, NO_THEME, CRITICAL);
-      console_pic = Load_Block (fpath, 0, 0, NULL);
+      console_pic = Load_Block (fpath, 0, 0, NULL, 0);
       fpath = find_file (CONSOLE_BG_PIC1_FILE, GRAPHICS_DIR, NO_THEME, CRITICAL);
-      console_bg_pic1 = Load_Block (fpath, 0, 0, NULL);
+      console_bg_pic1 = Load_Block (fpath, 0, 0, NULL, 0);
       fpath = find_file (CONSOLE_BG_PIC2_FILE, GRAPHICS_DIR, NO_THEME, CRITICAL);
-      console_bg_pic2 = Load_Block (fpath, 0, 0, NULL);
+      console_bg_pic2 = Load_Block (fpath, 0, 0, NULL, 0);
       printf_SDL (ne_screen, -1, -1, ".");
       arrow_up = IMG_Load (find_file ("arrow_up.png", GRAPHICS_DIR, NO_THEME, CRITICAL) );
       arrow_down = IMG_Load (find_file ("arrow_down.png", GRAPHICS_DIR, NO_THEME, CRITICAL) );
@@ -693,7 +689,7 @@ InitPictures (void)
       arrow_left = IMG_Load (find_file ("arrow_left.png", GRAPHICS_DIR, NO_THEME, CRITICAL) );
       //---------- get Banner
       fpath = find_file (BANNER_BLOCK_FILE, GRAPHICS_DIR, NO_THEME, CRITICAL);
-      banner_pic = Load_Block (fpath, 0, 0, NULL);
+      banner_pic = Load_Block (fpath, 0, 0, NULL, 0);
       printf_SDL (ne_screen, -1, -1, ".");
       //---------- get Droid images ----------
       for (i=0; i<NUM_DROIDS; i++)
@@ -717,11 +713,15 @@ InitPictures (void)
       strcpy( fname, Druidmap[DRUID999].druidname );
       strcat( fname , ".png" );
       fpath = find_file (fname, GRAPHICS_DIR, NO_THEME, CRITICAL);
-      pic999 = Load_Block (fpath, 0, 0, NULL);
+      pic999 = Load_Block (fpath, 0, 0, NULL, 0);
 
-    }
+    } // if first_call
   
   printf_SDL (ne_screen, -1, -1, " ok\n");
+
+  // make sure bullet-surfaces get re-generated!
+  for ( i = 0 ; i < MAXBULLETS ; i++ )
+    AllBullets[i].Surfaces_were_generated = FALSE ;
 
   SetCurrentFont (oldfont);
 
@@ -779,9 +779,14 @@ SDL_RWops *load_raw_pic (char *fpath)
  * line, col: block-position in pic-file to read block from
  * block: dimension of blocks to consider: if NULL: copy whole pic
  *
+ * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ * NOTE: to avoid memory-leaks, use (flags | INIT_ONLY) if you only
+ *       call this function to set up a new pic-file to be read.
+ *       This will avoid copying & mallocing a new pic, NULL will be returned
+ * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  *------------------------------------------------------------*/
 SDL_Surface *
-Load_Block (char *fpath, int line, int col, SDL_Rect * block)
+Load_Block (char *fpath, int line, int col, SDL_Rect * block, int flags)
 {
   static SDL_Surface *pic = NULL;
   SDL_Surface *tmp;
@@ -792,12 +797,16 @@ Load_Block (char *fpath, int line, int col, SDL_Rect * block)
   if (!fpath && !pic)		/* we need some info.. */
     return (NULL);
 
-  if (fpath)
+  if (fpath) // initialize: read & malloc new pic, dont' return a copy!!
     {
-      if (pic)
-	free (pic);
+      if (pic)  // previous pic?
+	SDL_FreeSurface (pic);
       pic = IMG_Load (fpath);
+      
     }
+
+  if ( (flags & INIT_ONLY) != FALSE )
+    return (NULL); // that's it guys, only initialzing...
 
   if (!block)
     {
@@ -1078,7 +1087,7 @@ white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout)
   // produce the tiles
   tmp = SDL_CreateRGBSurface(0, rect->w, rect->h, screen_bpp, 0, 0, 0, 0);
   tmp2 = SDL_DisplayFormat (tmp);
-  free(tmp);
+  SDL_FreeSurface (tmp);
   SDL_BlitSurface (bitmap, rect, tmp2, NULL);
   //  printf_SDL (ne_screen, rect->x + 10, rect->y + rect->h/2, "Preparing noise-tiles ");
   for (i=0; i< NOISE_TILES; i++)
@@ -1094,7 +1103,7 @@ white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout)
       //      SDL_BlitSurface (noise_tiles[i], NULL, ne_screen, rect);
       //      SDL_UpdateRect (ne_screen, rect->x, rect->y, rect->w, rect->h);
     }
-  free(tmp2);
+  SDL_FreeSurface (tmp2);
 
   memset(used_tiles,-1, sizeof(used_tiles));
   // let's go
@@ -1137,7 +1146,7 @@ white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout)
   SDL_SetClipRect (ne_screen, &clip_rect);
 
   for (i=0; i<NOISE_TILES; i++)
-    free(noise_tiles[i]);
+    SDL_FreeSurface (noise_tiles[i]);
 
   return;
 }

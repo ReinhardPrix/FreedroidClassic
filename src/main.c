@@ -109,9 +109,9 @@ main (int argc, char *const argv[])
 
 	  AnimateRefresh ();	
 
-	  AnimateTeleports ();	
-
 	  ExplodeBlasts ();	// move blasts to the right current "phase" of the blast
+
+	  AlertLevelWarning ();  // tout tout, blink blink... Alert!!
 
 	  DisplayBanner (NULL, NULL,  0 );
 
@@ -193,6 +193,17 @@ UpdateCountersForThisFrame (void)
     ShowScore++;
   if (RealScore < ShowScore)
     ShowScore--;
+
+  // drain Death-count, responsible for Alert-state
+  if (DeathCount > 0)
+    DeathCount -= DeathCountDrainSpeed * Frame_Time();
+  if (DeathCount < 0) DeathCount = 0;
+  // and switch Alert-level according to DeathCount
+  AlertLevel = (int)(DeathCount / AlertThreshold);
+  if (AlertLevel > AL_RED) AlertLevel = AL_RED;
+  // player gets a bonus/second in AlertLevel
+  RealScore += AlertLevel * AlertBonusPerSec * Frame_Time();
+  
 
   for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
     {

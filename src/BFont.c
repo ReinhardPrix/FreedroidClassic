@@ -79,7 +79,7 @@ LoadFont (char *filename)
 
   if (filename != NULL)
     {
-      Font = (BFont_Info *) malloc (sizeof (BFont_Info));
+      Font = (BFont_Info *) MyMalloc (sizeof (BFont_Info));
       if (Font != NULL)
 	{
 	  surface = (SDL_Surface *) IMG_Load (filename);

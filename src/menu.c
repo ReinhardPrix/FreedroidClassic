@@ -425,10 +425,13 @@ EscapeMenu (void)
   
   bool key=FALSE;
   bool finished = FALSE;
+  bool reload_theme = FALSE;
+  bool toggle_window = FALSE;
+
   int MenuPosition=1;
   char theme_string[40];
   char window_string[40];
-  int i;
+  int new_tnum = AllThemes.cur_tnum;
 
   InitiateMenu(TRUE);
   
@@ -439,13 +442,7 @@ EscapeMenu (void)
     
       PutInfluence (FIRST_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y + (MenuPosition-1.5)*fheight);
 
-      strcpy (theme_string, "Tileset: ");
-      if (strstr (GameConfig.Theme_SubPath, "classic"))
-	strcat (theme_string, "Classic");
-      else if (strstr (GameConfig.Theme_SubPath, "lanzz"))
-	strcat (theme_string, "Lanzz");
-      else
-	strcat (theme_string, "unknown");
+      sprintf (theme_string, "Graphics theme: %s", AllThemes.theme_name[new_tnum]);
 
       strcpy (window_string, "Combat window: ");
       if (GameConfig.FullUserRect) strcat (window_string, "Full");
@@ -470,6 +467,56 @@ EscapeMenu (void)
 	    {
 	      finished = TRUE;
 	      key = TRUE;
+	      if (MenuPosition == SET_THEME)
+		reload_theme = TRUE;
+	    }
+
+	  if (LeftPressedR() )
+	    {
+	      switch (MenuPosition)
+		{
+		case SET_THEME:
+		  key = TRUE;
+		  if (!MouseLeftPressed() )MoveMenuPositionSound();
+
+		  new_tnum--;
+		  if (new_tnum < 0) 
+		    new_tnum = AllThemes.num_themes - 1;
+		  reload_theme = TRUE;
+		  break;
+
+		case FULL_WINDOW:
+		  key = TRUE;
+		  toggle_window = TRUE;
+		  if (!MouseLeftPressed() ) MenuItemSelectedSound();
+		  break;
+
+		default:
+		  break;
+		}
+	    }
+	  if (RightPressedR() || MouseRightPressedR() )
+	    {
+	      switch (MenuPosition)
+		{
+		case SET_THEME:
+		  key = TRUE;
+		  MenuItemSelectedSound();
+
+		  new_tnum++;
+		  if (new_tnum > AllThemes.num_themes -1)
+		    new_tnum = 0;
+		  reload_theme = TRUE;
+		  break;
+
+		case FULL_WINDOW:
+		  key = TRUE;
+		  toggle_window = TRUE;
+		  break;
+
+		default:
+		  break;
+		}
 	    }
 	  if (FirePressedR())
 	    {
@@ -482,35 +529,16 @@ EscapeMenu (void)
 		  finished = TRUE;
 		  break;
 		case FULL_WINDOW:
-		  GameConfig.FullUserRect = ! GameConfig.FullUserRect;
-		  if (GameConfig.FullUserRect)
-		    Copy_Rect (Full_User_Rect, User_Rect);
-		  else
-		    Copy_Rect (Classic_User_Rect, User_Rect);
-
-		  InitiateMenu (TRUE);
+		  toggle_window = TRUE;
 		  break;
-
 		case SET_THEME:
-		  if ( !strcmp (GameConfig.Theme_SubPath , "classic_theme/" ) )
-		    sprintf (GameConfig.Theme_SubPath, "lanzz_theme/");
-		  else
-		    sprintf (GameConfig.Theme_SubPath, "classic_theme/");
+		  key = TRUE;
+		  if (!MouseLeftPressed() )MoveMenuPositionSound();
 
-		  InitPictures();
-		  
-		  //--------------------
-		  // Now we have loaded a new theme with new images!!  It might however be the
-		  // case, that also the number of phases per bullet, which is specific to each
-		  // theme, has been changed!!! THIS MUST NOT BE IGNORED, OR WE'LL SEGFAULT!!!!
-		  // Because the old number of phases is still attached to living bullets, it
-		  // might try to blit a new (higher) number of phases although there are only
-		  // less Surfaces generated for the bullet in the old theme.  The solution seems
-		  // to be simply to request new graphics to be attached to each bullet, which
-		  // should be simply setting a flag for each of the bullets:
-		  for ( i = 0 ; i < MAXBULLETS ; i++ )
-		    AllBullets[i].Surfaces_were_generated = FALSE ;
-		  InitiateMenu (TRUE);
+		  new_tnum--;
+		  if (new_tnum < 0) 
+		    new_tnum = AllThemes.num_themes - 1;
+		  reload_theme = TRUE;
 		  break;
 
 		case OPTIONS:
@@ -539,6 +567,9 @@ EscapeMenu (void)
 	  if (UpPressedR () || WheelUpPressed() ) 
 	    {
 	      key = TRUE;
+	      if (MenuPosition == SET_THEME)
+		reload_theme = TRUE;
+
 	      if (MenuPosition > 1) MenuPosition--;
 	      else MenuPosition = QUIT;
 	      MoveMenuPositionSound();
@@ -546,11 +577,40 @@ EscapeMenu (void)
 	  if (DownPressedR() || WheelDownPressed() ) 
 	    {
 	      key = TRUE;
+	      if (MenuPosition == SET_THEME)
+		reload_theme = TRUE;
+
 	      if ( MenuPosition < QUIT ) MenuPosition++;
 	      else MenuPosition = 1;
 	      MoveMenuPositionSound();
+      
 	    }
 	} // while !key
+
+
+      if (reload_theme)
+	{
+	  if (new_tnum != AllThemes.cur_tnum)
+	    {
+	      AllThemes.cur_tnum = new_tnum;
+	      strcpy (GameConfig.Theme_Name, AllThemes.theme_name[AllThemes.cur_tnum]);
+	      InitPictures();
+	      InitiateMenu (TRUE);
+	    }
+	  reload_theme = FALSE;
+	}
+      if (toggle_window)
+	{
+	  GameConfig.FullUserRect = ! GameConfig.FullUserRect;
+	  if (GameConfig.FullUserRect)
+	    Copy_Rect (Full_User_Rect, User_Rect);
+	  else
+	    Copy_Rect (Classic_User_Rect, User_Rect);
+		  
+	  InitiateMenu (TRUE);
+	  toggle_window = FALSE;
+	}
+
 
     } // while !finished
 
@@ -738,6 +798,7 @@ enum
   { SHOW_POSITION=1, 
     SHOW_FRAMERATE, 
     SHOW_ENERGY,
+    SHOW_DEATHCOUNT,
     BACK };
 
   while (!finished)
@@ -753,7 +814,10 @@ enum
 		   "Show Framerate: %s", GameConfig.Draw_Framerate? "ON" : "OFF");
       PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+2*fheight,
 		   "Show Energy: %s", GameConfig.Draw_Energy? "ON" : "OFF");
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+3*fheight, "Back");
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+3*fheight,
+		   "Show DeathCount: %s", GameConfig.Draw_DeathCount ? "ON" : "OFF");
+
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+4*fheight, "Back");
 
       SDL_Flip( ne_screen );
 
@@ -784,6 +848,10 @@ enum
 		  break;
 		case SHOW_ENERGY:
 		  GameConfig.Draw_Energy=!GameConfig.Draw_Energy;
+		  InitiateMenu (TRUE);
+		  break;
+		case SHOW_DEATHCOUNT:
+		  GameConfig.Draw_DeathCount = !GameConfig.Draw_DeathCount;
 		  InitiateMenu (TRUE);
 		  break;
 		case BACK:
@@ -825,130 +893,18 @@ enum
 @Ret:  none
 * $Function----------------------------------------------------------*/
 void
-Droid_Talk_Options_Menu (void)
-{
-  int MenuPosition=1;
-
-  bool finished = FALSE;
-  bool key = FALSE;
-
-  enum
-    { 
-    INFLU_REFRESH_TEXT=1,
-    INFLU_BLAST_TEXT,
-    ENEMY_HIT_TEXT,
-    ENEMY_BUMP_TEXT,
-    ENEMY_AIM_TEXT,
-    ALL_TEXTS,
-    BACK 
-  };
-
-  while (!finished)
-    {
-      key = FALSE;
-      SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
-
-      PutInfluence(FIRST_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y + (MenuPosition-1.5)*fheight);
-
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+0*fheight, 
-		   "Player Refresh Texts: %s", 
-		   GameConfig.Influencer_Refresh_Text ? "ON" : "OFF");
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+1*fheight, 
-		   "Player Blast Texts: %s", 
-		   GameConfig.Influencer_Blast_Text ? "ON" : "OFF");
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+2*fheight,
-		   "Enemy Hit Texts: %s", GameConfig.Enemy_Hit_Text ? "ON" : "OFF");
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+3*fheight,
-		   "Enemy Bumped Texts: %s", GameConfig.Enemy_Bump_Text ? "ON" : "OFF");
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+4*fheight,
-		   "Enemy Aim Texts: %s", GameConfig.Enemy_Aim_Text ? "ON" : "OFF");
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+5*fheight,
-		   "All in-game Speech: %s", GameConfig.All_Texts_Switch ? "ON" : "OFF");
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+6*fheight, "Back");
-
-      SDL_Flip( ne_screen );
-
-      while (!key)
-	{
-	  usleep(50);
-
-	  if ( EscapePressedR() )
-	    {
-	      finished = TRUE;
-	      key = TRUE;
-	    }
-
-	  if (FirePressedR())
-	    {
-	      MenuItemSelectedSound();
-	      key = TRUE;
-	      switch (MenuPosition) 
-		{
-		case INFLU_REFRESH_TEXT:
-		  GameConfig.Influencer_Refresh_Text=!GameConfig.Influencer_Refresh_Text;
-		  break;
-		case INFLU_BLAST_TEXT:
-		  GameConfig.Influencer_Blast_Text=!GameConfig.Influencer_Blast_Text;
-		  break;
-		case ENEMY_HIT_TEXT:
-		  GameConfig.Enemy_Hit_Text=!GameConfig.Enemy_Hit_Text;
-		  break;
-		case ENEMY_BUMP_TEXT:
-		  GameConfig.Enemy_Bump_Text=!GameConfig.Enemy_Bump_Text;
-		  break;
-		case ENEMY_AIM_TEXT:
-		  GameConfig.Enemy_Aim_Text=!GameConfig.Enemy_Aim_Text;
-		  break;
-		case ALL_TEXTS:
-		  GameConfig.All_Texts_Switch=!GameConfig.All_Texts_Switch;
-		  break;
-		case BACK:
-		  finished=TRUE;
-		  break;
-		default: 
-		  break;
-		} 
-	    } // if SpacePressed
-
-	  if (UpPressedR() || WheelUpPressed ()) 
-	    {
-	      if ( MenuPosition > 1 ) MenuPosition--;
-	      else MenuPosition = BACK;
-	      MoveMenuPositionSound();
-	      key = TRUE;
-	    }
-	  if (DownPressedR() || WheelDownPressed() ) 
-	    {
-	      if ( MenuPosition < BACK ) MenuPosition++;
-	      else MenuPosition = 1;
-	      MoveMenuPositionSound();
-	      key = TRUE;
-	    }
-	} // while !key
-    } // while !finished
-
-  return;
-
-}; // Droid_Talk_Options_Menu
-
-/*@Function============================================================
-@Desc: This function provides a the options menu.  This menu is a 
-       submenu of the big EscapeMenu.  Here you can change sound vol.,
-       gamma correction, fullscreen mode, display of FPS and such
-       things.
-
-@Ret:  none
-* $Function----------------------------------------------------------*/
-void
 Options_Menu (void)
 {
   int MenuPosition=1;
   bool finished = FALSE;
   bool key = FALSE;
+  int pos;
 
 enum
-  { GRAPHICS_SOUND_OPTIONS=1, 
-    DROID_TALK_OPTIONS,
+  { 
+    DROID_TALK = 1,
+    TAKEOVER_IS_ACTIVATE,
+    GRAPHICS_SOUND_OPTIONS,
     ON_SCREEN_DISPLAYS,
     BACK };
 
@@ -957,16 +913,25 @@ enum
       SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
       key = FALSE;
 
+
+
       PutInfluence( FIRST_MENU_ITEM_POS_X,
 		    FIRST_MENU_ITEM_POS_Y + ( MenuPosition - 1.5 ) *fheight);
+      pos = 0;
 
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+0*fheight,
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+(pos++)*fheight,
+		   "Droid Talk : %s", GameConfig.Droid_Talk ? "ON" : "OFF");
+
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+(pos++)*fheight,
+		   "Transfer = Activate: %s", GameConfig.TakeoverActivates ? "YES":"NO" );
+
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+(pos++)*fheight,
 		   "Graphics & Sound" );
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+1*fheight,
-		   "Droid Talk" );
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+2*fheight,
+
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+(pos++)*fheight,
 		   "On-Screen Displays" );
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+3*fheight, 
+
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+(pos++)*fheight, 
 		   "Back");
 
       SDL_Flip( ne_screen );
@@ -988,11 +953,14 @@ enum
 	      key = TRUE;
 	      switch (MenuPosition) 
 		{
+		case DROID_TALK:
+		  GameConfig.Droid_Talk = !GameConfig.Droid_Talk;
+		  break;
+		case TAKEOVER_IS_ACTIVATE:
+		  GameConfig.TakeoverActivates = !GameConfig.TakeoverActivates;
+		  break;
 		case GRAPHICS_SOUND_OPTIONS:
 		  GraphicsSound_Options_Menu();
-		  break;
-		case DROID_TALK_OPTIONS:
-		  Droid_Talk_Options_Menu();
 		  break;
 		case ON_SCREEN_DISPLAYS:
 		  On_Screen_Display_Options_Menu();
@@ -1493,7 +1461,7 @@ LevelEditor(void)
       if (KeyIsPressedR (SDLK_KP9))
 	CurLevel->map[BlockY][BlockX]=ECK_RO;
       if ( KeyIsPressedR ('m'))
-	CurLevel->map[BlockY][BlockX]=ALERT;	      
+	CurLevel->map[BlockY][BlockX]=ALERT_GREEN;	      
       if (KeyIsPressedR ('r'))
 	CurLevel->map[BlockY][BlockX]=REFRESH1;	            
       if (KeyIsPressedR('t'))

@@ -43,6 +43,15 @@ typedef char bool;
 
 typedef struct
 {
+  int num_themes;
+  int cur_tnum;
+  char *theme_name[MAX_THEMES];
+
+} themelist_t;
+
+
+typedef struct
+{
   char name[MAX_NAME_LEN+5];
   long score;                  /* use -1 for an empty entry */
   char date[DATE_LEN+5];
@@ -63,21 +72,18 @@ typedef struct
   int Draw_Framerate;
   int Draw_Energy;
   int Draw_Position;
-  int Influencer_Refresh_Text;
-  int Influencer_Blast_Text;
-  int Enemy_Hit_Text;
-  int Enemy_Bump_Text;
-  int Enemy_Aim_Text;
-  int All_Texts_Switch;
+  int Draw_DeathCount;
+  int Droid_Talk;
   float Current_BG_Music_Volume;
   float Current_Sound_FX_Volume;
   float Current_Gamma_Correction;
   int StandardEnemyMessages_On_Off;
   int StandardInfluencerMessages_On_Off;
   int Mouse_Input_Permitted;
-  char Theme_SubPath[100];  // pathname relative to graphics, where theme-graphics are found
+  char Theme_Name[100];  // name of graphics-theme : dirname = graphics/TNAME_theme/
   bool FullUserRect;   // use "full" or "classic" (=small) User_Rect
   bool UseFullscreen;	/* toggle for use of fullscreen vs. X11-window */
+  bool TakeoverActivates; // toggle if takeover-mode also does 'Activate' (i.e. lifts/consoles)
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
 
@@ -116,7 +122,7 @@ typedef struct
 
 typedef struct
 {
-  char *druidname;
+  char druidname[20];
   double maxspeed;		/* the maximum of speed it can go */
   int class;
   double accel;			/* its acceleration */
@@ -133,7 +139,7 @@ typedef struct
   int sensor1;
   int sensor2;
   int sensor3;
-  char *notes;			/* notes on the druid of this type */
+  char *notes;		/* notes on the druid of this type */
 }
 druidspec, *Druidspec;
 
@@ -275,8 +281,8 @@ typedef struct
   int color;
   char *map[MAXMAPLINES];	/* this is a vector of pointers ! */
   grob_point refreshes[MAX_REFRESHES_ON_LEVEL];
-  grob_point teleporters[MAX_TELEPORTERS_ON_LEVEL];
   grob_point doors[MAX_DOORS_ON_LEVEL];
+  grob_point alerts[MAX_ALERTS_ON_LEVEL];
   int num_waypoints;
   waypoint AllWaypoints[MAXWAYPOINTS];
 }
@@ -287,7 +293,7 @@ typedef struct
   int num_levels;
   int num_lifts;
   int num_lift_rows;
-  char* AreaName;
+  char AreaName[100];
   Level AllLevels[MAX_LEVELS];
   lift  AllLifts[MAX_LIFTS];
   SDL_Rect LiftRow_Rect[MAX_LIFT_ROWS];   /* the lift-row rectangles */

@@ -54,7 +54,7 @@ EnemyHitByBulletText( int Enum )
 {
   Enemy ThisRobot=&AllEnemys[ Enum ];
 
-  if ( !GameConfig.Enemy_Hit_Text ) return;
+  if ( !GameConfig.Droid_Talk ) return;
   
   ThisRobot->TextVisibleTime=0;
 
@@ -86,7 +86,7 @@ EnemyInfluCollisionText ( int Enum )
 {
   Enemy ThisRobot=&AllEnemys[ Enum ];
 
-  if ( !GameConfig.Enemy_Bump_Text ) return;
+  if ( !GameConfig.Droid_Talk ) return;
   
   ThisRobot->TextVisibleTime=0;
 	      
@@ -110,7 +110,7 @@ AddStandingAndAimingText ( int Enum )
 {
   Enemy ThisRobot=&AllEnemys[ Enum ];
 
-  if ( !GameConfig.Enemy_Aim_Text ) return;
+  if ( !GameConfig.Droid_Talk ) return;
   
   ThisRobot->TextVisibleTime=0;
 	      
@@ -131,7 +131,7 @@ AddInfluBurntText( void )
 {
   int FinalTextNr;
 
-  if ( !GameConfig.Influencer_Blast_Text ) return;
+  if ( !GameConfig.Droid_Talk ) return;
   
   Me.TextVisibleTime=0;
   
