@@ -676,6 +676,11 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
       Me [ 0 ] . melee_weapon_skill ++; 
       SetNewBigScreenMessage( "Melee fighting ability improved!" );
     }
+  else if ( ! strcmp ( ExtraCommandString , "IncreaseRangedWeaponSkill" ) )
+    {
+      Me [ 0 ] . ranged_weapon_skill ++; 
+      SetNewBigScreenMessage( "Ranged combat ability improved!" );
+    }
   else if ( ! strcmp ( ExtraCommandString , "IncreaseSpellcastingSkill" ) )
     {
       Me [ 0 ] . spellcasting_skill ++; 
@@ -727,6 +732,14 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
 			   &TempValue , ExtraCommandString + strlen ( ExtraCommandString ) + 0 );
       DebugPrintf( CHAT_DEBUG_LEVEL , "\n...decoding... amount of magic points mentioned is: %d." , TempValue );
       Me [ 0 ] . base_magic += TempValue;
+    }
+  else if ( CountStringOccurences ( ExtraCommandString , "AddBaseDexterity:" ) )
+    {
+      DebugPrintf( CHAT_DEBUG_LEVEL , "\nExtra invoked adding some base dexteritypoints. --> have to decode... " );
+      ReadValueFromString( ExtraCommandString , "AddBaseDexterity:" , "%d" , 
+			   &TempValue , ExtraCommandString + strlen ( ExtraCommandString ) + 0 );
+      DebugPrintf( CHAT_DEBUG_LEVEL , "\n...decoding... amount of dexterity points mentioned is: %d." , TempValue );
+      Me [ 0 ] . base_dexterity += TempValue;
     }
   else if ( CountStringOccurences ( ExtraCommandString , "SubtractPointsToDistribute:" ) )
     {
@@ -1227,6 +1240,11 @@ ChatWithFriendlyDroid( Enemy ChatDroid )
   else if ( strcmp ( Druidmap[ ChatDroid -> type ].druidname , "ERN" ) == 0 )
     {
       LoadChatRosterWithChatSequence ( "ERN" );
+      DoChatFromChatRosterData( 0 , PERSON_ERN , ChatDroid );
+    }
+  else if ( strcmp ( Druidmap[ ChatDroid -> type ].druidname , "BEN" ) == 0 )
+    {
+      LoadChatRosterWithChatSequence ( "Benjamin" );
       DoChatFromChatRosterData( 0 , PERSON_ERN , ChatDroid );
     }
   else if ( strcmp ( Druidmap[ ChatDroid -> type ].druidname , "HEA" ) == 0 )

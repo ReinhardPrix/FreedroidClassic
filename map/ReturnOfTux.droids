@@ -223,6 +223,9 @@ Allowed Type of Random Droid for this level: 997
 Allowed Type of Random Droid for this level: 247
 Allowed Type of Random Droid for this level: 302
 Allowed Type of Random Droid for this level: 420
+
+SpecialForce: Type=BEN X=10 Y=3 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="BenjaminStartGameSquare" RushTux="no"
+
 ** End of this levels droid data **
 
 ** Beginning of new Level **
