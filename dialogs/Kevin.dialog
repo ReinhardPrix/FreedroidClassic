@@ -31,7 +31,9 @@ freedroid-discussion@lists.sourceforge.net
 
 BEGIN OF AUTORS NOTES
 
+
 This is Kevin, a most formidable hacker and teacher of hacking skills.
+
 
 END OF AUTORS NOTES
 
@@ -91,8 +93,8 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=5  OptionText="NEWLY INSERTED DIALOG OPTION"
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+New Option Nr=5  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=774  PositionY=185  
 Subtitle="Good.  The most important thing about hacking is to understand the nature of the machine you want to hack."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -108,8 +110,8 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=6  OptionText="NEWLY INSERTED DIALOG OPTION"
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+New Option Nr=6  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=690  PositionY=190  
 Subtitle="You don't have enough experience.  I can't teach you anything more this way."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
