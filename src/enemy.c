@@ -393,96 +393,101 @@ ClearEnemys ( void )
 void
 ShuffleEnemys ( int LevelNum )
 {
-  int i, j;
-  int nth_enemy;
-  int wp_num;
-  int wp = 0;
-  int BestWaypoint;
-  Level ShuffleLevel = curShip.AllLevels[ LevelNum ];
+    int i, j;
+    int nth_enemy;
+    int wp_num;
+    int wp = 0;
+    int BestWaypoint;
+    Level ShuffleLevel = curShip.AllLevels[ LevelNum ];
+    
+    //--------------------
+    // We say what we're doing (for debug purposes...)
+    //
+    DebugPrintf ( 1 , "\n%s(): shuffling enemies on level %d." , __FUNCTION__ , LevelNum );
 
-  // get the number of waypoints on CurLevel
-  wp_num = ShuffleLevel->num_waypoints;;
-  nth_enemy = 0;
-  for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
+    // get the number of waypoints on CurLevel
+    wp_num = ShuffleLevel->num_waypoints;;
+    nth_enemy = 0;
+    for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i++ )
     {
-      if ( ( AllEnemys [ i ] . Status == OUT ) || ( AllEnemys [ i ] . pos . z != LevelNum ) )
-	continue;		// dont handle dead enemys or on other level 
-
-      AllEnemys [ i ] . persuing_given_course = FALSE; // since position is now completely mixed up,
-                                                    // the robot needs to forget about any previous given course.
-
-      if ( AllEnemys [ i ] . CompletelyFixed ) continue;
-
-      //--------------------
-      // A special force, that is not completely fixed, needs to be integrated
-      // into the waypoint system:  We find the closest waypoint for it and put
-      // it simply there.  For simplicity we use sum norm as distance.
-      //
-      if ( AllEnemys [ i ] . AdvancedCommand == 2 ) TeleportToClosestWaypoint ( &(AllEnemys[i]) );
-      if ( AllEnemys [ i ] . SpecialForce )
+	if ( ( AllEnemys [ i ] . Status == OUT ) || ( AllEnemys [ i ] . pos . z != LevelNum ) )
+	    continue;		// dont handle dead enemys or on other level 
+	
+	AllEnemys [ i ] . persuing_given_course = FALSE; // since position is now completely mixed up,
+	// the robot needs to forget about any previous given course.
+	
+	if ( AllEnemys [ i ] . CompletelyFixed ) continue;
+	
+	//--------------------
+	// A special force, that is not completely fixed, needs to be integrated
+	// into the waypoint system:  We find the closest waypoint for it and put
+	// it simply there.  For simplicity we use sum norm as distance.
+	//
+	if ( AllEnemys [ i ] . AdvancedCommand == 2 ) TeleportToClosestWaypoint ( &(AllEnemys[i]) );
+	if ( AllEnemys [ i ] . SpecialForce )
 	{
-
-	  //--------------------
-	  // For every special force, that is exactly positioned in the map anyway,
-	  // we find the waypoint he's standing on.  That will be his current target
-	  // and source waypoint.  That's it for special forces.
-	  //
-	  BestWaypoint = 0;
-	  for ( j=0 ; j<wp_num ; j ++ )
+	    
+	    //--------------------
+	    // For every special force, that is exactly positioned in the map anyway,
+	    // we find the waypoint he's standing on.  That will be his current target
+	    // and source waypoint.  That's it for special forces.
+	    //
+	    BestWaypoint = 0;
+	    for ( j = 0 ; j < wp_num ; j ++ )
 	    {
-	      if ( fabsf ( ( ShuffleLevel -> AllWaypoints[j].x  - AllEnemys[i].pos.x ) *
-			   ( ShuffleLevel -> AllWaypoints[j].x  - AllEnemys[i].pos.x ) +
-		           ( ShuffleLevel -> AllWaypoints[j].y - AllEnemys[i].pos.y ) *
-			   ( ShuffleLevel -> AllWaypoints[j].y - AllEnemys[i].pos.y ) ) < 
-		   fabsf ( ( ShuffleLevel -> AllWaypoints[ BestWaypoint ].x - AllEnemys[i].pos.x ) *
-			   ( ShuffleLevel -> AllWaypoints[ BestWaypoint ].x - AllEnemys[i].pos.x ) +
-			   ( ShuffleLevel -> AllWaypoints[ BestWaypoint ].y - AllEnemys[i].pos.y ) *
-			   ( ShuffleLevel -> AllWaypoints[ BestWaypoint ].y - AllEnemys[i].pos.y ) ) )
-		BestWaypoint = j;
+		if ( fabsf ( ( ShuffleLevel -> AllWaypoints[j].x  - AllEnemys[i].pos.x ) *
+			     ( ShuffleLevel -> AllWaypoints[j].x  - AllEnemys[i].pos.x ) +
+			     ( ShuffleLevel -> AllWaypoints[j].y - AllEnemys[i].pos.y ) *
+			     ( ShuffleLevel -> AllWaypoints[j].y - AllEnemys[i].pos.y ) ) < 
+		     fabsf ( ( ShuffleLevel -> AllWaypoints[ BestWaypoint ].x - AllEnemys[i].pos.x ) *
+			     ( ShuffleLevel -> AllWaypoints[ BestWaypoint ].x - AllEnemys[i].pos.x ) +
+			     ( ShuffleLevel -> AllWaypoints[ BestWaypoint ].y - AllEnemys[i].pos.y ) *
+			     ( ShuffleLevel -> AllWaypoints[ BestWaypoint ].y - AllEnemys[i].pos.y ) ) )
+		    BestWaypoint = j;
 	    }
-
-	  AllEnemys[i].nextwaypoint = BestWaypoint;
-	  AllEnemys[i].lastwaypoint = BestWaypoint;
-	  
-	  AllEnemys[i].pos.x = ShuffleLevel->AllWaypoints[ BestWaypoint ].x;
-	  AllEnemys[i].pos.y = ShuffleLevel->AllWaypoints[ BestWaypoint ].y;
-
-	  continue;
+	    
+	    AllEnemys[i].nextwaypoint = BestWaypoint;
+	    AllEnemys[i].lastwaypoint = BestWaypoint;
+	    
+	    AllEnemys[i].pos.x = ShuffleLevel->AllWaypoints[ BestWaypoint ].x;
+	    AllEnemys[i].pos.y = ShuffleLevel->AllWaypoints[ BestWaypoint ].y;
+	    
+	    continue;
 	}
-
-      nth_enemy++ ;
-      if ( nth_enemy < wp_num )
-      {
-	  //--------------------
-	  // Now if that waypoint is already useful for random-spawning
-	  // bots, that's good.  Otherwise we need to skip this waypoint
-	  // and try again...
-	  //
-	  if ( ! ShuffleLevel -> AllWaypoints [ nth_enemy ] . suppress_random_spawn )
-	  {
-	      wp = nth_enemy;
-	  }
-	  else
-	  {
-	      i -- ;
-	      continue ;
-	  }
-      }
-      else
+	
+	nth_enemy++ ;
+	if ( nth_enemy < wp_num )
 	{
-	  DebugPrintf (0, "\nNumber of waypoints found: %d." , wp_num );
-	  DebugPrintf (0, "\nLess waypoints than enemys on level %d? !", ShuffleLevel->levelnum );
-	  Terminate (ERR);
+	    //--------------------
+	    // Now if that waypoint is already useful for random-spawning
+	    // bots, that's good.  Otherwise we need to skip this waypoint
+	    // and try again...
+	    //
+	    if ( ! ShuffleLevel -> AllWaypoints [ nth_enemy ] . suppress_random_spawn )
+	    {
+		wp = nth_enemy;
+	    }
+	    else
+	    {
+		i -- ;
+		continue ;
+	    }
 	}
-
-      AllEnemys[i].pos.x = ShuffleLevel->AllWaypoints[wp].x;
-      AllEnemys[i].pos.y = ShuffleLevel->AllWaypoints[wp].y;
-
-      AllEnemys[i].lastwaypoint = wp;
-      AllEnemys[i].nextwaypoint = wp;
-
-    } // for (MAX_ENEMYS_ON_SHIP) 
-
+	else
+	{
+	    DebugPrintf (0, "\nNumber of waypoints found: %d." , wp_num );
+	    DebugPrintf (0, "\nLess waypoints than enemys on level %d? !", ShuffleLevel->levelnum );
+	    Terminate (ERR);
+	}
+	
+	AllEnemys[i].pos.x = ShuffleLevel->AllWaypoints[wp].x;
+	AllEnemys[i].pos.y = ShuffleLevel->AllWaypoints[wp].y;
+	
+	AllEnemys[i].lastwaypoint = wp;
+	AllEnemys[i].nextwaypoint = wp;
+	
+    } // for ( MAX_ENEMYS_ON_SHIP ) 
+    
 }; // void ShuffleEnemys ( void ) 
 
 /* ----------------------------------------------------------------------
@@ -839,11 +844,11 @@ MoveThisRobotThowardsHisCurrentTarget ( int EnemyNum )
     WpList = WaypointLevel -> AllWaypoints;
     
     //--------------------
-    // According to properties of the robot like being frozen or not,
-    // we define the maximum speed of this machine for later use...
     // A frozen robot is slow while a paralyzed robot can do absolutely nothing.
+    // A waiting robot shouldn't be moved either...
     //
     if ( ThisRobot -> paralysation_duration_left != 0 ) return;
+    if ( ThisRobot -> pure_wait > 0 ) return;
 
     //--------------------
     // We determine our movement target, either the preset course or the 
@@ -1092,7 +1097,7 @@ select_new_waypointless_random_walk_target ( int EnemyNum )
 
     if ( ! success )
     {
-	DebugPrintf ( 1 , "\n%s():  bad luck with random walk point this time..." , __FUNCTION__ );
+	DebugPrintf ( 2 , "\n%s():  bad luck with random walk point this time..." , __FUNCTION__ );
 	ThisRobot -> pure_wait = 1.6 ;
 	
     }
@@ -1395,13 +1400,13 @@ MoveThisEnemy( int EnemyNum )
     //--------------------
     // ignore all enemys with CompletelyFixed flag set...
     //
-    if ( ThisRobot->CompletelyFixed ) return;
+    if ( ThisRobot -> CompletelyFixed ) return;
     
     //--------------------
     // robots that still have to wait also do not need to
     // be processed for movement
     //
-    if ( ThisRobot->pure_wait > 0 ) return;
+    if ( ThisRobot -> pure_wait > 0 ) return;
     
     if ( ThisRobot->AdvancedCommand == 2 ) 
     {
@@ -2507,38 +2512,12 @@ robot_group_turn_hostile ( int enemy_num )
 }; // void robot_group_turn_hostile ( int enemy_num )
 
 /* ----------------------------------------------------------------------
- * This function sometimes fires a bullet from enemy number enemynum 
- * directly into the direction of the influencer, but of course only if 
- * the odds are good i.e. requirements are met.
+ * More for debugging purposes, we print out the current state of the
+ * robot as his in-game text.
  * ---------------------------------------------------------------------- */
 void
-ProcessAttackStateMachine ( int enemynum )
+enemy_say_current_state_on_screen ( enemy* ThisRobot )
 {
-    moderately_finepoint vect_to_target;
-    float dist2;
-    Enemy ThisRobot = & AllEnemys[ enemynum ] ;
-    int TargetPlayer;
-    
-    //--------------------
-    // At first, we check for a lot of cases in which we do not
-    // need to move anything for this reason or for that
-    //
-    // ignore robots on other levels 
-    // if ( ThisRobot->pos.z != CurLevel->levelnum) return;
-    // if ( ! IsActiveLevel ( ThisRobot -> pos . z ) ) return;
-    
-    // ignore dead robots as well...
-    // if ( ThisRobot -> Status == OUT ) return;
-    
-    // ignore paralyzed robots as well...
-    if ( ThisRobot -> paralysation_duration_left != 0 ) return;
-    // ignore robots, that don't have any weapon
-    if ( Druidmap [ ThisRobot -> type ] . weapon_item . type == ( -1 ) ) return;
-    
-    //--------------------
-    // More for debugging purposes, we print out the current state of the
-    // robot as his in-game text.
-    //
     switch ( ThisRobot -> combat_state )
     {
 	case MOVE_ALONG_RANDOM_WAYPOINTS:
@@ -2576,22 +2555,23 @@ ProcessAttackStateMachine ( int enemynum )
 	    break;
     }      
     ThisRobot->TextVisibleTime = 0 ; 
-    
-    //--------------------
-    // If some special command was given, like 
-    // ATTACK_FIXED_MAP_POSITION=1, then we IGNORE EVERYTHING AND JUST FIRE OUR BULLETS,
-    // NO MATTER WHOS IN THE LINE OF FIRE, HOW FAR WE ARE AWAY OR ANYTHING, JUST BLUNTLY
-    // DO THAT.
-    //
+}; // void enemy_say_current_state_on_screen ( enemy* ThisRobot )
+
+/* ----------------------------------------------------------------------
+ * Regardless of the current state, there are some cases where we 
+ * ALWAYS switch the current state to something new.  These cases
+ * can be handled in advance before the more individual states are
+ * handled in a more sophisticated function elsewhere.
+ * ---------------------------------------------------------------------- */
+void
+enemy_handle_trivial_state_switches_and_adv_commands ( enemy* ThisRobot )
+{
     if ( ThisRobot -> AdvancedCommand == 1 ) ThisRobot -> combat_state = RELENTLESS_FIRE_TO_GIVEN_POSITION ;
-    
     if ( ThisRobot->AdvancedCommand == 2 ) 
     {
 	TeleportToClosestWaypoint ( ThisRobot );
 	ThisRobot->AdvancedCommand = 0;
-	
     }
-    
     if ( ThisRobot -> will_rush_tux ) 
     {
 	if ( sqrt ( powf ( Me [ 0 ] . pos . x - ThisRobot -> pos . x , 2 ) +
@@ -2601,6 +2581,50 @@ ProcessAttackStateMachine ( int enemynum )
 	    ThisRobot -> will_rush_tux = FALSE ;
 	}
     }
+}; // void enemy_handle_trivial_state_switches_and_adv_commands ( enemy* ThisRobot )
+
+/* ----------------------------------------------------------------------
+ * This function sometimes fires a bullet from enemy number enemynum 
+ * directly into the direction of the influencer, but of course only if 
+ * the odds are good i.e. requirements are met.
+ * ---------------------------------------------------------------------- */
+void
+ProcessAttackStateMachine ( int enemynum )
+{
+    moderately_finepoint vect_to_target;
+    float dist2;
+    Enemy ThisRobot = & AllEnemys[ enemynum ] ;
+    int TargetPlayer;
+    
+    //--------------------
+    // At first, we check for a lot of cases in which we do not
+    // need to move anything for this reason or for that
+    //
+    // ignore robots on other levels 
+    // if ( ThisRobot->pos.z != CurLevel->levelnum) return;
+    // if ( ! IsActiveLevel ( ThisRobot -> pos . z ) ) return;
+    
+    // ignore dead robots as well...
+    // if ( ThisRobot -> Status == OUT ) return;
+    
+    // ignore paralyzed robots as well...
+    if ( ThisRobot -> paralysation_duration_left != 0 ) return;
+    // ignore robots, that don't have any weapon
+    if ( Druidmap [ ThisRobot -> type ] . weapon_item . type == ( -1 ) ) return;
+    
+    //--------------------
+    // More for debugging purposes, we print out the current state of the
+    // robot as his in-game text.
+    //
+    enemy_say_current_state_on_screen ( ThisRobot );
+
+    //--------------------
+    // Regardless of the current state, there are some cases where we 
+    // ALWAYS switch the current state to something new.  These cases
+    // can be handled in advance before the more individual states are
+    // handled further below
+    //
+    enemy_handle_trivial_state_switches_and_adv_commands ( ThisRobot );
     
     //--------------------
     // determine the distance vector to the target of this shot.  The target

@@ -39,7 +39,6 @@
 
 #define BEST_MELEE_DISTANCE (1.0)
 #define BEST_CHAT_DISTANCE (BEST_MELEE_DISTANCE+0.2)
-// #define DISTANCE_TOLERANCE (0.2)
 #define DISTANCE_TOLERANCE (0.00002)
 
 #define FORCE_FIRE_DISTANCE (1.5)
@@ -2334,88 +2333,88 @@ start_tux_death_explosions (void)
 void
 check_tux_enemy_collision (void)
 {
-  int i;
-  float xdist;
-  float ydist;
-  // float dist2;
-  float max_step_size;
-  // int swap;
-
-  //--------------------
-  // We need to go through the whole list of enemys...
-  //
-  for (i = 0; i < Number_Of_Droids_On_Ship ; i++)
+    int i;
+    float xdist;
+    float ydist;
+    float max_step_size;
+    
+    //--------------------
+    // We need to go through the whole list of enemys...
+    //
+    for (i = 0; i < Number_Of_Droids_On_Ship ; i++)
     {
+	
+	//--------------------
+	// ignore enemy that are not on this level or dead 
+	//
+	if ( AllEnemys[i].pos.z != CurLevel->levelnum )
+	    continue;
+	if ( AllEnemys[i].type == ( -1 ) )
+	    continue;
+	if ( AllEnemys[i].Status == OUT )
+	    continue;
+	
+	//--------------------
+	// We determine the distance and back out immediately if there
+	// is still one whole square distance or even more...
+	//
+	xdist = Me [ 0 ] . pos . x - AllEnemys [ i ] . pos . x;
+	ydist = Me [ 0 ] . pos . y - AllEnemys [ i ] . pos . y;
+	if (abs (xdist) > 1)
+	    continue;
+	if (abs (ydist) > 1)
+	    continue;
+	
+	//--------------------
+	// Now at this point we know, that we are pretty close.  It is time
+	// to calculate the exact distance and to see if the exact distance
+	// indicates a collision or not, in which case we can again back out
+	//
+	// dist2 = sqrt( (xdist * xdist) + (ydist * ydist) );
+	// if ( dist2 > 2 * Druid_Radius_X )
+	// continue;
+	//
+	if ( ( fabsf( xdist ) >= 2.0*Druid_Radius_X ) ||
+	     ( fabsf( ydist ) >= 2.0*Druid_Radius_Y ) ) 
+	    continue;
+	
+	// move the influencer a little bit out of the enemy AND the enemy a little bit out of the influ
+	max_step_size = ((Frame_Time()) < ( MAXIMAL_STEP_SIZE ) ? (Frame_Time()) : ( MAXIMAL_STEP_SIZE )) ; 
+	// Me[0].pos.x += copysignf( max_step_size , Me[0].pos.x - AllEnemys[i].pos.x ) ;
+	// Me[0].pos.y += copysignf( max_step_size , Me[0].pos.y - AllEnemys[i].pos.y ) ;
+	// evasion_vector . x = Me [ 0 ] . speed . x ;
+	// evasion_vector . y = Me [ 0 ] . speed . y ;
+	// evasion_vector . x *= Frame_Time();
+	// evasion_vector . y *= Frame_Time();
+	
+	AllEnemys[i].pos.x -= copysignf( 0.6 * Frame_Time() , Me[0].pos.x - AllEnemys[i].pos.x ) ;
+	AllEnemys[i].pos.y -= copysignf( 0.6 * Frame_Time() , Me[0].pos.y - AllEnemys[i].pos.y ) ;
+	
+	// AllEnemys[i].pos.x += evasion_vector . x ;
+	// AllEnemys[i].pos.y += evasion_vector . y ;copysignf( 5.1 * Frame_Time() , Me[0].pos.y - AllEnemys[i].pos.y ) ;
+	
+	// BounceSound ();
+	
+	DebugPrintf ( -4 , "\n%s(): Collision of Enemy with Tux detected.  Fixing..." , __FUNCTION__ );
 
-      //--------------------
-      // ignore enemy that are not on this level or dead 
-      //
-      if ( AllEnemys[i].pos.z != CurLevel->levelnum )
-	continue;
-      if ( AllEnemys[i].type == ( -1 ) )
-	continue;
-      if ( AllEnemys[i].Status == OUT )
-	continue;
-
-      //--------------------
-      // We determine the distance and back out immediately if there
-      // is still one whole square distance or even more...
-      //
-      xdist = Me [ 0 ] . pos . x - AllEnemys [ i ] . pos . x;
-      ydist = Me [ 0 ] . pos . y - AllEnemys [ i ] . pos . y;
-      if (abs (xdist) > 1)
-	continue;
-      if (abs (ydist) > 1)
-	continue;
-
-      //--------------------
-      // Now at this point we know, that we are pretty close.  It is time
-      // to calculate the exact distance and to see if the exact distance
-      // indicates a collision or not, in which case we can again back out
-      //
-      // dist2 = sqrt( (xdist * xdist) + (ydist * ydist) );
-      // if ( dist2 > 2 * Druid_Radius_X )
-      // continue;
-      //
-      if ( ( fabsf( xdist ) >= 2.0*Druid_Radius_X ) ||
-	   ( fabsf( ydist ) >= 2.0*Druid_Radius_Y ) ) 
-	continue;
-
-      // move the influencer a little bit out of the enemy AND the enemy a little bit out of the influ
-      max_step_size = ((Frame_Time()) < ( MAXIMAL_STEP_SIZE ) ? (Frame_Time()) : ( MAXIMAL_STEP_SIZE )) ; 
-      // Me[0].pos.x += copysignf( max_step_size , Me[0].pos.x - AllEnemys[i].pos.x ) ;
-      // Me[0].pos.y += copysignf( max_step_size , Me[0].pos.y - AllEnemys[i].pos.y ) ;
-      // evasion_vector . x = Me [ 0 ] . speed . x ;
-      // evasion_vector . y = Me [ 0 ] . speed . y ;
-      // evasion_vector . x *= Frame_Time();
-      // evasion_vector . y *= Frame_Time();
-
-      AllEnemys[i].pos.x -= copysignf( 0.6 * Frame_Time() , Me[0].pos.x - AllEnemys[i].pos.x ) ;
-      AllEnemys[i].pos.y -= copysignf( 0.6 * Frame_Time() , Me[0].pos.y - AllEnemys[i].pos.y ) ;
-
-      // AllEnemys[i].pos.x += evasion_vector . x ;
-      // AllEnemys[i].pos.y += evasion_vector . y ;copysignf( 5.1 * Frame_Time() , Me[0].pos.y - AllEnemys[i].pos.y ) ;
-	  
-      // BounceSound ();
-      
-      //--------------------
-      // shortly stop this enemy, then send him back to previous waypoint
-      //
-      if ( ! AllEnemys[i].pure_wait )
+	//--------------------
+	// shortly stop this enemy, then send him back to previous waypoint
+	//
+	if ( ! AllEnemys[i].pure_wait )
 	{
-	  AllEnemys[i].pure_wait = WAIT_COLLISION;
-	  // swap = AllEnemys[i].nextwaypoint;
-	  // AllEnemys[i].nextwaypoint = AllEnemys[i].lastwaypoint;
-	  // AllEnemys[i].lastwaypoint = swap;
-
-	  //--------------------
-	  // Maybe we add some fun collision text, but only
-	  // sometimes and only if configured to do so...
-	  //
-	  EnemyInfluCollisionText ( i );
-	  
+	    AllEnemys[i].pure_wait = WAIT_COLLISION;
+	    // swap = AllEnemys[i].nextwaypoint;
+	    // AllEnemys[i].nextwaypoint = AllEnemys[i].lastwaypoint;
+	    // AllEnemys[i].lastwaypoint = swap;
+	    
+	    //--------------------
+	    // Maybe we add some fun collision text, but only
+	    // sometimes and only if configured to do so...
+	    //
+	    EnemyInfluCollisionText ( i );
+	    
 	}
-
+	
     }				/* for */
 
 }; // void check_tux_enemy_collision( void )

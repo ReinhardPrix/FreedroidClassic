@@ -1463,10 +1463,14 @@ This indicates an error in the map system of Freedroid.",
 	Me [ PlayerNum ] . HaveBeenToLevel [ CurLevel->levelnum ] = TRUE;
 	// if ( array_num != 0 ) ShuffleEnemys ( array_num );
 	// if ( ( LNum != 0 ) && ( Shuffling ) ) ShuffleEnemys ( array_num );
-	ShuffleEnemys ( array_num );
+	// ShuffleEnemys ( array_num );
     }
     
-    if ( Shuffling ) ShuffleEnemys ( array_num );
+    //--------------------
+    // No more shuffling once the game is up and running...
+    // else there are hostile bots inside some buildings and such things...
+    //
+    // if ( Shuffling ) ShuffleEnemys ( array_num );
     
     SwitchBackgroundMusicTo( CurLevel->Background_Song_Name );
     
