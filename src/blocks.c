@@ -2563,42 +2563,6 @@ init_obstacle_data( void )
   obstacle_map [ ISO_W_BED ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_W_BED ] . is_smashable = TRUE ;
   obstacle_map [ ISO_W_BED ] . block_vision_too = FALSE ;
-  obstacle_map [ ISO_N_EMPTY_BOOKSHELF ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_N_EMPTY_BOOKSHELF ] . block_area_parm_1 = 0.5 ;
-  obstacle_map [ ISO_N_EMPTY_BOOKSHELF ] . block_area_parm_2 = 1.0 ;
-  obstacle_map [ ISO_N_EMPTY_BOOKSHELF ] . is_smashable = TRUE ;
-  obstacle_map [ ISO_N_EMPTY_BOOKSHELF ] . block_vision_too = FALSE ;
-  obstacle_map [ ISO_E_EMPTY_BOOKSHELF ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_E_EMPTY_BOOKSHELF ] . block_area_parm_1 = 1.0 ;
-  obstacle_map [ ISO_E_EMPTY_BOOKSHELF ] . block_area_parm_2 = 0.5 ;
-  obstacle_map [ ISO_E_EMPTY_BOOKSHELF ] . is_smashable = TRUE ;
-  obstacle_map [ ISO_E_EMPTY_BOOKSHELF ] . block_vision_too = FALSE ;
-  obstacle_map [ ISO_S_EMPTY_BOOKSHELF ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_S_EMPTY_BOOKSHELF ] . block_area_parm_1 = 0.5 ;
-  obstacle_map [ ISO_S_EMPTY_BOOKSHELF ] . block_area_parm_2 = 1.0 ;
-  obstacle_map [ ISO_S_EMPTY_BOOKSHELF ] . is_smashable = TRUE ;
-  obstacle_map [ ISO_S_EMPTY_BOOKSHELF ] . block_vision_too = FALSE ;
-  obstacle_map [ ISO_W_EMPTY_BOOKSHELF ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_W_EMPTY_BOOKSHELF ] . block_area_parm_1 = 1.0 ;
-  obstacle_map [ ISO_W_EMPTY_BOOKSHELF ] . block_area_parm_2 = 0.5 ;
-  obstacle_map [ ISO_W_EMPTY_BOOKSHELF ] . is_smashable = TRUE ;
-  obstacle_map [ ISO_W_EMPTY_BOOKSHELF ] . block_vision_too = FALSE ;
-  obstacle_map [ ISO_N_FULL_BOOKSHELF ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_N_FULL_BOOKSHELF ] . block_area_parm_1 = 0.5 ;
-  obstacle_map [ ISO_N_FULL_BOOKSHELF ] . block_area_parm_2 = 1.0 ;
-  obstacle_map [ ISO_N_FULL_BOOKSHELF ] . is_smashable = TRUE ;
-  obstacle_map [ ISO_E_FULL_BOOKSHELF ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_E_FULL_BOOKSHELF ] . block_area_parm_1 = 1.0 ;
-  obstacle_map [ ISO_E_FULL_BOOKSHELF ] . block_area_parm_2 = 0.5 ;
-  obstacle_map [ ISO_E_FULL_BOOKSHELF ] . is_smashable = TRUE ;
-  obstacle_map [ ISO_S_FULL_BOOKSHELF ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_S_FULL_BOOKSHELF ] . block_area_parm_1 = 0.5 ;
-  obstacle_map [ ISO_S_FULL_BOOKSHELF ] . block_area_parm_2 = 1.0 ;
-  obstacle_map [ ISO_S_FULL_BOOKSHELF ] . is_smashable = TRUE ;
-  obstacle_map [ ISO_W_FULL_BOOKSHELF ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_W_FULL_BOOKSHELF ] . block_area_parm_1 = 1.0 ;
-  obstacle_map [ ISO_W_FULL_BOOKSHELF ] . block_area_parm_2 = 0.5 ;
-  obstacle_map [ ISO_W_FULL_BOOKSHELF ] . is_smashable = TRUE ;
   obstacle_map [ ISO_N_FULL_PARK_BENCH ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_N_FULL_PARK_BENCH ] . block_area_parm_1 = 0.5 ;
   obstacle_map [ ISO_N_FULL_PARK_BENCH ] . block_area_parm_2 = 1.3 ;
@@ -2861,7 +2825,7 @@ init_obstacle_data( void )
   obstacle_map [ ISO_ROCKS_N_PLANTS_1 ] . block_area_parm_2 = 1.0 ;
   obstacle_map [ ISO_ROCKS_N_PLANTS_1 ] . filename = "iso_rocks_n_plants_0000.png" ;
   obstacle_map [ ISO_ROCKS_N_PLANTS_1 ] . block_vision_too = FALSE ;
-  obstacle_map [ ISO_ROCKS_N_PLANTS_1 ] . emitted_light_strength = -5 ;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_1 ] . emitted_light_strength = -9 ;
 
   
   obstacle_map [ ISO_ROCKS_N_PLANTS_2 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
@@ -2879,6 +2843,30 @@ init_obstacle_data( void )
   obstacle_map [ ISO_ROCKS_N_PLANTS_4 ] . block_area_parm_1 = 1.0 ;
   obstacle_map [ ISO_ROCKS_N_PLANTS_4 ] . block_area_parm_2 = 1.0 ;
   obstacle_map [ ISO_ROCKS_N_PLANTS_4 ] . filename = "iso_rocks_n_plants_0003.png" ;
+
+  obstacle_map [ ISO_ROCKS_N_PLANTS_5 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_5 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_5 ] . filename = "iso_rocks_n_plants_0004.png" ;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_5 ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_5 ] . emitted_light_strength = -12 ;
+
+  obstacle_map [ ISO_ROCKS_N_PLANTS_6 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_6 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_6 ] . filename = "iso_rocks_n_plants_0005.png" ;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_6 ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_6 ] . emitted_light_strength = -10 ;
+  
+  obstacle_map [ ISO_ROCKS_N_PLANTS_7 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_7 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_7 ] . filename = "iso_rocks_n_plants_0006.png" ;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_7 ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_7 ] . emitted_light_strength = -11 ;
+
+  obstacle_map [ ISO_ROCKS_N_PLANTS_8 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_8 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_8 ] . filename = "iso_rocks_n_plants_0007.png" ;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_8 ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_ROCKS_N_PLANTS_8 ] . emitted_light_strength = -8 ;
 
   obstacle_map [ ISO_ROOM_WALL_V_RED ]  . block_area_parm_1 = standard_wall_thickness ;
   obstacle_map [ ISO_ROOM_WALL_V_RED ]  . block_area_parm_2 = 1.2 ;
@@ -3142,6 +3130,43 @@ init_obstacle_data( void )
   obstacle_map [ ISO_PROJECTOR_W ] . block_area_parm_2 = 0.5 ;
   obstacle_map [ ISO_PROJECTOR_W ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_PROJECTOR_W ] . filename = "iso_conference_furniture_0005.png" ;
+
+
+  obstacle_map [ ISO_SHELF_FULL_V ] . block_area_parm_1 = 1.1 ;
+  obstacle_map [ ISO_SHELF_FULL_V ] . block_area_parm_2 = 2.3 ;
+  obstacle_map [ ISO_SHELF_FULL_V ] . filename = "iso_obstacle_0091.png" ;
+  obstacle_map [ ISO_SHELF_FULL_H ] . block_area_parm_1 = 2.3 ;
+  obstacle_map [ ISO_SHELF_FULL_H ] . block_area_parm_2 = 1.1 ;
+  obstacle_map [ ISO_SHELF_FULL_H ] . filename = "iso_obstacle_0092.png" ;
+
+  obstacle_map [ ISO_SHELF_FULL_V ] . block_area_parm_1 = 1.1 ;
+  obstacle_map [ ISO_SHELF_FULL_V ] . block_area_parm_2 = 2.3 ;
+  obstacle_map [ ISO_SHELF_FULL_V ] . filename = "iso_obstacle_0091.png" ;
+  obstacle_map [ ISO_SHELF_FULL_H ] . block_area_parm_1 = 2.3 ;
+  obstacle_map [ ISO_SHELF_FULL_H ] . block_area_parm_2 = 1.1 ;
+  obstacle_map [ ISO_SHELF_FULL_H ] . filename = "iso_obstacle_0092.png" ;
+
+  obstacle_map [ ISO_SHELF_EMPTY_V ] . block_area_parm_1 = 1.1 ;
+  obstacle_map [ ISO_SHELF_EMPTY_V ] . block_area_parm_2 = 2.3 ;
+  obstacle_map [ ISO_SHELF_EMPTY_V ] . filename = "iso_obstacle_0093.png" ;
+  obstacle_map [ ISO_SHELF_EMPTY_H ] . block_area_parm_1 = 2.3 ;
+  obstacle_map [ ISO_SHELF_EMPTY_H ] . block_area_parm_2 = 1.1 ;
+  obstacle_map [ ISO_SHELF_EMPTY_H ] . filename = "iso_obstacle_0094.png" ;
+
+  obstacle_map [ ISO_SHELF_SMALL_FULL_V ] . block_area_parm_1 = 1.1 ;
+  obstacle_map [ ISO_SHELF_SMALL_FULL_V ] . block_area_parm_2 = 1.1 ;
+  obstacle_map [ ISO_SHELF_SMALL_FULL_V ] . filename = "iso_obstacle_0095.png" ;
+  obstacle_map [ ISO_SHELF_SMALL_FULL_H ] . block_area_parm_1 = 1.1 ;
+  obstacle_map [ ISO_SHELF_SMALL_FULL_H ] . block_area_parm_2 = 1.1 ;
+  obstacle_map [ ISO_SHELF_SMALL_FULL_H ] . filename = "iso_obstacle_0096.png" ;
+
+  obstacle_map [ ISO_SHELF_SMALL_EMPTY_V ] . block_area_parm_1 = 1.1 ;
+  obstacle_map [ ISO_SHELF_SMALL_EMPTY_V ] . block_area_parm_2 = 1.1 ;
+  obstacle_map [ ISO_SHELF_SMALL_EMPTY_V ] . filename = "iso_obstacle_0097.png" ;
+  obstacle_map [ ISO_SHELF_SMALL_EMPTY_H ] . block_area_parm_1 = 1.1 ;
+  obstacle_map [ ISO_SHELF_SMALL_EMPTY_H ] . block_area_parm_2 = 1.1 ;
+  obstacle_map [ ISO_SHELF_SMALL_EMPTY_H ] . filename = "iso_obstacle_0098.png" ;
+
   //--------------------
   // Now that we have defined the block area paramters, it's time to do some
   // simple but often required computations in advance:  Calculating the offsets
