@@ -2465,12 +2465,14 @@ init_obstacle_data( void )
   obstacle_map [ ISO_N_TOILET_SMALL ] . block_area_parm_1 = 0.4 ;
   obstacle_map [ ISO_N_TOILET_SMALL ] . block_area_parm_2 = 0.4 ;
   obstacle_map [ ISO_N_TOILET_SMALL ] . is_smashable = TRUE ;
+  obstacle_map [ ISO_N_TOILET_SMALL ] . filename = "iso_bathroom_furniture_0008.png";
   obstacle_map [ ISO_N_TOILET_SMALL ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_E_TOILET_SMALL ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_E_TOILET_SMALL ] . block_area_parm_1 = 0.4 ;
   obstacle_map [ ISO_E_TOILET_SMALL ] . block_area_parm_2 = 0.4 ;
   obstacle_map [ ISO_E_TOILET_SMALL ] . is_smashable = TRUE ;
   obstacle_map [ ISO_E_TOILET_SMALL ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_E_TOILET_SMALL ] . filename = "iso_bathroom_furniture_0009.png";
   obstacle_map [ ISO_S_TOILET_SMALL ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_S_TOILET_SMALL ] . block_area_parm_1 = 0.4 ;
   obstacle_map [ ISO_S_TOILET_SMALL ] . block_area_parm_2 = 0.4 ;
@@ -2487,25 +2489,25 @@ init_obstacle_data( void )
   obstacle_map [ ISO_N_TOILET_BIG ] . block_area_parm_2 = 0.4 ;
   obstacle_map [ ISO_N_TOILET_BIG ] . is_smashable = TRUE ;
   obstacle_map [ ISO_N_TOILET_BIG ] . block_vision_too = FALSE ;
-  obstacle_map [ ISO_N_TOILET_BIG ] . filename = "iso_bathroom_furniture_0002.png";
+  obstacle_map [ ISO_N_TOILET_BIG ] . filename = "iso_bathroom_furniture_0004.png";
   obstacle_map [ ISO_E_TOILET_BIG ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_E_TOILET_BIG ] . block_area_parm_1 = 0.4 ;
   obstacle_map [ ISO_E_TOILET_BIG ] . block_area_parm_2 = 0.4 ;
   obstacle_map [ ISO_E_TOILET_BIG ] . is_smashable = TRUE ;
   obstacle_map [ ISO_E_TOILET_BIG ] . block_vision_too = FALSE ;
-  obstacle_map [ ISO_E_TOILET_BIG ] . filename = "iso_bathroom_furniture_0003.png";
+  obstacle_map [ ISO_E_TOILET_BIG ] . filename = "iso_bathroom_furniture_0005.png";
   obstacle_map [ ISO_S_TOILET_BIG ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_S_TOILET_BIG ] . block_area_parm_1 = 0.4 ;
   obstacle_map [ ISO_S_TOILET_BIG ] . block_area_parm_2 = 0.4 ;
   obstacle_map [ ISO_S_TOILET_BIG ] . is_smashable = TRUE ;
   obstacle_map [ ISO_S_TOILET_BIG ] . block_vision_too = FALSE ;
-  obstacle_map [ ISO_S_TOILET_BIG ] . filename = "iso_bathroom_furniture_0004.png";
+  obstacle_map [ ISO_S_TOILET_BIG ] . filename = "iso_bathroom_furniture_0006.png";
   obstacle_map [ ISO_W_TOILET_BIG ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_W_TOILET_BIG ] . block_area_parm_1 = 0.4 ;
   obstacle_map [ ISO_W_TOILET_BIG ] . block_area_parm_2 = 0.4 ;
   obstacle_map [ ISO_W_TOILET_BIG ] . is_smashable = TRUE ;
   obstacle_map [ ISO_W_TOILET_BIG ] . block_vision_too = FALSE ;
-  obstacle_map [ ISO_W_TOILET_BIG ] . filename = "iso_bathroom_furniture_0005.png";
+  obstacle_map [ ISO_W_TOILET_BIG ] . filename = "iso_bathroom_furniture_0007.png";
 
   obstacle_map [ ISO_N_CHAIR ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_N_CHAIR ] . block_area_parm_1 = 0.4 ;
@@ -2617,6 +2619,21 @@ init_obstacle_data( void )
   obstacle_map [ ISO_V_BATHTUB ] . is_smashable = TRUE ;
   obstacle_map [ ISO_V_BATHTUB ] . filename = "iso_bathroom_furniture_0001.png" ;
   obstacle_map [ ISO_V_BATHTUB ] . block_vision_too = FALSE ;
+  
+  obstacle_map [ ISO_3_BATHTUB ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_3_BATHTUB ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_3_BATHTUB ] . block_area_parm_2 = 0.5 ;
+  obstacle_map [ ISO_3_BATHTUB ] . is_smashable = TRUE ;
+  obstacle_map [ ISO_3_BATHTUB ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_3_BATHTUB ] . filename = "iso_bathroom_furniture_0002.png" ;
+  obstacle_map [ ISO_4_BATHTUB ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_4_BATHTUB ] . block_area_parm_1 = 0.5 ;
+  obstacle_map [ ISO_4_BATHTUB ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_4_BATHTUB ] . is_smashable = TRUE ;
+  obstacle_map [ ISO_4_BATHTUB ] . filename = "iso_bathroom_furniture_0003.png" ;
+  obstacle_map [ ISO_4_BATHTUB ] . block_vision_too = FALSE ;
+  
+
   obstacle_map [ ISO_H_WASHTUB ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_H_WASHTUB ] . block_area_parm_1 = 0.5 ;
   obstacle_map [ ISO_H_WASHTUB ] . block_area_parm_2 = 0.4 ;
