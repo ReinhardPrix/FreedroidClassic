@@ -327,7 +327,7 @@ clear_out_all_events_and_actions( void )
 #define EVENT_TRIGGER_LABEL_STRING "Use map location from map label=\""
 
 #define MODIFY_OBSTACLE_WITH_LABEL_STRING "modify_obstacle_with_label=\""
-#define MODIFY_OBSTACLE_TO_TYPE "modify_obstacle_to_type="
+#define MODIFY_OBSTACLE_TO_TYPE_STRING "modify_obstacle_to_type="
 
 /* ----------------------------------------------------------------------
  *
@@ -410,6 +410,13 @@ decode_all_event_actions ( char* EventSectionPointer )
 Leave out the label entry for obstacles if you don't want to use it!" );
 	      Terminate ( ERR );
 	    }
+	  //--------------------
+	  // But if such an obstacle label has been given, we also need to decode the new type that
+	  // this obstacle should be made into.  So we do it here:
+	  //
+	  ReadValueFromString( EventPointer , MODIFY_OBSTACLE_TO_TYPE_STRING , "%d" , 
+			       & ( AllTriggeredActions[ EventActionNumber ] . modify_obstacle_to_type ) , EndOfEvent );
+	  DebugPrintf ( 0 , "\nObstacle will be modified to type: %d." , AllTriggeredActions[ EventActionNumber ] . modify_obstacle_to_type );
 	}
       else
 	{

@@ -1241,11 +1241,68 @@ ExecuteActionWithLabel ( char* ActionLabel , int PlayerNum )
 }; // void ExecuteActionWithLabel ( char* ActionLabel )
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+obstacle* 
+give_pointer_to_obstacle_with_label ( char* obstacle_label ) 
+{
+  int i, j , k;
+
+  //--------------------
+  // Now we try to resolve the obstacle given in the labels of all the decks
+  // of the current ship.
+  //
+  for ( i = 0 ; i < curShip . num_levels ; i ++ )
+    {
+      for ( j = 0 ; j < MAX_OBSTACLE_NAMES_PER_LEVEL ; j ++ )
+	{
+	  if ( strlen ( curShip . AllLevels [ i ] -> obstacle_name_list [ j ] ) > 0 )
+	    {
+	      if ( strcmp ( curShip . AllLevels [ i ] -> obstacle_name_list [ j ] , obstacle_label ) == 0 )
+		{
+		  //--------------------
+		  // Now we need to find out which obstacle is pointing to this label
+		  //
+		  for ( k = 0 ; k < MAX_OBSTACLES_ON_MAP ; k ++ )
+		    {
+		      if ( curShip . AllLevels [ i ] -> obstacle_list [ k ] . name_index == j )
+			{
+			  DebugPrintf ( 0 , "\nSUCCESSFULLY RESOLVED OBSTACLE NAME %s." , 
+					obstacle_label );
+			  return ( & ( curShip . AllLevels [ i ] -> obstacle_list [ k ] ) );
+			}
+		    }
+		  //--------------------
+		  // So here we've encountered an error!  There seems to be no obstacle
+		  // pointing to this obstacle label (any more).
+		  //
+		  GiveStandardErrorMessage ( "give_pointer_to_obstacle_with_label(...)" , "\
+The obstacle label was found in the label list,\n but no obstacle seems to point to this label." ,
+					     PLEASE_INFORM, IS_FATAL );
+		}
+	    }
+	}
+    }
+
+  //--------------------
+  // So here we've encountered an error!  There seems to be no obstacle
+  // pointing to this obstacle label (any more).
+  //
+  GiveStandardErrorMessage ( "give_pointer_to_obstacle_with_label(...)" , "\
+The obstacle label given was NOT found in any levels obstacle label list." ,
+			     PLEASE_INFORM, IS_FATAL );
+  return ( NULL ) ;
+
+}; // obstacle* give_pointer_to_obstacle_with_label ( char* obstacle_label ) 
+
+/* ----------------------------------------------------------------------
  * 
  * ---------------------------------------------------------------------- */
 void 
 ExecuteEvent ( int EventNumber , int PlayerNum )
 {
+  obstacle* our_obstacle;
   // DebugPrintf( 1 , "\nvoid ExecuteEvent ( int EventNumber ) : real function call confirmed. ");
   // DebugPrintf( 1 , "\nvoid ExecuteEvent ( int EventNumber ) : executing event Nr.: %d." , EventNumber );
 
@@ -1272,6 +1329,20 @@ ExecuteEvent ( int EventNumber , int PlayerNum )
 	}
     }
 
+  //--------------------
+  // Maybe the action will cause a map obstacle to change type.  If that is so, we
+  // do it here...
+  //
+  if ( strlen ( AllTriggeredActions [ EventNumber ] . modify_obstacle_with_label ) > 0 )
+    {
+      our_obstacle = give_pointer_to_obstacle_with_label ( AllTriggeredActions [ EventNumber ] . modify_obstacle_with_label ) ;
+      our_obstacle -> type = AllTriggeredActions [ EventNumber ] . modify_obstacle_to_type ;
+      //--------------------
+      // Now we make sure the door lists and that are all updated...
+      //
+      GetAllAnimatedMapTiles ( curShip . AllLevels [ Me [ 0 ] . pos . z ] );
+    }
+
   // Does the action include a teleport of the influencer to some other location?
   if ( AllTriggeredActions[ EventNumber ].TeleportTarget.x != (-1) )
     {
@@ -1294,6 +1365,9 @@ ExecuteEvent ( int EventNumber , int PlayerNum )
       Me[0].TextVisibleTime=0;
       Me[0].TextToBeDisplayed=AllTriggeredActions[ EventNumber ].InfluencerSayText;
     }
+
+  
+
 }; // void ExecuteEvent ( int EventNumber )
 
 /* ----------------------------------------------------------------------
