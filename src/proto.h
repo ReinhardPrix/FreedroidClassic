@@ -48,6 +48,7 @@ EXTERN void AssignMission( int MissNum );
 EXTERN void parse_command_line (int argc, char *const argv[]);
 EXTERN void Title ( char *MissionBriefingPointer );
 EXTERN void EndTitle (void);
+EXTERN void ClearAutomapData( void );
 EXTERN void InitFreedroid (void);
 EXTERN void InitNewMissionList (char *MissionName);
 EXTERN void ThouArtDefeated (void);

@@ -541,7 +541,8 @@ PutInfluence ( int x , int y )
   int use_tux = TRUE;
   point UpperLeftBlitCorner;
   float angle;
-  SDL_Surface* tmp_influencer;
+  static float Previous_angle = -1000 ; // a completely unrealistic value
+  static SDL_Surface* tmp_influencer = NULL ;
   moderately_finepoint in_tile_shift;
 
   Text_Rect.x=UserCenter_x + Block_Width/3;
@@ -622,8 +623,17 @@ PutInfluence ( int x , int y )
       // angle = - ( atan2 (Me.speed.y,  Me.speed.x) * 180 / M_PI + 90 );
       angle = - ( atan2 ( input_axis.y,  input_axis.x ) * 180 / M_PI + 90 );
 
-      tmp_influencer = 
-	rotozoomSurface( TuxWorkingCopy [ ((int) Me.phase) ] , angle , 1.0 , FALSE );
+      if ( ( angle != Previous_angle ) || ( tmp_influencer == NULL ) )
+	{
+	  if ( tmp_influencer != NULL ) SDL_FreeSurface( tmp_influencer );
+	  tmp_influencer = 
+	    rotozoomSurface( TuxWorkingCopy [ ((int) Me.phase) ] , angle , 1.0 , FALSE );
+	  Previous_angle = angle;
+	}
+      // SDL_SetColorKey ( tmp_influencer , SDL_SRCCOLORKEY, SDL_MapRGB ( tmp_influencer->format , 255 , 0 , 255 ) ); 
+      SDL_SetColorKey ( tmp_influencer , 0 , SDL_MapRGB ( tmp_influencer->format , 255 , 0 , 255 ) ); // turn off colorkey
+      SDL_SetAlpha( TuxMotionArchetypes[5][i] , SDL_SRCALPHA , 0 );
+
 
       //--------------------
       // The rotation may of course have changed the dimensions of the
@@ -646,7 +656,7 @@ PutInfluence ( int x , int y )
 	}
       
       SDL_BlitSurface( tmp_influencer , NULL , Screen, &TargetRectangle );
-      SDL_FreeSurface( tmp_influencer );
+      // SDL_FreeSurface( tmp_influencer );
     }
   else
     {

@@ -869,6 +869,9 @@ Teleport (int LNum, int X, int Y)
 	    //AllBullets[i].type = OUT;
 	    //AllBullets[i].mine = FALSE;
 	}
+      
+      // clear the automapping information
+      ClearAutomapData();
     }
   else
     {
