@@ -553,26 +553,7 @@ ReactToSpecialKeys(void)
     }
 
   //--------------------
-  // We assign the T key to taking an item from the floor
-  //
-  if ( TPressed() )
-    {
-      for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i++ )
-	{
-	  if ( CurLevel->ItemList[ i ].type == (-1) ) continue;
-	  if ( ( fabsf( Me[0].pos.x - CurLevel->ItemList[ i ].pos.x ) < 0.25 ) &&
-	       ( fabsf( Me[0].pos.y - CurLevel->ItemList[ i ].pos.y ) < 0.25 ) )
-	    break;
-	}
-
-      if ( i < MAX_ITEMS_PER_LEVEL )
-	{
-	  AddFloorItemDirectlyToInventory( &( CurLevel->ItemList[ i ] ) );
-	}
-    }
-
-  //--------------------
-  // We assign the I key to turn on/off the inventory log 
+  // We assign the S key to turning on/off the skill screen
   //
   if ( SPressed() )
     {
@@ -591,7 +572,10 @@ ReactToSpecialKeys(void)
     }
 
   //--------------------
-  // We assign the I key to turn on/off the inventory log 
+  // We assign the I key to turn on/off the inventory screen.
+  //
+  // CHEAT:  Shift in addition to I will identify all items in
+  //         current inventory.  Very handy...
   //
   if ( IPressed() )
     {
@@ -1513,20 +1497,20 @@ keyboard_update(void)
 	case SDL_MOUSEMOTION:
 	  // if (mouse_control)
 	  // {
-	      //--------------------
-	      // Since the new mouse cursor does have it's tip at the top left corner
-	      // of the mouse cursor, but rather in the center of the 32x32 pixel mouse
-	      // cursor, we need to correct the given axis a little (16 pixels) bit.
-	      //
-	      // ATTENTION!! THIS ALSO MEANS THAT THE MOUSE CURSOR NEVER NEEDS TO BE
-	      // CORRECTED BY 16 PIXELS ANYWHERE ELSE IN THE CODE, OR WE'LL GET AN
-	      // OVERCORRECTION AND A WRONG RESULT FOR THE MOUSE POSITION!!!
-	      //
-	      input_axis.x = event.button.x - UserCenter_x + 16; 
-	      input_axis.y = event.button.y - UserCenter_y + 16; 	  
-	      CurrentMouseAbsPos.x = event.button.x;
-	      CurrentMouseAbsPos.y = event.button.y;
-	      // }
+	  //--------------------
+	  // Since the new mouse cursor does have it's tip at the top left corner
+	  // of the mouse cursor, but rather in the center of the 32x32 pixel mouse
+	  // cursor, we need to correct the given axis a little (16 pixels) bit.
+	  //
+	  // ATTENTION!! THIS ALSO MEANS THAT THE MOUSE CURSOR NEVER NEEDS TO BE
+	  // CORRECTED BY 16 PIXELS ANYWHERE ELSE IN THE CODE, OR WE'LL GET AN
+	  // OVERCORRECTION AND A WRONG RESULT FOR THE MOUSE POSITION!!!
+	  //
+	  input_axis . x = event . button . x - UserCenter_x + MOUSE_CROSSHAIR_OFFSET_X ;
+	  input_axis . y = event . button . y - UserCenter_y + MOUSE_CROSSHAIR_OFFSET_Y ;
+	  CurrentMouseAbsPos.x = event.button.x;
+	  CurrentMouseAbsPos.y = event.button.y;
+	  // }
 	  break;
 	  
 	  /* Mouse control */

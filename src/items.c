@@ -2332,6 +2332,47 @@ ShowQuickInventory ( void )
 }; // void ShowQuickInventory ( void )
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+int
+get_floor_item_index_under_mouse_cursor ( int player_num )
+{
+  Level PlayerLevel = curShip . AllLevels [ Me [ player_num ] . pos . z ] ;
+  finepoint MapPositionOfMouse;
+  int i;
+
+  //--------------------
+  // We get the in-game map coordinates of the spot the mouse cursor
+  // is pointing to...
+  //
+  MapPositionOfMouse . x = 
+    translate_pixel_to_map_location ( 0 , 
+				      ServerThinksInputAxisX ( 0 ) , 
+				      ServerThinksInputAxisY ( 0 ) , TRUE ) ;
+  MapPositionOfMouse . y = 
+    translate_pixel_to_map_location ( 0 , 
+				      ServerThinksInputAxisX ( 0 ) , 
+				      ServerThinksInputAxisY ( 0 ) , FALSE ) ;
+
+  //--------------------
+  // DebugPrintf( 1  , "\nMouse in map at: %f %f." , MapPositionOfMouse.x , MapPositionOfMouse.y );
+  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i++ )
+    {
+      if ( PlayerLevel -> ItemList [ i ] . type == (-1) ) continue;
+      
+      if ( ( fabsf( MapPositionOfMouse.x - PlayerLevel -> ItemList [ i ] . pos . x ) < 0.5 ) &&
+	   ( fabsf( MapPositionOfMouse.y - PlayerLevel -> ItemList [ i ] . pos . y ) < 0.5 ) )
+	{
+	  return ( i ) ;
+	}
+    }
+
+  return ( -1 );
+
+}; // int get_floor_item_index_under_mouse_cursor ( int player_num )
+
+/* ----------------------------------------------------------------------
  * This function display the inventory screen and also checks for mouse
  * actions in the invenotry screen.
  * ---------------------------------------------------------------------- */
@@ -2347,6 +2388,7 @@ ManageInventoryScreen ( void )
   finepoint MapPositionOfMouse;
   Level PlayerLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
   int SpellCost = SpellSkillMap [ SPELL_IDENTIFY_SKILL ] . mana_cost_table [ Me[ 0 ] . spellcasting_skill ] ;
+  int index_of_item_under_mouse_cursor = (-1) ;
 
   DebugPrintf (2, "\nvoid ShowInventoryMessages( ... ): Function call confirmed.");
 
@@ -2361,7 +2403,6 @@ ManageInventoryScreen ( void )
     {
       return;
     }
-
 
   // --------------------
   // We will need the current mouse position on several spots...
@@ -2385,34 +2426,25 @@ ManageInventoryScreen ( void )
       if ( ( axis_is_active ) && ( !MouseButtonPressedPreviousFrame ) && ( Item_Held_In_Hand == (-1) ) )
 	{
 	  // DebugPrintf( 1 , "\nCollecting items for direct addition to the inventory without grabbing." );
-	  MapPositionOfMouse.x = Me[0].pos.x + (CurPos.x - UserCenter_x) / (float) Block_Width;
-	  MapPositionOfMouse.y = Me[0].pos.y + (CurPos.y - UserCenter_y) / (float) Block_Height;
+	  MapPositionOfMouse.x = Me [ 0 ] . pos . x + ( CurPos.x - UserCenter_x ) / (float) Block_Width;
+	  MapPositionOfMouse.y = Me [ 0 ] . pos . y + ( CurPos.y - UserCenter_y ) / (float) Block_Height;
 
 	  // We only take items, when they are close enough 
-	  if ( ( fabsf( MapPositionOfMouse.x - Me[0].pos.x ) < ITEM_TAKE_DIST ) &&
-	       ( fabsf( MapPositionOfMouse.y - Me[0].pos.y ) < ITEM_TAKE_DIST ) )
+	  if ( ( fabsf( MapPositionOfMouse . x - Me [ 0 ] . pos . x ) < ITEM_TAKE_DIST ) &&
+	       ( fabsf( MapPositionOfMouse . y - Me [ 0 ] . pos . y ) < ITEM_TAKE_DIST ) )
 	    {
-	      // DebugPrintf( 1  , "\nMouse in map at: %f %f." , MapPositionOfMouse.x , MapPositionOfMouse.y );
-	      for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i++ )
+
+	      index_of_item_under_mouse_cursor = get_floor_item_index_under_mouse_cursor ( 0 );
+
+	      if ( index_of_item_under_mouse_cursor != (-1) )
 		{
-		  if ( PlayerLevel->ItemList[ i ].type == (-1) ) continue;
-		  
-		  if ( ( fabsf( MapPositionOfMouse.x - PlayerLevel->ItemList[ i ].pos.x ) < 0.5 ) &&
-		       ( fabsf( MapPositionOfMouse.y - PlayerLevel->ItemList[ i ].pos.y ) < 0.5 ) )
-		    {
-		      //--------------------
-		      // We've found some item to grab!!! How wonderful!!!
-		      // We simply add it to the inventory as good as we can.
-		      //
-		      Item_Held_In_Hand = ( -1 ); // ItemMap[ PlayerLevel->ItemList[ i ].type ].picture_number ;
-		      // PlayerLevel->ItemList[ i ].currently_held_in_hand = TRUE;
-		      AddFloorItemDirectlyToInventory( &( PlayerLevel->ItemList[ i ] ) );
-		      
-		      MouseButtonPressedPreviousFrame = axis_is_active;
-		      RightPressedPreviousFrame = MouseRightPressed ( ) ;
-		      return;
-		    }
+		  Item_Held_In_Hand = ( -1 ); 
+		  AddFloorItemDirectlyToInventory( & ( PlayerLevel -> ItemList [ index_of_item_under_mouse_cursor ] ) );
+		  MouseButtonPressedPreviousFrame = axis_is_active;
+		  RightPressedPreviousFrame = MouseRightPressed ( ) ;
+		  return;
 		}
+
 	    }
 	}
 
@@ -2561,7 +2593,7 @@ ManageInventoryScreen ( void )
 	      // course be the image of the item grabbed from inventory.
 	      //
 	      Item_Held_In_Hand = Me [ 0 ] . aux2_item . type ;
-	      Me[0].aux2_item.currently_held_in_hand = TRUE;
+	      Me [ 0 ] . aux2_item . currently_held_in_hand = TRUE;
 	    }
 	}
       else if ( CursorIsInUserRect( CurPos.x , CurPos.y ) )
@@ -2584,8 +2616,8 @@ ManageInventoryScreen ( void )
 	    {
 	      if ( PlayerLevel->ItemList[ i ].type == (-1) ) continue;
 	      
-	      if ( ( fabsf( MapPositionOfMouse.x - PlayerLevel->ItemList[ i ].pos.x ) < 0.5 ) &&
-		   ( fabsf( MapPositionOfMouse.y - PlayerLevel->ItemList[ i ].pos.y ) < 0.5 ) )
+	      if ( ( fabsf( MapPositionOfMouse.x - PlayerLevel -> ItemList [ i ] . pos . x ) < 0.5 ) &&
+		   ( fabsf( MapPositionOfMouse.y - PlayerLevel -> ItemList [ i ] . pos . y ) < 0.5 ) )
 		{
 		  //--------------------
 		  // We've found some item to grab!!! How wonderful!!!
@@ -2593,7 +2625,7 @@ ManageInventoryScreen ( void )
 		  // But of course we only really take the item into our 'hand' if it's
 		  // something else than money, cause money need not be put anywhere...
 		  //
-		  if ( PlayerLevel->ItemList[ i ].type == ITEM_MONEY ) 		      
+		  if ( PlayerLevel -> ItemList [ i ] . type == ITEM_MONEY ) 		      
 		    {
 		      AddFloorItemDirectlyToInventory( &( PlayerLevel->ItemList[ i ] ) );
 		      return;
