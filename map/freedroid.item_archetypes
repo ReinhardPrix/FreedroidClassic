@@ -30,8 +30,10 @@ freedroid-discussion@lists.sourceforge.net
 
 BEGIN OF AUTORS NOTES
 
-You can use this text field to make some notes on anything.  These otes will get saved with the dialog.
-This is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.
+
+NOTE 1:  The so-called 'Droid Laserswords A-J' are currently there to provide the nescessary dummy information for those bots, that don't yet have some real animation but instead use the gimped-in sword-swing images, very primitive and crude.  Hopefully, these items can be thrown out completely as soon as all droids either have some combat animation sequence or get a suitable real i.e. ranged weapon.
+
+NOTE 2:  Beware:  The order of the items currently is of importance to the game eninge.  Therefore please be careful with deleting items.  When introducing new items, best first use the 'Dummy Entry'-items.  Then add new entries.  But when deleting an item, best make it into a dummy item, so that it will not disturb the current index numbers for the items.
 
 END OF AUTORS NOTES
 
@@ -168,8 +170,8 @@ Item as gun: required ammunition type="none"
 // Item No. 3
 ** Start of new item specification subsection **
 Item name="Twin Laser"
-Position_X=535
-Position_Y=458
+Position_X=530
+Position_Y=449
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
@@ -246,8 +248,8 @@ Item as gun: required ammunition type="none"
 // Item No. 5
 ** Start of new item specification subsection **
 Item name="Simple Boots"
-Position_X=660
-Position_Y=245
+Position_X=632
+Position_Y=80
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="drive"
@@ -324,11 +326,11 @@ Item as gun: required ammunition type="none"
 // Item No. 7
 ** Start of new item specification subsection **
 Item name="Wheel Drive"
-Position_X=654
-Position_Y=137
+Position_X=115
+Position_Y=339
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
-Item can be installed in slot with name="drive"
+Item can be installed in slot with name="none"
 Item uses rotation series with prefix="NONE_AVAILABLE_YET"
 Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=-1
@@ -363,11 +365,11 @@ Item as gun: required ammunition type="none"
 // Item No. 8
 ** Start of new item specification subsection **
 Item name="Tripedal Drive"
-Position_X=664
-Position_Y=91
+Position_X=140
+Position_Y=331
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
-Item can be installed in slot with name="drive"
+Item can be installed in slot with name="none"
 Item uses rotation series with prefix="NONE_AVAILABLE_YET"
 Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=-1
@@ -402,11 +404,11 @@ Item as gun: required ammunition type="none"
 // Item No. 9
 ** Start of new item specification subsection **
 Item name="Bipedal Drive"
-Position_X=650
-Position_Y=50
+Position_X=122
+Position_Y=315
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
-Item can be installed in slot with name="drive"
+Item can be installed in slot with name="none"
 Item uses rotation series with prefix="NONE_AVAILABLE_YET"
 Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=-1
@@ -441,8 +443,8 @@ Item as gun: required ammunition type="none"
 // Item No. 10
 ** Start of new item specification subsection **
 Item name="Tracks"
-Position_X=660
-Position_Y=176
+Position_X=131
+Position_Y=356
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="none"
@@ -480,8 +482,8 @@ Item as gun: required ammunition type="none"
 // Item No. 11
 ** Start of new item specification subsection **
 Item name="Advanced Boots"
-Position_X=662
-Position_Y=214
+Position_X=632
+Position_Y=46
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="drive"
@@ -519,8 +521,8 @@ Item as gun: required ammunition type="none"
 // Item No. 12
 ** Start of new item specification subsection **
 Item name="Laser Rifle"
-Position_X=548
-Position_Y=136
+Position_X=567
+Position_Y=120
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
@@ -558,8 +560,8 @@ Item as gun: required ammunition type="laser_ammunition"
 // Item No. 13
 ** Start of new item specification subsection **
 Item name="Exterminator"
-Position_X=548
-Position_Y=180
+Position_X=568
+Position_Y=153
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
@@ -987,8 +989,8 @@ Item as gun: required ammunition type="plasma_ammunition"
 // Item No. 24
 ** Start of new item specification subsection **
 Item name="Long sword"
-Position_X=560
-Position_Y=462
+Position_X=570
+Position_Y=464
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
@@ -1065,8 +1067,8 @@ Item as gun: required ammunition type="none"
 // Item No. 26
 ** Start of new item specification subsection **
 Item name="Claymore"
-Position_X=557
-Position_Y=485
+Position_X=570
+Position_Y=495
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
@@ -1572,8 +1574,8 @@ Item as gun: required ammunition type="none"
 // Item No. 39
 ** Start of new item specification subsection **
 Item name="Laserstaff"
-Position_X=543
-Position_Y=48
+Position_X=565
+Position_Y=41
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
@@ -1611,7 +1613,7 @@ Item as gun: required ammunition type="none"
 // Item No. 40
 ** Start of new item specification subsection **
 Item name="Hand Laseraxe"
-Position_X=590
+Position_X=591
 Position_Y=479
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
@@ -2391,8 +2393,8 @@ Item as gun: required ammunition type="none"
 // Item No. 60
 ** Start of new item specification subsection **
 Item name="Power Exterminator"
-Position_X=540
-Position_Y=92
+Position_X=566
+Position_Y=75
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
@@ -3990,8 +3992,8 @@ Item as gun: required ammunition type="none"
 // Item No. 101
 ** Start of new item specification subsection **
 Item name="Droid Short Lasersword A"
-Position_X=90
-Position_Y=450
+Position_X=47
+Position_Y=461
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
@@ -4029,8 +4031,8 @@ Item as gun: required ammunition type="none"
 // Item No. 102
 ** Start of new item specification subsection **
 Item name="Droid Short Lasersword B"
-Position_X=130
-Position_Y=450
+Position_X=78
+Position_Y=461
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
@@ -4068,8 +4070,8 @@ Item as gun: required ammunition type="none"
 // Item No. 103
 ** Start of new item specification subsection **
 Item name="Droid Short Lasersword C"
-Position_X=170
-Position_Y=450
+Position_X=78
+Position_Y=489
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
@@ -4107,8 +4109,8 @@ Item as gun: required ammunition type="none"
 // Item No. 104
 ** Start of new item specification subsection **
 Item name="Droid Short Lasersword D"
-Position_X=210
-Position_Y=450
+Position_X=108
+Position_Y=461
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
@@ -4146,8 +4148,8 @@ Item as gun: required ammunition type="none"
 // Item No. 105
 ** Start of new item specification subsection **
 Item name="Droid Short Lasersword E"
-Position_X=250
-Position_Y=450
+Position_X=108
+Position_Y=490
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
@@ -4185,8 +4187,8 @@ Item as gun: required ammunition type="none"
 // Item No. 106
 ** Start of new item specification subsection **
 Item name="Droid Short Lasersword F"
-Position_X=290
-Position_Y=450
+Position_X=137
+Position_Y=461
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
@@ -4224,8 +4226,8 @@ Item as gun: required ammunition type="none"
 // Item No. 107
 ** Start of new item specification subsection **
 Item name="Droid Short Lasersword G"
-Position_X=330
-Position_Y=450
+Position_X=166
+Position_Y=493
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
@@ -4263,8 +4265,8 @@ Item as gun: required ammunition type="none"
 // Item No. 108
 ** Start of new item specification subsection **
 Item name="Droid Short Lasersword H"
-Position_X=302
-Position_Y=490
+Position_X=166
+Position_Y=463
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
@@ -4302,8 +4304,8 @@ Item as gun: required ammunition type="none"
 // Item No. 109
 ** Start of new item specification subsection **
 Item name="Droid Short Lasersword I"
-Position_X=271
-Position_Y=489
+Position_X=139
+Position_Y=492
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
@@ -4380,8 +4382,8 @@ Item as gun: required ammunition type="none"
 // Item No. 111
 ** Start of new item specification subsection **
 Item name="Anti-Grav Class A"
-Position_X=660
-Position_Y=245
+Position_X=114
+Position_Y=371
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="none"
@@ -4419,8 +4421,8 @@ Item as gun: required ammunition type="none"
 // Item No. 112
 ** Start of new item specification subsection **
 Item name="Anti-Grav Class B"
-Position_X=662
-Position_Y=214
+Position_X=135
+Position_Y=385
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="none"
@@ -4458,8 +4460,8 @@ Item as gun: required ammunition type="none"
 // Item No. 113
 ** Start of new item specification subsection **
 Item name="Mace"
-Position_X=502
-Position_Y=453
+Position_X=544
+Position_Y=477
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
@@ -4497,8 +4499,8 @@ Item as gun: required ammunition type="none"
 // Item No. 114
 ** Start of new item specification subsection **
 Item name="ITEM CODE ERROR ITEM"
-Position_X=268
-Position_Y=40
+Position_X=238
+Position_Y=402
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
