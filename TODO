@@ -3,24 +3,17 @@ Bugs
 ----
 - (rp): Invincible mode sollte auch Burn-out ueberleben, und ueberhaupt:Schuesse!!
 
-- funktioniert Energy-charger? (rp)?   JA, aber regeneriert wird nur
-  Schuss- und Kollisionsschaden. (jp)
+- put all "cheat"-keys in cheat-menu (some are still accessible outside)
 
 - Druidmap.notes sollten besser von file eingelesen werden oder
   zumindest in paravars.h (statt direkt in InitParaplus())
 - PORT: use vga_screenoff/on() anstatt MonitorSignalUnterbrechung...?
-
-DONE RECENTLY- (jp) Sound support: Sound effects and background music and
-  simultaneously please!
 
 - (jp) Calculate all movement (where movement is to be understood in an abstract
   sense including movement of energy and such) framerate-dependant
 
 - (rp/jp?) Ship-console endlich ordentlich machen, haufenweise
   Robo-graphics noetig
-
-- (jp) .lbm files in was lesbares umwandeln und entsprechende
-  Lade-routinen schreiben
 
 - (?) find more open and free sounds be can use legally
 
@@ -30,19 +23,20 @@ DONE RECENTLY- (jp) Sound support: Sound effects and background music and
 
 - (jp) add more sounds
 
+- (rp) Takeover game still looks 'unfinished'
+
 Missing features
 -----------------
-- use multitasking (fork()) for background processes... (update
-  counters etc)
+- save highscores to disk
+- Options menu? 
+- (rp?) mouse-support (should be good with touchstick on laptop!)
+- (rp?) joystick/gamepad support waere toll!
+- (rp) add command-line argument reading
+- (rp): PORT the map-editor 'maped' ?
 
-- mouse-support (should be good with touchstick on laptop!)
-
-- (rp): PORT the map-editor 'maped'  
-
-- (rp) use GNU-type configure scripts
 - (rp+jp) use GNU coding standards (see doc file 'gnu-standards')
 
 - "Encapsulate" all graphic-function/keyboard/mouse calls, 
   so that porting to X becomes easier?!
 
-
+- X11 - support (use DGA-mode!)
