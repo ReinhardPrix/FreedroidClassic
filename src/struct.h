@@ -1007,6 +1007,7 @@ typedef struct
     int jump_target_south;
     int jump_target_east;
     int jump_target_west;
+    int use_underground_lighting;
     
     obstacle obstacle_list[ MAX_OBSTACLES_ON_MAP ];
     

@@ -48,6 +48,7 @@ jump target north: 8
 jump target south: 11
 jump target east: 9
 jump target west: 10
+use underground lighting: 0
 Name of this level=Town
 Comment of the Influencer on entering this level="This must be the Old Town.
 Name of background song for this level=Bleostrada.ogg
@@ -2496,6 +2497,7 @@ jump target north: -1
 jump target south: -1
 jump target east: -1
 jump target west: -1
+use underground lighting: 0
 Name of this level=Warehouse Level 1
 Comment of the Influencer on entering this level="This must be the warehouse Spencer mentioned.
 Name of background song for this level=Daybreak.ogg
@@ -3468,6 +3470,7 @@ jump target north: -1
 jump target south: -1
 jump target east: -1
 jump target west: -1
+use underground lighting: 0
 Name of this level=Warehouse Level 2
 Comment of the Influencer on entering this level="This place is bigger even.
 Name of background song for this level=Daybreak.ogg
@@ -4145,6 +4148,7 @@ jump target north: -1
 jump target south: -1
 jump target east: -1
 jump target west: -1
+use underground lighting: 0
 Name of this level=Kevins Underground Station
 Comment of the Influencer on entering this level="This must be Kevins Underground Station...
 Name of background song for this level=Daybreak.ogg
@@ -4662,6 +4666,7 @@ jump target north: -1
 jump target south: -1
 jump target east: -1
 jump target west: -1
+use underground lighting: 0
 Name of this level=Distruption Machine Deck
 Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=Daybreak.ogg
@@ -5598,6 +5603,7 @@ jump target north: -1
 jump target south: -1
 jump target east: -1
 jump target west: -1
+use underground lighting: 0
 Name of this level=UNUSED LEVEL
 Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=Daybreak.ogg
@@ -6369,6 +6375,7 @@ jump target north: -1
 jump target south: -1
 jump target east: -1
 jump target west: -1
+use underground lighting: 0
 Name of this level=Maintainance Tunnels
 Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=Daybreak.ogg
@@ -6955,6 +6962,7 @@ jump target north: -1
 jump target south: -1
 jump target east: -1
 jump target west: -1
+use underground lighting: 0
 Name of this level=Disruptor Shield Control
 Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=Daybreak.ogg
@@ -7676,6 +7684,7 @@ jump target north: -1
 jump target south: 0
 jump target east: 17
 jump target west: 16
+use underground lighting: 0
 Name of this level=Temple Wood
 Comment of the Influencer on entering this level="This must be the main reactor level.  Humans are not allowes
 Name of background song for this level=TheBeginning.ogg
@@ -7912,7 +7921,7 @@ ob_type=2 ob_x=56.50 ob_y=19.00 ob_na=-1 ob_de=-1
 ob_type=2 ob_x=57.50 ob_y=19.00 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=59.00 ob_y=18.50 ob_na=-1 ob_de=-1 
 ob_type=2 ob_x=58.50 ob_y=19.00 ob_na=-1 ob_de=-1 
-ob_type=11 ob_x=20.00 ob_y=19.50 ob_na=-1 ob_de=-1 
+ob_type=15 ob_x=20.00 ob_y=19.50 ob_na=-1 ob_de=-1 
 ob_type=11 ob_x=28.00 ob_y=19.50 ob_na=-1 ob_de=-1 
 ob_type=44 ob_x=30.75 ob_y=19.50 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=32.00 ob_y=19.50 ob_na=-1 ob_de=-1 
@@ -7950,7 +7959,7 @@ ob_type=2 ob_x=29.50 ob_y=22.00 ob_na=-1 ob_de=-1
 ob_type=2 ob_x=30.50 ob_y=22.00 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=32.00 ob_y=21.50 ob_na=-1 ob_de=-1 
 ob_type=2 ob_x=31.50 ob_y=22.00 ob_na=-1 ob_de=-1 
-ob_type=6 ob_x=32.50 ob_y=22.00 ob_na=-1 ob_de=-1 
+ob_type=10 ob_x=32.50 ob_y=22.00 ob_na=-1 ob_de=-1 
 ob_type=6 ob_x=33.50 ob_y=22.00 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=35.00 ob_y=21.50 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=50.00 ob_y=21.50 ob_na=-1 ob_de=-1 
@@ -7961,7 +7970,7 @@ ob_type=1 ob_x=35.00 ob_y=24.50 ob_na=-1 ob_de=-1
 ob_type=1 ob_x=35.00 ob_y=25.50 ob_na=-1 ob_de=-1 
 ob_type=2 ob_x=34.50 ob_y=26.00 ob_na=-1 ob_de=-1 
 ob_type=56 ob_x=42.50 ob_y=25.50 ob_na=-1 ob_de=2 
-ob_type=23 ob_x=44.50 ob_y=25.50 ob_na=-1 ob_de=-1 
+ob_type=24 ob_x=44.50 ob_y=25.50 ob_na=-1 ob_de=-1 
 ob_type=57 ob_x=46.50 ob_y=25.50 ob_na=-1 ob_de=5 
 ob_type=2 ob_x=30.50 ob_y=27.00 ob_na=-1 ob_de=-1 
 ob_type=2 ob_x=31.50 ob_y=27.00 ob_na=-1 ob_de=-1 
@@ -7970,14 +7979,14 @@ ob_type=1 ob_x=34.00 ob_y=26.50 ob_na=-1 ob_de=-1
 ob_type=2 ob_x=33.50 ob_y=27.00 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=30.00 ob_y=27.50 ob_na=-1 ob_de=-1 
 ob_type=2 ob_x=29.50 ob_y=28.00 ob_na=-1 ob_de=-1 
-ob_type=23 ob_x=42.50 ob_y=27.50 ob_na=-1 ob_de=-1 
-ob_type=23 ob_x=46.50 ob_y=27.50 ob_na=-1 ob_de=-1 
+ob_type=24 ob_x=42.50 ob_y=27.50 ob_na=-1 ob_de=-1 
+ob_type=24 ob_x=46.50 ob_y=27.50 ob_na=-1 ob_de=-1 
 ob_type=29 ob_x=49.42 ob_y=26.58 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=29.00 ob_y=28.50 ob_na=-1 ob_de=-1 
 ob_type=29 ob_x=38.87 ob_y=27.27 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=29.00 ob_y=29.50 ob_na=-1 ob_de=-1 
 ob_type=55 ob_x=42.50 ob_y=29.50 ob_na=-1 ob_de=3 
-ob_type=23 ob_x=44.50 ob_y=29.50 ob_na=-1 ob_de=-1 
+ob_type=24 ob_x=44.50 ob_y=29.50 ob_na=-1 ob_de=-1 
 ob_type=58 ob_x=46.50 ob_y=29.50 ob_na=-1 ob_de=4 
 ob_type=1 ob_x=29.00 ob_y=30.50 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=29.00 ob_y=31.50 ob_na=-1 ob_de=-1 
@@ -8404,7 +8413,7 @@ ob_type=52 ob_x=39.50 ob_y=89.50 ob_na=-1 ob_de=-1
 ob_type=51 ob_x=40.50 ob_y=89.50 ob_na=-1 ob_de=-1 
 ob_type=51 ob_x=42.50 ob_y=88.50 ob_na=-1 ob_de=-1 
 ob_type=53 ob_x=40.50 ob_y=88.50 ob_na=-1 ob_de=-1 
-ob_type=23 ob_x=36.50 ob_y=84.50 ob_na=-1 ob_de=-1 
+ob_type=24 ob_x=36.50 ob_y=84.50 ob_na=-1 ob_de=-1 
 ob_type=2 ob_x=38.50 ob_y=86.00 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=38.00 ob_y=89.50 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=38.00 ob_y=88.50 ob_na=-1 ob_de=-1 
@@ -8453,7 +8462,7 @@ ob_type=117 ob_x=66.50 ob_y=89.50 ob_na=-1 ob_de=-1
 ob_type=117 ob_x=70.50 ob_y=83.50 ob_na=-1 ob_de=-1 
 ob_type=117 ob_x=70.50 ob_y=84.50 ob_na=-1 ob_de=-1 
 ob_type=117 ob_x=70.50 ob_y=85.50 ob_na=-1 ob_de=-1 
-ob_type=19 ob_x=68.50 ob_y=84.50 ob_na=-1 ob_de=-1 
+ob_type=18 ob_x=68.50 ob_y=84.50 ob_na=-1 ob_de=-1 
 ob_type=26 ob_x=68.50 ob_y=86.50 ob_na=-1 ob_de=-1 
 ob_type=116 ob_x=67.50 ob_y=86.50 ob_na=-1 ob_de=-1 
 ob_type=116 ob_x=69.50 ob_y=86.50 ob_na=-1 ob_de=-1 
@@ -8469,8 +8478,8 @@ ob_type=116 ob_x=75.50 ob_y=86.50 ob_na=-1 ob_de=-1
 ob_type=26 ob_x=76.50 ob_y=86.50 ob_na=-1 ob_de=-1 
 ob_type=26 ob_x=72.50 ob_y=86.50 ob_na=-1 ob_de=-1 
 ob_type=122 ob_x=74.50 ob_y=86.50 ob_na=-1 ob_de=-1 
-ob_type=19 ob_x=72.50 ob_y=84.50 ob_na=-1 ob_de=-1 
-ob_type=19 ob_x=76.50 ob_y=84.50 ob_na=-1 ob_de=-1 
+ob_type=18 ob_x=72.50 ob_y=84.50 ob_na=-1 ob_de=-1 
+ob_type=18 ob_x=76.50 ob_y=84.50 ob_na=-1 ob_de=-1 
 ob_type=243 ob_x=60.98 ob_y=87.05 ob_na=-1 ob_de=-1 
 ob_type=241 ob_x=60.40 ob_y=83.51 ob_na=-1 ob_de=-1 
 ob_type=247 ob_x=15.87 ob_y=89.84 ob_na=-1 ob_de=-1 
@@ -9010,6 +9019,7 @@ jump target north: 17
 jump target south: 31
 jump target east: 27
 jump target west: 0
+use underground lighting: 0
 Name of this level=Crystal Fields
 Comment of the Influencer on entering this level="MS Facility Gate
 Name of background song for this level=TheBeginning.ogg
@@ -10107,6 +10117,7 @@ jump target north: 16
 jump target south: 12
 jump target east: 0
 jump target west: 19
+use underground lighting: 0
 Name of this level=Desert of Red Tears
 Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=TheBeginning.ogg
@@ -10797,6 +10808,7 @@ jump target north: 0
 jump target south: 23
 jump target east: 31
 jump target west: 12
+use underground lighting: 0
 Name of this level=Slasher Mountains
 Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=TheBeginning.ogg
@@ -12010,6 +12022,7 @@ jump target north: 10
 jump target south: 22
 jump target east: 11
 jump target west: 20
+use underground lighting: 0
 Name of this level=Robot construction facility
 Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=TheBeginning.ogg
@@ -12722,6 +12735,7 @@ jump target north: -1
 jump target south: -1
 jump target east: -1
 jump target west: -1
+use underground lighting: 0
 Name of this level=Telemetry
 Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=Daybreak.ogg
@@ -13549,6 +13563,7 @@ jump target north: -1
 jump target south: -1
 jump target east: -1
 jump target west: -1
+use underground lighting: 0
 Name of this level=Scientists quarters
 Comment of the Influencer on entering this level="These must be the private quarters of the scientific staff of the installation.
 Name of background song for this level=Daybreak.ogg
@@ -14284,6 +14299,7 @@ jump target north: -1
 jump target south: -1
 jump target east: -1
 jump target west: -1
+use underground lighting: 0
 Name of this level=Private Goods Storage Cellar
 Comment of the Influencer on entering this level="This is the level, where I was created, back in the scientists makeshift bunker
 Name of background song for this level=Daybreak.ogg
@@ -14811,6 +14827,7 @@ jump target north: -1
 jump target south: 10
 jump target east: 8
 jump target west: -1
+use underground lighting: 0
 Name of this level=Terminal Field
 Comment of the Influencer on entering this level="This is a new level...
 Name of background song for this level=TheBeginning.ogg
@@ -15607,6 +15624,7 @@ jump target north: -1
 jump target south: 9
 jump target east: 28
 jump target west: 8
+use underground lighting: 0
 Name of this level=Ethereal Meadows
 Comment of the Influencer on entering this level="This is a new level...
 Name of background song for this level=TheBeginning.ogg
@@ -16427,6 +16445,7 @@ jump target north: -1
 jump target south: -1
 jump target east: -1
 jump target west: -1
+use underground lighting: 0
 Name of this level=Kevins Main Energy Source
 Comment of the Influencer on entering this level="This must be Kevin's Main Energy Source...
 Name of background song for this level=Daybreak.ogg
@@ -16822,6 +16841,7 @@ jump target north: 18
 jump target south: 20
 jump target east: 10
 jump target west: -1
+use underground lighting: 0
 Name of this level=New Level just created...
 Comment of the Influencer on entering this level="This is a new level...
 Name of background song for this level=TheBeginning.ogg
@@ -17145,6 +17165,7 @@ jump target north: 19
 jump target south: 21
 jump target east: 12
 jump target west: -1
+use underground lighting: 0
 Name of this level=New Level just created...
 Comment of the Influencer on entering this level="This is a new level...
 Name of background song for this level=TheBeginning.ogg
@@ -17790,6 +17811,7 @@ jump target north: 20
 jump target south: -1
 jump target east: 22
 jump target west: -1
+use underground lighting: 0
 Name of this level=New Level just created...
 Comment of the Influencer on entering this level="This is a new level...
 Name of background song for this level=TheBeginning.ogg
@@ -19340,6 +19362,7 @@ jump target north: 12
 jump target south: -1
 jump target east: 23
 jump target west: 21
+use underground lighting: 0
 Name of this level=New Level just created...
 Comment of the Influencer on entering this level="This is a new level...
 Name of background song for this level=TheBeginning.ogg
@@ -20416,6 +20439,7 @@ jump target north: 11
 jump target south: -1
 jump target east: 24
 jump target west: 22
+use underground lighting: 0
 Name of this level=New Level just created...
 Comment of the Influencer on entering this level="This is a new level...
 Name of background song for this level=TheBeginning.ogg
@@ -20999,6 +21023,7 @@ jump target north: 31
 jump target south: -1
 jump target east: 25
 jump target west: 23
+use underground lighting: 0
 Name of this level=level24
 Comment of the Influencer on entering this level="This is a new level...
 Name of background song for this level=TheBeginning.ogg
@@ -22017,6 +22042,7 @@ jump target north: 26
 jump target south: -1
 jump target east: -1
 jump target west: 24
+use underground lighting: 0
 Name of this level=New Level just created...
 Comment of the Influencer on entering this level="This is a new level...
 Name of background song for this level=TheBeginning.ogg
@@ -22751,6 +22777,7 @@ jump target north: 27
 jump target south: 25
 jump target east: -1
 jump target west: 31
+use underground lighting: 0
 Name of this level=New Level just created...
 Comment of the Influencer on entering this level="This is a new level...
 Name of background song for this level=TheBeginning.ogg
@@ -23393,6 +23420,7 @@ jump target north: 28
 jump target south: 26
 jump target east: -1
 jump target west: 9
+use underground lighting: 0
 Name of this level=Broken Glass Path
 Comment of the Influencer on entering this level="This is a new level...
 Name of background song for this level=TheBeginning.ogg
@@ -23919,6 +23947,7 @@ jump target north: -1
 jump target south: 27
 jump target east: -1
 jump target west: 17
+use underground lighting: 0
 Name of this level=Hell Fortress
 Comment of the Influencer on entering this level="This is the MS Hell Fortress
 Name of background song for this level=TheBeginning.ogg
@@ -24476,6 +24505,7 @@ jump target north: -1
 jump target south: -1
 jump target east: -1
 jump target west: -1
+use underground lighting: 0
 Name of this level=Novice Arena
 Comment of the Influencer on entering this level="This is a new level...
 Name of background song for this level=Daybreak.ogg
@@ -24733,6 +24763,7 @@ jump target north: -1
 jump target south: -1
 jump target east: -1
 jump target west: -1
+use underground lighting: 0
 Name of this level=Master Arena
 Comment of the Influencer on entering this level="This is a new level...
 Name of background song for this level=Daybreak.ogg
@@ -24987,6 +25018,7 @@ jump target north: 9
 jump target south: 24
 jump target east: 26
 jump target west: 11
+use underground lighting: 0
 Name of this level=Power Facility
 Comment of the Influencer on entering this level="This is a new level...
 Name of background song for this level=Daybreak.ogg
@@ -26283,6 +26315,7 @@ jump target north: -1
 jump target south: -1
 jump target east: -1
 jump target west: -1
+use underground lighting: 0
 Name of this level=Power Facility Underground
 Comment of the Influencer on entering this level="This is a new level...
 Name of background song for this level=Daybreak.ogg
@@ -26626,6 +26659,7 @@ jump target north: -1
 jump target south: -1
 jump target east: -1
 jump target west: -1
+use underground lighting: 0
 Name of this level=Crystal Cavens
 Comment of the Influencer on entering this level="This is a new level...
 Name of background song for this level=Daybreak.ogg

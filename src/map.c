@@ -313,7 +313,9 @@ DecodeInterfaceDataForThisLevel ( Level loadlevel , char* DataPointer )
     ReadValueFromString( DataPointer , "jump target west: " , "%d" , 
 			 &(loadlevel->jump_target_west) , TempSectionPointer );
     DebugPrintf( DEBUG_LEVEL_INTERFACES , "\nSuccessfully read jump target west : %d ", loadlevel->jump_target_west );
-    
+    ReadValueFromString( DataPointer , "use underground lighting: " , "%d" , 
+			 &(loadlevel->use_underground_lighting) , TempSectionPointer );
+    DebugPrintf( DEBUG_LEVEL_INTERFACES , "\nSuccessfully read use_underground_lighting : %d ", loadlevel->use_underground_lighting );
     
     TempSectionPointer [ 0 ] = PreservedLetter ;
     
@@ -1883,7 +1885,8 @@ jump threshold west: %d\n\
 jump target north: %d\n\
 jump target south: %d\n\
 jump target east: %d\n\
-jump target west: %d\n",
+jump target west: %d\n\
+use underground lighting: %d\n",
 	     Lev -> levelnum, Lev->xlen, Lev->ylen, Lev -> light_radius_bonus , 
 	     Lev -> minimum_light_value, 
 	     Lev -> infinite_running_on_this_level,
@@ -1894,7 +1897,8 @@ jump target west: %d\n",
 	     Lev -> jump_target_north, 
 	     Lev -> jump_target_south, 
 	     Lev -> jump_target_east, 
-	     Lev -> jump_target_west
+	     Lev -> jump_target_west,
+             Lev -> use_underground_lighting
 	);
     strcpy(LevelMem, linebuf);
     strcat(LevelMem, LEVEL_NAME_STRING );
@@ -2080,7 +2084,7 @@ freedroid-discussion@lists.sourceforge.net\n\
     //--------------------
     // Now we can save all the levels...
     //
-    DebugPrintf (2, "\nint SaveShip(char *shipname): now saving levels...");
+    DebugPrintf ( 2 , "\n%s(): now saving levels..." , __FUNCTION__ );
     for( i = 0 ; i < level_anz ; i++ ) 
     {
 	//--------------------
@@ -2145,6 +2149,10 @@ freedroid-discussion@lists.sourceforge.net\n\
     
 }; // int SaveShip ( char* filename )
 
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
 void
 ReadInOneItem ( char* ItemPointer , char* ItemsSectionEnd , Item TargetItem )
 {
