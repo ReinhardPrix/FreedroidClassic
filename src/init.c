@@ -710,6 +710,9 @@ Get_Game_Events ( char* EventSectionPointer )
   int EventActionNumber;
   int EventTriggerNumber;
 
+  char* TempMapLabelName;
+  location TempLocation;
+
 #define EVENT_TRIGGER_BEGIN_STRING "* Start of an Event Trigger Subsection *"
 #define EVENT_TRIGGER_END_STRING "* End of this Event Trigger Subsection *"
 #define EVENT_ACTION_BEGIN_STRING "* Start of an Event Action Subsection *"
@@ -719,6 +722,7 @@ Get_Game_Events ( char* EventSectionPointer )
 #define EVENT_ACTION_MAPCHANGE_POS_Y_STRING " Y="
 #define EVENT_ACTION_MAPCHANGE_MAPLEVEL_STRING " Lev="
 #define EVENT_ACTION_MAPCHANGE_TO_WHAT_STRING " to new value="
+#define MAPCHANGE_LABEL_STRING "Use map label for map change location=\""
 
 #define EVENT_ACTION_TELEPORT_POS_X_STRING "Teleport to TelX="
 #define EVENT_ACTION_TELEPORT_POS_Y_STRING " TelY="
@@ -795,13 +799,31 @@ Get_Game_Events ( char* EventSectionPointer )
       AllTriggeredActions[ EventActionNumber].ActionLabel =
 	ReadAndMallocStringFromData ( EventPointer , ACTION_LABEL_INDICATION_STRING , "\"" ) ;
 
+      //--------------------
       // Now we read in the map changing position in x and y and level coordinates
+      //
       ReadValueFromString( EventPointer , EVENT_ACTION_MAPCHANGE_POS_X_STRING , "%d" , 
 			   &AllTriggeredActions[ EventActionNumber ].ChangeMapLocation.x , EndOfEvent );
       ReadValueFromString( EventPointer , EVENT_ACTION_MAPCHANGE_POS_Y_STRING , "%d" , 
 			   &AllTriggeredActions[ EventActionNumber ].ChangeMapLocation.y , EndOfEvent );
       ReadValueFromString( EventPointer , EVENT_ACTION_MAPCHANGE_MAPLEVEL_STRING , "%d" , 
 			   &AllTriggeredActions[ EventActionNumber ].ChangeMapLevel , EndOfEvent );
+      // but maybe there was a label given.  This will override the pure coordinates...
+      TempMapLabelName = 
+	ReadAndMallocStringFromData ( EventPointer , MAPCHANGE_LABEL_STRING , "\"" ) ;
+      if ( strcmp ( TempMapLabelName , "NO_LABEL_DEFINED_YET" ) )
+	{
+	  DebugPrintf ( 0 , "\nMapchange coordinates overridden by map label %s." , TempMapLabelName );
+	  ResolveMapLabelOnShip ( TempMapLabelName , &TempLocation );
+	  AllTriggeredActions[ EventActionNumber ] . ChangeMapLocation . x = TempLocation . x ;
+	  AllTriggeredActions[ EventActionNumber ] . ChangeMapLocation . y = TempLocation . y ;
+	  AllTriggeredActions[ EventActionNumber ] . ChangeMapLevel = TempLocation . level ;
+	}
+      else
+	{
+	  DebugPrintf ( 0 , "\nMapchange label unused..." );
+	}
+
 
       // Now we read in the teleport target position in x and y and level coordinates
       ReadValueFromString( EventPointer , EVENT_ACTION_TELEPORT_POS_X_STRING , "%d" , 
@@ -1591,7 +1613,6 @@ InitNewMissionList ( char *MissionName )
   char* Crewname;
   char* GameDataName;
   char* Shipname;
-  int NumberOfStartPoints=0;
   int StartingLevel=0;
   int StartingXPos=0;
   int StartingYPos=0;
@@ -1615,6 +1636,19 @@ InitNewMissionList ( char *MissionName )
 
   // #define END_OF_MISSION_TARGET_STRING "*** End of Mission Target ***"
 #define NEXT_MISSION_NAME_STRING "After completing this mission, load mission : "
+
+  //--------------------
+  // JUST FOR NOW, WE READ IN THE EMPTY DEFAULT SHIP.  THIS WILL NOT
+  // HURT.  SOME INITIALISATION (map labels!) become much easier this
+  // way!  Later, we will load the real ship.
+  //
+  Shipname = "Asteroid.maps";
+  fpath = find_file (Shipname, MAP_DIR, FALSE);
+  if ( LoadShip (fpath) == ERR )
+    {
+      DebugPrintf (1, "Error in LoadShip\n");
+      Terminate (ERR);
+    }
 
   //--------------------
   // We store the mission name in case the influ
@@ -1758,46 +1792,6 @@ InitNewMissionList ( char *MissionName )
   DebriefingSong = ReadAndMallocStringFromData ( MainMissionPointer , MISSION_ENDTITLE_SONG_NAME_STRING , "\n" ) ;
   DebriefingText =
     ReadAndMallocStringFromData ( MainMissionPointer , MISSION_ENDTITLE_BEGIN_STRING , MISSION_ENDTITLE_END_STRING ) ;
-
-  //--------------------
-  // Now we read all the possible starting points for the
-  // current mission file, so that we know where to place the
-  // influencer at the beginning of the mission.
-
-  NumberOfStartPoints = CountStringOccurences ( MainMissionPointer , MISSION_START_POINT_STRING );
-
-  if ( NumberOfStartPoints == 0 )
-    {
-      DebugPrintf ( 0 , "\n\nERROR! NOT EVEN ONE SINGLE STARTING POINT ENTRY FOUND!  TERMINATING!");
-      Terminate( ERR );
-    }
-  DebugPrintf (1, "\nFound %d different starting points for the mission in the mission file.", NumberOfStartPoints );
-
-  /*
-
-  //--------------------
-  // Now that we know how many different starting points there are, we can randomly select
-  // one of them and read then in this one starting point into the right structures...
-  //
-  RealStartPoint = MyRandom ( NumberOfStartPoints -1 ) + 1;
-  StartPointPointer=MainMissionPointer;
-  for ( i=0 ; i<RealStartPoint; i++ )
-    {
-      StartPointPointer = strstr ( StartPointPointer , MISSION_START_POINT_STRING );
-      StartPointPointer += strlen ( MISSION_START_POINT_STRING );
-    }
-  StartPointPointer = strstr( StartPointPointer , "Level=" ) + strlen( "Level=" );
-  sscanf( StartPointPointer , "%d" , &StartingLevel );
-  CurLevel = curShip.AllLevels[ StartingLevel ];
-  Me[0].pos.z = StartingLevel;
-  StartPointPointer = strstr( StartPointPointer , "XPos=" ) + strlen( "XPos=" );
-  sscanf( StartPointPointer , "%d" , &StartingXPos );
-  Me[0].pos.x=StartingXPos;
-  StartPointPointer = strstr( StartPointPointer , "YPos=" ) + strlen( "YPos=" );
-  sscanf( StartPointPointer , "%d" , &StartingYPos );
-  Me[0].pos.y=StartingYPos;
-  */
-
 
   ResolveMapLabelOnShip ( "TuxStartGameSquare" , &StartPosition );
   Me [ 0 ] . pos . x = StartPosition . x ;

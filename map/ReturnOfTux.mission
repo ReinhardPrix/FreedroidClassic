@@ -219,6 +219,7 @@ Mission target is to live for how many seconds : -1
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * S**tart of an Event Trigger Subsection *
 Influencer must be at X=2 Y=7 Lev=2
+Use map location from map label="NO_LABEL_DEFINED_YET"
 Event Action to be triggered by this trigger="open_barrier"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
@@ -230,6 +231,7 @@ Delete the event trigger after it has been triggered=-1
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at X=2 Y=11 Lev=0
+Use map location from map label="NO_LABEL_DEFINED_YET"
 Event Action to be triggered by this trigger="teleport_in"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
@@ -237,6 +239,7 @@ Delete the event trigger after it has been triggered=-1
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at X=28 Y=2 Lev=1
+Use map location from map label="NO_LABEL_DEFINED_YET"
 Event Action to be triggered by this trigger="teleport_out"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
@@ -244,6 +247,7 @@ Delete the event trigger after it has been triggered=-1
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at X=63 Y=31 Lev=1
+Use map location from map label="NO_LABEL_DEFINED_YET"
 Event Action to be triggered by this trigger="teleport_to_second_combat_lv"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
@@ -251,6 +255,7 @@ Delete the event trigger after it has been triggered=-1
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at X=20 Y=2 Lev=2
+Use map location from map label="NO_LABEL_DEFINED_YET"
 Event Action to be triggered by this trigger="teleport_back_to_first_combat_lv"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
@@ -258,6 +263,7 @@ Delete the event trigger after it has been triggered=-1
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at X=30 Y=20 Lev=2
+Use map location from map label="NO_LABEL_DEFINED_YET"
 Event Action to be triggered by this trigger="teleport_to_third_combat_lv"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
@@ -265,6 +271,7 @@ Delete the event trigger after it has been triggered=-1
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at X=33 Y=13 Lev=3
+Use map location from map label="NO_LABEL_DEFINED_YET"
 Event Action to be triggered by this trigger="teleport_back_to_second_combat_lv"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
@@ -272,6 +279,7 @@ Delete the event trigger after it has been triggered=-1
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at X=11 Y=3 Lev=3
+Use map location from map label="NO_LABEL_DEFINED_YET"
 Event Action to be triggered by this trigger="teleport_to_fourth_combat_lv"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
@@ -279,6 +287,7 @@ Delete the event trigger after it has been triggered=-1
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at X=31 Y=2 Lev=4
+Use map location from map label="NO_LABEL_DEFINED_YET"
 Event Action to be triggered by this trigger="teleport_back_to_third_combat_lv"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
@@ -286,6 +295,7 @@ Delete the event trigger after it has been triggered=-1
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at X=10 Y=36 Lev=4
+Use map location from map label="NO_LABEL_DEFINED_YET"
 Event Action to be triggered by this trigger="teleport_to_fifth_combat_lv"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
@@ -293,6 +303,7 @@ Delete the event trigger after it has been triggered=-1
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at X=28 Y=2 Lev=5
+Use map location from map label="NO_LABEL_DEFINED_YET"
 Event Action to be triggered by this trigger="teleport_back_to_fourth_combat_lv"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
@@ -302,6 +313,7 @@ Delete the event trigger after it has been triggered=-1
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at X=36 Y=10 Lev=2
+Use map location from map label="NO_LABEL_DEFINED_YET"
 Event Action to be triggered by this trigger="teleport_to_telemetry_one"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
@@ -309,6 +321,7 @@ Delete the event trigger after it has been triggered=-1
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at X=3 Y=27 Lev=13
+Use map location from map label="NO_LABEL_DEFINED_YET"
 Event Action to be triggered by this trigger="teleport_from_telemetry_to_two"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
@@ -316,6 +329,7 @@ Delete the event trigger after it has been triggered=-1
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at X=53 Y=27 Lev=13
+Use map location from map label="NO_LABEL_DEFINED_YET"
 Event Action to be triggered by this trigger="teleport_from_telemetry_to_quarters"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
@@ -323,6 +337,7 @@ Delete the event trigger after it has been triggered=-1
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at X=37 Y=12 Lev=14
+Use map location from map label="NO_LABEL_DEFINED_YET"
 Event Action to be triggered by this trigger="teleport_from_quarters_to_telemetry"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
@@ -336,6 +351,7 @@ Delete the event trigger after it has been triggered=-1
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at X=29 Y=22 Lev=0
+Use map location from map label="NO_LABEL_DEFINED_YET"
 Event Action to be triggered by this trigger="teleport_from_camp_to_north_maintainance"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
@@ -343,6 +359,7 @@ Delete the event trigger after it has been triggered=-1
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at X=10 Y=3 Lev=6
+Use map location from map label="NO_LABEL_DEFINED_YET"
 Event Action to be triggered by this trigger="teleport_from_north_maintainance_to_camp"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
@@ -355,6 +372,7 @@ Delete the event trigger after it has been triggered=-1
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at X=8 Y=9 Lev=7
+Use map location from map label="NO_LABEL_DEFINED_YET"
 Event Action to be triggered by this trigger="teleport_from_sundabar_to_abandoned_cargo"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
@@ -362,6 +380,7 @@ Delete the event trigger after it has been triggered=-1
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at X=4 Y=31 Lev=4
+Use map location from map label="NO_LABEL_DEFINED_YET"
 Event Action to be triggered by this trigger="teleport_from_abandoned_cargo_to_sundabar"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
@@ -376,6 +395,7 @@ Delete the event trigger after it has been triggered=-1
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at X=19 Y=5 Lev=2
+Use map location from map label="NO_LABEL_DEFINED_YET"
 Event Action to be triggered by this trigger="stay_with_first_mission_comment"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
@@ -390,7 +410,9 @@ Delete the event trigger after it has been triggered=-1
 * Start of an Event Action Subsection *
 Action label for this action="open_barrier"
 Mapchange at X=4 Y=7 Lev=2 to new value=27
+Use map label for map change location="NO_LABEL_DEFINED_YET"
 Teleport to TelX=-1 TelY=-1 TelLev=-1
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
 Action is Influencer say="Thanks for unlocking the door!"
 Action is mission assignment=-1
 * End of this Event Action Subsection *
@@ -399,7 +421,9 @@ Action is mission assignment=-1
 * Start of an Event Action Subsection *
 Action label for this action="close_barrier"
 Mapchange at X=4 Y=7 Lev=2 to new value=23
+Use map label for map change location="NO_LABEL_DEFINED_YET"
 Teleport to TelX=-1 TelY=-1 TelLev=-1
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
 Action is Influencer say=""
 Action is mission assignment=-1
 * End of this Event Action Subsection *
@@ -408,7 +432,9 @@ Action is mission assignment=-1
 * Start of an Event Action Subsection *
 Action label for this action="teleport_in"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET"
 Teleport to TelX=27 TelY=3 TelLev=1
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
 Action is Influencer say="Now I should get teleported...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
@@ -417,7 +443,9 @@ Action is mission assignment=-1
 * Start of an Event Action Subsection *
 Action label for this action="teleport_out"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET"
 Teleport to TelX=3 TelY=11 TelLev=0
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
 Action is Influencer say="Now I should get teleported...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
@@ -425,7 +453,9 @@ Action is mission assignment=-1
 * Start of an Event Action Subsection *
 Action label for this action="teleport_to_second_combat_lv"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET"
 Teleport to TelX=21 TelY=3 TelLev=2
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
 Action is Influencer say="This is level two.  Beware...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
@@ -433,7 +463,9 @@ Action is mission assignment=-1
 * Start of an Event Action Subsection *
 Action label for this action="teleport_back_to_first_combat_lv"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET"
 Teleport to TelX=62 TelY=30 TelLev=1
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
 Action is Influencer say="Back to level one...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
@@ -441,7 +473,9 @@ Action is mission assignment=-1
 * Start of an Event Action Subsection *
 Action label for this action="teleport_to_third_combat_lv"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET"
 Teleport to TelX=34 TelY=12 TelLev=3
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
 Action is Influencer say="This is level two.  Beware...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
@@ -449,7 +483,9 @@ Action is mission assignment=-1
 * Start of an Event Action Subsection *
 Action label for this action="teleport_back_to_second_combat_lv"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET"
 Teleport to TelX=29 TelY=19 TelLev=2
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
 Action is Influencer say="Back to level one...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
@@ -457,7 +493,9 @@ Action is mission assignment=-1
 * Start of an Event Action Subsection *
 Action label for this action="teleport_to_fourth_combat_lv"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET"
 Teleport to TelX=31 TelY=1 TelLev=4
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
 Action is Influencer say="This is level two.  Beware...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
@@ -465,7 +503,9 @@ Action is mission assignment=-1
 * Start of an Event Action Subsection *
 Action label for this action="teleport_back_to_third_combat_lv"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET"
 Teleport to TelX=10 TelY=4 TelLev=3
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
 Action is Influencer say="Back to level one...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
@@ -473,7 +513,9 @@ Action is mission assignment=-1
 * Start of an Event Action Subsection *
 Action label for this action="teleport_to_fifth_combat_lv"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET"
 Teleport to TelX=27 TelY=2 TelLev=5
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
 Action is Influencer say="This is level two.  Beware...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
@@ -481,7 +523,9 @@ Action is mission assignment=-1
 * Start of an Event Action Subsection *
 Action label for this action="teleport_back_to_fourth_combat_lv"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET"
 Teleport to TelX=11 TelY=36 TelLev=4
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
 Action is Influencer say="Back to level one...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
@@ -489,7 +533,9 @@ Action is mission assignment=-1
 * Start of an Event Action Subsection *
 Action label for this action="teleport_to_telemetry_one"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET"
 Teleport to TelX=4 TelY=28 TelLev=13
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
 Action is Influencer say="Back to level one...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
@@ -497,7 +543,9 @@ Action is mission assignment=-1
 * Start of an Event Action Subsection *
 Action label for this action="teleport_from_telemetry_to_two"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET"
 Teleport to TelX=37 TelY=9 TelLev=2
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
 Action is Influencer say="Back to level one...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
@@ -505,7 +553,9 @@ Action is mission assignment=-1
 * Start of an Event Action Subsection *
 Action label for this action="teleport_from_telemetry_to_quarters"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET"
 Teleport to TelX=38 TelY=11 TelLev=14
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
 Action is Influencer say="Back to level one...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
@@ -513,7 +563,9 @@ Action is mission assignment=-1
 * Start of an Event Action Subsection *
 Action label for this action="teleport_from_quarters_to_telemetry"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET"
 Teleport to TelX=52 TelY=28 TelLev=13
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
 Action is Influencer say="Back to level one...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
@@ -524,7 +576,9 @@ Action is mission assignment=-1
 * Start of an Event Action Subsection *
 Action label for this action="unlock_northern_maintainance_door"
 Mapchange at X=29 Y=24 Lev=0 to new value=18
+Use map label for map change location="NorthernMaintainanceDoor" "NO_LABEL_DEFINED_YET" 
 Teleport to TelX=-1 TelY=-1 TelLev=-1
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
 Action is Influencer say="The northern maintainance acces is no unlocked...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
@@ -537,7 +591,9 @@ Action is mission assignment=-1
 * Start of an Event Action Subsection *
 Action label for this action="teleport_from_camp_to_north_maintainance"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET"
 Teleport to TelX=10 TelY=2 TelLev=6
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
 Action is Influencer say="Arrived at north maintainance...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
@@ -545,7 +601,9 @@ Action is mission assignment=-1
 * Start of an Event Action Subsection *
 Action label for this action="teleport_from_north_maintainance_to_camp"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET"
 Teleport to TelX=29 TelY=23 TelLev=0
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
 Action is Influencer say="Arrived back at camp from north maintainance...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
@@ -558,7 +616,9 @@ Action is mission assignment=-1
 * Start of an Event Action Subsection *
 Action label for this action="teleport_from_sundabar_to_abandoned_cargo"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET"
 Teleport to TelX=5 TelY=32 TelLev=4
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
 Action is Influencer say="Arrived at abandoned cargo area...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
@@ -566,7 +626,9 @@ Action is mission assignment=-1
 * Start of an Event Action Subsection *
 Action label for this action="teleport_from_abandoned_cargo_to_sundabar"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET"
 Teleport to TelX=7 TelY=8 TelLev=7
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
 Action is Influencer say="Arrived at sundabar from abandoned cargo area...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
@@ -584,7 +646,9 @@ Action is mission assignment=-1
 * Start of an Event Action Subsection *
 Action label for this action="stay_with_first_mission_comment"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET"
 Teleport to TelX=-1 TelY=-1 TelLev=-1
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
 Action is Influencer say="I think I should destroy the hostile machines around the scientists retreat first, before I venture any furthery.  The humans might get destroyed otherwise!"
 Action is mission assignment=-1
 * End of this Event Action Subsection *
@@ -593,7 +657,9 @@ Action is mission assignment=-1
 * Start of an Event Action Subsection *
 Action label for this action="wow_done_mission_zero"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET"
 Teleport to TelX=-1 TelY=-1 TelLev=-1
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
 Action is Influencer say="Hey, I think I've completed this mission!  Hey, cool!"
 Action is mission assignment=-1
 * End of this Event Action Subsection *
@@ -605,7 +671,9 @@ Action is mission assignment=-1
 * Start of an Event Action Subsection *
 Action label for this action="assign_mission_zero"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET"
 Teleport to TelX=-1 TelY=-1 TelLev=-1
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
 Action is Influencer say="Hey, I think I've been assigned a mission!  Cool!"
 Action is mission assignment=0
 * End of this Event Action Subsection *
@@ -614,7 +682,9 @@ Action is mission assignment=0
 * Start of an Event Action Subsection *
 Action label for this action="assign_mission_one"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET"
 Teleport to TelX=-1 TelY=-1 TelLev=-1
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
 Action is Influencer say="Hey, I think I've been assigned another mission!  Super!"
 Action is mission assignment=1
 * End of this Event Action Subsection *
@@ -718,40 +788,6 @@ Press Fire to continue
 
 *** End of Mission File ***
 
+(leave the above termination text in the file or we might get a segfault/corrupt file termination)
 
-
-//-------------------------------------------------------------
-// the following triggers close the barrier behind the influencer
-// after he has left the retreatment bunker: These are pure location
-// triggers.
-
-* Start of an Event Trigger Subsection *
-Influencer must be at X=2 Y=7 Lev=2
-Event Action to be triggered by this trigger="close_barrier"
-Delete the event trigger after it has been triggered=1
-* End of this Event Trigger Subsection *
-
-* Start of an Event Trigger Subsection *
-Influencer must be at X=2 Y=8 Lev=2
-Event Action to be triggered by this trigger="close_barrier"
-Delete the event trigger after it has been triggered=1
-* End of this Event Trigger Subsection *
-
-* Start of an Event Trigger Subsection *
-Influencer must be at X=2 Y=6 Lev=2
-Event Action to be triggered by this trigger="close_barrier"
-Delete the event trigger after it has been triggered=1
-* End of this Event Trigger Subsection *
-
-* Start of an Event Trigger Subsection *
-Influencer must be at X=3 Y=6 Lev=2
-Event Action to be triggered by this trigger="close_barrier"
-Delete the event trigger after it has been triggered=1
-* End of this Event Trigger Subsection *
-
-* Start of an Event Trigger Subsection *
-Influencer must be at X=3 Y=8 Lev=2
-Event Action to be triggered by this trigger="close_barrier"
-Delete the event trigger after it has been triggered=1
-* End of this Event Trigger Subsection *
 
