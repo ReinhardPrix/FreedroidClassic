@@ -10,8 +10,12 @@
  * $Author$
  *
  * $Log$
- * Revision 1.1  1993/05/22 20:53:58  rp
- * Initial revision
+ * Revision 1.2  1994/06/19 16:21:33  prix
+ * Sat May 21 07:37:55 1994: Neue Funktion: TransparentLadeLBMBild
+ * Sat May 21 09:57:45 1994: Transp.LBMLaden kann auch in den Speicher laden.
+ * Sat May 21 10:07:25 1994: LadeLBMBild kann auch in den Speicher laden.
+ * Sat May 21 11:19:57 1994: :LBMBIlder ver"andern nicht unbedingt die Pallete
+ * Sat May 21 13:24:56 1994: UnfadeLevel eingef"uhrt
  *
  * Revision 1.1  1993/05/22  20:53:58  rp
  * Initial revision
