@@ -375,6 +375,8 @@ blit_mouse_cursor_corona ( void )
     int our_obstacle_index ;
     int our_enemy_index;
 
+    return ;
+
     //--------------------
     // In case of scroll modes, we don't have to blit any corona...
     //

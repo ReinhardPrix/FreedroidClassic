@@ -1116,6 +1116,7 @@ prepare_text_window_content ( char* ItemDescText )
     int index_of_chest_below_mouse_cursor = ( -1 );
     int index_of_barrel_below_mouse_cursor = ( -1 );
     finepoint MapPositionOfMouse;
+    int obs_type;
 
 #define REQUIREMENTS_NOT_MET_TEXT "REQUIREMENTS NOT MET"
 
@@ -1303,7 +1304,28 @@ prepare_text_window_content ( char* ItemDescText )
 	index_of_barrel_below_mouse_cursor = smashable_barrel_below_mouse_cursor ( 0 ) ;
 	if ( index_of_barrel_below_mouse_cursor != (-1) )
 	{
-	    strcpy ( ItemDescText , "  B  A  R  R  E  L  ! ! ! " ); 
+	    //--------------------
+	    // We do some case separation for the type of barrel/crate
+	    // in question.
+	    //
+	    obs_type = curShip . AllLevels [ Me [ 0 ] . pos . z ] -> obstacle_list [ index_of_barrel_below_mouse_cursor ] . type ;
+	    switch ( obs_type )
+	    {
+		case ISO_BARREL_1:
+		case ISO_BARREL_2:
+		    strcpy ( ItemDescText , "  B  A  R  R  E  L  ! ! ! " ); 
+		    break;
+		case ISO_BARREL_3:
+		case ISO_BARREL_4:
+		    strcpy ( ItemDescText , "  C  R  A  T  E  ! ! ! " ); 
+		    break;
+		default:
+		    fprintf ( stderr , "\nobs_type: %d." , obs_type );
+		    GiveStandardErrorMessage ( __FUNCTION__  , "\
+A barrel was detected, but the barrel type was not valid.",
+					       PLEASE_INFORM, IS_FATAL );
+			break;
+	    }
 	    best_banner_pos_x = translate_map_point_to_screen_pixel ( 
 		CurLevel -> obstacle_list [ index_of_barrel_below_mouse_cursor ] . pos . x , 
 		CurLevel -> obstacle_list [ index_of_barrel_below_mouse_cursor ] . pos . y  ,
