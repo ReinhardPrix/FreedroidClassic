@@ -53,6 +53,8 @@ int MouseWheelUpMovesRecorded=0;
 int MouseWheelDownMovesRecorded=0;
 int ShiftWasPressedInAddition=FALSE;
 int CtrlWasPressedInAddition=FALSE;
+int LeftCtrlWasPressedInAddition=FALSE;
+int RightCtrlWasPressedInAddition=FALSE;
 int AltWasPressedInAddition=FALSE;
 int CurrentlyEnterPressed=0;
 int CurrentlySpacePressed=0;
@@ -767,6 +769,18 @@ Ctrl_Was_Pressed(void)
 }
 
 int
+RightCtrlWasPressed(void)
+{
+  return (RightCtrlWasPressedInAddition);  
+}
+
+int
+LeftCtrlWasPressed(void)
+{
+  return (LeftCtrlWasPressedInAddition);  
+}
+
+int
 Alt_Was_Pressed(void)
 {
   return (AltWasPressedInAddition);  
@@ -799,8 +813,15 @@ keyboard_update(void)
 	  else ShiftWasPressedInAddition=FALSE;
 
 	  if ( event.key.keysym.mod & (KMOD_LCTRL | KMOD_RCTRL) )
-	    CtrlWasPressedInAddition=TRUE;
+	    {
+	      CtrlWasPressedInAddition=TRUE;
+	    }
 	  else CtrlWasPressedInAddition=FALSE;
+
+	  if ( event.key.keysym.mod & (KMOD_LCTRL) ) LeftCtrlWasPressedInAddition=TRUE;
+	  else LeftCtrlWasPressedInAddition=FALSE;
+	  if ( event.key.keysym.mod & (KMOD_RCTRL) ) RightCtrlWasPressedInAddition=TRUE;
+	  else RightCtrlWasPressedInAddition=FALSE;
 
 	  if ( event.key.keysym.mod & (KMOD_LALT | KMOD_RALT) )
 	    AltWasPressedInAddition=TRUE;
@@ -1051,6 +1072,8 @@ keyboard_update(void)
 	  // fflush(stdout);
 
 	  // Check for some additional modifiers and set flags accordingly
+
+	  /*
 	  if ( event.key.keysym.mod & (KMOD_LSHIFT | KMOD_RSHIFT) )
 	    ShiftWasPressedInAddition=TRUE;
 	  else ShiftWasPressedInAddition=FALSE;
@@ -1059,10 +1082,18 @@ keyboard_update(void)
 	    CtrlWasPressedInAddition=TRUE;
 	  else CtrlWasPressedInAddition=FALSE;
 
+	  if ( event.key.keysym.mod & (KMOD_LCTRL) )
+	    LeftCtrlWasPressedInAddition=TRUE;
+	  else LeftCtrlWasPressedInAddition=FALSE;
+
+	  if ( event.key.keysym.mod & (KMOD_RCTRL) )
+	    RightCtrlWasPressedInAddition=TRUE;
+	  else RightCtrlWasPressedInAddition=FALSE;
+
 	  if ( event.key.keysym.mod & (KMOD_LALT | KMOD_RALT) )
 	    AltWasPressedInAddition=TRUE;
 	  else AltWasPressedInAddition=FALSE;
-
+	  */
 	  switch( event.key.keysym.sym )
 	    {
 	    case SDLK_KP_PLUS:

@@ -654,7 +654,7 @@ This is indicates a severe bug in Freedroid.",
 	}
       else
 	{
-	  DebugPrintf( 1 , "\nfind_file could not succeed with LOCAL path: %s." , File_Path );
+	  DebugPrintf( 0 , "\nfind_file could not succeed with LOCAL path: %s." , File_Path );
 	}
     } /* for i */
 

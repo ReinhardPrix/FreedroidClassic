@@ -355,6 +355,8 @@ EXTERN void Init_Joy(void);
 EXTERN void ReactToSpecialKeys(void);
 EXTERN int Shift_Was_Pressed(void);
 EXTERN int Ctrl_Was_Pressed(void);
+EXTERN int RightCtrlWasPressed(void);
+EXTERN int LeftCtrlWasPressed(void);
 EXTERN int Alt_Was_Pressed(void);
 EXTERN void Init_SDL_Keyboard(void);
 EXTERN int getchar_raw (void);

@@ -543,8 +543,6 @@ enum _directions
 //--------------------
 // Maximal number of ...
 //
-
-#define NUM_MAP_BLOCKS		80  // total number of map-blocks 
 #define NUM_COLORS              7   // how many different level colorings?/different tilesets?
 
 // #define ALLBULLETTYPES		4	/* number of bullet-types */
@@ -775,8 +773,12 @@ enum
   ENHANCER_RU=63,   ENHANCER_LU,     ENHANCER_RD,     ENHANCER_LD,
   CONSUMER_1=67,     CONSUMER_2,     CONSUMER_3,    CONSUMER_4,
   CHEST_U=71,   CHEST_L,     CHEST_D,     CHEST_R,
-  IDENTIFY_L=75,   IDENTIFY_R,     IDENTIFY_U,     IDENTIFY_D
+  FLOOR_CARPET_L,  FLOOR_CARPET_R, FLOOR_CARPET_U, FLOOR_CARPET_D, FLOOR_CARPET,
+  IDENTIFY_L,   IDENTIFY_R,     IDENTIFY_U,     IDENTIFY_D, 
+  LAST_BLOCK_IN_LIST_DUMMY_ENTRY
 };
 
+// #define NUM_MAP_BLOCKS		80  // total number of map-blocks 
+#define NUM_MAP_BLOCKS LAST_BLOCK_IN_LIST_DUMMY_ENTRY // total number of map-blocks 
 
 #endif

@@ -2028,8 +2028,10 @@ HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
     {
       if ( Shift_Was_Pressed() )
 	EditLevel->map[BlockY][BlockX]=CONSOLE_D;
-      else if ( Ctrl_Was_Pressed() ) 
+      else if ( LeftCtrlWasPressed() ) 
 	EditLevel->map[BlockY][BlockX]=CODEPANEL_D;
+      else if ( RightCtrlWasPressed() ) 
+	EditLevel->map[BlockY][BlockX]=FLOOR_CARPET_D;
       else if ( Alt_Was_Pressed() ) 
 	EditLevel->map[BlockY][BlockX]=CONVEY_D;
       else EditLevel->map[BlockY][BlockX]=T_D;
@@ -2044,24 +2046,30 @@ HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
     {
       if ( Shift_Was_Pressed() )
 	EditLevel->map[BlockY][BlockX]=CONSOLE_L;
-      else if ( Ctrl_Was_Pressed() ) 
+      else if ( LeftCtrlWasPressed() ) 
 	EditLevel->map[BlockY][BlockX]=CODEPANEL_L;
+      else if ( RightCtrlWasPressed() ) 
+	EditLevel->map[BlockY][BlockX]=FLOOR_CARPET_L;
       else if ( Alt_Was_Pressed() ) 
 	EditLevel->map[BlockY][BlockX]=CONVEY_R;
       else EditLevel->map[BlockY][BlockX]=T_L;
     }
   if (KP5Pressed()) 
     {
-      if (!Shift_Was_Pressed())
-	EditLevel->map[BlockY][BlockX]=KREUZ;
-      else EditLevel->map[BlockY][BlockX]=VOID;
+      if ( Shift_Was_Pressed() )
+	EditLevel->map[BlockY][BlockX]=VOID;
+      else if ( RightCtrlWasPressed() ) 
+	EditLevel->map[BlockY][BlockX]=FLOOR_CARPET;
+      else EditLevel->map[BlockY][BlockX]=KREUZ;
     }
   if (KP6Pressed()) 
     {
       if ( Shift_Was_Pressed() )
 	EditLevel->map[BlockY][BlockX]=CONSOLE_R;
-      else if ( Ctrl_Was_Pressed() ) 
+      else if ( LeftCtrlWasPressed() ) 
 	EditLevel->map[BlockY][BlockX]=CODEPANEL_R;
+      else if ( RightCtrlWasPressed() ) 
+	EditLevel->map[BlockY][BlockX]=FLOOR_CARPET_R;
       else if ( Alt_Was_Pressed() ) 
 	EditLevel->map[BlockY][BlockX]=CONVEY_L;
       else EditLevel->map[BlockY][BlockX]=T_R;
@@ -2076,8 +2084,10 @@ HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
     {
       if ( Shift_Was_Pressed() )
 	EditLevel->map[BlockY][BlockX]=CONSOLE_U;
-      else if ( Ctrl_Was_Pressed() ) 
+      else if ( LeftCtrlWasPressed() ) 
 	EditLevel->map[BlockY][BlockX]=CODEPANEL_U;
+      else if ( RightCtrlWasPressed() ) 
+	EditLevel->map[BlockY][BlockX]=FLOOR_CARPET_U;
       else if ( Alt_Was_Pressed() ) 
 	EditLevel->map[BlockY][BlockX]=CONVEY_U;
       else EditLevel->map[BlockY][BlockX]=T_U;

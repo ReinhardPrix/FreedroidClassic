@@ -1955,7 +1955,7 @@ DecodeChestItemSectionOfThisLevel ( Level loadlevel , char* data )
   Preserved_Letter=ItemsSectionEnd[0];
   ItemsSectionEnd[0]=0;
   NumberOfItemsInThisLevel = CountStringOccurences ( ItemsSectionBegin , ITEM_CODE_STRING ) ;
-  DebugPrintf( 0 , "\nNumber of chest items found in this level : %d." , NumberOfItemsInThisLevel );
+  DebugPrintf( 1 , "\nNumber of chest items found in this level : %d." , NumberOfItemsInThisLevel );
 
   // Now we decode all the item information
   ItemPointer=ItemsSectionBegin;
@@ -3122,6 +3122,11 @@ IsPassable ( float x , float y , int z , int Checkpos)
   switch (MapBrick)
     {
     case FLOOR:
+    case FLOOR_CARPET_L:
+    case FLOOR_CARPET_R:
+    case FLOOR_CARPET_U:
+    case FLOOR_CARPET_D:
+    case FLOOR_CARPET:
     case FINE_GRID:
     case LIFT:
     case VOID:
