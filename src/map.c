@@ -60,6 +60,7 @@
 #define ITEM_POS_Y_STRING " Y="
 #define ITEM_AC_BONUS_STRING " AC="
 #define ITEM_DAMAGE_STRING " DoDamage="
+#define ITEM_DAMAGE_MODIFIER_STRING " ModifyDamage="
 #define ITEM_MAX_DURATION_STRING " MaxDur="
 #define ITEM_CUR_DURATION_STRING " CurDur="
 #define ITEM_GOLD_AMOUNT_STRING " Gold="
@@ -605,6 +606,10 @@ char *Encode_Level_For_Saving(Level Lev)
       sprintf( linebuf , "%d " , Lev->ItemList[ i ].damage );
       strcat( LevelMem , linebuf );
 
+      strcat( LevelMem , ITEM_DAMAGE_MODIFIER_STRING );
+      sprintf( linebuf , "%d " , Lev->ItemList[ i ].damage_modifier );
+      strcat( LevelMem , linebuf );
+
       strcat( LevelMem , ITEM_MAX_DURATION_STRING );
       sprintf( linebuf , "%d " , Lev->ItemList[ i ].max_duration );
       strcat( LevelMem , linebuf );
@@ -1029,6 +1034,8 @@ Decode_Loaded_Leveldata (char *data)
 			   &( loadlevel->ItemList[ i ].ac_bonus ) , ItemsSectionEnd );
       ReadValueFromString( ItemPointer , ITEM_DAMAGE_STRING , "%d" , 
 			   &( loadlevel->ItemList[ i ].damage ) , ItemsSectionEnd );
+      ReadValueFromString( ItemPointer , ITEM_DAMAGE_MODIFIER_STRING , "%d" , 
+			   &( loadlevel->ItemList[ i ].damage_modifier ) , ItemsSectionEnd );
       ReadValueFromString( ItemPointer , ITEM_MAX_DURATION_STRING , "%d" , 
 			   &( loadlevel->ItemList[ i ].max_duration ) , ItemsSectionEnd );
       ReadValueFromString( ItemPointer , ITEM_CUR_DURATION_STRING , "%f" , 

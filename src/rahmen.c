@@ -153,7 +153,10 @@ GiveItemDescription ( char* ItemDescText , item* CurItem , int ForShop )
   // if ( ItemMap[ CurItem->type ].item_can_be_installed_in_weapon_slot )
   if ( CurItem->damage )
     {
-      sprintf( linebuf , "Damage=%d" , CurItem->damage );
+      if ( ! ForShop ) 
+	sprintf( linebuf , "Damage: %d to %d \n" , CurItem->damage , CurItem->damage_modifier + CurItem->damage );
+      else
+	sprintf( linebuf , "Dam: %d-%d " , CurItem->damage , CurItem->damage_modifier + CurItem->damage );
       strcat( ItemDescText , linebuf );
     }
 
@@ -162,9 +165,15 @@ GiveItemDescription ( char* ItemDescText , item* CurItem , int ForShop )
   //
   if ( ItemMap[ CurItem->type ].item_can_be_installed_in_drive_slot )
     {
-      sprintf( linebuf , "Speed: %2.1f Accel: %2.1f" , 
-	       ItemMap[ CurItem->type ].item_drive_maxspeed ,
-	       ItemMap[ CurItem->type ].item_drive_accel );
+      if ( ForShop )
+	sprintf( linebuf , "Speed: %2.1f Accel: %2.1f" , 
+		 ItemMap[ CurItem->type ].item_drive_maxspeed ,
+		 ItemMap[ CurItem->type ].item_drive_accel );
+      else
+	sprintf( linebuf , "Maximum Speed: %2.1f \n Maximum Acceleration: %2.1f \n " , 
+		 ItemMap[ CurItem->type ].item_drive_maxspeed ,
+		 ItemMap[ CurItem->type ].item_drive_accel );
+
       strcat( ItemDescText , linebuf );
     }
 
@@ -176,6 +185,7 @@ GiveItemDescription ( char* ItemDescText , item* CurItem , int ForShop )
     {
       sprintf( linebuf , "Armour: %d" , CurItem->ac_bonus );
       strcat( ItemDescText , linebuf );
+      if ( !ForShop ) strcat( ItemDescText , " \n " );
     }
 
   // --------------------
@@ -183,7 +193,10 @@ GiveItemDescription ( char* ItemDescText , item* CurItem , int ForShop )
   // and if it can be equipped, but not destroyed, we will also say so
   if ( CurItem->max_duration != (-1) )
     {
-      sprintf( linebuf , " Dur: %d/%d" , (int) CurItem->current_duration , (int) CurItem->max_duration );
+      if ( ! ForShop ) 
+	sprintf( linebuf , " Durability: %d of %d" , (int) CurItem->current_duration , (int) CurItem->max_duration );
+      else
+	sprintf( linebuf , " Dur: %d/%d" , (int) CurItem->current_duration , (int) CurItem->max_duration );
       strcat( ItemDescText , linebuf );
     }
   else if ( ItemMap [ CurItem->type ].item_can_be_installed_in_influ )
@@ -197,15 +210,21 @@ GiveItemDescription ( char* ItemDescText , item* CurItem , int ForShop )
        ( ItemMap[ CurItem->type ].item_require_dexterity != ( -1 ) ) )
     {
       if ( ! ForShop ) strcat ( ItemDescText , "\n" );
-      strcat ( ItemDescText , " Required:" );
+      if ( ForShop ) strcat ( ItemDescText , " Required:" );
       if ( ItemMap[ CurItem->type ].item_require_strength != ( -1 ) )
 	{
-	  sprintf( linebuf , "   Pow: %d" , ItemMap[ CurItem->type ].item_require_strength );
+	  if ( ForShop )
+	    sprintf( linebuf , "   Pow: %d" , ItemMap[ CurItem->type ].item_require_strength );
+	  else 
+	    sprintf( linebuf , " Required Power: %d \n " , ItemMap[ CurItem->type ].item_require_strength );
 	  strcat( ItemDescText , linebuf );
 	}
       if ( ItemMap[ CurItem->type ].item_require_dexterity != ( -1 ) )
 	{
-	  sprintf( linebuf , "   Dis: %d" ,  ItemMap[ CurItem->type ].item_require_dexterity );
+	  if ( ForShop )
+	    sprintf( linebuf , "   Dis: %d" ,  ItemMap[ CurItem->type ].item_require_dexterity );
+	  else
+	    sprintf( linebuf , " Power Distribution: %d \n " ,  ItemMap[ CurItem->type ].item_require_dexterity );
 	  strcat( ItemDescText , linebuf );
 	}
     }

@@ -288,6 +288,7 @@ typedef struct
   int suffix_code;
   int ac_bonus;    // how much is ac increased by this item worn
   int damage; // how much damage does this item
+  int damage_modifier; // how much additional damage can add to the base damage
   int max_duration;     // the maximum item durability reachable for this item
   int gold_amount; // how much cyberbucks are there, IN CASE OF CYBERBUCKS
   float current_duration; // the currently remaining durability for this item
