@@ -188,7 +188,6 @@ UpdateCountersForThisFrame ( int PlayerNum )
 {
   static long Overall_Frames_Displayed=0;
   int i;
-  Level UpdateLevel = curShip.AllLevels [ Me [ PlayerNum ] . pos . z ] ;
 
   //--------------------
   // First we do all the updated, that need to be done only once
@@ -217,11 +216,6 @@ UpdateCountersForThisFrame ( int PlayerNum )
       LevelDoorsNotMovedTime += Frame_Time();
       LevelGunsNotFiredTime += Frame_Time();
       if ( SkipAFewFrames ) SkipAFewFrames--;
-
-      if (ShipEmptyCounter > 1)
-	ShipEmptyCounter--;
-      if ( UpdateLevel->empty > 2)
-	UpdateLevel->empty--;
 
       for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
 	{

@@ -822,7 +822,7 @@ waypoint, *Waypoint;
 
 typedef struct
 {
-  int empty;
+  // int empty;
   int levelnum;	/* Number of this level */
   char *Levelname;		/* Name of this level */
   char *Background_Song_Name;

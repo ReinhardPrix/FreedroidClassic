@@ -944,7 +944,7 @@ ActSpecialField ( int PlayerNum )
       GameConfig.CharacterScreen_Visible=FALSE;
       GameConfig.Mission_Log_Visible=FALSE;
       GameOver=TRUE;
-      EndTitle ();
+      PlayATitleFile ( "EndOfGame.title" );
       Credits_Menu();
       break;
 
@@ -2038,8 +2038,6 @@ DecodeLoadedLeveldata ( char *data )
   // Get the memory for one level 
   //
   loadlevel = (Level) MyMalloc (sizeof (level));
-
-  loadlevel->empty = FALSE;
 
   DebugPrintf (2, "\n-----------------------------------------------------------------");
   DebugPrintf (2, "\nStarting to process information for another level:\n");

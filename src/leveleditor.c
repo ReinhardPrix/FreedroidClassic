@@ -1623,8 +1623,6 @@ CreateNewMapLevel( void )
   //
   NewLevel = (Level) MyMalloc (sizeof (level));
 
-  NewLevel->empty = FALSE;
-
   DebugPrintf (0, "\n-----------------------------------------------------------------");
   DebugPrintf (0, "\nStarting to create and add a completely new level to the ship.");
 

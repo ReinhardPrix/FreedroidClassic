@@ -1061,9 +1061,6 @@ CheckInfluenceEnemyCollision (void)
 	  if ( ! AllEnemys[i].is_friendly ) Takeover (i);
 	  else ChatWithFriendlyDroid( & ( AllEnemys [ i ] ) );
 
-	  if (LevelEmpty ())
-	    CurLevel->empty = WAIT_LEVELEMPTY;
-
 	  return;
 	}
 

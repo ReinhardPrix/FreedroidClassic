@@ -1094,9 +1094,6 @@ InitiateDeathOfEnemy ( Enemy ThisRobot )
       DropEnemyTreasure ( ThisRobot ) ;
     }
   
-  if (LevelEmpty ())
-    curShip.AllLevels[ Me[ 0 ] . pos . z ] -> empty = WAIT_LEVELEMPTY;
-
   if ( !ClientMode ) SwapThisRobotToFrontPosition ( ThisRobot );
 
 }; // void InitiateDeathOfEnemy ( Enemy ThisRobot )

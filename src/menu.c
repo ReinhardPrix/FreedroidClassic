@@ -919,7 +919,7 @@ enum
       switch (MenuPosition) 
 	{
 	case SINGLE_PLAYER_POSITION:
-	  // EnforceMissionFile ( NEW_MISSION );
+	  // PrepareStartOfNewCharacter ( NEW_MISSION );
 	  Weiter = Single_Player_Menu ( );
 	  break;
 	case MULTI_PLAYER_POSITION:
@@ -1784,7 +1784,7 @@ I need to know that for saving. Abort.\n");
       else
 	{
 	  // LoadShip ( find_file ( "Asteroid.maps" , MAP_DIR, FALSE) ) ;
-	  // EnforceMissionFile ( NEW_MISSION );
+	  // PrepareStartOfNewCharacter ( NEW_MISSION );
 	  strcpy( Me[0].character_name , MenuTexts[ MenuPosition -1 ] );
 	  LoadGame( );
 	  GetEventsAndEventTriggers ( "EventsAndEventTriggers" );
@@ -1994,7 +1994,7 @@ enum
 	  while (EnterPressed() || SpacePressed() ) ;
 	  PrepareNewHero ();
 	  LoadShip ( find_file ( "Asteroid.maps" , MAP_DIR, FALSE) ) ;
-	  EnforceMissionFile ( NEW_MISSION );
+	  PrepareStartOfNewCharacter (  );
 	  Weiter=TRUE;
 	  return ( TRUE );
 	  break;
@@ -2071,7 +2071,7 @@ enum
 	case START_AS_SERVER_POSITION:
 	  while (EnterPressed() || SpacePressed() ) ;
 	  LoadShip ( find_file ( "Asteroid.maps" , MAP_DIR , FALSE ) ) ;
-	  EnforceMissionFile ( NEW_MISSION );	
+	  PrepareStartOfNewCharacter (  );	
 	  ServerMode = TRUE ;
 	  OpenTheServerSocket (  );
 	  Weiter=TRUE;
@@ -2085,7 +2085,7 @@ enum
 	    {
 	      Weiter = TRUE;
 	      LoadShip ( find_file ( "Asteroid.maps" , MAP_DIR, FALSE) ) ;
-	      EnforceMissionFile ( NEW_MISSION );
+	      PrepareStartOfNewCharacter (  );
 	      ClientMode = TRUE;
 	      return ( TRUE );
 	    }

@@ -47,14 +47,14 @@ EXTERN void ResetGameConfigToDefaultValues ( void );
 EXTERN void ShowStartupPercentage ( int Percentage ) ;
 EXTERN void AssignMission( int MissNum );
 EXTERN void ParseCommandLine (int argc, char *const argv[]);
-EXTERN void Title ( char *MissionBriefingPointer );
-EXTERN void EndTitle (void);
 EXTERN void ClearAutomapData( void );
 EXTERN void InitFreedroid (void);
-EXTERN void EnforceMissionFile ( char *MissionFileName ) ;
+EXTERN void PrepareStartOfNewCharacter ( void ) ;
 EXTERN void ThouArtDefeated (void);
 EXTERN void ThouArtVictorious (void);
 EXTERN void CheckIfMissionIsComplete (void);
+EXTERN void GetEventsAndEventTriggers ( char* EventsAndEventTriggersFilename );
+EXTERN void PlayATitleFile ( char* Filename );
 
 // influ.c 
 #undef EXTERN
@@ -498,8 +498,6 @@ EXTERN void EnterItemIdentificationBooth( void );
 EXTERN void EnterCodepanel (void);
 EXTERN void EnterConsole (void);
 EXTERN void AlleLevelsGleichFaerben (void);
-EXTERN int LevelEmpty (void);
-EXTERN int ShipEmpty (void);
 EXTERN void ClearUserFenster (void);
 void GreatDruidShow (void);
 void ShowDroidInfo (int droidtype, int page , char ShowArrows );

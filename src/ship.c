@@ -945,8 +945,6 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , char* Backg
 
   SDL_SetClipRect ( Screen , NULL );
 
-  
-
   //--------------------
   // We can't reload the background from disk every frame!  On slow machines
   // this gives really horrible performance.  So here comes the fix:  If same
@@ -1683,56 +1681,6 @@ ShowDeckMap (Level deck)
   Me [ 0 ] . pos . y = tmp . y ;
 
 }; // void ShowDeckMap( ... )
-
-/* ---------------------------------------------------------------------- 
- * This function checks if a given level is already empty.  If this is 
- * the case, it will be changed to the 'lights off' tileset, cause in
- * the original game the lights went off when a level was cleared.
- * ---------------------------------------------------------------------- */
-int
-LevelEmpty (void)
-{
-  int i;
-  int levelnum = CurLevel->levelnum;
-
-  if (CurLevel->empty)
-    return TRUE;
-
-  for (i = 0; i < NumEnemys; i++)
-    {
-      if ((AllEnemys[i].Status != OUT)
-	  && (AllEnemys[i].pos.z == levelnum))
-	return FALSE;
-    }
-
-  CurLevel->empty = TRUE;
-  Me[0].Experience += DECKCOMPLETEBONUS;
-
-  if (ShipEmpty ())
-    ThouArtVictorious ();
-
-  return TRUE;
-}
-
-/* ----------------------------------------------------------------------
- * This function checks if the current ship is empty, cause in this case
- * in the old paradroid game, you had won.
- * ---------------------------------------------------------------------- */
-int
-ShipEmpty (void)
-{
-  int i;
-
-  for (i = 0; i < curShip.num_levels; i++)
-    {
-      if (curShip.AllLevels[i] == NULL)
-	continue;
-
-      if (!((curShip.AllLevels[i])->empty))
-	return (FALSE);
-    }
-  return (TRUE);
-}; // int ShipEmpty (void)
 
 /* ----------------------------------------------------------------------
  * This function fills the whole User_Rect with color 0 = black.
