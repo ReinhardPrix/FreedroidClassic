@@ -873,16 +873,9 @@ void ShowRobotPicture(int PosX,int PosY, int Number, unsigned char* Screen){
  * $Author$
  *
  * $Log$
- * Revision 1.6  1993/09/22 14:27:14  prix
- * Sat Jul 31 21:20:14 1993: Koordinatenverschiebung bei ungerader INTERNHOEHE
- * Sun Aug 01 10:37:50 1993: Verschiebungen der Offsets, um 001 ins Zentrum zu bekommen
- * Sun Aug 01 11:51:18 1993: written general PutObject function
- * Sun Aug 01 12:03:26 1993: FeindZusammenstellen liefert Pointer auf Feind-Picture !
- * Sun Aug 01 12:23:41 1993: Written all Put* Functions new: using PutObject
- * Mon Aug 02 09:18:48 1993: RotateBulletColor hinzugefuegt
- * Mon Aug 02 10:00:44 1993: farben genauer an c-64 angenaehert
- * Tue Aug 10 14:28:55 1993: BulletCollision check in MergeBlockToWindow()
- * Tue Aug 24 11:31:04 1993: call to IsVisible()
+ * Revision 1.7  1994/06/19 16:44:10  prix
+ * Wed Jun 08 13:46:12 1994: Influence is beamed into the ship when the game starts
+ * Wed Jun 15 20:18:01 1994: Schild wird beim Teleportieren nicht angezeigt.
  *
  * Revision 1.6  1993/09/22  14:27:14  prix
  * Sat Jul 31 21:20:14 1993: Koordinatenverschiebung bei ungerader INTERNHOEHE
