@@ -88,8 +88,8 @@
 
 #define AUX1_RECT_WIDTH 64
 #define AUX1_RECT_HEIGHT 64
-#define AUX1_POS_X 16
-#define AUX1_POS_Y 16
+#define AUX1_POS_X 32
+#define AUX1_POS_Y 25
 
 #define AUX2_RECT_WIDTH 64
 #define AUX2_RECT_HEIGHT 64

@@ -657,7 +657,7 @@ Base list price=25
 
 // Item No. 21
 ** Start of new item specification subsection **
-Item name="Plug-in"
+Item name="Warrior Plug-in from the North Pole"
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="aux"
@@ -896,7 +896,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=2
 Item as defensive item: ac_bonus_modifier=4
 Base item duration=20 plus duration modifier=10
-Picture number=15
+Picture number=39
 Sound number=5
 Base list price=75
 ** End of new item specification subsection **
@@ -913,7 +913,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=8
 Item as defensive item: ac_bonus_modifier=4
 Base item duration=30 plus duration modifier=10
-Picture number=23
+Picture number=40
 Sound number=5
 Base list price=200
 ** End of new item specification subsection **
@@ -1379,6 +1379,91 @@ Base item duration=18 plus duration modifier=10
 Picture number=36
 Sound number=0 
 Base list price=75
+** End of new item specification subsection **
+
+// Item No. 51
+** Start of new item specification subsection **
+Item name="Sniper Plug-in from the North Pole"
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item can be installed in slot with name="aux"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=-1 plus duration modifier=0
+Picture number=41
+Sound number=0 
+Base list price=0
+** End of new item specification subsection **
+
+// Item No. 52
+** Start of new item specification subsection **
+Item name="Hacker Plug-in from the North Pole"
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item can be installed in slot with name="aux"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=-1 plus duration modifier=0
+Picture number=42
+Sound number=0 
+Base list price=0
+** End of new item specification subsection **
+
+// Item No. 53
+** Start of new item specification subsection **
+Item name="Iron Hat"
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item can be installed in slot with name="special"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=4
+Item as defensive item: ac_bonus_modifier=5
+Base item duration=18 plus duration modifier=10
+Picture number=36
+Sound number=0 
+Base list price=175
+** End of new item specification subsection **
+
+// Item No. 54
+** Start of new item specification subsection **
+Item name="Iron Helm"
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item can be installed in slot with name="special"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=4
+Item as defensive item: ac_bonus_modifier=5
+Base item duration=18 plus duration modifier=10
+Picture number=36
+Sound number=0 
+Base list price=275
+** End of new item specification subsection **
+
+// Item No. 55
+** Start of new item specification subsection **
+Item name="Pot-Helm"
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item can be installed in slot with name="special"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=4
+Item as defensive item: ac_bonus_modifier=5
+Base item duration=18 plus duration modifier=10
+Picture number=36
+Sound number=0 
+Base list price=375
 ** End of new item specification subsection **
 
 
