@@ -74,6 +74,21 @@ unsigned char *MessageBar;
 message *Queue = NULL;
 // int ThisMessageTime=0;               /* Counter fuer Message-Timing */
 
+void 
+InitiateMenu( void )
+{
+      //--------------------
+      //Here comes the standard initializer for all the menus and submenus
+      //of the big escape menu.  This prepares the screen, so that we can
+      //write on it further down.
+      SDL_SetClipRect( ne_screen, NULL );
+      ClearGraphMem();
+      DisplayRahmen( RAHMEN_NO_SDL_UPDATE | RAHMEN_FORCE_UPDATE );
+      Assemble_Combat_Picture ( 0 );
+      SDL_SetClipRect( ne_screen, NULL );
+      MakeGridOnScreen();
+} // void InitiateMenu(void)
+
 void
 DebugPrintf (char *Print_String)
 {
@@ -590,12 +605,7 @@ enum
   while (!Weiter)
     {
 
-      SDL_SetClipRect( ne_screen, NULL );
-      ClearGraphMem();
-      DisplayRahmen( RAHMEN_NO_SDL_UPDATE | RAHMEN_FORCE_UPDATE );
-      Assemble_Combat_Picture ( 0 );
-      SDL_SetClipRect( ne_screen, NULL );
-      MakeGridOnScreen();
+      InitiateMenu();
 
       // 
       // we highlight the currently selected option with an 
@@ -877,12 +887,7 @@ Single_Player_Menu (void)
   while (!Weiter)
     {
 
-      SDL_SetClipRect( ne_screen, NULL );
-      ClearGraphMem();
-      DisplayRahmen( RAHMEN_NO_SDL_UPDATE | RAHMEN_FORCE_UPDATE );
-      Assemble_Combat_Picture ( 0 );
-      SDL_SetClipRect( ne_screen, NULL );
-      MakeGridOnScreen();
+      InitiateMenu();
 
       // 
       // we highlight the currently selected option with an 
@@ -952,12 +957,7 @@ Single_Player_Menu (void)
 	  while (DownPressed());
 	}
     }
-  ClearGraphMem ( );
-  Update_SDL_Screen();
-  DisplayRahmen ( RAHMEN_FORCE_UPDATE );
-  InitBars = TRUE;
 
-  return;
 } // Single_Player_Menu
 
 /*-----------------------------------------------------------------
@@ -965,9 +965,9 @@ Single_Player_Menu (void)
 void
 Show_Highscore_Menu (void)
 {
-#ifdef NEW_ENGINE
-  return;
-#else
+
+  /*
+
   int Weiter = 0;
 
   enum { NEW_GAME_POSITION=1, SHOW_HISCORE_POSITION=2, SHOW_MISSION_POSITION=3, BACK_POSITION=4 };
@@ -978,9 +978,7 @@ Show_Highscore_Menu (void)
   while (!Weiter)
     {
 
-      MakeGridOnScreen( Outline320x200 );
-
-      PrepareScaledSurface(FALSE);
+      InitiateMenu();
 
       CenteredPutString (ScaledSurface, 1*FontHeight(Menu_BFont), "Highscore list:" );
 
@@ -996,7 +994,7 @@ Show_Highscore_Menu (void)
       // LeftPutString (ScaledSurface , 9*FontHeight(Menu_BFont), "We are looking forward so seeing");
       // LeftPutString (ScaledSurface ,10*FontHeight(Menu_BFont), "new missions and levels from you!");
 
-      SDL_UpdateRect(ScaledSurface, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
+      SDL_Flip ( ne_screen );
 
       // Wait until the user does SOMETHING
 
@@ -1012,8 +1010,10 @@ Show_Highscore_Menu (void)
   DisplayRahmen ( RAHMEN_FORCE_UPDATE );
   InitBars = TRUE;
 
+  */ 
+
   return;
-#endif // !NEW_ENGINE
+
 } // Show_Highscore_Menu
 
 /*-----------------------------------------------------------------
@@ -1021,9 +1021,6 @@ Show_Highscore_Menu (void)
 void
 Multi_Player_Menu (void)
 {
-#ifdef NEW_ENGINE
-  return;
-#else
   int Weiter = 0;
 
   enum { NEW_GAME_POSITION=1, SHOW_HISCORE_POSITION=2, SHOW_MISSION_POSITION=3, BACK_POSITION=4 };
@@ -1034,21 +1031,17 @@ Multi_Player_Menu (void)
   while (!Weiter)
     {
 
-      MakeGridOnScreen( Outline320x200 );
+      InitiateMenu();
 
-      PrepareScaledSurface(FALSE);
+      CenteredPutString ( ne_screen , 1*FontHeight(Menu_BFont), "MULTI PLAYER" );
+      LeftPutString ( ne_screen , 3*FontHeight(Menu_BFont), "We are sorry, but a multi player");
+      LeftPutString ( ne_screen , 4*FontHeight(Menu_BFont), "mode has not yet been implemented.");
+      LeftPutString ( ne_screen , 5*FontHeight(Menu_BFont), "There are plans to do this, but");
+      LeftPutString ( ne_screen , 6*FontHeight(Menu_BFont), "currently it is not a priority.");
+      LeftPutString ( ne_screen , 8*FontHeight(Menu_BFont), "If you feel like setting something");
+      LeftPutString ( ne_screen , 9*FontHeight(Menu_BFont), "up, please contact the developers.");
 
-      CenteredPutString (ScaledSurface, 1*FontHeight(Menu_BFont), "MULTI PLAYER" );
-
-      
-      LeftPutString (ScaledSurface , 3*FontHeight(Menu_BFont), "We are sorry, but a multi player");
-      LeftPutString (ScaledSurface , 4*FontHeight(Menu_BFont), "mode has not yet been implemented.");
-      LeftPutString (ScaledSurface , 5*FontHeight(Menu_BFont), "There are plans to do this, but");
-      LeftPutString (ScaledSurface , 6*FontHeight(Menu_BFont), "currently it is not a priority.");
-      LeftPutString (ScaledSurface , 8*FontHeight(Menu_BFont), "If you feel like setting something");
-      LeftPutString (ScaledSurface , 9*FontHeight(Menu_BFont), "up, please contact the developers.");
-
-      SDL_UpdateRect(ScaledSurface, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
+      SDL_Flip( ne_screen );
 
       // Wait until the user does SOMETHING
 
@@ -1058,47 +1051,33 @@ Multi_Player_Menu (void)
 	}
     }
   while ( EscapePressed() || EnterPressed() || SpacePressed() );
-
-  ClearGraphMem ( );
-  // Update_SDL_Screen();
-  DisplayRahmen ( RAHMEN_FORCE_UPDATE );
-  InitBars = TRUE;
-
-  return;
-#endif // !NEW_ENGINE
 
 } // Multi_Player_Menu
 
 void
 Show_Mission_Instructions_Menu (void)
 {
-#ifdef NEW_ENGINE
-  return;
-#else
   int Weiter = 0;
 
   enum { NEW_GAME_POSITION=1, SHOW_HISCORE_POSITION=2, SHOW_MISSION_POSITION=3, BACK_POSITION=4 };
 
-  // while( !SpacePressed() && !EnterPressed() ) keyboard_update(); 
   while( SpacePressed() || EnterPressed() ) keyboard_update(); 
 
   while (!Weiter)
     {
 
-      MakeGridOnScreen( Outline320x200 );
+      InitiateMenu();
 
-      PrepareScaledSurface(FALSE);
+      CenteredPutString ( ne_screen ,  1*FontHeight(Menu_BFont),    "MISSION INSTRUCTIONS");
+      LeftPutString ( ne_screen , 3*FontHeight(Menu_BFont), "This is the first mission.  It is");
+      LeftPutString ( ne_screen , 4*FontHeight(Menu_BFont), "identical to the original Paradroid");
+      LeftPutString ( ne_screen , 5*FontHeight(Menu_BFont), "mission from the Commodore C64.");
+      LeftPutString ( ne_screen , 6*FontHeight(Menu_BFont), "So the mission is:");
+      LeftPutString ( ne_screen , 7*FontHeight(Menu_BFont), "Destroy all robots on the ship.");
+      LeftPutString ( ne_screen , 9*FontHeight(Menu_BFont), "If you have some new and good");
+      LeftPutString ( ne_screen ,10*FontHeight(Menu_BFont), "ideas, why not tell us?");
 
-      CenteredPutString (ScaledSurface ,  1*FontHeight(Menu_BFont),    "MISSION INSTRUCTIONS");
-      LeftPutString (ScaledSurface , 3*FontHeight(Menu_BFont), "This is the first mission.  It is");
-      LeftPutString (ScaledSurface , 4*FontHeight(Menu_BFont), "identical to the original Paradroid");
-      LeftPutString (ScaledSurface , 5*FontHeight(Menu_BFont), "mission from the Commodore C64.");
-      LeftPutString (ScaledSurface , 6*FontHeight(Menu_BFont), "So the mission is:");
-      LeftPutString (ScaledSurface , 7*FontHeight(Menu_BFont), "Destroy all robots on the ship.");
-      LeftPutString (ScaledSurface , 9*FontHeight(Menu_BFont), "If you have some new and good");
-      LeftPutString (ScaledSurface ,10*FontHeight(Menu_BFont), "ideas, why not tell us?");
-
-      SDL_UpdateRect(ScaledSurface, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
+      SDL_Flip( ne_screen );
 
       // Wait until the user does SOMETHING
 
@@ -1108,12 +1087,7 @@ Show_Mission_Instructions_Menu (void)
 	}
     }
   while ( EscapePressed() || EnterPressed() || SpacePressed() );
-  ClearGraphMem ( );
-  DisplayRahmen ( RAHMEN_FORCE_UPDATE );
-  InitBars = TRUE;
 
-  return;
-#endif
 } // ShowMissionInstructionsMenu
 
 void 
@@ -1124,27 +1098,24 @@ Highlight_Current_Block(void)
   for (i=0; i<Block_Width; i++)
     {
       // This draws a line at the upper border of the current block
-      InternWindow[(INTERNHOEHE-1)*(Block_Height/2)*INTERNBREITE*Block_Width+
-		   (INTERNBREITE-1)*(Block_Width/2)+i]=BULLETCOLOR;
+      // InternWindow[(INTERNHOEHE-1)*(Block_Height/2)*INTERNBREITE*Block_Width+ 		   (INTERNBREITE-1)*(Block_Width/2)+i]=BULLETCOLOR;
       // This draws a line at the lower border of the current block
-      InternWindow[(INTERNHOEHE+1)*(Block_Height/2)*INTERNBREITE*Block_Width+
-		   (INTERNBREITE-1)*(Block_Width/2)+i]=BULLETCOLOR;
+      // InternWindow[(INTERNHOEHE+1)*(Block_Height/2)*INTERNBREITE*Block_Width+		   (INTERNBREITE-1)*(Block_Width/2)+i]=BULLETCOLOR;
       // This draws a line at the left border of the current block
-      InternWindow[(INTERNHOEHE-1)*(Block_Height/2)*INTERNBREITE*Block_Width+
-		   (INTERNBREITE-1)*(Block_Width/2)+i*INTERNBREITE*Block_Width]=BULLETCOLOR;
+      // InternWindow[(INTERNHOEHE-1)*(Block_Height/2)*INTERNBREITE*Block_Width+		   (INTERNBREITE-1)*(Block_Width/2)+i*INTERNBREITE*Block_Width]=BULLETCOLOR;
       // This draws a line at the right border of the current block
-      InternWindow[(INTERNHOEHE-1)*(Block_Height/2)*INTERNBREITE*Block_Width+
-		   (INTERNBREITE+1)*(Block_Width/2)+i*INTERNBREITE*Block_Width]=BULLETCOLOR;
+      // InternWindow[(INTERNHOEHE-1)*(Block_Height/2)*INTERNBREITE*Block_Width+		   (INTERNBREITE+1)*(Block_Width/2)+i*INTERNBREITE*Block_Width]=BULLETCOLOR;
     }
 }
 
 void 
 Level_Editor(void)
 {
-#ifdef NEW_ENGINE
-  return;
-#else
-  int BlockX, BlockY;
+  // #ifdef NEW_ENGINE
+  // return;
+  // #else
+  int BlockX=rintf(Me.pos.x);
+  int BlockY=rintf(Me.pos.y);
   int Done=FALSE;
   int Weiter=FALSE;
   int MenuPosition=1;
@@ -1157,37 +1128,37 @@ Level_Editor(void)
       Weiter=FALSE;
       while (!EscapePressed())
 	{
-	  BlockX=(int)(floor(Me.pos.x/Block_Width));
-	  BlockY=(int)(floor(Me.pos.y/Block_Height));
+	  BlockX=rintf(Me.pos.x);
+	  BlockY=rintf(Me.pos.y);
 	  
-	  GetView();
-	  Assemble_Combat_Picture ( SHOW_MAP );
+	  ClearUserFenster();
+	  Assemble_Combat_Picture ( ONLY_SHOW_MAP );
 	  Highlight_Current_Block();
 
-	  PrepareScaledSurface( FALSE );
-	  CenteredPutString (ScaledSurface ,  1*FontHeight(Menu_BFont),    "LEVEL EDITOR");
-	  SDL_UpdateRect(ScaledSurface, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
+	  CenteredPutString ( ne_screen ,  1*FontHeight(Menu_BFont),    "LEVEL EDITOR");
+	  SDL_Flip( ne_screen );
 
-	  // If the Level editor pressed some cursor keys, move the
+	  //--------------------
+	  // If the user of the Level editor pressed some cursor keys, move the
 	  // highlited filed (that is Me.pos) accordingly. This is done here:
 	  if (LeftPressed()) 
 	    {
-	      Me.pos.x-=Block_Width;
+	      Me.pos.x-=1;
 	      while (LeftPressed());
 	    }
 	  if (RightPressed()) 
 	    {
-	      Me.pos.x+=Block_Width;
+	      Me.pos.x+=1;
 	      while (RightPressed());
 	    }
 	  if (UpPressed()) 
 	    {
-	      Me.pos.y-=Block_Height;
+	      Me.pos.y-=1;
 	      while (UpPressed());
 	    }
 	  if (DownPressed()) 
 	    {
-	      Me.pos.y+=Block_Height;
+	      Me.pos.y+=1;
 	      while (DownPressed());
 	    }
 	  
@@ -1267,22 +1238,21 @@ Level_Editor(void)
       while (!Weiter)
 	{
 
-	  AssembleCombatWindow( 0 );
-
-	  MakeGridOnScreen( Outline320x200 );
+	  InitiateMenu();
+	  // AssembleCombatWindow( 0 );
+	  // MakeGridOnScreen(  );
 
 	  // Highlight currently selected option with an influencer before it
-	  DisplayMergeBlock( SINGLE_PLAYER_MENU_POINTER_POS_X, (MenuPosition+3) * (FontHeight(Menu_BFont)/2) - Block_Width/4, 
-			     Influencepointer, Block_Width, Block_Height, RealScreen );
-	  
-	  PrepareScaledSurface(FALSE);
+	  // DisplayMergeBlock( SINGLE_PLAYER_MENU_POINTER_POS_X, (MenuPosition+3) * (FontHeight(Menu_BFont)/2) - Block_Width/4, 			     Influencepointer, Block_Width, Block_Height, RealScreen );
+	  PutInfluence( SINGLE_PLAYER_MENU_POINTER_POS_X, (MenuPosition+3) * (FontHeight(Menu_BFont)) - Block_Width/4 );
+	  // PrepareScaledSurface(FALSE);
 
-	  CenteredPutString (ScaledSurface ,  4*FontHeight(Menu_BFont),    "Save Level:");
-	  CenteredPutString (ScaledSurface ,  5*FontHeight(Menu_BFont),    "Set Level name:");
-	  CenteredPutString (ScaledSurface ,  6*FontHeight(Menu_BFont),    "Back to Level editing");
-	  CenteredPutString (ScaledSurface ,  7*FontHeight(Menu_BFont),    "Quit Level Editor");
+	  CenteredPutString ( ne_screen ,  4*FontHeight(Menu_BFont),    "Save Level:");
+	  CenteredPutString ( ne_screen ,  5*FontHeight(Menu_BFont),    "Set Level name:");
+	  CenteredPutString ( ne_screen ,  6*FontHeight(Menu_BFont),    "Back to Level editing");
+	  CenteredPutString ( ne_screen ,  7*FontHeight(Menu_BFont),    "Quit Level Editor");
 	  
-	  SDL_UpdateRect(ScaledSurface, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
+	  SDL_Flip ( ne_screen );
 	  
 	  // Wait until the user does SOMETHING
 	  
@@ -1304,8 +1274,8 @@ Level_Editor(void)
 		case SAVE_LEVEL_POSITION:
 		  while (EnterPressed() || SpacePressed() ) ;
 		  SaveShip("Testship");
-		  CenteredPutString (ScaledSurface ,  9*FontHeight(Menu_BFont),    "Your ship was saved...");
-		  SDL_UpdateRect(ScaledSurface, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
+		  CenteredPutString ( ne_screen ,  9*FontHeight(Menu_BFont),    "Your ship was saved...");
+		  SDL_Flip ( ne_screen );
 		  while (!EnterPressed() && !SpacePressed() ) ;
 		  while (EnterPressed() || SpacePressed() ) ;
 		  // Weiter=!Weiter;
@@ -1346,7 +1316,7 @@ Level_Editor(void)
       
     } // while (!Done)
 
-#endif // !NEW_ENGINE
+  // #endif // !NEW_ENGINE
 } // void Level_Editor(void)
 
 /*@Function============================================================
