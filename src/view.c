@@ -1310,6 +1310,13 @@ There was a rotation model type given, that exceeds the number of rotation model
     {
       
       //--------------------
+      // Maybe the rotation model we're going to use now isn't yet loaded. 
+      // Now in this case, we must load it immediately, or a segfault may
+      // result...
+      //
+      LoadAndPrepareEnemyRotationModelNr ( RotationModel );
+
+      //--------------------
       // Maybe we don't have an enemy here that would really stick to the 
       // exact size of a block but be somewhat bigger or smaller instead.
       // In this case, we'll just adapt the given target rectangle a little

@@ -368,12 +368,51 @@ This error indicates some installation problem with freedroid.",
  *
  * ---------------------------------------------------------------------- */
 void 
-LoadAndPrepareEnemyRotationModelNr ( int j )
+LoadAndPrepareEnemyRotationModelNr ( int ModelNr )
 {
   SDL_Surface* Whole_Image;
   char ConstructedFileName[5000];
   int i;
   char *fpath;
+  static int FirstCallEver = TRUE ;
+  static int EnemyFullyPrepared [ ENEMY_ROTATION_MODELS_AVAILABLE ] ;
+
+  //--------------------
+  // Maybe this function has just been called for the first time ever.
+  // Then of course we need to initialize the array, that is used for
+  // keeping track of the currently loaded enemy rotation surfaces.
+  // This we do here.
+  //
+  if ( FirstCallEver )
+    {
+      for ( i = 0 ; i < ENEMY_ROTATION_MODELS_AVAILABLE ; i ++ )
+	{
+	  EnemyFullyPrepared [ i ] = FALSE ;
+	}
+      FirstCallEver = FALSE ;
+    }
+
+  //--------------------
+  // Now a sanity check against using rotation types, that don't exist
+  // in Freedroid RPG at all!
+  //
+  if ( ( ModelNr < 0 ) || ( ModelNr >= ENEMY_ROTATION_MODELS_AVAILABLE ) )
+    {
+      fprintf ( stderr , "\n\nModelNr=%d.\n\n" , ModelNr );
+      GiveStandardErrorMessage ( "LoadAndPrepareEnemyRotationModelNr(...)" , "\
+Freedroid received a rotation model number that does not exist!",
+				 PLEASE_INFORM, IS_FATAL );
+    }
+
+  //--------------------
+  // Now we can check if the given rotation model type was perhaps already
+  // allocated and loaded and fully prepared.  Then of course we need not 
+  // do anything here...  Otherwise we can have trust and mark it as loaded
+  // already...
+  //
+  if ( EnemyFullyPrepared [ ModelNr ] ) return;
+  EnemyFullyPrepared [ ModelNr ] = TRUE;
+  Activate_Conservative_Frame_Computation();
 
   //--------------------
   // Now that we have the classic ball-shaped design completely done,
@@ -382,7 +421,8 @@ LoadAndPrepareEnemyRotationModelNr ( int j )
   //
   for ( i=0 ; i < ROTATION_ANGLES_PER_ROTATION_MODEL ; i++ )
     {
-      sprintf ( ConstructedFileName , "rotation_models/%s_%04d.png" , PrefixToFilename [ j ] , ( ModelMultiplier[j] * i) + 1 );
+      sprintf ( ConstructedFileName , "rotation_models/%s_%04d.png" , PrefixToFilename [ ModelNr ] , 
+		( ModelMultiplier [ ModelNr ] * i ) + 1 );
       DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
       // fpath = find_file ( "rotation_models/anim0001.png" , GRAPHICS_DIR, FALSE );
       fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
@@ -399,8 +439,8 @@ This error indicates some installation problem with freedroid.",
       
       SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
       
-      EnemyRotationSurfacePointer[j][i] = SDL_DisplayFormatAlpha( Whole_Image ); // now we have an alpha-surf of right size
-      SDL_SetColorKey( EnemyRotationSurfacePointer[j][i] , 0 , 0 ); // this should clear any color key in the dest surface
+      EnemyRotationSurfacePointer [ ModelNr ] [ i ] = SDL_DisplayFormatAlpha( Whole_Image ); // now we have an alpha-surf of right size
+      SDL_SetColorKey( EnemyRotationSurfacePointer [ ModelNr ] [ i ] , 0 , 0 ); // this should clear any color key in the dest surface
       
       SDL_FreeSurface( Whole_Image );
   
@@ -412,12 +452,12 @@ This error indicates some installation problem with freedroid.",
   //
   for ( i=0 ; i < ROTATION_ANGLES_PER_ROTATION_MODEL ; i++ )
     {
-      BlueEnemyRotationSurfacePointer [ j ] [ i ] = 
-	CreateColorFilteredSurface ( EnemyRotationSurfacePointer [ j ] [ i ] , FILTER_BLUE );
-      GreenEnemyRotationSurfacePointer [ j ] [ i ] = 
-	CreateColorFilteredSurface ( EnemyRotationSurfacePointer [ j ] [ i ] , FILTER_GREEN );
-      RedEnemyRotationSurfacePointer [ j ] [ i ] = 
-	CreateColorFilteredSurface ( EnemyRotationSurfacePointer [ j ] [ i ] , FILTER_RED );
+      BlueEnemyRotationSurfacePointer [ ModelNr ] [ i ] = 
+	CreateColorFilteredSurface ( EnemyRotationSurfacePointer [ ModelNr ] [ i ] , FILTER_BLUE );
+      GreenEnemyRotationSurfacePointer [ ModelNr ] [ i ] = 
+	CreateColorFilteredSurface ( EnemyRotationSurfacePointer [ ModelNr ] [ i ] , FILTER_GREEN );
+      RedEnemyRotationSurfacePointer [ ModelNr ] [ i ] = 
+	CreateColorFilteredSurface ( EnemyRotationSurfacePointer [ ModelNr ] [ i ] , FILTER_RED );
     }
 
 }; // void LoadAndPrepareEnemyRotationModelNr ( int j )
@@ -551,8 +591,7 @@ Load_Enemy_Surfaces( void )
 
   for ( j = 0 ; j < ENEMY_ROTATION_MODELS_AVAILABLE ; j ++ )
     {
-      LoadAndPrepareEnemyRotationModelNr ( j );
-
+      // LoadAndPrepareEnemyRotationModelNr ( j );
     }
 
 }; // void LoadEnemySurfaces( void )

@@ -26,12 +26,6 @@
  * Desc: all Bullet AND Blast - related functions.
  * ---------------------------------------------------------------------- */
 
-/*
- * This file has now been checked for remains of german (in the comments
- * at least.  Please eliminate anything else mercilessly if you find something
- * german in this file still.
- */
-
 #define _bullet_c
 
 #include "system.h"
