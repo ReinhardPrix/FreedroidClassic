@@ -1214,6 +1214,7 @@ blit_light_radius ( void )
   int chunk_size_x;
   int chunk_size_y;
   int window_offset_x;
+  int light_bonus = curShip . AllLevels [ Me [ 0 ] . pos . z ] -> light_radius_bonus ;
 
   //--------------------
   // If the darkenss chunks have not yet been loaded, we load them...
@@ -1271,7 +1272,7 @@ blit_light_radius ( void )
 	{
 	  target_pos . x = Me [ 0 ] . pos . x - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) + our_width * LIGHT_RADIUS_CHUNK_SIZE ;
 	  target_pos . y = Me [ 0 ] . pos . y - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) + our_height * LIGHT_RADIUS_CHUNK_SIZE;
-	  light_strength = (int) ( sqrt ( ( Me [ 0 ] . pos . x - target_pos . x ) * ( Me [ 0 ] . pos . x - target_pos . x ) + ( Me [ 0 ] . pos . y - target_pos . y ) * ( Me [ 0 ] . pos . y - target_pos . y ) ) * 4.0 ) ;
+	  light_strength = (int) ( sqrt ( ( Me [ 0 ] . pos . x - target_pos . x ) * ( Me [ 0 ] . pos . x - target_pos . x ) + ( Me [ 0 ] . pos . y - target_pos . y ) * ( Me [ 0 ] . pos . y - target_pos . y ) ) * 4.0 ) - light_bonus ;
 	  if ( light_strength >= NUMBER_OF_SHADOW_IMAGES ) light_strength = NUMBER_OF_SHADOW_IMAGES -1 ;
 	  if ( light_strength <= 0 ) continue ;
 

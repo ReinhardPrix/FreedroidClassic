@@ -1311,7 +1311,7 @@ enum
   { 
     SAVE_LEVEL_POSITION=1, 
     CHANGE_LEVEL_POSITION, 
-    CHANGE_TILE_SET_POSITION, 
+    CHANGE_LIGHT_RADIUS_BONUS, 
     CHANGE_SIZE_X, 
     SET_LEVEL_NAME , 
     SET_BACKGROUND_SONG_NAME , 
@@ -1333,9 +1333,10 @@ enum
       MenuTexts[ i ] = "Save whole ship to 'Testship.shp'" ; i++;
       sprintf( Options [ 0 ] , "Current: %d.  Level Up/Down" , EditLevel->levelnum );
       MenuTexts[ i ] = Options [ 0 ]; i++;
-      MenuTexts[ i ] = "Change tile set" ; i++;
-      sprintf( Options [ 1 ] , "Current levelsize: %d x %d map tiles." , EditLevel->xlen , EditLevel->ylen );
+      sprintf( Options [ 1 ] , "Light radius bonus: %d" , EditLevel -> light_radius_bonus );
       MenuTexts[ i ] = Options [ 1 ]; i++;
+      sprintf( Options [ 2 ] , "Current levelsize: %d x %d map tiles." , EditLevel->xlen , EditLevel->ylen );
+      MenuTexts[ i ] = Options [ 2 ]; i++;
       sprintf( Options [ 3 ] , "Level name: %s" , EditLevel->Levelname );
       MenuTexts[ i ] = Options [ 3 ] ; i++;
       sprintf( Options [ 4 ] , "Background music file name: %s" , EditLevel->Background_Song_Name );
@@ -1375,7 +1376,7 @@ enum
 	  // if ( EditLevel->levelnum ) Teleport ( EditLevel->levelnum-1 , Me[0].pos.x , Me[0].pos.y ); 
 	  while (EnterPressed() || SpacePressed() ) ;
 	  break;
-	case CHANGE_TILE_SET_POSITION: 
+	case CHANGE_LIGHT_RADIUS_BONUS: 
 	  while (EnterPressed() || SpacePressed() ) ;
 	  break;
 	case SET_LEVEL_NAME:
@@ -1453,15 +1454,15 @@ enum
 		}
 	      break;
 	      
-	    case CHANGE_TILE_SET_POSITION:
-	      if ( RightPressed() && (EditLevel->color  < 6 ) )
+	    case CHANGE_LIGHT_RADIUS_BONUS:
+	      if ( RightPressed() )
 		{
-		  EditLevel->color++;
+		  EditLevel -> light_radius_bonus ++;
 		  while (RightPressed());
 		}
-	      if ( LeftPressed() && (EditLevel->color > 0) )
+	      if ( LeftPressed() )
 		{
-		  EditLevel->color--;
+		  EditLevel -> light_radius_bonus --;
 		  while (LeftPressed());
 		}
 	      Teleport ( EditLevel->levelnum , Me[0].pos.x , Me[0].pos.y , 0 , TRUE , FALSE ); 
@@ -2136,10 +2137,10 @@ CreateNewMapLevel( void )
   DebugPrintf (0, "\n-----------------------------------------------------------------");
   DebugPrintf (0, "\nStarting to create and add a completely new level to the ship.");
 
-  NewLevel->levelnum = curShip.num_levels;
-  NewLevel->xlen = 90;
-  NewLevel->ylen = 90;
-  NewLevel->color = 1;
+  NewLevel -> levelnum = curShip.num_levels;
+  NewLevel -> xlen = 90;
+  NewLevel -> ylen = 90;
+  NewLevel -> light_radius_bonus = 1;
 
   DebugPrintf( 2 , "\nLevelnumber : %d ", NewLevel->levelnum );
   DebugPrintf( 2 , "\nxlen of this level: %d ", NewLevel->xlen );

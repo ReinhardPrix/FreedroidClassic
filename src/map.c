@@ -303,9 +303,9 @@ void DecodeDimensionsOfThisLevel ( Level loadlevel , char* DataPointer )
   sscanf ( DataPointer , "Levelnumber: %u \n\
  xlen of this level: %u \n\
  ylen of this level: %u \n\
- color of this level: %u \n" , 
+ light radius bonus of this level: %u \n" , 
 	  &(loadlevel->levelnum), &(loadlevel->xlen),
-	  &(loadlevel->ylen), &(loadlevel->color));
+	  &(loadlevel->ylen), &( loadlevel -> light_radius_bonus ));
 
   DebugPrintf( 2 , "\nLevelnumber : %d ", loadlevel->levelnum );
   DebugPrintf( 2 , "\nxlen of this level: %d ", loadlevel->xlen );
@@ -1610,7 +1610,7 @@ EncodeLevelForSaving(Level Lev)
   sprintf(linebuf, "Levelnumber: %d\n\
 xlen of this level: %d\n\
 ylen of this level: %d\n\
-color of this level: %d\n\
+light radius bonus of this level: %d\n\
 jump threshold north: %d\n\
 jump threshold south: %d\n\
 jump threshold east: %d\n\
@@ -1619,7 +1619,7 @@ jump target north: %d\n\
 jump target south: %d\n\
 jump target east: %d\n\
 jump target west: %d\n",
-	  Lev->levelnum, Lev->xlen, Lev->ylen, Lev->color , 
+	  Lev->levelnum, Lev->xlen, Lev->ylen, Lev -> light_radius_bonus , 
 	  Lev->jump_threshold_north, 
 	  Lev->jump_threshold_south, 
 	  Lev->jump_threshold_east, 

@@ -869,7 +869,7 @@ typedef struct
   char *obstacle_name_list[ MAX_OBSTACLE_NAMES_PER_LEVEL ];
   int xlen;		/* X dimension */
   int ylen;
-  int color;
+  int light_radius_bonus;
   map_tile *map[MAX_MAP_LINES];	// this is a vector of pointers
   int jump_threshold_north;
   int jump_threshold_south;

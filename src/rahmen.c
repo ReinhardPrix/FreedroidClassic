@@ -400,6 +400,7 @@ create_and_blit_droid_description ( int enemy_num )
   temp_fill_rect . y = 50 ;
   temp_fill_rect . h = FontHeight ( BFont_to_use ) ;
   temp_fill_rect . w = ( text_length * cur_enemy -> energy ) / Druidmap [ cur_enemy -> type ] . maxenergy ;
+  if ( cur_enemy -> energy <= 0 ) temp_fill_rect . w = 0 ;
   temp_fill_rect . x = UserCenter_x - text_length / 2 ;
 
   if ( ! cur_enemy -> is_friendly ) 
