@@ -101,6 +101,8 @@ main (int argc, char *const argv[])
 
 	  AnimateRefresh ();	
 
+	  AnimateTeleports ();	
+
 	  MoveBullets ();   
 
 	  ExplodeBlasts ();	// move blasts to the right current "phase" of the blast

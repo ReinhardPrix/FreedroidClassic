@@ -329,6 +329,7 @@ typedef struct
   int color;
   char *map[MAXMAPLINES];	/* this is a vector of pointers ! */
   grob_point refreshes[MAX_REFRESHES_ON_LEVEL];
+  grob_point teleporters[MAX_TELEPORTERS_ON_LEVEL];
   grob_point doors[MAX_DOORS_ON_LEVEL];
   waypoint AllWaypoints[MAXWAYPOINTS];
 }

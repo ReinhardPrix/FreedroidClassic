@@ -1,6 +1,9 @@
 
 
+--------------------
+
 New graphics design, Possible solutions:
+
     1. Stay with Ball and number design
        + simpler
        + easyer to tell droids apart and to classify a droid
@@ -30,4 +33,36 @@ Now this is of course all far away.  We might just stick to the interaction poss
 for now.  Change of missions and story line that way can also be discussed later.
 But what do you think?  Would that be the type of game you would like to see implemented
 or would you prefer to stick to acion/arcade contents?  Comments?  Addisions?  jp.
+
+--------------------
+
+Game Extension:  Friendly droids  :  Existence
+
+Game Extension:  Friendly droids  :  Shops and Chatting
+
+
+
+
+
+--------------------
+
+Game Extension:  Teleporters
+
+Since the very beginning, code is already there to properly do Teleportations as far as
+internal game mechanics is concerned.  What is left to do is to add (animated) map tiles that
+symbolize the teleporters and to write the code for detection of teleportation request and
+perhaps a fine graphical fade-in/fade-out effect for the teleportation (while the rest of
+the action continues a usual).
+
+
+--------------------
+
+Game Extension:  New Weapon:  Homing missiles
+
+Game Extension:  New Weapon:  Lasers
+
+Game Extension:  New Weapon:  Exterminator
+
+
+--------------------
 

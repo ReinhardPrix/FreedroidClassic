@@ -281,7 +281,7 @@ enum _directions
 
 #define NUM_MAP_BLOCKS		50  /* total number of map-blocks */
 
-#define ALLBULLETTYPES		4	/* number of bullet-types */
+#define ALLBULLETTYPES		5	/* number of bullet-types */
 #define ALLBLASTTYPES		2	/* number of different exposions */
 
 #define MAXBULLETS		100	/* maximum possible Bullets in the air */
@@ -311,6 +311,7 @@ enum _directions
 #define MAXWAYPOINTS 		100
 #define MAX_DOORS_ON_LEVEL 	30
 #define MAX_REFRESHES_ON_LEVEL	10
+#define MAX_TELEPORTERS_ON_LEVEL	10
 
 #define MAX_PHASES_IN_A_BULLET 12
 
@@ -421,13 +422,13 @@ enum _status
 enum
 {
   FLOOR = 0,
-  ECK_LU,     T_U,          ECK_RU,       T_L,          KREUZ,       T_R,    ECK_LO,  T_O,    ECK_RO,
+  ECK_LU,        T_U,          ECK_RU,       T_L,          KREUZ,       T_R,    ECK_LO,  T_O,    ECK_RO,
   H_WALL=10,     V_WALL,       ALERT,        BLOCK1,       BLOCK2,      BLOCK3, BLOCK4,  BLOCK5,
   H_ZUTUERE=18,  H_HALBTUERE1, H_HALBTUERE2, H_HALBTUERE3, H_GANZTUERE,
   KONSOLE_L=23,  KONSOLE_R,    KONSOLE_O,    KONSOLE_U,
   V_ZUTUERE=27,  V_HALBTUERE1, V_HALBTUERE2, V_HALBTUERE3, V_GANZTUERE,
   LIFT=32,       VOID,         REFRESH1,     REFRESH2,     REFRESH3,    REFRESH4,
-  I_REFRESH1=38, I_REFRESH2,   I_REFRESH3,   I_REFRESH4,   INVISIBLE_BRICK
+  TELE_1=38,     TELE_2,       TELE_3,       TELE_4,       INVISIBLE_BRICK
 };
 
 

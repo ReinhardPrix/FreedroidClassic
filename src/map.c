@@ -258,6 +258,45 @@ AnimateRefresh (void)
 }				/* AnimateRefresh */
 
 /*@Function============================================================
+@Desc: 	AnimateRefresh():
+
+@Ret: void
+@Int:
+* $Function----------------------------------------------------------*/
+void
+AnimateTeleports (void)
+{
+  static float InnerWaitCounter = 0;
+  static int InnerPhase = 0;	/* Zaehler fuer innere Phase */
+  int i, x, y;
+
+  DebugPrintf (2, "\nvoid AnimateRefresh(void):  real function call confirmed.");
+
+  InnerWaitCounter += Frame_Time () * 10;
+
+  // if( (((int)rintf(InnerWaitCounter)) % INNER_REFRESH_COUNTER) == 0) {
+  // InnerPhase ++;
+  // InnerPhase %= INNER_PHASES;
+
+  InnerPhase = (((int) rintf (InnerWaitCounter)) % INNER_PHASES);
+
+
+  for (i = 0; i < MAX_TELEPORTERS_ON_LEVEL; i++)
+    {
+      x = CurLevel->teleporters[i].x;
+      y = CurLevel->teleporters[i].y;
+      if (x == 0 || y == 0)
+	break;
+
+      CurLevel->map[y][x] = (((int) rintf (InnerWaitCounter)) % 4) + TELE_1;
+
+    }				/* for */
+
+  DebugPrintf (2, "\nvoid AnimateRefresh(void):  end of function reached.");
+
+}; // void AnimateTeleports ( void )
+
+/*@Function============================================================
 @Desc: 	LoadShip(): loads the data for a whole ship
 
 @Ret: OK | ERR
@@ -858,11 +897,10 @@ LevelToStruct (char *data)
 
 
 /*@Function============================================================
-@Desc: GetDoors: initialisiert Doors Array der uebergebenen Level-struct
-ACHTUNG: 	Map-Daten mussen schon in struct sein !!
+@Desc: GetDoors: initializes the Doors array of the given level structure
+Of course the level data must be in the structure already!!
 
-@Ret: Anz. der Tueren || ERR
-@Int:
+@Ret: Number of doors found or ERR
 * $Function----------------------------------------------------------*/
 int
 GetDoors (Level Lev)
@@ -925,10 +963,10 @@ Sorry...\n\
 }				/* GetDoors */
 
 /*@Function============================================================
-@Desc: int GetRefreshes(Level Lev): legt array der refr. positionen an
+@Desc: This function initialized the array of Refreshes for animation
+       within the level
 
-@Ret: Number of found refreshes or ERR
-@Int:
+@Ret: Number of refreshes found or ERR
 * $Function----------------------------------------------------------*/
 int
 GetRefreshes (Level Lev)
@@ -963,6 +1001,46 @@ GetRefreshes (Level Lev)
       }				/* for */
   return curref;
 }				// int GetRefreshed(Level lev)
+
+
+/*@Function============================================================
+@Desc: This function initialized the array of Teleports for animation
+       within the level
+
+@Ret: Number of refreshes found or ERR
+* $Function----------------------------------------------------------*/
+int
+GetTeleports (Level Lev)
+{
+  int i, row, col;
+  int xlen, ylen;
+  int curref = 0;
+
+  xlen = Lev->xlen;
+  ylen = Lev->ylen;
+
+  // init teleporters array to 0 
+  for (i = 0; i < MAX_TELEPORTERS_ON_LEVEL; i++)
+    Lev->teleporters[i].x = Lev->teleporters[i].y = 0;
+
+  // now find all the teleporters 
+  for (row = 0; row < ylen; row++)
+    for (col = 0; col < xlen; col++)
+      {
+	if (Lev->map[row][col] == TELE_1 )
+	  {
+	    Lev->teleporters[curref].x = col;
+	    Lev->teleporters[curref++].y = row;
+
+	    if (curref > MAX_TELEPORTERS_ON_LEVEL)
+	      {
+		DebugPrintf( 0 , "\nError in GetTeleporters:  Too many teleporters on level!!! Terminating...");
+		Terminate(ERR);
+	      }
+	  }			/* if */
+      }				/* for */
+  return curref;
+}; // int GetTeleports(Level lev)
 
 
 /*======================================================================
@@ -1120,8 +1198,12 @@ TranslateMap (Level Lev)
   GetDoors ( Lev );
 
   // NumWaypoints = GetWaypoints (loadlevel);
-  /* Get Refreshes */
+
+  // Get Refreshes 
   GetRefreshes ( Lev );
+
+  // Get Refreshes 
+  GetTeleports ( Lev );
 
   DebugPrintf (2, "\nint TranslateMap(Level Lev): end of function reached.");
   return OK;
@@ -1870,6 +1952,10 @@ IsPassable (float x, float y, int Checkpos)
     case REFRESH2:
     case REFRESH3:
     case REFRESH4:
+    case TELE_1:
+    case TELE_2:
+    case TELE_3:
+    case TELE_4:
       ret = CENTER;		/* these are passable */
       break;
 
