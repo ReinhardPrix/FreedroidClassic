@@ -256,6 +256,7 @@ EXTERN void CopyItem( item* SourceItem , item* DestItem );
 #else
 #define EXTERN extern
 #endif
+EXTERN void DisplayButtons( void );
 EXTERN void UpdateAllCharacterStats ( void );
 EXTERN void ShowCharacterScreen ( void );
 

@@ -67,6 +67,102 @@
 #define DAMAGE_GAIN_PER_STR_POINT 10
 #define AC_GAIN_PER_DEX_POINT 10
 
+// #define INV_BUTTON_X 20
+#define INV_BUTTON_X 600
+#define INV_BUTTON_Y 400
+// #define INV_BUTTON_Y 10
+// #define CHA_BUTTON_X 20
+#define CHA_BUTTON_X 600
+#define CHA_BUTTON_Y 430
+// #define CHA_BUTTON_Y 30
+#define INV_BUTTON_WIDTH 38
+#define INV_BUTTON_HEIGHT 22
+
+/* ----------------------------------------------------------------------
+ * This function checks if a given screen position lies within the 
+ * strength plus button or not
+ * ---------------------------------------------------------------------- */
+int
+CursorIsOnINVButton( int x , int y )
+{
+  if ( x > INV_BUTTON_X + INV_BUTTON_WIDTH  ) return ( FALSE );
+  if ( x < INV_BUTTON_X                     ) return ( FALSE );
+  if ( y > INV_BUTTON_Y + INV_BUTTON_HEIGHT ) return ( FALSE );
+  if ( y < INV_BUTTON_Y                     ) return ( FALSE );
+  return ( TRUE );
+}; // int CursorIsOnStrButton( int x , int y )
+
+/* ----------------------------------------------------------------------
+ * This function checks if a given screen position lies within the 
+ * strength plus button or not
+ * ---------------------------------------------------------------------- */
+int
+CursorIsOnCHAButton( int x , int y )
+{
+  if ( x > CHA_BUTTON_X + INV_BUTTON_WIDTH  ) return ( FALSE );
+  if ( x < CHA_BUTTON_X                     ) return ( FALSE );
+  if ( y > CHA_BUTTON_Y + INV_BUTTON_HEIGHT ) return ( FALSE );
+  if ( y < CHA_BUTTON_Y                     ) return ( FALSE );
+  return ( TRUE );
+}; // int CursorIsOnStrButton( int x , int y )
+
+
+/* ----------------------------------------------------------------------
+ * This function displays all the buttons that open up the character
+ * screen and the invenotry screen
+ * ---------------------------------------------------------------------- */
+void
+DisplayButtons( void )
+{
+  static SDL_Surface *CHA_ButtonImage = NULL;
+  static SDL_Surface *INV_ButtonImage = NULL;
+  static SDL_Rect CHA_Button_Rect;
+  static SDL_Rect INV_Button_Rect;
+  static int WasPressed;
+  char* fpath;
+  
+  // --------------------
+  // Some things like the loading of the character screen
+  // need to be done only once at the first call of this
+  // function. 
+  //
+  if ( INV_ButtonImage == NULL )
+    {
+      // SDL_FillRect( Screen, & InventoryRect , 0x0FFFFFF );
+      fpath = find_file ( "CHAButton.png" , GRAPHICS_DIR, FALSE);
+      CHA_ButtonImage = IMG_Load( fpath );
+      fpath = find_file ( "INVButton.png" , GRAPHICS_DIR, FALSE);
+      INV_ButtonImage = IMG_Load( fpath );
+
+    }
+
+      CHA_Button_Rect.x = CHA_BUTTON_X;
+      CHA_Button_Rect.y = CHA_BUTTON_Y;
+      // CHA_Button_Rect.w = CHARACTERRECT_W;
+      // CHA_Button_Rect.h = CHARACTERRECT_H;
+
+      INV_Button_Rect.x = INV_BUTTON_X;
+      INV_Button_Rect.y = INV_BUTTON_Y;
+      // INV_Button_Rect.w = CHARACTERRECT_W;
+      // INV_Button_Rect.h = CHARACTERRECT_H;
+  
+  SDL_BlitSurface( CHA_ButtonImage , NULL , Screen , &CHA_Button_Rect );
+  SDL_BlitSurface( INV_ButtonImage , NULL , Screen , &INV_Button_Rect );
+  
+  if ( CursorIsOnINVButton( GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
+    {
+      GameConfig.Inventory_Visible = ! GameConfig.Inventory_Visible;
+    }
+
+  if ( CursorIsOnCHAButton( GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
+    {
+      GameConfig.CharacterScreen_Visible = ! GameConfig.CharacterScreen_Visible;
+    }
+
+  WasPressed = axis_is_active;
+
+}; // void DisplayButtons( void )
+
 /* ----------------------------------------------------------------------
  * This function checks if a given screen position lies within the 
  * strength plus button or not
@@ -224,7 +320,7 @@ ShowCharacterScreen ( void )
       CharacterRect.w = CHARACTERRECT_W;
       CharacterRect.h = CHARACTERRECT_H;
     }
-
+  
   //--------------------
   // At this point we know, that the character screen is desired and must be
   // displayed in-game:
