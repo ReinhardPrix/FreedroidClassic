@@ -10,8 +10,8 @@
  * $Author$
  *
  * $Log$
- * Revision 1.1  1993/08/04 16:27:43  prix
- * Initial revision
+ * Revision 1.2  1994/06/19 16:22:55  prix
+ * Wed Jun 08 13:52:40 1994: Influ moves only when beam finished
  *
  * Revision 1.1  1993/08/04  16:27:43  prix
  * Initial revision
