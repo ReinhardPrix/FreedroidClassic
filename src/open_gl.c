@@ -535,6 +535,164 @@ hmmm... either the surface has been freed and the pointer moved cleanly to NULL\
 }; // void make_texture_out_of_surface ( iso_image* our_image )
 
 /* ----------------------------------------------------------------------
+ * If OpenGL is in use, we need to make textured quads out of our normal
+ * SDL surfaces, so that the image information can reside in texture 
+ * memory and that means ON THE GRAPHICS CARD, avoiding the bottleneck
+ * of the AGP port for *much* faster blitting of the graphics.
+ * 
+ * So this function should create appropriate OpenGL textures.  It relys
+ * on and checks the fact, that a proper amount of OpenGL textures has
+ * been requested in the beginning, knowing that this texture creation
+ * call MUST ONLY BE CALLED AT MOST ONCE, SEE NEHE TUTORIALS AND SIMILAR
+ * SOURCES, OR YOUR OLD TEXTURES WILL GET OVERWRITTEN AGAIN AND AGAIN!
+ *
+ * ALSO THIS FUNCTION EXPECTS PRE-PADDED IMAGE SIZES!  An outside tool
+ * like gluem must have preprated the images in question in advance for
+ * better loading times, or this function will simply fail (with proper
+ * error message of course...)
+ *
+ * ---------------------------------------------------------------------- */
+void
+make_texture_out_of_prepadded_image ( iso_image* our_image ) 
+{
+    int factor;
+
+#ifdef HAVE_LIBGL
+    
+    if ( ! use_open_gl ) return;
+    
+    //--------------------
+    // If the texture has been created before and this function is called
+    // for the second time, this is a major error, that is considered a
+    // cause for immediate program termination.
+    //
+    if ( our_image -> texture_has_been_created )
+    {
+	GiveStandardErrorMessage ( __FUNCTION__  , 
+				   "Texture has been created already according to flag...\n\
+hmmm... either the surface has been freed and the pointer moved cleanly to NULL\n\
+(which is good for bug detection) or something is not right here...",
+				   PLEASE_INFORM, IS_FATAL ); // WARNING_ONLY );
+	return;
+    }
+    
+    //--------------------
+    // Now we check if the image received really has the desired form, i.e. if
+    // the width and height of the image are really powers of two.  We do that
+    // by testing for the prime factors of the size and width received...
+    //
+    for ( factor = 3 ; factor < sqrt ( our_image -> surface -> w ) + 1 ; factor ++ )
+    {
+	if ( ! ( our_image -> surface -> w / factor ) )
+	{
+	    GiveStandardErrorMessage ( __FUNCTION__  , 
+				       "ERROR!  Prime factor unequal 2 identified in the image width...\n\
+hmmm... this does not seem like a pre-padded OpenGL-prepared surface.  Breaking off... " ,
+				       PLEASE_INFORM, IS_FATAL );
+	return;
+	}
+    }
+    for ( factor = 3 ; factor < sqrt ( our_image -> surface -> h ) + 1 ; factor ++ )
+    {
+	if ( ! ( our_image -> surface -> h / factor ) )
+	{
+	    GiveStandardErrorMessage ( __FUNCTION__  , 
+				       "ERROR!  Prime factor unequal 2 identified in the image height...\n\
+hmmm... this does not seem like a pre-padded OpenGL-prepared surface.  Breaking off... " ,
+				       PLEASE_INFORM, IS_FATAL );
+	return;
+	}
+    }
+
+    //--------------------
+    // The image data in question is already arranged to have dimensions
+    // which are powers of two, so all we need to do is fill the image
+    // specs from the parameter list into the image struct.
+    //
+    our_image -> texture_width = our_image -> surface -> w ;
+    our_image -> texture_height = our_image -> surface -> h ;
+    
+    //--------------------
+    // Having prepared the raw image it s now time to create the real 
+    // textures
+    //
+    glPixelStorei( GL_UNPACK_ALIGNMENT,1 );
+    
+    //--------------------
+    // We must not call glGenTextures more than once in all of Freedroid,
+    // according to the nehe docu and also confirmed instances of textures
+    // getting overwritten.  So all the gentexture stuff is now in the
+    // initialzize_our_default_open_gl_parameters function and we will use 
+    // stuff from there.
+    //
+    // glGenTextures( 1, & our_image -> texture );
+    //
+    our_image -> texture = & ( all_freedroid_textures [ next_texture_index_to_use ] ) ;
+    our_image -> texture_has_been_created = TRUE ;
+    next_texture_index_to_use ++ ;
+    if ( next_texture_index_to_use >= MAX_AMOUNT_OF_TEXTURES_WE_WILL_USE )
+    {
+	GiveStandardErrorMessage ( __FUNCTION__  , 
+				   "Ran out of initialized texture positions to use for new textures.",
+				   PLEASE_INFORM, IS_FATAL );
+    }
+    else
+    {
+	DebugPrintf ( 0 , "\nTexture positions remaining: %d." , MAX_AMOUNT_OF_TEXTURES_WE_WILL_USE - next_texture_index_to_use );
+    }
+    
+    //--------------------
+    // Typical Texture Generation Using Data From The Bitmap 
+    //
+    glBindTexture( GL_TEXTURE_2D, * ( our_image -> texture ) );
+    
+    //--------------------
+    // Maybe we will want to set some storage parameters, but I am not
+    // completely sure if they would really help us in any way...
+    //
+    // glPixelStorei(GL_UNPACK_ALIGNMENT, 0);
+    // glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
+    // glPixelStorei(GL_UNPACK_SKIP_ROWS, 0);
+    // glPixelStorei(GL_UNPACK_SKIP_PIXELS, 0);
+    
+    //--------------------
+    // Setting texture parameters like in NeHe tutorial...
+    //
+    glTexParameteri( GL_TEXTURE_2D , GL_TEXTURE_MAG_FILTER , GL_LINEAR );
+    glTexParameteri( GL_TEXTURE_2D , GL_TEXTURE_MIN_FILTER , GL_LINEAR );
+    
+    //--------------------
+    // We will use the 'GL_REPLACE' texturing environment or get 
+    // unusable (and slow) results.
+    //
+    // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL );
+    // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND );
+    // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+    glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
+    
+    // Generate The Texture 
+    glTexImage2D( GL_TEXTURE_2D, 0, 4, our_image -> surface -> w,
+		  our_image -> surface -> h , 0, GL_BGRA,
+		  GL_UNSIGNED_BYTE, our_image -> surface -> pixels );
+    
+    //--------------------
+    // Now that the texture has been created, we assume that the image is
+    // not needed any more and can be freed now!  BEWARE!  Keep this in mind,
+    // that creating the texture now removes the surface...
+    //
+    // So as to detect any occurances of access to the surface once the 
+    // texture has been created, we set the surface to the NULL pointer to
+    // ENCOURAGE SEGMENTATION FAULTS when doing this so as to eliminate
+    // these occurances with the debugger...
+    //
+    SDL_FreeSurface ( our_image -> surface );
+    our_image -> surface = NULL ;
+    
+#endif
+    
+}; // void make_texture_out_of_prepadded_image (...)
+
+/* ----------------------------------------------------------------------
  * This function checks the error status of the OpenGL driver.  An error
  * will produce at least a warning message, maybe even program termination
  * if the errors are really severe.

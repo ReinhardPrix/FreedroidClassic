@@ -152,6 +152,7 @@ EXTERN SDL_Surface* our_SDL_display_format_wrapperAlpha ( SDL_Surface *surface )
 EXTERN SDL_Surface* our_IMG_load_wrapper( const char *file );
 EXTERN void flip_image_horizontally ( SDL_Surface* tmp1 ) ;
 EXTERN void make_texture_out_of_surface ( iso_image* our_image ) ;
+EXTERN void make_texture_out_of_prepadded_image ( iso_image* our_image ) ;
 EXTERN SDL_Surface* pad_image_for_texture ( SDL_Surface* our_surface ) ;
 EXTERN void clear_screen (void) ;
 EXTERN void blit_open_gl_light_radius ( void );

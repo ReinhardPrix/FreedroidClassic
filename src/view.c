@@ -2408,18 +2408,22 @@ grab_enemy_images_from_archive ( int enemy_model_nr )
     int rotation_index;
     int enemy_phase ;
     FILE *DataFile;
-    char constructed_filename[10000];
+    char constructed_filename [ 10000 ] ;
     char* fpath;
+    char archive_type_string [ 5 ] = { 0 , 0 , 0 , 0 , 0 } ;
+    char ogl_support_string [ 5 ] = { 0 , 0 , 0 , 0 , 0 } ;
 
     Sint16 img_xlen;
     Sint16 img_ylen;
     Sint16 img_x_offs;
     Sint16 img_y_offs;
+    Sint16 orig_img_xlen;
+    Sint16 orig_img_ylen;
 
     //--------------------
     // A short message for debug purposes
     //
-    DebugPrintf ( 1 , "\ngrab_enemy_images_from_archive:  grabbing new image series..." );
+    DebugPrintf ( -4 , "\n%s:  grabbing new image series..." , __FUNCTION__ );
 
     //--------------------
     // We need a file name!
@@ -2446,6 +2450,25 @@ This indicates a serious bug in this installation of Freedroid.",
 	DebugPrintf ( 1 , "\ngrab_enemy_images_from_archive(...) : Opening file succeeded...");
     }
 
+    //--------------------
+    // Now we assume, that this is an image collection file for an enemy
+    // and therefore it should have the right header bytes (keyword eneX)
+    // and it also should be suitable for use with OpenGl (keyword oglX)
+    //
+    fread ( archive_type_string , 4 , 1 , DataFile ) ;
+    fread ( ogl_support_string , 4 , 1 , DataFile ) ;
+
+    //--------------------
+    // We check if this is really an image archive of ENEMY type...
+    //
+    if ( strncmp ( "eneX" , archive_type_string , 4 ) )
+    {
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
+Initial archive type string doesn't look like it's from an image archive of ENEMY type.\n\
+This indicates a serious bug in this installation of Freedroid.",
+				   PLEASE_INFORM, IS_FATAL );
+    }
+
     for ( rotation_index = 0 ; rotation_index < ROTATION_ANGLES_PER_ROTATION_MODEL ; rotation_index ++ )
     {
 	for ( enemy_phase = 0 ; enemy_phase < last_stand_animation_image [ enemy_model_nr ] ; enemy_phase ++ )
@@ -2458,7 +2481,9 @@ This indicates a serious bug in this installation of Freedroid.",
 	    fread ( & ( img_ylen ) , 1 , sizeof ( img_ylen ) , DataFile ) ;
 	    fread ( & ( img_x_offs ) , 1 , sizeof ( img_x_offs ) , DataFile ) ;
 	    fread ( & ( img_y_offs ) , 1 , sizeof ( img_y_offs ) , DataFile ) ;
-		
+	    fread ( & ( orig_img_xlen ) , 1 , sizeof ( orig_img_xlen ) , DataFile ) ;
+	    fread ( & ( orig_img_ylen ) , 1 , sizeof ( orig_img_ylen ) , DataFile ) ;
+
 	    enemy_iso_images [ enemy_model_nr ] [ rotation_index ] [ enemy_phase ] . surface = 
 		SDL_CreateRGBSurface ( SDL_SWSURFACE , img_xlen , img_ylen, 32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000 ) ;
 	    fread ( enemy_iso_images [ enemy_model_nr ] [ rotation_index ] [ enemy_phase ] . surface -> pixels , 4 * img_xlen * img_ylen , 1 , DataFile ) ;
@@ -2480,6 +2505,14 @@ This indicates a serious bug in this installation of Freedroid.",
 	    enemy_iso_images [ enemy_model_nr ] [ rotation_index ] [ enemy_phase ] . texture_has_been_created = FALSE ;
 	    enemy_iso_images [ enemy_model_nr ] [ rotation_index ] [ enemy_phase ] . offset_x = img_x_offs ;
 	    enemy_iso_images [ enemy_model_nr ] [ rotation_index ] [ enemy_phase ] . offset_y = img_y_offs ;
+	    enemy_iso_images [ enemy_model_nr ] [ rotation_index ] [ enemy_phase ] . original_image_width = 
+		orig_img_xlen ;
+	    enemy_iso_images [ enemy_model_nr ] [ rotation_index ] [ enemy_phase ] . original_image_height = 
+		orig_img_ylen ;
+	    enemy_iso_images [ enemy_model_nr ] [ rotation_index ] [ enemy_phase ] . texture_width = 
+		img_xlen ;
+	    enemy_iso_images [ enemy_model_nr ] [ rotation_index ] [ enemy_phase ] . texture_height = 
+		img_ylen ;
 	    
 	    SDL_SetColorKey( enemy_iso_images [ enemy_model_nr ] [ rotation_index ] [ enemy_phase ] . surface , 0 , 0 ); // this should clear any color key in the dest surface
 	    
@@ -2490,12 +2523,20 @@ This indicates a serious bug in this installation of Freedroid.",
 	    }
 	    else
 	    {
-		make_texture_out_of_surface ( 
+		make_texture_out_of_prepadded_image ( 
 		    & ( enemy_iso_images [ enemy_model_nr ] [ rotation_index ] [ enemy_phase ] ) ) ;
 	    }
 
 	    // DebugPrintf ( -4 , "%s: loaded surface phase=%d rotation_index=%d.\n" , 
 	    // __FUNCTION__ ,  enemy_phase , rotation_index );
+/*
+	    DebugPrintf ( -4 , "\noriginal_image: %5d / %5d " , 
+			  enemy_iso_images [ enemy_model_nr ] [ rotation_index ] [ enemy_phase ] . original_image_width , 
+			  enemy_iso_images [ enemy_model_nr ] [ rotation_index ] [ enemy_phase ] . original_image_height );
+	    DebugPrintf ( -4 , "\ntexture_width:  %5d / %5d " , enemy_iso_images [ enemy_model_nr ] [ rotation_index ] [ enemy_phase ] . texture_width , enemy_iso_images [ enemy_model_nr ] [ rotation_index ] [ enemy_phase ] . texture_height );
+	    DebugPrintf ( -4 , "\noffset:         %5d / %5d " , enemy_iso_images [ enemy_model_nr ] [ rotation_index ] [ enemy_phase ] . offset_x , enemy_iso_images [ enemy_model_nr ] [ rotation_index ] [ enemy_phase ] . offset_y );
+	    DebugPrintf ( -4 , "\n---" );
+*/
 	}
     }
 
@@ -2514,6 +2555,8 @@ belonging to Freedroid.",
 	DebugPrintf( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : file closed successfully...\n");
     }
     
+    DebugPrintf ( -4 , "\n%s:  grabbing new image series DONE." , __FUNCTION__ );
+
 }; // void grab_enemy_images_from_archive ( ... )
 
 /* ----------------------------------------------------------------------
