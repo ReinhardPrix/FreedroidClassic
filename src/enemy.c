@@ -1150,6 +1150,7 @@ AttackInfluence (int enemynum)
   Enemy ThisRobot = & AllEnemys[ enemynum ] ;
   float StepSize;
   float TargetRange;
+  int TargetPlayer;
 
   //--------------------
   // At first, we check for a lot of cases in which we do not
@@ -1215,7 +1216,13 @@ AttackInfluence (int enemynum)
 	}
     }
 
-  if ( ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_angle_change > 0 )
+
+  //--------------------
+  // For melee weapons, we can't just stand anywhere and try to
+  // hit the influencer,  In most cases, we will have to move thowards
+  // our target.  Here, this need is hopefully satisfied....
+  //
+  if ( ItemMap [ Druidmap [ ThisRobot -> type ] . weapon_item . type ] . item_gun_angle_change > 0 )
     {
       //--------------------
       // If the distance is not yet right, we find a new location to move to.  We
@@ -1224,23 +1231,27 @@ AttackInfluence (int enemynum)
       //
       // ThisRobot->TextVisibleTime = 0 ;
       // ThisRobot->TextToBeDisplayed = "Seeking to get closer to target...";
-      
-      ThisRobot->persuing_given_course = TRUE;
-      ThisRobot->PrivatePathway[ 0 ].x = ThisRobot->pos.x ;
-      ThisRobot->PrivatePathway[ 0 ].y = ThisRobot->pos.y ;
+      //
+      TargetPlayer = ClosestVisiblePlayer ( ThisRobot ) ;
+
+      ThisRobot -> persuing_given_course = TRUE;
+      ThisRobot -> PrivatePathway [ 0 ] . x = ThisRobot -> pos.x ;
+      ThisRobot -> PrivatePathway [ 0 ] . y = ThisRobot -> pos.y ;
       
       //--------------------
-      // Now we check if it's perhaps time to make a step to the left/right
+      // Now we check if it's perhaps time to make a step to the left/right in 
+      // order to get close enough to the target tux for a successful melee weapon
+      // swing.
       //
       TargetRange = 0.5;
       StepSize = 0.5;
-      if ( fabsf ( Me[0].pos.x - ThisRobot->pos.x ) > TargetRange )
+      if ( fabsf ( Me [ TargetPlayer ] . pos . x - ThisRobot -> pos . x ) > TargetRange )
 	{
-	  if ( ( Me[0].pos.x - ThisRobot->pos.x ) > 0 )
+	  if ( ( Me [ TargetPlayer ] . pos . x - ThisRobot -> pos . x ) > 0 )
 	    {
-	      if ( ( DruidPassable ( ThisRobot->pos.x + StepSize , 
-				     ThisRobot->PrivatePathway[ 0 ].y ,
-				     ThisRobot->pos.z ) == CENTER ) &&
+	      if ( ( DruidPassable ( ThisRobot -> pos.x + StepSize , 
+				     ThisRobot -> PrivatePathway [ 0 ] . y ,
+				     ThisRobot -> pos.z ) == CENTER ) &&
 		  ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
 		  ThisRobot->PrivatePathway[ 0 ].x + StepSize , ThisRobot->PrivatePathway[ 0 ].y,
 		  ThisRobot->pos.z , enemynum ) ) )
@@ -1254,19 +1265,21 @@ AttackInfluence (int enemynum)
 				     ThisRobot->PrivatePathway[ 0 ].y ,
 				     ThisRobot->pos.z ) == CENTER ) &&
 		  ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
-		  ThisRobot->PrivatePathway[ 0 ].x - StepSize , ThisRobot->PrivatePathway[ 0 ].y,
+		  ThisRobot->PrivatePathway [ 0 ] . x - StepSize , ThisRobot->PrivatePathway[ 0 ].y,
 		  ThisRobot->pos.z , enemynum ) ) )
 		{
-		  ThisRobot->PrivatePathway[ 0 ].x = ThisRobot->pos.x - StepSize;
+		  ThisRobot->PrivatePathway [ 0 ] . x = ThisRobot->pos.x - StepSize;
 		}
 	    }
 	}
+
       //--------------------
-      // Now we check if it's perhaps time to make a step up/down
+      // Now we check if it's perhaps time to make a step up/down in order to
+      // get close enough for a successful melee weapon swing at a tux.
       //
-      if ( fabsf ( Me[0].pos.y - ThisRobot->pos.y ) > TargetRange )
+      if ( fabsf ( Me [ TargetPlayer ] . pos . y - ThisRobot -> pos . y ) > TargetRange )
 	{
-	  if ( ( Me[0].pos.y - ThisRobot->pos.y ) > 0 )
+	  if ( ( Me [ TargetPlayer ] . pos . y - ThisRobot -> pos . y ) > 0 )
 	    {
 	      if ( ( DruidPassable ( ThisRobot->pos.x , 
 				     ThisRobot->PrivatePathway[ 0 ].y + StepSize ,
