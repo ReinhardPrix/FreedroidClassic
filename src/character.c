@@ -467,6 +467,9 @@ CursorIsOnVitButton( int x , int y )
 void
 AddInfluencerItemAttributeBonus( item* BonusItem )
 {
+  int i;
+
+
   //--------------------
   // In case of no item, the thing to do is pretty easy...
   //
@@ -486,7 +489,11 @@ AddInfluencerItemAttributeBonus( item* BonusItem )
     }
   if ( BonusItem->type == ITEM_START_PLUGIN_HACKER )
     {
-      Me [ 0 ] . spell_level_bonus = 2 ;
+      for ( i = 0 ; i < NUMBER_OF_SKILLS ; i ++ ) 
+	{
+	  Me [ 0 ] . SkillLevel [ i ] += 2 ;
+	}
+      // Me [ 0 ] . spell_level_bonus = 2 ;
     }
 
   //--------------------
@@ -545,6 +552,7 @@ void
 UpdateAllCharacterStats ( int PlayerNum )
 {
   int BaseExpRequired = 2000;
+  int i;
 
   //--------------------
   // Maybe the influencer has reached a new experience level?
@@ -575,7 +583,16 @@ UpdateAllCharacterStats ( int PlayerNum )
 
   Me [ PlayerNum ] . freezing_melee_targets = 0;
   Me [ PlayerNum ] . double_ranged_damage = FALSE;
-  Me [ PlayerNum ] . spell_level_bonus = 0 ;
+  // Me [ PlayerNum ] . spell_level_bonus = 0 ;
+
+  //--------------------
+  // Now we re-initialize the SKILL LEVELS
+  //
+  for ( i = 0 ; i < NUMBER_OF_SKILLS ; i ++ ) 
+    {
+      Me [ PlayerNum ] . SkillLevel [ i ] = Me [ PlayerNum ] . base_skill_level [ i ] ;
+    }
+
 
 
   //--------------------
