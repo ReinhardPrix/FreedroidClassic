@@ -246,11 +246,18 @@ This indicates some corruption in the data file in question.",
 	}
 
       // Now we allocate memory and copy the string...
-      StringLength = EndOfStringPointer - SearchPointer ;
-      
-      ReturnString = MyMalloc ( StringLength + 1 );
-      strncpy ( ReturnString , SearchPointer , StringLength );
-      ReturnString[ StringLength ] = 0;
+      // delete_one_dialog_option() doesn't free empty strings so don't
+      // malloc those.
+      if ( StringLength = EndOfStringPointer - SearchPointer )
+	{
+	  ReturnString = MyMalloc ( StringLength + 1 );
+	  strncpy ( ReturnString , SearchPointer , StringLength );
+	  ReturnString[ StringLength ] = 0;
+	}
+      else
+	{
+	  ReturnString = "" ;
+	}
 
       DebugPrintf( 2 , "\nchar* ReadAndMalocStringFromData (...): Successfully identified string : %s." , ReturnString );
     }
