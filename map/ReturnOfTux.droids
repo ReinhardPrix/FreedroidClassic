@@ -583,6 +583,8 @@ SpecialForce: Type=614 X=57 Y=46 Fixed=0 Marker=9997 AdvancedCommand=2 Parameter
 
 SpecialForce: Type=KEV X=70 Y=52 Fixed=0 Marker=9997 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="KevinStartGameSquare" RushTux="no" DialogSectionToUse="Kevin" ShortLabel="Kevin --- Hacker " attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
+SpecialForce: Type=JAS X=70 Y=52 Fixed=0 Marker=9997 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="JasmineStartGameSquare" RushTux="no" DialogSectionToUse="Jasmine" ShortLabel="Jasmine --- Girlfriend of a true Hacker" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+
 SpecialForce: Type=598 X=61 Y=42 Fixed=0 Marker=9998 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Kevins598StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Avenger Bot" attack_run_only_when_direct_line="yes" on_death_drop_item_code=-1
 
 SpecialForce: Type=751 X=61 Y=42 Fixed=0 Marker=9998 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Kevins751StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Avenger Bot" attack_run_only_when_direct_line="yes" on_death_drop_item_code=-1

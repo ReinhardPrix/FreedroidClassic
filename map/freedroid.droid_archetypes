@@ -1827,6 +1827,59 @@ Individual shape of this droid or just -1 for classic ball shaped : 32
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : This is a typical professor/sage character of some older age.  They are not armed as powerfully as e.g. the red guards.
 
+** Start of new Robot: ** 
+Droidname: JAS
+Droid portrait file name (without extension) to use="Chandra"
+Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
+Maximum speed of this droid: 6.1
+Class of this droid: 18
+Maximum acceleration of this droid: 2.1
+Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
+Rate of energyloss under influence control: 15.1
+Weapon type this droid uses: 4
+Aggression rate of this droid: 92
+Physical (base) damage an attack of this droid will do: 10.0
+Is this droid immune to disruptor blasts? 0
+Experience_Reward gained for destroying one of this type: 200
+Monster Level and maximum treasure chest to pick from=4
+Force how many additional magic items to be dropped=0
+Range of vision of this droid=2
+Time spent eyeing Tux=3
+Minimal distance hostile bots are tolerated=6
+Height of this droid : 1.87
+Weight of this droid : 162
+Drive of this droid : 2
+Brain of this droid : 2
+Sensor 1 of this droid : 2
+Sensor 2 of this droid : 5
+Sensor 3 of this droid : 3
+Drive item=7
+Weapon item=13
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Number of Plasma Transistors=0
+Number of Superconductors=0
+Number of Antimatter-Matter Converters=0
+Number of Entropy Inverters=0
+Number of Tach. Condensators=0
+Greeting Sound number=4
+Got Hit Sound number=-1
+Death sound file name="none"
+Attack animation sound file name="none"
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
+Armament of this droid : 1
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 1
+Individual shape of this droid or just -1 for classic ball shaped : 33
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : This is a typical sex bomb.  This one is even armed.
+
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
 *** End of Robot Data Section: ***

@@ -2360,6 +2360,7 @@ PosX=57 PosY=38 Statement=""
 End of pure statement information for this level
 
 Start of pure items information for this level
+New item: type=98  X=13.000000  Y=31.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
 End of pure items information for this level
 Start of pure chest item information for this level
 New item: type=39  X=30.500000  Y=78.750000  AC=0  DoDamage=2  ModifyDamage=3  MaxDur=80  CurDur=51.249691  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
@@ -8448,7 +8449,7 @@ ob_type=117 ob_x=66.50 ob_y=89.50 ob_na=-1 ob_de=-1
 ob_type=117 ob_x=70.50 ob_y=83.50 ob_na=-1 ob_de=-1 
 ob_type=117 ob_x=70.50 ob_y=84.50 ob_na=-1 ob_de=-1 
 ob_type=117 ob_x=70.50 ob_y=85.50 ob_na=-1 ob_de=-1 
-ob_type=19 ob_x=68.50 ob_y=84.50 ob_na=-1 ob_de=-1 
+ob_type=18 ob_x=68.50 ob_y=84.50 ob_na=-1 ob_de=-1 
 ob_type=26 ob_x=68.50 ob_y=86.50 ob_na=-1 ob_de=-1 
 ob_type=116 ob_x=67.50 ob_y=86.50 ob_na=-1 ob_de=-1 
 ob_type=116 ob_x=69.50 ob_y=86.50 ob_na=-1 ob_de=-1 
@@ -8464,8 +8465,8 @@ ob_type=116 ob_x=75.50 ob_y=86.50 ob_na=-1 ob_de=-1
 ob_type=26 ob_x=76.50 ob_y=86.50 ob_na=-1 ob_de=-1 
 ob_type=26 ob_x=72.50 ob_y=86.50 ob_na=-1 ob_de=-1 
 ob_type=122 ob_x=74.50 ob_y=86.50 ob_na=-1 ob_de=-1 
-ob_type=19 ob_x=72.50 ob_y=84.50 ob_na=-1 ob_de=-1 
-ob_type=19 ob_x=76.50 ob_y=84.50 ob_na=-1 ob_de=-1 
+ob_type=18 ob_x=72.50 ob_y=84.50 ob_na=-1 ob_de=-1 
+ob_type=18 ob_x=76.50 ob_y=84.50 ob_na=-1 ob_de=-1 
 ob_type=243 ob_x=60.98 ob_y=87.05 ob_na=-1 ob_de=-1 
 ob_type=241 ob_x=60.40 ob_y=83.51 ob_na=-1 ob_de=-1 
 ob_type=247 ob_x=15.87 ob_y=89.84 ob_na=-1 ob_de=-1 
@@ -10721,7 +10722,6 @@ Start of pure statement information for this level
 End of pure statement information for this level
 
 Start of pure items information for this level
-New item: type=98  X=90.000000  Y=31.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
 End of pure items information for this level
 Start of pure chest item information for this level
 End of pure chest item information for this level
@@ -15860,13 +15860,13 @@ ob_type=2 ob_x=74.50 ob_y=40.00 ob_na=-1 ob_de=-1
 ob_type=144 ob_x=69.50 ob_y=41.50 ob_na=-1 ob_de=-1 
 ob_type=141 ob_x=63.50 ob_y=41.50 ob_na=-1 ob_de=-1 
 ob_type=145 ob_x=62.50 ob_y=41.50 ob_na=-1 ob_de=-1 
-ob_type=25 ob_x=73.50 ob_y=51.50 ob_na=-1 ob_de=-1 
+ob_type=24 ob_x=73.50 ob_y=51.50 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=71.00 ob_y=42.50 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=71.00 ob_y=43.50 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=71.00 ob_y=41.50 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=71.00 ob_y=40.50 ob_na=-1 ob_de=-1 
 ob_type=2 ob_x=71.50 ob_y=44.00 ob_na=-1 ob_de=-1 
-ob_type=6 ob_x=72.50 ob_y=44.00 ob_na=-1 ob_de=-1 
+ob_type=9 ob_x=72.50 ob_y=44.00 ob_na=-1 ob_de=-1 
 ob_type=2 ob_x=73.50 ob_y=44.00 ob_na=-1 ob_de=-1 
 ob_type=2 ob_x=74.50 ob_y=44.00 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=75.00 ob_y=43.50 ob_na=-1 ob_de=-1 
@@ -15878,10 +15878,10 @@ ob_type=2 ob_x=72.50 ob_y=46.00 ob_na=-1 ob_de=-1
 ob_type=2 ob_x=60.50 ob_y=50.00 ob_na=-1 ob_de=-1 
 ob_type=2 ob_x=61.50 ob_y=50.00 ob_na=-1 ob_de=-1 
 ob_type=2 ob_x=59.50 ob_y=50.00 ob_na=-1 ob_de=-1 
-ob_type=25 ob_x=75.50 ob_y=51.50 ob_na=-1 ob_de=-1 
-ob_type=25 ob_x=73.50 ob_y=49.50 ob_na=-1 ob_de=-1 
-ob_type=25 ob_x=71.50 ob_y=51.50 ob_na=-1 ob_de=-1 
-ob_type=25 ob_x=73.50 ob_y=53.50 ob_na=-1 ob_de=-1 
+ob_type=24 ob_x=75.50 ob_y=51.50 ob_na=-1 ob_de=-1 
+ob_type=24 ob_x=73.50 ob_y=49.50 ob_na=-1 ob_de=-1 
+ob_type=24 ob_x=71.50 ob_y=51.50 ob_na=-1 ob_de=-1 
+ob_type=24 ob_x=73.50 ob_y=53.50 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=77.00 ob_y=53.50 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=77.00 ob_y=54.50 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=77.00 ob_y=52.50 ob_na=-1 ob_de=-1 
@@ -16236,6 +16236,7 @@ label.pos.x=69 label.pos.y=41 label.label_name="Kevins883StartGameSquare"
 label.pos.x=75 label.pos.y=29 label.label_name="KevensLawnMowerStart"
 label.pos.x=54 label.pos.y=21 label.label_name="EntryToKevinsUndergroundStation"
 label.pos.x=55 label.pos.y=21 label.label_name="ReturnFromKevinsUndergroundStation"
+label.pos.x=66 label.pos.y=51 label.label_name="JasmineStartGameSquare"
 End of pure map label information for this level
 Start of pure obstacle label information for this level
 obstacle_label.index=0 obstacle_label_name="HackingDoor1"
@@ -16408,6 +16409,12 @@ Nr.=150 x=  74 y=  37 rnd=1	 connections:  151
 Nr.=151 x=  69 y=  33 rnd=1	 connections:  152
 Nr.=152 x=  69 y=  30 rnd=1	 connections:  153
 Nr.=153 x=  74 y=  30 rnd=1	 connections:  146
+Nr.=154 x=  66 y=  51 rnd=0	 connections:  155
+Nr.=155 x=  66 y=  52 rnd=0	 connections:  156 154
+Nr.=156 x=  60 y=  52 rnd=0	 connections:  158 157 155
+Nr.=157 x=  60 y=  53 rnd=0	 connections:  156 159
+Nr.=158 x=  60 y=  51 rnd=0	 connections:  156
+Nr.=159 x=  61 y=  53 rnd=0	 connections:  157
 end_of_level
 ----------------------------------------------------------------------
 Levelnumber: 18
