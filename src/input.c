@@ -996,6 +996,10 @@ getchar_raw (void)
 	  if ( event.key.keysym.mod & KMOD_SHIFT ) Returnkey = toupper( (int)event.key.keysym.sym );
 	  return ( Returnkey );
 	}
+      else if (event.type == SDL_KEYUP)
+	{
+	  // do nothing here, but don't push this event either
+	}
       else
 	{
 	  SDL_PushEvent (&event);  /* put this event back into the queue */
