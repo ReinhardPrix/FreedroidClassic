@@ -189,7 +189,6 @@ EXTERN void LoadAndPrepareGreenEnemyRotationModelNr ( int RotationModel );
 EXTERN void LoadAndPrepareBlueEnemyRotationModelNr ( int RotationModel );
 EXTERN void Load_Enemy_Surfaces (void);
 EXTERN void Load_Influencer_Surfaces (void);
-EXTERN void HomemadeUpdateTuxWorkingCopy ( int player_num );
 EXTERN void InitTuxWorkingCopy( void );
 EXTERN void Load_Tux_Surfaces( void );
 EXTERN void LoadOneMapInsertSurfaceIfNotYetLoaded ( int i );

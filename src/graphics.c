@@ -1242,8 +1242,6 @@ InitPictures (void)
 
   ShowStartupPercentage ( 38 ) ; 
 
-  InitTuxWorkingCopy( ) ;
-
   ShowStartupPercentage ( 43 ) ; 
 
   clear_all_loaded_tux_images ( FALSE ) ;
@@ -1498,18 +1496,10 @@ InitVideo (void)
 
   InitOurBFonts ( );
 
-  DisplayImage ( find_file( FREEDROID_LOADING_PICTURE_NAME , GRAPHICS_DIR, FALSE) );
+  blit_special_background ( FREEDROID_LOADING_PICTURE_CODE );
   our_SDL_flip_wrapper ( Screen ) ;
 
   ShowStartupPercentage ( 10 ) ; 
-
-  // RGB of transparent color in our pics 
-  transp_rgb.rot   = 199; 
-  transp_rgb.gruen =  43; 
-  transp_rgb.blau  =  43; 
-  // and corresponding key: 
-  transp_key = SDL_MapRGB(Screen->format, transp_rgb.rot,
-			     transp_rgb.gruen, transp_rgb.blau);
 
   SDL_SetGamma( 1 , 1 , 1 );
   GameConfig.Current_Gamma_Correction=1;

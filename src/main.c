@@ -69,11 +69,6 @@ DoAllMovementAndAnimations ( void )
   
   if ( !ClientMode ) MoveBullets ();   
   
-  for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ )
-    {
-      HomemadeUpdateTuxWorkingCopy ( PlayerNum ); 
-    }
-  
 }; // void DoAllMovementAndAnimations ( void )
   
 /* -----------------------------------------------------------------

@@ -236,7 +236,7 @@ EXTERN int use_default_attack_image [ ENEMY_ROTATION_MODELS_AVAILABLE ];
 EXTERN int use_default_gethit_image [ ENEMY_ROTATION_MODELS_AVAILABLE ];
 EXTERN int use_default_death_image [ ENEMY_ROTATION_MODELS_AVAILABLE ];
 EXTERN float droid_animation_speed_factor [ ENEMY_ROTATION_MODELS_AVAILABLE ];
-                                               // influencer in different phases of rotation
+
 EXTERN SDL_Surface *TuxWorkingCopy [ MAX_PLAYERS ] [ TUX_BREATHE_PHASES + TUX_SWING_PHASES + TUX_GOT_HIT_PHASES ] [ MAX_TUX_DIRECTIONS ] ;   // A pointer to the surfaces containing the tux
 EXTERN SDL_Surface *TuxMotionArchetypes[ TUX_MODELS ][ TUX_BREATHE_PHASES + TUX_SWING_PHASES + TUX_GOT_HIT_PHASES ];   // A pointer to the surfaces containing the tux
 EXTERN iso_image floor_iso_images [ ALL_ISOMETRIC_FLOOR_TILES ] ;   
@@ -245,10 +245,8 @@ EXTERN float iso_floor_tile_width;
 EXTERN float iso_floor_tile_height;
 EXTERN int Block_Width;
 EXTERN int Block_Height;
-EXTERN const SDL_VideoInfo *vid_info;/* info about current video mode */
-EXTERN color transp_rgb;             /* RGB of transparent color */
-EXTERN int vid_bpp; 			/* bits per pixel */
-EXTERN Uint32 transp_key;            /* key of transparent color */
+EXTERN const SDL_VideoInfo *vid_info;  // info about current video mode 
+EXTERN int vid_bpp; 		       // bits per pixel 
 
 #undef EXTERN
 #ifdef _blocks_c
