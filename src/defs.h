@@ -480,7 +480,7 @@ enum _directions
 //
 
 #define MAX_WP_CONNECTIONS 	12
-#define MAXMAPLINES 		50
+#define MAX_MAP_LINES 		100
 #define MAX_STATEMENTS_PER_LEVEL 30
 #define MAX_CODEPANELS_PER_LEVEL 30
 

@@ -769,7 +769,7 @@ typedef struct
   int xlen;		/* X dimension */
   int ylen;
   int color;
-  char *map[MAXMAPLINES];	/* this is a vector of pointers ! */
+  char *map[MAX_MAP_LINES];	/* this is a vector of pointers ! */
   grob_point refreshes[MAX_REFRESHES_ON_LEVEL];
   grob_point teleporters[MAX_TELEPORTERS_ON_LEVEL];
   grob_point doors[MAX_DOORS_ON_LEVEL];
