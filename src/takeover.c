@@ -108,61 +108,6 @@ SDL_Rect TO_GroundRect = { 0, 0, 2*23, 2*8 };
 SDL_Rect TO_ColumnRect = { 0, 0, 2*30, 2*8 };
 
 
-//======================================================================
-#define TO_BLOCKLEN		2*32	/* dimension of a Game- block */
-#define TO_BLOCKHEIGHT	 	2*8
-
-#define FILL_BLOCK_LEN		2*16
-#define FILL_BLOCK_HEIGHT  	2*7
-
-#define CAPSULE_LEN		2*7
-#define CAPSULE_HEIGHT		2*7
-
-#define GROUNDBLOCKLEN		2*23
-#define GROUNDBLOCKHEIGHT	2*8
-
-#define COLUMNBLOCKLEN		2*30
-#define COLUMNBLOCKHEIGHT	2*8
-
-#define LEADERBLOCKLEN		2*30
-#define LEADERBLOCKHEIGHT	2*19
-
-
-
-/* Position of Leader-Led */
-#define LEADERLED_X		2*136
-#define LEADERLED_Y		2*11
-
-/* Start-pos of Led-column */
-#define LEDCOLUMN_X		2*136
-#define LEDCOLUMN_Y		2*27
-
-/* Positions of Druid-pictures */
-#define GELB_DRUID_X		2*40
-#define GELB_DRUID_Y		-3
-#define VIOLETT_DRUID_X		2*220
-#define VIOLETT_DRUID_Y		GELB_DRUID_Y
-
-/* Left-Capsules positions */
-#define GELB_LEFT_CAPSULES_X	4
-#define GELB_LEFT_CAPSULES_Y	2*27 
-#define VIOLETT_LEFT_CAPSULES_X	RIGHT_OFFS_X + COLUMNBLOCKLEN -10
-#define VIOLETT_LEFT_CAPSULES_Y	2*27
-
-/* start-pos of Current Capsule */
-#define GELB_CUR_CAPSULE_X	2*26
-#define GELB_CUR_CAPSULE_Y	2*19
-#define VIOLETT_CUR_CAPSULE_X	2*255
-#define VIOLETT_CUR_CAPSULE_Y	2*19
-
-
-/* Start-Pos of playground */
-#define GELB_PLAYGROUND_X	2*33
-#define GELB_PLAYGROUND_Y	2*26
-#define VIOLETT_PLAYGROUND_X	2*159
-#define VIOLETT_PLAYGROUND_Y	2*26 
-//======================================================================
-
 int CapsuleCurRow[TO_COLORS] = { 0, 0 };
 
 

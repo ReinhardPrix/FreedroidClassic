@@ -17,12 +17,6 @@ Bugs
 
 Outstanding release-critical bugs (priority: high) 
 --------------------------------------------------
-- allow initial scaling of the _whole_ game (-> Sharp Zaurus 320x200!)
-  * droid-console
-  * text+font
-  * takeover
-  * End screen (999)
-
 - limit fps to get smoother play?
 
 - use OpenGL for accel and smoother play?
@@ -369,4 +363,7 @@ Resolved bugs
 - check and adjust 614 parameters (too fast shot-rate!) and  
   (better now;)
 - add explosion-decals ? (switchable)
+  (done)
+
+- allow initial scaling of the _whole_ game (-> Sharp Zaurus 320x200!)
   (done)
