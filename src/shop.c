@@ -156,6 +156,13 @@ TryToIdentifyItem( item* IdentifyItem )
 	  while (EnterPressed() || SpacePressed() );
 	  Me[0].Gold -= 100 ;
 	  IdentifyItem -> is_identified = TRUE ;
+
+	  MenuTexts[0]=" BACK ";
+	  MenuTexts[1]="";
+	  GiveItemDescription( linebuf , IdentifyItem , TRUE );
+	  strcat ( linebuf , "\n\n " );
+	  MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 , NULL , NULL );
+
 	  return;
 	  break;
 	case ANSWER_NO:
