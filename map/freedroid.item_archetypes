@@ -571,7 +571,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
-File or directory name for inventory image="inventory_image_12.png"
+File or directory name for inventory image="exterminator_simple/inv_image.png"
 Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
 Base list price=1001
 Item description text="While this weapon is capable of firing quite powerful shots, beware of the exceptionally long loading times.  (Don't get swarmed by enemies with this weapon unless you got powerful armour!)"
@@ -727,7 +727,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
-File or directory name for inventory image="inventory_image_12.png"
+File or directory name for inventory image="exterminator_simple/inv_image.png"
 Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
 Base list price=1001
 Item description text="This bad boy has been known to blow away enemies with a single blast. A dangerous weapon that you dont want to be on the receiving end of."
@@ -2396,7 +2396,7 @@ Position_Y=124
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
-Item uses rotation series with prefix="plasma_triple"
+Item uses rotation series with prefix="exterminator_simple"
 Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=20
 Dexterity minimum required to wear/wield this item=45
@@ -2404,7 +2404,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
-File or directory name for inventory image="inventory_image_12.png"
+File or directory name for inventory image="exterminator_simple/inv_image.png"
 Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
 Base list price=1001
 Item description text="This is one of the most powerful ranged weapons in the game."
