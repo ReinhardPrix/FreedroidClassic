@@ -853,7 +853,7 @@ Sorry...\n\
   SourceRectangle.w=USERFENSTERBREITE;
   SourceRectangle.h=USERFENSTERHOEHE;
   TargetRectangle.x=USERFENSTERPOSX;
-  TargetRectangle.y=USERFENSTERPOSY;
+  TargetRectangle.y=USERFENSTERPOSY + TEXT_STRETCH * FontHeight(Menu_BFont) ;
   SDL_BlitSurface( tmp , &SourceRectangle, ne_screen , &TargetRectangle );
   
   SDL_FreeSurface(tmp);

@@ -397,8 +397,6 @@ EXTERN void HilightElevator (int);
 EXTERN int LevelEmpty (void);
 EXTERN int ShipEmpty (void);
 EXTERN void ClearUserFenster (void);
-EXTERN void ClearAllButRahmen (void);
-
 
 /* text.c */
 #undef EXTERN

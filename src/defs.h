@@ -103,6 +103,7 @@ enum
 #define RIGHT_INFO_Y	(8*2)
 #define LEFT_TEXT_LEN 10
 #define RIGHT_TEXT_LEN 6
+#define TEXT_STRETCH 1.2
 
 
 /* Menu in Konsole */

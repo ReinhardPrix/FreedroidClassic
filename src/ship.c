@@ -461,27 +461,20 @@ GreatDruidShow (void)
   for (Infodroid = Me.type; Infodroid > -1;)
     {
 
-      ClearAllButRahmen( );
-      /*
-       * Ausgabe der ersten Zeile, die den Druidtyp beschreibt
-       *
-       */
-
-      // PORT KillTastaturPuffer();
       PassOn = 0;
       while (!PassOn)
 	{
 
-	  ClearAllButRahmen( );
+	  ClearUserFenster( );
 	  // SetTextColor (208, RAHMEN_VIOLETT );	// RED // YELLOW
 	  strcpy (InfoText, "Unit type ");
 	  strcat (InfoText, Druidmap[Infodroid].druidname);
 	  strcat (InfoText, " - ");
 	  strcat (InfoText, Classname[Druidmap[Infodroid].class]);
 
-	  SetTextBorder (USERFENSTERPOSX, USERFENSTERPOSY, USERFENSTERPOSX +
-			 USERFENSTERBREITE-2*FONTBREITE,
-			 USERFENSTERPOSY + USERFENSTERHOEHE, 36);
+	  SetTextBorder (USERFENSTERPOSX , USERFENSTERPOSY , USERFENSTERPOSX + 
+			 USERFENSTERBREITE-2*FONTBREITE ,
+			 USERFENSTERPOSY + USERFENSTERHOEHE , 36 );
 	  DisplayText (InfoText, USERFENSTERPOSX, USERFENSTERPOSY, RealScreen,
 		       FALSE);
 	  ShowRobotPicture (USERFENSTERPOSX, USERFENSTERPOSY + 2 * FONTHOEHE,
@@ -533,7 +526,7 @@ GreatDruidShow (void)
 
       //      ClearGraphMem( Outline320x200 );
       //      DisplayRahmen( Outline320x200 );
-      ClearAllButRahmen( );
+      ClearUserFenster( );
       SetTextColor (208, RAHMEN_VIOLETT );	// RED // YELLOW
       // ClearUserFenster ();
       strcpy (InfoText, "Unit type ");
@@ -565,7 +558,7 @@ GreatDruidShow (void)
       SetTextBorder (MENUTEXT_X, USERFENSTERPOSX, USERFENSTERPOSX +
 		     USERFENSTERBREITE, USERFENSTERHOEHE + USERFENSTERPOSY,
 		     30);
-      DisplayText (InfoText, MENUTEXT_X, USERFENSTERPOSY + 17, RealScreen,
+      DisplayText (InfoText, MENUTEXT_X, USERFENSTERPOSY + FontHeight( Menu_BFont ) , RealScreen,
 		   FALSE);
 
       Update_SDL_Screen();
@@ -600,7 +593,7 @@ GreatDruidShow (void)
       // ClearUserFenster ();
       // ClearGraphMem( Outline320x200 );
       // DisplayRahmen( Outline320x200 );
-      ClearAllButRahmen( );
+      ClearUserFenster( );
       SetTextColor (208, RAHMEN_VIOLETT );	// BLACK and VIOLETT
       strcpy (InfoText, "Unit type ");
       strcat (InfoText, Druidmap[Infodroid].druidname);
@@ -627,7 +620,7 @@ GreatDruidShow (void)
       SetTextBorder (MENUTEXT_X, USERFENSTERPOSX, USERFENSTERPOSX +
 		     USERFENSTERBREITE, USERFENSTERHOEHE + USERFENSTERPOSY,
 		     30);
-      DisplayText (InfoText, MENUTEXT_X, USERFENSTERPOSY + 17, RealScreen,
+      DisplayText (InfoText, MENUTEXT_X, USERFENSTERPOSY + FontHeight( Menu_BFont ), RealScreen,
 		   FALSE);
 
       Update_SDL_Screen();
@@ -659,7 +652,7 @@ GreatDruidShow (void)
 
       //      ClearGraphMem( Outline320x200 );
       //      DisplayRahmen( Outline320x200 );
-      ClearAllButRahmen( );
+      ClearUserFenster( );
       SetTextColor (208, RAHMEN_VIOLETT );	// RED // YELLOW
       // ClearUserFenster ();
       strcpy (InfoText, "Unit type ");
@@ -684,7 +677,7 @@ GreatDruidShow (void)
       SetTextBorder (MENUTEXT_X, USERFENSTERPOSY + (1.35) * FONTHOEHE,
 		     USERFENSTERPOSX + USERFENSTERBREITE,
 		     USERFENSTERHOEHE + USERFENSTERPOSY, 30);
-      DisplayText (InfoText, MENUTEXT_X, USERFENSTERPOSY + 17, RealScreen,
+      DisplayText (InfoText, MENUTEXT_X, USERFENSTERPOSY + FontHeight( Menu_BFont ), RealScreen,
 		   FALSE);
 
       Update_SDL_Screen();
@@ -917,21 +910,6 @@ ClearUserFenster (void)
   ClearingRectangle.h=USERFENSTERHOEHE;
 
   SDL_FillRect( ne_screen , &ClearingRectangle, 0 );
-  return;
-
-} // void ClearUserFenster(void)
-
-/*@Function============================================================
-@Desc: l"oscht das Userfenster
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-ClearAllButRahmen (void)
-{
-  int i;
-
   return;
 
 } // void ClearUserFenster(void)

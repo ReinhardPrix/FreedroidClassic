@@ -43,7 +43,6 @@
 #include "text.h"
 
 #define WAITCHAR 220
-#define TEXT_STRETCH 1.5
 
 int CharLenList[100] = {
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	/* ' !"#$%&'()' */
