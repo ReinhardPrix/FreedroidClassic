@@ -1,10 +1,3 @@
-/*----------------------------------------------------------------------
- *
- * Desc: Everything that has to do with the takeover game of Paradroid
- * 	is contained in this file.
- *
- *----------------------------------------------------------------------*/
-
 /* 
  *
  *   Copyright (c) 1994, 2002 Johannes Prix
@@ -28,6 +21,14 @@
  *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
  *  MA  02111-1307  USA
  *
+ */
+/* ----------------------------------------------------------------------
+ * This file does everything that has to do with the takeover game from
+ * the original paradroid game.
+ * ---------------------------------------------------------------------- */
+/*
+ * This file has been checked for remains of german comments in the code
+ * I you still find some, please just kill it mercilessly.
  */
 #define _takeover_c
 
@@ -196,7 +197,7 @@ Takeover (int enemynum)
 
       PlayGame ();
 
-      /* Ausgang beurteilen und returnen */
+      // evaluate the final score of the game and return it
       if (InvincibleMode || (LeaderColor == YourColor))
 	{
 	  Switch_Background_Music_To (SILENCE);
@@ -282,15 +283,13 @@ Takeover (int enemynum)
   else
     return FALSE;
 
-} /* Takeover() */
+}; // int Takeover( int enemynum ) 
 
 
-/*@Function============================================================
-@Desc: ChooseColor():	Countdown zum Waehlen der Farbe 
-
-@Ret: void
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function does the countdown where you still can changes your
+ * color.
+ * ---------------------------------------------------------------------- */
 void
 ChooseColor (void)
 {
@@ -475,7 +474,7 @@ PlayGame (void)
 
     }	/* while !FinishTakeover */
 
-  /* Schluss- Countdown */
+  /* Final contdown */
   countdown = CAPSULE_COUNTDOWN + 10;
 
   while (countdown--)
@@ -499,10 +498,7 @@ PlayGame (void)
 } /* PlayGame() */
 
 /*-----------------------------------------------------------------
- * @Desc: animiert Gegner beim Uebernehm-Spiel
- * 
- * @Ret: void
- * @Int:
+ * This function performs the enemy movements in the takeover game.
  *-----------------------------------------------------------------*/
 void
 EnemyMovements (void)
@@ -569,11 +565,10 @@ EnemyMovements (void)
   return;
 }	/* EnemyMovements */
 
-/*@Function============================================================
- * read in takeover game elements. Frees previous SDL-surfaces if 
- * they were allocated, this allows to used this fct also for theme-switching
- *
- *
+/* ----------------------------------------------------------------------
+ * This function reads in the takeover game elements for later blitting. 
+ * It frees previous SDL-surfaces if they were allocated.  T
+ * This allows to use this fct also for theme-switching.
  *-----------------------------------------------------------------*/
 int
 GetTakeoverGraphics (void)
@@ -643,17 +638,15 @@ GetTakeoverGraphics (void)
   Set_Rect (ToLeaderBlock, curx, cury, LEADERBLOCKLEN, LEADERBLOCKHEIGHT);
 
   return OK;
-}				// int GetTakeoverGraphics(void)
+}; // int GetTakeoverGraphics ( void )
 
-/*-----------------------------------------------------------------
+/* -----------------------------------------------------------------
  * @Desc: prepares _and displays_ the current Playground
  *
  *   NOTE: this function should only change the USERFENSTER part
  *         so that we can do Infoline-setting before this
  *
- * @Ret: void
- *
- *-----------------------------------------------------------------*/
+ * ----------------------------------------------------------------- */
 void
 ShowPlayground ()
 {
@@ -799,7 +792,6 @@ ShowPlayground ()
 
 }				/* ShowPlayground */
 
-
 /*-----------------------------------------------------------------
  * @Desc: Clears Playground (and ActivationMap) to default start-values
  * @Ret:  void
@@ -824,15 +816,14 @@ ClearPlayground (void)
   for (row = 0; row < NUM_LINES; row++)
     DisplayColumn[row] = row % 2;
 
-}				/* ClearPlayground */
+}; // void ClearPlayground ( void )
 
-
-/*-----------------------------------------------------------------
+/* -----------------------------------------------------------------
  * @Desc: generate a random Playground
  *	
  * @Ret: void
  *
- *-----------------------------------------------------------------*/
+ * ----------------------------------------------------------------- */
 void
 InventPlayground (void)
 {
@@ -1043,7 +1034,7 @@ ProcessPlayground (void)
 		  if (ActivationMap[color][layer - 1][row] >= ACTIVE1)
 		    TurnActive = TRUE;
 
-		  /* Verstaerker halten sich aber auch selbst aktiv !! */
+		  // additional enforcers stay active by themselves...
 		  if (ActivationMap[color][layer][row] >= ACTIVE1)
 		    TurnActive = TRUE;
 
@@ -1090,17 +1081,13 @@ ProcessPlayground (void)
     }				/* for color */
 
   return;
-}				/* ProcessPlayground */
+};  // void ProcessPlayground ( void )
 
-
-
-/*@Function============================================================
-@Desc:  ProcessDisplayColumn(): setzt die Korrekten Werte in der Display-
-        Saeule. Blinkende LEDs werden ebenfalls hier realisiert
-
-@Ret: void
-@Int:
-* $Function----------------------------------------------------------*/
+/* ---------------------------------------------------------------------- 
+ * This function sets the correct values for the status column in the
+ * middle of the takeover game field.
+ * Binking leds are realized here as well.
+ * ---------------------------------------------------------------------- */
 void
 ProcessDisplayColumn (void)
 {
@@ -1113,11 +1100,11 @@ ProcessDisplayColumn (void)
 
   for (row = 0; row < NUM_LINES; row++)
     {
-      /* eindeutig gelb */
+      // unquestioned yellow
       if ((ActivationMap[GELB][CLayer][row] >= ACTIVE1) &&
 	  (ActivationMap[VIOLETT][CLayer][row] == INACTIVE))
 	{
-	  /* Farbtauscher ??? */
+	  // change color?
 	  if (ToPlayground[GELB][CLayer - 1][row] == FARBTAUSCHER)
 	    DisplayColumn[row] = VIOLETT;
 	  else
@@ -1125,11 +1112,11 @@ ProcessDisplayColumn (void)
 	  continue;
 	}
 
-      /* eindeutig violett */
+      // clearly magenta
       if ((ActivationMap[GELB][CLayer][row] == INACTIVE) &&
 	  (ActivationMap[VIOLETT][CLayer][row] >= ACTIVE1))
 	{
-	  /* Farbtauscher ??? */
+	  // change color?
 	  if (ToPlayground[VIOLETT][CLayer - 1][row] == FARBTAUSCHER)
 	    DisplayColumn[row] = GELB;
 	  else
@@ -1138,11 +1125,11 @@ ProcessDisplayColumn (void)
 	  continue;
 	}
 
-      /* unentschieden: Flimmern */
+      // undecided: flimmering
       if ((ActivationMap[GELB][CLayer][row] >= ACTIVE1) &&
 	  (ActivationMap[VIOLETT][CLayer][row] >= ACTIVE1))
 	{
-	  /* Farbtauscher - Faelle */
+	  // change color?
 	  if ((ToPlayground[GELB][CLayer - 1][row] == FARBTAUSCHER) &&
 	      (ToPlayground[VIOLETT][CLayer - 1][row] != FARBTAUSCHER))
 	    DisplayColumn[row] = VIOLETT;
@@ -1157,11 +1144,11 @@ ProcessDisplayColumn (void)
 		DisplayColumn[row] = VIOLETT;
 	    }			/* if - else if - else */
 
-	}			/* if unentschieden */
+	}			/* if undecided */
 
     }				/* for */
 
-  /* Win Color beurteilen */
+  // evaluate the winning color
   GelbCounter = 0;
   ViolettCounter = 0;
   for (row = 0; row < NUM_LINES; row++)
@@ -1185,15 +1172,12 @@ ProcessDisplayColumn (void)
   Me.Current_Victim_Resistance_Factor = 0.2 * ( (float) 12 - abs( ViolettCounter- GelbCounter ) );
 
   return;
-}; // ProcessDisplayColumn 
+}; // void ProcessDisplayColumn 
 
-/*@Function============================================================
-@Desc: ProcessCapsules():	does the countdown of the capsules and
-									kills them if too old
-
-@Ret: void
-@Int:
-* $Function----------------------------------------------------------*/
+/* ---------------------------------------------------------------------- 
+ * This function does the countdown of the capsules and kills them if 
+ * they are too old.
+ * ---------------------------------------------------------------------- */
 void
 ProcessCapsules (void)
 {
@@ -1215,16 +1199,12 @@ ProcessCapsules (void)
 
       } /* for row */
 
-}   /* ProcessCapsules() */
+}; // void ProcessCapsules ( void )
 
-
-/*@Function============================================================
-@Desc: IsInactive(color, row): tells, wether a Column-connection
-						is active or not
-
-@Ret: TRUE/FALSE
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function tells, wether a Column-connection is active or not.
+ * It returns TRUE or FALSE accordinly.
+ * ---------------------------------------------------------------------- */
 int
 IsActive (int color, int row)
 {
@@ -1238,13 +1218,11 @@ IsActive (int color, int row)
     return FALSE;
 }				/* IsActive */
 
-/*-----------------------------------------------------------------
- *
- * Animate the active cables: this is done by cycling over
- * the active phases ACTIVE1-ACTIVE3, which are represented by 
+/* -----------------------------------------------------------------
+ * This function animates the active cables: this is done by cycling 
+ * over the active phases ACTIVE1-ACTIVE3, which are represented by 
  * different pictures in the playground
- *
- *-----------------------------------------------------------------*/
+ * ----------------------------------------------------------------- */
 void
 AnimateCurrents (void)
 {
@@ -1261,6 +1239,6 @@ AnimateCurrents (void)
 	  }
 
   return;
-}
+}; // void AnimateCurrents (void)
 
 #undef _takeover_c
