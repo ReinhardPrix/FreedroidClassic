@@ -181,8 +181,8 @@ ne_get_digit_blocks (char *picfile, int num_blocks, int blocks_per_line,
 
   Digit_Length=INITIAL_DIGIT_LENGTH;
   Digit_Height=INITIAL_DIGIT_HEIGHT;
-  Digit_Pos_X=INITIAL_DIGIT_POS_X;
-  Digit_Pos_Y = INITIAL_DIGIT_POS_Y;
+  // Digit_Pos_X=INITIAL_DIGIT_POS_X;
+  // Digit_Pos_Y = INITIAL_DIGIT_POS_Y;
 
 
   return (ret);

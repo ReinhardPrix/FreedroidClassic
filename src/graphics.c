@@ -335,8 +335,13 @@ SetCombatScaleTo(float ResizeFactor)
 
   Digit_Length *= ResizeFactor;
   Digit_Height *= ResizeFactor;
-  Digit_Pos_X *= ResizeFactor;
-  Digit_Pos_Y *= ResizeFactor;
+
+  First_Digit_Pos_X *= ResizeFactor;
+  First_Digit_Pos_Y *= ResizeFactor;
+  Second_Digit_Pos_X *= ResizeFactor;
+  Second_Digit_Pos_Y *= ResizeFactor;
+  Third_Digit_Pos_X *= ResizeFactor;
+  Third_Digit_Pos_Y *= ResizeFactor;
 
   // SDL_SaveBMP ( tmp, "../graphics/debugSmall.bmp");
 
@@ -386,7 +391,7 @@ LoadThemeConfigurationFile(void)
 
   if ((Data = (char *) malloc (stbuf.st_size + 64*2)) == NULL)
     {
-      DebugPrintf ( 1 , "\nvoid LoadThemeConfigurationFile ( char * constantsname ) : Out of Memory? ");
+      DebugPrintf ( 0 , "\nvoid LoadThemeConfigurationFile ( char * constantsname ) : Out of Memory? ");
       Terminate(ERR);
     }
 
@@ -396,7 +401,7 @@ LoadThemeConfigurationFile(void)
 
   if ( (ReadPointer = strstr( Data , END_OF_THEME_DATA_STRING ) ) == NULL )
     {
-      DebugPrintf (1, "\nERROR!  END OF THEME DATA STRING NOT FOUND!  Terminating...");
+      DebugPrintf ( 0 , "\nERROR!  END OF THEME DATA STRING NOT FOUND!  Terminating...");
       Terminate(ERR);
     }
   else
@@ -405,7 +410,7 @@ LoadThemeConfigurationFile(void)
                        // terminated by nature.  We just have to add the zero termination.
     }
 
-  DebugPrintf( 0 , "\n\nvoid LoadThemeConfigurationFile ( void ) : The content of the read file: \n%s" , Data );
+  DebugPrintf( 1 , "\n\nvoid LoadThemeConfigurationFile ( void ) : The content of the read file: \n%s" , Data );
 
   //--------------------
   // Now the file is read in entirely and
@@ -415,6 +420,13 @@ LoadThemeConfigurationFile(void)
 #define BLAST_TWO_NUMBER_OF_PHASES_STRING "How many phases in Blast two :"
 #define BLAST_ONE_TOTAL_AMOUNT_OF_TIME_STRING "Time in seconds for the hole animation of blast one :"
 #define BLAST_TWO_TOTAL_AMOUNT_OF_TIME_STRING "Time in seconds for the hole animation of blast two :"
+
+#define DIGIT_ONE_POSITION_X_STRING "First digit x :"
+#define DIGIT_ONE_POSITION_Y_STRING "First digit y :"
+#define DIGIT_TWO_POSITION_X_STRING "Second digit x :"
+#define DIGIT_TWO_POSITION_Y_STRING "Second digit y :"
+#define DIGIT_THREE_POSITION_X_STRING "Third digit x :"
+#define DIGIT_THREE_POSITION_Y_STRING "Third digit y :"
 
   if ( ( ReadPointer = strstr ( Data , BLAST_ONE_NUMBER_OF_PHASES_STRING ) ) == NULL )
     {
@@ -472,6 +484,92 @@ LoadThemeConfigurationFile(void)
       ReadPointer += strlen ( BLAST_TWO_TOTAL_AMOUNT_OF_TIME_STRING );
       sscanf ( ReadPointer , "%lf" , &Blastmap[1].total_animation_time );
       DebugPrintf( 0 , "\nBlastmap[1].total_animation_time now reads:  %f" , Blastmap[1].total_animation_time );
+      // getchar();
+    }
+  
+  // --------------------
+  // Also decidable from the theme is where in the robot to
+  // display the digits.  This must also be read from the configuration
+  // file of the theme
+  //
+  if ( ( ReadPointer = strstr ( Data , DIGIT_ONE_POSITION_X_STRING ) ) == NULL )
+    {
+      DebugPrintf( 0 , "\n\nPosition x string for digit one not found...\n\nTerminating...\n\n");
+      Terminate(ERR);
+    }
+  else
+    {
+      DebugPrintf ( 0 , "\n\nDigit one position x string found. Good.");  
+      ReadPointer += strlen ( DIGIT_ONE_POSITION_X_STRING );
+      sscanf ( ReadPointer , "%d" , &First_Digit_Pos_X );
+      DebugPrintf( 0 , "\nFirst_Digit_Pos_X now reads:  %d" , First_Digit_Pos_X );
+      // getchar();
+    }
+  if ( ( ReadPointer = strstr ( Data , DIGIT_ONE_POSITION_Y_STRING ) ) == NULL )
+    {
+      DebugPrintf( 0 , "\n\nPosition y string for digit one not found...\n\nTerminating...\n\n");
+      Terminate(ERR);
+    }
+  else
+    {
+      DebugPrintf ( 0 , "\n\nDigit one position y string found. Good.");  
+      ReadPointer += strlen ( DIGIT_ONE_POSITION_Y_STRING );
+      sscanf ( ReadPointer , "%d" , &First_Digit_Pos_Y );
+      DebugPrintf( 0 , "\nFirst_Digit_Pos_X now reads:  %d" , First_Digit_Pos_Y );
+      // getchar();
+    }
+  
+  if ( ( ReadPointer = strstr ( Data , DIGIT_TWO_POSITION_X_STRING ) ) == NULL )
+    {
+      DebugPrintf( 0 , "\n\nPosition x string for digit two not found...\n\nTerminating...\n\n");
+      Terminate(ERR);
+    }
+  else
+    {
+      DebugPrintf ( 0 , "\n\nDigit two position x string found. Good.");  
+      ReadPointer += strlen ( DIGIT_TWO_POSITION_X_STRING );
+      sscanf ( ReadPointer , "%d" , &Second_Digit_Pos_X );
+      DebugPrintf( 0 , "\nSecond_Digit_Pos_X now reads:  %d" , Second_Digit_Pos_X );
+      // getchar();
+    }
+  if ( ( ReadPointer = strstr ( Data , DIGIT_TWO_POSITION_Y_STRING ) ) == NULL )
+    {
+      DebugPrintf( 0 , "\n\nPosition y string for digit two not found...\n\nTerminating...\n\n");
+      Terminate(ERR);
+    }
+  else
+    {
+      DebugPrintf ( 0 , "\n\nDigit two position y string found. Good.");  
+      ReadPointer += strlen ( DIGIT_TWO_POSITION_Y_STRING );
+      sscanf ( ReadPointer , "%d" , &Second_Digit_Pos_Y );
+      DebugPrintf( 0 , "\Second_Digit_Pos_X now reads:  %d" , Second_Digit_Pos_Y );
+      // getchar();
+    }
+
+  if ( ( ReadPointer = strstr ( Data , DIGIT_THREE_POSITION_X_STRING ) ) == NULL )
+    {
+      DebugPrintf( 0 , "\n\nPosition x string for digit three not found...\n\nTerminating...\n\n");
+      Terminate(ERR);
+    }
+  else
+    {
+      DebugPrintf ( 0 , "\n\nDigit three position x string found. Good.");  
+      ReadPointer += strlen ( DIGIT_THREE_POSITION_X_STRING );
+      sscanf ( ReadPointer , "%d" , &Third_Digit_Pos_X );
+      DebugPrintf( 0 , "\nThird_Digit_Pos_X now reads:  %d" , Third_Digit_Pos_X );
+      // getchar();
+    }
+  if ( ( ReadPointer = strstr ( Data , DIGIT_THREE_POSITION_Y_STRING ) ) == NULL )
+    {
+      DebugPrintf( 0 , "\n\nPosition y string for digit three not found...\n\nTerminating...\n\n");
+      Terminate(ERR);
+    }
+  else
+    {
+      DebugPrintf ( 0 , "\n\nDigit three position y string found. Good.");  
+      ReadPointer += strlen ( DIGIT_THREE_POSITION_Y_STRING );
+      sscanf ( ReadPointer , "%d" , &Third_Digit_Pos_Y );
+      DebugPrintf( 0 , "\nThird_Digit_Pos_X now reads:  %d" , Third_Digit_Pos_Y );
       // getchar();
     }
   

@@ -175,8 +175,12 @@ EXTERN int Block_Width;
 EXTERN int Block_Height;
 EXTERN int Digit_Length;
 EXTERN int Digit_Height;
-EXTERN int Digit_Pos_X;
-EXTERN int Digit_Pos_Y;
+EXTERN int First_Digit_Pos_X;
+EXTERN int First_Digit_Pos_Y;
+EXTERN int Second_Digit_Pos_X;
+EXTERN int Second_Digit_Pos_Y;
+EXTERN int Third_Digit_Pos_X;
+EXTERN int Third_Digit_Pos_Y;
 EXTERN const SDL_VideoInfo *ne_vid_info;/* info about current video mode */
 EXTERN color ne_transp_rgb;             /* RGB of transparent color */
 EXTERN int ne_bpp; 			/* bits per pixel */

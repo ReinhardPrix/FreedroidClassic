@@ -365,13 +365,13 @@ PutInfluence ( int x, int y)
   // COMPUTED ANEW!!!!
   if ( x == -1 ) 
     {
-      TargetRectangle.x=USER_FENSTER_CENTER_X - Block_Width/2 + Digit_Pos_X;
-      TargetRectangle.y=USER_FENSTER_CENTER_Y - Block_Height/2 + Digit_Pos_Y;
+      TargetRectangle.x=USER_FENSTER_CENTER_X - Block_Width/2 + First_Digit_Pos_X;
+      TargetRectangle.y=USER_FENSTER_CENTER_Y - Block_Height/2 + First_Digit_Pos_Y;
     }
   else
     {
-      TargetRectangle.x=x + Digit_Pos_X ;
-      TargetRectangle.y=y + Digit_Pos_Y ;
+      TargetRectangle.x=x + First_Digit_Pos_X ;
+      TargetRectangle.y=y + First_Digit_Pos_Y ;
     }
   SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Me.type].druidname[0]-'1'+1) , ne_screen, &TargetRectangle );
 
@@ -380,13 +380,15 @@ PutInfluence ( int x, int y)
   // COMPUTED ANEW!!!!
   if ( x == -1 ) 
     {
-      TargetRectangle.x=USER_FENSTER_CENTER_X - Block_Width/2 + Digit_Pos_X + Digit_Length;
-      TargetRectangle.y=USER_FENSTER_CENTER_Y - Block_Height/2 + Digit_Pos_Y;
+      // TargetRectangle.x=USER_FENSTER_CENTER_X - Block_Width/2 + Digit_Pos_X + Digit_Length;
+      // TargetRectangle.y=USER_FENSTER_CENTER_Y - Block_Height/2 + Digit_Pos_Y;
+      TargetRectangle.x=USER_FENSTER_CENTER_X - Block_Width/2 + Second_Digit_Pos_X;
+      TargetRectangle.y=USER_FENSTER_CENTER_Y - Block_Height/2 + Second_Digit_Pos_Y;
     }
   else
     {
-      TargetRectangle.x=x + Digit_Pos_X + Digit_Length ;
-      TargetRectangle.y=y + Digit_Pos_Y                ;
+      TargetRectangle.x=x + Second_Digit_Pos_X ;
+      TargetRectangle.y=y + Second_Digit_Pos_Y ;
     }
   SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Me.type].druidname[1]-'1'+1) , ne_screen, &TargetRectangle );
 
@@ -395,13 +397,13 @@ PutInfluence ( int x, int y)
   // COMPUTED ANEW!!!!
   if ( x == -1 ) 
     {
-      TargetRectangle.x=USER_FENSTER_CENTER_X - Block_Width/2 + Digit_Pos_X + 2*Digit_Length;
-      TargetRectangle.y=USER_FENSTER_CENTER_Y - Block_Height/2 + Digit_Pos_Y;
+      TargetRectangle.x=USER_FENSTER_CENTER_X - Block_Width/2 + Third_Digit_Pos_X ;
+      TargetRectangle.y=USER_FENSTER_CENTER_Y - Block_Height/2 + Third_Digit_Pos_Y;
     }
   else
     {
-      TargetRectangle.x=x + Digit_Pos_X + 2*Digit_Length ;
-      TargetRectangle.y=y + Digit_Pos_Y                  ;
+      TargetRectangle.x=x + Third_Digit_Pos_X ;
+      TargetRectangle.y=y + Third_Digit_Pos_Y ;
     }
   SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Me.type].druidname[2]-'1'+1) , ne_screen, &TargetRectangle );
 
@@ -525,14 +527,14 @@ Sorry...\n\
   if ( x == (-1) )
     {
       TargetRectangle.x=USER_FENSTER_CENTER_X - 
-	(Me.pos.x-AllEnemys[Enum].pos.x) * Block_Width + Digit_Pos_X  - Block_Width/2; 
+	(Me.pos.x-AllEnemys[Enum].pos.x) * Block_Width + First_Digit_Pos_X  - Block_Width/2; 
       TargetRectangle.y=USER_FENSTER_CENTER_Y - 
-	(Me.pos.y-AllEnemys[Enum].pos.y) * Block_Height + Digit_Pos_Y - Block_Height/2;
+	(Me.pos.y-AllEnemys[Enum].pos.y) * Block_Height + First_Digit_Pos_Y - Block_Height/2;
     }
   else
     {
-     TargetRectangle.x=x + Digit_Pos_X;
-     TargetRectangle.y=y + Digit_Pos_Y;
+     TargetRectangle.x=x + First_Digit_Pos_X;
+     TargetRectangle.y=y + First_Digit_Pos_Y;
     }
 
   if ( AllEnemys[Enum].Friendly == 0 )
@@ -549,14 +551,14 @@ Sorry...\n\
   if ( x == (-1) )
     {
   TargetRectangle.x=USER_FENSTER_CENTER_X - 
-    (Me.pos.x-AllEnemys[Enum].pos.x)*Block_Height + Digit_Pos_X + Digit_Length-1 - Block_Width/2;
+    (Me.pos.x-AllEnemys[Enum].pos.x)*Block_Height + Second_Digit_Pos_X - Block_Width/2;
   TargetRectangle.y=USER_FENSTER_CENTER_Y - 
-    (Me.pos.y-AllEnemys[Enum].pos.y)*Block_Height + Digit_Pos_Y - Block_Height/2 ;
+    (Me.pos.y-AllEnemys[Enum].pos.y)*Block_Height + Second_Digit_Pos_Y - Block_Height/2 ;
     }
   else
     {
-     TargetRectangle.x=x + Digit_Pos_X + Digit_Length-1;
-     TargetRectangle.y=y + Digit_Pos_Y;
+     TargetRectangle.x=x + Second_Digit_Pos_X;
+     TargetRectangle.y=y + Second_Digit_Pos_Y;
     }
 
   if ( AllEnemys[Enum].Friendly == 0 )
@@ -572,13 +574,13 @@ Sorry...\n\
 
   if ( x == (-1) )
     {
-      TargetRectangle.x=USER_FENSTER_CENTER_X - (Me.pos.x-AllEnemys[Enum].pos.x)*Block_Width - Block_Width/2 + Digit_Pos_X + 2*(Digit_Length-1);
-      TargetRectangle.y=USER_FENSTER_CENTER_Y - (Me.pos.y-AllEnemys[Enum].pos.y)*Block_Width - Block_Height/2 + Digit_Pos_Y;
+      TargetRectangle.x=USER_FENSTER_CENTER_X - (Me.pos.x-AllEnemys[Enum].pos.x)*Block_Width - Block_Width/2 + Third_Digit_Pos_X ;
+      TargetRectangle.y=USER_FENSTER_CENTER_Y - (Me.pos.y-AllEnemys[Enum].pos.y)*Block_Width - Block_Height/2 + Third_Digit_Pos_Y;
     }
   else
     {
-     TargetRectangle.x=x + Digit_Pos_X + 2*(Digit_Length-1);
-     TargetRectangle.y=y + Digit_Pos_Y;
+     TargetRectangle.x=x + Third_Digit_Pos_X ;
+     TargetRectangle.y=y + Third_Digit_Pos_Y;
     }
 
   if ( AllEnemys[Enum].Friendly == 0 )
