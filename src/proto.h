@@ -524,6 +524,17 @@ EXTERN char *GetString (int MaxLen, int echo);
 EXTERN void printf_SDL (SDL_Surface *screen, int x, int y, char *fmt, ...);
 EXTERN int putchar_SDL (SDL_Surface *Surface, int x, int y, int c);
 
+// text.c 
+#undef EXTERN
+#ifdef _text_public_c
+#define EXTERN
+#else
+#define EXTERN extern
+#endif
+
+EXTERN void LoadChatRosterWithChatSequence ( char* FullPathAndFullFilename );
+EXTERN void delete_one_dialog_option ( int i , int FirstInitialisation );
+EXTERN void InitChatRosterForNewDialogue( void );
 
 // rahmen.c 
 #undef EXTERN

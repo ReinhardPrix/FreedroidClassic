@@ -293,7 +293,7 @@ CutDownStringToMaximalSize ( char* StringToCut , int LengthInPixels )
 
 }; // void CutDownStringToMaximalSize ( char* StringToCut , int LengthInPixels )
 
-#include "text_public.c"
+// #include "text_public.c"
 
 /* ----------------------------------------------------------------------
  * This function restores all chat-with-friendly-droid variables to their

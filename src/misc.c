@@ -316,9 +316,6 @@ int framenr = 0;
 char *homedir = NULL;
 char ConfigDir[255]="\0";
 
-
-#include <file_utilities.c>
-
 /* -----------------------------------------------------------------
  * find a given filename in subdir relative to DATADIR, 
  * using theme subdir if use_theme==TRUE

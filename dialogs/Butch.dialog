@@ -55,7 +55,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=2  OptionText="I would like to fight in the arena."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=235  PositionY=148  
+PositionX=179  PositionY=123  
 Subtitle="That's a good idea, but currently the duelling arena is rented out until next month."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="You can only have a fight against some bots if you would like that."

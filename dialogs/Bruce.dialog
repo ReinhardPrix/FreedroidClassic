@@ -38,6 +38,7 @@ Subtitle="Hello!  I'm Bruce."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
@@ -48,6 +49,7 @@ Subtitle="I'm pretty tired, but otherwise well."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
@@ -60,12 +62,13 @@ Subtitle="And now I feel really finished, so maybe it would be better if you cam
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 ChangeOption=3 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 New Option Nr=3  OptionText="Why do you work so hard in the mine?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=350  PositionY=225  
+PositionX=311  PositionY=167  
 Subtitle="Because I must!  The red guards make everyone work up to his limits!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="If you don't work for a full work period, you'll be in trouble."
@@ -74,6 +77,7 @@ Subtitle="But I've got no choice.  I don't want to be a soldier for life."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
 DoSomethingExtra="BreakOffAndBecomeHostile"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
@@ -83,6 +87,7 @@ PositionX=214  PositionY=344
 Subtitle="See you later."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
