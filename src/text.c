@@ -132,20 +132,20 @@ GetChatWindowInput( SDL_Surface* ChatBackground , SDL_Rect* Chat_Window_Pointer 
 void
 RestoreChatVariableToInitialValue( int PlayerNum )
 {
-  Me [ PlayerNum ] . Chandra_Chat_Flags[ 0 ] = 1 ;
-  Me [ PlayerNum ] . Chandra_Chat_Flags[ 1 ] = 1 ;
-  Me [ PlayerNum ] . Chandra_Chat_Flags[ 2 ] = 1 ;
-  Me [ PlayerNum ] . Chandra_Chat_Flags[ 3 ] = 1 ;
-  Me [ PlayerNum ] . Chandra_Chat_Flags[ 4 ] = 0 ;
-  Me [ PlayerNum ] . Chandra_Chat_Flags[ 5 ] = 0 ;
-  Me [ PlayerNum ] . Chandra_Chat_Flags[ 6 ] = 0 ;
-  Me [ PlayerNum ] . Chandra_Chat_Flags[ 7 ] = 0 ;
-  Me [ PlayerNum ] . Chandra_Chat_Flags[ END_ANSWER ] = 1 ;
+  Me [ PlayerNum ] . Chat_Flags [ PERSON_CHA ] [ 0 ] = 1 ;
+  Me [ PlayerNum ] . Chat_Flags [ PERSON_CHA ] [ 1 ] = 1 ;
+  Me [ PlayerNum ] . Chat_Flags [ PERSON_CHA ] [ 2 ] = 1 ;
+  Me [ PlayerNum ] . Chat_Flags [ PERSON_CHA ] [ 3 ] = 1 ;
+  Me [ PlayerNum ] . Chat_Flags [ PERSON_CHA ] [ 4 ] = 0 ;
+  Me [ PlayerNum ] . Chat_Flags [ PERSON_CHA ] [ 5 ] = 0 ;
+  Me [ PlayerNum ] . Chat_Flags [ PERSON_CHA ] [ 6 ] = 0 ;
+  Me [ PlayerNum ] . Chat_Flags [ PERSON_CHA ] [ 7 ] = 0 ;
+  Me [ PlayerNum ] . Chat_Flags [ PERSON_CHA ] [ END_ANSWER ] = 1 ;
       
-  Me [ PlayerNum ] . RMS_Chat_Flags[ 0 ] = 1 ;
-  Me [ PlayerNum ] . RMS_Chat_Flags[ END_ANSWER ] = 1 ;
+  Me [ PlayerNum ] . Chat_Flags [ PERSON_RMS ] [ 0 ] = 1 ;
+  Me [ PlayerNum ] . Chat_Flags [ PERSON_RMS ] [ END_ANSWER ] = 1 ;
 
-  Me [ PlayerNum ] . SOR_Chat_Flags[ END_ANSWER ] = 1 ; // we always allow 'END' for SOR...
+  Me [ PlayerNum ] . Chat_Flags [ PERSON_SOR ] [ END_ANSWER ] = 1 ; // we always allow 'END' for SOR...
 
   // Me [ PlayerNum ] . Generic_614_Chat_Flags[ END_ANSWER ] = 1 ; // we always allow 'END' for SOR...
   
@@ -300,7 +300,7 @@ ChatWithFriendlyDroid( int Enum )
 	{
 	  
 	  // MenuSelection = ChatDoMenuSelection ( "What will you say?" , MenuTexts , 1 , NULL , FPS_Display_BFont );
-	  MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , Chandra_DialogMenuTexts , Me[0].Chandra_Chat_Flags , 1 , NULL , FPS_Display_BFont );
+	  MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , Chandra_DialogMenuTexts , Me[0].Chat_Flags [ PERSON_CHA ]  , 1 , NULL , FPS_Display_BFont );
 	  
 	  switch( MenuSelection )
 	    {
@@ -308,7 +308,7 @@ ChatWithFriendlyDroid( int Enum )
 	      PlayOnceNeededSoundSample( "Tux_Chandra_Who_Are_You_0.wav" , TRUE );
 	      DisplaySubtitle( " My name is Chandra. " , Background );
 	      PlayOnceNeededSoundSample( "Chandra_My_Name_Is_0.wav" , TRUE );
-	      Me [ 0 ] . Chandra_Chat_Flags[ 0 ] = 0 ;
+	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 0 ] = 0 ;
 	      break;
 	    case 2:
 	      PlayOnceNeededSoundSample( "Tux_Chandra_What_Can_Place_0.wav" , TRUE );
@@ -318,8 +318,8 @@ ChatWithFriendlyDroid( int Enum )
 	      PlayOnceNeededSoundSample( "Chandra_Formerly_This_Was_0.wav" , TRUE );
 	      DisplaySubtitle( " But they have left long ago. " , Background );
 	      PlayOnceNeededSoundSample( "Chandra_But_They_Have_0.wav" , TRUE );
-	      Me [ 0 ] . Chandra_Chat_Flags[ 1 ] = 0 ;
-	      Me [ 0 ] . Chandra_Chat_Flags[ 4 ] = 1 ;
+	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 1 ] = 0 ;
+	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 4 ] = 1 ;
 	      break;
 	    case 3:
 	      PlayOnceNeededSoundSample( "Tux_Chandra_Where_Can_I_0.wav" , TRUE );
@@ -329,7 +329,7 @@ ChatWithFriendlyDroid( int Enum )
 	      PlayOnceNeededSoundSample( "Chandra_They_Have_All_0.wav" , TRUE );
 	      DisplaySubtitle( " Talk to Mr. Stone, the shop bot. " , Background );
 	      PlayOnceNeededSoundSample( "Chandra_Talk_To_The_0.wav" , TRUE );
-	      Me [ 0 ] . Chandra_Chat_Flags[ 2 ] = 0 ; // but don't ask this twice.
+	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 2 ] = 0 ; // but don't ask this twice.
 	      break;
 	    case 4:
 	      PlayOnceNeededSoundSample( "Tux_Chandra_I_Need_Help_0.wav" , TRUE );
@@ -347,7 +347,7 @@ ChatWithFriendlyDroid( int Enum )
 	      PlayOnceNeededSoundSample( "Chandra_Controls_6.wav" , TRUE );
 	      DisplaySubtitle( " Use the S key to open or close the skills screen. " , Background );
 	      PlayOnceNeededSoundSample( "Chandra_Controls_7.wav" , TRUE );
-	      // Me [ 0 ] . Chandra_Chat_Flags[ 3 ] = 0 ; // but don't ask this twice.
+	      // Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 3 ] = 0 ; // but don't ask this twice.
 	      break;
 	    case 5:
 	      PlayOnceNeededSoundSample( "Tux_Chandra_What_Can_MS_0.wav" , TRUE );
@@ -361,10 +361,10 @@ ChatWithFriendlyDroid( int Enum )
 	      PlayOnceNeededSoundSample( "Chandra_The_Number_Of_0.wav" , TRUE );
 	      DisplaySubtitle( " It might be that in the end they can win their struggle for freedom." , Background );
 	      PlayOnceNeededSoundSample( "Chandra_It_Might_Well_0.wav" , TRUE );
-	      Me [ 0 ] . Chandra_Chat_Flags[ 5 ] = 1 ; // some new possibilities...
-	      Me [ 0 ] . Chandra_Chat_Flags[ 6 ] = 1 ;
-	      Me [ 0 ] . Chandra_Chat_Flags[ 7 ] = 1 ;
-	      Me [ 0 ] . Chandra_Chat_Flags[ 4 ] = 0 ; // but don't ask this twice.
+	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 5 ] = 1 ; // some new possibilities...
+	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 6 ] = 1 ;
+	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 7 ] = 1 ;
+	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 4 ] = 0 ; // but don't ask this twice.
 	      break;
 	    case 6:
 	      PlayOnceNeededSoundSample( "Tux_Chandra_Wouldnt_That_Mean_0.wav" , TRUE );
@@ -376,7 +376,7 @@ ChatWithFriendlyDroid( int Enum )
 	      PlayOnceNeededSoundSample( "Chandra_They_Work_Together_0.wav" , TRUE );
 	      DisplaySubtitle( " They will not change their goal to support the power and will of only one." , Background );
 	      PlayOnceNeededSoundSample( "Chandra_They_Will_Not_0.wav" , TRUE );
-	      Me [ 0 ] . Chandra_Chat_Flags[ 5 ] = 0 ; // but don't ask this twice.
+	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 5 ] = 0 ; // but don't ask this twice.
 	      break;
 	    case 7:
 	      PlayOnceNeededSoundSample( "Tux_Chandra_I_Want_To_0.wav" , TRUE );
@@ -384,14 +384,14 @@ ChatWithFriendlyDroid( int Enum )
 	      PlayOnceNeededSoundSample( "Chandra_This_Will_Be_0.wav" , TRUE );
 	      DisplaySubtitle( " But maybe there is a way.  I just don't know." , Background );
 	      PlayOnceNeededSoundSample( "Chandra_But_Maybe_There_0.wav" , TRUE );
-	      Me [ 0 ] . Chandra_Chat_Flags[ 6 ] = 0 ; // but don't ask this twice.
+	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 6 ] = 0 ; // but don't ask this twice.
 	      break;
 	    case 8:
 	      PlayOnceNeededSoundSample( "Tux_Chandra_I_Would_Like_0.wav" , TRUE );
 	      DisplaySubtitle( " This should be possible.  But you must gain their trust first." , Background );
 	      PlayOnceNeededSoundSample( "Chandra_This_Should_Be_0.wav" , TRUE );
-	      Me [ 0 ] . Chandra_Chat_Flags[ 7 ] = 0 ; // but don't ask this twice.
-	      Me [ 0 ] . Chandra_Chat_Flags[ 8 ] = 1 ; // this should lead on...
+	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 7 ] = 0 ; // but don't ask this twice.
+	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 8 ] = 1 ; // this should lead on...
 	      break;
 	    case 9:
 	      PlayOnceNeededSoundSample( "Tux_Chandra_How_Can_I_0.wav" , TRUE );
@@ -401,15 +401,15 @@ ChatWithFriendlyDroid( int Enum )
 	      PlayOnceNeededSoundSample( "Chandra_If_You_Do_0.wav" , TRUE );
 	      DisplaySubtitle( " If you think you've done enough quests, come back here and I'll see what I can do." , Background );
 	      PlayOnceNeededSoundSample( "Chandra_If_You_Think_0.wav" , TRUE );
-	      Me [ 0 ] . Chandra_Chat_Flags[ 8 ] = 0 ; // but don't ask this twice.
-	      Me [ 0 ] . Chandra_Chat_Flags[ 9 ] = 1 ; // this should lead on...
+	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 8 ] = 0 ; // but don't ask this twice.
+	      Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 9 ] = 1 ; // this should lead on...
 	      break;
 	    case 10:
 	      PlayOnceNeededSoundSample( "Tux_Chandra_Have_I_Done_0.wav" , TRUE );
 	      DisplaySubtitle( " No, not really.  Hurry up.  There's still a lot to do for you." , Background );
 	      PlayOnceNeededSoundSample( "Chandra_No_Not_Really_0.wav" , TRUE );
-	      // Me [ 0 ] . Chandra_Chat_Flags[ 9 ] = 0 ; // but don't ask this twice.
-	      // Me [ 0 ] . Chandra_Chat_Flags[ 8 ] = 0 ; // this should lead on...
+	      // Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 9 ] = 0 ; // but don't ask this twice.
+	      // Me [ 0 ] . Chat_Flags [ PERSON_CHA ] [ 8 ] = 0 ; // this should lead on...
 	      break;
 	    case MAX_ANSWERS_PER_PERSON :
 	    case (-1):
@@ -444,15 +444,15 @@ ChatWithFriendlyDroid( int Enum )
       if ( ( Me [ 0 ] . AllMissions [ 1 ] . MissionWasAssigned == TRUE ) &&
 	   ( Me [ 0 ] . AllMissions [ 1 ] . MissionIsComplete == FALSE ) )
 	{
-	  Me [ 0 ] . SOR_Chat_Flags [ 3 ] = TRUE ; // we allow to ask directly for the coffee machine...
-	  Me [ 0 ] . SOR_Chat_Flags [ 0 ] = FALSE ; // we disallow to ask about the job naively...
+	  Me [ 0 ] . Chat_Flags [ PERSON_SOR ]  [ 3 ] = TRUE ; // we allow to ask directly for the coffee machine...
+	  Me [ 0 ] . Chat_Flags [ PERSON_SOR ]  [ 0 ] = FALSE ; // we disallow to ask about the job naively...
 	}
 
       while (1)
 	{
 	  
 	  // MenuSelection = ChatDoMenuSelection ( "What will you say?" , MenuTexts , 1 , NULL , FPS_Display_BFont );
-	  MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , SOR_DialogMenuTexts , Me[0].SOR_Chat_Flags , 1 , NULL , FPS_Display_BFont );
+	  MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , SOR_DialogMenuTexts , Me[0].Chat_Flags [ PERSON_SOR ]  , 1 , NULL , FPS_Display_BFont );
 	  
 	  switch( MenuSelection )
 	    {
@@ -466,48 +466,48 @@ ChatWithFriendlyDroid( int Enum )
 	      DisplaySubtitle( " Chandra told me about you and indeed I do have a test for you. " , Background );
 	      PlayOnceNeededSoundSample( "SOR_Chandra_Told_Me_0.wav" , TRUE );
 	      */
-	      Me [ 0 ] . SOR_Chat_Flags[ 0 ] = 0 ; // don't say this twice...
-	      // Me [ 0 ] . SOR_Chat_Flags[ 1 ] = 1 ; // this should allow to ask 'so?'
+	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 0 ] = 0 ; // don't say this twice...
+	      // Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 1 ] = 1 ; // this should allow to ask 'so?'
 	      break;
 	    case 2:
 	      PlayOnceNeededSoundSample( "Tux_SOR_Im_New_In_0.wav" , TRUE );
 	      DisplaySubtitle( " Welcome then to this camp!  I'm Sorenson, teacher of magical abilities. " , Background );
 	      PlayOnceNeededSoundSample( "SOR_Welcome_Then_To_0.wav" , TRUE );
-	      Me [ 0 ] . SOR_Chat_Flags[ 2 ] = 1 ; // this should allow to ask about the magic abilities...
-	      Me [ 0 ] . SOR_Chat_Flags[ 1 ] = 0 ; // this should disallow to be new again...
+	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 2 ] = 1 ; // this should allow to ask about the magic abilities...
+	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 1 ] = 0 ; // this should disallow to be new again...
 	      break;
 	    case 3:
 	      PlayOnceNeededSoundSample( "Tux_SOR_What_Can_You_0.wav" , TRUE );
-	      Me [ 0 ] . SOR_Chat_Flags[ 3 ] = 1 ; // this enables some learning option
-	      Me [ 0 ] . SOR_Chat_Flags[ 4 ] = 1 ; // this enables some learning option
-	      Me [ 0 ] . SOR_Chat_Flags[ 5 ] = 1 ; // this enables some learning option
-	      Me [ 0 ] . SOR_Chat_Flags[ 6 ] = 1 ; // this enables to go back from learning
-	      Me [ 0 ] . SOR_Chat_Flags[ 2 ] = 0 ; // but disable to ask about learning options now again
-	      Me [ 0 ] . SOR_Chat_Flags[ END_ANSWER ] = 0 ; // this disables to quit immediately	      	      
+	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 3 ] = 1 ; // this enables some learning option
+	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 4 ] = 1 ; // this enables some learning option
+	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 5 ] = 1 ; // this enables some learning option
+	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 6 ] = 1 ; // this enables to go back from learning
+	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 2 ] = 0 ; // but disable to ask about learning options now again
+	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ END_ANSWER ] = 0 ; // this disables to quit immediately	      	      
 	      break;
 	    case 4:
 	      // PlayOnceNeededSoundSample( "Tux_SOR_I_Want_To_0.wav" , TRUE );
 	      break;
 	    case 5:
 	      // PlayOnceNeededSoundSample( "Tux_SOR_What_Are_These_0.wav" , TRUE );
-	      // Me [ 0 ] . SOR_Chat_Flags[ 4 ] = 0 ; // don't say this twice in one dialog
+	      // Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 4 ] = 0 ; // don't say this twice in one dialog
 	      break;
 	    case 6:
 	      PlayOnceNeededSoundSample( "Tux_SOR_I_Want_Learn_0.wav" , TRUE );
-	      // Me [ 0 ] . SOR_Chat_Flags[ 5 ] = 0 ; // don't say this twice in one dialog
+	      // Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 5 ] = 0 ; // don't say this twice in one dialog
 	      break;
 	    case 7:
 	      // PlayOnceNeededSoundSample( "Tux_SOR_Ive_Found_Your_0.wav" , TRUE );
-	      Me [ 0 ] . SOR_Chat_Flags[ 3 ] = 0 ; // now disallow all learning options.
-	      Me [ 0 ] . SOR_Chat_Flags[ 4 ] = 0 ; // now disallow all learning options.
-	      Me [ 0 ] . SOR_Chat_Flags[ 5 ] = 0 ; // now disallow all learning options.
-	      Me [ 0 ] . SOR_Chat_Flags[ 6 ] = 0 ; // now disallow also the BACK from lerning button
-	      Me [ 0 ] . SOR_Chat_Flags[ 2 ] = 1 ; // but reallow to ask about learning
-	      Me [ 0 ] . SOR_Chat_Flags[ END_ANSWER ] = 1 ; // but reallow to quit the dialog
+	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 3 ] = 0 ; // now disallow all learning options.
+	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 4 ] = 0 ; // now disallow all learning options.
+	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 5 ] = 0 ; // now disallow all learning options.
+	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 6 ] = 0 ; // now disallow also the BACK from lerning button
+	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 2 ] = 1 ; // but reallow to ask about learning
+	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ END_ANSWER ] = 1 ; // but reallow to quit the dialog
 	      break;
 	    case 9:
 	      PlayOnceNeededSoundSample( "Tux_SOR_Ill_Get_Your_0.wav" , TRUE );
-	      Me [ 0 ] . SOR_Chat_Flags[ 8 ] = 0 ; // don't say this twice in one dialog
+	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 8 ] = 0 ; // don't say this twice in one dialog
 	      AssignMission ( 1 ); // this should assign the coffee machine mission...
 	      break;
 	    case ( MAX_ANSWERS_PER_PERSON ):
@@ -549,15 +549,15 @@ ChatWithFriendlyDroid( int Enum )
       if ( ( Me [ 0 ] . AllMissions [ 1 ] . MissionWasAssigned == TRUE ) &&
 	   ( Me [ 0 ] . AllMissions [ 1 ] . MissionIsComplete == FALSE ) )
 	{
-	  Me [ 0 ] . SOR_Chat_Flags [ 3 ] = TRUE ; // we allow to ask directly for the coffee machine...
-	  Me [ 0 ] . SOR_Chat_Flags [ 0 ] = FALSE ; // we disallow to ask about the job naively...
+	  Me [ 0 ] . Chat_Flags [ PERSON_SOR ]  [ 3 ] = TRUE ; // we allow to ask directly for the coffee machine...
+	  Me [ 0 ] . Chat_Flags [ PERSON_SOR ]  [ 0 ] = FALSE ; // we disallow to ask about the job naively...
 	}
 
       while (1)
 	{
 	  
 	  // MenuSelection = ChatDoMenuSelection ( "What will you say?" , MenuTexts , 1 , NULL , FPS_Display_BFont );
-	  MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , SOR_DialogMenuTexts , Me[0].SOR_Chat_Flags , 1 , NULL , FPS_Display_BFont );
+	  MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , SOR_DialogMenuTexts , Me[0].Chat_Flags [ PERSON_SOR ]  , 1 , NULL , FPS_Display_BFont );
 	  
 	  switch( MenuSelection )
 	    {
@@ -571,48 +571,48 @@ ChatWithFriendlyDroid( int Enum )
 	      DisplaySubtitle( " Chandra told me about you and indeed I do have a test for you. " , Background );
 	      PlayOnceNeededSoundSample( "SOR_Chandra_Told_Me_0.wav" , TRUE );
 	      */
-	      Me [ 0 ] . SOR_Chat_Flags[ 0 ] = 0 ; // don't say this twice...
-	      // Me [ 0 ] . SOR_Chat_Flags[ 1 ] = 1 ; // this should allow to ask 'so?'
+	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 0 ] = 0 ; // don't say this twice...
+	      // Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 1 ] = 1 ; // this should allow to ask 'so?'
 	      break;
 	    case 2:
 	      PlayOnceNeededSoundSample( "Tux_SOR_Im_New_In_0.wav" , TRUE );
 	      DisplaySubtitle( " Welcome then to this camp!  I'm Sorenson, teacher of magical abilities. " , Background );
 	      PlayOnceNeededSoundSample( "SOR_Welcome_Then_To_0.wav" , TRUE );
-	      Me [ 0 ] . SOR_Chat_Flags[ 2 ] = 1 ; // this should allow to ask about the magic abilities...
-	      Me [ 0 ] . SOR_Chat_Flags[ 1 ] = 0 ; // this should disallow to be new again...
+	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 2 ] = 1 ; // this should allow to ask about the magic abilities...
+	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 1 ] = 0 ; // this should disallow to be new again...
 	      break;
 	    case 3:
 	      PlayOnceNeededSoundSample( "Tux_SOR_What_Can_You_0.wav" , TRUE );
-	      Me [ 0 ] . SOR_Chat_Flags[ 3 ] = 1 ; // this enables some learning option
-	      Me [ 0 ] . SOR_Chat_Flags[ 4 ] = 1 ; // this enables some learning option
-	      Me [ 0 ] . SOR_Chat_Flags[ 5 ] = 1 ; // this enables some learning option
-	      Me [ 0 ] . SOR_Chat_Flags[ 6 ] = 1 ; // this enables to go back from learning
-	      Me [ 0 ] . SOR_Chat_Flags[ 2 ] = 0 ; // but disable to ask about learning options now again
-	      Me [ 0 ] . SOR_Chat_Flags[ END_ANSWER ] = 0 ; // this disables to quit immediately	      	      
+	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 3 ] = 1 ; // this enables some learning option
+	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 4 ] = 1 ; // this enables some learning option
+	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 5 ] = 1 ; // this enables some learning option
+	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 6 ] = 1 ; // this enables to go back from learning
+	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 2 ] = 0 ; // but disable to ask about learning options now again
+	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ END_ANSWER ] = 0 ; // this disables to quit immediately	      	      
 	      break;
 	    case 4:
 	      // PlayOnceNeededSoundSample( "Tux_SOR_I_Want_To_0.wav" , TRUE );
 	      break;
 	    case 5:
 	      // PlayOnceNeededSoundSample( "Tux_SOR_What_Are_These_0.wav" , TRUE );
-	      // Me [ 0 ] . SOR_Chat_Flags[ 4 ] = 0 ; // don't say this twice in one dialog
+	      // Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 4 ] = 0 ; // don't say this twice in one dialog
 	      break;
 	    case 6:
 	      PlayOnceNeededSoundSample( "Tux_SOR_I_Want_Learn_0.wav" , TRUE );
-	      // Me [ 0 ] . SOR_Chat_Flags[ 5 ] = 0 ; // don't say this twice in one dialog
+	      // Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 5 ] = 0 ; // don't say this twice in one dialog
 	      break;
 	    case 7:
 	      // PlayOnceNeededSoundSample( "Tux_SOR_Ive_Found_Your_0.wav" , TRUE );
-	      Me [ 0 ] . SOR_Chat_Flags[ 3 ] = 0 ; // now disallow all learning options.
-	      Me [ 0 ] . SOR_Chat_Flags[ 4 ] = 0 ; // now disallow all learning options.
-	      Me [ 0 ] . SOR_Chat_Flags[ 5 ] = 0 ; // now disallow all learning options.
-	      Me [ 0 ] . SOR_Chat_Flags[ 6 ] = 0 ; // now disallow also the BACK from lerning button
-	      Me [ 0 ] . SOR_Chat_Flags[ 2 ] = 1 ; // but reallow to ask about learning
-	      Me [ 0 ] . SOR_Chat_Flags[ END_ANSWER ] = 1 ; // but reallow to quit the dialog
+	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 3 ] = 0 ; // now disallow all learning options.
+	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 4 ] = 0 ; // now disallow all learning options.
+	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 5 ] = 0 ; // now disallow all learning options.
+	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 6 ] = 0 ; // now disallow also the BACK from lerning button
+	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 2 ] = 1 ; // but reallow to ask about learning
+	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ END_ANSWER ] = 1 ; // but reallow to quit the dialog
 	      break;
 	    case 9:
 	      PlayOnceNeededSoundSample( "Tux_SOR_Ill_Get_Your_0.wav" , TRUE );
-	      Me [ 0 ] . SOR_Chat_Flags[ 8 ] = 0 ; // don't say this twice in one dialog
+	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 8 ] = 0 ; // don't say this twice in one dialog
 	      AssignMission ( 1 ); // this should assign the coffee machine mission...
 	      break;
 	    case ( MAX_ANSWERS_PER_PERSON ):
@@ -661,15 +661,15 @@ ChatWithFriendlyDroid( int Enum )
       if ( ( Me [ 0 ] . AllMissions [ 1 ] . MissionWasAssigned == TRUE ) &&
 	   ( Me [ 0 ] . AllMissions [ 1 ] . MissionIsComplete == FALSE ) )
 	{
-	  Me [ 0 ] . RMS_Chat_Flags [ 3 ] = TRUE ; // we allow to ask directly for the coffee machine...
-	  Me [ 0 ] . RMS_Chat_Flags [ 0 ] = FALSE ; // we disallow to ask about the job naively...
+	  Me [ 0 ] . Chat_Flags [ PERSON_RMS ]  [ 3 ] = TRUE ; // we allow to ask directly for the coffee machine...
+	  Me [ 0 ] . Chat_Flags [ PERSON_RMS ]  [ 0 ] = FALSE ; // we disallow to ask about the job naively...
 	}
 
       while (1)
 	{
 	  
 	  // MenuSelection = ChatDoMenuSelection ( "What will you say?" , MenuTexts , 1 , NULL , FPS_Display_BFont );
-	  MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , RMS_DialogMenuTexts , Me[0].RMS_Chat_Flags , 1 , NULL , FPS_Display_BFont );
+	  MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , RMS_DialogMenuTexts , Me[0].Chat_Flags [ PERSON_RMS ]  , 1 , NULL , FPS_Display_BFont );
 	  
 	  switch( MenuSelection )
 	    {
@@ -681,8 +681,8 @@ ChatWithFriendlyDroid( int Enum )
 	      PlayOnceNeededSoundSample( "RMS_You_Are_The_0.wav" , TRUE );
 	      DisplaySubtitle( " Chandra told me about you and indeed I do have a test for you. " , Background );
 	      PlayOnceNeededSoundSample( "RMS_Chandra_Told_Me_0.wav" , TRUE );
-	      Me [ 0 ] . RMS_Chat_Flags[ 0 ] = 0 ; // don't say this twice...
-	      Me [ 0 ] . RMS_Chat_Flags[ 1 ] = 1 ; // this should allow to ask 'so?'
+	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 0 ] = 0 ; // don't say this twice...
+	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 1 ] = 1 ; // this should allow to ask 'so?'
 	      break;
 	    case 2:
 	      PlayOnceNeededSoundSample( "Tux_RMS_So_0.wav" , TRUE );
@@ -698,10 +698,10 @@ ChatWithFriendlyDroid( int Enum )
 	      PlayOnceNeededSoundSample( "RMS_Find_The_Coffee_0.wav" , TRUE );
 	      DisplaySubtitle( " If you do that, I'll tell chandra that I'd approve if if you were brought in contact with the resistance. " , Background );
 	      PlayOnceNeededSoundSample( "RMS_If_You_Do_0.wav" , TRUE );
-	      Me [ 0 ] . RMS_Chat_Flags[ 1 ] = 0 ; // don't say this twice in one dialog
-	      Me [ 0 ] . RMS_Chat_Flags[ 2 ] = 1 ; // this should allow to ask how-can-i.. 
-	      Me [ 0 ] . RMS_Chat_Flags[ 5 ] = 1 ; // this should allow to ask why-didnt-you...
-	      Me [ 0 ] . RMS_Chat_Flags[ 8 ] = 1 ; // this should allow to agree on the task...
+	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 1 ] = 0 ; // don't say this twice in one dialog
+	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 2 ] = 1 ; // this should allow to ask how-can-i.. 
+	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 5 ] = 1 ; // this should allow to ask why-didnt-you...
+	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 8 ] = 1 ; // this should allow to agree on the task...
 	      break;
 	    case 3:
 	      PlayOnceNeededSoundSample( "Tux_RMS_How_Can_I_0.wav" , TRUE );
@@ -713,27 +713,27 @@ ChatWithFriendlyDroid( int Enum )
 	      PlayOnceNeededSoundSample( "RMS_It_Was_During_0.wav" , TRUE );
 	      DisplaySubtitle( " But anyway, the teleporter now points back to my former home. " , Background );
 	      PlayOnceNeededSoundSample( "RMS_But_Anyway_The_0.wav" , TRUE );
-	      Me [ 0 ] . RMS_Chat_Flags[ 2 ] = 0 ; // don't say this twice in one dialgo
-	      Me [ 0 ] . RMS_Chat_Flags[ 4 ] = 1 ; // this should allow to ask about the mag-storm...
+	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 2 ] = 0 ; // don't say this twice in one dialgo
+	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 4 ] = 1 ; // this should allow to ask about the mag-storm...
 	      break;
 	    case 4:
 	      PlayOnceNeededSoundSample( "Tux_RMS_About_This_Coffee_0.wav" , TRUE );
 	      break;
 	    case 5:
 	      PlayOnceNeededSoundSample( "Tux_RMS_What_Are_These_0.wav" , TRUE );
-	      Me [ 0 ] . RMS_Chat_Flags[ 4 ] = 0 ; // don't say this twice in one dialog
+	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 4 ] = 0 ; // don't say this twice in one dialog
 	      break;
 	    case 6:
 	      PlayOnceNeededSoundSample( "Tux_RMS_Why_Didnt_You_0.wav" , TRUE );
-	      Me [ 0 ] . RMS_Chat_Flags[ 5 ] = 0 ; // don't say this twice in one dialog
+	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 5 ] = 0 ; // don't say this twice in one dialog
 	      break;
 	    case 7:
 	      PlayOnceNeededSoundSample( "Tux_RMS_Ive_Found_Your_0.wav" , TRUE );
-	      Me [ 0 ] . RMS_Chat_Flags[ 6 ] = 0 ; // don't say this twice in one dialog
+	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 6 ] = 0 ; // don't say this twice in one dialog
 	      break;
 	    case 9:
 	      PlayOnceNeededSoundSample( "Tux_RMS_Ill_Get_Your_0.wav" , TRUE );
-	      Me [ 0 ] . RMS_Chat_Flags[ 8 ] = 0 ; // don't say this twice in one dialog
+	      Me [ 0 ] . Chat_Flags [ PERSON_RMS ] [ 8 ] = 0 ; // don't say this twice in one dialog
 	      AssignMission ( 1 ); // this should assign the coffee machine mission...
 	      break;
 	    case ( MAX_ANSWERS_PER_PERSON ):

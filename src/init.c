@@ -1498,7 +1498,7 @@ void
 InitNewMissionList ( char *MissionName )
 {
   char *fpath;
-  int i;
+  int i , j ;
   char *MainMissionPointer;
   char *BriefingSectionPointer;
   char *EventSectionPointer;
@@ -1796,11 +1796,12 @@ InitNewMissionList ( char *MissionName )
   //
   for ( i = 0 ; i < MAX_ANSWERS_PER_PERSON ; i ++ ) 
     {
-      Me[0].Chandra_Chat_Flags [ i ] = 0 ;
-      Me[0].RMS_Chat_Flags [ i ] = 0 ;
-      Me[0].SOR_Chat_Flags [ i ] = 0 ;
+      for ( j = 0 ; j < MAX_PERSONS ; j ++ )
+	{
+	  Me[0]. Chat_Flags [ j ] [ i ] = 0 ;
+	}
     }
-  Me[0].SOR_Chat_Flags [ 1 ] = 1 ;
+  Me[0].Chat_Flags [ PERSON_SOR ] [ 1 ] = 1 ;
   // RestoreChatVariableToInitialValue( 0 );
 
 
