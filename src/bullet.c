@@ -646,6 +646,7 @@ handle_flash_effects ( bullet* CurBullet )
     // disruptor resistance that the Tux might have...
     //
     Me [ 0 ] . energy -= CurBullet -> damage * ( 100 - Me [ 0 ] . resist_disruptor ) / 100 ;
+    DebugPrintf ( -4 , "\n%s(): Tux took damage from flash: %f." , __FUNCTION__ , (float)(CurBullet -> damage * ( 100 - Me [ 0 ] . resist_disruptor ) / 100 ) );
     
 }; // handle_flash_effects ( bullet* CurBullet )
 
@@ -678,51 +679,51 @@ check_bullet_background_collisions ( bullet* CurBullet , int num )
 void
 apply_bullet_damage_to_player ( int player_num , int damage ) 
 {
-  float real_damage = damage;
-
-  UpdateAllCharacterStats( player_num );
-
-  real_damage -= Me [ player_num ] . AC ;
-  if ( real_damage < 1.0 ) real_damage = 1.0 ;
-
-  //--------------------
-  // NEW RULE:  Even when the bullet hits, there's still a chance that
-  // the armour will compensate the shot
-  //
-  if ( MyRandom( 100 ) < Me [ player_num ] . AC )
+    float real_damage = damage;
+    
+    UpdateAllCharacterStats( player_num );
+    
+    real_damage -= Me [ player_num ] . AC ;
+    if ( real_damage < 1.0 ) real_damage = 1.0 ;
+    
+    //--------------------
+    // NEW RULE:  Even when the bullet hits, there's still a chance that
+    // the armour will compensate the shot
+    //
+    if ( MyRandom( 100 ) < Me [ player_num ] . AC )
     {
-      Me [ player_num ] . TextVisibleTime = 0 ;
-      Me [ player_num ] . TextToBeDisplayed = "That one went into the armour." ;
-      BulletReflectedSound ( ) ;
+	Me [ player_num ] . TextVisibleTime = 0 ;
+	Me [ player_num ] . TextToBeDisplayed = "That one went into the armour." ;
+	BulletReflectedSound ( ) ;
     }
-  else
+    else
     {
-      
-      Me [ player_num ] . TextVisibleTime = 0 ;
-      Me [ player_num ] . TextToBeDisplayed = "Ouch!" ;
-      Me [ player_num ] . energy -= real_damage ;	// loose some energy
-      
-      //--------------------
-      // A hit of what form so ever should make the Tux stop
-      // dead in his tracks.
-      //
-      // Me [ player_num ] . speed . x = 0;
-      // Me [ player_num ] . speed . y = 0; 
-      
-      //--------------------
-      // As the new rule, the influencer after getting hit, must completely
-      // start anew to recover his weapon from the previous shot
-      //
-      // Me [ player_num ] . firewait = ItemMap[ Me [ player_num ] . weapon_item . type ] . item_gun_recharging_time;
-      // Me [ player_num ] . got_hit_time = 0;
-      
-      // GotHitSound ();
-      tux_scream_sound ( );
+	
+	Me [ player_num ] . TextVisibleTime = 0 ;
+	Me [ player_num ] . TextToBeDisplayed = "Ouch!" ;
+	Me [ player_num ] . energy -= real_damage ;	// loose some energy
+	DebugPrintf ( -4 , "\n%s(): Tux took damage from bullet: %f." , __FUNCTION__ , real_damage );
+	//--------------------
+	// A hit of what form so ever should make the Tux stop
+	// dead in his tracks.
+	//
+	// Me [ player_num ] . speed . x = 0;
+	// Me [ player_num ] . speed . y = 0; 
+	
+	//--------------------
+	// As the new rule, the influencer after getting hit, must completely
+	// start anew to recover his weapon from the previous shot
+	//
+	// Me [ player_num ] . firewait = ItemMap[ Me [ player_num ] . weapon_item . type ] . item_gun_recharging_time;
+	// Me [ player_num ] . got_hit_time = 0;
+	
+	// GotHitSound ();
+	tux_scream_sound ( );
     }
-  //--------------------
-  // NEW RULE:  All items equipped suffer damage when the influencer gets hit
-  //
-  DamageAllEquipment ( player_num ) ;
+    //--------------------
+    // NEW RULE:  All items equipped suffer damage when the influencer gets hit
+    //
+    DamageAllEquipment ( player_num ) ;
 }; // void 
 
 /* ----------------------------------------------------------------------
@@ -739,7 +740,7 @@ check_bullet_player_collisions ( bullet* CurBullet , int num )
   // Now we check for collisions with one of the players.
   //
   for ( player_num = 0 ; player_num < MAX_PLAYERS ; player_num ++ )
-    {
+  {
       //--------------------
       // Of course only active players and players on the same level
       // may be checked!

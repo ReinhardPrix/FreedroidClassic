@@ -1635,8 +1635,7 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
     //--------------------
     // Newly, also enemys have to respect the angle modifier in their weapons...
     //
-    RotateVectorByAngle ( & ( NewBullet->speed ) , ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].item_gun_start_angle_modifier );
-    
+    RotateVectorByAngle ( & ( NewBullet->speed ) , ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].item_gun_start_angle_modifier );    
     NewBullet->angle = - ( 90 + 45 + 180 * atan2 ( NewBullet->speed.y,  NewBullet->speed.x ) / M_PI );  
     
     //--------------------
@@ -1645,6 +1644,30 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
     //
     ThisRobot->previous_angle = NewBullet->angle + 180 ;
   
+    // start all bullets in the center of the shooter first...
+    NewBullet -> pos . x = ThisRobot -> virt_pos . x;
+    NewBullet -> pos . y = ThisRobot -> virt_pos . y;
+    NewBullet -> pos . z = ThisRobot -> virt_pos . z;
+
+    //--------------------
+    // Maybe the position in question is true virtual, i.e. outside the current
+    // level.  As such bullets would (for now) get deleted, because bullets don't
+    // have a 'level' position yet, we suppress the bullet generation in that case
+    // and just print out a notification message.
+    //
+    if ( ThisRobot -> pos . z != Me [ 0 ] . pos . z ) 
+    {
+	// DebugPrintf ( -4 , "\n%s(): bullet generation suppressed because from outside this level." , __FUNCTION__ );
+	return;
+    }
+    
+    // fire bullets so, that they don't hit the shooter...
+    if ( NewBullet->angle_change_rate == 0 ) OffsetFactor = 0.5; else OffsetFactor = 1;
+    NewBullet->pos.x +=
+	(NewBullet->speed.x) / (bullet_speed) * OffsetFactor ;
+    NewBullet->pos.y +=
+	(NewBullet->speed.y) / (bullet_speed) * OffsetFactor ;
+
     // now we set the bullet type right
     // DebugPrintf( 0 , "Setting gun type : %d." , guntype );
     NewBullet->type = guntype;
@@ -1681,18 +1704,6 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
     NewBullet->pass_through_hit_bodies = 
 	ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_bullet_pass_through_hit_bodies;
     
-    // start all bullets in the center of the shooter first...
-    NewBullet -> pos . x = ThisRobot -> virt_pos . x;
-    NewBullet -> pos . y = ThisRobot -> virt_pos . y;
-    NewBullet -> pos . z = ThisRobot -> virt_pos . z;
-    
-    // fire bullets so, that they don't hit the shooter...
-    if ( NewBullet->angle_change_rate == 0 ) OffsetFactor = 0.5; else OffsetFactor = 1;
-    NewBullet->pos.x +=
-	(NewBullet->speed.x) / (bullet_speed) * OffsetFactor ;
-    NewBullet->pos.y +=
-	(NewBullet->speed.y) / (bullet_speed) * OffsetFactor ;
-    
     // wait for as long as is usual for this weapon type until making the next shot
     ThisRobot -> firewait = 
 	ItemMap [ Druidmap [ ThisRobot -> type ] . weapon_item . type ] . item_gun_recharging_time ;
@@ -1704,28 +1715,17 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
     // can delete the bullet that might have been created and just apply some
     // damage to the Tux if the Tux was sufficiently close
     //
-    if ( Druidmap [ ThisRobot -> type ] . use_image_archive_file )
+    if ( Druidmap [ ThisRobot -> type ] . suppress_bullet_generation_when_attacking )
     {
-	
-	if ( ( ThisRobot -> Status == OUT ) || ( ThisRobot -> animation_type == DEATH_ANIMATION ) )
-	{
-	    DebugPrintf ( -4 , "\n%s(): WARNING: animation phase reset for OUT bot... " , __FUNCTION__ );
-	}
-	
 	ThisRobot -> animation_phase = ((float)first_attack_animation_image [ ThisRobot -> type ]) + 0.1 ;
 	ThisRobot -> animation_type = ATTACK_ANIMATION;
 	
-	
-	
-	if ( Druidmap [ ThisRobot -> type ] . suppress_bullet_generation_when_attacking )
-	{
-	    DeleteBullet ( bullet_index , FALSE );
-	    //--------------------
-	    // Built-in attacks also don't use the recharge value of the
-	    // weapon item.
-	    //
-	    ThisRobot -> firewait = 1.7 ;
-	}
+	DeleteBullet ( bullet_index , FALSE );
+	//--------------------
+	// Built-in attacks also don't use the recharge value of the
+	// weapon item.
+	//
+	ThisRobot -> firewait = 1.7 ;
 	
 	ThisRobot -> current_angle = - ( - 90 + 180 * atan2 ( ydist ,  xdist ) / M_PI );  
 	
@@ -1793,6 +1793,8 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 			// should also be some kind of scream of the Tux?
 			//
 			Me [ 0 ] . energy -= Druidmap [ ThisRobot -> type ] . physical_damage ;
+			DebugPrintf ( -4 , "\n%s(): Tux took damage from melee: %f." , __FUNCTION__ , 
+				      Druidmap [ ThisRobot -> type ] . physical_damage );
 			if ( MyRandom ( 100 ) <= 20 ) tux_scream_sound ( );
 		    }
 		    else
