@@ -196,7 +196,7 @@ freedroid-discussion@lists.sourceforge.net\n\
   fwrite ( &(Me) , sizeof( influence_t ) , sizeof( char ) , SaveGameFile );  
   // fwrite ( DROID001_RAW_DATA_STRING , strlen( DROID001_RAW_DATA_STRING ), 
   // sizeof(char), SaveGameFile );  
-  fwrite ( &( Druidmap[ DRUID001 ]) , sizeof( druidspec ) , sizeof( char ) , SaveGameFile );  
+  // fwrite ( &( Druidmap[ DRUID001 ]) , sizeof( druidspec ) , sizeof( char ) , SaveGameFile );  
 
   // --------------------
   // Now we write the enemy raw data start string out to the file and of course
@@ -333,9 +333,11 @@ The game however could NOT be saved.\n\
   InfluencerRawDataPointer += strlen ( INFLUENCER_STRUCTURE_RAW_DATA_STRING ) ;
   memcpy( &Me , InfluencerRawDataPointer , sizeof ( influence_t ) );
   InfluencerRawDataPointer += sizeof ( influence_t );
+  /*
   memcpy( & ( Druidmap[ DRUID001 ] ) , InfluencerRawDataPointer , sizeof ( druidspec ) );
   Druidmap [ DRUID001 ].druidname = "001";
   Druidmap [ DRUID001 ].portrait_filename_without_ext = "001";
+  */
 
   //--------------------
   // Now we decode the enemy information.

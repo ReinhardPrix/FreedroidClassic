@@ -1855,7 +1855,6 @@ void
 DisplayChar (unsigned char c)
 {
 
-
   if ( c == 1 ) 
     {
       SetCurrentFont ( Red_BFont );
@@ -1878,6 +1877,8 @@ DisplayChar (unsigned char c)
     }
 
   PutChar ( Screen, MyCursorX, MyCursorY, c );
+
+  // DebugPrintf( 0 , "%c" , c );
 
   // After the char has been displayed, we must move the cursor to its
   // new position.  That depends of course on the char displayed.
