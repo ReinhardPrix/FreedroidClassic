@@ -328,6 +328,7 @@ EXTERN void EscapeMenu (void);
 #else
 #define EXTERN extern
 #endif
+EXTERN int sign (float x);
 EXTERN char* ReadAndMallocStringFromData ( char* SearchString , char* StartIndicationString , char* EndIndicationString );
 EXTERN int CountStringOccurences ( char* SearchString , char* TargetString ) ;
 EXTERN void ReadValueFromString( char* SearchBeginPointer , char* ValuePreceedText , char* FormatString , void* TargetValue , char* EndOfSearchSectionPointer );

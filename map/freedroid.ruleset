@@ -55,13 +55,10 @@ That will not cause any problems.
 Energy-Loss-factor for Collisions of Influ with hostile robots=1.0
 
 Radius of explosions (as far as damage is concerned) in multiples of tiles=0.3
-A**mount of damage done by contact to a blast per second of time=15.0
-Amount of damage done by contact to a blast per second of time=2.0
+Amount of damage done by contact to a blast per second of time=45.0
 
 'Radius' of droids in x direction=0.3
 'Radius' of droids in y direction=0.3
-
-Conveyor belt speed (in squares per second )=7
 
 Time for the doors to move by one subphase of their movement=0.05
 
@@ -134,1374 +131,8 @@ Cannot fire until previous bullet has been deleted : 0
 Type of blast this bullet causes when crashing e.g. against a wall : 0
 ** End of new bullet specification subsection **
 
-// this is half of the influencer primitive rifle
-** Start of new bullet specification subsection **
-Time is takes to recharge this bullet/weapon in seconds : 0.8
-Flying speed of this bullet type : 8.0
-Damage cause by a hit of this bullet type : 12
-Number of different phases that were designed for this bullet type : SEE CONFIG.THEME FILE
-Cannot fire until previous bullet has been deleted : 0
-Type of blast this bullet causes when crashing e.g. against a wall : 0
-** End of new bullet specification subsection **
-
-// this is even less than half of the influencer shot, only a white ball so far
-** Start of new bullet specification subsection **
-Time is takes to recharge this bullet/weapon in seconds : 0.4
-Flying speed of this bullet type : 8.0
-Damage cause by a hit of this bullet type : 8
-Number of different phases that were designed for this bullet type : SEE CONFIG.THEME FILE
-Cannot fire until previous bullet has been deleted : 0
-Type of blast this bullet causes when crashing e.g. against a wall : 0
-** End of new bullet specification subsection **
-
-// this is the yellow-red laser sword
-** Start of new bullet specification subsection **
-Time is takes to recharge this bullet/weapon in seconds : 0.4
-Flying speed of this bullet type : 8.0
-Damage cause by a hit of this bullet type : 8
-Number of different phases that were designed for this bullet type : SEE CONFIG.THEME FILE
-Cannot fire until previous bullet has been deleted : 0
-Type of blast this bullet causes when crashing e.g. against a wall : 0
-** End of new bullet specification subsection **
-
-// this is the yellow-red laser axe
-** Start of new bullet specification subsection **
-Time is takes to recharge this bullet/weapon in seconds : 0.4
-Flying speed of this bullet type : 8.0
-Damage cause by a hit of this bullet type : 8
-Number of different phases that were designed for this bullet type : SEE CONFIG.THEME FILE
-Cannot fire until previous bullet has been deleted : 0
-Type of blast this bullet causes when crashing e.g. against a wall : 0
-** End of new bullet specification subsection **
-
 
 *** End of Bullet Data Section: ***
-
-----------------------------------------------------------------------
-
-*** Start of item data section: ***
-
-// Item No. 0
-** Start of new item specification subsection **
-Item name="none present"
-Item can be applied in combat="no"
-Item can be installed in influ="no"
-Item can be installed in slot with name="none"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=-1 plus duration modifier=0
-Picture number=7 // this is the pure transparent 1x1 inventory square!!!
-Sound number=0 
-Base list price=0
-** End of new item specification subsection **
-
-// Item No. 1
-** Start of new item specification subsection **
-Item name="Minor Energy Capsule"
-Item can be applied in combat="yes"
-Item can be installed in influ="no"
-Item can be installed in slot with name="none"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=-1 plus duration modifier=0
-Picture number=27
-Sound number=5
-Base list price=50
-** End of new item specification subsection **
-
-// Item No. 2
-** Start of new item specification subsection **
-Item name="Full Energy Capsule"
-Item can be applied in combat="yes"
-Item can be installed in influ="no"
-Item can be installed in slot with name="none"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=-1 plus duration modifier=0
-Picture number=0
-Sound number=5 
-Base list price=150
-** End of new item specification subsection **
-
-// Item No. 3
-** Start of new item specification subsection **
-Item name="Twin Laser"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="weapon"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=28
-Magic minimum required to wear/wield this item=-1
-Item as gun: recharging time=0.95
-Item as gun: speed of bullets=8.0
-Item as gun: angle change of bullets=0.0
-Item as gun: damage of bullets=2
-Item as gun: modifier for damage of bullets=4
-Item as gun: blast type to create=1
-Item as gun: one_shot_only=0
-Item as gun: bullet_image_type=0
-Item as gun: bullet_lifetime=-1
-Item as gun: offset for melee weapon=0
-Item as gun: modifier for starting angle=0
-Item as gun: ignore collisions with wall="no"
-Item as gun: reflect other bullets="no"
-Item as gun: pass through explosions="no"
-Item as gun: pass through hit bodies="no"
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=10 plus duration modifier=10
-Picture number=14
-Sound number=7
-Base list price=350
-** End of new item specification subsection **
-
-// Item No. 4
-** Start of new item specification subsection **
-Item name="Droid Energetic Heart Class Beta"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="none"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=-1 plus duration modifier=0
-Picture number=3
-Sound number=4
-Base list price=900
-** End of new item specification subsection **
-
-// Item No. 5
-** Start of new item specification subsection **
-Item name="Alpha-Antigrav"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="drive"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item drive maxspeed=4
-Item drive acceleration=3
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=10 plus duration modifier=30
-Picture number=4
-Sound number=1 
-Base list price=200
-** End of new item specification subsection **
-
-// Item No. 6
-** Start of new item specification subsection **
-Item name="Cyberbucks"
-Item can be applied in combat="no"
-Item can be installed in influ="no"
-Item can be installed in slot with name="none"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=-1 plus duration modifier=0
-Picture number=1
-Sound number=2 
-Base list price=1
-** End of new item specification subsection **
-
-// Item No. 7
-** Start of new item specification subsection **
-Item name="Wheel Drive"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="drive"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item drive maxspeed=3
-Item drive acceleration=3
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=30 plus duration modifier=20
-Picture number=5
-Sound number=6
-Base list price=100
-** End of new item specification subsection **
-
-// Item No. 8
-** Start of new item specification subsection **
-Item name="Tripedal Drive"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="drive"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item drive maxspeed=5
-Item drive acceleration=9
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=70 plus duration modifier=20
-Picture number=8
-Sound number=4 
-Base list price=250
-** End of new item specification subsection **
-
-// Item No. 9
-** Start of new item specification subsection **
-Item name="Bipedal Drive"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="drive"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item drive maxspeed=6
-Item drive acceleration=9
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=50 plus duration modifier=20
-Picture number=10
-Sound number=4 
-Base list price=300
-** End of new item specification subsection **
-
-// Item No. 10
-** Start of new item specification subsection **
-Item name="Tracks"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="drive"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item drive maxspeed=2
-Item drive acceleration=6
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=90 plus duration modifier=30
-Picture number=11
-Sound number=0 
-Base list price=65
-** End of new item specification subsection **
-
-// Item No. 11
-** Start of new item specification subsection **
-Item name="Beta-Antigrav"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="drive"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item drive maxspeed=7
-Item drive acceleration=6
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=10 plus duration modifier=10
-Picture number=4
-Sound number=0 
-Base list price=450
-** End of new item specification subsection **
-
-// Item No. 12
-** Start of new item specification subsection **
-Item name="Laser Rifle"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="weapon"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as gun: recharging time=0.5
-Item as gun: speed of bullets=8.0
-Item as gun: angle change of bullets=0.0
-Item as gun: damage of bullets=4
-Item as gun: modifier for damage of bullets=4
-Item as gun: blast type to create=1
-Item as gun: one_shot_only=0
-Item as gun: bullet_image_type=5
-Item as gun: bullet_lifetime=-1
-Item as gun: offset for melee weapon=0
-Item as gun: modifier for starting angle=0
-Item as gun: ignore collisions with wall="no"
-Item as gun: reflect other bullets="no"
-Item as gun: pass through explosions="no"
-Item as gun: pass through hit bodies="no"
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=10 plus duration modifier=10
-Picture number=14
-Sound number=7
-Base list price=600
-** End of new item specification subsection **
-
-// Item No. 13
-** Start of new item specification subsection **
-Item name="Exterminator"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="weapon"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as gun: recharging time=3.0
-Item as gun: speed of bullets=8.0
-Item as gun: angle change of bullets=0.0
-Item as gun: damage of bullets=3
-Item as gun: modifier for damage of bullets=15
-Item as gun: blast type to create=1
-Item as gun: one_shot_only=0
-Item as gun: bullet_image_type=4
-Item as gun: bullet_lifetime=-1
-Item as gun: offset for melee weapon=0
-Item as gun: modifier for starting angle=0
-Item as gun: ignore collisions with wall="no"
-Item as gun: reflect other bullets="no"
-Item as gun: pass through explosions="no"
-Item as gun: pass through hit bodies="no"
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=10 plus duration modifier=10
-Picture number=14
-Sound number=7
-Base list price=1200
-** End of new item specification subsection **
-
-// Item No. 14
-** Start of new item specification subsection **
-Item name="Droid Disruptor Class Alpha"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="weapon"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as gun: recharging time=1.0
-Item as gun: speed of bullets=8.0   // don't set this to zero ever!! Or division by zero!!
-Item as gun: angle change of bullets=0.0   // don't set this to zero ever!! Or division by zero!0
-Item as gun: damage of bullets=40
-Item as gun: modifier for damage of bullets=12
-Item as gun: blast type to create=1
-Item as gun: one_shot_only=0
-Item as gun: bullet_image_type=3
-Item as gun: bullet_lifetime=-1
-Item as gun: offset for melee weapon=0
-Item as gun: modifier for starting angle=0
-Item as gun: ignore collisions with wall="no"
-Item as gun: reflect other bullets="no"
-Item as gun: pass through explosions="no"
-Item as gun: pass through hit bodies="no"
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=10 plus duration modifier=10
-Picture number=13
-Sound number=0 
-Base list price=2500
-** End of new item specification subsection **
-
-// Item No. 15
-** Start of new item specification subsection **
-Item name="Advanced Twin Laser"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="weapon"
-Strength minimum required to wear/wield this item=30
-Dexterity minimum required to wear/wield this item=40
-Magic minimum required to wear/wield this item=-1
-Item as gun: recharging time=1.4
-Item as gun: speed of bullets=8.0
-Item as gun: angle change of bullets=0.0
-Item as gun: damage of bullets=5
-Item as gun: modifier for damage of bullets=6
-Item as gun: blast type to create=1
-Item as gun: one_shot_only=0
-Item as gun: bullet_image_type=2
-Item as gun: bullet_lifetime=-1
-Item as gun: offset for melee weapon=0
-Item as gun: modifier for starting angle=0
-Item as gun: ignore collisions with wall="no"
-Item as gun: reflect other bullets="no"
-Item as gun: pass through explosions="no"
-Item as gun: pass through hit bodies="no"
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=10 plus duration modifier=10
-Picture number=14
-Sound number=7
-Base list price=800
-** End of new item specification subsection **
-
-// Item No. 16
-** Start of new item specification subsection **
-Item name="Advanced Single Laser"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="weapon"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as gun: recharging time=1.2
-Item as gun: speed of bullets=8.0
-Item as gun: angle change of bullets=0.0
-Item as gun: damage of bullets=3
-Item as gun: modifier for damage of bullets=9
-Item as gun: blast type to create=1
-Item as gun: one_shot_only=0
-Item as gun: bullet_image_type=1
-Item as gun: bullet_lifetime=-1
-Item as gun: offset for melee weapon=0
-Item as gun: modifier for starting angle=0
-Item as gun: ignore collisions with wall="no"
-Item as gun: reflect other bullets="no"
-Item as gun: pass through explosions="no"
-Item as gun: pass through hit bodies="no"
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=10 plus duration modifier=10
-Picture number=2
-Sound number=7
-Base list price=250
-** End of new item specification subsection **
-
-// Item No. 17
-** Start of new item specification subsection **
-Item name="The Super Exterminator!!!"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="weapon"
-Strength minimum required to wear/wield this item=20
-Dexterity minimum required to wear/wield this item=45
-Magic minimum required to wear/wield this item=-1
-Item as gun: recharging time=0.15
-Item as gun: speed of bullets=8.0
-Item as gun: angle change of bullets=0.0
-Item as gun: damage of bullets=80
-Item as gun: modifier for damage of bullets=20
-Item as gun: blast type to create=1
-Item as gun: one_shot_only=0
-Item as gun: bullet_image_type=4
-Item as gun: bullet_lifetime=-1
-Item as gun: offset for melee weapon=0
-Item as gun: modifier for starting angle=0
-Item as gun: ignore collisions with wall="no"
-Item as gun: reflect other bullets="no"
-Item as gun: pass through explosions="no"
-Item as gun: pass through hit bodies="no"
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=10 plus duration modifier=10
-Picture number=12
-Sound number=7
-Base list price=5000
-** End of new item specification subsection **
-
-// Item No. 18
-** Start of new item specification subsection **
-Item name="Droid Plating"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="armour"
-Strength minimum required to wear/wield this item=60
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=20
-Item as defensive item: ac_bonus_modifier=8
-Base item duration=30 plus duration modifier=15
-Picture number=23
-Sound number=5
-Base list price=12500
-** End of new item specification subsection **
-
-// Item No. 19
-** Start of new item specification subsection **
-Item name="Buckler"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="shield"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=1
-Item as defensive item: ac_bonus_modifier=5
-Base item duration=10 plus duration modifier=8
-Picture number=24
-Sound number=0 
-Base list price=30
-** End of new item specification subsection **
-
-// Item No. 20
-** Start of new item specification subsection **
-Item name="Cap"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="special"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=1
-Item as defensive item: ac_bonus_modifier=5
-Base item duration=10 plus duration modifier=10
-Picture number=16
-Sound number=0 
-Base list price=25
-** End of new item specification subsection **
-
-// Item No. 21
-** Start of new item specification subsection **
-Item name="Warrior Plug-in from the North Pole"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="aux"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=-1 plus duration modifier=0
-Picture number=17
-Sound number=0 
-Base list price=0
-** End of new item specification subsection **
-
-// Item No. 22
-** Start of new item specification subsection **
-Item name="Single laser"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="weapon"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as gun: recharging time=0.8
-Item as gun: speed of bullets=8.0
-Item as gun: angle change of bullets=0.0
-Item as gun: damage of bullets=1
-Item as gun: modifier for damage of bullets=3
-Item as gun: blast type to create=1
-Item as gun: one_shot_only=0
-Item as gun: bullet_image_type=6
-Item as gun: bullet_lifetime=-1
-Item as gun: offset for melee weapon=0
-Item as gun: modifier for starting angle=0
-Item as gun: ignore collisions with wall="no"
-Item as gun: reflect other bullets="no"
-Item as gun: pass through explosions="no"
-Item as gun: pass through hit bodies="no"
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=10 plus duration modifier=10
-Picture number=18
-Sound number=7
-Base list price=100
-** End of new item specification subsection **
-
-// Item No. 23
-** Start of new item specification subsection **
-Item name="Single substandard plasma pistol"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="weapon"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as gun: recharging time=0.6
-Item as gun: speed of bullets=8.0
-Item as gun: angle change of bullets=0.0
-Item as gun: damage of bullets=1
-Item as gun: modifier for damage of bullets=3
-Item as gun: blast type to create=1
-Item as gun: one_shot_only=0
-Item as gun: bullet_image_type=7
-Item as gun: bullet_lifetime=-1
-Item as gun: offset for melee weapon=0
-Item as gun: modifier for starting angle=0
-Item as gun: ignore collisions with wall="no"
-Item as gun: reflect other bullets="no"
-Item as gun: pass through explosions="no"
-Item as gun: pass through hit bodies="no"
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=10 plus duration modifier=10
-Picture number=18
-Sound number=7
-Base list price=40
-** End of new item specification subsection **
-
-// Item No. 24
-** Start of new item specification subsection **
-Item name="Long sword"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="weapon"
-S**trength minimum required to wear/wield this item=45
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as gun: recharging time=0.45
-Item as gun: speed of bullets=0.1
-Item as gun: angle change of bullets=720
-Item as gun: damage of bullets=2
-Item as gun: modifier for damage of bullets=10
-Item as gun: blast type to create=1
-Item as gun: one_shot_only=0
-Item as gun: bullet_image_type=8
-Item as gun: bullet_lifetime=0.20
-I**tem as gun: offset for melee weapon=0.85
-Item as gun: offset for melee weapon=1.05
-Item as gun: modifier for starting angle=-60
-Item as gun: ignore collisions with wall="yes"
-Item as gun: reflect other bullets="yes"
-Item as gun: pass through explosions="yes"
-Item as gun: pass through hit bodies="yes"
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=35 plus duration modifier=10
-Picture number=20
-Sound number=0 
-Base list price=350
-** End of new item specification subsection **
-
-// Item No. 25
-** Start of new item specification subsection **
-Item name="Cloak"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="armour"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=3
-Item as defensive item: ac_bonus_modifier=4
-Base item duration=18 plus duration modifier=1
-Picture number=15
-Sound number=5
-Base list price=40
-** End of new item specification subsection **
-
-// Item No. 26
-** Start of new item specification subsection **
-Item name="Claymore"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="weapon"
-Strength minimum required to wear/wield this item=35
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as gun: recharging time=0.95
-Item as gun: speed of bullets=0.1
-Item as gun: angle change of bullets=720
-Item as gun: damage of bullets=1
-Item as gun: modifier for damage of bullets=11
-Item as gun: blast type to create=1
-Item as gun: one_shot_only=0
-Item as gun: bullet_image_type=8
-Item as gun: bullet_lifetime=0.50
-Item as gun: offset for melee weapon=1.2
-Item as gun: modifier for starting angle=-40
-Item as gun: ignore collisions with wall="no"
-Item as gun: reflect other bullets="yes"
-Item as gun: pass through explosions="yes"
-Item as gun: pass through hit bodies="yes"
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=30 plus duration modifier=10
-Picture number=20
-Sound number=0 
-Base list price=450
-** End of new item specification subsection **
-
-// Item No. 27
-** Start of new item specification subsection **
-Item name="Short Lasersword"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="weapon"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as gun: recharging time=0.60
-Item as gun: speed of bullets=0.01
-Item as gun: angle change of bullets=720
-Item as gun: damage of bullets=2
-Item as gun: modifier for damage of bullets=5
-Item as gun: blast type to create=1
-Item as gun: one_shot_only=0
-Item as gun: bullet_image_type=8
-Item as gun: bullet_lifetime=0.20
-Item as gun: offset for melee weapon=0.85
-Item as gun: modifier for starting angle=-60
-Item as gun: ignore collisions with wall="yes"
-Item as gun: reflect other bullets="yes"
-Item as gun: pass through explosions="yes"
-Item as gun: pass through hit bodies="yes"
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=10 plus duration modifier=10
-Picture number=19
-Sound number=0 
-Base list price=120
-** End of new item specification subsection **
-
-// Item No. 28
-** Start of new item specification subsection **
-Item name="Small Axe"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="weapon"
-S**trength minimum required to wear/wield this item=45
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as gun: recharging time=0.95
-Item as gun: speed of bullets=0.01
-Item as gun: angle change of bullets=720
-Item as gun: damage of bullets=2
-Item as gun: modifier for damage of bullets=8
-Item as gun: blast type to create=1
-Item as gun: one_shot_only=0
-Item as gun: bullet_image_type=9
-Item as gun: bullet_lifetime=0.20
-Item as gun: offset for melee weapon=0.85
-Item as gun: modifier for starting angle=-60
-Item as gun: ignore collisions with wall="yes"
-Item as gun: reflect other bullets="yes"
-Item as gun: pass through explosions="yes"
-Item as gun: pass through hit bodies="yes"
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=20 plus duration modifier=10
-Picture number=25
-Sound number=0 
-Base list price=120
-** End of new item specification subsection **
-
-// Item No. 29
-** Start of new item specification subsection **
-Item name="Robe"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="armour"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=2
-Item as defensive item: ac_bonus_modifier=4
-Base item duration=20 plus duration modifier=10
-Picture number=39
-Sound number=5
-Base list price=75
-** End of new item specification subsection **
-
-// Item No. 30
-** Start of new item specification subsection **
-Item name="Quilted Armour"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="armour"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=8
-Item as defensive item: ac_bonus_modifier=4
-Base item duration=30 plus duration modifier=10
-Picture number=40
-Sound number=5
-Base list price=200
-** End of new item specification subsection **
-
-// Item No. 31
-** Start of new item specification subsection **
-Item name="Leather Armour"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="armour"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=10
-Item as defensive item: ac_bonus_modifier=6
-Base item duration=30 plus duration modifier=10
-Picture number=26
-Sound number=5
-Base list price=300
-** End of new item specification subsection **
-
-// Item No. 32
-** Start of new item specification subsection **
-Item name="Dancing laser blades (don't hurt yourself!)"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="weapon"
-Strength minimum required to wear/wield this item=35
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as gun: recharging time=0.95
-Item as gun: speed of bullets=8.1
-Item as gun: angle change of bullets=720
-Item as gun: damage of bullets=1
-Item as gun: modifier for damage of bullets=11
-Item as gun: blast type to create=1
-Item as gun: one_shot_only=0
-Item as gun: bullet_image_type=1
-Item as gun: bullet_lifetime=1.50
-Item as gun: offset for melee weapon=1.5
-Item as gun: modifier for starting angle=-40
-Item as gun: ignore collisions with wall="no"
-Item as gun: reflect other bullets="yes"
-Item as gun: pass through explosions="yes"
-Item as gun: pass through hit bodies="yes"
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=30 plus duration modifier=10
-Picture number=14
-Sound number=0 
-Base list price=450
-** End of new item specification subsection **
-
-// Item No. 33
-** Start of new item specification subsection **
-Item name="Standard Shield"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="shield"
-Strength minimum required to wear/wield this item=25
-Dexterity minimum required to wear/wield this item=25
-Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=20
-Item as defensive item: ac_bonus_modifier=7
-Base item duration=25 plus duration modifier=10
-Picture number=43
-Sound number=7
-Base list price=250
-** End of new item specification subsection **
-
-// Item No. 34
-** Start of new item specification subsection **
-Item name="Laserscimitar"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="weapon"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=21
-Magic minimum required to wear/wield this item=-1
-Item as gun: recharging time=0.45
-Item as gun: speed of bullets=0.1
-Item as gun: angle change of bullets=720
-Item as gun: damage of bullets=2
-Item as gun: modifier for damage of bullets=4
-Item as gun: blast type to create=1
-Item as gun: one_shot_only=0
-Item as gun: bullet_image_type=8
-Item as gun: bullet_lifetime=0.20
-I**tem as gun: offset for melee weapon=0.85
-Item as gun: offset for melee weapon=0.85
-Item as gun: modifier for starting angle=-60
-Item as gun: ignore collisions with wall="yes"
-Item as gun: reflect other bullets="yes"
-Item as gun: pass through explosions="yes"
-Item as gun: pass through hit bodies="yes"
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=10 plus duration modifier=10
-Picture number=21
-Sound number=0 
-Base list price=120
-** End of new item specification subsection **
-
-// Item No. 35
-** Start of new item specification subsection **
-Item name="Lasersaber"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="weapon"
-Strength minimum required to wear/wield this item=25
-Dexterity minimum required to wear/wield this item=25
-Magic minimum required to wear/wield this item=-1
-Item as gun: recharging time=0.45
-Item as gun: speed of bullets=0.1
-Item as gun: angle change of bullets=720
-Item as gun: damage of bullets=3
-Item as gun: modifier for damage of bullets=5
-Item as gun: blast type to create=1
-Item as gun: one_shot_only=0
-Item as gun: bullet_image_type=8
-Item as gun: bullet_lifetime=0.20
-I**tem as gun: offset for melee weapon=0.85
-Item as gun: offset for melee weapon=0.85
-Item as gun: modifier for starting angle=-60
-Item as gun: ignore collisions with wall="yes"
-Item as gun: reflect other bullets="yes"
-Item as gun: pass through explosions="yes"
-Item as gun: pass through hit bodies="yes"
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=10 plus duration modifier=10
-Picture number=20
-Sound number=0 
-Base list price=240
-** End of new item specification subsection **
-
-// Item No. 36
-** Start of new item specification subsection **
-Item name="Laserfalchion"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="weapon"
-Strength minimum required to wear/wield this item=33
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as gun: recharging time=0.85
-Item as gun: speed of bullets=0.1
-Item as gun: angle change of bullets=720
-Item as gun: damage of bullets=7
-Item as gun: modifier for damage of bullets=8
-Item as gun: blast type to create=1
-Item as gun: one_shot_only=0
-Item as gun: bullet_image_type=8
-Item as gun: bullet_lifetime=0.20
-I**tem as gun: offset for melee weapon=0.85
-Item as gun: offset for melee weapon=0.85
-Item as gun: modifier for starting angle=-60
-Item as gun: ignore collisions with wall="yes"
-Item as gun: reflect other bullets="yes"
-Item as gun: pass through explosions="yes"
-Item as gun: pass through hit bodies="yes"
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=10 plus duration modifier=10
-Picture number=21
-Sound number=0 
-Base list price=310
-** End of new item specification subsection **
-
-// Item No. 37
-** Start of new item specification subsection **
-Item name="Laserdagger"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="weapon"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as gun: recharging time=0.25
-Item as gun: speed of bullets=0.1
-Item as gun: angle change of bullets=720
-Item as gun: damage of bullets=1
-Item as gun: modifier for damage of bullets=3
-Item as gun: blast type to create=1
-Item as gun: one_shot_only=0
-Item as gun: bullet_image_type=8
-Item as gun: bullet_lifetime=0.20
-Item as gun: offset for melee weapon=0.85
-Item as gun: modifier for starting angle=-60
-Item as gun: ignore collisions with wall="yes"
-Item as gun: reflect other bullets="yes"
-Item as gun: pass through explosions="yes"
-Item as gun: pass through hit bodies="yes"
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=10 plus duration modifier=10
-Picture number=28
-Sound number=0 
-Base list price=60
-** End of new item specification subsection **
-
-// Item No. 38
-** Start of new item specification subsection **
-Item name="Laserclub"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="weapon"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as gun: recharging time=0.65
-Item as gun: speed of bullets=0.1
-Item as gun: angle change of bullets=720
-Item as gun: damage of bullets=1
-Item as gun: modifier for damage of bullets=4
-Item as gun: blast type to create=1
-Item as gun: one_shot_only=0
-Item as gun: bullet_image_type=8
-Item as gun: bullet_lifetime=0.30
-Item as gun: offset for melee weapon=0.85
-Item as gun: modifier for starting angle=-60
-Item as gun: ignore collisions with wall="yes"
-Item as gun: reflect other bullets="yes"
-Item as gun: pass through explosions="yes"
-Item as gun: pass through hit bodies="yes"
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=10 plus duration modifier=10
-Picture number=19
-Sound number=0 
-Base list price=50
-** End of new item specification subsection **
-
-// Item No. 39
-** Start of new item specification subsection **
-Item name="Laserstaff"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="weapon"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as gun: recharging time=0.55
-Item as gun: speed of bullets=0.1
-Item as gun: angle change of bullets=720
-Item as gun: damage of bullets=2
-Item as gun: modifier for damage of bullets=3
-Item as gun: blast type to create=1
-Item as gun: one_shot_only=0
-Item as gun: bullet_image_type=8
-Item as gun: bullet_lifetime=0.30
-Item as gun: offset for melee weapon=0.85
-Item as gun: modifier for starting angle=-60
-Item as gun: ignore collisions with wall="yes"
-Item as gun: reflect other bullets="yes"
-Item as gun: pass through explosions="yes"
-Item as gun: pass through hit bodies="yes"
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=40 plus duration modifier=40
-Picture number=31
-Sound number=0 
-Base list price=50
-** End of new item specification subsection **
-
-// Item No. 40
-** Start of new item specification subsection **
-Item name="Hand Laseraxe"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="weapon"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as gun: recharging time=0.35
-Item as gun: speed of bullets=0.1
-Item as gun: angle change of bullets=720
-Item as gun: damage of bullets=2
-Item as gun: modifier for damage of bullets=2
-Item as gun: blast type to create=1
-Item as gun: one_shot_only=0
-Item as gun: bullet_image_type=8
-Item as gun: bullet_lifetime=0.15
-Item as gun: offset for melee weapon=0.85
-Item as gun: modifier for starting angle=-40
-Item as gun: ignore collisions with wall="yes"
-Item as gun: reflect other bullets="yes"
-Item as gun: pass through explosions="yes"
-Item as gun: pass through hit bodies="yes"
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=10 plus duration modifier=10
-Picture number=19
-Sound number=0 
-Base list price=80
-** End of new item specification subsection **
-
-// Item No. 41
-** Start of new item specification subsection **
-Item name="Minor Force Capsule"
-Item can be applied in combat="yes"
-Item can be installed in influ="no"
-Item can be installed in slot with name="none"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=-1 plus duration modifier=0
-Picture number=30
-Sound number=5
-Base list price=50
-** End of new item specification subsection **
-
-// Item No. 42
-** Start of new item specification subsection **
-Item name="Full Force Capsule"
-Item can be applied in combat="yes"
-Item can be installed in influ="no"
-Item can be installed in slot with name="none"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=-1 plus duration modifier=0
-Picture number=29
-Sound number=5 
-Base list price=150
-** End of new item specification subsection **
-
-// Item No. 43
-** Start of new item specification subsection **
-Item name="Small Shield"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="shield"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=3
-Item as defensive item: ac_bonus_modifier=6
-Base item duration=10 plus duration modifier=8
-Picture number=6
-Sound number=0 
-Base list price=90
-** End of new item specification subsection **
-
-// Item No. 44
-** Start of new item specification subsection **
-Item name="Source Book of the Healing spell"
-Item can be applied in combat="yes"
-Item can be installed in influ="no"
-Item can be installed in slot with name="none"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=-1 plus duration modifier=0
-Picture number=32
-Sound number=5 
-Base list price=1000
-** End of new item specification subsection **
-
-// Item No. 45
-** Start of new item specification subsection **
-Item name="Modern Source Book of Teleport Home"
-Item can be applied in combat="yes"
-Item can be installed in influ="no"
-Item can be installed in slot with name="none"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=-1 plus duration modifier=0
-Picture number=33
-Sound number=5 
-Base list price=1000
-** End of new item specification subsection **
-
-// Item No. 46
-** Start of new item specification subsection **
-Item name="Modern Source Book of Explosion Circle"
-Item can be applied in combat="yes"
-Item can be installed in influ="no"
-Item can be installed in slot with name="none"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=-1 plus duration modifier=0
-Picture number=33
-Sound number=5 
-Base list price=1000
-** End of new item specification subsection **
-
-// Item No. 47
-** Start of new item specification subsection **
-Item name="Modern Source Book of Explosion Ray"
-Item can be applied in combat="yes"
-Item can be installed in influ="no"
-Item can be installed in slot with name="none"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=-1 plus duration modifier=0
-Picture number=33
-Sound number=5 
-Base list price=1000
-** End of new item specification subsection **
-
-// Item No. 48
-** Start of new item specification subsection **
-Item name="Medium Energy Capsule"
-Item can be applied in combat="yes"
-Item can be installed in influ="no"
-Item can be installed in slot with name="none"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=-1 plus duration modifier=0
-Picture number=34
-Sound number=5
-Base list price=100
-** End of new item specification subsection **
-
-// Item No. 49
-** Start of new item specification subsection **
-Item name="Medium Force Capsule"
-Item can be applied in combat="yes"
-Item can be installed in influ="no"
-Item can be installed in slot with name="none"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=-1 plus duration modifier=0
-Picture number=35
-Sound number=5
-Base list price=100
-** End of new item specification subsection **
-
-// Item No. 50
-** Start of new item specification subsection **
-Item name="Small Helm"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="special"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=4
-Item as defensive item: ac_bonus_modifier=5
-Base item duration=18 plus duration modifier=10
-Picture number=36
-Sound number=0 
-Base list price=75
-** End of new item specification subsection **
-
-// Item No. 51
-** Start of new item specification subsection **
-Item name="Sniper Plug-in from the North Pole"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="aux"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=-1 plus duration modifier=0
-Picture number=41
-Sound number=0 
-Base list price=0
-** End of new item specification subsection **
-
-// Item No. 52
-** Start of new item specification subsection **
-Item name="Hacker Plug-in from the North Pole"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="aux"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=-1 plus duration modifier=0
-Picture number=42
-Sound number=0 
-Base list price=0
-** End of new item specification subsection **
-
-// Item No. 53
-** Start of new item specification subsection **
-Item name="Iron Hat"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="special"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=4
-Item as defensive item: ac_bonus_modifier=5
-Base item duration=18 plus duration modifier=10
-Picture number=36
-Sound number=0 
-Base list price=175
-** End of new item specification subsection **
-
-// Item No. 54
-** Start of new item specification subsection **
-Item name="Iron Helm"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="special"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=8
-Item as defensive item: ac_bonus_modifier=8
-Base item duration=28 plus duration modifier=15
-Picture number=38
-Sound number=0 
-Base list price=275
-** End of new item specification subsection **
-
-// Item No. 55
-** Start of new item specification subsection **
-Item name="Pot-Helm"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="special"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=12
-Item as defensive item: ac_bonus_modifier=10
-Base item duration=38 plus duration modifier=20
-Picture number=37
-Sound number=0 
-Base list price=375
-** End of new item specification subsection **
-
-// Item No. 56
-** Start of new item specification subsection **
-Item name="Medium Shield"
-Item can be applied in combat="no"
-Item can be installed in influ="yes"
-Item can be installed in slot with name="shield"
-Strength minimum required to wear/wield this item=45
-Dexterity minimum required to wear/wield this item=30
-Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=20
-Item as defensive item: ac_bonus_modifier=7
-Base item duration=35 plus duration modifier=20
-Picture number=44
-Sound number=7
-Base list price=450
-** End of new item specification subsection **
-
-// Item No. 10000 LAST ITEM !!! DUMMY ENTRY!!!!
-** Start of new item specification subsection **
-Item name="ITEM CODE ERROR ITEM"
-Item can be applied in combat="yes"
-Item can be installed in influ="no"
-Item can be installed in slot with name="none"
-Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
-Magic minimum required to wear/wield this item=-1
-Item as defensive item: base_ac_bonus=0
-Item as defensive item: ac_bonus_modifier=0
-Base item duration=-1 plus duration modifier=0
-Picture number=33
-Sound number=5 
-Base list price=1000
-** End of new item specification subsection **
-
-
-*** End of item data section: ***
 
 ----------------------------------------------------------------------
 
@@ -1515,29 +146,25 @@ value in the detailed description of each robot further below
 and make your modifiactions there.
 
 Common factor for all droids maxspeed values: 0.7
-Common factor for all droids acceleration values: 3.0
+Common factor for all droids acceleration values: 9.0
 Common factor for all droids maximum energy values: 1.0
-Common factor for all droids energyloss values: 0.05
+Common factor for all droids energyloss values: 0.3
 Common factor for all droids aggression values: 1.0
-Common factor for all droids score values: 2.0
+Common factor for all droids score values: 1.0
 
 Now we come to the description of all the droids:
 
 ** Start of new Robot: ** 
 Droidname: 001
-Droid portrait file name (without extension) to use="001"
 Maximum speed of this droid: 5.1
 Class of this droid: 0
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 100.1
-Maximum mana of this droid: 100.1
-Rate of energyloss under influence control: 0.0
+Rate of energyloss under influence control: 1.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 0
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
 Height of this droid : 1.00
 Weight of this droid : 27
 Drive of this droid : 0
@@ -1546,37 +173,21 @@ Sensor 1 of this droid : 0
 Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
-Drive item=5
-Weapon item=22
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : robot activity influence device. This helmet is self-powered and will control any robot for a short time. Lasers are turret-mounted. 
 
 ** Start of new Robot: ** 
 Droidname: 123
-Droid portrait file name (without extension) to use="123"
 Maximum speed of this droid: 2.1
 Class of this droid: 1
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 20.1
-Maximum mana of this droid: 20.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 25
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
 Height of this droid : 1.37
 Weight of this droid : 85
 Drive of this droid : 1
@@ -1585,37 +196,21 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 2
 Sensor 3 of this droid : 0
 Armament of this droid : 0
-Drive item=10
-Weapon item=-1
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : simpe rubbish diposal robot. Common device in most space craft to maintain a clean ship. 
 
 ** Start of new Robot: ** 
 Droidname: 139
-Droid portrait file name (without extension) to use="139"
 Maximum speed of this droid: 2.1
 Class of this droid: 1
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 20.1
-Maximum mana of this droid: 20.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 25
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
 Height of this droid : 1.22
 Weight of this droid : 61
 Drive of this droid : 2
@@ -1624,37 +219,21 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
-Drive item=10
-Weapon item=-1
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : created by Dr. Masternak to clean up large heaps of rubbish. Its large scoop is used to collect rubbish. It is then crushed internally. 
 
 ** Start of new Robot: ** 
 Droidname: 247
-Droid portrait file name (without extension) to use="247"
 Maximum speed of this droid: 4.1
 Class of this droid: 2
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 20.1
-Maximum mana of this droid: 20.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 50
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
 Height of this droid : 1.56
 Weight of this droid : 78
 Drive of this droid : 2
@@ -1663,37 +242,21 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
-Drive item=5
-Weapon item=-1
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : light duty servant robot. One of the first to use the anti-grav system. 
 
 ** Start of new Robot: ** 
 Droidname: 249
-Droid portrait file name (without extension) to use="249"
 Maximum speed of this droid: 3.1
 Class of this droid: 2
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 40.1
-Maximum mana of this droid: 40.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 50
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
 Height of this droid : 1.63
 Weight of this droid : 83
 Drive of this droid : 3
@@ -1702,37 +265,21 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
-Drive item=8
-Weapon item=-1
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : cheaper version of the anti-grav servant robot. 
 
 ** Start of new Robot: ** 
 Droidname: 296
-Droid portrait file name (without extension) to use="296"
 Maximum speed of this droid: 2.1
 Class of this droid: 2
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 40.1
-Maximum mana of this droid: 40.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 50
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
 Height of this droid : 1.20
 Weight of this droid : 47
 Drive of this droid : 1
@@ -1741,37 +288,21 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
-Drive item=10
-Weapon item=-1
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : this robot is used mainly for serving drinks. A tray is mounted on the head. Built by Orchard and Marsden Enterprises. 
 
 ** Start of new Robot: ** 
 Droidname: 302
-Droid portrait file name (without extension) to use="302"
 Maximum speed of this droid: 7.1
 Class of this droid: 3
-Maximum acceleration of this droid: 2.1
+Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 40.1
-Maximum mana of this droid: 40.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 75
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
 Height of this droid : 1.07
 Weight of this droid : 23
 Drive of this droid : 2
@@ -1780,37 +311,21 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
-Drive item=11
-Weapon item=-1
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : common device for moving small packages. Clamp is mounted on the lower body. 
 
 ** Start of new Robot: ** 
 Droidname: 329
-Droid portrait file name (without extension) to use="329"
 Maximum speed of this droid: 1.1
 Class of this droid: 3
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 40.1
-Maximum mana of this droid: 40.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 75
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
 Height of this droid : 1.07
 Weight of this droid : 31
 Drive of this droid : 4
@@ -1819,37 +334,21 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
-Drive item=7
-Weapon item=-1
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : early type messenger robot. Large wheels impede motion on small craft.an
 
 ** Start of new Robot: ** 
 Droidname: 420
-Droid portrait file name (without extension) to use="420"
 Maximum speed of this droid: 2.1
 Class of this droid: 4
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 60.1
-Maximum mana of this droid: 60.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 100
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
 Height of this droid : 1.41
 Weight of this droid : 57
 Drive of this droid : 1
@@ -1858,37 +357,21 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
-Drive item=10
-Weapon item=-1
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : slow maintenance robot. Confined to drive maintenance during flight. 
 
 ** Start of new Robot: ** 
 Droidname: 476
-Droid portrait file name (without extension) to use="476"
 Maximum speed of this droid: 4.1
 Class of this droid: 4
 Maximum acceleration of this droid: 1.1
-Maximum energy of this droid: 16.1
-Maximum mana of this droid: 70.1
+Maximum energy of this droid: 70.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 1
 Aggression rate of this droid: 25
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 100
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
 Height of this droid : 1.32
 Weight of this droid : 42
 Drive of this droid : 2
@@ -1897,37 +380,21 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 2
 Sensor 3 of this droid : 0
 Armament of this droid : 1
-Drive item=5
-Weapon item=16
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=70
-Chance modifier, that this robot gets hit=10
 Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : ship maintenance robot. Fitted with multiple arms to carry out repairs to the ship efficiently. All craft built after the Jupiter-incident are supplied with a team of these. 
 
 ** Start of new Robot: ** 
 Droidname: 493
-Droid portrait file name (without extension) to use="493"
 Maximum speed of this droid: 4.1
 Class of this droid: 4
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 80.1
-Maximum mana of this droid: 80.1
 Rate of energyloss under influence control: 3.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 100
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
 Height of this droid : 1.48
 Weight of this droid : 51
 Drive of this droid : 2
@@ -1936,37 +403,21 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
-Drive item=5
-Weapon item=-1
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : slave maintenance droid. Standard version will carry its own toolbox. 
 
 ** Start of new Robot: ** 
 Droidname: 516
-Droid portrait file name (without extension) to use="516"
 Maximum speed of this droid: 3.1
 Class of this droid: 5
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 80.1
-Maximum mana of this droid: 80.1
 Rate of energyloss under influence control: 3.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 125
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
 Height of this droid : 1.57
 Weight of this droid : 74
 Drive of this droid : 5
@@ -1975,37 +426,21 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
-Drive item=9
-Weapon item=-1
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : early crew droid. Able to carry out simple flight checks only. No longer supplied. 
 
 ** Start of new Robot: ** 
 Droidname: 571
-Droid portrait file name (without extension) to use="571"
 Maximum speed of this droid: 4.1
 Class of this droid: 5
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 80.1
-Maximum mana of this droid: 80.1
 Rate of energyloss under influence control: 3.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 125
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
 Height of this droid : 1.76
 Weight of this droid : 62
 Drive of this droid : 5
@@ -2014,37 +449,21 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
-Drive item=9
-Weapon item=-1
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : standard crew droid. Supplied with the ship. 
 
 ** Start of new Robot: ** 
 Droidname: 598
-Droid portrait file name (without extension) to use="598"
 Maximum speed of this droid: 3.1
 Class of this droid: 5
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 80.1
-Maximum mana of this droid: 80.1
 Rate of energyloss under influence control: 3.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 125
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
 Height of this droid : 1.72
 Weight of this droid : 93
 Drive of this droid : 5
@@ -2053,37 +472,21 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
-Drive item=9
-Weapon item=-1
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : a highly sophisticated device. Able to control the Robo-Freighter on its own. 
 
 ** Start of new Robot: ** 
 Droidname: 614
-Droid portrait file name (without extension) to use="614"
 Maximum speed of this droid: 3.1
 Class of this droid: 6
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 100.1
-Maximum mana of this droid: 100.1
 Rate of energyloss under influence control: 3.1
 Weapon type this droid uses: 5
 Aggression rate of this droid: 30
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 150
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
 Height of this droid : 1.93
 Weight of this droid : 121
 Drive of this droid : 5
@@ -2092,37 +495,21 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 3
 Sensor 3 of this droid : 0
 Armament of this droid : 2
-Drive item=9
-Weapon item=12
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : low security sentinel droid. Used to protect areas of the ship from intruders. A slow but sure device. 
 
 ** Start of new Robot: ** 
 Droidname: 615
-Droid portrait file name (without extension) to use="615"
 Maximum speed of this droid: 4.1
 Class of this droid: 6
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 100.1
-Maximum mana of this droid: 100.1
 Rate of energyloss under influence control: 3.1
 Weapon type this droid uses: 1
 Aggression rate of this droid: 30
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 150
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
 Height of this droid : 1.20
 Weight of this droid : 29
 Drive of this droid : 2
@@ -2131,37 +518,21 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 2
 Sensor 3 of this droid : 0
 Armament of this droid : 1
-Drive item=5
-Weapon item=16
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : sophisticated sentinel droid. Only 2000 built by the Nicholson Company. these are now very rare.
 
 ** Start of new Robot: ** 
 Droidname: 629
-Droid portrait file name (without extension) to use="629"
 Maximum speed of this droid: 2.1
 Class of this droid: 6
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 100.1
-Maximum mana of this droid: 100.1
 Rate of energyloss under influence control: 3.1
 Weapon type this droid uses: 2
 Aggression rate of this droid: 40
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 150
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
 Height of this droid : 1.09
 Weight of this droid : 59
 Drive of this droid : 1
@@ -2170,37 +541,21 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 3
 Sensor 3 of this droid : 0
 Armament of this droid : 1
-Drive item=10
-Weapon item=15
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : low sentinel droid. Lasers are built into the turret. These are mounted on a small tank body. May be fitted with an auto-cannon on-the Gillen version. 
 
 ** Start of new Robot: ** 
 Droidname: 711
-Droid portrait file name (without extension) to use="711"
 Maximum speed of this droid: 5.1
 Class of this droid: 7
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 110.1
-Maximum mana of this droid: 110.1
 Rate of energyloss under influence control: 4.1
 Weapon type this droid uses: 3
 Aggression rate of this droid: 60
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 175
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
 Height of this droid : 1.93
 Weight of this droid : 102
 Drive of this droid : 5
@@ -2209,37 +564,21 @@ Sensor 1 of this droid : 4
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 0
 Armament of this droid : 3
-Drive item=9
-Weapon item=14
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : heavy duty battle droid. Disruptor is built into the head. One of the first in service with the Military. 
 
 ** Start of new Robot: ** 
 Droidname: 742
-Droid portrait file name (without extension) to use="742"
 Maximum speed of this droid: 4.1
 Class of this droid: 7
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 130.1
-Maximum mana of this droid: 130.1
 Rate of energyloss under influence control: 4.1
 Weapon type this droid uses: 3
 Aggression rate of this droid: 60
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 175
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
 Height of this droid : 1.87
 Weight of this droid : 140
 Drive of this droid : 5
@@ -2248,37 +587,21 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 0
 Armament of this droid : 3
-Drive item=9
-Weapon item=14
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : this version is the one mainly used by the Military. 
 
 ** Start of new Robot: ** 
 Droidname: 751
-Droid portrait file name (without extension) to use="751"
 Maximum speed of this droid: 5.1
 Class of this droid: 7
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 150.1
-Maximum mana of this droid: 150.1
 Rate of energyloss under influence control: 4.1
 Weapon type this droid uses: 1
 Aggression rate of this droid: 80
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 175
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
 Height of this droid : 1.93
 Weight of this droid : 227
 Drive of this droid : 5
@@ -2287,37 +610,21 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 1
-Drive item=9
-Weapon item=16
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : very heavy duty battle droid. Only a few have so far entered service. These are the most powerful battle units ever built. 
 
 ** Start of new Robot: ** 
 Droidname: 821
-Droid portrait file name (without extension) to use="821"
 Maximum speed of this droid: 6.1
 Class of this droid: 8
 Maximum acceleration of this droid: 2.1
 Maximum energy of this droid: 160.1
-Maximum mana of this droid: 160.1
 Rate of energyloss under influence control: 4.1
 Weapon type this droid uses: 2
 Aggression rate of this droid: 65
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 200
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
 Height of this droid : 1.00
 Weight of this droid : 28
 Drive of this droid : 2
@@ -2326,37 +633,21 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 2
 Armament of this droid : 1
-Drive item=11
-Weapon item=15
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : a very reliable anti-grav unit is fitted into this droid. It will patrol the ship and eliminate intruders as soon as detected by powerful sensors. 
 
 ** Start of new Robot: ** 
 Droidname: 834
-Droid portrait file name (without extension) to use="834"
 Maximum speed of this droid: 7.1
 Class of this droid: 8
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 140.1
-Maximum mana of this droid: 140.1
 Rate of energyloss under influence control: 4.1
 Weapon type this droid uses: 1
 Aggression rate of this droid: 55
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 200
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
 Height of this droid : 1.10
 Weight of this droid : 34
 Drive of this droid : 2
@@ -2365,37 +656,21 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 0
 Armament of this droid : 1
-Drive item=5
-Weapon item=16
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : early type anti-grav security droid. Fitted with an over-driven anti-grav unit. This droid is very fast but is not reliable. 
 
 ** Start of new Robot: ** 
 Droidname: 883
-Droid portrait file name (without extension) to use="883"
 Maximum speed of this droid: 2.1
 Class of this droid: 8
 Maximum acceleration of this droid: 1.1
 Maximum energy of this droid: 180.1
-Maximum mana of this droid: 180.1
 Rate of energyloss under influence control: 4.1
 Weapon type this droid uses: 4
 Aggression rate of this droid: 90
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 200
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
 Height of this droid : 1.62
 Weight of this droid : 79
 Drive of this droid : 4
@@ -2404,37 +679,21 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 0
 Armament of this droid : 4
-Drive item=7
-Weapon item=13
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : this droid was designed from archive data. For some unknown reason it instils great fear in Human adversaries. 
 
 ** Start of new Robot: ** 
 Droidname: 999
-Droid portrait file name (without extension) to use="999"
 Maximum speed of this droid: 6.1
 Class of this droid: 9
 Maximum acceleration of this droid: 2.1
 Maximum energy of this droid: 100.1
-Maximum mana of this droid: 100.1
-Rate of energyloss under influence control: 15.1
+Rate of energyloss under influence control: 10.1
 Weapon type this droid uses: 2
 Aggression rate of this droid: 90
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 225
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
 Height of this droid : 1.87
 Weight of this droid : 162
 Drive of this droid : 2
@@ -2443,545 +702,21 @@ Sensor 1 of this droid : 2
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
 Armament of this droid : 1
-Drive item=11
-Weapon item=15
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
 
 ** Start of new Robot: ** 
-Droidname: 124
-Droid portrait file name (without extension) to use="123"
-Maximum speed of this droid: 2.1
-Class of this droid: 1
-Maximum acceleration of this droid: 1.1
-Maximum energy of this droid: 2.1
-Maximum mana of this droid: 10.1
-Rate of energyloss under influence control: 2.1
-Weapon type this droid uses: 0
-Aggression rate of this droid: 99
-Is this droid immune to disruptor blasts? 0
-Score gained for destroying one of this type: 25
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
-Height of this droid : 1.37
-Weight of this droid : 85
-Drive of this droid : 1
-Brain of this droid : 0
-Sensor 1 of this droid : 1
-Sensor 2 of this droid : 2
-Sensor 3 of this droid : 0
-Armament of this droid : 0
-Drive item=10
-W**eapon item=22
-Weapon item=28
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=0
-Got Hit Sound number=0
-Chance of this robot scoring a hit=60
-Chance modifier, that this robot gets hit=30
-Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
-Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : simpe rubbish diposal robot. Common device in most space craft to maintain a clean ship. 
-
-** Start of new Robot: ** 
-Droidname: 140
-Droid portrait file name (without extension) to use="139"
-Maximum speed of this droid: 2.1
-Class of this droid: 1
-Maximum acceleration of this droid: 1.1
-Maximum energy of this droid: 2.1
-Maximum mana of this droid: 10.1
-Rate of energyloss under influence control: 2.1
-Weapon type this droid uses: 0
-Aggression rate of this droid: 65
-Is this droid immune to disruptor blasts? 0
-Score gained for destroying one of this type: 25
-Monster Level and maximum treasure chest to pick from=1
-Force how many additional magic items to be dropped=0
-Height of this droid : 1.22
-Weight of this droid : 61
-Drive of this droid : 2
-Brain of this droid : 0
-Sensor 1 of this droid : 1
-Sensor 2 of this droid : 0
-Sensor 3 of this droid : 0
-Armament of this droid : 0
-Drive item=10
-Weapon item=23
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=1
-Got Hit Sound number=1
-Chance of this robot scoring a hit=60
-Chance modifier, that this robot gets hit=30
-Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
-Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : created by Dr. Masternak to clean up large heaps of rubbish. Its large scoop is used to collect rubbish. It is then crushed internally. 
-
-** Start of new Robot: ** 
-Droidname: 248
-Droid portrait file name (without extension) to use="247"
-Maximum speed of this droid: 4.1
-Class of this droid: 2
-Maximum acceleration of this droid: 1.1
-Maximum energy of this droid: 6.1
-Maximum mana of this droid: 20.1
-Rate of energyloss under influence control: 2.1
-Weapon type this droid uses: 0
-Aggression rate of this droid: 82
-Is this droid immune to disruptor blasts? 0
-Score gained for destroying one of this type: 50
-Monster Level and maximum treasure chest to pick from=2
-Force how many additional magic items to be dropped=0
-Height of this droid : 1.56
-Weight of this droid : 78
-Drive of this droid : 2
-Brain of this droid : 1
-Sensor 1 of this droid : 1
-Sensor 2 of this droid : 0
-Sensor 3 of this droid : 0
-Armament of this droid : 0
-Drive item=5
-Weapon item=27
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=80
-Chance modifier, that this robot gets hit=20
-Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
-Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : light duty servant robot. One of the first to use the anti-grav system. 
-
-** Start of new Robot: ** 
-Droidname: 250
-Droid portrait file name (without extension) to use="249"
-Maximum speed of this droid: 3.1
-Class of this droid: 2
-Maximum acceleration of this droid: 1.1
-Maximum energy of this droid: 20.1
-Maximum mana of this droid: 20.1
-Rate of energyloss under influence control: 2.1
-Weapon type this droid uses: 0
-Aggression rate of this droid: 84
-Is this droid immune to disruptor blasts? 0
-Score gained for destroying one of this type: 50
-Monster Level and maximum treasure chest to pick from=3
-Force how many additional magic items to be dropped=0
-Height of this droid : 1.63
-Weight of this droid : 83
-Drive of this droid : 3
-Brain of this droid : 1
-Sensor 1 of this droid : 1
-Sensor 2 of this droid : 0
-Sensor 3 of this droid : 0
-Armament of this droid : 0
-Drive item=8
-Weapon item=22
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=0
-Chance of this robot scoring a hit=82
-Chance modifier, that this robot gets hit=10
-Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
-Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : cheaper version of the anti-grav servant robot. 
-
-** Start of new Robot: ** 
-Droidname: 257
-Droid portrait file name (without extension) to use="247"
-Maximum speed of this droid: 4.1
-Class of this droid: 2
-Maximum acceleration of this droid: 1.1
-Maximum energy of this droid: 12.1
-Maximum mana of this droid: 20.1
-Rate of energyloss under influence control: 2.1
-Weapon type this droid uses: 0
-Aggression rate of this droid: 82
-Is this droid immune to disruptor blasts? 0
-Score gained for destroying one of this type: 50
-Monster Level and maximum treasure chest to pick from=3
-Force how many additional magic items to be dropped=0
-Height of this droid : 1.56
-Weight of this droid : 78
-Drive of this droid : 2
-Brain of this droid : 1
-Sensor 1 of this droid : 1
-Sensor 2 of this droid : 0
-Sensor 3 of this droid : 0
-Armament of this droid : 0
-Drive item=5
-Weapon item=27
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=80
-Chance modifier, that this robot gets hit=20
-Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
-Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : light duty servant robot. One of the first to use the anti-grav system. 
-
-** Start of new Robot: ** 
-Droidname: 297
-Droid portrait file name (without extension) to use="296"
-Maximum speed of this droid: 2.1
-Class of this droid: 2
-Maximum acceleration of this droid: 1.1
-Maximum energy of this droid: 40.1
-Maximum mana of this droid: 40.1
-Rate of energyloss under influence control: 2.1
-Weapon type this droid uses: 0
-Aggression rate of this droid: 84
-Is this droid immune to disruptor blasts? 0
-Score gained for destroying one of this type: 50
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
-Height of this droid : 1.20
-Weight of this droid : 47
-Drive of this droid : 1
-Brain of this droid : 1
-Sensor 1 of this droid : 1
-Sensor 2 of this droid : 0
-Sensor 3 of this droid : 0
-Armament of this droid : 0
-Drive item=10
-Weapon item=27
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=85
-Chance modifier, that this robot gets hit=15
-Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
-Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : this robot is used mainly for serving drinks. A tray is mounted on the head. Built by Orchard and Marsden Enterprises. 
-
-** Start of new Robot: ** 
-Droidname: DAP
-Droid portrait file name (without extension) to use="999"
-Maximum speed of this droid: 6.1
-Class of this droid: 11
-Maximum acceleration of this droid: 2.1
-Maximum energy of this droid: 70.1
-Maximum mana of this droid: 70.1
-Rate of energyloss under influence control: 15.1
-Weapon type this droid uses: 2
-Aggression rate of this droid: 95
-Is this droid immune to disruptor blasts? 1
-Score gained for destroying one of this type: 500
-Monster Level and maximum treasure chest to pick from=3
-Force how many additional magic items to be dropped=2
-Height of this droid : 1.87
-Weight of this droid : 162
-Drive of this droid : 2
-Brain of this droid : 2
-Sensor 1 of this droid : 2
-Sensor 2 of this droid : 5
-Sensor 3 of this droid : 3
-Drive item=9
-Weapon item=12
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=90
-Chance modifier, that this robot gets hit=-30
-Armament of this droid : 1
-Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 1
-Going to request reinforcements typical for this droid : 0
-This is a dark Apprentice of the evil MS Super-Corporation.
-
-** Start of new Robot: ** 
-Droidname: DSR
-Droid portrait file name (without extension) to use="999"
-Maximum speed of this droid: 6.1
-Class of this droid: 11
-Maximum acceleration of this droid: 2.1
-Maximum energy of this droid: 110.1
-Maximum mana of this droid: 110.1
-Rate of energyloss under influence control: 15.1
-Weapon type this droid uses: 2
-Aggression rate of this droid: 95
-Is this droid immune to disruptor blasts? 1
-Score gained for destroying one of this type: 800
-Monster Level and maximum treasure chest to pick from=3
-Force how many additional magic items to be dropped=2
-Height of this droid : 1.87
-Weight of this droid : 162
-Drive of this droid : 2
-Brain of this droid : 2
-Sensor 1 of this droid : 2
-Sensor 2 of this droid : 5
-Sensor 3 of this droid : 3
-Drive item=9
-Weapon item=12
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=92
-Chance modifier, that this robot gets hit=-50
-Armament of this droid : 1
-Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 1
-Going to request reinforcements typical for this droid : 0
-This is a dark Apprentice of the evil MS Super-Corporation.
-
-** Start of new Robot: ** 
-Droidname: CHA
-Droid portrait file name (without extension) to use="CHA"
-Maximum speed of this droid: 6.1
-Class of this droid: 10
-Maximum acceleration of this droid: 2.1
-Maximum energy of this droid: 100.1
-Maximum mana of this droid: 100.1
-Rate of energyloss under influence control: 15.1
-Weapon type this droid uses: 2
-Aggression rate of this droid: 60
-Is this droid immune to disruptor blasts? 1
-Score gained for destroying one of this type: 225
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
-Height of this droid : 1.87
-Weight of this droid : 162
-Drive of this droid : 2
-Brain of this droid : 2
-Sensor 1 of this droid : 2
-Sensor 2 of this droid : 5
-Sensor 3 of this droid : 3
-Drive item=9
-Weapon item=-1
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
-Armament of this droid : 1
-Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 1
-Going to request reinforcements typical for this droid : 0
-This is Dr. Chanra, a leading scientist in the field of artificial intelligence and droid construction optimization theory.
-
-** Start of new Robot: ** 
-Droidname: STO
-Droid portrait file name (without extension) to use="999"
-Maximum speed of this droid: 6.1
-Class of this droid: 10
-Maximum acceleration of this droid: 2.1
-Maximum energy of this droid: 100.1
-Maximum mana of this droid: 100.1
-Rate of energyloss under influence control: 15.1
-Weapon type this droid uses: 2
-Aggression rate of this droid: 60
-Is this droid immune to disruptor blasts? 1
-Score gained for destroying one of this type: 225
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
-Height of this droid : 1.87
-Weight of this droid : 162
-Drive of this droid : 2
-Brain of this droid : 2
-Sensor 1 of this droid : 2
-Sensor 2 of this droid : 5
-Sensor 3 of this droid : 3
-Drive item=9
-Weapon item=-1
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
-Armament of this droid : 1
-Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 1
-Going to request reinforcements typical for this droid : 0
-This is Mr. Stone, a sales representative of the United Machines Corporation.
-
-** Start of new Robot: ** 
-Droidname: SOR
-Droid portrait file name (without extension) to use="999"
-Maximum speed of this droid: 6.1
-Class of this droid: 10
-Maximum acceleration of this droid: 2.1
-Maximum energy of this droid: 100.1
-Maximum mana of this droid: 100.1
-Rate of energyloss under influence control: 15.1
-Weapon type this droid uses: 2
-Aggression rate of this droid: 60
-Is this droid immune to disruptor blasts? 1
-Score gained for destroying one of this type: 225
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
-Height of this droid : 1.87
-Weight of this droid : 162
-Drive of this droid : 2
-Brain of this droid : 2
-Sensor 1 of this droid : 2
-Sensor 2 of this droid : 5
-Sensor 3 of this droid : 3
-Drive item=9
-Weapon item=-1
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
-Armament of this droid : 1
-Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 1
-Going to request reinforcements typical for this droid : 0
-This is Mr. Stone, a sales representative of the United Machines Corporation.
-
-** Start of new Robot: ** 
-Droidname: HEA
-Droid portrait file name (without extension) to use="999"
-Maximum speed of this droid: 6.1
-Class of this droid: 10
-Maximum acceleration of this droid: 2.1
-Maximum energy of this droid: 100.1
-Maximum mana of this droid: 100.1
-Rate of energyloss under influence control: 15.1
-Weapon type this droid uses: 2
-Aggression rate of this droid: 60
-Is this droid immune to disruptor blasts? 1
-Score gained for destroying one of this type: 225
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
-Height of this droid : 1.87
-Weight of this droid : 162
-Drive of this droid : 2
-Brain of this droid : 2
-Sensor 1 of this droid : 2
-Sensor 2 of this droid : 5
-Sensor 3 of this droid : 3
-Drive item=9
-Weapon item=-1
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
-Armament of this droid : 1
-Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 1
-Going to request reinforcements typical for this droid : 0
-This is the healer within the small startup town.
-
-** Start of new Robot: ** 
-Droidname: RMS
-Droid portrait file name (without extension) to use="999"
-Maximum speed of this droid: 6.1
-Class of this droid: 10
-Maximum acceleration of this droid: 2.1
-Maximum energy of this droid: 100.1
-Maximum mana of this droid: 100.1
-Rate of energyloss under influence control: 15.1
-Weapon type this droid uses: 2
-Aggression rate of this droid: 60
-Is this droid immune to disruptor blasts? 1
-Score gained for destroying one of this type: 225
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
-Height of this droid : 1.87
-Weight of this droid : 162
-Drive of this droid : 2
-Brain of this droid : 2
-Sensor 1 of this droid : 2
-Sensor 2 of this droid : 5
-Sensor 3 of this droid : 3
-Drive item=9
-Weapon item=-1
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=95
-Chance modifier, that this robot gets hit=-30
-Armament of this droid : 1
-Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 1
-Going to request reinforcements typical for this droid : 0
-This is Richard, who escaped from the second level
-
-** Start of new Robot: ** 
 Droidname: 998
-Droid portrait file name (without extension) to use="999"
 Maximum speed of this droid: 6.1
 Class of this droid: 9
 Maximum acceleration of this droid: 2.1
 Maximum energy of this droid: 100.1
-Maximum mana of this droid: 100.1
 Rate of energyloss under influence control: 15.1
 Weapon type this droid uses: 2
 Aggression rate of this droid: 60
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 225
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
 Height of this droid : 1.87
 Weight of this droid : 162
 Drive of this droid : 2
@@ -2990,37 +725,21 @@ Sensor 1 of this droid : 2
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
 Armament of this droid : 1
-Drive item=5
-Weapon item=15
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
 
 ** Start of new Robot: ** 
 Droidname: 997
-Droid portrait file name (without extension) to use="999"
 Maximum speed of this droid: 6.1
 Class of this droid: 9
 Maximum acceleration of this droid: 2.1
 Maximum energy of this droid: 100.1
-Maximum mana of this droid: 100.1
 Rate of energyloss under influence control: 15.1
 Weapon type this droid uses: 2
 Aggression rate of this droid: 60
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 225
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
 Height of this droid : 1.87
 Weight of this droid : 162
 Drive of this droid : 2
@@ -3029,37 +748,21 @@ Sensor 1 of this droid : 2
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
 Armament of this droid : 1
-Drive item=5
-Weapon item=15
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
 
 ** Start of new Robot: ** 
 Droidname: 996
-Droid portrait file name (without extension) to use="999"
 Maximum speed of this droid: 6.1
 Class of this droid: 9
 Maximum acceleration of this droid: 2.1
 Maximum energy of this droid: 100.1
-Maximum mana of this droid: 100.1
 Rate of energyloss under influence control: 15.1
 Weapon type this droid uses: 2
 Aggression rate of this droid: 60
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 225
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
 Height of this droid : 1.87
 Weight of this droid : 162
 Drive of this droid : 2
@@ -3068,37 +771,21 @@ Sensor 1 of this droid : 2
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
 Armament of this droid : 1
-Drive item=5
-Weapon item=15
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
 
 ** Start of new Robot: ** 
 Droidname: 995
-Droid portrait file name (without extension) to use="999"
 Maximum speed of this droid: 6.1
 Class of this droid: 9
 Maximum acceleration of this droid: 2.1
 Maximum energy of this droid: 100.1
-Maximum mana of this droid: 100.1
 Rate of energyloss under influence control: 15.1
 Weapon type this droid uses: 2
 Aggression rate of this droid: 60
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 225
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
 Height of this droid : 1.87
 Weight of this droid : 162
 Drive of this droid : 2
@@ -3107,37 +794,21 @@ Sensor 1 of this droid : 2
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
 Armament of this droid : 1
-Drive item=5
-Weapon item=15
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
 
 ** Start of new Robot: ** 
 Droidname: 994
-Droid portrait file name (without extension) to use="999"
 Maximum speed of this droid: 6.1
 Class of this droid: 9
 Maximum acceleration of this droid: 2.1
 Maximum energy of this droid: 100.1
-Maximum mana of this droid: 100.1
 Rate of energyloss under influence control: 15.1
 Weapon type this droid uses: 2
 Aggression rate of this droid: 60
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 225
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
 Height of this droid : 1.87
 Weight of this droid : 162
 Drive of this droid : 2
@@ -3146,37 +817,21 @@ Sensor 1 of this droid : 2
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
 Armament of this droid : 1
-Drive item=5
-Weapon item=15
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
 
 ** Start of new Robot: ** 
 Droidname: 993
-Droid portrait file name (without extension) to use="999"
 Maximum speed of this droid: 6.1
 Class of this droid: 9
 Maximum acceleration of this droid: 2.1
 Maximum energy of this droid: 100.1
-Maximum mana of this droid: 100.1
 Rate of energyloss under influence control: 15.1
 Weapon type this droid uses: 2
 Aggression rate of this droid: 60
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 225
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
 Height of this droid : 1.87
 Weight of this droid : 162
 Drive of this droid : 2
@@ -3185,37 +840,21 @@ Sensor 1 of this droid : 2
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
 Armament of this droid : 1
-Drive item=5
-Weapon item=15
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
 
 ** Start of new Robot: ** 
 Droidname: 992
-Droid portrait file name (without extension) to use="999"
 Maximum speed of this droid: 6.1
 Class of this droid: 9
 Maximum acceleration of this droid: 2.1
 Maximum energy of this droid: 100.1
-Maximum mana of this droid: 100.1
 Rate of energyloss under influence control: 15.1
 Weapon type this droid uses: 2
 Aggression rate of this droid: 60
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 225
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
 Height of this droid : 1.87
 Weight of this droid : 162
 Drive of this droid : 2
@@ -3224,37 +863,21 @@ Sensor 1 of this droid : 2
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
 Armament of this droid : 1
-Drive item=5
-Weapon item=15
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
 
 ** Start of new Robot: ** 
 Droidname: 991
-Droid portrait file name (without extension) to use="999"
 Maximum speed of this droid: 6.1
 Class of this droid: 9
 Maximum acceleration of this droid: 2.1
 Maximum energy of this droid: 100.1
-Maximum mana of this droid: 100.1
 Rate of energyloss under influence control: 15.1
 Weapon type this droid uses: 2
 Aggression rate of this droid: 60
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 225
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
 Height of this droid : 1.87
 Weight of this droid : 162
 Drive of this droid : 2
@@ -3263,37 +886,21 @@ Sensor 1 of this droid : 2
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
 Armament of this droid : 1
-Drive item=5
-Weapon item=15
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
 
 ** Start of new Robot: ** 
 Droidname: 990
-Droid portrait file name (without extension) to use="999"
 Maximum speed of this droid: 6.1
 Class of this droid: 9
 Maximum acceleration of this droid: 2.1
 Maximum energy of this droid: 100.1
-Maximum mana of this droid: 100.1
 Rate of energyloss under influence control: 15.1
 Weapon type this droid uses: 2
 Aggression rate of this droid: 60
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 225
-Monster Level and maximum treasure chest to pick from=0
-Force how many additional magic items to be dropped=0
 Height of this droid : 1.87
 Weight of this droid : 162
 Drive of this droid : 2
@@ -3302,19 +909,7 @@ Sensor 1 of this droid : 2
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
 Armament of this droid : 1
-Drive item=5
-Weapon item=15
-Shield item=-1
-Armour item=-1
-Aux1 item=-1
-Aux2 item=-1
-Special item=-1
-Greeting Sound number=-1
-Got Hit Sound number=-1
-Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
-Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
 

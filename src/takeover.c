@@ -118,7 +118,7 @@ int DisplayColumn[NUM_LINES] = {
   GELB, VIOLETT
 };
 
-SDL_Color to_bg_color = {199, 199, 199};
+SDL_Color to_bg_color = {130,130,130};
 
 playground_t ToPlayground;
 playground_t ActivationMap;

@@ -75,6 +75,21 @@ Uint32 Ten_Frame_SDL_Ticks;
 Uint32 Onehundred_Frame_SDL_Ticks;
 int framenr = 0;
 
+// ------------------------------------------------------------
+// just a plain old sign-function
+// ------------------------------------------------------------
+int sign (float x)
+{
+  if (x == 0.0)
+    return (0);
+  else if (x > 0.0)
+    return (1);
+  else 
+    return (-1);
+}
+
+
+
 /*
 ----------------------------------------------------------------------
 This function looks for a sting begin indicator and takes the string

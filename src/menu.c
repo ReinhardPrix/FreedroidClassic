@@ -467,7 +467,8 @@ EscapeMenu (void)
 	      switch (MenuPosition) 
 		{
 		case NEW_GAME:
-		  GameOver = TRUE;
+		  // just let influ die, that's enough to start a new game... ;)
+		  Me.energy = -1;
 		  finished = TRUE;
 		  break;
 		case FULL_WINDOW:

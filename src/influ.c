@@ -813,27 +813,29 @@ AdjustSpeed (void)
 void
 InfluenceFrictionWithAir (void)
 {
+  float deccel = 7.0;
+  float slowdown;
+  int oldsign;
 
-  if (!UpPressed () && !DownPressed ())
-    {
-      /*
-	if (Me.speed.y < 0)
-	Me.speed.y++;
-	if (Me.speed.y > 0)
-	Me.speed.y--;
-      */
-      Me.speed.y *= exp(log(0.02) * Frame_Time());
-    }
   if (!RightPressed () && !LeftPressed ())
     {
-      /*
-	if (Me.speed.x < 0)
-	Me.speed.x++;
-	if (Me.speed.x > 0)
-	Me.speed.x--;
-      */
-      Me.speed.x *= exp(log(0.02) * Frame_Time());
+      oldsign = sign(Me.speed.x);
+      slowdown = 1.0 * oldsign * deccel * Frame_Time();
+      Me.speed.x -= slowdown;
+      if (sign(Me.speed.x) != oldsign)  // changed direction -> vel=0
+	Me.speed.x = 0.0;
     }
+
+  if (!UpPressed() && !DownPressed())
+    {
+      oldsign = sign(Me.speed.y);
+      slowdown = 1.0 * oldsign * deccel * Frame_Time();
+      Me.speed.y -= slowdown;
+      if (sign(Me.speed.y) != oldsign)  // changed direction -> vel=0
+	Me.speed.y = 0.0;
+    }
+
+  return;
 
 } // InfluenceFrictionWithAir (void)
 
