@@ -56,6 +56,9 @@ enum
     ALL_PART_GROUPS = 6
   };
 
+#define PUT_ONLY_THROWN_ITEMS 3
+#define PUT_NO_THROWN_ITEMS 4
+
 char* 
 part_group_strings [ ALL_PART_GROUPS ] = 
   {
@@ -119,7 +122,8 @@ enum
     BLITTING_TYPE_ENEMY = 2 ,
     BLITTING_TYPE_TUX = 3 ,
     BLITTING_TYPE_BULLET = 4 ,
-    BLITTING_TYPE_BLAST = 5 
+    BLITTING_TYPE_BLAST = 5 ,
+    BLITTING_TYPE_THROWN_ITEM = 6
   };
 
 //
@@ -958,6 +962,25 @@ insert_one_enemy_into_blitting_list ( int enemy_num )
  *
  * ---------------------------------------------------------------------- */
 void
+insert_one_thrown_item_into_blitting_list ( int item_num )
+{
+  float item_norm;
+  Level ItemLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
+  Item CurItem = &ItemLevel -> ItemList [ item_num ] ;
+
+  item_norm = CurItem -> pos . x + CurItem -> pos . y ;
+
+  insert_new_element_into_blitting_list ( item_norm , BLITTING_TYPE_THROWN_ITEM , CurItem , item_num );
+
+  // fprintf ( stderr , "\nOne thrown item now inserted into blitting list. " );
+
+}; // void insert_one_item_into_blitting_list ( int enemy_num )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
 insert_one_bullet_into_blitting_list ( int bullet_num )
 {
   float bullet_norm = AllBullets [ bullet_num ] . pos . x + AllBullets [ bullet_num ] . pos . y ;
@@ -1040,6 +1063,26 @@ insert_blasts_into_blitting_list ( void )
 }; // void insert_enemies_into_blitting_list ( void )
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+insert_thrown_items_into_blitting_list ( void )
+{
+  int i;
+  Level ItemLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
+  Item CurItem = &ItemLevel -> ItemList [ 0 ] ;
+
+  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+    {
+      if ( CurItem -> throw_time > 0 )
+	insert_one_thrown_item_into_blitting_list ( i );
+      CurItem ++ ;
+    }
+      
+}; // void insert_enemies_into_blitting_list ( void )
+
+/* ----------------------------------------------------------------------
  * In isometric viewpoint setting, we need to respect visibility when
  * considering the order of things to blit.  Therefore we will first set
  * up a list of the things to be blitted for this frame.  Then we can
@@ -1069,6 +1112,8 @@ set_up_ordered_blitting_list ( int mask )
   insert_bullets_into_blitting_list ( ); 
 
   insert_blasts_into_blitting_list ( ); 
+
+  insert_thrown_items_into_blitting_list ( ); 
 
 }; // void set_up_ordered_blitting_list ( void )
 
@@ -1153,6 +1198,10 @@ blit_nonpreput_objects_according_to_blitting_list ( int mask )
 	case BLITTING_TYPE_BLAST:
 	  if ( ! ( mask & OMIT_BLASTS ) )
 	    PutBlast ( blitting_list [ i ] . code_number ); 
+	  break;
+	case BLITTING_TYPE_THROWN_ITEM:
+	  PutItem ( blitting_list [ i ] . code_number , mask , PUT_ONLY_THROWN_ITEMS ); 
+	  // DebugPrintf ( -1 , "\nThrown item now blitted..." );
 	  break;
 	default:
 	  GiveStandardErrorMessage ( "blit_all_objects_according_to_blitting_list (...)" , "\
@@ -1322,7 +1371,7 @@ AssembleCombatPicture (int mask)
     {
       for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
 	{
-	  PutItem( i , mask );
+	  PutItem( i , mask , PUT_NO_THROWN_ITEMS );
 	}
     }
 
@@ -2521,7 +2570,7 @@ There was a bullet to be blitted of a type that does not really exist.",
  * the AllItems array.
  * ---------------------------------------------------------------------- */
 void
-PutItem( int ItemNumber , int mask )
+PutItem( int ItemNumber , int mask , int put_thrown_items_flag )
 {
   Level ItemLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
   Item CurItem = &ItemLevel -> ItemList [ ItemNumber ] ;
@@ -2548,6 +2597,19 @@ There was an item type given, that exceeds the range of item images loaded.",
   // We don't blit any item, that we're currently holding in our hand, do we?
   if ( CurItem->currently_held_in_hand == TRUE ) return;
 
+  //--------------------
+  // In case the flag filters this item, we don't blit it
+  //
+  if ( ( put_thrown_items_flag == PUT_ONLY_THROWN_ITEMS ) &&
+       ( CurItem -> throw_time <= 0 ) ) 
+    return;
+  if ( ( put_thrown_items_flag == PUT_NO_THROWN_ITEMS ) &&
+       ( CurItem -> throw_time > 0 ) ) 
+    return;
+
+  
+
+
   ItemGPS . x = CurItem -> pos . x ;
   ItemGPS . y = CurItem -> pos . y ;
   ItemGPS . z = Me [ 0 ] . pos . z ; // this is silly.  The item is always from this leve...
@@ -2568,8 +2630,8 @@ There was an item type given, that exceeds the range of item images loaded.",
   else
     {
       blit_iso_image_to_map_position ( ItemImageList[ ItemMap[ CurItem->type ] . picture_number ] . ingame_iso_image , 
-				       CurItem -> pos . x - 2.0 * sinf ( CurItem -> throw_time * 3.0 ) , 
-				       CurItem -> pos . y - 2.0 * sinf ( CurItem -> throw_time * 3.0 ) );
+				       CurItem -> pos . x - 3.0 * sinf ( CurItem -> throw_time * 3.0 ) , 
+				       CurItem -> pos . y - 3.0 * sinf ( CurItem -> throw_time * 3.0 ) );
     }
 
 }; // void PutItem( int ItemNumber );

@@ -120,7 +120,7 @@ EXTERN void DisplayItemImageAtMouseCursor( int ItemImageCode );
 EXTERN void AssembleCombatPicture (int );
 EXTERN void blit_tux (int , int , int );
 EXTERN void PutBullet ( int Bullet_number , int mask );
-EXTERN void PutItem ( int ItemNumber , int mask );
+EXTERN void PutItem ( int ItemNumber , int mask , int put_thrown_items_flag );
 EXTERN void PutBlast (int);
 EXTERN void PutEnemy (int Enum, int x , int y , int mask );
 EXTERN void PutMouseMoveCursor ( void ) ;
