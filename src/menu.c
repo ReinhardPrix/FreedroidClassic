@@ -1053,7 +1053,7 @@ LevelEditor(void)
 	  PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "C...start/end waypoint CONNECTION" ); k++;
 
 	  SDL_Flip ( ne_screen );
-	  while (!FirePressedR() || !EscapePressedR()) usleep(50);
+	  while (!FirePressedR() && !EscapePressedR()) usleep(50);
 	}
       
       //--------------------
