@@ -10,6 +10,9 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.15  1997/06/09 11:17:56  jprix
+ * Threw out the SpeedX and SpeedY macros/definitions because they get confused with local variables.
+ *
  * Revision 1.14  1997/06/08 18:46:11  jprix
  * Sound server should be working perfectly now.  Background music was also activated.
  * Background music file and new fire sound added.
@@ -233,11 +236,6 @@ enum _directions {
 #define CLGrobY ((Me.pos.y+BLOCKHOEHE/2) / BLOCKHOEHE)
 #define CLFeinX ((Me.pos.x+BLOCKBREITE/2) % BLOCKHOEHE)
 #define CLGrobX ((Me.pos.x+BLOCKBREITE/2) / BLOCKHOEHE)
-
-#define SpeedX (Me.speed.x)
-#define SpeedY (Me.speed.y)
-
-// #define SwapScreen() MyMemcpy(RealScreen, InternalScreen, SCREENLEN*SCREENHEIGHT)
 
 #define BREMSDREHUNG 3 		/* warte 3*, bevor Influencer weitergedreht wird */
 

@@ -207,15 +207,15 @@ int main(void)
       AnimateEnemys();   // Bei den Feinden auch Phasen weiterzaehlen 
 
       /* Raeder bremsen die Fahrt des Influencers erheblich */
-      printf("\nvoid main(void): SpeedX ist jetzt: %f!",SpeedX);
-      printf("\nvoid main(void): SpeedY ist jetzt: %f!",SpeedY);
+      printf( "\nvoid main: Me.speed.x ist jetzt: %f!" , Me.speed.x );
+      printf( "\nvoid main: Me.speed.y ist jetzt: %f!" , Me.speed.y );
       Reibung();
 
       /* Influencedruid nach der momentanen Geschwindigkeit weiterbewegen */
-      printf("\nvoid main(void): SpeedX: %f!",SpeedX);
-      gl_printf(1,40,"\nvoid main(void): SpeedY: %f!",SpeedY);
-      Me.pos.x+=SpeedX * Frame_Time();
-      Me.pos.y+=SpeedY * Frame_Time();
+      printf("\nvoid main: Me.speed.x: %f!" , Me.speed.x);
+      gl_printf(1,40,"\nvoid main: Me.speed.y: %f!", Me.speed.y);
+      Me.pos.x += Me.speed.x * Frame_Time();
+      Me.pos.y += Me.speed.y * Frame_Time();
       AdjustSpeed();
 
       BounceInfluencer();       /* Testen ob der Weg nicht durch Mauern verstellt ist */

@@ -214,10 +214,10 @@ void MoveInfluence(void)
   /* Time passed before entering Transfermode ?? */
   if( TransferCounter && (TransferCounter-- == 1) ) Me.status = TRANSFERMODE;
 	
-  if (UpPressed()) SpeedY-= accel;
-  if (DownPressed()) SpeedY+= accel;
-  if (LeftPressed()) SpeedX-= accel;
-  if (RightPressed()) SpeedX+= accel;
+  if (UpPressed()) Me.speed.y-= accel;
+  if (DownPressed()) Me.speed.y+= accel;
+  if (LeftPressed()) Me.speed.x-= accel;
+  if (RightPressed()) Me.speed.x+= accel;
   
   if (!SpacePressed()) Me.status=MOBILE;
 
@@ -336,8 +336,10 @@ void AnimateInfluence(void) {
 
 /*@Function============================================================
 @Desc: BounceInfluencer: prueft Kollisionen mit Tueren und Mauer
-mit DruidPassable() und wirft Influencer
-entsprechend zurueck
+       mit DruidPassable() und wirft Influencer
+       entsprechend zurueck
+
+NEW: This functions HAS to take into account the current framerate!
 
 @Ret: void
 @Int:
@@ -345,7 +347,7 @@ entsprechend zurueck
 void BounceInfluencer(void)
 {
   int sign;
-  int SX=SpeedX, SY=SpeedY;
+  int SX=Me.speed.x, SY=Me.speed.y;
   finepoint lastpos;
   int res;		/* Ergebnis aus DruidPassable() */
   int safty_sx, safty_sy;	/* wegstoss - Geschwindigkeiten (falls noetig)*/
@@ -368,7 +370,7 @@ void BounceInfluencer(void)
       SX = abs(SX);
       while( --SX && (DruidPassable(lastpos.x+sign*SX,lastpos.y)!=CENTER));
       Me.pos.x = lastpos.x + SX*sign;
-      SpeedX = 0;
+      Me.speed.x = 0;
       
 				/* falls Influencer weggestossen werden muss ! */
       safty_sx = (-1)*sign*PUSHSPEED;
@@ -380,7 +382,7 @@ void BounceInfluencer(void)
       SY = abs(SY);
       while(--SY && (DruidPassable(lastpos.x,lastpos.y+sign*SY)!=CENTER));
       Me.pos.y = lastpos.y + SY*sign;
-      SpeedY = 0;
+      Me.speed.y = 0;
       
 				/* Falls Influencer weggestossen werden muss */
       safty_sy = (-1)*sign*PUSHSPEED;
@@ -460,12 +462,12 @@ void AdjustSpeed(void)
 * $Function----------------------------------------------------------*/
 void Reibung(void){
   if ( !UpPressed() && !DownPressed()) {
-    if (SpeedY < 0) SpeedY ++;
-    if (SpeedY > 0) SpeedY --;
+    if (Me.speed.y < 0) Me.speed.y ++;
+    if (Me.speed.y > 0) Me.speed.y --;
   }
   if ( !RightPressed() && !LeftPressed()) {
-    if (SpeedX < 0) SpeedX ++;
-    if (SpeedX > 0) SpeedX --;
+    if (Me.speed.x < 0) Me.speed.x ++;
+    if (Me.speed.x > 0) Me.speed.x --;
   }
 } // void Reibung(void)
 
@@ -538,18 +540,18 @@ void InfluenceEnemyCollision(void) {
 				/* den Geschwindigkeitsvektor des Influencers invertieren */
 	Me.speed.x = - Me.speed.x ;
 	Me.speed.y = - Me.speed.y ;
-	if( SpeedX != 0 )
-	  Me.speed.x += COLLISION_PUSHSPEED * (SpeedX/abs(SpeedX));
+	if( Me.speed.x != 0 )
+	  Me.speed.x += COLLISION_PUSHSPEED * (Me.speed.x/abs(Me.speed.x));
 	else if( xdist)
 	  Me.speed.x = COLLISION_PUSHSPEED * (xdist/abs(xdist));
-	if( SpeedY != 0 )
-	  Me.speed.y += COLLISION_PUSHSPEED * (SpeedY/abs(SpeedY));
+	if( Me.speed.y != 0 )
+	  Me.speed.y += COLLISION_PUSHSPEED * (Me.speed.y/abs(Me.speed.y));
 	else if( ydist)
 	  Me.speed.y = COLLISION_PUSHSPEED * (ydist/abs(ydist));
 	
 				/* den Influencer etwas aus dem Feind hinausschieben */	 
-	Me.pos.x += SpeedX * Frame_Time();
-	Me.pos.y += SpeedY * Frame_Time();
+	Me.pos.x += Me.speed.x * Frame_Time();
+	Me.pos.y += Me.speed.y * Frame_Time();
 
 				/* etwaige Wand - collisionen beruecksichtigen */
 	BounceInfluencer();
@@ -701,8 +703,8 @@ void FireBullet(void){
 
   if (PlusExtentionsOn) {
     if (!Me.vneut) {
-      CurBullet->SX+=SpeedX / Druidmap[Me.type].vneutral;
-      CurBullet->SY+=SpeedY / Druidmap[Me.type].vneutral;
+      CurBullet->SX+=Me.speed.x / Druidmap[Me.type].vneutral;
+      CurBullet->SY+=Me.speed.y / Druidmap[Me.type].vneutral;
     }
   }
   
