@@ -139,10 +139,11 @@ ShuffleEnemys (void)
   // EVEN WHEN A RETURN IS PLACED AT THE START OF THE FUNCTION!!!!
   //
   int curlevel = CurLevel->levelnum;
-  int i;
+  int i, j;
   int nth_enemy;
   int wp_num;
   int wp = 0;
+  int BestWaypoint;
   finepoint influ_coord;
 
   /* Anzahl der Waypoints auf CurLevel abzaehlen */
@@ -160,8 +161,25 @@ ShuffleEnemys (void)
 	  || AllEnemys[i].levelnum != curlevel)
 	continue;		/* dont handle dead enemys or on other level */
 
-      if (AllEnemys[i].SpecialForce) continue;
+      if (AllEnemys[i].CompletelyFixed) continue;
 
+      //--------------------
+      // A special force, that is not completely fixed, needs to be integrated
+      // into the waypoint system:  We find the closest waypoint for it and put
+      // it simply there.  For simplicity we use sum norm as distance.
+      if ( AllEnemys[i].SpecialForce )
+	{
+	  BestWaypoint = 0;
+	  for ( j=0 ; j<MAXWAYPOINTS ; j ++ )
+	    {
+	      if ( abs ( (CurLevel->AllWaypoints[j].x) - AllEnemys[i].pos.x ) < 
+		   abs ( CurLevel->AllWaypoints[ BestWaypoint ].x - AllEnemys[i].pos.x ) )
+		BestWaypoint = j;
+	    }
+	  AllEnemys[i].nextwaypoint = BestWaypoint;
+	  AllEnemys[i].lastwaypoint = BestWaypoint;
+	  continue;
+	}
 
       nth_enemy++;
       if (nth_enemy < wp_num)
@@ -254,6 +272,8 @@ MoveEnemys (void)
 
        // ignore all enemys with CompletelyFixed flag set...
        if ( AllEnemys[i].CompletelyFixed ) continue;
+
+
 
        // robots that still have to wait also do not need to
        // be processed...
@@ -374,7 +394,7 @@ AttackInfluence (int enemynum)
 
   //--------------------
   // If some special command was given, like 
-  // ATTACK_FIXED_MAP_POSITION, then we do the following:
+  // ATTACK_FIXED_MAP_POSITION=1, then we do the following:
   //
   if ( AllEnemys[enemynum].AdvancedCommand == 1 )
     {
@@ -462,9 +482,8 @@ AttackInfluence (int enemynum)
       return;
     }
 
-
-
   //--------------------
+  //
   // From here on, it's classical Paradroid robot behaviour concerning fireing....
   //
 

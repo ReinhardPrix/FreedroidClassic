@@ -1042,9 +1042,6 @@ Show_Mission_Instructions_Menu (void)
       printf_SDL ( ne_screen , User_Rect.x , 3 *FontHeight(Menu_BFont) , "Kill all droids : "  );
       if ( Me.mission.KillAll != (-1) ) printf_SDL( ne_screen , -1 , -1 , "YES" ); 
       else printf_SDL( ne_screen , -1 , -1 , "NO" );
-      printf_SDL ( ne_screen , -1 , -1 , "   Kill Class : "  );
-      if ( Me.mission.KillAll != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%d\n" , Me.mission.KillClass ); 
-      else printf_SDL( ne_screen , -1 , -1 , "NONE\n" );
 
       printf_SDL ( ne_screen , User_Rect.x , 4 *FontHeight(Menu_BFont) , "Kill special : "  );
       if ( Me.mission.KillOne != (-1) ) printf_SDL( ne_screen , -1 , -1 , "YES" ); 
@@ -1064,7 +1061,7 @@ Show_Mission_Instructions_Menu (void)
       if ( Me.mission.MustLiveTime != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%4.0f" , Me.mission.MustLiveTime ); 
       else printf_SDL( ne_screen , -1 , -1 , "NONE" );
       printf_SDL ( ne_screen , User_Rect.x , 7 *FontHeight(Menu_BFont) , "Must be class : "  );
-      if ( Me.mission.MustReachPoint.y != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%d\n" , Me.mission.MustBeClass );
+      if ( Me.mission.MustBeClass != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%d\n" , Me.mission.MustBeClass );
       else printf_SDL( ne_screen , -1 , -1 , "NONE\n" );
 
       printf_SDL ( ne_screen , User_Rect.x , 8 *FontHeight(Menu_BFont) , "Must be type : "  );
@@ -1074,6 +1071,9 @@ Show_Mission_Instructions_Menu (void)
       if ( Me.mission.MustBeOne != (-1) ) printf_SDL( ne_screen , -1 , -1 , "YES" );
       else printf_SDL( ne_screen , -1 , -1 , "NO\n" );
 
+      printf_SDL ( ne_screen , User_Rect.x , 10 * FontHeight(Menu_BFont) , "Kill Class : "  );
+      if ( Me.mission.KillClass != (-1) ) printf_SDL( ne_screen , -1 , -1 , "%s" , Classname[Me.mission.KillClass] ); 
+      else printf_SDL( ne_screen , -1 , -1 , "NONE\n" );
 
       
       //      LeftPutString ( ne_screen , 3*FontHeight(Menu_BFont), "This is the first mission.  It is");
