@@ -1,7 +1,6 @@
 /* 
  *
- *   Copyright (c) 1994, 2002 Johannes Prix
- *   Copyright (c) 1994, 2002 Reinhard Prix
+ *   Copyright (c) 2003 Johannes Prix
  *
  *
  *  This file is part of Freedroid
@@ -30,38 +29,10 @@
 
 #define _text_public_c
 
-// #include <gtk/gtk.h>
-// #include <gdk/gdk.h>
-// #include <gdk/gdkkeysyms.h>
+#include "system.h"
 
-#include <stdio.h>
-#include <math.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-#include <sys/time.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-
-#include <signal.h>
-#include <unistd.h>
-#include <sys/stat.h>
-#include <sys/time.h>
-
-#include <getopt.h>
-
-#include <sys/soundcard.h>
-#include <sys/ioctl.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <stdarg.h>
-#include <ctype.h>
-#include <dirent.h>
-
-#include <SDL/SDL.h>
-#include "../src/defs.h"
-#include "../src/struct.h"
+#include "defs.h"
+#include "struct.h"
 
 #include "DialogEditor.h"
 

@@ -1,8 +1,6 @@
 /* 
  *
- *   Copyright (c) 1994, 2002 Johannes Prix
- *   Copyright (c) 1994, 2002 Reinhard Prix
- *
+ *   Copyright (c) 2002, 2003 Johannes Prix
  *
  *  This file is part of Freedroid
  *
