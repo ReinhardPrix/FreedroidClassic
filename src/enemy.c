@@ -928,7 +928,7 @@ RawSetNewRandomWaypoint ( Enemy ThisRobot )
     ThisRobot->lastwaypoint = ThisRobot->nextwaypoint;
     
     // search for possible connections from here...
-    DebugPrintf (2, "\nRawSetNewRandomWaypoint ( Enemy ThisRobot ): searching for possible connections...");
+    DebugPrintf ( 2 , "\nRawSetNewRandomWaypoint ( Enemy ThisRobot ): searching for possible connections...");
     
     // search for the first connection, that doesn't exist any more, so
     // that we know, which connections surely do exist
@@ -941,11 +941,20 @@ RawSetNewRandomWaypoint ( Enemy ThisRobot )
     {
 	fprintf ( stderr , "\nThe offending waypoint nr. is: %d.", nextwp );
 	fprintf ( stderr , "\nThe map level in question got nr.: %d.", ThisRobot -> pos . z );
-	GiveStandardErrorMessage ( __FUNCTION__  , "\
+	if ( ThisRobot -> stick_to_waypoint_system_by_default )
+	{
+	    GiveStandardErrorMessage ( __FUNCTION__  , "\
 There was a droid on a waypoint, that apparently has no connections to other waypoints...\n\
-This is an error in the waypoint structure of this level.",
-				   NO_NEED_TO_INFORM, IS_FATAL );
-	Terminate(ERR);
+Since it was a waypoint-based bot, this is a fatal message in this case.",
+				       NO_NEED_TO_INFORM, IS_FATAL );
+	}
+	else
+	{
+	    GiveStandardErrorMessage ( __FUNCTION__  , "\
+There was a droid on a waypoint, that apparently has no connections to other waypoints...\n\
+Since it was NOT a waypoint-based bot, this is NOT a fatal message in this case.",
+				       NO_NEED_TO_INFORM, IS_WARNING_ONLY );
+	}
     }
     
     //--------------------
