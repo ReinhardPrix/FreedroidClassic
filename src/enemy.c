@@ -3026,99 +3026,99 @@ ProcessAttackStateMachine ( int enemynum )
 int
 CheckEnemyEnemyCollision (int enemynum)
 {
-  int i;
-  int curlev = Me [ 0 ] . pos . z ; // CurLevel->levelnum;
-  float check_x, check_y;
-  int swap;
-  float xdist, ydist;
-  float dist2;
-  float speed_x, speed_y;
-  enemy* ListEnemy;
-  enemy* OurBot= & ( AllEnemys[ enemynum ] );
-
-  // return ( FALSE );
-
-  //--------------------
-  // Enemys persuing a specific course may pass through other enerys
-  // and are therefore exempted from the collision check
-  //
-  // if ( OurBot->persuing_given_course == TRUE ) return ( FALSE );
-
-  check_x = OurBot->pos.x;
-  check_y = OurBot->pos.y;
-
-  //--------------------
-  // Now we check through all the other enemys on the ship if there is
-  // perhaps a collision with them...
-  //
-
-  // for (i = 0; i < MAX_ENEMYS_ON_SHIP	; i++)
-  for (i = 0; i < Number_Of_Droids_On_Ship ; i++)
+    int i;
+    int curlev = Me [ 0 ] . pos . z ; // CurLevel->levelnum;
+    float check_x, check_y;
+    int swap;
+    float xdist, ydist;
+    float dist2;
+    float speed_x, speed_y;
+    enemy* ListEnemy;
+    enemy* OurBot= & ( AllEnemys[ enemynum ] );
+    
+    // return ( FALSE );
+    
+    //--------------------
+    // Enemys persuing a specific course may pass through other enerys
+    // and are therefore exempted from the collision check
+    //
+    // if ( OurBot->persuing_given_course == TRUE ) return ( FALSE );
+    
+    check_x = OurBot->pos.x;
+    check_y = OurBot->pos.y;
+    
+    //--------------------
+    // Now we check through all the other enemys on the ship if there is
+    // perhaps a collision with them...
+    //
+    
+    // for (i = 0; i < MAX_ENEMYS_ON_SHIP	; i++)
+    for (i = 0; i < Number_Of_Droids_On_Ship ; i++)
     {
-      // check only collisions of LIVING enemys on this level
-      if (AllEnemys[i].Status == OUT || AllEnemys[i].pos.z != curlev)
-	continue;
-      // dont check yourself...
-      if (i == enemynum)
-	continue;
-
-      //--------------------
-      // We set up a pointer to the next one in the list...
-      //
-      ListEnemy = & ( AllEnemys[ i ] );
-
-      /* get distance between enemy i and enemynum */
-      xdist = check_x - ListEnemy->pos.x;
-      ydist = check_y - ListEnemy->pos.y;
-
-      dist2 = sqrt(xdist * xdist + ydist * ydist);
-
-      // Is there a Collision?
-      if ( dist2 <= 2*DRUIDRADIUSXY )
+	// check only collisions of LIVING enemys on this level
+	if (AllEnemys[i].Status == OUT || AllEnemys[i].pos.z != curlev)
+	    continue;
+	// dont check yourself...
+	if (i == enemynum)
+	    continue;
+	
+	//--------------------
+	// We set up a pointer to the next one in the list...
+	//
+	ListEnemy = & ( AllEnemys[ i ] );
+	
+	/* get distance between enemy i and enemynum */
+	xdist = check_x - ListEnemy->pos.x;
+	ydist = check_y - ListEnemy->pos.y;
+	
+	dist2 = sqrt(xdist * xdist + ydist * ydist);
+	
+	// Is there a Collision?
+	if ( dist2 <= 2*DRUIDRADIUSXY )
 	{
-
-	  // am I waiting already?  If so, keep waiting... 
-	  if ( OurBot->pure_wait)
+	    
+	    // am I waiting already?  If so, keep waiting... 
+	    if ( OurBot->pure_wait)
 	    {
-	      // keep waiting
-	      OurBot->pure_wait = WAIT_COLLISION;
-	      continue;
+		// keep waiting
+		OurBot->pure_wait = WAIT_COLLISION;
+		continue;
 	    }
-
-	  // otherwise: stop this one enemy and go back youself
-	  ListEnemy->pure_wait = WAIT_COLLISION;
-
-	  swap = OurBot->nextwaypoint;
-	  OurBot->nextwaypoint = OurBot->lastwaypoint;
-	  OurBot->lastwaypoint = swap;
-
-	  /*
-	  if ( ( ListEnemy -> combat_state == MOVE_ALONG_RANDOM_WAYPOINTS ) ||
-	       ( ListEnemy -> combat_state == TURN_THOWARDS_NEXT_WAYPOINT ) )
-	    ListEnemy -> combat_state = WAIT_AND_TURN_AROUND_AIMLESSLY ;
-	  */
-
-	  if ( ListEnemy -> combat_state == MOVE_ALONG_RANDOM_WAYPOINTS )
-	    ListEnemy -> combat_state = TURN_THOWARDS_NEXT_WAYPOINT ;
-
-	  // push the stopped colleague a little bit backwards...
-	  if (xdist)
-	    ListEnemy->pos.x -= xdist / fabsf (xdist) * Frame_Time();
-	  if (ydist)
-	    ListEnemy->pos.y -= ydist / fabsf (ydist) * Frame_Time();
-
-	  // Move a little bit out of the colleague yourself...
-	  speed_x = OurBot->speed.x;
-	  speed_y = OurBot->speed.y;
-
-	  if (speed_x) OurBot->pos.x -= Frame_Time() * COL_SPEED * (speed_x) / fabsf (speed_x);
-	  if (speed_y) OurBot->pos.y -= Frame_Time() * COL_SPEED * (speed_y) / fabsf (speed_y);
-
-	  return TRUE;
+	    
+	    // otherwise: stop this one enemy and go back youself
+	    ListEnemy->pure_wait = WAIT_COLLISION;
+	    
+	    swap = OurBot->nextwaypoint;
+	    OurBot->nextwaypoint = OurBot->lastwaypoint;
+	    OurBot->lastwaypoint = swap;
+	    
+	    /*
+	      if ( ( ListEnemy -> combat_state == MOVE_ALONG_RANDOM_WAYPOINTS ) ||
+	      ( ListEnemy -> combat_state == TURN_THOWARDS_NEXT_WAYPOINT ) )
+	      ListEnemy -> combat_state = WAIT_AND_TURN_AROUND_AIMLESSLY ;
+	    */
+	    
+	    if ( ListEnemy -> combat_state == MOVE_ALONG_RANDOM_WAYPOINTS )
+		ListEnemy -> combat_state = TURN_THOWARDS_NEXT_WAYPOINT ;
+	    
+	    // push the stopped colleague a little bit backwards...
+	    if (xdist)
+		ListEnemy->pos.x -= xdist / fabsf (xdist) * Frame_Time();
+	    if (ydist)
+		ListEnemy->pos.y -= ydist / fabsf (ydist) * Frame_Time();
+	    
+	    // Move a little bit out of the colleague yourself...
+	    speed_x = OurBot->speed.x;
+	    speed_y = OurBot->speed.y;
+	    
+	    if (speed_x) OurBot->pos.x -= Frame_Time() * COL_SPEED * (speed_x) / fabsf (speed_x);
+	    if (speed_y) OurBot->pos.y -= Frame_Time() * COL_SPEED * (speed_y) / fabsf (speed_y);
+	    
+	    return TRUE;
 	} // if collision distance reached
     } // for all the bots...
-
-  return FALSE;
+    
+    return FALSE;
 }; // int CheckEnemyEnemyCollision
 
 /* ----------------------------------------------------------------------

@@ -1593,6 +1593,8 @@ settings file will be generated.",
     {
 	GameConfig . screen_width = 640; 
 	GameConfig . screen_height = 480 ;
+	GameConfig . next_time_width_of_screen = 640; 
+	GameConfig . next_time_height_of_screen = 480 ;
 	GiveStandardErrorMessage ( __FUNCTION__  , "\
 You are using SDL instead of OpenGL for graphics output.  For this\n\
 output method, no other screen resolutions than 640x480 is available.\n\
