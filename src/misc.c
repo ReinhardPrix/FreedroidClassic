@@ -118,27 +118,32 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
 
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 320 + 11 , 449 , 297 , 25 } } ,
 
-    { NULL , "mouse_buttons/GoLevelNorthButton.png"           , { 233 , 90 , 160 ,  20 } } ,
-    { NULL , "mouse_buttons/GoLevelSouthButton.png"           , { 233 , 480-20-17 , 160 ,  20 } } ,
-    { NULL , "mouse_buttons/GoLevelEastButton.png"            , { 640-20 , (480-160)/2 , 20 , 160 } } ,
-    { NULL , "mouse_buttons/GoLevelWestButton.png"            , { 0+16 , (480-160)/2 ,  20 , 160 } } ,
-    { NULL , "mouse_buttons/ExportThisLevelButton.png"        , { 0 , 480-40 , 160 ,  20 } } ,
-    { NULL , "mouse_buttons/LevelEditorSaveShipButton.png"    , { 0 , 90 , 0 ,  0 } } ,
-    { NULL , "mouse_buttons/LevelEditorZoomInButton.png"      , { 40 , 90 , 0 ,  0 } } ,
-    { NULL , "mouse_buttons/LevelEditorZoomOutButton.png"     , { 40 , 90 , 0 ,  0 } } ,
-    { NULL , "mouse_buttons/LevelEditorRecursiveFillButton.png" , { 80 , 90 , 0 ,  0 } } ,
-    { NULL , "mouse_buttons/LevelEditorNewObstacleLabelButton.png" , { 120 , 90 , 0 ,  0 } } ,
-    { NULL , "mouse_buttons/LevelEditorNewMapLabelButton.png" , { 160 , 90 , 0 ,  0 } } ,
-    { NULL , "mouse_buttons/LevelEditorNewItemButton.png"     , { 200 , 90 , 0 ,  0 } } ,
-    { NULL , "mouse_buttons/LevelEditorMODEButton.png"        , { 640-241 , 90 , 0 ,  0 } } ,
-    { NULL , "mouse_buttons/LevelEditorESCButton.png"         , { 640-176 , 90 , 0 ,  0 } } ,
-    { NULL , "mouse_buttons/LevelEditorResizeLevelButton.png" , { 640-111 , 90 , 0 ,  0 } } ,
-    { NULL , "mouse_buttons/LevelEditorKeymapButton.png"      , { 640-71 , 90 , 0 ,  0 } } ,
-    { NULL , "mouse_buttons/LevelEditorQuitButton.png"        , { 640-31 , 90 , 0 ,  0 } } ,
+    { NULL , "mouse_buttons/GoLevelNorthButton.png"           , { 640-50-6 , 480-50-8 , 25 ,  25 } } ,
+    { NULL , "mouse_buttons/GoLevelSouthButton.png"           , { 640-50-6 , 480-4-25 , 25 ,  25 } } ,
+    { NULL , "mouse_buttons/GoLevelEastButton.png"            , { 640-25-4 , 437 , 25 , 25 } } ,
+    { NULL , "mouse_buttons/GoLevelWestButton.png"            , { 640-75-8 , 437 ,  0 , 0 } } ,
+    { NULL , "mouse_buttons/ExportThisLevelButton.png"        , { 640-60 , 90 , 0,  0 } } ,
+    { NULL , "mouse_buttons/LevelEditorSaveShipButton.png"    , { 640-90 , 90 , 0 ,  0 } } ,
+    { NULL , "mouse_buttons/LevelEditorZoomInButton.png"      , { 30 , 90 , 0 ,  0 } } ,
+    { NULL , "mouse_buttons/LevelEditorZoomOutButton.png"     , { 30 , 90 , 0 ,  0 } } ,
+    { NULL , "mouse_buttons/LevelEditorRecursiveFillButton.png" , { 60 , 90 , 0 ,  0 } } ,
+    { NULL , "mouse_buttons/LevelEditorNewObstacleLabelButton.png" , { 90 , 90 , 0 ,  0 } } ,
+    { NULL , "mouse_buttons/LevelEditorNewMapLabelButton.png" , { 120 , 90 , 0 ,  0 } } ,
+    { NULL , "mouse_buttons/LevelEditorNewItemButton.png"     , { 150 , 90 , 0 ,  0 } } ,
+    { NULL , "mouse_buttons/LevelEditorMODEButton.png"        , { 0 , 90 , 0 ,  0 } } ,
+    { NULL , "mouse_buttons/LevelEditorESCButton.png"         , { 430 , 90 , 0 ,  0 } } ,
+    { NULL , "mouse_buttons/LevelEditorResizeLevelButton.png" , { 460 , 90 , 0 ,  0 } } ,
+    { NULL , "mouse_buttons/LevelEditorKeymapButton.png"      , { 640-120 , 90 , 0 ,  0 } } ,
+    { NULL , "mouse_buttons/LevelEditorQuitButton.png"        , { 640-30 , 90 , 0 ,  0 } } ,
 
-    { NULL , "mouse_buttons/LevelEditorToggleTuxButton.png"        , { 640-31 , 390 , 0 ,  0 } } ,
-    { NULL , "mouse_buttons/LevelEditorToggleEnemiesButton.png"    , { 640-31 , 430 , 0 ,  0 } } ,
-    { NULL , "mouse_buttons/LevelEditorToggleObstaclesButton.png"  , { 640-31 , 350 , 0 ,  0 } } , 
+    { NULL , "mouse_buttons/LevelEditorToggleTuxButton.png"        , { 210 , 90 , 0 ,  0 } } ,
+    { NULL , "mouse_buttons/LevelEditorToggleTuxButtonOff.png"        , { 210 , 90 , 0 ,  0 } } ,
+    { NULL , "mouse_buttons/LevelEditorToggleEnemiesButton.png"    , { 240 , 90 , 0 ,  0 } } ,
+    { NULL , "mouse_buttons/LevelEditorToggleEnemiesButtonOff.png"    , { 240 , 90 , 0 ,  0 } } ,
+	{ NULL , "mouse_buttons/LevelEditorToggleObstaclesButton.png"  , { 270 , 90 , 0 ,  0 } } , 
+	{ NULL , "mouse_buttons/LevelEditorToggleObstaclesButtonOff.png"  , { 270 , 90 , 0 ,  0 } } , 
+	{ NULL , "mouse_buttons/LevelEditorToggleTooltipsButton.png"  , { 300 , 90 , 0 ,  0 } } , 
+	{ NULL , "mouse_buttons/LevelEditorToggleTooltipsButtonOff.png"  , { 300 , 90 , 0 ,  0 } } , 
 
     { NULL , "mouse_buttons/LevelEditorNextItemGroup.png"     , { 55 + 64 * 8 , 32+5*66 , 0 ,  0 } } ,
     { NULL , "mouse_buttons/LevelEditorPrevItemGroup.png"     , { 55          , 32+5*66 , 0 ,  0 } } ,
@@ -235,6 +240,7 @@ ShowGenericButtonFromList ( int ButtonIndex )
   //--------------------
   // First a sanity check if the button index given does make
   // some sense.
+  //
   //
   if ( ( ButtonIndex >= MAX_MOUSE_PRESS_BUTTONS ) || ( ButtonIndex < 0 ) )
     {

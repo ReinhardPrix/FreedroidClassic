@@ -539,34 +539,48 @@ HandleBannerMouseClick( void )
 {
   SDL_Rect TargetRect;
   int i;
+  int limit ;
+ 
+  if( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_FLOOR) 
+    limit = ALL_ISOMETRIC_FLOOR_TILES ;
+  else
+    limit = NUMBER_OF_OBSTACLE_TYPES ;
 
-  if ( CursorIsOnButton ( LEFT_LEVEL_EDITOR_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) )
+  if ( CursorIsOnButton ( LEFT_LEVEL_EDITOR_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ))
     {
-      if ( FirstBlock > 3 ) FirstBlock-= 8;
-      DebugPrintf ( 1 , "\nBlocks should be scrolling now, if apprpirate..." );
+      FirstBlock-= 8;
+      DebugPrintf ( 1 , "\nBlocks should be scrolling now, if appropriate..." );
     }
-  if ( CursorIsOnButton ( RIGHT_LEVEL_EDITOR_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) )
+  else if ( CursorIsOnButton ( RIGHT_LEVEL_EDITOR_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ))
     {
-      if ( FirstBlock < NUMBER_OF_OBSTACLE_TYPES -8 ) FirstBlock+= 8;
-      DebugPrintf ( 1 , "\nBlocks should be scrolling now, if apprpirate..." );
+      FirstBlock+=8 ;
+      DebugPrintf ( 1 , "\nBlocks should be scrolling now, if appropriate..." );
+    }
+  else
+    {
+      // could be a click on a block
+      for ( i = 0 ; i < 9 ; i ++ ) 
+        {
+          TargetRect.x = INITIAL_BLOCK_WIDTH/2 + INITIAL_BLOCK_WIDTH * i; 
+          TargetRect.y = INITIAL_BLOCK_HEIGHT/3;
+          TargetRect.w = INITIAL_BLOCK_WIDTH;
+          TargetRect.h = INITIAL_BLOCK_HEIGHT;
+          if ( ClickWasInRect ( TargetRect ) )
+            Highlight = FirstBlock + i;
+        }
     }
 
-  for ( i = 0 ; i < 9 ; i ++ ) 
-    {
-      TargetRect.x = INITIAL_BLOCK_WIDTH/2 + INITIAL_BLOCK_WIDTH * i; 
-      TargetRect.y = INITIAL_BLOCK_HEIGHT/3;
-      TargetRect.w = INITIAL_BLOCK_WIDTH;
-      TargetRect.h = INITIAL_BLOCK_HEIGHT;
-      if ( ClickWasInRect ( TargetRect ) )
-	{
-	  Highlight = FirstBlock + i;
-	}
-    }
-
+  // check limits
+  if(FirstBlock < 0)
+    FirstBlock = 0;
+ 
+  if(FirstBlock+8 > limit -1)
+    FirstBlock = limit -9 ;
+  
   //--------------------
   // Now some extra security against selecting indices that would point to
   // undefined objects (floor tiles or obstacles) later
-  //
+  // The following should never occur now - SN
   if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_FLOOR )
     {
       if ( Highlight >= ALL_ISOMETRIC_FLOOR_TILES )
@@ -3077,20 +3091,29 @@ show_level_editor_tooltips ( void )
       if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
 	show_button_tooltip ( "Use this button to quit out of the level editor and back to continue the normal game in normal mode.  Useful for e.g. putting objects into boxes.  You can always re-enter the level editor." );
     }
-  else if ( CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_ENEMIES_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+  else if ( CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_ENEMIES_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) ||
+	          CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_ENEMIES_BUTTON_OFF , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
     {
       if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
 	show_button_tooltip ( "Use this button to toggle between enemies dispalyed in level editor or enemies hidden in level editor." );
     }
-  else if ( CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_OBSTACLES_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+  else if ( CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_OBSTACLES_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) ||
+	          CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_OBSTACLES_BUTTON_OFF , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
     {
       if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
 	show_button_tooltip ( "Use this button to toggle between obstacles dispalyed in level editor or obstacles hidden in level editor." );
     }
-  else if ( CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_TUX_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+  else if ( CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_TUX_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) ||
+	          CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_TUX_BUTTON_OFF , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
     {
       if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
 	show_button_tooltip ( "Use this button to toggle between Tux dispalyed in level editor or Tux hidden in level editor." );
+    }
+  else if ( CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_TOOLTIPS_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) ||
+	          CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_TOOLTIPS_BUTTON_OFF , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+    {
+      if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
+	show_button_tooltip ( "Use this button to toggle these annoying help windows on and off." );
     }
   else
     {
@@ -3452,11 +3475,29 @@ LevelEditor(void)
 	  ShowGenericButtonFromList ( LEVEL_EDITOR_KEYMAP_BUTTON );
 	  ShowGenericButtonFromList ( LEVEL_EDITOR_QUIT_BUTTON );
 
-	  ShowGenericButtonFromList ( LEVEL_EDITOR_TOGGLE_TUX_BUTTON );
-	  ShowGenericButtonFromList ( LEVEL_EDITOR_TOGGLE_ENEMIES_BUTTON );
-	  ShowGenericButtonFromList ( LEVEL_EDITOR_TOGGLE_OBSTACLES_BUTTON );
+	  if ( GameConfig . omit_tux_in_level_editor ) 
+	    ShowGenericButtonFromList ( LEVEL_EDITOR_TOGGLE_TUX_BUTTON_OFF );
+	  else
+	    ShowGenericButtonFromList ( LEVEL_EDITOR_TOGGLE_TUX_BUTTON );
+	  
+	  if ( GameConfig . omit_enemies_in_level_editor ) 
+		ShowGenericButtonFromList ( LEVEL_EDITOR_TOGGLE_ENEMIES_BUTTON_OFF );
+	  else 
+		ShowGenericButtonFromList ( LEVEL_EDITOR_TOGGLE_ENEMIES_BUTTON );
 
-	  show_level_editor_tooltips (  );
+	  if ( GameConfig . omit_obstacles_in_level_editor ) 
+	    ShowGenericButtonFromList ( LEVEL_EDITOR_TOGGLE_OBSTACLES_BUTTON_OFF );
+	  else
+	    ShowGenericButtonFromList ( LEVEL_EDITOR_TOGGLE_OBSTACLES_BUTTON );
+
+	  if ( 1 ) 
+	  {
+	    ShowGenericButtonFromList ( LEVEL_EDITOR_TOGGLE_TOOLTIPS_BUTTON_OFF );
+	    show_level_editor_tooltips (  );
+	  }
+	  else
+	    ShowGenericButtonFromList ( LEVEL_EDITOR_TOGGLE_TOOLTIPS_BUTTON );
+
 
 	  //--------------------
 	  // Now that everything is blitted and printed, we may update the screen again...
@@ -3640,6 +3681,41 @@ LevelEditor(void)
 								   (float) GetMousePos_y ( ) + 16.0 - ( SCREEN_HEIGHT / 2 ), FALSE );
 	    }
 
+ 
+	    if ( MouseWheelDownPressed() )
+	      {
+	        if( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_FLOOR) 
+	          {
+	            if ( Highlight < ALL_ISOMETRIC_FLOOR_TILES -1 )
+	              Highlight++;
+	          } else 
+	          {
+                    if ( Highlight < NUMBER_OF_OBSTACLE_TYPES -1 )
+	              Highlight++;
+	          }
+
+	        // check if we have to scroll the list
+		if(Highlight < FirstBlock )
+	          // block is to the left
+	          FirstBlock = Highlight ;
+	        else if (Highlight > FirstBlock +8)
+	          // block is to the right
+	          FirstBlock = Highlight - 8;
+	      } 
+
+	    if ( MouseWheelUpPressed() && Highlight != 0)
+	      {
+	        Highlight--;
+
+	        // check if we have to scroll the list
+		if(Highlight < FirstBlock )
+	          // block is to the left
+	          FirstBlock = Highlight ;
+	        else if (Highlight > FirstBlock +8)
+	          // block is to the right
+	          FirstBlock = Highlight - 8;
+	      } 
+		
 	  if ( axis_is_active && !LeftMousePressedPreviousFrame )
 	    {
 	      if ( ClickWasInEditorBannerRect() )
@@ -3733,10 +3809,23 @@ LevelEditor(void)
 	      else if ( CursorIsOnButton ( LEVEL_EDITOR_MODE_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
 		{
 		  if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_FLOOR )
+		  {
 		    GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_OBSTACLES ;
+		    if( FirstBlock > NUMBER_OF_OBSTACLE_TYPES -9 )
+		      {	    
+		        FirstBlock = NUMBER_OF_OBSTACLE_TYPES -9 ;
+			Highlight = NUMBER_OF_OBSTACLE_TYPES -1 ;
+		      }
+		  }
 		  else if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_OBSTACLES )
+		  {
 		    GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_FLOOR ;
-		  Highlight = 0 ;
+		    if( FirstBlock > ALL_ISOMETRIC_FLOOR_TILES -9 )
+		      {	    
+		        FirstBlock = ALL_ISOMETRIC_FLOOR_TILES -9 ;
+			Highlight = ALL_ISOMETRIC_FLOOR_TILES -1 ;
+		      }
+		  }	
 		  while ( SpacePressed() );
 		}
 	      else if ( CursorIsOnButton ( LEVEL_EDITOR_ESC_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
@@ -3752,18 +3841,27 @@ LevelEditor(void)
 		{
 		  ShowLevelEditorKeymap (  );
 		}
-	      else if ( CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_TUX_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+	      else if ( CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_TUX_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) ||
+	                CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_TUX_BUTTON_OFF , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
 		{
 		  GameConfig . omit_tux_in_level_editor = ! GameConfig . omit_tux_in_level_editor ;
 		}
-	      else if ( CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_ENEMIES_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+	      else if ( CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_ENEMIES_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) ||
+	                CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_ENEMIES_BUTTON_OFF , GetMousePos_x() + 16 , GetMousePos_y() + 16 ))
 		{
 		  GameConfig . omit_enemies_in_level_editor = ! GameConfig . omit_enemies_in_level_editor ;
 		}
-	      else if ( CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_OBSTACLES_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+	      else if ( CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_OBSTACLES_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) ||
+	                CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_OBSTACLES_BUTTON_OFF , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
 		{
 		  GameConfig . omit_obstacles_in_level_editor = ! GameConfig . omit_obstacles_in_level_editor ;
 		}
+	      else if ( CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_TOOLTIPS_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) ||
+	                CursorIsOnButton ( LEVEL_EDITOR_TOGGLE_TOOLTIPS_BUTTON_OFF , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+		{
+		   // turn off here
+		}
+
 	      else if ( CursorIsOnButton ( LEVEL_EDITOR_QUIT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
 		{
 		  Weiter=!Weiter;
