@@ -1,8 +1,6 @@
 /* 
- *
  *   Copyright (c) 1994, 2002, 2003 Johannes Prix
  *   Copyright (c) 1994, 2002 Reinhard Prix
- *
  *
  *  This file is part of Freedroid
  *
@@ -40,6 +38,8 @@
 #include "proto.h"
 
 #define COL_SPEED		3	
+
+#define IS_FRIENDLY_EYE_DISTANCE (2.0)
 
 void ProcessAttackStateMachine ( int enemynum );
 void AnimateEnemys ( void );
@@ -2159,10 +2159,19 @@ ProcessAttackStateMachine ( int enemynum )
 	    }
 	}
 
+      //--------------------
+      // If the Tux isn't directly on it's way to the Tux, it might just
+      // switch to take a closer look at the Tux.  But this will again
+      // be different for hostile bots and for non-hostile bots...
+      //
       if ( ! ThisRobot -> will_rush_tux )
 	{
-	  ThisRobot -> combat_state = STOP_AND_EYE_TUX ;
-	  ThisRobot -> state_timeout = Druidmap [ ThisRobot -> type ] . time_spent_eyeing_tux ;
+	  if ( ( ThisRobot -> is_friendly && DistanceToTux( ThisRobot ) < IS_FRIENDLY_EYE_DISTANCE ) ||
+	       ( ! ThisRobot -> is_friendly ) )
+	    {
+	      ThisRobot -> combat_state = STOP_AND_EYE_TUX ;
+	      ThisRobot -> state_timeout = Druidmap [ ThisRobot -> type ] . time_spent_eyeing_tux ;
+	    }
 	}
 
       return; 
@@ -2228,7 +2237,8 @@ ProcessAttackStateMachine ( int enemynum )
       if ( ThisRobot -> state_timeout < 0 ) 
 	{
 	  
-	  if ( ( DistanceToTux ( ThisRobot ) > Druidmap [ ThisRobot->type ] . range_of_vision ) )
+	  if ( ( DistanceToTux ( ThisRobot ) > Druidmap [ ThisRobot->type ] . range_of_vision ) ||
+	       ( ( DistanceToTux ( ThisRobot ) > IS_FRIENDLY_EYE_DISTANCE ) &&ThisRobot->is_friendly ) )
 	    {
 	      // ThisRobot -> combat_state = MOVE_ALONG_RANDOM_WAYPOINTS ;
 	      ThisRobot -> combat_state = TURN_THOWARDS_NEXT_WAYPOINT ;
