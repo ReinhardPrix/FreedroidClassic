@@ -450,6 +450,7 @@ EXTERN void ReadValueFromString( char* SearchBeginPointer , char* ValuePreceedTe
 EXTERN char* ReadAndMallocAndTerminateFile( char* filename , char* File_End_String ) ;
 EXTERN char* LocateStringInData ( char* SearchBeginPointer, char* SearchTextPointer ) ;
 EXTERN char * find_file (char *fname, char *datadir, int use_theme);
+EXTERN char * find_file_for_callbacks (char *fname, char *datadir, int use_theme);
 EXTERN void CheckForTriggeredEventsAndStatements ( int player_num );
 EXTERN void Pause (void);
 EXTERN void ComputeFPSForThisFrame(void);

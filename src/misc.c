@@ -352,10 +352,20 @@ find_file (char *fname, char *subdir, int use_theme)
   // 
   // WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! 
   //
-
+  // 
+  // Because of the things mentioned above, FIND_FILE MUST NOT EVER BE USED
+  // FROM A CALLBACK FUNCTION, cause then it migth be A NESTED FUNCTION CALL!
+  //
+  // IN Case of a Callback function, best use a separate version of this function,
+  // best called find_file_for_callbacks.
+  //
+  // WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! 
+  // 
+  // WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! 
+  //
+  int i;
   static char File_Path[5000];   /* hope this will be enough */
   FILE *fp;  // this is the file we want to find?
-  int i;
 
   if (!fname)
     {
@@ -403,6 +413,102 @@ This is indicates a severe bug in Freedroid.",
   return (File_Path);
 	
 }; // char * find_file ( ... )
+
+/* -----------------------------------------------------------------
+ * find a given filename in subdir relative to DATADIR, 
+ * using theme subdir if use_theme==TRUE
+ *
+ * if you pass NULL as subdir, it will be ignored
+ *
+ * returns pointer to _static_ string array File_Path, which 
+ * contains the full pathname of the file.
+ *
+ * !! do never try to free the returned string !!
+ *
+ * ----------------------------------------------------------------- */
+char *
+find_file_for_callbacks (char *fname, char *subdir, int use_theme)
+{
+
+  //--------------------
+  // WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! 
+  // 
+  // WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! 
+  //
+  // This hack will only work if there is NEVER ANY NESTED use of find_file!!
+  // Otherwise one file is found, a new search is started and overwrites the
+  // previous file name.  If that one is then used again, unpredictable results
+  // may occur.
+  //
+  // But the benefit of it is, of course, that memory leaking will be reduced,
+  // even if the returned string is never freed, as it must be to prevent
+  // segmentation faults this way anyway!
+  //
+  // WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! 
+  // 
+  // WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! 
+  //
+  // 
+  // Because of the things mentioned above, FIND_FILE MUST NOT EVER BE USED
+  // FROM A CALLBACK FUNCTION, cause then it migth be A NESTED FUNCTION CALL!
+  //
+  // IN Case of a Callback function, best use a separate version of this function,
+  // best called find_file_for_callbacks.
+  //
+  // WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! 
+  // 
+  // WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! 
+  //
+  int i;
+  static char File_Path[5000];   /* hope this will be enough */
+  FILE *fp;  // this is the file we want to find?
+
+  if (!fname)
+    {
+      GiveStandardErrorMessage ( "find_file(...)" , "\
+A find_file call has been issued to generate the full path name of a\n\
+certain file, but the file name given is an empty string!\n\
+This is indicates a severe bug in Freedroid.",
+				 PLEASE_INFORM, IS_FATAL );
+    }
+  if (!subdir)
+    subdir = "";
+
+  for ( i = 0 ; i < 2 ; i++ )
+    {
+      if (i==0)
+	strcpy (File_Path, "..");   /* first try local subdirs */
+      if (i==1)
+	strcpy (File_Path, DATADIR); /* then the DATADIR */
+
+      strcat (File_Path, "/");
+      strcat (File_Path, subdir);
+      strcat (File_Path, "/");
+
+      if (use_theme)
+	strcat (File_Path, GameConfig.Theme_SubPath);
+
+      strcat (File_Path, fname);
+      
+      if ( (fp = fopen (File_Path, "r")) != NULL)  /* found it? */
+	{
+	  fclose (fp);
+	  break;
+	}
+      else
+	{
+	  if ( i == 0 )
+	    DebugPrintf( 1 , "\nfind_file could not succeed with LOCAL path: %s." , File_Path );
+	  else
+	    GiveStandardErrorMessage ( "find_file(...)" , "File not found even in data dir (2nd attempt).", NO_NEED_TO_INFORM , IS_WARNING_ONLY );
+	}
+    } // for i 
+
+  // DebugPrintf( 0 , "\nfind_file determined file path: %s." , File_Path );
+
+  return (File_Path);
+	
+}; // char * find_file_for_callbacks ( ... )
 
 /* ----------------------------------------------------------------------
  * This function realises the Pause-Mode: the game process is halted,

@@ -551,7 +551,7 @@ UpdateMouseMoveTargetAccoringToEnemy ( int player_num )
       Me [ player_num ] . mouse_move_target . x = Me [ player_num ] . pos . x - RemainingWay . x ;
       Me [ player_num ] . mouse_move_target . y = Me [ player_num ] . pos . y - RemainingWay . y ;
 
-      DebugPrintf ( 0 , "\nRemaining way: %f %f." , RemainingWay . x , RemainingWay . y );
+      // DebugPrintf ( 0 , "\nRemaining way: %f %f." , RemainingWay . x , RemainingWay . y );
 
     }
 }; // void UpdateMouseMoveTargetAccoringToEnemy ( int player_num )
@@ -949,7 +949,7 @@ AnimateInfluence ( int player_num )
 	  Me [ player_num ] .phase = 0;
 	}
       Me [ player_num ] . walk_cycle_phase = 17 ;
-      DebugPrintf ( 0 , "\nphase = %d. " , (int) Me [ player_num ] . phase );
+      // DebugPrintf ( 0 , "\nphase = %d. " , (int) Me [ player_num ] . phase );
     }
 
   

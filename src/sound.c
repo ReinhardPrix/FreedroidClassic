@@ -1063,7 +1063,7 @@ LoadAndFadeInBackgroundMusic ( void )
 
   strcpy ( filename_raw , "music/" );
   strcat ( filename_raw , NewMusicTargetFileName );
-  fpath = find_file ( filename_raw , SOUND_DIR, FALSE);
+  fpath = find_file_for_callbacks ( filename_raw , SOUND_DIR, FALSE);
   Loaded_MOD_Files [ 0 ] = Mix_LoadMUS( fpath );
   if ( Loaded_MOD_Files[ 0 ] == NULL )
     {
