@@ -2985,208 +2985,220 @@ translate_map_point_to_zoomed_screen_pixel ( float x_map_pos , float y_map_pos ,
 }; // int translate_map_point_to_zoomed_screen_pixel ( float x_map_pos , float y_map_pos , int give_x )
 
 /* ----------------------------------------------------------------------
- *
- *
+ * Maybe there is a chest underneath the mouse cursor?  Well, this 
+ * function checks if that is really so, taking into account not only the
+ * floor position of the mouse cursor (which would lead to rather 
+ * unintuitive clicking areas) but rather the full chest graphics.
  * ---------------------------------------------------------------------- */
 void
 check_for_chests_to_open ( int player_num , int chest_index ) 
 {
-  Level our_level = curShip . AllLevels [ Me [ player_num ] . pos . z ] ;
+    Level our_level = curShip . AllLevels [ Me [ player_num ] . pos . z ] ;
 
-  if ( chest_index != (-1) )
+    if ( chest_index != (-1) )
     {
-      //--------------------
-      // So the player clicked on a chest.  Well, if the chest is already close
-      // enough, it should be sufficient to just spill out the contents of the
-      // chest and then return.  However, if the player was not yet close enough
-      // to the chest, we need to SET A COMBINED_ACTION, i.e. first set the walk
-      // thowards the chest and then set the open_chest action, which is more
-      // complicated of course.
-      //
-      if ( fabsf ( Me [ player_num ] . pos . x - our_level -> obstacle_list [ chest_index ] . pos . x ) +
-	   fabsf ( Me [ player_num ] . pos . y - our_level -> obstacle_list [ chest_index ] . pos . y ) < 1.1 )
+	//--------------------
+	// So the player clicked on a chest.  Well, if the chest is already close
+	// enough, it should be sufficient to just spill out the contents of the
+	// chest and then return.  However, if the player was not yet close enough
+	// to the chest, we need to SET A COMBINED_ACTION, i.e. first set the walk
+	// thowards the chest and then set the open_chest action, which is more
+	// complicated of course.
+	//
+	if ( fabsf ( Me [ player_num ] . pos . x - our_level -> obstacle_list [ chest_index ] . pos . x ) +
+	     fabsf ( Me [ player_num ] . pos . y - our_level -> obstacle_list [ chest_index ] . pos . y ) < 1.1 )
 	{
-	  throw_out_all_chest_content ( chest_index ) ;
-
-	  if ( our_level -> obstacle_list [ chest_index ] . type == ISO_H_CHEST_CLOSED )
-	    our_level -> obstacle_list [ chest_index ] . type = ISO_H_CHEST_OPEN  ;
-	  if ( our_level -> obstacle_list [ chest_index ] . type == ISO_V_CHEST_CLOSED )
-	    our_level -> obstacle_list [ chest_index ] . type = ISO_V_CHEST_OPEN  ;
-
-	  //--------------------
-	  // Maybe a combo_action has made us come here and open the chest.  Then of
-	  // course we can remove the combo action setting now...
-	  //
-	  Me [ player_num ] . mouse_move_target_combo_action_type = NO_COMBO_ACTION_SET ;
-	  Me [ player_num ] . mouse_move_target_combo_action_parameter = ( -1 ) ;
-
-	  //--------------------
-	  // Now that the chest has been opend, we don't need to do anything more
-	  //
-	  return;
+	    throw_out_all_chest_content ( chest_index ) ;
+	    
+	    if ( our_level -> obstacle_list [ chest_index ] . type == ISO_H_CHEST_CLOSED )
+		our_level -> obstacle_list [ chest_index ] . type = ISO_H_CHEST_OPEN  ;
+	    if ( our_level -> obstacle_list [ chest_index ] . type == ISO_V_CHEST_CLOSED )
+		our_level -> obstacle_list [ chest_index ] . type = ISO_V_CHEST_OPEN  ;
+	    
+	    //--------------------
+	    // Maybe a combo_action has made us come here and open the chest.  Then of
+	    // course we can remove the combo action setting now...
+	    //
+	    Me [ player_num ] . mouse_move_target_combo_action_type = NO_COMBO_ACTION_SET ;
+	    Me [ player_num ] . mouse_move_target_combo_action_parameter = ( -1 ) ;
+	    
+	    //--------------------
+	    // Now that the chest has been opend, we don't need to do anything more
+	    //
+	    return;
 	}
-      else
+	else
 	{
-	  //--------------------
-	  // So here we know, that we must set the course thowards the chest.  We
-	  // do so first.
-	  //
-	  DebugPrintf ( 2 , "\ncheck_for_chests_to_open:  setting up combined mouse move target!" );
-
-	  switch ( our_level -> obstacle_list [ chest_index ] . type )
+	    //--------------------
+	    // So here we know, that we must set the course thowards the chest.  We
+	    // do so first.
+	    //
+	    DebugPrintf ( 2 , "\ncheck_for_chests_to_open:  setting up combined mouse move target!" );
+	    
+	    switch ( our_level -> obstacle_list [ chest_index ] . type )
 	    {
-	    case ISO_V_CHEST_CLOSED:
-	    case ISO_V_CHEST_OPEN:
-	      Me [ player_num ] . mouse_move_target . x = our_level -> obstacle_list [ chest_index ] . pos . x ;
-	      Me [ player_num ] . mouse_move_target . y = our_level -> obstacle_list [ chest_index ] . pos . y ;
-	      Me [ player_num ] . mouse_move_target . x += 0.8 ;
-	      set_up_intermediate_course_for_tux ( player_num ) ;
-
-	      Me [ player_num ] . mouse_move_target_is_enemy = ( -1 ) ;
-	      Me [ player_num ] . mouse_move_target_combo_action_type = COMBO_ACTION_OPEN_CHEST ;
-	      Me [ player_num ] . mouse_move_target_combo_action_parameter = chest_index ;
-	      
-	      break;
-	    case ISO_H_CHEST_CLOSED:
-	    case ISO_H_CHEST_OPEN:
-	      Me [ player_num ] . mouse_move_target . x = our_level -> obstacle_list [ chest_index ] . pos . x ;
-	      Me [ player_num ] . mouse_move_target . y = our_level -> obstacle_list [ chest_index ] . pos . y ;
-	      Me [ player_num ] . mouse_move_target . y += 0.8 ;
-	      set_up_intermediate_course_for_tux ( player_num ) ;
-
-	      Me [ player_num ] . mouse_move_target_is_enemy = ( -1 ) ;
-	      Me [ player_num ] . mouse_move_target_combo_action_type = COMBO_ACTION_OPEN_CHEST ;
-	      Me [ player_num ] . mouse_move_target_combo_action_parameter = chest_index ;
-
-	      break;
-	    default:
-	      GiveStandardErrorMessage ( __FUNCTION__  , 
-					 "chest to be approached is not a chest obstacle!!" ,
-					 PLEASE_INFORM, IS_FATAL );
-	      break;
+		case ISO_V_CHEST_CLOSED:
+		case ISO_V_CHEST_OPEN:
+		    Me [ player_num ] . mouse_move_target . x = our_level -> obstacle_list [ chest_index ] . pos . x ;
+		    Me [ player_num ] . mouse_move_target . y = our_level -> obstacle_list [ chest_index ] . pos . y ;
+		    Me [ player_num ] . mouse_move_target . x += 0.8 ;
+		    set_up_intermediate_course_for_tux ( player_num ) ;
+		    
+		    Me [ player_num ] . mouse_move_target_is_enemy = ( -1 ) ;
+		    Me [ player_num ] . mouse_move_target_combo_action_type = COMBO_ACTION_OPEN_CHEST ;
+		    Me [ player_num ] . mouse_move_target_combo_action_parameter = chest_index ;
+		    
+		    break;
+		case ISO_H_CHEST_CLOSED:
+		case ISO_H_CHEST_OPEN:
+		    Me [ player_num ] . mouse_move_target . x = our_level -> obstacle_list [ chest_index ] . pos . x ;
+		    Me [ player_num ] . mouse_move_target . y = our_level -> obstacle_list [ chest_index ] . pos . y ;
+		    Me [ player_num ] . mouse_move_target . y += 0.8 ;
+		    set_up_intermediate_course_for_tux ( player_num ) ;
+		    
+		    Me [ player_num ] . mouse_move_target_is_enemy = ( -1 ) ;
+		    Me [ player_num ] . mouse_move_target_combo_action_type = COMBO_ACTION_OPEN_CHEST ;
+		    Me [ player_num ] . mouse_move_target_combo_action_parameter = chest_index ;
+		    
+		    break;
+		default:
+		    GiveStandardErrorMessage ( __FUNCTION__  , 
+					       "chest to be approached is not a chest obstacle!!" ,
+					       PLEASE_INFORM, IS_FATAL );
+		    break;
 	    }
 	}
     }
-
+    
 }; // void check_for_chests_to_open ( int player_num ) 
 
 /* ----------------------------------------------------------------------
- *
- *
+ * Maybe there is a chest underneath the mouse cursor?  Well, this 
+ * function checks if that is really so, taking into account not only the
+ * floor position of the mouse cursor (which would lead to rather 
+ * unintuitive clicking areas) but rather the full chest graphics.
  * ---------------------------------------------------------------------- */
 void
 check_for_barrels_to_smash ( int player_num , int barrel_index ) 
 {
-  Level our_level = curShip . AllLevels [ Me [ player_num ] . pos . z ] ;
-  int i;
-  moderately_finepoint step_vector;
-  float vec_len;
-
-  if ( barrel_index != (-1) )
+    Level our_level = curShip . AllLevels [ Me [ player_num ] . pos . z ] ;
+    int i;
+    moderately_finepoint step_vector;
+    float vec_len;
+    
+    if ( barrel_index != (-1) )
     {
-      //--------------------
-      // If the smash distance for a barrel is not yet reached, then we must set up
-      // a course that will lead us to the barrel and also a combo_action specification,
-      // that will cause the corresponding barrel to be smashed upon arrival.
-      //
-      if ( calc_euklid_distance ( Me [ player_num ] . pos . x , Me [ player_num ] . pos . y , 
-				  our_level -> obstacle_list [ barrel_index ] . pos . x ,
-				  our_level -> obstacle_list [ barrel_index ] . pos . y ) 
-	   > ( obstacle_map [ ISO_BARREL_1 ] . block_area_parm_1 * sqrt(2) ) / 2.0 + 0.5 )
+	//--------------------
+	// If the smash distance for a barrel is not yet reached, then we must set up
+	// a course that will lead us to the barrel and also a combo_action specification,
+	// that will cause the corresponding barrel to be smashed upon arrival.
+	//
+	if ( calc_euklid_distance ( Me [ player_num ] . pos . x , Me [ player_num ] . pos . y , 
+				    our_level -> obstacle_list [ barrel_index ] . pos . x ,
+				    our_level -> obstacle_list [ barrel_index ] . pos . y ) 
+	     > ( obstacle_map [ ISO_BARREL_1 ] . block_area_parm_1 * sqrt(2) ) / 2.0 + 0.5 )
 	{
-	  //--------------------
-	  // We set up a course, that will lead us directly to the barrel, that we are
-	  // supposed to smash (upon arrival, later).
-	  //
-	  // For this purpose, we take a vector and rotate it around the barrel center to
-	  // find the 'best' location to go to for the smashing motion...
-	  //
-	  step_vector . x = Me [ player_num ] . pos . x - our_level -> obstacle_list [ barrel_index ] . pos . x ;
-	  step_vector . y = Me [ player_num ] . pos . y - our_level -> obstacle_list [ barrel_index ] . pos . y ;
-	  vec_len = vect_len ( step_vector );
-
-	  //--------------------
-	  // We normalize the distance of the final walk-point to the barrel center just
-	  // so, that it will be within the 'strike_distance' we have used just above in
-	  // the 'distance-met' query.
-	  //
-	  step_vector . x *= ( ( obstacle_map [ ISO_BARREL_1 ] . block_area_parm_1 * sqrt(2) ) / 2.0 + 0.05 ) / vec_len ;
-	  step_vector . y *= ( ( obstacle_map [ ISO_BARREL_1 ] . block_area_parm_1 * sqrt(2) ) / 2.0 + 0.05 ) / vec_len ;
-
-	  for ( i = 0 ; i < 8 ; i ++ )
+	    //--------------------
+	    // We set up a course, that will lead us directly to the barrel, that we are
+	    // supposed to smash (upon arrival, later).
+	    //
+	    // For this purpose, we take a vector and rotate it around the barrel center to
+	    // find the 'best' location to go to for the smashing motion...
+	    //
+	    step_vector . x = Me [ player_num ] . pos . x - 
+		our_level -> obstacle_list [ barrel_index ] . pos . x ;
+	    step_vector . y = Me [ player_num ] . pos . y - 
+		our_level -> obstacle_list [ barrel_index ] . pos . y ;
+	    vec_len = vect_len ( step_vector );
+	    
+	    //--------------------
+	    // We normalize the distance of the final walk-point to the barrel center just
+	    // so, that it will be within the 'strike_distance' we have used just above in
+	    // the 'distance-met' query.
+	    //
+	    step_vector . x *= ( ( obstacle_map [ ISO_BARREL_1 ] . block_area_parm_1 * sqrt(2) ) 
+				 / 2.0 + 0.05 ) / vec_len ;
+	    step_vector . y *= ( ( obstacle_map [ ISO_BARREL_1 ] . block_area_parm_1 * sqrt(2) ) 
+				 / 2.0 + 0.05 ) / vec_len ;
+	    
+	    for ( i = 0 ; i < 8 ; i ++ )
 	    {
-	      if ( IsPassable ( our_level -> obstacle_list [ barrel_index ] . pos . x + step_vector . x ,
-				our_level -> obstacle_list [ barrel_index ] . pos . y + step_vector . y ,
-				Me [ player_num ] . pos . z ) )
+		if ( IsPassable ( our_level -> obstacle_list [ barrel_index ] . pos . x + step_vector . x ,
+				  our_level -> obstacle_list [ barrel_index ] . pos . y + step_vector . y ,
+				  Me [ player_num ] . pos . z ) )
 		{
-		  //--------------------
-		  // The obstacle plus the step vector give us the position to move the
-		  // Tux to for the optimal strike...
-		  //
-		  Me [ player_num ] . mouse_move_target . x = our_level -> obstacle_list [ barrel_index ] . pos . x + 
-		    step_vector . x ;
-		  Me [ player_num ] . mouse_move_target . y = our_level -> obstacle_list [ barrel_index ] . pos . y + 
-		    step_vector . y ;
-		  set_up_intermediate_course_for_tux ( player_num ) ;
-
-		  //--------------------
-		  // We set up the combo_action, so that the barrel can be smashed later...
-		  //
-		  Me [ player_num ] . mouse_move_target_is_enemy = ( -1 ) ;
-		  Me [ player_num ] . mouse_move_target_combo_action_type = COMBO_ACTION_SMASH_BARREL ;
-		  Me [ player_num ] . mouse_move_target_combo_action_parameter = barrel_index ;
-		  break;
+		    //--------------------
+		    // The obstacle plus the step vector give us the position to move the
+		    // Tux to for the optimal strike...
+		    //
+		    Me [ player_num ] . mouse_move_target . x = 
+			our_level -> obstacle_list [ barrel_index ] . pos . x + 
+			step_vector . x ;
+		    Me [ player_num ] . mouse_move_target . y = 
+			our_level -> obstacle_list [ barrel_index ] . pos . y + 
+			step_vector . y ;
+		    set_up_intermediate_course_for_tux ( player_num ) ;
+		    
+		    //--------------------
+		    // We set up the combo_action, so that the barrel can be smashed later...
+		    //
+		    Me [ player_num ] . mouse_move_target_is_enemy = ( -1 ) ;
+		    Me [ player_num ] . mouse_move_target_combo_action_type = COMBO_ACTION_SMASH_BARREL ;
+		    Me [ player_num ] . mouse_move_target_combo_action_parameter = barrel_index ;
+		    break;
 		}
-
-	      //--------------------
-	      // If this vector didn't bring us any luck, we rotate by 45 degrees and try anew...
-	      //
-	      RotateVectorByAngle ( & ( step_vector ) , 45.0 ) ;
+		
+		//--------------------
+		// If this vector didn't bring us any luck, we rotate by 45 degrees and try anew...
+		//
+		RotateVectorByAngle ( & ( step_vector ) , 45.0 ) ;
 	    }
-
-	  //--------------------
-	  // since we cannot smash immediately, we must return now.  Later, on the 
-	  // second call once we've reached the barrel, this will be different.
-	  //
-	  return;
+	    
+	    //--------------------
+	    // since we cannot smash immediately, we must return now.  Later, on the 
+	    // second call once we've reached the barrel, this will be different.
+	    //
+	    return;
 	}
-
-      //--------------------
-      // Before the barrel can get destroyed and we loose the position information,
-      // we record the vector of the Tux strike direction...
-      //
-      step_vector . x = - Me [ player_num ] . pos . x + our_level -> obstacle_list [ barrel_index ] . pos . x ;
-      step_vector . y = - Me [ player_num ] . pos . y + our_level -> obstacle_list [ barrel_index ] . pos . y ;
-
-      //--------------------
-      // We make sure the barrel gets smashed, eben if the strike made by the
-      // Tux would be otherwise a miss...
-      //
-      smash_obstacle ( our_level -> obstacle_list [ barrel_index ] . pos . x , 
-		       our_level -> obstacle_list [ barrel_index ] . pos . y );
-
-      //--------------------
-      // We start an attack motion...
-      //
-      tux_wants_to_attack_now ( player_num ) ;
-
-      //--------------------
-      // We set a direction of facing directly thowards the barrel in question
-      // so that the strike motion looks authentic...
-      //
-      Me [ player_num ] . angle = - ( atan2 ( step_vector . y ,  step_vector . x ) * 180 / M_PI - 180 - 45 );
-      Me [ player_num ] . angle += 360 / ( 2 * MAX_TUX_DIRECTIONS );
-      while ( Me [ player_num ] . angle < 0 ) Me [ player_num ] . angle += 360;
-
-      //--------------------
-      // Maybe the barrel smashing came from a combo_action, i.e. the click made
-      // the tux come here and the same click should now also make the Tux smash
-      // the barrel.  So we smash the barrel. but that also means, that we can 
-      // now unset the combo_action back to normal state again.
-      //
-      Me [ player_num ] . mouse_move_target_combo_action_type = NO_COMBO_ACTION_SET ;
-      Me [ player_num ] . mouse_move_target_combo_action_parameter = ( -1 ) ;
-      DebugPrintf ( 2 , "\ncheck_for_barrels_to_smash(...):  combo_action now unset." );
+	
+	//--------------------
+	// Before the barrel can get destroyed and we loose the position information,
+	// we record the vector of the Tux strike direction...
+	//
+	step_vector . x = - Me [ player_num ] . pos . x + 
+	    our_level -> obstacle_list [ barrel_index ] . pos . x ;
+	step_vector . y = - Me [ player_num ] . pos . y + 
+	    our_level -> obstacle_list [ barrel_index ] . pos . y ;
+	
+	//--------------------
+	// We make sure the barrel gets smashed, eben if the strike made by the
+	// Tux would be otherwise a miss...
+	//
+	smash_obstacle ( our_level -> obstacle_list [ barrel_index ] . pos . x , 
+			 our_level -> obstacle_list [ barrel_index ] . pos . y );
+	
+	//--------------------
+	// We start an attack motion...
+	//
+	tux_wants_to_attack_now ( player_num ) ;
+	
+	//--------------------
+	// We set a direction of facing directly thowards the barrel in question
+	// so that the strike motion looks authentic...
+	//
+	Me [ player_num ] . angle = - ( atan2 ( step_vector . y ,  step_vector . x ) * 180 / M_PI - 180 - 45 );
+	Me [ player_num ] . angle += 360 / ( 2 * MAX_TUX_DIRECTIONS );
+	while ( Me [ player_num ] . angle < 0 ) Me [ player_num ] . angle += 360;
+	
+	//--------------------
+	// Maybe the barrel smashing came from a combo_action, i.e. the click made
+	// the tux come here and the same click should now also make the Tux smash
+	// the barrel.  So we smash the barrel. but that also means, that we can 
+	// now unset the combo_action back to normal state again.
+	//
+	Me [ player_num ] . mouse_move_target_combo_action_type = NO_COMBO_ACTION_SET ;
+	Me [ player_num ] . mouse_move_target_combo_action_parameter = ( -1 ) ;
+	DebugPrintf ( 2 , "\ncheck_for_barrels_to_smash(...):  combo_action now unset." );
     }
 }; // void check_for_barrels_to_smash ( int player_num , int barrel_index ) 
 

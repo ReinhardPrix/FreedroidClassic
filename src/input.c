@@ -281,8 +281,9 @@ void Init_Joy (void)
 }
 
 /* ----------------------------------------------------------------------
- *
- *
+ * If the cheat keys are enabled (a config option in the cheat menu), 
+ * then we have to check if some are pressed and properly respond to
+ * that.  This is what this function is supposed to do.
  * ---------------------------------------------------------------------- */
 void
 check_for_cheat_keys( void )
