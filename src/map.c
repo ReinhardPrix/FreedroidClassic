@@ -1454,13 +1454,17 @@ Sorry...\n\
       SearchPointer = strstr ( SearchPointer , "Y=" );
       SearchPointer += strlen ( "Y=" );
       sscanf ( SearchPointer , "%lf" , &AllEnemys[ FreeAllEnemysPosition ].pos.y );
-      printf("\nX= entry for this special force found!  It reads: %f" , AllEnemys[ FreeAllEnemysPosition ].pos.y );
+      printf("\nY= entry for this special force found!  It reads: %f" , AllEnemys[ FreeAllEnemysPosition ].pos.y );
+      
+      SearchPointer = strstr ( SearchPointer , "Fixed=" );
+      SearchPointer += strlen ( "Fixed=" );
+      sscanf ( SearchPointer , "%d" , &AllEnemys[ FreeAllEnemysPosition ].CompletelyFixed );
+      printf("\nFixed entry for this special force found!  It reads: %d" , AllEnemys[ FreeAllEnemysPosition ].CompletelyFixed );
       
       AllEnemys[ FreeAllEnemysPosition ].type = ListIndex;
       AllEnemys[ FreeAllEnemysPosition ].levelnum = OurLevelNumber;
       AllEnemys[ FreeAllEnemysPosition ].Status = 0;
       AllEnemys[ FreeAllEnemysPosition ].SpecialForce = 1;
-      AllEnemys[ FreeAllEnemysPosition ].CompletelyFixed = 1;
 
     } // while Special force droid found...
 
