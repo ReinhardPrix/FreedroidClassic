@@ -1133,29 +1133,66 @@ ApplyItem( item* CurItem )
     {
       Me [ 0 ] . base_magic ++ ;
     }
-  /*
   else if ( CurItem->type == ITEM_SPELLBOOK_OF_HEALING )
     {
-      Me [ 0 ] . SkillLevel [ 3 ] ++ ;
+      Me [ 0 ] . SkillLevel [ SPELL_FORCE_TO_ENERGY ] ++ ;
       Play_Spell_ForceToEnergy_Sound( );
     }
   else if ( CurItem->type == ITEM_SPELLBOOK_OF_EXPLOSION_CIRCLE )
     {
-      Me [ 0 ] . SkillLevel [ 1 ] ++ ;
+      Me [ 0 ] . SkillLevel [ SPELL_FORCE_EXPLOSION_CIRCLE ] ++ ;
       Play_Spell_ForceToEnergy_Sound( );
     }
   else if ( CurItem->type == ITEM_SPELLBOOK_OF_EXPLOSION_RAY )
     {
-      Me [ 0 ] . SkillLevel [ 2 ] ++ ;
+      Me [ 0 ] . SkillLevel [ SPELL_FORCE_EXPLOSION_RAY ] ++ ;
       Play_Spell_ForceToEnergy_Sound( );
     }
   else if ( CurItem->type == ITEM_SPELLBOOK_OF_TELEPORT_HOME )
     {
-      Me [ 0 ] . SkillLevel [ 4 ] ++ ;
+      Me [ 0 ] . SkillLevel [ SPELL_TELEPORT_HOME ] ++ ;
       Play_Spell_ForceToEnergy_Sound( );
     }
-  */
-  
+  else if ( CurItem->type == ITEM_SPELLBOOK_OF_PLASMA_BOLT )
+    {
+      Me [ 0 ] . SkillLevel [ SPELL_FIREY_BOLT ] ++ ;
+      Play_Spell_ForceToEnergy_Sound( );
+    }
+  else if ( CurItem->type == ITEM_SPELLBOOK_OF_ICE_BOLT )
+    {
+      Me [ 0 ] . SkillLevel [ SPELL_COLD_BOLT ] ++ ;
+      Play_Spell_ForceToEnergy_Sound( );
+    }
+  else if ( CurItem->type == ITEM_SPELLBOOK_OF_POISON_BOLT )
+    {
+      Me [ 0 ] . SkillLevel [ SPELL_POISON_BOLT ] ++ ;
+      Play_Spell_ForceToEnergy_Sound( );
+    }
+  else if ( CurItem->type == ITEM_SPELLBOOK_OF_PETRIFICATION )
+    {
+      Me [ 0 ] . SkillLevel [ SPELL_PARALYZE_BOLT ] ++ ;
+      Play_Spell_ForceToEnergy_Sound( );
+    }
+  else if ( CurItem->type == ITEM_SPELLBOOK_OF_RADIAL_EMP_WAVE )
+    {
+      Me [ 0 ] . SkillLevel [ SPELL_RADIAL_EMP_WAVE ] ++ ;
+      Play_Spell_ForceToEnergy_Sound( );
+    }
+  else if ( CurItem->type == ITEM_SPELLBOOK_OF_RADIAL_VMX_WAVE )
+    {
+      Me [ 0 ] . SkillLevel [ SPELL_RADIAL_VMX_WAVE ] ++ ;
+      Play_Spell_ForceToEnergy_Sound( );
+    }
+  else if ( CurItem->type == ITEM_SPELLBOOK_OF_RADIAL_PLASMA_WAVE )
+    {
+      Me [ 0 ] . SkillLevel [ SPELL_RADIAL_FIRE_WAVE ] ++ ;
+      Play_Spell_ForceToEnergy_Sound( );
+    }
+  else if ( CurItem->type == ITEM_SPELLBOOK_OF_DETECT_ITEMS )
+    {
+      Me [ 0 ] . SkillLevel [ SPELL_DETECT_ITEM ] ++ ;
+      Play_Spell_ForceToEnergy_Sound( );
+    }
 
   if ( Me[0].energy > Me[0].maxenergy ) Me[0].energy = Me[0].maxenergy ;
   if ( Me[0].mana > Me[0].maxmana ) Me[0].mana = Me[0].maxmana ;

@@ -1405,7 +1405,7 @@ Item description text="An incredible healing spell, in some cases the only one y
 
 // Item No. 45
 ** Start of new item specification subsection **
-Item name="Modern Source Book of Teleport Home"
+Item name="Source Book of Teleport Home"
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -1427,7 +1427,7 @@ Item description text="Teleporting takes on a whole new face with this book-use 
 
 // Item No. 46
 ** Start of new item specification subsection **
-Item name="Modern Source Book of Explosion Circle"
+Item name="Source Book of Explosion Circle"
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -1449,7 +1449,7 @@ Item description text="The destructive magic of this book is best used in tight 
 
 // Item No. 47
 ** Start of new item specification subsection **
-Item name="Modern Source Book of Explosion Ray"
+Item name="Source Book of Explosion Ray"
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -2257,178 +2257,178 @@ Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) pr
 
 // Item No. 83
 ** Start of new item specification subsection **
-Item name="Dummy Entry For Replacement"
-Item can be applied in combat="no"
+Item name="Source Book of Plasma Bolt"
+Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
-Item uses rotation series with prefix="drinking_mug"
-Item can be bought in shop="no"
-Items of this type collect together in inventory="yes"
+Item uses rotation series with prefix="NONE_AVAILABLE_YET"
+Item can be bought in shop="yes"
+Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-Picture number=66
+Picture number=32
 Rotation model number=0
-Sound number=4
-Base list price=50
-Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
+Sound number=5 
+Base list price=1000
+Item description text="An incredible healing spell, in some cases the only one you will ever need."
 ** End of new item specification subsection **
 
 // Item No. 84
 ** Start of new item specification subsection **
-Item name="Dummy Entry For Replacement"
-Item can be applied in combat="no"
+Item name="Source Book of Ice Bolt"
+Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
-Item uses rotation series with prefix="drinking_mug"
-Item can be bought in shop="no"
-Items of this type collect together in inventory="yes"
+Item uses rotation series with prefix="NONE_AVAILABLE_YET"
+Item can be bought in shop="yes"
+Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-Picture number=66
+Picture number=32
 Rotation model number=0
-Sound number=4
-Base list price=50
-Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
+Sound number=5 
+Base list price=1000
+Item description text="An incredible healing spell, in some cases the only one you will ever need."
 ** End of new item specification subsection **
 
 // Item No. 85
 ** Start of new item specification subsection **
-Item name="Dummy Entry For Replacement"
-Item can be applied in combat="no"
+Item name="Source Book of Poison Bolt"
+Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
-Item uses rotation series with prefix="drinking_mug"
-Item can be bought in shop="no"
-Items of this type collect together in inventory="yes"
+Item uses rotation series with prefix="NONE_AVAILABLE_YET"
+Item can be bought in shop="yes"
+Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-Picture number=66
+Picture number=32
 Rotation model number=0
-Sound number=4
-Base list price=50
-Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
+Sound number=5 
+Base list price=1000
+Item description text="An incredible healing spell, in some cases the only one you will ever need."
 ** End of new item specification subsection **
 
 // Item No. 86
 ** Start of new item specification subsection **
-Item name="Dummy Entry For Replacement"
-Item can be applied in combat="no"
+Item name="Source Book of Petrification"
+Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
-Item uses rotation series with prefix="drinking_mug"
-Item can be bought in shop="no"
-Items of this type collect together in inventory="yes"
+Item uses rotation series with prefix="NONE_AVAILABLE_YET"
+Item can be bought in shop="yes"
+Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-Picture number=66
+Picture number=32
 Rotation model number=0
-Sound number=4
-Base list price=50
-Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
+Sound number=5 
+Base list price=1000
+Item description text="An incredible healing spell, in some cases the only one you will ever need."
 ** End of new item specification subsection **
 
 // Item No. 87
 ** Start of new item specification subsection **
-Item name="Dummy Entry For Replacement"
-Item can be applied in combat="no"
+Item name="Source Book of Radial EMP Wave"
+Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
-Item uses rotation series with prefix="drinking_mug"
-Item can be bought in shop="no"
-Items of this type collect together in inventory="yes"
+Item uses rotation series with prefix="NONE_AVAILABLE_YET"
+Item can be bought in shop="yes"
+Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-Picture number=66
+Picture number=32
 Rotation model number=0
-Sound number=4
-Base list price=50
-Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
+Sound number=5 
+Base list price=1000
+Item description text="An incredible healing spell, in some cases the only one you will ever need."
 ** End of new item specification subsection **
 
 // Item No. 88
 ** Start of new item specification subsection **
-Item name="Dummy Entry For Replacement"
-Item can be applied in combat="no"
+Item name="Source Book of Radial VMX Wave"
+Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
-Item uses rotation series with prefix="drinking_mug"
-Item can be bought in shop="no"
-Items of this type collect together in inventory="yes"
+Item uses rotation series with prefix="NONE_AVAILABLE_YET"
+Item can be bought in shop="yes"
+Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-Picture number=66
+Picture number=32
 Rotation model number=0
-Sound number=4
-Base list price=50
-Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
+Sound number=5 
+Base list price=1000
+Item description text="An incredible healing spell, in some cases the only one you will ever need."
 ** End of new item specification subsection **
 
 // Item No. 89
 ** Start of new item specification subsection **
-Item name="Dummy Entry For Replacement"
-Item can be applied in combat="no"
+Item name="Source Book of Radial Plasma Wave"
+Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
-Item uses rotation series with prefix="drinking_mug"
-Item can be bought in shop="no"
-Items of this type collect together in inventory="yes"
+Item uses rotation series with prefix="NONE_AVAILABLE_YET"
+Item can be bought in shop="yes"
+Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-Picture number=66
+Picture number=32
 Rotation model number=0
-Sound number=4
-Base list price=50
-Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
+Sound number=5 
+Base list price=1000
+Item description text="An incredible healing spell, in some cases the only one you will ever need."
 ** End of new item specification subsection **
 
 // Item No. 90
 ** Start of new item specification subsection **
-Item name="Dummy Entry For Replacement"
-Item can be applied in combat="no"
+Item name="Source Book of Detect Items"
+Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
-Item uses rotation series with prefix="drinking_mug"
-Item can be bought in shop="no"
-Items of this type collect together in inventory="yes"
+Item uses rotation series with prefix="NONE_AVAILABLE_YET"
+Item can be bought in shop="yes"
+Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-Picture number=66
+Picture number=32
 Rotation model number=0
-Sound number=4
-Base list price=50
-Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
+Sound number=5 
+Base list price=1000
+Item description text="An incredible healing spell, in some cases the only one you will ever need."
 ** End of new item specification subsection **
 
 // Item No. 91

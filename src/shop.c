@@ -236,6 +236,16 @@ AssembleItemListForTradeCharacter ( item* ListToBeFilled , int ShopCharacterCode
       ListPointer->type = ITEM_SPELLBOOK_OF_EXPLOSION_CIRCLE; ListPointer++;
       ListPointer->type = ITEM_SPELLBOOK_OF_EXPLOSION_RAY; ListPointer++;
       ListPointer->type = ITEM_SPELLBOOK_OF_TELEPORT_HOME; ListPointer++;
+
+      ListPointer->type = ITEM_SPELLBOOK_OF_PLASMA_BOLT; ListPointer++;
+      ListPointer->type = ITEM_SPELLBOOK_OF_ICE_BOLT; ListPointer++;
+      ListPointer->type = ITEM_SPELLBOOK_OF_POISON_BOLT; ListPointer++;
+      ListPointer->type = ITEM_SPELLBOOK_OF_PETRIFICATION; ListPointer++;
+
+      ListPointer->type = ITEM_SPELLBOOK_OF_RADIAL_EMP_WAVE; ListPointer++;
+      ListPointer->type = ITEM_SPELLBOOK_OF_RADIAL_VMX_WAVE; ListPointer++;
+      ListPointer->type = ITEM_SPELLBOOK_OF_RADIAL_PLASMA_WAVE; ListPointer++;
+      ListPointer->type = ITEM_SPELLBOOK_OF_DETECT_ITEMS; ListPointer++;
     }
   else
     {
