@@ -672,8 +672,7 @@ enum
     SET_SOUND_FX_VOLUME, 
     SET_GAMMA_CORRECTION, 
     SET_FULLSCREEN_FLAG, 
-    CW_WIDTH,
-    CW_HEIGHT,
+    USER_RECT,
     LEAVE_OPTIONS_MENU };
 
   // This is not some Debug Menu but an optically impressive 
@@ -710,14 +709,8 @@ enum
       PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+3*FontHeight(Menu_BFont), 
 		       "Fullscreen Mode: %s", fullscreen_on ? "ON" : "OFF");
       PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+4*FontHeight(Menu_BFont), 
-		       "Combat Window Width: %s", User_Rect.x ? "CLASSIC" : "FULL" );
+		       "Combat Window Size: %s", GameConfig.FullUserRect ? "FULL" : "CLASSIC");
       PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+5*FontHeight(Menu_BFont), 
-		       "Combat Window Height: %s", (User_Rect.y - BANNER_HEIGHT ) ? "CLASSIC" : "FULL" );
-      //PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+4*FontHeight(Menu_BFont),
-      //"Show Framerate: %s", GameConfig.Draw_Framerate? "ON" : "OFF");
-      //PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+5*FontHeight(Menu_BFont),
-      //"Show Energy: %s", GameConfig.Draw_Energy? "ON" : "OFF");
-      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+6*FontHeight(Menu_BFont), 
 		       "Back");
 
       SDL_Flip( ne_screen );
@@ -797,38 +790,14 @@ enum
 	      fullscreen_on = !fullscreen_on;
 	      break;
 
-	    case CW_WIDTH:
+	    case USER_RECT:
 	      while (EnterPressed() || SpacePressed() );
-	      if (User_Rect.x == 0) 
-		{
-		  User_Rect.x=USERFENSTERPOSX;
-		  User_Rect.w=USERFENSTERBREITE;
-		  ClearGraphMem();
-		  DisplayBanner( NULL , NULL , BANNER_FORCE_UPDATE );
-		  SDL_Flip( ne_screen );
-		}
+	      GameConfig.FullUserRect = ! GameConfig.FullUserRect;
+	      if (GameConfig.FullUserRect)
+		Copy_Rect (Full_User_Rect, User_Rect);
 	      else
-		{
-		  User_Rect.x=0;
-		  User_Rect.w=640;
-		}
-	      break;
+		Copy_Rect (Classic_User_Rect, User_Rect);
 
-	    case CW_HEIGHT:
-	      while (EnterPressed() || SpacePressed() );
-	      if ( User_Rect.y == BANNER_HEIGHT ) 
-		{
-		  User_Rect.y=USERFENSTERPOSY;
-		  User_Rect.h=USERFENSTERHOEHE;
-		  ClearGraphMem();
-		  DisplayBanner( NULL , NULL , BANNER_FORCE_UPDATE );
-		  SDL_Flip( ne_screen );
-		}
-	      else
-		{
-		  User_Rect.y = BANNER_HEIGHT;
-		  User_Rect.h = 480 - BANNER_HEIGHT;
-		}
 	      break;
 
 	    case LEAVE_OPTIONS_MENU:

@@ -1161,10 +1161,8 @@ InitFreedroid (void)
   GameConfig.Influencer_Blast_Text=TRUE;
   // GameConfig.Theme_SubPath="default_theme/";
   GameConfig.Theme_SubPath="lanzz_theme/";
-  User_Rect.x=0;
-  User_Rect.w=640;
-  User_Rect.y = BANNER_HEIGHT;
-  User_Rect.h = 480 - BANNER_HEIGHT;
+  GameConfig.FullUserRect = TRUE;
+  Copy_Rect(Full_User_Rect, User_Rect);
 
   Init_Video ();
 

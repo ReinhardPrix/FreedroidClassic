@@ -467,17 +467,22 @@ PaintConsoleMenu (void)
 void
 ShowDeckMap (Level deck)
 {
+  SDL_Rect buf; // buffer: we always use Full_User_Rect for Deck-map.
   finepoint tmp;
   tmp.x=Me.pos.x;
   tmp.y=Me.pos.y;
-
+  
   ClearUserFenster ();
   Me.pos.x = CurLevel->xlen/2;
   Me.pos.y = CurLevel->ylen/2;
 
   SetCombatScaleTo( 0.25 );
 
+  Copy_Rect (User_Rect, buf);
+  Copy_Rect (Full_User_Rect, User_Rect);  // always use full-User_Rect for Deck-map
   Assemble_Combat_Picture( ONLY_SHOW_MAP );
+  // restore initial User-rect:
+  Copy_Rect (buf, User_Rect);
 
   SDL_Flip (ne_screen);
 
@@ -577,7 +582,7 @@ ClearUserFenster (void)
 {
   SDL_Rect tmp;
   
-  Copy_Rect (User_Rect, tmp)
+  Copy_Rect (User_Rect, tmp);
 
   SDL_FillRect( ne_screen , &tmp, 0 );
   return;

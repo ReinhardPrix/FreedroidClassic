@@ -42,11 +42,11 @@
 #define UserCenter_x (User_Rect.x + User_Rect.w/2)
 #define UserCenter_y (User_Rect.y + User_Rect.h/2)
 
-#define Set_Rect(rect, xx, yy, ww, hh) {\
-(rect).x = (xx); (rect).y = (yy); (rect).w = (ww); (rect).h = (hh); }
+#define Set_Rect(rect, xx, yy, ww, hh) do {\
+(rect).x = (xx); (rect).y = (yy); (rect).w = (ww); (rect).h = (hh); } while(0)
 
-#define Copy_Rect(src, dst) {\
-(dst).x = (src).x; (dst).y = (src).y; (dst).w = (src).w; (dst).h = (src).h; }
+#define Copy_Rect(src, dst) do {\
+(dst).x = (src).x; (dst).y = (src).y; (dst).w = (src).w; (dst).h = (src).h; } while(0)
 
 
 // **********************************************************************

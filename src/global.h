@@ -37,6 +37,9 @@
 #define EXTERN extern
 
 EXTERN SDL_Rect User_Rect;
+EXTERN const SDL_Rect Classic_User_Rect;
+EXTERN const SDL_Rect Full_User_Rect;
+
 EXTERN const SDL_Rect Full_Screen_Rect;
 EXTERN const SDL_Rect Menu_Rect;
 
