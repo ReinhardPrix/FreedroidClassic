@@ -36,12 +36,6 @@
  * we can do sound-compilation if and only if _both_ the 
  * SDL_mixer library _and_ the header file are present !!
  */
-#if (defined HAVE_SDL_SDL_MIXER_H) && (defined HAVE_LIBSDL_MIXER)
-#define HAS_SDL_SOUND
-#else
-#undef HAS_SDL_SOUND
-#endif
-
 
 #include "system.h"
 
@@ -50,6 +44,11 @@
 #include "global.h"
 #include "proto.h"
 
+#if defined HAVE_SDL_SDL_MIXER_H && defined HAVE_LIBSDL_MIXER
+#define HAS_SDL_SOUND
+#else
+#undef HAS_SDL_SOUND
+#endif
 
 
 // The following is the definition of the sound file names used in freedroid
