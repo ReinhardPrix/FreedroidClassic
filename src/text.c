@@ -471,6 +471,8 @@ SetTextCursor (int x, int y)
  *  startx/y give the Start-position, 
  *  EndLine is the last line (?)
  *
+ * returns : 0  if end of text was scolled out
+ *           1  if user pressed space
  *-----------------------------------------------------------------*/
 int
 ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePictureName )
@@ -479,8 +481,9 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
   char *textpt;			/* bewegl. Textpointer */
   int InsertLine = starty;
   int speed = +5;
-  int maxspeed = 8;
+  int maxspeed = 10;
   SDL_Surface* Background;
+  int ret = 0;
 
   DisplayImage ( find_file(TitlePictureName,GRAPHICS_DIR, FALSE) );
   MakeGridOnScreen( (SDL_Rect*) &Full_Screen_Rect );
@@ -498,7 +501,7 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
     if (*textpt == '\n')
       Number_Of_Line_Feeds++;
 
-  while ( !SpacePressed () )
+  while (1)
     {
       if (UpPressed ())
 	{
@@ -520,23 +523,7 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
 
       SDL_BlitSurface ( Background , NULL , ne_screen , NULL );
 
-      if (!DisplayText (Text, startx, InsertLine, &User_Rect))
-	{
-	  // JP: I've disabled this, since with this enabled we won't even
-	  // see a single line of the first section of the briefing.
-	  // But this leads to that we currently NEVER can see the second 
-	  // or third part of the briefing text, cause it will not start
-	  // the new text part when the lower end of the first text part
-	  // is reached.  I don't consider this bug release-critical.
-	  //
-	  // break;  /* Text has been scrolled outside User_Rect */
-	}
-
       InsertLine -= speed;
-
-      SDL_Flip (ne_screen);
-
-      usleep (20000);
 
       /* Nicht bel. nach unten wegscrollen */
       if (InsertLine > SCREENHEIGHT - 10 && (speed < 0))
@@ -544,12 +531,24 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
 	  InsertLine = SCREENHEIGHT - 10;
 	  speed = 0;
 	}
+      if (!DisplayText (Text, startx, InsertLine, &User_Rect))
+	{
+	  ret = 0;  /* Text has been scrolled outside User_Rect */
+	  break;  
+	}
+      if (SpacePressed())
+	{
+	  ret = 1;
+	  break;
+	}
+      SDL_Flip (ne_screen);
+      usleep (30000);
 
-    } /* while !Space_Pressed */
+    } /* while 1 */
 
   SDL_FreeSurface( Background );
 
-  return OK;
+  return (ret);
 }				// void ScrollText(void)
 
 /*-----------------------------------------------------------------

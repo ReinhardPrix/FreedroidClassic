@@ -380,7 +380,7 @@ enum
   { 
     CLASSIC_PARADROID_MISSION_POSITION=1, 
     NEW_MISSION_POSITION,
-    RESTART_PREVIOUS_MISSION
+    LAST_MISSION
   };
   int Weiter = 0;
   int MenuPosition=1;
@@ -420,7 +420,6 @@ enum
       CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y -2*FontHeight(GetCurrentFont()), "Mission Selection Menu");
       CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y ,    "Classic Paradroid");
       CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y +1*FontHeight(GetCurrentFont()), "Asteroid Research");
-      CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y +2*FontHeight(GetCurrentFont()), "Restart Previous Mission");
 
       SDL_Flip( ne_screen );
 
@@ -443,20 +442,6 @@ enum
 	      NoMissionLoadedEver = FALSE;
 	      Weiter = TRUE;   /* jp forgot this... ;) */
 	      break;
-	    case RESTART_PREVIOUS_MISSION:
-	      if ( NoMissionLoadedEver )
-		{
-		  CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y +5*FontHeight(GetCurrentFont()), "No previous mission known.");
-		  SDL_Flip( ne_screen );
-		  while ( EnterPressed() );
-		  while ( (!EnterPressed()) && (!SpacePressed()) );
-		}
-	      else
-		{
-		  InitNewMission ( Previous_Mission_Name );
-		  Weiter = TRUE;   /* jp forgot this... ;) */
-		}
-	      break;
 	    default: 
 	      break;
 	    } 
@@ -469,7 +454,7 @@ enum
 	}
       if ( key == SDLK_DOWN )
 	{
-	  if ( MenuPosition < RESTART_PREVIOUS_MISSION ) MenuPosition++;
+	  if ( MenuPosition < LAST_MISSION-1 ) MenuPosition++;
 	  MoveMenuPositionSound();
 	}
       if ( key == SDLK_ESCAPE )

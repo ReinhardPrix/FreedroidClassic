@@ -1226,7 +1226,6 @@ Title ( char *MissionBriefingPointer )
   char* TerminationPointer;
   char* TitlePictureName;
   char* TitleSongName;
-
   int ThisTextLength;
 #define BRIEFING_TITLE_PICTURE_STRING "The title picture in the graphics subdirectory for this mission is : "
 #define BRIEFING_TITLE_SONG_STRING "The title song in the sound subdirectory for this mission is : "
@@ -1263,8 +1262,13 @@ Title ( char *MissionBriefingPointer )
   // Next we display all the subsections of the briefing section
   // with scrolling font
   NextSubsectionStartPointer = MissionBriefingPointer;
-  while ( ( NextSubsectionStartPointer = strstr ( NextSubsectionStartPointer, NEXT_BRIEFING_SUBSECTION_START_STRING)) != NULL)
+  while (1)
     {
+      NextSubsectionStartPointer = strstr (NextSubsectionStartPointer, 
+					   NEXT_BRIEFING_SUBSECTION_START_STRING);
+      if (NextSubsectionStartPointer == NULL)
+	break;
+
       NextSubsectionStartPointer += strlen ( NEXT_BRIEFING_SUBSECTION_START_STRING );
       if ( (TerminationPointer=strstr ( NextSubsectionStartPointer, END_OF_BRIEFING_SUBSECTION_STRING)) == NULL)
 	{
@@ -1276,11 +1280,10 @@ Title ( char *MissionBriefingPointer )
       strncpy ( PreparedBriefingText , NextSubsectionStartPointer , ThisTextLength );
       PreparedBriefingText[ThisTextLength]=0;
       
-      // DebugPrintf (1, "\n\nIdentified Text for the scrolling briefing: %s." , PreparedBriefingText);
-      fflush(stdout);
-      
-      ScrollText ( PreparedBriefingText, User_Rect.x, User_Rect.y + User_Rect.h -10, 
-		   ScrollEndLine , TitlePictureName ); 
+      if (ScrollText ( PreparedBriefingText, User_Rect.x, User_Rect.y + User_Rect.h -10, 
+		   ScrollEndLine , TitlePictureName ) == 1)
+	break;  // User pressed 'fire'
+ 
       free ( PreparedBriefingText );
     }
 
@@ -1340,7 +1343,7 @@ ThouArtDefeated (void)
 
   now=SDL_GetTicks();
 
-  while ( SDL_GetTicks() - now < WAIT_AFTER_KILLED)
+  while ( (SDL_GetTicks() - now < WAIT_AFTER_KILLED) && (!SpacePressed()))
     {
       DisplayBanner (NULL, NULL,  0 );
       ExplodeBlasts ();
@@ -1348,8 +1351,18 @@ ThouArtDefeated (void)
       Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
     }
   
-  white_noise (ne_screen, &User_Rect, WAIT_AFTER_KILLED);
-  
+  if (!SpacePressed()) 
+    white_noise (ne_screen, &User_Rect, WAIT_AFTER_KILLED);
+
+  Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
+  MakeGridOnScreen (&User_Rect);
+  ShowRobotPicture (User_Rect.x + User_Rect.w/2 -70, User_Rect.y + 130, DRUID999);
+  DisplayText ("Transmission", User_Rect.x + User_Rect.w/2 -90, User_Rect.y + 100, &User_Rect);
+  DisplayText ("Terminated", User_Rect.x + User_Rect.w/2 -90, User_Rect.y + 320, &User_Rect);
+  SDL_Flip (ne_screen);
+  now=SDL_GetTicks();
+  while (  (SDL_GetTicks() - now < SHOW_WAIT) && (!SpacePressed()) );
+
   update_highscores ();
 
   GameOver = TRUE;

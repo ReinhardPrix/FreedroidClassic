@@ -652,15 +652,34 @@ show_droid_info (int droidtype, int page)
 
   switch (page)
     {
+    case -3: // Title screen: intro unit
+      sprintf (InfoText, "Unit type %s - %s\n \
+This is the unit that you currently control. Prepare to board Robo-frighter \
+Paradroid to eliminate all rogue robots.", 
+	       Druidmap[droidtype].druidname, 
+	       Classname[Druidmap[droidtype].class]);
+      break;
+    case -2: // Takeover: unit that you wish to control
+      sprintf (InfoText, "Unit type %s - %s\n \
+This is the unit that you wish to control. Prepare to takeover.", 
+	       Druidmap[droidtype].druidname, 
+	       Classname[Druidmap[droidtype].class]);
+      break;
+    case -1: // Takeover: unit that you control
+      sprintf (InfoText, "Unit type %s - %s\n \
+This is the unit that you currently control.", 
+	       Druidmap[droidtype].druidname, 
+	       Classname[Druidmap[droidtype].class]);
+      break;
     case 0:
-      sprintf( InfoText, "\
+      sprintf (InfoText, "\
 Unit type %s - %s\n\
 Entry : %d\n\
 Class : %s\n\
 Height : %f\n\
 Weight: %f \n\
 Drive : %s \n\
-Brain : %s", Druidmap[droidtype].druidname, Classname[Druidmap[Me.type].class],
+Brain : %s", Druidmap[droidtype].druidname, Classname[Druidmap[droidtype].class],
 	       droidtype+1, Classes[Druidmap[droidtype].class],
 	       Druidmap[droidtype].height, Druidmap[droidtype].weight,
 	       Drivenames [ Druidmap[ droidtype].drive], 

@@ -1388,7 +1388,6 @@ white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout)
   char used_tiles[NOISE_TILES/2+1];
   int next_tile;
   int now;
-  bool finished;
 
   for (i=0; i< NOISE_COLORS; i++)
     { 
@@ -1421,7 +1420,7 @@ white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout)
   // let's go
   now = SDL_GetTicks();
   
-  while (!finished)
+  while (1)
     {
       // pick an old enough tile
       do
@@ -1445,7 +1444,7 @@ white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout)
       usleep(25000);
 
       if (SpacePressed () || (timeout && (SDL_GetTicks()-now > timeout)))
-	finished = TRUE;
+	break;
 
     } // while (! finished)
 

@@ -1,3 +1,10 @@
+/*----------------------------------------------------------------------
+ *
+ * Desc: Everything that has to do with the takeover game of Paradroid
+ * 	is contained in this file.
+ *
+ *----------------------------------------------------------------------*/
+
 /* 
  *
  *   Copyright (c) 1994, 2002 Johannes Prix
@@ -22,14 +29,6 @@
  *  MA  02111-1307  USA
  *
  */
-/* ----------------------------------------------------------------------
- * This file does everything that has to do with the takeover game from
- * the original paradroid game.
- * ---------------------------------------------------------------------- */
-/*
- * This file has been checked for remains of german comments in the code
- * I you still find some, please just kill it mercilessly.
- */
 #define _takeover_c
 
 #include "system.h"
@@ -39,12 +38,10 @@
 #include "global.h"
 #include "proto.h"
 #include "takeover.h"
-#include "ship.h"
 #include "map.h"
 
 Uint32 cur_time;  		/* current time in ms */
 SDL_Surface *to_blocks;      /* the global surface containing all game-blocks */
-SDL_Surface *to_background;
 
 /* the rectangles containing the blocks */
 SDL_Rect FillBlocks[NUM_FILL_BLOCKS];
@@ -140,7 +137,6 @@ Takeover (int enemynum)
   int FinishTakeover = FALSE;
   static int RejectEnergy = 0;	/* your energy if you're rejected */
   char *message;
-  int key;
 
 
   /* Prevent distortion of framerate by the delay coming from 
@@ -159,14 +155,20 @@ Takeover (int enemynum)
 
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
   
-  //  Fill_Rect (User_Rect, to_bg_color);
+  Fill_Rect (User_Rect, to_bg_color);
 
-  Me[0].status = MOBILE; /* the new status _after_ the takeover game */
+  Me.status = MOBILE; /* the new status _after_ the takeover game */
 
-  show_droid_info ( AllEnemys[enemynum].type, 0 );
-  key = 0;
-  while ( (key != SDLK_SPACE) && (key != SDLK_ESCAPE) )
-    key = getchar_raw();
+
+  show_droid_info ( Me.type, -1 );
+  while ( !SpacePressed() );
+  while ( SpacePressed() );
+  
+
+  show_droid_info ( AllEnemys[enemynum].type, -2 );
+  while ( !SpacePressed() );
+  while ( SpacePressed() );
+
 
   while (!FinishTakeover)
     {
@@ -186,44 +188,43 @@ Takeover (int enemynum)
       
       DroidNum = enemynum;
       OpponentType = AllEnemys[enemynum].type;
-      NumCapsules[YOU] = 3 + ClassOfDruid (Me[0].type);
+      NumCapsules[YOU] = 3 + ClassOfDruid (Me.type);
       NumCapsules[ENEMY] = 4 + ClassOfDruid (OpponentType);
 
       InventPlayground ();
 
       ShowPlayground ();
-      SDL_Flip (Screen);
 
       ChooseColor ();
 
       PlayGame ();
 
-      // evaluate the final score of the game and return it
+      /* Ausgang beurteilen und returnen */
       if (InvincibleMode || (LeaderColor == YourColor))
 	{
 	  Switch_Background_Music_To (SILENCE);
 	  Takeover_Game_Won_Sound ();
-	  if (Me[0].type == DRUID001)
+	  if (Me.type == DRUID001)
 	    {
-	      RejectEnergy = Me[0].energy;
-	      PreTakeEnergy = Me[0].energy;
+	      RejectEnergy = Me.energy;
+	      PreTakeEnergy = Me.energy;
 	    }
 
 	  // We provide some security agains too high energy/health values gained
 	  // by very rapid successions of successful takeover attempts
-	  if (Me[0].energy > Druidmap[DRUID001].maxenergy) Me[0].energy = Druidmap[DRUID001].maxenergy;
-	  if (Me[0].health > Druidmap[DRUID001].maxenergy) Me[0].health = Druidmap[DRUID001].maxenergy;
+	  if (Me.energy > Druidmap[DRUID001].maxenergy) Me.energy = Druidmap[DRUID001].maxenergy;
+	  if (Me.health > Druidmap[DRUID001].maxenergy) Me.health = Druidmap[DRUID001].maxenergy;
 
 	  // We allow to gain the current energy/full health that was still in the 
 	  // other droid, since all previous damage must be due to fighting damage,
 	  // and this is exactly the sort of damage can usually be cured in refreshes.
-	  Me[0].energy += AllEnemys[enemynum].energy;
-	  Me[0].health += Druidmap[OpponentType].maxenergy;
+	  Me.energy += AllEnemys[enemynum].energy;
+	  Me.health += Druidmap[OpponentType].maxenergy;
 
-	  Me[0].type = AllEnemys[enemynum].type;
-	  Me[0].Marker = AllEnemys[enemynum].Marker;
+	  Me.type = AllEnemys[enemynum].type;
+	  Me.Marker = AllEnemys[enemynum].Marker;
 
-	  Me[0].Experience += Druidmap[OpponentType].score;
+	  RealScore += Druidmap[OpponentType].score;
 	  if (LeaderColor != YourColor)	/* only won because of InvincibleMode */
 	    message = "You cheat";
 	  else				/* won the proper way */
@@ -235,16 +236,16 @@ Takeover (int enemynum)
 	{
 	  Switch_Background_Music_To (SILENCE);
 	  Takeover_Game_Lost_Sound ();
-	  if (Me[0].type != DRUID001)
+	  if (Me.type != DRUID001)
 	    {
 	      message = "Rejected";
-	      Me[0].type = DRUID001;
-	      Me[0].energy = RejectEnergy;
+	      Me.type = DRUID001;
+	      Me.energy = RejectEnergy;
 	    }
 	  else
 	    {
 	      message = "Burnt Out";
-	      Me[0].energy = 0;
+	      Me.energy = 0;
 	    }
 	  FinishTakeover = TRUE;
 	}			/* LeadColor == OpponentColor */
@@ -268,10 +269,8 @@ Takeover (int enemynum)
       //  	{ */
       //  	  usleep (30000); */
       // 	  waiter--; */
-
+  	  DisplayBanner (message, NULL , 0 );	
   	  ShowPlayground ();
-  	  to_show_banner (message, NULL);
-	  SDL_Flip (Screen);
 	  // 	} /* WHILE waiter */ */
 
     }	/* while !FinishTakeover */
@@ -286,13 +285,15 @@ Takeover (int enemynum)
   else
     return FALSE;
 
-}; // int Takeover( int enemynum ) 
+} /* Takeover() */
 
 
-/* ----------------------------------------------------------------------
- * This function does the countdown where you still can changes your
- * color.
- * ---------------------------------------------------------------------- */
+/*@Function============================================================
+@Desc: ChooseColor():	Countdown zum Waehlen der Farbe 
+
+@Ret: void
+@Int:
+* $Function----------------------------------------------------------*/
 void
 ChooseColor (void)
 {
@@ -333,9 +334,9 @@ ChooseColor (void)
       countdown--;		/* Count down */
       sprintf (count_text, "Color-%d", countdown);
 
+      DisplayBanner (count_text, NULL , 0);
       ShowPlayground ();
-      to_show_banner (count_text, NULL);
-      SDL_Flip (Screen);
+
 
       if (countdown == 0)
 	ColorChosen = TRUE;
@@ -405,6 +406,7 @@ PlayGame (void)
 	  prev_count_tick += count_tick_len;  /* set for next countdown tick */
 	  countdown--;
 	  sprintf (count_text, "Finish-%d", countdown);
+	  DisplayBanner (count_text, NULL , 0 );
 
 	  if (countdown == 0)
 	    FinishTakeover = TRUE;
@@ -473,11 +475,10 @@ PlayGame (void)
 	} /* if (motion_tick has occurred) */
 
       ShowPlayground ();
-      to_show_banner (count_text, NULL);
-      SDL_Flip (Screen);
+
     }	/* while !FinishTakeover */
 
-  /* Final contdown */
+  /* Schluss- Countdown */
   countdown = CAPSULE_COUNTDOWN + 10;
 
   while (countdown--)
@@ -494,7 +495,6 @@ PlayGame (void)
       ProcessPlayground ();	/* this has to be done several times to be sure */
       ProcessDisplayColumn ();
       ShowPlayground ();
-      SDL_Flip (Screen);
     }	/* while (countdown) */
 
     return;
@@ -502,7 +502,10 @@ PlayGame (void)
 } /* PlayGame() */
 
 /*-----------------------------------------------------------------
- * This function performs the enemy movements in the takeover game.
+ * @Desc: animiert Gegner beim Uebernehm-Spiel
+ * 
+ * @Ret: void
+ * @Int:
  *-----------------------------------------------------------------*/
 void
 EnemyMovements (void)
@@ -569,10 +572,11 @@ EnemyMovements (void)
   return;
 }	/* EnemyMovements */
 
-/* ----------------------------------------------------------------------
- * This function reads in the takeover game elements for later blitting. 
- * It frees previous SDL-surfaces if they were allocated.  T
- * This allows to use this fct also for theme-switching.
+/*@Function============================================================
+ * read in takeover game elements. Frees previous SDL-surfaces if 
+ * they were allocated, this allows to used this fct also for theme-switching
+ *
+ *
  *-----------------------------------------------------------------*/
 int
 GetTakeoverGraphics (void)
@@ -585,31 +589,20 @@ GetTakeoverGraphics (void)
   Set_Rect (tmp, User_Rect.x, User_Rect.y, 0, 0);
 
   if (to_blocks)   /* this happens when we do theme-switching */
-    free (to_blocks);
-  if (to_background)
-    free (to_background);
-  
-  to_background = IMG_Load (find_file (TO_BG_FILE, GRAPHICS_DIR, TRUE));
-  if (to_background == NULL)
-    DebugPrintf (0, "\nWARNING: Takeover Background file %s missing for theme %s\n", 
-		 TO_BG_FILE, GameConfig.Theme_SubPath);
+    free(to_blocks);
 
   TempLoadSurface = IMG_Load (find_file (TO_BLOCK_FILE, GRAPHICS_DIR, TRUE));
   to_blocks = SDL_DisplayFormatAlpha( TempLoadSurface ); // the surface is converted
   SDL_FreeSurface ( TempLoadSurface );
 
-  /* Get the fill-blocks */
+  /* Set the fill-blocks */
   for (i=0; i<NUM_FILL_BLOCKS; i++,curx += FILL_BLOCK_LEN + 2)
     Set_Rect (FillBlocks[i], curx, cury, FILL_BLOCK_LEN, FILL_BLOCK_HEIGHT);
 
-  /* Get the capsule Blocks */
+  /* Set the capsule Blocks */
   for (i = 0; i < NUM_CAPS_BLOCKS; i++, curx += CAPSULE_LEN + 2)
     Set_Rect (CapsuleBlocks[i], curx, cury, CAPSULE_LEN, CAPSULE_HEIGHT);
-
-  /* Get the default background color, to be used when no background picture found! */
-  curx += CAPSULE_LEN + 2;
   
-
   curx = 0;
   cury += FILL_BLOCK_HEIGHT + 2;
 
@@ -642,15 +635,17 @@ GetTakeoverGraphics (void)
   Set_Rect (ToLeaderBlock, curx, cury, LEADERBLOCKLEN, LEADERBLOCKHEIGHT);
 
   return OK;
-}; // int GetTakeoverGraphics ( void )
+}				// int GetTakeoverGraphics(void)
 
-/* -----------------------------------------------------------------
+/*-----------------------------------------------------------------
  * @Desc: prepares _and displays_ the current Playground
  *
  *   NOTE: this function should only change the USERFENSTER part
  *         so that we can do Infoline-setting before this
  *
- * ----------------------------------------------------------------- */
+ * @Ret: void
+ *
+ *-----------------------------------------------------------------*/
 void
 ShowPlayground ()
 {
@@ -663,16 +658,13 @@ ShowPlayground ()
   xoffs = User_Rect.x + (User_Rect.w - SCALE_FACTOR*290)/2;
   yoffs = User_Rect.y + (User_Rect.h - SCALE_FACTOR*140)/2;
 
-  //  SDL_SetColorKey (Screen, 0, 0);
-  SDL_SetClipRect (Screen , &User_Rect);
+  SDL_SetColorKey (ne_screen, 0, 0);
+  SDL_SetClipRect (ne_screen , &User_Rect);
 
-  if (to_background)
-    SDL_BlitSurface (to_background, NULL, Screen, NULL);
-  else
-    Fill_Rect (User_Rect, to_bg_color);  /* fallback if now background pic found */
+  Fill_Rect (User_Rect, to_bg_color);
 
   PutInfluence (xoffs + DruidStart[YourColor].x,
-		yoffs + DruidStart[YourColor].y, 0 );
+		yoffs + DruidStart[YourColor].y);
 
   if (AllEnemys[DroidNum].Status != OUT)
     PutEnemy (DroidNum, xoffs + DruidStart[!YourColor].x,
@@ -683,54 +675,54 @@ ShowPlayground ()
 	    User_Rect.w, User_Rect.h);
 
   SDL_BlitSurface (to_blocks, &ToGroundBlocks[GELB_OBEN],
-		   Screen, &Target_Rect);
+		   ne_screen, &Target_Rect);
 
   Target_Rect.y += GROUNDBLOCKHEIGHT;
 
   for (i = 0; i < 12; i++)
     {
       SDL_BlitSurface (to_blocks, &ToGroundBlocks[GELB_MITTE],
-		       Screen, &Target_Rect);
+		       ne_screen, &Target_Rect);
 
       Target_Rect.y += GROUNDBLOCKHEIGHT;
     }				/* for i=1 to 12 */
 
   SDL_BlitSurface (to_blocks, &ToGroundBlocks[GELB_UNTEN],
-		   Screen, &Target_Rect);
+		   ne_screen, &Target_Rect);
 
 
   /* Mittlere Saeule */
   Set_Rect (Target_Rect, xoffs + MID_OFFS_X, yoffs + MID_OFFS_Y,0, 0);
   SDL_BlitSurface (to_blocks, &ToLeaderBlock,
-		   Screen, &Target_Rect);
+		   ne_screen, &Target_Rect);
 
   Target_Rect.y += LEADERBLOCKHEIGHT;
   for (i = 0; i < 12; i++, Target_Rect.y += COLUMNBLOCKHEIGHT)
     SDL_BlitSurface (to_blocks, &ToColumnBlock,
-		     Screen, &Target_Rect);
+		     ne_screen, &Target_Rect);
 
 
   /* rechte Saeule */
   Set_Rect (Target_Rect, xoffs + RIGHT_OFFS_X, yoffs + RIGHT_OFFS_Y,0, 0);
 
   SDL_BlitSurface (to_blocks, &ToGroundBlocks[VIOLETT_OBEN],
-		   Screen, &Target_Rect);
+		   ne_screen, &Target_Rect);
   Target_Rect.y += GROUNDBLOCKHEIGHT;
 
   for (i = 0; i < 12; i++, Target_Rect.y += GROUNDBLOCKHEIGHT)
     SDL_BlitSurface (to_blocks, &ToGroundBlocks[VIOLETT_MITTE],
-		     Screen, &Target_Rect);
+		     ne_screen, &Target_Rect);
 
   SDL_BlitSurface (to_blocks, &ToGroundBlocks[VIOLETT_UNTEN],
-		   Screen, &Target_Rect);
+		   ne_screen, &Target_Rect);
 
   /* Fill the Leader-LED with its color */
   Set_Rect (Target_Rect, xoffs + LEADERLED_X, yoffs + LEADERLED_Y, 0, 0);
   SDL_BlitSurface (to_blocks, &FillBlocks[LeaderColor],
-		   Screen, &Target_Rect);
+		   ne_screen, &Target_Rect);
   Target_Rect.y += FILL_BLOCK_HEIGHT;
   SDL_BlitSurface (to_blocks, &FillBlocks[LeaderColor],
-		   Screen, &Target_Rect);
+		   ne_screen, &Target_Rect);
 
   /* Fill the Display Column with its colors */
   for (i = 0; i < NUM_LINES; i++)
@@ -739,7 +731,7 @@ ShowPlayground ()
 		yoffs + LEDCOLUMN_Y + i*(FILL_BLOCK_HEIGHT+2),
 		0, 0);
       SDL_BlitSurface (to_blocks, &FillBlocks[DisplayColumn[i]],
-		       Screen, &Target_Rect);
+		       ne_screen, &Target_Rect);
     }
 
 
@@ -750,7 +742,7 @@ ShowPlayground ()
 	Set_Rect (Target_Rect, xoffs + PlaygroundStart[GELB].x + i * TO_BLOCKLEN,
 		  yoffs + PlaygroundStart[GELB].y + j * TO_BLOCKHEIGHT, 0, 0);
 	block = ToPlayground[GELB][i][j] + ActivationMap[GELB][i][j]*TO_BLOCKS;
-	SDL_BlitSurface (to_blocks, &ToGameBlocks[block],Screen, &Target_Rect);
+	SDL_BlitSurface (to_blocks, &ToGameBlocks[block],ne_screen, &Target_Rect);
       }
 
 
@@ -763,7 +755,7 @@ ShowPlayground ()
 		  yoffs + PlaygroundStart[VIOLETT].y + j * TO_BLOCKHEIGHT, 0, 0);
 	block = ToPlayground[VIOLETT][i][j]+
 	  (NUM_PHASES+ActivationMap[VIOLETT][i][j])*TO_BLOCKS;
-	SDL_BlitSurface (to_blocks, &ToGameBlocks[block],Screen, &Target_Rect);
+	SDL_BlitSurface (to_blocks, &ToGameBlocks[block],ne_screen, &Target_Rect);
       }
 
   /* Show the capsules left for each player */
@@ -778,7 +770,7 @@ ShowPlayground ()
 		yoffs + CurCapsuleStart[color].y + CapsuleCurRow[color]*(CAPSULE_HEIGHT+2),
 		0,0);
       if (NumCapsules[player])
-	SDL_BlitSurface (to_blocks, &CapsuleBlocks[color], Screen, &Target_Rect);
+	SDL_BlitSurface (to_blocks, &CapsuleBlocks[color], ne_screen, &Target_Rect);
 
 
       for (i = 0; i < NumCapsules[player]-1; i++)
@@ -786,13 +778,16 @@ ShowPlayground ()
 	  Set_Rect (Target_Rect, xoffs + LeftCapsulesStart[color].x,
 		    yoffs + LeftCapsulesStart[color].y + i*CAPSULE_HEIGHT, 0, 0);
 	  SDL_BlitSurface (to_blocks, &CapsuleBlocks[color],
-			   Screen, &Target_Rect);
+			   ne_screen, &Target_Rect);
 	} /* for capsules */
     } /* for player */
+
+  SDL_Flip (ne_screen);
 
   return;
 
 }				/* ShowPlayground */
+
 
 /*-----------------------------------------------------------------
  * @Desc: Clears Playground (and ActivationMap) to default start-values
@@ -818,14 +813,15 @@ ClearPlayground (void)
   for (row = 0; row < NUM_LINES; row++)
     DisplayColumn[row] = row % 2;
 
-}; // void ClearPlayground ( void )
+}				/* ClearPlayground */
 
-/* -----------------------------------------------------------------
+
+/*-----------------------------------------------------------------
  * @Desc: generate a random Playground
  *	
  * @Ret: void
  *
- * ----------------------------------------------------------------- */
+ *-----------------------------------------------------------------*/
 void
 InventPlayground (void)
 {
@@ -1036,7 +1032,7 @@ ProcessPlayground (void)
 		  if (ActivationMap[color][layer - 1][row] >= ACTIVE1)
 		    TurnActive = TRUE;
 
-		  // additional enforcers stay active by themselves...
+		  /* Verstaerker halten sich aber auch selbst aktiv !! */
 		  if (ActivationMap[color][layer][row] >= ACTIVE1)
 		    TurnActive = TRUE;
 
@@ -1083,13 +1079,17 @@ ProcessPlayground (void)
     }				/* for color */
 
   return;
-};  // void ProcessPlayground ( void )
+}				/* ProcessPlayground */
 
-/* ---------------------------------------------------------------------- 
- * This function sets the correct values for the status column in the
- * middle of the takeover game field.
- * Binking leds are realized here as well.
- * ---------------------------------------------------------------------- */
+
+
+/*@Function============================================================
+@Desc:  ProcessDisplayColumn(): setzt die Korrekten Werte in der Display-
+        Saeule. Blinkende LEDs werden ebenfalls hier realisiert
+
+@Ret: void
+@Int:
+* $Function----------------------------------------------------------*/
 void
 ProcessDisplayColumn (void)
 {
@@ -1102,11 +1102,11 @@ ProcessDisplayColumn (void)
 
   for (row = 0; row < NUM_LINES; row++)
     {
-      // unquestioned yellow
+      /* eindeutig gelb */
       if ((ActivationMap[GELB][CLayer][row] >= ACTIVE1) &&
 	  (ActivationMap[VIOLETT][CLayer][row] == INACTIVE))
 	{
-	  // change color?
+	  /* Farbtauscher ??? */
 	  if (ToPlayground[GELB][CLayer - 1][row] == FARBTAUSCHER)
 	    DisplayColumn[row] = VIOLETT;
 	  else
@@ -1114,11 +1114,11 @@ ProcessDisplayColumn (void)
 	  continue;
 	}
 
-      // clearly magenta
+      /* eindeutig violett */
       if ((ActivationMap[GELB][CLayer][row] == INACTIVE) &&
 	  (ActivationMap[VIOLETT][CLayer][row] >= ACTIVE1))
 	{
-	  // change color?
+	  /* Farbtauscher ??? */
 	  if (ToPlayground[VIOLETT][CLayer - 1][row] == FARBTAUSCHER)
 	    DisplayColumn[row] = GELB;
 	  else
@@ -1127,11 +1127,11 @@ ProcessDisplayColumn (void)
 	  continue;
 	}
 
-      // undecided: flimmering
+      /* unentschieden: Flimmern */
       if ((ActivationMap[GELB][CLayer][row] >= ACTIVE1) &&
 	  (ActivationMap[VIOLETT][CLayer][row] >= ACTIVE1))
 	{
-	  // change color?
+	  /* Farbtauscher - Faelle */
 	  if ((ToPlayground[GELB][CLayer - 1][row] == FARBTAUSCHER) &&
 	      (ToPlayground[VIOLETT][CLayer - 1][row] != FARBTAUSCHER))
 	    DisplayColumn[row] = VIOLETT;
@@ -1146,11 +1146,11 @@ ProcessDisplayColumn (void)
 		DisplayColumn[row] = VIOLETT;
 	    }			/* if - else if - else */
 
-	}			/* if undecided */
+	}			/* if unentschieden */
 
     }				/* for */
 
-  // evaluate the winning color
+  /* Win Color beurteilen */
   GelbCounter = 0;
   ViolettCounter = 0;
   for (row = 0; row < NUM_LINES; row++)
@@ -1171,15 +1171,18 @@ ProcessDisplayColumn (void)
   // depend on the details of the final takeover score.  Therefore we set this
   // resistance factor variable here.
   //
-  Me[0].Current_Victim_Resistance_Factor = 0.2 * ( (float) 12 - abs( ViolettCounter- GelbCounter ) );
+  Me.Current_Victim_Resistance_Factor = 0.2 * ( (float) 12 - abs( ViolettCounter- GelbCounter ) );
 
   return;
-}; // void ProcessDisplayColumn 
+}; // ProcessDisplayColumn 
 
-/* ---------------------------------------------------------------------- 
- * This function does the countdown of the capsules and kills them if 
- * they are too old.
- * ---------------------------------------------------------------------- */
+/*@Function============================================================
+@Desc: ProcessCapsules():	does the countdown of the capsules and
+									kills them if too old
+
+@Ret: void
+@Int:
+* $Function----------------------------------------------------------*/
 void
 ProcessCapsules (void)
 {
@@ -1201,12 +1204,16 @@ ProcessCapsules (void)
 
       } /* for row */
 
-}; // void ProcessCapsules ( void )
+}   /* ProcessCapsules() */
 
-/* ----------------------------------------------------------------------
- * This function tells, wether a Column-connection is active or not.
- * It returns TRUE or FALSE accordinly.
- * ---------------------------------------------------------------------- */
+
+/*@Function============================================================
+@Desc: IsInactive(color, row): tells, wether a Column-connection
+						is active or not
+
+@Ret: TRUE/FALSE
+@Int:
+* $Function----------------------------------------------------------*/
 int
 IsActive (int color, int row)
 {
@@ -1220,11 +1227,13 @@ IsActive (int color, int row)
     return FALSE;
 }				/* IsActive */
 
-/* -----------------------------------------------------------------
- * This function animates the active cables: this is done by cycling 
- * over the active phases ACTIVE1-ACTIVE3, which are represented by 
+/*-----------------------------------------------------------------
+ *
+ * Animate the active cables: this is done by cycling over
+ * the active phases ACTIVE1-ACTIVE3, which are represented by 
  * different pictures in the playground
- * ----------------------------------------------------------------- */
+ *
+ *-----------------------------------------------------------------*/
 void
 AnimateCurrents (void)
 {
@@ -1241,73 +1250,7 @@ AnimateCurrents (void)
 	  }
 
   return;
-}; // void AnimateCurrents (void)
-
-void
-to_show_banner (const char* left, const char* right)
-{
-  char dummy[80];
-  char left_box [LEFT_TEXT_LEN + 10];
-  char right_box[RIGHT_TEXT_LEN + 10];
-  int left_len, right_len;   // the actualy string lengths
-
-  // --------------------
-  // At first the text is prepared.  This can't hurt.
-  // we will decide whether to dispaly it or not later...
-  //
-
-  if (left == NULL) 
-    left = "0";
-
-  if ( right == NULL )
-    {
-      sprintf ( dummy , "%ld" , ShowScore );
-      right = dummy;
-    }
-
-  // Now fill in the text
-  left_len = strlen (left);
-  if( left_len > LEFT_TEXT_LEN )
-    {
-      printf ("\nWarning: String %s too long for Left Infoline!!",left);
-      left_len = LEFT_TEXT_LEN;  // too long, so we cut it! 
-      Terminate(ERR);
-    }
-  right_len = strlen (right);
-  if( right_len > RIGHT_TEXT_LEN )
-    {
-      printf ("\nWarning: String %s too long for Right Infoline!!", right);
-      right_len = RIGHT_TEXT_LEN;  // too long, so we cut it! 
-      Terminate(ERR);
-    }
-  
-  // Now prepare the left/right text-boxes 
-  memset (left_box,  ' ', LEFT_TEXT_LEN);  // pad with spaces 
-  memset (right_box, ' ', RIGHT_TEXT_LEN);  
-  
-  strncpy (left_box,  left, left_len);  // this drops terminating \0 ! 
-  strncpy (right_box, right, left_len);  // this drops terminating \0 ! 
-  
-  left_box [LEFT_TEXT_LEN]  = '\0';     // that's right, we want padding!
-  right_box[RIGHT_TEXT_LEN] = '\0';
-  
-  // Redraw the whole background of the top status bar
-  //  SDL_SetClipRect( Screen , NULL );  // this unsets the clipping rectangle
-  //  SDL_BlitSurface( banner_pic, NULL, Screen , NULL);
-
-  // Now the text should be ready and its
-  // time to display it...
-  DebugPrintf (2, "Takeover said: %s -- %s\n", left_box, right_box);
-  SetCurrentFont( Para_BFont );
-  DisplayText (left_box, LEFT_INFO_X, LEFT_INFO_Y, NULL);
-  DisplayText (right_box, RIGHT_INFO_X, RIGHT_INFO_Y, NULL);
-
-  //  PrintString ( Screen, LEFT_INFO_X , LEFT_INFO_Y , left_box );
-  //  PrintString ( Screen, RIGHT_INFO_X , RIGHT_INFO_Y , right_box );
-
-  return;
-
-} // void to_show_banner
+}
 
 
 #undef _takeover_c
