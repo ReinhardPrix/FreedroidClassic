@@ -168,25 +168,25 @@ CollectAutomapData ( void )
 	      //
 	      ObjPos.x = x + 0.75;
 	      ObjPos.y = y + 0;
-	      if ( IsVisible ( &ObjPos ) ) Me[0].Automap[y][x].r_wall = TRUE;
+	      if ( IsVisible ( &ObjPos , 0 ) ) Me[0].Automap[y][x].r_wall = TRUE;
 	      //--------------------
 	      // Now we check, if there are some left sides of walls visible
 	      //
 	      ObjPos.x = x - 0.75;
 	      ObjPos.y = y + 0;
-	      if ( IsVisible ( &ObjPos ) ) Me[0].Automap[y][x].l_wall = TRUE;
+	      if ( IsVisible ( &ObjPos , 0 ) ) Me[0].Automap[y][x].l_wall = TRUE;
 	      //--------------------
 	      // Now we check, if there are some southern sides of walls visible
 	      //
 	      ObjPos.x = x + 0;
 	      ObjPos.y = y + 0.75;
-	      if ( IsVisible ( &ObjPos ) ) Me[0].Automap[y][x].d_wall = TRUE;
+	      if ( IsVisible ( &ObjPos , 0 ) ) Me[0].Automap[y][x].d_wall = TRUE;
 	      //--------------------
 	      // Now we check, if there are some northern sides of walls visible
 	      //
 	      ObjPos.x = x + 0.0 ;
 	      ObjPos.y = y - 0.75 ;
-	      if ( IsVisible ( &ObjPos ) ) Me[0].Automap[y][x].u_wall = TRUE;
+	      if ( IsVisible ( &ObjPos , 0 ) ) Me[0].Automap[y][x].u_wall = TRUE;
 	    }
 	}
     }
@@ -2837,7 +2837,7 @@ IsPassable ( float x , float y , int z , int Checkpos)
  *
  * ---------------------------------------------------------------------- */
 int
-IsVisible ( GPS objpos )
+IsVisible ( GPS objpos , int PlayerNum )
 {
   float a_x;		/* Vector Influencer->objectpos */
   float a_y;
@@ -2846,11 +2846,20 @@ IsVisible ( GPS objpos )
   float a_len;			/* Lenght of a */
   int i;
   finepoint testpos;
-  double influ_x = Me[0].pos.x;
-  double influ_y = Me[0].pos.y;
+  double influ_x = Me [ PlayerNum ] . pos . x ;
+  double influ_y = Me [ PlayerNum ] . pos . y ;
 
-  DebugPrintf (2, "\nint IsVisible(Point objpos): Funktion echt aufgerufen.");
+  DebugPrintf (2, "\nint IsVisible ( ... ) : real function call confirmed.");
 
+  //--------------------
+  // If the object and this player are on different levels, we
+  // don't need to check anything.
+  //
+  if ( objpos -> z != Me [ PlayerNum ] . pos . z ) return FALSE;
+
+  //--------------------
+  // Otherwise we have to check visibility...
+  //
   a_x = influ_x - objpos->x;
   a_y = influ_y - objpos->y;
 

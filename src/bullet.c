@@ -443,8 +443,8 @@ CheckBulletCollisions (int num)
       // for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
       for (i = 0; i < Number_Of_Droids_On_Ship ; i++)
 	{
-	  if ( IsVisible (&AllEnemys[i].pos) &
-	       (!Druidmap[AllEnemys[i].type].flashimmune) )
+	  if ( IsVisible ( & AllEnemys[i].pos , 0 ) &
+	       (!Druidmap[AllEnemys[i].type].flashimmune) ) // WARNING:  PLAYER 0 here wrong
 	    {
 	      // ITEMS AllEnemys[i].energy -= Bulletmap[FLASH].damage;
 	      AllEnemys[i].energy -= CurBullet->damage;
