@@ -304,7 +304,13 @@ void
 PutInfluence ( int x, int y)
 {
   SDL_Rect TargetRectangle;
+  SDL_Rect Text_Rect;
   int alpha_value;
+
+  Text_Rect.x=User_Rect.x+(User_Rect.w/2) + Block_Width/3;
+  Text_Rect.y=User_Rect.y+(User_Rect.h/2) - Block_Height/2;
+  Text_Rect.w=User_Rect.w/2 - Block_Width/3;
+  Text_Rect.h=User_Rect.h/2;
 
   DebugPrintf (2, "\nvoid PutInfluence(void): real function call confirmed.");
 
@@ -424,10 +430,12 @@ PutInfluence ( int x, int y)
   //
   if ( ( x == (-1) ) && ( Me.TextVisibleTime < GameConfig.WantedTextVisibleTime ) && GameConfig.All_Texts_Switch )
     {
-      PutStringFont ( ne_screen , FPS_Display_BFont , 
-		      User_Rect.x+(User_Rect.w/2) + Block_Width/3 , 
-		      User_Rect.y+(User_Rect.h/2) - Block_Height/2 ,  
-		      Me.TextToBeDisplayed );
+      //      PutStringFont ( ne_screen , FPS_Display_BFont , 
+      //		      User_Rect.x+(User_Rect.w/2) + Block_Width/3 , 
+      //		      User_Rect.y+(User_Rect.h/2) - Block_Height/2 ,  
+      //		      Me.TextToBeDisplayed );
+      SetCurrentFont( FPS_Display_BFont );
+      DisplayText( Me.TextToBeDisplayed , User_Rect.x+(User_Rect.w/2) + Block_Width/3 , User_Rect.y+(User_Rect.h/2) - Block_Height/2 , &Text_Rect );
     }
 
   DebugPrintf (2, "\nvoid PutInfluence(void): enf of function reached.");

@@ -1889,7 +1889,7 @@ Level_Editor(void)
 	  PutInfluence( SINGLE_PLAYER_MENU_POINTER_POS_X, (MenuPosition+3) * (FontHeight(Menu_BFont)) - Block_Width/4 );
 
 	  CenteredPutString   ( ne_screen ,  4*FontHeight(Menu_BFont),    
-				"Save Level:");
+				"Save whole ship to 'Testship.shp'");
 	  CenteredPrintString ( ne_screen ,  5*FontHeight(Menu_BFont),    
 				"Current: %d.  Level Up/Down" , CurLevel->levelnum );
 	  CenteredPutString   ( ne_screen ,  6*FontHeight(Menu_BFont),    
