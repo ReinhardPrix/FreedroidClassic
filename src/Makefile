@@ -5,7 +5,7 @@ SOUNDLIBS = -lasound -lY2
 
 CC = gcc
 HFILES = Makefile defs.h proto.h global.h struct.h
-OBJ = para.o graphics.o view.o blocks.o sound.o map.o misc.o enemy.o influ.o bullet.o ship.o fm_hrd.o takeover.o rahmen.o paratext.o
+OBJ = para.o graphics.o view.o blocks.o sound.o map.o misc.o enemy.o influ.o bullet.o ship.o fm_hrd.o takeover.o rahmen.o paratext.o keyboard.o
 
 para: $(OBJ)
 	$(CC) -o $@ $(CFLAGS) $(STDLIBS) $(OBJ)

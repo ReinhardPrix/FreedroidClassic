@@ -232,9 +232,9 @@ EXTERN void StopModPlayer(void);
 EXTERN void PlayMod(char *modfile);
 EXTERN void sbfm_silence(void); 
 
-/* misc.c */
+/* keyboard.c */
 #undef EXTERN
-#ifdef _misc_c
+#ifdef _keyboard_c
 #define EXTERN
 #else
 #define EXTERN extern
@@ -250,6 +250,18 @@ EXTERN int PPressed(void);
 EXTERN int QPressed(void);
 EXTERN int WPressed(void);
 EXTERN int NoDirectionPressed(void);
+EXTERN int SetTypematicRate(unsigned char);
+EXTERN void KillTastaturPuffer(void);
+EXTERN void JoystickControl(void);
+
+/* misc.c */
+#undef EXTERN
+#ifdef _misc_c
+#define EXTERN
+#else
+#define EXTERN extern
+#endif
+
 EXTERN void Armageddon(void);
 EXTERN void Teleport(int LNum,int X,int Y);
 EXTERN void Cheatmenu(void);
@@ -260,12 +272,9 @@ EXTERN void PutMessages(void);
 EXTERN void InsertMessage(char* MText);
 EXTERN void* MyMemcpy(void*,void*,unsigned int);
 EXTERN void* MyMalloc(long);
-EXTERN int SetTypematicRate(unsigned char);
 EXTERN void DirToVect(int dir, Vect vector);
-EXTERN void JoystickControl(void);
 EXTERN void TurnIntVects(void);
 EXTERN void RestoreIntVects(void);
-EXTERN void KillTastaturPuffer(void);
 
 EXTERN long my_sqrt(long);
 EXTERN int my_abs(int);
