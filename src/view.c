@@ -1742,10 +1742,13 @@ get_light_strength ( moderately_finepoint target_pos )
 		    tol_x =  ( xdist / light_vec_len ) * 0.4 ;
 		    tol_y =  ( ydist / light_vec_len ) * 0.4 ;
 
-		    if ( ! DirectLineWalkable( Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , 
-					       target_pos . x + tol_x , target_pos . y + tol_y , 
-					       Me [ 0 ] . pos . z ) )
-			continue;
+		    if ( curShip . AllLevels [ Me [ 0 ] . pos . z ] -> use_underground_lighting )
+		    {
+			if ( ! DirectLineWalkable( Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , 
+						   target_pos . x + tol_x , target_pos . y + tol_y , 
+						   Me [ 0 ] . pos . z ) )
+			    continue;
+		    }
 		}
 	    }
 	    final_darkness = (int) ( light_vec_len * 4.0 ) 

@@ -348,7 +348,12 @@ There seems to be a sound file missing.",
     // now change the volume of the sound sample in question to what is normal
     // for sound effects right now...
     //
-    Mix_VolumeChunk( One_Shot_WAV_File , (int) rintf( GameConfig.Current_Sound_FX_Volume * MIX_MAX_VOLUME ) );
+    // And of course we may only do this, if the sound file has been loaded
+    // successfully!  Otherwise the SDL_mixer lib will produce a segfault.
+    //
+    if ( One_Shot_WAV_File != NULL )
+	Mix_VolumeChunk( One_Shot_WAV_File , 
+			 (int) rintf( GameConfig.Current_Sound_FX_Volume * MIX_MAX_VOLUME ) );
     
     //--------------------
     // Now we try to play the sound file that has just been successfully

@@ -4278,6 +4278,11 @@ show_level_editor_tooltips ( void )
 	if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
 	    show_button_tooltip ( "Use this button to quit out of the level editor and back to continue the normal game in normal mode.  Useful for e.g. putting objects into boxes.  You can always re-enter the level editor." );
     }
+    else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_UNDERGROUND_LIGHT_ON_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
+    {
+	if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
+	    show_button_tooltip ( "Use this button to toggle underground lighting, i.e. shadows coming from the light that the tux emanates.  \n\nThere isn't any key to toggle this on the keyboard." );
+    }
     else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_TOGGLE_ENEMIES_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) ||
 	      MouseCursorIsOnButton ( LEVEL_EDITOR_TOGGLE_ENEMIES_BUTTON_OFF , GetMousePos_x()  , GetMousePos_y()  ) )
     {
@@ -4679,6 +4684,11 @@ level_editor_handle_left_mouse_button ( int proceed_now )
 	{
 	    ExportLevelInterface ( Me [ 0 ] . pos . z );
 	}
+	else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_UNDERGROUND_LIGHT_ON_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
+	{
+	    EditLevel -> use_underground_lighting = ! EditLevel -> use_underground_lighting ;
+	    while ( SpacePressed() );
+	}
 	else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_SAVE_SHIP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
 	{
 	    close_all_chests_on_level ( Me [ 0 ] . pos . z ) ;
@@ -4775,7 +4785,6 @@ level_editor_handle_left_mouse_button ( int proceed_now )
 	{
 	    GameConfig . show_tooltips = ! GameConfig . show_tooltips ;
 	}
-	
 	else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_QUIT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
 	{
 	    proceed_now=!proceed_now;
@@ -4900,6 +4909,11 @@ level_editor_blit_mouse_buttons ( Level EditLevel )
     ShowGenericButtonFromList ( LEVEL_EDITOR_KEYMAP_BUTTON );
     ShowGenericButtonFromList ( LEVEL_EDITOR_QUIT_BUTTON );
     
+    if ( EditLevel -> use_underground_lighting )
+	ShowGenericButtonFromList ( LEVEL_EDITOR_UNDERGROUND_LIGHT_ON_BUTTON );
+    else
+	ShowGenericButtonFromList ( LEVEL_EDITOR_UNDERGROUND_LIGHT_OFF_BUTTON );
+
     if ( GameConfig . omit_tux_in_level_editor ) 
 	ShowGenericButtonFromList ( LEVEL_EDITOR_TOGGLE_TUX_BUTTON_OFF );
     else
