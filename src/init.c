@@ -242,7 +242,6 @@ InitNewGame (void)
   LastBlastHit = 0;
   LastGotIntoBlastSound = 2;
   LastRefreshSound = 2;
-  BeamLine = BLOCKBREITE;
   PlusExtentionsOn = FALSE;
   ThisMessageTime = 0;
 
@@ -284,41 +283,35 @@ InitNewGame (void)
   switch (i)
     {
     case 0:
-      {
-	Me.pos.x = 120;
-	Me.pos.y = 48;
-	CurLevel = curShip.AllLevels[4];
-	break;
-      }
+      Me.pos.x = 120;
+      Me.pos.y = 48;
+      CurLevel = curShip.AllLevels[4];
+      break;
+
     case 1:
-      {
-	Me.pos.x = 120;
-	Me.pos.y = 48;
-	CurLevel = curShip.AllLevels[5];
-	break;
-      }
+      Me.pos.x = 120;
+      Me.pos.y = 48;
+      CurLevel = curShip.AllLevels[5];
+      break;
+
     case 2:
-      {
-	Me.pos.x = 120;
-	Me.pos.y = 48;
-	CurLevel = curShip.AllLevels[6];
-	break;
-      }
+      Me.pos.x = 120;
+      Me.pos.y = 48;
+      CurLevel = curShip.AllLevels[6];
+      break;
+
     case 3:
-      {
-	Me.pos.x = 120;
-	Me.pos.y = 48;
-	CurLevel = curShip.AllLevels[7];
-	break;
-      }
-    case 4:
-      {
-	DebugPrintf
-	  ("\nvoid InitNewGame(void): ERROR: Impossible case 4 encountered.  Terminating...");
-	Terminate (ERR);
-	break;
-      }
-    }
+      Me.pos.x = 120;
+      Me.pos.y = 48;
+      CurLevel = curShip.AllLevels[7];
+      break;
+
+    default:
+      DebugPrintf
+	("\n InitNewGame(): MyRandom() failed  Terminating...");
+      Terminate (ERR);
+      break;
+    } /* switch */
 
   DebugPrintf
     ("\nvoid InitNewGame(void): Starting point for the influencer has been set...:");
@@ -398,12 +391,20 @@ InitNewGame (void)
 void
 InitParaplus (void)
 {
+  struct timeval timestamp;
 
   DebugPrintf ("\nvoid InitParaplus(void) wurde echt aufgerufen....\n");
 
   Set_SVGALIB_Video_ON ();
 
   Init_YIFF_Sound_Server ();
+
+  /* 
+   * Initialise random-number generator in order to make 
+   * level-start etc really different at each program start
+   */
+  gettimeofday(&timestamp, NULL);
+  srand((unsigned int) timestamp.tv_sec); /* yes, we convert long->int here! */
 
   /* Initialisierung der Highscorewerte */
   LowestName = MyMalloc (200);
@@ -515,15 +516,11 @@ InitParaplus (void)
     ("\nvoid InitParaplus(void): Textmeldungsvariablen wurden erfolgreich initialisiert....");
 
   /* ScreenPointer setzen */
-  // PORT RealScreen = MK_FP(SCREENADDRESS, 0);
   RealScreen = malloc (SCREENBREITE * SCREENHOEHE + 10);
   InternalScreen = (unsigned char *) malloc (SCREENHOEHE * SCREENBREITE + 10);
 
   DebugPrintf
     ("\nvoid InitParaplus(void): Realscreen und Internalscreen haben erfolgreich Speicher erhalten....");
-
-  /* Zufallsgenerator initialisieren */
-  //PORT MyRandomize();
 
   if (LoadShip (SHIPNAME) == ERR)
     {
