@@ -277,7 +277,7 @@ Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=3
 Sound number=4
-Base list price=0
+Base list price=900
 ** End of new item specification subsection **
 
 // Item No. 5
@@ -351,7 +351,7 @@ Item as defensive item: ac_bonus_modifier=0
 Base item duration=70 plus duration modifier=20
 Picture number=8
 Sound number=4 
-Base list price=0
+Base list price=250
 ** End of new item specification subsection **
 
 // Item No. 9
@@ -472,7 +472,7 @@ Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=14
 Sound number=7
-Base list price=0
+Base list price=1200
 ** End of new item specification subsection **
 
 // Item No. 14
@@ -504,7 +504,7 @@ Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=13
 Sound number=0 
-Base list price=0
+Base list price=2500
 ** End of new item specification subsection **
 
 // Item No. 15
@@ -536,7 +536,7 @@ Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=14
 Sound number=7
-Base list price=0
+Base list price=800
 ** End of new item specification subsection **
 
 // Item No. 16
@@ -600,7 +600,7 @@ Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=12
 Sound number=7
-Base list price=0
+Base list price=5000
 ** End of new item specification subsection **
 
 // Item No. 18
@@ -617,7 +617,7 @@ Item as defensive item: ac_bonus_modifier=8
 Base item duration=30 plus duration modifier=15
 Picture number=23
 Sound number=5
-Base list price=0
+Base list price=12500
 ** End of new item specification subsection **
 
 // Item No. 19
@@ -700,7 +700,7 @@ Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=18
 Sound number=7
-Base list price=0
+Base list price=100
 ** End of new item specification subsection **
 
 // Item No. 23
@@ -732,7 +732,7 @@ Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=18
 Sound number=7
-Base list price=0
+Base list price=40
 ** End of new item specification subsection **
 
 // Item No. 24
@@ -980,7 +980,7 @@ Item as defensive item: ac_bonus_modifier=7
 Base item duration=25 plus duration modifier=10
 Picture number=6
 Sound number=7
-Base list price=0
+Base list price=250
 ** End of new item specification subsection **
 
 // Item No. 34
@@ -1046,7 +1046,7 @@ Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=19
 Sound number=0 
-Base list price=120
+Base list price=240
 ** End of new item specification subsection **
 
 // Item No. 36
@@ -1079,7 +1079,7 @@ Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=19
 Sound number=0 
-Base list price=120
+Base list price=310
 ** End of new item specification subsection **
 
 // Item No. 37
