@@ -273,66 +273,66 @@ int NoInfluBulletOnWay(void)
 @Int:
 * $Function----------------------------------------------------------*/
 void AnimateInfluence(void) {
-	static int Teilphase;
-	static unsigned char Palwert=0;
-	static int blinkwaiter=0;
-	static int Crywait=1;
-	static int Overtaketunewait=2;
+  static int Teilphase;
+  static unsigned char Palwert=0;
+  static int blinkwaiter=0;
+  static int Crywait=1;
+  static int Overtaketunewait=2;
 	
-	/*
-	 * Phase des Influencers in fein gestuften Schritten weiterz"ahlen
-	 */
+  /*
+   * Phase des Influencers in fein gestuften Schritten weiterz"ahlen
+   */
 	 
-	Teilphase+=Me.energy;
-	Me.phase=Teilphase/(Druidmap[DRUID001].maxenergy);
-	if (Me.phase >= ENEMYPHASES) {
-		Me.phase=0;
-		Teilphase=0;
-	}
+  Teilphase+=Me.energy;
+  Me.phase=Teilphase/(Druidmap[DRUID001].maxenergy);
+  if (Me.phase >= ENEMYPHASES) {
+    Me.phase=0;
+    Teilphase=0;
+  }
 
 
-	/*
-	 * Farbe des Influencers (15) richtig setzen
-	 */
+  /*
+   * Farbe des Influencers (15) richtig setzen
+   */
 
-	if ((Me.status == TRANSFERMODE) && (Me.energy > BLINKENERGY)) 
-	  SetPalCol(INFLUENCEFARBWERT,Transfercolor.rot,Transfercolor.gruen,Transfercolor.blau);
+  if ((Me.status == TRANSFERMODE) && (Me.energy > BLINKENERGY)) 
+    SetPalCol(INFLUENCEFARBWERT,Transfercolor.rot,Transfercolor.gruen,Transfercolor.blau);
 
-	if ((Me.status == MOBILE) && (Me.energy > BLINKENERGY))
-		SetPalCol(INFLUENCEFARBWERT, Mobilecolor.rot, Mobilecolor.gruen,
-			Mobilecolor.blau);
+  if ((Me.status == MOBILE) && (Me.energy > BLINKENERGY))
+    SetPalCol(INFLUENCEFARBWERT, Mobilecolor.rot, Mobilecolor.gruen,
+	      Mobilecolor.blau);
 	
-	/*
-	 * Wenn die Energie den kritischen Stand erreicht hat,
-	 * beginnt der Robot zu blinken
-	 */
+  /*
+   * Wenn die Energie den kritischen Stand erreicht hat,
+   * beginnt der Robot zu blinken
+   */
 		 
 #define CRYWAITTIME 14
 
-	if ((Me.energy <= BLINKENERGY) && (blinkwaiter == 0)) {
-//		Palwert+=15;
-//		if(Palwert>63) Palwert=0;
-		Palwert=MyRandom(64);
-		if (Me.status == TRANSFERMODE) SetPalCol(INFLUENCEFARBWERT,63,Palwert,Palwert);
-		else SetPalCol(INFLUENCEFARBWERT,Palwert,Palwert,Palwert);
-	}
-	if (Me.energy <= BLINKENERGY){
-		if (Crywait > 0) Crywait--;
-		else {
-			Crywait=CRYWAITTIME+Me.energy;
-			CrySound();
-		}
-	}
-	if (Me.status == TRANSFERMODE) {
-		if (Overtaketunewait > 0) Overtaketunewait--;
-		else {
-			Overtaketunewait=12;
-			StartSound(6);
-		}
-	}
-	blinkwaiter++;
-	blinkwaiter %= 3;
-}
+  if ((Me.energy <= BLINKENERGY) && (blinkwaiter == 0)) {
+    //		Palwert+=15;
+    //		if(Palwert>63) Palwert=0;
+    Palwert=MyRandom(64);
+    if (Me.status == TRANSFERMODE) SetPalCol(INFLUENCEFARBWERT,63,Palwert,Palwert);
+    else SetPalCol(INFLUENCEFARBWERT,Palwert,Palwert,Palwert);
+  }
+  if (Me.energy <= BLINKENERGY){
+    if (Crywait > 0) Crywait--;
+    else {
+      Crywait=CRYWAITTIME+Me.energy;
+      CrySound();
+    }
+  }
+  if (Me.status == TRANSFERMODE) {
+    if (Overtaketunewait > 0) Overtaketunewait--;
+    else {
+      Overtaketunewait=12;
+      StartSound(6);
+    }
+  }
+  blinkwaiter++;
+  blinkwaiter %= 3;
+} // void AnimateInfluence(void)
 
 /*@Function============================================================
 @Desc: BounceInfluencer: prueft Kollisionen mit Tueren und Mauer
@@ -587,178 +587,184 @@ void InfluenceEnemyCollision(void) {
 @Int:
 * $Function----------------------------------------------------------*/
 void FireBullet(void){
-	int i=0;
-	Bullet CurBullet=NULL;		/* das Bullet, um das es jetzt geht */
-	int guntype = Druidmap[Me.type].gun;	/* which gun do we have ? */
-	int BulletSpeedX = Bulletmap[guntype].speed;
-	int BulletSpeedY = Bulletmap[guntype].speed;
-	int firedir;
+  int i=0;
+  Bullet CurBullet=NULL;		/* das Bullet, um das es jetzt geht */
+  int guntype = Druidmap[Me.type].gun;	/* which gun do we have ? */
+  int BulletSpeedX = Bulletmap[guntype].speed;
+  int BulletSpeedY = Bulletmap[guntype].speed;
+  int firedir;
 
 /* Wenn noch kein Schuss loesbar ist sofort zurueck */
-	if (Me.firewait > 0) return;
-	Me.firewait = Bulletmap[guntype].WaitNextTime;
+  if (Me.firewait > 0) return;
+  Me.firewait = Bulletmap[guntype].WaitNextTime;
 
 /* Geraeusch eines geloesten Schusses fabrizieren */
-	FireBulletSound();
+  FireBulletSound();
 
 /* Naechste Freie Bulletposition suchen */
-	for(i=0;i<(MAXBULLETS);i++){
-    	if (AllBullets[i].type == OUT) {
-			CurBullet=&AllBullets[i];
-			break;
-   	}
-   }
-
-   /* Kein freies Bullet gefunden: Nimm das erste */
-	if (CurBullet == NULL) CurBullet=&AllBullets[0];
-
-	CurBullet->PX=Me.pos.x;
-	CurBullet->PY=Me.pos.y;
-   CurBullet->type=guntype;
-   CurBullet->mine = TRUE;
-   CurBullet->owner = -1;
-
-	if (DownPressed()) firedir=UNTEN;
-	if (UpPressed()) firedir=OBEN;
-	if (LeftPressed()) firedir=LINKS;
-	if (RightPressed()) firedir=RECHTS;
-	if (RightPressed() && DownPressed()) firedir=RECHTSUNTEN;
-	if (LeftPressed() && DownPressed()) firedir=LINKSUNTEN;
-	if (LeftPressed() && UpPressed()) firedir=LINKSOBEN; 
-	if (RightPressed() && UpPressed()) firedir=RECHTSOBEN;
-
-	switch (firedir) {
-		case OBEN:
-			CurBullet->SX = 0;
-			CurBullet->SY = -BulletSpeedY;
-			CurBullet->phase = OBEN;
-			break;
-
-		case RECHTSOBEN:
-        	CurBullet->SX = BulletSpeedX; 
-			CurBullet->SY = -BulletSpeedY;
-			CurBullet->phase = RECHTSOBEN;
-			break;
-			
-		case RECHTS:
-			CurBullet->SX = BulletSpeedX;
-			CurBullet->SY = 0;
-			CurBullet->phase = RECHTS;
-			break;
-			
-		case RECHTSUNTEN:
-			CurBullet->SX = BulletSpeedX;
-        	CurBullet->SY = BulletSpeedY;
-        	CurBullet->phase = RECHTSUNTEN;
-			break;
-			
-		case UNTEN:
-			CurBullet->SX = 0;
-			CurBullet->SY = BulletSpeedY;
-			CurBullet->phase = OBEN;
-			break;
-			
-		case LINKSUNTEN:
-			CurBullet->SX = -BulletSpeedX;		
-			CurBullet->SY = BulletSpeedY;
-			CurBullet->phase = RECHTSOBEN;
-			break;
-			
-		case LINKS:
-			CurBullet->SX = -BulletSpeedX;
-			CurBullet->SY = 0;
-			CurBullet->phase = RECHTS;
-			break;
-			
-		case LINKSOBEN:
-			CurBullet->SX = -BulletSpeedX;
-			CurBullet->SY = -BulletSpeedY;
-        	CurBullet->phase = RECHTSUNTEN;
-			break;
+  for(i=0;i<(MAXBULLETS);i++){
+    if (AllBullets[i].type == OUT) {
+      CurBullet=&AllBullets[i];
+      break;
     }
+  }
 
-/* Um Selbstabschuss zu verhindern Bullet weiterbewegen */
+  /* Kein freies Bullet gefunden: Nimm das erste */
+  if (CurBullet == NULL) CurBullet=&AllBullets[0];
+
+  CurBullet->PX=Me.pos.x;
+  CurBullet->PY=Me.pos.y;
+  CurBullet->type=guntype;
+  CurBullet->mine = TRUE;
+  CurBullet->owner = -1;
+
+  if (DownPressed()) firedir=UNTEN;
+  if (UpPressed()) firedir=OBEN;
+  if (LeftPressed()) firedir=LINKS;
+  if (RightPressed()) firedir=RECHTS;
+  if (RightPressed() && DownPressed()) firedir=RECHTSUNTEN;
+  if (LeftPressed() && DownPressed()) firedir=LINKSUNTEN;
+  if (LeftPressed() && UpPressed()) firedir=LINKSOBEN; 
+  if (RightPressed() && UpPressed()) firedir=RECHTSOBEN;
+  
+  switch (firedir) {
+  case OBEN:
+    CurBullet->SX = 0;
+    CurBullet->SY = -BulletSpeedY;
+    CurBullet->phase = OBEN;
+    break;
+
+  case RECHTSOBEN:
+    CurBullet->SX = BulletSpeedX; 
+    CurBullet->SY = -BulletSpeedY;
+    CurBullet->phase = RECHTSOBEN;
+    break;
+    
+  case RECHTS:
+    CurBullet->SX = BulletSpeedX;
+    CurBullet->SY = 0;
+    CurBullet->phase = RECHTS;
+    break;
+			
+  case RECHTSUNTEN:
+    CurBullet->SX = BulletSpeedX;
+    CurBullet->SY = BulletSpeedY;
+    CurBullet->phase = RECHTSUNTEN;
+    break;
+    
+  case UNTEN:
+    CurBullet->SX = 0;
+    CurBullet->SY = BulletSpeedY;
+    CurBullet->phase = OBEN;
+    break;
+			
+  case LINKSUNTEN:
+    CurBullet->SX = -BulletSpeedX;		
+    CurBullet->SY = BulletSpeedY;
+    CurBullet->phase = RECHTSOBEN;
+    break;
+    
+  case LINKS:
+    CurBullet->SX = -BulletSpeedX;
+    CurBullet->SY = 0;
+    CurBullet->phase = RECHTS;
+    break;
+    
+  case LINKSOBEN:
+    CurBullet->SX = -BulletSpeedX;
+    CurBullet->SY = -BulletSpeedY;
+    CurBullet->phase = RECHTSUNTEN;
+    break;
+  }
+
+  /* Um Selbstabschuss zu verhindern Bullet weiterbewegen */
 	
-		CurBullet->PX+=CurBullet->SX;
-		CurBullet->PY+=CurBullet->SY;
-		if ((abs(BulletSpeedX) < 13) && (abs(BulletSpeedY) < 13)) {
-			CurBullet->PX+=CurBullet->SX;
-			CurBullet->PY+=CurBullet->SY;
-		}
+  CurBullet->PX+=CurBullet->SX;
+  CurBullet->PY+=CurBullet->SY;
+  if ((abs(BulletSpeedX) < 13) && (abs(BulletSpeedY) < 13)) {
+    CurBullet->PX+=CurBullet->SX;
+    CurBullet->PY+=CurBullet->SY;
+  }
 		
-    /*
-     * F"ur Geschosse gilt die alsolute Gescho"sgeschwindigkeit am c-64
-	  * und die Newtonsche Physik mit Vektoraddition bei Paraplus.
-	  *
-	  * Allerdings wird nicht die ganze Fahrt auf den Schu"s "ubertragen
-	  * Die Robotter sollen einen Wert haben, der angibt ob durch einen
-	  * "Velocityneutralisator" die Fahrt ganz, halb ect. oder gar keine
-	  * auswirkungen hat.
-	  *
-	  * Eventuell sollte dieser Menupunkt auch ausschaltbar sein.
-	  *
-	  */
+  /*
+   * F"ur Geschosse gilt die alsolute Gescho"sgeschwindigkeit am c-64
+   * und die Newtonsche Physik mit Vektoraddition bei Paraplus.
+   *
+   * Allerdings wird nicht die ganze Fahrt auf den Schu"s "ubertragen
+   * Die Robotter sollen einen Wert haben, der angibt ob durch einen
+   * "Velocityneutralisator" die Fahrt ganz, halb ect. oder gar keine
+   * auswirkungen hat.
+   *
+   * Eventuell sollte dieser Menupunkt auch ausschaltbar sein.
+   *
+   */
 
-	if (PlusExtentionsOn) {
-		if (!Me.vneut) {
-			CurBullet->SX+=SpeedX / Druidmap[Me.type].vneutral;
-			CurBullet->SY+=SpeedY / Druidmap[Me.type].vneutral;
-		}
-	}
-
-	return;
-	
+  if (PlusExtentionsOn) {
+    if (!Me.vneut) {
+      CurBullet->SX+=SpeedX / Druidmap[Me.type].vneutral;
+      CurBullet->SY+=SpeedY / Druidmap[Me.type].vneutral;
+    }
+  }
+  
+  return;
+  
 }	/* FireBullet */
 
 /*@Function============================================================
-@Desc: RefreshInfluencer(): Schuss- und Kollisions Verluste wieder
-							auffrischen 
+@Desc: RefreshInfluencer(): Refresh fields can be used to regain energy
+lost due to bullets or collisions, but not energy lost due to permanent
+loss of health in PermanentLoseEnergy.
+
+NEW: this function now takes into account the framerates.
 
 @Ret: void
 @In
 * $Function----------------------------------------------------------*/
 void RefreshInfluencer(void)
 {
-	static int timecounter=3;		/* to slow down healing process */
+  static int timecounter=3;		/* to slow down healing process */
 
-	if( --timecounter ) return;
-	if( timecounter == 0 ) timecounter = 3;
+  if( --timecounter ) return;
+  if( timecounter == 0 ) timecounter = 3;
+  
+  if( Me.energy < Me.health ) {
+    Me.energy += REFRESH_ENERGY * Frame_Time();
+    RealScore -= REFRESH_ENERGY*5;
+    if ( Me.energy > Me.health ) Me.energy = Me.health;
+    RefreshSound();
+  }
 	
-	if( Me.energy < Me.health ) {
-		Me.energy += REFRESH_ENERGY;
-		RealScore -= REFRESH_ENERGY*5;
-		if ( Me.energy > Me.health ) Me.energy = Me.health;
-		RefreshSound();
-	}
-
-	return;
+  return;
 } /* RefreshInfluence */
 			
 /*@Function============================================================
 @Desc: BounceLoseEnergy(): influ-enemy collisions are sucking someones
-								energy, depending on colliding types
+       energy, depending on colliding types
 
 @Ret: void
 @Int:
 * $Function----------------------------------------------------------*/
 void BounceLoseEnergy(int enemynum)
 {
-	int enemytype = Feindesliste[enemynum].type;
+  int enemytype = Feindesliste[enemynum].type;
 
-	
-	if( Me.type <= enemytype ) {
-		if( InvincibleMode ) return;
-		Me.energy -= (Druidmap[enemytype].class - Druidmap[Me.type].class)*BOUNCE_LOSE_FACT;
-	} else Feindesliste[enemynum].energy -=
-		(Druidmap[Me.type].class - Druidmap[enemytype].class)*BOUNCE_LOSE_FACT;
+  if( Me.type <= enemytype ) {
+    if( InvincibleMode ) return;
+    Me.energy -= (Druidmap[enemytype].class - Druidmap[Me.type].class)*BOUNCE_LOSE_FACT;
+  } else Feindesliste[enemynum].energy -=
+	   (Druidmap[Me.type].class - Druidmap[enemytype].class)*BOUNCE_LOSE_FACT;
+  
+  //	else Feindesliste[enemynum].energy -= BOUNCE_LOSE_ENERGY;
 		
-//	else Feindesliste[enemynum].energy -= BOUNCE_LOSE_ENERGY;
-		
-	return;
-}	
+  return;
+} // void BounceLoseEnergy(int enemynum)
 
 /*@Function============================================================
-@Desc: PermanentLoseEnergy(): staendiger Energieverlust des Influ
+@Desc: PermanentLoseEnergy(): In the classic paradroid game, the influencer
+continuously lost energy.  This loss was, in contrast to damage from fighting
+and collisions, NOT regainable by using refresh fields.
+
+NEW: this function now takes into account the framerate.
 
 @Ret: void
 @Int:
@@ -774,7 +780,7 @@ void PermanentLoseEnergy(void)
   if( time_counter == 0 ) time_counter = 2*18;	/* ca. 2 sec. */
 
   /* health decreases with time */
-  Me.health -= Druidmap[Me.type].lose_health;
+  Me.health -= Druidmap[Me.type].lose_health * Frame_Time();
 	
   /* you cant have more energy than health */
   if( Me.energy > Me.health ) Me.energy = Me.health;
@@ -783,4 +789,15 @@ void PermanentLoseEnergy(void)
 } // void PermanentLoseEnergy(void)
 
 #undef _influ_c
+
+
+
+
+
+
+
+
+
+
+
 

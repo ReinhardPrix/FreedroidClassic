@@ -62,33 +62,33 @@ typedef struct {
   byte status;       /* attacking, defense, dead, ... */
   vect speed;       /* the current speed of the druid */
   point pos;        /* current position in level levelnum */
-  int health;			/* the max. possible energy in the moment */
-  int energy;       /* current energy */
-  byte firewait;		/* counter after fire */
+  float health;		/* the max. possible energy in the moment */
+  float energy;       /* current energy */
+  byte firewait;	/* counter after fire */
   byte  phase;        /* the current phase of animation */
   int autofire;		/* Status of the Firecontrolautomatics */
-  int vneut;			/* Status of Velocityneutralizer for the gun */
-  int MyFCU;			/* FCU (Fire Control Unit) installed */
+  int vneut;		/* Status of Velocityneutralizer for the gun */
+  int MyFCU;		/* FCU (Fire Control Unit) installed */
   int MyShield;		/* Shield device installed */
-  int Shield[4];		/* Status of Partial Shields */
+  int Shield[4];	/* Status of Partial Shields */
 } influence_t, *Influence_t;
 
 typedef struct {
-  byte type;			/* gibt die Nummer in Druidmap an */
+  byte type;		/* gibt die Nummer in Druidmap an */
   int levelnum;		/* Level in dem sich enemy befindet */
-  point pos;			/* gibt die Koordinaten der Momentanposition an */
-  vect speed;			/* current speed  */
-  int energy;		/* gibt die Energie dieses Robots an */
+  point pos;		/* gibt die Koordinaten der Momentanposition an */
+  vect speed;		/* current speed  */
+  float energy;		/* gibt die Energie dieses Robots an */
   byte feindphase;	/* gibt die Phase an in der der Feind gedreht ist */
   int feindrehcode;	/* gibt Drehungen von Bruchteilen von Dehphasen an */
   byte nextwaypoint;	/* gibt den naechsten Zielpunkt an */
   byte lastwaypoint;	/* Waypoint, von dem ausgegangen wurde */
-  byte Status;			/* gibt z.B. an ob der Robotter abgeschossen wurde */
-  byte warten;			/* gibt Wartezeit an bis Fahrt wieder aufgenommen wird */
-  byte passable;			/* Zeit (counter), in der druid passable ist */
-  byte firewait;		/* gibt die Zeit bis zum naechsten Schuss an */
-  byte onscreen;		/* gibt an ob der Robot im moment sichtbar ist */
-  int Shield[4];		// Status of Partial shields
+  byte Status;		/* gibt z.B. an ob der Robotter abgeschossen wurde */
+  byte warten;		/* gibt Wartezeit an bis Fahrt wieder aufgenommen wird */
+  byte passable;	/* Zeit (counter), in der druid passable ist */
+  byte firewait;	/* gibt die Zeit bis zum naechsten Schuss an */
+  byte onscreen;	/* gibt an ob der Robot im moment sichtbar ist */
+  int Shield[4];	// Status of Partial shields
 } enemy, *Enemy;
 
 typedef struct {
@@ -201,6 +201,9 @@ typedef struct {
  * $Author$
  *
  * $Log$
+ * Revision 1.12  1997/06/08 21:46:00  jprix
+ * Modified energy of influence and enemys to be now floats instead of ints. cool.
+ *
  * Revision 1.11  1997/06/08 16:33:10  jprix
  * Eliminated all warnings, that resulted from the new -Wall gcc flag.
  *
