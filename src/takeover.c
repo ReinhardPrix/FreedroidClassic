@@ -288,7 +288,7 @@ Takeover (int enemynum)
 
     }	/* while !FinishTakeover */
 
-  ClearVGAScreen ();
+  ClearGraphMem();
 
   Switch_Background_Music_To (COMBAT_BACKGROUND_MUSIC_SOUND);
 

@@ -841,8 +841,8 @@ enum
 	  while (DownPressed());
 	}
     }
-  ClearGraphMem (InternalScreen);
-  ClearGraphMem (RealScreen);
+
+  ClearGraphMem ();
   Update_SDL_Screen();
   DisplayRahmen (InternalScreen);
   InitBars = TRUE;

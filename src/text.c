@@ -318,7 +318,7 @@ ScrollText (char *Text, int startx, int starty, int EndLine)
 
   printf("\nScrollTest should be starting to scroll now...");
 
-  ClearVGAScreen ();
+  ClearGraphMem ();
 
   SDL_SetClipRect( ne_screen , NULL );
 
@@ -330,7 +330,7 @@ ScrollText (char *Text, int startx, int starty, int EndLine)
 
   /* Texthoehe berechnen */
   TextHeight = ( Number_Of_Line_Feeds+ strlen(Text)/CharsPerLine )
-    * ( FontHeight(Menu_BFont) + ZEILENABSTAND );
+    * ( FontHeight(Menu_BFont) * 1.5 );
 
   while (!SpacePressed () && ((InsertLine + TextHeight) > EndLine))
     {
@@ -349,7 +349,8 @@ ScrollText (char *Text, int startx, int starty, int EndLine)
 
       usleep (30000);
 
-      ClearUserFenster(); 
+      // ClearUserFenster(); 
+      ClearGraphMem();
       DisplayText (Text, startx, InsertLine, Outline320x200, FALSE);
       InsertLine -= speed;
 
@@ -381,6 +382,14 @@ DisplayText (char *Text,
 	     int startx, int starty, unsigned char *screen, int EnterCursor)
 {
   char *tmp;	/* Beweg. Zeiger auf aktuelle Position im Ausgabe-Text */
+  SDL_Rect TempRect;
+  TempRect.x=USERFENSTERPOSX;
+  TempRect.y=USERFENSTERPOSY;
+  TempRect.w=USERFENSTERBREITE;
+  TempRect.h=USERFENSTERHOEHE;
+
+
+  SDL_SetClipRect( ne_screen, &TempRect);
 
   MyCursorX = startx;		/* akt. Schreib-Position */
   MyCursorY = starty;
@@ -401,7 +410,7 @@ DisplayText (char *Text,
       if (*tmp == '\n')
 	{			/* Zeilenende erreicht */
 	  MyCursorX = startx;	/* "Wagenruecklauf" */
-	  MyCursorY += FONTHOEHE + ZEILENABSTAND;	/* naechste Zeile */
+	  MyCursorY += FontHeight(Menu_BFont) * 1.5;	/* naechste Zeile */
 	  tmp++;		/* skip the newline-char !! */
 	  continue;
 	}
@@ -557,7 +566,7 @@ MakeUmbruch (void)
 {
   DebugPrintf("\nvoid MakeUmbruch(void): real function call confirmed.");
   MyCursorX = LeftTextBorder;
-  MyCursorY += FONTHOEHE + ZEILENABSTAND;
+  MyCursorY += FontHeight( Menu_BFont ) * 1.5;
   DebugPrintf("\nvoid MakeUmbruch(void): end of function reached.");
 } // void MakeUmbruch(void)
 

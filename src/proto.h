@@ -188,10 +188,9 @@ EXTERN int MergeBlockToWindow (unsigned char *,
 // EXTERN Uint32 getpixel(SDL_Surface *surface, int x, int y);
 // EXTERN void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
 EXTERN void replace_color (SDL_Surface *surf, SDL_Color src, SDL_Color dst);
-EXTERN void display_bmp(char *file_name);
+EXTERN void DisplayImage(char *file_name);
 EXTERN void MakeGridOnScreen(void);
 EXTERN int InitPictures (void);
-EXTERN void ClearVGAScreen (void);
 EXTERN void SetColors (int FirstCol, int PalAnz, char *PalPtr);
 EXTERN void SetPalCol (unsigned int palpos, unsigned char rot,
 		       unsigned char gruen, unsigned char blau);
@@ -208,7 +207,7 @@ EXTERN void UnfadeLevel (void);
 EXTERN void LadeZeichensatz (char *Zeichensatzname);
 EXTERN void RotateColors (int, int);
 EXTERN void LevelGrauFaerben (void);
-EXTERN void ClearGraphMem (unsigned char *screen);
+EXTERN void ClearGraphMem ( void );
 EXTERN void Flimmern (int type);
 
 /* map.c */

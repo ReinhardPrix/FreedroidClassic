@@ -44,15 +44,24 @@
 
 extern int TimerFlag;
 
+/*
+----------------------------------------------------------------------
+@Desc: 
 
+This function draws a "grid" on the screen, that means every
+"second" pixel is blacked out, thereby generation a fading 
+effect.  This function was created to fade the background of the 
+Escape menu and its submenus.
+
+@Ret: none
+----------------------------------------------------------------------
+*/
 void 
 MakeGridOnScreen(void){
   int x,y;
 
   DebugPrintf("\nvoid MakeGridOnScreen(...): real function call confirmed.");
-
   SDL_LockSurface( ne_screen );
-
   for (y=0; y<SCREENHOEHE; y++) 
     {
       for (x=0; x<SCREENBREITE; x++) 
@@ -65,9 +74,7 @@ MakeGridOnScreen(void){
     }
   
   SDL_UnlockSurface( ne_screen );
-
   DebugPrintf("\nvoid MakeGridOnScreen(...): end of function reached.");
-
 } // void MakeGridOnSchreen(void)
 
 SDL_Surface *LoadImage(char *datafile, int transparent)
@@ -88,6 +95,35 @@ SDL_Surface *LoadImage(char *datafile, int transparent)
   surface = SDL_DisplayFormat(image);
   SDL_FreeSurface(image);
   return(surface);
+}
+
+/*
+----------------------------------------------------------------------
+@Desc: 
+
+This function load an image and displays it directly to the ne_screen
+but without updating it.
+This might be very handy, especially in the Title() function to 
+display the title image and perhaps also for displaying the ship
+and that.
+
+@Ret: none
+----------------------------------------------------------------------
+*/
+void DisplayImage(char *datafile)
+{
+  SDL_Surface *image;
+  
+  image = IMG_Load(datafile);
+  if ( image == NULL ) {
+    fprintf(stderr, "Couldn't load image %s: %s\n",
+	    datafile, IMG_GetError());
+    Terminate(ERR);
+  }
+
+  SDL_BlitSurface(image, NULL, ne_screen, NULL);
+
+  SDL_FreeSurface(image);
 }
 
 
@@ -186,43 +222,14 @@ InitPictures (void)
   // elements apart (they dont have typical block format either)
   ne_console_surface=SDL_LoadBMP( NE_CONSOLEN_PIC_FILE );
 
-  /* 
-     TEST: show those successively on the screen 
-  */
+
+  // For debuggin purposes of the image loading procedure an
+  // image of the filled ne_blocks surface is saved to a file...
 
   SDL_SaveBMP (ne_blocks, "../graphics/debug.bmp");
 
-  /*
-  for (i=0; i<ALLBLASTTYPES; i++)
-    for (j=0; j<Blastmap[i].phases; j++)
-      {
-	SDL_BlitSurface (ne_blocks, &ne_map_block[0], ne_screen, NULL);
-	SDL_BlitSurface (ne_blocks, &Blastmap[i].block[j], ne_screen, NULL);
-	SDL_UpdateRect (ne_screen, 0,0,0,0);
-	getchar_raw ();
-      }
-  */
-  // Terminate(OK);
-  
   return (TRUE);
 }
-
-/*-----------------------------------------------------------------
- * @Desc: 
- * @Ret: 
- *
- *-----------------------------------------------------------------*/
-void
-ClearVGAScreen (void)
-{
-
-  return;
-
-
-  memset( Outline320x200, 0, SCREENBREITE * SCREENHOEHE );
-
-} // void ClearVGAScreen(void)
-
 
 void PlusDrawEnergyBar (void);
 
@@ -303,12 +310,8 @@ InitLevelColorTable (void)
 void
 SetLevelColor (int ColorEntry)
 {
-
-
-
   SetColors (FIRSTBLOCKCOLOR, FARBENPROLEVEL,
 	     LevelColorArray + ColorEntry * 3 * FARBENPROLEVEL);
-
 }				// void SetLevelColor(int ColorEntry)
 
 
@@ -491,28 +494,6 @@ LadeZeichensatz (char *Zeichensatzname)
       Terminate (-1);
     }
 
-  //
-  // CRAP DISABLED FOR THE PORT!
-  //
-
-  /*    Zeichensatz aktivieren */
-  //    SatzSegment=FP_SEG(Zeichensatzpointer);
-  //  SatzOffset=FP_OFF(Zeichensatzpointer);
-  //  asm{
-  //    push es
-  //     push bp
-  //    mov ax,SatzSegment
-  //     mov es,ax
-  //    mov ah,11h
-  //     mov al,21h
-  //     mov bl,2
-  //     mov cx,8
-  //     mov bp,SatzOffset
-  //     int 10h
-  //     pop bp
-  //     pop es
-  //  }
-
   /* Eventuell Report erstatten das der Zeichensatz installiert ist */
 #ifdef REPORTDEBUG
   DebugPrintf
@@ -623,11 +604,9 @@ LevelGrauFaerben (void)
 @Int:
 * $Function----------------------------------------------------------*/
 void
-ClearGraphMem (unsigned char *Parameter_screen)
+ClearGraphMem ( void )
 {
-
   SDL_FillRect( ne_screen , NULL , 0 );
-
 }
 
 

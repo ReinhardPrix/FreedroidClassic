@@ -253,7 +253,7 @@ IsolateBlock (unsigned char *Parameter_screen,
  * @Ret: SDL_Rect *  : array holding the block-coordinates 
  *
  *-----------------------------------------------------------------*/
-#ifdef NEW_ENGINE
+
 SDL_Rect *
 ne_get_blocks (char *picfile, int num_blocks, int blocks_per_line,
 	       int source_line, int target_line)
@@ -376,8 +376,6 @@ ne_get_rahmen_block (char *picfile, int num_blocks, int blocks_per_line,
   return (ret);
 
 } /* ne_get_rahmen_block() */
-
-#endif // NEW_ENGINE
 
 /*-----------------------------------------------------------------
  * @Desc: gibt Block *block (len*height) an angegebener

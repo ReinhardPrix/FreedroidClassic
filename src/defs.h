@@ -173,6 +173,7 @@ enum _sounds
 #define NE_CONSOLEN_PIC_FILE    "../graphics/ne_cons.bmp" // "../graphics/console.bmp"
 #define NE_DIGIT_BLOCK_FILE     "../graphics/ne_digits.bmp"
 #define NE_RAHMEN_BLOCK_FILE    "../graphics/ne_rahmen.bmp"
+#define NE_TITLE_PIC_FILE       "../graphics/ne_title.bmp"
 #else
 
 #define PALBILD_PCX                "../graphics/palbild.bmp"

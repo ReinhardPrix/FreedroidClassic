@@ -315,7 +315,7 @@ InitNewGame (void)
 	       Mobilecolor.blau);
 
   /* Den Rahmen fuer das Spiel anzeigen */
-  ClearVGAScreen ();
+  ClearGraphMem();
   DisplayRahmen (Outline320x200);
   SetInfoline (NULL,NULL);
 
@@ -522,13 +522,12 @@ Title (void)
   Switch_Background_Music_To (CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC);
 
   // LadeLBMBild(TITELBILD1,RealScreen,FALSE);  /* Titelbild laden */
-  // Load_PCX_Image (TITELBILD1_PCX , Outline320x200 , TRUE);	/* Titelbild laden */
+  DisplayImage ( NE_TITLE_PIC_FILE );
 
   PrepareScaledSurface(TRUE);
 
   while (!SpacePressed ());
   while (SpacePressed());
-
 
   InitPalette ();		/* This function writes into InternalScreen ! */
 

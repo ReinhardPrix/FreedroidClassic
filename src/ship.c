@@ -229,7 +229,7 @@ ShowElevators (void)
   DebugPrintf("\nvoid ShowElevators(void): real function call confirmed.");
 
   /* Zuerst Screen loeschen (InternalScreen) */
-  //  ClearGraphMem (RealScreen);
+  ClearGraphMem();
   
   /* Userfenster faerben */
   SetUserfenster (EL_BG_COLOR, Outline320x200);
@@ -272,7 +272,7 @@ ShowElevators (void)
   DebugPrintf("\nvoid ShowElevators(void): real function call confirmed.");
 
   /* Zuerst Screen loeschen (InternalScreen) */
-  //  ClearGraphMem (RealScreen);
+   ClearGraphMem();
   
   /* Userfenster faerben */
   SetUserfenster (EL_BG_COLOR, Outline320x200);
@@ -451,7 +451,7 @@ PaintConsoleMenu (void)
   SDL_Rect TargetRectangle;
 
 
-  ClearGraphMem (Outline320x200);
+  ClearGraphMem ();
   // GetTextColor (&bg, &fg);	/* store text color settings */
 
   DisplayRahmen (Outline320x200);
