@@ -7,6 +7,7 @@ Outstanding release-critical bugs (priority: high)
 - (rp) stabilise Highscore list
 - (rp) improve keyboard-repeat in takeover
 - (rp) fix small mouse-shooting inconsistencies
+
 - (rp/jp) put a crosshair mouse-cursor
   jp: --> done via taking and modifieing the example from the SDL doku
           the current cursor is defines via pixel-map contants in the code, haha.
@@ -31,6 +32,7 @@ Outstanding release-critical bugs (priority: high)
 - The console picture, i.e. the picture for the menu at the console is a terrible mess.
   Someone must sooner or later set up something more proper for the ne_cons.bmp file
   containing the different phases of the console, or end users must be tolerant.
+  jp: --> Corrected, thanks to the great new picture provided by Lanzz! Thanks a lot!!!
 
 - (jp) The game SHOULD be playtested on a *SLOW* machine before any release
        to make sure all the constants are in the right range for slow machines

@@ -865,15 +865,26 @@ ShowRobotPicture (int PosX, int PosY, int Number )
   SDL_Rect SourceRectangle;
   SDL_Rect TargetRectangle;
   char *fpath;
+  char *ModPointer;
   char fname[500];
+  int i;
 
   DebugPrintf (2, "\nvoid ShowRobotPicture(...): Function call confirmed.");
 
-  strcat( fname, Druidmap[Number].druidname );
+  strcpy( fname, Druidmap[Number].druidname );
   strcat( fname , ".jpg" );
 
   fpath = find_file (fname, GRAPHICS_DIR, FALSE);
-  if ( !(tmp=IMG_Load (fpath)) )
+
+  /*
+  ModPointer = strstr ( fpath , "//" );
+  for ( i = 0 ; i < 10 ; i ++ )
+    {
+      ModPointer[i]=ModPointer[i+1];
+    }
+  */
+
+  if ( (tmp=IMG_Load (fpath)) == NULL )
     {
       fprintf (stderr,
 	     "\n\
@@ -882,13 +893,15 @@ ShowRobotPicture (int PosX, int PosY, int Number )
 Freedroid has encountered a problem:\n\
 The image file named %s could not be read by SDL.\n\
 \n\
+The error reason as specified by SDL is : %s.\n\
+\n\
 Please check that the file is present and not corrupted\n\
 in your distribution of Freedroid.\n\
 \n\
 Freedroid will terminate now to point at the error.\n\
 Sorry...\n\
 ----------------------------------------------------------------------\n\
-\n" , fpath );
+\n" , fpath , SDL_GetError() );
       Terminate (ERR);
     }
   
