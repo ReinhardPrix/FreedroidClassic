@@ -363,98 +363,80 @@ LoadThemeConfigurationFile(void)
   char *ReadPointer;
   char *fpath;
   char *EndOfThemesBulletData;
+  char *EndOfThemesBlastData;
+  char *EndOfThemesDigitData;
   int BulletIndex;
   
 #define END_OF_THEME_DATA_STRING "**** End of theme data section ****"
+#define END_OF_THEME_BLAST_DATA_STRING "*** End of themes blast data section ***" 
+#define END_OF_THEME_BULLET_DATA_STRING "*** End of themes bullet data section ***" 
+#define END_OF_THEME_DIGIT_DATA_STRING "*** End of themes digit data section ***" 
 
   fpath = find_file ("config.theme", GRAPHICS_DIR, TRUE);
 
   Data = ReadAndMallocAndTerminateFile( fpath , END_OF_THEME_DATA_STRING ) ;
 
+  EndOfThemesBulletData = LocateStringInData ( Data , END_OF_THEME_BULLET_DATA_STRING );
+  EndOfThemesBlastData  = LocateStringInData ( Data , END_OF_THEME_BLAST_DATA_STRING  );
+  EndOfThemesDigitData  = LocateStringInData ( Data , END_OF_THEME_DIGIT_DATA_STRING  );
 
   //--------------------
   // Now the file is read in entirely and
-  // we can start to analyze its content
-
+  // we can start to analyze its content, 
+  //
 #define BLAST_ONE_NUMBER_OF_PHASES_STRING "How many phases in Blast one :"
 #define BLAST_TWO_NUMBER_OF_PHASES_STRING "How many phases in Blast two :"
-#define BLAST_ONE_TOTAL_AMOUNT_OF_TIME_STRING "Time in seconds for the hole animation of blast one :"
-#define BLAST_TWO_TOTAL_AMOUNT_OF_TIME_STRING "Time in seconds for the hole animation of blast two :"
 
-#define DIGIT_ONE_POSITION_X_STRING "First digit x :"
-#define DIGIT_ONE_POSITION_Y_STRING "First digit y :"
-#define DIGIT_TWO_POSITION_X_STRING "Second digit x :"
-#define DIGIT_TWO_POSITION_Y_STRING "Second digit y :"
-#define DIGIT_THREE_POSITION_X_STRING "Third digit x :"
-#define DIGIT_THREE_POSITION_Y_STRING "Third digit y :"
+  ReadValueFromString( Data , BLAST_ONE_NUMBER_OF_PHASES_STRING , "%d" , 
+		       &Blastmap[0].phases , EndOfThemesBlastData );
 
-  if ( ( ReadPointer = strstr ( Data , BLAST_ONE_NUMBER_OF_PHASES_STRING ) ) == NULL )
-    {
-      DebugPrintf( 0 , "\n\nNumber of phases for blast one string not found...\n\nTerminating...\n\n");
-      Terminate(ERR);
-    }
-  else
-    {
-      DebugPrintf ( 2 , "\n\nNumber of phases for blast one string found. Good.");  
-      ReadPointer += strlen ( BLAST_ONE_NUMBER_OF_PHASES_STRING );
-      sscanf ( ReadPointer , "%d" , &Blastmap[0].phases );
-      DebugPrintf( 1 , "\nBlastmap[0].phases now reads:  %d" , Blastmap[0].phases );
-      // getchar();
-    }
-  
-  if ( ( ReadPointer = strstr ( Data , BLAST_TWO_NUMBER_OF_PHASES_STRING ) ) == NULL )
-    {
-      DebugPrintf( 0 , "\n\nNumber of phases for blast two string not found...\n\nTerminating...\n\n");
-      Terminate(ERR);
-    }
-  else
-    {
-      DebugPrintf ( 2 , "\n\nNumber of phases for blast two string found. Good.");  
-      ReadPointer += strlen ( BLAST_TWO_NUMBER_OF_PHASES_STRING );
-      sscanf ( ReadPointer , "%d" , &Blastmap[1].phases );
-      DebugPrintf( 1 , "\nBlastmap[1].phases now reads:  %d" , Blastmap[1].phases );
-      // getchar();
-    }
+  ReadValueFromString( Data , BLAST_TWO_NUMBER_OF_PHASES_STRING , "%d" , 
+		       &Blastmap[1].phases , EndOfThemesBlastData );
 
   //--------------------
   // Now we read in the total time amount for each animation
-  
-  if ( ( ReadPointer = strstr ( Data , BLAST_ONE_TOTAL_AMOUNT_OF_TIME_STRING ) ) == NULL )
-    {
-      DebugPrintf( 0 , "\n\nAmount of total time for blast one string not found...\n\nTerminating...\n\n");
-      Terminate(ERR);
-    }
-  else
-    {
-      DebugPrintf ( 2 , "\n\nTotal amount of time for blast one string found. Good.");  
-      ReadPointer += strlen ( BLAST_ONE_TOTAL_AMOUNT_OF_TIME_STRING );
-      sscanf ( ReadPointer , "%lf" , &Blastmap[0].total_animation_time );
-      DebugPrintf( 1 , "\nBlastmap[0].total_animation_time now reads:  %f" , Blastmap[0].total_animation_time );
-      // getchar();
-    }
-  
-  if ( ( ReadPointer = strstr ( Data , BLAST_TWO_TOTAL_AMOUNT_OF_TIME_STRING ) ) == NULL )
-    {
-      DebugPrintf( 0 , "\n\nAmount of total time for blast two string not found...\n\nTerminating...\n\n");
-      Terminate(ERR);
-    }
-  else
-    {
-      DebugPrintf ( 2 , "\n\nTotal amount of time for blast two string found. Good.");  
-      ReadPointer += strlen ( BLAST_TWO_TOTAL_AMOUNT_OF_TIME_STRING );
-      sscanf ( ReadPointer , "%lf" , &Blastmap[1].total_animation_time );
-      DebugPrintf( 1 , "\nBlastmap[1].total_animation_time now reads:  %f" , Blastmap[1].total_animation_time );
-      // getchar();
-    }
+  //
+#define BLAST_ONE_TOTAL_AMOUNT_OF_TIME_STRING "Time in seconds for the hole animation of blast one :"
+#define BLAST_TWO_TOTAL_AMOUNT_OF_TIME_STRING "Time in seconds for the hole animation of blast two :"
+
+  ReadValueFromString( Data , BLAST_ONE_TOTAL_AMOUNT_OF_TIME_STRING , "%lf" , 
+		       &Blastmap[0].total_animation_time , EndOfThemesBlastData );
+
+  ReadValueFromString( Data , BLAST_TWO_TOTAL_AMOUNT_OF_TIME_STRING , "%lf" , 
+		       &Blastmap[1].total_animation_time , EndOfThemesBlastData );
 
   //--------------------
   // Next we read in the number of phases that are to be used for each bullet type
-  EndOfThemesBulletData = LocateStringInData ( Data , "*** End of themes bullet data section ***" );
   ReadPointer = Data ;
   while ( ( ReadPointer = strstr ( ReadPointer , "For Bullettype Nr.=" ) ) != NULL )
     {
       ReadValueFromString( ReadPointer , "For Bullettype Nr.=" , "%d" , &BulletIndex , EndOfThemesBulletData );
-      
+      if ( BulletIndex >= Number_Of_Bullet_Types )
+	{
+	  fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+In function 'char* LoadThemeConfigurationFile ( ... ):\n\
+\n\
+There was a specification for the number of phases in a bullet type\n\
+that does not at all exist in the ruleset.\n\
+\n\
+This might indicate that either the ruleset file is corrupt or the \n\
+theme.config configuration file is corrupt or (less likely) that there\n\
+is a severe bug in the reading function.\n\
+\n\
+Please check that your theme and ruleset files are properly set up.\n\
+\n\
+Please also don't forget, that you might have to run 'make install'\n\
+again after you've made modifications to the data files in the source tree.\n\
+\n\
+Freedroid will terminate now to draw attention to the data problem it could\n\
+not resolve.... Sorry, if that interrupts a major game of yours.....\n\
+----------------------------------------------------------------------\n\
+\n" );
+	  Terminate(ERR);
+	}
       ReadValueFromString( ReadPointer , "we will use number of phases=" , "%d" , 
 			   &Bulletmap[BulletIndex].phases , EndOfThemesBulletData );
       ReadPointer++;
@@ -465,87 +447,28 @@ LoadThemeConfigurationFile(void)
   // display the digits.  This must also be read from the configuration
   // file of the theme
   //
-  if ( ( ReadPointer = strstr ( Data , DIGIT_ONE_POSITION_X_STRING ) ) == NULL )
-    {
-      DebugPrintf( 0 , "\n\nPosition x string for digit one not found...\n\nTerminating...\n\n");
-      Terminate(ERR);
-    }
-  else
-    {
-      DebugPrintf ( 2 , "\n\nDigit one position x string found. Good.");  
-      ReadPointer += strlen ( DIGIT_ONE_POSITION_X_STRING );
-      sscanf ( ReadPointer , "%d" , &First_Digit_Pos_X );
-      DebugPrintf( 1 , "\nFirst_Digit_Pos_X now reads:  %d" , First_Digit_Pos_X );
-      // getchar();
-    }
-  if ( ( ReadPointer = strstr ( Data , DIGIT_ONE_POSITION_Y_STRING ) ) == NULL )
-    {
-      DebugPrintf( 0 , "\n\nPosition y string for digit one not found...\n\nTerminating...\n\n");
-      Terminate(ERR);
-    }
-  else
-    {
-      DebugPrintf ( 2 , "\n\nDigit one position y string found. Good.");  
-      ReadPointer += strlen ( DIGIT_ONE_POSITION_Y_STRING );
-      sscanf ( ReadPointer , "%d" , &First_Digit_Pos_Y );
-      DebugPrintf( 1 , "\nFirst_Digit_Pos_X now reads:  %d" , First_Digit_Pos_Y );
-      // getchar();
-    }
-  
-  if ( ( ReadPointer = strstr ( Data , DIGIT_TWO_POSITION_X_STRING ) ) == NULL )
-    {
-      DebugPrintf( 0 , "\n\nPosition x string for digit two not found...\n\nTerminating...\n\n");
-      Terminate(ERR);
-    }
-  else
-    {
-      DebugPrintf ( 2 , "\nDigit two position x string found. Good.");  
-      ReadPointer += strlen ( DIGIT_TWO_POSITION_X_STRING );
-      sscanf ( ReadPointer , "%d" , &Second_Digit_Pos_X );
-      DebugPrintf( 1 , "\nSecond_Digit_Pos_X now reads:  %d" , Second_Digit_Pos_X );
-      // getchar();
-    }
-  if ( ( ReadPointer = strstr ( Data , DIGIT_TWO_POSITION_Y_STRING ) ) == NULL )
-    {
-      DebugPrintf( 0 , "\n\nPosition y string for digit two not found...\n\nTerminating...\n\n");
-      Terminate(ERR);
-    }
-  else
-    {
-      DebugPrintf ( 2 , "\n\nDigit two position y string found. Good.");  
-      ReadPointer += strlen ( DIGIT_TWO_POSITION_Y_STRING );
-      sscanf ( ReadPointer , "%d" , &Second_Digit_Pos_Y );
-      DebugPrintf( 1 , "\nSecond_Digit_Pos_X now reads:  %d" , Second_Digit_Pos_Y );
-      // getchar();
-    }
+#define DIGIT_ONE_POSITION_X_STRING "First digit x :"
+#define DIGIT_ONE_POSITION_Y_STRING "First digit y :"
+#define DIGIT_TWO_POSITION_X_STRING "Second digit x :"
+#define DIGIT_TWO_POSITION_Y_STRING "Second digit y :"
+#define DIGIT_THREE_POSITION_X_STRING "Third digit x :"
+#define DIGIT_THREE_POSITION_Y_STRING "Third digit y :"
 
-  if ( ( ReadPointer = strstr ( Data , DIGIT_THREE_POSITION_X_STRING ) ) == NULL )
-    {
-      DebugPrintf( 0 , "\n\nPosition x string for digit three not found...\n\nTerminating...\n\n");
-      Terminate(ERR);
-    }
-  else
-    {
-      DebugPrintf ( 2 , "\n\nDigit three position x string found. Good.");  
-      ReadPointer += strlen ( DIGIT_THREE_POSITION_X_STRING );
-      sscanf ( ReadPointer , "%d" , &Third_Digit_Pos_X );
-      DebugPrintf( 1 , "\nThird_Digit_Pos_X now reads:  %d" , Third_Digit_Pos_X );
-      // getchar();
-    }
-  if ( ( ReadPointer = strstr ( Data , DIGIT_THREE_POSITION_Y_STRING ) ) == NULL )
-    {
-      DebugPrintf( 0 , "\n\nPosition y string for digit three not found...\n\nTerminating...\n\n");
-      Terminate(ERR);
-    }
-  else
-    {
-      DebugPrintf ( 2 , "\n\nDigit three position y string found. Good.");  
-      ReadPointer += strlen ( DIGIT_THREE_POSITION_Y_STRING );
-      sscanf ( ReadPointer , "%d" , &Third_Digit_Pos_Y );
-      DebugPrintf( 1 , "\nThird_Digit_Pos_X now reads:  %d" , Third_Digit_Pos_Y );
-      // getchar();
-    }
-  
+  ReadValueFromString( Data , DIGIT_ONE_POSITION_X_STRING , "%d" , 
+		       &First_Digit_Pos_X , EndOfThemesDigitData );
+  ReadValueFromString( Data , DIGIT_ONE_POSITION_Y_STRING , "%d" , 
+		       &First_Digit_Pos_Y , EndOfThemesDigitData );
+
+  ReadValueFromString( Data , DIGIT_TWO_POSITION_X_STRING , "%d" , 
+		       &Second_Digit_Pos_X , EndOfThemesDigitData );
+  ReadValueFromString( Data , DIGIT_TWO_POSITION_Y_STRING , "%d" , 
+		       &Second_Digit_Pos_Y , EndOfThemesDigitData );
+
+  ReadValueFromString( Data , DIGIT_THREE_POSITION_X_STRING , "%d" , 
+		       &Third_Digit_Pos_X , EndOfThemesDigitData );
+  ReadValueFromString( Data , DIGIT_THREE_POSITION_Y_STRING , "%d" , 
+		       &Third_Digit_Pos_Y , EndOfThemesDigitData );
+
 }; // void LoadThemeConfigurationFile ( void )
 
 
