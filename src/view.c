@@ -97,9 +97,9 @@ Assemble_Combat_Picture (int mask)
 	  if ((MapBrick = GetMapBrick( CurLevel, col , line )) != INVISIBLE_BRICK)
 	    {
 	      TargetRectangle.x = USER_FENSTER_CENTER_X 
-		+ ( -Me.pos.x+col-0.5 )*Block_Width;
+		+ (int)rint( (-Me.pos.x+1.0*col-0.5 )*Block_Width);
 	      TargetRectangle.y = USER_FENSTER_CENTER_Y
-		+ ( -Me.pos.y+line-0.5 )*Block_Height;
+		+ (int)rint( (-Me.pos.y+1.0*line-0.5 )*Block_Height);
 	      SDL_BlitSurface( MapBlockSurfacePointer[ CurLevel->color ][MapBrick] , NULL ,
  			       ne_screen, &TargetRectangle);
 	    }			// if !INVISIBLE_BRICK 
@@ -182,6 +182,8 @@ Assemble_Combat_Picture (int mask)
       SDL_UpdateRect (ne_screen, TxtRect.x, TxtRect.y, TxtRect.w, TxtRect.h);
     }
 
+  SDL_SetClipRect (ne_screen, NULL);
+  
   return;
 
 } // void Assemble_Combat_Picture(...)
@@ -484,7 +486,11 @@ PutBullet (int BulletNummer)
       // Now the whole window will be filled with either white
       // or black each frame until the flash is over.  (Flash 
       // deletion after some time is done in CheckBulletCollisions.)
-      if ( CurBullet->time_in_seconds <= FLASH_DURATION/2)
+      if ( CurBullet->time_in_seconds <= FLASH_DURATION/4)
+	Fill_Rect (User_Rect, Flash_Light);
+      else if (CurBullet->time_in_seconds <= FLASH_DURATION/2)
+	Fill_Rect (User_Rect, Flash_Dark);
+      else if (CurBullet->time_in_seconds <= 3*FLASH_DURATION/4)
 	Fill_Rect (User_Rect, Flash_Light);
       else if (CurBullet->time_in_seconds <= FLASH_DURATION)
 	Fill_Rect (User_Rect, Flash_Dark);
