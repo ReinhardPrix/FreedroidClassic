@@ -425,13 +425,27 @@ make_texture_out_of_surface ( iso_image* our_image )
   //
   glPixelStorei( GL_UNPACK_ALIGNMENT,1 );
 
-  // Create The Texture 
-  glGenTextures( 1, & our_image -> texture );
+  //--------------------
+  // We must not call glGenTextures more than once in all of Freedroid,
+  // according to the nehe docu and also confirmed instances of textures
+  // getting overwritten.  So all the gentexture stuff is now in the
+  // initGL function and we'll use stuff from there.
+  //
+  // glGenTextures( 1, & our_image -> texture );
+  //
+  our_image -> texture = & ( all_freedroid_textures [ next_texture_index_to_use ] ) ;
+  next_texture_index_to_use ++ ;
+  if ( next_texture_index_to_use >= MAX_AMOUNT_OF_TEXTURES_WE_WILL_USE )
+    {
+      GiveStandardErrorMessage ( "make_texture_out_of_surface(...)" , "\
+Ran out of initialized texture positions to use for new textures.",
+				 PLEASE_INFORM, IS_FATAL );
+    }
 
   //--------------------
   // Typical Texture Generation Using Data From The Bitmap 
   //
-  glBindTexture( GL_TEXTURE_2D, our_image -> texture );
+  glBindTexture( GL_TEXTURE_2D, * ( our_image -> texture ) );
   
   //--------------------
   // Maybe we will want to set some storage parameters, but I'm not
@@ -441,7 +455,13 @@ make_texture_out_of_surface ( iso_image* our_image )
   // glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
   // glPixelStorei(GL_UNPACK_SKIP_ROWS, 0);
   // glPixelStorei(GL_UNPACK_SKIP_PIXELS, 0);
-  
+
+  //--------------------
+  // Setting texture parameters like in NeHe tutorial...
+  //
+  glTexParameteri( GL_TEXTURE_2D , GL_TEXTURE_MAG_FILTER , GL_LINEAR );
+  glTexParameteri( GL_TEXTURE_2D , GL_TEXTURE_MIN_FILTER , GL_LINEAR );
+
   //--------------------
   // We will use the 'GL_REPLACE' texturing environment or get 
   // unusable (and slow) results.
@@ -515,6 +535,26 @@ initGL( void )
   glEnable( GL_ALPHA_TEST );  
   glAlphaFunc ( GL_GREATER , 0.5 ) ;
   
+
+  //--------------------
+  // NeHe docu reveals, that it can happen (and it does happen) that textures
+  // get deleted and overwritten when there are multiple calls to glgentexture.
+  // So we can't have that any more.  We need to create all the textures we 
+  // need once and forall and then later never again call glgentextures.
+  // 
+  // So we do the texture generation (not the texture loading) here once and
+  // for all:
+  //
+  glGenTextures( MAX_AMOUNT_OF_TEXTURES_WE_WILL_USE , & ( all_freedroid_textures [ 0 ] ) );  
+
+  //--------------------
+  // Also we must initialize an index to the texture array, so that we can keep
+  // track of which textures have been created and bound already.
+  //
+  // BEWARE:  Index 0 must not be used according to some docu...
+  //
+  next_texture_index_to_use = 1 ;
+
 #endif
 
   return( TRUE );
@@ -609,7 +649,7 @@ blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our
   glColor3f( r , g , b );
   // glColor4f( 1, 1 , 1 , 1 );
 
-  glBindTexture( GL_TEXTURE_2D, our_floor_iso_image . texture );
+  glBindTexture( GL_TEXTURE_2D, * ( our_floor_iso_image . texture ) );
 
   // glColor4f(1,1,1,1);
 
@@ -700,7 +740,7 @@ blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x 
 
   // glColor3f( 1 , 1 , 1 );
 
-  glBindTexture( GL_TEXTURE_2D, our_floor_iso_image . texture );
+  glBindTexture( GL_TEXTURE_2D, * ( our_floor_iso_image . texture ) );
   glBegin(GL_QUADS);
   glTexCoord2i( 0.0f, texture_start_y ); 
   glVertex2i( image_start_x , image_start_y );
@@ -815,7 +855,7 @@ blit_rotated_open_gl_texture_with_center ( iso_image our_iso_image , int x , int
   texture_start_y = 1.0 ; // 1 - ((float)(our_iso_image . surface -> h)) / 127.0 ; // 1.0 
   texture_end_y = 0.0 ;
 
-  glBindTexture( GL_TEXTURE_2D, our_iso_image . texture );
+  glBindTexture( GL_TEXTURE_2D, * ( our_iso_image . texture ) );
   glBegin(GL_QUADS);
   glTexCoord2i( 0.0f, texture_start_y ); 
   glVertex2i( corner1 . x , corner1 . y );
@@ -1226,6 +1266,61 @@ GL_HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area )
 
 }; // void GL_HighlightRectangle
 
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void 
+blit_special_background ( int background_code )
+{
+#define ALL_KNOWN_BACKGROUNDS 4
+  static iso_image our_backgrounds [ ALL_KNOWN_BACKGROUNDS ] ;
+  static int first_call = TRUE;
+  static char* background_filenames [ ALL_KNOWN_BACKGROUNDS ] = { INVENTORY_SCREEN_BACKGROUND_FILE , 
+								  CHARACTER_SCREEN_BACKGROUND_FILE ,
+								  SKILL_SCREEN_BACKGROUND_FILE ,
+								  SKILL_EXPLANATION_SCREEN_BACKGROUND_FILE } ;
+  SDL_Rect our_background_rects [ ALL_KNOWN_BACKGROUNDS ] = { { 0 , 0 , 0 , 0 } , 
+							      { CHARACTERRECT_X , 0 , 0 , 0 } ,
+							      { CHARACTERRECT_X , 0 , 0 , 0 } ,
+							      { 0 , 0 , 0 , 0 } } ;
+  int i;
+  char *fpath;
+  
+  //--------------------
+  // On the first function call, we load all the surfaces we will need, and
+  // in case of OpenGL output method, we also make textures from them...
+  //
+  if ( first_call )
+    {
+      first_call = FALSE ; 
+      for ( i = 0 ; i < ALL_KNOWN_BACKGROUNDS ; i ++ )
+	{
 
+	  fpath = find_file ( background_filenames [ i ] , GRAPHICS_DIR , FALSE );
+	  get_iso_image_from_file_and_path ( fpath , & ( our_backgrounds [ i ] ) ) ;
+
+	  if ( use_open_gl )
+	    {
+	      make_texture_out_of_surface ( & ( our_backgrounds [ i ] ) ) ;
+	    }
+	}
+    }
+
+  //--------------------
+  // Now that all the surfaces are loaded, we can start to blit the backgrounds
+  // in question to their proper locations.
+  //
+  if ( use_open_gl )
+    {
+      blit_open_gl_texture_to_screen_position ( our_backgrounds [ background_code ] , our_background_rects [ background_code ] . x , our_background_rects [ background_code ] . y , TRUE ) ;
+    }
+  else
+    {
+      SDL_SetClipRect( Screen, NULL );
+      our_SDL_blit_surface_wrapper ( our_backgrounds [ background_code ] . surface , NULL , Screen , &( our_background_rects [ background_code ] ) );
+    }
+  
+}; // void blit_special_background ( int background_code )
 
 #undef _open_gl_c

@@ -301,7 +301,7 @@ enum
 // #define ISO_WIDTH               128.0
 // #define ISO_HEIGHT              94.0
 #define BLOCKMEM  		INITIAL_BLOCK_WIDTH*INITIAL_BLOCK_HEIGHT
-  
+#define MAX_AMOUNT_OF_TEXTURES_WE_WILL_USE 300
 
 /* Scroll- Fenster */
 #define SCROLLSTARTX		User_Rect.x

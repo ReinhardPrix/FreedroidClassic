@@ -884,15 +884,16 @@ CursorIsOnWhichSpellLevelButton( int x , int y )
 void
 ShowSkillsExplanationScreen( void )
 {
-  static SDL_Surface *SkillExplanationScreenImage = NULL;
-  char* fpath;
-  SDL_Surface *tmp;
+  // static SDL_Surface *SkillExplanationScreenImage = NULL;
+  // char* fpath;
+  // SDL_Surface *tmp;
   SDL_Rect TargetSkillRect;
 
   //--------------------
   // At first we load the explanations screen background, if it has
   // not been loaded already.
   //
+  /*
   if ( SkillExplanationScreenImage == NULL )
     {
       fpath = find_file ( SKILL_EXPLANATION_SCREEN_BACKGROUND_FILE , GRAPHICS_DIR, FALSE);
@@ -906,7 +907,10 @@ ShowSkillsExplanationScreen( void )
   // information about this skill.
   //
   our_SDL_blit_surface_wrapper ( SkillExplanationScreenImage , NULL , Screen , NULL );
-  
+  */
+
+  blit_special_background ( 3 ) ;
+
   TargetSkillRect.x = 15;
   TargetSkillRect.y = 15;
   our_SDL_blit_surface_wrapper ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . spell_skill_icon_surface . surface , NULL , Screen , &TargetSkillRect );
@@ -929,9 +933,6 @@ void
 ShowSkillsScreen ( void )
 {
   static SDL_Rect ButtonRect;
-  static SDL_Surface *SkillScreenImage = NULL;
-  SDL_Surface *tmp;
-  char *fpath;
   char CharText[1000];
   static int MouseButtonPressedPreviousFrame = FALSE;
   point CurPos;
@@ -966,28 +967,11 @@ ShowSkillsScreen ( void )
   CurPos.x = GetMousePos_x() + 16;
   CurPos.y = GetMousePos_y() + 16;
 
-  // --------------------
-  // Some things like the loading of the character screen
-  // need to be done only once at the first call of this
-  // function. 
-  //
-  if ( SkillScreenImage == NULL )
-    {
-      fpath = find_file ( SKILL_SCREEN_BACKGROUND_FILE , GRAPHICS_DIR, FALSE);
-      tmp = our_IMG_load_wrapper( fpath );
-      SkillScreenImage = our_SDL_display_format_wrapper ( tmp );
-      SDL_FreeSurface ( tmp );
+  SkillScreenRect.x = CHARACTERRECT_X;
+  SkillScreenRect.y = 0; 
+  SkillScreenRect.w = CHARACTERRECT_W;
+  SkillScreenRect.h = CHARACTERRECT_H;
 
-      //--------------------
-      // We define the right side of the user screen as the rectangle
-      // for our inventory screen.
-      //
-      SkillScreenRect.x = CHARACTERRECT_X;
-      SkillScreenRect.y = 0; 
-      SkillScreenRect.w = CHARACTERRECT_W;
-      SkillScreenRect.h = CHARACTERRECT_H;
-    }
-  
   //--------------------
   // We will draw only those skills to the skills inventory, that are
   // already present in the Tux.  That way the game remains open for new
@@ -1012,8 +996,12 @@ ShowSkillsScreen ( void )
   // At this point we know, that the skill screen is desired and must be
   // displayed in-game:
   //
-  SDL_SetClipRect( Screen, NULL );
-  our_SDL_blit_surface_wrapper ( SkillScreenImage , NULL , Screen , &SkillScreenRect );
+  // SDL_SetClipRect( Screen, NULL );
+  // our_SDL_blit_surface_wrapper ( SkillScreenImage , NULL , Screen , &SkillScreenRect );
+
+  blit_special_background ( 2 );
+
+
   if ( GameConfig.skill_explanation_screen_visible )
     ShowSkillsExplanationScreen( );
 

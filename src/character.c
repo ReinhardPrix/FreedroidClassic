@@ -594,12 +594,7 @@ UpdateAllCharacterStats ( int PlayerNum )
 void 
 ShowCharacterScreen ( void )
 {
-  static SDL_Surface *CharacterScreenImage = NULL;
-  // static SDL_Surface *PlusButtonImage = NULL;
-  SDL_Surface *tmp = NULL;
-  char *fpath;
   char CharText[1000];
-  // SDL_Rect TargetRect;
   static int MouseButtonPressedPreviousFrame = FALSE;
   point CurPos;
 
@@ -618,44 +613,16 @@ ShowCharacterScreen ( void )
   CurPos.x = GetMousePos_x() + 16;
   CurPos.y = GetMousePos_y() + 16;
 
-  // --------------------
-  // Some things like the loading of the character screen
-  // need to be done only once at the first call of this
-  // function. 
-  //
-  if ( CharacterScreenImage == NULL )
-    {
-      // our_SDL_fill_rect_wrapper( Screen, & InventoryRect , 0x0FFFFFF );
-      fpath = find_file ( CHARACTER_SCREEN_BACKGROUND_FILE , GRAPHICS_DIR, FALSE);
-      tmp = our_IMG_load_wrapper( fpath );
-      CharacterScreenImage = our_SDL_display_format_wrapper ( tmp );
-      SDL_FreeSurface ( tmp );
-
-      /*
-      fpath = find_file ( "mouse_buttons/PlusButton.png" , GRAPHICS_DIR, FALSE);
-      tmp = our_IMG_load_wrapper( fpath );
-      PlusButtonImage = our_SDL_display_format_wrapper ( tmp );
-      SDL_FreeSurface ( tmp );
-      */
-
-      //--------------------
-      // We define the right side of the user screen as the rectangle
-      // for our inventory screen.
-      //
-      CharacterRect.x = CHARACTERRECT_X;
-      CharacterRect.y = 0; 
-      CharacterRect.w = CHARACTERRECT_W;
-      CharacterRect.h = CHARACTERRECT_H;
-    }
-  
   //--------------------
-  // At this point we know, that the character screen is desired and must be
-  // displayed in-game:
+  // We define the right side of the user screen as the rectangle
+  // for our inventory screen.
   //
-  // Into this inventory rectangle we draw the inventory mask
-  //
-  SDL_SetClipRect( Screen, NULL );
-  our_SDL_blit_surface_wrapper ( CharacterScreenImage , NULL , Screen , &CharacterRect );
+  CharacterRect.x = CHARACTERRECT_X;
+  CharacterRect.y = 0; 
+  CharacterRect.w = CHARACTERRECT_W;
+  CharacterRect.h = CHARACTERRECT_H;
+
+  blit_special_background ( 1 );
 
   //--------------------
   // Now we can start to fill in the character values:

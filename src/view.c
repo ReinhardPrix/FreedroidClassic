@@ -3191,12 +3191,10 @@ A droid portrait failed to load.",
 void
 ShowInventoryScreen( void )
 {
-  static SDL_Surface *InventoryImage = NULL;
   static SDL_Surface *TransparentPlateImage = NULL;
   SDL_Surface *tmp;
   char *fpath;
-  char fname[]=INVENTORY_SCREEN_BACKGROUND_FILE;
-  char fname2[]=INVENTORY_SQUARE_OCCUPIED_FILE;
+  char fname2 [ ] = INVENTORY_SQUARE_OCCUPIED_FILE;
   SDL_Rect TargetRect;
   int SlotNum;
   int i , j ;
@@ -3206,27 +3204,13 @@ ShowInventoryScreen( void )
   // inventory rectangle need to be done only once at the first call of this
   // function. 
   //
-  if ( InventoryImage == NULL )
+  if ( TransparentPlateImage == NULL )
     {
-      // our_SDL_fill_rect_wrapper( Screen, & InventoryRect , 0x0FFFFFF );
-      fpath = find_file ( fname , GRAPHICS_DIR, FALSE);
-      tmp = our_IMG_load_wrapper( fpath );
-      if ( !tmp )
-	{
-	  fprintf( stderr, "\n\nfname: '%s'\n" , fname );
-	  GiveStandardErrorMessage ( "ShowInventoryScreen(...)" , "\
-The inventory screen background image could not be loaded.  This is a fatal error.",
-				     PLEASE_INFORM, IS_FATAL );
-	}
-
-      InventoryImage = our_SDL_display_format_wrapper ( tmp );
-      SDL_FreeSurface ( tmp );
-
       fpath = find_file ( fname2 , GRAPHICS_DIR, FALSE);
       tmp = our_IMG_load_wrapper( fpath );
       if ( !tmp )
 	{
-	  fprintf( stderr, "\n\nfname: '%s'\n" , fname );
+	  fprintf( stderr, "\n\nfname2: '%s'\n" , fname2 );
 	  GiveStandardErrorMessage ( "ShowInventoryScreen(...)" , "\
 The transparent plate for the inventory could not be loaded.  This is a fatal error.",
 				     PLEASE_INFORM, IS_FATAL );
@@ -3250,10 +3234,7 @@ The transparent plate for the inventory could not be loaded.  This is a fatal er
   // At this point we know, that the inventory screen is desired and must be
   // displayed in-game:
   //
-  // Into this inventory rectangle we draw the inventory mask
-  //
-  SDL_SetClipRect( Screen, NULL );
-  our_SDL_blit_surface_wrapper ( InventoryImage , NULL , Screen , &InventoryRect );
+  blit_special_background ( 0 );
 
   //--------------------
   // Now we display the item in the influencer drive slot

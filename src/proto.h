@@ -155,6 +155,8 @@ EXTERN void blit_rotated_open_gl_texture_with_center ( iso_image our_floor_iso_i
 EXTERN void remove_open_gl_blending_mode_again ( void );
 EXTERN void prepare_open_gl_for_blending_textures( void );
 EXTERN void GL_HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area );
+EXTERN void ShowInventoryScreenBackground ( void );
+EXTERN void show_character_screen_background ( void );
 
 #ifdef HAVE_LIBGL
 EXTERN int initGL( GLvoid );
@@ -164,6 +166,7 @@ EXTERN int initGL( void );
 
 EXTERN void blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our_col , float our_line , float r , float g , float b ) ;
 EXTERN void blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x , int y , int set_gl_parameters ) ;
+EXTERN void blit_special_background ( int background_code );
 
 // blocks.c 
 #undef EXTERN

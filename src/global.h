@@ -148,6 +148,14 @@ EXTERN itemspec* ItemMap;
 EXTERN float timeout_from_item_drop;
 EXTERN int use_open_gl;
 
+#ifdef HAVE_LIBGL
+EXTERN GLuint all_freedroid_textures [ MAX_AMOUNT_OF_TEXTURES_WE_WILL_USE ] ;
+EXTERN int next_texture_index_to_use ;
+#else
+// EXTERN int all_freedroid_textures [ MAX_AMOUNT_OF_TEXTURES_WE_WILL_USE ] ;
+// EXTERN int next_texture_index_to_use ;
+#endif
+
 EXTERN mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] ;
 EXTERN int Item_Held_In_Hand;
 EXTERN point InventorySize;
