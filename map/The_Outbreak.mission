@@ -284,16 +284,16 @@ Press Space Bar to skip controls explanation
 * New Mission Briefing Text Subsection *
 Controls
 
-The game is controlled via keyboard input or via joystick input.
-The joystick control is similar to keyboard control.
-Therefore only keyboard control is expained here:
+The game is controlled via keyboard input, keyboard and mouse or via joystick input.
+
+Keyboard control:
 
 Use cursor keys to move around.  The speed you can go depends on the druid you currently control.
 
 If you press space bar in -addition- to a cursor key, this fires the weapon of the druid you currently control.
 
 
-If you press space bar whilst NOT pressing a cursor key, this will enter transfer mode.  Now if you touch some other druid, this will initiate the takeover process in which you have to win a small game of logical curcuits within the given time.
+If you press space bar whilst NOT pressing a cursor key, this will enter transfer mode.  You will notice your robot to take on a flashy red color.  Now if you touch some other druid, this will initiate the takeover process in which you have to win a small game of logical curcuits within the given time.
 If you succeed, you thereafter can control this new droid and for game purposes, it is as if you were him.
 If you loose, you either are destroyed if you didn't control an enemy druid at that time, or the host you controlled is destroyed together with the unit you wished to control.
 
@@ -301,9 +301,23 @@ The P key causes the game to pause.
 The S key causes a screenshot to be taken.
 The Escape key causes the menu to pop up.
 
-Elevators are also entered via transfer mode if you stand still on the elevaor.
+Keyboard and mouse control:
 
-Press Fire to Play
+At any point in the game, you can use the mouse to fire at a target,
+This is somewhat more convenient than using keyboard only since it allows
+you to fire at any angle, an advantage otherwise only had with joystick
+input.
+
+Joystick conrol:
+
+Rather self explanatory.  Use fire keys to fire or switch to transfer mode 
+similar with keyboard or mouse control.
+
+Watch out for energy refreshing fields and elevators.
+
+Lifts are also entered via transfer mode if you stand still on the lift
+
+    Press Fire to Play
 
 
 

@@ -146,9 +146,9 @@ Press space bar to skip instructions
 * New Mission Briefing Text Subsection *
 Controls
 
-The game is controlled via keyboard input or via joystick input.
-The joystick control is similar to keyboard control.
-Therefore only keyboard control is expained here:
+The game is controlled via keyboard input, keyboard and mouse or via joystick input.
+
+Keyboard control:
 
 Use cursor keys to move around.  The speed you can go depends on the druid you currently control.
 
@@ -162,6 +162,18 @@ If you loose, you either are destroyed if you didn't control an enemy druid at t
 The P key causes the game to pause.
 The S key causes a screenshot to be taken.
 The Escape key causes the menu to pop up.
+
+Keyboard and mouse control:
+
+At any point in the game, you can use the mouse to fire at a target,
+This is somewhat more convenient than using keyboard only since it allows
+you to fire at any angle, an advantage otherwise only had with joystick
+input.
+
+Joystick conrol:
+
+Rather self explanatory.  Use fire keys to fire or switch to transfer mode 
+similar with keyboard or mouse control.
 
 Watch out for energy refreshing fields and elevators.
 

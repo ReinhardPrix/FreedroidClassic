@@ -671,7 +671,7 @@ PutBullet (int BulletNummer)
   TargetRectangle.y = USER_FENSTER_CENTER_Y
     - (Me.pos.y-CurBullet->pos.y)*Block_Width-Block_Height/2;
 
-  PhaseOfBullet = (CurBullet->time_in_seconds * 10 );
+  PhaseOfBullet = (CurBullet->time_in_seconds * Bulletmap[ CurBullet->type ].phase_changes_per_second );
 
   PhaseOfBullet = PhaseOfBullet % Bulletmap[CurBullet->type].phases ;
 

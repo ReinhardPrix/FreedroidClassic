@@ -873,28 +873,20 @@ InitNewMission ( char *MissionName )
   EndOfMissionTargetPointer = LocateStringInData ( MainMissionPointer , END_OF_MISSION_TARGET_STRING ) ;
 
   //--------------------
-  //Now the mission file is read into memory
-  //That means we can start to decode the details given
-  //in the body of the mission file.  We start with 
-  //doing the briefing things...
+  // Now the mission file is read into memory.  That means we can start to decode the details given
+  // in the body of the mission file.  
 
   // Now we search for the beginning of the WHOLE event section within the mission file
-
   EventSectionPointer = LocateStringInData ( MainMissionPointer , EVENT_SECTION_BEGIN_STRING );
-
-  /* Title and Explanation of controls and such... */
+  // Read in the events and triggers that can be used to cause and define something to happen
   Get_Mission_Events ( EventSectionPointer );
-  DebugPrintf (2, "\nvoid InitNewMission(void): The title signaton has been successfully displayed...:");
+  DebugPrintf (2, "\nvoid InitNewMission(void): Events and triggerable actions have been successfully read in...:");
 
   //--------------------
-  // First we extract the game physics file name from the
-  // mission file and load the game data.
-  //
-
-  // Now we search for the beginning of the mission briefing big section NOT subsection
+  // We start with doing the briefing things...
+  // Now we search for the beginning of the mission briefing big section NOT subsection.
+  // We display the title and explanation of controls and such... 
   BriefingSectionPointer = LocateStringInData ( MainMissionPointer , MISSION_BRIEFING_BEGIN_STRING );
-
-  /* Title and Explanation of controls and such... */
   Title ( BriefingSectionPointer );
   DebugPrintf (2, "\nvoid InitNewMission(void): The title signaton has been successfully displayed...:");
 
@@ -996,7 +988,7 @@ InitNewMission ( char *MissionName )
   StartPointPointer = strstr( StartPointPointer , "YPos=" ) + strlen( "YPos=" );
   sscanf( StartPointPointer , "%d" , &StartingYPos );
   Me.pos.y=StartingYPos;
-  // DebugPrintf (1, "\nFinal starting position: Level=%d XPos=%d YPos=%d." , StartingLevel, StartingXPos, StartingYPos );
+  DebugPrintf ( 1 , "\nFinal starting position: Level=%d XPos=%d YPos=%d." , StartingLevel, StartingXPos, StartingYPos );
   
   //--------------------
   // Now we read in the mission targets for this mission

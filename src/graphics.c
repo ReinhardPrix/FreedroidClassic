@@ -439,6 +439,8 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
 	}
       ReadValueFromString( ReadPointer , "we will use number of phases=" , "%d" , 
 			   &Bulletmap[BulletIndex].phases , EndOfThemesBulletData );
+      ReadValueFromString( ReadPointer , "and number of phase changes per second=" , "%lf" , 
+			   &Bulletmap[BulletIndex].phase_changes_per_second , EndOfThemesBulletData );
       ReadPointer++;
     }
   
