@@ -60,6 +60,30 @@
 
 #define FreeIfUsed(pt) do { if ((pt)) SDL_FreeSurface((pt)); } while(0)
 
+// ----------------------------------------
+// some input-related defines and macros
+
+enum  _pointer_states {
+  MOUSE_UP = SDLK_LAST+1,
+  MOUSE_RIGHT,
+  MOUSE_DOWN,
+  MOUSE_LEFT,
+  MOUSE_BUTTON1,
+  MOUSE_BUTTON2,
+  MOUSE_BUTTON3,
+
+  JOY_UP,
+  JOY_RIGHT,
+  JOY_DOWN,
+  JOY_LEFT,
+  JOY_BUTTON1,
+  JOY_BUTTON2,
+  JOY_BUTTON3,
+
+  INPUT_LAST
+};
+
+
 #define EnterPressed() KeyIsPressed(SDLK_RETURN)
 
 #define ShiftPressed() ModIsPressed(KMOD_SHIFT)
@@ -75,6 +99,12 @@
 #define SpacePressed() KeyIsPressed(SDLK_SPACE)
 #define FirePressed() (SpacePressed()||MouseLeftPressed())
 
+#define MouseLeftPressed() KeyIsPressed(MOUSE_BUTTON1)
+#define MouseLeftPressedR() KeyIsPressedR(MOUSE_BUTTON1)
+
+#define MouseRightPressed() KeyIsPressed(MOUSE_BUTTON2)
+#define MouseRightPressedR() KeyIsPressedR(MOUSE_BUTTON2)
+
 #define EscapePressedR() KeyIsPressedR (SDLK_ESCAPE)
 #define SpacePressedR() KeyIsPressedR (SDLK_SPACE)
 #define FirePressedR() (SpacePressedR()||MouseLeftPressedR())
@@ -84,7 +114,9 @@
 #define LeftPressedR() (KeyIsPressedR(SDLK_LEFT)||KeyIsPressedR('a'))
 #define RightPressedR() (KeyIsPressedR(SDLK_RIGHT)||KeyIsPressedR('d'))
 
-#define Wait4Fire() do {while(1) {if(FirePressedR()||EscapePressedR()) break; else SDL_Delay(50);}; } while(0)
+#define wait4key()  do {while(1) {if(any_key_pressed()) break; else SDL_Delay(50);}; } while(0)
+
+// ----------------------------------------
 
 #define COLLISION_STEPSIZE   0.1
 
@@ -134,7 +166,7 @@ enum _alertnames {
 // the root "FD_DATADIR" should be defined in the Makefile as $(pkgdatadir)
 // if not, we set it here:
 #ifndef FD_DATADIR
-#ifdef __MACOSX__
+#ifdef MACOSX
 #define FD_DATADIR "FreeDroid.app/Contents/Resources"  // our local fallback
 #else
 #define FD_DATADIR "."   // our local fallback

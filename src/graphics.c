@@ -694,7 +694,7 @@ InitPictures (void)
       fpath = find_file (CONSOLE_BG_PIC2_FILE, GRAPHICS_DIR, NO_THEME, CRITICAL);
       console_bg_pic2 = Load_Block (fpath, 0, 0, NULL, 0);
 
-      update_progress (75);
+      update_progress (80);
 
       arrow_up = IMG_Load (find_file ("arrow_up.png", GRAPHICS_DIR, NO_THEME, CRITICAL) );
       arrow_down = IMG_Load (find_file ("arrow_down.png", GRAPHICS_DIR, NO_THEME, CRITICAL) );
@@ -704,7 +704,7 @@ InitPictures (void)
       fpath = find_file (BANNER_BLOCK_FILE, GRAPHICS_DIR, NO_THEME, CRITICAL);
       banner_pic = Load_Block (fpath, 0, 0, NULL, 0);
 
-      update_progress (80);
+      update_progress (90);
       //---------- get Droid images ----------
       for (i=0; i<NUM_DROIDS; i++)
 	{
@@ -723,7 +723,7 @@ InitPictures (void)
 	  packed_portraits[i] = load_raw_pic (fpath);
 	}
 
-      update_progress (90);
+      update_progress (95);
       // we need the 999.png in any case for transparency!
       strcpy( fname, Druidmap[DRUID999].druidname );
       strcat( fname , ".png" );
@@ -747,11 +747,11 @@ InitPictures (void)
 
     } // if first_call
 
-  update_progress (92);
+  update_progress (96);
   // if scale != 1 then we need to rescale everything now
   ScaleGraphics (GameConfig.scale);
 
-  update_progress (95);
+  update_progress (98);
 
   // make sure bullet-surfaces get re-generated!
   for ( i = 0 ; i < MAXBULLETS ; i++ )

@@ -331,7 +331,7 @@ EnterKonsole (void)
 	  if (show_cursor)
 	    SDL_WarpMouse (Cons_Menu_Rects[pos].x+Cons_Menu_Rects[pos].w/2, 
 			   Cons_Menu_Rects[pos].y+Cons_Menu_Rects[pos].h/2);
-	  keyboard_update ();  // this sets a new last_mouse_event
+	  update_input ();  // this sets a new last_mouse_event
 	  last_mouse_event = mousemove_buf; //... which we override.. ;)
 	  
 
@@ -348,7 +348,7 @@ EnterKonsole (void)
 	  if (show_cursor)
 	    SDL_WarpMouse (Cons_Menu_Rects[pos].x+Cons_Menu_Rects[pos].w/2, 
 			   Cons_Menu_Rects[pos].y+Cons_Menu_Rects[pos].h/2);
-	  keyboard_update ();  // this sets a new last_mouse_event
+	  update_input ();  // this sets a new last_mouse_event
 	  last_mouse_event = mousemove_buf; //... which we override.. ;)
 
 	  PaintConsoleMenu (pos, UPDATE_ONLY);

@@ -964,10 +964,6 @@ InitFreedroid (int argc, char *const argv[])
   /* initialize/load the highscore list */
   InitHighscores ();
  
-  HideInvisibleMap = FALSE;	/* Hide invisible map-parts. Para-extension!! */
-
-  CurLevel = NULL; // please leave this here BEFORE InitPictures
-  
   /* Now fill the pictures correctly to the structs */
   if (!InitPictures ())
     {		
@@ -976,9 +972,6 @@ InitFreedroid (int argc, char *const argv[])
     }
 
   update_progress (100); // finished init
-
-  // Initialisieren der Schildbilder
-  //  GetShieldBlocks ();
 
   return;
 } /* InitFreedroid() */
@@ -1118,7 +1111,7 @@ ThouArtDefeated (void)
 
   while ( (delay=SDL_GetTicks() - now) < WAIT_AFTER_KILLED)
     {
-      // bit of a dirty hack:  get "slow motion effect" by fiddlig with FPSover1
+      // bit of a dirty hack:  get "slow motion effect" by fiddlig with FPoverSover1
       FPSover1 *= 2.0;
 
       StartTakingTimeForFPSCalculation();
@@ -1342,7 +1335,8 @@ It is developed on a free operating system (GNU/Linux) using exclusively free to
 For more information about Free Software see the GPL licence (in the file COPYING)\n\
 or visit http://www.gnu.org.\n\n\n Press fire to play.", rect.x, rect.y, &rect);
   SDL_Flip (ne_screen);
-  Wait4Fire();
+
+  wait4key();
 
   return;
 }

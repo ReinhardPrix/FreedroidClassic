@@ -56,29 +56,21 @@ int CurrentlyMouseRightPressed=0;
 int CurrentlyMouseLeftPressed = 0;
 
 
-int joy_dirstate[4];  // array of 4 directions we map the joystick to
-
 SDLMod current_modifiers;
 
 SDL_Event event;
 
+int input_state[INPUT_LAST];	// array of states (pressed/released) of all keys
 
-enum  _input_states {
-  IN_UP = 0,
-  IN_RIGHT,
-  IN_DOWN,
-  IN_LEFT,
-  IN_BUTTON1,
-  IN_BUTTON2,
-  IN_BUTTON3,
-  IN_LAST
-};
+#define FRESH_BIT   	(0x01<<8)
+#define PRESSED		(TRUE|FRESH_BIT)
+#define RELEASED	(FALSE|FRESH_BIT)
 
-int key_state[SDLK_LAST];	// array of states (pressed/released) of all keys
-int joy_state[IN_LAST];
-int mouse_state[IN_LAST];
+#define is_down(x) ((x) & (~FRESH_BIT) )
+#define just_pressed(x) ( (x) & PRESSED == PRESSED)
 
-#define FRESH_BIT   0x01<<8
+#define clear_fresh(x) do { (x) &= ~FRESH_BIT; } while(0)
+
 
 
 int sgn (int x)
@@ -92,7 +84,7 @@ void Init_Joy (void)
 
   if (SDL_InitSubSystem (SDL_INIT_JOYSTICK) == -1)
     {
-      fprintf(stderr, "Couldn't initialize SDL-Joystick: %s\n",SDL_GetError());
+      fprintf(stderr, "Couldn't initialize SDL-Joystick: %s\n", SDL_GetError());
       Terminate(ERR);
     } else
       DebugPrintf(1, "\nSDL Joystick initialisation successful.\n");
@@ -120,7 +112,7 @@ void Init_Joy (void)
   return;
 }
 
-
+// FIXME: remove that obsolete stuff...
 void 
 ReactToSpecialKeys(void)
 {
@@ -143,8 +135,11 @@ ReactToSpecialKeys(void)
 
 } // void ReactToSpecialKeys(void)
 
+//----------------------------------------------------------------------
+// main input-reading routine
+//----------------------------------------------------------------------
 int 
-keyboard_update(void)
+update_input (void)
 {
   Uint8 axis; 
 
@@ -166,11 +161,11 @@ keyboard_update(void)
 
 	case SDL_KEYDOWN:
 	  current_modifiers = event.key.keysym.mod;
-	  key_state[event.key.keysym.sym] = TRUE | FRESH_BIT;
+	  input_state[event.key.keysym.sym] = PRESSED;
 	  break;
 	case SDL_KEYUP:
 	  current_modifiers = event.key.keysym.mod;
-	  key_state[event.key.keysym.sym] = FALSE | FRESH_BIT;
+	  input_state[event.key.keysym.sym] = RELEASED;
 	  break;
 
 	case SDL_JOYAXISMOTION:
@@ -186,18 +181,18 @@ keyboard_update(void)
 	      // so that it behaves like "set"/"release"
 	      if (joy_sensitivity*event.jaxis.value > 10000)   /* about half tilted */
 		{
-		  joy_state[IN_RIGHT] = TRUE|FRESH_BIT;
-		  joy_state[IN_LEFT] = FALSE;
+		  input_state[JOY_RIGHT] = PRESSED;
+		  input_state[JOY_LEFT] = FALSE;
 		}
 	      else if (joy_sensitivity*event.jaxis.value < -10000)
 		{
-		  joy_state[IN_LEFT] = TRUE|FRESH_BIT;
-		  joy_state[IN_RIGHT] = FALSE;
+		  input_state[JOY_LEFT] = PRESSED;
+		  input_state[JOY_RIGHT] = FALSE;
 		}
 	      else
 		{
-		  joy_state[IN_LEFT] = FALSE;
-		  joy_state[IN_RIGHT] = FALSE;
+		  input_state[JOY_LEFT] = FALSE;
+		  input_state[JOY_RIGHT] = FALSE;
 		}
 	    }
 	  else if ((axis == 1) || ((joy_num_axes >=5) && (axis == 4))) /* y-axis */
@@ -206,35 +201,35 @@ keyboard_update(void)
 
 	      if (joy_sensitivity*event.jaxis.value > 10000)  
 		{
-		  joy_dirstate[IN_DOWN] = TRUE|FRESH_BIT;
-		  joy_dirstate[IN_UP] =  FALSE;
+		  input_state[JOY_DOWN] = PRESSED;
+		  input_state[JOY_UP] =  FALSE;
 		}
 	      else if (joy_sensitivity*event.jaxis.value < -10000)
 		{
-		  joy_dirstate[IN_UP] = TRUE|FRESH_BIT;
-		  joy_dirstate[IN_DOWN]= FALSE;
+		  input_state[JOY_UP] = PRESSED;
+		  input_state[JOY_DOWN]= FALSE;
 		}
 	      else
 		{
-		  joy_dirstate[IN_UP] = FALSE;
-		  joy_dirstate[IN_DOWN] = FALSE;
+		  input_state[JOY_UP] = FALSE;
+		  input_state[JOY_DOWN] = FALSE;
 		}
 	    }
 		
 	  break;
 	  
-	case SDL_JOYBUTTONDOWN:  // here we do some brute-force remappings...
+	case SDL_JOYBUTTONDOWN: 
 	  // first button
 	  if (event.jbutton.button == 0)
-	    joy_state[IN_BUTTON1] = TRUE|FRESH_BIT;
+	    input_state[JOY_BUTTON1] = PRESSED;
 
 	  // second button
 	  else if (event.jbutton.button == 1) 
-	    joy_state[IN_BUTTON2] = TRUE|FRESH_BIT;
+	    input_state[JOY_BUTTON2] = PRESSED;
 
 	  // and third button
 	  else if (event.jbutton.button == 2) 
-	    joy_state[IN_BUTTON3] = TRUE|FRESH_BIT;
+	    input_state[JOY_BUTTON3] = PRESSED;
 
 	  axis_is_active = TRUE;
 	  break;
@@ -242,15 +237,15 @@ keyboard_update(void)
 	case SDL_JOYBUTTONUP:
 	  // first button 
 	  if (event.jbutton.button == 0)
-	    joy_state[IN_BUTTON1] = FALSE;
+	    input_state[JOY_BUTTON1] = FALSE;
 
 	  // second button
 	  else if (event.jbutton.button == 1) 
-	    joy_state[IN_BUTTON2] = FALSE;
+	    input_state[JOY_BUTTON2] = FALSE;
 
 	  // and third button
 	  else if (event.jbutton.button == 2) 
-	    joy_state[IN_BUTTON3] = FALSE;
+	    input_state[JOY_BUTTON3] = FALSE;
 
 	  axis_is_active = FALSE;
 	  break;
@@ -267,15 +262,15 @@ keyboard_update(void)
 	case SDL_MOUSEBUTTONDOWN:
 	  if (event.button.button == SDL_BUTTON_LEFT)
 	    {
-	      mouse_state[IN_BUTTON1] = TRUE|FRESH_BIT;
+	      input_state[MOUSE_BUTTON1] = PRESSED;
 	      axis_is_active = TRUE;
 	    }
 
 	  if (event.button.button == SDL_BUTTON_RIGHT)
-	    mouse_state[IN_BUTTON2] = TRUE|FRESH_BIT;
+	    input_state[MOUSE_BUTTON2] = PRESSED;
 
 	  if (event.button.button == SDL_BUTTON_MIDDLE)  
-	    mouse_state[IN_BUTTON3] = TRUE|FRESH_BIT;
+	    input_state[MOUSE_BUTTON3] = PRESSED;
 
 	  // wheel events are immediately released, so we rather
 	  // count the number of not yet read-out events
@@ -291,15 +286,15 @@ keyboard_update(void)
         case SDL_MOUSEBUTTONUP:
 	  if (event.button.button == SDL_BUTTON_LEFT)
 	    {
-	      mouse_state[IN_BUTTON1] = FALSE;
+	      input_state[MOUSE_BUTTON1] = FALSE;
 	      axis_is_active = FALSE;
 	    }
 
 	  if (event.button.button == SDL_BUTTON_RIGHT)
-	    mouse_state[IN_BUTTON2] = FALSE;
+	    input_state[MOUSE_BUTTON2] = FALSE;
 
 	  if (event.button.button == SDL_BUTTON_MIDDLE)
-	    mouse_state[IN_BUTTON3] = FALSE;
+	    input_state[MOUSE_BUTTON3] = FALSE;
 
 	  break;
 
@@ -345,7 +340,7 @@ getchar_raw (void)
       else
 	{
 	  SDL_PushEvent (&event);  /* put this event back into the queue */
-	  keyboard_update ();  /* and treat it the usual way */
+	  update_input ();  /* and treat it the usual way */
 	  continue;
 	}
 
@@ -364,7 +359,7 @@ ResetMouseWheel (void)
 bool
 WheelUpPressed (void)
 {
-  keyboard_update();
+  update_input();
   if (WheelUpEvents)
     return (WheelUpEvents--);
   else
@@ -374,7 +369,7 @@ WheelUpPressed (void)
 bool
 WheelDownPressed (void)
 {
-  keyboard_update();
+  update_input();
   if (WheelDownEvents)
     return (WheelDownEvents--);
   else
@@ -384,8 +379,9 @@ WheelDownPressed (void)
 bool
 KeyIsPressed (SDLKey key)
 {
-  keyboard_update();
-  return (key_state[key]);
+  update_input();
+
+  return( (input_state[key] & PRESSED) == PRESSED );
 }
 
 
@@ -394,8 +390,9 @@ bool
 KeyIsPressedR (SDLKey key)
 {
   bool ret;
-  keyboard_update();
-  ret = key_state[key];
+
+  ret = KeyIsPressed (key);
+
   ReleaseKey (key);
   return (ret);
 }
@@ -403,7 +400,7 @@ KeyIsPressedR (SDLKey key)
 void 
 ReleaseKey (SDLKey key)
 {
-  key_state[key] = FALSE;
+  input_state[key] = FALSE;
   return;
 }
 
@@ -411,7 +408,7 @@ bool
 ModIsPressed (SDLMod mod)
 {
   bool ret;
-  keyboard_update();
+  update_input();
   ret = ( (current_modifiers & mod) != 0) ;
   return (ret);
 }
@@ -427,41 +424,42 @@ NoDirectionPressed (void)
 } // int NoDirectionPressed(void)
 
 
-bool
-MouseRightPressed(void)
-{
-  keyboard_update();
-  return (CurrentlyMouseRightPressed);
-}
+//----------------------------------------------------------------------
+// check if a particular key has been pressed
 
 
+
+// check if any keys or buttons1 are pressed
 bool
-MouseRightPressedR (void)
+any_key_pressed (void)
 {
-  bool ret;
-  keyboard_update();
-  ret = CurrentlyMouseRightPressed;
-  CurrentlyMouseRightPressed = FALSE;
+  int i;
+  bool ret = FALSE;
+
+  update_input();
+
+  for (i=0; i<SDLK_LAST; i++)
+    if ( just_pressed(input_state[i]) )
+      { 
+	clear_fresh(input_state[i]);
+	ret = TRUE; 
+	break;
+      }
+  if ( just_pressed(input_state[JOY_BUTTON1]) )
+    {
+      clear_fresh (input_state[JOY_BUTTON1]);
+      ret = TRUE;
+    }
+
+  if ( just_pressed(input_state[MOUSE_BUTTON1]) )
+    {
+      ret = TRUE;
+      clear_fresh (input_state[MOUSE_BUTTON1]);
+    }
+
   return (ret);
-}
 
-bool
-MouseLeftPressed(void)
-{
-  keyboard_update();
-  return CurrentlyMouseLeftPressed;
-}
-
-bool
-MouseLeftPressedR (void)
-{
-  bool ret;
-  keyboard_update();
-  ret = CurrentlyMouseLeftPressed;
-  CurrentlyMouseLeftPressed = FALSE;
-  return (ret);
-}
-
+}  // any_key_pressed()
 
 
 

@@ -206,17 +206,15 @@ EXTERN void Takeover_Game_Lost_Sound (void);
 #define EXTERN extern
 #endif
 EXTERN void ReleaseKey (SDLKey key);
-EXTERN int keyboard_update(void);
+EXTERN int update_input(void);
 EXTERN int getchar_raw (void);
 EXTERN void ResetMouseWheel (void);
 EXTERN bool WheelUpPressed(void);
 EXTERN bool WheelDownPressed(void);
-EXTERN bool MouseRightPressed(void);
-EXTERN bool MouseRightPressedR (void);
-EXTERN bool MouseLeftPressed(void);
-EXTERN bool MouseLeftPressedR (void);
 EXTERN void Init_Joy(void);
 EXTERN void ReactToSpecialKeys(void);
+
+EXTERN bool any_key_pressed (void);
 
 EXTERN bool KeyIsPressed (SDLKey key);
 EXTERN bool KeyIsPressedR (SDLKey key);

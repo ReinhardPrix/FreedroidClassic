@@ -818,7 +818,7 @@ Credits_Menu (void)
 
   SDL_Flip( ne_screen );
 
-  Wait4Fire();
+  wait4key();
   
   return;
 
@@ -1620,8 +1620,6 @@ Cheatmenu (void)
       printf_SDL (ne_screen, -1, -1, " i. Invinciblemode: %s",
 		  InvincibleMode ? "ON\n" : "OFF\n");
       printf_SDL (ne_screen, -1, -1, " e. set energy\n");
-      printf_SDL (ne_screen, -1, -1, " h. Hide invisible map parts: %s",
-		  HideInvisibleMap ? "ON\n" : "OFF\n" );
       printf_SDL (ne_screen, -1, -1, " n. No hidden droids: %s",
 		  show_all_droids ? "ON\n" : "OFF\n" );
       printf_SDL (ne_screen, -1, -1, " m. Map of Deck xy\n");
@@ -1789,10 +1787,6 @@ Cheatmenu (void)
 	  if (Me.energy > Me.health) Me.health = Me.energy;
 	  break;
 
-	case 'h': /* toggle hide invisible map */
-	  HideInvisibleMap = !HideInvisibleMap;
-	  break;
-
 	case 'n': /* toggle display of all droids */
 	  show_all_droids = !show_all_droids;
 	  break;
@@ -1847,7 +1841,7 @@ Cheatmenu (void)
 
   ClearGraphMem ();
 
-  keyboard_update (); /* treat all pending keyboard events */
+  update_input (); /* treat all pending keyboard events */
 
   return;
 } /* Cheatmenu() */

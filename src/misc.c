@@ -47,12 +47,8 @@ long oneframedelay = 0;
 long tenframedelay = 0;
 long onehundredframedelay = 0;
 float FPSover1 = 10;
-float FPSover10 = 10;
-float FPSover100 = 10;
 Uint32 Now_SDL_Ticks;
 Uint32 One_Frame_SDL_Ticks;
-Uint32 Ten_Frame_SDL_Ticks;
-Uint32 Onehundred_Frame_SDL_Ticks;
 int framenr = 0;
 
 SDL_Color progress_color = {200, 20, 20};
@@ -752,18 +748,7 @@ StartTakingTimeForFPSCalculation(void)
   framenr++;
   
   One_Frame_SDL_Ticks = SDL_GetTicks();
-  if (framenr % 10 == 1)
-    Ten_Frame_SDL_Ticks = SDL_GetTicks();
-  if (framenr % 100 == 1)
-    {
-      Onehundred_Frame_SDL_Ticks=SDL_GetTicks();
-      // printf("\n%f",1/Frame_Time());
-      // printf("Me.pos.x: %g Me.pos.y: %g Me.speed.x: %g Me.speed.y: %g \n",
-      //Me.pos.x, Me.pos.y, Me.speed.x, Me.speed.y );
-      //printf("Me.maxspeed.x: %g \n",
-      //	     Druidmap[Me.type].maxspeed );
-    }
-  
+
 } // void StartTakingTimeForFPSCalculation(void)
 
 
@@ -798,12 +783,8 @@ ComputeFPSForThisFrame(void)
 
   Now_SDL_Ticks=SDL_GetTicks();
   oneframedelay=Now_SDL_Ticks-One_Frame_SDL_Ticks;
-  tenframedelay=Now_SDL_Ticks-Ten_Frame_SDL_Ticks;
-  onehundredframedelay=Now_SDL_Ticks-Onehundred_Frame_SDL_Ticks;
-  
+
   FPSover1 = 1000.0/(float)oneframedelay;
-  FPSover10 = 1000.0* 10.0 / (float) tenframedelay;
-  FPSover100 = 1000.0 * 100.0 / (float) onehundredframedelay;
   
 } // void ComputeFPSForThisFrame(void)
 
