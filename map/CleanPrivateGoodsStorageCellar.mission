@@ -201,21 +201,21 @@ Delete the event trigger after it has been triggered=-1
 
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
-Influencer must be at X=28 Y=2 Lev=3
+Influencer must be at X=28 Y=2 Lev=1
 Event Action to be triggered by this trigger="teleport_out"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
 
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
-Influencer must be at X=63 Y=31 Lev=3
+Influencer must be at X=63 Y=31 Lev=1
 Event Action to be triggered by this trigger="teleport_to_second_combat_lv"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
 
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
-Influencer must be at X=20 Y=2 Lev=1
+Influencer must be at X=20 Y=2 Lev=2
 Event Action to be triggered by this trigger="teleport_back_to_first_combat_lv"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
@@ -306,7 +306,7 @@ Action is mission assignment=-1
 * Start of an Event Action Subsection *
 Action label for this action="teleport_in"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
-Teleport to TelX=27 TelY=3 TelLev=3
+Teleport to TelX=27 TelY=3 TelLev=1
 Action is Influencer say="Now I should get teleported...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
@@ -323,7 +323,7 @@ Action is mission assignment=-1
 * Start of an Event Action Subsection *
 Action label for this action="teleport_to_second_combat_lv"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
-Teleport to TelX=21 TelY=3 TelLev=1
+Teleport to TelX=21 TelY=3 TelLev=2
 Action is Influencer say="This is level two.  Beware...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
@@ -331,7 +331,7 @@ Action is mission assignment=-1
 * Start of an Event Action Subsection *
 Action label for this action="teleport_back_to_first_combat_lv"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
-Teleport to TelX=62 TelY=30 TelLev=3
+Teleport to TelX=62 TelY=30 TelLev=1
 Action is Influencer say="Back to level one...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
