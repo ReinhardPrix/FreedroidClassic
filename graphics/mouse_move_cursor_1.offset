@@ -1,11 +1,14 @@
 
+
 ** Start of iso_image offset file **
 
-OffsetX=-25
 
-OffsetY=-25
+OffsetX=-53
 
-GraphicsFileName=none, because hand-made
+OffsetY=-27
+
+GraphicsFileName=./../mouse_move_cursor_1.png
+
 
 ** End of iso_image offset file **
 
