@@ -1258,8 +1258,7 @@ Item can be installed in armour slot="no"
 Item can be installed in shield slot="no"
 Item can be installed in special slot="no"
 Item can be installed in aux slot="no"
-S**trength minimum required to wear/wield this item=45
-Strength minimum required to wear/wield this item=-1
+Strength minimum required to wear/wield this item=35
 Dexterity minimum required to wear/wield this item=-1
 Magic minimum required to wear/wield this item=-1
 Item installation changes weapon into new value=2
@@ -1269,15 +1268,15 @@ Item weight=0.8
 Item drive maxspeed=0
 Item drive acceleration=0
 Item as gun: recharging time=0.95
-Item as gun: speed of bullets=8.1
-Item as gun: angle change of bullets=360
+Item as gun: speed of bullets=0.1
+Item as gun: angle change of bullets=720
 Item as gun: damage of bullets=1
 Item as gun: modifier for damage of bullets=11
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=1
-Item as gun: bullet_lifetime=1.50
-Item as gun: offset for melee weapon=1.5
+Item as gun: bullet_lifetime=0.50
+Item as gun: offset for melee weapon=1.2
 Item as gun: modifier for starting angle=-40
 Item as gun: ignore collisions with wall="no"
 Item as defensive item: base_ac_bonus=0
@@ -1310,7 +1309,7 @@ Energy gain on application in combat=60
 Item weight=0.8
 Item drive maxspeed=0
 Item drive acceleration=0
-Item as gun: recharging time=0.95
+Item as gun: recharging time=0.45
 Item as gun: speed of bullets=0.1
 Item as gun: angle change of bullets=720
 Item as gun: damage of bullets=2
@@ -1496,6 +1495,48 @@ Sound number=0
 Base list price=300
 ** End of new item specification subsection **
 
+// Item No. 32
+** Start of new item specification subsection **
+Item name="Dancing laser blades (don't hurt yourself!)"
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item can be installed in drive slot="no"
+Item can be installed in weapon slot="yes"
+Item can be installed in armour slot="no"
+Item can be installed in shield slot="no"
+Item can be installed in special slot="no"
+Item can be installed in aux slot="no"
+Strength minimum required to wear/wield this item=35
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item installation changes weapon into new value=2
+Item installation changes drive into new value=-1
+Energy gain on application in combat=60
+Item weight=0.8
+Item drive maxspeed=0
+Item drive acceleration=0
+Item as gun: recharging time=0.95
+Item as gun: speed of bullets=8.1
+Item as gun: angle change of bullets=720
+Item as gun: damage of bullets=1
+Item as gun: modifier for damage of bullets=11
+Item as gun: blast type to create=1
+Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=1
+Item as gun: bullet_lifetime=1.50
+Item as gun: offset for melee weapon=1.5
+Item as gun: modifier for starting angle=-40
+Item as gun: ignore collisions with wall="no"
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=30
+Item duration modifier=10
+Picture number=18
+Sound number=0 
+Base list price=450
+** End of new item specification subsection **
+
+
 *** End of item data section: ***
 
 ----------------------------------------------------------------------
@@ -1514,7 +1555,7 @@ Common factor for all droids acceleration values: 3.0
 Common factor for all droids maximum energy values: 1.0
 Common factor for all droids energyloss values: 0.3
 Common factor for all droids aggression values: 1.0
-Common factor for all droids score values: 1.0
+Common factor for all droids score values: 2.0
 
 Now we come to the description of all the droids:
 
