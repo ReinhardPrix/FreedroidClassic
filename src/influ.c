@@ -2636,47 +2636,6 @@ AnalyzePlayersMouseClick ( int player_num )
 }; // void AnalyzePlayersMouseClick ( int player_num )
 
 /* ----------------------------------------------------------------------
- * This function does all the things needed, when the influencer is on
- * some refresh field, i.e. it increases influencers current energy but
- * it also decreases his current score = experience points...
- * ---------------------------------------------------------------------- */
-void
-RefreshInfluencer (void)
-{
-
-  if ( Me[0].energy < Me[0].maxenergy )
-    {
-      Me[0].energy += REFRESH_ENERGY * Frame_Time () * 5;
-      Me[0].Experience -= REFRESH_ENERGY * Frame_Time () * 10;
-      if (Me[0].energy > Me[0].health)
-	Me[0].energy = Me[0].health;
-
-      RefreshSound ();
-      
-      //--------------------
-      // since robots like the refresh, the influencer might also say so...
-      //
-      if ( GameConfig.Influencer_Refresh_Text )
-	{
-	  Me[0].TextToBeDisplayed="Ahhh, that feels so good...";
-	  Me[0].TextVisibleTime=0;
-	}
-    }
-  else
-    {
-      //--------------------
-      // If nothing more is to be had, the influencer might also say so...
-      if ( GameConfig.Influencer_Refresh_Text )
-	{
-	  Me[0].TextToBeDisplayed="Oh, it seems that was it again.";
-	  Me[0].TextVisibleTime=0;
-	}
-    }
-
-  return;
-}; // void RefreshInfluence ( void )
-
-/* ----------------------------------------------------------------------
  * influ-enemy collisions are sucking someones
  * energy, depending no longer on classes of the colliding parties,
  * but on their weights

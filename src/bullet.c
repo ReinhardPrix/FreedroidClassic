@@ -1035,8 +1035,6 @@ CheckBlastCollisions (int num)
 	  
 	}
 
-      GotIntoBlastSound ();
-
     }
 
 }; // CheckBlastCollisions( ... )

@@ -343,7 +343,7 @@ RadialEMPWave ( gps ExpCenter , int SpellCostsMana )
       //
       if ( SpellCostsMana ) Me[0].mana -= SpellCost;
       //
-      PlaySound ( SPELL_FORCETOENERGY_SOUND_0 ) ;
+      Play_Spell_ForceToEnergy_Sound( );
 
       //--------------------
       // First we find a new entry in the active spells list
@@ -387,7 +387,7 @@ RadialVMXWave ( gps ExpCenter , int SpellCostsMana )
       //
       if ( SpellCostsMana ) Me[0].mana -= SpellCost;
       //
-      PlaySound ( SPELL_FORCETOENERGY_SOUND_0 ) ;
+      Play_Spell_ForceToEnergy_Sound( );
 
       //--------------------
       // First we find a new entry in the active spells list
@@ -432,7 +432,7 @@ RadialFireWave ( gps ExpCenter , int SpellCostsMana )
       //
       if ( SpellCostsMana ) Me[0].mana -= SpellCost;
       //
-      PlaySound ( SPELL_FORCETOENERGY_SOUND_0 ) ;
+      Play_Spell_ForceToEnergy_Sound( );
 
       //--------------------
       // First we find a new entry in the active spells list

@@ -1826,10 +1826,6 @@ InitFreedroid ( void )
 
   ShowStartupPercentage ( 4 ) ; 
   
-  LoadAllStaticWavFiles();
-
-  ShowStartupPercentage ( 6 ) ; 
-
   LoadAllStaticModFiles();
 
   ShowStartupPercentage ( 8 ) ; 

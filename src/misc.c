@@ -1112,7 +1112,7 @@ This indicates an error in the map system of Freedroid.",
   Me [ PlayerNum ] . mouse_move_target . y = ( -1 ) ;
   Me [ PlayerNum ] . mouse_move_target . z = ( -1 ) ;
 
-  if ( WithSound ) LeaveLiftSound ();
+  if ( WithSound ) teleport_arrival_sound ();
 
   //--------------------
   // Perhaps the player is visiting this level for the first time.  Then, the

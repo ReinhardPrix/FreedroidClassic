@@ -39,67 +39,6 @@
 #include "global.h"
 #include "proto.h"
 
-
-// The following is the definition of the sound file names used in freedroid
-// DO NOT EVER CHANGE THE ORDER OF APPEARENCE IN THIS LIST PLEASE!!!!!
-// The order of appearance here should match the order of appearance 
-// in the enum-Environment located in defs.h!
-
-#define ALL_SOUNDS 47
-char *SoundSampleFilenames[ALL_SOUNDS] = {
-   "ERRORSOUND_NILL.NOWAV",
-   "Blast_Sound_0.wav",
-   "Collision_Sound_0.wav",
-   "GotIntoBlast_Sound_0.wav",
-   "MoveElevator_Sound_0.wav",
-   "Refresh_Sound_0.wav",
-   "LeaveElevator_Sound_0.wav",
-   "EnterElevator_Sound_0.wav",
-   "Got_Hit_Sound_0.wav",
-   "Enemy_Got_Hit_Sound_0.wav",
-   "Menu_Item_Selected_Sound_1.wav",
-   "Menu_Item_Deselected_Sound_0.wav",
-   "Move_Menu_Position_Sound_0.wav",
-   "Fire_Bullet_Pulse_Sound_0.wav",
-   "Fire_Bullet_Single_Pulse_Sound_0.wav",
-   "Fire_Bullet_Military_Sound_0.wav",
-   "Fire_Bullet_Flash_Sound_0.wav",
-   "Fire_Bullet_Exterminator_Sound_0.wav",
-   "phaser.wav",
-   "Fire_Bullet_Single_Laser_Sound_0.wav",
-   "Fire_Bullet_Plasma_Pistol_Sound_0.wav",
-   "swing_then_hit_1.wav",
-   "swing_then_hit_2.wav",
-   "swing_then_hit_3.wav",
-   "swing_then_hit_4.wav",
-   "swing_then_nohit_1.wav",
-   "swing_then_nohit_2.wav",
-   "swing_then_nohit_3.wav",
-   "swing_then_nohit_4.wav",
-   "Bullet_Reflected_Sound_0.wav",
-   "Cry_Sound_0.wav",
-   "Takeover_Sound_0.wav",
-   "Mission_Status_Change_Sound_0.wav",
-   "ICantCarryAnyMore_Sound_0.wav",
-   "ICantCarryAnyMore_Sound_1.wav",
-   "ICantCarryAnyMore_Sound_2.wav",
-   "MSMachinesClose_0.wav",
-   "bot_sounds/First_Contact_Sound_0.wav",
-   "bot_sounds/First_Contact_Sound_1.wav",
-   "bot_sounds/First_Contact_Sound_2.wav",
-   "bot_sounds/First_Contact_Sound_3.wav",
-   "Not_Enough_Power_Sound_0.wav",
-   "Not_Enough_Dist_Sound_0.wav",
-   "Not_Enough_Mana_0.wav",
-   "Spell_ForceToEnergy_Sound_0.wav",
-   "Spell_DetectItems_Sound_0.wav",
-   "No_Ammo_Sound_0.wav"
-};
-
-#ifdef HAVE_LIBSDL_MIXER
-Mix_Chunk *Loaded_WAV_Files[ALL_SOUNDS];
-#endif
-
 //--------------------
 // We'll use a new sound concept now:  Don't load all the sound samples
 // we might be using again and again at game startup (which would require
@@ -115,12 +54,6 @@ Mix_Chunk *Loaded_WAV_Files[ALL_SOUNDS];
 #ifdef HAVE_LIBSDL_MIXER
 Mix_Chunk *dynamic_WAV_cache[ MAX_SOUNDS_IN_DYNAMIC_WAV_CACHE ];
 char* sound_names_in_dynamic_wav_chache [ MAX_SOUNDS_IN_DYNAMIC_WAV_CACHE ];
-#endif
-
-
-
-#ifdef HAVE_LIBSDL_MIXER
-Mix_Chunk *Loaded_WAV_Files[ALL_SOUNDS];
 #endif
 
 #define ALL_MOD_MUSICS 1
@@ -150,7 +83,14 @@ enum
 char NewMusicTargetFileName[5000];
 int BackgroundMusicStateMachineState = NOTHING_PLAYING_AT_ALL ;
 
+//--------------------
+// This variable refers to the next free position inside the WAV file
+// cache.
+//
+static int next_free_position_in_cache = 0 ;
+
 void play_sample_using_WAV_cache( char* SoundSampleFileName , int With_Waiting , int no_double_catching ) ;
+void remove_all_samples_from_WAV_cache( void );
 
 //----------------------------------------------------------------------
 // We want to know in certain cases if a channel has finished playback
@@ -438,52 +378,6 @@ The SDL MIXER WAS UNABLE TO PLAY A CERTAIN FILE LOADED INTO MEMORY FOR PLAYING O
 
 }; // void PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting) 
 
-/* ---------------------------------------------------------------------- 
- *
- *
- * ---------------------------------------------------------------------- */
-void
-LoadAllStaticWavFiles( void )
-{
-#ifndef HAVE_LIBSDL_MIXER  
-  return;
-#else
-  char *fpath;
-  int i;
-  char Temp_Filename[5000];
-
-  if ( !sound_on ) return;
-
-  //--------------------
-  // Now that the audio channel is opend, its time to load all the
-  // WAV files into memory, something we NEVER did while using the yiff,
-  // because the yiff did all the loading, analyzing and playing...
-  //
-  Loaded_WAV_Files[0]=NULL;
-  for (i = 1; i < ALL_SOUNDS; i++)
-    {
-      strcpy ( Temp_Filename , "effects/" );
-      strcat ( Temp_Filename , SoundSampleFilenames[ i ] );
-      fpath = find_file ( Temp_Filename , SOUND_DIR, FALSE);
-      Loaded_WAV_Files [ i ] = Mix_LoadWAV ( fpath ) ;
-      if ( Loaded_WAV_Files [ i ] == NULL )
-	{
-	  DebugPrintf (-1, "Sound sample %s not found. \n\
-Will continue with sound disabled.\n\
-If you want sound, please install the sound-samples.\n", Temp_Filename);
-	  sound_on = FALSE; // simply switch off sound
-	  return;
-	} // if ( !Loaded_WAV...
-      else
-	{
-	  DebugPrintf (1, "\nSuccessfully loaded file %s.", SoundSampleFilenames[i]);
-	}
-    } // for (i=0; ...
-
-#endif // HAVE_SDL_MIXER
-
-}; // void LoadAllStaticWavFiles( void )
-
 /* ----------------------------------------------------------------------
  *
  *
@@ -648,29 +542,20 @@ SetSoundFXVolume(float NewVolume)
 #else
   if ( !sound_on ) return;
 
-  // Set the volume IN the loaded files, if SDL is used...
-  // This is done here for the Files 1,2,3 and 4, since these
-  // are background music files.
-  for ( i=1 ; i<ALL_SOUNDS ; i++ )
-    {
-      Mix_VolumeChunk( Loaded_WAV_Files[i], (int) rintf(NewVolume* MIX_MAX_VOLUME) );
-    }
+  remove_all_samples_from_WAV_cache(  ) ;
 
 #endif // HAVE_LIBSDL_MIXER
 
 } // void SetBGMusicVolume(float NewVolume)
 
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ *
+ * ---------------------------------------------------------------------- */
 void
 CrySound (void)
 {
-  PlaySound ( CRY_SOUND );
-}
+  play_sample_using_WAV_cache( "../effects/Cry_Sound_0.wav", FALSE , FALSE );
+}; // void CrySound (void)
 
 /* ----------------------------------------------------------------------
  * When a chest is entered (for the chest take/put dialog) or when a
@@ -689,7 +574,7 @@ play_open_chest_sound( void )
 void
 Play_Spell_ForceToEnergy_Sound( )
 {
-  PlaySound ( SPELL_FORCETOENERGY_SOUND_0 ) ;
+  play_sample_using_WAV_cache( "../effects/Spell_ForceToEnergy_Sound_0.wav", FALSE , FALSE );
 };  // void Play_Spell_ForceToEnergy_Sound( )
 
 /* ----------------------------------------------------------------------
@@ -699,7 +584,7 @@ Play_Spell_ForceToEnergy_Sound( )
 void
 Play_Spell_DetectItems_Sound( )
 {
-  PlaySound ( SPELL_DETECTITEMS_SOUND_0 ) ;
+  play_sample_using_WAV_cache( "../effects/Spell_DetectItems_Sound_0.wav", FALSE , FALSE );
 };  // void Play_Spell_ForceToEnergy_Sound( )
 
 /* ----------------------------------------------------------------------
@@ -719,10 +604,10 @@ No_Ammo_Sound ( void )
   now = SDL_GetTicks() ;
   if ( SDL_GetTicks() - PreviousSound >= 0.25 * 1000 )
     {
-      PlaySound ( NO_AMMO_SOUND_0 );
+      play_sample_using_WAV_cache( "../effects/No_Ammo_Sound_0.wav", FALSE , FALSE );
       PreviousSound = now;
     }
-}; // void Not_Enough_Power_Sound ( void )
+}; // void No_Ammo_Sound ( void )
 
 /* ----------------------------------------------------------------------
  * This function plays a voice sample, stating that not enough power
@@ -741,7 +626,7 @@ Not_Enough_Power_Sound ( void )
   now = SDL_GetTicks() ;
   if ( SDL_GetTicks() - PreviousSound >= 1.15 * 1000 )
     {
-      PlaySound ( NOT_ENOUGH_POWER_SOUND );
+      play_sample_using_WAV_cache( "../effects/Not_Enough_Power_Sound_0.wav", FALSE , FALSE );
       PreviousSound = now;
     }
 }; // void Not_Enough_Power_Sound ( void )
@@ -763,7 +648,7 @@ Not_Enough_Dist_Sound ( void )
   now = SDL_GetTicks() ;
   if ( SDL_GetTicks() - PreviousSound >= 1.15 * 1000 )
     {
-      PlaySound ( NOT_ENOUGH_DIST_SOUND );
+      play_sample_using_WAV_cache( "../effects/Not_Enough_Dist_Sound_0.wav", FALSE , FALSE );
       PreviousSound = now;
     }
 }
@@ -786,7 +671,7 @@ Not_Enough_Mana_Sound ( void )
   now = SDL_GetTicks() ;
   if ( SDL_GetTicks() - PreviousNotEnoughForceSound >= 1.15 * 1000 )
     {
-      PlaySound ( NOT_ENOUGH_FORCE_SOUND );
+      play_sample_using_WAV_cache( "../effects/Not_Enough_Mana_0.wav", FALSE , FALSE );
       PreviousNotEnoughForceSound = now;
     }
 
@@ -808,62 +693,62 @@ PlayGreetingSound ( int SoundCode )
     case -1:
       return;
       break;
-    case 0:
-      PlaySound( FIRST_CONTACT_SOUND_0 );
+    case 0:      
+      play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_0.wav" , FALSE , FALSE );
       break;
     case 1:
-      PlaySound( FIRST_CONTACT_SOUND_1 );
+      play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_1.wav" , FALSE , FALSE );
       break;
     case 2:
-      PlaySound( FIRST_CONTACT_SOUND_2 );
+      play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_2.wav" , FALSE , FALSE );
       break;
     case 3:
-      PlaySound( FIRST_CONTACT_SOUND_3 );  // the dark apprentice.
+      play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_3.wav" , FALSE , FALSE );
       break;
     case 4:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_4.wav" , FALSE , FALSE );
+      play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_4.wav" , FALSE , FALSE );
       break;
     case 5:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_5.wav" , FALSE , FALSE );
+      play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_5.wav" , FALSE , FALSE );
       break;
     case 6:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_6.wav" , FALSE , FALSE );
+      play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_6.wav" , FALSE , FALSE );
       break;
     case 7:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_7.wav" , FALSE , FALSE );
+      play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_7.wav" , FALSE , FALSE );
       break;
     case 8:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_8.wav" , FALSE , FALSE );
+      play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_8.wav" , FALSE , FALSE );
       break;
     case 9:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_9.wav" , FALSE , FALSE );
+      play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_9.wav" , FALSE , FALSE );
       break;
     case 10:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_10.wav" , FALSE , FALSE );
+      play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_10.wav" , FALSE , FALSE );
       break;
     case 11:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_11.wav" , FALSE , FALSE );
+      play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_11.wav" , FALSE , FALSE );
       break;
     case 12:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_12.wav" , FALSE , FALSE );
+      play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_12.wav" , FALSE , FALSE );
       break;
     case 13:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_13.wav" , FALSE , FALSE );
+      play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_13.wav" , FALSE , FALSE );
       break;
     case 14:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_14.wav" , FALSE , FALSE );
+      play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_14.wav" , FALSE , FALSE );
       break;
     case 15:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_15.wav" , FALSE , FALSE );
+      play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_15.wav" , FALSE , FALSE );
       break;
     case 16:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_16.wav" , FALSE , FALSE );
+      play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_16.wav" , FALSE , FALSE );
       break;
     case 17:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_17.wav" , FALSE , FALSE );
+      play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_17.wav" , FALSE , FALSE );
       break;
     case 18:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/First_Contact_Sound_18.wav" , FALSE , FALSE );
+      play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_18.wav" , FALSE , FALSE );
       break;
     default:
       DebugPrintf( 0 , "\nUnknown Greeting sound!!! Terminating...");
@@ -1032,13 +917,13 @@ CantCarrySound (void)
       switch( MyRandom( 2 ) )
 	{
 	case 0 :
-	  PlaySound ( CANT_CARRY_SOUND_0 );
+	  play_sample_using_WAV_cache ( "../effects/ICantCarryAnyMore_Sound_0.wav", FALSE , FALSE );
 	  break;
 	case 1 :
-	  PlaySound ( CANT_CARRY_SOUND_1 );
+	  play_sample_using_WAV_cache ( "../effects/ICantCarryAnyMore_Sound_1.wav", FALSE , FALSE );
 	  break;
 	case 2 :
-	  PlaySound ( CANT_CARRY_SOUND_2 );
+	  play_sample_using_WAV_cache ( "../effects/ICantCarryAnyMore_Sound_2.wav", FALSE , FALSE );
 	  break;
 	default:
 	  break;
@@ -1048,23 +933,30 @@ CantCarrySound (void)
 
 /* ---------------------------------------------------------------------- 
  *
- *
  * ---------------------------------------------------------------------- */
 void
 TransferSound (void)
 {
-  PlaySound ( TRANSFER_SOUND );
+  play_sample_using_WAV_cache ( "../effects/Takeover_Sound_0.wav", FALSE , FALSE );
 }; // void TransferSound (void)
 
 /* ---------------------------------------------------------------------- 
- *
  *
  * ---------------------------------------------------------------------- */
 void
 Mission_Status_Change_Sound (void)
 {
-  PlaySound ( MISSION_STATUS_CHANGE_SOUND );
+  play_sample_using_WAV_cache ( "../effects/Mission_Status_Change_Sound_0.wav", FALSE , FALSE );
 }; // void Mission_Status_Change_Sound (void)
+
+/* ----------------------------------------------------------------------
+ *
+ * ---------------------------------------------------------------------- */
+void
+teleport_arrival_sound ( void )
+{
+  play_sample_using_WAV_cache ( "../effects/LeaveElevator_Sound_0.wav", FALSE , FALSE );
+}; // void teleport_arrival_sound ( void )
 
 /* ----------------------------------------------------------------------
  * This function is intended to provide a convenient way of switching
@@ -1211,82 +1103,22 @@ SwitchBackgroundMusicTo ( char* filename_raw_parameter )
 
 }; // void SwitchBackgroundMusicTo ( char* filename_raw_parameter )
 
-
-/* ---------------------------------------------------------------------- 
- *
- *
+/* ----------------------------------------------------------------------
+ * 
  * ---------------------------------------------------------------------- */
-void
-PlaySound (int Tune)
-{
-#ifndef HAVE_LIBSDL_MIXER
-  return;
-#else
-  int Newest_Sound_Channel=0;
-
-  if ( !sound_on ) return;
-
-  Newest_Sound_Channel = Mix_PlayChannel(-1, Loaded_WAV_Files[Tune] , 0);
-  if ( Newest_Sound_Channel == -1 )
-    {
-      fprintf (stderr, "\n\nSoundSampleFilenames[ Tune ]: '%s' Mix_GetError(): %s.\n" , SoundSampleFilenames[ Tune ] , Mix_GetError() );
-      GiveStandardErrorMessage ( "PlaySound(...)" , "\
-The SDL MIXER WAS UNABLE TO PLAY A CERTAIN FILE LOADED INTO MEMORY.\n\
-The most likely cause for the problem however is, that too many sounds\n\
-have been played in too rapid succession, which should be caught.\n\
-If the problem persists, please inform the developers about it.\n\
-\n\
-In the meantime you can choose to play without sound.\n\
-\n\
-If you want this, use the appropriate command line option and Freedroid will \n\
-not complain any more.  Freedroid will NOT be terminated now to draw attention \n\
-to this sound problem, because the problem is not lethal and will not interfere\n\
-with game performance in any way.  I think this is really not dangerous.",
-				 NO_NEED_TO_INFORM, IS_WARNING_ONLY );
-    } // if ( ... = -1
-  else
-    {
-      DebugPrintf( 2 , "\nSuccessfully playing file %s.", SoundSampleFilenames[ Tune ]);
-      // DebugPrintf (1, "\nSuccessfully playing file %s.", SoundSampleFilenames[ Tune ]);
-    }
-
-#endif // HAVE_LIBSDL_MIXER
-  
-}  // void PlaySound(int Tune)
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
 void
 GotHitSound (void)
 {
-  if (!sound_on) return;
-
-  PlaySound (GOT_HIT_SOUND);
-}				// void GotHitSound(void)
+  play_sample_using_WAV_cache( "../effects/Got_Hit_Sound_0.wav" , FALSE , FALSE );
+}; // void GotHitSound(void)
 
 
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ *
+ * ---------------------------------------------------------------------- */
 void
 Influencer_Scream_Sound (void)
 {
-  if (!sound_on) return;
-
-  //--------------------
-  // For a test, let's try using not my samples but rather this
-  // one and only sound sample, formerly used for got-into-blast
-  // occasions.
-  // PlaySound (GOT_INTO_BLAST_SOUND);
-  // return;
-
   switch( MyRandom( 4 ) )
     {
     case 0 :
@@ -1309,87 +1141,24 @@ Influencer_Scream_Sound (void)
     }
 }; // void Influencer_Scream_Sound (void)
 
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-GotIntoBlastSound (void)
-{
-  if (!sound_on) return;
-
-  // PlaySound (GOT_INTO_BLAST_SOUND);
-  return;
-}				// void GotIntoBlastSound(void)
-
-/* ---------------------------------------------------------------------- 
- *
+/* ----------------------------------------------------------------------
+ * We add a matching group of sounds here for the menu movements.  It's
+ * a 'ping-ping' sound, well, not super, but where do we get a better one?
  * ---------------------------------------------------------------------- */
-void
-RefreshSound (void)
-{
-  if (!sound_on) return;
-
-  // PlaySound (REFRESH_SOUND);
-  return;
-}; // void RefreshSound(void)
-
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-MoveLiftSound (void)
-{
-  if (!sound_on) return;
-
-  PlaySound (MOVE_ELEVATOR_SOUND);
-}				// void MoveLiftSound(void)
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
 void
 MenuItemSelectedSound (void)
 {
-  if (!sound_on) return;
-
-  PlaySound ( MENU_ITEM_SELECTED_SOUND );
-
+  play_sample_using_WAV_cache( "../effects/Menu_Item_Selected_Sound_1.wav", FALSE , FALSE );
 }; // void MenuItemSelectedSound ( void )
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
 void
 MenuItemDeselectedSound (void)
 {
-  if (!sound_on) return;
-
-  PlaySound ( MENU_ITEM_DESELECTED_SOUND );
-
+  play_sample_using_WAV_cache( "../effects/Menu_Item_Deselected_Sound_0.wav", FALSE , FALSE );
 }; // void MenuItemSelectedSound ( void )
-
-/* ----------------------------------------------------------------------
- *
- *
- * ---------------------------------------------------------------------- */
 void
 MoveMenuPositionSound (void)
 {
-  if (!sound_on) return;
-  PlaySound ( MOVE_MENU_POSITION_SOUND );
+  play_sample_using_WAV_cache( "../effects/Move_Menu_Position_Sound_0.wav", FALSE , FALSE );
 }; // void MoveMenuPositionSound (void)
 
 
@@ -1404,42 +1173,11 @@ ThouArtDefeatedSound (void)
   PlayOnceNeededSoundSample ( "../effects/ThouArtDefeated_Sound_0.wav" , FALSE , FALSE );
 }; // void ThouArtDefeatedSound (void)
 
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-EnterLiftSound (void)
-{
-  if (!sound_on) return;
-
-  PlaySound (ENTER_ELEVATOR_SOUND);
-  return;
-}				// void EnterLiftSound(void)
-
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-LeaveLiftSound (void)
-{
-  if (!sound_on) return;
-
-  PlaySound (LEAVE_ELEVATOR_SOUND);
-
-  return;
-}; // void LeaveLiftSound(void)
-
 /* ----------------------------------------------------------------------
- *
- *
+ * When the Tux makes a weapon swing, this will either cause a swinging
+ * sound and then a 'hit' sound or it will just be a swinging sound.  The
+ * following functions do this, also creating some variation in the choice
+ * of sample used.
  * ---------------------------------------------------------------------- */
 void
 play_melee_weapon_hit_something_sound ( void )
@@ -1447,42 +1185,37 @@ play_melee_weapon_hit_something_sound ( void )
   switch( MyRandom( 3 ) )
     {
     case 0 :
-      PlaySound ( SWING_THEN_HIT_2_SOUND ) ;
+      play_sample_using_WAV_cache( "../effects/swing_then_hit_1.wav", FALSE , FALSE );
       break;
     case 1 :
-      PlaySound ( SWING_THEN_HIT_1_SOUND ) ;
+      play_sample_using_WAV_cache( "../effects/swing_then_hit_2.wav", FALSE , FALSE );
       break;
     case 2 :
-      PlaySound ( SWING_THEN_HIT_3_SOUND ) ;
+      play_sample_using_WAV_cache( "../effects/swing_then_hit_3.wav", FALSE , FALSE );
       break;
     case 3 :
-      PlaySound ( SWING_THEN_HIT_4_SOUND ) ;
+      play_sample_using_WAV_cache( "../effects/swing_then_hit_4.wav", FALSE , FALSE );
       break;
     default:
       break;
     }
 }; // void play_melee_weapon_hit_something_sound ( void )
-
-/* ----------------------------------------------------------------------
- *
- *
- * ---------------------------------------------------------------------- */
 void
 play_melee_weapon_missed_sound ( void )
 {
   switch( MyRandom( 3 ) )
     {
     case 0 :
-      PlaySound ( SWING_THEN_NOHIT_1_SOUND ) ;
+      play_sample_using_WAV_cache( "../effects/swing_then_nohit_1.wav", FALSE , FALSE );
       break;
     case 1 :
-      PlaySound ( SWING_THEN_NOHIT_2_SOUND ) ;
+      play_sample_using_WAV_cache( "../effects/swing_then_nohit_2.wav", FALSE , FALSE );
       break;
     case 2 :
-      PlaySound ( SWING_THEN_NOHIT_3_SOUND ) ;
+      play_sample_using_WAV_cache( "../effects/swing_then_nohit_3.wav", FALSE , FALSE );
       break;
     case 3 :
-      PlaySound ( SWING_THEN_NOHIT_4_SOUND ) ;
+      play_sample_using_WAV_cache( "../effects/swing_then_nohit_4.wav", FALSE , FALSE );
       break;
     default:
       break;
@@ -1505,42 +1238,42 @@ Fire_Bullet_Sound (int BulletType)
   switch (BulletType)
     {
     case PULSE:
-      PlaySound ( FIRE_BULLET_PULSE_SOUND );
+      play_sample_using_WAV_cache( "../effects/Fire_Bullet_Pulse_Sound_0.wav", FALSE , FALSE );
       break;
 
     case SINGLE_PULSE:
-      PlaySound ( FIRE_BULLET_SINGLE_PULSE_SOUND );
+      play_sample_using_WAV_cache( "../effects/Fire_Bullet_Single_Pulse_Sound_0.wav", FALSE , FALSE );
       break;
 
     case MILITARY:
-      PlaySound ( FIRE_BULLET_MILITARY_SOUND );
+      play_sample_using_WAV_cache( "../effects/Fire_Bullet_Military_Sound_0.wav", FALSE , FALSE );
       break;
 
     case FLASH:
-      PlaySound ( FIRE_BULLET_FLASH_SOUND );
+      play_sample_using_WAV_cache( "../effects/Fire_Bullet_Flash_Sound_0.wav", FALSE , FALSE );
       break;
 
     case EXTERMINATOR:
-      PlaySound ( FIRE_BULLET_EXTERMINATOR_SOUND );
+      play_sample_using_WAV_cache( "../effects/Fire_Bullet_Exterminator_Sound_0.wav", FALSE , FALSE );
       break;
 
     case LASER_RIFLE:
-      PlaySound ( FIRE_BULLET_LASER_RIFLE_SOUND );
+      play_sample_using_WAV_cache( "../effects/phaser.wav", FALSE , FALSE );
       break;
 
     case SINGLE_LASER:
-      PlaySound ( FIRE_BULLET_SINGLE_LASER_SOUND );
+      play_sample_using_WAV_cache( "../effects/Fire_Bullet_Single_Laser_Sound_0.wav", FALSE , FALSE );
       break;
 
     case PLASMA_PISTOL:
-      PlaySound ( FIRE_BULLET_PLASMA_PISTOL_SOUND );
+      play_sample_using_WAV_cache( "../effects/Fire_Bullet_Plasma_Pistol_Sound_0.wav", FALSE , FALSE );
       break;
 
     case LASER_SWORD_1:
     case LASER_AXE:
     case LASER_SWORD_2:
     default:
-      PlaySound ( SWING_THEN_NOHIT_1_SOUND );
+      play_melee_weapon_missed_sound (  ) ;
       break;
     }
 }; // void FireBulletSound(void)
@@ -1553,55 +1286,42 @@ Fire_Bullet_Sound (int BulletType)
 void
 Takeover_Set_Capsule_Sound (void)
 {
-  play_sample_using_WAV_cache( "TakeoverSetCapsule_Sound_0.wav", FALSE , FALSE );
+  play_sample_using_WAV_cache( "../effects/TakeoverSetCapsule_Sound_0.wav", FALSE , FALSE );
 }; // void Takeover_Set_Capsule_Sound ( void )
 void
 Takeover_Game_Won_Sound (void)
 {
-  play_sample_using_WAV_cache( "Takeover_Game_Won_Sound_0.wav", FALSE , FALSE );
+  play_sample_using_WAV_cache( "../effects/Takeover_Game_Won_Sound_0.wav", FALSE , FALSE );
 }; // void Takeover_Game_Won_Sound ( void ) 
 void
 Takeover_Game_Deadlock_Sound (void)
 {
-  play_sample_using_WAV_cache( "Takeover_Game_Deadlock_Sound_0.wav", FALSE , FALSE );
+  play_sample_using_WAV_cache( "../effects/Takeover_Game_Deadlock_Sound_0.wav", FALSE , FALSE );
 }; // void Takeover_Game_Deadlock_Sound ( void )
 void
 Takeover_Game_Lost_Sound (void)
 {
-  play_sample_using_WAV_cache( "Takeover_Game_Lost_Sound_0.wav", FALSE , FALSE );
+  play_sample_using_WAV_cache( "../effects/Takeover_Game_Lost_Sound_0.wav", FALSE , FALSE );
 }; // void Takeover_Game_Lost_Sound ( void )
 
 
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * 
+ * ---------------------------------------------------------------------- */
 void
 BounceSound (void)
 {
-  if (!sound_on) return;
-
-  PlaySound ( COLLISIONSOUND );
-
+  play_sample_using_WAV_cache( "../effects/Collision_Sound_0.wav" , FALSE , FALSE );
 }; // void BounceSound ( void )
 
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ *
+ * ---------------------------------------------------------------------- */
 void
 DruidBlastSound (void)
 {
-  if (!sound_on) return;
-
-  PlaySound ( BLASTSOUND );
-
+  play_sample_using_WAV_cache( "../effects/Blast_Sound_0.wav" , FALSE , FALSE );
 }; // void DruidBlastSound (void)
-
 
 /* ----------------------------------------------------------------------
  * 
@@ -1616,8 +1336,7 @@ PlayLevelCommentSound ( int levelnum )
       // I've been away for a far too long time it seems...
       break;
     case 3:
-      // I can feel the MS Machines close now!
-      PlaySound ( MS_MACHINES_CLOSE_NOW_SOUND );
+      play_sample_using_WAV_cache( "../effects/MSMachinesClose_0.wav" , FALSE , FALSE );
       break;
     default: 
       break;
@@ -1638,7 +1357,7 @@ PlayEnemyGotHitSound ( int enemytype )
       break;
     case 0:
       // Play a grunting enemy got hit sound...
-      PlaySound ( ENEMY_GOT_HIT_SOUND_0 );
+      play_sample_using_WAV_cache( "../effects/Enemy_Got_Hit_Sound_0.wav" , FALSE , FALSE );
       break;
     default: 
       break;
@@ -1652,10 +1371,7 @@ PlayEnemyGotHitSound ( int enemytype )
 void
 BulletReflectedSound (void)
 {
-  if (!sound_on) return;
-
-  PlaySound ( BULLET_REFLECTED_SOUND);
-
+  play_sample_using_WAV_cache( "../effects/Bullet_Reflected_Sound_0.wav" , FALSE , FALSE );
 }; // void DruidBlastSound (void)
 
 /* ----------------------------------------------------------------------
@@ -1675,7 +1391,6 @@ play_sample_using_WAV_cache( char* SoundSampleFileName , int With_Waiting , int 
   int Newest_Sound_Channel=0;
   char Temp_Filename[5000];
   char* fpath;
-  static int next_free_position_in_cache = 0 ;
   int index_of_sample_to_be_played = 0 ;
   int sound_must_be_loaded = TRUE ;
   int i;
@@ -1801,5 +1516,42 @@ The SDL mixer was unable to play a certain sound sample file, that was supposed 
 #endif // HAVE_LIBSDL_MIXER
 
 }; // void play_sample_using_WAV_cache(...)
+
+/* ----------------------------------------------------------------------
+ * When the sound sample volume is changed via the in-game controls, we 
+ * need to re-sample everything, which is done only upon loading of the
+ * sound samples.  Instead of RE-MIXING SOUND SAMPLES AGAIN AND AGAIN to
+ * adapt the sound sample volume to the users needs, we will just clear
+ * out the current wav file cache, so that when needed again, the sound
+ * files will be loaded again and then automatically re-sampled to proper
+ * volume from the play/load function itself.  Perfect solution.
+ * ---------------------------------------------------------------------- */
+void 
+remove_all_samples_from_WAV_cache( void )
+{
+  for ( i = 0 ; i < next_free_position_in_cache ; i ++ )
+    {
+      //--------------------
+      // We free the allocated memory for the file name.  This is overly 'clean'
+      // code.  The amount of memory in question would be neglectable...
+      //
+      free ( sound_names_in_dynamic_wav_chache [ i ] ) ;
+
+      //--------------------
+      // We free the allocated music chunk.  This is more important since the
+      // music chunks in question can consume more memory...
+      //
+      Mix_FreeChunk ( dynamic_WAV_cache [ i ] ) ;
+    }
+
+  //--------------------
+  // Now that the cache has been emptied, it must be marked as such, or
+  // the next play function will search it and produce a segfault.
+  //
+  next_free_position_in_cache = 0 ;
+
+  DebugPrintf ( -3 , "\nremove_all_samples_from_WAV_cache(...): Successfully cleared the whole WAV cache." );
+
+}; // void remove_all_samples_from_WAV_cache( void )
 
 #undef _sound_c
