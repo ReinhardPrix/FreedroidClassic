@@ -1025,6 +1025,12 @@ beginning_of_map
 End of pure map information for this level
 Start of pure statement information for this level
 PosX=5 PosY=15 Statement="The door label reads 'Dr. Davenport'"
+PosX=10 PosY=5 Statement="The doorplate reads 'G. Freeman'."
+PosX=13 PosY=5 Statement="The doorplate reads 'G. Jaeger'."
+PosX=8 PosY=5 Statement="The doorplate reads 'B. Nosov'."
+PosX=5 PosY=5 Statement="The doorplate reads 'S. Turnhar'."
+PosX=5 PosY=10 Statement="The doorplate reads 'L. Bauer'."
+PosX=23 PosY=5 Statement="The doorplate reads 'D. Koenig'."
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
