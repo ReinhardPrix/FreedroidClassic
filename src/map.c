@@ -388,9 +388,10 @@ char *StructToMem(Level Lev)
   // Now the beginning of the actual map data is marked:
   strcat(LevelMem, MAP_BEGIN_STRING);
   strcat(LevelMem, "\n");
-  
+
   // Now in the loop each line of map data should be saved as a whole
   for(i=0; i<ylen; i++) {
+
     // But before we can write this line of the map to the disk, we need to
     // convert is back to human readable format.
     TranslateToHumanReadable ( HumanReadableMapLine , Lev->map[i] , xlen , Lev , i );
@@ -401,12 +402,11 @@ char *StructToMem(Level Lev)
   // The next thing we must do is write the waypoints of this level also
   // to disk.
 
-  // Now a newline seems to indicate the beginning of the next map
-  //
   strcat(LevelMem, WP_BEGIN_STRING);
   strcat(LevelMem, "\n");
   
-  for(i=0; i<anz_wp; i++) {
+  for(i=0; i<MAXWAYPOINTS; i++) {
+    if ( Lev->AllWaypoints[i].x == 0 ) continue;
     for( j=0; j<MAX_WP_CONNECTIONS; j++) {
       sprintf(linebuf, "%d \t ", Lev->AllWaypoints[i].connections[j]);
       strcat(LevelMem, linebuf);
@@ -777,9 +777,42 @@ TranslateToHumanReadable ( char* HumanReadable , unsigned char* MapInfo, int Lin
 
   printf("\n\nTranslating mapline into human readable format...");
   
+  // Now in the game and in the level editor, it might have happend that some open
+  // doors occur.  The make life easier for the saving routine, these doors should
+  // be closed first.
+  for (col=0; col < LineLength; col++)
+    {
+      for(i=0; i< Lev->ylen; i++)
+	{
+	  switch ( Lev->map[i][col] )
+	    {
+	    case V_ZUTUERE:
+	    case V_HALBTUERE1:
+	    case V_HALBTUERE2:
+	    case V_HALBTUERE3:
+	    case V_GANZTUERE:
+	      Lev->map[i][col]=V_ZUTUERE;
+	      break;
+	    case H_ZUTUERE:
+	    case H_HALBTUERE1:
+	    case H_HALBTUERE2:
+	    case H_HALBTUERE3:
+	    case H_GANZTUERE:
+	      Lev->map[i][col]=H_ZUTUERE;
+	      break;
+	    case REFRESH1:
+	    case REFRESH2:
+	    case REFRESH3:
+	    case REFRESH4:
+	      Lev->map[i][col]=REFRESH1;
+	    default:
+	      break;
+	    }
+
+	}
+    }
 
   /* transpose the game-engine mapdata line to human readable format */
-
   for (col = 0; col < LineLength; col++)
     {
       for (i = 0; (i < INVISIBLE_BRICK) && (Translator[i].intern != MapInfo[col] ); i++);
@@ -811,6 +844,24 @@ TranslateToHumanReadable ( char* HumanReadable , unsigned char* MapInfo, int Lin
       HumanReadable[ Lev->AllWaypoints[i].x ] = 'x';
     }
 
+  /*
+  // Scan the waypoint- connections
+  pos = strtok (wp_begin, "\n");	// Get Pointer to data-begin 
+
+  // Read Waypoint-data 
+  for (i = 0; i < NumWaypoints; i++)
+    {
+      for (j = 0; j < MAX_WP_CONNECTIONS; j++)
+	{
+	  if ((pos = strtok (NULL, " \n\t")) == NULL)
+	    return NULL;
+	  if (sscanf (pos, "%d", &zahl) == EOF)
+	      return NULL;
+
+	  loadlevel->AllWaypoints[i].connections[j] = zahl;
+	}
+    }
+  */
 } // void TranslateToHumanReadable( ... )
 
 /*-----------------------------------------------------------------
