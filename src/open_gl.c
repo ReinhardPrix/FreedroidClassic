@@ -479,7 +479,7 @@ Ran out of initialized texture positions to use for new textures.",
     }
   else
     {
-      DebugPrintf ( 0 , "\nTexture positions remaining: %d." , MAX_AMOUNT_OF_TEXTURES_WE_WILL_USE - next_texture_index_to_use );
+      DebugPrintf ( -1000 , "\nTexture positions remaining: %d." , MAX_AMOUNT_OF_TEXTURES_WE_WILL_USE - next_texture_index_to_use );
     }
 
   //--------------------

@@ -2346,7 +2346,7 @@ draw_connection_between_tiles ( float x1 , float y1 , float x2 , float y2 , int 
   // Maybe, if the level editor dot cursor has not yet been loaded,
   // we need to load it.
   //
-  if ( level_editor_dot_cursor . surface == NULL )
+  if ( ( level_editor_dot_cursor . surface == NULL ) && ( ! level_editor_dot_cursor . texture_has_been_created ) )
     {
       fpath = find_file ( "level_editor_waypoint_dot.png" , GRAPHICS_DIR, FALSE );
       get_iso_image_from_file_and_path ( fpath , & ( level_editor_dot_cursor ) , TRUE ) ;
