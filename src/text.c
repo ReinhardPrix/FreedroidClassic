@@ -629,6 +629,7 @@ ChatWithFriendlyDroid( int Enum )
       DialogMenuTexts [ 2 ] = " Melee weapons level 1 (cost 20 skill points)" ;
       DialogMenuTexts [ 3 ] = " Melee weapons level 2 (cost 30 skill points)" ;
       DialogMenuTexts [ 4 ] = " BACK ";
+      DialogMenuTexts [ 5 ] = " Can you bring me in contact with the resistance?" ; 
       DialogMenuTexts [ END_ANSWER ] = " END ";
       
       GiveSubtitleNSample( " Welcome Traveller! " , "Chandra_Welcome_Traveller_0.wav" );
@@ -642,15 +643,15 @@ ChatWithFriendlyDroid( int Enum )
 	  switch( MenuSelection )
 	    {
 	    case 1:
-	      PlayOnceNeededSoundSample( "Tux_PEN_Hi_Im_New_0.wav" , TRUE );
+	      PlayOnceNeededSoundSample( "Tux_Hi_Im_New_0.wav" , TRUE );
 	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 0 ] = 0 ; // don't say this twice...
 	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 1 ] = 1 ; // allow to ask for training possibilities
-	      GiveSubtitleNSample( "Really!  I'm not really living here either.  I'm just on vacasion. " , "PEN_Really_Im_Not_0.wav" );
+	      GiveSubtitleNSample( "Really!  I'm not living here either.  I'm just on vacasion. " , "PEN_Really_Im_Not_0.wav" );
 	      GiveSubtitleNSample( "Normally I'm a fighter among the ranks of the rebel army.  But now I try to relax. " , "PEN_Normally_Im_A_0.wav" );
 	      break;
 	    case 2:
 	      PlayOnceNeededSoundSample( "Tux_PEN_Do_You_Also_0.wav" , TRUE );
-	      GiveSubtitleNSample( "Well, I don't do that for a living, but I certainly could.  But not for free." , "PEN_No_The_MS_0.wav" );
+	      GiveSubtitleNSample( "Well, I don't do that for a living, but I certainly could.  But not for free." , "PEN_Well_I_Dont_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 1 ] = 0 ; // allow to ask for training possibilities
 	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 2 ] = 1 ; // allow training request 1
 	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 3 ] = 1 ; // allow training request 2
@@ -659,7 +660,7 @@ ChatWithFriendlyDroid( int Enum )
 	      break;
 	    case 3:
 	      PlayOnceNeededSoundSample( "Tux_PEN_I_Want_To_0.wav" , TRUE ); // ... to become more adapt with melee weapon
-	      GiveSubtitleNSample( "The most important thing about melee combat is how you are holding your weapon." , "PEN_The_Official_Manual_0.wav" );
+	      GiveSubtitleNSample( "The most important thing about melee combat is how you are holding your weapon." , "PEN_The_Most_Important_0.wav" );
 	      GiveSubtitleNSample( "Hold it too laxly and you will loose it, hold it too firmly and your movements will be uncontrolled." , "PEN_Hold_It_Too_0.wav" );
 	      GiveSubtitleNSample( "Now, you've already improved a lot.  Come back when you want to learn more." , "PEN_Now_Youve_Already_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 2 ] = 0 ; // don't say this twice...
@@ -675,6 +676,12 @@ ChatWithFriendlyDroid( int Enum )
 	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 4 ] = 0 ; // disallow back from training requests
 	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 1 ] = 1 ; // reallow to ask for training possibilities
 	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ END_ANSWER ] = 1 ; // reallow direct quit
+	      break;
+	    case 6:
+	      PlayOnceNeededSoundSample( "Tux_PEN_Can_You_Bring_0.wav" , TRUE ); // ... me in contact with Resist
+	      GiveSubtitleNSample( "I'm not entitled to even talk about that myself.  Talk to Chandra." , "PEN_Im_Not_Entitled_0.wav" );
+	      GiveSubtitleNSample( "When he says you can be trusted, I will take you with me when I return to the rebels." , "PEN_When_He_Says_0.wav" );
+	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 3 ] = 0 ; // don't say this twice...
 	      break;
 	    case ( MAX_ANSWERS_PER_PERSON ):
 	    case (-1):
@@ -706,7 +713,12 @@ ChatWithFriendlyDroid( int Enum )
       DialogMenuTexts [ 4 ] = " Sorry, this does not really sound like something I could do." ; 
       DialogMenuTexts [ 5 ] = " I have found your toolset. Here you are. " ; 
       DialogMenuTexts [ END_ANSWER ] = " END ";
-      
+
+      if ( CountItemtypeInInventory( ITEM_DIXONS_TOOLBOX , 0 ) )
+	Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 5 ] = 1 ; 
+      else
+	Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 5 ] = 0 ; 
+
       GiveSubtitleNSample( " Welcome Traveller! " , "Chandra_Welcome_Traveller_0.wav" );
 
       while (1)
@@ -718,23 +730,23 @@ ChatWithFriendlyDroid( int Enum )
 	  switch( MenuSelection )
 	    {
 	    case 1:
-	      PlayOnceNeededSoundSample( "Tux_DIX_Hi_Im_New_0.wav" , TRUE );
+	      PlayOnceNeededSoundSample( "Tux_Hi_Im_New_0.wav" , TRUE );
 	      GiveSubtitleNSample( "Hello and Welcome.  I'm Dixon.  I'm in charge of the teleporter system of this camp." , "DIX_Hello_And_Welcome_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 0 ] = 0 ; // don't say this twice...
 	      break;
 	    case 2:
 	      PlayOnceNeededSoundSample( "Tux_DIX_Is_Everything_Alright_0.wav" , TRUE );
-	      GiveSubtitleNSample( "On the contrary!  Well, I'm still working on it, but I'm not making much progress." , "DIX_Well_Im_Still_0.wav" );
-	      GiveSubtitleNSample( "It's a pitty.  If I only had my old toolkit, I could fix this problem in a minute." , "DIX_Well_Im_Still_0.wav" );
+	      GiveSubtitleNSample( "On the contrary!  Well, I'm still working on it, but I'm not making much progress." , "DIX_On_The_Contrary_0.wav" );
+	      GiveSubtitleNSample( "It's a pitty.  If I only had my old toolkit, I could fix this problem in a minute." , "DIX_Its_A_Pitty_0.wav" );
 	      GiveSubtitleNSample( "But it's gone.  It all happened down in the maintainance tunnels when I was surprised by some rouge bots." , "DIX_It_All_Happend_0.wav" );
-	      GiveSubtitleNSample( "I must have lost it down there and we had to seal the doors to be safe from those rogue bots." , "DIX_I_Must_Have_0.wav" );
+	      GiveSubtitleNSample( "I must have lost it down there and we had to seal the entrance." , "DIX_I_Must_Have_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 1 ] = 0 ; // don't say this twice...
 	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 2 ] = 1 ; // now you can offer help...
 	      break;
 	    case 3:
 	      PlayOnceNeededSoundSample( "Tux_DIX_Maybe_I_Can_0.wav" , TRUE );
-	      GiveSubtitleNSample( "Well, maybe you really could do help.  But it would be dangerous to even try." , "DIX_Well_Maybe_You_0.wav" );
-	      GiveSubtitleNSample( "You would have to go down the maintainance teleporter way and fetch me the toolkit." , "DIX_Well_Maybe_You_0.wav" );
+	      GiveSubtitleNSample( "Well, maybe you really could help.  But it would be dangerous to even try." , "DIX_Well_Maybe_You_0.wav" );
+	      GiveSubtitleNSample( "You would have to go down the maintainance teleporter way and fetch me the toolkit." , "DIX_You_Would_Have_0.wav" );
 	      GiveSubtitleNSample( "I'm pretty sure it is still lying around somewhere down there. But it's dangerous." , "DIX_Im_Pretty_Sure_0.wav" );
 	      GiveSubtitleNSample( "Are you sure you really want to try on that?  You better be well prepared." , "DIX_Are_You_Sure_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 2 ] = 0 ; // don't say this twice...
@@ -744,7 +756,7 @@ ChatWithFriendlyDroid( int Enum )
 	      break;
 	    case 4:
 	      PlayOnceNeededSoundSample( "Tux_DIX_Ill_Go_Give_0.wav" , TRUE );
-	      GiveSubtitleNSample( "Great!  I appreciate that.  I'll unlock the northern maintainance access door.  Good Luck." , "DIX_Hello_And_Welcome_0.wav" );
+	      GiveSubtitleNSample( "Great!  I appreciate that.  I'll unlock the northern maintainance access.  Good Luck." , "DIX_Great_I_Appreciate_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ END_ANSWER ] = 1 ; // reallow end right now...
 	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 3 ] = 0 ; // disallow for yes or no answer to this now
 	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 4 ] = 0 ; // disallow for yes or no answer to this now
@@ -754,15 +766,30 @@ ChatWithFriendlyDroid( int Enum )
 	      // above in the comment.  We need to call the right event for this.
 	      //
 	      ExecuteActionWithLabel ( "unlock_northern_maintainance_door" , 0 );
+	      AssignMission ( 4 ); // this should assign the toolbox mission...
 	      break;
 	    case 5:
-	      PlayOnceNeededSoundSample( "Tux_DIX_Hi_Im_New_0.wav" , TRUE );
-	      GiveSubtitleNSample( "Maybe it's better this way.  No use to have you torn apart by those rogue bots." , "DIX_Hello_And_Welcome_0.wav" );
-	      GiveSubtitleNSample( "Perhaps later, when you feel more like it, you might want to still give it a try." , "DIX_Hello_And_Welcome_0.wav" );
-	      GiveSubtitleNSample( "You know, just tell me in case you change your mind some time." , "DIX_Hello_And_Welcome_0.wav" );
+	      PlayOnceNeededSoundSample( "Tux_Hi_Im_New_0.wav" , TRUE );
+	      GiveSubtitleNSample( "Maybe it's better this way.  No use to have you torn apart by those rogue bots." , "DIX_Maybe_Its_Better_0.wav" );
+	      GiveSubtitleNSample( "Perhaps later, when you feel more like it, you might want to still give it a try." , "DIX_Perhaps_Later_When_0.wav" );
+	      GiveSubtitleNSample( "You know, just tell me in case you change your mind some time." , "DIX_You_Know_Just_0.wav" );
 	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 3 ] = 0 ; // disallow for yes or no answer to this now
 	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 4 ] = 0 ; // disallow for yes or no answer to this now
 	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ END_ANSWER ] = 1 ; // reallow end right now...
+	      break;
+	    case 6:
+	      //--------------------
+	      // At this point we know the Tux has completed the mission and
+	      // should get his reward.
+	      //
+	      PlayOnceNeededSoundSample( "Tux_DIX_I_Have_Found_0.wav" , TRUE );
+	      DeleteAllInventoryItemsOfType( ITEM_DIXONS_TOOLBOX , 0 );
+	      Me [ 0 ] . AllMissions[ 4 ] . MissionIsComplete = TRUE;
+	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 5 ] = 0 ; // don't say this twice...
+
+	      GiveSubtitleNSample( "Oh great!  How did you manage to get that?  Well anyway, thanks a lot." , "DIX_Oh_Great_How_0.wav" );
+	      GiveSubtitleNSample( "With this I'll be able to fix the damage at the teleporters immediately." , "DIX_With_This_Ill_0.wav" );
+	      GiveSubtitleNSample( "All that is left to do is convey a message to the other cities with our teleporter calibration." , "DIX_All_That_Is_0.wav" );
 	      break;
 	    case ( MAX_ANSWERS_PER_PERSON ):
 	    case (-1):

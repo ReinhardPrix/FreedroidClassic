@@ -1577,6 +1577,23 @@ Sound number=4
 Base list price=9000
 ** End of new item specification subsection **
 
+// Item No. 59
+** Start of new item specification subsection **
+Item name="Dixon's Toolbox"
+Item can be applied in combat="no"
+Item can be installed in influ="no"
+Item can be installed in slot with name="none"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=-1 plus duration modifier=0
+Picture number=47
+Sound number=4
+Base list price=9000
+** End of new item specification subsection **
+
 // Item No. 10000 LAST ITEM !!! DUMMY ENTRY!!!!
 ** Start of new item specification subsection **
 Item name="ITEM CODE ERROR ITEM"

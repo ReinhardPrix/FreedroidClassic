@@ -117,6 +117,8 @@
 // This is a special item for a mission....
 #define ITEM_ENERGETIC_HEART 4
 #define ITEM_ULTIMATE_COFFEE_MACHINE 57
+#define ITEM_ULTIMATE_BOOK_OF_FREE_CODE 57
+#define ITEM_DIXONS_TOOLBOX 59
 
 #define SKILL_TAKEOVER 0
 

@@ -1101,6 +1101,47 @@ GetInventoryItemAt ( int x , int y )
 }; // int GetInventoryItemAt ( int x , int y )
 
 /* ----------------------------------------------------------------------
+ *
+ * Often, especially in dialogs and in order to determine if some answer
+ * should be allowed for the Tux or not, it is important to know if the
+ * Tux has some special item of a given type in inventory or not and also
+ * how many of those items the Tux really has.  
+ *
+ * This function is now intended to count the number of items of a given
+ * type in the inventory of the Player.
+ *
+ * ---------------------------------------------------------------------- */
+int
+CountItemtypeInInventory( int Itemtype , int PlayerNum )
+{
+  int i;
+  int NumberOfItemsFound = 0 ;
+
+  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i++ )
+    {
+      if ( Me [ PlayerNum ] . Inventory [ i ] . type == Itemtype ) NumberOfItemsFound++;
+    }
+  return NumberOfItemsFound;
+}; // int CountItemtypeInInventory( int Itemtype , int PlayerNum )
+
+/* ----------------------------------------------------------------------
+ * At some point the Tux will hand over all his items of a given type
+ * to a dialog partner.  This function is intended to do exactly this:
+ * To remove all items of a given type from the inventory of a given 
+ * player.
+ * ---------------------------------------------------------------------- */
+void
+DeleteAllInventoryItemsOfType( int Itemtype , int PlayerNum )
+{
+  int i;
+  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i++ )
+    {
+      if ( Me [ PlayerNum ] . Inventory [ i ] . type == Itemtype ) 
+	DeleteItem ( & ( Me [ PlayerNum ] . Inventory [ i ] ) );
+    }
+}; // void DeleteAllInventoryItemsOfType( int Itemtype , int PlayerNum )
+
+/* ----------------------------------------------------------------------
  * This function checks if a given screen position lies within the user
  * i.e. combat rectangle or not.
  * ---------------------------------------------------------------------- */

@@ -268,6 +268,9 @@ EXTERN void Play_Shop_ItemIdentifiedSound( void );
 #else
 #define EXTERN extern
 #endif
+
+EXTERN int CountItemtypeInInventory( int Itemtype , int PlayerNum );
+EXTERN void DeleteAllInventoryItemsOfType( int Itemtype , int PlayerNum );
 EXTERN void DamageItem( item* CurItem );
 EXTERN int GetFreeInventoryIndex( void );
 EXTERN int ItemCanBeDroppedInInv ( int ItemType , int InvPos_x , int InvPos_y );
