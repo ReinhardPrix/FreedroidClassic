@@ -219,8 +219,8 @@ Item installation changes weapon into new value=-1
 Item installation changes drive into new value=2
 Energy gain on application in combat=60
 Item weight=0.8
-Item drive maxspeed=7
-Item drive acceleration=6
+Item drive maxspeed=4
+Item drive acceleration=3
 Picture number=4
 ** End of new item specification subsection **
 
@@ -290,6 +290,20 @@ Item installation changes drive into new value=4
 Energy gain on application in combat=60
 Item weight=0.8
 Item drive maxspeed=2
+Item drive acceleration=6
+Picture number=4
+** End of new item specification subsection **
+
+// Item No. 11
+** Start of new item specification subsection **
+Item name="Droid Antigrav Drive Class Beta"
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item installation changes weapon into new value=-1
+Item installation changes drive into new value=2
+Energy gain on application in combat=60
+Item weight=0.8
+Item drive maxspeed=7
 Item drive acceleration=6
 Picture number=4
 ** End of new item specification subsection **
@@ -485,7 +499,7 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
-Drive item=5
+Drive item=11
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -835,7 +849,7 @@ Sensor 1 of this droid : 1
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 2
 Armament of this droid : 1
-Drive item=5
+Drive item=11
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0
@@ -910,7 +924,7 @@ Sensor 1 of this droid : 2
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
 Armament of this droid : 1
-Drive item=5
+Drive item=11
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Going to request reinforcements typical for this droid : 0

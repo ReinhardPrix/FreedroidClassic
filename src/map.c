@@ -1562,6 +1562,8 @@ GetThisRobotsDecisionRequestList( char* SearchPointer , int RobotNum )
 #define FRIENDLY_DROID_DECISION_REQUEST_LIST_END_STRING "End of Decision-Request List for this friendly droid"
 
 #define REQUEST_TRIGGER_START_STRING "RequestTrigger=\""
+#define REQUEST_REQUIRES_MISSION_DONE "RequestRequiresMissionDone="
+#define REQUEST_REQUIRES_MISSION_UNASSIGNED "RequestRequiredMissionUnassigned="
 #define REQUEST_TEXT_START_STRING "RequestText=\""
 #define ANSWER_YES_START_STRING "AnswerYes=\""
 #define ANSWER_NO_START_STRING "AnswerNo=\""
@@ -1572,6 +1574,7 @@ GetThisRobotsDecisionRequestList( char* SearchPointer , int RobotNum )
   char* RequestListStart;
   char* RequestListEnd;
   char* NextDecisionEntry;
+  char* EndOfSearchSectionPointer;
 
   char* TempSearchArea;
   int DecisionNr = 0;
@@ -1585,6 +1588,8 @@ GetThisRobotsDecisionRequestList( char* SearchPointer , int RobotNum )
   //
   for ( j = 0 ; j < MAX_REQUESTS_PER_DROID ; j++ )
     {
+      AllEnemys[ RobotNum ].RequestList[ j ].RequestRequiresMissionDone = -1;
+      AllEnemys[ RobotNum ].RequestList[ j ].RequestRequiresMissionUnassigned = -1;
       AllEnemys[ RobotNum ].RequestList[ j ].RequestTrigger = "";
       AllEnemys[ RobotNum ].RequestList[ j ].RequestText = "";
       AllEnemys[ RobotNum ].RequestList[ j ].AnswerYes = "";
@@ -1603,6 +1608,7 @@ GetThisRobotsDecisionRequestList( char* SearchPointer , int RobotNum )
   TempSearchArea = MyMalloc( RequestListEnd - RequestListStart + 1 ); // First we allocate enough memory
   strncpy ( TempSearchArea , RequestListStart , RequestListEnd-RequestListStart ); // this copys the relevant part
   TempSearchArea[ RequestListEnd - RequestListStart ] = 0; // This shall terminate the string
+  EndOfSearchSectionPointer=&(TempSearchArea[RequestListEnd - RequestListStart]);
 
   NextDecisionEntry = TempSearchArea;
   
@@ -1639,6 +1645,12 @@ Sorry...\n\
 
       AllEnemys[ RobotNum ].RequestList[ DecisionNr ].RequestTrigger = 
 	ReadAndMallocStringFromData ( NextDecisionEntry , REQUEST_TRIGGER_START_STRING , "\"" );
+      ReadValueFromString( NextDecisionEntry , REQUEST_REQUIRES_MISSION_DONE , "%d" , 
+			   &AllEnemys[ RobotNum ].RequestList[ DecisionNr ].RequestRequiresMissionDone , 
+			   EndOfSearchSectionPointer );
+      ReadValueFromString( NextDecisionEntry , REQUEST_REQUIRES_MISSION_UNASSIGNED , "%d" , 
+			   &AllEnemys[ RobotNum ].RequestList[ DecisionNr ].RequestRequiresMissionUnassigned , 
+			   EndOfSearchSectionPointer );
       AllEnemys[ RobotNum ].RequestList[ DecisionNr ].RequestText = 
 	ReadAndMallocStringFromData ( NextDecisionEntry , REQUEST_TEXT_START_STRING , "\"" );
       AllEnemys[ RobotNum ].RequestList[ DecisionNr ].AnswerYes = 
