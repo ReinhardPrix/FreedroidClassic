@@ -4200,6 +4200,11 @@ show_level_editor_tooltips ( void )
 	if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
 	    show_button_tooltip ( "This button will save your current ship over the file '../map/Asteroid.maps' from your current working directory.  A need to manually copy anything like in earlier versions of FreedroidRPG is no longer given." );
     }    
+    else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_TOGGLE_WAYPOINT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
+    {
+	if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
+	    show_button_tooltip ( "\nUse this button to toggle waypoints on the current cursor location.  Waypoints are marked with a white (or multicolored) 4-direction arrow.\n\nYou can also use the W key for this." );
+    }
     else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_BEAUTIFY_GRASS_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
     {
 	if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
@@ -4672,6 +4677,11 @@ level_editor_handle_left_mouse_button ( int proceed_now )
 	    GameConfig . zoom_is_on = !GameConfig . zoom_is_on ;
 	    while ( SpacePressed() );
 	}
+	else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_TOGGLE_WAYPOINT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
+	{
+	    ToggleWaypoint ( EditLevel , BlockX, BlockY , FALSE );
+	    while ( SpacePressed() );
+	}
 	else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_BEAUTIFY_GRASS_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
 	{
 	    beautify_grass_tiles_on_level ( EditLevel );
@@ -4846,6 +4856,7 @@ level_editor_blit_mouse_buttons ( Level EditLevel )
 	ShowGenericButtonFromList ( LEVEL_EDITOR_ZOOM_IN_BUTTON );
     else
 	ShowGenericButtonFromList ( LEVEL_EDITOR_ZOOM_OUT_BUTTON );
+    ShowGenericButtonFromList ( LEVEL_EDITOR_TOGGLE_WAYPOINT_BUTTON );
     ShowGenericButtonFromList ( LEVEL_EDITOR_BEAUTIFY_GRASS_BUTTON );
     ShowGenericButtonFromList ( LEVEL_EDITOR_RECURSIVE_FILL_BUTTON );
     ShowGenericButtonFromList ( LEVEL_EDITOR_NEW_OBSTACLE_LABEL_BUTTON );
