@@ -131,17 +131,14 @@ You can however force update if you say so with a flag.
 BANNER_FORCE_UPDATE=1: Forces the redrawing of the title bar
 
 BANNER_DONT_TOUCH_TEXT=2: Prevents DisplayBanner from touching the
-text, i.e. calling SetInfoline            
+text.
 
 BANNER_NO_SDL_UPDATE=4: Prevents any SDL_Update calls.
-
-To update the information in the top status line only, you can
-as well use the function SetInfoline.
 
 -----------------------------------------------------------------
 */
 void
-DisplayBanner ( int flags )
+DisplayBanner (const char* left, const char* right,  int flags )
 {
   SDL_Rect TargetRectangle;
   char dummy[80];
@@ -150,17 +147,18 @@ DisplayBanner ( int flags )
   static char previous_left_box [LEFT_TEXT_LEN + 10]="NOUGHT";
   static char previous_right_box[RIGHT_TEXT_LEN + 10]="NOUGHT";
   int left_len, right_len;   /* the actualy string-lens */
-  char *left;
-  char *right;
-
 
   // --------------------
   // At first the text is prepared.  This can't hurt.
   // we will decide whether to dispaly it or not later...
   //
-  left = InfluenceModeNames[Me.status];
-  right =  ltoa (ShowScore, dummy, 10);
-  
+
+  if (left == NULL)       /* Left-DEFAULT: Mode */
+    left = InfluenceModeNames[Me.status];
+
+  if ( right == NULL )  /* Right-DEFAULT: Score */
+    right =  ltoa (ShowScore, dummy, 10);
+
   // Now fill in the text
   left_len = strlen (left);
   if( left_len > LEFT_TEXT_LEN )
@@ -223,82 +221,5 @@ DisplayBanner ( int flags )
 
 } /* DisplayBanner() */
 
-
-/*-----------------------------------------------------------------
- * @Desc: setzt Infos im Banner neu BUT does NOT update screen!!
- * 
- *  *left, *right: pointer to strings to display left and right
- *                 ! strings longer than LEFT/RIGHT_TEXT_LEN get cut
- *
-
- * NULL-pointer indicates to display default: left=MODE, right=SCORE 
- * 
- *-----------------------------------------------------------------*/
-void
-SetInfoline (const char *left, const char *right , int flags )
-{
-  char dummy[80];
-  char left_box [LEFT_TEXT_LEN + 10];
-  char right_box[RIGHT_TEXT_LEN + 10];
-  static char previous_left_box [LEFT_TEXT_LEN + 10]="NOUGHT";
-  static char previous_right_box[RIGHT_TEXT_LEN + 10]="NOUGHT";
-  int left_len, right_len;   /* the actualy string-lens */
-
-  if (left == NULL)       /* Left-DEFAULT: Mode */
-    left = InfluenceModeNames[Me.status];
-
-  if ( right == NULL )  /* Right-DEFAULT: Score */
-    right =  ltoa (ShowScore, dummy, 10);
-
-
-  left_len = strlen (left);
-  if( left_len > LEFT_TEXT_LEN )
-    {
-      printf ("\nWarning: String %s too long for Left Infoline!!",left);
-      left_len = LEFT_TEXT_LEN;  /* too long, so we cut it! */
-      Terminate(ERR);
-    }
-  right_len = strlen (right);
-  if( right_len > RIGHT_TEXT_LEN )
-    {
-      printf ("\nWarning: String %s too long for Right Infoline!!", right);
-      right_len = RIGHT_TEXT_LEN;  /* too long, so we cut it! */
-      Terminate(ERR);
-    }
-
-  /* Now prepare the left/right text-boxes */
-  memset (left_box,  ' ', LEFT_TEXT_LEN);  /* pad with spaces */
-  memset (right_box, ' ', RIGHT_TEXT_LEN);  
-
-  strncpy (left_box,  left, left_len);  /* this drops terminating \0 ! */
-  strncpy (right_box, right, left_len);  /* this drops terminating \0 ! */
-
-  left_box [LEFT_TEXT_LEN]  = '\0';     /* that's right, we want padding! */
-  right_box[RIGHT_TEXT_LEN] = '\0';
-
-  /* Hintergrund Textfarbe setzen */
-  SetTextColor (BANNER_WHITE, BANNER_VIOLETT);	// FONT_RED, 0
-  
-  SDL_SetClipRect( ne_screen , NULL );
-  // Now the text should be ready and its
-  // time to display it...
-  if ( (strcmp( left_box , previous_left_box )) || 
-       (strcmp( right_box , previous_right_box )) ||
-       ( flags & BANNER_FORCE_UPDATE ) )
-    {
-      SetCurrentFont(Para_BFont);
-      DisplayBanner( BANNER_FORCE_UPDATE | BANNER_DONT_TOUCH_TEXT );
-      PrintStringFont ( ne_screen , Para_BFont, LEFT_INFO_X , LEFT_INFO_Y , left_box );
-      // SDL_UpdateRect( ne_screen, LEFT_INFO_X, LEFT_INFO_Y, FontHeight(Menu_BFont)*8, FontHeight(Menu_BFont) );
-      strcpy( previous_left_box , left_box );
-      PrintStringFont ( ne_screen , Para_BFont, RIGHT_INFO_X , RIGHT_INFO_Y , right_box );
-      // SDL_UpdateRect( ne_screen, RIGHT_INFO_X, RIGHT_INFO_Y, FontHeight(Menu_BFont)*4, FontHeight(Menu_BFont) );
-      strcpy( previous_right_box , right_box );
-      printf("\nHad to update top status line box...");
-    }
-
-  return;
-
-} /* SetInfoline () */
 
 #undef _rahmen_c
