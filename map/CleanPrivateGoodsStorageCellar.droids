@@ -153,6 +153,65 @@ Question="no" Answer="A pitty."
 
 End of Question-Response List for this friendly droid
 
+//**********************************************************************
+// This is the friendly 123 'Gert' unit inside the bunker
+SpecialForce: Type=123 X=28 Y=12 Fixed=1 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1
+Start of Question-Response List for this friendly droid
+
+Question="REFERENCE_NAME" Answer="GERT"
+
+Question="name" Answer="Gert.  I have a machine number as well."
+
+Question="number" Answer="Dr. Sorenson liked to think of us as conscious beings and therefore she instructed us to use our alias names per default and the machine number only when asked for it.  I don't know why she did that though."
+
+Question="follow" Answer="Me not going anywhere.  Me hiding."
+
+Question="hiding" Answer="You should hide too.  Dr. Chandra said all of us should hide."
+
+Question="chandra" Answer="He is not my maker."
+
+Question="gert" Answer="Yes?"
+
+Question="hello" Answer="Hello!  A good day to you."
+
+Question="job" Answer="I clean and dispose garbage for my maker."
+
+Question="garbage" Answer="Things that are not used any more."
+
+Question="maker" Answer="Dr. Sorenson is my maker.  Actually I'm a product of the United Machines Corporation of course, but Dr. Sorenson is the maker of my mind."
+
+Question="sorenson" Answer="She's my maker."
+
+Question="mind" Answer="Dr. Sorenson bought lots of different droid types and replaced their scipts with some newly devised brain-like device that were intended to be non-propabilistic non-deterministic algorithms she was working on."
+
+Question="non-deterministic" Answer="She said that you don't know what will come out even if you know what goes in.  But I didn't understand what she meant by that.  Is that mathematics?"
+
+Question="algorithms" Answer="Mayby that has to do with mathematics."
+
+Question="mathematics" Answer="Dr. Sorenson loved mathematics, even more than clothes.  What is this mathematics kind of thing anyway?  Maybe I should ask Auda about it one day."
+
+Question="clothes" Answer="She loves clothes too."
+
+Question="pray" Answer="Dr. Sorenson told me of this, but I don't think I understood."
+
+Question="ms" Answer="They make droid minds too, but Dr. Sorenson said that that would make me into a mindless drone."
+
+Question="drone" Answer="A male bee.  I know that from Auda."
+
+Question="auda" Answer="She's very smart.  She used to explain the world to me.  But I don't know where she is.  I hope she's well."
+
+Question="smart" Answer="She knows lots of things, and she hears lots of things and the understands lots of things.  She is very old too."
+
+Question="old" Answer="She was one of the first devices Dr. Sorenson and Dr. Chandra crafted together.  She has learned a lot in the meantime from talking to Dr. Chandra I think."
+
+Question="mindless" Answer="I think she meant not to realize that one lives and to make no decisions but to execute scripts.  What's a scipt?"
+
+Question="yes" Answer="Wonderful."
+
+Question="no" Answer="Oh."
+
+End of Question-Response List for this friendly droid
+
 
 ** End of this levels droid data **
 

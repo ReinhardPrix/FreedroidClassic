@@ -1182,7 +1182,7 @@ xlen of this level: 20
 ylen of this level: 8
 color of this level: 3
 Name of this level=observation
-Comment of the Influencer on entering this level="Look out, this is the lookout, haha.
+Comment of the Influencer on entering this level="Look out, this is the lookout, haha. Sail ho, capt'n.
 Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
   7  10  10  10  10   9  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
@@ -1678,7 +1678,7 @@ xlen of this level: 34
 ylen of this level: 16
 color of this level: 2
 Name of this level=mid carga
-Comment of the Influencer on entering this level="Mid cargo, with little cover anywhere, very hard to fight here.
+Comment of the Influencer on entering this level="Mid cargo.  Maybe I shouldn't try to fight here at all but just take over everything.
 Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
   7  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   9 
