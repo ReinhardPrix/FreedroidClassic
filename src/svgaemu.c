@@ -350,8 +350,8 @@ int vga_setmode(int mode)
   // screen = SDL_SetVideoMode(320, 200, 0, SDL_SWSURFACE|SDL_FULLSCREEN|SDL_HWPALETTE );
   // screen = SDL_SetVideoMode(320, 200, 0, SDL_SWSURFACE|SDL_FULLSCREEN );
   // screen = SDL_SetVideoMode(320 , 200, 8, SDL_SWSURFACE | SDL_HWPALETTE );
-  // ScaledSurface = SDL_SetVideoMode(320*2 , 200*2, 8, SDL_SWSURFACE | SDL_HWPALETTE | SDL_RESIZABLE );
-  ScaledSurface = SDL_SetVideoMode(320*2 , 200*2, 8, SDL_SWSURFACE | SDL_HWPALETTE | SDL_RESIZABLE | SDL_FULLSCREEN );
+  ScaledSurface = SDL_SetVideoMode(320*2 , 200*2, 8, SDL_SWSURFACE | SDL_HWPALETTE | SDL_RESIZABLE );
+  // ScaledSurface = SDL_SetVideoMode(320*2 , 200*2, 8, SDL_SWSURFACE | SDL_HWPALETTE | SDL_RESIZABLE | SDL_FULLSCREEN );
   if ( ScaledSurface == NULL ) {
     fprintf(stderr, "Couldn't set 320x200 video mode: %s\n",
 	    SDL_GetError());

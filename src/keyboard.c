@@ -52,15 +52,34 @@ int CurrentlyLeftPressed=0;
 int CurrentlyRightPressed=0;
 int CurrentlyUpPressed=0;
 int CurrentlyDownPressed=0;
-int CurrentlyWPressed=0;
-int CurrentlyQPressed=0;
+int CurrentlyAPressed=0;
+int CurrentlyBPressed=0;
 int CurrentlyCPressed=0;
-int CurrentlyPPressed=0;
 int CurrentlyDPressed=0;
-int CurrentlyLPressed=0;
+int CurrentlyEPressed=0;
+int CurrentlyFPressed=0;
+int CurrentlyGPressed=0;
+int CurrentlyHPressed=0;
 int CurrentlyIPressed=0;
+int CurrentlyJPressed=0;
+int CurrentlyKPressed=0;
+int CurrentlyLPressed=0;
+int CurrentlyMPressed=0;
+int CurrentlyNPressed=0;
+int CurrentlyOPressed=0;
+int CurrentlyPPressed=0;
+int CurrentlyQPressed=0;
+int CurrentlyRPressed=0;
+int CurrentlySPressed=0;
+int CurrentlyTPressed=0;
+int CurrentlyUPressed=0;
 int CurrentlyVPressed=0;
+int CurrentlyWPressed=0;
+int CurrentlyXPressed=0;
+int CurrentlyYPressed=0;
+int CurrentlyZPressed=0;
 int CurrentlyEscapePressed=0;
+int CurrentlyBackspacePressed=0;
 
 void 
 Init_SDL_Keyboard(void)
@@ -84,6 +103,9 @@ keyboard_update(void)
 	  /* Check the SDLKey values */
 	  switch( event.key.keysym.sym )
 	    {
+	    case SDLK_BACKSPACE:
+	      CurrentlyBackspacePressed=TRUE;
+	      break;
 	    case SDLK_LEFT:
 	      CurrentlyLeftPressed=TRUE;
 	      break;
@@ -102,29 +124,83 @@ keyboard_update(void)
 	    case SDLK_RETURN:
 	      CurrentlyEnterPressed=TRUE;
 	      break;
-	    case SDLK_w:
-	      CurrentlyWPressed=TRUE;
+	    case SDLK_a:
+	      CurrentlyAPressed=TRUE;
 	      break;
-	    case SDLK_q:
-	      CurrentlyQPressed=TRUE;
+	    case SDLK_b:
+	      CurrentlyBPressed=TRUE;
 	      break;
 	    case SDLK_c:
 	      CurrentlyCPressed=TRUE;
 	      break;
-	    case SDLK_p:
-	      CurrentlyPPressed=TRUE;
-	      break;
 	    case SDLK_d:
 	      CurrentlyDPressed=TRUE;
 	      break;
-	    case SDLK_l:
-	      CurrentlyLPressed=TRUE;
+	    case SDLK_e:
+	      CurrentlyEPressed=TRUE;
+	      break;
+	    case SDLK_f:
+	      CurrentlyFPressed=TRUE;
+	      break;
+	    case SDLK_g:
+	      CurrentlyGPressed=TRUE;
+	      break;
+	    case SDLK_h:
+	      CurrentlyHPressed=TRUE;
 	      break;
 	    case SDLK_i:
 	      CurrentlyIPressed=TRUE;
 	      break;
+	    case SDLK_j:
+	      CurrentlyJPressed=TRUE;
+	      break;
+	    case SDLK_k:
+	      CurrentlyKPressed=TRUE;
+	      break;
+	    case SDLK_l:
+	      CurrentlyLPressed=TRUE;
+	      break;
+	    case SDLK_m:
+	      CurrentlyMPressed=TRUE;
+	      break;
+	    case SDLK_n:
+	      CurrentlyNPressed=TRUE;
+	      break;
+	    case SDLK_o:
+	      CurrentlyOPressed=TRUE;
+	      break;
+	    case SDLK_p:
+	      CurrentlyPPressed=TRUE;
+	      break;
+	    case SDLK_q:
+	      CurrentlyQPressed=TRUE;
+	      break;
+	    case SDLK_r:
+	      CurrentlyRPressed=TRUE;
+	      break;
+	    case SDLK_s:
+	      CurrentlySPressed=TRUE;
+	      break;
+	    case SDLK_t:
+	      CurrentlyTPressed=TRUE;
+	      break;
+	    case SDLK_u:
+	      CurrentlyUPressed=TRUE;
+	      break;
 	    case SDLK_v:
 	      CurrentlyVPressed=TRUE;
+	      break;
+	    case SDLK_w:
+	      CurrentlyWPressed=TRUE;
+	      break;
+	    case SDLK_x:
+	      CurrentlyXPressed=TRUE;
+	      break;
+	    case SDLK_y:
+	      CurrentlyYPressed=TRUE;
+	      break;
+	    case SDLK_z:
+	      CurrentlyZPressed=TRUE;
 	      break;
 	    case SDLK_ESCAPE:
 	      CurrentlyEscapePressed=TRUE;
@@ -141,6 +217,9 @@ keyboard_update(void)
 	case SDL_KEYUP:
 	  switch( event.key.keysym.sym )
 	    {
+	    case SDLK_BACKSPACE:
+	      CurrentlyBackspacePressed=FALSE;
+	      break;
 	    case SDLK_LEFT:
 	      CurrentlyLeftPressed=FALSE;
 	      break;
@@ -159,31 +238,83 @@ keyboard_update(void)
 	    case SDLK_RETURN:
 	      CurrentlyEnterPressed=FALSE;
 	      break;
-	    case SDLK_w:
-	      CurrentlyWPressed=FALSE;
+	    case SDLK_a:
+	      CurrentlyAPressed=FALSE;
 	      break;
-	    case SDLK_q:
-	      CurrentlyQPressed=FALSE;
-	      // printf("\n\nQPress detected!! Terminating...\n\n");
-	      // Terminate(0);
+	    case SDLK_b:
+	      CurrentlyBPressed=FALSE;
 	      break;
 	    case SDLK_c:
 	      CurrentlyCPressed=FALSE;
 	      break;
-	    case SDLK_p:
-	      CurrentlyPPressed=FALSE;
-	      break;
 	    case SDLK_d:
 	      CurrentlyDPressed=FALSE;
 	      break;
-	    case SDLK_l:
-	      CurrentlyLPressed=FALSE;
+	    case SDLK_e:
+	      CurrentlyEPressed=FALSE;
+	      break;
+	    case SDLK_f:
+	      CurrentlyFPressed=FALSE;
+	      break;
+	    case SDLK_g:
+	      CurrentlyGPressed=FALSE;
+	      break;
+	    case SDLK_h:
+	      CurrentlyHPressed=FALSE;
 	      break;
 	    case SDLK_i:
 	      CurrentlyIPressed=FALSE;
 	      break;
+	    case SDLK_j:
+	      CurrentlyJPressed=FALSE;
+	      break;
+	    case SDLK_k:
+	      CurrentlyKPressed=FALSE;
+	      break;
+	    case SDLK_l:
+	      CurrentlyLPressed=FALSE;
+	      break;
+	    case SDLK_m:
+	      CurrentlyMPressed=FALSE;
+	      break;
+	    case SDLK_n:
+	      CurrentlyNPressed=FALSE;
+	      break;
+	    case SDLK_o:
+	      CurrentlyOPressed=FALSE;
+	      break;
+	    case SDLK_p:
+	      CurrentlyPPressed=FALSE;
+	      break;
+	    case SDLK_q:
+	      CurrentlyQPressed=FALSE;
+	      break;
+	    case SDLK_r:
+	      CurrentlyRPressed=FALSE;
+	      break;
+	    case SDLK_s:
+	      CurrentlySPressed=FALSE;
+	      break;
+	    case SDLK_t:
+	      CurrentlyTPressed=FALSE;
+	      break;
+	    case SDLK_u:
+	      CurrentlyUPressed=FALSE;
+	      break;
 	    case SDLK_v:
 	      CurrentlyVPressed=FALSE;
+	      break;
+	    case SDLK_w:
+	      CurrentlyWPressed=FALSE;
+	      break;
+	    case SDLK_x:
+	      CurrentlyXPressed=FALSE;
+	      break;
+	    case SDLK_y:
+	      CurrentlyYPressed=FALSE;
+	      break;
+	    case SDLK_z:
+	      CurrentlyZPressed=FALSE;
 	      break;
 	    case SDLK_ESCAPE:
 	      CurrentlyEscapePressed=FALSE;
@@ -249,10 +380,115 @@ EnterPressed (void)
 }				// int SpacePressed(void)
 
 int
+BackspacePressed (void)
+{
+  keyboard_update ();
+  return CurrentlyBackspacePressed;
+}				// int SpacePressed(void)
+
+int
+APressed (void)
+{
+  keyboard_update ();
+  return CurrentlyAPressed;
+}				// int PPressed(void)
+
+int
+BPressed (void)
+{
+  keyboard_update ();
+  return CurrentlyBPressed;
+}				// int PPressed(void)
+
+int
+EPressed (void)
+{
+  keyboard_update ();
+  return CurrentlyEPressed;
+}				// int PPressed(void)
+
+int
+FPressed (void)
+{
+  keyboard_update ();
+  return CurrentlyFPressed;
+}				// int PPressed(void)
+
+int
+GPressed (void)
+{
+  keyboard_update ();
+  return CurrentlyGPressed;
+}				// int PPressed(void)
+
+int
+HPressed (void)
+{
+  keyboard_update ();
+  return CurrentlyHPressed;
+}				// int PPressed(void)
+
+int
+JPressed (void)
+{
+  keyboard_update ();
+  return CurrentlyJPressed;
+}				// int PPressed(void)
+
+int
+KPressed (void)
+{
+  keyboard_update ();
+  return CurrentlyKPressed;
+}				// int PPressed(void)
+
+int
+MPressed (void)
+{
+  keyboard_update ();
+  return CurrentlyMPressed;
+}				// int PPressed(void)
+
+int
+NPressed (void)
+{
+  keyboard_update ();
+  return CurrentlyNPressed;
+}				// int PPressed(void)
+
+int
+OPressed (void)
+{
+  keyboard_update ();
+  return CurrentlyOPressed;
+}				// int PPressed(void)
+
+int
 PPressed (void)
 {
   keyboard_update ();
   return CurrentlyPPressed;
+}				// int PPressed(void)
+
+int
+RPressed (void)
+{
+  keyboard_update ();
+  return CurrentlyRPressed;
+}				// int PPressed(void)
+
+int
+SPressed (void)
+{
+  keyboard_update ();
+  return CurrentlySPressed;
+}				// int PPressed(void)
+
+int
+TPressed (void)
+{
+  keyboard_update ();
+  return CurrentlyTPressed;
 }				// int PPressed(void)
 
 int
@@ -302,6 +538,34 @@ CPressed (void)
 {
   keyboard_update ();
   return CurrentlyCPressed;
+}				// int WPressed(void)
+
+int
+UPressed (void)
+{
+  keyboard_update ();
+  return CurrentlyUPressed;
+}				// int WPressed(void)
+
+int
+XPressed (void)
+{
+  keyboard_update ();
+  return CurrentlyXPressed;
+}				// int WPressed(void)
+
+int
+YPressed (void)
+{
+  keyboard_update ();
+  return CurrentlyYPressed;
+}				// int WPressed(void)
+
+int
+ZPressed (void)
+{
+  keyboard_update ();
+  return CurrentlyZPressed;
 }				// int WPressed(void)
 
 int

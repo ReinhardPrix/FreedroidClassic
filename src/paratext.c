@@ -680,12 +680,8 @@ GetString (int MaxLen)
   DisplayText (instring, TextOutX, TextOutY, RealScreen, TRUE);
 
   /* Zeichen einlesen und anzeigen, bis RET gedrueckt */
-  while (!keyboard_keypressed (SCANCODE_ENTER))
+  while ( !EnterPressed() )
     {
-
-      keyboard_update ();
-      /* Sondertasten mit ext. Code ignorieren: */
-      // if( taste == 0 ) {getchar(); continue;}
 
       /* Backspace: ausfuehren */
       if (keyboard_keypressed (SCANCODE_BACKSPACE))
@@ -709,7 +705,7 @@ GetString (int MaxLen)
       // PORT instring[charcounter] = '\0';                       /* und abschliessen */
       // }
 
-      if (keyboard_keypressed (SCANCODE_A) && charcounter < MaxLen)
+      if ( APressed()  && charcounter < MaxLen) 
 	{
 	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
 	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
@@ -721,11 +717,11 @@ GetString (int MaxLen)
 	      instring[charcounter++] = 'a';
 	    }
 	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while (keyboard_keypressed (SCANCODE_A))
+	  while ( APressed() )
 	    keyboard_update ();
 	}
 
-      if (keyboard_keypressed (SCANCODE_B) && charcounter < MaxLen)
+      if ( BPressed()  && charcounter < MaxLen) 
 	{
 	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
 	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
@@ -737,11 +733,11 @@ GetString (int MaxLen)
 	      instring[charcounter++] = 'b';
 	    }
 	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while (keyboard_keypressed (SCANCODE_B))
+	  while ( BPressed() )
 	    keyboard_update ();
 	}
 
-      if (keyboard_keypressed (SCANCODE_C) && charcounter < MaxLen)
+      if ( CPressed()  && charcounter < MaxLen) 
 	{
 	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
 	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
@@ -753,11 +749,11 @@ GetString (int MaxLen)
 	      instring[charcounter++] = 'c';
 	    }
 	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while (keyboard_keypressed (SCANCODE_C))
+	  while ( CPressed() )
 	    keyboard_update ();
 	}
 
-      if (keyboard_keypressed (SCANCODE_D) && charcounter < MaxLen)
+      if ( DPressed()  && charcounter < MaxLen) 
 	{
 	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
 	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
@@ -769,11 +765,11 @@ GetString (int MaxLen)
 	      instring[charcounter++] = 'd';
 	    }
 	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while (keyboard_keypressed (SCANCODE_D))
+	  while ( DPressed() )
 	    keyboard_update ();
 	}
 
-      if (keyboard_keypressed (SCANCODE_E) && charcounter < MaxLen)
+      if ( EPressed()  && charcounter < MaxLen) 
 	{
 	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
 	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
@@ -785,11 +781,11 @@ GetString (int MaxLen)
 	      instring[charcounter++] = 'e';
 	    }
 	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while (keyboard_keypressed (SCANCODE_E))
+	  while ( EPressed() )
 	    keyboard_update ();
 	}
 
-      if (keyboard_keypressed (SCANCODE_F) && charcounter < MaxLen)
+      if ( FPressed()  && charcounter < MaxLen) 
 	{
 	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
 	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
@@ -801,11 +797,11 @@ GetString (int MaxLen)
 	      instring[charcounter++] = 'f';
 	    }
 	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while (keyboard_keypressed (SCANCODE_F))
+	  while ( FPressed() )
 	    keyboard_update ();
 	}
 
-      if (keyboard_keypressed (SCANCODE_G) && charcounter < MaxLen)
+      if ( GPressed()  && charcounter < MaxLen) 
 	{
 	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
 	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
@@ -817,11 +813,11 @@ GetString (int MaxLen)
 	      instring[charcounter++] = 'g';
 	    }
 	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while (keyboard_keypressed (SCANCODE_G))
+	  while ( GPressed() )
 	    keyboard_update ();
 	}
 
-      if (keyboard_keypressed (SCANCODE_H) && charcounter < MaxLen)
+      if ( HPressed()  && charcounter < MaxLen) 
 	{
 	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
 	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
@@ -833,11 +829,11 @@ GetString (int MaxLen)
 	      instring[charcounter++] = 'h';
 	    }
 	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while (keyboard_keypressed (SCANCODE_H))
+	  while ( HPressed() )
 	    keyboard_update ();
 	}
 
-      if (keyboard_keypressed (SCANCODE_I) && charcounter < MaxLen)
+      if ( IPressed()  && charcounter < MaxLen) 
 	{
 	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
 	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
@@ -849,11 +845,11 @@ GetString (int MaxLen)
 	      instring[charcounter++] = 'i';
 	    }
 	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while (keyboard_keypressed (SCANCODE_I))
+	  while ( IPressed() )
 	    keyboard_update ();
 	}
 
-      if (keyboard_keypressed (SCANCODE_J) && charcounter < MaxLen)
+      if ( JPressed()  && charcounter < MaxLen) 
 	{
 	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
 	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
@@ -865,11 +861,11 @@ GetString (int MaxLen)
 	      instring[charcounter++] = 'j';
 	    }
 	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while (keyboard_keypressed (SCANCODE_J))
+	  while ( JPressed() )
 	    keyboard_update ();
 	}
 
-      if (keyboard_keypressed (SCANCODE_K) && charcounter < MaxLen)
+      if ( KPressed()  && charcounter < MaxLen) 
 	{
 	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
 	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
@@ -881,11 +877,11 @@ GetString (int MaxLen)
 	      instring[charcounter++] = 'k';
 	    }
 	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while (keyboard_keypressed (SCANCODE_K))
+	  while ( KPressed() )
 	    keyboard_update ();
 	}
 
-      if (keyboard_keypressed (SCANCODE_A) && charcounter < MaxLen)
+      if ( APressed()  && charcounter < MaxLen) 
 	{
 	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
 	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
@@ -897,11 +893,11 @@ GetString (int MaxLen)
 	      instring[charcounter++] = 'a';
 	    }
 	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while (keyboard_keypressed (SCANCODE_A))
+	  while ( APressed() )
 	    keyboard_update ();
 	}
 
-      if (keyboard_keypressed (SCANCODE_L) && charcounter < MaxLen)
+      if ( LPressed()  && charcounter < MaxLen) 
 	{
 	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
 	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
@@ -913,11 +909,11 @@ GetString (int MaxLen)
 	      instring[charcounter++] = 'l';
 	    }
 	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while (keyboard_keypressed (SCANCODE_L))
+	  while ( LPressed() )
 	    keyboard_update ();
 	}
 
-      if (keyboard_keypressed (SCANCODE_M) && charcounter < MaxLen)
+      if ( MPressed()  && charcounter < MaxLen) 
 	{
 	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
 	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
@@ -929,11 +925,11 @@ GetString (int MaxLen)
 	      instring[charcounter++] = 'm';
 	    }
 	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while (keyboard_keypressed (SCANCODE_M))
+	  while ( MPressed() )
 	    keyboard_update ();
 	}
 
-      if (keyboard_keypressed (SCANCODE_N) && charcounter < MaxLen)
+      if ( NPressed()  && charcounter < MaxLen) 
 	{
 	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
 	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
@@ -945,11 +941,11 @@ GetString (int MaxLen)
 	      instring[charcounter++] = 'n';
 	    }
 	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while (keyboard_keypressed (SCANCODE_N))
+	  while ( NPressed() )
 	    keyboard_update ();
 	}
 
-      if (keyboard_keypressed (SCANCODE_O) && charcounter < MaxLen)
+      if ( OPressed()  && charcounter < MaxLen) 
 	{
 	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
 	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
@@ -961,11 +957,11 @@ GetString (int MaxLen)
 	      instring[charcounter++] = 'o';
 	    }
 	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while (keyboard_keypressed (SCANCODE_O))
+	  while ( OPressed() )
 	    keyboard_update ();
 	}
 
-      if (keyboard_keypressed (SCANCODE_P) && charcounter < MaxLen)
+      if ( PPressed()  && charcounter < MaxLen) 
 	{
 	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
 	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
@@ -977,11 +973,11 @@ GetString (int MaxLen)
 	      instring[charcounter++] = 'p';
 	    }
 	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while (keyboard_keypressed (SCANCODE_P))
+	  while ( PPressed() )
 	    keyboard_update ();
 	}
 
-      if (keyboard_keypressed (SCANCODE_Q) && charcounter < MaxLen)
+      if ( QPressed()  && charcounter < MaxLen) 
 	{
 	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
 	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
@@ -993,11 +989,11 @@ GetString (int MaxLen)
 	      instring[charcounter++] = 'q';
 	    }
 	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while (keyboard_keypressed (SCANCODE_Q))
+	  while ( QPressed() )
 	    keyboard_update ();
 	}
 
-      if (keyboard_keypressed (SCANCODE_R) && charcounter < MaxLen)
+      if ( RPressed()  && charcounter < MaxLen) 
 	{
 	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
 	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
@@ -1009,11 +1005,11 @@ GetString (int MaxLen)
 	      instring[charcounter++] = 'r';
 	    }
 	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while (keyboard_keypressed (SCANCODE_R))
+	  while ( RPressed() )
 	    keyboard_update ();
 	}
 
-      if (keyboard_keypressed (SCANCODE_S) && charcounter < MaxLen)
+      if ( SPressed()  && charcounter < MaxLen) 
 	{
 	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
 	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
@@ -1025,11 +1021,11 @@ GetString (int MaxLen)
 	      instring[charcounter++] = 's';
 	    }
 	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while (keyboard_keypressed (SCANCODE_S))
+	  while ( SPressed() )
 	    keyboard_update ();
 	}
 
-      if (keyboard_keypressed (SCANCODE_T) && charcounter < MaxLen)
+      if ( TPressed()  && charcounter < MaxLen) 
 	{
 	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
 	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
@@ -1041,11 +1037,11 @@ GetString (int MaxLen)
 	      instring[charcounter++] = 't';
 	    }
 	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while (keyboard_keypressed (SCANCODE_T))
+	  while ( TPressed() )
 	    keyboard_update ();
 	}
 
-      if (keyboard_keypressed (SCANCODE_U) && charcounter < MaxLen)
+      if ( UPressed()  && charcounter < MaxLen) 
 	{
 	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
 	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
@@ -1057,11 +1053,11 @@ GetString (int MaxLen)
 	      instring[charcounter++] = 'u';
 	    }
 	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while (keyboard_keypressed (SCANCODE_U))
+	  while ( UPressed() )
 	    keyboard_update ();
 	}
 
-      if (keyboard_keypressed (SCANCODE_V) && charcounter < MaxLen)
+      if ( VPressed()  && charcounter < MaxLen) 
 	{
 	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
 	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
@@ -1073,11 +1069,11 @@ GetString (int MaxLen)
 	      instring[charcounter++] = 'v';
 	    }
 	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while (keyboard_keypressed (SCANCODE_V))
+	  while ( VPressed() )
 	    keyboard_update ();
 	}
 
-      if (keyboard_keypressed (SCANCODE_W) && charcounter < MaxLen)
+      if ( WPressed()  && charcounter < MaxLen) 
 	{
 	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
 	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
@@ -1089,11 +1085,11 @@ GetString (int MaxLen)
 	      instring[charcounter++] = 'w';
 	    }
 	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while (keyboard_keypressed (SCANCODE_W))
+	  while ( WPressed() )
 	    keyboard_update ();
 	}
 
-      if (keyboard_keypressed (SCANCODE_X) && charcounter < MaxLen)
+      if ( XPressed()  && charcounter < MaxLen) 
 	{
 	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
 	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
@@ -1105,11 +1101,11 @@ GetString (int MaxLen)
 	      instring[charcounter++] = 'x';
 	    }
 	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while (keyboard_keypressed (SCANCODE_X))
+	  while ( XPressed() )
 	    keyboard_update ();
 	}
 
-      if (keyboard_keypressed (SCANCODE_Y) && charcounter < MaxLen)
+      if ( YPressed()  && charcounter < MaxLen) 
 	{
 	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
 	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
@@ -1121,11 +1117,11 @@ GetString (int MaxLen)
 	      instring[charcounter++] = 'y';
 	    }
 	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while (keyboard_keypressed (SCANCODE_Y))
+	  while ( YPressed() )
 	    keyboard_update ();
 	}
 
-      if (keyboard_keypressed (SCANCODE_Z) && charcounter < MaxLen)
+      if ( ZPressed()  && charcounter < MaxLen) 
 	{
 	  if (keyboard_keypressed (SCANCODE_LEFTSHIFT)
 	      || keyboard_keypressed (SCANCODE_RIGHTSHIFT))
@@ -1137,7 +1133,7 @@ GetString (int MaxLen)
 	      instring[charcounter++] = 'z';
 	    }
 	  instring[charcounter] = '\0';	/* und abschliessen */
-	  while (keyboard_keypressed (SCANCODE_Z))
+	  while ( ZPressed() )
 	    keyboard_update ();
 	}
 
@@ -1149,6 +1145,8 @@ GetString (int MaxLen)
       /* Eingabe mit Cursor ausgeben */
       // DisplayText(instring, TextOutX, TextOutY, RealScreen, TRUE);
       DisplayText (instring, TextOutX, TextOutY, RealScreen, TRUE);
+      
+      PrepareScaledSurface();
 
     }				/* While nicht RET gedrueckt */
 

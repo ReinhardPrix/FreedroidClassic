@@ -523,6 +523,9 @@ Debriefing (void)
 	  DisplayText (Scoretext, USERFENSTERPOSX, USERFENSTERPOSY,
 		       RealScreen, FALSE);
 	  // free (GreatScoreName);
+	  // SwapScreen();
+	  PrepareScaledSurface();
+
 	  GreatScoreName = GetString (18);
 	  GreatScore = RealScore;
 	}
@@ -533,6 +536,8 @@ Debriefing (void)
 	  strcpy (Scoretext, "\n   Lowest Score of Day! \n Enter your name:");
 	  DisplayText (Scoretext, USERFENSTERPOSX, USERFENSTERPOSY,
 		       RealScreen, FALSE);
+	  // SwapScreen();
+	  PrepareScaledSurface();
 	  // free (LowestName);
 	  LowestName = GetString (18);
 	  LowestScoreOfDay = RealScore;
@@ -546,6 +551,8 @@ Debriefing (void)
 	  DisplayText (Scoretext, USERFENSTERPOSX, USERFENSTERPOSY,
 		       RealScreen, FALSE);
 	  // free (HighestName);
+	  // SwapScreen();
+	  PrepareScaledSurface();
 	  HighestName = GetString (18);
 	  HighestScoreOfDay = RealScore;
 	}
@@ -565,6 +572,9 @@ Debriefing (void)
       DisplayText
 	(" You have gained entry to the hall\n of fame!\nEnter your name:\n  ",
 	 USERFENSTERPOSX, USERFENSTERPOSY, RealScreen, FALSE);
+
+      // SwapScreen();
+	  PrepareScaledSurface();
 
       /* Den neuen Eintrag in die Liste integrieren */
       if (Hallptr->PlayerScore < RealScore)
@@ -596,6 +606,8 @@ Debriefing (void)
       DisplayText ("You are now added to the hall\n of fame!\n",
 		   USERFENSTERPOSX, USERFENSTERPOSY, RealScreen, FALSE);
       Hallptr = SaveHallptr;
+      // SwapScreen();
+	  PrepareScaledSurface();
       getchar ();
     }
 

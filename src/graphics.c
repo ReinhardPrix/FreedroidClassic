@@ -120,10 +120,17 @@ void display_bmp(char *file_name)
      * 8*8*4 colour cube), but if the image is palettized as well we can
      * use that palette for a nicer colour matching
      */
-    if (image->format->palette && screen->format->palette) {
-    SDL_SetColors( screen , image->format->palette->colors, 0,
-                  image->format->palette->ncolors);
-    }
+    if (image->format->palette && screen->format->palette) 
+      {
+	SDL_SetColors( screen , image->format->palette->colors, 0,
+		       image->format->palette->ncolors);
+	SDL_SetColors( ScaledSurface , image->format->palette->colors, 0,
+		       image->format->palette->ncolors);
+	/*
+	  printf("\n\n\nFarbpalette wurde erkannt...\n\n\nTerminiere...\n\n\n");
+	  Terminate(0);
+	*/
+      }
 
     if ( SDL_SetColorKey(image, SDL_SRCCOLORKEY, 252) == (-1) )
       {
@@ -1006,6 +1013,8 @@ Flimmern (void)
 {
   int i;
   unsigned char *Screenptr;
+  SDL_Rect LocalRectangle;
+
   //  unsigned char* Junkptr;
 
   DebugPrintf ("\nvoid Flimmern(void): Real function call confirmed.");
@@ -1084,15 +1093,26 @@ Flimmern (void)
 #endif
 
 #ifdef FLIMMERN4
+
+  LocalRectangle.x=USERFENSTERPOSX;
+  LocalRectangle.w=USERFENSTERBREITE;
+  LocalRectangle.h=1;
+
   /* vertical close Userfenster */
   for (i = 0; i < (USERFENSTERHOEHE / 2); i++)
     {
-      vga_drawline (USERFENSTERPOSX, USERFENSTERPOSY + i,
-		    USERFENSTERPOSX + USERFENSTERBREITE, USERFENSTERPOSY + i);
-      vga_drawline (USERFENSTERPOSX, USERFENSTERPOSY + USERFENSTERHOEHE - i,
-		    USERFENSTERPOSX + USERFENSTERBREITE,
-		    USERFENSTERPOSY + USERFENSTERHOEHE - i);
-      usleep (200);
+      LocalRectangle.x=USERFENSTERPOSX;
+      LocalRectangle.w=USERFENSTERBREITE;
+      LocalRectangle.h=1;
+      LocalRectangle.y=USERFENSTERPOSY+i;
+      SDL_FillRect( screen , &LocalRectangle, 0);
+      LocalRectangle.x=USERFENSTERPOSX;
+      LocalRectangle.w=USERFENSTERBREITE;
+      LocalRectangle.h=1;
+      LocalRectangle.y=USERFENSTERPOSY+USERFENSTERHOEHE-i;
+      SDL_FillRect( screen , &LocalRectangle, 0);
+      // usleep (200);
+      PrepareScaledSurface();
     }
 
   /* make the central line white */
@@ -1101,7 +1121,8 @@ Flimmern (void)
     {
       putpixel (screen, USERFENSTERPOSX + i, USERFENSTERPOSY + USERFENSTERHOEHE / 2, 0);
       putpixel (screen, USERFENSTERPOSX + USERFENSTERBREITE - i, USERFENSTERPOSY + USERFENSTERHOEHE / 2, 0);
-      usleep (20);
+      // usleep (20);
+      PrepareScaledSurface();
     }
   Unlock_SDL_Screen();
 

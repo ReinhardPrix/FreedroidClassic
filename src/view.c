@@ -1021,22 +1021,28 @@ FlashWindow (int Flashcolor)
  *
  *-----------------------------------------------------------------*/
 void
-SetUserfenster (int color, unsigned char *screen)
+SetUserfenster (int color, unsigned char *Parameter_screen)
 {
   int row;
+  SDL_Rect LocalRectangle;
 
   DebugPrintf ("\nvoid SetUserfenster(...): real function call confirmed.");
 
-  if (screen == RealScreen) 
-    {
 
+  if (Parameter_screen == RealScreen) 
+    {
+      LocalRectangle.x=USERFENSTERPOSX;
+      LocalRectangle.w=USERFENSTERBREITE;
+      LocalRectangle.h=USERFENSTERHOEHE;
+      LocalRectangle.y=USERFENSTERPOSY;
+      SDL_FillRect( screen , &LocalRectangle, color);
     }
     //gl_fillbox (USERFENSTERPOSX, USERFENSTERPOSY, 
     //USERFENSTERBREITE, USERFENSTERHOEHE, color);
   else
     {
       for (row = 0; row < USERFENSTERHOEHE; row++)
-	memset (screen + USERFENSTERPOSX +
+	memset (Parameter_screen + USERFENSTERPOSX +
 		(USERFENSTERPOSY + row) * SCREENBREITE,
 		color, USERFENSTERBREITE);
     }
