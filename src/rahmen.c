@@ -980,8 +980,6 @@ ShowCurrentTextWindow ( void )
       CenteredPutString ( Screen , Banner_Text_Rect.y + InterLineDistance + 
 			  i * ( InterLineDistance + FontHeight( GetCurrentFont() ) ) , TextLine[ i ] );
     }
-
-
   CenteredPutString ( Screen , Banner_Text_Rect.y + InterLineDistance + 
 		      i * ( InterLineDistance + FontHeight( GetCurrentFont() ) ) , LongTextPointer );
 

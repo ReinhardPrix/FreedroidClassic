@@ -363,10 +363,9 @@ PutStringFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y, char *tex
       //                                          jp, 27.7.2002
       //
       if ( text[i] == 1 ) Font = Red_BFont;
-      if ( text[i] == 2 ) Font = Blue_BFont;
-      if ( text[i] == 3 ) Font = FPS_Display_BFont;
-
-      x += PutCharFont (Surface, Font, x, y, text[i]) + kerning;
+      else if ( text[i] == 2 ) Font = Blue_BFont;
+      else if ( text[i] == 3 ) Font = FPS_Display_BFont;
+      else x += PutCharFont (Surface, Font, x, y, text[i]) + kerning;
       i++;
     }
 }; // void PutStringFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y, char *text)
