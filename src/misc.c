@@ -881,7 +881,7 @@ Teleport (int LNum, int X, int Y, int PlayerNum )
 	}
       
       // clear the automapping information
-      ClearAutomapData();
+      // ClearAutomapData();
     }
   else
     {

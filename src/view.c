@@ -89,6 +89,7 @@ ShowAutomapData( void )
   int FriendColor = SDL_MapRGB( Screen->format, 0 , 255 , 0 ); 
   int BoogyColor = SDL_MapRGB( Screen->format, 255 , 0 , 0 ); 
   Level AutomapLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
+  int level = Me [ 0 ] . pos . z ;
 
   //--------------------
   // Of course we only display the automap on demand of the user...
@@ -103,25 +104,25 @@ ShowAutomapData( void )
     {
       for ( x = 0 ; x < AutomapLevel->xlen ; x ++ )
 	{
-	  if ( Me [ 0 ] . Automap [ y ] [ x ] . storebyte & RIGHT_WALL_BIT )
+	  if ( Me [ 0 ] . Automap [ level ] [ y ] [ x ] & RIGHT_WALL_BIT )
 	    {
 	      putpixel ( Screen , 3*x+2 , 3*y+0 , AUTOMAP_COLOR );
 	      putpixel ( Screen , 3*x+2 , 3*y+1 , AUTOMAP_COLOR );
 	      putpixel ( Screen , 3*x+2 , 3*y+2 , AUTOMAP_COLOR );
 	    }
-	  if ( Me [ 0 ] . Automap [ y ] [ x ] . storebyte & LEFT_WALL_BIT )
+	  if ( Me [ 0 ] . Automap [ level ] [ y ] [ x ] & LEFT_WALL_BIT )
 	    {
 	      putpixel ( Screen , 3*x , 3*y+0 , AUTOMAP_COLOR );
 	      putpixel ( Screen , 3*x , 3*y+1 , AUTOMAP_COLOR );
 	      putpixel ( Screen , 3*x , 3*y+2 , AUTOMAP_COLOR );
 	    }
-	  if ( Me [ 0 ] . Automap [ y ] [ x ] . storebyte & UP_WALL_BIT )
+	  if ( Me [ 0 ] . Automap [ level ] [ y ] [ x ] & UP_WALL_BIT )
 	    {
 	      putpixel ( Screen , 3*x+0 , 3*y , AUTOMAP_COLOR );
 	      putpixel ( Screen , 3*x+1 , 3*y , AUTOMAP_COLOR );
 	      putpixel ( Screen , 3*x+2 , 3*y , AUTOMAP_COLOR );
 	    }
-	  if ( Me [ 0 ] . Automap [ y ] [ x ] . storebyte & DOWN_WALL_BIT )
+	  if ( Me [ 0 ] . Automap [ level ] [ y ] [ x ] & DOWN_WALL_BIT )
 	    {
 	      putpixel ( Screen , 3*x+0 , 3*y+2 , AUTOMAP_COLOR );
 	      putpixel ( Screen , 3*x+1 , 3*y+2 , AUTOMAP_COLOR );

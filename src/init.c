@@ -1820,15 +1820,19 @@ InitNewMissionList ( char *MissionName )
 void 
 ClearAutomapData( void )
 {
-  int x , y ;
+  int x , y , level ;
 
-  for ( y = 0 ; y < 200 ; y ++ )
+  for ( level = 0 ; level < MAX_LEVELS ; level ++ )
     {
-      for ( x = 0 ; x < 200 ; x ++ )
+      for ( y = 0 ; y < 200 ; y ++ )
 	{
-	  Me [ 0 ] . Automap[y][x] . storebyte = 0 ;
+	  for ( x = 0 ; x < 200 ; x ++ )
+	    {
+	      Me [ 0 ] . Automap[level][y][x] = 0 ;
+	    }
 	}
     }
+
 }; // void ClearAutomapData ( void )
 
 /*-----------------------------------------------------------------
@@ -1901,12 +1905,6 @@ InitFreedroid ( void )
   GameConfig.Draw_Position=FALSE;
   GameConfig.All_Texts_Switch = FALSE;
 
-  //--------------------
-  // Now we prepare the automap data for later use
-  //
-  GameConfig.Automap_Visible = TRUE;
-  ClearAutomapData( );
-
   //Load user config file if it exists...
   LoadSettings ();
 
@@ -1921,6 +1919,12 @@ InitFreedroid ( void )
   ShowStartupPercentage ( 4 ) ; 
   
   Init_Joy ();
+
+  //--------------------
+  // Now we prepare the automap data for later use
+  //
+  GameConfig.Automap_Visible = TRUE;
+  ClearAutomapData( );
 
   ShowStartupPercentage ( 6 ) ; 
 
