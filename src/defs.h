@@ -9,6 +9,9 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.11  1997/06/06 13:29:33  rprix
+ * ALL_DRUID_TYPES set to 24 (was 25 which is one too much!)
+ *
  * Revision 1.10  1997/06/05 23:47:38  jprix
  * added some doku.  cleaned out some old doku and old code, that was allready commented out.
  *
@@ -219,7 +222,7 @@ enum _directions {
 
 #define BLOCKANZAHL 43
 
-#define ALLDRUIDTYPES		25		/* number of druid-models that exist */
+#define ALLDRUIDTYPES		24		/* number of druid-models that exist */
 #define ALLBULLETTYPES		4		/* number of bullet-types */
 #define ALLBLASTTYPES		2     /* number of different exposions */
 
