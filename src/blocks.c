@@ -737,6 +737,31 @@ Load_Big_Map_Insert_Surfaces( void )
       //
       fpath = find_file ( AllMapInserts [ i ] . map_insert_file_name , GRAPHICS_DIR , FALSE );
       TempSurface = IMG_Load( fpath ) ;
+      if ( TempSurface == 0 )
+	{
+	  fprintf( stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+Freedroid was unable to load a big graphics insert from the hard disk\n\
+into memory.\n\
+\n\
+The full path name of the file, that could not be loaded was : \n\
+%s\n\
+\n\
+This error indicates some installation problem with freedroid.\n\
+Please contact the developers, as always freedroid-discussion@lists.sourceforge.net.\n\
+Thanks a lot.\n\
+\n\
+But for now Freedroid will terminate to draw attention \n\
+to the graphics loading problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , fpath );
+	  Terminate(ERR);
+
+
+	}
       AllMapInserts [ i ] . insert_surface = SDL_DisplayFormat ( TempSurface ) ;
       SDL_FreeSurface ( TempSurface ) ;
 

@@ -402,7 +402,7 @@ enum _sounds
 
 #define MAX_PLAYERS             5
 
-#define MAX_MAP_INSERTS         2
+#define MAX_MAP_INSERTS         3
 #define MAX_MAP_INSERTS_PER_LEVEL 20
 
 #define EL_BLOCK_LEN		8
