@@ -568,12 +568,15 @@ glue_obstacles_to_floor_tiles_for_level ( int level_num )
       //
       if ( next_free_index >= MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE )
 	{
+	  /*
+	    We disable this VERY FREQUENT warning now...
+	    
 	  DebugPrintf ( 0 , "The position where the problem occured is: x_tile=%d, y_tile=%d." , x_tile , y_tile );
 	  GiveStandardErrorMessage ( "glue_obstacles_to_floor_tiles_for_level (...)" , "\
 FreedroidRPG was unable to glue a certain obstacle to the nearest map tile.\n\
 This bug can be resolved by simply raising a contant by one, but it needs to be done :)",
 				     PLEASE_INFORM, IS_WARNING_ONLY );
-	  //return;
+	  */
 	  continue ;
 	}
 
