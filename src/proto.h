@@ -330,6 +330,7 @@ EXTERN void Play_Spell_ForceToEnergy_Sound( void );
 EXTERN void Play_Spell_DetectItems_Sound( void );
 EXTERN void play_melee_weapon_hit_something_sound ( void );
 EXTERN void play_melee_weapon_missed_sound ( void );
+EXTERN void play_open_chest_sound ( void );
 
 // items.c
 #undef EXTERN

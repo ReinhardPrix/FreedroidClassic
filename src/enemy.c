@@ -1520,10 +1520,6 @@ ClosestVisiblePlayer ( Enemy ThisRobot )
   //
   return ( 0 );
 
-
-
-
-
   for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ )
     {
       //--------------------
@@ -1666,7 +1662,8 @@ DetermineVectorToShotTarget( enemy* ThisRobot , moderately_finepoint* vect_to_ta
 
   if ( ThisRobot->is_friendly == TRUE )
     {
-      
+
+      //--------------------
       // Since it's a friendly device in this case, it will aim at the (closest?) of
       // the MS bots.
       for ( j = 0 ; j < Number_Of_Droids_On_Ship ; j++ )
@@ -2020,7 +2017,7 @@ robot_group_turn_hostile ( int enemy_num )
  * the odds are good i.e. requirements are met.
  * ---------------------------------------------------------------------- */
 void
-ProcessAttackStateMachine (int enemynum)
+ProcessAttackStateMachine ( int enemynum )
 {
   moderately_finepoint vect_to_target;
   float dist2;

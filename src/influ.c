@@ -174,6 +174,11 @@ throw_out_all_chest_content ( int obst_index )
       RotateVectorByAngle ( & throw_out_offset_vector , 45 );
     }
 
+  //--------------------
+  // We play the sound, now that the chest is really opened...
+  //
+  play_open_chest_sound ( ) ;
+
 }; // void throw_out_all_chest_content ( int obst_index )
 
 /* ----------------------------------------------------------------------

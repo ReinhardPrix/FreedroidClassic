@@ -696,6 +696,16 @@ CrySound (void)
 }
 
 /* ----------------------------------------------------------------------
+ * When a chest is entered (for the chest take/put dialog) or when a
+ * chest is just looted by left-click, we always play this sound...
+ * ---------------------------------------------------------------------- */
+void
+play_open_chest_sound( void )
+{
+  PlayOnceNeededSoundSample ( "../effects/enter_chest_sound.wav" , FALSE );
+}; // void play_open_chest_sound( void )
+
+/* ----------------------------------------------------------------------
  * When a Force-To-Energy Spell is invoked successfully, then this sound
  * should be played...
  * ---------------------------------------------------------------------- */

@@ -2006,6 +2006,8 @@ EnterChest ( moderately_finepoint pos )
 
   Activate_Conservative_Frame_Computation();
 
+  play_open_chest_sound();
+
   while ( ItemSelected != (-1) )
     {
       
