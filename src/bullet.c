@@ -616,6 +616,7 @@ handle_flash_effects ( bullet* CurBullet )
 {
     int i;
     char game_message_text[5000];
+    float my_damage;
 
     //--------------------
     // if the flash is over, just delete it and return
@@ -687,8 +688,11 @@ handle_flash_effects ( bullet* CurBullet )
     // We do some damage to the Tux, depending on the current
     // disruptor resistance that the Tux might have...
     //
-    Me [ 0 ] . energy -= CurBullet -> damage * ( 100 - Me [ 0 ] . resist_disruptor ) / 100 ;
-    DebugPrintf ( -4 , "\n%s(): Tux took damage from flash: %f." , __FUNCTION__ , (float)(CurBullet -> damage * ( 100 - Me [ 0 ] . resist_disruptor ) / 100 ) );
+    my_damage = CurBullet -> damage * ( 100 - Me [ 0 ] . resist_disruptor ) / 100 ;
+    Me [ 0 ] . energy -= my_damage;
+    sprintf ( game_message_text , "Disruptor blast has hit you for %d damage." ,
+	      ((int)my_damage) );
+    append_new_game_message ( game_message_text );
     
 }; // handle_flash_effects ( bullet* CurBullet )
 
