@@ -62,6 +62,8 @@
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
-#include <SDL/SDL_mixer.h>
 
+#ifdef HAVE_SDL_SDL_MIXER_H
+#include <SDL/SDL_mixer.h>
+#endif
 
