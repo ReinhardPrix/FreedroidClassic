@@ -591,6 +591,10 @@ EnemyMovements (void)
 int
 GetTakeoverGraphics (void)
 {
+#ifdef NEW_ENGINE
+  return (OK);
+#else
+
   unsigned char *tmp;
   int i, j;
   int curx, cury;
@@ -693,6 +697,7 @@ GetTakeoverGraphics (void)
 
   return OK;
 
+#endif
 }				// int GetTakeoverGraphics(void)
 
 /*-----------------------------------------------------------------

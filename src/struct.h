@@ -155,7 +155,6 @@ typedef struct
   byte passable;		/* Zeit (counter), in der druid passable ist */
   float firewait;		/* gibt die Zeit bis zum naechsten Schuss an */
   // byte onscreen;		/* gibt an ob der Robot im moment sichtbar ist */
-  int Shield[4];		// Status of Partial shields
 }
 enemy, *Enemy;
 
@@ -167,8 +166,9 @@ typedef struct
   byte phases;			/* how many phases in motion to show */
   byte blast;			/* which blast does this bullet create */
   unsigned char *picpointer;	/* pointer to picture of bullet */
-  signed char oneshotonly;	/* if this is set, there is never more than 1 shot from this Influweapon */
+  signed char oneshotonly;	/* if this is set, there is only 1 shot */
   int WaitNextTime;
+  SDL_Rect *block;            /* the coordinates of the blocks in ne_blocks */
 }
 bulletspec, *Bulletspec;
 
@@ -189,6 +189,7 @@ typedef struct
 {
   byte phases;
   unsigned char *picpointer;
+  SDL_Rect *block;     /* the coordinates of the blocks in ne_blocks */
 }
 blastspec, *Blastspec;
 
@@ -265,11 +266,6 @@ typedef struct
 }
 FCU;
 
-typedef struct
-{
-  char *shieldname;
-}
-shieldspec, *Shieldspec;
 
 typedef struct
 {

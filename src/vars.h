@@ -230,15 +230,6 @@ FCU AllFCUs[] = {
   {"Battle1234AD"}
 };
 
-shieldspec AllShields[] = {
-  {"none"},
-  {"SimpleF"},
-  {"SimpleR"},
-  {"RefF"},
-  {"RefR"},
-  {"Full"}
-};
-
 
 #define ROBOT_SPEED_CALIBRATOR 20
 #define ROBOT_ACCEL_CALIBRATOR 10
@@ -310,10 +301,10 @@ bulletspec Bulletmap[ALLBULLETTYPES] = {
   speed                             salve         blast                 oneshotonly
                               damage 	phases	                pic.	
 ------------------------------------------------------------*/
-  {10 * BULLET_SPEED_CALIBRATOR, 25, 1, 4, BULLETBLAST, NULL, FALSE, 34},	/* 01: PULSE */
-  {10 * BULLET_SPEED_CALIBRATOR, 40, 1, 4, BULLETBLAST, NULL, FALSE, 34},	/* single_pulse */
-  {10 * BULLET_SPEED_CALIBRATOR, 55, 1, 4, BULLETBLAST, NULL, FALSE, 34},	/* military */
-  {10 * BULLET_SPEED_CALIBRATOR, (60/FLASH_DURATION_IN_FRAMES) , 1, 3, BULLETBLAST, NULL, FALSE, 44}	/* flash */
+  {10 * BULLET_SPEED_CALIBRATOR, 25, 1, 4, BULLETBLAST, NULL, FALSE, 34, NULL},
+  {10 * BULLET_SPEED_CALIBRATOR, 40, 1, 4, BULLETBLAST, NULL, FALSE, 34, NULL},
+  {10 * BULLET_SPEED_CALIBRATOR, 55, 1, 4, BULLETBLAST, NULL, FALSE, 34, NULL},
+  {10 * BULLET_SPEED_CALIBRATOR, (60/FLASH_DURATION_IN_FRAMES) , 1, 3, BULLETBLAST, NULL, FALSE, 44, NULL}	/* flash */
 };
 
 blastspec Blastmap[ALLBLASTTYPES] = {

@@ -311,7 +311,6 @@ InitNewGame (void)
   return;
 
 }				/* InitNewGame */
-
 /*-----------------------------------------------------------------
  * @Desc: InitParaplus(): initialisiert das Spiel beim Programmstart
  * 
@@ -326,6 +325,8 @@ InitParaplus (void)
   Init_Video ();
 
   Init_Audio ();
+  
+  Init_Joy ();
 
   /* 
    * Initialise random-number generator in order to make 
@@ -495,6 +496,10 @@ Init_Druidmap (void)
 void
 Title (void)
 {
+#ifdef NEW_ENGINE
+  return;
+#else
+
   int ScrollEndLine = USERFENSTERPOSY;	/* Endpunkt des Scrollens */
 
   Switch_Background_Music_To (CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC);
@@ -531,6 +536,7 @@ Title (void)
 
   return;
 
+#endif
 } /* Title() */
 
 /*@Function============================================================
@@ -544,6 +550,10 @@ Title (void)
 void
 EndTitle (void)
 {
+#ifdef NEW_ENGINE
+  return;
+#else
+
   int ScrollEndLine = USERFENSTERPOSY;	/* Endpunkt des Scrollens */
 
   DebugPrintf ("\nvoid EndTitle(void): real function call confirmed...:");
@@ -567,6 +577,10 @@ EndTitle (void)
 
   SetTextBorder (0, 0, SCREENBREITE, SCREENHOEHE, 40);
 
+#endif
 } /* EndTitle() */
 
 #undef _init_c
+
+
+

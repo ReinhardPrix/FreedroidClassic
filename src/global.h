@@ -68,7 +68,7 @@ EXTERN char *Brainnames[];
 EXTERN char *Drivenames[];
 EXTERN int ThisMessageTime;
 
-EXTERN shieldspec AllShields[];
+
 EXTERN FCU AllFCUs[];
 EXTERN influence_t Me;		/* the influence data */
 EXTERN druidspec Druidmap[ALLDRUIDTYPES];	/* map of druid specifications */
@@ -170,10 +170,12 @@ EXTERN unsigned char *Data70Pointer;
 #ifdef NEW_ENGINE
 EXTERN const SDL_VideoInfo *ne_vid_info;    /* info about current video mode */
 EXTERN color ne_transp_rgb;                /* RGB of transparent color */
+EXTERN int ne_bpp; 			   /* bits per pixel */
 EXTERN Uint32 ne_transp_key;               /* key of transparent color */
-EXTERN SDL_Surface *ne_map_blocks;         /* surface containing all map blocks */
-EXTERN SDL_Rect ne_map_block_rect[NUM_BLOCKS]; /* array of their positions */
-
+EXTERN SDL_Surface *ne_blocks;             /* here we collect all game blocks */
+EXTERN SDL_Rect *ne_map_block; 			/* arrays of block positions */
+EXTERN SDL_Rect *ne_droid_block;
+EXTERN SDL_Rect *ne_influ_block;
 #endif
 
 
@@ -192,7 +194,7 @@ EXTERN unsigned char *ElevatorBlocks;
 EXTERN unsigned char *ElevatorPicture;
 EXTERN unsigned char *MenuItemPointer;
 EXTERN unsigned char *Robotptr;
-EXTERN unsigned char *ShieldBlocks;
+
 
 #undef EXTERN
 #ifdef _text_c

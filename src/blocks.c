@@ -194,6 +194,10 @@ SmallEnemy (int LX, int LY, int enemyclass, unsigned char *Parameter_Screen,
 void
 GetDigits (void)
 {
+#ifdef NEW_ENGINE
+  return;
+#else
+
   int i;
 
   Digitpointer = MyMalloc (DIGITMEM);
@@ -205,6 +209,8 @@ GetDigits (void)
 		    Digitpointer + DIGITHEIGHT * DIGITLENGTH * i,
 		    i * DIGITLENGTH, 0, DIGITLENGTH, DIGITHEIGHT);
     }
+
+#endif // !NEW_ENGINE
 } // void GetDigits(void)
 
 /* *********************************************************************** */
@@ -255,6 +261,9 @@ IsolateBlock (unsigned char *Parameter_screen,
 void
 GetMapBlocks (void)
 {
+#ifdef NEW_ENGINE
+  return;
+#else
 
   int i;
   unsigned char *tmp;
@@ -284,51 +293,68 @@ GetMapBlocks (void)
     IsolateBlock (InternalScreen, tmp, i * (BLOCKBREITE + 1),
 		  BLOCKHOEHE * 4 + 4, BLOCKBREITE, BLOCKHOEHE);
 
+#endif // !NEW_ENGINE
 }
 
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-GetShieldBlocks (void)
+/*-----------------------------------------------------------------
+ * @Desc: loads picture file, transfers blocks into main block-surface
+ *        (ne_blocks), and fills SDL_Rect array with the appropriate 
+ *        coordinates. 
+ * 	  The target_line given refers to the line in ne_blocks.
+ *
+ * @Arguments:	char *picfile	: the picture-file to load
+ *              int num_blocks  : number of blocks to read
+ *              int blocks_per_line: blocks per line in picture file
+ *                                  if 0: ==> = num_blocks
+ * 		int source_line: block-line to read from in pic-file
+ * 		int target_line: block-line in ne_blocks where blocks are put
+ * 
+ * @Ret: SDL_Rect *  : array holding the block-coordinates 
+ *
+ *-----------------------------------------------------------------*/
+#ifdef NEW_ENGINE
+SDL_Rect *
+ne_get_blocks (char *picfile, int num_blocks, int blocks_per_line,
+	       int source_line, int target_line)
 {
   int i;
+  SDL_Surface *tmp;
+  SDL_Rect rect, *ret;
 
-  if (!PlusExtentionsOn)
+  /* Load the map-block BMP file into the appropriate surface */
+  if( !(tmp = SDL_LoadBMP(picfile) ))
     {
-      printf ("\nGetShieldBlocks() called: is an extension!\n");
-      return;
-    }
-  // Sicherheitsabfrage gegen doppeltes initialisieren
-  if (ShieldBlocks)
-    {
-      DebugPrintf (" Die Schildbloecke waren schon initialisiert !");
-      getchar ();
+      fprintf(stderr, "Couldn't load %s: %s\n", picfile, SDL_GetError());
       Terminate (ERR);
     }
 
-  if (!(ShieldBlocks = MyMalloc (4 * BLOCKMEM + 10)))
+  if (!blocks_per_line) /* only one line here */
+    blocks_per_line = num_blocks;
+
+  ret = (SDL_Rect*)MyMalloc(num_blocks*sizeof(SDL_Rect));
+
+
+  /* now copy the individual map-blocks into ne_blocks */
+  for (i=0; i < num_blocks; i++)
     {
-      DebugPrintf (" Keine Memory fuer ShieldBlocks !.");
-      getchar ();
-      Terminate (ERR);
+      rect.x = (i%blocks_per_line)*(BLOCK_WIDTH+1);
+      rect.y = (source_line+i/blocks_per_line)*(BLOCK_HEIGHT+1);
+      rect.w = BLOCK_WIDTH;
+      rect.h = BLOCK_HEIGHT;
+      
+      ret[i].x = i*BLOCK_WIDTH;
+      ret[i].y = target_line*BLOCK_HEIGHT;
+      ret[i].w = BLOCK_WIDTH;
+      ret[i].h = BLOCK_HEIGHT;
+      SDL_BlitSurface (tmp, &rect, ne_blocks, &ret[i]);
     }
+  SDL_FreeSurface (tmp);
 
-  // Laden des Bildes
-  Load_PCX_Image (SHIELDPICTUREBILD_PCX, InternalScreen, FALSE);
+  return (ret);
 
-  // Isolieren der Schildbl"ocke
-  for (i = 0; i < 4; i++)
-    {
-      IsolateBlock (InternalScreen,
-		    ShieldBlocks + i * BLOCKBREITE * BLOCKHOEHE,
-		    i * (BLOCKBREITE + 1), 0, BLOCKBREITE, BLOCKHOEHE);
-    }
-}				// void GetShieldBlocks(void)
+} /* ne_get_blocks() */
 
+#endif // NEW_ENGINE
 
 /*@Function============================================================
 @Desc: GetBlocks

@@ -171,6 +171,21 @@ Load_PCX_Image (char *PCX_Filename, unsigned char *Parameter_Screen, int LoadPal
 
 } // void Load_PCX_Image(char* PCX_Filename,unsigned char* Screen,int LoadPal)
 
+/*
+ * replace every occurance of color src by dst in Surface surf
+ */
+void replace_color (SDL_Surface *surf, SDL_Color src, SDL_Color dst)
+{
+  int i, j;
+    
+  for (i=0; i < surf->w; i++)
+    for (j=0; j < surf->h; i++)
+      ; /* ok, I'll do that later ; */
+
+  return;
+}
+
+
 /*-----------------------------------------------------------------
  * @Desc: get the pics for: druids, bullets, blasts
  * 				
@@ -184,36 +199,80 @@ Load_PCX_Image (char *PCX_Filename, unsigned char *Parameter_Screen, int LoadPal
 int
 InitPictures (void)
 {
-  int i;
-  char *filename;
+  int i, j;
+  SDL_Surface *tmp;
+  int block_line = 0;   /* keep track of line in ne_blocks we're writing */
 
-  filename = BLOCKBILD1_PCX;
-  Load_PCX_Image (filename, InternalScreen, FALSE);
-
-   /* Load the map-block BMP file into the appropriate surface */
-  if( !(ne_map_blocks = SDL_LoadBMP(BLOCKBILD1_PCX)) )
+  /* create the internal storage for all our blocks */
+  tmp = SDL_CreateRGBSurface(0, NUM_MAP_BLOCKS*BLOCK_WIDTH,
+			     10*BLOCK_HEIGHT, ne_bpp, 0, 0, 0, 0);
+  if (tmp == NULL)
     {
-      fprintf(stderr, "Couldn't load %s: %s\n", filename, SDL_GetError());
+      printf ("\nCould not create ne_blocks surface: %s\n", SDL_GetError());
       return (FALSE);
     }
-  
-  if (SDL_SetColorKey(ne_map_blocks, SDL_SRCCOLORKEY, ne_transp_key) == -1 )
+  /* 
+   * convert this to display format for fast blitting 
+   */
+  ne_blocks = SDL_DisplayFormat(tmp);  /* the surface is copied !*/
+  if (ne_blocks == NULL) 
+    {
+      printf ("\nSDL_DisplayFormat() has failed: %s\n", SDL_GetError());
+      return (FALSE);
+    }
+  SDL_FreeSurface (tmp); /* and free the old one */
+
+  /* set the transparent color */
+  if (SDL_SetColorKey(ne_blocks, SDL_SRCCOLORKEY, ne_transp_key) == -1 )
     {
       fprintf (stderr, "Transp setting by SDL_SetColorKey() failed: %s \n",
 	       SDL_GetError());
       return (FALSE);
     }
 
-  /* now init the individual positions of the map-blocks in ne_map_blocks */
-  for (i=0; i < NUM_BLOCKS; i++)
-    {
-      ne_map_block_rect[i].x = i*(BLOCK_WIDTH+1);
-      ne_map_block_rect[i].y = i/9;
-      ne_map_block_rect[i].w = BLOCK_WIDTH;
-      ne_map_block_rect[i].h = BLOCK_HEIGHT;
-    }
+  /* 
+   * and now read in the blocks from various files into ne_blocks
+   * and initialise the block-coordinates 
+   */
+
+  ne_map_block =
+    ne_get_blocks (NE_MAP_BLOCK_FILE, NUM_MAP_BLOCKS, 9, 0, block_line++);
+
+  ne_influ_block =
+    ne_get_blocks (NE_DROID_BLOCK_FILE, DROID_PHASES, 0, 0, block_line++);
+
+  ne_droid_block =
+    ne_get_blocks (NE_DROID_BLOCK_FILE, DROID_PHASES, 0, 1, block_line++);
+
+  for (i=0; i < ALLBULLETTYPES; i++)
+    Bulletmap[i].block =
+      ne_get_blocks (NE_BULLET_BLOCK_FILE, Bulletmap[i].phases, 0, i, block_line++);
+
+  for (i=0; i < ALLBLASTTYPES; i++)
+    Blastmap[i].block =
+      ne_get_blocks (NE_BLAST_BLOCK_FILE, Blastmap[i].phases, 0, i, block_line++);
+
+
+
+
+
+  /* TEST: show those successively on the screen */
   
-   return (TRUE);
+  SDL_SaveBMP (ne_blocks, "../graphics/debug.bmp");
+
+  for (i=0; i<ALLBLASTTYPES; i++)
+    for (j=0; j<Blastmap[i].phases; j++)
+      {
+	SDL_BlitSurface (ne_blocks, &ne_map_block[0], ne_screen, NULL);
+	SDL_BlitSurface (ne_blocks, &Blastmap[i].block[j], ne_screen, NULL);
+	SDL_UpdateRect (ne_screen, 0,0,0,0);
+	getchar_raw ();
+      }
+
+
+  Terminate(OK);
+  
+  return (TRUE);
 }
 
 #else /* the old working engine */
@@ -337,9 +396,15 @@ SetColors (int FirstCol, int PalAnz, char *PalPtr)
 int
 InitPalette (void)
 {
+#ifdef NEW_ENGINE
+  return (OK);
+#else
+
   /* Hier sollte die Palette geladen werden */
   Load_PCX_Image (PALBILD_PCX, InternalScreen, TRUE);
   return OK;
+
+#endif
 }				// int InitPalette(void)
 
 
@@ -409,7 +474,6 @@ Init_Video (void)
     } else
       printf("\nSDL Video initialisation successful.\n");
 
-
   /* clean up on exit */
   atexit (SDL_Quit);
 
@@ -442,7 +506,8 @@ Init_Video (void)
    * once this is up and running, we'll provide others modes
    * as well.
    */
-  if( !(ne_screen = SDL_SetVideoMode (320, 200, 8, flags)) )
+  ne_bpp = 8; /* start with the simplest */
+  if( !(ne_screen = SDL_SetVideoMode (320, 200, ne_bpp, flags)) )
     {
       fprintf(stderr, "Couldn't set 320x200 video mode: %s\n", SDL_GetError());
       exit(-1);
@@ -453,8 +518,8 @@ Init_Video (void)
   ne_transp_rgb.gruen =  43; 
   ne_transp_rgb.blau  =  43; 
   /* and corresponding key: */
-  ne_transp_key = SDL_MapRGB(vid_info->vfmt, ne_transp_rgb.rot,
-			     ne_transp_rgb.gruen, ne_transp_rgb.rot);
+  ne_transp_key = SDL_MapRGB(ne_screen->format, ne_transp_rgb.rot,
+			     ne_transp_rgb.gruen, ne_transp_rgb.blau);
 
 #else     /* use the old but working graphics engine */
   ScaledSurface = SDL_SetVideoMode(320*2 , 200*2, 8, flags);

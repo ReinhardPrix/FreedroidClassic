@@ -94,12 +94,18 @@ enum _sounds
 #define ERR 	-1
 #define OK		0
 
+#ifdef NEW_ENGINE
+#define NE_MAP_BLOCK_FILE	"../graphics/block.bmp"
+#define NE_DROID_BLOCK_FILE	"../graphics/droids.bmp"
+#define NE_BULLET_BLOCK_FILE 	"../graphics/bullet.bmp"
+#define NE_BLAST_BLOCK_FILE 	"../graphics/blast.bmp"
+#define NE_FRAME_FILE		"../graphics/rahmen.bmp"
+#else
+
 #define PALBILD_PCX                "../graphics/palbild.bmp"
 #define BLOCKBILD1_PCX             "../graphics/block.bmp"
-#define BLOCKBILD2_PCX             ""
 #define TITELBILD1_PCX             "../graphics/newtitle.bmp"
 #define RAHMENBILD1_PCX            "../graphics/rahmen.bmp"
-#define PARAPLUSRAHMENBILD_PCX     "../graphics/plusrah1.bmp"
 #define BLASTBILD_PCX              "../graphics/blast.bmp"
 #define BULLETBILD_PCX             "../graphics/bullet.bmp"
 #define INFLUENCEBILD_PCX          "../graphics/influ.bmp"
@@ -110,10 +116,12 @@ enum _sounds
 #define FONTBILD_PCX               "../graphics/parafont.bmp"
 #define CONSOLENBILD_PCX           "../graphics/console.bmp"
 #define ROBOTPICTUREBILD_PCX       "../graphics/robots.bmp"
-#define SHIELDPICTUREBILD_PCX      "../graphics/shield.bmp"
+
 #define ELEMENTS_FILE_PCX	   "../graphics/to_elem.bmp"
 
 #define DATA70ZEICHENSATZ          "../graphics/para8x8.fnt"
+#endif
+
 #define SHIPNAME                   "../map/ship1"
 #define COLORFILE                  "../map/levels.col"
 
@@ -199,6 +207,7 @@ enum _sounds
 
 #define NUMBEROFS 		5+12*BLOCKBREITE
 #define ENEMYPHASES 		8
+#define DROID_PHASES            ENEMYPHASES
 
 #define WAIT_LEVELEMPTY		18	/* warte bevor Graufaerben */
 #define WAIT_AFTER_KILLED	45	/* warte, bevor Spiel aus */
@@ -216,15 +225,6 @@ enum _sounds
 
 /* Soundblasterkonstanten */
 #define SBCHANNELS 		7
-
-/* Nummern der Schilder */
-enum _shields
-{
-  SHIELD0 = 0,
-  SHIELD1,
-  SHIELD2,
-  SHIELD3
-};
 
 /* Richtungsdefinitionen (fuer die Einstellung der Schussrichtung) */
 enum _directions
@@ -262,7 +262,7 @@ enum _directions
 /* Maximale Anzahl von ... */
 
 #define BLOCKANZAHL 		43
-#define NUM_BLOCKS		BLOCKANZAHL  /* total number of map-blocks */
+#define NUM_MAP_BLOCKS		BLOCKANZAHL  /* total number of map-blocks */
 
 #define ALLDRUIDTYPES		24	/* number of druid-models that exist */
 #define ALLBULLETTYPES		4	/* number of bullet-types */
