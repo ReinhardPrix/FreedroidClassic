@@ -129,6 +129,7 @@ EXTERN void PutMouseMoveCursor ( void ) ;
 EXTERN void ShowRobotPicture (int PosX, int PosY, int Number);
 EXTERN void ShowInventoryScreen ( void );
 EXTERN int get_light_strength ( moderately_finepoint target_pos );
+EXTERN void clear_all_loaded_tux_images ( int with_free );
 
 // open_gl.c 
 #undef EXTERN

@@ -1184,6 +1184,8 @@ InitPictures (void)
 
   ShowStartupPercentage ( 43 ) ; 
 
+  clear_all_loaded_tux_images ( FALSE ) ;
+
   Load_Tux_Surfaces();
 
   ShowStartupPercentage ( 65 ) ; 

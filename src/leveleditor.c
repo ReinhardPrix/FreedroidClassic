@@ -3284,6 +3284,8 @@ LevelEditor(void)
 	  // know speed in here too, so that we can identify possible unnescessary lags
 	  // and then maybe do something about them...
 	  //
+	  ComputeFPSForThisFrame();
+	  if ( SkipAFewFrames ) SkipAFewFrames--;
 	  StartTakingTimeForFPSCalculation(); 
 
 	  //--------------------
@@ -3765,8 +3767,6 @@ LevelEditor(void)
 
 	  LeftMousePressedPreviousFrame = axis_is_active; 
 	  RightMousePressedPreviousFrame = MouseRightPressed() ;
-
-	  ComputeFPSForThisFrame();
 
 	} // while (!EscapePressed())
       while( EscapePressed() );

@@ -505,7 +505,7 @@ ShowCombatScreenTexts ( int mask )
 	    FPS_Displayed=(int)9999;
 	  TimeSinceLastFPSUpdate=0;
 
-	  DebugPrintf ( -2 , "\nFPS_Displayed: %d. " , FPS_Displayed );
+	  // DebugPrintf ( -2 , "\nFPS_Displayed: %d. " , FPS_Displayed );
 
 	}
       
@@ -736,22 +736,23 @@ There was an obstacle type given, that exceeds the number of\n\
   //
   if ( our_obstacle == level_editor_marked_obstacle )
     {
-      DebugPrintf ( 0 , "\nCOLOR FILTER INVOKED FOR MARKED OBSTACLE!" );
-      tmp . surface = our_SDL_display_format_wrapperAlpha ( obstacle_map [ our_obstacle -> type ] . image . surface );
-      tmp . surface -> format -> Bmask = 0x0 ; // 0FFFFFFFF ;
-      tmp . surface -> format -> Rmask = 0x0 ; // FFFFFFFF ;
-      tmp . surface -> format -> Gmask = 0x0FFFFFFFF ;
-      tmp . offset_x = obstacle_map [ our_obstacle -> type ] . image . offset_x ;
-      tmp . offset_y = obstacle_map [ our_obstacle -> type ] . image . offset_y ;
-      // obstacle_map [ our_obstacle -> type ] . image . surface -> format -> Gmask = 0x0FFFFFFFF ;
-      // SDL_UnlockSurface ( obstacle_map [ our_obstacle -> type ] . image . surface );
-      blit_iso_image_to_map_position ( tmp , 
-				       our_obstacle -> pos . x , our_obstacle -> pos . y );
-      SDL_FreeSurface ( tmp . surface );
-      // SDL_LockSurface ( obstacle_map [ our_obstacle -> type ] . image . surface );
-      // obstacle_map [ our_obstacle -> type ] . image . surface -> format -> Bmask = temp_Bmask ; 
-      // obstacle_map [ our_obstacle -> type ] . image . surface -> format -> Rmask = temp_Rmask ; 
-      // SDL_UnlockSurface ( obstacle_map [ our_obstacle -> type ] . image . surface );
+      if ( use_open_gl )
+	{
+	  blit_open_gl_texture_to_map_position ( obstacle_map [ our_obstacle -> type ] . image , 
+						 our_obstacle -> pos . x , our_obstacle -> pos . y , 1.0 , 0, ( SDL_GetTicks() % 2 ) * 1.0 ) ;
+	}
+      else
+	{
+	  DebugPrintf ( 0 , "\nCOLOR FILTER INVOKED FOR MARKED OBSTACLE!" );
+	  tmp . surface = our_SDL_display_format_wrapperAlpha ( obstacle_map [ our_obstacle -> type ] . image . surface );
+	  tmp . surface -> format -> Bmask = 0x0 ; // 0FFFFFFFF ;
+	  tmp . surface -> format -> Rmask = 0x0 ; // FFFFFFFF ;
+	  tmp . surface -> format -> Gmask = 0x0FFFFFFFF ;
+	  tmp . offset_x = obstacle_map [ our_obstacle -> type ] . image . offset_x ;
+	  tmp . offset_y = obstacle_map [ our_obstacle -> type ] . image . offset_y ;
+	  blit_iso_image_to_map_position ( tmp , our_obstacle -> pos . x , our_obstacle -> pos . y );
+	  SDL_FreeSurface ( tmp . surface );
+	}
     }
   else
     {
@@ -1505,8 +1506,7 @@ AssembleCombatPicture (int mask)
       glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
     }
   */
-
-  SDL_SetColorKey (Screen, 0, 0);
+  // SDL_SetColorKey (Screen, 0, 0);
   // SDL_SetAlpha( Screen , 0 , SDL_ALPHA_OPAQUE ); 
 
   isometric_show_floor_around_tux_without_doublebuffering ( mask );
@@ -1700,7 +1700,6 @@ free_one_loaded_tux_image_series ( int tux_part_group )
 void
 iso_put_tux_part ( int tux_part_group , char* part_string , int x , int y , int player_num , int rotation_index )
 {
-  static int first_call = TRUE;
   char* fpath;
   char constructed_filename[5000];
   int i;
@@ -1710,18 +1709,6 @@ iso_put_tux_part ( int tux_part_group , char* part_string , int x , int y , int 
   char* motion_class_string [ ALL_TUX_MOTION_CLASSES ] = { "sword_motion" , "gun_motion" } ;
   float my_speed;
   static int previously_used_motion_class = -4 ; // something we'll never really use...
-
-  //--------------------
-  // At first call, we need to mark all the iso_images as not yet loaded...
-  //
-  if ( first_call )
-    {
-      first_call = FALSE;
-      for ( i = 0 ; i < ALL_PART_GROUPS ; i ++ )
-	{
-	  clear_all_loaded_tux_images ( FALSE ) ;
-	}
-    }
 
   //--------------------
   // Now we find out which weapon class to use in this case.
@@ -1808,14 +1795,18 @@ Empty part string received!",
       strcpy ( previously_used_part_strings [ tux_part_group ] , part_string );
     }
 
+  //--------------------
+  // Now everything should be loaded correctly and we just need to blit the Tux.  Anything
+  // that isn't loaded yet should be considered a serious bug and a reason to terminate 
+  // immediately...
+  //
   if ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface != NULL )
     {
       blit_iso_image_to_map_position ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] , Me [ player_num ] . pos . x , Me [ player_num ] . pos . y );
     }
   else
     {
-      GiveStandardErrorMessage ( "iso_put_tux(...)" , "Unable to load tux part!",
-				 PLEASE_INFORM, IS_FATAL );
+      GiveStandardErrorMessage ( "iso_put_tux(...)" , "Unable to load tux part!", PLEASE_INFORM, IS_FATAL );
     }
 
 }; // void iso_put_tux_part ( char* part_string , int x , int y , int player_num )
