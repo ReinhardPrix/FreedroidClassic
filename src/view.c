@@ -1,6 +1,6 @@
 /* 
  *
- *   Copyright (c) 1994, 2002, 2003 Johannes Prix
+ *   Copyright (c) 1994, 2002, 2003, 2004 Johannes Prix
  *   Copyright (c) 1994, 2002 Reinhard Prix
  *
  *

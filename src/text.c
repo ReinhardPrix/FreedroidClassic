@@ -607,7 +607,7 @@ DisplayBigScreenMessage( void )
  *             out of clip-rect completely)
  *-----------------------------------------------------------------*/
 int
-DisplayText ( char *Text, int startx, int starty, const SDL_Rect *clip , float text_stretch )
+DisplayText ( const char *Text, int startx, int starty, const SDL_Rect *clip , float text_stretch )
 {
     char *tmp;	// mobile pointer to the current position in the string to be printed
     SDL_Rect Temp_Clipping_Rect; // adding this to prevent segfault in case of NULL as parameter
@@ -649,7 +649,7 @@ DisplayText ( char *Text, int startx, int starty, const SDL_Rect *clip , float t
     //
     // The running text pointer must be initialized.
     //
-    tmp = Text;
+    tmp = (char*) Text;  // this is no longer a 'const' char*, but only a char*
     
     while ( *tmp && ( MyCursorY < clip -> y + clip -> h ) )
     {

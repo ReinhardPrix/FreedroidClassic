@@ -1122,7 +1122,6 @@ Freedroid received a rotation model number that does not exist!",
 		
 		//--------------------
 		// Now we can proceed to load the images for each animation phase
-		// asdf
 		//
 		if ( j + 1 <= last_walk_animation_image [ ModelNr ] )
 		{
@@ -2421,7 +2420,49 @@ Load_Enemy_Surfaces( void )
     droid_stand_animation_speed_factor [ i ] = 6 ;
     ModelMultiplier  [ i ] = 1 ;i++;
         
-    
+    PrefixToFilename [ i ] = "jasmine" ; // 33
+    //--------------------
+    // As the kevin model now uses an image collection file, the information
+    // about the first and last animation images will be taken from
+    // the image collection archive anyway, so no need to hard-code
+    // anything here and changes in the image collection file will
+    // take effect immediately without code adaption...
+    //
+    // first_walk_animation_image [ i ] = 1 ;
+    // last_walk_animation_image [ i ] = 5 ;
+    // first_attack_animation_image [ i ] = 6 ;
+    // last_attack_animation_image [ i ] = 6 ;
+    // first_gethit_animation_image [ i ] = 7 ;
+    // last_gethit_animation_image [ i ] = 7 ;
+    // first_death_animation_image [ i ] = 8 ;
+    // last_death_animation_image [ i ] = 8 ;
+    // first_stand_animation_image [ i ] = 9 ;
+    // last_stand_animation_image [ i ] = 13 ;
+    // use_default_attack_image [ i ] = TRUE ;
+    // use_default_gethit_image [ i ] = TRUE ;
+    // use_default_death_image [ i ] = TRUE ;
+    // use_default_stand_image [ i ] = FALSE ;
+    Druidmap [ i ] . suppress_bullet_generation_when_attacking = TRUE ;
+    Druidmap [ i ] . use_image_archive_file = TRUE ;
+    droid_walk_animation_speed_factor [ i ] = 8 ;
+    droid_attack_animation_speed_factor [ i ] = 10 ;
+    droid_gethit_animation_speed_factor [ i ] = 10 ;
+    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_stand_animation_speed_factor [ i ] = 6 ;
+    ModelMultiplier  [ i ] = 1 ;i++;
+
+    //--------------------
+    // Finally we do some test to make sure we don't write
+    // over the bounds of our array or so
+    //
+    if ( i > ENEMY_ROTATION_MODELS_AVAILABLE )
+    {
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
+There seem to be a bit more models mentioned in the game than\n\
+currently allowed in defs.h (ENEMY_ROTATION_MODELS_AVAILABLE).\n\
+This should be investigated as soon as possible.",
+				   PLEASE_INFORM, IS_FATAL );
+    }
 }; // void LoadEnemySurfaces( void )
 
 /* ----------------------------------------------------------------------

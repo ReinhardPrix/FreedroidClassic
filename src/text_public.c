@@ -340,7 +340,7 @@ belonging to Freedroid.",
     // MyMemmem, so that we can handle 0 entries in the middle of the file content as well
     //
     // if ( (ReadPointer = strstr( Data , File_End_String ) ) == NULL )
-    if ( ( ReadPointer = MyMemmem ( Data, (size_t) MemoryAmount , File_End_String , (size_t)strlen( File_End_String ))) == NULL)
+    if ( ( ReadPointer = MyMemmem ( Data, (size_t) MemoryAmount , (unsigned char*)File_End_String , (size_t)strlen( File_End_String ))) == NULL)
     {
 	DebugPrintf( 0, "\n\nfilename: '%s'\n" , filename );
       DebugPrintf( 0, "File_End_String: '%s'\n" , File_End_String );
