@@ -573,6 +573,10 @@ void GreatDruidShow(void){
       DisplayText(InfoText,USERFENSTERPOSX,USERFENSTERPOSY,RealScreen,FALSE);
       ShowRobotPicture(USERFENSTERPOSX,USERFENSTERPOSY+2*FONTHOEHE,Infodroid,RealScreen);
 
+      KillTastaturPuffer();
+      while ( !LeftPressed() && !UpPressed() && !DownPressed() && !RightPressed() && !SpacePressed())
+	JoystickControl();
+
       if (UpPressed()) {
 	Infodroid--;
 	// Einem zu schnellen Weiterbl"attern vorbeugen
@@ -605,9 +609,7 @@ void GreatDruidShow(void){
 	printf("\nvoid GreadDruidShow(void): Alternate end of function reached via Space0.");
 	return;
       }
-      KillTastaturPuffer();
-      while ( !LeftPressed() && !UpPressed() && !DownPressed() && !RightPressed() && !SpacePressed())
-	JoystickControl();
+
     }
     while (LeftPressed() || UpPressed() || DownPressed() || RightPressed() || SpacePressed())
       JoystickControl();
