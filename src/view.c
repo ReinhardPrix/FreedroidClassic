@@ -629,45 +629,13 @@ Fill_Rect (SDL_Rect rect, SDL_Color color)
 void
 ShowRobotPicture (int PosX, int PosY, int Number )
 {
-  SDL_Surface *tmp;
   SDL_Rect target;
-  char *fpath;
-  char fname[500];
-
-  DebugPrintf (2, "\nvoid ShowRobotPicture(...): Function call confirmed.");
-
-  strcpy( fname, Druidmap[Number].druidname );
-  strcat( fname , ".png" );
-
-  fpath = find_file (fname, GRAPHICS_DIR, FALSE);
-
-  if ( (tmp=IMG_Load (fpath)) == NULL )
-    {
-      fprintf (stderr,
-	     "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The image file named %s could not be read by SDL.\n\
-\n\
-The error reason as specified by SDL is : %s.\n\
-\n\
-Please check that the file is present and not corrupted\n\
-in your distribution of Freedroid.\n\
-\n\
-Freedroid will terminate now to point at the error.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , fpath , SDL_GetError() );
-      Terminate (ERR);
-    }
 
   SDL_SetClipRect( ne_screen , NULL );
-  Set_Rect (target, PosX, PosY, tmp->w, tmp->h);
-  SDL_BlitSurface( tmp , NULL, ne_screen , &target);
-  SDL_FreeSurface(tmp);
+  Set_Rect (target, PosX, PosY, 0, 0);
+  SDL_BlitSurface( droid_pic[Number], NULL, ne_screen , &target);
 
-  DebugPrintf (2, "\nvoid ShowRobotPicture(...): Usual end of function reached.");
+  return;
 }; // void ShowRobotPicture ( ... )
 
 

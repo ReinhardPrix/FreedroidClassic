@@ -172,6 +172,7 @@ EXTERN const SDL_VideoInfo *ne_vid_info;/* info about current video mode */
 EXTERN int screen_bpp; 			/* bits per pixel */
 
 EXTERN SDL_Surface *banner_pic;      /* the banner pic */
+EXTERN SDL_Surface *droid_pic[NUM_DROIDS];
 
 EXTERN SDL_Surface *console_pic;
 EXTERN SDL_Surface *console_bg_pic1;

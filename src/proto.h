@@ -198,92 +198,24 @@ EXTERN void Takeover_Game_Lost_Sound (void);
 #else
 #define EXTERN extern
 #endif
+EXTERN void ReleaseKey (SDLKey key);
+EXTERN int keyboard_update(void);
+EXTERN int getchar_raw (void);
 EXTERN void ResetMouseWheel (void);
-EXTERN int WheelUpPressed(void);
-EXTERN int WheelDownPressed(void);
-EXTERN int MouseRightPressed(void);
-EXTERN int MouseLeftPressed(void);
+EXTERN bool WheelUpPressed(void);
+EXTERN bool WheelDownPressed(void);
+EXTERN bool MouseRightPressed(void);
+EXTERN bool MouseRightPressedR (void);
+EXTERN bool MouseLeftPressed(void);
+EXTERN bool MouseLeftPressedR (void);
 EXTERN void Init_Joy(void);
 EXTERN void ReactToSpecialKeys(void);
-EXTERN int Shift_Was_Pressed(void);
-EXTERN int Ctrl_Was_Pressed(void);
-EXTERN int Alt_Was_Pressed(void);
-EXTERN void Init_SDL_Keyboard(void);
-EXTERN int getchar_raw (void);
-EXTERN int keyboard_update(void);
-EXTERN void ClearKbState (void);
-EXTERN int LeftPressed (void);
-EXTERN int RightPressed (void);
-EXTERN int UpPressed (void);
-EXTERN int DownPressed (void);
-EXTERN int SpacePressed (void);
-EXTERN int EnterPressed (void);
-EXTERN int EscapePressed (void);
-EXTERN int BackspacePressed (void);
-EXTERN int KP_PLUS_Pressed (void);
-EXTERN int KP_MINUS_Pressed (void);
-EXTERN int KP_MULTIPLY_Pressed (void);
-EXTERN int KP_DIVIDE_Pressed (void);
-EXTERN int KP_ENTER_Pressed (void);
-EXTERN int Number0Pressed (void);
-EXTERN int Number1Pressed (void);
-EXTERN int Number2Pressed (void);
-EXTERN int Number3Pressed (void);
-EXTERN int Number4Pressed (void);
-EXTERN int Number5Pressed (void);
-EXTERN int Number6Pressed (void);
-EXTERN int Number7Pressed (void);
-EXTERN int Number8Pressed (void);
-EXTERN int Number9Pressed (void);
-EXTERN int KP0Pressed (void);
-EXTERN int KP1Pressed (void);
-EXTERN int KP2Pressed (void);
-EXTERN int KP3Pressed (void);
-EXTERN int KP4Pressed (void);
-EXTERN int KP5Pressed (void);
-EXTERN int KP6Pressed (void);
-EXTERN int KP7Pressed (void);
-EXTERN int KP8Pressed (void);
-EXTERN int KP9Pressed (void);
-EXTERN int F1Pressed (void);
-EXTERN int F2Pressed (void);
-EXTERN int F3Pressed (void);
-EXTERN int F4Pressed (void);
-EXTERN int F5Pressed (void);
-EXTERN int F6Pressed (void);
-EXTERN int F7Pressed (void);
-EXTERN int F8Pressed (void);
-EXTERN int F9Pressed (void);
-EXTERN int F10Pressed (void);
-EXTERN int F11Pressed (void);
-EXTERN int F12Pressed (void);
-EXTERN int APressed (void);
-EXTERN int BPressed (void);
-EXTERN int CPressed (void);
-EXTERN int DPressed (void);
-EXTERN int EPressed (void);
-EXTERN int FPressed (void);
-EXTERN int GPressed (void);
-EXTERN int HPressed (void);
-EXTERN int IPressed (void);
-EXTERN int JPressed (void);
-EXTERN int KPressed (void);
-EXTERN int LPressed (void);
-EXTERN int MPressed (void);
-EXTERN int NPressed (void);
-EXTERN int OPressed (void);
-EXTERN int PPressed (void);
-EXTERN int QPressed (void);
-EXTERN int RPressed (void);
-EXTERN int SPressed (void);
-EXTERN int TPressed (void);
-EXTERN int UPressed (void);
-EXTERN int VPressed (void);
-EXTERN int WPressed (void);
-EXTERN int XPressed (void);
-EXTERN int YPressed (void);
-EXTERN int ZPressed (void);
-EXTERN int NoDirectionPressed (void);
+
+EXTERN bool KeyIsPressed (SDLKey key);
+EXTERN bool KeyIsPressedR (SDLKey key);
+EXTERN bool ModIsPressed (SDLMod mod);
+
+EXTERN bool NoDirectionPressed (void);
 
 /* menu.c */
 #undef EXTERN
@@ -297,6 +229,7 @@ EXTERN void InitiateMenu (bool with_droids);
 EXTERN void QuitGameMenu (void);
 EXTERN void Cheatmenu (void);
 EXTERN void EscapeMenu (void);
+EXTERN bool LevelEditMenu (void);
 
 /* misc.c */
 #undef EXTERN

@@ -615,21 +615,16 @@ Pause (void)
 
       ComputeFPSForThisFrame();
 
-      if (CPressed ())
+      if (KeyIsPressedR ('c'))
 	{
-	  while (CPressed());
 	  if (Me.status != CHEESE) Me.status = CHEESE;
 	  else Me.status = PAUSE;
 	  Cheese = !Cheese;
-
 	} /* if (CPressed) */
 
-      if ( SpacePressed() )
-	{
-	  Pause = FALSE;
-	  while ( SpacePressed() );  /* wait for release */
-	}
-
+      if ( SpacePressedR() )
+	Pause = FALSE;
+      
     } /* while (Pause) */
 
   return;

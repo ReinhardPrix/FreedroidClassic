@@ -76,11 +76,12 @@ main (int argc, char *const argv[])
     {
       InitNewMission ( STANDARD_MISSION );
 
-      while ((SpacePressed()||MouseLeftPressed()));
+      // release fire-keys
+      if (FirePressedR()) ;
       show_droid_info (Me.type, -3);  // show unit-intro page
 
       now=SDL_GetTicks();
-      while (  (SDL_GetTicks() - now < SHOW_WAIT) && (!(SpacePressed()||MouseLeftPressed())) );
+      while (  (SDL_GetTicks() - now < SHOW_WAIT) && (!FirePressedR())) usleep(50);
 
       ClearGraphMem();
       DisplayBanner (NULL, NULL, BANNER_FORCE_UPDATE |BANNER_NO_SDL_UPDATE);

@@ -42,7 +42,7 @@
 
 #define REFRESH_ENERGY		3
 // NORMALISATION #define COLLISION_PUSHSPEED	70
-#define COLLISION_PUSHSPEED	7
+#define COLLISION_PUSHSPEED	2.0
 
 #define BOUNCE_LOSE_ENERGY 3	/* amount of lose-energy at enemy-collisions */
 #define BOUNCE_LOSE_FACT 1
@@ -712,7 +712,6 @@ CheckInfluenceEnemyCollision (void)
   float dist2;
   float max_step_size;
   int swap;
-  int first_collision = TRUE;	/* marker */
 
   // return;
 
@@ -740,40 +739,34 @@ CheckInfluenceEnemyCollision (void)
       if (Me.status != TRANSFERMODE)
 	{
 
-	  if (first_collision)
-	    {			
-	      /* nur beim ersten mal !!! */
-	      /* den Geschwindigkeitsvektor des Influencers invertieren */
-	      Me.speed.x = -Me.speed.x;
-	      Me.speed.y = -Me.speed.y;
+	  Me.speed.x = -Me.speed.x;
+	  Me.speed.y = -Me.speed.y;
 
-	      if (Me.speed.x != 0)
-		Me.speed.x +=
-		  COLLISION_PUSHSPEED * (Me.speed.x / fabsf (Me.speed.x));
-	      else if (xdist)
-		Me.speed.x = COLLISION_PUSHSPEED * (xdist / fabsf (xdist));
-	      if (Me.speed.y != 0)
-		Me.speed.y +=
-		  COLLISION_PUSHSPEED * (Me.speed.y / fabsf (Me.speed.y));
-	      else if (ydist)
-		Me.speed.y = COLLISION_PUSHSPEED * (ydist / fabsf (ydist));
-
-	      // move the influencer a little bit out of the enemy AND the enemy a little bit out of the influ
-	      max_step_size = ((Frame_Time()) < ( MAXIMAL_STEP_SIZE ) ? (Frame_Time()) : ( MAXIMAL_STEP_SIZE )) ; 
-	      Me.pos.x += copysignf( max_step_size , Me.pos.x - AllEnemys[i].pos.x ) ;
-	      Me.pos.y += copysignf( max_step_size , Me.pos.y - AllEnemys[i].pos.y ) ;
-	      AllEnemys[i].pos.x -= copysignf( Frame_Time() , Me.pos.x - AllEnemys[i].pos.x ) ;
-	      AllEnemys[i].pos.y -= copysignf( Frame_Time() , Me.pos.y - AllEnemys[i].pos.y ) ;
-	      // Me.pos.x += Me.speed.x * Frame_Time ();
-	      // Me.pos.y += Me.speed.y * Frame_Time ();
-
-	      // there might be walls close too, so lets check again for collisions with them
-	      CheckInfluenceWallCollisions ();
-
-	      BounceSound ();
-
-	    }			/* if first_collision */
-
+	  if (Me.speed.x != 0)
+	    Me.speed.x +=
+	      COLLISION_PUSHSPEED * (Me.speed.x / fabsf (Me.speed.x));
+	  else if (xdist)
+	    Me.speed.x = COLLISION_PUSHSPEED * (xdist / fabsf (xdist));
+	  if (Me.speed.y != 0)
+	    Me.speed.y +=
+	      COLLISION_PUSHSPEED * (Me.speed.y / fabsf (Me.speed.y));
+	  else if (ydist)
+	    Me.speed.y = COLLISION_PUSHSPEED * (ydist / fabsf (ydist));
+	  
+	  // move the influencer a little bit out of the enemy AND the enemy a little bit out of the influ
+	  max_step_size = ((Frame_Time()) < ( MAXIMAL_STEP_SIZE ) ? (Frame_Time()) : ( MAXIMAL_STEP_SIZE )) ; 
+	  Me.pos.x += copysignf( max_step_size , Me.pos.x - AllEnemys[i].pos.x ) ;
+	  Me.pos.y += copysignf( max_step_size , Me.pos.y - AllEnemys[i].pos.y ) ;
+	  AllEnemys[i].pos.x -= copysignf( Frame_Time() , Me.pos.x - AllEnemys[i].pos.x ) ;
+	  AllEnemys[i].pos.y -= copysignf( Frame_Time() , Me.pos.y - AllEnemys[i].pos.y ) ;
+	  // Me.pos.x += Me.speed.x * Frame_Time ();
+	  // Me.pos.y += Me.speed.y * Frame_Time ();
+	  
+	  // there might be walls close too, so lets check again for collisions with them
+	  CheckInfluenceWallCollisions ();
+	  
+	  BounceSound ();
+	      
 	  // shortly stop this enemy, then send him back to previous waypoint
 	  if (!AllEnemys[i].warten)
 	    {

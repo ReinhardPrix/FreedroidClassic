@@ -46,6 +46,32 @@
 
 #define FreeIfUsed(pt) do { if ((pt)) SDL_FreeSurface((pt)); } while(0)
 
+#define EnterPressed() KeyIsPressed(SDLK_RETURN)
+
+#define ShiftPressed() ModIsPressed(KMOD_SHIFT)
+#define AltPressed() ModIsPressed(KMOD_ALT)
+#define CtrlPressed() ModIsPressed(KMOD_CTRL)
+
+#define UpPressed() (KeyIsPressed(SDLK_UP)||KeyIsPressed('w'))
+#define DownPressed() (KeyIsPressed(SDLK_DOWN)||KeyIsPressed('s'))
+#define LeftPressed() (KeyIsPressed(SDLK_LEFT)||KeyIsPressed('a'))
+#define RightPressed() (KeyIsPressed(SDLK_RIGHT)||KeyIsPressed('d'))
+
+#define EscapePressed() KeyIsPressed(SDLK_ESCAPE)
+#define SpacePressed() KeyIsPressed(SDLK_SPACE)
+#define FirePressed() (SpacePressed()||MouseLeftPressed())
+
+#define EscapePressedR() KeyIsPressedR (SDLK_ESCAPE)
+#define SpacePressedR() KeyIsPressedR (SDLK_SPACE)
+#define FirePressedR() (SpacePressedR()||MouseLeftPressedR())
+
+#define UpPressedR() (KeyIsPressedR(SDLK_UP)||KeyIsPressedR('w'))
+#define DownPressedR() (KeyIsPressedR(SDLK_DOWN)||KeyIsPressedR('s'))
+#define LeftPressedR() (KeyIsPressedR(SDLK_LEFT)||KeyIsPressedR('a'))
+#define RightPressedR() (KeyIsPressedR(SDLK_RIGHT)||KeyIsPressedR('d'))
+
+#define Wait4Fire() do {while(1) {if(FirePressedR()) break; else usleep(50);}; } while(0)
+
 #define COLLISION_STEPSIZE   0.1
 
 // **********************************************************************
@@ -341,7 +367,7 @@ enum _druids
   DRUID834 = 21,
   DRUID883 = 22,
   DRUID999 = 23,
-  DEBUG_ENEMY = 24
+  NUM_DROIDS
 };
 
 /* Status- Werte der Druids */

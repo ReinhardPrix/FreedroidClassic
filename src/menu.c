@@ -113,8 +113,8 @@ QuitGameMenu (void)
 	      User_Rect.y + User_Rect.h/2, "Do you really want to quit? (y/n) ");
   SDL_Flip (ne_screen);
 
-  while ( (!NPressed()) && (!YPressed()) ) usleep(50);
-  if (YPressed())
+  while ( (!KeyIsPressed('n')) && (!KeyIsPressed('y')) ) usleep(50);
+  if (KeyIsPressed('y'))
     Terminate (OK);
 }
 
@@ -389,15 +389,8 @@ Cheatmenu (void)
     } /* while (!Weiter) */
 
   ClearGraphMem ();
-  SDL_Flip (ne_screen);
 
   keyboard_update (); /* treat all pending keyboard events */
-  /* 
-   * when changing windows etc, sometimes a key-release event gets 
-   * lost, so we have to make sure that CPressed is no longer set
-   * or we stay here for ever...
-   */
-  CurrentlyCPressed = FALSE;
 
   return;
 } /* Cheatmenu() */
@@ -424,8 +417,8 @@ EscapeMenu (void)
       QUIT
     };
   
+  bool key=FALSE;
   bool finished = FALSE;
-  bool key_pressed = FALSE;
   int MenuPosition=1;
   char theme_string[40];
   char window_string[40];
@@ -433,12 +426,9 @@ EscapeMenu (void)
 
   InitiateMenu(TRUE);
   
-  while ( EscapePressed() );
-
   while (!finished)
     {
-      key_pressed = FALSE;
-
+      key = FALSE;
       SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
     
       PutInfluence (FIRST_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y + (MenuPosition-1.5)*fheight);
@@ -466,21 +456,19 @@ EscapeMenu (void)
 
       SDL_Flip( ne_screen );
 
-      while (!key_pressed)
+      while (!key)
 	{
 	  usleep (50);
 
-	  if ( EscapePressed() )
+	  if ( EscapePressedR () )
 	    {
-	      while ( EscapePressed() );
 	      finished = TRUE;
-	      key_pressed = TRUE;
+	      key = TRUE;
 	    }
-	  if ((SpacePressed() || MouseLeftPressed()) ) 
+	  if (FirePressedR())
 	    {
-	      key_pressed = TRUE;
+	      key = TRUE;
 	      MenuItemSelectedSound();
-	      while ((SpacePressed() || MouseLeftPressed())) ;
 
 	      switch (MenuPosition) 
 		{
@@ -541,23 +529,21 @@ EscapeMenu (void)
 		  break;
 		} // switch 
 	    } // if SpacePressed()
-	  if (UpPressed() || WheelUpPressed() ) 
+	  if (UpPressedR () || WheelUpPressed() ) 
 	    {
-	      while (UpPressed());
-	      key_pressed = TRUE;
+	      key = TRUE;
 	      if (MenuPosition > 1) MenuPosition--;
 	      else MenuPosition = QUIT;
 	      MoveMenuPositionSound();
 	    }
-	  if (DownPressed() || WheelDownPressed() ) 
+	  if (DownPressedR() || WheelDownPressed() ) 
 	    {
-	      while (DownPressed());
-	      key_pressed = TRUE;
+	      key = TRUE;
 	      if ( MenuPosition < QUIT ) MenuPosition++;
 	      else MenuPosition = 1;
 	      MoveMenuPositionSound();
 	    }
-	} // while !key_pressed
+	} // while !key
 
     } // while !finished
 
@@ -586,7 +572,7 @@ GraphicsSound_Options_Menu (void)
 {
   int MenuPosition=1;
   bool finished = FALSE;
-  bool key_pressed = FALSE;
+  bool key = FALSE;
 
 enum
   { SET_BG_MUSIC_VOLUME=1, 
@@ -595,11 +581,9 @@ enum
     SET_FULLSCREEN_FLAG, 
     BACK };
 
-  while ( EscapePressed() );
-
   while (!finished)
     {
-      key_pressed = FALSE;
+      key = FALSE;
       SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
 
       PutInfluence (FIRST_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+ (MenuPosition-1.5)*fheight);
@@ -615,15 +599,14 @@ enum
       PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+4*fheight, "Back");
       SDL_Flip( ne_screen );
 
-      while (!key_pressed)
+      while (!key)
 	{
 	  usleep (50);
 
-	  if ( EscapePressed() )
+	  if ( EscapePressedR () )
 	    {
-	      while ( EscapePressed() );
 	      finished = TRUE;
-	      key_pressed = TRUE;
+	      key = TRUE;
 	    }
 	  
 	  // Some menu options can be controlled by pressing right or left
@@ -631,19 +614,17 @@ enum
 	  // Therefore left and right key must be resprected.  This is done here:
 	  if (RightPressed() || LeftPressed() ) 
 	    {
-	      key_pressed = TRUE;
+	      key = TRUE;
 	      if (MenuPosition == SET_BG_MUSIC_VOLUME ) 
 		{
-		  if (RightPressed()) 
+		  if (RightPressedR()) 
 		    {
-		      while (RightPressed());
 		      if ( GameConfig.Current_BG_Music_Volume < 1 ) 
 			GameConfig.Current_BG_Music_Volume += 0.05;
 		      Set_BG_Music_Volume( GameConfig.Current_BG_Music_Volume );
 		    }
-		  if (LeftPressed()) 
+		  if (LeftPressedR()) 
 		    {
-		      while (LeftPressed());
 		      if ( GameConfig.Current_BG_Music_Volume > 0 ) 
 			GameConfig.Current_BG_Music_Volume -= 0.05;
 		      Set_BG_Music_Volume( GameConfig.Current_BG_Music_Volume );
@@ -651,16 +632,14 @@ enum
 		}
 	      if (MenuPosition == SET_SOUND_FX_VOLUME ) 
 		{
-		  if (RightPressed()) 
+		  if (RightPressedR()) 
 		    {
-		      while (RightPressed());
 		      if ( GameConfig.Current_Sound_FX_Volume < 1 ) 
 			GameConfig.Current_Sound_FX_Volume += 0.05;
 		      Set_Sound_FX_Volume( GameConfig.Current_Sound_FX_Volume );
 		    }
-		  if (LeftPressed()) 
+		  if (LeftPressedR()) 
 		    {
-		      while (LeftPressed());
 		      if ( GameConfig.Current_Sound_FX_Volume > 0 ) 
 			GameConfig.Current_Sound_FX_Volume -= 0.05;
 		      Set_Sound_FX_Volume( GameConfig.Current_Sound_FX_Volume );
@@ -668,17 +647,15 @@ enum
 		}
 	      if (MenuPosition == SET_GAMMA_CORRECTION ) 
 		{
-		  if (RightPressed()) 
+		  if (RightPressedR()) 
 		    {
-		      while (RightPressed());
 		      GameConfig.Current_Gamma_Correction+=0.05;
 		      SDL_SetGamma( GameConfig.Current_Gamma_Correction , 
 				    GameConfig.Current_Gamma_Correction , 
 				    GameConfig.Current_Gamma_Correction );
 		    }
-		  if (LeftPressed()) 
+		  if (LeftPressedR()) 
 		    {
-		      while (LeftPressed());
 		      GameConfig.Current_Gamma_Correction-=0.05;
 		      SDL_SetGamma( GameConfig.Current_Gamma_Correction , 
 				    GameConfig.Current_Gamma_Correction , 
@@ -687,11 +664,10 @@ enum
 		}
 	    }
 
-	  if ((SpacePressed() || MouseLeftPressed()) ) 
+	  if ( FirePressedR() )
 	    {
 	      MenuItemSelectedSound();
-	      while ((SpacePressed() || MouseLeftPressed()));
-	      key_pressed = TRUE;
+	      key = TRUE;
 	      switch (MenuPosition) 
 		{
 		case SET_FULLSCREEN_FLAG:
@@ -700,7 +676,6 @@ enum
 		  break;
 
 		case BACK:
-		  while (EnterPressed() || (SpacePressed() || MouseLeftPressed()) );
 		  finished=TRUE;
 		  break;
 		default: 
@@ -708,23 +683,21 @@ enum
 		} 
 	    } // if SpacePressed()
 
-	  if (UpPressed() || WheelUpPressed ()) 
+	  if (UpPressedR() || WheelUpPressed ()) 
 	    {
-	      while (UpPressed());
-	      key_pressed = TRUE;
+	      key = TRUE;
 	      if ( MenuPosition > 1 ) MenuPosition--;
 	      else MenuPosition = BACK;
 	      MoveMenuPositionSound();
 	    }
-	  if (DownPressed() || WheelDownPressed()) 
+	  if (DownPressedR() || WheelDownPressed()) 
 	    {
-	      while (DownPressed());
-	      key_pressed = TRUE;
+	      key = TRUE;
 	      if ( MenuPosition < BACK ) MenuPosition++;
 	      else MenuPosition = 1;
 	      MoveMenuPositionSound();
 	    }
-	} // while !key_pressed
+	} // while !key
 
     } // while !finished
 
@@ -745,7 +718,7 @@ On_Screen_Display_Options_Menu (void)
 {
   int MenuPosition=1;
   bool finished = FALSE;
-  bool key_pressed = FALSE;
+  bool key = FALSE;
 
 enum
   { SHOW_POSITION=1, 
@@ -753,11 +726,9 @@ enum
     SHOW_ENERGY,
     BACK };
 
-  while ( EscapePressed() );
-
   while (!finished)
     {
-      key_pressed = FALSE;
+      key = FALSE;
       SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
       
       PutInfluence (FIRST_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y + (MenuPosition-1.5)*fheight);
@@ -772,23 +743,21 @@ enum
 
       SDL_Flip( ne_screen );
 
-      while (!key_pressed)
+      while (!key)
 	{
 
 	  usleep(50);
 
-	  if ( EscapePressed() )
+	  if ( EscapePressedR() )
 	    {
-	      while ( EscapePressed() );
 	      finished = TRUE;
-	      key_pressed = TRUE;
+	      key = TRUE;
 	    }
 
-	  if ((SpacePressed() || MouseLeftPressed()) ) 
+	  if (FirePressedR())
 	    {
 	      MenuItemSelectedSound();
-	      while ((SpacePressed() || MouseLeftPressed()));
-	      key_pressed = TRUE;
+	      key = TRUE;
 	      switch (MenuPosition) 
 		{
 		case SHOW_POSITION:
@@ -811,23 +780,21 @@ enum
 		} 
 	    } // if SpacePressed()
 
-	  if (UpPressed() || WheelUpPressed ()) 
+	  if (UpPressedR() || WheelUpPressed ()) 
 	    {
 	      if ( MenuPosition > 1 ) MenuPosition--;
 	      else MenuPosition = BACK;
 	      MoveMenuPositionSound();
-	      while (UpPressed());
-	      key_pressed = TRUE;
+	      key = TRUE;
 	    }
-	  if (DownPressed() || WheelDownPressed ()) 
+	  if (DownPressedR() || WheelDownPressed ()) 
 	    {
 	      if ( MenuPosition < BACK ) MenuPosition++;
 	      else MenuPosition = 1;
 	      MoveMenuPositionSound();
-	      while (DownPressed());
-	      key_pressed = TRUE;
+	      key = TRUE;
 	    }
-	} // while !key_pressed
+	} // while !key
 
     } // while !finished
 
@@ -849,7 +816,7 @@ Droid_Talk_Options_Menu (void)
   int MenuPosition=1;
 
   bool finished = FALSE;
-  bool key_pressed = FALSE;
+  bool key = FALSE;
 
   enum
     { 
@@ -862,11 +829,9 @@ Droid_Talk_Options_Menu (void)
     BACK 
   };
 
-  while ( EscapePressed() );
-
   while (!finished)
     {
-      key_pressed = FALSE;
+      key = FALSE;
       SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
 
       PutInfluence(FIRST_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y + (MenuPosition-1.5)*fheight);
@@ -889,22 +854,20 @@ Droid_Talk_Options_Menu (void)
 
       SDL_Flip( ne_screen );
 
-      while (!key_pressed)
+      while (!key)
 	{
 	  usleep(50);
 
-	  if ( EscapePressed() )
+	  if ( EscapePressedR() )
 	    {
-	      while ( EscapePressed() );
 	      finished = TRUE;
-	      key_pressed = TRUE;
+	      key = TRUE;
 	    }
 
-	  if ((SpacePressed() || MouseLeftPressed()) ) 
+	  if (FirePressedR())
 	    {
 	      MenuItemSelectedSound();
-	      while ((SpacePressed() || MouseLeftPressed()));
-	      key_pressed = TRUE;
+	      key = TRUE;
 	      switch (MenuPosition) 
 		{
 		case INFLU_REFRESH_TEXT:
@@ -933,23 +896,21 @@ Droid_Talk_Options_Menu (void)
 		} 
 	    } // if SpacePressed
 
-	  if (UpPressed() || WheelUpPressed ()) 
+	  if (UpPressedR() || WheelUpPressed ()) 
 	    {
 	      if ( MenuPosition > 1 ) MenuPosition--;
 	      else MenuPosition = BACK;
 	      MoveMenuPositionSound();
-	      while (UpPressed());
-	      key_pressed = TRUE;
+	      key = TRUE;
 	    }
-	  if (DownPressed() || WheelDownPressed() ) 
+	  if (DownPressedR() || WheelDownPressed() ) 
 	    {
 	      if ( MenuPosition < BACK ) MenuPosition++;
 	      else MenuPosition = 1;
 	      MoveMenuPositionSound();
-	      while (DownPressed());
-	      key_pressed = TRUE;
+	      key = TRUE;
 	    }
-	} // while !key_pressed
+	} // while !key
     } // while !finished
 
   return;
@@ -969,7 +930,7 @@ Options_Menu (void)
 {
   int MenuPosition=1;
   bool finished = FALSE;
-  bool key_pressed = FALSE;
+  bool key = FALSE;
 
 enum
   { GRAPHICS_SOUND_OPTIONS=1, 
@@ -977,12 +938,10 @@ enum
     ON_SCREEN_DISPLAYS,
     BACK };
 
-  while ( EscapePressed() );
-
   while (!finished)
     {
       SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
-      key_pressed = FALSE;
+      key = FALSE;
 
       PutInfluence( FIRST_MENU_ITEM_POS_X,
 		    FIRST_MENU_ITEM_POS_Y + ( MenuPosition - 1.5 ) *fheight);
@@ -998,23 +957,21 @@ enum
 
       SDL_Flip( ne_screen );
 
-      while (!key_pressed)
+      while (!key)
 	{
 
 	  usleep(50);
 
-	  if ( EscapePressed() )
+	  if ( EscapePressedR() )
 	    {
-	      while ( EscapePressed() );
 	      finished = TRUE;
-	      key_pressed = TRUE;
+	      key = TRUE;
 	    }
 
-	  if ((SpacePressed() || MouseLeftPressed()) ) 
+	  if (FirePressedR())
 	    {
 	      MenuItemSelectedSound();
-	      while ((SpacePressed() || MouseLeftPressed()));
-	      key_pressed = TRUE;
+	      key = TRUE;
 	      switch (MenuPosition) 
 		{
 		case GRAPHICS_SOUND_OPTIONS:
@@ -1034,23 +991,21 @@ enum
 		} 
 	    } // if SpacePressed
 
-	  if (UpPressed() || WheelUpPressed()) 
+	  if (UpPressedR() || WheelUpPressed()) 
 	    {
 	      if ( MenuPosition > 1 ) MenuPosition--;
 	      else MenuPosition = BACK;
 	      MoveMenuPositionSound();
-	      while (UpPressed());
-	      key_pressed = TRUE;
+	      key = TRUE;
 	    }
-	  if (DownPressed() || WheelDownPressed()) 
+	  if (DownPressedR() || WheelDownPressed()) 
 	    {
 	      if ( MenuPosition < BACK ) MenuPosition++;
 	      else MenuPosition = 1;
 	      MoveMenuPositionSound();
-	      while (DownPressed());
-	      key_pressed = TRUE;
+	      key = TRUE;
 	    }
-	} // while !key_pressed
+	} // while !key
 
     } // while !finished
 
@@ -1111,9 +1066,8 @@ Credits_Menu (void)
 
   SDL_Flip( ne_screen );
 
-  while (!(SpacePressed() || MouseLeftPressed() || EscapePressed())) usleep(50);
-  while ((SpacePressed() || MouseLeftPressed() || EscapePressed()));
-
+  Wait4Fire();
+  
   return;
 
 } // Credits_Menu
@@ -1292,17 +1246,322 @@ Level_Editor(void)
   int BlockX=rintf(Me.pos.x);
   int BlockY=rintf(Me.pos.y);
   int Done=FALSE;
-  int Weiter=FALSE;
-  int MenuPosition=1;
   int i,j,k;
   int SpecialMapValue;
   int OriginWaypoint = (-1);
   char* NumericInputString;
-  char* OldMapPointer;
-  bool key_pressed;
   SDL_Rect rect;
-  int xoffs = 110;
+
   int KeymapOffset = 15;
+  
+  Copy_Rect (User_Rect, rect);
+  Copy_Rect (Full_User_Rect, User_Rect);
+
+  while ( !Done )
+    {
+      usleep(50);
+
+      BlockX=rintf(Me.pos.x);
+      BlockY=rintf(Me.pos.y);
+	  
+      Fill_Rect (User_Rect, Black);
+      Assemble_Combat_Picture ( ONLY_SHOW_MAP );
+      Highlight_Current_Block();
+      Show_Waypoints();
+
+      // CenteredPutString ( ne_screen ,  1*FontHeight(Menu_BFont),    "LEVEL EDITOR");
+      LeftPutString ( ne_screen ,  3*FontHeight(Menu_BFont),    "Press F1 for keymap");
+      SDL_Flip( ne_screen );
+
+      //--------------------
+      // If the user of the Level editor pressed some cursor keys, move the
+      // highlited filed (that is Me.pos) accordingly. This is done here:
+      //
+      if (LeftPressedR()) 
+	if ( rintf(Me.pos.x) > 0 ) Me.pos.x-=1;
+
+      if (RightPressedR()) 
+	if ( rintf(Me.pos.x) < CurLevel->xlen-1 ) Me.pos.x+=1;
+
+      if (UpPressedR()) 
+	if ( rintf(Me.pos.y) > 0 ) Me.pos.y-=1;
+
+      if (DownPressedR()) 
+	if ( rintf(Me.pos.y) < CurLevel->ylen-1 ) Me.pos.y+=1;
+
+
+      if ( KeyIsPressedR (SDLK_F1) )
+	{
+	  k=3;
+	  SDL_BlitSurface ( console_bg_pic2 , NULL, ne_screen, NULL);
+	  CenteredPutString   ( ne_screen ,  (k)*FontHeight(Menu_BFont), "Level Editor Keymap"); k+=2;
+	  // DisplayText ("Use cursor keys to move around.", 1, 2 *FontHeight(Menu_BFont), NULL );
+	  PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "Use cursor keys to move around." ); k++;
+	  PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "Use number pad to plant walls." ); k++;
+	  PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "Use shift and number pad to plant extras." ); k++;
+	  PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "R...Refresh, 1-5...Blocktype 1-5, L...Lift" ); k++;
+	  PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "F...Fine grid, T/SHIFT + T...Doors" ); k++;
+	  PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "M...Alert, E...Enter tile by number" ); k++; 
+	  PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "Space/Enter...Floor" ); k+=2;
+	  
+	  PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "I/O...zoom INTO/OUT OF the map" ); k+=2;
+	  PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "P...toggle wayPOINT on/off" ); k++;
+	  PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "C...start/end waypoint CONNECTION" ); k++;
+
+	  SDL_Flip ( ne_screen );
+	  Wait4Fire();
+	}
+      
+      //--------------------
+      // Since the level editor will not always be able to
+      // immediately feature all the the map tiles that might
+      // have been added recently, we should offer a feature, so that you can
+      // specify the value of a map piece just numerically.  This will be
+      // done upon pressing the 'e' key.
+	  //
+      if ( KeyIsPressedR ('e') )
+	{
+	  CenteredPutString   ( ne_screen ,  6*FontHeight(Menu_BFont), "Please enter new value: ");
+	  SDL_Flip( ne_screen );
+	  NumericInputString = GetString (10, 2); 
+	  sscanf( NumericInputString , "%d" , &SpecialMapValue );
+	  if ( SpecialMapValue >= NUM_MAP_BLOCKS ) SpecialMapValue=0;
+	  CurLevel->map[BlockY][BlockX]=SpecialMapValue;
+	}
+
+      //--------------------
+      //If the person using the level editor decides he/she wants a different
+      //scale for the editing process, he/she may say so by using the O/I keys.
+      //
+      if ( KeyIsPressedR ('o') )
+	{
+	  if (CurrentCombatScaleFactor > 0.25 )
+	    CurrentCombatScaleFactor -= 0.25;
+	  SetCombatScaleTo (CurrentCombatScaleFactor);
+	}
+      if ( KeyIsPressedR ('i') )
+	{
+	  CurrentCombatScaleFactor += 0.25;
+	  SetCombatScaleTo (CurrentCombatScaleFactor);
+	}
+      
+      // If the person using the level editor pressed w, the waypoint is
+      // toggled on the current square.  That means either removed or added.
+      // And in case of removal, also the connections must be removed.
+      if (KeyIsPressedR('p'))
+	{
+	  // find out if there is a waypoint on the current square
+	  for (i=0 ; i < MAXWAYPOINTS ; i++)
+	    {
+	      if ( ( CurLevel->AllWaypoints[i].x == BlockX ) &&
+		   ( CurLevel->AllWaypoints[i].y == BlockY ) ) break;
+	    }
+	  
+	  // if its waypoint already, this waypoint must be deleted.
+	  if ( i != MAXWAYPOINTS )
+	    {
+	      // Eliminate the waypoint itself
+		  CurLevel->AllWaypoints[i].x = 0;
+		  CurLevel->AllWaypoints[i].y = 0;
+		  for ( k = 0; k < MAX_WP_CONNECTIONS ; k++) 
+		    CurLevel->AllWaypoints[i].connections[k] = (-1) ;
+		  
+		  
+		  // Eliminate all connections pointing to this waypoint
+		  for ( j = 0; j < MAXWAYPOINTS ; j++ )
+		    {
+		      for ( k = 0; k < MAX_WP_CONNECTIONS ; k++) 
+			if ( CurLevel->AllWaypoints[j].connections[k] == i )
+			  CurLevel->AllWaypoints[j].connections[k] = (-1) ;
+		    }
+	    }
+	  else // if its not a waypoint already, it must be made into one
+	    {
+	      // seek a free position
+	      for ( i = 0 ; i < MAXWAYPOINTS ; i++ )
+		{
+		  if ( CurLevel->AllWaypoints[i].x == 0 ) 
+		    {
+		      DebugPrintf( 0 , "\nFree waypoint entry found.  Index == %d." , i );
+		      break;
+		    }
+		}
+	      if ( i == MAXWAYPOINTS )
+		{
+		  printf("\n\nSorry, no free waypoint available.  Using the first one.");
+		  i = 0;
+		}
+	      
+	      // Now make the new entry into the waypoint list
+	      CurLevel->AllWaypoints[i].x = BlockX;
+	      CurLevel->AllWaypoints[i].y = BlockY;
+	      
+	      // delete all old connection information from the new waypoint
+	      for ( k = 0; k < MAX_WP_CONNECTIONS ; k++ ) 
+		CurLevel->AllWaypoints[i].connections[k] = (-1) ;
+	      
+	    }
+
+	}
+
+      // If the person using the level editor presses C that indicated he/she wants
+      // a connection between waypoints.  If this is the first selected waypoint, its
+      // an origin and the second "C"-pressed waypoint will be used a target.
+      // If origin and destination are the same, the operation is cancelled.
+      if (KeyIsPressedR ('c'))
+	{
+	  // Determine which waypoint is currently targeted
+	  for (i=0 ; i < MAXWAYPOINTS ; i++)
+	    {
+	      if ( ( CurLevel->AllWaypoints[i].x == BlockX ) &&
+		   ( CurLevel->AllWaypoints[i].y == BlockY ) ) break;
+	    }
+	  
+	  if ( i == MAXWAYPOINTS )
+	    {
+	      printf("\n\nSorry, don't know which waypoint you mean.");
+	    }
+	  else
+	    {
+	      printf("\n\nYou specified waypoint nr. %d.",i);
+	      if ( OriginWaypoint== (-1) )
+		{
+		  printf("\nIt has been marked as the origin of the next connection.");
+		  OriginWaypoint = i;
+		}
+	      else
+		{
+		  if ( OriginWaypoint == i )
+		    {
+		      printf("\n\nOrigin==Target --> Connection Operation cancelled.");
+		      OriginWaypoint = (-1);
+		    }
+		  else
+		    {
+		      printf("\n\nOrigin: %d Target: %d. Operation makes sense.", OriginWaypoint , i );
+		      for ( k = 0; k < MAX_WP_CONNECTIONS ; k++ ) 
+			{
+			  if (CurLevel->AllWaypoints[ OriginWaypoint ].connections[k] == (-1) ) break;
+			}
+		      if ( k == MAX_WP_CONNECTIONS ) 
+			{
+			  printf("\nSORRY. NO MORE CONNECTIONS AVAILABLE FROM THERE.");
+			}
+		      else
+			{
+			  CurLevel->AllWaypoints[ OriginWaypoint ].connections[k] = i;
+			  printf("\nOPERATION DONE!! CONNECTION SHOULD BE THERE.");
+			}
+		      OriginWaypoint = (-1);
+		    }
+		}
+	    }
+
+	  fflush(stdout);
+	}
+      
+      // If the person using the level editor pressed some editing keys, insert the
+      // corresponding map tile.  This is done here:
+      if (KeyIsPressedR ('f')) 
+	CurLevel->map[BlockY][BlockX]=FINE_GRID;
+      if (KeyIsPressedR ('1')) 
+	CurLevel->map[BlockY][BlockX]=BLOCK1;
+      if (KeyIsPressedR ('2')) 
+	CurLevel->map[BlockY][BlockX]=BLOCK2;
+      if (KeyIsPressedR ('3'))
+	CurLevel->map[BlockY][BlockX]=BLOCK3;
+      if (KeyIsPressedR ('4'))
+	CurLevel->map[BlockY][BlockX]=BLOCK4;
+      if (KeyIsPressedR ('5'))
+	CurLevel->map[BlockY][BlockX]=BLOCK5;
+      if (KeyIsPressedR ('l'))
+	CurLevel->map[BlockY][BlockX]=LIFT;
+      if (KeyIsPressedR (SDLK_KP_PLUS))
+	CurLevel->map[BlockY][BlockX]=V_WALL;
+      if (KeyIsPressedR (SDLK_KP0))
+	CurLevel->map[BlockY][BlockX]=H_WALL;
+      if (KeyIsPressedR(SDLK_KP1))
+	CurLevel->map[BlockY][BlockX]=ECK_LU;
+      if (KeyIsPressedR (SDLK_KP2))
+	{
+	  if (!ShiftPressed())
+	    CurLevel->map[BlockY][BlockX]=T_U;
+	  else CurLevel->map[BlockY][BlockX]=KONSOLE_U;
+	    }
+      if (KeyIsPressedR (SDLK_KP3))
+	CurLevel->map[BlockY][BlockX]=ECK_RU;
+      if (KeyIsPressedR (SDLK_KP4))
+	{
+	  if (!ShiftPressed())
+	    CurLevel->map[BlockY][BlockX]=T_L;
+	  else CurLevel->map[BlockY][BlockX]=KONSOLE_L;
+	}
+      if (KeyIsPressedR (SDLK_KP5))
+	{
+	  if (!ShiftPressed())
+	    CurLevel->map[BlockY][BlockX]=KREUZ;
+	  else CurLevel->map[BlockY][BlockX]=VOID;
+	}
+      if (KeyIsPressedR (SDLK_KP6))
+	{
+	  if (!ShiftPressed())
+	    CurLevel->map[BlockY][BlockX]=T_R;
+	  else CurLevel->map[BlockY][BlockX]=KONSOLE_R;
+	}
+      if (KeyIsPressedR (SDLK_KP7))
+	CurLevel->map[BlockY][BlockX]=ECK_LO;
+      if (KeyIsPressedR (SDLK_KP8))
+	{
+	  if (!ShiftPressed())
+	    CurLevel->map[BlockY][BlockX]=T_O;
+	  else CurLevel->map[BlockY][BlockX]=KONSOLE_O;
+	}
+      if (KeyIsPressedR (SDLK_KP9))
+	CurLevel->map[BlockY][BlockX]=ECK_RO;
+      if ( KeyIsPressedR ('m'))
+	CurLevel->map[BlockY][BlockX]=ALERT;	      
+      if (KeyIsPressedR ('r'))
+	CurLevel->map[BlockY][BlockX]=REFRESH1;	            
+      if (KeyIsPressedR('t'))
+	{
+	  if (ShiftPressed())
+	    CurLevel->map[BlockY][BlockX]=V_ZUTUERE;	            	      
+	  else CurLevel->map[BlockY][BlockX]=H_ZUTUERE;	            	      
+	}
+      if ((SpacePressed() || MouseLeftPressed()))
+	CurLevel->map[BlockY][BlockX]=FLOOR;	            	      	    
+
+      // After Level editing is done and escape has been pressed, 
+      // display the Menu with level save options and all that.
+      
+      if (EscapePressedR())
+	Done = LevelEditMenu();
+      
+    } // while (!Done)
+
+  Copy_Rect (rect, User_Rect);
+
+  ClearGraphMem();
+  return;
+
+} // void Level_Editor(void)
+
+
+//----------------------------------------------------------------------
+// returns FALSE if level-editing should continue, TRUE if user chose 'back'
+//----------------------------------------------------------------------
+
+bool
+LevelEditMenu (void)
+{
+  bool key = FALSE;
+  int xoffs = 0;
+  int Weiter=FALSE;
+  char* OldMapPointer;
+  int MenuPosition=1;
+  bool Done = FALSE;
+  int i;
+
 
   enum { 
     BACK = 1,
@@ -1316,569 +1575,203 @@ Level_Editor(void)
     SAVE_LEVEL_POSITION,
     LAST
     };
-  
-  Copy_Rect (User_Rect, rect);
-  Copy_Rect (Full_User_Rect, User_Rect);
 
-  while ( !Done )
+
+  InitiateMenu (FALSE);
+  while (!Weiter)
     {
+      SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
       usleep(50);
-      Weiter=FALSE;
-      while (!EscapePressed())
+
+      PutInfluence (FIRST_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y + (MenuPosition-1.5)*fheight);
+
+      CenteredPutString ( ne_screen ,  1*FontHeight(Menu_BFont),    "LEVEL EDITOR");
+
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 0*fheight, 
+		   "Quit Level Editor");
+
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 1*fheight, 
+		   "Current: %d.  Level +/-" , CurLevel->levelnum );
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 2*fheight, 
+		   "Change level color: %s", ColorNames[CurLevel->color]);
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 3*fheight, 
+		   "Levelsize in X: %d.  -/+" , CurLevel->xlen );
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 4*fheight, 
+		   "Levelsize in Y: %d.  -/+" , CurLevel->ylen );
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 5*fheight, 
+		   "Level name: %s" , CurLevel->Levelname );
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 6*fheight, 
+		   "Background music: %s" , CurLevel->Background_Song_Name );
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 7*fheight, 
+		   "Level Comment: %s" , CurLevel->Level_Enter_Comment );
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 8*fheight, 
+		   "Save ship as  'Testship.shp'");
+
+      SDL_Flip ( ne_screen );
+
+      key = FALSE;
+      while (!key)
 	{
 	  usleep(50);
-	  BlockX=rintf(Me.pos.x);
-	  BlockY=rintf(Me.pos.y);
+	  if ( EscapePressedR() )
+	    {
+	      Weiter=TRUE;
+	      key = TRUE;
+	    }
 	  
-	  Fill_Rect (User_Rect, Black);
-	  Assemble_Combat_Picture ( ONLY_SHOW_MAP );
-	  Highlight_Current_Block();
-	  Show_Waypoints();
-
-	  // CenteredPutString ( ne_screen ,  1*FontHeight(Menu_BFont),    "LEVEL EDITOR");
-	  LeftPutString ( ne_screen ,  3*FontHeight(Menu_BFont),    "Press F1 for keymap");
-	  SDL_Flip( ne_screen );
-
-	  //--------------------
-	  // If the user of the Level editor pressed some cursor keys, move the
-	  // highlited filed (that is Me.pos) accordingly. This is done here:
-	  //
-	  if (LeftPressed()) 
+	  if (FirePressedR())
 	    {
-	      if ( rintf(Me.pos.x) > 0 ) Me.pos.x-=1;
-	      while (LeftPressed());
-	    }
-	  if (RightPressed()) 
-	    {
-	      if ( rintf(Me.pos.x) < CurLevel->xlen-1 ) Me.pos.x+=1;
-	      while (RightPressed());
-	    }
-	  if (UpPressed()) 
-	    {
-	      if ( rintf(Me.pos.y) > 0 ) Me.pos.y-=1;
-	      while (UpPressed());
-	    }
-	  if (DownPressed()) 
-	    {
-	      if ( rintf(Me.pos.y) < CurLevel->ylen-1 ) Me.pos.y+=1;
-	      while (DownPressed());
-	    }
-
-	  if ( F1Pressed() )
-	    {
-	      k=3;
-	      SDL_BlitSurface ( console_bg_pic2 , NULL, ne_screen, NULL);
-	      CenteredPutString   ( ne_screen ,  (k)*FontHeight(Menu_BFont), "Level Editor Keymap"); k+=2;
-	      // DisplayText ("Use cursor keys to move around.", 1, 2 *FontHeight(Menu_BFont), NULL );
-	      PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "Use cursor keys to move around." ); k++;
-	      PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "Use number pad to plant walls." ); k++;
-	      PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "Use shift and number pad to plant extras." ); k++;
-	      PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "R...Refresh, 1-5...Blocktype 1-5, L...Lift" ); k++;
-	      PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "F...Fine grid, T/SHIFT + T...Doors" ); k++;
-	      PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "M...Alert, E...Enter tile by number" ); k++; 
-	      PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "Space/Enter...Floor" ); k+=2;
-	      
-	      PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "I/O...zoom INTO/OUT OF the map" ); k+=2;
-	      PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "P...toggle wayPOINT on/off" ); k++;
-	      PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "C...start/end waypoint CONNECTION" ); k++;
-
-	      SDL_Flip ( ne_screen );
-	      while ( !SpacePressed() && !EscapePressed() );
-	      while ( SpacePressed() || EscapePressed() );
-	    }
-
-	  //--------------------
-	  // Since the level editor will not always be able to
-	  // immediately feature all the the map tiles that might
-	  // have been added recently, we should offer a feature, so that you can
-	  // specify the value of a map piece just numerically.  This will be
-	  // done upon pressing the 'e' key.
-	  //
-	  if ( EPressed () )
-	    {
-	      while (EPressed());
-	      CenteredPutString   ( ne_screen ,  6*FontHeight(Menu_BFont), "Please enter new value: ");
-	      SDL_Flip( ne_screen );
-	      NumericInputString = GetString (10, 2); 
-	      sscanf( NumericInputString , "%d" , &SpecialMapValue );
-	      if ( SpecialMapValue >= NUM_MAP_BLOCKS ) SpecialMapValue=0;
-	      CurLevel->map[BlockY][BlockX]=SpecialMapValue;
-	    }
-
-	  //--------------------
-	  //If the person using the level editor decides he/she wants a different
-	  //scale for the editing process, he/she may say so by using the O/I keys.
-	  //
-	  if ( OPressed () )
-	    {
-	      if (CurrentCombatScaleFactor > 0.25 )
-		CurrentCombatScaleFactor -= 0.25;
-	      SetCombatScaleTo (CurrentCombatScaleFactor);
-	      while (OPressed());
-	    }
-	  if ( IPressed () )
-	    {
-	      CurrentCombatScaleFactor += 0.25;
-	      SetCombatScaleTo (CurrentCombatScaleFactor);
-	      while (IPressed());
-	    }
-  
-	  // If the person using the level editor pressed w, the waypoint is
-	  // toggled on the current square.  That means either removed or added.
-	  // And in case of removal, also the connections must be removed.
-	  if (PPressed())
-	    {
-	      // find out if there is a waypoint on the current square
-	      for (i=0 ; i < MAXWAYPOINTS ; i++)
+	      MenuItemSelectedSound();
+	      key = TRUE;
+	      switch (MenuPosition) 
 		{
-		  if ( ( CurLevel->AllWaypoints[i].x == BlockX ) &&
-		       ( CurLevel->AllWaypoints[i].y == BlockY ) ) break;
-		}
-	      
-	      // if its waypoint already, this waypoint must be deleted.
-	      if ( i != MAXWAYPOINTS )
-		{
-		  // Eliminate the waypoint itself
-		  CurLevel->AllWaypoints[i].x = 0;
-		  CurLevel->AllWaypoints[i].y = 0;
-		  for ( k = 0; k < MAX_WP_CONNECTIONS ; k++) 
-		    CurLevel->AllWaypoints[i].connections[k] = (-1) ;
-
 		  
-		  // Eliminate all connections pointing to this waypoint
-		  for ( j = 0; j < MAXWAYPOINTS ; j++ )
-		    {
-		      for ( k = 0; k < MAX_WP_CONNECTIONS ; k++) 
-			if ( CurLevel->AllWaypoints[j].connections[k] == i )
-			  CurLevel->AllWaypoints[j].connections[k] = (-1) ;
-		    }
-		}
-	      else // if its not a waypoint already, it must be made into one
-		{
-		  // seek a free position
-		  for ( i = 0 ; i < MAXWAYPOINTS ; i++ )
-		    {
-		      if ( CurLevel->AllWaypoints[i].x == 0 ) 
-			{
-			  DebugPrintf( 0 , "\nFree waypoint entry found.  Index == %d." , i );
-			  break;
-			}
-		    }
-		  if ( i == MAXWAYPOINTS )
-		    {
-		      printf("\n\nSorry, no free waypoint available.  Using the first one.");
-		      i = 0;
-		    }
+		case SAVE_LEVEL_POSITION:
+		  SaveShip("Testship");
+		  CenteredPutString (ne_screen, 3*FontHeight(Menu_BFont),"Ship saved as 'Testship.shp'\n");
+		  SDL_Flip ( ne_screen );
+		  Wait4Fire();
+		  break;
+		case CHANGE_LEVEL_POSITION: 
+		  break;
+		case CHANGE_COLOR:
+		  break;
+		case SET_LEVEL_NAME:
+		  DisplayText ("New level name: ",
+			       FIRST_MENU_ITEM_POS_X-50, FIRST_MENU_ITEM_POS_X+ 5*fheight, 
+			       &Full_User_Rect);
+		  SDL_Flip( ne_screen );
+		  CurLevel->Levelname = GetString(15, 2);
+		  Weiter=!Weiter;
+		  break;
+		case SET_BACKGROUND_SONG_NAME:
+		  DisplayText ("Bg music filename: ", 
+			       FIRST_MENU_ITEM_POS_X-50, FIRST_MENU_ITEM_POS_X+ 5*fheight, 
+			       &Full_User_Rect);
+		  SDL_Flip( ne_screen );
+		  CurLevel->Background_Song_Name=GetString(20, 2);
+		  break;
+		case SET_LEVEL_COMMENT:
+		  DisplayText ("New level-comment :",
+			       FIRST_MENU_ITEM_POS_X-50, FIRST_MENU_ITEM_POS_X+ 5*fheight, 
+			       &Full_User_Rect);
+		  SDL_Flip( ne_screen );
+		  CurLevel->Level_Enter_Comment=GetString(15 , FALSE );
+		  break;
 
-		  // Now make the new entry into the waypoint list
-		  CurLevel->AllWaypoints[i].x = BlockX;
-		  CurLevel->AllWaypoints[i].y = BlockY;
+		case BACK:
+		  Weiter=!Weiter;
+		  Done = TRUE;
+		  SetCombatScaleTo( 1 );
+		  break;
+		default: 
+		  break;
 
-		  // delete all old connection information from the new waypoint
-		  for ( k = 0; k < MAX_WP_CONNECTIONS ; k++ ) 
-		    CurLevel->AllWaypoints[i].connections[k] = (-1) ;
-
-		}
-
-	      // printf("\n\n  i is now: %d ", i ); fflush(stdout);
-
-	      while ( PPressed() );
-	    }
-
-	  // If the person using the level editor presses C that indicated he/she wants
-	  // a connection between waypoints.  If this is the first selected waypoint, its
-	  // an origin and the second "C"-pressed waypoint will be used a target.
-	  // If origin and destination are the same, the operation is cancelled.
-	  if (CPressed())
-	    {
-	      // Determine which waypoint is currently targeted
-	      for (i=0 ; i < MAXWAYPOINTS ; i++)
-		{
-		  if ( ( CurLevel->AllWaypoints[i].x == BlockX ) &&
-		       ( CurLevel->AllWaypoints[i].y == BlockY ) ) break;
-		}
-
-	      if ( i == MAXWAYPOINTS )
-		{
-		  printf("\n\nSorry, don't know which waypoint you mean.");
-		}
-	      else
-		{
-		  printf("\n\nYou specified waypoint nr. %d.",i);
-		  if ( OriginWaypoint== (-1) )
-		    {
-		      printf("\nIt has been marked as the origin of the next connection.");
-		      OriginWaypoint = i;
-		    }
-		  else
-		    {
-		      if ( OriginWaypoint == i )
-			{
-			  printf("\n\nOrigin==Target --> Connection Operation cancelled.");
-			  OriginWaypoint = (-1);
-			}
-		      else
-			{
-			  printf("\n\nOrigin: %d Target: %d. Operation makes sense.", OriginWaypoint , i );
-			  for ( k = 0; k < MAX_WP_CONNECTIONS ; k++ ) 
-			    {
-			      if (CurLevel->AllWaypoints[ OriginWaypoint ].connections[k] == (-1) ) break;
-			    }
-			  if ( k == MAX_WP_CONNECTIONS ) 
-			    {
-			      printf("\nSORRY. NO MORE CONNECTIONS AVAILABLE FROM THERE.");
-			    }
-			  else
-			    {
-			      CurLevel->AllWaypoints[ OriginWaypoint ].connections[k] = i;
-			      printf("\nOPERATION DONE!! CONNECTION SHOULD BE THERE.");
-			    }
-			  OriginWaypoint = (-1);
-			}
-		    }
-		}
-
-	      while (CPressed());
-	      fflush(stdout);
-	    }
-
-	  // If the person using the level editor pressed some editing keys, insert the
-	  // corresponding map tile.  This is done here:
-	  if (FPressed()) 
-	    {
-	      CurLevel->map[BlockY][BlockX]=FINE_GRID;
-	    }
-	  if (Number1Pressed()) 
-	    {
-	      CurLevel->map[BlockY][BlockX]=BLOCK1;
-	    }
-	  if (Number2Pressed()) 
-	    {
-	      CurLevel->map[BlockY][BlockX]=BLOCK2;
-	    }
-	  if (Number3Pressed()) 
-	    {
-	      CurLevel->map[BlockY][BlockX]=BLOCK3;
-	    }
-	  if (Number4Pressed()) 
-	    {
-	      CurLevel->map[BlockY][BlockX]=BLOCK4;
-	    }
-	  if (Number5Pressed()) 
-	    {
-	      CurLevel->map[BlockY][BlockX]=BLOCK5;
-	    }
-	  if (LPressed()) 
-	    {
-	      CurLevel->map[BlockY][BlockX]=LIFT;
-	    }
-	  if (KP_PLUS_Pressed()) 
-	    {
-	      CurLevel->map[BlockY][BlockX]=V_WALL;
-	    }
-	  if (KP0Pressed()) 
-	    {
-	      CurLevel->map[BlockY][BlockX]=H_WALL;
-	    }
-	  if (KP1Pressed()) 
-	    {
-	      CurLevel->map[BlockY][BlockX]=ECK_LU;
-	    }
-	  if (KP2Pressed()) 
-	    {
-	      if (!Shift_Was_Pressed())
-		CurLevel->map[BlockY][BlockX]=T_U;
-	      else CurLevel->map[BlockY][BlockX]=KONSOLE_U;
-	    }
-	  if (KP3Pressed()) 
-	    {
-	      CurLevel->map[BlockY][BlockX]=ECK_RU;
-	    }
-	  if (KP4Pressed()) 
-	    {
-	      if (!Shift_Was_Pressed())
-		CurLevel->map[BlockY][BlockX]=T_L;
-	      else CurLevel->map[BlockY][BlockX]=KONSOLE_L;
-	    }
-	  if (KP5Pressed()) 
-	    {
-	      if (!Shift_Was_Pressed())
-		CurLevel->map[BlockY][BlockX]=KREUZ;
-	      else CurLevel->map[BlockY][BlockX]=VOID;
-	    }
-	  if (KP6Pressed()) 
-	    {
-	      if (!Shift_Was_Pressed())
-		CurLevel->map[BlockY][BlockX]=T_R;
-	      else CurLevel->map[BlockY][BlockX]=KONSOLE_R;
-	    }
-	  if (KP7Pressed()) 
-	    {
-	      CurLevel->map[BlockY][BlockX]=ECK_LO;
-	    }
-	  if (KP8Pressed()) 
-	    {
-	      if (!Shift_Was_Pressed())
-		CurLevel->map[BlockY][BlockX]=T_O;
-	      else CurLevel->map[BlockY][BlockX]=KONSOLE_O;
-	    }
-	  if (KP9Pressed()) 
-	    {
-	      CurLevel->map[BlockY][BlockX]=ECK_RO;
-	    }
-	  if ( MPressed() )
-	    {
-	      CurLevel->map[BlockY][BlockX]=ALERT;	      
-	    }
-	  if (RPressed())
-	    {
-	      CurLevel->map[BlockY][BlockX]=REFRESH1;	            
-	    }
-	  if (TPressed())
-	    {
-	      if (Shift_Was_Pressed())
-		CurLevel->map[BlockY][BlockX]=V_ZUTUERE;	            	      
-	      else CurLevel->map[BlockY][BlockX]=H_ZUTUERE;	            	      
-	    }
-	  if ((SpacePressed() || MouseLeftPressed()))
-	    CurLevel->map[BlockY][BlockX]=FLOOR;	            	      	    
-
-	} // while (!EscapePressed())
-      while( EscapePressed() );
-
-      // After Level editing is done and escape has been pressed, 
-      // display the Menu with level save options and all that.
-
-      InitiateMenu (FALSE);
-      while (!Weiter)
-	{
-	  usleep(50);
-
-	  key_pressed = FALSE;
-
-	  // SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
-
-	  Fill_Rect (User_Rect, Black);
-	  Assemble_Combat_Picture ( ONLY_SHOW_MAP );
-	  Highlight_Current_Block();
-	  Show_Waypoints();
-	  
-
-	  CenteredPutString ( ne_screen ,  1*FontHeight(Menu_BFont),    "LEVEL EDITOR");
-
-	  // Highlight currently selected option with an influencer before it
-	  PutInfluence( FIRST_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y+(MenuPosition-1.5)*fheight);
-
-	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 0*fheight, 
-		       "Quit Level Editor");
-
-	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 1*fheight, 
-		       "Current: %d.  Level +/-" , CurLevel->levelnum );
-	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 2*fheight, 
-		       "Change level color: %s", ColorNames[CurLevel->color]);
-	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 3*fheight, 
-		       "Levelsize in X: %d.  -/+" , CurLevel->xlen );
-	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 4*fheight, 
-		       "Levelsize in Y: %d.  -/+" , CurLevel->ylen );
-	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 5*fheight, 
-		       "Level name: %s" , CurLevel->Levelname );
-	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 6*fheight, 
-		       "Background music: %s" , CurLevel->Background_Song_Name );
-	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 7*fheight, 
-		       "Level Comment: %s" , CurLevel->Level_Enter_Comment );
-	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 8*fheight, 
-		       "Save ship as  'Testship.shp'");
-
-	  SDL_Flip ( ne_screen );
-	  
-	  while (!key_pressed)
-	    {
-	      usleep(50);
-	      if ( EscapePressed() )
-		{
-		  while (EscapePressed());
-		  Weiter=TRUE;
-		  key_pressed = TRUE;
-		}
-	  
-	      if ((SpacePressed() || MouseLeftPressed()) ) 
-		{
-		  MenuItemSelectedSound();
-		  while ((SpacePressed() || MouseLeftPressed()) );
-		  key_pressed = TRUE;
-		  switch (MenuPosition) 
-		    {
-		  
-		    case SAVE_LEVEL_POSITION:
-		      SaveShip("Testship");
-		      CenteredPutString (ne_screen, 3*FontHeight(Menu_BFont),"Ship saved as 'Testship.shp'\n");
-		      SDL_Flip ( ne_screen );
-		      while (!(SpacePressed() || MouseLeftPressed())); 
-		      while ((SpacePressed() || MouseLeftPressed()));
-		      break;
-		    case CHANGE_LEVEL_POSITION: 
-		      break;
-		    case CHANGE_COLOR:
-		      break;
-		    case SET_LEVEL_NAME:
-		      DisplayText ("New level name: ",
-				   FIRST_MENU_ITEM_POS_X-50, FIRST_MENU_ITEM_POS_X+ 5*fheight, 
-				   &Full_User_Rect);
-		      SDL_Flip( ne_screen );
-		      CurLevel->Levelname = GetString(15, 2);
-		      Weiter=!Weiter;
-		      break;
-		    case SET_BACKGROUND_SONG_NAME:
-		      DisplayText ("Bg music filename: ", 
-				   FIRST_MENU_ITEM_POS_X-50, FIRST_MENU_ITEM_POS_X+ 5*fheight, 
-				   &Full_User_Rect);
-		      SDL_Flip( ne_screen );
-		      CurLevel->Background_Song_Name=GetString(20, 2);
-		      break;
-		    case SET_LEVEL_COMMENT:
-		      DisplayText ("New level-comment :",
-				   FIRST_MENU_ITEM_POS_X-50, FIRST_MENU_ITEM_POS_X+ 5*fheight, 
-				   &Full_User_Rect);
-		      SDL_Flip( ne_screen );
-		      CurLevel->Level_Enter_Comment=GetString(15 , FALSE );
-		      break;
-
-		    case BACK:
-		      Weiter=!Weiter;
-		      Done=TRUE;
-		      SetCombatScaleTo( 1 );
-		      break;
-		    default: 
-		      break;
-
-		    } // switch
-		} // if SpacePressed
+		} // switch
+	    } // if SpacePressed
 	      
 	      // If the user of the level editor pressed left or right, that should have
 	      // an effect IF he/she is a the change level menu point
 
-	      if (LeftPressed() || RightPressed() ) 
+	  if (LeftPressed() || RightPressed() ) 
+	    {
+	      key = TRUE;
+	      switch (MenuPosition)
 		{
-		  key_pressed = TRUE;
-		  switch (MenuPosition)
+
+		case CHANGE_LEVEL_POSITION:
+		  if ( LeftPressedR() )
 		    {
-
-		    case CHANGE_LEVEL_POSITION:
-		      if ( LeftPressed() )
-			{
-			  if ( CurLevel->levelnum > 0 )
-			    Teleport ( CurLevel->levelnum -1 , 3 , 3 );
-			  while (LeftPressed());
-			}
-
-		      if ( RightPressed() )
-			{
-			  if ( CurLevel->levelnum < curShip.num_levels -1 )
-			    Teleport ( CurLevel->levelnum +1 , 3 , 3 );
-			  while (RightPressed());
-			}
-		      
-		      SetCombatScaleTo ( CurrentCombatScaleFactor );
-		      InitiateMenu(FALSE);
-		      break;
-		  
-		    case CHANGE_COLOR:
-		      if ( RightPressed() && (CurLevel->color  < 6 ) )
-			{
-			  CurLevel->color++;
-			  while (RightPressed());
-			}
-		      if ( LeftPressed() && (CurLevel->color > 0) )
-			{
-			  CurLevel->color--;
-			  while (LeftPressed());
-			}
-		      InitiateMenu (FALSE);
-		      break;
-		    case CHANGE_SIZE_X:
-		      if ( RightPressed() )
-			{
-			  CurLevel->xlen++;
-			  // In case of enlargement, we need to do more:
-			  for ( i = 0 ; i < CurLevel->ylen ; i++ )
-			    {
-			      OldMapPointer=CurLevel->map[i];
-			      CurLevel->map[i] = MyMalloc( CurLevel->xlen +1) ;
-			      memcpy( CurLevel->map[i] , OldMapPointer , CurLevel->xlen-1 );
-			      // We don't want to fill the new area with junk, do we? So we set it VOID
-			      CurLevel->map[ i ] [ CurLevel->xlen-1 ] = VOID;  
-			    }
-			  while (RightPressed());
-			}
-		      if ( LeftPressed() )
-			{
-			  CurLevel->xlen--; // making it smaller is always easy:  just modify the value for size
-			  // allocation of new memory or things like that are not nescessary.
-			  while (LeftPressed());
-			}
-
-		      InitiateMenu (FALSE);
-		      break;
-		  
-		    case CHANGE_SIZE_Y:
-		      if ( RightPressed() )
-			{
-			  CurLevel->ylen++;
-		      
-			  // In case of enlargement, we need to do more:
-			  CurLevel->map[ CurLevel->ylen-1 ] = MyMalloc( CurLevel->xlen +1) ;
-			  
-			  // We don't want to fill the new area with junk, do we? So we set it VOID
-			  memset( CurLevel->map[ CurLevel->ylen-1 ] , VOID , CurLevel->xlen );
-			  
-			  while (RightPressed());
-		      
-			}
-
-		      if ( LeftPressed() )
-			{
-			  CurLevel->ylen--; // making it smaller is always easy:  just modify the value for size
-			  // allocation of new memory or things like that are not nescessary.
-			  while (LeftPressed());
-			}
-
-		      InitiateMenu (FALSE);
-		      break;
-		  
+		      if ( CurLevel->levelnum > 0 )
+			Teleport ( CurLevel->levelnum -1 , 3 , 3 );
 		    }
-		} // if LeftPressed || RightPressed
+
+		  if ( RightPressedR() )
+		    {
+		      if ( CurLevel->levelnum < curShip.num_levels -1 )
+			Teleport ( CurLevel->levelnum +1 , 3 , 3 );
+		    }
+		      
+		  SetCombatScaleTo ( CurrentCombatScaleFactor );
+		  InitiateMenu(FALSE);
+		  break;
+		  
+		case CHANGE_COLOR:
+		  if ( RightPressedR() && (CurLevel->color  < 6 ) )
+		    CurLevel->color++;
+
+		  if ( LeftPressedR() && (CurLevel->color > 0) )
+		    CurLevel->color--;
+
+		  InitiateMenu (FALSE);
+		  break;
+
+		case CHANGE_SIZE_X:
+		  if ( RightPressedR() )
+		    {
+		      CurLevel->xlen++;
+		      // In case of enlargement, we need to do more:
+		      for ( i = 0 ; i < CurLevel->ylen ; i++ )
+			{
+			  OldMapPointer=CurLevel->map[i];
+			  CurLevel->map[i] = MyMalloc( CurLevel->xlen +1) ;
+			  memcpy( CurLevel->map[i] , OldMapPointer , CurLevel->xlen-1 );
+			  // We don't want to fill the new area with junk, do we? So we set it VOID
+			  CurLevel->map[ i ] [ CurLevel->xlen-1 ] = VOID;  
+			}
+		    }
+		  if ( LeftPressedR() )
+		      CurLevel->xlen--; // making it smaller is always easy:  just modify the value for size
+		      // allocation of new memory or things like that are not nescessary.
+
+		  InitiateMenu (FALSE);
+		  break;
+		  
+		case CHANGE_SIZE_Y:
+		  if ( RightPressedR() )
+		    {
+		      CurLevel->ylen++;
+		      
+		      // In case of enlargement, we need to do more:
+		      CurLevel->map[ CurLevel->ylen-1 ] = MyMalloc( CurLevel->xlen +1) ;
+			  
+		      // We don't want to fill the new area with junk, do we? So we set it VOID
+		      memset( CurLevel->map[ CurLevel->ylen-1 ] , VOID , CurLevel->xlen );
+			  
+		    }
+
+		  if ( LeftPressedR() )
+		    CurLevel->ylen--; // making it smaller is always easy:  just modify the value for size
+		      // allocation of new memory or things like that are not nescessary.
+
+		  InitiateMenu (FALSE);
+		  break;
+		  
+		}
+	    } // if LeftPressed || RightPressed
 
 	      // If the user pressed up or down, the cursor within
 	      // the level editor menu has to be moved, which is done here:
-	      if (UpPressed() || WheelUpPressed ()) 
-		{
-		  if (MenuPosition > 1) MenuPosition--;
-		  else MenuPosition = LAST-1;
-		  MoveMenuPositionSound();
-		  while (UpPressed());
-		  key_pressed = TRUE;
-		}
-	      if (DownPressed() || WheelDownPressed ()) 
-		{
-		  if ( MenuPosition < LAST-1 ) MenuPosition++;
-		  else MenuPosition = 1;
-		  MoveMenuPositionSound();
-		  while (DownPressed());
-		  key_pressed = TRUE;
-		}
+	  if (UpPressedR() || WheelUpPressed ()) 
+	    {
+	      if (MenuPosition > 1) MenuPosition--;
+	      else MenuPosition = LAST-1;
+	      MoveMenuPositionSound();
+	      key = TRUE;
+	    }
+	  if (DownPressedR() || WheelDownPressed ()) 
+	    {
+	      if ( MenuPosition < LAST-1 ) MenuPosition++;
+	      else MenuPosition = 1;
+	      MoveMenuPositionSound();
+	      key = TRUE;
+	    }
 
-	    } // while !key_pressed
+	} // while !key
 
-	} // while !Weiter
-      
-    } // while (!Done)
+    } // while !Weiter
 
-  Copy_Rect (rect, User_Rect);
-
-  ClearGraphMem();
-  return;
-
-} // void Level_Editor(void)
-
+  return (Done);
+} // LevelEditMenu
 
 #undef _menu_c

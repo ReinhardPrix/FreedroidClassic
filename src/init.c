@@ -1039,7 +1039,8 @@ ThouArtVictorious(void)
 
   SetCurrentFont( Para_BFont);
 
-  while ((SpacePressed()||MouseLeftPressed()));
+  // release fire
+  if (FirePressedR());
 
   now=SDL_GetTicks();
 
@@ -1059,7 +1060,8 @@ ThouArtVictorious(void)
   rect.w -= 20;  //leave some border
   ScrollText (DebriefingText , &rect , 6 );
 
-  while ( (SpacePressed()||MouseLeftPressed()) );
+  // release fire
+  if (FirePressedR());
 
   return;
 } 
@@ -1090,8 +1092,6 @@ ThouArtDefeated (void)
       StartTakingTimeForFPSCalculation();
       DisplayBanner (NULL, NULL,  0 );
       ExplodeBlasts ();
-      if ( (delay < WAIT_AFTER_KILLED/4) && (delay % 100 < 10))
-	DruidBlastSound ();
       MoveBullets ();
       Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
       ComputeFPSForThisFrame ();
@@ -1108,7 +1108,7 @@ ThouArtDefeated (void)
   MakeGridOnScreen (&User_Rect);
 
   ShowRobotPicture (UserCenter_x -70, UserCenter_y - 80, DRUID999);
-  ThouArtDefeatedSound ();
+  //  ThouArtDefeatedSound ();
 
   SetCurrentFont (Para_BFont);
   DisplayText ("Transmission", UserCenter_x -90, UserCenter_y - 100, &User_Rect);

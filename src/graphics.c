@@ -569,10 +569,11 @@ InitPictures (void)
 {
   static bool first_call= TRUE;
   char *fpath;
-  int line, col;
+  int line, col, i;
   BFont_Info *oldfont;
   SDL_Rect StdBlock, DigitBlock;
   SDL_Surface *tmp_surf;
+  char fname[500];
 
   // Loading all these pictures might take a while...
   // and we do not want do deal with huge frametimes, which
@@ -690,8 +691,19 @@ InitPictures (void)
       //---------- get Banner
       fpath = find_file (BANNER_BLOCK_FILE, GRAPHICS_DIR, FALSE);
       banner_pic = Load_Block (fpath, 0, 0, NULL);
-
       printf_SDL (ne_screen, -1, -1, ".");
+      //---------- get Droid images ----------
+      for (i=0; i<NUM_DROIDS; i++)
+	{
+	  strcpy( fname, Druidmap[i].druidname );
+	  strcat( fname , ".png" );
+	  if ( (fpath = find_file (fname, GRAPHICS_DIR, FALSE)) == NULL)
+	    {
+	      DebugPrintf (0, "ERROR: Droid pic %s not found!\n", fname);
+	      Terminate (ERR);
+	    }
+	  droid_pic[i] = Load_Block (fpath, 0, 0, NULL);
+	}
     }
   
   printf_SDL (ne_screen, -1, -1, " ok\n");
@@ -863,6 +875,7 @@ ClearGraphMem ( void )
 
   // Now we fill the screen with black color...
   SDL_FillRect( ne_screen , NULL , 0 );
+  SDL_Flip (ne_screen);
 
   return;
 } // ClearGraphMem( void )

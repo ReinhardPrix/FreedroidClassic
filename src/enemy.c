@@ -852,7 +852,6 @@ AnimateEnemys (void)
       //}
 
       /* ignore enemys that are dead or on other levels or dummys */
-      // if (AllEnemys[i].type == DEBUG_ENEMY) continue;
       if (AllEnemys[i].levelnum != CurLevel->levelnum)
 	continue;
       if (AllEnemys[i].status == OUT)

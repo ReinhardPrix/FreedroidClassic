@@ -145,7 +145,9 @@ Takeover (int enemynum)
    */
   Activate_Conservative_Frame_Computation ();
 
-  while ((SpacePressed()||MouseLeftPressed())) ;  /* make sure space is release before proceed */
+  // release fire keys
+  SpacePressedR();
+  MouseLeftPressedR();
 
   // Takeover game always uses Classic User_Rect:
   Copy_Rect (User_Rect, buf);
@@ -160,13 +162,10 @@ Takeover (int enemynum)
   SDL_ShowCursor (SDL_DISABLE); // no mouse-cursor in takeover game!
 
   show_droid_info ( Me.type, -1 );
-  while ( !(SpacePressed() || MouseLeftPressed()) );
-  while ( (SpacePressed() || MouseLeftPressed()) );
-  
+  Wait4Fire();
 
   show_droid_info ( AllEnemys[enemynum].type, -2 );
-  while ( !(SpacePressed() || MouseLeftPressed()) );
-  while ( (SpacePressed() || MouseLeftPressed()) );
+  Wait4Fire();
 
   SDL_BlitSurface (console_bg_pic1, NULL, ne_screen, NULL);
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
@@ -264,7 +263,7 @@ Takeover (int enemynum)
       DisplayBanner (message, NULL , 0 );	
       ShowPlayground ();
       now = SDL_GetTicks();
-      while (!(SpacePressed() || MouseLeftPressed()) && (SDL_GetTicks() - now < SHOW_WAIT) );
+      while ((!FirePressedR()) && (SDL_GetTicks() - now < SHOW_WAIT) ) usleep(50);
 
     }	/* while !FinishTakeover */
 
@@ -272,6 +271,7 @@ Takeover (int enemynum)
   Copy_Rect (buf, User_Rect);
 
   ClearGraphMem();
+  SDL_Flip(ne_screen);
 
   if (LeaderColor == YourColor)
     return TRUE;
@@ -317,10 +317,9 @@ ChooseColor (void)
 	  OpponentColor = VIOLETT;
 	}
 
-      if (SpacePressed()||MouseLeftPressed())
+      if (FirePressedR())
 	{
 	  ColorChosen = TRUE;
-	  while (SpacePressed()||MouseLeftPressed()) ;
 	  MoveMenuPositionSound();
 	}
 
@@ -404,7 +403,7 @@ PlayGame (void)
       if (WheelDownPressed()) wheel_down ++;
 
       /* allow for a WIN-key that give immedate victory */
-      if ( WPressed () && Ctrl_Was_Pressed () && Alt_Was_Pressed () )
+      if ( KeyIsPressedR ('w') && CtrlPressed() && AltPressed() )
 	{
 	  LeaderColor = YourColor;   /* simple as that */
 	  return;  /* leave now, to avoid changing of LeaderColor! */
