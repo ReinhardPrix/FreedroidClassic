@@ -309,6 +309,7 @@ PutInfluence ( int x, int y)
   SDL_Rect TargetRectangle;
   SDL_Rect Text_Rect;
   int alpha_value;
+  int i;
 
   Text_Rect.x=User_Rect.x+(User_Rect.w/2) + Block_Width/3;
   Text_Rect.y=User_Rect.y+(User_Rect.h/2) - Block_Height/2;
@@ -343,9 +344,9 @@ PutInfluence ( int x, int y)
       alpha_value = (int) ( ( 256 - alpha_offset ) * 
 			    fabsf( 0.5 * Me.MissionTimeElapsed - floor( 0.5 * Me.MissionTimeElapsed ) - 0.5 ) + 
 			    ( alpha_offset ) );
-      /*
-      SDL_SetAlpha( ne_blocks , SDL_SRCALPHA , alpha_value );
-      */
+
+      for ( i = 0 ; i < DIGITNUMBER ; i++ )
+	SDL_SetAlpha( InfluDigitSurfacePointer[i] , SDL_SRCALPHA , alpha_value );
 
       // ... and also maybe start a new cry-sound
 
@@ -354,6 +355,11 @@ PutInfluence ( int x, int y)
 	  Me.LastCrysoundTime = 0;
 	  CrySound();
 	}
+    }
+  else
+    {
+      for ( i = 0 ; i < DIGITNUMBER ; i++ )
+	SDL_SetAlpha( InfluDigitSurfacePointer[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
     }
 
   //--------------------
@@ -429,9 +435,9 @@ PutInfluence ( int x, int y)
   // Now that all fading effects are done, we can restore the blocks surface to OPAQUE,
   // which is the oposite of TRANSPARENT :)
   //
-  /*
-  SDL_SetAlpha( ne_blocks , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-  */
+
+  // SDL_SetAlpha( ne_blocks , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+
   //--------------------
   // Maybe the influencer has something to say :)
   // so let him say it..
@@ -463,6 +469,8 @@ PutEnemy (int Enum , int x , int y)
 {
   const char *druidname;	/* the number-name of the Enemy */
   int phase;
+  int alpha_value;
+  int i;
   SDL_Rect TargetRectangle;
 
   DebugPrintf (3, "\nvoid PutEnemy(int Enum): real function call confirmed...\n");
@@ -541,6 +549,31 @@ Sorry...\n\
     {
       // SDL_BlitSurface(ne_blocks , ne_influ_block+phase, ne_screen, &TargetRectangle);
       SDL_BlitSurface( InfluencerSurfacePointer[ phase ] , NULL , ne_screen, &TargetRectangle);
+
+      if ( ( ( AllEnemys[Enum].energy*100/Druidmap[AllEnemys[Enum].type].maxenergy) <= BLINKENERGY) ) 
+	{
+	  
+	  // In case of low energy, do the fading effect...
+	  alpha_value = (int) ( ( 256 - alpha_offset ) * 
+				fabsf( 0.5 * Me.MissionTimeElapsed - floor( 0.5 * Me.MissionTimeElapsed ) - 0.5 ) + 
+				( alpha_offset ) );
+	  
+	  for ( i = 0 ; i < DIGITNUMBER ; i++ )
+	    SDL_SetAlpha( InfluDigitSurfacePointer[i] , SDL_SRCALPHA , alpha_value );
+	  
+	  // ... and also maybe start a new cry-sound
+	  
+	  // if ( Me.LastCrysoundTime > CRY_SOUND_INTERVAL )
+	  // {
+	  // Me.LastCrysoundTime = 0;
+	  // CrySound();
+	  // }
+	}
+      else
+	{
+	  for ( i = 0 ; i < DIGITNUMBER ; i++ )
+	    SDL_SetAlpha( InfluDigitSurfacePointer[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+	}
     }
 
   //--------------------

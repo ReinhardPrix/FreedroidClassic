@@ -1292,15 +1292,15 @@ GetCrew (char *filename)
   // right structure, it's time to set the energy of the corresponding
   // droids to "full" which means to the maximum of each type.
   //
+  Number_Of_Droids_On_Ship=0;
   for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
     {
       type = AllEnemys[i].type;
       if ( type == (-1) ) continue;  // Do nothing to unused entries
       AllEnemys[i].energy = Druidmap[type].maxenergy;
       AllEnemys[i].Status = !OUT;
+      Number_Of_Droids_On_Ship++;
     }
-
-
 
   return (OK);
 } /* GetCrew () */

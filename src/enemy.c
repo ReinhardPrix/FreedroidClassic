@@ -202,7 +202,8 @@ PermanentHealRobots (void)
 {
   int i;
 
-  for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
+  // for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
+  for (i = 0; i < Number_Of_Droids_On_Ship; i++)
     {
       if (AllEnemys[i].Status == OUT)
 	continue;
@@ -440,7 +441,8 @@ CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLe
 
   for ( i = 0 ; i < Steps ; i++ )
     {
-      for ( j = 0 ; j < MAX_ENEMYS_ON_SHIP ; j ++ )
+      // for ( j = 0 ; j < MAX_ENEMYS_ON_SHIP ; j ++ )
+      for ( j = 0 ; j < Number_Of_Droids_On_Ship ; j ++ )
 	{
 	  if ( AllEnemys[j].levelnum != OurLevel ) continue;
 	  if ( AllEnemys[j].Status == OUT ) continue;
@@ -793,7 +795,8 @@ MoveEnemys (void)
 
   AnimateEnemys ();	// move the "phase" of the rotation of enemys
 
-  for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
+  // for (i = 0; i < Number_Of_Droids_On_Ship MAX_ENEMYS_ON_SHIP ; i++)
+  for (i = 0; i < Number_Of_Droids_On_Ship ; i++)
      {
 
        MoveThisEnemy(i);
@@ -1037,7 +1040,8 @@ CheckEnemyEnemyCollision (int enemynum)
   check_x = AllEnemys[enemynum].pos.x;
   check_y = AllEnemys[enemynum].pos.y;
 
-  for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
+  // for (i = 0; i < MAX_ENEMYS_ON_SHIP	; i++)
+  for (i = 0; i < Number_Of_Droids_On_Ship ; i++)
     {
       // check only collisions of LIVING enemys on this level
       if (AllEnemys[i].Status == OUT || AllEnemys[i].levelnum != curlev)
@@ -1110,7 +1114,8 @@ AnimateEnemys (void)
 {
   int i;
 
-  for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
+  // for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
+  for (i = 0; i < Number_Of_Droids_On_Ship ; i++)
     {
       //      if (AllEnemys[i].type == DRUID598)
       //	{
