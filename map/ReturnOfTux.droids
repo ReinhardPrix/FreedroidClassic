@@ -69,7 +69,7 @@ SpecialForce: Type=614 X=19 Y=9 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 
 // **********************************************************************
 // This is Richard 'RMS', who lost most of his code
 // **********************************************************************
-SpecialForce: Type=GUA X=26 Y=18 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="RMSStartGameSquare" RushTux="no" DialogSectionToUse="RMS"
+SpecialForce: Type=GUA X=26 Y=18 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="RichardStartGameSquare" RushTux="no" DialogSectionToUse="RMS"
 
 // **********************************************************************
 // This is Dixon 'DIX', who escaped from the second level
