@@ -502,6 +502,7 @@ typedef struct
 
   unsigned char Chandra_Chat_Flags[ MAX_ANSWERS_PER_PERSON ];
   unsigned char RMS_Chat_Flags[ MAX_ANSWERS_PER_PERSON ];
+  unsigned char SOR_Chat_Flags[ MAX_ANSWERS_PER_PERSON ];
 
   //--------------------
   // THE FOLLOWING ARE INFORMATION, THAT ARE HUGE AND THAT ALSO DO NOT NEED

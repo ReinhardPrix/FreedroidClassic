@@ -1798,6 +1798,7 @@ InitNewMissionList ( char *MissionName )
     {
       Me[0].Chandra_Chat_Flags [ i ] = 0 ;
       Me[0].RMS_Chat_Flags [ i ] = 0 ;
+      Me[0].SOR_Chat_Flags [ i ] = 0 ;
     }
   // RestoreChatVariableToInitialValue( 0 );
 

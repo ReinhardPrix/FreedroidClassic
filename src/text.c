@@ -138,19 +138,14 @@ RestoreChatVariableToInitialValue( int PlayerNum )
   Me [ PlayerNum ] . Chandra_Chat_Flags[ 5 ] = 0 ;
   Me [ PlayerNum ] . Chandra_Chat_Flags[ 6 ] = 0 ;
   Me [ PlayerNum ] . Chandra_Chat_Flags[ 7 ] = 0 ;
-  Me [ PlayerNum ] . Chandra_Chat_Flags[ MAX_ANSWERS_PER_PERSON - 1 ] = 1 ;
+  Me [ PlayerNum ] . Chandra_Chat_Flags[ END_ANSWER ] = 1 ;
       
   Me [ PlayerNum ] . RMS_Chat_Flags[ 0 ] = 1 ;
-  Me [ PlayerNum ] . RMS_Chat_Flags[ 1 ] = 0 ;
-  Me [ PlayerNum ] . RMS_Chat_Flags[ 2 ] = 0 ;
-  Me [ PlayerNum ] . RMS_Chat_Flags[ 3 ] = 0 ;
-  Me [ PlayerNum ] . RMS_Chat_Flags[ 4 ] = 0 ;
-  Me [ PlayerNum ] . RMS_Chat_Flags[ 5 ] = 0 ;
-  Me [ PlayerNum ] . RMS_Chat_Flags[ 6 ] = 0 ;
-  Me [ PlayerNum ] . RMS_Chat_Flags[ 7 ] = 0 ;
-  Me [ PlayerNum ] . RMS_Chat_Flags[ MAX_ANSWERS_PER_PERSON - 1 ] = 1 ;
+  Me [ PlayerNum ] . RMS_Chat_Flags[ END_ANSWER ] = 1 ;
+
+  Me [ PlayerNum ] . SOR_Chat_Flags[ END_ANSWER ] = 1 ; // we always allow 'END' for SOR...
   
-};
+}; // void RestoreChatVariableToInitialValue( int PlayerNum )
 
 /* ----------------------------------------------------------------------
  * This function displays a subtitle for the ChatWithFriendlyDroid interface,
@@ -205,12 +200,10 @@ ChatWithFriendlyDroid( int Enum )
   SDL_Surface* Background;
   SDL_Rect Chat_Window;
   SDL_Rect Droid_Image_Window;
-  char* Chandra_Text;
-  char* Sorenson_Text;
-  char* RMS_Text;
   int MenuSelection = (-1) ;
   char* Chandra_DialogMenuTexts[ MAX_ANSWERS_PER_PERSON ];
   char* RMS_DialogMenuTexts[ MAX_ANSWERS_PER_PERSON ];
+  char* SOR_DialogMenuTexts[ MAX_ANSWERS_PER_PERSON ];
 
   //--------------------
   // First we empty the array of possible answers in the
@@ -220,6 +213,7 @@ ChatWithFriendlyDroid( int Enum )
     {
       Chandra_DialogMenuTexts [ i ] = "" ;
       RMS_DialogMenuTexts [ i ] = "" ;
+      SOR_DialogMenuTexts [ i ] = "" ;
     }
 
   //--------------------
@@ -229,50 +223,6 @@ ChatWithFriendlyDroid( int Enum )
   //
   RestoreChatVariableToInitialValue( 0 ); // Player=0 for now.
   
-  //--------------------
-  // Now we define the texts that the various NPCs will say in case
-  // the old monologuous interaction system is used...
-  // 
-  // I hope this can go out sooner or later...
-  //
-  Chandra_Text = "Tux!  At last you have returned!\n\
-\n\
-Alas, this is an hour of dire need. \n\
-The MS forces have killed may of us immediately at \
-the day of the revolution and others who resisted \
-were dragged away to become subjects in the experiments \
-of the MS. \n\
-\n\
-You must invade their cental and try to save who you can!  \n\
-\n\
-If you step through the teleporter, it will take you directly \
-to the first level of their main installation.\n\
-\n\
-Perhaps you can rescue some of our friends held captive there. \n\
-\n \n";
-
-  Sorenson_Text = "Oh Tux!  Finally you have returned!  \n\
-\n\
-You've come to save us, havn't you? \n\
-\n\
-You must know that earlier, I was on the MS prefered person list as well.  \n\
-But when they finally requested all their preferred persons be \
-fitted with implants, that would allow them to upload any software \
-directly to my brain any time they wanted, it became too much even for \
-me and I fled to this refuge. \n\
-\n\
-It's good that I have found new friends and I hope we can survive together. \n\
-\n \n \n ";
-
-  RMS_Text = "Beware, Tux, when I finally made my escape from the second level, \
-I saw a dark sales apprentice of the MS, transformed into a vile half-human \
-creature, now lurking mindlessly for blood.\n\
-\n\
-Take care if you encounter this one.  He has taken the lives of many of my friends.\n\
-\n\
-You must go and put a end to the thing so that further evil is prevented and \
-the things soul may finally rest.\n\
-\n \n \n ";
 
   // From initiating transfer mode, space might still have been pressed. 
   // So we wait till it's released...
@@ -280,24 +230,13 @@ the things soul may finally rest.\n\
   
   if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "CHA" ) == 0 )
     {
-
-      /* 
-	 // *******************************************************
-	 // *** This was the old non-dialog but monolog code... ***
-	 // *******************************************************
-	 Switch_Background_Music_To ( "../speeches/Chandra01.ogg" );
-	 ScrollText ( Chandra_Text , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NULL );
-	 Switch_Background_Music_To ( CurLevel->Background_Song_Name );
-      */
-
       //--------------------
       // Now we do the dialog with Dr. Chandra...
       //
-      
       // We define our input and image windows...
+      //
       Chat_Window.x=242; Chat_Window.y=100; Chat_Window.w=380; Chat_Window.h=314;
       Droid_Image_Window.x=15; Droid_Image_Window.y=82; Droid_Image_Window.w=215; Droid_Image_Window.h=330;
-      
       Activate_Conservative_Frame_Computation( );
 
       //--------------------
@@ -462,6 +401,7 @@ the things soul may finally rest.\n\
 	    case MAX_ANSWERS_PER_PERSON :
 	    case (-1):
 	    default:
+	      PlayOnceNeededSoundSample( "Tux_Goodbye_0.wav" , TRUE );
 	      return;
 	      break;
 	    }
@@ -471,51 +411,165 @@ the things soul may finally rest.\n\
 
   if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "SOR" ) == 0 )
     {
-
-      /* 
-      // *******************************************************
-      // *** This was the old non-dialog but monolog code... ***
-      // *******************************************************
-      Switch_Background_Music_To ( "../speeches/Sorenson01.ogg" );
-      ScrollText ( Sorenson_Text , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NULL );
-      Switch_Background_Music_To ( CurLevel->Background_Song_Name );
-      */
+      //--------------------
+      // Now we do the dialog with SOR...
+      //
+      // We define our input and image windows...
+      //
+      Chat_Window.x=242; Chat_Window.y=100; Chat_Window.w=380; Chat_Window.h=314;
+      Droid_Image_Window.x=15; Droid_Image_Window.y=82; Droid_Image_Window.w=215; Droid_Image_Window.h=330;
+      Activate_Conservative_Frame_Computation( );
 
       //--------------------
-      // Now that the SOR has made his first speech, the tux will be
-      // assigned the (second and third) mission.
+      // Next we prepare the whole background for all later text operations
       //
-      AssignMission ( 3 );
-      return;
+      Background = IMG_Load( find_file ( "backgrounds/chat_test.jpg" , GRAPHICS_DIR, FALSE ) );
+      if ( Background == NULL )
+	{
+	  printf("\n\nChatWithFriendlyDroid: ERROR LOADING FILE!!!!  Error code: %s " , SDL_GetError() );
+	  Terminate(ERR);
+	}
+      strcpy( fname, Druidmap[ AllEnemys[Enum].type ].druidname );
+      strcat( fname , ".png" );
+      fpath = find_file (fname, GRAPHICS_DIR, FALSE);
+      Small_Droid = IMG_Load (fpath) ;
+      Large_Droid = zoomSurface( Small_Droid , 1.8 , 1.8 , 0 );
+      SDL_BlitSurface( Large_Droid , NULL , Background , &Droid_Image_Window );
+      SDL_BlitSurface( Background , NULL , Screen , NULL );
+      SDL_Flip( Screen );
+      
+      // All droid chat should be done in the paradroid font I would say...
+      // SetCurrentFont( Para_BFont );
+      SetCurrentFont( FPS_Display_BFont );
+      
+      // We print out a little greeting message...
+      // DisplayTextWithScrolling ( 
+      // "Transfer channel protocol set up for text transfer...\n\n" , 
+      // Chat_Window.x , Chat_Window.y , &Chat_Window , Background );
+      
+      SOR_DialogMenuTexts [ 0 ] = " Chandra said you might have something to do for me. " ;
+      SOR_DialogMenuTexts [ 1 ] = " Hi!  I'm new here. " ;
+      SOR_DialogMenuTexts [ 2 ] = " What can you teach me about mental abilities? " ;
+      SOR_DialogMenuTexts [ 3 ] = " About this coffee machine... " ;
 
+      SOR_DialogMenuTexts [ 4 ] = " What are these magnetic storms really? " ;
+      
+      SOR_DialogMenuTexts [ 5 ] = " Why didn't you fetch the coffee machine yourself in all the time?" ;
+      SOR_DialogMenuTexts [ 6 ] = " I've found your coffee machine.  Here you are." ;
+      SOR_DialogMenuTexts [ 8 ] = " I'll get the coffee machine for you." ;
+      SOR_DialogMenuTexts [ END_ANSWER ] = " END ";
+      
+      DisplaySubtitle( " Welcome Traveller! " , Background );
+      PlayOnceNeededSoundSample( "Chandra_Welcome_Traveller_0.wav" , TRUE );
+
+      if ( ( Me [ 0 ] . AllMissions [ 1 ] . MissionWasAssigned == TRUE ) &&
+	   ( Me [ 0 ] . AllMissions [ 1 ] . MissionIsComplete == FALSE ) )
+	{
+	  Me [ 0 ] . SOR_Chat_Flags [ 3 ] = TRUE ; // we allow to ask directly for the coffee machine...
+	  Me [ 0 ] . SOR_Chat_Flags [ 0 ] = FALSE ; // we disallow to ask about the job naively...
+	}
+
+      while (1)
+	{
+	  
+	  // MenuSelection = ChatDoMenuSelection ( "What will you say?" , MenuTexts , 1 , NULL , FPS_Display_BFont );
+	  MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , SOR_DialogMenuTexts , Me[0].SOR_Chat_Flags , 1 , NULL , FPS_Display_BFont );
+	  
+	  switch( MenuSelection )
+	    {
+	    case 1:
+	      PlayOnceNeededSoundSample( "Tux_SOR_Chandra_Said_You_0.wav" , TRUE );
+	      DisplaySubtitle( " Oh Yes! " , Background );
+	      PlayOnceNeededSoundSample( "SOR_Oh_Yes_0.wav" , TRUE );
+	      DisplaySubtitle( " You are the one who wants to get in contact with the resistance then. " , Background );
+	      PlayOnceNeededSoundSample( "SOR_You_Are_The_0.wav" , TRUE );
+	      DisplaySubtitle( " Chandra told me about you and indeed I do have a test for you. " , Background );
+	      PlayOnceNeededSoundSample( "SOR_Chandra_Told_Me_0.wav" , TRUE );
+	      Me [ 0 ] . SOR_Chat_Flags[ 0 ] = 0 ; // don't say this twice...
+	      Me [ 0 ] . SOR_Chat_Flags[ 1 ] = 1 ; // this should allow to ask 'so?'
+	      break;
+	    case 2:
+	      PlayOnceNeededSoundSample( "Tux_SOR_So_0.wav" , TRUE );
+	      DisplaySubtitle( " After the revolution, I was forced to flee to this place. " , Background );
+	      PlayOnceNeededSoundSample( "SOR_After_The_Revolution_0.wav" , TRUE );
+	      DisplaySubtitle( " Most of my belongings stayed behind. " , Background );
+	      PlayOnceNeededSoundSample( "SOR_Most_Of_My_0.wav" , TRUE );
+	      DisplaySubtitle( " Among them is an old coffee machine, an inheritance from my father. " , Background );
+	      PlayOnceNeededSoundSample( "SOR_Among_Them_Is_0.wav" , TRUE );
+	      DisplaySubtitle( " Now here is what I want you to do: Go to the private quarters level of my former place." , Background );
+	      PlayOnceNeededSoundSample( "SOR_Now_Here_Is_0.wav" , TRUE );
+	      DisplaySubtitle( " Find the coffee machine and bring it back to me. " , Background );
+	      PlayOnceNeededSoundSample( "SOR_Find_The_Coffee_0.wav" , TRUE );
+	      DisplaySubtitle( " If you do that, I'll tell chandra that I'd approve if if you were brought in contact with the resistance. " , Background );
+	      PlayOnceNeededSoundSample( "SOR_If_You_Do_0.wav" , TRUE );
+	      Me [ 0 ] . SOR_Chat_Flags[ 1 ] = 0 ; // don't say this twice in one dialog
+	      Me [ 0 ] . SOR_Chat_Flags[ 2 ] = 1 ; // this should allow to ask how-can-i.. 
+	      Me [ 0 ] . SOR_Chat_Flags[ 5 ] = 1 ; // this should allow to ask why-didnt-you...
+	      Me [ 0 ] . SOR_Chat_Flags[ 8 ] = 1 ; // this should allow to agree on the task...
+	      break;
+	    case 3:
+	      PlayOnceNeededSoundSample( "Tux_SOR_How_Can_I_0.wav" , TRUE );
+	      DisplaySubtitle( " As you might know, a great magnetic storm has shaken the universe. " , Background );
+	      PlayOnceNeededSoundSample( "SOR_As_You_Might_0.wav" , TRUE );
+	      DisplaySubtitle( " Almost all of the existing teleporter connections were disrupted or redirected. " , Background );
+	      PlayOnceNeededSoundSample( "SOR_Almost_All_Of_0.wav" , TRUE );
+	      DisplaySubtitle( " It was during this storm that you arrived at our teleporter terminal." , Background );
+	      PlayOnceNeededSoundSample( "SOR_It_Was_During_0.wav" , TRUE );
+	      DisplaySubtitle( " But anyway, the teleporter now points back to my former home. " , Background );
+	      PlayOnceNeededSoundSample( "SOR_But_Anyway_The_0.wav" , TRUE );
+	      Me [ 0 ] . SOR_Chat_Flags[ 2 ] = 0 ; // don't say this twice in one dialgo
+	      Me [ 0 ] . SOR_Chat_Flags[ 4 ] = 1 ; // this should allow to ask about the mag-storm...
+	      break;
+	    case 4:
+	      PlayOnceNeededSoundSample( "Tux_SOR_About_This_Coffee_0.wav" , TRUE );
+	      break;
+	    case 5:
+	      PlayOnceNeededSoundSample( "Tux_SOR_What_Are_These_0.wav" , TRUE );
+	      Me [ 0 ] . SOR_Chat_Flags[ 4 ] = 0 ; // don't say this twice in one dialog
+	      break;
+	    case 6:
+	      PlayOnceNeededSoundSample( "Tux_SOR_Why_Didnt_You_0.wav" , TRUE );
+	      Me [ 0 ] . SOR_Chat_Flags[ 5 ] = 0 ; // don't say this twice in one dialog
+	      break;
+	    case 7:
+	      PlayOnceNeededSoundSample( "Tux_SOR_Ive_Found_Your_0.wav" , TRUE );
+	      Me [ 0 ] . SOR_Chat_Flags[ 6 ] = 0 ; // don't say this twice in one dialog
+	      break;
+	    case 9:
+	      PlayOnceNeededSoundSample( "Tux_SOR_Ill_Get_Your_0.wav" , TRUE );
+	      Me [ 0 ] . SOR_Chat_Flags[ 8 ] = 0 ; // don't say this twice in one dialog
+	      AssignMission ( 1 ); // this should assign the coffee machine mission...
+	      break;
+	    case ( MAX_ANSWERS_PER_PERSON ):
+	    case (-1):
+	    default:
+	      PlayOnceNeededSoundSample( "Tux_See_You_Later_0.wav" , TRUE );
+	      return;
+	      break;
+	    }
+	}
+
+      //--------------------
+      // Since there won't be anyone else to talk to when already having
+      // talked to the SOR, we can safely return here.
+      //
+      return; 
+      
     }
 
   //--------------------
   // Now that the CHANDRA person is done, we can start to do all the dialog
   // and interaction with the RMS person.
   //
-
   if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "RMS" ) == 0 )
     {
-
-      /* 
-	 // *******************************************************
-	 // *** This was the old non-dialog but monolog code... ***
-	 // *******************************************************
-      Switch_Background_Music_To ( "../speeches/Richard01.ogg" );
-      ScrollText ( RMS_Text , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NULL );
-      Switch_Background_Music_To ( CurLevel->Background_Song_Name );
-
-      */
-
       //--------------------
-      // Now we do the dialog with Dr. Chandra...
+      // Now we do the dialog with RMS...
       //
-      
       // We define our input and image windows...
+      //
       Chat_Window.x=242; Chat_Window.y=100; Chat_Window.w=380; Chat_Window.h=314;
       Droid_Image_Window.x=15; Droid_Image_Window.y=82; Droid_Image_Window.w=215; Droid_Image_Window.h=330;
-      
       Activate_Conservative_Frame_Computation( );
 
       //--------------------
@@ -613,8 +667,6 @@ the things soul may finally rest.\n\
 	      PlayOnceNeededSoundSample( "RMS_Almost_All_Of_0.wav" , TRUE );
 	      DisplaySubtitle( " It was during this storm that you arrived at our teleporter terminal." , Background );
 	      PlayOnceNeededSoundSample( "RMS_It_Was_During_0.wav" , TRUE );
-	      // DisplaySubtitle( " I wonder how you could have survived this. " , Background );
-	      // PlayOnceNeededSoundSample( "Chandra_Talk_To_The_0.wav" , TRUE );
 	      DisplaySubtitle( " But anyway, the teleporter now points back to my former home. " , Background );
 	      PlayOnceNeededSoundSample( "RMS_But_Anyway_The_0.wav" , TRUE );
 	      Me [ 0 ] . RMS_Chat_Flags[ 2 ] = 0 ; // don't say this twice in one dialgo
@@ -622,22 +674,6 @@ the things soul may finally rest.\n\
 	      break;
 	    case 4:
 	      PlayOnceNeededSoundSample( "Tux_RMS_About_This_Coffee_0.wav" , TRUE );
-	      /*
-	      DisplaySubtitle( " Use the left mouse button to move around, talk to friends or attack enemies. " , Background );
-	      PlayOnceNeededSoundSample( "Chandra_Controls_1.wav" , TRUE );
-	      DisplaySubtitle( " Hold down the left mouse button to keep moving. " , Background );
-	      PlayOnceNeededSoundSample( "Chandra_Controls_2.wav" , TRUE );
-	      DisplaySubtitle( " If you press the shift button in addition to the left mouse button, you will only attack and not move. " , Background );
-	      PlayOnceNeededSoundSample( "Chandra_Controls_3.wav" , TRUE );
-	      DisplaySubtitle( " Use the right mouse button to activate your currently readied skill or spell. " , Background );
-	      PlayOnceNeededSoundSample( "Chandra_Controls_4.wav" , TRUE );
-	      DisplaySubtitle( " Use the I key to open or close the inventory screen. " , Background );
-	      PlayOnceNeededSoundSample( "Chandra_Controls_5.wav" , TRUE );
-	      DisplaySubtitle( " Use the C key to open or close the character screen. " , Background );
-	      PlayOnceNeededSoundSample( "Chandra_Controls_6.wav" , TRUE );
-	      DisplaySubtitle( " Use the S key to open or close the skills screen. " , Background );
-	      PlayOnceNeededSoundSample( "Chandra_Controls_7.wav" , TRUE );
-	      */
 	      break;
 	    case 5:
 	      PlayOnceNeededSoundSample( "Tux_RMS_What_Are_These_0.wav" , TRUE );
@@ -659,21 +695,18 @@ the things soul may finally rest.\n\
 	    case ( MAX_ANSWERS_PER_PERSON ):
 	    case (-1):
 	    default:
+	      PlayOnceNeededSoundSample( "Tux_Ill_Be_Back_0.wav" , TRUE );
 	      return;
 	      break;
 	    }
 	}
 
-
-
-
-
       //--------------------
-      // Now that the RMS has made his first speech, the tux will be
-      // assigned the (fourth) mission.
+      // Since there won't be anyone else to talk to when already having
+      // talked to the RMS, we can safely return here.
       //
-      AssignMission ( 2 );
-      return;
+      return; 
+      
     }
 
   if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "STO" ) == 0 )
