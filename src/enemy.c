@@ -130,10 +130,10 @@ SetDirectCourseToConsole( int EnemyNum )
 	    case KONSOLE_O:
 	    case KONSOLE_R:
 	    case KONSOLE_L:
-	      DebugPrintf( 1 , "\nEnemy_Post_Bullethit_Behaviour( int EnemyNum ): Console found: %d-%d.", i , j );
+	      DebugPrintf( 1 , "\nSetDirectCourseToConsole( int EnemyNum ): Console found: %d-%d.", i , j );
 	      if ( DirectLineWalkable( AllEnemys[EnemyNum].pos.x , AllEnemys[EnemyNum].pos.y , i , j , AllEnemys [ EnemyNum ] . pos . z ) )
 		{
-		  DebugPrintf( 1 , "\nEnemy_Post_Bullethit_Behaviour( int EnemyNum ): Walkable is: %d-%d.",
+		  DebugPrintf( 1 , "\nSetDirectCourseToConsole( int EnemyNum ): Walkable is: %d-%d.",
 			       i , j );
 
 		  AllEnemys[ EnemyNum ].PrivatePathway[0].x = i;
