@@ -1052,8 +1052,6 @@ ThouArtVictorious(void)
   Me.status = VICTORY;
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
 
-  SetCurrentFont( Para_BFont);
-
   // release fire
   if (FirePressedR());
 
@@ -1073,6 +1071,7 @@ ThouArtVictorious(void)
   SDL_Flip(ne_screen);
   rect.x += 10;
   rect.w -= 20;  //leave some border
+  SetCurrentFont( Para_BFont);
   ScrollText (DebriefingText , &rect , 6 );
 
   // release fire

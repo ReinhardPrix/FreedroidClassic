@@ -1760,7 +1760,7 @@ IsVisible (Finepoint objpos)
   testpos.x = objpos->x;
   testpos.y = objpos->y;
 
-  for (i = 0; i < step_num; i++)
+  for (i = 1; i < step_num; i++)
     {
 
       testpos.x += step.x;
