@@ -35,6 +35,7 @@
 #include "global.h"
 #include "proto.h"
 
+point CurrentMouseAbsPos;
 int CurrentlyMouseRightPressed=0;
 SDL_Event event;
 int ShiftWasPressedInAddition=FALSE;
@@ -115,6 +116,21 @@ int CurrentlyBackspacePressed=0;
 
 // grob_point ItemSizeTable[ ALL_ITEMS ];
 
+int 
+GetMousePos_x(void)
+{
+  return( CurrentMouseAbsPos.x );
+};
+
+//
+int 
+GetMousePos_y(void)
+{
+  return( CurrentMouseAbsPos.y );
+};
+
+
+
 int sgn (int x)
 {
   return (x ? ((x)/abs(x)) : 0);
@@ -153,63 +169,6 @@ void Init_Joy (void)
 
   return;
 }
-
-void
-ApplyItemFromInventory( int ItemNum )
-{
-  DebugPrintf( 0 , "\nvoid ApplyItemFromInventory( int ItemNum ): function call confirmed.");
-
-  // If the inventory slot is not at all filled, we need not do anything more...
-  if ( Me.Inventory[ ItemNum ].type == (-1) ) return;
-
-  if ( ItemMap[ Me.Inventory[ ItemNum ].type ].item_can_be_applied_in_combat == FALSE ) 
-    {
-      Me.TextVisibleTime = 0;
-      Me.TextToBeDisplayed = "I can't use this item here.";
-      return;
-    }
-
-  //--------------------
-  // At this point we know that the item is applicable in combat situation
-  // and therefore all we need to do from here on is execute the item effect
-  // upon the influencer or his environment.
-  //
-  Me.health += ItemMap[ Me.Inventory[ ItemNum ].type ].energy_gain_uppon_application_in_combat;
-  Me.energy += ItemMap[ Me.Inventory[ ItemNum ].type ].energy_gain_uppon_application_in_combat;
-
-  //--------------------
-  // In some cases the item concerned is a one-shot-device like a health potion, which should
-  // evaporize after the first application.  Therefore we delete the item from the inventory list.
-  //
-  Me.Inventory[ ItemNum ].type = (-1);
-
-}; // void ApplyItemFromInventory( int ItemNum )
-
-int
-Inv_Pos_Is_Free( int x , int y )
-{
-  int i;
-  int item_width;
-  int item_height;
-  
-
-  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY; i++ )
-    {
-      if ( Me.Inventory[ i ].type == ( -1 ) ) continue;
-
-      // for ( item_height = 0 ; item_height < ItemSizeTable[ Me.Inventory[ i ].type ].y ; item_height ++ )
-      for ( item_height = 0 ; item_height < ItemImageList[ ItemMap[ Me.Inventory[ i ].type ].picture_number ].inv_size.y ; item_height ++ )
-	{
-	  for ( item_width = 0 ; item_width < ItemImageList[ ItemMap[ Me.Inventory[ i ].type ].picture_number ].inv_size.x ; item_width ++ )
-	    {
-	      if ( ( ( Me.Inventory[ i ].inventory_position.x + item_width ) == x ) &&
-		   ( ( Me.Inventory[ i ].inventory_position.y + item_height ) == y ) )
-		return ( FALSE );
-	    }
-	}
-    }
-  return ( TRUE );
-}; // int Inv_Pos_Is_Free( Inv_Loc.x , Inv_Loc.y )
 
 /* ----------------------------------------------------------------------
  * This function does the reactions to keypresses of the player other
@@ -1054,6 +1013,8 @@ keyboard_update(void)
 	      //
 	      input_axis.x = event.button.x - UserCenter_x + 16; 
 	      input_axis.y = event.button.y - UserCenter_y + 16; 	  
+	      CurrentMouseAbsPos.x = event.button.x;
+	      CurrentMouseAbsPos.y = event.button.y;
 	    }
 	  break;
 	  

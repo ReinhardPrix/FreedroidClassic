@@ -214,6 +214,18 @@ EXTERN void Takeover_Game_Won_Sound (void);
 EXTERN void Takeover_Game_Deadlock_Sound (void);
 EXTERN void Takeover_Game_Lost_Sound (void);
 
+
+// items.c
+#undef EXTERN
+#ifdef _items_c
+#define EXTERN
+#else
+#define EXTERN extern
+#endif
+EXTERN void ApplyItemFromInventory( int ItemNum );
+EXTERN int Inv_Pos_Is_Free( int x , int y );
+EXTERN int GetInventoryItemAt ( int x , int y );
+
 /* input.c */
 #undef EXTERN
 #ifdef _input_c
@@ -222,6 +234,8 @@ EXTERN void Takeover_Game_Lost_Sound (void);
 #define EXTERN extern
 #endif
 EXTERN int MouseRightPressed(void);
+EXTERN int GetMousePos_x(void);
+EXTERN int GetMousePos_y(void);
 EXTERN void Init_Joy(void);
 EXTERN void ReactToSpecialKeys(void);
 EXTERN int Shift_Was_Pressed(void);

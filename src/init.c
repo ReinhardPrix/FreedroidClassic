@@ -1338,6 +1338,7 @@ InitNewMissionList ( char *MissionName )
   for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
     {
       Me.Inventory[ i ].type = (-1);
+      Me.Inventory[ i ].currently_held_in_hand = FALSE;
     }
   DebugPrintf ( 1 , "\nvoid InitNewMission( ... ): Inventory has been emptied...");
 
