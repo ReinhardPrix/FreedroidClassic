@@ -983,25 +983,15 @@ NEW: this function now takes into account the framerate.
 void
 PermanentLoseEnergy (void)
 {
-  static int time_counter = 2 * 18;	/* to obtain approx. 2 sec. */
-
-  if (InvincibleMode)
-    return;
-
-  if (--time_counter)
-    return;			/* wait */
-
-  if (time_counter == 0)
-    time_counter = 2 * 18;	/* ca. 2 sec. */
+  // Of course if in invincible mode, no energy will ever be lost...
+  if (InvincibleMode) return;
 
   /* health decreases with time */
   Me.health -= Druidmap[Me.type].lose_health * Frame_Time ();
 
   /* you cant have more energy than health */
-  if (Me.energy > Me.health)
-    Me.energy = Me.health;
+  if (Me.energy > Me.health) Me.energy = Me.health;
 
-  return;
-}				// void PermanentLoseEnergy(void)
+} // void PermanentLoseEnergy(void)
 
 #undef _influ_c

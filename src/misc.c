@@ -690,11 +690,12 @@ Options_Menu (void)
 #define OPTIONS_MENU_ITEM_POS_X (BLOCKBREITE/2)
 enum
   { SET_BG_MUSIC_VOLUME=1, 
-    SET_SOUND_FX_VOLUME=2, 
-    SET_GAMMA_CORRECTION=3, 
-    SET_FULLSCREEN_FLAG=4, 
-    TOGGLE_FRAMERATE=5, 
-    LEAVE_OPTIONS_MENU=6 };
+    SET_SOUND_FX_VOLUME, 
+    SET_GAMMA_CORRECTION, 
+    SET_FULLSCREEN_FLAG, 
+    TOGGLE_FRAMERATE, 
+    SHOW_ENERGY,
+    LEAVE_OPTIONS_MENU };
 
   // This is not some Debug Menu but an optically impressive 
   // menu for the player.  Therefore I suggest we just fade out
@@ -726,8 +727,10 @@ enum
       PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 7*FontHeight(Font1),    
 		       "Fullscreen Mode: %s", fullscreen_on ? "ON" : "OFF");
       PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 8*FontHeight(Font1),    
-		       "Show Framerates: %s", Draw_Framerate? "ON" : "OFF");
+		       "Show Framerate: %s", Draw_Framerate? "ON" : "OFF");
       PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 9*FontHeight(Font1),    
+		       "Show Energy: %s", Draw_Framerate? "ON" : "OFF");
+      PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 10*FontHeight(Font1),    
 		       "Back");
 
       SDL_UpdateRect(ScaledSurface, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
@@ -809,6 +812,10 @@ enum
 	    case TOGGLE_FRAMERATE:
 	      while (EnterPressed() || SpacePressed() );
 	      Draw_Framerate=!Draw_Framerate;
+	      break;
+	    case SHOW_ENERGY:
+	      while (EnterPressed() || SpacePressed() );
+	      Draw_Energy=!Draw_Energy;
 	      break;
 	    case LEAVE_OPTIONS_MENU:
 	      while (EnterPressed() || SpacePressed() );

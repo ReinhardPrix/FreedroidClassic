@@ -210,6 +210,7 @@ EXTERN unsigned char *ShieldBlocks;
 
 EXTERN float Current_Gamma_Correction;
 EXTERN int Draw_Framerate;
+EXTERN int Draw_Energy;
 
 #ifdef NEW_ENGINE  /* this is for the new graphics engine */
 EXTERN SDL_Surface *ne_screen;   /* the graphics display */

@@ -394,7 +394,7 @@ enum _status
 
 /* Dimension eines Blasts */
 #define BLASTRADIUS		BLOCKBREITE/3
-#define BLASTDAMAGE		5
+#define BLASTDAMAGE		45
 #define BLASTPHASES_PER_SECOND  15
 
 #define DECKCOMPLETEBONUS 500

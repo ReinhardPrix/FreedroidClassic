@@ -49,7 +49,7 @@
 
 #define FIREDIST2	(INTERNBREITE*BLOCKBREITE/2)*(INTERNBREITE*BLOCKBREITE/2)+(INTERNHOEHE*BLOCKHOEHE/2)*(INTERNHOEHE*BLOCKHOEHE/2)
 
-void PermanentHealRobots (void);
+// void PermanentHealRobots (void);
 
 /*@Function============================================================
 @Desc: 
@@ -60,22 +60,16 @@ void PermanentHealRobots (void);
 void
 PermanentHealRobots (void)
 {
-  static int TimerCounter = 2 * 18;
   int i;
-
-  if (--TimerCounter)
-    return;
-  if (TimerCounter == 0)
-    TimerCounter = 2 * 18;
 
   for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
     {
       if (Feindesliste[i].Status == OUT)
 	continue;
       if (Feindesliste[i].energy < Druidmap[Feindesliste[i].type].maxenergy)
-	Feindesliste[i].energy += Druidmap[Feindesliste[i].type].lose_health;
+	Feindesliste[i].energy += Druidmap[Feindesliste[i].type].lose_health * Frame_Time();
     }
-}
+} // void PermanentHealRobots(void)
 
 /*-----------------------------------------------------------------
  * @Desc: initialisiert Feindesliste vollstaendig

@@ -187,6 +187,9 @@ InitNewGame (void)
   LastRefreshSound = 2;
   PlusExtentionsOn = FALSE;
   ThisMessageTime = 0;
+  Draw_Framerate=TRUE;
+  Draw_Energy=TRUE;
+
 
   /*
    * Die Punkte wieder auf 0 setzen
@@ -285,8 +288,6 @@ InitNewGame (void)
 
   /* Introduction und Title */
   Title ();
-
-  Draw_Framerate=TRUE;
 
   DebugPrintf
     ("\nvoid InitNewGame(void): The title signaton has been successfully displayed...:");

@@ -109,7 +109,7 @@ typedef struct
   int class;
   byte accel;			/* its acceleration */
   float maxenergy;		/* the maximum energy the batteries can carry */
-  byte lose_health;		/* the energy/time the duid loses under influence-control */
+  float lose_health;		/* the energy/time the duid loses under influence-control */
   byte gun;			/* Which gun does this druid use */
   byte vneutral;		/* Is there a velocityneutralisator for Bullets ? */
   byte aggression;		/* The aggressiveness of this druidtype */

@@ -145,6 +145,9 @@ PrepareScaledSurface(int With_Screen_Update)
   if (Draw_Framerate)
     PrintStringFont (ScaledSurface , Font1, 0, RAHMENHOEHE*2 , "FPS: %d", 
 		     5*(int)(rintf(0.2/Frame_Time())) );
+  if (Draw_Energy)
+    PrintStringFont (ScaledSurface , Font1, 0, RAHMENHOEHE*2+FontHeight(Font1) , "Energy: %d", 
+		     (int)(rintf(Me.energy)) );
 
 
   if (With_Screen_Update) Update_SDL_Screen();
