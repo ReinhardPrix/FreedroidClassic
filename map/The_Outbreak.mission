@@ -57,17 +57,33 @@ directly form the following example.
 --------------------------------------------------
 
 *** Start of Mission File ***
-Mission Name: Corporate takeover
+
+Mission Name: The Outbreak
+
++++
++++ At first we specify the other files, that also contain essential
++++ information about this mission, e.g. maps and droids and that
++++
 Physics ('game.dat') file to use for this mission: game.dat
-Ship file to use for this mission: new_ship_1.maps
-Lift file to use for this mission: new_ship_1.elevators
-Crew file to use for this mission: new_ship_1.droids
+Ship file to use for this mission: Asteroid.maps
+Lift file to use for this mission: The_Outbreak.elevators
+Crew file to use for this mission: The_Outbreak.droids
 Lifts On file to use for this mission: asteroid_on.bmp
 Lifts Off file to use for this mission: asteroid_off.bmp
-P**ossible Start Point : Level=4 XPos=1 YPos=1
-P**ossible Start Point : Level=5 XPos=5 YPos=5
-P**ossible Start Point : Level=6 XPos=3 YPos=3
-Possible Start Point : Level=7 XPos=8 YPos=7
+After completing this mission, load mission : Invading_Asteroid_Command_Central.mission
+
++++
++++ For the Outbreak mission, there is only one single starting point allowed,
++++ which is in the interiour of the scientists barricades:
++++
+Possible Start Point : Level=2 XPos=8 YPos=7
+
++++
++++ Now we define the mission target
++++ For the Outbreak mission, this target is defined as
++++ to eliminate all droids with the specified marker
++++ namely '1'.  Thats also quite simple.
++++
 Mission target is to kill all droids : -1
 Mission target is to kill class of droids : -1
 Mission target is to kill droids with marker : 1
@@ -78,7 +94,6 @@ Mission target is to reach level : -1
 Mission target is to reach X-Pos : -1
 Mission target is to reach Y-Pos : -1
 Mission target is to live for how many seconds : -1
-After completing this mission, load mission : new_mission_2.mission
 
 ----------------------------------------------------------------------
 
@@ -92,7 +107,7 @@ After completing this mission, load mission : new_mission_2.mission
 * Start of an Event Trigger Subsection *
 Influencer must be at x-coordinate=5
 Influencer must be at y-coordinate=7
-Influencer must be at maplevel=7
+Influencer must be at maplevel=2
 Event Action to be triggered by this trigger=0
 Delete the event trigger after it has been triggered=1
 * End of this Event Trigger Subsection *
@@ -105,7 +120,7 @@ Delete the event trigger after it has been triggered=1
 * Start of an Event Trigger Subsection *
 Influencer must be at x-coordinate=2
 Influencer must be at y-coordinate=7
-Influencer must be at maplevel=7
+Influencer must be at maplevel=2
 Event Action to be triggered by this trigger=2
 Delete the event trigger after it has been triggered=1
 * End of this Event Trigger Subsection *
@@ -114,7 +129,7 @@ Delete the event trigger after it has been triggered=1
 * Start of an Event Trigger Subsection *
 Influencer must be at x-coordinate=2
 Influencer must be at y-coordinate=8
-Influencer must be at maplevel=7
+Influencer must be at maplevel=2
 Event Action to be triggered by this trigger=2
 Delete the event trigger after it has been triggered=1
 * End of this Event Trigger Subsection *
@@ -123,7 +138,7 @@ Delete the event trigger after it has been triggered=1
 * Start of an Event Trigger Subsection *
 Influencer must be at x-coordinate=2
 Influencer must be at y-coordinate=6
-Influencer must be at maplevel=7
+Influencer must be at maplevel=2
 Event Action to be triggered by this trigger=2
 Delete the event trigger after it has been triggered=1
 * End of this Event Trigger Subsection *
@@ -132,7 +147,7 @@ Delete the event trigger after it has been triggered=1
 * Start of an Event Trigger Subsection *
 Influencer must be at x-coordinate=3
 Influencer must be at y-coordinate=6
-Influencer must be at maplevel=7
+Influencer must be at maplevel=2
 Event Action to be triggered by this trigger=2
 Delete the event trigger after it has been triggered=1
 * End of this Event Trigger Subsection *
@@ -141,7 +156,7 @@ Delete the event trigger after it has been triggered=1
 * Start of an Event Trigger Subsection *
 Influencer must be at x-coordinate=3
 Influencer must be at y-coordinate=8
-Influencer must be at maplevel=7
+Influencer must be at maplevel=2
 Event Action to be triggered by this trigger=2
 Delete the event trigger after it has been triggered=1
 * End of this Event Trigger Subsection *
@@ -154,7 +169,7 @@ Delete the event trigger after it has been triggered=1
 * Start of an Event Trigger Subsection *
 Influencer must be at x-coordinate=10
 Influencer must be at y-coordinate=7
-Influencer must be at maplevel=7
+Influencer must be at maplevel=2
 Event Action to be triggered by this trigger=3
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
@@ -166,7 +181,7 @@ FROM HERE ON THERE ARE ACTION DEFINITIONS
 ACTION INDEX NUMBER TO USE=0
 Action is mapchange at positionX=4
 Action is mapchange at positionY=7
-Action is mapchange at maplevel=7
+Action is mapchange at maplevel=2
 Action is change map there to new value=0
 Action is Influencer saying something=1
 Action is Influencer saying the following text="Thanks for removing the barrier!"
@@ -191,7 +206,7 @@ Action is Influencer saying the following text="Don't forget to close the barrie
 ACTION INDEX NUMBER TO USE=2
 Action is mapchange at positionX=4
 Action is mapchange at positionY=7
-Action is mapchange at maplevel=7
+Action is mapchange at maplevel=2
 Action is change map there to new value=23
 Action is Influencer saying something=-1
 Action is Influencer saying the following text=""

@@ -15,10 +15,12 @@ THESE ITEMS HAVE FIRST PRIORITY:
 --------------------------------
 
 4. Think of a way new tiles can be incorporated into the game
+
 5. Add documentation about how to incorporate new map tiles into the game
 
 7. Add additional map tiles:  destroyed console left/right/up/down 
    but only a dummy and leave the details to the creative people
+
 8. Add additional map tiles:  autoshooting gun left/right/up/down
    but only a dummy and leave the details to the creative people
 
@@ -32,15 +34,25 @@ THESE ITEMS HAVE FIRST PRIORITY:
 
 12. Enable mod files as well for the background music
 
+13. Put number of phases for each bullet type into the theme's configuration file,
+    instead of into the general game.dat file.
+
 *  Add code to animate the autoshooting gun
+
 *  Add new weapon type: laser: drawing (double) lines from source to target.
+
 *  Add new weapon type: dumb missile 
+
 *  Add new weapon type: homing missile
+
 *  Add old explosions of larger size to make the game graphically more advanced
+
 *  Add old sparks and lightning flash on a robot to make the game graphically
    more advanced
+
 *  Add new third mission with bomb defusal mission target and heavy guard and
    time limit for the defusal of the bomb.
+
 *  Add surface lift to the asteroid map, that should not be accessible from the start.
 
 

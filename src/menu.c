@@ -1424,7 +1424,7 @@ Credits_Menu (void)
       RightPutString ( ne_screen , 5*FontHeight(Menu_BFont), "Reinhard Prix");
       LeftPutString ( ne_screen , 7*FontHeight(Menu_BFont), "ARTWORK:");
       RightPutString ( ne_screen , 8*FontHeight(Menu_BFont), "Bastian Salmela");
-      LeftPutString ( ne_screen , 9*FontHeight(Menu_BFont), "");
+      RightPutString ( ne_screen , 9*FontHeight(Menu_BFont), "Lanzz");
 
       SDL_Flip( ne_screen );
 

@@ -448,30 +448,30 @@ PutEnemy (int Enum , int x , int y)
   int phase;
   SDL_Rect TargetRectangle;
 
-  DebugPrintf (2, "\nvoid PutEnemy(int Enum): real function call confirmed...\n");
+  DebugPrintf (3, "\nvoid PutEnemy(int Enum): real function call confirmed...\n");
 
   /* if enemy is on other level, return */
   if (AllEnemys[Enum].levelnum != CurLevel->levelnum)
     {
-      DebugPrintf (2, "\nvoid PutEnemy(int Enum): DIFFERENT LEVEL-->usual end of function reached.\n");
+      DebugPrintf (3, "\nvoid PutEnemy(int Enum): DIFFERENT LEVEL-->usual end of function reached.\n");
       return;
     }
 
   // if this enemy is dead, we need not do anything more here
   if (AllEnemys[Enum].Status == OUT)
     {
-      DebugPrintf (2, "\nvoid PutEnemy(int Enum): STATUS==OUT --> usual end of function reached.\n");
+      DebugPrintf (3, "\nvoid PutEnemy(int Enum): STATUS==OUT --> usual end of function reached.\n");
       return;
     }
 
   // if the enemy is out of signt, we need not do anything more here
   if ((!show_all_droids) && (!IsVisible (&AllEnemys[Enum].pos)) )
     {
-      DebugPrintf (2, "\nvoid PutEnemy(int Enum): ONSCREEN=FALSE --> usual end of function reached.\n");
+      DebugPrintf (3, "\nvoid PutEnemy(int Enum): ONSCREEN=FALSE --> usual end of function reached.\n");
       return;
     }
 
-  DebugPrintf (2, "\nvoid PutEnemy(int Enum): it seems that we must draw this one on the screen....\n");
+  DebugPrintf (3, "\nvoid PutEnemy(int Enum): it seems that we must draw this one on the screen....\n");
 
   // We check for incorrect droid types, which sometimes might occor, especially after
   // heavy editing of the crew initialisation functions ;)

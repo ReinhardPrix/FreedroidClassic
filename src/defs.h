@@ -94,8 +94,8 @@ enum
 #define SHIP_OFF_PIC		GRAPHICS_DIR "ship_off.bmp"
 #define SHIP_ON_PIC		GRAPHICS_DIR "ship_on.bmp"
 
-#define STANDARD_MISSION        MAP_DIR "classical_paradroid_mission.mission"
-#define NEW_MISSION             MAP_DIR "new_mission_1.mission"
+#define STANDARD_MISSION        MAP_DIR "Paradroid.mission"
+#define NEW_MISSION             MAP_DIR "The_Outbreak.mission"
 
 #define PARA_FONT_FILE 		GRAPHICS_DIR "parafont.png"
 // #define MENU_FONT_FILE 		GRAPHICS_DIR "font05.png"
