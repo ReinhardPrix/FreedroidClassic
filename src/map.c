@@ -818,18 +818,22 @@ CollectAutomapData ( void )
 }; // void CollectAutomapData ( void )
 
 /* ----------------------------------------------------------------------
- *
- *
+ * The smash_obstacle function uses this function as a subfunction to 
+ * check for exploding obstacles glued to one specific map square.  Of
+ * course also the player number (or -1 in case of no check/bullet hit)
+ * must be supplied so as to be able to suppress hits through walls or
+ * the like.
  * ---------------------------------------------------------------------- */
 int
-smash_obstacles_only_on_tile ( float x , float y , int map_x , int map_y )
+smash_obstacles_only_on_tile ( float x , float y , int map_x , int map_y , int player_num )
 {
     Level BoxLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
     int i ;
     Obstacle target_obstacle;
     int smashed_something = FALSE ;
     moderately_finepoint blast_start_pos;
-    
+    int stored_target_obstacle_type;
+
     //--------------------
     // First some security checks against touching the outsides of the map...
     //
@@ -859,6 +863,29 @@ smash_obstacles_only_on_tile ( float x , float y , int map_x , int map_y )
 	if ( fabsf ( x - target_obstacle -> pos . x ) > 0.4 ) continue ;
 	if ( fabsf ( y - target_obstacle -> pos . y ) > 0.4 ) continue ;
 	
+	//--------------------
+	// Now in case of a non-negative player number supplied, we check if 
+	// the attack was possible or if it would be through a wall.
+	//
+	// For that we shortly preserve the target obstacle type, then we 
+	// shortly 'eliminate' it by overwriting the type.  Then we can do
+	// the collision checking without the obstacle itself being 'in the
+	// way'.  Then we must of course restore the obstacle type again,
+	// before we do the actual smash.
+	//
+	if ( player_num >= 0 )
+	{
+	    stored_target_obstacle_type = target_obstacle -> type ;
+	    target_obstacle -> type = ISO_BLOOD_1 ; // something harmless concerning collisions
+	    if ( ! DirectLineWalkable ( x , y , 
+					Me [ player_num ] . pos . x , Me [ player_num ] . pos . y , 
+					Me [ player_num ] . pos . z ) )
+	    {
+		target_obstacle -> type = stored_target_obstacle_type ;
+		continue;
+	    }
+	}
+
 	DebugPrintf ( 1 , "\nObject smashed at: (%f/%f) by hit/explosion at (%f/%f)." ,
 		      target_obstacle -> pos . x , target_obstacle -> pos . y ,
 		      x , y );
@@ -909,16 +936,22 @@ smash_obstacles_only_on_tile ( float x , float y , int map_x , int map_y )
 
     return ( smashed_something );
 
-}; // int smash_obstacles_only_on_tile ( float x , float y , int map_x , int map_y )
+}; // int smash_obstacles_only_on_tile ( float x , float y , int map_x , int map_y , int player_num )
 
 /* ----------------------------------------------------------------------
- * When a destructable type of obstacle gets hit, 
- * e.g. by a blast exploding on the
- * tile or a influencer melee hit on the tile, then the barrel explodes,
- * possibly leaving some goods behind.
+ * When a destructable type of obstacle gets hit, e.g. by a blast 
+ * exploding on the tile or a melee hit on the same floor tile, then some
+ * of the obstacles (like barrel or crates) might explode, sometimes
+ * leaving some treasure behind.
+ *
+ * Of course not every hit should be causing this:  A melee attack from
+ * the other side of a wall for example should not cause the chests to
+ * explode.  Therefore some extra check for direct lines can be requested
+ * via the player_num parameter.
+ *
  * ---------------------------------------------------------------------- */
 int 
-smash_obstacle ( float x , float y )
+smash_obstacle ( float x , float y , int player_num )
 {
     int map_x, map_y;
     int smash_x, smash_y ;
@@ -931,14 +964,14 @@ smash_obstacle ( float x , float y )
     {
 	for ( smash_y = map_y - 1 ; smash_y < map_y + 2 ; smash_y ++ )
 	{
-	    if ( smash_obstacles_only_on_tile ( x , y , smash_x , smash_y ) ) 
+	    if ( smash_obstacles_only_on_tile ( x , y , smash_x , smash_y , player_num ) ) 
 		smashed_something = TRUE ;
 	}
     }
     
     return ( smashed_something );
 
-}; // int smash_obstacle ( float x , float y );
+}; // int smash_obstacle ( float x , float y , int player_num );
 
 /* ----------------------------------------------------------------------
  * This function returns the map brick code of the tile that occupies the

@@ -283,7 +283,7 @@ EXTERN void glue_obstacles_to_floor_tiles_for_level ( int level_num );
 EXTERN void ResolveMapLabelOnShip ( char* MapLabel , location* PositionPointer );
 EXTERN void CollectAutomapData ( void ) ;
 EXTERN void SmashBox ( float x , float y );
-EXTERN int smash_obstacle ( float x , float y );
+EXTERN int smash_obstacle ( float x , float y , int player_num );
 EXTERN void AnimateTeleports (void);
 EXTERN Uint16 GetMapBrick (Level deck, float x, float y);
 EXTERN void ActSpecialField ( int player_num ) ;
