@@ -9,10 +9,9 @@
  * $Author$
  *
  * $Log$
- * Revision 1.2  1993/05/22 21:57:45  rp
- * Sat May 22 17:15:42 1993: changed int Level[][] to level CurLevel
- * Sat May 22 17:35:34 1993: int Level[][] wieder her, damit irgendwas laeuft inzwischen
- * Sat May 22 17:40:54 1993: added dimensions to Level
+ * Revision 1.3  1993/05/23 20:19:19  prix
+ * Sat May 22 18:19:55 1993: Soundblastervariablen hinzugefuegt
+ * Sun May 23 12:19:11 1993: removed old Level array
  *
  * Revision 1.5  1993/05/28  20:53:58  prix
  * Sun May 23 17:10:35 1993: Grob-Fein-Koordinaten ausradiert !!!
