@@ -523,8 +523,8 @@ Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
  33  33  33  33  33  33  33  33  33  33  33   7  10  10  10  10  10  10  10  10  10   8  10  10  10  10  10  10  10  10   8  10  10  10  10   8  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   8  10  10  10  10  10  10  10  10   9 
  33  33  33  33  33  33   7  10  10  10  10   3  15  14  14  15  15  14  15  15  14  11   0   0   0   0   0  25  25  16  11   0   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  27   0   0   0   0   0   0   0   0  11 
- 33  33  33  33  33   7   3  17   0   0   0   0   0   0  49  50  15  14  15  14  14  11   0  17   0   0   0   0  38  24  11   0   0   0   0  27   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   7  10  10  10   3   0   0   0   0   0   0   0   0  11 
- 33  33  33  33   7   3  50   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0  24  11   0   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0   0  11 
+ 33  33  33  33  33   7   3  17   0   0   0   0   0   0   0   0  15  14  15  14  14  11   0  17   0   0   0   0  38  24  11   0   0   0   0  27   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   7  10  10  10   3   0   0   0   0   0   0   0   0  11 
+ 33  33  33  33   7   3   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0  24  11   0   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0   0  11 
  33  33  33  33  11   0   0   0   0   7   9   0   0   0   0   0   0   0   0   0   0   1  10  18  10   9   0   0   0  12  11   0   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0   0  11 
  33  33  33  33  11   0   0   0   0   1   2  10   8   9   0   0   0   0   0   0   0   0   0   0   0   1  10  18  10  10   2   9   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0   0  11 
  33  33  33   7   3   0   0   0   0   0   0   0   1   3   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   1  10  10  10   2  18  10  10  10  10  10   9   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0   0  11 
@@ -568,10 +568,8 @@ End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
 Start of pure items information for this level
-New item: type=1  X=40.992001  Y=14.292000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=10  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 New item: type=7  X=22.953676  Y=2.274745  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=13  CurDur=8.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 New item: type=5  X=22.547426  Y=1.852869  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=15  CurDur=13.000000  Gold=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
-New item: type=6  X=55.000000  Y=25.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=4  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 End of pure items information for this level
 wp
 Nr.=  0 x=  36 y=  26	 connections:   26   4  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
@@ -959,10 +957,10 @@ beginning_of_map
  33  33   7   3   0   0   0  11   0  11   0   0   0   1  10   8   3  23   0   0   0  11   0   0   0   0   0   0   0  11   0   0   0  14  15  15  14  11 
  33   7   3   0   0   0  24  11   0  27   0  38   0   0  24  11  23   0   0   0   0  27   0   0   0   0   0   0   0  27   0   0   0   0   0  13  14  11 
   7   3   0   0   0  26  12  11   0  11   0   0   0   0   7   2   9  26   0   0  26  11   0   0   0   0   0   0   0  11   0   0   0   0   0   0  15  11 
- 11   0   0   0   7  10  10   3   0   1  10  10  10  10   3  32   1  10  10  18  10   5  10  10  10  10  10  10  10   6   0   0   0   0   0   0  15  11 
+ 11   0   0   0   7  10  10   3   0   1  10  10  10  10   3  13   1  10  10  18  10   5  10  10  10  10  10  10  10   6   0   0   0   0   0   0  15  11 
  11   0   0   0  27   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  27   0   0   0   0   0   0  14  11   0  13   0   0   0  16  24  11 
- 11   0   0   0   1  18  10   9   0   7  10  10  10   8  10  10  10  10  10  10  10   6  16   0  24  13   0   0   0  27   0   0   0   0  16  17  24  11 
-  1   9   0   0   0   0   0  11   0  11  14  14  14  11  14  15  15   0   0  14   0  27   0   0   0   0   0   0  15  11   0  15   0   0   0  16  24  11 
+ 11   0   0   0   1  18  10   9   0   7  10  10  10   8   9  15   7  10  10  10  10   6  16   0  24  13   0   0   0  27   0   0   0   0  16  17  24  11 
+  1   9   0   0   0   0   0  11   0  11  14  14  14  11   1  10   3   0   0  14   0  27   0   0   0   0   0   0  15  11   0  15   0   0   0  16  24  11 
  33   1   9   0  34   0  34  11   0  11   0   0  14  11   0   0   0   0   0  15   0   4  10  10  10  10  10  10  10   6   0   0   0   0   0   0  15  11 
  33  33   1   9   0   0   0  11   0  27   0   0   0  27   0   0   0   0   0   0   0  27   0   0   0   0   0   0   0  27   0   0   0   0   0   0  15  11 
  33  33  33   1   9   0   0  11   0  11   0   0   0  11   0   0   0   0  14   0   0  11   0   0   0   0   0   0   0  11   0   0   0   0   0  15  15  11 
@@ -982,6 +980,7 @@ End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
 Start of pure items information for this level
+New item: type=34  X=8.000000  Y=6.000000  AC=0  DoDamage=2  ModifyDamage=4  MaxDur=20  CurDur=8.000000  Gold=31  PrefixCode=7  SuffixCode=8  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=9  StrToHit=8  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 End of pure items information for this level
 wp
 Nr.=  0 x=   4 y=   3	 connections:   19  18   5  -1  -1  -1  -1  -1  -1  -1  -1  -1
