@@ -287,7 +287,7 @@ main (int argc, char *const argv[])
 	      ShowHighscoreList ();
 	  if ( IPressed() )
 	    ShowDebugInfos ();
-	  if ( CPressed() ) 
+	  if ( CPressed() && Alt_Was_Pressed() && Ctrl_Was_Pressed() && Shift_Was_Pressed() ) 
 	      Cheatmenu ();
 	  if ( EscapePressed() )
 	    EscapeMenu ();

@@ -12,14 +12,16 @@ Outstanding release-critical bugs (priority: high)
 - (rp?) The game gets stuck in the very left elevator on the deck above the
         very lowest deck.  Might have something to do with map topics?
 
-- in the first ~20 seconds the game runs _still_ slowly
-  NO, now runs too fast... lol, frame-time determination should be _immediate_!!
-
 - game should be able to check if yiff is actually _running_ and
   complain if not and/or continue 
 
-- "hide" cheat menu from normal users (e.g. non-documented
-  command-line switch), otherwise it's too easy ;)
+- (DONE)  "hide" cheat menu from normal users (e.g. non-documented
+          command-line switch), otherwise it's too easy ;)
+	  DONE: The key is now SHIFT-CTRL-ALT-C not perfect, but hard enough
+	  and convenient: no need to turn it on and off every time :-)
+
+- (DONE) in the first ~20 seconds the game runs _still_ slowly
+         NO, now runs too fast... lol, frame-time determination should be _immediate_!!
 
 Outstanding normal bugs (priority: normal)
 ------------------------------------------

@@ -43,6 +43,8 @@
 
 SDL_Event event;
 int ShiftWasPressedInAddition=FALSE;
+int CtrlWasPressedInAddition=FALSE;
+int AltWasPressedInAddition=FALSE;
 int CurrentlyEnterPressed=0;
 int CurrentlySpacePressed=0;
 int CurrentlyLeftPressed=0;
@@ -94,6 +96,18 @@ Shift_Was_Pressed(void)
   return (ShiftWasPressedInAddition);  
 }
 
+int
+Ctrl_Was_Pressed(void)
+{
+  return (CtrlWasPressedInAddition);  
+}
+
+int
+Alt_Was_Pressed(void)
+{
+  return (AltWasPressedInAddition);  
+}
+
 void 
 Init_SDL_Keyboard(void)
 {
@@ -124,6 +138,14 @@ keyboard_update(void)
 	  if ( event.key.keysym.mod & (KMOD_LSHIFT | KMOD_RSHIFT) )
 	    ShiftWasPressedInAddition=TRUE;
 	  else ShiftWasPressedInAddition=FALSE;
+
+	  if ( event.key.keysym.mod & (KMOD_LCTRL | KMOD_RCTRL) )
+	    CtrlWasPressedInAddition=TRUE;
+	  else CtrlWasPressedInAddition=FALSE;
+
+	  if ( event.key.keysym.mod & (KMOD_LALT | KMOD_RALT) )
+	    AltWasPressedInAddition=TRUE;
+	  else AltWasPressedInAddition=FALSE;
 
 	  /* Check the SDLKey values */
 	  switch( event.key.keysym.sym )
@@ -286,6 +308,14 @@ keyboard_update(void)
 	  if ( event.key.keysym.mod & (KMOD_LSHIFT | KMOD_RSHIFT) )
 	    ShiftWasPressedInAddition=TRUE;
 	  else ShiftWasPressedInAddition=FALSE;
+
+	  if ( event.key.keysym.mod & (KMOD_LCTRL | KMOD_RCTRL) )
+	    CtrlWasPressedInAddition=TRUE;
+	  else CtrlWasPressedInAddition=FALSE;
+
+	  if ( event.key.keysym.mod & (KMOD_LALT | KMOD_RALT) )
+	    AltWasPressedInAddition=TRUE;
+	  else AltWasPressedInAddition=FALSE;
 
 	  switch( event.key.keysym.sym )
 	    {

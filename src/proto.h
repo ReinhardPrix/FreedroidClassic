@@ -272,6 +272,8 @@ EXTERN void Takeover_Game_Lost_Sound (void);
 #endif
 
 EXTERN int Shift_Was_Pressed(void);
+EXTERN int Ctrl_Was_Pressed(void);
+EXTERN int Alt_Was_Pressed(void);
 EXTERN void Init_SDL_Keyboard(void);
 EXTERN int getchar_raw (void);
 EXTERN int keyboard_update(void);
