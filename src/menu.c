@@ -208,6 +208,7 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , char* B
       for ( i = 0 ; TRUE ; i ++ )
 	{
 	  if ( strlen( MenuTexts[ i ] ) == 0 ) break;
+	  CutDownStringToMaximalSize ( MenuTexts [ i ] , 550 );
 	  CenteredPutString ( Screen ,  first_menu_item_pos_y + i * h , MenuTexts[ i ] );
 	}
       if ( strlen( InitialText ) > 0 ) 

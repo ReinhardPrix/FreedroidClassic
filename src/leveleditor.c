@@ -423,6 +423,8 @@ EditLevelDimensions ( void )
   int MenuPosition = 1 ;
   int Weiter = FALSE ;
 
+  CurLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
+
   while ( !Weiter )
     {
 
@@ -583,6 +585,8 @@ DoLevelEditorMainMenu ( Level CurLevel )
   while (!Weiter)
     {
       
+      CurLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
+
       InitiateMenu( NULL );
       
       MenuTexts[ 0 ] = "Save whole ship to 'Testship.shp'" ;
@@ -728,59 +732,8 @@ DoLevelEditorMainMenu ( Level CurLevel )
 	      break;
 
 	    case CHANGE_SIZE_X:
-	      /*
-	      if ( RightPressed() )
-		{
-		  CurLevel->xlen++;
-		  // In case of enlargement, we need to do more:
-		  for ( i = 0 ; i < CurLevel->ylen ; i++ )
-		    {
-		      OldMapPointer=CurLevel->map[i];
-		      CurLevel->map[i] = MyMalloc( CurLevel->xlen +1) ;
-		      memcpy( CurLevel->map[i] , OldMapPointer , CurLevel->xlen-1 );
-		      // We don't want to fill the new area with junk, do we? So we set it VOID
-		      CurLevel->map[ i ] [ CurLevel->xlen-1 ] = VOID;  
-		    }
-		  while (RightPressed());
-		}
-	      if ( LeftPressed() )
-		{
-		  CurLevel->xlen--; // making it smaller is always easy:  just modify the value for size
-		  // allocation of new memory or things like that are not nescessary.
-		  while (LeftPressed());
-		}
-	      */
 	      break;
-	      
 	    case CHANGE_SIZE_Y:
-	      
-	      /*
-	      if ( RightPressed() )
-		{
-		  
-		  //--------------------
-		  // The enlargement of levels in y direction is limited by a constant
-		  // defined in defs.h.  This is carefully checked or no operation at
-		  // all will be performed.
-		  //
-		  if ( (CurLevel->ylen)+1 < MAX_MAP_LINES )
-		    {
-		      CurLevel->ylen++;
-		      // In case of enlargement, we need to do more:
-		      CurLevel->map[ CurLevel->ylen-1 ] = MyMalloc( CurLevel->xlen +1) ;
-		      // We don't want to fill the new area with junk, do we? So we set it VOID
-		      memset( CurLevel->map[ CurLevel->ylen-1 ] , VOID , CurLevel->xlen );
-		    }
-		  while (RightPressed());
-		}
-	      
-	      if ( LeftPressed() )
-		{
-		  CurLevel->ylen--; // making it smaller is always easy:  just modify the value for size
-		  // allocation of new memory or things like that are not nescessary.
-		  while (LeftPressed());
-		}
-	      */
 
 	      break;
 	      
@@ -1080,6 +1033,8 @@ SetLevelInterfaces ( void )
   while (!Weiter)
     {
       
+      CurLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
+
       InitiateMenu( NULL );
       
       sprintf( Options [ 0 ] , "Jump threshold north: %d.  Up/Down" , CurLevel->jump_threshold_north );

@@ -99,6 +99,40 @@ dialogue_option, *Dialogue_option;
 dialogue_option ChatRoster[MAX_DIALOGUE_OPTIONS_IN_ROSTER];
 
 /* ----------------------------------------------------------------------
+ * 
+ * ---------------------------------------------------------------------- */
+void 
+CutDownStringToMaximalSize ( char* StringToCut , int LengthInPixels )
+{
+  int StringIndex=0;
+  int LengthByNow=0;
+  int i;
+
+  if ( TextWidth ( StringToCut ) <= LengthInPixels ) return;
+
+  while ( StringToCut[ StringIndex ] != 0 )
+    {
+      LengthByNow += CharWidth ( GetCurrentFont() , StringToCut [ StringIndex ] ) ;
+      if ( LengthByNow >= LengthInPixels )
+	{
+	  for ( i = 0 ; i < 3 ; i ++ )
+	    {
+	      if ( StringToCut [ StringIndex + i ] != 0 )
+		{
+		  StringToCut [ StringIndex + i ] = '.';
+		}
+	      else
+		return;
+	    }
+	  StringToCut [ StringIndex + 3 ] = 0 ;
+	  return;
+	}
+      StringIndex ++;
+    }
+
+}; // void CutDownStringToMaximalSize ( char* StringToCut , int LengthInPixels )
+
+/* ----------------------------------------------------------------------
  * This function should init the chat roster with empty values and thereby
  * clean out the remnants of the previous chat dialogue.
  * ---------------------------------------------------------------------- */

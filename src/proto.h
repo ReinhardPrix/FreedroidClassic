@@ -499,6 +499,7 @@ void PaintConsoleMenu (int menu_pos);
 #define EXTERN extern
 #endif
 
+EXTERN void CutDownStringToMaximalSize ( char* StringToCut , int LengthInPixels );
 EXTERN void SetNewBigScreenMessage( char* ScreenMessageText );
 EXTERN void DisplayBigScreenMessage( void );
 EXTERN char* GetChatWindowInput( SDL_Surface* Background , SDL_Rect* Chat_Window_Pointer );
