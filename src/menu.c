@@ -1432,6 +1432,7 @@ PerformanceTweaksOptionsMenu (void)
   char Options1[1000];
   char Options2[1000];
   char Options3[1000];
+  char Options4[1000];
   char* MenuTexts[10];
   enum
     { 
@@ -1439,6 +1440,7 @@ PerformanceTweaksOptionsMenu (void)
       SET_HIGHLIGHTING_MODE,
       SET_MENU_HANDLING_MODE,
       SKIP_LIGHT_RADIUS_MODE,
+      USE_BARS_INSTEAD_OF_ENERGY_O_METER_MODE,
       LEAVE_PERFORMANCE_TWEAKS_MENU 
     };
 
@@ -1455,6 +1457,8 @@ PerformanceTweaksOptionsMenu (void)
 	        GameConfig.hog_CPU ? "YES" : "NO" );
       sprintf ( Options1 , "Highlighting mode: %s", GameConfig.highlighting_mode_full ? "FULL" : "REDUCED" );
       sprintf ( Options3 , "Skip light radius: %s", GameConfig . skip_light_radius ? "YES" : "NO" );
+      sprintf ( Options4 , "Use bars for energy display: %s", 
+		GameConfig . use_bars_instead_of_energy_o_meter ? "YES" : "NO" );
       strcpy ( Options2 , "Menu handling: " );
 
       switch ( GameConfig . menu_mode )
@@ -1477,8 +1481,9 @@ PerformanceTweaksOptionsMenu (void)
       MenuTexts[1]=Options1;
       MenuTexts[2]=Options2;
       MenuTexts[3]=Options3;
-      MenuTexts[4]="Back";
-      MenuTexts[5]="";
+      MenuTexts[4]=Options4;
+      MenuTexts[5]="Back";
+      MenuTexts[6]="";
 
       MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL , NULL );
 
@@ -1511,6 +1516,11 @@ PerformanceTweaksOptionsMenu (void)
 	case SKIP_LIGHT_RADIUS_MODE:
 	  while (EnterPressed() || SpacePressed() );
 	  GameConfig . skip_light_radius = ! GameConfig . skip_light_radius ;
+	  break;
+
+	case USE_BARS_INSTEAD_OF_ENERGY_O_METER_MODE:
+	  while (EnterPressed() || SpacePressed() );
+	  GameConfig . use_bars_instead_of_energy_o_meter = ! GameConfig . use_bars_instead_of_energy_o_meter ;
 	  break;
 
 	case LEAVE_PERFORMANCE_TWEAKS_MENU:

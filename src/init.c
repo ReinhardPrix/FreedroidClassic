@@ -1727,6 +1727,8 @@ ResetGameConfigToDefaultValues ( void )
   GameConfig . omit_enemies_in_level_editor = TRUE ;
   GameConfig . zoom_is_on = FALSE ;
 
+  GameConfig . use_bars_instead_of_energy_o_meter = FALSE ;
+
 }; // void Reset_GameConfig_To_Default_Values ( void )
 
 /* -----------------------------------------------------------------

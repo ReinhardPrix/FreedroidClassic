@@ -149,6 +149,9 @@ EXTERN void blit_open_gl_light_radius ( void );
 EXTERN void blit_open_gl_cheap_light_radius ( void ) ;
 EXTERN void PutPixel_open_gl ( int x, int y, Uint32 pixel);
 EXTERN void blit_rotated_open_gl_texture_with_center ( iso_image our_floor_iso_image , int x , int y , float angle_in_degree ) ;
+EXTERN void remove_open_gl_blending_mode_again ( void );
+EXTERN void prepare_open_gl_for_blending_textures( void );
+
 
 #ifdef HAVE_LIBGL
 EXTERN int initGL( GLvoid );

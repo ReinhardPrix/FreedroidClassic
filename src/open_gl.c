@@ -133,13 +133,13 @@ our_SDL_blit_surface_wrapper(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *d
 	    }
 	  else if ( bytes == 3 )
 	    {
-	      DebugPrintf ( -1 , "\nSurface has bytes: %d. " , bytes );
+	      DebugPrintf ( 1 , "\nSurface has bytes: %d. " , bytes );
 	      fflush ( stdout );
 	      glDrawPixels( src -> w , src -> h, GL_RGB , GL_UNSIGNED_BYTE , src -> pixels );
 	    }
 	  else if ( bytes == 2 )
 	    {
-	      DebugPrintf ( -1 , "\nSurface has bytes: %d. --> using GL_UNSIGNED_SHORT_5_6_5. " , bytes );
+	      DebugPrintf ( 1 , "\nSurface has bytes: %d. --> using GL_UNSIGNED_SHORT_5_6_5. " , bytes );
 	      fflush ( stdout );
 	      glDrawPixels( src -> w , src -> h, GL_RGB , GL_UNSIGNED_SHORT_5_6_5 , src -> pixels );
 	    }
@@ -356,16 +356,16 @@ pad_image_for_texture ( SDL_Surface* our_surface )
 
   if ( x < 64 )
     {
-      DebugPrintf ( -1 , "\nWARNING!  Texture x < 64 encountered.  Raising to 64 x." ) ;
+      DebugPrintf ( 1 , "\nWARNING!  Texture x < 64 encountered.  Raising to 64 x." ) ;
       x = 64 ;
     }
   if ( y < 64 )
     {
-      DebugPrintf ( -1 , "\nWARNING!  Texture y < 64 encountered.  Raising to 64 y." ) ;
+      DebugPrintf ( 1 , "\nWARNING!  Texture y < 64 encountered.  Raising to 64 y." ) ;
       y = 64 ;
     }
 
-  DebugPrintf ( -1 , "\nPadding image to texture size: final is x=%d, y=%d." , x , y );
+  DebugPrintf ( 1 , "\nPadding image to texture size: final is x=%d, y=%d." , x , y );
   
   padded_surf = SDL_CreateRGBSurface( 0 , x , y , 32, 0x0FF000000 , 0x000FF0000  , 0x00000FF00 , 0x000FF );
   tmp_surf = SDL_DisplayFormatAlpha ( padded_surf ) ;
@@ -654,20 +654,10 @@ blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x 
   int image_end_y;
 
   //--------------------
-  // Linear Filtering is slow and maybe not nescessary here, so we
-  // stick to the faster 'nearest' variant.
-  //
-  glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
-  glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
-
-  //--------------------
   // Now of course we need to find out the proper target position.
   //
   target_rectangle . x = x ;
   target_rectangle . y = y ;
-  
-  // glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-  // glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 
   //--------------------
   // Now we can begin to draw the actual textured rectangle.
@@ -794,14 +784,6 @@ blit_rotated_open_gl_texture_with_center ( iso_image our_iso_image , int x , int
   glVertex2i( corner4 . x , corner4 . y );
   glEnd( );
 
-  glDisable( GL_TEXTURE_2D );  
-  glDisable(GL_BLEND);
-  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND );
-  // glBlendFunc( GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA );
-
-  glEnable( GL_ALPHA_TEST );  
-  glAlphaFunc ( GL_GREATER , 0.5 ) ;
-
 #endif
 
 }; // void blit_rotated_open_gl_texture_with_center ( iso_image our_iso_image , int x , int y , float angle_in_degree ) 
@@ -886,47 +868,88 @@ StoreMenuBackground ( int backup_slot )
  *
  * ---------------------------------------------------------------------- */
 void
+remove_open_gl_blending_mode_again ( void )
+{
+
+#ifdef HAVE_LIBGL
+
+  //--------------------
+  // But for the rest of the drawing function, the peripherals and other
+  // things that are to be blitted after that, we should not forget to
+  // disable the texturing things again, or HORRIBLE framerates will result...
+  //
+  // So we revert everything that we might have touched to normal state.
+  //
+  glDisable( GL_TEXTURE_2D );
+  glDisable( GL_BLEND );
+  glEnable( GL_ALPHA_TEST );  
+  glAlphaFunc ( GL_GREATER , 0.5 ) ;
+  
+#endif 
+
+}; // void remove_open_gl_blending_mode_again ( void )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+prepare_open_gl_for_light_radius ( void )
+{
+
+#ifdef HAVE_LIBGL
+
+  glDisable( GL_TEXTURE_2D );  
+  glEnable(GL_BLEND);
+  glDisable( GL_ALPHA_TEST );  
+  glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
+  glBlendFunc( GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA );
+
+#endif
+  
+}; // void prepare_open_gl_for_light_radius ( void )
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+prepare_open_gl_for_blending_textures( void )
+{
+#ifdef HAVE_LIBGL
+
+  //--------------------
+  // Linear Filtering is slow and maybe not nescessary here, so we
+  // stick to the faster 'nearest' variant.
+  //
+  glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+  glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+  
+  glEnable( GL_TEXTURE_2D );  
+  glEnable(GL_BLEND);
+  glDisable( GL_ALPHA_TEST );  
+  glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
+  glBlendFunc( GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA );
+
+#endif
+
+}; // void prepare_open_gl_for_blending_textures( void )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
 blit_open_gl_cheap_light_radius ( void )
 {
 #ifdef HAVE_LIBGL
   int our_height, our_width;
   int light_strength;
-  // static int pos_x_grid [ (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2) ] [ (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2 ) ] ;
-  // static int pos_y_grid [ (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2) ] [ (int)(FLOOR_TILES_VISIBLE_AROUND_TUX * ( 1.0 / LIGHT_RADIUS_CHUNK_SIZE ) * 2 ) ] ;
   int window_offset_x;
   int light_bonus = curShip . AllLevels [ Me [ 0 ] . pos . z ] -> light_radius_bonus ;
   Uint8 r , g , b , a ;
   moderately_finepoint target_pos;
 
-  //--------------------
-  // At first we need to enable texture mapping for all of the following.
-  // Without that, we'd just get (faster, but plain white) rectangles.
-  //
-  glDisable( GL_TEXTURE_2D );
-  //--------------------
-  // We disable depth test for all purposes.
-  //
-  glDisable(GL_DEPTH_TEST);
-
-  //--------------------
-  // We will use the 'GL_REPLACE' texturing environment or get 
-  // unusable (and slow) results.
-  //
-  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL );
-  glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND );
-  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
-  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
-
-  //--------------------
-  // Blending can be used, if there is no suitable alpha checking so that
-  // I could get it to work right....
-  //
-  // But alpha check functions ARE a bit faster, even on my hardware, so
-  // let's stick with that possibility for now, especially with the floor.
-  //
-  glDisable( GL_ALPHA_TEST );  
-  glEnable(GL_BLEND);
-  glBlendFunc( GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA );
+  prepare_open_gl_for_light_radius ();
 
   window_offset_x = - ( SCREEN_WIDTH / 2 ) + UserCenter_x ;
 
@@ -962,18 +985,8 @@ blit_open_gl_cheap_light_radius ( void )
 	}
     }
 
-  //--------------------
-  // But for the rest of the drawing function, the peripherals and other
-  // things that are to be blitted after that, we should not forget to
-  // disable the texturing things again, or HORRIBLE framerates will result...
-  //
-  // So we revert everything that we might have touched to normal state.
-  //
-  glDisable( GL_TEXTURE_2D );
-  glDisable( GL_BLEND );
-  glEnable( GL_ALPHA_TEST );  
-  glAlphaFunc ( GL_GREATER , 0.5 ) ;
-  
+  remove_open_gl_blending_mode_again ( ) ;
+
 #endif
 
 }; // void blit_open_gl_cheap_light_radius ( void )

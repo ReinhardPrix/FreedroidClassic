@@ -491,17 +491,12 @@ ShowCurrentSkill( void )
 }; // void ShowCurrentSkill ( void )
 
 /* ----------------------------------------------------------------------
- * This function displays the status bars for mana and energy in some 
- * corner of the screen.  The dimensions and location of the bar are
- * specified in items.h
+ *
+ *
  * ---------------------------------------------------------------------- */
-void 
-ShowCurrentHealthAndForceLevel( void )
+void
+blit_energy_o_meter( void )
 {
-  SDL_Rect Health_Rect;
-  SDL_Rect Unhealth_Rect;
-  SDL_Rect Force_Rect;
-  SDL_Rect Unforce_Rect;
   SDL_Surface* tmp;
   char *fpath;
   static iso_image speed_meter_iso_image = { NULL , 0 , 0 , NULL , 0 , 0 , 0 } ;
@@ -571,16 +566,16 @@ ShowCurrentHealthAndForceLevel( void )
 
   if ( use_open_gl ) 
     {
-      
+      /*      
       blit_open_gl_texture_to_map_position ( speed_meter_iso_image , 
 					     translate_pixel_to_map_location ( 0 , SCREEN_WIDTH/2 - speed_meter_iso_image . surface -> w + 32 , - SCREEN_HEIGHT / 2 + 32 , TRUE ) , 
 					     translate_pixel_to_map_location ( 0 , SCREEN_WIDTH/2 - speed_meter_iso_image . surface -> w + 32 , - SCREEN_HEIGHT / 2 + 32 , FALSE ) ) ;
-
-      /*
-      blit_open_gl_texture_to_screen_position ( SpeedMeterManaArrowImage , 
-						SCREEN_WIDTH/2 - speed_meter_iso_image . surface -> w , 
-						SCREEN_HEIGHT / 2 );
       */
+
+      prepare_open_gl_for_blending_textures ( );
+
+      blit_open_gl_texture_to_screen_position ( speed_meter_iso_image , 
+						SCREEN_WIDTH - speed_meter_iso_image . surface -> w , 0 );
 
       blit_rotated_open_gl_texture_with_center ( SpeedMeterManaArrowImage , 
 						SCREEN_WIDTH - speed_meter_iso_image . surface -> w + PivotPosition . x , 
@@ -590,7 +585,8 @@ ShowCurrentHealthAndForceLevel( void )
 						SCREEN_WIDTH - speed_meter_iso_image . surface -> w + PivotPosition . x , 
 						0 + PivotPosition . y  , - 360 * 3 / 4 * Me[0].energy / Me[0].maxenergy );
 
-      // blit_open_gl_texture_to_map_position ( speed_meter_iso_image , Me [ 0 ] . pos . x , Me [ 0 ] . pos . y ) ;
+      remove_open_gl_blending_mode_again ( );
+
     } // if ( use_open_gl )
   else
     {
@@ -655,7 +651,19 @@ ShowCurrentHealthAndForceLevel( void )
 
     } // if ( ! use_open_gl )
 
-  return; // The rest can remain disabled for now...
+}; // void blit_energy_o_meter ( void )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+blit_energy_and_mana_bars ( void )
+{
+  SDL_Rect Health_Rect;
+  SDL_Rect Unhealth_Rect;
+  SDL_Rect Force_Rect;
+  SDL_Rect Unforce_Rect;
 
   if ( GameConfig.Inventory_Visible ) 
     {
@@ -694,6 +702,23 @@ ShowCurrentHealthAndForceLevel( void )
   our_SDL_fill_rect_wrapper( Screen , & ( Unhealth_Rect ) , 0x0FF00000 );
   our_SDL_fill_rect_wrapper( Screen , & ( Force_Rect ) , FORCE_RECT_COLOR );
   our_SDL_fill_rect_wrapper( Screen , & ( Unforce_Rect ) , 0x0FF0000 );
+  
+}; // void blit_energy_and_mana_bars ( void )
+
+/* ----------------------------------------------------------------------
+ * This function displays the status bars for mana and energy in some 
+ * corner of the screen.  The dimensions and location of the bar are
+ * specified in items.h
+ * ---------------------------------------------------------------------- */
+void 
+ShowCurrentHealthAndForceLevel( void )
+{
+
+  if ( GameConfig . use_bars_instead_of_energy_o_meter )
+    blit_energy_and_mana_bars();
+  else
+    blit_energy_o_meter();
+
 }; // void ShowCurrentHealthAndForceLevel( void )
 
 /* ----------------------------------------------------------------------

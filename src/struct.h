@@ -115,6 +115,7 @@ typedef struct
   int omit_enemies_in_level_editor;
   int level_editor_edit_mode;
   int zoom_is_on;
+  int use_bars_instead_of_energy_o_meter;
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
 
