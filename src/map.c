@@ -997,6 +997,8 @@ GetLiftConnections (char *filename)
   // At first we read in the rectangles that define where the colums of the
   // lift are, so that we can highlight them later.
   //
+  
+  curShip.num_lift_rows = 0;
   while ( ( EntryPointer = strstr( EntryPointer , "Elevator Number=" ) ) != NULL )
     {
       ReadValueFromString (EntryPointer, "Elevator Number=", "%d", &ElevatorIndex);
@@ -1012,6 +1014,7 @@ GetLiftConnections (char *filename)
       curShip.LiftRow_Rect[ElevatorIndex].w = w;
       curShip.LiftRow_Rect[ElevatorIndex].h = h;
 
+      curShip.num_lift_rows ++;
     }
 
   //--------------------

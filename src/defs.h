@@ -49,6 +49,9 @@
 #define ScaleRect(rect,scale) do {\
 (rect).x *= scale; (rect).y *= scale; (rect).w *= scale; (rect).h *= scale; } while(0)
 
+#define ScalePoint(point,scale) do {\
+(point).x *= scale; (point).y *= scale; } while(0)
+
 #define Set_Rect(rect, xx, yy, ww, hh) do {\
 (rect).x = (xx); (rect).y = (yy); (rect).w = (ww); (rect).h = (hh); } while(0)
 
@@ -81,7 +84,7 @@
 #define LeftPressedR() (KeyIsPressedR(SDLK_LEFT)||KeyIsPressedR('a'))
 #define RightPressedR() (KeyIsPressedR(SDLK_RIGHT)||KeyIsPressedR('d'))
 
-#define Wait4Fire() do {while(1) {if(FirePressedR()) break; else usleep(50);}; } while(0)
+#define Wait4Fire() do {while(1) {if(FirePressedR()||EscapePressedR()) break; else usleep(50);}; } while(0)
 
 #define COLLISION_STEPSIZE   0.1
 

@@ -18,11 +18,10 @@ Bugs
 Outstanding release-critical bugs (priority: high) 
 --------------------------------------------------
 - allow initial scaling of the _whole_ game (-> Sharp Zaurus 320x200!)
-  * theme changes
   * droid-console
   * text+font
-  * banner-text
   * takeover
+  * End screen (999)
 
 - limit fps to get smoother play?
 

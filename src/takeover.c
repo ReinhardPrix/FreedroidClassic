@@ -75,25 +75,93 @@ int NumCapsules[TO_COLORS] = {
 };
 
 point LeftCapsulesStart[TO_COLORS] = {
-  {GELB_LEFT_CAPSULES_X, GELB_LEFT_CAPSULES_Y},
-  {VIOLETT_LEFT_CAPSULES_X, VIOLETT_LEFT_CAPSULES_Y}
+  { 4, 2*27 },
+  { 2*255 + 2*30 - 10, 2*27 }
 };
 
 point CurCapsuleStart[TO_COLORS] = {
-  {GELB_CUR_CAPSULE_X, GELB_CUR_CAPSULE_Y},
-  {VIOLETT_CUR_CAPSULE_X, VIOLETT_CUR_CAPSULE_Y}
+  { 2*26, 2*19},
+  { 2*255, 2*19}
 };
 
-
 point PlaygroundStart[TO_COLORS] = {
-  {GELB_PLAYGROUND_X, GELB_PLAYGROUND_Y},
-  {VIOLETT_PLAYGROUND_X, VIOLETT_PLAYGROUND_Y}
+  { 2*33, 2*26},
+  { 2*159, 2*26}
 };
 
 point DruidStart[TO_COLORS] = {
-  {GELB_DRUID_X, GELB_DRUID_Y},
-  {VIOLETT_DRUID_X, VIOLETT_DRUID_Y}
+  { 2*40, -4},
+  { 2*220, -4}
 };
+
+/* Offset of the left/right "grounds" and the "column" */
+point TO_LeftGroundStart = 	{ 2*10, 2*15 };
+point TO_ColumnStart = 		{ 2*136, 2*27};
+point TO_LeaderBlockStart = 	{ 2*129, 2*8};
+point TO_RightGroundStart = 	{ 2*255, 2*15};
+
+SDL_Rect TO_LeaderLed = { 2*136, 2*11, 2*16, 2*19};
+SDL_Rect TO_FillBlock = { 0, 0, 2*16, 2*7 };
+SDL_Rect TO_ElementRect = { 0, 0, 2*32, 2*8 };
+SDL_Rect TO_CapsuleRect = { 0, 0, 2*7, 2*8};
+SDL_Rect TO_GroundRect = { 0, 0, 2*23, 2*8 };
+SDL_Rect TO_ColumnRect = { 0, 0, 2*30, 2*8 };
+
+
+//======================================================================
+#define TO_BLOCKLEN		2*32	/* dimension of a Game- block */
+#define TO_BLOCKHEIGHT	 	2*8
+
+#define FILL_BLOCK_LEN		2*16
+#define FILL_BLOCK_HEIGHT  	2*7
+
+#define CAPSULE_LEN		2*7
+#define CAPSULE_HEIGHT		2*7
+
+#define GROUNDBLOCKLEN		2*23
+#define GROUNDBLOCKHEIGHT	2*8
+
+#define COLUMNBLOCKLEN		2*30
+#define COLUMNBLOCKHEIGHT	2*8
+
+#define LEADERBLOCKLEN		2*30
+#define LEADERBLOCKHEIGHT	2*19
+
+
+
+/* Position of Leader-Led */
+#define LEADERLED_X		2*136
+#define LEADERLED_Y		2*11
+
+/* Start-pos of Led-column */
+#define LEDCOLUMN_X		2*136
+#define LEDCOLUMN_Y		2*27
+
+/* Positions of Druid-pictures */
+#define GELB_DRUID_X		2*40
+#define GELB_DRUID_Y		-3
+#define VIOLETT_DRUID_X		2*220
+#define VIOLETT_DRUID_Y		GELB_DRUID_Y
+
+/* Left-Capsules positions */
+#define GELB_LEFT_CAPSULES_X	4
+#define GELB_LEFT_CAPSULES_Y	2*27 
+#define VIOLETT_LEFT_CAPSULES_X	RIGHT_OFFS_X + COLUMNBLOCKLEN -10
+#define VIOLETT_LEFT_CAPSULES_Y	2*27
+
+/* start-pos of Current Capsule */
+#define GELB_CUR_CAPSULE_X	2*26
+#define GELB_CUR_CAPSULE_Y	2*19
+#define VIOLETT_CUR_CAPSULE_X	2*255
+#define VIOLETT_CUR_CAPSULE_Y	2*19
+
+
+/* Start-Pos of playground */
+#define GELB_PLAYGROUND_X	2*33
+#define GELB_PLAYGROUND_Y	2*26
+#define VIOLETT_PLAYGROUND_X	2*159
+#define VIOLETT_PLAYGROUND_Y	2*26 
+//======================================================================
 
 int CapsuleCurRow[TO_COLORS] = { 0, 0 };
 
@@ -109,6 +177,7 @@ int DisplayColumn[NUM_LINES] = {
   GELB, VIOLETT, GELB, VIOLETT, GELB, VIOLETT, GELB, VIOLETT, GELB, VIOLETT,
   GELB, VIOLETT
 };
+
 
 SDL_Color to_bg_color = {130,130,130};
 
@@ -598,15 +667,15 @@ GetTakeoverGraphics (void)
   SDL_FreeSurface ( TempLoadSurface );
 
   /* Set the fill-blocks */
-  for (i=0; i<NUM_FILL_BLOCKS; i++,curx += FILL_BLOCK_LEN + 2)
-    Set_Rect (FillBlocks[i], curx, cury, FILL_BLOCK_LEN, FILL_BLOCK_HEIGHT);
+  for (i=0; i<NUM_FILL_BLOCKS; i++,curx += TO_FillBlock.w + 2)
+    Set_Rect (FillBlocks[i], curx, cury, TO_FillBlock.w, TO_FillBlock.h);
 
   /* Set the capsule Blocks */
-  for (i = 0; i < NUM_CAPS_BLOCKS; i++, curx += CAPSULE_LEN + 2)
-    Set_Rect (CapsuleBlocks[i], curx, cury, CAPSULE_LEN, CAPSULE_HEIGHT);
+  for (i = 0; i < NUM_CAPS_BLOCKS; i++, curx += TO_CapsuleRect.w + 2)
+    Set_Rect (CapsuleBlocks[i], curx, cury, TO_CapsuleRect.w, TO_CapsuleRect.h-2);
   
   curx = 0;
-  cury += FILL_BLOCK_HEIGHT + 2;
+  cury += TO_FillBlock.h + 2;
 
   /* get the game-blocks */
 
@@ -614,27 +683,27 @@ GetTakeoverGraphics (void)
     {
       for (i = 0; i < TO_BLOCKS; i++)
 	{
-	  Set_Rect (ToGameBlocks[j*TO_BLOCKS+i], curx, cury, TO_BLOCKLEN,TO_BLOCKHEIGHT);
-	  curx += TO_BLOCKLEN + 2;
+	  Set_Rect (ToGameBlocks[j*TO_BLOCKS+i], curx, cury, TO_ElementRect.w,TO_ElementRect.h);
+	  curx += TO_ElementRect.w + 2;
 	}
       curx = 0;
-      cury += TO_BLOCKHEIGHT + 2;
+      cury += TO_ElementRect.h + 2;
     }
 
   /* Get the ground, column and leader blocks */
   for (i = 0; i < NUM_GROUND_BLOCKS; i++)
     {
-      Set_Rect (ToGroundBlocks[i], curx, cury, GROUNDBLOCKLEN, GROUNDBLOCKHEIGHT);
-      curx += GROUNDBLOCKLEN + 2;
+      Set_Rect (ToGroundBlocks[i], curx, cury, TO_GroundRect.w, TO_GroundRect.h);
+      curx += TO_GroundRect.w + 2;
     }
-  cury += GROUNDBLOCKHEIGHT + 2;
+  cury += TO_GroundRect.h + 2;
   curx = 0;
 
-  Set_Rect (ToColumnBlock, curx, cury, COLUMNBLOCKLEN, COLUMNBLOCKHEIGHT);
+  Set_Rect (ToColumnBlock, curx, cury, TO_ColumnRect.w, TO_ColumnRect.h);
 		
-  curx += COLUMNBLOCKLEN + 2;
+  curx += TO_ColumnRect.w + 2;
 
-  Set_Rect (ToLeaderBlock, curx, cury, LEADERBLOCKLEN, LEADERBLOCKHEIGHT);
+  Set_Rect (ToLeaderBlock, curx, cury, 2*TO_LeaderLed.w-4, TO_LeaderLed.h);
 
   return(OK);
 }				// int GetTakeoverGraphics(void)
@@ -649,116 +718,100 @@ GetTakeoverGraphics (void)
  *
  *-----------------------------------------------------------------*/
 void
-ShowPlayground ()
+ShowPlayground (void)
 {
   int i, j;
   int color, player;
   int block;
   int xoffs, yoffs;
-  SDL_Rect Target_Rect;
+  SDL_Rect dst;
+  SDL_Rect bak;
 
-  xoffs = User_Rect.x + (User_Rect.w - 2*290)/2;
-  yoffs = User_Rect.y + (User_Rect.h - 2*128)/2;
+
+  xoffs = Classic_User_Rect.x;
+  yoffs = Classic_User_Rect.y;
 
   //  SDL_SetColorKey (ne_screen, 0, 0);
-  SDL_SetClipRect (ne_screen , &User_Rect);
+  //  SDL_SetClipRect (ne_screen , &User_Rect);
+  SDL_SetClipRect (ne_screen , NULL);
 
   //  Fill_Rect (User_Rect, to_bg_color);
   SDL_BlitSurface (takeover_bg_pic, &User_Rect, ne_screen, &User_Rect);
 
-  PutInfluence (xoffs + DruidStart[YourColor].x,
-		yoffs + DruidStart[YourColor].y);
+  PutInfluence (xoffs + DruidStart[YourColor].x, yoffs + DruidStart[YourColor].y);
 
   if (AllEnemys[DroidNum].status != OUT)
-    PutEnemy (DroidNum, xoffs + DruidStart[!YourColor].x,
-	      yoffs + DruidStart[!YourColor].y);
+    PutEnemy (DroidNum, xoffs + DruidStart[!YourColor].x, yoffs + DruidStart[!YourColor].y);
 
+  Set_Rect (dst, xoffs + TO_LeftGroundStart.x, yoffs + TO_LeftGroundStart.y, User_Rect.w, User_Rect.h);
 
-  Set_Rect (Target_Rect, xoffs + LEFT_OFFS_X, yoffs + LEFT_OFFS_Y,
-	    User_Rect.w, User_Rect.h);
+  SDL_BlitSurface (to_blocks, &ToGroundBlocks[GELB_OBEN], ne_screen, &dst);
 
-  SDL_BlitSurface (to_blocks, &ToGroundBlocks[GELB_OBEN],
-		   ne_screen, &Target_Rect);
-
-  Target_Rect.y += GROUNDBLOCKHEIGHT;
+  dst.y += TO_GroundRect.h;
 
   for (i = 0; i < 12; i++)
     {
-      SDL_BlitSurface (to_blocks, &ToGroundBlocks[GELB_MITTE],
-		       ne_screen, &Target_Rect);
+      SDL_BlitSurface (to_blocks, &ToGroundBlocks[GELB_MITTE], ne_screen, &dst);
 
-      Target_Rect.y += GROUNDBLOCKHEIGHT;
+      dst.y += TO_GroundRect.h;
     }				/* for i=1 to 12 */
 
-  SDL_BlitSurface (to_blocks, &ToGroundBlocks[GELB_UNTEN],
-		   ne_screen, &Target_Rect);
+  SDL_BlitSurface (to_blocks, &ToGroundBlocks[GELB_UNTEN], ne_screen, &dst);
 
 
   /* Mittlere Saeule */
-  Set_Rect (Target_Rect, xoffs + MID_OFFS_X, yoffs + MID_OFFS_Y,0, 0);
-  SDL_BlitSurface (to_blocks, &ToLeaderBlock,
-		   ne_screen, &Target_Rect);
+  Set_Rect (dst, xoffs + TO_LeaderBlockStart.x, yoffs + TO_LeaderBlockStart.y, 0, 0);
+  SDL_BlitSurface (to_blocks, &ToLeaderBlock, ne_screen, &dst);
 
-  Target_Rect.y += LEADERBLOCKHEIGHT;
-  for (i = 0; i < 12; i++, Target_Rect.y += COLUMNBLOCKHEIGHT)
-    SDL_BlitSurface (to_blocks, &ToColumnBlock,
-		     ne_screen, &Target_Rect);
+  dst.y += TO_LeaderLed.h;
+  for (i = 0; i < 12; i++, dst.y += TO_ColumnRect.h)
+    SDL_BlitSurface (to_blocks, &ToColumnBlock, ne_screen, &dst);
 
 
   /* rechte Saeule */
-  Set_Rect (Target_Rect, xoffs + RIGHT_OFFS_X, yoffs + RIGHT_OFFS_Y,0, 0);
+  Set_Rect (dst, xoffs + TO_RightGroundStart.x, yoffs + TO_RightGroundStart.y, 0, 0);
 
-  SDL_BlitSurface (to_blocks, &ToGroundBlocks[VIOLETT_OBEN],
-		   ne_screen, &Target_Rect);
-  Target_Rect.y += GROUNDBLOCKHEIGHT;
+  SDL_BlitSurface (to_blocks, &ToGroundBlocks[VIOLETT_OBEN], ne_screen, &dst);
+  dst.y += TO_GroundRect.h;
 
-  for (i = 0; i < 12; i++, Target_Rect.y += GROUNDBLOCKHEIGHT)
-    SDL_BlitSurface (to_blocks, &ToGroundBlocks[VIOLETT_MITTE],
-		     ne_screen, &Target_Rect);
+  for (i = 0; i < 12; i++, dst.y += TO_GroundRect.h)
+    SDL_BlitSurface (to_blocks, &ToGroundBlocks[VIOLETT_MITTE], ne_screen, &dst);
 
-  SDL_BlitSurface (to_blocks, &ToGroundBlocks[VIOLETT_UNTEN],
-		   ne_screen, &Target_Rect);
+  SDL_BlitSurface (to_blocks, &ToGroundBlocks[VIOLETT_UNTEN], ne_screen, &dst);
 
   /* Fill the Leader-LED with its color */
-  Set_Rect (Target_Rect, xoffs + LEADERLED_X, yoffs + LEADERLED_Y, 0, 0);
-  SDL_BlitSurface (to_blocks, &FillBlocks[LeaderColor],
-		   ne_screen, &Target_Rect);
-  Target_Rect.y += FILL_BLOCK_HEIGHT;
-  SDL_BlitSurface (to_blocks, &FillBlocks[LeaderColor],
-		   ne_screen, &Target_Rect);
+  Set_Rect (dst, xoffs + TO_LeaderLed.x, yoffs + TO_LeaderLed.y, 0, 0);
+  SDL_BlitSurface (to_blocks, &FillBlocks[LeaderColor], ne_screen, &dst);
+  dst.y += TO_FillBlock.h;
+  SDL_BlitSurface (to_blocks, &FillBlocks[LeaderColor], ne_screen, &dst);
 
-  /* Fill the Display Column with its colors */
+  /* Fill the Display Column with its leds */
   for (i = 0; i < NUM_LINES; i++)
     {
-      Set_Rect (Target_Rect, xoffs + LEDCOLUMN_X,
-		yoffs + LEDCOLUMN_Y + i*(FILL_BLOCK_HEIGHT+2),
-		0, 0);
-      SDL_BlitSurface (to_blocks, &FillBlocks[DisplayColumn[i]],
-		       ne_screen, &Target_Rect);
+      Set_Rect (dst, xoffs + TO_ColumnStart.x, yoffs + TO_ColumnStart.y + i*TO_ColumnRect.h, 0, 0);
+      SDL_BlitSurface (to_blocks, &FillBlocks[DisplayColumn[i]], ne_screen, &dst);
     }
-
 
   /* Show the yellow playground */
   for (i = 0; i < NUM_LAYERS - 1; i++)
     for (j = 0; j < NUM_LINES; j++)
       {
-	Set_Rect (Target_Rect, xoffs + PlaygroundStart[GELB].x + i * TO_BLOCKLEN,
-		  yoffs + PlaygroundStart[GELB].y + j * TO_BLOCKHEIGHT, 0, 0);
+	Set_Rect (dst, xoffs + PlaygroundStart[GELB].x + i * TO_ElementRect.w,
+		  yoffs + PlaygroundStart[GELB].y + j * TO_ElementRect.h, 0, 0);
 	block = ToPlayground[GELB][i][j] + ActivationMap[GELB][i][j]*TO_BLOCKS;
-	SDL_BlitSurface (to_blocks, &ToGameBlocks[block],ne_screen, &Target_Rect);
+	SDL_BlitSurface (to_blocks, &ToGameBlocks[block], ne_screen, &dst);
       }
-
 
   /* Show the violett playground */
   for (i = 0; i < NUM_LAYERS - 1; i++)
     for (j = 0; j < NUM_LINES; j++)
       {
-	Set_Rect (Target_Rect,
-		  xoffs + PlaygroundStart[VIOLETT].x +(NUM_LAYERS-i-2)*TO_BLOCKLEN,
-		  yoffs + PlaygroundStart[VIOLETT].y + j * TO_BLOCKHEIGHT, 0, 0);
+	Set_Rect (dst,
+		  xoffs + PlaygroundStart[VIOLETT].x +(NUM_LAYERS-i-2)*TO_ElementRect.w,
+		  yoffs + PlaygroundStart[VIOLETT].y + j * TO_ElementRect.h, 0, 0);
 	block = ToPlayground[VIOLETT][i][j]+
 	  (NUM_PHASES+ActivationMap[VIOLETT][i][j])*TO_BLOCKS;
-	SDL_BlitSurface (to_blocks, &ToGameBlocks[block],ne_screen, &Target_Rect);
+	SDL_BlitSurface (to_blocks, &ToGameBlocks[block],ne_screen, &dst);
       }
 
   /* Show the capsules left for each player */
@@ -769,19 +822,19 @@ ShowPlayground ()
       else
 	color = OpponentColor;
 
-      Set_Rect (Target_Rect, xoffs + CurCapsuleStart[color].x, 
-		yoffs + CurCapsuleStart[color].y + CapsuleCurRow[color]*(CAPSULE_HEIGHT+2),
+      Set_Rect (dst, xoffs + CurCapsuleStart[color].x, 
+		yoffs + CurCapsuleStart[color].y + CapsuleCurRow[color] * TO_CapsuleRect.h,
 		0,0);
       if (NumCapsules[player])
-	SDL_BlitSurface (to_blocks, &CapsuleBlocks[color], ne_screen, &Target_Rect);
+	SDL_BlitSurface (to_blocks, &CapsuleBlocks[color], ne_screen, &dst);
 
 
       for (i = 0; i < NumCapsules[player]-1; i++)
 	{
-	  Set_Rect (Target_Rect, xoffs + LeftCapsulesStart[color].x,
-		    yoffs + LeftCapsulesStart[color].y + i*CAPSULE_HEIGHT, 0, 0);
+	  Set_Rect (dst, xoffs + LeftCapsulesStart[color].x,
+		    yoffs + LeftCapsulesStart[color].y + i*TO_CapsuleRect.h, 0, 0);
 	  SDL_BlitSurface (to_blocks, &CapsuleBlocks[color],
-			   ne_screen, &Target_Rect);
+			   ne_screen, &dst);
 	} /* for capsules */
     } /* for player */
 

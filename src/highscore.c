@@ -126,6 +126,7 @@ UpdateHighscores (void)
   time_t tsec;
   float score;
   SDL_Rect dst;
+  int h;
 
   score = RealScore;
 
@@ -162,11 +163,12 @@ UpdateHighscores (void)
 
   Assemble_Combat_Picture ( 0);
   MakeGridOnScreen (&User_Rect);
-  Set_Rect (dst, UserCenter_x -70, UserCenter_y - 80, Portrait_Rect.w, Portrait_Rect.h);
+  Set_Rect (dst, UserCenter_x - Portrait_Rect.w/2, UserCenter_y - Portrait_Rect.h/2, 
+	    Portrait_Rect.w, Portrait_Rect.h);
   SDL_BlitSurface (pic999, NULL, ne_screen, &dst);
-
-  DisplayText ("Great Score !",  UserCenter_x -90, UserCenter_y - 100, &User_Rect);
-  DisplayText ("Enter your name: ",  UserCenter_x -160, UserCenter_y + 100, &User_Rect);
+  h = FontHeight (Para_BFont);
+  DisplayText ("Great Score !",  dst.x - h, dst.y - h, &User_Rect);
+  DisplayText ("Enter your name: ",  dst.x - 5*h, dst.y + dst.h, &User_Rect);
   SDL_Flip (ne_screen);
 
   SDL_SetClipRect (ne_screen, NULL);
@@ -219,8 +221,11 @@ ShowHighscores (void)
   x1 = x0 + 3*len;
   x2 = x1 + 9*len;
   x3 = x2 + MAX_NAME_LEN*len;
-  y0 = 80;  
+
   height = FontHeight (GetCurrentFont());
+
+  y0 = Full_User_Rect.y + height;
+
 
   CenteredPrintString (ne_screen, y0, "Top %d  scores\n", num_highscores);
   

@@ -133,6 +133,7 @@ EXTERN void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
 EXTERN void white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout);
 EXTERN void ScaleGraphics (float scale);
 EXTERN void ScalePic (SDL_Surface **pic, float scale);
+EXTERN void ScaleStatRects (float scale);
 
 /* map.c */
 #undef EXTERN

@@ -1,5 +1,5 @@
 # Process this file with autoconf to produce a configure script.
-AC_INIT([src/main.c])
+AC_INIT(freedroid, 1.0.2)
 
 dnl Setup for automake
 SDL_VERSION=1.2.3
@@ -8,8 +8,7 @@ dnl Detect the canonical host and target build environment
 AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
 
-
-AM_INIT_AUTOMAKE(freedroid, 1.0.2)
+AM_INIT_AUTOMAKE
 
 AM_CONFIG_HEADER(config.h)
 
@@ -112,8 +111,6 @@ dnl just use bundled version like hello does, and gnuchess
 CFLAGS="$CFLAGS  -DDATADIR='\"\$(pkgdatadir)\"'"   #avoid expansion of $pkgdatadir !
 
 
-AC_CONFIG_FILES([Makefile src/Makefile map/Makefile sound/Makefile 
-		graphics/Makefile graphics/classic_theme/Makefile
-		graphics/lanzz_theme/Makefile])
+AC_CONFIG_FILES([Makefile src/Makefile])
 
 AC_OUTPUT

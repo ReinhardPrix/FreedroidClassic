@@ -759,9 +759,10 @@ enum
 void
 Credits_Menu (void)
 {
-  int h; 
+  int h, em; 
   SDL_Rect screen;
   h = FontHeight(Menu_BFont);
+  em = CharWidth (Menu_BFont, 'm');
   
   Copy_Rect (Screen_Rect, screen);
   SDL_SetClipRect( ne_screen, NULL );
@@ -769,35 +770,34 @@ Credits_Menu (void)
   MakeGridOnScreen (&screen);
 
 
-  printf_SDL (ne_screen, User_Rect.w/2 - 20, 20, "CREDITS\n");
+  printf_SDL (ne_screen, UserCenter_x - 2*em, h, "CREDITS\n");
 
-  printf_SDL (ne_screen, 20, -1, "PROGRAMMING:");
-  printf_SDL (ne_screen, 2*User_Rect.w/3, -1, "Johannes Prix\n");
+  printf_SDL (ne_screen, em, -1, "PROGRAMMING:");
+  printf_SDL (ne_screen, 2*Full_User_Rect.w/3, -1, "Johannes Prix\n");
   printf_SDL (ne_screen, -1, -1, "Reinhard Prix\n");
   printf_SDL (ne_screen, -1, -1, "\n");
 
-  printf_SDL (ne_screen, 20, -1, "ARTWORK:");
+  printf_SDL (ne_screen, em, -1, "ARTWORK:");
   printf_SDL (ne_screen, 2*User_Rect.w/3, -1, "Bastian Salmela\n");
   printf_SDL (ne_screen, -1 , -1, "Lanzz\n");
-  printf_SDL (ne_screen, -1, -1, "\n");
 
-  printf_SDL (ne_screen, 20, -1, "C64 LEGACY MUSIC mods:\n");
+  printf_SDL (ne_screen, em, -1, "C64 LEGACY MUSIC mods:\n");
 
-  printf_SDL (ne_screen, 20, -1, "#dreamfish/trsi:");
-  printf_SDL (ne_screen, User_Rect.w/2 +40, -1, "Green Beret, Sanxion,\n");
-  printf_SDL (ne_screen, User_Rect.w/2 +40, -1, "Uridium2\n");
+  printf_SDL (ne_screen, em, -1, "#dreamfish/trsi:");
+  printf_SDL (ne_screen, Full_User_Rect.w/2, -1, "Green Beret, Sanxion,\n");
+  printf_SDL (ne_screen, Full_User_Rect.w/2, -1, "Uridium2\n");
 
-  printf_SDL (ne_screen, 20, -1, "4-mat:");
-  printf_SDL (ne_screen, User_Rect.w/2 +40, -1, "The last V8, Anarchy\n");
+  printf_SDL (ne_screen, em, -1, "4-mat:");
+  printf_SDL (ne_screen, Full_User_Rect.w/2, -1, "The last V8, Anarchy\n");
 
-  printf_SDL (ne_screen, 20, -1, "Kollaps:");
-  printf_SDL (ne_screen, User_Rect.w/2 +40, -1, "Tron\n");
+  printf_SDL (ne_screen, em, -1, "Kollaps:");
+  printf_SDL (ne_screen, Full_User_Rect.w/2, -1, "Tron\n");
 
-  printf_SDL (ne_screen, 20, -1, "Nashua:");
-  printf_SDL (ne_screen, User_Rect.w/2 +40, -1, "Starpaws\n");
+  printf_SDL (ne_screen, em, -1, "Nashua:");
+  printf_SDL (ne_screen, Full_User_Rect.w/2, -1, "Starpaws\n");
   
-  printf_SDL (ne_screen, 20, -1, "Android:");
-  printf_SDL (ne_screen, User_Rect.w/2 +40, -1, "Commando\n");
+  printf_SDL (ne_screen, em, -1, "Android:");
+  printf_SDL (ne_screen, Full_User_Rect.w/2, -1, "Commando\n");
 
   SDL_Flip( ne_screen );
 

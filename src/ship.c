@@ -55,9 +55,6 @@ extern bool show_cursor;
 
 #define WAIT_ELEVATOR		9	/* warte, bevor Lift weitergeht */
 
-#define MENUITEMHEIGHT 		4*77
-#define MENUITEMLENGTH 		50*2
-
 #define MENUTEXT_X	(132 + USERFENSTERPOSX + 5 )
 
 
@@ -231,10 +228,10 @@ ShowLifts (int level, int liftrow)
   SDL_Rect src, dst;
   int i;
   SDL_Color lift_bg_color = {0,0,0};  /* black... */
-  int xoffs = (User_Rect.w - 578)/2;
-  int yoffs = (User_Rect.h - 211)/2;
+  int xoffs = User_Rect.w/20;
+  int yoffs = User_Rect.h/5;
 
-  SDL_ShowCursor(SDL_DISABLE);
+  SDL_ShowCursor (SDL_DISABLE);
   // fill the user fenster with some color
   Fill_Rect (User_Rect, lift_bg_color);
 
@@ -447,10 +444,10 @@ PaintConsoleMenu (int pos, int flag)
 
     } // only if not UPDATE_ONLY was required 
 
-  src.x=(MENUITEMLENGTH+2)*pos;
-  src.y=0;
-  src.w=MENUITEMLENGTH;
-  src.h=MENUITEMHEIGHT;
+  src.x = Cons_Menu_Rects[0].w * pos;
+  src.y = 0;
+  src.w = Cons_Menu_Rect.w;
+  src.h = 4 * Cons_Menu_Rect.h;
   SDL_BlitSurface (console_pic, &src, ne_screen, &Cons_Menu_Rect);
 
   SDL_Flip (ne_screen);
@@ -831,15 +828,21 @@ show_droid_portrait (SDL_Rect dst, int droid_type, float cycle_time, int flags)
       SDL_FreeSurface (tmp);
       SDL_RWseek (packed_portraits[droid_type], 0, SEEK_SET);
 
+
+      // do we have to scale the droid pics
+      if (GameConfig.scale != 1.0)
+	ScalePic (&droid_pics, GameConfig.scale);
+
       last_droid_type = droid_type;
     }
 
   num_frames = droid_pics->w / Portrait_Rect.w;
+
   // sanity check
   if ( num_frames == 0)
     {
-      DebugPrintf (0, "WARNING: width of droid-pic %s is less than the standard %d\n",
-		   Druidmap[droid_type].druidname, Portrait_Rect.w);
+      DebugPrintf (0, "WARNING: Only one frame found. Width droid-pics=%d, Frame-width=%d\n",
+		   droid_pics->w, Portrait_Rect.w);
       num_frames = 1;       // continue and hope for the best
     }
 

@@ -40,29 +40,15 @@
 
 #define NUM_TO_BLOCKS		2*NUM_PHASES*TO_BLOCKS // total number of takover blocks 
 #define TO_ELEMENTS		6
-#define TO_BLOCKLEN		2*32	/* dimension of a Game- block */
-#define TO_BLOCKHEIGHT	 	2*8
 
 /* Dimensions of the fill-blocks (in led-column */
 #define NUM_FILL_BLOCKS		3   // yellow, violett and black
-#define FILL_BLOCK_LEN		2*16
-#define FILL_BLOCK_HEIGHT  	2*7
 
 /* Dimensions of a capsule */
 #define NUM_CAPS_BLOCKS		3  // yellow, violett and red (?what for)
-#define CAPSULE_LEN		2*7
-#define CAPSULE_HEIGHT		2*7
 
 /* Dimensions of ground-, column- und leader blocks */
 #define NUM_GROUND_BLOCKS	6
-#define GROUNDBLOCKLEN		2*23
-#define GROUNDBLOCKHEIGHT	2*8
-
-#define COLUMNBLOCKLEN		2*30
-#define COLUMNBLOCKHEIGHT	2*8
-
-#define LEADERBLOCKLEN		2*30
-#define LEADERBLOCKHEIGHT	2*19
 
 /* --------------- Timing parameters --------------- */
 #define COLOR_COUNTDOWN		100	/* Zeit zum Farbe auswaehlen */
@@ -75,52 +61,18 @@
 
 #define TO_TICK_LENGTH		40     /* Time in ms between ticks */
 
-
 /* --------------- Playground layout --------------- */
-
-/* Position of Leader-Led */
-#define LEADERLED_X		2*136
-#define LEADERLED_Y		2*11
-
-/* Start-pos of Led-column */
-#define LEDCOLUMN_X		2*136
-#define LEDCOLUMN_Y		2*27
-
-/* Positions of Druid-pictures */
-#define GELB_DRUID_X		2*40
-#define GELB_DRUID_Y		-3
-#define VIOLETT_DRUID_X		2*220
-#define VIOLETT_DRUID_Y		GELB_DRUID_Y
-
-/* Left-Capsules positions */
-#define GELB_LEFT_CAPSULES_X	4
-#define GELB_LEFT_CAPSULES_Y	2*27 
-#define VIOLETT_LEFT_CAPSULES_X	RIGHT_OFFS_X + COLUMNBLOCKLEN -10
-#define VIOLETT_LEFT_CAPSULES_Y	2*27
-
-/* start-pos of Current Capsule */
-#define GELB_CUR_CAPSULE_X	2*26
-#define GELB_CUR_CAPSULE_Y	2*19
-#define VIOLETT_CUR_CAPSULE_X	2*255
-#define VIOLETT_CUR_CAPSULE_Y	2*19
 
 #define MAX_CAPSULES		13	/* a 999 has 13 !!! */
 
-/* Start-Pos of playground */
-#define GELB_PLAYGROUND_X	2*33
-#define GELB_PLAYGROUND_Y	2*26
-#define VIOLETT_PLAYGROUND_X	2*159
-#define VIOLETT_PLAYGROUND_Y	2*26 
 
-#define LEFT_OFFS_X		2*10	/* Offset der linken "Saeule" */
-#define LEFT_OFFS_Y		2*15
+/* there are two classes of blocks: connectors and non-connectors */
+#define CONNECTOR		0
+#define NON_CONNECTOR  		1
 
-#define MID_OFFS_X		2*129	/* -- mittleren -- */
-#define MID_OFFS_Y		2*8
 
-#define RIGHT_OFFS_X		2*255	/* -- rechten --- */
-#define RIGHT_OFFS_Y		2*15
-
+#define NUM_LAYERS		4	/* dimension of the playground */
+#define NUM_LINES		12
 
 
 enum _groundblocks
@@ -187,14 +139,6 @@ enum to_blocks
   LEER
 };
 
-
-/* there are two classes of blocks: connectors and non-connectors */
-#define CONNECTOR		0
-#define NON_CONNECTOR  		1
-
-
-#define NUM_LAYERS		4	/* dimension of the playground */
-#define NUM_LINES		12
 
 /* the playground type */
 typedef int playground_t[TO_COLORS][NUM_LAYERS][NUM_LINES];

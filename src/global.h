@@ -65,6 +65,8 @@ EXTERN SDL_Rect Cons_Menu_Rects[4];
 EXTERN SDL_Rect LeftInfo_Rect;
 EXTERN SDL_Rect RightInfo_Rect;
 
+EXTERN SDL_Rect ConsMenuItem_Rect;
+
 
 EXTERN float LastRefreshSound;
 EXTERN float LastGotIntoBlastSound;
@@ -248,5 +250,21 @@ EXTERN SDL_Rect ToGroundBlocks[NUM_GROUND_BLOCKS];
 EXTERN SDL_Rect ToColumnBlock;
 EXTERN SDL_Rect ToLeaderBlock;
 
+
+EXTERN point LeftCapsulesStart[TO_COLORS];
+EXTERN point CurCapsuleStart[TO_COLORS];
+EXTERN point PlaygroundStart[TO_COLORS];
+EXTERN point DruidStart[TO_COLORS];
+EXTERN point TO_LeftGroundStart;
+EXTERN point TO_RightGroundStart;
+EXTERN point TO_ColumnStart;
+EXTERN point TO_LeaderBlockStart;
+
+EXTERN SDL_Rect TO_LeaderLed;
+EXTERN SDL_Rect TO_FillBlock;
+EXTERN SDL_Rect TO_ElementRect;
+EXTERN SDL_Rect TO_CapsuleRect;
+EXTERN SDL_Rect TO_GroundRect;
+EXTERN SDL_Rect TO_ColumnRect;
 
 #endif  // _global_h

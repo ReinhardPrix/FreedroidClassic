@@ -57,8 +57,9 @@ void UpdateCountersForThisFrame (void);
 int
 main (int argc, char * argv[])
 {
-  int i;
+  int i, level;
   Uint32 now;
+  float scale;
 
   GameOver = FALSE;
   QuitProgram = FALSE;
@@ -76,6 +77,17 @@ main (int argc, char * argv[])
   while (!QuitProgram)
     {
       InitNewMission ( STANDARD_MISSION );
+
+      // scale Level-pic rects
+      if ( (scale = GameConfig.scale) != 1.0)
+	{
+	  for (level = 0; level < curShip.num_levels; level++)
+	    for (i=0; i<curShip.num_level_rects[level]; i++)
+	      ScaleRect (curShip.Level_Rects[level][i], scale);
+	  for (i=0; i < curShip.num_lift_rows; i++)
+	    ScaleRect (curShip.LiftRow_Rect[i], scale);
+	}
+
 
       // release fire-keys
       if (FirePressedR()) ;

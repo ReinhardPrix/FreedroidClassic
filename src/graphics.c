@@ -1182,41 +1182,7 @@ ScaleGraphics (float scale)
 
   // note: only rescale these rects the first time!!
   if (first_call)
-    {
-      ScaleRect (Block_Rect, scale);
-      ScaleRect (User_Rect, scale);
-      ScaleRect (Classic_User_Rect, scale);
-      ScaleRect (Full_User_Rect, scale);
-      ScaleRect (Banner_Rect, scale);
-      ScaleRect (Portrait_Rect, scale);
-      ScaleRect (Cons_Droid_Rect, scale);
-      ScaleRect (Menu_Rect, scale);
-      ScaleRect (OptionsMenu_Rect, scale);
-      ScaleRect (Digit_Rect, scale);
-      ScaleRect (Cons_Header_Rect, scale);
-      ScaleRect (Cons_Menu_Rect, scale);
-      ScaleRect (Cons_Text_Rect, scale);
-      ScaleRect (Cons_Menu_Rects[4], scale);
-
-      ScaleRect (LeftInfo_Rect, scale);
-      ScaleRect (RightInfo_Rect, scale);
-
-      for (i=0; i<NUM_FILL_BLOCKS; i++)
-	ScaleRect (FillBlocks[i], scale);
-
-      for (i = 0; i < NUM_CAPS_BLOCKS; i++)
-	ScaleRect (CapsuleBlocks[i], scale);
-
-      for (j = 0; j < 2*NUM_PHASES; j++)
-	for (i = 0; i < TO_BLOCKS; i++)
-	  ScaleRect (ToGameBlocks[j*TO_BLOCKS+i], scale);
-
-      for (i = 0; i < NUM_GROUND_BLOCKS; i++)
-	ScaleRect (ToGroundBlocks[i], scale);
-
-      ScaleRect (ToColumnBlock, scale);
-      ScaleRect (ToLeaderBlock, scale);
-    }
+    ScaleStatRects (scale);
 
   printf_SDL (ne_screen, User_Rect.x + 50, -1, "Rescaling graphics ...");
 
@@ -1335,6 +1301,79 @@ ScalePic (SDL_Surface **pic, float scale)
   return;
 
 } // ScalePic ()
+
+/*----------------------------------------------------------------------
+ * scale all "static" rectangle
+ *----------------------------------------------------------------------*/
+void
+ScaleStatRects (float scale)
+{
+  int i, j;
+
+  ScaleRect (Block_Rect, scale);
+  ScaleRect (User_Rect, scale);
+  ScaleRect (Classic_User_Rect, scale);
+  ScaleRect (Full_User_Rect, scale);
+  ScaleRect (Banner_Rect, scale);
+  ScaleRect (Portrait_Rect, scale);
+  ScaleRect (Cons_Droid_Rect, scale);
+  ScaleRect (Menu_Rect, scale);
+  ScaleRect (OptionsMenu_Rect, scale);
+  ScaleRect (Digit_Rect, scale);
+  ScaleRect (Cons_Header_Rect, scale);
+  ScaleRect (Cons_Menu_Rect, scale);
+  ScaleRect (Cons_Text_Rect, scale);
+  
+  ScaleRect (Cons_Menu_Rects[0], scale);
+  ScaleRect (Cons_Menu_Rects[1], scale);
+  ScaleRect (Cons_Menu_Rects[2], scale);
+  ScaleRect (Cons_Menu_Rects[3], scale);
+
+  ScaleRect (ConsMenuItem_Rect, scale);
+  
+  ScaleRect (LeftInfo_Rect, scale);
+  ScaleRect (RightInfo_Rect, scale);
+  
+  for (i=0; i<NUM_FILL_BLOCKS; i++)
+    ScaleRect (FillBlocks[i], scale);
+  
+  for (i = 0; i < NUM_CAPS_BLOCKS; i++)
+    ScaleRect (CapsuleBlocks[i], scale);
+  
+  for (j = 0; j < 2*NUM_PHASES; j++)
+    for (i = 0; i < TO_BLOCKS; i++)
+      ScaleRect (ToGameBlocks[j*TO_BLOCKS+i], scale);
+
+  for (i = 0; i < NUM_GROUND_BLOCKS; i++)
+    ScaleRect (ToGroundBlocks[i], scale);
+  
+  ScaleRect (ToColumnBlock, scale);
+  ScaleRect (ToLeaderBlock, scale);
+
+
+  for (i=0; i < TO_COLORS; i++)
+    {
+      ScalePoint (LeftCapsulesStart[i],scale);
+      ScalePoint (CurCapsuleStart[i],scale);
+      ScalePoint (PlaygroundStart[i],scale);
+      ScalePoint (DruidStart[i],scale);
+    }
+  ScalePoint (TO_LeftGroundStart, scale);
+  ScalePoint (TO_ColumnStart, scale);
+  ScalePoint (TO_RightGroundStart, scale);
+  ScalePoint( TO_LeaderBlockStart, scale);
+
+  ScaleRect (TO_FillBlock, scale);
+  ScaleRect (TO_ElementRect, scale);
+  ScaleRect (TO_CapsuleRect, scale);
+  ScaleRect (TO_LeaderLed, scale);
+  ScaleRect (TO_GroundRect, scale);
+  ScaleRect (TO_ColumnRect, scale);
+
+  return;
+
+} // ScaleStatRects()
+
 
 
 #undef _graphics_c

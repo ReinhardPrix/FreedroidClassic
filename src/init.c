@@ -871,8 +871,6 @@ InitNewMission ( char *MissionName )
   Me.phase = 0;
   Me.timer = 0.0;  // set clock to 0
 
-  RealScore = 0.0;
-
   DebugPrintf (1, "done."); // this matches the printf at the beginning of this function
 
   free (MainMissionPointer);
@@ -1104,6 +1102,7 @@ ThouArtDefeated (void)
 {
   Uint32 now, delay;
   SDL_Rect dst;
+  int h;
 
   Me.status = TERMINATED;
   SDL_ShowCursor (SDL_DISABLE);
@@ -1136,13 +1135,15 @@ ThouArtDefeated (void)
   Assemble_Combat_Picture (DO_SCREEN_UPDATE);
   MakeGridOnScreen (&User_Rect);
 
-  Set_Rect (dst, UserCenter_x -70, UserCenter_y - 80, Portrait_Rect.w, Portrait_Rect.h);
+  Set_Rect (dst, UserCenter_x - Portrait_Rect.w/2, UserCenter_y - Portrait_Rect.h/2, 
+	    Portrait_Rect.w, Portrait_Rect.h);
   SDL_BlitSurface (pic999, NULL, ne_screen, &dst);
   ThouArtDefeatedSound ();
 
   SetCurrentFont (Para_BFont);
-  DisplayText ("Transmission", UserCenter_x -90, UserCenter_y - 100, &User_Rect);
-  DisplayText ("Terminated", UserCenter_x -90, UserCenter_y + 100, &User_Rect);
+  h = FontHeight (Para_BFont);
+  DisplayText ("Transmission", dst.x - h, dst.y - h, &User_Rect);
+  DisplayText ("Terminated",  dst.x -h, dst.y + dst.h, &User_Rect);
   printf_SDL(ne_screen, -1, -1, "\n");
   SDL_Flip (ne_screen);
   
