@@ -188,13 +188,12 @@ Takeover (int enemynum)
   //
   GetTakeoverGraphics ( ) ;
 
-
   while (SpacePressed ()) ;  /* make sure space is release before proceed */
 
   SwitchBackgroundMusicTo ( TAKEOVER_BACKGROUND_MUSIC_SOUND ); // now this is a STRING!!!
 
-  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
-  Me[0].status = MOBILE; /* the new status _after_ the takeover game */
+  DisplayBanner ( NULL , NULL ,  BANNER_FORCE_UPDATE );
+  Me [ 0 ] . status = MOBILE; /* the new status _after_ the takeover game */
 
   //--------------------
   // Now it is time to display the enemy of this whole takeover process...
@@ -214,7 +213,7 @@ Takeover (int enemynum)
 	  MoveMenuPositionSound();
 	  Displacement -= FontHeight ( GetCurrentFont () );
 	}
-      else if ( CursorIsOnButton( ITEM_BROWSER_EXIT_BUTTON , GetMousePos_x ( ) + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y ( ) + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed ) 
+      else if ( CursorIsOnButton( DRUID_SHOW_EXIT_BUTTON , GetMousePos_x ( ) + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y ( ) + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed ) 
 	{
 	  Finished = TRUE;
 	}

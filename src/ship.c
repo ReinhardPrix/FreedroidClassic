@@ -330,10 +330,10 @@ GreatDruidShow (void)
 	      MoveMenuPositionSound();
 	      Displacement -= FontHeight ( GetCurrentFont () );
 	    }
-	  else if ( CursorIsOnButton( DRUID_SHOW_EXIT_BUTTON , GetMousePos_x( ) + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y( ) + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed )
+	  else if ( CursorIsOnButton ( DRUID_SHOW_EXIT_BUTTON , GetMousePos_x ( ) + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y( ) + MOUSE_CROSSHAIR_OFFSET_Y ) && axis_is_active && !WasPressed )
 	    {
 	      finished = TRUE;
-	      while (SpacePressed() ||EscapePressed());
+	      while ( SpacePressed ( ) || EscapePressed ( ) );
 	    }
 	}
 
