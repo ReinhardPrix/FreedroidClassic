@@ -469,6 +469,7 @@ typedef struct
   item aux2_item;
 
   int KillRecord[ 1000 ];      // how many ( of the first 1000 monster types) have been killed yet?
+  int HaveBeenToLevel[ MAX_LEVELS ]; // record of the levels the player has visited yet.
   automap_tile Automap[200][200]; // this is the data for the automatic map
 }
 influence_t, *Influence_t;
