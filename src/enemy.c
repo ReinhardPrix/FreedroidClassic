@@ -192,7 +192,7 @@ ShuffleEnemys (void)
 void
 MoveEnemys (void)
 {
-  int i;
+  int i,j;
   point Restweg;
   Waypoint WpList;		/* Pointer to waypoint-liste */
   int nextwp;
@@ -201,103 +201,111 @@ MoveEnemys (void)
 
   PermanentHealRobots ();
 
-  for (i = 0; i < NumEnemys; i++)
-    {
+   for (i = 0; i < NumEnemys; i++)
+     {
 
-      /* 
-       * what the heck is this ?? (rp) 
-       */
-      if (Feindesliste[i].nextwaypoint == 100)
-	continue;
+       /* 
+	* what the heck is this ?? (rp) 
+	*/
+       if (Feindesliste[i].nextwaypoint == 100)
+	 continue;
 
-      /* ignore robots on other levels */
-      if (Feindesliste[i].levelnum != CurLevel->levelnum)
-	continue;
+       /* ignore robots on other levels */
+       if (Feindesliste[i].levelnum != CurLevel->levelnum)
+	 continue;
 
-      /* Wenn der robot tot ist dann weiter */
-      if (Feindesliste[i].Status == OUT)
-	continue;
+       /* Wenn der robot tot ist dann weiter */
+       if (Feindesliste[i].Status == OUT)
+	 continue;
 
-      /* ist der Robot gerade toedlich getroffen worden ?? */
-      if (Feindesliste[i].energy <= 0)
-	{
-	  Feindesliste[i].Status = OUT;
-	  RealScore += Druidmap[Feindesliste[i].type].score;
-	  StartBlast (Feindesliste[i].pos.x, Feindesliste[i].pos.y,
-		      DRUIDBLAST);
-	  if (LevelEmpty ())
-	    CurLevel->empty = WAIT_LEVELEMPTY;
-	  continue;		/* naechster Enemy, der ist hin */
-	}
+       /* ist der Robot gerade toedlich getroffen worden ?? */
+       if (Feindesliste[i].energy <= 0)
+	 {
+	   Feindesliste[i].Status = OUT;
+	   RealScore += Druidmap[Feindesliste[i].type].score;
+	   StartBlast (Feindesliste[i].pos.x, Feindesliste[i].pos.y,
+		       DRUIDBLAST);
+	   if (LevelEmpty ())
+	     CurLevel->empty = WAIT_LEVELEMPTY;
+	   continue;		/* naechster Enemy, der ist hin */
+	 }
 
-      if (Druidmap[Feindesliste[i].type].aggression)
-	AttackInfluence (i);
+       if (Druidmap[Feindesliste[i].type].aggression)
+	 AttackInfluence (i);
 
-      /* Wenn der Robot noch zu warten hat dann gleich weiter */
-      if (Feindesliste[i].warten > 0)
-	continue;
+       /* Wenn der Robot noch zu warten hat dann gleich weiter */
+       if (Feindesliste[i].warten > 0)
+	 continue;
 
-      /* collision mit anderem Druid */
-      EnemyEnemyCollision (i);
+       /* collision mit anderem Druid */
+       EnemyEnemyCollision (i);
 
-      /* Ermittlung des Restweges zum naechsten Ziel */
-      WpList = CurLevel->AllWaypoints;
-      nextwp = Feindesliste[i].nextwaypoint;
-      nextwp_pos.x = Grob2Fein (WpList[nextwp].x);
-      nextwp_pos.y = Grob2Fein (WpList[nextwp].y);
+       /* Ermittlung des Restweges zum naechsten Ziel */
+       WpList = CurLevel->AllWaypoints;
+       nextwp = Feindesliste[i].nextwaypoint;
+       nextwp_pos.x = Grob2Fein (WpList[nextwp].x);
+       nextwp_pos.y = Grob2Fein (WpList[nextwp].y);
 
-      Restweg.x = nextwp_pos.x - Feindesliste[i].pos.x;
-      Restweg.y = nextwp_pos.y - Feindesliste[i].pos.y;
+       Restweg.x = nextwp_pos.x - Feindesliste[i].pos.x;
+       Restweg.y = nextwp_pos.y - Feindesliste[i].pos.y;
 
 
-      /* Bewegung wenn der Abstand noch groesser als maxspeed ist */
-      if ((abs (Restweg.x) >=
+       /* Bewegung wenn der Abstand noch groesser als maxspeed ist */
+       if ((abs (Restweg.x) >=
+	    Druidmap[Feindesliste[i].type].maxspeed * Frame_Time ())
+	   && (Restweg.x != 0))
+	 {
+	   Feindesliste[i].speed.x =
+	     (Restweg.x / abs (Restweg.x)) *
+	     Druidmap[Feindesliste[i].type].maxspeed;
+	   Feindesliste[i].pos.x += Feindesliste[i].speed.x * Frame_Time ();
+	 }
+
+       if ((abs (Restweg.y) >=
+	    Druidmap[Feindesliste[i].type].maxspeed * Frame_Time ())
+	   && (Restweg.y != 0))
+	 {
+	   Feindesliste[i].speed.y =
+	     (Restweg.y / fabsf (Restweg.y)) *
+	     Druidmap[Feindesliste[i].type].maxspeed;
+	   Feindesliste[i].pos.y += Feindesliste[i].speed.y * Frame_Time ();
+	 }
+
+       /* Endannaeherung aktuellen waypoint und anvisieren des naechsten */
+       DebugPrintf
+	 ("/* Endannaeherung aktuellen waypoint und anvisieren des naechsten */");
+       if (abs (Restweg.x) <
 	   Druidmap[Feindesliste[i].type].maxspeed * Frame_Time ())
-	  && (Restweg.x != 0))
-	{
-	  Feindesliste[i].speed.x =
-	    (Restweg.x / abs (Restweg.x)) *
-	    Druidmap[Feindesliste[i].type].maxspeed;
-	  Feindesliste[i].pos.x += Feindesliste[i].speed.x * Frame_Time ();
-	}
+	 {
+	   Feindesliste[i].pos.x = nextwp_pos.x;
+	   Feindesliste[i].speed.x = 0;
+	 }
 
-      if ((abs (Restweg.y) >=
+       if (abs (Restweg.y) <
 	   Druidmap[Feindesliste[i].type].maxspeed * Frame_Time ())
-	  && (Restweg.y != 0))
-	{
-	  Feindesliste[i].speed.y =
-	    (Restweg.y / fabsf (Restweg.y)) *
-	    Druidmap[Feindesliste[i].type].maxspeed;
-	  Feindesliste[i].pos.y += Feindesliste[i].speed.y * Frame_Time ();
-	}
+	 {
+	   Feindesliste[i].pos.y = nextwp_pos.y;
+	   Feindesliste[i].speed.y = 0;
+	 }
 
-      /* Endannaeherung aktuellen waypoint und anvisieren des naechsten */
-      DebugPrintf
-	("/* Endannaeherung aktuellen waypoint und anvisieren des naechsten */");
-      if (abs (Restweg.x) <
-	  Druidmap[Feindesliste[i].type].maxspeed * Frame_Time ())
-	{
-	  Feindesliste[i].pos.x = nextwp_pos.x;
-	  Feindesliste[i].speed.x = 0;
-	}
+       if ((Restweg.x == 0) && (Restweg.y == 0))
+	 {
+	   Feindesliste[i].lastwaypoint = Feindesliste[i].nextwaypoint;
+	   Feindesliste[i].warten = MyRandom (ENEMYMAXWAIT);
 
-      if (abs (Restweg.y) <
-	  Druidmap[Feindesliste[i].type].maxspeed * Frame_Time ())
-	{
-	  Feindesliste[i].pos.y = nextwp_pos.y;
-	  Feindesliste[i].speed.y = 0;
-	}
-
-      if ((Restweg.x == 0) && (Restweg.y == 0))
-	{
-	  Feindesliste[i].lastwaypoint = Feindesliste[i].nextwaypoint;
-	  Feindesliste[i].warten = MyRandom (ENEMYMAXWAIT);
-
-	  /* suche moegliche Verbindung von hier */
-	  DebugPrintf ("/* suche moegliche Verbindung von hier */");
-
-	  while ( (trywp = WpList[nextwp].
-		   connections[MyRandom (MAX_WP_CONNECTIONS - 1)]) == -1);
+	   /* suche moegliche Verbindung von hier */
+	   DebugPrintf ("/* suche moegliche Verbindung von hier */\n");
+	   /* but only if there are connections possible */
+	   for ( j=0; j<MAX_WP_CONNECTIONS; j++ )
+	     if ( WpList[nextwp].connections[j] != -1 )
+	       break;
+	   if ( j < MAX_WP_CONNECTIONS )
+	     while ( (trywp = WpList[nextwp].
+		      connections[MyRandom (MAX_WP_CONNECTIONS - 1)]) == -1);
+	   else
+	     {
+	       printf ("\nWeird waypoint %d has no connections!\n", nextwp);
+	     }
 
 	  /* setze neuen Waypoint */
 	  Feindesliste[i].nextwaypoint = trywp;
