@@ -480,6 +480,7 @@ ERROR LOADING SELECTION KNOB IMAGE FILE!",
 	our_SDL_blit_surface_wrapper ( SelectionKnob , NULL , Screen , &knob_target_rect );
 	sprintf ( number_text , "%d" , knob_offset_x * ( upper_range - lower_range ) / ( knob_end_x - knob_start_x ) )  ;
 	PutStringFont( Screen , FPS_Display_BFont , 320 , 190 , number_text );
+	blit_our_own_mouse_cursor ( );
 	our_SDL_flip_wrapper ( Screen );
 	
 	if ( ( SpacePressed() && axis_is_active ) && ( ! left_mouse_pressed_previous_frame ) ) 

@@ -689,14 +689,14 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	//
 	sprintf ( GoldString , "%6d." , (int) Me [ 0 ] . Gold );
 	PutStringFont ( Screen , Menu_BFont, 46 * GameConfig . screen_width / 640 , 
-			143 * GameConfig . screen_height / 480 , GoldString );
+			113 * GameConfig . screen_height / 480 , GoldString );
 	
 	blit_our_own_mouse_cursor ( );
 	our_SDL_flip_wrapper( Screen );
 	
-	if (SpacePressed() || EscapePressed() || axis_is_active )
+	if ( SpacePressed() || EscapePressed() || axis_is_active )
 	{
-	    if ( MouseCursorIsOnButton( DESCRIPTION_WINDOW_UP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+	    if ( MouseCursorIsOnButton( DESCRIPTION_WINDOW_UP_BUTTON , GetMousePos_x() , GetMousePos_y() ) && axis_is_active && !WasPressed )
 	    {
 		MoveMenuPositionSound();
 		Displacement += FontHeight ( GetCurrentFont () );
