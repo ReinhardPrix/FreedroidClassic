@@ -118,6 +118,14 @@ IsWallBlock (int block)
     case ECK_LO:
     case T_O:
     case ECK_RO:
+    case BLOCK1:
+    case BLOCK2:
+    case BLOCK3:
+    case ALERT:
+    case CODEPANEL_L:
+    case CODEPANEL_R:
+    case CODEPANEL_U:
+    case CODEPANEL_D:
       return (TRUE);
     default:
       return (FALSE);
@@ -155,26 +163,26 @@ CollectAutomapData ( void )
 	      //--------------------
 	      // First we check, if there are some right sides of walls visible
 	      //
-	      ObjPos.x = x + 0.5;
+	      ObjPos.x = x + 0.75;
 	      ObjPos.y = y + 0;
 	      if ( IsVisible ( &ObjPos ) ) Me.Automap[y][x].r_wall = TRUE;
 	      //--------------------
 	      // Now we check, if there are some left sides of walls visible
 	      //
-	      ObjPos.x = x - 0.5;
+	      ObjPos.x = x - 0.75;
 	      ObjPos.y = y + 0;
 	      if ( IsVisible ( &ObjPos ) ) Me.Automap[y][x].l_wall = TRUE;
 	      //--------------------
 	      // Now we check, if there are some southern sides of walls visible
 	      //
 	      ObjPos.x = x + 0;
-	      ObjPos.y = y + 0.5;
+	      ObjPos.y = y + 0.75;
 	      if ( IsVisible ( &ObjPos ) ) Me.Automap[y][x].d_wall = TRUE;
 	      //--------------------
 	      // Now we check, if there are some northern sides of walls visible
 	      //
 	      ObjPos.x = x + 0.0 ;
-	      ObjPos.y = y - 0.5 ;
+	      ObjPos.y = y - 0.75 ;
 	      if ( IsVisible ( &ObjPos ) ) Me.Automap[y][x].u_wall = TRUE;
 	    }
 	}
