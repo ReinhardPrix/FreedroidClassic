@@ -141,7 +141,7 @@ Takeover (int enemynum)
   static int RejectEnergy = 0;	/* your energy if you're rejected */
   char *message;
   int key;
-
+  int ClearanceIndex;
 
   /* Prevent distortion of framerate by the delay coming from 
    * the time spend in the menu.
@@ -175,13 +175,15 @@ Takeover (int enemynum)
 
   while (!FinishTakeover)
     {
-      /* Init Color-column and Capsule-Number for each opponenet and your color */
+      //--------------------
+      // Init Color-column and Capsule-Number for each opponenet and your color 
+      //
       for (row = 0; row < NUM_LINES; row++)
 	{
 	  DisplayColumn[row] = (row % 2);
 	  CapsuleCountdown[GELB][0][row] = -1;
 	  CapsuleCountdown[VIOLETT][0][row] = -1;
-	}			/* for row */
+	} // for row 
 
       YourColor = GELB;
       OpponentColor = VIOLETT;
@@ -215,17 +217,36 @@ Takeover (int enemynum)
 	      PreTakeEnergy = Me[0].energy;
 	    }
 
-	  // We provide some security agains too high energy/health values gained
-	  // by very rapid successions of successful takeover attempts
-	  if (Me[0].energy > Druidmap[DRUID001].maxenergy) Me[0].energy = Druidmap[DRUID001].maxenergy;
-	  if (Me[0].health > Druidmap[DRUID001].maxenergy) Me[0].health = Druidmap[DRUID001].maxenergy;
-
+	  //--------------------
 	  // We allow to gain the current energy/full health that was still in the 
 	  // other droid, since all previous damage must be due to fighting damage,
 	  // and this is exactly the sort of damage can usually be cured in refreshes.
 	  Me[0].energy += AllEnemys[enemynum].energy;
 	  Me[0].health += Druidmap[OpponentType].maxenergy;
 
+	  //--------------------
+	  // We provide some security agains too high energy/health values gained
+	  // by very rapid successions of successful takeover attempts
+	  //
+	  if ( Me [ 0 ] . energy > Me [ 0 ] . maxenergy ) 
+	    Me [ 0 ] . energy = Me [ 0 ] . maxenergy;
+	  if ( Me [ 0 ] . health > Me [ 0 ] . maxenergy ) 
+	    Me [ 0 ] . health = Me [ 0 ] . maxenergy;
+
+	  //--------------------
+	  // We add the victims security clearance to our own list of 
+	  // availabe security clearances.
+	  //
+	  for ( ClearanceIndex = 0 ; ClearanceIndex < MAX_CLEARANCES ; ClearanceIndex ++ )
+	    {
+	      if ( Me [ 0 ] . clearance_list [ ClearanceIndex ] == 0 )
+		{
+		  Me [ 0 ] . clearance_list [ ClearanceIndex ] = AllEnemys [ enemynum ] . type ;
+		  SetNewBigScreenMessage ( "Clearance obtained" );
+		  break;
+		}
+	    }
+	  
 	  Me[0].type = AllEnemys[enemynum].type;
 	  Me[0].Marker = AllEnemys[enemynum].Marker;
 
