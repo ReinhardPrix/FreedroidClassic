@@ -1553,7 +1553,7 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 
       if ( ThisRobot -> is_friendly )
 	{
-	  DebugPrintf ( -3 , "\nATTACK OF A FRIENDLY DROID WITH BUILD-IN ATTACK ANIMATION DETECTED!-->hurting enemies..." );
+	  DebugPrintf ( -3 , "\nATTACK OF A FRIENDLY DROID WITH BUILT-IN ATTACK ANIMATION DETECTED!-->hurting enemies..." );
 	  for ( j = 0 , target_robot = & ( AllEnemys [ 0 ] ) ; j < Number_Of_Droids_On_Ship ; j ++ , target_robot ++ )
 	    {
 	      if ( target_robot -> Status == OUT ) continue ;
@@ -1568,29 +1568,74 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
       else
 	{
 	  //--------------------
-	  // For now, we just damage the Tux according to this enemys 'damage' value.  We
-	  // don't fuss around whether the Tux is close at all or not.  
-	  // In later releases, a more complex ruleset,
-	  // taking into account position, maybe even bocks with the shield, should
-	  // be implemented here.
+	  // There can be two cases:  The hostile bot is attacking a player i.e. 
+	  // a Tux or the hostile bot is attacking a friendly bot.
 	  //
-	  if ( MyRandom ( 100 ) <= Me [ 0 ] . lv_1_bot_will_hit_percentage )
+	  switch ( ThisRobot -> attack_target_type )
 	    {
+	    case ATTACK_TARGET_IS_ENEMY:
+	      DebugPrintf ( -4 , "\nNow hostile bot is trying to hurt friendly bot!" );
 	      //--------------------
-	      // If the bot hit, we reduce the energy of the Tux and maybe there
-	      // should also be some kind of scream of the Tux?
+	      // For now we use a constant of 70% hit chance of hostile bots against
+	      // any friendly bots.  This might be replaced by something more sophisticated
+	      // some time later.
 	      //
-	      Me [ 0 ] . energy -= Druidmap [ ThisRobot -> type ] . physical_damage ;
-	      if ( MyRandom ( 100 ) <= 20 ) tux_scream_sound ( );
-	    }
-	  else
-	    {
+	      if ( MyRandom ( 100 ) <= 70 )
+		{
+		  //--------------------
+		  // If the bot hit, we reduce the energy of the other bot and maybe there
+		  // should also be some kind of scream of the victimized bot?
+		  //
+		  AllEnemys [ ThisRobot -> attack_target_index ] . energy -= 
+		    Druidmap [ ThisRobot -> type ] . physical_damage ;
+		  if ( MyRandom ( 100 ) <= 20 ) 
+		    play_death_sound_for_bot ( & AllEnemys [ ThisRobot -> attack_target_index ] ) ;
+		}
+	      else
+		{
+		  //--------------------
+		  // If the bot missed the other bot, we do nothing...
+		  //
+		}
+	      break;
+
+	    case ATTACK_TARGET_IS_PLAYER:
 	      //--------------------
-	      // If the bot missed, we do nothing...
+	      // For now, we just damage the Tux according to this enemys 'damage' value.  We
+	      // don't fuss around whether the Tux is close at all or not.  
+	      // In later releases, a more complex ruleset,
+	      // taking into account position, maybe even bocks with the shield, should
+	      // be implemented here.
 	      //
+	      if ( MyRandom ( 100 ) <= Me [ 0 ] . lv_1_bot_will_hit_percentage )
+		{
+		  //--------------------
+		  // If the bot hit, we reduce the energy of the Tux and maybe there
+		  // should also be some kind of scream of the Tux?
+		  //
+		  Me [ 0 ] . energy -= Druidmap [ ThisRobot -> type ] . physical_damage ;
+		  if ( MyRandom ( 100 ) <= 20 ) tux_scream_sound ( );
+		}
+	      else
+		{
+		  //--------------------
+		  // If the bot missed, we do nothing...
+		  //
+		}
+	      break;
+
+	    case ATTACK_TARGET_IS_NOTHING:
+	      DebugPrintf ( -4 , "\nSuspicious:  attack made while attack_target_type set to NOTHING." );
+	      break;
+
+	    default:
+	      GiveStandardErrorMessage ( "RawStartEnemysShot ( ... )" , 
+					 "unhandled attack_target_type encountered!",
+					 PLEASE_INFORM, IS_FATAL );
+	      break;
 	    }
 	}
-
+	  
       //--------------------
       // While we don't have sound samples for individual attack motions,
       // we'll use the death sound sample here too, even if noone is dying.
