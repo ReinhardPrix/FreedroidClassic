@@ -36,6 +36,7 @@
 #include "proto.h"
 #include "vars.h"
 #include "ship.h"
+#include "fenv.h"
 
 int ThisMessageTime;
 float LastGotIntoBlastSound = 2;
@@ -80,9 +81,34 @@ main (int argc, char * argv[])
 {
   int i;
   int PlayerNum;
+  float test_float_1, test_float_2, test_float_3;
+
+  // feenableexcept ( FE_ALL_EXCEPT );
+  // feenableexcept ( FE_INEXACT ) ;
+  feenableexcept ( FE_DIVBYZERO ) ;
+  // feenableexcept ( FE_UNDERFLOW ) ;
+  // feenableexcept ( FE_OVERFLOW ) ;
+  feenableexcept ( FE_INVALID ) ;
+
+  /*
+  if ( feraiseexcept ( FE_ALL_EXCEPT ) != 0 )
+    {
+      DebugPrintf ( -100 , "\nCouldn't set floating point exceptions to be raised...\nTerminating..." );
+      exit ( 0 );
+    }
+  else
+    {
+      DebugPrintf ( -100 , "\nFloating point exceptions to be raised set successfully!\n" );
+    }
+  */
 
   GameOver = FALSE;
   QuitProgram = FALSE;
+
+
+  test_float_1 = 3.1 ;
+  test_float_2 = 0.0 ; 
+  test_float_3 = test_float_1 / test_float_2 ;
 
   /*
    *  Parse command line and set global switches 

@@ -80,6 +80,7 @@ DebugPrintf (int db_level, char *fmt, ...)
       tmp = (char *) MyMalloc (1000000 + 1);
       vsprintf (tmp, fmt, args);
       fprintf (stderr, tmp);
+      fflush ( stderr );
 
       free (tmp);
     }

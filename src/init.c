@@ -1526,7 +1526,7 @@ PrepareStartOfNewCharacter ( void )
   int MissionTargetIndex = 0;
   int PlayerNum;
   location StartPosition;
-
+  
   //--------------------
   // At first we do the things that must be done for all
   // missions, regardless of mission file given
@@ -1767,6 +1767,17 @@ InitFreedroid ( void )
   // feenableexcept ( FE_ALL_EXCEPT );
   // feenableexcept ( FE_DIVBYZERO | FE_INVALID ); // FE_INEXACT | FE_UNDERFLOW | FE_OVERFLOW 
   // fesetexceptflag (const fexcept_t *flagp, int excepts);
+
+  //--------------------
+  // We set these dummy values, so that when the title plays (and banner and
+  // therefore energy bars are displayed, there won't be any floating point
+  // exception problems...)
+  //
+  Me [ 0 ] . mana = 0 ;
+  Me [ 0 ] . maxmana = 10 ;
+  Me [ 0 ] . energy = 1 ;
+  Me [ 0 ] . maxenergy = 10 ;
+
 
   //--------------------
   // It might happen, that the uninitialized AllBullets array contains a 1

@@ -329,7 +329,7 @@ ClearEnemys ( void )
 {
   int i , j;
 
-  for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
+  for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i++ )
     {
       AllEnemys[i].type = -1;
       AllEnemys[i].pos.z = AllEnemys[i].energy = 0;

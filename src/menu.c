@@ -321,10 +321,12 @@ ChatDoMenuSelectionFlagged( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER
   int i;
   int use_counter = 0;
 
+  DebugPrintf ( -100, "\nBEFORE:  First Item now: %d." , FirstItem );
+
   //--------------------
   // We filter out those answering options that are allowed by the flag mask
   //
-  DebugPrintf ( MENU_SELECTION_DEBUG , "\nChatDoMenuSelectionFlagged: \n" , FirstItem ) ; 
+  DebugPrintf ( MENU_SELECTION_DEBUG , "\nChatDoMenuSelectionFlagged: %d \n" , FirstItem ) ; 
   for ( i = 0 ; i < MAX_ANSWERS_PER_PERSON ; i ++ )
     {
       FilteredChatMenuTexts [ i ] = "" ; 
@@ -332,8 +334,8 @@ ChatDoMenuSelectionFlagged( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER
 	{
 
 	  DebugPrintf ( MENU_SELECTION_DEBUG , "%2d. " , i ) ; 
-	  DebugPrintf ( MENU_SELECTION_DEBUG , MenuTexts [ i ] ) ; 
-	  DebugPrintf ( MENU_SELECTION_DEBUG , "\n" ) ; 
+	  DebugPrintf ( MENU_SELECTION_DEBUG , "%s\n" , MenuTexts [ i ] ) ; 
+
 	  fflush ( stdout );
 	  fflush ( stderr );
 
@@ -341,6 +343,8 @@ ChatDoMenuSelectionFlagged( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER
 	  use_counter++;
 	}
     }
+
+  DebugPrintf ( -100, "\nMIDDLE:  First Item now: %d." , FirstItem );
 
   //--------------------
   // Now we do the usual menu selection, using only the activated chat alternatives...
@@ -388,6 +392,18 @@ GetNumberOfTextLinesNeeded ( char* GivenText, SDL_Rect GivenRectangle )
   int TextLinesNeeded;
   int i;
   int TestPosition;
+
+  //--------------------
+  // If we receive an empty string, we print out a warning message and then
+  // return one line as the required amount of lines.
+  //
+  if ( strlen ( GivenText ) <= 1 )
+    {
+      GiveStandardErrorMessage ( "GetNumberOfTextLinesNeeded (...)" , "\
+Warning.  Received empty or nearly empty string!",
+				 NO_NEED_TO_INFORM, IS_WARNING_ONLY );
+      return ( 1 ) ;
+    }
 
   //--------------------
   // First we make a backup of everything, so that we don't destory anything.
@@ -440,13 +456,13 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
 {
   int h = FontHeight (GetCurrentFont());
   int i , j ;
-  static int MenuPosition = 1;
+  static int menu_position_to_remember = 1;
   int NumberOfOptionsGiven;
 #define ITEM_DIST 50
   int MenuPosX[20] = { 260 , 260 , 260 , 260 , 260 , 260 , 260 , 260 , 260 , 260 } ;
   int MenuPosY[20] = {  90 , 90 + 1 * ITEM_DIST , 90 + 2 * ITEM_DIST , 90 + 3 * ITEM_DIST , 90 + 4 * ITEM_DIST , 
       90 + 5 * ITEM_DIST , 90 + 6 * ITEM_DIST , 90 + 7 * ITEM_DIST , 90 + 8 * ITEM_DIST , 90 + 9 * ITEM_DIST } ;
-  int MenuOptionLineRequirement[20] ;
+  int MenuOptionLineRequirement [ MAX_ANSWERS_PER_PERSON ] ;
   SDL_Rect Choice_Window;
   SDL_Rect HighlightRect;
   int MaxLinesInMenuRectangle;
@@ -457,6 +473,8 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
   int LastOptionVisible = 0 ;
   int MenuLineOfMouseCursor;
   int ThisOptionEnd;
+
+  DebugPrintf ( -100, "\nINSIDE:  First Item now: %d." , FirstItem );
 
   //--------------------
   // Now we set some viable choice window and we compute the maximum number of lines
@@ -473,13 +491,13 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
   //
   SDL_ShowCursor( SDL_ENABLE );
 
-  if ( FirstItem != (-1) ) MenuPosition = FirstItem;
+  if ( FirstItem != (-1) ) menu_position_to_remember = FirstItem;
 
   //--------------------
   // First thing we do is find out how may options we have
   // been given for the menu
   //
-  DebugPrintf ( MENU_SELECTION_DEBUG , "\nChatDoMenuSelection: \n" , FirstItem ) ; 
+  DebugPrintf ( MENU_SELECTION_DEBUG , "\nChatDoMenuSelection: %d \n" , FirstItem ) ; 
   for ( i = 0 ; i < 10 ; i ++ )
     {
       DebugPrintf ( MENU_SELECTION_DEBUG , "%2d. " , i ) ; 
@@ -497,6 +515,10 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
   // options should have...  Based on that we can then determine the right
   // line distances and the right highlight-rectangle-size for each menu option.
   //
+  for ( i = 0 ; i < MAX_ANSWERS_PER_PERSON ; i++ )
+    {
+      MenuOptionLineRequirement [ i ] = 1 ;
+    }
   for ( i = 0 ; i < NumberOfOptionsGiven ; i++ )
     {
       MenuOptionLineRequirement [ i ] = GetNumberOfTextLinesNeeded ( MenuTexts [ i ] , Choice_Window );
@@ -558,10 +580,10 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
       //--------------------
       // We highlight the currently selected option with a highlighting rectangle
       //
-      HighlightRect.x = MenuPosX[ MenuPosition -1 ] - 0 * h ;
-      HighlightRect.y = MenuPosY[ MenuPosition -1 ] ;
-      HighlightRect.w = TextWidth ( MenuTexts [ MenuPosition - 1 ] ) + 0 * h ;
-      HighlightRect.h = MenuOptionLineRequirement [ MenuPosition - 1 ] * 
+      HighlightRect.x = MenuPosX[ menu_position_to_remember -1 ] - 0 * h ;
+      HighlightRect.y = MenuPosY[ menu_position_to_remember -1 ] ;
+      HighlightRect.w = TextWidth ( MenuTexts [ menu_position_to_remember - 1 ] ) + 0 * h ;
+      HighlightRect.h = MenuOptionLineRequirement [ menu_position_to_remember - 1 ] * 
 	( FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) ;	    
       HighlightRectangle ( Screen , HighlightRect );
 
@@ -632,7 +654,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
 	  SDL_ShowCursor( SDL_ENABLE );
 	  RestoreMenuBackground ( 0 );
 	  our_SDL_flip_wrapper( Screen );
-	  return ( MenuPosition );
+	  return ( menu_position_to_remember );
 
 	}
 
@@ -670,16 +692,16 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
 		  SDL_ShowCursor( SDL_ENABLE );
 		  RestoreMenuBackground ( 0 );
 		  our_SDL_flip_wrapper( Screen );
-		  return ( MenuPosition );
+		  return ( menu_position_to_remember );
 		}
 	    }
 	  
 	}
       if ( UpPressed() || MouseWheelUpPressed() ) 
 	{
-	  if (MenuPosition > OptionOffset + 1 ) 
+	  if ( menu_position_to_remember > OptionOffset + 1 ) 
 	    {
-	      SDL_WarpMouse ( GetMousePos_x () , MenuPosY [ MenuPosition - 2 ] ) ;
+	      SDL_WarpMouse ( GetMousePos_x () , MenuPosY [ menu_position_to_remember - 2 ] ) ;
 	      MoveMenuPositionSound();	    
 	    }
 	  else if ( OptionOffset > 0 ) 
@@ -692,14 +714,14 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
 	}
       if ( DownPressed() || MouseWheelDownPressed() ) 
 	{
-	  if ( MenuPosition < LastOptionVisible ) 
+	  if ( menu_position_to_remember < LastOptionVisible ) 
 	    { 
-	      SDL_WarpMouse ( GetMousePos_x () , MenuPosY [ MenuPosition ] );
+	      SDL_WarpMouse ( GetMousePos_x () , MenuPosY [ menu_position_to_remember ] );
 	    }
 	  else
 	    {
 	      if ( BreakOffCauseNoRoom ) OptionOffset++;
-	      SDL_WarpMouse ( GetMousePos_x () , MenuPosY [ MenuPosition - 1 ] );
+	      SDL_WarpMouse ( GetMousePos_x () , MenuPosY [ menu_position_to_remember - 1 ] );
 	    }
 	  MoveMenuPositionSound();
 	  while (DownPressed());
@@ -726,18 +748,18 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ 10 ] , int FirstItem ,
 
 	      if ( GetMousePos_y () + 16 < ThisOptionEnd )
 		{
-		  MenuPosition = i + 1 ; // MouseCursorIsOverMenuItem( MenuPosY [ 0 ] , MenuPosY [ 1 ] - MenuPosY [ 0 ] );
+		  menu_position_to_remember = i + 1 ; // MouseCursorIsOverMenuItem( MenuPosY [ 0 ] , MenuPosY [ 1 ] - MenuPosY [ 0 ] );
 		  break;
 		}
 	    }
 
 	  /*
-      MenuPosition = MouseCursorIsOverMenuItem( MenuPosY [ 0 ] , MenuPosY [ 1 ] - MenuPosY [ 0 ] );
+      menu_position_to_remember = MouseCursorIsOverMenuItem( MenuPosY [ 0 ] , MenuPosY [ 1 ] - MenuPosY [ 0 ] );
 	  */
 	}
 
-      if ( MenuPosition < OptionOffset + 1 ) MenuPosition = OptionOffset + 1 ;
-      if ( MenuPosition > LastOptionVisible ) MenuPosition = LastOptionVisible ;
+      if ( menu_position_to_remember < OptionOffset + 1 ) menu_position_to_remember = OptionOffset + 1 ;
+      if ( menu_position_to_remember > LastOptionVisible ) menu_position_to_remember = LastOptionVisible ;
 
     }
 

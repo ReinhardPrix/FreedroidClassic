@@ -1601,7 +1601,7 @@ CheckForTriggeredEventsAndStatements ( int PlayerNum )
   //--------------------
   // Now we check if some statment location is reached
   //
-  map_x = (int) rintf( Me [ PlayerNum ] . pos . x ); map_y = (int) rintf( Me [ PlayerNum ] . pos . y ) ;
+  map_x = (int) rintf( (float) Me [ PlayerNum ] . pos . x ); map_y = (int) rintf( (float)Me [ PlayerNum ] . pos . y ) ;
   for ( i = 0 ; i < MAX_STATEMENTS_PER_LEVEL ; i++ )
     {
       if ( ( map_x == StatementLevel -> StatementList [ i ] . x ) &&
