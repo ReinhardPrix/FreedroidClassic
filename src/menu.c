@@ -43,7 +43,6 @@ void Single_Player_Menu (void);
 void Multi_Player_Menu (void);
 void Credits_Menu (void);
 void Options_Menu (void);
-void Show_Highscore_Menu (void);
 void Show_Mission_Instructions_Menu (void);
 void Show_Waypoints(void);
 void Level_Editor(void);
@@ -379,6 +378,7 @@ enum
   };
   int Weiter = 0;
   int MenuPosition=1;
+  int key;
 
   Me.status=MENU;
 
@@ -416,34 +416,25 @@ enum
       CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y ,    "Classical Paradroid");
       CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y +1*FontHeight(GetCurrentFont()), "Skip Classical Paradroid Episode");
 
-      // SDL_UpdateRect(ne_screen, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALEb_FACTOR);
+      // SDL_UpdateRect(ne_screen, 0, 0, SCREENLEN*SCALE_FACTOR, SCREENHEIGHT*SCALEb_FACTOR);
       SDL_Flip( ne_screen );
 
       // Wait until the user does SOMETHING
 
-      while( !SpacePressed() && !EnterPressed() && !UpPressed()
-	     && !DownPressed() && !EscapePressed() ) ;
-
-      if ( EscapePressed() )
-	{
-	  while ( EscapePressed() );
-	  Weiter=!Weiter;
-	}
-      if (EnterPressed() || SpacePressed() ) 
+      key = getchar_raw ();
+      if ( (key == SDLK_RETURN) || (key == SDLK_SPACE))
 	{
 	  MenuItemSelectedSound();
 	  switch (MenuPosition) 
 	    {
 
 	    case CLASSIC_PARADROID_MISSION_POSITION:
-	      while (EnterPressed() || SpacePressed() );
 	      InitNewMission ( STANDARD_MISSION );
 	      // New_Game_Requested=FALSE;
 	      // Single_Player_Menu();
 	      Weiter = TRUE;   
 	      break;
 	    case NEW_MISSION_POSITION:
-	      while (EnterPressed() || SpacePressed() );
 	      InitNewMission ( NEW_MISSION );
 	      Weiter = TRUE;   /* jp forgot this... ;) */
 	      break;
@@ -452,17 +443,15 @@ enum
 	    } 
 	  // Weiter=!Weiter;
 	}
-      if (UpPressed()) 
+      if ( key == SDLK_UP )
 	{
 	  if (MenuPosition > 1) MenuPosition--;
 	  MoveMenuPositionSound();
-	  while (UpPressed());
 	}
-      if (DownPressed()) 
+      if ( key == SDLK_DOWN )
 	{
 	  if ( MenuPosition < NEW_MISSION_POSITION ) MenuPosition++;
 	  MoveMenuPositionSound();
-	  while (DownPressed());
 	}
     }
 
@@ -538,7 +527,7 @@ enum
       CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +4*FontHeight(GetCurrentFont()),    "Credits");
       CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +5*FontHeight(GetCurrentFont()),    "Quit Game");
 
-      // SDL_UpdateRect(ne_screen, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
+      // SDL_UpdateRect(ne_screen, 0, 0, SCREENLEN*SCALE_FACTOR, SCREENHEIGHT*SCALE_FACTOR);
       SDL_Flip( ne_screen );
 
       // Wait until the user does SOMETHING
@@ -1260,7 +1249,7 @@ Single_Player_Menu (void)
 	      break;
 	    case SHOW_HISCORE_POSITION: 
 	      while (EnterPressed() || SpacePressed() ) ;
-	      Show_Highscore_Menu();
+	      Show_Highscores();
 	      break;
 	    case SHOW_MISSION_POSITION:
 	      while (EnterPressed() || SpacePressed() ) ;
@@ -1289,47 +1278,6 @@ Single_Player_Menu (void)
     }
 } // Single_Player_Menu
 
-/*-----------------------------------------------------------------
- * Display the high scores of the single player game.  
- * This function is actually a submenu of the big EscapeMenu.
- * The function is currently disabled, since rp is rewriting the
- * high score administration routines.
- *
- *-----------------------------------------------------------------*/
-void
-Show_Highscore_Menu (void)
-{
-  int x0, y0;
-  Hall_entry tmp;
-  int counter;
-  //  BFont_Info *prev_font;
-
-  InitiateMenu ();
-
-  x0 = 100;
-  y0 = 50;  
-
-  //  prev_font = CurrentFont;
-  //  SetCurrentFont (FPS_Display_BFont);  /* should use a better one */
-
-  printf_SDL (ne_screen, x0, y0, "Top %d  freedom fighters\n", MAX_HIGHSCORES);
-  printf_SDL (ne_screen, -1, -1, "\n");
-  
-  counter = 1;
-  if ( (tmp = highscores)==NULL)
-    printf_SDL (ne_screen, -1, -1, "---- Empty ----");
-  else
-    while (tmp)
-      {
-	printf_SDL (ne_screen, -1, -1, "%d. %s   %ld\n",
-		    counter ++, tmp->name, tmp->score);
-	tmp = tmp->next;
-      }
-
-  getchar_raw ();
-
-  return;
-} // Show_Highscore_Menu
 
 /*@Function============================================================
 @Desc: This function provides the multi player menu.  It is a submenu
@@ -1385,36 +1333,24 @@ Multi_Player_Menu (void)
 void
 Credits_Menu (void)
 {
-  int Weiter = 0;
+  while( SpacePressed() || EnterPressed() ) ; /* wait for key release */
 
-  // while( !SpacePressed() && !EnterPressed() ) keyboard_update(); 
-  while( SpacePressed() || EnterPressed() ) keyboard_update(); 
-
-  while (!Weiter)
-    {
-
-      InitiateMenu();
+  InitiateMenu();
       
-      DisplayImage ( find_file(NE_CREDITS_PIC_FILE,GRAPHICS_DIR,FALSE) );
+  DisplayImage ( find_file(NE_CREDITS_PIC_FILE,GRAPHICS_DIR,FALSE) );
 
-      CenteredPutString ( ne_screen , 1*FontHeight(Menu_BFont), "CREDITS" );
-      LeftPutString ( ne_screen , 3*FontHeight(Menu_BFont), "PROGRAMMING:");
-      RightPutString ( ne_screen , 4*FontHeight(Menu_BFont), "Johannes Prix");
-      RightPutString ( ne_screen , 5*FontHeight(Menu_BFont), "Reinhard Prix");
-      LeftPutString ( ne_screen , 7*FontHeight(Menu_BFont), "ARTWORK:");
-      RightPutString ( ne_screen , 8*FontHeight(Menu_BFont), "Bastian Salmela");
-      RightPutString ( ne_screen , 9*FontHeight(Menu_BFont), "Lanzz");
+  CenteredPutString ( ne_screen , 1*FontHeight(Menu_BFont), "CREDITS" );
+  LeftPutString ( ne_screen , 3*FontHeight(Menu_BFont), "   PROGRAMMING:");
+  RightPutString ( ne_screen , 4*FontHeight(Menu_BFont), "Johannes Prix   ");
+  RightPutString ( ne_screen , 5*FontHeight(Menu_BFont), "Reinhard Prix   ");
+  LeftPutString ( ne_screen , 7*FontHeight(Menu_BFont), "   ARTWORK:");
+  RightPutString ( ne_screen , 8*FontHeight(Menu_BFont), "Bastian Salmela   ");
+  RightPutString ( ne_screen , 9*FontHeight(Menu_BFont), "Lanzz   ");
 
-      SDL_Flip( ne_screen );
+  SDL_Flip( ne_screen );
 
-      // Wait until the user does SOMETHING
-
-      if ( EscapePressed() || EnterPressed() || SpacePressed() )
-	{
-	  Weiter=!Weiter;
-	}
-    }
-  while ( EscapePressed() || EnterPressed() || SpacePressed() );
+  // Wait until the user does SOMETHING
+  getchar_raw();
 
 } // Credits_Menu
 
