@@ -121,7 +121,7 @@ but the section itself must be present.
 
 ** Start of Mission Briefing Text Section **
 
-The title picture in the graphics subdirectory for this mission is : ne_title.jpg
+The title picture in the graphics subdirectory for this mission is : title.jpg
 The title song in the sound subdirectory for this mission is : BETHOW.MOD
 Song name to play in the end title if the mission is completed: Beachhead_2.mod
 

@@ -430,6 +430,7 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
  *
  * !! do never try to free the returned string !!
  *
+ * if file is not found, return NULL pointer
  *-----------------------------------------------------------------*/
 char *
 find_file (char *fname, char *subdir, int use_theme)
@@ -437,6 +438,7 @@ find_file (char *fname, char *subdir, int use_theme)
   static char File_Path[5000];   /* hope this will be enough */
   FILE *fp;  // this is the file we want to find?
   int i;
+  bool found = FALSE;
 
   if (!fname)
     {
@@ -465,12 +467,15 @@ find_file (char *fname, char *subdir, int use_theme)
       if ( (fp = fopen (File_Path, "r")) != NULL)  /* found it? */
 	{
 	  fclose (fp);
+	  found = TRUE;
 	  break;
 	}
     } /* for i */
 
-
-  return (File_Path);
+  if (found)
+    return (File_Path);
+  else
+    return (NULL);
 	
 } /* find_file */
 

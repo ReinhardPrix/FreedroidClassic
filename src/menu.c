@@ -428,7 +428,7 @@ EscapeMenu (void)
       PutInfluence (FIRST_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y + (MenuPosition-1.5)*fheight);
 
       strcpy (theme_string, "Tileset: ");
-      if (strstr (GameConfig.Theme_SubPath, "default"))
+      if (strstr (GameConfig.Theme_SubPath, "classic"))
 	strcat (theme_string, "Classic");
       else if (strstr (GameConfig.Theme_SubPath, "lanzz"))
 	strcat (theme_string, "Lanzz");
@@ -481,10 +481,10 @@ EscapeMenu (void)
 		  break;
 
 		case SET_THEME:
-		  if ( !strcmp ( GameConfig.Theme_SubPath , "default_theme/" ) )
+		  if ( !strcmp ( GameConfig.Theme_SubPath , "classic_theme/" ) )
 		    GameConfig.Theme_SubPath="lanzz_theme/";
 		  else
-		    GameConfig.Theme_SubPath="default_theme/";
+		    GameConfig.Theme_SubPath="classic_theme/";
 
 		  ReInitPictures();
 		  

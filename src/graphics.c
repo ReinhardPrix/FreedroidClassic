@@ -736,8 +736,8 @@ Load_Digit_Surfaces( void )
     {
       tmp_surf = SDL_CreateRGBSurface( 0 , INITIAL_DIGIT_LENGTH , INITIAL_DIGIT_HEIGHT, ne_bpp, 0, 0, 0, 0);
       SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
-      InfluDigitSurfacePointer[i] = SDL_DisplayFormat( tmp_surf ); // now we have an alpha-surf of right size
-      // SDL_SetColorKey( InfluDigitSurfacePointer[i] , 0 , 0 ); // this should clear any color key in the dest surface
+      InfluDigitSurfacePointer[i] = SDL_DisplayFormatAlpha ( tmp_surf ); // now we have an alpha-surf of right size
+      SDL_SetColorKey( InfluDigitSurfacePointer[i] , 0 , 0 ); // this should clear any color key in the dest surface
       // Now we can copy the image Information
       Source.x=i*( INITIAL_DIGIT_LENGTH + 2 );
       Source.y=0*( INITIAL_DIGIT_HEIGHT + 2);
@@ -748,13 +748,7 @@ Load_Digit_Surfaces( void )
       Target.w=INITIAL_DIGIT_LENGTH;
       Target.h=INITIAL_DIGIT_HEIGHT;
       SDL_BlitSurface ( Whole_Image , &Source , InfluDigitSurfacePointer[i] , &Target );
-      SDL_SetAlpha( InfluDigitSurfacePointer[i] , 0 , SDL_ALPHA_OPAQUE );
-      if ( SDL_SetColorKey( InfluDigitSurfacePointer[i] , SDL_SRCCOLORKEY, ne_transp_key ) == -1 )
-	{
-	  fprintf (stderr, "Transp setting by SDL_SetColorKey() failed: %s \n",
-		   SDL_GetError());
-	  Terminate( ERR );
-	}
+      SDL_SetAlpha( InfluDigitSurfacePointer[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );      
     }
   SDL_FreeSurface( tmp_surf );
 
@@ -762,7 +756,7 @@ Load_Digit_Surfaces( void )
     {
       tmp_surf = SDL_CreateRGBSurface( 0 , INITIAL_DIGIT_LENGTH , INITIAL_DIGIT_HEIGHT, ne_bpp, 0, 0, 0, 0);
       SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
-      EnemyDigitSurfacePointer[i] = SDL_DisplayFormat( tmp_surf ); // now we have an alpha-surf of right size
+      EnemyDigitSurfacePointer[i] = SDL_DisplayFormatAlpha (tmp_surf); // now we have an alpha-surf of right size
       // SDL_SetColorKey( EnemyDigitSurfacePointer[i] , 0 , 0 ); // this should clear any color key in the dest surface
       // Now we can copy the image Information
       Source.x=(i+10)*( INITIAL_DIGIT_LENGTH + 2 );
@@ -775,23 +769,15 @@ Load_Digit_Surfaces( void )
       Target.h=INITIAL_DIGIT_HEIGHT;
       SDL_BlitSurface ( Whole_Image , &Source , EnemyDigitSurfacePointer[i] , &Target );
       SDL_SetAlpha( EnemyDigitSurfacePointer[i] , 0 , SDL_ALPHA_OPAQUE );
-      if ( SDL_SetColorKey( EnemyDigitSurfacePointer[i] , SDL_SRCCOLORKEY, ne_transp_key ) == -1 )
-	{
-	  fprintf (stderr, "Transp setting by SDL_SetColorKey() failed: %s \n",
-		   SDL_GetError());
-	  Terminate( ERR );
-	}
+      SDL_SetAlpha( EnemyDigitSurfacePointer[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );      
     }
   SDL_FreeSurface( tmp_surf );
 
 }; // void Load_Digit_Surfaces( void )
 
-/* 
-----------------------------------------------------------------------
-----------------------------------------------------------------------
-*/
+
 void 
-Load_MapBlock_Surfaces( void )
+old_Load_MapBlock_Surfaces( void )
 {
   SDL_Surface* Whole_Image;
   SDL_Surface* tmp_surf;
@@ -800,16 +786,6 @@ Load_MapBlock_Surfaces( void )
   int i;
   int color;
   char *fpath;
-  /*  char *ColoredBlockFiles[] = {
-    "ne_block_red.gif",
-    "ne_block_yellow.gif",
-    "ne_block_green.gif",
-    "ne_block_gray.gif",
-    "ne_block_blue.gif",
-    "ne_block_turquoise.gif",
-    "ne_block_dark.gif",
-    NULL
-    }; */
   char *ColoredBlockFiles[] = {
     "ne_block_red.png",
     "ne_block_yellow.png",
@@ -859,6 +835,63 @@ Load_MapBlock_Surfaces( void )
     }
 }; // void Load_MapBlock_Surfaces( void )
 
+
+/* 
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+*/
+void
+Load_MapBlock_Surfaces( void )
+{
+  SDL_Surface* Whole_Image;
+  SDL_Surface* tmp_surf;
+  SDL_Rect Source;
+  SDL_Rect Target;
+  int i;
+  int color;
+  char *fpath;
+
+  char *fname = "map_blocks.png";
+
+  Block_Width=INITIAL_BLOCK_WIDTH;
+  Block_Height=INITIAL_BLOCK_HEIGHT;
+  
+  if ( (fpath = find_file ( fname, GRAPHICS_DIR, TRUE)) == NULL)
+    {
+      DebugPrintf (0, "\n*****************************************************************");
+      DebugPrintf (0, "\nERROR: could not find graphics-file %s in search-path", fname);
+      DebugPrintf (0, "\n*****************************************************************");
+      Terminate(ERR);
+    }
+  for ( color = 0 ; color < NUM_COLORS ; color ++ )
+    {
+      Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+      SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
+      
+      for ( i=0 ; i < NUM_MAP_BLOCKS ; i++ )
+	{
+	  tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, ne_bpp, 0, 0, 0, 0);
+	  SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
+	  MapBlockSurfacePointer[ color ][i] = SDL_DisplayFormat( tmp_surf ); // now we have an alpha-surf of right size
+	  SDL_SetColorKey( MapBlockSurfacePointer[ color ][i] , 0 , 0 ); // this should clear any color key in the dest surface
+	  // Now we can copy the image Information
+	  Source.x=i*(Block_Height+2);
+	  Source.y=color*(Block_Width+2);
+	  Source.w=Block_Width;
+	  Source.h=Block_Height;
+	  Target.x=0;
+	  Target.y=0;
+	  Target.w=Block_Width;
+	  Target.h=Block_Height;
+	  SDL_BlitSurface ( Whole_Image , &Source , MapBlockSurfacePointer[ color ][i] , &Target );
+	  SDL_SetAlpha( MapBlockSurfacePointer[ color ][i] , 0 , 0 );
+	  OrigMapBlockSurfacePointer[color][i] = MapBlockSurfacePointer[ color ][i];
+	  // unzoomed original map-blocks
+	  SDL_FreeSurface( tmp_surf );
+	}
+      SDL_FreeSurface( Whole_Image );
+    }
+}; // void Load_MapBlock_Surfaces( void )
 
 /*-----------------------------------------------------------------
  * @Desc: get the pics for: druids, bullets, blasts
@@ -925,7 +958,7 @@ InitPictures (void)
    * and now read in the blocks from various files into ne_blocks
    * and initialise the block-coordinates 
    */
-
+  //************************************************************
   printf_SDL (ne_screen, User_Rect.x + 50, -1, "Loading image data ");
 
   Load_MapBlock_Surfaces();

@@ -9,7 +9,7 @@ AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
 
 
-AM_INIT_AUTOMAKE(freedroidRPG, 0.9)
+AM_INIT_AUTOMAKE(freedroid, 0.8.4)
 
 AM_CONFIG_HEADER(config.h)
 
@@ -63,10 +63,6 @@ see http://www.libpng.org/pub/png/libpng.html]))
 
 AC_CHECK_LIB([SDL_image], [IMG_LoadJPG_RW],,
 	AC_MSG_ERROR([SDL_image library needed for Freedroid!
-see http://www.libsdl.org/]))
-
-AC_CHECK_LIB([SDL_net], [SDLNet_Init],,
-	AC_MSG_ERROR([SDL_net library needed for Freedroid!
 see http://www.libsdl.org/]))
 
 
