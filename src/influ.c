@@ -1521,13 +1521,17 @@ FireBullet ( int PlayerNum )
       // Finally we add a new wait-counter, so that bullets or swings
       // cannot be started in too rapid succession.  
       // 
-      // And then we can return, for real bullet generation isn't required in
-      // our case here.
+      // And then we can return, for real bullet generation in the sense that
+      // we would have to enter something into the AllBullets array or that
+      // isn't required in our case here.
       //
-      if ( Me [ PlayerNum ] .weapon_item.type != ( -1 ) )
-	Me [ PlayerNum ] .firewait = ItemMap[ Me [ PlayerNum ] .weapon_item.type ].item_gun_recharging_time;
+      if ( Me [ PlayerNum ] . weapon_item . type != ( -1 ) )
+	Me [ PlayerNum ] . firewait = ItemMap [ Me [ PlayerNum ] . weapon_item.type ] . item_gun_recharging_time;
       else
-	Me [ PlayerNum ] .firewait = 0.5;
+	Me [ PlayerNum ] . firewait = 0.5;
+
+      // Now we modify for melee weapon skill...
+      Me [ PlayerNum ] . firewait *= MeleeRechargeMultiplierTable [ Me [ PlayerNum ] . melee_weapon_skill ] ;
 
       return;
     }

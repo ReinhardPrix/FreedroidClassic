@@ -640,8 +640,20 @@ UpdateAllCharacterStats ( int PlayerNum )
 	{
 	  Me [ PlayerNum ] .base_damage = Me [ PlayerNum ] .weapon_item.damage * 
 	    ( Me [ PlayerNum ] .Strength + 100.0) / 100.0 ;
+
+	  //--------------------
+	  // Damage modifier is computed:  
+	  // WEAPON's modifier * (100+Strenth)%
 	  Me [ PlayerNum ] .damage_modifier = Me [ PlayerNum ] .weapon_item.damage_modifier * 
 	    ( Me [ PlayerNum ] .Strength + 100.0) / 100.0 ;
+
+	  //--------------------
+	  // Damage AND damage modifier a modified by additional melee weapon
+	  // skill:  A multiplier is applied!
+	  //
+	  Me [ PlayerNum ] .damage_modifier *= MeleeDamageMultiplierTable [ Me [ 0 ] . melee_weapon_skill ] ;
+	  Me [ PlayerNum ] .base_damage     *= MeleeDamageMultiplierTable [ Me [ 0 ] . melee_weapon_skill ] ;
+
 	}
       else
 	{

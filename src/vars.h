@@ -336,13 +336,24 @@ int ManaCostTable [ NUMBER_OF_SKILLS ] [ NUMBER_OF_SKILL_LEVELS ] = {
 };
 
 //--------------------
+// When a character aquires better melee_weapon_skill, this
+// will affect (his chance to hit and also) the damage the player
+// does, by applying a multiplier to the normal computed damage.
+// These multipliers are given by the table below.
+//
+float MeleeDamageMultiplierTable [  ] =
+  {  1.0 , 1.5 , 2.0 , 2.5 , 3.0 , 3.5 } ;
+float MeleeRechargeMultiplierTable [  ] =
+  {  1.0 , 0.8 , 0.6 , 0.5 , 0.4 , 0.2 } ;
+
+//--------------------
 // In the game, many spells are still internally similar
 // to bullets flying around.  But what hit chance shall this
 // bullet have?  --  That will depend upon the skill level
 // of the caster.  The details will be taken from the following
 // table:
 //
-SpellHitPercentageTable [  ] =
+int SpellHitPercentageTable [  ] =
   {  50 , 70 , 90 , 110 , 130 , 150 } ;
 
 char* SkillName[ NUMBER_OF_SKILLS ] = {

@@ -577,6 +577,26 @@ ReactToSpecialKeys(void)
   // I added a feature to quickly gain experience points and
   // levels via the numbers 0 , 1 and 2 on the numerical keyboard.
   // 
+  if ( KP9Pressed() )
+    {
+      while (KP9Pressed());
+      Me[0].melee_weapon_skill ++ ;
+    }
+  if ( KP8Pressed() )
+    {
+      while (KP8Pressed());
+      Me[0].ranged_weapon_skill ++ ;
+    }
+  if ( KP7Pressed() )
+    {
+      while ( KP7Pressed() );
+      Me[0].spellcasting_skill ++ ;
+    }
+  if ( KP6Pressed() )
+    {
+      while ( KP6Pressed() );
+      Me[0].hacking_skill ++ ;
+    }
   if ( KP0Pressed() )
     {
       while (KP0Pressed());
