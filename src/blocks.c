@@ -412,8 +412,8 @@ DisplayBlock (int x, int y,
 	for (j = 0; j < len; j++)
 	  {
 	    // SDL vga_setcolor (*source);
-	    source++;
 	    putpixel ( screen, j + x, i + y, *source );
+	    source++;
 	  }			/* for j */
 
       Unlock_SDL_Screen();
