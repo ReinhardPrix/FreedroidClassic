@@ -1073,6 +1073,7 @@ InitNewMission ( char *MissionName )
   Me.phase = 0;
   Me.MissionTimeElapsed=0;
   Me.Current_Victim_Resistance_Factor=1;
+  Me.FramesOnThisLevel=0;
 
   /* Set colors of current level NOTE: THIS REQUIRES CurLevel TO BE INITIALIZED */
   // SetLevelColor (CurLevel->color); 
@@ -1370,6 +1371,16 @@ void
 CheckIfMissionIsComplete (void)
 {
   int Robot_Counter;
+
+  //--------------------
+  // We set up a cheat code, so that one can easily 'complete' a mission
+  //
+  if ( MPressed() )
+    {
+      EndTitle();
+      InitNewMission ( NextMissionName);
+    }
+
 
   #define MIS_COMPLETE_DEBUG 3
 

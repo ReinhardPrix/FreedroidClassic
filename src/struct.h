@@ -211,6 +211,7 @@ typedef struct
   float TextVisibleTime;
   char* TextToBeDisplayed;
   float Current_Victim_Resistance_Factor;
+  int FramesOnThisLevel;        // how many frames has the influ spent on this level already?
 }
 influence_t, *Influence_t;
 

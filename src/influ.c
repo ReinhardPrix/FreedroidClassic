@@ -53,6 +53,32 @@ int NoInfluBulletOnWay (void);
 #define max(x,y) ((x) < (y) ? (y) : (x) ) 
 #define MAXIMAL_STEP_SIZE ( 7.0/20 )
 
+
+void
+Move_Influencers_Friends ( void )
+{
+  int Enum;
+
+  if ( Me.FramesOnThisLevel == MAX_INFLU_POSITION_HISTORY )
+    {
+
+      printf(" Level correction occured...\n");
+      fflush( stdout );
+
+      for ( Enum = 0 ; Enum < Number_Of_Droids_On_Ship ; Enum ++ )
+	{
+	  if ( ( AllEnemys[ Enum ].Friendly ) &&
+	       ( AllEnemys[ Enum ].FollowingInflusTail) )
+	    {
+	      AllEnemys[ Enum ].levelnum = CurLevel->levelnum;
+	      AllEnemys[ Enum ].pos.x = Me.Position_History[ MAX_INFLU_POSITION_HISTORY -1 ].x;
+	      AllEnemys[ Enum ].pos.y = Me.Position_History[ MAX_INFLU_POSITION_HISTORY -1 ].y;
+	    }
+	}
+    }
+}; // void Move_Influencers_Friends (void)
+
+
 /*@Function============================================================
 @Desc: Fires Bullets automatically
 

@@ -135,7 +135,13 @@ EnterLift (void)
 	  }			/* if downlevel */
     }				/* while !SpaceReleased */
 
-  /* Neuen Level und Position setzen */
+  //--------------------
+  // It might happen, that the influencer enters the elevator, but then decides to
+  // come out on the same level where he has been before.  In this case of course there
+  // is no need to reshuffle enemys or to reset influencers position.  Therefore, only
+  // when a real level change has occured, we need to do real changes as below, where
+  // we set the new level and set new position and initiate timers and all that...
+  //
   if (curLevel != CurLevel->levelnum)
     {				/* wirklich neu ??? */
       int array_num = 0;
@@ -148,6 +154,15 @@ EnterLift (void)
 	    break;
 	  else
 	    array_num++;
+	}
+
+      
+      // We reset the time on this level and the position history
+      Me.FramesOnThisLevel=0;
+      for ( i = 0 ; i < MAX_INFLU_POSITION_HISTORY ; i++ ) 
+	{
+	  Me.Position_History[ i ].x = 0;
+	  Me.Position_History[ i ].y = 0;
 	}
 
       CurLevel = curShip.AllLevels[array_num];

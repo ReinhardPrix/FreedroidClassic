@@ -117,6 +117,8 @@ main (int argc, char *const argv[])
 	  MoveInfluence ();	// change Influ-speed depending on keys pressed, but
 	                        // also change his status and position and "phase" of rotation
 
+	  Move_Influencers_Friends (); // 
+
 	  MoveEnemys ();	// move all the enemys:
 	                        // also do attacks on influ and also move "phase" or their rotation
 
@@ -160,6 +162,7 @@ UpdateCountersForThisFrame (void)
   LastBlastHit++;
 
   Total_Frames_Passed_In_Mission++;
+  Me.FramesOnThisLevel++;
   // The next couter counts the frames displayed by freedroid during this
   // whole run!!  DO NOT RESET THIS COUNTER WHEN THE GAME RESTARTS!!
   Overall_Frames_Displayed++;

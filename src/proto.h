@@ -61,6 +61,7 @@ EXTERN void CheckIfMissionIsComplete (void);
 #define EXTERN extern
 #endif
 EXTERN int isignf (float);
+EXTERN void Move_Influencers_Friends ( void );
 EXTERN void MoveInfluence (void);
 EXTERN void AdjustSpeed (void);
 EXTERN void CheckInfluenceWallCollisions (void);
