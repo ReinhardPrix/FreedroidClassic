@@ -72,6 +72,8 @@ Lifts On file to use for this mission: ship_on.png
 Lifts Off file to use for this mission: ship_off.png
 After completing this mission, load mission : CleanPrivateGoodsStorageCellar.mission
 
+Influs mission start comment="Ok. I'm on board.  Let's get to work."
+
 +++
 +++ For the classical paradroid mission, several different
 +++ starting points are allowed:

@@ -72,6 +72,8 @@ Lifts On file to use for this mission: asteroid_on.png
 Lifts Off file to use for this mission: asteroid_off.png
 After completing this mission, load mission : RestabilizeReactorPlant.mission
 
+Influs mission start comment="The private quarters must be at the top level of this lift."
+
 +++
 +++ For the asteroid command central invasion mission, 
 +++ there is also only one single starting point allowed,

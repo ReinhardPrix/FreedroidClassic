@@ -944,6 +944,14 @@ InitNewMission ( char *MissionName )
     ReadAndMallocStringFromData ( MainMissionPointer , LIFTS_OFF_INDICATION_STRING , "\n" ) ;
 
   //--------------------
+  // We also load the comment for the influencer to say at the beginning of the mission
+  //
+  Me.TextToBeDisplayed =
+    ReadAndMallocStringFromData ( MainMissionPointer , "Influs mission start comment=\"" , "\"" ) ;
+  Me.TextVisibleTime = 0;
+
+
+  //--------------------
   // Now its time to get the crew file name from the mission file and
   // assemble an appropriate crew out of it
   //

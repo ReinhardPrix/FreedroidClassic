@@ -72,6 +72,8 @@ Lifts On file to use for this mission: asteroid_on.png
 Lifts Off file to use for this mission: asteroid_off.png
 After completing this mission, load mission : CleanPrivateQuartersDeck.mission
 
+Influs mission start comment="Linux Kernel booted.  001 transfer-tech modules loaded.  System up and running.";
+
 +++
 +++ For the Outbreak mission, there is only one single starting point allowed,
 +++ which is in the interiour of the scientists barricades:
