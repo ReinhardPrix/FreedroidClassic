@@ -252,6 +252,7 @@ enum
 #define NE_TITLE_PIC_FILE       "backgrounds/title.jpg"
 #define NE_CONSOLE_BG_PIC1_FILE "backgrounds/console_bg1.jpg"
 #define NE_CONSOLE_BG_PIC2_FILE "backgrounds/console_bg2.jpg"
+#define ITEM_BROWESER_BG_PIC_FILE "backgrounds/item_browser.jpg"
 #define NE_CREDITS_PIC_FILE     "backgrounds/credits.jpg"
 #define FREEDROID_LOADING_PICTURE_NAME "backgrounds/startup1.jpg"
 #define HS_BACKGROUND_FILE     "backgrounds/transfer.jpg"  

@@ -967,8 +967,11 @@ show_item_info ( item* ShowItem , int page , char ShowArrows )
   // char None[20] = "none";
   // char *item_name;
   // int type;
+
   SDL_SetClipRect ( Screen , NULL );
-  DisplayImage ( find_file( NE_CONSOLE_BG_PIC2_FILE , GRAPHICS_DIR, FALSE) );
+
+  DisplayImage ( find_file( ITEM_BROWESER_BG_PIC_FILE , GRAPHICS_DIR, FALSE) );
+
   // DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
 
   ShowItemPicture (Cons_Menu_Rect.x, Cons_Menu_Rect.y, ShowItem->type );
