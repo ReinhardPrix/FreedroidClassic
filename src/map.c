@@ -839,6 +839,12 @@ generate_wallobstacles_from_level_map ( int level_num )
 	    }
 	}
     }
+
+  loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_COOKING_POT ;
+  loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = 20 + 0.5;
+  loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = 80 + 0.5;
+  obstacle_counter ++ ;
+
   
 }; // void generate_wallobstacles_from_level_map ( int level_num )
 

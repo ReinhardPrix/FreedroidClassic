@@ -1516,6 +1516,10 @@ load_all_obstacles ( void )
   obstacle_map [ ISO_CAVE_CORNER_SW ] . block_area_parm_1 = 1.0 ;
   obstacle_map [ ISO_CAVE_CORNER_SW ] . block_area_parm_2 = 1.0 ;
 
+  obstacle_map [ ISO_COOKING_POT ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_COOKING_POT ] . block_area_parm_1 = 0.5 ;
+  obstacle_map [ ISO_COOKING_POT ] . block_area_parm_2 = 0.5 ;
+
 }; // void LoadAllMapTilesThatAreNotYetLoaded( void )
 
 /* ---------------------------------------------------------------------- 
