@@ -301,7 +301,7 @@ ReadAndMallocAndTerminateFile( char* filename , const char* File_End_String )
     if ( ( DataFile = fopen ( filename , "rb") ) == NULL )
     {
 	fprintf( stderr, "\n\nfilename: '%s'\n" , filename );
-	
+
 	GiveStandardErrorMessage ( __FUNCTION__  , "\
 Freedroid was unable to open a given text file,\n\
 that should be there and should be accessible.\n\
@@ -342,9 +342,10 @@ belonging to Freedroid.",
     // if ( (ReadPointer = strstr( Data , File_End_String ) ) == NULL )
     if ( ( ReadPointer = MyMemmem ( Data, (size_t) MemoryAmount , (unsigned char*)File_End_String , (size_t)strlen( File_End_String ))) == NULL)
     {
-	DebugPrintf( 0, "\n\nfilename: '%s'\n" , filename );
-      DebugPrintf( 0, "File_End_String: '%s'\n" , File_End_String );
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
+	fprintf( stderr, "\n\nfilename: '%s'\n" , filename );
+	fprintf( stderr, "File_End_String: '%s'\n" , File_End_String );
+
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
 Freedroid was unable to find the string, that should indicate the end of\n\
 the given text file within this file.\n\
 This indicates a corrupt or outdated data or saved game file.", PLEASE_INFORM, IS_FATAL );
