@@ -52,6 +52,8 @@
 #define SAVEDGAME_EXT ".savegame"
 #define SAVE_GAME_THUMBNAIL_EXT ".thumbnail.bmp"
 
+int load_game_command_came_from_inside_running_game = FALSE ;
+
 /* ----------------------------------------------------------------------
  *
  *
@@ -646,11 +648,30 @@ LoadGame( void )
     
     if ( strcmp ( Me [ 0 ] . freedroid_version_string , version_check_string ) != 0 )
     {
-	show_button_tooltip ( "Error: Version or structsize mismatch! The saved game in question appears to be from a (slightly?) different version of FreedroidRPG.\n\nSorry, but I refuse to load it for safety/stability reasons..." );
+	show_button_tooltip ( "Error: Version or structsize mismatch! The saved game in question appears to be from a (slightly?) different version of FreedroidRPG.\nSorry, but I refuse to load it for safety/stability reasons...\nFor Recovery, a blank game will be loaded...(please disregard)\n" );
 	our_SDL_flip_wrapper( Screen );
 	while ( SpacePressed() ) SDL_Delay ( 3 );
 	while ( !SpacePressed() ) SDL_Delay ( 3 );
 	while ( SpacePressed() ) SDL_Delay ( 3 );
+
+	//--------------------
+	// Now at this point the current Tux data has been junked
+	// around with from the failed loading attempt.  We must
+	// clear out the data and then safely exit out of the current
+	// game!
+	//
+	// WARNING!  If the game is already running, this really
+	// dangerous.  In that case the damaged data should best be
+	// completely overwritten with something sensible...
+	// (Otherwise Floating Point Exceptions and the like are likely...)
+	//
+	if ( load_game_command_came_from_inside_running_game )
+	{
+	    clear_player_inventory_and_stats ( ) ;
+	    UpdateAllCharacterStats ( 0 ) ;
+	    LoadShip ( find_file ( "Asteroid.maps" , MAP_DIR, FALSE) ) ;
+	    PrepareStartOfNewCharacter (  ) ;
+	}
 	return ( ERR ) ;
     }
     
@@ -694,6 +715,8 @@ LoadGame( void )
     // the automap texture in the open_gl case...
     //
     insert_old_map_info_into_texture (  );
+
+    load_game_command_came_from_inside_running_game = TRUE ;
 
     return OK;
 }; // int LoadGame ( void ) 

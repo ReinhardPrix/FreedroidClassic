@@ -216,7 +216,7 @@ show_automap_data_sdl ( void )
   // Also if there is no map-maker present in inventory, then we need not
   // do a thing here...
   //
-  if ( ! CountItemtypeInInventory( ITEM_MAP_MAKER_SIMPLE , 0 ) ) return;
+  if ( ! Me [ 0 ] . map_maker_is_present ) return;
 
   //--------------------
   // At first, we only blit the known data about the pure wall-type
@@ -551,7 +551,7 @@ show_automap_data_ogl ( void )
     // Also if there is no map-maker present in inventory, then we need not
     // do a thing here...
     //
-    // if ( ! CountItemtypeInInventory( ITEM_MAP_MAKER_SIMPLE , 0 ) ) return;
+    if ( ! Me [ 0 ] . map_maker_is_present ) return;
     
     //--------------------
     // Updating the automap is a bit costly.  It should only be done now

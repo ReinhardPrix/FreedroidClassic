@@ -441,7 +441,7 @@ check_for_new_experience_level_reached ( int PlayerNum )
     int BaseExpRequired = 400;
 
     Me [ PlayerNum ] . ExpRequired = 
-	BaseExpRequired * ( exp ( ( Me [ PlayerNum ] .exp_level - 1 ) * log ( 2 ) ) ) ;
+	BaseExpRequired * ( exp ( ( Me [ PlayerNum ] . exp_level - 1 ) * log ( 2 ) ) ) ;
     
     //--------------------
     // For display reasons in the experience graph, we also state the experience 

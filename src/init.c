@@ -1521,42 +1521,47 @@ InitInfluencerPasswordsAndClearances( int PlayerNum )
 }; // void InitInfluencerPasswordsAndClearances( int PlayerNum )
 
 /* ----------------------------------------------------------------------
- *
- *
+ * When a completely fresh and new game is started, some more or less
+ * harmless status variables need to be initialized.  This is what is
+ * done in here.
  * ---------------------------------------------------------------------- */
 void
-InitHarmlessTuxStatusVariables( int PlayerNum )
+InitHarmlessTuxStatusVariables( int player_num )
 {
-  int i;
-
-  Me[ PlayerNum ].type = DRUID001;
-  Me[ PlayerNum ].speed.x = 0;
-  Me[ PlayerNum ].speed.y = 0;
-  Me[ PlayerNum ].status = MOBILE;
-  Me[ PlayerNum ].phase = 0;
-  Me[ PlayerNum ].MissionTimeElapsed=0;
-  Me[ PlayerNum ].Current_Victim_Resistance_Factor=1;
-  Me[ PlayerNum ].FramesOnThisLevel=0;
-  Me[ PlayerNum ].weapon_swing_time = (-1);  // currently not swinging this means...
-  Me[ PlayerNum ].got_hit_time = (-1);  // currently not stunned and needing time to recover...
-  Me[ PlayerNum ].points_to_distribute = 0;
-  Me[ PlayerNum ].ExpRequired = 1500;
-  for ( i = 0 ; i < 1000 ; i ++ ) Me[ PlayerNum ].KillRecord[ i ] = 0;
-  for ( i = 0 ; i < MAX_LEVELS ; i ++ ) 
+    int i;
+    
+    Me [ player_num ] . type = DRUID001;
+    Me [ player_num ] . speed.x = 0;
+    Me [ player_num ] . speed.y = 0;
+    Me [ player_num ] . status = MOBILE;
+    Me [ player_num ] . phase = 0;
+    Me [ player_num ] . MissionTimeElapsed=0;
+    Me [ player_num ] . Current_Victim_Resistance_Factor=1;
+    Me [ player_num ] . FramesOnThisLevel=0;
+    Me [ player_num ] . weapon_swing_time = (-1);  // currently not swinging this means...
+    Me [ player_num ] . got_hit_time = (-1);  // currently not stunned and needing time to recover...
+    Me [ player_num ] . points_to_distribute = 0;
+    Me [ player_num ] . ExpRequired = 1500;
+    Me [ player_num ] . map_maker_is_present = FALSE ;
+    for ( i = 0 ; i < 1000 ; i ++ ) 
     {
-      Me [ PlayerNum ] . HaveBeenToLevel [ i ] = FALSE ;
-      Me [ PlayerNum ] . time_since_last_visit_or_respawn [ i ] = (-1) ;
+	Me [ player_num ] . KillRecord [ i ] = 0;
     }
-  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ ) 
+    for ( i = 0 ; i < MAX_LEVELS ; i ++ ) 
     {
-      Me[ PlayerNum ].DetectedItemList[i].x = 0 ;
-      Me[ PlayerNum ].DetectedItemList[i].y = 0 ;
+	Me [ player_num ] . HaveBeenToLevel [ i ] = FALSE ;
+	Me [ player_num ] . time_since_last_visit_or_respawn [ i ] = (-1) ;
     }
-  Me[ PlayerNum ].Experience = 1;
-  Me[ PlayerNum ].exp_level = 1;
-  Me[ PlayerNum ].Gold = 0 ; // formerly this was starting funds 100, but no longer... 
+    for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ ) 
+    {
+	Me [ player_num ] . DetectedItemList [ i ] . x = 0 ;
+	Me [ player_num ] . DetectedItemList [ i ] . y = 0 ;
+    }
+    Me [ player_num ] . Experience = 1;
+    Me [ player_num ] . exp_level = 1;
+    Me [ player_num ] . Gold = 0 ; 
 
-}; // void InitHarmlessTuxStatusVariables( int PlayerNum )
+}; // void InitHarmlessTuxStatusVariables( int player_num )
 
 /* -----------------------------------------------------------------
  * This function initializes a completely new game within freedroid.
@@ -1676,6 +1681,12 @@ PrepareStartOfNewCharacter ( void )
   Me [ 0 ] . running_power = Me [ 0 ] . max_running_power ;
   Me [ 0 ] . health = Me [ 0 ] . energy;
   Me [ 0 ] . firewait = 0 ;
+
+  Me [ 0 ] . TextVisibleTime = 0;
+  Me [ 0 ] . readied_skill = 0;
+  Me [ 0 ] . walk_cycle_phase = 0 ;
+  // CurLevel = NULL;  // please leave this here.  It indicates, that the map is not yet initialized!!!
+  Me [ 0 ] . TextToBeDisplayed = "Linux Kernel booted.  001 transfer-tech modules loaded.  System up and running.";
 
   //--------------------
   // None of the inventory slots like currently equipped weapons

@@ -1043,7 +1043,8 @@ Freedroid received a rotation model number that does not exist!",
   // Maybe we got an image collection file for this enemy?  Then
   // of course we'll use it and not bother with anything else...
   //
-  if ( ( ModelNr == 1 ) || ( ModelNr == 2 ) || ( ModelNr == 3 ) || ( ModelNr == 4 ) || ( ModelNr == 6 ) || ( ModelNr == 14 ) || ( ModelNr == 24 ) || ( ModelNr == 25 ) || ( ModelNr == 26 ) || ( ModelNr == 27 ) || ( ModelNr == 31 ) )
+  // if ( ( ModelNr == 1 ) || ( ModelNr == 2 ) || ( ModelNr == 3 ) || ( ModelNr == 4 ) || ( ModelNr == 6 ) || ( ModelNr == 14 ) || ( ModelNr == 24 ) || ( ModelNr == 25 ) || ( ModelNr == 26 ) || ( ModelNr == 27 ) || ( ModelNr == 31 ) )
+  if ( Druidmap [ ModelNr ] . use_image_archive_file )
   {
       grab_enemy_images_from_archive ( ModelNr );
       return ;
@@ -1485,778 +1486,803 @@ Load_Enemy_Surfaces( void )
     droid_stand_animation_speed_factor [ i ] = 5 ;
     ModelMultiplier  [ i ] = 1 ; i++;
 
-  PrefixToFilename [ i ] = "123" ; // 1
-  //--------------------
-  // As the 123 now uses an image collection file, the information
-  // about the first and last animation images will be taken from
-  // the image collection archive anyway, so no need to hard-code
-  // anything here and changes in the image collection file will
-  // take effect immediately without code adaption...
-  //
-  // first_walk_animation_image [ i ] = 1 ;
-  // last_walk_animation_image [ i ] = 5 ;
-  // first_attack_animation_image [ i ] = 6 ;
-  // last_attack_animation_image [ i ] = 10 ;
-  // first_gethit_animation_image [ i ] = 11 ;
-  // last_gethit_animation_image [ i ] = 15 ;
-  // first_death_animation_image [ i ] = 16 ;
-  // last_death_animation_image [ i ] = 20 ;
-  // first_stand_animation_image [ i ] = 21 ;
-  // last_stand_animation_image [ i ] = 21 ;
-  // use_default_attack_image [ i ] = FALSE ;
-  // use_default_gethit_image [ i ] = FALSE ;
-  // use_default_death_image [ i ] = FALSE ;
-  // use_default_stand_image [ i ] = TRUE ;
-  Druidmap [ i ] . suppress_bullet_generation_when_attacking = TRUE ;
-  droid_walk_animation_speed_factor [ i ] = 5 ;
-  droid_attack_animation_speed_factor [ i ] = 5 ;
-  droid_gethit_animation_speed_factor [ i ] = 5 ;
-  droid_death_animation_speed_factor [ i ] = 5 ;
-  droid_stand_animation_speed_factor [ i ] = 5 ;
-  ModelMultiplier  [ i ] = 1 ; i++;
-  PrefixToFilename [ i ] = "139" ; // 2
-  //--------------------
-  // As the 123 now uses an image collection file, the information
-  // about the first and last animation images will be taken from
-  // the image collection archive anyway, so no need to hard-code
-  // anything here and changes in the image collection file will
-  // take effect immediately without code adaption...
-  //
-  // first_walk_animation_image [ i ] = 1 ;
-  // last_walk_animation_image [ i ] = 1 ;
-  // first_attack_animation_image [ i ] = 1 ;
-  // last_attack_animation_image [ i ] = 1 ;
-  // first_gethit_animation_image [ i ] = 1 ;
-  // last_gethit_animation_image [ i ] = 1 ;
-  // first_death_animation_image [ i ] = 1 ;
-  // last_death_animation_image [ i ] = 1 ;
-  // first_stand_animation_image [ i ] = 1 ;
-  // last_stand_animation_image [ i ] = 1 ;
-  // use_default_attack_image [ i ] = TRUE ;
-  // use_default_gethit_image [ i ] = TRUE ;
-  // use_default_death_image [ i ] = TRUE ;
-  // use_default_stand_image [ i ] = TRUE ;
-  Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
-  droid_walk_animation_speed_factor [ i ] = 5 ;
-  droid_attack_animation_speed_factor [ i ] = 5 ;
-  droid_gethit_animation_speed_factor [ i ] = 5 ;
-  droid_death_animation_speed_factor [ i ] = 5 ;
-  droid_stand_animation_speed_factor [ i ] = 5 ;
-  ModelMultiplier  [ i ] = 1 ; i++;
-  PrefixToFilename [ i ] = "247" ; // 3 
-  //--------------------
-  // As the 247 now uses an image collection file, the information
-  // about the first and last animation images will be taken from
-  // the image collection archive anyway, so no need to hard-code
-  // anything here and changes in the image collection file will
-  // take effect immediately without code adaption...
-  //
-  // first_walk_animation_image [ i ] = 1 ;
-  // last_walk_animation_image [ i ] = 5 ;
-  // first_attack_animation_image [ i ] = 6 ;
-  // last_attack_animation_image [ i ] = 10 ;
-  // first_gethit_animation_image [ i ] = 11 ;
-  // last_gethit_animation_image [ i ] = 15 ;
-  // first_death_animation_image [ i ] = 16 ;
-  // last_death_animation_image [ i ] = 16 ;
-  // first_stand_animation_image [ i ] = 17 ;
-  // last_stand_animation_image [ i ] = 17 ;
-  // use_default_attack_image [ i ] = FALSE ;
-  // use_default_gethit_image [ i ] = FALSE ;
-  // use_default_death_image [ i ] = TRUE ;
-  // use_default_stand_image [ i ] = TRUE ;
-  Druidmap [ i ] . suppress_bullet_generation_when_attacking = TRUE ;
-  droid_walk_animation_speed_factor [ i ] = 5 ;
-  droid_attack_animation_speed_factor [ i ] = 16 ;
-  droid_gethit_animation_speed_factor [ i ] = 5 ;
-  droid_death_animation_speed_factor [ i ] = 5 ;
-  droid_stand_animation_speed_factor [ i ] = 5 ;
-  ModelMultiplier  [ i ] = 1 ;i++;
-  PrefixToFilename [ i ] = "249" ; // 4
-  //--------------------
-  // As the 249 now uses an image collection file, the information
-  // about the first and last animation images will be taken from
-  // the image collection archive anyway, so no need to hard-code
-  // anything here and changes in the image collection file will
-  // take effect immediately without code adaption...
-  //
-  // first_walk_animation_image [ i ] = 1 ;
-  // last_walk_animation_image [ i ] = 5 ;
-  // first_attack_animation_image [ i ] = 6 ;
-  // last_attack_animation_image [ i ] = 6 ;
-  // first_gethit_animation_image [ i ] = 7 ;
-  // last_gethit_animation_image [ i ] = 7 ;
-  // first_death_animation_image [ i ] = 8 ;
-  // last_death_animation_image [ i ] = 8 ;
-  // first_stand_animation_image [ i ] = 9 ;
-  // last_stand_animation_image [ i ] = 9 ;
-  // use_default_attack_image [ i ] = TRUE ;
-  // use_default_gethit_image [ i ] = TRUE ;
-  // use_default_death_image [ i ] = TRUE ;
-  // use_default_stand_image [ i ] = TRUE ;
-  Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
-  droid_walk_animation_speed_factor [ i ] = 5 ;
-  droid_attack_animation_speed_factor [ i ] = 5 ;
-  droid_gethit_animation_speed_factor [ i ] = 5 ;
-  droid_death_animation_speed_factor [ i ] = 5 ;
-  droid_stand_animation_speed_factor [ i ] = 5 ;
-  ModelMultiplier  [ i ] = 1 ;i++;
-  PrefixToFilename [ i ] = "296" ; // 5
-  first_walk_animation_image [ i ] = 1 ;
-  last_walk_animation_image [ i ] = 5 ;
-  first_attack_animation_image [ i ] = 6 ;
-  last_attack_animation_image [ i ] = 6 ;
-  first_gethit_animation_image [ i ] = 7 ;
-  last_gethit_animation_image [ i ] = 7 ;
-  first_death_animation_image [ i ] = 8 ;
-  last_death_animation_image [ i ] = 8 ;
-  first_stand_animation_image [ i ] = 9 ;
-  last_stand_animation_image [ i ] = 9 ;
-  use_default_attack_image [ i ] = TRUE ;
-  use_default_gethit_image [ i ] = TRUE ;
-  use_default_death_image [ i ] = TRUE ;
-  use_default_stand_image [ i ] = TRUE ;
-  Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
-  droid_walk_animation_speed_factor [ i ] = 5 ;
-  droid_attack_animation_speed_factor [ i ] = 5 ;
-  droid_gethit_animation_speed_factor [ i ] = 5 ;
-  droid_death_animation_speed_factor [ i ] = 5 ;
-  droid_stand_animation_speed_factor [ i ] = 5 ;
-  ModelMultiplier  [ i ] = 1 ;i++; 
-  PrefixToFilename [ i ] = "302" ; // 6
-  //--------------------
-  // As the 302 now uses an image collection file, the information
-  // about the first and last animation images will be taken from
-  // the image collection archive anyway, so no need to hard-code
-  // anything here and changes in the image collection file will
-  // take effect immediately without code adaption...
-  //
-  // first_walk_animation_image[ i ] = 1 ;
-  // last_walk_animation_image[ i ] = 1 ;
-  // first_attack_animation_image[ i ] = 2 ;
-  // last_attack_animation_image[ i ] = 16 ;
-  // first_gethit_animation_image[ i ] = 17 ;
-  // last_gethit_animation_image[ i ] = 24 ;
-  // first_death_animation_image[ i ] = 25 ;
-  // last_death_animation_image[ i ] = 31 ;
-  // first_stand_animation_image [ i ] = 32 ;
-  // last_stand_animation_image [ i ] = 32 ;
-  // use_default_attack_image [ i ] = FALSE ;
-  // use_default_gethit_image [ i ] = FALSE ;
-  // use_default_death_image [ i ] = FALSE ;
-  // use_default_stand_image [ i ] = TRUE ;
-  Druidmap [ i ] . suppress_bullet_generation_when_attacking = TRUE ;
-  droid_walk_animation_speed_factor [ i ] = 15 ;
-  droid_attack_animation_speed_factor [ i ] = 15 ;
-  droid_gethit_animation_speed_factor [ i ] = 15 ;
-  droid_death_animation_speed_factor [ i ] = 15 ;
-  droid_stand_animation_speed_factor [ i ] = 15 ;
-  ModelMultiplier  [ i ] = 1 ;i++;
-  PrefixToFilename [ i ] = "329" ; // 7
-  first_walk_animation_image [ i ] = 1 ;
-  last_walk_animation_image [ i ] = 1 ;
-  first_attack_animation_image [ i ] = 1 ;
-  last_attack_animation_image [ i ] = 1 ;
-  first_gethit_animation_image [ i ] = 1 ;
-  last_gethit_animation_image [ i ] = 1 ;
-  first_death_animation_image [ i ] = 1 ;
-  last_death_animation_image [ i ] = 1 ;
-  first_stand_animation_image [ i ] = 1 ;
-  last_stand_animation_image [ i ] = 1 ;
-  use_default_attack_image [ i ] = TRUE ;
-  use_default_gethit_image [ i ] = TRUE ;
-  use_default_death_image [ i ] = TRUE ;
-  use_default_stand_image [ i ] = TRUE ;
-  Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
-  droid_walk_animation_speed_factor [ i ] = 5 ;
-  droid_attack_animation_speed_factor [ i ] = 5 ;
-  droid_gethit_animation_speed_factor [ i ] = 5 ;
-  droid_death_animation_speed_factor [ i ] = 5 ;
-  droid_stand_animation_speed_factor [ i ] = 5 ;
-  ModelMultiplier  [ i ] = 1 ;i++;
-  PrefixToFilename [ i ] = "420" ; // 8 
-  first_walk_animation_image [ i ] = 1 ;
-  last_walk_animation_image [ i ] = 1 ;
-  first_attack_animation_image [ i ] = 1 ;
-  last_attack_animation_image [ i ] = 1 ;
-  first_gethit_animation_image [ i ] = 1 ;
-  last_gethit_animation_image [ i ] = 1 ;
-  first_death_animation_image [ i ] = 1 ;
-  last_death_animation_image [ i ] = 1 ;
-  first_stand_animation_image [ i ] = 1 ;
-  last_stand_animation_image [ i ] = 1 ;
-  use_default_attack_image [ i ] = TRUE ;
-  use_default_gethit_image [ i ] = TRUE ;
-  use_default_death_image [ i ] = TRUE ;
-  use_default_stand_image [ i ] = TRUE ;
-  Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
-  droid_walk_animation_speed_factor [ i ] = 5 ;
-  droid_attack_animation_speed_factor [ i ] = 5 ;
-  droid_gethit_animation_speed_factor [ i ] = 5 ;
-  droid_death_animation_speed_factor [ i ] = 5 ;
-  droid_stand_animation_speed_factor [ i ] = 5 ;
-  ModelMultiplier  [ i ] = 1 ;i++;
-  PrefixToFilename [ i ] = "476" ; // 9 
-  first_walk_animation_image [ i ] = 1 ;
-  last_walk_animation_image [ i ] = 1 ;
-  first_attack_animation_image [ i ] = 1 ;
-  last_attack_animation_image [ i ] = 1 ;
-  first_gethit_animation_image [ i ] = 1 ;
-  last_gethit_animation_image [ i ] = 1 ;
-  first_death_animation_image [ i ] = 1 ;
-  last_death_animation_image [ i ] = 1 ;
-  first_stand_animation_image [ i ] = 1 ;
-  last_stand_animation_image [ i ] = 1 ;
-  use_default_attack_image [ i ] = TRUE ;
-  use_default_gethit_image [ i ] = TRUE ;
-  use_default_death_image [ i ] = TRUE ;
-  use_default_stand_image [ i ] = TRUE ;
-  Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
-  droid_walk_animation_speed_factor [ i ] = 5 ;
-  droid_attack_animation_speed_factor [ i ] = 5 ;
-  droid_gethit_animation_speed_factor [ i ] = 5 ;
-  droid_death_animation_speed_factor [ i ] = 5 ;
-  droid_stand_animation_speed_factor [ i ] = 5 ;
-  ModelMultiplier  [ i ] = 1 ;i++;
-  PrefixToFilename [ i ] = "493" ; // 10
-  first_walk_animation_image [ i ] = 1 ;
-  last_walk_animation_image [ i ] = 1 ;
-  first_attack_animation_image [ i ] = 1 ;
-  last_attack_animation_image [ i ] = 1 ;
-  first_gethit_animation_image [ i ] = 1 ;
-  last_gethit_animation_image [ i ] = 1 ;
-  first_death_animation_image [ i ] = 1 ;
-  last_death_animation_image [ i ] = 1 ;
-  first_stand_animation_image [ i ] = 1 ;
-  last_stand_animation_image [ i ] = 1 ;
-  use_default_attack_image [ i ] = TRUE ;
-  use_default_gethit_image [ i ] = TRUE ;
-  use_default_death_image [ i ] = TRUE ;
-  use_default_stand_image [ i ] = TRUE ;
-  Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
-  droid_walk_animation_speed_factor [ i ] = 5 ;
-  droid_attack_animation_speed_factor [ i ] = 5 ;
-  droid_gethit_animation_speed_factor [ i ] = 5 ;
-  droid_death_animation_speed_factor [ i ] = 5 ;
-  droid_stand_animation_speed_factor [ i ] = 5 ;
-  ModelMultiplier  [ i ] = 1 ;i++; 
-  PrefixToFilename [ i ] = "516" ; // 11
-  first_walk_animation_image [ i ] = 1 ;
-  last_walk_animation_image [ i ] = 1 ;
-  first_attack_animation_image [ i ] = 1 ;
-  last_attack_animation_image [ i ] = 1 ;
-  first_gethit_animation_image [ i ] = 1 ;
-  last_gethit_animation_image [ i ] = 1 ;
-  first_death_animation_image [ i ] = 1 ;
-  last_death_animation_image [ i ] = 1 ;
-  first_stand_animation_image [ i ] = 1 ;
-  last_stand_animation_image [ i ] = 1 ;
-  use_default_attack_image [ i ] = TRUE ;
-  use_default_gethit_image [ i ] = TRUE ;
-  use_default_death_image [ i ] = TRUE ;
-  use_default_stand_image [ i ] = TRUE ;
-  Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
-  droid_walk_animation_speed_factor [ i ] = 5 ;
-  droid_attack_animation_speed_factor [ i ] = 5 ;
-  droid_gethit_animation_speed_factor [ i ] = 5 ;
-  droid_death_animation_speed_factor [ i ] = 5 ;
-  droid_stand_animation_speed_factor [ i ] = 5 ;
-  ModelMultiplier  [ i ] = 1 ;i++;
-  PrefixToFilename [ i ] = "571" ; // 12
-  first_walk_animation_image [ i ] = 1 ;
-  last_walk_animation_image [ i ] = 1 ;
-  first_attack_animation_image [ i ] = 1 ;
-  last_attack_animation_image [ i ] = 1 ;
-  first_gethit_animation_image [ i ] = 1 ;
-  last_gethit_animation_image [ i ] = 1 ;
-  first_death_animation_image [ i ] = 1 ;
-  last_death_animation_image [ i ] = 1 ;
-  first_stand_animation_image [ i ] = 1 ;
-  last_stand_animation_image [ i ] = 1 ;
-  use_default_attack_image [ i ] = TRUE ;
-  use_default_gethit_image [ i ] = TRUE ;
-  use_default_death_image [ i ] = TRUE ;
-  use_default_stand_image [ i ] = TRUE ;
-  Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
-  droid_walk_animation_speed_factor [ i ] = 5 ;
-  droid_attack_animation_speed_factor [ i ] = 5 ;
-  droid_gethit_animation_speed_factor [ i ] = 5 ;
-  droid_death_animation_speed_factor [ i ] = 5 ;
-  droid_stand_animation_speed_factor [ i ] = 5 ;
-  ModelMultiplier  [ i ] = 1 ;i++;
-  PrefixToFilename [ i ] = "598" ; // 13
-  first_walk_animation_image [ i ] = 1 ;
-  last_walk_animation_image [ i ] = 1 ;
-  first_attack_animation_image [ i ] = 1 ;
-  last_attack_animation_image [ i ] = 1 ;
-  first_gethit_animation_image [ i ] = 1 ;
-  last_gethit_animation_image [ i ] = 1 ;
-  first_death_animation_image [ i ] = 1 ;
-  last_death_animation_image [ i ] = 1 ;
-  first_stand_animation_image [ i ] = 1 ;
-  last_stand_animation_image [ i ] = 1 ;
-  use_default_attack_image [ i ] = TRUE ;
-  use_default_gethit_image [ i ] = TRUE ;
-  use_default_death_image [ i ] = TRUE ;
-  use_default_stand_image [ i ] = TRUE ;
-  Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
-  droid_walk_animation_speed_factor [ i ] = 5 ;
-  droid_attack_animation_speed_factor [ i ] = 5 ;
-  droid_gethit_animation_speed_factor [ i ] = 5 ;
-  droid_death_animation_speed_factor [ i ] = 5 ;
-  droid_stand_animation_speed_factor [ i ] = 5 ;
-  ModelMultiplier  [ i ] = 1 ;i++;
+    PrefixToFilename [ i ] = "123" ; // 1
+    //--------------------
+    // As the 123 now uses an image collection file, the information
+    // about the first and last animation images will be taken from
+    // the image collection archive anyway, so no need to hard-code
+    // anything here and changes in the image collection file will
+    // take effect immediately without code adaption...
+    //
+    // first_walk_animation_image [ i ] = 1 ;
+    // last_walk_animation_image [ i ] = 5 ;
+    // first_attack_animation_image [ i ] = 6 ;
+    // last_attack_animation_image [ i ] = 10 ;
+    // first_gethit_animation_image [ i ] = 11 ;
+    // last_gethit_animation_image [ i ] = 15 ;
+    // first_death_animation_image [ i ] = 16 ;
+    // last_death_animation_image [ i ] = 20 ;
+    // first_stand_animation_image [ i ] = 21 ;
+    // last_stand_animation_image [ i ] = 21 ;
+    // use_default_attack_image [ i ] = FALSE ;
+    // use_default_gethit_image [ i ] = FALSE ;
+    // use_default_death_image [ i ] = FALSE ;
+    // use_default_stand_image [ i ] = TRUE ;
+    Druidmap [ i ] . suppress_bullet_generation_when_attacking = TRUE ;
+    Druidmap [ i ] . use_image_archive_file = TRUE ;
+    droid_walk_animation_speed_factor [ i ] = 5 ;
+    droid_attack_animation_speed_factor [ i ] = 5 ;
+    droid_gethit_animation_speed_factor [ i ] = 5 ;
+    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_stand_animation_speed_factor [ i ] = 5 ;
+    ModelMultiplier  [ i ] = 1 ; i++;
 
-  PrefixToFilename [ i ] = "614" ; // 14
-  //--------------------
-  // As the 614 now uses an image collection file, the information
-  // about the first and last animation images will be taken from
-  // the image collection archive anyway, so no need to hard-code
-  // anything here and changes in the image collection file will
-  // take effect immediately without code adaption...
-  //
-  // first_walk_animation_image [ i ] = 1 ;
-  // last_walk_animation_image [ i ] = 5 ;
-  // first_attack_animation_image [ i ] = 6 ;
-  // last_attack_animation_image [ i ] = 6 ;
-  // first_gethit_animation_image [ i ] = 7 ;
-  // last_gethit_animation_image [ i ] = 7 ;
-  // first_death_animation_image [ i ] = 8 ;
-  // last_death_animation_image [ i ] = 8 ;
-  // first_stand_animation_image [ i ] = 9 ;
-  // last_stand_animation_image [ i ] = 18 ;
-  // use_default_attack_image [ i ] = TRUE ;
-  // use_default_gethit_image [ i ] = TRUE ;
-  // use_default_death_image [ i ] = TRUE ;
-  // use_default_stand_image [ i ] = FALSE ;
-  Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
-  droid_walk_animation_speed_factor [ i ] = 18 ;
-  droid_attack_animation_speed_factor [ i ] = 5 ;
-  droid_gethit_animation_speed_factor [ i ] = 5 ;
-  droid_death_animation_speed_factor [ i ] = 5 ;
-  droid_stand_animation_speed_factor [ i ] = 3 ;
-  ModelMultiplier  [ i ] = 1 ;i++;
+    PrefixToFilename [ i ] = "139" ; // 2
+    //--------------------
+    // As the 139 now uses an image collection file, the information
+    // about the first and last animation images will be taken from
+    // the image collection archive anyway, so no need to hard-code
+    // anything here and changes in the image collection file will
+    // take effect immediately without code adaption...
+    //
+    // first_walk_animation_image [ i ] = 1 ;
+    // last_walk_animation_image [ i ] = 1 ;
+    // first_attack_animation_image [ i ] = 1 ;
+    // last_attack_animation_image [ i ] = 1 ;
+    // first_gethit_animation_image [ i ] = 1 ;
+    // last_gethit_animation_image [ i ] = 1 ;
+    // first_death_animation_image [ i ] = 1 ;
+    // last_death_animation_image [ i ] = 1 ;
+    // first_stand_animation_image [ i ] = 1 ;
+    // last_stand_animation_image [ i ] = 1 ;
+    // use_default_attack_image [ i ] = TRUE ;
+    // use_default_gethit_image [ i ] = TRUE ;
+    // use_default_death_image [ i ] = TRUE ;
+    // use_default_stand_image [ i ] = TRUE ;
+    Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
+    Druidmap [ i ] . use_image_archive_file = TRUE ;
+    droid_walk_animation_speed_factor [ i ] = 5 ;
+    droid_attack_animation_speed_factor [ i ] = 5 ;
+    droid_gethit_animation_speed_factor [ i ] = 5 ;
+    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_stand_animation_speed_factor [ i ] = 5 ;
+    ModelMultiplier  [ i ] = 1 ; i++;
 
-  PrefixToFilename [ i ] = "615" ; // 15
-  first_walk_animation_image [ i ] = 1 ;
-  last_walk_animation_image [ i ] = 1 ;
-  first_attack_animation_image [ i ] = 1 ;
-  last_attack_animation_image [ i ] = 1 ;
-  first_gethit_animation_image [ i ] = 1 ;
-  last_gethit_animation_image [ i ] = 1 ;
-  first_death_animation_image [ i ] = 1 ;
-  last_death_animation_image [ i ] = 1 ;
-  first_stand_animation_image [ i ] = 1 ;
-  last_stand_animation_image [ i ] = 1 ;
-  use_default_attack_image [ i ] = TRUE ;
-  use_default_gethit_image [ i ] = TRUE ;
-  use_default_death_image [ i ] = TRUE ;
-  use_default_stand_image [ i ] = TRUE ;
-  Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
-  droid_walk_animation_speed_factor [ i ] = 5 ;
-  droid_attack_animation_speed_factor [ i ] = 5 ;
-  droid_gethit_animation_speed_factor [ i ] = 5 ;
-  droid_death_animation_speed_factor [ i ] = 5 ;
-  droid_stand_animation_speed_factor [ i ] = 5 ;
-  ModelMultiplier  [ i ] = 1 ;i++;
-  PrefixToFilename [ i ] = "629" ; // 16
-  first_walk_animation_image [ i ] = 1 ;
-  last_walk_animation_image [ i ] = 1 ;
-  first_attack_animation_image [ i ] = 1 ;
-  last_attack_animation_image [ i ] = 1 ;
-  first_gethit_animation_image [ i ] = 1 ;
-  last_gethit_animation_image [ i ] = 1 ;
-  first_death_animation_image [ i ] = 1 ;
-  last_death_animation_image [ i ] = 1 ;
-  first_stand_animation_image [ i ] = 1 ;
-  last_stand_animation_image [ i ] = 1 ;
-  use_default_attack_image [ i ] = TRUE ;
-  use_default_gethit_image [ i ] = TRUE ;
-  use_default_death_image [ i ] = TRUE ;
-  use_default_stand_image [ i ] = TRUE ;
-  Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
-  droid_walk_animation_speed_factor [ i ] = 5 ;
-  droid_attack_animation_speed_factor [ i ] = 5 ;
-  droid_gethit_animation_speed_factor [ i ] = 5 ;
-  droid_death_animation_speed_factor [ i ] = 5 ;
-  droid_stand_animation_speed_factor [ i ] = 5 ;
-  ModelMultiplier  [ i ] = 1 ;i++;
-  PrefixToFilename [ i ] = "711" ; // 17
-  first_walk_animation_image [ i ] = 1 ;
-  last_walk_animation_image [ i ] = 1 ;
-  first_attack_animation_image [ i ] = 1 ;
-  last_attack_animation_image [ i ] = 1 ;
-  first_gethit_animation_image [ i ] = 1 ;
-  last_gethit_animation_image [ i ] = 1 ;
-  first_death_animation_image [ i ] = 1 ;
-  last_death_animation_image [ i ] = 1 ;
-  first_stand_animation_image [ i ] = 1 ;
-  last_stand_animation_image [ i ] = 1 ;
-  use_default_attack_image [ i ] = TRUE ;
-  use_default_gethit_image [ i ] = TRUE ;
-  use_default_death_image [ i ] = TRUE ;
-  use_default_stand_image [ i ] = TRUE ;
-  Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
-  droid_walk_animation_speed_factor [ i ] = 5 ;
-  droid_attack_animation_speed_factor [ i ] = 5 ;
-  droid_gethit_animation_speed_factor [ i ] = 5 ;
-  droid_death_animation_speed_factor [ i ] = 5 ;
-  droid_stand_animation_speed_factor [ i ] = 5 ;
-  ModelMultiplier  [ i ] = 1 ;i++;
-  PrefixToFilename [ i ] = "742" ; // 18
-  first_walk_animation_image [ i ] = 1 ;
-  last_walk_animation_image [ i ] = 1 ;
-  first_attack_animation_image [ i ] = 1 ;
-  last_attack_animation_image [ i ] = 1 ;
-  first_gethit_animation_image [ i ] = 1 ;
-  last_gethit_animation_image [ i ] = 1 ;
-  first_death_animation_image [ i ] = 1 ;
-  last_death_animation_image [ i ] = 1 ;
-  first_stand_animation_image [ i ] = 1 ;
-  last_stand_animation_image [ i ] = 1 ;
-  use_default_attack_image [ i ] = TRUE ;
-  use_default_gethit_image [ i ] = TRUE ;
-  use_default_death_image [ i ] = TRUE ;
-  use_default_stand_image [ i ] = TRUE ;
-  Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
-  droid_walk_animation_speed_factor [ i ] = 5 ;
-  droid_attack_animation_speed_factor [ i ] = 5 ;
-  droid_gethit_animation_speed_factor [ i ] = 5 ;
-  droid_death_animation_speed_factor [ i ] = 5 ;
-  droid_stand_animation_speed_factor [ i ] = 5 ;
-  ModelMultiplier  [ i ] = 1 ;i++;
-  PrefixToFilename [ i ] = "751" ; // 19
-  first_walk_animation_image [ i ] = 1 ;
-  last_walk_animation_image [ i ] = 1 ;
-  first_attack_animation_image [ i ] = 1 ;
-  last_attack_animation_image [ i ] = 1 ;
-  first_gethit_animation_image [ i ] = 1 ;
-  last_gethit_animation_image [ i ] = 1 ;
-  first_death_animation_image [ i ] = 1 ;
-  last_death_animation_image [ i ] = 1 ;
-  first_stand_animation_image [ i ] = 1 ;
-  last_stand_animation_image [ i ] = 1 ;
-  use_default_attack_image [ i ] = TRUE ;
-  use_default_gethit_image [ i ] = TRUE ;
-  use_default_death_image [ i ] = TRUE ;
-  use_default_stand_image [ i ] = TRUE ;
-  Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
-  droid_walk_animation_speed_factor [ i ] = 5 ;
-  droid_attack_animation_speed_factor [ i ] = 5 ;
-  droid_gethit_animation_speed_factor [ i ] = 5 ;
-  droid_death_animation_speed_factor [ i ] = 5 ;
-  droid_stand_animation_speed_factor [ i ] = 5 ;
-  ModelMultiplier  [ i ] = 1 ;i++;
-  PrefixToFilename [ i ] = "821" ; // 20
-  first_walk_animation_image [ i ] = 1 ;
-  last_walk_animation_image [ i ] = 1 ;
-  first_attack_animation_image [ i ] = 1 ;
-  last_attack_animation_image [ i ] = 1 ;
-  first_gethit_animation_image [ i ] = 1 ;
-  last_gethit_animation_image [ i ] = 1 ;
-  first_death_animation_image [ i ] = 1 ;
-  last_death_animation_image [ i ] = 1 ;
-  first_stand_animation_image [ i ] = 1 ;
-  last_stand_animation_image [ i ] = 1 ;
-  use_default_attack_image [ i ] = TRUE ;
-  use_default_gethit_image [ i ] = TRUE ;
-  use_default_death_image [ i ] = TRUE ;
-  use_default_stand_image [ i ] = TRUE ;
-  Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
-  droid_walk_animation_speed_factor [ i ] = 5 ;
-  droid_attack_animation_speed_factor [ i ] = 5 ;
-  droid_gethit_animation_speed_factor [ i ] = 5 ;
-  droid_death_animation_speed_factor [ i ] = 5 ;
-  droid_stand_animation_speed_factor [ i ] = 5 ;
-  ModelMultiplier  [ i ] = 1 ;i++;
-  PrefixToFilename [ i ] = "834" ; // 21
-  first_walk_animation_image [ i ] = 1 ;
-  last_walk_animation_image [ i ] = 1 ;
-  first_attack_animation_image [ i ] = 1 ;
-  last_attack_animation_image [ i ] = 1 ;
-  first_gethit_animation_image [ i ] = 1 ;
-  last_gethit_animation_image [ i ] = 1 ;
-  first_death_animation_image [ i ] = 1 ;
-  last_death_animation_image [ i ] = 1 ;
-  first_stand_animation_image [ i ] = 1 ;
-  last_stand_animation_image [ i ] = 1 ;
-  use_default_attack_image [ i ] = TRUE ;
-  use_default_gethit_image [ i ] = TRUE ;
-  use_default_death_image [ i ] = TRUE ;
-  use_default_stand_image [ i ] = TRUE ;
-  Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
-  droid_walk_animation_speed_factor [ i ] = 5 ;
-  droid_attack_animation_speed_factor [ i ] = 5 ;
-  droid_gethit_animation_speed_factor [ i ] = 5 ;
-  droid_death_animation_speed_factor [ i ] = 5 ;
-  droid_stand_animation_speed_factor [ i ] = 5 ;
-  ModelMultiplier  [ i ] = 1 ;i++;
+    PrefixToFilename [ i ] = "247" ; // 3 
+    //--------------------
+    // As the 247 now uses an image collection file, the information
+    // about the first and last animation images will be taken from
+    // the image collection archive anyway, so no need to hard-code
+    // anything here and changes in the image collection file will
+    // take effect immediately without code adaption...
+    //
+    // first_walk_animation_image [ i ] = 1 ;
+    // last_walk_animation_image [ i ] = 5 ;
+    // first_attack_animation_image [ i ] = 6 ;
+    // last_attack_animation_image [ i ] = 10 ;
+    // first_gethit_animation_image [ i ] = 11 ;
+    // last_gethit_animation_image [ i ] = 15 ;
+    // first_death_animation_image [ i ] = 16 ;
+    // last_death_animation_image [ i ] = 16 ;
+    // first_stand_animation_image [ i ] = 17 ;
+    // last_stand_animation_image [ i ] = 17 ;
+    // use_default_attack_image [ i ] = FALSE ;
+    // use_default_gethit_image [ i ] = FALSE ;
+    // use_default_death_image [ i ] = TRUE ;
+    // use_default_stand_image [ i ] = TRUE ;
+    Druidmap [ i ] . suppress_bullet_generation_when_attacking = TRUE ;
+    Druidmap [ i ] . use_image_archive_file = TRUE ;
+    droid_walk_animation_speed_factor [ i ] = 5 ;
+    droid_attack_animation_speed_factor [ i ] = 16 ;
+    droid_gethit_animation_speed_factor [ i ] = 5 ;
+    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_stand_animation_speed_factor [ i ] = 5 ;
+    ModelMultiplier  [ i ] = 1 ;i++;
+    PrefixToFilename [ i ] = "249" ; // 4
+    //--------------------
+    // As the 249 now uses an image collection file, the information
+    // about the first and last animation images will be taken from
+    // the image collection archive anyway, so no need to hard-code
+    // anything here and changes in the image collection file will
+    // take effect immediately without code adaption...
+    //
+    // first_walk_animation_image [ i ] = 1 ;
+    // last_walk_animation_image [ i ] = 5 ;
+    // first_attack_animation_image [ i ] = 6 ;
+    // last_attack_animation_image [ i ] = 6 ;
+    // first_gethit_animation_image [ i ] = 7 ;
+    // last_gethit_animation_image [ i ] = 7 ;
+    // first_death_animation_image [ i ] = 8 ;
+    // last_death_animation_image [ i ] = 8 ;
+    // first_stand_animation_image [ i ] = 9 ;
+    // last_stand_animation_image [ i ] = 9 ;
+    // use_default_attack_image [ i ] = TRUE ;
+    // use_default_gethit_image [ i ] = TRUE ;
+    // use_default_death_image [ i ] = TRUE ;
+    // use_default_stand_image [ i ] = TRUE ;
+    Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
+    Druidmap [ i ] . use_image_archive_file = TRUE ;
+    droid_walk_animation_speed_factor [ i ] = 5 ;
+    droid_attack_animation_speed_factor [ i ] = 5 ;
+    droid_gethit_animation_speed_factor [ i ] = 5 ;
+    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_stand_animation_speed_factor [ i ] = 5 ;
+    ModelMultiplier  [ i ] = 1 ;i++;
 
-  PrefixToFilename [ i ] = "883" ; // 22, the 'dallek' model...
-  first_walk_animation_image [ i ] = 1 ;
-  last_walk_animation_image [ i ] = 1 ;
-  first_attack_animation_image [ i ] = 1 ;
-  last_attack_animation_image [ i ] = 1 ;
-  first_gethit_animation_image [ i ] = 1 ;
-  last_gethit_animation_image [ i ] = 1 ;
-  first_death_animation_image [ i ] = 1 ;
-  last_death_animation_image [ i ] = 1 ;
-  first_stand_animation_image [ i ] = 1 ;
-  last_stand_animation_image [ i ] = 1 ;
-  use_default_attack_image [ i ] = TRUE ;
-  use_default_gethit_image [ i ] = TRUE ;
-  use_default_death_image [ i ] = TRUE ;
-  use_default_stand_image [ i ] = TRUE ;
-  Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
-  droid_walk_animation_speed_factor [ i ] = 5 ;
-  droid_attack_animation_speed_factor [ i ] = 5 ;
-  droid_gethit_animation_speed_factor [ i ] = 5 ;
-  droid_death_animation_speed_factor [ i ] = 5 ;
-  droid_stand_animation_speed_factor [ i ] = 5 ;
-  ModelMultiplier  [ i ] = 1 ;i++;
+    PrefixToFilename [ i ] = "296" ; // 5
+    first_walk_animation_image [ i ] = 1 ;
+    last_walk_animation_image [ i ] = 5 ;
+    first_attack_animation_image [ i ] = 6 ;
+    last_attack_animation_image [ i ] = 6 ;
+    first_gethit_animation_image [ i ] = 7 ;
+    last_gethit_animation_image [ i ] = 7 ;
+    first_death_animation_image [ i ] = 8 ;
+    last_death_animation_image [ i ] = 8 ;
+    first_stand_animation_image [ i ] = 9 ;
+    last_stand_animation_image [ i ] = 9 ;
+    use_default_attack_image [ i ] = TRUE ;
+    use_default_gethit_image [ i ] = TRUE ;
+    use_default_death_image [ i ] = TRUE ;
+    use_default_stand_image [ i ] = TRUE ;
+    Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
+    droid_walk_animation_speed_factor [ i ] = 5 ;
+    droid_attack_animation_speed_factor [ i ] = 5 ;
+    droid_gethit_animation_speed_factor [ i ] = 5 ;
+    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_stand_animation_speed_factor [ i ] = 5 ;
+    ModelMultiplier  [ i ] = 1 ;i++; 
 
-  PrefixToFilename [ i ] = "999" ; // 23
-  first_walk_animation_image [ i ] = 1 ;
-  last_walk_animation_image [ i ] = 1 ;
-  first_attack_animation_image [ i ] = 1 ;
-  last_attack_animation_image [ i ] = 1 ;
-  first_gethit_animation_image [ i ] = 1 ;
-  last_gethit_animation_image [ i ] = 1 ;
-  first_death_animation_image [ i ] = 1 ;
-  last_death_animation_image [ i ] = 1 ;
-  first_stand_animation_image [ i ] = 1 ;
-  last_stand_animation_image [ i ] = 1 ;
-  use_default_attack_image [ i ] = TRUE ;
-  use_default_gethit_image [ i ] = TRUE ;
-  use_default_death_image [ i ] = TRUE ;
-  use_default_stand_image [ i ] = TRUE ;
-  Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
-  droid_walk_animation_speed_factor [ i ] = 5 ;
-  droid_attack_animation_speed_factor [ i ] = 5 ;
-  droid_gethit_animation_speed_factor [ i ] = 5 ;
-  droid_death_animation_speed_factor [ i ] = 5 ;
-  droid_stand_animation_speed_factor [ i ] = 5 ;
-  ModelMultiplier  [ i ] = 1 ;i++;
+    PrefixToFilename [ i ] = "302" ; // 6
+    //--------------------
+    // As the 302 now uses an image collection file, the information
+    // about the first and last animation images will be taken from
+    // the image collection archive anyway, so no need to hard-code
+    // anything here and changes in the image collection file will
+    // take effect immediately without code adaption...
+    //
+    // first_walk_animation_image[ i ] = 1 ;
+    // last_walk_animation_image[ i ] = 1 ;
+    // first_attack_animation_image[ i ] = 2 ;
+    // last_attack_animation_image[ i ] = 16 ;
+    // first_gethit_animation_image[ i ] = 17 ;
+    // last_gethit_animation_image[ i ] = 24 ;
+    // first_death_animation_image[ i ] = 25 ;
+    // last_death_animation_image[ i ] = 31 ;
+    // first_stand_animation_image [ i ] = 32 ;
+    // last_stand_animation_image [ i ] = 32 ;
+    // use_default_attack_image [ i ] = FALSE ;
+    // use_default_gethit_image [ i ] = FALSE ;
+    // use_default_death_image [ i ] = FALSE ;
+    // use_default_stand_image [ i ] = TRUE ;
+    Druidmap [ i ] . suppress_bullet_generation_when_attacking = TRUE ;
+    Druidmap [ i ] . use_image_archive_file = TRUE ;
+    droid_walk_animation_speed_factor [ i ] = 15 ;
+    droid_attack_animation_speed_factor [ i ] = 15 ;
+    droid_gethit_animation_speed_factor [ i ] = 15 ;
+    droid_death_animation_speed_factor [ i ] = 15 ;
+    droid_stand_animation_speed_factor [ i ] = 15 ;
+    ModelMultiplier  [ i ] = 1 ;i++;
 
-  PrefixToFilename [ i ] = "professor" ; // 24
-  //--------------------
-  // As the professor now uses an image collection file, the information
-  // about the first and last animation images will be taken from
-  // the image collection archive anyway, so no need to hard-code
-  // anything here and changes in the image collection file will
-  // take effect immediately without code adaption...
-  //
-  // first_walk_animation_image [ i ] = 1 ;
-  // last_walk_animation_image [ i ] = 5 ;
-  // first_attack_animation_image [ i ] = 6 ;
-  // last_attack_animation_image [ i ] = 6 ;
-  // first_gethit_animation_image [ i ] = 7 ;
-  // last_gethit_animation_image [ i ] = 7 ;
-  // first_death_animation_image [ i ] = 8 ;
-  // last_death_animation_image [ i ] = 8 ;
-  // first_stand_animation_image [ i ] = 9 ;
-  // last_stand_animation_image [ i ] = 13 ;
-  // use_default_attack_image [ i ] = TRUE ;
-  // use_default_gethit_image [ i ] = TRUE ;
-  // use_default_death_image [ i ] = TRUE ;
-  // use_default_stand_image [ i ] = FALSE ;
-  Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
-  droid_walk_animation_speed_factor [ i ] = 8 ;
-  droid_attack_animation_speed_factor [ i ] = 5 ;
-  droid_gethit_animation_speed_factor [ i ] = 5 ;
-  droid_death_animation_speed_factor [ i ] = 5 ;
-  droid_stand_animation_speed_factor [ i ] = 2 ;
-  ModelMultiplier  [ i ] = 1 ;i++;
+    PrefixToFilename [ i ] = "329" ; // 7
+    //--------------------
+    // As the 329 now uses an image collection file, the information
+    // about the first and last animation images will be taken from
+    // the image collection archive anyway, so no need to hard-code
+    // anything here and changes in the image collection file will
+    // take effect immediately without code adaption...
+    //
+    // first_walk_animation_image [ i ] = 1 ;
+    // last_walk_animation_image [ i ] = 1 ;
+    // first_attack_animation_image [ i ] = 1 ;
+    // last_attack_animation_image [ i ] = 1 ;
+    // first_gethit_animation_image [ i ] = 1 ;
+    // last_gethit_animation_image [ i ] = 1 ;
+    // first_death_animation_image [ i ] = 1 ;
+    // last_death_animation_image [ i ] = 1 ;
+    // first_stand_animation_image [ i ] = 1 ;
+    // last_stand_animation_image [ i ] = 1 ;
+    // use_default_attack_image [ i ] = TRUE ;
+    // use_default_gethit_image [ i ] = TRUE ;
+    // use_default_death_image [ i ] = TRUE ;
+    // use_default_stand_image [ i ] = TRUE ;
+    Druidmap [ i ] . suppress_bullet_generation_when_attacking = TRUE ;
+    Druidmap [ i ] . use_image_archive_file = TRUE ;
+    droid_walk_animation_speed_factor [ i ] = 5 ;
+    droid_attack_animation_speed_factor [ i ] = 5 ;
+    droid_gethit_animation_speed_factor [ i ] = 5 ;
+    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_stand_animation_speed_factor [ i ] = 5 ;
+    ModelMultiplier  [ i ] = 1 ;i++;
 
-  PrefixToFilename [ i ] = "red_guard" ; // 25
-  //--------------------
-  // As the red_guard now uses an image collection file, the information
-  // about the first and last animation images will be taken from
-  // the image collection archive anyway, so no need to hard-code
-  // anything here and changes in the image collection file will
-  // take effect immediately without code adaption...
-  //
-  // first_walk_animation_image [ i ] = 1 ;
-  // last_walk_animation_image [ i ] = 5 ;
-  // first_attack_animation_image [ i ] = 6 ;
-  // last_attack_animation_image [ i ] = 10 ;
-  // first_gethit_animation_image [ i ] = 11 ;
-  // last_gethit_animation_image [ i ] = 15 ;
-  // first_death_animation_image [ i ] = 16 ;
-  // last_death_animation_image [ i ] = 20 ;
-  // first_stand_animation_image [ i ] = 21 ;
-  // last_stand_animation_image [ i ] = 25 ;
-  // use_default_attack_image [ i ] = FALSE ;
-  // use_default_gethit_image [ i ] = FALSE ;
-  // use_default_death_image [ i ] = FALSE ;
-  // use_default_stand_image [ i ] = FALSE ;
-  Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
-  droid_walk_animation_speed_factor [ i ] = 8 ;
-  droid_attack_animation_speed_factor [ i ] = 8 ;
-  droid_gethit_animation_speed_factor [ i ] = 8 ;
-  droid_death_animation_speed_factor [ i ] = 7 ;
-  droid_stand_animation_speed_factor [ i ] = 2 ;
-  ModelMultiplier  [ i ] = 1 ; i++;
-
-  PrefixToFilename [ i ] = "hot_mama" ; // 26
-  //--------------------
-  // As the hot_mama now uses an image collection file, the information
-  // about the first and last animation images will be taken from
-  // the image collection archive anyway, so no need to hard-code
-  // anything here and changes in the image collection file will
-  // take effect immediately without code adaption...
-  //
-  // first_walk_animation_image [ i ] = 1 ;
-  // last_walk_animation_image [ i ] = 5 ;
-  // first_attack_animation_image [ i ] = 6 ;
-  // last_attack_animation_image [ i ] = 6 ;
-  // first_gethit_animation_image [ i ] = 7 ;
-  // last_gethit_animation_image [ i ] = 7 ;
-  // first_death_animation_image [ i ] = 8 ;
-  // last_death_animation_image [ i ] = 8 ;
-  // first_stand_animation_image [ i ] = 9 ;
-  // last_stand_animation_image [ i ] = 13 ;
-  // use_default_attack_image [ i ] = TRUE ;
-  // use_default_gethit_image [ i ] = TRUE ;
-  // use_default_death_image [ i ] = TRUE ;
-  // use_default_stand_image [ i ] = FALSE ;
-  Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
-  droid_walk_animation_speed_factor [ i ] = 5 ;
-  droid_attack_animation_speed_factor [ i ] = 5 ;
-  droid_gethit_animation_speed_factor [ i ] = 5 ;
-  droid_death_animation_speed_factor [ i ] = 5 ;
-  droid_stand_animation_speed_factor [ i ] = 1 ;
-  ModelMultiplier  [ i ] = 1 ;i++;
-
-  PrefixToFilename [ i ] = "female_scientist" ; // 27
-  //--------------------
-  // As the female_scientist now uses an image collection file, the information
-  // about the first and last animation images will be taken from
-  // the image collection archive anyway, so no need to hard-code
-  // anything here and changes in the image collection file will
-  // take effect immediately without code adaption...
-  //
-  // first_walk_animation_image [ i ] = 1 ;
-  // last_walk_animation_image [ i ] = 5 ;
-  // first_attack_animation_image [ i ] = 6 ;
-  // last_attack_animation_image [ i ] = 6 ;
-  // first_gethit_animation_image [ i ] = 7 ;
-  // last_gethit_animation_image [ i ] = 7 ;
-  // first_death_animation_image [ i ] = 8 ;
-  // last_death_animation_image [ i ] = 8 ;
-  // first_stand_animation_image [ i ] = 9 ;
-  // last_stand_animation_image [ i ] = 13 ;
-  // use_default_attack_image [ i ] = TRUE ;
-  // use_default_gethit_image [ i ] = TRUE ;
-  // use_default_death_image [ i ] = TRUE ;
-  // use_default_stand_image [ i ] = FALSE ;
-  Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
-  droid_walk_animation_speed_factor [ i ] = 5 ;
-  droid_attack_animation_speed_factor [ i ] = 5 ;
-  droid_gethit_animation_speed_factor [ i ] = 5 ;
-  droid_death_animation_speed_factor [ i ] = 5 ;
-  droid_stand_animation_speed_factor [ i ] = 1 ;
-  ModelMultiplier  [ i ] = 1 ;i++;
-
-  PrefixToFilename [ i ] = "brown_worker" ; // 28
-  first_walk_animation_image [ i ] = 1 ;
-  last_walk_animation_image [ i ] = 1 ;
-  first_attack_animation_image [ i ] = 1 ;
-  last_attack_animation_image [ i ] = 1 ;
-  first_gethit_animation_image [ i ] = 1 ;
-  last_gethit_animation_image [ i ] = 1 ;
-  first_death_animation_image [ i ] = 1 ;
-  last_death_animation_image [ i ] = 1 ;
-  first_stand_animation_image [ i ] = 1 ;
-  last_stand_animation_image [ i ] = 1 ;
-  use_default_attack_image [ i ] = TRUE ;
-  use_default_gethit_image [ i ] = TRUE ;
-  use_default_death_image [ i ] = TRUE ;
-  use_default_stand_image [ i ] = TRUE ;
-  Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
-  droid_walk_animation_speed_factor [ i ] = 5 ;
-  droid_attack_animation_speed_factor [ i ] = 5 ;
-  droid_gethit_animation_speed_factor [ i ] = 5 ;
-  droid_death_animation_speed_factor [ i ] = 5 ;
-  droid_stand_animation_speed_factor [ i ] = 5 ;
-  ModelMultiplier  [ i ] = 1 ;i++;
-
-  PrefixToFilename [ i ] = "blue_guard" ; // 29
-  first_walk_animation_image [ i ] = 1 ;
-  last_walk_animation_image [ i ] = 1 ;
-  first_attack_animation_image [ i ] = 1 ;
-  last_attack_animation_image [ i ] = 1 ;
-  first_gethit_animation_image [ i ] = 1 ;
-  last_gethit_animation_image [ i ] = 1 ;
-  first_death_animation_image [ i ] = 1 ;
-  last_death_animation_image [ i ] = 1 ;
-  first_stand_animation_image [ i ] = 1 ;
-  last_stand_animation_image [ i ] = 1 ;
-  use_default_attack_image [ i ] = TRUE ;
-  use_default_gethit_image [ i ] = TRUE ;
-  use_default_death_image [ i ] = TRUE ;
-  use_default_stand_image [ i ] = TRUE ;
-  Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
-  droid_walk_animation_speed_factor [ i ] = 5 ;
-  droid_attack_animation_speed_factor [ i ] = 5 ;
-  droid_gethit_animation_speed_factor [ i ] = 5 ;
-  droid_death_animation_speed_factor [ i ] = 5 ;
-  droid_stand_animation_speed_factor [ i ] = 5 ;
-  ModelMultiplier  [ i ] = 1 ;i++;
-
-  PrefixToFilename [ i ] = "green_guard" ; // 30
-  first_walk_animation_image [ i ] = 1 ;
-  last_walk_animation_image [ i ] = 1 ;
-  first_attack_animation_image [ i ] = 1 ;
-  last_attack_animation_image [ i ] = 1 ;
-  first_gethit_animation_image [ i ] = 1 ;
-  last_gethit_animation_image [ i ] = 1 ;
-  first_death_animation_image [ i ] = 1 ;
-  last_death_animation_image [ i ] = 1 ;
-  first_stand_animation_image [ i ] = 1 ;
-  last_stand_animation_image [ i ] = 1 ;
-  use_default_attack_image [ i ] = TRUE ;
-  use_default_gethit_image [ i ] = TRUE ;
-  use_default_death_image [ i ] = TRUE ;
-  use_default_stand_image [ i ] = TRUE ;
-  droid_walk_animation_speed_factor [ i ] = 5 ;
-  droid_attack_animation_speed_factor [ i ] = 5 ;
-  droid_gethit_animation_speed_factor [ i ] = 5 ;
-  droid_death_animation_speed_factor [ i ] = 5 ;
-  droid_stand_animation_speed_factor [ i ] = 5 ;
-  ModelMultiplier  [ i ] = 1 ; i++;
-
-  PrefixToFilename [ i ] = "cook" ; // 31
-  //--------------------
-  // As the cook now uses an image collection file, the information
-  // about the first and last animation images will be taken from
-  // the image collection archive anyway, so no need to hard-code
-  // anything here and changes in the image collection file will
-  // take effect immediately without code adaption...
-  //
-  // first_walk_animation_image [ i ] = 1 ;
-  // last_walk_animation_image [ i ] = 5 ;
-  // first_attack_animation_image [ i ] = 6 ;
-  // last_attack_animation_image [ i ] = 6 ;
-  // first_gethit_animation_image [ i ] = 7 ;
-  // last_gethit_animation_image [ i ] = 7 ;
-  // first_death_animation_image [ i ] = 8 ;
-  // last_death_animation_image [ i ] = 8 ;
-  // first_stand_animation_image [ i ] = 9 ;
-  // last_stand_animation_image [ i ] = 13 ;
-  // use_default_attack_image [ i ] = TRUE ;
-  // use_default_gethit_image [ i ] = TRUE ;
-  // use_default_death_image [ i ] = TRUE ;
-  // use_default_stand_image [ i ] = FALSE ;
-  Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
-  droid_walk_animation_speed_factor [ i ] = 5 ;
-  droid_attack_animation_speed_factor [ i ] = 5 ;
-  droid_gethit_animation_speed_factor [ i ] = 5 ;
-  droid_death_animation_speed_factor [ i ] = 5 ;
-  droid_stand_animation_speed_factor [ i ] = 1 ;
-  ModelMultiplier  [ i ] = 1 ;i++;
-
-
+    PrefixToFilename [ i ] = "420" ; // 8 
+    first_walk_animation_image [ i ] = 1 ;
+    last_walk_animation_image [ i ] = 1 ;
+    first_attack_animation_image [ i ] = 1 ;
+    last_attack_animation_image [ i ] = 1 ;
+    first_gethit_animation_image [ i ] = 1 ;
+    last_gethit_animation_image [ i ] = 1 ;
+    first_death_animation_image [ i ] = 1 ;
+    last_death_animation_image [ i ] = 1 ;
+    first_stand_animation_image [ i ] = 1 ;
+    last_stand_animation_image [ i ] = 1 ;
+    use_default_attack_image [ i ] = TRUE ;
+    use_default_gethit_image [ i ] = TRUE ;
+    use_default_death_image [ i ] = TRUE ;
+    use_default_stand_image [ i ] = TRUE ;
+    Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
+    droid_walk_animation_speed_factor [ i ] = 5 ;
+    droid_attack_animation_speed_factor [ i ] = 5 ;
+    droid_gethit_animation_speed_factor [ i ] = 5 ;
+    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_stand_animation_speed_factor [ i ] = 5 ;
+    ModelMultiplier  [ i ] = 1 ;i++;
+    PrefixToFilename [ i ] = "476" ; // 9 
+    first_walk_animation_image [ i ] = 1 ;
+    last_walk_animation_image [ i ] = 1 ;
+    first_attack_animation_image [ i ] = 1 ;
+    last_attack_animation_image [ i ] = 1 ;
+    first_gethit_animation_image [ i ] = 1 ;
+    last_gethit_animation_image [ i ] = 1 ;
+    first_death_animation_image [ i ] = 1 ;
+    last_death_animation_image [ i ] = 1 ;
+    first_stand_animation_image [ i ] = 1 ;
+    last_stand_animation_image [ i ] = 1 ;
+    use_default_attack_image [ i ] = TRUE ;
+    use_default_gethit_image [ i ] = TRUE ;
+    use_default_death_image [ i ] = TRUE ;
+    use_default_stand_image [ i ] = TRUE ;
+    Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
+    droid_walk_animation_speed_factor [ i ] = 5 ;
+    droid_attack_animation_speed_factor [ i ] = 5 ;
+    droid_gethit_animation_speed_factor [ i ] = 5 ;
+    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_stand_animation_speed_factor [ i ] = 5 ;
+    ModelMultiplier  [ i ] = 1 ;i++;
+    PrefixToFilename [ i ] = "493" ; // 10
+    first_walk_animation_image [ i ] = 1 ;
+    last_walk_animation_image [ i ] = 1 ;
+    first_attack_animation_image [ i ] = 1 ;
+    last_attack_animation_image [ i ] = 1 ;
+    first_gethit_animation_image [ i ] = 1 ;
+    last_gethit_animation_image [ i ] = 1 ;
+    first_death_animation_image [ i ] = 1 ;
+    last_death_animation_image [ i ] = 1 ;
+    first_stand_animation_image [ i ] = 1 ;
+    last_stand_animation_image [ i ] = 1 ;
+    use_default_attack_image [ i ] = TRUE ;
+    use_default_gethit_image [ i ] = TRUE ;
+    use_default_death_image [ i ] = TRUE ;
+    use_default_stand_image [ i ] = TRUE ;
+    Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
+    droid_walk_animation_speed_factor [ i ] = 5 ;
+    droid_attack_animation_speed_factor [ i ] = 5 ;
+    droid_gethit_animation_speed_factor [ i ] = 5 ;
+    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_stand_animation_speed_factor [ i ] = 5 ;
+    ModelMultiplier  [ i ] = 1 ;i++; 
+    PrefixToFilename [ i ] = "516" ; // 11
+    first_walk_animation_image [ i ] = 1 ;
+    last_walk_animation_image [ i ] = 1 ;
+    first_attack_animation_image [ i ] = 1 ;
+    last_attack_animation_image [ i ] = 1 ;
+    first_gethit_animation_image [ i ] = 1 ;
+    last_gethit_animation_image [ i ] = 1 ;
+    first_death_animation_image [ i ] = 1 ;
+    last_death_animation_image [ i ] = 1 ;
+    first_stand_animation_image [ i ] = 1 ;
+    last_stand_animation_image [ i ] = 1 ;
+    use_default_attack_image [ i ] = TRUE ;
+    use_default_gethit_image [ i ] = TRUE ;
+    use_default_death_image [ i ] = TRUE ;
+    use_default_stand_image [ i ] = TRUE ;
+    Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
+    droid_walk_animation_speed_factor [ i ] = 5 ;
+    droid_attack_animation_speed_factor [ i ] = 5 ;
+    droid_gethit_animation_speed_factor [ i ] = 5 ;
+    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_stand_animation_speed_factor [ i ] = 5 ;
+    ModelMultiplier  [ i ] = 1 ;i++;
+    PrefixToFilename [ i ] = "571" ; // 12
+    first_walk_animation_image [ i ] = 1 ;
+    last_walk_animation_image [ i ] = 1 ;
+    first_attack_animation_image [ i ] = 1 ;
+    last_attack_animation_image [ i ] = 1 ;
+    first_gethit_animation_image [ i ] = 1 ;
+    last_gethit_animation_image [ i ] = 1 ;
+    first_death_animation_image [ i ] = 1 ;
+    last_death_animation_image [ i ] = 1 ;
+    first_stand_animation_image [ i ] = 1 ;
+    last_stand_animation_image [ i ] = 1 ;
+    use_default_attack_image [ i ] = TRUE ;
+    use_default_gethit_image [ i ] = TRUE ;
+    use_default_death_image [ i ] = TRUE ;
+    use_default_stand_image [ i ] = TRUE ;
+    Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
+    droid_walk_animation_speed_factor [ i ] = 5 ;
+    droid_attack_animation_speed_factor [ i ] = 5 ;
+    droid_gethit_animation_speed_factor [ i ] = 5 ;
+    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_stand_animation_speed_factor [ i ] = 5 ;
+    ModelMultiplier  [ i ] = 1 ;i++;
+    PrefixToFilename [ i ] = "598" ; // 13
+    first_walk_animation_image [ i ] = 1 ;
+    last_walk_animation_image [ i ] = 1 ;
+    first_attack_animation_image [ i ] = 1 ;
+    last_attack_animation_image [ i ] = 1 ;
+    first_gethit_animation_image [ i ] = 1 ;
+    last_gethit_animation_image [ i ] = 1 ;
+    first_death_animation_image [ i ] = 1 ;
+    last_death_animation_image [ i ] = 1 ;
+    first_stand_animation_image [ i ] = 1 ;
+    last_stand_animation_image [ i ] = 1 ;
+    use_default_attack_image [ i ] = TRUE ;
+    use_default_gethit_image [ i ] = TRUE ;
+    use_default_death_image [ i ] = TRUE ;
+    use_default_stand_image [ i ] = TRUE ;
+    Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
+    droid_walk_animation_speed_factor [ i ] = 5 ;
+    droid_attack_animation_speed_factor [ i ] = 5 ;
+    droid_gethit_animation_speed_factor [ i ] = 5 ;
+    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_stand_animation_speed_factor [ i ] = 5 ;
+    ModelMultiplier  [ i ] = 1 ;i++;
+    
+    PrefixToFilename [ i ] = "614" ; // 14
+    //--------------------
+    // As the 614 now uses an image collection file, the information
+    // about the first and last animation images will be taken from
+    // the image collection archive anyway, so no need to hard-code
+    // anything here and changes in the image collection file will
+    // take effect immediately without code adaption...
+    //
+    // first_walk_animation_image [ i ] = 1 ;
+    // last_walk_animation_image [ i ] = 5 ;
+    // first_attack_animation_image [ i ] = 6 ;
+    // last_attack_animation_image [ i ] = 6 ;
+    // first_gethit_animation_image [ i ] = 7 ;
+    // last_gethit_animation_image [ i ] = 7 ;
+    // first_death_animation_image [ i ] = 8 ;
+    // last_death_animation_image [ i ] = 8 ;
+    // first_stand_animation_image [ i ] = 9 ;
+    // last_stand_animation_image [ i ] = 18 ;
+    // use_default_attack_image [ i ] = TRUE ;
+    // use_default_gethit_image [ i ] = TRUE ;
+    // use_default_death_image [ i ] = TRUE ;
+    // use_default_stand_image [ i ] = FALSE ;
+    Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
+    Druidmap [ i ] . use_image_archive_file = TRUE ;
+    droid_walk_animation_speed_factor [ i ] = 18 ;
+    droid_attack_animation_speed_factor [ i ] = 5 ;
+    droid_gethit_animation_speed_factor [ i ] = 5 ;
+    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_stand_animation_speed_factor [ i ] = 3 ;
+    ModelMultiplier  [ i ] = 1 ;i++;
+    
+    PrefixToFilename [ i ] = "615" ; // 15
+    first_walk_animation_image [ i ] = 1 ;
+    last_walk_animation_image [ i ] = 1 ;
+    first_attack_animation_image [ i ] = 1 ;
+    last_attack_animation_image [ i ] = 1 ;
+    first_gethit_animation_image [ i ] = 1 ;
+    last_gethit_animation_image [ i ] = 1 ;
+    first_death_animation_image [ i ] = 1 ;
+    last_death_animation_image [ i ] = 1 ;
+    first_stand_animation_image [ i ] = 1 ;
+    last_stand_animation_image [ i ] = 1 ;
+    use_default_attack_image [ i ] = TRUE ;
+    use_default_gethit_image [ i ] = TRUE ;
+    use_default_death_image [ i ] = TRUE ;
+    use_default_stand_image [ i ] = TRUE ;
+    Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
+    droid_walk_animation_speed_factor [ i ] = 5 ;
+    droid_attack_animation_speed_factor [ i ] = 5 ;
+    droid_gethit_animation_speed_factor [ i ] = 5 ;
+    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_stand_animation_speed_factor [ i ] = 5 ;
+    ModelMultiplier  [ i ] = 1 ;i++;
+    PrefixToFilename [ i ] = "629" ; // 16
+    first_walk_animation_image [ i ] = 1 ;
+    last_walk_animation_image [ i ] = 1 ;
+    first_attack_animation_image [ i ] = 1 ;
+    last_attack_animation_image [ i ] = 1 ;
+    first_gethit_animation_image [ i ] = 1 ;
+    last_gethit_animation_image [ i ] = 1 ;
+    first_death_animation_image [ i ] = 1 ;
+    last_death_animation_image [ i ] = 1 ;
+    first_stand_animation_image [ i ] = 1 ;
+    last_stand_animation_image [ i ] = 1 ;
+    use_default_attack_image [ i ] = TRUE ;
+    use_default_gethit_image [ i ] = TRUE ;
+    use_default_death_image [ i ] = TRUE ;
+    use_default_stand_image [ i ] = TRUE ;
+    Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
+    droid_walk_animation_speed_factor [ i ] = 5 ;
+    droid_attack_animation_speed_factor [ i ] = 5 ;
+    droid_gethit_animation_speed_factor [ i ] = 5 ;
+    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_stand_animation_speed_factor [ i ] = 5 ;
+    ModelMultiplier  [ i ] = 1 ;i++;
+    PrefixToFilename [ i ] = "711" ; // 17
+    first_walk_animation_image [ i ] = 1 ;
+    last_walk_animation_image [ i ] = 1 ;
+    first_attack_animation_image [ i ] = 1 ;
+    last_attack_animation_image [ i ] = 1 ;
+    first_gethit_animation_image [ i ] = 1 ;
+    last_gethit_animation_image [ i ] = 1 ;
+    first_death_animation_image [ i ] = 1 ;
+    last_death_animation_image [ i ] = 1 ;
+    first_stand_animation_image [ i ] = 1 ;
+    last_stand_animation_image [ i ] = 1 ;
+    use_default_attack_image [ i ] = TRUE ;
+    use_default_gethit_image [ i ] = TRUE ;
+    use_default_death_image [ i ] = TRUE ;
+    use_default_stand_image [ i ] = TRUE ;
+    Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
+    droid_walk_animation_speed_factor [ i ] = 5 ;
+    droid_attack_animation_speed_factor [ i ] = 5 ;
+    droid_gethit_animation_speed_factor [ i ] = 5 ;
+    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_stand_animation_speed_factor [ i ] = 5 ;
+    ModelMultiplier  [ i ] = 1 ;i++;
+    PrefixToFilename [ i ] = "742" ; // 18
+    first_walk_animation_image [ i ] = 1 ;
+    last_walk_animation_image [ i ] = 1 ;
+    first_attack_animation_image [ i ] = 1 ;
+    last_attack_animation_image [ i ] = 1 ;
+    first_gethit_animation_image [ i ] = 1 ;
+    last_gethit_animation_image [ i ] = 1 ;
+    first_death_animation_image [ i ] = 1 ;
+    last_death_animation_image [ i ] = 1 ;
+    first_stand_animation_image [ i ] = 1 ;
+    last_stand_animation_image [ i ] = 1 ;
+    use_default_attack_image [ i ] = TRUE ;
+    use_default_gethit_image [ i ] = TRUE ;
+    use_default_death_image [ i ] = TRUE ;
+    use_default_stand_image [ i ] = TRUE ;
+    Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
+    droid_walk_animation_speed_factor [ i ] = 5 ;
+    droid_attack_animation_speed_factor [ i ] = 5 ;
+    droid_gethit_animation_speed_factor [ i ] = 5 ;
+    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_stand_animation_speed_factor [ i ] = 5 ;
+    ModelMultiplier  [ i ] = 1 ;i++;
+    PrefixToFilename [ i ] = "751" ; // 19
+    first_walk_animation_image [ i ] = 1 ;
+    last_walk_animation_image [ i ] = 1 ;
+    first_attack_animation_image [ i ] = 1 ;
+    last_attack_animation_image [ i ] = 1 ;
+    first_gethit_animation_image [ i ] = 1 ;
+    last_gethit_animation_image [ i ] = 1 ;
+    first_death_animation_image [ i ] = 1 ;
+    last_death_animation_image [ i ] = 1 ;
+    first_stand_animation_image [ i ] = 1 ;
+    last_stand_animation_image [ i ] = 1 ;
+    use_default_attack_image [ i ] = TRUE ;
+    use_default_gethit_image [ i ] = TRUE ;
+    use_default_death_image [ i ] = TRUE ;
+    use_default_stand_image [ i ] = TRUE ;
+    Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
+    droid_walk_animation_speed_factor [ i ] = 5 ;
+    droid_attack_animation_speed_factor [ i ] = 5 ;
+    droid_gethit_animation_speed_factor [ i ] = 5 ;
+    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_stand_animation_speed_factor [ i ] = 5 ;
+    ModelMultiplier  [ i ] = 1 ;i++;
+    PrefixToFilename [ i ] = "821" ; // 20
+    first_walk_animation_image [ i ] = 1 ;
+    last_walk_animation_image [ i ] = 1 ;
+    first_attack_animation_image [ i ] = 1 ;
+    last_attack_animation_image [ i ] = 1 ;
+    first_gethit_animation_image [ i ] = 1 ;
+    last_gethit_animation_image [ i ] = 1 ;
+    first_death_animation_image [ i ] = 1 ;
+    last_death_animation_image [ i ] = 1 ;
+    first_stand_animation_image [ i ] = 1 ;
+    last_stand_animation_image [ i ] = 1 ;
+    use_default_attack_image [ i ] = TRUE ;
+    use_default_gethit_image [ i ] = TRUE ;
+    use_default_death_image [ i ] = TRUE ;
+    use_default_stand_image [ i ] = TRUE ;
+    Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
+    droid_walk_animation_speed_factor [ i ] = 5 ;
+    droid_attack_animation_speed_factor [ i ] = 5 ;
+    droid_gethit_animation_speed_factor [ i ] = 5 ;
+    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_stand_animation_speed_factor [ i ] = 5 ;
+    ModelMultiplier  [ i ] = 1 ;i++;
+    PrefixToFilename [ i ] = "834" ; // 21
+    first_walk_animation_image [ i ] = 1 ;
+    last_walk_animation_image [ i ] = 1 ;
+    first_attack_animation_image [ i ] = 1 ;
+    last_attack_animation_image [ i ] = 1 ;
+    first_gethit_animation_image [ i ] = 1 ;
+    last_gethit_animation_image [ i ] = 1 ;
+    first_death_animation_image [ i ] = 1 ;
+    last_death_animation_image [ i ] = 1 ;
+    first_stand_animation_image [ i ] = 1 ;
+    last_stand_animation_image [ i ] = 1 ;
+    use_default_attack_image [ i ] = TRUE ;
+    use_default_gethit_image [ i ] = TRUE ;
+    use_default_death_image [ i ] = TRUE ;
+    use_default_stand_image [ i ] = TRUE ;
+    Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
+    droid_walk_animation_speed_factor [ i ] = 5 ;
+    droid_attack_animation_speed_factor [ i ] = 5 ;
+    droid_gethit_animation_speed_factor [ i ] = 5 ;
+    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_stand_animation_speed_factor [ i ] = 5 ;
+    ModelMultiplier  [ i ] = 1 ;i++;
+    
+    PrefixToFilename [ i ] = "883" ; // 22, the 'dallek' model...
+    first_walk_animation_image [ i ] = 1 ;
+    last_walk_animation_image [ i ] = 1 ;
+    first_attack_animation_image [ i ] = 1 ;
+    last_attack_animation_image [ i ] = 1 ;
+    first_gethit_animation_image [ i ] = 1 ;
+    last_gethit_animation_image [ i ] = 1 ;
+    first_death_animation_image [ i ] = 1 ;
+    last_death_animation_image [ i ] = 1 ;
+    first_stand_animation_image [ i ] = 1 ;
+    last_stand_animation_image [ i ] = 1 ;
+    use_default_attack_image [ i ] = TRUE ;
+    use_default_gethit_image [ i ] = TRUE ;
+    use_default_death_image [ i ] = TRUE ;
+    use_default_stand_image [ i ] = TRUE ;
+    Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
+    droid_walk_animation_speed_factor [ i ] = 5 ;
+    droid_attack_animation_speed_factor [ i ] = 5 ;
+    droid_gethit_animation_speed_factor [ i ] = 5 ;
+    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_stand_animation_speed_factor [ i ] = 5 ;
+    ModelMultiplier  [ i ] = 1 ;i++;
+    
+    PrefixToFilename [ i ] = "999" ; // 23
+    first_walk_animation_image [ i ] = 1 ;
+    last_walk_animation_image [ i ] = 1 ;
+    first_attack_animation_image [ i ] = 1 ;
+    last_attack_animation_image [ i ] = 1 ;
+    first_gethit_animation_image [ i ] = 1 ;
+    last_gethit_animation_image [ i ] = 1 ;
+    first_death_animation_image [ i ] = 1 ;
+    last_death_animation_image [ i ] = 1 ;
+    first_stand_animation_image [ i ] = 1 ;
+    last_stand_animation_image [ i ] = 1 ;
+    use_default_attack_image [ i ] = TRUE ;
+    use_default_gethit_image [ i ] = TRUE ;
+    use_default_death_image [ i ] = TRUE ;
+    use_default_stand_image [ i ] = TRUE ;
+    Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
+    droid_walk_animation_speed_factor [ i ] = 5 ;
+    droid_attack_animation_speed_factor [ i ] = 5 ;
+    droid_gethit_animation_speed_factor [ i ] = 5 ;
+    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_stand_animation_speed_factor [ i ] = 5 ;
+    ModelMultiplier  [ i ] = 1 ;i++;
+    
+    PrefixToFilename [ i ] = "professor" ; // 24
+    //--------------------
+    // As the professor now uses an image collection file, the information
+    // about the first and last animation images will be taken from
+    // the image collection archive anyway, so no need to hard-code
+    // anything here and changes in the image collection file will
+    // take effect immediately without code adaption...
+    //
+    // first_walk_animation_image [ i ] = 1 ;
+    // last_walk_animation_image [ i ] = 5 ;
+    // first_attack_animation_image [ i ] = 6 ;
+    // last_attack_animation_image [ i ] = 6 ;
+    // first_gethit_animation_image [ i ] = 7 ;
+    // last_gethit_animation_image [ i ] = 7 ;
+    // first_death_animation_image [ i ] = 8 ;
+    // last_death_animation_image [ i ] = 8 ;
+    // first_stand_animation_image [ i ] = 9 ;
+    // last_stand_animation_image [ i ] = 13 ;
+    // use_default_attack_image [ i ] = TRUE ;
+    // use_default_gethit_image [ i ] = TRUE ;
+    // use_default_death_image [ i ] = TRUE ;
+    // use_default_stand_image [ i ] = FALSE ;
+    Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
+    Druidmap [ i ] . use_image_archive_file = TRUE ;
+    droid_walk_animation_speed_factor [ i ] = 8 ;
+    droid_attack_animation_speed_factor [ i ] = 5 ;
+    droid_gethit_animation_speed_factor [ i ] = 5 ;
+    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_stand_animation_speed_factor [ i ] = 2 ;
+    ModelMultiplier  [ i ] = 1 ;i++;
+    
+    PrefixToFilename [ i ] = "red_guard" ; // 25
+    //--------------------
+    // As the red_guard now uses an image collection file, the information
+    // about the first and last animation images will be taken from
+    // the image collection archive anyway, so no need to hard-code
+    // anything here and changes in the image collection file will
+    // take effect immediately without code adaption...
+    //
+    // first_walk_animation_image [ i ] = 1 ;
+    // last_walk_animation_image [ i ] = 5 ;
+    // first_attack_animation_image [ i ] = 6 ;
+    // last_attack_animation_image [ i ] = 10 ;
+    // first_gethit_animation_image [ i ] = 11 ;
+    // last_gethit_animation_image [ i ] = 15 ;
+    // first_death_animation_image [ i ] = 16 ;
+    // last_death_animation_image [ i ] = 20 ;
+    // first_stand_animation_image [ i ] = 21 ;
+    // last_stand_animation_image [ i ] = 25 ;
+    // use_default_attack_image [ i ] = FALSE ;
+    // use_default_gethit_image [ i ] = FALSE ;
+    // use_default_death_image [ i ] = FALSE ;
+    // use_default_stand_image [ i ] = FALSE ;
+    Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
+    Druidmap [ i ] . use_image_archive_file = TRUE ;
+    droid_walk_animation_speed_factor [ i ] = 8 ;
+    droid_attack_animation_speed_factor [ i ] = 8 ;
+    droid_gethit_animation_speed_factor [ i ] = 8 ;
+    droid_death_animation_speed_factor [ i ] = 7 ;
+    droid_stand_animation_speed_factor [ i ] = 2 ;
+    ModelMultiplier  [ i ] = 1 ; i++;
+    
+    PrefixToFilename [ i ] = "hot_mama" ; // 26
+    //--------------------
+    // As the hot_mama now uses an image collection file, the information
+    // about the first and last animation images will be taken from
+    // the image collection archive anyway, so no need to hard-code
+    // anything here and changes in the image collection file will
+    // take effect immediately without code adaption...
+    //
+    // first_walk_animation_image [ i ] = 1 ;
+    // last_walk_animation_image [ i ] = 5 ;
+    // first_attack_animation_image [ i ] = 6 ;
+    // last_attack_animation_image [ i ] = 6 ;
+    // first_gethit_animation_image [ i ] = 7 ;
+    // last_gethit_animation_image [ i ] = 7 ;
+    // first_death_animation_image [ i ] = 8 ;
+    // last_death_animation_image [ i ] = 8 ;
+    // first_stand_animation_image [ i ] = 9 ;
+    // last_stand_animation_image [ i ] = 13 ;
+    // use_default_attack_image [ i ] = TRUE ;
+    // use_default_gethit_image [ i ] = TRUE ;
+    // use_default_death_image [ i ] = TRUE ;
+    // use_default_stand_image [ i ] = FALSE ;
+    Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
+    Druidmap [ i ] . use_image_archive_file = TRUE ;
+    droid_walk_animation_speed_factor [ i ] = 5 ;
+    droid_attack_animation_speed_factor [ i ] = 5 ;
+    droid_gethit_animation_speed_factor [ i ] = 5 ;
+    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_stand_animation_speed_factor [ i ] = 1 ;
+    ModelMultiplier  [ i ] = 1 ;i++;
+    
+    PrefixToFilename [ i ] = "female_scientist" ; // 27
+    //--------------------
+    // As the female_scientist now uses an image collection file, the information
+    // about the first and last animation images will be taken from
+    // the image collection archive anyway, so no need to hard-code
+    // anything here and changes in the image collection file will
+    // take effect immediately without code adaption...
+    //
+    // first_walk_animation_image [ i ] = 1 ;
+    // last_walk_animation_image [ i ] = 5 ;
+    // first_attack_animation_image [ i ] = 6 ;
+    // last_attack_animation_image [ i ] = 6 ;
+    // first_gethit_animation_image [ i ] = 7 ;
+    // last_gethit_animation_image [ i ] = 7 ;
+    // first_death_animation_image [ i ] = 8 ;
+    // last_death_animation_image [ i ] = 8 ;
+    // first_stand_animation_image [ i ] = 9 ;
+    // last_stand_animation_image [ i ] = 13 ;
+    // use_default_attack_image [ i ] = TRUE ;
+    // use_default_gethit_image [ i ] = TRUE ;
+    // use_default_death_image [ i ] = TRUE ;
+    // use_default_stand_image [ i ] = FALSE ;
+    Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
+    Druidmap [ i ] . use_image_archive_file = TRUE ;
+    droid_walk_animation_speed_factor [ i ] = 5 ;
+    droid_attack_animation_speed_factor [ i ] = 5 ;
+    droid_gethit_animation_speed_factor [ i ] = 5 ;
+    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_stand_animation_speed_factor [ i ] = 1 ;
+    ModelMultiplier  [ i ] = 1 ;i++;
+    
+    PrefixToFilename [ i ] = "brown_worker" ; // 28
+    first_walk_animation_image [ i ] = 1 ;
+    last_walk_animation_image [ i ] = 1 ;
+    first_attack_animation_image [ i ] = 1 ;
+    last_attack_animation_image [ i ] = 1 ;
+    first_gethit_animation_image [ i ] = 1 ;
+    last_gethit_animation_image [ i ] = 1 ;
+    first_death_animation_image [ i ] = 1 ;
+    last_death_animation_image [ i ] = 1 ;
+    first_stand_animation_image [ i ] = 1 ;
+    last_stand_animation_image [ i ] = 1 ;
+    use_default_attack_image [ i ] = TRUE ;
+    use_default_gethit_image [ i ] = TRUE ;
+    use_default_death_image [ i ] = TRUE ;
+    use_default_stand_image [ i ] = TRUE ;
+    Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
+    droid_walk_animation_speed_factor [ i ] = 5 ;
+    droid_attack_animation_speed_factor [ i ] = 5 ;
+    droid_gethit_animation_speed_factor [ i ] = 5 ;
+    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_stand_animation_speed_factor [ i ] = 5 ;
+    ModelMultiplier  [ i ] = 1 ;i++;
+    
+    PrefixToFilename [ i ] = "blue_guard" ; // 29
+    first_walk_animation_image [ i ] = 1 ;
+    last_walk_animation_image [ i ] = 1 ;
+    first_attack_animation_image [ i ] = 1 ;
+    last_attack_animation_image [ i ] = 1 ;
+    first_gethit_animation_image [ i ] = 1 ;
+    last_gethit_animation_image [ i ] = 1 ;
+    first_death_animation_image [ i ] = 1 ;
+    last_death_animation_image [ i ] = 1 ;
+    first_stand_animation_image [ i ] = 1 ;
+    last_stand_animation_image [ i ] = 1 ;
+    use_default_attack_image [ i ] = TRUE ;
+    use_default_gethit_image [ i ] = TRUE ;
+    use_default_death_image [ i ] = TRUE ;
+    use_default_stand_image [ i ] = TRUE ;
+    Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
+    droid_walk_animation_speed_factor [ i ] = 5 ;
+    droid_attack_animation_speed_factor [ i ] = 5 ;
+    droid_gethit_animation_speed_factor [ i ] = 5 ;
+    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_stand_animation_speed_factor [ i ] = 5 ;
+    ModelMultiplier  [ i ] = 1 ;i++;
+    
+    PrefixToFilename [ i ] = "green_guard" ; // 30
+    first_walk_animation_image [ i ] = 1 ;
+    last_walk_animation_image [ i ] = 1 ;
+    first_attack_animation_image [ i ] = 1 ;
+    last_attack_animation_image [ i ] = 1 ;
+    first_gethit_animation_image [ i ] = 1 ;
+    last_gethit_animation_image [ i ] = 1 ;
+    first_death_animation_image [ i ] = 1 ;
+    last_death_animation_image [ i ] = 1 ;
+    first_stand_animation_image [ i ] = 1 ;
+    last_stand_animation_image [ i ] = 1 ;
+    use_default_attack_image [ i ] = TRUE ;
+    use_default_gethit_image [ i ] = TRUE ;
+    use_default_death_image [ i ] = TRUE ;
+    use_default_stand_image [ i ] = TRUE ;
+    droid_walk_animation_speed_factor [ i ] = 5 ;
+    droid_attack_animation_speed_factor [ i ] = 5 ;
+    droid_gethit_animation_speed_factor [ i ] = 5 ;
+    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_stand_animation_speed_factor [ i ] = 5 ;
+    ModelMultiplier  [ i ] = 1 ; i++;
+    
+    PrefixToFilename [ i ] = "cook" ; // 31
+    //--------------------
+    // As the cook now uses an image collection file, the information
+    // about the first and last animation images will be taken from
+    // the image collection archive anyway, so no need to hard-code
+    // anything here and changes in the image collection file will
+    // take effect immediately without code adaption...
+    //
+    // first_walk_animation_image [ i ] = 1 ;
+    // last_walk_animation_image [ i ] = 5 ;
+    // first_attack_animation_image [ i ] = 6 ;
+    // last_attack_animation_image [ i ] = 6 ;
+    // first_gethit_animation_image [ i ] = 7 ;
+    // last_gethit_animation_image [ i ] = 7 ;
+    // first_death_animation_image [ i ] = 8 ;
+    // last_death_animation_image [ i ] = 8 ;
+    // first_stand_animation_image [ i ] = 9 ;
+    // last_stand_animation_image [ i ] = 13 ;
+    // use_default_attack_image [ i ] = TRUE ;
+    // use_default_gethit_image [ i ] = TRUE ;
+    // use_default_death_image [ i ] = TRUE ;
+    // use_default_stand_image [ i ] = FALSE ;
+    Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
+    Druidmap [ i ] . use_image_archive_file = TRUE ;
+    droid_walk_animation_speed_factor [ i ] = 5 ;
+    droid_attack_animation_speed_factor [ i ] = 5 ;
+    droid_gethit_animation_speed_factor [ i ] = 5 ;
+    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_stand_animation_speed_factor [ i ] = 1 ;
+    ModelMultiplier  [ i ] = 1 ;i++;
+    
+    
 }; // void LoadEnemySurfaces( void )
 
 /* ----------------------------------------------------------------------

@@ -513,6 +513,7 @@ EXTERN int NoDirectionPressed (void);
 #else
 #define EXTERN extern
 #endif
+EXTERN void clear_player_inventory_and_stats ( void );
 EXTERN void StoreMenuBackground ( int backup_slot );
 EXTERN void RestoreMenuBackground ( int backup_slot );
 EXTERN int DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , int background_code , void* MenuFont );

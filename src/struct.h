@@ -477,64 +477,65 @@ typedef struct
 
 typedef struct
 {
-  char *druidname;
-  char *portrait_filename_without_ext;
-  char *droid_portrait_rotation_series_prefix;
-  char *droid_death_sound_file_name;
-  char *droid_attack_animation_sound_file_name;
-  int class;
-  double maxenergy;		// the maximum energy the batteries can carry 
-  double maxmana;		// the maximum force this droids mind can carry 
-  double lose_health;		// the energy/time the duid loses under influence-control 
-
-  double maxspeed;
-  double accel;
-
-  float physical_damage;        // the amount of physical (base) damage an attack of this bot will do
-
-  int aggression;		// The aggressiveness of this druidtype 
-  int flashimmune;		// is the droid immune to FLASH-bullets 
-  int experience_reward;			// experience_reward for the elimination of one droid of this type 
-  double height;                // the height of this droid  
-  double weight;                // the weight of this droid
-  int brain;
-  int sensor1;
-  int sensor2;
-  int sensor3;
-
-  float range_of_vision;
-  float time_spent_eyeing_tux;
-  float minimal_range_hostile_bots_are_ignored;
-
-  int monster_level;
-  int forced_magic_items;
-
-  item drive_item;
-  item weapon_item;
-  item armour_item;
-  item shield_item;
-  item special_item;
-  item aux1_item;
-  item aux2_item;
-
-  int amount_of_plasma_transistors;
-  int amount_of_superconductors;
-  int amount_of_antimatter_converters;
-  int amount_of_entropy_inverters;
-  int amount_of_tachyon_condensators;
-
-  int greeting_sound_type;              // which sample to play in order to 'greet' the influencer?
-  int got_hit_sound_type;               // which sample to play in order to 'greet' the influencer?
-  int to_hit;                           // chance that this droid hits an unarmoured target
-  int getting_hit_modifier;             // modifier for this droid to receive a hit from the player
-  float recover_time_after_getting_hit;
-  int advanced_behaviour;               // Does this droid behave better that in the original paradroid?
-  int call_for_help_after_getting_hit;  // Does this droid request help from the next console so soon as it is
-                                        // hit by a bullet of some type?
-  char *notes;			        // notes on the druid of this type 
-  int is_human;
-  int individual_shape_nr;
-  int suppress_bullet_generation_when_attacking; // some bots have weapon and attack built into the animation images...
+    char *druidname;
+    char *portrait_filename_without_ext;
+    char *droid_portrait_rotation_series_prefix;
+    char *droid_death_sound_file_name;
+    char *droid_attack_animation_sound_file_name;
+    int class;
+    double maxenergy;		// the maximum energy the batteries can carry 
+    double maxmana;		// the maximum force this droids mind can carry 
+    double lose_health;		// the energy/time the duid loses under influence-control 
+    
+    double maxspeed;
+    double accel;
+    
+    float physical_damage;        // the amount of physical (base) damage an attack of this bot will do
+    
+    int aggression;		// The aggressiveness of this druidtype 
+    int flashimmune;		// is the droid immune to FLASH-bullets 
+    int experience_reward;			// experience_reward for the elimination of one droid of this type 
+    double height;                // the height of this droid  
+    double weight;                // the weight of this droid
+    int brain;
+    int sensor1;
+    int sensor2;
+    int sensor3;
+    
+    float range_of_vision;
+    float time_spent_eyeing_tux;
+    float minimal_range_hostile_bots_are_ignored;
+    
+    int monster_level;
+    int forced_magic_items;
+    
+    item drive_item;
+    item weapon_item;
+    item armour_item;
+    item shield_item;
+    item special_item;
+    item aux1_item;
+    item aux2_item;
+    
+    int amount_of_plasma_transistors;
+    int amount_of_superconductors;
+    int amount_of_antimatter_converters;
+    int amount_of_entropy_inverters;
+    int amount_of_tachyon_condensators;
+    
+    int greeting_sound_type;              // which sample to play in order to 'greet' the influencer?
+    int got_hit_sound_type;               // which sample to play in order to 'greet' the influencer?
+    int to_hit;                           // chance that this droid hits an unarmoured target
+    int getting_hit_modifier;             // modifier for this droid to receive a hit from the player
+    float recover_time_after_getting_hit;
+    int advanced_behaviour;               // Does this droid behave better that in the original paradroid?
+    int call_for_help_after_getting_hit;  // Does this droid request help from the next console so soon as it is
+    // hit by a bullet of some type?
+    char *notes;			        // notes on the druid of this type 
+    int is_human;
+    int individual_shape_nr;
+    int suppress_bullet_generation_when_attacking; // some bots have weapon and attack built into the animation images...
+    int use_image_archive_file;
 }
 druidspec, *Druidspec;
 
@@ -552,6 +553,7 @@ typedef struct
     int mouse_move_target_combo_action_parameter; // extra data to use for the combo action
     
     int light_bonus_from_tux ;
+    int map_maker_is_present ;
 
     double health;		  // the max. possible energy in the moment 
     float maxenergy; // current top limit for the influencers energy

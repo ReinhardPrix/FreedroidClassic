@@ -2020,27 +2020,27 @@ free_one_loaded_tux_image_series ( int tux_part_group )
 int
 get_current_phase ( int tux_part_group , int player_num , int motion_class ) 
 {
-  int our_phase = (int) Me [ player_num ] . phase ;
-  float my_speed;
-
-  if ( ( use_walk_cycle_for_part [ tux_part_group ] [ motion_class ] ) && ( Me [ player_num ] . weapon_swing_time < 0 ) )
+    int our_phase = (int) Me [ player_num ] . phase ;
+    float my_speed;
+    
+    if ( ( use_walk_cycle_for_part [ tux_part_group ] [ motion_class ] ) && ( Me [ player_num ] . weapon_swing_time < 0 ) )
     {
-      our_phase = (int) Me [ player_num ] . walk_cycle_phase ;
-
-      //--------------------
-      // Maybe the Tux speed is so high, that he should be considered running...
-      // But then we should use the running motion, which is just 10 frames shifted
-      // but otherwise in sync with the normal walkcycle...
-      //
-      my_speed = sqrt ( Me [ player_num ] . speed . x * Me [ player_num ] . speed . x +
-			Me [ player_num ] . speed . y * Me [ player_num ] . speed . y ) ;
-      if ( my_speed > ( TUX_WALKING_SPEED + TUX_RUNNING_SPEED ) * 0.5 )
-	our_phase += TUX_WALK_CYCLE_PHASES ;
-
-      // our_phase = ( ( ( int ) SDL_GetTicks()/1000) % 6 ) + 16 ;
+	our_phase = (int) Me [ player_num ] . walk_cycle_phase ;
+	
+	//--------------------
+	// Maybe the Tux speed is so high, that he should be considered running...
+	// But then we should use the running motion, which is just 10 frames shifted
+	// but otherwise in sync with the normal walkcycle...
+	//
+	my_speed = sqrt ( Me [ player_num ] . speed . x * Me [ player_num ] . speed . x +
+			  Me [ player_num ] . speed . y * Me [ player_num ] . speed . y ) ;
+	if ( my_speed > ( TUX_WALKING_SPEED + TUX_RUNNING_SPEED ) * 0.5 )
+	    our_phase += TUX_WALK_CYCLE_PHASES ;
+	
+	// our_phase = ( ( ( int ) SDL_GetTicks()/1000) % 6 ) + 16 ;
     }
-
-  return ( our_phase );
+    
+    return ( our_phase );
 
 }; // int get_current_phase ( int tux_part_group , int player_num ) 
 
@@ -3086,7 +3086,8 @@ blit_tux ( int x , int y , int player_num )
     //
     
 #define alpha_offset 80
-    if ( ( ( Me [ player_num ].energy * 100 / Me [ player_num ].maxenergy ) <= BLINKENERGY ) && ( x == (-1) ) ) 
+
+    if ( ( ( Me [ player_num ] . energy * 100 / Me [ player_num ] . maxenergy ) <= BLINKENERGY ) && ( x == (-1) ) ) 
     {
 	
 	// In case of low energy, do the fading effect...

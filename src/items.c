@@ -1467,6 +1467,11 @@ ApplyItem( item* CurItem )
 	Me [ 0 ] . running_power = Me [ 0 ] . max_running_power;
 	Me [ 0 ] . running_must_rest = FALSE ;
     }
+    else if ( CurItem->type == ITEM_MAP_MAKER_SIMPLE )
+    {
+	Me [ 0 ] . map_maker_is_present = TRUE ;
+	Play_Spell_ForceToEnergy_Sound( );
+    }
     else if ( CurItem->type == ITEM_VMX_GAS_GRENADE )
     {
 	RadialVMXWave ( Me [ 0 ] . pos , FALSE );

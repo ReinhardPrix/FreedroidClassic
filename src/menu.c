@@ -50,6 +50,7 @@ void Show_Mission_Log_Menu (void);
 EXTERN void LevelEditor(void);
 extern int MyCursorX;
 extern int MyCursorY;
+extern int load_game_command_came_from_inside_running_game;
 
 #define SELL_PRICE_FACTOR (0.25)
 #define REPAIR_PRICE_FACTOR (0.5)
@@ -2269,10 +2270,11 @@ Get_New_Character_Name ( void )
 }; // void Get_New_Character_Name ( void )
 
 /* ----------------------------------------------------------------------
- * This function prepares a new hero for adventure...
+ *
+ *
  * ---------------------------------------------------------------------- */
-int
-PrepareNewHero (void)
+void
+clear_player_inventory_and_stats ( void )
 {
     int i;
 
@@ -2316,16 +2318,38 @@ PrepareNewHero (void)
     Me [ 0 ] . aux2_item.suffix_code = ( -1 ) ;
     Me [ 0 ] . special_item.suffix_code = ( -1 ) ;
     
-    Me [ 0 ] . character_class = WAR_BOT;
-    Me [ 0 ] . base_vitality = 25;
-    Me [ 0 ] . base_strength = 10;
-    Me [ 0 ] . base_dexterity = 15;
-    Me [ 0 ] . base_magic = 40;
+    Me [ 0 ] . weapon_item.currently_held_in_hand = ( -1 ) ;
+    Me [ 0 ] . drive_item.currently_held_in_hand = ( -1 ) ;
+    Me [ 0 ] . armour_item.currently_held_in_hand = ( -1 ) ;
+    Me [ 0 ] . shield_item.currently_held_in_hand = ( -1 ) ;
+    Me [ 0 ] . aux1_item.currently_held_in_hand = ( -1 ) ;
+    Me [ 0 ] . aux2_item.currently_held_in_hand = ( -1 ) ;
+    Me [ 0 ] . special_item.currently_held_in_hand = ( -1 ) ;
     
-    Me [ 0 ] . is_town_guard_member = FALSE ;
+    Me [ 0 ] . character_class = WAR_BOT ;
+    Me [ 0 ] . base_vitality = 25 ;
+    Me [ 0 ] . base_strength = 10 ;
+    Me [ 0 ] . base_dexterity = 15 ;
+    Me [ 0 ] . base_magic = 40 ;
+    Me [ 0 ] . exp_level = 1 ;
+
+}; // void clear_player_inventory_and_stats ( void )
+
+/* ----------------------------------------------------------------------
+ * This function prepares a new hero for adventure...
+ * ---------------------------------------------------------------------- */
+int
+PrepareNewHero (void)
+{
+
+    clear_player_inventory_and_stats ( ) ;
+
+    UpdateAllCharacterStats ( 0 ) ;
 
     Get_New_Character_Name( );
     
+    Me [ 0 ] . is_town_guard_member = FALSE ;
+
     //--------------------
     // If a real name has been given, then we can proceed and start the
     // game.  If no real name has been given or 'Escape' has been pressed,
@@ -2711,6 +2735,7 @@ enum
 	      LoadShip ( find_file ( "Asteroid.maps" , MAP_DIR, FALSE) ) ;
 	      PrepareStartOfNewCharacter ( ) ;
 	      Weiter=TRUE;
+	      load_game_command_came_from_inside_running_game = TRUE ;
 	      return ( TRUE );
 	    }
 	  else

@@ -620,7 +620,7 @@ blit_energy_o_meter( void )
       blit_rotated_open_gl_texture_with_center ( SpeedMeterEnergyArrowImage , 
 						 SCREEN_WIDTH - speed_meter_iso_image . original_image_width + PivotPosition . x , 
 						 0 + PivotPosition . y  , 
-						 - 360 * 3 / 4 * Me[0].energy / Me[0].maxenergy );
+						 - 360 * 3 / 4 * Me [ 0 ] . energy / Me [ 0 ] . maxenergy );
 
       blit_rotated_open_gl_texture_with_center ( SpeedMeterManaArrowImage , 
 						 SCREEN_WIDTH - speed_meter_iso_image . original_image_width + PivotPosition . x , 

@@ -728,7 +728,7 @@ CollectAutomapData ( void )
     // Also if there is no map-maker present in inventory, then we need not
     // do a thing here...
     //
-    // if ( ! CountItemtypeInInventory( ITEM_MAP_MAKER_SIMPLE , 0 ) ) return;
+    if ( ! Me [ 0 ] . map_maker_is_present ) return;
     
     //--------------------
     // Earlier we had

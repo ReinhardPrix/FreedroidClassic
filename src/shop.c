@@ -236,6 +236,16 @@ AssembleItemListForTradeCharacter ( item* ListToBeFilled , int ShopCharacterCode
       ListPointer->type = ITEM_EMP_SHOCK_GRENADE; ListPointer++;
       ListPointer->type = ITEM_PLASMA_GRENADE; ListPointer++;
     }
+  else if ( ShopCharacterCode == PERSON_EWALD )
+    {
+      ListPointer->type = ITEM_SMALL_HEALTH_POTION; ListPointer++;
+      ListPointer->type = ITEM_SMALL_MANA_POTION; ListPointer++;
+      ListPointer->type = ITEM_MEDIUM_HEALTH_POTION; ListPointer++;
+      ListPointer->type = ITEM_MEDIUM_MANA_POTION; ListPointer++;
+      ListPointer->type = ITEM_FULL_HEALTH_POTION; ListPointer++;
+      ListPointer->type = ITEM_FULL_MANA_POTION; ListPointer++;
+      ListPointer->type = ITEM_RUNNING_POWER_POTION; ListPointer++;
+    }
   else if ( ShopCharacterCode == PERSON_SORENSON )
     {
       ListPointer->type = ITEM_SPELLBOOK_OF_HEALING; ListPointer++;
