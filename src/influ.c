@@ -315,6 +315,10 @@ CheckForTuxOutOfMap ( PlayerNum )
        ( (int) rintf( Me [ PlayerNum ] . pos.x ) <  0              ) )
     {
       fprintf ( stderr, "\n\nPlayerNum: '%d'.\n" , PlayerNum );
+      fprintf ( stderr, "\n\nPlayerNum's last position: X=%f, Y=%f, Z=%d.\n" , 
+		Me [ PlayerNum ] . pos . x ,
+		Me [ PlayerNum ] . pos . y ,
+		Me [ PlayerNum ] . pos . z );
       GiveStandardErrorMessage ( "CheckForTuxOutOfMap(...)" , "\
 A player's Tux was found outside the map in MoveInfluence.\n\
 This indicates either a bug in the Freedroid RPG code or\n\
