@@ -40,7 +40,8 @@ Mission target is to fetch item : 79
 Mission target is to kill all droids : -1
 Mission target is to kill class of droids : -1
 Mission target is to kill droids with marker : -1
-Mission target is to clean level : -1
+Mission target is to kill all hostile droids this first level : -1
+Mission target is to also kill all hostile droids on second level : -1
 Mission target is to become class : -1
 Mission target is to become type : -1
 Mission target is to overtake a droid with marker : -1
@@ -57,7 +58,8 @@ Mission target is to fetch item : 59
 Mission target is to kill all droids : -1
 Mission target is to kill class of droids : -1
 Mission target is to kill droids with marker : -1
-Mission target is to clean level : -1
+Mission target is to kill all hostile droids this first level : -1
+Mission target is to also kill all hostile droids on second level : -1
 Mission target is to become class : -1
 Mission target is to become type : -1
 Mission target is to overtake a droid with marker : -1
@@ -74,7 +76,8 @@ Mission target is to fetch item : 74
 Mission target is to kill all droids : -1
 Mission target is to kill class of droids : -1
 Mission target is to kill droids with marker : -1
-Mission target is to clean level : -1
+Mission target is to kill all hostile droids this first level : -1
+Mission target is to also kill all hostile droids on second level : -1
 Mission target is to become class : -1
 Mission target is to become type : -1
 Mission target is to overtake a droid with marker : -1
@@ -91,7 +94,8 @@ Mission target is to fetch item : -1
 Mission target is to kill all droids : -1
 Mission target is to kill class of droids : -1
 Mission target is to kill droids with marker : 3
-Mission target is to clean level : -1
+Mission target is to kill all hostile droids this first level : -1
+Mission target is to also kill all hostile droids on second level : -1
 Mission target is to become class : -1
 Mission target is to become type : -1
 Mission target is to overtake a droid with marker : -1
@@ -109,7 +113,8 @@ Mission target is to fetch item : -1
 Mission target is to kill all droids : -1
 Mission target is to kill class of droids : -1
 Mission target is to kill droids with marker : 4
-Mission target is to clean level : -1
+Mission target is to kill all hostile droids this first level : -1
+Mission target is to also kill all hostile droids on second level : -1
 Mission target is to become class : -1
 Mission target is to become type : -1
 Mission target is to overtake a droid with marker : -1
@@ -123,11 +128,12 @@ On mission completition immediately trigger action labeled="open_master_arena_ex
 ** Start of this mission target subsection **
 Mission Name="MS Warehouse"
 Assign this mission to influencer automatically at start : 0
-Mission target is to fetch item : 15
+Mission target is to fetch item : -1
 Mission target is to kill all droids : -1
 Mission target is to kill class of droids : -1
 Mission target is to kill droids with marker : -1
-Mission target is to clean level : 1
+Mission target is to kill all hostile droids this first level : 1
+Mission target is to also kill all hostile droids on second level : -1
 Mission target is to become class : -1
 Mission target is to become type : -1
 Mission target is to overtake a droid with marker : -1
@@ -145,7 +151,8 @@ Mission target is to fetch item : -1
 Mission target is to kill all droids : -1
 Mission target is to kill class of droids : -1
 Mission target is to kill droids with marker : 101
-Mission target is to clean level : -1
+Mission target is to kill all hostile droids this first level : -1
+Mission target is to also kill all hostile droids on second level : -1
 Mission target is to become class : -1
 Mission target is to become type : -1
 Mission target is to overtake a droid with marker : -1
@@ -162,7 +169,8 @@ Mission target is to fetch item : -1
 Mission target is to kill all droids : -1
 Mission target is to kill class of droids : -1
 Mission target is to kill droids with marker : 1
-Mission target is to clean level : -1
+Mission target is to kill all hostile droids this first level : -1
+Mission target is to also kill all hostile droids on second level : -1
 Mission target is to become class : -1
 Mission target is to become type : -1
 Mission target is to overtake a droid with marker : -1
@@ -182,7 +190,8 @@ Mission target is to fetch item : 4
 Mission target is to kill all droids : -1
 Mission target is to kill class of droids : -1
 Mission target is to kill droids with marker : -1
-Mission target is to clean level : -1
+Mission target is to kill all hostile droids this first level : -1
+Mission target is to also kill all hostile droids on second level : -1
 Mission target is to become class : -1
 Mission target is to become type : -1
 Mission target is to overtake a droid with marker : -1
