@@ -104,7 +104,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=27
-Item uses drop sound with filename="potion_drop_sound.wav"
+Item uses drop sound with filename="drop_potion_sound.wav"
 Base list price=50
 Item description text="These small containers hold purified essence of life, that will automatically mend and repair any injured tissue on the person closest by as soon as the container is opened.  Each container can be used only once, buy multiple of those items can be grouped together like one item in inventory."
 ----- the following part is only relevant for weapons -----
@@ -143,7 +143,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=0
-Item uses drop sound with filename="potion_drop_sound.wav"
+Item uses drop sound with filename="drop_potion_sound.wav"
 Base list price=150
 Item description text="These small containers hold purified essence of life, that will automatically mend and repair any injured tissue on the person closest by as soon as the container is opened.  Each container can be used only once, buy multiple of those items can be grouped together like one item in inventory."
 ----- the following part is only relevant for weapons -----
@@ -1001,7 +1001,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=35 plus duration modifier=10
 Picture number=20
-Item uses drop sound with filename="sword_drop_sound.wav"
+Item uses drop sound with filename="drop_sword_sound.wav"
 Base list price=350
 Item description text="In an age of high tech guns and lasers, this modified sword still reigns supreme."
 ----- the following part is only relevant for weapons -----
@@ -1079,7 +1079,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=30 plus duration modifier=10
 Picture number=20
-Item uses drop sound with filename="sword_drop_sound.wav"
+Item uses drop sound with filename="drop_sword_sound.wav"
 Base list price=450
 Item description text=" This large double-edged broadsword has the ability to shut down the opposing defender with one swift, well placed blow."
 ----- the following part is only relevant for weapons -----
@@ -1118,7 +1118,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=19
-Item uses drop sound with filename="sword_drop_sound.wav"
+Item uses drop sound with filename="drop_sword_sound.wav"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
 ----- the following part is only relevant for weapons -----
@@ -1391,7 +1391,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=21
-Item uses drop sound with filename="sword_drop_sound.wav"
+Item uses drop sound with filename="drop_sword_sound.wav"
 Base list price=120
 Item description text="A reliable weapon whose destructive history is well known over the years."
 ----- the following part is only relevant for weapons -----
@@ -1508,7 +1508,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=28
-Item uses drop sound with filename="sword_drop_sound.wav"
+Item uses drop sound with filename="drop_sword_sound.wav"
 Base list price=60
 Item description text="Very, very reliable backup weapon. The price is handsome as is the weapons effectiveness against most enemies."
 ----- the following part is only relevant for weapons -----
@@ -1664,7 +1664,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=30
-Item uses drop sound with filename="potion_drop_sound.wav"
+Item uses drop sound with filename="drop_potion_sound.wav"
 Base list price=50
 Item description text="These small containers hold condensed and purified mental energy also known as 'force', that will automatically merge with the spirit of the person closest by as soon as the container is opened.  Each container can be used only once, buy multiple of those items can be grouped together like one item in inventory."
 ----- the following part is only relevant for weapons -----
@@ -1703,7 +1703,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=29
-Item uses drop sound with filename="potion_drop_sound.wav"
+Item uses drop sound with filename="drop_potion_sound.wav"
 Base list price=150
 Item description text="These small containers hold condensed and purified mental energy also known as 'force', that will automatically merge with the spirit of the person closest by as soon as the container is opened.  Each container can be used only once, buy multiple of those items can be grouped together like one item in inventory."
 ----- the following part is only relevant for weapons -----
@@ -1781,7 +1781,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=32
-Item uses drop sound with filename="book_drop_sound.wav"
+Item uses drop sound with filename="drop_book_sound.wav"
 Base list price=1000
 Item description text="An incredible healing spell, in some cases the only one you will ever need."
 ----- the following part is only relevant for weapons -----
@@ -1820,7 +1820,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=32
-Item uses drop sound with filename="book_drop_sound.wav"
+Item uses drop sound with filename="drop_book_sound.wav"
 Base list price=1000
 Item description text="Teleporting takes on a whole new face with this book-use it wisely."
 ----- the following part is only relevant for weapons -----
@@ -1859,7 +1859,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=32
-Item uses drop sound with filename="book_drop_sound.wav"
+Item uses drop sound with filename="drop_book_sound.wav"
 Base list price=1000
 Item description text="The destructive magic of this bookis best used in tight situations, when the enemies have an upper hand."
 ----- the following part is only relevant for weapons -----
@@ -1898,7 +1898,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=32
-Item uses drop sound with filename="book_drop_sound.wav"
+Item uses drop sound with filename="drop_book_sound.wav"
 Base list price=1000
 Item description text="Another damaging book this one having a similar effect to dropping a house on an enemy."
 ----- the following part is only relevant for weapons -----
@@ -1937,7 +1937,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=34
-Item uses drop sound with filename="potion_drop_sound.wav"
+Item uses drop sound with filename="drop_potion_sound.wav"
 Base list price=100
 Item description text="These small containers hold purified essence of life, that will automatically mend and repair any injured tissue on the person closest by as soon as the container is opened.  Each container can be used only once, buy multiple of those items can be grouped together like one item in inventory."
 ----- the following part is only relevant for weapons -----
@@ -1976,7 +1976,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=35
-Item uses drop sound with filename="potion_drop_sound.wav"
+Item uses drop sound with filename="drop_potion_sound.wav"
 Base list price=100
 Item description text="These small containers hold condensed and purified mental energy also known as 'force', that will automatically merge with the spirit of the person closest by as soon as the container is opened.  Each container can be used only once, buy multiple of those items can be grouped together like one item in inventory."
 ----- the following part is only relevant for weapons -----
@@ -3302,7 +3302,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=32
-Item uses drop sound with filename="book_drop_sound.wav"
+Item uses drop sound with filename="drop_book_sound.wav"
 Base list price=1000
 Item description text="An incredible healing spell, in some cases the only one you will ever need."
 ----- the following part is only relevant for weapons -----
@@ -3341,7 +3341,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=32
-Item uses drop sound with filename="book_drop_sound.wav"
+Item uses drop sound with filename="drop_book_sound.wav"
 Base list price=1000
 Item description text="An incredible healing spell, in some cases the only one you will ever need."
 ----- the following part is only relevant for weapons -----
@@ -3380,7 +3380,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=32
-Item uses drop sound with filename="book_drop_sound.wav"
+Item uses drop sound with filename="drop_book_sound.wav"
 Base list price=1000
 Item description text="An incredible healing spell, in some cases the only one you will ever need."
 ----- the following part is only relevant for weapons -----
@@ -3419,7 +3419,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=32
-Item uses drop sound with filename="book_drop_sound.wav"
+Item uses drop sound with filename="drop_book_sound.wav"
 Base list price=1000
 Item description text="An incredible healing spell, in some cases the only one you will ever need."
 ----- the following part is only relevant for weapons -----
@@ -3458,7 +3458,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=32
-Item uses drop sound with filename="book_drop_sound.wav"
+Item uses drop sound with filename="drop_book_sound.wav"
 Base list price=1000
 Item description text="An incredible healing spell, in some cases the only one you will ever need."
 ----- the following part is only relevant for weapons -----
@@ -3497,7 +3497,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=32
-Item uses drop sound with filename="book_drop_sound.wav"
+Item uses drop sound with filename="drop_book_sound.wav"
 Base list price=1000
 Item description text="An incredible healing spell, in some cases the only one you will ever need."
 ----- the following part is only relevant for weapons -----
@@ -3536,7 +3536,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=32
-Item uses drop sound with filename="book_drop_sound.wav"
+Item uses drop sound with filename="drop_book_sound.wav"
 Base list price=1000
 Item description text="An incredible healing spell, in some cases the only one you will ever need."
 ----- the following part is only relevant for weapons -----
@@ -3575,7 +3575,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=32
-Item uses drop sound with filename="book_drop_sound.wav"
+Item uses drop sound with filename="drop_book_sound.wav"
 Base list price=1000
 Item description text="An incredible healing spell, in some cases the only one you will ever need."
 ----- the following part is only relevant for weapons -----
@@ -3614,7 +3614,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=32
-Item uses drop sound with filename="book_drop_sound.wav"
+Item uses drop sound with filename="drop_book_sound.wav"
 Base list price=800
 Item description text="This manual allows to learn the identify spell."
 ----- the following part is only relevant for weapons -----
@@ -4004,7 +4004,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=19
-Item uses drop sound with filename="sword_drop_sound.wav"
+Item uses drop sound with filename="drop_sword_sound.wav"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
 ----- the following part is only relevant for weapons -----
@@ -4043,7 +4043,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=19
-Item uses drop sound with filename="sword_drop_sound.wav"
+Item uses drop sound with filename="drop_sword_sound.wav"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
 ----- the following part is only relevant for weapons -----
@@ -4082,7 +4082,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=19
-Item uses drop sound with filename="sword_drop_sound.wav"
+Item uses drop sound with filename="drop_sword_sound.wav"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
 ----- the following part is only relevant for weapons -----
@@ -4121,7 +4121,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=19
-Item uses drop sound with filename="sword_drop_sound.wav"
+Item uses drop sound with filename="drop_sword_sound.wav"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
 ----- the following part is only relevant for weapons -----
@@ -4160,7 +4160,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=19
-Item uses drop sound with filename="sword_drop_sound.wav"
+Item uses drop sound with filename="drop_sword_sound.wav"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
 ----- the following part is only relevant for weapons -----
@@ -4199,7 +4199,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=19
-Item uses drop sound with filename="sword_drop_sound.wav"
+Item uses drop sound with filename="drop_sword_sound.wav"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
 ----- the following part is only relevant for weapons -----
@@ -4238,7 +4238,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=19
-Item uses drop sound with filename="sword_drop_sound.wav"
+Item uses drop sound with filename="drop_sword_sound.wav"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
 ----- the following part is only relevant for weapons -----
@@ -4277,7 +4277,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=19
-Item uses drop sound with filename="sword_drop_sound.wav"
+Item uses drop sound with filename="drop_sword_sound.wav"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
 ----- the following part is only relevant for weapons -----
@@ -4316,7 +4316,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=19
-Item uses drop sound with filename="sword_drop_sound.wav"
+Item uses drop sound with filename="drop_sword_sound.wav"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
 ----- the following part is only relevant for weapons -----
@@ -4355,7 +4355,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=19
-Item uses drop sound with filename="sword_drop_sound.wav"
+Item uses drop sound with filename="drop_sword_sound.wav"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
 ----- the following part is only relevant for weapons -----
