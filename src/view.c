@@ -1079,7 +1079,7 @@ blit_all_objects_according_to_blitting_list ( int mask )
 	case BLITTING_TYPE_ENEMY:
 	  if ( ! ( mask & OMIT_ENEMIES ) ) 
 	    {
-	      PutEnemy ( blitting_list [ i ] . code_number , -1 , -1 ); // this blits player 0 
+	      PutEnemy ( blitting_list [ i ] . code_number , -1 , -1 , mask ); // this blits player 0 
 	    }
 	  break;
 	case BLITTING_TYPE_BULLET:
@@ -1159,7 +1159,7 @@ AssembleCombatPicture (int mask)
     {
       for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
 	{
-	  PutItem( i );
+	  PutItem( i , mask );
 	}
     }
 
@@ -1873,7 +1873,7 @@ PutEnemyEnergyBar ( int Enum , SDL_Rect TargetRectangle )
  * everthing a little bit more complicated.
  * ---------------------------------------------------------------------- */
 void
-PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle )
+PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask )
 {
   int phase = AllEnemys[Enum].phase;
   int RotationModel;
@@ -1990,8 +1990,10 @@ There was a rotation model type given, that exceeds the number of rotation model
 	    }
 	  else
 	    {
-	      blit_iso_image_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] , AllEnemys [ Enum ] . pos . x , AllEnemys [ Enum ] . pos . y );
-
+	      if ( mask & ZOOM_OUT )
+		blit_zoomed_iso_image_to_map_position ( & ( enemy_iso_images[ RotationModel ] [ RotationIndex ] ) , AllEnemys [ Enum ] . pos . x , AllEnemys [ Enum ] . pos . y );
+	      else
+		blit_iso_image_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] , AllEnemys [ Enum ] . pos . x , AllEnemys [ Enum ] . pos . y );
 
 	      TargetRectangle . x = 
 		translate_map_point_to_screen_pixel ( AllEnemys[Enum].pos.x , AllEnemys[Enum].pos.y , TRUE );
@@ -2030,7 +2032,7 @@ There was a rotation model type given, that exceeds the number of rotation model
  * AllEnemys array. Everything else is computed in here.
  * ---------------------------------------------------------------------- */
 void
-PutEnemy (int Enum , int x , int y)
+PutEnemy ( int Enum , int x , int y , int mask )
 {
   char *druidname;	// the number-name of the Enemy 
   SDL_Rect TargetRectangle;
@@ -2076,7 +2078,7 @@ There was a droid type on this level, that does not really exist.",
   TargetRectangle.y = UpperLeftBlitCorner.y ;
   // DebugPrintf( 0 , "X: %d." , TargetRectangle.x ); fflush(stdout);
 
-  PutIndividuallyShapedDroidBody ( Enum , TargetRectangle );
+  PutIndividuallyShapedDroidBody ( Enum , TargetRectangle , mask );
 
   // if this enemy is dead, we need not do anything more here
   if (AllEnemys[Enum].Status == OUT)
@@ -2150,7 +2152,7 @@ There was a bullet to be blitted of a type that does not really exist.",
  * the AllItems array.
  * ---------------------------------------------------------------------- */
 void
-PutItem( int ItemNumber )
+PutItem( int ItemNumber , int mask )
 {
   Level ItemLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
   Item CurItem = &ItemLevel -> ItemList [ ItemNumber ] ;
@@ -2182,13 +2184,6 @@ There was an item type given, that exceeds the range of item images loaded.",
   ItemGPS . z = Me [ 0 ] . pos . z ; // this is silly.  The item is always from this leve...
   if ( ( ! IsVisible ( & ItemGPS , 0 ) ) && RespectVisibilityOnMap ) return;
 
-  /*
-  TargetRectangle . x = UserCenter_x - ( Me [ 0 ] . pos . x - CurItem -> pos . x ) * Block_Width  - 
-    ( 16 * ItemImageList [ ItemMap [ CurItem -> type ] . picture_number ] . inv_size . x ) ;
-  TargetRectangle . y = UserCenter_y - ( Me [ 0 ] . pos . y - CurItem -> pos . y ) * Block_Height - 
-    ( 16 * ItemImageList [ ItemMap [ CurItem -> type ] . picture_number ] . inv_size . y ) ;
-  */
-
   //--------------------
   // Now we can go take a look if maybe there is an ingame surface 
   // for this item available.  If not, the function will automatically
@@ -2198,8 +2193,12 @@ There was an item type given, that exceeds the range of item images loaded.",
   if ( ItemImageList[ ItemMap[ CurItem->type ] . picture_number ] . ingame_iso_image . surface == NULL )
     try_to_load_ingame_item_surface ( CurItem -> type );
 
-  blit_iso_image_to_map_position ( ItemImageList[ ItemMap[ CurItem->type ] . picture_number ] . ingame_iso_image , 
-				   CurItem -> pos . x , CurItem -> pos . y );
+  if ( mask & ZOOM_OUT )
+    blit_zoomed_iso_image_to_map_position ( & ( ItemImageList[ ItemMap[ CurItem->type ] . picture_number ] . ingame_iso_image ) , 
+					    CurItem -> pos . x , CurItem -> pos . y );
+  else
+    blit_iso_image_to_map_position ( ItemImageList[ ItemMap[ CurItem->type ] . picture_number ] . ingame_iso_image , 
+				     CurItem -> pos . x , CurItem -> pos . y );
 
 }; // void PutItem( int ItemNumber );
 
