@@ -8388,7 +8388,7 @@ ob_type=1 ob_x=35.00 ob_y=25.50 ob_na=-1
 ob_type=2 ob_x=34.50 ob_y=26.00 ob_na=-1 
 ob_type=1 ob_x=40.00 ob_y=25.50 ob_na=-1 
 ob_type=56 ob_x=42.50 ob_y=25.50 ob_na=-1 
-ob_type=23 ob_x=44.50 ob_y=25.50 ob_na=-1 
+ob_type=21 ob_x=44.50 ob_y=25.50 ob_na=-1 
 ob_type=57 ob_x=46.50 ob_y=25.50 ob_na=-1 
 ob_type=1 ob_x=50.00 ob_y=25.50 ob_na=-1 
 ob_type=2 ob_x=30.50 ob_y=27.00 ob_na=-1 
@@ -8399,14 +8399,14 @@ ob_type=2 ob_x=33.50 ob_y=27.00 ob_na=-1
 ob_type=1 ob_x=40.00 ob_y=26.50 ob_na=-1 
 ob_type=1 ob_x=30.00 ob_y=27.50 ob_na=-1 
 ob_type=2 ob_x=29.50 ob_y=28.00 ob_na=-1 
-ob_type=23 ob_x=42.50 ob_y=27.50 ob_na=-1 
-ob_type=23 ob_x=46.50 ob_y=27.50 ob_na=-1 
+ob_type=21 ob_x=42.50 ob_y=27.50 ob_na=-1 
+ob_type=21 ob_x=46.50 ob_y=27.50 ob_na=-1 
 ob_type=29 ob_x=48.75 ob_y=27.50 ob_na=-1 
 ob_type=1 ob_x=29.00 ob_y=28.50 ob_na=-1 
 ob_type=29 ob_x=40.25 ob_y=28.50 ob_na=-1 
 ob_type=1 ob_x=29.00 ob_y=29.50 ob_na=-1 
 ob_type=55 ob_x=42.50 ob_y=29.50 ob_na=-1 
-ob_type=23 ob_x=44.50 ob_y=29.50 ob_na=-1 
+ob_type=21 ob_x=44.50 ob_y=29.50 ob_na=-1 
 ob_type=58 ob_x=46.50 ob_y=29.50 ob_na=-1 
 ob_type=1 ob_x=29.00 ob_y=30.50 ob_na=-1 
 ob_type=1 ob_x=50.00 ob_y=30.50 ob_na=-1 
@@ -8862,7 +8862,7 @@ ob_type=1 ob_x=45.00 ob_y=89.50 ob_na=-1
 ob_type=2 ob_x=45.50 ob_y=90.00 ob_na=-1 
 ob_type=1 ob_x=47.00 ob_y=89.50 ob_na=-1 
 ob_type=2 ob_x=46.50 ob_y=90.00 ob_na=-1 
-ob_type=23 ob_x=47.50 ob_y=89.50 ob_na=-1 
+ob_type=21 ob_x=47.50 ob_y=89.50 ob_na=-1 
 ob_type=1 ob_x=49.00 ob_y=89.50 ob_na=-1 
 ob_type=2 ob_x=49.50 ob_y=90.00 ob_na=-1 
 ob_type=50 ob_x=39.50 ob_y=88.50 ob_na=-1 
@@ -8912,7 +8912,7 @@ ob_type=2 ob_x=55.50 ob_y=83.00 ob_na=-1
 ob_type=2 ob_x=56.50 ob_y=83.00 ob_na=-1 
 ob_type=2 ob_x=34.50 ob_y=85.00 ob_na=-1 
 ob_type=2 ob_x=35.50 ob_y=85.00 ob_na=-1 
-ob_type=23 ob_x=36.50 ob_y=84.50 ob_na=-1 
+ob_type=21 ob_x=36.50 ob_y=84.50 ob_na=-1 
 ob_type=2 ob_x=38.50 ob_y=85.00 ob_na=-1 
 ob_type=1 ob_x=34.00 ob_y=85.50 ob_na=-1 
 ob_type=2 ob_x=34.50 ob_y=86.00 ob_na=-1 
@@ -9096,7 +9096,7 @@ ob_type=117 ob_x=66.50 ob_y=89.50 ob_na=-1
 ob_type=117 ob_x=70.50 ob_y=83.50 ob_na=-1 
 ob_type=117 ob_x=70.50 ob_y=84.50 ob_na=-1 
 ob_type=117 ob_x=70.50 ob_y=85.50 ob_na=-1 
-ob_type=18 ob_x=68.50 ob_y=84.50 ob_na=-1 
+ob_type=19 ob_x=68.50 ob_y=84.50 ob_na=-1 
 ob_type=26 ob_x=68.50 ob_y=86.50 ob_na=-1 
 ob_type=116 ob_x=67.50 ob_y=86.50 ob_na=-1 
 ob_type=116 ob_x=69.50 ob_y=86.50 ob_na=-1 
@@ -9112,8 +9112,8 @@ ob_type=116 ob_x=75.50 ob_y=86.50 ob_na=-1
 ob_type=26 ob_x=76.50 ob_y=86.50 ob_na=-1 
 ob_type=26 ob_x=72.50 ob_y=86.50 ob_na=-1 
 ob_type=122 ob_x=74.50 ob_y=86.50 ob_na=-1 
-ob_type=18 ob_x=72.50 ob_y=84.50 ob_na=-1 
-ob_type=18 ob_x=76.50 ob_y=84.50 ob_na=-1 
+ob_type=19 ob_x=72.50 ob_y=84.50 ob_na=-1 
+ob_type=19 ob_x=76.50 ob_y=84.50 ob_na=-1 
 ob_type=243 ob_x=60.98 ob_y=87.05 ob_na=-1 
 ob_type=241 ob_x=60.40 ob_y=83.51 ob_na=-1 
 ob_type=47 ob_x=82.50 ob_y=84.50 ob_na=-1 
@@ -9166,6 +9166,7 @@ ob_type=116 ob_x=80.50 ob_y=88.50 ob_na=-1
 ob_type=116 ob_x=81.50 ob_y=88.50 ob_na=-1 
 ob_type=116 ob_x=82.50 ob_y=88.50 ob_na=-1 
 ob_type=116 ob_x=83.50 ob_y=88.50 ob_na=-1 
+ob_type=152 ob_x=7.37 ob_y=46.80 ob_na=-1 
 End of obstacle data
 Start of pure map label information for this level
 label.pos.x=44 label.pos.y=27 label.label_name="NewTuxStartGameSquare"
@@ -24362,8 +24363,8 @@ jump target north: -1
 jump target south: 27
 jump target east: -1
 jump target west: 17
-Name of this level=New Level just created...
-Comment of the Influencer on entering this level="This is a new level...
+Name of this level=Hell Fortress
+Comment of the Influencer on entering this level="This is the MS Hell Fortress
 Name of background song for this level=TheBeginning.ogg
 beginning_of_map
   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
@@ -24393,7 +24394,7 @@ beginning_of_map
   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
- 17  19   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   3   1   1   1   2   1   1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
+ 17  19   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   4   1   1   1   2   1   1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
   7  14   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   3   1   1   1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
   7  14   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
   6  14   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
@@ -24415,7 +24416,7 @@ beginning_of_map
   1   1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   0   0   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
   1   1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
   1   1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  43   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   3   3   1   0   0   0   0   0   0   0   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   1   1   3   1   1  43   1   1   1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   0   0   0   0   0   0   0   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   1   1   3   1   1  43   1   1   1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   0   0   0   0   0   0   0   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   0   0   0   0   0   0   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   0   0   0   0   0   0   0   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   0   0   0   0   0   0   1   1   1   2   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   4   4   4   4   4   4   4   3   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   2   0   0   0   0   0   0   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4 
@@ -24808,9 +24809,64 @@ ob_type=168 ob_x=57.94 ob_y=59.00 ob_na=-1
 ob_type=168 ob_x=56.94 ob_y=59.00 ob_na=-1 
 ob_type=168 ob_x=55.94 ob_y=59.00 ob_na=-1 
 ob_type=168 ob_x=54.94 ob_y=59.00 ob_na=-1 
-ob_type=168 ob_x=53.94 ob_y=59.00 ob_na=-1 
-ob_type=144 ob_x=41.58 ob_y=49.52 ob_na=-1 
 ob_type=141 ob_x=51.38 ob_y=41.57 ob_na=-1 
+ob_type=165 ob_x=53.91 ob_y=58.97 ob_na=-1 
+ob_type=165 ob_x=52.94 ob_y=58.97 ob_na=-1 
+ob_type=190 ob_x=51.37 ob_y=58.97 ob_na=-1 
+ob_type=166 ob_x=49.79 ob_y=58.90 ob_na=-1 
+ob_type=168 ob_x=48.83 ob_y=58.88 ob_na=-1 
+ob_type=168 ob_x=47.83 ob_y=58.88 ob_na=-1 
+ob_type=168 ob_x=46.83 ob_y=58.88 ob_na=-1 
+ob_type=168 ob_x=45.83 ob_y=58.88 ob_na=-1 
+ob_type=168 ob_x=44.83 ob_y=58.88 ob_na=-1 
+ob_type=168 ob_x=43.83 ob_y=58.88 ob_na=-1 
+ob_type=168 ob_x=42.83 ob_y=58.88 ob_na=-1 
+ob_type=178 ob_x=41.90 ob_y=58.96 ob_na=-1 
+ob_type=171 ob_x=41.86 ob_y=57.94 ob_na=-1 
+ob_type=171 ob_x=41.86 ob_y=56.94 ob_na=-1 
+ob_type=171 ob_x=41.86 ob_y=55.94 ob_na=-1 
+ob_type=171 ob_x=41.86 ob_y=54.94 ob_na=-1 
+ob_type=171 ob_x=41.86 ob_y=53.94 ob_na=-1 
+ob_type=171 ob_x=41.86 ob_y=52.94 ob_na=-1 
+ob_type=171 ob_x=41.86 ob_y=47.94 ob_na=-1 
+ob_type=171 ob_x=41.86 ob_y=46.94 ob_na=-1 
+ob_type=171 ob_x=41.86 ob_y=45.94 ob_na=-1 
+ob_type=171 ob_x=41.86 ob_y=44.94 ob_na=-1 
+ob_type=171 ob_x=41.86 ob_y=43.94 ob_na=-1 
+ob_type=171 ob_x=41.86 ob_y=42.94 ob_na=-1 
+ob_type=171 ob_x=41.86 ob_y=41.94 ob_na=-1 
+ob_type=177 ob_x=41.87 ob_y=40.96 ob_na=-1 
+ob_type=168 ob_x=42.88 ob_y=40.94 ob_na=-1 
+ob_type=168 ob_x=43.88 ob_y=40.94 ob_na=-1 
+ob_type=168 ob_x=44.88 ob_y=40.94 ob_na=-1 
+ob_type=168 ob_x=45.88 ob_y=40.94 ob_na=-1 
+ob_type=168 ob_x=50.88 ob_y=40.94 ob_na=-1 
+ob_type=168 ob_x=51.88 ob_y=40.94 ob_na=-1 
+ob_type=168 ob_x=52.88 ob_y=40.94 ob_na=-1 
+ob_type=168 ob_x=53.88 ob_y=40.94 ob_na=-1 
+ob_type=168 ob_x=54.88 ob_y=40.94 ob_na=-1 
+ob_type=168 ob_x=56.88 ob_y=40.94 ob_na=-1 
+ob_type=168 ob_x=57.88 ob_y=40.94 ob_na=-1 
+ob_type=168 ob_x=58.88 ob_y=40.94 ob_na=-1 
+ob_type=180 ob_x=59.89 ob_y=40.97 ob_na=-1 
+ob_type=172 ob_x=59.87 ob_y=41.96 ob_na=-1 
+ob_type=172 ob_x=59.88 ob_y=45.95 ob_na=-1 
+ob_type=174 ob_x=59.86 ob_y=46.91 ob_na=-1 
+ob_type=174 ob_x=59.86 ob_y=47.91 ob_na=-1 
+ob_type=174 ob_x=59.86 ob_y=48.91 ob_na=-1 
+ob_type=174 ob_x=59.86 ob_y=53.91 ob_na=-1 
+ob_type=174 ob_x=59.86 ob_y=54.91 ob_na=-1 
+ob_type=174 ob_x=59.86 ob_y=55.91 ob_na=-1 
+ob_type=171 ob_x=59.91 ob_y=56.91 ob_na=-1 
+ob_type=171 ob_x=59.91 ob_y=57.91 ob_na=-1 
+ob_type=179 ob_x=41.81 ob_y=48.96 ob_na=-1 
+ob_type=135 ob_x=40.82 ob_y=49.00 ob_na=-1 
+ob_type=135 ob_x=39.82 ob_y=49.00 ob_na=-1 
+ob_type=135 ob_x=38.82 ob_y=49.01 ob_na=-1 
+ob_type=135 ob_x=37.82 ob_y=49.01 ob_na=-1 
+ob_type=135 ob_x=36.82 ob_y=49.01 ob_na=-1 
+ob_type=135 ob_x=35.82 ob_y=49.01 ob_na=-1 
+ob_type=170 ob_x=55.90 ob_y=40.93 ob_na=-1 
 End of obstacle data
 Start of pure map label information for this level
 label.pos.x=61 label.pos.y=50 label.label_name="MSExecutioner1StartGameSquare"
