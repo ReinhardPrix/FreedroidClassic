@@ -1068,34 +1068,7 @@ ThisEnemyNeedsToBeBlitted ( int Enum , int x , int y )
       return FALSE ;
     }
 
-  // if the enemy is outside of the current map, that's an error and needs to be correted.
-  if ( ( AllEnemys[Enum]. pos . x <= 0 ) || 
-       ( AllEnemys[Enum]. pos . x >= curShip.AllLevels[ AllEnemys[Enum].pos.z ]->xlen ) ||
-       ( AllEnemys[Enum]. pos . y <= 0 ) || 
-       ( AllEnemys[Enum]. pos . y >= curShip.AllLevels[ AllEnemys[Enum].pos.z ]->ylen ) )
-    {
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-There was a droid found outside the bounds of this level.\n\
-\n\
-This is an error and should not occur, but most likely it does since\n\
-the bots are allowed some motion without respect to existing waypoints\n\
-in Freedroid RPG.  \n\
-\n\
-But for now we'll choose not to worry and delete the bots that have\n\
-somehow gotten outside of the map.\n\
-----------------------------------------------------------------------\n\
-\n" );
-      AllEnemys[Enum].type = (-1) ;
-      AllEnemys[Enum].Status = (OUT) ;
-      //--------------------
-      // This droid must not be blitted!!
-      //
-      return ( FALSE );
-      // Terminate(ERR);
-    }
+  if ( ! MakeSureEnemyIsInsideThisLevel ( &(AllEnemys[Enum] ) ) ) return ( FALSE );
 
   // if the enemy is out of sight, we need not do anything more here
   if ( ( ! show_all_droids ) && ( ! IsVisible ( & AllEnemys [ Enum ] . pos , 0 ) ) )

@@ -100,6 +100,48 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
   }; // AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] 
 
 /* ----------------------------------------------------------------------
+ * This function should help to simplify and standardize the many error
+ * messages possible in Freedroid RPG.
+ * ---------------------------------------------------------------------- */
+void
+GiveStandardErrorMessage ( char* FunctionName , char* ProblemDescription, int InformDevelopers , int IsFatal )
+{
+  fprintf (stderr, "\n----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n" );
+  fprintf (stderr, "In Function: %s.\n\n" , FunctionName );
+  fprintf (stderr, "Problem Description: %s.\n\n" , ProblemDescription );
+
+  if ( InformDevelopers )
+    {
+      fprintf (stderr, 
+"If you encounter this message, please inform the Freedroid developers\n\
+about the problem, best by sending e-mail to \n\
+\n\
+freedroid-discussion@lists.sourceforge.net\n\
+\n\
+Thanks a lot!\n\n" );
+    }
+
+  if ( IsFatal )
+    {
+      fprintf (stderr, 
+"Freedroid will terminate now to draw attention to the problems it could\n\
+not sesolve.  Sorry if that interrupts a major game of yours...\n" );
+    }
+  else
+    {
+      fprintf (stderr, 
+"The error mentioned above is not a big problem for Freedroid.  Therefore\n\
+we'll continue execution right now.\n" );
+    }
+
+  fprintf (stderr, "----------------------------------------------------------------------\n" );
+
+  if ( IsFatal ) Terminate ( ERR );
+  
+}; // void GiveStandardErrorMessage ( ... )
+
+/* ----------------------------------------------------------------------
  * This function checks if a given screen position lies within the 
  * inventory screen toggle button or not.
  * ---------------------------------------------------------------------- */
@@ -112,15 +154,10 @@ CursorIsOnButton( int ButtonIndex , int x , int y )
   //
   if ( ( ButtonIndex >= MAX_MOUSE_PRESS_BUTTONS ) || ( ButtonIndex < 0 ) )
     {
-      fprintf (stderr, "\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-A Button that should be checked for mouse contact was requested, but the\n\
-button index given exceeds the number of buttons defined in freedroid.\n\
-\n\
-Freedroid will terminate now to draw attention to the problem...\n\
-----------------------------------------------------------------------\n" );
-      Terminate ( ERR );
+      GiveStandardErrorMessage ( "CursorIsOnButton(...)" , 
+"A Button that should be checked for mouse contact was requested, but the\n\
+button index given exceeds the number of buttons defined in freedroid.",
+				 PLEASE_INFORM, IS_FATAL );
     }
 
   //--------------------
@@ -160,16 +197,10 @@ ShowGenericButtonFromList ( int ButtonIndex )
   //
   if ( ( ButtonIndex >= MAX_MOUSE_PRESS_BUTTONS ) || ( ButtonIndex < 0 ) )
     {
-      fprintf (stderr,
-	       "\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-A Button that should be displayed on the screen was requested, but the\n\
-button index given exceeds the number of buttons defined in freedroid.\n\
-\n\
-Freedroid will terminate now to draw attention to the problem...\n\
-----------------------------------------------------------------------\n" );
-      Terminate ( ERR );
+      GiveStandardErrorMessage ( "ShowGenericButtonFromList(...)" , 
+"A Button that should be displayed on the screen was requested, but the\n\
+button index given exceeds the number of buttons defined in freedroid.",
+				 PLEASE_INFORM, IS_FATAL );
     }
 
   //--------------------
@@ -182,22 +213,11 @@ Freedroid will terminate now to draw attention to the problem...\n\
       tmp = IMG_Load( fpath );
       if ( tmp == NULL )
 	{
-	  fprintf (stderr,
-		   "\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
+	  GiveStandardErrorMessage ( "ShowGenericButtonFromList(...)" , "\
 An image file for a button that should be displayed on the screen couldn't\n\
 be successfully loaded into memory.\n\
-\n\
-The name of the problematic file is: %s\n\
-\n\
-This is an indication of a severe bug/installation problem of freedroid.\n\
-If you encounter this message, please inform the developers about it, as\n\
-always, best via e-mail to freedroid-discussion@lists.sourceforge.net.\n\
-Thanks a lot.\n\
-Now Freedroid will terminate to draw attention to the problem...\n\
-----------------------------------------------------------------------\n" , fpath );
-	  Terminate ( ERR );
+This is an indication of a severe bug/installation problem of freedroid.",
+				     PLEASE_INFORM, IS_FATAL );
 	}
       AllMousePressButtons[ ButtonIndex ] . button_surface = SDL_DisplayFormat ( tmp );
       SDL_FreeSurface ( tmp );
@@ -317,27 +337,12 @@ ReadAndMallocStringFromData ( char* SearchString , char* StartIndicationString ,
 
   if ( (SearchPointer = strstr ( SearchString , StartIndicationString )) == NULL )
     {
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-In function 'char* ReadAndMalocStringFromData ( ... ):\n\
-A starter string that was supposed to be in some data, most likely from an external\n\
-data file could not be found, which indicates a corrupted data file or \n\
-a serious bug in the reading functions.\n\
-\n\
-The string that couldn't be located was: %s\n\
-\n\
-Please check that your external text files are properly set up.\n\
-\n\
-Please also don't forget, that you might have to run 'make install'\n\
-again after you've made modifications to the data files in the source tree.\n\
-\n\
-Freedroid will terminate now to draw attention to the data problem it could\n\
-not resolve.... Sorry, if that interrupts a major game of yours.....\n\
-----------------------------------------------------------------------\n\
-\n" , StartIndicationString );
-      Terminate(ERR);
+      fprintf( stderr, "\n\nStartIndicationString: '%s'\n" , StartIndicationString );
+      GiveStandardErrorMessage ( "ReadAndMalocStringFromData(...)" , 
+"The string that is supposed to prefix an entry in a text data file\n\
+of Freedroid was not found within this text data file.\n\
+This indicates some corruption in the data file in question.",
+				 PLEASE_INFORM, IS_FATAL );
     }
   else
     {
@@ -347,27 +352,12 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
       // Now we move to the end with the end pointer
       if ( (EndOfStringPointer = strstr( SearchPointer , EndIndicationString ) ) == NULL )
 	{
-	  fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-In function 'char* ReadAndMalocStringFromData ( ... ):\n\
-A terminating string that was supposed to be in some data, most likely from an external\n\
-data file could not be found, which indicates a corrupted data file or \n\
-a serious bug in the reading functions.\n\
-\n\
-The string that couldn't be located was: %s\n\
-\n\
-Please check that your external text files are properly set up.\n\
-\n\
-Please also don't forget, that you might have to run 'make install'\n\
-again after you've made modifications to the data files in the source tree.\n\
-\n\
-Freedroid will terminate now to draw attention to the data problem it could\n\
-not resolve.... Sorry, if that interrupts a major game of yours.....\n\
-----------------------------------------------------------------------\n\
-\n" , EndIndicationString );
-	  Terminate(ERR);
+	  fprintf( stderr, "\n\nEndIndicationString: '%s'\n" , EndIndicationString );
+	  GiveStandardErrorMessage ( "ReadAndMalocStringFromData(...)" , "\
+The string that is supposed to terminate an entry in a text data file\n\
+of Freedroid was not found within this text data file.\n\
+This indicates some corruption in the data file in question.",
+				     PLEASE_INFORM, IS_FATAL );
 	}
 
       // Now we allocate memory and copy the string...
@@ -422,30 +412,12 @@ ReadAndMallocAndTerminateFile( char* filename , char* File_End_String )
   // Read the whole theme data to memory 
   if ((DataFile = fopen ( filename , "r")) == NULL)
     {
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-In function 'char* ReadAndMallocAndTerminateFile ( char* filename ):\n\
-\n\
+      fprintf( stderr, "\n\nfilename: '%s'\n" , filename );
+      GiveStandardErrorMessage ( "ReadAndMallocAndTerminateFile(...)" , "\
 Freedroid was unable to open a given text file, that should be there and\n\
 should be accessible.\n\
-\n\
-This might be due to a wrong file name in a mission file, a wrong filename\n\
-in the source or a serious bug in the source.\n\
-\n\
-The file that couldn't be located was: %s\n\
-\n\
-Please check that your external text files are properly set up.\n\
-\n\
-Please also don't forget, that you might have to run 'make install'\n\
-again after you've made modifications to the data files in the source tree.\n\
-\n\
-Freedroid will terminate now to draw attention to the data problem it could\n\
-not resolve.... Sorry, if that interrupts a major game of yours.....\n\
-----------------------------------------------------------------------\n\
-\n" , filename );
-      Terminate(ERR);
+This indicates a serious bug in this installation of Freedroid.",
+				 PLEASE_INFORM, IS_FATAL );
     }
   else
     {
@@ -454,8 +426,14 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
 
   if (fstat (fileno (DataFile), &stbuf) == EOF)
     {
-      DebugPrintf ( 0 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : Error fstat-ing File....");
-      Terminate(ERR);
+      fprintf( stderr, "\n\nfilename: '%s'\n" , filename );
+      GiveStandardErrorMessage ( "ReadAndMallocAndTerminateFile(...)" , "\
+Freedroid was unable to fstat a given text file, that should be there and\n\
+should be accessible.\n\
+This indicates a strange bug in this installation of Freedroid, that is\n\
+very likely a problem with the file/directory permissions of the files\n\
+belonging to Freedroid.",
+				 PLEASE_INFORM, IS_FATAL );
     }
   else
     {
@@ -463,11 +441,7 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
     }
 
   MemoryAmount = stbuf.st_size + 64*2 + 10000;
-  if ( ( Data = (char *) MyMalloc ( MemoryAmount  ) ) == NULL )
-    {
-      DebugPrintf ( 0 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : Out of Memory? ");
-      Terminate(ERR);
-    }
+  Data = (char *) MyMalloc ( MemoryAmount );
 
   fread ( Data, (size_t) 64, (size_t) (stbuf.st_size / 64 +1 ), DataFile);
 
@@ -475,8 +449,14 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
 
   if (fclose ( DataFile ) == EOF)
     {
-      DebugPrintf( 0 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : Error while trying to close lift file....Terminating....\n\n");
-      Terminate(ERR);
+      fprintf( stderr, "\n\nfilename: '%s'\n" , filename );
+      GiveStandardErrorMessage ( "ReadAndMallocAndTerminateFile(...)" , "\
+Freedroid was unable to close a given text file, that should be there and\n\
+should be accessible.\n\
+This indicates a strange bug in this installation of Freedroid, that is\n\
+very likely a problem with the file/directory permissions of the files\n\
+belonging to Freedroid.",
+				 PLEASE_INFORM, IS_FATAL );
     }
   else
     {
@@ -491,32 +471,13 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
   // if ( (ReadPointer = strstr( Data , File_End_String ) ) == NULL )
   if ( ( ReadPointer = MyMemmem ( Data , (size_t) MemoryAmount , File_End_String , (size_t) strlen( File_End_String ) ) ) == NULL )
     {
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-In function 'char* ReadAndMallocAndTerminateFile ( char* filename ):\n\
-\n\
-Freedroid was unable to find the string, that should terminate the given\n\
-file within this file.\n\
-\n\
-This might be due to a corrupt text file on disk that does not confirm to\n\
-the file standards of this version of freedroid or (less likely) to a serious\n\
-bug in the reading function.\n\
-\n\
-The file that is concerned is: %s\n\
-The string, that could not be located was: %s\n\
-\n\
-Please check that your external text files are properly set up.\n\
-\n\
-Please also don't forget, that you might have to run 'make install'\n\
-again after you've made modifications to the data files in the source tree.\n\
-\n\
-Freedroid will terminate now to draw attention to the data problem it could\n\
-not resolve.... Sorry, if that interrupts a major game of yours.....\n\
-----------------------------------------------------------------------\n\
-\n" , filename , File_End_String );
-      Terminate(ERR);
+      fprintf( stderr, "\n\nfilename: '%s'\n" , filename );
+      fprintf( stderr, "File_End_String: '%s'\n" , File_End_String );
+      GiveStandardErrorMessage ( "ReadAndMallocAndTerminateFile(...)" , "\
+Freedroid was unable to find the string, that should indicate the end of\n\
+the given text file within this file.\n\
+This indicates a corrupt or outdated data or saved game file.",
+				 PLEASE_INFORM, IS_FATAL );
     }
   else
     {
@@ -525,7 +486,7 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
                        // terminated by nature.  We just have to add the zero termination.
     }
 
-  DebugPrintf( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : The content of the read file: \n%s" , Data );
+  // DebugPrintf( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : The content of the read file: \n%s" , Data );
 
   return ( Data );
 }; // char* ReadAndMallocAndTerminateFile( char* filename) 
@@ -545,27 +506,11 @@ LocateStringInData ( char* SearchBeginPointer, char* SearchTextPointer )
 
   if ( ( temp = strstr ( SearchBeginPointer , SearchTextPointer ) ) == NULL)
     {
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-In function 'char* LocateStringInData ( char* SearchBeginPointer, char* SearchTextPointer ):\n\
-A string that was supposed to be in some data, most likely from an external\n\
-data file could not be found, which indicates a corrupted data file or \n\
-a serious bug in the reading functions.\n\
-\n\
-The string that couldn't be located was: %s\n\
-\n\
-Please check that your external text files are properly set up.\n\
-\n\
-Please also don't forget, that you might have to run 'make install'\n\
-again after you've made modifications to the data files in the source tree.\n\
-\n\
-Freedroid will terminate now to draw attention to the data problem it could\n\
-not resolve.... Sorry, if that interrupts a major game of yours.....\n\
-----------------------------------------------------------------------\n\
-\n" , SearchTextPointer );
-      Terminate(ERR);
+      fprintf( stderr, "\n\nSearchTextPointer: '%s'\n" , SearchTextPointer );
+      GiveStandardErrorMessage ( "LocateStringInData(...)" , "\
+The string that was supposed to be in the text data file could not be found.\n\
+This indicates a corrupted or seriously outdated game data or saved game file.",
+				 PLEASE_INFORM, IS_FATAL );
     }
   else
     {
@@ -600,33 +545,12 @@ ReadValueFromString( char* SearchBeginPointer , char* ValuePreceedText , char* F
   //
   if ( sscanf ( SourceLocation , FormatString , TargetValue ) == EOF )
     {
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-In function 'void ReadValueFromString ( .... ):\n\
-\n\
-Freedroid has tried to read a value conformant to the format string %s.\n\
-\n\
-But the reading via sscanf didn't work.\n\
-\n\
-This might be indicating that the data, most likely from an external\n\
-data file, was corrupt.\n\
-\n\
-Also a serious bug in the reading function might (less likely) be a cause for the problem.\n\
-\n\
-The text that should be preceeding the real value was: %s\n\
-\n\
-Please check that your external text files are properly set up.\n\
-\n\
-Please also don't forget, that you might have to run 'make install'\n\
-again after you've made modifications to the data files in the source tree.\n\
-\n\
-Freedroid will terminate now to draw attention to the data problem it could\n\
-not resolve.... Sorry, if that interrupts a major game of yours.....\n\
-----------------------------------------------------------------------\n\
-\n" , FormatString , ValuePreceedText );
-      Terminate(ERR);
+      fprintf( stderr, "\n\nFormatString: '%s'\n" , FormatString );
+      fprintf( stderr, "ValuePreceedText: '%s'\n" , ValuePreceedText );
+      GiveStandardErrorMessage ( "ReadValueFromString(...)" , "\
+sscanf using a certain format string failed!\n\
+This indicates a corrupted or seriously outdated game data or saved game file.",
+				 PLEASE_INFORM, IS_FATAL );
     }
   else
     {
@@ -678,18 +602,11 @@ find_file (char *fname, char *subdir, int use_theme)
 
   if (!fname)
     {
-      // printf ("\nError. find_file() called with empty filename!\n");
-      fprintf (stderr, "\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
+      GiveStandardErrorMessage ( "find_file(...)" , "\
 A find_file call has been issued to generate the full path name of a\n\
 certain file, but the file name given is an empty string!\n\
-This is indicates a severe bug in Freedroid.\n\
-\n\
-Freedroid will terminate now to draw attention to the problem...\n\
-----------------------------------------------------------------------\n" );
-      Terminate ( ERR );
-      return (NULL);
+This is indicates a severe bug in Freedroid.",
+				 PLEASE_INFORM, IS_FATAL );
     }
   if (!subdir)
     subdir = "";
@@ -1092,20 +1009,12 @@ Teleport (int LNum, float X, float Y, int PlayerNum , int Shuffling )
 	   ( Me [ PlayerNum ] . pos . x >= curShip.AllLevels[ array_num ] -> xlen ) ||
 	   ( Me [ PlayerNum ] . pos . y >= curShip.AllLevels[ array_num ] -> ylen ) )
 	{
-	  fprintf (stderr, "\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
+	  fprintf( stderr, "\n\ntarget location was: lev=%d x=%f y=%f.\n" , LNum , X , Y );
+	  GiveStandardErrorMessage ( "Teleport(...)" , "\
 A Teleport was requested, but the location to teleport to lies outside\n\
 the bounds of this 'ship' which means the current collection of levels.\n\
-This is a severe error.  Please report the bug to the Freedroid team\n\
-as always best via e-mail to freedroid-discussion@lists.sourceforge.net\n\
-Thanks a lot.\n\
-\n\
-The given target location was: lev=%d x=%f y=%f.\n\
-Freedroid will terminate now to draw attention to the problem...\n\
-----------------------------------------------------------------------\n" ,
-LNum , X , Y );
-	  Terminate ( ERR );
+This indicates an error in the map system of Freedroid.",
+				 PLEASE_INFORM, IS_FATAL );
 	}
 
       // turn off all blasts and bullets from the old level
@@ -1253,20 +1162,15 @@ You settings will not be loaded but the default values will be used instead...\n
   if ( ( mystrnlen ( GameConfig.freedroid_version_string , 100 ) != strlen ( VERSION ) ) ||
        ( memcmp ( GameConfig.freedroid_version_string , VERSION , strlen ( VERSION ) ) ) )
     {
-      DebugPrintf ( 0 , "\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-Settings file %s does not\n\
+      GiveStandardErrorMessage ( "LoadGameConfig(...)" , "\
+Settings file found in your ~/.freedroid_rpg dir does not\n\
 seem to be from the same version a this installation of freedroid.\n\
 This is perfectly normal if you have just upgraded your version of\n\
 freedroid.  But the loading of your settings will be cancelled now,\n\
 cause the format of the settings file is no longer supported.  \n\
 No need to panic.  The default settings will be used instead and a new\n\
-settings file will be generated.\n\
-\n\
-However, if the problem continues, please inform the freedroid developers\n\
-about it, as always, best send e-mail to freedroid-discussion@lists.sourceforge.net.\n\
-----------------------------------------------------------------------\n" , fname );
+settings file will be generated.",
+				 NO_NEED_TO_INFORM, IS_WARNING_ONLY );
       ResetGameConfigToDefaultValues (  );
       return (ERR);
     };
@@ -1288,7 +1192,7 @@ about it, as always, best send e-mail to freedroid-discussion@lists.sourceforge.
 int
 SaveGameConfig (void)
 {
-  char fname[255];
+  char fname[5000];
   FILE *config;
   
   if ( ConfigDir[0] == '\0')
@@ -1405,27 +1309,11 @@ GiveNumberToThisActionLabel ( char* ActionLabel )
 
   if ( i >= MAX_TRIGGERED_ACTIONS_IN_GAME )
     {
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-In function 'void GiveNumberToThisActionLabel ( char* ActionLabel ):\n\
-\n\
+      fprintf( stderr, "\n\nActionLabel: '%s'\n" , ActionLabel );
+      GiveStandardErrorMessage ( "GiveNumberToThisActionLabel(...)" , "\
 The label that should reference an action for later execution could not\n\
-be identified as valid reference to an existing action.\n\
-\n\
-The label, that caused this problem was: %s\n\
-\n\
-Please check that your external text files are properly set up.\n\
-\n\
-Please also don't forget, that you might have to run 'make install'\n\
-again after you've made modifications to the data files in the source tree.\n\
-\n\
-Freedroid will terminate now to draw attention to the data problem it could\n\
-not resolve.... Sorry, if that interrupts a major game of yours.....\n\
-----------------------------------------------------------------------\n\
-\n" , ActionLabel );
-      Terminate(ERR);
+be identified as valid reference to an existing action.",
+				 PLEASE_INFORM, IS_FATAL );
     }
 
   return ( i );

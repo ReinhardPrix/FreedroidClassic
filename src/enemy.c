@@ -952,6 +952,42 @@ DropEnemyTreasure ( Enemy ThisRobot )
 }; // void DropEnemyTreasure ( Enemy ThisRobot )
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+int
+MakeSureEnemyIsInsideThisLevel ( Enemy ThisRobot )
+{
+
+  // if the enemy is outside of the current map, that's an error and needs to be correted.
+  if ( ( ThisRobot -> pos . x <= 0 ) || 
+       ( ThisRobot -> pos . x >= curShip.AllLevels[ ThisRobot -> pos . z ] -> xlen ) ||
+       ( ThisRobot -> pos . y <= 0 ) || 
+       ( ThisRobot -> pos . y >= curShip.AllLevels[ ThisRobot -> pos . z ] -> ylen ) )
+    {
+
+      GiveStandardErrorMessage ( "MakeSureEnemyIsInsideThisLevel(...)" , "\
+There was a droid found outside the bounds of this level.\n\
+This is an error and should not occur, but most likely it does since\n\
+the bots are allowed some motion without respect to existing waypoints\n\
+in Freedroid RPG.\n\
+The offending bot will be deleted silently.",
+				 NO_NEED_TO_INFORM, IS_WARNING_ONLY );
+      ThisRobot -> type = (-1) ;
+      ThisRobot -> Status = (OUT) ;
+
+      //--------------------
+      // This droid must not be blitted!!
+      //
+      return ( FALSE );
+      // Terminate(ERR);
+    }
+
+  return ( TRUE );
+
+}; // int MakeSureEnemyIsInsideThisLevel ( int Enum )
+
+/* ----------------------------------------------------------------------
  * When a robot has reached energy <= 1, then this robot will explode and
  * die, lose some treasure and add up to the kill record of the Tux.  All
  * the things that should happen when energy is that low are handled here
@@ -977,21 +1013,25 @@ InitiateDeathOfEnemy ( Enemy ThisRobot )
       //
       Me[0].Experience += Druidmap[ ThisRobot->type ].score;
     }
-  //--------------------
-  // The dead enemy will now explode.
-  //
+
   ThisRobot->Status = OUT;
-  StartBlast ( ThisRobot->pos.x , ThisRobot->pos.y , ThisRobot->pos.z , DRUIDBLAST );
-  Me [ 0 ] . KillRecord [ ThisRobot -> type ] ++ ;
-  
   //--------------------
-  // Maybe that robot did have something with him?  The item should then
-  // fall to the floor with it's clanc
+  // The dead enemy will now explode and drop treasure, provided that 
+  // it was still on this map
   //
-  // Maybe the robots was also a boss monster.  Then some additional items
-  // must be dropped and they must always be magical.
-  //
-  DropEnemyTreasure ( ThisRobot ) ;
+  if ( MakeSureEnemyIsInsideThisLevel ( ThisRobot ) ) 
+    {
+      StartBlast ( ThisRobot->pos.x , ThisRobot->pos.y , ThisRobot->pos.z , DRUIDBLAST );
+      Me [ 0 ] . KillRecord [ ThisRobot -> type ] ++ ;
+      //--------------------
+      // Maybe that robot did have something with him?  The item should then
+      // fall to the floor with it's clanc
+      //
+      // Maybe the robots was also a boss monster.  Then some additional items
+      // must be dropped and they must always be magical.
+      //
+      DropEnemyTreasure ( ThisRobot ) ;
+    }
   
   if (LevelEmpty ())
     curShip.AllLevels[ Me[ 0 ] . pos . z ] -> empty = WAIT_LEVELEMPTY;
@@ -1298,6 +1338,55 @@ ClosestVisiblePlayer ( Enemy ThisRobot )
 }; // int ClosestVisiblePlayer ( Enemy ThisRobot ) 
 
 /* ----------------------------------------------------------------------
+ * This function should determine the closest visible player to this 
+ * enemy droid.
+ * ---------------------------------------------------------------------- */
+int
+ClosestOtherEnemyDroid ( Enemy ThisRobot ) 
+{
+  int BestTarget = -1 ;
+  float BestDistance = 100000 ;
+  float FoundDistance;
+  int i;
+
+  for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i ++ )
+    {
+      //--------------------
+      // A dead or deactivated colleague can never be the closest enemy
+      //
+      if ( AllEnemys [ i ] . Status == OUT ) continue;
+
+      //--------------------
+      // A colleague on a different level can never be the closest enemy
+      //
+      if ( ThisRobot -> pos . z != AllEnemys [ i ] . pos . z ) continue;
+
+      //--------------------
+      // If we compare us with ourselves, this is also no good...
+      //
+      if ( ThisRobot == & (AllEnemys [ i ] ) ) continue;
+
+      //--------------------
+      // Now we compute the distance and see if this robot is closer than
+      // the previous best target.
+      //
+      FoundDistance = ( AllEnemys [ i ] . pos . x - ThisRobot -> pos . x ) *
+	( AllEnemys [ i ] . pos . x - ThisRobot -> pos . x ) +
+	( AllEnemys [ i ] . pos . y - ThisRobot -> pos . y ) * 
+	( AllEnemys [ i ] . pos . y - ThisRobot -> pos . y ) ;
+
+      if ( FoundDistance < BestDistance )
+	{
+	  BestDistance = FoundDistance ;
+	  BestTarget = i ;
+	}
+    }
+
+  return BestTarget ;
+
+}; // int ClosestOtherEnemyDroid ( Enemy ThisRobot ) 
+
+/* ----------------------------------------------------------------------
  * determine the distance vector to the target of this shot.  The target
  * depends of course on wheter it's a friendly device or a hostile device.
  * ---------------------------------------------------------------------- */
@@ -1389,13 +1478,12 @@ ConsideredMoveIsFeasible ( Enemy ThisRobot , moderately_finepoint StepVector , i
 void
 MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int TargetPlayer , int enemynum , int DirectionSign )
 {
-  float StepSize;
   finepoint VictimPosition;
   finepoint CurrentPosition;
   moderately_finepoint StepVector;
   moderately_finepoint RotatedStepVector;
   float StepVectorLen;
-  int i;
+  int i , j ;
 #define ANGLES_TO_TRY 7
   float RotationAngleTryList[ ANGLES_TO_TRY ] = { 0 , 30 , 360-30 , 60, 360-60, 90, 360-90 };
 
@@ -1421,8 +1509,6 @@ MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int TargetPlayer , int 
   // without passing though walls and if it's also free of other droids so
   // that we won't bump into our colleagues as well.
   //
-  StepSize = 0.5;
-
   VictimPosition . x = Me [ TargetPlayer ] . pos . x ;
   VictimPosition . y = Me [ TargetPlayer ] . pos . y ;
   CurrentPosition . x = ThisRobot -> pos . x ;
@@ -1460,51 +1546,54 @@ MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int TargetPlayer , int 
     }
 
   //--------------------
-  // But if we didn't find anything, we'll just consider making a step back, and FORCED!!
+  // But if we didn't find anything, we'll just consider moving away from 
+  // the robot that we got stuck into instead of making a step back.
   //
   if ( i >= ANGLES_TO_TRY ) 
     {
-      ThisRobot -> PrivatePathway [ 0 ] . x = ThisRobot -> pos.x - StepVector.x;
-      ThisRobot -> PrivatePathway [ 0 ] . y = ThisRobot -> pos.y - StepVector.y;
-    }
-
-  /*
-
-  if ( ConsideredMoveIsFeasible ( ThisRobot , StepVector , enemynum ) )
-    {
-      ThisRobot -> PrivatePathway [ 0 ] . x = ThisRobot -> pos.x + StepVector . x ;
-      ThisRobot -> PrivatePathway [ 0 ] . y = ThisRobot -> pos.y + StepVector . y ;
-    }
-  else
-    {
       //--------------------
-      // If we didn't have any luck with the direct vector, we may have
-      // more luck with a 30 degree rotated vector.  So let's try that.
+      // Well, who is the closest (other) robot?
       //
-      RotateVectorByAngle ( & StepVector , 30 ) ;
-      if ( ConsideredMoveIsFeasible ( ThisRobot , StepVector , enemynum ) )
+      j = ClosestOtherEnemyDroid ( ThisRobot );
+
+      StepVector . x = ThisRobot -> pos . x - AllEnemys [ j ] . pos . x ;
+      StepVector . y = ThisRobot -> pos . y - AllEnemys [ j ] . pos . y ;
+      StepVectorLen = sqrt ( ( StepVector . x ) * ( StepVector . x ) + ( StepVector . y ) * ( StepVector . y ) );
+
+      //--------------------
+      // If can happen, that two droids are EXACTLY on top of each other.  This
+      // is possible by starting teleportation of a special force right on top
+      // of a random bot for example.  But we should not cause a FLOATING POINT
+      // EXCEPTION here!  AND we should also do a sensible handling...
+      //
+      if ( StepVectorLen )
 	{
-	  ThisRobot -> PrivatePathway [ 0 ] . x = ThisRobot -> pos.x + StepVector . x ;
-	  ThisRobot -> PrivatePathway [ 0 ] . y = ThisRobot -> pos.y + StepVector . y ;
+	  StepVector . x /= ( DirectionSign * 2 * StepVectorLen ) ;
+	  StepVector . y /= ( DirectionSign * 2 * StepVectorLen ) ;
 	}
       else
 	{
-	  //--------------------
-	  // And if all else has failed, we could still try rotating (the meanwhile
-	  // 60 degree rotated vector) into the other direction, which is the same
-	  // as rotating is again by (360 - 2*30) degrees.
-	  //
-	  RotateVectorByAngle ( & StepVector , 360 - 2 * 30 ) ;
-	  if ( ConsideredMoveIsFeasible ( ThisRobot , StepVector , enemynum ) )
-	    {
-	      ThisRobot -> PrivatePathway [ 0 ] . x = ThisRobot -> pos.x + StepVector . x ;
-	      ThisRobot -> PrivatePathway [ 0 ] . y = ThisRobot -> pos.y + StepVector . y ;
-	    }
+	  StepVector . x = (float) MyRandom ( 100 ) / 200.0 ;
+	  StepVector . y = (float) MyRandom ( 100 ) / 200.0 ;
 	}
-    }
-  */
+      
+      //--------------------
+      // Here, when eventually moving out of a colliding colleague,
+      // we must not check for feasibility but only for wall collisions,
+      // cause otherwise the move out of the colleague will never
+      // be allowed.
+      //
+      if ( DruidPassable ( ThisRobot -> pos.x + StepVector.x , 
+			   ThisRobot -> pos.y + StepVector.y ,
+			   ThisRobot -> pos.z ) == CENTER )
+	{
+	  ThisRobot -> PrivatePathway [ 0 ] . x = ThisRobot -> pos.x + StepVector.x;
+	  ThisRobot -> PrivatePathway [ 0 ] . y = ThisRobot -> pos.y + StepVector.y;
+	}
 
-}; // void MoveInCloserForMeleeCombat ( Enemy ThisRobot , int TargetPlayer , int enemynum )
+    }
+
+}; // void MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int TargetPlayer , int enemynum )
 
 /* ----------------------------------------------------------------------
  * This function sometimes fires a bullet from enemy number enemynum 

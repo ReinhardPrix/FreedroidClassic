@@ -619,18 +619,20 @@ CreateAlphaCombinedSurface ( SDL_Surface* FirstSurface , SDL_Surface* SecondSurf
 	  //--------------------
 	  // In some cases we give exact alpha values...
 	  //
+	  if ( alpha3 )
+	    {
+	      new_red =  ( alpha2 * red2 +
+			   ( 1.0 - alpha2 ) * alpha1 * red1 ) 
+		/ alpha3 ;
 
-	  new_red =  ( alpha2 * red2 +
-		   ( 1 - alpha2 ) * alpha1 * red1 ) 
-	    / alpha3 ;
+	      new_green =  ( alpha2 * green2 +
+			     ( 1.0 - alpha2 ) * alpha1 * green1 ) 
+		/ alpha3 ;
 
-	  new_green =  ( alpha2 * green2 +
-		   ( 1 - alpha2 ) * alpha1 * green1 ) 
-	    / alpha3 ;
-
-	  new_blue =  ( alpha2 * blue2 +
-		   ( 1 - alpha2 ) * alpha1 * blue1 ) 
-	    / alpha3 ;
+	      new_blue =  ( alpha2 * blue2 +
+			    ( 1.0 - alpha2 ) * alpha1 * blue1 ) 
+		/ alpha3 ;
+	    }
 
 	  alpha3 *= 255.0 ; 
 

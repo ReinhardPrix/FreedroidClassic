@@ -147,13 +147,13 @@ Allowed Type of Random Droid for this level: 124
 Allowed Type of Random Droid for this level: 248
 Allowed Type of Random Droid for this level: 250
 
-SpecialForce: Type=883 X=34 Y=10 Fixed=1 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="StoneStartGameSquare"
-SpecialForce: Type=883 X=34 Y=12 Fixed=1 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="StoneStartGameSquare"
-SpecialForce: Type=883 X=35 Y=3 Fixed=1 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="StoneStartGameSquare"
-SpecialForce: Type=883 X=36 Y=3 Fixed=1 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="StoneStartGameSquare"
-SpecialForce: Type=883 X=37 Y=3 Fixed=1 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="StoneStartGameSquare"
-SpecialForce: Type=883 X=37 Y=12 Fixed=1 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="StoneStartGameSquare"
-SpecialForce: Type=883 X=38 Y=11 Fixed=1 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="StoneStartGameSquare"
+Sp**ecialForce: Type=883 X=34 Y=10 Fixed=1 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="StoneStartGameSquare"
+Sp**ecialForce: Type=883 X=34 Y=12 Fixed=1 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="StoneStartGameSquare"
+Sp**ecialForce: Type=883 X=35 Y=3 Fixed=1 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="StoneStartGameSquare"
+Sp**ecialForce: Type=883 X=36 Y=3 Fixed=1 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="StoneStartGameSquare"
+Sp**ecialForce: Type=883 X=37 Y=3 Fixed=1 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="StoneStartGameSquare"
+Sp**ecialForce: Type=883 X=37 Y=12 Fixed=1 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="StoneStartGameSquare"
+SpecialForce: Type=GOT X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="ToolkitBossMonsterStartGameSquare"
 ** End of this levels droid data **
 
 ** Beginning of new Level **

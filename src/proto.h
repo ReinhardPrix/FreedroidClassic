@@ -425,6 +425,7 @@ EXTERN void Credits_Menu (void);
 #else
 #define EXTERN extern
 #endif
+EXTERN void GiveStandardErrorMessage ( char* FunctionName , char* ProblemDescription, int InformDevelopers , int IsFatal );
 EXTERN void ShowGenericButtonFromList ( int ButtonIndex );
 EXTERN int CursorIsOnButton( int ButtonIndex , int x , int y );
 EXTERN void *MyMemmem ( unsigned char *haystack, size_t haystacklen, unsigned char *needle, size_t needlelen);
@@ -463,6 +464,7 @@ EXTERN void ExecuteEvent ( int EventNumber , int PlayerNum );
 #else
 #define EXTERN extern
 #endif
+EXTERN int MakeSureEnemyIsInsideThisLevel ( Enemy ThisRobot );
 EXTERN void Enemy_Post_Bullethit_Behaviour( int EnemyNum );
 EXTERN void ShuffleEnemys ( int LevelNum );
 EXTERN int CheckEnemyEnemyCollision (int enemynum);

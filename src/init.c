@@ -42,7 +42,8 @@
 #include "proto.h"
 #include "text.h"
 #include "ship.h"
-
+#include "fenv.h"
+// #include "math.h"
 
 void Init_Game_Data( char* Datafilename );
 void Get_Bullet_Data ( char* DataPointer );
@@ -1304,7 +1305,21 @@ timeout (int sig)
 {
   DebugPrintf (2, "\n\nstatic void timeout(int sig): Automatic termination NOW!!");
   Terminate (0);
-}				/* timeout */
+}; // static void timeout (int sig)
+
+/* ----------------------------------------------------------------------
+ * To better keep track of floating point operations gone awry, we'll 
+ * also keep track of the SIGFPE and 'redirect' it so a SIGSEGV, so the
+ * debugger will stop at the right place....
+ * ---------------------------------------------------------------------- */
+static void
+FloatingPointException (int sig)
+{
+  fprintf ( stderr , "\n\nstatic void FloatingPointException(int sig): redirecting to SIGSEGV...\n\n" );
+  // Terminate (0);
+  raise ( SIGSEGV );
+}; // static void timeout (int sig)
+
 
 char copyright[] = "\nCopyright (C) 2002 Johannes Prix, Reinhard Prix\n\
 Freedroid comes with NO WARRANTY to the extent permitted by law.\n\
@@ -2086,6 +2101,20 @@ InitFreedroid ( void )
 {
   struct timeval timestamp;
   int i;
+  // float test;
+  // float test2=0;
+
+  // feenableexcept ( FE_ALL_EXCEPT );
+  feenableexcept ( FE_DIVBYZERO | FE_INVALID | FE_UNDERFLOW | FE_OVERFLOW ); // FE_INEXACT
+
+  // fesetexceptflag (const fexcept_t *flagp, int excepts);
+
+  // DebugPrintf ( 0 , "\nSetting up handler to handle FPEs..." );
+  // signal ( SIGFPE , FloatingPointException );
+
+  // test = 15 / test2;
+
+  // raise ( SIGFPE );
 
   // InvincibleMode = TRUE;
 
