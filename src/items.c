@@ -40,6 +40,24 @@
 
 #define ITEM_TAKE_DIST (1.2)
 
+enum
+  {
+    WEAPON_SLOT = 0 ,
+    SHIELD_SLOT , 
+    SPECIAL_SLOT , 
+    AUX1_SLOT , 
+    AUX2_SLOT , 
+    DRIVE_SLOT ,
+    FIRST_INV_SLOT 
+  };
+
+/*
+ *
+ * FIRST_INV_SLOT - FIRST_INV_SLOT + MAX_ITEMS_IN_INVENTORY: inventory of player
+ * ?? perhaps afterwards: items on the floor of the current level?  maybe not.
+ *
+ */
+
 /* ----------------------------------------------------------------------
  * This function calculates the price of a given item, taking into account
  * (*) the items base list price 
@@ -502,6 +520,16 @@ DamageAllEquipment( void )
   DamageItem( & ( Me[0].aux2_item ) );
 }; // void DamageAllEquipment( void )
 
+/* ----------------------------------------------------------------------
+ * This function is used when an equipment EXCHANGE is performed, i.e.
+ * one weapon equiped is replaced by a new item using the mouse.  This 
+ * leads to an exchange in the items.  Yet, if the new item came from 
+ * inventory, the old item can't be just put in the same place where the
+ * new item was, cause it might be bigger.  So, attemting to solve the
+ * problem, the old item from the slot can just be made into an item on
+ * the floor, but not visible yet of course, cause it still gets the 
+ * held in hand attribute.
+ * ---------------------------------------------------------------------- */
 void
 MakeHeldFloorItemOutOf( item* SourceItem )
 {
@@ -1133,22 +1161,137 @@ ItemCanBeDroppedInInv ( int ItemType , int InvPos_x , int InvPos_y )
 
 }; // int ItemCanBeDroppedInInv ( int ItemType , int InvPos_x , int InvPos_y )
 
-void 
-DropHeldItemToTheFloor ( void )
+/* ----------------------------------------------------------------------
+ * For communication with the server, we can not use pointers to items.
+ * That's a pity, cause it would be most convenient.  Instead we must 
+ * think of something new and devise some unique item position codes.
+ *
+ * This item position code is a number that uniquely describes a position
+ * in all the existing item lists.  It works as follows:
+ *
+ * 0: WEAPON_SLOT
+ * 1: SHIELD_SLOT
+ * 2: SPECIAL_SLOT
+ * 3: AUX1_SLOT
+ * 4: AUX2_SLOT
+ * 5: DRIVE_SLOT
+ * 6-5+MAX_ITEMS_IN_INVENTORY: inventory of player
+ * ?? perhaps afterwards: items on the floor of the current level?  maybe not.
+ *
+ * ---------------------------------------------------------------------- */
+int
+GetPositionCode ( Item ItemPointer ) 
 {
-  item* DropItemPointer;
+  int InvIndex;
+
+  if ( & ( Me [ 0 ] . weapon_item ) == ItemPointer )
+   {
+      return WEAPON_SLOT ;
+   }
+ else if ( & ( Me [ 0 ] . shield_item ) == ItemPointer )
+   {
+      return SHIELD_SLOT;
+   }
+ else if ( & ( Me [ 0 ] . special_item ) == ItemPointer )
+   {
+      return SPECIAL_SLOT;
+   }
+ else if ( & ( Me [ 0 ] . aux1_item ) == ItemPointer )
+   {
+      return AUX1_SLOT;
+   }
+ else if ( & ( Me [ 0 ] . aux2_item ) == ItemPointer )
+   {
+      return AUX2_SLOT;
+   }
+ else if ( & ( Me [ 0 ] . drive_item ) == ItemPointer )
+   {
+      return DRIVE_SLOT;
+   }
+ else
+   {
+     for ( InvIndex = 0 ; InvIndex < MAX_ITEMS_IN_INVENTORY ; InvIndex ++ )
+       {
+	 if ( & ( Me [ 0 ] . Inventory [ InvIndex ] ) == ItemPointer )
+	   {
+	     return ( InvIndex + FIRST_INV_SLOT ) ;
+	   }
+       }
+   }
+
+  DebugPrintf ( 0 , "\nERROR! Unidentifiable pointer given to int GetPositionCode ( Item ). Terminating... " ) ;
+  Terminate ( ERR ) ;
+
+ return ( 0 ) ;
+
+}; // int GetPositionCode ( Item ItemPointer ) 
+
+/* ----------------------------------------------------------------------
+ * Same as GetPositionCode makes a position code out of a pointer, we now
+ * want to it the other way around and find a pointer to a given position
+ * code and player number.
+ * ---------------------------------------------------------------------- */
+Item
+FindPointerToPositionCode ( int SlotCode , int PlayerNum ) 
+{
+
+  DebugPrintf ( 0 , "\nSlotCode received : %d . Player Number : %d. " , SlotCode , PlayerNum ) ;
+  switch ( SlotCode )
+    {
+    case WEAPON_SLOT:
+      DebugPrintf ( 0 , "\nItem Found! It's of type %d. It's from weapon slot. " , 
+		    Me [ PlayerNum ] . weapon_item . type ) ;
+      return ( & ( Me [ PlayerNum ] . weapon_item ) ) ;
+      break;
+    case SPECIAL_SLOT:
+      DebugPrintf ( 0 , "\nItem Found! It's of type %d. It's from special slot. " , 
+		    Me [ PlayerNum ] . weapon_item . type ) ;
+      return ( & ( Me [ PlayerNum ] . special_item ) ) ;
+      break;
+    case SHIELD_SLOT:
+      DebugPrintf ( 0 , "\nItem Found! It's of type %d. It's from shield slot. " , 
+		    Me [ PlayerNum ] . weapon_item . type ) ;
+      return ( & ( Me [ PlayerNum ] . shield_item ) ) ;
+      break;
+    case AUX1_SLOT:
+      return ( & ( Me [ PlayerNum ] . aux1_item ) ) ;
+      break;
+    case AUX2_SLOT:
+      return ( & ( Me [ PlayerNum ] . aux2_item ) ) ;
+      break;
+    case DRIVE_SLOT:
+      return ( & ( Me [ PlayerNum ] . drive_item ) ) ;
+      break;
+    default:
+      if ( SlotCode < FIRST_INV_SLOT + MAX_ITEMS_IN_INVENTORY )
+	{
+	  DebugPrintf ( 0 , "\nItem Found! It's of type %d. It's directly from inventory. " , 
+			Me [ PlayerNum ] . Inventory [ SlotCode - FIRST_INV_SLOT ] . type ) ;
+	  return ( & ( Me [ PlayerNum ] . Inventory [ SlotCode - FIRST_INV_SLOT ] ) ) ;
+	}
+      else
+	{
+	  DebugPrintf ( 0 , "\nERROR! Unidentifiable item slot code given to Item FindPointerToPositionCode ( int , int ). Terminating... " ) ;
+	  Terminate ( ERR ) ;
+	}
+   }
+
+  return NULL ;
+}; // Item FindPointerToPositionCode ( PositionCode , PlayerNum ) 
+
+/* ---------------------------------------------------------------------- 
+ * This function should drop a given item to the floor. 
+ *
+ * Of couse this function should also initiate a signal to the server,
+ * telling the server, that the item drop has occured and that the 
+ * server should perform it too.
+ *
+ * ---------------------------------------------------------------------- */
+void 
+DropItemToTheFloor ( Item DropItemPointer , float x , float y )
+{
   int i;
 
-  // --------------------
-  // First we find out which item we want to drop onto the floor
-  //
-  DropItemPointer = GetHeldItemPointer(  );
-  if ( DropItemPointer == NULL )
-    {
-      DebugPrintf( 0 , "\nvoid DropHeldItemToTheFloor ( void ) : No item in inventory seems to be currently held in hand...");
-      return;
-    } 
-  
   // --------------------
   // Now we want to drop the item to the floor.
   // We therefore find a free position in the item list of this level
@@ -1165,19 +1308,58 @@ DropHeldItemToTheFloor ( void )
       Terminate( ERR );
     }
 
-  // --------------------
+  //--------------------
   // Now we enter the item into the item list of this level
   //
   CopyItem( DropItemPointer , &(CurLevel->ItemList[ i ]) , TRUE );
   // CurLevel->ItemList[ i ].pos.x = Me[0].pos.x;
   // CurLevel->ItemList[ i ].pos.y = Me[0].pos.y;
-  CurLevel->ItemList[ i ].pos.x = Me[0].pos.x + (GetMousePos_x() + 16 - UserCenter_x) / (float) Block_Width;
-  CurLevel->ItemList[ i ].pos.y = Me[0].pos.y + (GetMousePos_y() + 16 - UserCenter_y) / (float) Block_Height; 
+  CurLevel->ItemList[ i ].pos.x = x ; 
+  CurLevel->ItemList[ i ].pos.y = y ; 
   CurLevel->ItemList[ i ].currently_held_in_hand = FALSE;
   // CurLevel->ItemList[ i ].type = Me[0].Inventory[ InvPos ].type;
   
   // Me[0].Inventory[ InvPos ].type = ( -1 );
   DeleteItem( DropItemPointer );
+
+  
+  if ( ClientMode && !ServerMode ) 
+    {
+      SendPlayerItemDropToServer ( GetPositionCode ( DropItemPointer )  , 
+				   CurLevel -> ItemList [ i ] . pos . x ,
+				   CurLevel -> ItemList [ i ] . pos . y ) ;
+    }
+
+}; // void DropItemToTheFloor ( void )
+
+/* ---------------------------------------------------------------------- 
+ * This function should drop a held item to the floor. 
+ *
+ * Of couse this function should also initiate a signal to the server,
+ * telling the server, that the item drop has occured and that the 
+ * server should perform it too.
+ *
+ * ---------------------------------------------------------------------- */
+void 
+DropHeldItemToTheFloor ( void )
+{
+  item* DropItemPointer;
+  float x , y ;
+
+  // --------------------
+  // First we find out which item we want to drop onto the floor
+  //
+  DropItemPointer = GetHeldItemPointer(  );
+  if ( DropItemPointer == NULL )
+    {
+      DebugPrintf( 0 , "\nvoid DropHeldItemToTheFloor ( void ) : No item in inventory seems to be currently held in hand...");
+      return;
+    } 
+
+  x = Me [ 0 ] . pos . x + ( GetMousePos_x ( ) + 16 - UserCenter_x ) / ( float ) Block_Width;
+  y = Me [ 0 ] . pos . y + ( GetMousePos_y ( ) + 16 - UserCenter_y ) / ( float ) Block_Height; 
+
+  DropItemToTheFloor ( DropItemPointer , x , y ) ;
 
 }; // void DropHeldItemToTheFloor ( void )
 

@@ -66,12 +66,11 @@ typedef struct
 {
   int ItemIndex;
 
-
   finepoint pos;
   int type;
   int is_identified;  // is the item identified already?
+  int currently_held_in_hand; // is the item currently held 'in hand' with the mouse cursor?
 
-  int condition;
   int prefix_code;
   int suffix_code;
 
@@ -95,7 +94,6 @@ typedef struct
   int gold_amount; // how much cyberbucks are there, IN CASE OF CYBERBUCKS
   float current_duration; // the currently remaining durability for this item
   grob_point inventory_position;
-  int currently_held_in_hand; // is the item currently held 'in hand' with the mouse cursor?
 } item_engram , *Item_Engram ;
 
 item_engram ItemEngram [ MAX_ITEMS_PER_LEVEL ] ;
@@ -108,7 +106,7 @@ item_engram ItemEngram [ MAX_ITEMS_PER_LEVEL ] ;
 typedef struct
 {
   int status;			/* attacking, defense, dead, ... */
-  int8_t phase;                  // the current phase of motion
+  int8_t phase;                 // the current phase of motion
   finepoint speed;		/* the current speed of the druid */
   gps pos;		        /* current position in the whole ship */
   double health;		/* the max. possible energy in the moment */
@@ -118,6 +116,20 @@ typedef struct
 player_engram, *Player_Engram;
 
 player_engram PlayerEngram [ MAX_PLAYERS ] ;
+
+//--------------------
+// Now we define a short message, that is designed to
+// be sent from the server to the client, to inform the server
+// about occuring item drops.
+//
+typedef struct
+{
+  int item_slot_code;		// indead of an item pointer, we have to supply a code over the net....
+  moderately_finepoint pos;	// current position where to drop the item....
+}
+item_drop_engram, *Item_Drop_Engram;
+
+item_drop_engram ItemDropEngram;
 
 //--------------------
 // Now we define a short message, that is designed to
@@ -142,8 +154,6 @@ typedef struct
 enemy_engram, *Enemy_Engram;
 
 enemy_engram EnemyEngram [ MAX_ENEMYS_ON_SHIP ] ;
-
-
 
 typedef struct
 {
@@ -224,6 +234,7 @@ enum
 
     SERVER_ACCEPT_THIS_KEYBOARD_EVENT ,
     SERVER_ACCEPT_THIS_MOUSE_BUTTON_EVENT ,
+    SERVER_ACCEPT_THIS_ITEM_DROP ,
 
     NUMBER_OF_KNOWN_COMMANDS
 
@@ -730,6 +741,9 @@ FillDataIntoItemEngram ( int WriteIndex , int ItemIndex , int MapLevel )
   ItemEngram [ WriteIndex ] . type       = curShip . AllLevels [ MapLevel ]->ItemList [ ItemIndex ] . type ;
   ItemEngram [ WriteIndex ] . pos . x    = curShip . AllLevels [ MapLevel ]->ItemList [ ItemIndex ] . pos . x ;
   ItemEngram [ WriteIndex ] . pos . y    = curShip . AllLevels [ MapLevel ]->ItemList [ ItemIndex ] . pos . y ;
+  ItemEngram [ WriteIndex ] . currently_held_in_hand = 
+    curShip . AllLevels [ MapLevel ]->ItemList [ ItemIndex ] . currently_held_in_hand ;
+
 
   // More should follow later...
   
@@ -810,6 +824,32 @@ PrepareFullItemEngramForPlayer ( int PlayerNum )
     }
   
 }; // void PrepareFullBlastEngramForPlayer ( int PlayerNum ) 
+
+/* ----------------------------------------------------------------------
+ * This function prepares a player engram for player number PlayerNum.
+ * It assumes, that the ItemEngram has been loaded with the nescessary
+ * item drop information already.
+ * ---------------------------------------------------------------------- */
+void
+EnforcePlayersItemDrop ( int PlayerNum  ) 
+{
+  Item SourceItemPointer;
+
+  DebugPrintf ( 0 , "\nvoid EnforcePlayersItemDrop ( int PlayerNum ) : real function call confirmed. " );
+
+  //--------------------
+  // Now we find out the item pointer on the server, that the item code
+  // in the engram is indicating.
+  //
+  SourceItemPointer = FindPointerToPositionCode ( ItemDropEngram . item_slot_code , PlayerNum ) ;
+
+  DebugPrintf ( 0 , "\nItem type of item to drop at the server : %d . " , SourceItemPointer -> type ) ;
+
+  DropItemToTheFloor ( SourceItemPointer , ItemDropEngram . pos . x , ItemDropEngram . pos . y ) ;
+
+  DebugPrintf ( 0 , "\nvoid EnforcePlayersItemDrop ( int PlayerNum ) : end of function reached. " );
+  
+}; // void EnforceServersPlayerEngram ( void ) 
 
 /* ----------------------------------------------------------------------
  * This function prepares a player engram for player number PlayerNum.
@@ -1580,7 +1620,7 @@ SendItemUpdateToClient ( int PlayerNum )
 
   if ( ChangedItems == 0 )
     {
-      DebugPrintf ( 0 , "\nComparison of the items on the Level of Player %d showed no changes.  Sending suppressed." ,
+      DebugPrintf ( SERVER_SEND_DEBUG , "\nComparison of the items on the Level of Player %d showed no changes.  Sending suppressed." ,
 		    PlayerNum );
       return;
     }
@@ -2601,6 +2641,12 @@ ExecutePlayerCommand ( int PlayerNum )
 	}
       break;
 
+    case SERVER_ACCEPT_THIS_ITEM_DROP:
+      DebugPrintf ( 0 , "\nSERVER_ACCEPT_THIS_ITEM_DROP command received from player %d." , PlayerNum ) ;
+      memcpy ( & ( ItemDropEngram) , CommandFromPlayer [ PlayerNum ] . command_data_buffer , sizeof ( ItemDropEngram ) );
+      EnforcePlayersItemDrop ( PlayerNum ) ;
+      break;
+
     case PLAYER_TELL_ME_YOUR_NAME:
       DebugPrintf ( 0 , "\nPLAYER_TELL_ME_YOUR_NAME command received...Terminting..." );
       Terminate ( ERR );
@@ -3097,6 +3143,71 @@ Sorry...\n\
     }
 
 }; // void SendPlayerMouseButtonEventToServer ( void )
+
+/* ----------------------------------------------------------------------
+ * This function informs the server, that an item drop has occured from
+ * the players equipment to the floor.
+ * ---------------------------------------------------------------------- */
+void
+SendPlayerItemDropToServer ( int PositionCode , float x , float y ) 
+{
+  int CommunicationResult;
+  int len;
+  network_command LocalCommandBuffer;
+
+  // print out the message
+  DebugPrintf ( 0 , "\nSending item drop to server in command form. " ) ;
+  len = sizeof ( ItemDropEngram ) ; // the amount of bytes in the data buffer
+
+  //--------------------
+  // We check against sending too long messages to the server.
+  //
+  if ( len >= COMMAND_BUFFER_MAXLEN )
+    {
+      DebugPrintf ( 0 , "\nAttempted to send too long item drop engram to server... Terminating..." );
+      Terminate ( ERR ) ;
+    }
+
+  //--------------------
+  // Now we prepare our command buffer.
+  //
+  ItemDropEngram . item_slot_code = PositionCode ;
+  ItemDropEngram . pos . x = x ;
+  ItemDropEngram . pos . y = y ;
+
+  LocalCommandBuffer . command_code = SERVER_ACCEPT_THIS_ITEM_DROP ;
+  LocalCommandBuffer . data_chunk_length = len ;
+  memcpy ( LocalCommandBuffer . command_data_buffer , & ( ItemDropEngram ) , sizeof ( ItemDropEngram ) );
+
+  CommunicationResult = SDLNet_TCP_Send ( sock , 
+					  & ( LocalCommandBuffer ) , 
+					  2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length ); 
+
+  //--------------------
+  // Now we print out the success or return value of the sending operation
+  //
+  DebugPrintf ( 0 , "\nSending item drop engram to server returned : %d . " , CommunicationResult );
+  if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
+    {
+      fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+The SDL NET COULD NOT SEND AN ITEM DROP ENGRAM TO THE SERVER SUCCESSFULLY\n\
+in the function void SendTextMessageToServer ( char* message ).\n\
+\n\
+The cause of this problem as reportet by the SDL_net was: \n\
+%s\n\
+\n\
+Freedroid will terminate now to draw attention \n\
+to the networking problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , SDLNet_GetError ( ) ) ;
+      Terminate(ERR);
+    }
+
+}; // void SendPlayerItemDropToServer ( int PositionCode , float x , float y ) 
 
 /* ----------------------------------------------------------------------
  * This function assembles copys of the item information on all levels
