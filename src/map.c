@@ -122,6 +122,10 @@ IsWallBlock (int block)
     case CORNER_LU:
     case T_U:
     case CORNER_RU:
+    case ENHANCER_LD:
+    case ENHANCER_RD:
+    case ENHANCER_LU:
+    case ENHANCER_RU:
     case BLOCK1:
     case BLOCK2:
     case BLOCK3:
@@ -254,6 +258,7 @@ SmashBox ( float x , float y )
 unsigned char
 GetMapBrick (Level deck, float x, float y)
 {
+  int BrickWanted;
 
   /* 
    * ATTENTION! BE CAREFUL HERE!  What we want is an integer division with rest, 
@@ -284,7 +289,33 @@ GetMapBrick (Level deck, float x, float y)
       return VOID;
       Terminate (-1);
     }
-  return deck->map[((int) rintf (y)) ][((int) rintf (x)) ];
+
+  BrickWanted = deck->map[((int) rintf (y)) ][((int) rintf (x)) ] ;
+  if ( BrickWanted >= NUM_MAP_BLOCKS )
+    {
+      fprintf( stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+A maplevel in Freedroid contained a brick type, that does not have a\n\
+real graphical representation.  This is a severe error, that really \n\
+shouldn't be occuring in normal game, except perhaps if the level editor\n\
+was just used to add/remove some new doors or refreshes or other animated\n\
+map tiles.\n\
+\n\
+If you receive this error message, you might aid the Freedroid project by\n\
+sending e-mail about the problem to freedroid-discussion@lists.sourceforge.net.\n\
+Thanks a lot.\n\
+\n\
+But for now Freedroid will terminate to draw attention \n\
+to the map loading problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" );
+      Terminate ( ERR ) ;
+    }
+
+  return BrickWanted;
 }; // int GetMapBrick( ... ) 
  
 /* ---------------------------------------------------------------------- 
@@ -434,6 +465,18 @@ ActSpecialField ( int PlayerNum )
       break;
       */
 
+    case CONSUMER_1:
+    case CONSUMER_2:
+    case CONSUMER_3:
+    case CONSUMER_4:
+      GameConfig.Inventory_Visible=FALSE;
+      GameConfig.CharacterScreen_Visible=FALSE;
+      GameConfig.Mission_Log_Visible=FALSE;
+      GameOver=TRUE;
+      EndTitle ();
+      Credits_Menu();
+      break;
+
     default:
       break;
     }				/* switch */
@@ -471,6 +514,36 @@ AnimateRefresh (void)
   DebugPrintf (2, "\nvoid AnimateRefresh(void):  end of function reached.");
 
 }; // void AnimateRefresh ( void )
+
+/* ----------------------------------------------------------------------
+ * This function moves all the consumer fields to their next phase (if
+ * it's time already).
+ * ---------------------------------------------------------------------- */
+void
+AnimateConsumer (void)
+{
+  static float InnerWaitCounter = 0;
+  int i;
+  int x, y;
+
+  DebugPrintf (2, "\nvoid AnimateConsumer(void):  real function call confirmed.");
+
+  InnerWaitCounter += Frame_Time () * 10;
+
+  for (i = 0; i < MAX_CONSUMERS_ON_LEVEL; i++)
+    {
+      x = CurLevel->consumers[i].x;
+      y = CurLevel->consumers[i].y;
+      if (x == 0 || y == 0)
+	break;
+
+      CurLevel->map[y][x] = (((int) rintf (InnerWaitCounter)) % 4) + CONSUMER_1;
+
+    }				/* for */
+
+  DebugPrintf (2, "\nvoid AnimateRefresh(void):  end of function reached.");
+
+}; // void AnimateConsumer ( void )
 
 /* ----------------------------------------------------------------------
  * This function moves all the teleporter fields to their next phase (if
@@ -1685,7 +1758,7 @@ GetRefreshes (Level Lev)
   for (row = 0; row < ylen; row++)
     for (col = 0; col < xlen; col++)
       {
-	if (Lev->map[row][col] == REFRESH1 )
+	if ( (Lev->map[row][col] == REFRESH1 ) || (Lev->map[row][col] == REFRESH2 ) || (Lev->map[row][col] == REFRESH3 ) || (Lev->map[row][col] == REFRESH4 ) )
 	  {
 	    Lev->refreshes[curref].x = col;
 	    Lev->refreshes[curref++].y = row;
@@ -1722,10 +1795,70 @@ Sorry...\n\
 }; // int GetRefreshes (Level lev)
 
 /* ----------------------------------------------------------------------
+ * This function initialized the array of Consumers for animation
+ * within the level
+ * 
+ * Return value: the number of consumers found or ERR
+ * ---------------------------------------------------------------------- */
+int
+GetConsumers (Level Lev)
+{
+  int i, row, col;
+  int xlen, ylen;
+  int curref = 0;
+
+  xlen = Lev->xlen;
+  ylen = Lev->ylen;
+
+  /* init consumers array to 0 */
+  for (i = 0; i < MAX_CONSUMERS_ON_LEVEL; i++)
+    Lev->consumers[i].x = Lev->consumers[i].y = 0;
+
+  /* now find all the consumers */
+  for (row = 0; row < ylen; row++)
+    for (col = 0; col < xlen; col++)
+      {
+	if ( ( Lev->map[row][col] == CONSUMER_1 ) || ( Lev->map[row][col] == CONSUMER_2 ) || ( Lev->map[row][col] == CONSUMER_3 ) || ( Lev->map[row][col] == CONSUMER_4 ) )
+	  {
+	    Lev->consumers[curref].x = col;
+	    Lev->consumers[curref++].y = row;
+
+	    if (curref >= MAX_CONSUMERS_ON_LEVEL)
+	      {
+		fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+The number of consumers found in level %d seems to be greater than the number\n\
+of consumers currently allowed in a freedroid map.\n\
+\n\
+The constant for the maximum number of consumers currently is set to %d in the\n\
+freedroid defs.h file.  You can enlarge the constant there, then start make\n\
+and make install again, and the map will be loaded without complaint.\n\
+\n\
+The constant in defs.h is names 'MAX_CONSUMERS_ON_LEVEL'.  If you received this \n\
+message, please also tell the developers of the freedroid project, that they\n\
+should enlarge the constant in all future versions as well.\n\
+\n\
+Thanks a lot.\n\
+\n\
+But for now Freedroid will terminate to draw attention to this small map problem.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , Lev->levelnum , MAX_CONSUMERS_ON_LEVEL );
+		Terminate(ERR);
+		return ERR;
+	      }
+	  }			/* if */
+      }				/* for */
+  return curref;
+}; // int GetConsumers (Level lev)
+
+/* ----------------------------------------------------------------------
  * This function initialized the array of Teleports for animation
  * within the level
  *
- * Return value:  number of refreshes found or ERR
+ * Return value:  number of teleporters found or ERR
  * ---------------------------------------------------------------------- */
 int
 GetTeleports (Level Lev)
@@ -1817,12 +1950,14 @@ TranslateToHumanReadable ( char* HumanReadable , unsigned char* MapInfo, int Lin
 	    case H_OPEN_DOOR:
 	      Lev->map[i][col]=H_SHUT_DOOR;
 	      break;
+	      /*
 	    case REFRESH1:
 	    case REFRESH2:
 	    case REFRESH3:
 	    case REFRESH4:
 	      Lev->map[i][col]=REFRESH1;
 	      break;
+	      */
 	    case TELE_1:
 	    case TELE_2:
 	    case TELE_3:
@@ -1905,6 +2040,9 @@ TranslateMap (Level Lev)
 
   // Get Refreshes 
   GetRefreshes ( Lev );
+
+  // Get Consumers 
+  GetConsumers ( Lev );
 
   // Get Teleports
   GetTeleports ( Lev );
@@ -3007,6 +3145,10 @@ IsPassable ( float x , float y , int z , int Checkpos)
     case REFRESH2:
     case REFRESH3:
     case REFRESH4:
+    case CONSUMER_1:
+    case CONSUMER_2:
+    case CONSUMER_3:
+    case CONSUMER_4:
     case CONVEY_L:
     case CONVEY_D:
     case CONVEY_R:

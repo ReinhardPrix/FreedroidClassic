@@ -552,7 +552,7 @@ enum _directions
 // Maximal number of ...
 //
 
-#define NUM_MAP_BLOCKS		70  // total number of map-blocks 
+#define NUM_MAP_BLOCKS		80  // total number of map-blocks 
 #define NUM_COLORS              7   // how many different level colorings?/different tilesets?
 
 // #define ALLBULLETTYPES		4	/* number of bullet-types */
@@ -604,6 +604,7 @@ enum _directions
 #define MAX_DOORS_ON_LEVEL 	60
 #define MAX_AUTOGUNS_ON_LEVEL 	60
 #define MAX_REFRESHES_ON_LEVEL	39
+#define MAX_CONSUMERS_ON_LEVEL	39
 #define MAX_TELEPORTERS_ON_LEVEL	10
 
 #define MAX_PHASES_IN_A_BULLET 12
@@ -758,7 +759,9 @@ enum
   BOX_1=49,      BOX_2,        BOX_3,        BOX_4,        UNUSED_BRICK,
   CONVEY_L=54,   CONVEY_D,     CONVEY_R,     CONVEY_U,     FINE_GRID,
   AUTOGUN_R=59,   AUTOGUN_D,     AUTOGUN_L,     AUTOGUN_U,
-  IDENTIFY_L=63,   IDENTIFY_R,     IDENTIFY_U,     IDENTIFY_D
+  ENHANCER_RU=63,   ENHANCER_LU,     ENHANCER_RD,     ENHANCER_LD,
+  CONSUMER_1=67,     CONSUMER_2,     CONSUMER_3,    CONSUMER_4,
+  IDENTIFY_L=71,   IDENTIFY_R,     IDENTIFY_U,     IDENTIFY_D
 };
 
 

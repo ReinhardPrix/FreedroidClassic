@@ -118,6 +118,8 @@ main (int argc, char *const argv[])
 
 	  AnimateRefresh (); // this is a pure client issue.  Not dependent upon the players.
 
+	  AnimateConsumer (); // this is a pure client issue.  Not dependent upon the players.
+
 	  AnimateTeleports (); // this is a pure client issue.  Not dependent upon the players.
 
 	  ExplodeBlasts ();	// move blasts to the right current "phase" of the blast

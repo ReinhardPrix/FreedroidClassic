@@ -199,6 +199,7 @@ EXTERN int GetLiftConnections (char *shipname);
 EXTERN int GetCrew (char *shipname);
 
 EXTERN void AnimateRefresh (void);
+EXTERN void AnimateConsumer (void);
 EXTERN void MoveLevelDoors ( int PlayerNum ) ;
 EXTERN void WorkLevelGuns ( int PlayerNum ) ;
 EXTERN int IsPassable ( float x , float y , int z , int Checkpos ) ;
@@ -406,6 +407,7 @@ EXTERN void InitiateMenu( char* BackgroundToUse );
 EXTERN void MissionSelectMenu (void);
 EXTERN void Cheatmenu (void);
 EXTERN void EscapeMenu (void);
+EXTERN void Credits_Menu (void);
 
 // misc.c 
 #undef EXTERN

@@ -875,6 +875,7 @@ Level_Editor(void)
 	  if (KP1Pressed()) 
 	    {
 	      if ( Shift_Was_Pressed() ) CurLevel->map[BlockY][BlockX]=AUTOGUN_L;
+	      else if ( Ctrl_Was_Pressed() ) CurLevel->map[BlockY][BlockX]=ENHANCER_LD;
 	      else CurLevel->map[BlockY][BlockX]=CORNER_LD;
 	    }
 	  if (KP2Pressed()) 
@@ -890,6 +891,7 @@ Level_Editor(void)
 	  if (KP3Pressed()) 
 	    {
 	      if ( Shift_Was_Pressed() ) CurLevel->map[BlockY][BlockX]=AUTOGUN_U;
+	      else if ( Ctrl_Was_Pressed() ) CurLevel->map[BlockY][BlockX]=ENHANCER_RD;
 	      else CurLevel->map[BlockY][BlockX]=CORNER_RD;
 	    }
 	  if (KP4Pressed()) 
@@ -921,6 +923,7 @@ Level_Editor(void)
 	  if (KP7Pressed()) 
 	    {
 	      if ( Shift_Was_Pressed() ) CurLevel->map[BlockY][BlockX]=AUTOGUN_D;
+	      else if ( Ctrl_Was_Pressed() ) CurLevel->map[BlockY][BlockX]=ENHANCER_LU;
 	      else CurLevel->map[BlockY][BlockX]=CORNER_LU;
 	    }
 	  if ( KP8Pressed() ) 
@@ -936,6 +939,7 @@ Level_Editor(void)
 	  if (KP9Pressed()) 
 	    {
 	      if ( Shift_Was_Pressed() ) CurLevel->map[BlockY][BlockX]=AUTOGUN_R;
+	      else if ( Ctrl_Was_Pressed() ) CurLevel->map[BlockY][BlockX]=ENHANCER_RU;
 	      else CurLevel->map[BlockY][BlockX]=CORNER_RU;
 	    }
 	  if (APressed())
@@ -944,7 +948,8 @@ Level_Editor(void)
 	    }
 	  if (RPressed())
 	    {
-	      CurLevel->map[BlockY][BlockX]=REFRESH1;	            
+	      if ( Shift_Was_Pressed() ) CurLevel->map[BlockY][BlockX] = CONSUMER_1;
+	      else CurLevel->map[BlockY][BlockX] = REFRESH1;	            
 	    }
 	  if (DPressed())
 	    {

@@ -460,7 +460,6 @@ Assemble_Combat_Picture (int mask)
 		+ ( -Me[0].pos.x+col-0.5 )*Block_Width;
 	      TargetRectangle.y = UserCenter_y
 		+ ( -Me[0].pos.y+line-0.5 )*Block_Height;
-	      // Screen, &TargetRectangle);
 	      SDL_BlitSurface( MapBlockSurfacePointer[ DisplayLevel->color ][MapBrick] , NULL ,
  			       Screen, &TargetRectangle);
 	    }			// if !INVISIBLE_BRICK 
