@@ -29,6 +29,14 @@ If you have questions concerning FreedroidRPG, please send mail to:
 
 freedroid-discussion@lists.sourceforge.net
 
+BEGIN OF AUTORS NOTES
+
+You can use this text field to make some notes on anything.  These otes will get saved with the dialog.
+This is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.
+
+END OF AUTORS NOTES
+
+
 Beginning of new chat dialog for character="XXXXX"
 
 New Option Nr=0  OptionText=" Hi!  I'm new here. "
@@ -95,10 +103,13 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=354  PositionY=339  
 Subtitle="Great!  And hurry up!  Then I can finally dump this old oven beast and use my new one again."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Also I will open the east gate of town for you.  That way you won't have to fight your way through the northern areas."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=4 ChangeToValue=0
 ChangeOption=5 ChangeToValue=0
 ChangeOption=99 ChangeToValue=1
 DoSomethingExtra="AssignMission:2"
+DoSomethingExtra="ExecuteActionWithLabel:unlock_east_gate_of_town"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
