@@ -226,6 +226,11 @@ AssembleItemListForTradeCharacter ( item* ListToBeFilled , int ShopCharacterCode
 	ListPointer->type = ITEM_MEDIUM_HEALTH_POTION; ListPointer++;
 	ListPointer->type = ITEM_MEDIUM_MANA_POTION; ListPointer++;
     }
+    else if ( ShopCharacterCode == PERSON_LUKAS )
+    {
+	ListPointer->type = ITEM_RED_GUARD_LIGHT_ARMOUR; ListPointer++;
+	ListPointer->type = ITEM_RED_GUARD_HEAVY_ARMOUR; ListPointer++;
+    }
     else if ( ShopCharacterCode == PERSON_SKIPPY )
     {
 	ListPointer->type = ITEM_MAP_MAKER_SIMPLE; ListPointer++;

@@ -456,6 +456,7 @@ enum _non_player_characters
     PERSON_EWALD,
     PERSON_KEVINS_GUARD,
     PERSON_KEVIN,
+    PERSON_LUKAS,
     LAST_PERSON
   };
 #define MAX_PERSONS             (LAST_PERSON)
