@@ -118,8 +118,9 @@
 #define SNIPER_BOT 2
 #define MIND_BOT 3
 
-#define NUMBER_OF_SKILLS 6
 #define NUMBER_OF_SKILL_LEVELS 10
+#define NUMBER_OF_SKILLS_PER_SKILL_LEVEL 5
+#define NUMBER_OF_SKILLS ( NUMBER_OF_SKILLS_PER_SKILL_LEVEL * NUMBER_OF_SKILL_LEVELS )
 
 //--------------------
 // This is old and should go out, but that must be done from at home, 
@@ -224,13 +225,13 @@ enum
 #define STANDARD_MISSION        "Paradroid.mission"
 #define NEW_MISSION             "CleanPrivateGoodsStorageCellar.mission"
 
-#define PARA_FONT_FILE 		"parafont.png"
-#define MENU_FONT_FILE 		"ArialGold_Depleted.png"
-// #define RED_FONT_FILE 		"redfont.png"
-#define RED_FONT_FILE 		"font05_red.png"
-#define BLUE_FONT_FILE 		"font05_white.png"
-#define FPS_FONT_FILE 		"font05.png"
-#define ICON_FILE		"paraicon.bmp"
+#define PARA_FONT_FILE 		"font/parafont.png"
+#define MENU_FONT_FILE 		"font/ArialGold_Depleted.png"
+// #define RED_FONT_FILE 	"font/redfont.png"
+#define RED_FONT_FILE 		"font/font05_red.png"
+#define BLUE_FONT_FILE 		"font/font05_white.png"
+#define FPS_FONT_FILE 		"font/font05.png"
+#define ICON_FILE		"font/paraicon.bmp"
 
 
 //--------------------

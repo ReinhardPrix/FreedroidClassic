@@ -326,8 +326,8 @@ CursorIsOnWhichSkillButton( int x , int y )
   if ( y < SkillScreenRect.y + 16 + 4 * 64 + 4 * 16 ) return ( -1 );
   if ( y < SkillScreenRect.y + 16 + 5 * 64 + 4 * 16 ) return (  4 );
 
-  if ( y < SkillScreenRect.y + 16 + 5 * 64 + 5 * 16 ) return ( -1 );
-  if ( y < SkillScreenRect.y + 16 + 6 * 64 + 5 * 16 ) return (  5 );
+  // if ( y < SkillScreenRect.y + 16 + 5 * 64 + 5 * 16 ) return ( -1 );
+  // if ( y < SkillScreenRect.y + 16 + 6 * 64 + 5 * 16 ) return (  5 );
 
   return ( -1 );
 }; // int CursorIsOnWhichSkillButton( int x , int y )
@@ -454,14 +454,14 @@ ShowSkillsScreen ( void )
   // are not class-specific, like in diablo or something, but this is our first
   // approach to the topic after all.... :)
   //
-  for ( i = 0 ; i < 5 ; i ++ )
+  for ( i = 0 ; i < NUMBER_OF_SKILLS_PER_SKILL_LEVEL ; i ++ )
     {
       ButtonRect.x = SkillScreenRect.x + 16;
       ButtonRect.y = SkillScreenRect.y + 16 + i * ( 64 + 16 );
       ButtonRect.w = 64;
       ButtonRect.h = 64;
 
-      SDL_BlitSurface ( SkillIconSurfacePointer[ i ] , NULL , Screen , &ButtonRect );
+      SDL_BlitSurface ( SkillIconSurfacePointer[ i + 5 * GameConfig.spell_level_visible ] , NULL , Screen , &ButtonRect );
 
       //--------------------
       // First we write the name of the skill to the screen
