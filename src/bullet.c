@@ -324,6 +324,10 @@ CheckBulletCollisions (int num)
 	  if ((xdist * xdist + ydist * ydist) < DRUIDHITDIST2)
 	    {
 	      AllEnemys[i].energy -= Bulletmap[CurBullet->type].damage;
+	      // We might also start a little bullet-blast even after the
+	      // collision of the bullet with an enemy (not in Paradroid)
+	      DeleteBullet( num );
+
 	      // Since the enemy just got hit, it might as well say so :)
 	      EnemyHitByBulletText( i );
 

@@ -694,23 +694,6 @@ AttackInfluence (int enemynum)
 
       AllBullets[j].angle = - ( 90 + 180 * atan2 ( AllBullets[j].speed.y ,  AllBullets[j].speed.x ) / M_PI ) ;  
 
-      // old code: determine the 'phase' of the shot, meaning the
-      // number of the direction the bullet is approximately heading.
-      /*
-      AllBullets[j].phase = NOSTRAIGHTDIR;
-      if ( fabsf (xdist) / fabsf (ydist) > (3/2.0) )
-	AllBullets[j].phase = RECHTS;
-      if ( fabsf (ydist) / fabsf (xdist) > (3/2.0) )
-	AllBullets[j].phase = OBEN;
-      if (AllBullets[j].phase == NOSTRAIGHTDIR)
-	{
-	  if (((xdist < 0) && (ydist < 0)) || ((xdist > 0) && (ydist > 0)))
-	    AllBullets[j].phase = RECHTSUNTEN;
-	  else
-	    AllBullets[j].phase = RECHTSOBEN;
-	}
-      */
-
       /* Bullets im Zentrum des Schuetzen starten */
       AllBullets[j].pos.x = ThisRobot->pos.x;
       AllBullets[j].pos.y = ThisRobot->pos.y;
@@ -797,24 +780,6 @@ AttackInfluence (int enemynum)
 	}
 
       AllBullets[j].angle = - ( 90 + 180 * atan2 ( AllBullets[j].speed.y,  AllBullets[j].speed.x ) / M_PI );  
-
-      /*
-      // Determine the 'phase' i.e. the image of the shot (old code )
-      AllBullets[j].phase = NOSTRAIGHTDIR;
-      if ( fabsf (xdist) / fabsf (ydist) > (3/2.0) )
-	AllBullets[j].phase = RECHTS;
-      if ( fabsf (ydist) / fabsf (xdist) > (3/2.0) )
-	AllBullets[j].phase = OBEN;
-      if (AllBullets[j].phase == NOSTRAIGHTDIR)
-	{
-	  if (((xdist < 0) && (ydist < 0)) || ((xdist > 0) && (ydist > 0)))
-	    AllBullets[j].phase = RECHTSUNTEN;
-	  else
-	    AllBullets[j].phase = RECHTSOBEN;
-	}
-
-      */
-
 
       /* Bullets im Zentrum des Schuetzen starten */
       AllBullets[j].pos.x = ThisRobot->pos.x;
