@@ -472,4 +472,3 @@ char font_switchto_blue [ 2 ] = { 2 , 0 };
 char font_switchto_neon [ 2 ] = { 3 , 0 };
 
 int skip_initial_menus = FALSE ;
-

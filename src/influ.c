@@ -385,7 +385,14 @@ CheckForJumpThresholds ( int player_num )
 	  Me [ player_num ] . mouse_move_target . y += curShip . AllLevels [ Me [ player_num ] . pos . z ] -> ylen ;
 
 	  DebugPrintf (  LEVEL_JUMP_DEBUG , "\nJUMP TO THE NORTH:  target translated:  y=%f!" , Me [ player_num ] . mouse_move_target . y );
-	  set_up_intermediate_course_for_tux ( player_num );
+	  if ( IsPassable ( Me [ player_num ] . mouse_move_target . x , Me [ player_num ] . mouse_move_target . y , Me [ player_num ] . mouse_move_target . z ) )
+	      set_up_intermediate_course_for_tux ( player_num );
+	  else
+	  {
+	      Me [ player_num ] . mouse_move_target . x = ( -1 ) ;
+	      Me [ player_num ] . mouse_move_target . y = ( -1 ) ;
+	      Me [ player_num ] . mouse_move_target . z = ( -1 ) ;
+	  }
 
       }
 
@@ -441,7 +448,14 @@ CheckForJumpThresholds ( int player_num )
 	  Me [ player_num ] . mouse_move_target . y += 0 ;
 
 	  DebugPrintf ( LEVEL_JUMP_DEBUG , "\nJUMP TO THE SOUTH:  target translated to y=%f!" ,  Me [ player_num ] . mouse_move_target . y );
-	  set_up_intermediate_course_for_tux ( player_num );
+	  if ( IsPassable ( Me [ player_num ] . mouse_move_target . x , Me [ player_num ] . mouse_move_target . y , Me [ player_num ] . mouse_move_target . z ) )
+	      set_up_intermediate_course_for_tux ( player_num );
+	  else
+	  {
+	      Me [ player_num ] . mouse_move_target . x = ( -1 ) ;
+	      Me [ player_num ] . mouse_move_target . y = ( -1 ) ;
+	      Me [ player_num ] . mouse_move_target . z = ( -1 ) ;
+	  }
 
       }
 
@@ -496,7 +510,14 @@ CheckForJumpThresholds ( int player_num )
 	  Me [ player_num ] . mouse_move_target . x += 0 ;
 
 	  DebugPrintf ( LEVEL_JUMP_DEBUG , "\nJUMP TO THE EAST:  target translated to x=%f!" ,  Me [ player_num ] . mouse_move_target . x );
-	  set_up_intermediate_course_for_tux ( player_num );
+	  if ( IsPassable ( Me [ player_num ] . mouse_move_target . x , Me [ player_num ] . mouse_move_target . y , Me [ player_num ] . mouse_move_target . z ) )
+	      set_up_intermediate_course_for_tux ( player_num );
+	  else
+	  {
+	      Me [ player_num ] . mouse_move_target . x = ( -1 ) ;
+	      Me [ player_num ] . mouse_move_target . y = ( -1 ) ;
+	      Me [ player_num ] . mouse_move_target . z = ( -1 ) ;
+	  }
 
       }
 
@@ -545,7 +566,14 @@ CheckForJumpThresholds ( int player_num )
 	  Me [ player_num ] . mouse_move_target . x += curShip . AllLevels [ Me [ player_num ] . pos . z ] -> xlen ;
 
 	  DebugPrintf (  LEVEL_JUMP_DEBUG , "\nJUMP TO THE NORTH:  target translated:  x=%f!" , Me [ player_num ] . mouse_move_target . x );
-	  set_up_intermediate_course_for_tux ( player_num );
+	  if ( IsPassable ( Me [ player_num ] . mouse_move_target . x , Me [ player_num ] . mouse_move_target . y , Me [ player_num ] . mouse_move_target . z ) )
+	      set_up_intermediate_course_for_tux ( player_num );
+	  else
+	  {
+	      Me [ player_num ] . mouse_move_target . x = ( -1 ) ;
+	      Me [ player_num ] . mouse_move_target . y = ( -1 ) ;
+	      Me [ player_num ] . mouse_move_target . z = ( -1 ) ;
+	  }
 
       }
 

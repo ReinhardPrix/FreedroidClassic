@@ -278,13 +278,228 @@ void Init_Joy (void)
 }
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+check_for_cheat_keys( void )
+{
+    int i, j ;
+    tux_t Zwisch_Me;
+
+    //--------------------
+    // This is a convenient way of dropping some random treasure...
+    //
+    if ( RPressed() && CtrlWasPressed() ) 
+    {
+	if ( Shift_Was_Pressed() )
+	    DropRandomItem( Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , 3 , TRUE  , FALSE , FALSE ) ;
+	else
+	    DropRandomItem( Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , 3 , FALSE , FALSE , FALSE ) ;
+	
+	//--------------------
+	// here our cheat key for immediately forcing respawning of the
+	// enemies on this level...
+	//
+	if ( Alt_Was_Pressed() )
+	{
+	    respawn_level ( Me [ 0 ] . pos . z );
+	}
+	
+	while ( RPressed() );
+    }
+    //--------------------
+    // For identifying items, there is a quick way too...
+    //
+    if ( IPressed() && Shift_Was_Pressed() )
+    {
+	for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ ) Me[0].Inventory[i].is_identified = TRUE;
+	Me[0].weapon_item.is_identified = TRUE;
+	Me[0].shield_item.is_identified = TRUE;
+	Me[0].armour_item.is_identified = TRUE;
+	Me[0].special_item.is_identified = TRUE;
+	Me[0].aux1_item.is_identified = TRUE;
+	Me[0].aux2_item.is_identified = TRUE;
+	Me[0].drive_item.is_identified = TRUE;
+	while ( IPressed() );
+    }
+    //--------------------
+    // Now some cheat keys to quickly rise in level...
+    //
+    if ( KP0Pressed() )
+    {
+	while (KP0Pressed());
+	Me[0].Experience-=1000;
+    }
+    if ( KP1Pressed() )
+    {
+	while (KP1Pressed());
+	Me[0].Experience+=1000;
+    }
+    if ( KP2Pressed() )
+    {
+	while (KP2Pressed());
+	Me[0].Experience *= 2;
+    }
+    //--------------------
+    // To debug the rising in levels and the addition of points
+    // I added a feature to quickly gain experience points and
+    // levels via the numbers 0 , 1 and 2 on the numerical keyboard.
+    // 
+    if ( KP9Pressed() )
+    {
+	while ( KP9Pressed() );
+	if ( Shift_Was_Pressed() )
+	    Me [ 0 ] . base_strength += 5 ;
+	else
+	{
+	    if ( Me [ 0 ] . melee_weapon_skill < 8 )  Me [ 0 ] . melee_weapon_skill ++ ;
+	}
+    }
+    if ( KP8Pressed() )
+    {
+	while (KP8Pressed());
+	if ( Shift_Was_Pressed() )
+	    Me [ 0 ] . base_magic += 5 ;
+	else
+	{
+	    if ( Me [ 0 ] . ranged_weapon_skill < 8 ) Me [ 0 ] . ranged_weapon_skill ++ ;
+	}
+    }
+    if ( KP7Pressed() )
+    {
+	while ( KP7Pressed() );
+	if ( Shift_Was_Pressed() )
+	    Me [ 0 ] . base_dexterity += 5 ;
+	else
+	{
+	    if ( Me [ 0 ] . spellcasting_skill < 8 ) Me [ 0 ] . spellcasting_skill ++ ;
+	}
+    }
+    if ( KP6Pressed() )
+    {
+	while ( KP6Pressed() );
+	if ( Me [ 0 ] . hacking_skill < 8 ) Me [ 0 ] . hacking_skill ++ ;
+    }
+    
+    //--------------------
+    // Here we insert some cheat codes for assigning and completing missions
+    //
+    if ( Number0Pressed() )
+    {
+	if ( CPressed() )
+	{
+	    Me [ 0 ] . AllMissions [ 0 ] . MissionWasAssigned = TRUE ;
+	    Me [ 0 ] . AllMissions [ 0 ] . MissionIsComplete = TRUE ;
+	}
+    }
+    if ( Number1Pressed() )
+    {
+	if ( CPressed() )
+	{
+	    Me [ 0 ] . AllMissions [ 1 ] . MissionWasAssigned = TRUE ;
+	    Me [ 0 ] . AllMissions [ 1 ] . MissionIsComplete = TRUE ;
+	}
+
+	//--------------------
+	// For debugging the multiplayer and networking mode, there is
+	// also some way to swap players 0 and 1, but currently, this won't
+	// be needed much, since network play is currently not really under
+	// active development.
+	//
+	if ( Shift_Was_Pressed () )
+	{
+	    memcpy ( & ( Zwisch_Me ) , & ( Me [ 0 ] ) , sizeof ( Me[ 0 ] ) );
+	    memcpy ( & ( Me [ 0 ] ) , & ( Me [ 1 ] ) , sizeof ( Me[ 0 ] ) );
+	    memcpy ( & ( Me [ 1 ] ) , & ( Zwisch_Me ) , sizeof ( Me[ 0 ] ) );
+	    while ( Number1Pressed() );
+	    Activate_Conservative_Frame_Computation ( );
+	    
+	    //--------------------
+	    // When switching between players, we must of course also reset the 
+	    // current level...
+	    //
+	    // CurLevel = curShip.AllLevels[ Me[ 0 ].levelnum ];
+	    // Teleport ( 
+	}
+    }
+    if ( Number2Pressed() )
+    {
+	if ( CPressed() )
+	{
+	    Me [ 0 ] . AllMissions [ 2 ] . MissionWasAssigned = TRUE ;
+	    Me [ 0 ] . AllMissions [ 2 ] . MissionIsComplete = TRUE ;
+	}
+    }
+    if ( Number3Pressed() )
+    {
+	if ( CPressed() )
+	{
+	    Me [ 0 ] . AllMissions [ 3 ] . MissionWasAssigned = TRUE ;
+	    Me [ 0 ] . AllMissions [ 3 ] . MissionIsComplete = TRUE ;
+	}
+    }
+    if ( Number4Pressed() )
+    {
+	if ( CPressed() )
+	{
+	    Me [ 0 ] . AllMissions [ 4 ] . MissionWasAssigned = TRUE ;
+	    Me [ 0 ] . AllMissions [ 4 ] . MissionIsComplete = TRUE ;
+	}
+    }
+    if ( Number5Pressed() )
+    {
+	if ( CPressed() )
+	{
+	    Me [ 0 ] . AllMissions [ 5 ] . MissionWasAssigned = TRUE ;
+	    Me [ 0 ] . AllMissions [ 5 ] . MissionIsComplete = TRUE ;
+	}
+    }
+
+    if ( Number1Pressed() && Shift_Was_Pressed () )
+    {
+	memcpy ( & ( Zwisch_Me ) , & ( Me [ 0 ] ) , sizeof ( Me[ 0 ] ) );
+	memcpy ( & ( Me [ 0 ] ) , & ( Me [ 1 ] ) , sizeof ( Me[ 0 ] ) );
+	memcpy ( & ( Me [ 1 ] ) , & ( Zwisch_Me ) , sizeof ( Me[ 0 ] ) );
+	while ( Number1Pressed() );
+	Activate_Conservative_Frame_Computation ( );
+	
+	//--------------------
+	// When switching between players, we must of course also reset the 
+	// current level...
+	//
+	// CurLevel = curShip.AllLevels[ Me[ 0 ].levelnum ];
+	// Teleport ( 
+    }
+    
+    //--------------------
+    // For debugging purposes, we introduce a key, that causes several 
+    // floor values around the Tux to be printed out.
+    //
+    if ( NPressed() )
+    {
+	DebugPrintf( 0 , "\n--------------------\nStarting at x=%d/y=%d.\n" , 
+		     (int) Me [ 0 ] . pos . x - 5 , (int) Me [ 0 ] . pos . y - 5 );
+	for ( i = Me [ 0 ] . pos . y - 5 ; i < Me [ 0 ] . pos . y + 5 ; i ++ )
+	{
+	    for ( j = Me [ 0 ] . pos . x - 5 ; j < Me [ 0 ] . pos . x + 5 ; j ++ )
+	    {
+		DebugPrintf( 0 , "%d " , CurLevel -> map [ i ] [ j ] . floor_value );
+	    }
+	    DebugPrintf( 0 , "\n" );
+	}
+    }
+
+}; // void check_for_cheat_keys( void )
+ 
+/* ----------------------------------------------------------------------
  * This function does the reactions to keypresses of the player other
  * than pressing cursor keys.
  * ---------------------------------------------------------------------- */
 void 
 ReactToSpecialKeys(void)
 {
-  int i , j ;
+  int i;
   static int IPressed_LastFrame;
   static int CPressed_LastFrame;
   static int SPressed_LastFrame;
@@ -299,225 +514,120 @@ ReactToSpecialKeys(void)
   static int Number7PressedLastFrame;
   static int Number8PressedLastFrame;
   static int Number9PressedLastFrame;
-  tux_t Zwisch_Me;
 
+  //--------------------
+  // Some QUIT key and some self-destruct keys can stay in
+  // there (they are most convenient for debug purposes, yet
+  // they can't be used for 'cheating' in the normal sense).
+  //
   if ( QPressed() && CtrlWasPressed() )
     Terminate (OK);
-
   if ( DPressed() && CtrlWasPressed() ) 
     Me[0].energy = 0;
 
-  if ( F1Pressed() )
-    activate_nth_aquired_skill ( 0 );
-
-  if ( F2Pressed() )
-    activate_nth_aquired_skill ( 1 );
-
-  if ( F3Pressed() )
-    activate_nth_aquired_skill ( 2 );
-
-  if ( F4Pressed() )
-    activate_nth_aquired_skill ( 3 );
-
-  if ( F5Pressed() )
-    activate_nth_aquired_skill ( 4 );
-
-  if ( F6Pressed() )
-    activate_nth_aquired_skill ( 5 );
-
-  if ( F7Pressed() )
-    activate_nth_aquired_skill ( 6 );
-
-  if ( F8Pressed() )
-    activate_nth_aquired_skill ( 7 );
-
-  if ( F9Pressed() )
-    activate_nth_aquired_skill ( 8 );
-
-  if ( F10Pressed() )
-    activate_nth_aquired_skill ( 9 );
-
-  // THIS REMAINS DISABLED... if ( Number0Pressed() ) Quick_ApplyItem ( 0 );
+  //--------------------
+  // The 'function' keys F1-F10 can be used to quick-ready
+  // a skill.  Currently the skill to associate with each
+  // function key can NOT be customized.  This might follow
+  // later, when the game reaches a more complete state.
+  //
+  if ( F1Pressed()  ) activate_nth_aquired_skill ( 0 );
+  if ( F2Pressed()  ) activate_nth_aquired_skill ( 1 );
+  if ( F3Pressed()  ) activate_nth_aquired_skill ( 2 );
+  if ( F4Pressed()  ) activate_nth_aquired_skill ( 3 );
+  if ( F5Pressed()  ) activate_nth_aquired_skill ( 4 );
+  if ( F6Pressed()  ) activate_nth_aquired_skill ( 5 );
+  if ( F7Pressed()  ) activate_nth_aquired_skill ( 6 );
+  if ( F8Pressed()  ) activate_nth_aquired_skill ( 7 );
+  if ( F9Pressed()  ) activate_nth_aquired_skill ( 8 );
+  if ( F10Pressed() ) activate_nth_aquired_skill ( 9 );
 
   //--------------------
-  // Here we insert some cheat codes for assigning and completing missions
+  // To quick-apply the items in the very lowest row of the
+  // inventory screen, the number keys 1-9 can be used.
   //
-  if ( Number0Pressed() )
-    {
-      if ( CPressed() )
-	{
-	  Me [ 0 ] . AllMissions [ 0 ] . MissionWasAssigned = TRUE ;
-	  Me [ 0 ] . AllMissions [ 0 ] . MissionIsComplete = TRUE ;
-	}
-    }
   if ( Number1Pressed() )
-    {
-      if ( CPressed() )
-	{
-	  Me [ 0 ] . AllMissions [ 1 ] . MissionWasAssigned = TRUE ;
-	  Me [ 0 ] . AllMissions [ 1 ] . MissionIsComplete = TRUE ;
-	}
-    }
-  if ( Number2Pressed() )
-    {
-      if ( CPressed() )
-	{
-	  Me [ 0 ] . AllMissions [ 2 ] . MissionWasAssigned = TRUE ;
-	  Me [ 0 ] . AllMissions [ 2 ] . MissionIsComplete = TRUE ;
-	}
-    }
-  if ( Number3Pressed() )
-    {
-      if ( CPressed() )
-	{
-	  Me [ 0 ] . AllMissions [ 3 ] . MissionWasAssigned = TRUE ;
-	  Me [ 0 ] . AllMissions [ 3 ] . MissionIsComplete = TRUE ;
-	}
-    }
-  if ( Number4Pressed() )
-    {
-      if ( CPressed() )
-	{
-	  Me [ 0 ] . AllMissions [ 4 ] . MissionWasAssigned = TRUE ;
-	  Me [ 0 ] . AllMissions [ 4 ] . MissionIsComplete = TRUE ;
-	}
-    }
-  if ( Number5Pressed() )
-    {
-      if ( CPressed() )
-	{
-	  Me [ 0 ] . AllMissions [ 5 ] . MissionWasAssigned = TRUE ;
-	  Me [ 0 ] . AllMissions [ 5 ] . MissionIsComplete = TRUE ;
-	}
-    }
-
-  
-  if ( Number1Pressed() )
-    {
-      if ( Shift_Was_Pressed () )
-	{
-	  memcpy ( & ( Zwisch_Me ) , & ( Me [ 0 ] ) , sizeof ( Me[ 0 ] ) );
-	  memcpy ( & ( Me [ 0 ] ) , & ( Me [ 1 ] ) , sizeof ( Me[ 0 ] ) );
-	  memcpy ( & ( Me [ 1 ] ) , & ( Zwisch_Me ) , sizeof ( Me[ 0 ] ) );
-	  while ( Number1Pressed() );
-	  Activate_Conservative_Frame_Computation ( );
-
-	  //--------------------
-	  // When switching between players, we must of course also reset the 
-	  // current level...
-	  //
-	  // CurLevel = curShip.AllLevels[ Me[ 0 ].levelnum ];
-	  // Teleport ( 
-	}
-      else 
-	{
-	  if ( !Number1PressedLastFrame ) Quick_ApplyItem ( 1 );
-	}
+  {
+      if ( !Number1PressedLastFrame ) Quick_ApplyItem ( 1 );
       Number1PressedLastFrame = TRUE;
-    }
-  else
-    {
+  }
+  else 
+  {
       Number1PressedLastFrame = FALSE;
-    }
-
+  }
   if ( Number2Pressed() )
-    {
+  {
       if ( !Number2PressedLastFrame ) Quick_ApplyItem ( 2 );
       Number2PressedLastFrame = TRUE;
-    }
+  }
   else
-    {
+  {
       Number2PressedLastFrame = FALSE;
-    }
-
+  }
   if ( Number3Pressed() )
-    {
+  {
       if ( !Number3PressedLastFrame ) Quick_ApplyItem ( 3 );
       Number3PressedLastFrame = TRUE;
-    }
+  }
   else
-    {
+  {
       Number3PressedLastFrame = FALSE;
-    }
-
+  }
   if ( Number4Pressed() )
-    {
+  {
       if ( !Number4PressedLastFrame ) Quick_ApplyItem ( 4 );
       Number4PressedLastFrame = TRUE;
-    }
+  }
   else
-    {
+  {
       Number4PressedLastFrame = FALSE;
-    }
-
+  }
   if ( Number5Pressed() )
-    {
+  {
       if ( !Number5PressedLastFrame ) Quick_ApplyItem ( 5 );
       Number5PressedLastFrame = TRUE;
-    }
+  }
   else
-    {
+  {
       Number5PressedLastFrame = FALSE;
-    }
-
+  }
   if ( Number6Pressed() )
-    {
+  {
       if ( !Number6PressedLastFrame ) Quick_ApplyItem ( 6 );
       Number6PressedLastFrame = TRUE;
-    }
+  }
   else
-    {
+  {
       Number6PressedLastFrame = FALSE;
-    }
-
+  }
   if ( Number7Pressed() )
-    {
+  {
       if ( !Number7PressedLastFrame ) Quick_ApplyItem ( 7 );
       Number7PressedLastFrame = TRUE;
-    }
+  }
   else
-    {
+  {
       Number7PressedLastFrame = FALSE;
-    }
-
+  }
   if ( Number8Pressed() )
-    {
+  {
       if ( !Number8PressedLastFrame ) Quick_ApplyItem ( 8 );
       Number8PressedLastFrame = TRUE ;
-   }
+  }
   else
-    {
+  {
       Number8PressedLastFrame = FALSE;
-    }
-
+  }
   if ( Number9Pressed() )
-    {
+  {
       if ( !Number9PressedLastFrame ) Quick_ApplyItem ( 9 );
       Number9PressedLastFrame = TRUE;
-    }
+  }
   else
-    {
+  {
       Number9PressedLastFrame = FALSE;
-    }
-
-  //--------------------
-  // For debugging purposes, we introduce a key, that causes several 
-  // floor values around the Tux to be printed out.
-  //
-  if ( NPressed() )
-    {
-      DebugPrintf( 0 , "\n--------------------\nStarting at x=%d/y=%d.\n" , 
-		   (int) Me [ 0 ] . pos . x - 5 , (int) Me [ 0 ] . pos . y - 5 );
-      for ( i = Me [ 0 ] . pos . y - 5 ; i < Me [ 0 ] . pos . y + 5 ; i ++ )
-	{
-	  for ( j = Me [ 0 ] . pos . x - 5 ; j < Me [ 0 ] . pos . x + 5 ; j ++ )
-	    {
-	      DebugPrintf( 0 , "%d " , CurLevel -> map [ i ] [ j ] . floor_value );
-	    }
-	  DebugPrintf( 0 , "\n" );
-	}
-    }
-
+  }
+  
   //--------------------
   // For debugging purposes, we introduce a key, that causes several 
   // values to be printed out.  This MUST be removed for the next release.
@@ -563,8 +673,6 @@ ReactToSpecialKeys(void)
 	  else DebugPrintf( 0 , "\nweapon_item: NONE" );
 
 	}
-
-
       while ( MPressed() );
     }
 
@@ -639,24 +747,11 @@ ReactToSpecialKeys(void)
   //
   if ( IPressed() )
     {
-      if ( Shift_Was_Pressed() )
-	{
-	  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ ) Me[0].Inventory[i].is_identified = TRUE;
-	  Me[0].weapon_item.is_identified = TRUE;
-	  Me[0].shield_item.is_identified = TRUE;
-	  Me[0].armour_item.is_identified = TRUE;
-	  Me[0].special_item.is_identified = TRUE;
-	  Me[0].aux1_item.is_identified = TRUE;
-	  Me[0].aux2_item.is_identified = TRUE;
-	  Me[0].drive_item.is_identified = TRUE;
-	}
-
       if ( !IPressed_LastFrame ) 
 	{
 	  GameConfig.Inventory_Visible_Time = 0;
 	  GameConfig.Inventory_Visible = !GameConfig.Inventory_Visible;
 	}
-
       IPressed_LastFrame = TRUE;
     }
   else
@@ -723,61 +818,8 @@ ReactToSpecialKeys(void)
       */
     }
 
-  //--------------------
-  // To debug the rising in levels and the addition of points
-  // I added a feature to quickly gain experience points and
-  // levels via the numbers 0 , 1 and 2 on the numerical keyboard.
-  // 
-  if ( KP9Pressed() )
-    {
-      while (KP9Pressed());
-      if ( Shift_Was_Pressed() )
-	Me [ 0 ] . base_strength += 5 ;
-      else
-	{
-	  if ( Me [ 0 ] . melee_weapon_skill < 8 )  Me [ 0 ] . melee_weapon_skill ++ ;
-	}
-    }
-  if ( KP8Pressed() )
-    {
-      while (KP8Pressed());
-      if ( Shift_Was_Pressed() )
-	Me [ 0 ] . base_magic += 5 ;
-      else
-	{
-	  if ( Me [ 0 ] . ranged_weapon_skill < 8 ) Me [ 0 ] . ranged_weapon_skill ++ ;
-	}
-    }
-  if ( KP7Pressed() )
-    {
-      while ( KP7Pressed() );
-      if ( Shift_Was_Pressed() )
-	Me [ 0 ] . base_dexterity += 5 ;
-      else
-	{
-	  if ( Me [ 0 ] . spellcasting_skill < 8 ) Me [ 0 ] . spellcasting_skill ++ ;
-	}
-    }
-  if ( KP6Pressed() )
-    {
-      while ( KP6Pressed() );
-      if ( Me [ 0 ] . hacking_skill < 8 ) Me [ 0 ] . hacking_skill ++ ;
-    }
-  if ( KP0Pressed() )
-    {
-      while (KP0Pressed());
-      Me[0].Experience-=1000;
-    }
-  if ( KP1Pressed() )
-    {
-      while (KP1Pressed());
-      Me[0].Experience+=1000;
-    }
-  if ( KP2Pressed() )
-    {
-      while (KP2Pressed());
-      Me[0].Experience *= 2;
-    }
+
+  if ( GameConfig . enable_cheatkeys ) check_for_cheat_keys();
 
   //--------------------
   // To quicksave and quickload in a convenient way, I added
@@ -807,25 +849,6 @@ ReactToSpecialKeys(void)
   if ( CPressed() && Alt_Was_Pressed()
        && CtrlWasPressed() && Shift_Was_Pressed() ) 
     Cheatmenu ();
-
-  if ( RPressed() && CtrlWasPressed() ) 
-    {
-      if ( Shift_Was_Pressed() )
-	DropRandomItem( Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , 3 , TRUE  , FALSE , FALSE ) ;
-      else
-	DropRandomItem( Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , 3 , FALSE , FALSE , FALSE ) ;
-
-      //--------------------
-      // here our cheat key for immediately forcing respawning of the
-      // enemies on this level...
-      //
-      if ( Alt_Was_Pressed() )
-	{
-	  respawn_level ( Me [ 0 ] . pos . z );
-	}
-
-      while ( RPressed() );
-    }
 
   //--------------------
   // The 'Esc' key is assigned to the big main menu, the so called

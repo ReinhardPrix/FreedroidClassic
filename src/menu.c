@@ -1073,8 +1073,8 @@ Cheatmenu (void)
 	printf_SDL (Screen, -1, -1, " m. Map of Deck xy\n");
 	printf_SDL (Screen, -1, -1, " s. Sound: %s",
 		    sound_on ? "ON\n" : "OFF\n");
-	printf_SDL (Screen, -1, -1, " x. Fullscreen : %s",
-		    fullscreen_on ? "ON\n" : "OFF\n");
+	printf_SDL (Screen, -1, -1, " x. Cheatkeys : %s",
+		    GameConfig . enable_cheatkeys ? "ON\n" : "OFF\n");
 	printf_SDL (Screen, -1, -1, " w. Print current waypoints\n");
 	printf_SDL (Screen, -1, -1, " f. Freeze on this positon: %s",
 		    stop_influencer ? "ON\n" : "OFF\n");
@@ -1257,8 +1257,8 @@ Cheatmenu (void)
 		getchar_raw ();
 		break;
 		
-	    case 'x': /* toggle fullscreen - mode */
-		fullscreen_on = !fullscreen_on;
+	    case 'x': 
+		GameConfig . enable_cheatkeys = ! GameConfig . enable_cheatkeys;
 		break;
 		
 	    case 'w':  /* print waypoint info of current level */

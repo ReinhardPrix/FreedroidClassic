@@ -2207,6 +2207,7 @@ DecodeLoadedLeveldata ( char *data )
 	  loadlevel->num_waypoints = i;
 	  break;
 	}
+      wp_rnd = 0 ;
       sscanf( this_line , "Nr.=%d \t x=%d \t y=%d   rnd=%d" , &nr , &x , &y , &wp_rnd );
 
       // completely ignore x=0/y=0 entries, which are considered non-waypoints!!

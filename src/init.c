@@ -1772,56 +1772,58 @@ ClearAutomapData( void )
 void 
 ResetGameConfigToDefaultValues ( void )
 {
-  //--------------------
-  // At first we set audio volume to maximum value.
-  // This might be replaced later with values from a 
-  // private user Freedroid config file.  But for now
-  // this code is good enough...
-  //
-  GameConfig.Current_BG_Music_Volume=1.0;
-  GameConfig.Current_Sound_FX_Volume=0.5;
-
-  GameConfig.WantedTextVisibleTime = 3;
-  GameConfig.Draw_Framerate=FALSE;
-  GameConfig.All_Texts_Switch=TRUE;
-  GameConfig.Enemy_Hit_Text=FALSE;
-  GameConfig.Enemy_Bump_Text=TRUE;
-  GameConfig.Enemy_Aim_Text=TRUE;
-  GameConfig.Influencer_Refresh_Text=FALSE;
-  GameConfig.Influencer_Blast_Text=TRUE;
-  GameConfig.Mission_Log_Visible_Max_Time = 5;
-  GameConfig.Inventory_Visible_Max_Time = 5;
-  strcpy ( GameConfig.Theme_SubPath , "lanzz_theme/" );
-  GameConfig.Draw_Framerate=TRUE;
-  GameConfig.Draw_Energy=FALSE;
-  GameConfig.Draw_Position=FALSE;
-  GameConfig.All_Texts_Switch = FALSE;
-
-  GameConfig.terminate_on_missing_speech_sample = FALSE ;
-  GameConfig.show_subtitles_in_dialogs = TRUE ;
-
-  GameConfig.enemy_energy_bars_visible = TRUE ;
-  
-  GameConfig . hog_CPU = TRUE ;
-  GameConfig . highlighting_mode_full = TRUE ;
-  GameConfig . menu_mode = MENU_MODE_DEFAULT ;
-  GameConfig . skip_light_radius = FALSE ; 
-
-  GameConfig . omit_tux_in_level_editor = TRUE ;
-  GameConfig . omit_obstacles_in_level_editor = FALSE ;
-  GameConfig . omit_enemies_in_level_editor = TRUE ;
-  GameConfig . zoom_is_on = FALSE ;
-
-  GameConfig . use_bars_instead_of_energy_o_meter = FALSE ;
-
-  GameConfig . show_blood = TRUE ;
-  GameConfig . show_tooltips = TRUE;
-
-  GameConfig . tux_image_update_policy = TUX_IMAGE_UPDATE_EVERYTHING_AT_ONCE ;
-
-  GameConfig . number_of_big_screen_messages = 4 ;
-  GameConfig . delay_for_big_screen_messages = 6.5 ;
-
+    //--------------------
+    // At first we set audio volume to maximum value.
+    // This might be replaced later with values from a 
+    // private user Freedroid config file.  But for now
+    // this code is good enough...
+    //
+    GameConfig.Current_BG_Music_Volume=1.0;
+    GameConfig.Current_Sound_FX_Volume=0.5;
+    
+    GameConfig.WantedTextVisibleTime = 3;
+    GameConfig.Draw_Framerate=FALSE;
+    GameConfig.All_Texts_Switch=TRUE;
+    GameConfig.Enemy_Hit_Text=FALSE;
+    GameConfig.Enemy_Bump_Text=TRUE;
+    GameConfig.Enemy_Aim_Text=TRUE;
+    GameConfig.Influencer_Refresh_Text=FALSE;
+    GameConfig.Influencer_Blast_Text=TRUE;
+    GameConfig.Mission_Log_Visible_Max_Time = 5;
+    GameConfig.Inventory_Visible_Max_Time = 5;
+    strcpy ( GameConfig.Theme_SubPath , "lanzz_theme/" );
+    GameConfig.Draw_Framerate=TRUE;
+    GameConfig.Draw_Energy=FALSE;
+    GameConfig.Draw_Position=FALSE;
+    GameConfig.All_Texts_Switch = FALSE;
+    
+    GameConfig.terminate_on_missing_speech_sample = FALSE ;
+    GameConfig.show_subtitles_in_dialogs = TRUE ;
+    
+    GameConfig.enemy_energy_bars_visible = TRUE ;
+    
+    GameConfig . hog_CPU = TRUE ;
+    GameConfig . highlighting_mode_full = TRUE ;
+    GameConfig . menu_mode = MENU_MODE_DEFAULT ;
+    GameConfig . skip_light_radius = FALSE ; 
+    
+    GameConfig . omit_tux_in_level_editor = TRUE ;
+    GameConfig . omit_obstacles_in_level_editor = FALSE ;
+    GameConfig . omit_enemies_in_level_editor = TRUE ;
+    GameConfig . zoom_is_on = FALSE ;
+    
+    GameConfig . use_bars_instead_of_energy_o_meter = FALSE ;
+    
+    GameConfig . show_blood = TRUE ;
+    GameConfig . show_tooltips = TRUE;
+    
+    GameConfig . tux_image_update_policy = TUX_IMAGE_UPDATE_EVERYTHING_AT_ONCE ;
+    
+    GameConfig . number_of_big_screen_messages = 4 ;
+    GameConfig . delay_for_big_screen_messages = 6.5 ;
+    
+    GameConfig . enable_cheatkeys = FALSE ;
+    
 }; // void Reset_GameConfig_To_Default_Values ( void )
 
 /* -----------------------------------------------------------------
