@@ -1037,9 +1037,13 @@ int IsVisible(Point objpos){
  * $Author$
  *
  * $Log$
- * Revision 1.2  1993/07/31 16:05:36  prix
- * Thu Jul 29 16:23:49 1993: probably found the crashing error: wrong cast ?? in malloc
- * Thu Jul 29 16:46:18 1993: probably found reason for crash: string not alloc'ed !
+ * Revision 1.3  1993/08/04 16:31:59  prix
+ * Sat Jul 31 12:07:52 1993: load levelnum with map
+ * Sat Jul 31 21:42:35 1993: loadmap now generates a list of the doors
+ * Sun Aug 01 09:54:04 1993: only one line-terminator !!!!!
+ * Sun Aug 01 09:59:54 1993: init doors-map to 0
+ * Wed Aug 04 10:41:35 1993: modified LoadMap to new symtrans struct
+ * Wed Aug 04 12:31:39 1993: added some functions from paraplus.c
  *
  * Revision 1.5  1993/10/02  16:23:07  prix
  * Sun Aug 08 17:18:44 1993: Merged DruidPassable and IsPassable( old: NotPassable)
