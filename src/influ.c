@@ -1028,12 +1028,13 @@ void
 FireBullet (void)
 {
   int i = 0;
-  Bullet CurBullet = NULL;	/* das Bullet, um das es jetzt geht */
-  int guntype = ItemMap[ Druidmap[Me.type].weapon_item.type ].item_gun_bullet_image_type;	/* which gun do we have ? */
+  Bullet CurBullet = NULL;  // the bullet we're currentl dealing with
+  int guntype = ItemMap[ Druidmap[Me.type].weapon_item.type ].item_gun_bullet_image_type;   // which gun do we have ? 
   double BulletSpeed = ItemMap[ Druidmap[ Me.type ].weapon_item.type ].item_gun_speed;
   double speed_norm;
   finepoint speed;
   int max_val;
+  float OffsetFactor;
 
   // If the current overtaken droid doesn't have a weapon at all, just return
   if ( Druidmap [ Me.type ].weapon_item.type == (-1) ) return;
@@ -1056,10 +1057,10 @@ FireBullet (void)
   if (Me.firewait > 0)
     return;
 
-  /* Geraeusch eines geloesten Schusses fabrizieren */
+  // make the sound of a fired bullet
   Fire_Bullet_Sound ( guntype );
 
-  /* Naechste Freie Bulletposition suchen */
+  // search for the next free bullet list entry
   for (i = 0; i < (MAXBULLETS); i++)
     {
       if (AllBullets[i].type == OUT)
@@ -1069,7 +1070,7 @@ FireBullet (void)
 	}
     }
 
-  /* Kein freies Bullet gefunden: Nimm das erste */
+  // didn't find any free bullet entry? --> take the first
   if (CurBullet == NULL)
     CurBullet = &AllBullets[0];
 
@@ -1086,6 +1087,9 @@ FireBullet (void)
   CurBullet->mine = TRUE;
   CurBullet->owner = -1;
   CurBullet->bullet_lifetime = ItemMap[ Druidmap[ Me.type].weapon_item.type ].item_gun_bullet_lifetime;
+  CurBullet->angle_change_rate = ItemMap[ Druidmap[ Me.type].weapon_item.type ].item_gun_angle_change;
+  CurBullet->fixed_offset = ItemMap[ Druidmap[ Me.type].weapon_item.type ].item_gun_fixed_offset;
+  CurBullet->owner_pos = & ( Me.pos );
   CurBullet->time_in_frames = 0;
   CurBullet->time_in_seconds = 0;
   // Me.firewait = ItemMap[ Druidmap[ Me.type ].weapon_item.type ].item_gun_recharging_time * Me.RechargeTimeModifier;
@@ -1112,11 +1116,25 @@ FireBullet (void)
       speed.y = 1.0*input_axis.y/max_val;
     }
 
+  //--------------------
+  // It might happen, that this is not a normal shot, but rather the
+  // swing of a melee weapon.  Then of course, we should make a swing
+  // and not start in this direction, but rather somewhat 'before' it,
+  // so that the rotation will hit the target later.
+  //
+  RotateVectorByAngle ( & speed , ItemMap[ Druidmap[ Me.type].weapon_item.type ].item_gun_start_angle_modifier );
+
+
+
   speed_norm = sqrt (speed.x * speed.x + speed.y * speed.y);
   CurBullet->speed.x = (speed.x/speed_norm);
   CurBullet->speed.y = (speed.y/speed_norm);
 
-  // now determine the angle of the shot
+  //--------------------
+  // Now we determine the angle of rotation to be used for
+  // the picture of the bullet itself
+  //
+  
   CurBullet->angle= - ( atan2 (speed.y,  speed.x) * 180 / M_PI + 90 );
 
   DebugPrintf( 1 , "\nFireBullet(...) : Phase of bullet=%d." , CurBullet->phase );
@@ -1131,8 +1149,11 @@ FireBullet (void)
 
   // To prevent influ from hitting himself with his own bullets,
   // move them a bit..
-  CurBullet->pos.x += 0.5 * (CurBullet->speed.x/BulletSpeed);
-  CurBullet->pos.y += 0.5 * (CurBullet->speed.y/BulletSpeed);
+  if ( CurBullet->angle_change_rate == 0 ) OffsetFactor = 0.5; else OffsetFactor = 1;
+  CurBullet->pos.x += OffsetFactor * (CurBullet->speed.x/BulletSpeed);
+  CurBullet->pos.y += OffsetFactor * (CurBullet->speed.y/BulletSpeed);
+  // CurBullet->pos.x += 0.5 ;
+  // CurBullet->pos.y += 0.5 ;
 
   return;
 }; // FireBullet 

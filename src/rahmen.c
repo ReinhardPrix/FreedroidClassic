@@ -260,8 +260,9 @@ GiveDroidDescription ( char* DroidDescText , enemy* CurEnemy )
 }; // void GiveDroidDescription ( char* ItemDescText , item* CurItem )
 
 /* ----------------------------------------------------------------------
- *
- *
+ * This function displays the status bars for mana and energy in some 
+ * corner of the screen.  The dimensions and location of the bar are
+ * specified in items.h
  * ---------------------------------------------------------------------- */
 void 
 ShowCurrentHealthAndForceLevel( void )
@@ -270,6 +271,8 @@ ShowCurrentHealthAndForceLevel( void )
   SDL_Rect Unhealth_Rect;
   SDL_Rect Force_Rect;
   SDL_Rect Unforce_Rect;
+
+  if ( Me.status == BRIEFING ) return;
   
   if ( GameConfig.Inventory_Visible ) 
     {
