@@ -119,7 +119,7 @@ EXTERN void ShowRobotPicture (int PosX, int PosY, int Number);
 #define EXTERN extern
 #endif
 
-EXTERN SDL_Rect *get_rahmen_block (char *picfile);
+EXTERN void Load_Item_Surfaces (void);
 EXTERN void Load_MapBlock_Surfaces (void);
 EXTERN void Load_Enemy_Surfaces (void);
 EXTERN void Load_Influencer_Surfaces (void);

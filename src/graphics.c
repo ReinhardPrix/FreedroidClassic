@@ -533,7 +533,7 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
 int
 InitPictures (void)
 {
-  SDL_Surface *tmp2;
+  SDL_Surface *tmp;
   char *fpath;
 
   Block_Width=INITIAL_BLOCK_WIDTH;
@@ -558,14 +558,14 @@ InitPictures (void)
      create the internal storage for all our blocks 
   */
 
-  tmp2 = SDL_CreateRGBSurface(0, SCREENLEN, SCREENHEIGHT, ne_bpp, 0, 0, 0, 0);
-  if (tmp2 == NULL) 
+  tmp = SDL_CreateRGBSurface(0, SCREENLEN, SCREENHEIGHT, ne_bpp, 0, 0, 0, 0);
+  if (tmp == NULL) 
     {
       DebugPrintf (1, "\nCould not create ne_blocks surface: %s\n", SDL_GetError());
       return (FALSE);
     }
-  ne_static = SDL_DisplayFormat(tmp2);  /* the second surface is copied !*/
-  SDL_FreeSurface( tmp2 );
+  ne_static = SDL_DisplayFormat(tmp);  /* the second surface is copied !*/
+  SDL_FreeSurface( tmp );
   if (ne_static == NULL) 
     {
       DebugPrintf (1, "\nSDL_DisplayFormat() has failed: %s\n", SDL_GetError());
@@ -606,13 +606,13 @@ InitPictures (void)
 
   DebugPrintf( 2 , "\nvoid InitPictures(void): preparing to load blast image file." );
 
-  fpath = find_file (NE_DIGIT_BLOCK_FILE, GRAPHICS_DIR, TRUE);
-
   Load_Digit_Surfaces();
 
   fpath = find_file (NE_BANNER_BLOCK_FILE, GRAPHICS_DIR, FALSE);
-  ne_rahmen_block = get_rahmen_block (fpath);
-  
+  tmp = IMG_Load (fpath); 
+  banner_pic = SDL_DisplayFormat (tmp);
+  SDL_FreeSurface (tmp);  
+
   // console picture need not be rendered fast or something.  This
   // really has time, so we load it as a surface and do not take the
   // elements apart (they dont have typical block format either)

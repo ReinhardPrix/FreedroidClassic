@@ -197,10 +197,8 @@ DisplayBanner (const char* left, const char* right,  int flags )
        (strcmp( right_box , previous_right_box )) )
     {
       // Redraw the whole background of the top status bar
-      TargetRectangle.x=0;
-      TargetRectangle.y=0;
       SDL_SetClipRect( ne_screen , NULL );  // this unsets the clipping rectangle
-      SDL_BlitSurface( ne_static , ne_rahmen_block , ne_screen , &TargetRectangle );
+      SDL_BlitSurface( banner_pic, NULL, ne_screen , NULL);
 
       // Now the text should be ready and its
       // time to display it...
