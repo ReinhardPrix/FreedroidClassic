@@ -202,23 +202,11 @@ Maximum number of Random Droids=0
 Minimum number of Random Droids=0
 Allowed Type of Random Droid for this level: 614
 Allowed Type of Random Droid for this level: 615
-
-// These are the three droids fireing at the front door of the retreatment
-SpecialForce: Type=629 X=13 Y=4 Fixed=1 Marker=1 AdvancedCommand=1 Parameter1=9 Parameter2=7 Friendly=0
-SpecialForce: Type=751 X=13 Y=7 Fixed=1 Marker=1 AdvancedCommand=1 Parameter1=9 Parameter2=7 Friendly=0
-SpecialForce: Type=883 X=13 Y=10 Fixed=1 Marker=1 AdvancedCommand=1 Parameter1=9 Parameter2=7 Friendly=0
-
-// These are the droids guarding the back entrance
-SpecialForce: Type=629 X=3 Y=3 Fixed=1 Marker=1 AdvancedCommand=0 Parameter1=9 Parameter2=6 Friendly=0
-SpecialForce: Type=629 X=1 Y=1 Fixed=1 Marker=1 AdvancedCommand=0 Parameter1=9 Parameter2=6 Friendly=0
-SpecialForce: Type=751 X=1 Y=7 Fixed=1 Marker=1 AdvancedCommand=0 Parameter1=9 Parameter2=7 Friendly=0
-SpecialForce: Type=751 X=1 Y=10 Fixed=1 Marker=1 AdvancedCommand=0 Parameter1=9 Parameter2=7 Friendly=0
-S**pecialForce: Type=883 X=3 Y=11 Fixed=1 Marker=1 AdvancedCommand=0 Parameter1=9 Parameter2=8 Friendly=0
-
-// These two are guarding the lift, so that noone can escape the level
-SpecialForce: Type=883 X=19 Y=4 Fixed=1 Marker=1 AdvancedCommand=0 Parameter1=9 Parameter2=8 Friendly=0
-SpecialForce: Type=751 X=20 Y=5 Fixed=1 Marker=1 AdvancedCommand=0 Parameter1=9 Parameter2=8 Friendly=0
+Allowed Type of Random Droid for this level: 629
+Allowed Type of Random Droid for this level: 711
 ** End of this levels droid data **
+
+*** End of Droid Data ***
 
 ** Beginning of new Level **
 Level=7
@@ -470,12 +458,23 @@ Maximum number of Random Droids=0
 Minimum number of Random Droids=0
 Allowed Type of Random Droid for this level: 614
 Allowed Type of Random Droid for this level: 615
-Allowed Type of Random Droid for this level: 629
-Allowed Type of Random Droid for this level: 711
+
+// These are the three droids fireing at the front door of the retreatment
+SpecialForce: Type=629 X=13 Y=4 Fixed=1 Marker=1 AdvancedCommand=1 Parameter1=9 Parameter2=7 Friendly=0
+SpecialForce: Type=751 X=13 Y=7 Fixed=1 Marker=1 AdvancedCommand=1 Parameter1=9 Parameter2=7 Friendly=0
+SpecialForce: Type=883 X=13 Y=10 Fixed=1 Marker=1 AdvancedCommand=1 Parameter1=9 Parameter2=7 Friendly=0
+
+// These are the droids guarding the back entrance
+SpecialForce: Type=629 X=3 Y=3 Fixed=1 Marker=1 AdvancedCommand=0 Parameter1=9 Parameter2=6 Friendly=0
+SpecialForce: Type=629 X=1 Y=1 Fixed=1 Marker=1 AdvancedCommand=0 Parameter1=9 Parameter2=6 Friendly=0
+SpecialForce: Type=751 X=1 Y=7 Fixed=1 Marker=1 AdvancedCommand=0 Parameter1=9 Parameter2=7 Friendly=0
+SpecialForce: Type=751 X=1 Y=10 Fixed=1 Marker=1 AdvancedCommand=0 Parameter1=9 Parameter2=7 Friendly=0
+S**pecialForce: Type=883 X=3 Y=11 Fixed=1 Marker=1 AdvancedCommand=0 Parameter1=9 Parameter2=8 Friendly=0
+
+// These two are guarding the lift, so that noone can escape the level
+SpecialForce: Type=883 X=19 Y=4 Fixed=1 Marker=1 AdvancedCommand=0 Parameter1=9 Parameter2=8 Friendly=0
+SpecialForce: Type=751 X=20 Y=5 Fixed=1 Marker=1 AdvancedCommand=0 Parameter1=9 Parameter2=8 Friendly=0
 ** End of this levels droid data **
-
-*** End of Droid Data ***
-
 
 //**********************************************************************
 // This is Dr. Chandra, from whom you will receive your first mission

@@ -294,6 +294,20 @@ Event Action to be triggered by this trigger="teleport_from_telemetry_to_two"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
 
+// This is a pure location trigger.  Copy and adapt is as you feel like it.
+* Start of an Event Trigger Subsection *
+Influencer must be at X=53 Y=27 Lev=13
+Event Action to be triggered by this trigger="teleport_from_telemetry_to_quarters"
+Delete the event trigger after it has been triggered=-1
+* End of this Event Trigger Subsection *
+
+// This is a pure location trigger.  Copy and adapt is as you feel like it.
+* Start of an Event Trigger Subsection *
+Influencer must be at X=37 Y=12 Lev=14
+Event Action to be triggered by this trigger="teleport_from_quarters_to_telemetry"
+Delete the event trigger after it has been triggered=-1
+* End of this Event Trigger Subsection *
+
 
 
 
@@ -432,9 +446,21 @@ Action is Influencer say="Back to level one...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
 
+* Start of an Event Action Subsection *
+Action label for this action="teleport_from_telemetry_to_quarters"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Teleport to TelX=38 TelY=11 TelLev=14
+Action is Influencer say="Back to level one...."
+Action is mission assignment=-1
+* End of this Event Action Subsection *
 
-teleport_to_second_combat_lv"
-
+* Start of an Event Action Subsection *
+Action label for this action="teleport_from_quarters_to_telemetry"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Teleport to TelX=52 TelY=28 TelLev=13
+Action is Influencer say="Back to level one...."
+Action is mission assignment=-1
+* End of this Event Action Subsection *
 
 
 
