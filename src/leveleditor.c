@@ -956,6 +956,34 @@ HandleBannerMouseClick( void )
       FirstBlock+=8 ;
       DebugPrintf ( 1 , "\nBlocks should be scrolling now, if appropriate..." );
     }
+  else if( CursorIsOnButton(  LEVEL_EDITOR_FLOOR_TAB, GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ))
+    {
+      GameConfig . level_editor_edit_mode = LEVEL_EDITOR_SELECTION_FLOOR ;
+    }
+  else if( CursorIsOnButton(  LEVEL_EDITOR_WALLS_TAB, GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ))
+    {
+      GameConfig . level_editor_edit_mode = LEVEL_EDITOR_SELECTION_FLOOR + 1;
+    }
+  else if( CursorIsOnButton(  LEVEL_EDITOR_MACHINERY_TAB, GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ))
+    {
+      GameConfig . level_editor_edit_mode = LEVEL_EDITOR_SELECTION_FLOOR + 2 ;
+    }
+  else if( CursorIsOnButton(  LEVEL_EDITOR_FURNITURE_TAB, GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ))
+    {
+      GameConfig . level_editor_edit_mode = LEVEL_EDITOR_SELECTION_FLOOR + 3;
+    }
+  else if( CursorIsOnButton(  LEVEL_EDITOR_CONTAINERS_TAB, GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ))
+    {
+      GameConfig . level_editor_edit_mode = LEVEL_EDITOR_SELECTION_FLOOR + 4;
+    }
+  else if( CursorIsOnButton(  LEVEL_EDITOR_PLANTS_TAB, GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ))
+    {
+      GameConfig . level_editor_edit_mode = LEVEL_EDITOR_SELECTION_FLOOR + 5;
+    }
+  else if( CursorIsOnButton(  LEVEL_EDITOR_ALL_TAB, GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ))
+    {
+      GameConfig . level_editor_edit_mode = LEVEL_EDITOR_SELECTION_FLOOR + 6;
+    }
   else
     {
       // could be a click on a block
@@ -1103,9 +1131,6 @@ ShowLevelEditorTopMenu( int Highlight )
 	//
 	selected_index ++ ;
     }
-    
-    ShowGenericButtonFromList ( LEFT_LEVEL_EDITOR_BUTTON ) ;
-    ShowGenericButtonFromList ( RIGHT_LEVEL_EDITOR_BUTTON ) ;
     
 }; // void ShowLevelEditorTopMenu( void )
 
@@ -3676,11 +3701,6 @@ show_level_editor_tooltips ( void )
       if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
 	show_button_tooltip ( "Use this button to drop a new item to the floor.  You can also use the hotkey 'G' for this." );
     }
-  else if ( CursorIsOnButton ( LEVEL_EDITOR_MODE_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
-    {
-      if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
-	show_button_tooltip ( "Use this button to switch between obstacle edit mode and floor edit mode.  The two modes are easily recognized by the top level editor banner showing either floor tiles or obstacles.\n Note, that you can also use the 'f' key to switch between these two modes." );
-    }
   else if ( CursorIsOnButton ( LEVEL_EDITOR_ESC_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
     {
       if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
@@ -4120,7 +4140,7 @@ LevelEditor(void)
 	  ShowGenericButtonFromList ( LEVEL_EDITOR_NEW_OBSTACLE_LABEL_BUTTON );
 	  ShowGenericButtonFromList ( LEVEL_EDITOR_NEW_MAP_LABEL_BUTTON );
 	  ShowGenericButtonFromList ( LEVEL_EDITOR_NEW_ITEM_BUTTON );
-	  ShowGenericButtonFromList ( LEVEL_EDITOR_MODE_BUTTON );
+//	  ShowGenericButtonFromList ( LEVEL_EDITOR_MODE_BUTTON );
 	  ShowGenericButtonFromList ( LEVEL_EDITOR_ESC_BUTTON );
 	  ShowGenericButtonFromList ( LEVEL_EDITOR_LEVEL_RESIZE_BUTTON );
 	  ShowGenericButtonFromList ( LEVEL_EDITOR_KEYMAP_BUTTON );
@@ -4446,15 +4466,6 @@ LevelEditor(void)
 	      else if ( CursorIsOnButton ( LEVEL_EDITOR_NEW_ITEM_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 		{
 		  ItemDropFromLevelEditor(  );
-		}
-	      else if ( CursorIsOnButton ( LEVEL_EDITOR_MODE_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
-	      {
-		  GameConfig . level_editor_edit_mode ++ ;
-		  if ( GameConfig . level_editor_edit_mode >= NUMBER_OF_LEVEL_EDITOR_GROUPS )
-		      GameConfig . level_editor_edit_mode = LEVEL_EDITOR_SELECTION_FLOOR ;
-		  if ( FirstBlock >= number_of_walls [ GameConfig . level_editor_edit_mode ] )
-		      FirstBlock = 0 ;
-		  while ( SpacePressed() );
 		}
 	      else if ( CursorIsOnButton ( LEVEL_EDITOR_ESC_BUTTON , GetMousePos_x() + MOUSE_CROSSHAIR_OFFSET_X , GetMousePos_y() + MOUSE_CROSSHAIR_OFFSET_Y ) )
 		{

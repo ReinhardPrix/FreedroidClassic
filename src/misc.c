@@ -102,8 +102,8 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "mouse_buttons/RightShopButton.png"              , { 576 , 447 ,  26 ,  26 } } ,
     { NULL , "mouse_buttons/LeftShopButton.png"               , {   5 ,  16 ,  26 ,  26 } } ,
     { NULL , "mouse_buttons/RightShopButton.png"              , { 580 ,  13 ,  26 ,  26 } } ,
-    { NULL , "mouse_buttons/LeftShopButton.png"               , {  10 ,  20 ,  40 ,  40 } } ,
-    { NULL , "mouse_buttons/RightShopButton.png"              , { 600 ,  20 ,  40 ,  40 } } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , {  3 ,  25 ,  15 ,  60 } } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                       , { 620 ,  26 ,  15 ,  60 } } ,
 
     { NULL , "mouse_buttons/number_selector_ok_button.png"    , { 300 , 288 ,  71 ,  31 } } ,
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 148 , 244 ,  35 ,  35 } } ,
@@ -130,7 +130,7 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "mouse_buttons/LevelEditorNewObstacleLabelButton.png" , { 90 , 90 , 0 ,  0 } } ,
     { NULL , "mouse_buttons/LevelEditorNewMapLabelButton.png" , { 120 , 90 , 0 ,  0 } } ,
     { NULL , "mouse_buttons/LevelEditorNewItemButton.png"     , { 150 , 90 , 0 ,  0 } } ,
-    { NULL , "mouse_buttons/LevelEditorMODEButton.png"        , { 0 , 90 , 0 ,  0 } } ,
+ //   { NULL , "mouse_buttons/LevelEditorMODEButton.png"        , { 0 , 90 , 0 ,  0 } } ,
     { NULL , "mouse_buttons/LevelEditorESCButton.png"         , { 430 , 90 , 0 ,  0 } } ,
     { NULL , "mouse_buttons/LevelEditorResizeLevelButton.png" , { 460 , 90 , 0 ,  0 } } ,
     { NULL , "mouse_buttons/LevelEditorKeymapButton.png"      , { 640-120 , 90 , 0 ,  0 } } ,
@@ -177,6 +177,14 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
 
     { NULL , "mouse_buttons/ScrollDialogMenuUp.png"           , { 335 , 6   , 160 ,  20 } } ,
     { NULL , "mouse_buttons/ScrollDialogMenuDown.png"         , { 335 , 270 , 160 ,  20 } } ,
+    
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 0   , 3 , 99 ,  14 } } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 102 , 3 , 99 ,  14 } } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 203 , 3 , 99 ,  14 } } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 304 , 3 , 99 ,  14 } } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 405 , 3 , 99 ,  14 } } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 506 , 3 , 99 ,  14 } } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 606 , 3 , 34 ,  14 } } ,
 
   }; // AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] 
 
@@ -258,6 +266,11 @@ button index given exceeds the number of buttons defined in freedroid.",
 				 PLEASE_INFORM, IS_FATAL );
     }
 
+  // Now check if this button needs blitting
+  if (! strcmp(  AllMousePressButtons[ ButtonIndex ] . button_image_file_name, "THIS_DOESNT_NEED_BLITTING")) {
+    return ;
+  }
+  
   //--------------------
   // Now we check if we have to load the button image still
   // or if it is perhaps already loaded into memory.
@@ -1033,7 +1046,6 @@ Teleport (int LNum, float X, float Y, int PlayerNum , int Shuffling , int WithSo
 
   if ( curLevel != Me [ PlayerNum ] . pos . z )
     {	
-
       //--------------------
       // In case a real level change has happend,
       // we need to do a lot of work.  Therefore we start by activating
