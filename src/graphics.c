@@ -84,82 +84,6 @@ MakeGridOnScreen(void){
 
 unsigned char *MemSearch (unsigned char *, unsigned char *, unsigned char *);
 
-void
-readpcximage (FILE * file, void *target, int size)
-{
-  unsigned char buf;
-  unsigned int counter;
-  int i = 0;
-  while (i <= size)		/* Image not entirely read? */
-    {
-      /* Get one byte */
-      fread (&buf, 1, 1, file);
-      /* Check the 2 most significant bits */
-      if ((buf & 192) == 192)
-	{
-	  /* We have 11xxxxxx */
-	  counter = (buf & 63);	/* Number of times to repeat next byte */
-	  fread (&buf, 1, 1, file);	/* Get next byte */
-	  for (; counter > 0; counter--)	/* and copy it counter times */
-	    {
-	      ((char *) target)[i] = buf;
-	      i++;		/* increase the number of bytes written */
-	    }
-	}
-      else
-	{
-	  /* Just copy the byte */
-	  ((char *) target)[i] = buf;
-	  i++;			/* Increase the number of bytes written */
-	}
-    }
-}				// void readpcximage(...)
-
-void *
-readpcx (FILE * file, char *palette, unsigned short int *length,
-	 unsigned short int *height)
-     /* Returns NULL if failed, otherwise a pointer to the loaded image */
-{
-  PCX_Header header;
-  void *target;
-
-  DebugPrintf ("\nvoid* readpcx(...):  Real function call confirmed....");
-
-  fseek (file, 0, SEEK_SET);
-  fread (&header, sizeof (PCX_Header), 1, file);	/* read the header */
-  /* Check if this file is in pcx format */
-  if ((header.signature != 0x0a) || (header.version != 5))
-    {
-      DebugPrintf ("\nvoid* readpcx(...): ERROR in header-signature!\n");
-      DebugPrintf
-	("\nvoid* readpcx(...):  ERROR: end of function reached....");
-      return (NULL);
-    }
-  else
-    {				/* it is! */
-      /* Return height and length */
-      *length = header.xmax + 1 - header.xmin;
-      *height = header.ymax + 1 - header.ymin;
-      /* Allocate the sprite buffer */
-      target = (void *) malloc ((*length) * (*height));
-      /* Read the image */
-      readpcximage (file, target, (*length) * (*height));
-      fseek (file, -768, SEEK_END);
-      /* Get the palette */
-      fread (palette, 1, 768, file);
-      /* PCX succesfully read! */
-
-      DebugPrintf
-	("\nvoid* readpcx(...):  SUCCESS: end of function reached....");
-      return (target);
-    }
-
-  DebugPrintf
-    ("\nvoid* readpcx(...):  UNREACHABLE: end of function reached....");
-
-} // void *readpcx(...)
-
-
 SDL_Surface *LoadImage(char *datafile, int transparent)
 {
   SDL_Surface *image, *surface;
@@ -234,14 +158,6 @@ Load_PCX_Image (char *PCX_Filename, unsigned char *Parameter_Screen, int LoadPal
 
   display_bmp(PCX_Filename);
 
-  /*
-  LocalImage = LoadImage( PCX_Filename , 1);
-  if ( LocalImage == NULL ) {
-    printf("\n\nvoid Load_PCX_Image: ERROR Loading image...\n\nTerminating...\n\n");
-    Terminate(ERR);
-  } 
-  */
-
   SDL_UpdateRect(screen, 0, 0, SCREENBREITE, SCREENHOEHE);
 
   Lock_SDL_Screen();
@@ -253,55 +169,6 @@ Load_PCX_Image (char *PCX_Filename, unsigned char *Parameter_Screen, int LoadPal
       }
 
   Unlock_SDL_Screen();
-
-  /*
-  if ((file = fopen (PCX_Filename, "r")) == NULL)
-    {
-      DebugPrintf ("\nLoad_PCX_Image(...): Can't open file!\n");
-      Terminate (ERR);
-    }
-
-  if ((image = readpcx (file, palette, &length, &height)) == NULL)
-    {
-      DebugPrintf ("\nLoad_PCX_Image(...): Error loading file!\n");
-      Terminate (ERR);
-    }
-
-  DebugPrintf
-    ("\nvoid Load_PCX_Image(...):  Loading done... closing file.....");
-
-  fclose (file);
-
-  DebugPrintf
-    ("\nvoid Load_PCX_Image(...):  image file has been loaded successfully....");
-  DebugPrintf ("\nvoid Load_PCX_Image(...): The Filename is:");
-  DebugPrintf (PCX_Filename);
-
-  printf ("\nLoad_PCX_Image(...): Image is %dx%d sized.\n", length, height);
-
-  if ((length > 320) || (height > 200))
-    {
-      DebugPrintf ("Image is too big!\n");
-      Terminate (ERR);
-    }
-
-  if (LoadPal)
-    {
-      for (i = 0; i < 768; i++)
-	palette[i] = palette[i] >> 2;
-      gl_setpalette (palette);
-    }
-
-  if (Screen == RealScreen)
-    {
-      gl_clearscreen (0);
-      gl_putbox (0, 0, length, height, image);
-    }
-  else
-    {
-      memcpy (Screen, image, length * height);
-    }
-  */
 
   DebugPrintf ("\nvoid Load_PCX_Image(...):  end of function reached.");
 
@@ -562,12 +429,7 @@ SetColors (int FirstCol, int PalAnz, char *PalPtr)
 void
 Monitorsignalunterbrechung (int Signal)
 {
-  //    asm{
-  //            mov ax,Signal
-  //            mov ah,12h
-  //            mov bl,36h
-  //            int 10h
-  //    }
+
 }
 
 /*@Function============================================================

@@ -356,6 +356,8 @@ ScrollText (char *Text, int startx, int starty, int EndLine)
 
       usleep (30000);
 
+      PrepareScaledSurface();
+
       ClearTextBorder (InternalScreen, CurrentFontBG);
       DisplayText (Text, startx, InsertLine, InternalScreen, FALSE);
       InsertLine -= speed;

@@ -357,7 +357,8 @@ int vga_setmode(int mode)
     exit(2);
   }
 
-  SDL_SetGamma( 1.4 , 2.5 , 2.5 );
+  // SDL_SetGamma( 1.4 , 2.5 , 2.5 );
+  SDL_SetGamma( 2 , 2 , 2 );
 
   // SDL_CreateRGBSurface( SDL_SWSURFACE , 640, 480, 8, screen->Rmask, screen->Gmask, screen->Bmask, screen->Amask);
   screen = SDL_CreateRGBSurface( SDL_SWSURFACE , 320, 200, 8, 0, 0, 0, 0 );

@@ -626,6 +626,8 @@ Title (void)
   // LadeLBMBild(TITELBILD1,RealScreen,FALSE);  /* Titelbild laden */
   Load_PCX_Image (TITELBILD1_PCX, RealScreen, TRUE);	/* Titelbild laden */
 
+  PrepareScaledSurface();
+
   while (!SpacePressed ())
     JoystickControl ();
 
@@ -637,6 +639,7 @@ Title (void)
   // DisplayRahmen(RealScreen);
 
   Load_PCX_Image (RAHMENBILD1_PCX, RealScreen, FALSE);	/* Titelbild laden */
+
 
   SetTextBorder (USERFENSTERPOSX, USERFENSTERPOSY,
 		 USERFENSTERPOSX + USERFENSTERBREITE,

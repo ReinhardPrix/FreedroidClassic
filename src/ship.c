@@ -161,6 +161,8 @@ EnterElevator (void)
   ShowElevators ();
   HilightElevator (row);
 
+  PrepareScaledSurface();
+
   /* Warten, bis User Feuer auslaesst */
   while (SpacePressed ())
     {
