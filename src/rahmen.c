@@ -271,7 +271,7 @@ ShowCurrentHealthLevel( void )
   Whole_Health_Rect.h = WHOLE_HEALTH_RECT_H;
 
   SDL_SetClipRect( Screen , NULL );
-  SDL_FillRect( Screen , & ( Health_Rect ) , 0x000FF00 );
+  SDL_FillRect( Screen , & ( Health_Rect ) , HEALTH_RECT_COLOR );
   SDL_FillRect( Screen , & ( Unhealth_Rect ) , 0x0FF0000 );
   // SDL_UpdateRect( Screen , Whole_Health_Rect.x , Whole_Health_Rect.y , Whole_Health_Rect.w , Whole_Health_Rect.h );
   //  SDL_Flip( Screen );
@@ -308,7 +308,7 @@ ShowCurrentTextWindow ( void )
   CurPos.x = GetMousePos_x() + 16 ;
   CurPos.y = GetMousePos_y() + 16 ;
   SDL_SetClipRect( Screen , NULL );  // this unsets the clipping rectangle
-  SDL_FillRect( Screen , &Banner_Text_Rect , 0x00 );
+  SDL_FillRect( Screen , &Banner_Text_Rect , BANNER_TEXT_REC_BACKGROUNDCOLOR );
 
   //--------------------
   // In case some item is held in hand by the player, the situation is simple:
