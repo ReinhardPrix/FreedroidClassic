@@ -642,6 +642,7 @@ void
 CollectAutomapData ( void )
 {
   int x , y ;
+  int start_x, start_y, end_x, end_y;
   // finepoint ObjPos;
   gps ObjPos;
   static int TimePassed;
@@ -659,11 +660,28 @@ CollectAutomapData ( void )
   TimePassed = (int) Me[0].MissionTimeElapsed;
 
   //--------------------
+  // Earlier we had
+  //
+  // start_x = 0 ; start_y = 0 ; end_x = AutomapLevel->xlen ; end_y = AutomapLevel->ylen ;
+  //
+  // when maximal automap was generated.  Now we only add to the automap what really is on screen...
+  //
+  start_x = Me [ 0 ] . pos . x - 7 ; 
+  end_x = Me [ 0 ] . pos . x + 7 ; 
+  start_y = Me [ 0 ] . pos . y - 7 ; 
+  end_y = Me [ 0 ] . pos . y + 7 ; 
+
+  if ( start_x < 0 ) start_x = 0 ; 
+  if ( end_x > AutomapLevel->xlen ) end_x = AutomapLevel->xlen ;
+  if ( start_y < 0 ) start_y = 0 ; 
+  if ( end_y > AutomapLevel->ylen ) end_y = AutomapLevel->ylen ;
+
+  //--------------------
   // Now we do the actual checking for visible wall components.
   //
-  for ( y = 0 ; y < AutomapLevel->ylen ; y ++ )
+  for ( y = start_y ; y < end_y ; y ++ )
     {
-      for ( x = 0 ; x < AutomapLevel->xlen ; x ++ )
+      for ( x = start_x ; x < end_x ; x ++ )
 	{
 	  if ( IsWallBlock( AutomapLevel->map[y][x] ) ) 
 	    {
