@@ -9395,6 +9395,7 @@ label.pos.x=55 label.pos.y=50 label.label_name="Lev8Start123Nr9"
 label.pos.x=53 label.pos.y=52 label.label_name="Lev8Start123Nr10"
 label.pos.x=44 label.pos.y=39 label.label_name="Lev8Start123Nr11"
 label.pos.x=47 label.pos.y=41 label.label_name="Lev8Start123Nr12"
+label.pos.x=38 label.pos.y=12 label.label_name="The302InFrontOfTheTempleStart"
 End of pure map label information for this level
 Start of pure obstacle label information for this level
 End of pure obstacle label information for this level
@@ -9519,10 +9520,10 @@ Nr.= 95 x=  44 y=  41	 connections:   96  98  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 96 x=  44 y=  39	 connections:   95  97  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 97 x=  47 y=  39	 connections:   98  96  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 98 x=  47 y=  41	 connections:   97  95  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 99 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=100 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=101 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.=102 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 99 x=  38 y=  12	 connections:  102 100  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=100 x=  38 y=   7	 connections:   99 101  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=101 x=  43 y=   7	 connections:  100 102  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.=102 x=  43 y=  12	 connections:   99 101  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=103 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=104 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=105 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
