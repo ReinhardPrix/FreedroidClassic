@@ -254,7 +254,8 @@ enum
 #define SOUND_DIR		"sound/"
 #define MAP_DIR			"map/"
 
-#define NE_DROID_BLOCK_FILE	"droids.png"
+#define BALL_SHAPED_DROIDS_FILE	"droids.png"
+#define TUX_MOTIONS_FILE        "tux_motions.png"
 #define NE_BULLET_BLOCK_FILE 	"bullet.png"
 #define NE_BLAST_BLOCK_FILE 	"blast.png"
 #define NE_DIGIT_BLOCK_FILE     "digits.gif"

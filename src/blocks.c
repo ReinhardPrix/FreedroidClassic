@@ -494,7 +494,7 @@ Load_Enemy_Surfaces( void )
   PrefixToFilename [ i ] = "proffa" ;
   ModelMultiplier  [ i ] = 1 ;i++;
 
-  fpath = find_file ( NE_DROID_BLOCK_FILE , GRAPHICS_DIR, TRUE);
+  fpath = find_file ( BALL_SHAPED_DROIDS_FILE , GRAPHICS_DIR, TRUE);
 
   Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
   SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
@@ -556,7 +556,7 @@ Load_Influencer_Surfaces( void )
   int i;
   char *fpath;
 
-  fpath = find_file ( NE_DROID_BLOCK_FILE , GRAPHICS_DIR, TRUE);
+  fpath = find_file ( BALL_SHAPED_DROIDS_FILE , GRAPHICS_DIR, TRUE);
 
   Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
   SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
@@ -777,7 +777,7 @@ Load_Tux_Surfaces( void )
 #define TUX_HEIGHT 130
 
 
-  fpath = find_file ( NE_DROID_BLOCK_FILE , GRAPHICS_DIR, TRUE);
+  fpath = find_file ( TUX_MOTIONS_FILE , GRAPHICS_DIR, TRUE);
 
   Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
   SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE ); // this should 
@@ -799,7 +799,7 @@ Load_Tux_Surfaces( void )
 			    SDL_MapRGB( TuxMotionArchetypes[j][i]->format, 255, 0, 255) ); 
 	  // Now we can copy the image Information
 	  Source.x=i*( TUX_WIDTH  + 2 );
-	  Source.y=( 1 + j ) * ( TUX_HEIGHT + 2 ) ;
+	  Source.y=( 0 + j ) * ( TUX_HEIGHT + 2 ) ;
 	  Source.w=TUX_WIDTH;
 	  Source.h=TUX_HEIGHT;
 	  Target.x=0;
