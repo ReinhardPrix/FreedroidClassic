@@ -978,7 +978,11 @@ Sorry...\n\
 
   if ( AllEnemys[Enum].is_friendly == 0 ) 
     {
-      if ( AllEnemys[Enum].frozen != 0 ) 
+      if ( AllEnemys[Enum].poison_duration_left != 0 ) 
+	{
+	  SDL_BlitSurface( GreenEnemySurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
+	}
+      else if ( AllEnemys[Enum].frozen != 0 ) 
 	{
 	  SDL_BlitSurface( BlueEnemySurfacePointer[ phase ] , NULL , Screen, &TargetRectangle);
 	}

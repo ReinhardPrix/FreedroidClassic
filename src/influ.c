@@ -1159,7 +1159,7 @@ GetLivingDroidBelowMouseCursor ( int PlayerNum )
  * and SILENTLY TRUSTING THAT THIS TUX HAS A RANGED WEAPON EQUIPPED.
  * ---------------------------------------------------------------------- */
 void
-FireTuxRangedWeaponRaw ( int PlayerNum , int weapon_item_type , int bullet_image_type, int ForceMouseUse , int FreezeSeconds ) 
+FireTuxRangedWeaponRaw ( int PlayerNum , int weapon_item_type , int bullet_image_type, int ForceMouseUse , int FreezeSeconds , float PoisonDuration , float PoisonDamagePerSec ) 
 {
   int i = 0;
   Bullet CurBullet = NULL;  // the bullet we're currentl dealing with
@@ -1213,6 +1213,8 @@ FireTuxRangedWeaponRaw ( int PlayerNum , int weapon_item_type , int bullet_image
   memset( CurBullet->total_miss_hit , UNCHECKED , MAX_ENEMYS_ON_SHIP );
   CurBullet->to_hit = Me [ PlayerNum ] .to_hit;
   CurBullet->freezing_level = FreezeSeconds;
+  CurBullet->poison_duration = PoisonDuration;
+  CurBullet->poison_damage_per_sec = PoisonDamagePerSec;
 
   Me [ PlayerNum ] . firewait = ItemMap[ weapon_item_type ].item_gun_recharging_time;
 
@@ -1504,7 +1506,7 @@ FireBullet ( int PlayerNum )
       return;
     }
 
-  FireTuxRangedWeaponRaw ( PlayerNum , Me [ PlayerNum ] .weapon_item.type , guntype, FALSE , 0 ) ;
+  FireTuxRangedWeaponRaw ( PlayerNum , Me [ PlayerNum ] .weapon_item.type , guntype, FALSE , 0 , 0 , 0 ) ;
 
 
   return;

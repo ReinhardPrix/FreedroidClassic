@@ -101,7 +101,7 @@ FireyBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
       Me[0].mana -= SpellCost;
 
       //FireTuxRangedWeaponRaw ( 0 , ITEM_COMPOSITE_BOW ) ;
-      FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , MAGENTA_BULLET, TRUE , 0 ) ;
+      FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , MAGENTA_BULLET, TRUE , 0 , 0 , 0 ) ;
 
       Play_Spell_ForceToEnergy_Sound( );
 
@@ -127,7 +127,7 @@ ColdBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
       Me[0].mana -= SpellCost;
 
       //FireTuxRangedWeaponRaw ( 0 , ITEM_COMPOSITE_BOW ) ;
-      FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , BLUE_BULLET , TRUE , 3 ) ;
+      FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , BLUE_BULLET , TRUE , 3 , 0 , 0 ) ;
 
       Play_Spell_ForceToEnergy_Sound( );
 
@@ -139,6 +139,32 @@ ColdBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
       Not_Enough_Mana_Sound(  );
     }
 }; // void ColdBoltSpell ( ... )
+
+/* ----------------------------------------------------------------------
+ * This function creates a teleporter portal to the home location.
+ * ---------------------------------------------------------------------- */
+void
+PoisonBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
+{
+  int SpellCost = ManaCostTable [ 6 ][ Me[ 0 ].SkillLevel [ 6 ] ] ;
+
+  if ( Me [ 0 ] . mana >= SpellCost )
+    {
+      Me[0].mana -= SpellCost;
+
+      //FireTuxRangedWeaponRaw ( 0 , ITEM_COMPOSITE_BOW ) ;
+      FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , GREEN_BULLET , TRUE , 0 , 3 , 1 ) ;
+
+      Play_Spell_ForceToEnergy_Sound( );
+
+    }
+  else
+    {
+      Me[0].TextVisibleTime = 0;
+      Me[0].TextToBeDisplayed = "Not enough force left within me.";
+      Not_Enough_Mana_Sound(  );
+    }
+}; // void PoisonBoltSpell ( ... )
 
 /* ----------------------------------------------------------------------
  * This function creates a teleporter portal to the home location.
@@ -360,6 +386,18 @@ HandleCurrentlyActivatedSkill( void )
 	      TargetPoint . x = Me [ 0 ] . pos . x + ( GetMousePos_x() + 16 ) / Block_Width ;
 	      TargetPoint . y = Me [ 0 ] . pos . y + ( GetMousePos_y() + 16 ) / Block_Height ; 
 	      ColdBoltSpell ( Me [ 0 ] . pos , TargetPoint );
+	    }
+	}
+    }
+  else if ( Me[0].readied_skill == 8 )
+    {
+      if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
+	{
+	  if ( CursorIsInUserRect ( GetMousePos_x() + 16 , GetMousePos_y() + 16) )
+	    {
+	      TargetPoint . x = Me [ 0 ] . pos . x + ( GetMousePos_x() + 16 ) / Block_Width ;
+	      TargetPoint . y = Me [ 0 ] . pos . y + ( GetMousePos_y() + 16 ) / Block_Height ; 
+	      PoisonBoltSpell ( Me [ 0 ] . pos , TargetPoint );
 	    }
 	}
     }

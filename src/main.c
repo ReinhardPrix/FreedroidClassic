@@ -236,6 +236,13 @@ UpdateCountersForThisFrame ( int PlayerNum )
 	      if (AllEnemys[i].frozen < 0) AllEnemys[i].frozen = 0;
 	    }
 	  
+	  if (AllEnemys[i].poison_duration_left > 0) 
+	    {
+	      AllEnemys[i].poison_duration_left -= Frame_Time() ;
+	      if (AllEnemys[i].poison_duration_left < 0) AllEnemys[i].poison_duration_left = 0;
+	      AllEnemys[i].energy -= Frame_Time() * AllEnemys[i].poison_damage_per_sec ;
+	    }
+	  
 	  if (AllEnemys[i].firewait > 0) 
 	    {
 	      AllEnemys[i].firewait -= Frame_Time() ;

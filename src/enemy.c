@@ -229,6 +229,9 @@ ClearEnemys ( void )
       AllEnemys[i].nextwaypoint = AllEnemys[i].lastwaypoint = 0;
       AllEnemys[i].Status = OUT;
       AllEnemys[i].warten = 0;
+      AllEnemys[i].frozen = 0;
+      AllEnemys[i].poison_duration_left = 0;
+      AllEnemys[i].poison_damage_per_sec = 0;
       AllEnemys[i].firewait = 0;
       AllEnemys[i].energy = 0;
       AllEnemys[i].SpecialForce = 0;
@@ -1112,6 +1115,9 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
   
   NewBullet->time_in_seconds = 0;
   NewBullet->time_in_frames = 0;
+  NewBullet->poison_duration = 0;
+  NewBullet->poison_damage_per_sec = 0;
+  NewBullet->freezing_level = 0;
   NewBullet->bullet_lifetime = ItemMap [ Druidmap[ThisRobot->type].weapon_item.type ].item_gun_bullet_lifetime;
   
   NewBullet->angle_change_rate = ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_angle_change;

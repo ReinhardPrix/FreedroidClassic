@@ -589,6 +589,9 @@ CheckBulletCollisions (int num)
 		      AllEnemys[i].energy -= CurBullet->damage;
 
 		      AllEnemys[i].frozen += CurBullet->freezing_level;
+
+		      AllEnemys[i].poison_duration_left += CurBullet->poison_duration;
+		      AllEnemys[i].poison_damage_per_sec += CurBullet->poison_damage_per_sec;
 		      
 		      AllEnemys[i].firewait =
 			1 * ItemMap [ Druidmap [ AllEnemys[ i ].type ].weapon_item.type ].item_gun_recharging_time ;
