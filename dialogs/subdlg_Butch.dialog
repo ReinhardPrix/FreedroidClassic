@@ -32,10 +32,11 @@ freedroid-discussion@lists.sourceforge.net
 BEGIN OF AUTORS NOTES
 
 
-
 You can use this text field to make some notes on ANYTHING.  
 It's purely for the author's reference.  
 The game engine will ignore this entry.
+
+
 
 
 
@@ -52,7 +53,7 @@ ChangeOption=0 ChangeToValue=0
 ChangeOption=99 ChangeToValue=1
 ChangeOption=7 ChangeToValue=1
 ChangeOption=1 ChangeToValue=1
-AlwaysExecuteThisOptionPriorToDialogStart="no"
+AlwaysExecuteThisOptionPriorToDialogStart="yes"
 
 ----------------------------------------------------------------------
 
@@ -78,7 +79,7 @@ New Option Nr=3  OptionText="GO_THERE_AND_DO_IT"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=482  PositionY=135  
 Subtitle="I've already opened the door for you.  All you need to do is walk in there and crush all four bots."
-ReplySample=""
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -101,8 +102,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=5  OptionText="ASSIGN MASTER ARENA"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=552  PositionY=271  
-Subtitle="Ok.  I've unlocked the door to the master arena now.  But take care, this will not be so easy any more.  I wish you the best of luck."
-ReplySample=""
+Subtitle="Ok.  I've unlocked the door to the master arena now.  But take care, this will not be so easy any more. "
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="In fact, you should know that we've got a 711 battle bot in there.  It's deadly disruptor flashes cannot be evaded.  "
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="You should make sure you've got proper anti-disruptor devices on you or just kill it fast enough.  Good luck!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=0
 DoSomethingExtra="ExecuteActionWithLabel:unlock_master_arena_access_door"
 DoSomethingExtra="AssignMission:4"
@@ -114,9 +119,9 @@ New Option Nr=6  OptionText="ITS_ALL_DONE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=481  PositionY=215  
 Subtitle="You've already completed the novice arena, and currently we don't have any bots to place in there. "
-ReplySample=""
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="But you might want to try the master arena now, maybe?  If so, just say so."
-ReplySample=""
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=6 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -144,11 +149,11 @@ New Option Nr=9  OptionText="NOVICE_NOT_YET_DONE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=347  PositionY=383  
 Subtitle="I'm sorry but town regulations forbit access to the master arena unless you've completed the novice arena first."
-ReplySample=""
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="This regulation is there for your own safely, so that no newbie accidentially signs up for the master arena."
-ReplySample=""
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="You might try taking the novice arena first. Then I can grant you access to the master field."
-ReplySample=""
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=9 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -158,9 +163,11 @@ New Option Nr=10  OptionText="MASTER ALREADY ASSIGNED"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=554  PositionY=339  
 Subtitle="But I've already opend the door.  What are you waiting for?  All you need to do is go down to the master arena and fight the bots."
-ReplySample=""
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="But I can understand if you hesitate.  The master arena is by no means an easy task.  Maybe you should practice some more before you go down."
-ReplySample=""
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="When you should make sure you've got proper anti-disruptor devices on you or the 711 disruptor flash will kill you in 2 seconds."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=10 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -170,9 +177,9 @@ New Option Nr=11  OptionText="MASTER IS DONE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=452  PositionY=370  
 Subtitle="But you've already completed the master arena.  I'm afraid we don't have any arena bots left for you."
-ReplySample=""
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="But certainly you've earned yourself a reputation as arena master around here now and we respect that."
-ReplySample=""
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=11 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -189,7 +196,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=99  OptionText="BACK"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
-PositionX=245  PositionY=425  
+PositionX=243  PositionY=378  
 ChangeOption=99 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 

@@ -32,9 +32,11 @@ freedroid-discussion@lists.sourceforge.net
 BEGIN OF AUTORS NOTES
 
 
+
 You can use this text field to make some notes on ANYTHING.  
 It's purely for the author's reference.  
 The game engine will ignore this entry.
+
 
 
 
@@ -68,7 +70,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=2  OptionText="I would like to fight in the arena."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=179  PositionY=123  
+PositionX=246  PositionY=137  
 Subtitle="That's a good idea, but currently the duelling arena is rented out until next month."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="You can only have a fight against some bots if you would like that."
@@ -77,7 +79,7 @@ Subtitle="We have two arena grounds.  One is more for novice fighters, the other
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="I think I need not explain that further.  Now, which one will it be?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=2 ChangeToValue=0
+ChangeOption=2 ChangeToValue=1
 DoSomethingExtra="ExecuteSubdialog:subdlg_Butch"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
