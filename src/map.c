@@ -2838,6 +2838,7 @@ game data file with all droid type specifications.",
       AllEnemys[ FreeAllEnemysPosition ] . pos . z = OurLevelNumber;
       AllEnemys[ FreeAllEnemysPosition ] . Status = MOBILE ; // !OUT;
       AllEnemys[ FreeAllEnemysPosition ] . on_death_drop_item_code = (-1) ;
+      strcpy ( AllEnemys[ FreeAllEnemysPosition ] . dialog_section_name , "StandardBotAfterTakeover" );
 
       strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "No Description For This One" );
 

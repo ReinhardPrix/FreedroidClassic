@@ -435,7 +435,7 @@ MoveActiveSpells (void)
 	      
 	      if ( fabsf ( DistanceFromCenter - AllActiveSpells [ i ] . spell_radius ) < 0.4 )
 		{
-		  AllEnemys [ j ] . energy -= 200.0 * Frame_Time();
+		  AllEnemys [ j ] . energy -= 80.0 * Frame_Time();
 		  AllEnemys [ j ] . firewait = Druidmap [ AllEnemys [ j ] . type ] . recover_time_after_getting_hit ;
 		}
 	    }
@@ -468,7 +468,7 @@ MoveActiveSpells (void)
 	      
 	      if ( fabsf ( DistanceFromCenter - AllActiveSpells [ i ] . spell_radius ) < 0.4 )
 		{
-		  AllEnemys [ j ] . energy -= 500.0 * Frame_Time();
+		  AllEnemys [ j ] . energy -= 180.0 * Frame_Time();
 		  AllEnemys [ j ] . firewait = Druidmap [ AllEnemys [ j ] . type ] . recover_time_after_getting_hit ;
 		}
 	    }
@@ -501,7 +501,7 @@ MoveActiveSpells (void)
 	      
 	      if ( fabsf ( DistanceFromCenter - AllActiveSpells [ i ] . spell_radius ) < 0.4 )
 		{
-		  AllEnemys [ j ] . energy -= 1000.0 * Frame_Time();
+		  AllEnemys [ j ] . energy -= 300.0 * Frame_Time();
 		  AllEnemys [ j ] . firewait = Druidmap [ AllEnemys [ j ] . type ] . recover_time_after_getting_hit ;
 		}
 	    }
