@@ -1471,8 +1471,14 @@ Teleport ( int LNum , float X , float Y , int PlayerNum , int Shuffling , int wi
     int array_num = 0;
     Level tmp;
     int i;
-    static char entering_message[1000];
-    
+
+    //--------------------
+    // Maybe the 'teleport' really comes from a teleportation device or
+    // teleport spell or maybe even from accessing some sewer accessway.
+    // In that case we'll fade out the screen a bit using the gamme ramp
+    // and then later back in again.  (Note that this is a blocking function
+    // call, i.e. it will take a second or so each.)
+    //
     if ( with_sound_and_fading ) 
     {
 	fade_out_using_gamma_ramp ();

@@ -457,7 +457,7 @@ hmmm... either the surface has been freed and the pointer moved cleanly to NULL\
     // Having prepared the raw image it's now time to create the real
     // textures.
     //
-    glPixelStorei( GL_UNPACK_ALIGNMENT,1 );
+    glPixelStorei ( GL_UNPACK_ALIGNMENT , 1 );
     
     //--------------------
     // We must not call glGenTextures more than once in all of Freedroid,
@@ -512,8 +512,8 @@ hmmm... either the surface has been freed and the pointer moved cleanly to NULL\
     glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
     
     // Generate The Texture 
-    glTexImage2D( GL_TEXTURE_2D, 0, 4, right_sized_image ->w,
-		  right_sized_image -> h, 0, GL_BGRA,
+    glTexImage2D( GL_TEXTURE_2D, 0, 4, right_sized_image ->w ,
+		  right_sized_image -> h , 0, GL_BGRA,
 		  GL_UNSIGNED_BYTE, right_sized_image -> pixels );
     
     SDL_FreeSurface ( right_sized_image );
