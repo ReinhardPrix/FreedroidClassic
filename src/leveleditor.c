@@ -36,7 +36,7 @@
 #include "global.h"
 #include "proto.h"
 
-void Show_Waypoints(void);
+void Show_Waypoints( int PrintConnectionList );
 void Level_Editor(void);
 
 EXTERN char Previous_Mission_Name[1000];
@@ -122,7 +122,7 @@ Highlight_Current_Block(void)
  * freedroid.  It marks all waypoints with a cross.
  * ---------------------------------------------------------------------- */
 void 
-Show_Waypoints(void)
+Show_Waypoints( int PrintConnectionList )
 {
   int wp;
   int i;
@@ -175,10 +175,15 @@ Show_Waypoints(void)
 	  
 	}
 
+      
       //--------------------
       // Draw the connections to other waypoints, BUT ONLY FOR THE WAYPOINT CURRENTLY TARGETED
       //
-      strcpy( ConnectionText , "List of connection for this wp:\n" );
+      if ( PrintConnectionList )
+	{
+	  strcpy( ConnectionText , "List of connection for this wp:\n" );
+	}
+
       for ( i=0; i<MAX_WP_CONNECTIONS; i++ )
 	{
 	  if ( CurLevel->AllWaypoints[wp].connections[i] != (-1) )
@@ -189,19 +194,24 @@ Show_Waypoints(void)
 		  // else color = HIGHLIGHTCOLOR ; 
 		  // printf(" Found a connection!! ");
 		  // printf_SDL ( Screen  , 100 , 100 , "Waypoint connection to: " );
+
 		  
-		  SDL_UnlockSurface( Screen );
-
-		  sprintf ( TextAddition , "To: X=%d Y=%d    " , 
-			    CurLevel->AllWaypoints[CurLevel->AllWaypoints[wp].connections[i]].x , 
-			    CurLevel->AllWaypoints[CurLevel->AllWaypoints[wp].connections[i]].y 
-			    );
-		  strcat ( ConnectionText , TextAddition );
-
-		  DisplayText ( ConnectionText , User_Rect.x , User_Rect.y , &User_Rect );
-
-		  SDL_LockSurface( Screen );
-
+		  //--------------------
+		  // If this is desired, we also print a list of connections from
+		  // this waypoint to other waypoints in text form...
+		  //
+		  if ( PrintConnectionList )
+		    {
+		      SDL_UnlockSurface( Screen );
+		      sprintf ( TextAddition , "To: X=%d Y=%d    " , 
+				CurLevel->AllWaypoints[CurLevel->AllWaypoints[wp].connections[i]].x , 
+				CurLevel->AllWaypoints[CurLevel->AllWaypoints[wp].connections[i]].y 
+				);
+		      strcat ( ConnectionText , TextAddition );
+		      DisplayText ( ConnectionText , User_Rect.x , User_Rect.y , &User_Rect );
+		      SDL_LockSurface( Screen );
+		    }
+		      
 		  DrawLineBetweenTiles( CurLevel->AllWaypoints[wp].x , CurLevel->AllWaypoints[wp].y , 
 					CurLevel->AllWaypoints[CurLevel->AllWaypoints[wp].connections[i]].x , 
 					CurLevel->AllWaypoints[CurLevel->AllWaypoints[wp].connections[i]].y ,
@@ -209,6 +219,7 @@ Show_Waypoints(void)
 		}
 	    }
 	}
+	      
     }
   SDL_UnlockSurface( Screen );
 
@@ -237,6 +248,7 @@ Level_Editor(void)
   char* NewCommentOnThisSquare;
   char* OldMapPointer;
   char linebuf[10000];
+  static char VanishingMessage[10000]="";
   SDL_Rect Editor_Window;
   enum
     { SAVE_LEVEL_POSITION=1, CHANGE_LEVEL_POSITION, CHANGE_TILE_SET_POSITION, CHANGE_SIZE_X, CHANGE_SIZE_Y, SET_LEVEL_NAME , SET_BACKGROUND_SONG_NAME , SET_LEVEL_COMMENT, QUIT_LEVEL_EDITOR_POSITION };
@@ -257,9 +269,32 @@ Level_Editor(void)
 	  ClearUserFenster();
 	  Assemble_Combat_Picture ( ONLY_SHOW_MAP_AND_TEXT );
 	  Highlight_Current_Block();
-	  Show_Waypoints();
+	  Show_Waypoints( FALSE );
+	  
+	  SetCurrentFont ( FPS_Display_BFont ) ;
 
-	  CenteredPutString ( Screen ,  1*FontHeight(Menu_BFont),    "LEVEL EDITOR");
+	  //--------------------
+	  // Now we print out the current status directly onto the window:
+	  //
+	  CenteredPutString ( Screen ,  0*FontHeight( GetCurrentFont () ),    "LEVEL EDITOR");
+
+	  if ( OriginWaypoint == ( -1 ) )
+	    {
+	      sprintf ( linebuf , " Source Waypoint selected : NONE" );
+	    }
+	  else
+	    {
+	      sprintf ( linebuf , " Source Waypoint selected : X=%d Y=%d. " , 
+			CurLevel -> AllWaypoints [ OriginWaypoint ] . x , 
+			CurLevel -> AllWaypoints [ OriginWaypoint ] . y );
+	    }
+	  LeftPutString ( Screen , 4 * FontHeight( GetCurrentFont() ), linebuf );
+	  LeftPutString ( Screen , 5 * FontHeight( GetCurrentFont() ), VanishingMessage );
+
+
+	  //--------------------
+	  // Now that everything is blitted and printed, we may update the screen again...
+	  //
 	  SDL_Flip( Screen );
 
 	  //--------------------
