@@ -55,7 +55,6 @@ SDL_Rect Cons_Text_Rect = {175, 180, SCREENLEN-175, 305};
 
 int ConsoleMenuPos=0;
 
-
 /*-----------------------------------------------------------------
  * @Desc: does all the work when we enter a lift
  * 
@@ -204,6 +203,8 @@ EnterLift (void)
   Me.TextToBeDisplayed=CurLevel->Level_Enter_Comment;
 
   DebugPrintf (2, "\nvoid EnterLift(void): Usual end of function reached.");
+  
+  return;
 }	/* EnterLift */
 
 /*-----------------------------------------------------------------

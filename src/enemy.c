@@ -45,7 +45,43 @@
 #define FIREDIST2	8 // according to the intro, the laser can be "focused on any target
                           // within a range of eight metres"
 
-// void PermanentHealRobots (void);
+
+//----------------------------------------------------------------------
+// for debug purposes: check if there are any droid "piles" on this level
+//----------------------------------------------------------------------
+void
+CheckDroidDistribution (int level)
+{
+  int i;
+  bool ok = TRUE;
+
+  for (i=0; i< NumEnemys; i++)
+    if ( (AllEnemys[i].levelnum == level) && CheckEnemyEnemyCollision (i) )
+      {
+	DebugPrintf (0, "We found a droid collision of droid Nr: %d\n", i);
+	ok = FALSE;
+      }
+
+  if (ok) 
+    DebugPrintf (0, "Seems ok.\n");
+
+
+  DebugPrintf (0, "\n NR.   ID  X    Y   ENERGY   speedX\n");
+  for (i = 0; i < NumEnemys; i++)
+    {
+      if ( (AllEnemys[i].levelnum == CurLevel->levelnum)  && (AllEnemys[i].energy > 0) )
+	DebugPrintf (0, "%d.   %s   %d   %d   %d    %g.\n", i,
+		     Druidmap[AllEnemys[i].type].druidname,
+		     (int)AllEnemys[i].pos.x,
+		     (int)AllEnemys[i].pos.y,
+		     (int)AllEnemys[i].energy,
+		     AllEnemys[i].speed.x);
+    } /* for (i<NumEnemys) */
+
+  
+  return;
+}
+
 
 
 /* ----------------------------------------------------------------------
@@ -147,6 +183,8 @@ ClearEnemys (void)
       AllEnemys[i].TextToBeDisplayed = "";
     }
 
+  NumEnemys = 0;
+
   return;
 
 } /*  ClearEnemys() */
@@ -166,7 +204,6 @@ ShuffleEnemys (void)
   int wp_num;
   int wp = 0;
   finepoint influ_coord;
-
 
   /* Anzahl der Waypoints auf CurLevel abzaehlen */
   wp_num = 0;
@@ -359,7 +396,7 @@ MoveThisRobotThowardsHisWaypoint ( int EnemyNum )
   Waypoint WpList;		/* Pointer to waypoint-liste */
   int nextwp;
   finepoint nextwp_pos;
-  float maxspeed;
+  float maxspeed, steplen, dist;
   Enemy ThisRobot=&AllEnemys[ EnemyNum ];
 
   DebugPrintf( 2 , "\n void MoveThisRobotThowardsHisWaypoint ( int EnemyNum ) : real function call confirmed. ");
@@ -376,39 +413,31 @@ MoveThisRobotThowardsHisWaypoint ( int EnemyNum )
   Restweg.x = nextwp_pos.x - ThisRobot->pos.x;
   Restweg.y = nextwp_pos.y - ThisRobot->pos.y;
 
+  steplen = Frame_Time() * maxspeed;
   // --------------------
   // As long a the distance from the current position of the enemy
   // to its next wp is large, movement is rather simple:
-  //
 
-  if ( fabsf (Restweg.x)  > Frame_Time() * maxspeed )
+  dist = sqrt(Restweg.x*Restweg.x + Restweg.y*Restweg.y);
+  if ( dist > steplen )
     {
-      ThisRobot->speed.x =
-	(Restweg.x / fabsf (Restweg.x)) * maxspeed;
+      ThisRobot->speed.x = (Restweg.x/dist) * maxspeed;
+      ThisRobot->speed.y = (Restweg.y/dist) * maxspeed;
       ThisRobot->pos.x += ThisRobot->speed.x * Frame_Time ();
-    } 	 
-  else
-    {
-      // --------------------
-      // Once this enemy is close to his final destination waypoint, we have
-      // to do some fine tuning, and then of course set the next waypoint.
-      ThisRobot->pos.x = nextwp_pos.x;
-      ThisRobot->speed.x = 0;
-    }
-
-
-  if ( fabsf (Restweg.y)  > Frame_Time() * maxspeed )
-    {
-      ThisRobot->speed.y =
-	(Restweg.y / fabsf (Restweg.y)) * maxspeed;
       ThisRobot->pos.y += ThisRobot->speed.y * Frame_Time ();
     }
   else
     {
-      // ThisRobot->pos.y += (nextwp_pos.y-ThisRobot->pos.y)*Frame_Time();
+      // --------------------
+      // If this enemy is just one step ahead of his target, we just put him there now
+      ThisRobot->pos.x = nextwp_pos.x;
       ThisRobot->pos.y = nextwp_pos.y;
+      ThisRobot->speed.x = 0;
       ThisRobot->speed.y = 0;
     }
+
+  return;
+
 }; // void MoveThisRobotThowardsHisWaypoint ( int EnemyNum )
 
 /* ----------------------------------------------------------------------
@@ -887,7 +916,5 @@ ClassOfDruid (int druidtype)
 
   return (atoi (classnumber));
 }				/* ClassOfDruid */
-
-
 
 #undef _enemy_c

@@ -1073,6 +1073,9 @@ ThouArtDefeated (void)
 {
   int now;
 
+  // important!!: don't forget to stop fps calculation here (bugfix: enemy piles after gameOver)
+  Activate_Conservative_Frame_Computation ();
+
   Me.status = TERMINATED;
   ThouArtDefeatedSound ();
   ExplodeInfluencer ();

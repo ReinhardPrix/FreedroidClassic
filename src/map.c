@@ -175,16 +175,18 @@ ActSpecialField (float x, float y)
 {
   unsigned char MapBrick;
   float cx, cy;			/* tmp: NullPunkt im Blockzentrum */
+  float myspeed2;
 
   DebugPrintf (2, "\nvoid ActSpecialField(int x, int y):  Real function call confirmed.");
 
   MapBrick = GetMapBrick (CurLevel, x, y);
 
+  myspeed2 = Me.speed.x*Me.speed.x + Me.speed.y*Me.speed.y;
+
   switch (MapBrick)
     {
     case LIFT:
-      if (!((Me.status == TRANSFERMODE) &&
-	    ( abs(Me.speed.x) <= 1) && ( abs(Me.speed.y) <= 1)))
+      if ( (Me.status != TRANSFERMODE) || (myspeed2 > 1) )
 	break;
 
       cx = rintf(x) - x ;
@@ -199,7 +201,7 @@ ActSpecialField (float x, float y)
     case KONSOLE_L:
     case KONSOLE_O:
     case KONSOLE_U:
-      if (Me.status == TRANSFERMODE)
+      if (Me.status == TRANSFERMODE && (myspeed2 < 1) )
 	{
 	  EnterKonsole ();
 	  DebugPrintf (2, "\nvoid ActSpecialField(int x, int y):  Back from EnterKonsole().\n");
