@@ -46,7 +46,9 @@ char TitleText3[] =
 char TitleText4[] =
   "Controls\n\
 \n\
-The game is controlled via keyboard input.\n\
+The game is controlled via keyboard input or via joystick input.\n\
+The joystick control is similar to keyboard control.\n\
+Therefore only keyboard control is expained here:\n\
 \n\
 Use cursor keys to move around.  The speed you can go \
 depends on the druid you currently control.\n\
@@ -64,6 +66,10 @@ purposes, it is as if you were him.\n\
 If you loose, you either are destroyed if you didn't control an enemy \
 druid at that time, or the host you controlled is destroyed together with \
 the unit you wished to control.\n\
+\n\
+The P key causes the game to pause.\n\
+The S key causes a screenshot to be taken.\n\
+The Escape key causes the menu to pop up.\n\
 \n\
 Watch out for energy refreshing fields and elevators.\n\
 \n\

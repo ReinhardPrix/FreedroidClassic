@@ -234,7 +234,7 @@ main (int argc, char *const argv[])
   parse_command_line (argc, argv);
 
   /* Initialisieren der globalen Variablen und Arrays */
-  InitParaplus ();
+  InitFreedroid ();
 
   // NONSENSE FROM THE OLD ENGINE RedrawInfluenceNumber ();
 
@@ -280,9 +280,8 @@ main (int argc, char *const argv[])
 
 	  // To debug the Debriefing() I added a function to add or subtract
 	  // a thousand points of score via numerical keyboard functions.
-	  // Activate this if you want to test that.  Since the error hasnt
-	  // occured lately, I deactivate this code now.
-	  /*
+	  // Activate this if you want to test that.  
+
 	  if ( KP0Pressed() )
 	    {
 	      while (KP0Pressed());
@@ -293,7 +292,6 @@ main (int argc, char *const argv[])
 	      while (KP1Pressed());
 	      RealScore+=1000;
 	    }
-	  */
 
 
 	  if ( CPressed() && Alt_Was_Pressed()
@@ -447,7 +445,7 @@ main (int argc, char *const argv[])
 void
 ThouArtDefeated (void)
 {
-  int i, j;
+  int j;
   int now;
 
   DebugPrintf ("\nvoid ThouArtDefeated(void): Real function call confirmed.");
@@ -521,7 +519,7 @@ Debriefing (void)
   if (!PlusExtentionsOn)
     {
       Scoretext = MyMalloc (1000);
-      SetUserfenster (DebriefColor, RealScreen);	// KON_BG_COLOR
+      SetUserfenster ( DebriefColor );	// KON_BG_COLOR
       // SetTextColor (DebriefColor, KON_TEXT_COLOR);	// KON_BG_COLOR
       SetTextColor (208, RAHMEN_VIOLETT );	// RED // YELLOW
       if (RealScore > GreatScore)
@@ -573,7 +571,7 @@ Debriefing (void)
       if (RealScore == 0)
 	return;
       /* Setzten der Umgebung */
-      SetUserfenster (KON_BG_COLOR, RealScreen);
+      SetUserfenster ( KON_BG_COLOR );
       SetTextColor (KON_BG_COLOR, KON_TEXT_COLOR);
       DisplayText
 	(" You have gained entry to the hall\n of fame!\nEnter your name:\n  ",

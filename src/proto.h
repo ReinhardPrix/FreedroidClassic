@@ -56,7 +56,7 @@ EXTERN void StandardEnergieLieferungen (void);
 EXTERN void parse_command_line (int argc, char *const argv[]);
 EXTERN void Title (void);
 EXTERN void EndTitle (void);
-EXTERN void InitParaplus (void);
+EXTERN void InitFreedroid (void);
 EXTERN void InitNewGame (void);
 EXTERN void Init_Druidmap (void);
 /* influ.c */
@@ -115,7 +115,7 @@ EXTERN void PutInternFenster (int);
 EXTERN int PutObject (int x, int y, unsigned char *pic, int check);
 EXTERN void DrawDigit (unsigned char *, unsigned char *);
 EXTERN void RedrawInfluenceNumber (void);
-EXTERN void SetUserfenster (int color, unsigned char *screen);
+EXTERN void SetUserfenster (int color );
 EXTERN void ShowRobotPicture (int PosX, int PosY, int Number,
 			      unsigned char *Screen);
 
@@ -409,8 +409,6 @@ EXTERN void ClearAllButRahmen (void);
 EXTERN void StoreTextEnvironment (void);
 EXTERN void RestoreTextEnvironment (void);
 
-EXTERN int InitParaplusFont (void);
-
 EXTERN void SetTextColor (unsigned char bg, unsigned char fg);
 EXTERN void GetTextColor (unsigned int *bg, unsigned int *fg);
 
@@ -440,7 +438,7 @@ EXTERN char *GetString (int MaxLen, int echo);
 #else
 #define EXTERN extern
 #endif
-EXTERN void DisplayRahmen (unsigned char *screen);
+EXTERN void DisplayRahmen ( int flags );
 EXTERN void SetInfoline (const char *left, const char *right);
 
 

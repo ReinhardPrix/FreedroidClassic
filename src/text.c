@@ -124,53 +124,6 @@ RestoreTextEnvironment (void)
   SetTextColor (StoreTextBG, StoreTextFG);
 }
 
-/*@Function============================================================
-@Desc: Initialisierne des Text-Moduls: Buchstaben-Icons einlesen
-
-@Ret: OK/Exit
-@Int:
-* $Function----------------------------------------------------------*/
-int
-InitParaplusFont (void)
-{
-#ifdef NEW_ENGINE
-  return OK;   // sorry, the new engine has not fonts for the moment
-#else
-  int i, j;
-  int FontXPos = 0;
-  unsigned char *FontMem;
-
-  if (RealScreen == NULL)
-    RealScreen = MyMalloc (64010);
-  if (InternalScreen == NULL)
-    InternalScreen = (unsigned char *) MyMalloc (SCREENHOEHE * SCREENBREITE);
-
-  Load_PCX_Image (FONTBILD_PCX, InternalScreen, FALSE);
-
-  FontMem = (unsigned char *) MyMalloc (FONTANZAHL * FONTMEM * 2 + 10);
-
-  for (j = 0; j < 10; j++)
-    {
-      FontXPos = 0;
-
-      for (i = 0; i < 10; i++)
-	{
-	  Zeichenpointer[j * 10 + i] = FontMem + (j * 10 + i) * FONTMEM * 2;
-	  IsolateBlock (InternalScreen, Zeichenpointer[j * 10 + i], FontXPos,
-			j * (FONTHOEHE + 1),
-			(CharLenList[j * 10 + i] ==
-			 0) ? FONTBREITE : 2 * FONTBREITE, FONTHOEHE);
-	  FontXPos +=
-	    FONTBREITE + 1 + (CharLenList[j * 10 + i] * (FONTBREITE + 1));
-	}
-    }
-
-  return (OK);
-
-#endif  // !NEW_ENGINE
-
-}				// int InitParaplusFont(void)
-
 /*-----------------------------------------------------------------
  * @Desc: Setzt die Palettenwerten (und nicht die RGB-Werte) der
  * 	Proportionalschrift Null als Farbwert bewirkt keinen Effekt
@@ -318,8 +271,6 @@ ScrollText (char *Text, int startx, int starty, int EndLine)
 
   printf("\nScrollTest should be starting to scroll now...");
 
-  ClearGraphMem ();
-
   SDL_SetClipRect( ne_screen , NULL );
 
   /* Zeilen zaehlen */
@@ -349,8 +300,8 @@ ScrollText (char *Text, int startx, int starty, int EndLine)
 
       usleep (30000);
 
-      // ClearUserFenster(); 
-      ClearGraphMem();
+      ClearUserFenster(); 
+      // ClearGraphMem();
       DisplayText (Text, startx, InsertLine, Outline320x200, FALSE);
       InsertLine -= speed;
 
@@ -463,13 +414,8 @@ DisplayText (char *Text,
 void
 DisplayChar (unsigned char Zeichen, unsigned char *screen)
 {
-  int i;
-  int ZNum = Zeichen - ' ';
-  int ZLen = CharLenList[ZNum];
-  unsigned char *target;	/* Pointer auf Ausgabeposition am Screen */
   char Dummystring[]=" ";
 
-  // printf("\nDisplay Char called...");
   if (Zeichen == '\n')
     {
       MakeUmbruch ();
@@ -483,20 +429,16 @@ DisplayChar (unsigned char Zeichen, unsigned char *screen)
     }
 
   Dummystring[0]=Zeichen;
-  SDL_SetClipRect( ne_screen , NULL );
+
+  // SDL_SetClipRect( ne_screen , NULL );
+
   PrintStringFont ( ne_screen , Menu_BFont, MyCursorX , MyCursorY , "%s" , Dummystring );
-  //  PrintStringFont ( ne_screen , Para_BFont, MyCursorX , MyCursorY , "%s" , Dummystring );
-  // PrintStringFont ( ne_screen , Para_BFont, MyCursorX , MyCursorY , "AB" );
-
-
-  // DisplayBlock (MyCursorX, MyCursorY, Zeichenpointer[ZNum],
-  // FONTBREITE * (1 + ZLen), FONTHOEHE, RealScreen);
 
   // After the char has been displayed, we must move the cursor to its
   // new position.  That depends of course on the char displayed.
-  MyCursorX += CharWidth (Menu_BFont , Zeichen ); // 2*FONTBREITE * (1 + ZLen);
-
-  DebugPrintf("\nvoid DisplayChar(...): Usual end of function reached.");
+  //
+  MyCursorX += CharWidth (Menu_BFont , Zeichen );
+  
 } // void DisplayChar(...)
 
 /*@Function============================================================

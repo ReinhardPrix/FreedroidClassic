@@ -155,7 +155,7 @@ void replace_color (SDL_Surface *surf, SDL_Color src, SDL_Color dst)
 int
 InitPictures (void)
 {
-  int i, j;
+  int i;
   SDL_Surface *tmp;
   int block_line = 0;   /* keep track of line in ne_blocks we're writing */
 
@@ -255,8 +255,10 @@ SetColors (int FirstCol, int PalAnz, char *PalPtr)
 }				// void SetColors(...)
 
 /*@Function============================================================
-@Desc: InitPalette(): laedt die allgemein gueltige Palette fuer die
-						LBM- Bilder 
+@Desc: InitPalette(): 
+This should load the right palette that is used troughout Freedroid.
+But now we dont use a palette any more and the function is now
+rather obsolete.
 
 @Ret: OK | ERR
 @Int:
@@ -266,10 +268,6 @@ InitPalette (void)
 {
 
   return (OK);
-
-  /* Hier sollte die Palette geladen werden */
-  // FROM THE OLD ENGINE Load_PCX_Image (PALBILD_PCX, InternalScreen, TRUE);
-  return OK;
 
 }				// int InitPalette(void)
 
@@ -432,7 +430,6 @@ UnfadeLevel (void)
 
   // NONSENSE FROM THE OLD ENGINE GetView ();
   Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
-  PutInternFenster (TRUE);
 
   /* Speicher reservieren */
   CMAPBuffer = MyMalloc (257 * 3);	// wird wieder freigegeben

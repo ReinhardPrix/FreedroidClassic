@@ -844,7 +844,7 @@ enum
 
   ClearGraphMem ();
   Update_SDL_Screen();
-  DisplayRahmen (InternalScreen);
+  DisplayRahmen ( FORCE_UPDATE );
   InitBars = TRUE;
 
   return;
@@ -866,8 +866,6 @@ Single_Player_Menu (void)
 
   while (!Weiter)
     {
-
-      PutInternFenster( FALSE );
 
       MakeGridOnScreen( Outline320x200 );
 
@@ -936,10 +934,9 @@ Single_Player_Menu (void)
 	  while (DownPressed());
 	}
     }
-  ClearGraphMem (InternalScreen);
-  ClearGraphMem (RealScreen);
+  ClearGraphMem ( );
   Update_SDL_Screen();
-  DisplayRahmen (InternalScreen);
+  DisplayRahmen ( );
   InitBars = TRUE;
 
   return;
@@ -963,8 +960,6 @@ Show_Highscore_Menu (void)
 
   while (!Weiter)
     {
-
-      PutInternFenster( FALSE );
 
       MakeGridOnScreen( Outline320x200 );
 
@@ -993,11 +988,11 @@ Show_Highscore_Menu (void)
 	  Weiter=!Weiter;
 	}
     }
+
   while ( EscapePressed() || EnterPressed() || SpacePressed() );
-  ClearGraphMem (InternalScreen);
-  ClearGraphMem (RealScreen);
-  // Update_SDL_Screen();
-  DisplayRahmen (InternalScreen);
+
+  ClearGraphMem ( );
+  DisplayRahmen ( );
   InitBars = TRUE;
 
   return;
@@ -1021,8 +1016,6 @@ Multi_Player_Menu (void)
 
   while (!Weiter)
     {
-
-      PutInternFenster( FALSE );
 
       MakeGridOnScreen( Outline320x200 );
 
@@ -1048,10 +1041,10 @@ Multi_Player_Menu (void)
 	}
     }
   while ( EscapePressed() || EnterPressed() || SpacePressed() );
-  ClearGraphMem (InternalScreen);
-  ClearGraphMem (RealScreen);
+
+  ClearGraphMem ( );
   // Update_SDL_Screen();
-  DisplayRahmen (InternalScreen);
+  DisplayRahmen ( );
   InitBars = TRUE;
 
   return;
@@ -1074,8 +1067,6 @@ Show_Mission_Instructions_Menu (void)
 
   while (!Weiter)
     {
-
-      PutInternFenster( FALSE );
 
       MakeGridOnScreen( Outline320x200 );
 
@@ -1100,10 +1091,8 @@ Show_Mission_Instructions_Menu (void)
 	}
     }
   while ( EscapePressed() || EnterPressed() || SpacePressed() );
-  ClearGraphMem (InternalScreen);
-  ClearGraphMem (RealScreen);
-  // Update_SDL_Screen();
-  DisplayRahmen (InternalScreen);
+  ClearGraphMem ( );
+  DisplayRahmen ( );
   InitBars = TRUE;
 
   return;
@@ -1157,7 +1146,7 @@ Level_Editor(void)
 	  GetView();
 	  Assemble_Combat_Picture ( SHOW_MAP );
 	  Highlight_Current_Block();
-	  PutInternFenster( FALSE );
+
 	  PrepareScaledSurface( FALSE );
 	  CenteredPutString (ScaledSurface ,  1*FontHeight(Menu_BFont),    "LEVEL EDITOR");
 	  SDL_UpdateRect(ScaledSurface, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
@@ -1261,7 +1250,7 @@ Level_Editor(void)
       while (!Weiter)
 	{
 
-	  PutInternFenster( FALSE );
+	  AssembleCombatWindow( );
 
 	  MakeGridOnScreen( Outline320x200 );
 

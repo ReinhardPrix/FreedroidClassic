@@ -119,17 +119,26 @@ DrawBar (int BarCode, int Wert, unsigned char *Parameter_Screen)
 
   DebugPrintf ("\nvoid DrawBar(...):  end of function reached.");
 
-}				// void DrawBar(...)
+} // void DrawBar(...)
 
-/*-----------------------------------------------------------------
- * @Desc: well, do just that
- *
- * NOTE: this function used to update also the infoline display,
- *    this is now down by a separate call to SetInfoline(left,right)!!
- *
- *-----------------------------------------------------------------*/
+/*
+-----------------------------------------------------------------
+@Desc: This function updates the top status bar.
+To save framerate on slow machines however it will only work
+if it thinks that work needs to be done. 
+You can however force update if you say so with a flag.
+
+FORCE_UPDATE=1.
+
+Well, the details have to be written still...
+
+To update the information in the top status line only, you can
+as well use the function SetInfoline.
+
+-----------------------------------------------------------------
+*/
 void
-DisplayRahmen (unsigned char *Parameter_Screen)
+DisplayRahmen ( int flags )
 {
 
   SDL_Rect TargetRectangle;

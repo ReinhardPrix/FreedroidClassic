@@ -182,8 +182,8 @@ Takeover (int enemynum)
      for use as background in transparent version of Takeover-game */
   //  GetInternFenster (SHOW_MAP);
 
-  DisplayRahmen (Outline320x200);
-  SetUserfenster (TO_BG_COLOR, Outline320x200);  /* set takeover color */
+  DisplayRahmen ( FORCE_UPDATE );
+  SetUserfenster ( TO_BG_COLOR );  /* set takeover color */
 
   Me.status = MOBILE; /* the new status _after_ the takeover game */
 
@@ -745,7 +745,7 @@ ShowPlayground (void)
   if (WorkBlock == NULL)
     WorkBlock = MyMalloc (BLOCKMEM + 10);
 
-  SetUserfenster (TO_BG_COLOR, Outline320x200);
+  SetUserfenster ( TO_BG_COLOR );
 
   curx = USERFENSTERPOSX + LEFT_OFFS_X;
   cury = USERFENSTERPOSY + LEFT_OFFS_Y;

@@ -248,7 +248,7 @@ Assemble_Combat_Picture (int mask)
 
   if ( mask & ALSO_UPDATE_EXTERIORS )
     {
-      DisplayRahmen( NULL );
+      DisplayRahmen( 0 );
       SetInfoline( NULL , NULL );
     }
 
@@ -777,72 +777,6 @@ PutObject (int x, int y, unsigned char *pic, int check)
 } /* PutObject() */
 
 
-/*-----------------------------------------------------------------
- * @Desc: Diese Prozedur schreibt das im Speicher zusammengebaute
- * 	Bild in den Bildschirmspeicher.
- *
- * 
- *-----------------------------------------------------------------*/
-void
-PutInternFenster (int also_update_scaled_surface)
-{
-  int StartX, StartY;
-  int i;
-  unsigned char *source;
-  unsigned char *target;
-
-  return;
-
-  /*
-    In case the Conceptview switch is set, only a small map is drawn, like in 
-    the console when you request the map of the entire deck.
-  */
-  if (Conceptview)
-    {
-      for (i = 0; i < USERFENSTERHOEHE; i++)
-	{
-	  memcpy (Outline320x200 + (USERFENSTERPOSY + i) * SCREENBREITE +
-		  USERFENSTERPOSX,
-		  InternWindow + i * INTERNBREITE * BLOCKBREITE,
-		  USERFENSTERBREITE);
-	}
-      
-      PrepareScaledSurface(also_update_scaled_surface);
-
-      return;
-    }
-
-
-  StartX = (((int) Me.pos.x) % BLOCKBREITE) - BLOCKBREITE / 2;
-  StartY =
-    ((((int) Me.pos.y) % BLOCKHOEHE) -
-     BLOCKHOEHE / 2) * BLOCKBREITE * INTERNBREITE;
-
-  DisplayRahmen ( Outline320x200 );
-  SetInfoline (NULL, NULL);
-
-  for (i = 0; i < USERFENSTERHOEHE; i++)
-    {
-      source = InternWindow +
-	BLOCKBREITE * (INTERNBREITE - VIEWBREITE) / 2 +
-	INTERNBREITE * BLOCKBREITE * (BLOCKHOEHE *
-				      (INTERNHOEHE - VIEWHOEHE)) / 2 +
-	// USERFENSTEROBEN*INTERNBREITE*BLOCKBREITE + 
-	//       USERFENSTERLINKS +
-	StartY + StartX + i * INTERNBREITE * BLOCKBREITE;
-      target = Outline320x200 + USERFENSTERPOSX + (USERFENSTERPOSY+i) * SCREENBREITE;
-
-      memcpy(target, source, USERFENSTERBREITE);
-
-    }	// for(i=0; ...
-
-
-  PrepareScaledSurface(also_update_scaled_surface);
-
-  return;
-
-}; // void PutInternFenster(void)
-
 /*@Function============================================================
 @Desc: Diese Funktion setzt die Schu"sfarbe um einen Wert weiter
 
@@ -887,20 +821,22 @@ FlashWindow (int Flashcolor)
 }				// void FlashWindow(int Flashcolor)
 
 /*-----------------------------------------------------------------
- * @Desc: Setzt die Hintergrundfarbe fuer das Userfenster using SDLx
+ * @Desc: Setzt die Hintergrundfarbe fuer das Userfenster using SDL
  * @Ret: void
  *
  *-----------------------------------------------------------------*/
 void
-SetUserfenster (int color, unsigned char *Parameter_screen)
+SetUserfenster (int color)
 {
-
-
-  int row;
   SDL_Rect LocalRectangle;
 
-  return;
+  LocalRectangle.x=USERFENSTERPOSX;
+  LocalRectangle.y=USERFENSTERPOSY;
+  LocalRectangle.w=USERFENSTERBREITE;
+  LocalRectangle.h=USERFENSTERHOEHE;
 
+  SDL_FillRect( ne_screen , &LocalRectangle, color );
+  return;
 }				/* SetUserFenster() */
 
 /* **********************************************************************

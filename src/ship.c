@@ -192,9 +192,9 @@ EnterElevator (void)
     }				/* if neuer Level */
 
   LeaveElevatorSound ();
-  //  ClearGraphMem (RealScreen);
-  //  DisplayRahmen (Outline320x200);
-  //  SetInfoline (NULL,NULL);
+  ClearGraphMem ( );
+  DisplayRahmen ( FORCE_UPDATE );
+  SetInfoline (NULL,NULL);
 
   UnfadeLevel ();
 
@@ -217,7 +217,6 @@ EnterElevator (void)
  *
  *
  *-----------------------------------------------------------------*/
-#ifdef NEW_ENGINE
 void
 ShowElevators (void)
 {
@@ -228,16 +227,12 @@ ShowElevators (void)
 
   DebugPrintf("\nvoid ShowElevators(void): real function call confirmed.");
 
-  /* Zuerst Screen loeschen (InternalScreen) */
+  // clear the whole screen
   ClearGraphMem();
-  
-  /* Userfenster faerben */
-  SetUserfenster (EL_BG_COLOR, Outline320x200);
-  DisplayRahmen (Outline320x200);	// Rahmen dazu 
+  // fill the user fenster with some color
+  SetUserfenster ( EL_BG_COLOR );
+  DisplayRahmen ( FORCE_UPDATE );      
   SetInfoline (NULL, NULL);
-
-  //DisplayBlock (USERFENSTERPOSX, USERFENSTERPOSY, ElevatorPicture, 
-  //USERFENSTERBREITE, USERFENSTERHOEHE, Outline320x200);
 
   tmp=SDL_LoadBMP( NE_ELEVATOR_PIC_FILE );
   SourceRectangle.x=0;
@@ -263,38 +258,6 @@ ShowElevators (void)
   return;
 
 } /* ShowElevators() */
-#else
-void
-ShowElevators (void)
-{
-  int curLevel = CurLevel->levelnum;
-
-  DebugPrintf("\nvoid ShowElevators(void): real function call confirmed.");
-
-  /* Zuerst Screen loeschen (InternalScreen) */
-   ClearGraphMem();
-  
-  /* Userfenster faerben */
-  SetUserfenster (EL_BG_COLOR, Outline320x200);
-  DisplayRahmen (Outline320x200);	/* Rahmen dazu */
-  SetInfoline (NULL, NULL);
-
-  DisplayBlock (USERFENSTERPOSX, USERFENSTERPOSY, ElevatorPicture, 
-		USERFENSTERBREITE, USERFENSTERHOEHE, Outline320x200);
-
-  AlleLevelsGleichFaerben ();
-  AlleElevatorsGleichFaerben ();
-
-  HilightLevel (curLevel);
-
-  PrepareScaledSurface(TRUE);
-
-  DebugPrintf("\nvoid ShowElevators(void): end of function reached.");
-
-  return;
-
-} /* ShowElevators() */
-#endif
 
 /*@Function============================================================
 @Desc: EnterKonsole(): does all konsole- duties
@@ -443,23 +406,19 @@ void
 PaintConsoleMenu (void)
 {
   char MenuText[200];
-  // unsigned int fg, bg;
-
-#ifdef NEW_ENGINE
 
   SDL_Rect SourceRectangle;
   SDL_Rect TargetRectangle;
 
 
   ClearGraphMem ();
-  // GetTextColor (&bg, &fg);	/* store text color settings */
 
-  DisplayRahmen (Outline320x200);
+  DisplayRahmen ( FORCE_UPDATE );
   SetInfoline (NULL, NULL);
 
   /* Userfenster faerben */
   // SetUserfenster (KON_BG_COLOR, Outline320x200);
-  SetUserfenster (208, Outline320x200);
+  SetUserfenster ( 208 );
 
   /* Konsolen-Menue Farbe setzen */
   // SetTextColor (KON_BG_COLOR, KON_TEXT_COLOR);
@@ -512,62 +471,7 @@ PaintConsoleMenu (void)
   */
 
   // SetTextColor (bg, fg); /* restore text color settings */
-#else
 
-  ClearGraphMem (Outline320x200);
-  // GetTextColor (&bg, &fg);	/* store text color settings */
-
-  DisplayRahmen (Outline320x200);
-  SetInfoline (NULL, NULL);
-
-  /* Userfenster faerben */
-  // SetUserfenster (KON_BG_COLOR, Outline320x200);
-  SetUserfenster (208, Outline320x200);
-
-  /* Konsolen-Menue Farbe setzen */
-  // SetTextColor (KON_BG_COLOR, KON_TEXT_COLOR);
-  SetTextColor (208, RAHMEN_VIOLETT );	// RED // YELLOW
-
-  strcpy (MenuText, "Unit type ");
-  strcat (MenuText, Druidmap[Me.type].druidname);
-  strcat (MenuText, " - ");
-  strcat (MenuText, Classname[Druidmap[Me.type].class]);
-  DisplayText (MenuText, USERFENSTERPOSX, USERFENSTERPOSY, Outline320x200, FALSE);
-
-  SetTextBorder (MENUTEXT_X, USERFENSTERPOSY,
-		 USERFENSTERPOSX + USERFENSTERBREITE,
-		 USERFENSTERPOSY + USERFENSTERHOEHE, 30);
-
-  strcpy (MenuText, "\nAccess granted.\nShip : ");
-  strcat (MenuText, Shipnames[ThisShip]);
-  strcat (MenuText, "\nDeck : ");
-  strcat (MenuText, Decknames[CurLevel->levelnum]);
-  strcat (MenuText, "\n\nAlert: ");
-  strcat (MenuText, Alertcolor[Alert]);
-
-  DisplayText (MenuText, MENUTEXT_X, USERFENSTERPOSY + 15, Outline320x200,
-	       FALSE);
-
-  SetTextBorder (0, 0, SCREENBREITE, SCREENHOEHE, 40);
-
-  /*
-   * Hier werden die Icons des Menus ausgegeben
-   *
-   */
-
-  DisplayMergeBlock (MENUITEMPOSX, MENUITEMPOSY + FONTHOEHE + BLOCKHOEHE - 4,
-		     MenuItemPointer,
-		     MENUITEMLENGTH, MENUITEMHEIGHT, Outline320x200);
-
-
-  DisplayMergeBlock (MENUITEMPOSX + 10, MENUITEMPOSY + FONTHOEHE,
-		     Influencepointer + BLOCKMEM * ((int) rintf (Me.phase)),
-		     BLOCKBREITE, BLOCKHOEHE, Outline320x200);
-
-
-  // SetTextColor (bg, fg); /* restore text color settings */
-
-#endif
   return;
 }	// PaintConsoleMenu ()
 
@@ -589,7 +493,7 @@ GreatDruidShow (void)
   /* Warte, bis User Space auslaesst */
   while (SpacePressed ()) ;
 
-  SetUserfenster (KON_BG_COLOR, InternalScreen);
+  SetUserfenster ( KON_BG_COLOR );
 
 
   // SetTextColor (KON_BG_COLOR, FONT_BLUE);	// RED // YELLOW

@@ -316,7 +316,7 @@ InitNewGame (void)
 
   /* Den Rahmen fuer das Spiel anzeigen */
   ClearGraphMem();
-  DisplayRahmen (Outline320x200);
+  DisplayRahmen ( FORCE_UPDATE );
   SetInfoline (NULL,NULL);
 
   SetTextBorder (0, 0, SCREENBREITE, SCREENHOEHE, 40);
@@ -331,14 +331,19 @@ InitNewGame (void)
 
 } /* InitNewGame */
 
-/*-----------------------------------------------------------------
- * @Desc: InitParaplus(): initialisiert das Spiel beim Programmstart
- * 
- * @Ret: void
- * 
- *-----------------------------------------------------------------*/
+/*
+-----------------------------------------------------------------
+@Desc: InitFreedroid(): 
+This function initializes the whole Freedroid game.
+
+THIS MUST NOT BE CONFUSED WITH INITNEWGAME, WHICH
+ONLY INITIALIZES A NEW MISSION FOR THE GAME.
+ 
+@Ret: none
+ 
+*-----------------------------------------------------------------*/
 void
-InitParaplus (void)
+InitFreedroid (void)
 {
   struct timeval timestamp;
 
@@ -375,7 +380,6 @@ InitParaplus (void)
   Draw_Framerate=FALSE;
   HideInvisibleMap = FALSE;	/* Hide invisible map-parts. Para-extension!! */
 
-
   Init_Druidmap ();   /* initialise some global text variables */
 
   if ( InitLevelColorTable () == FALSE)
@@ -385,12 +389,6 @@ InitParaplus (void)
       Terminate (ERR);
     }
 
-  if (InitParaplusFont () == ERR)
-    {
-      printf (" Kann Schrift nicht initialisieren !\n");
-      getchar_raw ();
-      Terminate (ERR);
-    }
 
   MinMessageTime = 55;
   MaxMessageTime = 850;
@@ -404,13 +402,6 @@ InitParaplus (void)
 
   GameAdapterPresent = FALSE;	/* start with this */
   taste = 255;
-
-  /* the pixel-screens are part of the old graphics engine only */
-#ifndef NEW_ENGINE
-  RealScreen = MyMalloc (SCREENBREITE * SCREENHOEHE + 10);
-  Outline320x200 = MyMalloc (SCREENBREITE * SCREENHOEHE + 10);
-  InternalScreen = (unsigned char *) MyMalloc (SCREENHOEHE * SCREENBREITE + 10);
-#endif
 
   if (LoadShip (SHIPNAME) == ERR)
     {
@@ -441,7 +432,7 @@ InitParaplus (void)
   //  InitPalette ();
 
   return;
-} /* InitParaplus() */
+} /* InitFreedroid() */
 
 /*-----------------------------------------------------------------
  *
@@ -521,7 +512,6 @@ Title (void)
 
   Switch_Background_Music_To (CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC);
 
-  // LadeLBMBild(TITELBILD1,RealScreen,FALSE);  /* Titelbild laden */
   DisplayImage ( NE_TITLE_PIC_FILE );
 
   PrepareScaledSurface(TRUE);
@@ -529,9 +519,11 @@ Title (void)
   while (!SpacePressed ());
   while (SpacePressed());
 
-  InitPalette ();		/* This function writes into InternalScreen ! */
+  InitPalette (); 
 
-  DisplayRahmen(NULL); //Load_PCX_Image (RAHMENBILD1_PCX, RealScreen, FALSE);	/* Titelbild laden */
+  ClearGraphMem ();
+
+  DisplayRahmen( FORCE_UPDATE ); 
 
   SetTextBorder (USERFENSTERPOSX, USERFENSTERPOSY,
 		 USERFENSTERPOSX + USERFENSTERBREITE,
@@ -539,15 +531,10 @@ Title (void)
 
   SetTextColor (FONT_BLACK, FONT_RED);
 
-  // *          Auskommentiert zu Testzwecken
-  // *
-
-
   ScrollText (TitleText1, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
   ScrollText (TitleText2, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
   ScrollText (TitleText3, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
   ScrollText (TitleText4, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
-
 
   SetTextBorder (0, 0, SCREENBREITE, SCREENHOEHE, 40);
 
@@ -566,17 +553,13 @@ Title (void)
 void
 EndTitle (void)
 {
-#ifdef NEW_ENGINE
-  return;
-#else
-
   int ScrollEndLine = USERFENSTERPOSY;	/* Endpunkt des Scrollens */
 
   DebugPrintf ("\nvoid EndTitle(void): real function call confirmed...:");
 
   Switch_Background_Music_To (CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC);
 
-  Load_PCX_Image (RAHMENBILD1_PCX, RealScreen, FALSE);	/* Titelbild laden */
+  DisplayRahmen( FORCE_UPDATE );
 
   SetTextBorder (USERFENSTERPOSX, USERFENSTERPOSY,
 		 USERFENSTERPOSX + USERFENSTERBREITE,
@@ -584,16 +567,13 @@ EndTitle (void)
 
   SetTextColor (FONT_BLACK, FONT_RED);
 
-  // *          Auskommentiert zu Testzwecken
-  // *
-
   ScrollText (EndTitleText1, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
   ScrollText (EndTitleText2, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
-  // ScrollText (TitleText3, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
 
   SetTextBorder (0, 0, SCREENBREITE, SCREENHOEHE, 40);
 
-#endif
+  while ( SpacePressed() );
+
 } /* EndTitle() */
 
 #undef _init_c

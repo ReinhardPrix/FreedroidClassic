@@ -36,9 +36,24 @@
 #include "colodefs.h"
 
 // **********************************************************************
-// Konstants about the size (and mem?) of pixmaps
+// Constants influencing code generation and
+// constants defining flags for some functions:
 
+#define USE_SDL_FRAMERATE
 #define NEW_ENGINE
+
+
+// The flags for DisplayRahmen are:
+enum
+  { FORCE_UPDATE=1 };
+
+// The flags for AssembleCombatWindow are:
+enum
+{ ONLY_SHOW_MAP = 1 , DO_SCREEN_UPDATE = 2, ALSO_UPDATE_EXTERIORS = 4 };
+
+
+// **********************************************************************
+// Konstants about the size (and mem?) of pixmaps
 
 #define BLOCKBREITE 		64
 #define BLOCK_WIDTH		BLOCKBREITE
@@ -113,11 +128,6 @@ enum
     SHOW_MISSION_POSITION=3, BACK_POSITION=4 };
 
 
-#define USE_SDL_FRAMERATE
-
-enum
-{ ONLY_SHOW_MAP = 1 , DO_SCREEN_UPDATE = 2, ALSO_UPDATE_EXTERIORS = 4 };
-
 
 // The following is the definition of the sound file names used in freedroid
 // DO NOT EVER CHANGE THE ORDER OF APPEARENCE IN THIS LIST PLEASE!!!!!
@@ -169,8 +179,8 @@ enum _sounds
 #define NE_BULLET_BLOCK_FILE 	"../graphics/ne_bullet.bmp"
 #define NE_BLAST_BLOCK_FILE 	"../graphics/ne_blast.bmp"
 #define NE_FRAME_FILE		"../graphics/rahmen.bmp"
-#define NE_ELEVATOR_PIC_FILE    "../graphics/ship.bmp"
-#define NE_CONSOLEN_PIC_FILE    "../graphics/ne_cons.bmp" // "../graphics/console.bmp"
+#define NE_ELEVATOR_PIC_FILE    "../graphics/ne_ship.bmp"
+#define NE_CONSOLEN_PIC_FILE    "../graphics/ne_cons.bmp" 
 #define NE_DIGIT_BLOCK_FILE     "../graphics/ne_digits.bmp"
 #define NE_RAHMEN_BLOCK_FILE    "../graphics/ne_rahmen.bmp"
 #define NE_TITLE_PIC_FILE       "../graphics/ne_title.bmp"
