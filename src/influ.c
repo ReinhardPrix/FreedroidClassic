@@ -2104,6 +2104,7 @@ adapt_global_mode_for_player ( int player_num )
     int obstacle_index;
     static int right_pressed_previous_frame = FALSE ;
     static int left_pressed_previous_frame = FALSE ;
+    int our_enemy_index ;
 
     //--------------------
     // At first we check if maybe the player is scrolling the game
@@ -2132,18 +2133,21 @@ adapt_global_mode_for_player ( int player_num )
 	global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
     }
 
-    //--------------------
-    // Now we need to find the obstacle under the current mouse
-    // corsor.  If there isn't any obstacle under it, then the global
-    // mode can be (more or less) reset.
-    //
-    obstacle_index = GetObstacleBelowMouseCursor ( player_num ) ;
-
-    if ( obstacle_index == (-1) )
+    our_enemy_index = GetLivingDroidBelowMouseCursor ( 0 ) ;
+    if ( our_enemy_index == (-1) )
     {
-	if ( global_ingame_mode != GLOBAL_INGAME_MODE_IDENTIFY )
-	    global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
-	return;
+	//--------------------
+	// Now we need to find the obstacle under the current mouse
+	// corsor.  If there isn't any obstacle under it, then the global
+	// mode can be (more or less) reset.
+	//
+	obstacle_index = GetObstacleBelowMouseCursor ( player_num ) ;
+	if ( obstacle_index == (-1) )
+	{
+	    if ( global_ingame_mode != GLOBAL_INGAME_MODE_IDENTIFY )
+		global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
+	    return;
+	}
     }
 
     if ( ( RightPressed ( ) && ( ! right_pressed_previous_frame) ) || MouseWheelDownPressed ( ) )
@@ -2156,6 +2160,14 @@ adapt_global_mode_for_player ( int player_num )
 	    global_ingame_mode = GLOBAL_INGAME_MODE_REPAIR ;
 	else if ( global_ingame_mode == GLOBAL_INGAME_MODE_REPAIR )	
 	    global_ingame_mode = GLOBAL_INGAME_MODE_UNLOCK ;
+	else if ( global_ingame_mode == GLOBAL_INGAME_MODE_UNLOCK )	
+	    global_ingame_mode = GLOBAL_INGAME_MODE_TALK ;
+	else if ( global_ingame_mode == GLOBAL_INGAME_MODE_TALK )	
+	    global_ingame_mode = GLOBAL_INGAME_MODE_FIRST_AID ;
+	else if ( global_ingame_mode == GLOBAL_INGAME_MODE_FIRST_AID )	
+	    global_ingame_mode = GLOBAL_INGAME_MODE_ATTACK ;
+	else if ( global_ingame_mode == GLOBAL_INGAME_MODE_ATTACK )	
+	    global_ingame_mode = GLOBAL_INGAME_MODE_PICKPOCKET ;
 	else
 	    global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
     }
@@ -3727,6 +3739,118 @@ handle_player_repair_command ( int player_num )
 }; // void handle_player_repair_command ( int player_num ) 
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+handle_player_talk_command ( int player_num ) 
+{
+    int obstacle_index ;
+    obstacle* our_obstacle;
+    char game_message_text[ 2000 ] ;
+
+    obstacle_index = GetObstacleBelowMouseCursor ( player_num ) ;
+    if ( obstacle_index == (-1) )
+    {
+	GiveStandardErrorMessage ( __FUNCTION__  , 
+				   "Talk command received, but there isn't any obstacle under the current mouse cursor.  Has it maybe moved away?  I'll simply ignore this request." ,
+				   NO_NEED_TO_INFORM, IS_WARNING_ONLY );
+	return;
+    }
+    our_obstacle = & ( curShip . AllLevels [ Me [ player_num ] . pos . z ] -> obstacle_list [ obstacle_index ] ) ;
+
+    DebugPrintf ( -4 , "\n%s(): talking to obstacle of type : %d. " , __FUNCTION__ , our_obstacle -> type );
+    
+    sprintf ( game_message_text , "Talking to obstacle of type %d." , our_obstacle -> type );
+    append_new_game_message ( game_message_text );
+
+}; // void handle_player_repair_command ( int player_num ) 
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+handle_player_first_aid_command ( int player_num ) 
+{
+    int obstacle_index ;
+    obstacle* our_obstacle;
+    char game_message_text[ 2000 ] ;
+
+    obstacle_index = GetObstacleBelowMouseCursor ( player_num ) ;
+    if ( obstacle_index == (-1) )
+    {
+	GiveStandardErrorMessage ( __FUNCTION__  , 
+				   "First aid command received, but there isn't any obstacle under the current mouse cursor.  Has it maybe moved away?  I'll simply ignore this request." ,
+				   NO_NEED_TO_INFORM, IS_WARNING_ONLY );
+	return;
+    }
+    our_obstacle = & ( curShip . AllLevels [ Me [ player_num ] . pos . z ] -> obstacle_list [ obstacle_index ] ) ;
+
+    DebugPrintf ( -4 , "\n%s(): applying first aid to obstacle of type : %d. " , __FUNCTION__ , our_obstacle -> type );
+    
+    sprintf ( game_message_text , "Applying first aid to obstacle of type %d." , our_obstacle -> type );
+    append_new_game_message ( game_message_text );
+
+}; // void handle_player_repair_command ( int player_num ) 
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+handle_player_attack_command ( int player_num ) 
+{
+    int obstacle_index ;
+    obstacle* our_obstacle;
+    char game_message_text[ 2000 ] ;
+
+    obstacle_index = GetObstacleBelowMouseCursor ( player_num ) ;
+    if ( obstacle_index == (-1) )
+    {
+	GiveStandardErrorMessage ( __FUNCTION__  , 
+				   "Attack command received, but there isn't any obstacle under the current mouse cursor.  Has it maybe moved away?  I'll simply ignore this request." ,
+				   NO_NEED_TO_INFORM, IS_WARNING_ONLY );
+	return;
+    }
+    our_obstacle = & ( curShip . AllLevels [ Me [ player_num ] . pos . z ] -> obstacle_list [ obstacle_index ] ) ;
+
+    DebugPrintf ( -4 , "\n%s(): attacking obstacle of type : %d. " , __FUNCTION__ , our_obstacle -> type );
+    
+    sprintf ( game_message_text , "Attacking obstacle of type %d." , our_obstacle -> type );
+    append_new_game_message ( game_message_text );
+
+}; // void handle_player_repair_command ( int player_num ) 
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+handle_player_pickpocket_command ( int player_num ) 
+{
+    int obstacle_index ;
+    obstacle* our_obstacle;
+    char game_message_text[ 2000 ] ;
+
+    obstacle_index = GetObstacleBelowMouseCursor ( player_num ) ;
+    if ( obstacle_index == (-1) )
+    {
+	GiveStandardErrorMessage ( __FUNCTION__  , 
+				   "Pickpocket command received, but there isn't any obstacle under the current mouse cursor.  Has it maybe moved away?  I'll simply ignore this request." ,
+				   NO_NEED_TO_INFORM, IS_WARNING_ONLY );
+	return;
+    }
+    our_obstacle = & ( curShip . AllLevels [ Me [ player_num ] . pos . z ] -> obstacle_list [ obstacle_index ] ) ;
+
+    DebugPrintf ( -4 , "\n%s(): picking pockets of obstacle of type : %d. " , __FUNCTION__ , our_obstacle -> type );
+    
+    sprintf ( game_message_text , "Picking pockets of obstacle of type %d." , our_obstacle -> type );
+    append_new_game_message ( game_message_text );
+
+}; // void handle_player_repair_command ( int player_num ) 
+
+/* ----------------------------------------------------------------------
  * If the user clicked his mouse, this might have several reasons.  It 
  * might happen to open some windows, pick up some stuff, smash a box,
  * move somewhere or fire a shot or make a weapon swing.
@@ -3796,7 +3920,7 @@ AnalyzePlayersMouseClick ( int player_num )
 	    break;
 	case GLOBAL_INGAME_MODE_LOOT:
 	    // if ( ButtonPressWasNotMeantAsFire( player_num ) ) return;
-	    DebugPrintf ( -4 , "\n%s(): received examine command." , __FUNCTION__ );
+	    DebugPrintf ( -4 , "\n%s(): received loot command." , __FUNCTION__ );
 	    handle_player_loot_command ( 0 ) ;
 	    global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
 	    
@@ -3810,7 +3934,7 @@ AnalyzePlayersMouseClick ( int player_num )
 	    break;
 	case GLOBAL_INGAME_MODE_REPAIR:
 	    // if ( ButtonPressWasNotMeantAsFire( player_num ) ) return;
-	    DebugPrintf ( -4 , "\n%s(): received examine command." , __FUNCTION__ );
+	    DebugPrintf ( -4 , "\n%s(): received repair command." , __FUNCTION__ );
 	    handle_player_repair_command ( 0 ) ;
 	    global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
 	    
@@ -3824,8 +3948,61 @@ AnalyzePlayersMouseClick ( int player_num )
 	    break;
 	case GLOBAL_INGAME_MODE_UNLOCK:
 	    // if ( ButtonPressWasNotMeantAsFire( player_num ) ) return;
-	    DebugPrintf ( -4 , "\n%s(): received examine command." , __FUNCTION__ );
+	    DebugPrintf ( -4 , "\n%s(): received unlock command." , __FUNCTION__ );
 	    handle_player_unlock_command ( 0 ) ;
+	    global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
+	    
+	    //--------------------
+	    // To stop any movement, we wait for the release of the 
+	    // mouse button.
+	    //
+	    while ( SpacePressed() );
+	    Activate_Conservative_Frame_Computation();
+
+	    break;
+	case GLOBAL_INGAME_MODE_TALK:
+	    // if ( ButtonPressWasNotMeantAsFire( player_num ) ) return;
+	    DebugPrintf ( -4 , "\n%s(): received talk command." , __FUNCTION__ );
+	    handle_player_talk_command ( 0 ) ;
+	    global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
+	    
+	    //--------------------
+	    // To stop any movement, we wait for the release of the 
+	    // mouse button.
+	    //
+	    while ( SpacePressed() );
+	    Activate_Conservative_Frame_Computation();
+
+	    break;
+	case GLOBAL_INGAME_MODE_FIRST_AID:
+	    DebugPrintf ( -4 , "\n%s(): received first aid command." , __FUNCTION__ );
+	    handle_player_first_aid_command ( 0 ) ;
+	    global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
+	    
+	    //--------------------
+	    // To stop any movement, we wait for the release of the 
+	    // mouse button.
+	    //
+	    while ( SpacePressed() );
+	    Activate_Conservative_Frame_Computation();
+
+	    break;
+	case GLOBAL_INGAME_MODE_ATTACK:
+	    DebugPrintf ( -4 , "\n%s(): received attack command." , __FUNCTION__ );
+	    handle_player_attack_command ( 0 ) ;
+	    global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
+	    
+	    //--------------------
+	    // To stop any movement, we wait for the release of the 
+	    // mouse button.
+	    //
+	    while ( SpacePressed() );
+	    Activate_Conservative_Frame_Computation();
+
+	    break;
+	case GLOBAL_INGAME_MODE_PICKPOCKET:
+	    DebugPrintf ( -4 , "\n%s(): received pickpocket command." , __FUNCTION__ );
+	    handle_player_pickpocket_command ( 0 ) ;
 	    global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
 	    
 	    //--------------------

@@ -1498,7 +1498,7 @@ append_new_game_message ( char* game_message_text )
     if ( game_message_protocol == NULL )
     {
 	game_message_protocol = MyMalloc ( 500000 ) ; // enough for any protocol
-	sprintf ( game_message_protocol , "This is the protocol.\nOh yes, it is indeed!\nIt has multiple lines too!\nIsn't that great?  But how long may any one line be?  Is there a limit for that?  Anyway, it looks good." );
+	sprintf ( game_message_protocol , "--- Message Protocol ---" );
     }
 
     strcat ( game_message_protocol , "\n* " ) ;

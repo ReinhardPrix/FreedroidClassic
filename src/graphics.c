@@ -264,7 +264,7 @@ blit_our_own_mouse_cursor ( void )
     //
     if ( first_call )
     {
-	for ( i = 0 ; i < 8 ; i ++ )
+	for ( i = 0 ; i < 12 ; i ++ )
 	{
 	    sprintf ( constructed_filename , "mouse_cursor_%04d.png" , i );
 	    fpath = find_file ( constructed_filename , GRAPHICS_DIR, FALSE );
@@ -325,6 +325,22 @@ Error loading flag image.",
 		blit_open_gl_texture_to_screen_position ( mouse_cursors [ 7 ] , 
 							  GetMousePos_x () , GetMousePos_y () , TRUE );
 		break;
+	    case GLOBAL_INGAME_MODE_TALK:
+		blit_open_gl_texture_to_screen_position ( mouse_cursors [ 8 ] , 
+							  GetMousePos_x () , GetMousePos_y () , TRUE );
+		break;
+	    case GLOBAL_INGAME_MODE_FIRST_AID:
+		blit_open_gl_texture_to_screen_position ( mouse_cursors [ 9 ] , 
+							  GetMousePos_x () , GetMousePos_y () , TRUE );
+		break;
+	    case GLOBAL_INGAME_MODE_ATTACK:
+		blit_open_gl_texture_to_screen_position ( mouse_cursors [ 10 ] , 
+							  GetMousePos_x () , GetMousePos_y () , TRUE );
+		break;
+	    case GLOBAL_INGAME_MODE_PICKPOCKET:
+		blit_open_gl_texture_to_screen_position ( mouse_cursors [ 11 ] , 
+							  GetMousePos_x () , GetMousePos_y () , TRUE );
+		break;
 	    default:
 		DebugPrintf ( -4 , "\n%s(): global_ingame_mode: %d." , __FUNCTION__ , 
 			      global_ingame_mode );
@@ -357,6 +373,7 @@ blit_mouse_cursor_corona ( void )
     char* fpath;
     moderately_finepoint offset_vector;
     int our_obstacle_index ;
+    int our_enemy_index;
 
     //--------------------
     // In case of scroll modes, we don't have to blit any corona...
@@ -371,7 +388,7 @@ blit_mouse_cursor_corona ( void )
     //
     if ( first_call )
     {
-	for ( i = 0 ; i < 5 ; i ++ )
+	for ( i = 0 ; i < 8 ; i ++ )
 	{
 	    sprintf ( constructed_filename , "mouse_cursor_corona_%04d.png" , i );
 	    fpath = find_file ( constructed_filename , GRAPHICS_DIR, FALSE );
@@ -393,16 +410,23 @@ Error loading flag image.",
 	first_call = FALSE ;
     }
 
-    our_obstacle_index = GetObstacleBelowMouseCursor ( 0 ) ;
-    if ( our_obstacle_index != (-1) )
+    //--------------------
+    // First we check to see if there is maybe a person underneath the current
+    // mouse cursor.  If this is so, we'll use this person to associate all 
+    // special functions.  Obstacles have a lower priority and only get taken
+    // into account if there isn't any person present as well.
+    //
+    our_enemy_index = GetLivingDroidBelowMouseCursor ( 0 ) ;
+    if ( our_enemy_index == (-1) )
     {
-	PutStringFont ( Screen , FPS_Display_BFont , GetMousePos_x () + 30 , GetMousePos_y () + 30 , 
-			"Obstacle type:" );
+	our_obstacle_index = GetObstacleBelowMouseCursor ( 0 ) ;
+	if ( our_obstacle_index == (-1) ) return;
     }
-    else return;
 	
-
-    for ( i = 0 ; i < 5 ; i ++ )
+    //--------------------
+    // Now we blit the full mouse cursor corona
+    //
+    for ( i = 0 ; i < 8 ; i ++ )
     {
 	offset_vector . x = 0 ;
 	offset_vector . y = -35 ;
