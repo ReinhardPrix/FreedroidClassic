@@ -6,7 +6,6 @@ SDL_VERSION=1.2.3
 
 dnl Detect the canonical host and target build environment
 
-# check for windows cross-compilation tools
 AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
 
@@ -124,6 +123,7 @@ dnl send a signal to automake if we're compiling for win32
 AM_CONDITIONAL(WIN32, test x$win32 = xtrue)
 
 
-AC_CONFIG_FILES([Makefile src/Makefile])
+AC_CONFIG_FILES([Makefile src/Makefile map/Makefile sound/Makefile
+ graphics/Makefile graphics/classic_theme/Makefile graphics/lanzz_theme/Makefile])
 
 AC_OUTPUT

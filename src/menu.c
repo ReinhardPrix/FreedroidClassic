@@ -1532,8 +1532,9 @@ DeleteWaypoint (level *Lev, int num)
 
 } // DeleteWaypoint()
 
-
-// create a new empty waypoint on position x/y
+/*----------------------------------------------------------------------
+ * create a new empty waypoint on position x/y
+ *----------------------------------------------------------------------*/
 void
 CreateWaypoint (level *Lev, int x, int y)
 {

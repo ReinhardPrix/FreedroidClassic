@@ -3,5 +3,7 @@ aclocal
 autoheader
 automake --add-missing
 autoconf
-./configure
+##./configure
+echo "You are now ready to run './configure'"
+
 

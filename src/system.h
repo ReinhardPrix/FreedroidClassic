@@ -60,10 +60,6 @@
 
 #include <signal.h>
 
-#ifdef MAXOSX
-#include "mac-osx/getopt.h"
-#endif
-
 #ifdef HAVE_SYS_SOUNDCARD_H
 #include <sys/soundcard.h>
 #endif

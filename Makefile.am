@@ -1,26 +1,11 @@
-SUBDIRS = src 
+SUBDIRS = src map graphics sound
 
 man_MANS = freedroid.6
 
-freedroid_data = map graphics sound
-EXTRA_DIST = $(man_MANS) $(freedroid_data) mac-osx 
+EXTRA_DIST = $(man_MANS) mac-osx
 
 dist-hook:
 	rm -rf `find $(distdir) -name CVS`
-
-install-data-local:
-	echo "Now copying the the data-directories..."
-	$(mkinstalldirs) $(DESTDIR)$(pkgdatadir)
-	cp -pr $(freedroid_data) $(DESTDIR)$(pkgdatadir)
-	echo "... and removing CVS dirs and Makefiles..."
-	rm -rf `find $(DESTDIR)$(pkgdatadir) -name CVS -o -name "Makefile*"`
-	echo "..done."
-
-uninstall-local:
-	echo "Removing data files ..."
-	rm -rf $(DESTDIR)$(pkgdatadir)
-	echo "...done."
-
 
 ## Win32 specific stuff follows here
 
