@@ -68,6 +68,10 @@ symtrans Translator[BLOCKANZAHL] = {
   {0, -1}			// marks the end
 };
 
+void TranslateToHumanReadable ( char* HumanReadable , unsigned char* MapInfo, int LineLength , Level Lev , int CurrentLine);
+
+
+
 /*@Function============================================================
   @Desc: unsigned char GetMapBrick(Level deck, float x, float y): liefert
   intern-code des Elements, das sich auf (deck x/y) befindet
@@ -354,29 +358,30 @@ char *StructToMem(Level Lev)
   int i, j;
   int MemAmount=0;		/* the size of the level-data */
   int xlen = Lev->xlen, ylen = Lev->ylen;
-  int anz_wp;		/* Anzahl der Waypoints */
+  int anz_wp;		/* number of Waypoints */
   char linebuf[81];		/* Buffer */
+  char HumanReadableMapLine[1000]="Hallo, dies soll lesbarer Map-string werden.";
   
   /* Get the number of waypoints */
   anz_wp = 0;
   while( Lev->AllWaypoints[anz_wp++].x != 0 );
   anz_wp --;		/* we counted one too much */
 		
-  /* Groesse des benoetigten Speichers abschaetzen */
+  /* estimate the amount of memory needed */
   MemAmount = (xlen+1) * ylen; 	/* Map-memory */
   MemAmount += anz_wp * MAX_WP_CONNECTIONS * 4;
   MemAmount += 1000;		/* Puffer fuer Dimensionen, mark-strings .. */
   
-  /* Speicher reservieren */
+  /* allocate some memory */
   if( (LevelMem = (char*)malloc(MemAmount)) == NULL) {
     printf("\n\nError in StructToMem:  Could not allocate memory...\n\nTerminating...\n\n");
     Terminate(ERR);
     return NULL;
   }
 
-  // Daten in Speicher schreiben :
+  // Write the data to memory:
   // Here the levelnumber and general information about the level is written
-  sprintf(linebuf, "%d\n%d\n%d\n%d\n",
+  sprintf(linebuf, "Levelnumber: %d\nxlen of this level: %d\nylen of this level: %d\ncolor of this level: %d\n",
 	  Lev->levelnum, Lev->xlen, Lev->ylen, Lev->color);
   strcpy(LevelMem, linebuf);
   
@@ -386,10 +391,16 @@ char *StructToMem(Level Lev)
   
   // Now in the loop each line of map data should be saved as a whole
   for(i=0; i<ylen; i++) {
-    strncat(LevelMem, Lev->map[i], xlen);
+    // But before we can write this line of the map to the disk, we need to
+    // convert is back to human readable format.
+    TranslateToHumanReadable ( HumanReadableMapLine , Lev->map[i] , xlen , Lev , i );
+    strncat(LevelMem, HumanReadableMapLine , xlen);
     strcat(LevelMem, "\n");
   }
   
+  // The next thing we must do is write the waypoints of this level also
+  // to disk.
+
   // Now a newline seems to indicate the beginning of the next map
   //
   strcat(LevelMem, WP_BEGIN_STRING);
@@ -576,14 +587,12 @@ Starting to process information for another level:\n");
       return NULL;
 
   /* Get Doors Array */
-  // NumDoors =
   GetDoors (loadlevel);
 
   /* Get Waypoints */
   NumWaypoints = GetWaypoints (loadlevel);
 
   /* Get Refreshes */
-  // NumRefreshes =
   GetRefreshes (loadlevel);
 
   /* Scan the waypoint- connections */
@@ -760,9 +769,58 @@ IsWallBlock (int block)
     }				// switch
 }				// IsWallBlock()
 
+void
+TranslateToHumanReadable ( char* HumanReadable , unsigned char* MapInfo, int LineLength , Level Lev , int CurrentLine)
+{
+  int col;
+  int i;
+
+  printf("\n\nTranslating mapline into human readable format...");
+  
+
+  /* transpose the game-engine mapdata line to human readable format */
+
+  for (col = 0; col < LineLength; col++)
+    {
+      for (i = 0; (i < INVISIBLE_BRICK) && (Translator[i].intern != MapInfo[col] ); i++);
+      
+      if ( i == INVISIBLE_BRICK )
+	{
+	  printf ("\nIn TranslateToHumanReadable: Unknown map-char: %d\nWriting '+' for it.\n",
+		  MapInfo[col]);
+	  HumanReadable[col] = '+';
+	  // Terminate (ERR);
+	}
+      else
+	{
+	  printf("\nSuccessfully interpreting: %d\n", MapInfo[col] );
+	  HumanReadable[col] = Translator[i].ascii;
+	}
+    }
+
+  // At this point, the map is basically translated into human readable format
+  // and ready for output.  Only one more thing must be done before that can
+  // happen:  The WAYPOINT information must be stored in the map as well and
+  // this must happen via 'x' entries in the map for every waypoint.  So
+  // we just add the nescessary x's and we are done
+
+  for (i=0; i<MAXWAYPOINTS; i++)
+    {
+      if ( Lev->AllWaypoints[i].y != CurrentLine ) continue;
+      if ( Lev->AllWaypoints[i].y == 0 ) continue;  // this means an unused waypoint field
+      HumanReadable[ Lev->AllWaypoints[i].x ] = 'x';
+    }
+
+} // void TranslateToHumanReadable( ... )
 
 /*-----------------------------------------------------------------
- * @Desc: uebersetzt die geladene Karte in die internen Werte
+ * @Desc: When the ship is loaded from disk, the data of the map 
+ *        are initally in a human readable form with sensible
+ *        ascii characters.  This however is NOT the format and
+ *        the map encoding actually used by the game engine.
+ *        Therefore a translation of human readable format to
+ *        game-engine format has to occur and that is what this
+ *        function achieves.
  *
  * @Ret: OK | ERR
  *
@@ -778,7 +836,9 @@ TranslateMap (Level Lev)
   int environs;			// encodes the "Wall-environment" of a "+"
   int NewBlock = KREUZ;		// Neuen "Eck-Block" in den wir KREUZ verwandeln
 
-  /* Erste Runde: transpose these ascii -mapdata to internal numbers for map */
+  printf("\n\nStarting to translate the map from human readable disk format into game-engine format.");
+
+  /* first round: transpose all ascii-mapdata to internal numbers for map */
   for (row = 0; row < ydim; row++)
     {
       for (col = 0; col < xdim; col++)
