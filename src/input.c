@@ -134,7 +134,7 @@ int CurrentlyEscapePressed=0;
 int CurrentlyTabPressed=0;
 int CurrentlyShiftPressed=0;
 int CurrentlyBackspacePressed=0;
-
+int CurrentlyLeftCtrlPressed=0;
 
 void 
 UnsetAllKeys( void )
@@ -210,6 +210,7 @@ UnsetAllKeys( void )
   CurrentlyF12Pressed=0;
   CurrentlyEscapePressed=0;
   CurrentlyBackspacePressed=0;
+  CurrentlyLeftCtrlPressed=0;
 }; // void UnsetAllKeys( void )
 
 // grob_point ItemSizeTable[ ALL_ITEMS ];
@@ -1056,6 +1057,9 @@ keyboard_update(void)
 	    case SDLK_BACKSPACE:
 	      CurrentlyBackspacePressed=TRUE;
 	      break;
+	    case SDLK_LCTRL:
+	      CurrentlyLeftCtrlPressed=TRUE;
+	      break;
 	    case SDLK_LEFT:
 	      CurrentlyLeftPressed=TRUE;
 	      break;
@@ -1320,6 +1324,9 @@ keyboard_update(void)
 	      break;
 	    case SDLK_BACKSPACE:
 	      CurrentlyBackspacePressed=FALSE;
+	      break;
+	    case SDLK_LCTRL:
+	      CurrentlyLeftCtrlPressed=FALSE;
 	      break;
 	    case SDLK_LEFT:
 	      CurrentlyLeftPressed=FALSE;
@@ -1961,6 +1968,13 @@ BackspacePressed (void)
 {
   keyboard_update ();
   return CurrentlyBackspacePressed;
+}				// int SpacePressed(void)
+
+int
+LeftCtrlPressed (void)
+{
+  keyboard_update ();
+  return CurrentlyLeftCtrlPressed;
 }				// int SpacePressed(void)
 
 int

@@ -437,6 +437,7 @@ EXTERN int EscapePressed (void);
 EXTERN int TabPressed (void);
 EXTERN int Shift_Is_Pressed(void);
 EXTERN int BackspacePressed (void);
+EXTERN int LeftCtrlPressed (void);
 EXTERN int KP_PLUS_Pressed (void);
 EXTERN int KP_MINUS_Pressed (void);
 EXTERN int KP_MULTIPLY_Pressed (void);

@@ -636,7 +636,9 @@ enum
 #define TUX_WALK_CYCLE_PHASES   10
 #define TUX_RUN_CYCLE_PHASES   10
 #define TUX_TOTAL_PHASES (TUX_SWING_PHASES+TUX_BREATHE_PHASES+TUX_GOT_HIT_PHASES+TUX_WALK_CYCLE_PHASES+TUX_RUN_CYCLE_PHASES)
-#define RUNNING_SPEED_THRESHOLD (5.0)
+
+#define TUX_RUNNING_SPEED (7.1)
+#define TUX_WALKING_SPEED (2.5)
 
 #define TUX_MODELS              13
 #define MAX_TUX_DIRECTIONS      16
@@ -656,9 +658,6 @@ enum
                                   // while.  This variable describes the amount of time in SECONDS.  However,
                                   // the final wait time is a random number within [0,ENEMYMAXWAIT].
 #define FLASH_DURATION_IN_SECONDS 0.1
-
-#define TUX_MAXSPEED_WITHOUT_DRIVE_ITEM 2
-#define TUX_ACCEL_WITHOUT_DRIVE_ITEM 2
 
 //--------------------
 // direction definitions (fireing bullets and testing blockedness of positions) 

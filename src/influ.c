@@ -57,8 +57,6 @@
 
 #define MAXIMAL_STEP_SIZE ( 7.0/20.0 )
 
-#define TUX_MAX_SPEED (7.1)
-
 #define DEBUG_TUX_PATHFINDING 0  // debug level for tux pathfinding...
 
 void InfluEnemyCollisionLoseEnergy (int enemynum);	/* influ can lose energy on coll. */
@@ -693,6 +691,8 @@ MoveTuxAccordingToHisSpeed ( int player_num )
   //
   planned_step_x = Me [ player_num ] . speed . x * Frame_Time ();
   planned_step_y = Me [ player_num ] . speed . y * Frame_Time ();
+
+  /*
   if ( fabsf( planned_step_x ) >= MAXIMAL_STEP_SIZE )
     {
       planned_step_x = copysignf( MAXIMAL_STEP_SIZE , planned_step_x );
@@ -701,6 +701,7 @@ MoveTuxAccordingToHisSpeed ( int player_num )
     {
       planned_step_y = copysignf( MAXIMAL_STEP_SIZE , planned_step_y );
     }
+  */
 
   //--------------------
   // Maybe the Tux is just executing a weapon strike.  In this case, there should
@@ -796,9 +797,26 @@ move_tux_thowards_raw_position ( int player_num , float x , float y )
       return ( TRUE ) ;
     }
 
-  planned_step . x = RemainingWay . x * TUX_MAX_SPEED / length ;
-  planned_step . y = RemainingWay . y * TUX_MAX_SPEED / length ;
+  //--------------------
+  // Now depending on whether the running key is pressed or not,
+  // we have the Tux go on running speed or on walking speed.
+  //
+  if ( LeftCtrlPressed() )
+    { 
+      planned_step . x = RemainingWay . x * TUX_RUNNING_SPEED / length ;
+      planned_step . y = RemainingWay . y * TUX_RUNNING_SPEED / length ;
+      DebugPrintf ( -2 , "\nNow running..." );
+    }
+  else
+    {
+      planned_step . x = RemainingWay . x * TUX_WALKING_SPEED / length ;
+      planned_step . y = RemainingWay . y * TUX_WALKING_SPEED / length ;
+      DebugPrintf ( -2 , "\nNow walking..." );
+    }
 
+  //--------------------
+  // Now that the speed is set, we can start to make the step
+  //
   Me [ player_num ] . speed . x = planned_step . x ;
   Me [ player_num ] . speed . y = planned_step . y ;
 
@@ -808,9 +826,9 @@ move_tux_thowards_raw_position ( int player_num , float x , float y )
   //
   if ( ( Frame_Time() > 0.001 ) && ( length > 0.05 ) )
     {
-      if ( fabsf ( planned_step . x * Frame_Time() ) >= RemainingWay .x  )
+      if ( fabsf ( planned_step . x * Frame_Time() ) >= fabsf ( RemainingWay .x  ) )
 	Me [ player_num ] . speed . x = RemainingWay . x / Frame_Time() ;
-      if ( fabsf ( planned_step . y * Frame_Time() ) >= RemainingWay .y  )
+      if ( fabsf ( planned_step . y * Frame_Time() ) >= fabsf ( RemainingWay .y  ) )
 	Me [ player_num ] . speed . y = RemainingWay . y / Frame_Time() ;
     }
 
@@ -1380,22 +1398,6 @@ MoveInfluence ( int player_num )
   // But in case of some mouse move target present, we proceed to move
   // thowards this mouse move target.
   //
-  /*
-  if ( Me [ player_num ] . mouse_move_target . x != ( -1 ) )
-    {
-      // update_intermediate_tux_waypoints( player_num );
-
-
-      // if ( ( fabsf ( Me [ 0 ] . next_intermediate_point [ 0 ] . x - Me [ 0 ] . mouse_move_target . x ) < 0.1 ) &&
-      // ( fabsf ( Me [ 0 ] . next_intermediate_point [ 0 ] . y - Me [ 0 ] . mouse_move_target . y ) < 0.1 ) )
-      // move_tux_thowards_mouse_move_target ( player_num );
-      // else
-
-
-      move_tux_thowards_intermediate_point ( player_num );
-    }
-  */
-
   move_tux_thowards_intermediate_point ( player_num );
  
   //--------------------
@@ -1413,7 +1415,6 @@ MoveInfluence ( int player_num )
 	   ( Me [ player_num ] .status != WEAPON ) )
 	Me [ player_num ] . status = TRANSFERMODE ;
 
-      // if ( ( ServerThinksSpacePressed ( player_num ) || ServerThinksAxisIsActive ( player_num ) ) && 
       if ( ( ServerThinksAxisIsActive ( player_num ) ) && 
 	   ( ! ServerThinksNoDirectionPressed ( player_num ) ) &&
 	   ( Me [ player_num ] .status != TRANSFERMODE ) )
@@ -1582,7 +1583,7 @@ AnimateInfluence ( int player_num )
 	{
 	  my_speed = sqrt ( Me [ player_num ] . speed . x * Me [ player_num ] . speed . x +
 			    Me [ player_num ] . speed . y * Me [ player_num ] . speed . y ) ;
-	  if ( my_speed <= RUNNING_SPEED_THRESHOLD )
+	  if ( my_speed <= ( TUX_WALKING_SPEED + TUX_RUNNING_SPEED ) * 0.5 )
 	    Me [ player_num ] . walk_cycle_phase += Frame_Time() * 10.0 * my_speed ;
 	  else
 	    Me [ player_num ] . walk_cycle_phase += Frame_Time() * 3.0 * my_speed ;
@@ -1636,16 +1637,14 @@ CheckInfluenceWallCollisions ( int player_num )
   double maxspeed;
   Level InfluencerLevel = curShip . AllLevels [ Me [ player_num ] . pos . z ] ;
 
+  return;
+
   //--------------------
   // First we introduce some security against later segfaults
   // due to calculation with properties of items of type -1.
   //
   if ( Me [ player_num ] . status == OUT ) return;
   if ( Me [ player_num ] . energy <= 0   ) return;
-
-  if ( Me [ player_num ] .drive_item.type != (-1) )
-    maxspeed = ItemMap [ Me [ player_num ] .drive_item.type ].item_drive_maxspeed ;
-  else maxspeed = TUX_MAXSPEED_WITHOUT_DRIVE_ITEM ;
 
   maxspeed = 7.0 ;
 
@@ -1791,7 +1790,7 @@ CheckInfluenceWallCollisions ( int player_num )
 void
 limit_tux_speed_to_a_maximum ( int player_num )
 {
-  double maxspeed = TUX_MAX_SPEED ;
+  double maxspeed = TUX_RUNNING_SPEED ;
 
   //--------------------
   // First we adjust the speed, so that the Tux can never go too fast
@@ -1807,7 +1806,6 @@ limit_tux_speed_to_a_maximum ( int player_num )
   if (Me [ player_num ] .speed.y < (-maxspeed))
     Me [ player_num ] .speed.y = (-maxspeed);
 
-
 }; // void limit_tux_speed_to_a_maximum ( int player_num ) 
 
 /* ----------------------------------------------------------------------
@@ -1817,7 +1815,6 @@ limit_tux_speed_to_a_maximum ( int player_num )
 void
 InfluenceFrictionWithAir ( int player_num )
 {
-
   //--------------------
   // Maybe the Tux is justified on his way.  Then we don't apply
   // any friction, since there is intended movement.
@@ -1829,26 +1826,6 @@ InfluenceFrictionWithAir ( int player_num )
 
   Me [ player_num ] . speed . x = 0 ;
   Me [ player_num ] . speed . y = 0 ;
-
-  return;
-
-  //--------------------
-  // So now that we know, that some friction is intended, we can start
-  // to apply the friction.  However, we must do so of course depending
-  // on the current frame rate, a task, that the exponential function
-  // seems very fitting for.
-  //
-  if ( ! ServerThinksUpPressed ( player_num ) && ! ServerThinksDownPressed ( player_num ) )
-    {
-      Me [ player_num ] . speed . y *= exp ( log ( FRICTION_CONSTANT ) * Frame_Time ( ) );
-    }
-  if ( ! ServerThinksRightPressed ( player_num ) && ! ServerThinksLeftPressed ( player_num ) )
-    {
-      Me [ player_num ] . speed . x *= exp ( log ( FRICTION_CONSTANT ) * Frame_Time ( ) );
-    }
-
-  if ( fabsf ( Me [ player_num ] . speed . x ) < 0.3 ) Me [ player_num ] . speed . x = 0 ;
-  if ( fabsf ( Me [ player_num ] . speed . y ) < 0.3 ) Me [ player_num ] . speed . y = 0 ;
 
 }; // InfluenceFrictionWithAir ( int player_num )
 

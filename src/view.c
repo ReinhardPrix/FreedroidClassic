@@ -1783,7 +1783,7 @@ Empty part string received!",
       //
       my_speed = sqrt ( Me [ player_num ] . speed . x * Me [ player_num ] . speed . x +
 			Me [ player_num ] . speed . y * Me [ player_num ] . speed . y ) ;
-      if ( my_speed > RUNNING_SPEED_THRESHOLD )
+      if ( my_speed > ( TUX_WALKING_SPEED + TUX_RUNNING_SPEED ) * 0.5 )
 	our_phase += TUX_WALK_CYCLE_PHASES ;
 
       // our_phase = ( ( ( int ) SDL_GetTicks()/1000) % 6 ) + 16 ;
