@@ -364,6 +364,9 @@ CreateAlphaCombinedSurface ( SDL_Surface* FirstSurface , SDL_Surface* SecondSurf
   SDL_PixelFormat *fmt1;
   SDL_PixelFormat *fmt2;
   Uint32 temp, pixel1 , pixel2 ;
+  Uint32 AMask_1 , AMask_2 , RMask_1, RMask_2, GMask_1, GMask_2, BMask_1, BMask_2;
+  Uint8 AShift_1 , AShift_2 , RShift_1, RShift_2, GShift_1, GShift_2, BShift_1, BShift_2;
+  Uint8 ALoss_1 , ALoss_2 , RLoss_1, RLoss_2, GLoss_1, GLoss_2, BLoss_1, BLoss_2;
   Uint32* pixel_pointer1;
   Uint32* pixel_pointer2;
   // Uint8 blue;
@@ -396,12 +399,36 @@ CreateAlphaCombinedSurface ( SDL_Surface* FirstSurface , SDL_Surface* SecondSurf
   pixel_pointer1 = ( ( ( Uint32* ) FirstSurface -> pixels ) + 0 + 0 * FirstSurface->w )  ;
   pixel_pointer2 = ( ( ( Uint32* ) SecondSurface -> pixels ) + 0 + 0 * SecondSurface->w )  ;
 
+  //--------------------
+  // Now we prepare some surface properties, so that we don't have to retrieve
+  // them again and again later...
+  //
+  BMask_1 = fmt1->Bmask;  /* Isolate blue component */
+  BMask_2 = fmt2->Bmask;  /* Isolate blue component */
+  RMask_1 = fmt1->Rmask;  /* Isolate blue component */
+  RMask_2 = fmt2->Rmask;  /* Isolate blue component */
+  GMask_1 = fmt1->Gmask;  /* Isolate blue component */
+  GMask_2 = fmt2->Gmask;  /* Isolate blue component */
+  AMask_1 = fmt1->Amask;  /* Isolate blue component */
+  AMask_2 = fmt2->Amask;  /* Isolate blue component */
 
+  BLoss_1 = fmt1->Bloss;  /* Isolate blue component */
+  BLoss_2 = fmt2->Bloss;  /* Isolate blue component */
+  RLoss_1 = fmt1->Rloss;  /* Isolate blue component */
+  RLoss_2 = fmt2->Rloss;  /* Isolate blue component */
+  GLoss_1 = fmt1->Gloss;  /* Isolate blue component */
+  GLoss_2 = fmt2->Gloss;  /* Isolate blue component */
+  ALoss_1 = fmt1->Aloss;  /* Isolate blue component */
+  ALoss_2 = fmt2->Aloss;  /* Isolate blue component */
 
-
-
-
-
+  BShift_1 = fmt1->Bshift;  /* Isolate blue component */
+  BShift_2 = fmt2->Bshift;  /* Isolate blue component */
+  RShift_1 = fmt1->Rshift;  /* Isolate blue component */
+  RShift_2 = fmt2->Rshift;  /* Isolate blue component */
+  GShift_1 = fmt1->Gshift;  /* Isolate blue component */
+  GShift_2 = fmt2->Gshift;  /* Isolate blue component */
+  AShift_1 = fmt1->Ashift;  /* Isolate blue component */
+  AShift_2 = fmt2->Ashift;  /* Isolate blue component */
 
 
   //--------------------
@@ -422,25 +449,25 @@ CreateAlphaCombinedSurface ( SDL_Surface* FirstSurface , SDL_Surface* SecondSurf
 	  //--------------------
 	  // Now we can extract the blue component
 	  //
-	  temp = pixel1&fmt1->Bmask;  /* Isolate blue component */
-	  temp = temp>>fmt1->Bshift; /* Shift it down to 8-bit */
-	  temp = temp<<fmt1->Bloss;  /* Expand to a full 8-bit number */
+	  temp = pixel1  & BMask_1;  /* Isolate blue component */
+	  temp = temp   >> BShift_1; /* Shift it down to 8-bit */
+	  temp = temp   << BLoss_1;  /* Expand to a full 8-bit number */
 	  blue1 = ( Uint8 ) temp ;
 
-	  temp = pixel2&fmt2->Bmask;  /* Isolate blue component */
-	  temp = temp>>fmt2->Bshift; /* Shift it down to 8-bit */
-	  temp = temp<<fmt2->Bloss;  /* Expand to a full 8-bit number */
+	  temp = pixel2 &  BMask_2;  /* Isolate blue component */
+	  temp = temp   >> BShift_2; /* Shift it down to 8-bit */
+	  temp = temp   << BLoss_2;  /* Expand to a full 8-bit number */
 	  blue2 = ( Uint8 ) temp ;
 
 	  //--------------------
 	  // Now we can extract the red component
 	  //
-	  temp = pixel1&fmt1->Rmask; /* Isolate red component */
+	  temp = pixel1& RMask_1; /* Isolate red component */
 	  temp = temp>>fmt1->Rshift;/* Shift it down to 8-bit */
 	  temp = temp<<fmt1->Rloss; /* Expand to a full 8-bit number */
 	  red1 = ( Uint8 ) temp ;
 
-	  temp = pixel2&fmt2->Rmask; /* Isolate red component */
+	  temp = pixel2& RMask_2; /* Isolate red component */
 	  temp = temp>>fmt2->Rshift;/* Shift it down to 8-bit */
 	  temp = temp<<fmt2->Rloss; /* Expand to a full 8-bit number */
 	  red2 = ( Uint8 ) temp ;
@@ -448,27 +475,27 @@ CreateAlphaCombinedSurface ( SDL_Surface* FirstSurface , SDL_Surface* SecondSurf
 	  //--------------------
 	  // Now we can extract the green component
 	  //
-	  temp = pixel1&fmt1->Gmask; /* Isolate green component */
-	  temp = temp>>fmt1->Gshift;/* Shift it down to 8-bit */
-	  temp = temp<<fmt1->Gloss; /* Expand to a full 8-bit number */
+	  temp = pixel1 &  GMask_1; /* Isolate green component */
+	  temp = temp   >> GShift_1; /* Shift it down to 8-bit */
+	  temp = temp   << GLoss_1; /* Expand to a full 8-bit number */
 	  green1 = (Uint8)temp;
 
-	  temp = pixel2&fmt2->Gmask; /* Isolate green component */
-	  temp = temp>>fmt2->Gshift;/* Shift it down to 8-bit */
-	  temp = temp<<fmt2->Gloss; /* Expand to a full 8-bit number */
+	  temp = pixel2 &  GMask_2; /* Isolate green component */
+	  temp = temp   >> GShift_2;/* Shift it down to 8-bit */
+	  temp = temp   << GLoss_2; /* Expand to a full 8-bit number */
 	  green2 = (Uint8)temp;
 
 	  //--------------------
 	  // Now we can extract the alpha component
 	  //
-	  temp = pixel1&fmt1->Amask;  /* Isolate alpha component */
-	  temp = temp>>fmt1->Ashift; /* Shift it down to 8-bit */
-	  temp = temp<<fmt1->Aloss;  /* Expand to a full 8-bit number */
+	  temp = pixel1 &  AMask_1;  /* Isolate alpha component */
+	  temp = temp   >> AShift_1; /* Shift it down to 8-bit */
+	  temp = temp   << ALoss_1;  /* Expand to a full 8-bit number */
 	  raw_alpha1 = ( Uint8 ) temp ;
 
-	  temp = pixel2&fmt2->Amask;  /* Isolate alpha component */
-	  temp = temp>>fmt2->Ashift; /* Shift it down to 8-bit */
-	  temp = temp<<fmt2->Aloss;  /* Expand to a full 8-bit number */
+	  temp = pixel2 &  AMask_2;  /* Isolate alpha component */
+	  temp = temp   >> AShift_2; /* Shift it down to 8-bit */
+	  temp = temp   << ALoss_2;  /* Expand to a full 8-bit number */
 	  raw_alpha2 = ( Uint8 ) temp ;
 
 
@@ -507,6 +534,10 @@ CreateAlphaCombinedSurface ( SDL_Surface* FirstSurface , SDL_Surface* SecondSurf
 		   ( 1 - alpha2 ) * alpha1 * blue1 ) 
 	    / alpha3 ;
 
+	  //--------------------
+	  // This putpixel must go out and be replaced by something with
+	  // less overhead...
+	  //
 	  putpixel ( ThirdSurface , x , y , 
 		     SDL_MapRGBA ( ThirdSurface -> format , new_red , new_green , new_blue , 255.0 * alpha3 ) ) ;
 
