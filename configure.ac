@@ -148,6 +148,6 @@ AM_CONDITIONAL(WIN32, test x$win32 = xtrue)
 dnl send a signal to automake wether gtk was found or not
 AM_CONDITIONAL(FOUND_GTK, test x$found_gtk = xtrue)
 
-AC_CONFIG_FILES([Makefile src/Makefile item_editor/Makefile croppy/Makefile gluem/Makefile win32/Makefile])
+AC_CONFIG_FILES([Makefile src/Makefile croppy/Makefile gluem/Makefile win32/Makefile])
 
 AC_OUTPUT
