@@ -1086,8 +1086,8 @@ glue_obstacles_to_floor_tiles_for_level ( int level_num )
       // We need to glue this one and we glue it to the closest map tile center we have...
       // For this we need first to prepare some things...
       //
-      x_tile = rintf ( loadlevel -> obstacle_list [ obstacle_counter ] . pos . x );
-      y_tile = rintf ( loadlevel -> obstacle_list [ obstacle_counter ] . pos . y );
+      x_tile = rintf ( loadlevel -> obstacle_list [ obstacle_counter ] . pos . x - 0.5 );
+      y_tile = rintf ( loadlevel -> obstacle_list [ obstacle_counter ] . pos . y - 0.5 );
 
       if ( x_tile < 0 ) x_tile = 0;       if ( y_tile < 0 ) y_tile = 0 ;
       if ( x_tile >= loadlevel -> xlen ) x_tile = loadlevel -> xlen - 1;

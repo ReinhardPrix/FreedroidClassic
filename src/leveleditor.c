@@ -239,8 +239,11 @@ HandleBannerMouseClick( void )
       if ( ClickWasInRect ( TargetRect ) )
 	{
 	  Highlight = FirstBlock + i;
-	}; 
+	}
     }
+
+  if ( Highlight >= ALL_ISOMETRIC_FLOOR_TILES )
+    Highlight = ALL_ISOMETRIC_FLOOR_TILES - 1;
 
 }; // void HandleBannerMouseClick( void )
 
@@ -2987,8 +2990,8 @@ show_level_editor_tooltips ( void )
 void 
 LevelEditor(void)
 {
-  int BlockX=rintf(Me[0].pos.x);
-  int BlockY=rintf(Me[0].pos.y);
+  int BlockX=rintf(Me[0].pos.x+0.5);
+  int BlockY=rintf(Me[0].pos.y+0.5);
   int Done=FALSE;
   int Weiter=FALSE;
   int i ;
@@ -3390,12 +3393,15 @@ LevelEditor(void)
 		  // simply as bigger move command, which might indeed be much handier than 
 		  // using only keyboard cursor keys to move around on the map.
 		  //
-		  Me [ 0 ] . pos . x += ( GetMousePos_x ( ) + 16 - ( SCREEN_WIDTH / 2 ) ) / ( INITIAL_BLOCK_WIDTH * CurrentCombatScaleFactor ) ;
+		  Me [ 0 ] . pos . x = 
+		    translate_pixel_to_map_location ( 0 , (float) GetMousePos_x ( ) + 16.0 - ( SCREEN_WIDTH / 2 ) , 
+						      (float) GetMousePos_y ( ) + 16.0 - ( SCREEN_HEIGHT / 2 ), TRUE ); 
 		  if ( Me [ 0 ] . pos . x >= curShip.AllLevels[Me[0].pos.z]->xlen-2 )
 		    Me [ 0 ] . pos . x = curShip.AllLevels[Me[0].pos.z]->xlen-2 ;
 		  if ( Me [ 0 ] . pos . x <= 2 ) Me [ 0 ] . pos . x = 2;
-		  
-		  Me [ 0 ] . pos . y += ( GetMousePos_y ( ) + 16 - ( SCREEN_HEIGHT / 2 ) ) / ( INITIAL_BLOCK_WIDTH * CurrentCombatScaleFactor ) ;
+		  Me [ 0 ] . pos . y = 
+		    translate_pixel_to_map_location ( 0 , (float) GetMousePos_x ( ) + 16.0 - ( SCREEN_WIDTH / 2 ), 
+						      (float) GetMousePos_y ( ) + 16.0 - ( SCREEN_HEIGHT / 2 ), FALSE );
 		  if ( Me [ 0 ] . pos . y >= curShip.AllLevels[Me[0].pos.z]->ylen-2 )
 		    Me [ 0 ] . pos . y = curShip.AllLevels[Me[0].pos.z]->ylen-2 ;
 		  if ( Me [ 0 ] . pos . y <= 2 ) Me [ 0 ] . pos . y = 2;
