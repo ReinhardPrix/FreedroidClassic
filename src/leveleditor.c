@@ -41,6 +41,13 @@ void ShowWaypoints( int PrintConnectionList );
 void LevelEditor(void);
 Level CreateNewMapLevel( void );
 void SetLevelInterfaces ( void );
+void delete_obstacle ( level* EditLevel , obstacle* our_obstacle );
+void duplicate_all_obstacles_in_area ( Level source_level ,
+				       float source_start_x , float source_start_y , 
+				       float source_area_width , float source_area_height ,
+				       Level target_level ,
+				       float target_start_x , float target_start_y );
+void add_obstacle ( Level EditLevel , float x , float y , int new_obstacle_type );
 
 EXTERN SDL_Surface *BackupMapBlockSurfacePointer[ NUM_COLORS ][ NUM_MAP_BLOCKS ];
 
@@ -1377,6 +1384,63 @@ ReportInconsistenciesForLevel ( int LevelNum )
 }; // void ReportInconsistenciesForLevel ( int LevelNum )
 
 /* ----------------------------------------------------------------------
+ * If we want to synchronize two levels, we need to remove the old obstacles
+ * before we can add new ones.  Else the place might get too crowded with
+ * obstacles. :)
+ * ---------------------------------------------------------------------- */
+void
+delete_all_obstacles_in_area ( Level TargetLevel , float start_x , float start_y , float area_width , float area_height )
+{
+  int i;
+  
+  for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
+    {
+      if ( TargetLevel -> obstacle_list [ i ] . type <= (-1) ) continue;
+      if ( TargetLevel -> obstacle_list [ i ] . pos . x < start_x ) continue;
+      if ( TargetLevel -> obstacle_list [ i ] . pos . y < start_y ) continue;
+      if ( TargetLevel -> obstacle_list [ i ] . pos . x > start_x + area_width ) continue;
+      if ( TargetLevel -> obstacle_list [ i ] . pos . y > start_y + area_height ) continue;
+      delete_obstacle ( TargetLevel , & ( TargetLevel -> obstacle_list [ i ] ) );
+      i--; // this is so that this obstacle will be processed AGAIN, since deleting might
+           // have moved a different obstacle to this list position.
+    }
+}; // void delete_all_obstacles_in_area ( curShip . AllLevels [ TargetLevel ] , 0 , TargetLevel->ylen-AreaHeight , AreaWidth , AreaHeight )
+
+/* ----------------------------------------------------------------------
+ * This function should allow for conveninet duplication of obstacles from
+ * one map to the other.  It assumes, that the target area has been cleaned
+ * out of obstacles already.
+ * ---------------------------------------------------------------------- */
+void
+duplicate_all_obstacles_in_area ( Level source_level ,
+				  float source_start_x , float source_start_y , 
+				  float source_area_width , float source_area_height ,
+				  Level target_level ,
+				  float target_start_x , float target_start_y )
+{
+  int i;
+
+  for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
+    {
+      if ( source_level -> obstacle_list [ i ] . type <= (-1) ) continue;
+      if ( source_level -> obstacle_list [ i ] . pos . x < source_start_x ) continue;
+      if ( source_level -> obstacle_list [ i ] . pos . y < source_start_y ) continue;
+      if ( source_level -> obstacle_list [ i ] . pos . x > source_start_x + source_area_width ) continue;
+      if ( source_level -> obstacle_list [ i ] . pos . y > source_start_y + source_area_height ) continue;
+
+      add_obstacle ( target_level , 
+		     target_start_x  + source_level -> obstacle_list [ i ] . pos . x - source_start_x ,
+		     target_start_y  + source_level -> obstacle_list [ i ] . pos . y - source_start_y ,
+		     source_level -> obstacle_list [ i ] . type );
+
+		    //delete_obstacle ( source_level , & ( source_level -> obstacle_list [ i ] ) );
+		    // i--; // this is so that this obstacle will be processed AGAIN, since deleting might
+		    // // have moved a different obstacle to this list position.
+    }
+  
+}; // void duplicate_all_obstacles_in_area ( ... )
+      
+/* ----------------------------------------------------------------------
  * When we connect two maps smoothly together, we want an area in both
  * maps, that is really synchronized with the other level we connect to.
  * But this isn't a task that should be done manually.  We rather make
@@ -1425,7 +1489,15 @@ ExportLevelInterface ( int LevelNum )
 		   AreaWidth ) ;
 	}
       
+      delete_all_obstacles_in_area ( curShip . AllLevels [ TargetLevel ] , 0 , curShip . AllLevels [ TargetLevel ] ->ylen-AreaHeight , AreaWidth , AreaHeight );
+      
+
+      duplicate_all_obstacles_in_area ( curShip . AllLevels [ LevelNum ] , 0 , 0 , 
+					AreaWidth , AreaHeight ,
+					curShip . AllLevels [ TargetLevel ] , 0 , curShip . AllLevels [ TargetLevel ] -> ylen-AreaHeight );
+
       GetAllAnimatedMapTiles ( curShip . AllLevels [ TargetLevel ] );
+
     }
 
   //--------------------
@@ -1458,7 +1530,15 @@ ExportLevelInterface ( int LevelNum )
 		   curShip . AllLevels [ LevelNum ] -> map[ TargetStartLine - y ] ,
 		   AreaWidth ) ;
 	}
+
+      delete_all_obstacles_in_area ( curShip . AllLevels [ TargetLevel ] , 0 , 0 , AreaWidth , AreaHeight );
+
+      duplicate_all_obstacles_in_area ( curShip . AllLevels [ LevelNum ] , 0 , curShip . AllLevels [ LevelNum ] -> ylen - AreaHeight ,
+					AreaWidth , AreaHeight ,
+					curShip . AllLevels [ TargetLevel ] , 0 , 0 );
+
       GetAllAnimatedMapTiles ( curShip . AllLevels [ TargetLevel ] );
+
     }
 
   //--------------------
@@ -1492,7 +1572,15 @@ ExportLevelInterface ( int LevelNum )
 		    curShip . AllLevels [ LevelNum ] -> xlen - 0 - AreaWidth ,
 		   AreaWidth ) ;
 	}
+
+      delete_all_obstacles_in_area ( curShip . AllLevels [ TargetLevel ] , 0 , 0 , AreaWidth , AreaHeight );
+
+      duplicate_all_obstacles_in_area ( curShip . AllLevels [ LevelNum ] , curShip . AllLevels [ LevelNum ] -> xlen - AreaWidth , 0 , 
+					AreaWidth , AreaHeight ,
+					curShip . AllLevels [ TargetLevel ] , 0 , 0 );
+
       GetAllAnimatedMapTiles ( curShip . AllLevels [ TargetLevel ] );
+
     }
 
   //--------------------
@@ -1526,6 +1614,12 @@ ExportLevelInterface ( int LevelNum )
 		   ( curShip . AllLevels [ LevelNum ] -> map[ y ] ) + 0 , 
 		   AreaWidth ) ;
 	}
+
+      delete_all_obstacles_in_area ( curShip . AllLevels [ TargetLevel ] , curShip . AllLevels [ TargetLevel ] -> xlen - AreaWidth , 0 , AreaWidth , AreaHeight );
+
+      duplicate_all_obstacles_in_area ( curShip . AllLevels [ LevelNum ] , 0 , 0 , AreaWidth , AreaHeight ,
+					curShip . AllLevels [ TargetLevel ] , curShip . AllLevels [ TargetLevel ] -> xlen - AreaWidth , 0 );
+
       GetAllAnimatedMapTiles ( curShip . AllLevels [ TargetLevel ] );
     }
 
@@ -2974,10 +3068,11 @@ delete_obstacle ( level* EditLevel , obstacle* our_obstacle )
   if ( obstacle_index == (-1) )
     {
       GiveStandardErrorMessage ( "delete_obstacle (...)" , "\
-Unhandles level editor edit mode received.",
+Unable to find the obstacle in question within the obstacle list!",
 				 PLEASE_INFORM , IS_FATAL );
     }
 
+  /*
   //--------------------
   // Now we can eliminate all the glue...
   //
@@ -3007,6 +3102,7 @@ Unhandles level editor edit mode received.",
 	      }
 	}
     }
+  */
 
   //--------------------
   // And of course we must not forget to delete the obstalce itself
@@ -3014,16 +3110,23 @@ Unhandles level editor edit mode received.",
   //
   our_obstacle -> type = ( -1 ) ;
 
+  /*
   //--------------------
   // Now that we maybe have torn a gap into the current list of obstacles,
   // we must see to fill this gap again...
   //
   for ( j = obstacle_index ; j < MAX_OBSTACLES_ON_MAP - 1 ; j ++ )
     {
-      memcpy ( & ( EditLevel -> obstacle_list [ j ] ) , 
-	       & ( EditLevel -> obstacle_list [ j + 1 ] ) ,
-	       sizeof ( obstacle ) );
+      memmove ( & ( EditLevel -> obstacle_list [ j ] ) , 
+	        & ( EditLevel -> obstacle_list [ j + 1 ] ) ,
+	        sizeof ( obstacle ) );
     }
+  */
+  memmove ( & ( EditLevel -> obstacle_list [ obstacle_index ] ) , 
+	    & ( EditLevel -> obstacle_list [ obstacle_index + 1 ] ) ,
+	    ( MAX_OBSTACLES_ON_MAP - obstacle_index - 2 ) * sizeof ( obstacle ) );
+  
+
 
   //--------------------
   // Now doing that must have shifted the glue!  That is a problem.  We need to
@@ -3033,6 +3136,29 @@ Unhandles level editor edit mode received.",
 
 }; // void delete_obstacle ( obstacle* our_obstacle )
 
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+int
+marked_obstacle_is_glued_to_here ( Level EditLevel , float x , float y )
+{
+  int j;
+  int current_mark_index = (-1);
+
+  if ( level_editor_marked_obstacle == NULL ) return ( FALSE );
+  
+  for ( j = 0 ; j < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; j ++ )
+    {
+      if ( level_editor_marked_obstacle == & ( EditLevel -> obstacle_list [ EditLevel -> map [ (int)y ] [ (int)x ] . obstacles_glued_to_here [ j ] ] ) )
+	current_mark_index = j ;
+    }
+  
+  if ( current_mark_index != (-1) ) return ( TRUE );
+  return ( FALSE );
+
+}; // int marked_obstacle_is_glued_to_here ( Me [ 0 ] . pos . x , Me [ 0 ] . pos . y )
+     
 /* ----------------------------------------------------------------------
  * This function is provides the Level Editor integrated into 
  * freedroid.  Actually this function is a submenu of the big
@@ -3058,6 +3184,8 @@ LevelEditor(void)
   int RightMousePressedPreviousFrame = FALSE;
   moderately_finepoint TargetSquare;
   int new_x, new_y;
+  int current_mark_index ;
+  int j;
 
   //--------------------
   // We set the Tux position to something 'round'.
@@ -3109,18 +3237,30 @@ LevelEditor(void)
 	  GetAllAnimatedMapTiles ( EditLevel );
 
 	  //--------------------
-	  // For testing purposes, we just select the next best obstacle as
-	  // the marked obstacle (for now)
+	  // If the cursor is close to the currently marked obstacle, we leave everything as it
+	  // is.  (There might be some human choice made here already.)
+	  // Otherwise we just select the next best obstacle as the new marked obstacle.
 	  //
-	  if ( EditLevel -> map [ BlockY ] [ BlockX ] . obstacles_glued_to_here [ 0 ] != (-1) )
+	  if ( level_editor_marked_obstacle != NULL ) 
 	    {
-	      level_editor_marked_obstacle = & ( EditLevel -> obstacle_list [ EditLevel -> map [ BlockY ] [ BlockX ] . obstacles_glued_to_here [ 0 ] ] ) ;
-	      DebugPrintf ( 0 , "\nObstacle marked now!" );
+	      // if ( ( fabsf ( level_editor_marked_obstacle -> pos . x - Me [ 0 ] . pos . x ) >= 0.98 ) ||
+	      // ( fabsf ( level_editor_marked_obstacle -> pos . y - Me [ 0 ] . pos . y ) >= 0.98 ) )
+	      //level_editor_marked_obstacle = NULL ;
+	      if ( ! marked_obstacle_is_glued_to_here ( EditLevel , Me [ 0 ] . pos . x , Me [ 0 ] . pos . y ) )
+		level_editor_marked_obstacle = NULL ;
 	    }
 	  else
 	    {
-	      level_editor_marked_obstacle = NULL ;
-	      DebugPrintf ( 0 , "\nNo obstacle marked now!" );
+	      if ( EditLevel -> map [ BlockY ] [ BlockX ] . obstacles_glued_to_here [ 0 ] != (-1) )
+		{
+		  level_editor_marked_obstacle = & ( EditLevel -> obstacle_list [ EditLevel -> map [ BlockY ] [ BlockX ] . obstacles_glued_to_here [ 0 ] ] ) ;
+		  DebugPrintf ( 0 , "\nObstacle marked now!" );
+		}
+	      else
+		{
+		  level_editor_marked_obstacle = NULL ;
+		  DebugPrintf ( 0 , "\nNo obstacle marked now!" );
+		}
 	    }
 
 	  VanishingMessageDisplayTime += ( SDL_GetTicks ( ) - OldTicks ) / 1000.0 ;
@@ -3190,8 +3330,6 @@ LevelEditor(void)
 	  // Now that everything is blitted and printed, we may update the screen again...
 	  //
 	  SDL_Flip( Screen );
-
-	  
 
 	  //--------------------
 	  // If the user of the Level editor pressed some cursor keys, move the
@@ -3299,7 +3437,39 @@ LevelEditor(void)
 	      level_editor_marked_obstacle = NULL ;
 	      while ( XPressed() );
 	    }
-  
+
+	  if ( NPressed() )
+	    {
+	      if ( level_editor_marked_obstacle != NULL )
+		{
+		  //--------------------
+		  // See if this floor tile has some other obstacles glued to it as well
+		  //
+		  if ( EditLevel -> map [ BlockY ] [ BlockX ] . obstacles_glued_to_here [ 1 ] != (-1) )
+		    {
+		      //--------------------
+		      // Find out which one of these is currently marked
+		      //
+		      current_mark_index = (-1);
+		      for ( j = 0 ; j < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; j ++ )
+			{
+			  if ( level_editor_marked_obstacle == & ( EditLevel -> obstacle_list [ EditLevel -> map [ BlockY ] [ BlockX ] . obstacles_glued_to_here [ j ] ] ) )
+			    current_mark_index = j ;
+			}
+		      		      
+		      if ( current_mark_index != (-1) ) 
+			{
+			  if ( EditLevel -> map [ BlockY ] [ BlockX ] . obstacles_glued_to_here [ current_mark_index + 1 ] != (-1) )
+			    level_editor_marked_obstacle = & ( EditLevel -> obstacle_list [ EditLevel -> map [ BlockY ] [ BlockX ] . obstacles_glued_to_here [ current_mark_index + 1 ] ] ) ;
+			  else
+			    level_editor_marked_obstacle = & ( EditLevel -> obstacle_list [ EditLevel -> map [ BlockY ] [ BlockX ] . obstacles_glued_to_here [ 0 ] ] ) ;
+			}
+
+		    }
+		}
+	      while ( NPressed() );
+	    }
+
 	  //--------------------
 	  // If the person using the level editor pressed w, the waypoint is
 	  // toggled on the current square.  That means either removed or added.
