@@ -2322,24 +2322,24 @@ init_obstacle_data( void )
 
   obstacle_map [ ISO_CONSOLE_N ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_CONSOLE_N ] . block_area_parm_1 = 0.8 ;
-  obstacle_map [ ISO_CONSOLE_N ] . block_area_parm_2 = standard_wall_thickness ;
+  obstacle_map [ ISO_CONSOLE_N ] . block_area_parm_2 = 0.8 ;
   obstacle_map [ ISO_CONSOLE_N ] . is_smashable = TRUE ;
   obstacle_map [ ISO_CONSOLE_N ] . block_vision_too = FALSE ;
 
   obstacle_map [ ISO_CONSOLE_S ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_CONSOLE_S ] . block_area_parm_1 = 0.8 ;
-  obstacle_map [ ISO_CONSOLE_S ] . block_area_parm_2 = standard_wall_thickness ;
+  obstacle_map [ ISO_CONSOLE_S ] . block_area_parm_2 = 0.8 ;
   obstacle_map [ ISO_CONSOLE_S ] . is_smashable = TRUE ;
   obstacle_map [ ISO_CONSOLE_S ] . block_vision_too = FALSE ;
 
   obstacle_map [ ISO_CONSOLE_E ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_CONSOLE_E ] . block_area_parm_1 = standard_wall_thickness ;
+  obstacle_map [ ISO_CONSOLE_E ] . block_area_parm_1 = 0.8 ;
   obstacle_map [ ISO_CONSOLE_E ] . block_area_parm_2 = 0.8 ;
   obstacle_map [ ISO_CONSOLE_E ] . is_smashable = TRUE ;
   obstacle_map [ ISO_CONSOLE_E ] . block_vision_too = FALSE ;
 
   obstacle_map [ ISO_CONSOLE_W ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_CONSOLE_W ] . block_area_parm_1 = standard_wall_thickness ;
+  obstacle_map [ ISO_CONSOLE_W ] . block_area_parm_1 = 0.8 ;
   obstacle_map [ ISO_CONSOLE_W ] . block_area_parm_2 = 0.8 ;
   obstacle_map [ ISO_CONSOLE_W ] . is_smashable = TRUE ;
   obstacle_map [ ISO_CONSOLE_W ] . block_vision_too = FALSE ;
@@ -2960,15 +2960,48 @@ init_obstacle_data( void )
   obstacle_map [ ISO_OUTER_DOOR_H_100 ] . block_area_type = COLLISION_TYPE_NONE ;
 
   obstacle_map [ ISO_OUTER_DOOR_V_LOCKED ] . block_area_parm_1 = standard_wall_thickness ;
-  obstacle_map [ ISO_OUTER_DOOR_V_LOCKED ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_OUTER_DOOR_V_LOCKED ] . block_area_parm_2 = 2.0 ;
   obstacle_map [ ISO_OUTER_DOOR_V_LOCKED ] . filename = "iso_doors_0024.png" ;
   obstacle_map [ ISO_OUTER_DOOR_V_LOCKED ] . block_vision_too = FALSE ;
 
   obstacle_map [ ISO_OUTER_DOOR_H_LOCKED ] . filename = "iso_doors_0023.png" ;
-  obstacle_map [ ISO_OUTER_DOOR_H_LOCKED ] . block_area_parm_1 = 1.2 ;
+  obstacle_map [ ISO_OUTER_DOOR_H_LOCKED ] . block_area_parm_1 = 2.0 ;
   obstacle_map [ ISO_OUTER_DOOR_H_LOCKED ] . block_area_parm_2 = standard_wall_thickness ;
   obstacle_map [ ISO_OUTER_DOOR_H_LOCKED ] . block_vision_too = FALSE ;
 
+  obstacle_map [ ISO_YELLOW_CHAIR_N ] . block_area_parm_1 = 0.4 ;
+  obstacle_map [ ISO_YELLOW_CHAIR_N ] . block_area_parm_2 = 0.4 ;
+  obstacle_map [ ISO_YELLOW_CHAIR_N ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_YELLOW_CHAIR_N ] . filename = "iso_chairs_0004.png" ;
+  obstacle_map [ ISO_YELLOW_CHAIR_E ] . block_area_parm_1 = 0.4 ;
+  obstacle_map [ ISO_YELLOW_CHAIR_E ] . block_area_parm_2 = 0.4 ;
+  obstacle_map [ ISO_YELLOW_CHAIR_E ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_YELLOW_CHAIR_E ] . filename = "iso_chairs_0001.png" ;
+  obstacle_map [ ISO_YELLOW_CHAIR_S ] . block_area_parm_1 = 0.4 ;
+  obstacle_map [ ISO_YELLOW_CHAIR_S ] . block_area_parm_2 = 0.4 ;
+  obstacle_map [ ISO_YELLOW_CHAIR_S ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_YELLOW_CHAIR_S ] . filename = "iso_chairs_0002.png" ;
+  obstacle_map [ ISO_YELLOW_CHAIR_W ] . block_area_parm_1 = 0.4 ;
+  obstacle_map [ ISO_YELLOW_CHAIR_W ] . block_area_parm_2 = 0.4 ;
+  obstacle_map [ ISO_YELLOW_CHAIR_W ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_YELLOW_CHAIR_W ] . filename = "iso_chairs_0003.png" ;
+
+    obstacle_map [ ISO_RED_CHAIR_N ] . block_area_parm_1 = 1.2 ;
+  obstacle_map [ ISO_RED_CHAIR_N ] . block_area_parm_2 = 0.8 ;
+  obstacle_map [ ISO_RED_CHAIR_N ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_RED_CHAIR_N ] . filename = "iso_chairs_0008.png" ;
+  obstacle_map [ ISO_RED_CHAIR_E ] . block_area_parm_1 = 0.8 ;
+  obstacle_map [ ISO_RED_CHAIR_E ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_RED_CHAIR_E ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_RED_CHAIR_E ] . filename = "iso_chairs_0005.png" ;
+  obstacle_map [ ISO_RED_CHAIR_S ] . block_area_parm_1 = 1.2 ;
+  obstacle_map [ ISO_RED_CHAIR_S ] . block_area_parm_2 = 0.8 ;
+  obstacle_map [ ISO_RED_CHAIR_S ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_RED_CHAIR_S ] . filename = "iso_chairs_0006.png" ;
+  obstacle_map [ ISO_RED_CHAIR_W ] . block_area_parm_1 = 0.8 ;
+  obstacle_map [ ISO_RED_CHAIR_W ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_RED_CHAIR_W ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_RED_CHAIR_W ] . filename = "iso_chairs_0007.png" ;
   //--------------------
   // Now that we have defined the block area paramters, it's time to do some
   // simple but often required computations in advance:  Calculating the offsets
