@@ -732,6 +732,7 @@ Notes: %s", Druidmap[droidtype].druidname , Classname[Druidmap[droidtype].class]
       break;
     } /* switch (page) */
 
+  SetCurrentFont( Para_BFont );
   DisplayText (InfoText, Cons_Text_Rect.x, Cons_Text_Rect.y, &Cons_Text_Rect);
   SDL_Flip (Screen);
 
