@@ -277,33 +277,16 @@ ShowCurrentHealthLevel( void )
   //  SDL_Flip( Screen );
 }; // void ShowCurrentHealthLevel( void )
 
-
-/* -----------------------------------------------------------------
- * This function updates the top status bar. 
- * To save framerate on slow machines however it will only work
- * if it thinks that work needs to be done. 
- * You can however force update if you say so with a flag.
- * 
- * BANNER_FORCE_UPDATE=1: Forces the redrawing of the title bar
- * 
- * BANNER_DONT_TOUCH_TEXT=2: Prevents DisplayBanner from touching 
- * the text.
- * 
- * BANNER_NO_SDL_UPDATE=4: Prevents any SDL_Update calls.
- * 
- ----------------------------------------------------------------- */
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
 void
-DisplayBanner (const char* left, const char* right,  int flags )
+ShowCurrentTextWindow ( void )
 {
-  char dummy[80];
-  char left_box [LEFT_TEXT_LEN + 10];
-  char right_box[RIGHT_TEXT_LEN + 10];
-  static char previous_left_box [LEFT_TEXT_LEN + 10]="NOUGHT";
-  static char previous_right_box[RIGHT_TEXT_LEN + 10]="NOUGHT";
-  int left_len, right_len;   /* the actualy string-lens */
   SDL_Rect Banner_Text_Rect;
   point CurPos;
-  char ItemDescText[5000]="=== Nothing ===";
+  char ItemDescText[5000]=" ";
   char TextLine[10][1000];
   grob_point inv_square;
   int InvIndex;
@@ -313,8 +296,6 @@ DisplayBanner (const char* left, const char* right,  int flags )
   char* LongTextPointer;
   int InterLineDistance;
   int StringLength;
-
-  ShowCurrentHealthLevel( );
 
   //--------------------
   // For testing purposes is bluntly insert the new banner element here:
@@ -474,18 +455,51 @@ DisplayBanner (const char* left, const char* right,  int flags )
 
   // SDL_UpdateRect( Screen , Banner_Text_Rect.x , Banner_Text_Rect.y , Banner_Text_Rect.w , Banner_Text_Rect.h );
   //--------------------
+};
 
 
+/* -----------------------------------------------------------------
+ * This function updates the top status bar. 
+ * To save framerate on slow machines however it will only work
+ * if it thinks that work needs to be done. 
+ * You can however force update if you say so with a flag.
+ * 
+ * BANNER_FORCE_UPDATE=1: Forces the redrawing of the title bar
+ * 
+ * BANNER_DONT_TOUCH_TEXT=2: Prevents DisplayBanner from touching 
+ * the text.
+ * 
+ * BANNER_NO_SDL_UPDATE=4: Prevents any SDL_Update calls.
+ * 
+ ----------------------------------------------------------------- */
+void
+DisplayBanner (const char* left, const char* right,  int flags )
+{
+  char dummy[80];
+  char left_box [LEFT_TEXT_LEN + 10];
+  char right_box[RIGHT_TEXT_LEN + 10];
+  static char previous_left_box [LEFT_TEXT_LEN + 10]="NOUGHT";
+  static char previous_right_box[RIGHT_TEXT_LEN + 10]="NOUGHT";
+  int left_len, right_len;   /* the actualy string-lens */
+
+  SDL_SetClipRect( Screen , NULL );  // this unsets the clipping rectangle
+  SDL_BlitSurface( banner_pic, NULL, Screen , NULL);
+
+  ShowCurrentHealthLevel( );
+
+  ShowCurrentTextWindow( );
+
+  return;
 
   // --------------------
   // At first the text is prepared.  This can't hurt.
   // we will decide whether to dispaly it or not later...
   //
 
-  if (left == NULL)       /* Left-DEFAULT: Mode */
+  if (left == NULL)       // Left-DEFAULT: Mode 
     left = InfluenceModeNames[Me.status];
 
-  if ( right == NULL )  /* Right-DEFAULT: Score */
+  if ( right == NULL )  // Right-DEFAULT: Score 
     {
       sprintf ( dummy , "%ld" , ShowScore );
       right = dummy;
@@ -496,25 +510,25 @@ DisplayBanner (const char* left, const char* right,  int flags )
   if( left_len > LEFT_TEXT_LEN )
     {
       printf ("\nWarning: String %s too long for Left Infoline!!",left);
-      left_len = LEFT_TEXT_LEN;  /* too long, so we cut it! */
+      left_len = LEFT_TEXT_LEN;  // too long, so we cut it! 
       Terminate(ERR);
     }
   right_len = strlen (right);
   if( right_len > RIGHT_TEXT_LEN )
     {
       printf ("\nWarning: String %s too long for Right Infoline!!", right);
-      right_len = RIGHT_TEXT_LEN;  /* too long, so we cut it! */
+      right_len = RIGHT_TEXT_LEN;  // too long, so we cut it! 
       Terminate(ERR);
     }
   
-  /* Now prepare the left/right text-boxes */
-  memset (left_box,  ' ', LEFT_TEXT_LEN);  /* pad with spaces */
+  // Now prepare the left/right text-boxes 
+  memset (left_box,  ' ', LEFT_TEXT_LEN);  // pad with spaces 
   memset (right_box, ' ', RIGHT_TEXT_LEN);  
   
-  strncpy (left_box,  left, left_len);  /* this drops terminating \0 ! */
-  strncpy (right_box, right, left_len);  /* this drops terminating \0 ! */
+  strncpy (left_box,  left, left_len);  // this drops terminating \0 ! 
+  strncpy (right_box, right, left_len);  // this drops terminating \0 ! 
   
-  left_box [LEFT_TEXT_LEN]  = '\0';     /* that's right, we want padding! */
+  left_box [LEFT_TEXT_LEN]  = '\0';     // that's right, we want padding!
   right_box[RIGHT_TEXT_LEN] = '\0';
   
   // --------------------
@@ -548,9 +562,9 @@ DisplayBanner (const char* left, const char* right,  int flags )
 	SDL_UpdateRect( Screen, 0, 0, BANNER_WIDTH , BANNER_HEIGHT );
       BannerIsDestroyed=FALSE;
       return;
-    } /* if */
+    } // if 
 
-} /* DisplayBanner() */
+}; // void DisplayBanner( .. ) 
 
 
 #undef _rahmen_c
