@@ -1767,6 +1767,10 @@ InitNewMissionList ( char *MissionName )
   for ( i = 0 ; i < MAX_LEVELS ; i ++ ) Me[0].HaveBeenToLevel [ i ] = FALSE ;
   Me[0].exp_level = 1;
   Me[0].Gold = 100;
+
+  Me[0].readied_skill = 0;
+  for ( i = 0 ; i < NUMBER_OF_SKILL_ICONS ; i ++ ) Me[0].SkillLevel [ i ] = 0 ;
+
   // strcpy ( Me[0].character_name , "R2D2 v.0.8.5." );
   // strcpy ( Me[0].character_name , "character_name" );
   // strcpy ( Me[0].class_name , "Force bot" );

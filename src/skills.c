@@ -39,6 +39,7 @@
 #include "proto.h"
 
 #include "items.h"
+// #include "BFont.h"
 
 #define CLASS_X 175
 
@@ -386,34 +387,20 @@ ShowSkillsScreen ( void )
 
       SDL_BlitSurface ( SkillIconSurfacePointer[ i ] , NULL , Screen , &ButtonRect );
 
+      //--------------------
+      // First we write the name of the skill to the screen
+      //
       DisplayText( SkillName[i] , 16 + 64 + 16 + SkillScreenRect.x , 
 		   16 + 20 + i * (64 + 16) + SkillScreenRect.y , &SkillScreenRect );
+      
+      //--------------------
+      // Now we write the competence of the players character in that skill to the screen
+      //
+      sprintf( CharText , "Skill Level: %d " , Me[0].SkillLevel[i] );
+      DisplayText( CharText , 16 + 64 + 16 + SkillScreenRect.x , 
+		   16 + 20 + i * (64 + 16) + SkillScreenRect.y + FontHeight( GetCurrentFont() ) , &SkillScreenRect );
+      
     }
-
-  //--------------------
-  // Now we can start to fill in the character values:
-  // Name, Class, Level, Exp, Strength, Dex, ...
-  //
-
-  switch ( Me[0].character_class )
-    {
-    case WAR_BOT:
-      // DisplayText( "War Bot" , CLASS_X + SkillScreenRect.x , 18 + SkillScreenRect.y , &SkillScreenRect );
-      break;
-    case SNIPER_BOT:
-      // DisplayText( "Sniper Bot" , CLASS_X + SkillScreenRect.x , 18 + SkillScreenRect.y , &SkillScreenRect );
-      break;
-    case MIND_BOT:
-      // DisplayText( "Mind Bot" , CLASS_X + SkillScreenRect.x , 18 + SkillScreenRect.y , &SkillScreenRect );
-      break;
-    default:
-      DebugPrintf( 0 , "\n\nILLEGAL CHARACTER CLASS FOUND!!! ERROR!!! TERMINATING....." );
-      Terminate( ERR );
-      break;
-    }
-
-  sprintf( CharText , "%d", (int) Me[0].AC );
-  DisplayText( CharText , AC_X + SkillScreenRect.x , AC_Y + SkillScreenRect.y , &SkillScreenRect );
 
   //--------------------
   // It might be the case, that the character has some points to distribute upon the character
