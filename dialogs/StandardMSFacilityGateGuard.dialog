@@ -1,8 +1,7 @@
 
 ----------------------------------------------------------------------
  *
- *   Copyright (c) 1994, 2002 Johannes Prix
- *   Copyright (c) 1994, 2002 Reinhard Prix
+ *   Copyright (c) 1994, 2003, 2004 Johannes Prix
  *
  *
  *  This file is part of Freedroid
@@ -29,6 +28,14 @@ If you have questions concerning FreedroidRPG, please send mail to:
 
 freedroid-discussion@lists.sourceforge.net
 
+BEGIN OF AUTORS NOTES
+
+You can use this text field to make some notes on anything.  These otes will get saved with the dialog.
+This is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.
+
+END OF AUTORS NOTES
+
+
 Beginning of new chat dialog for character="XXXXX"
 
 New Option Nr=0  OptionText=" Hi!  I'm new here. "
@@ -38,20 +45,21 @@ Subtitle="Then see that you get back to where you came from.  This is no place f
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 New Option Nr=1  OptionText="What's the matter with this gate?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=151  PositionY=218  
-Subtitle="This is the gate to the facility the MS used to have on this planet."
+Subtitle="This is the gate to an automated robot factory producing lots of powerful hostiles."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="You must be plain crazy if you want to get in there."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="So you better turn back now, for your own good."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=1 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
@@ -60,7 +68,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=279  PositionY=102  
 Subtitle="Of course not.  Getting you killed for this would be a complete waste of time."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="The MS bots in there will have that done in seconds anyway, haha."
+Subtitle="The hostiles in there will have that done in seconds anyway, haha."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="But you could also just give me your valuables before you commit suicide."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -68,6 +76,7 @@ Subtitle="You won't need any money once you're dead, and I could use it, eh?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 ChangeOption=3 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
@@ -78,6 +87,8 @@ Subtitle="You're dead if you don't take it."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
+ChangeOption=3 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
@@ -87,6 +98,8 @@ PositionX=398  PositionY=220
 Subtitle="Finally."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=1
+ChangeOption=99 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
