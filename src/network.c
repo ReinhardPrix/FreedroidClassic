@@ -2914,39 +2914,46 @@ ListenForServerMessages ( void )
   // Here we check if the set of the one and only server socket
   // perhaps contains some data in its only socket.
   //
-  ActivityInTheSet = SDLNet_CheckSockets ( The_Set_Of_The_One_Server_Socket , 0 ) ;
-  if ( ActivityInTheSet == 0 )
-    {
-      DebugPrintf ( 2 , "\nNo Activity in the whole set of the one server socket at the client detected.... Returning.... " );
-      return;
-    }
-  else
-    {
-      DebugPrintf ( 2 , "\nvoid ListenForServerMessages ( void ) : Something was sent from the server!!!" );
-    }
+  // if ( ActivityInTheSet == 0 )
+  // {
+  // DebugPrintf ( 2 , "\nNo Activity in the whole set of the one server socket at the client detected.... Returning.... " );
+  // return;
+  // }
 
   //--------------------
-  // This is somewhat redundant, cause since there is never more than one socket
-  // in this socket set, it must be this one socket, where the activity came from.
-  // But nevertheless, being a networking newbie, I'll check again if the activity
-  // has really been observed in the socket itself.
+  // Now we read out the detected activity AND we keep doing so, until
+  // no more activity is detected in the set of the one server socket.
   //
-  if ( ! SDLNet_SocketReady( sock ) )
+  while ( ( ActivityInTheSet = SDLNet_CheckSockets ( The_Set_Of_The_One_Server_Socket , 0 ) ) )
     {
-      DebugPrintf ( 0 , "\n\
+      // else
+      // {
+      // DebugPrintf ( 2 , "\nvoid ListenForServerMessages ( void ) : Something was sent from the server!!!" );
+      // }
+      
+      //--------------------
+      // This is somewhat redundant, cause since there is never more than one socket
+      // in this socket set, it must be this one socket, where the activity came from.
+      // But nevertheless, being a networking newbie, I'll check again if the activity
+      // has really been observed in the socket itself.
+      //
+      if ( ! SDLNet_SocketReady( sock ) )
+	{
+	  DebugPrintf ( 0 , "\n\
 --------------------\n\
 WARNING!! SEVERE ERROR ENCOUNTERED! ACTIVITY THERE, BUT NOT DETECTABLE!! ERROR!!\n\
 Termination....\n\
 --------------------\n" );
-      Terminate ( ERR ) ;
+	  Terminate ( ERR ) ;
+	}
+      
+      //--------------------
+      // Now that we know, that we really got some message from the server,
+      // we try to read that information.
+      //
+      Read_Command_Buffer_From_Server (  ) ;
+      
     }
-
-  //--------------------
-  // Now that we know, that we really got some message from the server,
-  // we try to read that information.
-  //
-  Read_Command_Buffer_From_Server (  ) ;
-
 }; // void ListenForServerMessages ( void ) 
 
 /* ----------------------------------------------------------------------
