@@ -743,72 +743,72 @@ Not_Enough_Mana_Sound ( void )
 void
 PlayGreetingSound ( int SoundCode )
 {
-  switch ( SoundCode )
+    switch ( SoundCode )
     {
-    case -1:
-      return;
-      break;
-    case 0:      
-      play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_0.wav" , FALSE , FALSE );
-      break;
-    case 1:
-      play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_1.wav" , FALSE , FALSE );
-      break;
-    case 2:
-      play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_2.wav" , FALSE , FALSE );
-      break;
-    case 3:
-      play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_3.wav" , FALSE , FALSE );
-      break;
-    case 4:
-      play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_4.wav" , FALSE , FALSE );
-      break;
-    case 5:
-      play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_5.wav" , FALSE , FALSE );
-      break;
-    case 6:
-      play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_6.wav" , FALSE , FALSE );
-      break;
-    case 7:
-      play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_7.wav" , FALSE , FALSE );
-      break;
-    case 8:
-      play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_8.wav" , FALSE , FALSE );
-      break;
-    case 9:
-      play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_9.wav" , FALSE , FALSE );
-      break;
-    case 10:
-      play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_10.wav" , FALSE , FALSE );
-      break;
-    case 11:
-      play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_11.wav" , FALSE , FALSE );
-      break;
-    case 12:
-      play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_12.wav" , FALSE , FALSE );
-      break;
-    case 13:
-      play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_13.wav" , FALSE , FALSE );
-      break;
-    case 14:
-      play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_14.wav" , FALSE , FALSE );
-      break;
-    case 15:
-      play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_15.wav" , FALSE , FALSE );
-      break;
-    case 16:
-      play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_16.wav" , FALSE , FALSE );
-      break;
-    case 17:
-      play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_17.wav" , FALSE , FALSE );
-      break;
-    case 18:
-      play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_18.wav" , FALSE , FALSE );
-      break;
-    default:
-      DebugPrintf( 0 , "\nUnknown Greeting sound!!! Terminating...");
-      Terminate( ERR );
-      break;
+	case -1:
+	    return;
+	    break;
+	case 0:      
+	    play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_0.wav" , FALSE , FALSE );
+	    break;
+	case 1:
+	    play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_1.wav" , FALSE , FALSE );
+	    break;
+	case 2:
+	    play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_2.wav" , FALSE , FALSE );
+	    break;
+	case 3:
+	    play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_3.wav" , FALSE , FALSE );
+	    break;
+	case 4:
+	    play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_4.wav" , FALSE , FALSE );
+	    break;
+	case 5:
+	    play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_5.wav" , FALSE , FALSE );
+	    break;
+	case 6:
+	    play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_6.wav" , FALSE , FALSE );
+	    break;
+	case 7:
+	    play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_7.wav" , FALSE , FALSE );
+	    break;
+	case 8:
+	    play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_8.wav" , FALSE , FALSE );
+	    break;
+	case 9:
+	    play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_9.wav" , FALSE , FALSE );
+	    break;
+	case 10:
+	    play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_10.wav" , FALSE , FALSE );
+	    break;
+	case 11:
+	    play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_11.wav" , FALSE , FALSE );
+	    break;
+	case 12:
+	    play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_12.wav" , FALSE , FALSE );
+	    break;
+	case 13:
+	    play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_13.wav" , FALSE , FALSE );
+	    break;
+	case 14:
+	    play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_14.wav" , FALSE , FALSE );
+	    break;
+	case 15:
+	    play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_15.wav" , FALSE , FALSE );
+	    break;
+	case 16:
+	    play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_16.wav" , FALSE , FALSE );
+	    break;
+	case 17:
+	    play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_17.wav" , FALSE , FALSE );
+	    break;
+	case 18:
+	    play_sample_using_WAV_cache( "../effects/bot_sounds/First_Contact_Sound_18.wav" , FALSE , FALSE );
+	    break;
+	default:
+	    DebugPrintf( 0 , "\nUnknown Greeting sound!!! Terminating...");
+	    Terminate( ERR );
+	    break;
     }
 }; // void PlayGreetingSound ( int SoundCode )
 
@@ -821,24 +821,24 @@ PlayGreetingSound ( int SoundCode )
 void
 play_death_sound_for_bot ( enemy* ThisRobot )
 {
-  char filename[5000];
+    char filename[5000];
 
-  //--------------------
-  // If the keyword 'none' for the death sound file name is encountered,
-  // nothing will be done...
-  //.
-  if ( ! strcmp ( Druidmap [ ThisRobot -> type ] . droid_death_sound_file_name , "none" ) )
-    return;
-
-  //--------------------
-  // Now we play the given death sound, looking for the file in the
-  // appropriate sound folder.
-  //
-  strcpy ( filename , "../effects/bot_sounds/" );
-  strcat ( filename , Druidmap [ ThisRobot -> type ] . droid_death_sound_file_name );
-  // PlayOnceNeededSoundSample ( filename , FALSE , FALSE );
-  play_sample_using_WAV_cache( filename , FALSE , FALSE );
-
+    //--------------------
+    // If the keyword 'none' for the death sound file name is encountered,
+    // nothing will be done...
+    //.
+    if ( ! strcmp ( Druidmap [ ThisRobot -> type ] . droid_death_sound_file_name , "none" ) )
+	return;
+    
+    //--------------------
+    // Now we play the given death sound, looking for the file in the
+    // appropriate sound folder.
+    //
+    strcpy ( filename , "../effects/bot_sounds/" );
+    strcat ( filename , Druidmap [ ThisRobot -> type ] . droid_death_sound_file_name );
+    // PlayOnceNeededSoundSample ( filename , FALSE , FALSE );
+    play_sample_using_WAV_cache( filename , FALSE , FALSE );
+    
 }; // void play_death_sound_for_bot ( enemy* ThisRobot )
 
 /* ----------------------------------------------------------------------
@@ -849,23 +849,23 @@ play_death_sound_for_bot ( enemy* ThisRobot )
 void
 play_attack_animation_sound_for_bot ( enemy* ThisRobot )
 {
-  char filename[5000];
+    char filename[5000];
 
-  //--------------------
-  // If the keyword 'none' for the death sound file name is encountered,
-  // nothing will be done...
-  //
-  if ( ! strcmp ( Druidmap [ ThisRobot -> type ] . droid_attack_animation_sound_file_name , "none" ) )
-    return;
-
-  //--------------------
-  // Now we play the given death sound, looking for the file in the
-  // appropriate sound folder.
-  //
-  strcpy ( filename , "../effects/bot_sounds/" );
-  strcat ( filename , Druidmap [ ThisRobot -> type ] . droid_attack_animation_sound_file_name );
-  PlayOnceNeededSoundSample ( filename , FALSE , FALSE );
-
+    //--------------------
+    // If the keyword 'none' for the death sound file name is encountered,
+    // nothing will be done...
+    //
+    if ( ! strcmp ( Druidmap [ ThisRobot -> type ] . droid_attack_animation_sound_file_name , "none" ) )
+	return;
+    
+    //--------------------
+    // Now we play the given death sound, looking for the file in the
+    // appropriate sound folder.
+    //
+    strcpy ( filename , "../effects/bot_sounds/" );
+    strcat ( filename , Druidmap [ ThisRobot -> type ] . droid_attack_animation_sound_file_name );
+    PlayOnceNeededSoundSample ( filename , FALSE , FALSE );
+    
 }; // play_attack_animation_sound_for_bot ( enemy* ThisRobot )
 
 
@@ -876,54 +876,54 @@ play_attack_animation_sound_for_bot ( enemy* ThisRobot )
 void
 play_enter_attack_run_state_sound ( int SoundCode )
 {
-  switch ( SoundCode )
+    switch ( SoundCode )
     {
-    case -1:
-      return;
-      break;
-    case 0:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_0.wav" , FALSE , FALSE );
-      break;
-    case 1:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_1.wav" , FALSE , FALSE );
-      break;
-    case 2:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_2.wav" , FALSE , FALSE );
-      break;
-    case 9:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_9.wav" , FALSE , FALSE );
-      break;
-    case 10:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_10.wav" , FALSE , FALSE );
-      break;
-    case 11:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_11.wav" , FALSE , FALSE );
-      break;
-    case 12:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_12.wav" , FALSE , FALSE );
-      break;
-    case 13:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_13.wav" , FALSE , FALSE );
-      break;
-    case 14:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_14.wav" , FALSE , FALSE );
-      break;
-    case 15:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_15.wav" , FALSE , FALSE );
-      break;
-    case 16:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_16.wav" , FALSE , FALSE );
-      break;
-    case 17:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_17.wav" , FALSE , FALSE );
-      break;
-    case 18:
-      PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_18.wav" , FALSE , FALSE );
-      break;
-    default:
-      DebugPrintf( 0 , "\nUnknown Start Attack sound!!! NOT TERMINATING CAUSE OF THIS...");
-      // Terminate( ERR );
-      break;
+	case -1:
+	    return;
+	    break;
+	case 0:
+	    PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_0.wav" , FALSE , FALSE );
+	    break;
+	case 1:
+	    PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_1.wav" , FALSE , FALSE );
+	    break;
+	case 2:
+	    PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_2.wav" , FALSE , FALSE );
+	    break;
+	case 9:
+	    PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_9.wav" , FALSE , FALSE );
+	    break;
+	case 10:
+	    PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_10.wav" , FALSE , FALSE );
+	    break;
+	case 11:
+	    PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_11.wav" , FALSE , FALSE );
+	    break;
+	case 12:
+	    PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_12.wav" , FALSE , FALSE );
+	    break;
+	case 13:
+	    PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_13.wav" , FALSE , FALSE );
+	    break;
+	case 14:
+	    PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_14.wav" , FALSE , FALSE );
+	    break;
+	case 15:
+	    PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_15.wav" , FALSE , FALSE );
+	    break;
+	case 16:
+	    PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_16.wav" , FALSE , FALSE );
+	    break;
+	case 17:
+	    PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_17.wav" , FALSE , FALSE );
+	    break;
+	case 18:
+	    PlayOnceNeededSoundSample ( "../effects/bot_sounds/Start_Attack_Sound_18.wav" , FALSE , FALSE );
+	    break;
+	default:
+	    DebugPrintf( 0 , "\nUnknown Start Attack sound!!! NOT TERMINATING CAUSE OF THIS...");
+	    // Terminate( ERR );
+	    break;
     }
 }; // void PlayStartAttackSound ( int SoundCode )
 

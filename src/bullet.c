@@ -702,7 +702,7 @@ apply_bullet_damage_to_player ( int player_num , int damage )
 	Me [ player_num ] . TextVisibleTime = 0 ;
 	Me [ player_num ] . TextToBeDisplayed = "Ouch!" ;
 	Me [ player_num ] . energy -= real_damage ;	// loose some energy
-	DebugPrintf ( -4 , "\n%s(): Tux took damage from bullet: %f." , __FUNCTION__ , real_damage );
+	DebugPrintf ( 1 , "\n%s(): Tux took damage from bullet: %f." , __FUNCTION__ , real_damage );
 	//--------------------
 	// A hit of what form so ever should make the Tux stop
 	// dead in his tracks.
@@ -724,7 +724,7 @@ apply_bullet_damage_to_player ( int player_num , int damage )
     // NEW RULE:  All items equipped suffer damage when the influencer gets hit
     //
     DamageAllEquipment ( player_num ) ;
-}; // void 
+}; // void apply_bullet_damage_to_player ( int player_num , int damage ) 
 
 /* ----------------------------------------------------------------------
  *

@@ -970,10 +970,10 @@ The blitting list size was exceeded!",
 void
 insert_tux_into_blitting_list ( void )
 {
-  float tux_norm = Me [ 0 ] . pos . x + Me [ 0 ] . pos . y ;
-
-  insert_new_element_into_blitting_list ( tux_norm , BLITTING_TYPE_TUX , NULL , -1 );
-
+    float tux_norm = Me [ 0 ] . pos . x + Me [ 0 ] . pos . y ;
+    
+    insert_new_element_into_blitting_list ( tux_norm , BLITTING_TYPE_TUX , NULL , -1 );
+    
 }; // void insert_tux_into_blitting_list ( void )
 
 /* ----------------------------------------------------------------------
@@ -983,12 +983,12 @@ insert_tux_into_blitting_list ( void )
 void
 insert_one_enemy_into_blitting_list ( int enemy_num )
 {
-  float enemy_norm;
+    float enemy_norm;
 
-  enemy_norm = AllEnemys [ enemy_num ] . virt_pos . x + AllEnemys [ enemy_num ] . virt_pos . y ;
-
-  insert_new_element_into_blitting_list ( enemy_norm , BLITTING_TYPE_ENEMY , & ( AllEnemys [ enemy_num ] ) , enemy_num );
-
+    enemy_norm = AllEnemys [ enemy_num ] . virt_pos . x + AllEnemys [ enemy_num ] . virt_pos . y ;
+    
+    insert_new_element_into_blitting_list ( enemy_norm , BLITTING_TYPE_ENEMY , & ( AllEnemys [ enemy_num ] ) , enemy_num );
+    
 }; // void insert_one_enemy_into_blitting_list ( int enemy_num )
 
 /* ----------------------------------------------------------------------

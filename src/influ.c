@@ -2901,6 +2901,8 @@ PerformTuxAttackRaw ( int player_num , int use_mouse_cursor_for_targeting )
 	    //
 	    if ( Druidmap[ AllEnemys[ i ] . type ].greeting_sound_type != (-1) )
 	    {
+		DebugPrintf ( 1 , "\n%s(): playing enter_attack_run sound for tux attack victing of type %d." ,
+			      __FUNCTION__ , AllEnemys [ i ] . type );
 		play_enter_attack_run_state_sound ( Druidmap[ AllEnemys[ i ] . type ].greeting_sound_type );
 	    }
 	    

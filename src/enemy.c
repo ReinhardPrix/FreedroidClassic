@@ -1354,6 +1354,8 @@ InitiateDeathOfEnemy ( Enemy ThisRobot )
 	    ThisRobot -> animation_phase = ( ( float ) first_death_animation_image [ ThisRobot -> type ] ) - 1 + 0.1 ;
 	    ThisRobot -> animation_type = DEATH_ANIMATION;
 	    play_death_sound_for_bot ( ThisRobot );
+	    DebugPrintf ( 1 , "\n%s(): playing death sound because bot of type %d really died." , 
+			  __FUNCTION__ , ThisRobot -> type );
 	}
 	else
 	{
@@ -1784,8 +1786,11 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 			//
 			AllEnemys [ ThisRobot -> attack_target_index ] . energy -= 
 			    Druidmap [ ThisRobot -> type ] . physical_damage ;
-		  if ( MyRandom ( 100 ) <= 20 ) 
-		      play_death_sound_for_bot ( & AllEnemys [ ThisRobot -> attack_target_index ] ) ;
+			if ( MyRandom ( 100 ) <= 20 ) 
+			{
+			    DebugPrintf ( 1 , "\n%s(): playing enemy death sound for enemy-enemy attack for droid of type %d." , __FUNCTION__ , ThisRobot -> type ) ;
+			    play_death_sound_for_bot ( & AllEnemys [ ThisRobot -> attack_target_index ] ) ;
+			}
 		    }
 		    else
 		    {
@@ -1810,7 +1815,7 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 			// should also be some kind of scream of the Tux?
 			//
 			Me [ 0 ] . energy -= Druidmap [ ThisRobot -> type ] . physical_damage ;
-			DebugPrintf ( -4 , "\n%s(): Tux took damage from melee: %f." , __FUNCTION__ , 
+			DebugPrintf ( 1 , "\n%s(): Tux took damage from melee: %f." , __FUNCTION__ , 
 				      Druidmap [ ThisRobot -> type ] . physical_damage );
 			if ( MyRandom ( 100 ) <= 20 ) tux_scream_sound ( );
 		    }
@@ -1841,6 +1846,8 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 	// later bots could have separate attack and death sound samples, maybe
 	// in some later release...
 	//
+
+	DebugPrintf ( 1 , "\n%s(): playing enemy death sound for raw enemy attack for droid of type %d." , __FUNCTION__ , ThisRobot -> type ) ;
 	play_death_sound_for_bot ( ThisRobot );
     }
     else
@@ -1954,18 +1961,34 @@ ClosestOtherEnemyDroid ( Enemy ThisRobot )
 }; // int ClosestOtherEnemyDroid ( Enemy ThisRobot ) 
 
 /* ----------------------------------------------------------------------
- *
- *
+ * This function computes the distance a certain robot has with respect
+ * to Tux, i.e. player 0 in the game.  If the Tux and the bot in question
+ * are on the same level, then everything is pretty simple.  However, if
+ * the enemy is on another level that is connected to this level via an
+ * interface area, then of course we need to take more care.
  * ---------------------------------------------------------------------- */
 float
 DistanceToTux ( Enemy ThisRobot )
 {
+    if ( ThisRobot -> pos . z == Me [ 0 ] . pos . z )
+    {
+	return ( sqrt ( ( ThisRobot -> pos . x - Me [ 0 ] . pos . x ) * 
+			( ThisRobot -> pos . x - Me [ 0 ] . pos . x ) + 
+			( ThisRobot -> pos . y - Me [ 0 ] . pos . y ) * 
+			( ThisRobot -> pos . y - Me [ 0 ] . pos . y ) ) );
+    }
+    else
+    {
+	update_virtual_position ( & ( ThisRobot -> virt_pos ) ,
+				  & ( ThisRobot -> pos ) , Me [ 0 ] . pos . z );
+	if ( ThisRobot -> virt_pos . z == (-1) ) return ( 10000 );
 
-  return ( sqrt ( ( ThisRobot -> pos . x - Me [ 0 ] . pos . x ) * 
-		  ( ThisRobot -> pos . x - Me [ 0 ] . pos . x ) + 
-		  ( ThisRobot -> pos . y - Me [ 0 ] . pos . y ) * 
-		  ( ThisRobot -> pos . y - Me [ 0 ] . pos . y ) ) );
-
+	return ( sqrt ( ( ThisRobot -> virt_pos . x - Me [ 0 ] . pos . x ) * 
+			( ThisRobot -> virt_pos . x - Me [ 0 ] . pos . x ) + 
+			( ThisRobot -> virt_pos . y - Me [ 0 ] . pos . y ) * 
+			( ThisRobot -> virt_pos . y - Me [ 0 ] . pos . y ) ) );
+    }
+	
 }; // float DistanceToTux ( Enemy ThisRobot )
 
 /* ----------------------------------------------------------------------
@@ -2726,9 +2749,11 @@ ProcessAttackStateMachine ( int enemynum )
 	if ( ThisRobot -> has_greeted_influencer == FALSE )
 	{
 	    ThisRobot->has_greeted_influencer = TRUE;
-	    if ( Druidmap[ ThisRobot->type ].greeting_sound_type != (-1) )
+	    if ( Druidmap [ ThisRobot -> type ] . greeting_sound_type != (-1) )
 	    {
-		PlayGreetingSound( Druidmap[ ThisRobot->type ].greeting_sound_type );
+		DebugPrintf ( 1 , "\n%s(): Playing greeting sound for bot of type %d." , 
+			      __FUNCTION__ , ThisRobot -> type );
+		PlayGreetingSound ( Druidmap[ ThisRobot -> type ] . greeting_sound_type );
 	    }
 	}
 	
@@ -2779,6 +2804,8 @@ ProcessAttackStateMachine ( int enemynum )
 	    ThisRobot->has_greeted_influencer = TRUE;
 	    if ( Druidmap[ ThisRobot->type ].greeting_sound_type != (-1) )
 	    {
+		DebugPrintf ( 1 , "\n%s(): Playing greeting sound for bot of type %d." , 
+			      __FUNCTION__ , ThisRobot -> type );
 		PlayGreetingSound( Druidmap[ ThisRobot->type ].greeting_sound_type );
 	    }
 	}
@@ -2935,8 +2962,10 @@ ProcessAttackStateMachine ( int enemynum )
 		    //--------------------
 		    // We'll launch the attack cry of this bot...
 		    //
-		    if ( Druidmap[ ThisRobot->type ].greeting_sound_type != (-1) )
+		    if ( Druidmap [ ThisRobot -> type ] . greeting_sound_type != (-1) )
 		    {
+			DebugPrintf ( 1 , "\n%s(): playing enter_attack_run sound for bot of type %d." ,
+				      __FUNCTION__ , ThisRobot -> type );
 			// PlayStartAttackSound( Druidmap[ ThisRobot->type ].greeting_sound_type );
 			play_enter_attack_run_state_sound ( Druidmap[ ThisRobot->type ].greeting_sound_type );
 		    }

@@ -374,7 +374,7 @@ automap_update_texture_for_square ( int x , int y )
     if ( first_call )
     {
 	first_call = FALSE ;
-	DebugPrintf ( -4 , "\n%s(): iso_floor_tile_width: %f. iso_floor_tile_height: %f." , 
+	DebugPrintf ( 1 , "\n%s(): iso_floor_tile_width: %f. iso_floor_tile_height: %f." , 
 		      __FUNCTION__ , iso_floor_tile_width , iso_floor_tile_height );
     }
 

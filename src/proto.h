@@ -131,6 +131,7 @@ EXTERN void enemy_spray_blood ( Enemy CurEnemy ) ;
 #else
 #define EXTERN extern
 #endif
+EXTERN void update_virtual_position ( gps* target_pos , gps* source_pos , int level_num );
 EXTERN void FillRect (SDL_Rect rect, SDL_Color color);
 EXTERN void ShowPosition (void);
 EXTERN void DisplayItemImageAtMouseCursor( int ItemImageCode );
