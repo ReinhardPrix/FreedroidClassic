@@ -575,7 +575,7 @@ GreatItemShow (void)
   int NumberOfItems;
   int ItemIndex=0;
   int PasswordIndex = (-1) ;
-  int ClearanceIndex = (-1) ;
+  // int ClearanceIndex = (-1) ;
   int IdentifyAllowed = FALSE ;
   char* MenuTexts[ 10 ];
   MenuTexts[0]="Yes";
