@@ -1212,6 +1212,33 @@ your suggestion to the FreedroidRPG dev team to enable new resolutions.",
 		break;
 	}			/* switch(c) */
     }				/* while(1) */
+
+    //--------------------
+    // If the user is using SDL for the graphics output, then no other
+    // screen resolutions than 640x480 will be available.
+    //
+    if ( ( ! use_open_gl ) && ( GameConfig . screen_width != 640 ) )
+    {
+	GameConfig . screen_width = 640; 
+	GameConfig . screen_height = 480 ;
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
+You are using SDL instead of OpenGL for graphics output.  For this\n\
+output method, no other screen resolutions than 640x480 is available.\n\
+Therefore your setting will be overridden and 640x480 will be used.\n\
+If you want different resolutions, please use OpenGL for graphics\n\
+output.",
+				   NO_NEED_TO_INFORM , IS_WARNING_ONLY );
+    }
+
+    //--------------------
+    // By default, after starting up, the current resolution should be
+    // the resolution used at the next game startup too, so we preselect
+    // that for now.  The user can still change that later inside the
+    // game from within the options menu.
+    //
+    GameConfig . next_time_width_of_screen  = GameConfig . screen_width ;
+    GameConfig . next_time_height_of_screen = GameConfig . screen_height ;
+
 }; // ParseCommandLine (int argc, char *const argv[])
 
 
@@ -1957,13 +1984,6 @@ InitFreedroid ( void )
     implant_backtrace_into_signal_handlers ( ) ;
 
     //--------------------
-    // Adapt button positions for the current screen resolution.  (Note: At this
-    // point the command linehas been evaluated already, therefore we know if OpenGL
-    // is used or not and also which screen resolution to use.
-    //
-    adapt_button_positions_to_screen_resolution();
-
-    //--------------------
     // That will cause the memory to be allocated later...
     //
     Bulletmap = NULL;  
@@ -2062,10 +2082,11 @@ I will not be able to load or save games or configurations\n\
     LoadGameConfig ();
 
     //--------------------
-    // We parse the command line AGAIN here.  Maybe there were
-    // some overrides over the game config...
+    // Adapt button positions for the current screen resolution.  (Note: At this
+    // point the command line has been evaluated already, therefore we know if OpenGL
+    // is used or not and also which screen resolution to use.
     //
-    
+    adapt_button_positions_to_screen_resolution();
 
     Copy_Rect (Full_User_Rect, User_Rect);
     

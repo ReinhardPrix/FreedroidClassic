@@ -1596,34 +1596,48 @@ settings file will be generated.",
 int
 SaveGameConfig (void)
 {
-  char fname[5000];
-  FILE *config;
-  
-  if ( ConfigDir[0] == '\0')
-    return (ERR);
-  
-  sprintf (fname, "%s/config", ConfigDir);
-  if( (config = fopen (fname, "wb")) == NULL)
-    {
-      DebugPrintf (0, "WARNING: failed to create config-file: %s\n");
-      return (ERR);
-    }
-  
-  //--------------------
-  // We put the current version number of freedroid into the 
-  // version number string.  This will be usefull so that later
-  // versions of freedroid can identify old config files and decide
-  // not to use them in some cases.
-  //
-  strcpy ( GameConfig.freedroid_version_string , VERSION );
-  
-  //--------------------
-  // Now write the actual data
-  fwrite ( &(GameConfig), sizeof (configuration_for_freedroid), sizeof(char), config);
-  fclose (config);
+    char fname[5000];
+    FILE *config;
+    int current_width;
+    int current_height;
 
-  return (OK);
-  
+    if ( ConfigDir[0] == '\0')
+	return (ERR);
+    
+    sprintf (fname, "%s/config", ConfigDir);
+    if( (config = fopen (fname, "wb")) == NULL)
+    {
+	DebugPrintf (0, "WARNING: failed to create config-file: %s\n");
+	return (ERR);
+    }
+    
+    //--------------------
+    // We put the current version number of freedroid into the 
+    // version number string.  This will be usefull so that later
+    // versions of freedroid can identify old config files and decide
+    // not to use them in some cases.
+    //
+    strcpy ( GameConfig.freedroid_version_string , VERSION );
+    
+    //--------------------
+    // We preseve the current resolution, modify it a bit, such that
+    // the preseleted resolution will come to effect next time, save
+    // it and then we restore the current settings again.
+    //
+    current_width = GameConfig . screen_width ;
+    current_height = GameConfig . screen_height ;
+    GameConfig . screen_width = GameConfig . next_time_width_of_screen ;
+    GameConfig . screen_height = GameConfig . next_time_height_of_screen ;
+    //--------------------
+    // Now write the actual data
+    fwrite ( &(GameConfig), sizeof (configuration_for_freedroid), sizeof(char), config);
+    GameConfig . screen_width = current_width ;
+    GameConfig . screen_height = current_height ;
+
+    fclose (config);
+    
+    return (OK);
+    
 }; // int SaveGameConfig ( void )
 
 

@@ -119,6 +119,8 @@ typedef struct
     int automap_manual_shift_y ;
     int screen_width;
     int screen_height;
+    int next_time_width_of_screen;
+    int next_time_height_of_screen;
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
 

@@ -1504,6 +1504,107 @@ enum
 }; // void EscapeMenu( void )
 
 /* ----------------------------------------------------------------------
+ * This menu allows the user to change the screen resolution of the game.
+ * However this will only be available 
+ *
+ * ---------------------------------------------------------------------- */
+void
+Change_Screen_Resolution_Menu ( void )
+{
+    int Weiter = 0;
+    int MenuPosition=1;
+    char* MenuTexts[10];
+    enum
+	{ 
+	    SET_640_480 = 1 , 
+	    SET_800_600, 
+	    SET_1024_768,
+	    LEAVE_OPTIONS_MENU 
+	};
+    
+    //--------------------
+    // Users of SDL output must stick to 640x480 screen resolution.
+    //
+    if ( ! use_open_gl ) return;
+
+    while ( EscapePressed() );
+    
+    while (!Weiter)
+    {
+	MenuTexts[0]="640x480";
+	MenuTexts[1]="800x600";
+	MenuTexts[2]="1024x768";
+	MenuTexts[3]="Back";
+	MenuTexts[4]="";
+	
+	MenuPosition = DoMenuSelection( "Changes will take effect\n       when you next start the game" , 
+					MenuTexts , -1 , -1 , NULL );
+	
+	switch (MenuPosition) 
+	{
+	    case (-1):
+		Weiter=!Weiter;
+		break;
+		
+	    case SET_640_480:
+		while ( EnterPressed( ) || SpacePressed( ) );
+		GameConfig . next_time_width_of_screen = 640 ;
+		GameConfig . next_time_height_of_screen = 480 ;
+		GiveMouseAlertWindow ( "\n\
+You selected 640x480 pixel.\n\n\
+Change of screen resolution will\n\
+take effect automatically when you next\n\
+start FreedroidRPG.\n\
+\n\
+Thanks you.\n");
+		SetCurrentFont ( Menu_BFont );
+		break;
+		
+	    case SET_800_600:
+		while ( EnterPressed( ) || SpacePressed( ) );
+		GameConfig . next_time_width_of_screen = 800 ;
+		GameConfig . next_time_height_of_screen = 600 ;
+		GiveMouseAlertWindow ( "\n\
+You selected 800x600 pixel.\n\n\
+Change of screen resolution will\n\
+take effect automatically when you next\n\
+start FreedroidRPG.\n\
+\n\
+Thanks you.\n");
+		SetCurrentFont ( Menu_BFont );
+		break;
+		
+	    case SET_1024_768:
+		while ( EnterPressed( ) || SpacePressed( ) );
+		GameConfig . next_time_width_of_screen = 1024 ;
+		GameConfig . next_time_height_of_screen = 768 ;
+		GiveMouseAlertWindow ( "\n\
+You selected 1024x768 pixel.\n\n\
+Change of screen resolution will take\n\
+effect automatically when you next\n\
+start FreedroidRPG.\n\
+\n\
+Thanks you.\n");
+		SetCurrentFont ( Menu_BFont );
+		break;
+		
+	    case LEAVE_OPTIONS_MENU:
+		while (EnterPressed() || SpacePressed() );
+		Weiter=TRUE;
+		break;
+		
+	    default: 
+		break;
+		
+	} 
+    }
+    
+    ClearGraphMem ();
+    DisplayBanner ( ) ;
+    
+}; // void New_Graphics_Options_Menu (void)
+
+/* ----------------------------------------------------------------------
  * This function provides a the options menu.  This menu is a 
  * submenu of the big EscapeMenu.  Here you can change sound vol.,
  * gamma correction, fullscreen mode, display of FPS and such
@@ -1512,116 +1613,99 @@ enum
 void
 New_Graphics_Options_Menu (void)
 {
-  int Weiter = 0;
-  int MenuPosition=1;
-  char Options0[1000];
-  char Options1[1000];
-  char Options2[1000];
-  char Options3[1000];
-  char* MenuTexts[10];
-  enum
-    { 
-      SET_GAMMA_CORRECTION = 1 , 
-      SET_FULLSCREEN_FLAG, 
-      CW_SIZE,
-      SET_SHOW_BLOOD_FLAG,
-      LEAVE_OPTIONS_MENU 
-    };
-
-  // This is not some Debug Menu but an optically impressive 
-  // menu for the player.  Therefore I suggest we just fade out
-  // the game screen a little bit.
-
-  while ( EscapePressed() );
-
-  while (!Weiter)
+    int Weiter = 0;
+    int MenuPosition=1;
+    char Options0[1000];
+    char Options1[1000];
+    char Options2[1000];
+    char Options3[1000];
+    char* MenuTexts[10];
+    enum
+	{ 
+	    SET_GAMMA_CORRECTION = 1 , 
+	    SET_FULLSCREEN_FLAG, 
+	    CHANGE_SCREEN_RESOLUTION,
+	    SET_SHOW_BLOOD_FLAG,
+	    LEAVE_OPTIONS_MENU 
+	};
+    
+    // This is not some Debug Menu but an optically impressive 
+    // menu for the player.  Therefore I suggest we just fade out
+    // the game screen a little bit.
+    
+    while ( EscapePressed() );
+    
+    while (!Weiter)
     {
-      sprintf( Options0 , "Gamma Correction: %1.2f", GameConfig.current_gamma_correction );
-      sprintf( Options1 , "Fullscreen Mode: %s", fullscreen_on ? "ON" : "OFF");
-      sprintf( Options2 , "Combat Window Size: %s", classic_user_rect ? "CLASSIC" : "FULL" );
-      sprintf( Options3 , "Show Blood: %s", 
-	       GameConfig . show_blood ? "YES" : "NO" );
-      MenuTexts[0]=Options0;
-      MenuTexts[1]=Options1;
-      MenuTexts[2]=Options2;
-      MenuTexts[3]=Options3;
-      MenuTexts[4]="Back";
-      MenuTexts[5]="";
-
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , -1 , NULL );
-
-      switch (MenuPosition) 
+	sprintf( Options0 , "Gamma Correction: %1.2f", GameConfig.current_gamma_correction );
+	sprintf( Options1 , "Fullscreen Mode: %s", fullscreen_on ? "ON" : "OFF");
+	sprintf( Options2 , "Change Screen Resolution" );
+	sprintf( Options3 , "Show Blood: %s", 
+		 GameConfig . show_blood ? "YES" : "NO" );
+	MenuTexts[0]=Options0;
+	MenuTexts[1]=Options1;
+	MenuTexts[2]=Options2;
+	MenuTexts[3]=Options3;
+	MenuTexts[4]="Back";
+	MenuTexts[5]="";
+	
+	MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , -1 , NULL );
+	
+	switch (MenuPosition) 
 	{
-
-	case (-1):
-	  Weiter=!Weiter;
-	  break;
-
-	case SET_GAMMA_CORRECTION:
-
-	  if ( RightPressed() ) 
-	    {
-	      while ( RightPressed());
-	      GameConfig.current_gamma_correction+=0.05;
-	      SDL_SetGamma( GameConfig.current_gamma_correction , GameConfig.current_gamma_correction , GameConfig.current_gamma_correction );
-	    }
-
-	  if ( LeftPressed() ) 
-	    {
-	      while (LeftPressed());
-	      GameConfig.current_gamma_correction-=0.05;
-	      SDL_SetGamma( GameConfig.current_gamma_correction , GameConfig.current_gamma_correction , GameConfig.current_gamma_correction );
-	    }
-
-	  break;
-
-	case SET_FULLSCREEN_FLAG:
-	  while (EnterPressed() || SpacePressed() );
-	  SDL_WM_ToggleFullScreen (Screen);
-	  fullscreen_on = !fullscreen_on;
-	  break;
-
-	case CW_SIZE:
-	  while (EnterPressed() || SpacePressed() );
-	  
-	  if (classic_user_rect)
-	    {
-	      classic_user_rect = FALSE;
-	      Copy_Rect (Full_User_Rect, User_Rect);
-	    }
-	  else
-	    {
-	      classic_user_rect = TRUE;
-	      Copy_Rect (Classic_User_Rect, User_Rect);
-	    }
-	  
-	  ClearGraphMem();
-	  DisplayBanner ( ) ;
-	  our_SDL_flip_wrapper( Screen );
-	  
-	  break;
-
-	case SET_SHOW_BLOOD_FLAG:
-	  while (EnterPressed() || SpacePressed() );
-	  GameConfig . show_blood = !GameConfig . show_blood;
-	  break;
-
-	case LEAVE_OPTIONS_MENU:
-	  while (EnterPressed() || SpacePressed() );
-	  Weiter=TRUE;
-	  break;
-
-	default: 
-	  break;
-
+	    
+	    case (-1):
+		Weiter=!Weiter;
+		break;
+		
+	    case SET_GAMMA_CORRECTION:
+		
+		if ( RightPressed() ) 
+		{
+		    while ( RightPressed());
+		    GameConfig.current_gamma_correction+=0.05;
+		    SDL_SetGamma( GameConfig.current_gamma_correction , GameConfig.current_gamma_correction , GameConfig.current_gamma_correction );
+		}
+		
+		if ( LeftPressed() ) 
+		{
+		    while (LeftPressed());
+		    GameConfig.current_gamma_correction-=0.05;
+		    SDL_SetGamma( GameConfig.current_gamma_correction , GameConfig.current_gamma_correction , GameConfig.current_gamma_correction );
+		}
+		
+		break;
+		
+	    case SET_FULLSCREEN_FLAG:
+		while ( EnterPressed( ) || SpacePressed( ) );
+		SDL_WM_ToggleFullScreen ( Screen );
+		fullscreen_on = !fullscreen_on;
+		break;
+		
+	    case CHANGE_SCREEN_RESOLUTION:
+		while (EnterPressed() || SpacePressed() );
+		Change_Screen_Resolution_Menu();
+		break;
+		
+	    case SET_SHOW_BLOOD_FLAG:
+		while (EnterPressed() || SpacePressed() );
+		GameConfig . show_blood = !GameConfig . show_blood;
+		break;
+		
+	    case LEAVE_OPTIONS_MENU:
+		while (EnterPressed() || SpacePressed() );
+		Weiter=TRUE;
+		break;
+		
+	    default: 
+		break;
+		
 	} 
     }
-
-  ClearGraphMem ();
-  DisplayBanner ( ) ;
-
-  return;
-
+    
+    ClearGraphMem ();
+    DisplayBanner ( ) ;
+    
 }; // void New_Graphics_Options_Menu (void)
 
 /* ----------------------------------------------------------------------
