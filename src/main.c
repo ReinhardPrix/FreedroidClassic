@@ -230,6 +230,12 @@ UpdateCountersForThisFrame ( int PlayerNum )
 	      if (AllEnemys[i].warten < 0) AllEnemys[i].warten = 0;
 	    }
 	  
+	  if (AllEnemys[i].frozen > 0) 
+	    {
+	      AllEnemys[i].frozen -= Frame_Time() ;
+	      if (AllEnemys[i].frozen < 0) AllEnemys[i].frozen = 0;
+	    }
+	  
 	  if (AllEnemys[i].firewait > 0) 
 	    {
 	      AllEnemys[i].firewait -= Frame_Time() ;

@@ -501,8 +501,20 @@ MoveThisRobotThowardsHisWaypoint ( int EnemyNum )
   // We do some definitions to save us some more typing later...
   WpList = WaypointLevel->AllWaypoints;
   nextwp = ThisRobot->nextwaypoint;
+
+  //--------------------
+  // According to properties of the robot like being frozen or not,
+  // we define the maximum speed of this machine for later use...
+  //
   // maxspeed = Druidmap[ ThisRobot->type ].maxspeed;
-  maxspeed = ItemMap[ Druidmap[ ThisRobot->type ].drive_item.type ].item_drive_maxspeed;
+  if ( ThisRobot -> frozen == 0 )
+    {
+      maxspeed = ItemMap[ Druidmap[ ThisRobot->type ].drive_item.type ].item_drive_maxspeed;
+    }
+  else 
+    {
+      maxspeed = 0.2 * ItemMap[ Druidmap[ ThisRobot->type ].drive_item.type ].item_drive_maxspeed;
+    }
 
   nextwp_pos.x = WpList[nextwp].x;
   nextwp_pos.y = WpList[nextwp].y;
