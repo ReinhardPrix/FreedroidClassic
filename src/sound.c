@@ -108,7 +108,8 @@ Init_Audio(void)
   int audio_rate = 22050;
   Uint16 audio_format = AUDIO_S16; 
   int audio_channels = 2;
-  int audio_buffers = 4096;
+  //  int audio_buffers = 4096;
+  int audio_buffers = 2048;
 #endif
 
   // At first we set audio volume to medium value.
@@ -589,6 +590,8 @@ Play_Sound (int Tune)
 {
 #ifndef USE_SDL_AUDIO
   YEventSoundPlay Music_Parameters;
+#else
+  int Newest_Sound_Channel=0;
 #endif
 
   if ( !sound_on ) return;
@@ -618,6 +621,37 @@ Play_Sound (int Tune)
   play_id = YStartPlaySoundObject(BackgroundMusic_con, ExpandedSoundSampleFilenames[Tune], &Music_Parameters);
 
 #endif /* HAVE_LIBY2 */
+#else
+  Newest_Sound_Channel = Mix_PlayChannel(-1, Loaded_WAV_Files[Tune] , 0);
+  if ( Newest_Sound_Channel == -1 )
+    {
+      fprintf (stderr,
+	       "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+The a SDL MIXER WAS UNABLE TO PLAY A CERTAIN FILE LOADES INTO MEMORY.\n\
+\n\
+The name of the problematic file is:\n\
+%s \n\
+\n\
+If the problem persists, please inform the developers about it.\n\
+\n\
+In the meantime you can choose to play without sound.\n\
+\n\
+If you want this, use the appropriate command line option and Freedroid will \n\
+not complain any more.  But for now Freedroid will terminate to draw attention \n\
+to the sound problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , ExpandedSoundSampleFilenames[ Tune ]);
+      Terminate (ERR);
+    } // if ( ... = -1
+  else
+    {
+      printf("\nSuccessfully playing file %s.", ExpandedSoundSampleFilenames[ Tune ]);
+    }
+  
 #endif /* USE_SDL_AUDIO */
 
 }  // void Play_Sound(int Tune)
