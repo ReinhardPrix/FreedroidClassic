@@ -258,9 +258,9 @@ ReactToSpecialKeys(void)
     {
       for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i++ )
 	{
-	  if ( AllItems[ i ].type == (-1) ) continue;
-	  if ( ( fabsf( Me.pos.x - AllItems[ i ].pos.x ) < 0.25 ) &&
-	       ( fabsf( Me.pos.y - AllItems[ i ].pos.y ) < 0.25 ) )
+	  if ( CurLevel->ItemList[ i ].type == (-1) ) continue;
+	  if ( ( fabsf( Me.pos.x - CurLevel->ItemList[ i ].pos.x ) < 0.25 ) &&
+	       ( fabsf( Me.pos.y - CurLevel->ItemList[ i ].pos.y ) < 0.25 ) )
 	    break;
 	}
       //--------------------
@@ -283,11 +283,11 @@ ReactToSpecialKeys(void)
 	  else
 	    {
 	      Me.TextVisibleTime = 0;
-	      sprintf( TempText , "Item taken: %s." , ItemMap[ AllItems[ i ].type ].ItemName );
+	      sprintf( TempText , "Item taken: %s." , ItemMap[ CurLevel->ItemList[ i ].type ].ItemName );
 	      Me.TextToBeDisplayed=MyMalloc( strlen( TempText ) + 1 );
 	      strcpy ( Me.TextToBeDisplayed , TempText );
-	      Me.Inventory[ InvPos ].type = AllItems[ i ].type;
-	      AllItems[ i ].type = (-1);
+	      Me.Inventory[ InvPos ].type = CurLevel->ItemList[ i ].type;
+	      CurLevel->ItemList[ i ].type = (-1);
 	      ItemTakenSound();
 	    }
 	}

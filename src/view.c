@@ -867,7 +867,7 @@ PutBullet (int BulletNummer)
 void
 PutItem( int ItemNumber )
 {
-  Item CurItem = &AllItems[ ItemNumber ];
+  Item CurItem = &CurLevel->ItemList[ ItemNumber ];
   SDL_Rect TargetRectangle;
   
   if ( CurItem->type == ( -1 ) ) return;

@@ -58,7 +58,6 @@ DONE Enable mod files as well for the background music
 
 *  Add surface lift to the asteroid map, that should not be accessible from the start.
 
-
 7. Add additional map tiles:  destroyed console left/right/up/down 
    but only a dummy and leave the details to the creative people
 
@@ -69,7 +68,7 @@ DONE Enable mod files as well for the background music
    DONE dimensions of combat window should be enlarged vertically
    b. Takeover graphics effect (alpha-blending?) should be added
    ??. use fixed pictures for each droid.  when no image found-->generate generic ones
-   h. add new tiles: barred door horizontally/vertically (of about wall size)
+   DONE add new tiles: barred door horizontally/vertically (of about wall size)
 
 DONE Put combat background music to play into the ship file
      for every deck.

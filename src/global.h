@@ -129,7 +129,7 @@ EXTERN int mouse_control;       /* allow for mouse control */
 #define EXTERN extern
 #endif
 
-EXTERN item AllItems[ MAX_ITEMS_PER_LEVEL ];
+// EXTERN item AllItems[ MAX_ITEMS_PER_LEVEL ];
 EXTERN itemspec ItemMap[ ALL_ITEMS ];
 EXTERN SDL_Surface* ItemSurfaceList[ NUMBER_OF_ITEM_PICTURES ];
 
