@@ -318,10 +318,13 @@ PutCharFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y, int c)
       // only a part of the source image isn't effectively implemented in our SDL-OpenGL-wrapper
       // function.
       //
+      /*
       if ( use_open_gl )
 	our_SDL_blit_surface_wrapper ( Font -> char_surface [ c ] , NULL , Surface, &dest);
       else
-	our_SDL_blit_surface_wrapper (Font->Surface, &Font->Chars[c], Surface, &dest);
+	our_SDL_blit_surface_wrapper ( Font -> Surface, &Font->Chars[c], Surface, &dest);
+      */
+      our_SDL_blit_surface_wrapper ( Font -> char_surface [ c ] , NULL , Surface, & dest );
     }
 
   return CharWidth ( Font , c ) ;
