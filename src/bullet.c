@@ -408,10 +408,10 @@ CheckBlastCollisions (int num)
 	  || (AllEnemys[i].levelnum != level))
 	continue;
 
-      if (abs (AllEnemys[i].pos.x - CurBlast->PX) <
-	  Blast_Radius + Druid_Radius_X)
-	if (abs (AllEnemys[i].pos.y - CurBlast->PY) <
-	    Blast_Radius + Druid_Radius_Y)
+      //      if ( ( abs (AllEnemys[i].pos.x - CurBlast->PX) < Blast_Radius + Druid_Radius_X ) &&
+      //         ( abs (AllEnemys[i].pos.y - CurBlast->PY) < Blast_Radius + Druid_Radius_Y ) )
+      if ( ( fabsf (AllEnemys[i].pos.x - CurBlast->PX) < Blast_Radius ) &&
+	   ( fabsf (AllEnemys[i].pos.y - CurBlast->PY) < Blast_Radius ) )
 	  {
 	    /* drag energy of enemy */
 	    AllEnemys[i].energy -= Blast_Damage_Per_Second * Frame_Time ();
@@ -423,33 +423,34 @@ CheckBlastCollisions (int num)
     }				/* for */
 
   /* Check influence-Blast collisions */
-  if ((Me.status != OUT) && (abs (Me.pos.x - CurBlast->PX) < Druid_Radius_X))
-    if (abs (Me.pos.y - CurBlast->PY) < Druid_Radius_Y)
-      {
-	if (!InvincibleMode)
-	  {
-	    Me.energy -= Blast_Damage_Per_Second * Frame_Time ();
-	    if ((PlusExtentionsOn) && (LastBlastHit > 5))
-	      InsertMessage ("Blast hit me! OUCH!");
-	    LastBlastHit = 0;
-	    
-	    // So the influencer got some damage from the hot blast
-	    // Now most likely, he then will also say so :)
-	    if ( !CurBlast->MessageWasDone )
-	      {
-		AddInfluBurntText();
-		CurBlast->MessageWasDone=TRUE;
-	      }
-
-	  }
-	// In order to avoid a new sound EVERY frame we check for how long the previous blast 
-	// lies back in time.  LastBlastHit is a float, that counts SECONDS real-time !!
-	if (LastGotIntoBlastSound > 1.2)
-	  {
-	    GotIntoBlastSound ();
-	    LastGotIntoBlastSound = 0;
-	  }
-      }
+  if ( (Me.status != OUT) && 
+       ( fabsf (Me.pos.x - CurBlast->PX) < Blast_Radius ) &&
+       ( fabsf (Me.pos.y - CurBlast->PY) < Blast_Radius ) )
+    {
+      if (!InvincibleMode)
+	{
+	  Me.energy -= Blast_Damage_Per_Second * Frame_Time ();
+	  if ((PlusExtentionsOn) && (LastBlastHit > 5))
+	    InsertMessage ("Blast hit me! OUCH!");
+	  LastBlastHit = 0;
+	  
+	  // So the influencer got some damage from the hot blast
+	  // Now most likely, he then will also say so :)
+	  if ( !CurBlast->MessageWasDone )
+	    {
+	      AddInfluBurntText();
+	      CurBlast->MessageWasDone=TRUE;
+	    }
+	  
+	}
+      // In order to avoid a new sound EVERY frame we check for how long the previous blast 
+      // lies back in time.  LastBlastHit is a float, that counts SECONDS real-time !!
+      if (LastGotIntoBlastSound > 1.2)
+	{
+	  GotIntoBlastSound ();
+	  LastGotIntoBlastSound = 0;
+	}
+    }
 
 }				/* CheckBlastCollisions */
 
