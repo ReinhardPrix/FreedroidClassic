@@ -181,8 +181,6 @@ EXTERN SDL_Surface *BuildBlock;			// a block for temporary pic-construction
 
 EXTERN int BannerIsDestroyed;
 
-EXTERN int screen_bpp; 			/* bits per pixel */
-
 EXTERN SDL_Surface *banner_pic;      /* the banner pic */
 EXTERN SDL_Surface *pic999;
 EXTERN SDL_RWops *packed_portraits[NUM_DROIDS];

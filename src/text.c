@@ -49,6 +49,7 @@ int MyCursorX;
 int MyCursorY;
 
 char TextBuffer[10000];
+extern int vid_bpp;
 
 void 
 EnemyHitByBulletText( int Enum )
@@ -465,7 +466,7 @@ GetString (int MaxLen, int echo)
   y0 = MyCursorY;
   height = FontHeight (GetCurrentFont());
   
-  store = SDL_CreateRGBSurface(0, Screen_Rect.w, height, screen_bpp, 0, 0, 0, 0);
+  store = SDL_CreateRGBSurface(0, Screen_Rect.w, height, vid_bpp, 0, 0, 0, 0);
   Set_Rect (store_rect, x0, y0, Screen_Rect.w, height);
   SDL_BlitSurface (ne_screen, &store_rect, store, NULL);
 

@@ -548,8 +548,7 @@ enum
 	    case SET_FULLSCREEN_FLAG:
 	      if (FirePressedR())
 		{
-		  SDL_WM_ToggleFullScreen (ne_screen);
-		  GameConfig.UseFullscreen = !GameConfig.UseFullscreen;
+		  toggle_fullscreen();
 		  MenuItemSelectedSound();
 		}
 	      break;

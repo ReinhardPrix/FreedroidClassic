@@ -44,6 +44,7 @@
 int CursorIsOnRect (SDL_Rect *rect);
 SDL_Rect up_rect,down_rect,left_rect,right_rect;
 extern bool show_cursor;
+extern int vid_bpp;
 
 #define UPDATE_ONLY 0x01
 
@@ -790,7 +791,7 @@ show_droid_portrait (SDL_Rect dst, int droid_type, float cycle_time, int flags)
 
   if (!background) // first call
     {
-      tmp = SDL_CreateRGBSurface (0, dst.w, dst.h, screen_bpp, 0, 0, 0, 0);
+      tmp = SDL_CreateRGBSurface (0, dst.w, dst.h, vid_bpp, 0, 0, 0, 0);
       background = SDL_DisplayFormat (tmp);
       SDL_FreeSurface (tmp);
       SDL_BlitSurface (ne_screen, &dst, background, NULL);

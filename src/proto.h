@@ -135,6 +135,7 @@ EXTERN void white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout);
 EXTERN void ScaleGraphics (float scale);
 EXTERN void ScalePic (SDL_Surface **pic, float scale);
 EXTERN void ScaleStatRects (float scale);
+EXTERN void toggle_fullscreen (void);
 
 /* map.c */
 #undef EXTERN

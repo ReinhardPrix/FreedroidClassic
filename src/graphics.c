@@ -44,7 +44,8 @@
 #include "SDL_rotozoom.h"
 #include "takeover.h"
 
-const SDL_VideoInfo *vid_info;/* info about current video mode */
+const SDL_VideoInfo *vid_info;	/* info about current video mode */
+int vid_bpp;
 
 void PutPixel (SDL_Surface * surface, int x, int y, Uint32 pixel);
 int Load_Fonts (void);
@@ -665,7 +666,7 @@ InitPictures (void)
   if (first_call)
     {
       //  create the tmp block-build storage 
-      tmp = SDL_CreateRGBSurface( 0 , Block_Rect.w, Block_Rect.h, screen_bpp, 0, 0, 0, 0);
+      tmp = SDL_CreateRGBSurface( 0 , Block_Rect.w, Block_Rect.h, vid_bpp, 0, 0, 0, 0);
       BuildBlock = SDL_DisplayFormatAlpha (tmp); 
       SDL_FreeSurface (tmp);
 
@@ -843,7 +844,7 @@ Load_Block (char *fpath, int line, int col, SDL_Rect * block, int flags)
 
   if (usealpha)
     SDL_SetAlpha (pic, 0, 0);	/* clear per-surf alpha for internal blit */
-  tmp = SDL_CreateRGBSurface (0, dim.w, dim.h, screen_bpp, 0, 0, 0, 0);
+  tmp = SDL_CreateRGBSurface (0, dim.w, dim.h, vid_bpp, 0, 0, 0, 0);
   if (usealpha)
     ret = SDL_DisplayFormatAlpha (tmp);
   else
@@ -869,8 +870,9 @@ void
 Init_Video (void)
 {
   char vid_driver[81];
-  Uint32 flags;  /* flags for SDL video mode */
+  Uint32 vid_flags;  		/* flags for SDL video mode */
   char *fpath;
+  char *YN[2] = {"no", "yes"};
 
   /* Initialize the SDL library */
   // if ( SDL_Init (SDL_INIT_VIDEO | SDL_INIT_TIMER) == -1 ) 
@@ -897,10 +899,29 @@ Init_Video (void)
 
   vid_info = SDL_GetVideoInfo (); /* just curious */
   SDL_VideoDriverName (vid_driver, 80);
+  vid_bpp = vid_info->vfmt->BitsPerPixel;
+  
+  DebugPrintf (0, "Video info summary from SDL:\n");
+  DebugPrintf (0, "----------------------------------------------------------------------\n");
+  DebugPrintf (0, "Is it possible to create hardware surfaces: %s\n" , YN[vid_info->hw_available]);
+  DebugPrintf (0, "Is there a window manager available: %s\n", YN[vid_info->wm_available]);
+  DebugPrintf (0, "Are hardware to hardware blits accelerated: %s\n", YN[vid_info->blit_hw]);
+  DebugPrintf (0, "Are hardware to hardware colorkey blits accelerated: %s\n", YN[vid_info->blit_hw_CC]);
+  DebugPrintf (0, "Are hardware to hardware alpha blits accelerated: %s\n", YN[vid_info->blit_hw_A]);
+  DebugPrintf (0, "Are software to hardware blits accelerated: %s\n", YN[vid_info->blit_sw]);
+  DebugPrintf (0, "Are software to hardware colorkey blits accelerated: %s\n", YN[vid_info->blit_sw_CC]);
+  DebugPrintf (0, "Are software to hardware alpha blits accelerated: %s\n", YN[vid_info->blit_sw_A]);
+  DebugPrintf (0, "Are color fills accelerated: %s\n", YN[vid_info->blit_fill]);
+  DebugPrintf (0, "Total amount of video memory in Kilobytes: %d\n", vid_info->video_mem);
+  DebugPrintf (0, "Pixel format of the video device: bpp = %d, bytes/pixel = %d\n", 
+	       vid_bpp, vid_info->vfmt->BytesPerPixel);
+  DebugPrintf (0, "Video Driver Name: %s\n", vid_driver);
+  DebugPrintf (0, "----------------------------------------------------------------------\n");
+
   
   //  flags = SDL_HWSURFACE | SDL_DOUBLEBUF;
-  flags = 0;
-  if (GameConfig.UseFullscreen) flags |= SDL_FULLSCREEN;
+  vid_flags = 0;
+  if (GameConfig.UseFullscreen) vid_flags |= SDL_FULLSCREEN;
 
   if (vid_info->wm_available)  /* if there's a window-manager */
     {
@@ -909,9 +930,7 @@ Init_Video (void)
       if (fpath) SDL_WM_SetIcon( IMG_Load (fpath), NULL);
     }
 
-  screen_bpp = 16; /* start with the simplest */
-
-  if( !(ne_screen = SDL_SetVideoMode ( Screen_Rect.w, Screen_Rect.h , 0 , flags)) )
+  if( !(ne_screen = SDL_SetVideoMode ( Screen_Rect.w, Screen_Rect.h , 0 , vid_flags)) )
     {
       DebugPrintf (0, "ERORR: Couldn't set %d x %d video mode. SDL: %s\n",
 		   Screen_Rect.w, Screen_Rect.h, SDL_GetError()); 
@@ -1090,7 +1109,7 @@ white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout)
     }
   
   // produce the tiles
-  tmp = SDL_CreateRGBSurface(0, rect->w, rect->h, screen_bpp, 0, 0, 0, 0);
+  tmp = SDL_CreateRGBSurface(0, rect->w, rect->h, vid_bpp, 0, 0, 0, 0);
   tmp2 = SDL_DisplayFormat (tmp);
   SDL_FreeSurface (tmp);
   SDL_BlitSurface (bitmap, rect, tmp2, NULL);
@@ -1237,7 +1256,7 @@ ScaleGraphics (float scale)
     {
       //  create a new tmp block-build storage 
       FreeIfUsed (BuildBlock);
-      tmp = SDL_CreateRGBSurface( 0 , Block_Rect.w, Block_Rect.h, screen_bpp, 0, 0, 0, 0);
+      tmp = SDL_CreateRGBSurface( 0 , Block_Rect.w, Block_Rect.h, vid_bpp, 0, 0, 0, 0);
       BuildBlock = SDL_DisplayFormatAlpha (tmp); 
       SDL_FreeSurface (tmp);
 
@@ -1371,5 +1390,37 @@ ScaleStatRects (float scale)
 } // ScaleStatRects()
 
 
+/*----------------------------------------------------------------------
+ * toggle windowed/fullscreen modes
+ *----------------------------------------------------------------------*/
+void
+toggle_fullscreen (void)
+{
+  Uint32 vid_flags = ne_screen->flags;
+
+  //  SDL_WM_ToggleFullScreen (ne_screen);
+  
+  if (GameConfig.UseFullscreen) 
+    vid_flags &= ~SDL_FULLSCREEN;
+  else
+    vid_flags |= SDL_FULLSCREEN;
+
+  if( !(ne_screen = SDL_SetVideoMode ( Screen_Rect.w, Screen_Rect.h, 0, vid_flags)) )
+    {
+      DebugPrintf (0, "ERORR occured when trying ot toggle windowed/fullscreen %d x %d video mode.\n", 
+		   Screen_Rect.w, Screen_Rect.h);
+      DebugPrintf (0, "SDL-Error: %s\n", SDL_GetError() );
+      Terminate (ERR);
+    }
+  
+  if ( ne_screen->flags != vid_flags )
+    {
+      DebugPrintf (0, "WARNING: Failed to toggle windowed/fullscreen mode!\n");
+    }
+  else
+    GameConfig.UseFullscreen = !GameConfig.UseFullscreen;
+
+  return;
+}
 
 #undef _graphics_c
