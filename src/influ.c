@@ -714,10 +714,17 @@ MoveTuxAccordingToHisSpeed ( int player_num )
     }
 
   //--------------------
-  // Now we can make the actual move
+  // Now we can make the actual move, BUT OF COURSE ONLY IF THE TARGET POSITION
+  // IS ALSO COMPLETELY NON-BLOCKED BY ALL OBSTACLES AROUND!!!
   //
-  Me [ player_num ] . pos . x += planned_step_x;
-  Me [ player_num ] . pos . y += planned_step_y;
+  // If that isn't the case, then we simply don't make the move :)
+  //
+  if ( IsPassable ( Me [ player_num ] . pos . x + planned_step_x , Me [ player_num ] . pos . y + planned_step_y ,
+		    Me [ player_num ] . pos . z , CENTER ) == CENTER )
+    {
+      Me [ player_num ] . pos . x += planned_step_x;
+      Me [ player_num ] . pos . y += planned_step_y;
+    }
 
   //--------------------
   // Even the Tux must not leave the map!  A sanity check is done
