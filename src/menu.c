@@ -948,47 +948,63 @@ Credits_Menu (void)
 {
   int h, em; 
   SDL_Rect screen;
+  BFont_Info *oldfont;
+  int col2 = 2*User_Rect.w/3;
+
   h = FontHeight(Menu_BFont);
   em = CharWidth (Menu_BFont, 'm');
-  
+
   Copy_Rect (Screen_Rect, screen);
   SDL_SetClipRect( ne_screen, NULL );
   DisplayImage ( find_file(CREDITS_PIC_FILE, GRAPHICS_DIR, NO_THEME, CRITICAL));
   MakeGridOnScreen (&screen);
 
+  oldfont = GetCurrentFont();
+  SetCurrentFont (Font1_BFont);
 
   printf_SDL (ne_screen, UserCenter_x - 2*em, h, "CREDITS\n");
 
   printf_SDL (ne_screen, em, -1, "PROGRAMMING:");
-  printf_SDL (ne_screen, 2*Full_User_Rect.w/3, -1, "Johannes Prix\n");
+  printf_SDL (ne_screen, col2, -1, "Johannes Prix\n");
   printf_SDL (ne_screen, -1, -1, "Reinhard Prix\n");
   printf_SDL (ne_screen, -1, -1, "\n");
 
   printf_SDL (ne_screen, em, -1, "ARTWORK:");
-  printf_SDL (ne_screen, 2*User_Rect.w/3, -1, "Bastian Salmela\n");
-  printf_SDL (ne_screen, -1 , -1, "Lanzz\n");
+  printf_SDL (ne_screen, col2, -1, "Bastian Salmela\n");
+  printf_SDL (ne_screen, -1, -1, "\n");
+  printf_SDL (ne_screen, em, -1, "ADDITIONAL THEMES:\n");
+  printf_SDL (ne_screen, 2*em, -1, "Lanzz-theme");
+  printf_SDL (ne_screen, col2, -1, "Lanzz\n");
+  printf_SDL (ne_screen, 2*em, -1, "Para90-theme");
+  printf_SDL (ne_screen, col2, -1, "Andreas Wedemeyer\n");
 
-  printf_SDL (ne_screen, em, -1, "C64 LEGACY MUSIC mods:\n");
+  printf_SDL (ne_screen, -1, -1, "\n");
+  printf_SDL (ne_screen, em, -1, "C64 LEGACY MODS:\n");
 
-  printf_SDL (ne_screen, em, -1, "#dreamfish/trsi:");
-  printf_SDL (ne_screen, Full_User_Rect.w/2, -1, "Green Beret, Sanxion,\n");
-  printf_SDL (ne_screen, Full_User_Rect.w/2, -1, "Uridium2\n");
 
-  printf_SDL (ne_screen, em, -1, "4-mat:");
-  printf_SDL (ne_screen, Full_User_Rect.w/2, -1, "The last V8, Anarchy\n");
+  printf_SDL (ne_screen, 2*em, -1, "Green Beret, Sanxion, Uridium2");
+  printf_SDL (ne_screen, col2, -1, "#dreamfish/trsi\n");
 
-  printf_SDL (ne_screen, em, -1, "Kollaps:");
-  printf_SDL (ne_screen, Full_User_Rect.w/2, -1, "Tron\n");
+  printf_SDL (ne_screen, 2*em, -1, "The last V8, Anarchy");
+  printf_SDL (ne_screen, col2, -1, "4-mat\n");
 
-  printf_SDL (ne_screen, em, -1, "Nashua:");
-  printf_SDL (ne_screen, Full_User_Rect.w/2, -1, "Starpaws\n");
+  printf_SDL (ne_screen, 2*em, -1, "Tron");
+  printf_SDL (ne_screen, col2, -1, "Kollaps\n");
+
+
+  printf_SDL (ne_screen, 2*em, -1, "Starpaws");
+  printf_SDL (ne_screen, col2, -1, "Nashua\n");
+
   
-  printf_SDL (ne_screen, em, -1, "Android:");
-  printf_SDL (ne_screen, Full_User_Rect.w/2, -1, "Commando\n");
+  printf_SDL (ne_screen, 2*em, -1, "Commando");
+  printf_SDL (ne_screen, col2, -1, "Android");
+
 
   SDL_Flip( ne_screen );
 
   wait4key();
+
+  SetCurrentFont (oldfont);
   
   return;
 

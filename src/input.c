@@ -255,6 +255,8 @@ init_keystr (void)
   keystr[MOUSE_BUTTON1]	= "Mouse1";
   keystr[MOUSE_BUTTON2] = "Mouse2";
   keystr[MOUSE_BUTTON3] = "Mouse3";
+  keystr[MOUSE_WHEELUP] = "WheelUp";
+  keystr[MOUSE_WHEELDOWN]="WheelDown";
 
   keystr[JOY_UP]	= "JoyUp";
   keystr[JOY_DOWN]	= "JoyDown"; 
@@ -513,33 +515,58 @@ int
 getchar_raw (void)
 {
   SDL_Event event;
-  int Returnkey;
-
+  int Returnkey = 0;
+  
   //  keyboard_update ();   /* treat all pending keyboard-events */
 
-  while (1)
+  while ( !Returnkey )
     {
       SDL_WaitEvent (&event);    /* wait for next event */
       
-      if (event.type == SDL_KEYDOWN)
+      switch (event.type)
 	{
+	case SDL_KEYDOWN:
 	  /* 
 	   * here we use the fact that, I cite from SDL_keyboard.h:
 	   * "The keyboard syms have been cleverly chosen to map to ASCII"
 	   * ... I hope that this design feature is portable, and durable ;)  
 	   */
 	  Returnkey = (int) event.key.keysym.sym;
-	  if ( event.key.keysym.mod & KMOD_SHIFT ) Returnkey = toupper( (int)event.key.keysym.sym );
-	  return ( Returnkey );
-	}
-      else
-	{
+	  if ( event.key.keysym.mod & KMOD_SHIFT ) 
+	    Returnkey = toupper( (int)event.key.keysym.sym );
+	  break;
+
+	case SDL_JOYBUTTONDOWN: 
+	  if (event.jbutton.button == 0)
+	    Returnkey = JOY_BUTTON1;
+	  else if (event.jbutton.button == 1) 
+	    Returnkey = JOY_BUTTON2;
+	  else if (event.jbutton.button == 2) 
+	    Returnkey = JOY_BUTTON3;
+	  break;
+
+	case SDL_MOUSEBUTTONDOWN:
+	  if (event.button.button == SDL_BUTTON_LEFT)
+	    Returnkey = MOUSE_BUTTON1;
+	  else if (event.button.button == SDL_BUTTON_RIGHT)
+	    Returnkey = MOUSE_BUTTON2;
+	  else if (event.button.button == SDL_BUTTON_MIDDLE)  
+	    Returnkey = MOUSE_BUTTON3;
+	  else if (event.button.button == SDL_BUTTON_WHEELUP)
+	    Returnkey = MOUSE_WHEELUP;
+	  else if (event.button.button == SDL_BUTTON_WHEELDOWN)
+	    Returnkey = MOUSE_WHEELDOWN;
+	  break;
+
+	default:
 	  SDL_PushEvent (&event);  /* put this event back into the queue */
 	  update_input ();  /* and treat it the usual way */
 	  continue;
 	}
 
     } /* while(1) */
+
+  return ( Returnkey );
 
 } /* getchar_raw() */
 

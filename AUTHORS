@@ -16,17 +16,23 @@ additional artwork
 * Bastian Salmela <bastian.salmela@hel.fi>
   3D Blender graphics design. Title, robots-pics and various backgrounds
 
-Patches
--------
-* Tanel Kylaots <mou@tdl.ee>
-  Nighthawk-type mouse control (based on his patch)
-
 additional Themes
 -----------------
-* lanzz   <lanzz@lanzz.org>
+* "Lanzz theme" by lanzz <lanzz@lanzz.org>
+* "Para90 theme" by Andreas Wedemeyer <miamibass@t-online.de>
 
 Porting
---------
+-------
 * Jason Kingan <jasonk@toast442.org> 
    patches and ProjectBuilder files for MacOS X port 
 
+* Reinhard Prix <rprix@users.sourceforge.net>
+  Win32 port
+
+Misc
+----
+* Tanel Kylaots <mou@tdl.ee>
+  Nighthawk-type mouse control (based on his patch)
+
+* Yann Dirson <ydirson@altern.org>
+  maintainer of Debian package. Contribution of various patches and bug-reports.

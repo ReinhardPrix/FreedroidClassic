@@ -4,13 +4,14 @@ Current version: 1.0.2
 
 Release TODO
 ============
-(done) - write some Changelog summary vs 0.8.4
-(done)- write a HappyPenguin announcement
-(done)- update INSTALL-instructions, README, News etc..
 
-- screenshot anzeigen
-- activate auch fuer Lift verlassen
-
+various Ideas for next release (1.1.0)
+------------------------------
+- screenshot irgendwie 'anzeigen', nicht ueberschreiben...
+- 'activate' auch fuer Lift verlassen
+- add ship-finished time in highscores?
+- show remaining enemys/decks
+- smaller font in Credits
 
 Bugs
 =======
@@ -44,9 +45,6 @@ Outstanding tuning/design bugs and general TODO (priority: low)
 
 Wishlist
 --------
-- Add the original energy-upload-function from the C64 classical game start
-  to Freedroid (instead of BeamLine perhaps...)
-  --> (rp) mhh, dunno if that's worth the effort, let's see
 
 Resolved bugs
 -------------
@@ -367,3 +365,9 @@ Resolved bugs
 
 - allow initial scaling of the _whole_ game (-> Sharp Zaurus 320x200!)
   (done)
+(done) - write some Changelog summary vs 0.8.4
+(done)- write a HappyPenguin announcement
+(done)- update INSTALL-instructions, README, News etc..
+- Add the original energy-upload-function from the C64 classical game start
+  to Freedroid (instead of BeamLine perhaps...)
+  --> (rp) mhh, dunno if that's worth the effort, let's see
