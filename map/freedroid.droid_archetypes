@@ -83,6 +83,7 @@ Maximum mana of this droid: 100.1
 Rate of energyloss under influence control: 0.0
 Weapon type this droid uses: 0
 Aggression rate of this droid: 0
+Physical (base) damage an attack of this droid will do: 10.0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 5
 Monster Level and maximum treasure chest to pick from=0
@@ -135,6 +136,7 @@ Maximum mana of this droid: 10.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 99
+Physical (base) damage an attack of this droid will do: 3.0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 40
 Monster Level and maximum treasure chest to pick from=0
@@ -188,6 +190,7 @@ Maximum mana of this droid: 14.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 65
+Physical (base) damage an attack of this droid will do: 4.0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 50
 Monster Level and maximum treasure chest to pick from=1
@@ -240,6 +243,7 @@ Maximum mana of this droid: 16.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 82
+Physical (base) damage an attack of this droid will do: 6.0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 50
 Monster Level and maximum treasure chest to pick from=2
@@ -292,6 +296,7 @@ Maximum mana of this droid: 20.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 84
+Physical (base) damage an attack of this droid will do: 7.0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 70
 Monster Level and maximum treasure chest to pick from=3
@@ -344,6 +349,7 @@ Maximum mana of this droid: 30.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 80
+Physical (base) damage an attack of this droid will do: 8.0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 90
 Monster Level and maximum treasure chest to pick from=0
@@ -396,6 +402,7 @@ Maximum mana of this droid: 40.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 2
 Aggression rate of this droid: 75
+Physical (base) damage an attack of this droid will do: 10.0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 120
 Monster Level and maximum treasure chest to pick from=3
@@ -451,6 +458,7 @@ Maximum mana of this droid: 40.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 93
+Physical (base) damage an attack of this droid will do: 12.0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 140
 Monster Level and maximum treasure chest to pick from=0
@@ -503,6 +511,7 @@ Maximum mana of this droid: 60.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 99
+Physical (base) damage an attack of this droid will do: 14.0
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 180
 Monster Level and maximum treasure chest to pick from=0
@@ -555,6 +564,7 @@ Maximum mana of this droid: 70.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 1
 Aggression rate of this droid: 90
+Physical (base) damage an attack of this droid will do: 16.0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 200
 Monster Level and maximum treasure chest to pick from=0
@@ -607,6 +617,7 @@ Maximum mana of this droid: 80.1
 Rate of energyloss under influence control: 3.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 94
+Physical (base) damage an attack of this droid will do: 18.0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 240
 Monster Level and maximum treasure chest to pick from=0
@@ -659,6 +670,7 @@ Maximum mana of this droid: 90.1
 Rate of energyloss under influence control: 3.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 98
+Physical (base) damage an attack of this droid will do: 20.0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 280
 Monster Level and maximum treasure chest to pick from=0
@@ -711,6 +723,7 @@ Maximum mana of this droid: 100.1
 Rate of energyloss under influence control: 3.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 81
+Physical (base) damage an attack of this droid will do: 22.0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 320
 Monster Level and maximum treasure chest to pick from=0
@@ -763,6 +776,7 @@ Maximum mana of this droid: 120.1
 Rate of energyloss under influence control: 3.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 0
+Physical (base) damage an attack of this droid will do: 24.0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 400
 Monster Level and maximum treasure chest to pick from=0
@@ -815,6 +829,7 @@ Maximum mana of this droid: 130.1
 Rate of energyloss under influence control: 3.1
 Weapon type this droid uses: 5
 Aggression rate of this droid: 90
+Physical (base) damage an attack of this droid will do: 26.0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 460
 Monster Level and maximum treasure chest to pick from=0
@@ -867,6 +882,7 @@ Maximum mana of this droid: 140.1
 Rate of energyloss under influence control: 3.1
 Weapon type this droid uses: 1
 Aggression rate of this droid: 30
+Physical (base) damage an attack of this droid will do: 28.0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 500
 Monster Level and maximum treasure chest to pick from=0
@@ -919,6 +935,7 @@ Maximum mana of this droid: 160.1
 Rate of energyloss under influence control: 3.1
 Weapon type this droid uses: 2
 Aggression rate of this droid: 40
+Physical (base) damage an attack of this droid will do: 30.0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 600
 Monster Level and maximum treasure chest to pick from=0
@@ -971,6 +988,7 @@ Maximum mana of this droid: 180.1
 Rate of energyloss under influence control: 4.1
 Weapon type this droid uses: 3
 Aggression rate of this droid: 60
+Physical (base) damage an attack of this droid will do: 32.0
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 650
 Monster Level and maximum treasure chest to pick from=0
@@ -1023,6 +1041,7 @@ Maximum mana of this droid: 210.1
 Rate of energyloss under influence control: 4.1
 Weapon type this droid uses: 3
 Aggression rate of this droid: 60
+Physical (base) damage an attack of this droid will do: 34.0
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 700
 Monster Level and maximum treasure chest to pick from=0
@@ -1075,6 +1094,7 @@ Maximum mana of this droid: 150.1
 Rate of energyloss under influence control: 4.1
 Weapon type this droid uses: 1
 Aggression rate of this droid: 80
+Physical (base) damage an attack of this droid will do: 36.0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 800
 Monster Level and maximum treasure chest to pick from=0
@@ -1127,6 +1147,7 @@ Maximum mana of this droid: 200.1
 Rate of energyloss under influence control: 4.1
 Weapon type this droid uses: 2
 Aggression rate of this droid: 65
+Physical (base) damage an attack of this droid will do: 38.0
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 1000
 Monster Level and maximum treasure chest to pick from=0
@@ -1179,6 +1200,7 @@ Maximum mana of this droid: 220.1
 Rate of energyloss under influence control: 4.1
 Weapon type this droid uses: 1
 Aggression rate of this droid: 55
+Physical (base) damage an attack of this droid will do: 40.0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 1200
 Monster Level and maximum treasure chest to pick from=0
@@ -1231,6 +1253,7 @@ Maximum mana of this droid: 240.1
 Rate of energyloss under influence control: 4.1
 Weapon type this droid uses: 4
 Aggression rate of this droid: 92
+Physical (base) damage an attack of this droid will do: 42.0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 1500
 Monster Level and maximum treasure chest to pick from=0
@@ -1283,6 +1306,7 @@ Maximum mana of this droid: 300.1
 Rate of energyloss under influence control: 15.1
 Weapon type this droid uses: 2
 Aggression rate of this droid: 90
+Physical (base) damage an attack of this droid will do: 44.0
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 2000
 Monster Level and maximum treasure chest to pick from=0
@@ -1335,6 +1359,7 @@ Maximum mana of this droid: 70.1
 Rate of energyloss under influence control: 15.1
 Weapon type this droid uses: 2
 Aggression rate of this droid: 95
+Physical (base) damage an attack of this droid will do: 10.0
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 500
 Monster Level and maximum treasure chest to pick from=3
@@ -1387,6 +1412,7 @@ Maximum mana of this droid: 110.1
 Rate of energyloss under influence control: 15.1
 Weapon type this droid uses: 2
 Aggression rate of this droid: 95
+Physical (base) damage an attack of this droid will do: 10.0
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 800
 Monster Level and maximum treasure chest to pick from=3
@@ -1439,6 +1465,7 @@ Maximum mana of this droid: 100.1
 Rate of energyloss under influence control: 15.1
 Weapon type this droid uses: 4
 Aggression rate of this droid: 92
+Physical (base) damage an attack of this droid will do: 10.0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 200
 Monster Level and maximum treasure chest to pick from=0
@@ -1491,6 +1518,7 @@ Maximum mana of this droid: 100.1
 Rate of energyloss under influence control: 15.1
 Weapon type this droid uses: 4
 Aggression rate of this droid: 92
+Physical (base) damage an attack of this droid will do: 10.0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 200
 Monster Level and maximum treasure chest to pick from=0
@@ -1543,6 +1571,7 @@ Maximum mana of this droid: 100.1
 Rate of energyloss under influence control: 15.1
 Weapon type this droid uses: 4
 Aggression rate of this droid: 92
+Physical (base) damage an attack of this droid will do: 10.0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 200
 Monster Level and maximum treasure chest to pick from=0
@@ -1595,6 +1624,7 @@ Maximum mana of this droid: 100.1
 Rate of energyloss under influence control: 15.1
 Weapon type this droid uses: 4
 Aggression rate of this droid: 92
+Physical (base) damage an attack of this droid will do: 10.0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 200
 Monster Level and maximum treasure chest to pick from=0
@@ -1647,6 +1677,7 @@ Maximum mana of this droid: 100.1
 Rate of energyloss under influence control: 15.1
 Weapon type this droid uses: 4
 Aggression rate of this droid: 92
+Physical (base) damage an attack of this droid will do: 10.0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 200
 Monster Level and maximum treasure chest to pick from=0
