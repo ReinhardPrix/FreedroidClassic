@@ -49,6 +49,7 @@ void Level_Editor(void);
 
 EXTERN int MyCursorX;
 EXTERN int MyCursorY;
+EXTERN char Previous_Mission_Name[1000];
 
 /*@Function============================================================
 @Desc: This function prepares the screen for the big Escape menu and 
@@ -378,11 +379,13 @@ MissionSelectMenu (void)
 enum
   { 
     CLASSIC_PARADROID_MISSION_POSITION=1, 
-    NEW_MISSION_POSITION
+    NEW_MISSION_POSITION,
+    RESTART_PREVIOUS_MISSION
   };
   int Weiter = 0;
   int MenuPosition=1;
   int key;
+  static int NoMissionLoadedEver=TRUE;
 
   Me.status=MENU;
 
@@ -419,6 +422,7 @@ enum
       CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y -2*FontHeight(GetCurrentFont()), "Mission Selection Menu");
       CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y ,    "Classic Paradroid");
       CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y +1*FontHeight(GetCurrentFont()), "Asteroid Research");
+      CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y +2*FontHeight(GetCurrentFont()), "Restart Previous Mission");
 
       SDL_Flip( ne_screen );
 
@@ -433,13 +437,27 @@ enum
 
 	    case CLASSIC_PARADROID_MISSION_POSITION:
 	      InitNewMission ( STANDARD_MISSION );
-	      // New_Game_Requested=FALSE;
-	      // Single_Player_Menu();
+	      NoMissionLoadedEver = FALSE;
 	      Weiter = TRUE;   
 	      break;
 	    case NEW_MISSION_POSITION:
 	      InitNewMission ( NEW_MISSION );
+	      NoMissionLoadedEver = FALSE;
 	      Weiter = TRUE;   /* jp forgot this... ;) */
+	      break;
+	    case RESTART_PREVIOUS_MISSION:
+	      if ( NoMissionLoadedEver )
+		{
+		  CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y +5*FontHeight(GetCurrentFont()), "No previous mission known.");
+		  SDL_Flip( ne_screen );
+		  while ( EnterPressed() );
+		  while ( (!EnterPressed()) && (!SpacePressed()) );
+		}
+	      else
+		{
+		  InitNewMission ( Previous_Mission_Name );
+		  Weiter = TRUE;   /* jp forgot this... ;) */
+		}
 	      break;
 	    default: 
 	      break;
@@ -453,7 +471,7 @@ enum
 	}
       if ( key == SDLK_DOWN )
 	{
-	  if ( MenuPosition < NEW_MISSION_POSITION ) MenuPosition++;
+	  if ( MenuPosition < RESTART_PREVIOUS_MISSION ) MenuPosition++;
 	  MoveMenuPositionSound();
 	}
       if ( key == SDLK_ESCAPE )

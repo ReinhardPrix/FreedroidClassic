@@ -49,6 +49,7 @@ void Get_Bullet_Data ( char* DataPointer );
 char* DebriefingText;
 char* DebriefingSong;
 char* NextMissionName;
+char Previous_Mission_Name[1000];
 
 /*@Function============================================================
 @Desc: This function loads all the constant variables of the game from
@@ -822,9 +823,14 @@ InitNewMission ( char *MissionName )
 #define END_OF_MISSION_TARGET_STRING "*** End of Mission Target ***"
 #define NEXT_MISSION_NAME_STRING "After completing this mission, load mission : "
 
-
-
-
+  //--------------------
+  // We store the mission name in case the influ
+  // gets destroyed so we know where to continue in
+  // case the player doesn't want to return to the very beginning
+  // but just to replay this mission.
+  //
+  strcpy( Previous_Mission_Name , MissionName ); 
+  
   DebugPrintf (2, "\nvoid InitNewMission( char *MissionName ): real function call confirmed...");
   DebugPrintf (1, "\nA new mission is being initialized from file %s.\n" , MissionName );
 
