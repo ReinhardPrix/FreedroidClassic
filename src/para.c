@@ -242,10 +242,12 @@ int main(int argc, char * const argv[])
       printf( "\nvoid main: Me.speed.y ist jetzt: %f!" , Me.speed.y );
       Reibung();
 
-      /* Influencedruid nach der momentanen Geschwindigkeit weiterbewegen */
       printf("\nvoid main: Me.speed.x: %f!" , Me.speed.x);
-      gl_printf(-1,-1,"\nmain: speed:%f/%f!", Me.speed.x, Me.speed.y);
-      gl_printf(-1,-1,"\nmain: phase:%f!", Me.phase );
+      gl_printf( -1 , -1 , "\nmain: Me.energy:%f!" , Me.energy );
+      // gl_printf(-1,-1,"\nmain: speed:%f/%f!", Me.speed.x, Me.speed.y);
+      // gl_printf(-1,-1,"\nmain: phase:%f!", Me.phase );
+
+      /* Influencedruid nach der momentanen Geschwindigkeit weiterbewegen */
       Me.pos.x += Me.speed.x * Frame_Time();
       Me.pos.y += Me.speed.y * Frame_Time();
       AdjustSpeed();
