@@ -400,6 +400,8 @@ EXTERN void create_new_obstacle_on_level ( Level EditLevel , int our_obstacle_ty
 EXTERN void show_button_tooltip ( char* tooltip_text );
 EXTERN void delete_obstacle ( level* EditLevel , obstacle* our_obstacle );
 EXTERN void ExportLevelInterface ( int level_num ) ;
+EXTERN void give_new_name_to_obstacle ( Level EditLevel , obstacle* our_obstacle , char* predefined_name );
+
 // skills.c
 #undef EXTERN
 #ifdef _skills_c

@@ -50,7 +50,7 @@ void duplicate_all_obstacles_in_area ( Level source_level ,
 				       float source_area_width , float source_area_height ,
 				       Level target_level ,
 				       float target_start_x , float target_start_y );
-void add_obstacle ( Level EditLevel , float x , float y , int new_obstacle_type );
+obstacle* add_obstacle ( Level EditLevel , float x , float y , int new_obstacle_type );
 
 // EXTERN SDL_Surface *BackupMapBlockSurfacePointer[ NUM_COLORS ][ NUM_MAP_BLOCKS ];
 
@@ -2390,26 +2390,42 @@ duplicate_all_obstacles_in_area ( Level source_level ,
 				  Level target_level ,
 				  float target_start_x , float target_start_y )
 {
-  int i;
+    int i;
+    obstacle* new_obstacle;
 
-  for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
+    for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
     {
-      if ( source_level -> obstacle_list [ i ] . type <= (-1) ) continue;
-      if ( source_level -> obstacle_list [ i ] . pos . x < source_start_x ) continue;
-      if ( source_level -> obstacle_list [ i ] . pos . y < source_start_y ) continue;
-      if ( source_level -> obstacle_list [ i ] . pos . x > source_start_x + source_area_width ) continue;
-      if ( source_level -> obstacle_list [ i ] . pos . y > source_start_y + source_area_height ) continue;
-
-      add_obstacle ( target_level , 
-		     target_start_x  + source_level -> obstacle_list [ i ] . pos . x - source_start_x ,
-		     target_start_y  + source_level -> obstacle_list [ i ] . pos . y - source_start_y ,
-		     source_level -> obstacle_list [ i ] . type );
-
-		    //delete_obstacle ( source_level , & ( source_level -> obstacle_list [ i ] ) );
-		    // i--; // this is so that this obstacle will be processed AGAIN, since deleting might
-		    // // have moved a different obstacle to this list position.
+	if ( source_level -> obstacle_list [ i ] . type <= (-1) ) continue;
+	if ( source_level -> obstacle_list [ i ] . pos . x < source_start_x ) continue;
+	if ( source_level -> obstacle_list [ i ] . pos . y < source_start_y ) continue;
+	if ( source_level -> obstacle_list [ i ] . pos . x > source_start_x + source_area_width ) continue;
+	if ( source_level -> obstacle_list [ i ] . pos . y > source_start_y + source_area_height ) continue;
+	
+	new_obstacle = 
+	    add_obstacle ( target_level , 
+			   target_start_x  + source_level -> obstacle_list [ i ] . pos . x - source_start_x ,
+			   target_start_y  + source_level -> obstacle_list [ i ] . pos . y - source_start_y ,
+			   source_level -> obstacle_list [ i ] . type );
+	
+	//--------------------
+	// Maybe the source obstacle had a label attached to it?  Then
+	// We should also duplicate the obstacle label.  Otherwise it
+	// might get overwritten when exporting in the other direction.
+	//
+	if ( source_level -> obstacle_list [ i ] . name_index != (-1) )
+	{
+	    give_new_name_to_obstacle ( 
+		target_level , new_obstacle , 
+		source_level -> obstacle_name_list [ source_level -> obstacle_list [ i ] . name_index ] );
+	    DebugPrintf ( -1 , "\nNOTE:  obstacle name was exported:  %s." ,
+			  source_level -> obstacle_name_list [ source_level -> obstacle_list [ i ] . name_index ] );
+	}
+	
+	//delete_obstacle ( source_level , & ( source_level -> obstacle_list [ i ] ) );
+	// i--; // this is so that this obstacle will be processed AGAIN, since deleting might
+	// // have moved a different obstacle to this list position.
     }
-  
+    
 }; // void duplicate_all_obstacles_in_area ( ... )
 
 /* ----------------------------------------------------------------------
@@ -2439,13 +2455,11 @@ floor_copy ( map_tile* target_pointer , map_tile* source_pointer , int amount )
 void
 ExportLevelInterface ( int LevelNum )
 {
-
   int AreaWidth;
   int AreaHeight;
   int TargetLevel;
   int y;
   int TargetStartLine;
-
 
   //--------------------
   // First we see if we need to copy the northern interface region
@@ -3870,24 +3884,29 @@ show_level_editor_tooltips ( void )
  *
  *
  * ---------------------------------------------------------------------- */
-void
+obstacle*
 add_obstacle ( Level EditLevel , float x , float y , int new_obstacle_type )
 {
-  int i;
+    int i;
 
-  for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
+    for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
     {
-      if ( EditLevel -> obstacle_list [ i ] . type == (-1) )
+	if ( EditLevel -> obstacle_list [ i ] . type == (-1) )
 	{
-	  EditLevel -> obstacle_list [ i ] . type = new_obstacle_type ;
-	  EditLevel -> obstacle_list [ i ] . pos . x = x ;
-	  EditLevel -> obstacle_list [ i ] . pos . y = y ;
-	  glue_obstacles_to_floor_tiles_for_level ( EditLevel -> levelnum );
-	  DebugPrintf ( 0 , "\nNew obstacle has been added!!!" );
-	  fflush(stdout);
-	  return;
+	    EditLevel -> obstacle_list [ i ] . type = new_obstacle_type ;
+	    EditLevel -> obstacle_list [ i ] . pos . x = x ;
+	    EditLevel -> obstacle_list [ i ] . pos . y = y ;
+	    glue_obstacles_to_floor_tiles_for_level ( EditLevel -> levelnum );
+	    DebugPrintf ( 0 , "\nNew obstacle has been added!!!" );
+	    fflush(stdout);
+	    return ( & ( EditLevel -> obstacle_list [ i ] ) ) ;
 	}
     }
+    
+    GiveStandardErrorMessage ( "add_obstacle (...)" , "\
+Ran out of obstacle positions in target level!",
+			       PLEASE_INFORM , IS_FATAL );
+    return ( NULL );
 
 }; // void add_obstacle ( Level EditLevel , float x , float y , int Highlight )
 
@@ -3992,7 +4011,7 @@ marked_obstacle_is_glued_to_here ( Level EditLevel , float x , float y )
  * input about the desired new obstacle name.
  * ---------------------------------------------------------------------- */
 void
-give_new_name_to_obstacle ( Level EditLevel , obstacle* our_obstacle )
+give_new_name_to_obstacle ( Level EditLevel , obstacle* our_obstacle , char* predefined_name )
 {
   int i;
   int free_index=(-1);
@@ -4021,13 +4040,24 @@ give_new_name_to_obstacle ( Level EditLevel , obstacle* our_obstacle )
     }
 
   //--------------------
-  // We must query the user for the desired new name
+  // Maybe we must query the user for the desired new name.
+  // On the other hand, it might be that a name has been
+  // supplied as an argument.  That depends on whether the
+  // argument string is NULL or not.
   //
   if ( EditLevel -> obstacle_name_list [ free_index ] == NULL )
     EditLevel -> obstacle_name_list [ free_index ] = "" ;
-  EditLevel -> obstacle_name_list [ free_index ] = 
-    GetEditableStringInPopupWindow ( 1000 , "\nPlease enter name for this obstacle: \n\n" ,
-				     EditLevel -> obstacle_name_list [ free_index ] );
+  if ( predefined_name == NULL )
+  {
+      EditLevel -> obstacle_name_list [ free_index ] = 
+	  GetEditableStringInPopupWindow ( 1000 , "\nPlease enter name for this obstacle: \n\n" ,
+					   EditLevel -> obstacle_name_list [ free_index ] );
+  }
+  else
+  {
+      EditLevel -> obstacle_name_list [ free_index ] = MyMalloc ( 5000 );
+      strncpy ( EditLevel -> obstacle_name_list [ free_index ] , predefined_name , 4900 ) ;
+  }
 
   //--------------------
   // We must select the right index as the name of this obstacle.
@@ -4415,7 +4445,7 @@ LevelEditor(void)
 	    {
 	      if ( level_editor_marked_obstacle != NULL )
 		{
-		  give_new_name_to_obstacle ( EditLevel , level_editor_marked_obstacle );
+		  give_new_name_to_obstacle ( EditLevel , level_editor_marked_obstacle , NULL );
 		  while ( HPressed() );
 		}
 	    }
@@ -4617,7 +4647,7 @@ LevelEditor(void)
 		{
 		  if ( level_editor_marked_obstacle != NULL )
 		    {
-		      give_new_name_to_obstacle ( EditLevel , level_editor_marked_obstacle );
+		      give_new_name_to_obstacle ( EditLevel , level_editor_marked_obstacle , NULL );
 		      while ( SpacePressed() );
 		    }
 		}
