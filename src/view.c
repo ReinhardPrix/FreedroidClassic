@@ -943,8 +943,8 @@ Sorry...\n\
     };
 
   
-  TargetRectangle.x=UserCenter_x - (Me.pos.x - CurBlast->PX)*Block_Width  -Block_Width/2;
-  TargetRectangle.y=UserCenter_y - (Me.pos.y - CurBlast->PY)*Block_Height -Block_Height/2;
+  TargetRectangle.x=UserCenter_x - (Me.pos.x - CurBlast->pos.x )*Block_Width  -Block_Width/2;
+  TargetRectangle.y=UserCenter_y - (Me.pos.y - CurBlast->pos.y )*Block_Height -Block_Height/2;
   // Blastmap[CurBlast->type].block + ((int) floorf(CurBlast->phase)), Screen , &TargetRectangle);
   SDL_BlitSurface( Blastmap[CurBlast->type].SurfacePointer[ (int)floorf(CurBlast->phase) ] , NULL , Screen , &TargetRectangle);
 
