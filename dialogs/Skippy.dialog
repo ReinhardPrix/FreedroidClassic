@@ -29,6 +29,20 @@ If you have questions concerning FreedroidRPG, please send mail to:
 
 freedroid-discussion@lists.sourceforge.net
 
+BEGIN OF AUTORS NOTES
+
+
+
+You can use this text field to make some notes on ANYTHING.  
+It's purely for the author's reference.  Tahisafsd asdfasdf asdfasdf.
+The game engine will ignore this entry.
+
+
+
+
+END OF AUTORS NOTES
+
+
 Beginning of new chat dialog for character="XXXXX"
 
 New Option Nr=0  OptionText=" Hi!  I'm new here. "
@@ -38,12 +52,13 @@ Subtitle="Great!  A newcomer!  Welcome!  I'm Skippy!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Since you are new, you might need some map making device?  I got some for sale!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I make them, you must know.  Only finest quality of course."
+Subtitle="I make them, you must know.  Only the finest quality of course."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
 ChangeOption=2 ChangeToValue=1
 ChangeOption=3 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
@@ -52,7 +67,9 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=148  PositionY=306  
 Subtitle="Good!  Here is the selection of items I have for sale."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=1 ChangeToValue=0
 DoSomethingExtra="InitTradeWithCharacter:Skippy"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
@@ -61,13 +78,14 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=152  PositionY=224  
 Subtitle="Oh, that's too simple.  No need to activate anything at all.  Just carry is along with your other stuff in inventory."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="The map-making device will automatically collect data from within 7 meters of whereever you're going."
+Subtitle="The map-making device will automatically collect data from within 7 meters of wherever you're going."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="To take a look at the data, just hold the device to your eye."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="The data will then be projected directly into your eye.  (Use the Tab key to turn on/off background map display)."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
@@ -81,6 +99,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="The only source of these devices is here.  It's me!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
@@ -94,6 +113,8 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=1
 ChangeOption=2 ChangeToValue=1
 ChangeOption=3 ChangeToValue=1
+ChangeOption=99 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 

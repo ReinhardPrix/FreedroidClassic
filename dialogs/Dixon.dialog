@@ -29,6 +29,14 @@ If you have questions concerning FreedroidRPG, please send mail to:
 
 freedroid-discussion@lists.sourceforge.net
 
+BEGIN OF AUTORS NOTES
+
+You can use this text field to make some notes on anything.  These otes will get saved with the dialog.
+This is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.
+
+END OF AUTORS NOTES
+
+
 Beginning of new chat dialog for character="XXXXX"
 
 New Option Nr=0  OptionText=" Hi!  I'm new here. "
@@ -106,7 +114,7 @@ Subtitle="Oh great!  How did you manage to get that?  Well anyway, thanks a lot.
 ReplySample="DIX_Oh_Great_How_0.wav"
 Subtitle="With this I'll be able to fix the damage at the teleporters immediately."
 ReplySample="DIX_With_This_Ill_0.wav"
-Subtitle="Here, take these 100 bucks as a reward.  And no be gone, I got to work."
+Subtitle="Here, take these 100 bucks as a reward.  And now be gone, I got to work."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=0
 DoSomethingExtra="DeleteAllInventoryItemsWithCode:59"
@@ -133,8 +141,9 @@ Subtitle="Yes, have you found it?"
 ReplySample="DIX_Have_You_Found_0.wav"
 Subtitle="   "
 ReplySample="Tux_DIX_No_I_Havent_0.wav"
-Subtitle="Keep searching.  I really need this toolset!"
+Subtitle="Keep searching.  I really need that toolset!"
 ReplySample="DIX_Keep_Searching_I_0.wav"
+ChangeOption=7 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -163,14 +172,15 @@ OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=201  PositionY=277  
 Subtitle="On the contrary!  Well, I'm still working on it, but I'm not making much progress."
 ReplySample="DIX_On_The_Contrary_0.wav"
-Subtitle="It's a pitty.  If I only had my old toolkit, I could fix this problem in a minute."
+Subtitle="It's a pity.  If I only had my old toolkit, I could fix this problem in a minute."
 ReplySample="DIX_Its_A_Pitty_0.wav"
-Subtitle="But it's gone.  It all happened down in the maintainance tunnels when I was surprised by some rouge bots."
+Subtitle="But it's gone.  It all happened down in the maintainance tunnels when I was surprised by some rogue bots."
 ReplySample="DIX_It_All_Happend_0.wav"
 Subtitle="I must have lost it down there and we had to seal the entrance."
 ReplySample="DIX_I_Must_Have_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=1
+ChangeOption=10 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -182,10 +192,11 @@ Subtitle="Basically the teleporter system is now working again."
 ReplySample="DIX_Basically_The_Teleporter_0.wav"
 Subtitle="But it's still locked since we don't have the calibration data from the other cities."
 ReplySample="DIX_But_Its_Still_0.wav"
-Subtitle="Someone needs to go there and collect them by hand.  But that's none of my problems."
+Subtitle="Someone needs to go there and collect them by hand.  But that's not my problem."
 ReplySample="DIX_Someone_Needs_To_0.wav"
 Subtitle="The person responsible for this part is Arlas, but he isn't in town right now.  So there's nothing we could do."
 ReplySample="DIX_The_Person_Responsible_0.wav"
+ChangeOption=11 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------

@@ -31,9 +31,11 @@ freedroid-discussion@lists.sourceforge.net
 
 BEGIN OF AUTORS NOTES
 
+
 You can use this text field to make some notes on ANYTHING.  
 It's purely for the author's reference.  
 The game engine will ignore this entry.
+
 
 
 END OF AUTORS NOTES
@@ -59,6 +61,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=233  PositionY=388  
 Subtitle="Everyone who enjoys it.  Using the arena for some good fight is free, but by using it you implicitly state that we have the unristricted and exclusive copyright on all recordings made of the fight."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=1 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -74,6 +77,7 @@ Subtitle="We have two arena grounds.  One is more for novice fighters, the other
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="I think I need not explain that further.  Now, which one will it be?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=2 ChangeToValue=0
 DoSomethingExtra="ExecuteSubdialog:subdlg_Butch"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -82,9 +86,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=3  OptionText="I'm sorry but I see no arena.  Where is it?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=234  PositionY=261  
-Subtitle="Of course you can't see it.  The arena is deeper under ground."
+Subtitle="Of course you can't see it.  The arena is deep under ground."
 ReplySample="DIX_Great_I_Appreciate_0.wav"
-Subtitle="We had some concerns of citicens that one of the bots might break free at night and kill people."
+Subtitle="We had some concerns of citizens that one of the bots might break free at night and kill people."
 ReplySample="DIX_Great_I_Appreciate_0.wav"
 Subtitle="We had to find this new arrangement, with a teleporter connection down and back up."
 ReplySample="DIX_Great_I_Appreciate_0.wav"
@@ -99,6 +103,7 @@ New Option Nr=99  OptionText=" END "
 OptionSample="Tux_See_You_Later_0.wav"
 PositionX=380  PositionY=385  
 ChangeOption=1 ChangeToValue=1
+ChangeOption=99 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------

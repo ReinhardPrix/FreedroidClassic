@@ -31,8 +31,10 @@ freedroid-discussion@lists.sourceforge.net
 
 BEGIN OF AUTORS NOTES
 
+
 You can use this text field to make some notes on anything.  These otes will get saved with the dialog.
 This is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.
+
 
 END OF AUTORS NOTES
 
@@ -80,9 +82,9 @@ OptionSample="Tux_Chandra_What_Can_MS_0.wav"
 PositionX=186  PositionY=312  
 Subtitle=" While the MS was in power, it must have had the most powerful hold of the galaxy ever.  But their systems were crap and that lead to the Great Assault."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="They tried to fix the problems, but using again their crap, it didn't work in time and they got attacked themselves."
+Subtitle="They tried to fix the problems, but, again, using their crap, it didn't work in time and they got attacked themselves."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Then they split up and the different branches are now fighting each other.  It's a complete chaos."
+Subtitle="Then they split up and the different branches are now fighting each other.  It's complete chaos."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=6 ChangeToValue=1
 ChangeOption=7 ChangeToValue=0
@@ -143,9 +145,9 @@ Subtitle="This force field originates from the former MS facility on this planet
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="It was part of their effort to keep their affairs totally secret, so no employee or anyone can get away."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="And now that the MS facility is full of hostile bots, noone can turn off the force field."
+Subtitle="And now that the MS facility is full of hostile bots, no one can turn off the force field."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="And that's the reason why noone, human or linarian, can ever get out of this place, I'm sorry."
+Subtitle="And that's the reason why no one, human or linarian, can ever get out of this place, I'm sorry."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=8 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -157,6 +159,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=176  PositionY=390  
 Subtitle="Unlikely.  You'd have to establish a reputation before and demonstrate that you can fix things."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=9 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -164,6 +167,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=99  OptionText=" END "
 OptionSample="Tux_Goodbye_0.wav"
 PositionX=515  PositionY=297  
+ChangeOption=99 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------

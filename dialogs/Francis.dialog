@@ -32,8 +32,10 @@ freedroid-discussion@lists.sourceforge.net
 BEGIN OF AUTORS NOTES
 
 
+
 You can use this text field to make some notes on anything.  These otes will get saved with the dialog.
 This is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.
+
 
 
 END OF AUTORS NOTES
@@ -58,6 +60,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=283  PositionY=568  
 Subtitle="Maybe it is possible to leave this planet somehow.  But you'll have to talk to our leader.  He's in the town to the south."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=1 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -76,7 +79,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=6  OptionText="My home world?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=612  PositionY=89  
-Subtitle="Well, it's obvious you are not a human like me.  You are a Linarian.  So Linaria is your home world.  It's not so common for Linarians to appear here.  In fact you're the first one I meet face to face."
+Subtitle="Well, it's obvious you are not a human like me.  You are a Linarian.  So Linaria is your home world.  It's not so common for Linarians to appear here.  In fact you're the first one I've met face to face."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=6 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -86,7 +89,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=7  OptionText="You mentioned some 'Resistance'?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=758  PositionY=90  
-Subtitle="The resistance is the organisation that tries to get rid of the oppression through the MS forces.  It's existence is a direct consequence of the great assault, that happend 3 month ago."
+Subtitle="The resistance is the organisation that tries to get rid of the oppression through the MS forces.  It's existence is a direct consequence of the great assault, that happend 3 months ago."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=7 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -114,7 +117,7 @@ Subtitle="Right.  This whole area around you is a system of underground tunnels 
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="We had to retreat to this place to seek refuge from the bot armies after the Great Assault."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="But still may bots have made it down here.  So take care!"
+Subtitle="But still many bots have made it down here.  So take care!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=10 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -164,12 +167,13 @@ PositionX=248  PositionY=306
 Subtitle="During your time in stasis, the MS took over the government.  The few existing rebels were quickly executed."
 ReplySample="Sorry_No_Voice_Sampe_Yet_0.wav
 "
-Subtitle="So they had the galaxy under control.  But then it happend:  Their machines went completely out of control and attacked everyone.  That's what we call the 'Great Assault'."
+Subtitle="So they had the galaxy under control.  But then it happened:  Their machines went completely out of control and attacked everyone.  That's what we call the 'Great Assault'."
 ReplySample="Sorry_No_Voice_Sampe_Yet_0.wav"
 ChangeOption=19 ChangeToValue=1
 ChangeOption=17 ChangeToValue=1
 ChangeOption=9 ChangeToValue=1
 ChangeOption=16 ChangeToValue=1
+ChangeOption=18 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -183,6 +187,7 @@ Subtitle="And since it was running on all police and military bots, they immedia
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="There was nothing we could do.  But this was not so clear to everyone.  Some rebelled and were executed swiftly."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=19 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -193,6 +198,7 @@ PositionX=394  PositionY=625
 Subtitle="I am glad if I could help you along.  Also you should be careful around here.  Best head straight for our town."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=9 ChangeToValue=1
+ChangeOption=99 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------

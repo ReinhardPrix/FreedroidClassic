@@ -29,6 +29,14 @@ If you have questions concerning FreedroidRPG, please send mail to:
 
 freedroid-discussion@lists.sourceforge.net
 
+BEGIN OF AUTORS NOTES
+
+You can use this text field to make some notes on anything.  These otes will get saved with the dialog.
+This is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.
+
+END OF AUTORS NOTES
+
+
 Beginning of new chat dialog for character="XXXXX"
 
 New Option Nr=0  OptionText="THIS WILL NOT EVER BE VISIBLE"
@@ -38,13 +46,16 @@ ChangeOption=0 ChangeToValue=0
 ChangeOption=3 ChangeToValue=1
 ChangeOption=2 ChangeToValue=1
 ChangeOption=99 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 New Option Nr=2  OptionText=" Melee weapons level 1 (cost: 10 skill points 100 bucks)"
 OptionSample="Tux_PEN_I_Want_To_0.wav"
 PositionX=183  PositionY=304  
+ChangeOption=2 ChangeToValue=0
 OnCondition="MeleeSkillLesserThan:1" JumpToOption=6 ElseGoto=7
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
@@ -55,15 +66,19 @@ Subtitle="Haha!"
 ReplySample="PEN_Haha_0.wav"
 Subtitle="You're very ambitious.  I like that.  But I can't help you there."
 ReplySample="PEN_Youre_Very_Ambitious_0.wav"
-Subtitle="To become more adapt, you must see a real teacher of melee weapons.  And there is none in this town, I'm sorry."
+Subtitle="To become more adept, you must see a real teacher of melee weapons.  And there is none in this town, I'm sorry."
 ReplySample="PEN_To_Become_More_0.wav"
+ChangeOption=3 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 New Option Nr=6  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=283  PositionY=368  
+ChangeOption=6 ChangeToValue=0
 OnCondition="GoldIsLessThan:100" JumpToOption=8 ElseGoto=9
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
@@ -72,6 +87,8 @@ OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=275  PositionY=302  
 Subtitle="You already know the basics of melee combat!"
 ReplySample="PEN_You_Already_Know_0.wav"
+ChangeOption=7 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
@@ -80,13 +97,17 @@ OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=369  PositionY=425  
 Subtitle="You don't haven enough bucks on you!  Come back when you have the money."
 ReplySample="PEN_You_Dont_Money_0.wav"
+ChangeOption=8 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 New Option Nr=9  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=379  PositionY=357  
+ChangeOption=9 ChangeToValue=0
 OnCondition="PointsToDistributeAtLeast:10" JumpToOption=11 ElseGoto=10
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
@@ -97,6 +118,8 @@ Subtitle="You don't have enough experience.  I can't teach you anything more rig
 ReplySample="PEN_You_Dont_Have_0.wav"
 Subtitle="First collect more experience.  Then we can go on."
 ReplySample="PEN_First_Collect_More_0.wav"
+ChangeOption=10 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
@@ -107,19 +130,23 @@ Subtitle="Good decision!"
 ReplySample="PEN_Good_Decision_0.wav"
 Subtitle="The most important thing about melee combat is how you are holding your weapon."
 ReplySample="PEN_The_Most_Important_0.wav"
-Subtitle="Hold it too laxly and you will loose it, hold it too firmly and your movements will be uncontrolled."
+Subtitle="Hold it too laxly and you will lose it, hold it too firmly and your movements will be uncontrolled."
 ReplySample="PEN_Hold_It_Too_0.wav"
 Subtitle="Now, you've already improved a lot.  Come back when you want to learn more."
 ReplySample="PEN_Now_Youve_Already_0.wav"
+ChangeOption=11 ChangeToValue=0
 DoSomethingExtra="SubtractPointsToDistribute:10"
 DoSomethingExtra="SubtractGold:100"
 DoSomethingExtra="IncreaseMeleeWeaponSkill"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 New Option Nr=99  OptionText="BACK"
 OptionSample="Tux_See_You_Later_0.wav"
 PositionX=191  PositionY=413  
+ChangeOption=99 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 

@@ -37,8 +37,10 @@ BEGIN OF AUTORS NOTES
 
 
 
+
 You can use this text field to make some notes on anything.  These otes will get saved with the dialog.
 This is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.
+
 
 
 
@@ -103,9 +105,9 @@ OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=293  PositionY=53  
 Subtitle="These are bad times.  The MS machines threaten to overrun our defenses.  "
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="We've tried to get rid of the problem by sendind a group of our men into a large warehouse where many bots are still lurking."
+Subtitle="We've tried to get rid of the problem by sending a group of our men into a large warehouse where many bots are still lurking."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="We wanted to blow the place up, and we even had some help, a guy from outside.  But he was an MS agent, led the troup into a trap and everyone was slain."
+Subtitle="We wanted to blow the place up, and we even had some help, a guy from outside.  But he was an MS agent, led the troop into a trap and everyone was slain."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=1
 ChangeOption=4 ChangeToValue=0
@@ -204,6 +206,7 @@ PositionX=418  PositionY=343
 Subtitle="See you later."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=1
+ChangeOption=99 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------

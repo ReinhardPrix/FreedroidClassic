@@ -29,6 +29,14 @@ If you have questions concerning FreedroidRPG, please send mail to:
 
 freedroid-discussion@lists.sourceforge.net
 
+BEGIN OF AUTORS NOTES
+
+You can use this text field to make some notes on anything.  These otes will get saved with the dialog.
+This is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.
+
+END OF AUTORS NOTES
+
+
 Beginning of new chat dialog for character="XXXXX"
 
 New Option Nr=0  OptionText=" Hello! "
@@ -71,7 +79,7 @@ Subtitle="Three kinds of enhancement pills were developed.  One for strength, on
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="These pills work on a nano-technological basis with small machines connecting to your muscle and nerve tissue."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="The machines connect together and form some artificial anorganic tissue that has been optimized for certain qualities."
+Subtitle="The machines connect together and form some artificial inorganic tissue that has been optimized for certain qualities."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Since this invention only came shortly before the great assault, these pills are today very rare."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -98,7 +106,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=4 ChangeToValue=0
 ChangeOption=2 ChangeToValue=0
 DoSomethingExtra="GiveItem:79"
-DoSomethingExtra="PlantCookie:BrainEnlargementAntidodeGiven"
+DoSomethingExtra="PlantCookie:BrainEnlargementAntidodeGiven:"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -154,6 +162,7 @@ Subtitle="See you later!"
 ReplySample="Tux_See_You_Later_0.wav"
 Subtitle="NO_SUBTITLE_AND_NO_WAITING_EITHER"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=99 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------

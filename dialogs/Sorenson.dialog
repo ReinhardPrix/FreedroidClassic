@@ -29,6 +29,20 @@ If you have questions concerning FreedroidRPG, please send mail to:
 
 freedroid-discussion@lists.sourceforge.net
 
+BEGIN OF AUTORS NOTES
+
+
+
+You can use this text field to make some notes on ANYTHING.  
+It's purely for the author's reference.  Tahisafsd asdfasdf asdfasdf.
+The game engine will ignore this entry.
+
+
+
+
+END OF AUTORS NOTES
+
+
 Beginning of new chat dialog for character="XXXXX"
 
 New Option Nr=0  OptionText=" Hi!  I'm new here. "
@@ -39,13 +53,16 @@ ReplySample="SOR_Welcome_Then_To_0.wav"
 ChangeOption=2 ChangeToValue=1
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 New Option Nr=1  OptionText="[TRADE]"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=155  PositionY=302  
+ChangeOption=1 ChangeToValue=0
 DoSomethingExtra="InitTradeWithCharacter:Sorenson"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
@@ -56,11 +73,13 @@ Subtitle="That depends.  What would you like to learn?"
 ReplySample="SOR_That_Depends_What_0.wav"
 Subtitle="I could help to enhance the force-capacity of your mind."
 ReplySample="SOR_I_Could_Help_0.wav"
-Subtitle="I could also teach you how to become more adapt at spellcasting."
+Subtitle="I could also teach you how to become more adept at spellcasting."
 ReplySample="SOR_I_Could_Also_0.wav"
 Subtitle="Now, what will it be?"
 ReplySample="SOR_Now_What_Will_0.wav"
+ChangeOption=2 ChangeToValue=0
 DoSomethingExtra="ExecuteSubdialog:subdlg_Sorenson"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
@@ -71,6 +90,8 @@ Subtitle="See you later!"
 ReplySample="Tux_See_You_Later_0.wav"
 Subtitle="NO_SUBTITLE_AND_NO_WAITING_EITHER"
 ReplySample="SOR_I_Hope_You_0.wav"
+ChangeOption=99 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 

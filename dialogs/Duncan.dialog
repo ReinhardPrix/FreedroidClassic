@@ -29,6 +29,14 @@ If you have questions concerning FreedroidRPG, please send mail to:
 
 freedroid-discussion@lists.sourceforge.net
 
+BEGIN OF AUTORS NOTES
+
+You can use this text field to make some notes on anything.  These otes will get saved with the dialog.
+This is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.
+
+END OF AUTORS NOTES
+
+
 Beginning of new chat dialog for character="XXXXX"
 
 New Option Nr=0  OptionText=" Hi!  I'm new here. "
@@ -38,11 +46,12 @@ Subtitle="Hello!  I'm Duncan!  I make grenades.  Want some?  Not for free of cou
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Since you are new, you might need some map making device?  I got some for sale!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I make them, you must know.  Only finest quality of course."
+Subtitle="I make them, you must know.  Only the finest quality of course."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
 ChangeOption=2 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
@@ -51,7 +60,9 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=181  PositionY=364  
 Subtitle="Grenades are vital for survival round here.  You really should buy some."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=1 ChangeToValue=0
 DoSomethingExtra="InitTradeWithCharacter:Duncan"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
@@ -60,11 +71,12 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=187  PositionY=264  
 Subtitle="Hey man, if you're trying to get something off-price, sorry, not with me."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="My prices are best in all of the colony.  I know that.  Just take it or leave it."
+Subtitle="My prices are the best in all of the colony.  I know that.  Just take it or leave it."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Apart from that, none of my customers have ever complained about skin iritations so far."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
@@ -77,6 +89,8 @@ Subtitle="NO_SUBTITLE_AND_NO_WAITING_EITHER"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=1
 ChangeOption=2 ChangeToValue=1
+ChangeOption=99 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
