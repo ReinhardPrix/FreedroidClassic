@@ -81,6 +81,7 @@ char usage_string[] =
   "Usage: freedroid [-v|--version] [-q|--nosound] [-s|--sound] \n\
 			[-t|--timeout=SECONDS] \n\
 			[-f|--fullscreen] [-w|--window]\n\
+			[-j|--sensitivity]\n\
 	      		[-d|--debug=LEVEL]\n\n\
 Report bugs to freedroid@??? (sorry, havent got one yet ;)\n";
 
@@ -103,12 +104,13 @@ parse_command_line (int argc, char *const argv[])
     {"debug", 	2, 0, 'd'},
     {"window",  0, 0, 'w'},
     {"fullscreen",0,0,'f'},
+    {"sensitivity",1,0,'j'},
     { 0, 	0, 0,  0}
   };
 
   while (1)
     {
-      c = getopt_long (argc, argv, "vqst:h?d::wf", long_options, NULL);
+      c = getopt_long (argc, argv, "vqst:h?d::wfj:", long_options, NULL);
       if (c == -1)
 	break;
 
@@ -142,6 +144,14 @@ parse_command_line (int argc, char *const argv[])
 	    {
 	      signal (SIGALRM, timeout);
 	      alarm (timeout_time);	/* Terminate after some seconds for safety. */
+	    }
+	  break;
+	case 'j':
+	  joy_sensitivity = atoi (optarg);
+	  if (joy_sensitivity < 0 || joy_sensitivity > 32)
+	    {
+	      printf ("\nJoystick sensitivity must lie in the range [0;32]\n");
+	      Terminate(ERR);
 	    }
 	  break;
 
@@ -294,6 +304,10 @@ InitNewGame (void)
 
   /* Farben des aktuellen Levels einstellen */
   SetLevelColor (CurLevel->color); 
+
+  /* set correct Influ color */
+  SetPalCol (INFLUENCEFARBWERT, Mobilecolor.rot, Mobilecolor.gruen,
+	       Mobilecolor.blau);
 
   /* Den Rahmen fuer das Spiel anzeigen */
   ClearVGAScreen ();
