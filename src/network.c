@@ -749,7 +749,7 @@ FillDataIntoEnemyEngram ( int WriteIndex , int EnemyIndex )
   EnemyEngram [ WriteIndex ] . pos . z    = AllEnemys [ EnemyIndex ] . pos . z ;
   EnemyEngram [ WriteIndex ] . energy     = AllEnemys [ EnemyIndex ] . energy ;
   EnemyEngram [ WriteIndex ] . phase = AllEnemys [ EnemyIndex ] . phase ;
-  EnemyEngram [ WriteIndex ] . friendly   = AllEnemys [ EnemyIndex ] . Friendly ;
+  EnemyEngram [ WriteIndex ] . friendly   = AllEnemys [ EnemyIndex ] . is_friendly ;
 
 }; // void FillDataIntoEnemyEngram ( int WriteIndex , int EnemyIndex )
 
@@ -1022,7 +1022,7 @@ EnforceServersFullEnemysEngram ( void )
       AllEnemys [ i ] . pos . z    = EnemyEngram [ i ] . pos . z ;
       AllEnemys [ i ] . energy     = EnemyEngram [ i ] . energy ;
       AllEnemys [ i ] . phase = EnemyEngram [ i ] . phase ;
-      AllEnemys [ i ] . Friendly   = EnemyEngram [ i ] . friendly ;
+      AllEnemys [ i ] . is_friendly   = EnemyEngram [ i ] . friendly ;
 
     }
 
@@ -1064,7 +1064,7 @@ EnforceServersUpdateEnemysEngram ( int NumberOfTargets )
       AllEnemys [ WriteIndex ] . pos . z    = EnemyEngram [ i ] . pos . z ;
       AllEnemys [ WriteIndex ] . energy     = EnemyEngram [ i ] . energy ;
       AllEnemys [ WriteIndex ] . phase = EnemyEngram [ i ] . phase ;
-      AllEnemys [ WriteIndex ] . Friendly   = EnemyEngram [ i ] . friendly ;
+      AllEnemys [ WriteIndex ] . is_friendly   = EnemyEngram [ i ] . friendly ;
 
     }
 

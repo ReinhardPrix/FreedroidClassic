@@ -617,7 +617,7 @@ typedef struct
   int AdvancedCommand;          // An advanced command that modifies the behaviour of the droid (in new missions)
   double Parameter1;            // This contains special information for AdvancedCommand
   double Parameter2;            // This contains special information for AdvancedCommand
-  int Friendly;                 // is this a friendly droid or is it a MS controlled one?
+  int is_friendly;                 // is this a friendly droid or is it a MS controlled one?
   int persuing_given_course;    // is this robot persuing a given course via PersueGivenCourse( EnemyNum )?
   int StayHowManyFramesBehind;  // how many frames shall this droid trott behind the influ when follwing his tail?
   int StayHowManySecondsBehind;  // how many seconds shall this droid trott behind the influ when follwing his tail?
@@ -654,7 +654,7 @@ typedef struct
   int AdvancedCommand;          // An advanced command that modifies the behaviour of the droid (in new missions)
   double Parameter1;            // This contains special information for AdvancedCommand
   double Parameter2;            // This contains special information for AdvancedCommand
-  int Friendly;                 // is this a friendly droid or is it a MS controlled one?
+  int is_friendly;                 // is this a friendly droid or is it a MS controlled one?
   int persuing_given_course;    // is this robot persuing a given course via PersueGivenCourse( EnemyNum )?
   int StayHowManyFramesBehind;  // how many frames shall this droid trott behind the influ when follwing his tail?
   int StayHowManySecondsBehind;  // how many seconds shall this droid trott behind the influ when follwing his tail?

@@ -151,11 +151,15 @@ ChatWithFriendlyDroid( int Enum )
   Chandra_Text = "Tux!  At last you have returned!\n\
 \n\
 Alas, this is an hour of dire need. \n\
-The MS forces have killed may of us immediately at the day of the revolution and others who resisted were dragged away to become subjects in the experiments of the MS. \n\
+The MS forces have killed may of us immediately at \
+the day of the revolution and others who resisted \
+were dragged away to become subjects in the experiments \
+of the MS. \n\
 \n\
 You must invade their cental and try to save who you can!  \n\
 \n\
-If you step through the teleporter, it will take you directly to the first level of their main installation.\n\
+If you step through the teleporter, it will take you directly \
+to the first level of their main installation.\n\
 \n\
 Perhaps you can rescue some of our friends held captive there. \n\
 \n \n";
@@ -165,16 +169,22 @@ Perhaps you can rescue some of our friends held captive there. \n\
 You've come to save us, havn't you? \n\
 \n\
 You must know that earlier, I was on the MS prefered person list as well.  \n\
-But when they finally requested all their preferred persons be fitted with implants, that would allow them to upload any software directly to my brain any time they wanted, it became too much even for me and I fled to this refuge. \n\
+But when they finally requested all their preferred persons be \
+fitted with implants, that would allow them to upload any software \
+directly to my brain any time they wanted, it became too much even for \
+me and I fled to this refuge. \n\
 \n\
 It's good that I have found new friends and I hope we can survive together. \n\
 \n \n \n ";
 
-  RMS_Text = "Beware, Tux, when I finally made my escape from the second level, I saw a dark sales apprentice of the MS, transformed into a vile half-human creature, now lurking mindlessly for blood.\n\
+  RMS_Text = "Beware, Tux, when I finally made my escape from the second level, \
+I saw a dark sales apprentice of the MS, transformed into a vile half-human \
+creature, now lurking mindlessly for blood.\n\
 \n\
 Take care if you encounter this one.  He has taken the lives of many of my friends.\n\
 \n\
-You must go and put a end to the thing so that further evil is prevented and the things soul may finally rest.\n\
+You must go and put a end to the thing so that further evil is prevented and \
+the things soul may finally rest.\n\
 \n \n \n ";
 
   // From initiating transfer mode, space might still have been pressed. 
@@ -497,7 +507,7 @@ EnemyHitByBulletText( int Enum )
   if ( !GameConfig.Enemy_Hit_Text ) return;
   
   ThisRobot->TextVisibleTime=0;
-  if ( !ThisRobot->Friendly )
+  if ( !ThisRobot->is_friendly )
     switch (MyRandom(4))
     {
     case 0:
@@ -533,7 +543,7 @@ EnemyInfluCollisionText ( int Enum )
   
   ThisRobot->TextVisibleTime=0;
 	      
-  if ( ThisRobot->Friendly )
+  if ( ThisRobot->is_friendly )
     {
       ThisRobot->TextToBeDisplayed="Ah, good, that we have an open collision avoiding standard, isn't it.";
     }

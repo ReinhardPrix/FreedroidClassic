@@ -237,7 +237,7 @@ ClearEnemys ( void )
       AllEnemys[i].Parameter1 = 0;
       AllEnemys[i].Parameter2 = 0;
       AllEnemys[i].Marker = 0;
-      AllEnemys[i].Friendly = 0;
+      AllEnemys[i].is_friendly = 0;
       AllEnemys[i].TextVisibleTime = 0;
       AllEnemys[i].TextToBeDisplayed = "";
       AllEnemys[i].persuing_given_course = FALSE;
@@ -694,7 +694,7 @@ SelectNextWaypointAdvanced ( int EnemyNum )
 	   Druidmap[ThisRobot->type].aggression &&
 	   IsVisible ( & ( ThisRobot -> pos ) , 0 ) && // WARNING!  Player 0 here always is wrong
 	   // ! ItemMap [ Druidmap [ ThisRobot->type ].weapon_item.type ].item_gun_angle_change  &&
-	   ! ThisRobot->Friendly &&
+	   ! ThisRobot->is_friendly &&
 	   ( sqrt ( ( ThisRobot->pos.x - Me[0].pos.x ) * ( ThisRobot->pos.x - Me[0].pos.x ) +
 		    ( ThisRobot->pos.y - Me[0].pos.y ) * ( ThisRobot->pos.y - Me[0].pos.y ) ) > 1.5 ) )
 	{
@@ -1201,14 +1201,14 @@ DetermineVectorToShotTarget( enemy* ThisRobot , moderately_finepoint* vect_to_ta
   int j;
   int TargetPlayerNum;
 
-  if ( ThisRobot->Friendly == TRUE )
+  if ( ThisRobot->is_friendly == TRUE )
     {
       // Since it's a friendly device in this case, it will aim at the (closest?) of
       // the MS bots.
       for ( j = 0 ; j < Number_Of_Droids_On_Ship ; j++ )
 	{
 	  if ( AllEnemys[ j ].Status == OUT ) continue;
-	  if ( AllEnemys[ j ].Friendly ) continue;
+	  if ( AllEnemys[ j ].is_friendly ) continue;
 	  if ( AllEnemys[ j ].pos.z != ThisRobot->pos.z ) continue;
 	  if ( DirectLineWalkable ( ThisRobot -> pos . x , ThisRobot -> pos . y , 
 				    AllEnemys [ j ] . pos . x , AllEnemys [ j ] . pos . y , 
@@ -1297,7 +1297,7 @@ AttackInfluence (int enemynum)
   // From here on, it's classical Paradroid robot behaviour concerning fireing....
   //
 
-  if ( ( dist2 >= FIREDIST2 ) && ( ThisRobot->Friendly == FALSE ) ) return; // distance limitation only for MS mechs
+  if ( ( dist2 >= FIREDIST2 ) && ( ThisRobot->is_friendly == FALSE ) ) return; // distance limitation only for MS mechs
 
   TargetPlayer = ClosestVisiblePlayer ( ThisRobot ) ;
 
@@ -1312,7 +1312,7 @@ AttackInfluence (int enemynum)
   // nothing to do and we just return.
   //
   if ( ! IsVisible ( &ThisRobot->pos , TargetPlayer ) && 
-       ( ThisRobot->Friendly == FALSE ) ) 
+       ( ThisRobot->is_friendly == FALSE ) ) 
     return; 
 
   //--------------------
@@ -1520,7 +1520,7 @@ AttackInfluence (int enemynum)
   if ( ThisRobot->firewait ) return;
   
   if ( ( MyRandom ( AGGRESSIONMAX ) >= Druidmap[ThisRobot->type].aggression ) &&
-       ( ThisRobot->Friendly == FALSE ) )
+       ( ThisRobot->is_friendly == FALSE ) )
     {
       ThisRobot->firewait += drand48()* ROBOT_MAX_WAIT_BETWEEN_SHOTS; //MyRandom (Druidmap[ThisRobot->type].firewait);
       return;

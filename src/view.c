@@ -598,20 +598,20 @@ Assemble_Combat_Picture (int mask)
  * friendly droids as well as for hostile ones.
  * ---------------------------------------------------------------------- */
 void
-BlitRobotDigits( point UpperLeftBlitCorner , char* druidname , int Friendly )
+BlitRobotDigits( point UpperLeftBlitCorner , char* druidname , int is_friendly )
 {
   SDL_Rect TargetRectangle;
   int HumanModifier;
   int i;
 
-  if ( druidname[ 0 ] >= 'A' ) HumanModifier = 'A' - '1' - 13 - 10 * (!Friendly) ;
+  if ( druidname[ 0 ] >= 'A' ) HumanModifier = 'A' - '1' - 13 - 10 * (!is_friendly) ;
   else HumanModifier = 0 ;
 
   for ( i = 0 ; i < 3 ; i ++ )
     {
       TargetRectangle.x = UpperLeftBlitCorner.x + Digit_Pos[i].x ;
       TargetRectangle.y = UpperLeftBlitCorner.y + Digit_Pos[i].y ;
-      if ( Friendly == 0 )
+      if ( is_friendly == 0 )
 	{
 	  SDL_BlitSurface( EnemyDigitSurfacePointer[ druidname[i]-'1'+1+HumanModifier ] , 
 			   NULL, Screen, &TargetRectangle );
@@ -972,7 +972,7 @@ Sorry...\n\
   TargetRectangle.y = UpperLeftBlitCorner.y ;
   // DebugPrintf( 0 , "X: %d." , TargetRectangle.x ); fflush(stdout);
 
-  if ( AllEnemys[Enum].Friendly == 0 ) 
+  if ( AllEnemys[Enum].is_friendly == 0 ) 
     {
       if ( AllEnemys[Enum].frozen != 0 ) 
 	{
@@ -1014,7 +1014,7 @@ Sorry...\n\
   //--------------------
   // Now the numbers should be blittet.
   //
-  BlitRobotDigits( UpperLeftBlitCorner , druidname , AllEnemys[Enum].Friendly );
+  BlitRobotDigits( UpperLeftBlitCorner , druidname , AllEnemys[Enum].is_friendly );
 
 
   //--------------------

@@ -48,6 +48,7 @@
 #define FRICTION_CONSTANT (0.02)
 
 #define BEST_MELEE_DISTANCE_IN_SQUARES (1.0)
+#define BEST_CHAT_DISTANCE_IN_SQUARES ( BEST_MELEE_DISTANCE_IN_SQUARES + 0.2 )
 #define DISTANCE_TOLERANCE (0.2)
 #define FORCE_FIRE_DISTANCE (1.5)
 #define DROID_SELECTION_TOLERANCE (0.9)
@@ -518,6 +519,35 @@ Sorry...\n\
 
   AnimateInfluence ( PlayerNum ) ;	// move the "phase" of influencers rotation
 
+  //--------------------
+  // Finally we check if perhaps the influencer is close to some friendly droid
+  // and this friendly droid is also target of the mouse move.  Then of course
+  // a chat with this droid must be initiated.
+  //
+  if ( ( Me [ PlayerNum ] . mouse_move_target_is_enemy != (-1) ) &&
+       ( fabsf( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . pos . x -
+		Me [ PlayerNum ] . pos . x ) < BEST_CHAT_DISTANCE_IN_SQUARES ) &&  
+       ( fabsf( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . pos . y -
+		Me [ PlayerNum ] . pos . y ) < BEST_CHAT_DISTANCE_IN_SQUARES ) &&  
+       ( ( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . pos . z -
+	   Me [ PlayerNum ] . pos . z ) == 0 ) )
+    {
+      //--------------------
+      // This whole action only makes sence for FRIENDLY droids of course!
+      //
+      if ( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . is_friendly )
+	{
+	  //--------------------
+	  // We chat with the friendly droid
+	  ChatWithFriendlyDroid ( Me [ PlayerNum ] . mouse_move_target_is_enemy ) ;
+	  
+	  //--------------------
+	  // and then we deactivate this mouse_move_target_is_enemy to prevent
+	  // immediate recurrence of the very same chat.
+	  Me [ PlayerNum ] . mouse_move_target_is_enemy = (-1) ;
+	}
+    }
+
 }; // void MoveInfluence( void );
 
 
@@ -891,7 +921,7 @@ CheckInfluenceEnemyCollision (void)
       //
       if ( Me[0].status == TRANSFERMODE )
 	{
-	  if ( ! AllEnemys[i].Friendly ) Takeover (i);
+	  if ( ! AllEnemys[i].is_friendly ) Takeover (i);
 	  else ChatWithFriendlyDroid( i );
 
 	  if (LevelEmpty ())
@@ -1437,7 +1467,7 @@ InfluEnemyCollisionLoseEnergy (int enemynum)
 {
   int enemytype = AllEnemys[enemynum].type;
 
-  if ( AllEnemys[enemynum].Friendly ) return;
+  if ( AllEnemys[enemynum].is_friendly ) return;
 
   if (Me[0].type <= enemytype)
     {

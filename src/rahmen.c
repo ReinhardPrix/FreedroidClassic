@@ -349,7 +349,7 @@ GiveDroidDescription ( char* DroidDescText , enemy* CurEnemy )
   strcat( DroidDescText , Classname [ Druidmap[ CurEnemy->type ].class ] );
   strcat( DroidDescText , "\n" );
 
-  if ( CurEnemy->Friendly == FALSE )
+  if ( CurEnemy->is_friendly == FALSE )
     {
       sprintf( linebuf , " Total Kills : %d " , Me[0].KillRecord[ CurEnemy->type ] );
       strcat ( DroidDescText , linebuf );

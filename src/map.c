@@ -2458,7 +2458,7 @@ Sorry...\n\
 			    EndOfThisLevelData );
       ReadValueFromString ( SearchPointer ,"Parameter2=","%lf", &AllEnemys[ FreeAllEnemysPosition ].Parameter2 , 
 			    EndOfThisLevelData );
-      ReadValueFromString ( SearchPointer ,"Friendly=","%d", &AllEnemys[ FreeAllEnemysPosition ].Friendly , 
+      ReadValueFromString ( SearchPointer ,"Friendly=","%d", &AllEnemys[ FreeAllEnemysPosition ].is_friendly , 
 			    EndOfThisLevelData );
 
       AllEnemys[ FreeAllEnemysPosition ].type = ListIndex;
@@ -2471,7 +2471,7 @@ Sorry...\n\
       // In case of a friendly droid, we need to check out the question-response list for
       // this droid and read it into the appropriate data structures in AllEnemys too
       //
-      if ( AllEnemys[ FreeAllEnemysPosition ].Friendly )
+      if ( AllEnemys[ FreeAllEnemysPosition ].is_friendly )
 	{
 	  GetThisRobotsQuestionResponseList( SearchPointer , FreeAllEnemysPosition );
 	  GetThisRobotsDecisionRequestList( SearchPointer , FreeAllEnemysPosition );
