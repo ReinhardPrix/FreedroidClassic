@@ -1531,9 +1531,9 @@ Load_Enemy_Surfaces( void )
     Druidmap [ i ] . suppress_bullet_generation_when_attacking = TRUE ;
     Druidmap [ i ] . use_image_archive_file = TRUE ;
     droid_walk_animation_speed_factor [ i ] = 5 ;
-    droid_attack_animation_speed_factor [ i ] = 5 ;
-    droid_gethit_animation_speed_factor [ i ] = 5 ;
-    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_attack_animation_speed_factor [ i ] = 8 ;
+    droid_gethit_animation_speed_factor [ i ] = 8 ;
+    droid_death_animation_speed_factor [ i ] = 8;
     droid_stand_animation_speed_factor [ i ] = 5 ;
     ModelMultiplier  [ i ] = 1 ; i++;
 
@@ -1562,9 +1562,9 @@ Load_Enemy_Surfaces( void )
     Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
     Druidmap [ i ] . use_image_archive_file = TRUE ;
     droid_walk_animation_speed_factor [ i ] = 5 ;
-    droid_attack_animation_speed_factor [ i ] = 5 ;
-    droid_gethit_animation_speed_factor [ i ] = 5 ;
-    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_attack_animation_speed_factor [ i ] = 8 ;
+    droid_gethit_animation_speed_factor [ i ] = 8 ;
+    droid_death_animation_speed_factor [ i ] = 8 ;
     droid_stand_animation_speed_factor [ i ] = 5 ;
     ModelMultiplier  [ i ] = 1 ; i++;
 
@@ -1594,8 +1594,8 @@ Load_Enemy_Surfaces( void )
     Druidmap [ i ] . use_image_archive_file = TRUE ;
     droid_walk_animation_speed_factor [ i ] = 5 ;
     droid_attack_animation_speed_factor [ i ] = 16 ;
-    droid_gethit_animation_speed_factor [ i ] = 5 ;
-    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_gethit_animation_speed_factor [ i ] = 8 ;
+    droid_death_animation_speed_factor [ i ] = 8 ;
     droid_stand_animation_speed_factor [ i ] = 5 ;
     ModelMultiplier  [ i ] = 1 ;i++;
     PrefixToFilename [ i ] = "249" ; // 4
@@ -1623,9 +1623,9 @@ Load_Enemy_Surfaces( void )
     Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
     Druidmap [ i ] . use_image_archive_file = TRUE ;
     droid_walk_animation_speed_factor [ i ] = 5 ;
-    droid_attack_animation_speed_factor [ i ] = 5 ;
-    droid_gethit_animation_speed_factor [ i ] = 5 ;
-    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_attack_animation_speed_factor [ i ] = 8 ;
+    droid_gethit_animation_speed_factor [ i ] = 8 ;
+    droid_death_animation_speed_factor [ i ] = 8 ;
     droid_stand_animation_speed_factor [ i ] = 5 ;
     ModelMultiplier  [ i ] = 1 ;i++;
 
@@ -1708,9 +1708,9 @@ Load_Enemy_Surfaces( void )
     Druidmap [ i ] . suppress_bullet_generation_when_attacking = TRUE ;
     Druidmap [ i ] . use_image_archive_file = TRUE ;
     droid_walk_animation_speed_factor [ i ] = 5 ;
-    droid_attack_animation_speed_factor [ i ] = 5 ;
-    droid_gethit_animation_speed_factor [ i ] = 5 ;
-    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_attack_animation_speed_factor [ i ] = 8 ;
+    droid_gethit_animation_speed_factor [ i ] = 8 ;
+    droid_death_animation_speed_factor [ i ] = 8 ;
     droid_stand_animation_speed_factor [ i ] = 5 ;
     ModelMultiplier  [ i ] = 1 ;i++;
 
@@ -1858,9 +1858,9 @@ Load_Enemy_Surfaces( void )
     Druidmap [ i ] . suppress_bullet_generation_when_attacking = TRUE ;
     Druidmap [ i ] . use_image_archive_file = TRUE ;
     droid_walk_animation_speed_factor [ i ] = 5 ;
-    droid_attack_animation_speed_factor [ i ] = 5 ;
-    droid_gethit_animation_speed_factor [ i ] = 5 ;
-    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_attack_animation_speed_factor [ i ] = 8 ;
+    droid_gethit_animation_speed_factor [ i ] = 8 ;
+    droid_death_animation_speed_factor [ i ] = 8 ;
     droid_stand_animation_speed_factor [ i ] = 5 ;
     ModelMultiplier  [ i ] = 1 ;i++;
     
