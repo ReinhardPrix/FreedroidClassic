@@ -871,6 +871,7 @@ enum _combo_action_types
     COMBO_ACTION_OPEN_CHEST = 15 ,
     COMBO_ACTION_PICK_UP_ITEM = 16 ,
     COMBO_ACTION_SMASH_BARREL = 17 ,
+    COMBO_ACTION_LOOT_OBSTACLE = 18 ,
 };
 
 //--------------------

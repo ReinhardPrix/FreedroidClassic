@@ -2003,8 +2003,11 @@ move_tux_thowards_intermediate_point ( int player_num )
 {
     int i;
     Level PlayerLevel;
-    
+    int obstacle_index;
+    obstacle* our_obstacle;
     // DebugPrintf ( -1000 , "\nmove_tux_thowards_intermediate_point: player_num = %d." , player_num );
+
+    PlayerLevel = curShip . AllLevels [ Me [ player_num ] . pos. z ] ;
     
     //--------------------
     // If there is no intermediate course, we don't need to do anything
@@ -2027,6 +2030,24 @@ move_tux_thowards_intermediate_point ( int player_num )
 	{
 	    case NO_COMBO_ACTION_SET:
 		break;
+	    case COMBO_ACTION_LOOT_OBSTACLE:
+		//--------------------
+		// We've arrived.  Let's make sure the obstacle pointed to in the
+		// parameter makes sense, then we can loot the obstacle.
+		//
+		obstacle_index = Me [ player_num ] . mouse_move_target_combo_action_parameter ;
+		if ( ( obstacle_index <= (-1) ) || ( obstacle_index >= MAX_OBSTACLES_ON_MAP ) )
+		{
+		    fprintf ( stderr , "\nobstacle_index: %d." , obstacle_index );
+		    GiveStandardErrorMessage ( __FUNCTION__  , "\
+ Received obstacle index, that doesn't correspond to obstacle." ,
+					       PLEASE_INFORM, IS_FATAL );
+		}
+		our_obstacle = & ( PlayerLevel -> obstacle_list [ obstacle_index ] ) ;
+		EnterChest ( our_obstacle -> pos );
+		while ( SpacePressed() );
+		Me [ player_num ] . mouse_move_target_combo_action_type = NO_COMBO_ACTION_SET ;
+		break;
 	    case COMBO_ACTION_OPEN_CHEST:
 		check_for_chests_to_open ( player_num , Me [ player_num ] . mouse_move_target_combo_action_parameter ) ;
 		break;
@@ -2040,7 +2061,6 @@ move_tux_thowards_intermediate_point ( int player_num )
 		// been picked up in the meantime or maybe another player
 		// could have picked it up).
 		//
-		PlayerLevel = curShip . AllLevels [ Me [ player_num ] . pos. z ] ;
 		if ( PlayerLevel -> ItemList [ Me [ player_num ] . mouse_move_target_combo_action_parameter ] . type != (-1) )
 		{
 		    DebugPrintf ( 1 , "\n%s(): Item for combo seems to be still there." , __FUNCTION__ );
@@ -2081,15 +2101,6 @@ move_tux_thowards_intermediate_point ( int player_num )
 		    Me [ player_num ] . next_intermediate_point [ i ] . y ;
 	    }
 	}
-	/*
-	  else
-	  {
-	  DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nLAST INTERMEDIATE WAYPOINT HAS BEEN REACHED! --> clearing setup." );
-	  clear_out_intermediate_points ( player_num ) ;
-	  // find_new_intermediate_point ( player_num );
-	  }
-	*/
-	// find_new_intermediate_point ( player_num );
     }
     
 }; // void move_tux_thowards_intermediate_point ( int player_num )
@@ -2144,9 +2155,11 @@ adapt_global_mode_for_player ( int player_num )
 	obstacle_index = GetObstacleBelowMouseCursor ( player_num ) ;
 	if ( obstacle_index == (-1) )
 	{
+	    /*
 	    if ( global_ingame_mode != GLOBAL_INGAME_MODE_IDENTIFY )
 		global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
 	    return;
+	    */
 	}
     }
 
@@ -3685,13 +3698,20 @@ handle_player_loot_command ( int player_num )
     int obstacle_index ;
     obstacle* our_obstacle;
     char game_message_text[ 2000 ] ;
+    Level our_level;
+
+    our_level = curShip . AllLevels [ Me [ player_num ] . pos . z ] ;
 
     obstacle_index = GetObstacleBelowMouseCursor ( player_num ) ;
     if ( obstacle_index == (-1) )
     {
+	/*
 	GiveStandardErrorMessage ( __FUNCTION__  , 
 				   "Loot command received, but there isn't any obstacle under the current mouse cursor.  Has it maybe moved away?  I'll simply ignore this request." ,
 				   NO_NEED_TO_INFORM, IS_WARNING_ONLY );
+	*/
+	sprintf ( game_message_text , "Loot what?  The floor?" );
+	append_new_game_message ( game_message_text );
 	return;
     }
     our_obstacle = & ( curShip . AllLevels [ Me [ player_num ] . pos . z ] -> obstacle_list [ obstacle_index ] ) ;
@@ -3701,6 +3721,18 @@ handle_player_loot_command ( int player_num )
     sprintf ( game_message_text , "Looting obstacle of type %d." , our_obstacle -> type );
     append_new_game_message ( game_message_text );
 
+    Me [ player_num ] . mouse_move_target . x = our_level -> obstacle_list [ obstacle_index ] . pos . x ;
+    Me [ player_num ] . mouse_move_target . y = our_level -> obstacle_list [ obstacle_index ] . pos . y ;
+    Me [ player_num ] . mouse_move_target . z = Me [ player_num ] . pos . z ;
+    Me [ player_num ] . mouse_move_target . y += 0.8 ;
+    set_up_intermediate_course_for_tux ( player_num ) ;
+    
+    Me [ player_num ] . mouse_move_target_is_enemy = ( -1 ) ;
+    Me [ player_num ] . mouse_move_target_combo_action_type = COMBO_ACTION_LOOT_OBSTACLE ;
+    Me [ player_num ] . mouse_move_target_combo_action_parameter = obstacle_index ;
+
+    
+		    
 }; // void handle_player_examine_command ( int player_num ) 
 
 /* ----------------------------------------------------------------------
