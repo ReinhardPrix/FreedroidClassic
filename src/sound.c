@@ -664,9 +664,6 @@ void EnterElevatorSound(void){
 * $Function----------------------------------------------------------*/
 void LeaveElevatorSound(void){
 
-	/* Sound "uber FM-Generatoren */
-  // MakeSound(&MoveElevatorTune);
-	/* oder "uber MOD-Abspielroutine */
 	return;
 }
 

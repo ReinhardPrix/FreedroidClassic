@@ -107,7 +107,7 @@
 #define CONSOLENBILD_PCX           "../graphics/console.pcx"
 #define ROBOTPICTUREBILD_PCX       "../graphics/robots.pcx"
 #define SHIELDPICTUREBILD_PCX      "../graphics/shield.pcx"
-#define TAKEOVERBACKGROUNDBILD_PCX "../graphics/overtake.pcx"
+#define TAKEOVERBACKGROUNDBILD_PCX "../graphics/TakeoverBackground.pcx"
 #define PLAYGROUND_FILE_PCX    	   "../graphics/to_ground.pcx"	// graphics - files 
 #define ELEMENTS_FILE_PCX	   "../graphics/to_elem.pcx"
 
