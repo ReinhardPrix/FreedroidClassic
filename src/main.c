@@ -159,6 +159,9 @@ main (int argc, char * argv[])
 
 	  CheckIfMissionIsComplete ();
 
+	  if (!GameConfig.HogCPU)	// don't use up 100% CPU unless requested
+	    SDL_Delay (1);
+
 	  ComputeFPSForThisFrame();
 
 	} /* while !GameOver */

@@ -137,8 +137,8 @@ EscapeMenu (void)
     { 
       BACK2GAME=1, 
       POS_GRAPHICS_SOUND_OPTIONS,
-      POS_ON_SCREEN_DISPLAYS,
       POS_LEGACY_OPTIONS,
+      POS_ON_SCREEN_DISPLAYS,
       POS_LEVEL_EDITOR,
       POS_HIGHSCORES,
       POS_CREDITS,
@@ -160,13 +160,12 @@ EscapeMenu (void)
 
       PutInfluence (Menu_Rect.x, Menu_Rect.y + (MenuPosition-1.5)*fheight);
 
-
       pos = 0;
 
       PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight, "Back to Game");
       PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight,"Graphics & Sound" );
-      PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight,"On-Screen Displays" );
       PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight,"Legacy Options");
+      PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight,"On-Screen Displays" );
       PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight, "Level Editor");
       PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight, "Highscores");
       PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y +(pos++)*fheight, "Credits");
@@ -504,30 +503,40 @@ GraphicsSound_Options_Menu (void)
   int MenuPosition=1;
   bool finished = FALSE;
   bool key = FALSE;
+  int pos;
 
 enum
   { SET_BG_MUSIC_VOLUME=1, 
     SET_SOUND_FX_VOLUME, 
     SET_GAMMA_CORRECTION, 
     SET_FULLSCREEN_FLAG, 
-    BACK };
+    SET_HOG_CPU,
+    BACK 
+  };
+
+ 
 
   while (!finished)
     {
       key = FALSE;
+
+      pos = 0;
+
       SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
 
       PutInfluence (Menu_Rect.x, Menu_Rect.y+ (MenuPosition-1.5)*fheight);
 
-      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+0*fheight, 
+      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+(pos++)*fheight, 
 		   "Background Music: %1.2f" , GameConfig.Current_BG_Music_Volume );
-      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+1*fheight,  
+      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+(pos++)*fheight,  
 		   "Sound Effects: %1.2f", GameConfig.Current_Sound_FX_Volume );
-      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+2*fheight,  
+      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+(pos++)*fheight,  
 		   "Gamma: %1.2f", GameConfig.Current_Gamma_Correction );
-      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+3*fheight, 
+      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+(pos++)*fheight, 
 		   "Fullscreen Mode: %s", GameConfig.UseFullscreen ? "ON" : "OFF");
-      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+4*fheight, "Back");
+      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+(pos++)*fheight, 
+		   "Use 100%% CPU: %s", GameConfig.HogCPU ? "ON" : "OFF");
+      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+(pos++)*fheight, "Back");
       SDL_Flip( ne_screen );
 
       while (!key)
@@ -549,6 +558,15 @@ enum
 	      if (FirePressedR())
 		{
 		  toggle_fullscreen();
+		  MenuItemSelectedSound();
+		}
+	      break;
+
+
+	    case SET_HOG_CPU:
+	      if (FirePressedR())
+		{
+		  GameConfig.HogCPU = !GameConfig.HogCPU;
 		  MenuItemSelectedSound();
 		}
 	      break;

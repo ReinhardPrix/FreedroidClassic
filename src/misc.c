@@ -126,6 +126,7 @@ read_variable (char *data, char *var_name, char *fmt, void *var)
 #define SHOW_DECALS                  "ShowDecals"
 #define ALL_MAP_VISIBLE              "AllMapVisible"
 #define VID_SCALE_FACTOR             "Vid_ScaleFactor"
+#define HOG_CPU			     "Hog_Cpu"
 
 /*----------------------------------------------------------------------
  * LoadGameConfig(): load saved options from config-file
@@ -226,6 +227,7 @@ LoadGameConfig (void)
   read_variable (data, SHOW_DECALS,              "%d", &GameConfig.ShowDecals);
   read_variable (data, ALL_MAP_VISIBLE,          "%d", &GameConfig.AllMapVisible);
   read_variable (data, VID_SCALE_FACTOR,         "%f", &GameConfig.scale);
+  read_variable (data, HOG_CPU,			 "%d", &GameConfig.HogCPU);
 
   free (data);
 
@@ -271,6 +273,7 @@ SaveGameConfig (void)
   fprintf (fp, "%s = %d\n", SHOW_DECALS, GameConfig.ShowDecals);
   fprintf (fp, "%s = %d\n", ALL_MAP_VISIBLE, GameConfig.AllMapVisible);
   fprintf (fp, "%s = %f\n", VID_SCALE_FACTOR, GameConfig.scale);
+  fprintf (fp, "%s = %d\n", HOG_CPU, GameConfig.HogCPU);
 
   fclose (fp);
   return (OK);
@@ -1090,6 +1093,8 @@ init_progress (char *text)
     {
       fpath = find_file (PROGRESS_METER_FILE, GRAPHICS_DIR, NO_THEME, CRITICAL);
       progress_meter_pic = Load_Block (fpath, 0, 0, NULL, 0);
+      fpath = find_file (PROGRESS_FILLER_FILE, GRAPHICS_DIR, NO_THEME, CRITICAL);
+      progress_filler_pic = Load_Block (fpath, 0, 0, NULL, 0);
     }
 
   oldfont = GetCurrentFont ();
@@ -1105,7 +1110,7 @@ init_progress (char *text)
 
   SDL_Flip (ne_screen);
 
-} // show_progress()
+} // init_progress()
 
 
 /*----------------------------------------------------------------------
@@ -1114,16 +1119,21 @@ init_progress (char *text)
 void
 update_progress (int percent)
 {
-  SDL_Rect dst;
+  SDL_Rect dst, src;
 
   Copy_Rect (ProgressBar_Rect, dst);
 
+  dst.h = (Uint16) (1.0*ProgressBar_Rect.h * percent / 100.0);
+
   dst.x += ProgressMeter_Rect.x;
-  dst.y += ProgressMeter_Rect.y;
+  dst.y += ProgressMeter_Rect.y + ProgressBar_Rect.h - dst.h;
 
-  dst.w = (Uint16) (1.0*ProgressBar_Rect.w * percent / 100.0);
+  src.x = src.y = 0;
+  src.h = dst.h;
+  src.y += ProgressBar_Rect.h - dst.h;
 
-  Fill_Rect (dst, progress_color);
+  //  Fill_Rect (dst, progress_color);
+  SDL_BlitSurface (progress_filler_pic, &src, ne_screen, &dst);
 
   SDL_UpdateRects (ne_screen, 1, &dst);
   

@@ -208,12 +208,15 @@ ScrollText (char *Text, SDL_Rect *rect, int SecondsMinimumDuration )
 	}
       SDL_Flip (ne_screen);
 
+      if (!GameConfig.HogCPU)
+	SDL_Delay(1);
 
       if (just_started)
 	{
 	  just_started = FALSE;
 	  now = SDL_GetTicks();
-	  while ( (!FirePressed()) && (SDL_GetTicks() - now < SHOW_WAIT)) ;  // wait before scrolling
+	  while ( (!FirePressed()) && (SDL_GetTicks() - now < SHOW_WAIT)) 
+	    SDL_Delay(1);  // wait before scrolling
 
 	  //--------------------
 	  // Returning from this function is only possible after the minimum display time has been

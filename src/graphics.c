@@ -588,6 +588,8 @@ InitPictures (void)
 
   SetCurrentFont (FPS_Display_BFont);
 
+  init_progress ("Loading pictures");
+
   LoadThemeConfigurationFile();
 
   update_progress (15);

@@ -784,6 +784,10 @@ ShowPlayground (void)
     } /* for player */
 
   SDL_Flip (ne_screen);
+  
+  // give CPU some air, unless requested otherwise
+  if (!GameConfig.HogCPU)
+    SDL_Delay(1);
 
   return;
 

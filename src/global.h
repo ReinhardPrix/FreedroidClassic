@@ -206,6 +206,7 @@ EXTERN SDL_Surface *ship_off_pic;    	/* Side-view of ship: lights off */
 EXTERN SDL_Surface *ship_on_pic;	/* Side-view of ship: lights on */
 
 EXTERN SDL_Surface *progress_meter_pic;
+EXTERN SDL_Surface *progress_filler_pic;
 
 EXTERN SDL_Rect level_rect[MAX_LEVELS]; /* rect's of levels in side-view */
 EXTERN SDL_Rect liftrow_rect[MAX_LIFT_ROWS]; /* the lift-row rect's in side-view*/

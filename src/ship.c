@@ -82,7 +82,6 @@ EnterLift (void)
    * the time spend in the menu. */
   Activate_Conservative_Frame_Computation();
 
-
   /* make sure to release the fire-key */
   SpacePressedR();
   MouseLeftPressedR();
@@ -116,7 +115,6 @@ EnterLift (void)
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );      
 
   ShowLifts (curLevel, liftrow);
-
 
   while (! FirePressedR())
     {
@@ -160,6 +158,9 @@ EnterLift (void)
 		MoveLiftSound ();
 	      }
 	  }			/* if downlevel */
+
+      SDL_Delay(10);
+
     }				/* while !SpaceReleased */
 
   //--------------------
@@ -866,6 +867,10 @@ show_droid_portrait (SDL_Rect dst, int droid_type, float cycle_time, int flags)
       SDL_BlitSurface (droid_pics, &src_rect, ne_screen, &dst);
 
       SDL_UpdateRects (ne_screen, 1, &dst);
+
+      // don't use full CPU unless requested
+      if (!GameConfig.HogCPU)
+	SDL_Delay(1);
 
       last_frame_time = SDL_GetTicks();
 

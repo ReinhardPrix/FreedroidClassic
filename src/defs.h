@@ -165,6 +165,7 @@ enum _alertnames {
 #define SHIP_OFF_PIC_FILE       "ship_off.png"
 
 #define PROGRESS_METER_FILE	"progress_meter.png"
+#define PROGRESS_FILLER_FILE	"progress_filler.png"
 
 #define STANDARD_MISSION        "Paradroid.mission"
 #define NEW_MISSION             "CleanPrivateGoodsStorageCellar.mission"

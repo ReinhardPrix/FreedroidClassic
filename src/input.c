@@ -38,6 +38,7 @@
 #include "global.h"
 #include "proto.h"
 
+// earlier SDL versions didn't define these...
 #ifndef SDL_BUTTON_WHEELUP 
 #define SDL_BUTTON_WHEELUP 4
 #endif
@@ -54,21 +55,30 @@ Uint32 last_mouse_event = 0;  // record when last mouse event took place (SDL ti
 int CurrentlyMouseRightPressed=0;
 int CurrentlyMouseLeftPressed = 0;
 
-bool key_pressed[SDLK_LAST];	// array of states (pressed/released) of all keys
+
 int joy_dirstate[4];  // array of 4 directions we map the joystick to
 
 SDLMod current_modifiers;
 
 SDL_Event event;
 
-// direction for joystick->keyboard mappings
-enum _joy_dirs {
-  JOY_UP = 0,
-  JOY_RIGHT,
-  JOY_DOWN,
-  JOY_LEFT
+
+enum  _input_states {
+  IN_UP = 0,
+  IN_RIGHT,
+  IN_DOWN,
+  IN_LEFT,
+  IN_BUTTON1,
+  IN_BUTTON2,
+  IN_BUTTON3,
+  IN_LAST
 };
-#define FLAG_NEW 0xf0
+
+int key_state[SDLK_LAST];	// array of states (pressed/released) of all keys
+int joy_state[IN_LAST];
+int mouse_state[IN_LAST];
+
+#define FRESH_BIT   0x01<<8
 
 
 int sgn (int x)
@@ -156,11 +166,11 @@ keyboard_update(void)
 
 	case SDL_KEYDOWN:
 	  current_modifiers = event.key.keysym.mod;
-	  key_pressed[event.key.keysym.sym] = TRUE;
+	  key_state[event.key.keysym.sym] = TRUE | FRESH_BIT;
 	  break;
 	case SDL_KEYUP:
 	  current_modifiers = event.key.keysym.mod;
-	  key_pressed[event.key.keysym.sym] = FALSE;
+	  key_state[event.key.keysym.sym] = FALSE | FRESH_BIT;
 	  break;
 
 	case SDL_JOYAXISMOTION:
@@ -176,31 +186,18 @@ keyboard_update(void)
 	      // so that it behaves like "set"/"release"
 	      if (joy_sensitivity*event.jaxis.value > 10000)   /* about half tilted */
 		{
-		  // compare to previous joy-direction!
-		  if (!joy_dirstate[JOY_RIGHT])
-		    {
-		      key_pressed[SDLK_RIGHT] = TRUE;
-		      key_pressed[SDLK_LEFT] = FALSE;
-		    }
-		  joy_dirstate[JOY_RIGHT] = TRUE;
-		  joy_dirstate[JOY_LEFT] = FALSE;
+		  joy_state[IN_RIGHT] = TRUE|FRESH_BIT;
+		  joy_state[IN_LEFT] = FALSE;
 		}
 	      else if (joy_sensitivity*event.jaxis.value < -10000)
 		{
-		  if (!joy_dirstate[JOY_LEFT])
-		    {
-		      key_pressed[SDLK_LEFT] = TRUE;
-		      key_pressed[SDLK_RIGHT] = FALSE;
-		    }
-		  joy_dirstate[JOY_LEFT] = TRUE;
-		  joy_dirstate[JOY_RIGHT] = FALSE;
+		  joy_state[IN_LEFT] = TRUE|FRESH_BIT;
+		  joy_state[IN_RIGHT] = FALSE;
 		}
 	      else
 		{
-		  joy_dirstate[JOY_LEFT] = FALSE;
-		  joy_dirstate[JOY_RIGHT] = FALSE;
-		  key_pressed[SDLK_LEFT] = FALSE;
-		  key_pressed[SDLK_RIGHT] = FALSE;
+		  joy_state[IN_LEFT] = FALSE;
+		  joy_state[IN_RIGHT] = FALSE;
 		}
 	    }
 	  else if ((axis == 1) || ((joy_num_axes >=5) && (axis == 4))) /* y-axis */
@@ -209,63 +206,51 @@ keyboard_update(void)
 
 	      if (joy_sensitivity*event.jaxis.value > 10000)  
 		{
-		  if (!joy_dirstate[JOY_DOWN])
-		    {
-		      key_pressed[SDLK_DOWN] = TRUE;
-		      key_pressed[SDLK_UP] = FALSE;
-		    }
-		  joy_dirstate[JOY_DOWN] = TRUE;
-		  joy_dirstate[JOY_UP] =  FALSE;
+		  joy_dirstate[IN_DOWN] = TRUE|FRESH_BIT;
+		  joy_dirstate[IN_UP] =  FALSE;
 		}
 	      else if (joy_sensitivity*event.jaxis.value < -10000)
 		{
-		  if (!joy_dirstate[JOY_UP])
-		    {
-		      key_pressed[SDLK_UP] = TRUE;
-		      key_pressed[SDLK_DOWN] = FALSE;
-		    }
-		  joy_dirstate[JOY_UP] = TRUE;
-		  joy_dirstate[JOY_DOWN]= FALSE;
+		  joy_dirstate[IN_UP] = TRUE|FRESH_BIT;
+		  joy_dirstate[IN_DOWN]= FALSE;
 		}
 	      else
 		{
-		  joy_dirstate[JOY_UP] = FALSE;
-		  joy_dirstate[JOY_DOWN] = FALSE;
-		  key_pressed[SDLK_UP] = FALSE;
-		  key_pressed[SDLK_DOWN] = FALSE;
+		  joy_dirstate[IN_UP] = FALSE;
+		  joy_dirstate[IN_DOWN] = FALSE;
 		}
 	    }
 		
 	  break;
 	  
 	case SDL_JOYBUTTONDOWN:  // here we do some brute-force remappings...
-	  // map first button onto fire, 
+	  // first button
 	  if (event.jbutton.button == 0)
-	    key_pressed[SDLK_SPACE] = TRUE;
+	    joy_state[IN_BUTTON1] = TRUE|FRESH_BIT;
 
-	  // second button onto MouseRight (i.e Takeover)
+	  // second button
 	  else if (event.jbutton.button == 1) 
-	    CurrentlyMouseRightPressed = TRUE;
+	    joy_state[IN_BUTTON2] = TRUE|FRESH_BIT;
 
-	  // and third button onto 'RSHIFT' , i.e Activate
+	  // and third button
 	  else if (event.jbutton.button == 2) 
-	    key_pressed[SDLK_RSHIFT] = TRUE;
+	    joy_state[IN_BUTTON3] = TRUE|FRESH_BIT;
 
 	  axis_is_active = TRUE;
 	  break;
 
 	case SDL_JOYBUTTONUP:
-	  // map first button onto fire, 
+	  // first button 
 	  if (event.jbutton.button == 0)
-	    key_pressed[SDLK_SPACE] = FALSE;
+	    joy_state[IN_BUTTON1] = FALSE;
 
-	  // second button onto MouseRight (i.e Takeover)
+	  // second button
 	  else if (event.jbutton.button == 1) 
-	    CurrentlyMouseRightPressed = FALSE;
+	    joy_state[IN_BUTTON2] = FALSE;
 
-	  // and third button onto 'RSHIFT' , i.e Activate
+	  // and third button
 	  else if (event.jbutton.button == 2) 
-	    key_pressed[SDLK_RSHIFT] = FALSE;
+	    joy_state[IN_BUTTON3] = FALSE;
 
 	  axis_is_active = FALSE;
 	  break;
@@ -282,16 +267,15 @@ keyboard_update(void)
 	case SDL_MOUSEBUTTONDOWN:
 	  if (event.button.button == SDL_BUTTON_LEFT)
 	    {
-	      CurrentlyMouseLeftPressed = TRUE;
+	      mouse_state[IN_BUTTON1] = TRUE|FRESH_BIT;
 	      axis_is_active = TRUE;
 	    }
 
 	  if (event.button.button == SDL_BUTTON_RIGHT)
-	    CurrentlyMouseRightPressed = TRUE;
+	    mouse_state[IN_BUTTON2] = TRUE|FRESH_BIT;
 
-	  // we just map middle->Rshift (i.e. Activate)
 	  if (event.button.button == SDL_BUTTON_MIDDLE)  
-	    key_pressed[SDLK_RSHIFT] = TRUE;
+	    mouse_state[IN_BUTTON3] = TRUE|FRESH_BIT;
 
 	  // wheel events are immediately released, so we rather
 	  // count the number of not yet read-out events
@@ -307,15 +291,15 @@ keyboard_update(void)
         case SDL_MOUSEBUTTONUP:
 	  if (event.button.button == SDL_BUTTON_LEFT)
 	    {
-	      CurrentlyMouseLeftPressed = FALSE;
+	      mouse_state[IN_BUTTON1] = FALSE;
 	      axis_is_active = FALSE;
 	    }
 
 	  if (event.button.button == SDL_BUTTON_RIGHT)
-	    CurrentlyMouseRightPressed = FALSE;
+	    mouse_state[IN_BUTTON2] = FALSE;
 
-	  if (event.button.button == SDL_BUTTON_MIDDLE)  // we just map middle->Escape
-	    key_pressed[SDLK_RSHIFT] = FALSE;
+	  if (event.button.button == SDL_BUTTON_MIDDLE)
+	    mouse_state[IN_BUTTON3] = FALSE;
 
 	  break;
 
@@ -401,7 +385,7 @@ bool
 KeyIsPressed (SDLKey key)
 {
   keyboard_update();
-  return (key_pressed[key]);
+  return (key_state[key]);
 }
 
 
@@ -411,7 +395,7 @@ KeyIsPressedR (SDLKey key)
 {
   bool ret;
   keyboard_update();
-  ret = key_pressed[key];
+  ret = key_state[key];
   ReleaseKey (key);
   return (ret);
 }
@@ -419,7 +403,7 @@ KeyIsPressedR (SDLKey key)
 void 
 ReleaseKey (SDLKey key)
 {
-  key_pressed[key] = FALSE;
+  key_state[key] = FALSE;
   return;
 }
 

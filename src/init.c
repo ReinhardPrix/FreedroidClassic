@@ -913,6 +913,7 @@ InitFreedroid (int argc, char *const argv[])
   GameConfig.ShowDecals = TRUE;
   GameConfig.AllMapVisible = TRUE;    // classic setting: map always visible
   GameConfig.scale = 1.0;  	 // overall scaling of _all_ graphics (e.g. for 320x200 displays)
+  GameConfig.HogCPU = FALSE;	// default to being nice 
 
   // now load saved options from the config-file
   LoadGameConfig ();
@@ -934,7 +935,7 @@ InitFreedroid (int argc, char *const argv[])
 
   Load_Fonts (); // we need this for progress-meter!
 
-  init_progress ("Loading Freedroid ...");
+  init_progress ("Loading Freedroid");
 
   FindAllThemes ();  // put all found themes into a list: AllThemes[]
 
