@@ -74,17 +74,17 @@ beginning_of_map
   4   4   4   4   4   1   1   1   1   1   1   1   3   1   3   1   1   2   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11  11   3   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   6 
   4   4   4   4   4   1   1   1   1  11  11   1   1   3   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11  11   2   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   6 
   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
-  4   4   4   4   4   1   1   1   1   1   1   1   1   1  11  11  11   2   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11   1   1   1   1   1   1   1   3   1   1  11  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
-  4   4   4   4   4   1   1   1   1   1   1   1   1  11  11  11  11   2   1   1  11  11  11   1   1   1   1   1   2   1   2   1   1   1   1  11  11  11   1   1   1   1   1   1   1   1   1   1   1  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
-  4   4   4   4   4   1   1   1   1   1   1   1   1  11  11  11   1   1   1   1   1  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
+  4   4   4   4   4   1   1   1   1   1   1   1   1   1  11  11  11   2   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   3   1   1  11  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
+  4   4   4   4   4   1   1   1   1   1   1   1   1  11  11  11  11   2   1   1   1   1   1   1   1   1   1   1   2   1   2   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
+  4   4   4   4   4   1   1   1   1   1   1   1   1  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
   4   4   4   4   4   1   1   1   1   1   1   1   1  11  11  11   1  11  11  11   1   1   1   1   1   1   1   1   2   1   2   1   1   1   1   1   1   2   1   1   1   1   1   1   1   1   3   2   3   1   2   2   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   2   1   1   1   1   1   1   4   4   4   4 
   4   4   4   4   4   1   1   1   1   1   1   1   1  11  11  11   1  11  11  11   1   2   2   1   1   1   1   1   1   1   1   1   1   1   1   1   2   1   2   1   1   1   1   1   1   1   2   3   2   1   3   3   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
   4   4   4   4   4   1   1   1   1   1   1   1   1  11  11  11   1  11  11  11   1   2   2   1   1   1   1   1   1   1   1   1   1   1   1   1   1   2   1   1   1   1   1   1   1   1   3   2   3   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
   4   4   4   4   4   1   1   1   1   1   1   1   1  11  11   1   1   1  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
-  4   4   4   4   4   1   1   1   1   1   1   1   1   1  11   1   1   1   1   1  11  11  11  11   1   1   1   1   1   1   1   1   1   1   1  11  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
-  4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
-  4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   2   1   1   1   1   1   1  11  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
-  4   4   4   4   4   1   1   1   1   1   1   1   1   1   3   1   3   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
+  4   4   4   4   4   1   1   1   1   1   1   1   1   1  11   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
+  4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
+  4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   2   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
+  4   4   4   4   4   1   1   1   1   1   1   1   1   1   3   1   3   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   3   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   2   2   2   3   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   3   1   1   1   1   1   1   1   3   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   3   1   3   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4 
@@ -899,7 +899,6 @@ ob_type=2 ob_x=43.50 ob_y=26.00 ob_na=-1
 ob_type=6 ob_x=44.50 ob_y=26.00 ob_na=-1 
 ob_type=6 ob_x=45.50 ob_y=26.00 ob_na=-1 
 ob_type=2 ob_x=46.50 ob_y=26.00 ob_na=-1 
-ob_type=1 ob_x=47.00 ob_y=25.50 ob_na=-1 
 ob_type=1 ob_x=48.00 ob_y=25.50 ob_na=-1 
 ob_type=2 ob_x=47.50 ob_y=26.00 ob_na=-1 
 ob_type=43 ob_x=48.50 ob_y=25.75 ob_na=-1 
@@ -953,12 +952,7 @@ ob_type=1 ob_x=7.00 ob_y=27.50 ob_na=-1
 ob_type=1 ob_x=13.00 ob_y=27.50 ob_na=-1 
 ob_type=1 ob_x=17.00 ob_y=27.50 ob_na=-1 
 ob_type=1 ob_x=21.00 ob_y=27.50 ob_na=-1 
-ob_type=2 ob_x=21.50 ob_y=28.00 ob_na=-1 
-ob_type=2 ob_x=22.50 ob_y=28.00 ob_na=-1 
-ob_type=2 ob_x=23.50 ob_y=28.00 ob_na=-1 
 ob_type=1 ob_x=24.00 ob_y=27.50 ob_na=-1 
-ob_type=1 ob_x=25.00 ob_y=27.50 ob_na=-1 
-ob_type=2 ob_x=24.50 ob_y=28.00 ob_na=-1 
 ob_type=43 ob_x=29.50 ob_y=27.75 ob_na=-1 
 ob_type=1 ob_x=43.00 ob_y=27.50 ob_na=-1 
 ob_type=1 ob_x=50.00 ob_y=27.50 ob_na=-1 
@@ -1022,8 +1016,6 @@ ob_type=2 ob_x=22.50 ob_y=31.00 ob_na=-1
 ob_type=1 ob_x=24.00 ob_y=30.50 ob_na=-1 
 ob_type=2 ob_x=23.50 ob_y=31.00 ob_na=-1 
 ob_type=2 ob_x=24.50 ob_y=31.00 ob_na=-1 
-ob_type=2 ob_x=29.50 ob_y=31.00 ob_na=-1 
-ob_type=2 ob_x=30.50 ob_y=31.00 ob_na=-1 
 ob_type=2 ob_x=35.50 ob_y=31.00 ob_na=-1 
 ob_type=2 ob_x=36.50 ob_y=31.00 ob_na=-1 
 ob_type=2 ob_x=37.50 ob_y=31.00 ob_na=-1 
@@ -1061,7 +1053,6 @@ ob_type=2 ob_x=18.50 ob_y=32.00 ob_na=-1
 ob_type=1 ob_x=20.00 ob_y=31.50 ob_na=-1 
 ob_type=2 ob_x=19.50 ob_y=32.00 ob_na=-1 
 ob_type=1 ob_x=25.00 ob_y=31.50 ob_na=-1 
-ob_type=1 ob_x=29.00 ob_y=31.50 ob_na=-1 
 ob_type=49 ob_x=29.50 ob_y=31.50 ob_na=-1 
 ob_type=1 ob_x=31.00 ob_y=31.50 ob_na=-1 
 ob_type=1 ob_x=35.00 ob_y=31.50 ob_na=-1 
@@ -1113,7 +1104,6 @@ ob_type=2 ob_x=22.50 ob_y=33.00 ob_na=-1
 ob_type=2 ob_x=23.50 ob_y=33.00 ob_na=-1 
 ob_type=1 ob_x=25.00 ob_y=32.50 ob_na=-1 
 ob_type=2 ob_x=24.50 ob_y=33.00 ob_na=-1 
-ob_type=1 ob_x=29.00 ob_y=32.50 ob_na=-1 
 ob_type=2 ob_x=29.50 ob_y=33.00 ob_na=-1 
 ob_type=1 ob_x=31.00 ob_y=32.50 ob_na=-1 
 ob_type=2 ob_x=30.50 ob_y=33.00 ob_na=-1 
@@ -1928,7 +1918,7 @@ ob_type=21 ob_x=35.50 ob_y=73.50 ob_na=-1
 ob_type=1 ob_x=41.00 ob_y=73.50 ob_na=-1 
 ob_type=21 ob_x=41.50 ob_y=73.50 ob_na=-1 
 ob_type=1 ob_x=47.00 ob_y=73.50 ob_na=-1 
-ob_type=27 ob_x=68.00 ob_y=73.50 ob_na=-1 
+ob_type=27 ob_x=68.00 ob_y=73.50 ob_na=1 
 ob_type=1 ob_x=71.00 ob_y=73.50 ob_na=-1 
 ob_type=1 ob_x=78.00 ob_y=73.50 ob_na=-1 
 ob_type=1 ob_x=81.00 ob_y=73.50 ob_na=-1 
@@ -1959,7 +1949,7 @@ ob_type=1 ob_x=29.00 ob_y=75.50 ob_na=-1
 ob_type=1 ob_x=35.00 ob_y=75.50 ob_na=-1 
 ob_type=1 ob_x=41.00 ob_y=75.50 ob_na=-1 
 ob_type=1 ob_x=47.00 ob_y=75.50 ob_na=-1 
-ob_type=27 ob_x=68.00 ob_y=75.50 ob_na=-1 
+ob_type=27 ob_x=68.00 ob_y=75.50 ob_na=0 
 ob_type=1 ob_x=71.00 ob_y=75.50 ob_na=-1 
 ob_type=1 ob_x=78.00 ob_y=75.50 ob_na=-1 
 ob_type=6 ob_x=78.50 ob_y=76.00 ob_na=-1 
@@ -2375,6 +2365,20 @@ ob_type=2 ob_x=22.50 ob_y=88.00 ob_na=-1
 ob_type=1 ob_x=24.00 ob_y=87.50 ob_na=-1 
 ob_type=2 ob_x=23.50 ob_y=88.00 ob_na=-1 
 ob_type=42 ob_x=20.50 ob_y=80.50 ob_na=-1 
+ob_type=1 ob_x=30.98 ob_y=30.53 ob_na=-1 
+ob_type=1 ob_x=27.98 ob_y=32.53 ob_na=-1 
+ob_type=1 ob_x=27.98 ob_y=31.53 ob_na=-1 
+ob_type=1 ob_x=27.98 ob_y=30.53 ob_na=-1 
+ob_type=2 ob_x=28.51 ob_y=30.03 ob_na=-1 
+ob_type=2 ob_x=29.51 ob_y=30.03 ob_na=-1 
+ob_type=2 ob_x=30.51 ob_y=30.03 ob_na=-1 
+ob_type=2 ob_x=28.51 ob_y=33.03 ob_na=-1 
+ob_type=49 ob_x=28.52 ob_y=33.57 ob_na=-1 
+ob_type=2 ob_x=21.54 ob_y=27.03 ob_na=-1 
+ob_type=2 ob_x=22.54 ob_y=27.03 ob_na=-1 
+ob_type=2 ob_x=23.53 ob_y=27.02 ob_na=-1 
+ob_type=2 ob_x=24.53 ob_y=27.02 ob_na=-1 
+ob_type=2 ob_x=52.49 ob_y=26.99 ob_na=-1 
 End of obstacle data
 Start of pure map label information for this level
 label.pos.x=40 label.pos.y=34 label.label_name="NorthernMaintainanceDoor"
@@ -2398,14 +2402,14 @@ label.pos.x=46 label.pos.y=55 label.label_name="DocMooreStartGameSquare"
 label.pos.x=18 label.pos.y=68 label.label_name="SkippyStartGameSquare"
 label.pos.x=45 label.pos.y=73 label.label_name="DuncanStartGameSquare"
 label.pos.x=64 label.pos.y=79 label.label_name="ButchStartGameSquare"
-label.pos.x=67 label.pos.y=75 label.label_name="NoviceArenaAccessDoor"
-label.pos.x=67 label.pos.y=73 label.label_name="MasterArenaAccessDoor"
 label.pos.x=69 label.pos.y=76 label.label_name="NoviceArenaTeleporter"
 label.pos.x=69 label.pos.y=72 label.label_name="MasterArenaTeleporter"
 label.pos.x=68 label.pos.y=73 label.label_name="MasterArenaTeleporterReturn"
 label.pos.x=68 label.pos.y=75 label.label_name="NoviceArenaTeleporterReturn"
 End of pure map label information for this level
 Start of pure obstacle label information for this level
+obstacle_label.index=0 obstacle_label_name="NoviceArenaAccessDoor"
+obstacle_label.index=1 obstacle_label_name="MasterArenaAccessDoor"
 End of pure obstacle label information for this level
 
 Start of pure statement information for this level
@@ -8254,7 +8258,7 @@ ob_type=1 ob_x=35.00 ob_y=25.50 ob_na=-1
 ob_type=2 ob_x=34.50 ob_y=26.00 ob_na=-1 
 ob_type=1 ob_x=40.00 ob_y=25.50 ob_na=-1 
 ob_type=56 ob_x=42.50 ob_y=25.50 ob_na=-1 
-ob_type=25 ob_x=44.50 ob_y=25.50 ob_na=-1 
+ob_type=23 ob_x=44.50 ob_y=25.50 ob_na=-1 
 ob_type=57 ob_x=46.50 ob_y=25.50 ob_na=-1 
 ob_type=1 ob_x=50.00 ob_y=25.50 ob_na=-1 
 ob_type=1 ob_x=1.00 ob_y=26.50 ob_na=-1 
@@ -8264,30 +8268,30 @@ ob_type=2 ob_x=32.50 ob_y=27.00 ob_na=-1
 ob_type=1 ob_x=34.00 ob_y=26.50 ob_na=-1 
 ob_type=2 ob_x=33.50 ob_y=27.00 ob_na=-1 
 ob_type=1 ob_x=40.00 ob_y=26.50 ob_na=-1 
-ob_type=25 ob_x=43.50 ob_y=26.50 ob_na=-1 
-ob_type=25 ob_x=45.50 ob_y=26.50 ob_na=-1 
+ob_type=23 ob_x=43.50 ob_y=26.50 ob_na=-1 
+ob_type=23 ob_x=45.50 ob_y=26.50 ob_na=-1 
 ob_type=1 ob_x=50.00 ob_y=26.50 ob_na=-1 
 ob_type=1 ob_x=1.00 ob_y=27.50 ob_na=-1 
 ob_type=1 ob_x=30.00 ob_y=27.50 ob_na=-1 
 ob_type=2 ob_x=29.50 ob_y=28.00 ob_na=-1 
 ob_type=1 ob_x=40.00 ob_y=27.50 ob_na=-1 
-ob_type=25 ob_x=42.50 ob_y=27.50 ob_na=-1 
-ob_type=25 ob_x=44.50 ob_y=27.50 ob_na=-1 
-ob_type=25 ob_x=46.50 ob_y=27.50 ob_na=-1 
+ob_type=23 ob_x=42.50 ob_y=27.50 ob_na=-1 
+ob_type=23 ob_x=44.50 ob_y=27.50 ob_na=-1 
+ob_type=23 ob_x=46.50 ob_y=27.50 ob_na=-1 
 ob_type=29 ob_x=48.75 ob_y=27.50 ob_na=-1 
 ob_type=1 ob_x=50.00 ob_y=27.50 ob_na=-1 
 ob_type=1 ob_x=1.00 ob_y=28.50 ob_na=-1 
 ob_type=1 ob_x=29.00 ob_y=28.50 ob_na=-1 
 ob_type=1 ob_x=40.00 ob_y=28.50 ob_na=-1 
 ob_type=29 ob_x=40.25 ob_y=28.50 ob_na=-1 
-ob_type=25 ob_x=43.50 ob_y=28.50 ob_na=-1 
-ob_type=25 ob_x=45.50 ob_y=28.50 ob_na=-1 
+ob_type=23 ob_x=43.50 ob_y=28.50 ob_na=-1 
+ob_type=23 ob_x=45.50 ob_y=28.50 ob_na=-1 
 ob_type=1 ob_x=50.00 ob_y=28.50 ob_na=-1 
 ob_type=1 ob_x=1.00 ob_y=29.50 ob_na=-1 
 ob_type=1 ob_x=29.00 ob_y=29.50 ob_na=-1 
 ob_type=1 ob_x=40.00 ob_y=29.50 ob_na=-1 
 ob_type=55 ob_x=42.50 ob_y=29.50 ob_na=-1 
-ob_type=25 ob_x=44.50 ob_y=29.50 ob_na=-1 
+ob_type=23 ob_x=44.50 ob_y=29.50 ob_na=-1 
 ob_type=58 ob_x=46.50 ob_y=29.50 ob_na=-1 
 ob_type=1 ob_x=50.00 ob_y=29.50 ob_na=-1 
 ob_type=1 ob_x=1.00 ob_y=30.50 ob_na=-1 
@@ -8747,7 +8751,7 @@ ob_type=1 ob_x=18.00 ob_y=88.50 ob_na=-1
 ob_type=1 ob_x=29.00 ob_y=88.50 ob_na=-1 
 ob_type=2 ob_x=34.50 ob_y=89.00 ob_na=-1 
 ob_type=2 ob_x=35.50 ob_y=89.00 ob_na=-1 
-ob_type=25 ob_x=36.50 ob_y=88.50 ob_na=-1 
+ob_type=23 ob_x=36.50 ob_y=88.50 ob_na=-1 
 ob_type=2 ob_x=38.50 ob_y=89.00 ob_na=-1 
 ob_type=1 ob_x=84.00 ob_y=88.50 ob_na=-1 
 ob_type=1 ob_x=85.00 ob_y=88.50 ob_na=-1 
@@ -22514,27 +22518,27 @@ Name of this level=New Level just created...
 Comment of the Influencer on entering this level="This is a new level...
 Name of background song for this level=NOWHERE.MOD
 beginning_of_map
-  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11  11 
-  1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1  11  11  11  11 
-  1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1  11  11  11  11 
-  1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1  11  11  11  11 
-  1   4   4   4   1   1   1   4   4   4   4   4   4   4   1   1   1   4   4   4   1  11  11  11  11 
-  1   4   4   4   1   1   1   4   4   4   4   4   4   4   1   1   1   4   4   4   1  11  11  11  11 
-  1   4   4   4   1   1   1   4   4   4   4   4   4   4   1   1   1   4   4   4   1  11  11  11  11 
-  1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1  11  11  11  11 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4 
+  1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   4   4   4 
+  1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   4   4   4 
+  1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   4   4   4 
+  1   4   4   4   1   1   1   4   4   4   4   4   4   4   1   1   1   4   4   4   1   1   4   4   4 
+  1   4   4   4   1   1   1   4   4   4   4   4   4   4   1   1   1   4   4   4   1   1   4   4   4 
+  1   4   4   4   1   1   1   4   4   4   4   4   4   4   1   1   1   4   4   4   1   1   4   4   4 
+  1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   4   4   4 
   1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1 
   1   4   4   4   4   4   4   4   4   1   1   1   4   4   4   4   4   4   4   4   1   1   1   1   1 
   1   4   4   4   4   4   4   4   4   1   2   1   4   4   4   4   4   4   4   4   1   1   1   1   1 
   1   4   4   4   4   4   4   4   4   1   1   1   4   4   4   4   4   4   4   4   1   1   1   1   1 
   1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1 
-  1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1  11  11  11  11 
-  1   4   4   4   1   1   1   4   4   4   4   4   4   4   1   1   1   4   4   4   1  11  11  11  11 
-  1   4   4   4   1   1   1   4   4   4   4   4   4   4   1   1   1   4   4   4   1  11  11  11  11 
-  1   4   4   4   1   1   1   4   4   4   4   4   4   4   1   1   1   4   4   4   1  11  11  11  11 
-  1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1  11  11  11  11 
-  1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1  11  11  11  11 
-  1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1  11  11  11  11 
-  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11  11 
+  1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1 
+  1   4   4   4   1   1   1   4   4   4   4   4   4   4   1   1   1   4   4   4   1   1   4   4   4 
+  1   4   4   4   1   1   1   4   4   4   4   4   4   4   1   1   1   4   4   4   1   1   4   4   4 
+  1   4   4   4   1   1   1   4   4   4   4   4   4   4   1   1   1   4   4   4   1   1   4   4   4 
+  1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   4   4   4 
+  1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   4   4   4 
+  1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4 
 End of pure map information for this level
 Begin of obstacle data
 ob_type=2 ob_x=1.50 ob_y=1.00 ob_na=-1 
@@ -22612,7 +22616,7 @@ ob_type=1 ob_x=25.00 ob_y=9.50 ob_na=-1
 ob_type=1 ob_x=1.00 ob_y=10.50 ob_na=-1 
 ob_type=21 ob_x=9.50 ob_y=10.50 ob_na=-1 
 ob_type=21 ob_x=11.50 ob_y=10.50 ob_na=-1 
-ob_type=27 ob_x=21.00 ob_y=10.50 ob_na=-1 
+ob_type=27 ob_x=21.00 ob_y=10.50 ob_na=0 
 ob_type=16 ob_x=22.50 ob_y=10.50 ob_na=-1 
 ob_type=1 ob_x=25.00 ob_y=10.50 ob_na=-1 
 ob_type=1 ob_x=1.00 ob_y=11.50 ob_na=-1 
@@ -22691,6 +22695,32 @@ ob_type=2 ob_x=19.50 ob_y=21.00 ob_na=-1
 ob_type=1 ob_x=21.00 ob_y=20.50 ob_na=-1 
 ob_type=2 ob_x=20.50 ob_y=21.00 ob_na=-1 
 ob_type=42 ob_x=20.50 ob_y=80.50 ob_na=-1 
+ob_type=1 ob_x=23.99 ob_y=12.49 ob_na=-1 
+ob_type=1 ob_x=23.99 ob_y=11.49 ob_na=-1 
+ob_type=1 ob_x=23.99 ob_y=10.49 ob_na=-1 
+ob_type=1 ob_x=23.99 ob_y=9.49 ob_na=-1 
+ob_type=2 ob_x=20.52 ob_y=20.02 ob_na=-1 
+ob_type=2 ob_x=20.47 ob_y=19.95 ob_na=-1 
+ob_type=2 ob_x=19.47 ob_y=19.95 ob_na=-1 
+ob_type=2 ob_x=18.50 ob_y=20.01 ob_na=-1 
+ob_type=2 ob_x=18.49 ob_y=19.99 ob_na=-1 
+ob_type=2 ob_x=17.49 ob_y=19.99 ob_na=-1 
+ob_type=2 ob_x=16.49 ob_y=19.99 ob_na=-1 
+ob_type=2 ob_x=15.49 ob_y=19.99 ob_na=-1 
+ob_type=2 ob_x=14.49 ob_y=19.99 ob_na=-1 
+ob_type=2 ob_x=13.49 ob_y=19.99 ob_na=-1 
+ob_type=2 ob_x=12.49 ob_y=19.99 ob_na=-1 
+ob_type=2 ob_x=11.49 ob_y=19.99 ob_na=-1 
+ob_type=2 ob_x=10.49 ob_y=19.99 ob_na=-1 
+ob_type=2 ob_x=9.49 ob_y=19.99 ob_na=-1 
+ob_type=2 ob_x=8.49 ob_y=19.99 ob_na=-1 
+ob_type=2 ob_x=7.49 ob_y=19.99 ob_na=-1 
+ob_type=2 ob_x=6.49 ob_y=19.99 ob_na=-1 
+ob_type=2 ob_x=5.49 ob_y=19.99 ob_na=-1 
+ob_type=2 ob_x=4.49 ob_y=19.99 ob_na=-1 
+ob_type=2 ob_x=3.49 ob_y=19.99 ob_na=-1 
+ob_type=2 ob_x=2.49 ob_y=19.99 ob_na=-1 
+ob_type=2 ob_x=1.49 ob_y=19.99 ob_na=-1 
 End of obstacle data
 Start of pure map label information for this level
 label.pos.x=10 label.pos.y=10 label.label_name="NoviceArenaTeleportInPoint"
@@ -22699,9 +22729,9 @@ label.pos.x=5 label.pos.y=10 label.label_name="NoviceArenaBot1StartGameSquare"
 label.pos.x=10 label.pos.y=18 label.label_name="NoviceArenaBot2StartGameSquare"
 label.pos.x=18 label.pos.y=10 label.label_name="NoviceArenaBot3StartGameSquare"
 label.pos.x=10 label.pos.y=2 label.label_name="NoviceArenaBot4StartGameSquare"
-label.pos.x=20 label.pos.y=10 label.label_name="NoviceArenaExitDoor"
 End of pure map label information for this level
 Start of pure obstacle label information for this level
+obstacle_label.index=0 obstacle_label_name="NoviceArenaExitDoor"
 End of pure obstacle label information for this level
 
 Start of pure statement information for this level
@@ -22835,27 +22865,27 @@ Name of this level=New Level just created...
 Comment of the Influencer on entering this level="This is a new level...
 Name of background song for this level=NOWHERE.MOD
 beginning_of_map
-  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11  11 
-  1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1  11  11  11  11 
-  1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1  11  11  11  11 
-  1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1  11  11  11  11 
-  1   4   4   4   1   1   1   4   4   4   4   4   4   4   1   1   1   4   4   4   1  11  11  11  11 
-  1   4   4   4   1   1   1   4   4   4   4   4   4   4   1   1   1   4   4   4   1  11  11  11  11 
-  1   4   4   4   1   1   1   4   4   4   4   4   4   4   1   1   1   4   4   4   1  11  11  11  11 
-  1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1  11  11  11  11 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4 
+  1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   4   4   4 
+  1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   4   4   4 
+  1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   4   4   4 
+  1   4   4   4   1   1   1   4   4   4   4   4   4   4   1   1   1   4   4   4   1   1   4   4   4 
+  1   4   4   4   1   1   1   4   4   4   4   4   4   4   1   1   1   4   4   4   1   1   4   4   4 
+  1   4   4   4   1   1   1   4   4   4   4   4   4   4   1   1   1   4   4   4   1   1   4   4   4 
+  1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   4   4   4 
   1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1 
   1   4   4   4   4   4   4   4   4   1   1   1   4   4   4   4   4   4   4   4   1   1   1   1   1 
   1   4   4   4   4   4   4   4   4   1   2   1   4   4   4   4   4   4   4   4   1   1   1   1   1 
   1   4   4   4   4   4   4   4   4   1   1   1   4   4   4   4   4   4   4   4   1   1   1   1   1 
   1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1 
-  1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1  11  11  11  11 
-  1   4   4   4   1   1   1   4   4   4   4   4   4   4   1   1   1   4   4   4   1  11  11  11  11 
-  1   4   4   4   1   1   1   4   4   4   4   4   4   4   1   1   1   4   4   4   1  11  11  11  11 
-  1   4   4   4   1   1   1   4   4   4   4   4   4   4   1   1   1   4   4   4   1  11  11  11  11 
-  1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1  11  11  11  11 
-  1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1  11  11  11  11 
-  1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1  11  11  11  11 
-  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1  11  11  11  11 
+  1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1 
+  1   4   4   4   1   1   1   4   4   4   4   4   4   4   1   1   1   4   4   4   1   1   4   4   4 
+  1   4   4   4   1   1   1   4   4   4   4   4   4   4   1   1   1   4   4   4   1   1   4   4   4 
+  1   4   4   4   1   1   1   4   4   4   4   4   4   4   1   1   1   4   4   4   1   1   4   4   4 
+  1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   4   4   4 
+  1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   4   4   4 
+  1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4 
 End of pure map information for this level
 Begin of obstacle data
 ob_type=2 ob_x=1.50 ob_y=1.00 ob_na=-1 
@@ -22933,7 +22963,7 @@ ob_type=1 ob_x=25.00 ob_y=9.50 ob_na=-1
 ob_type=1 ob_x=1.00 ob_y=10.50 ob_na=-1 
 ob_type=21 ob_x=9.50 ob_y=10.50 ob_na=-1 
 ob_type=21 ob_x=11.50 ob_y=10.50 ob_na=-1 
-ob_type=27 ob_x=21.00 ob_y=10.50 ob_na=-1 
+ob_type=27 ob_x=21.00 ob_y=10.50 ob_na=0 
 ob_type=16 ob_x=22.50 ob_y=10.50 ob_na=-1 
 ob_type=1 ob_x=25.00 ob_y=10.50 ob_na=-1 
 ob_type=1 ob_x=1.00 ob_y=11.50 ob_na=-1 
@@ -23012,6 +23042,30 @@ ob_type=2 ob_x=19.50 ob_y=21.00 ob_na=-1
 ob_type=1 ob_x=21.00 ob_y=20.50 ob_na=-1 
 ob_type=2 ob_x=20.50 ob_y=21.00 ob_na=-1 
 ob_type=42 ob_x=20.50 ob_y=80.50 ob_na=-1 
+ob_type=1 ob_x=23.92 ob_y=10.54 ob_na=-1 
+ob_type=1 ob_x=23.92 ob_y=9.54 ob_na=-1 
+ob_type=1 ob_x=23.92 ob_y=11.54 ob_na=-1 
+ob_type=1 ob_x=23.92 ob_y=12.54 ob_na=-1 
+ob_type=2 ob_x=20.51 ob_y=19.98 ob_na=-1 
+ob_type=2 ob_x=19.51 ob_y=19.98 ob_na=-1 
+ob_type=2 ob_x=18.51 ob_y=19.98 ob_na=-1 
+ob_type=2 ob_x=17.51 ob_y=19.98 ob_na=-1 
+ob_type=2 ob_x=16.51 ob_y=19.98 ob_na=-1 
+ob_type=2 ob_x=15.51 ob_y=19.98 ob_na=-1 
+ob_type=2 ob_x=14.51 ob_y=19.98 ob_na=-1 
+ob_type=2 ob_x=13.51 ob_y=19.98 ob_na=-1 
+ob_type=2 ob_x=12.51 ob_y=19.98 ob_na=-1 
+ob_type=2 ob_x=11.51 ob_y=19.98 ob_na=-1 
+ob_type=2 ob_x=10.51 ob_y=19.98 ob_na=-1 
+ob_type=2 ob_x=9.51 ob_y=19.98 ob_na=-1 
+ob_type=2 ob_x=8.51 ob_y=19.98 ob_na=-1 
+ob_type=2 ob_x=7.51 ob_y=19.98 ob_na=-1 
+ob_type=2 ob_x=6.51 ob_y=19.98 ob_na=-1 
+ob_type=2 ob_x=5.51 ob_y=19.98 ob_na=-1 
+ob_type=2 ob_x=4.51 ob_y=19.98 ob_na=-1 
+ob_type=2 ob_x=3.51 ob_y=19.98 ob_na=-1 
+ob_type=2 ob_x=2.51 ob_y=19.98 ob_na=-1 
+ob_type=2 ob_x=1.51 ob_y=19.98 ob_na=-1 
 End of obstacle data
 Start of pure map label information for this level
 label.pos.x=10 label.pos.y=10 label.label_name="MasterArenaTeleportInPoint"
@@ -23020,9 +23074,9 @@ label.pos.x=5 label.pos.y=10 label.label_name="MasterArenaBot1StartGameSquare"
 label.pos.x=10 label.pos.y=18 label.label_name="MasterArenaBot2StartGameSquare"
 label.pos.x=18 label.pos.y=10 label.label_name="MasterArenaBot3StartGameSquare"
 label.pos.x=10 label.pos.y=2 label.label_name="MasterArenaBot4StartGameSquare"
-label.pos.x=20 label.pos.y=10 label.label_name="MasterArenaExitDoor"
 End of pure map label information for this level
 Start of pure obstacle label information for this level
+obstacle_label.index=0 obstacle_label_name="MasterArenaExitDoor"
 End of pure obstacle label information for this level
 
 Start of pure statement information for this level

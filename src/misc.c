@@ -1257,7 +1257,7 @@ give_pointer_to_obstacle_with_label ( char* obstacle_label )
     {
       for ( j = 0 ; j < MAX_OBSTACLE_NAMES_PER_LEVEL ; j ++ )
 	{
-	  if ( strlen ( curShip . AllLevels [ i ] -> obstacle_name_list [ j ] ) > 0 )
+	  if ( curShip . AllLevels [ i ] -> obstacle_name_list [ j ] != NULL )
 	    {
 	      if ( strcmp ( curShip . AllLevels [ i ] -> obstacle_name_list [ j ] , obstacle_label ) == 0 )
 		{
@@ -1347,8 +1347,8 @@ ExecuteEvent ( int EventNumber , int PlayerNum )
   if ( AllTriggeredActions[ EventNumber ].TeleportTarget.x != (-1) )
     {
       Teleport ( AllTriggeredActions[ EventNumber ].TeleportTargetLevel ,
-		 AllTriggeredActions[ EventNumber ].TeleportTarget.x ,
-		 AllTriggeredActions[ EventNumber ].TeleportTarget.y ,
+		 AllTriggeredActions[ EventNumber ].TeleportTarget.x + 0.5 ,
+		 AllTriggeredActions[ EventNumber ].TeleportTarget.y + 0.5 ,
 		 PlayerNum , FALSE , TRUE );
     }
 
@@ -1419,12 +1419,12 @@ CheckForTriggeredEventsAndStatements ( int PlayerNum )
 
       if ( AllEventTriggers[i].Influ_Must_Be_At_Point.x != (-1) )
 	{
-	  if ( rintf( AllEventTriggers[i].Influ_Must_Be_At_Point.x ) != rintf( Me [ PlayerNum ] . pos.x ) ) continue;
+	  if ( rintf( AllEventTriggers[i].Influ_Must_Be_At_Point.x ) != (int) ( Me [ PlayerNum ] . pos.x ) ) continue;
 	}
 
       if ( AllEventTriggers[i].Influ_Must_Be_At_Point.y != (-1) )
 	{
-	  if ( rintf( AllEventTriggers[i].Influ_Must_Be_At_Point.y ) != rintf( Me [ PlayerNum ] . pos.y ) ) continue;
+	  if ( rintf( AllEventTriggers[i].Influ_Must_Be_At_Point.y ) != (int) ( Me [ PlayerNum ] . pos.y ) ) continue;
 	}
 
       if ( AllEventTriggers[i].Influ_Must_Be_At_Level != (-1) )

@@ -523,7 +523,7 @@ ShowCombatScreenTexts ( int mask )
 
   if ( GameConfig.Draw_Position || ( mask & ONLY_SHOW_MAP_AND_TEXT ) )
     {
-      PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x+2*User_Rect.w/3 , 
+      PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x+1.0*User_Rect.w/3 , 
 		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
 		       "GPS: X=%3.1f Y=%3.1f Lev=%d" , ( Me [ 0 ] . pos . x ) , ( Me [ 0 ] . pos . y ) , DisplayLevel->levelnum );
     }
