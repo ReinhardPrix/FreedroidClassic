@@ -1846,23 +1846,25 @@ PutInfluence ( int x , int y , int PlayerNum )
  * comments, that must have been set before, to the screen.
  * ---------------------------------------------------------------------- */
 void
-PrintCommentOfThisEnemy ( int Enum , int x , int y )
+PrintCommentOfThisEnemy ( int Enum )
 {
+  int x_pos, y_pos;
+
   //--------------------
   // At this point we can assume, that the enemys has been blittet to the
   // screen, whether it's a friendly enemy or not.
   // 
   // So now we can add some text the enemys says.  That might be fun.
   //
-  if ( (x == -1)
-       && ( AllEnemys[Enum].TextVisibleTime < GameConfig.WantedTextVisibleTime )
+  if ( ( AllEnemys[Enum].TextVisibleTime < GameConfig.WantedTextVisibleTime )
        && GameConfig.All_Texts_Switch )
     {
+      x_pos = translate_map_point_to_screen_pixel ( AllEnemys[ Enum ] . pos . x , AllEnemys [ Enum ] . pos . y , TRUE );
+      y_pos = translate_map_point_to_screen_pixel ( AllEnemys[ Enum ] . pos . x , AllEnemys [ Enum ] . pos . y , FALSE )
+	- 100 ;
       PutStringFont ( Screen , FPS_Display_BFont , 
-		      UserCenter_x + Block_Width/3
-		      + (AllEnemys[Enum].pos.x - Me[0].pos.x) * Block_Width ,  
-		      UserCenter_y - Block_Height/2
-		      + (AllEnemys[Enum].pos.y - Me[0].pos.y) * Block_Height ,  
+		      x_pos ,  
+		      y_pos ,  
 		      AllEnemys[Enum].TextToBeDisplayed );
     }
 
@@ -2162,10 +2164,6 @@ There was a droid type on this level, that does not really exist.",
     {
       UpperLeftBlitCorner.x = 0 ;
       UpperLeftBlitCorner.y = 0 ;
-      // UpperLeftBlitCorner.x = 
-      // translate_map_point_to_screen_pixel ( AllEnemys[Enum].pos.x , AllEnemys[Enum].pos.y , TRUE );
-      // UpperLeftBlitCorner.y = 
-      // translate_map_point_to_screen_pixel ( AllEnemys[Enum].pos.x , AllEnemys[Enum].pos.y , FALSE );
     }
   else
     {
@@ -2198,7 +2196,7 @@ There was a droid type on this level, that does not really exist.",
   if ( GameConfig.show_digits_of_droids )
     BlitRobotDigits( UpperLeftBlitCorner , druidname , AllEnemys[Enum].is_friendly );
 
-  PrintCommentOfThisEnemy ( Enum , x , y );
+  PrintCommentOfThisEnemy ( Enum );
 
 }; // void PutEnemy(int Enum , int x , int y) 
 
