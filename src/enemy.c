@@ -576,8 +576,8 @@ MoveThisRobotThowardsHisCurrentTarget ( int EnemyNum )
     }
   else
     {
-      nextwp_pos.x = WpList[ ThisRobot->nextwaypoint ] . x ;
-      nextwp_pos.y = WpList[ ThisRobot->nextwaypoint ] . y ;
+      nextwp_pos.x = WpList[ ThisRobot->nextwaypoint ] . x + 0.5 ;
+      nextwp_pos.y = WpList[ ThisRobot->nextwaypoint ] . y + 0.5 ;
     }
 
   //--------------------
@@ -640,8 +640,8 @@ RawSetNewRandomWaypoint ( Enemy ThisRobot )
   WpList = WaypointLevel->AllWaypoints;
   nextwp = ThisRobot->nextwaypoint;
   maxspeed = ItemMap[ Druidmap[ ThisRobot->type ].drive_item.type ].item_drive_maxspeed;
-  nextwp_pos.x = WpList[nextwp].x;
-  nextwp_pos.y = WpList[nextwp].y;
+  nextwp_pos.x = WpList[nextwp].x + 0.5 ;
+  nextwp_pos.y = WpList[nextwp].y + 0.5 ;
 
   ThisRobot->lastwaypoint = ThisRobot->nextwaypoint;
   
@@ -666,7 +666,7 @@ RawSetNewRandomWaypoint ( Enemy ThisRobot )
       //
       for ( i = 0; i < j ; i++ )
 	{
-	  FreeWays[i] = CheckIfWayIsFreeOfDroids ( WpList[ThisRobot->lastwaypoint].x , WpList[ThisRobot->lastwaypoint].y , WpList[WpList[ThisRobot->lastwaypoint].connections[i]].x , WpList[WpList[ThisRobot->lastwaypoint].connections[i]].y , ThisRobot->pos.z , ThisRobot );
+	  FreeWays[i] = CheckIfWayIsFreeOfDroids ( WpList[ThisRobot->lastwaypoint].x + 0.5 , WpList[ThisRobot->lastwaypoint].y + 0.5 , WpList[WpList[ThisRobot->lastwaypoint].connections[i]].x + 0.5 , WpList[WpList[ThisRobot->lastwaypoint].connections[i]].y + 0.5 , ThisRobot->pos.z , ThisRobot );
 	}
       
       //--------------------
@@ -728,13 +728,7 @@ This is an error in the waypoint structure of this level.",
 void 
 SelectNextWaypointAdvanced ( int EnemyNum )
 {
-  Waypoint WpList;		/* Pointer to waypoint-liste */
-  int nextwp;
-  finepoint nextwp_pos;
-  float maxspeed;
   Enemy ThisRobot=&AllEnemys[ EnemyNum ];
-  Level WaypointLevel = curShip.AllLevels[ AllEnemys[ EnemyNum ].pos.z ];
-  finepoint Restweg;
 
   DebugPrintf( 2 , "\nvoid SelectNextWaypointAdvanced ( int EnemyNum ) : real function call confirmed. ");
 
@@ -745,28 +739,7 @@ SelectNextWaypointAdvanced ( int EnemyNum )
   //
   if ( ThisRobot->persuing_given_course == TRUE ) return;
 
-  //--------------------
-  // We do some definitions to save us some more typing later...
-  //
-  WpList = WaypointLevel->AllWaypoints;
-  nextwp = ThisRobot->nextwaypoint;
-  // maxspeed = Druidmap[ ThisRobot->type ].maxspeed;
-  maxspeed = ItemMap[ Druidmap[ ThisRobot->type ].drive_item.type ].item_drive_maxspeed;
-  nextwp_pos.x = WpList[nextwp].x;
-  nextwp_pos.y = WpList[nextwp].y;
-
-  // determine the remaining way until the target point is reached
-  Restweg.x = nextwp_pos.x - ThisRobot->pos.x;
-  Restweg.y = nextwp_pos.y - ThisRobot->pos.y;
-
-  //--------------------
-  // Now we can see if we are perhaps already there?
-  // then it might be time to set a new waypoint.
-  //
-  if ((Restweg.x == 0) && (Restweg.y == 0))
-    {
-      RawSetNewRandomWaypoint ( ThisRobot );
-    } // if
+  RawSetNewRandomWaypoint ( ThisRobot );
 
 }; // void SelectNextWaypointAdvanced ( int EnemyNum )
 
@@ -800,8 +773,8 @@ RemainingDistanceToNextWaypoint ( Enemy ThisRobot )
   nextwp = ThisRobot->nextwaypoint;
   // maxspeed = Druidmap[ ThisRobot->type ].maxspeed;
   maxspeed = ItemMap[ Druidmap[ ThisRobot->type ].drive_item.type ].item_drive_maxspeed;
-  nextwp_pos.x = WpList[nextwp].x;
-  nextwp_pos.y = WpList[nextwp].y;
+  nextwp_pos.x = WpList[nextwp].x + 0.5 ;
+  nextwp_pos.y = WpList[nextwp].y + 0.5 ;
 
   // determine the remaining way until the target point is reached
   Restweg.x = nextwp_pos.x - ThisRobot->pos.x;
@@ -2007,9 +1980,14 @@ ProcessAttackStateMachine (int enemynum)
 				     AllWaypoints [ ThisRobot->nextwaypoint ] . x ,
 				     curShip . AllLevels [ Me [ 0 ] . pos . z ] -> 
 				     AllWaypoints [ ThisRobot->nextwaypoint ] . y ,
-				     240 )
+				     90 )
 	  )
 	{
+	  //--------------------
+	  // Maybe there should be some more waiting here, so that the bots and
+	  // characters don't appear so very busy and moving so abruptly, but that
+	  // may follow later...
+	  //
 	  ThisRobot -> combat_state = MOVE_ALONG_RANDOM_WAYPOINTS ;
 	}
       return;

@@ -908,10 +908,10 @@ Cheatmenu (void)
 		  
 		  l ++;
 		  printf_SDL (Screen, 15, -1,
-			      "%d.   %s   %d   %d   %d    %g ", i,
+			      "%d.   %s   %3.1f   %3.1f   %d    %g ", i,
 			       Druidmap[AllEnemys[i].type].druidname,
-			       (int)AllEnemys[i].pos.x,
-			       (int)AllEnemys[i].pos.y,
+			       AllEnemys[i].pos.x,
+			       AllEnemys[i].pos.y,
 			       (int)AllEnemys[i].energy,
 			       AllEnemys[i].speed.x );
 		  if ( AllEnemys[i].Status == MOBILE ) printf_SDL (Screen, -1, -1, "MOB" );

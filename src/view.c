@@ -58,7 +58,7 @@ EXTERN int MyCursorY;
 SDL_Color flashcolor1 = {100, 100, 100};
 SDL_Color flashcolor2 = {0, 0, 0};
 
-#define MAX_ELEMENTS_IN_BLITTING_LIST 3000
+#define MAX_ELEMENTS_IN_BLITTING_LIST (MAX_OBSTACLES_ON_MAP+100) // some enemies might there too
 
 typedef struct
 {
@@ -2102,9 +2102,9 @@ There was a rotation model type given, that exceeds the number of rotation model
 		- ENEMY_ENERGY_BAR_OFFSET_Y ;
 
 	      TargetRectangle.x -= ( enemy_iso_images[ RotationModel ] [ RotationIndex ] . surface -> w ) / 2 ;
-	  TargetRectangle.y -= ( enemy_iso_images[ RotationModel ] [ RotationIndex ] . surface -> h ) / 1 ;
-	  TargetRectangle.w = enemy_iso_images[ RotationModel ] [ RotationIndex ] . surface -> w;
-	  TargetRectangle.h = enemy_iso_images[ RotationModel ] [ RotationIndex ] . surface -> h;
+	      TargetRectangle.y -= ( enemy_iso_images[ RotationModel ] [ RotationIndex ] . surface -> h ) / 1 ;
+	      TargetRectangle.w = enemy_iso_images[ RotationModel ] [ RotationIndex ] . surface -> w;
+	      TargetRectangle.h = enemy_iso_images[ RotationModel ] [ RotationIndex ] . surface -> h;
 
 
 	      if ( GameConfig . enemy_energy_bars_visible )
