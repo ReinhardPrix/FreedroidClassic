@@ -2415,33 +2415,43 @@ init_obstacle_data( void )
   obstacle_map [ ISO_LAMP_W ] . filename = "iso_obstacle_0057.png" ;
   
   
+  //--------------------
+  // We have several types of fences.  These are typically rather
+  // long and slender obstacles, which is a case that our method
+  // of planting obstacles so that the visibility properties are
+  // more or less correct can not so easily handle.  A feasible
+  // solution is to increase the thickness of the long and slender
+  // obstacles, setting e.g. the thickness to 1.1 should provide
+  // some protection against small errors in the visibility on screen.
+  // Maybe we will need even a bit more.  It's a fine-tuning thing.
+  //
   obstacle_map [ ISO_V_WOOD_FENCE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_V_WOOD_FENCE ] . block_area_parm_1 = 0.8 ;
+  obstacle_map [ ISO_V_WOOD_FENCE ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_V_WOOD_FENCE ] . block_area_parm_2 = 2.2 ;
   obstacle_map [ ISO_V_DENSE_FENCE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_V_DENSE_FENCE ] . block_area_parm_1 = 0.80 ;
+  obstacle_map [ ISO_V_DENSE_FENCE ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_V_DENSE_FENCE ] . block_area_parm_2 = 2.2 ;
   obstacle_map [ ISO_V_MESH_FENCE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_V_MESH_FENCE ] . block_area_parm_1 = 0.80 ;
+  obstacle_map [ ISO_V_MESH_FENCE ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_V_MESH_FENCE ] . block_area_parm_2 = 2.2 ;
   obstacle_map [ ISO_V_MESH_FENCE ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_V_WIRE_FENCE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_V_WIRE_FENCE ] . block_area_parm_1 = 0.80 ;
+  obstacle_map [ ISO_V_WIRE_FENCE ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_V_WIRE_FENCE ] . block_area_parm_2 = 2.2 ;
   obstacle_map [ ISO_V_WIRE_FENCE ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_H_WOOD_FENCE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_H_WOOD_FENCE ] . block_area_parm_1 = 2.2 ;
-  obstacle_map [ ISO_H_WOOD_FENCE ] . block_area_parm_2 = 0.8 ;
+  obstacle_map [ ISO_H_WOOD_FENCE ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_H_DENSE_FENCE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_H_DENSE_FENCE ] . block_area_parm_1 = 2.2 ;
-  obstacle_map [ ISO_H_DENSE_FENCE ] . block_area_parm_2 = 0.80 ;
+  obstacle_map [ ISO_H_DENSE_FENCE ] . block_area_parm_2 = 1.10 ;
   obstacle_map [ ISO_H_MESH_FENCE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_H_MESH_FENCE ] . block_area_parm_1 = 2.2 ;
-  obstacle_map [ ISO_H_MESH_FENCE ] . block_area_parm_2 = 0.80 ;
+  obstacle_map [ ISO_H_MESH_FENCE ] . block_area_parm_2 = 1.10 ;
   obstacle_map [ ISO_H_MESH_FENCE ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_H_WIRE_FENCE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_H_WIRE_FENCE ] . block_area_parm_1 = 2.2 ;
-  obstacle_map [ ISO_H_WIRE_FENCE ] . block_area_parm_2 = 0.80 ;
+  obstacle_map [ ISO_H_WIRE_FENCE ] . block_area_parm_2 = 1.10 ;
   obstacle_map [ ISO_H_WIRE_FENCE ] . block_vision_too = FALSE ;
 
   obstacle_map [ ISO_N_TOILET_SMALL ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
