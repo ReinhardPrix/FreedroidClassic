@@ -11,8 +11,17 @@ jp
 
 The list of things I'm going to work on next:
 
--3. Remove the limitation to ALLDRUIDTYPES druid types
-    via dynamically allocating memory.
+(?). Restore the animation of Refreshes
+
+(?). Speed up the loading and interpreting time for the map file
+
+DONE Correct the aggression of droids
+
+(?). Introduce a flag for new and advanced combat behaviour for 
+     some new robots, that have to be devised still
+
+(?). Adapt the crew file format, so that you can enter types by
+     their names instead of their numbers
 
 (?) Add instructions for using the Level editor in Freedroid perhaps on the home page
 
@@ -28,12 +37,16 @@ The list of things I'm going to work on next:
    DONE Extend the Level Editor to connect new waypoints to other waypoints 
    f. Allow to change the level name
    g. Write doku for the usage of the level editor
+   h. Do segfault protection from planting tiles outside map structure
+   i. Allow for more things to be set directly: straight walls & Elevators
 
 1. Introduce "Mission" files consisting of:
    a. Mission target specification: KILLALL, REACH_POS, KILL_TYPE
-   b. Briefing and EndTitle text
-   c. "Ship" to be loaded
-   d. Next mission file
+   DONE Briefing text
+   c. EndTitle text
+   DONE "Ship" to be loaded
+   e. Next mission file after completition of mission
+   f. Add a function "CheckMissionSuccess" for a.
 
 5. Write a new ship/area for testing purposes: "The mining community"
    2.a One deck at least.

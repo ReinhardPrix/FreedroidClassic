@@ -367,14 +367,13 @@ AttackInfluence (int enemynum)
       IsVisible (&AllEnemys[enemynum].pos))
     {
 
-      /*
       if ( MyRandom (AGGRESSIONMAX)  >=
  	  Druidmap[AllEnemys[enemynum].type].aggression )
 	{
-	  AllEnemys[enemynum].firewait = MyRandom (Druidmap[AllEnemys[enemynum].type].firewait);
+	  AllEnemys[enemynum].firewait += drand48()*10; //MyRandom (Druidmap[AllEnemys[enemynum].type].firewait);
 	  return;
 	}
-      */
+
 
       Fire_Bullet_Sound ( guntype );
 

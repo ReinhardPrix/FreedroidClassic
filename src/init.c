@@ -44,7 +44,7 @@
 #define SCROLLSTARTX		USERFENSTERPOSX
 #define SCROLLSTARTY		SCREENHOEHE
 
-void Init_Game_Data(void);
+void Init_Game_Data( char* Datafilename );
 
 
 /*@Function============================================================
@@ -508,27 +508,30 @@ Get_Robot_Data ( void* DataPointer )
 @Ret: 
 * $Function----------------------------------------------------------*/
 void
-Init_Game_Data (void)
+Init_Game_Data ( char * Datafilename )
 {
   struct stat stbuf;
   FILE *DataFile;
   char *Data;
   char *EndPointer;
-  char filename[]=MAP_DIR "game.dat";
+  // char filename[10000];
 #define END_OF_GAME_DAT_STRING "*** End of game.dat File ***"
 
-  printf("\nint Init_Game_Data ( void ) called.");
-  printf("\nint Init_Game_Data ( void ): The filename is: %s" , filename );
+  // strcpy ( filename , MAP_DIR );
+  // strcat ( filename , Datafilename );
+
+  printf("\nint Init_Game_Data ( char* Datafilename ) called.");
+  printf("\nint Init_Game_Data ( char* Datafilename ): The filename is: %s" , Datafilename );
 
   /* Read the whole game data to memory */
-  if ((DataFile = fopen (filename, "r")) == NULL)
+  if ((DataFile = fopen (Datafilename, "r")) == NULL)
     {
       DebugPrintf ("\nint Init_Game_Data( void ): Error opening file.... ");
       Terminate(ERR);
     }
   else
     {
-      printf("\nOpening game.dat file succeeded...");
+      printf("\nOpening game data file succeeded...");
     }
 
   if (fstat (fileno (DataFile), &stbuf) == EOF)
@@ -539,7 +542,7 @@ Init_Game_Data (void)
     }
   else
     {
-      printf("\nfstating game.dat file succeeded...");
+      printf("\nfstating game data file succeeded...");
     }
 
   if ((Data = (char *) malloc (stbuf.st_size + 64*2)) == NULL)
@@ -723,12 +726,15 @@ InitNewMission ( char *MissionName )
   char *ShipnamePointer;
   char *ElevatornamePointer;
   char *CrewnamePointer;
-  char Shipname[10000];
-  char Elevatorname[10000];
-  char Crewname[10000];
+  char *GameDataNamePointer;
+  char Shipname[2000];
+  char Elevatorname[2000];
+  char Crewname[2000];
+  char GameDataName[2000];
   int ShipnameLength;
   int CrewnameLength;
   int ElevatornameLength;
+  int GameDataNameLength;
   // char filename[]=MAP_DIR "game.dat";
   // #define END_OF_GAME_DAT_STRING "*** End of game.dat File ***"
 #define END_OF_MISSION_DATA_STRING "*** End of Mission File ***"
@@ -736,7 +742,7 @@ InitNewMission ( char *MissionName )
 #define SHIPNAME_INDICATION_STRING "Ship file to use for this mission: "
 #define ELEVATORNAME_INDICATION_STRING "Elevator file to use for this mission: "
 #define CREWNAME_INDICATION_STRING "Crew file to use for this mission: "
-#define GAME_DAT_NAME_INDICATION_STRING "Physics ('game.dat') file to use for this mission: "
+#define GAMEDATANAME_INDICATION_STRING "Physics ('game.dat') file to use for this mission: "
 
   DebugPrintf ("\nvoid InitNewMission( char *MissionName ): real function call confirmed...");
   printf("\nA new mission is being initialized from file %s." , MissionName );
@@ -843,8 +849,27 @@ InitNewMission ( char *MissionName )
   DebugPrintf
     ("\nvoid InitNewGame(void): The title signaton has been successfully displayed...:");
 
-
-  Init_Game_Data ( );
+  //--------------------
+  // First we extract the game physics file name from the
+  // mission file and load the game data.
+  //
+  if ( (GameDataNamePointer = strstr ( MainMissionPointer, GAMEDATANAME_INDICATION_STRING )) == NULL )
+    {
+      printf("\nERROR! NO GAME DATA FILENAME FOUND! TERMINATING!");
+      Terminate(ERR);
+    }
+  else
+    {
+      strcpy( GameDataName , MAP_DIR );
+      GameDataNamePointer += strlen ( GAMEDATANAME_INDICATION_STRING );
+      
+      GameDataNameLength = strstr ( GameDataNamePointer , "\n") - GameDataNamePointer;
+      strncat( GameDataName , GameDataNamePointer , GameDataNameLength );
+      GameDataName[ strlen(MAP_DIR) + GameDataNameLength ] = 0;
+      printf("\nGame data filename found!  It reads: %s" , GameDataName );
+    }
+  
+  Init_Game_Data ( GameDataName );
 
   //--------------------
   // Now its time to get the shipname from the mission file and
