@@ -933,8 +933,8 @@ FireBullet (void)
   // now determine the angle of the shot
   CurBullet->angle= - ( atan2 (speed.y,  speed.x) * 180 / M_PI + 90 );
 
-  DebugPrintf( 1 , "\nFireBullet(...) : Phase of bullet=%d." , CurBullet->phase );
-  DebugPrintf( 1 , "\nFireBullet(...) : angle of bullet=%f." , CurBullet->angle );
+  DebugPrintf( 0 , "\nFireBullet(...) : Phase of bullet=%d." , CurBullet->phase );
+  DebugPrintf( 0 , "\nFireBullet(...) : angle of bullet=%f." , CurBullet->angle );
   
   //  printf_SDL(ne_screen, User_Rect.x, User_Rect.y, "Bullet speed: %g %g ",
   //	     CurBullet->speed.x, CurBullet->speed.y);
