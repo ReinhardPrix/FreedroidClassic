@@ -1090,8 +1090,8 @@ Show_Mission_Instructions_Menu (void)
       LeftPutString (ScaledSurface , 5*FontHeight(Menu_BFont), "mission from the Commodore C64.");
       LeftPutString (ScaledSurface , 6*FontHeight(Menu_BFont), "So the mission is:");
       LeftPutString (ScaledSurface , 7*FontHeight(Menu_BFont), "Destroy all robots on the ship.");
-      LeftPutString (ScaledSurface , 9*FontHeight(Menu_BFont), "We are looking forward so seeing");
-      LeftPutString (ScaledSurface ,10*FontHeight(Menu_BFont), "new missions and levels from you!");
+      LeftPutString (ScaledSurface , 9*FontHeight(Menu_BFont), "If you have some new and good");
+      LeftPutString (ScaledSurface ,10*FontHeight(Menu_BFont), "ideas, why not tell us?");
 
       SDL_UpdateRect(ScaledSurface, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
 

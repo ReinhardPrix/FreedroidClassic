@@ -99,6 +99,9 @@ Init_Audio(void)
   Current_BG_Music_Volume=1.0;
   Current_Sound_FX_Volume=1.0;
 
+  if ( !sound_on ) return;
+
+
   /* Because the yiff does not nescessarily have the same origin for */
   /* relative paths as paradroid does, it is nescessary to first translate */
   /* our path names to absolute pathnames.  */
@@ -111,14 +114,8 @@ Init_Audio(void)
 	ExpandFilename (SoundSampleFilenames[i]);
     }
 
-  // Now SDL_AUDIO and SDL_TIMER are initialized here:
+  // Now SDL_AUDIO is initialized here:
 
-  if ( SDL_InitSubSystem ( SDL_INIT_TIMER ) == -1 ) 
-    {
-      fprintf(stderr, "Couldn't initialize SDL: %s\n",SDL_GetError());
-      Terminate(ERR);
-    } else
-      printf("\nSDL Timer initialisation successful.\n");
   if ( SDL_InitSubSystem ( SDL_INIT_AUDIO ) == -1 ) 
     {
       fprintf(stderr, "Couldn't initialize SDL: %s\n",SDL_GetError());
@@ -209,6 +206,8 @@ void
 Set_BG_Music_Volume(float NewVolume)
 {
 
+  if ( !sound_on ) return;
+
   // Set the volume IN the loaded files, if SDL is used...
   for ( i=1 ; i<5 ; i++ )
     {
@@ -222,6 +221,8 @@ Set_BG_Music_Volume(float NewVolume)
 void 
 Set_Sound_FX_Volume(float NewVolume)
 {
+
+  if ( !sound_on ) return;
 
   // Set the volume IN the loaded files, if SDL is used...
   // This is done here for the Files 1,2,3 and 4, since these
@@ -305,6 +306,8 @@ Technical details:
 void
 Switch_Background_Music_To (int Tune)
 {
+
+  if ( !sound_on ) return;
 
   // Here comes the SDL-BASED Background music code:
 

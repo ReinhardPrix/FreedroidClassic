@@ -493,6 +493,15 @@ Init_Video (void)
     } else
       printf("\nSDL Video initialisation successful.\n");
 
+  // Now SDL_TIMER is initialized here:
+
+  if ( SDL_InitSubSystem ( SDL_INIT_TIMER ) == -1 ) 
+    {
+      fprintf(stderr, "Couldn't initialize SDL: %s\n",SDL_GetError());
+      Terminate(ERR);
+    } else
+      printf("\nSDL Timer initialisation successful.\n");
+
   /* clean up on exit */
   atexit (SDL_Quit);
 

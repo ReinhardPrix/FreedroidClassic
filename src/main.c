@@ -470,8 +470,13 @@ ThouArtDefeated (void)
       usleep (10000);
     }
 
+#ifdef NEW_ENGINE
+
+#else
   /* Ein Flimmer zieht "uber den Schirm */
-  // Flimmern (4);  /* type 4 flimmer */
+  Flimmern (4);  /* type 4 flimmer */
+#endif
+
   Debriefing ();
 
   /* Soundblaster soll keine Toene mehr spucken */
