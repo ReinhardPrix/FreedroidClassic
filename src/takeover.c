@@ -144,8 +144,10 @@ Takeover (int enemynum)
   int FinishTakeover = FALSE;
   static int RejectEnergy = 0;	/* your energy if you're rejected */
   char *message;
-  int key;
   int ClearanceIndex;
+  int Finished = FALSE;
+  int WasPressed = FALSE ;
+  int Displacement = 0 ;
 
   //--------------------
   // Prevent distortion of framerate by the delay coming from 
@@ -164,17 +166,36 @@ Takeover (int enemynum)
   SwitchBackgroundMusicTo ( TAKEOVER_BACKGROUND_MUSIC_SOUND ); // now this is a STRING!!!
 
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
-  
-  //  FillRect (User_Rect, to_bg_color);
-
   Me[0].status = MOBILE; /* the new status _after_ the takeover game */
 
-  ShowDroidInfo ( AllEnemys[enemynum].type, 0 , FALSE );
-  key = 0;
+  //--------------------
+  // Now it is time to display the enemy of this whole takeover process...
+  //
+  while ( !Finished )
+    {
+      ShowDroidInfo ( AllEnemys[enemynum].type, Displacement , TRUE );
+      SDL_Flip ( Screen );
+      
+      if ( CursorIsOnButton( UP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
+	{
+	  MoveMenuPositionSound();
+	  Displacement += FontHeight ( GetCurrentFont () );
+	}
+      else if ( CursorIsOnButton( DOWN_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
+	{
+	  MoveMenuPositionSound();
+	  Displacement -= FontHeight ( GetCurrentFont () );
+	}
+      else if ( CursorIsOnButton( ITEM_BROWSER_EXIT_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed ) 
+	{
+	  Finished = TRUE;
+	}
+      WasPressed = axis_is_active; 
 
-  SDL_Flip ( Screen );
+      if ( SpacePressed() && !axis_is_active ) Finished = TRUE ;
 
-  while ( !SpacePressed() && !EscapePressed() && !axis_is_active );
+    }
+
   while ( !( !SpacePressed() && !EscapePressed() && !axis_is_active )) ;
 
 

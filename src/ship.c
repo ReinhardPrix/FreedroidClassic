@@ -354,12 +354,6 @@ GreatDruidShow (void)
   int i;
 
   //--------------------
-  // We initialize the text rectangle
-  //
-  // Cons_Text_Rect . x = 175 ; Cons_Text_Rect . y = 180 ; Cons_Text_Rect . w = SCREEN_WIDTH - 175 ; Cons_Text_Rect . h = 305 ;
-  Cons_Text_Rect . x = 258 ; Cons_Text_Rect . y = 89 ; Cons_Text_Rect . w = 346 ; Cons_Text_Rect . h = 282 ;
-
-  //--------------------
   // First we find out how many clearances the Tux has gained
   // so far.
   //
@@ -631,6 +625,10 @@ ShowDroidInfo (int droidtype, int Displacement , char ShowArrows )
   char InfoText[10000];
   char TextChunk[2000];
 
+  //--------------------
+  // We initialize the text rectangle
+  //
+  Cons_Text_Rect . x = 258 ; Cons_Text_Rect . y = 89 ; Cons_Text_Rect . w = 346 ; Cons_Text_Rect . h = 282 ;
 
   SDL_SetClipRect ( Screen , NULL );
 
@@ -664,20 +662,15 @@ Brain : %s", Druidmap[droidtype].druidname, Classname[Druidmap[ droidtype ].clas
   else 
     item_name = "none";
 
-  sprintf( TextChunk , "\
-Unit type %s - %s\n\
-Armamant : %s\n\
-Sensors  1: %s\n          2: %s\n          3: %s", Druidmap[droidtype].druidname,
-	       Classname[Druidmap[droidtype].class],
+  sprintf( TextChunk , "\nArmamant : %s\n\
+Sensors  1: %s\n          2: %s\n          3: %s", 
 	       item_name,
 	       Sensornames[ Druidmap[droidtype].sensor1 ],
 	       Sensornames[ Druidmap[droidtype].sensor2 ],
 	       Sensornames[ Druidmap[droidtype].sensor3 ]);
   strcat ( InfoText , TextChunk );
 
-  sprintf ( TextChunk , "Unit type %s - %s\n\
-Notes: %s", Druidmap[droidtype].druidname , Classname[Druidmap[droidtype].class],
-	    Druidmap[droidtype].notes);
+  sprintf ( TextChunk , "\nNotes: %s\n", Druidmap[droidtype].notes);
   strcat ( InfoText , TextChunk );
 
   SetCurrentFont( FPS_Display_BFont );
