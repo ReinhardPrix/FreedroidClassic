@@ -266,29 +266,6 @@ DoEquippmentListSelection( char* Startstring , item* Item_Pointer_List[ MAX_ITEM
 	  while ( DownPressed() );
 	}      
 
-      //--------------------
-      // Maybe the mouse wheel was pressed up or down.  Then of course we
-      // must not move the cursor, which is only used for keyboard input
-      // but instead we have the menu scrolling up or down, depending on
-      // what's currently requested.
-      //
-      /*
-      if ( MouseWheelUpPressed() )
-	{
-	  if ( MenuInListPosition > 0 )
-	    MenuInListPosition --;
-
-	  while ( MouseWheelUpPressed() );
-	}
-      if ( MouseWheelDownPressed() )
-	{
-	  if ( MenuInListPosition < Pointer_Index - NUMBER_OF_ITEMS_ON_ONE_SCREEN )
-	    MenuInListPosition ++;
-
-	  while ( MouseWheelDownPressed() );
-	}      
-      */
-
     } // while not space pressed...
 
   if ( SpacePressed() || axis_is_active ) 
@@ -296,21 +273,6 @@ DoEquippmentListSelection( char* Startstring , item* Item_Pointer_List[ MAX_ITEM
       SDL_ShowCursor( SDL_ENABLE );
       return ( InMenuPosition + MenuInListPosition ) ;
     }
-  /*
-  if ( SpacePressed() && !axis_is_active ) 
-    {
-      SDL_ShowCursor( SDL_ENABLE );
-      return ( InMenuPosition + MenuInListPosition ) ;
-    }
-  else
-    {
-      if ( ( ClickedMenuItemPosition() != (-1) ) && ( ClickedMenuItemPosition() < Pointer_Index ) )
-	{
-	  SDL_ShowCursor( SDL_ENABLE );
-	  return ( ClickedMenuItemPosition() + MenuInListPosition ) ;
-	}
-    }
-  */
 
   while ( SpacePressed() || EscapePressed() );
 
@@ -530,9 +492,11 @@ TryToBuyItem( item* BuyItem )
   MenuTexts[7]="";
   MenuTexts[9]="";
 
+  DebugPrintf ( 0 , "\nTryToBuyItem (...):  function called." );
+
   FreeIndex = GetFreeInventoryIndex(  );
 
-  while ( SpacePressed() || EnterPressed() );
+  while ( SpacePressed() || EnterPressed() || axis_is_active );
 
   if ( CalculateItemPrice ( BuyItem , FALSE ) > Me[0].Gold )
     {
@@ -580,6 +544,18 @@ TryToBuyItem( item* BuyItem )
 	    }
 	}
     }
+
+  //--------------------
+  // If this point is ever reached, we know that an item has been selected 
+  // for buying and could be bought, if only ONE HAD ENOUGH ROOM IN INVENTORY!!
+  // Therefore a message must be displayed, saying what the problem is.
+  //
+  PlayOnceNeededSoundSample ( "Tux_Hold_On_I_0.wav" , TRUE );
+  MenuTexts[0]=" BACK ";
+  MenuTexts[1]="";
+  GiveItemDescription( linebuf , BuyItem , TRUE );
+  strcat ( linebuf , "\n\n   No room for this item in inventory!" );
+  DoMenuSelection( linebuf , MenuTexts , 1 , NULL , NULL );
 
 }; // void TryToBuyItem( item* BuyItem )
 
@@ -638,9 +614,18 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
   // to the given user selection.
   //
   sprintf( DescriptionText , " I HAVE THESE ITEMS FOR SALE         YOUR GOLD:  %4ld" , Me[0].Gold );
-  ItemSelected = DoEquippmentListSelection( DescriptionText , Buy_Pointer_List , PRICING_FOR_BUY );
 
-  if ( ItemSelected != (-1) ) TryToBuyItem( Buy_Pointer_List[ ItemSelected ] ) ;
+  //--------------------
+  // Now here comes the new thing:  This will be a loop from now
+  // on.  The buy and buy and buy until at one point we say 'BACK'
+  //
+  ItemSelected = 0;
+
+  while ( ItemSelected != (-1) )
+    {
+      ItemSelected = DoEquippmentListSelection( DescriptionText , Buy_Pointer_List , PRICING_FOR_BUY );
+      if ( ItemSelected != (-1) ) TryToBuyItem( Buy_Pointer_List[ ItemSelected ] ) ;
+    }
 
 }; // void Buy_Basic_Items( void )
 
