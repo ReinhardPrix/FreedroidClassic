@@ -67,6 +67,7 @@
 #define ITEM_SMALL_SHIELD 43
 #define ITEM_SCIMITAR 34
 #define ITEM_HUNTERS_BOW 03
+#define ITEM_WHEELS 07
 
 #define WAR_BOT 1
 #define SNIPER_BOT 2

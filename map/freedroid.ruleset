@@ -318,7 +318,7 @@ Base list price=1
 
 // Item No. 7
 ** Start of new item specification subsection **
-Item name="Droid Wheel Drive Class Alpha"
+Item name="Wheel Drive"
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="drive"
@@ -1298,6 +1298,7 @@ Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 0
 Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.00
 Weight of this droid : 27
 Drive of this droid : 0
@@ -1335,6 +1336,7 @@ Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 25
 Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.37
 Weight of this droid : 85
 Drive of this droid : 1
@@ -1372,6 +1374,7 @@ Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 25
 Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.22
 Weight of this droid : 61
 Drive of this droid : 2
@@ -1409,6 +1412,7 @@ Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 50
 Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.56
 Weight of this droid : 78
 Drive of this droid : 2
@@ -1446,6 +1450,7 @@ Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 50
 Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.63
 Weight of this droid : 83
 Drive of this droid : 3
@@ -1483,6 +1488,7 @@ Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 50
 Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.20
 Weight of this droid : 47
 Drive of this droid : 1
@@ -1520,6 +1526,7 @@ Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 75
 Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.07
 Weight of this droid : 23
 Drive of this droid : 2
@@ -1557,6 +1564,7 @@ Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 75
 Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.07
 Weight of this droid : 31
 Drive of this droid : 4
@@ -1594,6 +1602,7 @@ Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 100
 Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.41
 Weight of this droid : 57
 Drive of this droid : 1
@@ -1631,6 +1640,7 @@ Aggression rate of this droid: 25
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 100
 Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.32
 Weight of this droid : 42
 Drive of this droid : 2
@@ -1668,6 +1678,7 @@ Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 100
 Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.48
 Weight of this droid : 51
 Drive of this droid : 2
@@ -1705,6 +1716,7 @@ Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 125
 Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.57
 Weight of this droid : 74
 Drive of this droid : 5
@@ -1742,6 +1754,7 @@ Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 125
 Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.76
 Weight of this droid : 62
 Drive of this droid : 5
@@ -1779,6 +1792,7 @@ Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 125
 Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.72
 Weight of this droid : 93
 Drive of this droid : 5
@@ -1816,6 +1830,7 @@ Aggression rate of this droid: 30
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 150
 Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.93
 Weight of this droid : 121
 Drive of this droid : 5
@@ -1853,6 +1868,7 @@ Aggression rate of this droid: 30
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 150
 Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.20
 Weight of this droid : 29
 Drive of this droid : 2
@@ -1890,6 +1906,7 @@ Aggression rate of this droid: 40
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 150
 Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.09
 Weight of this droid : 59
 Drive of this droid : 1
@@ -1927,6 +1944,7 @@ Aggression rate of this droid: 60
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 175
 Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.93
 Weight of this droid : 102
 Drive of this droid : 5
@@ -1964,6 +1982,7 @@ Aggression rate of this droid: 60
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 175
 Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.87
 Weight of this droid : 140
 Drive of this droid : 5
@@ -2001,6 +2020,7 @@ Aggression rate of this droid: 80
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 175
 Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.93
 Weight of this droid : 227
 Drive of this droid : 5
@@ -2038,6 +2058,7 @@ Aggression rate of this droid: 65
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 200
 Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.00
 Weight of this droid : 28
 Drive of this droid : 2
@@ -2075,6 +2096,7 @@ Aggression rate of this droid: 55
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 200
 Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.10
 Weight of this droid : 34
 Drive of this droid : 2
@@ -2112,6 +2134,7 @@ Aggression rate of this droid: 90
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 200
 Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.62
 Weight of this droid : 79
 Drive of this droid : 4
@@ -2149,6 +2172,7 @@ Aggression rate of this droid: 90
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 225
 Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.87
 Weight of this droid : 162
 Drive of this droid : 2
@@ -2186,6 +2210,7 @@ Aggression rate of this droid: 99
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 25
 Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.37
 Weight of this droid : 85
 Drive of this droid : 1
@@ -2224,6 +2249,7 @@ Aggression rate of this droid: 65
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 25
 Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.22
 Weight of this droid : 61
 Drive of this droid : 2
@@ -2260,7 +2286,8 @@ Weapon type this droid uses: 0
 Aggression rate of this droid: 82
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 50
-Monster Level and maximum treasure chest to pick from=0
+Monster Level and maximum treasure chest to pick from=1
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.56
 Weight of this droid : 78
 Drive of this droid : 2
@@ -2297,7 +2324,8 @@ Weapon type this droid uses: 0
 Aggression rate of this droid: 84
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 50
-Monster Level and maximum treasure chest to pick from=0
+Monster Level and maximum treasure chest to pick from=2
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.63
 Weight of this droid : 83
 Drive of this droid : 3
@@ -2334,7 +2362,8 @@ Weapon type this droid uses: 0
 Aggression rate of this droid: 82
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 50
-Monster Level and maximum treasure chest to pick from=0
+Monster Level and maximum treasure chest to pick from=3
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.56
 Weight of this droid : 78
 Drive of this droid : 2
@@ -2371,7 +2400,8 @@ Weapon type this droid uses: 2
 Aggression rate of this droid: 95
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 500
-Monster Level and maximum treasure chest to pick from=0
+Monster Level and maximum treasure chest to pick from=3
+Force how many additional magic items to be dropped=2
 Height of this droid : 1.87
 Weight of this droid : 162
 Drive of this droid : 2
@@ -2409,6 +2439,7 @@ Aggression rate of this droid: 60
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 225
 Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.87
 Weight of this droid : 162
 Drive of this droid : 2
@@ -2446,6 +2477,7 @@ Aggression rate of this droid: 60
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 225
 Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.87
 Weight of this droid : 162
 Drive of this droid : 2
@@ -2483,6 +2515,7 @@ Aggression rate of this droid: 60
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 225
 Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.87
 Weight of this droid : 162
 Drive of this droid : 2
@@ -2520,6 +2553,7 @@ Aggression rate of this droid: 60
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 225
 Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.87
 Weight of this droid : 162
 Drive of this droid : 2
@@ -2557,6 +2591,7 @@ Aggression rate of this droid: 60
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 225
 Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.87
 Weight of this droid : 162
 Drive of this droid : 2
@@ -2594,6 +2629,7 @@ Aggression rate of this droid: 60
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 225
 Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.87
 Weight of this droid : 162
 Drive of this droid : 2
@@ -2631,6 +2667,7 @@ Aggression rate of this droid: 60
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 225
 Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.87
 Weight of this droid : 162
 Drive of this droid : 2
@@ -2668,6 +2705,7 @@ Aggression rate of this droid: 60
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 225
 Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.87
 Weight of this droid : 162
 Drive of this droid : 2
@@ -2705,6 +2743,7 @@ Aggression rate of this droid: 60
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 225
 Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.87
 Weight of this droid : 162
 Drive of this droid : 2
@@ -2742,6 +2781,7 @@ Aggression rate of this droid: 60
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 225
 Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.87
 Weight of this droid : 162
 Drive of this droid : 2
@@ -2779,6 +2819,7 @@ Aggression rate of this droid: 60
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 225
 Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
 Height of this droid : 1.87
 Weight of this droid : 162
 Drive of this droid : 2

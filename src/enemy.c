@@ -773,6 +773,7 @@ void
 MoveThisEnemy( int EnemyNum )
 {
   Enemy ThisRobot = & AllEnemys[ EnemyNum ];
+  int i;
 
   //--------------------
   // At first, we check for a lot of cases in which we do not
@@ -801,7 +802,16 @@ MoveThisEnemy( int EnemyNum )
       // Maybe that robot did have something with him?  The item should then
       // fall to the floor with it's clanc
       //
-      DropRandomItem ( ThisRobot->pos.x , ThisRobot->pos.y , 1 , ! ( MyRandom ( 5 ) ) ) ;
+      // Maybe the robots was also a boss monster.  Then some additional items
+      // must be dropped and they must always be magical.
+      //
+      DropRandomItem ( ThisRobot->pos.x , ThisRobot->pos.y , Druidmap [ ThisRobot->type ].monster_level , 
+		       ! ( MyRandom ( 5 ) ) , FALSE ) ;
+      for ( i = 0 ; i < Druidmap [ ThisRobot->type ].forced_magic_items ; i ++ )
+	{
+	  DropRandomItem ( ThisRobot->pos.x + MyRandom(10) * 0.07 , ThisRobot->pos.y + MyRandom(10) * 0.07 , Druidmap [ ThisRobot->type ].monster_level , 
+			   TRUE , TRUE ) ;
+	}
 
       if (LevelEmpty ())
 	CurLevel->empty = WAIT_LEVELEMPTY;

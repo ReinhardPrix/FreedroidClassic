@@ -22,12 +22,9 @@
  *  MA  02111-1307  USA
  *
  */
-
-/*----------------------------------------------------------------------
- *
+/* ----------------------------------------------------------------------
  * Desc: the paraplus initialisation routines
- *
- *----------------------------------------------------------------------*/
+ * ---------------------------------------------------------------------- */
 
 #define _init_c
 
@@ -976,6 +973,14 @@ Get_Robot_Data ( void* DataPointer )
       // Now we score to be had for destroying one droid of this type
       ReadValueFromString( RobotPointer , SCORE_BEGIN_STRING , "%d" , 
 			   &Druidmap[RobotIndex].score, EndOfDataPointer );
+
+      // Now we read in the monster level = maximum treasure chest to pick from
+      ReadValueFromString( RobotPointer , "Monster Level and maximum treasure chest to pick from=" , "%d" , 
+			   &Druidmap[RobotIndex].monster_level , EndOfDataPointer );
+
+      // Now we read in the number of additional magical items this monster type must drop
+      ReadValueFromString( RobotPointer , "Force how many additional magic items to be dropped=" , "%d" , 
+			   &Druidmap[RobotIndex].forced_magic_items , EndOfDataPointer );
 
       // Now we read in the height of this droid of this type
       ReadValueFromString( RobotPointer , HEIGHT_BEGIN_STRING , "%lf" , 
