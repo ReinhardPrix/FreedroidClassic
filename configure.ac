@@ -90,11 +90,13 @@ OpenGL development libs/header not found!
 Building FreedroidRPG without OpenGL support.
 --------------------------------------------------]))
 
+dnl Don't Check for getopt_long 
+dnl just use bundled version like hello does, and gnuchess
 
 # Checks for header files.
 AC_HEADER_STDC
 AC_CHECK_HEADERS([fcntl.h stdlib.h string.h sys/ioctl.h sys/time.h time.h \
-			  unistd.h dirent.h getopt.h sys/soundcard.h GL/gl.h])
+			  unistd.h dirent.h sys/soundcard.h GL/gl.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
@@ -102,9 +104,9 @@ AC_TYPE_SIZE_T
 AC_HEADER_TIME
 
 # Checks for library functions.
-AC_FUNC_MALLOC
+##AC_FUNC_MALLOC
 AC_TYPE_SIGNAL
-AC_CHECK_FUNCS([alarm getcwd gettimeofday memset sqrt strstr strtok])
+AC_CHECK_FUNCS([alarm getcwd gettimeofday memset sqrt strstr strtok usleep])
 
 ## Check gtk libs
 AM_PATH_GTK(1.2.0, 
@@ -118,8 +120,20 @@ If you only want to play Freedroid you can ignore this!
 --------------------------------------------------]))
 
 
-CFLAGS="$CFLAGS  -DDATADIR='\"\$(pkgdatadir)\"'"   #avoid expansion of $pkgdatadir !
+case "$target" in
+     *-*-cygwin* | *-*-mingw32*)
+     CFLAGS="$CFLAGS  -DFD_DATADIR='\".\"'"
+     win32=true
+     ;;
 
+     *)
+     CFLAGS="$CFLAGS  -DFD_DATADIR='\"\$(pkgdatadir)\"'"   #avoid expansion of $pkgdatadir !
+     win32=false
+     ;;
+esac
+
+dnl send a signal to automake if we're compiling for win32
+AM_CONDITIONAL(WIN32, test x$win32 = xtrue)
 
 AC_CONFIG_FILES([Makefile src/Makefile])
 
