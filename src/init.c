@@ -1856,7 +1856,11 @@ InitNewMissionList ( char *MissionName )
 	  Me[0]. Chat_Flags [ j ] [ 0 ] = 1 ; // we always allow to say something in the beginning...
 	}
     }
-  Me [ 0 ] . has_agreed_at_chandra = FALSE ;
+
+  for ( j = 0 ; j < MAX_CLEARANCES ; j ++ )
+    {
+      Me [ 0 ] . clearance_list [ j ] = 0 ;
+    }
 
   Me[0].energy = Me[0].maxenergy;
   Me[0].mana = Me[0].maxmana;

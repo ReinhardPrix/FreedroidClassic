@@ -871,6 +871,7 @@ ShowDeckMap (Level deck)
   int SelectedFunction = NO_FUNCTION ;
   grob_point TargetSquare;
   char MapValue;
+  int ClearanceIndex = 0 ;
 
   tmp.x=Me[0].pos.x;
   tmp.y=Me[0].pos.y;
@@ -936,6 +937,16 @@ ShowDeckMap (Level deck)
 	    {
 	      if ( SelectedFunction == GUNONOFF_FUNCTION ) SelectedFunction = NO_FUNCTION;
 	      else SelectedFunction = GUNONOFF_FUNCTION;
+	    }
+	  else if ( CursorIsOnButton( MAP_SECURITYLEFT_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) )
+	    {
+	      if ( ClearanceIndex > 0 ) ClearanceIndex --;
+	      MenuItemSelectedSound();
+	    }
+	  else if ( CursorIsOnButton( MAP_SECURITYRIGHT_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) )
+	    {
+	      if ( ClearanceIndex < MAX_CLEARANCES - 1 ) ClearanceIndex ++;
+	      MenuItemSelectedSound();
 	    }
 	  //--------------------
 	  // The remaining case is that no particular button but rather some
@@ -1009,6 +1020,13 @@ ShowDeckMap (Level deck)
 	{
 	  ShowGenericButtonFromList ( MAP_GUNONOFF_BUTTON_YELLOW );
 	}
+
+      ShowGenericButtonFromList ( MAP_SECURITYMIDDLE_BUTTON );
+      ShowGenericButtonFromList ( MAP_SECURITYRIGHT_BUTTON );
+      ShowGenericButtonFromList ( MAP_SECURITYLEFT_BUTTON );
+
+      SetCurrentFont ( Menu_BFont );
+      PutString ( Screen , 380 , 440 , Druidmap [ ClearanceIndex ] . druidname );      
 
       SDL_Flip (Screen);
 
