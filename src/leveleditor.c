@@ -840,7 +840,7 @@ Level_Editor(void)
 			Teleport ( CurLevel->levelnum +1 , 3 , 3 , 0 );
 		      while (RightPressed());
 		    }
-		  SetCombatScaleTo ( CurrentCombatScaleFactor );
+		  if ( CurrentCombatScaleFactor != 1 ) SetCombatScaleTo ( CurrentCombatScaleFactor );
 		  break;
 		  
 		case CHANGE_TILE_SET_POSITION:
