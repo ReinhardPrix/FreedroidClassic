@@ -1990,6 +1990,7 @@ IsPassable (float x, float y, int Checkpos)
       break;
 
     case KONSOLE_L:
+    case CODEPANEL_L:
       if (Checkpos == LIGHT)
 	{
 	  ret = CENTER;
@@ -2003,6 +2004,7 @@ IsPassable (float x, float y, int Checkpos)
       break;
 
     case KONSOLE_R:
+    case CODEPANEL_R:
       if (Checkpos == LIGHT)
 	{
 	  ret = CENTER;
@@ -2015,6 +2017,7 @@ IsPassable (float x, float y, int Checkpos)
       break;
 
     case KONSOLE_O:
+    case CODEPANEL_U:
       if (Checkpos == LIGHT)
 	{
 	  ret = CENTER;
@@ -2028,6 +2031,7 @@ IsPassable (float x, float y, int Checkpos)
       break;
 
     case KONSOLE_U:
+    case CODEPANEL_D:
       if (Checkpos == LIGHT)
 	{
 	  ret = CENTER;
