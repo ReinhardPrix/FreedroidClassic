@@ -319,11 +319,11 @@ Load_Skill_Level_Button_Surfaces( void )
       Target.w = Source.w;
       Target.h = Source.h;
 
-      SpellLevelButtonImageList[ j ] = our_SDL_display_format_wrapperAlpha( tmp_surf ); // now we have an alpha-surf of right size
-      SDL_SetColorKey( SpellLevelButtonImageList[ j ] , 0 , 0 ); // this should clear any color key in the dest surface
+      SpellLevelButtonImageList[ j ] . surface = our_SDL_display_format_wrapperAlpha( tmp_surf ); // now we have an alpha-surf of right size
+      SDL_SetColorKey( SpellLevelButtonImageList[ j ] . surface , 0 , 0 ); // this should clear any color key in the dest surface
       // Now we can copy the image Information
-      our_SDL_blit_surface_wrapper ( Whole_Image , &Source , SpellLevelButtonImageList[ j ] , &Target );
-      SDL_SetAlpha( SpellLevelButtonImageList[ j ] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+      our_SDL_blit_surface_wrapper ( Whole_Image , &Source , SpellLevelButtonImageList[ j ] . surface , &Target );
+      SDL_SetAlpha( SpellLevelButtonImageList[ j ] . surface , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
     }
 
   SDL_FreeSurface( tmp_surf );
@@ -419,7 +419,7 @@ LoadOneSkillSurfaceIfNotYetLoaded ( int SkillSpellNr )
   // Maybe this spell/skill icon surface has already been loaded, i.e. it's not
   // NULL any more.  Then we needn't do anything here.
   //
-  if ( SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_surface ) return;
+  if ( SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_surface . surface ) return;
 
   //--------------------
   // Now it's time to assemble the file name to get the image from
@@ -441,12 +441,15 @@ This error indicates some installation problem with freedroid.",
 				 PLEASE_INFORM, IS_FATAL );
     }
 
-  SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_surface = our_SDL_display_format_wrapperAlpha( Whole_Image ); 
+  SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_surface . surface = our_SDL_display_format_wrapperAlpha( Whole_Image ); 
 
-  SDL_SetColorKey( SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_surface , 0 , 0 ); 
-  SDL_SetAlpha( SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_surface , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+  SDL_SetColorKey( SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_surface . surface , 0 , 0 ); 
+  SDL_SetAlpha( SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_surface . surface , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
 
   SDL_FreeSurface( Whole_Image );
+
+  if ( use_open_gl )
+    make_texture_out_of_surface ( & ( SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_surface ) ) ;
   
 }; // void LoadOneSkillSurfaceIfNotYetLoaded ( int SkillSpellNr )
 

@@ -161,7 +161,7 @@ EXTERN int initGL( void );
 #endif
 
 EXTERN void blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our_col , float our_line , float r , float g , float b ) ;
-EXTERN void blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x , int y ) ;
+EXTERN void blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x , int y , int set_gl_parameters ) ;
 
 // blocks.c 
 #undef EXTERN

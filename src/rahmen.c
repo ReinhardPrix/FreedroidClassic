@@ -470,7 +470,15 @@ ShowCurrentSkill( void )
   Target_Rect.h = CURRENT_SKILL_RECT_H ;
 
   LoadOneSkillSurfaceIfNotYetLoaded ( Me[0].readied_skill );
-  our_SDL_blit_surface_wrapper ( SpellSkillMap [ Me[0].readied_skill ] . spell_skill_icon_surface , NULL , Screen , &Target_Rect );
+
+  if ( use_open_gl )
+    {
+      blit_open_gl_texture_to_screen_position ( SpellSkillMap [ Me[0].readied_skill ] . spell_skill_icon_surface , Target_Rect . x , Target_Rect . y , TRUE ) ;
+
+      glDisable( GL_TEXTURE_2D );
+    }
+  else
+    our_SDL_blit_surface_wrapper ( SpellSkillMap [ Me[0].readied_skill ] . spell_skill_icon_surface . surface , NULL , Screen , &Target_Rect );
 
   /*
   //--------------------
@@ -499,9 +507,9 @@ blit_energy_o_meter( void )
 {
   SDL_Surface* tmp;
   char *fpath;
-  static iso_image speed_meter_iso_image;
-  static iso_image SpeedMeterEnergyArrowImage;
-  static iso_image SpeedMeterManaArrowImage;
+  static iso_image speed_meter_iso_image = UNLOADED_ISO_IMAGE ;
+  static iso_image SpeedMeterEnergyArrowImage = UNLOADED_ISO_IMAGE ;
+  static iso_image SpeedMeterManaArrowImage = UNLOADED_ISO_IMAGE ;
   static SDL_Surface *SpeedOMeterWorkingCopy = NULL;
   static SDL_Rect SpeedMeterRect;
   static int Previous_Energy = - 1234; // a completely unrealistic value;
@@ -511,10 +519,6 @@ blit_energy_o_meter( void )
   point PivotPosition = { 42 , 49 };
   SDL_Surface *RotatedArrow; // this will be blitted into the speed-o-meter working copy
   SDL_Rect ArrowRect;
-
-  memset (&speed_meter_iso_image, 0, sizeof (iso_image));
-  memset (&SpeedMeterEnergyArrowImage, 0, sizeof(iso_image));
-  memset (&SpeedMeterManaArrowImage, 0, sizeof(iso_image));
 
   //--------------------
   // At first we read in the raw images for the speed-o-meter and 
@@ -579,15 +583,15 @@ blit_energy_o_meter( void )
       prepare_open_gl_for_blending_textures ( );
 
       blit_open_gl_texture_to_screen_position ( speed_meter_iso_image , 
-						SCREEN_WIDTH - speed_meter_iso_image . surface -> w , 0 );
-
-      blit_rotated_open_gl_texture_with_center ( SpeedMeterManaArrowImage , 
-						SCREEN_WIDTH - speed_meter_iso_image . surface -> w + PivotPosition . x , 
-						0 + PivotPosition . y  , - 360 * 3 / 4 * Me[0].mana / Me[0].maxmana );
+						SCREEN_WIDTH - speed_meter_iso_image . surface -> w , 0 , FALSE );
 
       blit_rotated_open_gl_texture_with_center ( SpeedMeterEnergyArrowImage , 
 						SCREEN_WIDTH - speed_meter_iso_image . surface -> w + PivotPosition . x , 
 						0 + PivotPosition . y  , - 360 * 3 / 4 * Me[0].energy / Me[0].maxenergy );
+
+      blit_rotated_open_gl_texture_with_center ( SpeedMeterManaArrowImage , 
+						SCREEN_WIDTH - speed_meter_iso_image . surface -> w + PivotPosition . x , 
+						0 + PivotPosition . y  , - 360 * 3 / 4 * Me[0].mana / Me[0].maxmana );
 
       remove_open_gl_blending_mode_again ( );
 

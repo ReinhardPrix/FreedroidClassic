@@ -909,7 +909,7 @@ ShowSkillsExplanationScreen( void )
   
   TargetSkillRect.x = 15;
   TargetSkillRect.y = 15;
-  our_SDL_blit_surface_wrapper ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . spell_skill_icon_surface , NULL , Screen , &TargetSkillRect );
+  our_SDL_blit_surface_wrapper ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . spell_skill_icon_surface . surface , NULL , Screen , &TargetSkillRect );
 
   TargetSkillRect.w = 320 - 15 - 15;
   TargetSkillRect.h = 480 - 15 ;
@@ -1025,7 +1025,7 @@ ShowSkillsScreen ( void )
   SpellLevelRect.x = SkillScreenRect.x + SPELL_LEVEL_BUTTONS_X + 
     SPELL_LEVEL_BUTTON_WIDTH * GameConfig.spell_level_visible ;
   SpellLevelRect.y = SkillScreenRect.y + SPELL_LEVEL_BUTTONS_Y ;
-  our_SDL_blit_surface_wrapper ( SpellLevelButtonImageList[ GameConfig.spell_level_visible ] , NULL , Screen , &SpellLevelRect );
+  our_SDL_blit_surface_wrapper ( SpellLevelButtonImageList [ GameConfig.spell_level_visible ] . surface , NULL , Screen , &SpellLevelRect );
 
   //--------------------
   // Now we fill in the skills available to this bot.  ( For now, these skills 
@@ -1043,7 +1043,7 @@ ShowSkillsScreen ( void )
       if ( SkillOfThisSlot < 0 ) continue;
 
       LoadOneSkillSurfaceIfNotYetLoaded ( SkillOfThisSlot );
-      our_SDL_blit_surface_wrapper ( SpellSkillMap [ SkillOfThisSlot ] . spell_skill_icon_surface , NULL , Screen , &ButtonRect );
+      our_SDL_blit_surface_wrapper ( SpellSkillMap [ SkillOfThisSlot ] . spell_skill_icon_surface . surface , NULL , Screen , &ButtonRect );
 
       //--------------------
       // First we write the name of the skill to the screen

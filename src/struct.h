@@ -249,6 +249,18 @@ typedef struct
   char* Statement_Text;
 } map_statement , *Map_statement;
 
+/* ----------------------------------------------------------------------
+ * Here comes the struct for an iso image.  It also contains some 
+ * placeholder for a possible 'zoomed-out' version of the iso image and
+ * also some placeholder for a possible OpenGL texture as well.
+ *
+ * In order to have a convenient means to initialize variables of this
+ * type in several places, even in case this struct changes shape in the
+ * future, the 'UNLOADED_ISO_IMAGE' definition below is made.  This
+ * definition should be used always when initializing a variable of this
+ * so that later changes to the struct can be made with minimal effort 
+ * and mistakes.
+ * ---------------------------------------------------------------------- */
 typedef struct
 {
   SDL_Surface* surface;
@@ -257,13 +269,15 @@ typedef struct
   SDL_Surface* zoomed_out_surface;
   int texture_width;
   int texture_height;
-
 #ifdef HAVE_LIBGL
   GLuint texture;  // this is to store an open_gl texture...
+#else
+  int placeholder_for_texture_value;  // this is to store an open_gl texture...
 #endif
-
 }
 iso_image, *Iso_image;
+#define UNLOADED_ISO_IMAGE { NULL , 0 , 0 , NULL , 0 , 0 , 0 }
+
 
 typedef struct
 {
@@ -826,7 +840,7 @@ typedef struct
   int Circle;
   char* spell_skill_name;
   char* spell_skill_icon_name;
-  SDL_Surface* spell_skill_icon_surface;
+  iso_image spell_skill_icon_surface;
   int mana_cost_table[ NUMBER_OF_SKILL_LEVELS ];
   char* spell_skill_description;
 }

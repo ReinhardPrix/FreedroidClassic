@@ -640,7 +640,7 @@ blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our
  *
  * ---------------------------------------------------------------------- */
 void
-blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x , int y ) 
+blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x , int y , int set_gl_parameters ) 
 {
 
 #ifdef HAVE_LIBGL
@@ -652,6 +652,20 @@ blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x 
   int image_end_x;
   int image_start_y;
   int image_end_y;
+
+  if ( set_gl_parameters )
+    {
+      //--------------------
+      // At first we need to enable texture mapping for all of the following.
+      // Without that, we'd just get (faster, but plain white) rectangles.
+      //
+      glEnable( GL_TEXTURE_2D );
+      
+      // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL );
+      // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND );
+      // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+      glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
+    }
 
   //--------------------
   // Now of course we need to find out the proper target position.
@@ -677,6 +691,8 @@ blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x 
   texture_start_y = 1.0 ; // 1 - ((float)(our_floor_iso_image . surface -> h)) / 127.0 ; // 1.0 
   texture_end_y = 0.0 ;
 
+  // glColor3f( 1 , 1 , 1 );
+
   glBindTexture( GL_TEXTURE_2D, our_floor_iso_image . texture );
   glBegin(GL_QUADS);
   glTexCoord2i( 0.0f, texture_start_y ); 
@@ -688,6 +704,11 @@ blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x 
   glTexCoord2f( 1.0f, texture_start_y ); 
   glVertex2i( image_end_x , image_start_y );
   glEnd( );
+
+  if ( set_gl_parameters )
+    {
+      glDisable( GL_TEXTURE_2D );
+    }
 
 #endif
 
@@ -714,6 +735,11 @@ blit_rotated_open_gl_texture_with_center ( iso_image our_iso_image , int x , int
 
   moderately_finepoint corner1, corner2, corner3, corner4;
 
+  glEnable( GL_TEXTURE_2D );  
+
+  glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+  glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+
   //--------------------
   // Linear Filtering is slow and maybe not nescessary here, so we
   // stick to the faster 'nearest' variant.
@@ -721,11 +747,21 @@ blit_rotated_open_gl_texture_with_center ( iso_image our_iso_image , int x , int
   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
   
-  glEnable( GL_TEXTURE_2D );  
-  glDisable( GL_ALPHA_TEST );  
-  glEnable(GL_BLEND);
   glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
-  glBlendFunc( GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA );
+  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND );
+  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL );
+
+  glDisable(GL_BLEND);
+  glDisable(GL_DEPTH_TEST);
+  
+  glEnable( GL_ALPHA_TEST );  
+  glAlphaFunc ( GL_GREATER , 0.5 ) ;
+
+  // glBlendFunc( GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA );
+  // glBlendFunc( GL_SRC_ALPHA , GL_ONE );
+
+  glColor4f( 1, 1, 1 , 0 );
 
   //--------------------
   // Now of course we need to find out the proper target position.
@@ -927,7 +963,10 @@ prepare_open_gl_for_blending_textures( void )
   glEnable( GL_TEXTURE_2D );  
   glEnable(GL_BLEND);
   glDisable( GL_ALPHA_TEST );  
+
+  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND );
   glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
+  // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
   glBlendFunc( GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA );
 
 #endif
@@ -1104,7 +1143,7 @@ blit_open_gl_light_radius ( void )
 	  target_rectangle . x = pos_x_grid [ our_width ] [ our_height ] + window_offset_x ;
 	  target_rectangle . y = pos_y_grid [ our_width ] [ our_height ] ;
 
-	  blit_open_gl_texture_to_screen_position ( light_radius_chunk [ light_strength ] , target_rectangle . x , target_rectangle . y ) ;
+	  blit_open_gl_texture_to_screen_position ( light_radius_chunk [ light_strength ] , target_rectangle . x , target_rectangle . y , FALSE ) ;
 	}
     }
 
