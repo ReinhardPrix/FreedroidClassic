@@ -108,6 +108,8 @@ GiveMouseAlertWindow( char* WindowText )
 {
   SDL_Rect TargetRect;
 
+  Activate_Conservative_Frame_Computation();
+
   TargetRect . w = 440 ; 
   TargetRect . h = 340 ; 
   TargetRect . x = ( 640 - TargetRect . w ) / 2 ; 

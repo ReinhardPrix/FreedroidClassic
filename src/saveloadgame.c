@@ -518,6 +518,7 @@ LoadGame( void )
   unsigned char* BulletRawDataPointer;
   int i;
   int current_geographics_levelnum;
+  FILE *DataFile;
 
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): function call confirmed....");
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): determining file name....");
@@ -557,19 +558,42 @@ The game however could NOT be saved.\n\
     }
 
   //--------------------
-  // Now we generate the right directory for saving from the home
+  // Now we generate the right directory for saved games from the home
   // directory.
   //
   sprintf ( Saved_Games_Dir , "%s/.freedroid_rpg" , homedir );
 
   //--------------------
-  // First we save the full ship information, same as with the level editor
+  // First we load the full ship information, same as with the level editor
   //
   sprintf( filename , "%s/%s%s", Saved_Games_Dir, Me[0].character_name, SHIP_EXT);
+
+  //--------------------
+  // Maybe there isn't any saved game by that name.  This case must be checked for
+  // and handled...
+  //
+  if ((DataFile = fopen ( filename , "r")) == NULL)
+    {
+      GiveMouseAlertWindow ( "\nW A R N I N G !\n\nFreedroidRPG was unable to locate the saved game file you requested to load.\nThis might mean that it really isn't there cause you tried to load a game without ever having saved the game before.  \nThe other explanation of this error might be a severe error in FreedroidRPG.\nNothing will be done about it." );
+      /*
+      fprintf( stderr, "\n\nfilename: '%s'\n" , filename );
+      GiveStandardErrorMessage ( "ReadAndMallocAndTerminateFile(...)" , "\
+Freedroid was unable to open a given text file, that should be there and\n\
+should be accessible.\n\
+This indicates a serious bug in this installation of Freedroid.",
+				 PLEASE_INFORM, IS_FATAL );
+      */
+      return ( ERR ) ;
+    }
+  else
+    {
+      DebugPrintf ( 1 , "\nThe saved game file (.shp file) seems to be there at least.....");
+    }
+
   LoadShip( filename );
 
   //--------------------
-  // First, we must determine the savedgame data file name
+  // Now we must determine the savedgame data file name
   //
   sprintf (filename, "%s/%s%s", Saved_Games_Dir, Me[0].character_name, SAVEDGAME_EXT);
 
