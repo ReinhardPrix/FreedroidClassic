@@ -117,6 +117,10 @@ about the problem, best by sending e-mail to \n\
 \n\
 freedroid-discussion@lists.sourceforge.net\n\
 \n\
+Or you might mention it to someone of the developers on our IRC channel.  The channel is:\n\
+\n\
+channel: #freedroid on irc.freenode.net\n\
+\n\
 Thanks a lot!\n\n" );
     }
     
