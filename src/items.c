@@ -967,7 +967,7 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
     switch ( MyRandom ( TreasureChestRange ) )
     {
 	case 0:
-	    switch ( MyRandom ( 15 ) )
+	    switch ( MyRandom ( 16 ) )
 	    {
 		case 0:
 		    drop_item_type = ITEM_TRACKS ;
@@ -1030,6 +1030,10 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 15:
+		    drop_item_type = ITEM_BLUE_ENERGY_DRINK ;
+		    drop_item_multiplicity =  1 ;
+		    break;
+		case 16:
 		default:
 		    drop_item_type = ITEM_RUNNING_POWER_POTION ;
 		    drop_item_multiplicity =  1 ;
@@ -1259,7 +1263,7 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 	    } // inner switch
 	    break;
 	case 4:
-	    switch ( MyRandom ( 6 ) )
+	    switch ( MyRandom ( 9 ) )
 	    {
 		case 0:
 		    drop_item_type = ITEM_HIKING_BOOTS ;
@@ -1282,6 +1286,18 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 5:
+		    drop_item_type = ITEM_VMX_GAS_GRENADE ;
+		    drop_item_multiplicity =  1 ;
+		    break;
+		case 6:
+		    drop_item_type = ITEM_EMP_SHOCK_GRENADE ;
+		    drop_item_multiplicity =  1 ;
+		    break;
+		case 7:
+		    drop_item_type = ITEM_PLASMA_GRENADE ;
+		    drop_item_multiplicity =  1 ;
+		    break;
+		case 8:
 		    switch ( MyRandom ( 4 ) )
 		    {
 			case 0:
