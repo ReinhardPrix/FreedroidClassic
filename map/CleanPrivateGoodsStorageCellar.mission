@@ -118,15 +118,6 @@ Event Action to be triggered by this trigger=0
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
 
-// This is a pure location trigger.  Copy and adapt is as you feel like it.
-* Start of an Event Trigger Subsection *
-Influencer must be at x-coordinate=6
-Influencer must be at y-coordinate=6
-Influencer must be at maplevel=2
-Event Action to be triggered by this trigger=4
-Delete the event trigger after it has been triggered=-1
-* End of this Event Trigger Subsection *
-
 //-------------------------------------------------------------
 // the following triggers close the barrier behind the influencer
 // after he has left the retreatment bunker: These are pure location
@@ -182,6 +173,24 @@ Influencer must be at x-coordinate=10
 Influencer must be at y-coordinate=7
 Influencer must be at maplevel=2
 Event Action to be triggered by this trigger=3
+Delete the event trigger after it has been triggered=-1
+* End of this Event Trigger Subsection *
+
+// This is a pure location trigger.  Copy and adapt is as you feel like it.
+* Start of an Event Trigger Subsection *
+Influencer must be at x-coordinate=19
+Influencer must be at y-coordinate=5
+Influencer must be at maplevel=2
+Event Action to be triggered by this trigger=5
+Delete the event trigger after it has been triggered=-1
+* End of this Event Trigger Subsection *
+
+// This is a pure location trigger.  Copy and adapt is as you feel like it.
+* Start of an Event Trigger Subsection *
+Influencer must be at x-coordinate=6
+Influencer must be at y-coordinate=6
+Influencer must be at maplevel=2
+Event Action to be triggered by this trigger=4
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
 
@@ -245,6 +254,18 @@ Action is mapchange at maplevel=-1
 Action is change map there to new value=-1
 Action is Influencer saying something=1
 Action is Influencer saying the following text="This teleportation device is not yet functional!"
+* End of this Event Action Subsection *
+
+// This is a pure text statement.  You can copy it and just adapt the 
+// the text to fill in remarks. Then set up triggers at any location you want.
+* Start of an Event Action Subsection *
+ACTION INDEX NUMBER TO USE=5
+Action is mapchange at positionX=-1
+Action is mapchange at positionY=-1
+Action is mapchange at maplevel=-1
+Action is change map there to new value=-1
+Action is Influencer saying something=1
+Action is Influencer saying the following text="I think I should destroy the hostile machines around the scientists retreat first, before I venture any furthery.  The humans might get destroyed otherwise!"
 * End of this Event Action Subsection *
 
 ** End of Mission Event Section **
