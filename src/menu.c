@@ -154,6 +154,11 @@ print_menu_text ( char* InitialText , char* MenuTexts[] , int first_menu_item_po
 /* ----------------------------------------------------------------------
  * This function performs a menu for the player to select from, using the
  * keyboard only, currently, sorry.
+ *
+ * This function EXPECTS, that MenuTexts[] is an array of strings, THE 
+ * LAST OF WHICH IS AN EMPTY STRING TO DENOTE THE END OF THE ARRAY!  If 
+ * this is not respected, segfault errors are likely.
+ * 
  * ---------------------------------------------------------------------- */
 int
 DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , int background_code , void* MenuFont )
@@ -2592,7 +2597,7 @@ Connect_To_Existing_Server_Menu (void)
  * the sorting function that seems appropriate for our little program.
  * ---------------------------------------------------------------------- */
 int
-one (struct dirent *unused)
+filename_filter_func ( struct dirent *unused )
 {
     if ( strstr ( unused->d_name , "savegame" ) != NULL )
     {
@@ -2606,7 +2611,7 @@ one (struct dirent *unused)
     // to make compilers happy...
     return ( 0 );
     
-}; // static int one (struct dirent *unused)
+}; // static int filename_filter_func (struct dirent *unused)
 
 /* ----------------------------------------------------------------------
  * This is the function available from the freedroid startup menu, that
@@ -2617,7 +2622,7 @@ int
 Load_Existing_Hero_Menu ( void )
 {
     char Saved_Games_Dir[1000];
-    char* MenuTexts[ 10 ] = { "" , "" , "" , "" , "" , "" , "" , "" , "" , "" } ;
+    char* MenuTexts[ MAX_SAVED_CHARACTERS_ON_DISK + 1 ] ;
     struct dirent **eps;
     int n;  
     int cnt;
@@ -2626,6 +2631,18 @@ Load_Existing_Hero_Menu ( void )
     DebugPrintf ( 1 , "\nint Load_Existing_Hero_Menu ( void ): real function call confirmed.");
     InitiateMenu( NE_TITLE_PIC_BACKGROUND_CODE );
     
+    //--------------------
+    // We use empty strings to denote the end of any menu selection, 
+    // therefore also for the end of the list of saved characters.  So
+    // We prepare such a list now by initializing the list with empty
+    // strings.  Memory leak at this point can be neglected.  Really.
+    //
+    for ( n = 0 ; n < MAX_SAVED_CHARACTERS_ON_DISK + 1 ; n ++ )
+    {
+	MenuTexts [ n ] = malloc ( strlen ( "" ) + 1 ) ;
+	strcpy ( MenuTexts [ n ] , "" );
+    }
+
     //--------------------
     // First we must find the home directory of the user.  From there on
     // we can then construct the full directory path of the saved games directory.
@@ -2654,17 +2671,20 @@ I need to know that for saving. Abort.\n");
     // This is a slightly modified copy of the code sniplet from the
     // GNU C Library description on directory operations...
     //
-    n = scandir ( Saved_Games_Dir , &eps, one , alphasort);
+    // the scandir here will give a list of ONLY THOSE FILES WITH .savegame
+    // EXTENTION, see GNU C Library docu for the formal details...
+    //
+    n = scandir ( Saved_Games_Dir , &eps, filename_filter_func , alphasort);
     if (n > 0)
     {
 	for (cnt = 0; cnt < n; ++cnt) 
 	{
 	    puts ( eps[cnt]->d_name );
 	    DisplayText ( eps[cnt]->d_name , 50 , 150 + cnt * 40 , NULL , TEXT_STRETCH );
-	    if ( cnt < 10 ) 
+	    if ( cnt < MAX_SAVED_CHARACTERS_ON_DISK ) 
 	    {
 		MenuTexts[ cnt ] = ReadAndMallocStringFromData ( eps[cnt]->d_name , "" , ".savegame" ) ;
-		DebugPrintf ( 2 , "\nAnother load game name found: %s." , MenuTexts [ cnt ] );
+		DebugPrintf ( -1 , "\nAnother load game name found: %s.\n" , MenuTexts [ cnt ] );
 	    }
 	}
 	
@@ -2721,117 +2741,121 @@ Freedroid will continue execution now, since this problem\n\
 int 
 Delete_Existing_Hero_Menu ( void )
 {
-  char Saved_Games_Dir[1000];
-  char* MenuTexts[ 10 ] = { "" , "" , "" , "" , "" , "" , "" , "" , "" , "" } ;
-  struct dirent **eps;
-  int n;  
-  int cnt;
-  int MenuPosition;
-  int FinalDecision;
-  char SafetyText[2000];
-
-  DebugPrintf ( 0 , "\nint Delete_Existing_Hero_Menu ( void ): real function call confirmed.");
-  InitiateMenu( NE_TITLE_PIC_BACKGROUND_CODE );
+    char Saved_Games_Dir[1000];
+    char* MenuTexts[ MAX_SAVED_CHARACTERS_ON_DISK + 1 ] ;
+    struct dirent **eps;
+    int n;  
+    int cnt;
+    int MenuPosition;
+    int FinalDecision;
+    char SafetyText[2000];
+    
+    DebugPrintf ( 0 , "\nint Delete_Existing_Hero_Menu ( void ): real function call confirmed.");
+    InitiateMenu( NE_TITLE_PIC_BACKGROUND_CODE );
+    
+    //--------------------
+    // We use empty strings to denote the end of any menu selection, 
+    // therefore also for the end of the list of saved characters.  So
+    // We prepare such a list now by initializing the list with empty
+    // strings.  Memory leak at this point can be neglected.  Really.
+    //
+    for ( n = 0 ; n < MAX_SAVED_CHARACTERS_ON_DISK + 1 ; n ++ )
+    {
+	MenuTexts [ n ] = malloc ( strlen ( "" ) + 1 ) ;
+	strcpy ( MenuTexts [ n ] , "" );
+    }
 
 #if __WIN32__
-  our_homedir = ".";
+    our_homedir = ".";
 #else
-  // first we need the user's homedir for loading/saving stuff
-  if ( (our_homedir = getenv("HOME")) == NULL )
+    // first we need the user's homedir for loading/saving stuff
+    if ( (our_homedir = getenv("HOME")) == NULL )
     {
-      DebugPrintf ( 0 , "ERROR: Environment does not contain HOME variable... \n\
+	DebugPrintf ( 0 , "ERROR: Environment does not contain HOME variable... \n\
 I need to know that for saving. Abort.\n");
-      return ( ERR );
+	return ( ERR );
     }
 #endif
-
-  //--------------------
-  // Now we generate the right directory for saving from the home
-  // directory.
-  //
-  sprintf ( Saved_Games_Dir , "%s/.freedroid_rpg" , our_homedir );
-
-
-  // DisplayText ( "This is the record of all your characters:\n\n" , 50 , 50 , NULL );
-
-  //--------------------
-  // This is a slightly modified copy of the code sniplet from the
-  // GNU C Library description on directory operations...
-  //
-  n = scandir ( Saved_Games_Dir , &eps, one , alphasort);
-  if (n > 0)
+    
+    //--------------------
+    // Now we generate the right directory for saving from the home
+    // directory.
+    //
+    sprintf ( Saved_Games_Dir , "%s/.freedroid_rpg" , our_homedir );
+    
+    
+    // DisplayText ( "This is the record of all your characters:\n\n" , 50 , 50 , NULL );
+    
+    //--------------------
+    // This is a slightly modified copy of the code sniplet from the
+    // GNU C Library description on directory operations...
+    //
+    n = scandir ( Saved_Games_Dir , &eps, filename_filter_func , alphasort);
+    if (n > 0)
     {
-      for (cnt = 0; cnt < n; ++cnt) 
+	for (cnt = 0; cnt < n; ++cnt) 
 	{
-	  puts ( eps[cnt]->d_name );
-	  DisplayText ( eps[cnt]->d_name , 50 , 150 + cnt * 40 , NULL , TEXT_STRETCH );
-	  if ( cnt < 10 ) 
+	    puts ( eps[cnt]->d_name );
+	    DisplayText ( eps[cnt]->d_name , 50 , 150 + cnt * 40 , NULL , TEXT_STRETCH );
+	    if ( cnt < MAX_SAVED_CHARACTERS_ON_DISK ) 
 	    {
-	      MenuTexts[ cnt ] = ReadAndMallocStringFromData ( eps[cnt]->d_name , "" , ".savegame" ) ;
+		MenuTexts[ cnt ] = ReadAndMallocStringFromData ( eps[cnt]->d_name , "" , ".savegame" ) ;
+		DebugPrintf ( -1 , "\nAnother delete game name found: %s.\n" , MenuTexts [ cnt ] );
 	    }
 	}
-
-      MenuPosition = DoMenuSelection( DELETE_EXISTING_HERO_STRING , MenuTexts , 1 , NE_TITLE_PIC_BACKGROUND_CODE , NULL );
-
-      if ( MenuPosition == (-1) ) return ( FALSE );
-      else
+	
+	MenuPosition = DoMenuSelection( DELETE_EXISTING_HERO_STRING , MenuTexts , 1 , NE_TITLE_PIC_BACKGROUND_CODE , NULL );
+	
+	if ( MenuPosition == (-1) ) return ( FALSE );
+	else
 	{
-	  //--------------------
-	  // We store the character name, just for the case of eventual deletion later!
-	  //
-	  strcpy( Me[0].character_name , MenuTexts[ MenuPosition -1 ] );
-
-	  //--------------------
-	  // We do a final safety check to ask for confirmation.
-	  //
-	  MenuTexts [ 0 ] = "Sure!" ;
-	  MenuTexts [ 1 ] = "BACK" ;
-	  MenuTexts [ 2 ] = "";
-	  MenuTexts [ 3 ] = "";
-	  MenuTexts [ 4 ] = "";
-	  MenuTexts [ 5 ] = "";
-	  MenuTexts [ 6 ] = "";
-	  MenuTexts [ 7 ] = "";
-	  MenuTexts [ 8 ] = "";
-	  MenuTexts [ 9 ] = "";
-	  sprintf( SafetyText , "Really delete hero '%s'?" , Me[0].character_name ) ;
-	  FinalDecision = DoMenuSelection( SafetyText , MenuTexts , 1 , NE_TITLE_PIC_BACKGROUND_CODE , NULL );
-
-	  if ( FinalDecision == 1 )
+	    //--------------------
+	    // We store the character name, just for the case of eventual deletion later!
+	    //
+	    strcpy( Me[0].character_name , MenuTexts[ MenuPosition -1 ] );
+	    
+	    //--------------------
+	    // We do a final safety check to ask for confirmation.
+	    //
+	    MenuTexts [ 0 ] = "Sure!" ;
+	    MenuTexts [ 1 ] = "BACK" ;
+	    MenuTexts [ 2 ] = "";
+	    sprintf( SafetyText , "Really delete hero '%s'?" , Me[0].character_name ) ;
+	    FinalDecision = DoMenuSelection( SafetyText , MenuTexts , 1 , NE_TITLE_PIC_BACKGROUND_CODE , NULL );
+	    
+	    if ( FinalDecision == 1 )
 	    {
-	      DeleteGame( );
+		DeleteGame( );
 	    }
-	  return ( TRUE );
+	    return ( TRUE );
 	}
     }
-  else
+    else
     {
-      fprintf ( stderr, "\n\nSaved_Games_Dir: '%s'.\n" , Saved_Games_Dir );
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
+	fprintf ( stderr, "\n\nSaved_Games_Dir: '%s'.\n" , Saved_Games_Dir );
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
 Either it couldn't open the directory for the saved games\n\
 which should be %s,\n\
 or there were no saved games present in this directory.\n\
 Freedroid will continue execution now, since this problem\n\
  will be dealt with in-game.",
-				 NO_NEED_TO_INFORM, IS_WARNING_ONLY );
-
-      MenuTexts[0]="BACK";
-      MenuTexts[1]="";
-      MenuTexts[2]=""; MenuTexts[3]=""; MenuTexts[4]=""; MenuTexts[5]="";
-      MenuTexts[8]=""; MenuTexts[6]=""; MenuTexts[7]=""; MenuTexts[9]="";
-
-      while ( SpacePressed() || EnterPressed() );
-      DoMenuSelection ( "\n\nNo saved games found!!  Deletion Cancelled. " , MenuTexts , 1 , NE_TITLE_PIC_BACKGROUND_CODE , NULL );
-      
-      //--------------------
-      // Now we got to return the problem to the calling function...
-      //
-      return ( FALSE );
+				   NO_NEED_TO_INFORM, IS_WARNING_ONLY );
+	
+	MenuTexts[0]="BACK";
+	MenuTexts[1]="";
+	
+	while ( SpacePressed() || EnterPressed() );
+	DoMenuSelection ( "\n\nNo saved games found!!  Deletion Cancelled. " , MenuTexts , 1 , NE_TITLE_PIC_BACKGROUND_CODE , NULL );
+	
+	//--------------------
+	// Now we got to return the problem to the calling function...
+	//
+	return ( FALSE );
     }
-
-  our_SDL_flip_wrapper( Screen );
-
-  return ( OK );
+    
+    our_SDL_flip_wrapper( Screen );
+    
+    return ( OK );
 }; // int Delete_Existing_Hero_Menu ( void )
 
 
