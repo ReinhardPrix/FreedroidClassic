@@ -729,7 +729,7 @@ HandleCurrentlyActivatedSkill( int player_num )
 	      // Do nothing here.  The right mouse click while in inventory screen
 	      // will be handled in the inventory screen management function.
 	      //
-	      PlayOnceNeededSoundSample ( "../effects/item_must_be_in_inv_for_identi.wav" , FALSE , FALSE );
+	      PlayOnceNeededSoundSample ( "../effects/tux_ingame_comments/CantRepairThat.wav" , FALSE , FALSE );
 	    }
 	}
       break;
