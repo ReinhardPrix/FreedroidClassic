@@ -1024,13 +1024,14 @@ beginning_of_map
  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
 End of pure map information for this level
 Start of pure statement information for this level
+PosX=5 PosY=15 Statement="The door label reads 'Dr. Davenport'"
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
 wp
 Nr.=  0 x=  17 y=   5	 connections:    1   7   3  18  23  88  92  -1  -1  -1  -1  -1
 Nr.=  1 x=   5 y=   5	 connections:    2   0  24  29  31  -1  -1  -1  -1  -1  -1  -1
-Nr.=  2 x=   5 y=  15	 connections:    3   1  31  34  39  -1  -1  -1  -1  -1  -1  -1
+Nr.=  2 x=   5 y=  15	 connections:    3   1  31  39  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.=  3 x=  17 y=  15	 connections:    4   2   0  41  48  86  -1  -1  -1  -1  -1  -1
 Nr.=  4 x=  29 y=  15	 connections:    5   3   7  54  57  83  -1  -1  -1  -1  -1  -1
 Nr.=  5 x=  41 y=  15	 connections:    6   4  61  75  -1  -1  -1  -1  -1  -1  -1  -1
@@ -1062,11 +1063,11 @@ Nr.= 30 x=   2 y=   3	 connections:   29  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 31 x=   5 y=  10	 connections:    1   2  32  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 32 x=   2 y=  10	 connections:   31  33  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 33 x=   2 y=   8	 connections:   32  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 34 x=   3 y=  15	 connections:    2  35  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 35 x=   3 y=  18	 connections:   36  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 36 x=   2 y=  18	 connections:   37  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 37 x=   2 y=  13	 connections:   38  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 38 x=   3 y=  13	 connections:   34  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 34 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 35 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 36 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 37 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 38 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 39 x=   8 y=  15	 connections:    2  40  44  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 40 x=  10 y=  15	 connections:   39  41  46  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 41 x=  13 y=  15	 connections:   40   3  42  -1  -1  -1  -1  -1  -1  -1  -1  -1
