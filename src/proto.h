@@ -436,15 +436,11 @@ EXTERN void Armageddon (void);
 EXTERN void Teleport (int LNum, int X, int Y);
 EXTERN void InsertNewMessage (void);
 EXTERN void Terminate (int);
-EXTERN void KillQueue (void);
-EXTERN void PutMessages (void);
-EXTERN void InsertMessage (char *MText);
 EXTERN void *MyMalloc (long);
 EXTERN void ShowDebugInfos (void);
 EXTERN int GiveNumberToThisActionLabel ( char* ActionLabel );
 EXTERN void ExecuteActionWithLabel ( char* ActionLabel );
 EXTERN void ExecuteEvent ( int EventNumber );
-EXTERN int InstallItem( int IventoryIndex );
 
 /* enemy.c */
 #undef EXTERN

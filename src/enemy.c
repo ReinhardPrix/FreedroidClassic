@@ -1,12 +1,3 @@
-/*----------------------------------------------------------------------
- *
- * Desc: All enemy - realted functions.  This includes their whole behaviour,
- *	healing, initialization, shuffling them around after evevator-transitions
- *	of the paradroid, deleting them, collisions of enemys among themselves,
- *	their fireing, animation and such.
- *
- *----------------------------------------------------------------------*/
-
 /* 
  *
  *   Copyright (c) 1994, 2002 Johannes Prix
@@ -31,6 +22,16 @@
  *  MA  02111-1307  USA
  *
  */
+/* ----------------------------------------------------------------------
+ * This file contains all enemy realted functions.  This includes their 
+ * whole behaviour, healing, initialization, shuffling them around after 
+ * evevator-transitions, deleting them, collisions of enemys among 
+ * themselves, their fireing, animation and such.
+ * ---------------------------------------------------------------------- */
+/*
+ * This file has been checked for remains of german comments in the code
+ * I you still find some, please just kill it mercilessly.
+ */
 #define _enemy_c
 
 #include "system.h"
@@ -40,13 +41,10 @@
 #include "global.h"
 #include "proto.h"
 
-#define COL_SPEED		3	/* wegstossen bei enemy-enemy collision */
+#define COL_SPEED		3	
 
 #define FIREDIST2	8 // according to the intro, the laser can be "focused on any target
                           // within a range of eight metres"
-
-// void PermanentHealRobots (void);
-
 
 /* ----------------------------------------------------------------------
  * This function tests, if a Robot can go a direct straigt line from
@@ -108,7 +106,6 @@ DirectLineWalkable( float x1 , float y1 , float x2 , float y2 )
  * and TRUE is returned.
  * Else nothing is done and FALSE is returned.
  * ----------------------------------------------------------------------*/
-
 int 
 SetDirectCourseToConsole( int EnemyNum )
 {
@@ -158,6 +155,11 @@ SetDirectCourseToConsole( int EnemyNum )
   return FALSE;
 }; // int SetDirectCourseToConsole ( int Enemynum )
 
+/* ----------------------------------------------------------------------
+ * After an enemy gets hit, it might perform some special behaviour as
+ * reaction to the hit.  Perhaps it might just say ouch, perhaps it
+ * might do more.  This is done here.
+ * ----------------------------------------------------------------------*/
 void 
 Enemy_Post_Bullethit_Behaviour( int EnemyNum )
 {
@@ -185,18 +187,14 @@ Enemy_Post_Bullethit_Behaviour( int EnemyNum )
 	  DebugPrintf( 1 , "\nEnemy_Post_Bullethit_Behaviour( int EnemyNum ): giving up way for console....");
 	  ThisRobot->persuing_given_course = FALSE;
 	}
-
     }
-
 }; // void Enemy_Post_Bullethit_Behaviour( int Enemynum )
 
 
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * Enemys recover with time, just so.  This is done in this function, and
+ * it is of course independent of the current framerate.
+ * ---------------------------------------------------------------------- */
 void
 PermanentHealRobots (void)
 {
@@ -212,14 +210,12 @@ PermanentHealRobots (void)
     }
 } // void PermanentHealRobots(void)
 
-
-/*-----------------------------------------------------------------
- * @Desc: setzt AllEnemys - Array auf 0
- *
- *
- *-----------------------------------------------------------------*/
+/* -----------------------------------------------------------------
+ * This function removes all enemy entries from the list of the
+ * enemys.
+ * ----------------------------------------------------------------- */
 void
-ClearEnemys (void)
+ClearEnemys ( void )
 {
   int i , j;
 
@@ -260,21 +256,21 @@ ClearEnemys (void)
 
   return;
 
-} /*  ClearEnemys() */
+}; // void ClearEnemys ( void ) 
 
 
-/*-----------------------------------------------------------------
- * @Desc: Vermischt enemys in CurLevel auf die Waypoints
+/* -----------------------------------------------------------------
+ * After a teleporter or lift transition but also after the ship
+ * is loaded, the enemys on each deck get shuffled around.
  *
+ * WARNING!! IT SHOULD BE NOTED THAT THIS FUNCTION REQUIRES THE
+ * CURLEVEL STRUCTURE TO BE SET ALREADY, OR IT WILL SEGFAULT,
+ * EVEN WHEN A RETURN IS PLACED AT THE START OF THE FUNCTION!!!!
  *
- *-----------------------------------------------------------------*/
+ * -----------------------------------------------------------------*/
 void
 ShuffleEnemys (void)
 {
-  // WARNING!! IT SHOULD BE NOTED THAT THIS FUNCTION REQUIRES THE
-  // CURLEVEL STRUCTURE TO BE SET ALREADY, OR IT WILL SEGFAULT,
-  // EVEN WHEN A RETURN IS PLACED AT THE START OF THE FUNCTION!!!!
-  //
   int curlevel = CurLevel->levelnum;
   int i, j;
   int nth_enemy;
@@ -339,28 +335,26 @@ ShuffleEnemys (void)
 
     }/* for (MAX_ENEMYS_ON_SHIP) */
 
-  /* enemys ein bisschen sich selbst ueberlassen */
+  /* leave the enemys alone for some time.... */
 
-  /* Influencer zuerst entfernen */
+  /* we shortly remove the influencer, so that it does not interfere with the movement */
   influ_coord.x = Me.pos.x;
   influ_coord.y = Me.pos.y;
   Me.pos.x = Me.pos.y = 0;
 
   for (i = 0; i < 30; i++)     MoveEnemys ();
 
-  /* influencer wieder her */
+  /* now we can put the influencer back in */
   Me.pos.x = influ_coord.x;
   Me.pos.y = influ_coord.y;
 
-}	/* ShuffleEnemys() */
+}; // void ShuffleEnemys ( void ) 
 
 /* ----------------------------------------------------------------------
- * This function checks if the connection between two points is free of
- * droids.  
- *
- * MAP TILES ARE NOT TAKEN INTO CONSIDERATION, ONLY DROIDS!!!
- *
- ----------------------------------------------------------------------*/
+ * This function selects the next waypoint for a droid, with a random
+ * principle, not taking anything but existing waypoint connections into
+ * account.
+ * ---------------------------------------------------------------------- */
 void 
 SelectNextWaypointClassical( int EnemyNum )
 {
@@ -393,9 +387,8 @@ SelectNextWaypointClassical( int EnemyNum )
       ThisRobot->lastwaypoint = ThisRobot->nextwaypoint;
       ThisRobot->warten = MyRandom (ENEMYMAXWAIT);
       
-      /* suche moegliche Verbindung von hier */
-      DebugPrintf (2, "/* suche moegliche Verbindung von hier */\n");
-      /* but only if there are connections possible */
+      // search for possible connections from here
+      // but only if there are connections possible 
       for ( j=0; j<MAX_WP_CONNECTIONS; j++ )
 	if ( WpList[nextwp].connections[j] != -1 )
 	  break;
@@ -412,7 +405,7 @@ SelectNextWaypointClassical( int EnemyNum )
       ThisRobot->nextwaypoint = trywp;
     }			/* if */
 
-} // void MoveThisRobotClassical ( int Enemynum );
+}; // void MoveThisRobotClassical ( int Enemynum );
 
 /* ----------------------------------------------------------------------
  * This function checks if the connection between two points is free of
@@ -420,7 +413,7 @@ SelectNextWaypointClassical( int EnemyNum )
  *
  * MAP TILES ARE NOT TAKEN INTO CONSIDERATION, ONLY DROIDS!!!
  *
- ----------------------------------------------------------------------*/
+ * ---------------------------------------------------------------------- */
 int 
 CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLevel , int ExceptedDroid )
 {
@@ -484,18 +477,15 @@ CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLe
   return TRUE;
 }; // CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLevel , int ExceptedDroid )
 
-
-
 /* ----------------------------------------------------------------------
  * This function moves one robot thowards his next waypoint.  If already
  * there, the function does nothing more.
- *
- ----------------------------------------------------------------------*/
+ * ---------------------------------------------------------------------- */
 void 
 MoveThisRobotThowardsHisWaypoint ( int EnemyNum )
 {
   finepoint Restweg;
-  Waypoint WpList;		/* Pointer to waypoint-liste */
+  Waypoint WpList;		/* Pointer to waypoint-list */
   int nextwp;
   finepoint nextwp_pos;
   float maxspeed;
@@ -626,15 +616,13 @@ Persue_Given_Course ( int EnemyNum )
   ThisRobot->TextVisibleTime = 0;
   ThisRobot->TextToBeDisplayed = "Persuing given course!!";
 
-
 }; // Persue_Given_Waypoint_Course
 
 
 /* ----------------------------------------------------------------------
  * This function moves one robot in an advanced way, that hasn't been
  * present within the classical paradroid game.
- *
- ----------------------------------------------------------------------*/
+ * ---------------------------------------------------------------------- */
 void 
 SelectNextWaypointAdvanced ( int EnemyNum )
 {
@@ -763,7 +751,7 @@ SelectNextWaypointAdvanced ( int EnemyNum )
       /* setze neuen Waypoint */
       ThisRobot->nextwaypoint = trywp;
     }			/* if */
-} // void MoveThisRobotAdvanced ( int EnemyNum )
+}; // void MoveThisRobotAdvanced ( int EnemyNum )
 
 
 /* ----------------------------------------------------------------------
@@ -867,7 +855,7 @@ MoveEnemys (void)
 
     }	/* for (MAX_ENEMYS_ON_SHIP) */
 
-} /* MoveEnemys() */
+}; // MoveEnemys( void ) 
 
 /* ----------------------------------------------------------------------
  * This function is low-level:  It simply sets off a shot from enemy
@@ -1018,18 +1006,15 @@ DetermineVectorToShotTarget( enemy* ThisRobot , moderately_finepoint* vect_to_ta
 
 }; // void DetermineVectorToShotTarget( enemy* ThisRobot , & vect_to_target )
 
-/*@Function============================================================
-@Desc: AttackInfluence(): This function sometimes fires a bullet from
-enemy number enemynum directly into the direction of the influencer,
-but of course only if the odds are good i.e. requirements are met.
-
-@Ret: void
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function sometimes fires a bullet from enemy number enemynum 
+ * directly into the direction of the influencer, but of course only if 
+ * the odds are good i.e. requirements are met.
+ * ---------------------------------------------------------------------- */
 void
 AttackInfluence (int enemynum)
 {
   moderately_finepoint vect_to_target;
-  // float xdist, ydist;
   float dist2;
   Enemy ThisRobot=&AllEnemys[ enemynum ];
   float StepSize;
@@ -1187,14 +1172,12 @@ AttackInfluence (int enemynum)
   
   RawStartEnemysShot( ThisRobot , vect_to_target.x , vect_to_target.y );
   
-}; // AttackInfluence 
+}; // void AttackInfluence ( int enemynum )
 
-/*@Function============================================================
-@Desc: CheckEnemyEnemyCollision()
-
-@Ret: 	TRUE: if enemy Nr. Enemynum collided with another enemy
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function checks for enemy collsions and returns TRUE if enemy 
+ * with number enemynum collided with another enemy from the list.
+ * ---------------------------------------------------------------------- */
 int
 CheckEnemyEnemyCollision (int enemynum)
 {
@@ -1281,13 +1264,10 @@ CheckEnemyEnemyCollision (int enemynum)
   return FALSE;
 }; // int CheckEnemyEnemyCollision
 
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function does the rotation of the enemys according to their 
+ * current energy level.
+ * ---------------------------------------------------------------------- */
 void
 AnimateEnemys (void)
 {
@@ -1313,14 +1293,11 @@ AnimateEnemys (void)
 	  AllEnemys[i].feindphase = 0;
 	}
     }
-} // void AnimateEnemys(void)
+}; // void AnimateEnemys ( void )
 
-/*@Function============================================================
-@Desc: ClassOfDruid(druidtype): liefert die Classe des Druidtypes type
-
-@Ret: int class: 0-9
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function returns the class a robot belongs to.
+ * ---------------------------------------------------------------------- */
 int
 ClassOfDruid (int druidtype)
 {
@@ -1330,8 +1307,6 @@ ClassOfDruid (int druidtype)
   classnumber[1] = '\0';
 
   return (atoi (classnumber));
-}				/* ClassOfDruid */
-
-
+}; // ClassOfDruid 
 
 #undef _enemy_c

@@ -1530,7 +1530,6 @@ InitNewMissionList ( char *MissionName )
 
   Me.Experience = 0; // This should be done at the end of the highscore list procedure
   ShowScore = 0; // This should be done at the end of the highscore list procedure
-  KillQueue (); // This has NO meaning right now...
 
   //--------------------
   // Delete all bullets and blasts.  We need to do this AFTER the map has been

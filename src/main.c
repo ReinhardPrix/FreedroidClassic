@@ -116,8 +116,6 @@ main (int argc, char *const argv[])
 
 	  SDL_Flip ( Screen );
 
-	  PutMessages ();
-
 	  for (i = 0; i < MAXBULLETS; i++) CheckBulletCollisions (i);
 
 	  MoveInfluence ();	// change Influ-speed depending on keys pressed, but
