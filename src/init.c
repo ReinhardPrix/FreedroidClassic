@@ -1237,9 +1237,10 @@ GetQuestList ( char* QuestListFilename )
       ReadValueFromString( MissionTargetPointer , MISSION_TARGET_KILL_ONE_STRING , "%d" , 
 			   &Me[0].AllMissions[ MissionTargetIndex ].KillOne , EndOfMissionTargetPointer );
 
-      ReadValueFromString( MissionTargetPointer , MISSION_TARGET_MUST_CLEAR_SECOND_LEVEL , "%d" , 
-			   &Me[0].AllMissions[ MissionTargetIndex ]. must_clear_second_level , EndOfMissionTargetPointer );
       ReadValueFromString( MissionTargetPointer , MISSION_TARGET_MUST_CLEAR_FIRST_LEVEL , "%d" , 
+			   &Me[0].AllMissions[ MissionTargetIndex ]. must_clear_first_level , EndOfMissionTargetPointer );
+
+      ReadValueFromString( MissionTargetPointer , MISSION_TARGET_MUST_CLEAR_SECOND_LEVEL , "%d" , 
 			   &Me[0].AllMissions[ MissionTargetIndex ]. must_clear_second_level , EndOfMissionTargetPointer );
       ReadValueFromString( MissionTargetPointer , MISSION_TARGET_MUST_BE_CLASS_STRING , "%d" , 
 			   &Me[0].AllMissions[ MissionTargetIndex ].MustBeClass , EndOfMissionTargetPointer );

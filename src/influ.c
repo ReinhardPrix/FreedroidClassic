@@ -648,7 +648,7 @@ move_tux_thowards_mouse_move_target ( int player_num )
   if ( Me [ player_num ] . status == OUT ) return;
   // if ( Me [ player_num ] . energy <= 0 ) return;
 
-  DebugPrintf ( 0 , "\nNot at:  move_tux_thowards_mouse_move_target." );
+  // DebugPrintf ( 0 , "\nNow at:  move_tux_thowards_mouse_move_target." );
 
   accel = 5.0 * Frame_Time() ;
 

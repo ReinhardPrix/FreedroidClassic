@@ -1065,7 +1065,8 @@ LoadAndFadeInBackgroundMusic ( void )
   Loaded_MOD_Files [ 0 ] = Mix_LoadMUS( fpath );
   if ( Loaded_MOD_Files[ 0 ] == NULL )
     {
-      fprintf (stderr, "\n\nfpath: '%s' Mix_GetError(): %s.\n" , fpath , Mix_GetError() );
+      fprintf ( stderr , "\n\nThe original name given was: %s." , NewMusicTargetFileName );
+      fprintf ( stderr , "\nfpath: '%s' Mix_GetError(): %s.\n" , fpath , Mix_GetError() );
       GiveStandardErrorMessage ( "LoadAndFadeInBackgroundMusic(...)" , "\
 The SDL MIXER WAS UNABLE TO LOAD A CERTAIN MOD FILE INTO MEMORY.\n\
 \n\

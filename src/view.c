@@ -467,7 +467,9 @@ ShowCombatScreenTexts ( int mask )
   Level DisplayLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
   int minutes;
   int seconds;
-
+  int i;
+  int k;
+  int remaining_bots;
 
   if ( GameConfig.Draw_Framerate )
     {
@@ -504,18 +506,46 @@ ShowCombatScreenTexts ( int mask )
 		       "GPS: X=%3.1f Y=%3.1f Lev=%d" , ( Me [ 0 ] . pos . x ) , ( Me [ 0 ] . pos . y ) , DisplayLevel->levelnum );
     }
 
-  if ( Me[0].AllMissions[0].MustLiveTime != (-1) )
+  for ( i = 0 ; i < MAX_MISSIONS_IN_GAME ; i ++ )
     {
-      minutes=floor( ( Me[0].AllMissions[0].MustLiveTime - Me[0].MissionTimeElapsed ) / 60 );
-      seconds= rintf( Me[0].AllMissions[0].MustLiveTime - Me[0].MissionTimeElapsed ) - 60 * minutes;
-      if ( minutes < 0 ) 
+      if ( ! Me [ 0 ] . AllMissions [ i ] . MissionWasAssigned ) continue;
+
+      DebugPrintf ( 0 , "\nYES, Something was assigned at all...." );
+
+      if ( Me [ 0 ] . AllMissions [ i ] . MustLiveTime != (-1) )
 	{
-	  minutes = 0;
-	  seconds = 0;
+	  minutes = floor ( ( Me [ 0 ] . AllMissions [ i ] . MustLiveTime - Me [ 0 ] . MissionTimeElapsed ) / 60 );
+	  seconds = rintf ( Me [ 0 ] . AllMissions [ i ] . MustLiveTime - Me [ 0 ] . MissionTimeElapsed ) - 60 * minutes;
+	  if ( minutes < 0 ) 
+	    {
+	      minutes = 0;
+	      seconds = 0;
+	    }
+	  PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x , 
+			   User_Rect.y + 0*FontHeight( FPS_Display_BFont ), 
+			   "Time to hold out still: %2d:%2d " , minutes , seconds );
 	}
-      PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x , 
-		       User_Rect.y + 0*FontHeight( FPS_Display_BFont ), 
-		       "Time to hold out still: %2d:%2d " , minutes , seconds );
+
+      if ( ( Me [ 0 ] . AllMissions [ i ] . must_clear_first_level == Me [ 0 ] . pos . z ) ||
+	   ( Me [ 0 ] . AllMissions [ i ] . must_clear_second_level == Me [ 0 ] . pos . z ) )
+	{
+	  remaining_bots = 0 ;
+
+	  for ( k = 0 ; k < Number_Of_Droids_On_Ship ; k ++ )
+	    {
+	      if ( ( AllEnemys [ k ] . pos . z == Me [ 0 ] . pos . z ) &&
+		   ( AllEnemys [ k ] . Status != OUT ) &&
+		   ( AllEnemys [ k ] . energy > 0 ) &&
+		   ( ! AllEnemys [ k ] . is_friendly ) )
+		remaining_bots ++ ;
+	    }
+	  PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x , 
+			   User_Rect.y + 0*FontHeight( FPS_Display_BFont ), 
+			   "Bots remaining on level: %d" , remaining_bots );
+
+	  DebugPrintf ( 0 , "\nYES, this is the level...." );
+      
+	}
     }
 
   ShowMissionCompletitionMessages();
