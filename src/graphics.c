@@ -1246,8 +1246,6 @@ InitPictures (void)
 
   clear_all_loaded_tux_images ( FALSE ) ;
 
-  // Load_Tux_Surfaces();
-
   ShowStartupPercentage ( 65 ) ; 
 
   DebugPrintf( 1 , "\nvoid InitPictures(void): preparing to load blast image file." );

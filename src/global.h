@@ -200,6 +200,7 @@ EXTERN int global_check_for_light_only_collisions_flag;
 #endif
 EXTERN iso_image light_radius_chunk[ NUMBER_OF_SHADOW_IMAGES ];
 EXTERN SDL_Rect InventoryRect;
+EXTERN char previous_part_strings [ ALL_PART_GROUPS ] [ 200 ] ;
 
 #undef EXTERN
 #ifdef _sound_c
@@ -251,7 +252,6 @@ EXTERN int droid_death_animation_speed_factor [ ENEMY_ROTATION_MODELS_AVAILABLE 
 EXTERN int droid_stand_animation_speed_factor [ ENEMY_ROTATION_MODELS_AVAILABLE ];
 
 EXTERN SDL_Surface *TuxWorkingCopy [ MAX_PLAYERS ] [ TUX_BREATHE_PHASES + TUX_SWING_PHASES + TUX_GOT_HIT_PHASES ] [ MAX_TUX_DIRECTIONS ] ;   // A pointer to the surfaces containing the tux
-// EXTERN SDL_Surface *TuxMotionArchetypes[ TUX_MODELS ][ TUX_BREATHE_PHASES + TUX_SWING_PHASES + TUX_GOT_HIT_PHASES ];   // A pointer to the surfaces containing the tux
 EXTERN iso_image floor_iso_images [ ALL_ISOMETRIC_FLOOR_TILES ] ;   
 
 EXTERN float iso_floor_tile_width;

@@ -44,18 +44,6 @@
 #include "colodefs.h"
 #include "SDL_rotozoom.h"
 
-#define NOT_LOADED_MARKER "nothing_loaded"
-enum
-  {
-    PART_GROUP_HEAD = 0 ,
-    PART_GROUP_SHIELD = 1 , 
-    PART_GROUP_TORSO = 2 ,
-    PART_GROUP_FEET = 3 ,
-    PART_GROUP_WEAPON = 4 ,
-    PART_GROUP_WEAPONARM = 5 ,
-    ALL_PART_GROUPS = 6
-  };
-
 #define PUT_ONLY_THROWN_ITEMS 3
 #define PUT_NO_THROWN_ITEMS 4
 
@@ -83,8 +71,6 @@ int use_walk_cycle_for_part [ ALL_PART_GROUPS ] [ ALL_TUX_MOTION_CLASSES ] =
     { 1 , 0 } , // sword
     { 1 , 0 } , // weaponarm
   } ;
-
-char previous_part_strings [ ALL_PART_GROUPS ] [ 200 ] ;
 
 char previous_part_strings_for_each_phase_and_direction [ ALL_PART_GROUPS ] [ TUX_TOTAL_PHASES ] [ MAX_TUX_DIRECTIONS ] [ 200 ] ;
 

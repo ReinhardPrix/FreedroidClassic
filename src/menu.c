@@ -1830,7 +1830,16 @@ Unhandles Tux image update policy encountered!",
 	  if ( GameConfig . tux_image_update_policy == TUX_IMAGE_UPDATE_EVERYTHING_AT_ONCE )
 	    GameConfig . tux_image_update_policy = TUX_IMAGE_UPDATE_CONTINUOUSLY ;
 	  else if ( GameConfig . tux_image_update_policy == TUX_IMAGE_UPDATE_CONTINUOUSLY )
-	    GameConfig . tux_image_update_policy = TUX_IMAGE_UPDATE_EVERYTHING_AT_ONCE ;
+	    {
+	      GameConfig . tux_image_update_policy = TUX_IMAGE_UPDATE_EVERYTHING_AT_ONCE ;
+	      strcpy ( previous_part_strings [ 0 ] , NOT_LOADED_MARKER );
+	      strcpy ( previous_part_strings [ 1 ] , NOT_LOADED_MARKER );
+	      strcpy ( previous_part_strings [ 2 ] , NOT_LOADED_MARKER );
+	      strcpy ( previous_part_strings [ 3 ] , NOT_LOADED_MARKER );
+	      strcpy ( previous_part_strings [ 4 ] , NOT_LOADED_MARKER );
+	      strcpy ( previous_part_strings [ 5 ] , NOT_LOADED_MARKER );
+	    }  
+
 	  break;
 
 	case LEAVE_PERFORMANCE_TWEAKS_MENU:
