@@ -2385,7 +2385,7 @@ init_obstacle_data( void )
   obstacle_map [ ISO_V_WIRE_FENCE ] . block_area_parm_2 = 2.0 ;
   obstacle_map [ ISO_V_WIRE_FENCE ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_H_WOOD_FENCE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_H_WOOD_FENCE ] . block_area_parm_1 = 2.0 ;
+  obstacle_map [ ISO_H_WOOD_FENCE ] . block_area_parm_1 = 2.2 ;
   obstacle_map [ ISO_H_WOOD_FENCE ] . block_area_parm_2 = 1.00 ;
   obstacle_map [ ISO_H_DENSE_FENCE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_H_DENSE_FENCE ] . block_area_parm_1 = 2.0 ;
@@ -3046,6 +3046,57 @@ init_obstacle_data( void )
   obstacle_map [ ISO_CONFERENCE_TABLE_W ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_CONFERENCE_TABLE_W ] . filename = "iso_conference_furniture_0002.png" ;
 
+  obstacle_map [ ISO_RED_FENCE_H ] . block_area_parm_1 = 2.0 ;
+  obstacle_map [ ISO_RED_FENCE_H ] . block_area_parm_2 = 0.80 ;
+  obstacle_map [ ISO_RED_FENCE_H ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_RED_FENCE_H ] . filename = "iso_fence_0002.png" ;
+
+  obstacle_map [ ISO_RED_FENCE_V ] . block_area_parm_1 = 0.80 ;
+  obstacle_map [ ISO_RED_FENCE_V ] . block_area_parm_2 = 2.0 ;
+  obstacle_map [ ISO_RED_FENCE_V ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_RED_FENCE_V ] . filename = "iso_fence_0001.png" ;
+
+  obstacle_map [ ISO_BED_1 ] . block_area_parm_1 = 1.2 ;
+  obstacle_map [ ISO_BED_1 ] . block_area_parm_2 = 2.0 ;
+  obstacle_map [ ISO_BED_1 ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_BED_1 ] . filename = "iso_beds_0000.png" ;
+  obstacle_map [ ISO_BED_2 ] . block_area_parm_1 = 2.0 ;
+  obstacle_map [ ISO_BED_2 ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_BED_2 ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_BED_2 ] . filename = "iso_beds_0001.png" ;
+  obstacle_map [ ISO_BED_3 ] . block_area_parm_1 = 1.2 ;
+  obstacle_map [ ISO_BED_3 ] . block_area_parm_2 = 2.0 ;
+  obstacle_map [ ISO_BED_3 ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_BED_3 ] . filename = "iso_beds_0002.png" ;
+  obstacle_map [ ISO_BED_4 ] . block_area_parm_1 = 2.0 ;
+  obstacle_map [ ISO_BED_4 ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_BED_4 ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_BED_4 ] . filename = "iso_beds_0003.png" ; 
+  obstacle_map [ ISO_BED_5 ] . block_area_parm_1 = 1.2 ;
+  obstacle_map [ ISO_BED_5 ] . block_area_parm_2 = 2.0 ;
+  obstacle_map [ ISO_BED_5 ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_BED_5 ] . filename = "iso_beds_0004.png" ;
+  obstacle_map [ ISO_BED_6 ] . block_area_parm_1 = 2.0 ;
+  obstacle_map [ ISO_BED_6 ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_BED_6 ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_BED_6 ] . filename = "iso_beds_0005.png" ;
+  obstacle_map [ ISO_BED_7 ] . block_area_parm_1 = 1.2 ;
+  obstacle_map [ ISO_BED_7 ] . block_area_parm_2 = 2.0 ;
+  obstacle_map [ ISO_BED_7 ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_BED_7 ] . filename = "iso_beds_0006.png" ;
+  obstacle_map [ ISO_BED_8 ] . block_area_parm_1 = 2.0 ;
+  obstacle_map [ ISO_BED_8 ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_BED_8 ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_BED_8 ] . filename = "iso_beds_0007.png" ;
+	
+  obstacle_map [ ISO_PROJECTOR_E ] . block_area_parm_1 = 0.50 ;
+  obstacle_map [ ISO_PROJECTOR_E ] . block_area_parm_2 = 0.5 ;
+  obstacle_map [ ISO_PROJECTOR_E ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_PROJECTOR_E ] . filename = "iso_conference_furniture_0004.png" ;
+  obstacle_map [ ISO_PROJECTOR_W ] . block_area_parm_1 = 0.5 ;
+  obstacle_map [ ISO_PROJECTOR_W ] . block_area_parm_2 = 0.5 ;
+  obstacle_map [ ISO_PROJECTOR_W ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_PROJECTOR_W ] . filename = "iso_conference_furniture_0005.png" ;
   //--------------------
   // Now that we have defined the block area paramters, it's time to do some
   // simple but often required computations in advance:  Calculating the offsets
