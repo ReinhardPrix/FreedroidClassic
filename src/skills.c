@@ -908,6 +908,12 @@ ShowSkillsExplanationScreen( void )
  * already present in the Tux.  That way the game remains open for new
  * skills to the player and he doesn't now in advance which skills there
  * are, which is more interesting than complete control and overview.
+ *
+ * Any skills not in use will be marked as -1.
+ *
+ * The first few entries will be filled with internal skill index numbers
+ * for reference.
+ *
  * ---------------------------------------------------------------------- */
 void
 establish_skill_subset_map ( int *SkillSubsetMap )
@@ -928,6 +934,41 @@ establish_skill_subset_map ( int *SkillSubsetMap )
 	}
     }
 }; // void establish_skill_subset_map ( int *SkillSubsetMap );
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+activate_nth_aquired_skill ( int skill_num )
+{
+  int SkillSubsetMap [ NUMBER_OF_SKILLS ] ;
+  int i;
+
+  //--------------------
+  // We will choose only from those skills, that have been aquired already,
+  // so we prepare a list of exactly these skills...
+  //
+  establish_skill_subset_map ( & ( SkillSubsetMap [ 0 ] ) );
+
+  //--------------------
+  // If the n-th skill does exist, we activate the n-th skill,
+  // otherwise we activate the last aquired skill.
+  //
+  if ( SkillSubsetMap [ skill_num ] != (-1) )
+    {
+      Me [ 0 ] . readied_skill = SkillSubsetMap [ skill_num ] ;
+    }
+  else
+    {
+      for ( i = 0 ; i < NUMBER_OF_SKILLS ; i ++ )
+	{
+	  if ( SkillSubsetMap [ i ] != (-1) )
+	    Me [ 0 ] . readied_skill = SkillSubsetMap [ i ] ;
+	}
+    }
+  
+}; // void activate_nth_skill ( int skill_num )
 
 /* ----------------------------------------------------------------------
  * This function displays the SKILLS SCREEN.  This is NOT the same as the

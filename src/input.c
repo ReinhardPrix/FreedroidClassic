@@ -308,36 +308,34 @@ ReactToSpecialKeys(void)
     Me[0].energy = 0;
 
   if ( F1Pressed() )
-    Me[0].readied_skill = 0;
+    activate_nth_aquired_skill ( 0 );
 
   if ( F2Pressed() )
-    Me[0].readied_skill = 1;
+    activate_nth_aquired_skill ( 1 );
 
   if ( F3Pressed() )
-    Me[0].readied_skill = 2;
+    activate_nth_aquired_skill ( 2 );
 
   if ( F4Pressed() )
-    Me[0].readied_skill = 3;
+    activate_nth_aquired_skill ( 3 );
 
   if ( F5Pressed() )
-    Me[0].readied_skill = 4;
+    activate_nth_aquired_skill ( 4 );
 
   if ( F6Pressed() )
-    {
-      Me[0].readied_skill = 5;
-    }
+    activate_nth_aquired_skill ( 5 );
 
   if ( F7Pressed() )
-    Me[0].readied_skill = 6;
+    activate_nth_aquired_skill ( 6 );
 
   if ( F8Pressed() )
-    Me[0].readied_skill = 7;
+    activate_nth_aquired_skill ( 7 );
 
   if ( F9Pressed() )
-    Me[0].readied_skill = 8;
+    activate_nth_aquired_skill ( 8 );
 
   if ( F10Pressed() )
-    Me[0].readied_skill = 9;
+    activate_nth_aquired_skill ( 9 );
 
   // THIS REMAINS DISABLED... if ( Number0Pressed() ) Quick_ApplyItem ( 0 );
 
