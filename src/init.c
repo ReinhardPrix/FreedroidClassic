@@ -1691,7 +1691,6 @@ InitNewMissionList ( char *MissionName )
   LastBlastHit = 0;
   LastGotIntoBlastSound = 2;
   LastRefreshSound = 2;
-  PlusExtentionsOn = FALSE;
   ThisMessageTime = 0;
   LevelDoorsNotMovedTime = 0.0;
   RespectVisibilityOnMap = TRUE ;
@@ -2198,8 +2197,6 @@ InitFreedroid ( void )
   // initialize the highscore list 
   Init_Highscores ();
  
-  HideInvisibleMap = FALSE;	/* Hide invisible map-parts. Para-extension!! */
-
   MinMessageTime = 55;
   MaxMessageTime = 850;
 

@@ -590,8 +590,7 @@ Cheatmenu (void)
       printf_SDL (Screen, -1, -1, " i. Invinciblemode: %s",
 		  InvincibleMode ? "ON\n" : "OFF\n");
       printf_SDL (Screen, -1, -1, " e. set energy\n");
-      printf_SDL (Screen, -1, -1, " h. Hide invisible map parts: %s",
-		  HideInvisibleMap ? "ON\n" : "OFF\n" );
+      printf_SDL (Screen, -1, -1, " h. Auto-aquire all skills\n" );
       printf_SDL (Screen, -1, -1, " n. No hidden droids: %s",
 		  show_all_droids ? "ON\n" : "OFF\n" );
       printf_SDL (Screen, -1, -1, " m. Map of Deck xy\n");
@@ -763,8 +762,8 @@ Cheatmenu (void)
 	  if (Me[0].energy > Me[0].health) Me[0].health = Me[0].energy;
 	  break;
 
-	case 'h': /* toggle hide invisible map */
-	  HideInvisibleMap = !HideInvisibleMap;
+	case 'h': // auto-aquire all skills
+	  for ( i = 0 ; i < NUMBER_OF_SKILLS ; i ++ ) Me [ 0 ] . base_skill_level [ i ] = 1 ;
 	  break;
 
 	case 'n': /* toggle display of all droids */

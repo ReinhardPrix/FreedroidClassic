@@ -102,6 +102,7 @@ typedef struct
   int show_subtitles_in_dialogs;
   char freedroid_version_string[500];
   int show_digits_of_droids;
+  int skill_explanation_screen_visible;
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
 
@@ -791,6 +792,7 @@ typedef struct
   char* spell_skill_icon_name;
   SDL_Surface* spell_skill_icon_surface;
   int mana_cost_table[ NUMBER_OF_SKILL_LEVELS ];
+  char* spell_skill_description;
 }
 spell_skill_spec, *Spell_Skill_Spec;
 

@@ -221,6 +221,7 @@ enum
 
 #define CHARACTER_SCREEN_BACKGROUND_FILE "backgrounds/character.png" 
 #define SKILL_SCREEN_BACKGROUND_FILE "backgrounds/SkillScreen.png" 
+#define SKILL_EXPLANATION_SCREEN_BACKGROUND_FILE "backgrounds/SkillExplanationScreen.png" 
 #define INVENTORY_SCREEN_BACKGROUND_FILE "backgrounds/inventory.png"
 #define INVENTORY_SQUARE_OCCUPIED_FILE "backgrounds/TransparentPlate.png"
 #define LEVEL_EDITOR_BANNER_FILE "backgrounds/LevelEditorBanner.png"
@@ -415,7 +416,7 @@ enum _non_player_characters
 #define MAX_MAP_INSERTS         6
 #define MAX_MAP_INSERTS_PER_LEVEL 20
 
-#define MAX_MOUSE_PRESS_BUTTONS 60
+#define MAX_MOUSE_PRESS_BUTTONS 61
 enum
   { 
     CHA_BUTTON, 
@@ -479,7 +480,9 @@ enum
     TAKE_100_BUTTON,
     PUT_BUTTON,
     PUT_10_BUTTON,
-    PUT_100_BUTTON
+    PUT_100_BUTTON,
+
+    OPEN_CLOSE_SKILL_EXPLANATION_BUTTON
   };
 
 

@@ -102,10 +102,7 @@ EXTERN int QuitProgram;
 EXTERN int GameOver;
 EXTERN int LastBlastHit;
 EXTERN int InvincibleMode;
-EXTERN int HideInvisibleMap;
-EXTERN int PlusExtentionsOn;
 EXTERN int Alert;
-EXTERN int ThisShip;
 EXTERN long ShowScore;
 EXTERN int RespectVisibilityOnMap;
 

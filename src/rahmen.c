@@ -427,6 +427,7 @@ ShowCurrentSkill( void )
 
   if ( Me[0].status == BRIEFING ) return;
   if ( GameConfig.Inventory_Visible ) return;
+  if ( GameConfig.SkillScreen_Visible && GameConfig.skill_explanation_screen_visible ) return;
 
   Target_Rect.x = CURRENT_SKILL_RECT_X ;
   Target_Rect.y = CURRENT_SKILL_RECT_Y ;
