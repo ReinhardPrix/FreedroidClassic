@@ -2300,17 +2300,24 @@ There was a rotation model type given, that exceeds the number of rotation model
       if ( AllEnemys[Enum].paralysation_duration_left != 0 ) 
 	{
 	  LoadAndPrepareRedEnemyRotationModelNr ( RotationModel );
-	  SDL_BlitSurface( RedEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] , NULL , Screen, &TargetRectangle);
+	  // SDL_BlitSurface( RedEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] , NULL , Screen, &TargetRectangle);
+	  blit_iso_image_to_map_position ( RedEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
+					   AllEnemys [ Enum ] . pos . x , AllEnemys [ Enum ] . pos . y );
 	}
       else if ( AllEnemys[Enum].poison_duration_left != 0 ) 
 	{
 	  LoadAndPrepareGreenEnemyRotationModelNr ( RotationModel );
-	  SDL_BlitSurface( GreenEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] , NULL , Screen, &TargetRectangle);
+	  // SDL_BlitSurface( GreenEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] , NULL , Screen, &TargetRectangle);
+	  blit_iso_image_to_map_position ( GreenEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
+					   AllEnemys [ Enum ] . pos . x , AllEnemys [ Enum ] . pos . y );
+
 	}
       else if ( AllEnemys[Enum].frozen != 0 ) 
 	{
 	  LoadAndPrepareBlueEnemyRotationModelNr ( RotationModel );
-	  SDL_BlitSurface( BlueEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] , NULL , Screen, &TargetRectangle);
+	  // SDL_BlitSurface( BlueEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] , NULL , Screen, &TargetRectangle);
+	  blit_iso_image_to_map_position ( BlueEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
+					   AllEnemys [ Enum ] . pos . x , AllEnemys [ Enum ] . pos . y );
 	}
       else
 	{

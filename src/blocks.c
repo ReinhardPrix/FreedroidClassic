@@ -779,8 +779,12 @@ Freedroid received a rotation model number that does not exist!",
   //
   for ( i=0 ; i < ROTATION_ANGLES_PER_ROTATION_MODEL ; i++ )
     {
-      GreenEnemyRotationSurfacePointer [ ModelNr ] [ i ] = 
+      GreenEnemyRotationSurfacePointer [ ModelNr ] [ i ] [ 0 ] . surface = 
 	CreateColorFilteredSurface ( enemy_iso_images [ ModelNr ] [ i ] [ 0 ] . surface , FILTER_GREEN );
+      GreenEnemyRotationSurfacePointer [ ModelNr ] [ i ] [ 0 ] . offset_x = 
+	enemy_iso_images [ ModelNr ] [ i ] [ 0 ] . offset_x ;
+      GreenEnemyRotationSurfacePointer [ ModelNr ] [ i ] [ 0 ] . offset_y = 
+	enemy_iso_images [ ModelNr ] [ i ] [ 0 ] . offset_y ;
     }
 }; // void LoadAndPrepareGreenEnemyRotationModelNr ( int ModelNr )
   
@@ -839,8 +843,12 @@ Freedroid received a rotation model number that does not exist!",
   //
   for ( i=0 ; i < ROTATION_ANGLES_PER_ROTATION_MODEL ; i++ )
     {
-      BlueEnemyRotationSurfacePointer [ ModelNr ] [ i ] = 
+      BlueEnemyRotationSurfacePointer [ ModelNr ] [ i ] [ 0 ] . surface = 
 	CreateColorFilteredSurface ( enemy_iso_images [ ModelNr ] [ i ] [ 0 ] . surface , FILTER_BLUE );
+      BlueEnemyRotationSurfacePointer [ ModelNr ] [ i ] [ 0 ] . offset_x = 
+	enemy_iso_images [ ModelNr ] [ i ] [ 0 ] . offset_x ;
+      BlueEnemyRotationSurfacePointer [ ModelNr ] [ i ] [ 0 ] . offset_y = 
+	enemy_iso_images [ ModelNr ] [ i ] [ 0 ] . offset_y ;
     }
 }; // void LoadAndPrepareBlueEnemyRotationModelNr ( int ModelNr )
   
@@ -899,8 +907,12 @@ Freedroid received a rotation model number that does not exist!",
   //
   for ( i=0 ; i < ROTATION_ANGLES_PER_ROTATION_MODEL ; i++ )
     {
-      RedEnemyRotationSurfacePointer [ ModelNr ] [ i ] = 
+      RedEnemyRotationSurfacePointer [ ModelNr ] [ i ] [ 0 ] . surface = 
 	CreateColorFilteredSurface ( enemy_iso_images [ ModelNr ] [ i ] [ 0 ] . surface , FILTER_RED );
+      RedEnemyRotationSurfacePointer [ ModelNr ] [ i ] [ 0 ] . offset_x = 
+	enemy_iso_images [ ModelNr ] [ i ] [ 0 ] . offset_x ;
+      RedEnemyRotationSurfacePointer [ ModelNr ] [ i ] [ 0 ] . offset_y = 
+	enemy_iso_images [ ModelNr ] [ i ] [ 0 ] . offset_y ;
     }
 }; // void LoadAndPrepareRedEnemyRotationModelNr ( int ModelNr )
   
