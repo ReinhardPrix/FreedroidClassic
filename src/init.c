@@ -57,8 +57,13 @@ ShowStartupPercentage ( int Percentage )
   Bar_Rect . y = 200 ;
   Bar_Rect . w = 2 * Percentage ;
   Bar_Rect . h = 30 ;
-
   SDL_FillRect ( Screen , & Bar_Rect , FillColor ) ;
+
+  Bar_Rect . x = 200 + 2 * Percentage ;
+  Bar_Rect . y = 200 ;
+  Bar_Rect . w = 200 - 2 * Percentage ;
+  Bar_Rect . h = 30 ;
+  SDL_FillRect ( Screen , & Bar_Rect , 0 ) ;
 
   PrintString ( Screen , 200 + 80 , 200 + 4 , "%d%%", Percentage ) ;
 
