@@ -790,7 +790,7 @@ Pause (void)
   while ( Pause )
     {
       SetNewBigScreenMessage( " Pause " );
-      AnimateInfluence ( 0 );
+      animate_tux ( 0 );
       AnimateCyclingMapTiles ();
       DisplayBanner ( );
       AssembleCombatPicture ( 0 );

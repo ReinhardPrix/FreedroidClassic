@@ -526,7 +526,8 @@ HandleCurrentlyActivatedSkill( int player_num )
     float xdist, ydist, dist2;
     Level ChestLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
     moderately_finepoint loc_pos ;
-    
+    int index_of_droid_below_mouse_cursor = ( -1 ) ;
+
     switch ( Me [ 0 ] . readied_skill )
     {
 	case SPELL_WEAPON:
@@ -536,6 +537,19 @@ HandleCurrentlyActivatedSkill( int player_num )
 				      GetMousePos_y()  ) )
 		tux_wants_to_attack_now ( 0 );
 	    
+	    break;
+	case  SPELL_TRANSFERMODE:
+	    if ( MouseRightPressed ( ) != 1 ) break;
+	    
+	    if ( ! MouseCursorIsInUserRect ( GetMousePos_x() , GetMousePos_y() ) ) break;
+
+	    index_of_droid_below_mouse_cursor = GetLivingDroidBelowMouseCursor ( player_num ) ;
+	    if ( index_of_droid_below_mouse_cursor == ( -1 ) ) break;
+
+	    if ( AllEnemys [ index_of_droid_below_mouse_cursor ] . is_friendly )
+		ChatWithFriendlyDroid( & ( AllEnemys [ index_of_droid_below_mouse_cursor ] ) );
+	    else
+		Takeover ( index_of_droid_below_mouse_cursor ) ;
 	    break;
 	case SPELL_LOOT_CHEST_OR_DEAD_BODY:
 	    //--------------------
@@ -619,6 +633,7 @@ HandleCurrentlyActivatedSkill( int player_num )
 	    PlayOnceNeededSoundSample ( "../effects/I_See_No_Chest_Sound_0.wav" , FALSE , FALSE );
 	    break;
 	    
+/*
 	case SPELL_TRANSFERMODE:
 	    if (MouseRightPressed() == 1)
 	    {
@@ -653,7 +668,8 @@ HandleCurrentlyActivatedSkill( int player_num )
 		}
 	    }
 	    break;
-	    
+*/
+    
 	case SPELL_FORCE_EXPLOSION_CIRCLE:
 	    if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
 	    {

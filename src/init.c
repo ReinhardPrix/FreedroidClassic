@@ -2092,7 +2092,7 @@ ThouArtDefeated (void)
     GameConfig . CharacterScreen_Visible = FALSE;
     GameConfig . Mission_Log_Visible = FALSE;
     ThouArtDefeatedSound ( ) ;
-    ExplodeInfluencer ( ) ;
+    start_tux_death_explosions ( ) ;
     now = SDL_GetTicks ( ) ;
 
     //--------------------

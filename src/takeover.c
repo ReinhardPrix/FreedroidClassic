@@ -295,12 +295,13 @@ Takeover ( int enemynum )
 		if ( Me [ 0 ] . clearance_list [ ClearanceIndex ] == 0 )
 		{
 		    Me [ 0 ] . clearance_list [ ClearanceIndex ] = AllEnemys [ enemynum ] . type ;
-		    SetNewBigScreenMessage ( "Clearance obtained" );
+		    // SetNewBigScreenMessage ( "Clearance obtained" );
+		    SetNewBigScreenMessage ( "Bot Reprogrammed" );
 		    break;
 		}
 	    }
 	    
-	    Me [ 0 ] . type = AllEnemys [enemynum ] . type;
+	    Me [ 0 ] . type = AllEnemys [ enemynum ] . type;
 	    Me [ 0 ] . marker = AllEnemys [ enemynum ] . marker;
 	    Me [ 0 ] . Experience += Druidmap [ OpponentType ] . experience_reward;
 

@@ -187,7 +187,7 @@ better than nothing.  Thanks anyway for you interest in FreedroidRPG.\n\
 	    // for (i = 0; i < MAXBULLETS; i++) CheckBulletCollisions (i);
 	    
 	    if ( ! ClientMode )
-		for ( i = 0 ; i < MAX_PLAYERS ; i ++ ) MoveInfluence ( i );	
+		for ( i = 0 ; i < MAX_PLAYERS ; i ++ ) move_tux ( i );	
 
 	    UpdateAllCharacterStats ( 0 );
 	    
@@ -196,7 +196,7 @@ better than nothing.  Thanks anyway for you interest in FreedroidRPG.\n\
 	    if ( ! ClientMode ) MoveEnemys ();	// move all the enemys:
 	    // also do attacks on influ and also move "phase" or their rotation
 	    
-	    CheckInfluenceEnemyCollision ();
+	    check_tux_enemy_collision ();
 	    
 	    correct_tux_position_according_to_jump_thresholds ( 0 );
 	    

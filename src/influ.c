@@ -98,6 +98,52 @@ vect_len ( moderately_finepoint our_vector )
 }; // float vect_len ( moderately_finepoint our_vector )
 
 /* ----------------------------------------------------------------------
+ * This function adapts the influencers current speed to the maximal speed
+ * possible for the influencer (determined by the currely used drive type).
+ * ---------------------------------------------------------------------- */
+void
+limit_tux_speed_to_a_maximum ( int player_num )
+{
+    double maxspeed = TUX_RUNNING_SPEED ;
+    
+    //--------------------
+    // First we adjust the speed, so that the Tux can never go too fast
+    // in any direction.
+    //
+    if (Me [ player_num ] .speed.x > maxspeed)
+	Me [ player_num ] .speed.x = maxspeed;
+    if (Me [ player_num ] .speed.x < (-maxspeed))
+	Me [ player_num ] .speed.x = (-maxspeed);
+    
+    if (Me [ player_num ] .speed.y > maxspeed)
+	Me [ player_num ] .speed.y = maxspeed;
+    if (Me [ player_num ] .speed.y < (-maxspeed))
+	Me [ player_num ] .speed.y = (-maxspeed);
+    
+}; // void limit_tux_speed_to_a_maximum ( int player_num ) 
+
+/* ----------------------------------------------------------------------
+ * This function reduces the influencers speed as long as no direction 
+ * key of any form is pressed and also no mouse move target is set.
+ * ---------------------------------------------------------------------- */
+void
+tux_friction_with_air ( int player_num )
+{
+    //--------------------
+    // Maybe the Tux is justified on his way.  Then we don't apply
+    // any friction, since there is intended movement.
+    //
+    // if ( Me [ player_num ] . mouse_move_target . x == (-1) ) 
+    //
+    if ( Me [ player_num ] . next_intermediate_point [ 0 ] . x != (-1) ) 
+	return;
+    
+    Me [ player_num ] . speed . x = 0 ;
+    Me [ player_num ] . speed . y = 0 ;
+    
+}; // tux_friction_with_air ( int player_num )
+
+/* ----------------------------------------------------------------------
  *
  *
  * ---------------------------------------------------------------------- */
@@ -930,7 +976,7 @@ CheckForTuxOutOfMap ( player_num )
 		Me [ player_num ] . pos . y ,
 		Me [ player_num ] . pos . z );
       GiveStandardErrorMessage ( __FUNCTION__  , "\
-A player's Tux was found outside the map in MoveInfluence.\n\
+A player's Tux was found outside the map.\n\
 This indicates either a bug in the Freedroid RPG code or\n\
 a bug in the currently used map system of Freedroid RPG.",
 				 PLEASE_INFORM, IS_FATAL );
@@ -2003,144 +2049,111 @@ move_tux_thowards_intermediate_point ( int player_num )
  * rotation.
  * ---------------------------------------------------------------------- */
 void
-MoveInfluence ( int player_num )
+move_tux ( int player_num )
 {
-  Level MoveLevel = curShip.AllLevels[ Me [ player_num ] . pos . z ] ;
+    Level MoveLevel = curShip.AllLevels[ Me [ player_num ] . pos . z ] ;
 
-  // DebugPrintf ( -1000 , "\nMoveInfluence: player_num = %d." , player_num );
+    // DebugPrintf ( -1000 , "\n%s(): player_num = %d." , __FUNCTION__ , player_num );
 
-  //--------------------
-  // We store the influencers position for the history record and so that others
-  // can follow his trail.
-  //
-  Me [ player_num ] . current_zero_ring_index++;
-  Me [ player_num ] . current_zero_ring_index %= MAX_INFLU_POSITION_HISTORY;
-  Me [ player_num ] . Position_History_Ring_Buffer [ Me [ player_num ] . current_zero_ring_index ] . x = Me [ player_num ] .pos.x;
-  Me [ player_num ] . Position_History_Ring_Buffer [ Me [ player_num ] . current_zero_ring_index ] . y = Me [ player_num ] .pos.y;
-  Me [ player_num ] . Position_History_Ring_Buffer [ Me [ player_num ] . current_zero_ring_index ] . z = MoveLevel->levelnum ;
-
-  // check, if the influencer is still ok
-  CheckIfCharacterIsStillOk ( player_num ) ;
-  
-  //--------------------
-  // As a preparation for the later operations, we see if there is
-  // a living droid set as a target, and if yes, we correct the move
-  // target to something suiting that new droids position.
-  //
-  if ( Me [ player_num ] . mouse_move_target_is_enemy != (-1) )
-    UpdateMouseMoveTargetAccordingToEnemy ( player_num );
-
-  //--------------------
-  // But in case of some mouse move target present, we proceed to move
-  // thowards this mouse move target.
-  //
-  move_tux_thowards_intermediate_point ( player_num );
- 
-  //--------------------
-  // As long as the Tux is still alive, his status will be either
-  // in MOBILE mode or in WEAPON mode or in TRANSFER mode.
-  //
-  if ( Me [ player_num ] . energy >= 0 )
+    //--------------------
+    // We store the influencers position for the history record and so that others
+    // can follow his trail.
+    //
+    Me [ player_num ] . current_zero_ring_index++;
+    Me [ player_num ] . current_zero_ring_index %= MAX_INFLU_POSITION_HISTORY;
+    Me [ player_num ] . Position_History_Ring_Buffer [ Me [ player_num ] . current_zero_ring_index ] . x = Me [ player_num ] .pos.x;
+    Me [ player_num ] . Position_History_Ring_Buffer [ Me [ player_num ] . current_zero_ring_index ] . y = Me [ player_num ] .pos.y;
+    Me [ player_num ] . Position_History_Ring_Buffer [ Me [ player_num ] . current_zero_ring_index ] . z = MoveLevel->levelnum ;
+    
+    // check, if the influencer is still ok
+    CheckIfCharacterIsStillOk ( player_num ) ;
+    
+    //--------------------
+    // As a preparation for the later operations, we see if there is
+    // a living droid set as a target, and if yes, we correct the move
+    // target to something suiting that new droids position.
+    //
+    if ( Me [ player_num ] . mouse_move_target_is_enemy != (-1) )
+	UpdateMouseMoveTargetAccordingToEnemy ( player_num );
+    
+    //--------------------
+    // But in case of some mouse move target present, we proceed to move
+    // thowards this mouse move target.
+    //
+    move_tux_thowards_intermediate_point ( player_num );
+    
+    //--------------------
+    // As long as the Tux is still alive, his status will be either
+    // in MOBILE mode or in WEAPON mode or in TRANSFER mode.
+    //
+    if ( Me [ player_num ] . energy >= 0 )
     {
-      if ( ! ServerThinksSpacePressed ( player_num ) )
+	if ( ! ServerThinksSpacePressed ( player_num ) )
 	{
-	  Me [ player_num ] .status = MOBILE;
+	    Me [ player_num ] .status = MOBILE;
 	}
-
-      if ( ( ServerThinksSpacePressed ( player_num ) ) && ( ServerThinksNoDirectionPressed ( player_num ) ) &&
-	   ( Me [ player_num ] .status != WEAPON ) )
-	Me [ player_num ] . status = TRANSFERMODE ;
-
-      if ( ( ServerThinksAxisIsActive ( player_num ) ) && 
-	   ( ! ServerThinksNoDirectionPressed ( player_num ) ) &&
-	   ( Me [ player_num ] .status != TRANSFERMODE ) )
-	Me [ player_num ] .status = WEAPON ;
+	
+	if ( ( ServerThinksSpacePressed ( player_num ) ) && ( ServerThinksNoDirectionPressed ( player_num ) ) &&
+	     ( Me [ player_num ] .status != WEAPON ) )
+	    Me [ player_num ] . status = TRANSFERMODE ;
+	
+	if ( ( ServerThinksAxisIsActive ( player_num ) ) && 
+	     ( ! ServerThinksNoDirectionPressed ( player_num ) ) &&
+	     ( Me [ player_num ] .status != TRANSFERMODE ) )
+	    Me [ player_num ] .status = WEAPON ;
     }
-
-  //--------------------
-  // Perhaps the player has pressed the right mouse button, indicating the use
-  // of the currently selected special function or spell.
-  //
-  HandleCurrentlyActivatedSkill( player_num );
-
-  // --------------------
-  // Maybe we need to fire a bullet or set a new mouse move target
-  // for the new move-to location
-  //
-  if ( ( ServerThinksSpacePressed ( player_num ) || ServerThinksAxisIsActive ( player_num ) ) && 
-       ( ! ServerThinksNoDirectionPressed ( player_num ) ) && 
-       ( Me [ player_num ] . status == WEAPON ) )
-      AnalyzePlayersMouseClick ( player_num );
-
-  if ( ServerThinksSpacePressed ( player_num ) || ServerThinksAxisIsActive ( player_num ) )
-    no_left_button_press_in_previous_analyze_mouse_click = FALSE ;
-  else
-    no_left_button_press_in_previous_analyze_mouse_click = TRUE ;
-
-  //--------------------
-  // During inventory operations, there should not be any (new) movement
-  //
-  if ( Item_Held_In_Hand != (-1) )
+    
+    //--------------------
+    // Perhaps the player has pressed the right mouse button, indicating the use
+    // of the currently selected special function or spell.
+    //
+    HandleCurrentlyActivatedSkill( player_num );
+    
+    // --------------------
+    // Maybe we need to fire a bullet or set a new mouse move target
+    // for the new move-to location
+    //
+    if ( ( ServerThinksSpacePressed ( player_num ) || ServerThinksAxisIsActive ( player_num ) ) && 
+	 ( ! ServerThinksNoDirectionPressed ( player_num ) ) && 
+	 ( Me [ player_num ] . status == WEAPON ) )
+	AnalyzePlayersMouseClick ( player_num );
+    
+    if ( ServerThinksSpacePressed ( player_num ) || ServerThinksAxisIsActive ( player_num ) )
+	no_left_button_press_in_previous_analyze_mouse_click = FALSE ;
+    else
+	no_left_button_press_in_previous_analyze_mouse_click = TRUE ;
+    
+    //--------------------
+    // During inventory operations, there should not be any (new) movement
+    //
+    if ( Item_Held_In_Hand != (-1) )
     {
-      Me [ player_num ] . mouse_move_target . x = Me [ player_num ] . pos . x ;
-      Me [ player_num ] . mouse_move_target . y = Me [ player_num ] . pos . y ;
-      Me [ player_num ] . mouse_move_target . z = Me [ player_num ] . pos . z ;
-      Me [ player_num ] . mouse_move_target_is_enemy = (-1) ;
-      // clear_out_intermediate_points ( player_num );
-      return; 
+	Me [ player_num ] . mouse_move_target . x = Me [ player_num ] . pos . x ;
+	Me [ player_num ] . mouse_move_target . y = Me [ player_num ] . pos . y ;
+	Me [ player_num ] . mouse_move_target . z = Me [ player_num ] . pos . z ;
+	Me [ player_num ] . mouse_move_target_is_enemy = (-1) ;
+	// clear_out_intermediate_points ( player_num );
+	return; 
     }
-
-  //--------------------
-  // The influ should lose some of his speed when no key is pressed and
-  // also no mouse move target is set.
-  //
-  InfluenceFrictionWithAir ( player_num ) ; 
-
-  limit_tux_speed_to_a_maximum ( player_num ) ;  
-
-  MoveTuxAccordingToHisSpeed ( player_num );
-
-  //--------------------
-  // Check it the influ is on a special field like a lift, a console or a refresh or a conveyor belt
-  //
-  ActSpecialField ( player_num ) ;
-
-  AnimateInfluence ( player_num ) ;	// move the "phase" of influencers rotation
-
-  //--------------------
-  // Now we check if perhaps the influencer is close to some targeted enemy droid
-  // and the takeover skill is activated as well.
-  // Then of course, takeover process must be initiated.
-  //
-  if ( ( Me [ player_num ] . mouse_move_target_is_enemy != (-1) ) &&
-       ( fabsf( AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . pos . x -
-		Me [ player_num ] . pos . x ) < BEST_CHAT_DISTANCE ) &&  
-       ( fabsf( AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . pos . y -
-		Me [ player_num ] . pos . y ) < BEST_CHAT_DISTANCE ) &&  
-       ( ( AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . pos . z -
-	   Me [ player_num ] . pos . z ) == 0 ) &&
-       ( Me [ player_num ] . readied_skill == SPELL_TRANSFERMODE ) &&
-       ( MouseRightPressed() )
-       )
-    {
-      //--------------------
-      // This whole action only makes sence for ENEMY droids of course!
-      //
-      if ( ! AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . is_friendly )
-	{
-	  //--------------------
-	  // We chat with the friendly droid
-	  Takeover ( Me [ player_num ] . mouse_move_target_is_enemy ) ;
-	  
-	  //--------------------
-	  // and then we deactivate this mouse_move_target_is_enemy to prevent
-	  // immediate recurrence of the very same chat.
-	  Me [ player_num ] . mouse_move_target_is_enemy = (-1) ;
-	}
-    }
-
-}; // void MoveInfluence( int player_num );
-
+    
+    //--------------------
+    // The influ should lose some of his speed when no key is pressed and
+    // also no mouse move target is set.
+    //
+    tux_friction_with_air ( player_num ) ; 
+    
+    limit_tux_speed_to_a_maximum ( player_num ) ;  
+    
+    MoveTuxAccordingToHisSpeed ( player_num );
+    
+    //--------------------
+    // Check it the influ is on a special field like a lift, a console or a refresh or a conveyor belt
+    //
+    ActSpecialField ( player_num ) ;
+    
+    animate_tux ( player_num ) ;	// move the "phase" of influencers rotation
+    
+}; // void move_tux( int player_num );
 
 /* ----------------------------------------------------------------------
  * This function checks if there is a bullet from the influencer still
@@ -2172,7 +2185,7 @@ NoInfluBulletOnWay (void)
  * fast. 
  * ---------------------------------------------------------------------- */
 void
-AnimateInfluence ( int player_num )
+animate_tux ( int player_num )
 {
   float my_speed;
 #define TOTAL_SWING_TIME 0.55
@@ -2250,53 +2263,7 @@ AnimateInfluence ( int player_num )
 
   // Me [ player_num ] . walk_cycle_phase = Me [ player_num ] . phase ;
 
-}; // void AnimateInfluence ( void )
-
-/* ----------------------------------------------------------------------
- * This function adapts the influencers current speed to the maximal speed
- * possible for the influencer (determined by the currely used drive type).
- * ---------------------------------------------------------------------- */
-void
-limit_tux_speed_to_a_maximum ( int player_num )
-{
-  double maxspeed = TUX_RUNNING_SPEED ;
-
-  //--------------------
-  // First we adjust the speed, so that the Tux can never go too fast
-  // in any direction.
-  //
-  if (Me [ player_num ] .speed.x > maxspeed)
-    Me [ player_num ] .speed.x = maxspeed;
-  if (Me [ player_num ] .speed.x < (-maxspeed))
-    Me [ player_num ] .speed.x = (-maxspeed);
-
-  if (Me [ player_num ] .speed.y > maxspeed)
-    Me [ player_num ] .speed.y = maxspeed;
-  if (Me [ player_num ] .speed.y < (-maxspeed))
-    Me [ player_num ] .speed.y = (-maxspeed);
-
-}; // void limit_tux_speed_to_a_maximum ( int player_num ) 
-
-/* ----------------------------------------------------------------------
- * This function reduces the influencers speed as long as no direction 
- * key of any form is pressed and also no mouse move target is set.
- * ---------------------------------------------------------------------- */
-void
-InfluenceFrictionWithAir ( int player_num )
-{
-  //--------------------
-  // Maybe the Tux is justified on his way.  Then we don't apply
-  // any friction, since there is intended movement.
-  //
-  // if ( Me [ player_num ] . mouse_move_target . x == (-1) ) 
-  //
-  if ( Me [ player_num ] . next_intermediate_point [ 0 ] . x != (-1) ) 
-    return;
-
-  Me [ player_num ] . speed . x = 0 ;
-  Me [ player_num ] . speed . y = 0 ;
-
-}; // InfluenceFrictionWithAir ( int player_num )
+}; // void animate_tux ( void )
 
 /* ----------------------------------------------------------------------
  * This function creates several exprosions around the location where the
@@ -2304,45 +2271,47 @@ InfluenceFrictionWithAir ( int player_num )
  * death to make his death more spectacular.
  * ---------------------------------------------------------------------- */
 void
-ExplodeInfluencer (void)
+start_tux_death_explosions (void)
 {
-  int i;
-  int counter;
-
-  Me[0].status = OUT;
-
-  DebugPrintf (2, "\nvoid ExplodeInfluencer(void): Real function call confirmed.");
-
-  // create a few shifted explosions...
-  for (i = 0; i < 10; i++)
+    int i;
+    int counter;
+    
+    Me[0].status = OUT;
+    
+    DebugPrintf ( 1, "\n%s(): Real function call confirmed." , __FUNCTION__ );
+    
+    // create a few shifted explosions...
+    for (i = 0; i < 10; i++)
     {
-
-      // find a free blast
-      counter = 0;
-      while (AllBlasts[counter++].type != OUT);
-      counter -= 1;
-      if (counter >= MAXBLASTS)
+	
+	// find a free blast
+	counter = 0;
+	while (AllBlasts[counter++].type != OUT);
+	counter -= 1;
+	if (counter >= MAXBLASTS)
 	{
-	  DebugPrintf(1, "\n\nWent out of blasts in ExplodeInfluencer...\n\n");
-	  Terminate(ERR);
+	    GiveStandardErrorMessage ( __FUNCTION__  , 
+				       "Ran out of blasts!!!" ,
+				       PLEASE_INFORM, IS_FATAL );
 	}
-      AllBlasts[counter].type = DRUIDBLAST;
-      AllBlasts[counter].pos.x =
-	Me[0].pos.x - Druid_Radius_X / 2 + MyRandom (10)*0.05;
-      AllBlasts[counter].pos.y =
+	AllBlasts[counter].type = DRUIDBLAST;
+	AllBlasts[counter].pos.x =
+	    Me[0].pos.x - Druid_Radius_X / 2 + MyRandom (10)*0.05;
+	AllBlasts[counter].pos.y =
 	Me[0].pos.y - Druid_Radius_Y / 2 + MyRandom (10)*0.05;
-      AllBlasts[counter].phase = i;
+	AllBlasts[counter].phase = i;
     }
 
-  DebugPrintf (2, "\nvoid ExplodeInfluencer(void): Usual end of function reached.");
-}; // void ExplodeInfluencer ( void )
+    DebugPrintf ( 1 , "\n%s(): Usual end of function reached." , __FUNCTION__ );
+
+}; // void start_tux_death_explosions ( void )
 
 /* ----------------------------------------------------------------------
  * This function checks if the influencer is currently colliding with an
  * enemys and throws him back in that case.
  * ---------------------------------------------------------------------- */
 void
-CheckInfluenceEnemyCollision (void)
+check_tux_enemy_collision (void)
 {
   int i;
   float xdist;
@@ -2391,22 +2360,6 @@ CheckInfluenceEnemyCollision (void)
 	   ( fabsf( ydist ) >= 2.0*Druid_Radius_Y ) ) 
 	continue;
 
-      //--------------------
-      // At this point we know, that the influencer *has* collided with some
-      // form of 'enemy' robot.  In case of the influencer being in transfer
-      // mode, we just either start the transfer subgame or we start the
-      // chat interface, but after that we're sure to back out, since collsions
-      // after either of that don't interest us, at least not in this frame
-      // any more.
-      //
-      if ( Me[0].status == TRANSFERMODE )
-	{
-	  if ( ! AllEnemys[i].is_friendly ) Takeover (i);
-	  else ChatWithFriendlyDroid( & ( AllEnemys [ i ] ) );
-
-	  return;
-	}
-
       // move the influencer a little bit out of the enemy AND the enemy a little bit out of the influ
       max_step_size = ((Frame_Time()) < ( MAXIMAL_STEP_SIZE ) ? (Frame_Time()) : ( MAXIMAL_STEP_SIZE )) ; 
       // Me[0].pos.x += copysignf( max_step_size , Me[0].pos.x - AllEnemys[i].pos.x ) ;
@@ -2442,11 +2395,9 @@ CheckInfluenceEnemyCollision (void)
 	  
 	}
 
-      // InfluEnemyCollisionLoseEnergy (i);	/* someone loses energy ! */
-      
     }				/* for */
 
-}; // void CheckInfluenceEnemyCollision( void )
+}; // void check_tux_enemy_collision( void )
 
 /* ----------------------------------------------------------------------
  * This function checks if there is some living droid below the current
@@ -2516,23 +2467,6 @@ GetLivingDroidBelowMouseCursor ( int player_num )
 
 	our_iso_image = & ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) this_bot -> animation_phase ] ) ;
 
-/*
-	enemy_screen_rectangle . x = 
-	    translate_map_point_to_screen_pixel ( this_bot -> pos . x , this_bot -> pos . y , TRUE ) + 
-	    our_iso_image -> offset_x ;
-	enemy_screen_rectangle . y = 
-	    translate_map_point_to_screen_pixel ( this_bot -> pos . x , this_bot -> pos . y , FALSE ) +
-	    our_iso_image -> offset_y ;
-	enemy_screen_rectangle . w = our_iso_image -> original_image_width ;
-	enemy_screen_rectangle . h = our_iso_image -> original_image_height ;
-
-	if ( MouseCursorIsInRect ( & ( enemy_screen_rectangle ) , 
-				   ServerThinksInputAxisX ( player_num ) + User_Rect . w / 2 + User_Rect . x ,
-				   ServerThinksInputAxisY ( player_num ) + User_Rect . h / 2 + User_Rect . y ) )
-	{
-	    TargetFound = i;
-	}      
-*/
 	if ( mouse_cursor_is_on_that_iso_image ( this_bot -> pos . x , 
 						 this_bot -> pos . y , 
 						 our_iso_image ) )
