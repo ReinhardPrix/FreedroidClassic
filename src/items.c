@@ -579,7 +579,7 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
 	}
       break;
     case 2:
-      switch ( MyRandom ( 7 ) )
+      switch ( MyRandom ( 8 ) )
 	{
 	case 0:
 	  DropItemAt( ITEM_TRIPEDAL , x , y , Pre , Suf , TreasureChestRange );
@@ -604,6 +604,9 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
 	  break;
 	case 7:
 	  DropItemAt( ITEM_QUILTED_ARMOUR , x , y , Pre , Suf , TreasureChestRange );
+	  break;
+	case 8:
+	  DropItemAt( ITEM_STANDARD_SHIELD , x , y , Pre , Suf , TreasureChestRange );
 	  break;
 	}
       break;
@@ -633,6 +636,9 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
 	  break;
 	case 7:
 	  DropItemAt( ITEM_LEATHER_ARMOUR , x , y , Pre , Suf , TreasureChestRange );
+	  break;
+	case 8:
+	  DropItemAt( ITEM_MEDIUM_SHIELD , x , y , Pre , Suf , TreasureChestRange );
 	  break;
 	}
       break;
