@@ -29,22 +29,8 @@ If you have questions concerning FreedroidRPG, please send mail to:
 freedroid-discussion@lists.sourceforge.net
 
 BEGIN OF AUTORS NOTES
-
-
-
-
-
-
-
 You can use this text field to make some notes on anything.  These otes will get saved with the dialog.
 This is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.
-
-
-
-
-
-
-
 END OF AUTORS NOTES
 
 
@@ -65,7 +51,7 @@ New Option Nr=1  OptionText=" Is everything alright with the teleporter system?"
 OptionSample="Dixon/Tux_is_everything_alright.wav"
 PositionX=131  PositionY=343  
 ChangeOption=1 ChangeToValue=1
-OnCondition="MissionComplete:1" JumpToOption=16 ElseGoto=10
+OnCondition="MissionAssigned:1" JumpToOption=16 ElseGoto=10
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -211,6 +197,7 @@ ReplySample="DIX_Someone_Needs_To_0.wav"
 Subtitle="The person responsible for this part is Arlas, but he isn't in town right now.  So there's nothing we could do."
 ReplySample="DIX_The_Person_Responsible_0.wav"
 ChangeOption=11 ChangeToValue=0
+ChangeOption=1 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -256,7 +243,7 @@ New Option Nr=16  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=281  PositionY=298  
 ChangeOption=16 ChangeToValue=0
-OnCondition="MissionAssigned:1" JumpToOption=17 ElseGoto=10
+OnCondition="MissionComplete:1" JumpToOption=11 ElseGoto=17
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
