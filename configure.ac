@@ -21,6 +21,7 @@ AC_PROG_MAKE_SET
 # we don't want optimisation for the moment, as that makes 
 # debugging a bit more confusing
 #CFLAGS="-g -Wall"
+CFLAGS="$CFLAGS -Wall"
 
 # Checks for libraries.
 AC_CHECK_LIB([m], [sin],, 
