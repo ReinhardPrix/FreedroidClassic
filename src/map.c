@@ -140,7 +140,7 @@ GetCurrentElevator (void)
   int curlev = CurLevel->levelnum;
   int gx = GrobX, gy = GrobY;
 
-  for (i = 0; i < ALLELEVATORS; i++)
+  for (i = 0; i < curShip.num_lifts; i++)
     {
       if (curShip.AllElevators[i].level != curlev)
 	continue;
@@ -149,7 +149,7 @@ GetCurrentElevator (void)
 	break;
     }
 
-  if (i == ALLELEVATORS)	/* keinen gefunden */
+  if (i == curShip.num_lifts)	/* keinen gefunden */
     return -1;
   else
     return i;
@@ -281,8 +281,8 @@ LoadShip (char *shipname)
   char *filename;
   FILE *ShipFile;
   char *ShipData;
-  char *endpt;			/* Pointer to end-strings */
-  char *LevelStart[MAX_LEVELS_ON_SHIP];	/* Pointer to a level-start */
+  char *endpt;				/* Pointer to end-strings */
+  char *LevelStart[MAX_LEVELS];		/* Pointer to a level-start */
   int level_anz;
   int i;
 
@@ -332,24 +332,14 @@ LoadShip (char *shipname)
     }
 
   /* init the level-structs */
-  curShip.LevelsOnShip = level_anz;
+  curShip.num_levels = level_anz;
 
-  for (i = 0; i < MAX_LEVELS_ON_SHIP; i++)
+  for (i = 0; i < curShip.num_levels; i++)
     {
-      if (i < level_anz)
-	{
-	  if ((curShip.AllLevels[i] = LevelToStruct (LevelStart[i])) == NULL)
-	    {
-	      return ERR;
-	    }
-	  else
-	    {
-	      TranslateMap (curShip.AllLevels[i]);
-	    }
-
-	}
+      if ((curShip.AllLevels[i] = LevelToStruct (LevelStart[i])) == NULL)
+	return ERR;
       else
-	curShip.AllLevels[i] = NULL;
+	TranslateMap (curShip.AllLevels[i]);
     }
 
   /* Get the elevator connections */
@@ -749,14 +739,15 @@ GetElevatorConnections (char *shipname)
   if ((Elevfile = fopen (filename, "r")) == NULL)
     return FALSE;
 
-  for (i = 0; i < ALLELEVATORS; i++)
+  for (i = 0; i < MAX_LIFTS; i++)
     {
       if (fscanf (Elevfile, "%d %d %d %d %d %d",
 		  &cur_lev, &cur_x, &cur_y, &up, &down, &elev_row) == EOF)
 	{
-	  printf ("Illegal Elevator file: %s", filename);
-	  return FALSE;
+	  curShip.num_lifts = i;
+	  break;
 	}
+
       CurElev = &(curShip.AllElevators[i]);
       CurElev->level = cur_lev;
       CurElev->x = cur_x;
