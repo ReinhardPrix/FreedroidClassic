@@ -215,7 +215,47 @@ DisplayItemImageAtMouseCursor( int ItemImageCode )
   TargetRect.y = GetMousePos_y() + 16 - ItemImageList[ ItemImageCode ].inv_size.x * 16;
 
   SDL_BlitSurface( ItemImageList[ ItemImageCode ].Surface , NULL , Screen , &TargetRect );
-};
+}; // void DisplayItemImageAtMouseCursor( int ItemImageCode )
+
+/* ----------------------------------------------------------------------
+ * This function displays (several) blinking warning signs as soon as item
+ * durations reach critical (<5) duration level.
+ * ---------------------------------------------------------------------- */
+void
+ShowOneItemAlarm( item* AlarmItem , int Position )
+{
+  SDL_Rect TargetRect;
+  int ItemImageCode;
+
+  if ( AlarmItem->type == ( -1 ) ) return;
+
+  ItemImageCode = ItemMap [ AlarmItem->type ].picture_number ;
+
+  TargetRect.x = 60 * Position ;
+  TargetRect.y = 400;
+
+  if ( AlarmItem->current_duration < 5 )
+    {
+      SDL_BlitSurface( ItemImageList[ ItemImageCode ].Surface , NULL , Screen , &TargetRect );
+    }
+}; // void ShowOneItemAlarm( item* AlarmItem )
+
+/* ----------------------------------------------------------------------
+ * This function displays (several) blinking warning signs as soon as item
+ * durations reach critical (<5) duration level.
+ * ---------------------------------------------------------------------- */
+void
+ShowItemAlarm( void )
+{
+
+  if ( ( ( int ) ( Me.MissionTimeElapsed * 2 ) ) % 2 == 1 ) return;
+
+  ShowOneItemAlarm( & Druidmap [ Me.type ] . weapon_item , 1 );
+  ShowOneItemAlarm( & Druidmap [ Me.type ] . drive_item , 2 );
+  ShowOneItemAlarm( & Druidmap [ Me.type ] . shield_item , 3 );
+  ShowOneItemAlarm( & Druidmap [ Me.type ] . armour_item , 4 );
+
+}; // void ShowItemAlarm( void )
 
 /* -----------------------------------------------------------------
  * This function assembles the contents of the combat window 
@@ -357,6 +397,8 @@ Assemble_Combat_Picture (int mask)
 		       User_Rect.y + 0*FontHeight( FPS_Display_BFont ), 
 		       "Time to hold out still: %2d:%2d " , minutes , seconds );
     }
+
+  ShowItemAlarm();
 
   ShowMissionCompletitionMessages();
   ShowCharacterScreen ( );
