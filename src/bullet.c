@@ -10,8 +10,8 @@
  * $Author$
  *
  * $Log$
- * Revision 1.1  1993/08/08 21:20:50  prix
- * Initial revision
+ * Revision 1.2  1994/06/19 16:15:51  prix
+ * *** empty log message ***
  *
  * Revision 1.1  1993/08/08  21:20:50  prix
  * Initial revision
