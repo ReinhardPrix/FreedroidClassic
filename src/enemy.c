@@ -599,11 +599,11 @@ MoveEnemys (void)
 } /* MoveEnemys() */
 
 /*@Function============================================================
-@Desc: AttackInfluence(): enemynum schiesst unter gegebenen Umstaenden auf
-								Influencer
+@Desc: AttackInfluence(): This function sometimes fires a bullet from
+enemy number enemynum directly into the direction of the influencer,
+but of course only if the odds are good i.e. requirements are met.
 
 @Ret: void
-@Int:
 * $Function----------------------------------------------------------*/
 void
 AttackInfluence (int enemynum)
@@ -692,7 +692,11 @@ AttackInfluence (int enemynum)
 	    }
 	}
 
-      /* Schussphase festlegen ( ->phase=Schussbild ) */
+      AllBullets[j].angle = - ( 90 + 180 * atan2 ( AllBullets[j].speed.y ,  AllBullets[j].speed.x ) / M_PI ) ;  
+
+      // old code: determine the 'phase' of the shot, meaning the
+      // number of the direction the bullet is approximately heading.
+      /*
       AllBullets[j].phase = NOSTRAIGHTDIR;
       if ( fabsf (xdist) / fabsf (ydist) > (3/2.0) )
 	AllBullets[j].phase = RECHTS;
@@ -705,6 +709,7 @@ AttackInfluence (int enemynum)
 	  else
 	    AllBullets[j].phase = RECHTSOBEN;
 	}
+      */
 
       /* Bullets im Zentrum des Schuetzen starten */
       AllBullets[j].pos.x = ThisRobot->pos.x;
@@ -766,7 +771,9 @@ AttackInfluence (int enemynum)
 	  Terminate (ERR);
 	}
 
-      /* Schussrichtung festlegen */
+      // determine the direction of the shot, so that it will go into the direction of
+      // the influencer
+
       if (fabsf (xdist) > fabsf (ydist))
 	{
 	  AllBullets[j].speed.x = Bulletmap[guntype].speed;
@@ -789,7 +796,10 @@ AttackInfluence (int enemynum)
 	    }
 	}
 
-      /* Schussphase festlegen ( ->phase=Schussbild ) */
+      AllBullets[j].angle = - ( 90 + 180 * atan2 ( AllBullets[j].speed.y,  AllBullets[j].speed.x ) / M_PI );  
+
+      /*
+      // Determine the 'phase' i.e. the image of the shot (old code )
       AllBullets[j].phase = NOSTRAIGHTDIR;
       if ( fabsf (xdist) / fabsf (ydist) > (3/2.0) )
 	AllBullets[j].phase = RECHTS;
@@ -802,6 +812,9 @@ AttackInfluence (int enemynum)
 	  else
 	    AllBullets[j].phase = RECHTSOBEN;
 	}
+
+      */
+
 
       /* Bullets im Zentrum des Schuetzen starten */
       AllBullets[j].pos.x = ThisRobot->pos.x;
