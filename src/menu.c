@@ -262,7 +262,7 @@ Buy_Basic_Items( void )
   for ( i = 0 ; i < BASIC_ITEMS_NUMBER ; i++ )
     {
       SalesList[ i ].type = MyRandom( Number_Of_Item_Types - 2 ) + 1;
-      FillInItemProperties( & ( SalesList[ i ] ) );
+      FillInItemProperties( & ( SalesList[ i ] ) , TRUE );
     }
 
   while ( !SpacePressed() && !EscapePressed() )

@@ -233,18 +233,18 @@ Base list price=150
 
 // Item No. 3
 ** Start of new item specification subsection **
-Item name="Twin Lasers Class Alpha"
+Item name="Single Laser"
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
 Strength minimum required to wear/wield this item=-1
-Dexterity minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=15
 Magic minimum required to wear/wield this item=-1
 Item as gun: recharging time=0.95
 Item as gun: speed of bullets=8.0
 Item as gun: angle change of bullets=0.0
-Item as gun: damage of bullets=25
-Item as gun: modifier for damage of bullets=10
+Item as gun: damage of bullets=1
+Item as gun: modifier for damage of bullets=3
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=0
@@ -410,7 +410,7 @@ Base list price=0
 
 // Item No. 12
 ** Start of new item specification subsection **
-Item name="Laser Rifle Class Alpha"
+Item name="Laser Rifle"
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
@@ -439,7 +439,7 @@ Base list price=0
 
 // Item No. 13
 ** Start of new item specification subsection **
-Item name="Droid Exterminators Class Alpha"
+Item name="Exterminator"
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
@@ -497,7 +497,7 @@ Base list price=0
 
 // Item No. 15
 ** Start of new item specification subsection **
-Item name="Twin Lasers Class Beta"
+Item name="Advanced Twin Laser"
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
@@ -526,7 +526,7 @@ Base list price=0
 
 // Item No. 16
 ** Start of new item specification subsection **
-Item name="Single Lasers Class Beta"
+Item name="Advanced Single Laser"
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
@@ -652,7 +652,7 @@ Base list price=0
 
 // Item No. 22
 ** Start of new item specification subsection **
-Item name="Single primitive laser device"
+Item name="Single laser"
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
@@ -662,8 +662,8 @@ Magic minimum required to wear/wield this item=-1
 Item as gun: recharging time=0.8
 Item as gun: speed of bullets=8.0
 Item as gun: angle change of bullets=0.0
-Item as gun: damage of bullets=12
-Item as gun: modifier for damage of bullets=5
+Item as gun: damage of bullets=1
+Item as gun: modifier for damage of bullets=3
 Item as gun: blast type to create=1
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=6

@@ -245,7 +245,7 @@ EXTERN void PlayItemSound ( int SoundCode );
 EXTERN int GetFreeInventoryIndex( void );
 EXTERN int ItemCanBeDroppedInInv ( int ItemType , int InvPos_x , int InvPos_y );
 EXTERN long CalculateItemPrice ( item* BuyItem );
-EXTERN void FillInItemProperties( item* ThisItem );
+EXTERN void FillInItemProperties( item* ThisItem , int FullDuration );
 EXTERN void DamageAllEquipment( void );
 EXTERN void DropItemAt( int ItemType , float x , float y );
 EXTERN void ApplyItem( item* CurItem );

@@ -55,7 +55,7 @@ CalculateItemPrice ( item* BuyItem )
  *
  * ---------------------------------------------------------------------- */
 void
-FillInItemProperties( item* ThisItem )
+FillInItemProperties( item* ThisItem , int FullDuration )
 {
 
   ThisItem->damage = ItemMap[ ThisItem->type ].base_item_gun_damage;
@@ -80,14 +80,15 @@ FillInItemProperties( item* ThisItem )
     {
       ThisItem->max_duration = ItemMap[ ThisItem->type ].base_item_duration +
 	MyRandom( ItemMap[ ThisItem->type ].item_duration_modifier );
-      ThisItem->current_duration = MyRandom( ThisItem->max_duration ) ;
+      if ( FullDuration ) ThisItem->current_duration = ThisItem->max_duration ;
+      else ThisItem->current_duration = MyRandom( ThisItem->max_duration ) ;
     }
   else
     {
       ThisItem->max_duration = ( -1 );
       ThisItem->current_duration = 1 ;
     }
-}; // void FillInItemProperties( item* ThisItem )
+}; // void FillInItemProperties( item* ThisItem , int FullDuration )
 
 /* ----------------------------------------------------------------------
  *
@@ -128,7 +129,7 @@ DropItemAt( int ItemType , float x , float y )
   CurLevel->ItemList[ i ].pos.x = x;
   CurLevel->ItemList[ i ].pos.y = y;
 
-  FillInItemProperties ( & ( CurLevel->ItemList[ i ] ) );
+  FillInItemProperties ( & ( CurLevel->ItemList[ i ] ) , FALSE );
 
 
   PlayItemSound( ItemMap[ ItemType ].sound_number );

@@ -1147,7 +1147,7 @@ AttackInfluence (int enemynum)
 						ThisRobot->PrivatePathway[ 0 ].x , ThisRobot->PrivatePathway[ 0 ].y - StepSize ,
 						ThisRobot->levelnum , enemynum ) ) )
 		{
-		  ThisRobot->PrivatePathway[ 0 ].y = rintf ( ThisRobot->pos.y ) - StepSize;
+		  ThisRobot->PrivatePathway[ 0 ].y = ThisRobot->pos.y - StepSize;
 		}
 	    }
 	}
