@@ -1796,6 +1796,11 @@ ResetGameConfigToDefaultValues ( void )
     GameConfig.Current_BG_Music_Volume=1.0;
     GameConfig.Current_Sound_FX_Volume=0.5;
     
+    if ( use_open_gl )
+	GameConfig.Current_Gamma_Correction = 1.20 ;
+    else
+	GameConfig.Current_Gamma_Correction = 1.00 ;
+
     GameConfig.WantedTextVisibleTime = 3;
     GameConfig.Draw_Framerate=FALSE;
     GameConfig.All_Texts_Switch=TRUE;

@@ -1690,7 +1690,7 @@ blit_all_item_slots ( void )
 	{
 	    if ( use_open_gl )
 	    {
-		GL_HighlightRectangle ( Screen , item_level -> ItemList [ i ] . text_slot_rectangle , 0 , 0 , 0 , 160 );
+		GL_HighlightRectangle ( Screen , item_level -> ItemList [ i ] . text_slot_rectangle , 0 , 0 , 0 , BACKGROUND_TEXT_RECT_ALPHA );
 	    }
 	    else
 	    {

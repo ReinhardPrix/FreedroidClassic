@@ -40,23 +40,11 @@ SDL_Rect Classic_User_Rect = {
   9*INITIAL_BLOCK_WIDTH,  4*INITIAL_BLOCK_HEIGHT
 };
 
-// SDL_Rect Full_User_Rect = {0, BANNER_HEIGHT+10, SCREEN_WIDTH, SCREEN_HEIGHT-BANNER_HEIGHT-11};
-SDL_Rect Full_User_Rect = {0, BANNER_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT-BANNER_HEIGHT-1};
+SDL_Rect Full_User_Rect = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
 
 SDL_Rect Cons_Rect = {16, 162, 595, 315};
 
 SDL_Rect Cons_Text_Rect = {175, 180, SCREEN_WIDTH-175, 305}; 
-
-/*
-  iso_image image;
-  int block_area_type;
-  float block_area_parm_1;
-  float block_area_parm_2;
-  int is_smashable;
-  int needs_pre_put; // this is a special property for obstacles, that can be stepped on, like a rug or floor plate.
-  int drop_random_treasure;
-  char* filename;
-*/
 
 char* floor_tile_filenames [ ALL_ISOMETRIC_FLOOR_TILES ] =
   {

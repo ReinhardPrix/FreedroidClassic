@@ -346,8 +346,8 @@ enum
 #define LEFT_TEXT_LEN 10
 #define RIGHT_TEXT_LEN 6
 #define TEXT_STRETCH (6.0/5.0)
-#define BANNER_WIDTH		SCREEN_WIDTH
-#define BANNER_HEIGHT		( 2 )
+
+#define BACKGROUND_TEXT_RECT_ALPHA 110
 
 //--------------------
 // Definitions for the menu inside the in-game console
@@ -621,10 +621,6 @@ enum
 #define DROID_PHASES            8
 #define DEAD_DROID_PHASES       1
 
-// #define TUX_SWING_PHASES 	7
-// #define TUX_BREATHE_PHASES 	5
-// #define TUX_GOT_HIT_PHASES      3
-
 #define TUX_SWING_PHASES 	14
 #define TUX_BREATHE_PHASES 	1
 #define TUX_GOT_HIT_PHASES      1
@@ -639,27 +635,12 @@ enum
 #define MAX_TUX_DIRECTIONS      16
 #define BULLET_DIRECTIONS       16
 
-#define WAIT_LEVELEMPTY		18	// time in frames to wait before removing the light in an empty level
-
 #define WAIT_AFTER_KILLED	1.5  // time to wait and still display pictures after the destruction of 
                                  // the players droid.  This is now measured in seconds and can be a float
-#define WAIT_SHIPEMPTY		20
-#define WAIT_TRANSFERMODE	0.3	/* this is a "float" indicating the number of seconds the influence 
-					   stand still with space pressed, before switching into transfermode 
-					   This variable describes the amount in SECONDS */
 #define WAIT_COLLISION		2.5 // after a little collision with Tux or another enemy, hold position for a while
                                     // this variable describes the amount of time in SECONDS 
-// #define ENEMYMAXWAIT 2.0		  // after each robot has reached its current destination waypoint is waits a
-                                  // while.  This variable describes the amount of time in SECONDS.  However,
-                                  // the final wait time is a random number within [0,ENEMYMAXWAIT].
 #define FLASH_DURATION_IN_SECONDS 0.1
 
-//--------------------
-// Maximal number of ...
-//
-#define NUM_COLORS              7   // how many different level colorings?/different tilesets?
-
-// #define ALLBULLETTYPES		4	/* number of bullet-types */
 #define ALLBLASTTYPES		2	/* number of different exposions */
 
 #define MAXBULLETS		100	/* maximum possible Bullets in the air */
@@ -694,16 +675,10 @@ enum
 #define MAX_MISSIONS_IN_GAME 10         // how many missions can there be at most in Freedroid
 #define MAX_MISSION_TRIGGERED_ACTIONS 10
 
-#define MAX_LIFTS	 	50  	/* actually the entries to the lifts */
 #define MAX_LEVELS		39   	// how many map levels are allowed in one ship
-				     	/* corresponds to a reserved palette range ! */
-#define MAX_LIFT_ROWS		15   	/* the different lift "rows" */
-					/* don't change this easily */
-					/* corresponds to a reserved palette range !*/
-#define MAX_LEVEL_RECTS         20   // how many rects compose a level
+
 #define MAX_EVENT_TRIGGERS      100   // how many event triggers at most to allow
 #define MAX_TRIGGERED_ACTIONS_IN_GAME   100   // how many triggerable actions to allow at most
-
 
 #define MAXWAYPOINTS 		200
 #define MAX_DOORS_ON_LEVEL 	120
@@ -713,7 +688,6 @@ enum
 
 #define MAX_PHASES_IN_A_BULLET 12
 #define PHASES_OF_EACH_BLAST 20
-// #define MAX_STEPS_IN_GIVEN_COURSE 1000
 #define MAX_STEPS_IN_GIVEN_COURSE 100
 
 #undef USE_MISS_HIT_ARRAYS
@@ -723,8 +697,6 @@ enum
 
 #define ITEM_INVENTORY_IMAGE_FILE_NAME "File or directory name for inventory image=\""
 #define ITEM_DROP_SOUND_FILE_NAME "Item uses drop sound with filename=\""
-
-#define PUSHSPEED 2 // speed at which influ will be pushed away from doors and such...
 
 //--------------------
 // bullet types

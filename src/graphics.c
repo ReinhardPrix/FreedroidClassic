@@ -219,7 +219,9 @@ fade_out_using_gamma_ramp ( void )
     Activate_Conservative_Frame_Computation( );
     for ( i = 0 ; i < 100 ; i ++ ) 
     {
-	SDL_SetGamma ( 0.01 * ( (float) (100 - i ) ) , 0.01 * ( (float) ( 100 - i ) ) , 0.01 * ( (float) (100 - i ) ) );
+	SDL_SetGamma ( GameConfig . Current_Gamma_Correction * 0.01 * ( (float) ( 100 - i ) ) , 
+		       GameConfig . Current_Gamma_Correction * 0.01 * ( (float) ( 100 - i ) ) , 
+		       GameConfig . Current_Gamma_Correction * 0.01 * ( (float) ( 100 - i ) ) );
 	SDL_Delay ( 8 ) ;
     }
 }; // void fade_out_using_gamma_ramp ( void )
@@ -240,7 +242,9 @@ fade_in_using_gamma_ramp ( void )
     Activate_Conservative_Frame_Computation( );
     for ( i = 0 ; i < 100 ; i ++ ) 
     {
-	SDL_SetGamma ( 0.01 * ((float)i) , 0.01 * ((float)i) , 0.01 * ((float)i) );
+	SDL_SetGamma ( GameConfig . Current_Gamma_Correction * 0.01 * ((float)i) , 
+		       GameConfig . Current_Gamma_Correction * 0.01 * ((float)i) , 
+		       GameConfig . Current_Gamma_Correction * 0.01 * ((float)i) );
 	SDL_Delay ( 8 ) ;
     }
 }; // void fade_in_using_gamma_ramp ( void )

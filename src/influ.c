@@ -37,10 +37,6 @@
 #include "global.h"
 #include "proto.h"
 
-#define TIMETILLNEXTBULLET 14
-
-#define FRICTION_CONSTANT (0.02)
-
 #define BEST_MELEE_DISTANCE (1.0)
 #define BEST_CHAT_DISTANCE (BEST_MELEE_DISTANCE+0.2)
 // #define DISTANCE_TOLERANCE (0.2)
@@ -48,10 +44,6 @@
 
 #define FORCE_FIRE_DISTANCE (1.5)
 #define ATTACK_BOXES_DISTANCE (2.0)
-#define DROID_SELECTION_TOLERANCE (0.5)
-
-#define REFRESH_ENERGY		3
-#define COLLISION_PUSHSPEED	7
 
 #define BOUNCE_LOSE_ENERGY 3	/* amount of lose-energy at enemy-collisions */
 #define BOUNCE_LOSE_FACT 1
