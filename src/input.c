@@ -35,6 +35,13 @@
 #include "global.h"
 #include "proto.h"
 
+#ifndef SDL_BUTTON_WHEELUP 
+#define SDL_BUTTON_WHEELUP 4
+#endif
+#ifndef SDL_BUTTON_WHEELDOWN
+#define SDL_BUTTON_WHEELDOWN 5
+#endif
+
 point CurrentMouseAbsPos;
 
 SDL_Event event;
