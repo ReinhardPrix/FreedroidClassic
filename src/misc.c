@@ -537,6 +537,7 @@ Pause (void)
   while ( Pause )
     {
       // usleep(10);
+      SetNewBigScreenMessage( " Pause " );
       AnimateInfluence ( 0 );
       AnimateRefresh ();
       AnimateEnemys ();
@@ -562,6 +563,7 @@ Pause (void)
 	}
 
     } /* while (Pause) */
+  SetNewBigScreenMessage( "" );
   return;
 }; // Pause () 
 
