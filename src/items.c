@@ -415,8 +415,19 @@ ApplyItem( item* CurItem )
   // and therefore all we need to do from here on is execute the item effect
   // upon the influencer or his environment.
   //
-  Me.health += ItemMap[ CurItem->type ].energy_gain_uppon_application_in_combat;
-  Me.energy += ItemMap[ CurItem->type ].energy_gain_uppon_application_in_combat;
+#define MINOR_ENERGY_CAPSULE_ITEM 1
+#define MAJOR_ENERGY_CAPSULE_ITEM 2
+  if ( CurItem->type == MINOR_ENERGY_CAPSULE_ITEM )
+    {
+      Me.health += 25;
+      Me.energy += 25;
+    }
+  else if ( CurItem->type == MAJOR_ENERGY_CAPSULE_ITEM )
+    {
+      Me.health += Druidmap [ Me.type ].maxenergy;
+      Me.energy += Druidmap [ Me.type ].maxenergy;
+    }
+
   if ( Me.energy > Druidmap [ Me.type ].maxenergy ) Me.energy = Druidmap [ Me.type ].maxenergy ;
 
   PlayItemSound( ItemMap[ CurItem->type ].sound_number );

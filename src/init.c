@@ -432,62 +432,61 @@ Sorry...\n\
       ReadValueFromString( ItemPointer , "Magic minimum required to wear/wield this item=" , "%d" , 
 			   &ItemMap[ItemIndex].item_require_magic , EndOfItemData );
 
-
-      // Now we read in the new laser type after installing this item
-      // ReadValueFromString( ItemPointer ,  "Item installation changes weapon into new value=" , "%d" , 
-      // &ItemMap[ItemIndex].New_Laser_Type_After_Installation , EndOfItemData );
-
-      // Now we read in the new drive type after installing this item
-      // ReadValueFromString( ItemPointer ,  "Item installation changes drive into new value=" , "%d" , 
-      // &ItemMap[ItemIndex].New_Drive_Type_After_Installation , EndOfItemData );
-
-      // Now we read in the energy and health the influ gains (upon drinking this potion)
-      ReadValueFromString( ItemPointer ,  "Energy gain on application in combat=" , "%lf" , 
-			   &ItemMap[ItemIndex].energy_gain_uppon_application_in_combat , EndOfItemData );
-
-      // Now we read in the weight of this item
-      ReadValueFromString( ItemPointer ,  "Item weight=" , "%lf" , 
-			   &ItemMap[ItemIndex].item_weight , EndOfItemData );
-
-      // Now we read in the maxspeed you can go with this item as drive
-      ReadValueFromString( ItemPointer ,  "Item drive maxspeed=" , "%lf" , 
-			   &ItemMap[ItemIndex].item_drive_maxspeed , EndOfItemData );
-
-      // Now we read in the acceleration you will have with this item as drive
-      ReadValueFromString( ItemPointer ,  "Item drive acceleration=" , "%lf" , 
-			   &ItemMap[ItemIndex].item_drive_accel , EndOfItemData );
-
-      // Now we read in the damage bullets from this gun will do
-      ReadValueFromString( ItemPointer ,  "Item as gun: damage of bullets=" , "%d" , 
-			   &ItemMap[ItemIndex].base_item_gun_damage , EndOfItemData );
-      ReadValueFromString( ItemPointer ,  "Item as gun: modifier for damage of bullets=" , "%d" , 
-			   &ItemMap[ItemIndex].item_gun_damage_modifier , EndOfItemData );
-
-      // Now we read in the speed this bullet will go
-      ReadValueFromString( ItemPointer ,  "Item as gun: speed of bullets=" , "%lf" , 
-			   &ItemMap[ItemIndex].item_gun_speed , EndOfItemData );
-
-      // Now we read in speed of melee application and melee offset from influ
-      ReadValueFromString( ItemPointer ,  "Item as gun: angle change of bullets=" , "%lf" , 
-			   &ItemMap[ItemIndex].item_gun_angle_change , EndOfItemData );
-      ReadValueFromString( ItemPointer ,  "Item as gun: offset for melee weapon=" , "%lf" , 
-			   &ItemMap[ItemIndex].item_gun_fixed_offset , EndOfItemData );
-      ReadValueFromString( ItemPointer ,  "Item as gun: modifier for starting angle=" , "%lf" , 
-			   &ItemMap[ItemIndex].item_gun_start_angle_modifier , EndOfItemData );
-
-      // Now we read in if this item can be installed in special slot
-      YesNoString = ReadAndMallocStringFromData ( ItemPointer , ITEM_GUN_IGNORE_WALL , "\"" ) ;
-      if ( strcmp( YesNoString , "yes" ) == 0 )
+      //--------------------
+      // If the item is a drive, we read in the drive specification...
+      // If the item isn't a drive, then we set the default values, just to be sure..
+      //
+      if ( ItemMap[ItemIndex].item_can_be_installed_in_drive_slot == TRUE )
 	{
-	  ItemMap[ItemIndex].item_gun_bullet_ignore_wall_collisions = TRUE;
-	}
-      else if ( strcmp( YesNoString , "no" ) == 0 )
-	{
-	  ItemMap[ItemIndex].item_gun_bullet_ignore_wall_collisions = FALSE;
+	  // Now we read in the maxspeed you can go with this item as drive
+	  ReadValueFromString( ItemPointer ,  "Item drive maxspeed=" , "%lf" , 
+			       &ItemMap[ItemIndex].item_drive_maxspeed , EndOfItemData );
+	  // Now we read in the acceleration you will have with this item as drive
+	  ReadValueFromString( ItemPointer ,  "Item drive acceleration=" , "%lf" , 
+			       &ItemMap[ItemIndex].item_drive_accel , EndOfItemData );
 	}
       else
 	{
-	  fprintf(stderr, "\n\
+	  ItemMap[ItemIndex].item_drive_maxspeed = 0 ;
+	  ItemMap[ItemIndex].item_drive_accel = 0 ;
+	}
+
+      //--------------------
+      // If the item is a gun, we read in the drive specification...
+      //
+      if ( ItemMap[ItemIndex].item_can_be_installed_in_weapon_slot == TRUE )
+	{
+	  // Now we read in the damage bullets from this gun will do
+	  ReadValueFromString( ItemPointer ,  "Item as gun: damage of bullets=" , "%d" , 
+			       &ItemMap[ItemIndex].base_item_gun_damage , EndOfItemData );
+	  ReadValueFromString( ItemPointer ,  "Item as gun: modifier for damage of bullets=" , "%d" , 
+			       &ItemMap[ItemIndex].item_gun_damage_modifier , EndOfItemData );
+	  
+	  // Now we read in the speed this bullet will go
+	  ReadValueFromString( ItemPointer ,  "Item as gun: speed of bullets=" , "%lf" , 
+			       &ItemMap[ItemIndex].item_gun_speed , EndOfItemData );
+	  
+	  // Now we read in speed of melee application and melee offset from influ
+	  ReadValueFromString( ItemPointer ,  "Item as gun: angle change of bullets=" , "%lf" , 
+			       &ItemMap[ItemIndex].item_gun_angle_change , EndOfItemData );
+	  ReadValueFromString( ItemPointer ,  "Item as gun: offset for melee weapon=" , "%lf" , 
+			       &ItemMap[ItemIndex].item_gun_fixed_offset , EndOfItemData );
+	  ReadValueFromString( ItemPointer ,  "Item as gun: modifier for starting angle=" , "%lf" , 
+			       &ItemMap[ItemIndex].item_gun_start_angle_modifier , EndOfItemData );
+
+	  // Now we read in if this weapon can pass through walls or not...
+	  YesNoString = ReadAndMallocStringFromData ( ItemPointer , ITEM_GUN_IGNORE_WALL , "\"" ) ;
+	  if ( strcmp( YesNoString , "yes" ) == 0 )
+	    {
+	      ItemMap[ItemIndex].item_gun_bullet_ignore_wall_collisions = TRUE;
+	    }
+	  else if ( strcmp( YesNoString , "no" ) == 0 )
+	    {
+	      ItemMap[ItemIndex].item_gun_bullet_ignore_wall_collisions = FALSE;
+	    }
+	  else
+	    {
+	      fprintf(stderr, "\n\
 \n\
 ----------------------------------------------------------------------\n\
 Freedroid has encountered a problem:\n\
@@ -503,22 +502,24 @@ to the initialisation problem it could not resolve.\n\
 Sorry...\n\
 ----------------------------------------------------------------------\n\
 \n" );
-	  Terminate( ERR );
+	      Terminate( ERR );
+	    }; // if ( ItemMap[ItemIndex].item_can_be_installed_in_weapon_slot == TRUE )
+	  
+	  // Now we read in the recharging time this weapon will need
+	  ReadValueFromString( ItemPointer ,  "Item as gun: recharging time=" , "%lf" , 
+			       &ItemMap[ItemIndex].item_gun_recharging_time , EndOfItemData );
+	  
+	  // Now we read in the image type that should be generated for this bullet
+	  ReadValueFromString( ItemPointer ,  "Item as gun: bullet_image_type=" , "%d" , 
+			       &ItemMap[ItemIndex].item_gun_bullet_image_type , EndOfItemData );
+	  
+	  // Now we read in the image type that should be generated for this bullet
+	  ReadValueFromString( ItemPointer ,  "Item as gun: bullet_lifetime=" , "%lf" , 
+			       &ItemMap[ItemIndex].item_gun_bullet_lifetime , EndOfItemData );
 	}
 
-      // Now we read in the recharging time this weapon will need
-      ReadValueFromString( ItemPointer ,  "Item as gun: recharging time=" , "%lf" , 
-			   &ItemMap[ItemIndex].item_gun_recharging_time , EndOfItemData );
 
-      // Now we read in the image type that should be generated for this bullet
-      ReadValueFromString( ItemPointer ,  "Item as gun: bullet_image_type=" , "%d" , 
-			   &ItemMap[ItemIndex].item_gun_bullet_image_type , EndOfItemData );
-
-      // Now we read in the image type that should be generated for this bullet
-      ReadValueFromString( ItemPointer ,  "Item as gun: bullet_lifetime=" , "%lf" , 
-			   &ItemMap[ItemIndex].item_gun_bullet_lifetime , EndOfItemData );
-
-      // Now we read in the armour value of this item as armour or shield or whatever
+	  // Now we read in the armour value of this item as armour or shield or whatever
       ReadValueFromString( ItemPointer ,  "Item as defensive item: base_ac_bonus=" , "%d" , 
 			   &ItemMap[ItemIndex].base_ac_bonus , EndOfItemData );
       ReadValueFromString( ItemPointer ,  "Item as defensive item: ac_bonus_modifier=" , "%d" , 
@@ -527,7 +528,7 @@ Sorry...\n\
       // Now we read in the base item duration and the duration modifier
       ReadValueFromString( ItemPointer ,  "Base item duration=" , "%d" , 
 			   &ItemMap[ItemIndex].base_item_duration , EndOfItemData );
-      ReadValueFromString( ItemPointer ,  "Item duration modifier=" , "%d" , 
+      ReadValueFromString( ItemPointer ,  "plus duration modifier=" , "%d" , 
 			   &ItemMap[ItemIndex].item_duration_modifier , EndOfItemData );
 
       
