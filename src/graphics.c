@@ -229,7 +229,8 @@ InitPictures (void)
 		RAHMENHOEHE);
 
   /* get the Elevator-Blocks */
-  ElevatorBlocks =
+/* obsolete, we rather load the whole ship-picture at once */
+  /*  ElevatorBlocks =
     (unsigned char *) MyMalloc (NUM_EL_BLOCKS * EL_BLOCK_MEM + 100);
   Load_PCX_Image (EL_BLOCKS_FILE_PCX, InternalScreen, FALSE);
   for (i = 0; i < NUM_EL_BLOCKS; i++)
@@ -237,7 +238,14 @@ InitPictures (void)
 		  ElevatorBlocks + i * EL_BLOCK_MEM,
 		  1 + i * (EL_BLOCK_LEN + 1), 1,
 		  EL_BLOCK_LEN, EL_BLOCK_HEIGHT);
+  */ 
 
+  /* new: get Elevator-ship picture */
+  ElevatorPicture = (unsigned char *) 
+    MyMalloc (USERFENSTERBREITE*USERFENSTERHOEHE + 10);
+  Load_PCX_Image (SEITENANSICHTBILD_PCX, InternalScreen, FALSE);
+  IsolateBlock (InternalScreen, ElevatorPicture, 0, 0,
+		USERFENSTERBREITE, USERFENSTERHOEHE);
 
   /* get Menublocks for the In-game Consoles, not the Options menu! */
   Load_PCX_Image ( CONSOLENBILD_PCX, InternalScreen, FALSE);
