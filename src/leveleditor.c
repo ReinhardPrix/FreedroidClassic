@@ -421,6 +421,7 @@ Level_Editor(void)
 	  // Now we print out the current status directly onto the window:
 	  //
 	  CenteredPutString ( Screen ,  0*FontHeight( GetCurrentFont () ),    "LEVEL EDITOR");
+	  LeftPutString   ( Screen ,  (1)*FontHeight(Menu_BFont), "F1...Level Editor Keymap"); 
 
 	  if ( OriginWaypoint == ( -1 ) )
 	    {
@@ -470,6 +471,31 @@ Level_Editor(void)
 	    {
 	      if ( rintf(Me[0].pos.y) < CurLevel->ylen-1 ) Me[0].pos.y+=1;
 	      while (DownPressed());
+	    }
+
+	  if ( F1Pressed() )
+	    {
+	      k=1;
+	      // SDL_BlitSurface ( console_bg_pic2 , NULL, ne_screen, NULL);
+	      DisplayImage (find_file ( NE_CONSOLE_BG_PIC1_FILE, GRAPHICS_DIR, FALSE));
+#define KeymapOffset 15
+	      CenteredPutString   ( Screen ,  (k)*FontHeight(Menu_BFont), "Level Editor Keymap"); k+=1;
+	      PutString ( Screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "Use cursor keys to move around." ); k++;
+	      PutString ( Screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "Use number pad to plant walls." ); k++;
+	      PutString ( Screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "Use SHIFT and number pad to plant extras." ); k++;
+	      PutString ( Screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "Use CTRL and number pad for more extras." ); k++;
+	      PutString ( Screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "R...Refresh, 1-5...Blocktype 1-5, L...Lift, F...Fine grid" ); k++;
+	      PutString ( Screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "D/SHIFT+D/CTRL+D...(Locked) Doors, A...Alert" ); k++;
+	      PutString ( Screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "E...Enter tile by number, Space/Enter...Floor" ); k++; 
+	      
+	      PutString ( Screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "I/O...zoom INTO/OUT OF the map" ); k+=1;
+	      PutString ( Screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "W...toggle wayPOINT on/off" ); k++;
+	      PutString ( Screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "C...start/end waypoint CONNECTION" ); k+=2;
+	      PutString ( Screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "For more keys see our home page" ); k++;
+
+	      SDL_Flip ( Screen );
+	      while ( !SpacePressed() && !EscapePressed() );
+	      while ( SpacePressed() || EscapePressed() );
 	    }
 
 	  //--------------------
