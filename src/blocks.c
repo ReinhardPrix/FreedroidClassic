@@ -242,6 +242,16 @@ Load_Bullet_Surfaces( void )
   BulletImageHeightTable[  8 ] = Block_Height * 2 ;
   BulletImageHeightTable[  9 ] = Block_Height;
   BulletImageHeightTable[ 10 ] = Block_Height;
+  BulletImageHeightTable[ 11 ] = Block_Height;
+  BulletImageHeightTable[ 12 ] = Block_Height;
+  BulletImageHeightTable[ 13 ] = Block_Height;
+  BulletImageHeightTable[ 14 ] = Block_Height;
+  BulletImageHeightTable[ 15 ] = Block_Height;
+  BulletImageHeightTable[ 16 ] = Block_Height;
+  BulletImageHeightTable[ 17 ] = Block_Height;
+  BulletImageHeightTable[ 18 ] = Block_Height;
+  BulletImageHeightTable[ 19 ] = Block_Height;
+  BulletImageHeightTable[ 20 ] = Block_Height;
 
   fpath = find_file (NE_BULLET_BLOCK_FILE, GRAPHICS_DIR, TRUE);
 

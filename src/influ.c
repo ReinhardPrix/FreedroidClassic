@@ -1159,11 +1159,11 @@ GetLivingDroidBelowMouseCursor ( int PlayerNum )
  * and SILENTLY TRUSTING THAT THIS TUX HAS A RANGED WEAPON EQUIPPED.
  * ---------------------------------------------------------------------- */
 void
-FireTuxRangedWeaponRaw ( int PlayerNum , int weapon_item_type , int ForceMouseUse ) 
+FireTuxRangedWeaponRaw ( int PlayerNum , int weapon_item_type , int bullet_image_type, int ForceMouseUse , int FreezeSeconds ) 
 {
   int i = 0;
   Bullet CurBullet = NULL;  // the bullet we're currentl dealing with
-  int guntype = ItemMap[ weapon_item_type ].item_gun_bullet_image_type;   // which gun do we have ? 
+  // int bullet_image_type = ItemMap[ weapon_item_type ].item_gun_bullet_image_type;   // which gun do we have ? 
   double BulletSpeed = ItemMap[ weapon_item_type ].item_gun_speed;
   double speed_norm;
   moderately_finepoint speed;
@@ -1189,7 +1189,7 @@ FireTuxRangedWeaponRaw ( int PlayerNum , int weapon_item_type , int ForceMouseUs
   CurBullet->pos.x = Me [ PlayerNum ] .pos.x;
   CurBullet->pos.y = Me [ PlayerNum ] .pos.y;
   CurBullet->pos.z = Me [ PlayerNum ] .pos.z;
-  CurBullet->type = guntype;
+  CurBullet->type = bullet_image_type;
 
   //--------------------
   // Previously, we had the damage done only dependant upon the weapon used.  Now
@@ -1212,6 +1212,7 @@ FireTuxRangedWeaponRaw ( int PlayerNum , int weapon_item_type , int ForceMouseUs
   CurBullet->miss_hit_influencer = UNCHECKED ;
   memset( CurBullet->total_miss_hit , UNCHECKED , MAX_ENEMYS_ON_SHIP );
   CurBullet->to_hit = Me [ PlayerNum ] .to_hit;
+  CurBullet->freezing_level = FreezeSeconds;
 
   Me [ PlayerNum ] . firewait = ItemMap[ weapon_item_type ].item_gun_recharging_time;
 
@@ -1503,7 +1504,7 @@ FireBullet ( int PlayerNum )
       return;
     }
 
-  FireTuxRangedWeaponRaw ( PlayerNum , Me [ PlayerNum ] .weapon_item.type , FALSE ) ;
+  FireTuxRangedWeaponRaw ( PlayerNum , Me [ PlayerNum ] .weapon_item.type , guntype, FALSE , 0 ) ;
 
 
   return;

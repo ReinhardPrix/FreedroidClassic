@@ -706,7 +706,7 @@ typedef struct
   int ignore_wall_collisions; // does this bullet go through walls (e.g. a laser sword strike)
   int was_reflected; // has this bullet been reflected once in it's lifetime?
   int reflect_other_bullets; // does this bullet reflect other bullets in case of a collision?
-  // int freezing_level;        // does this bullet freeze the target?
+  int freezing_level;        // does this bullet freeze the target?
 
   // these are values only of relevance in case of a melee weapon
   double angle_change_rate;

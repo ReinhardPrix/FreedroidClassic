@@ -584,12 +584,14 @@ CheckBulletCollisions (int num)
 		      //--------------------
 		      // The enemy who was hit, loses some energy, depending on the bullet, and 
 		      // also gets stunned from the hit, which only means that the enemy can't
-		      // fire immediately now but takes double normal time for the next shot.
+		      // fire immediately now but takes (double?) normal time for the next shot.
 		      //
 		      AllEnemys[i].energy -= CurBullet->damage;
+
+		      AllEnemys[i].frozen += CurBullet->freezing_level;
 		      
 		      AllEnemys[i].firewait =
-			2 * ItemMap [ Druidmap [ AllEnemys[ i ].type ].weapon_item.type ].item_gun_recharging_time ;
+			1 * ItemMap [ Druidmap [ AllEnemys[ i ].type ].weapon_item.type ].item_gun_recharging_time ;
 
 		      // Maybe he will also stop doing his fixed routine and return to normal
 		      // operation as well
