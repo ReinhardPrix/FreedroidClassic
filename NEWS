@@ -1,3 +1,5 @@
-CVS archive moved to maupertuis! yippieh!
-log-mailing should work now too. 
-Should work for Johannes too?!
+-*- mode: text -*-
+
+* added joystick support, works ok.
+
+* SDL now used for graphics _and_ sound, yiff is no longer used.

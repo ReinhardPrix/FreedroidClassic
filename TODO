@@ -18,6 +18,11 @@ Outstanding normal bugs (priority: normal)
 
 Outstanding tuning/design bugs and general TODO (priority: low)
 --------------------------------------------------------------
+- (rp) sensitivity in takeover-game too high (single steps difficult)
+  (is BETTER NOW)
+
+- Walls are too "sticky", would be better playable if one could "slide"
+
 - Colors sind allgemein ein wenig verdreht seit SDL Port
   (wird automatisch behoben mit dem Umstieg auf TrueColor mode,
    wo es dann ohnehin keine Farbpalette mehr gibt...)

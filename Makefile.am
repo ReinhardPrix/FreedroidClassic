@@ -1,3 +1,5 @@
-SUBDIRS = src 
+SUBDIRS = src map graphics sound
 
-EXTRA_DIST = map/ graphics/ sound/
+
+
+
