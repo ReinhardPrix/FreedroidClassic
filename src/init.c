@@ -43,6 +43,7 @@
 void Init_Game_Data( char* Datafilename );
 void Get_Bullet_Data ( char* DataPointer );
 extern int feenableexcept (int TheExceptionFlags );
+extern int fedisableexcept (int TheExceptionFlags );
 
 /* ----------------------------------------------------------------------
  *
@@ -1953,12 +1954,31 @@ InitFreedroid ( void )
     //           these instructions in case they give you any porting problems...
     //--------------------
 #ifndef __WIN32__
-    // feenableexcept ( FE_ALL_EXCEPT );
-    // feenableexcept ( FE_INEXACT ) ;
-    feenableexcept ( FE_DIVBYZERO ) ;
-    // feenableexcept ( FE_UNDERFLOW ) ;
-    // feenableexcept ( FE_OVERFLOW ) ;
-    feenableexcept ( FE_INVALID ) ;
+
+    //--------------------
+    // Let's see if we're dealing with a real release or rather if
+    // we're dealing with a cvs version.  The difference is this:
+    // Releases shouldn't terminate upon a floating point exception
+    // while the current cvs code (for better debugging) should
+    // do so.  Therefore we check for 'cvs' in the current version
+    // string and enable/disable the exceptions accordingly...
+    //
+    if ( strstr ( VERSION , "cvs" ) != NULL )
+    {
+	DebugPrintf ( -4 , "\nThis seems to be a cvs version, so we'll exit on floating point exceptions." );
+	// feenableexcept ( FE_ALL_EXCEPT );
+	// feenableexcept ( FE_INEXACT ) ;
+	// feenableexcept ( FE_UNDERFLOW ) ;
+	// feenableexcept ( FE_OVERFLOW ) ;
+	feenableexcept ( FE_INVALID ) ;
+	feenableexcept ( FE_DIVBYZERO ) ;
+    }
+    else
+    {
+	DebugPrintf ( -4 , "\nThis seems to be a 'stable' release, so no exit on floating point exceptions." );
+	fedisableexcept ( FE_INVALID ) ;
+	fedisableexcept ( FE_DIVBYZERO ) ;
+    }
 #endif
     
     /*

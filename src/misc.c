@@ -347,7 +347,7 @@ Now catching SIGSEGV: " );
 
     //--------------------
     // 
-    DebugPrintf ( -4 , "\nNow catching FPE: " );
+    DebugPrintf ( -4 , "\nNow catching FPE (if raised, that is!): " );
     sigaction (SIGFPE, NULL, &old_action);
     if ( old_action . sa_handler != SIG_IGN )
     {
