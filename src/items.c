@@ -38,7 +38,6 @@
 
 #include "items.h"
 
-int Item_Held_In_Hand = -1 ;
 
 void
 MakeHeldFloorItemOutOf( item* SourceItem )
@@ -88,18 +87,13 @@ GetHeldItemInventoryIndex( void )
   //
   for ( InvPos = 0 ; InvPos < MAX_ITEMS_IN_INVENTORY ; InvPos ++ )
     {
-      if ( Me.Inventory[ InvPos ].currently_held_in_hand ) break;
+      if ( Me.Inventory[ InvPos ].currently_held_in_hand && ( Me.Inventory[ InvPos ].type > 0 ) ) 
+	{
+	  return ( InvPos );
+	}
     }
-  if ( InvPos >=  MAX_ITEMS_IN_INVENTORY )
-    {
-      // DebugPrintf( 0 , "\nNo item in inventory seems to be currently held in hand...");
-      InvPos = ( -1 ) ;
-    }
-  else
-    {
-      // DebugPrintf( 0 , "\nInventory item index %d was held in hand." , InvPos );
-    }
-  return ( InvPos );
+
+  return ( -1 );
 }; // int GetHeldItemInventoryIndex( void )
 
 /* ----------------------------------------------------------------------
@@ -124,37 +118,37 @@ item* GetHeldItemPointer( void )
       // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in inventory was held in hand.  Good.");
       return ( & ( Me.Inventory[ InvIndex ] ) );
     } 
-  else if ( Druidmap[ Me.type ].weapon_item.currently_held_in_hand )
+  else if ( Druidmap[ Me.type ].weapon_item.currently_held_in_hand > 0 )
     {
       // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
       return ( & ( Druidmap[ Me.type ].weapon_item ) );
     }
-  else if ( Druidmap[ Me.type ].drive_item.currently_held_in_hand )
+  else if ( Druidmap[ Me.type ].drive_item.currently_held_in_hand > 0 )
     {
       // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
       return ( & ( Druidmap[ Me.type ].drive_item ) );
     }
-  else if ( Druidmap[ Me.type ].shield_item.currently_held_in_hand )
+  else if ( Druidmap[ Me.type ].shield_item.currently_held_in_hand > 0 )
     {
       // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
       return ( & ( Druidmap[ Me.type ].shield_item ) );
     }
-  else if ( Druidmap[ Me.type ].armour_item.currently_held_in_hand )
+  else if ( Druidmap[ Me.type ].armour_item.currently_held_in_hand > 0 )
     {
       // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
       return ( & ( Druidmap[ Me.type ].armour_item ) );
     }
-  else if ( Druidmap[ Me.type ].special_item.currently_held_in_hand )
+  else if ( Druidmap[ Me.type ].special_item.currently_held_in_hand > 0 )
     {
       // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
       return ( & ( Druidmap[ Me.type ].special_item ) );
     }
-  else if ( Druidmap[ Me.type ].aux1_item.currently_held_in_hand )
+  else if ( Druidmap[ Me.type ].aux1_item.currently_held_in_hand > 0 )
     {
       // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
       return ( & ( Druidmap[ Me.type ].aux1_item ) );
     }
-  else if ( Druidmap[ Me.type ].aux2_item.currently_held_in_hand )
+  else if ( Druidmap[ Me.type ].aux2_item.currently_held_in_hand > 0 )
     {
       // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
       return ( & ( Druidmap[ Me.type ].aux2_item ) );
@@ -680,7 +674,11 @@ DropHeldItemToWeaponSlot ( void )
   // be out of all inventory slots, but still in the hand of the 
   // player and ready to be put somewhere else
   //
-  if ( Druidmap[ DRUID001 ].weapon_item.type != (-1) )
+  // But this may only be done of course, if the 'old item' is not
+  // the item we want to put there itself!!!!  HAHAHAHA!!!!
+  //
+  if ( ( Druidmap[ DRUID001 ].weapon_item.type != (-1) ) &&
+       ( Druidmap[ DRUID001 ].weapon_item.currently_held_in_hand == FALSE ) )
     MakeHeldFloorItemOutOf( &( Druidmap[ DRUID001 ].weapon_item ) );
 
   //--------------------
@@ -719,7 +717,12 @@ DropHeldItemToDriveSlot ( void )
   // be out of all inventory slots, but still in the hand of the 
   // player and ready to be put somewhere else
   //
-  if ( Druidmap[ DRUID001 ].drive_item.type != (-1) )
+  //
+  // But this may only be done of course, if the 'old item' is not
+  // the item we want to put there itself!!!!  HAHAHAHA!!!!
+  //.currently_held_in_hand
+  if ( ( Druidmap[ DRUID001 ].drive_item.type != (-1) ) &&
+       ( Druidmap[ DRUID001 ].drive_item.currently_held_in_hand == FALSE ) )
     MakeHeldFloorItemOutOf( &( Druidmap[ DRUID001 ].drive_item ) );
 
   // Now the item is installed into the drive slot of the influencer
@@ -755,7 +758,11 @@ DropHeldItemToArmourSlot ( void )
   // be out of all inventory slots, but still in the hand of the 
   // player and ready to be put somewhere else
   //
-  if ( Druidmap[ DRUID001 ].armour_item.type != (-1) )
+  // But this may only be done of course, if the 'old item' is not
+  // the item we want to put there itself!!!!  HAHAHAHA!!!!
+  //
+  if ( ( Druidmap[ DRUID001 ].armour_item.type != (-1) ) &&
+       ( Druidmap[ DRUID001 ].armour_item.currently_held_in_hand == FALSE ) )
     MakeHeldFloorItemOutOf( &( Druidmap[ DRUID001 ].armour_item ) );
 
   // Now the item is installed into the weapon slot of the influencer
@@ -792,7 +799,11 @@ DropHeldItemToShieldSlot ( void )
   // be out of all inventory slots, but still in the hand of the 
   // player and ready to be put somewhere else
   //
-  if ( Druidmap[ DRUID001 ].shield_item.type != (-1) )
+  // But this may only be done of course, if the 'old item' is not
+  // the item we want to put there itself!!!!  HAHAHAHA!!!!
+  //
+  if ( ( Druidmap[ DRUID001 ].shield_item.type != (-1) ) &&
+       ( Druidmap[ DRUID001 ].shield_item.currently_held_in_hand == FALSE ) )
     MakeHeldFloorItemOutOf( &( Druidmap[ DRUID001 ].shield_item ) );
 
   // Now the item is installed into the weapon slot of the influencer
@@ -828,7 +839,11 @@ DropHeldItemToSpecialSlot ( void )
   // be out of all inventory slots, but still in the hand of the 
   // player and ready to be put somewhere else
   //
-  if ( Druidmap[ DRUID001 ].special_item.type != (-1) )
+  // But this may only be done of course, if the 'old item' is not
+  // the item we want to put there itself!!!!  HAHAHAHA!!!!
+  //
+  if ( ( Druidmap[ DRUID001 ].special_item.type != (-1) ) &&
+       ( Druidmap[ DRUID001 ].special_item.currently_held_in_hand == FALSE ) )
     MakeHeldFloorItemOutOf( &( Druidmap[ DRUID001 ].special_item ) );
 
   // Now the item is installed into the weapon slot of the influencer
@@ -840,7 +855,7 @@ DropHeldItemToSpecialSlot ( void )
   if ( DropItemPointer != &(Druidmap[ DRUID001 ].special_item) )
     DeleteItem( DropItemPointer );
 
-}; // void DropHeldItemToShieldSlot ( void )
+}; // void DropHeldItemToSpecialSlot ( void )
 
 void
 DropHeldItemToAux1Slot ( void )
@@ -864,7 +879,11 @@ DropHeldItemToAux1Slot ( void )
   // be out of all inventory slots, but still in the hand of the 
   // player and ready to be put somewhere else
   //
-  if ( Druidmap[ DRUID001 ].aux1_item.type != (-1) )
+  // But this may only be done of course, if the 'old item' is not
+  // the item we want to put there itself!!!!  HAHAHAHA!!!!
+  //
+  if ( ( Druidmap[ DRUID001 ].aux1_item.type != (-1) ) &&
+       ( Druidmap[ DRUID001 ].aux1_item.currently_held_in_hand == FALSE ) )
     MakeHeldFloorItemOutOf( &( Druidmap[ DRUID001 ].aux1_item ) );
 
   // Now the item is installed into the weapon slot of the influencer
@@ -900,7 +919,11 @@ DropHeldItemToAux2Slot ( void )
   // be out of all inventory slots, but still in the hand of the 
   // player and ready to be put somewhere else
   //
-  if ( Druidmap[ DRUID001 ].aux2_item.type != (-1) )
+  // But this may only be done of course, if the 'old item' is not
+  // the item we want to put there itself!!!!  HAHAHAHA!!!!
+  //
+  if ( ( Druidmap[ DRUID001 ].aux2_item.type != (-1) ) && 
+       ( Druidmap[ DRUID001 ].aux2_item.currently_held_in_hand == FALSE ) )
     MakeHeldFloorItemOutOf( &( Druidmap[ DRUID001 ].aux2_item ) );
 
   // Now the item is installed into the weapon slot of the influencer

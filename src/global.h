@@ -136,6 +136,7 @@ EXTERN int classic_user_rect;   /* use the User-Rect dimensions of the original 
 #define EXTERN extern
 #endif
 
+EXTERN int Item_Held_In_Hand;
 EXTERN grob_point InventorySize;
 // EXTERN item AllItems[ MAX_ITEMS_PER_LEVEL ];
 EXTERN itemspec ItemMap[ ALL_ITEMS ];
