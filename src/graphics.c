@@ -106,47 +106,53 @@ SDL_Surface *LoadImage(char *datafile, int transparent)
 
 void display_bmp(char *file_name)
 {
-    SDL_Surface *image;
+  SDL_Surface *image;
 
-    /* Load the BMP file into a surface */
-    image = SDL_LoadBMP(file_name);
-    if (image == NULL) {
-        fprintf(stderr, "Couldn't load %s: %s\n", file_name, SDL_GetError());
-        return;
+  DebugPrintf
+    ("\nvoid display_bmp(char *file_name):  Real function call confirmed...");
+
+  /* Load the BMP file into a surface */
+  image = SDL_LoadBMP(file_name);
+  if (image == NULL) {
+    fprintf(stderr, "Couldn't load %s: %s\n", file_name, SDL_GetError());
+    return;
+  }
+  
+  /*
+   * Palettized screen modes will have a default palette (a standard
+   * 8*8*4 colour cube), but if the image is palettized as well we can
+   * use that palette for a nicer colour matching
+   */
+  if (image->format->palette && screen->format->palette) 
+    {
+      SDL_SetColors( screen , image->format->palette->colors, 0,
+		     image->format->palette->ncolors);
+      SDL_SetColors( ScaledSurface , image->format->palette->colors, 0,
+		     image->format->palette->ncolors);
+      /*
+	printf("\n\n\nFarbpalette wurde erkannt...\n\n\nTerminiere...\n\n\n");
+	Terminate(0);
+      */
     }
+  
+  if ( SDL_SetColorKey(image, SDL_SRCCOLORKEY, 252) == (-1) )
+    {
+      printf("\n\nvoid display_bmp(char* file_name): ERROR in SDL_SetColorKey.\n\nTerminating...\n\n");
+      Terminate(ERR);
+    }
+  
+  /* Blit onto the screen surface */
+  if(SDL_BlitSurface(image, NULL, screen, NULL) < 0)
+    fprintf(stderr, "BlitSurface error: %s\n", SDL_GetError());
+  
+  SDL_UpdateRect(screen, 0, 0, image->w, image->h);
+  
+  /* Free the allocated BMP surface */
+  SDL_FreeSurface(image);
 
-    /*
-     * Palettized screen modes will have a default palette (a standard
-     * 8*8*4 colour cube), but if the image is palettized as well we can
-     * use that palette for a nicer colour matching
-     */
-    if (image->format->palette && screen->format->palette) 
-      {
-	SDL_SetColors( screen , image->format->palette->colors, 0,
-		       image->format->palette->ncolors);
-	SDL_SetColors( ScaledSurface , image->format->palette->colors, 0,
-		       image->format->palette->ncolors);
-	/*
-	  printf("\n\n\nFarbpalette wurde erkannt...\n\n\nTerminiere...\n\n\n");
-	  Terminate(0);
-	*/
-      }
-
-    if ( SDL_SetColorKey(image, SDL_SRCCOLORKEY, 252) == (-1) )
-      {
-	printf("\n\nvoid display_bmp(char* file_name): ERROR in SDL_SetColorKey.\n\nTerminating...\n\n");
-	Terminate(ERR);
-      }
-
-    /* Blit onto the screen surface */
-    if(SDL_BlitSurface(image, NULL, screen, NULL) < 0)
-        fprintf(stderr, "BlitSurface error: %s\n", SDL_GetError());
-
-    SDL_UpdateRect(screen, 0, 0, image->w, image->h);
-
-    /* Free the allocated BMP surface */
-    SDL_FreeSurface(image);
-}
+  DebugPrintf
+    ("\nvoid display_bmp(char *file_name):  end of function reached...");
+} 
 
 
 void

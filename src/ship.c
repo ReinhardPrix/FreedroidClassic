@@ -279,7 +279,7 @@ EnterElevator (void)
   ClearGraphMem (RealScreen);
   DisplayRahmen (RealScreen);
 
-  UnfadeLevel ();
+  // UnfadeLevel ();
 
   /* Wenn Level leer: grau faerben */
   if (CurLevel->empty)
@@ -362,6 +362,7 @@ ShowElevators (void)
 
       HilightLevel (curLevel);
       SwapScreen ();		/* und anzeigen */
+      PrepareScaledSurface();
       DebugPrintf ("\nvoid ShowElevators(void): end of function reached.");
       return;
     }
@@ -444,6 +445,7 @@ EnterKonsole (void)
     {
 
       PaintConsoleMenu ();
+      PrepareScaledSurface();
 
       /* Nichts tun bis eine vern"unftige Taste gedr"uckt wurde */
       TasteOK = 0;
@@ -494,7 +496,9 @@ EnterKonsole (void)
       if ((MenuPoint == 1) & (SpacePressed ()))
 	GreatDruidShow ();
       if ((MenuPoint == 2) & (SpacePressed ()))
-	ShowDeckMap (CurLevel);
+	{
+	  ShowDeckMap (CurLevel);
+	}
       if ((MenuPoint == 3) & (SpacePressed ()))
 	{
 	  while (SpacePressed ())
@@ -699,6 +703,7 @@ GreatDruidShow (void)
 			    Infodroid, RealScreen);
 
 	  Update_SDL_Screen();
+	  PrepareScaledSurface();
 
 	  KillTastaturPuffer ();
 	  while (!LeftPressed () && !UpPressed () && !DownPressed ()
@@ -792,6 +797,7 @@ GreatDruidShow (void)
 		   FALSE);
 
       Update_SDL_Screen();
+      PrepareScaledSurface();
 
       KillTastaturPuffer ();
       PassOn = 0;
@@ -854,7 +860,7 @@ GreatDruidShow (void)
 		   FALSE);
 
       Update_SDL_Screen();
-
+      PrepareScaledSurface();
 
       KillTastaturPuffer ();
       PassOn = 0;
@@ -911,6 +917,7 @@ GreatDruidShow (void)
 		   FALSE);
 
       Update_SDL_Screen();
+      PrepareScaledSurface();
 
       KillTastaturPuffer ();
       PassOn = 0;
@@ -980,6 +987,8 @@ ShowDeckMap (Level deck)
       LY += 8;
       DebugPrintf (" . \n");
     }
+
+  PrepareScaledSurface();
 
   // Vorbeugung gegen vorzeitiges Verlassen
   // PORT KillTastaturPuffer();

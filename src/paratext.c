@@ -422,6 +422,8 @@ DisplayText (char *Text,
       if ((unsigned char) *tmp == WAITCHAR)
 	{
 	  Update_SDL_Screen();
+	  PrepareScaledSurface();
+
 	  tmp++;
 	  while (UpPressed () || DownPressed () || LeftPressed ()
 		 || RightPressed ())
