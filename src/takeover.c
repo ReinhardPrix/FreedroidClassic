@@ -384,7 +384,7 @@ Takeover ( int enemynum )
     
     SwitchBackgroundMusicTo ( CurLevel -> Background_Song_Name );
     
-    if (LeaderColor == YourColor)
+    if ( LeaderColor == YourColor )
 	return TRUE;
     else
 	return FALSE;

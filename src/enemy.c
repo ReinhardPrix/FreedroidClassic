@@ -97,104 +97,105 @@ TeleportToClosestWaypoint ( Enemy ThisRobot )
 int 
 DirectLineWalkable( float x1 , float y1 , float x2 , float y2 , int z )
 {
-  float LargerDistance;
-  int Steps;
-  int i;
-  finepoint step;
-  finepoint CheckPosition;
-  static int first_call = TRUE;
-  static int step_multiplier = -1 ; // something completely absurd...
-  int steps_for_this_obstacle;
-  static int key_obstacle_type = -1 ;
+    float LargerDistance;
+    int Steps;
+    int i;
+    finepoint step;
+    finepoint CheckPosition;
+    static int first_call = TRUE;
+    static int step_multiplier = -1 ; // something completely absurd...
+    int steps_for_this_obstacle;
+    static int key_obstacle_type = -1 ;
 
-  //--------------------
-  // On the very first call of this function, we find out how much of
-  // a stepsize will be possible for the purpose of finding out, if any
-  // given line is directly walkable or not.  Depending on the collision
-  // rectangles defined for each obstacle, we'll find out the maximum
-  // step distance we can take.
-  //
-  if ( first_call )
+    //--------------------
+    // On the very first call of this function, we find out how much of
+    // a stepsize will be possible for the purpose of finding out, if any
+    // given line is directly walkable or not.  Depending on the collision
+    // rectangles defined for each obstacle, we'll find out the maximum
+    // step distance we can take.
+    //
+    if ( first_call )
     {
-      first_call = FALSE;
-      
-      DebugPrintf ( 1 , "\n%s():Now calibrating passability check maximum stepsize..." , __FUNCTION__ );
-
-      for ( i = 0 ; i < NUMBER_OF_OBSTACLE_TYPES ; i ++ )
+	first_call = FALSE;
+	
+	DebugPrintf ( 1 , "\n%s():Now calibrating passability check maximum stepsize..." , __FUNCTION__ );
+	
+	for ( i = 0 ; i < NUMBER_OF_OBSTACLE_TYPES ; i ++ )
 	{
-	  if ( obstacle_map [ i ] . block_area_type == COLLISION_TYPE_RECTANGLE )
+	    if ( obstacle_map [ i ] . block_area_type == COLLISION_TYPE_RECTANGLE )
 	    {
-	      steps_for_this_obstacle = ( 1.0 / obstacle_map [ i ] . block_area_parm_1 ) + 1 ;
-	      if ( steps_for_this_obstacle > step_multiplier )
+		steps_for_this_obstacle = ( 1.0 / obstacle_map [ i ] . block_area_parm_1 ) + 1 ;
+		if ( steps_for_this_obstacle > step_multiplier )
 		{
-		  step_multiplier = steps_for_this_obstacle;
-		  key_obstacle_type = i ;
+		    step_multiplier = steps_for_this_obstacle;
+		    key_obstacle_type = i ;
 		}
-
-	      steps_for_this_obstacle = ( 1.0 / obstacle_map [ i ] . block_area_parm_2 ) + 1 ;
-	      if ( steps_for_this_obstacle > step_multiplier )
+		
+		steps_for_this_obstacle = ( 1.0 / obstacle_map [ i ] . block_area_parm_2 ) + 1 ;
+		if ( steps_for_this_obstacle > step_multiplier )
 		{
-		  step_multiplier = steps_for_this_obstacle;
-		  key_obstacle_type = i ;
+		    step_multiplier = steps_for_this_obstacle;
+		    key_obstacle_type = i ;
 		}
 	    }
 	}
-
-      DebugPrintf ( 1 , "\n%s(): Final calibration for passablilit check produced multiplier : %d." , 
-		    __FUNCTION__ , step_multiplier );
-      DebugPrintf ( 1 , "\n%s(): The key obstacle type for this calibration was : %d." , 
-		    __FUNCTION__ , key_obstacle_type );
-      
+	
+	DebugPrintf ( 1 , "\n%s(): Final calibration for passablilit check produced multiplier : %d." , 
+		      __FUNCTION__ , step_multiplier );
+	DebugPrintf ( 1 , "\n%s(): The key obstacle type for this calibration was : %d." , 
+		      __FUNCTION__ , key_obstacle_type );
+	
     }
   
 
-  //--------------------
-  // First we determine the amount of steps we need to take
-  // such that we can't oversee any walls or something.
-  //
-  if ( fabsf(x1-x2) > fabsf (y1-y2) ) LargerDistance = fabsf(x1-x2);
-  else LargerDistance=fabsf(y1-y2);
-
-  //--------------------
-  // The larger distance must be used to compute the steps nescessary
-  // for good passability check. i.e. passability check such that no
-  // movement completely through an obstacle will be possible.
-  //
-  // The number of steps must of course be multiplied with the minimum
-  // number of steps for one floor tile, which has been calibrated
-  // (hopefully sensibly) above.
-  //
-  Steps = LargerDistance * step_multiplier ; 
-  if ( Steps <= 1 ) Steps = 2 ; // return TRUE;
-
-  //--------------------
-  // We determine the step size when walking from (x1,y1) to (x2,y2) in Steps number of steps
-  //
-  step.x = (x2 - x1) / ( float ) Steps;
-  step.y = (y2 - y1) / ( float ) Steps;
-
-  DebugPrintf( 2 , "\nint DirectLineWalkable (...) :  step.x=%f step.y=%f." , step.x , step.y );
-
-  //--------------------
-  // We start from position (x1, y1)
-  CheckPosition.x = x1;
-  CheckPosition.y = y1;
-
-  for ( i = 0 ; i < Steps + 1 ; i++ )
+    //--------------------
+    // First we determine the amount of steps we need to take
+    // such that we can't oversee any walls or something.
+    //
+    if ( fabsf(x1-x2) > fabsf (y1-y2) ) LargerDistance = fabsf(x1-x2);
+    else LargerDistance=fabsf(y1-y2);
+    
+    //--------------------
+    // The larger distance must be used to compute the steps nescessary
+    // for good passability check. i.e. passability check such that no
+    // movement completely through an obstacle will be possible.
+    //
+    // The number of steps must of course be multiplied with the minimum
+    // number of steps for one floor tile, which has been calibrated
+    // (hopefully sensibly) above.
+    //
+    Steps = LargerDistance * step_multiplier ; 
+    if ( Steps <= 1 ) Steps = 2 ; // return TRUE;
+    
+    //--------------------
+    // We determine the step size when walking from (x1,y1) to (x2,y2) in Steps number of steps
+    //
+    step.x = (x2 - x1) / ( float ) Steps;
+    step.y = (y2 - y1) / ( float ) Steps;
+    
+    DebugPrintf( 2 , "\n%s():  step.x=%f step.y=%f." , __FUNCTION__ , step.x , step.y );
+    
+    //--------------------
+    // We start from position (x1, y1)
+    //
+    CheckPosition . x = x1;
+    CheckPosition . y = y1;
+    
+    for ( i = 0 ; i < Steps + 1 ; i++ )
     {
-      if ( ! IsPassable ( CheckPosition.x , CheckPosition.y , z ) ) 
+	if ( ! IsPassable ( CheckPosition . x , CheckPosition . y , z ) ) 
 	{
-	  DebugPrintf( 1 , "\n DirectLineWalkable (...) : Connection analysis revealed : OBSTACLES!! NO WAY!!!");
-	  return FALSE;
+	    DebugPrintf( 1 , "\n%s(): Connection analysis revealed : OBSTACLES!! NO WAY!!!" , __FUNCTION__ );
+	    return FALSE;
 	}	
 
-      CheckPosition.x += step.x;
-      CheckPosition.y += step.y;
+	CheckPosition.x += step.x;
+	CheckPosition.y += step.y;
     }
 
-  DebugPrintf( 1 , "\n DirectLineWalkable (...) : Connection analysis revealed : FREE!");
+    DebugPrintf( 1 , "\n%s(): Connection analysis revealed : FREE!" , __FUNCTION__ );
 
-  return TRUE;
+    return TRUE;
 
 }; // int DirectLineWalkable( float x1 , float y1 , float x2 , float y2 )
 
@@ -1078,8 +1079,8 @@ select_new_waypointless_random_walk_target ( int EnemyNum )
 	target_candidate . x = ThisRobot -> pos . x + ( MyRandom ( 600 ) - 300 ) / 100 ; 
 	target_candidate . y = ThisRobot -> pos . y + ( MyRandom ( 600 ) - 300 ) / 100 ; 
 
-	if ( droid_can_walk_this_line ( 0 , ThisRobot -> pos . x , ThisRobot -> pos . y , 
-				      target_candidate . x , target_candidate . y ) )
+	if ( droid_can_walk_this_line ( ThisRobot -> pos . z , ThisRobot -> pos . x , ThisRobot -> pos . y , 
+					target_candidate . x , target_candidate . y ) )
 	{
 	    ThisRobot -> persuing_given_course = TRUE ;
 	    ThisRobot -> PrivatePathway [ 0 ] . x = target_candidate . x ;
