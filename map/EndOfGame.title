@@ -1,3 +1,4 @@
+% -*- mode: flyspell; mode: fill -*- 
 
  * --------------------------------------------------
  *
@@ -27,7 +28,7 @@
  = 
  * --------------------------------------------------
 
-The title picture in the graphics subdirectory for this mission is : backgrounds/title.jpg
+The title picture in the graphics subdirectory for this mission is : backgrounds/credits.jpg
 The title song in the sound subdirectory for this mission is : TheBeginning.ogg
 
 --------------------
@@ -36,9 +37,18 @@ The title song in the sound subdirectory for this mission is : TheBeginning.ogg
 *** START OF PURE SCROLLTEXT DATA ***
 Congratulations!!
 
-You have managed to reach the end of the Freedroid RPG.  Sorry, that we don't have very much content to offer at this point.  But we're trying to fill this gap.  We've 'hired' to new content writers, but they still need time to get their systems up and running.  We sincerly hope that the next release of Freedroid has more to offer.
+The disruptor shield is now being activated and the bots already started to wander off.  You have won the game.  A big celebration will be held in your honor at the guardian citadel of the colony and there will be happiness and joy for quite some time.  (At least until we've prepared a 'second act' of the game.)
 
-If you liked Freedroid RPG and wish to contribute something to development, like some voices or character dialog or the like, you're invited to do so, best by making contact with us on our mailing list (see the sourceforge freedroid project page for more info).
+
+
+If you liked FreedroidRPG and wish to contribute something to the development, that would be wonderful.  There are plenty of opportunities to do so.  Especially more content, i.e. 
+
+* additional level design and level beautifications
+* more quests and quest ideas and characters and character dialogs
+* more items and character descriptions and item descriptions
+* more individual descriptions for obstacles on the map to add extra depth to the game
+
+would be very welcome, see also the credits section.
 
 The Freedroid Dev Team
 
