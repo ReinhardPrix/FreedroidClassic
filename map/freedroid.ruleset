@@ -979,7 +979,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=20
 Item as defensive item: ac_bonus_modifier=7
 Base item duration=25 plus duration modifier=10
-Picture number=6
+Picture number=43
 Sound number=7
 Base list price=250
 ** End of new item specification subsection **
@@ -1466,6 +1466,22 @@ Sound number=0
 Base list price=375
 ** End of new item specification subsection **
 
+// Item No. 56
+** Start of new item specification subsection **
+Item name="Medium Shield"
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item can be installed in slot with name="shield"
+Strength minimum required to wear/wield this item=45
+Dexterity minimum required to wear/wield this item=30
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=20
+Item as defensive item: ac_bonus_modifier=7
+Base item duration=35 plus duration modifier=20
+Picture number=44
+Sound number=7
+Base list price=450
+** End of new item specification subsection **
 
 // Item No. 10000 LAST ITEM !!! DUMMY ENTRY!!!!
 ** Start of new item specification subsection **
