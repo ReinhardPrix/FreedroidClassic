@@ -55,6 +55,9 @@
 #define DAMAGE_X 260
 #define DAMAGE_Y 228
 
+#define RECHARGE_X 260
+#define RECHARGE_Y 200
+
 #define AC_X 260
 #define AC_Y 171
 
@@ -66,6 +69,7 @@
 #define ENERGY_GAIN_PER_VIT_POINT 10
 #define DAMAGE_GAIN_PER_STR_POINT 10
 #define AC_GAIN_PER_DEX_POINT 10
+#define RECHARGE_SPEED_PERCENT_PER_DEX_POINT 15
 
 // #define INV_BUTTON_X 20
 #define INV_BUTTON_X 600
@@ -237,9 +241,9 @@ UpdateAllCharacterStats ( void )
   //--------------------
   // Now we compute the damage the influecer can do
   //
-  if ( Druidmap[ Me.type ].weapon_item.type == (-1) )
+  if ( Druidmap[ DRUID001 ].weapon_item.type != (-1) )
     {
-      Me.Damage = ItemMap[ Druidmap[ Me.type ].weapon_item.type ].item_gun_damage + 
+      Me.Damage = ItemMap[ Druidmap[ DRUID001 ].weapon_item.type ].item_gun_damage + 
 	(Me.Strength - 15) * DAMAGE_GAIN_PER_STR_POINT;
     }
   else
@@ -250,13 +254,21 @@ UpdateAllCharacterStats ( void )
   //--------------------
   // Now we compute the armour class of the influecer
   //
-  Me.AC = (Me.Dexterity - 15) * AC_GAIN_PER_DEX_POINT;
-  if ( Druidmap[ Me.type ].armour_item.type != (-1) )
+  Me.AC = ( Me.Dexterity - 15 ) * AC_GAIN_PER_DEX_POINT;
+  if ( Druidmap[ DRUID001 ].armour_item.type != (-1) )
     {
       // DebugPrintf( 2 , "\nAn armour is beeing used!!!, type = %d" , Druidmap[ Me.type ].armour_item.type);
       // DebugPrintf( 2 , "\nAC bonus = %f" , ItemMap[ Druidmap[ Me.type ].armour_item.type ].item_armour_ac_bonus );
       Me.AC += ItemMap[ Druidmap[ Me.type ].armour_item.type ].item_armour_ac_bonus;
     }
+
+  //--------------------
+  // Now we compute the current recharging time for the weapon for each shot
+  // And also the current recharge time modifier to be applied.
+  // 
+  Me.RechargeTimeModifier = 100 - ( Me.Dexterity - 15 ) * RECHARGE_SPEED_PERCENT_PER_DEX_POINT;
+  Me.RechargeTime = ItemMap[ Druidmap[ DRUID001 ].weapon_item.type ].item_gun_recharging_time * 
+    0.01 * Me.RechargeTimeModifier;
 
 }; // void UpdateAllCharacterStats ( void )
 
@@ -371,6 +383,10 @@ ShowCharacterScreen ( void )
 
   sprintf( CharText , "%d", (int) Me.Damage );
   DisplayText( CharText , DAMAGE_X + CharacterRect.x , DAMAGE_Y + CharacterRect.y , &CharacterRect );
+
+  sprintf( CharText , "%d", (int) Me.RechargeTimeModifier );
+  strcat( CharText , "%" );
+  DisplayText( CharText , RECHARGE_X + CharacterRect.x , RECHARGE_Y + CharacterRect.y , &CharacterRect );
 
   sprintf( CharText , "%d", (int) Me.AC );
   DisplayText( CharText , AC_X + CharacterRect.x , AC_Y + CharacterRect.y , &CharacterRect );
