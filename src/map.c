@@ -1188,6 +1188,29 @@ Decode_Loaded_Leveldata ( char *data )
   DebugPrintf( 2 , "\nylen of this level: %d ", loadlevel->ylen );
   DebugPrintf( 2 , "\ncolor of this level: %d ", loadlevel->ylen );
 
+  if ( loadlevel->ylen >= MAX_MAP_LINES ) 
+    {
+	  fprintf( stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+A maplevel Freedroid was supposed to load has more map lines than allowed\n\
+for a map level as by the constant MAX_MAP_LINES in defs.h.\n\
+\n\
+Sorry, but unless this constant is raised, I'll refuse to load this map.\n\
+\n\
+If you receive this error message, either raise the constant yourself and recompile or\n\
+contact the developers, as always freedroid-discussion@lists.sourceforge.net.\n\
+Thanks a lot.\n\
+\n\
+But for now Freedroid will terminate to draw attention \n\
+to the map loading problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" );
+	  Terminate(ERR);
+    }
+
   loadlevel->Levelname = ReadAndMallocStringFromData ( data , LEVEL_NAME_STRING , "\n" );
   loadlevel->Background_Song_Name = ReadAndMallocStringFromData ( data , BACKGROUND_SONG_NAME_STRING , "\n" );
   loadlevel->Level_Enter_Comment = ReadAndMallocStringFromData ( data , LEVEL_ENTER_COMMENT_STRING , "\n" );
@@ -1601,7 +1624,7 @@ GetRefreshes (Level Lev)
 	    Lev->refreshes[curref].x = col;
 	    Lev->refreshes[curref++].y = row;
 
-	    if (curref > MAX_REFRESHES_ON_LEVEL)
+	    if (curref >= MAX_REFRESHES_ON_LEVEL)
 	      {
 		fprintf(stderr, "\n\
 \n\
@@ -1630,7 +1653,7 @@ Sorry...\n\
 	  }			/* if */
       }				/* for */
   return curref;
-}				// int GetRefreshed(Level lev)
+}; // int GetRefreshes (Level lev)
 
 /* ----------------------------------------------------------------------
  * This function initialized the array of Teleports for animation

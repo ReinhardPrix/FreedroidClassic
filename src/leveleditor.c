@@ -989,16 +989,20 @@ Level_Editor(void)
 		  if ( RightPressed() )
 		    {
 
-		      CurLevel->ylen++;
-		      
-		      // In case of enlargement, we need to do more:
-		      CurLevel->map[ CurLevel->ylen-1 ] = MyMalloc( CurLevel->xlen +1) ;
-		      
-		      // We don't want to fill the new area with junk, do we? So we set it VOID
-		      memset( CurLevel->map[ CurLevel->ylen-1 ] , VOID , CurLevel->xlen );
-		      
+		      //--------------------
+		      // The enlargement of levels in y direction is limited by a constant
+		      // defined in defs.h.  This is carefully checked or no operation at
+		      // all will be performed.
+		      //
+		      if ( (CurLevel->ylen)+1 < MAX_MAP_LINES )
+			{
+			  CurLevel->ylen++;
+			  // In case of enlargement, we need to do more:
+			  CurLevel->map[ CurLevel->ylen-1 ] = MyMalloc( CurLevel->xlen +1) ;
+			  // We don't want to fill the new area with junk, do we? So we set it VOID
+			  memset( CurLevel->map[ CurLevel->ylen-1 ] , VOID , CurLevel->xlen );
+			}
 		      while (RightPressed());
-
 		    }
 
 		  if ( LeftPressed() )
