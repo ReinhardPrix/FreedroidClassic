@@ -682,6 +682,10 @@ generate_wallobstacles_from_level_map ( int level_num )
 	    case V_HALF_DOOR2:
 	    case V_HALF_DOOR3:
 	    case V_OPEN_DOOR:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_V_DOOR_000_OPEN ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 1.0 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
+	      obstacle_counter ++ ;
 	      break;
 
 	    default:

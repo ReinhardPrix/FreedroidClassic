@@ -874,8 +874,10 @@ show_obstacles_around_tux ( void )
 
   for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
     {
-      if ( obstacle_level -> obstacle_list [ i ] . type != ( -1 ) )
-	blit_one_obstacle ( & ( obstacle_level -> obstacle_list [ i ] ) ) ;
+      if ( obstacle_level -> obstacle_list [ i ] . type >= 0 )
+	{
+	  blit_one_obstacle ( & ( obstacle_level -> obstacle_list [ i ] ) ) ;
+	}
       else 
 	break;
     }

@@ -93,7 +93,7 @@ enum
 #define INVENTORY_GRID_WIDTH 9
 #define INVENTORY_GRID_HEIGHT 6
 #define NUMBER_OF_ITEM_PICTURES 68
-#define NUMBER_OF_OBSTACLE_TYPES 10
+#define NUMBER_OF_OBSTACLE_TYPES 16
 #define NUMBER_OF_MOUSE_CURSOR_PICTURES 2
 
 #define ITEM_DROP_PERCENTAGE 20
@@ -869,6 +869,12 @@ enum
   ISO_H_DOOR_075_OPEN = 9,
   ISO_H_DOOR_100_OPEN = 10,
 
+  ISO_V_DOOR_000_OPEN = 11,
+  ISO_V_DOOR_025_OPEN = 12,
+  ISO_V_DOOR_050_OPEN = 13,
+  ISO_V_DOOR_075_OPEN = 14,
+  ISO_V_DOOR_100_OPEN = 15,
+
 };
 
 
@@ -879,7 +885,7 @@ enum
 
 // #define NUM_MAP_BLOCKS		80  // total number of map-blocks 
 // #define NUM_MAP_BLOCKS (3*LAST_BLOCK_IN_LIST_DUMMY_ENTRY) // total number of map-blocks 
-#define NUM_MAP_BLOCKS (3*LAST_BLOCK_IN_LIST_DUMMY_ENTRY) // total number of map-blocks 
+#define NUM_MAP_BLOCKS (1*LAST_BLOCK_IN_LIST_DUMMY_ENTRY) // total number of map-blocks 
 
 
 #endif
