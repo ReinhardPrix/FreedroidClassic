@@ -510,6 +510,11 @@ MoveThisRobotThowardsHisWaypoint ( int EnemyNum )
   // we define the maximum speed of this machine for later use...
   //
   // maxspeed = Druidmap[ ThisRobot->type ].maxspeed;
+  if ( ThisRobot -> paralysation_duration_left != 0 )
+    {
+      return;
+      // maxspeed = ItemMap[ Druidmap[ ThisRobot->type ].drive_item.type ].item_drive_maxspeed;
+    }
   if ( ThisRobot -> frozen == 0 )
     {
       maxspeed = ItemMap[ Druidmap[ ThisRobot->type ].drive_item.type ].item_drive_maxspeed;
@@ -1115,9 +1120,15 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
   
   NewBullet->time_in_seconds = 0;
   NewBullet->time_in_frames = 0;
+
+  //--------------------
+  // Most enemy shots will not have any special 'magic' property...
+  //
   NewBullet->poison_duration = 0;
   NewBullet->poison_damage_per_sec = 0;
   NewBullet->freezing_level = 0;
+  NewBullet->paralysation_duration = 0;
+
   NewBullet->bullet_lifetime = ItemMap [ Druidmap[ThisRobot->type].weapon_item.type ].item_gun_bullet_lifetime;
   
   NewBullet->angle_change_rate = ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_angle_change;
@@ -1269,6 +1280,9 @@ AttackInfluence (int enemynum)
 
   // ignore dead robots as well...
   if ( ThisRobot -> Status == OUT ) return;
+
+  // ignore paralyzed robots as well...
+  if ( ThisRobot -> paralysation_duration_left != 0 ) return;
 
   // ignore robots, that don't have any weapon
   if ( Druidmap [ ThisRobot -> type ] . weapon_item . type == ( -1 ) ) return;

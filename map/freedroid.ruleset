@@ -174,6 +174,16 @@ Cannot fire until previous bullet has been deleted : 0
 Type of blast this bullet causes when crashing e.g. against a wall : 0
 ** End of new bullet specification subsection **
 
+// second version of the yellow-red laser sword
+** Start of new bullet specification subsection **
+Time is takes to recharge this bullet/weapon in seconds : 0.4
+Flying speed of this bullet type : 8.0
+Damage cause by a hit of this bullet type : 8
+Number of different phases that were designed for this bullet type : SEE CONFIG.THEME FILE
+Cannot fire until previous bullet has been deleted : 0
+Type of blast this bullet causes when crashing e.g. against a wall : 0
+** End of new bullet specification subsection **
+
 // this is half of the influencer primitive rifle, but colored in green
 ** Start of new bullet specification subsection **
 Time is takes to recharge this bullet/weapon in seconds : 0.8
@@ -205,6 +215,16 @@ Type of blast this bullet causes when crashing e.g. against a wall : 0
 ** End of new bullet specification subsection **
 
 // this is half of the influencer primitive rifle, but colored in white
+** Start of new bullet specification subsection **
+Time is takes to recharge this bullet/weapon in seconds : 0.8
+Flying speed of this bullet type : 8.0
+Damage cause by a hit of this bullet type : 12
+Number of different phases that were designed for this bullet type : SEE CONFIG.THEME FILE
+Cannot fire until previous bullet has been deleted : 0
+Type of blast this bullet causes when crashing e.g. against a wall : 0
+** End of new bullet specification subsection **
+
+// this is half of the influencer primitive rifle, but colored in yellow
 ** Start of new bullet specification subsection **
 Time is takes to recharge this bullet/weapon in seconds : 0.8
 Flying speed of this bullet type : 8.0

@@ -564,6 +564,12 @@ enum _bullets
   BLUE_BULLET,
   MAGENTA_BULLET,
   WHITE_BULLET
+  //--------------------
+  // If you add some more bullet types here, don't forget to
+  //   1.  Also add a specification in the freedroid ruleset
+  //   2.  Also add an entry for the number of phases in the config.theme file!!
+  //   3.  Specify the size of the bullet image in the blocks.c loading function
+  //
 };
 
 

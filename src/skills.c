@@ -92,6 +92,32 @@ SDL_Rect SkillScreenRect;
  * This function creates a teleporter portal to the home location.
  * ---------------------------------------------------------------------- */
 void
+ParalyzeBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
+{
+  int SpellCost = ManaCostTable [ 6 ][ Me[ 0 ].SkillLevel [ 6 ] ] ;
+
+  if ( Me [ 0 ] . mana >= SpellCost )
+    {
+      Me[0].mana -= SpellCost;
+
+      //FireTuxRangedWeaponRaw ( 0 , ITEM_COMPOSITE_BOW ) ;
+      FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , WHITE_BULLET, TRUE , 0 , 0 , 0 , 7 ) ;
+
+      Play_Spell_ForceToEnergy_Sound( );
+
+    }
+  else
+    {
+      Me[0].TextVisibleTime = 0;
+      Me[0].TextToBeDisplayed = "Not enough force left within me.";
+      Not_Enough_Mana_Sound(  );
+    }
+}; // void ParalyzeBoltSpell ( gps PortalTarget )
+
+/* ----------------------------------------------------------------------
+ * This function creates a teleporter portal to the home location.
+ * ---------------------------------------------------------------------- */
+void
 FireyBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
 {
   int SpellCost = ManaCostTable [ 6 ][ Me[ 0 ].SkillLevel [ 6 ] ] ;
@@ -101,7 +127,7 @@ FireyBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
       Me[0].mana -= SpellCost;
 
       //FireTuxRangedWeaponRaw ( 0 , ITEM_COMPOSITE_BOW ) ;
-      FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , MAGENTA_BULLET, TRUE , 0 , 0 , 0 ) ;
+      FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , MAGENTA_BULLET, TRUE , 0 , 0 , 0 , 0 ) ;
 
       Play_Spell_ForceToEnergy_Sound( );
 
@@ -127,7 +153,7 @@ ColdBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
       Me[0].mana -= SpellCost;
 
       //FireTuxRangedWeaponRaw ( 0 , ITEM_COMPOSITE_BOW ) ;
-      FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , BLUE_BULLET , TRUE , 3 , 0 , 0 ) ;
+      FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , BLUE_BULLET , TRUE , 3 , 0 , 0 , 0 ) ;
 
       Play_Spell_ForceToEnergy_Sound( );
 
@@ -153,7 +179,7 @@ PoisonBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
       Me[0].mana -= SpellCost;
 
       //FireTuxRangedWeaponRaw ( 0 , ITEM_COMPOSITE_BOW ) ;
-      FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , GREEN_BULLET , TRUE , 0 , 3 , 1 ) ;
+      FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , GREEN_BULLET , TRUE , 0 , 3 , 1 , 0 ) ;
 
       Play_Spell_ForceToEnergy_Sound( );
 
@@ -398,6 +424,18 @@ HandleCurrentlyActivatedSkill( void )
 	      TargetPoint . x = Me [ 0 ] . pos . x + ( GetMousePos_x() + 16 ) / Block_Width ;
 	      TargetPoint . y = Me [ 0 ] . pos . y + ( GetMousePos_y() + 16 ) / Block_Height ; 
 	      PoisonBoltSpell ( Me [ 0 ] . pos , TargetPoint );
+	    }
+	}
+    }
+  else if ( Me[0].readied_skill == 9 )
+    {
+      if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
+	{
+	  if ( CursorIsInUserRect ( GetMousePos_x() + 16 , GetMousePos_y() + 16) )
+	    {
+	      TargetPoint . x = Me [ 0 ] . pos . x + ( GetMousePos_x() + 16 ) / Block_Width ;
+	      TargetPoint . y = Me [ 0 ] . pos . y + ( GetMousePos_y() + 16 ) / Block_Height ; 
+	      ParalyzeBoltSpell ( Me [ 0 ] . pos , TargetPoint );
 	    }
 	}
     }

@@ -377,6 +377,7 @@ Load_Enemy_Surfaces( void )
     {
       BlueEnemySurfacePointer [ i ] = CreateColorFilteredSurface ( EnemySurfacePointer [ i ] , FILTER_BLUE );
       GreenEnemySurfacePointer [ i ] = CreateColorFilteredSurface ( EnemySurfacePointer [ i ] , FILTER_GREEN );
+      RedEnemySurfacePointer [ i ] = CreateColorFilteredSurface ( EnemySurfacePointer [ i ] , FILTER_RED );
     }
 
 }; // void LoadEnemySurfaces( void )

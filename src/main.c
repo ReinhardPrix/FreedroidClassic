@@ -243,6 +243,13 @@ UpdateCountersForThisFrame ( int PlayerNum )
 	      AllEnemys[i].energy -= Frame_Time() * AllEnemys[i].poison_damage_per_sec ;
 	    }
 	  
+	  if (AllEnemys[i].paralysation_duration_left > 0) 
+	    {
+	      AllEnemys[i].paralysation_duration_left -= Frame_Time() ;
+	      if (AllEnemys[i].paralysation_duration_left < 0) AllEnemys[i].paralysation_duration_left = 0;
+	      // AllEnemys[i].energy -= Frame_Time() * AllEnemys[i].paralysation_damage_per_sec ;
+	    }
+	  
 	  if (AllEnemys[i].firewait > 0) 
 	    {
 	      AllEnemys[i].firewait -= Frame_Time() ;
