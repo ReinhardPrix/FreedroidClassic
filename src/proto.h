@@ -25,6 +25,8 @@
 #ifndef _proto_h
 #define _proto_h
 
+#include "struct.h"
+
 /* main.c */
 #undef EXTERN
 #ifdef _main_c
@@ -131,11 +133,15 @@ EXTERN void SmallBlast (int, int, int, int, unsigned char *, int);
 EXTERN void SmallBullet (int, int, int, int, unsigned char *, int);
 
 EXTERN void GetMapBlocks (void);
-EXTERN void GetShieldBlocks (void);
+
 EXTERN void IsolateBlock (unsigned char *screen,
 			  unsigned char *target,
 			  int BlockEckLinks,
 			  int BlockEckOben, int Blockbreite, int Blockhoehe);
+
+EXTERN SDL_Rect *ne_get_blocks (char *picfile, int num_blocks,
+				int blocks_per_line, int source_line,
+				int target_line);
 
 EXTERN unsigned char *GetBlocks (char *picfile, int line, int num);
 EXTERN int MergeBlockToWindow (register unsigned char *source,
@@ -172,6 +178,7 @@ EXTERN int MergeBlockToWindow (unsigned char *,
 // EXTERN void Update_SDL_Screen(void);
 // EXTERN Uint32 getpixel(SDL_Surface *surface, int x, int y);
 // EXTERN void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
+EXTERN void replace_color (SDL_Surface *surf, SDL_Color src, SDL_Color dst);
 EXTERN void display_bmp(char *file_name);
 EXTERN void MakeGridOnScreen(unsigned char*);
 EXTERN int InitPictures (void);
@@ -493,5 +500,13 @@ EXTERN int vga_white(void);
 EXTERN void vga_waitretrace(void);
 EXTERN int vga_getdefaultmode(void);
 
+
+#undef EXTERN
+#ifdef _joy_c
+#define EXTERN
+#else
+#define EXTERN extern
+#endif
+EXTERN void Init_Joy(void);
 
 #endif
