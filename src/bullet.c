@@ -356,7 +356,13 @@ CheckBulletCollisions (int num)
 	  
 	  if ((xdist * xdist + ydist * ydist) < DRUIDHITDIST2)
 	    {
+	      // The enemy who was hit, loses some energy, depending on the bullet
 	      AllEnemys[i].energy -= Bulletmap[CurBullet->type].damage;
+
+	      // Maybe he will also stop doing his fixed routine and return to normal
+	      // operation as well
+	      AllEnemys[i].AdvancedCommand = 0;
+
 	      // We might also start a little bullet-blast even after the
 	      // collision of the bullet with an enemy (not in Paradroid)
 	      DeleteBullet( num );
