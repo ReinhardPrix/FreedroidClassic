@@ -1921,6 +1921,7 @@ ThouArtDefeated (void)
   DebugPrintf (2, "\nvoid ThouArtDefeated(void): Real function call confirmed.");
   Me.status = TERMINATED;
   GameConfig.Inventory_Visible=FALSE;
+  GameConfig.CharacterScreen_Visible=FALSE;
   GameConfig.Mission_Log_Visible=FALSE;
   ThouArtDefeatedSound ();
   ExplodeInfluencer ();
