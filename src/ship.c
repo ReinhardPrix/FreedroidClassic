@@ -428,6 +428,7 @@ GreatDruidShow (void)
   char InfoText[10000];
   int Infodroid;
   char PassOn = 0;
+  char EntryText[100];
   SDL_Rect Droid_Text_Rect;
 
   DebugPrintf ("\nvoid GreadDruidShow(void): Function call confirmed.");
@@ -523,20 +524,16 @@ GreatDruidShow (void)
       */
       DisplayText (InfoText, USERFENSTERPOSX, USERFENSTERPOSY, &User_Rect);
 
+      
       ShowRobotPicture (USERFENSTERPOSX, USERFENSTERPOSY + 2 * FONTHOEHE, Infodroid );
 
-      strcpy (InfoText, "Entry : ");
-      strcat (InfoText, Entry[Infodroid]);
-      strcat (InfoText, "\nClass : ");
-      strcat (InfoText, Classes[Druidmap[Infodroid].class]);
-      strcat (InfoText, "\nHeight: ");
-      strcat (InfoText, Height[Infodroid]);
-      strcat (InfoText, "\nWeight: ");
-      strcat (InfoText, Weight[Infodroid]);
-      strcat (InfoText, "\nDrive : ");
-      strcat (InfoText, Drivenames[Drive[Infodroid]]);
-      strcat (InfoText, "\nBrain : ");
-      strcat (InfoText, Brainnames[Brain[Infodroid]]);
+      sprintf( InfoText, "Entry : %d\nClass : %s\nHeight : %f\nWeight: %f \nDrive : %s \nBrain : %s " , 
+	       Infodroid+1 , 
+	       Classes[Druidmap[Infodroid].class] ,
+	       Druidmap[Infodroid].height ,
+	       Druidmap[Infodroid].weight ,
+	       Drivenames[ Druidmap[Infodroid].drive ] ,
+	       Brainnames[ Druidmap[Infodroid].brain ] );
 
       DisplayText (InfoText, MENUTEXT_X, USERFENSTERPOSY + FontHeight (Menu_BFont),
 		   &Menu_Rect);
@@ -585,13 +582,13 @@ GreatDruidShow (void)
       ShowRobotPicture (USERFENSTERPOSX, USERFENSTERPOSY + 2 * FONTHOEHE, Infodroid);
 
       strcpy (InfoText, "Armamant : ");
-      strcat (InfoText, Weaponnames[Armament[Infodroid]]);
+      strcat (InfoText, Weaponnames[ Druidmap[Infodroid].armament ]);
       strcat (InfoText, "\nSensors  1: ");
-      strcat (InfoText, Sensornames[Sensor1[Infodroid]]);
+      strcat (InfoText, Sensornames[ Druidmap[Infodroid].sensor1 ]);
       strcat (InfoText, "\n          2: ");
-      strcat (InfoText, Sensornames[Sensor2[Infodroid]]);
+      strcat (InfoText, Sensornames[ Druidmap[Infodroid].sensor2 ]);
       strcat (InfoText, "\n          3: ");
-      strcat (InfoText, Sensornames[Sensor3[Infodroid]]);
+      strcat (InfoText, Sensornames[ Druidmap[Infodroid].sensor3 ]);
 
       DisplayText (InfoText, MENUTEXT_X, USERFENSTERPOSY + FontHeight (Menu_BFont),
 		   &Menu_Rect);

@@ -28,7 +28,7 @@ value in the detailed description of each robot further below
 and make your modifiactions there.
 
 Common factor for all droids maxspeed values: 0.7
-Common factor for all droids acceleration values: 0.5
+Common factor for all droids acceleration values: 0.1
 Common factor for all droids maximum energy values: 1.0
 Common factor for all droids energyloss values: 0.3
 Common factor for all droids aggression values: 1.0
@@ -47,6 +47,14 @@ Weapon type this droid uses: 0
 Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 0
+Height of this droid : 1.00
+Weight of this droid : 27
+Drive of this droid : 0
+Brain of this droid : 0
+Sensor 1 of this droid : 0
+Sensor 2 of this droid : 0
+Sensor 3 of this droid : 0
+Armament of this droid : 0
 
 ** Start of new Robot: ** 
 Droidname: 123
@@ -59,6 +67,14 @@ Weapon type this droid uses: 0
 Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 25
+Height of this droid : 1.37
+Weight of this droid : 85
+Drive of this droid : 1
+Brain of this droid : 0
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 2
+Sensor 3 of this droid : 0
+Armament of this droid : 0
 
 ** Start of new Robot: ** 
 Droidname: 139
@@ -71,6 +87,14 @@ Weapon type this droid uses: 0
 Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 25
+Height of this droid : 1.22
+Weight of this droid : 61
+Drive of this droid : 2
+Brain of this droid : 0
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 0
+Sensor 3 of this droid : 0
+Armament of this droid : 0
 
 ** Start of new Robot: ** 
 Droidname: 247
@@ -83,6 +107,14 @@ Weapon type this droid uses: 0
 Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 50
+Height of this droid : 1.56
+Weight of this droid : 78
+Drive of this droid : 2
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 0
+Sensor 3 of this droid : 0
+Armament of this droid : 0
 
 ** Start of new Robot: ** 
 Droidname: 249
@@ -95,6 +127,14 @@ Weapon type this droid uses: 0
 Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 50
+Height of this droid : 1.63
+Weight of this droid : 83
+Drive of this droid : 3
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 0
+Sensor 3 of this droid : 0
+Armament of this droid : 0
 
 ** Start of new Robot: ** 
 Droidname: 296
@@ -107,6 +147,14 @@ Weapon type this droid uses: 0
 Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 50
+Height of this droid : 1.20
+Weight of this droid : 47
+Drive of this droid : 1
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 0
+Sensor 3 of this droid : 0
+Armament of this droid : 0
 
 ** Start of new Robot: ** 
 Droidname: 302
@@ -119,6 +167,14 @@ Weapon type this droid uses: 0
 Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 75
+Height of this droid : 1.07
+Weight of this droid : 23
+Drive of this droid : 2
+Brain of this droid : 0
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 0
+Sensor 3 of this droid : 0
+Armament of this droid : 0
 
 ** Start of new Robot: ** 
 Droidname: 329
@@ -131,6 +187,14 @@ Weapon type this droid uses: 0
 Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 75
+Height of this droid : 1.07
+Weight of this droid : 31
+Drive of this droid : 4
+Brain of this droid : 0
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 0
+Sensor 3 of this droid : 0
+Armament of this droid : 0
 
 ** Start of new Robot: ** 
 Droidname: 420
@@ -143,6 +207,14 @@ Weapon type this droid uses: 0
 Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 100
+Height of this droid : 1.41
+Weight of this droid : 57
+Drive of this droid : 1
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 0
+Sensor 3 of this droid : 0
+Armament of this droid : 0
 
 ** Start of new Robot: ** 
 Droidname: 476
@@ -155,6 +227,14 @@ Weapon type this droid uses: 1
 Aggression rate of this droid: 65
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 100
+Height of this droid : 1.32
+Weight of this droid : 42
+Drive of this droid : 2
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 2
+Sensor 3 of this droid : 0
+Armament of this droid : 1
 
 ** Start of new Robot: ** 
 Droidname: 493
@@ -167,6 +247,14 @@ Weapon type this droid uses: 0
 Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 100
+Height of this droid : 1.48
+Weight of this droid : 51
+Drive of this droid : 2
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 0
+Sensor 3 of this droid : 0
+Armament of this droid : 0
 
 ** Start of new Robot: ** 
 Droidname: 516
@@ -179,6 +267,14 @@ Weapon type this droid uses: 0
 Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 125
+Height of this droid : 1.57
+Weight of this droid : 74
+Drive of this droid : 5
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 0
+Sensor 3 of this droid : 0
+Armament of this droid : 0
 
 ** Start of new Robot: ** 
 Droidname: 571
@@ -191,6 +287,14 @@ Weapon type this droid uses: 0
 Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 125
+Height of this droid : 1.76
+Weight of this droid : 62
+Drive of this droid : 5
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 0
+Sensor 3 of this droid : 0
+Armament of this droid : 0
 
 ** Start of new Robot: ** 
 Droidname: 598
@@ -203,6 +307,14 @@ Weapon type this droid uses: 0
 Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 125
+Height of this droid : 1.72
+Weight of this droid : 93
+Drive of this droid : 5
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 0
+Sensor 3 of this droid : 0
+Armament of this droid : 0
 
 ** Start of new Robot: ** 
 Droidname: 614
@@ -215,6 +327,14 @@ Weapon type this droid uses: 1
 Aggression rate of this droid: 50
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 150
+Height of this droid : 1.93
+Weight of this droid : 121
+Drive of this droid : 5
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 3
+Sensor 3 of this droid : 0
+Armament of this droid : 2
 
 ** Start of new Robot: ** 
 Droidname: 615
@@ -227,6 +347,14 @@ Weapon type this droid uses: 1
 Aggression rate of this droid: 50
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 150
+Height of this droid : 1.20
+Weight of this droid : 29
+Drive of this droid : 2
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 2
+Sensor 3 of this droid : 0
+Armament of this droid : 1
 
 ** Start of new Robot: ** 
 Droidname: 629
@@ -239,6 +367,14 @@ Weapon type this droid uses: 2
 Aggression rate of this droid: 60
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 150
+Height of this droid : 1.09
+Weight of this droid : 59
+Drive of this droid : 1
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 3
+Sensor 3 of this droid : 0
+Armament of this droid : 1
 
 ** Start of new Robot: ** 
 Droidname: 711
@@ -251,6 +387,14 @@ Weapon type this droid uses: 3
 Aggression rate of this droid: 30
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 175
+Height of this droid : 1.93
+Weight of this droid : 102
+Drive of this droid : 5
+Brain of this droid : 1
+Sensor 1 of this droid : 4
+Sensor 2 of this droid : 5
+Sensor 3 of this droid : 0
+Armament of this droid : 3
 
 ** Start of new Robot: ** 
 Droidname: 742
@@ -263,6 +407,14 @@ Weapon type this droid uses: 3
 Aggression rate of this droid: 30
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 175
+Height of this droid : 1.87
+Weight of this droid : 140
+Drive of this droid : 5
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 5
+Sensor 3 of this droid : 0
+Armament of this droid : 3
 
 ** Start of new Robot: ** 
 Droidname: 751
@@ -275,6 +427,14 @@ Weapon type this droid uses: 1
 Aggression rate of this droid: 60
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 175
+Height of this droid : 1.93
+Weight of this droid : 227
+Drive of this droid : 5
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 0
+Sensor 3 of this droid : 0
+Armament of this droid : 1
 
 ** Start of new Robot: ** 
 Droidname: 821
@@ -287,6 +447,14 @@ Weapon type this droid uses: 2
 Aggression rate of this droid: 70
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 200
+Height of this droid : 1.00
+Weight of this droid : 28
+Drive of this droid : 2
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 5
+Sensor 3 of this droid : 2
+Armament of this droid : 1
 
 ** Start of new Robot: ** 
 Droidname: 834
@@ -299,6 +467,14 @@ Weapon type this droid uses: 1
 Aggression rate of this droid: 70
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 200
+Height of this droid : 1.10
+Weight of this droid : 34
+Drive of this droid : 2
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 5
+Sensor 3 of this droid : 0
+Armament of this droid : 1
 
 ** Start of new Robot: ** 
 Droidname: 883
@@ -311,6 +487,14 @@ Weapon type this droid uses: 1
 Aggression rate of this droid: 80
 Is this droid immune to disruptor blasts? 0
 Score gained for destroying one of this type: 200
+Height of this droid : 1.62
+Weight of this droid : 79
+Drive of this droid : 4
+Brain of this droid : 1
+Sensor 1 of this droid : 1
+Sensor 2 of this droid : 5
+Sensor 3 of this droid : 0
+Armament of this droid : 4
 
 ** Start of new Robot: ** 
 Droidname: 999
@@ -323,6 +507,15 @@ Weapon type this droid uses: 2
 Aggression rate of this droid: 60
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 225
+Height of this droid : 1.87
+Weight of this droid : 162
+Drive of this droid : 2
+Brain of this droid : 2
+Sensor 1 of this droid : 2
+Sensor 2 of this droid : 5
+Sensor 3 of this droid : 3
+Armament of this droid : 1
+
 
 Start of new Robot: ** 
 Droidname: 963
@@ -335,7 +528,14 @@ Weapon type this droid uses: 2
 Aggression rate of this droid: 60
 Is this droid immune to disruptor blasts? 1
 Score gained for destroying one of this type: 225
-
+Height of this droid : 1.11
+Weight of this droid : 41
+Drive of this droid : 2
+Brain of this droid : 2
+Sensor 1 of this droid : 2
+Sensor 2 of this droid : 5
+Sensor 3 of this droid : 1
+Armament of this droid : 1
 
 *** End of game.dat File ***
 

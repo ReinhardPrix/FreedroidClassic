@@ -90,6 +90,15 @@ Get_Robot_Data ( void* DataPointer )
 #define AGGRESSION_BEGIN_STRING "Aggression rate of this droid: "
 #define FLASHIMMUNE_BEGIN_STRING "Is this droid immune to disruptor blasts? "
 #define SCORE_BEGIN_STRING "Score gained for destroying one of this type: "
+#define HEIGHT_BEGIN_STRING "Height of this droid : "
+#define WEIGHT_BEGIN_STRING "Weight of this droid : "
+#define DRIVE_BEGIN_STRING "Drive of this droid : "
+#define BRAIN_BEGIN_STRING "Brain of this droid : "
+#define SENSOR1_BEGIN_STRING "Sensor 1 of this droid : "
+#define SENSOR2_BEGIN_STRING "Sensor 2 of this droid : "
+#define SENSOR3_BEGIN_STRING "Sensor 3 of this droid : "
+#define ARMAMENT_BEGIN_STRING "Armament of this droid : "
+
 
 
   if ( (RobotPointer = strstr ( DataPointer , ROBOT_SECTION_BEGIN_STRING ) ) == NULL)
@@ -325,6 +334,110 @@ Get_Robot_Data ( void* DataPointer )
 	  ValuePointer += strlen ( SCORE_BEGIN_STRING );
 	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].score );
 	  printf("\nDroid score entry found!  It reads: %d" , Druidmap[RobotIndex].score );
+	}
+
+      // Now we read in the height of this droid of this type
+      if ( (ValuePointer = strstr ( RobotPointer, HEIGHT_BEGIN_STRING ) ) == NULL )
+	{
+	  printf("\nERROR! NO HEIGHT ENTRY FOUND! TERMINATING!");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  ValuePointer += strlen ( HEIGHT_BEGIN_STRING );
+	  sscanf ( ValuePointer , "%lf" , &Druidmap[RobotIndex].height );
+	  printf("\nDroid height entry found!  It reads: %f" , Druidmap[RobotIndex].height );
+	}
+
+      // Now we read in the weight of this droid type
+      if ( (ValuePointer = strstr ( RobotPointer, WEIGHT_BEGIN_STRING )) == NULL )
+	{
+	  printf("\nERROR! NO WEIGHT ENTRY FOUND! TERMINATING!");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  ValuePointer += strlen ( WEIGHT_BEGIN_STRING );
+	  sscanf ( ValuePointer , "%lf" , &Druidmap[RobotIndex].weight );
+	  printf( "\nDroid weight entry found!  It reads: %f" , Druidmap[RobotIndex].weight );
+	}
+
+      // Now we read in the drive of this droid of this type
+      if ( (ValuePointer = strstr ( RobotPointer, DRIVE_BEGIN_STRING ) ) == NULL )
+	{
+	  printf("\nERROR! NO DRIVE ENTRY FOUND! TERMINATING!");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  ValuePointer += strlen ( DRIVE_BEGIN_STRING );
+	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].drive );
+	  printf("\nDroid drive entry found!  It reads: %d" , Druidmap[RobotIndex].drive );
+	}
+
+      // Now we read in the brain of this droid of this type
+      if ( (ValuePointer = strstr ( RobotPointer, BRAIN_BEGIN_STRING ) ) == NULL )
+	{
+	  printf("\nERROR! NO BRAIN ENTRY FOUND! TERMINATING!");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  ValuePointer += strlen ( BRAIN_BEGIN_STRING );
+	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].brain );
+	  printf("\nDroid brain entry found!  It reads: %d" , Druidmap[RobotIndex].brain );
+	}
+
+      // Now we read in the sensor 1 of this droid type
+      if ( (ValuePointer = strstr ( RobotPointer, SENSOR1_BEGIN_STRING ) ) == NULL )
+	{
+	  printf("\nERROR! NO SENSOR1 ENTRY FOUND! TERMINATING!");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  ValuePointer += strlen ( SENSOR1_BEGIN_STRING );
+	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].sensor1 );
+	  printf("\nDroid sensor 1 entry found!  It reads: %d" , Druidmap[RobotIndex].sensor1 );
+	}
+
+      // Now we read in the sensor 2 of this droid type
+      if ( (ValuePointer = strstr ( RobotPointer, SENSOR2_BEGIN_STRING ) ) == NULL )
+	{
+	  printf("\nERROR! NO SENSOR2 ENTRY FOUND! TERMINATING!");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  ValuePointer += strlen ( SENSOR1_BEGIN_STRING );
+	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].sensor2 );
+	  printf("\nDroid sensor 2 entry found!  It reads: %d" , Druidmap[RobotIndex].sensor2 );
+	}
+
+      // Now we read in the sensor 3 of this droid type
+      if ( (ValuePointer = strstr ( RobotPointer, SENSOR3_BEGIN_STRING ) ) == NULL )
+	{
+	  printf("\nERROR! NO SENSOR3 ENTRY FOUND! TERMINATING!");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  ValuePointer += strlen ( SENSOR3_BEGIN_STRING );
+	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].sensor3 );
+	  printf("\nDroid sensor 3 entry found!  It reads: %d" , Druidmap[RobotIndex].sensor3 );
+	}
+
+      // Now we read in the armament of this droid type
+      if ( (ValuePointer = strstr ( RobotPointer, ARMAMENT_BEGIN_STRING ) ) == NULL )
+	{
+	  printf("\nERROR! NO ARMAMENT ENTRY FOUND! TERMINATING!");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  ValuePointer += strlen ( ARMAMENT_BEGIN_STRING );
+	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].armament );
+	  printf("\nDroid armament entry found!  It reads: %d" , Druidmap[RobotIndex].armament );
 	}
 
 
