@@ -432,6 +432,7 @@ typedef struct
   grob_point teleporters[MAX_TELEPORTERS_ON_LEVEL];
   grob_point doors[MAX_DOORS_ON_LEVEL];
   waypoint AllWaypoints[MAXWAYPOINTS];
+  item ItemList[ MAX_ITEMS_PER_LEVEL ];
 }
 level, *Level;
 

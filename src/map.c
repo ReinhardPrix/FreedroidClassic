@@ -53,6 +53,11 @@
 #define STATEMENT_END_STRING "End of pure statement information for this level"
 #define CODEPANEL_SECTION_BEGIN_STRING "Start of pure codepanel information for this level"
 #define CODEPANEL_SECTION_END_STRING "End of pure codepanel information for this level"
+#define ITEMS_SECTION_BEGIN_STRING "Start of pure items information for this level"
+#define ITEMS_SECTION_END_STRING "End of pure items information for this level"
+#define ITEM_CODE_STRING "New item: type="
+#define ITEM_POS_X_STRING " X="
+#define ITEM_POS_Y_STRING " Y="
 #define X_POSITION_OF_STATEMENT_STRING "PosX="
 #define Y_POSITION_OF_STATEMENT_STRING "PosY="
 #define STATEMENT_ITSELF_ANNOUNCE_STRING "Statement=\""
@@ -564,6 +569,42 @@ char *Encode_Level_For_Saving(Level Lev)
   strcat(LevelMem, "\n");
   
 
+  //--------------------
+  // Now we write out a marker to announce the beginning of the codepanel data
+  //
+  strcat(LevelMem, ITEMS_SECTION_BEGIN_STRING);
+  strcat(LevelMem, "\n");
+
+  //--------------------
+  // Now we write out the bulk of codepanel infos
+  //
+  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+    {
+      if ( Lev->CodepanelList[ i ].x == (-1) ) continue;
+
+      strcat( LevelMem , ITEM_CODE_STRING );
+      sprintf( linebuf , "%d " , Lev->ItemList[ i ].type );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , POSITION_X_OF_CODEPANEL_STRING );
+      sprintf( linebuf , "%d " , Lev->CodepanelList[ i ].x );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , POSITION_Y_OF_CODEPANEL_STRING );
+      sprintf( linebuf , "%d " , Lev->CodepanelList[ i ].y );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , CODEPANEL_CODE_ANNOUNCE_STRING );
+      strcat( LevelMem , Lev->CodepanelList[ i ].Secret_Code );
+      strcat( LevelMem , "\"\n" );
+    }
+  //--------------------
+  // Now we write out a marker to announce the end of the codepanel data
+  //
+  strcat(LevelMem, ITEMS_SECTION_END_STRING);
+  strcat(LevelMem, "\n");
+  
+
   // --------------------  
   // The next thing we must do is write the waypoints of this level also
   // to disk.
@@ -927,6 +968,19 @@ Decode_Loaded_Leveldata (char *data)
 
   // Now we repair the damage done to the loaded level data
   CodepanelSectionEnd[0]=Preserved_Letter;
+
+
+  //--------------------
+  // From here on we take apart the items section of the loaded level...
+  //
+  
+  // First we initialize the items arrays with 'empty' information
+  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+    {
+      loadlevel->ItemList[ i ].pos.x = ( -1 ) ;
+      loadlevel->ItemList[ i ].pos.y = ( -1 ) ;
+      loadlevel->ItemList[ i ].type = ( -1 ) ;
+    }
 
   //--------------------
   // find the map data

@@ -1455,6 +1455,42 @@ InitNewMissionList ( char *MissionName )
     }
 
 
+  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+    {
+      CurLevel->ItemList[ i ].pos.x = 0;
+      CurLevel->ItemList[ i ].pos.y = 0;
+      CurLevel->ItemList[ i ].type = ( -1 ) ;
+    }
+
+  CurLevel->ItemList[ 0 ].pos.x = 7;
+  CurLevel->ItemList[ 0 ].pos.y = 7;
+  CurLevel->ItemList[ 0 ].type = 0 ;
+
+  CurLevel->ItemList[ 1 ].pos.x = 6;
+  CurLevel->ItemList[ 1 ].pos.y = 7;
+  CurLevel->ItemList[ 1 ].type = 1 ;
+
+  CurLevel->ItemList[ 2 ].pos.x = 7;
+  CurLevel->ItemList[ 2 ].pos.y = 6;
+  CurLevel->ItemList[ 2 ].type = 2 ;
+
+  CurLevel->ItemList[ 3 ].pos.x = 7;
+  CurLevel->ItemList[ 3 ].pos.y = 8;
+  CurLevel->ItemList[ 3 ].type = 3 ;
+
+  CurLevel->ItemList[ 4 ].pos.x = 5;
+  CurLevel->ItemList[ 4 ].pos.y = 6;
+  CurLevel->ItemList[ 4 ].type = 4 ;
+
+  CurLevel->ItemList[ 5 ].pos.x = 5;
+  CurLevel->ItemList[ 5 ].pos.y = 7;
+  CurLevel->ItemList[ 5 ].type = 5 ;
+
+  CurLevel->ItemList[ 6 ].pos.x = 5;
+  CurLevel->ItemList[ 6 ].pos.y = 8;
+  CurLevel->ItemList[ 6 ].type = 6 ;
+
+
 }; // void InitNewMissionList ( char* MissionName )
 
 /*-----------------------------------------------------------------
@@ -1518,6 +1554,9 @@ InitFreedroid (void)
   User_Rect.y = BANNER_HEIGHT;
   User_Rect.h = 480 - BANNER_HEIGHT;
 
+
+
+  /*
   ItemMap[ 0 ].ItemName = "Item one";
   ItemMap[ 0 ].ItemClass = "Energy drink";  // class of the item, e.g. weapon, drive, shield, other
   ItemMap[ 0 ].MaximumSpeed = 0; 
@@ -1529,41 +1568,9 @@ InitFreedroid (void)
   ItemMap[ 2 ].ItemName = "Item three";
   ItemMap[ 2 ].ItemClass = "Energy drink";  // class of the item, e.g. weapon, drive, shield, other
   ItemMap[ 2 ].MaximumSpeed = 0; 
+  */
 
-  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
-    {
-      AllItems[ i ].pos.x = 0;
-      AllItems[ i ].pos.y = 0;
-      AllItems[ i ].type = ( -1 ) ;
-    }
 
-  AllItems[ 0 ].pos.x = 7;
-  AllItems[ 0 ].pos.y = 7;
-  AllItems[ 0 ].type = 0 ;
-
-  AllItems[ 1 ].pos.x = 6;
-  AllItems[ 1 ].pos.y = 7;
-  AllItems[ 1 ].type = 1 ;
-
-  AllItems[ 2 ].pos.x = 7;
-  AllItems[ 2 ].pos.y = 6;
-  AllItems[ 2 ].type = 2 ;
-
-  AllItems[ 3 ].pos.x = 7;
-  AllItems[ 3 ].pos.y = 8;
-  AllItems[ 3 ].type = 3 ;
-
-  AllItems[ 4 ].pos.x = 5;
-  AllItems[ 4 ].pos.y = 6;
-  AllItems[ 4 ].type = 4 ;
-
-  AllItems[ 5 ].pos.x = 5;
-  AllItems[ 5 ].pos.y = 7;
-  AllItems[ 5 ].type = 5 ;
-
-  AllItems[ 6 ].pos.x = 5;
-  AllItems[ 6 ].pos.y = 8;
-  AllItems[ 6 ].type = 6 ;
 
   Init_Video ();
 
