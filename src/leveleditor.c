@@ -2715,6 +2715,7 @@ LevelEditor(void)
   char* NewCommentOnThisSquare;
   int LeftMousePressedPreviousFrame = FALSE;
   point TargetSquare;
+  int new_x, new_y;
 
   GameConfig.Inventory_Visible = FALSE;
   GameConfig.CharacterScreen_Visible = FALSE;
@@ -2789,6 +2790,10 @@ LevelEditor(void)
 	    }
 
 	  ShowLevelEditorTopMenu( Highlight );
+	  ShowGenericButtonFromList ( GO_LEVEL_NORTH_BUTTON );
+	  ShowGenericButtonFromList ( GO_LEVEL_SOUTH_BUTTON );
+	  ShowGenericButtonFromList ( GO_LEVEL_EAST_BUTTON );
+	  ShowGenericButtonFromList ( GO_LEVEL_WEST_BUTTON );
 
 	  //--------------------
 	  // Now that everything is blitted and printed, we may update the screen again...
@@ -2962,6 +2967,46 @@ LevelEditor(void)
 	    {
 	      if ( ClickWasInEditorBannerRect() )
 		HandleBannerMouseClick();
+	      else if ( CursorIsOnButton ( GO_LEVEL_NORTH_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+		{
+		  if ( Me [ 0 ] . pos . x < curShip . AllLevels [ EditLevel -> jump_target_north ] -> xlen -1 )
+		    new_x = Me [ 0 ] . pos . x ; 
+		  else 
+		    new_x = 3;
+		  new_y = curShip . AllLevels [ EditLevel -> jump_target_north ] -> xlen - 4 ;
+		  if ( EditLevel -> jump_target_north >= 0 ) 
+		    Teleport ( EditLevel -> jump_target_north , new_x , new_y , 0 , TRUE , FALSE );
+		}
+	      else if ( CursorIsOnButton ( GO_LEVEL_SOUTH_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+		{
+		  if ( Me [ 0 ] . pos . x < curShip . AllLevels [ EditLevel -> jump_target_south ] -> xlen -1 )
+		    new_x = Me [ 0 ] . pos . x ; 
+		  else 
+		    new_x = 3;
+		  new_y = 4;
+		  if ( EditLevel -> jump_target_south >= 0 ) 
+		    Teleport ( EditLevel -> jump_target_south , new_x , new_y , 0 , TRUE , FALSE );
+		}
+	      else if ( CursorIsOnButton ( GO_LEVEL_EAST_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+		{
+		  new_x = 3;
+		  if ( Me [ 0 ] . pos . y < curShip . AllLevels [ EditLevel -> jump_target_east ] -> ylen -1 )
+		    new_y = Me [ 0 ] . pos . y ; 
+		  else 
+		    new_y = 4;
+		  if ( EditLevel -> jump_target_east >= 0 ) 
+		    Teleport ( EditLevel -> jump_target_east , new_x , new_y , 0 , TRUE , FALSE );
+		}
+	      else if ( CursorIsOnButton ( GO_LEVEL_WEST_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+		{
+		  new_x = curShip . AllLevels [ EditLevel -> jump_target_west ] -> xlen -4 ;
+		  if ( Me [ 0 ] . pos . y < curShip . AllLevels [ EditLevel -> jump_target_west ] -> ylen -1 )
+		    new_y = Me [ 0 ] . pos . y ; 
+		  else 
+		    new_y = 4;
+		  if ( EditLevel -> jump_target_west >= 0 ) 
+		    Teleport ( EditLevel -> jump_target_west , new_x , new_y , 0 , TRUE , FALSE );
+		}
 	      else
 		{
 		  //--------------------

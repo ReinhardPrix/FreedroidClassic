@@ -112,14 +112,20 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "mouse_buttons/Sell10Button.png"                 , { 360 , 375 , 120 ,  37 } } ,
     { NULL , "mouse_buttons/Sell100Button.png"                , { 487 , 375 , 120 ,  37 } } ,
 
-    { NULL , "mouse_buttons/TakeButton.png"                    , { 233 , 375 , 120 ,  37 } } ,
-    { NULL , "mouse_buttons/Take10Button.png"                  , { 360 , 375 , 120 ,  37 } } ,
-    { NULL , "mouse_buttons/Take100Button.png"                 , { 487 , 375 , 120 ,  37 } } ,
-    { NULL , "mouse_buttons/PutButton.png"                     , { 233 , 375 , 120 ,  37 } } ,
-    { NULL , "mouse_buttons/Put10Button.png"                   , { 360 , 375 , 120 ,  37 } } ,
-    { NULL , "mouse_buttons/Put100Button.png"                  , { 487 , 375 , 120 ,  37 } } ,
+    { NULL , "mouse_buttons/TakeButton.png"                   , { 233 , 375 , 120 ,  37 } } ,
+    { NULL , "mouse_buttons/Take10Button.png"                 , { 360 , 375 , 120 ,  37 } } ,
+    { NULL , "mouse_buttons/Take100Button.png"                , { 487 , 375 , 120 ,  37 } } ,
+    { NULL , "mouse_buttons/PutButton.png"                    , { 233 , 375 , 120 ,  37 } } ,
+    { NULL , "mouse_buttons/Put10Button.png"                  , { 360 , 375 , 120 ,  37 } } ,
+    { NULL , "mouse_buttons/Put100Button.png"                 , { 487 , 375 , 120 ,  37 } } ,
 
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                       , { 320 + 11 , 449 , 297 , 25 } } 
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 320 + 11 , 449 , 297 , 25 } } ,
+
+    { NULL , "mouse_buttons/GoLevelNorthButton.png"           , { 233 , 90 , 160 ,  20 } } ,
+    { NULL , "mouse_buttons/GoLevelSouthButton.png"           , { 233 , 480-20 , 160 ,  20 } } ,
+    { NULL , "mouse_buttons/GoLevelEastButton.png"            , { 640-20 , (480-160)/2 , 20 , 160 } } ,
+    { NULL , "mouse_buttons/GoLevelWestButton.png"            , { 0+4 , (480-160)/2 ,  20 , 160 } } 
+
   }; // AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] 
 
 /* ----------------------------------------------------------------------
