@@ -837,7 +837,6 @@ Teleport (int LNum, int X, int Y, int PlayerNum )
   Level tmp;
   int i;
 
-
   if ( curLevel != Me [ PlayerNum ] . pos . z )
     {	
 
@@ -908,6 +907,12 @@ Teleport (int LNum, int X, int Y, int PlayerNum )
   // UnfadeLevel ();
 
   Switch_Background_Music_To( CurLevel->Background_Song_Name );
+
+  //--------------------
+  // Since we've mightily changed position now, we should clear the
+  // position history, so that noone get's confused...
+  //
+  InitInfluPositionHistory ( PlayerNum );
 
 }; // void Teleport( ... ) 
 

@@ -67,15 +67,16 @@ int CurrentZeroRingIndex=0;
  * for that, and that's why it is a ring buffer).
  * ---------------------------------------------------------------------- */
 void 
-InitInfluPositionHistory( void )
+InitInfluPositionHistory( int PlayerNum )
 {
   int RingPosition;
 
   for ( RingPosition = 0 ; RingPosition < MAX_INFLU_POSITION_HISTORY ; RingPosition ++ )
     {
-      Me[0].Position_History_Ring_Buffer[ RingPosition ].x = Me[0].pos.x ;
-      Me[0].Position_History_Ring_Buffer[ RingPosition ].y = Me[0].pos.y ;
-      Me[0].Position_History_Ring_Buffer[ RingPosition ].z = CurLevel->levelnum ;
+      Me [ PlayerNum ] . Position_History_Ring_Buffer [ RingPosition ] . x = Me [ PlayerNum ] . pos . x ;
+      Me [ PlayerNum ] . Position_History_Ring_Buffer [ RingPosition ] . y = Me [ PlayerNum ] . pos . y ;
+      // Me [ PlayerNum ] . Position_History_Ring_Buffer [ RingPosition ] . z = CurLevel->levelnum ;
+      Me [ PlayerNum ] . Position_History_Ring_Buffer [ RingPosition ] . z = Me [ PlayerNum ] . pos . z ;
     }
 } // void InitInfluPositionHistory( void )
 
