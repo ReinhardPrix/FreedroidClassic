@@ -568,7 +568,7 @@ EXTERN void start_gethit_animation_if_applicable ( enemy* ThisRobot ) ;
 #endif
 EXTERN int GreatItemShow ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVENTORY ] );
 EXTERN void ShowDeckMap (Level deck);
-EXTERN void ShowItemInfo ( item* ShowItem , int page , char ShowArrows , int background_code );
+EXTERN void ShowItemInfo ( item* ShowItem , int page , char ShowArrows , int background_code , int title_text_flag );
 EXTERN void EnterLift (void);
 EXTERN void EnterItemIdentificationBooth( void );
 EXTERN void EnterCodepanel (void);

@@ -445,7 +445,7 @@ GreatItemShow ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVENTOR
       // We show all the info and the buttons that should be in this
       // interface...
       //
-      ShowItemInfo ( ShowPointerList [ ItemIndex ] , Displacement , TRUE , ITEM_BROWSER_BG_PIC_BACKGROUND_CODE );
+      ShowItemInfo ( ShowPointerList [ ItemIndex ] , Displacement , TRUE , ITEM_BROWSER_BG_PIC_BACKGROUND_CODE , TRUE );
 
       // PutPasswordButtonsAndPassword ( PasswordIndex );
       // PutSecurityButtonsAndClearance ( ClearanceIndex );
@@ -875,7 +875,7 @@ This error indicates some installation problem with freedroid.",
  * does update the screen, no our_SDL_flip_wrapper() necesary !
  * ------------------------------------------------------------ */
 void 
-ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , int background_code )
+ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , int background_code , int title_text_flag )
 {
   char InfoText[10000];
   char TextChunk[2000];
@@ -892,13 +892,20 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , int backgro
   ShowItemPicture ( 45 , 190 , ShowItem->type );
 
   //--------------------
-  // We fill out the header area of the items browser.
+  // If that is wanted, we fill out the title header line, announcing the
+  // currently browsed items name in full glory.
   //
-  SetCurrentFont ( Menu_BFont );
-  strcpy ( TextChunk , ItemMap [ ShowItem->type ] . item_name );
-  CutDownStringToMaximalSize ( TextChunk , 225 );
-  PutString ( Screen , 330, 38, TextChunk );
+  if ( title_text_flag )
+    {
+      SetCurrentFont ( Menu_BFont );
+      strcpy ( TextChunk , ItemMap [ ShowItem->type ] . item_name );
+      CutDownStringToMaximalSize ( TextChunk , 225 );
+      PutString ( Screen , 330, 38, TextChunk );
+    }
 
+  //--------------------
+  // Now we can display the rest of the smaller-font item description.
+  //
   if ( ItemMap [ ShowItem->type ] . item_can_be_installed_in_weapon_slot )
     ClassString = "Weapon" ;
   else if ( ItemMap [ ShowItem->type ] . item_can_be_installed_in_drive_slot )

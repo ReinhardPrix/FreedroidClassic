@@ -603,9 +603,9 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
       // interface...
       //
       if ( ItemIndex >= 0 )
-	ShowItemInfo ( ShowPointerList [ ItemIndex ] , Displacement , TRUE , ITEM_BROWSER_SHOP_BACKGROUND_CODE );
+	ShowItemInfo ( ShowPointerList [ ItemIndex ] , Displacement , TRUE , ITEM_BROWSER_SHOP_BACKGROUND_CODE , FALSE );
       else if ( TuxItemIndex >= 0 )
-	ShowItemInfo ( TuxItemsList [ TuxItemIndex ] , Displacement , TRUE , ITEM_BROWSER_SHOP_BACKGROUND_CODE );
+	ShowItemInfo ( TuxItemsList [ TuxItemIndex ] , Displacement , TRUE , ITEM_BROWSER_SHOP_BACKGROUND_CODE , FALSE );
       else blit_special_background ( ITEM_BROWSER_SHOP_BACKGROUND_CODE );
 
       for ( i = 0 ; i < RowLength ; i++ )
@@ -765,7 +765,10 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 
 		  return ( 0 );
 		}
-	      else if ( SellButtonActive )
+	    }
+	  else if ( CursorIsOnButton( SELL_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
+	    {
+	      if ( SellButtonActive )
 		{
 		  ShopOrder -> item_selected = TuxItemIndex ;
 		  ShopOrder -> shop_command = SELL_1_ITEM ;
