@@ -448,7 +448,11 @@ smashable_barrel_below_mouse_cursor ( int player_num )
 void
 tux_wants_to_attack_now ( int player_num , int use_mouse_cursor_for_targeting ) 
 {
-    
+
+    //--------------------
+    // Maybe the player requested an attack before the reload/retract
+    // phase is completed.  In that case, we don't attack.
+    //
     if ( Me [ 0 ] . firewait > 0 ) 
     {
 	//--------------------
@@ -467,8 +471,6 @@ tux_wants_to_attack_now ( int player_num , int use_mouse_cursor_for_targeting )
 	
 	return; 
     }
-
-    
     
     //--------------------
     // If the Tux has a weapon and this weapon requires some ammunition, then
@@ -2538,6 +2540,9 @@ FireTuxRangedWeaponRaw ( int player_num , int weapon_item_type , int bullet_imag
     OffsetFactor = 0.25 ;
 #define FIRE_TUX_RANGED_WEAPON_RAW_DEBUG 1
     
+    DebugPrintf ( 1 , "\n%s(): target location: x=%f, y=%f." , __FUNCTION__ , 
+		  target_location . x , target_location . y );
+
     //--------------------
     // We search for the first free bullet entry in the 
     // bullet list...
@@ -2794,6 +2799,24 @@ PerformTuxAttackRaw ( int player_num , int use_mouse_cursor_for_targeting )
     if ( !APressed() )
     {
 	//--------------------
+	// By default, we set an attack target according to the mouse 
+	// cursor.  If there is something else going on, this will simply
+	// be overwritten.  But it's a good default this way.
+	//
+	MapPositionOfMouse . x = translate_pixel_to_map_location ( 
+	    player_num , 
+	    (float) ServerThinksInputAxisX ( player_num ) , 
+	    (float) ServerThinksInputAxisY ( player_num ) , TRUE ) ;
+	MapPositionOfMouse . y = translate_pixel_to_map_location ( 
+	    player_num , 
+	    (float) ServerThinksInputAxisX ( player_num ) , 
+	    (float) ServerThinksInputAxisY ( player_num ) , FALSE ) ;
+	angle = - ( atan2 ( Me [ player_num ] . pos . y - MapPositionOfMouse . y ,
+			    Me [ player_num ] . pos . x - MapPositionOfMouse . x ) * 180 / M_PI - 90 + 22.5 );
+	target_location . x = MapPositionOfMouse . x ;
+	target_location . y = MapPositionOfMouse . y ;
+
+	//--------------------
 	//
 	if ( Me [ player_num ] . mouse_move_target_is_enemy != (-1) )
 	{
@@ -2839,7 +2862,9 @@ PerformTuxAttackRaw ( int player_num , int use_mouse_cursor_for_targeting )
 	angle = - ( atan2 ( Me [ player_num ] . pos . y - MapPositionOfMouse . y ,
 			    Me [ player_num ] . pos . x - MapPositionOfMouse . x ) * 180 / M_PI - 90 + 22.5 );
 	target_location . x = MapPositionOfMouse . x ;
-	target_location . y = MapPositionOfMouse . y ; 
+	target_location . y = MapPositionOfMouse . y ;
+	// DebugPrintf ( -4 , "\n%s(): target location: x=%f, y=%f." , __FUNCTION__ , 
+	// target_location . x , target_location . y );	
     }
     
     

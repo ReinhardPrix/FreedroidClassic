@@ -1020,7 +1020,7 @@ GetQuestList ( char* QuestListFilename )
 	    number_of_diary_entries ++;
 	    next_diary_entry_pointer ++;
 	}
-	DebugPrintf ( -4 , "\n%s(): Detected %d mission description entries." , 
+	DebugPrintf ( 1 , "\n%s(): Detected %d mission description entries." , 
 		      __FUNCTION__ , number_of_diary_entries );
 	
 	//--------------------

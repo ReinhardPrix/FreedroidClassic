@@ -3109,86 +3109,103 @@ iso_put_tux_weapon ( int x , int y , int player_num , int rotation_index )
 }; // void iso_put_tux_weapon ( int x , int y , int player_num , int rotation_index )
 
 /* ----------------------------------------------------------------------
- *
- *
+ * This function is intended to bring the Tux parts to the screen 
+ * directly, respecting the correct order of blitting for all the parts
+ * of the Tux in the sword motion.  Of course, the blitting order stongly
+ * depends on the direction the Tux is facing.  Therefore a lot of cases
+ * have to be separated.
  * ---------------------------------------------------------------------- */
 void
 iso_put_all_tux_parts_for_sword_motion ( int x , int y , int player_num , int rotation_index )
 {
 
-  DebugPrintf ( 2 , "\nDirection given: %d." , rotation_index );
-  // DebugPrintf ( 0 , "\nphase: %d." , (int) Me [ player_num ] . phase );
+    DebugPrintf ( 2 , "\nDirection given: %d." , rotation_index );
+    // DebugPrintf ( 0 , "\nphase: %d." , (int) Me [ player_num ] . phase );
 
-  switch ( rotation_index )
+    //--------------------
+    // The correct order of blitting for all the Tux parts stongly depends
+    // on the direction the Tux is facing, therefore we need to do careful
+    // case separation for the tux direction.
+    //
+    switch ( rotation_index )
     {
-    case 0:
-      iso_put_tux_feet ( x , y , player_num , rotation_index );
-      iso_put_tux_torso ( x , y , player_num , rotation_index );
-      iso_put_tux_head ( x , y , player_num , rotation_index );
-      iso_put_tux_part ( PART_GROUP_WEAPONARM , "iso_weaponarm" , x , y , player_num , rotation_index );
-      iso_put_tux_shieldarm ( x , y , player_num , rotation_index );
-      iso_put_tux_weapon ( x , y , player_num , rotation_index );
-      break;
-    case 8:
-      iso_put_tux_weapon ( x , y , player_num , rotation_index );
-      iso_put_tux_feet ( x , y , player_num , rotation_index );
-      iso_put_tux_part ( PART_GROUP_WEAPONARM , "iso_weaponarm" , x , y , player_num , rotation_index );
-      iso_put_tux_shieldarm ( x , y , player_num , rotation_index );
-      iso_put_tux_torso ( x , y , player_num , rotation_index );
-      iso_put_tux_head ( x , y , player_num , rotation_index );
-      break;
-
-    case 9:
-    case 10:
-    case 11:
-    case 12:
-    case 13:
-    case 14:
-    case 15:
-      iso_put_tux_feet ( x , y , player_num , rotation_index );
-      iso_put_tux_weapon ( x , y , player_num , rotation_index );
-      iso_put_tux_part ( PART_GROUP_WEAPONARM , "iso_weaponarm" , x , y , player_num , rotation_index );
-      iso_put_tux_torso ( x , y , player_num , rotation_index );
-      iso_put_tux_shieldarm ( x , y , player_num , rotation_index );
-      iso_put_tux_head ( x , y , player_num , rotation_index );
-      break;
-
-    case 1:
-    case 2:
-    case 3:
-    case 4:
-    case 5:
-    case 6:
-    case 7:
-      iso_put_tux_feet ( x , y , player_num , rotation_index );
-      iso_put_tux_shieldarm ( x , y , player_num , rotation_index );
-      iso_put_tux_torso ( x , y , player_num , rotation_index );
-      iso_put_tux_head ( x , y , player_num , rotation_index );
-      iso_put_tux_weapon ( x , y , player_num , rotation_index );
-      iso_put_tux_part ( PART_GROUP_WEAPONARM , "iso_weaponarm" , x , y , player_num , rotation_index );
-      break;
-
-    default:
-      fprintf ( stderr , "Suspicious rotation index: %d " , rotation_index );
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
+	case 0:
+	    iso_put_tux_feet ( x , y , player_num , rotation_index );
+	    iso_put_tux_torso ( x , y , player_num , rotation_index );
+	    iso_put_tux_head ( x , y , player_num , rotation_index );
+	    iso_put_tux_part ( PART_GROUP_WEAPONARM , "iso_weaponarm" , x , y , player_num , rotation_index );
+	    iso_put_tux_shieldarm ( x , y , player_num , rotation_index );
+	    iso_put_tux_weapon ( x , y , player_num , rotation_index );
+	    break;
+	case 8:
+	    iso_put_tux_weapon ( x , y , player_num , rotation_index );
+	    iso_put_tux_feet ( x , y , player_num , rotation_index );
+	    iso_put_tux_part ( PART_GROUP_WEAPONARM , "iso_weaponarm" , x , y , player_num , rotation_index );
+	    iso_put_tux_shieldarm ( x , y , player_num , rotation_index );
+	    iso_put_tux_torso ( x , y , player_num , rotation_index );
+	    iso_put_tux_head ( x , y , player_num , rotation_index );
+	    break;
+	    
+	case 9:
+	case 10:
+	case 11:
+	case 12:
+	case 13:
+	case 14:
+	case 15:
+	    iso_put_tux_feet ( x , y , player_num , rotation_index );
+	    iso_put_tux_weapon ( x , y , player_num , rotation_index );
+	    iso_put_tux_part ( PART_GROUP_WEAPONARM , "iso_weaponarm" , x , y , player_num , rotation_index );
+	    iso_put_tux_torso ( x , y , player_num , rotation_index );
+	    iso_put_tux_shieldarm ( x , y , player_num , rotation_index );
+	    iso_put_tux_head ( x , y , player_num , rotation_index );
+	    break;
+	    
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+	case 5:
+	case 6:
+	case 7:
+	    iso_put_tux_feet ( x , y , player_num , rotation_index );
+	    iso_put_tux_shieldarm ( x , y , player_num , rotation_index );
+	    iso_put_tux_torso ( x , y , player_num , rotation_index );
+	    iso_put_tux_head ( x , y , player_num , rotation_index );
+	    iso_put_tux_weapon ( x , y , player_num , rotation_index );
+	    iso_put_tux_part ( PART_GROUP_WEAPONARM , "iso_weaponarm" , x , y , player_num , rotation_index );
+	    break;
+	    
+	default:
+	    fprintf ( stderr , "Suspicious rotation index: %d " , rotation_index );
+	    GiveStandardErrorMessage ( __FUNCTION__  , "\
 Suspicious rotation index encountered!",
-				 PLEASE_INFORM, IS_FATAL );
-      break;
+				       PLEASE_INFORM, IS_FATAL );
+	    break;
     }
-
-}; // void iso_put_all_tux_parts_in_direction ( x , y , player_num , rotation_index )
+    
+}; // void iso_put_all_tux_parts_for_sword_motion ( int x , int y , int player_num , int rotation_index )
 
 /* ----------------------------------------------------------------------
- *
- *
+ * This function is intended to bring the Tux parts to the screen 
+ * directly, respecting the correct order of blitting for all the parts
+ * of the Tux in the gun motion.  Of course, the blitting order stongly
+ * depends on the direction the Tux is facing.  Therefore a lot of cases
+ * have to be separated.
  * ---------------------------------------------------------------------- */
 void
 iso_put_all_tux_parts_for_gun_motion ( int x , int y , int player_num , int rotation_index )
 {
 
-    DebugPrintf ( -4 , "\nDirection given: %d." , rotation_index );
+    DebugPrintf ( 2 , "\nDirection given: %d." , rotation_index );
     // DebugPrintf ( 1 , "\nphase: %d." , (int) Me [ player_num ] . phase );
     
+    //--------------------
+    // The correct order of blitting for all the Tux parts stongly depends
+    // on the direction the Tux is facing, therefore we need to do careful
+    // case separation for the tux direction and sometimes even handle
+    // some subcases because of the changes during the full motion.
+    //
     switch ( rotation_index )
     {
 	case 0:
