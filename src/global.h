@@ -207,6 +207,9 @@ EXTERN int ne_bpp; 			/* bits per pixel */
 EXTERN Uint32 ne_transp_key;            /* key of transparent color */
 EXTERN SDL_Surface *ne_static;          /* here we collect all non-resizable blocks */
 EXTERN SDL_Surface *ne_console_surface;
+EXTERN SDL_Surface *ne_console_bg_pic1;
+EXTERN SDL_Surface *ne_console_bg_pic2;
+
 EXTERN SDL_Surface *ship_off_pic;    	/* Side-view of ship: lights off */
 EXTERN SDL_Surface *ship_on_pic;	/* Side-view of ship: lights on */
 

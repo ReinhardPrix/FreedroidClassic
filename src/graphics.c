@@ -888,21 +888,13 @@ InitPictures (void)
   DisplayImage (find_file (NE_TITLE_PIC_FILE, GRAPHICS_DIR, FALSE));
 
   SetCurrentFont (FPS_Display_BFont);
-  DisplayText ("Loading Theme config ...", 20, SCREENHEIGHT/3, NULL);
-  SDL_Flip (ne_screen);
+  printf_SDL (ne_screen, User_Rect.x + 50, SCREENHEIGHT - 100, "Loading Theme config ...");
 
-  // In the following we will be reading in image information.  But the number
-  // of images to read in and the way they are displayed might be strongly dependant
-  // on the theme.  That is not at all a problem.  We just got to read in the
-  // theme configuration file again.  After that is done, the following reading
-  // commands will do the right thing...
   LoadThemeConfigurationFile();
 
-  DisplayText ("ok", -1, -1, NULL);
-  SDL_Flip (ne_screen);
+  printf_SDL (ne_screen, -1, -1, "ok\n");
 
   SDL_SetCursor( init_system_cursor( arrow ) );
-
 
   /* 
      create the internal storage for all our blocks 
@@ -934,56 +926,49 @@ InitPictures (void)
    * and initialise the block-coordinates 
    */
 
-  DisplayText ("Loading image data.", 20, SCREENHEIGHT/3+30, NULL);
-  SDL_Flip (ne_screen);
+  printf_SDL (ne_screen, User_Rect.x + 50, -1, "Loading image data ");
 
   Load_MapBlock_Surfaces();
-  DisplayText (".", -1, -1, NULL);
-  SDL_Flip (ne_screen);
+  printf_SDL (ne_screen, -1, -1, ".");
 
   Load_Influencer_Surfaces();
-  DisplayText (".", -1, -1, NULL);
-  SDL_Flip (ne_screen);
+  printf_SDL (ne_screen, -1, -1, ".");
 
   Load_Enemy_Surfaces();
-  DisplayText (".", -1, -1, NULL);
-  SDL_Flip (ne_screen);
+  printf_SDL (ne_screen, -1, -1, ".");
 
   Load_Bullet_Surfaces();
-  DisplayText (".", -1, -1, NULL);
-  SDL_Flip (ne_screen);
+  printf_SDL (ne_screen, -1, -1, ".");
 
   Load_Blast_Surfaces();
-  DisplayText (".", -1, -1, NULL);
-  SDL_Flip (ne_screen);
+  printf_SDL (ne_screen, -1, -1, ".");
 
   fpath = find_file (NE_DIGIT_BLOCK_FILE, GRAPHICS_DIR, TRUE);
   Load_Digit_Surfaces();
-
-  DisplayText (".", -1, -1, NULL);
-  SDL_Flip (ne_screen);
+  printf_SDL (ne_screen, -1, -1, ".");
 
   fpath = find_file (NE_BANNER_BLOCK_FILE, GRAPHICS_DIR, FALSE);
   ne_rahmen_block = ne_get_rahmen_block (fpath);
-
-  DisplayText (".", -1, -1, NULL);
-  SDL_Flip (ne_screen);
+  printf_SDL (ne_screen, -1, -1, ".");
   
-  // console picture need not be rendered fast or something.  This
-  // really has time, so we load it as a surface and do not take the
-  // elements apart (they dont have typical block format either)
   fpath = find_file (NE_CONSOLEN_PIC_FILE, GRAPHICS_DIR, FALSE);
   ne_console_surface= IMG_Load (fpath); 
+  printf_SDL (ne_screen, -1, -1, ".");
 
-  DisplayText (".", -1, -1, NULL);
-  SDL_Flip (ne_screen);
+  fpath = find_file( NE_CONSOLE_BG_PIC1_FILE , GRAPHICS_DIR, FALSE);
+  tmp2 = IMG_Load (fpath);
+  ne_console_bg_pic1 = SDL_DisplayFormat (tmp2);
+  SDL_FreeSurface (tmp2);
+  printf_SDL (ne_screen, -1, -1, ".");
 
-  // ne_blocks = SDL_DisplayFormat( ne_blocks );  /* the surface is copied !*/
+  fpath = find_file( NE_CONSOLE_BG_PIC2_FILE , GRAPHICS_DIR, FALSE);
+  tmp2 = IMG_Load (fpath);
+  ne_console_bg_pic2 = SDL_DisplayFormat (tmp2);
+  SDL_FreeSurface (tmp2);
+  printf_SDL (ne_screen, -1, -1, ".");
 
   GetTakeoverGraphics();
-
-  DisplayText ("ok", -1, -1, NULL);
-  SDL_Flip (ne_screen);
+  printf_SDL (ne_screen, -1, -1, " ok\n");
   
   SetCurrentFont (oldfont);
 

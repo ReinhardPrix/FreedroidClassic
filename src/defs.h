@@ -48,7 +48,7 @@
 #define Copy_Rect(src, dst) do {\
 (dst).x = (src).x; (dst).y = (src).y; (dst).w = (src).w; (dst).h = (src).h; } while(0)
 
-#define Wait4Fire() do { while (!SpacePressed()); while(SpacePressed());} while(0)
+#define Wait4Fire() do { while (!SpacePressed() && !EscapePressed()); while(SpacePressed() || EscapePressed());} while(0)
 
 
 // **********************************************************************
@@ -311,7 +311,7 @@ enum _directions
 #define MAXMAPLINES 		50
 #define MAX_ENEMYS_ON_SHIP	1000
 #define MAX_CHAT_KEYWORDS_PER_DROID 30
-#define MAX_INFLU_POSITION_HISTORY 10000
+#define MAX_INFLU_POSITION_HISTORY 1000
 
 #define MAX_LIFTS	 	50  	/* actually the entries to the lifts */
 #define MAX_LEVELS		29   	/* don't change this easily */

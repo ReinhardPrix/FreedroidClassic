@@ -387,7 +387,7 @@ EXTERN void ClearUserFenster (void);
 void GreatDruidShow (void);
 EXTERN void show_droid_info (int droidtype, int page);
 void ShowLifts (int level, int liftrow);
-void PaintConsoleMenu (void);
+void PaintConsoleMenu (int flag);
 
 /* text.c */
 #undef EXTERN

@@ -85,6 +85,7 @@ main (int argc, char *const argv[])
       InitNewMission ( STANDARD_MISSION );
 
       show_droid_info (Me.type, -3);  // show unit-intro page
+      ClearGraphMem();
       now=SDL_GetTicks();
       while (  (SDL_GetTicks() - now < SHOW_WAIT) && (!SpacePressed()) );
 

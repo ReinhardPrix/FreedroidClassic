@@ -4,14 +4,9 @@
 /*                                                         */
 /***********************************************************/
 
-// #include "BFont.h"
+#include "BFont.h"
 #include "system.h"
-#include "defs.h"
-#include "struct.h"
 #include "proto.h"
-#include "global.h"
-#include "text.h"
-#include "SDL_rotozoom.h"
 
 /* Current font */
 BFont_Info *CurrentFont;
@@ -274,16 +269,6 @@ PutStringFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y,
   int i = 0;
   while (text[i] != '\0')
     {
-      //--------------------
-      // Here I've added some hack to allow to give a font switching
-      // directive with a text through various menus and therefore
-      // switch the font even multiple times in one big text.
-      //                                          jp, 27.7.2002
-      //
-      if ( text[i] == 1 ) Font = Red_BFont;
-      if ( text[i] == 2 ) Font = Blue_BFont;
-      if ( text[i] == 3 ) Font = FPS_Display_BFont;
-
       x += PutCharFont (Surface, Font, x, y, text[i]);
       i++;
     }
@@ -624,16 +609,8 @@ void
 PutPixel (SDL_Surface * surface, int x, int y, Uint32 pixel)
 {
   int bpp = surface->format->BytesPerPixel;
-  Uint8 *p;
-
-  //--------------------
-  // Here I add a security query against segfaults due to writing
-  // perhaps even far outside of the surface pixmap data.
-  //
-  if ( ( x < 0 ) || ( y < 0 ) || ( x >= surface->w ) || ( y >= surface->h ) ) return;
-
   /* Here p is the address to the pixel we want to set */
-  p = (Uint8 *) surface->pixels + y * surface->pitch + x * bpp;
+  Uint8 *p = (Uint8 *) surface->pixels + y * surface->pitch + x * bpp;
 
   switch (bpp)
     {
@@ -664,8 +641,7 @@ PutPixel (SDL_Surface * surface, int x, int y, Uint32 pixel)
       *(Uint32 *) p = pixel;
       break;
     }
-
-}; // void PutPixel ( ... )
+}
 
 Uint32
 GetPixel (SDL_Surface * Surface, Sint32 X, Sint32 Y)
@@ -675,9 +651,9 @@ GetPixel (SDL_Surface * Surface, Sint32 X, Sint32 Y)
   Uint32 Bpp;
 
   if (X < 0)
-    puts ("x too small in GetPixel!");
+    DebugPrintf (2, "x too small in GetPixel!");
   if (X >= Surface->w)
-    puts ("x too big in GetPixel!");
+    DebugPrintf (2, "x too big in GetPixel!");
 
   Bpp = Surface->format->BytesPerPixel;
 

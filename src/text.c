@@ -479,21 +479,14 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
 {
   int Number_Of_Line_Feeds = 0;		/* Anzahl der Textzeilen */
   char *textpt;			/* bewegl. Textpointer */
-  int InsertLine = starty;
-  int speed = +5;
-  int maxspeed = 10;
+  float InsertLine = 1.0*starty;
+  int speed = 30;   // in pixel / sec
+  int maxspeed = 50;
   SDL_Surface* Background;
   int ret = 0;
+  Uint32 prev_tick;
 
-  DisplayImage ( find_file(TitlePictureName,GRAPHICS_DIR, FALSE) );
-  MakeGridOnScreen( (SDL_Rect*) &Full_Screen_Rect );
-  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE ); 
   Background = SDL_DisplayFormat( ne_screen );
-
-
-  // printf("\nScrollTest should be starting to scroll now...");
-
-  // getchar();
 
   // count the number of lines in the text
   textpt = Text;
@@ -505,25 +498,32 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
     {
       if (UpPressed ())
 	{
-	  speed--;
+	  speed -= 5;
 	  if (speed < -maxspeed)
 	    speed = -maxspeed;
 	}
       if (DownPressed ())
 	{
-	  speed++;
+	  speed +=5;
 	  if (speed > maxspeed)
 	    speed = maxspeed;
 	}
+      if (SpacePressed())
+	{
+	  ret = 1;
+	  break;
+	}
 
-      // DisplayImage ( find_file(TitlePictureName,GRAPHICS_DIR, FALSE) );
-      // MakeGridOnScreen( (SDL_Rect*) &Full_Screen_Rect );
-      // DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE ); 
-      // ClearUserFenster(); 
-
+      prev_tick = SDL_GetTicks ();
       SDL_BlitSurface ( Background , NULL , ne_screen , NULL );
+      if (!DisplayText (Text, startx, (int)InsertLine, &User_Rect))
+	{
+	  ret = 0;  /* Text has been scrolled outside User_Rect */
+	  break;  
+	}
+      SDL_Flip (ne_screen);
 
-      InsertLine -= speed;
+      InsertLine -= 1.0 * (SDL_GetTicks() - prev_tick) * speed /1000;
 
       /* Nicht bel. nach unten wegscrollen */
       if (InsertLine > SCREENHEIGHT - 10 && (speed < 0))
@@ -531,21 +531,11 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
 	  InsertLine = SCREENHEIGHT - 10;
 	  speed = 0;
 	}
-      if (!DisplayText (Text, startx, InsertLine, &User_Rect))
-	{
-	  ret = 0;  /* Text has been scrolled outside User_Rect */
-	  break;  
-	}
-      if (SpacePressed())
-	{
-	  ret = 1;
-	  break;
-	}
-      SDL_Flip (ne_screen);
-      usleep (30000);
 
     } /* while 1 */
 
+  SDL_BlitSurface (Background, NULL, ne_screen, NULL);
+  SDL_Flip (ne_screen);
   SDL_FreeSurface( Background );
 
   return (ret);
@@ -920,7 +910,7 @@ void
 printf_SDL (SDL_Surface *screen, int x, int y, char *fmt, ...)
 {
   va_list args;
-  int i;
+  int i, h;
 
   char *tmp;
   va_start (args, fmt);
@@ -934,13 +924,13 @@ printf_SDL (SDL_Surface *screen, int x, int y, char *fmt, ...)
   tmp = (char *) MyMalloc (10000 + 1);
   vsprintf (tmp, fmt, args);
   PutString (screen, x, y, tmp);
-
-  SDL_Flip (screen);
+  h = FontHeight (GetCurrentFont()) + 2;
+  SDL_UpdateRect (screen, x, y, SCREENLEN - x, h);  // update the relevant line
 
   if (tmp[strlen(tmp)-1] == '\n')
     {
       MyCursorX = x;
-      MyCursorY = y+ 1.1* (GetCurrentFont()->h);
+      MyCursorY = y+ 1.1*h;
     }
   else
     {

@@ -54,6 +54,9 @@ void Level_Editor(void);
 EXTERN int MyCursorX;
 EXTERN int MyCursorY;
 
+SDL_Surface *Menu_Background = NULL;
+int fheight;  // font height of Menu-font
+
 /*@Function============================================================
 @Desc: This function prepares the screen for the big Escape menu and 
        its submenus.  This means usual content of the screen, i.e. the 
@@ -71,12 +74,27 @@ InitiateMenu( void )
   // of the big escape menu.  This prepares the screen, so that we can
   // write on it further down.
   //
+  Activate_Conservative_Frame_Computation();
+
   SDL_SetClipRect( ne_screen, NULL );
+  Me.status=MENU;
   ClearGraphMem();
   DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
   Assemble_Combat_Picture ( 0 );
   SDL_SetClipRect( ne_screen, NULL );
   MakeGridOnScreen( NULL );
+  
+  if (Menu_Background) SDL_FreeSurface (Menu_Background);
+  Menu_Background = SDL_DisplayFormat (ne_screen);  // keep a global copy of background 
+ 
+  ResetMouseWheel ();
+  
+  SDL_ShowCursor (SDL_DISABLE);  // deactivate mouse-cursor in menus
+  SetCurrentFont ( Menu_BFont );
+  fheight = FontHeight (GetCurrentFont()) + 2;
+
+  return;
+
 } // void InitiateMenu(void)
 
 /*@Function============================================================
@@ -378,55 +396,36 @@ Cheatmenu (void)
 void
 EscapeMenu (void)
 {
-enum
-  { 
-    NEW_GAME=1, 
-    FULL_WINDOW,
-    SET_THEME,
-    OPTIONS,
-    LEVEL_EDITOR,
-    HIGHSCORES,
-    CREDITS,
-    QUIT
-  };
-
-  int Weiter = 0;
+  enum
+    { 
+      NEW_GAME=1, 
+      FULL_WINDOW,
+      SET_THEME,
+      OPTIONS,
+      LEVEL_EDITOR,
+      HIGHSCORES,
+      CREDITS,
+      QUIT
+    };
+  
+  bool finished = FALSE;
+  bool key_pressed = FALSE;
   int MenuPosition=1;
-  int h;
   char theme_string[40];
   char window_string[40];
   int i;
 
-  Me.status=MENU;
-  
-  ResetMouseWheel ();
-  
-  SDL_ShowCursor (SDL_DISABLE);  // deactivate mouse-cursor in menus
-
-  DebugPrintf (2, "\nvoid EscapeMenu(void): real function call confirmed."); 
-
-  // Prevent distortion of framerate by the delay coming from 
-  // the time spend in the menu.
-  Activate_Conservative_Frame_Computation();
-
-  // This is not some Debug Menu but an optically impressive 
-  // menu for the player.  Therefore I suggest we just fade out
-  // the game screen a little bit.
-
-  SetCurrentFont ( Menu_BFont );
-  h = FontHeight (GetCurrentFont()) + 2;
+  InitiateMenu();
   
   while ( EscapePressed() );
 
-  while (!Weiter)
+  while (!finished)
     {
-      InitiateMenu();
-      // 
-      // we highlight the currently selected option with an 
-      // influencer to the left before it
-      // PutInfluence( FIRST_MENU_ITEM_POS_X , 
-      // FIRST_MENU_ITEM_POS_Y + (MenuPosition-1) * (FontHeight(Menu_BFont)) - Block_Width/4 );
-      PutInfluence (FIRST_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y + (MenuPosition-1.5)*h);
+      key_pressed = FALSE;
+
+      SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
+    
+      PutInfluence (FIRST_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y + (MenuPosition-1.5)*fheight);
 
       strcpy (theme_string, "Tileset: ");
       if (strstr (GameConfig.Theme_SubPath, "default"))
@@ -441,105 +440,109 @@ enum
       else strcat (window_string, "Classic");
 
       PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y, "New Game");
-      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+1*h, window_string);
-      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+2*h, theme_string);
-      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X,FIRST_MENU_ITEM_POS_Y+3*h,"Further Options");
-      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y +4*h, "Level Editor");
-      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y +5*h, "Highscores");
-      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y +6*h, "Credits");
-      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y +7*h, "Quit Game");
+      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+1*fheight, window_string);
+      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+2*fheight, theme_string);
+      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X,FIRST_MENU_ITEM_POS_Y+3*fheight,"Further Options");
+      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y +4*fheight, "Level Editor");
+      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y +5*fheight, "Highscores");
+      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y +6*fheight, "Credits");
+      PutString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y +7*fheight, "Quit Game");
 
       SDL_Flip( ne_screen );
 
-      if ( EscapePressed() )
+      while (!key_pressed)
 	{
-	  while ( EscapePressed() );
-	  Weiter=!Weiter;
-	}
-      if (EnterPressed() || SpacePressed() ) 
-	{
-	  MenuItemSelectedSound();
-	  switch (MenuPosition) 
+	  if ( EscapePressed() )
 	    {
+	      while ( EscapePressed() );
+	      finished = TRUE;
+	      key_pressed = TRUE;
+	    }
+	  if (SpacePressed() ) 
+	    {
+	      key_pressed = TRUE;
+	      MenuItemSelectedSound();
+	      while (SpacePressed()) ;
 
-	    case NEW_GAME:
-	      while (EnterPressed() || SpacePressed() ) ;
-	      GameOver = TRUE;
-	      Weiter=!Weiter;
-	      break;
-
-	    case FULL_WINDOW:
-	      while (EnterPressed() || SpacePressed() );
-	      GameConfig.FullUserRect = ! GameConfig.FullUserRect;
-	      if (GameConfig.FullUserRect)
-		Copy_Rect (Full_User_Rect, User_Rect);
-	      else
-		Copy_Rect (Classic_User_Rect, User_Rect);
-	      break;
-
-	    case SET_THEME:
-	      while (EnterPressed() || SpacePressed() );
-	      if ( !strcmp ( GameConfig.Theme_SubPath , "default_theme/" ) )
-		GameConfig.Theme_SubPath="lanzz_theme/";
-	      else
-		GameConfig.Theme_SubPath="default_theme/";
-
-	      ReInitPictures();
-
-	      //--------------------
-	      // Now we have loaded a new theme with new images!!  It might however be the
-	      // case, that also the number of phases per bullet, which is specific to each
-	      // theme, has been changed!!! THIS MUST NOT BE IGNORED, OR WE'LL SEGFAULT!!!!
-	      // Because the old number of phases is still attached to living bullets, it
-	      // might try to blit a new (higher) number of phases although there are only
-	      // less Surfaces generated for the bullet in the old theme.  The solution seems
-	      // to be simply to request new graphics to be attached to each bullet, which
-	      // should be simply setting a flag for each of the bullets:
-	      for ( i = 0 ; i < MAXBULLETS ; i++ )
+	      switch (MenuPosition) 
 		{
-		  AllBullets[i].Surfaces_were_generated = FALSE ;
-		}
-	      break;
-	    case OPTIONS:
-	      while (EnterPressed() || SpacePressed() );
-	      Options_Menu();
-	      break;
+		case NEW_GAME:
+		  GameOver = TRUE;
+		  finished = TRUE;
+		  break;
+		case FULL_WINDOW:
+		  GameConfig.FullUserRect = ! GameConfig.FullUserRect;
+		  if (GameConfig.FullUserRect)
+		    Copy_Rect (Full_User_Rect, User_Rect);
+		  else
+		    Copy_Rect (Classic_User_Rect, User_Rect);
 
-	    case LEVEL_EDITOR:
-	      while (EnterPressed() || SpacePressed() );
-	      Level_Editor();
-	      break;
-	    case HIGHSCORES:
-	      while (EnterPressed() || SpacePressed() ) ;
-	      Show_Highscores();
-	      break;
-	    case CREDITS:
-	      while (EnterPressed() || SpacePressed() );
-	      Credits_Menu();
-	      break;
-	    case QUIT:
-	      DebugPrintf (2, "\nvoid Options_Menu(void): Quit Requested by user.  Terminating...");
-	      Terminate(0);
-	      break;
-	    default: 
-	      break;
-	    } 
-	}
-      if (UpPressed() || WheelUpPressed() ) 
-	{
-	  if (MenuPosition > 1) MenuPosition--;
-	  else MenuPosition = QUIT;
-	  MoveMenuPositionSound();
-	  while (UpPressed());
-	}
-      if (DownPressed() || WheelDownPressed() ) 
-	{
-	  if ( MenuPosition < QUIT ) MenuPosition++;
-	  else MenuPosition = 1;
-	  MoveMenuPositionSound();
-	  while (DownPressed());
-	}
-    }
+		  InitiateMenu ();
+		  break;
+
+		case SET_THEME:
+		  if ( !strcmp ( GameConfig.Theme_SubPath , "default_theme/" ) )
+		    GameConfig.Theme_SubPath="lanzz_theme/";
+		  else
+		    GameConfig.Theme_SubPath="default_theme/";
+
+		  ReInitPictures();
+		  
+		  //--------------------
+		  // Now we have loaded a new theme with new images!!  It might however be the
+		  // case, that also the number of phases per bullet, which is specific to each
+		  // theme, has been changed!!! THIS MUST NOT BE IGNORED, OR WE'LL SEGFAULT!!!!
+		  // Because the old number of phases is still attached to living bullets, it
+		  // might try to blit a new (higher) number of phases although there are only
+		  // less Surfaces generated for the bullet in the old theme.  The solution seems
+		  // to be simply to request new graphics to be attached to each bullet, which
+		  // should be simply setting a flag for each of the bullets:
+		  for ( i = 0 ; i < MAXBULLETS ; i++ )
+		    AllBullets[i].Surfaces_were_generated = FALSE ;
+		  InitiateMenu();
+		  break;
+
+		case OPTIONS:
+		  Options_Menu();
+		  break;
+
+		case LEVEL_EDITOR:
+		  Level_Editor();
+		  break;
+
+		case HIGHSCORES:
+		  Show_Highscores();
+		  break;
+
+		case CREDITS:
+		  Credits_Menu();
+		  break;
+		case QUIT:
+		  Terminate(0);
+		  break;
+		default: 
+		  break;
+		} // switch 
+	    } // if SpacePressed()
+	  if (UpPressed() || WheelUpPressed() ) 
+	    {
+	      while (UpPressed());
+	      key_pressed = TRUE;
+	      if (MenuPosition > 1) MenuPosition--;
+	      else MenuPosition = QUIT;
+	      MoveMenuPositionSound();
+	    }
+	  if (DownPressed() || WheelDownPressed() ) 
+	    {
+	      while (DownPressed());
+	      key_pressed = TRUE;
+	      if ( MenuPosition < QUIT ) MenuPosition++;
+	      else MenuPosition = 1;
+	      MoveMenuPositionSound();
+	    }
+	} // while !key_pressed
+
+    } // while !finished
 
   ClearGraphMem();
   // Since we've faded out the whole scren, it can't hurt
@@ -564,9 +567,10 @@ enum
 void
 GraphicsSound_Options_Menu (void)
 {
-  int Weiter = 0;
   int MenuPosition=1;
-  int h;
+  bool finished = FALSE;
+  bool key_pressed = FALSE;
+
 enum
   { SET_BG_MUSIC_VOLUME=1, 
     SET_SOUND_FX_VOLUME, 
@@ -574,138 +578,136 @@ enum
     SET_FULLSCREEN_FLAG, 
     BACK };
 
-  h = FontHeight (GetCurrentFont()) + 2;
-
   while ( EscapePressed() );
 
-  while (!Weiter)
+  while (!finished)
     {
-      SDL_SetClipRect( ne_screen, NULL );
-      ClearGraphMem();
-      DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
-      Assemble_Combat_Picture ( 0 );
-      SDL_SetClipRect( ne_screen, NULL );
-      MakeGridOnScreen( NULL );
+      key_pressed = FALSE;
+      SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
 
-      PutInfluence (FIRST_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+ (MenuPosition-1.5)*h);
+      PutInfluence (FIRST_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+ (MenuPosition-1.5)*fheight);
 
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+0*h, 
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+0*fheight, 
 		   "Background Music: %1.2f" , GameConfig.Current_BG_Music_Volume );
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+1*h,  
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+1*fheight,  
 		   "Sound Effects: %1.2f", GameConfig.Current_Sound_FX_Volume );
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+2*h,  
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+2*fheight,  
 		   "Gamma: %1.2f", GameConfig.Current_Gamma_Correction );
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+3*h, 
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+3*fheight, 
 		   "Fullscreen Mode: %s", fullscreen_on ? "ON" : "OFF");
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+4*h, "Back");
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+4*fheight, "Back");
       SDL_Flip( ne_screen );
 
-      if ( EscapePressed() )
+      while (!key_pressed)
 	{
-	  while ( EscapePressed() );
-	  Weiter=!Weiter;
-	}
-
-      // Some menu options can be controlled by pressing right or left
-      // These options are gamma corrections, sound volume and the like
-      // Therefore left and right key must be resprected.  This is done here:
-      if (RightPressed() || LeftPressed() ) 
-	{
-	  if (MenuPosition == SET_BG_MUSIC_VOLUME ) 
+	  if ( EscapePressed() )
 	    {
-	      if (RightPressed()) 
+	      while ( EscapePressed() );
+	      finished = TRUE;
+	      key_pressed = TRUE;
+	    }
+	  
+	  // Some menu options can be controlled by pressing right or left
+	  // These options are gamma corrections, sound volume and the like
+	  // Therefore left and right key must be resprected.  This is done here:
+	  if (RightPressed() || LeftPressed() ) 
+	    {
+	      key_pressed = TRUE;
+	      if (MenuPosition == SET_BG_MUSIC_VOLUME ) 
 		{
-		  while (RightPressed());
-		  if ( GameConfig.Current_BG_Music_Volume < 1 ) 
-		    GameConfig.Current_BG_Music_Volume += 0.05;
-		  Set_BG_Music_Volume( GameConfig.Current_BG_Music_Volume );
+		  if (RightPressed()) 
+		    {
+		      while (RightPressed());
+		      if ( GameConfig.Current_BG_Music_Volume < 1 ) 
+			GameConfig.Current_BG_Music_Volume += 0.05;
+		      Set_BG_Music_Volume( GameConfig.Current_BG_Music_Volume );
+		    }
+		  if (LeftPressed()) 
+		    {
+		      while (LeftPressed());
+		      if ( GameConfig.Current_BG_Music_Volume > 0 ) 
+			GameConfig.Current_BG_Music_Volume -= 0.05;
+		      Set_BG_Music_Volume( GameConfig.Current_BG_Music_Volume );
+		    }
 		}
-	      if (LeftPressed()) 
+	      if (MenuPosition == SET_SOUND_FX_VOLUME ) 
 		{
-		  while (LeftPressed());
-		  if ( GameConfig.Current_BG_Music_Volume > 0 ) 
-		    GameConfig.Current_BG_Music_Volume -= 0.05;
-		  Set_BG_Music_Volume( GameConfig.Current_BG_Music_Volume );
+		  if (RightPressed()) 
+		    {
+		      while (RightPressed());
+		      if ( GameConfig.Current_Sound_FX_Volume < 1 ) 
+			GameConfig.Current_Sound_FX_Volume += 0.05;
+		      Set_Sound_FX_Volume( GameConfig.Current_Sound_FX_Volume );
+		    }
+		  if (LeftPressed()) 
+		    {
+		      while (LeftPressed());
+		      if ( GameConfig.Current_Sound_FX_Volume > 0 ) 
+			GameConfig.Current_Sound_FX_Volume -= 0.05;
+		      Set_Sound_FX_Volume( GameConfig.Current_Sound_FX_Volume );
+		    }
+		}
+	      if (MenuPosition == SET_GAMMA_CORRECTION ) 
+		{
+		  if (RightPressed()) 
+		    {
+		      while (RightPressed());
+		      GameConfig.Current_Gamma_Correction+=0.05;
+		      SDL_SetGamma( GameConfig.Current_Gamma_Correction , 
+				    GameConfig.Current_Gamma_Correction , 
+				    GameConfig.Current_Gamma_Correction );
+		    }
+		  if (LeftPressed()) 
+		    {
+		      while (LeftPressed());
+		      GameConfig.Current_Gamma_Correction-=0.05;
+		      SDL_SetGamma( GameConfig.Current_Gamma_Correction , 
+				    GameConfig.Current_Gamma_Correction , 
+				    GameConfig.Current_Gamma_Correction );
+		    }
 		}
 	    }
-	  if (MenuPosition == SET_SOUND_FX_VOLUME ) 
+
+	  if (SpacePressed() ) 
 	    {
-	      if (RightPressed()) 
+	      MenuItemSelectedSound();
+	      while (SpacePressed());
+	      key_pressed = TRUE;
+	      switch (MenuPosition) 
 		{
-		  while (RightPressed());
-		  if ( GameConfig.Current_Sound_FX_Volume < 1 ) 
-		    GameConfig.Current_Sound_FX_Volume += 0.05;
-		  Set_Sound_FX_Volume( GameConfig.Current_Sound_FX_Volume );
-		}
-	      if (LeftPressed()) 
-		{
-		  while (LeftPressed());
-		  if ( GameConfig.Current_Sound_FX_Volume > 0 ) 
-		    GameConfig.Current_Sound_FX_Volume -= 0.05;
-		  Set_Sound_FX_Volume( GameConfig.Current_Sound_FX_Volume );
-		}
+		case SET_FULLSCREEN_FLAG:
+		  SDL_WM_ToggleFullScreen (ne_screen);
+		  fullscreen_on = !fullscreen_on;
+		  break;
+
+		case BACK:
+		  while (EnterPressed() || SpacePressed() );
+		  finished=TRUE;
+		  break;
+		default: 
+		  break;
+		} 
+	    } // if SpacePressed()
+
+	  if (UpPressed() || WheelUpPressed ()) 
+	    {
+	      while (UpPressed());
+	      key_pressed = TRUE;
+	      if ( MenuPosition > 1 ) MenuPosition--;
+	      else MenuPosition = BACK;
+	      MoveMenuPositionSound();
 	    }
-	  if (MenuPosition == SET_GAMMA_CORRECTION ) 
+	  if (DownPressed() || WheelDownPressed()) 
 	    {
-	      if (RightPressed()) 
-		{
-		  while (RightPressed());
-		  GameConfig.Current_Gamma_Correction+=0.05;
-		  SDL_SetGamma( GameConfig.Current_Gamma_Correction , 
-				GameConfig.Current_Gamma_Correction , 
-				GameConfig.Current_Gamma_Correction );
-		}
-	      if (LeftPressed()) 
-		{
-		  while (LeftPressed());
-		  GameConfig.Current_Gamma_Correction-=0.05;
-		  SDL_SetGamma( GameConfig.Current_Gamma_Correction , 
-				GameConfig.Current_Gamma_Correction , 
-				GameConfig.Current_Gamma_Correction );
-		}
+	      while (DownPressed());
+	      key_pressed = TRUE;
+	      if ( MenuPosition < BACK ) MenuPosition++;
+	      else MenuPosition = 1;
+	      MoveMenuPositionSound();
 	    }
-	}
+	} // while !key_pressed
 
-
-      if (EnterPressed() || SpacePressed() ) 
-	{
-	  MenuItemSelectedSound();
-	  switch (MenuPosition) 
-	    {
-	    case SET_FULLSCREEN_FLAG:
-	      while (EnterPressed() || SpacePressed() );
-	      SDL_WM_ToggleFullScreen (ne_screen);
-	      fullscreen_on = !fullscreen_on;
-	      break;
-
-	    case BACK:
-	      while (EnterPressed() || SpacePressed() );
-	      Weiter=TRUE;
-	      break;
-	    default: 
-	      break;
-	    } 
-	  // Weiter=!Weiter;
-	}
-      if (UpPressed() || WheelUpPressed ()) 
-	{
-	  if ( MenuPosition > 1 ) MenuPosition--;
-	  else MenuPosition = BACK;
-	  MoveMenuPositionSound();
-	  while (UpPressed());
-	}
-      if (DownPressed() || WheelDownPressed()) 
-	{
-	  if ( MenuPosition < BACK ) MenuPosition++;
-	  else MenuPosition = 1;
-	  MoveMenuPositionSound();
-	  while (DownPressed());
-	}
-    }
-
-  ClearGraphMem ();
-  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
-  InitBars = TRUE;
+    } // while !finished
 
   return;
 
@@ -722,91 +724,90 @@ enum
 void
 On_Screen_Display_Options_Menu (void)
 {
-  int Weiter = 0;
   int MenuPosition=1;
-  int h;
+  bool finished = FALSE;
+  bool key_pressed = FALSE;
+
 enum
   { SHOW_POSITION=1, 
     SHOW_FRAMERATE, 
     SHOW_ENERGY,
     BACK };
 
-  h = FontHeight (GetCurrentFont()) + 2;
-
   while ( EscapePressed() );
 
-  while (!Weiter)
+  while (!finished)
     {
-      SDL_SetClipRect( ne_screen, NULL );
-      ClearGraphMem();
-      DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
-      Assemble_Combat_Picture ( 0 );
-      SDL_SetClipRect( ne_screen, NULL );
-      MakeGridOnScreen( NULL );
+      key_pressed = FALSE;
+      SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
+      
+      PutInfluence (FIRST_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y + (MenuPosition-1.5)*fheight);
 
-      PutInfluence (FIRST_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y + (MenuPosition-1.5)*h);
-
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+0*h, 
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+0*fheight, 
 		   "Show Position: %s", GameConfig.Draw_Position ? "ON" : "OFF");
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+1*h,
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+1*fheight,
 		   "Show Framerate: %s", GameConfig.Draw_Framerate? "ON" : "OFF");
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+2*h,
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+2*fheight,
 		   "Show Energy: %s", GameConfig.Draw_Energy? "ON" : "OFF");
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+3*h, "Back");
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+3*fheight, "Back");
 
       SDL_Flip( ne_screen );
 
-      if ( EscapePressed() )
+      while (!key_pressed)
 	{
-	  while ( EscapePressed() );
-	  Weiter=!Weiter;
-	}
-
-      if (EnterPressed() || SpacePressed() ) 
-	{
-	  MenuItemSelectedSound();
-	  switch (MenuPosition) 
+	  if ( EscapePressed() )
 	    {
-	    case SHOW_POSITION:
-	      while (EnterPressed() || SpacePressed() );
-	      GameConfig.Draw_Position=!GameConfig.Draw_Position;
-	      break;
-	    case SHOW_FRAMERATE:
-	      while (EnterPressed() || SpacePressed() );
-	      GameConfig.Draw_Framerate=!GameConfig.Draw_Framerate;
-	      break;
-	    case SHOW_ENERGY:
-	      while (EnterPressed() || SpacePressed() );
-	      GameConfig.Draw_Energy=!GameConfig.Draw_Energy;
-	      break;
-	    case BACK:
-	      while (EnterPressed() || SpacePressed() );
-	      Weiter=TRUE;
-	      break;
-	    default: 
-	      break;
-	    } 
-	  // Weiter=!Weiter;
-	}
-      if (UpPressed() || WheelUpPressed ()) 
-	{
-	  if ( MenuPosition > 1 ) MenuPosition--;
-	  else MenuPosition = BACK;
-	  MoveMenuPositionSound();
-	  while (UpPressed());
-	}
-      if (DownPressed() || WheelDownPressed ()) 
-	{
-	  if ( MenuPosition < BACK ) MenuPosition++;
-	  MenuPosition = 1;
-	  MoveMenuPositionSound();
-	  while (DownPressed());
-	}
-    }
+	      while ( EscapePressed() );
+	      finished = TRUE;
+	      key_pressed = TRUE;
+	    }
 
-  ClearGraphMem ();
-  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
-  InitBars = TRUE;
+	  if (SpacePressed() ) 
+	    {
+	      MenuItemSelectedSound();
+	      while (SpacePressed());
+	      key_pressed = TRUE;
+	      switch (MenuPosition) 
+		{
+		case SHOW_POSITION:
+		  GameConfig.Draw_Position=!GameConfig.Draw_Position;
+		  InitiateMenu();
+		  break;
+		case SHOW_FRAMERATE:
+		  GameConfig.Draw_Framerate=!GameConfig.Draw_Framerate;
+		  InitiateMenu();
+		  break;
+		case SHOW_ENERGY:
+		  GameConfig.Draw_Energy=!GameConfig.Draw_Energy;
+		  InitiateMenu();
+		  break;
+		case BACK:
+		  finished = TRUE;
+		  break;
+		default: 
+		  break;
+		} 
+	    } // if SpacePressed()
+
+	  if (UpPressed() || WheelUpPressed ()) 
+	    {
+	      if ( MenuPosition > 1 ) MenuPosition--;
+	      else MenuPosition = BACK;
+	      MoveMenuPositionSound();
+	      while (UpPressed());
+	      key_pressed = TRUE;
+	    }
+	  if (DownPressed() || WheelDownPressed ()) 
+	    {
+	      if ( MenuPosition < BACK ) MenuPosition++;
+	      else MenuPosition = 1;
+	      MoveMenuPositionSound();
+	      while (DownPressed());
+	      key_pressed = TRUE;
+	    }
+	} // while !key_pressed
+
+    } // while !finished
 
   return;
 
@@ -823,12 +824,13 @@ enum
 void
 Droid_Talk_Options_Menu (void)
 {
-
-  int Weiter = 0;
   int MenuPosition=1;
-  int h;
+
+  bool finished = FALSE;
+  bool key_pressed = FALSE;
+
   enum
-  { 
+    { 
     INFLU_REFRESH_TEXT=1,
     INFLU_BLAST_TEXT,
     ENEMY_HIT_TEXT,
@@ -838,101 +840,92 @@ Droid_Talk_Options_Menu (void)
     BACK 
   };
 
-  h = FontHeight (GetCurrentFont()) + 2;
- 
   while ( EscapePressed() );
 
-  while (!Weiter)
+  while (!finished)
     {
-      SDL_SetClipRect( ne_screen, NULL );
-      ClearGraphMem();
-      DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
-      Assemble_Combat_Picture ( 0 );
-      SDL_SetClipRect( ne_screen, NULL );
-      MakeGridOnScreen( NULL );
+      key_pressed = FALSE;
+      SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
 
-      PutInfluence(FIRST_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y + (MenuPosition-1.5)*h);
+      PutInfluence(FIRST_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y + (MenuPosition-1.5)*fheight);
 
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+0*h, 
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+0*fheight, 
 		   "Player Refresh Texts: %s", 
 		   GameConfig.Influencer_Refresh_Text ? "ON" : "OFF");
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+1*h, 
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+1*fheight, 
 		   "Player Blast Texts: %s", 
 		   GameConfig.Influencer_Blast_Text ? "ON" : "OFF");
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+2*h,
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+2*fheight,
 		   "Enemy Hit Texts: %s", GameConfig.Enemy_Hit_Text ? "ON" : "OFF");
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+3*h,
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+3*fheight,
 		   "Enemy Bumped Texts: %s", GameConfig.Enemy_Bump_Text ? "ON" : "OFF");
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+4*h,
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+4*fheight,
 		   "Enemy Aim Texts: %s", GameConfig.Enemy_Aim_Text ? "ON" : "OFF");
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+5*h,
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+5*fheight,
 		   "All in-game Speech: %s", GameConfig.All_Texts_Switch ? "ON" : "OFF");
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+6*h, "Back");
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+6*fheight, "Back");
 
       SDL_Flip( ne_screen );
 
-      if ( EscapePressed() )
+      while (!key_pressed)
 	{
-	  while ( EscapePressed() );
-	  Weiter=!Weiter;
-	}
-
-      if (EnterPressed() || SpacePressed() ) 
-	{
-	  MenuItemSelectedSound();
-	  switch (MenuPosition) 
+	  if ( EscapePressed() )
 	    {
-	    case INFLU_REFRESH_TEXT:
-	      while (EnterPressed() || SpacePressed() );
-	      GameConfig.Influencer_Refresh_Text=!GameConfig.Influencer_Refresh_Text;
-	      break;
-	    case INFLU_BLAST_TEXT:
-	      while (EnterPressed() || SpacePressed() );
-	      GameConfig.Influencer_Blast_Text=!GameConfig.Influencer_Blast_Text;
-	      break;
-	    case ENEMY_HIT_TEXT:
-	      while (EnterPressed() || SpacePressed() );
-	      GameConfig.Enemy_Hit_Text=!GameConfig.Enemy_Hit_Text;
-	      break;
-	    case ENEMY_BUMP_TEXT:
-	      while (EnterPressed() || SpacePressed() );
-	      GameConfig.Enemy_Bump_Text=!GameConfig.Enemy_Bump_Text;
-	      break;
-	    case ENEMY_AIM_TEXT:
-	      while (EnterPressed() || SpacePressed() );
-	      GameConfig.Enemy_Aim_Text=!GameConfig.Enemy_Aim_Text;
-	      break;
-	    case ALL_TEXTS:
-	      while (EnterPressed() || SpacePressed() );
-	      GameConfig.All_Texts_Switch=!GameConfig.All_Texts_Switch;
-	      break;
-	    case BACK:
-	      while (EnterPressed() || SpacePressed() );
-	      Weiter=TRUE;
-	      break;
-	    default: 
-	      break;
-	    } 
-	  // Weiter=!Weiter;
-	}
-      if (UpPressed() || WheelUpPressed ()) 
-	{
-	  if ( MenuPosition > 1 ) MenuPosition--;
-	  else MenuPosition = BACK;
-	  MoveMenuPositionSound();
-	  while (UpPressed());
-	}
-      if (DownPressed()) 
-	{
-	  if ( MenuPosition < BACK ) MenuPosition++;
-	  MoveMenuPositionSound();
-	  while (DownPressed());
-	}
-    }
+	      while ( EscapePressed() );
+	      finished = TRUE;
+	      key_pressed = TRUE;
+	    }
 
-  ClearGraphMem ();
-  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
-  InitBars = TRUE;
+	  if (SpacePressed() ) 
+	    {
+	      MenuItemSelectedSound();
+	      while (SpacePressed());
+	      key_pressed = TRUE;
+	      switch (MenuPosition) 
+		{
+		case INFLU_REFRESH_TEXT:
+		  GameConfig.Influencer_Refresh_Text=!GameConfig.Influencer_Refresh_Text;
+		  break;
+		case INFLU_BLAST_TEXT:
+		  GameConfig.Influencer_Blast_Text=!GameConfig.Influencer_Blast_Text;
+		  break;
+		case ENEMY_HIT_TEXT:
+		  GameConfig.Enemy_Hit_Text=!GameConfig.Enemy_Hit_Text;
+		  break;
+		case ENEMY_BUMP_TEXT:
+		  GameConfig.Enemy_Bump_Text=!GameConfig.Enemy_Bump_Text;
+		  break;
+		case ENEMY_AIM_TEXT:
+		  GameConfig.Enemy_Aim_Text=!GameConfig.Enemy_Aim_Text;
+		  break;
+		case ALL_TEXTS:
+		  GameConfig.All_Texts_Switch=!GameConfig.All_Texts_Switch;
+		  break;
+		case BACK:
+		  finished=TRUE;
+		  break;
+		default: 
+		  break;
+		} 
+	    } // if SpacePressed
+
+	  if (UpPressed() || WheelUpPressed ()) 
+	    {
+	      if ( MenuPosition > 1 ) MenuPosition--;
+	      else MenuPosition = BACK;
+	      MoveMenuPositionSound();
+	      while (UpPressed());
+	      key_pressed = TRUE;
+	    }
+	  if (DownPressed()) 
+	    {
+	      if ( MenuPosition < BACK ) MenuPosition++;
+	      MoveMenuPositionSound();
+	      while (DownPressed());
+	      key_pressed = TRUE;
+	    }
+	} // while !key_pressed
+    } // while !finished
 
   return;
 
@@ -949,9 +942,9 @@ Droid_Talk_Options_Menu (void)
 void
 Options_Menu (void)
 {
-  int Weiter = 0;
   int MenuPosition=1;
-  int h;
+  bool finished = FALSE;
+  bool key_pressed = FALSE;
 
 enum
   { GRAPHICS_SOUND_OPTIONS=1, 
@@ -962,88 +955,82 @@ enum
 
   while ( EscapePressed() );
 
-  h = FontHeight (GetCurrentFont()) + 2;
-
-  while (!Weiter)
+  while (!finished)
     {
-      SDL_SetClipRect( ne_screen, NULL );
-      ClearGraphMem();
-      DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
-      Assemble_Combat_Picture ( 0 );
-      SDL_SetClipRect( ne_screen, NULL );
-      MakeGridOnScreen( NULL );
+      SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
+      key_pressed = FALSE;
 
       PutInfluence( FIRST_MENU_ITEM_POS_X,
-		    FIRST_MENU_ITEM_POS_Y + ( MenuPosition - 1.5 ) * h);
+		    FIRST_MENU_ITEM_POS_Y + ( MenuPosition - 1.5 ) *fheight);
 
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+0*h,
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+0*fheight,
 		   "Graphics & Sound" );
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+1*h,
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+1*fheight,
 		   "Droid Talk" );
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+2*h,
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+2*fheight,
 		   "On-Screen Displays" );
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+3*h,
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+3*fheight,
 		   "Asteroid Mission (unfinished)");
-      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+4*h, 
+      PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X, FIRST_MENU_ITEM_POS_Y+4*fheight, 
 		   "Back");
 
       SDL_Flip( ne_screen );
 
-      if ( EscapePressed() )
+      while (!key_pressed)
 	{
-	  while ( EscapePressed() );
-	  Weiter=!Weiter;
-	}
-
-      if (EnterPressed() || SpacePressed() ) 
-	{
-	  MenuItemSelectedSound();
-	  switch (MenuPosition) 
+	  if ( EscapePressed() )
 	    {
-	    case GRAPHICS_SOUND_OPTIONS:
-	      while (EnterPressed() || SpacePressed() );
-	      GraphicsSound_Options_Menu();
-	      break;
-	    case DROID_TALK_OPTIONS:
-	      while (EnterPressed() || SpacePressed() );
-	      Droid_Talk_Options_Menu();
-	      break;
-	    case ON_SCREEN_DISPLAYS:
-	      while (EnterPressed() || SpacePressed() );
-	      On_Screen_Display_Options_Menu();
-	      break;
-	    case EXP_MISSION:
-	      while (EnterPressed() || SpacePressed() );
-	      InitNewMission (NEW_MISSION);
-	      break;
-	    case BACK:
-	      while (EnterPressed() || SpacePressed() );
-	      Weiter=TRUE;
-	      break;
-	    default: 
-	      break;
-	    } 
-	  // Weiter=!Weiter;
-	}
-      if (UpPressed() || WheelUpPressed()) 
-	{
-	  if ( MenuPosition > 1 ) MenuPosition--;
-	  else MenuPosition = BACK;
-	  MoveMenuPositionSound();
-	  while (UpPressed());
-	}
-      if (DownPressed() || WheelDownPressed()) 
-	{
-	  if ( MenuPosition < BACK ) MenuPosition++;
-	  else MenuPosition = 1;
-	  MoveMenuPositionSound();
-	  while (DownPressed());
-	}
-    }
+	      while ( EscapePressed() );
+	      finished = TRUE;
+	      key_pressed = TRUE;
+	    }
 
-  ClearGraphMem ();
-  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
-  InitBars = TRUE;
+	  if (SpacePressed() ) 
+	    {
+	      MenuItemSelectedSound();
+	      while (SpacePressed());
+	      key_pressed = TRUE;
+	      switch (MenuPosition) 
+		{
+		case GRAPHICS_SOUND_OPTIONS:
+		  GraphicsSound_Options_Menu();
+		  break;
+		case DROID_TALK_OPTIONS:
+		  Droid_Talk_Options_Menu();
+		  break;
+		case ON_SCREEN_DISPLAYS:
+		  On_Screen_Display_Options_Menu();
+		  break;
+		case EXP_MISSION:
+		  InitNewMission (NEW_MISSION);
+		  break;
+		case BACK:
+		  finished = TRUE;
+		  break;
+		default: 
+		  break;
+		} 
+	    } // if SpacePressed
+
+	  if (UpPressed() || WheelUpPressed()) 
+	    {
+	      if ( MenuPosition > 1 ) MenuPosition--;
+	      else MenuPosition = BACK;
+	      MoveMenuPositionSound();
+	      while (UpPressed());
+	      key_pressed = TRUE;
+	    }
+	  if (DownPressed() || WheelDownPressed()) 
+	    {
+	      if ( MenuPosition < BACK ) MenuPosition++;
+	      else MenuPosition = 1;
+	      MoveMenuPositionSound();
+	      while (DownPressed());
+	      key_pressed = TRUE;
+	    }
+	} // while !key_pressed
+
+    } // while !finished
 
   return;
 
@@ -1060,10 +1047,7 @@ enum
 void
 Credits_Menu (void)
 {
-  while( SpacePressed() || EnterPressed() ) ; /* wait for key release */
-
-  InitiateMenu();
-      
+  SDL_SetClipRect( ne_screen, NULL );
   DisplayImage ( find_file(NE_CREDITS_PIC_FILE,GRAPHICS_DIR,FALSE) );
 
   CenteredPutString ( ne_screen , 1*FontHeight(Menu_BFont), "CREDITS" );
@@ -1076,8 +1060,8 @@ Credits_Menu (void)
 
   SDL_Flip( ne_screen );
 
-  while (!SpacePressed ());
-  while (SpacePressed());
+  while (!SpacePressed() && !EscapePressed());
+  while (SpacePressed() || EscapePressed());
 
   return;
 
@@ -1226,7 +1210,7 @@ Level_Editor(void)
   int OriginWaypoint = (-1);
   char* NumericInputString;
   char* OldMapPointer;
-  int h;
+  bool key_pressed;
 
   enum { 
     SAVE_LEVEL_POSITION=1, 
@@ -1238,8 +1222,6 @@ Level_Editor(void)
     SET_BACKGROUND_SONG_NAME, 
     SET_LEVEL_COMMENT, 
     BACK};
-
-  h = FontHeight (GetCurrentFont()) + 2;
 
   while ( !Done )
     {
@@ -1542,209 +1524,211 @@ Level_Editor(void)
       while (!Weiter)
 	{
 	  int xoffs = 110;
-	  InitiateMenu();
+	  key_pressed = FALSE;
+	  SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
 
 	  // Highlight currently selected option with an influencer before it
-	  PutInfluence( FIRST_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y+(MenuPosition-1.5)*h);
+	  PutInfluence( FIRST_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y+(MenuPosition-1.5)*fheight);
 
-	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 0*h, 
+	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 0*fheight, 
 		       "Save ship as  'Testship.shp'");
-	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 1*h, 
+	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 1*fheight, 
 		       "Current: %d.  Level +/-" , CurLevel->levelnum );
-	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 2*h, 
+	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 2*fheight, 
 		       "Change tile set (color)");
-	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 3*h, 
+	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 3*fheight, 
 		       "Levelsize in X: %d.  -/+" , CurLevel->xlen );
-	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 4*h, 
+	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 4*fheight, 
 		       "Levelsize in Y: %d.  -/+" , CurLevel->ylen );
-	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 5*h, 
+	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 5*fheight, 
 		       "Level name: %s" , CurLevel->Levelname );
-	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 6*h, 
+	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 6*fheight, 
 		       "Background music: %s" , CurLevel->Background_Song_Name );
-	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 7*h, 
+	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 7*fheight, 
 		       "Level Comment: %s" , CurLevel->Level_Enter_Comment );
-	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 8*h, 
+	  PrintString (ne_screen, OPTIONS_MENU_ITEM_POS_X-xoffs, FIRST_MENU_ITEM_POS_Y + 8*fheight, 
 		       "Quit Level Editor");
 	  
 	  SDL_Flip ( ne_screen );
 	  
-	  if ( EscapePressed() )
+	  while (!key_pressed)
 	    {
-	      while (EscapePressed());
-	      Weiter=!Weiter;
-	    }
-	  
-	  if (EnterPressed() || SpacePressed() ) 
-	    {
-	      MenuItemSelectedSound();
-	      while (EnterPressed() || SpacePressed() );
-	      switch (MenuPosition) 
+	      if ( EscapePressed() )
 		{
-		  
-		case SAVE_LEVEL_POSITION:
-		  while (EnterPressed() || SpacePressed() ) ;
-		  SaveShip("Testship");
-		  CenteredPutString ( ne_screen ,  11*FontHeight(Menu_BFont),    "Your ship was saved...");
-		  SDL_Flip ( ne_screen );
-		  while (!EnterPressed() && !SpacePressed() ) ;
-		  while (EnterPressed() || SpacePressed() ) ;
-		  // Weiter=!Weiter;
-		  break;
-		case CHANGE_LEVEL_POSITION: 
-		  while (EnterPressed() || SpacePressed() ) ;
-		  break;
-		case CHANGE_TILE_SET_POSITION: 
-		  while (EnterPressed() || SpacePressed() ) ;
-		  break;
-		case SET_LEVEL_NAME:
-		  while (EnterPressed() || SpacePressed() ) ;
-		  ClearUserFenster();
-		  Assemble_Combat_Picture ( ONLY_SHOW_MAP );
-		  DisplayText ("New level name: ",
-			       FIRST_MENU_ITEM_POS_X-50, FIRST_MENU_ITEM_POS_X+ 5*h, 
-			       &Full_User_Rect);
-		  SDL_Flip( ne_screen );
-		  CurLevel->Levelname=GetString(15, FALSE );
-		  Weiter=!Weiter;
-		  break;
-		case SET_BACKGROUND_SONG_NAME:
-		  while (EnterPressed() || SpacePressed() ) ;
-		  ClearUserFenster();
-		  Assemble_Combat_Picture ( ONLY_SHOW_MAP );
-		  DisplayText ("Bg music filename: ", 
-			       FIRST_MENU_ITEM_POS_X-50, FIRST_MENU_ITEM_POS_X+ 5*h, 
-			       &Full_User_Rect);
-		  SDL_Flip( ne_screen );
-		  CurLevel->Background_Song_Name=GetString(20 , FALSE );
-		  break;
-		case SET_LEVEL_COMMENT:
-		  while (EnterPressed() || SpacePressed() ) ;
-		  ClearUserFenster();
-		  Assemble_Combat_Picture ( ONLY_SHOW_MAP );
-		  DisplayText ("New level-comment :",
-			       FIRST_MENU_ITEM_POS_X-50, FIRST_MENU_ITEM_POS_X+ 5*h, 
-			       &Full_User_Rect);
-		  SDL_Flip( ne_screen );
-		  CurLevel->Level_Enter_Comment=GetString(15 , FALSE );
-		  break;
-
-		case BACK:
-		  while (EnterPressed() || SpacePressed() ) ;
-		  Weiter=!Weiter;
-		  Done=TRUE;
-		  SetCombatScaleTo( 1 );
-		  break;
-		default: 
-		  break;
-
-		} // switch
-	    } // if EnterPressed or SpacePressed
-
-	  // If the user of the level editor pressed left or right, that should have
-	  // an effect IF he/she is a the change level menu point
-
-	  if (LeftPressed() || RightPressed() ) 
-	    {
-	      switch (MenuPosition)
-		{
-
-		case CHANGE_LEVEL_POSITION:
-		  if ( LeftPressed() )
-		    {
-		      if ( CurLevel->levelnum > 0 )
-			Teleport ( CurLevel->levelnum -1 , 3 , 3 );
-		      while (LeftPressed());
-		    }
-		  if ( RightPressed() )
-		    {
-		      if ( CurLevel->levelnum < curShip.num_levels -1 )
-			Teleport ( CurLevel->levelnum +1 , 3 , 3 );
-		      while (RightPressed());
-		    }
-		  SetCombatScaleTo ( CurrentCombatScaleFactor );
-		  break;
-		  
-		case CHANGE_TILE_SET_POSITION:
-		  if ( RightPressed() && (CurLevel->color  < 6 ) )
-		    {
-		      CurLevel->color++;
-		      while (RightPressed());
-		    }
-		  if ( LeftPressed() && (CurLevel->color > 0) )
-		    {
-		      CurLevel->color--;
-		      while (LeftPressed());
-		    }
-		  Teleport ( CurLevel->levelnum , Me.pos.x , Me.pos.y ); 
-		  break;
-		case CHANGE_SIZE_X:
-		  if ( RightPressed() )
-		    {
-		      CurLevel->xlen++;
-		      // In case of enlargement, we need to do more:
-		      for ( i = 0 ; i < CurLevel->ylen ; i++ )
-			{
-			  OldMapPointer=CurLevel->map[i];
-			  CurLevel->map[i] = MyMalloc( CurLevel->xlen +1) ;
-			  memcpy( CurLevel->map[i] , OldMapPointer , CurLevel->xlen-1 );
-			  // We don't want to fill the new area with junk, do we? So we set it VOID
-			  CurLevel->map[ i ] [ CurLevel->xlen-1 ] = VOID;  
-			}
-		      while (RightPressed());
-		    }
-		  if ( LeftPressed() )
-		    {
-		      CurLevel->xlen--; // making it smaller is always easy:  just modify the value for size
-		                        // allocation of new memory or things like that are not nescessary.
-		      while (LeftPressed());
-		    }
-		  break;
-		  
-		case CHANGE_SIZE_Y:
-		  if ( RightPressed() )
-		    {
-
-		      CurLevel->ylen++;
-		      
-		      // In case of enlargement, we need to do more:
-		      CurLevel->map[ CurLevel->ylen-1 ] = MyMalloc( CurLevel->xlen +1) ;
-		      
-		      // We don't want to fill the new area with junk, do we? So we set it VOID
-		      memset( CurLevel->map[ CurLevel->ylen-1 ] , VOID , CurLevel->xlen );
-		      
-		      while (RightPressed());
-
-		    }
-
-		  if ( LeftPressed() )
-		    {
-		      CurLevel->ylen--; // making it smaller is always easy:  just modify the value for size
-		                        // allocation of new memory or things like that are not nescessary.
-		      while (LeftPressed());
-		    }
-		  break;
-		  
+		  while (EscapePressed());
+		  Weiter=TRUE;
+		  key_pressed = TRUE;
 		}
-	    } // if LeftPressed || RightPressed
+	  
+	      if (SpacePressed() ) 
+		{
+		  MenuItemSelectedSound();
+		  while (SpacePressed() );
+		  key_pressed = TRUE;
+		  switch (MenuPosition) 
+		    {
+		  
+		    case SAVE_LEVEL_POSITION:
+		      SaveShip("Testship");
+		      CenteredPutString ( ne_screen ,  11*FontHeight(Menu_BFont),    "Your ship was saved...");
+		      SDL_Flip ( ne_screen );
+		      Wait4Fire();
+		      break;
+		    case CHANGE_LEVEL_POSITION: 
+		      break;
+		    case CHANGE_TILE_SET_POSITION: 
+		      break;
+		    case SET_LEVEL_NAME:
+		      ClearUserFenster();
+		      Assemble_Combat_Picture ( ONLY_SHOW_MAP );
+		      DisplayText ("New level name: ",
+				   FIRST_MENU_ITEM_POS_X-50, FIRST_MENU_ITEM_POS_X+ 5*fheight, 
+				   &Full_User_Rect);
+		      SDL_Flip( ne_screen );
+		      CurLevel->Levelname=GetString(15, FALSE );
+		      Weiter=!Weiter;
+		      break;
+		    case SET_BACKGROUND_SONG_NAME:
+		      ClearUserFenster();
+		      Assemble_Combat_Picture ( ONLY_SHOW_MAP );
+		      DisplayText ("Bg music filename: ", 
+				   FIRST_MENU_ITEM_POS_X-50, FIRST_MENU_ITEM_POS_X+ 5*fheight, 
+				   &Full_User_Rect);
+		      SDL_Flip( ne_screen );
+		      CurLevel->Background_Song_Name=GetString(20 , FALSE );
+		      break;
+		    case SET_LEVEL_COMMENT:
+		      ClearUserFenster();
+		      Assemble_Combat_Picture ( ONLY_SHOW_MAP );
+		      DisplayText ("New level-comment :",
+				   FIRST_MENU_ITEM_POS_X-50, FIRST_MENU_ITEM_POS_X+ 5*fheight, 
+				   &Full_User_Rect);
+		      SDL_Flip( ne_screen );
+		      CurLevel->Level_Enter_Comment=GetString(15 , FALSE );
+		      break;
 
-	  // If the user pressed up or down, the cursor within
-	  // the level editor menu has to be moved, which is done here:
-	  if (UpPressed() || WheelUpPressed ()) 
-	    {
-	      if (MenuPosition > 1) MenuPosition--;
-	      else MenuPosition = BACK;
-	      MoveMenuPositionSound();
-	      while (UpPressed());
-	    }
-	  if (DownPressed() || WheelDownPressed ()) 
-	    {
-	      if ( MenuPosition < BACK ) MenuPosition++;
-	      else MenuPosition = 1;
-	      MoveMenuPositionSound();
-	      while (DownPressed());
-	    }
+		    case BACK:
+		      Weiter=!Weiter;
+		      Done=TRUE;
+		      SetCombatScaleTo( 1 );
+		      break;
+		    default: 
+		      break;
 
-	}
+		    } // switch
+		} // if SpacePressed
+	      
+	      // If the user of the level editor pressed left or right, that should have
+	      // an effect IF he/she is a the change level menu point
+
+	      if (LeftPressed() || RightPressed() ) 
+		{
+		  key_pressed = TRUE;
+		  switch (MenuPosition)
+		    {
+
+		    case CHANGE_LEVEL_POSITION:
+		      if ( LeftPressed() )
+			{
+			  if ( CurLevel->levelnum > 0 )
+			    Teleport ( CurLevel->levelnum -1 , 3 , 3 );
+			  while (LeftPressed());
+			}
+
+		      if ( RightPressed() )
+			{
+			  if ( CurLevel->levelnum < curShip.num_levels -1 )
+			    Teleport ( CurLevel->levelnum +1 , 3 , 3 );
+			  while (RightPressed());
+			}
+		      
+		      SetCombatScaleTo ( CurrentCombatScaleFactor );
+		      break;
+		  
+		    case CHANGE_TILE_SET_POSITION:
+		      if ( RightPressed() && (CurLevel->color  < 6 ) )
+			{
+			  CurLevel->color++;
+			  while (RightPressed());
+			}
+		      if ( LeftPressed() && (CurLevel->color > 0) )
+			{
+			  CurLevel->color--;
+			  while (LeftPressed());
+			}
+		      Teleport ( CurLevel->levelnum , Me.pos.x , Me.pos.y ); 
+		      break;
+		    case CHANGE_SIZE_X:
+		      if ( RightPressed() )
+			{
+			  CurLevel->xlen++;
+			  // In case of enlargement, we need to do more:
+			  for ( i = 0 ; i < CurLevel->ylen ; i++ )
+			    {
+			      OldMapPointer=CurLevel->map[i];
+			      CurLevel->map[i] = MyMalloc( CurLevel->xlen +1) ;
+			      memcpy( CurLevel->map[i] , OldMapPointer , CurLevel->xlen-1 );
+			      // We don't want to fill the new area with junk, do we? So we set it VOID
+			      CurLevel->map[ i ] [ CurLevel->xlen-1 ] = VOID;  
+			    }
+			  while (RightPressed());
+			}
+		      if ( LeftPressed() )
+			{
+			  CurLevel->xlen--; // making it smaller is always easy:  just modify the value for size
+			  // allocation of new memory or things like that are not nescessary.
+			  while (LeftPressed());
+			}
+		      break;
+		  
+		    case CHANGE_SIZE_Y:
+		      if ( RightPressed() )
+			{
+			  CurLevel->ylen++;
+		      
+			  // In case of enlargement, we need to do more:
+			  CurLevel->map[ CurLevel->ylen-1 ] = MyMalloc( CurLevel->xlen +1) ;
+			  
+			  // We don't want to fill the new area with junk, do we? So we set it VOID
+			  memset( CurLevel->map[ CurLevel->ylen-1 ] , VOID , CurLevel->xlen );
+			  
+			  while (RightPressed());
+		      
+			}
+
+		      if ( LeftPressed() )
+			{
+			  CurLevel->ylen--; // making it smaller is always easy:  just modify the value for size
+			  // allocation of new memory or things like that are not nescessary.
+			  while (LeftPressed());
+			}
+		      break;
+		  
+		    }
+		} // if LeftPressed || RightPressed
+
+	      // If the user pressed up or down, the cursor within
+	      // the level editor menu has to be moved, which is done here:
+	      if (UpPressed() || WheelUpPressed ()) 
+		{
+		  if (MenuPosition > 1) MenuPosition--;
+		  else MenuPosition = BACK;
+		  MoveMenuPositionSound();
+		  while (UpPressed());
+		  key_pressed = TRUE;
+		}
+	      if (DownPressed() || WheelDownPressed ()) 
+		{
+		  if ( MenuPosition < BACK ) MenuPosition++;
+		  else MenuPosition = 1;
+		  MoveMenuPositionSound();
+		  while (DownPressed());
+		  key_pressed = TRUE;
+		}
+
+	    } // while !key_pressed
+
+	} // while !Weiter
       
     } // while (!Done)
 

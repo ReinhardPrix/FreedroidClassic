@@ -40,6 +40,7 @@
 #include "ship.h"
 #include "SDL_rotozoom.h"
 
+#define UPDATE_ONLY 0x01
 int NoKeyPressed (void);
 //--------------------
 // Definitions for the menu inside the in-game console
@@ -242,7 +243,7 @@ ShowLifts (int level, int liftrow)
   ship_on_pic = IMG_Load (find_file (ship_on_filename, GRAPHICS_DIR, TRUE));
 
   // clear the whole screen
-  //ClearGraphMem();
+  ClearGraphMem();
   // fill the user fenster with some color
   Fill_Rect (User_Rect, lift_bg_color);
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );      
@@ -297,10 +298,11 @@ void
 EnterKonsole (void)
 {
   int ReenterGame = FALSE;
-
   // Prevent distortion of framerate by the delay coming from 
   // the time spend in the menu.
   Activate_Conservative_Frame_Computation();
+
+  while (SpacePressed ());  /* wait for user to release Space */
 
   Me.status = CONSOLE;
 
@@ -310,37 +312,33 @@ EnterKonsole (void)
 
   Switch_Background_Music_To (CONSOLE_BACKGROUND_MUSIC_SOUND);
 
-  while (SpacePressed ());  /* wait for user to release Space */
-
   ConsoleMenuPos=0;
+  PaintConsoleMenu (0);
 
   /* Gesamtkonsolenschleife */
 
   while (!ReenterGame)
     {
-      PaintConsoleMenu ();
-      SDL_Flip (ne_screen);
-
+      if (EscapePressed())
+	{
+	  while (EscapePressed());
+	  ReenterGame = TRUE;
+	}
+      
       if (UpPressed () || WheelUpPressed())
 	{
-	  ConsoleMenuPos--;
+	  if (ConsoleMenuPos > 0) ConsoleMenuPos--;
+	  else ConsoleMenuPos = 3;
+	  PaintConsoleMenu (UPDATE_ONLY);
 	  while (UpPressed());
 	}
       if (DownPressed () || WheelDownPressed())
 	{
-	  ConsoleMenuPos++;
+	  if (ConsoleMenuPos < 3) ConsoleMenuPos++;
+	  else ConsoleMenuPos = 0;
+	  PaintConsoleMenu (UPDATE_ONLY);
 	  while (DownPressed());
 	}
-      if (EscapePressed())
-	{
-	  while (EscapePressed());
-	  break;
-	}
-      // cycle round at the ends
-      if (ConsoleMenuPos < 0)
-	ConsoleMenuPos = 3;
-      if (ConsoleMenuPos > 3)
-	ConsoleMenuPos = 0;
 
       if (SpacePressed ())
 	{
@@ -352,29 +350,32 @@ EnterKonsole (void)
 	      break;
 	    case 1:
 	      GreatDruidShow ();
+	      PaintConsoleMenu (0);
 	      break;
 	    case 2:
 	      ShowDeckMap (CurLevel);
+	      PaintConsoleMenu(0);
 	      break;
 	    case 3:
-	      ClearGraphMem();
 	      ShowLifts (CurLevel->levelnum, -1);
 	      Wait4Fire();
-	    }
-	}
+	      PaintConsoleMenu(0);
+	      break;
+	    default: 
+	      DebugPrintf (1, "Konsole menu out of bounds... pos = %d", ConsoleMenuPos);
+	      ConsoleMenuPos = 0;
+	      break;
+	    } // switch
+	} // if SpacePressed
 
-    }				/* (while !ReenterGane) */
+    }	/* (while !ReenterGane) */
 
   Me.status = MOBILE;
-  /* Die Textfarben wieder setzen wie sie vorher waren */
-  SetTextColor (FONT_WHITE, FONT_RED);	/* BG: Bannerwei"s FG: FONT_RED */
-
-  ClearGraphMem ( );
-  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
-  SDL_Flip( ne_screen );
 
   // Switch_Background_Music_To ( COMBAT_BACKGROUND_MUSIC_SOUND );
   Switch_Background_Music_To ( CurLevel->Background_Song_Name );
+
+  ClearGraphMem();
 
   return;
 
@@ -388,50 +389,39 @@ EnterKonsole (void)
  *        it just prepares the display, so you need
  *        to call SDL_Flip() to display the result!
  *
- *
+ *  flag : UPDATE_ONLY  only update the console-menu bar, not text & background
  *-----------------------------------------------------------------*/
 void
-PaintConsoleMenu (void)
+PaintConsoleMenu (int flag)
 {
   char MenuText[200];
 
   SDL_Rect SourceRectangle;
   SDL_Rect TargetRectangle;
 
-  ClearGraphMem ();
+  if ( !(flag & UPDATE_ONLY) )
+    {
+      ClearGraphMem ();
+      SDL_SetClipRect ( ne_screen , NULL );
+      SDL_BlitSurface( ne_console_bg_pic1 , NULL , ne_screen , NULL );
 
-  SDL_SetClipRect ( ne_screen , NULL );
-  DisplayImage ( find_file( NE_CONSOLE_BG_PIC1_FILE , GRAPHICS_DIR, FALSE) );
+      DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
+      
+      strcpy (MenuText, "Unit type ");
+      strcat (MenuText, Druidmap[Me.type].druidname);
+      strcat (MenuText, " - ");
+      strcat (MenuText, Classname[Druidmap[Me.type].class]);
+      DisplayText (MenuText, USERFENSTERPOSX, USERFENSTERPOSY, &User_Rect);
+      
+      strcpy (MenuText, "\nAccess granted.\nArea : ");
+      strcat (MenuText, curShip.AreaName ); // Shipnames[ThisShip]);
+      strcat (MenuText, "\nDeck : ");
+      strcat (MenuText, CurLevel->Levelname );
+      strcat (MenuText, "\n\nAlert: ");
+      strcat (MenuText, Alertcolor[Alert]);
 
-  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
-
-  /* Userfenster faerben */
-  // SetUserfenster (KON_BG_COLOR, Outline320x200);
-  // SetUserfenster ( 208 );
-
-  /* Konsolen-Menue Farbe setzen */
-  // SetTextColor (KON_BG_COLOR, KON_TEXT_COLOR);
-  SetTextColor (208, BANNER_VIOLETT );	// RED // YELLOW
-
-  strcpy (MenuText, "Unit type ");
-  strcat (MenuText, Druidmap[Me.type].druidname);
-  strcat (MenuText, " - ");
-  strcat (MenuText, Classname[Druidmap[Me.type].class]);
-  DisplayText (MenuText, USERFENSTERPOSX, USERFENSTERPOSY, &User_Rect);
-
-  strcpy (MenuText, "\nAccess granted.\nArea : ");
-  strcat (MenuText, curShip.AreaName ); // Shipnames[ThisShip]);
-  strcat (MenuText, "\nDeck : ");
-  strcat (MenuText, CurLevel->Levelname );
-  strcat (MenuText, "\n\nAlert: ");
-  strcat (MenuText, Alertcolor[Alert]);
-
-  DisplayText (MenuText, MENUTEXT_X, USERFENSTERPOSY + 15, &Menu_Rect);
-
-  /*
-   * Hier werden die Icons des Menus ausgegeben
-   *
-   */
+      DisplayText (MenuText, MENUTEXT_X, USERFENSTERPOSY + 15, &Menu_Rect);
+    } // only if not UPDATE_ONLY was required 
 
   SourceRectangle.x=(MENUITEMLENGTH+2)*ConsoleMenuPos;
   SourceRectangle.y=0;
@@ -440,6 +430,8 @@ PaintConsoleMenu (void)
   TargetRectangle.x=MENUITEMPOSX;
   TargetRectangle.y=MENUITEMPOSY;
   SDL_BlitSurface( ne_console_surface , &SourceRectangle , ne_screen , &TargetRectangle );
+
+  SDL_Flip (ne_screen);
 
   return;
 }	// PaintConsoleMenu ()
@@ -588,41 +580,53 @@ void
 GreatDruidShow (void)
 {
   int droidtype;
-  int key;
-  int finished;
   int page;
+  bool finished = FALSE;
+  bool key_pressed = FALSE;
 
   droidtype = Me.type;
   page = 0;
 
-  finished = FALSE;
+  show_droid_info (droidtype, page);
+
   while (!finished)
     {
-      show_droid_info (droidtype, page);
-
-      key = getchar_raw();
-      switch (key)
+      if (key_pressed)
 	{
-	case SDLK_RETURN:
-	case SDLK_SPACE:
-	case SDLK_ESCAPE:
+	  show_droid_info (droidtype, page);
+	  key_pressed = FALSE;
+	}
+
+      if (SpacePressed() || EscapePressed())
+	{
+	  while (SpacePressed() ||EscapePressed());
 	  finished = TRUE;
-	  break;
-	case SDLK_UP:
+	}
+
+      if (UpPressed() || WheelUpPressed())
+	{
+	  while (UpPressed());
 	  if (droidtype < Me.type) droidtype ++;
-	  break;
-	case SDLK_DOWN:
+	  key_pressed = TRUE;
+	}
+      if (DownPressed() || WheelDownPressed())
+	{
+	  while (DownPressed());
 	  if (droidtype > 0) droidtype --;
-	  break;
-	case SDLK_RIGHT:
+	  key_pressed = TRUE;
+	}
+      if (RightPressed() )
+	{
+	  while (RightPressed());
 	  if (page < 2) page ++;
-	  break;
-	case SDLK_LEFT:
+	  key_pressed = TRUE;
+	}
+      if (LeftPressed() )
+	{
+	  while (LeftPressed());
 	  if (page > 0) page --;
-	  break;
-	default:
-	  break;
-	} /* switch (key) */
+	  key_pressed = TRUE;
+	}
 
     } /* while !finished */
 
@@ -640,7 +644,8 @@ show_droid_info (int droidtype, int page)
 {
   char InfoText[1000];
   SDL_SetClipRect ( ne_screen , NULL );
-  DisplayImage ( find_file( NE_CONSOLE_BG_PIC2_FILE , GRAPHICS_DIR, FALSE) );
+
+  SDL_BlitSurface (ne_console_bg_pic2, NULL, ne_screen, NULL);
   DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
 
   ShowRobotPicture (Cons_Menu_Rect.x, Cons_Menu_Rect.y,  droidtype);
@@ -705,6 +710,8 @@ Notes: %s", Druidmap[droidtype].druidname , Classname[Druidmap[droidtype].class]
   SetCurrentFont( Para_BFont );
   DisplayText (InfoText, Cons_Text_Rect.x, Cons_Text_Rect.y, &Cons_Text_Rect);
   SDL_Flip (ne_screen);
+
+  return;
 
 } /* show_droid_info */
 

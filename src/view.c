@@ -259,15 +259,9 @@ Assemble_Combat_Picture (int mask)
 
   // At this point we are done with the drawing procedure
   // and all that remains to be done is updating the screen.
-  // Depending on where we did our modifications, we update
-  // an according portion of the screen.
 
   if ( mask & DO_SCREEN_UPDATE )
-    {
-      SDL_UpdateRect( ne_screen , User_Rect.x , User_Rect.y , User_Rect.w , User_Rect.h );
-    }
-
-  DebugPrintf (2, "\nvoid Assemble_Combat_Picture(...): end of function reached.");
+    SDL_Flip (ne_screen);
 
   return;
 
@@ -877,9 +871,8 @@ Sorry...\n\
     }
 
   SDL_SetClipRect( ne_screen , NULL );
-  Set_Rect (target, PosX, PosY, SCREENLEN, SCREENHEIGHT);
+  Set_Rect (target, PosX, PosY, tmp->w, tmp->h);
   SDL_BlitSurface( tmp , NULL, ne_screen , &target);
-
   SDL_FreeSurface(tmp);
 
   DebugPrintf (2, "\nvoid ShowRobotPicture(...): Usual end of function reached.");

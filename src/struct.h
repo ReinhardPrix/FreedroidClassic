@@ -26,6 +26,8 @@
 #ifndef _struct_h
 #define _struct_h
 
+#include "defs.h"
+
 #ifndef _BYTE
 typedef unsigned char byte;
 #define _BYTE

@@ -792,6 +792,7 @@ InitNewMission ( char *MissionName )
   int StartingLevel=0;
   int StartingXPos=0;
   int StartingYPos=0;
+  BFont_Info *oldfont;
 
 #define END_OF_MISSION_DATA_STRING "*** End of Mission File ***"
 #define MISSION_BRIEFING_BEGIN_STRING "** Start of Mission Briefing Text Section **"
@@ -828,7 +829,7 @@ InitNewMission ( char *MissionName )
   strcpy( Previous_Mission_Name , MissionName ); 
   
   DebugPrintf (2, "\nvoid InitNewMission( char *MissionName ): real function call confirmed...");
-  DebugPrintf (1, "\nA new mission is being initialized from file %s.\n" , MissionName );
+  DebugPrintf (2, "\nA new mission is being initialized from file %s.\n" , MissionName );
 
   //--------------------
   //At first we do the things that must be done for all
@@ -848,8 +849,6 @@ InitNewMission ( char *MissionName )
 
   RealScore = 0; // This should be done at the end of the highscore list procedure
   ShowScore = 0; // This should be done at the end of the highscore list procedure
-  KillQueue (); // This has NO meaning right now...
-  InsertMessage (" Game on!  Good Luck,,."); // this also has NO meaning right now
 
   /* Delete all bullets and blasts */
   for (i = 0; i < MAXBULLETS; i++)
@@ -871,8 +870,13 @@ InitNewMission ( char *MissionName )
   //For that, we must get it into memory first.
   //The procedure is the same as with LoadShip
 
-  /* Read the whole mission data to memory */
 
+  oldfont = GetCurrentFont ();
+
+  SetCurrentFont (FPS_Display_BFont);
+  printf_SDL (ne_screen, User_Rect.x + 50, -1, "Loading mission data ");
+
+  /* Read the whole mission data to memory */
   fpath = find_file (MissionName, MAP_DIR, FALSE);
 
   MainMissionPointer = ReadAndMallocAndTerminateFile( fpath , END_OF_MISSION_DATA_STRING ) ;
@@ -886,15 +890,8 @@ InitNewMission ( char *MissionName )
   EventSectionPointer = LocateStringInData ( MainMissionPointer , EVENT_SECTION_BEGIN_STRING );
   // Read in the events and triggers that can be used to cause and define something to happen
   Get_Mission_Events ( EventSectionPointer );
+  printf_SDL (ne_screen, -1, -1, ".");
   DebugPrintf (2, "\nvoid InitNewMission(void): Events and triggerable actions have been successfully read in...:");
-
-  //--------------------
-  // We start with doing the briefing things...
-  // Now we search for the beginning of the mission briefing big section NOT subsection.
-  // We display the title and explanation of controls and such... 
-  BriefingSectionPointer = LocateStringInData ( MainMissionPointer , MISSION_BRIEFING_BEGIN_STRING );
-  Title ( BriefingSectionPointer );
-  DebugPrintf (2, "\nvoid InitNewMission(void): The title signaton has been successfully displayed...:");
 
   //--------------------
   // First we extract the game physics file name from the
@@ -904,7 +901,7 @@ InitNewMission ( char *MissionName )
     ReadAndMallocStringFromData ( MainMissionPointer , GAMEDATANAME_INDICATION_STRING , "\n" ) ;
 
   Init_Game_Data ( GameDataName );
-
+  printf_SDL (ne_screen, -1, -1, ".");
   //--------------------
   // Now its time to get the shipname from the mission file and
   // read the ship file into the right memory structures
@@ -917,7 +914,7 @@ InitNewMission ( char *MissionName )
       DebugPrintf (1, "Error in LoadShip\n");
       Terminate (ERR);
     }
-
+  printf_SDL (ne_screen, -1, -1, ".");
   //--------------------
   // Now its time to get the elevator file name from the mission file and
   // read the elevator file into the right memory structures
@@ -929,7 +926,7 @@ InitNewMission ( char *MissionName )
       DebugPrintf (1, "\nError in GetLiftConnections ");
       Terminate (ERR);
     }
-
+  printf_SDL (ne_screen, -1, -1, ".");
   //--------------------
   // Now its time to get the lifts on/off picturec file name from the mission file and
   // assemble an appropriate crew out of it
@@ -961,6 +958,7 @@ InitNewMission ( char *MissionName )
       DebugPrintf (1, "\nInitNewGame(): ERROR: Initialization of enemys failed...");
       Terminate (-1);
     }
+  printf_SDL (ne_screen, -1, -1, ".");
 
   //--------------------
   // Now its time to get the debriefing text from the mission file so that it
@@ -1010,7 +1008,7 @@ InitNewMission ( char *MissionName )
   // At this point the position history can be initialized
   //
   InitInfluPositionHistory();
-
+  printf_SDL (ne_screen, -1, -1, ".");
   //--------------------
   // Now we read in the mission targets for this mission
   // Several different targets may be specified simultaneously
@@ -1051,7 +1049,7 @@ InitNewMission ( char *MissionName )
 
   ReadValueFromString( MissionTargetPointer , MISSION_TARGET_MUST_LIVE_TIME_STRING , "%lf" , 
 		       &Me.mission.MustLiveTime , EndOfMissionTargetPointer );
-
+  printf_SDL (ne_screen, -1, -1, ".");
   //--------------------
   // After the mission targets have been successfully loaded now,
   // we need to add a pointer to the next mission, so that we will later
@@ -1064,6 +1062,14 @@ InitNewMission ( char *MissionName )
   for (i = 0; i < curShip.num_levels; i++)
     curShip.AllLevels[i]->empty = FALSE;
   DebugPrintf (2, "\nvoid InitNewMission( ... ): All levels have been set to 'active'...");
+  printf_SDL (ne_screen, -1, -1, " ok\n");
+  SetCurrentFont (oldfont);
+  //--------------------
+  // We start with doing the briefing things...
+  // Now we search for the beginning of the mission briefing big section NOT subsection.
+  // We display the title and explanation of controls and such... 
+  BriefingSectionPointer = LocateStringInData ( MainMissionPointer , MISSION_BRIEFING_BEGIN_STRING );
+  Title ( BriefingSectionPointer );
 
   /* Den Banner fuer das Spiel anzeigen */
   ClearGraphMem();
@@ -1101,8 +1107,7 @@ InitNewMission ( char *MissionName )
   ShuffleEnemys(); // NOTE: THIS REQUIRES CurLevel TO BE INITIALIZED
 
   DebugPrintf (1, "done."); // this matches the printf at the beginning of this function
-  fflush(stdout);
-  
+ 
   return;
 
 } /* InitNewGame */
@@ -1278,17 +1283,16 @@ Title ( char *MissionBriefingPointer )
       PreparedBriefingText = MyMalloc (ThisTextLength + 10);
       strncpy ( PreparedBriefingText , NextSubsectionStartPointer , ThisTextLength );
       PreparedBriefingText[ThisTextLength]=0;
-      
+
+      DisplayImage ( find_file(TitlePictureName,GRAPHICS_DIR, FALSE) );
+      MakeGridOnScreen( (SDL_Rect*) &Full_Screen_Rect );
+      DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE ); 
       if (ScrollText ( PreparedBriefingText, User_Rect.x, User_Rect.y + User_Rect.h -10, 
 		   ScrollEndLine , TitlePictureName ) == 1)
 	break;  // User pressed 'fire'
  
       free ( PreparedBriefingText );
     }
-
-  ClearGraphMem ();
-  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE ); 
-  SDL_Flip( ne_screen );
 
   return;
 
@@ -1315,8 +1319,7 @@ EndTitle (void)
 
   SetTextColor (FONT_BLACK, FONT_RED);
 
-  // SetCurrentFont( FPS_Display_BFont );
-  SetCurrentFont( Para_BFont );
+  SetCurrentFont( Para_BFont);
 
   ScrollText ( DebriefingText , User_Rect.x, User_Rect.y+User_Rect.h-10, 
 	       ScrollEndLine , NE_TITLE_PIC_FILE );
@@ -1359,6 +1362,8 @@ ThouArtDefeated (void)
   MakeGridOnScreen (&User_Rect);
 
   ShowRobotPicture (UserCenter_x -70, UserCenter_y - 80, DRUID999);
+
+  SetCurrentFont (Para_BFont);
   DisplayText ("Transmission", UserCenter_x -90, UserCenter_y - 100, &User_Rect);
   DisplayText ("Terminated", UserCenter_x -90, UserCenter_y + 100, &User_Rect);
   SDL_Flip (ne_screen);
