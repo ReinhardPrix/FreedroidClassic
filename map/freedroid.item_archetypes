@@ -56,6 +56,7 @@ That will not cause any problems.
 
 Common factor for all ranged weapons bullet speed values: 2.0
 Common factor for all ranged weapons bullet damage values: 2.0
+Common factor for all melee weapons damage values: 1.0
 
 // Item No. 0
 ** Start of new item specification subsection **

@@ -74,7 +74,7 @@ Now we come to the description of all the droids:
 ** Start of new Robot: ** 
 Droidname: 001
 Droid portrait file name (without extension) to use="001"
-Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
+Droid uses portrait rotation series with prefix="001"
 Maximum speed of this droid: 5.1
 Class of this droid: 0
 Maximum acceleration of this droid: 1.1
@@ -410,7 +410,7 @@ Notes concerning this droid : early type messenger robot. Large wheels impede mo
 ** Start of new Robot: ** 
 Droidname: 420
 Droid portrait file name (without extension) to use="420"
-Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
+Droid uses portrait rotation series with prefix="420"
 Maximum speed of this droid: 2.1
 Class of this droid: 4
 Maximum acceleration of this droid: 1.1
@@ -452,7 +452,7 @@ Notes concerning this droid : slow maintenance robot. Confined to drive maintena
 ** Start of new Robot: ** 
 Droidname: 476
 Droid portrait file name (without extension) to use="476"
-Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
+Droid uses portrait rotation series with prefix="476"
 Maximum speed of this droid: 4.1
 Class of this droid: 4
 Maximum acceleration of this droid: 1.1
@@ -494,7 +494,7 @@ Notes concerning this droid : ship maintenance robot. Fitted with multiple arms 
 ** Start of new Robot: ** 
 Droidname: 493
 Droid portrait file name (without extension) to use="493"
-Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
+Droid uses portrait rotation series with prefix="493"
 Maximum speed of this droid: 4.1
 Class of this droid: 4
 Maximum acceleration of this droid: 1.1
@@ -536,7 +536,7 @@ Notes concerning this droid : slave maintenance droid. Standard version will car
 ** Start of new Robot: ** 
 Droidname: 516
 Droid portrait file name (without extension) to use="516"
-Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
+Droid uses portrait rotation series with prefix="516"
 Maximum speed of this droid: 3.1
 Class of this droid: 5
 Maximum acceleration of this droid: 1.1
@@ -578,7 +578,7 @@ Notes concerning this droid : early crew droid. Able to carry out simple flight 
 ** Start of new Robot: ** 
 Droidname: 571
 Droid portrait file name (without extension) to use="571"
-Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
+Droid uses portrait rotation series with prefix="571"
 Maximum speed of this droid: 4.1
 Class of this droid: 5
 Maximum acceleration of this droid: 1.1
@@ -620,7 +620,7 @@ Notes concerning this droid : standard crew droid. Supplied with the ship.
 ** Start of new Robot: ** 
 Droidname: 598
 Droid portrait file name (without extension) to use="598"
-Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
+Droid uses portrait rotation series with prefix="598"
 Maximum speed of this droid: 3.1
 Class of this droid: 5
 Maximum acceleration of this droid: 1.1
@@ -662,7 +662,7 @@ Notes concerning this droid : a highly sophisticated device. Able to control the
 ** Start of new Robot: ** 
 Droidname: 614
 Droid portrait file name (without extension) to use="614"
-Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
+Droid uses portrait rotation series with prefix="614"
 Maximum speed of this droid: 3.1
 Class of this droid: 6
 Maximum acceleration of this droid: 1.1
@@ -704,7 +704,7 @@ Notes concerning this droid : low security sentinel droid. Used to protect areas
 ** Start of new Robot: ** 
 Droidname: 615
 Droid portrait file name (without extension) to use="615"
-Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
+Droid uses portrait rotation series with prefix="615"
 Maximum speed of this droid: 4.1
 Class of this droid: 6
 Maximum acceleration of this droid: 1.1
@@ -746,7 +746,7 @@ Notes concerning this droid : sophisticated sentinel droid. Only 2000 built by t
 ** Start of new Robot: ** 
 Droidname: 629
 Droid portrait file name (without extension) to use="629"
-Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
+Droid uses portrait rotation series with prefix="629"
 Maximum speed of this droid: 2.1
 Class of this droid: 6
 Maximum acceleration of this droid: 1.1
@@ -788,7 +788,7 @@ Notes concerning this droid : low sentinel droid. Lasers are built into the turr
 ** Start of new Robot: ** 
 Droidname: 711
 Droid portrait file name (without extension) to use="711"
-Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
+Droid uses portrait rotation series with prefix="711"
 Maximum speed of this droid: 5.1
 Class of this droid: 7
 Maximum acceleration of this droid: 1.1
@@ -830,7 +830,7 @@ Notes concerning this droid : heavy duty battle droid. Disruptor is built into t
 ** Start of new Robot: ** 
 Droidname: 742
 Droid portrait file name (without extension) to use="742"
-Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
+Droid uses portrait rotation series with prefix="742"
 Maximum speed of this droid: 4.1
 Class of this droid: 7
 Maximum acceleration of this droid: 1.1
@@ -872,7 +872,7 @@ Notes concerning this droid : this version is the one mainly used by the Militar
 ** Start of new Robot: ** 
 Droidname: 751
 Droid portrait file name (without extension) to use="751"
-Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
+Droid uses portrait rotation series with prefix="751"
 Maximum speed of this droid: 5.1
 Class of this droid: 7
 Maximum acceleration of this droid: 1.1
@@ -914,7 +914,7 @@ Notes concerning this droid : very heavy duty battle droid. Only a few have so f
 ** Start of new Robot: ** 
 Droidname: 821
 Droid portrait file name (without extension) to use="821"
-Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
+Droid uses portrait rotation series with prefix="821"
 Maximum speed of this droid: 6.1
 Class of this droid: 8
 Maximum acceleration of this droid: 2.1
@@ -956,7 +956,7 @@ Notes concerning this droid : a very reliable anti-grav unit is fitted into this
 ** Start of new Robot: ** 
 Droidname: 834
 Droid portrait file name (without extension) to use="834"
-Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
+Droid uses portrait rotation series with prefix="834"
 Maximum speed of this droid: 7.1
 Class of this droid: 8
 Maximum acceleration of this droid: 1.1
@@ -998,7 +998,7 @@ Notes concerning this droid : early type anti-grav security droid. Fitted with a
 ** Start of new Robot: ** 
 Droidname: 883
 Droid portrait file name (without extension) to use="883"
-Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
+Droid uses portrait rotation series with prefix="883"
 Maximum speed of this droid: 2.1
 Class of this droid: 8
 Maximum acceleration of this droid: 1.1
@@ -1125,7 +1125,7 @@ Notes concerning this droid : simpe rubbish diposal robot. Common device in most
 ** Start of new Robot: ** 
 Droidname: 140
 Droid portrait file name (without extension) to use="139"
-Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
+Droid uses portrait rotation series with prefix="139"
 Maximum speed of this droid: 2.1
 Class of this droid: 1
 Maximum acceleration of this droid: 1.1
@@ -1167,7 +1167,7 @@ Notes concerning this droid : created by Dr. Masternak to clean up large heaps o
 ** Start of new Robot: ** 
 Droidname: 248
 Droid portrait file name (without extension) to use="247"
-Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
+Droid uses portrait rotation series with prefix="247"
 Maximum speed of this droid: 4.1
 Class of this droid: 2
 Maximum acceleration of this droid: 1.1
@@ -1209,7 +1209,7 @@ Notes concerning this droid : light duty servant robot. One of the first to use 
 ** Start of new Robot: ** 
 Droidname: 250
 Droid portrait file name (without extension) to use="249"
-Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
+Droid uses portrait rotation series with prefix="249"
 Maximum speed of this droid: 3.1
 Class of this droid: 2
 Maximum acceleration of this droid: 1.1
@@ -1251,7 +1251,7 @@ Notes concerning this droid : cheaper version of the anti-grav servant robot.
 ** Start of new Robot: ** 
 Droidname: 257
 Droid portrait file name (without extension) to use="247"
-Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
+Droid uses portrait rotation series with prefix="247"
 Maximum speed of this droid: 4.1
 Class of this droid: 2
 Maximum acceleration of this droid: 1.1
@@ -1293,7 +1293,7 @@ Notes concerning this droid : light duty servant robot. One of the first to use 
 ** Start of new Robot: ** 
 Droidname: 297
 Droid portrait file name (without extension) to use="296"
-Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
+Droid uses portrait rotation series with prefix="296"
 Maximum speed of this droid: 2.1
 Class of this droid: 2
 Maximum acceleration of this droid: 1.1
@@ -1335,7 +1335,7 @@ Notes concerning this droid : this robot is used mainly for serving drinks. A tr
 ** Start of new Robot: ** 
 Droidname: DAP
 Droid portrait file name (without extension) to use="999"
-Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
+Droid uses portrait rotation series with prefix="999"
 Maximum speed of this droid: 6.1
 Class of this droid: 11
 Maximum acceleration of this droid: 2.1
@@ -1419,7 +1419,7 @@ Notes concerning this droid : common device for moving small packages. Clamp is 
 ** Start of new Robot: ** 
 Droidname: GOT
 Droid portrait file name (without extension) to use="883"
-Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
+Droid uses portrait rotation series with prefix="883"
 Maximum speed of this droid: 2.1
 Class of this droid: 8
 Maximum acceleration of this droid: 1.1
@@ -1462,7 +1462,7 @@ Notes concerning this droid : this droid was designed from archive data. For som
 ** Start of new Robot: ** 
 Droidname: DSR
 Droid portrait file name (without extension) to use="999"
-Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
+Droid uses portrait rotation series with prefix="999"
 Maximum speed of this droid: 6.1
 Class of this droid: 11
 Maximum acceleration of this droid: 2.1

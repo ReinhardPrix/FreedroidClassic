@@ -57,7 +57,7 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "mouse_buttons/SKIButton.png"                    , { 600 , 370 ,  38 ,  22 } } ,
     { NULL , "mouse_buttons/PlusButton.png"                   , { 600 , 430 ,  38 ,  22 } } ,
     { NULL , "mouse_buttons/UPButton.png"                     , { 600 ,  94 ,  40 ,  40 } } ,
-    { NULL , "mouse_buttons/DOWNButton.png"                   , { 580 , 316 ,  40 ,  40 } } ,
+    { NULL , "mouse_buttons/DOWNButton.png"                   , { 600 , 316 ,  40 ,  40 } } ,
     { NULL , "mouse_buttons/LEFTButton.png"                   , { 300 ,   5 , 100 ,  50 } } ,
     { NULL , "mouse_buttons/RIGHTButton.png"                  , { 450 ,   5 , 100 ,  50 } } ,
     { NULL , "mouse_buttons/MapExitButton.png"                , {  50 ,   5 , 100 ,  50 } } ,

@@ -129,12 +129,9 @@ exist really (i.e. has a type = (-1) ).",
   //--------------------
   // If this item has a multiplicity, we print it out
   //
-  if ( CurItem->multiplicity )
+  if ( ItemMap [ CurItem->type ] . item_group_together_in_inventory )
     {
-      // if ( ! ForShop ) 
       sprintf( linebuf , "Multiplicity: %d \n" , CurItem->multiplicity );
-      // else
-      // sprintf( linebuf , "Dam: %d-%d " , CurItem->damage , CurItem->damage_modifier + CurItem->damage );
       strcat( ItemDescText , linebuf );
     }
 

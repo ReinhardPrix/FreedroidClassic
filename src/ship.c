@@ -896,7 +896,7 @@ ShowDroidPicture (int PosX, int PosY, int Number )
 
   static char LastImageSeriesPrefix[1000] = "NONE_AT_ALL";
 
-#define NUMBER_OF_IMAGES_IN_DROID_PORTRAIT_ROTATION 16
+#define NUMBER_OF_IMAGES_IN_DROID_PORTRAIT_ROTATION 32
   static SDL_Surface *DroidRotationSurfaces[ NUMBER_OF_IMAGES_IN_DROID_PORTRAIT_ROTATION ] = { NULL } ;
   SDL_Surface *Whole_Image;
   int i;
@@ -936,7 +936,7 @@ ShowDroidPicture (int PosX, int PosY, int Number )
 	    }
 	  else
 	    {
-	      sprintf ( ConstructedFileName , "rotation_models/portraits/portrait_%s_%04d" , Druidmap[ Number ] . droid_portrait_rotation_series_prefix , i+1 );
+	      sprintf ( ConstructedFileName , "rotation_models/portraits/portrait_%s_%04d.jpg" , Druidmap[ Number ] . droid_portrait_rotation_series_prefix , i+1 );
 	      DebugPrintf ( 0 , "\nConstructedFileName = %s " , ConstructedFileName );
 	    }
 

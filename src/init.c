@@ -210,14 +210,11 @@ Get_Item_Data ( char* DataPointer )
 {
   char *ItemPointer;
   char *EndOfItemData;
-  // int i;
   int ItemIndex=0;
   char *YesNoString;
   float ranged_weapon_damage_calibrator;
+  float melee_weapon_damage_calibrator;
   float ranged_weapon_speed_calibrator;
-
-  // double bullet_speed_calibrator;
-  // double bullet_damage_calibrator;
 
 #define ITEM_SECTION_BEGIN_STRING "*** Start of item data section: ***"
 #define ITEM_SECTION_END_STRING "*** End of item data section: ***"
@@ -286,7 +283,11 @@ than the maximum allowance for item types in the ALL_ITEMS constant.",
   ReadValueFromString( DataPointer ,  "Common factor for all ranged weapons bullet damage values:" , "%f" , 
 		       &ranged_weapon_damage_calibrator , EndOfItemData );
 
-  DebugPrintf ( 0 , "\nCommon bullet speed factor: %f.\nCommon bullet damage factor: %f", ranged_weapon_speed_calibrator, ranged_weapon_damage_calibrator );
+  // Now we read in the damage calibration factor for all bullets
+  ReadValueFromString( DataPointer ,  "Common factor for all melee weapons damage values:" , "%f" , 
+		       &melee_weapon_damage_calibrator , EndOfItemData );
+
+  DebugPrintf ( 0 , "\nCommon bullet speed factor: %f.\nCommon bullet damage factor: %f.\nCommon melee damage factor: %f.\n", ranged_weapon_speed_calibrator, ranged_weapon_damage_calibrator , melee_weapon_damage_calibrator );
 
   while ( (ItemPointer = strstr ( ItemPointer, NEW_ITEM_TYPE_BEGIN_STRING )) != NULL)
     {
@@ -609,12 +610,18 @@ answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
   //
   for ( ItemIndex = 0 ; ItemIndex < Number_Of_Item_Types ; ItemIndex++ )
     {
-      ItemMap [ ItemIndex ] . item_gun_speed *= ranged_weapon_speed_calibrator;
-      ItemMap [ ItemIndex ] . base_item_gun_damage *= ranged_weapon_damage_calibrator;
-      ItemMap [ ItemIndex ] . item_gun_damage_modifier *= ranged_weapon_damage_calibrator;
+      if ( ItemMap [ ItemIndex ] . item_gun_angle_change )
+	{
+	  ItemMap [ ItemIndex ] . base_item_gun_damage *= melee_weapon_damage_calibrator;
+	  ItemMap [ ItemIndex ] . item_gun_damage_modifier *= melee_weapon_damage_calibrator;
+	}
+      else
+	{
+	  ItemMap [ ItemIndex ] . item_gun_speed *= ranged_weapon_speed_calibrator;
+	  ItemMap [ ItemIndex ] . base_item_gun_damage *= ranged_weapon_damage_calibrator;
+	  ItemMap [ ItemIndex ] . item_gun_damage_modifier *= ranged_weapon_damage_calibrator;
+	}
     }
-
-
 
 }; // void Get_Item_Data ( char* DataPointer );
 
@@ -1868,6 +1875,19 @@ InitNewMissionList ( char *MissionName )
   Me [ 0 ] . clearance_list [ j ] = 7 ; j++;
   Me [ 0 ] . clearance_list [ j ] = 8 ; j++;
   Me [ 0 ] . clearance_list [ j ] = 9 ; j++;
+  Me [ 0 ] . clearance_list [ j ] = 10 ; j++;
+  Me [ 0 ] . clearance_list [ j ] = 11 ; j++;
+  Me [ 0 ] . clearance_list [ j ] = 12 ; j++;
+  Me [ 0 ] . clearance_list [ j ] = 13 ; j++;
+  Me [ 0 ] . clearance_list [ j ] = 14 ; j++;
+  Me [ 0 ] . clearance_list [ j ] = 15 ; j++;
+  Me [ 0 ] . clearance_list [ j ] = 16 ; j++;
+  Me [ 0 ] . clearance_list [ j ] = 17 ; j++;
+  Me [ 0 ] . clearance_list [ j ] = 18 ; j++;
+  Me [ 0 ] . clearance_list [ j ] = 19 ; j++;
+  Me [ 0 ] . clearance_list [ j ] = 20 ; j++;
+  Me [ 0 ] . clearance_list [ j ] = 21 ; j++;
+  Me [ 0 ] . clearance_list [ j ] = 22 ; j++;
   Me [ 0 ] . clearance_list [ j ] = 23 ; j++;
 
 
