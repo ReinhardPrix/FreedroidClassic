@@ -129,7 +129,7 @@ set_up_texture_for_automap ( void )
 
     SDL_FreeSurface ( pure_surface );
 
-    DebugPrintf ( -4 , "\nset_up_texture_for_automap ( ): Texture for AUTOMAP has been set up..." );
+    DebugPrintf ( 1 , "\nset_up_texture_for_automap ( ): Texture for AUTOMAP has been set up..." );
 
 #endif
 
@@ -178,7 +178,7 @@ clear_automap_texture_completely ( void )
     
     open_gl_check_error_status ( __FUNCTION__ );
 
-    DebugPrintf ( -4 , "\nclear_automap_texture_completely( ): Texture for AUTOMAP has been cleared..." );
+    DebugPrintf ( 1 , "\nclear_automap_texture_completely( ): Texture for AUTOMAP has been cleared..." );
 
 #endif
 
@@ -364,6 +364,9 @@ show_automap_data_sdl ( void )
 void
 automap_update_texture_for_square ( int x , int y ) 
 {
+
+#ifdef HAVE_LIBGL
+
     int i;
     Level automap_level = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
     obstacle* our_obstacle ;
@@ -401,6 +404,8 @@ automap_update_texture_for_square ( int x , int y )
 	    open_gl_check_error_status ( __FUNCTION__ );
 	}
     }
+
+#endif
 
 }; // void automap_update_texture_for_square ( int x , int y ) 
 
@@ -587,7 +592,7 @@ show_automap_data_ogl ( void )
     //
     if ( ! tux_on_the_map_iso_image . texture_has_been_created )
     {
-	DebugPrintf ( -4 , "\nLoading icon for Tux on the automap." );
+	DebugPrintf ( 1 , "\nLoading icon for Tux on the automap." );
 	fpath = find_file ( "tux_icon_on_automap.png" , GRAPHICS_DIR , FALSE );
 	get_iso_image_from_file_and_path ( fpath , & tux_on_the_map_iso_image , TRUE ) ;
 	make_texture_out_of_surface ( & ( tux_on_the_map_iso_image ) ) ;

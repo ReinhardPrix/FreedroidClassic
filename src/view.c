@@ -2451,7 +2451,7 @@ belonging to Freedroid.",
 	DebugPrintf( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : file closed successfully...\n");
     }
     
-    DebugPrintf ( -4 , "\n%s:  grabbing new image series DONE." , __FUNCTION__ );
+    DebugPrintf ( 1 , "\n%s:  grabbing new image series DONE." , __FUNCTION__ );
 
 }; // void grab_enemy_images_from_archive ( ... )
 

@@ -118,7 +118,7 @@ DirectLineWalkable( float x1 , float y1 , float x2 , float y2 , int z )
     {
       first_call = FALSE;
       
-      DebugPrintf ( -2 , "\nNow calibrating passability check maximum stepsize..." );
+      DebugPrintf ( 1 , "\n%s():Now calibrating passability check maximum stepsize..." , __FUNCTION__ );
 
       for ( i = 0 ; i < NUMBER_OF_OBSTACLE_TYPES ; i ++ )
 	{
@@ -140,10 +140,10 @@ DirectLineWalkable( float x1 , float y1 , float x2 , float y2 , int z )
 	    }
 	}
 
-      DebugPrintf ( -2 , "\nFinal calibration for passablilit check produced multiplier : %d." , 
-		    step_multiplier );
-      DebugPrintf ( -2 , "\nThe key obstacle type for this calibration was : %d." , 
-		    key_obstacle_type );
+      DebugPrintf ( 1 , "\n%s(): Final calibration for passablilit check produced multiplier : %d." , 
+		    __FUNCTION__ , step_multiplier );
+      DebugPrintf ( 1 , "\n%s(): The key obstacle type for this calibration was : %d." , 
+		    __FUNCTION__ , key_obstacle_type );
       
     }
   
