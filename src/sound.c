@@ -435,23 +435,25 @@ void
 InitAudio(void)
 {
 #ifndef HAVE_LIBSDL_MIXER  
-  return;
+    return;
 #else
-  int audio_rate = 22050;
-  Uint16 audio_format = AUDIO_S16; 
-  int audio_channels = 2;
-  //  int audio_buffers = 4096;
-  int audio_buffers = 2048;
-
-  DebugPrintf(1, "\nInitializing SDL Audio Systems....\n");
-
-  if ( !sound_on ) return;
-
-  // Now SDL_AUDIO is initialized here:
-
-  if ( SDL_InitSubSystem ( SDL_INIT_AUDIO ) == -1 ) 
+    int audio_rate = 22050;
+    Uint16 audio_format = AUDIO_S16; 
+    int audio_channels = 2;
+    //  int audio_buffers = 4096;
+    int audio_buffers = 2048;
+    
+    DebugPrintf(1, "\nInitializing SDL Audio Systems....\n");
+    
+    if ( !sound_on ) return;
+    
+    // Now SDL_AUDIO is initialized here:
+    
+    if ( SDL_InitSubSystem ( SDL_INIT_AUDIO ) == -1 ) 
     {
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
+	fprintf( stderr, "\n\nSDL just reported a problem.\n\
+The error string from SDL_GetError\nwas: %s \n" , SDL_GetError() );
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
 The SDL AUDIO SUBSYSTEM COULD NOT BE INITIALIZED.\n\
 \n\
 Please check that your sound card is properly configured,\n\
@@ -462,19 +464,19 @@ you can choose to play without sound.\n\
 \n\
 If you want this, use the appropriate command line option and Freedroid will \n\
 not complain any more.",
-				 NO_NEED_TO_INFORM, IS_FATAL );
+				   NO_NEED_TO_INFORM, IS_FATAL );
     } 
-  else
+    else
     {
-      DebugPrintf ( 1 , "\nSDL Audio initialisation successful.\n");
+	DebugPrintf ( 1 , "\nSDL Audio initialisation successful.\n");
     }
-
-  // Now that we have initialized the audio SubSystem, we must open
-  // an audio channel.  This will be done here (see code from Mixer-Tutorial):
-
-  if ( Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers) ) 
+    
+    // Now that we have initialized the audio SubSystem, we must open
+    // an audio channel.  This will be done here (see code from Mixer-Tutorial):
+    
+    if ( Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers) ) 
     {
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
 The SDL AUDIO CHANNEL COULD NOT BE OPEND.\n\
 \n\
 Please check that your sound card is properly configured,\n\
@@ -485,21 +487,21 @@ you can choose to play without sound.\n\
 \n\
 If you want this, use the appropriate command line option and Freedroid will \n\
 not complain any more.",
-				 NO_NEED_TO_INFORM, IS_FATAL );
+				   NO_NEED_TO_INFORM, IS_FATAL );
     }
-  else 
+    else 
     {
-      DebugPrintf (1, "\nSuccessfully opened SDL audio channel." );
+	DebugPrintf (1, "\nSuccessfully opened SDL audio channel." );
     }
-
-  //--------------------
-  // Since we don't want some sounds to be omitted due to lack of mixing
-  // channels, we select to have some at our disposal.  The SDL will do this
-  // for a small increase in memory appetite as the price.  Whether this will
-  // really resolve the problem however is unsure.
-  //
-  DebugPrintf( 1 , "\nChannels allocated: %d. " , Mix_AllocateChannels( 200 ) );
-
+    
+    //--------------------
+    // Since we don't want some sounds to be omitted due to lack of mixing
+    // channels, we select to have some at our disposal.  The SDL will do this
+    // for a small increase in memory appetite as the price.  Whether this will
+    // really resolve the problem however is unsure.
+    //
+    DebugPrintf( 1 , "\nChannels allocated: %d. " , Mix_AllocateChannels( 200 ) );
+    
 #endif // HAVE_SDL_MIXER
 }; // void InitAudio(void)
 
