@@ -430,6 +430,8 @@ InitPictures (void)
   /* load the 3 ship side-view: lights off, level-lights on and lift-lights on */
   ship_off_pic = IMG_Load (SHIP_OFF_PIC);
   ship_on_pic = IMG_Load (SHIP_ON_PIC);
+  SDL_SetColorKey(ship_off_pic, SDL_SRCCOLORKEY, ne_transp_key);
+  SDL_SetColorKey(ship_on_pic, SDL_SRCCOLORKEY, ne_transp_key);
 
 
   return (TRUE);

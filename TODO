@@ -25,8 +25,6 @@ Outstanding release-critical bugs (priority: high)
   Someone must sooner or later set up something more proper for the ne_cons.bmp file
   containing the different phases of the console before any new release can be shipped.
 
-- (rp) adapt Takeover game to the new engine
-
 - (rp) Build-environment: make sure SDL/X,jpeg etc tests work ok!
 
 - (jp) The game SHOULD be playtested on a *SLOW* machine before any release
@@ -218,4 +216,6 @@ Resolved bugs
          bequem einstellen kann: Use ESCAPE key to access menu
 
 - (jp/rp?) make sure sound-code respects HAVE_LIBSDL_MIXER #define!!
+  (DONE)
+- (rp) adapt Takeover game to the new engine
   (DONE)

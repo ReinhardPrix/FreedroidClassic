@@ -205,7 +205,7 @@ ShowLifts (int level, int liftrow)
   SDL_Rect dst;
 
   // clear the whole screen
-  ClearGraphMem();
+  //  ClearGraphMem();
   // fill the user fenster with some color
   SetUserfenster ( EL_BG_COLOR );
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );      
