@@ -57,6 +57,8 @@ int mission_list_scroll_override_from_user = 0 ;
 
 int current_quest_browser_mode = QUEST_BROWSER_SHOW_OPEN_MISSIONS ;
 
+int quest_browser_mission_lines_needed [ MAX_MISSIONS_IN_GAME ] ;
+
 /* ----------------------------------------------------------------------
  * This function is responsible for making a new quest diary entry 
  * visible inside the quest browser.
@@ -201,7 +203,7 @@ There was an illegal mission number received.",
  * for.
  * ---------------------------------------------------------------------- */
 void
-quest_browser_append_mission_info ( int mis_num )
+quest_browser_append_mission_info ( int mis_num , int full_description )
 {
     char temp_text[10000];
     int mission_diary_index;
@@ -219,7 +221,16 @@ There was an illegal mission number received.",
 
     strcat ( complete_mission_display_text , "Mission: " );
     strcat ( complete_mission_display_text , Me [ 0 ] . AllMissions [ mis_num ] . MissionName );
-    strcat ( complete_mission_display_text , "\nStatus: " );
+    strcat ( complete_mission_display_text , "\n" );
+
+    //--------------------
+    // Depending on whether we want the full mission description or only
+    // some closed file description, we can either return or must continue
+    // to the detailed description.
+    //
+    if ( ! full_description ) return;
+
+    strcat ( complete_mission_display_text , "Status: " );
     if ( Me [ 0 ] . AllMissions [ mis_num ] . MissionIsComplete )
 	strcat ( complete_mission_display_text , "COMPLETE" );
     else if ( Me [ 0 ] . AllMissions [ mis_num ] . MissionWasFailed )
@@ -260,24 +271,50 @@ quest_browser_display_mission_list ( int list_type )
 
     for ( mis_num = 0 ; mis_num < MAX_MISSIONS_IN_GAME; mis_num ++ )
     {
+	//--------------------
+	// The mission short/long symbol positions must be initialized
+	// with some default values.
+	//
+	quest_browser_mission_lines_needed [ mis_num ] = (-1) ;
+
 	// In case the mission does not exist at all, we need not do anything more...
 	if ( Me [ 0 ] . AllMissions [ mis_num ] . MissionExistsAtAll != TRUE ) continue;
 	
 	//  In case the mission was not yet assigned, we need not do anything more...
 	if ( Me [ 0 ] . AllMissions[ mis_num ] . MissionWasAssigned != TRUE ) continue;
 
+	//--------------------
+	// We record the number of lines needed so far, so that we may later
+	// draw suitable long/short buttons in front of the text, so that the
+	// user can then select to see the full/short information on this quest.
+	//
+	if ( list_type != QUEST_BROWSER_SHOW_NOTES )
+	{
+	    quest_browser_mission_lines_needed [ mis_num ] = 
+		GetNumberOfTextLinesNeeded ( complete_mission_display_text , 
+					     mission_description_rect , 
+					     TEXT_STRETCH );
+	    DebugPrintf ( 2 , "\n%s(): new mission start pos at lines needed: %d.",
+			  __FUNCTION__ , quest_browser_mission_lines_needed [ mis_num ] );
+	}
+
 	if ( ( list_type == QUEST_BROWSER_SHOW_OPEN_MISSIONS ) &&
 	     ( Me [ 0 ] . AllMissions[ mis_num ] . MissionIsComplete == FALSE ) )
 	{
-	    quest_browser_append_mission_info ( mis_num );
+	    quest_browser_append_mission_info ( mis_num , Me [ 0 ] . AllMissions [ mis_num ] . 
+						expanded_display_for_this_mission );
 	    something_was_displayed = TRUE ;
 	}
-
-	if ( ( list_type == QUEST_BROWSER_SHOW_DONE_MISSIONS ) &&
+	else if ( ( list_type == QUEST_BROWSER_SHOW_DONE_MISSIONS ) &&
 	     ( Me [ 0 ] . AllMissions[ mis_num ] . MissionIsComplete != FALSE ) )
 	{
-	    quest_browser_append_mission_info ( mis_num );
+	    quest_browser_append_mission_info ( mis_num , Me [ 0 ] . AllMissions [ mis_num ] . 
+						expanded_display_for_this_mission );
 	    something_was_displayed = TRUE ;
+	}
+	else
+	{
+	    quest_browser_mission_lines_needed [ mis_num ] = (-1) ;
 	}
 
     }
@@ -292,7 +329,56 @@ quest_browser_display_mission_list ( int list_type )
 	SetTextCursor ( mission_description_rect . x , 
 			mission_description_rect . y );
 	DisplayText( complete_mission_display_text , mission_description_rect . x , 
-		     mission_description_rect . y - mission_list_offset , &mission_description_rect );	    
+		     mission_description_rect . y - mission_list_offset , &mission_description_rect );	
+	
+	//--------------------
+	// Now it's time to display some short/long symbols in front
+	// of each of the missions.
+	//
+	for ( mis_num = 0 ; mis_num < MAX_MISSIONS_IN_GAME; mis_num ++ )
+	{
+	    //--------------------
+	    // At first we bring the short/long buttons into position.
+	    // This position might be well off the screen.  That's no
+	    // problem, because we won't blit the thing in this case
+	    // anyway.
+	    //
+	    if ( quest_browser_mission_lines_needed [ mis_num ] != (-1) )
+	    {
+		AllMousePressButtons [ QUEST_BROWSER_ITEM_SHORT_BUTTON ] . button_rect . y = 
+		    mission_description_rect . y - mission_list_offset + 
+		    ( FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) *
+		    ( quest_browser_mission_lines_needed [ mis_num ] - 1 ) * 0.96  - 3 ;
+		AllMousePressButtons [ QUEST_BROWSER_ITEM_LONG_BUTTON ] . button_rect . y =
+		    AllMousePressButtons [ QUEST_BROWSER_ITEM_SHORT_BUTTON ] . button_rect . y ;
+	    }
+
+	    //--------------------
+	    // Now we check if the y coordinate of the buttons are 
+	    // somewhat reasonable or not.  For those buttons that are
+	    // off the screen, things are simple, because then we can
+	    // skip the rest of this pass of the loop.
+	    //
+	    if ( AllMousePressButtons [ QUEST_BROWSER_ITEM_SHORT_BUTTON ] . button_rect . y 
+		 <= mission_description_rect . y - 4 ) continue;
+	    if ( AllMousePressButtons [ QUEST_BROWSER_ITEM_SHORT_BUTTON ] . button_rect . y 
+		 >= mission_description_rect . y + mission_description_rect . h - FontHeight ( GetCurrentFont() ) ) continue;
+
+	    if ( Me [ 0 ] . AllMissions [ mis_num ] . expanded_display_for_this_mission )
+		ShowGenericButtonFromList ( QUEST_BROWSER_ITEM_LONG_BUTTON );
+	    else
+		ShowGenericButtonFromList ( QUEST_BROWSER_ITEM_SHORT_BUTTON );
+
+	    if ( SpacePressed() )
+	    {
+		if ( MouseCursorIsOnButton ( QUEST_BROWSER_ITEM_SHORT_BUTTON , GetMousePos_x() , GetMousePos_y() ) )
+		{
+		    Me [ 0 ] . AllMissions [ mis_num ] . expanded_display_for_this_mission =
+			! Me [ 0 ] . AllMissions [ mis_num ] . expanded_display_for_this_mission ;
+		    while ( SpacePressed() );
+		}
+	    }
+	}
     }
     else
     {
@@ -336,6 +422,7 @@ quest_browser_interface ( void )
     //
     Activate_Conservative_Frame_Computation ();
     make_sure_system_mouse_cursor_is_turned_on ( );
+    SetCurrentFont ( FPS_Display_BFont );
 
     while ( EscapePressed() );
     while ( SpacePressed() );

@@ -427,72 +427,74 @@ ChatDoMenuSelectionFlagged( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER
 int
 GetNumberOfTextLinesNeeded ( char* GivenText, SDL_Rect GivenRectangle , float text_stretch )
 {
-  int BackupOfMyCursorX, BackupOfMyCursorY;
-  int TextLinesNeeded;
-  int i;
-  int TestPosition;
-  int stored_height ;
-
-  //--------------------
-  // If we receive an empty string, we print out a warning message and then
-  // return one line as the required amount of lines.
-  //
-  if ( strlen ( GivenText ) <= 1 )
+    int BackupOfMyCursorX, BackupOfMyCursorY;
+    int TextLinesNeeded;
+    int i;
+    int TestPosition;
+    int stored_height ;
+    
+    //--------------------
+    // If we receive an empty string, we print out a warning message and then
+    // return one line as the required amount of lines.
+    //
+    if ( strlen ( GivenText ) <= 1 )
     {
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
+	/*
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
 Warning.  Received empty or nearly empty string!",
-				 NO_NEED_TO_INFORM, IS_WARNING_ONLY );
-      return ( 1 ) ;
+				   NO_NEED_TO_INFORM, IS_WARNING_ONLY );
+	*/
+	return ( 1 ) ;
     }
-
-  //--------------------
-  // First we make a backup of everything, so that we don't destory anything.
-  //
-  display_char_disabled = TRUE ;
-  BackupOfMyCursorX = MyCursorX;
-  BackupOfMyCursorY = MyCursorY;
-
-  //--------------------
-  // Now in our simulated environment, we can blit the Text and see how many lines it takes...
-  //
-  MyCursorX = GivenRectangle . x ;
-  MyCursorY = GivenRectangle . y ;
-  TestPosition = MyCursorY ;
-
-  stored_height = GivenRectangle.h ;
-  GivenRectangle.h = 32000 ;
-  DisplayText ( GivenText , GivenRectangle.x , GivenRectangle.y , &GivenRectangle );
-  GivenRectangle.h = stored_height ;
-
-  //--------------------
-  // Now we estimate how many lines that must have meant...
-  //
-  for ( i = 0 ; 1 ; i ++ ) // this is infinite until break!
+    
+    //--------------------
+    // First we make a backup of everything, so that we don't destory anything.
+    //
+    display_char_disabled = TRUE ;
+    BackupOfMyCursorX = MyCursorX;
+    BackupOfMyCursorY = MyCursorY;
+    
+    //--------------------
+    // Now in our simulated environment, we can blit the Text and see how many lines it takes...
+    //
+    MyCursorX = GivenRectangle . x ;
+    MyCursorY = GivenRectangle . y ;
+    TestPosition = MyCursorY ;
+    
+    stored_height = GivenRectangle.h ;
+    GivenRectangle.h = 32000 ;
+    DisplayText ( GivenText , GivenRectangle.x , GivenRectangle.y , &GivenRectangle );
+    GivenRectangle.h = stored_height ;
+    
+    //--------------------
+    // Now we estimate how many lines that must have meant...
+    //
+    for ( i = 0 ; 1 ; i ++ ) // this is infinite until break!
     {
-      if ( MyCursorY <= TestPosition ) 
+	if ( MyCursorY <= TestPosition ) 
 	{
-	  break;
+	    break;
 	}
-      TestPosition += FontHeight ( GetCurrentFont() ) * text_stretch;
+	TestPosition += FontHeight ( GetCurrentFont() ) * text_stretch;
     }
-  TextLinesNeeded = i + 1 ;
-
-  // TextLinesNeeded = ( MyCursorY - GivenRectangle . y + 1 ) / ( FontHeight ( GetCurrentFont() ) * text_stretch ) ;
-  // TextLinesNeeded ++ ;
-  DebugPrintf ( 1 , "\nGetNumberOfTextLinesNeeded(...):  lines needed = %d." , TextLinesNeeded );
-
-
-  //--------------------
-  // Now that we have found our solution, we can restore everything back to normal
-  //
-  // RestoreMenuBackground ( 1 ) ;
-  display_char_disabled = FALSE ;
-
-  MyCursorX = BackupOfMyCursorX;
-  MyCursorY = BackupOfMyCursorY;
-
-  return ( TextLinesNeeded );
-
+    TextLinesNeeded = i + 1 ;
+    
+    // TextLinesNeeded = ( MyCursorY - GivenRectangle . y + 1 ) / ( FontHeight ( GetCurrentFont() ) * text_stretch ) ;
+    // TextLinesNeeded ++ ;
+    DebugPrintf ( 1 , "\nGetNumberOfTextLinesNeeded(...):  lines needed = %d." , TextLinesNeeded );
+    
+    
+    //--------------------
+    // Now that we have found our solution, we can restore everything back to normal
+    //
+    // RestoreMenuBackground ( 1 ) ;
+    display_char_disabled = FALSE ;
+    
+    MyCursorX = BackupOfMyCursorX;
+    MyCursorY = BackupOfMyCursorY;
+    
+    return ( TextLinesNeeded );
+    
 }; // int GetNumberOfTextLinesNeeded ( MenuTexts [ i ] , Choice_Window )
 
 /* ----------------------------------------------------------------------
