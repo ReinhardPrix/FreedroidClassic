@@ -1087,7 +1087,8 @@ InitNewMission ( char *MissionName )
   Me.status = MOBILE;
   Me.phase = 0;
   Me.MissionTimeElapsed=0;
-  Me.Current_Victim_Resistance_Factor=1;
+  Me.Current_Victim_Resistance_Factor=1;  // this will never get changed in "classic" FD
+  
   Me.FramesOnThisLevel=0;
 
   /* Set colors of current level NOTE: THIS REQUIRES CurLevel TO BE INITIALIZED */

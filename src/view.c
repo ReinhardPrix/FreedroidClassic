@@ -252,9 +252,6 @@ Assemble_Combat_Picture (int mask)
       PrintStringFont( ne_screen , FPS_Display_BFont , User_Rect.x+User_Rect.w/2 , 
 		       User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
 		       "Energy: %d " , (int) (Me.energy) );
-      PrintStringFont( ne_screen , FPS_Display_BFont , User_Rect.x+User_Rect.w/2 , 
-		       User_Rect.y+User_Rect.h - 2 * FontHeight( FPS_Display_BFont ), 
-		       "Resistance: %f " , (Me.Current_Victim_Resistance_Factor) );
     }
 
   if ( GameConfig.Draw_Position )

@@ -1171,7 +1171,9 @@ ProcessDisplayColumn (void)
   // depend on the details of the final takeover score.  Therefore we set this
   // resistance factor variable here.
   //
-  Me.Current_Victim_Resistance_Factor = 0.2 * ( (float) 12 - abs( ViolettCounter- GelbCounter ) );
+  // RP: yes, but as this is now a purely "classic" release, such extensions are
+  // deactivated...
+  //  Me.Current_Victim_Resistance_Factor = 0.2 * ( (float) 12 - abs( ViolettCounter- GelbCounter ) );
 
   return;
 }; // ProcessDisplayColumn 
