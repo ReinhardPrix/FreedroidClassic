@@ -397,6 +397,13 @@ automap_update_texture_for_square ( int x , int y )
     obstacle* our_obstacle ;
     static int first_call = TRUE;
 
+    //---------------------
+    // If there is no OpenGL graphics output, then there is also no need
+    // to update/edit any OpenGL textures, therefore we quit to prevent 
+    // a segmentation fault.
+    //
+    if ( ! use_open_gl ) return;
+
     if ( first_call )
     {
 	first_call = FALSE ;
@@ -489,6 +496,15 @@ insert_old_map_info_into_texture ( void )
 #define AUTOMAP_SQUARE_SIZE 3
 #define AUTOMAP_COLOR 0x0FFFF
     Level automap_level = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
+
+    //---------------------
+    // If there is no OpenGL graphics output, then there is also no need
+    // to update/edit any OpenGL textures, therefore we quit to prevent 
+    // a segmentation fault.
+    //
+    if ( ! use_open_gl ) return;
+
+    set_up_texture_for_automap ( );
 
     //--------------------
     // At first, we only blit the known data about the pure wall-type
