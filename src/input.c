@@ -210,12 +210,13 @@ GetMousePos_y(void)
 };
 
 // 
+/*  use MouseRightPressed() instead!!
 int 
 GetMouseRightButton( void )
 {
   return( CurrentlyMouseRightPressed );
 };
-
+*/
 
 
 int sgn (int x)

@@ -520,7 +520,7 @@ Sorry...\n\
   AnimateInfluence ( PlayerNum ) ;	// move the "phase" of influencers rotation
 
   //--------------------
-  // Finally we check if perhaps the influencer is close to some friendly droid
+  // Now we check if perhaps the influencer is close to some friendly droid
   // and this friendly droid is also target of the mouse move.  Then of course
   // a chat with this droid must be initiated.
   //
@@ -547,6 +547,39 @@ Sorry...\n\
 	  Me [ PlayerNum ] . mouse_move_target_is_enemy = (-1) ;
 	}
     }
+
+  //--------------------
+  // Finally we check if perhaps the influencer is close to some targeted enemy droid
+  // and the takeover skill is activated as well.
+  // Then of course, takeover process must be initiated.
+  //
+  if ( ( Me [ PlayerNum ] . mouse_move_target_is_enemy != (-1) ) &&
+       ( fabsf( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . pos . x -
+		Me [ PlayerNum ] . pos . x ) < BEST_CHAT_DISTANCE_IN_SQUARES ) &&  
+       ( fabsf( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . pos . y -
+		Me [ PlayerNum ] . pos . y ) < BEST_CHAT_DISTANCE_IN_SQUARES ) &&  
+       ( ( AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . pos . z -
+	   Me [ PlayerNum ] . pos . z ) == 0 ) &&
+       ( Me [ PlayerNum ] . readied_skill == SKILL_TAKEOVER ) &&
+       ( MouseRightPressed() )
+       )
+    {
+      //--------------------
+      // This whole action only makes sence for ENEMY droids of course!
+      //
+      if ( ! AllEnemys [ Me [ PlayerNum ] . mouse_move_target_is_enemy ] . is_friendly )
+	{
+	  //--------------------
+	  // We chat with the friendly droid
+	  Takeover ( Me [ PlayerNum ] . mouse_move_target_is_enemy ) ;
+	  
+	  //--------------------
+	  // and then we deactivate this mouse_move_target_is_enemy to prevent
+	  // immediate recurrence of the very same chat.
+	  Me [ PlayerNum ] . mouse_move_target_is_enemy = (-1) ;
+	}
+    }
+
 
 }; // void MoveInfluence( void );
 
