@@ -500,7 +500,7 @@ Title (void)
 
   // STRANGE!! This command will be silently ignored by SDL?
   // WHY?? DONT KNOW!!!
-  Play_Sound ( CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC );
+  // Play_Sound ( CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC );
 
   // Play_Sound ( CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC );
   Switch_Background_Music_To ( CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC );
@@ -518,7 +518,9 @@ Title (void)
   // ClearGraphMem ();
   // DisplayRahmen( RAHMEN_FORCE_UPDATE ); 
 
-  SetTextColor (FONT_BLACK, FONT_RED);
+  // SetTextColor (FONT_BLACK, FONT_RED);
+
+  SetCurrentFont( FPS_Display_BFont );
 
   ScrollText (TitleText1, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
   ScrollText (TitleText2, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);

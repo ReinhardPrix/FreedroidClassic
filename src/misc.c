@@ -602,6 +602,7 @@ enum
       // influencer to the left before it
       // PutInfluence( FIRST_MENU_ITEM_POS_X , 
       // FIRST_MENU_ITEM_POS_Y + (MenuPosition-1) * (FontHeight(Menu_BFont)) - Block_Width/4 );
+      SetCurrentFont ( Menu_BFont );
       PutInfluence( FIRST_MENU_ITEM_POS_X , 
 		    FIRST_MENU_ITEM_POS_Y + ( MenuPosition - 1.5 ) * (FontHeight( Menu_BFont )) );
 
@@ -1555,8 +1556,7 @@ PutMessages (void)
 void
 CleanMessageLine (void)
 {
-  memset (RealScreen + MESPOSX + MESPOSY * SCREENBREITE, 0,
-	  SCREENBREITE * MESHOEHE);
+  // memset (RealScreen + MESPOSX + MESPOSY * SCREENBREITE, 0, SCREENBREITE * MESHOEHE);
 }
 
 /*@Function============================================================

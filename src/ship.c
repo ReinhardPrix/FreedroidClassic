@@ -463,7 +463,7 @@ GreatDruidShow (void)
 	  DisplayText (InfoText, USERFENSTERPOSX, USERFENSTERPOSY, &User_Rect);
 
 	  ShowRobotPicture (USERFENSTERPOSX, USERFENSTERPOSY + 2 * FONTHOEHE,
-			    Infodroid, RealScreen);
+			    Infodroid);
 
 	  Update_SDL_Screen();
 	  PrepareScaledSurface(TRUE);
@@ -523,8 +523,7 @@ GreatDruidShow (void)
       */
       DisplayText (InfoText, USERFENSTERPOSX, USERFENSTERPOSY, &User_Rect);
 
-      ShowRobotPicture (USERFENSTERPOSX, USERFENSTERPOSY + 2 * FONTHOEHE,
-			Infodroid, RealScreen);
+      ShowRobotPicture (USERFENSTERPOSX, USERFENSTERPOSY + 2 * FONTHOEHE, Infodroid );
 
       strcpy (InfoText, "Entry : ");
       strcat (InfoText, Entry[Infodroid]);
@@ -583,8 +582,7 @@ GreatDruidShow (void)
 
       DisplayText (InfoText, USERFENSTERPOSX, USERFENSTERPOSY, &User_Rect);
 
-      ShowRobotPicture (USERFENSTERPOSX, USERFENSTERPOSY + 2 * FONTHOEHE,
-			Infodroid, RealScreen);
+      ShowRobotPicture (USERFENSTERPOSX, USERFENSTERPOSY + 2 * FONTHOEHE, Infodroid);
 
       strcpy (InfoText, "Armamant : ");
       strcat (InfoText, Weaponnames[Armament[Infodroid]]);
@@ -636,8 +634,7 @@ GreatDruidShow (void)
 
       DisplayText (InfoText, USERFENSTERPOSX, USERFENSTERPOSY, &User_Rect);
 
-      ShowRobotPicture (USERFENSTERPOSX, USERFENSTERPOSY + 2 * FONTHOEHE,
-			Infodroid, RealScreen);
+      ShowRobotPicture (USERFENSTERPOSX, USERFENSTERPOSY + 2 * FONTHOEHE, Infodroid );
 
       strcpy (InfoText, "Notes: ");
       strcat (InfoText, Druidmap[Infodroid].notes);

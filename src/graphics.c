@@ -495,14 +495,17 @@ Init_Video (void)
   /* clean up on exit */
   atexit (SDL_Quit);
 
-  if ( ( Menu_BFont = LoadFont (FPS_FONT_FILE) ) == NULL )
+  //--------------------
+  // Now we initialize the fonts needed by BFont functions
+  
+  if ( ( Menu_BFont = LoadFont (MENU_FONT_FILE) ) == NULL )
       {
         fprintf(stderr, "\n\nCouldn't initialize Font.\n\nTerminating...\n\n");
         Terminate(ERR);
   } else
   printf("\nSDL Menu Font initialisation successful.\n");
 
-  if ( ( Para_BFont = LoadFont (FPS_FONT_FILE) ) == NULL )
+  if ( ( Para_BFont = LoadFont (PARA_FONT_FILE) ) == NULL )
     {
       fprintf(stderr, "\n\nCouldn't initialize Font.\n\nTerminating...\n\n");
       Terminate(ERR);
@@ -516,7 +519,7 @@ Init_Video (void)
     } else
       printf("\nSDL FPS Display Font initialisation successful.\n");
 
-  SetCurrentFont(Menu_BFont);
+  //  SetCurrentFont(Menu_BFont);
 
   vid_info = SDL_GetVideoInfo (); /* just curious */
   SDL_VideoDriverName (vid_driver, 80);

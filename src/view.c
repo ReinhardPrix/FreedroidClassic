@@ -661,7 +661,7 @@ SetUserfenster (int color)
 #define ROBOTBILDBREITE SCREENBREITE/8
 
 void
-ShowRobotPicture (int PosX, int PosY, int Number, unsigned char *Screen)
+ShowRobotPicture (int PosX, int PosY, int Number )
 {
   SDL_Surface *tmp;
   SDL_Rect SourceRectangle;

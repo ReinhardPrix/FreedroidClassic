@@ -282,11 +282,12 @@ SetInfoline (const char *left, const char *right )
   if ( (strcmp( left_box , previous_left_box )) || 
        (strcmp( right_box , previous_right_box )) )
     {
+      SetCurrentFont(Para_BFont);
       DisplayRahmen( RAHMEN_FORCE_UPDATE | RAHMEN_DONT_TOUCH_TEXT );
-      PrintStringFont ( ne_screen , Menu_BFont, LEFT_INFO_X , LEFT_INFO_Y , left_box );
+      PrintStringFont ( ne_screen , Para_BFont, LEFT_INFO_X , LEFT_INFO_Y , left_box );
       // SDL_UpdateRect( ne_screen, LEFT_INFO_X, LEFT_INFO_Y, FontHeight(Menu_BFont)*8, FontHeight(Menu_BFont) );
       strcpy( previous_left_box , left_box );
-      PrintStringFont ( ne_screen , Menu_BFont, RIGHT_INFO_X , RIGHT_INFO_Y , right_box );
+      PrintStringFont ( ne_screen , Para_BFont, RIGHT_INFO_X , RIGHT_INFO_Y , right_box );
       // SDL_UpdateRect( ne_screen, RIGHT_INFO_X, RIGHT_INFO_Y, FontHeight(Menu_BFont)*4, FontHeight(Menu_BFont) );
       strcpy( previous_right_box , right_box );
       printf("\nHad to update top status line box...");

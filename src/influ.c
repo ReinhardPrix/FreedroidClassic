@@ -481,7 +481,7 @@ CheckInfluenceWallCollisions (void)
       if ( ! ( ( DruidPassable(lastpos.x , lastpos.y + Druidmap[Me.type].maxspeed * Frame_Time() ) != CENTER ) ||
 	       ( DruidPassable(lastpos.x , lastpos.y - Druidmap[Me.type].maxspeed * Frame_Time() ) != CENTER ) ) )
 	{
-	  printf("\nNorth-south-Axis seems to be free.");
+	  // printf("\nNorth-south-Axis seems to be free.");
 	  NorthSouthAxisBlocked = FALSE;
 	}
       else
@@ -492,7 +492,7 @@ CheckInfluenceWallCollisions (void)
       if ( ( DruidPassable(lastpos.x + Druidmap[Me.type].maxspeed * Frame_Time() , lastpos.y ) == CENTER ) &&
 	   ( DruidPassable(lastpos.x - Druidmap[Me.type].maxspeed * Frame_Time() , lastpos.y ) == CENTER ) )
 	{
-	  printf("\nEast-west-Axis seems to be free.");
+	  // printf("\nEast-west-Axis seems to be free.");
 	  EastWestAxisBlocked = FALSE;
 	}
       else 
@@ -506,7 +506,7 @@ CheckInfluenceWallCollisions (void)
 
       if ( NorthSouthAxisBlocked )
 	{
-	  printf("\nNS-Axis seems NOT to be free.");
+	  // printf("\nNS-Axis seems NOT to be free.");
 	  // printf("\nCorrection movement and position in this direction...");
 
 	  // NorthSouthCorrectionDone=TRUE;
@@ -520,13 +520,13 @@ CheckInfluenceWallCollisions (void)
 	    {
 	      Me.pos.x += copysignf ( PUSHSPEED * Frame_Time() , ( rintf(Me.pos.x) - Me.pos.x ));
 	      H_Door_Sliding_Active = TRUE;
-	      printf("\nDOOR SLIDING ACTIVATED!!!");
+	      // printf("\nDOOR SLIDING ACTIVATED!!!");
 	    }
 	}
 
       if ( EastWestAxisBlocked )
 	{
-	  printf("\nEW-Axis seems NOT to be free.");
+	  // printf("\nEW-Axis seems NOT to be free.");
 	  // printf("\nCorrection movement and position in this direction...");
 
 	  // EastWestCorrectionDone=TRUE;
@@ -542,7 +542,7 @@ CheckInfluenceWallCollisions (void)
 
       if ( EastWestAxisBlocked && NorthSouthAxisBlocked )
 	{
-	  printf("\nBOTH AXES BLOCKED... Corner handling activated...");
+	  // printf("\nBOTH AXES BLOCKED... Corner handling activated...");
 	  // in case both axes were blocked, we must be at a corner.  
 	  // both axis-blocked-routines have been executed, so the speed has
 	  // been set to absolutely zero and we are at the previous position.

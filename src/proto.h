@@ -117,8 +117,7 @@ EXTERN int PutObject (int x, int y, unsigned char *pic, int check);
 EXTERN void DrawDigit (unsigned char *, unsigned char *);
 EXTERN void RedrawInfluenceNumber (void);
 EXTERN void SetUserfenster (int color );
-EXTERN void ShowRobotPicture (int PosX, int PosY, int Number,
-			      unsigned char *Screen);
+EXTERN void ShowRobotPicture (int PosX, int PosY, int Number);
 
 
 /* blocks.c */

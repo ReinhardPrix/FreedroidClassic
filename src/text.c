@@ -268,12 +268,12 @@ DisplayChar (unsigned char c)
       Terminate(ERR);
     }
 
-  PutCharFont (ne_screen, Menu_BFont, MyCursorX, MyCursorY, c);
+  PutChar (ne_screen, MyCursorX, MyCursorY, c);
 
   // After the char has been displayed, we must move the cursor to its
   // new position.  That depends of course on the char displayed.
   //
-  MyCursorX += CharWidth (Menu_BFont, c);
+  MyCursorX += CharWidth ( GetCurrentFont() , c);
   
 } // void DisplayChar(...)
 
@@ -308,11 +308,11 @@ ImprovedCheckUmbruch (char* Resttext, const SDL_Rect *clip)
       {
 	if ( (Resttext[i] != ' ') && (Resttext[i] != 0) )
 	  { 
-	    NeededSpace+=CharWidth( Menu_BFont , Resttext[i] );
+	    NeededSpace+=CharWidth( GetCurrentFont() , Resttext[i] );
 	    if ( MyCursorX+NeededSpace > clip->x + clip->w - 10 )
 	      {
 		MyCursorX = clip->x;
-		MyCursorY += FontHeight (Menu_BFont) * TEXT_STRETCH;
+		MyCursorY += FontHeight ( GetCurrentFont() ) * TEXT_STRETCH;
 		return;
 	      }
 	  }

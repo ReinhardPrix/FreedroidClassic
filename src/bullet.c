@@ -369,7 +369,7 @@ CheckBlastCollisions (int num)
   int i;
   int level = CurLevel->levelnum;
   Blast CurBlast = &(AllBlasts[num]);
-  static int RHBZaehler = 0;
+  // static int RHBZaehler = 0;
 
   /* check Blast-Bullet Collisions and kill hit Bullets */
   for (i = 0; i < MAXBULLETS; i++)
