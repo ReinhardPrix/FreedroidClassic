@@ -2716,6 +2716,9 @@ the item specification section.",
 				     PLEASE_INFORM, IS_FATAL );
 	}
 
+      ReadValueFromString ( SearchPointer , "on_death_drop_item_code=" , "%d", 
+			    &AllEnemys[ FreeAllEnemysPosition ].on_death_drop_item_code , EndOfThisLevelData );
+
       AllEnemys[ FreeAllEnemysPosition ].type = ListIndex;
       AllEnemys[ FreeAllEnemysPosition ].pos.z = OurLevelNumber;
       AllEnemys[ FreeAllEnemysPosition ].Status = MOBILE ; // !OUT;
@@ -2831,9 +2834,10 @@ game data file with all droid type specifications.",
 				     PLEASE_INFORM, IS_FATAL );
 	}
 
-      AllEnemys[ FreeAllEnemysPosition ].type = ListOfTypesAllowed[MyRandom (DifferentRandomTypes-1)];
-      AllEnemys[ FreeAllEnemysPosition ].pos.z = OurLevelNumber;
-      AllEnemys[ FreeAllEnemysPosition ].Status = MOBILE ; // !OUT;
+      AllEnemys[ FreeAllEnemysPosition ] . type = ListOfTypesAllowed[MyRandom ( DifferentRandomTypes - 1 ) ];
+      AllEnemys[ FreeAllEnemysPosition ] . pos . z = OurLevelNumber;
+      AllEnemys[ FreeAllEnemysPosition ] . Status = MOBILE ; // !OUT;
+      AllEnemys[ FreeAllEnemysPosition ] . on_death_drop_item_code = (-1) ;
 
       strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "No Description For This One" );
 

@@ -720,62 +720,63 @@ network_tux_t, *Network_tux_t;
 
 typedef struct
 {
-  int type;			// the number of the droid specifications in Druidmap 
-  gps pos;		        // coordinates of the current position in the level
-  finepoint speed;		// current speed  
-  double energy;		// current energy of this droid
+    int type;			// the number of the droid specifications in Druidmap 
+    gps pos;		        // coordinates of the current position in the level
+    finepoint speed;		// current speed  
+    double energy;		// current energy of this droid
+    
+    double phase;	                // current phase of rotation of this droid
+    float animation_phase;        // the current animation frame for this enemy (starting at 0 of course...)
+    int animation_type;           // walk-animation, attack-animation, gethit animation, death animation
+    
+    int nextwaypoint;		// the next waypoint target
+    int lastwaypoint;		// the waypoint from whence this robot just came
+    int Status;			// current status like OUT=TERMINATED or not OUT
+    
+    int combat_state;             // MOVE_ALONG_RANDOM_WAYPOINTS, BACK_OFF_AFTER_GETTING_HIT, MAKE_ATTACK_RUN, SEEK_BETTER_POSITION...
+    float state_timeout;          // when will this state automatically time out...
+    
+    float frozen;                 // is this droid currently frozen and for how long will it stay this way?
+    float poison_duration_left;   // is this droid currently poisoned and for how long will it stay this way?
+    float poison_damage_per_sec;  // is this droid currently poisoned and how much poison is at work?
+    float paralysation_duration_left;  // is this droid currently paralyzed and for how long will it stay this way?
+    double warten;		// time till the droid will start to move again
+    double firewait;		// time this robot still takes until it's gun/weapon will be fully reloaded
+    
+    int CompletelyFixed;          // set this flat to make the robot entirely immobile
+    int FollowingInflusTail;      // does this robot follow influs tail? (trott behind him? )
+    int SpecialForce;             // This flag will exclude the droid from initial shuffling of droids
+    int on_death_drop_item_code;  // drop a pre-determined item when dying?
 
-  double phase;	                // current phase of rotation of this droid
-  float animation_phase;        // the current animation frame for this enemy (starting at 0 of course...)
-  int animation_type;           // walk-animation, attack-animation, gethit animation, death animation
+    int marker;                   // This provides a marker for special mission targets
+    int AdvancedCommand;          // An advanced command that modifies the behaviour of the droid (in new missions)
+    double Parameter1;            // This contains special information for AdvancedCommand
+    double Parameter2;            // This contains special information for AdvancedCommand
 
-  int nextwaypoint;		// the next waypoint target
-  int lastwaypoint;		// the waypoint from whence this robot just came
-  int Status;			// current status like OUT=TERMINATED or not OUT
+    int is_friendly;              // is this a friendly droid or is it a MS controlled one?
+    int attack_target_type ;      // attack NOTHING, PLAYER12345, or BOT
+    int attack_target_index ;     // index of player or of enemy or eventually also (-1) in case there is no target
+    int attack_run_only_when_direct_line; // require direct line to target before switching into attach run mode
+    char dialog_section_name[ MAX_LENGTH_FOR_DIALOG_SECTION_NAME ]; // This should indicate one of the many sections of the Freedroid.dialogues file
+    char short_description_text[ MAX_LENGTH_OF_SHORT_DESCRIPTION_STRING ]; // This should indicate one of the many sections of the Freedroid.dialogues file
+    int will_rush_tux;            // will this robot approach the Tux on sight and open communication?
+    int persuing_given_course;    // is this robot persuing a given course via PersueGivenCourse( EnemyNum )?
+    int StayHowManyFramesBehind;  // how many frames shall this droid trott behind the influ when follwing his tail?
+    int StayHowManySecondsBehind;  // how many seconds shall this droid trott behind the influ when follwing his tail?
+    int has_greeted_influencer;   // has this robot issued his first-time-see-the-Tux message?
+    float previous_angle;         // which angle has this robot been facing the frame before?
+    float current_angle;          // which angle will the robot be facing now?
+    float last_phase_change;      // when did the robot last change his (8-way-)direction of facing
+    float previous_phase;         // which (8-way) direction did the robot face before?
+    float last_combat_step;       // when did this robot last make a step to move in closer or farther away from Tux in combat?
 
-  int combat_state;             // MOVE_ALONG_RANDOM_WAYPOINTS, BACK_OFF_AFTER_GETTING_HIT, MAKE_ATTACK_RUN, SEEK_BETTER_POSITION...
-  float state_timeout;          // when will this state automatically time out...
-
-  float frozen;                 // is this droid currently frozen and for how long will it stay this way?
-  float poison_duration_left;   // is this droid currently poisoned and for how long will it stay this way?
-  float poison_damage_per_sec;  // is this droid currently poisoned and how much poison is at work?
-  float paralysation_duration_left;  // is this droid currently paralyzed and for how long will it stay this way?
-  double warten;		// time till the droid will start to move again
-  double firewait;		// time this robot still takes until it's gun/weapon will be fully reloaded
-
-  int CompletelyFixed;          // set this flat to make the robot entirely immobile
-  int FollowingInflusTail;      // does this robot follow influs tail? (trott behind him? )
-  int SpecialForce;             // This flag will exclude the droid from initial shuffling of droids
-
-  int marker;                   // This provides a marker for special mission targets
-  int AdvancedCommand;          // An advanced command that modifies the behaviour of the droid (in new missions)
-  double Parameter1;            // This contains special information for AdvancedCommand
-  double Parameter2;            // This contains special information for AdvancedCommand
-
-  int is_friendly;              // is this a friendly droid or is it a MS controlled one?
-  int attack_target_type ;      // attack NOTHING, PLAYER12345, or BOT
-  int attack_target_index ;     // index of player or of enemy or eventually also (-1) in case there is no target
-  int attack_run_only_when_direct_line; // require direct line to target before switching into attach run mode
-  char dialog_section_name[ MAX_LENGTH_FOR_DIALOG_SECTION_NAME ]; // This should indicate one of the many sections of the Freedroid.dialogues file
-  char short_description_text[ MAX_LENGTH_OF_SHORT_DESCRIPTION_STRING ]; // This should indicate one of the many sections of the Freedroid.dialogues file
-  int will_rush_tux;            // will this robot approach the Tux on sight and open communication?
-  int persuing_given_course;    // is this robot persuing a given course via PersueGivenCourse( EnemyNum )?
-  int StayHowManyFramesBehind;  // how many frames shall this droid trott behind the influ when follwing his tail?
-  int StayHowManySecondsBehind;  // how many seconds shall this droid trott behind the influ when follwing his tail?
-  int has_greeted_influencer;   // has this robot issued his first-time-see-the-Tux message?
-  float previous_angle;         // which angle has this robot been facing the frame before?
-  float current_angle;          // which angle will the robot be facing now?
-  float last_phase_change;      // when did the robot last change his (8-way-)direction of facing
-  float previous_phase;         // which (8-way) direction did the robot face before?
-  float last_combat_step;       // when did this robot last make a step to move in closer or farther away from Tux in combat?
-
-  //--------------------
-  // FROM HERE ON, THERE IS ONLY INFORMATION, THAT DOES NOT NEED TO BE
-  // COMMUNICATED BETWEEN THE CLIENT AND THE SERVER
-  //
-  float TextVisibleTime;
-  char* TextToBeDisplayed;
-  moderately_finepoint PrivatePathway[ MAX_STEPS_IN_GIVEN_COURSE ];
+    //--------------------
+    // FROM HERE ON, THERE IS ONLY INFORMATION, THAT DOES NOT NEED TO BE
+    // COMMUNICATED BETWEEN THE CLIENT AND THE SERVER
+    //
+    float TextVisibleTime;
+    char* TextToBeDisplayed;
+    moderately_finepoint PrivatePathway[ MAX_STEPS_IN_GIVEN_COURSE ];
 }
 enemy, *Enemy;
 

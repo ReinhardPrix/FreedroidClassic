@@ -1052,43 +1052,48 @@ void
 DropEnemyTreasure ( Enemy ThisRobot )
 {
 
-  //--------------------
-  // If the Tux has the skill to extract certain components from dead bots,
-  // these components will be thrown out automatically, when the bot is killed.
-  //
-  if ( Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_PLASMA_TRANSISTORS ] )
+    //--------------------
+    // If the Tux has the skill to extract certain components from dead bots,
+    // these components will be thrown out automatically, when the bot is killed.
+    //
+    if ( Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_PLASMA_TRANSISTORS ] )
     {
-      if ( Druidmap [ ThisRobot->type ] . amount_of_plasma_transistors )
-	DropItemAt( ITEM_DROID_PART_1 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 , 1 );
+	if ( Druidmap [ ThisRobot->type ] . amount_of_plasma_transistors )
+	    DropItemAt( ITEM_DROID_PART_1 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 , 1 );
     }
-  if ( Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_SUPERCONDUCTORS ] )
+    if ( Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_SUPERCONDUCTORS ] )
     {
-      if ( Druidmap [ ThisRobot->type ] . amount_of_superconductors )
-	DropItemAt( ITEM_DROID_PART_2 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 , 1 );
+	if ( Druidmap [ ThisRobot->type ] . amount_of_superconductors )
+	    DropItemAt( ITEM_DROID_PART_2 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 , 1 );
     }
-  if ( Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_ANTIMATTER_CONVERTERS ] )
+    if ( Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_ANTIMATTER_CONVERTERS ] )
     {
-      if ( Druidmap [ ThisRobot->type ] . amount_of_antimatter_converters )
-	DropItemAt( ITEM_DROID_PART_3 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 , 1 );
+	if ( Druidmap [ ThisRobot->type ] . amount_of_antimatter_converters )
+	    DropItemAt( ITEM_DROID_PART_3 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 , 1 );
     }
-  if ( Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_ENTROPY_INVERTERS ] )
+    if ( Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_ENTROPY_INVERTERS ] )
     {
-      if ( Druidmap [ ThisRobot->type ] . amount_of_entropy_inverters )
-	DropItemAt( ITEM_DROID_PART_4 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 , 1 );
+	if ( Druidmap [ ThisRobot->type ] . amount_of_entropy_inverters )
+	    DropItemAt( ITEM_DROID_PART_4 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 , 1 );
     }
-  if ( Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_TACHYON_CONDENSATORS ] )
+    if ( Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_TACHYON_CONDENSATORS ] ) 
     {
-      if ( Druidmap [ ThisRobot->type ] . amount_of_tachyon_condensators )
-	DropItemAt( ITEM_DROID_PART_5 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 , 1 );
+	if ( Druidmap [ ThisRobot->type ] . amount_of_tachyon_condensators )
+	    DropItemAt( ITEM_DROID_PART_5 , ThisRobot->pos.x , ThisRobot->pos.y , -1 , -1 , 2 , 1 );
     }
-
-  //--------------------
-  // Apart from the parts, that the Tux might be able to extract from the bot,
-  // there is still some chance, that the enemy will have (and drop) some other
-  // valuables, that the Tux can then collect afterwards.
-  //
-  DropRandomItem ( ThisRobot -> pos . x , ThisRobot -> pos . y , Druidmap [ ThisRobot -> type ] . monster_level , FALSE , FALSE , FALSE );
-
+    if ( ThisRobot -> on_death_drop_item_code != (-1) )
+    {
+	DropItemAt( ThisRobot -> on_death_drop_item_code , ThisRobot -> pos . x , 
+		    ThisRobot -> pos . y , -1 , -1 , 2 , 1 );
+    }  
+    
+    //--------------------
+    // Apart from the parts, that the Tux might be able to extract from the bot,
+    // there is still some chance, that the enemy will have (and drop) some other
+    // valuables, that the Tux can then collect afterwards.
+    //
+    DropRandomItem ( ThisRobot -> pos . x , ThisRobot -> pos . y , Druidmap [ ThisRobot -> type ] . monster_level , FALSE , FALSE , FALSE );
+    
 
 }; // void DropEnemyTreasure ( Enemy ThisRobot )
 

@@ -83,7 +83,8 @@ void RecFlashFill (int LX, int LY, int Color, unsigned char *Parameter_Screen,
 		   int SBreite);
 int Cent (int);
 void PutRadialBlueSparks( float PosX, float PosY , float Radius , int SparkType );
-void insert_new_element_into_blitting_list ( float new_element_norm , int new_element_type , void* new_element_pointer , int code_number );
+void insert_new_element_into_blitting_list ( float new_element_norm , int new_element_type , 
+					     void* new_element_pointer , int code_number );
 
 char *Affected;
 EXTERN int MyCursorX;
