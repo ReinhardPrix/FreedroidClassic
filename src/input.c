@@ -255,6 +255,7 @@ ReactToSpecialKeys(void)
 	  DebugPrintf( 0 , "\nitem_can_be_installed_in_weapon_slot: %d " , ItemMap[ i ].item_can_be_installed_in_weapon_slot );
 	  DebugPrintf( 0 , "\nitem_can_be_installed_in_drive_slot: %d " , ItemMap[ i ].item_can_be_installed_in_drive_slot );
 	  DebugPrintf( 0 , "\nitem_gun_damage: %d " , ItemMap[ i ].item_gun_damage );
+	  DebugPrintf( 0 , "\nitem_gun_recharging_time: %f " , ItemMap[ i ].item_gun_recharging_time );
 
 /*
   int New_Laser_Type_After_Installation;

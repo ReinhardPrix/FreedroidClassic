@@ -860,6 +860,7 @@ AttackInfluence (int enemynum)
   float xdist, ydist;
   float dist2;
   Enemy ThisRobot=&AllEnemys[ enemynum ];
+  double bullet_speed = ItemMap[ Druidmap[ ThisRobot->type ].weapon_item ].item_gun_speed;
 
   //--------------------
   // At first, we check for a lot of cases in which we do not
@@ -939,7 +940,7 @@ AttackInfluence (int enemynum)
       /* Schussrichtung festlegen */
       if (fabsf (xdist) >= fabsf (ydist))
 	{
-	  AllBullets[j].speed.x = Bulletmap[guntype].speed;
+	  AllBullets[j].speed.x = bullet_speed;
 	  AllBullets[j].speed.y = ydist * AllBullets[j].speed.x / xdist;
 	  if (xdist < 0)
 	    {
@@ -950,7 +951,7 @@ AttackInfluence (int enemynum)
 
       if (fabsf (xdist) < fabsf (ydist))
 	{
-	  AllBullets[j].speed.y = Bulletmap[guntype].speed;
+	  AllBullets[j].speed.y = bullet_speed;
 	  AllBullets[j].speed.x = xdist * AllBullets[j].speed.y / ydist;
 	  if (ydist < 0)
 	    {
@@ -967,9 +968,9 @@ AttackInfluence (int enemynum)
 
       /* Bullets so abfeuern, dass sie nicht den Schuetzen treffen */
       AllBullets[j].pos.x +=
-	(AllBullets[j].speed.x) / fabsf (Bulletmap[guntype].speed) * 0.5;
+	(AllBullets[j].speed.x) / ( bullet_speed ) * 0.5;
       AllBullets[j].pos.y +=
-	(AllBullets[j].speed.y) / fabsf (Bulletmap[guntype].speed) * 0.5;
+	(AllBullets[j].speed.y) / ( bullet_speed ) * 0.5;
 
       // The following lines could be improved: Use not the sign, but only */
       // the fraction of the maxspeed times constant!
@@ -980,7 +981,7 @@ AttackInfluence (int enemynum)
 
       /* Dem Bullettype entsprechend lange warten vor naechstem Schuss */
 
-      ThisRobot->firewait = Bulletmap[Druidmap[ThisRobot->type].gun].recharging_time ;
+      ThisRobot->firewait = ItemMap [ Druidmap[ThisRobot->type].weapon_item ].item_gun_recharging_time ;
 
       /* Bullettype gemaes dem ueblichen guntype fuer den robottyp setzen */
       AllBullets[j].type = guntype;
@@ -1035,7 +1036,7 @@ AttackInfluence (int enemynum)
 
       if (fabsf (xdist) > fabsf (ydist))
 	{
-	  AllBullets[j].speed.x = Bulletmap[guntype].speed;
+	  AllBullets[j].speed.x = bullet_speed;
 	  AllBullets[j].speed.y = ydist * AllBullets[j].speed.x / xdist;
 	  if (xdist < 0)
 	    {
@@ -1046,7 +1047,7 @@ AttackInfluence (int enemynum)
 
       if (fabsf (xdist) < fabsf (ydist))
 	{
-	  AllBullets[j].speed.y = Bulletmap[guntype].speed;
+	  AllBullets[j].speed.y = bullet_speed;
 	  AllBullets[j].speed.x = xdist * AllBullets[j].speed.y / ydist;
 	  if (ydist < 0)
 	    {
@@ -1063,9 +1064,9 @@ AttackInfluence (int enemynum)
 
       /* Bullets so abfeuern, dass sie nicht den Schuetzen treffen */
       AllBullets[j].pos.x +=
-	(AllBullets[j].speed.x) / fabsf (Bulletmap[guntype].speed) * 0.5;
+	(AllBullets[j].speed.x) / (bullet_speed) * 0.5;
       AllBullets[j].pos.y +=
-	(AllBullets[j].speed.y) / fabsf (Bulletmap[guntype].speed) * 0.5;
+	(AllBullets[j].speed.y) / (bullet_speed) * 0.5;
 
       // The following lines could be improved: Use not the sign, but only */
       // the fraction of the maxspeed times constant!
@@ -1076,7 +1077,7 @@ AttackInfluence (int enemynum)
 
       /* Dem Bullettype entsprechend lange warten vor naechstem Schuss */
 
-      ThisRobot->firewait = Bulletmap[Druidmap[ThisRobot->type].gun].recharging_time ;
+      ThisRobot->firewait = ItemMap [ Druidmap[ThisRobot->type].weapon_item ].item_gun_recharging_time ;
 
       /* Bullettype gemaess dem ueblichen guntype fuer den robottyp setzen */
       AllBullets[j].type = guntype;
