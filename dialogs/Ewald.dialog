@@ -74,7 +74,7 @@ PositionX=170  PositionY=226
 Subtitle="Take a look.  You will find everything you desire."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
-DoSomethingExtra="InitTradeWithCharacter:"
+DoSomethingExtra="InitTradeWithCharacter:Ewald"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
