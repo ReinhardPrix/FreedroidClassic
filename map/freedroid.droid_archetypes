@@ -1376,7 +1376,7 @@ Sensor 1 of this droid : 2
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
 Drive item=7
-Weapon item=60
+Weapon item=13
 Shield item=-1
 Armour item=-1
 Aux1 item=-1
@@ -1399,7 +1399,7 @@ Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
 Individual shape of this droid or just -1 for classic ball shaped : 24
 Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : This is a typical professor/sage character of some older age.
+Notes concerning this droid : This is a typical professor/sage character of some older age.  They are not armed as powerfully as e.g. the red guards.
 
 ** Start of new Robot: ** 
 Droidname: GUA
@@ -1452,7 +1452,7 @@ Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
 Individual shape of this droid or just -1 for classic ball shaped : 25
 Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : This is a typical red (male) guard/fighter character.
+Notes concerning this droid : This is a typical red (male) guard/fighter character.  They are equipped with powerful PowerExterminators.
 
 ** Start of new Robot: ** 
 Droidname: MUM
@@ -1505,7 +1505,7 @@ Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
 Individual shape of this droid or just -1 for classic ball shaped : 26
 Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : This is a typical red (male) guard/fighter character.
+Notes concerning this droid : This is the hot_mama shopkeeper character model.
 
 ** Start of new Robot: ** 
 Droidname: FSC
@@ -1535,7 +1535,7 @@ Sensor 1 of this droid : 2
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
 Drive item=7
-Weapon item=60
+Weapon item=13
 Shield item=-1
 Armour item=-1
 Aux1 item=-1
@@ -1558,7 +1558,7 @@ Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
 Individual shape of this droid or just -1 for classic ball shaped : 27
 Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : This is a typical red (male) guard/fighter character.
+Notes concerning this droid : This is the female scientist character model.  They are not armed as powerfully as e.g. the red guards.
 
 ** Start of new Robot: ** 
 Droidname: WOR
@@ -1588,7 +1588,7 @@ Sensor 1 of this droid : 2
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
 Drive item=7
-Weapon item=60
+Weapon item=13
 Shield item=-1
 Armour item=-1
 Aux1 item=-1
@@ -1611,7 +1611,7 @@ Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
 Individual shape of this droid or just -1 for classic ball shaped : 28
 Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : This is a typical professor/sage character of some older age.
+Notes concerning this droid : This is the brown worker model.  They are not armed as powerfully as e.g. the red guards.
 
 ** Start of new Robot: ** 
 Droidname: GUB
@@ -1641,7 +1641,7 @@ Sensor 1 of this droid : 2
 Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
 Drive item=7
-Weapon item=60
+Weapon item=13
 Shield item=-1
 Armour item=-1
 Aux1 item=-1
@@ -1664,7 +1664,7 @@ Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
 Individual shape of this droid or just -1 for classic ball shaped : 29
 Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : This is a typical blue (male) guard/fighter character.
+Notes concerning this droid : This is the blue guard model used e.g. for Darwin and fiend outside of town.  They are not armed as powerfully as e.g. the red guards.
 
 ** Start of new Robot: ** 
 Droidname: GUG
