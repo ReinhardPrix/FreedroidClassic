@@ -259,6 +259,7 @@ Get_Item_Data ( char* DataPointer )
 #define ITEM_CAN_BE_INSTALLED_IN_INFLU "Item can be installed in influ=\""
 #define ITEM_CAN_BE_INSTALLED_IN_WEAPON_SLOT "Item can be installed in weapon slot=\""
 #define ITEM_CAN_BE_INSTALLED_IN_DRIVE_SLOT "Item can be installed in drive slot=\""
+#define ITEM_CAN_BE_INSTALLED_IN_ARMOUR_SLOT "Item can be installed in armour slot=\""
 
 #define ITEM_RECHARGE_TIME_BEGIN_STRING "Time is takes to recharge this bullet/weapon in seconds :"
 #define ITEM_SPEED_BEGIN_STRING "Flying speed of this bullet type :"
@@ -397,6 +398,37 @@ Sorry...\n\
       else if ( strcmp( YesNoString , "no" ) == 0 )
 	{
 	  ItemMap[ItemIndex].item_can_be_installed_in_drive_slot = FALSE;
+	}
+      else
+	{
+	  fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+The item specification of an item in freedroid.ruleset should contain an \n\
+answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.\n\
+\n\
+This indicated a corrupted freedroid.ruleset file with an error at least in\n\
+the item specification section.  Please correct the error or send mail to the\n\
+freedroid development team.\n\
+\n\
+But for now Freedroid will terminate to draw attention \n\
+to the initialisation problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" );
+	  Terminate( ERR );
+	}
+
+      // Now we read in if this item can be installed in the armour slot
+      YesNoString = ReadAndMallocStringFromData ( ItemPointer , ITEM_CAN_BE_INSTALLED_IN_ARMOUR_SLOT , "\"" ) ;
+      if ( strcmp( YesNoString , "yes" ) == 0 )
+	{
+	  ItemMap[ItemIndex].item_can_be_installed_in_armour_slot = TRUE;
+	}
+      else if ( strcmp( YesNoString , "no" ) == 0 )
+	{
+	  ItemMap[ItemIndex].item_can_be_installed_in_armour_slot = FALSE;
 	}
       else
 	{

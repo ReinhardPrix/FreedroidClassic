@@ -108,33 +108,6 @@ Load_Item_Surfaces( void )
   int j;
   char *fpath;
 
-  fpath = find_file ( NE_ITEMS_BLOCK_FILE , GRAPHICS_DIR, TRUE);
-
-  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
-  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
-
-  for ( j=0 ; j < NUMBER_OF_ITEM_PICTURES ; j++ )
-    {
-      tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, vid_bpp, 0, 0, 0, 0);
-      SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
-      ItemImageList[ j ].Surface = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
-      SDL_SetColorKey( ItemImageList[ j ].Surface , 0 , 0 ); // this should clear any color key in the dest surface
-      // Now we can copy the image Information
-      Source.x=j*(Block_Height+2);
-      Source.y=i*(Block_Width+2);
-      Source.w=Block_Width;
-      Source.h=Block_Height;
-      Target.x=0;
-      Target.y=0;
-      Target.w=Block_Width;
-      Target.h=Block_Height;
-      SDL_BlitSurface ( Whole_Image , &Source , ItemImageList[ j ].Surface , &Target );
-      SDL_SetAlpha( ItemImageList[ j ].Surface , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-    }
-
-  SDL_FreeSurface( tmp_surf );
-
-
   ItemImageList[ 0 ].inv_size.x = 1;
   ItemImageList[ 0 ].inv_size.y = 1;
   ItemImageList[ 1 ].inv_size.x = 2;
@@ -166,7 +139,7 @@ Load_Item_Surfaces( void )
   ItemImageList[ 14 ].inv_size.x = 2;
   ItemImageList[ 14 ].inv_size.y = 2;
   ItemImageList[ 15 ].inv_size.x = 2;
-  ItemImageList[ 15 ].inv_size.y = 2;
+  ItemImageList[ 15 ].inv_size.y = 3;
   ItemImageList[ 16 ].inv_size.x = 2;
   ItemImageList[ 16 ].inv_size.y = 2;
   ItemImageList[ 17 ].inv_size.x = 2;
@@ -178,6 +151,31 @@ Load_Item_Surfaces( void )
   ItemImageList[ 20 ].inv_size.x = 2;
   ItemImageList[ 20 ].inv_size.y = 2;
 
+  fpath = find_file ( NE_ITEMS_BLOCK_FILE , GRAPHICS_DIR, TRUE);
+
+  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
+
+  for ( j=0 ; j < NUMBER_OF_ITEM_PICTURES ; j++ )
+    {
+      Source.x = j * ( Block_Height + 2 );
+      Source.y = i * ( Block_Width  + 2 );
+      Source.w = (Block_Width/2) * ItemImageList[ j ].inv_size.x ;
+      Source.h = (Block_Height/2) * ItemImageList[ j ].inv_size.y ;
+      Target.x = 0;
+      Target.y = 0;
+      Target.w = Source.w;
+      Target.h = Source.h;
+      tmp_surf = SDL_CreateRGBSurface( 0 , Source.w , Source.h , vid_bpp , 0 , 0 , 0 , 0 );
+      SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
+      ItemImageList[ j ].Surface = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
+      SDL_SetColorKey( ItemImageList[ j ].Surface , 0 , 0 ); // this should clear any color key in the dest surface
+      // Now we can copy the image Information
+      SDL_BlitSurface ( Whole_Image , &Source , ItemImageList[ j ].Surface , &Target );
+      SDL_SetAlpha( ItemImageList[ j ].Surface , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+    }
+
+  SDL_FreeSurface( tmp_surf );
 
 
 }; // void Load_Item_Surfaces( void )
