@@ -1932,10 +1932,31 @@ Highlight_Current_Block(void)
 {
   int i;
   Level EditLevel;
+  static iso_image level_editor_cursor = { NULL , 0 , 0 } ;
+  char* fpath;
 
   EditLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
-
 #define HIGHLIGHTCOLOR 255
+
+  //--------------------
+  // Maybe, if the level editor floor cursor has not yet been loaded,
+  // we need to load it.
+  //
+  if ( level_editor_cursor . surface == NULL )
+    {
+      fpath = find_file ( "level_editor_floor_cursor.png" , GRAPHICS_DIR, FALSE );
+      get_iso_image_from_file_and_path ( fpath , & ( level_editor_cursor ) ) ;
+      if ( level_editor_cursor . surface == NULL )
+	{
+	  GiveStandardErrorMessage ( "Highlight_Current_Block (...)" , "\
+Unable to load the level editor floor cursor.",
+				     PLEASE_INFORM, IS_FATAL );
+	}
+    }
+
+  blit_iso_image_to_map_position ( level_editor_cursor , Me [ 0 ] . pos . x , Me [ 0 ] . pos . y );
+
+  /*
 
   //--------------------
   // At first we draw all the four lines that make up the 
@@ -1962,6 +1983,8 @@ Highlight_Current_Block(void)
 
     }
   SDL_UnlockSurface( Screen );
+
+  */
 
   //--------------------
   // Now we print out the codepanel information about this tile
@@ -2927,29 +2950,40 @@ LevelEditor(void)
   char* NumericInputString;
   char linebuf[10000];
   long OldTicks;
-  SDL_Rect Editor_Window;
   Level EditLevel;
   char* NewCommentOnThisSquare;
   int LeftMousePressedPreviousFrame = FALSE;
   point TargetSquare;
   int new_x, new_y;
 
+  //--------------------
+  // We set the Tux position to something 'round'.
+  //
+  Me [ 0 ] . pos . x = rintf ( Me [ 0 ] . pos . x ) + 0.5 ;
+  Me [ 0 ] . pos . y = rintf ( Me [ 0 ] . pos . y ) + 0.5 ;
+
+  //--------------------
+  // We disable all the 'screens' so that we have full view on the
+  // map for the purpose of level editing.
+  //
   GameConfig.Inventory_Visible = FALSE;
   GameConfig.CharacterScreen_Visible = FALSE;
   GameConfig.SkillScreen_Visible = FALSE;
   RespectVisibilityOnMap = FALSE ;
 
+  //--------------------
+  // We init the 'vanishing message' structs, so that there is always
+  // something to display, and we set the time to 'out of date' already.
+  //
   EditLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
-
   strcpy ( VanishingMessage , "Hello" );
   VanishingMessageDisplayTime = 0 ;
+
+  //--------------------
+  // For drawing new waypoints, we init this.
+  //
   OriginWaypoint = (-1);
 
-  Editor_Window.x=User_Rect.x;
-  Editor_Window.y=User_Rect.y;  
-  Editor_Window.w=User_Rect.w;
-  Editor_Window.h=User_Rect.h;
-  
   while ( !Done )
     {
       Weiter=FALSE;
@@ -2963,8 +2997,8 @@ LevelEditor(void)
 	  //
 	  usleep ( 2 );
 
-	  BlockX=rintf(Me[0].pos.x);
-	  BlockY=rintf(Me[0].pos.y);
+	  BlockX = rintf ( Me [ 0 ] . pos . x - 0.5 );
+	  BlockY = rintf ( Me [ 0 ] . pos . y - 0.5 );
 	  
 	  EditLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;	  
 	  GetAllAnimatedMapTiles ( EditLevel );
@@ -2974,7 +3008,9 @@ LevelEditor(void)
 
 	  ClearUserFenster();
 	  AssembleCombatPicture ( ONLY_SHOW_MAP_AND_TEXT | SHOW_GRID | SHOW_ITEMS );
+
 	  Highlight_Current_Block();
+
 	  ShowWaypoints( FALSE );
 	  ShowMapLabels( );
 	  
