@@ -4,8 +4,8 @@ AC_INIT(FreeDroid, 0.6.0, r.prix@maths.soton.ac.uk, freedroid)
 # we want to use automake:
 AM_INIT_AUTOMAKE(@PACKAGE_TARNAME@, @PACKAGE_VERSION@)
 
-AC_CONFIG_SRCDIR([para.c])
-AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_SRCDIR([src/para.c])
+AM_CONFIG_HEADER(config.h)
 
 # Checks for programs.
 AC_PROG_CC
@@ -30,5 +30,5 @@ AC_FUNC_MALLOC
 AC_TYPE_SIGNAL
 AC_CHECK_FUNCS([alarm getcwd gettimeofday memset sqrt strstr])
 
-AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([Makefile src/Makefile])
 AC_OUTPUT
