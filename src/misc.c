@@ -205,10 +205,10 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     // These are the scrollbuttons for the chat protocal inside the
     // chat window, like when talking to a character/bot.
     //
-    { UNLOADED_ISO_IMAGE , "mouse_buttons/ScrollDialogMenuUp.png"           , { 335 , 6   , 160 ,  20 } , TRUE , TRUE } ,
-    { UNLOADED_ISO_IMAGE , "mouse_buttons/ScrollDialogMenuDown.png"         , { 335 , 270 , 160 ,  20 } , TRUE , TRUE } ,
-    { UNLOADED_ISO_IMAGE , "mouse_buttons/ScrollDialogMenuOff.png"          , { 335 , 6   , 160 ,  20 } , TRUE , TRUE } ,
-    { UNLOADED_ISO_IMAGE , "mouse_buttons/ScrollDialogMenuOff.png"          , { 335 , 270 , 160 ,  20 } , TRUE , TRUE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/ScrollDialogMenuUp.png"           , { 334 , 8   , 160 ,  20 } , TRUE , TRUE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/ScrollDialogMenuDown.png"         , { 334 , 270 , 160 ,  20 } , TRUE , TRUE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/ScrollDialogMenuOff.png"          , { 334 , 8   , 160 ,  20 } , TRUE , TRUE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/ScrollDialogMenuOff.png"          , { 334 , 270 , 160 ,  20 } , TRUE , TRUE } ,
 
     //--------------------
     // These 7 buttons are for the level editor and will not need
