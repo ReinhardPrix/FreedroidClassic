@@ -1057,7 +1057,7 @@ Freedroid received a rotation model number that does not exist!",
 	      // the classical Tux direction number codes while the other ones
 	      // use the old one-image-animation direction codes for enemies.
 	      //
-	      if ( ( ModelNr == 6 ) || ( ModelNr == 25 ) )
+	      if ( ( ModelNr == 6 ) || ( ModelNr == 25 ) || ( ModelNr == 26 ) || ( ModelNr == 27 ) )
 		source_direction_code = ModelMultiplier [ ModelNr ] * i * 2 ;
 	      else
 		source_direction_code = ( ModelMultiplier [ ModelNr ] * i ) + 0 ;
@@ -1773,25 +1773,39 @@ Load_Enemy_Surfaces( void )
   droid_animation_speed_factor [ i ] = 5 ;
   ModelMultiplier  [ i ] = 1 ;i++;
 
-  /*
-  PrefixToFilename [ i ] = "red_guard" ; // 25
+  PrefixToFilename [ i ] = "hot_mama" ; // 26
   first_walk_animation_image [ i ] = 1 ;
   last_walk_animation_image [ i ] = 5 ;
-  first_attack_animation_image [ i ] = 6 ;
-  last_attack_animation_image [ i ] = 6 ;
-  first_gethit_animation_image [ i ] = 7 ;
-  last_gethit_animation_image [ i ] = 8 ;
-  first_death_animation_image [ i ] = 9 ;
-  last_death_animation_image [ i ] = 10 ;
-  use_default_attack_image [ i ] = FALSE ;
-  use_default_gethit_image [ i ] = FALSE ;
-  use_default_death_image [ i ] = FALSE ;
+  first_attack_animation_image [ i ] = 5 ;
+  last_attack_animation_image [ i ] = 5 ;
+  first_gethit_animation_image [ i ] = 5 ;
+  last_gethit_animation_image [ i ] = 5 ;
+  first_death_animation_image [ i ] = 5 ;
+  last_death_animation_image [ i ] = 5 ;
+  use_default_attack_image [ i ] = TRUE ;
+  use_default_gethit_image [ i ] = TRUE ;
+  use_default_death_image [ i ] = TRUE ;
   Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
   droid_animation_speed_factor [ i ] = 5 ;
   ModelMultiplier  [ i ] = 1 ;i++;
-  */
 
-  PrefixToFilename [ i ] = "brown_worker" ; // 26
+  PrefixToFilename [ i ] = "female_scientist" ; // 27
+  first_walk_animation_image [ i ] = 1 ;
+  last_walk_animation_image [ i ] = 5 ;
+  first_attack_animation_image [ i ] = 5 ;
+  last_attack_animation_image [ i ] = 5 ;
+  first_gethit_animation_image [ i ] = 5 ;
+  last_gethit_animation_image [ i ] = 5 ;
+  first_death_animation_image [ i ] = 5 ;
+  last_death_animation_image [ i ] = 5 ;
+  use_default_attack_image [ i ] = TRUE ;
+  use_default_gethit_image [ i ] = TRUE ;
+  use_default_death_image [ i ] = TRUE ;
+  Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
+  droid_animation_speed_factor [ i ] = 5 ;
+  ModelMultiplier  [ i ] = 1 ;i++;
+
+  PrefixToFilename [ i ] = "brown_worker" ; // 28
   first_walk_animation_image [ i ] = 1 ;
   last_walk_animation_image [ i ] = 1 ;
   first_attack_animation_image [ i ] = 1 ;
@@ -1806,7 +1820,7 @@ Load_Enemy_Surfaces( void )
   Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
   droid_animation_speed_factor [ i ] = 5 ;
   ModelMultiplier  [ i ] = 1 ;i++;
-  PrefixToFilename [ i ] = "blue_guard" ; // 27
+  PrefixToFilename [ i ] = "blue_guard" ; // 29
   first_walk_animation_image [ i ] = 1 ;
   last_walk_animation_image [ i ] = 1 ;
   first_attack_animation_image [ i ] = 1 ;
@@ -1821,7 +1835,7 @@ Load_Enemy_Surfaces( void )
   Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
   droid_animation_speed_factor [ i ] = 5 ;
   ModelMultiplier  [ i ] = 1 ;i++;
-  PrefixToFilename [ i ] = "green_guard" ; // 28
+  PrefixToFilename [ i ] = "green_guard" ; // 30
   first_walk_animation_image [ i ] = 1 ;
   last_walk_animation_image [ i ] = 1 ;
   first_attack_animation_image [ i ] = 1 ;
