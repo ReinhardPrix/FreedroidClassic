@@ -245,11 +245,39 @@ PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting , int no
   //--------------------
   // Only if the file name wasn't 'no_voice_sample', we really
   // try to load anything...
-  //
+  //  
   if ( strcmp ( SoundSampleFileName , "Sorry_No_Voice_Sample_Yet_0.wav" ) )
     {
-      fpath = find_file ( Temp_Filename , SOUND_DIR, FALSE);
-      One_Shot_WAV_File = Mix_LoadWAV( fpath );
+      // This code searches for different kinds of 
+      int i;
+      int pathlen;
+      char *extension;
+      char *extensions[] = { ".spx", ".ogg", ".wav", NULL };  // Extensions to try for audio
+      
+      pathlen = strlen(Temp_Filename);
+
+      if(strcmp(Temp_Filename+pathlen-4, ".wav") == 0)
+      {
+          extension = Temp_Filename + pathlen - 4;
+      }
+      else
+      {
+          extension = Temp_Filename + pathlen;
+      }
+      
+      i = 0;
+      while(extensions[i] != NULL)
+      {
+        strcpy(extension, extensions[i]);
+        fpath = find_file ( Temp_Filename , SOUND_DIR, FALSE);
+        One_Shot_WAV_File = Mix_LoadWAV( fpath );
+        if(One_Shot_WAV_File != NULL)
+        {
+            break;
+        }
+
+        i++;
+      }
     }
   else
     One_Shot_WAV_File = NULL ;
