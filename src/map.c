@@ -568,10 +568,7 @@ int SaveShip(char *shipname)
 	} // while 
     
       if ( array_num == -1 ) {
-	char buf[10];
-	itoa(i, buf, 10);
-      
-	// DialogErr(MISSING_LEVELNUMBER, buf);
+
 	printf("\n\nMissing Levelnumber error in SaveShip...\n\nTerminating\n\n");
 	Terminate(ERR);
       

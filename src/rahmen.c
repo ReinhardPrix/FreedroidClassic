@@ -157,7 +157,10 @@ DisplayBanner (const char* left, const char* right,  int flags )
     left = InfluenceModeNames[Me.status];
 
   if ( right == NULL )  /* Right-DEFAULT: Score */
-    right =  ltoa (ShowScore, dummy, 10);
+    {
+      sprintf ( dummy , "%ld" , ShowScore );
+      right = dummy;
+    }
 
   // Now fill in the text
   left_len = strlen (left);

@@ -394,58 +394,6 @@ reverse (char s[])
 
 
 /*@Function============================================================
-@Desc: This function is used to transform an integer into an ascii
-       string that can then be written to a file.
-
-@Ret:  the given pointer to the string.
-* $Function----------------------------------------------------------*/
-char *
-itoa (int n, char s[], int Dummy)
-{
-  int i, sign;
-
-  if ((sign = n) < 0)
-    n = -n;
-  i = 0;
-  do
-    {
-      s[i++] = n % 10 + '0';
-    }
-  while ((n /= 10) > 0);
-  if (sign < 0)
-    s[i++] = '-';
-  s[i] = '\0';
-  reverse (s);
-  return s;
-}// void itoa(int n, char s[]) siehe Kernighan&Ritchie!
-
-/*@Function============================================================
-@Desc: This function is used to transform a long into an ascii
-       string that can then be written to a file.
-
-@Ret:  the given pointer to the string.
-* $Function----------------------------------------------------------*/
-char *
-ltoa (long n, char s[], int Dummy)
-{
-  int i, sign;
-
-  if ((sign = n) < 0)
-    n = -n;
-  i = 0;
-  do
-    {
-      s[i++] = n % 10 + '0';
-    }
-  while ((n /= 10) > 0);
-  if (sign < 0)
-    s[i++] = '-';
-  s[i] = '\0';
-  reverse (s);
-  return s;
-} // void ltoa(long n, char s[]) angelehnt an itoa!
-
-/*@Function============================================================
 @Desc: This function is kills all enemy robots on the whole ship.
        It querys the user once for safety.
 
