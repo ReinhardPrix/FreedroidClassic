@@ -826,9 +826,9 @@ enum
       MenuTexts[2]="Sell Items";
       MenuTexts[3]="Repair Items";
       MenuTexts[4]="Leave the Sales Representative";
-      MenuTexts[5]="";
-      MenuTexts[8]="";
-      MenuTexts[6]="";
+      MenuTexts[5]="XABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      MenuTexts[8]="xabcdefghijklmnopqrstuvwxyz";
+      MenuTexts[6]="x01234567890";
       MenuTexts[7]="";
       MenuTexts[9]="";
 

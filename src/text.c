@@ -149,6 +149,7 @@ ChatWithFriendlyDroid( int Enum )
   int SelectedItemNumber;
   char* Chandra_Text;
   char* Sorenson_Text;
+  char* RMS_Text;
   
   Chandra_Text = "Tux!  At last you have returned!\n\
 \n\
@@ -172,6 +173,13 @@ But when they finally requested all their preferred persons be fitted with impla
 It's good that I have found new friends and I hope we can survive together. \n\
 \n \n \n ";
 
+  RMS_Text = "Beware, Tux, when I finally made my escape from the second level, I saw a dark sales apprentice of the MS, transformed into a vile half-human creature, now lurking mindlessly for blood.\n\
+\n\
+Take care if you encounter this one.  He has taken the lives of many of my friends.\n\
+\n\
+You must go and put a end to the thing so that further evil is prevented and the things soul may finally rest.\n\
+\n \n \n ";
+
   // From initiating transfer mode, space might still have been pressed. 
   // So we wait till it's released...
   while (SpacePressed());
@@ -188,6 +196,14 @@ It's good that I have found new friends and I hope we can survive together. \n\
     {
       Switch_Background_Music_To ( "Sorenson01.ogg" );
       ScrollText ( Sorenson_Text , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NULL );
+      Switch_Background_Music_To ( CurLevel->Background_Song_Name );
+      return;
+    }
+
+  if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "RMS" ) == 0 )
+    {
+      Switch_Background_Music_To ( "Richard01.ogg" );
+      ScrollText ( RMS_Text , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NULL );
       Switch_Background_Music_To ( CurLevel->Background_Song_Name );
       return;
     }

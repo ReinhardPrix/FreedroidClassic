@@ -58,11 +58,11 @@ beginning_of_map
   1  10  10  10   2  10  10  10   9  12   0  26   0   0   0   0   0   0   0   0   0   0   0   0  24   7  10   9   0   0   0   0   0   0   0   4  10   3 
  33  33  33  33  33  33  33  33   1  10  10  10   9  23   0   0   0   7  10   9   0   0   0   7  10   3  33  11  13   0   0   0   0  16  12  11  33  33 
  33  33  33  33  33  33  33  33  33  33  33  33   1   9   0   0   0  11  33  11   0   0   0  11  33  33  33   1  10  10  10  10  10  10  10   3  33  33 
- 33  33  33  33  33   7  10  10  10  10   9  33  33  11   0   0   0   1  10   3   0   0   0  11  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
- 33  33  33  33  33  11  16  17  16  12   1  10  10   3   0   0   0  13  15  16   0   0   0  11  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
- 33  33  33  33  33  11  17   0  17   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
- 33  33  33  33  33  11  16  17  16   0  15   0   0   0   0   0   0   0   0   0   0   0   0  11  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
- 33  33  33  33  33   1  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   3  33  33  33  33  33  33  33  33  33  33  33  33  33  33 
+ 33  33  33  33  33   7  10  10  10  10   9  33  33  11   0   0   0   1  10   3   0   0   0   1  10  10  10  10   9  33  33  33  33  33  33  33  33  33 
+ 33  33  33  33  33  11  16  17  16  12   1  10  10   3   0   0   0  13  15  16   0   0   0   0   0   0  17   0  11  33  33  33  33  33  33  33  33  33 
+ 33  33  33  33  33  11  17   0  17   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  17   0  17  11  33  33  33  33  33  33  33  33  33 
+ 33  33  33  33  33  11  16  17  16   0  15   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  17   0  11  33  33  33  33  33  33  33  33  33 
+ 33  33  33  33  33   1  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   3  33  33  33  33  33  33  33  33  33 
 End of pure map information for this level
 Start of pure statement information for this level
 PosX=5 PosY=11 Statement="This must be the entrance to the teleporter room.  I think GNU will open the door."
@@ -75,11 +75,6 @@ New item: type=10  X=22.000000  Y=3.000000  AC=0  DoDamage=0  ModifyDamage=0  Ma
 New item: type=4  X=16.000000  Y=3.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  PrefixCode=0  SuffixCode=0 
 New item: type=5  X=17.000000  Y=3.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=18  CurDur=9.000000  Gold=0  PrefixCode=0  SuffixCode=0 
 New item: type=7  X=19.000000  Y=3.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=16  CurDur=10.000000  Gold=0  PrefixCode=0  SuffixCode=0 
-New item: type=1  X=12.000000  Y=1.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  PrefixCode=0  SuffixCode=0 
-New item: type=2  X=13.000000  Y=1.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  PrefixCode=0  SuffixCode=0 
-New item: type=5  X=16.000000  Y=1.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=15  CurDur=13.000000  Gold=0  PrefixCode=0  SuffixCode=0 
-New item: type=6  X=17.000000  Y=1.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=19  PrefixCode=0  SuffixCode=0 
-New item: type=7  X=18.000000  Y=1.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=13  CurDur=8.000000  Gold=0  PrefixCode=0  SuffixCode=0 
 New item: type=8  X=19.000000  Y=1.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=16  CurDur=8.000000  Gold=0  PrefixCode=0  SuffixCode=0 
 New item: type=9  X=20.000000  Y=1.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=20  CurDur=12.000000  Gold=0  PrefixCode=0  SuffixCode=0 
 New item: type=10  X=21.000000  Y=1.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=12  CurDur=9.000000  Gold=0  PrefixCode=0  SuffixCode=0 
@@ -119,12 +114,12 @@ Nr.= 20 x=   7 y=  17	 connections:   19  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 21 x=   7 y=  19	 connections:   19  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 22 x=   6 y=  18	 connections:   19  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 23 x=   8 y=  18	 connections:   18  19  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 24 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 25 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 26 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 27 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 28 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 29 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 24 x=  26 y=  17	 connections:   28  27  25  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 25 x=  25 y=  18	 connections:   29  28  24  26  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 26 x=  26 y=  19	 connections:   28  27  25  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 27 x=  27 y=  18	 connections:   28  26  24  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 28 x=  26 y=  18	 connections:   25  24  27  26  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 29 x=  21 y=  18	 connections:   25  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 30 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 31 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 32 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
@@ -243,6 +238,7 @@ End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
 Start of pure items information for this level
+New item: type=19  X=29.000000  Y=20.000000  AC=3  DoDamage=0  ModifyDamage=0  MaxDur=10  CurDur=7.000000  Gold=9  PrefixCode=-1  SuffixCode=-1 
 End of pure items information for this level
 wp
 Nr.=  0 x=   5 y=   1	 connections:    2   1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
@@ -521,9 +517,9 @@ Comment of the Influencer on entering this level="This is a level, like many oth
 Name of background song for this level=ELYSIUM.MOD
 beginning_of_map
  33  33  33  33  33  33  33  33  33  33  33   7  10  10  10  10  10  10  10  10  10   8  10  10  10  10  10  10  10  10   8  10  10  10  10   8  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10  10   8  10  10  10  10  10  10  10  10   9 
- 33  33  33  33  33  33   7  10  10  10  10   3  15  14  14  15  15  14  15  15  14  11  49   0   0   0   0  25  25  16  11  50  50   0   0  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  27   0   0   0   0   0   0   0   0  11 
- 33  33  33  33  33   7   3  17   0   0   0   0   0   0  49  50  15  14  15  14  14  11  50  17   0   0   0   0  38  24  11   0  50   0   0  27   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   7  10  10  10   3   0   0   0   0   0   0   0   0  11 
- 33  33  33  33   7   3  50   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11  49   0   0   0   0   0   0  24  11   0   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0   0  11 
+ 33  33  33  33  33  33   7  10  10  10  10   3  15  14  14  15  15  14  15  15  14  11   0   0   0   0   0  25  25  16  11   0   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  27   0   0   0   0   0   0   0   0  11 
+ 33  33  33  33  33   7   3  17   0   0   0   0   0   0  49  50  15  14  15  14  14  11   0  17   0   0   0   0  38  24  11   0   0   0   0  27   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   7  10  10  10   3   0   0   0   0   0   0   0   0  11 
+ 33  33  33  33   7   3  50   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0  24  11   0   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0   0  11 
  33  33  33  33  11   0   0   0   0   7   9   0   0   0   0   0   0   0   0   0   0   1  10  18  10   9   0   0   0  12  11   0   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0   0  11 
  33  33  33  33  11   0   0   0   0   1   2  10   8   9   0   0   0   0   0   0   0   0   0   0   0   1  10  18  10  10   2   9   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0   0  11 
  33  33  33   7   3   0   0   0   0   0   0   0   1   3   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   1  10  10  10   2  18  10  10  10  10  10   9   0   0   0   0   0   0   0   0   0   0   0   0   0  11   0   0   0   0   0   0   0   0   0   0   0   0  11 
@@ -567,7 +563,9 @@ End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
 Start of pure items information for this level
-New item: type=1  X=7.584000  Y=13.142000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=16  PrefixCode=0  SuffixCode=0 
+New item: type=1  X=40.992001  Y=14.292000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=10  PrefixCode=-1  SuffixCode=-1 
+New item: type=7  X=22.953676  Y=2.274745  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=13  CurDur=8.000000  Gold=0  PrefixCode=0  SuffixCode=0 
+New item: type=5  X=22.547426  Y=1.852869  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=15  CurDur=13.000000  Gold=0  PrefixCode=0  SuffixCode=0 
 End of pure items information for this level
 wp
 Nr.=  0 x=  36 y=  26	 connections:   26   4  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
