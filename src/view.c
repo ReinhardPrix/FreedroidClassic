@@ -2581,6 +2581,7 @@ void
 PrintCommentOfThisEnemy ( int Enum )
 {
   int x_pos, y_pos;
+  char phase_text[200];
 
   //--------------------
   // At this point we can assume, that the enemys has been blittet to the
@@ -2594,10 +2595,27 @@ PrintCommentOfThisEnemy ( int Enum )
       x_pos = translate_map_point_to_screen_pixel ( AllEnemys[ Enum ] . pos . x , AllEnemys [ Enum ] . pos . y , TRUE );
       y_pos = translate_map_point_to_screen_pixel ( AllEnemys[ Enum ] . pos . x , AllEnemys [ Enum ] . pos . y , FALSE )
 	- 100 ;
+
+      //--------------------
+      // First we display the normal text to be displayed...
+      //
       PutStringFont ( Screen , FPS_Display_BFont , 
-		      x_pos ,  
-		      y_pos ,  
+		      x_pos , y_pos ,  
 		      AllEnemys[Enum].TextToBeDisplayed );
+
+      //--------------------
+      // Now we add some more debug info here...
+      //
+      /*
+      sprintf ( phase_text , "a-phase: %3.3f a-type: %d" , AllEnemys [ Enum ] . animation_phase , AllEnemys [ Enum ] . animation_type );
+      PutStringFont ( Screen , FPS_Display_BFont , 
+		      x_pos , y_pos + FontHeight ( FPS_Display_BFont ) ,  
+		      phase_text );
+      sprintf ( phase_text , "speed: %3.3fx %3.3fy" , AllEnemys [ Enum ] . speed . x , AllEnemys [ Enum ] . speed . y );
+      PutStringFont ( Screen , FPS_Display_BFont , 
+		      x_pos , y_pos + 2 * FontHeight ( FPS_Display_BFont ) ,  
+		      phase_text );
+      */
     }
 
 }; // void PrintCommentOfThisEnemy ( int Enum, int x, int y )

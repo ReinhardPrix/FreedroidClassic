@@ -235,10 +235,17 @@ EXTERN int first_gethit_animation_image [ ENEMY_ROTATION_MODELS_AVAILABLE ];
 EXTERN int last_gethit_animation_image [ ENEMY_ROTATION_MODELS_AVAILABLE ];
 EXTERN int first_death_animation_image [ ENEMY_ROTATION_MODELS_AVAILABLE ];
 EXTERN int last_death_animation_image [ ENEMY_ROTATION_MODELS_AVAILABLE ];
+EXTERN int first_stand_animation_image [ ENEMY_ROTATION_MODELS_AVAILABLE ];
+EXTERN int last_stand_animation_image [ ENEMY_ROTATION_MODELS_AVAILABLE ];
 EXTERN int use_default_attack_image [ ENEMY_ROTATION_MODELS_AVAILABLE ];
 EXTERN int use_default_gethit_image [ ENEMY_ROTATION_MODELS_AVAILABLE ];
 EXTERN int use_default_death_image [ ENEMY_ROTATION_MODELS_AVAILABLE ];
-EXTERN float droid_animation_speed_factor [ ENEMY_ROTATION_MODELS_AVAILABLE ];
+EXTERN int use_default_stand_image [ ENEMY_ROTATION_MODELS_AVAILABLE ];
+EXTERN int droid_walk_animation_speed_factor [ ENEMY_ROTATION_MODELS_AVAILABLE ];
+EXTERN int droid_attack_animation_speed_factor [ ENEMY_ROTATION_MODELS_AVAILABLE ];
+EXTERN int droid_gethit_animation_speed_factor [ ENEMY_ROTATION_MODELS_AVAILABLE ];
+EXTERN int droid_death_animation_speed_factor [ ENEMY_ROTATION_MODELS_AVAILABLE ];
+EXTERN int droid_stand_animation_speed_factor [ ENEMY_ROTATION_MODELS_AVAILABLE ];
 
 EXTERN SDL_Surface *TuxWorkingCopy [ MAX_PLAYERS ] [ TUX_BREATHE_PHASES + TUX_SWING_PHASES + TUX_GOT_HIT_PHASES ] [ MAX_TUX_DIRECTIONS ] ;   // A pointer to the surfaces containing the tux
 EXTERN SDL_Surface *TuxMotionArchetypes[ TUX_MODELS ][ TUX_BREATHE_PHASES + TUX_SWING_PHASES + TUX_GOT_HIT_PHASES ];   // A pointer to the surfaces containing the tux

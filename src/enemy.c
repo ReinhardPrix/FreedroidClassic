@@ -569,9 +569,15 @@ RawEnemyApproachPosition ( Enemy ThisRobot , finepoint nextwp_pos )
     maxspeed = 0.2 * Druidmap [ ThisRobot->type ] . maxspeed;
  
   //--------------------
-  // While getting hit, the bot or person souldn't be running...
-  // 
-  if ( ThisRobot -> animation_phase == GETHIT_ANIMATION ) return;
+  // While getting hit, the bot or person shouldn't be running, but
+  // when standing, it should move over to the 'walk' animation type...
+  //
+  if ( ThisRobot -> animation_type == GETHIT_ANIMATION ) return;
+  if ( ThisRobot -> animation_type == STAND_ANIMATION ) 
+    {
+      ThisRobot -> animation_type = WALK_ANIMATION ;
+      ThisRobot -> animation_phase = 0.0 ;
+    }
 
   //--------------------
   // Now that we have found out where to go, we can start to determine the remaining 
@@ -1164,7 +1170,7 @@ MoveEnemys ( void )
   //--------------------
   // Now the pure movement stuff..
   //
-  for (i = 0; i < Number_Of_Droids_On_Ship ; i++)
+  for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i++ )
      {
        ThisRobot = & AllEnemys[ i ];
 
@@ -1195,6 +1201,13 @@ MoveEnemys ( void )
        //
        // if ( ThisRobot -> animation_phase > 0 ) continue ;
        if ( ThisRobot -> animation_type == ATTACK_ANIMATION ) continue ;
+
+       //--------------------
+       // We set the speed to zero for a start.  Later it can be
+       // set to something else...
+       //
+       ThisRobot -> speed . x = 0 ;
+       ThisRobot -> speed . y = 0 ;
 
        //--------------------
        // Now we do the movement, either to the next waypoint OR if one
@@ -1288,7 +1301,7 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
   enemy* target_robot;
 
   // if ( ThisRobot -> animation_phase > 0 ) return ;
-  if ( ThisRobot -> animation_type != WALK_ANIMATION ) return ;
+  if ( ( ThisRobot -> animation_type != WALK_ANIMATION ) && ( ThisRobot -> animation_type != STAND_ANIMATION ) ) return ;
 
   //--------------------
   // find a bullet entry, that isn't currently used... 
@@ -1412,7 +1425,7 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 	      // should also be some kind of scream of the Tux?
 	      //
 	      Me [ 0 ] . energy -= Druidmap [ ThisRobot -> type ] . physical_damage ;
-	      if ( MyRandom ( 100 ) <= 20 ) Influencer_Scream_Sound ( );
+	      if ( MyRandom ( 100 ) <= 20 ) tux_scream_sound ( );
 	    }
 	  else
 	    {
@@ -1733,7 +1746,7 @@ MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int TargetPlayer , int 
   // of a running motion, especially during the corresponding animaiton
   // phase...
   //
-  if ( ThisRobot -> animation_phase == GETHIT_ANIMATION ) 
+  if ( ThisRobot -> animation_type == GETHIT_ANIMATION ) 
     return;
 
   //--------------------
@@ -2072,6 +2085,7 @@ ProcessAttackStateMachine ( int enemynum )
   dist2 = sqrt( vect_to_target . x * vect_to_target . x + vect_to_target . y * vect_to_target . y );
 
   TargetPlayer = ClosestVisiblePlayer ( ThisRobot ) ;
+
 
   if ( ThisRobot -> combat_state == RUSH_TUX_ON_SIGHT_AND_OPEN_TALK )
     {
@@ -2479,18 +2493,34 @@ AnimateEnemys (void)
       //
       if ( our_enemy -> animation_phase > 0 )
 	{
-	  our_enemy -> animation_phase += Frame_Time() * droid_animation_speed_factor [ our_enemy -> type ] ;
-
 	  switch ( our_enemy -> animation_type )
 	    {
 	    case WALK_ANIMATION:
+	      our_enemy -> animation_phase += Frame_Time() * droid_walk_animation_speed_factor [ our_enemy -> type ] ;
+
+	      //--------------------
+	      // While we're in the walk animation cycle, we have the walk animation
+	      // images cycle.
+	      //
 	      if ( our_enemy -> animation_phase >= last_walk_animation_image [ our_enemy -> type ] )
 		{
 		  our_enemy -> animation_phase = 0 ;
 		  our_enemy -> animation_type = WALK_ANIMATION;
 		}
+	      //--------------------
+	      // But as soon as the walk stops and the 'bot' is standing still, we switch
+	      // to the standing cycle...
+	      //
+	      if ( ( fabsf ( our_enemy -> speed . x ) < 0.1 ) && ( fabsf ( our_enemy -> speed . y ) < 0.1 ) )
+		{
+		  our_enemy -> animation_type = STAND_ANIMATION ;
+		  our_enemy -> animation_phase = first_stand_animation_image [ our_enemy -> type ] - 1 ;
+		  DebugPrintf ( -1000 , "\nSwitching to 'stand' now..." );
+		}
 	      break;
 	    case ATTACK_ANIMATION:
+	      our_enemy -> animation_phase += Frame_Time() * droid_attack_animation_speed_factor [ our_enemy -> type ] ;
+
 	      if ( our_enemy -> animation_phase >= last_attack_animation_image [ our_enemy -> type ] )
 		{
 		  our_enemy -> animation_phase = 0 ;
@@ -2498,6 +2528,8 @@ AnimateEnemys (void)
 		}
 	      break;
 	    case GETHIT_ANIMATION:
+	      our_enemy -> animation_phase += Frame_Time() * droid_gethit_animation_speed_factor [ our_enemy -> type ] ;
+
 	      if ( our_enemy -> animation_phase >= last_gethit_animation_image [ our_enemy -> type ] )
 		{
 		  our_enemy -> animation_phase = 0 ;
@@ -2505,12 +2537,24 @@ AnimateEnemys (void)
 		}
 	      break;
 	    case DEATH_ANIMATION:
+	      our_enemy -> animation_phase += Frame_Time() * droid_death_animation_speed_factor [ our_enemy -> type ] ;
+
 	      if ( our_enemy -> animation_phase >= last_death_animation_image [ our_enemy -> type ] - 1 )
 		{
 		  our_enemy -> animation_phase = last_death_animation_image [ our_enemy -> type ] - 1 ;
 		  our_enemy -> animation_type = DEATH_ANIMATION ;
 		}
 	      break;
+	    case STAND_ANIMATION:
+	      our_enemy -> animation_phase += Frame_Time() * droid_stand_animation_speed_factor [ our_enemy -> type ] ;
+
+	      if ( our_enemy -> animation_phase >= last_stand_animation_image [ our_enemy -> type ] - 1 )
+		{
+		  our_enemy -> animation_phase = first_stand_animation_image [ our_enemy -> type ] - 1 ;
+		  our_enemy -> animation_type = STAND_ANIMATION;
+		}
+	      break;
+
 	    default:
 	      fprintf ( stderr , "\nThe animation type found is: %d.", our_enemy -> animation_type );
 	      GiveStandardErrorMessage ( "AnimateEnemys ( ... )" , "\

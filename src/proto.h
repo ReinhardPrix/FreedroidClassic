@@ -289,7 +289,7 @@ EXTERN void SetBGMusicVolume(float);
 EXTERN void SetSoundFXVolume(float);
 EXTERN void SwitchBackgroundMusicTo ( char * filename_raw );
 EXTERN void GotHitSound (void);
-EXTERN void Influencer_Scream_Sound (void);
+EXTERN void tux_scream_sound (void);
 EXTERN void No_Ammo_Sound ( void );
 EXTERN void Not_Enough_Power_Sound( void );
 EXTERN void Not_Enough_Dist_Sound( void );

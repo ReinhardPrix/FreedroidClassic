@@ -105,8 +105,8 @@ MouseCursorIsOverMenuItem( int first_menu_item_pos_y , int h )
 void
 print_menu_text ( char* InitialText , char* MenuTexts[] , int first_menu_item_pos_y , int background_code , void* MenuFont ) 
 {
-  char open_gl_string[2000];
-  int h = FontHeight (GetCurrentFont());
+  char open_gl_string [ 2000 ];
+  int h = FontHeight ( GetCurrentFont ( ) );
   int i;
 
   //--------------------
@@ -115,6 +115,11 @@ print_menu_text ( char* InitialText , char* MenuTexts[] , int first_menu_item_po
   //
   InitiateMenu( background_code );
 
+  //--------------------
+  // Maybe if this is the very first startup menu, we should also print
+  // out some status variables like whether using OpenGL or not DIRECTLY
+  // ON THE MENU SCREEN...
+  //
   if ( ! strcmp ( MenuTexts [ 0 ] , SINGLE_PLAYER_STRING ) )
     {
       SetCurrentFont ( FPS_Display_BFont );
@@ -133,11 +138,10 @@ print_menu_text ( char* InitialText , char* MenuTexts[] , int first_menu_item_po
       else
 	strcat ( open_gl_string , " NO " ) ;
       LeftPutString( Screen , SCREEN_HEIGHT - FontHeight ( GetCurrentFont() ) , open_gl_string );
-      SetCurrentFont ( MenuFont );
     }
 
   //--------------------
-  // Now that the possible font-changing background assembling is
+  // Now that the possible font-changing small info printing is
   // done, we can finally set the right font for the menu itself.
   //
   if ( MenuFont == NULL ) SetCurrentFont ( Menu_BFont );
@@ -166,7 +170,7 @@ print_menu_text ( char* InitialText , char* MenuTexts[] , int first_menu_item_po
 int
 DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , int background_code , void* MenuFont )
 {
-  int h = FontHeight (GetCurrentFont());
+  int h;
   int i;
   static int MenuPosition = 1;
   int NumberOfOptionsGiven;
@@ -177,6 +181,13 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , int bac
   // At first we show the mouse cursor...
   //
   SDL_ShowCursor( SDL_ENABLE );
+
+  //--------------------
+  // We set the given font, if appropriate, and set the font height variable...
+  //
+  if ( MenuFont != NULL )
+    SetCurrentFont ( MenuFont );
+  h = FontHeight ( GetCurrentFont ( ) );
 
   //--------------------
   // Some menus are intended to start with the default setting of the
@@ -1223,11 +1234,11 @@ enum
     CONTRIBUTE_POSITION,
     EXIT_FREEDROID_POSITION
   };
-  int Weiter = 0;
-  int MenuPosition=1;
-  char* MenuTexts[10];
+  int Weiter = 0 ;
+  int MenuPosition = 1 ;
+  char* MenuTexts [ 10 ] ;
 
-  Me[0].status=MENU;
+  Me [ 0 ] . status = MENU ;
 
   DebugPrintf ( 1 , "\nvoid StartupMenu ( void ): real function call confirmed. "); 
 
@@ -1235,7 +1246,7 @@ enum
 
   // Prevent distortion of framerate by the delay coming from 
   // the time spent in the menu.
-  Activate_Conservative_Frame_Computation();
+  Activate_Conservative_Frame_Computation ( ) ;
 
   while (!Weiter)
     {
@@ -1305,7 +1316,7 @@ enum
   int MenuPosition=1;
   char* MenuTexts[10];
 
-  Me[0].status=MENU;
+  Me [ 0 ] . status = MENU;
 
   DebugPrintf (2, "\nvoid EscapeMenu(void): real function call confirmed."); 
 
@@ -1331,7 +1342,7 @@ enum
       MenuTexts[6]="Quit";
       MenuTexts[7]="";
 
-      MenuPosition = DoMenuSelection( "" , MenuTexts , 1 ,  NE_TITLE_PIC_BACKGROUND_CODE , NULL );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , 1 ,  NE_TITLE_PIC_BACKGROUND_CODE , Menu_BFont );
 
       switch (MenuPosition) 
 	{
@@ -1975,7 +1986,7 @@ enum
   while ( !Weiter )
     {
 
-      MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , -1 , NULL );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , -1 , Menu_BFont );
 
       switch (MenuPosition) 
 	{

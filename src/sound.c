@@ -1117,8 +1117,10 @@ GotHitSound (void)
  *
  * ---------------------------------------------------------------------- */
 void
-Influencer_Scream_Sound (void)
+tux_scream_sound (void)
 {
+  if ( MyRandom ( 7 ) <= 5 ) return;
+
   switch( MyRandom( 4 ) )
     {
     case 0 :
@@ -1141,7 +1143,7 @@ Influencer_Scream_Sound (void)
     default:
       break;
     }
-}; // void Influencer_Scream_Sound (void)
+}; // void tux_scream_sound (void)
 
 /* ----------------------------------------------------------------------
  * We add a matching group of sounds here for the menu movements.  It's

@@ -255,6 +255,15 @@ SetFontColor (BFont_Info * Font, Uint8 r, Uint8 g, Uint8 b)
 void
 SetCurrentFont (BFont_Info * Font)
 {
+  if ( Font == NULL )
+    {
+      //--------------------
+      // If we've received a NULL pointer for the font to be set, we make
+      // a big noise!!!
+      //
+      DebugPrintf ( -1000 , "\nNull pointer received in SetCurrentFont!  -->  delibarately causing SEGFAULT...\n\n" );
+      raise ( SIGSEGV );
+    }
   CurrentFont = Font;
 }; // void SetCurrentFont (BFont_Info * Font)
 

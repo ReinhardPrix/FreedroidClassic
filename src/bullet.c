@@ -697,7 +697,7 @@ apply_bullet_damage_to_player ( int player_num , int damage )
       // Me [ player_num ] . got_hit_time = 0;
       
       // GotHitSound ();
-      Influencer_Scream_Sound ( );
+      tux_scream_sound ( );
     }
   //--------------------
   // NEW RULE:  All items equipped suffer damage when the influencer gets hit
