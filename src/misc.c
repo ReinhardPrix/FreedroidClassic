@@ -1,6 +1,6 @@
 /*----------------------------------------------------------------------
  *
- * Desc: miscellaeous helpful functions for paraplus
+ * Desc: miscellaeous helpful functions for Freedroid
  *	 
  *----------------------------------------------------------------------*/
 
@@ -66,10 +66,13 @@ message, Message;
 void CreateMessageBar (char *MText);
 void CleanMessageLine (void);
 void AdvanceQueue (void);
-void SinglePlayerMenu (void);
-void OptionsMenu (void);
-void ShowMissionInstructionsMenu (void);
+void Single_Player_Menu (void);
+void Multi_Player_Menu (void);
+void Options_Menu (void);
+void Show_Highscore_Menu (void);
+void Show_Mission_Instructions_Menu (void);
 
+int New_Game_Requested=FALSE;
 int VectsHaveBeenTurned = 0;
 unsigned char *MessageBar;
 message *Queue = NULL;
@@ -604,7 +607,7 @@ enum
       CenteredPutString (ScaledSurface ,  5*FontHeight(Font1),    "Multi Player");
       CenteredPutString (ScaledSurface ,  6*FontHeight(Font1),    "Options");
       CenteredPutString (ScaledSurface ,  7*FontHeight(Font1),    "Level Editor");
-      CenteredPutString (ScaledSurface ,  8*FontHeight(Font1),    "Quit");
+      CenteredPutString (ScaledSurface ,  8*FontHeight(Font1),    "Quit Game");
 
       SDL_UpdateRect(ScaledSurface, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
 
@@ -626,16 +629,22 @@ enum
 
 	    case SINGLE_PLAYER_POSITION:
 	      while (EnterPressed() || SpacePressed() );
-	      SinglePlayerMenu();
-	      Weiter = TRUE;   /* jp forgot this... ;) */
+	      New_Game_Requested=FALSE;
+	      Single_Player_Menu();
+	      if (New_Game_Requested) Weiter = TRUE;   /* jp forgot this... ;) */
+	      break;
+	    case MULTI_PLAYER_POSITION:
+	      while (EnterPressed() || SpacePressed() );
+	      Multi_Player_Menu();
+	      // Weiter = TRUE;   /* jp forgot this... ;) */
 	      break;
 	    case OPTIONS_POSITION:
 	      while (EnterPressed() || SpacePressed() );
-	      OptionsMenu();
+	      Options_Menu();
 	      // Weiter = TRUE;   /* jp forgot this... ;) */
 	      break;
 	    case QUIT_POSITION:
-	      DebugPrintf("\nvoid OptionsMenu(void): Quit Requested by user.  Terminating...");
+	      DebugPrintf("\nvoid Options_Menu(void): Quit Requested by user.  Terminating...");
 	      Terminate(0);
 	      break;
 	    default: 
@@ -668,7 +677,7 @@ enum
 /* -----------------------------------------------------------------
  *-----------------------------------------------------------------*/
 void
-OptionsMenu (void)
+Options_Menu (void)
 {
   int Weiter = 0;
   int MenuPosition=1;
@@ -786,12 +795,6 @@ enum
 	  MenuItemSelectedSound();
 	  switch (MenuPosition) 
 	    {
-
-	    case SET_BG_MUSIC_VOLUME:
-	      while (EnterPressed() || SpacePressed() );
-	      SinglePlayerMenu();
-	      Weiter = TRUE;   /* jp forgot this... ;) */
-	      break;
 	    case SET_FULLSCREEN_FLAG:
 	      while (EnterPressed() || SpacePressed() );
 	      SDL_WM_ToggleFullScreen (ScaledSurface);
@@ -830,12 +833,14 @@ enum
   InitBars = TRUE;
 
   return;
-} // OptionsMenu
+} // Options_Menu
 
 /* -----------------------------------------------------------------
- *-----------------------------------------------------------------*/
+  This function prints the actual highscore list.
+  It is called from the single player submenu of the escape menu.
+  ------------------------------------------------------------------*/
 void
-SinglePlayerMenu (void)
+Single_Player_Menu (void)
 {
   int Weiter = 0;
   int MenuPosition=1;
@@ -877,25 +882,31 @@ enum
       if (EnterPressed() || SpacePressed() ) 
 	{
 	  MenuItemSelectedSound();
+	  while (EnterPressed() || SpacePressed() );
 	  switch (MenuPosition) 
 	    {
 
 	    case NEW_GAME_POSITION:
 	      while (EnterPressed() || SpacePressed() ) ;
+	      New_Game_Requested=TRUE;
 	      InitNewGame();
+	      Weiter=!Weiter;
 	      break;
 	    case SHOW_HISCORE_POSITION: 
+	      while (EnterPressed() || SpacePressed() ) ;
+	      Show_Highscore_Menu();
+	      break;
 	    case SHOW_MISSION_POSITION:
 	      while (EnterPressed() || SpacePressed() ) ;
-	      ShowMissionInstructionsMenu();
+	      Show_Mission_Instructions_Menu();
 	      break;
 	    case BACK_POSITION:
 	      while (EnterPressed() || SpacePressed() ) ;
+	      Weiter=!Weiter;
 	      break;
 	    default: 
 	      break;
 	    }
-	  Weiter=!Weiter;
 	}
       if (UpPressed()) 
 	{
@@ -921,13 +932,122 @@ enum
   // keyboard_init (); /* return to raw keyboard mode */
 
   return;
-} // SinglePlayerMenu
+} // Single_Player_Menu
 
-
-/* -----------------------------------------------------------------
+/*-----------------------------------------------------------------
  *-----------------------------------------------------------------*/
 void
-ShowMissionInstructionsMenu (void)
+Show_Highscore_Menu (void)
+{
+  int Weiter = 0;
+
+  enum { NEW_GAME_POSITION=1, SHOW_HISCORE_POSITION=2, SHOW_MISSION_POSITION=3, BACK_POSITION=4 };
+
+  // while( !SpacePressed() && !EnterPressed() ) keyboard_update(); 
+  while( SpacePressed() || EnterPressed() ) keyboard_update(); 
+
+  while (!Weiter)
+    {
+
+      PutInternFenster( FALSE );
+
+      MakeGridOnScreen( Outline320x200 );
+
+      PrepareScaledSurface(FALSE);
+
+      CenteredPutString (ScaledSurface, 1*FontHeight(Font1), "Highscore list:" );
+
+      PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 4*FontHeight(Font1),    
+		       "Highest score: %10s : %6.2f" , HighestName, HighestScoreOfDay );
+
+      PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 5*FontHeight(Font1),
+		       "Great score: %10s : %6.2f" , GreatScoreName,  GreatScore);
+
+      PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 6*FontHeight(Font1),
+		       " Lowest Score:  %10s : %6.2f", LowestName,   LowestScoreOfDay);
+
+      LeftPutString (ScaledSurface , 9*FontHeight(Font1), "We are looking forward so seeing");
+      LeftPutString (ScaledSurface ,10*FontHeight(Font1), "new missions and levels from you!");
+
+      SDL_UpdateRect(ScaledSurface, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
+
+      // Wait until the user does SOMETHING
+
+      if ( EscapePressed() || EnterPressed() || SpacePressed() )
+	{
+	  Weiter=!Weiter;
+	}
+    }
+  while ( EscapePressed() || EnterPressed() || SpacePressed() );
+  ClearGraphMem (InternalScreen);
+  ClearGraphMem (RealScreen);
+  // Update_SDL_Screen();
+  DisplayRahmen (InternalScreen);
+  InitBars = TRUE;
+
+  vga_clear ();
+  
+  // keyboard_init (); /* return to raw keyboard mode */
+
+  return;
+} // Show_Highscore_Menu
+
+/*-----------------------------------------------------------------
+ *-----------------------------------------------------------------*/
+void
+Multi_Player_Menu (void)
+{
+  int Weiter = 0;
+
+  enum { NEW_GAME_POSITION=1, SHOW_HISCORE_POSITION=2, SHOW_MISSION_POSITION=3, BACK_POSITION=4 };
+
+  // while( !SpacePressed() && !EnterPressed() ) keyboard_update(); 
+  while( SpacePressed() || EnterPressed() ) keyboard_update(); 
+
+  while (!Weiter)
+    {
+
+      PutInternFenster( FALSE );
+
+      MakeGridOnScreen( Outline320x200 );
+
+      PrepareScaledSurface(FALSE);
+
+      CenteredPutString (ScaledSurface, 1*FontHeight(Font1), "MULTI PLAYER" );
+
+      
+      LeftPutString (ScaledSurface , 3*FontHeight(Font1), "We are sorry, but a multi player");
+      LeftPutString (ScaledSurface , 4*FontHeight(Font1), "mode has not yet been implemented.");
+      LeftPutString (ScaledSurface , 5*FontHeight(Font1), "There are plans to do this, but");
+      LeftPutString (ScaledSurface , 6*FontHeight(Font1), "currently it is not a priority.");
+      LeftPutString (ScaledSurface , 8*FontHeight(Font1), "If you feel like setting something");
+      LeftPutString (ScaledSurface , 9*FontHeight(Font1), "up, please contact the developers.");
+
+      SDL_UpdateRect(ScaledSurface, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
+
+      // Wait until the user does SOMETHING
+
+      if ( EscapePressed() || EnterPressed() || SpacePressed() )
+	{
+	  Weiter=!Weiter;
+	}
+    }
+  while ( EscapePressed() || EnterPressed() || SpacePressed() );
+  ClearGraphMem (InternalScreen);
+  ClearGraphMem (RealScreen);
+  // Update_SDL_Screen();
+  DisplayRahmen (InternalScreen);
+  InitBars = TRUE;
+
+  vga_clear ();
+  
+  // keyboard_init (); /* return to raw keyboard mode */
+
+  return;
+} // Multi_Player_Menu
+
+void
+Show_Mission_Instructions_Menu (void)
 {
   int Weiter = 0;
 
@@ -963,6 +1083,7 @@ ShowMissionInstructionsMenu (void)
 	  Weiter=!Weiter;
 	}
     }
+  while ( EscapePressed() || EnterPressed() || SpacePressed() );
   ClearGraphMem (InternalScreen);
   ClearGraphMem (RealScreen);
   // Update_SDL_Screen();
@@ -1460,5 +1581,49 @@ ShowDebugInfos (void)
   getchar_raw ();
   return;
 }
+
+
+/* **********************************************************************
+ *	Diese Funktion gibt die momentane Highscoreliste aus
+ *	Derweil ist sie noch im Textmodus.
+ *	Wenn sie fertig ist, soll sie die Liste in Paraplusart nach oben
+ *	scrollen.
+ ***********************************************************************/
+void
+ShowHighscoreList (void)
+{
+  int Rankcounter = 0;
+  // HallElement *SaveHallptr = Hallptr;
+
+  if (!PlusExtentionsOn)
+    {
+      DisplayText ("Highscore list:", 10,10, RealScreen, FALSE);
+
+      //      DisplayText ("Highest Score: %10s : %4d\n", HighestName, HighestScoreOfDay);
+      gl_printf (-1, -1, " Ok Score:      %10s : %4d\n", GreatScoreName,
+		 GreatScore);
+      gl_printf (-1, -1, " Lowest Score:  %10s : %4d\n", LowestName,
+		 LowestScoreOfDay);
+      PrepareScaledSurface (TRUE);
+      getchar_raw ();
+    }
+  else
+    {
+      gl_printf (-1, -1, " This is today's Hall of Fame:\n\n");
+      gl_printf (-1, -1, "\tRank\tName\tScore\n");
+      while (Hallptr->NextPlayer != NULL)
+	{
+	  gl_printf (-1, -1, "\t%d\t", Rankcounter);
+	  gl_printf (-1, -1, "%s", Hallptr->PlayerName);
+	  gl_printf (-1, -1, "\t%d\n", Hallptr->PlayerScore);
+	  Hallptr = Hallptr->NextPlayer;
+	  Rankcounter++;
+	}
+      getchar ();
+    }
+  //  Hallptr = SaveHallptr;
+
+  return;
+} /* ShowHighscoreList () */
 
 #undef _misc_c

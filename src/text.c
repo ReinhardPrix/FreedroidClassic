@@ -31,7 +31,7 @@
  *  MA  02111-1307  USA
  *
  */
-#define _paratext_c
+#define _freetext_c
 
 #include "system.h"
 
@@ -699,4 +699,4 @@ GetString (int MaxLen, int echo)
 } /* GetString() */
 
 
-#undef _paratext_c
+#undef _freetext_c

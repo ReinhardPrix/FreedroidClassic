@@ -28,7 +28,7 @@
  *  MA  02111-1307  USA
  *
  */
-#define _parainit_c
+#define _freeinit_c
 
 #include "system.h"
 
@@ -688,4 +688,4 @@ EndTitle (void)
 
 } /* EndTitle() */
 
-#undef _parainit_c
+#undef _freeinit_c

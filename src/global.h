@@ -31,7 +31,7 @@
 #include "colodefs.h"
 
 #undef EXTERN
-#ifdef _paraplus_c
+#ifdef _freedroid_c
 #define EXTERN
 #else
 #define EXTERN extern

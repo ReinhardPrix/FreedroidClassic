@@ -27,7 +27,7 @@
 
 /* paraplus.c */
 #undef EXTERN
-#ifdef _paraplus_c
+#ifdef _freedroid_c
 #define EXTERN
 #else
 #define EXTERN extern
@@ -45,7 +45,7 @@ EXTERN void StandardEnergieLieferungen (void);
 
 /* paraplus.c */
 #undef EXTERN
-#ifdef _parainit_c
+#ifdef _freeinit_c
 #define EXTERN
 #else
 #define EXTERN extern
@@ -346,6 +346,7 @@ EXTERN long my_sqrt (long);
 EXTERN int my_abs (int);
 
 EXTERN void ShowDebugInfos (void);
+EXTERN void ShowHighscoreList (void);
 
 /* enemy.c */
 #undef EXTERN
@@ -383,7 +384,7 @@ EXTERN void ClearUserFenster (void);
 
 /* paratext.c */
 #undef EXTERN
-#ifdef _paratext_c
+#ifdef _freetext_c
 #define EXTERN
 #else
 #define EXTERN extern

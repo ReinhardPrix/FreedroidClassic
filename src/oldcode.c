@@ -433,3 +433,118 @@ MakeGridOnScreen(unsigned char* Parameter_Screen){
 
 } // void MakeGridOnSchreen(void)
 
+/*@Function============================================================
+@Desc: 
+
+@Ret: 
+@Int:
+* $Function----------------------------------------------------------*/
+void
+Play_YIFF_Server_Sound (int Tune)
+{
+  YEventSoundPlay Music_Parameters;
+
+
+  if ( !sound_on ) return;
+
+  /* This function can and should only be compiled on machines, that have */
+  /* the YIFF sound server installed.  Compilation therefore is optional and */
+  /* can be toggled with the following  definition.*/
+
+#if HAVE_LIBY2
+  DebugPrintf
+    ("\nvoid Play_YIFF_Server_Sound(int Tune):  Real function call confirmed.");
+  DebugPrintf
+    ("\nvoid Play_YIFF_Server_Sound(int Tune):  Playback is about to start!");
+
+
+/*
+  This part takes A LOT OF TIME and destroys game flow.
+  Therefore it remains commented out
+
+  if (YGetSoundObjectAttributes
+      (BackgroundMusic_con, ExpandedSoundSampleFilenames[Tune],
+       &BackgroundMusic_sndobj_attrib))
+    {
+      DebugPrintf
+	("\nvoid Switch_Background_Music_To(int Tune):  Error: Missing or corrupt.\n");
+      // Can't get sound object attributes.
+      fprintf (stderr,
+	       "\nvoid Play_YIFF_Server_Sound(int Tune): %s: Error: Missing or corrupt.\n",
+	       ExpandedSoundSampleFilenames[Tune]);
+      printf (" CWD: %s \n\n", getcwd (NULL, 0));
+      Terminate (ERR);
+    }
+  else
+    {
+
+      DebugPrintf 
+	("\nvoid Play_YIFF_Server_Sound(int Tune):  Now starting new background tune...\n");
+      DebugPrintf 
+	("\nvoid Play_YIFF_Server_Sound(int Tune):  The following file will be loaded: ");
+      DebugPrintf (ExpandedSoundSampleFilenames[ Tune ]);
+
+      BackgroundMusic_play_id = YStartPlaySoundObjectSimple (BackgroundMusic_con, 
+							     ExpandedSoundSampleFilenames[ Tune ] );
+      DebugPrintf ("\nvoid Play_YIFF_Server_Sound(int Tune):  Tune has been loaded: ");
+      DebugPrintf ( ExpandedSoundSampleFilenames[ Tune ] );
+
+      Music_Parameters.repeats = 0;
+      Music_Parameters.total_repeats = 1;	// -1 here means to repeat indefinately
+      Music_Parameters.left_volume = 0.5;
+      Music_Parameters.right_volume = 0.5;
+      Music_Parameters.sample_rate = BackgroundMusic_sndobj_attrib.sample_rate;
+      Music_Parameters.length = BackgroundMusic_sndobj_attrib.sample_size;
+      Music_Parameters.position = 0;
+      Music_Parameters.yid = BackgroundMusic_play_id;
+      Music_Parameters.flags = 0xFFFFFFFF;
+
+
+      YSetPlaySoundObjectValues (BackgroundMusic_con, BackgroundMusic_play_id,
+				 &Music_Parameters);
+
+      DebugPrintf
+	("\nvoid Switch_Background_Music_To(int Tune):  New tune should be played endlessly now.\n");
+
+    }
+*/
+
+
+  Music_Parameters.repeats = 0;
+  Music_Parameters.total_repeats = 1;	// -1 here means to repeat indefinately
+  Music_Parameters.left_volume = Current_Sound_FX_Volume;
+  Music_Parameters.right_volume = Current_Sound_FX_Volume;
+  Music_Parameters.sample_rate =
+    BackgroundMusic_sndobj_attrib.sample_rate;
+  Music_Parameters.length = BackgroundMusic_sndobj_attrib.sample_size;
+  Music_Parameters.position = 0;
+  Music_Parameters.yid = BackgroundMusic_play_id;
+  Music_Parameters.flags = YPlayValuesFlagVolume;
+
+  //  YSetPlaySoundObjectValues (BackgroundMusic_con, play_id, &Music_Parameters);
+
+  play_id = YStartPlaySoundObject(BackgroundMusic_con, ExpandedSoundSampleFilenames[Tune], &Music_Parameters);
+
+  /*
+  play_id =
+    YStartPlaySoundObjectSimple (BackgroundMusic_con,
+  			 ExpandedSoundSampleFilenames[Tune]);
+  */
+
+  /*
+  Music_Parameters.repeats = 0;
+  Music_Parameters.total_repeats = 1;	// -1 here means to repeat indefinately
+  Music_Parameters.left_volume = Current_Sound_FX_Volume;
+  Music_Parameters.right_volume = Current_Sound_FX_Volume;
+  Music_Parameters.sample_rate =
+    BackgroundMusic_sndobj_attrib.sample_rate;
+  Music_Parameters.length = BackgroundMusic_sndobj_attrib.sample_size;
+  Music_Parameters.position = 0;
+  Music_Parameters.yid = play_id;
+  Music_Parameters.flags = YPlayValuesFlagVolume;
+  YSetPlaySoundObjectValues (BackgroundMusic_con, play_id, &Music_Parameters);
+  &*/
+
+#endif /* HAVE_LIBY2 */
+
+}  // void Play_YIFF_Server_Sound(int Tune)

@@ -28,7 +28,7 @@
  *  MA  02111-1307  USA
  *
  */
-#define _paraplus_c
+#define _freedroid_c
 
 #include "system.h"
 
@@ -98,7 +98,6 @@ float Overall_Average=0.041;
 int TestSound (void);
 void CalibratedDelay (long);
 void Debriefing (void);
-void ShowHighscoreList (void);
 void Pause (void);
 void UpdateCountersForThisFrame (void);
 
@@ -150,7 +149,9 @@ Frame_Time (void)
     }
   */
 
-  Rate_To_Be_Returned = (1.0 / FPSover100);
+  // Rate_To_Be_Returned = (1.0 / FPSover100);
+  // Rate_To_Be_Returned = (1.0 / FPSover10);
+  Rate_To_Be_Returned = (1.0 / FPSover1);
 
   // if (FPSover10 > 20)
   /* if (FPSover100 > 20)
@@ -195,7 +196,9 @@ Frame_Time (void)
 void 
 Activate_Conservative_Frame_Computation(void)
 {
-  SkipAFewFrames=212;
+  // SkipAFewFrames=212;
+  // SkipAFewFrames=22;
+  SkipAFewFrames=3;
 } // void Activate_Conservative_Frame_Computation(void)
 
 /*-----------------------------------------------------------------
@@ -667,50 +670,6 @@ Pause (void)
 
 } /* Pause () */
 
-
-/* **********************************************************************
- *	Diese Funktion gibt die momentane Highscoreliste aus
- *	Derweil ist sie noch im Textmodus.
- *	Wenn sie fertig ist, soll sie die Liste in Paraplusart nach oben
- *	scrollen.
- ***********************************************************************/
-void
-ShowHighscoreList (void)
-{
-  int Rankcounter = 0;
-  HallElement *SaveHallptr = Hallptr;
-
-  if (!PlusExtentionsOn)
-    {
-      DisplayText ("Highscore list:", 10,10, RealScreen, FALSE);
-
-      //      DisplayText ("Highest Score: %10s : %4d\n", HighestName, HighestScoreOfDay);
-      gl_printf (-1, -1, " Ok Score:      %10s : %4d\n", GreatScoreName,
-		 GreatScore);
-      gl_printf (-1, -1, " Lowest Score:  %10s : %4d\n", LowestName,
-		 LowestScoreOfDay);
-      PrepareScaledSurface (TRUE);
-      getchar_raw ();
-    }
-  else
-    {
-      gl_printf (-1, -1, " This is today's Hall of Fame:\n\n");
-      gl_printf (-1, -1, "\tRank\tName\tScore\n");
-      while (Hallptr->NextPlayer != NULL)
-	{
-	  gl_printf (-1, -1, "\t%d\t", Rankcounter);
-	  gl_printf (-1, -1, "%s", Hallptr->PlayerName);
-	  gl_printf (-1, -1, "\t%d\n", Hallptr->PlayerScore);
-	  Hallptr = Hallptr->NextPlayer;
-	  Rankcounter++;
-	}
-      getchar ();
-    }
-  //  Hallptr = SaveHallptr;
-
-  return;
-} /* ShowHighscoreList () */
-
 void
 UpdateCountersForThisFrame (void)
 {
@@ -729,7 +688,10 @@ UpdateCountersForThisFrame (void)
   if ( SkipAFewFrames ) SkipAFewFrames--;
 
   if ( Me.firewait > 0 )
-    Me.firewait--;
+    {
+      Me.firewait-=Frame_Time()*20;
+      if (Me.firewait < 0) Me.firewait=0;
+    }
   if (ShipEmptyCounter > 1)
     ShipEmptyCounter--;
   if (WaitElevatorCounter > 0)
@@ -746,4 +708,4 @@ UpdateCountersForThisFrame (void)
 } /* UpdateCountersForThisFrame() */
 
 
-#undef _paraplus_c
+#undef _freedroid_c
