@@ -1311,8 +1311,6 @@ Cheatmenu (void)
 	} /* switch (getchar_raw()) */
     } /* while (!Weiter) */
     
-    InitBars = TRUE;
-    
     ClearGraphMem ();
     our_SDL_flip_wrapper (Screen);
     
@@ -1621,7 +1619,6 @@ New_Graphics_Options_Menu (void)
 
   ClearGraphMem ();
   DisplayBanner ( ) ;
-  InitBars = TRUE;
 
   return;
 
@@ -1743,9 +1740,6 @@ New_Sound_Options_Menu (void)
 
   ClearGraphMem ();
   DisplayBanner ( );
-  InitBars = TRUE;
-
-  return;
 
 }; // void New_Sound_Options_Menu (void)
 
@@ -1912,9 +1906,6 @@ Unhandles Tux image update policy encountered!",
 
   ClearGraphMem ();
   DisplayBanner ( );
-  InitBars = TRUE;
-
-  return;
 
 }; // void PerformanceTweaksOptionsMenu (void)
 
@@ -2041,9 +2032,6 @@ On_Screen_Display_Options_Menu (void)
 
   ClearGraphMem ();
   DisplayBanner ( );
-  InitBars = TRUE;
-
-  return;
 
 }; // On_Screen_Display_Options_Menu
 
@@ -2136,9 +2124,6 @@ Droid_Talk_Options_Menu (void)
 
   ClearGraphMem ();
   DisplayBanner ( );
-  InitBars = TRUE;
-
-  return;
 
 }; // Droid_Talk_Options_Menu
 
@@ -2218,9 +2203,6 @@ enum
 
   ClearGraphMem ();
   DisplayBanner ( );
-  InitBars = TRUE;
-
-  return;
 
 } // Options_Menu
 

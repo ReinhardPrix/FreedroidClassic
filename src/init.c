@@ -121,59 +121,57 @@ ShowStartupPercentage ( int Percentage )
 void
 PlayATitleFile ( char* Filename )
 {
-  char* fpath;
-  char* TitleFilePointer;
-  // int ScrollEndLine = User_Rect.y;	// endpoint for scrolling...
-  int ScrollEndLine = 480;	// endpoint for scrolling...
-  char* NextSubsectionStartPointer;
-  char* PreparedBriefingText;
-  char* TerminationPointer;
-  char* TitlePictureName;
-  char* TitleSongName;
-  int ThisTextLength;
-
-  while ( SpacePressed() );
-
-  //--------------------
-  // Now its time to start loading the title file...
-  //
-  fpath = find_file ( Filename , MAP_DIR , FALSE );
-  TitleFilePointer = 
-    ReadAndMallocAndTerminateFile( fpath , "*** END OF TITLE FILE *** LEAVE THIS TERMINATOR IN HERE ***" ) ;
-
-  TitleSongName = ReadAndMallocStringFromData ( TitleFilePointer, "The title song in the sound subdirectory for this mission is : " , "\n" ) ;
-
-  SwitchBackgroundMusicTo ( TitleSongName );
-
-  TitlePictureName = ReadAndMallocStringFromData ( TitleFilePointer, "The title picture in the graphics subdirectory for this mission is : " , "\n" ) ;
-
-  SDL_SetClipRect ( Screen, NULL );
-  Me[0].status=BRIEFING;
-  SetCurrentFont( Para_BFont );
-
-  NextSubsectionStartPointer = TitleFilePointer;
-  while ( ( NextSubsectionStartPointer = strstr ( NextSubsectionStartPointer, "*** START OF PURE SCROLLTEXT DATA ***")) 
-	  != NULL )
+    char* fpath;
+    char* TitleFilePointer;
+    int ScrollEndLine = 480;	// endpoint for scrolling...
+    char* NextSubsectionStartPointer;
+    char* PreparedBriefingText;
+    char* TerminationPointer;
+    char* TitlePictureName;
+    char* TitleSongName;
+    int ThisTextLength;
+    
+    while ( SpacePressed() );
+    
+    //--------------------
+    // Now its time to start loading the title file...
+    //
+    fpath = find_file ( Filename , MAP_DIR , FALSE );
+    TitleFilePointer = 
+	ReadAndMallocAndTerminateFile( fpath , "*** END OF TITLE FILE *** LEAVE THIS TERMINATOR IN HERE ***" ) ;
+    
+    TitleSongName = ReadAndMallocStringFromData ( TitleFilePointer, "The title song in the sound subdirectory for this mission is : " , "\n" ) ;
+    
+    SwitchBackgroundMusicTo ( TitleSongName );
+    
+    TitlePictureName = ReadAndMallocStringFromData ( TitleFilePointer, "The title picture in the graphics subdirectory for this mission is : " , "\n" ) ;
+    
+    SDL_SetClipRect ( Screen, NULL );
+    Me[0].status=BRIEFING;
+    SetCurrentFont( Para_BFont );
+    
+    NextSubsectionStartPointer = TitleFilePointer;
+    while ( ( NextSubsectionStartPointer = strstr ( NextSubsectionStartPointer, "*** START OF PURE SCROLLTEXT DATA ***")) 
+	    != NULL )
     {
-      NextSubsectionStartPointer += strlen ( "*** START OF PURE SCROLLTEXT DATA ***" );
-      if ( (TerminationPointer=strstr ( NextSubsectionStartPointer, "*** END OF PURE SCROLLTEXT DATA ***")) == NULL)
+	NextSubsectionStartPointer += strlen ( "*** START OF PURE SCROLLTEXT DATA ***" );
+	if ( (TerminationPointer=strstr ( NextSubsectionStartPointer, "*** END OF PURE SCROLLTEXT DATA ***")) == NULL)
 	{
-	  DebugPrintf (1, "\n\nvoid PlayATitleFile(...): Unterminated Subsection in Mission briefing....Terminating...");
-	  Terminate(ERR);
+	    DebugPrintf (1, "\n\nvoid PlayATitleFile(...): Unterminated Subsection in Mission briefing....Terminating...");
+	    Terminate(ERR);
 	}
-      ThisTextLength=TerminationPointer-NextSubsectionStartPointer;
-      PreparedBriefingText = MyMalloc (ThisTextLength + 10);
-      strncpy ( PreparedBriefingText , NextSubsectionStartPointer , ThisTextLength );
-      PreparedBriefingText[ThisTextLength]=0;
-      fflush(stdout);
-      // ScrollText ( PreparedBriefingText, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine , TitlePictureName );
-      ScrollText ( PreparedBriefingText, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine , NE_TITLE_PIC_BACKGROUND_CODE );
-      free ( PreparedBriefingText );
+	ThisTextLength=TerminationPointer-NextSubsectionStartPointer;
+	PreparedBriefingText = MyMalloc (ThisTextLength + 10);
+	strncpy ( PreparedBriefingText , NextSubsectionStartPointer , ThisTextLength );
+	PreparedBriefingText[ThisTextLength]=0;
+	fflush(stdout);
+	// ScrollText ( PreparedBriefingText, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine , TitlePictureName );
+	ScrollText ( PreparedBriefingText, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine , NE_TITLE_PIC_BACKGROUND_CODE );
+	free ( PreparedBriefingText );
     }
-
-  ClearGraphMem ();
-  DisplayBanner ( );
-  our_SDL_flip_wrapper( Screen );
+    
+    ClearGraphMem ();
+    our_SDL_flip_wrapper( Screen );
   
 }; // void PlayATitleFile ( char* Filename )
 
@@ -1534,6 +1532,10 @@ InitHarmlessTuxStatusVariables( int player_num )
     Me [ player_num ] . type = DRUID001;
     Me [ player_num ] . speed.x = 0;
     Me [ player_num ] . speed.y = 0;
+    Me [ player_num ] . energy = 5 ;
+    Me [ player_num ] . maxenergy = 10 ;
+    Me [ player_num ] . mana = 5 ;
+    Me [ player_num ] . maxmana = 10 ;
     Me [ player_num ] . status = MOBILE;
     Me [ player_num ] . phase = 0;
     Me [ player_num ] . MissionTimeElapsed=0;
@@ -1648,11 +1650,6 @@ PrepareStartOfNewCharacter ( void )
   // Several different targets may be specified simultaneously
   //
   GetQuestList ( "QuestList" );
-
-  // show the banner for the game
-  ClearGraphMem();
-  DisplayBanner ( );
-  InitBars = TRUE;
 
   SwitchBackgroundMusicTo ( curShip.AllLevels [ Me [ 0 ] . pos . z ] ->Background_Song_Name );
 

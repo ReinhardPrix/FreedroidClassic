@@ -1197,9 +1197,81 @@ blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x 
 }; // void blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x , int y , int set_gl_parameters ) 
 
 /* ----------------------------------------------------------------------
- *
- *
+ * This function blits some texture to the screen, but instead of using
+ * the usual 1:1 ratio, this function will instead stretch the texture
+ * received such that the ratio corrsponds to the current (possibly wider)
+ * screen dimension.
  * ---------------------------------------------------------------------- */
+void
+blit_open_gl_texture_to_full_screen ( iso_image our_floor_iso_image , int x , int y , int set_gl_parameters ) 
+{
+
+#ifdef HAVE_LIBGL
+
+    SDL_Rect target_rectangle;
+    float texture_start_y;
+    float texture_end_y;
+    int image_start_x;
+    int image_end_x;
+    int image_start_y;
+    int image_end_y;
+    
+    if ( set_gl_parameters )
+    {
+	//--------------------
+	// At first we need to enable texture mapping for all of the following.
+	// Without that, we'd just get (faster, but plain white) rectangles.
+	//
+	glEnable( GL_TEXTURE_2D );
+	glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
+	glEnable ( GL_BLEND );
+	glDisable ( GL_ALPHA_TEST );
+	glBlendFunc( GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA );
+    }
+    
+    //--------------------
+    // Now of course we need to find out the proper target position.
+    //
+    target_rectangle . x = x ;
+    target_rectangle . y = y ;
+    
+    //--------------------
+    // Now we can begin to draw the actual textured rectangle.
+    //
+    image_start_x = target_rectangle . x ;
+    image_end_x = target_rectangle . x + our_floor_iso_image . texture_width * SCREEN_WIDTH / 640 ;
+    image_start_y = target_rectangle . y ;
+    image_end_y = target_rectangle . y + our_floor_iso_image . texture_height * SCREEN_HEIGHT / 480 ;
+    
+    if ( image_start_x > SCREEN_WIDTH ) return ;
+    if ( image_end_x < 0 ) return ;
+    if ( image_start_y > SCREEN_HEIGHT ) return;
+    if ( image_end_y < 0 ) return;
+
+    texture_start_y = 1.0 ;
+    texture_end_y = 0.0 ;
+
+    glBindTexture( GL_TEXTURE_2D, * ( our_floor_iso_image . texture ) );
+    glBegin(GL_QUADS);
+    glTexCoord2i( 0.0f, texture_start_y ); 
+    glVertex2i( image_start_x , image_start_y );
+    glTexCoord2i( 0.0f, texture_end_y ); 
+    glVertex2i( image_start_x , image_end_y );
+    glTexCoord2i( 1.0f, texture_end_y ); 
+    glVertex2i( image_end_x , image_end_y );
+    glTexCoord2f( 1.0f, texture_start_y ); 
+    glVertex2i( image_end_x , image_start_y );
+    glEnd( );
+    
+    if ( set_gl_parameters )
+    {
+	glDisable( GL_TEXTURE_2D );
+    }
+    
+#endif
+
+}; // void blit_open_gl_texture_to_full_screen ( iso_image our_floor_iso_image , int x , int y , int set_gl_parameters ) 
+/*
 void
 blit_open_gl_texture_to_full_screen ( iso_image our_floor_iso_image , int set_gl_parameters ) 
 {
@@ -1258,6 +1330,7 @@ blit_open_gl_texture_to_full_screen ( iso_image our_floor_iso_image , int set_gl
 #endif
 
 }; // void blit_open_gl_texture_to_full_screen ( iso_image our_floor_iso_image , int set_gl_parameters ) 
+*/
 
 /* ----------------------------------------------------------------------
  *
@@ -1539,19 +1612,20 @@ blit_rotated_open_gl_texture_with_center ( iso_image our_iso_image , int x , int
 void
 RestoreMenuBackground ( int backup_slot )
 {
-  if ( use_open_gl )
+    if ( use_open_gl )
     {
-      return;
-
+	return;
+	
 #ifdef HAVE_LIBGL
-      glRasterPos2i( 0 , 479 ) ; 
-      glDrawPixels( 640, 478, GL_RGB, GL_UNSIGNED_BYTE, (GLvoid*) StoredMenuBackground [ backup_slot ] );
-      return ;
+	glRasterPos2i ( 0 , SCREEN_HEIGHT - 1 ) ; 
+	glDrawPixels ( SCREEN_WIDTH , SCREEN_HEIGHT - 2 , GL_RGB, GL_UNSIGNED_BYTE, 
+		       (GLvoid*) StoredMenuBackground [ backup_slot ] );
+	return ;
 #endif
     }
-  else
+    else
     {
-      our_SDL_blit_surface_wrapper ( StoredMenuBackground [ backup_slot ] , NULL , Screen , NULL );
+	our_SDL_blit_surface_wrapper ( StoredMenuBackground [ backup_slot ] , NULL , Screen , NULL );
     }
 }; // void RestoreMenuBackground ( void )
 
@@ -2119,7 +2193,9 @@ blit_special_background ( int background_code )
 	     ( our_background_rects [ background_code ] . h == SCREEN_HEIGHT ) )
 	{
 	    blit_open_gl_texture_to_full_screen ( 
-		our_backgrounds [ background_code ] , TRUE ) ;
+		our_backgrounds [ background_code ] , 
+		our_background_rects [ background_code ] . x , 
+		our_background_rects [ background_code ] . y , TRUE ) ;
 	}
 	else
 	    blit_open_gl_texture_to_screen_position ( 
