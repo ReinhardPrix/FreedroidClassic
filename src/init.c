@@ -863,7 +863,7 @@ InitFreedroid (int argc, char *const argv[])
   Me.TextToBeDisplayed = "Linux Kernel booted.  001 transfer-tech modules loaded.  System up and running.";
 
   // these are the hardcoded game-defaults, they can be overloaded by the config-file if present
-  GameConfig.Current_BG_Music_Volume=0.6;
+  GameConfig.Current_BG_Music_Volume=0.3;
   GameConfig.Current_Sound_FX_Volume=0.5;
   GameConfig.WantedTextVisibleTime = 3;
   GameConfig.Draw_Framerate=FALSE;
@@ -1108,7 +1108,7 @@ ThouArtDefeated (void)
   MakeGridOnScreen (&User_Rect);
 
   ShowRobotPicture (UserCenter_x -70, UserCenter_y - 80, DRUID999);
-  //  ThouArtDefeatedSound ();
+  ThouArtDefeatedSound ();
 
   SetCurrentFont (Para_BFont);
   DisplayText ("Transmission", UserCenter_x -90, UserCenter_y - 100, &User_Rect);

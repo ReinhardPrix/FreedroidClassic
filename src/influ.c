@@ -690,10 +690,10 @@ ExplodeInfluencer (void)
       AllBlasts[counter].phase = 0.2*i;
     }
 
-  DruidBlastSound (); 
-  usleep(500);
-  DruidBlastSound (); 
+  Play_Sound (INFLUEXPLOSION_SOUND);
 
+  return;
+  
   DebugPrintf (2, "\nvoid ExplodeInfluencer(void): Usual end of function reached.");
 }				/* ExplodeInfluencer */
 

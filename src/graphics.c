@@ -1041,6 +1041,8 @@ white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout)
 
   memset(used_tiles,-1, sizeof(used_tiles));
   // let's go
+  Play_Sound (WHITE_NOISE);
+
   now = SDL_GetTicks();
   
   while (1)
