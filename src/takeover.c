@@ -164,8 +164,14 @@ Takeover (int enemynum)
 
   show_droid_info ( AllEnemys[enemynum].type, 0 );
   key = 0;
+
+  /*
   while ( (key != SDLK_SPACE) && (key != SDLK_ESCAPE) )
     key = getchar_raw();
+  */
+  while ( !SpacePressed() && !EscapePressed() && !axis_is_active );
+  while ( !( !SpacePressed() && !EscapePressed() && !axis_is_active )) ;
+
 
   while (!FinishTakeover)
     {
@@ -312,21 +318,21 @@ ChooseColor (void)
 
       prev_count_tick += count_tick_len; /* set for next tick */
       
-      if (RightPressed ())
+      if ( RightPressed () || MouseWheelDownPressed() )
 	{
 	  YourColor = VIOLETT;
 	  OpponentColor = GELB;
 	}
-      if (LeftPressed ())
+      if (LeftPressed () || MouseWheelUpPressed() )
 	{
 	  YourColor = GELB;
 	  OpponentColor = VIOLETT;
 	}
 
-      if (SpacePressed ())
+      if ( SpacePressed() || axis_is_active )
 	{
 	  ColorChosen = TRUE;
-	  while (SpacePressed ()) ;
+	  while ( SpacePressed() || axis_is_active ) ;
 	}
 
       countdown--;		/* Count down */
@@ -385,8 +391,8 @@ PlayGame (void)
        * here we register if there have been key-press events in the
        * "waiting period" between move-ticks :
        */
-      up   = up   | UpPressed(); 
-      down = down | DownPressed();
+      up   = ( up   | UpPressed() ) + MouseWheelUpPressed() ; 
+      down = ( down | DownPressed() ) + MouseWheelDownPressed() ;
       set  = set  | SpacePressed();
 
       if (!up) up_counter = 0;    /* reset counters for released keys */
@@ -423,7 +429,14 @@ PlayGame (void)
 	    {
 	      if (!up_counter || (up_counter > wait_move_ticks) )
 		{
-		  CapsuleCurRow[YourColor]--;
+		  //--------------------
+		  // Here I have to change some things in order to make
+		  // mouse movement work properly with the wheel...
+		  //
+		  // CapsuleCurRow[YourColor]--;
+		  //
+		  CapsuleCurRow[YourColor] -= up;
+
 		  if (CapsuleCurRow[YourColor] < 1)
 		    CapsuleCurRow[YourColor] = NUM_LINES;
 		}
@@ -434,7 +447,14 @@ PlayGame (void)
 	    {
 	      if (!down_counter || (down_counter > wait_move_ticks))
 		{
-		  CapsuleCurRow[YourColor]++;
+		  //--------------------
+		  // Here I have to change some things in order to make
+		  // mouse movement work properly with the wheel...
+		  //
+		  // CapsuleCurRow[YourColor]++;
+		  //
+		  CapsuleCurRow[YourColor] += down;
+
 		  if (CapsuleCurRow[YourColor] > NUM_LINES)
 		    CapsuleCurRow[YourColor] = 1;
 		}
