@@ -210,58 +210,6 @@ DamageAllEquipment( void )
   DamageItem( & ( Druidmap[ DRUID001 ].aux2_item ) );
 }; // void DamageAllEquipment( void )
 
-/* ----------------------------------------------------------------------
- *
- *
- * ---------------------------------------------------------------------- */
-/*
-void 
-DropSpecificItemAtPosition( int x , int y , int NewItemCode )
-{
-  int ItemIndex;
-
-  for ( ItemIndex = 0 ; ItemIndex < MAX_ITEMS_PER_LEVEL ; ItemIndex++ )
-    {
-      if ( CurLevel->ItemList[ ItemIndex ].type  == (-1) ) break;
-    }
-  if ( ItemIndex >= MAX_ITEMS_PER_LEVEL )
-    {
-      CenteredPutString   ( Screen ,  8*FontHeight(Menu_BFont), "Item maximum for level reached.");
-      CenteredPutString   ( Screen ,  9*FontHeight(Menu_BFont), "--> Overwriting first item.");
-      ItemIndex = 0;
-    }
-
-  //--------------------
-  // First we specify general things like item type and position
-  //
-  CurLevel->ItemList[ ItemIndex ].pos.x = rintf( Me.pos.x );
-  CurLevel->ItemList[ ItemIndex ].pos.y = rintf( Me.pos.y );
-  CurLevel->ItemList[ ItemIndex ].type = NewItemCode;
-
-  //--------------------
-  // Now we fix the details of this one dropped item, like ac_bonus, damage, duration
-  //
-  CurLevel->ItemList[ ItemIndex ].ac_bonus = 
-    ItemMap [ NewItemCode ].base_ac_bonus + MyRandom( ItemMap [ NewItemCode ].ac_bonus_modifier );
-  CurLevel->ItemList[ ItemIndex ].damage = 
-    ItemMap [ NewItemCode ].base_item_gun_damage + MyRandom( ItemMap [ NewItemCode ].item_gun_damage_modifier );
-  if ( ItemMap[ NewItemCode ].base_item_duration == (-1) )
-    {
-      CurLevel->ItemList[ ItemIndex ].current_duration = 1;
-      CurLevel->ItemList[ ItemIndex ].max_duration = -1;
-    }
-  else
-    {
-      CurLevel->ItemList[ ItemIndex ].max_duration = 
-	ItemMap [ NewItemCode ].base_item_duration + MyRandom( ItemMap [ NewItemCode ].item_duration_modifier );
-      CurLevel->ItemList[ ItemIndex ].current_duration = 
-	CurLevel->ItemList[ ItemIndex ].max_duration/2 + MyRandom ( CurLevel->ItemList[ ItemIndex ].max_duration/2 );
-    }
-
-}; // void DropSpecificItemAtPosition( int x , int y , int NewItemCode )
-*/
-
-
 void
 MakeHeldFloorItemOutOf( item* SourceItem )
 {
@@ -475,6 +423,10 @@ ApplyItem( item* CurItem )
 
 }; // void ApplyItemFromInventory( int ItemNum )
 
+/* ----------------------------------------------------------------------
+ * This function checks if a given coordinate within the influencers
+ * inventory grid can be considered as free or as occupied by some item.
+ * ---------------------------------------------------------------------- */
 int
 Inv_Pos_Is_Free( int x , int y )
 {
