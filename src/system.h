@@ -64,13 +64,4 @@
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_mixer.h>
 
-#if HAVE_LIBY2
-#include <Y2/Y.h>		//  Basic Y types and constants.
-#include <Y2/Ylib.h>		//  YLib functions and structs.
-/* Change this to the address and port of the Y server you want
- * to connect to. Note that 127.0.0.1 is a symbolic address
- * meaning `localhost'.
- */
-#define CON_ARG             "127.0.0.1:9433"
-#endif
 

@@ -76,41 +76,21 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
 
 char *ExpandedSoundSampleFilenames[ALL_SOUNDS];
 
-char *ExpandFilename(char *LocalFilename);
-
-#if HAVE_LIBY2
-// The following Lines define several channels for sound output to the yiff sound server!!!
-// Background Music Cannel 
-YConnection *BackgroundMusic_con;
-YEventSoundObjectAttributes BackgroundMusic_sndobj_attrib;
-YID BackgroundMusic_play_id;
-YID play_id;
-YEvent event;
-int handle = -1;
-int setting = 0x000C000D;	// 12 fragments size 8kb
-int channels = 0;		// 0=mono 1=stereo
-int format = AFMT_U8;
-int rate = 8000;
-// The above Lines define several channels for sound output to the yiff sound server!!!
-#endif /* HAVE_LIBY2 */
-
-#ifdef USE_SDL_AUDIO
 Mix_Chunk *Loaded_WAV_Files[ALL_SOUNDS];
 int Background_Music_Channel = -1;
-#endif
 
+// This wills soon go out...
+char *ExpandFilename(char *LocalFilename);
 
 void 
 Init_Audio(void)
 {
   int i;
-#ifdef USE_SDL_AUDIO
   int audio_rate = 22050;
   Uint16 audio_format = AUDIO_S16; 
   int audio_channels = 2;
   //  int audio_buffers = 4096;
   int audio_buffers = 2048;
-#endif
 
   // At first we set audio volume to medium value.
   // This might be replaced later with values from a 
@@ -131,12 +111,7 @@ Init_Audio(void)
 	ExpandFilename (SoundSampleFilenames[i]);
     }
 
-
-#ifdef USE_SDL_AUDIO
-
-  // Only if SDL AUDIO is used for sound output may SDL_AUDIO
-  // or SDL_TIMER be initialized.  Otherwise the yiff will not
-  // start up later.  So we really cannot do both here!
+  // Now SDL_AUDIO and SDL_TIMER are initialized here:
 
   if ( SDL_InitSubSystem ( SDL_INIT_TIMER ) == -1 ) 
     {
@@ -222,45 +197,23 @@ Sorry...\n\
 	}
     } // for (i=0; ...
 
+} // void InitAudio(void)
 
-
-#else
-
-  // Only if sound output via YIFF and NOT via SDL is used,
-  // then we init the YIFF sound server.
-  Init_YIFF_Sound_Server ();
-
-#endif
-
-
-
-}
-
-
-void
-ExitProc ()
-{
-  if (handle != -1)
-      close (handle);
-}
 
 int i;
 unsigned char *ptr;
 unsigned char v = 128;
 int SampleLaenge;
 
-
 void 
 Set_BG_Music_Volume(float NewVolume)
 {
 
-#ifdef USE_SDL_AUDIO
   // Set the volume IN the loaded files, if SDL is used...
   for ( i=1 ; i<5 ; i++ )
     {
       Mix_VolumeChunk( Loaded_WAV_Files[i], (int) rintf(NewVolume* MIX_MAX_VOLUME) );
     }
-#endif
 
   Switch_Background_Music_To ( COMBAT_BACKGROUND_MUSIC_SOUND );
 
@@ -270,91 +223,15 @@ void
 Set_Sound_FX_Volume(float NewVolume)
 {
 
-#ifdef USE_SDL_AUDIO
   // Set the volume IN the loaded files, if SDL is used...
+  // This is done here for the Files 1,2,3 and 4, since these
+  // are background music files.
   for ( i=5 ; i<ALL_SOUNDS ; i++ )
     {
       Mix_VolumeChunk( Loaded_WAV_Files[i], (int) rintf(NewVolume* MIX_MAX_VOLUME) );
     }
-#endif
 
 } // void Set_BG_Music_Volume(float NewVolume)
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void 
-YIFF_Server_Check_Events(void)
-{
-
-  if (!sound_on) return;
-  /* This function can and should only be compiled on machines, that have */
-  /* the YIFF sound server installed.  Compilation therefore is optional and */
-  /* can be toggled with the following  definition. */
-#if HAVE_LIBY2
-  if (YGetNextEvent (BackgroundMusic_con, &event, False) > 0)
-    {
-      // Sound object stopped playing? 
-      if ((event.type == YSoundObjectKill))
-	{
-	  // Our play has stopped. 
-	  DebugPrintf ("Done playing.\n");
-	}
-      // Server disconnected us? 
-      else if (event.type == YDisconnect)
-	{
-	  // Got disconnected.
-	  fprintf (stderr, 
-		  "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:  The YIFF sound server has DISCONNECTED\n\
-our connection.  The reason reported by the server is: %i.\n\
-Under these cirmumstances Freedroid will stop to work in order to draw attention\n\
-to this problem.  Please contact the developers and report this strange problem,\n\
-which we have never ever encountered in all the test phases.\n\
-If the problem persists, you might also prefer to use command line options to turn\n\
-off sound such that you can play uninteruptedly.\n\
-For now however Freedroid will terminate due to unresolvable sound problems.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , event.disconnect.reason );
-	  Terminate (ERR);
-	}
-      // Server shutdown? 
-      else if (event.type == YShutdown)
-	{
-	  // Server shutdown. 
-	  fprintf (stderr, 
-		  "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:  The YIFF sound server has SHUT DOWN\n\
-our connection.  The reason reported by the server is: %i.\n\
-Under these cirmumstances Freedroid will stop to work in order to draw attention\n\
-to this problem.  Please contact the developers and report this strange problem,\n\
-which we have never ever encountered in all the test phases.\n\
-If the problem persists, you might also prefer to use command line options to turn\n\
-off sound such that you can play uninteruptedly.\n\
-For now however Freedroid will terminate due to unresolvable sound problems.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n", event.shutdown.reason);
-	  Terminate (ERR);
-	}
-      else
-	{
-	  
-	  // Some other Y event, ignore. 
-	}
-    }
-
-#endif /* HAVE_LIBY2 */
-}  // void YIFF_Server_Check_Events(void)
-
 
 /*@Function============================================================
   @Desc: When accessing the yiff sound server, we need to supply absolute path
@@ -383,42 +260,6 @@ ExpandFilename (char *LocalFilename)
   return (tmp);
 }				// char *ExpandFilename(char *LocalFilename){
 
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void 
-YIFF_Server_Close_Connections (void)
-{
-
-  /* This function can and should only be compiled on machines, that have */
-  /* the YIFF sound server installed.  Compilation therefore is optional and */
-  /* can be toggled with the following definition. */
-#if HAVE_LIBY2
-
-  /* Disconnect from the Y server. We need to pass the
-   * original connection pointer con to close that
-   * connection to the Y server. Note that con may be
-   * NULL at this point if the Y server disconnected us
-   * already, passing NULL is okay.
-   *
-   * The second argument asks us do we want to leave the
-   * Y server up when we disconnect. If we were the
-   * program that started the Y erver and the second
-   * argument is set to False then the Y server will
-   * be automatically shut down.  To ensure that the Y
-   * server stays running, you can pass True instead.
-   */
-
-  YCloseConnection (BackgroundMusic_con, False);
-  BackgroundMusic_con = NULL;
-
-#endif /* HAVE_LIBY2 */
-
-} /* void YIFF_Server_Close_Connections(void) */
 
 /*@Function============================================================
 @Desc: Starts a Tune.
@@ -464,121 +305,7 @@ Technical details:
 void
 Switch_Background_Music_To (int Tune)
 {
-#ifndef USE_SDL_AUDIO
-  static int Current_Tune = SILENCE;
-#endif
 
-
-
-#ifndef USE_SDL_AUDIO
-#if HAVE_LIBY2
-  YEventSoundPlay Music_Parameters;
-
-  if (!sound_on) return;
-
-  DebugPrintf
-    ("\nvoid Switch_Background_Music_To(int Tune):  Real function call confirmed.\n");
-
-  DebugPrintf
-    ("\nvoid Switch_Background_Music_To(int Tune):  Shutting down old background music track...\n");
-
-  if (Current_Tune == SILENCE)
-    {
-
-      DebugPrintf
-	("\nvoid Switch_Background_Music_To(int Tune):  No old music there to be shut down...\n");
-
-    }
-  else
-    {
-
-      DebugPrintf
-	("\nvoid Switch_Background_Music_To(int Tune):  Old music track detected...\n");
-
-      YDestroyPlaySoundObject (BackgroundMusic_con, BackgroundMusic_play_id);
-
-      DebugPrintf
-	("\nvoid Switch_Background_Music_To(int Tune):  Old music track stopped..\n");
-
-      DebugPrintf
-	("\nvoid Switch_Background_Music_To(int Tune):  SILENCE --> end of function reached.\n");
-
-      if ( Tune == SILENCE ) return;
-
-    }
-
-  Current_Tune = SILENCE;
-
-  if (YGetSoundObjectAttributes
-      (BackgroundMusic_con, ExpandedSoundSampleFilenames[Tune],
-       &BackgroundMusic_sndobj_attrib))
-    {
-
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:  The YIFF sound server has reported,\n\
-that a certain file it wanted to playback was MISSING OR CORRUPT.\n\
-This error message will also appear if the YIFF sound server has not been\n\
-initialized at all i.e. no attempt to initialize is has been made.\n\
-The file name of this missing or corrupt file was determined as:\n\
-%s\n\
-Under these cirmumstances Freedroid will stop to work in order to draw attention\n\
-to this problem.  Please contact the developers and report this strange problem,\n\
-which we have never ever encountered in all the test phases.\n\
-If the problem persists, you might also prefer to use command line options to turn\n\
-off sound such that you can play uninteruptedly.\n\
-For now however Freedroid will terminate due to unresolvable sound problems.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n", ExpandedSoundSampleFilenames[Tune]);
-
-      printf (" CWD: %s \n\n", getcwd (NULL, 0));
-      Terminate (ERR);
-    }
-  else
-    {
-
-      DebugPrintf 
-	("\nvoid Switch_Background_Music_To(int Tune):  Now starting new background tune...\n");
-      DebugPrintf 
-	("\nvoid Switch_Background_Music_To(int Tune):  The following file will be loaded: ");
-      DebugPrintf (ExpandedSoundSampleFilenames[ Tune ]);
-
-      BackgroundMusic_play_id = YStartPlaySoundObjectSimple (BackgroundMusic_con, 
-							     ExpandedSoundSampleFilenames[ Tune ] );
-      DebugPrintf ("\nvoid Switch_Background_Music_To(int Tune):  Tune has been loaded: ");
-      DebugPrintf ( ExpandedSoundSampleFilenames[ Tune ] );
-      DebugPrintf ("\nvoid Switch_Background_Music_To(int Tune):  preparing endless loop...\n");
-
-      Current_Tune = Tune;
-
-      Music_Parameters.repeats = 0;
-      Music_Parameters.total_repeats = -1;	// -1 here means to repeat indefinately
-      Music_Parameters.left_volume = Current_BG_Music_Volume;
-      Music_Parameters.right_volume = Current_BG_Music_Volume;
-      Music_Parameters.sample_rate =
-	BackgroundMusic_sndobj_attrib.sample_rate;
-      Music_Parameters.length = BackgroundMusic_sndobj_attrib.sample_size;
-      Music_Parameters.position = 0;
-      Music_Parameters.yid = BackgroundMusic_play_id;
-      Music_Parameters.flags = 0xFFFFFFFF;
-
-
-      YSetPlaySoundObjectValues (BackgroundMusic_con, BackgroundMusic_play_id,
-				 &Music_Parameters);
-
-      DebugPrintf
-	("\nvoid Switch_Background_Music_To(int Tune):  New tune should be played endlessly now.\n");
-
-    }
-
-  DebugPrintf
-    ("\nvoid Switch_Background_Music_To(int Tune):  end of function reached.\n");
-
-#endif /* HAVE_LIBY2 */
-#else
-  //
   // Here comes the SDL-BASED Background music code:
 
   if ( Background_Music_Channel >= 0 )
@@ -593,7 +320,6 @@ Sorry...\n\
       Background_Music_Channel = Mix_PlayChannel(-1, Loaded_WAV_Files[ Tune ], -1);
     }
 
-#endif /* USE_SDL_AUDIO */
 } // void Switch_Background_Music_To(int Tune)
 
 
@@ -606,40 +332,10 @@ Sorry...\n\
 void
 Play_Sound (int Tune)
 {
-#ifndef USE_SDL_AUDIO
-  YEventSoundPlay Music_Parameters;
-#else
   int Newest_Sound_Channel=0;
-#endif
 
   if ( !sound_on ) return;
 
-  /* This function can and should only be compiled on machines, that have */
-  /* the YIFF sound server installed.  Compilation therefore is optional and */
-  /* can be toggled with the following  definition.*/
-
-#ifndef USE_SDL_AUDIO
-#if HAVE_LIBY2
-  DebugPrintf
-    ("\nvoid Play_Sound(int Tune):  Real function call confirmed.");
-  DebugPrintf
-    ("\nvoid Play_Sound(int Tune):  Playback is about to start!");
-
-  Music_Parameters.repeats = 0;
-  Music_Parameters.total_repeats = 1;	// -1 here means to repeat indefinately
-  Music_Parameters.left_volume = Current_Sound_FX_Volume;
-  Music_Parameters.right_volume = Current_Sound_FX_Volume;
-  Music_Parameters.sample_rate =
-    BackgroundMusic_sndobj_attrib.sample_rate;
-  Music_Parameters.length = BackgroundMusic_sndobj_attrib.sample_size;
-  Music_Parameters.position = 0;
-  Music_Parameters.yid = BackgroundMusic_play_id;
-  Music_Parameters.flags = YPlayValuesFlagVolume;
-
-  play_id = YStartPlaySoundObject(BackgroundMusic_con, ExpandedSoundSampleFilenames[Tune], &Music_Parameters);
-
-#endif /* HAVE_LIBY2 */
-#else
   Newest_Sound_Channel = Mix_PlayChannel(-1, Loaded_WAV_Files[Tune] , 0);
   if ( Newest_Sound_Channel == -1 )
     {
@@ -674,73 +370,7 @@ with game performance in any way.  I think this is really not dangerous.\n\
       printf("\nSuccessfully playing file %s.", ExpandedSoundSampleFilenames[ Tune ]);
     }
   
-#endif /* USE_SDL_AUDIO */
-
 }  // void Play_Sound(int Tune)
-
-/*@Function============================================================
-@Desc: 
-
-Connect to the Y server. (That is the yiff.) 
-We pass NULL as the start argument, this means the Y server will not be started if it was detected to be not running. 
-The connection argument is CON_ARG which is defined above as a constant. 
-The connection argument is a string of the format ":".
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-int
-Init_YIFF_Sound_Server (void)
-{
-  /* This function can and should only be compiled on machines, that have */
-  /* the YIFF sound server installed.  Compilation therefore is optional */
-  /* and can be toggled with the following definition. */
-#if HAVE_LIBY2
-
-  DebugPrintf
-    ("\nint Init_YIFF_Sound_Server(void): real function call confirmed.\n");
-
-  // Now a new connection to the yiff server can be opend.  The first argument to open is not NULL,
-  // therefore a yiff server will be started even if none is running!!  great!!
-  BackgroundMusic_con = YOpenConnection ("/usr/sbin/yiff", CON_ARG);
-
-  // Attention!! First channel is to be opend now!
-  if (BackgroundMusic_con == NULL)
-    {
-      // Failed to connect to the Y server. 
-      fprintf (stderr,
-	       "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:  The a CONNECTION TO THE YIFF SOUND \n\
-SERVER COULD NOT BE ESTABLISHED.  Maybe the problem is that the YIFF sound\n\
-server could not be started at all.  The connection argument was : \n\
-%s\n\
-Please see if you really have installed (and configured) the YIFF.\n\
-If you do not have installed the YIFF, you can obtain if from: \n\
-http://wolfpack.twu.net/YIFF/\n\
-If you for some reason cannot install the yiff, you can choose to play \n\
-without sound.\n\
-If you want this, use the appropriate command line option and Freedroid will \n\
-not complain any more.  But for now Freedroid will terminate to draw attention \n\
-to the sound problem it could not resolve. Sorry...\n\
-----------------------------------------------------------------------\n\
-\n", CON_ARG);
-      Terminate (ERR);
-    }
-
-  // The connection to the sound server should now be established...
-  // Printing debug message and going on...
-
-  DebugPrintf
-    ("\nint Init_YIFF_Sound_Server(void): The connection to the sound server was established successfully...");
-  DebugPrintf
-    ("\nint Init_YIFF_Sound_Server(void): end of function reached.\n");
-
-#endif
-  return (OK);
-} // void Init_YIFF_Sound_Server(void)
-
 
 /*@Function============================================================
 @Desc: 

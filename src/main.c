@@ -326,8 +326,6 @@ main (int argc, char *const argv[])
 
 	  PutInternFenster ( TRUE );
 	  
-	  YIFF_Server_Check_Events ();
-
 	  SetInfoline (NULL, NULL); /* put up default infos: MODE  -- SCORE */
 
 	  for (i = 0; i < MAXBULLETS; i++)
