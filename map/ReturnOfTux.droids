@@ -578,6 +578,18 @@ SpecialForce: Type=821 X=61 Y=42 Fixed=0 Marker=9998 AdvancedCommand=2 Parameter
 ----------------------------------------------------------------------
 
 ** Beginning of new Level **
+Level=18
+Maximum number of Random Droids=3
+Minimum number of Random Droids=2
+Allowed Type of Random Droid for this level: 571
+Allowed Type of Random Droid for this level: 476
+** End of this levels droid data **
+
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+
+** Beginning of new Level **
 Level=20
 Maximum number of Random Droids=0
 Minimum number of Random Droids=0
