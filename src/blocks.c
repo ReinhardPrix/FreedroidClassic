@@ -2519,13 +2519,13 @@ init_obstacle_data( void )
     obstacle_map [ ISO_V_WALL ] . filename = "iso_walls_0001.png" ;
     obstacle_map [ ISO_V_WALL ] . transparent = TRANSPARENCY_FOR_WALLS ;
     obstacle_map [ ISO_V_WALL ] . obstacle_short_name = "Wall";
-    obstacle_map [ ISO_V_WALL ] . obstacle_long_description = "Hey ! This looks like...a WALL ! Maybe you could run into it to be sure...";
+    obstacle_map [ ISO_V_WALL ] . obstacle_long_description = "Hey ! This looks like...a WALL !";
     obstacle_map [ ISO_H_WALL ] . block_area_parm_1 = 1.2 ;
     obstacle_map [ ISO_H_WALL ] . block_area_parm_2 = standard_wall_thickness ;
     obstacle_map [ ISO_H_WALL ] . filename = "iso_walls_0002.png" ;
     obstacle_map [ ISO_H_WALL ] . transparent = TRANSPARENCY_FOR_WALLS;
     obstacle_map [ ISO_H_WALL ] . obstacle_short_name = "Wall";
-    obstacle_map [ ISO_H_WALL ] . obstacle_long_description = "Hey ! This looks like...a WALL ! Maybe you could run into it to be sure...";
+    obstacle_map [ ISO_H_WALL ] . obstacle_long_description = "Hey ! This looks like...a WALL !";
         
     obstacle_map [ ISO_V_WALL_WITH_DOT ] . block_area_parm_1 = standard_wall_thickness ;
     obstacle_map [ ISO_V_WALL_WITH_DOT ] . block_area_parm_2 = 1.2 ;
@@ -2546,7 +2546,7 @@ init_obstacle_data( void )
     obstacle_map [ ISO_GLASS_WALL_1 ] . filename = "iso_walls_0020.png" ;
     obstacle_map [ ISO_GLASS_WALL_1 ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS ;
     obstacle_map [ ISO_GLASS_WALL_1 ] . obstacle_short_name = "Glass wall";
-    obstacle_map [ ISO_GLASS_WALL_1 ] . obstacle_long_description = "A wall, made out of glass.";
+    obstacle_map [ ISO_GLASS_WALL_1 ] . obstacle_long_description = "A wall made out of glass. Lets the light go through.";
     
     obstacle_map [ ISO_GLASS_WALL_2 ] . block_area_parm_1 = 1.2 ;
     obstacle_map [ ISO_GLASS_WALL_2 ] . block_area_parm_2 = standard_wall_thickness ;
@@ -2554,7 +2554,7 @@ init_obstacle_data( void )
     obstacle_map [ ISO_GLASS_WALL_2 ] . filename = "iso_walls_0021.png" ;
     obstacle_map [ ISO_GLASS_WALL_2 ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS ;
     obstacle_map [ ISO_GLASS_WALL_2 ] . obstacle_short_name = "Glass wall";
-    obstacle_map [ ISO_GLASS_WALL_2 ] . obstacle_long_description = "A wall, made out of glass.";
+    obstacle_map [ ISO_GLASS_WALL_2 ] . obstacle_long_description = "This is useful for lightning a room.";
   
     obstacle_map [ ISO_CYAN_WALL_WINDOW_1 ] . block_area_parm_1 = standard_wall_thickness ;
     obstacle_map [ ISO_CYAN_WALL_WINDOW_1 ] . block_area_parm_2 = 1.2 ;
@@ -2603,21 +2603,21 @@ init_obstacle_data( void )
     
     //the eight windowed walls share the same description because i'm lazy and have no imagination
     obstacle_map [ ISO_CYAN_WALL_WINDOW_1 ] . obstacle_short_name = "Wall with a window";
-    obstacle_map [ ISO_CYAN_WALL_WINDOW_1 ] . obstacle_long_description = "Did you know that light is coming from the outside ? Well, even a geek should know that :S"; 
+    obstacle_map [ ISO_CYAN_WALL_WINDOW_1 ] . obstacle_long_description = "Windows, are, besides a famous joke OS trademark, very useful things."; 
     obstacle_map [ ISO_CYAN_WALL_WINDOW_2 ] . obstacle_short_name = "Wall with a window";
-    obstacle_map [ ISO_CYAN_WALL_WINDOW_2 ] . obstacle_long_description = "Did you know that light is coming from the outside ? Well, even a geek should know that :S";
+    obstacle_map [ ISO_CYAN_WALL_WINDOW_2 ] . obstacle_long_description = "Windows, are, besides a famous joke OS trademark, very useful things.";
     obstacle_map [ ISO_RED_WALL_WINDOW_1 ] . obstacle_short_name = "Wall with a window";
-    obstacle_map [ ISO_RED_WALL_WINDOW_1 ] . obstacle_long_description = "Did you know that light is coming from the outside ? Well, even a geek should know that :S";
+    obstacle_map [ ISO_RED_WALL_WINDOW_1 ] . obstacle_long_description = "Windows, are, besides a famous joke OS trademark, very useful things.";
     obstacle_map [ ISO_RED_WALL_WINDOW_2 ] . obstacle_short_name = "Wall with a window";
-    obstacle_map [ ISO_RED_WALL_WINDOW_2 ] . obstacle_long_description = "Did you know that light is coming from the outside ? Well, even a geek should know that :S";
+    obstacle_map [ ISO_RED_WALL_WINDOW_2 ] . obstacle_long_description = "Windows, are, besides a famous joke OS trademark, very useful things.";
     obstacle_map [ ISO_FLOWER_WALL_WINDOW_1 ] . obstacle_short_name = "Wall with a window";
-    obstacle_map [ ISO_FLOWER_WALL_WINDOW_1 ] . obstacle_long_description = "Did you know that light is coming from the outside ? Well, even a geek should know that :S";
+    obstacle_map [ ISO_FLOWER_WALL_WINDOW_1 ] . obstacle_long_description = "Windows, are, besides a famous joke OS trademark, very useful things.";
     obstacle_map [ ISO_FLOWER_WALL_WINDOW_2 ] . obstacle_short_name = "Wall with a window";
-    obstacle_map [ ISO_FLOWER_WALL_WINDOW_2 ] . obstacle_long_description = "Did you know that light is coming from the outside ? Well, even a geek should know that :S";
+    obstacle_map [ ISO_FLOWER_WALL_WINDOW_2 ] . obstacle_long_description = "Windows, are, besides a famous joke OS trademark, very useful things.";
     obstacle_map [ ISO_FUNKY_WALL_WINDOW_1 ] . obstacle_short_name = "Wall with a window";
-    obstacle_map [ ISO_FUNKY_WALL_WINDOW_1 ] . obstacle_long_description = "Did you know that light is coming from the outside ? Well, even a geek should know that :S";
+    obstacle_map [ ISO_FUNKY_WALL_WINDOW_1 ] . obstacle_long_description = "Windows, are, besides a famous joke OS trademark, very useful things.";
     obstacle_map [ ISO_FUNKY_WALL_WINDOW_2 ] . obstacle_short_name = "Wall with a window";
-    obstacle_map [ ISO_FUNKY_WALL_WINDOW_2 ] . obstacle_long_description = "Did you know that light is coming from the outside ? Well, even a geek should know that :S";
+    obstacle_map [ ISO_FUNKY_WALL_WINDOW_2 ] . obstacle_long_description = "Windows, are, besides a famous joke OS trademark, very useful things.";
     
     
     obstacle_map [ ISO_V_DOOR_000_OPEN ] . block_area_parm_1 = standard_wall_thickness ;
@@ -2759,7 +2759,17 @@ init_obstacle_data( void )
   obstacle_map [ ISO_REFRESH_5 ] . needs_pre_put = TRUE ;
   obstacle_map [ ISO_REFRESH_5 ] . filename = "iso_machinery_0013.png" ;
   obstacle_map [ ISO_REFRESH_5 ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS ;
-
+  obstacle_map [ ISO_REFRESH_5 ] . obstacle_short_name = "Droid nest";
+  obstacle_map [ ISO_REFRESH_4 ] . obstacle_short_name = "Droid nest";
+  obstacle_map [ ISO_REFRESH_3 ] . obstacle_short_name = "Droid nest";
+  obstacle_map [ ISO_REFRESH_2 ] . obstacle_short_name = "Droid nest";
+  obstacle_map [ ISO_REFRESH_1 ] . obstacle_short_name = "Droid nest";
+  obstacle_map [ ISO_REFRESH_5 ] . obstacle_long_description = "This is a service droid case. You suppose it's of no use for your quest.";
+  obstacle_map [ ISO_REFRESH_4 ] . obstacle_long_description = "This is a service droid case. You suppose it's of no use for your quest.";
+  obstacle_map [ ISO_REFRESH_3 ] . obstacle_long_description = "This is a service droid case. You suppose it's of no use for your quest.";
+  obstacle_map [ ISO_REFRESH_2 ] . obstacle_long_description = "This is a service droid case. You suppose it's of no use for your quest.";
+  obstacle_map [ ISO_REFRESH_1 ] . obstacle_long_description = "This is a service droid case. You suppose it's of no use for your quest.";
+  
   obstacle_map [ ISO_TELEPORTER_1 ] . block_area_type = COLLISION_TYPE_NONE ;
   obstacle_map [ ISO_TELEPORTER_1 ] . is_smashable = FALSE ;
   obstacle_map [ ISO_TELEPORTER_1 ] . emitted_light_strength = 10 ;
@@ -2787,6 +2797,9 @@ init_obstacle_data( void )
   obstacle_map [ ISO_V_CHEST_OPEN ] . filename = "iso_container_0004.png" ;
   obstacle_map [ ISO_V_CHEST_OPEN ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_V_CHEST_OPEN ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
+  obstacle_map [ ISO_V_CHEST_OPEN ] . obstacle_short_name = "Chest";
+  obstacle_map [ ISO_V_CHEST_OPEN ] . obstacle_long_description = "This chest has already been opened";
+  
 
   obstacle_map [ ISO_V_CHEST_CLOSED ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_V_CHEST_CLOSED ] . block_area_parm_1 = standard_wall_thickness ;
@@ -2794,6 +2807,8 @@ init_obstacle_data( void )
   obstacle_map [ ISO_V_CHEST_CLOSED ] . filename = "iso_container_0002.png" ;
   obstacle_map [ ISO_V_CHEST_CLOSED ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_V_CHEST_CLOSED ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
+  obstacle_map [ ISO_V_CHEST_CLOSED ] . obstacle_short_name = "Chest";
+  obstacle_map [ ISO_V_CHEST_CLOSED ] . obstacle_long_description = "This chest is closed.";
 
   obstacle_map [ ISO_H_CHEST_OPEN ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_H_CHEST_OPEN ] . block_area_parm_1 = 0.8 ;
@@ -2801,6 +2816,8 @@ init_obstacle_data( void )
   obstacle_map [ ISO_H_CHEST_OPEN ] . filename = "iso_container_0003.png" ;
   obstacle_map [ ISO_H_CHEST_OPEN ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_H_CHEST_OPEN ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
+  obstacle_map [ ISO_H_CHEST_OPEN ] . obstacle_short_name = "Chest";
+  obstacle_map [ ISO_H_CHEST_OPEN ] . obstacle_long_description = "This chest has already been opened";
 
   obstacle_map [ ISO_H_CHEST_CLOSED ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_H_CHEST_CLOSED ] . block_area_parm_1 = 0.8 ;
@@ -2808,48 +2825,70 @@ init_obstacle_data( void )
   obstacle_map [ ISO_H_CHEST_CLOSED ] . filename = "iso_container_0001.png" ;
   obstacle_map [ ISO_H_CHEST_CLOSED ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_H_CHEST_CLOSED ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
+  obstacle_map [ ISO_H_CHEST_CLOSED ] . obstacle_short_name = "Chest";
+  obstacle_map [ ISO_H_CHEST_CLOSED ] . obstacle_long_description = "This chest is closed.";
 
   obstacle_map [ ISO_AUTOGUN_N ] . block_area_parm_1 = 0.9 ;
   obstacle_map [ ISO_AUTOGUN_N ] . block_area_parm_2 = 0.9 ;
   obstacle_map [ ISO_AUTOGUN_N ] . filename = "iso_autogun_0002.png" ;
   obstacle_map [ ISO_AUTOGUN_N ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_AUTOGUN_N ] . obstacle_short_name = "Autogun";
+  obstacle_map [ ISO_AUTOGUN_N ] . obstacle_long_description = "A not-that-nice autogun. Beware : it could be harmful.";
   obstacle_map [ ISO_AUTOGUN_S ] . block_area_parm_1 = 0.9 ;
   obstacle_map [ ISO_AUTOGUN_S ] . block_area_parm_2 = 0.9 ;
   obstacle_map [ ISO_AUTOGUN_S ] . filename = "iso_autogun_0004.png" ;
   obstacle_map [ ISO_AUTOGUN_S ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_AUTOGUN_S ] . obstacle_short_name = "Autogun";
+  obstacle_map [ ISO_AUTOGUN_S ] . obstacle_long_description = "A not-that-nice autogun. Beware : it could be harmful.";
   obstacle_map [ ISO_AUTOGUN_E ] . block_area_parm_1 = 0.9 ;
   obstacle_map [ ISO_AUTOGUN_E ] . block_area_parm_2 = 0.9 ;
   obstacle_map [ ISO_AUTOGUN_E ] . filename = "iso_autogun_0003.png" ;
   obstacle_map [ ISO_AUTOGUN_E ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_AUTOGUN_E ] . obstacle_short_name = "Autogun";
+  obstacle_map [ ISO_AUTOGUN_E ] . obstacle_long_description = "A not-that-nice autogun. Beware : it could be harmful.";
   obstacle_map [ ISO_AUTOGUN_W ] . block_area_parm_1 = 0.9 ;
   obstacle_map [ ISO_AUTOGUN_W ] . block_area_parm_2 = 0.9 ;
   obstacle_map [ ISO_AUTOGUN_W ] . filename = "iso_autogun_0001.png" ;
   obstacle_map [ ISO_AUTOGUN_W ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_AUTOGUN_W ] . obstacle_short_name = "Autogun";
+  obstacle_map [ ISO_AUTOGUN_W ] . obstacle_long_description = "A not-that-nice autogun. Beware : it could be harmful.";
 
   obstacle_map [ ISO_CAVE_WALL_H ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_CAVE_WALL_H ] . block_area_parm_1 = 1.0 ;
   obstacle_map [ ISO_CAVE_WALL_H ] . block_area_parm_2 = 1.0 ;
   obstacle_map [ ISO_CAVE_WALL_H ] . filename = "iso_cave_wall_0001.png" ;
+  obstacle_map [ ISO_CAVE_WALL_H ] . obstacle_short_name = "Rock barrier";
+  obstacle_map [ ISO_CAVE_WALL_H ] . obstacle_long_description = "No way to pass through. Find another path.";
   obstacle_map [ ISO_CAVE_WALL_V ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_CAVE_WALL_V ] . block_area_parm_1 = 1.0 ;
   obstacle_map [ ISO_CAVE_WALL_V ] . block_area_parm_2 = 1.0 ;
   obstacle_map [ ISO_CAVE_WALL_V ] . filename = "iso_cave_wall_0002.png" ;
+  obstacle_map [ ISO_CAVE_WALL_V ] . obstacle_short_name = "Rock barrier";
+  obstacle_map [ ISO_CAVE_WALL_V ] . obstacle_long_description = "No way to pass through. Find another path.";
   obstacle_map [ ISO_CAVE_CORNER_NE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_CAVE_CORNER_NE ] . block_area_parm_1 = 1.0 ;
   obstacle_map [ ISO_CAVE_CORNER_NE ] . block_area_parm_2 = 1.0 ;
   obstacle_map [ ISO_CAVE_CORNER_NE ] . filename = "iso_cave_wall_0003.png" ;
+  obstacle_map [ ISO_CAVE_CORNER_NE ] . obstacle_short_name = "Rock barrier";
+  obstacle_map [ ISO_CAVE_CORNER_NE ] . obstacle_long_description = "No way to pass through. Find another path.";
   obstacle_map [ ISO_CAVE_CORNER_SE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_CAVE_CORNER_SE ] . block_area_parm_1 = 1.0 ;
   obstacle_map [ ISO_CAVE_CORNER_SE ] . block_area_parm_2 = 1.0 ;
   obstacle_map [ ISO_CAVE_CORNER_SE ] . filename = "iso_cave_wall_0004.png" ;
+  obstacle_map [ ISO_CAVE_CORNER_SE ] . obstacle_short_name = "Rock barrier";
+  obstacle_map [ ISO_CAVE_CORNER_SE ] . obstacle_long_description = "No way to pass through. Find another path.";
   obstacle_map [ ISO_CAVE_CORNER_NW ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_CAVE_CORNER_NW ] . block_area_parm_1 = 1.0 ;
   obstacle_map [ ISO_CAVE_CORNER_NW ] . block_area_parm_2 = 1.0 ;
   obstacle_map [ ISO_CAVE_CORNER_NW ] . filename = "iso_cave_wall_0005.png" ;
+  obstacle_map [ ISO_CAVE_CORNER_NW ] . obstacle_short_name = "Rock barrier";
+  obstacle_map [ ISO_CAVE_CORNER_NW ] . obstacle_long_description = "No way to pass through. Find another path.";
   obstacle_map [ ISO_CAVE_CORNER_SW ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_CAVE_CORNER_SW ] . block_area_parm_1 = 1.0 ;
   obstacle_map [ ISO_CAVE_CORNER_SW ] . block_area_parm_2 = 1.0 ;
   obstacle_map [ ISO_CAVE_CORNER_SW ] . filename = "iso_cave_wall_0006.png" ;
+  obstacle_map [ ISO_CAVE_CORNER_SW ] . obstacle_short_name = "Rock barrier";
+  obstacle_map [ ISO_CAVE_CORNER_SW ] . obstacle_long_description = "No way to pass through. Find another path.";
 
   obstacle_map [ ISO_COOKING_POT ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_COOKING_POT ] . block_area_parm_1 = 0.5 ;
@@ -2884,12 +2923,22 @@ init_obstacle_data( void )
 
   obstacle_map [ ISO_BARREL_1 ] . drop_random_treasure = TRUE ;
   obstacle_map [ ISO_BARREL_1 ] . is_smashable = TRUE ;
+  obstacle_map [ ISO_BARREL_1 ] . obstacle_short_name = "Barrel";
+  obstacle_map [ ISO_BARREL_1 ] . obstacle_long_description = "A painted barrel, protected from rust.";
   obstacle_map [ ISO_BARREL_2 ] . drop_random_treasure = TRUE ;
   obstacle_map [ ISO_BARREL_2 ] . is_smashable = TRUE ;
+  obstacle_map [ ISO_BARREL_2 ] . obstacle_short_name = "Barrel";
+  obstacle_map [ ISO_BARREL_2 ] . obstacle_long_description = "A rusty barrel.";
+
+  //wood crates
   obstacle_map [ ISO_BARREL_3 ] . drop_random_treasure = TRUE ;
   obstacle_map [ ISO_BARREL_3 ] . is_smashable = TRUE ;
+  obstacle_map [ ISO_BARREL_3 ] . obstacle_short_name = "Wood crate";
+  obstacle_map [ ISO_BARREL_3 ] . obstacle_long_description = "This is a wood crate that could contain interesting things. Or not.";
   obstacle_map [ ISO_BARREL_4 ] . drop_random_treasure = TRUE ;
   obstacle_map [ ISO_BARREL_4 ] . is_smashable = TRUE ;
+  obstacle_map [ ISO_BARREL_4 ] . obstacle_short_name = "Wood crate";
+  obstacle_map [ ISO_BARREL_4 ] . obstacle_long_description = "This is a wood crate that could contain interesting things. Or not.";
 
   //--------------------
   // This is the wonderful new room lamp from basse
@@ -2901,25 +2950,32 @@ init_obstacle_data( void )
   obstacle_map [ ISO_LAMP_N ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_LAMP_N ] . emitted_light_strength = 5 ; // how much light emitted from here...
   obstacle_map [ ISO_LAMP_N ] . filename = "iso_obstacle_0055.png" ;
+  obstacle_map [ ISO_LAMP_N ] . obstacle_short_name = "Room lamp" ;
+  obstacle_map [ ISO_LAMP_N ] . obstacle_long_description = "This is a wonderful room lamp.";
   
   obstacle_map [ ISO_LAMP_E ] . block_area_parm_1 = 0.5 ;
   obstacle_map [ ISO_LAMP_E ] . block_area_parm_2 = 0.5 ;
   obstacle_map [ ISO_LAMP_E ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_LAMP_E ] . emitted_light_strength = 5 ;
   obstacle_map [ ISO_LAMP_E ] . filename = "iso_obstacle_0056.png" ;
+  obstacle_map [ ISO_LAMP_E ] . obstacle_short_name = "Room lamp" ;
+  obstacle_map [ ISO_LAMP_E ] . obstacle_long_description = "This is a wonderful room lamp.";
   
   obstacle_map [ ISO_LAMP_S ] . block_area_parm_1 = 0.5 ;
   obstacle_map [ ISO_LAMP_S ] . block_area_parm_2 = 0.5 ;
   obstacle_map [ ISO_LAMP_S ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_LAMP_S ] . emitted_light_strength = 5 ;
   obstacle_map [ ISO_LAMP_S ] . filename = "iso_obstacle_0054.png" ;
+  obstacle_map [ ISO_LAMP_S ] . obstacle_short_name = "Room lamp" ;
+  obstacle_map [ ISO_LAMP_S ] . obstacle_long_description = "This is a wonderful room lamp.";
   
   obstacle_map [ ISO_LAMP_W ] . block_area_parm_1 = 0.5 ;
   obstacle_map [ ISO_LAMP_W ] . block_area_parm_2 = 0.5 ;
   obstacle_map [ ISO_LAMP_W ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_LAMP_W ] . emitted_light_strength = 5 ;
   obstacle_map [ ISO_LAMP_W ] . filename = "iso_obstacle_0057.png" ;
-  
+  obstacle_map [ ISO_LAMP_W ] . obstacle_short_name = "Room lamp" ;
+  obstacle_map [ ISO_LAMP_W ] . obstacle_long_description = "This is a wonderful room lamp.";
   
   //--------------------
   // We have several types of fences.  These are typically rather
@@ -2933,6 +2989,9 @@ init_obstacle_data( void )
   //
   obstacle_map [ ISO_V_WOOD_FENCE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_V_WOOD_FENCE ] . block_area_parm_1 = 1.1 ;
+  obstacle_map [ ISO_V_WOOD_FENCE ] . block_area_parm_2 = 2.2 ;
+  obstacle_map [ ISO_V_WOOD_FENCE ] . obstacle_short_name = "Fence";
+  obstacle_map [ ISO_V_WOOD_FENCE ] . obstacle_long_description = "This is a wood fence. Find another path.";
   obstacle_map [ ISO_V_WOOD_FENCE ] . block_area_parm_2 = 2.2 ;
   obstacle_map [ ISO_V_DENSE_FENCE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_V_DENSE_FENCE ] . block_area_parm_1 = 1.1 ;
@@ -2948,6 +3007,8 @@ init_obstacle_data( void )
   obstacle_map [ ISO_H_WOOD_FENCE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_H_WOOD_FENCE ] . block_area_parm_1 = 2.2 ;
   obstacle_map [ ISO_H_WOOD_FENCE ] . block_area_parm_2 = 1.1 ;
+  obstacle_map [ ISO_H_WOOD_FENCE ] . obstacle_short_name = "Fence";
+  obstacle_map [ ISO_H_WOOD_FENCE ] . obstacle_short_name = "You can't break it. Find another way.";
   obstacle_map [ ISO_H_DENSE_FENCE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_H_DENSE_FENCE ] . block_area_parm_1 = 2.2 ;
   obstacle_map [ ISO_H_DENSE_FENCE ] . block_area_parm_2 = 1.10 ;
@@ -2966,23 +3027,32 @@ init_obstacle_data( void )
   obstacle_map [ ISO_N_TOILET_SMALL ] . is_smashable = TRUE ;
   obstacle_map [ ISO_N_TOILET_SMALL ] . filename = "iso_bathroom_furniture_0008.png";
   obstacle_map [ ISO_N_TOILET_SMALL ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_N_TOILET_SMALL ] . obstacle_short_name = "Small toilet";
+  obstacle_map [ ISO_N_TOILET_SMALL ] . obstacle_long_description = "Smells good.";
+  
   obstacle_map [ ISO_E_TOILET_SMALL ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_E_TOILET_SMALL ] . block_area_parm_1 = 0.4 ;
   obstacle_map [ ISO_E_TOILET_SMALL ] . block_area_parm_2 = 0.4 ;
   obstacle_map [ ISO_E_TOILET_SMALL ] . is_smashable = TRUE ;
   obstacle_map [ ISO_E_TOILET_SMALL ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_E_TOILET_SMALL ] . filename = "iso_bathroom_furniture_0009.png";
+  obstacle_map [ ISO_E_TOILET_SMALL ] . obstacle_short_name = "Small toilet";
+  obstacle_map [ ISO_E_TOILET_SMALL ] . obstacle_long_description = "Smells good.";
   obstacle_map [ ISO_S_TOILET_SMALL ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_S_TOILET_SMALL ] . block_area_parm_1 = 0.4 ;
   obstacle_map [ ISO_S_TOILET_SMALL ] . block_area_parm_2 = 0.4 ;
   obstacle_map [ ISO_S_TOILET_SMALL ] . is_smashable = TRUE ;
   obstacle_map [ ISO_S_TOILET_SMALL ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_S_TOILET_SMALL ] . obstacle_short_name = "Small toilet";
+  obstacle_map [ ISO_S_TOILET_SMALL ] . obstacle_long_description = "Smells good.";
   obstacle_map [ ISO_W_TOILET_SMALL ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_W_TOILET_SMALL ] . block_area_parm_1 = 0.4 ;
   obstacle_map [ ISO_W_TOILET_SMALL ] . block_area_parm_2 = 0.4 ;
   obstacle_map [ ISO_W_TOILET_SMALL ] . is_smashable = TRUE ;
   obstacle_map [ ISO_W_TOILET_SMALL ] . block_vision_too = FALSE ;
-
+  obstacle_map [ ISO_W_TOILET_SMALL ] . obstacle_short_name = "Small toilet";
+  obstacle_map [ ISO_W_TOILET_SMALL ] . obstacle_long_description = "Smells good.";
+  
   obstacle_map [ ISO_N_TOILET_BIG ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_N_TOILET_BIG ] . block_area_parm_1 = 0.4 ;
   obstacle_map [ ISO_N_TOILET_BIG ] . block_area_parm_2 = 0.4 ;
@@ -3007,6 +3077,14 @@ init_obstacle_data( void )
   obstacle_map [ ISO_W_TOILET_BIG ] . is_smashable = TRUE ;
   obstacle_map [ ISO_W_TOILET_BIG ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_W_TOILET_BIG ] . filename = "iso_bathroom_furniture_0007.png";
+  obstacle_map [ ISO_W_TOILET_BIG] . obstacle_short_name = "Toilet";
+  obstacle_map [ ISO_W_TOILET_BIG] . obstacle_long_description = "Feel like defecating ?";
+  obstacle_map [ ISO_S_TOILET_BIG] . obstacle_short_name = "Toilet";
+  obstacle_map [ ISO_S_TOILET_BIG] . obstacle_long_description = "Feel like defecating ?";
+  obstacle_map [ ISO_E_TOILET_BIG] . obstacle_short_name = "Toilet";
+  obstacle_map [ ISO_E_TOILET_BIG] . obstacle_long_description = "Yes, they are clean.";
+  obstacle_map [ ISO_N_TOILET_BIG] . obstacle_short_name = "Toilet";
+  obstacle_map [ ISO_N_TOILET_BIG] . obstacle_long_description = "Would you have something to empty ?";
 
   obstacle_map [ ISO_N_CHAIR ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_N_CHAIR ] . block_area_parm_1 = 0.4 ;
@@ -3204,12 +3282,16 @@ init_obstacle_data( void )
   obstacle_map [ ISO_H_BATHTUB ] . is_smashable = TRUE ;
   obstacle_map [ ISO_H_BATHTUB ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_H_BATHTUB ] . filename = "iso_bathroom_furniture_0000.png" ;
+  obstacle_map [ ISO_H_BATHTUB ] . obstacle_short_name = "Bath tub";
+  obstacle_map [ ISO_H_BATHTUB ] . obstacle_long_description = "A picture of what comfort is.";
   obstacle_map [ ISO_V_BATHTUB ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_V_BATHTUB ] . block_area_parm_1 = 0.5 ;
   obstacle_map [ ISO_V_BATHTUB ] . block_area_parm_2 = 1.0 ;
   obstacle_map [ ISO_V_BATHTUB ] . is_smashable = TRUE ;
   obstacle_map [ ISO_V_BATHTUB ] . filename = "iso_bathroom_furniture_0001.png" ;
   obstacle_map [ ISO_V_BATHTUB ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_V_BATHTUB ] . obstacle_short_name = "Bath tub";
+  obstacle_map [ ISO_V_BATHTUB ] . obstacle_long_description = "A picture of what comfort is.";
   
   obstacle_map [ ISO_3_BATHTUB ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_3_BATHTUB ] . block_area_parm_1 = 1.0 ;
@@ -3268,14 +3350,20 @@ init_obstacle_data( void )
   obstacle_map [ ISO_TREE_1 ] . block_area_parm_1 = 0.4 ;
   obstacle_map [ ISO_TREE_1 ] . block_area_parm_2 = 0.4 ;
   obstacle_map [ ISO_TREE_1 ] . is_smashable = FALSE ;
+  obstacle_map [ ISO_TREE_1 ] . obstacle_short_name = "Tree";
+  obstacle_map [ ISO_TREE_1 ] . obstacle_long_description = "This tree seems quite normal";
   obstacle_map [ ISO_TREE_2 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_TREE_2 ] . block_area_parm_1 = 0.4 ;
   obstacle_map [ ISO_TREE_2 ] . block_area_parm_2 = 0.4 ;
   obstacle_map [ ISO_TREE_2 ] . is_smashable = FALSE ;
+  obstacle_map [ ISO_TREE_2 ] . obstacle_short_name = "Tree";
+  obstacle_map [ ISO_TREE_2 ] . obstacle_long_description = "This is a nice tree";  
   obstacle_map [ ISO_TREE_3 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_TREE_3 ] . block_area_parm_1 = 0.4 ;
   obstacle_map [ ISO_TREE_3 ] . block_area_parm_2 = 0.4 ;
   obstacle_map [ ISO_TREE_3 ] . is_smashable = FALSE ;
+  obstacle_map [ ISO_TREE_3 ] . obstacle_short_name = "Tree";
+  obstacle_map [ ISO_TREE_3 ] . obstacle_long_description = "No, it definitely doesn't look like a droid";
 
   obstacle_map [ ISO_TREE_4 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_TREE_4 ] . block_area_parm_1 = 1.2 ;
@@ -4131,6 +4219,12 @@ init_obstacle_data( void )
   obstacle_map [ ISO_SIGN_3 ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_SIGN_3 ] . filename = "iso_signs_0002.png" ;
   obstacle_map [ ISO_SIGN_3 ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_SIGN_1 ] . obstacle_short_name = "Sign";
+  obstacle_map [ ISO_SIGN_1 ] . obstacle_long_description = "The arrow points a direction. Maybe you should follow it";
+  obstacle_map [ ISO_SIGN_2 ] . obstacle_short_name = "Sign";
+  obstacle_map [ ISO_SIGN_2 ] . obstacle_long_description = "The arrow points a direction. Maybe you should follow it";
+  obstacle_map [ ISO_SIGN_3 ] . obstacle_short_name = "Sign";
+  obstacle_map [ ISO_SIGN_3 ] . obstacle_long_description = "The arrow points a direction. Maybe you should follow it";
 
   obstacle_map[ ISO_COUNTER_MIDDLE_1 ] . block_area_parm_1 = 1.1;
   obstacle_map[ ISO_COUNTER_MIDDLE_1 ] . block_area_parm_2 = 2.3;
