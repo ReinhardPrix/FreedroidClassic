@@ -796,6 +796,9 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 		{
 		  ShopOrder -> item_selected = ItemIndex ;
 		  ShopOrder -> shop_command = BUY_1_ITEM ;
+
+		  do_graphical_number_selection_in_range ( 0 , 100 );
+
 		  return ( 0 );
 		}
 	      else if ( SellButtonActive )

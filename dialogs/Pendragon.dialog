@@ -29,6 +29,16 @@ If you have questions concerning FreedroidRPG, please send mail to:
 
 freedroid-discussion@lists.sourceforge.net
 
+BEGIN OF AUTORS NOTES
+
+You can use this text field to make some notes on ANYTHING.  
+It's purely for the author's reference.  Tahisafsd asdfasdf asdfasdf.
+The game engine will ignore this entry.
+
+
+END OF AUTORS NOTES
+
+
 Beginning of new chat dialog for character="XXXXX"
 
 New Option Nr=0  OptionText=" Hi!  I'm new here. "
@@ -40,6 +50,7 @@ Subtitle="Normally I'm a fighter among the ranks of the rebel army.  But now I t
 ReplySample="PEN_Normally_Im_A_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
@@ -50,6 +61,7 @@ Subtitle="Well, I don't do that for a living, but I certainly could.  But not fo
 ReplySample="PEN_Well_I_Dont_0.wav"
 ChangeOption=1 ChangeToValue=0
 DoSomethingExtra="ExecuteSubdialog:subdlg_Pendragon"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
@@ -60,12 +72,14 @@ Subtitle="I'm not entitled to even talk about that myself.  Talk to Chandra."
 ReplySample="PEN_Im_Not_Entitled_0.wav"
 Subtitle="When he says you can be trusted, I will take you with me when I return to the rebels."
 ReplySample="PEN_When_He_Says_0.wav"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 New Option Nr=99  OptionText=" END "
 OptionSample="Tux_See_You_Later_0.wav"
 PositionX=261  PositionY=316  
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 

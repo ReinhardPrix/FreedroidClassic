@@ -47,6 +47,7 @@ point CurrentMouseAbsPos;
 SDL_Event event;
 
 int CurrentlyMouseRightPressed=0;
+int CurrentlyMouseLeftPressed=0;
 int CurrentlyMouseWheelUpPressed=0;
 int CurrentlyMouseWheelDownPressed=0;
 int MouseWheelUpMovesRecorded=0;
@@ -1458,8 +1459,8 @@ keyboard_update(void)
 	  break;
 
 	case SDL_MOUSEMOTION:
-	  if (mouse_control)
-	    {
+	  // if (mouse_control)
+	  // {
 	      //--------------------
 	      // Since the new mouse cursor does have it's tip at the top left corner
 	      // of the mouse cursor, but rather in the center of the 32x32 pixel mouse
@@ -1473,7 +1474,7 @@ keyboard_update(void)
 	      input_axis.y = event.button.y - UserCenter_y + 16; 	  
 	      CurrentMouseAbsPos.x = event.button.x;
 	      CurrentMouseAbsPos.y = event.button.y;
-	    }
+	      // }
 	  break;
 	  
 	  /* Mouse control */
@@ -1485,6 +1486,8 @@ keyboard_update(void)
 	    {
 	      CurrentlySpacePressed = TRUE;
 	      axis_is_active = TRUE;
+	      CurrentlyMouseLeftPressed = TRUE;
+	      DebugPrintf ( 0 , "\nLeft button press registered..." );
 	    }
 
 	  if ( event.button.button == SDL_BUTTON_RIGHT )
@@ -2131,6 +2134,14 @@ MouseRightPressed(void)
   // keyboard_update();  // DON'T UPDATE HERE, OR SOMETHING GOES WRONG WITH KEEPING TRACK
   // OF MOUSE STATUS IN THE PREVIOUS FRAMES!!!!
   return CurrentlyMouseRightPressed;
+}
+
+int
+MouseLeftPressed(void)
+{
+  // keyboard_update();  // DON'T UPDATE HERE, OR SOMETHING GOES WRONG WITH KEEPING TRACK
+  // OF MOUSE STATUS IN THE PREVIOUS FRAMES!!!!
+  return CurrentlyMouseLeftPressed;
 }
 
 int

@@ -130,6 +130,83 @@ init_system_cursor(const char *image[])
 };
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+int
+do_graphical_number_selection_in_range ( int lower_range , int upper_range )
+{
+  static SDL_Surface* Background = NULL ;
+  static SDL_Surface* SelectionKnob = NULL ;
+  int ok_button_was_pressed = FALSE;
+  int left_mouse_pressed_previous_frame = FALSE;
+  int current_value ;
+
+  if ( upper_range >= 1 ) current_value = 1 ; 
+  else current_value = 0 ;
+
+  MakeGridOnScreen ( NULL );
+  
+  //--------------------
+  // Next we prepare the whole background for all later operations
+  //
+  if ( Background == NULL )
+    Background = IMG_Load( find_file ( "backgrounds/number_selector.png" , GRAPHICS_DIR, FALSE ) );
+  if ( Background == NULL )
+    {
+      fprintf( stderr, "\n\nSDL_GetError: %s \n" , SDL_GetError() );
+      GiveStandardErrorMessage ( "do_graphical_number_selection_in_range(...)" , "\
+ERROR LOADING BACKGROUND IMAGE FILE!",
+				 PLEASE_INFORM, IS_FATAL );
+    }
+
+  //--------------------
+  // Next we prepare the selection knob for all later operations
+  //
+  if ( SelectionKnob == NULL )
+    SelectionKnob = IMG_Load( find_file ( "mouse_buttons/number_selector_selection_knob.png" , GRAPHICS_DIR, FALSE ) );
+  if ( SelectionKnob == NULL )
+    {
+      fprintf( stderr, "\n\nSDL_GetError: %s \n" , SDL_GetError() );
+      GiveStandardErrorMessage ( "do_graphical_number_selection_in_range(...)" , "\
+ERROR LOADING SELECTION KNOB IMAGE FILE!",
+				 PLEASE_INFORM, IS_FATAL );
+    }
+
+  //--------------------
+  // We select small font for the menu interaction...
+  //
+  SetCurrentFont( FPS_Display_BFont );
+
+  while ( SpacePressed() );
+  while ( ! ok_button_was_pressed )
+    {
+
+      SDL_BlitSurface ( Background , NULL , Screen , NULL );
+
+      ShowGenericButtonFromList ( NUMBER_SELECTOR_OK_BUTTON );
+
+      SDL_Flip ( Screen );
+
+      if ( ( SpacePressed() && axis_is_active ) && ( ! left_mouse_pressed_previous_frame ) ) 
+	{
+	  if ( CursorIsOnButton ( NUMBER_SELECTOR_OK_BUTTON , GetMousePos_x()+16 , GetMousePos_y()+16 ) )
+	    ok_button_was_pressed = TRUE ;
+
+	}
+      left_mouse_pressed_previous_frame = axis_is_active ;
+
+      usleep ( 20 );
+
+
+    }
+
+
+  return ( 1 );
+
+}; // int do_graphical_number_selection_in_range ( int lower_range , int upper_range )
+
+/* ----------------------------------------------------------------------
  * This function gives the green component of a pixel, using a value of
  * 255 for the most green pixel and 0 for the least green pixel.
  * ---------------------------------------------------------------------- */

@@ -165,6 +165,7 @@ EXTERN void ClearGraphMem ( void );
 EXTERN Uint32 getpixel(SDL_Surface *surface, int x, int y);
 EXTERN void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
 EXTERN void HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area );
+EXTERN int do_graphical_number_selection_in_range ( int lower_range , int upper_range );
 
 // saveloadgame.c 
 #undef EXTERN
@@ -337,6 +338,7 @@ EXTERN void HandleCurrentlyActivatedSkill( void );
 EXTERN int MouseWheelUpPressed(void);
 EXTERN int MouseWheelDownPressed(void);
 EXTERN int MouseRightPressed(void);
+EXTERN int MouseLeftPressed(void);
 EXTERN int GetMousePos_x(void);
 EXTERN int GetMousePos_y(void);
 EXTERN void Init_Joy(void);

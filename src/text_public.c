@@ -504,6 +504,17 @@ freedroid-discussion@lists.sourceforge.net\n\
 \n" );
   fwrite ( linebuf , strlen( linebuf ), sizeof ( char ), SaveGameFile );  
 
+  strcpy ( linebuf , "BEGIN OF AUTORS NOTES\n" );
+  fwrite ( linebuf , strlen( linebuf ), sizeof ( char ), SaveGameFile );  
+
+  strcpy ( linebuf , authors_notes );
+  fwrite ( linebuf , strlen( linebuf ), sizeof ( char ), SaveGameFile );  
+  
+  strcpy ( linebuf , "\nEND OF AUTORS NOTES\n\n\n" );
+  fwrite ( linebuf , strlen( linebuf ), sizeof ( char ), SaveGameFile );  
+
+
+
   //--------------------
   // Now we can write out the certain string, that is still needed by
   // the dialog loading function...
@@ -797,6 +808,7 @@ LoadChatRosterWithChatSequence ( char* FullPathAndFullFilename )
   char* OptionChangePointer;
   char* ExtraPointer;
   char* YesNoString;
+  char* tmp_string;
 
   fpath = FullPathAndFullFilename;
 
@@ -810,6 +822,25 @@ LoadChatRosterWithChatSequence ( char* FullPathAndFullFilename )
   //
   ChatData = ReadAndMallocAndTerminateFile( fpath , CHAT_CHARACTER_END_STRING ) ;
   SectionPointer = ChatData ;
+
+  //--------------------
+  // Maybe there are some notes from the author present, describing the
+  // use of this character for the story as a whole or something like
+  // that.  If there are some notes like that, we'll read them in here.
+  //
+  if ( CountStringOccurences ( SectionPointer , "BEGIN OF AUTORS NOTES\n" ) ) 
+    {
+      DebugPrintf( CHAT_DEBUG_LEVEL , "\nWe've found some AUTHORS NOTES HERE..." );
+      tmp_string = 
+	ReadAndMallocStringFromData ( SectionPointer , "BEGIN OF AUTORS NOTES\n" , "END OF AUTORS NOTES" ) ;
+      DebugPrintf( CHAT_DEBUG_LEVEL , "\nAUTHORS NOTES text found: \"%s\"." , tmp_string );
+      strcpy ( authors_notes , tmp_string );
+    }
+  else
+    {
+      DebugPrintf( CHAT_DEBUG_LEVEL , "\nThere seem to be NO AUTHORS NOTES AT ALL IN THIS DIALOG." );
+    }
+  
 
   //--------------------
   // Now we search for the desired chat section, cause most likely
