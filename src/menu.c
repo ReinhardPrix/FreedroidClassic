@@ -45,7 +45,8 @@ void Credits_Menu (void);
 void Options_Menu (void);
 void Show_Mission_Instructions_Menu (void);
 void Show_Waypoints(void);
-void Level_Editor(void);
+void LevelEditor(void);
+bool LevelEditMenu (void);
 
 #define FIRST_MENU_ITEM_POS_X (2*INITIAL_BLOCK_WIDTH)
 #define FIRST_MENU_ITEM_POS_Y (USERFENSTERPOSY + FontHeight(Menu_BFont))
@@ -512,7 +513,7 @@ EscapeMenu (void)
 		  break;
 
 		case LEVEL_EDITOR:
-		  Level_Editor();
+		  LevelEditor();
 		  break;
 
 		case HIGHSCORES:
@@ -608,80 +609,87 @@ enum
 	      finished = TRUE;
 	      key = TRUE;
 	    }
-	  
-	  // Some menu options can be controlled by pressing right or left
-	  // These options are gamma corrections, sound volume and the like
-	  // Therefore left and right key must be resprected.  This is done here:
-	  if (RightPressed() || LeftPressed() ) 
-	    {
-	      key = TRUE;
-	      if (MenuPosition == SET_BG_MUSIC_VOLUME ) 
-		{
-		  if (RightPressedR()) 
-		    {
-		      if ( GameConfig.Current_BG_Music_Volume < 1 ) 
-			GameConfig.Current_BG_Music_Volume += 0.05;
-		      Set_BG_Music_Volume( GameConfig.Current_BG_Music_Volume );
-		    }
-		  if (LeftPressedR()) 
-		    {
-		      if ( GameConfig.Current_BG_Music_Volume > 0 ) 
-			GameConfig.Current_BG_Music_Volume -= 0.05;
-		      Set_BG_Music_Volume( GameConfig.Current_BG_Music_Volume );
-		    }
-		}
-	      if (MenuPosition == SET_SOUND_FX_VOLUME ) 
-		{
-		  if (RightPressedR()) 
-		    {
-		      if ( GameConfig.Current_Sound_FX_Volume < 1 ) 
-			GameConfig.Current_Sound_FX_Volume += 0.05;
-		      Set_Sound_FX_Volume( GameConfig.Current_Sound_FX_Volume );
-		    }
-		  if (LeftPressedR()) 
-		    {
-		      if ( GameConfig.Current_Sound_FX_Volume > 0 ) 
-			GameConfig.Current_Sound_FX_Volume -= 0.05;
-		      Set_Sound_FX_Volume( GameConfig.Current_Sound_FX_Volume );
-		    }
-		}
-	      if (MenuPosition == SET_GAMMA_CORRECTION ) 
-		{
-		  if (RightPressedR()) 
-		    {
-		      GameConfig.Current_Gamma_Correction+=0.05;
-		      SDL_SetGamma( GameConfig.Current_Gamma_Correction , 
-				    GameConfig.Current_Gamma_Correction , 
-				    GameConfig.Current_Gamma_Correction );
-		    }
-		  if (LeftPressedR()) 
-		    {
-		      GameConfig.Current_Gamma_Correction-=0.05;
-		      SDL_SetGamma( GameConfig.Current_Gamma_Correction , 
-				    GameConfig.Current_Gamma_Correction , 
-				    GameConfig.Current_Gamma_Correction );
-		    }
-		}
-	    }
+	  if (RightPressed() || LeftPressed() || MouseLeftPressed() || SpacePressed() || MouseRightPressed()) 
+	    key = TRUE;
 
-	  if ( FirePressedR() )
+      
+	  switch (MenuPosition)
 	    {
-	      MenuItemSelectedSound();
-	      key = TRUE;
-	      switch (MenuPosition) 
+	    case SET_FULLSCREEN_FLAG:
+	      if (FirePressedR())
 		{
-		case SET_FULLSCREEN_FLAG:
 		  SDL_WM_ToggleFullScreen (ne_screen);
 		  GameConfig.UseFullscreen = !GameConfig.UseFullscreen;
-		  break;
+		  MenuItemSelectedSound();
+		}
+	      break;
 
-		case BACK:
+	    case BACK:
+	      if (FirePressedR())
+		{
+		  MenuItemSelectedSound();
 		  finished=TRUE;
-		  break;
-		default: 
-		  break;
-		} 
-	    } // if SpacePressed()
+		}
+	      break;
+	      
+	    case SET_BG_MUSIC_VOLUME: 
+	      if (RightPressedR()||MouseRightPressedR()) 
+		{
+		  if ( GameConfig.Current_BG_Music_Volume < 1 ) 
+		    GameConfig.Current_BG_Music_Volume += 0.05;
+		  Set_BG_Music_Volume( GameConfig.Current_BG_Music_Volume );
+		  MoveMenuPositionSound();
+		}
+	      if (LeftPressedR()||MouseLeftPressedR()) 
+		{
+		  if ( GameConfig.Current_BG_Music_Volume > 0 ) 
+		    GameConfig.Current_BG_Music_Volume -= 0.05;
+		  Set_BG_Music_Volume( GameConfig.Current_BG_Music_Volume );
+		  MoveMenuPositionSound();
+		}
+	      break;
+
+	      case SET_SOUND_FX_VOLUME:
+		if (RightPressedR()||MouseRightPressedR()) 
+		  {
+		    if ( GameConfig.Current_Sound_FX_Volume < 1 ) 
+		      GameConfig.Current_Sound_FX_Volume += 0.05;
+		    Set_Sound_FX_Volume( GameConfig.Current_Sound_FX_Volume );
+		    MoveMenuPositionSound();
+		  }
+		if (LeftPressedR()||MouseLeftPressedR()) 
+		  {
+		    if ( GameConfig.Current_Sound_FX_Volume > 0 ) 
+		      GameConfig.Current_Sound_FX_Volume -= 0.05;
+		    Set_Sound_FX_Volume( GameConfig.Current_Sound_FX_Volume );
+		    MoveMenuPositionSound();
+		  }
+		break;
+
+	      case SET_GAMMA_CORRECTION:
+		if (RightPressedR()||MouseRightPressedR()) 
+		  {
+		    GameConfig.Current_Gamma_Correction+=0.05;
+		    SDL_SetGamma( GameConfig.Current_Gamma_Correction , 
+				  GameConfig.Current_Gamma_Correction , 
+				  GameConfig.Current_Gamma_Correction );
+		    MoveMenuPositionSound();
+		  }
+		if (LeftPressedR()||MouseLeftPressedR()) 
+		  {
+		    GameConfig.Current_Gamma_Correction-=0.05;
+		    SDL_SetGamma( GameConfig.Current_Gamma_Correction , 
+				  GameConfig.Current_Gamma_Correction , 
+				  GameConfig.Current_Gamma_Correction );
+		    MoveMenuPositionSound();
+		  }
+		break;
+	    default:
+	      DebugPrintf (0, "WARNING: illegal menu selection: %d\n", MenuPosition);
+	      break;
+	      
+	    } // switch MenuPosition
+
 
 	  if (UpPressedR() || WheelUpPressed ()) 
 	    {
@@ -1241,7 +1249,7 @@ Show_Waypoints(void)
 @Ret:  none
 * $Function----------------------------------------------------------*/
 void 
-Level_Editor(void)
+LevelEditor(void)
 {
   int BlockX=rintf(Me.pos.x);
   int BlockY=rintf(Me.pos.y);
@@ -1255,7 +1263,7 @@ Level_Editor(void)
   int KeymapOffset = 15;
   
   Copy_Rect (User_Rect, rect);
-  Copy_Rect (Full_User_Rect, User_Rect);
+  Copy_Rect (Full_Screen_Rect, User_Rect);  /// level editor can use the full screen!
 
   while ( !Done )
     {
@@ -1270,7 +1278,11 @@ Level_Editor(void)
       Show_Waypoints();
 
       // CenteredPutString ( ne_screen ,  1*FontHeight(Menu_BFont),    "LEVEL EDITOR");
-      LeftPutString ( ne_screen ,  3*FontHeight(Menu_BFont),    "Press F1 for keymap");
+      //      LeftPutString ( ne_screen ,  3*FontHeight(FPS_Display_BFont),    "Press F1 for keymap");
+      PrintStringFont (ne_screen, FPS_Display_BFont, Full_User_Rect.x+Full_User_Rect.w/3 , 
+		       Full_User_Rect.y+Full_User_Rect.h - FontHeight(FPS_Display_BFont), 
+		       "Press F1 for keymap");
+
       SDL_Flip( ne_screen );
 
       //--------------------
@@ -1544,7 +1556,7 @@ Level_Editor(void)
   ClearGraphMem();
   return;
 
-} // void Level_Editor(void)
+} // void LevelEditor(void)
 
 
 //----------------------------------------------------------------------
@@ -1613,158 +1625,175 @@ LevelEditMenu (void)
       while (!key)
 	{
 	  usleep(50);
+	  
+	  if (LeftPressed()||RightPressed()||MouseLeftPressed()||MouseRightPressed()||SpacePressed())
+	    key = TRUE;
+	  
 	  if ( EscapePressedR() )
 	    {
 	      Weiter=TRUE;
-	      key = TRUE;
+	      key=TRUE;
 	    }
 	  
-	  if (FirePressedR())
+
+	  switch (MenuPosition) 
 	    {
-	      MenuItemSelectedSound();
-	      key = TRUE;
-	      switch (MenuPosition) 
+	    case SAVE_LEVEL_POSITION:
+	      if (FirePressedR())
 		{
-		  
-		case SAVE_LEVEL_POSITION:
+		  MenuItemSelectedSound();
 		  SaveShip("Testship");
 		  CenteredPutString (ne_screen, 3*FontHeight(Menu_BFont),"Ship saved as 'Testship.shp'\n");
 		  SDL_Flip ( ne_screen );
 		  Wait4Fire();
-		  break;
-		case CHANGE_LEVEL_POSITION: 
-		  break;
-		case CHANGE_COLOR:
-		  break;
-		case SET_LEVEL_NAME:
+		}
+	      break;
+	    case SET_LEVEL_NAME:
+	      if (FirePressedR())
+		{
+		  MenuItemSelectedSound();
 		  DisplayText ("New level name: ",
 			       FIRST_MENU_ITEM_POS_X-50, FIRST_MENU_ITEM_POS_X+ 5*fheight, 
 			       &Full_User_Rect);
 		  SDL_Flip( ne_screen );
 		  CurLevel->Levelname = GetString(15, 2);
 		  Weiter=!Weiter;
-		  break;
-		case SET_BACKGROUND_SONG_NAME:
+		}
+	      break;
+	    case SET_BACKGROUND_SONG_NAME:
+	      if (FirePressedR())
+		{
+		  MenuItemSelectedSound();
 		  DisplayText ("Bg music filename: ", 
 			       FIRST_MENU_ITEM_POS_X-50, FIRST_MENU_ITEM_POS_X+ 5*fheight, 
 			       &Full_User_Rect);
 		  SDL_Flip( ne_screen );
 		  CurLevel->Background_Song_Name=GetString(20, 2);
-		  break;
-		case SET_LEVEL_COMMENT:
+		}
+	      break;
+	    case SET_LEVEL_COMMENT:
+	      if (FirePressedR())
+		{
+		  MenuItemSelectedSound();
 		  DisplayText ("New level-comment :",
 			       FIRST_MENU_ITEM_POS_X-50, FIRST_MENU_ITEM_POS_X+ 5*fheight, 
 			       &Full_User_Rect);
 		  SDL_Flip( ne_screen );
 		  CurLevel->Level_Enter_Comment=GetString(15 , FALSE );
-		  break;
-
-		case BACK:
+		}
+	      break;
+	    case BACK:
+	      if (FirePressedR())
+		{
+		  MenuItemSelectedSound();
 		  Weiter=!Weiter;
 		  Done = TRUE;
 		  SetCombatScaleTo( 1 );
-		  break;
-		default: 
-		  break;
-
-		} // switch
-	    } // if SpacePressed
-	      
-	      // If the user of the level editor pressed left or right, that should have
-	      // an effect IF he/she is a the change level menu point
-
-	  if (LeftPressed() || RightPressed() ) 
-	    {
-	      key = TRUE;
-	      switch (MenuPosition)
-		{
-
-		case CHANGE_LEVEL_POSITION:
-		  if ( LeftPressedR() )
-		    {
-		      if ( CurLevel->levelnum > 0 )
-			Teleport ( CurLevel->levelnum -1 , 3 , 3 );
-		    }
-
-		  if ( RightPressedR() )
-		    {
-		      if ( CurLevel->levelnum < curShip.num_levels -1 )
-			Teleport ( CurLevel->levelnum +1 , 3 , 3 );
-		    }
-		      
-		  SetCombatScaleTo ( CurrentCombatScaleFactor );
-		  InitiateMenu(FALSE);
-		  break;
-		  
-		case CHANGE_COLOR:
-		  if ( RightPressedR() && (CurLevel->color  < 6 ) )
-		    CurLevel->color++;
-
-		  if ( LeftPressedR() && (CurLevel->color > 0) )
-		    CurLevel->color--;
-
-		  InitiateMenu (FALSE);
-		  break;
-
-		case CHANGE_SIZE_X:
-		  if ( RightPressedR() )
-		    {
-		      CurLevel->xlen++;
-		      // In case of enlargement, we need to do more:
-		      for ( i = 0 ; i < CurLevel->ylen ; i++ )
-			{
-			  OldMapPointer=CurLevel->map[i];
-			  CurLevel->map[i] = MyMalloc( CurLevel->xlen +1) ;
-			  memcpy( CurLevel->map[i] , OldMapPointer , CurLevel->xlen-1 );
-			  // We don't want to fill the new area with junk, do we? So we set it VOID
-			  CurLevel->map[ i ] [ CurLevel->xlen-1 ] = VOID;  
-			}
-		    }
-		  if ( LeftPressedR() )
-		      CurLevel->xlen--; // making it smaller is always easy:  just modify the value for size
-		      // allocation of new memory or things like that are not nescessary.
-
-		  InitiateMenu (FALSE);
-		  break;
-		  
-		case CHANGE_SIZE_Y:
-		  if ( RightPressedR() )
-		    {
-		      CurLevel->ylen++;
-		      
-		      // In case of enlargement, we need to do more:
-		      CurLevel->map[ CurLevel->ylen-1 ] = MyMalloc( CurLevel->xlen +1) ;
-			  
-		      // We don't want to fill the new area with junk, do we? So we set it VOID
-		      memset( CurLevel->map[ CurLevel->ylen-1 ] , VOID , CurLevel->xlen );
-			  
-		    }
-
-		  if ( LeftPressedR() )
-		    CurLevel->ylen--; // making it smaller is always easy:  just modify the value for size
-		      // allocation of new memory or things like that are not nescessary.
-
-		  InitiateMenu (FALSE);
-		  break;
-		  
 		}
-	    } // if LeftPressed || RightPressed
+	      break;
+
+	    case CHANGE_LEVEL_POSITION:
+	      if (LeftPressedR()||MouseLeftPressedR()) 
+		{
+		  if ( CurLevel->levelnum > 0 )
+		    Teleport ( CurLevel->levelnum -1 , 3 , 3 );
+		  InitiateMenu(FALSE);
+		  MoveMenuPositionSound();
+		}
+	      if ( RightPressedR()||MouseRightPressedR() )
+		{
+		  if ( CurLevel->levelnum < curShip.num_levels -1 )
+		    Teleport ( CurLevel->levelnum +1 , 3 , 3 );
+		  InitiateMenu(FALSE);
+		  MoveMenuPositionSound();
+		}
+	      break;
+		  
+	    case CHANGE_COLOR:
+	      if ( (RightPressedR()||MouseRightPressedR()) && (CurLevel->color  < 6 ) )
+		{
+		  CurLevel->color++;
+		  InitiateMenu(FALSE);
+		  MoveMenuPositionSound();
+		}
+		  
+	      if ( (LeftPressedR()||MouseLeftPressedR()) && (CurLevel->color > 0) )
+		{
+		  CurLevel->color--;
+		  InitiateMenu(FALSE);
+		  MoveMenuPositionSound();
+		}
+	      break;
+		  
+	    case CHANGE_SIZE_X:
+	      if ( RightPressedR()||MouseRightPressedR() )
+		{
+		  CurLevel->xlen++;
+		  // In case of enlargement, we need to do more:
+		  for ( i = 0 ; i < CurLevel->ylen ; i++ )
+		    {
+		      OldMapPointer=CurLevel->map[i];
+		      CurLevel->map[i] = MyMalloc( CurLevel->xlen +1) ;
+		      memcpy( CurLevel->map[i] , OldMapPointer , CurLevel->xlen-1 );
+		      // We don't want to fill the new area with junk, do we? So we set it VOID
+		      CurLevel->map[ i ] [ CurLevel->xlen-1 ] = VOID;  
+		    }
+		  InitiateMenu (FALSE);
+		  MoveMenuPositionSound();
+		}
+	      if (LeftPressedR()||MouseLeftPressedR()) 
+		{
+		  CurLevel->xlen--; // making it smaller is always easy:  just modify the value for size
+		  // allocation of new memory or things like that are not nescessary.
+		  InitiateMenu (FALSE);
+		  MoveMenuPositionSound();
+		}
+	      break;
+		  
+	    case CHANGE_SIZE_Y:
+	      if ( RightPressedR()||MouseRightPressedR() )
+		{
+		  CurLevel->ylen++;
+		      
+		  // In case of enlargement, we need to do more:
+		  CurLevel->map[ CurLevel->ylen-1 ] = MyMalloc( CurLevel->xlen +1) ;
+		      
+		  // We don't want to fill the new area with junk, do we? So we set it VOID
+		  memset( CurLevel->map[ CurLevel->ylen-1 ] , VOID , CurLevel->xlen );
+		  InitiateMenu (FALSE);		      
+		  MoveMenuPositionSound();
+		}
+		  
+	      if (LeftPressedR()||MouseLeftPressedR()) 
+		{
+		  CurLevel->ylen--; // making it smaller is always easy:  just modify the value for size
+		  // allocation of new memory or things like that are not nescessary.
+		  InitiateMenu (FALSE);
+		  MoveMenuPositionSound();
+		}
+	      break;
+
+	    default:
+	      DebugPrintf(0, "WARNING: nonexistant Menu selection: %d\n", MenuPosition);
+	      break;
+		  
+	    } // switch MenuPosition
 
 	      // If the user pressed up or down, the cursor within
 	      // the level editor menu has to be moved, which is done here:
 	  if (UpPressedR() || WheelUpPressed ()) 
 	    {
+	      key = TRUE;
 	      if (MenuPosition > 1) MenuPosition--;
 	      else MenuPosition = LAST-1;
 	      MoveMenuPositionSound();
-	      key = TRUE;
 	    }
 	  if (DownPressedR() || WheelDownPressed ()) 
 	    {
+	      key = TRUE;
 	      if ( MenuPosition < LAST-1 ) MenuPosition++;
 	      else MenuPosition = 1;
 	      MoveMenuPositionSound();
-	      key = TRUE;
 	    }
 
 	} // while !key
