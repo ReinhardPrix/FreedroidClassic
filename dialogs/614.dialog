@@ -1,8 +1,7 @@
 
 ----------------------------------------------------------------------
  *
- *   Copyright (c) 1994, 2002 Johannes Prix
- *   Copyright (c) 1994, 2002 Reinhard Prix
+ *   Copyright (c) 1994, 2003, 2004 Johannes Prix
  *
  *
  *  This file is part of Freedroid
@@ -31,8 +30,10 @@ freedroid-discussion@lists.sourceforge.net
 
 BEGIN OF AUTORS NOTES
 
+
 You can use this text field to make some notes on anything.  These otes will get saved with the dialog.
 This is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.
+
 
 END OF AUTORS NOTES
 
@@ -50,10 +51,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" Have you detected any MS activity?"
+New Option Nr=1  OptionText=" Have you detected any hostile bot activity?"
 OptionSample="Tux_614_Have_You_Detected_0.wav"
 PositionX=100  PositionY=204  
-Subtitle="No.  The MS Bots have not shown up within the last 24 hours. "
+Subtitle="No.  The hostiles have not shown up within the last 24 hours."
 ReplySample="614_No_The_MS_0.wav"
 ChangeOption=1 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -79,7 +80,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=3  OptionText=" What are your orders?"
 OptionSample="Tux_614_What_Are_Your_0.wav"
 PositionX=100  PositionY=71  
-Subtitle="My orders are to protect the living beings in this camp from attacks by MS bots."
+Subtitle="My orders are to protect the living beings in this camp from attacks by hostile bots."
 ReplySample="614_My_Orders_Are_0.wav"
 Subtitle="This has top priority.  There are no other priorities."
 ReplySample="614_This_Has_Top_0.wav"
@@ -91,11 +92,13 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=4  OptionText="Why are you not hostile as all the other bots?"
 OptionSample="Tux_614_What_Are_Your_0.wav"
 PositionX=223  PositionY=270  
-Subtitle="I belong to a kind of hardware that was never able to run the MS operating system."
+Subtitle="I belong to a an older generation of bots, running a custom-made security guard operating system."
 ReplySample="614_My_Orders_Are_0.wav"
-Subtitle="Therefore I was not affected when the Great Assault happend."
+Subtitle="None of the bots of this generation were affected by the proceedings that led to bots attacking, generally known as the Great Assault."
 ReplySample="614_This_Has_Top_0.wav"
-Subtitle="Today, some people are even working to improve the free operating system running on me."
+Subtitle="Even though discontinued from Nicholson Company long ago, today, some people have picked up the work and are even trying to improve the operating system running on my series."
+ReplySample="614_This_Has_Top_0.wav"
+Subtitle="Don't forget to buy products from Nicholson Company.  They are the best."
 ReplySample="614_This_Has_Top_0.wav"
 ChangeOption=4 ChangeToValue=0
 ChangeOption=5 ChangeToValue=1
