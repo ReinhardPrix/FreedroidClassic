@@ -153,6 +153,12 @@ Takeover (int enemynum)
   //
   Activate_Conservative_Frame_Computation ();
 
+  //--------------------
+  // Maybe takeover graphics haven't been loaded yet.  Then we do this
+  // here now and for once.  Later calls will be ignored inside the function.
+  //
+  GetTakeoverGraphics ( ) ;
+
   while (SpacePressed ()) ;  /* make sure space is release before proceed */
 
   SwitchBackgroundMusicTo ( TAKEOVER_BACKGROUND_MUSIC_SOUND ); // now this is a STRING!!!
@@ -165,6 +171,8 @@ Takeover (int enemynum)
 
   ShowDroidInfo ( AllEnemys[enemynum].type, 0 , FALSE );
   key = 0;
+
+  SDL_Flip ( Screen );
 
   while ( !SpacePressed() && !EscapePressed() && !axis_is_active );
   while ( !( !SpacePressed() && !EscapePressed() && !axis_is_active )) ;
@@ -725,11 +733,22 @@ AdvancedEnemyTakeoverMovements (void)
 int
 GetTakeoverGraphics (void)
 {
+  static int TakeoverGraphicsAreAlreadyLoaded = FALSE ; 
   int i,j;
   int curx = 0, cury = 0;
   SDL_Rect tmp;
   SDL_Surface* TempLoadSurface;
 
+  //--------------------
+  // Maybe this function has been called before and everything
+  // has been loaded already.  Then of course we don't need to
+  // do anything any more and can just return.
+  //
+  if ( TakeoverGraphicsAreAlreadyLoaded ) return (OK);
+
+  //--------------------
+  // Now we start loading all the takeover graphics.
+  //
   Set_Rect (tmp, User_Rect.x, User_Rect.y, 0, 0);
 
   if (to_blocks)   /* this happens when we do theme-switching */
@@ -788,6 +807,12 @@ GetTakeoverGraphics (void)
   curx += COLUMNBLOCKLEN + 2;
 
   Set_Rect (ToLeaderBlock, curx, cury, LEADERBLOCKLEN, LEADERBLOCKHEIGHT);
+
+  //--------------------
+  // Now that everything was loaded, we should remember this, so we
+  // don't load anything again next time...
+  //
+  TakeoverGraphicsAreAlreadyLoaded = TRUE ; 
 
   return OK;
 }; // int GetTakeoverGraphics ( void )

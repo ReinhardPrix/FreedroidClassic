@@ -191,6 +191,7 @@ Load_Mouse_Move_Cursor_Surfaces( void )
 void 
 Load_Skill_Level_Button_Surfaces( void )
 {
+  static int SkillLevelButtonsAreAlreadyLoaded = FALSE;
   SDL_Surface* Whole_Image;
   SDL_Surface* tmp_surf;
   SDL_Rect Source;
@@ -199,6 +200,15 @@ Load_Skill_Level_Button_Surfaces( void )
   int j;
   char *fpath;
 
+  //--------------------
+  // Maybe this function has been called before.  Then we do not
+  // need to do anything (again) here and can just return.
+  //
+  if ( SkillLevelButtonsAreAlreadyLoaded ) return;
+
+  //--------------------
+  // Now we proceed to load all the skill circle buttons.
+  //
   fpath = find_file ( SKILL_LEVEL_BUTTON_FILE , GRAPHICS_DIR, TRUE);
 
   Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
@@ -228,6 +238,8 @@ Load_Skill_Level_Button_Surfaces( void )
 
   SDL_FreeSurface( tmp_surf );
   SDL_FreeSurface( Whole_Image );
+
+  SkillLevelButtonsAreAlreadyLoaded = TRUE; 
 
 }; // void Load_Skill_Level_Button_Surfaces( void )
 

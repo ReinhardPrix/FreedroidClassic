@@ -800,6 +800,13 @@ ShowSkillsScreen ( void )
   //
   if ( GameConfig.SkillScreen_Visible == FALSE ) return;
 
+  //--------------------
+  // Maybe the skill circle images for clicking between different spell circles
+  // have not been loaded yet.  Then it is time to do so.  If this was already
+  // done before, then the function will know it and don't do anything anyway.
+  //
+  Load_Skill_Level_Button_Surfaces( );
+
   // --------------------
   // We will need the current mouse position on several spots...
   //

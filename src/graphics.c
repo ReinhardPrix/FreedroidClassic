@@ -1255,30 +1255,23 @@ InitPictures (void)
   ShowStartupPercentage ( 65 ) ; 
 
   DebugPrintf( 1 , "\nvoid InitPictures(void): preparing to load blast image file." );
-
   Load_Blast_Surfaces();
 
   ShowStartupPercentage ( 70 ) ; 
 
   DebugPrintf( 1 , "\nvoid InitPictures(void): preparing to load items image file." );
-
   Load_Item_Surfaces();
 
   ShowStartupPercentage ( 75 ) ; 
 
   Load_Mouse_Move_Cursor_Surfaces( );
 
-  Load_Skill_Level_Button_Surfaces( );
-
-  DebugPrintf( 1 , "\nvoid InitPictures(void): preparing to load skill icon image file." );
+  // Load_Skill_Level_Button_Surfaces( );
 
   ShowStartupPercentage ( 80 ) ; 
 
-  DebugPrintf( 1 , "\nvoid InitPictures(void): preparing to load blast image file." );
-
   DebugPrintf( 1 , "\nvoid InitPictures(void): preparing to load bullet file." );
   DebugPrintf( 1 , "\nvoid InitPictures(void): Number_Of_Bullet_Types : %d." , Number_Of_Bullet_Types );
-
   Load_Bullet_Surfaces();
 
   ShowStartupPercentage ( 84 ) ; 
@@ -1288,8 +1281,6 @@ InitPictures (void)
   ShowStartupPercentage ( 88 ) ; 
 
   ShowStartupPercentage ( 90 ) ; 
-
-  GetTakeoverGraphics();
 
   ShowStartupPercentage ( 92 ) ; 
   
