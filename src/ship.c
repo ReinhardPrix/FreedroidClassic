@@ -45,6 +45,25 @@
 #include "ship.h"
 #include "SDL_rotozoom.h"
 
+
+#define UP_BUTTON_WIDTH 50
+#define DOWN_BUTTON_WIDTH UP_BUTTON_WIDTH
+#define LEFT_BUTTON_WIDTH 100
+#define RIGHT_BUTTON_WIDTH LEFT_BUTTON_WIDTH
+#define UP_BUTTON_HEIGHT 100
+#define DOWN_BUTTON_HEIGHT UP_BUTTON_HEIGHT
+#define LEFT_BUTTON_HEIGHT 50
+#define RIGHT_BUTTON_HEIGHT LEFT_BUTTON_HEIGHT
+
+#define UP_BUTTON_X 580
+#define UP_BUTTON_Y 180
+#define DOWN_BUTTON_X UP_BUTTON_X
+#define DOWN_BUTTON_Y (UP_BUTTON_Y + UP_BUTTON_HEIGHT * 1.5 )
+#define LEFT_BUTTON_X 300
+#define LEFT_BUTTON_Y 420
+#define RIGHT_BUTTON_X 450
+#define RIGHT_BUTTON_Y LEFT_BUTTON_Y
+
 int NoKeyPressed (void);
 
 // EXTERN SDL_Surface *console_pic;
@@ -503,7 +522,6 @@ EnterKonsole (void)
 {
   int finished = FALSE;
   int menu_pos = 0;
-  int key;
   char* fpath;
 
   //--------------------
@@ -536,7 +554,53 @@ EnterKonsole (void)
       PaintConsoleMenu (menu_pos);
       SDL_Flip (Screen);
 
-      key = getchar_raw();
+      if ( DownPressed() || MouseWheelDownPressed() ) 
+	{
+	  while (DownPressed());
+	  if (menu_pos < 3) menu_pos++;
+	}
+      if ( UpPressed() || MouseWheelUpPressed() ) 
+	{
+	  if (menu_pos > 0) menu_pos--;
+	  while (UpPressed());
+	}
+      if ( EscapePressed() ) 
+	{
+	  finished = TRUE ;
+	  while (EscapePressed());
+	}
+      if ( SpacePressed() || EnterPressed() ) 
+	{
+	  while ( SpacePressed() || EnterPressed() );
+	  switch (menu_pos)
+	    {
+	    case 0:
+	      finished = TRUE;
+	      break;
+	    case 1:
+	      GreatDruidShow ();
+	      break;
+	    case 2:
+	      ClearGraphMem();
+	      ShowDeckMap (CurLevel);
+	      getchar_raw();
+	      SetCombatScaleTo( 1 );
+	      break;
+	    case 3:
+	      ClearGraphMem();
+	      ShowLifts (CurLevel->levelnum, -1);
+	      getchar_raw();
+	      break;
+	    default:
+	      DebugPrintf(0,"\nError in Console: menu-pos out of bounds \n");
+	      Terminate(-1);
+	      break;
+	    } // switch menu_pos 
+	}
+      
+
+      /*
+
       switch (key)
 	{
 	case SDLK_DOWN:
@@ -571,7 +635,7 @@ EnterKonsole (void)
 	      DebugPrintf(0,"\nError in Console: menu-pos out of bounds \n");
 	      Terminate(-1);
 	      break;
-	    } /* switch menu_pos */
+	    } // switch menu_pos 
 	  break;
 
 	case SDLK_ESCAPE:
@@ -580,7 +644,9 @@ EnterKonsole (void)
 
 	default:
 	  break;
-	} /* switch key */
+	} // switch key 
+
+      */
 
     } /* while (!finished) */
 
@@ -644,6 +710,131 @@ PaintConsoleMenu (int menu_pos)
 }; // void PaintConsoleMenu ( int MenuPos )
 
 /* ----------------------------------------------------------------------
+ * This function checks if a given screen position lies within the 
+ * UP button of the droid show or not.
+ * ---------------------------------------------------------------------- */
+int
+CursorIsOnUPButton( int x , int y )
+{
+  if ( x > UP_BUTTON_X + UP_BUTTON_WIDTH  ) return ( FALSE );
+  if ( x < UP_BUTTON_X                     ) return ( FALSE );
+  if ( y > UP_BUTTON_Y + UP_BUTTON_HEIGHT ) return ( FALSE );
+  if ( y < UP_BUTTON_Y                     ) return ( FALSE );
+  return ( TRUE );
+}; // int CursorIsOnStrButton( int x , int y )
+
+/* ----------------------------------------------------------------------
+ * This function checks if a given screen position lies within the 
+ * DOWN button of the droid show or not.
+ * ---------------------------------------------------------------------- */
+int
+CursorIsOnDOWNButton( int x , int y )
+{
+  if ( x > DOWN_BUTTON_X + DOWN_BUTTON_WIDTH  ) return ( FALSE );
+  if ( x < DOWN_BUTTON_X                     ) return ( FALSE );
+  if ( y > DOWN_BUTTON_Y + DOWN_BUTTON_HEIGHT ) return ( FALSE );
+  if ( y < DOWN_BUTTON_Y                     ) return ( FALSE );
+  return ( TRUE );
+}; // int CursorIsOnStrButton( int x , int y )
+
+/* ----------------------------------------------------------------------
+ * This function checks if a given screen position lies within the 
+ * LEFT button of the droid show or not.
+ * ---------------------------------------------------------------------- */
+int
+CursorIsOnLEFTButton( int x , int y )
+{
+  if ( x > LEFT_BUTTON_X + LEFT_BUTTON_WIDTH  ) return ( FALSE );
+  if ( x < LEFT_BUTTON_X                     ) return ( FALSE );
+  if ( y > LEFT_BUTTON_Y + LEFT_BUTTON_HEIGHT ) return ( FALSE );
+  if ( y < LEFT_BUTTON_Y                     ) return ( FALSE );
+  return ( TRUE );
+}; // int CursorIsOnStrButton( int x , int y )
+
+/* ----------------------------------------------------------------------
+ * This function checks if a given screen position lies within the 
+ * UP button of the droid show or not.
+ * ---------------------------------------------------------------------- */
+int
+CursorIsOnRIGHTButton( int x , int y )
+{
+  if ( x > RIGHT_BUTTON_X + RIGHT_BUTTON_WIDTH  ) return ( FALSE );
+  if ( x < RIGHT_BUTTON_X                     ) return ( FALSE );
+  if ( y > RIGHT_BUTTON_Y + RIGHT_BUTTON_HEIGHT ) return ( FALSE );
+  if ( y < RIGHT_BUTTON_Y                     ) return ( FALSE );
+  return ( TRUE );
+}; // int CursorIsOnStrButton( int x , int y )
+
+
+/* ----------------------------------------------------------------------
+ * This function is intended to show some buttons (with an arrow pointing
+ * left and with an arrow pointing right and perhaps also with arrows
+ * pointing up or down) so that one can easily navigate through the droid
+ * show in the console most conveniently never needing anything but the
+ * mouse.
+ * ---------------------------------------------------------------------- */
+void
+ShowLeftRightDroidshowButtons ( void )
+{
+  static SDL_Surface *UP_ButtonImage = NULL;
+  static SDL_Surface *DOWN_ButtonImage = NULL;
+  static SDL_Surface *LEFT_ButtonImage = NULL;
+  static SDL_Surface *RIGHT_ButtonImage = NULL;
+  SDL_Surface *tmp;
+  static SDL_Rect UP_Button_Rect;
+  static SDL_Rect DOWN_Button_Rect;
+  static SDL_Rect LEFT_Button_Rect;
+  static SDL_Rect RIGHT_Button_Rect;
+  char* fpath;
+
+  // --------------------
+  // Some things like the loading of the button images
+  // need to be done only once at the first call of this
+  // function. 
+  //
+  if ( UP_ButtonImage == NULL )
+    {
+      fpath = find_file ( "UPButton.png" , GRAPHICS_DIR, FALSE);
+      tmp = IMG_Load( fpath );
+      UP_ButtonImage = SDL_DisplayFormat( tmp );
+      SDL_FreeSurface( tmp );
+
+      fpath = find_file ( "DOWNButton.png" , GRAPHICS_DIR, FALSE);
+      tmp = IMG_Load( fpath );
+      DOWN_ButtonImage = SDL_DisplayFormat( tmp );
+      SDL_FreeSurface( tmp );
+
+      fpath = find_file ( "LEFTButton.png" , GRAPHICS_DIR, FALSE);
+      tmp = IMG_Load( fpath );
+      LEFT_ButtonImage = SDL_DisplayFormat( tmp );
+      SDL_FreeSurface( tmp );
+
+      fpath = find_file ( "RIGHTButton.png" , GRAPHICS_DIR, FALSE);
+      tmp = IMG_Load( fpath );
+      RIGHT_ButtonImage = SDL_DisplayFormat( tmp );
+      SDL_FreeSurface( tmp );
+    }
+
+  UP_Button_Rect.x = UP_BUTTON_X;
+  UP_Button_Rect.y = UP_BUTTON_Y;
+  
+  DOWN_Button_Rect.x = DOWN_BUTTON_X;
+  DOWN_Button_Rect.y = DOWN_BUTTON_Y;
+  
+  LEFT_Button_Rect.x = LEFT_BUTTON_X;
+  LEFT_Button_Rect.y = LEFT_BUTTON_Y;
+  
+  RIGHT_Button_Rect.x = RIGHT_BUTTON_X;
+  RIGHT_Button_Rect.y = RIGHT_BUTTON_Y;
+  
+  SDL_BlitSurface( UP_ButtonImage , NULL , Screen , &UP_Button_Rect );
+  SDL_BlitSurface( DOWN_ButtonImage , NULL , Screen , &DOWN_Button_Rect );
+  SDL_BlitSurface( LEFT_ButtonImage , NULL , Screen , &LEFT_Button_Rect );
+  SDL_BlitSurface( RIGHT_ButtonImage , NULL , Screen , &RIGHT_Button_Rect );
+
+}; // void ShowLeftRightDroidshowButtons ( void )
+
+/* ----------------------------------------------------------------------
  * This function does the robot show when the user has selected robot
  * show from the console menu.
  * ---------------------------------------------------------------------- */
@@ -651,51 +842,103 @@ void
 GreatDruidShow (void)
 {
   int droidtype;
-  int key;
-  int finished;
   int page;
+  bool finished = FALSE;
+  bool key_pressed = FALSE;
+  static int WasPressed = FALSE ;
 
   droidtype = Me[0].type;
   page = 0;
 
-  finished = FALSE;
+  show_droid_info (droidtype, page);
+
   while (!finished)
     {
-      show_droid_info (droidtype, page);
-
-      key = getchar_raw();
-      switch (key)
+      if (key_pressed)
 	{
-	case SDLK_ESCAPE:
-	  finished = TRUE;
-	  break;
-	case SDLK_UP:
-	  if (droidtype < Me[0].type) droidtype ++;
-	  break;
-	case SDLK_DOWN:
+	  show_droid_info (droidtype, page);
+	  key_pressed = FALSE;
+	}
+
+      if (SpacePressed() || EscapePressed() || axis_is_active )
+	{
+	  if ( CursorIsOnUPButton( GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
+	    {
+	      if ( droidtype < Me[0].type) droidtype ++;	    
+	      key_pressed = TRUE;
+	      MoveMenuPositionSound();
+	    }
+	  else if ( CursorIsOnDOWNButton( GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
+	    {
+	      if (droidtype > 0) droidtype --;	      
+	      key_pressed = TRUE;
+	      MoveMenuPositionSound();
+	    }
+	  else if ( CursorIsOnRIGHTButton( GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
+	    {
+	      MoveMenuPositionSound();
+	      if (page < 2) page ++;
+	      key_pressed = TRUE;
+	    }
+	  else if ( CursorIsOnLEFTButton( GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
+	    {
+	      MoveMenuPositionSound();
+	      if (page > 0) page --;
+	      key_pressed = TRUE;
+	    }
+
+
+	  if ( ! CursorIsOnUPButton( GetMousePos_x() + 16 , GetMousePos_y() + 16 ) &&
+	       ! CursorIsOnDOWNButton( GetMousePos_x() + 16 , GetMousePos_y() + 16 ) &&
+	       ! CursorIsOnLEFTButton( GetMousePos_x() + 16 , GetMousePos_y() + 16 ) &&
+	       ! CursorIsOnRIGHTButton( GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+	    {
+	      finished = TRUE;
+	      while (SpacePressed() ||EscapePressed());
+	    }
+
+	}
+
+      WasPressed = axis_is_active;
+
+      if (UpPressed() || MouseWheelUpPressed())
+	{
+	  MoveMenuPositionSound();
+	  while (UpPressed());
+	  if ( droidtype < Me[0].type) droidtype ++;
+	  key_pressed = TRUE;
+	}
+      if (DownPressed() || MouseWheelDownPressed())
+	{
+	  MoveMenuPositionSound();
+	  while (DownPressed());
 	  if (droidtype > 0) droidtype --;
-	  break;
-	case SDLK_RIGHT:
+	  key_pressed = TRUE;
+	}
+      if (RightPressed() )
+	{
+	  MoveMenuPositionSound();
+	  while (RightPressed());
 	  if (page < 2) page ++;
-	  break;
-	case SDLK_LEFT:
+	  key_pressed = TRUE;
+	}
+      if (LeftPressed() )
+	{
+	  MoveMenuPositionSound();
+	  while (LeftPressed());
 	  if (page > 0) page --;
-	  break;
-	default:
-	  break;
-	} /* switch (key) */
+	  key_pressed = TRUE;
+	}
 
     } /* while !finished */
 
   return;
 }; // void GreatDroidShow( void ) 
 
-/*------------------------------------------------------------
+/* ------------------------------------------------------------
  * display infopage page of droidtype
- *
- *  does update the screen, no SDL_Flip() necesary !
- *
- *------------------------------------------------------------*/
+ * does update the screen, no SDL_Flip() necesary !
+ * ------------------------------------------------------------ */
 void 
 show_droid_info (int droidtype, int page)
 {
@@ -742,8 +985,7 @@ Sensors  1: %s\n          2: %s\n          3: %s", Druidmap[droidtype].druidname
 	       Sensornames[ Druidmap[droidtype].sensor3 ]);
       break;
     case 2:
-      sprintf (InfoText, "\
-Unit type %s - %s\n\
+      sprintf (InfoText, "Unit type %s - %s\n\
 Notes: %s", Druidmap[droidtype].druidname , Classname[Druidmap[droidtype].class],
 	       Druidmap[droidtype].notes);
       break;
@@ -754,6 +996,9 @@ Notes: %s", Druidmap[droidtype].druidname , Classname[Druidmap[droidtype].class]
 
   SetCurrentFont( Para_BFont );
   DisplayText (InfoText, Cons_Text_Rect.x, Cons_Text_Rect.y, &Cons_Text_Rect);
+
+  ShowLeftRightDroidshowButtons (  );
+
   SDL_Flip (Screen);
 
 } /* show_droid_info */

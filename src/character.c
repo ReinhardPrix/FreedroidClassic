@@ -372,7 +372,6 @@ DisplayButtons( void )
   //
   if ( INV_ButtonImage == NULL )
     {
-      // SDL_FillRect( Screen, & InventoryRect , 0x0FFFFFF );
       fpath = find_file ( "CHAButton.png" , GRAPHICS_DIR, FALSE);
       tmp = IMG_Load( fpath );
       CHA_ButtonImage = SDL_DisplayFormat( tmp );
@@ -396,13 +395,9 @@ DisplayButtons( void )
 
   CHA_Button_Rect.x = CHA_BUTTON_X;
   CHA_Button_Rect.y = CHA_BUTTON_Y;
-  // CHA_Button_Rect.w = CHARACTERRECT_W;
-  // CHA_Button_Rect.h = CHARACTERRECT_H;
   
   INV_Button_Rect.x = INV_BUTTON_X;
   INV_Button_Rect.y = INV_BUTTON_Y;
-  // INV_Button_Rect.w = CHARACTERRECT_W;
-  // INV_Button_Rect.h = CHARACTERRECT_H;
 
   SKI_Button_Rect.x = SKI_BUTTON_X;
   SKI_Button_Rect.y = SKI_BUTTON_Y;
