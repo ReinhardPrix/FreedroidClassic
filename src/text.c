@@ -63,8 +63,11 @@ int StoreCursorY;
 unsigned int StoreTextBG;
 unsigned int StoreTextFG;
 
-char BigScreenMessage[5000];
-float BigScreenMessageDuration=10000;
+#define MAX_BIG_SCREEN_MESSAGES 5
+
+int BigScreenMessageIndex = 0 ;
+char BigScreenMessage[ MAX_BIG_SCREEN_MESSAGES ] [ 5000 ];
+float BigScreenMessageDuration[ MAX_BIG_SCREEN_MESSAGES ] = { 10000, 10000, 10000, 10000, 10000 } ;
 
 SDL_Surface* Background;
 
@@ -621,6 +624,8 @@ void
 ExecuteChatExtra ( char* ExtraCommandString )
 {
   int TempValue;
+  char WorkString[5000];
+  char *TempMessage;
 
   if ( ! strcmp ( ExtraCommandString , "Buy_Basic_Items" ) )
     {
@@ -673,6 +678,23 @@ ExecuteChatExtra ( char* ExtraCommandString )
 			   &TempValue , ExtraCommandString + strlen ( ExtraCommandString ) + 0 );
       DebugPrintf( CHAT_DEBUG_LEVEL , "\n...decoding...Mission to mark as complete is: %d." , TempValue );
       Me [ 0 ] . AllMissions[ TempValue ] . MissionIsComplete = TRUE;
+    }
+  else if ( CountStringOccurences ( ExtraCommandString , "AddExperienceBonus:" ) )
+    {
+      DebugPrintf( CHAT_DEBUG_LEVEL , "\nExtra invoked adding an exerpience bonus. --> have to decode... " );
+      ReadValueFromString( ExtraCommandString , "AddExperienceBonus:" , "%d" , 
+			   &TempValue , ExtraCommandString + strlen ( ExtraCommandString ) + 0 );
+      DebugPrintf( CHAT_DEBUG_LEVEL , "\n...decoding...bonus to add is: %d." , TempValue );
+      Me [ 0 ] . Experience += TempValue;
+      sprintf( WorkString , "+%d Experience Points" , TempValue );
+      SetNewBigScreenMessage ( WorkString );
+    }
+  else if ( CountStringOccurences ( ExtraCommandString , "AddBigScreenMessageBUT_WITH_TERMINATION_CHARACTER_PLEASE:" ) )
+    {
+      DebugPrintf( CHAT_DEBUG_LEVEL , "\nExtra invoked adding a big screen message. --> have to decode... " );
+      TempMessage = ReadAndMallocStringFromData ( ExtraCommandString , "AddBigScreenMessageBUT_WITH_TERMINATION_CHARACTER_PLEASE:" , ":" ) ;
+      DebugPrintf( CHAT_DEBUG_LEVEL , "\n...decoding...message is: %s." , TempMessage );
+      SetNewBigScreenMessage ( TempMessage );
     }
   else if ( CountStringOccurences ( ExtraCommandString , "AddBaseMagic:" ) )
     {
@@ -1576,8 +1598,11 @@ DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *cl
 void
 SetNewBigScreenMessage( char* ScreenMessageText )
 {
-  strcpy ( BigScreenMessage , ScreenMessageText );
-  BigScreenMessageDuration = 0 ;
+  strcpy ( BigScreenMessage[ BigScreenMessageIndex] , ScreenMessageText );
+  BigScreenMessageDuration[ BigScreenMessageIndex] = 0 ;
+  BigScreenMessageIndex ++ ;
+  if ( BigScreenMessageIndex >= MAX_BIG_SCREEN_MESSAGES )
+    BigScreenMessageIndex = MAX_BIG_SCREEN_MESSAGES ;
 }; // void SetNewBigScreenMessage( char* ScreenMessageText )
 
 /* ----------------------------------------------------------------------
@@ -1587,16 +1612,22 @@ SetNewBigScreenMessage( char* ScreenMessageText )
 void
 DisplayBigScreenMessage( void )
 {
-  if ( BigScreenMessageDuration < 6.5 )
-    {
-      SDL_SetClipRect ( Screen , NULL );
-      CenteredPutStringFont ( Screen , Menu_Filled_BFont , 120 , BigScreenMessage );
-      if ( !GameConfig.Inventory_Visible &&
-           !GameConfig.SkillScreen_Visible &&
-	   !GameConfig.CharacterScreen_Visible )
-	BigScreenMessageDuration += Frame_Time();
+  int i;
 
+  for ( i = 0 ; i < MAX_BIG_SCREEN_MESSAGES ; i ++ )
+    {
+      if ( BigScreenMessageDuration [ i ] < 6.5 )
+	{
+	  SDL_SetClipRect ( Screen , NULL );
+	  CenteredPutStringFont ( Screen , Menu_Filled_BFont , 100 + i * FontHeight ( Menu_Filled_BFont ) , BigScreenMessage [ i ]  );
+	  if ( !GameConfig.Inventory_Visible &&
+	       !GameConfig.SkillScreen_Visible &&
+	       !GameConfig.CharacterScreen_Visible )
+	    BigScreenMessageDuration [ i ]  += Frame_Time();
+	  
+	}
     }
+
 }; // void DisplayBigScreenMessage( void )
 
 /*-----------------------------------------------------------------

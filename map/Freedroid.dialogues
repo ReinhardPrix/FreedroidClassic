@@ -322,6 +322,8 @@ New Option Nr=5  OptionText=" I have found your toolset. Here you are. "
 OptionSample="Tux_DIX_I_Have_Found_0.wav"
 DoSomethingExtra="DeleteAllInventoryItemsOfType:ITEM_DIXONS_TOOLBOX"
 DoSomethingExtra="MarkMissionComplete:4"
+DoSomethingExtra="AddBigScreenMessageBUT_WITH_TERMINATION_CHARACTER_PLEASE:Toolbox given:"
+DoSomethingExtra="AddExperienceBonus:2000"
 ChangeOption=5 ChangeToValue=0
 
 Subtitle="Oh great!  How did you manage to get that?  Well anyway, thanks a lot."
