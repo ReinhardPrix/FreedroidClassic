@@ -150,7 +150,7 @@ ShuffleEnemys (void)
 
   for ( i=0 ; i<MAXWAYPOINTS ; i++ )
     {
-      if ( CurLevel->AllWaypoints[wp_num].x != 0 ) wp_num ++;
+      if ( CurLevel->AllWaypoints[i].x != 0 ) wp_num ++;
     }
 
   nth_enemy = 0;
@@ -168,7 +168,7 @@ ShuffleEnemys (void)
 	wp = nth_enemy;
       else
 	{
-	  
+	  printf ("\nNumber of waypoints found: %d." , wp_num );
 	  printf ("\nLess waypoints than enemys on level %d? !", CurLevel->levelnum );
 	  Terminate (ERR);
 	}

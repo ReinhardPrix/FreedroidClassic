@@ -210,9 +210,6 @@ ShowLifts (int level, int liftrow)
   SDL_SetColorKey(ship_off_pic, SDL_SRCCOLORKEY, ne_transp_key);
   SDL_SetColorKey(ship_on_pic, SDL_SRCCOLORKEY, ne_transp_key);
 
-
-
-
   // clear the whole screen
   //  ClearGraphMem();
   // fill the user fenster with some color

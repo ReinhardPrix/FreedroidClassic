@@ -161,7 +161,8 @@ enum
 #define DRUIDRADIUSY		(18/64.0)
 // #define DRUIDRADIUSXY	        ((7*2)/64.0)
 #define DRUIDRADIUSXY	        (7*2/64.0)
-#define BULLET_BULLET_COLLISION_DIST (10/64.0)
+// #define BULLET_BULLET_COLLISION_DIST (10/64.0)
+#define BULLET_BULLET_COLLISION_DIST (8.0/64.0)
 
 /* Dimension eines Blasts */
 #define BLASTRADIUS		( ( INITIAL_BLOCK_WIDTH/64.0 ) * 0.4 )

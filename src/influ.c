@@ -866,10 +866,6 @@ CheckInfluenceEnemyCollision (void)
 
   for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
     {
-      /* ignore debug-enemys */
-      if (AllEnemys[i].type == DEBUG_ENEMY)
-	continue;
-
       /* ignore enemy that are not on this level or dead */
       if (AllEnemys[i].levelnum != CurLevel->levelnum)
 	continue;

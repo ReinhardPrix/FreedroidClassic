@@ -64,10 +64,10 @@ Lift file to use for this mission: new_ship_1.elevators
 Crew file to use for this mission: new_ship_1.droids
 Lifts On file to use for this mission: asteroid_on.bmp
 Lifts Off file to use for this mission: asteroid_off.bmp
-Possible Start Point : Level=4 XPos=1 YPos=1
-Possible Start Point : Level=5 XPos=5 YPos=5
-Possible Start Point : Level=6 XPos=3 YPos=3
-Possible Start Point : Level=7 XPos=2 YPos=1
+P**ossible Start Point : Level=4 XPos=1 YPos=1
+P**ossible Start Point : Level=5 XPos=5 YPos=5
+P**ossible Start Point : Level=6 XPos=3 YPos=3
+Possible Start Point : Level=7 XPos=3 YPos=7
 Mission target is to kill all droids : -1
 Mission target is to kill class of droids : 9
 Mission target is to kill droids with marker : -1
