@@ -1,5 +1,5 @@
 # Process this file with autoconf to produce a configure script.
-AC_INIT(freedroidRPG, 0.9.10cvs)
+AC_INIT(freedroidRPG, 0.9.10)
 
 dnl Detect the canonical host and target build environment
 AC_CANONICAL_HOST
@@ -129,7 +129,7 @@ AC_HEADER_TIME
 # Checks for library functions.
 ##AC_FUNC_MALLOC
 AC_TYPE_SIGNAL
-AC_CHECK_FUNCS([alarm getcwd gettimeofday memset sqrt strstr strtok usleep])
+AC_CHECK_FUNCS([alarm getcwd gettimeofday memset sqrt strstr strtok ])
 
 ## Check gtk libs
 if test x$win32 = xfalse; then
