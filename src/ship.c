@@ -362,6 +362,14 @@ GreatDruidShow (void)
   int i;
 
   //--------------------
+  // We initialize the text rectangle
+  //
+  Cons_Text_Rect . x = 175 ;
+  Cons_Text_Rect . y = 180 ;
+  Cons_Text_Rect . w = SCREEN_WIDTH - 175 ;
+  Cons_Text_Rect . h = 305 ;
+
+  //--------------------
   // First we find out how many clearances the Tux has gained
   // so far.
   //
@@ -559,7 +567,8 @@ void
 GreatItemShow (void)
 {
   int ItemType;
-  int page;
+  // int page;
+  int Displacement=0;
   bool finished = FALSE;
   static int WasPressed = FALSE ;
   item* ShowPointerList[ MAX_ITEMS_IN_INVENTORY ];
@@ -580,6 +589,14 @@ GreatItemShow (void)
   MenuTexts[7]="";
   MenuTexts[9]="";
 
+  //--------------------
+  // We initialize the text rectangle
+  //
+  Cons_Text_Rect . x = 258 ;
+  Cons_Text_Rect . y = 89 ;
+  Cons_Text_Rect . w = 346 ;
+  Cons_Text_Rect . h = 282 ;
+
   NumberOfItems = AssemblePointerListForItemShow ( &(ShowPointerList[0]), 0 );
 
   if ( ShowPointerList[0] == NULL )
@@ -593,7 +610,7 @@ GreatItemShow (void)
 
   ItemType = ShowPointerList [ ItemIndex ] -> type ;
 
-  page = 0;
+  Displacement = 0;
 
   while (!finished)
     {
@@ -603,19 +620,11 @@ GreatItemShow (void)
       // We show all the info and the buttons that should be in this
       // interface...
       //
-      show_item_info ( ShowPointerList [ ItemIndex ] , page , TRUE );
-      PutPasswordButtonsAndPassword ( PasswordIndex );
-      PutSecurityButtonsAndClearance ( ClearanceIndex );
-      ShowGenericButtonFromList ( MAP_EXIT_BUTTON );
-      if ( ShowPointerList [ ItemIndex ] -> is_identified ) 
-	ShowGenericButtonFromList ( CONSOLE_IDENTIFY_BUTTON_YELLOW );
-      else 
-	{
-	  if ( IdentifyAllowed )
-	    ShowGenericButtonFromList ( CONSOLE_IDENTIFY_BUTTON_GREEN );
-	  else
-	    ShowGenericButtonFromList ( CONSOLE_IDENTIFY_BUTTON_RED );
-	}
+      show_item_info ( ShowPointerList [ ItemIndex ] , Displacement , TRUE );
+
+      // PutPasswordButtonsAndPassword ( PasswordIndex );
+      // PutSecurityButtonsAndClearance ( ClearanceIndex );
+
       SDL_Flip( Screen );
 
       //--------------------
@@ -642,6 +651,7 @@ GreatItemShow (void)
 		{
 		  ItemIndex ++;	    
 		  MoveMenuPositionSound();
+		  Displacement = 0;
 		}
 	    }
 	  else if ( CursorIsOnButton( ITEM_BROWSER_LEFT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
@@ -650,18 +660,22 @@ GreatItemShow (void)
 		{
 		  ItemIndex --;	      
 		  MoveMenuPositionSound();
+		  Displacement = 0;
 		}
 	    }
 	  else if ( CursorIsOnButton( UP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
 	    {
 	      MoveMenuPositionSound();
-	      if (page < 2) page ++;
+	      // if (page < 2) page ++;
+	      Displacement += FontHeight ( GetCurrentFont () );
 	    }
 	  else if ( CursorIsOnButton( DOWN_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
 	    {
 	      MoveMenuPositionSound();
-	      if (page > 0) page --;
+	      // if (page > 0) page --;
+	      Displacement -= FontHeight ( GetCurrentFont () );
 	    }
+	  /*
 	  else if ( CursorIsOnButton( CONSOLE_IDENTIFY_BUTTON_GREEN , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) && axis_is_active && !WasPressed )
 	    {
 	      MoveMenuPositionSound();
@@ -713,7 +727,8 @@ GreatItemShow (void)
 		    }
 		}
 	    }
-	  else if ( CursorIsOnButton( MAP_EXIT_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
+	  */
+	  else if ( CursorIsOnButton( ITEM_BROWSER_EXIT_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) && axis_is_active && !WasPressed )
 	    {
 	      finished = TRUE;
 	      while (SpacePressed() ||EscapePressed());
@@ -739,13 +754,15 @@ GreatItemShow (void)
 	{
 	  MoveMenuPositionSound();
 	  while (RightPressed());
-	  if (page < 2) page ++;
+	  // if (page < 2) page ++;
+	  Displacement += FontHeight ( GetCurrentFont () );
 	}
       if (LeftPressed() )
 	{
 	  MoveMenuPositionSound();
 	  while (LeftPressed());
-	  if (page > 0) page --;
+	  // if (page > 0) page --;
+	  Displacement -= FontHeight ( GetCurrentFont () );
 	}
 
     } /* while !finished */
@@ -980,9 +997,10 @@ Sorry...\n\
  * does update the screen, no SDL_Flip() necesary !
  * ------------------------------------------------------------ */
 void 
-show_item_info ( item* ShowItem , int page , char ShowArrows )
+show_item_info ( item* ShowItem , int Displacement , char ShowArrows )
 {
-  char InfoText[1000];
+  char InfoText[10000];
+  char TextChunk[2000];
   // char None[20] = "none";
   // char *item_name;
   // int type;
@@ -996,92 +1014,52 @@ show_item_info ( item* ShowItem , int page , char ShowArrows )
   // ShowItemPicture ( Cons_Menu_Rect.x, Cons_Menu_Rect.y, ShowItem->type );
   ShowItemPicture ( 45 , 190 , ShowItem->type );
 
-  switch (page)
-    {
-    case 0:
-      /*
-      sprintf( InfoText, "\
-Unit type %s - %s\n\
-Entry : %d\n\
-Class : %s\n\
-Height : %f\n\
-Weight: %f \n\
-Drive : %s \n\
-Brain : %s", ItemMap [ ShowItem->type ] . item_name, Classname[Druidmap[ droidtype ].class],
-	       droidtype+1, Classes[Druidmap[droidtype].class],
-	       Druidmap[droidtype].height, Druidmap[droidtype].weight,
-	       ItemMap [ Druidmap[ droidtype ].drive_item.type ].item_name,
-	       Brainnames[ Druidmap[droidtype].brain ]);
-      */
-      sprintf( InfoText, "Item: %s \nClass: %s\n\
+  //--------------------
+  // We fill out the header area of the items browser.
+  //
+  SetCurrentFont ( Menu_BFont );
+  strcpy ( TextChunk , ItemMap [ ShowItem->type ] . item_name );
+  CutDownStringToMaximalSize ( TextChunk , 225 );
+  PutString ( Screen , 330, 38, TextChunk );
+
+  sprintf( InfoText, "Item: %s \nClass: %s\n\
 Duration: %d / %d\n\
 Required Str: %d\n\
 Required Dex: %d\n\
 Required Mag: %d\n\
 Base list price: %d\n", 
-	       ItemMap [ ShowItem->type ] . item_name, 
-	       ItemMap [ ShowItem->type ] . item_class,
-	       (int)ShowItem->current_duration, 
-	       ShowItem->max_duration ,
-	       ItemMap [ ShowItem->type ] . item_require_strength,
-	       ItemMap [ ShowItem->type ] . item_require_dexterity,
-	       ItemMap [ ShowItem->type ] . item_require_magic,
-	       ItemMap [ ShowItem->type ] . base_list_price );
+	   ItemMap [ ShowItem->type ] . item_name, 
+	   ItemMap [ ShowItem->type ] . item_class,
+	   (int)ShowItem->current_duration, 
+	   ShowItem->max_duration ,
+	   ItemMap [ ShowItem->type ] . item_require_strength,
+	   ItemMap [ ShowItem->type ] . item_require_dexterity,
+	   ItemMap [ ShowItem->type ] . item_require_magic,
+	   ItemMap [ ShowItem->type ] . base_list_price );
 
-      break;
-    case 1:
-      /*
-      if ( (type = Druidmap[droidtype].weapon_item.type) >= 0) 
-	item_name = ItemMap[type].item_name;                   
-      else 
-	item_name = None;
-
-      sprintf( InfoText , "\
-Unit type %s - %s\n\
-Armamant : %s\n\
-Sensors  1: %s\n          2: %s\n          3: %s", Druidmap[droidtype].druidname,
-	       Classname[Druidmap[droidtype].class],
-	       item_name,
-	       Sensornames[ Druidmap[droidtype].sensor1 ],
-	       Sensornames[ Druidmap[droidtype].sensor2 ],
-	       Sensornames[ Druidmap[droidtype].sensor3 ]);
-*/
-      //--------------------
-      // On this page we show the weapon properties (in case of a weapon)
-      //
-      sprintf( InfoText, "Item: %s \nClass: %s\n\
-Damage: %d - %d\n\
+  sprintf( TextChunk, "Damage: %d - %d\n\
 Recharge time: %f\n\
 Defence bonus: %d\n\
 Speed / Acceleration: %d / %d \n", 
-	       ItemMap [ ShowItem->type ] . item_name, 
-	       ItemMap [ ShowItem->type ] . item_class,
-	       ItemMap [ ShowItem->type ] . base_item_gun_damage,
-	       ItemMap [ ShowItem->type ] . base_item_gun_damage +
-	       ItemMap [ ShowItem->type ] . item_gun_damage_modifier,
-	       ItemMap [ ShowItem->type ] . item_gun_recharging_time,
-	       ShowItem->ac_bonus,
-	       (int)ItemMap [ ShowItem->type ] . item_drive_maxspeed,
-	       (int)ItemMap [ ShowItem->type ] . item_drive_accel );
+	   ItemMap [ ShowItem->type ] . base_item_gun_damage,
+	   ItemMap [ ShowItem->type ] . base_item_gun_damage +
+	   ItemMap [ ShowItem->type ] . item_gun_damage_modifier,
+	   ItemMap [ ShowItem->type ] . item_gun_recharging_time,
+	   ShowItem->ac_bonus,
+	   (int)ItemMap [ ShowItem->type ] . item_drive_maxspeed,
+	   (int)ItemMap [ ShowItem->type ] . item_drive_accel );
 
+  strcat ( InfoText , TextChunk );
 
+  sprintf ( TextChunk, "Notes: %s", 
+	    ItemMap [ ShowItem->type ] . item_description );
 
+  strcat ( InfoText, TextChunk );
 
-      break;
-    case 2:
-      sprintf (InfoText, "Item: %s \nClass: %s\n\
-Notes: %s", 
-	       ItemMap [ ShowItem->type ] . item_name, 
-	       ItemMap [ ShowItem->type ] . item_class,
-	       ItemMap [ ShowItem->type ] . item_description );
-      break;
-    default:
-      // sprintf (InfoText, "ERROR: Page not implemented!! \nPlease report bug!");
-      break;
-    } // switch (page) 
-
-  SetCurrentFont( Para_BFont );
-  DisplayText (InfoText, Cons_Text_Rect.x, Cons_Text_Rect.y, &Cons_Text_Rect);
+  // SetCurrentFont( Para_BFont );
+  // SetCurrentFont( Menu_BFont );
+  SetCurrentFont( FPS_Display_BFont );
+  DisplayText (InfoText, Cons_Text_Rect.x, Cons_Text_Rect.y + Displacement , &Cons_Text_Rect);
 
   if ( ShowArrows ) 
     {

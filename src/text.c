@@ -1665,13 +1665,10 @@ DisplayBigScreenMessage( void )
 }; // void DisplayBigScreenMessage( void )
 
 /*-----------------------------------------------------------------
- * @Desc: prints *Text beginning at positions startx/starty, 
- * 
- *	and respecting the text-borders set by clip_rect
- *      -> this includes clipping but also automatic line-breaks
- *      when end-of-line is reached
- * 
- *      if clip_rect==NULL, no clipping is performed
+ * This function prints *Text beginning at positions startx/starty,
+ * respecting the text-borders set by clip_rect.  This includes 
+ * clipping but also automatic line-breaks when end-of-line is 
+ * reached.  If clip_rect==NULL, no clipping is performed.
  *      
  *      NOTE: the previous clip-rectange is restored before
  *            the function returns!
