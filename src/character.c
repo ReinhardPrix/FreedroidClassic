@@ -67,7 +67,7 @@
 #define AC_Y 171
 
 #define CHARACTERRECT_X (SCREENLEN/2)
-#define CHARACTERRECT_Y (User_Rect.y)
+// #define CHARACTERRECT_Y (User_Rect.y)
 #define CHARACTERRECT_W (SCREENLEN/2)
 #define CHARACTERRECT_H (User_Rect.h)
 
@@ -86,6 +86,9 @@
 // #define CHA_BUTTON_Y 30
 #define INV_BUTTON_WIDTH 38
 #define INV_BUTTON_HEIGHT 22
+
+SDL_Rect CharacterRect;
+
 
 /* ----------------------------------------------------------------------
  * This function checks if a given screen position lies within the 
@@ -197,8 +200,8 @@ CursorIsOnStrButton( int x , int y )
 {
   if ( x > CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X + BUTTON_WIDTH ) return ( FALSE );
   if ( x < CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X ) return ( FALSE );
-  if ( y > CHARACTERRECT_Y + BUTTON_MOD_X + STR_Y + BUTTON_HEIGHT ) return ( FALSE );
-  if ( y < CHARACTERRECT_Y + BUTTON_MOD_X + STR_Y ) return ( FALSE );
+  if ( y > CharacterRect.y + BUTTON_MOD_X + STR_Y + BUTTON_HEIGHT ) return ( FALSE );
+  if ( y < CharacterRect.y + BUTTON_MOD_X + STR_Y ) return ( FALSE );
   return ( TRUE );
 }; // int CursorIsOnStrButton( int x , int y )
 
@@ -211,8 +214,8 @@ CursorIsOnDexButton( int x , int y )
 {
   if ( x > CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X + BUTTON_WIDTH ) return ( FALSE );
   if ( x < CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X ) return ( FALSE );
-  if ( y > CHARACTERRECT_Y + BUTTON_MOD_X + DEX_Y + BUTTON_HEIGHT ) return ( FALSE );
-  if ( y < CHARACTERRECT_Y + BUTTON_MOD_X + DEX_Y ) return ( FALSE );
+  if ( y > CharacterRect.y + BUTTON_MOD_X + DEX_Y + BUTTON_HEIGHT ) return ( FALSE );
+  if ( y < CharacterRect.y + BUTTON_MOD_X + DEX_Y ) return ( FALSE );
   return ( TRUE );
 }; // int CursorIsOnDexButton( int x , int y )
 
@@ -225,8 +228,8 @@ CursorIsOnMagButton( int x , int y )
 {
   if ( x > CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X + BUTTON_WIDTH ) return ( FALSE );
   if ( x < CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X ) return ( FALSE );
-  if ( y > CHARACTERRECT_Y + BUTTON_MOD_X + MAG_Y + BUTTON_HEIGHT ) return ( FALSE );
-  if ( y < CHARACTERRECT_Y + BUTTON_MOD_X + MAG_Y ) return ( FALSE );
+  if ( y > CharacterRect.y + BUTTON_MOD_X + MAG_Y + BUTTON_HEIGHT ) return ( FALSE );
+  if ( y < CharacterRect.y + BUTTON_MOD_X + MAG_Y ) return ( FALSE );
   return ( TRUE );
 }; // int CursorIsOnMagButton( int x , int y )
 
@@ -239,8 +242,8 @@ CursorIsOnVitButton( int x , int y )
 {
   if ( x > CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X + BUTTON_WIDTH ) return ( FALSE );
   if ( x < CHARACTERRECT_X + BUTTON_MOD_X + STR_NOW_X ) return ( FALSE );
-  if ( y > CHARACTERRECT_Y + BUTTON_MOD_X + VIT_Y + BUTTON_HEIGHT ) return ( FALSE );
-  if ( y < CHARACTERRECT_Y + BUTTON_MOD_X + VIT_Y ) return ( FALSE );
+  if ( y > CharacterRect.y + BUTTON_MOD_X + VIT_Y + BUTTON_HEIGHT ) return ( FALSE );
+  if ( y < CharacterRect.y + BUTTON_MOD_X + VIT_Y ) return ( FALSE );
   return ( TRUE );
 }; // int CursorIsOnVitButton( int x , int y )
 
@@ -323,7 +326,6 @@ UpdateAllCharacterStats ( void )
 void 
 ShowCharacterScreen ( void )
 {
-  static SDL_Rect CharacterRect;
   static SDL_Rect ButtonRect;
   static SDL_Surface *CharacterScreenImage = NULL;
   static SDL_Surface *PlusButtonImage = NULL;
@@ -371,8 +373,15 @@ ShowCharacterScreen ( void )
       CharacterRect.w = SCREENLEN/2;
       CharacterRect.h = User_Rect.h;
       */
+      /*
       CharacterRect.x = CHARACTERRECT_X;
       CharacterRect.y = CHARACTERRECT_Y; 
+      CharacterRect.w = CHARACTERRECT_W;
+      CharacterRect.h = CHARACTERRECT_H;
+      */
+      CharacterRect.x = CHARACTERRECT_X;
+      // CharacterRect.y = SCREENHEIGHT - CharacterScreenImage->h; 
+      CharacterRect.y = 0; 
       CharacterRect.w = CHARACTERRECT_W;
       CharacterRect.h = CHARACTERRECT_H;
     }

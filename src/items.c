@@ -1652,7 +1652,7 @@ ManageInventoryScreen ( void )
   // visible and therefore we must updated it here, since it is currently not
   // contained within the user rectangle that also gets updated every frame.
   //
-  SDL_UpdateRect( Screen , InventoryRect.x , InventoryRect.y , InventoryRect.w , InventoryRect.h );
+  // SDL_UpdateRect( Screen , InventoryRect.x , InventoryRect.y , InventoryRect.w , InventoryRect.h );
 
 
   MouseButtonPressedPreviousFrame = axis_is_active;

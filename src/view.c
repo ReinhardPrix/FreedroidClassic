@@ -359,8 +359,8 @@ Assemble_Combat_Picture (int mask)
     }
 
   ShowMissionCompletitionMessages();
-  ManageInventoryScreen ( );
   ShowCharacterScreen ( );
+  ManageInventoryScreen ( );
   DisplayButtons( );
 
   if ( GameConfig.Inventory_Visible ) 
