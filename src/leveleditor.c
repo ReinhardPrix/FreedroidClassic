@@ -391,6 +391,8 @@ ShowLevelEditorTopMenu( int Highlight )
     {
       for ( i = 0 ; i < 9 ; i ++ )
 	{
+	  if ( selected_index >= ALL_ISOMETRIC_FLOOR_TILES ) continue;
+
 	  TargetRectangle.x = INITIAL_BLOCK_WIDTH/2 + INITIAL_BLOCK_WIDTH * i ;
 	  TargetRectangle.y = INITIAL_BLOCK_HEIGHT/3 ;
 	  
@@ -408,7 +410,8 @@ ShowLevelEditorTopMenu( int Highlight )
 	  if ( selected_index == Highlight ) 
 	    HighlightRectangle ( Screen , TargetRectangle );
 	  
-	  if ( selected_index < ALL_ISOMETRIC_FLOOR_TILES -1 ) selected_index ++ ;
+	  // if ( selected_index < ALL_ISOMETRIC_FLOOR_TILES -1 ) selected_index ++ ;
+	  selected_index ++ ;
 	}
     }
   else if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_OBSTACLES )
