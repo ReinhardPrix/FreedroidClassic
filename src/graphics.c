@@ -830,7 +830,7 @@ Load_MapBlock_Surfaces( void )
   int i;
   int color;
   char *fpath;
-  char *ColoredBlockFiles[] = {
+  /*  char *ColoredBlockFiles[] = {
     "ne_block_red.gif",
     "ne_block_yellow.gif",
     "ne_block_green.gif",
@@ -839,7 +839,17 @@ Load_MapBlock_Surfaces( void )
     "ne_block_turquoise.gif",
     "ne_block_dark.gif",
     NULL
-  };
+    }; */
+  char *ColoredBlockFiles[] = {
+    "ne_block_red.png",
+    "ne_block_yellow.png",
+    "ne_block_green.png",
+    "ne_block_gray.png",
+    "ne_block_blue.png",
+    "ne_block_turquoise.png",
+    "ne_block_dark.png",
+    NULL
+  }; 
 
   Block_Width=INITIAL_BLOCK_WIDTH;
   Block_Height=INITIAL_BLOCK_HEIGHT;

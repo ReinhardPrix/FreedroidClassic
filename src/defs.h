@@ -82,7 +82,7 @@ enum
 #define SOUND_DIR		"sound/"
 #define MAP_DIR			"map/"
 
-#define NE_MAP_BLOCK_FILE	"ne_block_red.gif"
+// #define NE_MAP_BLOCK_FILE	"ne_block_red.gif"
 #define NE_DROID_BLOCK_FILE	"ne_droids.png"
 #define NE_BULLET_BLOCK_FILE 	"ne_bullet.png"
 #define NE_BLAST_BLOCK_FILE 	"ne_blast.png"
