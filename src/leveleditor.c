@@ -39,6 +39,7 @@
 
 void ShowWaypoints( int PrintConnectionList , int maks );
 void LevelEditor(void);
+void cycle_marked_obstacle( Level EditLevel );
 void CreateNewMapLevel( void );
 void SetLevelInterfaces ( void );
 void delete_obstacle ( level* EditLevel , obstacle* our_obstacle );
@@ -4228,6 +4229,16 @@ show_level_editor_tooltips ( void )
 		show_button_tooltip ( "\nYou have currently a connection attempt going on already.  Go to the desired destination waypoint and hit this button again to establish the connection.\n\nYou can also use the C key for this." );
 	}
     }
+    else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_DELETE_OBSTACLE_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
+    {
+	if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
+	    show_button_tooltip ( "\nUse this button to delete the currently marked obstacle.\n\nYou can also use the X key for this." );
+    }
+    else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_NEXT_OBSTACLE_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
+    {
+	if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
+	    show_button_tooltip ( "\nUse this button to cycle the currently marked obstacle.\n\nYou can also use the N key for this." );
+    }
     else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_BEAUTIFY_GRASS_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
     {
 	if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
@@ -4724,6 +4735,19 @@ level_editor_handle_left_mouse_button ( int proceed_now )
 	{
 	    beautify_grass_tiles_on_level ( EditLevel );
 	}
+	else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_DELETE_OBSTACLE_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
+	{
+	    if ( level_editor_marked_obstacle != NULL )
+	    {
+		delete_obstacle ( EditLevel , level_editor_marked_obstacle );
+		level_editor_marked_obstacle = NULL ;
+		while ( SpacePressed() );
+	    }
+	}
+	else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_NEXT_OBSTACLE_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
+	{
+	    cycle_marked_obstacle( EditLevel );
+	}
 	else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_RECURSIVE_FILL_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
 	{
 	    RecFillMap ( EditLevel , BlockY , BlockX , Highlight );
@@ -4899,6 +4923,10 @@ level_editor_blit_mouse_buttons ( Level EditLevel )
     else
 	ShowGenericButtonFromList ( LEVEL_EDITOR_TOGGLE_CONNECTION_RED_BUTTON );
     ShowGenericButtonFromList ( LEVEL_EDITOR_BEAUTIFY_GRASS_BUTTON );
+
+    ShowGenericButtonFromList ( LEVEL_EDITOR_DELETE_OBSTACLE_BUTTON );
+    ShowGenericButtonFromList ( LEVEL_EDITOR_NEXT_OBSTACLE_BUTTON );
+
     ShowGenericButtonFromList ( LEVEL_EDITOR_RECURSIVE_FILL_BUTTON );
     ShowGenericButtonFromList ( LEVEL_EDITOR_NEW_OBSTACLE_LABEL_BUTTON );
     ShowGenericButtonFromList ( LEVEL_EDITOR_NEW_OBSTACLE_DESCRIPTION_BUTTON );
@@ -4940,6 +4968,49 @@ level_editor_blit_mouse_buttons ( Level EditLevel )
 }; // void level_editor_blit_mouse_buttons ( Level EditLevel )
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+cycle_marked_obstacle( Level EditLevel )
+{
+    int current_mark_index ;
+    int j;
+
+    if ( level_editor_marked_obstacle != NULL )
+    {
+	//--------------------
+	// See if this floor tile has some other obstacles glued to it as well
+	//
+	if ( EditLevel -> map [ BlockY ] [ BlockX ] . obstacles_glued_to_here [ 1 ] != (-1) )
+	{
+	    //--------------------
+	    // Find out which one of these is currently marked
+	    //
+	    current_mark_index = (-1);
+	    for ( j = 0 ; j < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; j ++ )
+	    {
+		if ( level_editor_marked_obstacle == & ( EditLevel -> obstacle_list [ EditLevel -> map [ BlockY ] [ BlockX ] . obstacles_glued_to_here [ j ] ] ) )
+		    current_mark_index = j ;
+	    }
+	    
+	    if ( current_mark_index != (-1) ) 
+	    {
+		if ( EditLevel -> map [ BlockY ] [ BlockX ] . obstacles_glued_to_here [ current_mark_index + 1 ] != (-1) )
+		    level_editor_marked_obstacle = & ( EditLevel -> obstacle_list [ EditLevel -> map [ BlockY ] [ BlockX ] . obstacles_glued_to_here [ current_mark_index + 1 ] ] ) ;
+		else
+		    level_editor_marked_obstacle = & ( EditLevel -> obstacle_list [ EditLevel -> map [ BlockY ] [ BlockX ] . obstacles_glued_to_here [ 0 ] ] ) ;
+	    }
+	    
+	}
+    }
+
+    while ( NPressed() );
+    while ( SpacePressed() );
+
+}; // void cycle_marked_obstacle( Level EditLevel )
+
+/* ----------------------------------------------------------------------
  * This function is provides the Level Editor integrated into 
  * freedroid.  Actually this function is a submenu of the big
  * Escape Menu.  In here you can edit the level and, upon pressing
@@ -4957,8 +5028,6 @@ LevelEditor(void)
     int LeftMousePressedPreviousFrame = FALSE;
     int RightMousePressedPreviousFrame = FALSE;
     moderately_finepoint TargetSquare;
-    int current_mark_index ;
-    int j;
 
     BlockX = rintf( Me [ 0 ] . pos . x + 0.5 );
     BlockY = rintf( Me [ 0 ] . pos . y + 0.5 );
@@ -5275,33 +5344,7 @@ LevelEditor(void)
 	    
 	    if ( NPressed() )
 	    {
-		if ( level_editor_marked_obstacle != NULL )
-		{
-		    //--------------------
-		    // See if this floor tile has some other obstacles glued to it as well
-		    //
-		    if ( EditLevel -> map [ BlockY ] [ BlockX ] . obstacles_glued_to_here [ 1 ] != (-1) )
-		    {
-			//--------------------
-			// Find out which one of these is currently marked
-			//
-			current_mark_index = (-1);
-			for ( j = 0 ; j < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; j ++ )
-			{
-			    if ( level_editor_marked_obstacle == & ( EditLevel -> obstacle_list [ EditLevel -> map [ BlockY ] [ BlockX ] . obstacles_glued_to_here [ j ] ] ) )
-				current_mark_index = j ;
-			}
-			
-			if ( current_mark_index != (-1) ) 
-			{
-			    if ( EditLevel -> map [ BlockY ] [ BlockX ] . obstacles_glued_to_here [ current_mark_index + 1 ] != (-1) )
-				level_editor_marked_obstacle = & ( EditLevel -> obstacle_list [ EditLevel -> map [ BlockY ] [ BlockX ] . obstacles_glued_to_here [ current_mark_index + 1 ] ] ) ;
-			    else
-				level_editor_marked_obstacle = & ( EditLevel -> obstacle_list [ EditLevel -> map [ BlockY ] [ BlockX ] . obstacles_glued_to_here [ 0 ] ] ) ;
-			}
-			
-		    }
-		}
+		cycle_marked_obstacle( EditLevel );		
 		while ( NPressed() );
 	    }
 	    

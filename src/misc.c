@@ -138,6 +138,10 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorToggleWaypointButton.png" , { 00 , 150 , 0 ,  0 } , FALSE , FALSE } ,
     { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorToggleConnectionBlueButton.png" , { 00 , 180 , 0 ,  0 } , FALSE , FALSE } ,
     { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorToggleConnectionRedButton.png" , { 00 , 180 , 0 ,  0 } , FALSE , FALSE } ,
+
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorDeleteObstacleButton.png" , { 00 , 240 , 0 ,  0 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorNextObstacleButton.png" , { 00 , 270 , 0 ,  0 } , FALSE , FALSE } ,
+
     { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorBeautifyGrassButton.png" , { 00 , 90 , 0 ,  0 } , FALSE , FALSE } ,
     { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorZoomInButton.png"      , { 30 , 90 , 0 ,  0 } , FALSE , FALSE } ,
     { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorZoomOutButton.png"     , { 30 , 90 , 0 ,  0 } , FALSE , FALSE } ,
@@ -686,8 +690,8 @@ Uint32 Ten_Frame_SDL_Ticks;
 Uint32 Onehundred_Frame_SDL_Ticks;
 int framenr = 0;
 
-char *homedir = NULL;
-char *ConfigDir = NULL;
+char *our_homedir = NULL;
+char *our_config_dir = NULL;
 
 /* -----------------------------------------------------------------
  * find a given filename in subdir relative to FD_DATADIR, 
@@ -1692,13 +1696,13 @@ LoadGameConfig (void)
     int original_width_of_screen = GameConfig . screen_width ;
     int original_height_of_screen = GameConfig . screen_height ;
     
-    if (!ConfigDir)
+    if (! our_config_dir)
     {
 	DebugPrintf (1, "No useable config-dir. No config-loading possible\n");
 	return (OK);
     }
     
-    sprintf (fname, "%s/config", ConfigDir);
+    sprintf (fname, "%s/config", our_config_dir);
     if( (config = fopen (fname, "rb")) == NULL)
     {
 	DebugPrintf (0, "WARNING: failed to open config-file: %s\n");
@@ -1778,7 +1782,6 @@ output.",
 				   NO_NEED_TO_INFORM , IS_WARNING_ONLY );
     }
 
-
     return (OK);
     
 }; // int LoadGameConfig ( void )
@@ -1795,10 +1798,10 @@ SaveGameConfig (void)
     int current_width;
     int current_height;
 
-    if ( ConfigDir[0] == '\0')
+    if ( our_config_dir [ 0 ] == '\0' )
 	return (ERR);
     
-    sprintf (fname, "%s/config", ConfigDir);
+    sprintf (fname, "%s/config", our_config_dir );
     if( (config = fopen (fname, "wb")) == NULL)
     {
 	DebugPrintf (0, "WARNING: failed to create config-file: %s\n");

@@ -1871,36 +1871,36 @@ InitFreedroid ( void )
     homedir = ".";
 #else
     // first we need the user's homedir for loading/saving stuff
-    if ( (homedir = getenv("HOME")) == NULL )
+    if ( ( our_homedir = getenv("HOME")) == NULL )
     {
 	DebugPrintf ( 0 , "WARNING: Environment does not contain HOME variable...\n\
 I will try to use local directory instead\n");
-	homedir = ".";
+	our_homedir = ".";
     }
 #endif
     
-    ConfigDir = MyMalloc( strlen (homedir) + 20 );
-    sprintf (ConfigDir, "%s/.freedroid_rpg", homedir);
+    our_config_dir = MyMalloc( strlen ( our_homedir ) + 20 );
+    sprintf ( our_config_dir , "%s/.freedroid_rpg" , our_homedir);
     
-    if (stat(ConfigDir, &statbuf) == -1) 
+    if ( stat ( our_config_dir , &statbuf) == -1) 
     {
 	DebugPrintf ( 0 , "\n----------------------------------------------------------------------\n\
 You seem not to have the directory %s in your home directory.\n\
 This directory is used by freedroid to store saved games and your personal settings.\n\
 So I'll try to create it now...\n\
-----------------------------------------------------------------------\n", ConfigDir);
+----------------------------------------------------------------------\n", our_config_dir );
 #if __WIN32__
-	_mkdir ( ConfigDir );
+	_mkdir ( our_config_dir );
 	DebugPrintf ( 1 , "ok\n" );
 #else
-	if (mkdir (ConfigDir, S_IREAD|S_IWRITE|S_IEXEC) == -1)
+	if ( mkdir ( our_config_dir , S_IREAD|S_IWRITE|S_IEXEC) == -1)
 	{
 	    DebugPrintf ( 0 , "\n----------------------------------------------------------------------\n\
 WARNING: Failed to create config-dir: %s. Giving up...\n\
 I will not be able to load or save games or configurations\n\
-----------------------------------------------------------------------\n", ConfigDir);
-	    free(ConfigDir);
-	    ConfigDir = NULL;
+----------------------------------------------------------------------\n", our_config_dir);
+	    free ( our_config_dir );
+	    our_config_dir = NULL;
 	}
 	else
 	{

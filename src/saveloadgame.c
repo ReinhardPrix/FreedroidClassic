@@ -84,32 +84,32 @@ ShowSaveLoadGameProgressMeter( int Percentage , int IsSavegame )
 void
 LoadAndShowThumbnail ( char* CoreFilename )
 {
-  char filename[1000];
-  SDL_Surface* NewThumbnail;
-  SDL_Rect TargetRectangle;
-
-  if (!ConfigDir)
-    return;
-
-  DebugPrintf ( 2 , "\nTrying to load thumbnail for character '%s'. " , CoreFilename );
-
-  //--------------------
-  // First we save the full ship information, same as with the level editor
-  //
-  
-  sprintf( filename , "%s/%s%s", ConfigDir, CoreFilename , SAVE_GAME_THUMBNAIL_EXT );
-
-  NewThumbnail = our_IMG_load_wrapper ( filename );
-  if ( NewThumbnail == NULL ) return;
-
-  // TargetRectangle.x = GameConfig . screen_width - NewThumbnail ->w ;
-  TargetRectangle.x = 10 ;
-  TargetRectangle.y = GameConfig . screen_height - NewThumbnail ->h - 10 ;
-
-  if ( use_open_gl ) swap_red_and_blue_for_open_gl ( NewThumbnail );  
-  our_SDL_blit_surface_wrapper ( NewThumbnail , NULL , Screen , &TargetRectangle );
-
-  SDL_FreeSurface( NewThumbnail );
+    char filename[1000];
+    SDL_Surface* NewThumbnail;
+    SDL_Rect TargetRectangle;
+    
+    if ( ! our_config_dir )
+	return;
+    
+    DebugPrintf ( 2 , "\nTrying to load thumbnail for character '%s'. " , CoreFilename );
+    
+    //--------------------
+    // First we save the full ship information, same as with the level editor
+    //
+    
+    sprintf( filename , "%s/%s%s", our_config_dir , CoreFilename , SAVE_GAME_THUMBNAIL_EXT );
+    
+    NewThumbnail = our_IMG_load_wrapper ( filename );
+    if ( NewThumbnail == NULL ) return;
+    
+    // TargetRectangle.x = GameConfig . screen_width - NewThumbnail ->w ;
+    TargetRectangle.x = 10 ;
+    TargetRectangle.y = GameConfig . screen_height - NewThumbnail ->h - 10 ;
+    
+    if ( use_open_gl ) swap_red_and_blue_for_open_gl ( NewThumbnail );  
+    our_SDL_blit_surface_wrapper ( NewThumbnail , NULL , Screen , &TargetRectangle );
+    
+    SDL_FreeSurface( NewThumbnail );
 
 }; // void LoadAndShowThumbnail ( char* CoreFilename )
 
@@ -126,7 +126,7 @@ LoadAndShowStats ( char* CoreFilename )
     struct tm *LocalTimeSplitup;
     long int FileSize;
     
-    if ( ! ConfigDir )
+    if ( ! our_config_dir )
 	return;
     
     DebugPrintf ( 2 , "\nTrying to get file stats for character '%s'. " , CoreFilename );
@@ -135,7 +135,7 @@ LoadAndShowStats ( char* CoreFilename )
     // First we save the full ship information, same as with the level editor
     //
     
-    sprintf( filename , "%s/%s%s", ConfigDir, CoreFilename , SAVEDGAME_EXT );
+    sprintf( filename , "%s/%s%s", our_config_dir , CoreFilename , SAVEDGAME_EXT );
     
     if ( stat ( filename , & ( FileInfoBuffer) ) )
     {
@@ -169,7 +169,7 @@ or file permissions of ~/.freedroid_rpg are somehow not right.",
     //--------------------
     // The saved ship must exist.  On not, it's a sever error!
     //
-    sprintf( filename , "%s/%s%s", ConfigDir, CoreFilename , ".shp" );
+    sprintf( filename , "%s/%s%s", our_config_dir , CoreFilename , ".shp" );
     if ( stat ( filename , & ( FileInfoBuffer) ) )
     {
 	fprintf( stderr, "\n\nfilename: %s. \n" , filename );
@@ -185,7 +185,7 @@ or file permissions of ~/.freedroid_rpg are somehow not right.",
     //--------------------
     // A thumbnail may not yet exist.  We won't make much fuss if it doesn't.
     //
-    sprintf( filename , "%s/%s%s", ConfigDir, CoreFilename , SAVE_GAME_THUMBNAIL_EXT );
+    sprintf( filename , "%s/%s%s", our_config_dir , CoreFilename , SAVE_GAME_THUMBNAIL_EXT );
     if ( ! stat ( filename , & ( FileInfoBuffer) ) )
     {
         FileSize += FileInfoBuffer.st_size;
@@ -210,13 +210,13 @@ SaveThumbnailOfGame ( void )
     SDL_Surface* NewThumbnail;
     SDL_Surface* FullView;
     
-    if (!ConfigDir)
+    if ( ! our_config_dir )
 	return;
     
     //--------------------
     // First we save the full ship information, same as with the level editor
     //
-    sprintf( filename , "%s/%s%s", ConfigDir, Me [ 0  ] . character_name , SAVE_GAME_THUMBNAIL_EXT );
+    sprintf( filename , "%s/%s%s", our_config_dir, Me [ 0  ] . character_name , SAVE_GAME_THUMBNAIL_EXT );
     
     AssembleCombatPicture ( SHOW_ITEMS );
     
@@ -269,7 +269,7 @@ SaveGame( void )
     char linebuf[10000];
     char* MenuTexts[10]={ "Back" , "" , "" , "" , "" , "" , "" , "" , "" , "" };
     
-    if (!ConfigDir)
+    if ( ! our_config_dir )
 	return (OK);
     
     //--------------------
@@ -316,7 +316,7 @@ SaveGame( void )
 	      (int) MAX_ENEMYS_ON_SHIP );
     
     //--------------------
-    sprintf( filename , "%s/%s%s", ConfigDir, Me[0].character_name, SHIP_EXT );
+    sprintf( filename , "%s/%s%s", our_config_dir, Me[0].character_name, SHIP_EXT );
     if ( SaveShip( filename ) != OK )
     {
 	GiveStandardErrorMessage ( __FUNCTION__  , "\
@@ -335,7 +335,7 @@ or file permissions of ~/.freedroid_rpg are somehow not right.",
     //--------------------
     // First, we must determine the save game file name
     //
-    sprintf (filename, "%s/%s%s", ConfigDir, Me[0].character_name, ".savegame");
+    sprintf ( filename , "%s/%s%s", our_config_dir , Me[0].character_name, ".savegame");
     
     DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint SaveShip(char *shipname): now opening the savegame file for writing ..."); 
     
@@ -468,24 +468,24 @@ DeleteGame( void )
 {
     char filename[1000];
 
-    if (!ConfigDir)
+    if ( ! our_config_dir )
 	return (OK);
     
     //--------------------
     // First we save the full ship information, same as with the level editor
     //
-    sprintf( filename , "%s/%s%s", ConfigDir, Me[0].character_name, SHIP_EXT);
+    sprintf( filename , "%s/%s%s", our_config_dir , Me[0].character_name, SHIP_EXT);
     
     remove ( filename ) ;
     
     //--------------------
     // First, we must determine the savedgame data file name
     //
-    sprintf (filename, "%s/%s%s", ConfigDir, Me[0].character_name, SAVEDGAME_EXT);
+    sprintf (filename, "%s/%s%s", our_config_dir, Me[0].character_name, SAVEDGAME_EXT);
     
     remove ( filename );
     
-    sprintf( filename , "%s/%s%s", ConfigDir, Me[0].character_name , SAVE_GAME_THUMBNAIL_EXT );
+    sprintf( filename , "%s/%s%s", our_config_dir, Me[0].character_name , SAVE_GAME_THUMBNAIL_EXT );
     
     remove ( filename );
     
@@ -509,7 +509,7 @@ LoadGame( void )
     int current_geographics_levelnum;
     FILE *DataFile;
     
-    if (!ConfigDir)
+    if ( ! our_config_dir )
     {
 	DebugPrintf (0, "No Config-directory, cannot load any games\n");
 	return (OK);
@@ -530,7 +530,7 @@ LoadGame( void )
     //--------------------
     // First we load the full ship information, same as with the level editor
     
-    sprintf( filename , "%s/%s%s", ConfigDir, Me [ 0 ] . character_name, SHIP_EXT);
+    sprintf( filename , "%s/%s%s", our_config_dir, Me [ 0 ] . character_name, SHIP_EXT);
     
     //--------------------
     // Maybe there isn't any saved game by that name.  This case must be checked for
@@ -560,7 +560,7 @@ LoadGame( void )
     //--------------------
     // Now we must determine the savedgame data file name
     //
-    sprintf (filename, "%s/%s%s", ConfigDir, Me[0].character_name, SAVEDGAME_EXT);
+    sprintf (filename, "%s/%s%s", our_config_dir, Me[0].character_name, SAVEDGAME_EXT);
     
     DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\n%s(): starting to read savegame data...." , __FUNCTION__ );
     
