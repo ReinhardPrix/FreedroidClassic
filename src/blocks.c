@@ -3413,7 +3413,10 @@ init_obstacle_data( void )
   obstacle_map[ ISO_COUNTER_CORNER_SHARP_4 ] . block_area_parm_2 = 2.3;
   obstacle_map[ ISO_COUNTER_CORNER_SHARP_4 ] . filename = "iso_counter_0012.png";
   
- 
+  obstacle_map[ ISO_BAR_TABLE ] . block_area_parm_1 = 1.1;
+  obstacle_map[ ISO_BAR_TABLE ] . block_area_parm_2 = 1.3;
+  obstacle_map[ ISO_BAR_TABLE ] . filename = "iso_tables_0005.png";
+
  
 
   //--------------------
