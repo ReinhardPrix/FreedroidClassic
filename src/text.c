@@ -127,6 +127,7 @@ ChatWithFriendlyDroid( int Enum )
   SDL_Surface* Background;
   SDL_Rect Chat_Window;
   SDL_Rect Droid_Image_Window;
+  int SelectedItemNumber;
 
   // From initiating transfer mode, space might still have been pressed. 
   // So we wait till it's released...
@@ -398,10 +399,87 @@ Of course you can ask the droid about anything else it has told you or about wha
 
 	      if ( strcmp ( DecisionString , "q" ) == 0 ) 
 		{
-		  DisplayTextWithScrolling ( "Good then, how else may I be of assistance?" , 
+		  DisplayTextWithScrolling ( "Nothing then.  Good.  How else may I be of assistance?" , 
 					     -1 , -1 , &Chat_Window , Background );
 		  break;
 		}
+
+
+	      SelectedItemNumber = ( -1 );
+	      sscanf( DecisionString , "%d" , &SelectedItemNumber );
+	      
+	      if ( ( SelectedItemNumber >= 0 ) && ( SelectedItemNumber <= 9 ) )
+		{
+		  if ( InstallItem( SelectedItemNumber ) == OK )
+		    {
+		      DisplayTextWithScrolling ( "As you wish.  The item has been installed into your system and should be usable immediately.  How else may I be of assistance?" , -1 , -1 , &Chat_Window , Background );
+		      break;
+		    }
+		  else
+		    {
+		      DisplayTextWithScrolling ( "Sorry, but the item you selected is not designed for installation into your system." , -1 , -1 , &Chat_Window , Background );
+		      break;
+		    }
+		}
+
+	      /*
+	      if ( strcmp ( DecisionString , "0" ) == 0 ) 
+		{
+		  InstallItem( 0 );
+		  DisplayTextWithScrolling ( "As you wish.  The item has been installed into your system and should be usable immediately.  How else may I be of assistance?" , -1 , -1 , &Chat_Window , Background );
+		  break;
+		}
+	      if ( strcmp ( DecisionString , "1" ) == 0 ) 
+		{
+		  InstallItem( 1 );
+		  DisplayTextWithScrolling ( "As you wish.  The item has been installed into your system and should be usable immediately.  How else may I be of assistance?" , -1 , -1 , &Chat_Window , Background );
+		  break;
+		}
+	      if ( strcmp ( DecisionString , "2" ) == 0 ) 
+		{
+		  InstallItem( 2 );
+		  DisplayTextWithScrolling ( "As you wish.  The item has been installed into your system and should be usable immediately.  How else may I be of assistance?" , -1 , -1 , &Chat_Window , Background );
+		  break;
+		}
+	      if ( strcmp ( DecisionString , "3" ) == 0 ) 
+		{
+		  InstallItem( 3 );
+		  DisplayTextWithScrolling ( "As you wish.  The item has been installed into your system and should be usable immediately.  How else may I be of assistance?" , -1 , -1 , &Chat_Window , Background );
+		  break;
+		}
+	      if ( strcmp ( DecisionString , "4" ) == 0 ) 
+		{
+		  InstallItem( 4 );
+		  DisplayTextWithScrolling ( "As you wish.  The item has been installed into your system and should be usable immediately.  How else may I be of assistance?" , -1 , -1 , &Chat_Window , Background );
+		  break;
+		}
+	      if ( strcmp ( DecisionString , "5" ) == 0 ) 
+		{
+		  InstallItem( 5 );
+		  DisplayTextWithScrolling ( "As you wish.  The item has been installed into your system and should be usable immediately.  How else may I be of assistance?" , -1 , -1 , &Chat_Window , Background );
+		  break;
+		}
+	      if ( strcmp ( DecisionString , "6" ) == 0 ) 
+		{
+		  InstallItem( 6 );
+		  DisplayTextWithScrolling ( "As you wish.  The item has been installed into your system and should be usable immediately.  How else may I be of assistance?" , -1 , -1 , &Chat_Window , Background );
+		  break;
+		}
+	      if ( strcmp ( DecisionString , "7" ) == 0 ) 
+		{
+		  InstallItem( 7 );
+		  DisplayTextWithScrolling ( "As you wish.  The item has been installed into your system and should be usable immediately.  How else may I be of assistance?" , -1 , -1 , &Chat_Window , Background );
+		  break;
+		}
+	      if ( strcmp ( DecisionString , "8" ) == 0 ) 
+		{
+		  InstallItem( 8 );
+		  DisplayTextWithScrolling ( "As you wish.  The item has been installed into your system and should be usable immediately.  How else may I be of assistance?" , -1 , -1 , &Chat_Window , Background );
+		  break;
+		}
+	      */
+
+
 
 	      DisplayTextWithScrolling ( "Please answer '0'-'9' or 'q'." , -1 , -1 , &Chat_Window , Background );
 	    }

@@ -356,6 +356,7 @@ EXTERN void ShowDebugInfos (void);
 EXTERN int GiveNumberToThisActionLabel ( char* ActionLabel );
 EXTERN void ExecuteActionWithLabel ( char* ActionLabel );
 EXTERN void ExecuteEvent ( int EventNumber );
+EXTERN int InstallItem( int IventoryIndex );
 
 /* enemy.c */
 #undef EXTERN
