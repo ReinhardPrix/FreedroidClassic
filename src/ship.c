@@ -553,6 +553,7 @@ EnterKonsole (void)
     {
       PaintConsoleMenu (menu_pos);
       SDL_Flip (Screen);
+      usleep(2);
 
       if ( DownPressed() || MouseWheelDownPressed() ) 
 	{
@@ -680,8 +681,29 @@ PaintConsoleMenu (int menu_pos)
   SDL_Rect SourceRectangle;
   SDL_Rect TargetRectangle;
 
-  DisplayImage ( find_file( NE_CONSOLE_BG_PIC1_FILE , GRAPHICS_DIR, FALSE) );
-  DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE |BANNER_FORCE_UPDATE);
+  static SDL_Surface *image = NULL ;
+
+  // DisplayImage ( find_file( NE_CONSOLE_BG_PIC1_FILE , GRAPHICS_DIR, FALSE) );
+  // DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE |BANNER_FORCE_UPDATE);
+
+  //--------------------
+  // If this has not happend yet, we load the console menu image
+  // once and for all to be kept until the end of the game.
+  //
+  if ( image == NULL )
+    {
+      image = IMG_Load( find_file ( NE_CONSOLE_BG_PIC1_FILE , GRAPHICS_DIR , FALSE ) );
+      if ( image == NULL ) {
+	fprintf(stderr, "Couldn't load image %s: %s\n",
+		find_file ( NE_CONSOLE_BG_PIC1_FILE , GRAPHICS_DIR , FALSE ) , IMG_GetError ( ) );
+	Terminate(ERR);
+      }
+    }
+
+  //--------------------
+  // At this point we can safely display the image from memory.
+  //
+  SDL_BlitSurface( image , NULL , Screen , NULL );
 
   strcpy (MenuText, "Unit type ");
   strcat (MenuText, Druidmap[Me[0].type].druidname);
@@ -854,6 +876,7 @@ GreatDruidShow (void)
 
   while (!finished)
     {
+      usleep ( 2 );
       if (key_pressed)
 	{
 	  show_droid_info (droidtype, page , TRUE );
@@ -1003,12 +1026,12 @@ Notes: %s", Druidmap[droidtype].druidname , Classname[Druidmap[droidtype].class]
 } /* show_droid_info */
 
 
-/*-----------------------------------------------------------------
- * @Desc: Displays the concept view of Level "deck" in Userfenster
+/* -----------------------------------------------------------------
+ * Displays the concept view of Level "deck" in Userfenster
  * 	  
- *	Note: we no longer wait here for a key-press, but return
- *            immediately 
- *-----------------------------------------------------------------*/
+ * Note: we no longer wait here for a key-press, but return
+ *       immediately 
+ * ----------------------------------------------------------------- */
 void
 ShowDeckMap (Level deck)
 {

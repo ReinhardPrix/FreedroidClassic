@@ -900,10 +900,29 @@ SetCombatScaleTo(float ResizeFactor)
 {
   int i, j;
   SDL_Surface *tmp;
+  static SDL_Surface *BackupMapBlockSurfacePointer[ NUM_COLORS ][ NUM_MAP_BLOCKS ] = { { NULL , NULL } , { NULL , NULL } } ; 
 
   // just to be sure, reset the size of the graphics
-  ReInitPictures();
+  // ReInitPictures();
 
+  //--------------------
+  // If a backup does not yet exist, we'll make one of each map block
+  //
+  if ( BackupMapBlockSurfacePointer [ 0 ] [ 0 ] == NULL )
+    {
+      for ( j=0 ; j < NUM_COLORS ; j++ )
+	{
+	  for ( i = 0 ; i < NUM_MAP_BLOCKS ; i++ )
+	    {
+	      BackupMapBlockSurfacePointer [ j ] [ i ] = SDL_DisplayFormat( MapBlockSurfacePointer [ j ] [ i ] );
+	    }
+	}
+    }
+
+  //--------------------
+  // Now that we are sure we have a backup available, we can start
+  // to resize everything.
+  //
   for ( j=0 ; j < NUM_COLORS ; j++ )
     {
       for ( i = 0 ; i < NUM_MAP_BLOCKS ; i++ )
@@ -912,9 +931,9 @@ SetCombatScaleTo(float ResizeFactor)
 	  // Now we resize the map blocks to fullfill the requirements of the
 	  // currently set ResizeFactor.
 	  //
-	  tmp = MapBlockSurfacePointer[j][i]; // store the surface pointer for freeing it soon
-	  MapBlockSurfacePointer[j][i]=zoomSurface( MapBlockSurfacePointer[j][i] , ResizeFactor , ResizeFactor , 0 );
-	  SDL_FreeSurface( tmp ); // free the old surface
+	  SDL_FreeSurface( MapBlockSurfacePointer[j][i] ); // free the old surface
+	  MapBlockSurfacePointer [ j ] [ i ] = 
+	    zoomSurface ( BackupMapBlockSurfacePointer [ j ] [ i ] , ResizeFactor , ResizeFactor , 0 );
 
 	  //--------------------
 	  // Now we convert all the new map blocks to the current display format,
@@ -926,8 +945,8 @@ SetCombatScaleTo(float ResizeFactor)
 	}
     }
 
-  Block_Width *= ResizeFactor;
-  Block_Height *= ResizeFactor;
+  Block_Width  = INITIAL_BLOCK_WIDTH * ResizeFactor ;
+  Block_Height = INITIAL_BLOCK_HEIGHT * ResizeFactor ;
 
 } // void SetCombatScaleTo(float new_scale);
 
