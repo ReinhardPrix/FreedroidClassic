@@ -1,5 +1,12 @@
-
-
+/*=@Header==============================================================
+ * $Source$
+ *
+ * @Desc: All map-related functions, which also includes loading of decks 
+ * and whole ships, starting the elevators and consoles if close to the 
+ * paradroid, refreshes as well as determining the map brick that contains
+ * specified coordinates are done in this file.
+ *
+ *-@Header------------------------------------------------------------*/
 
 /* static const char RCSid[]=\
    "$Id$"; */
@@ -13,12 +20,41 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+#include <vgagl.h>
+#include <vgakeyboard.h>
+
 #include "defs.h"
 #include "struct.h"
 #include "proto.h"
 #include "global.h"
 
 #include "map.h"
+
+
+symtrans Translator[BLOCKANZAHL] = {
+	{'.',FLOOR},
+	{'\'',VOID},
+	{'x',FLOOR},	/* A waypoint is invisible */
+	{'+',KREUZ},
+	{'-',H_WALL},
+	{'|',V_WALL},
+	{'"',H_ZUTUERE},
+	{'=',V_ZUTUERE},
+	{'[',KONSOLE_L},
+	{']',KONSOLE_R},
+	{'(',KONSOLE_O},
+	{')',KONSOLE_U},
+	{'o',LIFT},
+	{'@',REFRESH1},
+	{'a',ALERT},
+	{'1',BLOCK1},
+	{'2',BLOCK2},
+	{'3',BLOCK3},
+	{'4',BLOCK4},
+	{'5',BLOCK5},
+	{ 0, -1 }   // marks the end
+};
+
 
 /*@Function============================================================
   @Desc: unsigned char GetMapBrick(Level deck, float x, float y): liefert
@@ -261,14 +297,14 @@ int LoadShip(char *shipname)
 
 
 /*@Function============================================================
-@Desc: Level LevelToStruct(char *data):
-Extrahiert die Daten aus *data und schreibt sie in eine
-Level-struct:
-Map- Daten noch NICHT in interne Werte uebersetzt
-Doors and Waypoints Arrays initialisiert
-
-@Ret:  Level or NULL
-@Int:
+ * @Desc: Level LevelToStruct(char *data):
+ * 	Extrahiert die Daten aus *data und schreibt sie in eine
+ *	Level-struct:
+ *	Map- Daten noch NICHT in interne Werte uebersetzt
+ *	Doors and Waypoints Arrays initialisiert
+ *
+ *	@Ret:  Level or NULL
+ *	@Int:
 * $Function----------------------------------------------------------*/
 Level LevelToStruct(char *data)
 {
@@ -383,12 +419,12 @@ int GetDoors(Level Lev)
 } /* GetDoors */	
 		
 /*@Function============================================================
-@Desc: GetWaypoints: initialisiert Waypoint-Koordinaten des
-Waypoint-arrays der uebergebenen Level-struct
-ACHTUNG: Map-daten muessen schon in struct stehen 
-
-@Ret: Anz. der Waypoints || ERR
-@Int:
+ * @Desc: GetWaypoints: initialisiert Waypoint-Koordinaten des
+ *	Waypoint-arrays der uebergebenen Level-struct
+ *	ACHTUNG: Map-daten muessen schon in struct stehen 
+ *
+ * @Ret: Anz. der Waypoints || ERR
+ * @Int:
 * $Function----------------------------------------------------------*/
 int GetWaypoints(Level Lev)
 {
@@ -456,37 +492,117 @@ int GetRefreshes(Level Lev)
   return curref;
 } // int GetRefreshed(Level lev)
 
-/*@Function============================================================
-@Desc: int TranslateMap(Level Lev): uebersetzt die geladene Karte
-in die internen Werte
 
-@Ret: OK | ERR
-@Int:
-* $Function----------------------------------------------------------*/
+/*======================================================================
+  IsWallBlock():  Returns TRUE (1) for blocks classified as "Walls", 
+  		  0 otherwise
+ ======================================================================*/
+int IsWallBlock(int block) {
+  switch(block) {
+  case KREUZ:
+  case H_WALL:
+  case V_WALL:
+  case H_ZUTUERE:
+  case V_ZUTUERE:
+  case ECK_LU:
+  case T_U:
+  case ECK_RU:
+  case T_L:
+  case T_R:
+  case ECK_LO:
+  case T_O:
+  case ECK_RO:
+    return(TRUE);
+  default:
+    return(FALSE);
+  } // switch
+} // IsWallBlock()
+
+
+/*@Function============================================================
+ * @Desc: int TranslateMap(Level Lev): uebersetzt die geladene Karte
+ *	in die internen Werte
+ * @Ret: OK | ERR
+ * @Int:
+ * $Function----------------------------------------------------------*/
 int TranslateMap(Level Lev)
 {
   int xdim = Lev->xlen;
   int ydim = Lev->ylen;
   int row, col;
   int i;
+  int WAbove, WBelow, WLeft, WRight; // Walls around CROSS? yes=1,no=0
+  int environs; // encodes the "Wall-environment" of a "+"
+  int NewBlock;  // Neuen "Eck-Block" in den wir KREUZ verwandeln
 
-  printf("\nint TranslateMap(Level lev): Function call confirmed.");
-
-  /* transpose these ascii -mapdata to internal numbers for map */
-  for( row=0; row<ydim; row++)
+  /* Erste Runde: transpose these ascii -mapdata to internal numbers for map */
+  for( row=0; row<ydim; row++) {
     for(col=0; col<xdim; col++) {
-      for(i=0; (i<BLOCKANZAHL) && (Translator[i].ascii != Lev->map[row][col]); i++);
-
-      Lev->map[row][col] = Translator[i].intern;
-
-      if (i==BLOCKANZAHL) {
-	printf("\nint TranslateMap(Level lev): Strange dos2unix? error encountered.. correction.. done.");
-	Lev->map[row][col] = H_WALL;
-	// Terminate(-1);
-      }
+      for(i=0; Translator[i].ascii && (Translator[i].ascii != Lev->map[row][col]); i++);
+      
+      if (!Translator[i].ascii) {
+	gl_printf(20,5, "In TranslateMap: Unknown map-char: %c\n",Lev->map[row][col]);
+	keyboard_close();
+	getchar();
+	Terminate(-1);
+      } else
+	Lev->map[row][col] = Translator[i].intern;
     }
+  } /* for (row=0..) */
+  
+  // Zweiter Durchlauf: Kreuze "abschleifen", 
+  //     i.e. in entsprechende Ecken umwandeln wo noetig
+  for( row=0;row<ydim;row++) {
+    for( col=0; col<xdim; col++) {
+      if( Lev->map[row][col] != KREUZ ) continue;
+      // KREUZ: mal die Nachbarn ansehen: "Wall" or not?
+      WAbove = (row>0) ? IsWallBlock(Lev->map[row-1][col]):0;
+      WBelow = (row<ydim-1)?IsWallBlock(Lev->map[row+1][col]):0;
+      WLeft  = (col>0)?IsWallBlock(Lev->map[row][col-1]):0;
+      WRight = (col<xdim-1)?IsWallBlock(Lev->map[row][col+1]):0;
 
-  printf("\nint TranslateMap(Level lev): Usual end of function reached.....");
+      // encode this environment into one single number:
+      environs = 0x1000*WAbove + 0x100*WRight + 0x10*WBelow + WLeft; 
+
+      // ... und unnoetige Enden entfernen:
+      switch(environs) {
+      case 0x0000: // no walls around
+      case 0x1000: // just one connecting wall, bit lonely?
+      case 0x0100:
+      case 0x0010:
+      case 0x0001:
+	printf("\nUnconnected '+' found on Level %i.\n", Lev->levelnum);
+	break;
+
+      case 0x1010: // just part of a straight wall, a bit redundant?
+      case 0x0101:
+	printf("\nUnconnected '+' found on Level %i.\n", Lev->levelnum);
+	// don't do anything
+	break;
+
+	// pure corners
+      case 0x1100:  NewBlock = ECK_LU; break;
+      case 0x0110:  NewBlock = ECK_LO; break;
+      case 0x0011:  NewBlock = ECK_RO; break;
+      case 0x1001:  NewBlock = ECK_RU; break;
+
+	// T - connectors
+      case 0x1110:  NewBlock = T_L; break;
+      case 0x1101:  NewBlock = T_U; break;
+      case 0x1011:  NewBlock = T_R; break;
+      case 0x0111:  NewBlock = T_O; break;
+
+	// full cross
+      case 0x1111: break;
+      default: 
+	printf("\nMap-panic. TranslateMap() is messed up!\n"); 
+	return(ERR);
+	break;
+      } // switch(environs)
+      Lev->map[row][col] = NewBlock; // ok, hope we got it right ;)
+    } /* for(col) */
+  } /* for(row) */
+
   return OK;
 } // int Translate Map(Level lev)
 
@@ -1021,100 +1137,4 @@ int IsVisible(Finepoint objpos){
 
 
 #undef _map_c
-
-/*=@Header==============================================================
- * $Source$
- *
- * @Desc: All map-related functions, which also includes loading of decks and whole ships, starting the
- *	  elevators and consoles if close to the paradroid, refreshes as well as determining the map brick 
- *	  that contains specified coordinates are done in this file.
- * 	
- * $Revision$
- *
- * $State$
- *
- * $Author$
- *
- * $Log$
- * Revision 1.14  1997/06/09 21:00:56  jprix
- * The constants for the druids have been largely rescaled to MUCH larger values.
- * This is for the new float and framedependent movement of the enemys.  It works nicley
- * as you will see from the now very smooth movement of each of them.
- *
- * Revision 1.13  1997/06/09 10:50:29  jprix
- * Halfway through with making robot coordinates also info floats.  Still works :->
- *
- * Revision 1.12  1997/06/08 23:19:38  jprix
- * Transition to floating point coordinates started.  This version is still working.
- *
- * Revision 1.11  1997/06/08 16:33:10  jprix
- * Eliminated all warnings, that resulted from the new -Wall gcc flag.
- *
- * Revision 1.10  1997/06/08 14:49:40  jprix
- * Added file FILES describing the files of this project.
- * Added more doku while writing the files description.
- * Added -Wall compilerflag for maximal generation of sane warnings.
- *
- * Revision 1.9  2002/04/08 19:19:09  rp
- * Johannes latest (and last) non-cvs version to be checked in. Added graphics,sound,map-subdirs. 
- * Sound support using ALSA started.
- *
- * Revision 1.9  1997/05/31 13:30:31  rprix
- * Further update by johannes. (sent to me in tar.gz)
- *
- * Revision 1.6  1994/06/19  16:23:51  prix
- * Sat Oct 02 12:23:34 1993: moved header to end of file
- * Sat Oct 09 10:42:12 1993: precision_factor in IsVisible() erhoeht
- * Fri May 27 08:51:52 1994: void-space durchg"anglich gemacht
- *
- * Revision 1.5  1993/10/02  16:23:07  prix
- * Sun Aug 08 17:18:44 1993: Merged DruidPassable and IsPassable( old: NotPassable)
- * Sun Aug 08 18:12:31 1993: written GetCurrentElevator()
- * Sun Aug 08 22:31:17 1993: added code to read in Waypoint-data in LoadMap()
- * Mon Aug 09 17:52:15 1993: init of wp-list
- * Mon Aug 09 20:01:11 1993: level->empty init
- * Wed Aug 11 20:08:42 1993: Lift to enter only in center of Block
- * Sat Aug 21 14:44:12 1993: new Ship-loading functions from maped imported
- * Sat Aug 21 14:54:42 1993: written GetElevatorConnections
- * Sat Aug 21 15:24:45 1993: written TranslateMap()
- * Tue Aug 24 09:49:25 1993: written AnimateRefresh()
- * Tue Aug 24 10:00:50 1993: call GetRefreshes
- * Tue Aug 24 17:19:10 1993: moved IsVisible to here
- * Wed Aug 25 18:36:21 1993: writing GetCrew()
- * Sat Sep 18 12:44:43 1993: Refreshes langsameer
- * Sat Sep 18 17:44:56 1993: InnerRefresh wird nun animiert
- * Sat Oct 02 12:22:20 1993: dont call GetCrew() in LoadShip, but in InitNewGame()
- *
- * Revision 1.4  1993/08/08  21:00:19  prix
- * Wed Aug 04 12:44:47 1993: added include of global.h
- * Wed Aug 04 15:06:42 1993: KONSOLEN richtig passable
- * Thu Aug 05 11:03:16 1993: Walls und Konsolen in DruidPassable bedacht
- * Thu Aug 05 11:20:21 1993: added ECK_RO
- * Thu Aug 05 11:34:44 1993: added ECKEN to DruidPassable
- * Fri Aug 06 14:14:23 1993: added T Kollision checkin in DruidPassable
- * Fri Aug 06 15:38:27 1993: modified LoadMap: dont load from disk but from memory
- * Fri Aug 06 16:12:04 1993: writing LoadShip
- * Sat Aug 07 14:51:01 1993: added GetMapBrick()
- * Sat Aug 07 14:54:21 1993: added calls to GetMapBrick()
- * Sat Aug 07 15:20:35 1993: added ActSpecialField()
- * Sat Aug 07 16:05:32 1993: added Elevator-load to LoadShip
- * Sun Aug 08 16:59:37 1993: DruidPassable verbessert
- *
- * Revision 1.3  1993/08/04  16:31:59  prix
- * Sat Jul 31 12:07:52 1993: load levelnum with map
- * Sat Jul 31 21:42:35 1993: loadmap now generates a list of the doors
- * Sun Aug 01 09:54:04 1993: only one line-terminator !!!!!
- * Sun Aug 01 09:59:54 1993: init doors-map to 0
- * Wed Aug 04 10:41:35 1993: modified LoadMap to new symtrans struct
- * Wed Aug 04 12:31:39 1993: added some functions from paraplus.c
- *
- * Revision 1.2  1993/07/31  16:05:36  prix
- * Thu Jul 29 16:23:49 1993: probably found the crashing error: wrong cast ?? in malloc
- * Thu Jul 29 16:46:18 1993: probably found reason for crash: string not alloc'ed !
- *
- * Revision 1.1  1993/07/29  17:29:28  prix
- * Initial revision
- *
- *
- *-@Header------------------------------------------------------------*/
 

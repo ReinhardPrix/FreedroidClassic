@@ -207,7 +207,7 @@ EXTERN int DruidPassable(int x, int y);
 EXTERN int IsVisible(Finepoint objpos);
 EXTERN int TranslateMap(Level Lev);
 
-/* sound.c */
+/* sound.c  OR nosound.c */
 #undef EXTERN
 #ifdef _sound_c
 #define EXTERN
