@@ -2420,6 +2420,12 @@ grab_enemy_images_from_archive ( int enemy_model_nr )
     Sint16 orig_img_xlen;
     Sint16 orig_img_ylen;
 
+    Sint16 cooked_walk_object_phases;
+    Sint16 cooked_attack_object_phases;
+    Sint16 cooked_gethit_object_phases;
+    Sint16 cooked_death_object_phases;
+    Sint16 cooked_stand_object_phases;
+
     //--------------------
     // A short message for debug purposes
     //
@@ -2468,6 +2474,33 @@ Initial archive type string doesn't look like it's from an image archive of ENEM
 This indicates a serious bug in this installation of Freedroid.",
 				   PLEASE_INFORM, IS_FATAL );
     }
+
+    //--------------------
+    // Now we know that this is an archive of enemy type.  Therefore
+    // we can start to read out some entries, that are only found in
+    // enemy image collections.
+    //
+    fread ( & ( cooked_walk_object_phases ) , 1 , sizeof ( Sint16 ) , DataFile ) ;
+    fread ( & ( cooked_attack_object_phases ) , 1 , sizeof ( Sint16 ) , DataFile ) ;
+    fread ( & ( cooked_gethit_object_phases ) , 1 , sizeof ( Sint16 ) , DataFile ) ;
+    fread ( & ( cooked_death_object_phases ) , 1 , sizeof ( Sint16 ) , DataFile ) ;
+    fread ( & ( cooked_stand_object_phases ) , 1 , sizeof ( Sint16 ) , DataFile ) ;
+
+    //--------------------
+    // The information about cycle length needs to be entered into the 
+    // corresponding arrays (usually initialized in blocks.c, for those
+    // series, that don't have an image archive yet...)
+    //
+    first_walk_animation_image [ enemy_model_nr ] = 1 ;
+    last_walk_animation_image [ enemy_model_nr ] = cooked_walk_object_phases ;
+    first_attack_animation_image [ enemy_model_nr ] = last_walk_animation_image [ enemy_model_nr ] + 1 ; 
+    last_attack_animation_image [ enemy_model_nr ] = last_walk_animation_image [ enemy_model_nr ] + cooked_attack_object_phases ;
+    first_gethit_animation_image [ enemy_model_nr ] = last_attack_animation_image [ enemy_model_nr ] + 1 ;
+    last_gethit_animation_image [ enemy_model_nr ] = last_attack_animation_image [ enemy_model_nr ] + cooked_gethit_object_phases ;
+    first_death_animation_image [ enemy_model_nr ] = last_gethit_animation_image [ enemy_model_nr ] + 1 ;
+    last_death_animation_image [ enemy_model_nr ] = last_gethit_animation_image [ enemy_model_nr ] + cooked_death_object_phases ;
+    first_stand_animation_image [ enemy_model_nr ] = last_death_animation_image [ enemy_model_nr ] + 1 ;
+    last_stand_animation_image [ enemy_model_nr ] = last_death_animation_image [ enemy_model_nr ] + cooked_stand_object_phases ;
 
     for ( rotation_index = 0 ; rotation_index < ROTATION_ANGLES_PER_ROTATION_MODEL ; rotation_index ++ )
     {

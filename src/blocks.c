@@ -1022,7 +1022,8 @@ Freedroid received a rotation model number that does not exist!",
   // Maybe we got an image collection file for this enemy?  Then
   // of course we'll use it and not bother with anything else...
   //
-  if ( ModelNr == 6 )
+  if ( ( ModelNr == 6 ) || ( ModelNr == 14 ) )
+  // if ( ( ModelNr == 6 ) )
   {
       grab_enemy_images_from_archive ( ModelNr );
       return ;
