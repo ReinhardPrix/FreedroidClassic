@@ -699,7 +699,22 @@ MoveTuxAccordingToHisSpeed ( int player_num )
  *
  * ---------------------------------------------------------------------- */
 void
-move_tux_thowards_mouse_move_target ( int player_num )
+update_intermediate_tux_waypoints ( int player_num )
+{
+
+  Me [ player_num ] . next_intermediate_point . x =
+      Me [ player_num ] . mouse_move_target . x ;
+  Me [ player_num ] . next_intermediate_point . y =
+      Me [ player_num ] . mouse_move_target . y ;
+
+}; // void update_intermediate_tux_waypoints ( int player_num )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+int
+move_tux_thowards_raw_position ( int player_num , float x , float y )
 {
   moderately_finepoint RemainingWay;
   moderately_finepoint MinimalWayAtThisSpeed;
@@ -708,11 +723,8 @@ move_tux_thowards_mouse_move_target ( int player_num )
   //--------------------
   // We do not move any players, who's statuses are 'OUT'.
   //
-  if ( Me [ player_num ] . status == OUT ) return;
+  if ( Me [ player_num ] . status == OUT ) return ( FALSE ) ;
   // if ( Me [ player_num ] . energy <= 0 ) return;
-
-  // DebugPrintf ( 0 , "\nNow at:  move_tux_thowards_mouse_move_target." );
-
   accel = 5.0 * Frame_Time() ;
 
   //--------------------
@@ -723,8 +735,8 @@ move_tux_thowards_mouse_move_target ( int player_num )
   // if it's time to slow down again and so finally we will slide to a stop exactly
   // at the place where we intend to be.  So:  Mathematics is always helpful. :)
   //
-  RemainingWay . x = Me [ player_num ] . pos . x - Me [ player_num ] . mouse_move_target . x ;
-  RemainingWay . y = Me [ player_num ] . pos . y - Me [ player_num ] . mouse_move_target . y ;
+  RemainingWay . x = Me [ player_num ] . pos . x - x ;
+  RemainingWay . y = Me [ player_num ] . pos . y - y ;
   
   MinimalWayAtThisSpeed . x = Me [ player_num ] . speed . x / log ( FRICTION_CONSTANT ) ;
   MinimalWayAtThisSpeed . y = Me [ player_num ] . speed . y / log ( FRICTION_CONSTANT ) ;
@@ -759,11 +771,27 @@ move_tux_thowards_mouse_move_target ( int player_num )
 	 ( fabsf ( RemainingWay.x ) <= DISTANCE_TOLERANCE )     ) ||
        ( Me [ player_num ] . mouse_move_target . z != Me [ player_num ] . pos . z ) )
     {
+      return ( TRUE );
+    }
+
+  return ( FALSE );
+
+}; // int move_tux_thowards_raw_position ( int player_num , float x , float y )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+move_tux_thowards_mouse_move_target ( int player_num )
+{
+
+  if ( move_tux_thowards_raw_position ( player_num , Me [ player_num ] . mouse_move_target . x , 
+					Me [ player_num ] . mouse_move_target . y ) )
+    {
       Me [ player_num ] . mouse_move_target . x = ( -1 ) ;
       Me [ player_num ] . mouse_move_target . y = ( -1 ) ;
       Me [ player_num ] . mouse_move_target . z = ( -1 ) ;
-      
-      // Me [ player_num ] . mouse_move_target_is_enemy = ( -1 ) ;
     }
 
 }; // void move_tux_thowards_mouse_move_target ( int player_num )
@@ -805,6 +833,7 @@ MoveInfluence ( int player_num )
   //
   if ( Me [ player_num ] . mouse_move_target . x != ( -1 ) )
     {
+      update_intermediate_tux_waypoints( player_num );
       move_tux_thowards_mouse_move_target ( player_num );
     }
   

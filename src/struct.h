@@ -504,6 +504,7 @@ typedef struct
   gps teleport_anchor;          // where from have you last teleported home
   gps mouse_move_target;        // where the tux is going automatically by virtue of mouse move 
   int mouse_move_target_is_enemy; // which enemy has been targeted (for a melee shot)
+  moderately_finepoint next_intermediate_point; // waypoints for the tux, when target not directly reachable
   double health;		/* the max. possible energy in the moment */
   double energy;		/* current energy level */
   double mana;                  // current mana level 
