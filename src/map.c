@@ -64,6 +64,8 @@
 #define ITEM_MAX_DURATION_STRING " MaxDur="
 #define ITEM_CUR_DURATION_STRING " CurDur="
 #define ITEM_GOLD_AMOUNT_STRING " Gold="
+#define ITEM_PREFIX_CODE_STRING " PrefixCode="
+#define ITEM_SUFFIX_CODE_STRING " SuffixCode="
 #define X_POSITION_OF_STATEMENT_STRING "PosX="
 #define Y_POSITION_OF_STATEMENT_STRING "PosY="
 #define STATEMENT_ITSELF_ANNOUNCE_STRING "Statement=\""
@@ -620,6 +622,14 @@ char *Encode_Level_For_Saving(Level Lev)
 
       strcat( LevelMem , ITEM_GOLD_AMOUNT_STRING );
       sprintf( linebuf , "%d " , Lev->ItemList[ i ].gold_amount );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , ITEM_PREFIX_CODE_STRING );
+      sprintf( linebuf , "%d " , Lev->ItemList[ i ].prefix_code );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , ITEM_SUFFIX_CODE_STRING );
+      sprintf( linebuf , "%d " , Lev->ItemList[ i ].suffix_code );
       strcat( LevelMem , linebuf );
 
       strcat( LevelMem , "\n" );

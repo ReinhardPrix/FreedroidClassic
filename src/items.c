@@ -91,11 +91,11 @@ FillInItemProperties( item* ThisItem , int FullDuration )
 }; // void FillInItemProperties( item* ThisItem , int FullDuration )
 
 /* ----------------------------------------------------------------------
- *
- *
+ * This function drops an item at a given place, assigning it the given
+ * suffix and prefix code.
  * ---------------------------------------------------------------------- */
 void
-DropItemAt( int ItemType , float x , float y )
+DropItemAt( int ItemType , float x , float y , int prefix , int suffix )
 {
   int i;
 
@@ -128,13 +128,15 @@ DropItemAt( int ItemType , float x , float y )
   CurLevel->ItemList[ i ].type = ItemType;
   CurLevel->ItemList[ i ].pos.x = x;
   CurLevel->ItemList[ i ].pos.y = y;
+  CurLevel->ItemList[ i ].prefix_code = prefix;
+  CurLevel->ItemList[ i ].suffix_code = suffix;
 
   FillInItemProperties ( & ( CurLevel->ItemList[ i ] ) , FALSE );
 
 
   PlayItemSound( ItemMap[ ItemType ].sound_number );
 
-}; // void DropItemAt( int ItemType , int x , int y )
+}; // void DropItemAt( int ItemType , int x , int y , int prefix , int suffix )
 
 /* ----------------------------------------------------------------------
  * This function drops a random item to the floor of the current level
@@ -158,15 +160,15 @@ DropRandomItem( float x , float y )
     }
   if ( Rand < 800 )
     {
-      DropItemAt( ITEM_MONEY , x , y );
+      DropItemAt( ITEM_MONEY , x , y , -1 , -1 );
       return;
     }
   if ( Rand < 950 )
     {
-      DropItemAt( ITEM_HEALTH_POTION , x , y );
+      DropItemAt( ITEM_HEALTH_POTION , x , y , -1 , -1 );
       return;
     }
-  DropItemAt( MyRandom( Number_Of_Item_Types -2 ) + 1 , x , y );
+  DropItemAt( MyRandom( Number_Of_Item_Types -2 ) + 1 , x , y , -1 , -1 );
 
 
 }; // void DropRandomItem( int x , int y )

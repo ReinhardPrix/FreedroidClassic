@@ -251,7 +251,36 @@ CursorIsOnVitButton( int x , int y )
   return ( TRUE );
 }; // int CursorIsOnVitButton( int x , int y )
 
+/* ----------------------------------------------------------------------
+ * This function adds any bonuses that might be on the influencers armour
+ * to the influencers current stats in the character structure.
+ * ---------------------------------------------------------------------- */
+void
+AddInfluencerItemBonus( item* BonusItem )
+{
+  //--------------------
+  // In case of no item, the thing to do is pretty easy...
+  if ( BonusItem->type == ( -1 ) ) return;
 
+  //--------------------
+  // In case of a suffix modifier, we need to apply the suffix...
+  if ( BonusItem->suffix_code != ( -1 ) )
+    {
+      Me.Strength += SuffixList[ BonusItem->suffix_code ].bonus_to_str;
+      Me.Dexterity += SuffixList[ BonusItem->suffix_code ].bonus_to_dex;
+      Me.Magic += SuffixList[ BonusItem->suffix_code ].bonus_to_mag;
+      Me.Vitality += SuffixList[ BonusItem->suffix_code ].bonus_to_vit;
+    }
+
+  //--------------------
+  // In case of a prefix modifier, we need to apply the suffix...
+  if ( BonusItem->prefix_code != ( -1 ) )
+    {
+
+    }
+
+
+}; // void 
 
 /* ----------------------------------------------------------------------
  * This function should re-compute all character stats according to the
@@ -275,9 +304,24 @@ UpdateAllCharacterStats ( void )
       Me.energy = Druidmap [ Me.type ].maxenergy ;
     }
 
+  //--------------------
+  // Now we compute the maximum energy of the influencer
+  //
+  Me.Strength = Me.base_strength;
+  Me.Dexterity = Me.base_dexterity;
+  Me.Magic = Me.base_magic;
+  Me.Vitality = Me.base_vitality;
+
+  AddInfluencerItemBonus( & Me.armour_item );
+  AddInfluencerItemBonus( & Me.weapon_item );
+  AddInfluencerItemBonus( & Me.drive_item );
+  AddInfluencerItemBonus( & Me.shield_item );
+  AddInfluencerItemBonus( & Me.special_item );
+  AddInfluencerItemBonus( & Me.aux1_item );
+  AddInfluencerItemBonus( & Me.aux2_item );
 
   //--------------------
-  // First we compute the maximum energy of the influencer
+  // Now we compute the maximum energy of the influencer
   //
   // Druidmap[ DRUID001 ].maxenergy = 100 + (Me.Vitality - 15) * ENERGY_GAIN_PER_VIT_POINT;
   // Druidmap[ DRUID001 ].maxmana = 100 + (Me.Magic - 15) * MANA_GAIN_PER_MAGIC_POINT;
@@ -439,26 +483,35 @@ ShowCharacterScreen ( void )
   sprintf( CharText , "%6ld", Me.Gold ); 
   DisplayText( CharText , 240 + CharacterRect.x ,  GOLD_Y + CharacterRect.y , &CharacterRect );
 
-  sprintf( CharText , "%d", Me.Strength );
+  SetCurrentFont( FPS_Display_BFont) ;
+  sprintf( CharText , "%d", Me.base_strength );
   DisplayText( CharText , STR_BASE_X + CharacterRect.x , STR_Y + CharacterRect.y , &CharacterRect );
   sprintf( CharText , "%d", Me.Strength );
+  if ( Me.Strength != Me.base_strength ) SetCurrentFont( Red_BFont) ;
   DisplayText( CharText , STR_NOW_X + CharacterRect.x , STR_Y + CharacterRect.y , &CharacterRect );
 
-  sprintf( CharText , "%d", Me.Magic );
+  SetCurrentFont( FPS_Display_BFont) ;
+  sprintf( CharText , "%d", Me.base_magic );
   DisplayText( CharText , 100 + CharacterRect.x , MAG_Y + CharacterRect.y , &CharacterRect );
   sprintf( CharText , "%d", Me.Magic );
+  if ( Me.Magic != Me.base_magic ) SetCurrentFont( Red_BFont) ;
   DisplayText( CharText , 148 + CharacterRect.x , MAG_Y + CharacterRect.y , &CharacterRect );
 
-  sprintf( CharText , "%d", Me.Dexterity );
+  SetCurrentFont( FPS_Display_BFont) ;
+  sprintf( CharText , "%d", Me.base_dexterity );
   DisplayText( CharText , 100 + CharacterRect.x , DEX_Y + CharacterRect.y , &CharacterRect );
   sprintf( CharText , "%d", Me.Dexterity );
+  if ( Me.Dexterity != Me.base_dexterity ) SetCurrentFont( Red_BFont) ;
   DisplayText( CharText , 148 + CharacterRect.x , DEX_Y + CharacterRect.y , &CharacterRect );
 
-  sprintf( CharText , "%d", Me.Vitality );
+  SetCurrentFont( FPS_Display_BFont) ;
+  sprintf( CharText , "%d", Me.base_vitality );
   DisplayText( CharText , 100 + CharacterRect.x , VIT_Y + CharacterRect.y , &CharacterRect );
   sprintf( CharText , "%d", Me.Vitality );
+  if ( Me.Vitality != Me.base_vitality ) SetCurrentFont( Red_BFont) ;
   DisplayText( CharText , 148 + CharacterRect.x , VIT_Y + CharacterRect.y , &CharacterRect );
 
+  SetCurrentFont( FPS_Display_BFont) ;
   sprintf( CharText , "%d", Me.PointsToDistribute );
   DisplayText( CharText , 100 + CharacterRect.x , POINTS_Y + CharacterRect.y , &CharacterRect );
 
@@ -507,23 +560,23 @@ ShowCharacterScreen ( void )
 
       if ( CursorIsOnStrButton( CurPos.x , CurPos.y ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
 	{
-	  Me.Strength++;
+	  Me.base_strength++;
 	  Me.PointsToDistribute--;
 	}
       if ( CursorIsOnDexButton( CurPos.x , CurPos.y ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
 	{
-	  Me.Dexterity++;
+	  Me.base_dexterity++;
 	  Me.PointsToDistribute--;
 	}
       if ( CursorIsOnMagButton( CurPos.x , CurPos.y ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
 	{
-	  Me.Magic++;
+	  Me.base_magic++;
 	  Me.PointsToDistribute--;
 	  Me.mana += MANA_GAIN_PER_MAGIC_POINT;
 	}
       if ( CursorIsOnVitButton( CurPos.x , CurPos.y ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
 	{
-	  Me.Vitality++;
+	  Me.base_vitality++;
 	  Me.PointsToDistribute--;
 	  Me.health += ENERGY_GAIN_PER_VIT_POINT;
 	  Me.energy += ENERGY_GAIN_PER_VIT_POINT;

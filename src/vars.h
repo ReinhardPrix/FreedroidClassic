@@ -123,6 +123,27 @@ char *Classes[] = {
   "error"
 };
 
+/*
+typedef struct
+{
+  char* Bonus_name;
+  int bonus_to_dex;
+  int bonus_to_str;
+  int bonus_to_vit;
+  int bonus_to_mag;
+  int bonus_to_life;
+  int bonus_to_force;
+  int bonus_to_tohit;
+} item_bonus , *Item_bonus;
+*/
+
+item_bonus SuffixList[] = {
+  { " of Strength"  ,  0 , 50 ,  0 ,  0 , 0 , 0 , 0 },
+  { " of Dexterity" , 50 ,  0 ,  0 ,  0 , 0 , 0 , 0 },
+  { " of Vitality"  ,  0 ,  0 , 50 ,  0 , 0 , 0 , 0 },
+  { " of Magic"     ,  0 ,  0 ,  0 , 50 , 0 , 0 , 0 },
+};
+
 char *Shipnames[ALLSHIPS] = {
   "Paradroid",
   "Metahawk",

@@ -221,6 +221,18 @@ typedef struct
 
 typedef struct
 {
+  char* bonus_name;
+  int bonus_to_dex;
+  int bonus_to_str;
+  int bonus_to_vit;
+  int bonus_to_mag;
+  int bonus_to_life;
+  int bonus_to_force;
+  int bonus_to_tohit;
+} item_bonus , *Item_bonus;
+
+typedef struct
+{
   char* ItemName;
   char* ItemClass;  // class of the item, e.g. weapon, drive, shield, other
   int item_can_be_applied_in_combat;
@@ -352,6 +364,10 @@ typedef struct
   int Strength;  // character Strength value = 'power supply max. capacity'
   int Magic;     // character Magic value = 
   int Dexterity; // character Dexterity value = 'power redistribution speed'
+  int base_vitality;  // character Vitality value = 'cloaking field maximum strength'
+  int base_strength;  // character Strength value = 'power supply max. capacity'
+  int base_magic;     // character Magic value = 
+  int base_dexterity; // character Dexterity value = 'power redistribution speed'
   int Vitality;  // character Vitality value = 'cloaking field maximum strength'
   long Experience; // character Experience = 'spare droid elements found'
   int PointsToDistribute; // these are the points that are available to distribute upon the character stats

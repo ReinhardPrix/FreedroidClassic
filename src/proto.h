@@ -247,7 +247,7 @@ EXTERN int ItemCanBeDroppedInInv ( int ItemType , int InvPos_x , int InvPos_y );
 EXTERN long CalculateItemPrice ( item* BuyItem );
 EXTERN void FillInItemProperties( item* ThisItem , int FullDuration );
 EXTERN void DamageAllEquipment( void );
-EXTERN void DropItemAt( int ItemType , float x , float y );
+EXTERN void DropItemAt( int ItemType , float x , float y , int prefix , int suffix );
 EXTERN void ApplyItem( item* CurItem );
 EXTERN int Inv_Pos_Is_Free( int x , int y );
 EXTERN int GetInventoryItemAt ( int x , int y );
@@ -387,6 +387,7 @@ EXTERN int NoDirectionPressed (void);
 #else
 #define EXTERN extern
 #endif
+EXTERN void StartupMenu (void);
 EXTERN void BuySellMenu ( void );
 EXTERN void InitiateMenu( char* BackgroundToUse );
 EXTERN void MissionSelectMenu (void);

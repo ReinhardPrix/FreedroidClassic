@@ -1966,6 +1966,22 @@ enum
   Me.aux2_item.type = ( -1 ) ;
   Me.special_item.type = ( -1 ) ;
 
+  Me.weapon_item.prefix_code = ( -1 ) ;
+  Me.drive_item.prefix_code = ( -1 ) ;
+  Me.armour_item.prefix_code = ( -1 ) ;
+  Me.shield_item.prefix_code = ( -1 ) ;
+  Me.aux1_item.prefix_code = ( -1 ) ;
+  Me.aux2_item.prefix_code = ( -1 ) ;
+  Me.special_item.prefix_code = ( -1 ) ;
+
+  Me.weapon_item.suffix_code = ( -1 ) ;
+  Me.drive_item.suffix_code = ( -1 ) ;
+  Me.armour_item.suffix_code = ( -1 ) ;
+  Me.shield_item.suffix_code = ( -1 ) ;
+  Me.aux1_item.suffix_code = ( -1 ) ;
+  Me.aux2_item.suffix_code = ( -1 ) ;
+  Me.special_item.suffix_code = ( -1 ) ;
+
   while (!Weiter)
     {
       MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NE_TITLE_PIC_FILE );
@@ -1982,10 +1998,10 @@ enum
 	  while (EnterPressed() || SpacePressed() ) ;
 
 	  Me.character_class = WAR_BOT;
-	  Me.Vitality = 25;
-	  Me.Strength = 30;
-	  Me.Dexterity = 25;
-	  Me.Magic = 10;
+	  Me.base_vitality = 25;
+	  Me.base_strength = 30;
+	  Me.base_dexterity = 25;
+	  Me.base_magic = 10;
 	  Me.weapon_item.type = ITEM_SHORT_SWORD;
 	  Me.drive_item.type = ITEM_ANTIGRAV_BETA;
 
@@ -1996,10 +2012,10 @@ enum
 	  while (EnterPressed() || SpacePressed() ) ;
 
 	  Me.character_class = SNIPER_BOT;
-	  Me.Vitality = 20;
-	  Me.Strength = 25;
-	  Me.Dexterity = 35;
-	  Me.Magic = 20;
+	  Me.base_vitality = 20;
+	  Me.base_strength = 25;
+	  Me.base_dexterity = 35;
+	  Me.base_magic = 20;
 	  Me.weapon_item.type = ITEM_SHORT_BOW;
 	  Me.drive_item.type = ITEM_ANTIGRAV_BETA;
 
@@ -2010,10 +2026,10 @@ enum
 	  while (EnterPressed() || SpacePressed() ) ;
 
 	  Me.character_class = MIND_BOT;
-	  Me.Vitality = 15;
-	  Me.Strength = 15;
-	  Me.Dexterity = 20;
-	  Me.Magic = 35;
+	  Me.base_vitality = 15;
+	  Me.base_strength = 15;
+	  Me.base_dexterity = 20;
+	  Me.base_magic = 35;
 	  Me.weapon_item.type = ITEM_SHORT_BOW;
 	  Me.drive_item.type = ITEM_ANTIGRAV_ALPHA;
 
