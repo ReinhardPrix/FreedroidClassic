@@ -44,10 +44,9 @@
 #define BEST_MELEE_DISTANCE (1.0)
 #define BEST_CHAT_DISTANCE (BEST_MELEE_DISTANCE+0.2)
 #define DISTANCE_TOLERANCE (0.2)
+
 #define FORCE_FIRE_DISTANCE (1.5)
 #define ATTACK_BOXES_DISTANCE (2.0)
-// #define DROID_SELECTION_TOLERANCE (0.9)
-// #define DROID_SELECTION_TOLERANCE (0.3)
 #define DROID_SELECTION_TOLERANCE (0.5)
 
 #define REFRESH_ENERGY		3
@@ -55,11 +54,27 @@
 
 #define BOUNCE_LOSE_ENERGY 3	/* amount of lose-energy at enemy-collisions */
 #define BOUNCE_LOSE_FACT 1
+
+#define MAXIMAL_STEP_SIZE ( 7.0/20.0 )
+
+#define TUX_MAX_SPEED (7.1)
+
+#define DEBUG_TUX_PATHFINDING 0  // debug level for tux pathfinding...
+
 void InfluEnemyCollisionLoseEnergy (int enemynum);	/* influ can lose energy on coll. */
 int NoInfluBulletOnWay (void);
 void limit_tux_speed_to_a_maximum ( int player_num );
+void set_up_intermediate_course_for_tux ( int player_num );
+void clear_out_intermediate_points ( int player_num );
 
-#define MAXIMAL_STEP_SIZE ( 7.0/20.0 )
+char recursion_grid[ MAX_MAP_LINES ][ MAX_MAP_LINES ] ;
+// moderately_finepoint first_found_walkable_point;
+moderately_finepoint last_sight_contact;
+int next_index_to_set_up = 30000 ;
+int bad_luck_in_4_directions_counter = 0;
+
+#define TILE_IS_UNPROCESSED 3
+#define TILE_IS_PROCESSED 4
 
 /* ----------------------------------------------------------------------
  *
@@ -70,6 +85,16 @@ calc_euklid_distance ( float pos1_x , float pos1_y , float pos2_x , float pos2_y
 {
   return sqrt ( (pos1_x-pos2_x)*(pos1_x-pos2_x) + (pos1_y-pos2_y)*(pos1_y-pos2_y) ) ;
 };
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+float
+vect_len ( moderately_finepoint our_vector )
+{
+  return ( sqrt ( ( our_vector . x * our_vector . x ) + ( our_vector . y * our_vector . y ) ) ) ;
+}; // float vect_len ( moderately_finepoint our_vector )
 
 /* ----------------------------------------------------------------------
  *
@@ -555,7 +580,7 @@ a bug in the currently used map system of Freedroid RPG.",
  * target of the influencer must adapt, which is done in this function.
  * ---------------------------------------------------------------------- */
 void
-UpdateMouseMoveTargetAccoringToEnemy ( int player_num )
+UpdateMouseMoveTargetAccordingToEnemy ( int player_num )
 {
   moderately_finepoint RemainingWay;
   float RemainingWayLength;
@@ -601,6 +626,15 @@ UpdateMouseMoveTargetAccoringToEnemy ( int player_num )
       
       Me [ player_num ] . mouse_move_target . x = Me [ player_num ] . pos . x - RemainingWay . x ;
       Me [ player_num ] . mouse_move_target . y = Me [ player_num ] . pos . y - RemainingWay . y ;
+
+      //--------------------
+      // Now that the mouse move target has implicitly affected the recursive
+      // waypoint stuff, we might need to establish a new waypoint route, so we
+      // do this here as well...
+      //
+      // (redundancy will be caught inside that function anyway...)
+      //
+      set_up_intermediate_course_for_tux ( player_num ) ;
 
       // DebugPrintf ( 0 , "\nRemaining way: %f %f." , RemainingWay . x , RemainingWay . y );
 
@@ -701,67 +735,85 @@ MoveTuxAccordingToHisSpeed ( int player_num )
 void
 update_intermediate_tux_waypoints ( int player_num )
 {
+  if ( tux_can_walk_this_line ( player_num , Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , 
+				Me [ 0 ] . mouse_move_target . x , Me [ 0 ] . mouse_move_target . y ) )
+    {
+      Me [ player_num ] . next_intermediate_point [ 0 ] . x =
+	Me [ player_num ] . mouse_move_target . x ;
+      Me [ player_num ] . next_intermediate_point [ 0 ] . y =
+	Me [ player_num ] . mouse_move_target . y ;
 
-  Me [ player_num ] . next_intermediate_point . x =
-      Me [ player_num ] . mouse_move_target . x ;
-  Me [ player_num ] . next_intermediate_point . y =
-      Me [ player_num ] . mouse_move_target . y ;
+      DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nThis point can be reached directly, so no need to set up waypoints..." );
+    }
+  else
+    {
+      // find_new_intermediate_point ( player_num );
+    }
 
 }; // void update_intermediate_tux_waypoints ( int player_num )
 
 /* ----------------------------------------------------------------------
+ * This function contains the final dumb movement code, that, without
+ * any checks and any refinement, just moves the tux thowards the given
+ * target position.
  *
+ * The return value indicates, if the target has been sufficiently 
+ * approximated (TRUE) already or not (FALSE) .
  *
  * ---------------------------------------------------------------------- */
 int
 move_tux_thowards_raw_position ( int player_num , float x , float y )
 {
   moderately_finepoint RemainingWay;
-  moderately_finepoint MinimalWayAtThisSpeed;
-  float accel;
+  moderately_finepoint planned_step;
+  float length;
 
   //--------------------
   // We do not move any players, who's statuses are 'OUT'.
   //
   if ( Me [ player_num ] . status == OUT ) return ( FALSE ) ;
-  // if ( Me [ player_num ] . energy <= 0 ) return;
-  accel = 5.0 * Frame_Time() ;
 
   //--------------------
-  // Let's do some mathematics:  We compute how far we have to go still
-  // and we also compute how far we will inevitably go even if we pull the breakes
-  // or even better use the usual friction with air to stop our motion immediately.
-  // Once we know that, we can simply decide if we still have to build up speed or
-  // if it's time to slow down again and so finally we will slide to a stop exactly
-  // at the place where we intend to be.  So:  Mathematics is always helpful. :)
+  // Now for a change, we try to implement some movement code,
+  // that doesn't rely on any acceleration any more, but just
+  // gives full speed immediately
   //
-  RemainingWay . x = Me [ player_num ] . pos . x - x ;
-  RemainingWay . y = Me [ player_num ] . pos . y - y ;
-  
-  MinimalWayAtThisSpeed . x = Me [ player_num ] . speed . x / log ( FRICTION_CONSTANT ) ;
-  MinimalWayAtThisSpeed . y = Me [ player_num ] . speed . y / log ( FRICTION_CONSTANT ) ;
-  
-  if ( fabsf ( MinimalWayAtThisSpeed . x ) < fabsf ( RemainingWay . x ) )
+
+  RemainingWay . x = - Me [ player_num ] . pos . x + x ;
+  RemainingWay . y = - Me [ player_num ] . pos . y + y ;
+
+  length = vect_len ( RemainingWay );
+
+  //--------------------
+  // Maybe the remaining way is VERY!! small!  Then we must not do
+  // a division at all.  We also need not do any movement, so the
+  // speed can be eliminated and we're done here.
+  //
+  if ( length < 0.05 )
     {
-      if ( RemainingWay.x > 0 ) Me [ player_num ] .speed.x -= accel;
-      else Me [ player_num ] .speed.x += accel;
+      Me [ player_num ] . speed . x = 0 ;
+      Me [ player_num ] . speed . y = 0 ;
+      return ( TRUE ) ;
     }
-  else
+
+  planned_step . x = RemainingWay . x * TUX_MAX_SPEED / length ;
+  planned_step . y = RemainingWay . y * TUX_MAX_SPEED / length ;
+
+  Me [ player_num ] . speed . x = planned_step . x ;
+  Me [ player_num ] . speed . y = planned_step . y ;
+
+  //--------------------
+  // If speed is so high, that we might step over the target,
+  // we reduce the speed.
+  //
+  if ( ( Frame_Time() > 0.001 ) && ( length > 0.05 ) )
     {
-      Me [ player_num ] . speed . x *= exp ( log ( FRICTION_CONSTANT ) * Frame_Time ( ) );
-      if ( fabsf ( Me [ player_num ] . speed . x ) < 0.3 ) Me [ player_num ] . speed . x = 0 ;
+      if ( fabsf ( planned_step . x * Frame_Time() ) >= RemainingWay .x  )
+	Me [ player_num ] . speed . x = RemainingWay . x / Frame_Time() ;
+      if ( fabsf ( planned_step . y * Frame_Time() ) >= RemainingWay .y  )
+	Me [ player_num ] . speed . y = RemainingWay . y / Frame_Time() ;
     }
-  if ( fabsf ( MinimalWayAtThisSpeed . y ) < fabsf ( RemainingWay . y ) )
-    {
-      if ( RemainingWay.y > 0 ) Me [ player_num ] .speed.y -= accel;
-      else Me [ player_num ] .speed.y += accel;
-    }
-  else
-    {
-      Me [ player_num ] . speed . y *= exp ( log ( FRICTION_CONSTANT ) * Frame_Time ( ) );
-      if ( fabsf ( Me [ player_num ] . speed . y ) < 0.3 ) Me [ player_num ] . speed . y = 0 ;
-    }
-  
+
   //--------------------
   // In case we have reached our target, we can remove this mouse_move_target again,
   // but also if we have been thrown onto a different level, we cancel our current
@@ -779,9 +831,26 @@ move_tux_thowards_raw_position ( int player_num , float x , float y )
 }; // int move_tux_thowards_raw_position ( int player_num , float x , float y )
 
 /* ----------------------------------------------------------------------
+ * This function is supposed to find out if a given line on the current
+ * map of this player is walkable for the tux or not.
+ *
+ * ---------------------------------------------------------------------- */
+int
+tux_can_walk_this_line ( int player_num , float x1, float y1 , float x2 , float y2 )
+{
+  global_ignore_doors_for_collisions_flag = TRUE ;
+  if ( DirectLineWalkable ( x1 , y1 , x2 , y2 , Me [ player_num ] . pos . z ) )
+    return ( TRUE );
+  else
+    return ( FALSE ); 
+  global_ignore_doors_for_collisions_flag = FALSE ;
+}; // int tux_can_walk_this_line ( float x1, float y1 , float x2 , float y2 )
+
+/* ----------------------------------------------------------------------
  *
  *
  * ---------------------------------------------------------------------- */
+/*
 void
 move_tux_thowards_mouse_move_target ( int player_num )
 {
@@ -792,9 +861,489 @@ move_tux_thowards_mouse_move_target ( int player_num )
       Me [ player_num ] . mouse_move_target . x = ( -1 ) ;
       Me [ player_num ] . mouse_move_target . y = ( -1 ) ;
       Me [ player_num ] . mouse_move_target . z = ( -1 ) ;
+
+      clear_out_intermediate_points ( player_num );
     }
 
 }; // void move_tux_thowards_mouse_move_target ( int player_num )
+*/
+
+/* ----------------------------------------------------------------------
+ * After a course for the Tux has been set up, the Tux can start to 
+ * proceed thowards his target.  However, the unmodified recursive course
+ * is often a bit awakward and goes back and forth a lot.
+ * 
+ * Therefore it will be a good idea to streamline the freshly set up
+ * course first, once and for all, before the tux is finally set in
+ * motion.
+ *
+ * ---------------------------------------------------------------------- */
+void
+streamline_tux_intermediate_course ( int player_num )
+{
+  int start_index ;
+  int last_index = -10;
+  int scan_index;
+  int cut_away;
+
+  DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nOPTIMISATION --> streamline_tux_intermediate_course: Course optimisation has been done." );
+
+  //--------------------
+  // We process each index position of the course, starting with the point
+  // where the tux will be starting.
+  //
+  for ( start_index = 0 ; start_index < MAX_INTERMEDIATE_WAYPOINTS_FOR_TUX ; start_index ++ )
+    {
+      //--------------------
+      // If the end of the course is reached in the outer loop, then we're done indeed 
+      // with the streamlining process and therefore can go home now...
+      //
+      if ( Me [ player_num ] . next_intermediate_point [ start_index ] . x == (-1) )
+	return;
+
+      //--------------------
+      // Start of inner streamlining loop:
+      // We eliminate every point from here on up to the last point in the
+      // course, that can still be reached from here.
+      //
+      last_index = (-1) ;
+      for ( scan_index = start_index + 1 ; scan_index < MAX_INTERMEDIATE_WAYPOINTS_FOR_TUX ; scan_index ++ )
+	{
+
+	  //--------------------
+	  // If we've reached the end of the course this way, then we know how much
+	  // we can cut away and can quit the inner loop here.
+	  //
+	  if ( Me [ player_num ] . next_intermediate_point [ scan_index ] . x == (-1) )
+	    break;
+
+	  //--------------------
+	  // Otherwise we check if maybe this is (another) reachable intermediate point (AGAIN?)
+	  //
+	  if ( tux_can_walk_this_line ( player_num , 
+					Me [ player_num ] . next_intermediate_point [ start_index ] . x ,
+					Me [ player_num ] . next_intermediate_point [ start_index ] . y ,
+					Me [ player_num ] . next_intermediate_point [ scan_index ] . x ,
+					Me [ player_num ] . next_intermediate_point [ scan_index ] . y ) )
+	    {
+	      last_index = scan_index ;
+	    }
+	}
+
+      //--------------------
+      // Maybe the result of the scan indicated, that there is nothing to cut away at this
+      // point.  Then we must contine right after this point.
+      //
+      if ( last_index == (-1) ) continue;
+      // if ( last_index == start_index + 1 ) continue; // nothing to cut away...
+      
+      //--------------------
+      // Now we know how much to cut away.  So we'll do it.
+      //
+      for ( cut_away = 0 ; cut_away < MAX_INTERMEDIATE_WAYPOINTS_FOR_TUX - last_index ; cut_away ++ )
+	{
+	  Me [ player_num ] . next_intermediate_point [ start_index + 1 + cut_away ] . x =
+	    Me [ player_num ] . next_intermediate_point [ last_index + cut_away ] . x ;
+	  Me [ player_num ] . next_intermediate_point [ start_index + 1 + cut_away ] . y =
+	    Me [ player_num ] . next_intermediate_point [ last_index + cut_away ] . y ;
+	}
+    }
+
+}; // void streamline_tux_intermediate_course ( player_num )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+int
+recursive_find_walkable_point ( float x1 , float y1 , float x2 , float y2 , int recursion_depth ) 
+{
+  moderately_finepoint ordered_moves[4];
+  int i;
+
+#define MAX_RECUSION_DEPTH 50
+
+  //--------------------
+  // At first we mark the current position as processed...
+  //
+  recursion_grid [ (int) x1 ] [ (int) y1 ] = TILE_IS_PROCESSED ;
+  
+  //--------------------
+  // Maybe the recursion is too deep already.  Then we just return and report
+  // failure.
+  //
+  if ( recursion_depth > MAX_RECUSION_DEPTH )
+    return ( FALSE );
+
+  //--------------------
+  // If we can reach the final destination from here, then there is no need to
+  // go any further, but instead we select the current position as the preliminary
+  // walkable target for the Tux.
+  //
+  if ( tux_can_walk_this_line ( 0 , x1, y1 , x2 , y2 ) )
+    {
+      //--------------------
+      // If the current position is still directly reachable for the Tux, we set it
+      // as our target and return
+      //
+      DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nRecursion has found the final target! --> start to set up course..." );
+      Me [ 0 ] . next_intermediate_point [ 0 ] . x = x2 ;
+      Me [ 0 ] . next_intermediate_point [ 0 ] . y = y2 ;
+      Me [ 0 ] . next_intermediate_point [ 1 ] . x = x1 ;
+      Me [ 0 ] . next_intermediate_point [ 1 ] . y = y1 ;
+      next_index_to_set_up = 2 ;
+      return ( TRUE ) ;
+    }
+
+  //--------------------
+  // So at this point we know, that the current position is not one from where
+  // we would be able to reach our goal.
+  //
+  // Therefore we will try other positions that might bring us more luck, but 
+  // we only try such positions, as we can reach from here...
+  //
+  // And also we will try the 'more promising' directions before the 'less promising'
+  // ones...
+  //
+  if ( fabsf ( x1-x2 ) >= fabsf ( y1-y2 ) )
+    {
+      //--------------------
+      // More prority on x move into the right direction, least
+      // priority on x move into the wrong direction.
+      //
+      if ( x1 <= x2 )
+	{
+	  ordered_moves [ 0 ] . x =  1.0 ;
+	  ordered_moves [ 0 ] . y =  0.0 ;
+	  ordered_moves [ 3 ] . x = -1.0 ;
+	  ordered_moves [ 3 ] . y =  0.0 ;
+	}
+      else
+	{
+	  ordered_moves [ 3 ] . x =  1.0 ;
+	  ordered_moves [ 3 ] . y =  0.0 ;
+	  ordered_moves [ 0 ] . x = -1.0 ;
+	  ordered_moves [ 0 ] . y =  0.0 ;
+	}
+      if ( y1 <= y2 )
+	{
+	  ordered_moves [ 2 ] . x =  0.0 ;
+	  ordered_moves [ 2 ] . y =  1.0 ;
+	  ordered_moves [ 1 ] . x =  0.0 ;
+	  ordered_moves [ 1 ] . y = -1.0 ;
+	}
+      else
+	{
+	  ordered_moves [ 1 ] . x =  0.0 ;
+	  ordered_moves [ 1 ] . y =  1.0 ;
+	  ordered_moves [ 2 ] . x =  0.0 ;
+	  ordered_moves [ 2 ] . y = -1.0 ;
+	}
+    }
+  else
+    {
+      //--------------------
+      // More prority on x move into the right direction, least
+      // priority on x move into the wrong direction.
+      //
+      if ( x1 <= x2 )
+	{
+	  ordered_moves [ 1 ] . x =  1.0 ;
+	  ordered_moves [ 1 ] . y =  0.0 ;
+	  ordered_moves [ 2 ] . x = -1.0 ;
+	  ordered_moves [ 2 ] . y =  0.0 ;
+	}
+      else
+	{
+	  ordered_moves [ 2 ] . x =  1.0 ;
+	  ordered_moves [ 2 ] . y =  0.0 ;
+	  ordered_moves [ 1 ] . x = -1.0 ;
+	  ordered_moves [ 1 ] . y =  0.0 ;
+	}
+      if ( y1 <= y2 )
+	{
+	  ordered_moves [ 0 ] . x =  0.0 ;
+	  ordered_moves [ 0 ] . y =  1.0 ;
+	  ordered_moves [ 3 ] . x =  0.0 ;
+	  ordered_moves [ 3 ] . y = -1.0 ;
+	}
+      else
+	{
+	  ordered_moves [ 3 ] . x =  0.0 ;
+	  ordered_moves [ 3 ] . y =  1.0 ;
+	  ordered_moves [ 0 ] . x =  0.0 ;
+	  ordered_moves [ 0 ] . y = -1.0 ;
+	}
+    }
+
+
+  //--------------------
+  // Now that we have set up our walk preferences, we can start to try out the directions we have...
+  //
+
+  for ( i = 0 ; i < 4 ; i ++ )
+    {
+      if ( ( tux_can_walk_this_line ( 0 , x1, y1 , 
+				      x1 + ordered_moves [ i ] . x , 
+				      y1 + ordered_moves [ i ] . y ) ) &&
+	   ( recursion_grid 
+	     [ (int) ( x1 + ordered_moves [ i ] . x ) ] 
+	     [ (int) ( y1 + ordered_moves [ i ] . y ) ] == TILE_IS_UNPROCESSED ) )
+	{
+	  
+	  last_sight_contact . x = x1 ;
+	  last_sight_contact . y = y1 ;
+	  
+	  if ( recursive_find_walkable_point ( rintf ( x1 + ordered_moves [ i ] . x + 0.5 ) - 0.5 , 
+					       rintf ( y1 + ordered_moves [ i ] . y + 0.5 ) - 0.5 , x2 , y2 , recursion_depth + 1 ) )
+	    {
+	      
+	      //--------------------
+	      // If there is still sight contact to the waypoint closer to the target, we just set this
+	      // waypoint.
+	      // Otherwise we set THE NEXT WAYPOINT.
+	      //
+	      Me [ 0 ] . next_intermediate_point [ next_index_to_set_up ] . x = x1 + ordered_moves [ i ] . x ;
+	      Me [ 0 ] . next_intermediate_point [ next_index_to_set_up ] . y = y1 + ordered_moves [ i ] . y ;
+
+	      DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nAdded another Tux waypoint entry..." );
+	      next_index_to_set_up++;
+
+	      if ( next_index_to_set_up >= MAX_INTERMEDIATE_WAYPOINTS_FOR_TUX )
+		{
+		  DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nERROR!  Ran out of tux waypoints even with solutionfound!" );
+		  clear_out_intermediate_points ( 0 ) ;
+		  return ( FALSE );
+		}
+
+	      return ( TRUE ) ;
+	      
+	    }
+	}
+    }
+
+
+  // DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nBad luck in all 4 directions!" );
+  bad_luck_in_4_directions_counter ++ ;
+
+  //--------------------
+  // Here we know, that we didn't have any success finding some possible point...
+  //
+  return ( FALSE );
+
+}; // int recursive_find_walkable_point ( float x1 , float y1 , float x2 , float y2 ) 
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+clear_out_intermediate_points ( int player_num )
+{
+  int i;
+
+  //--------------------
+  // We clear out the waypoint list for the Tux and initialize the 
+  // very first entry.
+  //
+  for ( i = 0 ; i < MAX_INTERMEDIATE_WAYPOINTS_FOR_TUX ; i ++ )
+    {
+      Me [ player_num ] . next_intermediate_point [ i ] . x = (-1) ;
+      Me [ player_num ] . next_intermediate_point [ i ] . y = (-1) ;
+    }
+  Me [ player_num ] . next_intermediate_point [ 0 ] . x = Me [ 0 ] . pos . x ;
+  Me [ player_num ] . next_intermediate_point [ 0 ] . y = Me [ 0 ] . pos . y ;
+}; // void clear_out_intermediate_points ( int player_num )
+
+/* ----------------------------------------------------------------------
+ * In case that the Tux cannot walk the direct line from his current 
+ * position to the mouse move target, we must set up an alternative target
+ * that should sooner or later lead to a news position that is finally
+ * so good that the Tux has better chances of walking to the final mouse
+ * move target.
+ * ---------------------------------------------------------------------- */
+void
+set_up_intermediate_course_for_tux ( int player_num )
+{
+  int i;
+  moderately_finepoint tmp;
+  static moderately_finepoint last_given_course_target = { -2 , -2 };
+
+  //--------------------
+  // For the protocol, we want to know how many cases of the cursion
+  // ending unresolved have occured.  Therefore we initialize a counter
+  // here and give out the result later after the recursion.
+  //
+  bad_luck_in_4_directions_counter = 0;
+
+  //--------------------
+  // For optimisation purposes, we'll not do anything unless a new target
+  // has been given.
+  //
+  if ( ( fabsf ( Me [ player_num ] . mouse_move_target . x - last_given_course_target . x ) < 0.3 ) &&
+       ( fabsf ( Me [ player_num ] . mouse_move_target . y - last_given_course_target . y ) < 0.3 ) )
+    {
+      DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nSKIPPING RECURSION BECAUSE OF REDUNDANCY!" );
+      return;
+    }
+
+  //--------------------
+  // If the target position cannot be reached at all, because of being inside an obstacle
+  // for example, then we know what to do:  Set up one waypoint to the target and that's it.
+  //
+  if ( IsPassable ( Me [ player_num ] . mouse_move_target . x ,
+		    Me [ player_num ] . mouse_move_target . y ,
+		    Me [ player_num ] . mouse_move_target . z , CENTER ) != CENTER )
+    {
+      DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nSKIPPING RECURSION BECAUSE OF UNREACHABLENESS!" );
+      return;
+    }
+
+  //--------------------
+  // We give out a well visible debug message, so that the heavy process
+  // can easily be seen as redundant if that's really the case.
+  //
+  DebugPrintf ( DEBUG_TUX_PATHFINDING , 
+"\n\n\n\n\
+*******************************************\n\
+*** Setting up new intermediate course using recursion...\n\
+*******************************************\n" );
+
+  //--------------------
+  // First we clear out the position grid and initialize the target
+  // point, which will be the result of the recursion.
+  //
+  memset ( & ( recursion_grid [ 0 ] ) , TILE_IS_UNPROCESSED , sizeof ( char ) * MAX_MAP_LINES * MAX_MAP_LINES );
+  next_index_to_set_up = 0 ;
+  
+  clear_out_intermediate_points ( player_num );
+
+  recursive_find_walkable_point ( Me [ player_num ] . pos . x , Me [ player_num ] . pos . y , Me [ player_num ] . mouse_move_target . x , Me [ player_num ] . mouse_move_target . y , 0 ) ;
+
+  //--------------------
+  // We delete the current position from the courseway, cause this position
+  // would only lead to jittering in the process of the walk.
+  //
+  next_index_to_set_up -- ;
+  if ( next_index_to_set_up > 0 )
+    {
+      Me [ player_num ] . next_intermediate_point [ next_index_to_set_up ] . x = (-1) ;
+      Me [ player_num ] . next_intermediate_point [ next_index_to_set_up ] . y = (-1) ;
+    }
+
+  //--------------------
+  // We print out the final result for debug purposes
+  //
+  DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nTHE FINAL WAYPOINT HISTORY LOOKS LIKE THIS:" );
+  for ( i = 0 ; i < MAX_INTERMEDIATE_WAYPOINTS_FOR_TUX ; i ++ )
+    {
+      if ( Me [ player_num ] . next_intermediate_point [ i ] . x != (-1) )
+	{
+	  DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nIndex: %d.  Position: (%f,%f)." , i , 
+			Me [ player_num ] . next_intermediate_point [ i ] . x ,	
+			Me [ player_num ] . next_intermediate_point [ i ] . y );
+	}
+    }
+
+  for ( i = 0 ; i < next_index_to_set_up / 2 ; i ++ )
+    {
+      tmp . x = Me [ player_num ] . next_intermediate_point [ i ] . x ;
+      tmp . y = Me [ player_num ] . next_intermediate_point [ i ] . y ;
+
+      Me [ player_num ] . next_intermediate_point [ i ] . x = 
+	Me [ player_num ] . next_intermediate_point [ next_index_to_set_up -1 - i ] . x;
+      Me [ player_num ] . next_intermediate_point [ i ] . y = 
+	Me [ player_num ] . next_intermediate_point [ next_index_to_set_up -1 - i ] . y;
+
+      Me [ player_num ] . next_intermediate_point [ next_index_to_set_up -1 - i ] . x =
+	tmp . x ;
+      Me [ player_num ] . next_intermediate_point [ next_index_to_set_up -1 - i ] . y =
+	tmp . y ;
+      
+    }
+
+  //--------------------
+  // We print out the final result for debug purposes
+  //
+  DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nAFTER INVERSION OF THE LIST, THIS LOOKS LIKE THIS:" );
+  for ( i = 0 ; i < MAX_INTERMEDIATE_WAYPOINTS_FOR_TUX ; i ++ )
+    {
+      if ( Me [ player_num ] . next_intermediate_point [ i ] . x != (-1) )
+	{
+	  DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nIndex: %d.  Position: (%f,%f)." , i , 
+			Me [ player_num ] . next_intermediate_point [ i ] . x ,	
+			Me [ player_num ] . next_intermediate_point [ i ] . y );
+	}
+    }
+
+  streamline_tux_intermediate_course ( player_num ) ;
+
+  //--------------------
+  // Finally, we set the reminder what the last given target was, so that
+  // we'll be able to identify redundant orders later, which is IMPORTANT
+  // for performance!
+  //
+  last_given_course_target . x = Me [ player_num ] . mouse_move_target . x ;
+  last_given_course_target . y = Me [ player_num ] . mouse_move_target . y ;
+
+  //--------------------
+  // We give the number of 4-way-unresolved situations here.
+  //
+  DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nFinal value of bad_luck_in_4_directions_counter after recursion: %d. " , 
+		bad_luck_in_4_directions_counter );
+
+}; // void set_up_intermediate_course_for_tux ( int player_num )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+move_tux_thowards_intermediate_point ( int player_num )
+{
+  int i;
+
+  //--------------------
+  // If there is no intermediate course, we don't need to do anything
+  // in this function.
+  //
+  if ( Me [ player_num ] . next_intermediate_point [ 0 ] . x == (-1) )
+    return;
+
+  //--------------------
+  // Now we move the Tux thowards the next intermediate course point
+  //
+  if ( move_tux_thowards_raw_position ( player_num , Me [ player_num ] . next_intermediate_point [ 0 ] . x , 
+					Me [ player_num ] . next_intermediate_point [ 0 ] . y ) )
+    {
+
+      if ( Me [ player_num ] . next_intermediate_point [ 0 ] . x == (-1) )
+	{
+	  // find_new_intermediate_point ( player_num );
+	}
+      else // if ( Me [ player_num ] . next_intermediate_point [ 1 ] . x != (-1) )
+	{
+	  DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nMOVING ON TO NEXT INTERMEDIATE WAYPOINT! " );
+	  for ( i = 1 ; i < MAX_INTERMEDIATE_WAYPOINTS_FOR_TUX ; i ++ )
+	    {
+	      Me [ player_num ] . next_intermediate_point [ i-1 ] . x = 
+		Me [ player_num ] . next_intermediate_point [ i ] . x ;
+	      Me [ player_num ] . next_intermediate_point [ i-1 ] . y = 
+		Me [ player_num ] . next_intermediate_point [ i ] . y ;
+	    }
+	}
+      /*
+      else
+	{
+	  DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nLAST INTERMEDIATE WAYPOINT HAS BEEN REACHED! --> clearing setup." );
+	  clear_out_intermediate_points ( player_num ) ;
+	  // find_new_intermediate_point ( player_num );
+	}
+      */
+	// find_new_intermediate_point ( player_num );
+    }
+
+}; // void move_tux_thowards_intermediate_point ( int player_num )
 
 /* ----------------------------------------------------------------------
  * This function moves the influencer, adjusts his speed according to
@@ -825,18 +1374,30 @@ MoveInfluence ( int player_num )
   // target to something suiting that new droids position.
   //
   if ( Me [ player_num ] . mouse_move_target_is_enemy != (-1) )
-    UpdateMouseMoveTargetAccoringToEnemy ( player_num );
+    UpdateMouseMoveTargetAccordingToEnemy ( player_num );
 
   //--------------------
   // But in case of some mouse move target present, we proceed to move
   // thowards this mouse move target.
   //
+  /*
   if ( Me [ player_num ] . mouse_move_target . x != ( -1 ) )
     {
-      update_intermediate_tux_waypoints( player_num );
-      move_tux_thowards_mouse_move_target ( player_num );
+      // update_intermediate_tux_waypoints( player_num );
+
+
+      // if ( ( fabsf ( Me [ 0 ] . next_intermediate_point [ 0 ] . x - Me [ 0 ] . mouse_move_target . x ) < 0.1 ) &&
+      // ( fabsf ( Me [ 0 ] . next_intermediate_point [ 0 ] . y - Me [ 0 ] . mouse_move_target . y ) < 0.1 ) )
+      // move_tux_thowards_mouse_move_target ( player_num );
+      // else
+
+
+      move_tux_thowards_intermediate_point ( player_num );
     }
-  
+  */
+
+  move_tux_thowards_intermediate_point ( player_num );
+ 
   //--------------------
   // As long as the Tux is still alive, his status will be either
   // in MOBILE mode or in WEAPON mode or in TRANSFER mode.
@@ -883,6 +1444,7 @@ MoveInfluence ( int player_num )
       Me [ player_num ] . mouse_move_target . y = Me [ player_num ] . pos . y ;
       Me [ player_num ] . mouse_move_target . z = Me [ player_num ] . pos . z ;
       Me [ player_num ] . mouse_move_target_is_enemy = (-1) ;
+      // clear_out_intermediate_points ( player_num );
       return; 
     }
 
@@ -890,7 +1452,7 @@ MoveInfluence ( int player_num )
   // The influ should lose some of his speed when no key is pressed and
   // also no mouse move target is set.
   //
-  if ( Me [ player_num ] . mouse_move_target . x == (-1) ) InfluenceFrictionWithAir ( player_num ) ; 
+  InfluenceFrictionWithAir ( player_num ) ; 
 
   limit_tux_speed_to_a_maximum ( player_num ) ;  
 
@@ -917,6 +1479,7 @@ MoveInfluence ( int player_num )
 	  //--------------------
 	  // and then we deactivate this mouse_move_target_is_enemy to prevent
 	  // immediate recurrence of the very same chat.
+	  //
 	  Me [ player_num ] . mouse_move_target_is_enemy = (-1) ;
 	}
     }
@@ -1089,7 +1652,18 @@ CheckInfluenceWallCollisions ( int player_num )
   lastpos.x = Me [ player_num ] .pos.x - SX;
   lastpos.y = Me [ player_num ] .pos.y - SY;
 
-  res = DruidPassable ( Me [ player_num ] .pos.x , Me [ player_num ] .pos.y , Me [ player_num ] . pos . z );
+  // res = DruidPassable ( Me [ player_num ] .pos.x , Me [ player_num ] .pos.y , Me [ player_num ] . pos . z );
+  res = IsPassable ( Me [ player_num ] . pos . x , Me [ player_num ] . pos . y , Me [ player_num ] . pos . z , CENTER ); 
+
+  /*
+  if (res != CENTER )
+    {
+      Me [ player_num ] .pos.x = GetInfluPositionHistoryX( 2 );
+      Me [ player_num ] .pos.y = GetInfluPositionHistoryY( 2 );
+      DebugPrintf ( 1, "\nATTENTION! CheckInfluenceWallCollsision FALLBACK ACTIVATED!!");
+      return ;
+    }
+  */
 
   //--------------------
   // Influence-Wall-Collision only has to be checked in case of
@@ -1101,8 +1675,10 @@ CheckInfluenceWallCollisions ( int player_num )
       // At first we just check in which directions (from the last position)
       // the ways are blocked and in which directions the ways are open.
       //
-      if ( ! ( ( DruidPassable ( lastpos.x , lastpos.y + maxspeed * Frame_Time() , Me [ player_num ] . pos . z ) != CENTER ) ||
-	       ( DruidPassable ( lastpos.x , lastpos.y - maxspeed * Frame_Time() , Me [ player_num ] . pos . z ) != CENTER ) ) )
+      // if ( ! ( ( DruidPassable ( lastpos.x , lastpos.y + maxspeed * Frame_Time() , Me [ player_num ] . pos . z ) != CENTER ) ||
+      // ( DruidPassable ( lastpos.x , lastpos.y - maxspeed * Frame_Time() , Me [ player_num ] . pos . z ) != CENTER ) ) )
+      if ( ! ( ( IsPassable ( lastpos.x , lastpos.y + maxspeed * Frame_Time() , Me [ player_num ] . pos . z , CENTER ) != CENTER ) ||
+	       ( IsPassable ( lastpos.x , lastpos.y - maxspeed * Frame_Time() , Me [ player_num ] . pos . z , CENTER ) != CENTER ) ) )
 	{
 	  DebugPrintf(1, "\nNorth-south-Axis seems to be free.");
 	  NorthSouthAxisBlocked = FALSE;
@@ -1112,8 +1688,10 @@ CheckInfluenceWallCollisions ( int player_num )
 	  NorthSouthAxisBlocked = TRUE;
 	}
 
-      if ( ( DruidPassable(lastpos.x + maxspeed * Frame_Time() , lastpos.y , Me [ player_num ] . pos . z ) == CENTER ) &&
-	   ( DruidPassable(lastpos.x - maxspeed * Frame_Time() , lastpos.y , Me [ player_num ] . pos . z ) == CENTER ) )
+      // if ( ( DruidPassable(lastpos.x + maxspeed * Frame_Time() , lastpos.y , Me [ player_num ] . pos . z ) == CENTER ) &&
+      // ( DruidPassable(lastpos.x - maxspeed * Frame_Time() , lastpos.y , Me [ player_num ] . pos . z ) == CENTER ) )
+      if ( ( IsPassable(lastpos.x + maxspeed * Frame_Time() , lastpos.y , Me [ player_num ] . pos . z , CENTER ) == CENTER ) &&
+	   ( IsPassable(lastpos.x - maxspeed * Frame_Time() , lastpos.y , Me [ player_num ] . pos . z , CENTER ) == CENTER ) )
 	{
 	  EastWestAxisBlocked = FALSE;
 	}
@@ -1167,12 +1745,19 @@ CheckInfluenceWallCollisions ( int player_num )
 	  // try if this would make sense...
 	  // (Of course we may only move into the one direction that is free)
 	  //
-	  if ( DruidPassable( Me [ player_num ] . pos . x + SX , 
-			      Me [ player_num ] . pos . y ,
-			      Me [ player_num ] . pos . z ) == CENTER ) Me [ player_num ] .pos.x += SX;
-	  if ( DruidPassable( Me [ player_num ] . pos . x      , 
-			      Me [ player_num ] . pos . y + SY ,
-			      Me [ player_num ] . pos . z ) == CENTER ) Me [ player_num ] .pos.y += SY;
+	  
+	  // if ( DruidPassable( Me [ player_num ] . pos . x + SX , 
+	  // Me [ player_num ] . pos . y ,
+	  // Me [ player_num ] . pos . z ) == CENTER ) Me [ player_num ] .pos.x += SX;
+	  // if ( DruidPassable( Me [ player_num ] . pos . x      , 
+	  // Me [ player_num ] . pos . y + SY ,
+	  // Me [ player_num ] . pos . z ) == CENTER ) Me [ player_num ] .pos.y += SY;
+	  if ( IsPassable( Me [ player_num ] . pos . x + SX , 
+			   Me [ player_num ] . pos . y ,
+			   Me [ player_num ] . pos . z , CENTER ) == CENTER ) Me [ player_num ] .pos.x += SX;
+	  if ( IsPassable( Me [ player_num ] . pos . x      , 
+			   Me [ player_num ] . pos . y + SY ,
+			   Me [ player_num ] . pos . z , CENTER ) == CENTER ) Me [ player_num ] .pos.y += SY;
 	}
 
       //--------------------
@@ -1183,9 +1768,12 @@ CheckInfluenceWallCollisions ( int player_num )
       // For this reason, a history of influ-coordinates has been introduced.  This will all
       // be done here and now:
       
-      if ( ( DruidPassable ( Me [ player_num ] .pos.x, Me [ player_num ] .pos.y , Me [ player_num ] . pos . z ) != CENTER) && 
-	   ( DruidPassable ( GetInfluPositionHistoryX( 0 ) , GetInfluPositionHistoryY( 0 ) , GetInfluPositionHistoryZ( 0 ) ) != CENTER) &&
-	   ( DruidPassable ( GetInfluPositionHistoryX( 1 ) , GetInfluPositionHistoryY( 1 ) , GetInfluPositionHistoryZ( 1 ) ) != CENTER) )
+      // if ( ( DruidPassable ( Me [ player_num ] .pos.x, Me [ player_num ] .pos.y , Me [ player_num ] . pos . z ) != CENTER) && 
+      // ( DruidPassable ( GetInfluPositionHistoryX( 0 ) , GetInfluPositionHistoryY( 0 ) , GetInfluPositionHistoryZ( 0 ) ) != CENTER) &&
+      // ( DruidPassable ( GetInfluPositionHistoryX( 1 ) , GetInfluPositionHistoryY( 1 ) , GetInfluPositionHistoryZ( 1 ) ) != CENTER) )
+      if ( ( IsPassable ( Me [ player_num ] .pos.x, Me [ player_num ] .pos.y , Me [ player_num ] . pos . z , CENTER ) != CENTER) && 
+	   ( IsPassable ( GetInfluPositionHistoryX( 0 ) , GetInfluPositionHistoryY( 0 ) , GetInfluPositionHistoryZ( 0 ) , CENTER ) != CENTER) &&
+	   ( IsPassable ( GetInfluPositionHistoryX( 1 ) , GetInfluPositionHistoryY( 1 ) , GetInfluPositionHistoryZ( 1 ) , CENTER ) != CENTER) )
 	{
 	  Me [ player_num ] .pos.x = GetInfluPositionHistoryX( 2 );
 	  Me [ player_num ] .pos.y = GetInfluPositionHistoryY( 2 );
@@ -1203,7 +1791,7 @@ CheckInfluenceWallCollisions ( int player_num )
 void
 limit_tux_speed_to_a_maximum ( int player_num )
 {
-  double maxspeed = 7.0 ;
+  double maxspeed = TUX_MAX_SPEED ;
 
   //--------------------
   // First we adjust the speed, so that the Tux can never go too fast
@@ -1230,6 +1818,26 @@ void
 InfluenceFrictionWithAir ( int player_num )
 {
 
+  //--------------------
+  // Maybe the Tux is justified on his way.  Then we don't apply
+  // any friction, since there is intended movement.
+  //
+  // if ( Me [ player_num ] . mouse_move_target . x == (-1) ) 
+  //
+  if ( Me [ player_num ] . next_intermediate_point [ 0 ] . x != (-1) ) 
+    return;
+
+  Me [ player_num ] . speed . x = 0 ;
+  Me [ player_num ] . speed . y = 0 ;
+
+  return;
+
+  //--------------------
+  // So now that we know, that some friction is intended, we can start
+  // to apply the friction.  However, we must do so of course depending
+  // on the current frame rate, a task, that the exponential function
+  // seems very fitting for.
+  //
   if ( ! ServerThinksUpPressed ( player_num ) && ! ServerThinksDownPressed ( player_num ) )
     {
       Me [ player_num ] . speed . y *= exp ( log ( FRICTION_CONSTANT ) * Frame_Time ( ) );
@@ -2035,6 +2643,11 @@ check_for_droids_to_attack ( int player_num )
       Me [ player_num ] . mouse_move_target . z = Me [ player_num ] . pos . z ;
 
       Me [ player_num ] . mouse_move_target_is_enemy = (-1) ;
+
+      // clear_out_intermediate_points ( player_num ) ;
+
+      set_up_intermediate_course_for_tux ( player_num ) ;
+
       return; // no attack motion since no target given!!
     }
 

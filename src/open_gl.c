@@ -248,7 +248,7 @@ our_SDL_display_format_wrapper ( SDL_Surface *surface )
     }
 
   return ( NULL );
-};
+}; // SDL_Surface* our_SDL_display_format_wrapper ( SDL_Surface *surface )
 
 /* ----------------------------------------------------------------------
  *

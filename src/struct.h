@@ -498,13 +498,11 @@ typedef struct
   Sint8 type;			/* what kind of druid is this ? */
   Sint8 character_class;          // is this unit a FIGHTER=WAR_BOT, or MAGE=MIND_BOT or ROGUE=SNIPER_BOT character
   Sint8 status;			/* attacking, defense, dead, ... */
-  char freedroid_version_string[100]; // a string to identify games from older freedroid versions
   finepoint speed;		/* the current speed of the druid */
   gps pos;		        /* current position in the whole ship */
   gps teleport_anchor;          // where from have you last teleported home
   gps mouse_move_target;        // where the tux is going automatically by virtue of mouse move 
   int mouse_move_target_is_enemy; // which enemy has been targeted (for a melee shot)
-  moderately_finepoint next_intermediate_point; // waypoints for the tux, when target not directly reachable
   double health;		/* the max. possible energy in the moment */
   double energy;		/* current energy level */
   double mana;                  // current mana level 
@@ -518,6 +516,8 @@ typedef struct
   float weapon_swing_time;	// How long is the current weapon swing in progress (in seconds of course) 
   float MissionTimeElapsed;
   float got_hit_time;           // how long stunned now since the last time tux got hit 
+
+  char freedroid_version_string[100]; // a string to identify games from older freedroid versions
 
   int Strength;  // character Strength value = 'power supply max. capacity'
   int Magic;     // character Magic value = 
@@ -583,6 +583,7 @@ typedef struct
   // THE FOLLOWING ARE INFORMATION, THAT ARE HUGE AND THAT ALSO DO NOT NEED
   // TO BE COMMUNICATED FROM THE CLIENT TO THE SERVER OR VICE VERSA
   //
+  moderately_finepoint next_intermediate_point [ MAX_INTERMEDIATE_WAYPOINTS_FOR_TUX ] ;  // waypoints for the tux, when target not directly reachable
   Uint16 KillRecord[ 200 ];      // how many ( of the first 1000 monster types) have been killed yet?
   Uint8 Automap [ MAX_LEVELS ] [ 100 ][ 100 ]; // this is the data for the automatic map
   moderately_finepoint DetectedItemList[ MAX_ITEMS_PER_LEVEL ];

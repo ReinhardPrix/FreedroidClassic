@@ -3113,6 +3113,28 @@ position_collides_with_this_obstacle ( float x , float y , obstacle* our_obstacl
   if ( obs_type <= -1 ) return ( FALSE );
 
   //--------------------
+  // Now we check if maybe it's a door.  Doors should get ignored, 
+  // if the global ignore_doors_for_collisions flag is set.  This
+  // flag is introduced the reduce function overhead, especially
+  // in the recursions used here and there.
+  //
+  if ( global_ignore_doors_for_collisions_flag )
+    {
+      if ( ( obs_type >= ISO_H_DOOR_000_OPEN ) && ( obs_type <= ISO_V_DOOR_100_OPEN ) )
+	return ( FALSE );
+      // ISO_H_DOOR_000_OPEN = 6,
+      // ISO_H_DOOR_025_OPEN = 7,
+      // ISO_H_DOOR_050_OPEN = 8,
+      // ISO_H_DOOR_075_OPEN = 9,
+      // ISO_H_DOOR_100_OPEN = 10,
+      // ISO_V_DOOR_000_OPEN = 11,
+      // ISO_V_DOOR_025_OPEN = 12,
+      // ISO_V_DOOR_050_OPEN = 13,
+      // ISO_V_DOOR_075_OPEN = 14,
+      // ISO_V_DOOR_100_OPEN = 15,
+    }
+
+  //--------------------
   // If the obstacle doesn't even have a collision rectangle, then
   // of course it's easy, cause then there can't be any collsision
   //
@@ -3177,12 +3199,9 @@ position_collides_with_obstacles_on_square ( float x, float y , int x_tile , int
 
 /* ---------------------------------------------------------------------- 
  * This function checks if a given location lies within a wall or not.
- * The location given is like the center of a droid and the 'Checkpos'
- * refers to if the left or right or up or down borders of the droid
- * should be compared for wall collisions.
  *
- * In case of CENTER given as checkpos, no such shift is done but only
- * the collision situation at the given coordinates is returned.
+ *
+ *
  *
  * A return value of CENTER means that the location is passable in that sense.
  * while any directions and (-1) indicate that it is not so and in case
@@ -3201,8 +3220,8 @@ IsPassable ( float x , float y , int z , int Checkpos)
   // We take a look whether the position given in the parameter is 
   // blocked by an obstacle ON ANY SQUARE WITHIN A 3x3 TILE RECTANGLE.
   //
-  x_tile_start = rintf ( x ) -2 ; y_tile_start = rintf ( y ) -2 ;
-  x_tile_end = x_tile_start + 4 ; y_tile_end = y_tile_start + 4 ;
+  x_tile_start = rintf ( x ) -3         ; y_tile_start = rintf ( y ) -3 ;
+  x_tile_end   = x_tile_start + 5       ; y_tile_end   = y_tile_start + 5 ;
   if ( x_tile_start < 0 ) x_tile_start = 0 ; 
   if ( y_tile_start < 0 ) y_tile_start = 0 ; 
   if ( x_tile_end >= PassLevel -> xlen ) x_tile_end = PassLevel->xlen -1 ;
@@ -3210,10 +3229,21 @@ IsPassable ( float x , float y , int z , int Checkpos)
 
   for ( x_tile = x_tile_start ; x_tile < x_tile_end ; x_tile ++ )
     {
+
       // DebugPrintf ( 0 , " %d " , x_tile );
       for ( y_tile = y_tile_start ; y_tile < y_tile_end ; y_tile ++ )
 	{
-	  if ( position_collides_with_obstacles_on_square ( x , y , x_tile , y_tile , PassLevel ) ) return ( -1 );
+
+	  if ( position_collides_with_obstacles_on_square ( x        , y        , x_tile , y_tile , PassLevel ) ) return ( -1 );
+	  /*
+
+	  if ( position_collides_with_obstacles_on_square ( x + 0.24 , y        , x_tile , y_tile , PassLevel ) ) return ( -1 );
+	  if ( position_collides_with_obstacles_on_square ( x - 0.24 , y        , x_tile , y_tile , PassLevel ) ) return ( -1 );
+	  if ( position_collides_with_obstacles_on_square ( x        , y + 0.24 , x_tile , y_tile , PassLevel ) ) return ( -1 );
+	  if ( position_collides_with_obstacles_on_square ( x        , y - 0.24 , x_tile , y_tile , PassLevel ) ) return ( -1 );
+
+	  */
+
 	}
     }
 

@@ -1754,6 +1754,8 @@ InitFreedroid ( void )
   RespectVisibilityOnMap = TRUE ; 
   timeout_from_item_drop = 0 ; 
 
+  global_ignore_doors_for_collisions_flag = FALSE ;
+
   Overall_Average=0.041;
   SkipAFewFrames = 0;
   Me[0].TextVisibleTime = 0;

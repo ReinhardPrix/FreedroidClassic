@@ -180,6 +180,8 @@ EXTERN BFont_Info *Highscore_BFont;
 EXTERN float Overall_Average;
 EXTERN int SkipAFewFrames;
 
+EXTERN int global_ignore_doors_for_collisions_flag;
+
 #undef EXTERN
 #ifdef _view_c
 #define EXTERN

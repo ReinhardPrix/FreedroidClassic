@@ -105,18 +105,25 @@ DirectLineWalkable( float x1 , float y1 , float x2 , float y2 , int z )
   DebugPrintf( 1 , "\nint DirectLineWalkable (...) : Checking from %d-%d to %d-%d.", (int) x1, (int) y1 , (int) x2, (int) y2 );
   fflush(stdout);
 
-  if ( fabsf(x1-x2) > fabsf (y1-y2) ) LargerDistance=fabsf(x1-x2);
+  //--------------------
+  // First we determine the amount of steps we need to take
+  // such that we can't oversee any walls or something.
+  //
+  if ( fabsf(x1-x2) > fabsf (y1-y2) ) LargerDistance = fabsf(x1-x2);
   else LargerDistance=fabsf(y1-y2);
 
-  Steps=LargerDistance * 4 ;   // We check four times on each map tile...
+  Steps=LargerDistance * 12 ;   // We check 6 times on each map tile...
   if ( Steps == 0 ) return TRUE;
 
+  //--------------------
   // We determine the step size when walking from (x1,y1) to (x2,y2) in Steps number of steps
-  step.x = (x2 - x1) / Steps;
-  step.y = (y2 - y1) / Steps;
+  //
+  step.x = (x2 - x1) / ( float ) Steps;
+  step.y = (y2 - y1) / ( float ) Steps;
 
   DebugPrintf( 2 , "\nint DirectLineWalkable (...) :  step.x=%f step.y=%f." , step.x , step.y );
 
+  //--------------------
   // We start from position (x1, y1)
   CheckPosition.x = x1;
   CheckPosition.y = y1;
@@ -124,11 +131,20 @@ DirectLineWalkable( float x1 , float y1 , float x2 , float y2 , int z )
   for ( i = 0 ; i < Steps ; i++ )
     {
 
+
       if ( IsPassable ( CheckPosition.x , CheckPosition.y , z , CENTER ) != CENTER ) 
 	{
 	  DebugPrintf( 1 , "\n DirectLineWalkable (...) : Connection analysis revealed : OBSTACLES!! NO WAY!!!");
 	  return FALSE;
-	}
+	  }	
+
+      /*
+      if ( DruidPassable ( CheckPosition.x , CheckPosition.y , z ) != CENTER ) 
+	{
+	  DebugPrintf( 1 , "\n DirectLineWalkable (...) : Connection analysis revealed : OBSTACLES!! NO WAY!!!");
+	  return FALSE;
+	}	
+      */
 
       CheckPosition.x += step.x;
       CheckPosition.y += step.y;
@@ -154,9 +170,7 @@ SetDirectCourseToConsole( int EnemyNum )
   long TicksBefore;
   Level ThisBotsLevel = curShip.AllLevels[ AllEnemys[ EnemyNum ].pos.z ];
 
-
   TicksBefore = SDL_GetTicks();
-
 
   DebugPrintf( 1 , "\nSetDirectCourseToConsole( int EnemyNum ): real function call confirmed.");
   DebugPrintf( 1 , "\nSetDirectCourseToConsole( int EnemyNum ): Trying to find direct line to console...");
@@ -196,6 +210,7 @@ SetDirectCourseToConsole( int EnemyNum )
   DebugPrintf( 1 , "\nSetDirectCourseToConsole: Ticks used: %d." , SDL_GetTicks() - TicksBefore );
 
   return FALSE;
+
 }; // int SetDirectCourseToConsole ( int Enemynum )
 
 /* ----------------------------------------------------------------------

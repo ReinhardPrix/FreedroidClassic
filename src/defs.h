@@ -705,6 +705,7 @@ enum _directions
 #define MAX_PASSWORD_LENGTH 20
 #define MAX_COOKIES 100
 #define MAX_COOKIE_LENGTH 200
+#define MAX_INTERMEDIATE_WAYPOINTS_FOR_TUX 100
 
 #define RIGHT_WALL_BIT 1
 #define LEFT_WALL_BIT 2
@@ -912,7 +913,6 @@ enum
   ISO_H_WALL = 2 ,
   ISO_V_WALL_WITH_DOT = 3 ,
   ISO_H_WALL_WITH_DOT = 4 ,
-
 
   //--------------------
   // These obstacles originate from door_tiles.blend.
