@@ -265,7 +265,7 @@ ShowInventoryMessages( void )
       TargetRect.w = 50;
       TargetRect.h = 50;
 
-      SDL_BlitSurface( ItemSurfaceList[ ItemMap[ Me.Inventory[ SlotNum ].type ].picture_number ] , NULL , Screen , &TargetRect );
+      SDL_BlitSurface( ItemImageList[ ItemMap[ Me.Inventory[ SlotNum ].type ].picture_number ].Surface , NULL , Screen , &TargetRect );
       
     }
 
@@ -914,7 +914,7 @@ PutItem( int ItemNumber )
   TargetRectangle.x=UserCenter_x - (Me.pos.x - CurItem->pos.x)*Block_Width  -Block_Width/2;
   TargetRectangle.y=UserCenter_y - (Me.pos.y - CurItem->pos.y)*Block_Height -Block_Height/2;
 
-  SDL_BlitSurface( ItemSurfaceList[ ItemMap[ CurItem->type ].picture_number ] , NULL , Screen , &TargetRectangle);
+  SDL_BlitSurface( ItemImageList[ ItemMap[ CurItem->type ].picture_number ].Surface , NULL , Screen , &TargetRectangle);
 }; // void PutItem( int ItemNumber );
 
 /* ----------------------------------------------------------------------

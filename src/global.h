@@ -136,7 +136,9 @@ EXTERN int classic_user_rect;   /* use the User-Rect dimensions of the original 
 EXTERN grob_point InventorySize;
 // EXTERN item AllItems[ MAX_ITEMS_PER_LEVEL ];
 EXTERN itemspec ItemMap[ ALL_ITEMS ];
-EXTERN SDL_Surface* ItemSurfaceList[ NUMBER_OF_ITEM_PICTURES ];
+
+// EXTERN SDL_Surface* ItemSurfaceList[ NUMBER_OF_ITEM_PICTURES ];
+EXTERN item_image_spec ItemImageList[ NUMBER_OF_ITEM_PICTURES ];
 
 EXTERN double Conveyor_Belt_Speed;
 EXTERN long Total_Frames_Passed_In_Mission;

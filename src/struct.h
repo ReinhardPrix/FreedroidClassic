@@ -201,6 +201,12 @@ typedef struct
 
 typedef struct
 {
+  grob_point inv_size;
+  SDL_Surface* Surface;
+} item_image_spec , *Item_image_spec;
+
+typedef struct
+{
   char* ItemName;
   char* ItemClass;  // class of the item, e.g. weapon, drive, shield, other
   int item_can_be_applied_in_combat;
@@ -228,6 +234,8 @@ typedef struct
   int picture_number;
 
 } itemspec , *Itemspec;
+
+
 
 typedef struct
 {
