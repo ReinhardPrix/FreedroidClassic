@@ -41,6 +41,196 @@ void LevelEditor(void);
 
 EXTERN char Previous_Mission_Name[1000];
 
+enum
+  {
+    JUMP_THRESHOLD_NORTH = 1,
+    JUMP_THRESHOLD_SOUTH ,
+    JUMP_THRESHOLD_EAST ,
+    JUMP_THRESHOLD_WEST ,
+    JUMP_TARGET_NORTH ,
+    JUMP_TARGET_SOUTH ,
+    JUMP_TARGET_EAST ,
+    JUMP_TARGET_WEST ,
+    QUIT_THRESHOLD_EDITOR_POSITION
+  };
+      
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+SetLevelInterfaces ( void )
+{
+  char *MenuTexts[ 100 ];
+  int Weiter = FALSE;
+  int MenuPosition = 1 ;
+  char Options [ 20 ] [ 500 ] ;
+
+  while (!Weiter)
+    {
+      
+      InitiateMenu( NULL );
+      
+      sprintf( Options [ 0 ] , "Jump threshold north: %d.  Up/Down" , CurLevel->jump_threshold_north );
+      MenuTexts [ 0 ] = Options [ 0 ] ;
+      sprintf( Options [ 1 ] , "Jump threshold south: %d.  Up/Down" , CurLevel->jump_threshold_south );
+      MenuTexts [ 1 ] = Options [ 1 ] ;
+      sprintf( Options [ 2 ] , "Jump threshold east: %d.  Up/Down" , CurLevel->jump_threshold_east );
+      MenuTexts [ 2 ] = Options [ 2 ] ;
+      sprintf( Options [ 3 ] , "Jump threshold west: %d.  Up/Down" , CurLevel->jump_threshold_west );
+      MenuTexts [ 3 ] = Options [ 3 ] ;
+      sprintf( Options [ 4 ] , "Jump target north: %d.  Up/Down" , CurLevel->jump_target_north );
+      MenuTexts [ 4 ] = Options [ 4 ] ;
+      sprintf( Options [ 5 ] , "Jump target south: %d.  Up/Down" , CurLevel->jump_target_south );
+      MenuTexts [ 5 ] = Options [ 5 ] ;
+      sprintf( Options [ 6 ] , "Jump target east: %d.  Up/Down" , CurLevel->jump_target_east );
+      MenuTexts [ 6 ] = Options [ 6 ] ;
+      sprintf( Options [ 7 ] , "Jump target west: %d.  Up/Down" , CurLevel->jump_target_west );
+      MenuTexts [ 7 ] = Options [ 7 ] ;
+      MenuTexts [ 8 ] = "Quit Threshold Editor" ;
+      MenuTexts [ 9 ] = "" ;
+
+      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL , FPS_Display_BFont );
+      
+      while (EnterPressed() || SpacePressed() );
+      
+      switch (MenuPosition) 
+	{
+	  
+	case (-1):
+	  while ( EscapePressed() );
+	  Weiter=!Weiter;
+	  if ( CurrentCombatScaleFactor != 1 ) SetCombatScaleTo( 1 );
+	  break;
+	case QUIT_THRESHOLD_EDITOR_POSITION:
+	  while (EnterPressed() || SpacePressed() ) ;
+	  Weiter=!Weiter;
+	  break;
+	default: 
+	  break;
+	  
+	} // switch
+      
+	  // If the user of the level editor pressed left or right, that should have
+	  // an effect IF he/she is a the change level menu point
+      
+      if (LeftPressed() || RightPressed() ) 
+	{
+	  switch (MenuPosition)
+	    {
+	      
+	    case JUMP_THRESHOLD_NORTH:
+	      if ( LeftPressed() )
+		{
+		  if ( CurLevel->jump_threshold_north >= 0 ) CurLevel->jump_threshold_north -- ;
+		  while (LeftPressed());
+		}
+	      if ( RightPressed() )
+		{
+		  CurLevel->jump_threshold_north ++ ;
+		  while (RightPressed());
+		}
+	      break;
+	      
+	    case JUMP_THRESHOLD_SOUTH:
+	      if ( LeftPressed() )
+		{
+		  if ( CurLevel->jump_threshold_south >= 0 ) CurLevel->jump_threshold_south -- ;
+		  while (LeftPressed());
+		}
+	      if ( RightPressed() )
+		{
+		  CurLevel->jump_threshold_south ++ ;
+		  while (RightPressed());
+		}
+	      break;
+
+	    case JUMP_THRESHOLD_EAST:
+	      if ( LeftPressed() )
+		{
+		  if ( CurLevel->jump_threshold_east >= 0 ) CurLevel->jump_threshold_east -- ;
+		  while (LeftPressed());
+		}
+	      if ( RightPressed() )
+		{
+		  CurLevel->jump_threshold_east ++ ;
+		  while (RightPressed());
+		}
+	      break;
+
+	    case JUMP_THRESHOLD_WEST:
+	      if ( LeftPressed() )
+		{
+		  if ( CurLevel->jump_threshold_west >= 0 ) CurLevel->jump_threshold_west -- ;
+		  while (LeftPressed());
+		}
+	      if ( RightPressed() )
+		{
+		  CurLevel->jump_threshold_west ++ ;
+		  while (RightPressed());
+		}
+	      break;
+	      
+	    case JUMP_TARGET_NORTH:
+	      if ( LeftPressed() )
+		{
+		  if ( CurLevel->jump_target_north >= 0 ) CurLevel->jump_target_north -- ;
+		  while (LeftPressed());
+		}
+	      if ( RightPressed() )
+		{
+		  CurLevel->jump_target_north ++ ;
+		  while (RightPressed());
+		}
+	      break;
+	      
+	    case JUMP_TARGET_SOUTH:
+	      if ( LeftPressed() )
+		{
+		  if ( CurLevel->jump_target_south >= 0 ) CurLevel->jump_target_south -- ;
+		  while (LeftPressed());
+		}
+	      if ( RightPressed() )
+		{
+		  CurLevel->jump_target_south ++ ;
+		  while (RightPressed());
+		}
+	      break;
+
+	    case JUMP_TARGET_EAST:
+	      if ( LeftPressed() )
+		{
+		  if ( CurLevel->jump_target_east >= 0 ) CurLevel->jump_target_east -- ;
+		  while (LeftPressed());
+		}
+	      if ( RightPressed() )
+		{
+		  CurLevel->jump_target_east ++ ;
+		  while (RightPressed());
+		}
+	      break;
+
+	    case JUMP_TARGET_WEST:
+	      if ( LeftPressed() )
+		{
+		  if ( CurLevel->jump_target_west >= 0 ) CurLevel->jump_target_west -- ;
+		  while (LeftPressed());
+		}
+	      if ( RightPressed() )
+		{
+		  CurLevel->jump_target_west ++ ;
+		  while (RightPressed());
+		}
+	      break;
+	      
+
+	    }
+	} // if LeftPressed || RightPressed
+      
+    }
+  
+}; // void SetLevelInterfaces ( void )
+
 /* ----------------------------------------------------------------------
  * This function should create a completely new level into the existing
  * ship structure that we already have.  The new level will be rather
@@ -384,7 +574,7 @@ LevelEditor(void)
 
   SDL_Rect Editor_Window;
   enum
-    { SAVE_LEVEL_POSITION=1, CHANGE_LEVEL_POSITION, CHANGE_TILE_SET_POSITION, CHANGE_SIZE_X, CHANGE_SIZE_Y, SET_LEVEL_NAME , SET_BACKGROUND_SONG_NAME , SET_LEVEL_COMMENT, ADD_NEW_LEVEL , SET_LEVEL_INTERFACES , QUIT_LEVEL_EDITOR_POSITION };
+    { SAVE_LEVEL_POSITION=1, CHANGE_LEVEL_POSITION, CHANGE_TILE_SET_POSITION, CHANGE_SIZE_X, CHANGE_SIZE_Y, SET_LEVEL_NAME , SET_BACKGROUND_SONG_NAME , SET_LEVEL_COMMENT, ADD_NEW_LEVEL , SET_LEVEL_INTERFACE_POSITION , QUIT_LEVEL_EDITOR_POSITION };
   
   Editor_Window.x=User_Rect.x;
   Editor_Window.y=User_Rect.y;  
@@ -1007,6 +1197,7 @@ LevelEditor(void)
 	} // while (!EscapePressed())
       while( EscapePressed() );
 
+      //--------------------
       // After Level editing is done and escape has been pressed, 
       // display the Menu with level save options and all that.
 
@@ -1096,6 +1287,11 @@ LevelEditor(void)
 		  while (EnterPressed() || SpacePressed() ) ;
 		  SetTextCursor( 15 , 440 );
 		  Weiter=!Weiter;
+		  break;
+		case SET_LEVEL_INTERFACE_POSITION:
+		  while (EnterPressed() || SpacePressed() ) ;
+		  Weiter=!Weiter;
+		  SetLevelInterfaces ( );
 		  break;
 		case QUIT_LEVEL_EDITOR_POSITION:
 		  while (EnterPressed() || SpacePressed() ) ;
