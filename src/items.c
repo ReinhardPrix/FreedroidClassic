@@ -1824,6 +1824,7 @@ ManageInventoryScreen ( void )
   int Grabbed_InvPos;
   int i;
   finepoint MapPositionOfMouse;
+  Level PlayerLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
   // static int Item_Grabbed = FALSE;
 
   DebugPrintf (2, "\nvoid ShowInventoryMessages( ... ): Function call confirmed.");
@@ -1861,18 +1862,18 @@ ManageInventoryScreen ( void )
 	      // DebugPrintf( 1  , "\nMouse in map at: %f %f." , MapPositionOfMouse.x , MapPositionOfMouse.y );
 	      for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i++ )
 		{
-		  if ( CurLevel->ItemList[ i ].type == (-1) ) continue;
+		  if ( PlayerLevel->ItemList[ i ].type == (-1) ) continue;
 		  
-		  if ( ( fabsf( MapPositionOfMouse.x - CurLevel->ItemList[ i ].pos.x ) < 0.5 ) &&
-		       ( fabsf( MapPositionOfMouse.y - CurLevel->ItemList[ i ].pos.y ) < 0.5 ) )
+		  if ( ( fabsf( MapPositionOfMouse.x - PlayerLevel->ItemList[ i ].pos.x ) < 0.5 ) &&
+		       ( fabsf( MapPositionOfMouse.y - PlayerLevel->ItemList[ i ].pos.y ) < 0.5 ) )
 		    {
 		      //--------------------
 		      // We've found some item to grab!!! How wonderful!!!
 		      // We simply add it to the inventory as good as we can.
 		      //
-		      Item_Held_In_Hand = ( -1 ); // ItemMap[ CurLevel->ItemList[ i ].type ].picture_number ;
-		      // CurLevel->ItemList[ i ].currently_held_in_hand = TRUE;
-		      AddFloorItemDirectlyToInventory( &( CurLevel->ItemList[ i ] ) );
+		      Item_Held_In_Hand = ( -1 ); // ItemMap[ PlayerLevel->ItemList[ i ].type ].picture_number ;
+		      // PlayerLevel->ItemList[ i ].currently_held_in_hand = TRUE;
+		      AddFloorItemDirectlyToInventory( &( PlayerLevel->ItemList[ i ] ) );
 		      
 		      MouseButtonPressedPreviousFrame = axis_is_active;
 		      RightPressedPreviousFrame = MouseRightPressed ( ) ;
@@ -2037,14 +2038,14 @@ ManageInventoryScreen ( void )
 	  DebugPrintf( 0  , "\nMouse in map at: %f %f." , MapPositionOfMouse.x , MapPositionOfMouse.y );
 	  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i++ )
 	    {
-	      if ( CurLevel->ItemList[ i ].type == (-1) ) continue;
+	      if ( PlayerLevel->ItemList[ i ].type == (-1) ) continue;
 	      
-	      if ( ( fabsf( MapPositionOfMouse.x - CurLevel->ItemList[ i ].pos.x ) < 0.5 ) &&
-		   ( fabsf( MapPositionOfMouse.y - CurLevel->ItemList[ i ].pos.y ) < 0.5 ) )
+	      if ( ( fabsf( MapPositionOfMouse.x - PlayerLevel->ItemList[ i ].pos.x ) < 0.5 ) &&
+		   ( fabsf( MapPositionOfMouse.y - PlayerLevel->ItemList[ i ].pos.y ) < 0.5 ) )
 		{
 		  // We've found some item to grab!!! How wonderful!!!
-		  Item_Held_In_Hand = ItemMap[ CurLevel->ItemList[ i ].type ].picture_number ;
-		  CurLevel->ItemList[ i ].currently_held_in_hand = TRUE;
+		  Item_Held_In_Hand = ItemMap[ PlayerLevel->ItemList[ i ].type ].picture_number ;
+		  PlayerLevel->ItemList[ i ].currently_held_in_hand = TRUE;
 		  break;
 		}
 	    }
