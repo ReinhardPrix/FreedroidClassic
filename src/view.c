@@ -565,7 +565,7 @@ Assemble_Combat_Picture (int mask)
       User_Rect.x = SCREEN_WIDTH/2;
       User_Rect.w = SCREEN_WIDTH/2;
     }
-  else if ( GameConfig.CharacterScreen_Visible ) 
+  else if ( GameConfig.CharacterScreen_Visible || GameConfig.SkillScreen_Visible ) 
     {
       User_Rect.x = 0; // SCREEN_WIDTH/2;
       User_Rect.w = SCREEN_WIDTH/2;
