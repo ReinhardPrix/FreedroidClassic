@@ -99,6 +99,40 @@ dialogue_option, *Dialogue_option;
 dialogue_option ChatRoster[MAX_DIALOGUE_OPTIONS_IN_ROSTER];
 
 /* ----------------------------------------------------------------------
+ * In some cases it will be nescessary to inform the user of something in
+ * a big important style.  Then a popup window is suitable, with a mouse
+ * button to confirm and make it go away again.
+ * ---------------------------------------------------------------------- */
+void
+GiveMouseAlertWindow( char* WindowText )
+{
+  SDL_Rect TargetRect;
+
+  TargetRect . w = 440 ; 
+  TargetRect . h = 340 ; 
+  TargetRect . x = ( 640 - TargetRect . w ) / 2 ; 
+  TargetRect . y = ( 480 - TargetRect . h ) / 2 ; 
+  SDL_FillRect ( Screen , &TargetRect , 
+		 SDL_MapRGB ( Screen->format, 0 , 0 , 0 ) ) ;
+  
+#define IN_WINDOW_TEXT_OFFSET 15
+  TargetRect . w -= IN_WINDOW_TEXT_OFFSET;
+  TargetRect . h -= IN_WINDOW_TEXT_OFFSET;
+  TargetRect . x += IN_WINDOW_TEXT_OFFSET;
+  TargetRect . y += IN_WINDOW_TEXT_OFFSET;
+
+  SetCurrentFont ( FPS_Display_BFont );
+
+  DisplayText ( WindowText, TargetRect . x, TargetRect . y , &TargetRect )  ;
+
+  SDL_Flip ( Screen );
+
+  while (!EnterPressed() && !SpacePressed() ) ;
+  while (EnterPressed() || SpacePressed() ) ;
+
+}; // void GiveMouseAlertWindow( char* WindowText )
+
+/* ----------------------------------------------------------------------
  * This function finds the index of the array where the chat flags for
  * this person are stored.  It does this by exploiting on the (unique?)
  * dialog section to use entry of each (friendly) droid.

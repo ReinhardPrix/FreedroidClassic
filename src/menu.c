@@ -1154,10 +1154,8 @@ EscapeMenu (void)
 enum
   { 
     SAVE_GAME_POSITION=1,
-    // SINGLE_PLAYER_POSITION, 
     RESUME_GAME_POSITION,
     OPTIONS_POSITION, 
-    SET_THEME,
     LEVEL_EDITOR_POSITION, 
     LOAD_GAME_POSITION,
     QUIT_POSITION
@@ -1165,8 +1163,6 @@ enum
 
   int Weiter = 0;
   int MenuPosition=1;
-  char theme_string[40];
-  // int i;
   char* MenuTexts[10];
 
   Me[0].status=MENU;
@@ -1186,24 +1182,13 @@ enum
 
   while (!Weiter)
     {
-      strcpy (theme_string, "Theme: ");
-      if (strstr (GameConfig.Theme_SubPath, "classic"))
-	strcat (theme_string, "Classic");
-      else if (strstr (GameConfig.Theme_SubPath, "lanzz"))
-	strcat (theme_string, "Lanzz");
-      else
-	strcat (theme_string, "unknown");
-
       MenuTexts[0]="Save Game";
       MenuTexts[1]="Resume Game";
       MenuTexts[2]="Options";
-      MenuTexts[3]=theme_string;
-      MenuTexts[4]="Level Editor";
-      MenuTexts[5]="Load Game";
-      MenuTexts[6]="Quit Game";
-      MenuTexts[7]="";
-      MenuTexts[8]="";
-      MenuTexts[9]="";
+      MenuTexts[3]="Level Editor";
+      MenuTexts[4]="Load Game";
+      MenuTexts[5]="Quit Game";
+      MenuTexts[6]="";
 
       MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , NE_TITLE_PIC_FILE , NULL );
 
@@ -1217,37 +1202,6 @@ enum
 	  while (EnterPressed() || SpacePressed() );
 	  Options_Menu();
 	  // Weiter = TRUE;   /* jp forgot this... ;) */
-	  break;
-	case SET_THEME:
-	  while (EnterPressed() || SpacePressed() );
-	  /*
-	  if ( !strcmp ( GameConfig.Theme_SubPath , "classic_theme/" ) )
-	    {
-	      // GameConfig.Theme_SubPath="lanzz_theme/";
-	      strcpy ( GameConfig.Theme_SubPath , "lanzz_theme/" );
-	    }
-	  else
-	    {
-	      // GameConfig.Theme_SubPath="classic_theme/";
-	      strcpy ( GameConfig.Theme_SubPath , "classic_theme/" );
-	    }
-	  ReInitPictures();
-
-	  //--------------------
-	  // Now we have loaded a new theme with new images!!  It might however be the
-	  // case, that also the number of phases per bullet, which is specific to each
-	  // theme, has been changed!!! THIS MUST NOT BE IGNORED, OR WE'LL SEGFAULT!!!!
-	  // Because the old number of phases is still attached to living bullets, it
-	  // might try to blit a new (higher) number of phases although there are only
-	  // less Surfaces generated for the bullet in the old theme.  The solution seems
-	  // to be simply to request new graphics to be attached to each bullet, which
-	  // should be simply setting a flag for each of the bullets:
-	  for ( i = 0 ; i < MAXBULLETS ; i++ )
-	    {
-	      AllBullets[i].Surfaces_were_generated = FALSE ;
-	    }
-
-	  */
 	  break;
 	case LEVEL_EDITOR_POSITION:
 	  while (EnterPressed() || SpacePressed() );
@@ -2274,6 +2228,8 @@ enum
   MenuTexts[2]="List known Servers";
   MenuTexts[3]="Back";
   MenuTexts[4]="";
+
+  GiveMouseAlertWindow ( "\nW A R N I N G !\n\nMultiplayer and network play is still very much experimental code.\nCurrently we are not continuing the networking code, simply because our team does not have enough manpower for this additional task and because it slows down development of new features of the single player game a lot." ) ;
 
   while (!Weiter)
     {

@@ -1084,7 +1084,6 @@ ShowLevelEditorKeymap ( void )
 {
   int k=1;
 
-  // SDL_BlitSurface ( console_bg_pic2 , NULL, ne_screen, NULL);
   DisplayImage (find_file ( NE_CONSOLE_BG_PIC1_FILE, GRAPHICS_DIR, FALSE));
 #define KeymapOffset 15
   CenteredPutString   ( Screen ,  (k)*FontHeight(Menu_BFont), "Level Editor Keymap"); k+=1;
@@ -1102,6 +1101,8 @@ ShowLevelEditorKeymap ( void )
   PutString ( Screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "For more keys see our home page" ); k++;
   
   SDL_Flip ( Screen );
+
+  while ( SpacePressed() || EscapePressed() );
   while ( !SpacePressed() && !EscapePressed() );
   while ( SpacePressed() || EscapePressed() );
   
@@ -2784,8 +2785,6 @@ LevelEditor(void)
 	  //--------------------
 	  // Now we print out the current status directly onto the window:
 	  //
-	  CenteredPutString ( Screen ,  91 + 0*FontHeight( GetCurrentFont () ),    "LEVEL EDITOR");
-	  RightPutString   ( Screen ,  91 + (1)*FontHeight(Menu_BFont), "F1...Level Editor Keymap"); 
 
 	  if ( OriginWaypoint == ( -1 ) )
 	    {
@@ -2822,6 +2821,7 @@ LevelEditor(void)
 	  ShowGenericButtonFromList ( LEVEL_EDITOR_ZOOM_IN_BUTTON );
 	  ShowGenericButtonFromList ( LEVEL_EDITOR_ZOOM_OUT_BUTTON );
 	  ShowGenericButtonFromList ( LEVEL_EDITOR_RECURSIVE_FILL_BUTTON );
+	  ShowGenericButtonFromList ( LEVEL_EDITOR_KEYMAP_BUTTON );
 	  ShowGenericButtonFromList ( LEVEL_EDITOR_QUIT_BUTTON );
 
 	  //--------------------
@@ -2834,8 +2834,6 @@ LevelEditor(void)
 	  // highlited filed (that is Me[0].pos) accordingly. This is done here:
 	  //
 	  HandleLevelEditorCursorKeys();
-
-	  if ( F1Pressed() ) ShowLevelEditorKeymap ();	   
 
 	  //--------------------
 	  // With the 'S' key, you can attach a statement for the influencer to 
@@ -3035,10 +3033,12 @@ LevelEditor(void)
 	      else if ( CursorIsOnButton ( LEVEL_EDITOR_SAVE_SHIP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
 		{
 		  SaveShip("Testship.shp");
-		  CenteredPutString ( Screen ,  11*FontHeight(Menu_BFont),    "Your ship was saved...");
-		  SDL_Flip ( Screen );
-		  while (!EnterPressed() && !SpacePressed() ) ;
-		  while (EnterPressed() || SpacePressed() ) ;
+
+		  // CenteredPutString ( Screen ,  11*FontHeight(Menu_BFont),    "Your ship was saved...");
+		  // SDL_Flip ( Screen );
+
+		  GiveMouseAlertWindow ( "\nM E S S A G E\n\nYour ship was saved to file 'Testship.shp'.\nIf you are sure, that you wish to use this file in the game, copy it over the 'maps/Asteroid.maps' file so that FreedroidRPG will really use it.\n\nIf you have set up something cool and you wish to contribute it to FreedroidRPG, please contact the FreedroidRPG dev team." ) ;
+
 		}
 	      else if ( CursorIsOnButton ( LEVEL_EDITOR_ZOOM_IN_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
 		{
@@ -3051,6 +3051,10 @@ LevelEditor(void)
 	      else if ( CursorIsOnButton ( LEVEL_EDITOR_RECURSIVE_FILL_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
 		{
 		  RecFillMap ( EditLevel , BlockY , BlockX , Highlight );
+		}
+	      else if ( CursorIsOnButton ( LEVEL_EDITOR_KEYMAP_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+		{
+		  ShowLevelEditorKeymap (  );
 		}
 	      else if ( CursorIsOnButton ( LEVEL_EDITOR_QUIT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
 		{
