@@ -1169,8 +1169,8 @@ MoveEnemys ( void )
        // MoveThisEnemy ( i ); // this will now be done in the attack state machine...
 
        // If its a combat droid, then if might attack...
-       if ( ! AllEnemys [ i ] . is_friendly ) 
-	 ProcessAttackStateMachine ( i );
+       // if ( ! AllEnemys [ i ] . is_friendly ) 
+       ProcessAttackStateMachine ( i );
 
      }	// for Number_Of_Droids_On_Ship
 
@@ -1422,10 +1422,17 @@ DetermineVectorToShotTarget( enemy* ThisRobot , moderately_finepoint* vect_to_ta
 	  DebugPrintf( 0 , "\nPOSSIBLE TARGET FOR FRIENDLY DROID FOUND!!!\n");
 	  break;
 	}
+
+      //--------------------
       // Maybe we havn't found a single target.  Then we don't attack anything of course.
+      // But the target will be set to the Tux.
+      //
       if ( j >= Number_Of_Droids_On_Ship ) 
 	{
 	  ThisRobot->firewait = 1.0 ;
+	  TargetPlayerNum = ClosestVisiblePlayer ( ThisRobot ) ;
+	  vect_to_target -> x = Me [ TargetPlayerNum ] . pos . x - ThisRobot -> pos . x ;
+	  vect_to_target -> y = Me [ TargetPlayerNum ] . pos . y - ThisRobot -> pos . y ;
 	  return; 
 	}
     }
@@ -1764,7 +1771,7 @@ ProcessAttackStateMachine (int enemynum)
       // does not even see Tux now, there's nothing more to do here...
       // Not even the combat state will change.
       //
-      if ( dist2 > Druidmap [ ThisRobot->type ] . range_of_vision ) return;
+      if ( dist2 > Druidmap [ ThisRobot -> type ] . range_of_vision ) return;
 
       //--------------------
       // But if the Tux is now within range of vision, then it will be
@@ -1779,8 +1786,12 @@ ProcessAttackStateMachine (int enemynum)
 	      PlayGreetingSound( Druidmap[ ThisRobot->type ].greeting_sound_type );
 	    }
 	}
-      ThisRobot -> combat_state = STOP_AND_EYE_TUX ;
-      ThisRobot -> state_timeout = 3.0 ;
+
+      if ( ! ThisRobot -> will_rush_tux )
+	{
+	  ThisRobot -> combat_state = STOP_AND_EYE_TUX ;
+	  ThisRobot -> state_timeout = 3.0 ;
+	}
 
       return; 
     }
@@ -1803,15 +1814,24 @@ ProcessAttackStateMachine (int enemynum)
       if ( ThisRobot -> state_timeout < 0 ) 
 	{
 	  
-	  if ( dist2 > Druidmap [ ThisRobot->type ] . range_of_vision ) 
+	  if ( ( dist2 > Druidmap [ ThisRobot->type ] . range_of_vision ) )
 	    {
 	      ThisRobot -> combat_state = UNAWARE_OF_TUX ;
 	      ThisRobot -> persuing_given_course = FALSE ;
 	    }
 	  else
 	    {
-	      ThisRobot -> combat_state = MAKE_ATTACK_RUN ;
-	      ThisRobot -> persuing_given_course = FALSE ;
+	      if ( ThisRobot -> is_friendly )
+		{
+		  //--------------------
+		  // No dramatic changes here...
+		  ThisRobot -> state_timeout = 1.0 ; 
+		}
+	      else
+		{
+		  ThisRobot -> combat_state = MAKE_ATTACK_RUN ;
+		  ThisRobot -> persuing_given_course = FALSE ;
+		}
 	    }
 	}
 
@@ -1839,6 +1859,8 @@ ProcessAttackStateMachine (int enemynum)
   if ( ! IsVisible ( &ThisRobot->pos , TargetPlayer ) && 
        ( ThisRobot->is_friendly == FALSE ) ) 
     return; 
+
+  if ( ThisRobot -> is_friendly ) return; 
 
   //--------------------
   // For melee weapons, we can't just stand anywhere and try to
