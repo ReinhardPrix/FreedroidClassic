@@ -125,7 +125,7 @@ FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange
       ThisItem->max_duration = ItemMap[ ThisItem->type ].base_item_duration +
 	MyRandom( ItemMap[ ThisItem->type ].item_duration_modifier );
       if ( FullDuration ) ThisItem->current_duration = ThisItem->max_duration ;
-      else ThisItem->current_duration = MyRandom( ThisItem->max_duration ) ;
+      else ThisItem->current_duration = ThisItem->max_duration / 4 + MyRandom( ThisItem->max_duration / 2 ) ;
     }
   else
     {
