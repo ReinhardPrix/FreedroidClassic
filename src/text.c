@@ -752,6 +752,79 @@ ERROR:  UNKNOWN COMMAND STRING GIVEN!",
  *
  * ---------------------------------------------------------------------- */
 void
+make_sure_chat_portraits_loaded_for_this_droid ( Enemy this_droid )
+{
+  SDL_Surface* Small_Droid;
+  SDL_Surface* Large_Droid;
+  char *fpath;
+  char fname[500];
+  int i;
+  int model_number;
+  static int first_call = TRUE ;
+  static int this_type_has_been_loaded [ ENEMY_ROTATION_MODELS_AVAILABLE ] ;
+
+  //--------------------
+  // We make sure we only load the portrait files once and not
+  // every time...
+  //
+  if ( first_call )
+    {
+      for ( i = 0 ; i < ENEMY_ROTATION_MODELS_AVAILABLE ; i ++ )
+	this_type_has_been_loaded [ i ] = FALSE ;
+    }
+  first_call = FALSE ;
+
+  //--------------------
+  // All of the portrait files will now be loaded one after the
+  // other...
+  //
+  model_number = this_droid -> type ;
+
+  //--------------------
+  // At first we try to load the image, that is named after this
+  // chat section.  If that succeeds, perfect.  If not, we'll revert
+  // to a default image.
+  //
+  strcpy( fname, "droids/" );
+  strcat( fname, PrefixToFilename [ model_number ] ) ;
+  strcat( fname , "/portrait.png" );
+  fpath = find_file (fname, GRAPHICS_DIR, FALSE);
+  DebugPrintf ( -1000, "\nFilename used for portrait: %s." , fpath );
+
+  Small_Droid = our_IMG_load_wrapper (fpath) ;
+  if ( Small_Droid == NULL )
+    {
+      strcpy( fname, "droids/" );
+      strcat( fname, "DefaultPortrait.png" );
+      fpath = find_file (fname, GRAPHICS_DIR, FALSE);
+      Small_Droid = our_IMG_load_wrapper ( fpath ) ;
+    }
+  if ( Small_Droid == NULL )
+    {
+      fprintf( stderr, "\n\nfpath: %s \n" , fpath );
+      GiveStandardErrorMessage ( "PrepareMultipleChoiceDialog(...)" , "\
+It wanted to load a small portrait file in order to display it in the \n\
+chat interface of Freedroid.  But:  Loading this file has ALSO failed.",
+				 PLEASE_INFORM, IS_FATAL );
+    }
+  
+  Large_Droid = zoomSurface( Small_Droid , (float) Droid_Image_Window . w / (float) Small_Droid -> w , 
+			     (float) Droid_Image_Window . w / (float) Small_Droid -> w , 0 );
+  
+  chat_portrait_of_droid [ model_number ] . surface = Large_Droid ;
+  
+  if ( use_open_gl )
+    swap_red_and_blue_for_open_gl ( chat_portrait_of_droid [ model_number ] . surface );
+  
+  SDL_FreeSurface( Small_Droid );
+  
+}; // void make_sure_chat_portraits_loaded_for_this_droid ( Enemy this_droid )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
 make_sure_all_chat_portraits_are_loaded ( void )
 {
   SDL_Surface* Small_Droid;
@@ -833,7 +906,8 @@ PrepareMultipleChoiceDialog ( Enemy ChatDroid )
   // We make sure that all the chat portraits we might need are
   // loaded....
   //
-  make_sure_all_chat_portraits_are_loaded ( );
+  make_sure_chat_portraits_loaded_for_this_droid ( ChatDroid ) ;
+  //make_sure_all_chat_portraits_are_loaded ( );
 
   //--------------------
   // We select small font for the menu interaction...
@@ -1223,6 +1297,17 @@ DialogPartnersTurnToEachOther ( Enemy ChatDroid )
   Activate_Conservative_Frame_Computation();
 
   //--------------------
+  // We make sure the one droid in question is in the standing and not
+  // in the middle of the walking motion when turning to the chat partner...
+  //
+  // Calling AnimatEnemies() once for this task seems justified...
+  //
+  // ChatDroid -> animation_type = STAND_ANIMATION ;
+  ChatDroid -> speed . x = 0 ;
+  ChatDroid -> speed . y = 0 ;
+  AnimateEnemys ( ) ; 
+
+  //--------------------
   // At first do some waiting before the turning around starts...
   //
   TurningStartTime = SDL_GetTicks();  TurningDone = FALSE ;
@@ -1231,6 +1316,7 @@ DialogPartnersTurnToEachOther ( Enemy ChatDroid )
       StartTakingTimeForFPSCalculation();       
 
       AssembleCombatPicture ( SHOW_ITEMS ); 
+
       our_SDL_flip_wrapper ( Screen );
       
       if ( ( SDL_GetTicks() - TurningStartTime ) >= 1000.0 * WaitBeforeTurningTime )
