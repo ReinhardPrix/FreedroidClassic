@@ -932,6 +932,8 @@ teleporter_square_below_mouse_cursor ( int player_num , char* ItemDescText )
 	  //
 	  action_number = GiveNumberToThisActionLabel ( AllEventTriggers [ i ] . TargetActionLabel ) ;
 
+	  if(action_number == -1) return FALSE ;
+
 	  if ( AllTriggeredActions [ action_number ] . TeleportTargetLevel != (-1) )
 	    {
 	      sprintf ( ItemDescText , "To %s...." , curShip . AllLevels [ AllTriggeredActions [ action_number ] . TeleportTargetLevel ] -> Levelname ) ;
