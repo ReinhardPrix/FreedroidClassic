@@ -150,6 +150,22 @@ Load_Item_Surfaces( void )
   ItemImageList[ 19 ].inv_size.y = 2;
   ItemImageList[ 20 ].inv_size.x = 2;
   ItemImageList[ 20 ].inv_size.y = 2;
+  ItemImageList[ 21 ].inv_size.x = 2;
+  ItemImageList[ 21 ].inv_size.y = 2;
+  ItemImageList[ 22 ].inv_size.x = 1;
+  ItemImageList[ 22 ].inv_size.y = 3;
+  ItemImageList[ 23 ].inv_size.x = 2;
+  ItemImageList[ 23 ].inv_size.y = 3;
+  ItemImageList[ 24 ].inv_size.x = 2;
+  ItemImageList[ 24 ].inv_size.y = 2;
+  ItemImageList[ 25 ].inv_size.x = 2;
+  ItemImageList[ 25 ].inv_size.y = 3;
+  ItemImageList[ 26 ].inv_size.x = 2;
+  ItemImageList[ 26 ].inv_size.y = 2;
+  ItemImageList[ 27 ].inv_size.x = 2;
+  ItemImageList[ 27 ].inv_size.y = 2;
+  ItemImageList[ 28 ].inv_size.x = 2;
+  ItemImageList[ 28 ].inv_size.y = 2;
 
   fpath = find_file ( NE_ITEMS_BLOCK_FILE , GRAPHICS_DIR, TRUE);
 

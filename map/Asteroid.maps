@@ -97,6 +97,13 @@ New item: type=23  X=27.000000  Y=8.000000  AC=0  DoDamage=11  MaxDur=13  CurDur
 New item: type=24  X=28.000000  Y=8.000000  AC=0  DoDamage=113  MaxDur=13  CurDur=12.000000  Gold=0 
 New item: type=25  X=29.000000  Y=8.000000  AC=10  DoDamage=0  MaxDur=16  CurDur=13.000000  Gold=0 
 New item: type=27  X=9.000000  Y=3.000000  AC=0  DoDamage=115  MaxDur=17  CurDur=6.000000  Gold=0 
+New item: type=28  X=30.000000  Y=8.000000  AC=0  DoDamage=9  MaxDur=22  CurDur=12.000000  Gold=0 
+New item: type=27  X=31.000000  Y=8.000000  AC=0  DoDamage=3  MaxDur=12  CurDur=2.000000  Gold=0 
+New item: type=29  X=32.000000  Y=8.000000  AC=4  DoDamage=0  MaxDur=25  CurDur=2.000000  Gold=0 
+New item: type=30  X=33.000000  Y=8.000000  AC=11  DoDamage=0  MaxDur=39  CurDur=30.000000  Gold=0 
+New item: type=31  X=34.000000  Y=8.000000  AC=11  DoDamage=0  MaxDur=35  CurDur=8.000000  Gold=0 
+New item: type=32  X=34.000000  Y=9.000000  AC=0  DoDamage=4  MaxDur=31  CurDur=20.000000  Gold=0 
+New item: type=33  X=34.000000  Y=10.000000  AC=27  DoDamage=0  MaxDur=29  CurDur=21.000000  Gold=0 
 End of pure items information for this level
 wp
 Nr.=  0 x=  11 y=   1	 connections:    5   1   2   3  -1  -1  -1  -1  -1  -1  -1  -1
