@@ -155,7 +155,7 @@ Frame_Time (void)
   Rate_To_Be_Returned = (1.0 / FPSover100);
 
   // if (FPSover10 > 20)
-  if (FPSover100 > 20)
+  /* if (FPSover100 > 20)
     {
       Rate_To_Be_Returned = (1.0 / FPSover100);
     }
@@ -163,6 +163,7 @@ Frame_Time (void)
     {
       Rate_To_Be_Returned = (1.0 / 20.0);
     }
+  */
 
   if ( SkipAFewFrames ) 
     {
@@ -201,7 +202,7 @@ Frame_Time (void)
 void 
 Activate_Conservative_Frame_Computation(void)
 {
-  SkipAFewFrames=112;
+  SkipAFewFrames=212;
 } // void Activate_Conservative_Frame_Computation(void)
 
 /*-----------------------------------------------------------------

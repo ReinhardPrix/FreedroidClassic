@@ -457,7 +457,7 @@ AttackInfluence (int enemynum)
       /* Dem Bullettype entsprechend lange warten vor naechstem Schuss */
 
       Feindesliste[enemynum].firewait =
-	MyRandom (Druidmap[Feindesliste[enemynum].type].firewait) ;
+	MyRandom ( Druidmap[Feindesliste[enemynum].type].firewait ) ;
 
       /* Bullettype gemaes dem ueblichen guntype fuer den robottyp setzen */
       AllBullets[j].type = guntype;
