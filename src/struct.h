@@ -328,6 +328,7 @@ typedef struct
   float AC; // the current Armour Class of the influencer
   float RechargeTimeModifier; // the factor to be multiplied to the recharge time (times 100 for % notation)
   float RechargeTime; // the actual minimum time to wait for the influencer between shots
+  int Level; // which 'experience level' is the influencer currenly at?
   gps Position_History_Ring_Buffer[ MAX_INFLU_POSITION_HISTORY ];
   mission AllMissions[ MAX_MISSIONS_IN_GAME ];         // What must be done to fullfill this mission?
   float MissionTimeElapsed;
