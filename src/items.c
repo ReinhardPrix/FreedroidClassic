@@ -569,6 +569,7 @@ DropItemAt( int ItemType , int level_num , float x , float y , int prefix , int 
     if ( ( ItemType <= 0 ) || ( ItemType >= Number_Of_Item_Types ) )
     {
 	DebugPrintf ( -1000 , "\n\nItemType received: %d." , ItemType );
+	raise ( SIGSEGV );
 	GiveStandardErrorMessage ( __FUNCTION__  , "\
 Received an item type that was outside of range of the allowed item types.",
 				   PLEASE_INFORM, IS_FATAL );
@@ -1024,6 +1025,7 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 14:
+		default:
 		    drop_item_type = ITEM_RUNNING_POWER_POTION ;
 		    drop_item_multiplicity =  1 ;
 		    break;
@@ -1089,6 +1091,7 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 14:
+		default:
 		    drop_item_type = ITEM_SMALL_MANA_POTION ;
 		    drop_item_multiplicity =  1 ;
 		    break;
@@ -1162,6 +1165,7 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 16:
+		default:
 		    drop_item_type = ITEM_RUNNING_POWER_POTION ;
 		    drop_item_multiplicity =  1 ;
 		    break;
@@ -1231,6 +1235,7 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 15:
+		default:
 		    drop_item_type = ITEM_MEDIUM_MANA_POTION ;
 		    drop_item_multiplicity =  1 ;
 		    break;

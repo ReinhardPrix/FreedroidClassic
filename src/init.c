@@ -2187,22 +2187,47 @@ ThouArtDefeated (void)
     // Now that the influencer is dead, all this precious items
     // spring off of him...
     //
-    DropItemAt ( Me [ 0 ] . weapon_item  . type , Me [ 0 ] . pos . z , 
-		 Me [ 0 ] . pos . x - 0.5 , Me [ 0 ] . pos . y - 0.5 , -1 , -1 , 0 , 1 );
-    DropItemAt ( Me [ 0 ] . drive_item   . type , Me [ 0 ] . pos . z , 
-		 Me [ 0 ] . pos . x + 0.5 , Me [ 0 ] . pos . y - 0.5 , -1 , -1 , 0 , 1 );
-    DropItemAt ( Me [ 0 ] . shield_item  . type , Me [ 0 ] . pos . z , 
-		 Me [ 0 ] . pos . x + 0.5 , Me [ 0 ] . pos . y + 0.5 , -1 , -1 , 0 , 1 );
-    DropItemAt ( Me [ 0 ] . armour_item  . type , Me [ 0 ] . pos . z , 
-		 Me [ 0 ] . pos . x - 0.5 , Me [ 0 ] . pos . y + 0.5 , -1 , -1 , 0 , 1 );
-    DropItemAt ( Me [ 0 ] . special_item . type , Me [ 0 ] . pos . z , 
-		 Me [ 0 ] . pos . x - 0.5 , Me [ 0 ] . pos . y       , -1 , -1 , 0 , 1 );
-    DropItemAt ( Me [ 0 ] . aux1_item    . type , Me [ 0 ] . pos . z , 
-		 Me [ 0 ] . pos . x + 0.5 , Me [ 0 ] . pos . y       , -1 , -1 , 0 , 1 );
-    DropItemAt ( Me [ 0 ] . aux2_item    . type , Me [ 0 ] . pos . z , 
-		 Me [ 0 ] . pos . x       , Me [ 0 ] . pos . y - 0.5 , -1 , -1 , 0 , 1 );
-    DropItemAt ( ITEM_MONEY                     , Me [ 0 ] . pos . z , 
-		 Me [ 0 ] . pos . x       , Me [ 0 ] . pos . y       , -1 , -1 , 0 , 1 );
+    if ( Me [ 0 ] . weapon_item  . type > 0 )
+    {
+	DropItemAt ( Me [ 0 ] . weapon_item  . type , Me [ 0 ] . pos . z , 
+		     Me [ 0 ] . pos . x - 0.5 , Me [ 0 ] . pos . y - 0.5 , -1 , -1 , 0 , 1 );
+    }
+    if ( Me [ 0 ] . drive_item . type > 0 )
+    {
+	DropItemAt ( Me [ 0 ] . drive_item   . type , Me [ 0 ] . pos . z , 
+		     Me [ 0 ] . pos . x + 0.5 , Me [ 0 ] . pos . y - 0.5 , -1 , -1 , 0 , 1 );
+    }
+    if ( Me [ 0 ] . shield_item . type > 0 )
+    {
+	DropItemAt ( Me [ 0 ] . shield_item  . type , Me [ 0 ] . pos . z , 
+		     Me [ 0 ] . pos . x + 0.5 , Me [ 0 ] . pos . y + 0.5 , -1 , -1 , 0 , 1 );
+    }
+    if ( Me [ 0 ] . armour_item . type > 0 )
+    {
+	DropItemAt ( Me [ 0 ] . armour_item  . type , Me [ 0 ] . pos . z , 
+		     Me [ 0 ] . pos . x - 0.5 , Me [ 0 ] . pos . y + 0.5 , -1 , -1 , 0 , 1 );
+    }
+    if ( Me [ 0 ] . special_item . type > 0 )
+    {
+	DropItemAt ( Me [ 0 ] . special_item . type , Me [ 0 ] . pos . z , 
+		     Me [ 0 ] . pos . x - 0.5 , Me [ 0 ] . pos . y       , -1 , -1 , 0 , 1 );
+    }
+    if ( Me [ 0 ] . aux1_item . type > 0 )
+    {
+	DropItemAt ( Me [ 0 ] . aux1_item    . type , Me [ 0 ] . pos . z , 
+		     Me [ 0 ] . pos . x + 0.5 , Me [ 0 ] . pos . y       , -1 , -1 , 0 , 1 );
+    }
+    if ( Me [ 0 ] . aux2_item . type > 0 )
+    {
+	DropItemAt ( Me [ 0 ] . aux2_item    . type , Me [ 0 ] . pos . z , 
+		     Me [ 0 ] . pos . x       , Me [ 0 ] . pos . y - 0.5 , -1 , -1 , 0 , 1 );
+    }
+    if ( Me [ 0 ] . Gold > 0 )
+    {
+	DropItemAt ( ITEM_MONEY                     , Me [ 0 ] . pos . z , 
+		     Me [ 0 ] . pos . x       , Me [ 0 ] . pos . y       , -1 , -1 , 0 , 1 );
+    }
+
     
     GameOver = TRUE;
     

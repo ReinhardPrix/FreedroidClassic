@@ -1221,6 +1221,18 @@ DropEnemyTreasure ( Enemy ThisRobot )
     }
     if ( ThisRobot -> on_death_drop_item_code != (-1) )
     {
+	//--------------------
+	// We make sure the item created is of a reasonable type
+	//
+	if ( ( ThisRobot -> on_death_drop_item_code <= 0 ) ||
+	     ( ThisRobot -> on_death_drop_item_code >= Number_Of_Item_Types ) )
+	{
+	    DebugPrintf ( -1000 , "\n%s(): item type found: %d." , ThisRobot -> on_death_drop_item_code );
+	    GiveStandardErrorMessage ( __FUNCTION__  , "\
+Item to be dropped (forced for this bot) is of illegal type!" ,
+				       PLEASE_INFORM, IS_FATAL );
+	}
+
 	DropItemAt( ThisRobot -> on_death_drop_item_code , ThisRobot -> pos . z , 
 		    ThisRobot -> virt_pos . x , 
 		    ThisRobot -> virt_pos . y , -1 , -1 , 2 , 1 );
@@ -1301,10 +1313,10 @@ InitiateDeathOfEnemy ( Enemy ThisRobot )
 	//--------------------
 	// The Tux gains experience from this, only for non-friends
 	//
-	Me [ 0 ] . Experience += Druidmap[ ThisRobot->type ].experience_reward;
+	Me [ 0 ] . Experience += Druidmap [ ThisRobot -> type ] . experience_reward;
     }
     
-    ThisRobot->Status = OUT;
+    ThisRobot -> Status = OUT;
     
     //--------------------
     // The dead enemy will now explode and drop treasure, provided that 
