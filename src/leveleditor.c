@@ -3219,8 +3219,12 @@ LevelEditor(void)
 	  // First we find out which map square the player MIGHT wish us to operate on
 	  // via a POTENTIAL mouse click
 	  //
-	  TargetSquare.x = rintf ( Me [ 0 ] . pos . x + (float)( GetMousePos_x ( ) + 16 - ( SCREEN_WIDTH / 2 ) ) / ( (float)INITIAL_BLOCK_WIDTH * CurrentCombatScaleFactor ) ) ;
-	  TargetSquare.y = rintf ( Me [ 0 ] . pos . y + (float)( GetMousePos_y ( ) + 16 - ( SCREEN_HEIGHT / 2 ) ) / ( (float)INITIAL_BLOCK_HEIGHT * CurrentCombatScaleFactor ) ) ;
+	  // TargetSquare.x = rintf ( Me [ 0 ] . pos . x + (float)( GetMousePos_x ( ) + 16 - ( SCREEN_WIDTH / 2 ) ) / ( (float)INITIAL_BLOCK_WIDTH * CurrentCombatScaleFactor ) ) ;
+	  // TargetSquare.y = rintf ( Me [ 0 ] . pos . y + (float)( GetMousePos_y ( ) + 16 - ( SCREEN_HEIGHT / 2 ) ) / ( (float)INITIAL_BLOCK_HEIGHT * CurrentCombatScaleFactor ) ) ;
+	  TargetSquare . x = translate_pixel_to_map_location ( 0 , (float) GetMousePos_x ( ) + 16.0 - ( SCREEN_WIDTH / 2 ) , 
+							       (float) GetMousePos_y ( ) + 16.0 - ( SCREEN_HEIGHT / 2 ), TRUE );
+	  TargetSquare . y = translate_pixel_to_map_location ( 0 , (float) GetMousePos_x ( ) + 16.0 - ( SCREEN_WIDTH / 2 ), 
+							       (float) GetMousePos_y ( ) + 16.0 - ( SCREEN_HEIGHT / 2 ), FALSE );
 		  
 	  if ( axis_is_active && !LeftMousePressedPreviousFrame )
 	    {
