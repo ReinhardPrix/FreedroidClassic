@@ -422,7 +422,7 @@ Repair_Items( void )
 #define BASIC_ITEMS_NUMBER 10
 #define NUMBER_OF_ITEMS_ON_ONE_SCREEN 4
 #define ITEM_MENU_DISTANCE 80
-  item* Repair_Pointer_List[ MAX_ITEMS_IN_INVENTORY ];
+  item* Repair_Pointer_List[ MAX_ITEMS_IN_INVENTORY + 10 ];  // the inventory plus 7 slots or so
   int Pointer_Index=0;
   int i;
   int InMenuPosition = 0;
@@ -452,22 +452,26 @@ Repair_Items( void )
   //--------------------
   // Now we start to fill the Repair_Pointer_List
   //
-  if ( Me.weapon_item.current_duration < Me.weapon_item.max_duration ) 
+  if ( ( Me.weapon_item.current_duration < Me.weapon_item.max_duration ) && 
+       ( Me.weapon_item.type != ( -1 ) ) )
     {
       Repair_Pointer_List [ Pointer_Index ] = & ( Me.weapon_item );
       Pointer_Index ++;
     }
-  if ( Me.drive_item.current_duration < Me.drive_item.max_duration ) 
+  if ( ( Me.drive_item.current_duration < Me.drive_item.max_duration ) &&
+       ( Me.drive_item.type != ( -1 ) ) )
     {
       Repair_Pointer_List [ Pointer_Index ] = & ( Me.drive_item );
       Pointer_Index ++;
     }
-  if ( Me.armour_item.current_duration < Me.armour_item.max_duration ) 
+  if ( ( Me.armour_item.current_duration < Me.armour_item.max_duration ) &&
+       ( Me.armour_item.type != ( -1 ) ) )
     {
       Repair_Pointer_List [ Pointer_Index ] = & ( Me.armour_item );
       Pointer_Index ++;
     }
-  if ( Me.shield_item.current_duration < Me.shield_item.max_duration ) 
+  if ( ( Me.shield_item.current_duration < Me.shield_item.max_duration ) &&
+       ( Me.shield_item.type != ( -1 ) ) )
     {
       Repair_Pointer_List [ Pointer_Index ] = & ( Me.shield_item );
       Pointer_Index ++;
@@ -476,6 +480,7 @@ Repair_Items( void )
   for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
     {
       if ( Me.Inventory [ i ].type == (-1) ) continue;
+      if ( Me.Inventory [ i ].max_duration == (-1) ) continue;
       if ( Me.Inventory [ i ].current_duration < Me.Inventory [ i ] .max_duration ) 
 	{
 	  Repair_Pointer_List [ Pointer_Index ] = & ( Me.Inventory[ i ] );
@@ -789,7 +794,6 @@ enum
 
   int Weiter = 0;
   int MenuPosition=1;
-  char theme_string[40];
   char* MenuTexts[10];
 
   Me.status=MENU;
@@ -803,14 +807,6 @@ enum
 
   while (!Weiter)
     {
-      strcpy (theme_string, "Theme: ");
-      if (strstr (GameConfig.Theme_SubPath, "classic"))
-	strcat (theme_string, "Classic");
-      else if (strstr (GameConfig.Theme_SubPath, "lanzz"))
-	strcat (theme_string, "Lanzz");
-      else
-	strcat (theme_string, "unknown");
-
       MenuTexts[0]="Buy Basic Items";
       MenuTexts[1]="Buy Premium Items";
       MenuTexts[2]="Sell Items";

@@ -129,17 +129,46 @@ DrawBar (int BarCode, int Wert, unsigned char *Parameter_Screen)
 void 
 GiveItemDescription ( char* ItemDescText , item* CurItem , int ForShop )
 {
-  char linebuf[1000];
+  char linebuf[5000];
   char font_switchto_red [ 2 ] = { 1 , 0 };
   char font_switchto_blue [ 2 ] = { 2 , 0 };
   char font_switchto_neon [ 2 ] = { 3 , 0 };
 
+  //--------------------
+  // We initialize the description text, so that at least something,
+  // i.e. something terminated with a null charcter is in there.
+  //
+  strcpy( ItemDescText , "" );
   
+  //--------------------
+  // In case of a NULL given as item pointer, we can return immediately.
+  //
+  if ( CurItem == NULL ) return;
+  if ( CurItem->type == (-1) ) 
+    {
+      fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+An item description was requested for an item, that does not seem to \n\
+exist really (i.e. has a type = (-1) ).\n\
+\n\
+This indicated a severe bug in freedroid.\n\
+Please inform the developers about the problem.\n\
+\n\
+But for now Freedroid will terminate to draw attention \n\
+to the item type problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" );
+      Terminate( ERR );
+      return;
+    }
+
   // --------------------
   // First clear the string and the we print out the item name.  That's simple.
   // we also add the extension of the name, the 'suffix' to it.
   //
-  strcpy( ItemDescText , "" );
   if ( ( CurItem->suffix_code != (-1) ) || ( CurItem->prefix_code != (-1) ) )
     {
       strcat ( ItemDescText , font_switchto_blue );
@@ -151,6 +180,7 @@ GiveItemDescription ( char* ItemDescText , item* CurItem , int ForShop )
 
   if ( CurItem->type == ITEM_MONEY ) sprintf( ItemDescText , "%d " , CurItem->gold_amount );
   strcat( ItemDescText , ItemMap[ CurItem->type ].ItemName );
+
   if ( CurItem->suffix_code != (-1) )
     strcat( ItemDescText , SuffixList[ CurItem->suffix_code ].bonus_name );
 
