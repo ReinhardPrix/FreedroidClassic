@@ -239,10 +239,7 @@ enum
 #define DIALOG_DIR		"dialogs/"
 
 #define BALL_SHAPED_DROIDS_FILE	"droids.png"
-#define TUX_MOTIONS_FILE        "tux_motions.png"
-#define NE_BULLET_BLOCK_FILE 	"bullet.png"
 #define NE_BLAST_BLOCK_FILE 	"blast.png"
-#define NE_DIGIT_BLOCK_FILE     "digits.gif"
 #define NE_ITEMS_BLOCK_FILE     "items.png"
 #define MOUSE_CURSOR_BLOCK_FILE "mouse_move_cursor.png"
 #define SKILL_ICON_FILE         "skills.png"
@@ -297,8 +294,6 @@ enum
 #define INITIAL_DIGIT_HEIGHT (9*2)
 #define INITIAL_DIGIT_POS_X 5*2
 #define INITIAL_DIGIT_POS_Y 12*2
-#define DIGITNUMBER (22+26)
-#define DIGITMEM DIGITHEIGHT*DIGITLENGTH*DIGITNUMBER
 
 #define SCALE_FACTOR  2 /* scale-factor between actually displayed screen and 320x220 */
 #define SCREEN_WIDTH		(320*SCALE_FACTOR)

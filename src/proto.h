@@ -148,7 +148,6 @@ EXTERN void HomemadeUpdateTuxWorkingCopy ( int PlayerNum );
 EXTERN void InitTuxWorkingCopy( void );
 EXTERN void Load_Tux_Surfaces( void );
 EXTERN void LoadOneMapInsertSurfaceIfNotYetLoaded ( int i );
-EXTERN void Load_Digit_Surfaces (void);
 EXTERN void Load_Bullet_Surfaces (void);
 EXTERN void Load_Blast_Surfaces (void);
 EXTERN void load_all_isometric_floor_tiles ( void );

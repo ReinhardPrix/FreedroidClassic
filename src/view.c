@@ -1232,37 +1232,6 @@ AssembleCombatPicture (int mask)
 
 }; // void AssembleCombatPicture(...)
 
-/* ----------------------------------------------------------------------
- * This function blits robot digits into the robot.  It can do so for 
- * friendly droids as well as for hostile ones.
- * ---------------------------------------------------------------------- */
-void
-BlitRobotDigits( point UpperLeftBlitCorner , char* druidname , int is_friendly )
-{
-  SDL_Rect TargetRectangle;
-  int HumanModifier;
-  int i;
-
-  if ( druidname[ 0 ] >= 'A' ) HumanModifier = 'A' - '1' - 13 - 10 * (!is_friendly) ;
-  else HumanModifier = 0 ;
-
-  for ( i = 0 ; i < 3 ; i ++ )
-    {
-      TargetRectangle.x = UpperLeftBlitCorner.x + Digit_Pos[i].x ;
-      TargetRectangle.y = UpperLeftBlitCorner.y + Digit_Pos[i].y ;
-      if ( is_friendly == 0 )
-	{
-	  SDL_BlitSurface( EnemyDigitSurfacePointer[ druidname[i]-'1'+1+HumanModifier ] , 
-			   NULL, Screen, &TargetRectangle );
-	}
-      else
-	{
-	  SDL_BlitSurface( InfluDigitSurfacePointer[ druidname[i]-'1'+1+HumanModifier ] , 
-			   NULL, Screen, &TargetRectangle );
-	}
-    }
-}; // void 
-
 /* -----------------------------------------------------------------
  * This function draws the mouse move cursor.
  * ----------------------------------------------------------------- */
@@ -1367,7 +1336,7 @@ Empty part string received!",
     {
       part_index = 2 ;
     }
-  else if ( ! strcmp ( part_string , "mace" ) )
+  else if ( ! strcmp ( part_string , "sword" ) )
     {
       part_index = 3 ;
     }
@@ -1503,7 +1472,7 @@ void
 iso_put_tux_weapon ( int x , int y , int PlayerNum , int rotation_index )
 {
   if ( Me [ PlayerNum ] . weapon_item . type != (-1) )
-    iso_put_tux_part ( "mace" , x , y , PlayerNum , rotation_index );
+    iso_put_tux_part ( "sword" , x , y , PlayerNum , rotation_index );
 
 }; // void iso_put_tux_weapon ( int x , int y , int PlayerNum , int rotation_index )
 
@@ -1564,7 +1533,7 @@ iso_put_all_tux_parts_in_direction ( int x , int y , int PlayerNum , int rotatio
       iso_put_tux_torso ( x , y , PlayerNum , rotation_index );
       iso_put_tux_weapon ( x , y , PlayerNum , rotation_index );
       iso_put_tux_shieldarm ( x , y , PlayerNum , rotation_index );
-      iso_put_tux_part ( "mace" , x , y , PlayerNum , rotation_index );
+      iso_put_tux_part ( "sword" , x , y , PlayerNum , rotation_index );
       iso_put_tux_head ( x , y , PlayerNum , rotation_index );
       break;
     }
@@ -1633,7 +1602,6 @@ PutInfluence ( int x , int y , int PlayerNum )
   int alpha_value;
   int use_tux = TRUE;
   point UpperLeftBlitCorner;
-  int i;
 
   Text_Rect.x=UserCenter_x + Block_Width/3;
   Text_Rect.y=UserCenter_y  - Block_Height/2;
@@ -1690,9 +1658,6 @@ PutInfluence ( int x , int y , int PlayerNum )
 			    fabsf( 0.5 * Me [ PlayerNum ].MissionTimeElapsed - floor( 0.5 * Me [ PlayerNum ].MissionTimeElapsed ) - 0.5 ) + 
 			    ( alpha_offset ) );
 
-      for ( i = 0 ; i < DIGITNUMBER ; i++ )
-	SDL_SetAlpha( InfluDigitSurfacePointer[i] , SDL_SRCALPHA , alpha_value );
-
       // ... and also maybe start a new cry-sound
 
       if ( Me [ PlayerNum ].LastCrysoundTime > CRY_SOUND_INTERVAL )
@@ -1700,11 +1665,6 @@ PutInfluence ( int x , int y , int PlayerNum )
 	  Me [ PlayerNum ].LastCrysoundTime = 0;
 	  CrySound();
 	}
-    }
-  else
-    {
-      for ( i = 0 ; i < DIGITNUMBER ; i++ )
-	SDL_SetAlpha( InfluDigitSurfacePointer[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
     }
 
   //--------------------
@@ -1735,7 +1695,6 @@ PutInfluence ( int x , int y , int PlayerNum )
       // and the digits of the influencers current number.
       //
       SDL_BlitSurface( InfluencerSurfacePointer[ (int) floorf (Me [ PlayerNum ].phase) ], NULL , Screen, &TargetRectangle );
-      BlitRobotDigits( UpperLeftBlitCorner , Druidmap[ Me [ PlayerNum ].type ].druidname , TRUE );
     }
 
 
@@ -2113,12 +2072,6 @@ There was a droid type on this level, that does not really exist.",
       // DebugPrintf (3, "\nvoid PutEnemy(int Enum): STATUS==OUT --> usual end of function reached.\n");
       return;
     }
-
-  //--------------------
-  // Now the numbers should be blittet.
-  //
-  if ( GameConfig.show_digits_of_droids )
-    BlitRobotDigits( UpperLeftBlitCorner , druidname , AllEnemys[Enum].is_friendly );
 
   PrintCommentOfThisEnemy ( Enum );
 

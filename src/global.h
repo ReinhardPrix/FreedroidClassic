@@ -228,10 +228,6 @@ EXTERN SDL_Surface *GreenEnemyRotationSurfacePointer[ ENEMY_ROTATION_MODELS_AVAI
                                                // influencer in different phases of rotation
 EXTERN SDL_Surface *TuxWorkingCopy [ MAX_PLAYERS ] [ TUX_BREATHE_PHASES + TUX_SWING_PHASES + TUX_GOT_HIT_PHASES ] [ MAX_TUX_DIRECTIONS ] ;   // A pointer to the surfaces containing the tux
 EXTERN SDL_Surface *TuxMotionArchetypes[ TUX_MODELS ][ TUX_BREATHE_PHASES + TUX_SWING_PHASES + TUX_GOT_HIT_PHASES ];   // A pointer to the surfaces containing the tux
-EXTERN SDL_Surface *InfluDigitSurfacePointer[ DIGITNUMBER ];   // A pointer to the surfaces containing the pictures of the
-                                               // influencer in different phases of rotation
-EXTERN SDL_Surface *EnemyDigitSurfacePointer[ DIGITNUMBER ];   // A pointer to the surfaces containing the pictures of the
-                                               // influencer in different phases of rotation
 EXTERN iso_image floor_iso_images [ ALL_ISOMETRIC_FLOOR_TILES ] ;   
 
 
@@ -244,9 +240,6 @@ EXTERN int iso_floor_tile_width;
 EXTERN int iso_floor_tile_height;
 EXTERN int Block_Width;
 EXTERN int Block_Height;
-EXTERN int Digit_Length;
-EXTERN int Digit_Height;
-EXTERN point Digit_Pos[3];
 EXTERN const SDL_VideoInfo *vid_info;/* info about current video mode */
 EXTERN color transp_rgb;             /* RGB of transparent color */
 EXTERN int vid_bpp; 			/* bits per pixel */

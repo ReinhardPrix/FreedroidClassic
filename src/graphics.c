@@ -1065,35 +1065,6 @@ is a severe bug in the reading function.",
 				 NO_NEED_TO_INFORM, IS_FATAL );
 	}
 
-
-  
-  // --------------------
-  // Also decidable from the theme is where in the robot to
-  // display the digits.  This must also be read from the configuration
-  // file of the theme
-  //
-#define DIGIT_ONE_POSITION_X_STRING "First digit x :"
-#define DIGIT_ONE_POSITION_Y_STRING "First digit y :"
-#define DIGIT_TWO_POSITION_X_STRING "Second digit x :"
-#define DIGIT_TWO_POSITION_Y_STRING "Second digit y :"
-#define DIGIT_THREE_POSITION_X_STRING "Third digit x :"
-#define DIGIT_THREE_POSITION_Y_STRING "Third digit y :"
-
-  ReadValueFromString( Data , DIGIT_ONE_POSITION_X_STRING , "%d" , 
-		       & ( Digit_Pos[0].x ) , EndOfThemesDigitData );
-  ReadValueFromString( Data , DIGIT_ONE_POSITION_Y_STRING , "%d" , 
-		       & ( Digit_Pos[0].y ) , EndOfThemesDigitData );
-
-  ReadValueFromString( Data , DIGIT_TWO_POSITION_X_STRING , "%d" , 
-		       & ( Digit_Pos[1].x ) , EndOfThemesDigitData );
-  ReadValueFromString( Data , DIGIT_TWO_POSITION_Y_STRING , "%d" , 
-		       & ( Digit_Pos[1].y ) , EndOfThemesDigitData );
-
-  ReadValueFromString( Data , DIGIT_THREE_POSITION_X_STRING , "%d" , 
-		       & ( Digit_Pos[2].x ) , EndOfThemesDigitData );
-  ReadValueFromString( Data , DIGIT_THREE_POSITION_Y_STRING , "%d" , 
-		       & ( Digit_Pos[2].y ) , EndOfThemesDigitData );
-
 }; // void LoadThemeConfigurationFile ( void )
 
 /* ----------------------------------------------------------------------
@@ -1210,10 +1181,6 @@ InitPictures (void)
   ShowStartupPercentage ( 43 ) ; 
 
   Load_Tux_Surfaces();
-
-  ShowStartupPercentage ( 60 ) ; 
-
-  Load_Digit_Surfaces();
 
   ShowStartupPercentage ( 65 ) ; 
 

@@ -101,7 +101,9 @@ typedef struct
   int terminate_on_missing_speech_sample;
   int show_subtitles_in_dialogs;
   char freedroid_version_string[500];
-  int show_digits_of_droids;
+
+  int UNUSED_ENTRY_HERE ;
+
   int skill_explanation_screen_visible;
   int enemy_energy_bars_visible;
   int hog_CPU;

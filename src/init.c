@@ -1695,7 +1695,6 @@ ResetGameConfigToDefaultValues ( void )
 
   GameConfig.terminate_on_missing_speech_sample = FALSE ;
   GameConfig.show_subtitles_in_dialogs = TRUE ;
-  GameConfig.show_digits_of_droids = FALSE ;
 
   GameConfig.enemy_energy_bars_visible = TRUE ;
   
