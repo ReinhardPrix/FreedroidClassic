@@ -756,6 +756,10 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , 
 	  drop_item_type = ITEM_LASER_AMMUNITION ;
 	  drop_item_multiplicity =  2 + MyRandom ( 9 ) ;
 	  break;
+	case 12:
+	  drop_item_type = ITEM_CLUB ;
+	  drop_item_multiplicity =  1 ;
+	  break;
 	} // inner switch
       break;
     case 1:
@@ -1399,6 +1403,12 @@ ApplyItem( item* CurItem )
     {
       Me [ 0 ] . SkillLevel [ SPELL_DETECT_ITEM ] ++ ;
       Me [ 0 ] . base_skill_level [ SPELL_DETECT_ITEM ] ++ ;
+      Play_Spell_ForceToEnergy_Sound( );
+    }
+  else if ( CurItem->type == ITEM_SPELLBOOK_OF_IDENTIFY )
+    {
+      Me [ 0 ] . SkillLevel [ SPELL_IDENTIFY_SKILL ] ++ ;
+      Me [ 0 ] . base_skill_level [ SPELL_IDENTIFY_SKILL ] ++ ;
       Play_Spell_ForceToEnergy_Sound( );
     }
 

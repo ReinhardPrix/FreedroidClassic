@@ -211,6 +211,7 @@ exist really (i.e. has a type = (-1) ).",
 	case ITEM_SPELLBOOK_OF_RADIAL_VMX_WAVE:
 	case ITEM_SPELLBOOK_OF_RADIAL_PLASMA_WAVE:
 	case ITEM_SPELLBOOK_OF_DETECT_ITEMS:
+	case ITEM_SPELLBOOK_OF_IDENTIFY:
 	  sprintf( linebuf , "Permanently aquire this skill/spell\n" );
 	  strcat( ItemDescText , linebuf );
 	  break;
