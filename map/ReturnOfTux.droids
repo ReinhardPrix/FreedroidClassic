@@ -316,23 +316,23 @@ SpecialForce: Type=302 X=38 Y=11 Fixed=0 Marker=44 AdvancedCommand=2 Parameter1=
 SpecialForce: Type=296 X=38 Y=11 Fixed=0 Marker=50 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Some296StartsHere1" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Guardian"
 SpecialForce: Type=296 X=38 Y=11 Fixed=0 Marker=50 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Some296StartsHere2" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Guardian"
 
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=49 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr21" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot"
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=49 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr22" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot"
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=52 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr21" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot"
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=52 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr22" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot"
 
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=49 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr23" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot"
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=49 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr24" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot"
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=53 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr23" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot"
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=53 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr24" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot"
 
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=49 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr25" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot"
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=49 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr26" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot"
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=54 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr25" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot"
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=54 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr26" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot"
 
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=49 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr27" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot"
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=49 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr28" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot"
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=55 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr27" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot"
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=55 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr28" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot"
 
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=49 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr29" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot"
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=49 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr30" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot"
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=56 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr29" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot"
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=56 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr30" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot"
 
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=49 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr31" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot"
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=49 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr32" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot"
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=57 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr31" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot"
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=57 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr32" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot"
 
 ** End of this levels droid data **
 
