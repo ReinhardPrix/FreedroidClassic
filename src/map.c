@@ -143,6 +143,7 @@ CollectAutomapData ( void )
   // finepoint ObjPos;
   gps ObjPos;
   static int TimePassed;
+  int level = Me [ 0 ] . pos . z ;
 
   ObjPos . z = Me [ 0 ] . pos . z ;
 
@@ -170,7 +171,7 @@ CollectAutomapData ( void )
 	      ObjPos.y = y + 0;
 	      if ( IsVisible ( &ObjPos , 0 ) ) 
 		{
-		  Me [ 0 ] . Automap[y][x].storebyte = Me [ 0 ] . Automap[y][x].storebyte | RIGHT_WALL_BIT ;
+		  Me [ 0 ] . Automap[level][y][x] = Me [ 0 ] . Automap[level][y][x] | RIGHT_WALL_BIT ;
 		}
 	      //--------------------
 	      // Now we check, if there are some left sides of walls visible
@@ -179,7 +180,7 @@ CollectAutomapData ( void )
 	      ObjPos.y = y + 0;
 	      if ( IsVisible ( &ObjPos , 0 ) )
 		{
-		  Me [ 0 ] . Automap[y][x].storebyte = Me [ 0 ] . Automap[y][x].storebyte | LEFT_WALL_BIT ;
+		  Me [ 0 ] . Automap[level][y][x] = Me [ 0 ] . Automap[level][y][x] | LEFT_WALL_BIT ;
 		}
 	      //--------------------
 	      // Now we check, if there are some southern sides of walls visible
@@ -188,7 +189,7 @@ CollectAutomapData ( void )
 	      ObjPos.y = y + 0.75;
 	      if ( IsVisible ( &ObjPos , 0 ) ) 
 		{
-		  Me [ 0 ] . Automap[y][x].storebyte = Me [ 0 ] . Automap[y][x].storebyte | DOWN_WALL_BIT ;
+		  Me [ 0 ] . Automap[level][y][x] = Me [ 0 ] . Automap[level][y][x] | DOWN_WALL_BIT ;
 		}
 	      //--------------------
 	      // Now we check, if there are some northern sides of walls visible
@@ -197,7 +198,7 @@ CollectAutomapData ( void )
 	      ObjPos.y = y - 0.75 ;
 	      if ( IsVisible ( &ObjPos , 0 ) ) 
 		{
-		  Me [ 0 ] . Automap[y][x].storebyte = Me [ 0 ] . Automap[y][x].storebyte | UP_WALL_BIT ;
+		  Me [ 0 ] . Automap[level][y][x] = Me [ 0 ] . Automap[level][y][x] | UP_WALL_BIT ;
 		}
 	    }
 	}

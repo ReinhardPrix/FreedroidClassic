@@ -468,7 +468,7 @@ typedef struct
   // TO BE COMMUNICATED FROM THE CLIENT TO THE SERVER OR VICE VERSA
   //
   int KillRecord[ 1000 ];      // how many ( of the first 1000 monster types) have been killed yet?
-  automap_tile Automap[200][200]; // this is the data for the automatic map
+  Uint8 Automap [MAX_LEVELS][100][100]; // this is the data for the automatic map
   gps Position_History_Ring_Buffer[ MAX_INFLU_POSITION_HISTORY ];
 }
 influence_t, *Influence_t;
