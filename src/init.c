@@ -117,7 +117,8 @@ For more information about these matters, see the file named COPYING.\n";
 
 char usage_string[] =
   "Usage: freedroid [-v|--version] [-q|--nosound] [-s|--sound] 
-			[-t|--timeout=SECONDS]\n
+			[-t|--timeout=SECONDS]
+	      		[-d|--debug=LEVEL]\n
 Report bugs to freedroid@??? (sorry, havent got one yet ;)\n";
 
 /* -----------------------------------------------------------------
@@ -132,16 +133,17 @@ parse_command_line (int argc, char *const argv[])
 
   static struct option long_options[] = {
     {"version", 0, 0, 'v'},
-    {"help", 0, 0, 'h'},
+    {"help", 	0, 0, 'h'},
     {"nosound", 0, 0, 'q'},
-    {"sound", 0, 0, 's'},
+    {"sound", 	0, 0, 's'},
     {"timeout", 1, 0, 't'},
-    {0, 0, 0, 0}
+    {"debug", 	2, 0, 'd'},
+    { 0, 	0, 0,  0}
   };
 
   while (1)
     {
-      c = getopt_long (argc, argv, "vqst:h?", long_options, NULL);
+      c = getopt_long (argc, argv, "vqst:h?d::", long_options, NULL);
       if (c == -1)
 	break;
 
@@ -176,6 +178,13 @@ parse_command_line (int argc, char *const argv[])
 	      signal (SIGALRM, timeout);
 	      alarm (timeout_time);	/* Terminate after some seconds for safety. */
 	    }
+	  break;
+
+	case 'd':
+	  if (!optarg) 
+	    debug_level = 1;
+	  else
+	    debug_level = atoi (optarg);
 	  break;
 
 	default:

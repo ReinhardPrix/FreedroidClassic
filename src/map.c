@@ -1,3 +1,11 @@
+/*----------------------------------------------------------------------
+ *
+ * Desc: All map-related functions, which also includes loading of decks 
+ * and whole ships, starting the elevators and consoles if close to the 
+ * paradroid, refreshes as well as determining the map brick that contains
+ * specified coordinates are done in this file.
+ *
+ *----------------------------------------------------------------------*/
 /* 
  *
  *   Copyright (c) 1994, 2002 Johannes Prix
@@ -22,15 +30,6 @@
  *  MA  02111-1307  USA
  *
  */
-
-/*----------------------------------------------------------------------
- *
- * Desc: All map-related functions, which also includes loading of decks 
- * and whole ships, starting the elevators and consoles if close to the 
- * paradroid, refreshes as well as determining the map brick that contains
- * specified coordinates are done in this file.
- *
- *----------------------------------------------------------------------*/
 #include <config.h>
 
 #define _map_c
@@ -89,8 +88,10 @@ unsigned char
 GetMapBrick (Level deck, float x, float y)
 {
 
-  // ATTENTION! BE CAREFUL HERE!  What we want is an integer division with rest, not an exact
-  // foating point division!  Beware of "improvements" here!!!
+  /* 
+   * ATTENTION! BE CAREFUL HERE!  What we want is an integer division with rest, 
+   * not an exact foating point division!  Beware of "improvements" here!!!
+   */
 
   if (((int) rintf (y)) / BLOCKHOEHE >= deck->ylen)
     {
@@ -122,7 +123,7 @@ GetMapBrick (Level deck, float x, float y)
     }
   return deck->map[((int) rintf (y)) / BLOCKHOEHE][((int) rintf (x)) /
 						   BLOCKBREITE];
-}				// unsigned char GetMapBrick(Level deck, float x, float y)
+} /* GetMapBrick() */
 
 /*@Function============================================================
 @Desc: int GetCurrentElevator: finds Elevator-number to your position 
@@ -359,7 +360,7 @@ LoadShip (char *shipname)
       return ERR;
     }
   return OK;
-}				// int LoadShip(char *shipname)
+} /* LoadShip () */
 
 
 /*@Function============================================================
@@ -380,7 +381,7 @@ LevelToStruct (char *data)
   char *map_begin, *wp_begin;
   int i, j;
   int NumWaypoints;
-  //    int NumDoors, NumRefreshes;
+  /*    int NumDoors, NumRefreshes; */
   int zahl;
 
   /* Get the memory for one level */
@@ -395,15 +396,12 @@ LevelToStruct (char *data)
 
   /* find Map-data */
   if ((map_begin = strstr (data, MAP_BEGIN_STRING)) == NULL)
-    {
-      return NULL;
-    }
+    return NULL;
 
-  /* Position on Waypoint-Data */
+
+  /* set position to Waypoint-Data */
   if ((wp_begin = strstr (data, WP_BEGIN_STRING)) == NULL)
-    {
-      return NULL;
-    }
+    return NULL;
 
   /* now scan the map */
   strtok (map_begin, "\n");	/* init strtok to map-begin */
@@ -411,9 +409,8 @@ LevelToStruct (char *data)
   /* read MapData */
   for (i = 0; i < loadlevel->ylen; i++)
     if ((loadlevel->map[i] = strtok (NULL, "\n")) == NULL)
-      {
-	return NULL;
-      }
+      return NULL;
+
 
   /* Get Doors Array */
   // NumDoors =
@@ -435,14 +432,9 @@ LevelToStruct (char *data)
       for (j = 0; j < MAX_WP_CONNECTIONS; j++)
 	{
 	  if ((pos = strtok (NULL, " \n\t")) == NULL)
-	    {
-	      return NULL;
-	    }
-
+	    return NULL;
 	  if (sscanf (pos, "%d", &zahl) == EOF)
-	    {
 	      return NULL;
-	    }
 
 	  loadlevel->AllWaypoints[i].connections[j] = zahl;
 	}
@@ -525,22 +517,19 @@ GetWaypoints (Level Lev)
   /* Now find the waypoints */
   for (line = 0; line < ylen; line++)
     for (col = 0; col < xlen; col++)
-      {
-	if (Lev->map[line][col] == WAYPOINT_CHAR)
-	  {
-	    Lev->AllWaypoints[curwp].x = col;
-	    Lev->AllWaypoints[curwp++].y = line;
+      if (Lev->map[line][col] == WAYPOINT_CHAR)
+	{
+	  Lev->AllWaypoints[curwp].x = col;
+	  Lev->AllWaypoints[curwp].y = line;
+	  curwp ++;
 
-	    if (curwp > MAXWAYPOINTS)
-	      {
-		return ERR;
-	      }
+	  if (curwp > MAXWAYPOINTS)
+	    return ERR;
+	} /* if (WAYPOINT_CHAR) */
 
-	  }			/* if */
-      }				/* for */
+  return curwp;  /* return number of waypoints found */
 
-  return curwp;
-}				/* GetWaypoints */
+} /* GetWaypoints() */
 
 /*@Function============================================================
 @Desc: int GetRefreshes(Level Lev): legt array der refr. positionen an

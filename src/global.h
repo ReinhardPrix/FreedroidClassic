@@ -120,14 +120,8 @@ EXTERN char RightInfo[50];
 EXTERN int taste;
 
 EXTERN int sound_on;		/* Toggle TRUE/FALSE for turning sounds on/off */
-
-// PORT EXTERN int UpPressed;
-// PORT EXTERN int DownPressed;
-// PORT EXTERN int LeftPressed;
-// PORT EXTERN int RightPressed;
-// PORT EXTERN int SpacePressed;
-// PORT EXTERN int SpaceReleased;
-// PORT EXTERN int QPressed;
+EXTERN int debug_level;       	/* 0=no debug 1=some debug messages 2=...etc */
+				/* (currently only 0 or 1 is implemented) */
 
 #undef EXTERN
 #ifdef _misc_c

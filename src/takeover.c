@@ -789,6 +789,8 @@ ShowPlayground (void)
 
   PutInternFenster ();		/* restore current Game-view (for transparancy) */
 
+  SetUserfenster(TO_BG_COLOR, RealScreen);
+
   UpdateInfoline ();
   DebugPrintf ("\nShowPlayground(): first UpdateInfoline() survived");
   curx = USERFENSTERPOSX + LEFT_OFFS_X;

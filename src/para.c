@@ -222,11 +222,13 @@ main (int argc, char *const argv[])
   QuitProgram = FALSE;
   Conceptview = FALSE;
 
-  sound_on = TRUE;		/* default value, can be overridden by command-line */
+  sound_on = TRUE;	/* default value, can be overridden by command-line */
+  debug_level = 0;     /* 0=no debug 1=first debug level (at the moment=all) */
 
-  /* Parse command line and set global switches 
-     this function exits program when error, so we don't need to 
-     check its success  (dunno if that's good design?)
+  /*
+   *  Parse command line and set global switches 
+   *  this function exits program when error, so we don't need to 
+   *  check its success  (dunno if that's good design?)
    */
   parse_command_line (argc, argv);
 

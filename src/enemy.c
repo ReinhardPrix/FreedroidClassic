@@ -1,3 +1,11 @@
+/*----------------------------------------------------------------------
+ *
+ * Desc: All enemy - realted functions.  This includes their whole behaviour,
+ *	healing, initialization, shuffling them around after evevator-transitions
+ *	of the paradroid, deleting them, collisions of enemys among themselves,
+ *	their fireing, animation and such.
+ *
+ *----------------------------------------------------------------------*/
 /* 
  *
  *   Copyright (c) 1994, 2002 Johannes Prix
@@ -23,14 +31,6 @@
  *
  */
 
-/*----------------------------------------------------------------------
- *
- * Desc: All enemy - realted functions.  This includes their whole behaviour,
- *	healing, initialization, shuffling them around after evevator-transitions
- *	of the paradroid, deleting them, collisions of enemys among themselves,
- *	their fireing, animation and such.
- *
- *----------------------------------------------------------------------*/
 #include <config.h>
 
 #define _enemy_c

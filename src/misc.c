@@ -93,6 +93,8 @@ DebugPrintf (char *Print_String)
   static int first_time = TRUE;
   FILE *debugfile;
 
+  if (debug_level == 0) return;
+
   if (first_time)		/* make sure the first call deletes previous log-file */
     {
       debugfile = fopen ("debug.out", "w");
@@ -277,22 +279,22 @@ Teleport (int LNum, int X, int Y)
 }				// void Teleport(...)
 
 /* **********************************************************************
-   Diese Funktion stellt ein praktisches Cheatmenu zur Verf"ugung
-   Es sind geplant:
-		* Robotvernichtung
-		* Teleportationen nach Belieben
-		* Belibige Typenauswahl
-		* Ausgabe einer Gesamtrobotliste
-   **********************************************************************/
+ *  Diese Funktion stellt ein praktisches Cheatmenu zur Verf"ugung
+ *  Es sind geplant:
+ *		* Robotvernichtung
+ *		* Teleportationen nach Belieben
+ *		* Belibige Typenauswahl
+ *		* Ausgabe einer Gesamtrobotliste
+ ***********************************************************************/
 void
 Cheatmenu (void)
 {
   char CTaste = ' ';
-  // int vgamode;
-  char NewRoboType[80];		// name of new influencer robot-type, i.e. "123"
+  char NewRoboType[80];		/* name of new influencer robot-type, i.e. "123" */
   int Weiter = 0;
   int LNum, X, Y, i;
-  int X0 = 20, Y0 = 5;		// startpos for gl_- text writing
+  int X0 = 20, Y0 = 5;		/* startpos for gl_- text writing */
+  Waypoint WpList;           /* pointer on current waypoint-list  */
 
   
   // Prevent distortion of framerate by the delay coming from 
@@ -302,11 +304,6 @@ Cheatmenu (void)
   // return to normal keyboard operation
   keyboard_close ();
 
-  //  gotoxy(1,1);
-  //  vgamode = vga_getcurrentmode();
-  //  vga_setmode(TEXT);
-
-  // rp: try out the gl-textfunctions
   while (!Weiter)
     {
       vga_clear ();
@@ -314,9 +311,8 @@ Cheatmenu (void)
       gl_setwritemode (FONT_COMPRESSED + WRITEMODE_OVERWRITE);
       gl_setfontcolors (0, vga_white ());
 
-      gl_printf (X0, Y0, "*******************************\n");
-      gl_printf (-1, -1, " ----  C H E A T M E N U  ----\n");
-      gl_printf (-1, -1, "-------------------------------\n\n");
+      gl_printf (X0, Y0, "Current position: Level=%d, X=%d, Y=%d\n\n",
+		 CurLevel->levelnum, (int)GrobX, (int)GrobY);
       gl_printf (-1, -1, " a. Armageddon (alle Robots sprengen)\n");
       gl_printf (-1, -1, " l. Robotliste von einem Deck\n");
       gl_printf (-1, -1, " g. Gesamtrobotliste\n");
@@ -330,6 +326,7 @@ Cheatmenu (void)
       gl_printf (-1, -1, " c. Conceptview: %s\n", Conceptview ? "ON" : "OFF");
       gl_printf (-1, -1, " m. Map von Deck xy\n");
       gl_printf (-1, -1, " s. Sound: %s\n", sound_on ? "ON" : "OFF");
+      gl_printf (-1, -1, " W. Print current waypoints\n");
       gl_printf (-1, -1, "\n q. RESUME game\n");
 
       CTaste = getchar ();
@@ -346,7 +343,7 @@ Cheatmenu (void)
 	    {
 	      if (Feindesliste[i].levelnum == CurLevel->levelnum)
 		{
-		  if ( ( Feindesliste[i].type < 0 ) || ( Feindesliste[i].type >= ALLDRUIDTYPES ) )
+		  if (Feindesliste[i].type >= ALLDRUIDTYPES)
 		    {
 		      printf("\n\n WARNING!  Illegal Druidtype encoutered!  Terminating...");
 		      printf("\n               The details are: Type=%d.\n\n", Feindesliste[i].type );
@@ -452,10 +449,27 @@ Cheatmenu (void)
 	  gl_printf (-1, -1, "\nLevelnum:");
 	  scanf ("%d", &LNum);
 	  getchar ();
-	  // this function works in raw-kb mode, so we switch again
+	  /* this function works in raw-kb mode, so we switch again */
 	  keyboard_init ();
 	  ShowDeckMap (curShip.AllLevels[LNum]);
 	  keyboard_close ();
+	  break;
+	  
+	case 'W':  /* print waypoint info of current level */
+	  vga_clear();
+	  WpList = CurLevel->AllWaypoints;
+	  gl_printf (X0, Y0, "Nr.   X   Y      C1 C2 C3 C4  \n");
+	  for (i=0; i<MAXWAYPOINTS && WpList[i].x; i++)
+	    {
+	      gl_printf (-1, -1, "%2d %2d %2d     %2d %2d %2d %2d\n",
+			 i, WpList[i].x, WpList[i].y,
+			 WpList[i].connections[0],
+			 WpList[i].connections[1],
+			 WpList[i].connections[2],
+			 WpList[i].connections[3]);
+	    } /* for (waypoints) */
+	  getchar();
+
 	  break;
 
 	case ' ':
@@ -472,7 +486,7 @@ Cheatmenu (void)
   keyboard_init (); /* return to raw keyboard mode */
 
   return;
-}
+} /* Cheatmenu() */
 
 
 void
