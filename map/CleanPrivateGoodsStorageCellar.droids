@@ -55,9 +55,22 @@ Start of Question-Response List for this friendly droid
 End of Question-Response List for this friendly droid
 
 //**********************************************************************
-// This is Dr. Chandra, from whom you will receive your first mission
+// This is Mr. Stone, a sales representative of the UMC
 //**********************************************************************
 SpecialForce: Type=STO X=33 Y=11 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1
+
+Start of Decision-Request List for this friendly droid
+
+End of Decision-Request List for this friendly droid
+
+Start of Question-Response List for this friendly droid
+
+End of Question-Response List for this friendly droid
+
+//**********************************************************************
+// This is Sorenson, a former preferred person of the MS
+//**********************************************************************
+SpecialForce: Type=SOR X=7 Y=18 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1
 
 Start of Decision-Request List for this friendly droid
 
