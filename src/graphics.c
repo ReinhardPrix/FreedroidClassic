@@ -473,6 +473,188 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
 
 }; // void LoadThemeConfigurationFile ( void )
 
+/*
+----------------------------------------------------------------------
+This function loads the Blast image and decodes it into the multiple
+small Blast surfaces.
+----------------------------------------------------------------------
+*/
+void 
+Load_Blast_Surfaces( void )
+{
+  SDL_Surface* Whole_Image;
+  SDL_Surface* tmp_surf;
+  SDL_Rect Source;
+  SDL_Rect Target;
+  int i;
+  int j;
+  char *fpath;
+
+  fpath = find_file (NE_BLAST_BLOCK_FILE, GRAPHICS_DIR, TRUE);
+
+  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
+
+  for ( i=0 ; i < ALLBLASTTYPES ; i++ )
+    {
+      for ( j=0 ; j < Blastmap[i].phases ; j++ )
+	{
+	  tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, ne_bpp, 0, 0, 0, 0);
+	  SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
+	  Blastmap[i].SurfacePointer[j] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
+	  SDL_SetColorKey( Blastmap[i].SurfacePointer[j] , 0 , 0 ); // this should clear any color key in the dest surface
+	  // Now we can copy the image Information
+	  Source.x=j*(Block_Height+2);
+	  Source.y=i*(Block_Width+2);
+	  Source.w=Block_Width;
+	  Source.h=Block_Height;
+	  Target.x=0;
+	  Target.y=0;
+	  Target.w=Block_Width;
+	  Target.h=Block_Height;
+	  SDL_BlitSurface ( Whole_Image , &Source , Blastmap[i].SurfacePointer[j] , &Target );
+	  SDL_SetAlpha( Blastmap[i].SurfacePointer[j] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+	}
+    }
+
+  SDL_FreeSurface( tmp_surf );
+
+}; // void Load_Blast_Surfaces( void )
+
+
+/*
+----------------------------------------------------------------------
+This function loads the Blast image and decodes it into the multiple
+small Blast surfaces.
+----------------------------------------------------------------------
+*/
+void 
+Load_Bullet_Surfaces( void )
+{
+  SDL_Surface* Whole_Image;
+  SDL_Surface* tmp_surf;
+  SDL_Rect Source;
+  SDL_Rect Target;
+  int i;
+  int j;
+  char *fpath;
+
+  fpath = find_file (NE_BULLET_BLOCK_FILE, GRAPHICS_DIR, TRUE);
+
+  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
+
+  for ( i=0 ; i < Number_Of_Bullet_Types ; i++ )
+    {
+      for ( j=0 ; j < Bulletmap[i].phases ; j++ )
+	{
+	  tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, ne_bpp, 0, 0, 0, 0);
+	  SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
+	  Bulletmap[i].SurfacePointer[j] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
+	  SDL_SetColorKey( Bulletmap[i].SurfacePointer[j] , 0 , 0 ); // this should clear any color key in the dest surface
+	  // Now we can copy the image Information
+	  Source.x=j*(Block_Height+2);
+	  Source.y=i*(Block_Width+2);
+	  Source.w=Block_Width;
+	  Source.h=Block_Height;
+	  Target.x=0;
+	  Target.y=0;
+	  Target.w=Block_Width;
+	  Target.h=Block_Height;
+	  SDL_BlitSurface ( Whole_Image , &Source , Bulletmap[i].SurfacePointer[j] , &Target );
+	  SDL_SetAlpha( Bulletmap[i].SurfacePointer[j] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+	}
+    }
+
+  SDL_FreeSurface( tmp_surf );
+
+}; // void Load_Bullet_Surfaces( void )
+
+
+/* 
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+*/
+void 
+Load_Enemy_Surfaces( void )
+{
+  SDL_Surface* Whole_Image;
+  SDL_Surface* tmp_surf;
+  SDL_Rect Source;
+  SDL_Rect Target;
+  int i;
+  char *fpath;
+
+  fpath = find_file ( NE_DROID_BLOCK_FILE , GRAPHICS_DIR, TRUE);
+
+  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
+
+  for ( i=0 ; i < DROID_PHASES ; i++ )
+    {
+      tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, ne_bpp, 0, 0, 0, 0);
+      SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
+      EnemySurfacePointer[i] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
+      SDL_SetColorKey( EnemySurfacePointer[i] , 0 , 0 ); // this should clear any color key in the dest surface
+      // Now we can copy the image Information
+      Source.x=i*(Block_Height+2);
+      Source.y=1*(Block_Width+2);
+      Source.w=Block_Width;
+      Source.h=Block_Height;
+      Target.x=0;
+      Target.y=0;
+      Target.w=Block_Width;
+      Target.h=Block_Height;
+      SDL_BlitSurface ( Whole_Image , &Source , EnemySurfacePointer[i] , &Target );
+      SDL_SetAlpha( EnemySurfacePointer[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+    }
+
+  SDL_FreeSurface( tmp_surf );
+
+}; // void LoadEnemySurfaces( void )
+
+
+/* 
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+*/
+void 
+Load_Influencer_Surfaces( void )
+{
+  SDL_Surface* Whole_Image;
+  SDL_Surface* tmp_surf;
+  SDL_Rect Source;
+  SDL_Rect Target;
+  int i;
+  char *fpath;
+
+  fpath = find_file ( NE_DROID_BLOCK_FILE , GRAPHICS_DIR, TRUE);
+
+  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
+
+  for ( i=0 ; i < DROID_PHASES ; i++ )
+    {
+      tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, ne_bpp, 0, 0, 0, 0);
+      SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
+      InfluencerSurfacePointer[i] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
+      SDL_SetColorKey( InfluencerSurfacePointer[i] , 0 , 0 ); // this should clear any color key in the dest surface
+      // Now we can copy the image Information
+      Source.x=i*(Block_Height+2);
+      Source.y=0*(Block_Width+2);
+      Source.w=Block_Width;
+      Source.h=Block_Height;
+      Target.x=0;
+      Target.y=0;
+      Target.w=Block_Width;
+      Target.h=Block_Height;
+      SDL_BlitSurface ( Whole_Image , &Source , InfluencerSurfacePointer[i] , &Target );
+      SDL_SetAlpha( InfluencerSurfacePointer[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+    }
+
+  SDL_FreeSurface( tmp_surf );
+
+}; // void Load_Influencer_Surfaces( void )
 
 /*-----------------------------------------------------------------
  * @Desc: get the pics for: druids, bullets, blasts
@@ -486,13 +668,8 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
 int
 InitPictures (void)
 {
-  int i, j;
   SDL_Surface *tmp;
   SDL_Surface *tmp2;
-  SDL_Surface *tmp3;
-  SDL_Surface *tmp4;
-  SDL_Rect Source_Rectangle;
-  SDL_Rect Destination_Rectangle;
   int block_line = 0;   /* keep track of line in ne_blocks we're writing */
   char *fpath;
 
@@ -573,198 +750,18 @@ InitPictures (void)
     }
 
   DebugPrintf( 2 , "\nvoid InitPictures(void): preparing to load droids." );
-  fpath = find_file (NE_DROID_BLOCK_FILE, GRAPHICS_DIR, TRUE);
 
-  ne_influ_block =
-    ne_get_blocks ( fpath , DROID_PHASES, 0, 0, block_line++);
-
-  // At first we create a surface of the size of one map tile and then
-  // we make sure it is supplied with an alpha channel
-  tmp3 = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, ne_bpp, 0, 0, 0, 0);
-  tmp4 = SDL_DisplayFormatAlpha( tmp3 );
-  SDL_FreeSurface( tmp3 );
-
-  // In order to make sure, that he alpha cannel from the ne_blocks surface 
-  // is COPIED AND NOT APPLIED, we have do disable the source_alpha flag
-  SDL_SetAlpha( ne_blocks , 0 , SDL_ALPHA_OPAQUE );
-      
-  // The influencer has several phases
-  for ( j = 0 ; j < ENEMYPHASES ; j++ )
-    {
-      // Now we can copy the RGB information together with the alpha channel.
-      Source_Rectangle.x= j * Block_Width;
-      Source_Rectangle.y= (block_line -1) * Block_Height ;
-      Source_Rectangle.w=Block_Width;
-      Source_Rectangle.h=Block_Height;
-      Destination_Rectangle.x=0;
-      Destination_Rectangle.y=0;
-      Destination_Rectangle.w=Block_Width;
-      Destination_Rectangle.h=Block_Height;
-      SDL_BlitSurface ( ne_blocks , &Source_Rectangle , tmp4 , &Destination_Rectangle );
-      // ne_bullet[i] = SDL_DisplayFormatAlpha(tmp4);  /* the surface is copied !*/
-      // SDL_SetAlpha( ne_bullet[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-      InfluencerSurfacePointer[j] = SDL_DisplayFormatAlpha( tmp4 );  /* the surface is copied !*/
-      if ( InfluencerSurfacePointer[j] == NULL )
-	{
-	  DebugPrintf( 0 , "\nProblem converting influencer image to alpha surface....\nTerminating...\n\n");
-	  Terminate(ERR);
-	}
-
-      SDL_SetAlpha( InfluencerSurfacePointer[j] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-      
-    } // for j = 0 to PHASES OF INFLUENCER
-
-  SDL_FreeSurface ( tmp4 );
-
-
-
-  ne_droid_block =
-    ne_get_blocks ( fpath , DROID_PHASES, 0, 1, block_line++);
-
-  // At first we create a surface of the size of one map tile and then
-  // we make sure it is supplied with an alpha channel
-  tmp3 = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, ne_bpp, 0, 0, 0, 0);
-  tmp4 = SDL_DisplayFormatAlpha( tmp3 );
-  SDL_FreeSurface( tmp3 );
-
-  // In order to make sure, that he alpha cannel from the ne_blocks surface 
-  // is COPIED AND NOT APPLIED, we have do disable the source_alpha flag
-  SDL_SetAlpha( ne_blocks , 0 , SDL_ALPHA_OPAQUE );
-      
-  // Enemys have several phases
-  for ( j = 0 ; j < ENEMYPHASES ; j++ )
-    {
-      // Now we can copy the RGB information together with the alpha channel.
-      Source_Rectangle.x= j * Block_Width;
-      Source_Rectangle.y= (block_line -1) * Block_Height ;
-      Source_Rectangle.w=Block_Width;
-      Source_Rectangle.h=Block_Height;
-      Destination_Rectangle.x=0;
-      Destination_Rectangle.y=0;
-      Destination_Rectangle.w=Block_Width;
-      Destination_Rectangle.h=Block_Height;
-      SDL_BlitSurface ( ne_blocks , &Source_Rectangle , tmp4 , &Destination_Rectangle );
-      // ne_bullet[i] = SDL_DisplayFormatAlpha(tmp4);  /* the surface is copied !*/
-      // SDL_SetAlpha( ne_bullet[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-      EnemySurfacePointer[j] = SDL_DisplayFormatAlpha( tmp4 );  /* the surface is copied !*/
-      if ( EnemySurfacePointer[j] == NULL )
-	{
-	  DebugPrintf( 0 , "\nProblem converting enemy image to alpha surface....\nTerminating...\n\n");
-	  Terminate(ERR);
-	}
-
-      SDL_SetAlpha( EnemySurfacePointer[j] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-      
-    } // for j = 0 to PHASES OF ENEMY
-
-  SDL_FreeSurface ( tmp4 );
-
+  Load_Influencer_Surfaces();
+  Load_Enemy_Surfaces();
 
   DebugPrintf( 2 , "\nvoid InitPictures(void): preparing to load bullet file." );
-  fpath = find_file (NE_BULLET_BLOCK_FILE, GRAPHICS_DIR, TRUE);
-
-  
   DebugPrintf( 1 , "\nvoid InitPictures(void): Number_Of_Bullet_Types : %d." , Number_Of_Bullet_Types );
-  // getchar();
-  // for (i=0; i < ALLBULLETTYPES; i++)
-  for ( i=0 ; i < Number_Of_Bullet_Types ; i++ )
-    {
-      // This is the old command to read in all the rotated pictures of this bullet
-      // It should soon be no longer nescessary to read more than one type in, but
-      // it doesn't hurt and for now we can leave it as it is
-      Bulletmap[i].block =
-	ne_get_blocks ( fpath , MAX_PHASES_IN_A_BULLET , 0, i, block_line++);
 
-      // At first we create a surface of the size of one map tile and then
-      // we make sure it is supplied with an alpha channel
-      tmp3 = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, ne_bpp, 0, 0, 0, 0);
-      tmp4 = SDL_DisplayFormatAlpha( tmp3 );
-      SDL_FreeSurface( tmp3 );
-
-      // In order to make sure, that he alpha cannel from the ne_blocks surface 
-      // is COPIED AND NOT APPLIED, we have do disable the source_alpha flag
-      SDL_SetAlpha( ne_blocks , 0 , SDL_ALPHA_OPAQUE );
-      
-      // Bullettypes might have several different phases
-      for ( j = 0 ; j < Bulletmap[i].phases ; j++ )
-	{
-	  // Now we can copy the RGB information together with the alpha channel.
-	  Source_Rectangle.x= j * Block_Width;
-	  Source_Rectangle.y= (block_line -1) * Block_Height ;
-	  Source_Rectangle.w=Block_Width;
-	  Source_Rectangle.h=Block_Height;
-	  Destination_Rectangle.x=0;
-	  Destination_Rectangle.y=0;
-	  Destination_Rectangle.w=Block_Width;
-	  Destination_Rectangle.h=Block_Height;
-	  SDL_BlitSurface ( ne_blocks , &Source_Rectangle , tmp4 , &Destination_Rectangle );
-	  // ne_bullet[i] = SDL_DisplayFormatAlpha(tmp4);  /* the surface is copied !*/
-	  // SDL_SetAlpha( ne_bullet[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-	  Bulletmap[i].SurfacePointer[j] = SDL_DisplayFormatAlpha( tmp4 );  /* the surface is copied !*/
-	  if (Bulletmap[i].SurfacePointer[j] == NULL )
-	    {
-	      DebugPrintf( 0 , "\nProblem converting Bullet image to Alpha surface....\nTerminating...\n\n");
-	      Terminate(ERR);
-	    }
-
-	  SDL_SetAlpha( Bulletmap[i].SurfacePointer[j] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-
-	} // for j = 0 to PHASES OF THIS BULLET
-
-      SDL_FreeSurface ( tmp4 );
-
-    } // for i = 0 to MAXBULLETTYPES
+  Load_Bullet_Surfaces();
 
   DebugPrintf( 2 , "\nvoid InitPictures(void): preparing to load blast image file." );
-  fpath = find_file (NE_BLAST_BLOCK_FILE, GRAPHICS_DIR, TRUE);
 
-  for ( i=0 ; i < ALLBLASTTYPES ; i++ )
-    {
-      // This is the old command to read in all the rotated pictures of this bullet
-      // It should soon be no longer nescessary to read more than one type in, but
-      // it doesn't hurt and for now we can leave it as it is
-      Blastmap[i].block =
-	ne_get_blocks ( fpath , Blastmap[i].phases, 0, i, block_line++);
-
-      // At first we create a surface of the size of one map tile and then
-      // we make sure it is supplied with an alpha channel
-      tmp3 = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, ne_bpp, 0, 0, 0, 0);
-      tmp4 = SDL_DisplayFormatAlpha( tmp3 );
-      SDL_FreeSurface( tmp3 );
-
-      // In order to make sure, that he alpha cannel from the ne_blocks surface 
-      // is COPIED AND NOT APPLIED, we have do disable the source_alpha flag
-      SDL_SetAlpha( ne_blocks , 0 , SDL_ALPHA_OPAQUE );
-      
-      // Blasttypes might have several different phases
-      for ( j = 0 ; j < Blastmap[i].phases ; j++ )
-	{
-	  // Now we can copy the RGB information together with the alpha channel.
-	  Source_Rectangle.x= j * Block_Width;
-	  Source_Rectangle.y= (block_line -1) * Block_Height ;
-	  Source_Rectangle.w=Block_Width;
-	  Source_Rectangle.h=Block_Height;
-	  Destination_Rectangle.x=0;
-	  Destination_Rectangle.y=0;
-	  Destination_Rectangle.w=Block_Width;
-	  Destination_Rectangle.h=Block_Height;
-	  SDL_BlitSurface ( ne_blocks , &Source_Rectangle , tmp4 , &Destination_Rectangle );
-	  // ne_bullet[i] = SDL_DisplayFormatAlpha(tmp4);  /* the surface is copied !*/
-	  // SDL_SetAlpha( ne_bullet[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-	  Blastmap[i].SurfacePointer[j] = SDL_DisplayFormatAlpha( tmp4 );  /* the surface is copied !*/
-	  if (Blastmap[i].SurfacePointer[j] == NULL )
-	    {
-	      DebugPrintf( 0 , "\nProblem converting Blast image to Alpha surface....\nTerminating...\n\n");
-	      Terminate(ERR);
-	    }
-
-	  SDL_SetAlpha( Blastmap[i].SurfacePointer[j] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-
-	} // for j = 0 to PHASES OF THIS BULLET
-
-      SDL_FreeSurface ( tmp4 );
-
-    } // for i = 0 to MAXBLASTTYPES
+  Load_Blast_Surfaces();
 
   DebugPrintf( 2 , "\nvoid InitPictures(void): preparing to load digits image file." );
 

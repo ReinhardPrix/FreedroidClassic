@@ -103,6 +103,12 @@ DeleteBullet (int Bulletnumber)
   int i;
 
   //--------------------
+  // At first we generate the blast at the collision spot of the bullet,
+  // cause later, after the bullet is deleted, it will be hard to know
+  // the correct location ;)
+  StartBlast (CurBullet->pos.x, CurBullet->pos.y, BULLETBLAST);
+
+  //--------------------
   // maybe, the bullet had several SDL_Surfaces attached to it.  Then we need to 
   // free the SDL_Surfaces again as well...
   //
@@ -114,7 +120,7 @@ DeleteBullet (int Bulletnumber)
 	{
 	  SDL_FreeSurface( CurBullet->SurfacePointer[i] );
 	}
-      CurBullet->Surfaces_were_generated == FALSE;
+      CurBullet->Surfaces_were_generated = FALSE;
     }
 
   //--------------------
@@ -130,8 +136,6 @@ DeleteBullet (int Bulletnumber)
   CurBullet->pos.y = 0;
   CurBullet->angle = 0;
 
-  /* Blast erzeugen: type BULLETBLAST */
-  StartBlast (CurBullet->pos.x, CurBullet->pos.y, BULLETBLAST);
 }; // void DeleteBullet(int Bulletnumber)
 
 /*@Function============================================================
