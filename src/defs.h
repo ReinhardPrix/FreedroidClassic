@@ -217,7 +217,7 @@ enum _directions {
 #define BULLETBLOCKPOSITIONY 0 /* (BLOCKHOEHE*4) */
 #define BLASTBLOCKPOSITIONY 0 /* (BLOCKHOEHE*3) */
 
-#define STARTENERGIE 100
+// #define STARTENERGIE 100
 #define ENERGIEBALKENBREITE 15
 #define MAXENERGIEBALKENLAENGE 160
 #define ENERGIEPOSY 180
@@ -354,6 +354,6 @@ enum _status {
 #define TYPEMATIC_FAST 0
 #define TYPEMATIC_TAKEOVER 92             /* For the takeover-game */
 
-#define OUT			TERMINATED		/* Type fuer inaktive Dinge */
+#define OUT TERMINATED	/* Type fuer inaktive Dinge */
 
 #endif

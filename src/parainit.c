@@ -229,7 +229,7 @@ void InitNewGame(void)
 
   DebugPrintf("\nvoid InitNewGame(void): All levels have been set to 'active'...");
 
-  i=MyRandom(4);
+  i=MyRandom(3);
   switch(i) 
     {
     case 0: 
@@ -286,7 +286,7 @@ void InitNewGame(void)
   Me.type = DRUID001;
   Me.speed.x = 0;
   Me.speed.y = 0;
-  Me.energy = STARTENERGIE;
+  Me.energy = Druidmap[DRUID001].maxenergy;
   Me.health = Me.energy;		/* start with max. health */
   Me.autofire = FALSE;
   Me.status = MOBILE;

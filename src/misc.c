@@ -341,7 +341,7 @@ void Cheatmenu(void){
       }  else {
 	Me.type = i;
 	Me.energy=Druidmap[Me.type].maxenergy;
-	Me.health= STARTENERGIE; // Druidmap[OpponentType].maxenergy;
+	Me.health=Me.energy;
 	gl_printf(-1,-1,"\nYou are now a %s. Have fun!\n", NewRoboType);
 	getchar();
 	RedrawInfluenceNumber();

@@ -33,7 +33,7 @@ int ShipEmptyCounter = 0;		/* counter to Message: you have won(this ship*/
 int TimerFlag = FALSE;		/* the internal timer */
 	
 influence_t Me = {
-DRUID001, TRANSFERMODE, {0, 0}, {120, 48}, STARTENERGIE, STARTENERGIE, 0, 0
+DRUID001, TRANSFERMODE, {0, 0}, {120, 48}, 100, 100, 0, 0
 };
 
 char *InfluenceModeNames[] = {
@@ -181,10 +181,10 @@ shieldspec AllShields[]={
 #define ROBOT_ACCEL_CALIBRATOR 10
 druidspec Druidmap[ALLDRUIDTYPES]={
 /*
-                                     accel.    lose_health          aggr.  fl.imm.
-name            maxspeed          cl.      energy     gun      vneut.  firewait score notes
+                                                accel.            lose_health          aggr.  fl.imm.
+name            maxspeed          cl.                          energy     gun      vneut.  firewait score notes
 ------------------------------------------------------------------------------------------- */
-{"001", ROBOT_SPEED_CALIBRATOR*5,  0, 1*ROBOT_ACCEL_CALIBRATOR,  65, 2,  PULSE,       1, 00,  0,  0,   0, NULL },
+{"001", ROBOT_SPEED_CALIBRATOR*5,  0, 1*ROBOT_ACCEL_CALIBRATOR, 100, 2,  PULSE,       1, 00,  0,  0,   0, NULL },
 {"123", ROBOT_SPEED_CALIBRATOR*2,  1, 1*ROBOT_ACCEL_CALIBRATOR,  20, 2,  PULSE,       1, 00,  0,  0,  25, NULL },
 {"139", ROBOT_SPEED_CALIBRATOR*2,  1, 1*ROBOT_ACCEL_CALIBRATOR,  20, 2,  PULSE,       1, 00,  0,  0,  25, NULL },
 {"247", ROBOT_SPEED_CALIBRATOR*4,  2, 1*ROBOT_ACCEL_CALIBRATOR,  20, 2,  PULSE,       1, 00,  0,  0,  50, NULL },
@@ -215,8 +215,8 @@ name            maxspeed          cl.      energy     gun      vneut.  firewait 
 #define BULLET_SPEED_CALIBRATOR (ROBOT_SPEED_CALIBRATOR)
 bulletspec Bulletmap[ALLBULLETTYPES]={
 /*  
-  speed     salve         blast                 oneshotonly
-     damage 	phases	                pic.	
+  speed                             salve         blast                 oneshotonly
+                              damage 	phases	                pic.	
 ------------------------------------------------------------*/
 { 10*BULLET_SPEED_CALIBRATOR,  25,    1,  4,    BULLETBLAST,	NULL ,	FALSE, 34},	/* 01: PULSE */
 { 10*BULLET_SPEED_CALIBRATOR,  40,    1,  4,	BULLETBLAST,	NULL ,	FALSE, 34},	/* single_pulse */

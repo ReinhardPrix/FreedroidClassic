@@ -833,11 +833,11 @@ void SetUserfenster(int color, unsigned char *screen)
 }
 
 /* **********************************************************************
-	Diese Funktion zeigt einen Robotter an
-	Dazu mu"s zuerst InitRobotPictures einmal aufgerufen worden sein.
-	Wenn InitRobotPictures auf effizientere Methoden umsteigt, so mu"s
-	diese Funktion nat"urlich auch entsprechend angepa"st werden.
-	**********************************************************************/
+   Diese Funktion zeigt einen Robotter an
+   Dazu mu"s zuerst InitRobotPictures einmal aufgerufen worden sein.
+   Wenn InitRobotPictures auf effizientere Methoden umsteigt, so mu"s
+   diese Funktion nat"urlich auch entsprechend angepa"st werden.
+**********************************************************************/
 
 #define ROBOTBILDHOEHE SCREENHOEHE/3
 #define ROBOTBILDBREITE SCREENBREITE/8

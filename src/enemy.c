@@ -337,9 +337,15 @@ void AttackInfluence(int enemynum)
       FireBulletSound();
       
       /* Einen bulleteintragg suchen, der noch nicht belegt ist */
-      for (j=0;j<MAXBULLETS;j++) {
-	if (AllBullets[j].type == OUT) break; 
-      }
+      for (j=0;j<MAXBULLETS;j++) 
+	{
+	  if (AllBullets[j].type == OUT) break; 
+	}
+      if (j==MAXBULLETS) 
+	{
+	  printf("\nvoid AttackInfluencer(void):  Ran out of Bullets.... Terminating....");
+	  Terminate(ERR);
+	}
 
       /* Schussrichtung festlegen */
       if (abs(xdist) > abs(ydist) ) {

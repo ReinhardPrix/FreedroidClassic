@@ -217,10 +217,17 @@ void CheckBulletCollisions(int num)
   xdist = Me.pos.x - CurBullet->pos.x;
   ydist = Me.pos.y - CurBullet->pos.y;
   if( (xdist*xdist+ydist*ydist) < DRUIDHITDIST2 ) {
-    CurBullet->type = OUT;
-    CurBullet->mine = FALSE;
     GotHitSound();
     Me.energy -= Bulletmap[CurBullet->type].damage;	/* Energie verlieren */
+
+    // printf("Verlorene Energie: %d.", Bulletmap[CurBullet->type].damage );
+    // printf("Bullettyp: %d.", CurBullet->type );
+    //    Terminate(0);
+
+    // The bullet has hit.  The damage has been calculated.  Now it can be disabled.
+    // ATTENTION!  These instructions belong here and must not be moved up.
+    CurBullet->type = OUT;
+    CurBullet->mine = FALSE;
     return;		/* Bullet ist hin */
   }
   

@@ -231,10 +231,10 @@ Takeover (int enemynum)
 	    RejectEnergy = Me.energy;
 	    PreTakeEnergy = Me.energy;
 	  }
-	Me.energy=(int)(
-			((long)STARTENERGIE * Feindesliste[enemynum].energy)
-			/ Druidmap[OpponentType].maxenergy);
-	Me.health= STARTENERGIE; // Druidmap[OpponentType].maxenergy;
+
+	Me.energy=Feindesliste[enemynum].energy;
+	Me.health= Druidmap[OpponentType].maxenergy;
+
 	Me.type = Feindesliste[enemynum].type;
 	RealScore += Druidmap[OpponentType].score;
 	if( LeaderColor != YourColor )  /* only won because of InvincibleMode */
