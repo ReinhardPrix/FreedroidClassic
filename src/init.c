@@ -423,9 +423,6 @@ InitFreedroid (void)
   /* Init the Takeover- Game */
   InitTakeover ();
 
-  /* Die Zahlen, mit denen die Robotkennungen erzeugt werden einlesen */
-  GetDigits ();
-
   /* InternWindow */
   InternWindow = MyMalloc (INTERNBREITE * INTERNHOEHE * BLOCKMEM + 100);
 

@@ -720,11 +720,15 @@ ShowDeckMap (Level deck)
   SDL_Surface *zwisch;
   float ResizeFactor;
 
-  ResizeFactor=0.25;
+  ResizeFactor=0.5;
 
   ClearUserFenster ();
 
+  // SDL_SetColorKey( ne_blocks , 0 , 0 );
   tmp=zoomSurface( ne_blocks , ResizeFactor , ResizeFactor , 0 );
+
+  SDL_SaveBMP ( tmp, "../graphics/debugSmall.bmp");
+  
   zwisch=ne_blocks;
   ne_blocks=tmp;
 
@@ -770,9 +774,27 @@ ShowDeckMap (Level deck)
 	Blastmap[i].block[j].h *= ResizeFactor;
       }
 
+  for (i=0; i< DIGITNUMBER ; i++)
+    {
+      ne_digit_block[i].x *= ResizeFactor;
+      ne_digit_block[i].y *= ResizeFactor;
+      ne_digit_block[i].w *= ResizeFactor;
+      ne_digit_block[i].h *= ResizeFactor;
+    }
 
   Block_Width *= ResizeFactor;
   Block_Height *= ResizeFactor;
+
+  printf("\nDigit_Length: %d " , Digit_Length );
+  printf("\nDigit_Pos_X: %d " , Digit_Pos_X );
+
+  Digit_Length *= ResizeFactor;
+  Digit_Height *= ResizeFactor;
+  Digit_Pos_X *= ResizeFactor;
+  Digit_Pos_Y *= ResizeFactor;
+
+  printf("\nDigit_Length: %d " , Digit_Length );
+  printf("\nDigit_Pos_X: %d " , Digit_Pos_X );
 
   Assemble_Combat_Picture( 0 );
 

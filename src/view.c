@@ -56,7 +56,6 @@
 
 
 
-void GetConceptInternFenster (void);
 void FlashWindow (int Flashcolor);
 void RecFlashFill (int LX, int LY, int Color, unsigned char *Parameter_Screen,
 		   int SBreite);
@@ -171,7 +170,7 @@ Assemble_Combat_Picture (int mask)
   
   if (Conceptview)
     {
-      GetConceptInternFenster ();
+      // GetConceptInternFenster ();
       return;
     }
 
@@ -269,139 +268,6 @@ Assemble_Combat_Picture (int mask)
 
 } // void Assemble_Combat_Picture(...)
 
-/*@Function============================================================
-@Desc: GetConceptInternFenster(): analoge Funktion zu GetInternFenster()
-			fuer Concept-View.
-
-		Parameter: keine
-@Ret: void
-@Int:
-* $Function----------------------------------------------------------*/
-void
-GetConceptInternFenster (void)
-{
-  int LX = 0;
-  int LY = 0;
-  int i, j;
-
-  char* OutputPointer=InternWindow;
-
-  // Darstellen der blo"sen Deckkarte 
-  for (i = 0; i < CurLevel->ylen; i++)
-    {
-      for (j = 0; j < CurLevel->xlen; j++)
-	{
-	  SmallBlock (LX, LY,
-		      GetMapBrick (CurLevel, j * Block_Width, i * Block_Height),
-		      OutputPointer, INTERNBREITE * Block_Width);
-	  LX += 8;
-	}
-      LX = 0;
-      LY += 8;
-    }
-
-  // Darstellen der Feinde am Deck
-  for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
-    {
-      if (Feindesliste[i].levelnum != CurLevel->levelnum)
-	continue;
-      if (Feindesliste[i].Status == OUT)
-	continue;
-      if ( !IsVisible (&Feindesliste[i].pos) )
-	continue;
-      SmallEnemy (Feindesliste[i].pos.x / 4, Feindesliste[i].pos.y / 4,
-		  Druidmap[Feindesliste[i].type].class, OutputPointer,
-		  INTERNBREITE * Block_Width);
-    }
-
-  // Darstellen des Influencers, wenn er nicht schon vernichtet wurde
-  if (Me.energy > 0)
-    SmallEnemy (((int) Me.pos.x) / 4, ((int) Me.pos.y) / 4,
-		-10 + Druidmap[Me.type].class, OutputPointer,
-		INTERNBREITE * Block_Width);
-
-  // Darstellen der Blasts
-  for (i = 0; i < MAXBLASTS; i++)
-    {
-      if (AllBlasts[i].type == OUT)
-	continue;
-      SmallBlast (AllBlasts[i].PX / 4, AllBlasts[i].PY / 4, AllBlasts[i].type,
-		  AllBlasts[i].phase, OutputPointer,
-		  INTERNBREITE * Block_Width);
-    }
-
-  // Darstellen der Bullets
-  for (i = 0; i < MAXBULLETS; i++)
-    {
-      if (AllBullets[i].type == OUT)
-	continue;
-
-      if (AllBullets[i].type == FLASH)
-	{
-	  // Wenn der FLASH vorbei ist, l"oschen und fertig
-	  if ( AllBullets[i].time_in_frames > FLASH_DURATION_IN_FRAMES )
-	    {
-	      AllBullets[i].time_in_frames = 0;
-	      AllBullets[i].time_in_seconds = 0;
-	      AllBullets[i].type = OUT;
-	      AllBullets[i].mine = FALSE;
-	      return;
-	    }
-
-	  // Das ganze Fenster entweder schwarz oder weiss f"arben
-	  Affected = MyMalloc ((CurLevel->xlen+100) * (CurLevel->ylen + 100));
-	  memset (Affected, CurLevel->xlen * CurLevel->ylen, FALSE);
-
-	  if ( (AllBullets[i].time_in_frames % 2) == 1)
-	    {
-	      RecFlashFill (AllBullets[i].pos.x, AllBullets[i].pos.y,
-			    FLASHCOLOR1, OutputPointer,
-			    INTERNBREITE * Block_Width);
-	    }
-	  if ( (AllBullets[i].time_in_frames % 2) == 0)
-	    {
-	      RecFlashFill (AllBullets[i].pos.x, AllBullets[i].pos.y,
-			    FLASHCOLOR2, OutputPointer,
-			    INTERNBREITE * Block_Width);
-	    }
-
-	  /*
-	   * Alle betroffenen Enemys, die nicht immun sind besch"adigen
-	   * Auch den Influencer wenn er nicht immun ist besch"adigen
-	   */
-
-	  for (j = 0; j < MAX_ENEMYS_ON_SHIP; j++)
-	    {
-	      if (Feindesliste[j].levelnum != CurLevel->levelnum)
-		continue;
-	      if (Affected
-		  [(int)(((int) (rintf (Feindesliste[j].pos.x)) / Block_Width) +
-		   ((int) (rintf (Feindesliste[j].pos.y)) / Block_Height) *
-		   CurLevel->xlen )]
-		  && (!Druidmap[ Feindesliste[j].type ].flashimmune))
-		{
-		  Feindesliste[j].energy -= Bulletmap[FLASH].damage / 2;
-		}
-	    }
-
-	  if (!InvincibleMode && !Druidmap[Me.type].flashimmune &&
-	      Affected[((int) Me.pos.x) / Block_Width +
-		       ((int) Me.pos.y) / Block_Height * CurLevel->xlen])
-	    Me.energy -= Bulletmap[FLASH].damage / 2;
-
-	  free (Affected);
-	}
-      else
-	{
-	  SmallBullet (AllBullets[i].pos.x / 4, AllBullets[i].pos.y / 4,
-		       AllBullets[i].type, AllBullets[i].phase, OutputPointer,
-		       INTERNBREITE * Block_Width);
-	}
-    }
-  return;
-
-} // GetConceptInternWindow()
-
 /*-----------------------------------------------------------------
  * Desc: Diese Funktion malt den Influencer an die Position die
  *    das Zentrum des angezeigten Bildausschnittes sein wird.
@@ -436,13 +302,13 @@ PutInfluence ( int x, int y)
   // COMPUTED ANEW!!!!
   if ( x == -1 ) 
     {
-      TargetRectangle.x=USER_FENSTER_CENTER_X - Block_Width/2 + DIGIT_POS_X;
-      TargetRectangle.y=USER_FENSTER_CENTER_Y - Block_Height/2 + DIGIT_POS_Y;
+      TargetRectangle.x=USER_FENSTER_CENTER_X - Block_Width/2 + Digit_Pos_X;
+      TargetRectangle.y=USER_FENSTER_CENTER_Y - Block_Height/2 + Digit_Pos_Y;
     }
   else
     {
-      TargetRectangle.x=x + DIGIT_POS_X;
-      TargetRectangle.y=y + DIGIT_POS_Y;
+      TargetRectangle.x=x + Digit_Pos_X;
+      TargetRectangle.y=y + Digit_Pos_Y;
     }
   SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Me.type].druidname[0]-'1'+1) , ne_screen, &TargetRectangle );
 
@@ -451,13 +317,13 @@ PutInfluence ( int x, int y)
   // COMPUTED ANEW!!!!
   if ( x == -1 ) 
     {
-      TargetRectangle.x=USER_FENSTER_CENTER_X - Block_Width/2 + DIGIT_POS_X + DIGITLENGTH;
-      TargetRectangle.y=USER_FENSTER_CENTER_Y - Block_Height/2 + DIGIT_POS_Y;
+      TargetRectangle.x=USER_FENSTER_CENTER_X - Block_Width/2 + Digit_Pos_X + Digit_Length;
+      TargetRectangle.y=USER_FENSTER_CENTER_Y - Block_Height/2 + Digit_Pos_Y;
     }
   else
     {
-      TargetRectangle.x=x + DIGIT_POS_X + DIGITLENGTH;
-      TargetRectangle.y=y + DIGIT_POS_Y;
+      TargetRectangle.x=x + Digit_Pos_X + Digit_Length;
+      TargetRectangle.y=y + Digit_Pos_Y;
     }
   SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Me.type].druidname[1]-'1'+1) , ne_screen, &TargetRectangle );
 
@@ -466,13 +332,13 @@ PutInfluence ( int x, int y)
   // COMPUTED ANEW!!!!
   if ( x == -1 ) 
     {
-      TargetRectangle.x=USER_FENSTER_CENTER_X - Block_Width/2 + DIGIT_POS_X + 2*DIGITLENGTH;
-      TargetRectangle.y=USER_FENSTER_CENTER_Y - Block_Height/2 + DIGIT_POS_Y;
+      TargetRectangle.x=USER_FENSTER_CENTER_X - Block_Width/2 + Digit_Pos_X + 2*Digit_Length;
+      TargetRectangle.y=USER_FENSTER_CENTER_Y - Block_Height/2 + Digit_Pos_Y;
     }
   else
     {
-      TargetRectangle.x=x + DIGIT_POS_X + 2*DIGITLENGTH;
-      TargetRectangle.y=y + DIGIT_POS_Y;
+      TargetRectangle.x=x + Digit_Pos_X + 2*Digit_Length;
+      TargetRectangle.y=y + Digit_Pos_Y;
     }
   SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Me.type].druidname[2]-'1'+1) , ne_screen, &TargetRectangle );
 
@@ -552,21 +418,21 @@ PutEnemy (int Enum)
   // Now the numbers should be blittet.
 
   TargetRectangle.x=USER_FENSTER_CENTER_X - 
-    (Me.pos.x-Feindesliste[Enum].pos.x) * Block_Width + DIGIT_POS_X  - Block_Width/2; 
+    (Me.pos.x-Feindesliste[Enum].pos.x) * Block_Width + Digit_Pos_X  - Block_Width/2; 
   TargetRectangle.y=USER_FENSTER_CENTER_Y - 
-    (Me.pos.y-Feindesliste[Enum].pos.y) * Block_Height + DIGIT_POS_Y - Block_Height/2;
+    (Me.pos.y-Feindesliste[Enum].pos.y) * Block_Height + Digit_Pos_Y - Block_Height/2;
   SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Feindesliste[Enum].type].druidname[0]-'1'+11) , 
 		   ne_screen, &TargetRectangle );
 
   TargetRectangle.x=USER_FENSTER_CENTER_X - 
-    (Me.pos.x-Feindesliste[Enum].pos.x)*Block_Height + DIGIT_POS_X + DIGITLENGTH-1 - Block_Width/2;
+    (Me.pos.x-Feindesliste[Enum].pos.x)*Block_Height + Digit_Pos_X + Digit_Length-1 - Block_Width/2;
   TargetRectangle.y=USER_FENSTER_CENTER_Y - 
-    (Me.pos.y-Feindesliste[Enum].pos.y)*Block_Height + DIGIT_POS_Y - Block_Height/2 ;
+    (Me.pos.y-Feindesliste[Enum].pos.y)*Block_Height + Digit_Pos_Y - Block_Height/2 ;
   SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Feindesliste[Enum].type].druidname[1]-'1'+11) , 
 		   ne_screen, &TargetRectangle );
 
-  TargetRectangle.x=USER_FENSTER_CENTER_X - (Me.pos.x-Feindesliste[Enum].pos.x)*Block_Width - Block_Width/2 + DIGIT_POS_X + 2*(DIGITLENGTH-1);
-  TargetRectangle.y=USER_FENSTER_CENTER_Y - (Me.pos.y-Feindesliste[Enum].pos.y)*Block_Width - Block_Height/2 + DIGIT_POS_Y;
+  TargetRectangle.x=USER_FENSTER_CENTER_X - (Me.pos.x-Feindesliste[Enum].pos.x)*Block_Width - Block_Width/2 + Digit_Pos_X + 2*(Digit_Length-1);
+  TargetRectangle.y=USER_FENSTER_CENTER_Y - (Me.pos.y-Feindesliste[Enum].pos.y)*Block_Width - Block_Height/2 + Digit_Pos_Y;
   SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Feindesliste[Enum].type].druidname[2]-'1'+11) , 
 		   ne_screen, &TargetRectangle );
 

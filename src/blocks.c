@@ -43,162 +43,6 @@
 #include "global.h"
 #include "proto.h"
 
-/*-----------------------------------------------------------------
- * @Desc: display the mini-block number "BlockN" at position (LX, LY)
- * 	  on "*Screen" of width "SBreite"
- *
- *-----------------------------------------------------------------*/
-void
-SmallBlock (int LX, int LY, int BlockN, unsigned char *Parameter_Screen, int SBreite)
-{
-  int i, j;
-  unsigned char *source = MapBlocks + Block_Width * Block_Height * BlockN;
-  unsigned char *target = Parameter_Screen + LY * SBreite + LX;
-
-  if (Parameter_Screen == RealScreen)
-    target=Outline320x200 + LY * SBreite + LX;
-
-  DebugPrintf("\nvoid SmallBlock(...): real function call confirmed.");
-
-  if (LX > USERFENSTERPOSX + USERFENSTERBREITE)
-    return;
-
-  for (i = 0; i < 8; i++)
-    {
-      for (j = 0; j < 8; j++)
-	{
-	  *target = *source;
-	  target++;
-	  source += 4;
-	}
-      target += SBreite - 8;
-      source += 4 * Block_Width - 4 * 8;
-    }
-
-} /* SmallBlock() */
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-SmallBlast (int LX, int LY, int BlastT, int phase, unsigned char *Parameter_Screen,
-	    int SBreite)
-{
-  int i, j;
-
-  if (LX > USERFENSTERPOSX + USERFENSTERBREITE)
-    return;
-  for (i = 0; i < 8; i++)
-    {
-      for (j = 0; j < 8; j++)
-	if (*
-	    (Blastmap[BlastT].picpointer + j * 4 + i * Block_Width * 4 +
-	     phase * BLOCKMEM) != TRANSPARENTCOLOR)
-	  Parameter_Screen[LX - DIGITLENGTH / 2 + j +
-		 (LY + i - DIGITHEIGHT / 2) * SBreite] =
-	    *(Blastmap[BlastT].picpointer + j * 4 + i * Block_Width * 4 +
-	      phase * BLOCKMEM);
-    }
-}
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-SmallBullet (int LX, int LY, int BulletT, int phase, unsigned char *Parameter_Screen,
-	     int SBreite)
-{
-  Blast CurBlast = &(AllBlasts[0]);
-  int i, j;
-
-  if (LX > USERFENSTERPOSX + USERFENSTERBREITE)
-    return;
-  for (i = 0; i < 8; i++)
-    {
-      for (j = 0; j < 8; j++)
-	{
-	  if (*
-	      (Bulletmap[BulletT].picpointer + j * 4 + i * Block_Width * 4 +
-	       phase * BLOCKMEM) != TRANSPARENTCOLOR)
-	    {
-	      if ((unsigned char)
-		  Parameter_Screen[LX - DIGITLENGTH / 2 + j +
-			 (LY + i - DIGITHEIGHT / 2) * SBreite] == BULLETCOLOR)
-		StartBlast (LX * 4 + 2, LY * 4 + 2, DRUIDBLAST);
-	      Parameter_Screen[LX - DIGITLENGTH / 2 + j +
-		     (LY + i - DIGITHEIGHT / 2) * SBreite] =
-		*(Bulletmap[BulletT].picpointer + j * 4 +
-		  i * Block_Width * 4 + phase * BLOCKMEM);
-	    }
-	}
-    }
-  for (j = 0; j < MAXBLASTS; j++)
-    {
-      /* check Blast-Bullet Collisions and kill hit Bullets */
-      for (i = 0; i < MAXBULLETS; i++)
-	{
-	  if (AllBullets[i].type == OUT)
-	    continue;
-	  if (CurBlast->phase > 4)
-	    break;
-
-	  if (abs (AllBullets[i].pos.x - CurBlast->PX) < BLASTRADIUS)
-	    if (abs (AllBullets[i].pos.y - CurBlast->PY) < BLASTRADIUS)
-	      {
-		/* KILL Bullet silently */
-		AllBullets[i].type = OUT;
-		AllBullets[i].mine = FALSE;
-	      }
-	}			/* for */
-      CurBlast++;
-    }				/* for */
-}
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-SmallEnemy (int LX, int LY, int enemyclass, unsigned char *Parameter_Screen,
-	    int SBreite)
-{
-  int i, j;
-  enemyclass += 10;
-
-  if (LX > USERFENSTERPOSX + USERFENSTERBREITE)
-    return;
-  for (i = 0; i < DIGITHEIGHT; i++)
-    {
-      for (j = 0; j < DIGITLENGTH - 1; j++)
-	if (Digitpointer
-	    [enemyclass * DIGITLENGTH * DIGITHEIGHT + i * DIGITLENGTH + j] !=
-	    TRANSPARENTCOLOR)
-	  Parameter_Screen[LX - DIGITLENGTH / 2 + j +
-		 (LY + i - DIGITHEIGHT / 2) * SBreite] =
-	    Digitpointer[enemyclass * DIGITLENGTH * DIGITHEIGHT +
-			 i * DIGITLENGTH + j];
-//                                      Enemypointer[j*4+i*Block_Width*4];
-    }
-}
-
-/* *********************************************************************** */
-
-void
-GetDigits (void)
-{
-
-  return;
-
-} // void GetDigits(void)
-
 /* *********************************************************************** */
 
 /*-----------------------------------------------------------------
@@ -319,18 +163,24 @@ ne_get_digit_blocks (char *picfile, int num_blocks, int blocks_per_line,
   /* now copy the individual map-blocks into ne_blocks */
   for (i=0; i < num_blocks; i++)
     {
-      rect.x = (i%blocks_per_line)*(DIGITLENGTH+2);
+      rect.x = (i%blocks_per_line)*(INITIAL_DIGIT_LENGTH+2);
       rect.y = (source_line+i/blocks_per_line)*(Block_Height+2);
-      rect.w = DIGITLENGTH-1;
-      rect.h = DIGITHEIGHT;
+      rect.w = INITIAL_DIGIT_LENGTH-1;
+      rect.h = INITIAL_DIGIT_HEIGHT;
       
-      ret[i].x = i*DIGITLENGTH;
+      ret[i].x = i*INITIAL_DIGIT_LENGTH;
       ret[i].y = target_line*Block_Height;
-      ret[i].w = DIGITLENGTH;
-      ret[i].h = DIGITHEIGHT;
+      ret[i].w = INITIAL_DIGIT_LENGTH;
+      ret[i].h = INITIAL_DIGIT_HEIGHT;
       SDL_BlitSurface (tmp, &rect, ne_blocks, &ret[i]);
     }
   SDL_FreeSurface (tmp);
+
+  Digit_Length=INITIAL_DIGIT_LENGTH;
+  Digit_Height=INITIAL_DIGIT_HEIGHT;
+  Digit_Pos_X=INITIAL_DIGIT_POS_X;
+  Digit_Pos_Y = INITIAL_DIGIT_POS_Y;
+
 
   return (ret);
 
@@ -360,15 +210,15 @@ ne_get_rahmen_block (char *picfile, int num_blocks, int blocks_per_line,
   /* now copy the individual map-blocks into ne_blocks */
   for (i=0; i < num_blocks; i++)
     {
-      rect.x = (i%blocks_per_line)*(DIGITLENGTH);
+      rect.x = (i%blocks_per_line)*(RAHMENBREITE);
       rect.y = (source_line+i/blocks_per_line)*(Block_Height+2);
       rect.w = RAHMENBREITE;
       rect.h = RAHMENHOEHE;
       
-      ret[i].x = i*DIGITLENGTH;
+      ret[i].x = i*RAHMENBREITE;
       ret[i].y = target_line*Block_Height;
-      ret[i].w = DIGITLENGTH;
-      ret[i].h = DIGITHEIGHT;
+      ret[i].w = RAHMENBREITE;
+      ret[i].h = RAHMENHOEHE;
       SDL_BlitSurface (tmp, &rect, ne_blocks, &ret[i]);
     }
   SDL_FreeSurface (tmp);
