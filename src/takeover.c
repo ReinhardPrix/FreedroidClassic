@@ -373,17 +373,21 @@ PlayGame (void)
   int FinishTakeover = FALSE;
   int row;
 
-  int up, down, set;  /* local variables about user action */
-  
   Uint32 prev_count_tick, count_tick_len;  /* tick vars for count-down */
   Uint32 prev_move_tick, move_tick_len;    /* tick vars for motion */
-  
-  count_tick_len = 100;  	/* countdown in 1/10 second steps */
-  move_tick_len  = 50;       /* allow motion at this tick-speed in ms */
+  int wait_move_ticks;    /* number of move-ticks to wait before "key-repeat" */
 
-  up = FALSE;
-  down = FALSE;
-  set = FALSE;
+
+  int up, down, set; 
+  int up_counter, down_counter; 
+
+  count_tick_len = 100;   /* countdown in 1/10 second steps */
+  move_tick_len  = 60;    /* allow motion at this tick-speed in ms */
+  
+  up = down = set = FALSE;
+  up_counter = down_counter = 0;
+
+  wait_move_ticks = 1;  
 
   prev_count_tick = prev_move_tick = SDL_GetTicks (); /* start tick clock */
   
@@ -399,6 +403,8 @@ PlayGame (void)
       down = down | DownPressed();
       set  = set  | SpacePressed();
 
+      if (!up) up_counter = 0;    /* reset counters for released keys */
+      if (!down) down_counter =0;
 
       /* allow for a WIN-key that give immedate victory */
       if ( WPressed () && Ctrl_Was_Pressed () && Alt_Was_Pressed () )
@@ -407,7 +413,6 @@ PlayGame (void)
 	  return;  /* leave now, to avoid changing of LeaderColor! */
 	} 
 	
-      
       if ( cur_time > prev_count_tick + count_tick_len ) /* time to count 1 down */
 	{
 	  prev_count_tick += count_tick_len;  /* set for next countdown tick */
@@ -420,24 +425,36 @@ PlayGame (void)
 	    FinishTakeover = TRUE;
 	} /* if (countdown_tick has occurred) */
 
-      if ( cur_time > prev_move_tick + move_tick_len )  /* time for movement */
+
+      /* time for movement */
+      if ( cur_time > prev_move_tick + move_tick_len )  
 	{
 	  prev_move_tick += move_tick_len; /* set for next motion tick */
 	  EnemyMovements ();
+
 	  if (up)
 	    {
-	      CapsuleCurRow[YourColor]--;
-	      if (CapsuleCurRow[YourColor] < 1)
-		CapsuleCurRow[YourColor] = NUM_LINES;
+	      if (!up_counter || (up_counter > wait_move_ticks) )
+		{
+		  CapsuleCurRow[YourColor]--;
+		  if (CapsuleCurRow[YourColor] < 1)
+		    CapsuleCurRow[YourColor] = NUM_LINES;
+		}
 	      up = FALSE;  
+	      up_counter ++;
 	    }
 	  if (down)
 	    {
-	      CapsuleCurRow[YourColor]++;
-	      if (CapsuleCurRow[YourColor] > NUM_LINES)
-		CapsuleCurRow[YourColor] = 1;
+	      if (!down_counter || (down_counter > wait_move_ticks))
+		{
+		  CapsuleCurRow[YourColor]++;
+		  if (CapsuleCurRow[YourColor] > NUM_LINES)
+		    CapsuleCurRow[YourColor] = 1;
+		}
 	      down = FALSE;
+	      down_counter ++;
 	    }
+
 	  if ( set && (NumCapsules[YOU] > 0))
 	    {
 	      set = FALSE;
