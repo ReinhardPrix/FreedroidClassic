@@ -37,7 +37,6 @@
 #include "global.h"
 #include "proto.h"
 
-
 int New_Game_Requested=FALSE;
 
 void Single_Player_Menu (void);
@@ -87,32 +86,25 @@ void
 Cheatmenu (void)
 {
   char *input;		/* string input from user */
-  const char clearscr[] =
-    "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
   int Weiter;
   int LNum, X, Y;
   int i, l;
+  int x0, y0;
   Waypoint WpList;      /* pointer on current waypoint-list  */
 
   // Prevent distortion of framerate by the delay coming from 
   // the time spend in the menu.
   Activate_Conservative_Frame_Computation();
 
-  /* 
-   * this cheat-menu currently uses the text-window for output
-   * therefore, if we're in fullscreen-mode: change to window-mode
-   */
-#ifndef NEW_ENGINE
-  if (fullscreen_on)
-    SDL_WM_ToggleFullScreen (ScaledSurface);
-#endif
+  x0 = User_Rect.x + 100;
+  y0 = User_Rect.y + 100;
 
   Weiter = FALSE;
   while (!Weiter)
     {
-      printf (clearscr);
-      printf ("\n\nCurrent position: Level=%d, X=%d, Y=%d\n\n",
-	      CurLevel->levelnum, (int)Me.pos.x, (int)Me.pos.y);
+      PrintString (ne_screen, x0, y0,
+		   "\n\nCurrent position: Level=%d, X=%d, Y=%d\n\n",
+		   CurLevel->levelnum, (int)Me.pos.x, (int)Me.pos.y);
       printf (" a. Armageddon (alle Robots sprengen)\n");
       printf (" l. robot list of current level\n");
       printf (" g. complete robot list\n");
@@ -155,7 +147,7 @@ Cheatmenu (void)
 		    }
 		  if (!(l % 20) )  
 		    {
-		      printf (clearscr);
+		      //		      printf (clearscr);
 		      printf ("\n\n NR.\tID\tX\tY\tENERGY\tspeedX\n");
 		      printf ("---------------------------------------------\n");
 		    }
@@ -185,7 +177,7 @@ Cheatmenu (void)
 		}
 	      if ( !(i % 20) )
 		{
-		  printf (clearscr);
+		  //		  printf (clearscr);
 		  printf ("\n\nNr.\tLev.\tID\tEnergy\nSpeed.x\n");
 		  printf ("------------------------------\n");
 		}
@@ -297,7 +289,7 @@ Cheatmenu (void)
 		}
 	      if ( !(i%20) )
 		{
-		  printf (clearscr);
+		  //		  printf (clearscr);
 		  printf ("\n\nNr.   X   Y      C1  C2  C3  C4 \n");
 		  printf ("------------------------------------\n");
 		}
@@ -331,7 +323,7 @@ Cheatmenu (void)
   CurrentlyCPressed = FALSE;
 
   /* clear terminal (if it's not a terminal: tant pis) */
-  printf (clearscr);
+  //  printf (clearscr);
   printf ("Back in the game!\n");
 
   /* toggle back to fullscreen, if that's where we came from */

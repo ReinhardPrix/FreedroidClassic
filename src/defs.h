@@ -137,8 +137,8 @@ enum
 			   actually displayed screen shall be bigger than the 320x200 window. */
 
 /* Startpos + dimesnions of Banner-Texts */
-#define LEFT_INFO_X 	(12*2)
-#define LEFT_INFO_Y	(8*2)
+#define LEFT_INFO_X 	(13*2)
+#define LEFT_INFO_Y	(10*2)
 #define RIGHT_INFO_X	(242*2)
 #define RIGHT_INFO_Y	(8*2)
 #define LEFT_TEXT_LEN 10
