@@ -50,7 +50,6 @@ EXTERN void Title (void);
 EXTERN void EndTitle (void);
 EXTERN void InitFreedroid (void);
 EXTERN void InitNewGame (void);
-EXTERN void Init_Druidmap (void);
 EXTERN void ThouArtDefeated (void);
 EXTERN void ThouArtVictorious (void);
 EXTERN void Debriefing (void);

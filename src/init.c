@@ -98,6 +98,7 @@ Get_Robot_Data ( void* DataPointer )
 #define SENSOR2_BEGIN_STRING "Sensor 2 of this droid : "
 #define SENSOR3_BEGIN_STRING "Sensor 3 of this droid : "
 #define ARMAMENT_BEGIN_STRING "Armament of this droid : "
+#define NOTES_BEGIN_STRING "Notes concerning this droid : "
 
 
 
@@ -438,6 +439,23 @@ Get_Robot_Data ( void* DataPointer )
 	  ValuePointer += strlen ( ARMAMENT_BEGIN_STRING );
 	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].armament );
 	  printf("\nDroid armament entry found!  It reads: %d" , Druidmap[RobotIndex].armament );
+	}
+
+      // Now we read in the notes concerning this droid.  We consider as notes all the rest of the
+      // line after the NOTES_BEGIN_STRING until the "\n" is found.
+      if ( (ValuePointer = strstr ( RobotPointer, NOTES_BEGIN_STRING )) == NULL )
+	{
+	  printf("\nERROR! NO NOTES ENTRY FOUND! TERMINATING!");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  ValuePointer += strlen (NOTES_BEGIN_STRING);
+	  StringLength = strstr (ValuePointer , "\n") - ValuePointer;
+	  Druidmap[RobotIndex].notes = malloc ( StringLength + 1 );
+	  strncpy ( (char*) Druidmap[RobotIndex].notes , ValuePointer , StringLength );
+	  Druidmap[RobotIndex].notes[StringLength]=0;
+	  printf("\nNotes concerning the droid found!  They read: %s" , Druidmap[RobotIndex].notes );
 	}
 
 
@@ -864,8 +882,6 @@ InitFreedroid (void)
   Draw_Framerate=FALSE;
   HideInvisibleMap = FALSE;	/* Hide invisible map-parts. Para-extension!! */
 
-  Init_Druidmap ();   /* initialise some global text variables */
-
   MinMessageTime = 55;
   MaxMessageTime = 850;
 
@@ -904,70 +920,6 @@ InitFreedroid (void)
 
   return;
 } /* InitFreedroid() */
-
-/*-----------------------------------------------------------------
- *
- * a bit stupid: here we initialise the global druid-descriptions
- *
- *-----------------------------------------------------------------*/
-void
-Init_Druidmap (void)
-{
-
-  Druidmap[DRUID001].notes =
-    "robot activity influence device. This helmet is self-powered and will control any robot for a short time. Lasers are turret-mounted. ";
-  Druidmap[DRUID123].notes =
-    "simpe rubbish diposal robot. Common device in most space craft to maintain a clean ship. ";
-  Druidmap[DRUID139].notes =
-    "created by Dr. Masternak to clean up large heaps of rubbish. Its large scoop is used to collect rubbish. It is then crushed internally. ";
-  Druidmap[DRUID247].notes =
-    "light duty servant robot. One of the first to use the anti-grav system. ";
-  Druidmap[DRUID249].notes =
-    "cheaper version of the anti-grav servant robot. ";
-  Druidmap[DRUID296].notes =
-    "this robot is used mainly for serving drinks. A tray is mounted on the head. Built by Orchard and Marsden Enterprises. ";
-  Druidmap[DRUID302].notes =
-    "common device for moving small packages. Clamp is mounted on the lower body. ";
-  Druidmap[DRUID329].notes =
-    "early type messenger robot. Large wheels impede motion on small craft.an";
-  Druidmap[DRUID420].notes =
-    "slow maintenance robot. Confined to drive maintenance during flight. ";
-  Druidmap[DRUID476].notes =
-    "ship maintenance robot. Fitted with multiple arms to carry out repairs to the ship efficiently. All craft built after the Jupiter-incident are supplied with a team of these. ";
-  Druidmap[DRUID493].notes =
-    "slave maintenance droid. Standard version will carry its own toolbox. ";
-  Druidmap[DRUID516].notes =
-    "early crew droid. Able to carry out simple flight checks only. No longer supplied. ";
-  Druidmap[DRUID571].notes =
-    "standard crew droid. Supplied with the ship. ";
-  Druidmap[DRUID598].notes =
-    "a highly sophisticated device. Able to control the Robo-Freighter on its own. ";
-  Druidmap[DRUID614].notes =
-    "low security sentinel droid. Used to protect areas of the ship from intruders. A slow but sure device. ";
-  Druidmap[DRUID615].notes =
-    "sophisticated sentinel droid. Only 2000 built by the Nicholson Company. these are now very rare.";
-  Druidmap[DRUID629].notes =
-    "low sentinel droid. Lasers are built into the turret. These are mounted on a small tank body. May be fitted with an auto-cannon on-the Gillen version. ";
-  Druidmap[DRUID711].notes =
-    "heavy duty battle droid. Disruptor is built into the head. One of the first in service with the Military. ";
-  Druidmap[DRUID742].notes =
-    "this version is the one mainly used by the Military. ";
-  Druidmap[DRUID751].notes =
-    "very heavy duty battle droid. Only a few have so far entered service. These are the most powerful battle units ever built. ";
-  Druidmap[DRUID821].notes =
-    "a very reliable anti-grav unit is fitted into this droid. It will patrol the ship and eliminate intruders as soon as detected by powerful sensors. ";
-  Druidmap[DRUID834].notes =
-    "early type anti-grav security droid. Fitted with an over-driven anti-grav unit. This droid is very fast but is not reliable. ";
-  Druidmap[DRUID883].notes =
-    "this droid was designed from archive data. For some unknown reason it instils great fear in Human adversaries. ";
-  Druidmap[DRUID999].notes =
-    "experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. ";
-
-  return;
-
-} /* Init_Textvars () */
-
-
 
 /*-----------------------------------------------------------------
  * @Desc: Diese Prozedur ist fuer die Introduction in das Spiel
