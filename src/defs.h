@@ -9,8 +9,8 @@
  * $Author$
  *
  * $Log$
- * Revision 1.1  1993/05/22 20:55:51  rp
- * Initial revision
+ * Revision 1.2  1993/05/22 21:58:10  rp
+ * added MAXMAPLINES
  *
  * Revision 1.3  1993/05/23  21:03:10  prix
  * Sun May 23 07:43:22 1993: Laufkonstanten hinzugefuegt
