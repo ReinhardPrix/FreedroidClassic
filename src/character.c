@@ -539,7 +539,10 @@ update_secondary_stats_from_primary_stats ( int PlayerNum )
     // walk a bit
     //
     Me [ PlayerNum ] . max_running_power = 
-	( Me [ PlayerNum ] . Strength ) + ( Me [ PlayerNum ] . Dexterity ) + ( Me [ PlayerNum ] . Vitality ) ;
+	( Me [ PlayerNum ] . Strength ) + 
+	( Me [ PlayerNum ] . Dexterity ) + 
+	( Me [ PlayerNum ] . Vitality ) +
+	Me [ PlayerNum ] . running_power_bonus ;
 
 }; // void update_secondary_stats_from_primary_stats ( int PlayerNum )
 

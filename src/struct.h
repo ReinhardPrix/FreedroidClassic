@@ -561,6 +561,7 @@ typedef struct
     float max_running_power;
     float running_power;
     int running_must_rest;
+    int running_power_bonus;
     
     Sint16 LastMouse_X;             // mostly for other players:  Where was the last mouseclick...
     Sint16 LastMouse_Y;             // mostly for other players:  Where was the last mouseclick...

@@ -1088,7 +1088,21 @@ move_tux_thowards_raw_position ( int player_num , float x , float y )
   // Now depending on whether the running key is pressed or not,
   // we have the Tux go on running speed or on walking speed.
   //
-  if ( Me [ player_num ] . running_power <= 0 ) Me [ player_num ] . running_must_rest = TRUE ;
+  if ( Me [ player_num ] . running_power <= 0 ) 
+  {
+      //--------------------
+      // Maybe only occasionally, with some randomness involved
+      // going to the running power limit might do some good to
+      // the max running power, so some implicit 'training' effect
+      //
+      if ( ! Me [ player_num ] . running_must_rest )
+      {
+	  Me [ player_num ] . running_power_bonus ++ ;
+      }
+
+      Me [ player_num ] . running_must_rest = TRUE ;
+  }
+
   if ( LeftCtrlPressed() && ( ! Me [ player_num ] . running_must_rest ) )
     { 
       planned_step . x = RemainingWay . x * TUX_RUNNING_SPEED / length ;
