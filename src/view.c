@@ -1486,7 +1486,7 @@ update_light_list ( int player_num )
 	//
 	light_sources [ next_light_emitter_index ] . x = AllEnemys [ i ] . pos . x ;
 	light_sources [ next_light_emitter_index ] . y = AllEnemys [ i ] . pos . y ;
-	light_source_strengthes [ next_light_emitter_index ] = -4 ;
+	light_source_strengthes [ next_light_emitter_index ] = -14 ;
 	next_light_emitter_index ++ ;
     }
     
