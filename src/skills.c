@@ -372,7 +372,7 @@ RadialEMPWave ( gps ExpCenter )
       AllActiveSpells [ i ] . type = SPELL_RADIAL_EMP_WAVE ; 
       AllActiveSpells [ i ] . spell_center . x = Me [ 0 ] . pos . x;
       AllActiveSpells [ i ] . spell_center . y = Me [ 0 ] . pos . y;
-      AllActiveSpells [ i ] . spell_radius = 1 ;
+      AllActiveSpells [ i ] . spell_radius = 0.3 ;
       AllActiveSpells [ i ] . spell_age = 0 ; 
       
     }
