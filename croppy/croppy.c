@@ -71,6 +71,15 @@ int vid_bpp;
 int offset_x_override = -30000; // something completely unlikely
 int offset_y_override = -30000; // something completely unlikely
 
+//--------------------
+// We add this dummy, so that dialog editor and item editor
+// will properly compile...
+//
+void
+print_trace ( int signum )
+{
+};
+
 /* ----------------------------------------------------------------------
  * This function gives the alpha component of a pixel, using a value of
  * 255 for the most opaque pixel and 0 for the least opaque pixel.

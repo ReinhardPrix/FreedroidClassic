@@ -96,6 +96,10 @@ void
 load_item_surfaces_for_item_type ( int item_type )
 {
 };
+void
+print_trace ( int signum )
+{
+};
 
 void
 PutPixel (SDL_Surface * surface, int x, int y, Uint32 pixel)
@@ -1119,10 +1123,15 @@ Unhandled case in the AUTO image prefix code encountered!",
 	    if ( tux_direction_numbering && ( all_object_directions < 16 ) )
 	    {
 		sprintf ( current_filename , "./%s_%02d_%04d.png" , local_prefix , j * ( 16 / all_object_directions ) , local_index );
+		// DebugPrintf ( -4 , "\nDirection code used: %d." , j * ( 16 / all_object_directions ) );
 	    }
 	    else
+	    {
 		sprintf ( current_filename , "./%s_%02d_%04d.png" , local_prefix , j , local_index );
+		// DebugPrintf ( -4 , "\nDirection code used: %d." , j );
+	    }
 
+	    DebugPrintf ( -4 , "\nFilename used: %s." , current_filename );
 	    input_surface = IMG_Load ( current_filename ) ;
 	    if ( input_surface == NULL )
 	    {
