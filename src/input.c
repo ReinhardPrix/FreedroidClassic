@@ -816,7 +816,6 @@ keyboard_update(void)
 	      break;
 	    case SDLK_F2:
 	      CurrentlyF2Pressed=TRUE;
-	      TakeScreenshot();
 	      break;
 	    case SDLK_F3:
 	      CurrentlyF3Pressed=TRUE;
@@ -847,6 +846,7 @@ keyboard_update(void)
 	      break;
 	    case SDLK_F12:
 	      CurrentlyF12Pressed=TRUE;
+	      TakeScreenshot();
 	      break;
 	    case SDLK_BACKSPACE:
 	      CurrentlyBackspacePressed=TRUE;

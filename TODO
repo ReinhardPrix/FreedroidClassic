@@ -2,6 +2,12 @@
 Bugs
 =======
 
+To do closer before release:
+----------------------------------------------------------------------
+* Update the credits section
+* See that an eventually existing manual is added to the release package.
+
+
 Outstanding release-critical bugs (priority: high)
 --------------------------------------------------
 - (jp) Collision with robo can still kick you out of level..

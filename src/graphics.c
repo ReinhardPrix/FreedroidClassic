@@ -753,7 +753,7 @@ TakeScreenshot(void)
 
   Screenshoot_Filename=malloc(100);
   DebugPrintf (1, "\n\nScreenshoot function called.\n\n");
-  sprintf( Screenshoot_Filename , "Screenshot_%d.bmp", Number_Of_Screenshot );
+  sprintf( Screenshoot_Filename , "Screenshot_%02d.bmp", Number_Of_Screenshot );
   DebugPrintf(1, "\n\nScreenshoot function: The Filename is: %s.\n\n" , Screenshoot_Filename );
   SDL_SaveBMP( Screen , Screenshoot_Filename );
   Number_Of_Screenshot++;
