@@ -40,10 +40,7 @@
 #include "takeover.h"
 #include "map.h"
 
-Uint32 prev_tick, next_tick;  	/* time of previous and next ticks */
 Uint32 cur_time;  		/* current time in ms */
-Uint32 tick_length; 		/* time between ticks */
-
 
 unsigned char *ToPlaygroundBlock;
 unsigned char *ToGroundBlocks;
@@ -217,10 +214,6 @@ Takeover (int enemynum)
 
       ShowPlayground ();
 
-      /* here we start the tick-timer */
-      prev_tick = SDL_GetTicks (); 
-      next_tick = prev_tick + TO_TICK_LENGTH; 
-      
       ChooseColor ();
 
       PlayGame ();
@@ -319,13 +312,19 @@ ChooseColor (void)
   int ColorChosen = FALSE;
   char dummy[80];
   
-  tick_length = 100;  	/* count down in 1/10 second steps */
+  Uint32 prev_count_tick, count_tick_len;
 
-  prev_tick = SDL_GetTicks ();
-  next_tick = prev_tick + tick_length;
+  count_tick_len = 100; 	/* countdown in 1/10 second steps */
+
+  prev_count_tick = SDL_GetTicks ();
 
   while (!ColorChosen)
     {
+      /* wait for next countdown tick */
+      while ( SDL_GetTicks() < prev_count_tick + count_tick_len ); 
+
+      prev_count_tick += count_tick_len; /* set for next tick */
+      
       if (RightPressed ())
 	{
 	  YourColor = VIOLETT;
@@ -343,16 +342,11 @@ ChooseColor (void)
 	  while (SpacePressed ()) ;
 	}
 
-      cur_time = SDL_GetTicks ();
-      if (cur_time >= next_tick )   /* next tick has ocurred */
-	{
-	  prev_tick = next_tick; 
-	  next_tick = prev_tick + tick_length;
-	  countdown--;		/* Count down */
-	  strcpy (LeftInfo, "Color? ");
-	  strcat (LeftInfo, itoa (countdown, dummy, 10));
-	  ShowPlayground ();
-	}
+      countdown--;		/* Count down */
+      strcpy (LeftInfo, "Color? ");
+      strcat (LeftInfo, itoa (countdown, dummy, 10));
+      ShowPlayground ();
+
 
       if (countdown == 0)
 	ColorChosen = TRUE;
@@ -372,90 +366,91 @@ ChooseColor (void)
 void
 PlayGame (void)
 {
-  int countdown = GAME_COUNTDOWN * 2;
+  int countdown = 100;   /* lenght of Game in 1/10 seconds */
   char dummy[80];
   int FinishTakeover = FALSE;
-  int waiter = 0;
   int row;
 
+  int up, down, set;  /* local variables about user action */
+  
+  Uint32 prev_count_tick, count_tick_len;  /* tick vars for count-down */
+  Uint32 prev_move_tick, move_tick_len;    /* tick vars for motion */
+  
+  count_tick_len = 100;  	/* countdown in 1/10 second steps */
+  move_tick_len  = 50;       /* allow motion at this tick-speed in ms */
+
+  up = FALSE;
+  down = FALSE;
+  set = FALSE;
+
+  prev_count_tick = prev_move_tick = SDL_GetTicks (); /* start tick clock */
+  
   while (!FinishTakeover)
     {
-      keyboard_update ();
-
-      if (WPressed ())
+      cur_time = SDL_GetTicks ();
+      
+      /* 
+       * here we register if there have been key-press events in the
+       * "waiting period" between move-ticks :
+       */
+      up   = up   | UpPressed(); 
+      down = down | DownPressed();
+      set  = set  | SpacePressed();
+      
+      if ( cur_time > prev_count_tick + count_tick_len ) /* time to count 1 down */
 	{
-	  LeaderColor = YourColor;
-	  return;
-	}
+	  prev_count_tick += count_tick_len;  /* set for next countdown tick */
+	  countdown--;
+	  strcpy (LeftInfo, "Finish-");
+	  strcat (LeftInfo, itoa (countdown, dummy, 10));
+	  RollToColors ();
+	  if (countdown == 0)
+	    FinishTakeover = TRUE;
+	} /* if (countdown_tick has occurred) */
 
-      countdown--;
-
-      strcpy (LeftInfo, "Finish-");
-      strcat (LeftInfo, itoa (countdown / 2, dummy, 10));
-
-      if (countdown == 0)
-	FinishTakeover = TRUE;
-
-      if (waiter > 0)
-	waiter--;
-
-
-      RollToColors ();
-
-      if (QPressed ())
-	FinishTakeover = TRUE;
-
-      EnemyMovements ();
-
-      JoystickControl ();
-
-      keyboard_update ();
-
-      if (UpPressed () && !waiter)
+      if ( cur_time > prev_move_tick + move_tick_len )  /* time for movement */
 	{
-	  waiter = WAIT_MOVEMENT;
-	  CapsuleCurRow[YourColor]--;
-	  if (CapsuleCurRow[YourColor] < 1)
-	    CapsuleCurRow[YourColor] = NUM_LINES;
-	  // PORT UpPressed() = FALSE;
-	}
-
-      if (DownPressed () && !waiter)
-	{
-	  waiter = WAIT_MOVEMENT;
-	  CapsuleCurRow[YourColor]++;
-	  if (CapsuleCurRow[YourColor] > NUM_LINES)
-	    CapsuleCurRow[YourColor] = 1;
-	  // PORT DownPressed = FALSE;
-	}
-
-      if (SpacePressed () && (NumCapsules[YOU] != 0))
-	{
-	  row = CapsuleCurRow[YourColor] - 1;
-
-	  if ((row >= 0) &&
-	      (ToPlayground[YourColor][0][row] != KABELENDE) &&
-	      (ToPlayground[YourColor][0][row] < ACTIVE_OFFSET))
+	  prev_move_tick += move_tick_len; /* set for next motion tick */
+	  EnemyMovements ();
+	  if (up)
 	    {
+	      CapsuleCurRow[YourColor]--;
+	      if (CapsuleCurRow[YourColor] < 1)
+		CapsuleCurRow[YourColor] = NUM_LINES;
+	      up = FALSE;  
+	    }
+	  if (down)
+	    {
+	      CapsuleCurRow[YourColor]++;
+	      if (CapsuleCurRow[YourColor] > NUM_LINES)
+		CapsuleCurRow[YourColor] = 1;
+	      down = FALSE;
+	    }
+	  if ( set && (NumCapsules[YOU] > 0))
+	    {
+	      set = FALSE;
+	      row = CapsuleCurRow[YourColor] - 1;
+	      if ((row >= 0) &&
+		  (ToPlayground[YourColor][0][row] != KABELENDE) &&
+		  (ToPlayground[YourColor][0][row] < ACTIVE_OFFSET))
+		{
+		  NumCapsules[YOU]--;
+		  CapsuleCurRow[YourColor] = 0;
+		  ToPlayground[YourColor][0][row] = VERSTAERKER;
+		  ToPlayground[YourColor][0][row] += ACTIVE_OFFSET;
+		  CapsuleCountdown[YourColor][row] = CAPSULE_COUNTDOWN * 2;
 
-	      NumCapsules[YOU]--;
-	      CapsuleCurRow[YourColor] = 0;
-	      ToPlayground[YourColor][0][row] = VERSTAERKER;
-	      ToPlayground[YourColor][0][row] += ACTIVE_OFFSET;
-	      CapsuleCountdown[YourColor][row] = CAPSULE_COUNTDOWN * 2;
+		  Takeover_Set_Capsule_Sound ();
+		}	/* if (row > 0 && ... ) */
+	    } /* if ( set ) */
 
-	      Takeover_Set_Capsule_Sound ();
-	    }	/* if (row > 0 && ... ) */
-	}
-
-      ProcessCapsules ();	/* count down the lifetime of the capsules */
-
-      ProcessPlayground ();
-      ProcessPlayground ();
-      ProcessPlayground ();
-      ProcessPlayground ();	/* this has to be done some times to be sure */
-
-      ProcessDisplayColumn ();
+	  ProcessCapsules ();	/* count down the lifetime of the capsules */
+	  ProcessPlayground ();
+	  ProcessPlayground ();
+	  ProcessPlayground ();
+	  ProcessPlayground ();	/* this has to be done some times to be sure */
+	  ProcessDisplayColumn ();
+	} /* if (motion_tick has occurred) */
 
       ShowPlayground ();
 
@@ -495,18 +490,8 @@ PlayGame (void)
 void
 RollToColors (void)
 {
-  static int rotate_waiter = 0;
-
-  DebugPrintf ("\nvoid RollToColors(void): Funktion echt aufgerufen....");
-
-  if (rotate_waiter-- == 0)
-    {
-      RotateColors (67, 70);
-      RotateColors (74, 77);
-      rotate_waiter = WAIT_COLOR_ROTATION;
-    }
-  DebugPrintf
-    ("\nvoid RollToColors(void): Funktionsende ordnungsgemaess erreicht....");
+  /* currently des-activated */
+  return;
 }
 
 /*-----------------------------------------------------------------
@@ -1341,9 +1326,9 @@ ProcessCapsules (void)
 	    ToPlayground[color][0][row] = KABEL;
 	  }
 
-      }				/* for row */
+      } /* for row */
 
-}				/* ProcessCapsules() */
+}   /* ProcessCapsules() */
 
 
 /*@Function============================================================

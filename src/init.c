@@ -299,14 +299,14 @@ InitNewGame (void)
       break;
 
     default:
-      DebugPrintf
-	("\n InitNewGame(): MyRandom() failed  Terminating...");
+      printf
+	("\n InitNewGame(): MyRandom() failed  Terminating...\n");
       Terminate (ERR);
       break;
     } /* switch */
 
-  DebugPrintf
-    ("\nvoid InitNewGame(void): Starting point for the influencer has been set...:");
+  printf
+    ("\nvoid InitNewGame(void): Starting point for the influencer has been set...:\n");
   printf ("%f,%f", Me.pos.x, Me.pos.y);
 
   /* Alertcolor auf Gruen zurueckschalten */
@@ -315,12 +315,10 @@ InitNewGame (void)
   /* Enemys initialisieren */
   if (GetCrew (SHIPNAME) == ERR)
     {
-      DebugPrintf
-	("\nvoid InitNewGame(void): ERROR: Initialization of enemys failed... Terminating...");
+      printf
+	("\nInitNewGame(): ERROR: Initialization of enemys failed...");
       Terminate (-1);
     }
-
-  DebugPrintf ("\nvoid InitNewGame(void): Enemys have been initialized...:");
 
   /* Influ initialisieren */
   Me.type = DRUID001;
@@ -332,13 +330,7 @@ InitNewGame (void)
   Me.status = MOBILE;
   Me.phase = 0;
 
-  DebugPrintf
-    ("\nvoid InitNewGame(void): The status of the influencer has been initialized...:");
-
   RedrawInfluenceNumber ();
-
-  DebugPrintf
-    ("\nvoid InitNewGame(void): The influence number has been redrawn...:");
 
   /* Introduction und Title */
 #ifdef TITLE_EIN
@@ -370,7 +362,7 @@ InitNewGame (void)
 
   Switch_Background_Music_To (COMBAT_BACKGROUND_MUSIC_SOUND);
 
-  DebugPrintf ("\nvoid InitNewGame(void): end of function reached.");
+  return;
 
 }				/* InitNewGame */
 
@@ -638,7 +630,7 @@ Title (void)
 
   SetTextBorder (0, 0, SCREENBREITE, SCREENHOEHE, 40);
 
-  SetTypematicRate (TYPEMATIC_SLOW);
+  return;
 
 } /* Title() */
 
