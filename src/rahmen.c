@@ -394,14 +394,24 @@ create_and_blit_droid_description ( int enemy_num )
   if ( cur_enemy -> energy <= 0 ) temp_fill_rect . w = 0 ;
   temp_fill_rect . x = UserCenter_x - text_length / 2 ;
 
+  //--------------------
+  // If the 'enemy' is hostile, then we use red underlying color.  If
+  // it's a friendly entity, then we use green underlying color for the
+  // enemy's name.
+  //
   if ( ! cur_enemy -> is_friendly ) 
     {
       our_SDL_fill_rect_wrapper ( Screen , & ( temp_fill_rect ) , SDL_MapRGB ( Screen->format , 0x099 , 0x000 , 0x000 ) );
-      temp_fill_rect . x = temp_fill_rect . x + temp_fill_rect . w ;
-      temp_fill_rect . w = text_length - temp_fill_rect . w ;
-      our_SDL_fill_rect_wrapper ( Screen , & ( temp_fill_rect ) , SDL_MapRGB ( Screen->format , 0x000 , 0x000 , 0x000 ) );
-      temp_fill_rect . x = UserCenter_x - text_length / 2 ;
     }
+  else
+    {
+      our_SDL_fill_rect_wrapper ( Screen , & ( temp_fill_rect ) , SDL_MapRGB ( Screen->format , 0x000 , 0x099 , 0x000 ) );
+    }
+
+  temp_fill_rect . x = temp_fill_rect . x + temp_fill_rect . w ;
+  temp_fill_rect . w = text_length - temp_fill_rect . w ;
+  our_SDL_fill_rect_wrapper ( Screen , & ( temp_fill_rect ) , SDL_MapRGB ( Screen->format , 0x000 , 0x000 , 0x000 ) );
+  temp_fill_rect . x = UserCenter_x - text_length / 2 ;
 
   PutStringFont ( Screen , BFont_to_use , temp_fill_rect . x , temp_fill_rect . y , 
 		  AllEnemys [ enemy_num ] . short_description_text );
