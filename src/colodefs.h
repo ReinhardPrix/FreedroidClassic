@@ -44,7 +44,6 @@
 #define BULLETCOLOR 254
 #define TRANSPARENTCOLOR 255
 
-
 #define NOTCURRENTLEVELCOLOR {0,0,47}
 //#define BULLETCOLOR1 {63,61,0} /* gelb */
 //#define BULLETCOLOR2 {50,11,11} /* rot */

@@ -25,6 +25,54 @@
 
 #include "colodefs.h"
 
+
+
+char EndTitleText1[] =
+"Congratulations!!\n\nIt seems that you have made it!  The Ship is clear.\n\n At the moment, this is the end of Freedroid.  However we are looking forward to writing a new and different story line, introduce more new concepts, features and sounds.\n\n If you enjoyed the game and would like to contribute, contact one of the developers. \n\n Also if you would like to donate something to help keep alive the Freedroid development, please also contact the developers.\n\n  Since we have not yet written something new, we can not launch the second part of the game now.\n\n What we can do is inform you about the concept of the new story-line and the features we plan to introduce sooner or later:\n\n After this preview of the coming storyline is over, the game will be restarted.\n You however have made it, but if you want, you can restart from the beginning nevertheless.\n\n  Press Space Bar to\nrestart Freedroid from the beginning. \n \n \n ";
+
+char EndTitleText2[] =
+"In the year 2400 in a far distant galaxy strange civilisation has been enslaved by an all-mighty Software Corporation named 'MegaSoft' and called MS for short.  This came to be as follows:  At first all the druids of that civilisation were running a MS Operating System which turned out to be a trojan horse and led to the revolution and the enslavement of men.  By virtue of the tremendous wealth the Corporation had accumulated it was able to break all resistances and ban all other operating systems forever, using the druids with their MS Operating System to enforce the oppression with military strength.\n\n  However not all is yet lost:\nA small group of rebels has managed to create a new 'influence device' running the latest Linux 28.32.199 kernel.  The rebels will soon be spotted and can not hope to withstand an open attack.  The Influence device must be beamed aboard an unmanned transport ship that could evacuate the rebel group.  In the first episode, the rebel influence device is beamed aboard the robo freighter and must eliminate all of the robot crew running the MS operating system.  After this is done, the rebels can beam aboard and make their escape to some distant planet from where they can prepare their next steps to free the world from oppression.\n\n Press Space Bar to relauch the original Freedroid game \n \n \n ";
+
+char TitleText1[] =
+  "A fleet of Robo-freighters on its way to the Beta Ceti system reported entering an uncharted field of asteroids. Each ship carries a cargo of battle droids to reinforce the outworld defences. Two distress beacons have been discovered. Similar Messages were stored on each. The ships had been bombarded by a powerful radionic beam from one of the asteroids. All of the robots on the ships, including those in storage, became hyper-active. The crews report an attack by droids, isolating them on the bridge. They cannot reach the shuttle and can hold out for only a couple more hours.  Since these beacons were located two days ago, we can only fear the worst.  Some of the fleet was last seen heading for enemy space. In enemy hands the droids can be used against our forces. Docking would be impossible but we can beam aboard a prototype Influence Device. \n \n ";
+
+
+char TitleText2[] =
+  "The 001 Influence Device consists of a helmet, which, when placed over a robots control unit can halt the normal activities of that robot for a short time. The helmet has its own energy supply and powers the robot itself, at an upgraded capability. The helmet also uses an energy cloak for protection of the host. The helmet is fitted with twin lasers mounted in a turret. These can be focussed on any target inside a range of eight metres. Most of the device's resources are channelled towards holding control of the host robot, as it attempts to resume 'normal' operation. It is therefore necessary to change the host robot often to prevent the device from burning out. Transfer to a new robot requires the device to drain its host of energy in order to take ist over. Failure to achieve transfer results in the device being a free agent once more.\n\n        Press space bar to skip instructions\n \n ";
+
+char TitleText3[] =
+  "An Influence Device can transmitt data to your console.  A small-scale plan of the whole deck is available, as well as a side elevation of the ship. Robots are represented on-screen as a symbol showing a three-digit number. The first digit shown is the important one, the class of the robot. It denotes the strength also. To find out more about any given robot, use the robot enquiry system at a console. Only data about units of a lower class than your current host is available, since it is the host's security clearance which is used to acces the console. \n  \n  \n  \n Press space bar to skip instructions\n\n\n";
+
+char TitleText4[] =
+  "Controls\n\
+\n\
+The game is controlled via keyboard input.\n\
+\n\
+Use cursor keys to move around.  The speed you can go \
+depends on the druid you currently control.\n\
+\n\
+If you press space bar in -addition- to a cursor key, this fires \
+the weapon of the druid you currently control.\n\n\
+If you press space bar whilst NOT pressing a cursor key, \
+this will enter transfer mode.  You will notice your robot to \
+take on a flashy red color.  \
+Now if you touch some other druid, this will initiate the takeover \
+process in which you have to win a small game of logical curcuits \
+within the given time.\n\
+If you succeed, you thereafter can control this new droid and for game \
+purposes, it is as if you were him.\n\
+If you loose, you either are destroyed if you didn't control an enemy \
+druid at that time, or the host you controlled is destroyed together with \
+the unit you wished to control.\n\
+\n\
+Watch out for energy refreshing fields and elevators.\n\
+\n\
+Elevators are also entered via transfer mode if you stand still on the elevaor.\n\
+\n\
+    Press Fire to Play\n \n \n \n \n \n";
+
+
+
 char Text1[] =
   "Clear the freighter of Robots by\ndestroying them with twin lasers\nor by transferring control to them.\n\nControl is by Joystick and also\nby Keyboard as follows:\n\nAny time Joystick moves and holding\nfirebutton down will allow use of\nlifts and consoles. Diese Nachricht\nist noch nicht lang genug, und daher\nschreibe ich jetzt ein Par Extrazeilen, die, wenn \nsie nicht mehr am Bildschirm\nzu sehen sind von der Textausgaberoutine\nnicht mehr angezeigt werden.";
 
@@ -270,3 +318,5 @@ blastspec Blastmap[ALLBLASTTYPES] = {
   {6, NULL},			/* BULLETBLAST */
   {9, NULL}			/* DRUIDBLAST */
 };
+
+

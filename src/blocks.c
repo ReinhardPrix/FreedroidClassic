@@ -248,17 +248,17 @@ IsolateBlock (unsigned char *Parameter_screen,
 
 }				/* IsolateBlock */
 
-/* ***********************************************************************/
+
+/*-----------------------------------------------------------------
+ * Diese Prozedur isoliert ueber Aufrufe der Funktion GetBlock aus dem
+ * Anfangsbild alle Bloecke, die benoetigt werden und legt diese im Speicher
+ * ab
+ * 
+ *   Parameter: keine
+ *-----------------------------------------------------------------*/
 void
 GetMapBlocks (void)
 {
-/*
-	Diese Prozedur isoliert ueber Aufrufe der Funktion GetBlock aus dem
-	Anfangsbild alle Bloecke, die benoetigt werden und legt diese im Speicher
-   ab
-
-   Parameter: keine
-*/
 
   int i;
   unsigned char *tmp;
@@ -280,11 +280,11 @@ GetMapBlocks (void)
     IsolateBlock (InternalScreen, tmp, i * (BLOCKBREITE + 1),
 		  BLOCKHOEHE * 2 + 2, BLOCKBREITE, BLOCKHOEHE);
 
-  for (i = 0; i < 7; tmp += BLOCKMEM, i++)
+  for (i = 0; i < 9; tmp += BLOCKMEM, i++)
     IsolateBlock (InternalScreen, tmp, i * (BLOCKBREITE + 1),
 		  BLOCKHOEHE * 3 + 3, BLOCKBREITE, BLOCKHOEHE);
 
-  for (i = 0; i < 8; tmp += BLOCKMEM, i++)
+  for (i = 0; i < 7; tmp += BLOCKMEM, i++)
     IsolateBlock (InternalScreen, tmp, i * (BLOCKBREITE + 1),
 		  BLOCKHOEHE * 4 + 4, BLOCKBREITE, BLOCKHOEHE);
 
@@ -301,6 +301,11 @@ GetShieldBlocks (void)
 {
   int i;
 
+  if (!PlusExtentionsOn)
+    {
+      printf ("\nGetShieldBlocks() called: is an extension!\n");
+      return;
+    }
   // Sicherheitsabfrage gegen doppeltes initialisieren
   if (ShieldBlocks)
     {

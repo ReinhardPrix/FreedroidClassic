@@ -108,12 +108,6 @@ Alt_Was_Pressed(void)
   return (AltWasPressedInAddition);  
 }
 
-void 
-Init_SDL_Keyboard(void)
-{
-  return;  
-}
-
 int 
 keyboard_update(void)
 {
@@ -258,7 +252,7 @@ keyboard_update(void)
 	      break;
 	    case SDLK_s:
 	      CurrentlySPressed=TRUE;
-
+#ifndef NEW_ENGINE
 	      Screenshoot_Filename=malloc(100);
 	      printf("\n\nScreenshoot function called.\n\n");
 	      sprintf( Screenshoot_Filename , "Screenshot_%d.bmp", Number_Of_Screenshot );
@@ -266,7 +260,7 @@ keyboard_update(void)
 	      SDL_SaveBMP( ScaledSurface , Screenshoot_Filename );
 	      Number_Of_Screenshot++;
 	      free(Screenshoot_Filename);
-
+#endif 
 	      break;
 	    case SDLK_t:
 	      CurrentlyTPressed=TRUE;
@@ -502,14 +496,6 @@ getchar_raw (void)
 
 } /* getchar_raw() */
 
-
-/*-----------------------------------------------------------------
- *-----------------------------------------------------------------*/
-void
-ClearKbState (void)
-{
-  keyboard_clearstate ();	// This resets the state of all keys when keyboard in raw mode
-}				// void ClearKbState(void)
 
 int
 KP0Pressed (void)
@@ -833,50 +819,6 @@ NoDirectionPressed (void)
     return ( FALSE );
   return ( TRUE );
 } // int NoDirectionPressed(void)
-
-/* ************************************************************** *
- * * Diese Funktion setzt die Zeichenwiederholrate der Tastatur * *
- * * Es wird zuerst das Befehlswort 0x0F3 gesendet und dann die * *
- * * neue Rate (0,1 delay 2,3,4,5,6 typematic) nach 0x60 gesandt. *
- * ************************************************************** */
-
-int
-SetTypematicRate (unsigned char Rate)
-{
-  return 0;
-}
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-JoystickControl (void)
-{
-  //      SpacePressed=JoyB;
-  //      if (JoyX < 50) LeftPressed=TRUE; else LeftPressed=FALSE;
-  //      if (JoyX >200) RightPressed=TRUE; else RightPressed=FALSE;
-  //      if (JoyY < 50) UpPressed=TRUE; else UpPressed=FALSE;
-  //      if (JoyY >200) DownPressed=TRUE; else DownPressed=FALSE;
-  //
-}				// void JoystickControl(void)
-
-/*@Function============================================================
-@Desc:  This function drains the keyboard buffer of characters to
-			prevent nasty beeps when it is overloaded
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-KillTastaturPuffer (void)
-{
-  //PORT: nix tun hier!
-  printf ("\nOBSOLETE function KillTastaturPuffer() called: deprecated !\n");
-  return;
-}
 
 
 #undef _keyboard_c

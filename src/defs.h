@@ -38,17 +38,17 @@
 // **********************************************************************
 //
 
-#define MEMDEBUG
-#define SOUND
+#define SINGLE_PLAYER_MENU_POINTER_POS_X (BLOCKBREITE/2)
+enum
+  { NEW_GAME_POSITION=1, SHOW_HISCORE_POSITION=2,
+    SHOW_MISSION_POSITION=3, BACK_POSITION=4 };
+
+
 #define USE_SDL_FRAMERATE
 
 enum
 { SHOW_ALL = 0, SHOW_MAP = 1 };
 
-
-// For development purposes, the sound will not be activated unless the following definition is made
-// #undef PARADROID_SOUND_SUPPORT_ON
-#define PARADROID_SOUND_SUPPORT_ON
 
 // The following is the definition of the sound file names used in freedroid
 // DO NOT EVER CHANGE THE ORDER OF APPEARENCE IN THIS LIST PLEASE!!!!!
@@ -170,7 +170,11 @@ enum _sounds
 
 /* Konstanten die die Ausmasse von maps und Arrays beeinflussen */
 #define BLOCKBREITE 		32
+#define BLOCK_WIDTH		BLOCKBREITE
+
 #define BLOCKHOEHE 		32
+#define BLOCK_HEIGHT		BLOCKHOEHE
+
 #define BLOCKMEM  		BLOCKBREITE*BLOCKHOEHE
 
 
@@ -258,6 +262,7 @@ enum _directions
 /* Maximale Anzahl von ... */
 
 #define BLOCKANZAHL 		43
+#define NUM_BLOCKS		BLOCKANZAHL  /* total number of map-blocks */
 
 #define ALLDRUIDTYPES		24	/* number of druid-models that exist */
 #define ALLBULLETTYPES		4	/* number of bullet-types */

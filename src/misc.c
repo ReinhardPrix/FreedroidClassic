@@ -38,7 +38,6 @@
 #include "proto.h"
 
 #undef DIAGONAL_KEYS_AUS
-#define QUEUEDEBUG
 
 #define MESPOSX 0
 #define MESPOSY 64
@@ -74,12 +73,6 @@ int VectsHaveBeenTurned = 0;
 unsigned char *MessageBar;
 message *Queue = NULL;
 // int ThisMessageTime=0;               /* Counter fuer Message-Timing */
-
-void
-gotoxy (int x, int y)
-{
-  return;
-};
 
 void
 DebugPrintf (char *Print_String)
@@ -250,8 +243,6 @@ Teleport (int LNum, int X, int Y)
 
   if (curLevel != CurLevel->levelnum)
     {				/* wirklich neu ??? */
-
-      FadeLevel ();
       /* Aktuellen Level setzen */
       while ((tmp = curShip.AllLevels[array_num]) != NULL)
 	{
@@ -281,7 +272,6 @@ Teleport (int LNum, int X, int Y)
     }
   else
     {
-      FadeLevel ();
       Me.pos.x = Grob2Fein(X);
       Me.pos.y = Grob2Fein(Y);
     }
@@ -319,8 +309,10 @@ Cheatmenu (void)
    * this cheat-menu currently uses the text-window for output
    * therefore, if we're in fullscreen-mode: change to window-mode
    */
+#ifndef NEW_ENGINE
   if (fullscreen_on)
     SDL_WM_ToggleFullScreen (ScaledSurface);
+#endif
 
   Weiter = FALSE;
   while (!Weiter)
@@ -554,8 +546,10 @@ Cheatmenu (void)
   printf ("Back in the game!\n");
 
   /* toggle back to fullscreen, if that's where we came from */
+#ifndef NEW_ENGINE
   if (fullscreen_on)
     SDL_WM_ToggleFullScreen (ScaledSurface);
+#endif
 
   return;
 } /* Cheatmenu() */
@@ -565,6 +559,9 @@ Cheatmenu (void)
 void
 EscapeMenu (void)
 {
+#ifdef NEW_ENGINE
+  return;
+#else
   int Weiter = 0;
   int MenuPosition=1;
 
@@ -676,6 +673,7 @@ enum
   InitBars = TRUE;
 
   return;
+#endif // !NEW_ENGINE
 } // EscapeMenu
 
 /* -----------------------------------------------------------------
@@ -683,6 +681,9 @@ enum
 void
 Options_Menu (void)
 {
+#ifdef NEW_ENGINE
+  return;
+#else
   int Weiter = 0;
   int MenuPosition=1;
 
@@ -838,6 +839,7 @@ enum
   InitBars = TRUE;
 
   return;
+#endif // !NEW_ENGINE
 } // Options_Menu
 
 /* -----------------------------------------------------------------
@@ -847,12 +849,11 @@ enum
 void
 Single_Player_Menu (void)
 {
+#ifdef NEW_ENGINE
+  return;
+#else
   int Weiter = 0;
   int MenuPosition=1;
-
-#define SINGLE_PLAYER_MENU_POINTER_POS_X (BLOCKBREITE/2)
-enum
-  { NEW_GAME_POSITION=1, SHOW_HISCORE_POSITION=2, SHOW_MISSION_POSITION=3, BACK_POSITION=4 };
 
   while (!Weiter)
     {
@@ -932,11 +933,8 @@ enum
   DisplayRahmen (InternalScreen);
   InitBars = TRUE;
 
-  vga_clear ();
-  
-  // keyboard_init (); /* return to raw keyboard mode */
-
   return;
+#endif // !NEW_ENGINE
 } // Single_Player_Menu
 
 /*-----------------------------------------------------------------
@@ -944,6 +942,9 @@ enum
 void
 Show_Highscore_Menu (void)
 {
+#ifdef NEW_ENGINE
+  return;
+#else
   int Weiter = 0;
 
   enum { NEW_GAME_POSITION=1, SHOW_HISCORE_POSITION=2, SHOW_MISSION_POSITION=3, BACK_POSITION=4 };
@@ -990,11 +991,8 @@ Show_Highscore_Menu (void)
   DisplayRahmen (InternalScreen);
   InitBars = TRUE;
 
-  vga_clear ();
-  
-  // keyboard_init (); /* return to raw keyboard mode */
-
   return;
+#endif // !NEW_ENGINE
 } // Show_Highscore_Menu
 
 /*-----------------------------------------------------------------
@@ -1002,6 +1000,9 @@ Show_Highscore_Menu (void)
 void
 Multi_Player_Menu (void)
 {
+#ifdef NEW_ENGINE
+  return;
+#else
   int Weiter = 0;
 
   enum { NEW_GAME_POSITION=1, SHOW_HISCORE_POSITION=2, SHOW_MISSION_POSITION=3, BACK_POSITION=4 };
@@ -1044,16 +1045,17 @@ Multi_Player_Menu (void)
   DisplayRahmen (InternalScreen);
   InitBars = TRUE;
 
-  vga_clear ();
-  
-  // keyboard_init (); /* return to raw keyboard mode */
-
   return;
+#endif // !NEW_ENGINE
+
 } // Multi_Player_Menu
 
 void
 Show_Mission_Instructions_Menu (void)
 {
+#ifdef NEW_ENGINE
+  return;
+#else
   int Weiter = 0;
 
   enum { NEW_GAME_POSITION=1, SHOW_HISCORE_POSITION=2, SHOW_MISSION_POSITION=3, BACK_POSITION=4 };
@@ -1095,11 +1097,8 @@ Show_Mission_Instructions_Menu (void)
   DisplayRahmen (InternalScreen);
   InitBars = TRUE;
 
-  vga_clear ();
-  
-  // keyboard_init (); /* return to raw keyboard mode */
-
   return;
+#endif
 } // ShowMissionInstructionsMenu
 
 void 
@@ -1127,6 +1126,9 @@ Highlight_Current_Block(void)
 void 
 Level_Editor(void)
 {
+#ifdef NEW_ENGINE
+  return;
+#else
   int BlockX, BlockY;
   int Done=FALSE;
   int Weiter=FALSE;
@@ -1328,6 +1330,8 @@ Level_Editor(void)
 	}
       
     } // while (!Done)
+
+#endif // !NEW_ENGINE
 } // void Level_Editor(void)
 
 /*@Function============================================================
@@ -1442,17 +1446,12 @@ PutMessages (void)
   if (!Working)
     ThisMessageTime = 0;	/* inaktiv, aber Queue->reset time */
 
-
-#ifdef QUEUEDEBUG
-  gotoxy (1, 10);
   printf ("Time: %d", ThisMessageTime);
-#endif
 
 // Ausgabe der momentanen Liste:
-#ifdef QUEUEDEBUG
+
   LQueue = Queue;
   i = 0;
-  gotoxy (1, 5);
   DebugPrintf ("\nvoid PutMessages(void): This is the Queue of Messages:\n");
   while (LQueue != NULL)
     {
@@ -1468,8 +1467,6 @@ PutMessages (void)
       LQueue = LQueue->NextMessage;
     }
   DebugPrintf (" NULL reached !\n");
-#endif
-
 
   // Wenn die Nachricht schon sehr alt ist, wird sie gel"oscht. 
   if (Working && (ThisMessageTime > MaxMessageTime))
@@ -1644,19 +1641,19 @@ InsertMessage (char *MText)
   strcpy (LQueue->MessageText, MText);
   LQueue->NextMessage = NULL;
   LQueue->MessageCreated = FALSE;
-#ifdef QUEUEDEBUG
-  gotoxy (1, 11);
+
   printf ("\nvoid InsertMessage(char* MText): A message has been added:%s",
 	  MText);
-#endif
 
-  DebugPrintf ("\nvoid InsertMessage(char* MText): end of function reached.");
 }				// void InsertMessage(char* MText)
 
 /* **********************************************************************
-	Diese Funktion erledigt ein normales Malloc, trifft zuerst aber ein
-	Par Sicherheitsvorkehrungen.
-	**********************************************************************/
+ *	Diese Funktion erledigt ein normales Malloc, trifft
+ *      zuerst aber ein paar Sicherheitsvorkehrungen.
+ * 
+ *   NOTE: this exits on error, so we don't need to check success!
+ * 
+ **********************************************************************/
 void *
 MyMalloc (long Mamount)
 {
@@ -1824,36 +1821,14 @@ ShowDebugInfos (void)
 void
 ShowHighscoreList (void)
 {
-  int Rankcounter = 0;
-  // HallElement *SaveHallptr = Hallptr;
+  DisplayText ("Highscore list:", 10,10, RealScreen, FALSE);
 
-  if (!PlusExtentionsOn)
-    {
-      DisplayText ("Highscore list:", 10,10, RealScreen, FALSE);
+  // DisplayText ("Highest Score: %10s : %4d\n", HighestName, HighestScoreOfDay);
+  printf (" Ok Score:      %10s : %f\n", GreatScoreName, GreatScore);
+  printf (" Lowest Score:  %10s : %f\n", LowestName, LowestScoreOfDay);
 
-      //      DisplayText ("Highest Score: %10s : %4d\n", HighestName, HighestScoreOfDay);
-      gl_printf (-1, -1, " Ok Score:      %10s : %4d\n", GreatScoreName,
-		 GreatScore);
-      gl_printf (-1, -1, " Lowest Score:  %10s : %4d\n", LowestName,
-		 LowestScoreOfDay);
-      PrepareScaledSurface (TRUE);
-      getchar_raw ();
-    }
-  else
-    {
-      gl_printf (-1, -1, " This is today's Hall of Fame:\n\n");
-      gl_printf (-1, -1, "\tRank\tName\tScore\n");
-      while (Hallptr->NextPlayer != NULL)
-	{
-	  gl_printf (-1, -1, "\t%d\t", Rankcounter);
-	  gl_printf (-1, -1, "%s", Hallptr->PlayerName);
-	  gl_printf (-1, -1, "\t%d\n", Hallptr->PlayerScore);
-	  Hallptr = Hallptr->NextPlayer;
-	  Rankcounter++;
-	}
-      getchar ();
-    }
-  //  Hallptr = SaveHallptr;
+  PrepareScaledSurface (TRUE);
+  getchar_raw ();
 
   return;
 } /* ShowHighscoreList () */

@@ -334,7 +334,6 @@ main (int argc, char *const argv[])
 	    CheckBulletCollisions (i);
 	  PutMessages ();
 
-	  JoystickControl ();	// Wenn vorhanden: Joystick einlesen 
 	  MoveInfluence ();	// change Influ-speed depending on keys pressed
 	  MoveEnemys ();	// Auch die Feinde bewegen 
 	  AnimateInfluence ();	// Bei animierten Influencer die Phasen weiterzaehlen 
@@ -493,10 +492,8 @@ ThouArtVictorious (void)
   ShipEmptyCounter = WAIT_SHIPEMPTY;
   GameOver = TRUE;		/*  */
 
-  KillTastaturPuffer ();
   ClearUserFenster ();
-  DebugPrintf (" BRAVO ! Sie haben es geschafft ! ");
-  getchar ();
+  getchar_raw ();
 }
 
 /* **********************************************************************
@@ -566,7 +563,6 @@ Debriefing (void)
 	(" You have gained entry to the hall\n of fame!\nEnter your name:\n  ",
 	 USERFENSTERPOSX, USERFENSTERPOSY, RealScreen, FALSE);
 
-      // SwapScreen();
 	  PrepareScaledSurface(TRUE);
 
       /* Den neuen Eintrag in die Liste integrieren */
@@ -599,8 +595,8 @@ Debriefing (void)
       DisplayText ("You are now added to the hall\n of fame!\n",
 		   USERFENSTERPOSX, USERFENSTERPOSY, RealScreen, FALSE);
       Hallptr = SaveHallptr;
-      // SwapScreen();
-	  PrepareScaledSurface(TRUE);
+
+      PrepareScaledSurface(TRUE);
       getchar ();
     } /* if (ParaPlusExtensions) */
 

@@ -85,7 +85,6 @@ EnterElevator (void)
     }
 
   EnterElevatorSound ();
-  FadeLevel ();
 
   upElev = curShip.AllElevators[curElev].up;
   downElev = curShip.AllElevators[curElev].down;
@@ -98,24 +97,16 @@ EnterElevator (void)
   PrepareScaledSurface(TRUE);
 
   /* Warten, bis User Feuer auslaesst */
-  while (SpacePressed ())
-    {
-      JoystickControl ();
-      keyboard_update ();
-    }
+  while (SpacePressed ()) ;
+
 
   while (!SpacePressed ())
     {
-      JoystickControl ();	/* Falls vorhanden einlesen */
-      keyboard_update ();
-      // if( kbhit() ) getchar();         /* Tastaturuffer leeren */
-
       if (UpPressed () && !DownPressed ())
 	if (upElev != -1)
 	  {			/* gibt es noch einen Lift hoeher ? */
 	    if (curShip.AllElevators[upElev].x == 99)
 	      {
-		gotoxy (1, 1);
 		printf ("Out of order, so sorry ..");
 	      }
 	    else
@@ -132,11 +123,7 @@ EnterElevator (void)
 		WaitElevatorCounter = WAIT_ELEVATOR;
 		MoveElevatorSound ();
 		//PORT while( UpPressed() && WaitElevatorCounter ) {
-		while (UpPressed ())
-		  {
-		    JoystickControl ();
-		    keyboard_update ();
-		  }
+		while (UpPressed ()) ;
 	      }
 	  }			/* if uplevel */
 
@@ -146,7 +133,6 @@ EnterElevator (void)
 	  {			/* gibt es noch einen Lift tiefer ? */
 	    if (curShip.AllElevators[downElev].x == 99)
 	      {
-		gotoxy (1, 1);
 		printf ("Out of order, so sorry ..");
 	      }
 	    else
@@ -163,11 +149,7 @@ EnterElevator (void)
 		WaitElevatorCounter = WAIT_ELEVATOR;
 		MoveElevatorSound ();
 		// PORT while( DownPressed() && WaitElevatorCounter ) {
-		while (DownPressed ())
-		  {
-		    JoystickControl ();
-		    keyboard_update ();
-		  }
+		while (DownPressed ()) ;
 	      }
 	  }			/* if downlevel */
     }				/* while !SpaceReleased */
@@ -222,11 +204,7 @@ EnterElevator (void)
 
   InitBars = TRUE;
 
-  while (SpacePressed ())
-    {
-      JoystickControl ();
-      keyboard_update ();
-    }
+  while (SpacePressed ()) ;
 
   Me.status = MOBILE;
 
@@ -324,7 +302,6 @@ EnterKonsole (void)
       TasteOK = 0;
       while (!TasteOK)
 	{
-	  JoystickControl ();
 	  if (UpPressed ())
 	    {
 	      MenuPoint--;
@@ -378,34 +355,22 @@ EnterKonsole (void)
 	}
       if ((MenuPoint == 3) & (SpacePressed ()))
 	{
-	  while (SpacePressed ())
-	    JoystickControl ();
+	  while (SpacePressed ());
 	  ShowElevators ();
-	  while (!SpacePressed ())
-	    JoystickControl ();
-	  while (SpacePressed ())
-	    JoystickControl ();
-	  KillTastaturPuffer ();
+	  while (!SpacePressed ());
+	  while (SpacePressed ());
 	}
 
-      while (DownPressed ())
-	JoystickControl ();
-      while (UpPressed ())
-	JoystickControl ();
-
+      while (DownPressed ());
+      while (UpPressed ());
     }				/* (while !ReenterGane) */
 
-  KillTastaturPuffer ();
   Me.status = MOBILE;
   /* Die Textfarben wieder setzen wie sie vorher waren */
   SetTextColor (FONT_WHITE, FONT_RED);	/* BG: Rahmenwei"s FG: FONT_RED */
   SetInfoline (NULL, NULL);
 
-  while (SpacePressed ())
-    {
-      keyboard_update ();
-      JoystickControl ();
-    }
+  while (SpacePressed ());
 
   Switch_Background_Music_To ( COMBAT_BACKGROUND_MUSIC_SOUND );
 
@@ -501,11 +466,7 @@ GreatDruidShow (void)
   DebugPrintf ("\nvoid GreadDruidShow(void): Function call confirmed.");
 
   /* Warte, bis User Space auslaesst */
-  while (SpacePressed ())
-    {
-      JoystickControl ();
-      keyboard_update ();
-    }
+  while (SpacePressed ()) ;
 
   SetUserfenster (KON_BG_COLOR, InternalScreen);
 
@@ -556,31 +517,21 @@ GreatDruidShow (void)
 	  Update_SDL_Screen();
 	  PrepareScaledSurface(TRUE);
 
-	  KillTastaturPuffer ();
 	  while (!LeftPressed () && !UpPressed () && !DownPressed ()
-		 && !RightPressed () && !SpacePressed ())
-	    JoystickControl ();
+		 && !RightPressed () && !SpacePressed ()) ;
 
 	  if (UpPressed ())
 	    {
 	      Infodroid--;
 	      // Einem zu schnellen Weiterbl"attern vorbeugen
-	      while (UpPressed () || DownPressed ())
-		{
-		  JoystickControl ();
-		  keyboard_update ();
-		}
+	      while (UpPressed () || DownPressed ()) ;
 	    }
 
 	  if (DownPressed ())
 	    {
 	      Infodroid++;
 	      // Einem zu schnellen Weiterbl"attern vorbeugen
-	      while (UpPressed () || DownPressed ())
-		{
-		  JoystickControl ();
-		  keyboard_update ();
-		}
+	      while (UpPressed () || DownPressed ()) ;
 	    }
 
 	  if ((RightPressed ()) || (LeftPressed ()))
@@ -592,22 +543,15 @@ GreatDruidShow (void)
 	    Infodroid = Me.type;
 	  if (SpacePressed ())
 	    {
-	      KillTastaturPuffer ();
-	      while (SpacePressed ())
-		{
-		  JoystickControl ();
-		  keyboard_update ();
-		}
+	      while (SpacePressed ()) ;
+
 	      SetTextBorder (0, 0, SCREENBREITE, SCREENHOEHE, 40);
-	      DebugPrintf
-		("\nvoid GreadDruidShow(void): Alternate end of function reached via Space0.");
 	      return;
 	    }
 
 	}
       while (LeftPressed () || UpPressed () || DownPressed ()
-	     || RightPressed () || SpacePressed ())
-	JoystickControl ();
+	     || RightPressed () || SpacePressed ()) ;
 
       /*
        * Ausgabe der Liste von Werten dieses Druids
@@ -654,24 +598,19 @@ GreatDruidShow (void)
       Update_SDL_Screen();
       PrepareScaledSurface(TRUE);
 
-      KillTastaturPuffer ();
       PassOn = 0;
       while (!PassOn)
 	{
-	  JoystickControl ();
 	  if ((RightPressed ()) || (LeftPressed ()) || (UpPressed ())
 	      || (DownPressed ()))
 	    {
 	      PassOn = 1;
 	      while ((RightPressed ()) || (LeftPressed ()) || (UpPressed ())
-		     || (DownPressed ()))
-		JoystickControl ();
+		     || (DownPressed ())) ;
 	    }
 	  if (SpacePressed ())
 	    {
-	      KillTastaturPuffer ();
-	      while (SpacePressed ())
-		JoystickControl ();
+	      while (SpacePressed ()) ;
 	      SetTextBorder (0, 0, SCREENBREITE, SCREENHOEHE, 40);
 	      DebugPrintf
 		("\nvoid GreadDruidShow(void): Alternate end of function reached via Space1.");
@@ -721,27 +660,20 @@ GreatDruidShow (void)
       Update_SDL_Screen();
       PrepareScaledSurface(TRUE);
 
-      KillTastaturPuffer ();
       PassOn = 0;
       while (!PassOn)
 	{
-	  JoystickControl ();
 	  if ((RightPressed ()) || (LeftPressed ()) || (UpPressed ())
 	      || (DownPressed ()))
 	    {
 	      PassOn = 1;
 	      while ((RightPressed ()) || (LeftPressed ()) || (UpPressed ())
-		     || (DownPressed ()))
-		JoystickControl ();
+		     || (DownPressed ())) ;
 	    }
 	  if (SpacePressed ())
 	    {
-	      KillTastaturPuffer ();
-	      while (SpacePressed ())
-		JoystickControl ();
+	      while (SpacePressed ()) ;
 	      SetTextBorder (0, 0, SCREENBREITE, SCREENHOEHE, 40);
-	      DebugPrintf
-		("\nvoid GreadDruidShow(void): Alternate end of function reached via Space2.");
 	      return;
 	    }
 	}
@@ -785,27 +717,20 @@ GreatDruidShow (void)
       Update_SDL_Screen();
       PrepareScaledSurface(TRUE);
 
-      KillTastaturPuffer ();
       PassOn = 0;
       while (!PassOn)
 	{
-	  JoystickControl ();
 	  if ((RightPressed ()) || (LeftPressed ()) || (UpPressed ())
 	      || (DownPressed ()))
 	    {
 	      PassOn = 1;
 	      while ((RightPressed ()) || (LeftPressed ()) || (UpPressed ())
-		     || (DownPressed ()))
-		JoystickControl ();
+		     || (DownPressed ())) ;
 	    }
 	  if (SpacePressed ())
 	    {
-	      KillTastaturPuffer ();
-	      while (SpacePressed ())
-		JoystickControl ();
+	      while (SpacePressed ()) ;
 	      SetTextBorder (0, 0, SCREENBREITE, SCREENHOEHE, 40);
-	      DebugPrintf
-		("\nvoid GreadDruidShow(void): End of function reached.");
 	      return;
 	    }
 	}

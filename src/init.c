@@ -38,7 +38,6 @@
 #include "proto.h"
 #include "text.h"
 
-// #include "vars.h"
 #include "ship.h"
 
 
@@ -49,52 +48,6 @@
 #define SCROLLSTARTX		USERFENSTERPOSX
 #define SCROLLSTARTY		SCREENHOEHE
 #define CHARSPERLINE		(int)(USERFENSTERBREITE/FONTBREITE)
-
-
-char EndTitleText1[] =
-"Congratulations!!\n\nIt seems that you have made it!  The Ship is clear.\n\n At the moment, this is the end of Freedroid.  However we are looking forward to writing a new and different story line, introduce more new concepts, features and sounds.\n\n If you enjoyed the game and would like to contribute, contact one of the developers. \n\n Also if you would like to donate something to help keep alive the Freedroid development, please also contact the developers.\n\n  Since we have not yet written something new, we can not launch the second part of the game now.\n\n What we can do is inform you about the concept of the new story-line and the features we plan to introduce sooner or later:\n\n After this preview of the coming storyline is over, the game will be restarted.\n You however have made it, but if you want, you can restart from the beginning nevertheless.\n\n  Press Space Bar to\nrestart Freedroid from the beginning. \n \n \n ";
-
-char EndTitleText2[] =
-"In the year 2400 in a far distant galaxy strange civilisation has been enslaved by an all-mighty Software Corporation named 'MegaSoft' and called MS for short.  This came to be as follows:  At first all the druids of that civilisation were running a MS Operating System which turned out to be a trojan horse and led to the revolution and the enslavement of men.  By virtue of the tremendous wealth the Corporation had accumulated it was able to break all resistances and ban all other operating systems forever, using the druids with their MS Operating System to enforce the oppression with military strength.\n\n  However not all is yet lost:\nA small group of rebels has managed to create a new 'influence device' running the latest Linux 28.32.199 kernel.  The rebels will soon be spotted and can not hope to withstand an open attack.  The Influence device must be beamed aboard an unmanned transport ship that could evacuate the rebel group.  In the first episode, the rebel influence device is beamed aboard the robo freighter and must eliminate all of the robot crew running the MS operating system.  After this is done, the rebels can beam aboard and make their escape to some distant planet from where they can prepare their next steps to free the world from oppression.\n\n Press Space Bar to relauch the original Freedroid game \n \n \n ";
-
-char TitleText1[] =
-  "A fleet of Robo-freighters on its way to the Beta Ceti system reported entering an uncharted field of asteroids. Each ship carries a cargo of battle droids to reinforce the outworld defences. Two distress beacons have been discovered. Similar Messages were stored on each. The ships had been bombarded by a powerful radionic beam from one of the asteroids. All of the robots on the ships, including those in storage, became hyper-active. The crews report an attack by droids, isolating them on the bridge. They cannot reach the shuttle and can hold out for only a couple more hours.  Since these beacons were located two days ago, we can only fear the worst.  Some of the fleet was last seen heading for enemy space. In enemy hands the droids can be used against our forces. Docking would be impossible but we can beam aboard a prototype Influence Device. \n \n ";
-
-
-char TitleText2[] =
-  "The 001 Influence Device consists of a helmet, which, when placed over a robots control unit can halt the normal activities of that robot for a short time. The helmet has its own energy supply and powers the robot itself, at an upgraded capability. The helmet also uses an energy cloak for protection of the host. The helmet is fitted with twin lasers mounted in a turret. These can be focussed on any target inside a range of eight metres. Most of the device's resources are channelled towards holding control of the host robot, as it attempts to resume 'normal' operation. It is therefore necessary to change the host robot often to prevent the device from burning out. Transfer to a new robot requires the device to drain its host of energy in order to take ist over. Failure to achieve transfer results in the device being a free agent once more.\n\n        Press space bar to skip instructions\n \n ";
-
-char TitleText3[] =
-  "An Influence Device can transmitt data to your console.  A small-scale plan of the whole deck is available, as well as a side elevation of the ship. Robots are represented on-screen as a symbol showing a three-digit number. The first digit shown is the important one, the class of the robot. It denotes the strength also. To find out more about any given robot, use the robot enquiry system at a console. Only data about units of a lower class than your current host is available, since it is the host's security clearance which is used to acces the console. \n  \n  \n  \n Press space bar to skip instructions\n\n\n";
-
-char TitleText4[] =
-  "Controls\n\
-\n\
-The game is controlled via keyboard input.\n\
-\n\
-Use cursor keys to move around.  The speed you can go \
-depends on the druid you currently control.\n\
-\n\
-If you press space bar in -addition- to a cursor key, this fires \
-the weapon of the druid you currently control.\n\n\
-If you press space bar whilst NOT pressing a cursor key, \
-this will enter transfer mode.  You will notice your robot to \
-take on a flashy red color.  \
-Now if you touch some other druid, this will initiate the takeover \
-process in which you have to win a small game of logical curcuits \
-within the given time.\n\
-If you succeed, you thereafter can control this new droid and for game \
-purposes, it is as if you were him.\n\
-If you loose, you either are destroyed if you didn't control an enemy \
-druid at that time, or the host you controlled is destroyed together with \
-the unit you wished to control.\n\
-\n\
-Watch out for energy refreshing fields and elevators.\n\
-\n\
-Elevators are also entered via transfer mode if you stand still on the elevaor.\n\
-\n\
-    Press Fire to Play\n \n \n \n \n \n";
-
 
 /* -----------------------------------------------------------------
  * This function is for stability while working with the SVGALIB, which otherwise would
@@ -358,20 +311,18 @@ InitNewGame (void)
 
 }				/* InitNewGame */
 
-/*@Function============================================================
-@Desc: InitParaplus(): initialisiert das Spiel beim Programmstart
-
-@Ret: void
-@Int:
-* $Function----------------------------------------------------------*/
+/*-----------------------------------------------------------------
+ * @Desc: InitParaplus(): initialisiert das Spiel beim Programmstart
+ * 
+ * @Ret: void
+ * 
+ *-----------------------------------------------------------------*/
 void
 InitParaplus (void)
 {
   struct timeval timestamp;
 
-  DebugPrintf ("\nvoid InitParaplus(void) wurde echt aufgerufen....\n");
-
-  Set_SVGALIB_Video_ON ();
+  Init_Video ();
 
   Init_YIFF_Sound_Server ();
 
@@ -405,25 +356,22 @@ InitParaplus (void)
   Draw_Framerate=FALSE;
   HideInvisibleMap = FALSE;	/* Hide invisible map-parts. Para-extension!! */
 
-  DebugPrintf
-    ("\nvoid InitParaplus(void): Highscorevariablen wurden erfolgreich initialisiert...");
 
-  if (InitLevelColorTable () == FALSE)
+  Init_Druidmap ();   /* initialise some global text variables */
+
+  if ( InitLevelColorTable () == FALSE)
     {
-      DebugPrintf (" Kann Farben nicht initialisieren !");
-      getchar ();
-      Terminate (0);
+      printf (" Kann Farben nicht initialisieren !\n");
+      getchar_raw ();
+      Terminate (ERR);
     }
 
   if (InitParaplusFont () == ERR)
     {
-      DebugPrintf (" Kann Schrift nicht initialisieren !");
-      getchar ();
+      printf (" Kann Schrift nicht initialisieren !\n");
+      getchar_raw ();
       Terminate (ERR);
     }
-
-  DebugPrintf
-    ("\nvoid InitParaplus(void): Farben- und Fontinitialisierung zumindest fehlerfrei ueberwunden....");
 
   MinMessageTime = 55;
   MaxMessageTime = 850;
@@ -435,8 +383,65 @@ InitParaplus (void)
   Mobilecolor.blau = 63;
   Mobilecolor.rot = 63;
 
+  GameAdapterPresent = FALSE;	/* start with this */
+  taste = 255;
+
+  /* the pixel-screens are part of the old graphics engine only */
+#ifndef NEW_ENGINE
+  RealScreen = MyMalloc (SCREENBREITE * SCREENHOEHE + 10);
+  Outline320x200 = MyMalloc (SCREENBREITE * SCREENHOEHE + 10);
+  InternalScreen = (unsigned char *) MyMalloc (SCREENHOEHE * SCREENBREITE + 10);
+#endif
+
+  if (LoadShip (SHIPNAME) == ERR)
+    {
+      printf ("Error in LoadShip\n");
+      Terminate (ERR);
+    }
+
+  /* Now fill the pictures correctly to the structs */
+  if (!InitPictures ())
+    {		
+      printf("\n Error in InitPictures reported back...\n");
+      Terminate(ERR);
+    }
+
+  /* Init the Takeover- Game */
+  InitTakeover ();
+
+  /* Die Zahlen, mit denen die Robotkennungen erzeugt werden einlesen */
+  GetDigits ();
+
+  /* InternWindow */
+  InternWindow = MyMalloc (INTERNBREITE * INTERNHOEHE * BLOCKMEM + 100);
+
+  /* eigenen Zeichensatz installieren */
+  //  LadeZeichensatz (DATA70ZEICHENSATZ);
+
+  // Initialisieren der Schildbilder
+  //  GetShieldBlocks ();
+
+  /* richtige Paletten-Werte einstellen */
+  //  InitPalette ();
+
+  /* Tastaturwiederholrate auf den geringsten Wert setzen */
+  //  SetTypematicRate (TYPEMATIC_SLOW);
+
+  return;
+
+} /* InitParaplus() */
+
+/*-----------------------------------------------------------------
+ *
+ * a bit stupid: here we initialise the global druid-descriptions
+ *
+ *-----------------------------------------------------------------*/
+void
+Init_Druidmap (void)
+{
+
   Druidmap[DRUID001].notes =
-    "robot activity influence device. This helmet is self-powered and will control any robot for a short time. Lasers are turret‹mounted. ";
+    "robot activity influence device. This helmet is self-powered and will control any robot for a short time. Lasers are turret-mounted. ";
   Druidmap[DRUID123].notes =
     "simpe rubbish diposal robot. Common device in most space craft to maintain a clean ship. ";
   Druidmap[DRUID139].notes =
@@ -454,7 +459,7 @@ InitParaplus (void)
   Druidmap[DRUID420].notes =
     "slow maintenance robot. Confined to drive maintenance during flight. ";
   Druidmap[DRUID476].notes =
-    "ship maintenance robot. Fitted with multiple arms to carry out repairs to the ship efficiently. All craft built after the Jupiter‹incident are supplied with a team of these. ";
+    "ship maintenance robot. Fitted with multiple arms to carry out repairs to the ship efficiently. All craft built after the Jupiter-incident are supplied with a team of these. ";
   Druidmap[DRUID493].notes =
     "slave maintenance droid. Standard version will carry its own toolbox. ";
   Druidmap[DRUID516].notes =
@@ -468,7 +473,7 @@ InitParaplus (void)
   Druidmap[DRUID615].notes =
     "sophisticated sentinel droid. Only 2000 built by the Nicholson Company. these are now very rare.";
   Druidmap[DRUID629].notes =
-    "low sentinel droid. Lasers are built into the turret. These are mounted on a small tank body. May be fitted with an auto-cannon on‹the Gillen version. ";
+    "low sentinel droid. Lasers are built into the turret. These are mounted on a small tank body. May be fitted with an auto-cannon on-the Gillen version. ";
   Druidmap[DRUID711].notes =
     "heavy duty battle droid. Disruptor is built into the head. One of the first in service with the Military. ";
   Druidmap[DRUID742].notes =
@@ -476,77 +481,18 @@ InitParaplus (void)
   Druidmap[DRUID751].notes =
     "very heavy duty battle droid. Only a few have so far entered service. These are the most powerful battle units ever built. ";
   Druidmap[DRUID821].notes =
-    "a very reliable anti-grav unit is fitted into this droid. It will patrol the ship and eliminate intruders as soon as detected by‹powerful sensors. ";
+    "a very reliable anti-grav unit is fitted into this droid. It will patrol the ship and eliminate intruders as soon as detected by powerful sensors. ";
   Druidmap[DRUID834].notes =
     "early type anti-grav security droid. Fitted with an over-driven anti-grav unit. This droid is very fast but is not reliable. ";
   Druidmap[DRUID883].notes =
     "this droid was designed from archive data. For some unknown reason it instils great fear in Human adversaries. ";
   Druidmap[DRUID999].notes =
-    "experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience.‹warning: the influence device may not control a primode brain for long. ";
-  IntroMSG1 =
-    "Dies symbolisiert den Text, der zu Beginn des Spiels ausgegeben werden soll. Nach einer gewissen Zeit soll der Text nach unten weiterscrolloen und zwar in einer moeglichst fliessenden Form.";
-
-  GameAdapterPresent = FALSE;	/* start with this */
-  taste = 255;
-
-  /* ScreenPointer setzen */
-  RealScreen = MyMalloc (SCREENBREITE * SCREENHOEHE + 10);
-  Outline320x200 = MyMalloc (SCREENBREITE * SCREENHOEHE + 10);
-  InternalScreen = (unsigned char *) MyMalloc (SCREENHOEHE * SCREENBREITE + 10);
-
-  if (LoadShip (SHIPNAME) == ERR)
-    {
-      printf ("Error in LoadShip\n");
-      Terminate (-1);
-    }
-
-  /* Now fill the pictures correctly to the structs */
-  if (!InitPictures ())
-    {				/* Fehler aufgetreten */
-      printf("\n Error in InitPictures reported back...\n");
-      Terminate(ERR);
-      return;
-    }
-
-  /* Init the Takeover- Game */
-  InitTakeover ();
-
-  /* Die Zahlen, mit denen die Robotkennungen erzeugt werden einlesen */
-  GetDigits ();
-
-  /* InternWindow */
-  /* wenn moeglich: Speicher sparen und mit InternalScreen ueberlappen: */
-  if (INTERNHOEHE * INTERNBREITE * BLOCKMEM <= SCREENHOEHE * SCREENBREITE)
-    {
-      InternWindow = InternalScreen;
-    }
-  else
-    {
-      if ((InternWindow =
-	   (unsigned char *)
-	   MyMalloc (INTERNBREITE * INTERNHOEHE * BLOCKMEM + 100)) == NULL)
-	{
-	  DebugPrintf ("\nFatal: Out of Memory for InternWindow.");
-	  getchar ();
-	  Terminate (-1);
-	}
-    }
-
-  /* eigenen Zeichensatz installieren */
-  LadeZeichensatz (DATA70ZEICHENSATZ);
-
-  // Initialisieren der Schildbilder
-  GetShieldBlocks ();
-
-  /* richtige Paletten-Werte einstellen */
-  InitPalette ();
-
-  /* Tastaturwiederholrate auf den geringsten Wert setzen */
-  SetTypematicRate (TYPEMATIC_SLOW);
+    "experimental command cyborg. Fitted with a new tipe of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. ";
 
   return;
 
-} /* InitParaplus() */
+} /* Init_Textvars () */
+
 
 
 /*-----------------------------------------------------------------
@@ -570,8 +516,6 @@ Title (void)
   while (!SpacePressed ());
   while (SpacePressed());
 
-
-  FadeColors1 ();		/* Titelbild langsam ausblenden */
 
   InitPalette ();		/* This function writes into InternalScreen ! */
 
@@ -631,10 +575,6 @@ EndTitle (void)
   // ScrollText (TitleText3, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
 
   SetTextBorder (0, 0, SCREENBREITE, SCREENHOEHE, 40);
-
-  SetTypematicRate (TYPEMATIC_SLOW);
-
-  DebugPrintf ("\nvoid EndTitle(void): end of function reached...:");
 
 } /* EndTitle() */
 

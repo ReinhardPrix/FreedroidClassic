@@ -69,70 +69,6 @@ symtrans Translator[BLOCKANZAHL] = {
 };
 
 /*@Function============================================================
-@Desc: int ScanMapToStruct(): liest die map aus dem Edit-Fenster
-				in die map - struct von CurLevel.
-			updates doors and waypoints array
-
-@Ret: int OK | ERR
-@Int:
-* $Function----------------------------------------------------------*/
-int ScanMapToStruct()
-{
-  int row, col;
-  struct text_info *CurTi;		/* momentan geltende Koordinaten */
-  int endrow=0, endcol=0;		/* the last col/row filled with a mapchar */
-  int xlen, ylen;
-  char onbrick[2];
-  char linebuf[W_EDIT_LEN*2 + 1];  /* Buffer for a map line with attr. bytes */ 
-  int i;
-  
-  if( CurLevel == NULL ) return ERR;
-  
-  /* rp: temp disabled, because maped.c is missing and I want to compile!!*/
-  //  CurTi = &EditTextInfo;		/* Damit die Koordinaten stimmen */
-	
-  // MouHideMouse();
-  
-  /* Get the minimum dimensions of the map on the screen */
-  /* xlen : */
-  //	for( col = CurTi->winright; (col>=CurTi->winleft) && !endcol; col--) {
-  //		for(row=CurTi->wintop; row <= CurTi->winbottom; row++) {
-  //			gettext(col, row, col, row, onbrick);
-  //			if( onbrick[0] != VOID_BOXCHAR ) {
-  //				endcol = col;
-  //				break;
-  //			} /* if */
-  //		} /* for row */
-  //	} /* for col */
-  
-  /* ylen */
-  //	for( row = CurTi->winbottom; (row>=CurTi->wintop) && !endrow; row--) {
-  //		for(col=CurTi->winleft; col<=CurTi->winright; col ++) {
-  //			gettext(col, row, col, row, onbrick);
-  //			if( onbrick[0] != VOID_BOXCHAR ) {
-  //				endrow = row;
-  //				break;
-  //			} /* if */
-  //		} /* for col */
-  //	} /* for row */
-  
-  // xlen = endcol - CurTi->winleft +1;
-  // ylen = endrow - CurTi->wintop +1;
-  
-  // NOW I INSERT THIS INSTEAD:
-  
-	
-  GetDoors(CurLevel);
-
-	
-  GetWaypoints(CurLevel);
-
-  // PORT MouShowMouse();
-
-  return OK;
-} /* ScanMapToStruct */
-
-/*@Function============================================================
   @Desc: unsigned char GetMapBrick(Level deck, float x, float y): liefert
   intern-code des Elements, das sich auf (deck x/y) befindet
 
@@ -403,7 +339,9 @@ LoadShip (char *shipname)
       getchar ();
       return ERR;
     }
+
   return OK;
+
 } /* LoadShip () */
 
 /*@Function============================================================
@@ -500,8 +438,6 @@ int SaveShip(char *shipname)
   int i;
 
   DebugPrintf("\nint SaveShip(char *shipname): real function call confirmed.");
-  /* Aktuellen Level updaten */
-  // PORT ScanMapToStruct();
   
   /* Get the complete filename */
   strcpy(filename, shipname);
@@ -826,9 +762,6 @@ TranslateMap (Level Lev)
   int environs;			// encodes the "Wall-environment" of a "+"
   int NewBlock = KREUZ;		// Neuen "Eck-Block" in den wir KREUZ verwandeln
 
-  DebugPrintf
-    ("\nint TranslateMap(Level Lev): real function call confirmed.");
-
   /* Erste Runde: transpose these ascii -mapdata to internal numbers for map */
   for (row = 0; row < ydim; row++)
     {
@@ -840,11 +773,9 @@ TranslateMap (Level Lev)
 
 	  if (!Translator[i].ascii)
 	    {
-	      gl_printf (20, 5, "In TranslateMap: Unknown map-char: %c\n",
+	      printf ("In TranslateMap: Unknown map-char: %c\n",
 			 Lev->map[row][col]);
-	      keyboard_close ();
-	      getchar ();
-	      Terminate (-1);
+	      Terminate (ERR);
 	    }
 	  else
 	    Lev->map[row][col] = Translator[i].intern;

@@ -133,20 +133,17 @@ RestoreTextEnvironment (void)
 int
 InitParaplusFont (void)
 {
+#ifdef NEW_ENGINE
+  return OK;   // sorry, the new engine has not fonts for the moment
+#else
   int i, j;
   int FontXPos = 0;
   unsigned char *FontMem;
 
   if (RealScreen == NULL)
-    // PORT RealScreen = MK_FP(SCREENADDRESS,0000);     
-    RealScreen = malloc (64010);
+    RealScreen = MyMalloc (64010);
   if (InternalScreen == NULL)
     InternalScreen = (unsigned char *) MyMalloc (SCREENHOEHE * SCREENBREITE);
-  if (InternalScreen == NULL)
-    {
-      DebugPrintf ("No memory left !!");
-      Terminate (-1);
-    }
 
   Load_PCX_Image (FONTBILD_PCX, InternalScreen, FALSE);
 
@@ -169,6 +166,9 @@ InitParaplusFont (void)
     }
 
   return (OK);
+
+#endif  // !NEW_ENGINE
+
 }				// int InitParaplusFont(void)
 
 /*-----------------------------------------------------------------
@@ -184,6 +184,9 @@ InitParaplusFont (void)
 void
 SetTextColor (unsigned char bg, unsigned char fg)
 {
+#ifdef NEW_ENGINE
+  return;
+#else
   unsigned int i;
   static unsigned LastBg = FIRST_FONT_BG;
   static unsigned LastFg = FIRST_FONT_FG;
@@ -217,6 +220,7 @@ SetTextColor (unsigned char bg, unsigned char fg)
     }
 
   return;
+#endif
 }				/* SetTextcolor */
 
 /* ====================================================================== 
@@ -312,7 +316,7 @@ ScrollText (char *Text, int startx, int starty, int EndLine)
   int speed = +2;
   int maxspeed = 4;
 
-  ClearGraphMem (InternalScreen);
+  ClearVGAScreen ();
 
   /* Zeilen zaehlen */
   textpt = Text;
@@ -321,13 +325,11 @@ ScrollText (char *Text, int startx, int starty, int EndLine)
       Number_Of_Line_Feeds++;
 
   /* Texthoehe berechnen */
-  TextHeight = ( Number_Of_Line_Feeds+ strlen(Text)/CharsPerLine ) * (FONTHOEHE + ZEILENABSTAND);
+  TextHeight = ( Number_Of_Line_Feeds+ strlen(Text)/CharsPerLine )
+    * (FONTHOEHE + ZEILENABSTAND);
 
   while (!SpacePressed () && ((InsertLine + TextHeight) > EndLine))
     {
-
-      JoystickControl ();
-
       if (UpPressed ())
 	{
 	  speed--;
@@ -345,8 +347,8 @@ ScrollText (char *Text, int startx, int starty, int EndLine)
 
       PrepareScaledSurface(TRUE);
 
-      ClearTextBorder (InternalScreen, CurrentFontBG);
-      DisplayText (Text, startx, InsertLine, InternalScreen, FALSE);
+      //      ClearTextBorder (InternalScreen, CurrentFontBG);
+      DisplayText (Text, startx, InsertLine, Outline320x200, FALSE);
       InsertLine -= speed;
 
       /* Nicht bel. nach unten wegscrollen */
@@ -356,10 +358,8 @@ ScrollText (char *Text, int startx, int starty, int EndLine)
 	  speed = 0;
 	}
 
-      SwapScreen ();		/* Show it */
     }
 
-  // PORT SpacePressed = FALSE;
   return OK;
 }				// void ScrollText(void)
 
@@ -409,16 +409,14 @@ DisplayText (char *Text,
 
 	  tmp++;
 	  while (UpPressed () || DownPressed () || LeftPressed ()
-		 || RightPressed ())
-	    JoystickControl ();
+		 || RightPressed ()) ;
+
 	  while (!UpPressed () && !DownPressed () && !LeftPressed ()
-		 && !RightPressed () && !SpacePressed ())
-	    JoystickControl ();
+		 && !RightPressed () && !SpacePressed ()) ;
 	  if (SpacePressed ())
 	    continue;
 	  while (UpPressed () || DownPressed () || LeftPressed ()
-		 || RightPressed ())
-	    JoystickControl ();
+		 || RightPressed ()) ;
 	  MyCursorX = startx;
 	  MyCursorY = starty;
 	  // ClearUserFenster ();
@@ -438,32 +436,6 @@ DisplayText (char *Text,
   return;
 
 } // void DisplayText(...)
-
-/*@Function============================================================
-@Desc: 
-			Wird nicht gebraucht ???
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-DisplayWord (char *Worttext)
-{
-  int i;
-
-  gotoxy (1, 1);
-  DebugPrintf ("\nDisplayWord() called !!!");
-  getchar ();
-
-  if (FensterVoll ())
-    return;
-
-  for (i = 0; i < strlen (Worttext); i++)
-    {
-      DisplayChar (*(Worttext + i), RealScreen);
-    }
-  MyCursorX += FONTBREITE;
-  CheckUmbruch ();
-}
 
 /*-----------------------------------------------------------------
  * @Desc: Stellt ein Zeichen an der Pos MyCursorX/Y INNERHALB des
@@ -496,7 +468,6 @@ DisplayChar (unsigned char Zeichen, unsigned char *screen)
       Terminate(ERR);
     }
 
-  //PORT: SINCE REALSCREEN NO LONGER OF MUCH INPORTANCE FIND SOME WORKAROUND:
   if (screen == RealScreen)
     {
       DisplayBlock (MyCursorX, MyCursorY, Zeichenpointer[ZNum],

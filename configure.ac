@@ -3,10 +3,6 @@ AC_INIT([src/main.c])
 
 AM_INIT_AUTOMAKE(freedroid, 0.7.1)
 
-#once Johannes has updated his autoconf, we'll enforce version 2.53
-# this is necessary to get the PACKAGE_STRING #defines included in config.h.in
-# AC_PREREQ(2.54)
-
 AM_CONFIG_HEADER(config.h)
 
 # Checks for programs.
@@ -39,8 +35,21 @@ AC_FUNC_MALLOC
 AC_TYPE_SIGNAL
 AC_CHECK_FUNCS([alarm getcwd gettimeofday memset sqrt strstr])
 
-# CPPFLAGS="$CPPFLAGS -I/usr/include/SDL"
-CFLAGS="$CFLAGS -Wall" 
+# we don't want optimisation for the moment, as that makes 
+# debugging a bit more confusing
+CFLAGS="-g -Wall" 
+
+
+#allow --enable-NE to choose the NEW_ENGINE :
+AC_ARG_ENABLE([NE],
+	AC_HELP_STRING( [--enable-NE],
+			[use new experimental graphics engine]),
+	[echo "--- New experimental graphics engine will be built!"; 
+		CFLAGS="$CFLAGS -DNEW_ENGINE"],
+	[echo "--- We'll build the old but working graphics engine"])
+
+
 
 AC_CONFIG_FILES([Makefile src/Makefile])
 AC_OUTPUT
+

@@ -39,14 +39,19 @@ rp
 
 more detailed list of planned activities:
 
-1. correct bugs in autoconf/automake/configure (esp. path to SDL includes!!)
-2. consider putting compression into cvs as suggested by  Frode Haugsgjerd
-3. put proper timing in takeover game
-4. chase SegFault bug that might come from my new getchar_raw() or GetString()
-   functions, and happens mostly after Highscore-entry (func. Debriefing())
-5. Add the Homepage-Makefile into the general autoconf/automake machinery
+*) "clean-up" code, esp. get rid of all the obsolete "Screens"..
+*) Takeover game: rahmen, points etc + Keyboard-sensitivity better
+*) have a look at Map-editor and save-function
+*) putting cvs compression hint on homepage
+*) Add the Homepage-Makefile into the general autoconf/automake machinery
 
 limo
 ----
 - play& find bugs? ;-)
 - ... ?
+
+
+
+
+
+

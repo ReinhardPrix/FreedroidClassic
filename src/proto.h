@@ -55,7 +55,7 @@ EXTERN void Title (void);
 EXTERN void EndTitle (void);
 EXTERN void InitParaplus (void);
 EXTERN void InitNewGame (void);
-
+EXTERN void Init_Druidmap (void);
 /* influ.c */
 #undef EXTERN
 #ifdef _influ_c
@@ -175,8 +175,6 @@ EXTERN int MergeBlockToWindow (unsigned char *,
 EXTERN void display_bmp(char *file_name);
 EXTERN void MakeGridOnScreen(unsigned char*);
 EXTERN int InitPictures (void);
-EXTERN void SwapScreen (void);
-EXTERN void CopyScreenToInternalScreen(void);
 EXTERN void ClearVGAScreen (void);
 EXTERN void SetColors (int FirstCol, int PalAnz, char *PalPtr);
 EXTERN void SetPalCol (unsigned int palpos, unsigned char rot,
@@ -190,13 +188,8 @@ EXTERN void LadeLBMBild (char *LBMDateiname, unsigned char *Screen,
 			 int LoadPal);
 EXTERN void TransparentLadeLBMBild (char *LBMDateiname, unsigned char *Screen,
 				    int LoadPal);
-EXTERN void Set_SVGALIB_Video_ON (void);
-EXTERN void Set_SVGALIB_Video_OFF (void);
-EXTERN void WaitVRetrace (void);
+EXTERN void Init_Video (void);
 EXTERN void UnfadeLevel (void);
-EXTERN void FadeLevel (void);
-EXTERN void FadeColors1 (void);
-EXTERN void FadeColors2 (void);
 EXTERN void LadeZeichensatz (char *Zeichensatzname);
 EXTERN void RotateColors (int, int);
 EXTERN void LevelGrauFaerben (void);
@@ -324,9 +317,6 @@ EXTERN int XPressed (void);
 EXTERN int YPressed (void);
 EXTERN int ZPressed (void);
 EXTERN int NoDirectionPressed (void);
-EXTERN int SetTypematicRate (unsigned char);
-EXTERN void KillTastaturPuffer (void);
-EXTERN void JoystickControl (void);
 
 /* misc.c */
 #undef EXTERN
@@ -482,45 +472,7 @@ EXTERN void Update_SDL_Screen(void);
 EXTERN Uint32 getpixel(SDL_Surface *surface, int x, int y);
 EXTERN void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
 
-
-
-EXTERN void gl_printf(int x, int y, const char *fmt,...);
-EXTERN void gl_expandfont(int fw, int fh, int c, void *sfdp, void *dfdp);
-EXTERN void gl_setfont(int fw, int fh, void *fdp);
-EXTERN void gl_colorfont(int fw, int fh, int c, void *fdp);
-EXTERN void gl_setwritemode(int wm);
-EXTERN void gl_write(int x, int y, char *s);
-EXTERN void gl_writen(int x, int y, int n, char *s);
-EXTERN void gl_setfontcolors(int bg, int fg);
-EXTERN void gl_setpalettecolor(int c, int r, int b, int g);
-EXTERN void gl_getpalettecolor(int c, int *r, int *b, int *g);
-EXTERN void gl_setpalettecolors(int s, int n, void *dp);
-EXTERN void gl_getpalettecolors(int s, int n, void *dp);
-EXTERN void gl_setpalette(void *p);
-EXTERN void gl_getpalette(void *p);
-EXTERN void gl_setrgbpalette(void);
-EXTERN void gl_clearscreen(int c);
-EXTERN void gl_scalebox(int w1, int h1, void *sb, int w2, int h2, void *db);
-EXTERN void gl_setdisplaystart(int x, int y);
-EXTERN void gl_enableclipping(void);
-EXTERN void gl_setclippingwindow(int x1, int y1, int x2, int y2);
-EXTERN void gl_disableclipping(void);
-EXTERN void gl_putbox(int x, int y, int w, int h, void *dp);
-EXTERN int gl_setcontextvga(int m);
-EXTERN void gl_hline(int x1, int y, int x2, int c);
-EXTERN int keyboard_init(void);
-EXTERN int keyboard_init_return_fd(void);
-EXTERN void keyboard_close(void);
-EXTERN void keyboard_setdefaulteventhandler(void);
-EXTERN char *keyboard_getstate(void);
-EXTERN void keyboard_clearstate(void);
-EXTERN void keyboard_translatekeys(int mask);
-EXTERN int keyboard_keypressed(int scancode);
-
-EXTERN int vga_setmode(int mode);
-EXTERN int vga_hasmode(int mode);
 EXTERN int vga_setflipchar(int c);
-EXTERN int vga_clear(void);
 EXTERN int vga_flip(void);
 EXTERN int vga_getxdim(void);
 EXTERN int vga_getydim(void);
@@ -540,7 +492,6 @@ EXTERN int vga_getpixel(int x, int y);      /* Added. */
 EXTERN int vga_getscansegment(unsigned char *colors, int x, int y, int length);
 EXTERN int vga_getch(void);
 EXTERN int vga_dumpregs(void);
-EXTERN int vga_init(void); 
 EXTERN int vga_white(void);
 EXTERN void vga_waitretrace(void);
 EXTERN int vga_getdefaultmode(void);

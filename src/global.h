@@ -36,6 +36,13 @@
 #else
 #define EXTERN extern
 
+EXTERN char EndTitleText1[];
+EXTERN char EndTitleText2[];
+EXTERN char TitleText1[];
+EXTERN char TitleText2[];
+EXTERN char TitleText3[];
+EXTERN char TitleText4[];
+EXTERN char Text1[];
 EXTERN float LastRefreshSound;
 EXTERN float LastGotIntoBlastSound;
 EXTERN float FPSover1;
@@ -89,7 +96,6 @@ EXTERN char *GreatScoreName;
 EXTERN char *LowestName;
 EXTERN char *HighestName;
 EXTERN HallElement *Hallptr;
-EXTERN char *IntroMSG1;
 EXTERN enemy Feindesliste[MAX_ENEMYS_ON_SHIP];
 
 EXTERN int NumEnemys;
@@ -119,7 +125,6 @@ EXTERN int sound_on;		/* Toggle TRUE/FALSE for turning sounds on/off */
 EXTERN int debug_level;       	/* 0=no debug 1=some debug messages 2=...etc */
 				/* (currently only 0 or !=0 is implemented) */
 EXTERN int fullscreen_on;	/* toggle for use of fullscreen vs. X11-window */
-
 
 #undef EXTERN
 #ifdef _misc_c
@@ -162,6 +167,16 @@ EXTERN unsigned char *LevelColorArray;
 EXTERN int *CRTC;
 EXTERN unsigned char *Data70Pointer;
 
+#ifdef NEW_ENGINE
+EXTERN const SDL_VideoInfo *ne_vid_info;    /* info about current video mode */
+EXTERN color ne_transp_rgb;                /* RGB of transparent color */
+EXTERN Uint32 ne_transp_key;               /* key of transparent color */
+EXTERN SDL_Surface *ne_map_blocks;         /* surface containing all map blocks */
+EXTERN SDL_Rect ne_map_block_rect[NUM_BLOCKS]; /* array of their positions */
+
+#endif
+
+
 #undef EXTERN
 #ifdef _blocks_c
 #define EXTERN
@@ -195,7 +210,13 @@ EXTERN unsigned char *ShieldBlocks;
 
 EXTERN float Current_Gamma_Correction;
 EXTERN int Draw_Framerate;
+
+#ifdef NEW_ENGINE  /* this is for the new graphics engine */
+EXTERN SDL_Surface *ne_screen;   /* the graphics display */
+#else
 EXTERN SDL_Surface *screen;
 EXTERN SDL_Surface *ScaledSurface;
+#endif
+
 
 #endif

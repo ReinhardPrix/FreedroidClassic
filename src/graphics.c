@@ -62,8 +62,6 @@ MakeGridOnScreen(unsigned char* Parameter_Screen){
   
 } // void MakeGridOnSchreen(void)
 
-unsigned char *MemSearch (unsigned char *, unsigned char *, unsigned char *);
-
 SDL_Surface *LoadImage(char *datafile, int transparent)
 {
   SDL_Surface *image, *surface;
@@ -86,6 +84,9 @@ SDL_Surface *LoadImage(char *datafile, int transparent)
 
 void display_bmp(char *file_name)
 {
+#ifdef NEW_ENGINE
+  return;
+#else
   SDL_Surface *image;
 
   DebugPrintf
@@ -134,6 +135,7 @@ void display_bmp(char *file_name)
     ("\nvoid display_bmp(char *file_name):  end of function reached...");
 
   return;
+#endif // !NEW_ENGINE
 }  /* display_bmp() */
 
 
@@ -145,10 +147,10 @@ void display_bmp(char *file_name)
 void
 Load_PCX_Image (char *PCX_Filename, unsigned char *Parameter_Screen, int LoadPal)
 {
+#ifdef NEW_ENGINE
+  return;
+#else
   int i,j;
-
-  DebugPrintf
-    ("\nvoid Load_PCX_Image(...):  Real function call confirmed...");
 
   display_bmp(PCX_Filename);
 
@@ -164,7 +166,8 @@ Load_PCX_Image (char *PCX_Filename, unsigned char *Parameter_Screen, int LoadPal
 
   Unlock_SDL_Screen();
 
-  DebugPrintf ("\nvoid Load_PCX_Image(...):  end of function reached.");
+
+#endif // !NEW_ENGINE
 
 } // void Load_PCX_Image(char* PCX_Filename,unsigned char* Screen,int LoadPal)
 
@@ -174,9 +177,46 @@ Load_PCX_Image (char *PCX_Filename, unsigned char *Parameter_Screen, int LoadPal
  * 	reads all blocks and puts the right pointers into
  * 	the various structs
  *
- * @Ret: FALSE: ERROR  	TRUE: OK
+ * @Ret: TRUE/FALSE
  *
  *-----------------------------------------------------------------*/
+#ifdef NEW_ENGINE /* new experimental graphics engine */
+int
+InitPictures (void)
+{
+  int i;
+  char *filename;
+
+  filename = BLOCKBILD1_PCX;
+  Load_PCX_Image (filename, InternalScreen, FALSE);
+
+   /* Load the map-block BMP file into the appropriate surface */
+  if( !(ne_map_blocks = SDL_LoadBMP(BLOCKBILD1_PCX)) )
+    {
+      fprintf(stderr, "Couldn't load %s: %s\n", filename, SDL_GetError());
+      return (FALSE);
+    }
+  
+  if (SDL_SetColorKey(ne_map_blocks, SDL_SRCCOLORKEY, ne_transp_key) == -1 )
+    {
+      fprintf (stderr, "Transp setting by SDL_SetColorKey() failed: %s \n",
+	       SDL_GetError());
+      return (FALSE);
+    }
+
+  /* now init the individual positions of the map-blocks in ne_map_blocks */
+  for (i=0; i < NUM_BLOCKS; i++)
+    {
+      ne_map_block_rect[i].x = i*(BLOCK_WIDTH+1);
+      ne_map_block_rect[i].y = i/9;
+      ne_map_block_rect[i].w = BLOCK_WIDTH;
+      ne_map_block_rect[i].h = BLOCK_HEIGHT;
+    }
+  
+   return (TRUE);
+}
+
+#else /* the old working engine */
 int
 InitPictures (void)
 {
@@ -215,18 +255,6 @@ InitPictures (void)
   IsolateBlock (InternalScreen, RahmenPicture, 0, 0, RAHMENBREITE,
 		RAHMENHOEHE);
 
-  /* get the Elevator-Blocks */
-/* obsolete, we rather load the whole ship-picture at once */
-  /*  ElevatorBlocks =
-    (unsigned char *) MyMalloc (NUM_EL_BLOCKS * EL_BLOCK_MEM + 100);
-  Load_PCX_Image (EL_BLOCKS_FILE_PCX, InternalScreen, FALSE);
-  for (i = 0; i < NUM_EL_BLOCKS; i++)
-    IsolateBlock (InternalScreen,
-		  ElevatorBlocks + i * EL_BLOCK_MEM,
-		  1 + i * (EL_BLOCK_LEN + 1), 1,
-		  EL_BLOCK_LEN, EL_BLOCK_HEIGHT);
-  */ 
-
   /* new: get Elevator-ship picture */
   ElevatorPicture = (unsigned char *) 
     MyMalloc (USERFENSTERBREITE*USERFENSTERHOEHE + 10);
@@ -257,48 +285,10 @@ InitPictures (void)
     }
   free (DruidFilename);
   return TRUE;
+
 } // int InitPictures(void)
 
-/*-----------------------------------------------------------------
- * OBSOLETED by SDL, don't use this any more!!!
- * 
- * @Desc: doesnt really _swap_ anything, but copies InternalScreen
- *        onto the Real vga screen
- *
- *-----------------------------------------------------------------*/
-void
-SwapScreen (void)
-{
-
-  printf ("\nSwapScreen() called: OBSOLETE!!! don't use any more!!\n");
-  memcpy( Outline320x200, InternalScreen, SCREENBREITE * SCREENHOEHE );
-
-  return;
-
-} /* SwapScreen() */
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-CopyScreenToInternalScreen(void)
-{
-  int y, x;
-
-  Lock_SDL_Screen();
-
-  for (y = 0; y < SCREENHOEHE; y++)
-    {
-      for (x=0; x<SCREENBREITE; x++) 
-	InternalScreen[y*SCREENBREITE+x]=getpixel(screen, x,y);
-    }
-
-  Unlock_SDL_Screen();
-
-} // void CopyScreenToInternalScreen(void)
+#endif // !NEW_ENGINE
 
 /*-----------------------------------------------------------------
  * @Desc: 
@@ -309,66 +299,12 @@ void
 ClearVGAScreen (void)
 {
 
-
   memset( Outline320x200, 0, SCREENBREITE * SCREENHOEHE );
 
 } // void ClearVGAScreen(void)
 
-unsigned char *MemSearch (unsigned char *SStart,
-			  unsigned char *SEnd, unsigned char *SString);
 
 void PlusDrawEnergyBar (void);
-
-/*@Function============================================================
-@Desc: MemSearch(): Sucht Binary-Area zwischen SStart und SEnd nach
-SString ab. liefer Pointer auf gef. String oder NULL
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-unsigned char *
-MemSearch (unsigned char *SStart, unsigned char *SEnd, unsigned char *SString)
-{
-  register unsigned char *tmp;	// bewegl. Zeiger auf Search-Area 
-  register unsigned char *string;	// bewegl. Zeiger auf ges. STring 
-  unsigned char *firstchar;	// Zeiger auf Beginn der Uebereinstimmung 
-  tmp = SStart;
-
-  while (1)
-    {
-      string = SString;
-
-      // Erste "Ubereinstimmung finden
-      while ((*tmp != *string) && (tmp < SEnd))
-	tmp++;
-      if (tmp >= SEnd)
-	return NULL;		// Suchbereich schon verlassen
-
-      firstchar = tmp;		// Beginn der Uebereinst. merken
-
-      // Rest vergleichen
-      string++;
-      tmp++;
-      while (*string && (tmp < SEnd) && (*string == *tmp))
-	{
-	  string++;
-	  tmp++;
-	}
-
-      // Falls Ende des String erreicht ---> gefunden !!!
-      if (*string == '\0')
-	return firstchar;
-
-      // Falls Ende des Suchbereichs erreicht --> nix gefunden !!
-      if (tmp >= SEnd)
-	return NULL;
-
-      // sonst: weitersuchen
-      tmp = firstchar + 1;	// nach voriger Uebereinst. weiter
-      continue;
-    }				// while
-
-}				/* MemSearch */
 
 /*@Function============================================================
 @Desc: 
@@ -419,7 +355,8 @@ InitLevelColorTable (void)
   FILE *ColorFile;
   int i;
 
-  LevelColorArray = MyMalloc (ALLLEVELCOLORS * 3 * FARBENPROLEVEL + 10);	// NICHT FREIGEBEN
+  LevelColorArray = MyMalloc (ALLLEVELCOLORS * 3 * FARBENPROLEVEL + 10);
+	// NICHT FREIGEBEN !
   if ((ColorFile = fopen (COLORFILE, "r")) == NULL)
     return (FALSE);
   for (i = 0; i < ALLLEVELCOLORS * FARBENPROLEVEL; i++)
@@ -448,62 +385,92 @@ SetLevelColor (int ColorEntry)
 
 }				// void SetLevelColor(int ColorEntry)
 
-/* *********************************************************************** */
 
+/*-----------------------------------------------------------------
+ * Initialise the Video display and graphics engine
+ *
+ *
+ *-----------------------------------------------------------------*/
 void
-Set_SVGALIB_Video_ON (void)
+Init_Video (void)
 {
-  int vgamode;
+  const SDL_VideoInfo *vid_info;
+  SDL_Rect **vid_modes;
+  char vid_driver[81];
+  Uint32 flags;  /* flags for SDL video mode */
 
-  DebugPrintf
-    ("\n\n    Die SVGALIB wird nun initialisiert.... gleich gehts los.... \n\n");
-  //  getchar();
-  vga_init ();
-  vgamode = vga_getdefaultmode ();
-  // SDL if ((vgamode == -1) || (vga_getmodeinfo (vgamode)->bytesperpixel != 1))
-  // SDL vgamode = G320x200x256;
-
-  if (!vga_hasmode (vgamode))
+  /* Initialize the SDL library */
+  if ( SDL_Init (SDL_INIT_VIDEO | SDL_INIT_TIMER) == -1 ) 
     {
-      DebugPrintf ("Mode not available.\n");
-      exit (1);
+      fprintf(stderr, "Couldn't initialize SDL: %s\n",SDL_GetError());
+      Terminate(ERR);
+    } else
+      printf("\nSDL Video initialisation successful.\n");
+
+  /* clean up on exit */
+  atexit (SDL_Quit);
+
+  if ( ( Font1 = LoadFont("../graphics/font01.png") ) == NULL )
+    {
+      fprintf(stderr, "\n\nCouldn't initialize Font.\n\nTerminating...\n\n");
+      Terminate(ERR);
+    } else
+      printf("\nSDL Font initialisation successful.\n");
+
+  vid_info = SDL_GetVideoInfo (); /* just curious */
+  SDL_VideoDriverName (vid_driver, 80);
+  
+  flags = SDL_SWSURFACE | SDL_HWPALETTE ;
+  if (fullscreen_on) flags |= SDL_FULLSCREEN;
+
+  vid_modes = SDL_ListModes (NULL, SDL_SWSURFACE);
+
+  if (vid_info->wm_available)  /* if there's a window-manager */
+    {
+      SDL_WM_SetCaption("Freedroid", "");
+      SDL_WM_SetIcon(SDL_LoadBMP("../graphics/paraicon.bmp"), NULL);
     }
 
-  vga_setmode (vgamode);
-  gl_setcontextvga (vgamode);
-  gl_enableclipping ();
-  // Initiate fonts of the svgalib (gl-part)!
-  // SDL gl_setfont (8, 8, gl_font8x8);
-  // SDL gl_setwritemode (FONT_COMPRESSED + WRITEMODE_OVERWRITE);
-  gl_setfontcolors (0, vga_white ());
-  // Initiate raw keyboard access...
-  DebugPrintf
-    ("\n\n    Die Tastatur wird nun fuer die svgalib initialisiert.... gleich gehts los!\n");
 
-  Init_SDL_Keyboard();
-  /*
-  if (keyboard_init ())
+#ifdef NEW_ENGINE  /* new experimental graphics engine */
+  /* 
+   * currently only the simple 320x200 mode is supported for 
+   * simplicity, as all our graphics are in this format
+   * once this is up and running, we'll provide others modes
+   * as well.
+   */
+  if( !(ne_screen = SDL_SetVideoMode (320, 200, 8, flags)) )
     {
-      DebugPrintf
-	("FEHLER! FEHLER! Keyboard konnte nicht initialisiert werden!!!!!");
-      Terminate (ERR);
+      fprintf(stderr, "Couldn't set 320x200 video mode: %s\n", SDL_GetError());
+      exit(-1);
     }
-  */
+  ne_vid_info = SDL_GetVideoInfo (); /* info about current video mode */
+  /* RGB of transparent color in our pics */
+  ne_transp_rgb.rot   = 199; 
+  ne_transp_rgb.gruen =  43; 
+  ne_transp_rgb.blau  =  43; 
+  /* and corresponding key: */
+  ne_transp_key = SDL_MapRGB(vid_info->vfmt, ne_transp_rgb.rot,
+			     ne_transp_rgb.gruen, ne_transp_rgb.rot);
 
-}				// void Set_SVGALIB_Video_ON(void)
+#else     /* use the old but working graphics engine */
+  ScaledSurface = SDL_SetVideoMode(320*2 , 200*2, 8, flags);
+  SDL_ShowCursor (SDL_DISABLE);  /* turn off display of mouse cursor */
+  if ( ScaledSurface == NULL ) {
+    fprintf(stderr, "Couldn't set 320x200 video mode: %s\n",
+	    SDL_GetError());
+    exit(2);
+  } 
+  screen = SDL_CreateRGBSurface( SDL_SWSURFACE , 320, 200, 8, 0, 0, 0, 0 );
 
-void
-Set_SVGALIB_Video_OFF (void)
-{
+#endif  /* !NEW_ENGINE */
 
-  DebugPrintf
-    ("\nvoid Set_SVGALIB_Video_OFF(void): shutting svga-keyboard back to normal.....\n");
-  keyboard_close ();
+  SDL_SetGamma( 2 , 2 , 2 );
+  Current_Gamma_Correction=2;
 
-  DebugPrintf
-    ("\nvoid Set_SVGALIB_Video_OFF(void): shutting console back to text mode....\n");
+  return;
 
-}				// Set_SVGALIB_Video_OFF(void)
+} /* InitVideo () */
 
 /*@Function============================================================
 @Desc: 
@@ -543,180 +510,6 @@ UnfadeLevel (void)
   free (CMAPBuffer);
 }				// void UnfadeLevel(void)
 
-/*@Function============================================================
-@Desc: Wie FadeColors1 nur auf die FARBENPROLEVEL Farben beschr"ankt.
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-FadeLevel (void)
-{
-  // char* CMAPBuffer;
-  // int CMAPOffset,CMAPSegment,i,ii;
-
-  // 
-  // THIS CRAP WAS IN BEFORE THE PORT!!!!!!!!!!
-  //
-  /* Speicherplatz fuer die Farbregister reservieren  */
-  // CMAPBuffer=MyMalloc(257*3);                // wird wieder freigegeben 
-  // CMAPOffset=FP_OFF(CMAPBuffer);
-  // CMAPSegment=FP_SEG(CMAPBuffer);
-
-  /* Farbregisterwerte aus den DAC-Registern auslesen */
-  //    asm{
-  //    mov ax,1017h
-  //    mov bx,1
-  //    mov dx,CMAPOffset
-  //    mov cx,CMAPSegment
-  //    mov es,cx
-  //    mov cx,FARBENPROLEVEL
-  //    int 10h
-  // }
-
-  /* Farbregisterwerte an einen absteigenden Hoechstwert anpassen */
-  //for(i=64;i>0;i--)
-  //{
-  //    for(ii=0;ii<(256*3);ii++)
-  //    {
-  //            if (CMAPBuffer[ii]>i) CMAPBuffer[ii]--;
-  //    }
-
-  /* Farbregisterwerte in die DAC-Register eintragen */
-  //    asm{
-  //            mov ax,1012h
-  //            mov bx,1
-  //            mov cx,FARBENPROLEVEL
-  //            mov dx,CMAPSegment
-  //            mov es,dx
-  //            mov dx,CMAPOffset
-  //            int 10h
-  //    }
-  //}
-  //free(CMAPBuffer);
-}				// void FadeLevel(void)
-
-void
-FadeColors1 (void)
-{
-/*
-  Diese Prozedur blendet das momentan angezeigte Bild aus. Dabei werden die
-  Farbregister des DAC-Converters an einen absteigenden Hoechstwert angepasst.
-  
-  Parameter: keine
-  Returnwert: keiner
-*/
-
-/* lokale Variablen der Funktion */
-  int *CMAPBuffer;
-  int i;
-  int ii;
-
-/* Speicherplatz fuer die Farbregister reservieren  */
-  CMAPBuffer = MyMalloc (2 * 257 * 3);	// wird wieder freigegeben 
-
-/* Farbregisterwerte auslesen */
-  vga_getpalvec (0, 256, CMAPBuffer);
-
-/* Farbregisterwerte an einen absteigenden Hoechstwert anpassen */
-  for (i = 64; i > 0; i--)
-    {
-      for (ii = 0; ii < (256 * 3); ii++)
-	{
-	  if (CMAPBuffer[ii] > i)
-	    CMAPBuffer[ii]--;
-	}
-      /* Farbregisterwerte in die DAC-Register eintragen */
-      vga_setpalvec (0, 256, CMAPBuffer);
-    }				// for(i=64,...)
-
-
-  free (CMAPBuffer);
-}				// void FadeColors1(void)
-
-
-/* *********************************************************************** */
-
-void
-FadeColors2 (void)
-{
-/*
-	Diese Prozedur blendet das momentan angezeigte Bild aus. Dabei werden die
-	DAC-Farbregister der Grafikkarte immer dekrementiert, solange sie nicht
-	mit null identisch sind.
-
-	Parameter: keine
-	Returnwert: keiner
-*/
-
-/* lokale Variablen der Funktion */
-  // char* CMAPBuffer;
-  // int CMAPOffset=0;
-  // int CMAPSegment=0;
-  // int i;
-  // int ii;
-
-/* Speicherplatz fuer die Farbregister reservieren  */
-//      CMAPBuffer=MyMalloc(257*3);                     // wird wieder freigegeben
-//      CMAPOffset=FP_OFF(CMAPBuffer);
-//      CMAPSegment=FP_SEG(CMAPBuffer);
-
-/* Farbregisterwerte aus den DAC-Registern auslesen */
-//      asm{
-//              mov ax,1017h
-//              mov bx,0
-//              mov dx,CMAPOffset
-//              mov cx,CMAPSegment
-//              mov es,cx
-//              mov cx,256
-//              int 10h
-//      }
-
-/* Farbregisterwerte an einen absteigenden Hoechstwert anpassen */
-//      for(i=64;i>0;i--)
-//      {
-//              for(ii=0;ii<(256*3);ii++)
-//              {
-//                      if (CMAPBuffer[ii]>0) CMAPBuffer[ii]--;
-//              }
-
-/* Farbregisterwerte in die DAC-Register eintragen */
-//              asm{
-//                      mov ax,1012h
-//                      mov bx,0
-//                      mov cx,256
-//                      mov dx,CMAPSegment
-//                      mov es,dx
-//                      mov dx,CMAPOffset
-//                      int 10h
-//              }
-//      }
-
-/* Reservierten Speicher wieder freigeben */
-//      free(CMAPBuffer);
-}
-
-
-/* *********************************************************************** */
-
-void
-WaitVRetrace (void)
-{
-  /*
-     Diese Prozedur wartet darauf, daá der Elektronenstrahl des Monitors den
-     naechsten vertikalen Strahlruecklauf antritt. Sollte der Elektronenstrahl
-     zu Beginn der Funktion gerade mit einem Ruecklauf beschaeftigt sein, so
-     wird die naechste Ruecklaufperiode abgewartet.
-
-     Parameter: keine
-   */
-
-  printf ("\nCompletely OBSOLETE WaitVRtrace called!! deprecated\n");
-  return;
-
-}				// void WaitVRetrace(void)
-
-
 /* *********************************************************************** */
 
 void
@@ -735,6 +528,7 @@ LadeZeichensatz (char *Zeichensatzname)
   FILE *CharDateiHandle;
   int i, j, k;
 
+  printf ("\nLadeZeichensatz() called... is that not obsolete?\n");
 
   /* Speicher fuer die zu ladende Datei reservieren */
   Zeichensatzpointer = MyMalloc (256 * 8 + 10);
@@ -892,6 +686,9 @@ LevelGrauFaerben (void)
 void
 ClearGraphMem (unsigned char *Parameter_screen)
 {
+#ifdef NEW_ENGINE
+  return;
+#else
   SDL_Rect ThisRectangle;
 
   if (Parameter_screen == RealScreen) 
@@ -901,11 +698,10 @@ ClearGraphMem (unsigned char *Parameter_screen)
       ThisRectangle.w=SCREENBREITE;
       ThisRectangle.h=SCREENHOEHE;
       SDL_FillRect( screen , & ThisRectangle , 0 );
-      vga_clear ();
     }
   else
     memset (Parameter_screen, 0, SCREENBREITE * SCREENHOEHE);
-
+#endif // !NEW_ENGINE
 }				// void ClearGraphMem(unsigned char* screen)
 
 
@@ -920,6 +716,9 @@ void
 SetPalCol (unsigned int palpos, unsigned char rot, unsigned char gruen,
 	   unsigned char blau)
 {
+#ifdef NEW_ENGINE
+  return;
+#else
   SDL_Color ThisOneColor;
 
   ThisOneColor.r=rot;
@@ -934,6 +733,7 @@ SetPalCol (unsigned int palpos, unsigned char rot, unsigned char gruen,
 
   // SDL_SetColors( screen , &ThisOneColor, palpos, 1 );
   // DebugPrintf("\nvoid SetPalCol(...): Usual end of function reached.");
+#endif // !NEW_ENGINE
 }				// void SetPalCol(...)
 
 /*@Function============================================================

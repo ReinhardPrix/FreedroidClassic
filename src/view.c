@@ -921,6 +921,9 @@ RedrawInfluenceNumber (void)
 void
 DrawDigit (unsigned char *Src, unsigned char *Dst)
 {
+#ifdef NEW_ENGINE
+  return;
+#else
   int i;
   int j;
 
@@ -936,6 +939,7 @@ DrawDigit (unsigned char *Src, unsigned char *Dst)
 
   DebugPrintf ("\nvoid DrawDigit(...): end of usual function reached.");
 
+#endif // !NEW_ENGINE
 } // void DrawDigit(,..)
 
 
@@ -990,6 +994,9 @@ FlashWindow (int Flashcolor)
 void
 SetUserfenster (int color, unsigned char *Parameter_screen)
 {
+#ifdef NEW_ENGINE
+  return;
+#else
   int row;
   SDL_Rect LocalRectangle;
 
@@ -1010,6 +1017,7 @@ SetUserfenster (int color, unsigned char *Parameter_screen)
     }
 
   return;
+#endif // !NEW_ENGINE
 }				/* SetUserFenster() */
 
 /* **********************************************************************
