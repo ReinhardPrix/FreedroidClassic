@@ -3624,11 +3624,17 @@ LevelEditor(void)
 		  GiveMouseAlertWindow ( "\nM E S S A G E\n\nYour ship was saved to file 'Testship.shp'.\nIf you are sure, that you wish to use this file in the game, copy it over the 'maps/Asteroid.maps' file so that FreedroidRPG will really use it.\n\nIf you have set up something cool and you wish to contribute it to FreedroidRPG, please contact the FreedroidRPG dev team." ) ;
 
 		}
-	      else if ( CursorIsOnButton ( LEVEL_EDITOR_ZOOM_OUT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+	      else if ( GameConfig . zoom_is_on && CursorIsOnButton ( LEVEL_EDITOR_ZOOM_IN_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
 		{
 		  GameConfig . zoom_is_on = !GameConfig . zoom_is_on ;
 		  while ( SpacePressed() );
 		}
+		  else if ( !GameConfig . zoom_is_on && CursorIsOnButton ( LEVEL_EDITOR_ZOOM_OUT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+		{
+		  GameConfig . zoom_is_on = !GameConfig . zoom_is_on ;
+		  while ( SpacePressed() );
+		}
+
 	      else if ( CursorIsOnButton ( LEVEL_EDITOR_RECURSIVE_FILL_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
 		{
 		  RecFillMap ( EditLevel , BlockY , BlockX , Highlight );
