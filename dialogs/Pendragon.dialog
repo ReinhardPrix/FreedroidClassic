@@ -1,9 +1,8 @@
-
+% -*- mode: flyspell; mode: fill -*-
 ----------------------------------------------------------------------
  *
  *   Copyright (c) 1994, 2002 Johannes Prix
  *   Copyright (c) 1994, 2002 Reinhard Prix
- *
  *
  *  This file is part of Freedroid
  *
@@ -30,13 +29,7 @@ If you have questions concerning FreedroidRPG, please send mail to:
 freedroid-discussion@lists.sourceforge.net
 
 BEGIN OF AUTORS NOTES
-
-
-
-You can use this text field to make some notes on ANYTHING.  
-It's purely for the author's reference.  Tahisafsd asdfasdf asdfasdf.
-The game engine will ignore this entry.
-
+Melee combat teacher.
 
 
 
@@ -48,7 +41,7 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText=" Hi!  I'm new here. "
 OptionSample="Tux_Hi_Im_New_0.wav"
 PositionX=157  PositionY=219  
-Subtitle="Really!  I'm not living here either.  I'm just on vacasion. "
+Subtitle="Really!  I'm not living here either.  I'm just on vacation. "
 ReplySample="PEN_Really_Im_Not_0.wav"
 Subtitle="Normally I'm a fighter among the ranks of the rebel army.  But now I try to relax. "
 ReplySample="PEN_Normally_Im_A_0.wav"
