@@ -263,11 +263,30 @@ ReactToSpecialKeys(void)
   int i;
   static int IPressed_LastFrame;
   static int CPressed_LastFrame;
+  static int SPressed_LastFrame;
 
   if ( QPressed() ) /* user asked for quit */
     Terminate (OK);
   if ( DPressed() )
     Me.energy = 0;
+
+  if ( F1Pressed() )
+    Me.readied_skill = 0;
+
+  if ( F2Pressed() )
+    Me.readied_skill = 1;
+
+  if ( F3Pressed() )
+    Me.readied_skill = 2;
+
+  if ( F4Pressed() )
+    Me.readied_skill = 3;
+
+  if ( F5Pressed() )
+    Me.readied_skill = 4;
+
+  if ( F6Pressed() )
+    Me.readied_skill = 5;
 
   if ( Number0Pressed() )
     ApplyItem ( & ( Me.Inventory[ 0 ] ) );
@@ -396,6 +415,24 @@ ReactToSpecialKeys(void)
 	{
 	  AddFloorItemDirectlyToInventory( &( CurLevel->ItemList[ i ] ) );
 	}
+    }
+
+  //--------------------
+  // We assign the I key to turn on/off the inventory log 
+  //
+  if ( SPressed() )
+    {
+      if ( !SPressed_LastFrame ) 
+	{
+	  GameConfig.SkillScreen_Visible_Time = 0;
+	  GameConfig.SkillScreen_Visible = !GameConfig.SkillScreen_Visible;
+	}
+
+      SPressed_LastFrame = TRUE;
+    }
+  else
+    {
+      SPressed_LastFrame = FALSE;
     }
 
   //--------------------

@@ -47,16 +47,32 @@
 #define INVENTORY_RECTANGLE_DEBUG_LEVEL 2 
 #define INVENTORY_MOUSE_BUTTON_DEBUG 2
 
+#define MAX_ITEMS_PER_LEVEL 300
+#define MAX_ITEMS_IN_INVENTORY 100
+#define INVENTORY_GRID_WIDTH 9
+#define INVENTORY_GRID_HEIGHT 6
+#define NUMBER_OF_ITEM_PICTURES 38
+#define ALL_ITEMS 100
+
 #define ITEM_MONEY 6
-#define ITEM_HEALTH_POTION 1
+#define ITEM_SMALL_HEALTH_POTION 1
+#define ITEM_SMALL_MANA_POTION 41
+#define ITEM_FULL_HEALTH_POTION 2
+#define ITEM_FULL_MANA_POTION 42
 #define ITEM_SHORT_SWORD 27
 #define ITEM_SHORT_BOW 22
 #define ITEM_ANTIGRAV_ALPHA 5
 #define ITEM_ANTIGRAV_BETA 11
+#define ITEM_BUCKLER 19
+#define ITEM_SMALL_SHIELD 43
+#define ITEM_SCIMITAR 34
+#define ITEM_HUNTERS_BOW 03
 
 #define WAR_BOT 1
 #define SNIPER_BOT 2
 #define MIND_BOT 3
+
+#define NUMBER_OF_SKILL_ICONS 6
 
 //--------------------
 // This is old and should go out, but that must be done from at home, 
@@ -142,6 +158,7 @@ enum
 #define NE_BLAST_BLOCK_FILE 	"blast.png"
 #define NE_DIGIT_BLOCK_FILE     "digits.gif"
 #define NE_ITEMS_BLOCK_FILE     "items.png"
+#define NE_SKILL_ICON_FILE      "skills.png"
 
 #define NE_CONSOLE_PIC_FILE    "console_fg.png" 
 #define NE_BANNER_BLOCK_FILE    "banner.png"
@@ -155,7 +172,9 @@ enum
 
 #define PARA_FONT_FILE 		"parafont.png"
 #define MENU_FONT_FILE 		"ArialGold.png"
-#define RED_FONT_FILE 		"redfont.png"
+// #define RED_FONT_FILE 		"redfont.png"
+#define RED_FONT_FILE 		"font05_red.png"
+#define BLUE_FONT_FILE 		"font05_white.png"
 #define FPS_FONT_FILE 		"font05.png"
 #define ICON_FILE		"paraicon.bmp"
 
@@ -403,13 +422,6 @@ enum _directions
 #define MAX_INFLU_POSITION_HISTORY 10000
 #define MAX_MISSIONS_IN_GAME 10         // how many missions can there be at most in Freedroid
 #define MAX_MISSION_TRIGGERED_ACTIONS 10
-
-#define MAX_ITEMS_PER_LEVEL 300
-#define MAX_ITEMS_IN_INVENTORY 100
-#define INVENTORY_GRID_WIDTH 9
-#define INVENTORY_GRID_HEIGHT 6
-#define NUMBER_OF_ITEM_PICTURES 38
-#define ALL_ITEMS 100
 
 #define MAX_LIFTS	 	50  	/* actually the entries to the lifts */
 #define MAX_LEVELS		29   	/* don't change this easily */

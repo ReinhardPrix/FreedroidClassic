@@ -402,6 +402,7 @@ Assemble_Combat_Picture (int mask)
 
   ShowMissionCompletitionMessages();
   ShowCharacterScreen ( );
+  ShowSkillsScreen ( );
   ManageInventoryScreen ( );
   DisplayButtons( );
 
@@ -436,6 +437,37 @@ Assemble_Combat_Picture (int mask)
   DebugPrintf (2, "\nvoid Assemble_Combat_Picture(...): end of function reached.");
 }; // void Assemble_Combat_Picture(...)
 
+/* ----------------------------------------------------------------------
+ * This function blits robot digits into the robot.  It can do so for 
+ * friendly droids as well as for hostile ones.
+ * ---------------------------------------------------------------------- */
+void
+BlitRobotDigits( point UpperLeftBlitCorner , char* druidname , int Friendly )
+{
+  SDL_Rect TargetRectangle;
+  int HumanModifier;
+  int i;
+
+  if ( druidname[ 0 ] >= 'A' ) HumanModifier = 'A' - '1' - 13 - 10 * (!Friendly) ;
+  else HumanModifier = 0 ;
+
+  for ( i = 0 ; i < 3 ; i ++ )
+    {
+      TargetRectangle.x = UpperLeftBlitCorner.x + Digit_Pos[i].x ;
+      TargetRectangle.y = UpperLeftBlitCorner.y + Digit_Pos[i].y ;
+      if ( Friendly == 0 )
+	{
+	  SDL_BlitSurface( EnemyDigitSurfacePointer[ druidname[i]-'1'+1+HumanModifier ] , 
+			   NULL, Screen, &TargetRectangle );
+	}
+      else
+	{
+	  SDL_BlitSurface( InfluDigitSurfacePointer[ druidname[i]-'1'+1+HumanModifier ] , 
+			   NULL, Screen, &TargetRectangle );
+	}
+    }
+}; // void 
+
 /* -----------------------------------------------------------------
  * This function draws the influencer to the screen, either
  * to the center of the combat window if (-1,-1) was specified, or
@@ -449,6 +481,7 @@ PutInfluence ( int x , int y )
   SDL_Rect Text_Rect;
   int alpha_value;
   int i;
+  point UpperLeftBlitCorner;
 
   Text_Rect.x=UserCenter_x + Block_Width/3;
   Text_Rect.y=UserCenter_y  - Block_Height/2;
@@ -459,14 +492,18 @@ PutInfluence ( int x , int y )
 
   if ( x == -1 ) 
     {
-      TargetRectangle.x=UserCenter_x - Block_Width/2;
-      TargetRectangle.y=UserCenter_y - Block_Height/2;
+      UpperLeftBlitCorner.x = UserCenter_x - Block_Width  / 2 ;
+      UpperLeftBlitCorner.y = UserCenter_y - Block_Height / 2 ;
     }
   else
     {
-      TargetRectangle.x=x ;
-      TargetRectangle.y=y ;
+      UpperLeftBlitCorner.x=x ;
+      UpperLeftBlitCorner.y=y ;
     }
+
+  TargetRectangle.x = UpperLeftBlitCorner.x ;
+  TargetRectangle.y = UpperLeftBlitCorner.y ;
+
 
   //--------------------
   // Maybe the influencer is fading due to low energy?
@@ -514,55 +551,13 @@ PutInfluence ( int x , int y )
 	}
     }
 
-
   // Now we draw the hat and shoes of the influencer
   SDL_BlitSurface( InfluencerSurfacePointer[ (int) floorf (Me.phase) ], NULL , Screen, &TargetRectangle );
 
-
+  //--------------------
   // Now we draw the first digit of the influencers current number.
-  // SDL SOMETIMES MODIFIES THE TARGET ENTRY, THEREFORE IT HAS TO BE 
-  // COMPUTED ANEW!!!!
-  if ( x == -1 ) 
-    {
-      TargetRectangle.x=UserCenter_x - Block_Width/2 + First_Digit_Pos_X;
-      TargetRectangle.y=UserCenter_y - Block_Height/2 + First_Digit_Pos_Y;
-    }
-  else
-    {
-      TargetRectangle.x=x + First_Digit_Pos_X ;
-      TargetRectangle.y=y + First_Digit_Pos_Y ;
-    }
-  SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[Me.type].druidname[0]-'1'+1 ] , NULL, Screen, &TargetRectangle );
-
-  // Now we draw the second digit of the influencers current number.
-  // SDL SOMETIMES MODIFIES THE TARGET ENTRY, THEREFORE IT HAS TO BE 
-  // COMPUTED ANEW!!!!
-  if ( x == -1 ) 
-    {
-      TargetRectangle.x=UserCenter_x - Block_Width/2 + Second_Digit_Pos_X;
-      TargetRectangle.y=UserCenter_y - Block_Height/2 + Second_Digit_Pos_Y;
-    }
-  else
-    {
-      TargetRectangle.x=x + Second_Digit_Pos_X ;
-      TargetRectangle.y=y + Second_Digit_Pos_Y ;
-    }
-  SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[Me.type].druidname[1]-'1'+1 ] , NULL, Screen, &TargetRectangle );
-
-  // Now we draw the third digit of the influencers current number.
-  // SDL SOMETIMES MODIFIES THE TARGET ENTRY, THEREFORE IT HAS TO BE 
-  // COMPUTED ANEW!!!!
-  if ( x == -1 ) 
-    {
-      TargetRectangle.x=UserCenter_x - Block_Width/2 + Third_Digit_Pos_X ;
-      TargetRectangle.y=UserCenter_y - Block_Height/2 + Third_Digit_Pos_Y;
-    }
-  else
-    {
-      TargetRectangle.x=x + Third_Digit_Pos_X ;
-      TargetRectangle.y=y + Third_Digit_Pos_Y ;
-    }
-  SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[Me.type].druidname[2]-'1'+1 ] , NULL, Screen, &TargetRectangle );
+  //
+  BlitRobotDigits( UpperLeftBlitCorner , Druidmap[ Me.type ].druidname , TRUE );
 
   //--------------------
   // Now that all fading effects are done, we can restore the blocks surface to OPAQUE,
@@ -597,12 +592,13 @@ PutInfluence ( int x , int y )
 void
 PutEnemy (int Enum , int x , int y)
 {
-  const char *druidname;	/* the number-name of the Enemy */
+  char *druidname;	/* the number-name of the Enemy */
   int phase;
   int alpha_value;
   int i;
   int HumanModifier;
   SDL_Rect TargetRectangle;
+  point UpperLeftBlitCorner;
 
   DebugPrintf (3, "\nvoid PutEnemy(int Enum): real function call confirmed...\n");
 
@@ -630,10 +626,12 @@ PutEnemy (int Enum , int x , int y)
       return;
     }
 
-  DebugPrintf (3, "\nvoid PutEnemy(int Enum): it seems that we must draw this one on the screen....\n");
+  DebugPrintf ( 3 , "\nvoid PutEnemy(int Enum): it seems that we must draw this one on the screen....\n" );
 
+  //--------------------
   // We check for incorrect droid types, which sometimes might occor, especially after
   // heavy editing of the crew initialisation functions ;)
+  //
   if ( AllEnemys[Enum].type >= Number_Of_Droid_Types )
     {
       fprintf(stderr, "\n\
@@ -653,26 +651,32 @@ Sorry...\n\
     }
 
   //--------------------
-  // First blit just the enemy hat and shoes.
-  // If no coordinates, i.e. "-1", were given, we blit to the correct location in
-  // the combat window, else we blit to the given location.
-  // The number will be blittet later
-
-  druidname = Druidmap[AllEnemys[Enum].type].druidname;
-  phase = AllEnemys[Enum].feindphase;
-
+  // Since we will need that several times in the sequel, we find out the correct
+  // target location on the screen for our surface blit once and remember it for
+  // later.  ( THE TARGET RECTANGLE GETS MODIFIED IN THE SDL BLIT!!! )
+  //
   if ( x == (-1) ) 
     {
-      TargetRectangle.x=UserCenter_x+ 
-	( (-Me.pos.x+AllEnemys[Enum].pos.x ) ) * Block_Width  -Block_Width/2;
-      TargetRectangle.y=UserCenter_y+ 
-	( (-Me.pos.y+AllEnemys[Enum].pos.y ) ) * Block_Height -Block_Height/2;
+      UpperLeftBlitCorner.x = UserCenter_x + 
+	( ( - Me.pos.x + AllEnemys[Enum].pos.x ) ) * Block_Width  - Block_Width / 2 ;
+      UpperLeftBlitCorner.y = UserCenter_y + 
+	( ( - Me.pos.y + AllEnemys[Enum].pos.y ) ) * Block_Height - Block_Height / 2 ;
     }
   else
     {
-      TargetRectangle.x=x;
-      TargetRectangle.y=y;
+      UpperLeftBlitCorner.x = x ;
+      UpperLeftBlitCorner.y = y ;
     }
+
+  //--------------------
+  // First blit just the enemy hat and shoes.
+  // The number will be blittet later
+  //
+  druidname = Druidmap[AllEnemys[Enum].type].druidname;
+  phase = AllEnemys[Enum].feindphase;
+
+  TargetRectangle.x = UpperLeftBlitCorner.x ;
+  TargetRectangle.y = UpperLeftBlitCorner.y ;
 
   if ( AllEnemys[Enum].Friendly == 0 ) 
     {
@@ -684,22 +688,12 @@ Sorry...\n\
 
       if ( ( ( AllEnemys[Enum].energy*100/Druidmap[AllEnemys[Enum].type].maxenergy) <= BLINKENERGY) ) 
 	{
-	  
 	  // In case of low energy, do the fading effect...
 	  alpha_value = (int) ( ( 256 - alpha_offset ) * 
 				fabsf( 0.5 * Me.MissionTimeElapsed - floor( 0.5 * Me.MissionTimeElapsed ) - 0.5 ) + 
 				( alpha_offset ) );
-	  
 	  for ( i = 0 ; i < DIGITNUMBER ; i++ )
 	    SDL_SetAlpha( InfluDigitSurfacePointer[i] , SDL_SRCALPHA , alpha_value );
-	  
-	  // ... and also maybe start a new cry-sound
-	  
-	  // if ( Me.LastCrysoundTime > CRY_SOUND_INTERVAL )
-	  // {
-	  // Me.LastCrysoundTime = 0;
-	  // CrySound();
-	  // }
 	}
       else
 	{
@@ -710,72 +704,8 @@ Sorry...\n\
 
   //--------------------
   // Now the numbers should be blittet.
-  // again, if no coordinates, i.e. "-1", were given, we blit to the correct location in
-  // the combat window, else we blit to the given location.
-  if ( x == (-1) )
-    {
-      TargetRectangle.x=UserCenter_x - 
-	(Me.pos.x-AllEnemys[Enum].pos.x) * Block_Width + First_Digit_Pos_X  - Block_Width/2; 
-      TargetRectangle.y=UserCenter_y - 
-	(Me.pos.y-AllEnemys[Enum].pos.y) * Block_Height + First_Digit_Pos_Y - Block_Height/2;
-    }
-  else
-    {
-     TargetRectangle.x=x + First_Digit_Pos_X;
-     TargetRectangle.y=y + First_Digit_Pos_Y;
-    }
-
-  if ( AllEnemys[Enum].Friendly == 0 )
-    {
-      SDL_BlitSurface( EnemyDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[0]-'1'+1 ] , NULL, Screen, &TargetRectangle );
-    }
-  else
-    {
-      
-      SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[0]-'1'+1+HumanModifier ] , NULL, Screen, &TargetRectangle );
-    }
-
-  if ( x == (-1) )
-    {
-  TargetRectangle.x=UserCenter_x - 
-    (Me.pos.x-AllEnemys[Enum].pos.x)*Block_Height + Second_Digit_Pos_X - Block_Width/2;
-  TargetRectangle.y=UserCenter_y - 
-    (Me.pos.y-AllEnemys[Enum].pos.y)*Block_Height + Second_Digit_Pos_Y - Block_Height/2 ;
-    }
-  else
-    {
-     TargetRectangle.x=x + Second_Digit_Pos_X;
-     TargetRectangle.y=y + Second_Digit_Pos_Y;
-    }
-
-  if ( AllEnemys[Enum].Friendly == 0 )
-    {
-      SDL_BlitSurface( EnemyDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[1]-'1'+1 ] , NULL, Screen, &TargetRectangle );
-    }
-  else
-    {
-      SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[1]-'1'+1 +HumanModifier ] , NULL, Screen, &TargetRectangle );
-    }
-
-  if ( x == (-1) )
-    {
-      TargetRectangle.x=UserCenter_x - (Me.pos.x-AllEnemys[Enum].pos.x)*Block_Width - Block_Width/2 + Third_Digit_Pos_X ;
-      TargetRectangle.y=UserCenter_y - (Me.pos.y-AllEnemys[Enum].pos.y)*Block_Width - Block_Height/2 + Third_Digit_Pos_Y;
-    }
-  else
-    {
-     TargetRectangle.x=x + Third_Digit_Pos_X ;
-     TargetRectangle.y=y + Third_Digit_Pos_Y;
-    }
-
-  if ( AllEnemys[Enum].Friendly == 0 )
-    {
-      SDL_BlitSurface( EnemyDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[2]-'1'+1 ] , NULL, Screen, &TargetRectangle );
-    }
-  else
-    {
-      SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[2]-'1'+1 +HumanModifier ] , NULL, Screen, &TargetRectangle );
-    }
+  //
+  BlitRobotDigits( UpperLeftBlitCorner , druidname , AllEnemys[Enum].Friendly );
 
 
   //--------------------
@@ -796,11 +726,8 @@ Sorry...\n\
 		      AllEnemys[Enum].TextToBeDisplayed );
     }
 
-  
-
   DebugPrintf (2, "\nvoid PutEnemy(int Enum): ENEMY HAS BEEN PUT --> usual end of function reached.\n");
-
-}	// void PutEnemy(int Enum , int x , int y) 
+}; // void PutEnemy(int Enum , int x , int y) 
 
 /* ----------------------------------------------------------------------
  * This function draws a Bullet into the combat window.  The only 

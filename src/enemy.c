@@ -767,13 +767,12 @@ SelectNextWaypointAdvanced ( int EnemyNum )
 
 
 /* ----------------------------------------------------------------------
- *
- *
+ * This function moves a single enemy.  It is used by MoveEnemys().
  * ---------------------------------------------------------------------- */
 void 
 MoveThisEnemy( int EnemyNum )
 {
-  Enemy ThisRobot=&AllEnemys[ EnemyNum ];
+  Enemy ThisRobot = & AllEnemys[ EnemyNum ];
 
   //--------------------
   // At first, we check for a lot of cases in which we do not
@@ -802,7 +801,7 @@ MoveThisEnemy( int EnemyNum )
       // Maybe that robot did have something with him?  The item should then
       // fall to the floor with it's clanc
       //
-      DropRandomItem( ThisRobot->pos.x , ThisRobot->pos.y );
+      DropRandomItem ( ThisRobot->pos.x , ThisRobot->pos.y , 1 , ! ( MyRandom ( 5 ) ) ) ;
 
       if (LevelEmpty ())
 	CurLevel->empty = WAIT_LEVELEMPTY;
@@ -831,7 +830,7 @@ MoveThisEnemy( int EnemyNum )
 
   Persue_Given_Course( EnemyNum );
 
-} // void MoveThisEnemy ( int EnemyNum )
+}; // void MoveThisEnemy ( int EnemyNum )
 
 /* ----------------------------------------------------------------------
  * This function moves all enemys individually, using MoveThisEnems(i)

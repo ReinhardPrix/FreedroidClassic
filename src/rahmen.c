@@ -130,12 +130,20 @@ void
 GiveItemDescription ( char* ItemDescText , item* CurItem , int ForShop )
 {
   char linebuf[1000];
+  char font_switchto_red [ 2 ] = { 1 , 0 };
+  char font_switchto_blue [ 2 ] = { 2 , 0 };
 
+  
   // --------------------
   // First clear the string and the we print out the item name.  That's simple.
   // we also add the extension of the name, the 'suffix' to it.
   //
   strcpy( ItemDescText , "" );
+  if ( ( CurItem->suffix_code != (-1) ) || ( CurItem->prefix_code != (-1) ) )
+    {
+      strcat ( ItemDescText , font_switchto_blue );
+    }
+
   if ( CurItem->type == ITEM_MONEY ) sprintf( ItemDescText , "%d " , CurItem->gold_amount );
   strcat( ItemDescText , ItemMap[ CurItem->type ].ItemName );
   if ( CurItem->suffix_code != (-1) )
@@ -206,6 +214,7 @@ GiveItemDescription ( char* ItemDescText , item* CurItem , int ForShop )
     {
       strcat( ItemDescText , " Indestructable" );
     };
+
   // --------------------
   // If this item has some strength or dex or magic requirements, we say so
   //
@@ -219,7 +228,7 @@ GiveItemDescription ( char* ItemDescText , item* CurItem , int ForShop )
 	  if ( ForShop )
 	    sprintf( linebuf , "   Pow: %d" , ItemMap[ CurItem->type ].item_require_strength );
 	  else 
-	    sprintf( linebuf , " Required Power: %d \n " , ItemMap[ CurItem->type ].item_require_strength );
+	    sprintf( linebuf , " Required Power: %d " , ItemMap[ CurItem->type ].item_require_strength );
 	  strcat( ItemDescText , linebuf );
 	}
       if ( ItemMap[ CurItem->type ].item_require_dexterity != ( -1 ) )
@@ -227,7 +236,7 @@ GiveItemDescription ( char* ItemDescText , item* CurItem , int ForShop )
 	  if ( ForShop )
 	    sprintf( linebuf , "   Dis: %d" ,  ItemMap[ CurItem->type ].item_require_dexterity );
 	  else
-	    sprintf( linebuf , " Power Distribution: %d \n " ,  ItemMap[ CurItem->type ].item_require_dexterity );
+	    sprintf( linebuf , " Power Distribution: %d " ,  ItemMap[ CurItem->type ].item_require_dexterity );
 	  strcat( ItemDescText , linebuf );
 	}
     }
@@ -245,6 +254,26 @@ GiveItemDescription ( char* ItemDescText , item* CurItem , int ForShop )
       sprintf( linebuf , "Right click to use" );
       strcat( ItemDescText , linebuf );
     }
+
+  //--------------------
+  // If the item has some suffixes, we describe these as well
+  //
+  if ( CurItem->suffix_code != (-1) )
+    {
+      // if ( !ForShop ) 
+      strcat ( ItemDescText , "\n" );
+      strcat ( ItemDescText , font_switchto_red );
+      if ( SuffixList[ CurItem->suffix_code ].bonus_to_str )
+	sprintf( linebuf , "+%d to Power\n" , SuffixList[ CurItem->suffix_code ].bonus_to_str );
+      if ( SuffixList[ CurItem->suffix_code ].bonus_to_dex )
+	sprintf( linebuf , "+%d to Power Distribution\n" , SuffixList[ CurItem->suffix_code ].bonus_to_dex );
+      if ( SuffixList[ CurItem->suffix_code ].bonus_to_mag )
+	sprintf( linebuf , "+%d to Force\n" , SuffixList[ CurItem->suffix_code ].bonus_to_mag );
+      if ( SuffixList[ CurItem->suffix_code ].bonus_to_vit )
+	sprintf( linebuf , "+%d to Vitality\n" , SuffixList[ CurItem->suffix_code ].bonus_to_vit );
+      strcat( ItemDescText , linebuf );
+    }
+  
 
 }; // void GiveItemDescription ( char* ItemDescText , item* CurItem , int ForShop )
 
@@ -272,6 +301,26 @@ GiveDroidDescription ( char* DroidDescText , enemy* CurEnemy )
     }
 
 }; // void GiveDroidDescription ( char* ItemDescText , item* CurItem )
+
+
+/* ----------------------------------------------------------------------
+ * This function displays the status bars for mana and energy in some 
+ * corner of the screen.  The dimensions and location of the bar are
+ * specified in items.h
+ * ---------------------------------------------------------------------- */
+void 
+ShowCurrentSkill( void )
+{
+  SDL_Rect Target_Rect;
+
+  Target_Rect.x = CURRENT_SKILL_RECT_X ;
+  Target_Rect.y = CURRENT_SKILL_RECT_Y ;
+  Target_Rect.w = CURRENT_SKILL_RECT_W ;
+  Target_Rect.h = CURRENT_SKILL_RECT_H ;
+
+  SDL_BlitSurface ( SkillIconSurfacePointer[ Me.readied_skill ] , NULL , Screen , &Target_Rect );
+
+}; // void ShowCurrentSkill ( void )
 
 /* ----------------------------------------------------------------------
  * This function displays the status bars for mana and energy in some 
@@ -532,14 +581,11 @@ ShowCurrentTextWindow ( void )
       CenteredPutString ( Screen , Banner_Text_Rect.y + InterLineDistance + 
 			  i * ( InterLineDistance + FontHeight( GetCurrentFont() ) ) , TextLine[ i ] );
     }
+
   CenteredPutString ( Screen , Banner_Text_Rect.y + InterLineDistance + 
 		      i * ( InterLineDistance + FontHeight( GetCurrentFont() ) ) , LongTextPointer );
   
-  // DisplayText ( ItemDescText , Banner_Text_Rect.x , Banner_Text_Rect.y , &Banner_Text_Rect );
-
-  // SDL_UpdateRect( Screen , Banner_Text_Rect.x , Banner_Text_Rect.y , Banner_Text_Rect.w , Banner_Text_Rect.h );
-  //--------------------
-};
+}; // void ShowCurrentTextWindow ( void )
 
 
 /* -----------------------------------------------------------------
@@ -569,9 +615,11 @@ DisplayBanner (const char* left, const char* right,  int flags )
   SDL_SetClipRect( Screen , NULL );  // this unsets the clipping rectangle
   // SDL_BlitSurface( banner_pic, NULL, Screen , NULL);
 
-  ShowCurrentHealthAndForceLevel( );
+  ShowCurrentHealthAndForceLevel ( );
 
-  ShowCurrentTextWindow( );
+  ShowCurrentTextWindow ( );
+
+  ShowCurrentSkill ( );
 
   return;
 

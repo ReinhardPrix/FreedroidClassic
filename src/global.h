@@ -161,6 +161,7 @@ EXTERN int MinMessageTime;
 EXTERN BFont_Info *Menu_BFont;
 EXTERN BFont_Info *Para_BFont;
 EXTERN BFont_Info *FPS_Display_BFont;
+EXTERN BFont_Info *Blue_BFont;
 EXTERN BFont_Info *Red_BFont;
 EXTERN BFont_Info *Highscore_BFont;
 EXTERN float Overall_Average;
@@ -191,6 +192,7 @@ EXTERN SDL_Rect InventoryRect;
 EXTERN int Number_Of_Item_Types;
 EXTERN int Number_Of_Bullet_Types;
 EXTERN SDL_Surface *Screen;   /* the graphics display */
+EXTERN SDL_Surface *SkillIconSurfacePointer[ NUMBER_OF_SKILL_ICONS ]; // A pointer all skill icon surfaces
 EXTERN SDL_Surface *EnemySurfacePointer[ ENEMYPHASES ];   // A pointer to the surfaces containing the pictures of the
                                                // enemys in different phases of rotation
 EXTERN SDL_Surface *InfluencerSurfacePointer[ ENEMYPHASES ];   // A pointer to the surfaces containing the pictures of the
@@ -212,12 +214,15 @@ EXTERN int Block_Width;
 EXTERN int Block_Height;
 EXTERN int Digit_Length;
 EXTERN int Digit_Height;
+EXTERN point Digit_Pos[3];
+/*
 EXTERN int First_Digit_Pos_X;
 EXTERN int First_Digit_Pos_Y;
 EXTERN int Second_Digit_Pos_X;
 EXTERN int Second_Digit_Pos_Y;
 EXTERN int Third_Digit_Pos_X;
 EXTERN int Third_Digit_Pos_Y;
+*/
 EXTERN const SDL_VideoInfo *vid_info;/* info about current video mode */
 EXTERN color transp_rgb;             /* RGB of transparent color */
 EXTERN int vid_bpp; 			/* bits per pixel */

@@ -84,6 +84,9 @@ typedef struct
   int CharacterScreen_Visible;
   float CharacterScreen_Visible_Time;
   float CharacterScreen_Visible_Max_Time;
+  int SkillScreen_Visible;
+  float SkillScreen_Visible_Time;
+  float SkillScreen_Visible_Max_Time;
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
 
@@ -229,6 +232,7 @@ typedef struct
   int bonus_to_life;
   int bonus_to_force;
   int bonus_to_tohit;
+  int bonus_to_all_attibutes;
 } item_bonus , *Item_bonus;
 
 typedef struct
@@ -391,6 +395,8 @@ typedef struct
   char* TextToBeDisplayed;
   float Current_Victim_Resistance_Factor;
   int FramesOnThisLevel;        // how many frames has the influ spent on this level already?
+
+  int readied_skill; // which skill does the influencer currently have readied?
 
   item Inventory[ MAX_ITEMS_IN_INVENTORY ];
   item weapon_item;

@@ -289,7 +289,7 @@ StartBlast (float x, float y, int type)
     {
       CurLevel->map[ map_y ][ map_x ] = FLOOR;
       StartBlast( map_x , map_y , DRUIDBLAST );
-      DropRandomItem( map_x , map_y );
+      DropRandomItem( map_x , map_y , 1 , FALSE );
     }
   if ( ( CurLevel->map[ map_y ][ map_x ] == BOX_1 ) ||
        ( CurLevel->map[ map_y ][ map_x ] == BOX_2 ) ||
@@ -702,8 +702,7 @@ CheckBlastCollisions (int num)
 	    AllEnemys[i].energy -= Blast_Damage_Per_Second * Frame_Time ();
 	  }
 
-      if (AllEnemys[i].energy < 0)
-	AllEnemys[i].energy = 0;
+      // if (AllEnemys[i].energy < 0) AllEnemys[i].energy = 0;
 
     }				/* for */
 
