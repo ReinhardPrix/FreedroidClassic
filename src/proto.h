@@ -84,7 +84,7 @@ EXTERN void ExplodeInfluencer (void);
 #else
 #define EXTERN extern
 #endif
-EXTERN void RotateVectorByAngle ( finepoint* vector , float rot_angle );
+EXTERN void RotateVectorByAngle ( moderately_finepoint* vector , float rot_angle );
 EXTERN void FireBullet (void);
 EXTERN void MoveBullets (void);
 EXTERN void DeleteBullet (int num , int StartBlast );
