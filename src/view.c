@@ -2920,7 +2920,7 @@ PutRadialBlueSparks( float PosX, float PosY , float Radius , int SparkType )
 
   SDL_Rect TargetRectangle;
   static SDL_Surface* SparkPrototypeSurface [ NUMBER_OF_SPARK_TYPES ] [ FIXED_NUMBER_OF_PROTOTYPES ] = { { NULL , NULL , NULL , NULL } , { NULL , NULL , NULL , NULL } } ;
-  static SDL_Surface* PrerotatedSparkSurfaces [ NUMBER_OF_SPARK_TYPES ] [ FIXED_NUMBER_OF_PROTOTYPES ] [ FIXED_NUMBER_OF_SPARK_ANGLES ];
+  static iso_image PrerotatedSparkSurfaces [ NUMBER_OF_SPARK_TYPES ] [ FIXED_NUMBER_OF_PROTOTYPES ] [ FIXED_NUMBER_OF_SPARK_ANGLES ];
   SDL_Surface* tmp_surf;
   char* fpath;
   int NumberOfPicturesToUse;
@@ -3004,12 +3004,21 @@ function used for this did not succeed.",
 	  //
 	  for ( i = 0 ; i < FIXED_NUMBER_OF_SPARK_ANGLES ; i++ )
 	    {
-	      Angle = -45 + 360.0 * (float)i / (float)FIXED_NUMBER_OF_SPARK_ANGLES ;
+	      Angle = +45 - 360.0 * (float)i / (float)FIXED_NUMBER_OF_SPARK_ANGLES ;
 	      
 	      tmp_surf = 
 		rotozoomSurface( SparkPrototypeSurface [ SparkType ] [ k ] , Angle , 1.0 , FALSE );
 	      
-	      PrerotatedSparkSurfaces [ SparkType ] [ k ] [ i ] = our_SDL_display_format_wrapperAlpha ( tmp_surf );
+	      PrerotatedSparkSurfaces [ SparkType ] [ k ] [ i ] . surface = our_SDL_display_format_wrapperAlpha ( tmp_surf );
+
+	      //--------------------
+	      // Maybe opengl is in use.  Then we need to prepare some textures too...
+	      //
+	      if ( use_open_gl )
+		{
+		  flip_image_horizontally ( & ( PrerotatedSparkSurfaces [ SparkType ] [ k ] [ i ] ) ) ;
+		  make_texture_out_of_surface ( & ( PrerotatedSparkSurfaces [ SparkType ] [ k ] [ i ] ) ) ;
+		}
 	      
 	      SDL_FreeSurface ( tmp_surf );
 	    }
@@ -3032,13 +3041,22 @@ function used for this did not succeed.",
 
       RotateVectorByAngle ( &Displacement , Angle );
 
-      PrerotationIndex = rintf ( Angle * (float)FIXED_NUMBER_OF_SPARK_ANGLES / 360.0 ); 
+      PrerotationIndex = rintf ( ( Angle  ) * (float)FIXED_NUMBER_OF_SPARK_ANGLES / 360.0 ); 
       if ( PrerotationIndex >= FIXED_NUMBER_OF_SPARK_ANGLES ) PrerotationIndex = 0 ;
 
-      TargetRectangle . x = translate_map_point_to_screen_pixel ( PosX + Displacement . x , PosY + Displacement . y , TRUE ) - ( ( PrerotatedSparkSurfaces [ SparkType ] [ PictureType ] [ PrerotationIndex ] -> w ) / 2 );
-      TargetRectangle . y = translate_map_point_to_screen_pixel ( PosX + Displacement . x , PosY + Displacement . y , FALSE ) - ( ( PrerotatedSparkSurfaces [ SparkType ] [ PictureType ] [ PrerotationIndex ] -> h ) / 2 );
+      TargetRectangle . x = translate_map_point_to_screen_pixel ( PosX + Displacement . x , PosY + Displacement . y , TRUE ) - ( ( PrerotatedSparkSurfaces [ SparkType ] [ PictureType ] [ PrerotationIndex ] . surface -> w ) / 2 );
+      TargetRectangle . y = translate_map_point_to_screen_pixel ( PosX + Displacement . x , PosY + Displacement . y , FALSE ) - ( ( PrerotatedSparkSurfaces [ SparkType ] [ PictureType ] [ PrerotationIndex ] . surface -> h ) / 2 );
 
-      our_SDL_blit_surface_wrapper( PrerotatedSparkSurfaces [ SparkType ] [ PictureType ] [ PrerotationIndex ] , NULL , Screen , &TargetRectangle);
+      if ( use_open_gl )
+	{
+	  blit_open_gl_texture_to_screen_position ( PrerotatedSparkSurfaces [ SparkType ] [ PictureType ] [ PrerotationIndex ] , 
+						    TargetRectangle . x , 
+						    TargetRectangle . y , TRUE ) ;
+	}
+      else
+	{
+	  our_SDL_blit_surface_wrapper( PrerotatedSparkSurfaces [ SparkType ] [ PictureType ] [ PrerotationIndex ] . surface , NULL , Screen , &TargetRectangle);
+	}
 
     }
 
