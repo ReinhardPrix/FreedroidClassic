@@ -584,6 +584,22 @@ This is an indication of a severe bug/installation problem of freedroid.",
 	}
 
 	//--------------------
+	// Maybe we had '0' entries for the height or width of this button in the list.
+	// This means that we will take the real width and the real height from the image
+	// and overwrite the 0 entries with this.
+	//
+	if ( AllMousePressButtons[ ButtonIndex ] . button_rect . w == ( 0 ) )
+	{
+	    AllMousePressButtons[ ButtonIndex ] . button_rect . w =
+		AllMousePressButtons[ ButtonIndex ] . button_image . surface -> w ;
+	}
+	if ( AllMousePressButtons[ ButtonIndex ] . button_rect . h == ( 0 ) )
+	{
+	    AllMousePressButtons[ ButtonIndex ] . button_rect . h =
+		AllMousePressButtons[ ButtonIndex ] . button_image . surface -> h ;
+	}
+	
+	//--------------------
 	// With OpenGL output method, we'll make a texture for faster and 
 	// better blitting.
 	//
@@ -593,24 +609,7 @@ This is an indication of a severe bug/installation problem of freedroid.",
 	}
 
     }
-    
 
-    //--------------------
-    // Maybe we had '0' entries for the height or width of this button in the list.
-    // This means that we will take the real width and the real height from the image
-    // and overwrite the 0 entries with this.
-    //
-    if ( AllMousePressButtons[ ButtonIndex ] . button_rect . w == ( 0 ) )
-    {
-	AllMousePressButtons[ ButtonIndex ] . button_rect . w =
-	    AllMousePressButtons[ ButtonIndex ] . button_image . surface -> w ;
-    }
-    if ( AllMousePressButtons[ ButtonIndex ] . button_rect . h == ( 0 ) )
-    {
-	AllMousePressButtons[ ButtonIndex ] . button_rect . h =
-	    AllMousePressButtons[ ButtonIndex ] . button_image . surface -> h ;
-    }
-    
     //--------------------
     // Now that we know we have the button image loaded, we can start
     // to blit the button image to the screen.
