@@ -99,8 +99,21 @@ GetChatWindowInput( SDL_Surface* Background , SDL_Rect* Chat_Window_Pointer )
   // the given input string into lower cases.  That will make pattern matching afterwards
   // much more reliable.
   //
+  // Also leading spaces should be removed
   j=0;
   while ( RequestString[j] != 0 ) { RequestString[j]=tolower( RequestString[j] ); j++; }
+  while ( RequestString[0] == ' ' ) 
+    {
+      j=0;
+      while ( RequestString [ j + 1 ] != 0 )
+	{
+	  RequestString[ j ] = RequestString[ j + 1 ];
+	  j++;
+	}
+      RequestString[ j ] = 0;
+    }
+
+
 
   return ( RequestString );
 }; // char* GetChatWindowInput( void )
