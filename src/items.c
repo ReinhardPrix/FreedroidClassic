@@ -745,14 +745,8 @@ ShowInventoryScreen ( void )
   // At this point we know, that the inventory screen is desired and must be
   // displayed in-game:
   //
-  // Therefore we split the screen to half, so that one half can be used for 
-  // the inventory and the other for the normal user (combat) rectangle
-  //
   // Into this inventory rectangle we draw the inventory mask
   //
-  // User_Rect.x = SCREENLEN/2;
-  // User_Rect.w = SCREENLEN/2;
-  // SDL_SetClipRect( Screen, &InventoryRect );
   SDL_SetClipRect( Screen, NULL );
   SDL_BlitSurface ( InventoryImage , NULL , Screen , &InventoryRect );
 
@@ -1111,12 +1105,7 @@ ShowCharacterScreen ( void )
   // do anything more, but to restore the usual user rectangle size
   // back to normal and to return...
   //
-  if ( GameConfig.CharacterScreen_Visible == FALSE ) 
-    {
-      // User_Rect.x = 0;
-      // User_Rect.w = SCREENLEN;
-      return;
-    }
+  if ( GameConfig.CharacterScreen_Visible == FALSE ) return;
 
   // --------------------
   // Some things like the loading of the character screen
@@ -1142,14 +1131,8 @@ ShowCharacterScreen ( void )
   // At this point we know, that the character screen is desired and must be
   // displayed in-game:
   //
-  // Therefore we split the screen to half, so that one half can be used for 
-  // the inventory and the other for the normal user (combat) rectangle
-  //
   // Into this inventory rectangle we draw the inventory mask
   //
-  // User_Rect.x = 0; // SCREENLEN/2;
-  // User_Rect.w = SCREENLEN/2;
-  // SDL_SetClipRect( Screen, &InventoryRect );
   SDL_SetClipRect( Screen, NULL );
   SDL_BlitSurface ( CharacterScreenImage , NULL , Screen , &CharacterRect );
 

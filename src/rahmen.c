@@ -1,10 +1,3 @@
-/*----------------------------------------------------------------------
- *
- * Desc: contains functions to update and draw the top status line with
- *	score and status etc...
- *
- *----------------------------------------------------------------------*/
-
 /* 
  *
  *   Copyright (c) 1994, 2002 Johannes Prix
@@ -29,6 +22,13 @@
  *  MA  02111-1307  USA
  *
  */
+/*----------------------------------------------------------------------
+ *
+ * Desc: contains functions to update and draw the top status line with
+ *	score and status etc...
+ *
+ *----------------------------------------------------------------------*/
+
 #define _rahmen_c
 
 #include "system.h"
@@ -158,8 +158,8 @@ DisplayBanner (const char* left, const char* right,  int flags )
   //--------------------
   // For testing purposes is bluntly insert the new banner element here:
   //
-  CurPos.x = GetMousePos_x();
-  CurPos.y = GetMousePos_y();
+  CurPos.x = GetMousePos_x() + 16 ;
+  CurPos.y = GetMousePos_y() + 16 ;
   SDL_SetClipRect( Screen , NULL );  // this unsets the clipping rectangle
   SDL_FillRect( Screen , &Banner_Text_Rect , 0 );
 
@@ -200,9 +200,44 @@ DisplayBanner (const char* left, const char* right,  int flags )
 	      // DisplayText ( ItemMap[ Me.Inventory[ InvIndex ].type ].ItemName ,
 	      // Banner_Text_Rect.x , Banner_Text_Rect.y , &Banner_Text_Rect );
 	    }
+	} 
+      else if ( CursorIsInWeaponRect ( CurPos.x , CurPos.y ) )
+	{
+	  if ( Druidmap [ Me.type ].weapon_item )
+	    strcpy( ItemDescText , ItemMap[ Druidmap[ Me.type ].weapon_item ].ItemName );
+	}
+      else if ( CursorIsInDriveRect ( CurPos.x , CurPos.y ) )
+	{
+	  if ( Druidmap [ Me.type ].drive_item )
+	    strcpy( ItemDescText , ItemMap[ Druidmap[ Me.type ].drive_item ].ItemName );
+	}
+      else if ( CursorIsInShieldRect ( CurPos.x , CurPos.y ) )
+	{
+	  if ( Druidmap [ Me.type ].shield_item )
+	    strcpy( ItemDescText , ItemMap[ Druidmap[ Me.type ].shield_item ].ItemName );
+	}
+      else if ( CursorIsInArmourRect ( CurPos.x , CurPos.y ) )
+	{
+	  if ( Druidmap [ Me.type ].armour_item )
+	    strcpy( ItemDescText , ItemMap[ Druidmap[ Me.type ].armour_item ].ItemName );
+	}
+      else if ( CursorIsInAux1Rect ( CurPos.x , CurPos.y ) )
+	{
+	  if ( Druidmap [ Me.type ].aux1_item )
+	    strcpy( ItemDescText , ItemMap[ Druidmap[ Me.type ].aux1_item ].ItemName );
+	}
+      else if ( CursorIsInAux2Rect ( CurPos.x , CurPos.y ) )
+	{
+	  if ( Druidmap [ Me.type ].aux2_item )
+	    strcpy( ItemDescText , ItemMap[ Druidmap[ Me.type ].aux2_item ].ItemName );
+	}
+      else if ( CursorIsInSpecialRect ( CurPos.x , CurPos.y ) )
+	{
+	  if ( Druidmap [ Me.type ].special_item )
+	    strcpy( ItemDescText , ItemMap[ Druidmap[ Me.type ].special_item ].ItemName );
 	}
 
-    }
+    } // if nothing is 'held in hand'
 
 
   DisplayText ( ItemDescText , 
