@@ -326,7 +326,6 @@ void LadeLBMBild(char* LBMDateiname,unsigned char* Screen,int LoadPal)
 
   if( (BildDateiPointer = (char*) MyMalloc((size_t)stbuf.st_size + 10)) == NULL) {
     printf("\nOut of Memory in LadeLBMBild()");
-    printf("\nFree: %lu", coreleft() );
     getchar();
     Terminate(-1);
   }

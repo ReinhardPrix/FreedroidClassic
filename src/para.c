@@ -99,6 +99,7 @@ int TestSound(void);
 void CalibratedDelay(long);
 void Debriefing(void);
 void ShowHighscoreList(void);
+void Pause(void);
 
 float Frame_Time(void){
   if (FPSover1 > 10) {
@@ -124,8 +125,8 @@ void CalibratedDelay(long delay){
 // status directly from the keyboard!  Long live the linux kernel and the svgalib!
 //                                                                          jp, 10.04.2002
 void ClearKbState(void) {
-  keyboard_clearstate();
-}
+  keyboard_clearstate();  // This resets the state of all keys when keyboard in raw mode
+} // void ClearKbState(void)
 
 //
 // This function is for stability while working with the SVGALIB, which otherwise would
@@ -223,13 +224,6 @@ int kbhit(void){
 // This Function is for the PORT!!!!
 // Replacing all MyRandom-calls with MyMyRandom-calls
 
-int coreleft(void){
-  return 12345;
-};
-
-// This Function is for the PORT!!!!
-// Replacing all MyRandom-calls with MyMyRandom-calls
-
 int MyRandom(int Obergrenze)
 {
   float Zwisch;
@@ -269,7 +263,6 @@ int main(void)
   Conceptview = FALSE;
   
   InterruptInfolineUpdate=TRUE;
-  DMAUseON = 0;
 
   /* Initialisieren der globalen Variablen und Arrays */
   SaveVideoMode();
@@ -332,44 +325,7 @@ int main(void)
       if(keyboard_keypressed(SCANCODE_I)) ShowDebugInfos();
       if(keyboard_keypressed(SCANCODE_V)) HideInvisibleMap = !HideInvisibleMap; 
       if(keyboard_keypressed(SCANCODE_C)) Cheatmenu();
-      if(PPressed()) {
-	Me.status=PAUSE;
-	SetInfoline();
-	UpdateInfoline();
-	ClearKbState();
-	while (!PPressed() ) {
-	  usleep(30000);
-	  JoystickControl();
-	  //PORT: worfuer war das??  
-	  //while (!TimerFlag) JoystickControl();
-	  AnimateInfluence();
-	  AnimateRefresh();
-	  RotateBulletColor();
-	  AnimateEnemys();
-	  GetView();
-	  GetInternFenster();
-	  PutInternFenster();
-	  //PORT	    if (kbhit()) taste=getch();
-	  if (taste == 'c') {
-	    JoystickControl();
-	    Me.status=CHEESE;
-	    while (!SpacePressed()) {
-	      JoystickControl();
-	      //PORT		if (kbhit()) taste=getch();
-	      //PORTif (taste == ' ') SpacePressed = TRUE;
-	    }
-	    while (SpacePressed()) {
-	      JoystickControl();
-	      //PORT		if (kbhit()) taste=getch();
-	      //PORTif (taste == ' ') SpacePressed = FALSE;
-	    }
-	    taste = 1;
-	  }
-	  //PORTif (taste == ' ') SpacePressed = TRUE;
-	}
-	//	while (SpacePressed()) JoystickControl();
-	ClearKbState();
-      } // if PPressed()
+      if(PPressed()) Pause();
       // } /* if while () */
 
       //PORT	if( !TimerFlag ) continue;		/* the clock - timing */
@@ -921,21 +877,6 @@ void Title(void)
 }
 
 /*@Function============================================================
-@Desc: Diese Funktion ermittelt, ob irgend eine Richtungstaste gedrueckt ist
-
-@Ret: wenn eine Richtungstaste gedrueckt ist FALSE
-												ansonsten TRUE 
-* $Function----------------------------------------------------------*/
-
-int NoDirectionPressed(){
-  if (DownPressed()) return (0);
-  if (UpPressed()) return (0);
-  if (LeftPressed()) return (0);
-  if (RightPressed()) return (0);
-  return (1);
-}
-
-/*@Function============================================================
 @Desc: Diese Funktion Sprengt den Influencer und beendet das Programm
 
 @Ret: 
@@ -991,8 +932,8 @@ void ThouArtVictorious(void){
 }
 
 /* **********************************************************************
-	Diese Funktion updated die Highscoreliste
-	**********************************************************************/
+   Diese Funktion updated die Highscoreliste
+**********************************************************************/
 void Debriefing(void){
   char* Scoretext;
   HallElement* Oldptr;
@@ -1078,6 +1019,54 @@ void Debriefing(void){
 
   printf("\nvoid Debriefing(void): Usual end of function reached.");
 }  // void Debriefing(void)
+
+// This function does the Pause-Mode, which means, that the game process is halted,
+// while the graphics and animations are not.  The "Mode" can be set to CHEESE, which is
+// a feature from the original program that should allow for better screenshots and
+// of course allow the player to take a rest.
+//
+// Status: functioning perfectly
+//
+
+void Pause(void){
+  Me.status=PAUSE;
+  SetInfoline();
+  UpdateInfoline();
+  ClearKbState();
+  while (!PPressed() ) {
+    usleep(30000);
+    JoystickControl();
+    //PORT: worfuer war das??  
+    //while (!TimerFlag) JoystickControl();
+    AnimateInfluence();
+    AnimateRefresh();
+    RotateBulletColor();
+    AnimateEnemys();
+    GetView();
+    GetInternFenster();
+    PutInternFenster();
+    //PORT	    if (kbhit()) taste=getch();
+    if (CPressed()) {
+      JoystickControl();
+      Me.status=CHEESE;
+      SetInfoline();
+      UpdateInfoline();
+      while (!SpacePressed()) {
+	JoystickControl();
+	keyboard_update();
+      }
+      Me.status=PAUSE;
+      SetInfoline();
+      UpdateInfoline();
+      while (SpacePressed()) {
+	JoystickControl();
+	keyboard_update();
+      }
+      taste = 1;
+    }
+  }
+  ClearKbState();
+} // void Pause(void)
 
 /* **********************************************************************
 	Diese Funktion gibt die momentane Highscoreliste aus

@@ -106,6 +106,15 @@ int SpacePressed(void){
   }
 } // int SpacePressed(void)
 
+int CPressed(void){
+  keyboard_update();
+  if(keyboard_keypressed(SCANCODE_C)) {
+    return(TRUE);
+  } else {
+    return(FALSE);
+  }
+} // int CPressed(void)
+
 int PPressed(void){
   keyboard_update();
   if(keyboard_keypressed(SCANCODE_P)) {
@@ -113,7 +122,7 @@ int PPressed(void){
   } else {
     return(FALSE);
   }
-} // int SpacePressed(void)
+} // int PPressed(void)
 
 int QPressed(void){
   keyboard_update();
@@ -132,6 +141,22 @@ int WPressed(void){
     return(FALSE);
   }
 } // int WPressed(void)
+
+/*@Function============================================================
+  @Desc: Diese Funktion ermittelt, ob irgend eine Richtungstaste gedrueckt ist
+  
+  @Ret: wenn eine Richtungstaste gedrueckt ist FALSE
+  ansonsten TRUE 
+* $Function----------------------------------------------------------*/
+
+int NoDirectionPressed(void){
+  if (DownPressed()) return (0);
+  if (UpPressed()) return (0);
+  if (LeftPressed()) return (0);
+  if (RightPressed()) return (0);
+  return (1);
+}  // int NoDirectionPressed(void)
+
 
 
 /* **********************************************************************
@@ -657,16 +682,10 @@ void InsertMessage(char* MText)
 	"uber DMA-Zugriff.
 	**********************************************************************/
 void* MyMemcpy(void* Ziel,void* Quelle,unsigned int Laenge){
-	unsigned int ZOfs,ZSeg,QOfs,QSeg;
-	unsigned char PCFlag,DirFlag;
+  unsigned int ZOfs,ZSeg,QOfs,QSeg;
+  unsigned char PCFlag,DirFlag;
 
-	if (!DMAUseON) return(memcpy(Ziel,Quelle,Laenge));
-	else {
-		printf("ERror: NO DMA usable");
-		getchar();
-		Terminate(-1);
-		return(NULL);
-	}
+  return(memcpy(Ziel,Quelle,Laenge));
 
 }
 

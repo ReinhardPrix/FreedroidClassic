@@ -47,7 +47,6 @@ EXTERN int Conceptview;
 EXTERN int QuitProgram;
 EXTERN int GameOver;
 EXTERN int LastBlastHit;
-EXTERN int DMAUseON;
 EXTERN int InterruptInfolineUpdate;
 EXTERN int InvincibleMode;
 EXTERN int HideInvisibleMap;
@@ -172,6 +171,11 @@ EXTERN unsigned char *ShieldBlocks;
  * $Author$
  *
  * $Log$
+ * Revision 1.12  1997/06/08 11:24:38  jprix
+ * Made the pause function into a real function.
+ * Deleted some old unused features like non-portable DMA-use etc.
+ * added some doku.
+ *
  * Revision 1.11  1997/06/07 09:26:01  jprix
  * Framerates are now calculated and displayed. Average FPS over 1, 10 and 100 Frames are now globally available.
  *
