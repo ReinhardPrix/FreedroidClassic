@@ -249,6 +249,9 @@ typedef struct
   finepoint pos;
   int type;
   int currently_held_in_hand;
+  int condition;
+  int prefix_code;
+  int suffix_code;
   grob_point inventory_position;
 } item, *Item;
 
@@ -258,7 +261,6 @@ typedef struct
   int class;
   double maxenergy;		/* the maximum energy the batteries can carry */
   double lose_health;		/* the energy/time the duid loses under influence-control */
-  // int gun;			/* Which gun does this druid use */
   int aggression;		/* The aggressiveness of this druidtype */
   int flashimmune;		/* is the droid immune to FLASH-bullets */
   int score;			/* score for the elimination of one droid of this type */
@@ -268,14 +270,20 @@ typedef struct
   int sensor1;
   int sensor2;
   int sensor3;
-  int armament;
-  int drive_item;
-  int weapon_item;
-  int armour_item;
-  int shield_item;
-  int special_item;
-  int aux1_item;
-  int aux2_item;
+  // int drive_item;
+  item drive_item;
+  // int weapon_item;
+  item weapon_item;
+  // int armour_item;
+  item armour_item;
+  // int shield_item;
+  item shield_item;
+  // int special_item;
+  item special_item;
+  // int aux1_item;
+  item aux1_item;
+  // int aux2_item;
+  item aux2_item;
   int AdvancedBehaviour;        // Does this droid behave better that in the original paradroid?
   int CallForHelpAfterSufferingHit;  // Does this droid request help from the next console so soon as it is
                                      // hit by a bullet of some type?

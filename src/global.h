@@ -171,6 +171,8 @@ EXTERN int SkipAFewFrames;
 #define EXTERN extern
 #endif
 
+EXTERN SDL_Rect InventoryRect;
+
 #undef EXTERN
 #ifdef _sound_c
 #define EXTERN

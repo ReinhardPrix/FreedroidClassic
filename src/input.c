@@ -348,8 +348,8 @@ ReactToSpecialKeys(void)
 	{
 	  if ( Druidmap[ i ].druidname == NULL ) continue;
 	  DebugPrintf( 0 , "\n\ndruidname: %s " , Druidmap[ i ].druidname );
-	  DebugPrintf( 0 , "\ndrive_item: %d (%s)" , Druidmap[ i ].drive_item , ItemMap[ Druidmap[ i ].drive_item ].ItemName );
-	  DebugPrintf( 0 , "\nweapon_item: %d (%s) " , Druidmap[ i ].weapon_item , ItemMap[ Druidmap[ i ].weapon_item ].ItemName );
+	  DebugPrintf( 0 , "\ndrive_item: %d (%s)" , Druidmap[ i ].drive_item.type , ItemMap[ Druidmap[ i ].drive_item.type ].ItemName );
+	  DebugPrintf( 0 , "\nweapon_item: %d (%s) " , Druidmap[ i ].weapon_item.type , ItemMap[ Druidmap[ i ].weapon_item.type ].ItemName );
 	}
 
 

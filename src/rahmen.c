@@ -38,6 +38,7 @@
 #include "proto.h"
 #include "global.h"
 #include "text.h"
+#include "items.h"
 
 extern char *InfluenceModeNames[];
 
@@ -121,6 +122,44 @@ DrawBar (int BarCode, int Wert, unsigned char *Parameter_Screen)
 
 } // void DrawBar(...)
 
+/* ----------------------------------------------------------------------
+ * This function writes the description of an item into the item description
+ * string.
+ * ---------------------------------------------------------------------- */
+void 
+GiveItemDescription ( char* ItemDescText , item* CurItem )
+{
+  char linebuf[1000];
+
+  // --------------------
+  // First we print out the item name.  That's simple.
+  //
+  strcpy( ItemDescText , ItemMap[ CurItem->type ].ItemName );
+  strcat( ItemDescText , "\n" );
+
+  // --------------------
+  // If it's a weapon, then we give out the damage value of that weapon as well
+  //
+  if ( ItemMap[ CurItem->type ].item_can_be_installed_in_weapon_slot )
+    {
+      sprintf( linebuf , "Damage=%d" , ItemMap[ CurItem->type ].item_gun_damage );
+      strcat( ItemDescText , linebuf );
+    }
+
+  // --------------------
+  // If it's a drive, then we give out the maxspeed and accel values as well
+  //
+  if ( ItemMap[ CurItem->type ].item_can_be_installed_in_drive_slot )
+    {
+      sprintf( linebuf , "Maxspeed=%2.1f Accel=%2.1f" , 
+	       ItemMap[ CurItem->type ].item_drive_maxspeed ,
+	       ItemMap[ CurItem->type ].item_drive_accel );
+      strcat( ItemDescText , linebuf );
+    }
+
+}; // void GiveItemDescription ( char* ItemDescText , item* CurItem )
+
+
 /* -----------------------------------------------------------------
  * This function updates the top status bar. 
  * To save framerate on slow machines however it will only work
@@ -152,10 +191,10 @@ DisplayBanner (const char* left, const char* right,  int flags )
   int i;
   finepoint MapPositionOfMouse;
 
-  Banner_Text_Rect.x = 170;
-  Banner_Text_Rect.y = 10;
-  Banner_Text_Rect.w = 300;
-  Banner_Text_Rect.h = 50;
+  Banner_Text_Rect.x = BANNER_TEXT_RECT_X;
+  Banner_Text_Rect.y = BANNER_TEXT_RECT_Y;
+  Banner_Text_Rect.w = BANNER_TEXT_RECT_W;
+  Banner_Text_Rect.h = BANNER_TEXT_RECT_H;
 
   //--------------------
   // For testing purposes is bluntly insert the new banner element here:
@@ -167,15 +206,14 @@ DisplayBanner (const char* left, const char* right,  int flags )
 
   //--------------------
   // In case some item is held in hand by the player, the situation is simple:
-  // we merele need to draw this items description into the description field and
+  // we merely need to draw this items description into the description field and
   // that's it.
   //
   if ( GetHeldItemCode() != (-1) )
     {
       strcpy( ItemDescText , ItemMap[ GetHeldItemCode() ].ItemName );
-      // DisplayText ( ItemMap[ GetHeldItemCode() ].ItemName ,
-      // Banner_Text_Rect.x , Banner_Text_Rect.y , &Banner_Text_Rect );
     }
+
   //--------------------
   // in the other case however, that no item is currently held in hand, we need to
   // work a little more:  we need to find out if the cursor is currently over some
@@ -198,45 +236,43 @@ DisplayBanner (const char* left, const char* right,  int flags )
 	  // DebugPrintf( 0 , "\nInv Index targeted: %d." , InvIndex );
 	  if ( InvIndex != (-1) )
 	    {
-	      strcpy( ItemDescText , ItemMap[ Me.Inventory[ InvIndex ].type ].ItemName );
-	      // DisplayText ( ItemMap[ Me.Inventory[ InvIndex ].type ].ItemName ,
-	      // Banner_Text_Rect.x , Banner_Text_Rect.y , &Banner_Text_Rect );
+	      GiveItemDescription ( ItemDescText , &(Me.Inventory[ InvIndex ]) );
 	    }
 	} 
       else if ( CursorIsInWeaponRect ( CurPos.x , CurPos.y ) )
 	{
-	  if ( Druidmap [ Me.type ].weapon_item )
-	    strcpy( ItemDescText , ItemMap[ Druidmap[ Me.type ].weapon_item ].ItemName );
+	  if ( Druidmap [ Me.type ].weapon_item.type )
+	    GiveItemDescription ( ItemDescText , &(Druidmap[ Me.type ].weapon_item) );
 	}
       else if ( CursorIsInDriveRect ( CurPos.x , CurPos.y ) )
 	{
-	  if ( Druidmap [ Me.type ].drive_item )
-	    strcpy( ItemDescText , ItemMap[ Druidmap[ Me.type ].drive_item ].ItemName );
+	  if ( Druidmap [ Me.type ].drive_item.type )
+	   GiveItemDescription ( ItemDescText , &(Druidmap[ Me.type ].drive_item) );
 	}
       else if ( CursorIsInShieldRect ( CurPos.x , CurPos.y ) )
 	{
-	  if ( Druidmap [ Me.type ].shield_item )
-	    strcpy( ItemDescText , ItemMap[ Druidmap[ Me.type ].shield_item ].ItemName );
+	   if ( Druidmap [ Me.type ].shield_item.type )
+	   GiveItemDescription ( ItemDescText , &(Druidmap[ Me.type ].shield_item) );
 	}
       else if ( CursorIsInArmourRect ( CurPos.x , CurPos.y ) )
 	{
-	  if ( Druidmap [ Me.type ].armour_item )
-	    strcpy( ItemDescText , ItemMap[ Druidmap[ Me.type ].armour_item ].ItemName );
+	   if ( Druidmap [ Me.type ].armour_item.type )
+	   GiveItemDescription ( ItemDescText , &(Druidmap[ Me.type ].armour_item) );
 	}
       else if ( CursorIsInAux1Rect ( CurPos.x , CurPos.y ) )
 	{
-	  if ( Druidmap [ Me.type ].aux1_item )
-	    strcpy( ItemDescText , ItemMap[ Druidmap[ Me.type ].aux1_item ].ItemName );
+	   if ( Druidmap [ Me.type ].aux1_item.type )
+	   GiveItemDescription ( ItemDescText , &(Druidmap[ Me.type ].aux1_item) );
 	}
       else if ( CursorIsInAux2Rect ( CurPos.x , CurPos.y ) )
 	{
-	  if ( Druidmap [ Me.type ].aux2_item )
-	    strcpy( ItemDescText , ItemMap[ Druidmap[ Me.type ].aux2_item ].ItemName );
+	   if ( Druidmap [ Me.type ].aux2_item.type )
+	   GiveItemDescription ( ItemDescText , &(Druidmap[ Me.type ].aux2_item) );
 	}
       else if ( CursorIsInSpecialRect ( CurPos.x , CurPos.y ) )
 	{
-	  if ( Druidmap [ Me.type ].special_item )
-	    strcpy( ItemDescText , ItemMap[ Druidmap[ Me.type ].special_item ].ItemName );
+	   if ( Druidmap [ Me.type ].special_item.type )
+	   GiveItemDescription ( ItemDescText , &(Druidmap[ Me.type ].special_item) );
 	}
 
     } // if nothing is 'held in hand' && inventory-screen visible
@@ -254,12 +290,13 @@ DisplayBanner (const char* left, const char* right,  int flags )
 	  if ( ( fabsf( MapPositionOfMouse.x - CurLevel->ItemList[ i ].pos.x ) < 0.5 ) &&
 	       ( fabsf( MapPositionOfMouse.y - CurLevel->ItemList[ i ].pos.y ) < 0.5 ) )
 	    {
-	      strcpy( ItemDescText , ItemMap[ CurLevel->ItemList[ i ].type ].ItemName );
+	      GiveItemDescription ( ItemDescText , &(CurLevel->ItemList[ i ]) );
+	      // strcpy( ItemDescText , ItemMap[ CurLevel->ItemList[ i ].type ].ItemName );
 	    }
 	}
     }
 
-
+  SetCurrentFont( FPS_Display_BFont );
   DisplayText ( ItemDescText , 
 		Banner_Text_Rect.x , Banner_Text_Rect.y , &Banner_Text_Rect );
 

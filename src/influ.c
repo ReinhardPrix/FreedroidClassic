@@ -160,7 +160,7 @@ AutoFireBullet (void)
 
   if (Me.firewait)
     return;
-  Me.firewait = ItemMap[ Druidmap[Me.type].weapon_item ].item_gun_recharging_time;
+  Me.firewait = ItemMap[ Druidmap[Me.type].weapon_item.type ].item_gun_recharging_time;
 
   // find out the number of the shots target
   for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
@@ -195,7 +195,7 @@ AutoFireBullet (void)
       return;
     }
 
-  guntype = ItemMap[ Druidmap[Me.type].weapon_item ].item_gun_bullet_image_type;
+  guntype = ItemMap[ Druidmap[Me.type].weapon_item.type ].item_gun_bullet_image_type;
 
   Fire_Bullet_Sound ( guntype );
 
@@ -223,7 +223,7 @@ AutoFireBullet (void)
 	break;
     }
 
-  bullet_speed = ItemMap[ Druidmap[ Me.type ].weapon_item ].item_gun_speed;
+  bullet_speed = ItemMap[ Druidmap[ Me.type ].weapon_item.type ].item_gun_speed;
   // determine the direction of the shot
   if (abs (xdist) > abs (ydist))
     {
@@ -264,7 +264,7 @@ AutoFireBullet (void)
   AllBullets[j].type = guntype;
 
   // set the type of bullet according to the gun used by the shooter
-  AllBullets[j].damage = ItemMap[ Druidmap[ Me.type].weapon_item ].item_gun_damage;
+  AllBullets[j].damage = ItemMap[ Druidmap[ Me.type].weapon_item.type ].item_gun_damage;
 
 } // void AutoFireBullet(void)
 
@@ -279,7 +279,7 @@ void
 MoveInfluence (void)
 {
   // float accel = Druidmap[Me.type].accel;
-  float accel = ItemMap[ Druidmap[Me.type].drive_item ].item_drive_accel;
+  float accel = ItemMap[ Druidmap[Me.type].drive_item.type ].item_drive_accel;
   float planned_step_x;
   float planned_step_y;
   static float TransferCounter = 0;
@@ -460,7 +460,7 @@ NoInfluBulletOnWay (void)
   if (PlusExtentionsOn)
     return TRUE;
 
-  if ( ! ItemMap[ Druidmap[Me.type].weapon_item ].item_gun_oneshotonly )
+  if ( ! ItemMap[ Druidmap[Me.type].weapon_item.type ].item_gun_oneshotonly )
     return TRUE;
 
   for (i = 0; i < MAXBULLETS; i++)
@@ -531,7 +531,7 @@ CheckInfluenceWallCollisions (void)
   int EastWestAxisBlocked=FALSE;
   int H_Door_Sliding_Active = FALSE;
   // double maxspeed = Druidmap[Me.type].maxspeed;
-  double maxspeed = ItemMap [ Druidmap[Me.type].drive_item ].item_drive_maxspeed ;
+  double maxspeed = ItemMap [ Druidmap[Me.type].drive_item.type ].item_drive_maxspeed ;
 
   int crashx = FALSE, crashy = FALSE;	/* Merker wo kollidiert wurde */
 
@@ -809,7 +809,7 @@ void
 AdjustSpeed (void)
 {
   // double maxspeed = Druidmap[Me.type].maxspeed;
-  double maxspeed = ItemMap [ Druidmap[Me.type].drive_item ].item_drive_maxspeed ;
+  double maxspeed = ItemMap [ Druidmap[Me.type].drive_item.type ].item_drive_maxspeed ;
   if (Me.speed.x > maxspeed)
     Me.speed.x = maxspeed;
   if (Me.speed.x < (-maxspeed))
@@ -1015,8 +1015,8 @@ FireBullet (void)
 {
   int i = 0;
   Bullet CurBullet = NULL;	/* das Bullet, um das es jetzt geht */
-  int guntype = ItemMap[ Druidmap[Me.type].weapon_item ].item_gun_bullet_image_type;	/* which gun do we have ? */
-  double BulletSpeed = ItemMap[ Druidmap[ Me.type ].weapon_item ].item_gun_speed;
+  int guntype = ItemMap[ Druidmap[Me.type].weapon_item.type ].item_gun_bullet_image_type;	/* which gun do we have ? */
+  double BulletSpeed = ItemMap[ Druidmap[ Me.type ].weapon_item.type ].item_gun_speed;
   double speed_norm;
   finepoint speed;
   int max_val;
@@ -1024,7 +1024,7 @@ FireBullet (void)
   /* Wenn noch kein Schuss loesbar ist sofort zurueck */
   if (Me.firewait > 0)
     return;
-  Me.firewait = ItemMap[ Druidmap[ Me.type ].weapon_item ].item_gun_recharging_time;
+  Me.firewait = ItemMap[ Druidmap[ Me.type ].weapon_item.type ].item_gun_recharging_time;
 
   /* Geraeusch eines geloesten Schusses fabrizieren */
   Fire_Bullet_Sound ( guntype );
@@ -1046,7 +1046,7 @@ FireBullet (void)
   CurBullet->pos.x = Me.pos.x;
   CurBullet->pos.y = Me.pos.y;
   CurBullet->type = guntype;
-  CurBullet->damage = ItemMap[ Druidmap[ Me.type].weapon_item ].item_gun_damage;
+  CurBullet->damage = ItemMap[ Druidmap[ Me.type].weapon_item.type ].item_gun_damage;
   CurBullet->mine = TRUE;
   CurBullet->owner = -1;
 

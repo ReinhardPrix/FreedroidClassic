@@ -957,36 +957,36 @@ Get_Robot_Data ( void* DataPointer )
 			   &Druidmap[RobotIndex].sensor3, EndOfDataPointer );
 
       // Now we read in the armament of this droid type
-      ReadValueFromString( RobotPointer , ARMAMENT_BEGIN_STRING , "%d" , 
-			   &Druidmap[RobotIndex].armament , EndOfDataPointer );
+      // ReadValueFromString( RobotPointer , ARMAMENT_BEGIN_STRING , "%d" , 
+      // &Druidmap[RobotIndex].armament , EndOfDataPointer );
 
       // Now we read in the drive item of this droid type
       ReadValueFromString( RobotPointer , DRIVE_ITEM_BEGIN_STRING , "%d" , 
-			   &Druidmap[RobotIndex].drive_item , EndOfDataPointer );
+			   &Druidmap[RobotIndex].drive_item.type , EndOfDataPointer );
 
       // Now we read in the weapon item of this droid type
       ReadValueFromString( RobotPointer , WEAPON_ITEM_BEGIN_STRING , "%d" , 
-			   &Druidmap[RobotIndex].weapon_item , EndOfDataPointer );
+			   &Druidmap[RobotIndex].weapon_item.type , EndOfDataPointer );
 
       // Now we read in the shield item of this droid type
       ReadValueFromString( RobotPointer , SHIELD_ITEM_BEGIN_STRING , "%d" , 
-			   &Druidmap[RobotIndex].shield_item , EndOfDataPointer );
+			   &Druidmap[RobotIndex].shield_item.type , EndOfDataPointer );
 
       // Now we read in the armour item of this droid type
       ReadValueFromString( RobotPointer , ARMOUR_ITEM_BEGIN_STRING , "%d" , 
-			   &Druidmap[RobotIndex].armour_item , EndOfDataPointer );
+			   &Druidmap[RobotIndex].armour_item.type , EndOfDataPointer );
 
       // Now we read in the aux1 item of this droid type
       ReadValueFromString( RobotPointer , AUX1_ITEM_BEGIN_STRING , "%d" , 
-			   &Druidmap[RobotIndex].aux1_item , EndOfDataPointer );
+			   &Druidmap[RobotIndex].aux1_item.type , EndOfDataPointer );
 
       // Now we read in the aux2 item of this droid type
       ReadValueFromString( RobotPointer , AUX2_ITEM_BEGIN_STRING , "%d" , 
-			   &Druidmap[RobotIndex].aux2_item , EndOfDataPointer );
+			   &Druidmap[RobotIndex].aux2_item.type , EndOfDataPointer );
 
       // Now we read in the special item of this droid type
       ReadValueFromString( RobotPointer , SPECIAL_ITEM_BEGIN_STRING , "%d" , 
-			   &Druidmap[RobotIndex].special_item , EndOfDataPointer );
+			   &Druidmap[RobotIndex].special_item.type , EndOfDataPointer );
 
       // Now we read in the AdvancedFighing flag of this droid type
       ReadValueFromString( RobotPointer , ADVANCED_FIGHTING_BEGIN_STRING , "%d" , 

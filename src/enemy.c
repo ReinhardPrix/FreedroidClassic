@@ -505,7 +505,7 @@ MoveThisRobotThowardsHisWaypoint ( int EnemyNum )
   WpList = CurLevel->AllWaypoints;
   nextwp = ThisRobot->nextwaypoint;
   // maxspeed = Druidmap[ ThisRobot->type ].maxspeed;
-  maxspeed = ItemMap[ Druidmap[ ThisRobot->type ].drive_item ].item_drive_maxspeed;
+  maxspeed = ItemMap[ Druidmap[ ThisRobot->type ].drive_item.type ].item_drive_maxspeed;
 
   nextwp_pos.x = WpList[nextwp].x;
   nextwp_pos.y = WpList[nextwp].y;
@@ -606,7 +606,7 @@ Persue_Given_Course ( int EnemyNum )
   WpList = CurLevel->AllWaypoints;
   nextwp = ThisRobot->nextwaypoint;
   // maxspeed = Druidmap[ ThisRobot->type ].maxspeed;
-  maxspeed = ItemMap[ Druidmap[ ThisRobot->type ].drive_item ].item_drive_maxspeed;
+  maxspeed = ItemMap[ Druidmap[ ThisRobot->type ].drive_item.type ].item_drive_maxspeed;
   nextwp_pos.x = WpList[nextwp].x;
   nextwp_pos.y = WpList[nextwp].y;
 
@@ -655,7 +655,7 @@ SelectNextWaypointAdvanced ( int EnemyNum )
   WpList = CurLevel->AllWaypoints;
   nextwp = ThisRobot->nextwaypoint;
   // maxspeed = Druidmap[ ThisRobot->type ].maxspeed;
-  maxspeed = ItemMap[ Druidmap[ ThisRobot->type ].drive_item ].item_drive_maxspeed;
+  maxspeed = ItemMap[ Druidmap[ ThisRobot->type ].drive_item.type ].item_drive_maxspeed;
   nextwp_pos.x = WpList[nextwp].x;
   nextwp_pos.y = WpList[nextwp].y;
 
@@ -860,7 +860,7 @@ AttackInfluence (int enemynum)
   float xdist, ydist;
   float dist2;
   Enemy ThisRobot=&AllEnemys[ enemynum ];
-  double bullet_speed = ItemMap[ Druidmap[ ThisRobot->type ].weapon_item ].item_gun_speed;
+  double bullet_speed = ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].item_gun_speed;
 
   //--------------------
   // At first, we check for a lot of cases in which we do not
@@ -907,7 +907,7 @@ AttackInfluence (int enemynum)
   if (ydist == 0) ydist = 0.01;
 
   // if odds are good, make a shot at your target
-  guntype = ItemMap[ Druidmap[ThisRobot->type].weapon_item ].item_gun_bullet_image_type;
+  guntype = ItemMap[ Druidmap[ThisRobot->type].weapon_item.type ].item_gun_bullet_image_type;
 
   dist2 = sqrt(xdist * xdist + ydist * ydist);
 
@@ -981,13 +981,13 @@ AttackInfluence (int enemynum)
 
       /* Dem Bullettype entsprechend lange warten vor naechstem Schuss */
 
-      ThisRobot->firewait = ItemMap [ Druidmap[ThisRobot->type].weapon_item ].item_gun_recharging_time ;
+      ThisRobot->firewait = ItemMap [ Druidmap[ThisRobot->type].weapon_item.type ].item_gun_recharging_time ;
 
       /* Bullettype gemaes dem ueblichen guntype fuer den robottyp setzen */
       AllBullets[j].type = guntype;
 
       // Now we set the damage of this bullet to the correct value
-      AllBullets[j].damage = ItemMap[ Druidmap[ ThisRobot->type ].weapon_item ].item_gun_damage;
+      AllBullets[j].damage = ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].item_gun_damage;
 
       return;
     }
@@ -1077,13 +1077,13 @@ AttackInfluence (int enemynum)
 
       /* Dem Bullettype entsprechend lange warten vor naechstem Schuss */
 
-      ThisRobot->firewait = ItemMap [ Druidmap[ThisRobot->type].weapon_item ].item_gun_recharging_time ;
+      ThisRobot->firewait = ItemMap [ Druidmap[ThisRobot->type].weapon_item.type ].item_gun_recharging_time ;
 
       /* Bullettype gemaess dem ueblichen guntype fuer den robottyp setzen */
       AllBullets[j].type = guntype;
 
       // Now we set the damage of this bullet to the correct value
-      AllBullets[j].damage = ItemMap[ Druidmap[ ThisRobot->type ].weapon_item ].item_gun_damage;
+      AllBullets[j].damage = ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].item_gun_damage;
 
       //}	/* if */
 
