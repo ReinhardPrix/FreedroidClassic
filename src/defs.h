@@ -209,8 +209,12 @@ enum _sounds
   FIRE_BULLET_PULSE_SOUND,
   FIRE_BULLET_SINGLE_PULSE_SOUND,
   FIRE_BULLET_MILITARY_SOUND,
-  FIRE_BULLET_FLASH_SOUND
+  FIRE_BULLET_FLASH_SOUND,
+  CRY_SOUND
 };
+
+#define CRY_SOUND_INTERVAL 2
+
 
 // **********************************************************************
 

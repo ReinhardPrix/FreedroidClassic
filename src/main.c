@@ -171,6 +171,7 @@ UpdateCountersForThisFrame (void)
 
   LastGotIntoBlastSound += Frame_Time ();
   LastRefreshSound += Frame_Time ();
+  Me.LastCrysoundTime += Frame_Time ();
 
   if ( SkipAFewFrames ) SkipAFewFrames--;
 

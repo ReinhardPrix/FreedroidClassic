@@ -140,6 +140,7 @@ typedef struct
   missiontarget mission;         // What must be done to fullfill this mission?
   float MissionTimeElapsed;
   int Marker;                   // In case you've taken over a marked droid, this will contain the marker
+  float LastCrysoundTime;
 }
 influence_t, *Influence_t;
 

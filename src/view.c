@@ -328,8 +328,18 @@ PutInfluence ( int x, int y)
 #define alpha_offset 80
   if ( ( (Me.energy*100/Druidmap[Me.type].maxenergy) <= BLINKENERGY) && ( x == (-1) ) ) 
     {
+
+      // In case of low energy, do the fading effect...
       alpha_value = (int) ( ( 256 - alpha_offset ) * fabsf( 0.5 * Me.MissionTimeElapsed - floor( 0.5 * Me.MissionTimeElapsed ) - 0.5 ) + ( alpha_offset ) );
       SDL_SetAlpha( ne_blocks , SDL_SRCALPHA , alpha_value );
+
+      // ... and also maybe start a new cry-sound
+
+      if ( Me.LastCrysoundTime > CRY_SOUND_INTERVAL )
+	{
+	  Me.LastCrysoundTime = 0;
+	  CrySound();
+	}
     }
 
 
