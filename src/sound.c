@@ -906,14 +906,14 @@ Mission_Status_Change_Sound (void)
 void
 SwitchBackgroundMusicTo ( char* filename_raw_parameter )
 {
+#ifndef HAVE_LIBSDL_MIXER
+  return;
+#else
+
   static int MOD_Music_Channel = -1;
   char* fpath;
   char filename_raw[5000];
   static char PreviousFileParameter[5000]="NONE_AT_ALL";
-
-#ifndef HAVE_LIBSDL_MIXER
-  return;
-#else
 
   if ( !sound_on ) return;
 
