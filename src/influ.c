@@ -38,7 +38,6 @@
 #include "global.h"
 #include "proto.h"
 
-// #define NOSTRAIGHTDIR 112
 #define TIMETILLNEXTBULLET 14
 
 #define REFRESH_ENERGY		3
@@ -163,26 +162,6 @@ AutoFireBullet (void)
 
   // determine the angle of the shot
   AllBullets[j].angle= - ( atan2 ( AllBullets[j].speed.y , AllBullets[j].speed.x ) * 180 / M_PI + 90 );
-
-  /*
-  AllBullets[j].phase = NOSTRAIGHTDIR;
-  if ((abs (xdist) * 2 / 3) / abs (ydist))
-    AllBullets[j].phase = RECHTS;
-  if ((abs (ydist) * 2 / 3) / abs (xdist))
-    AllBullets[j].phase = OBEN;
-  if (AllBullets[j].phase == NOSTRAIGHTDIR)
-    {
-      if (((xdist < 0) && (ydist < 0)) || ((xdist > 0) && (ydist > 0)))
-	AllBullets[j].phase = RECHTSUNTEN;
-      else
-	AllBullets[j].phase = RECHTSOBEN;
-    }
-
-  if (AllBullets[j].speed.x == 0)
-    AllBullets[j].phase = OBEN;
-  if (AllBullets[j].speed.y == 0)
-    AllBullets[j].phase = RECHTS;
-  */
 
   // start the bullet in the center of the droid fireing
   AllBullets[j].pos.x = Me.pos.x;

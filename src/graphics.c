@@ -614,7 +614,7 @@ InitPictures (void)
      create the internal storage for all our blocks 
   */
   tmp = SDL_CreateRGBSurface( SDL_SRCALPHA , NUM_MAP_BLOCKS*Block_Width,
-			     12*Block_Height, ne_bpp, 0, 0, 0, 0);
+			     15*Block_Height, ne_bpp, 0, 0, 0, 0);
   tmp2 = SDL_CreateRGBSurface(0, SCREENBREITE, SCREENHOEHE, ne_bpp, 0, 0, 0, 0);
   if ( (tmp == NULL) || (tmp2 == NULL) )
     {

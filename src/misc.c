@@ -843,7 +843,7 @@ ExecuteEvent ( int EventNumber )
 	}
     }
 
-  // Does the trigger make the influencer say something?
+  // Does the defined action make the influencer say something?
   if ( AllTriggeredActions[ EventNumber ].InfluencerSaySomething != -1 )
     {
       //YES. So we need to output his sentence as usual
@@ -851,7 +851,6 @@ ExecuteEvent ( int EventNumber )
       Me.TextToBeDisplayed=AllTriggeredActions[ EventNumber ].InfluencerSayText;
     }
 
-  AllTriggeredActions[0].ChangeMapLocation.y=0;
 
 }; // void ExecuteEvent ( int EventNumber )
 

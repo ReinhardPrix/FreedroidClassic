@@ -40,10 +40,6 @@
 #include "global.h"
 #include "proto.h"
 
-
-
-#define NOSTRAIGHTDIR 255
-
 #define COL_SPEED		3	/* wegstossen bei enemy-enemy collision */
 
 #define FIREDIST2	8 // according to the intro, the laser can be "focused on any target
