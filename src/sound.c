@@ -625,7 +625,7 @@ Not_Enough_Power_Sound ( void )
   now = SDL_GetTicks() ;
   if ( SDL_GetTicks() - PreviousSound >= 1.15 * 1000 )
     {
-      play_sample_using_WAV_cache( "../effects/tux_ingame_comments/Not_Enough_Power_Sound_0.wav", FALSE , FALSE );
+      play_sample_using_WAV_cache( "../effects/tux_ingame_comments/Not_Enough_Power_Sound_0.ogg", FALSE , FALSE );
       PreviousSound = now;
     }
 }; // void Not_Enough_Power_Sound ( void )
@@ -647,7 +647,7 @@ Not_Enough_Dist_Sound ( void )
   now = SDL_GetTicks() ;
   if ( SDL_GetTicks() - PreviousSound >= 1.15 * 1000 )
     {
-      play_sample_using_WAV_cache( "../effects/tux_ingame_comments/Not_Enough_Dist_Sound_0.wav", FALSE , FALSE );
+      play_sample_using_WAV_cache( "../effects/tux_ingame_comments/Not_Enough_Dist_Sound_0.ogg", FALSE , FALSE );
       PreviousSound = now;
     }
 }
@@ -670,7 +670,7 @@ Not_Enough_Mana_Sound ( void )
   now = SDL_GetTicks() ;
   if ( SDL_GetTicks() - PreviousNotEnoughForceSound >= 1.15 * 1000 )
     {
-      play_sample_using_WAV_cache( "../effects/tux_ingame_comments/Not_Enough_Mana_0.wav", FALSE , FALSE );
+      play_sample_using_WAV_cache( "../effects/tux_ingame_comments/Not_Enough_Mana_0.ogg", FALSE , FALSE );
       PreviousNotEnoughForceSound = now;
     }
 
@@ -916,13 +916,13 @@ CantCarrySound (void)
       switch( MyRandom( 2 ) )
 	{
 	case 0 :
-	  play_sample_using_WAV_cache ( "../effects/tux_ingame_comments/ICantCarryAnyMore_Sound_0.wav", FALSE , FALSE );
+	  play_sample_using_WAV_cache ( "../effects/tux_ingame_comments/ICantCarryAnyMore_Sound_0.ogg", FALSE , FALSE );
 	  break;
 	case 1 :
-	  play_sample_using_WAV_cache ( "../effects/tux_ingame_comments/ICantCarryAnyMore_Sound_1.wav", FALSE , FALSE );
+	  play_sample_using_WAV_cache ( "../effects/tux_ingame_comments/ICantCarryAnyMore_Sound_1.ogg", FALSE , FALSE );
 	  break;
 	case 2 :
-	  play_sample_using_WAV_cache ( "../effects/tux_ingame_comments/ICantCarryAnyMore_Sound_2.wav", FALSE , FALSE );
+	  play_sample_using_WAV_cache ( "../effects/tux_ingame_comments/ICantCarryAnyMore_Sound_2.ogg", FALSE , FALSE );
 	  break;
 	default:
 	  break;
