@@ -182,8 +182,8 @@ Beginning of new chat dialog for character="Chandra"
 New Option Nr=0 
 OptionText=" Hi!  I'm new here. " 
 OptionSample="Tux_Hi_Im_New_0.wav"
-Subtitle="Welcome to this camp! I am Chandra. I care about visitors."
-ReplySample="Chandra_Welcome_To_This_0.wav"
+Subtitle="Welcome to this camp!  I am Chandra.  I am the local sage in this old town."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
 ChangeOption=2 ChangeToValue=1
@@ -191,12 +191,12 @@ ChangeOption=2 ChangeToValue=1
 New Option Nr=1 
 OptionText=" What can you tell me about this place? " 
 OptionSample="Tux_Chandra_What_Can_Place_0.wav"
-Subtitle="This place is owned by refugees like me, who hide from the MS. "
-ReplySample="Chandra_This_Place_Consists_0.wav"
-Subtitle="Formerly this was a camp of the resistance movement. "
-ReplySample="Chandra_Formerly_This_Was_0.wav"
-Subtitle="But they have left long ago. "
-ReplySample="Chandra_But_They_Have_0.wav"
+Subtitle="This place is the camp of those, that were here before the Great Assault. "
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Many have arrived since, trying to find some place safe from the bots."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Some of them have joined this camp.  Others have founded their own settlements."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=4 ChangeToValue=1
 
@@ -204,74 +204,80 @@ New Option Nr=2
 OptionText=" Where can I get better equipment? " 
 OptionSample="Tux_Chandra_Where_Can_I_0.wav"
 Subtitle=" You might try it at the shop. "
-ReplySample="Chandra_You_Might_Try_0.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle=" Mrs. Stone always has a good range of equipment there. "
-ReplySample="Chandra_They_Have_All_0.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 
 New Option Nr=4 
 OptionText=" What can you tell me about the MS? " 
 OptionSample="Tux_Chandra_What_Can_MS_0.wav"
-Subtitle=" Currently, the MS is the most powerful organisation in the universe. "
-ReplySample="Chandra_Currently_The_MS_0.wav"
-Subtitle=" But maybe not for very much longer:  A rebellion has started."
-ReplySample="Chandra_But_Maybe_Not_0.wav"
-Subtitle=" The rebels have small supporters throughout the universe."
-ReplySample="Chandra_The_Rebels_Have_0.wav"
-Subtitle=" The number of the rebels has grown a lot in the last decade."
-ReplySample="Chandra_The_Number_Of_0.wav"
-Subtitle=" It might be that in the end they can win their struggle for freedom."
-ReplySample="Chandra_It_Might_Well_0.wav"
+Subtitle=" While the MS was in power, it must have had the most powerful hold of the galaxy ever. "
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle=" But after the Great Assault, hardly any member of their organisation will have survived."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle=" They had facilities for various purposes on many planets, sometimes even very remote ones."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle=" Alas, also on this planet there is such a facility.  It is guarded by the most deadly bots."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle=" And God only knows what horrible dangers are lurking therein."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=1
 ChangeOption=6 ChangeToValue=1
-ChangeOption=7 ChangeToValue=1
+ChangeOption=7 ChangeToValue=0
 ChangeOption=4 ChangeToValue=0
 
-
-New Option Nr=5 OptionText=" Wouldn't that just mean replacing one evil with another?" 
+New Option Nr=5 OptionText="Why haven't you joined with the other settlements to fight the bots?" 
 OptionSample="Tux_Chandra_Wouldnt_That_Mean_0.wav"
-Subtitle="By no means.  The rebellion is carried on by individuals. "
-ReplySample="Chandra_By_No_Means_0.wav"
-Subtitle="They are neither bound to some central authority nor are they paid in any way."
-ReplySample="Chandra_They_Are_Neither_0.wav"
-Subtitle="They work together for thier common goal of freedom."
-ReplySample="Chandra_They_Work_Together_0.wav"
-Subtitle="They will not change their goal to support the power and will of only one."
-ReplySample="Chandra_They_Will_Not_0.wav"
+Subtitle="Fighting the bots is not so easy.  They are numerous and some of them are hard to defeat. "
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Also the other camps have different goals than we have."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="While we seek to make life acceptable in here, they weave great plans that are futile."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="As far as I know, they even try to break the barrier, that originates from the MS facility."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="But with their makeshift devices, this is not even worth trying."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=0
 
-New Option Nr=6 OptionText=" I want to get in contact with the MS." 
-OptionSample="Tux_Chandra_I_Want_To_0.wav"
-Subtitle="This will be difficult.  As a non-member of the MS, their machines will attack you."
-ReplySample="Chandra_This_Will_Be_0.wav"
-Subtitle="But maybe there is a way.  I just don't know."
-ReplySample="Chandra_But_Maybe_There_0.wav"
+New Option Nr=6 OptionText=" I want to leave this place." 
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="You mean this town?  The gate is on the south side of the city.  You can't miss it."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=6 ChangeToValue=0
+ChangeOption=7 ChangeToValue=1
 
-New Option Nr=7 OptionText=" I would like to get in contact with the Rebellion." 
-OptionSample="Tux_Chandra_I_Would_Like_0.wav"
-Subtitle="This should be possible.  But you must gain their trust first."
-ReplySample="Chandra_This_Should_Be_0.wav"
+New Option Nr=7 OptionText="No, I meant I would like to leave this planet."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Sorry, but that's impossible.  Noone can get away from this place.  Ever."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=7 ChangeToValue=0
 ChangeOption=8 ChangeToValue=1
 
-New Option Nr=8 OptionText=" How can I gain their trust?" 
-OptionSample="Tux_Chandra_How_Can_I_0.wav"
-Subtitle="Ask around! "
-ReplySample="Chandra_Ask_Around_Ill_0.wav"
-Subtitle="I'm sure help is needed at all ends of town! "
-ReplySample="Chandra_Im_Sure_Help_0.wav"
-Subtitle="If you do well on them, I'll hear that and I'll count it in your favour."
-ReplySample="Chandra_If_You_Do_0.wav"
-Subtitle="If you think you've done enough quests, come back here and I'll see what I can do."
-ReplySample="Chandra_If_You_Think_0.wav"
+New Option Nr=8 OptionText="I will find a way to get away from here." 
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="If you think so.  I wish you the best of luck."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="But remember there is a big force field cloaking this whole colony."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="It prevents any life form from geting out, even teleporting out."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="This force field originates from the former MS facility on this planet."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="It was part of their effort to keep their affairs totally secret, so no employee or anyone can get away."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="And now that the MS facility is full of hostile bots, noone can turn off the force field."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="And that's the reason why noone, human or linarian, can ever get out of this place, I'm sorry."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=8 ChangeToValue=0
 ChangeOption=9 ChangeToValue=1
 
-New Option Nr=9 OptionText=" Have I done enough quests yet for my meeting with the Resistance?" 
-OptionSample="Tux_Chandra_Have_I_Done_0.wav"
-Subtitle=" No, not yet.  Get going.  There's still a lot of things to do for you."
-ReplySample="Chandra_No_Not_Really_0.wav"
+New Option Nr=9 OptionText="Do you think they would let me join the guard of this town?" 
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Unlikely.  You'd have to establish a reputation before and demonstrate that you can fix things."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 
 New Option Nr=99 OptionText=" END "
 OptionSample="Tux_Goodbye_0.wav"
@@ -1211,7 +1217,7 @@ Subtitle="These are called the builders."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="The other is a fanatic sect, claiming to have some form of spiritual contact to the alien race that once populated the universe."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="You best talk to them yourselves, if you're really interested in their weird theories."
+Subtitle="You best talk to them yourself, if you're really interested in their weird theories."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=15 ChangeToValue=0 ; // allow to guess on the great assault
 ChangeOption=16 ChangeToValue=1 ; // allow to ask for the reason for help

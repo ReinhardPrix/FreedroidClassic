@@ -776,7 +776,7 @@ S ... Take a Screenshot and save it to disk
 P ... Turn on/off Pause Mode
 Tab ... Turn on/off automap display
 Escape ... Pops up the main menu
-F1-F9 Quick-Switch to spells 1-9
+F1-F9 Quick-Switch to skill/ability/spells 1-9
 1-9 ... Quick-Use items from the quick-inventory.  (That's those small items 
 placed on the very bottom of the inventory.)
 
@@ -810,6 +810,10 @@ time.  They can however still attack at their normal speed.
 Poison bolt:  Poisons an enemy (turning green then), delivering some damage 
 over time.  Note that damage duration AND damage effect are cumulative, 
 (i.e. damage done will raise with the square of the poison bolt hits taken).
+
+There are many more skills and spells available in Freedroid.  
+Consult the in-game explanation page from the skills screen for more information.
+Also, to avoid opening unwanted dialogs with people, it might be good to switch so some other skill while moving along, so as not to accidentially start chatting with everyone along the way.
 
     Press Fire to Play
 

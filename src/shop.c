@@ -592,7 +592,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	}
 
       sprintf ( GoldString , "Your Gold: %d." , (int) Me [ 0 ] . Gold );
-      PutStringFont ( Screen , Menu_BFont, 10, 110, GoldString );
+      PutStringFont ( Screen , Menu_BFont, 10, 141, GoldString );
 
       SDL_Flip( Screen );
 
