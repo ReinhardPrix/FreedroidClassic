@@ -363,6 +363,7 @@ enum _sounds
 #define TUX_SWING_PHASES 	7
 #define TUX_BREATHE_PHASES 	5
 #define TUX_GOT_HIT_PHASES      3
+#define TUX_MODELS              3
 
 #define WAIT_LEVELEMPTY		18	// time in frames to wait before removing the light in an empty level
 

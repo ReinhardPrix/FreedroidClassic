@@ -808,6 +808,7 @@ FireBullet (void)
 	  if ( fabsf ( AllEnemys[i].pos.x - Weapon_Target_Vector.x ) > 0.5 ) continue;
 	  if ( fabsf ( AllEnemys[i].pos.y - Weapon_Target_Vector.y ) > 0.5 ) continue;
 	  AllEnemys[ i ].energy -= Me.base_damage + MyRandom( Me.damage_modifier );
+	  AllEnemys[ i ].firewait = 2 * ItemMap [ Druidmap [ AllEnemys[ i ].type ].weapon_item.type ].item_gun_recharging_time ;
 	}
       
       //--------------------

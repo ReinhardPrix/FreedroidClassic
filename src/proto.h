@@ -127,6 +127,7 @@ EXTERN void Load_SkillIcon_Surfaces (void);
 EXTERN void Load_MapBlock_Surfaces (void);
 EXTERN void Load_Enemy_Surfaces (void);
 EXTERN void Load_Influencer_Surfaces (void);
+EXTERN void Update_Tux_Working_Copy ( void );
 EXTERN void Load_Tux_Surfaces( void );
 EXTERN void Load_Digit_Surfaces (void);
 EXTERN void Load_Bullet_Surfaces (void);

@@ -564,10 +564,16 @@ CheckBulletCollisions (int num)
 		  if ( MyRandom ( 100 ) < CurBullet->to_hit + Druidmap [ AllEnemys[ i ].type ].getting_hit_modifier )
 		    {
 		      CurBullet->total_miss_hit[ i ] = HIT;
-		      // The enemy who was hit, loses some energy, depending on the bullet
-		      // ITEMS AllEnemys[i].energy -= Bulletmap[CurBullet->type].damage;
+
+		      //--------------------
+		      // The enemy who was hit, loses some energy, depending on the bullet, and 
+		      // also gets stunned from the hit, which only means that the enemy can't
+		      // fire immediately now but takes double normal time for the next shot.
+		      //
 		      AllEnemys[i].energy -= CurBullet->damage;
 		      GotHitSound ();
+		      AllEnemys[i].firewait = 
+			2 * ItemMap [ Druidmap [ AllEnemys[ i ].type ].weapon_item.type ].item_gun_recharging_time ;
 		      
 		      // Maybe he will also stop doing his fixed routine and return to normal
 		      // operation as well

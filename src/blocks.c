@@ -384,6 +384,36 @@ Load_Influencer_Surfaces( void )
  * the alternative tux character.
  * ---------------------------------------------------------------------- */
 void 
+Update_Tux_Working_Copy ( void )
+{
+  int i;
+
+  if ( Me.weapon_item.type == (-1) ) return;
+
+  if ( ItemMap [ Me.weapon_item.type ].item_gun_angle_change == 0 )
+    {
+      for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
+	{
+	  SDL_FreeSurface ( TuxWorkingCopy[i] );
+	  TuxWorkingCopy [ i ] = SDL_DisplayFormatAlpha( TuxMotionArchetypes[2][i] );
+	}
+    }
+  else
+    {
+      for ( i = 0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i ++ )
+	{
+	  SDL_FreeSurface ( TuxWorkingCopy[i] );
+	  TuxWorkingCopy [ i ] = SDL_DisplayFormatAlpha( TuxMotionArchetypes[0][i] );
+	}
+    }
+}; // void Update_Tux_Working_Copy ( void )
+
+
+/* ----------------------------------------------------------------------
+ * This function loads the all tux surfaces, that are needed to display 
+ * the alternative tux character.
+ * ---------------------------------------------------------------------- */
+void 
 Load_Tux_Surfaces( void )
 {
   SDL_Surface* Whole_Image;
@@ -392,35 +422,40 @@ Load_Tux_Surfaces( void )
   SDL_Rect Target;
   int i;
   char *fpath;
+  int j;
 
 #define TUX_WIDTH 130
 #define TUX_HEIGHT 130
+
 
   fpath = find_file ( NE_DROID_BLOCK_FILE , GRAPHICS_DIR, TRUE);
 
   Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
   SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
 
-  for ( i=0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i++ )
+  for ( j = 0 ; j < TUX_MODELS ; j ++ )
     {
-      tmp_surf = SDL_CreateRGBSurface( 0 , TUX_WIDTH , TUX_HEIGHT , vid_bpp , 0 , 0 , 0 , 0 );
-      SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
-      TuxSurfacePointer[i] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
-      SDL_SetColorKey( TuxSurfacePointer[i] , 0 , 0 ); // this should clear any color key in the dest surface
-      // Now we can copy the image Information
-      Source.x=i*( TUX_WIDTH + 2 );
-      Source.y=2*(Block_Width+2);
-      Source.w=TUX_WIDTH;
-      Source.h=TUX_HEIGHT;
-      Target.x=0;
-      Target.y=0;
-      Target.w=Block_Width;
-      Target.h=Block_Height;
-      SDL_BlitSurface ( Whole_Image , &Source , TuxSurfacePointer[i] , &Target );
-      SDL_SetAlpha( TuxSurfacePointer[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-      SDL_FreeSurface( tmp_surf );
+      for ( i=0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i++ )
+	{
+	  tmp_surf = SDL_CreateRGBSurface( 0 , TUX_WIDTH , TUX_HEIGHT , vid_bpp , 0 , 0 , 0 , 0 );
+	  SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
+	  TuxMotionArchetypes[j][i] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
+	  SDL_SetColorKey( TuxMotionArchetypes[j][i] , 0 , 0 ); // this should clear any color key in the dest surface
+	  // Now we can copy the image Information
+	  Source.x=i*( TUX_WIDTH  + 2 );
+	  Source.y=( 1 + j ) * ( TUX_HEIGHT + 2 ) ;
+	  Source.w=TUX_WIDTH;
+	  Source.h=TUX_HEIGHT;
+	  Target.x=0;
+	  Target.y=0;
+	  Target.w=Block_Width;
+	  Target.h=Block_Height;
+	  SDL_BlitSurface ( Whole_Image , &Source , TuxMotionArchetypes[j][i] , &Target );
+	  SDL_SetAlpha( TuxMotionArchetypes[j][i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+	  if ( j == 0 ) TuxWorkingCopy[i] = SDL_DisplayFormatAlpha( TuxMotionArchetypes[j][i] );
+	  SDL_FreeSurface( tmp_surf );
+	}
     }
-  
 
 
   SDL_FreeSurface( Whole_Image );
