@@ -1331,8 +1331,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 32
 ** Start of new item specification subsection **
 Item name="Dancing laser blades (don't hurt yourself!)"
-Position_X=579
-Position_Y=381
+Position_X=529
+Position_Y=392
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
@@ -3971,8 +3971,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 98
 ** Start of new item specification subsection **
 Item name="Identification Script"
-Position_X=679
-Position_Y=391
+Position_X=310
+Position_Y=173
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
@@ -4011,8 +4011,8 @@ Item as gun: weapon requires both hands="yes"
 // Item No. 99
 ** Start of new item specification subsection **
 Item name="Evacuation script"
-Position_X=579
-Position_Y=391
+Position_X=311
+Position_Y=205
 Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
