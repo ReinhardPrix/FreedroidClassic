@@ -44,6 +44,14 @@ Minimum number of Random Droids=0
 Allowed Type of Random Droid for this level: 476
 
 //--------------------
+// These are the north gate guards.
+//
+SpecialForce: Type=GUA X=10 Y=3 Fixed=0 Marker=14 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="OldTownNorthGateGuard2" RushTux="no" DialogSectionToUse="StandardOldTownGateGuard" ShortLabel="Old Town Gate Guard"
+SpecialForce: Type=GUA X=10 Y=3 Fixed=0 Marker=14 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="OldTownNorthGateGuard1" RushTux="no" DialogSectionToUse="StandardOldTownGateGuard" ShortLabel="Old Town Gate Guard"
+SpecialForce: Type=GUA X=10 Y=3 Fixed=0 Marker=14 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="OldTownNorthGateGuardLeader" RushTux="yes" DialogSectionToUse="OldTownGateGuardLeader" ShortLabel="Old Town Gate Guard"
+
+
+//--------------------
 // This is Bender, who suffers from brain enlargement pills...
 //
 SpecialForce: Type=GUA X=35 Y=18 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="BenderStartGameSquare" RushTux="no" DialogSectionToUse="Bender" ShortLabel="Bender -- Strongest man in town"
@@ -397,9 +405,10 @@ Maximum number of Random Droids=0
 Minimum number of Random Droids=0
 Allowed Type of Random Droid for this level: 123
 
-SpecialForce: Type=GUA X=10 Y=3 Fixed=0 Marker=14 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="OldTownGateGuard2StartGameSquare" RushTux="no" DialogSectionToUse="StandardOldTownGateGuard" ShortLabel="Old Town Gate Guard"
-SpecialForce: Type=GUA X=10 Y=3 Fixed=0 Marker=14 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="OldTownGateGuard1StartGameSquare" RushTux="no" DialogSectionToUse="StandardOldTownGateGuard" ShortLabel="Old Town Gate Guard"
-SpecialForce: Type=GUA X=10 Y=3 Fixed=0 Marker=14 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="OldTownGateGuardStartGameSquare" RushTux="yes" DialogSectionToUse="OldTownGateGuardLeader" ShortLabel="Old Town Gate Guard"
+S**pecialForce: Type=GUA X=10 Y=3 Fixed=0 Marker=14 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="OldTownGateGuard2StartGameSquare" RushTux="no" DialogSectionToUse="StandardOldTownGateGuard" ShortLabel="Old Town Gate Guard"
+S**pecialForce: Type=GUA X=10 Y=3 Fixed=0 Marker=14 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="OldTownGateGuard1StartGameSquare" RushTux="no" DialogSectionToUse="StandardOldTownGateGuard" ShortLabel="Old Town Gate Guard"
+S**pecialForce: Type=GUA X=10 Y=3 Fixed=0 Marker=14 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="OldTownGateGuardStartGameSquare" RushTux="yes" DialogSectionToUse="OldTownGateGuardLeader" ShortLabel="Old Town Gate Guard"
+
 
 SpecialForce: Type=329 X=38 Y=11 Fixed=0 Marker=15 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="329RoadTroll1StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Road Troll Bot"
 SpecialForce: Type=329 X=38 Y=11 Fixed=0 Marker=15 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="329RoadTroll2StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Road Troll Bot"
