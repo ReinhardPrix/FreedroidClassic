@@ -630,10 +630,6 @@ PaintConsoleMenu (void)
 
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
 
-  /* Userfenster faerben */
-  // SetUserfenster (KON_BG_COLOR, Outline320x200);
-  // SetUserfenster ( 208 );
-
   strcpy (MenuText, "Unit type ");
   strcat (MenuText, Druidmap[Me.type].druidname);
   strcat (MenuText, " - ");
@@ -683,8 +679,6 @@ GreatDruidShow (void)
 
   // wait for user to release the space, that has been pressed for transfer-mode
   while (SpacePressed ()) ;
-
-  SetUserfenster ( KON_BG_COLOR );
 
   for (Infodroid = Me.type; Infodroid > -1;)
     {

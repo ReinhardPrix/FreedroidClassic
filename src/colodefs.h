@@ -37,9 +37,6 @@
 #define ALLLEVELCOLORS 7
 #define MAXBULCOL 5
 
-// Die Flashcolors sind willk"urlich gew"ahlt
-#define FLASHCOLOR1 60
-#define FLASHCOLOR2 70
 #define INFLUENCEFARBWERT 253
 #define BULLETCOLOR 254
 #define TRANSPARENTCOLOR 255
