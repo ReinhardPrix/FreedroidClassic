@@ -63,6 +63,7 @@ EXTERN void CheckIfMissionIsComplete (void);
 #else
 #define EXTERN extern
 #endif
+EXTERN void CheckForJumpThresholds ( int PlayerNum );
 EXTERN int isignf (float);
 EXTERN void InitInfluPositionHistory( int PlayerNum );
 EXTERN float GetInfluPositionHistoryX( int Index );
@@ -440,7 +441,7 @@ EXTERN void DebugPrintf (int db_level, char *fmt, ...);
 EXTERN void gotoxy (int, int);
 EXTERN int MyRandom (int);
 EXTERN void Armageddon (void);
-EXTERN void Teleport ( int LNum , int X , int Y , int PlayerNum , int Shuffling ) ;
+EXTERN void Teleport ( int LNum , float X , float Y , int PlayerNum , int Shuffling ) ;
 EXTERN int SaveGameConfig (void);
 EXTERN int LoadGameConfig (void);
 EXTERN void InsertNewMessage (void);

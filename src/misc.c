@@ -1038,7 +1038,7 @@ Armageddon (void)
  * ship.  THIS CAN BE A POSITION ON A DIFFERENT LEVEL.
  * ---------------------------------------------------------------------- */
 void
-Teleport (int LNum, int X, int Y, int PlayerNum , int Shuffling )
+Teleport (int LNum, float X, float Y, int PlayerNum , int Shuffling )
 {
   int curLevel = LNum;
   int array_num = 0;
@@ -1096,7 +1096,7 @@ This is a severe error.  Please report the bug to the Freedroid team\n\
 as always best via e-mail to freedroid-discussion@lists.sourceforge.net\n\
 Thanks a lot.\n\
 \n\
-The given target location was: lev=%d x=%d y=%d.\n\
+The given target location was: lev=%d x=%f y=%f.\n\
 Freedroid will terminate now to draw attention to the problem...\n\
 ----------------------------------------------------------------------\n" ,
 LNum , X , Y );

@@ -53,6 +53,56 @@ enum
     JUMP_TARGET_WEST ,
     QUIT_THRESHOLD_EDITOR_POSITION
   };
+
+/* ----------------------------------------------------------------------
+ * When we connect two maps smoothly together, we want an area in both
+ * maps, that is really synchronized with the other level we connect to.
+ * But this isn't a task that should be done manually.  We rather make
+ * a function, that does this synchronisation work, overwriting the 
+ * higher level number with the data from the lower level number.
+ * ---------------------------------------------------------------------- */
+void
+ExportLevelInterface ( int LevelNum )
+{
+
+  int AreaWidth;
+  int AreaHeight;
+  int TargetLevel;
+  int x , y;
+  int TargetStartLine;
+
+  TargetLevel = curShip.AllLevels [ LevelNum ] -> jump_target_north ;
+
+  if ( TargetLevel == (-1) ) return;
+
+  //--------------------
+  // First we find out the dimensions of the area we want to copy
+  //
+  if ( curShip . AllLevels [ LevelNum ] -> xlen < curShip . AllLevels [ TargetLevel ] -> xlen )
+    AreaWidth = curShip . AllLevels [ LevelNum ] -> xlen;
+  else 
+    AreaWidth = curShip . AllLevels [ TargetLevel ] -> xlen ;
+
+  AreaHeight = curShip . AllLevels [ LevelNum ] -> jump_threshold_north;
+ 
+  if ( AreaHeight <= 0 ) return;
+
+  TargetStartLine = ( curShip . AllLevels [ TargetLevel ] -> ylen ) - 1 ;
+
+  //--------------------
+  // Now we can start to make the copy...
+  //
+  for ( x = 0 ; x < AreaWidth ; x ++ )
+    {
+      for ( y = 0 ; y < AreaHeight ; y ++ )
+	{
+	  memcpy ( curShip . AllLevels [ TargetLevel ] -> map[ TargetStartLine - y ] ,
+		   curShip . AllLevels [ LevelNum ] -> map[ AreaHeight-1 - y ] ,
+		   AreaWidth ) ;
+	}
+    }
+
+}; // void SynchronizeLevelInterfaces ( void )
       
 /* ----------------------------------------------------------------------
  *
@@ -65,6 +115,7 @@ SetLevelInterfaces ( void )
   int Weiter = FALSE;
   int MenuPosition = 1 ;
   char Options [ 20 ] [ 500 ] ;
+  int i;
 
   while (!Weiter)
     {
@@ -227,6 +278,15 @@ SetLevelInterfaces ( void )
 	    }
 	} // if LeftPressed || RightPressed
       
+    }
+
+  //--------------------
+  // Now that we leave the threshold editor again, we may well already
+  // synchronize the maps again (for now)
+  //
+  for ( i = 0 ; i < curShip.num_levels ; i ++ )
+    {
+      ExportLevelInterface ( i );
     }
   
 }; // void SetLevelInterfaces ( void )

@@ -68,6 +68,76 @@ int CurrentZeroRingIndex=0;
 #define MAXIMAL_STEP_SIZE ( 7.0/20 )
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+CheckForJumpThresholds ( int PlayerNum )
+{
+  int JumpTarget;
+  float JumpThreshold;
+  float SafetyBonus = 0.0 ;
+  float JumpStartThreshold;
+
+  //--------------------
+  // First we check for the northern threshold
+  //
+  JumpThreshold = curShip.AllLevels [ Me [ PlayerNum ] . pos . z ] -> jump_threshold_north ;
+  JumpStartThreshold = JumpThreshold / 2.0 ;
+
+  if ( Me [ PlayerNum ] . pos . y < JumpStartThreshold )
+    {
+
+      JumpTarget = curShip.AllLevels [ Me [ PlayerNum ] . pos . z ] -> jump_target_north ; 
+
+      DebugPrintf ( 0 , "\nJUMP TO THE NORTH CONSIDERED!!" );
+      DebugPrintf ( 0 , "\nJumpStartThreshold was: %f. " , JumpStartThreshold ); 
+
+      if ( JumpTarget <= -1 ) return;
+
+      Teleport ( JumpTarget , 
+		 Me [ PlayerNum ] . pos . x ,
+		 curShip.AllLevels [ JumpTarget ] -> ylen - 0 - JumpStartThreshold - SafetyBonus ,
+		 PlayerNum , 
+		 FALSE ) ; 
+
+      return;
+
+    }
+
+  //--------------------
+  // Now we check for the southern threshold
+  //
+  JumpThreshold = curShip.AllLevels [ Me [ PlayerNum ] . pos . z ] -> jump_threshold_south ;
+  JumpStartThreshold = JumpThreshold / 2.0 ;
+
+  if ( Me [ PlayerNum ] . pos . y > 
+       curShip.AllLevels [ Me [ PlayerNum ] . pos . z ] -> ylen - 
+       JumpStartThreshold ) 
+    {
+
+      JumpTarget = curShip.AllLevels [ Me [ PlayerNum ] . pos . z ] -> jump_target_south ; 
+
+      DebugPrintf ( 0 , "\nJUMP TO THE SOUTH CONSIDERED!!" );
+      DebugPrintf ( 0 , "\nJumpStartThreshold was: %f. " , JumpStartThreshold ); 
+      DebugPrintf ( 0 , "\nCurrent Level Y-len: %d. " , curShip.AllLevels [ Me [ PlayerNum ] . pos . z ] -> ylen );
+      DebugPrintf ( 0 , "\nCurrent Y-pos: %f. " , Me [ PlayerNum ] . pos . y );
+      DebugPrintf ( 0 , "\nResult of if-computation: %f. " , curShip.AllLevels [ Me [ PlayerNum ] . pos . z ] -> ylen - 
+       JumpStartThreshold );
+
+      if ( JumpTarget <= -1 ) return;
+
+      Teleport ( JumpTarget , 
+		 Me [ PlayerNum ] . pos . x ,
+		 0 + ( ( JumpThreshold + 0 ) / 2.0 + SafetyBonus ),
+		 PlayerNum , 
+		 FALSE ) ; 
+      return;
+    }
+
+}; // void CheckForJumpThresholds ( int PlayerNum )
+
+/* ----------------------------------------------------------------------
  * This function initializes the influencers position history, which is
  * a ring buffer and is needed for throwing the influencer back (only one
  * or two positions would be needed for that) and for influencers followers

@@ -159,6 +159,9 @@ main (int argc, char *const argv[])
 
 	  CheckInfluenceEnemyCollision ();
 
+	  CheckForJumpThresholds( 0  ); // maybe the Tux is so close to the border of one map, that
+	                                // he should be put into the next one already, to link them smoothly
+
 	  if (CurLevel->empty == 2)
 	    {
 	      LevelGrauFaerben ();
