@@ -1100,6 +1100,95 @@ EncodeStatementsOfThisLevel ( char* LevelMem , Level Lev )
 }; // void EncodeStatementsOfThisLevel ( char* LevelMem , Level Lev )
 
 /* ----------------------------------------------------------------------
+ * This function adds the statement data of this level to the chunk of 
+ * data that will be written out to a file later.
+ * ---------------------------------------------------------------------- */
+void
+EncodeCodepanelsOfThisLevel ( char* LevelMem , Level Lev )
+{
+  int i;
+  char linebuf[5000];	  
+
+  //--------------------
+  // Now we write out a marker to announce the beginning of the codepanel data
+  //
+  strcat(LevelMem, CODEPANEL_SECTION_BEGIN_STRING);
+  strcat(LevelMem, "\n");
+
+  //--------------------
+  // Now we write out the bulk of codepanel infos
+  //
+  for ( i = 0 ; i < MAX_CODEPANELS_PER_LEVEL ; i ++ )
+    {
+      if ( Lev->CodepanelList[ i ].x == (-1) ) continue;
+
+      strcat( LevelMem , POSITION_X_OF_CODEPANEL_STRING );
+      sprintf( linebuf , "%d " , Lev->CodepanelList[ i ].x );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , POSITION_Y_OF_CODEPANEL_STRING );
+      sprintf( linebuf , "%d " , Lev->CodepanelList[ i ].y );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , CODEPANEL_CODE_ANNOUNCE_STRING );
+      strcat( LevelMem , Lev->CodepanelList[ i ].Secret_Code );
+      strcat( LevelMem , "\"\n" );
+    }
+
+  strcat(LevelMem, CODEPANEL_SECTION_END_STRING);
+  strcat(LevelMem, "\n");
+  
+}; // void EncodeCodepanelsOfThisLevel ( char* LevelMem , Level Lev )
+
+/* ----------------------------------------------------------------------
+ * This function adds the statement data of this level to the chunk of 
+ * data that will be written out to a file later.
+ * ---------------------------------------------------------------------- */
+void
+EncodeBigMapInsertsOfThisLevel ( char* LevelMem , Level Lev )
+{
+  int i;
+  char linebuf[5000];	  
+
+  //--------------------
+  // Now we write out a marker to announce the beginning of the 
+  // big graphics inserts for this map
+  //
+  strcat( LevelMem, BIG_MAP_INSERT_SECTION_BEGIN_STRING );
+  strcat( LevelMem, "\n" );
+
+  //--------------------
+  // Now we write out the bulk of big map insert infos
+  //
+  for ( i = 0 ; i < MAX_MAP_INSERTS_PER_LEVEL ; i ++ )
+    {
+
+      if ( Lev -> MapInsertList [ i ] . type <= ( -1 ) ) continue;
+
+      strcat( LevelMem , POSITION_X_OF_BIG_MAP_INSERT_STRING );
+      sprintf( linebuf , "%d " , Lev -> MapInsertList [ i ] . pos . x );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , POSITION_Y_OF_BIG_MAP_INSERT_STRING );
+      sprintf( linebuf , "%d " , Lev -> MapInsertList [ i ] . pos . y );
+      strcat( LevelMem , linebuf );
+
+      strcat( LevelMem , BIG_MAP_INSERT_TYPE_STRING );
+      sprintf( linebuf , "%d " , Lev -> MapInsertList [ i ] . type );
+      strcat( LevelMem , linebuf );
+      strcat( LevelMem, "\n" );
+
+    }
+
+  //--------------------
+  // Now we write out a marker to announce the end of the codepanel data
+  //
+  strcat(LevelMem, BIG_MAP_INSERT_SECTION_END_STRING);
+  strcat(LevelMem, "\n");
+
+}; // void EncodeBigMapInsertsOfThisLevel ( char* LevelMem , Level Lev )
+
+/* ----------------------------------------------------------------------
  *
  * ---------------------------------------------------------------------- */
 void
@@ -1324,74 +1413,9 @@ jump target west: %d\n",
 
   EncodeStatementsOfThisLevel ( LevelMem , Lev );
 
-  //--------------------
-  // Now we write out a marker to announce the beginning of the codepanel data
-  //
-  strcat(LevelMem, CODEPANEL_SECTION_BEGIN_STRING);
-  strcat(LevelMem, "\n");
+  EncodeCodepanelsOfThisLevel ( LevelMem , Lev );
 
-  //--------------------
-  // Now we write out the bulk of codepanel infos
-  //
-  for ( i = 0 ; i < MAX_CODEPANELS_PER_LEVEL ; i ++ )
-    {
-      if ( Lev->CodepanelList[ i ].x == (-1) ) continue;
-
-      strcat( LevelMem , POSITION_X_OF_CODEPANEL_STRING );
-      sprintf( linebuf , "%d " , Lev->CodepanelList[ i ].x );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , POSITION_Y_OF_CODEPANEL_STRING );
-      sprintf( linebuf , "%d " , Lev->CodepanelList[ i ].y );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , CODEPANEL_CODE_ANNOUNCE_STRING );
-      strcat( LevelMem , Lev->CodepanelList[ i ].Secret_Code );
-      strcat( LevelMem , "\"\n" );
-    }
-
-  //--------------------
-  // Now we write out a marker to announce the end of the codepanel data
-  //
-  strcat(LevelMem, CODEPANEL_SECTION_END_STRING);
-  strcat(LevelMem, "\n");
-  
-
-  //--------------------
-  // Now we write out a marker to announce the beginning of the 
-  // big graphics inserts for this map
-  //
-  strcat( LevelMem, BIG_MAP_INSERT_SECTION_BEGIN_STRING );
-  strcat( LevelMem, "\n" );
-
-  //--------------------
-  // Now we write out the bulk of big map insert infos
-  //
-  for ( i = 0 ; i < MAX_MAP_INSERTS_PER_LEVEL ; i ++ )
-    {
-
-      if ( Lev -> MapInsertList [ i ] . type <= ( -1 ) ) continue;
-
-      strcat( LevelMem , POSITION_X_OF_BIG_MAP_INSERT_STRING );
-      sprintf( linebuf , "%d " , Lev -> MapInsertList [ i ] . pos . x );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , POSITION_Y_OF_BIG_MAP_INSERT_STRING );
-      sprintf( linebuf , "%d " , Lev -> MapInsertList [ i ] . pos . y );
-      strcat( LevelMem , linebuf );
-
-      strcat( LevelMem , BIG_MAP_INSERT_TYPE_STRING );
-      sprintf( linebuf , "%d " , Lev -> MapInsertList [ i ] . type );
-      strcat( LevelMem , linebuf );
-      strcat( LevelMem, "\n" );
-
-    }
-
-  //--------------------
-  // Now we write out a marker to announce the end of the codepanel data
-  //
-  strcat(LevelMem, BIG_MAP_INSERT_SECTION_END_STRING);
-  strcat(LevelMem, "\n");
+  EncodeBigMapInsertsOfThisLevel ( LevelMem , Lev );
 
   EncodeItemSectionOfThisLevel ( LevelMem , Lev ) ;
 
