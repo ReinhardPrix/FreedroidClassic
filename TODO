@@ -1,7 +1,17 @@
 #-*- mode: text -*-
+
+Release TODO
+============
+- write some Changelog summary vs 0.8.4
+- write a HappyPenguin announcement
+- update INSTALL instructions
+- produce the .tar.gz archive and test it
+- playtest on all possible machines
+- ? produce binary .tgz, rpm's and .deb packages? (later)
+
+
 Bugs
 =======
-
 Preparing "final" release 1.0.0:
 ==> all bugs are to be considered release-critical now!
 
