@@ -687,6 +687,15 @@ There was an obstacle type given, that exceeds the number of\n\
     }
 
   //--------------------
+  // Maybe the children friendly version is desired.  Then the blood on the floor
+  // will not be blitted to the screen.
+  //
+  if ( ( ! GameConfig . show_blood ) && 
+       ( our_obstacle-> type >= ISO_BLOOD_1 ) && 
+       ( our_obstacle -> type <= ISO_BLOOD_8 ) ) 
+    return;
+
+  //--------------------
   // We blit the obstacle in question, but if we're in the level editor and this
   // obstacle has been marked, we apply a color filter to it.  Otherwise we blit
   // it just so.
