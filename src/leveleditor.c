@@ -3447,9 +3447,12 @@ LevelEditor(void)
 	      if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_FLOOR )
 		GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_OBSTACLES ;
 	      else if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_EDIT_OBSTACLES )
-		GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_FLOOR ;
+		{
+		  GameConfig . level_editor_edit_mode = LEVEL_EDITOR_EDIT_FLOOR ;
+		}
 	      while ( FPressed() );
 	      Highlight = 0 ;
+	      FirstBlock = 0 ;
 	    }
 
 	  //--------------------
