@@ -915,7 +915,7 @@ FireBullet ( int PlayerNum )
 	  AllEnemys[ i ] . energy -= Me [ PlayerNum ] .base_damage + MyRandom( Me [ PlayerNum ] .damage_modifier );
 	  AllEnemys[ i ] . firewait = 
 	    2 * ItemMap [ Druidmap [ AllEnemys [ i ] . type ] . weapon_item.type ] . item_gun_recharging_time ;
-	  PlayEnemyGotHitSound ( Druidmap [ AllEnemys [ i ] . type ] . Got_Hit_Sound_Type );
+	  PlayEnemyGotHitSound ( Druidmap [ AllEnemys [ i ] . type ] . got_hit_sound_type );
 	  DebugPrintf( 0 , "\n===> Fire Bullet hit something.... melee ... " ) ;
 	}
 

@@ -351,7 +351,7 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
       DisplayText( DescriptionText , 580 , 50 + ( 0 ) * 80 , NULL );
       for ( i = 0 ; i < NUMBER_OF_ITEMS_ON_ONE_SCREEN ; i++ )
 	{
-	  // DisplayText( ItemMap [ SalesList[ i ].type ].ItemName , 50 , 50 + i * 50 , NULL );
+	  // DisplayText( ItemMap [ SalesList[ i ].type ].item_name , 50 , 50 + i * 50 , NULL );
 	  // DisplayText( "\n" , -1 , -1, NULL );
 	  GiveItemDescription( DescriptionText , & ( SalesList[ i + MenuInListPosition ] ) , TRUE );
 	  DisplayText( DescriptionText , 50 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
@@ -495,7 +495,7 @@ Repair_Items( void )
       DisplayText( DescriptionText , 580 , 50 + ( 0 ) * 80 , NULL );
       for ( i = 0 ; ( (i < NUMBER_OF_ITEMS_ON_ONE_SCREEN) && (Repair_Pointer_List[ i + MenuInListPosition ] != NULL ) ) ; i++ )
 	{
-	  // DisplayText( ItemMap [ Repair_Pointer_List[ i + ]->type ].ItemName , 50 , 50 + i * 50 , NULL );
+	  // DisplayText( ItemMap [ Repair_Pointer_List[ i + ]->type ].item_name , 50 , 50 + i * 50 , NULL );
 	  // DisplayText( "\n" , -1 , -1, NULL );
 	  GiveItemDescription( DescriptionText , Repair_Pointer_List [ i + MenuInListPosition ] , TRUE );
 	  DisplayText( DescriptionText , 50 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
@@ -643,7 +643,7 @@ Identify_Items ( void )
       DisplayText( DescriptionText , 580 , 50 + ( 0 ) * 80 , NULL );
       for ( i = 0 ; ( (i < NUMBER_OF_ITEMS_ON_ONE_SCREEN) && (Identify_Pointer_List[ i + MenuInListPosition ] != NULL ) ) ; i++ )
 	{
-	  // DisplayText( ItemMap [ Identify_Pointer_List[ i + ]->type ].ItemName , 50 , 50 + i * 50 , NULL );
+	  // DisplayText( ItemMap [ Identify_Pointer_List[ i + ]->type ].item_name , 50 , 50 + i * 50 , NULL );
 	  // DisplayText( "\n" , -1 , -1, NULL );
 	  GiveItemDescription( DescriptionText , Identify_Pointer_List [ i + MenuInListPosition ] , TRUE );
 	  DisplayText( DescriptionText , 50 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
@@ -773,7 +773,7 @@ Sell_Items( int ForHealer )
       DisplayText( DescriptionText , 580 , 50 + ( 0 ) * 80 , NULL );
       for ( i = 0 ; ( (i < NUMBER_OF_ITEMS_ON_ONE_SCREEN) && (Sell_Pointer_List[ i + MenuInListPosition ] != NULL ) ) ; i++ )
 	{
-	  // DisplayText( ItemMap [ Repair_Pointer_List[ i + ]->type ].ItemName , 50 , 50 + i * 50 , NULL );
+	  // DisplayText( ItemMap [ Repair_Pointer_List[ i + ]->type ].item_name , 50 , 50 + i * 50 , NULL );
 	  // DisplayText( "\n" , -1 , -1, NULL );
 	  GiveItemDescription( DescriptionText , Sell_Pointer_List [ i + MenuInListPosition ] , TRUE );
 	  DisplayText( DescriptionText , 50 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );

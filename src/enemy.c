@@ -177,7 +177,7 @@ Enemy_Post_Bullethit_Behaviour( int EnemyNum )
   // we will establish a route to the next best console and set the droid to
   // persue this route and make his report.
   //
-  if ( Druidmap[ ThisRobot->type ].CallForHelpAfterSufferingHit ) 
+  if ( Druidmap[ ThisRobot->type ].call_for_help_after_getting_hit ) 
     {
       DebugPrintf( 1 , "\nEnemy_Post_Bullethit_Behaviour( int EnemyNum ): starting to set up special course.");
       
@@ -957,7 +957,7 @@ MoveThisEnemy( int EnemyNum )
   MoveThisRobotThowardsHisWaypoint( EnemyNum );
 
 
-  if ( Druidmap[ThisRobot->type].AdvancedBehaviour )
+  if ( Druidmap[ThisRobot->type].advanced_behaviour )
     SelectNextWaypointAdvanced( EnemyNum );
   else
     SelectNextWaypointClassical( EnemyNum );

@@ -107,7 +107,7 @@ Sorry...\n\
   if ( ( CurItem->prefix_code != (-1) ) && ( CurItem->is_identified ) )
     strcat( ItemDescText , PrefixList[ CurItem->prefix_code ].bonus_name );
 
-  strcat( ItemDescText , ItemMap[ CurItem->type ].ItemName );
+  strcat( ItemDescText , ItemMap[ CurItem->type ].item_name );
 
   if ( ( CurItem->suffix_code != (-1) ) && ( CurItem->is_identified ) )
     strcat( ItemDescText , SuffixList[ CurItem->suffix_code ].bonus_name );
@@ -599,7 +599,7 @@ ShowCurrentTextWindow ( void )
   if ( GetHeldItemPointer( ) != NULL )
     {
       if ( ItemUsageRequirementsMet( GetHeldItemPointer( ) , FALSE ) )
-	strcpy( ItemDescText , ItemMap[ GetHeldItemCode() ].ItemName );
+	strcpy( ItemDescText , ItemMap[ GetHeldItemCode() ].item_name );
       else 
 	{
 	  strcpy( ItemDescText , REQUIREMENTS_NOT_MET_TEXT  );
@@ -690,7 +690,7 @@ ShowCurrentTextWindow ( void )
 	       ( fabsf( MapPositionOfMouse.y - CurLevel->ItemList[ i ].pos.y ) < 0.5 ) )
 	    {
 	      GiveItemDescription ( ItemDescText , &(CurLevel->ItemList[ i ]) , FALSE );
-	      // strcpy( ItemDescText , ItemMap[ CurLevel->ItemList[ i ].type ].ItemName );
+	      // strcpy( ItemDescText , ItemMap[ CurLevel->ItemList[ i ].type ].item_name );
 	    }
 	}
       for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i++ )
@@ -703,7 +703,7 @@ ShowCurrentTextWindow ( void )
 	       ( fabsf( MapPositionOfMouse.y - AllEnemys[ i ].pos.y ) < 0.5 ) )
 	    {
 	      GiveDroidDescription ( ItemDescText , &( AllEnemys[ i ]) );
-	      // strcpy( ItemDescText , ItemMap[ CurLevel->ItemList[ i ].type ].ItemName );
+	      // strcpy( ItemDescText , ItemMap[ CurLevel->ItemList[ i ].type ].item_name );
 	    }
 	}
     }
