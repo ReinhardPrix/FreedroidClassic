@@ -1795,6 +1795,7 @@ InitFreedroid (void)
   GameConfig.Enemy_Aim_Text=TRUE;
   GameConfig.Influencer_Refresh_Text=TRUE;
   GameConfig.Influencer_Blast_Text=TRUE;
+  GameConfig.Theme_SubPath="lanzz_theme/";
 
   Init_Video ();
 

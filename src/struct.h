@@ -75,6 +75,7 @@ typedef struct
   int StandardEnemyMessages_On_Off;
   int StandardInfluencerMessages_On_Off;
   int Mouse_Input_Permitted;
+  char* Theme_SubPath;
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
 

@@ -25,6 +25,11 @@ Outstanding release-critical bugs (priority: high)
 Outstanding normal bugs (priority: normal)
 ------------------------------------------
 
+- (jp) There is still a lot of german in the code.  Since we are growing more and more 
+       international, that should be removed and better sooner than later, as well in
+       the comments as in the choice of some old variable names, which are from 
+       historical origin, long before I started using the internet at all.
+
 - (rp?) The space for droids in the takeover game is a bit scarce.  The bottom tends to
         get chopped off.  Takeover should be rearranged to display the droids without
         chopped off parts indepentend of which theme is loaded.

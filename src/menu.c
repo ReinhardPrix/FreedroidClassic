@@ -638,6 +638,7 @@ enum
     SET_SOUND_FX_VOLUME, 
     SET_GAMMA_CORRECTION, 
     SET_FULLSCREEN_FLAG, 
+    SET_THEME, 
     LEAVE_OPTIONS_MENU };
 
   // This is not some Debug Menu but an optically impressive 
@@ -673,11 +674,13 @@ enum
 		       "Gamma Correction: %1.2f", GameConfig.Current_Gamma_Correction );
       PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+3*FontHeight(Menu_BFont), 
 		       "Fullscreen Mode: %s", fullscreen_on ? "ON" : "OFF");
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+4*FontHeight(Menu_BFont), 
+		       "Theme: %s", GameConfig.Theme_SubPath );
       //PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+4*FontHeight(Menu_BFont),
       //"Show Framerate: %s", GameConfig.Draw_Framerate? "ON" : "OFF");
       //PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+5*FontHeight(Menu_BFont),
       //"Show Energy: %s", GameConfig.Draw_Energy? "ON" : "OFF");
-      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+4*FontHeight(Menu_BFont), 
+      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+5*FontHeight(Menu_BFont), 
 		       "Back");
 
       SDL_Flip( ne_screen );
@@ -755,6 +758,20 @@ enum
 	      while (EnterPressed() || SpacePressed() );
 	      SDL_WM_ToggleFullScreen (ne_screen);
 	      fullscreen_on = !fullscreen_on;
+	      break;
+	    case SET_THEME:
+	      while (EnterPressed() || SpacePressed() );
+	      if ( !strcmp ( GameConfig.Theme_SubPath , "default_theme/" ) )
+		{
+		  GameConfig.Theme_SubPath="lanzz_theme/";
+		}
+	      else
+		{
+		  GameConfig.Theme_SubPath="default_theme/";
+		}
+	      ReInitPictures();
+	      // SDL_WM_ToggleFullScreen (ne_screen);
+	      // fullscreen_on = !fullscreen_on;
 	      break;
 	    case LEAVE_OPTIONS_MENU:
 	      while (EnterPressed() || SpacePressed() );

@@ -359,6 +359,7 @@ InitPictures (void)
   SDL_Surface *tmp;
   SDL_Surface *tmp2;
   int block_line = 0;   /* keep track of line in ne_blocks we're writing */
+  char PicturePath[5000];
 
   Block_Width=INITIAL_BLOCK_WIDTH;
   Block_Height=INITIAL_BLOCK_HEIGHT;
@@ -417,31 +418,58 @@ InitPictures (void)
    * and initialise the block-coordinates 
    */
 
+  // We set the correct path to the tileset file for this theme and load it
+  strcpy( PicturePath , GRAPHICS_DIR );
+  strcat( PicturePath , GameConfig.Theme_SubPath );
+  strcat( PicturePath , NE_MAP_BLOCK_FILE );
+
+  DebugPrintf( 2 , "\nThe path to the tileset image is now : %s." , PicturePath );
+
   if ( CurLevel == NULL )
     ne_map_block =
-      ne_get_blocks (NE_MAP_BLOCK_FILE, NUM_MAP_BLOCKS, 9, 0, block_line++);
+      ne_get_blocks ( PicturePath , NUM_MAP_BLOCKS, 9, 0, block_line++);
   else 
     {
       SetLevelColor ( CurLevel->color );
       block_line++;
     }
 
+  // We set the correct path to the influencer/enemy image file for this theme and load it
+  strcpy( PicturePath , GRAPHICS_DIR );
+  strcat( PicturePath , GameConfig.Theme_SubPath );
+  strcat( PicturePath , NE_DROID_BLOCK_FILE );
+
   ne_influ_block =
-    ne_get_blocks (NE_DROID_BLOCK_FILE, DROID_PHASES, 0, 0, block_line++);
+    ne_get_blocks ( PicturePath , DROID_PHASES, 0, 0, block_line++);
 
   ne_droid_block =
-    ne_get_blocks (NE_DROID_BLOCK_FILE, DROID_PHASES, 0, 1, block_line++);
+    ne_get_blocks ( PicturePath , DROID_PHASES, 0, 1, block_line++);
+
+  // We set the correct path to the bullet file for this theme and load it
+  strcpy( PicturePath , GRAPHICS_DIR );
+  strcat( PicturePath , GameConfig.Theme_SubPath );
+  strcat( PicturePath , NE_BULLET_BLOCK_FILE );
 
   for (i=0; i < ALLBULLETTYPES; i++)
     Bulletmap[i].block =
-      ne_get_blocks (NE_BULLET_BLOCK_FILE, Bulletmap[i].phases, 0, i, block_line++);
+      ne_get_blocks ( PicturePath , Bulletmap[i].phases, 0, i, block_line++);
+
+  // We set the correct path to the blast file for this theme and load it
+  strcpy( PicturePath , GRAPHICS_DIR );
+  strcat( PicturePath , GameConfig.Theme_SubPath );
+  strcat( PicturePath , NE_BLAST_BLOCK_FILE );
 
   for (i=0; i < ALLBLASTTYPES; i++)
     Blastmap[i].block =
-      ne_get_blocks (NE_BLAST_BLOCK_FILE, Blastmap[i].phases, 0, i, block_line++);
+      ne_get_blocks ( PicturePath , Blastmap[i].phases, 0, i, block_line++);
+
+  // We set the correct path to the digits file for this theme and load it
+  strcpy( PicturePath , GRAPHICS_DIR );
+  strcat( PicturePath , GameConfig.Theme_SubPath );
+  strcat( PicturePath , NE_DIGIT_BLOCK_FILE );
 
   ne_digit_block =
-    ne_get_digit_blocks (NE_DIGIT_BLOCK_FILE, DIGITNUMBER, DIGITNUMBER, 0, block_line++);
+    ne_get_digit_blocks ( PicturePath , DIGITNUMBER, DIGITNUMBER, 0, block_line++);
 
   ne_rahmen_block = ne_get_rahmen_block ( NE_BANNER_BLOCK_FILE );
   
@@ -492,6 +520,9 @@ SetColors (int FirstCol, int PalAnz, char *PalPtr)
 void
 SetLevelColor (int ColorEntry)
 {
+  char PicturePath[5000];
+
+  /*
   char *ColoredBlockFiles[] = {
     GRAPHICS_DIR "ne_block_red.gif",
     GRAPHICS_DIR "ne_block_yellow.gif",
@@ -502,9 +533,25 @@ SetLevelColor (int ColorEntry)
     GRAPHICS_DIR "ne_block_dark.gif",
     NULL
   };
+  */
+
+  char *ColoredBlockFiles[] = {
+    "ne_block_red.gif",
+    "ne_block_yellow.gif",
+    "ne_block_green.gif",
+    "ne_block_gray.gif",
+    "ne_block_blue.gif",
+    "ne_block_turquoise.gif",
+    "ne_block_dark.gif",
+    NULL
+  };
+
+  strcpy( PicturePath , GRAPHICS_DIR );
+  strcat( PicturePath , GameConfig.Theme_SubPath );
+  strcat( PicturePath , ColoredBlockFiles[ ColorEntry ] );
 
   ne_map_block =
-    ne_get_blocks ( ColoredBlockFiles[ ColorEntry ] , NUM_MAP_BLOCKS, 9, 0, 0);
+    ne_get_blocks ( PicturePath , NUM_MAP_BLOCKS, 9, 0, 0);
 
   
 } // void SetLevelColor(int ColorEntry)
