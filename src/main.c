@@ -193,6 +193,9 @@ UpdateCountersForThisFrame (void)
 
   for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
     {
+
+      if (AllEnemys[i].Status == OUT ) continue;
+
       if (AllEnemys[i].warten > 0) 
 	{
 	  AllEnemys[i].warten -= Frame_Time() ;
@@ -203,6 +206,7 @@ UpdateCountersForThisFrame (void)
 	  AllEnemys[i].firewait -= Frame_Time() ;
 	  if (AllEnemys[i].firewait <= 0) AllEnemys[i].firewait=0;
 	}
+      AllEnemys[i].TextVisibleTime += Frame_Time();
     } // for (i=0;...
 
 } /* UpdateCountersForThisFrame() */

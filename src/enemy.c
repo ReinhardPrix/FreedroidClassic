@@ -99,6 +99,8 @@ ClearEnemys (void)
       AllEnemys[i].Parameter2 = 0;
       AllEnemys[i].Marker = 0;
       AllEnemys[i].Friendly = 0;
+      AllEnemys[i].TextVisibleTime = 0;
+      AllEnemys[i].TextToBeDisplayed = "";
     }
 
   return;

@@ -588,6 +588,23 @@ Sorry...\n\
 		       ne_screen, &TargetRectangle );
     }
 
+
+  //--------------------
+  // At this point we can assume, that the enemys has been blittet to the
+  // screen, whether it's a friendly enemy or not.
+  // 
+  // So now we can add some text the enemys says.  That might be fun.
+  //
+  if ( ( AllEnemys[Enum].TextVisibleTime < GameConfig.WantedTextVisibleTime ) )
+    {
+      PutStringFont ( ne_screen , FPS_Display_BFont , 
+		      User_Rect.x+(User_Rect.w/2) + Block_Width/3 + (AllEnemys[Enum].pos.x - Me.pos.x) * Block_Width , 
+		      User_Rect.y+(User_Rect.h/2) - Block_Height/2 + (AllEnemys[Enum].pos.y - Me.pos.y) * Block_Height ,  
+		      AllEnemys[Enum].TextToBeDisplayed );
+    }
+
+  
+
   DebugPrintf (2, "\nvoid PutEnemy(int Enum): ENEMY HAS BEEN PUT --> usual end of function reached.\n");
 
 }	// void PutEnemy(int Enum , int x , int y) 

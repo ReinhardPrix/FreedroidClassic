@@ -846,13 +846,17 @@ CheckInfluenceEnemyCollision (void)
 
 	    }			/* if first_collision */
 
-	  /* Den Feind kurz stoppen und dann umdrehen */
+	  // shortly stop this enemy, then send him back to previous waypoint
 	  if (!AllEnemys[i].warten)
 	    {
 	      AllEnemys[i].warten = WAIT_COLLISION;
 	      swap = AllEnemys[i].nextwaypoint;
 	      AllEnemys[i].nextwaypoint = AllEnemys[i].lastwaypoint;
 	      AllEnemys[i].lastwaypoint = swap;
+
+	      // Add some funny text!
+	      AllEnemys[i].TextToBeDisplayed="Hey, I'm from MS! Walk outa my way!";
+	      AllEnemys[i].TextVisibleTime=0;
 	    }
 	  BounceLoseEnergy (i);	/* someone loses energy ! */
 
@@ -1043,6 +1047,18 @@ RefreshInfluencer (void)
 	  RefreshSound ();
 	  LastRefreshSound = 0;
 	}
+
+      //
+      // since robots like the refresh, the influencer will also say so...
+      //
+      Me.TextToBeDisplayed="Ahhh, that feels so good...";
+      Me.TextVisibleTime=0;
+    }
+  else
+    {
+      // If nothing more is to be had, the influencer might also say so...
+      Me.TextToBeDisplayed="Oh, it seems that was if for now. ";
+      Me.TextVisibleTime=0;
     }
 
   return;
