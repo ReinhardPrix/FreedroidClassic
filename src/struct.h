@@ -201,8 +201,9 @@ typedef struct {
  * $Author$
  *
  * $Log$
- * Revision 1.2  1993/05/22 21:58:42  rp
- * added level struct
+ * Revision 1.3  1993/05/23 19:33:53  prix
+ * Sat May 22 18:21:16 1993: Soundblastertypen hizugefuegt
+ * Sat May 22 18:52:08 1993: Zuruecknahmen
  *
  * Revision 1.6  1993/09/30  17:57:20  prix
  * Fri Aug 06 14:56:25 1993: added first version of ship-struct
