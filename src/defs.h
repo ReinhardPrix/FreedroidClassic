@@ -36,6 +36,73 @@
 #include "colodefs.h"
 
 // **********************************************************************
+// Konstants about the size (and mem?) of pixmaps
+
+#define BLOCKBREITE 		64
+#define BLOCK_WIDTH		BLOCKBREITE
+
+#define BLOCKHOEHE 		64
+#define BLOCK_HEIGHT		BLOCKHOEHE
+#define BLOCKMEM  		BLOCKBREITE*BLOCKHOEHE
+
+#define DIGITLENGTH (9*2)
+#define DIGITHEIGHT (9*2)
+#define DIGITNUMBER 22
+#define DIGITMEM DIGITHEIGHT*DIGITLENGTH*DIGITNUMBER
+#define DIGIT_POS_X 5*2
+#define DIGIT_POS_Y 12*2
+
+#define SCREENBREITE 		(320*2)
+#define SCREENHOEHE 		(200*2)
+#define SCREENLEN		(320*2)
+#define SCREENHEIGHT		(200*2)
+
+#define VIEWBREITE 		9
+#define VIEWHOEHE 		4
+
+#define INTERNBREITE 		13
+#define INTERNHOEHE 		7
+
+#define USERFENSTERHOEHE 	VIEWHOEHE*BLOCKHOEHE
+#define USERFENSTERBREITE 	VIEWBREITE*BLOCKBREITE
+#define USERFENSTERPOSX 	( (SCREENBREITE-USERFENSTERBREITE) / 2)
+#define USERFENSTERPOSY 	( (SCREENHOEHE-USERFENSTERHOEHE) )
+#define USER_FENSTER_CENTER_X (USERFENSTERPOSX + (USERFENSTERBREITE/2))
+#define USER_FENSTER_CENTER_Y (USERFENSTERPOSY + (USERFENSTERHOEHE/2))
+
+#define DRUIDIMAGE_LENGTH       66
+#define DRUIDIMAGE_HEIGHT       90
+
+#define SCALE_FACTOR  2 /* This constant (please let it be an int!) defines how many times the
+			   actually displayed screen shall be bigger than the 320x200 window. */
+
+#define RAHMENBREITE		SCREENBREITE
+#define RAHMENHOEHE		32
+
+/* Startpos + lens of Rahmen-Texts */
+#define LEFTINFO_X 	12
+#define LEFTINFO_Y	8
+#define RIGHTINFO_X	242
+#define RIGHTINFO_Y	8
+#define LEFT_TEXT_LEN 10
+#define RIGHT_TEXT_LEN 6
+
+
+/* Menu in Konsole */
+#define MENUITEMHEIGHT 		77
+#define MENUITEMLENGTH 		50
+#define MENUITEMMEM 		(MENUITEMLENGTH * MENUITEMHEIGHT)
+
+/* Dimensionen der Druids (fuer NotPassable() and CheckEnemyCollsion() ) */
+#define DRUIDRADIUSX		(10*2)
+#define DRUIDRADIUSY		(10*2)
+#define DRUIDRADIUSXY	        (7*2)
+
+/* Dimension eines Blasts */
+#define BLASTRADIUS		((BLOCKBREITE/3)*2)
+
+// **********************************************************************
+//
 //
 
 #define SINGLE_PLAYER_MENU_POINTER_POS_X (BLOCKBREITE/2)
@@ -95,25 +162,22 @@ enum _sounds
 #define OK		0
 
 #ifdef NEW_ENGINE
-#define NE_MAP_BLOCK_FILE	"../graphics/block.bmp"
-#define NE_DROID_BLOCK_FILE	"../graphics/droids.bmp"
-#define NE_BULLET_BLOCK_FILE 	"../graphics/bullet.bmp"
-#define NE_BLAST_BLOCK_FILE 	"../graphics/blast.bmp"
+#define NE_MAP_BLOCK_FILE	"../graphics/ne_block.bmp"
+#define NE_DROID_BLOCK_FILE	"../graphics/ne_droids.bmp"
+#define NE_BULLET_BLOCK_FILE 	"../graphics/ne_bullet.bmp"
+#define NE_BLAST_BLOCK_FILE 	"../graphics/ne_blast.bmp"
 #define NE_FRAME_FILE		"../graphics/rahmen.bmp"
 #define NE_ELEVATOR_PIC_FILE    "../graphics/ship.bmp"
 #define NE_CONSOLEN_PIC_FILE    "../graphics/ne_cons.bmp" // "../graphics/console.bmp"
-#define NE_DIGIT_BLOCK_FILE     "../graphics/digits.bmp"
+#define NE_DIGIT_BLOCK_FILE     "../graphics/ne_digits.bmp"
 #define NE_RAHMEN_BLOCK_FILE    "../graphics/rahmen.bmp"
 #else
 
 #define PALBILD_PCX                "../graphics/palbild.bmp"
-#define BLOCKBILD1_PCX             "../graphics/block.bmp"
 #define TITELBILD1_PCX             "../graphics/newtitle.bmp"
 #define RAHMENBILD1_PCX            "../graphics/rahmen.bmp"
 #define BLASTBILD_PCX              "../graphics/blast.bmp"
 #define BULLETBILD_PCX             "../graphics/bullet.bmp"
-#define INFLUENCEBILD_PCX          "../graphics/influ.bmp"
-#define DIGITBILD_PCX              "../graphics/digits.bmp"
 #define ENEMYBILD_PCX              "../graphics/enemy.bmp"
 #define SEITENANSICHTBILD_PCX      "../graphics/ship.bmp"
 #define EL_BLOCKS_FILE_PCX         "../graphics/ship2.bmp"
@@ -129,50 +193,6 @@ enum _sounds
 #define SHIPNAME                   "../map/ship1"
 #define COLORFILE                  "../map/levels.col"
 
-/* Konstanten die unmittelbar die Hardware betreffen */
-#define SCREENADDRESS		0xa000	/* screen - data */
-#define RETRACEWARTEPERIODE 	5
-#define SCREENBREITE 		320
-#define SCREENHOEHE 		200
-#define SCREENLEN		320
-#define SCREENHEIGHT		200
-
-#define DRUIDIMAGE_LENGTH       66
-#define DRUIDIMAGE_HEIGHT       90
-
-#define SCALE_FACTOR  2 /* This constant (please let it be an int!) defines how many times the
-			   actually displayed screen shall be bigger than the 320x200 window. */
-
-
-/* Dimensionen von Bloecken und Bildern */
-
-// Little Digits to be filled into robot pictures.
-#define DIGITLENGTH 9
-#define DIGITHEIGHT 9
-#define DIGITNUMBER 22
-#define DIGITMEM DIGITHEIGHT*DIGITLENGTH*DIGITNUMBER
-#define NUMBEROFS 		5+12*BLOCKBREITE
-#define DIGIT_POS_X 5
-#define DIGIT_POS_Y 12
-
-/* Rahmen */
-#define RAHMENBREITE		SCREENBREITE
-#define RAHMENHOEHE		32
-
-/* Startpos + lens of Rahmen-Texts */
-#define LEFTINFO_X 	12
-#define LEFTINFO_Y	8
-#define RIGHTINFO_X	242
-#define RIGHTINFO_Y	8
-#define LEFT_TEXT_LEN 10
-#define RIGHT_TEXT_LEN 6
-
-
-/* Menu in Konsole */
-#define MENUITEMHEIGHT 		77
-#define MENUITEMLENGTH 		50
-#define MENUITEMMEM 		(MENUITEMLENGTH * MENUITEMHEIGHT)
-
 /* Ship-Elevator Picture */
 #define NUM_EL_BLOCKS		17
 
@@ -183,28 +203,6 @@ enum _sounds
 #define ELEVATOR_LEN		38
 #define ELEVATOR_HEIGHT		12
 
-/* Konstanten die die Ausmasse von maps und Arrays beeinflussen */
-#define BLOCKBREITE 		32
-#define BLOCK_WIDTH		BLOCKBREITE
-
-#define BLOCKHOEHE 		32
-#define BLOCK_HEIGHT		BLOCKHOEHE
-
-#define BLOCKMEM  		BLOCKBREITE*BLOCKHOEHE
-
-
-#define VIEWBREITE 		9
-#define VIEWHOEHE 		4
-
-#define INTERNBREITE 		13
-#define INTERNHOEHE 		7
-
-#define USERFENSTERHOEHE 	VIEWHOEHE*BLOCKHOEHE
-#define USERFENSTERBREITE 	VIEWBREITE*BLOCKBREITE
-#define USERFENSTERPOSX 	( (SCREENBREITE-USERFENSTERBREITE) / 2)
-#define USERFENSTERPOSY 	( (SCREENHOEHE-USERFENSTERHOEHE) )
-#define USER_FENSTER_CENTER_X (USERFENSTERPOSX + (USERFENSTERBREITE/2))
-#define USER_FENSTER_CENTER_Y (USERFENSTERPOSY + (USERFENSTERHOEHE/2))
 
 #define BULLETSPEEDINFLUENCE 	2
 
@@ -394,13 +392,6 @@ enum _status
 };
 
 
-/* Dimensionen der Druids (fuer NotPassable() and CheckEnemyCollsion() ) */
-#define DRUIDRADIUSX		10
-#define DRUIDRADIUSY		10
-#define DRUIDRADIUSXY	7
-
-/* Dimension eines Blasts */
-#define BLASTRADIUS		BLOCKBREITE/3
 #define BLASTDAMAGE		45
 #define BLASTPHASES_PER_SECOND  15
 

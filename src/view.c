@@ -208,9 +208,10 @@ Assemble_Combat_Picture (int mask)
     if (AllBlasts[i].type != OUT)
       PutBlast (i);
 
-#define INFRAME_SCALING
-  // #undef INFRAME_SCALING 
+  //#define INFRAME_SCALING
+   #undef INFRAME_SCALING 
 #ifdef INFRAME_SCALING
+
   ne_scaled_screen = zoomSurface ( ne_screen , 2 , 2 , 0);
 
   SDL_SetClipRect( ne_screen, NULL);
@@ -220,6 +221,7 @@ Assemble_Combat_Picture (int mask)
   SDL_Flip ( ne_screen );
 
   SDL_FreeSurface( ne_scaled_screen );
+
 #else
 
   SDL_Flip( ne_screen );
