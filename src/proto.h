@@ -200,6 +200,7 @@ EXTERN void LoadAndShowStats ( char* CoreFilename );
 EXTERN void ResolveMapLabelOnShip ( char* MapLabel , location* PositionPointer );
 EXTERN void CollectAutomapData ( void ) ;
 EXTERN void SmashBox ( float x , float y );
+EXTERN void smash_obstacle ( float x , float y );
 EXTERN void AnimateTeleports (void);
 EXTERN Uint16 GetMapBrick (Level deck, float x, float y);
 EXTERN void ActSpecialField ( int PlayerNum ) ;

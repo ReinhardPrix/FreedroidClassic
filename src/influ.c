@@ -1526,13 +1526,13 @@ PerformTuxAttackRaw ( int PlayerNum )
       // to all the enemys in that area.
       //
       angle = - ( atan2 ( ServerThinksInputAxisY ( PlayerNum ) + 16 ,  
-			  ServerThinksInputAxisX ( PlayerNum ) + 16 ) * 180 / M_PI + 90 );
+			  ServerThinksInputAxisX ( PlayerNum ) + 16 ) * 180 / M_PI + 90 - 45 );
       DebugPrintf( PERFORM_TUX_ATTACK_RAW_DEBUG , "\n===> Fire Bullet: angle=%f. " , angle ) ;
       DebugPrintf( PERFORM_TUX_ATTACK_RAW_DEBUG , "\n===> Fire Bullet: InpAxis: X=%d Y=%d . " , 
 		   ServerThinksInputAxisX ( PlayerNum ) , 
 		   ServerThinksInputAxisY ( PlayerNum ) ) ;
       Weapon_Target_Vector.x = 0 ;
-      Weapon_Target_Vector.y = - 1.0 ;
+      Weapon_Target_Vector.y = - 0.8 ;
       RotateVectorByAngle ( & Weapon_Target_Vector , angle );
       Weapon_Target_Vector.x += Me [ PlayerNum ] . pos . x;
       Weapon_Target_Vector.y += Me [ PlayerNum ] . pos . y;
@@ -1575,7 +1575,8 @@ PerformTuxAttackRaw ( int PlayerNum )
       // or something that can be smashed up, cause in this case, we
       // must open pendoras box now.
       //
-      SmashBox ( Weapon_Target_Vector.x , Weapon_Target_Vector.y );
+      // SmashBox ( Weapon_Target_Vector.x , Weapon_Target_Vector.y );
+      smash_obstacle ( Weapon_Target_Vector.x , Weapon_Target_Vector.y );
       
       //--------------------
       // Finally we add a new wait-counter, so that bullets or swings

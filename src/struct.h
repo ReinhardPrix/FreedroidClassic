@@ -272,6 +272,7 @@ typedef struct
   int block_area_type;
   float block_area_parm_1;
   float block_area_parm_2;
+  int is_smashable;
 }
 obstacle_spec, *Obstacle_spec;
 

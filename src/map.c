@@ -640,6 +640,7 @@ generate_wallobstacles_from_level_map ( int level_num )
 	      obstacle_counter ++ ;
 	      break;
 	    case CORNER_RD:
+	    case KREUZ:
 	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_V_WALL ;
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 1.0 ;
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
@@ -672,6 +673,10 @@ generate_wallobstacles_from_level_map ( int level_num )
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 1.0 ;
 	      obstacle_counter ++ ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_V_WALL ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 1.0 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
+	      obstacle_counter ++ ;
 	      break;
 	    case T_R:
 	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_V_WALL ;
@@ -688,6 +693,10 @@ generate_wallobstacles_from_level_map ( int level_num )
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 1.0 ;
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
 	      obstacle_counter ++ ;
+	      // loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_H_WALL ;
+	      // loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
+	      // loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 1.0 ;
+	      // obstacle_counter ++ ;
 	      break;
 	    case V_SHUT_DOOR:
 	    case V_HALF_DOOR1:
@@ -1001,7 +1010,7 @@ This bug can be resolved by simply raising a contant by one, but it needs to be 
       //--------------------
       // Now it can be glued...
       //
-      loadlevel -> map [ y_tile ] [ x_tile ] . obstacles_glued_to_here [ glue_index ] =
+      loadlevel -> map [ y_tile ] [ x_tile ] . obstacles_glued_to_here [ next_free_index ] =
 	obstacle_counter ; 
 
     }
@@ -1335,6 +1344,7 @@ CollectAutomapData ( void )
  * tile or a influencer melee hit on the tile, then the box explodes,
  * possibly leaving some goods behind.
  * ---------------------------------------------------------------------- */
+/*
 void 
 SmashBox ( float x , float y )
 {
@@ -1363,6 +1373,104 @@ SmashBox ( float x , float y )
     }
 
 }; // void SmashBox ( float x , float y );
+*/
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+smash_obstacles_only_on_tile ( float x , float y , int map_x , int map_y )
+{
+  Level BoxLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
+  int i;
+  Obstacle target_obstacle;
+
+  //--------------------
+  // First some security checks against touching the outsides of the map...
+  //
+  if ( ( map_x < 0 ) || ( map_y < 0 ) || ( map_x >= BoxLevel -> xlen ) || ( map_y >= BoxLevel -> ylen ) )
+    return;
+
+  //--------------------
+  // We check all the obstacles on this square if they are maybe destructable
+  // and if they are, we destruct them, haha
+  //
+  for ( i = 0 ; i < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; i ++ )
+    {
+      //--------------------
+      // First we see if there is something glued to this map tile at all.
+      //
+      if ( BoxLevel -> map [ map_y ] [ map_x ] . obstacles_glued_to_here [ i ] == (-1) ) continue;
+
+      target_obstacle = & ( BoxLevel -> obstacle_list [ BoxLevel -> map [ map_y ] [ map_x ] . 
+							obstacles_glued_to_here [ i ] ] );
+
+      if ( ! obstacle_map [ target_obstacle -> type ] . is_smashable ) continue;
+
+      //--------------------
+      // Now we check if the item really was close enough to the strike target.
+      // A range of 0.5 should do.
+      //
+      if ( fabsf ( x - target_obstacle -> pos . x ) > 0.4 ) continue ;
+      if ( fabsf ( y - target_obstacle -> pos . y ) > 0.4 ) continue ;
+
+      BoxLevel -> obstacle_list [ BoxLevel -> map [ map_y ] [ map_x ] . obstacles_glued_to_here [ i ] ] . type = ( -1 ) ;
+      BoxLevel -> map [ map_y ] [ map_x ] . obstacles_glued_to_here [ i ] = (-1) ;
+      StartBlast( x , y , BoxLevel->levelnum , DRUIDBLAST );
+      // DropRandomItem( map_x , map_y , 1 , FALSE , FALSE );
+
+    }
+}; // void smash_obstacles_only_on_tile ( float x , float y , int map_x , int map_y )
+
+/* ----------------------------------------------------------------------
+ * When a destructable type of obstacle gets hit, 
+ * e.g. by a blast exploding on the
+ * tile or a influencer melee hit on the tile, then the barrel explodes,
+ * possibly leaving some goods behind.
+ * ---------------------------------------------------------------------- */
+void 
+smash_obstacle ( float x , float y )
+{
+  int map_x, map_y;
+  Level BoxLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
+  int i, smash_x, smash_y ;
+  Obstacle target_obstacle;
+
+  map_x=(int)rintf(x);
+  map_y=(int)rintf(y);
+
+  for ( smash_x = map_x - 1 ; smash_x < map_x + 2 ; smash_x ++ )
+    {
+      for ( smash_y = map_y - 1 ; smash_y < map_y + 2 ; smash_y ++ )
+	{
+	  smash_obstacles_only_on_tile ( x , y , smash_x , smash_y );
+	}
+    }
+
+  //--------------------
+  // first we see if there are any destructible map tiles, that need to
+  // be destructed this way...
+  //
+      /*
+  switch ( BoxLevel->map[ map_y ][ map_x ]  . floor_value )
+    { 
+    case BOX_4:
+    case BOX_3:
+    case BOX_2:
+    case BOX_1:
+      BoxLevel->map[ map_y ][ map_x ]  . floor_value = FLOOR;
+      StartBlast( map_x , map_y , BoxLevel->levelnum , DRUIDBLAST );
+      DropRandomItem( map_x , map_y , 1 , FALSE , FALSE );
+      break;
+    default:
+      break;
+    }
+      */
+
+}; // void smash_obstacle ( float x , float y );
+
+
 
 /* ----------------------------------------------------------------------
  * This function returns the map brick code of the tile that occupies the
@@ -1409,6 +1517,7 @@ GetMapBrick (Level deck, float x, float y)
   BrickWanted = deck -> map[ RoundY ][ RoundX ] . floor_value ;
   if ( BrickWanted >= NUM_MAP_BLOCKS )
     {
+      fprintf( stderr , "\nBrickWanted: %d at pos X=%d Y=%d Z=%d." , BrickWanted , RoundX , RoundY , deck->levelnum );
       GiveStandardErrorMessage ( "GetMapBrick(...)" , "\
 A maplevel in Freedroid contained a brick type, that does not have a\n\
 real graphical representation.  This is a severe error, that really \n\
@@ -3201,10 +3310,10 @@ decode_floor_tiles_of_this_level (Level Lev)
       // Finally the proper struct can then replace the old map pointer.
       //
       Buffer = MyMalloc( sizeof ( map_tile ) * ( xdim + 10 ) );
-      for (col = 0; col < xdim  ; col++)
+      for ( col = 0 ; col < xdim  ; col ++ )
 	{
-	  sscanf( ( ( (char*)(Lev->map[row]) ) + 4 * col) , "%d " , &tmp);
-	  Buffer [ col ] . floor_value = tmp;
+	  sscanf( ( ( (char*)(Lev->map[row]) ) + 4 * col) , "%04d " , &tmp);
+	  Buffer [ col ] . floor_value = (Uint16) tmp;
 	  for ( glue_index = 0 ; glue_index < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; glue_index ++ )
 	    {
 	      Buffer [ col ] . obstacles_glued_to_here [ glue_index ] = ( -1 ) ;
