@@ -61,6 +61,10 @@ Droid radius: 0.3
 
 Time for the doors to move by one subphase of their movement=0.05
 
+Deathcount drain speed = 10.0
+First alert threshold = 300
+Alert bonus per second = 5
+
 *** End of General Game Constants Section: ***
 
 ----------------------------------------------------------------------
