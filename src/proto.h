@@ -88,7 +88,7 @@ EXTERN void ExplodeInfluencer (void);
 EXTERN void FireBullet (void);
 EXTERN void MoveBullets (void);
 EXTERN void DeleteBullet (int num);
-EXTERN void StartBlast (int x, int y, int type);
+EXTERN void StartBlast (float x, float y, int type);
 EXTERN void ExplodeBlasts (void);
 EXTERN void DeleteBlast (int num);
 EXTERN void CheckBulletCollisions (int num);

@@ -894,8 +894,8 @@ FireBullet (void)
   int i = 0;
   Bullet CurBullet = NULL;	/* das Bullet, um das es jetzt geht */
   int guntype = Druidmap[Me.type].gun;	/* which gun do we have ? */
-  int BulletSpeedX = Bulletmap[guntype].speed;
-  int BulletSpeedY = Bulletmap[guntype].speed;
+  float BulletSpeedX = Bulletmap[guntype].speed;
+  float BulletSpeedY = Bulletmap[guntype].speed;
   int firedir = LINKS;
 
 /* Wenn noch kein Schuss loesbar ist sofort zurueck */
@@ -994,18 +994,24 @@ FireBullet (void)
       break;
     }
 
-  /* Um Selbstabschuss zu verhindern Bullet weiterbewegen */
+  // To prevent influ from hitting himself with his own bullets,
+  // move them a bit..
 
-  CurBullet->pos.x += isignf (CurBullet->speed.x) * Block_Width / 2;
-  CurBullet->pos.y += isignf (CurBullet->speed.y) * Block_Height / 2;
+  //NORMALISATION CurBullet->pos.x += isignf (CurBullet->speed.x) * Block_Width / 2;
+  CurBullet->pos.x += isignf (CurBullet->speed.x) / 2;
+  //NORMALISATION CurBullet->pos.y += isignf (CurBullet->speed.y) * Block_Height / 2;
+  CurBullet->pos.y += isignf (CurBullet->speed.y) / 2;
 
   //  CurBullet->pos.x += Me.speed.x * Frame_Time();
   //  CurBullet->pos.y += Me.speed.y * Frame_Time();
 
-  if ((fabsf (BulletSpeedX) < 13) && (fabsf (BulletSpeedY) < 13))
+  // NORMALISATION if ((fabsf (BulletSpeedX) < (13)) && (fabsf (BulletSpeedY) < (13)) )
+  if ((fabsf (BulletSpeedX) < (26/64.0)) && (fabsf (BulletSpeedY) < (26/64.0)) )
     {
-      CurBullet->pos.x += isignf (CurBullet->speed.x) * Block_Width / 3;
-      CurBullet->pos.y += isignf (CurBullet->speed.y) * Block_Height / 3;
+      //NORMALISATION CurBullet->pos.x += isignf (CurBullet->speed.x) * Block_Width / 3;
+      CurBullet->pos.x += isignf (CurBullet->speed.x)  / 3;
+      //NORMALISATION CurBullet->pos.y += isignf (CurBullet->speed.y) * Block_Height / 3;
+      CurBullet->pos.y += isignf (CurBullet->speed.y)  / 3;
     }
 
   /*

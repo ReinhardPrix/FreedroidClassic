@@ -39,8 +39,10 @@
 #include "proto.h"
 
 /* Distances for hitting a druid */
-#define MORE		4
-#define DRUIDHITDIST2		(DRUIDRADIUSX+MORE)*(DRUIDRADIUSY+MORE)
+//NORMALISATION #define MORE		4
+#define MORE		(4/64.0)
+//NORMALISATION #define DRUIDHITDIST2		(DRUIDRADIUSX+MORE)*(DRUIDRADIUSY+MORE)
+#define DRUIDHITDIST2		0
 
 
 /*@Function============================================================
@@ -113,7 +115,7 @@ DeleteBullet (int Bulletnummer)
 @Int:
 * $Function----------------------------------------------------------*/
 void
-StartBlast (int x, int y, int type)
+StartBlast (float x, float y, int type)
 {
   int i;
   Blast NewBlast;

@@ -632,8 +632,8 @@ PutBullet (int BulletNummer)
     }	// if 
   */
 
-  TargetRectangle.x=USER_FENSTER_CENTER_X-Me.pos.x+CurBullet->pos.x-Block_Width/2;
-  TargetRectangle.y=USER_FENSTER_CENTER_Y-Me.pos.y+CurBullet->pos.y-Block_Height/2;
+  TargetRectangle.x=USER_FENSTER_CENTER_X-(Me.pos.x-CurBullet->pos.x)*Block_Width-Block_Width/2;
+  TargetRectangle.y=USER_FENSTER_CENTER_Y-(Me.pos.y-CurBullet->pos.y)*Block_Width-Block_Height/2;
 
   SDL_BlitSurface( ne_blocks , Bulletmap[CurBullet->type].block + CurBullet->phase, ne_screen , &TargetRectangle );
 
@@ -665,18 +665,12 @@ PutBlast (int BlastNummer)
   if (CurBlast->type == OUT)
     return;
 
-  TargetRectangle.x=USER_FENSTER_CENTER_X - Me.pos.x + CurBlast->PX -Block_Width/2;
-  TargetRectangle.y=USER_FENSTER_CENTER_Y - Me.pos.y + CurBlast->PY -Block_Height/2;
-  SDL_BlitSurface( ne_blocks, Blastmap[CurBlast->type].block + ((int) rintf(CurBlast->phase)), ne_screen , &TargetRectangle);
-
+  TargetRectangle.x=USER_FENSTER_CENTER_X - (Me.pos.x - CurBlast->PX)*Block_Width  -Block_Width/2;
+  TargetRectangle.y=USER_FENSTER_CENTER_Y - (Me.pos.y - CurBlast->PY)*Block_Height -Block_Height/2;
+  SDL_BlitSurface( ne_blocks, 
+		   Blastmap[CurBlast->type].block + ((int) rintf(CurBlast->phase)), ne_screen , &TargetRectangle);
 
   return;
-
-  blastpic =
-    Blastmap[CurBlast->type].picpointer +
-    ((int) rintf (CurBlast->phase)) * BLOCKMEM;
-
-  PutObject (CurBlast->PX, CurBlast->PY, blastpic, FALSE);
 }  // void PutBlast(int BlastNummer)
 
 
