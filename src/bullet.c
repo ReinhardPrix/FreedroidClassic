@@ -506,40 +506,23 @@ DeleteSpell (int SpellNum)
 }; // void DeleteSpell( int SpellNum )
 
 /* ----------------------------------------------------------------------
- * THIS FUNCTION IS CURRENTLY NOWHERE USED!!!
- * Is shall obviously tell from which direction a given robot was hit.
- * (I guess this function may fail utterly when framerate is low!)
- * ---------------------------------------------------------------------- */
-int
-GetDirection (point robo, point bul)
-{
-
-  if ((robo.x < bul.x) && (robo.y > bul.y))
-    return 0;
-  if ((robo.x < bul.x) && (robo.y < bul.y))
-    return 1;
-  if ((robo.x > bul.x) && (robo.y < bul.y))
-    return 2;
-  if ((robo.x > bul.x) && (robo.y > bul.y))
-    return 3;
-  if ((robo.x == bul.x) && (robo.y == bul.y))
-    {
-      DebugPrintf (2, " Center hit directy!");
-      getchar ();
-    }
-  return 0;
-}; // int GetDirection (point robo, point bul)
-
-/* ----------------------------------------------------------------------
+ * When an enemy is his, this causes some blood to be sprayed on the floor.
+ * The blood is just an obstacle (several types of blood exist) with 
+ * preput flag set, so that the Tux and everyone can really step *on* the
+ * blood.
  *
+ * Blood will always be sprayed, but there is a toggle available for making
+ * the blood visible/invisible for more a children-friendly version of the
+ * game.
  *
+ * This function does the blood spraying (adding of these obstacles).
  * ---------------------------------------------------------------------- */
 void
 enemy_spray_blood ( Enemy CurEnemy ) 
 {
   moderately_finepoint target_pos = { 1.0 , 0 } ;
 
-  DebugPrintf ( -3 , "\nBlood has been sprayed..." );
+  DebugPrintf ( 1 , "\nBlood has been sprayed..." );
 
   RotateVectorByAngle ( & target_pos , MyRandom ( 360 ) );
 
@@ -690,7 +673,7 @@ apply_bullet_damage_to_player ( int player_num , int damage )
  *
  * ---------------------------------------------------------------------- */
 void
-check_bullet_player_collsisions ( bullet* CurBullet , int num )
+check_bullet_player_collisions ( bullet* CurBullet , int num )
 {
   int player_num;
   double xdist, ydist;
@@ -747,14 +730,14 @@ check_bullet_player_collsisions ( bullet* CurBullet , int num )
 	    }
 	}
     }
-}; // check_bullet_player_collsisions ( CurBullet , num )
+}; // check_bullet_player_collisions ( CurBullet , num )
 
 /* ----------------------------------------------------------------------
  *
  *
  * ---------------------------------------------------------------------- */
 void
-check_bullet_enemy_collsisions ( bullet* CurBullet , int num )
+check_bullet_enemy_collisions ( bullet* CurBullet , int num )
 {
   int i;
   double xdist, ydist;
@@ -853,14 +836,14 @@ check_bullet_enemy_collsisions ( bullet* CurBullet , int num )
 #endif
 	} // if distance low enough to possibly be at hit
     }  /* for AllEnemys */
-}; // void check_bullet_enemy_collsisions ( CurBullet , num )
+}; // void check_bullet_enemy_collisions ( CurBullet , num )
 
 /* ----------------------------------------------------------------------
  *
  *
  * ---------------------------------------------------------------------- */
 void
-check_bullet_bullet_collsisions ( bullet* CurBullet , int num )
+check_bullet_bullet_collisions ( bullet* CurBullet , int num )
 {
   int i;
 
@@ -911,7 +894,7 @@ check_bullet_bullet_collsisions ( bullet* CurBullet , int num )
 	}
       
     }
-}; // void check_bullet_bullet_collsisions ( CurBullet , num )
+}; // void check_bullet_bullet_collisions ( CurBullet , num )
 
 /* ----------------------------------------------------------------------
  * This function checks if there are some collisions of the one bullet
@@ -948,9 +931,9 @@ CheckBulletCollisions (int num)
       // and some for collisions with blast
       //
       check_bullet_background_collisions ( CurBullet , num );
-      check_bullet_player_collsisions ( CurBullet , num );
-      check_bullet_enemy_collsisions ( CurBullet , num );
-      check_bullet_bullet_collsisions ( CurBullet , num );
+      check_bullet_player_collisions ( CurBullet , num );
+      check_bullet_enemy_collisions ( CurBullet , num );
+      check_bullet_bullet_collisions ( CurBullet , num );
 
       break;
     } // switch ( Bullet-Type )

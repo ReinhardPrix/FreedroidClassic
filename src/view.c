@@ -2550,31 +2550,33 @@ PutEnemyEnergyBar ( int Enum , SDL_Rect TargetRectangle )
 }; // void PutEnemyEnergyBar ( Enum , TargetRectangle )
 
 /* ----------------------------------------------------------------------
- * This function is here to blit the 'body' of a droid to the screen, 
- * but the 'body' in the new and more modern sense with the 3d models
- * in various rotated forms as they are provided by Bastian.
- * This shape now depends upon the behaviour of the droid, which makes
- * everthing a little bit more complicated.
+ * The direction this robot should be facing right now is determined and
+ * properly set in this function.
  * ---------------------------------------------------------------------- */
-void
-PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask )
+int
+set_rotation_index_for_this_robot ( enemy* ThisRobot ) 
 {
-  int phase = AllEnemys[Enum].phase;
-  int RotationModel;
   int RotationIndex;
-  enemy* ThisRobot = & ( AllEnemys [ Enum ] ) ;
 
   //--------------------
-  // Now that the angle the robot is facing is determined, we just need to
-  // translate this angle into an index within the image series, i.e. into a 'phase'
-  // of rotation. 
+  // By now the angle the robot is facing is determined, so we just need to
+  // translate this angle into an index within the image series, i.e. into 
+  // a 'phase' of rotation. 
   //
-  // For this, several 'rounding' issues have to be taken into account!
-  // But now it has optimal performance.
+  RotationIndex = ( ( ThisRobot -> current_angle - 45.0 + 360.0 + 360 / 
+		      ( 2 * ROTATION_ANGLES_PER_ROTATION_MODEL ) ) * ROTATION_ANGLES_PER_ROTATION_MODEL / 360 ) ;
+
+  //--------------------
+  // But it might happen, that the angle of rotation is 'out of scale' i.e.
+  // it's more than 360 degree or less than 0 degree.  Therefore, we need to
+  // be especially careful to generate only proper indices for our arrays.
+  // Some would say, we identify the remainder classes with integers in the
+  // range [ 0 - (rotation_angles-1) ], which is what's happening here.
   //
-  RotationIndex = ( ( ThisRobot -> current_angle - 45.0 + 360.0 + 360 / ( 2 * ROTATION_ANGLES_PER_ROTATION_MODEL ) ) * ROTATION_ANGLES_PER_ROTATION_MODEL / 360 ) ;
-  while ( RotationIndex < 0  ) RotationIndex += ROTATION_ANGLES_PER_ROTATION_MODEL ; // just to make sure... a modulo ROTATION_ANGLES_PER_ROTATION_MODEL operation can't hurt
-  while ( RotationIndex >= ROTATION_ANGLES_PER_ROTATION_MODEL ) RotationIndex -= ROTATION_ANGLES_PER_ROTATION_MODEL ; // just to make sure... a modulo ROTATION_ANGLES_PER_ROTATION_MODEL operation can't hurt
+  while ( RotationIndex < 0  ) 
+    RotationIndex += ROTATION_ANGLES_PER_ROTATION_MODEL ;
+  while ( RotationIndex >= ROTATION_ANGLES_PER_ROTATION_MODEL ) 
+    RotationIndex -= ROTATION_ANGLES_PER_ROTATION_MODEL ; 
 
   //--------------------
   // Now to prevent some jittering in some cases, where the droid uses an angle that is
@@ -2603,7 +2605,19 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
     }
 
   // DebugPrintf ( 0 , "\nCurrent angle: %f Current RotationIndex: %d. " , angle, RotationIndex );
-  RotationModel = Druidmap [ ThisRobot -> type ] . individual_shape_nr ;
+
+  return ( RotationIndex );
+
+}; // int set_rotation_index_for_this_robot ( enemy* ThisRobot ) 
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+int
+set_rotation_model_for_this_robot ( enemy* ThisRobot ) 
+{
+  int RotationModel = Druidmap [ ThisRobot -> type ] . individual_shape_nr ;
   
   //--------------------
   // A sanity check for roation model to use can never hurt...
@@ -2615,12 +2629,43 @@ There was a rotation model type given, that exceeds the number of rotation model
 				     PLEASE_INFORM, IS_FATAL );
     }
 
+  return ( RotationModel );
+
+}; // int set_rotation_model_for_this_robot ( enemy* ThisRobot ) 
+
+/* ----------------------------------------------------------------------
+ * This function is here to blit the 'body' of a droid to the screen, 
+ * but the 'body' in the new and more modern sense with the 3d models
+ * in various rotated forms as they are provided by Bastian.
+ * This shape now depends upon the behaviour of the droid, which makes
+ * everthing a little bit more complicated.
+ * ---------------------------------------------------------------------- */
+void
+PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask )
+{
+  int phase = AllEnemys[Enum].phase;
+  int RotationModel;
+  int RotationIndex;
+  enemy* ThisRobot = & ( AllEnemys [ Enum ] ) ;
+
+  //--------------------
+  // We properly set the direction this robot is facing.
+  //
+  RotationIndex = set_rotation_index_for_this_robot ( ThisRobot ) ;
+
+  //--------------------
+  // We properly set the rotation model number for this robot, i.e.
+  // which shape (like 302, 247 or proffa) to use for drawing this bot.
+  //
+  RotationModel = set_rotation_model_for_this_robot ( ThisRobot ) ;
+
   //--------------------
   // First we check if the robot is still alive.  If it isn't, 
   // then we can use the explosion dust from the classic ball-shaped
   // version.
   //
-  if ( ( phase != DROID_PHASES ) || ( last_death_animation_image [ ThisRobot -> type ] - first_death_animation_image [ ThisRobot -> type ] > 0 ) )
+  if ( ( phase != DROID_PHASES ) || 
+       ( last_death_animation_image [ ThisRobot -> type ] - first_death_animation_image [ ThisRobot -> type ] > 0 ) )
     {
       
       //--------------------
@@ -2630,35 +2675,16 @@ There was a rotation model type given, that exceeds the number of rotation model
       //
       LoadAndPrepareEnemyRotationModelNr ( RotationModel );
 
-      //--------------------
-      // Maybe we don't have an enemy here that would really stick to the 
-      // exact size of a block but be somewhat bigger or smaller instead.
-      // In this case, we'll just adapt the given target rectangle a little
-      // bit, cause this rectangle assumes exactly the same size as a map 
-      // block and has the origin shifted accordingly.
-      //
-      //      if ( enemy_iso_images[ RotationModel ] [ RotationIndex ] -> w != Block_Width )
-      // {
-      if ( ( TargetRectangle . x != 0 ) && ( TargetRectangle . y != 0 ) )
-	{
-	  TargetRectangle.x -= ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface -> w ) / 2 ;
-	  TargetRectangle.y -= ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface -> h ) / 2 ;
-	  TargetRectangle.w = enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface -> w;
-	  TargetRectangle.h = enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface -> h;
-	}
-
       
       if ( AllEnemys[Enum].paralysation_duration_left != 0 ) 
 	{
 	  LoadAndPrepareRedEnemyRotationModelNr ( RotationModel );
-	  // our_SDL_blit_surface_wrapper( RedEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] , NULL , Screen, &TargetRectangle);
 	  blit_iso_image_to_map_position ( RedEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
 					   ThisRobot -> pos . x , ThisRobot -> pos . y );
 	}
       else if ( AllEnemys[Enum].poison_duration_left != 0 ) 
 	{
 	  LoadAndPrepareGreenEnemyRotationModelNr ( RotationModel );
-	  // our_SDL_blit_surface_wrapper( GreenEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] , NULL , Screen, &TargetRectangle);
 	  blit_iso_image_to_map_position ( GreenEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
 					   ThisRobot -> pos . x , ThisRobot -> pos . y );
 
@@ -2666,12 +2692,27 @@ There was a rotation model type given, that exceeds the number of rotation model
       else if ( AllEnemys[Enum].frozen != 0 ) 
 	{
 	  LoadAndPrepareBlueEnemyRotationModelNr ( RotationModel );
-	  // our_SDL_blit_surface_wrapper( BlueEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] , NULL , Screen, &TargetRectangle);
 	  blit_iso_image_to_map_position ( BlueEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
 					   ThisRobot -> pos . x , ThisRobot -> pos . y );
 	}
       else
 	{
+
+	  //--------------------
+	  // Maybe we don't have an enemy here that would really stick to the 
+	  // exact size of a block but be somewhat bigger or smaller instead.
+	  // In this case, we'll just adapt the given target rectangle a little
+	  // bit, cause this rectangle assumes exactly the same size as a map 
+	  // block and has the origin shifted accordingly.
+	  //
+	  if ( ( TargetRectangle . x != 0 ) && ( TargetRectangle . y != 0 ) )
+	    {
+	      TargetRectangle.x -= ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface -> w ) / 2 ;
+	      TargetRectangle.y -= ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface -> h ) / 2 ;
+	      TargetRectangle.w = enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface -> w;
+	      TargetRectangle.h = enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface -> h;
+	    }
+
 	  if ( ( TargetRectangle . x != 0 ) && ( TargetRectangle . y != 0 ) )
 	    {
 	      our_SDL_blit_surface_wrapper( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] . surface , NULL , Screen, &TargetRectangle);
@@ -2691,7 +2732,6 @@ There was a rotation model type given, that exceeds the number of rotation model
 		    }
 		  else
 		    {
-		      // blit_iso_image_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ ( SDL_GetTicks() / 100 ) % phases_in_enemy_animation [ RotationModel ] ] , ThisRobot -> pos . x , ThisRobot -> pos . y );
 		      blit_iso_image_to_map_position ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , ThisRobot -> pos . x , ThisRobot -> pos . y );
 		    }
 		}
