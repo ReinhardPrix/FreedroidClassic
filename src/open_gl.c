@@ -68,7 +68,7 @@ our_SDL_blit_surface_wrapper(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *d
 #ifdef HAVE_LIBGL
       if ( src == NULL ) 
 	{
-	  DebugPrintf ( -1 , "\nNull source surface received. --> doing nothing." );
+	  DebugPrintf ( -4 , "\nNull source surface received. --> doing nothing." );
 	  fflush ( stdout );
 	  
 	  return ( 0 );
@@ -107,7 +107,7 @@ our_SDL_blit_surface_wrapper(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *d
 	    bytes = src -> pitch / src -> w ;
 	  else
 	    {
-	      DebugPrintf ( -1 , "\nSurface of width 0 encountered. --> doing nothing." );
+	      DebugPrintf ( -4 , "\nSurface of width 0 encountered. --> doing nothing." );
 	      fflush ( stdout );
 	      return ( 0 ) ;
 	    }
@@ -117,7 +117,7 @@ our_SDL_blit_surface_wrapper(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *d
 	  
 	  if ( srcrect != NULL )
 	    {
-	      DebugPrintf ( -1 , "\nNon-Null source rect encountered. --> doing nothing." );
+	      DebugPrintf ( -4 , "\nNon-Null source rect encountered. --> doing nothing." );
 	      fflush ( stdout );
 	      return ( 0 ) ;
 	    }
@@ -142,7 +142,7 @@ our_SDL_blit_surface_wrapper(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *d
 	    }
 	  else
 	    {
-	      DebugPrintf ( -1 , "\nSurface has bytes: %d.--> doing nothing. " , bytes );
+	      DebugPrintf ( -4 , "\nSurface has bytes: %d.--> doing nothing. " , bytes );
 	      fflush ( stdout );
 	    }
 
