@@ -331,8 +331,8 @@ int ManaCostTable [ NUMBER_OF_SKILLS ] [ NUMBER_OF_SKILL_LEVELS ] = {
   {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'Poison Bolt'
   {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'Petrification'
   {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'Detect Stuff'
-  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'UNUSED SLOT 11'
-  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'UNUSED SLOT 12'
+  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'EMP Radial Wave'
+  {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'VMS Radial Wave'
   {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'UNUSED SLOT 13'
   {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'UNUSED SLOT 14'
   {    6 ,  5 ,  4 ,  3 ,  2 ,  1 ,  1 ,  1 ,  1 ,  1 } , // 'UNUSED SLOT 15'
@@ -387,7 +387,7 @@ char* SkillName[ NUMBER_OF_SKILLS ] = {
   "Petrification",
 
   "Detect Stuff",
-  "Unused spell Nr. 11",
+  "EMP Radial Wave",
   "Unused spell Nr. 12",
   "Unused spell Nr. 13",
   "Unused spell Nr. 14",

@@ -354,7 +354,7 @@ RadialEMPWave ( gps ExpCenter )
       //--------------------
       // For now, this spell is for free!! gratis!! yeah!! oh groovy!
       //
-      // Me[0].mana -= SpellCost;
+      Me[0].mana -= SpellCost;
       //
 
       //--------------------
@@ -383,6 +383,50 @@ RadialEMPWave ( gps ExpCenter )
       Not_Enough_Mana_Sound(  );
     }
 }; // void RadialEMPWave ( finepoint ExpCenter )
+
+/* ----------------------------------------------------------------------
+ * This function handles the ForceExplosionCircle skill.
+ * ---------------------------------------------------------------------- */
+void
+RadialVMXWave ( gps ExpCenter )
+{
+  int SpellCost = ManaCostTable [ SPELL_RADIAL_VMX_WAVE ][ Me[ 0 ]. spellcasting_skill ] ;
+  int i;
+
+  if ( Me[0].mana >= SpellCost )
+    {
+      //--------------------
+      // For now, this spell is for free!! gratis!! yeah!! oh groovy!
+      //
+      Me[0].mana -= SpellCost;
+      //
+
+      //--------------------
+      // First we find a new entry in the active spells list
+      //
+      for ( i = 0 ; i < MAX_ACTIVE_SPELLS ; i ++ )
+	{
+	  if ( AllActiveSpells [ i ] . type == (-1) ) break;
+	}
+      if ( i >= MAX_ACTIVE_SPELLS ) i = 0 ;
+      
+      //--------------------
+      // Now we start our new emp wave
+      //
+      AllActiveSpells [ i ] . type = SPELL_RADIAL_VMX_WAVE ; 
+      AllActiveSpells [ i ] . spell_center . x = Me [ 0 ] . pos . x;
+      AllActiveSpells [ i ] . spell_center . y = Me [ 0 ] . pos . y;
+      AllActiveSpells [ i ] . spell_radius = 0.3 ;
+      AllActiveSpells [ i ] . spell_age = 0 ; 
+      
+    }
+  else
+    {
+      Me[0].TextVisibleTime = 0;
+      Me[0].TextToBeDisplayed = "Not enough force left within me.";
+      Not_Enough_Mana_Sound(  );
+    }
+}; // void RadialVMXWave ( finepoint ExpCenter )
 
 /* ----------------------------------------------------------------------
  * This function handles the ForceExplosionCircle skill.
@@ -564,6 +608,15 @@ HandleCurrentlyActivatedSkill( void )
 	  if ( CursorIsInUserRect ( GetMousePos_x() + 16 , GetMousePos_y() + 16) )
 	    {
 	      RadialEMPWave ( Me [ 0 ] . pos );
+	    }
+	}
+      break;
+    case SPELL_RADIAL_VMX_WAVE:
+      if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
+	{
+	  if ( CursorIsInUserRect ( GetMousePos_x() + 16 , GetMousePos_y() + 16) )
+	    {
+	      RadialVMXWave ( Me [ 0 ] . pos );
 	    }
 	}
       break;

@@ -54,7 +54,7 @@ void FlashWindow (SDL_Color Flashcolor);
 void RecFlashFill (int LX, int LY, int Color, unsigned char *Parameter_Screen,
 		   int SBreite);
 int Cent (int);
-void PutRadialBlueSparks( float PosX, float PosY , float Radius );
+void PutRadialBlueSparks( float PosX, float PosY , float Radius , int SparkType );
 
 char *Affected;
 EXTERN int MyCursorX;
@@ -419,7 +419,13 @@ PutMiscellaneousSpellEffects ( void )
 	{
 	  PutRadialBlueSparks( AllActiveSpells [ i ] . spell_center . x , 
 			       AllActiveSpells [ i ] . spell_center . y , 
-			       AllActiveSpells [ i ] . spell_radius );
+			       AllActiveSpells [ i ] . spell_radius , 0 );
+	}
+      else if ( AllActiveSpells [ i ] . type == SPELL_RADIAL_VMX_WAVE ) 
+	{
+	  PutRadialBlueSparks( AllActiveSpells [ i ] . spell_center . x , 
+			       AllActiveSpells [ i ] . spell_center . y , 
+			       AllActiveSpells [ i ] . spell_radius , 1 );
 	}
       else
 	{
@@ -1498,14 +1504,15 @@ PutItem( int ItemNumber )
  * the AllItems array.
  * ---------------------------------------------------------------------- */
 void
-PutRadialBlueSparks( float PosX, float PosY , float Radius )
+PutRadialBlueSparks( float PosX, float PosY , float Radius , int SparkType )
 {
 #define FIXED_NUMBER_OF_SPARK_ANGLES 12
 #define FIXED_NUMBER_OF_PROTOTYPES 4
+#define NUMBER_OF_SPARK_TYPES 2
 
   SDL_Rect TargetRectangle;
-  static SDL_Surface* SparkPrototypeSurface [ FIXED_NUMBER_OF_PROTOTYPES ] = { NULL , NULL , NULL , NULL };
-  static SDL_Surface* PrerotatedSparkSurfaces [ FIXED_NUMBER_OF_PROTOTYPES ] [ FIXED_NUMBER_OF_SPARK_ANGLES ];
+  static SDL_Surface* SparkPrototypeSurface [ NUMBER_OF_SPARK_TYPES ] [ FIXED_NUMBER_OF_PROTOTYPES ] = { { NULL , NULL , NULL , NULL } , { NULL , NULL , NULL , NULL } } ;
+  static SDL_Surface* PrerotatedSparkSurfaces [ NUMBER_OF_SPARK_TYPES ] [ FIXED_NUMBER_OF_PROTOTYPES ] [ FIXED_NUMBER_OF_SPARK_ANGLES ];
   SDL_Surface* tmp_surf;
   char* fpath;
   int NumberOfPicturesToUse;
@@ -1531,11 +1538,12 @@ PutRadialBlueSparks( float PosX, float PosY , float Radius )
   // Now if we do not yet have all the prototype images in memory,
   // we need to load them now and for once...
   //
-  if ( SparkPrototypeSurface[0] == NULL )
+  if ( SparkPrototypeSurface [ SparkType ] [0] == NULL )
     {
       for ( k = 0 ; k < FIXED_NUMBER_OF_PROTOTYPES ; k ++ )
 	{
-	  sprintf( ConstructedFilename , "blue_sparks_%d.png" , k );
+	  if ( SparkType ) sprintf( ConstructedFilename , "green_mist_%d.png" , k );
+	  else sprintf( ConstructedFilename , "blue_sparks_%d.png" , k );
 	  fpath = find_file ( ConstructedFilename , GRAPHICS_DIR, FALSE );
 
 	  tmp_surf = IMG_Load( fpath );
@@ -1560,10 +1568,8 @@ it could not resolve.\n\
 	    }
 
 	  // SDL_SetColorKey( tmp_surf , 0 , 0 ); 
-	  SparkPrototypeSurface[k] = SDL_DisplayFormatAlpha ( tmp_surf );
+	  SparkPrototypeSurface [ SparkType ] [k] = SDL_DisplayFormatAlpha ( tmp_surf );
 	  SDL_FreeSurface( tmp_surf );
-
-
 
 	  //--------------------
 	  // Now that the loading is successfully done, we can do the
@@ -1574,9 +1580,9 @@ it could not resolve.\n\
 	      Angle = 360.0 * (float)i / (float)FIXED_NUMBER_OF_SPARK_ANGLES ;
 	      
 	      tmp_surf = 
-		rotozoomSurface( SparkPrototypeSurface [ k ] , Angle , 1.0 , FALSE );
+		rotozoomSurface( SparkPrototypeSurface [ SparkType ] [ k ] , Angle , 1.0 , FALSE );
 	      
-	      PrerotatedSparkSurfaces [ k ] [ i ] = SDL_DisplayFormatAlpha ( tmp_surf );
+	      PrerotatedSparkSurfaces [ SparkType ] [ k ] [ i ] = SDL_DisplayFormatAlpha ( tmp_surf );
 	      
 	      SDL_FreeSurface ( tmp_surf );
 	    }
@@ -1584,11 +1590,7 @@ it could not resolve.\n\
 
     }
 
-	  
-  
-
-
-  NumberOfPicturesToUse = ( 2 * Radius * Block_Width * 3.14 ) / (float) SparkPrototypeSurface[ PictureType ] -> w;
+  NumberOfPicturesToUse = ( 2 * Radius * Block_Width * 3.14 ) / (float) SparkPrototypeSurface[ SparkType ] [ PictureType ] -> w;
   NumberOfPicturesToUse += 3 ; // we want some overlap
 
   //--------------------
@@ -1606,14 +1608,12 @@ it could not resolve.\n\
       PrerotationIndex = rintf ( Angle * (float)FIXED_NUMBER_OF_SPARK_ANGLES / 360.0 ); 
       if ( PrerotationIndex >= FIXED_NUMBER_OF_SPARK_ANGLES ) PrerotationIndex = 0 ;
 
-      TargetRectangle . x = UserCenter_x - ( Me [ 0 ] . pos . x - PosX ) * Block_Width  + Displacement . x - ( ( PrerotatedSparkSurfaces [ PictureType ] [ PrerotationIndex ] -> w) / 2 );
-      TargetRectangle . y = UserCenter_y - ( Me [ 0 ] . pos . y - PosY ) * Block_Height + Displacement . y - ( ( PrerotatedSparkSurfaces [ PictureType ] [ PrerotationIndex ] -> h) / 2 );
+      TargetRectangle . x = UserCenter_x - ( Me [ 0 ] . pos . x - PosX ) * Block_Width  + Displacement . x - ( ( PrerotatedSparkSurfaces [ SparkType ] [ PictureType ] [ PrerotationIndex ] -> w) / 2 );
+      TargetRectangle . y = UserCenter_y - ( Me [ 0 ] . pos . y - PosY ) * Block_Height + Displacement . y - ( ( PrerotatedSparkSurfaces [ SparkType ] [ PictureType ] [ PrerotationIndex ] -> h) / 2 );
       
-      SDL_BlitSurface( PrerotatedSparkSurfaces [ PictureType ] [ PrerotationIndex ] , NULL , Screen , &TargetRectangle);
+      SDL_BlitSurface( PrerotatedSparkSurfaces [ SparkType ] [ PictureType ] [ PrerotationIndex ] , NULL , Screen , &TargetRectangle);
 
     }
-
-  // DebugPrintf ( 0 , "\nSparks drawn!! " );
 
 }; // void PutRadialBlueSparks( float PosX, float PosY , float Radius )
 
