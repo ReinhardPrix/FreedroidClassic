@@ -339,7 +339,7 @@ enum _directions
 /* Schusstypen */
 enum _bullets
 {
-  PULSE,
+  PULSE=0,
   SINGLE_PULSE,
   MILITARY,
   FLASH

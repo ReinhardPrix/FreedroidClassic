@@ -68,8 +68,11 @@ Get_Robot_Data ( void* DataPointer )
 #define CLASS_BEGIN_STRING "Class of this droid: "
 #define ACCELERATION_BEGIN_STRING "Maximum acceleration of this droid: "
 #define MAXENERGY_BEGIN_STRING "Maximum energy of this droid: "
-
-
+#define LOSEHEALTH_BEGIN_STRING "Rate of energyloss under influence control: "
+#define GUN_BEGIN_STRING "Weapon type this droid uses: "
+#define AGGRESSION_BEGIN_STRING "Aggression rate of this droid: "
+#define FLASHIMMUNE_BEGIN_STRING "Is this droid immune to disruptor blasts? "
+#define SCORE_BEGIN_STRING "Score gained for destroying one of this type: "
   if ( (RobotPointer = strstr ( DataPointer , ROBOT_SECTION_BEGIN_STRING ) ) == NULL)
     {
       printf("\n\nBegin of Robot Data Section not found...\n\nTerminating...\n\n");
@@ -154,6 +157,72 @@ Get_Robot_Data ( void* DataPointer )
 	  sscanf ( ValuePointer , "%lf" , &Druidmap[RobotIndex].maxenergy );
 	  printf("\nDroid maximum energy found!  It reads: %f" , Druidmap[RobotIndex].maxenergy );
 	}
+
+      // Now we read in the lose_health rate.
+      if ( (ValuePointer = strstr ( RobotPointer, LOSEHEALTH_BEGIN_STRING )) == NULL )
+	{
+	  printf("\nERROR! NO LOSE_HEALTH ENTRY FOUND! TERMINATING!");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  ValuePointer += strlen ( LOSEHEALTH_BEGIN_STRING );
+	  sscanf ( ValuePointer , "%lf" , &Druidmap[RobotIndex].lose_health );
+	  printf("\nDroid lose_health entry found!  It reads: %f" , Druidmap[RobotIndex].lose_health );
+	}
+
+      // Now we read in the class of this droid.
+      if ( (ValuePointer = strstr ( RobotPointer, GUN_BEGIN_STRING )) == NULL )
+	{
+	  printf("\nERROR! NO GUN ENTRY FOUND! TERMINATING!");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  ValuePointer += strlen ( GUN_BEGIN_STRING );
+	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].gun );
+	  printf("\nDroid gun entry found!  It reads: %d" , Druidmap[RobotIndex].gun );
+	}
+
+      // Now we read in the aggression rate of this droid.
+      if ( (ValuePointer = strstr ( RobotPointer, AGGRESSION_BEGIN_STRING )) == NULL )
+	{
+	  printf("\nERROR! NO AGGRESSION ENTRY FOUND! TERMINATING!");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  ValuePointer += strlen ( AGGRESSION_BEGIN_STRING );
+	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].aggression );
+	  printf("\nDroid aggression rate entry found!  It reads: %d" , Druidmap[RobotIndex].aggression );
+	}
+
+      // Now we read in the flash immunity of this droid.
+      if ( (ValuePointer = strstr ( RobotPointer, FLASHIMMUNE_BEGIN_STRING )) == NULL )
+	{
+	  printf("\nERROR! NO FLASHIMMUNE ENTRY FOUND! TERMINATING!");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  ValuePointer += strlen ( FLASHIMMUNE_BEGIN_STRING );
+	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].flashimmune );
+	  printf("\nDroid flashimmune entry found!  It reads: %d" , Druidmap[RobotIndex].flashimmune );
+	}
+
+      // Now we score to be had for destroying one droid of this type
+      if ( (ValuePointer = strstr ( RobotPointer, SCORE_BEGIN_STRING )) == NULL )
+	{
+	  printf("\nERROR! NO SCORE ENTRY FOUND! TERMINATING!");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  ValuePointer += strlen ( SCORE_BEGIN_STRING );
+	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].score );
+	  printf("\nDroid score entry found!  It reads: %d" , Druidmap[RobotIndex].score );
+	}
+
 
 
       // Now we're potentially ready to process the next droid.  Therefore we proceed to

@@ -1083,6 +1083,7 @@ FireBullet (void)
    *
    */
 
+  /*
   if (PlusExtentionsOn)
     {
       if (!Me.vneut)
@@ -1091,6 +1092,8 @@ FireBullet (void)
 	  CurBullet->speed.y += Me.speed.y / Druidmap[Me.type].vneutral;
 	}
     }
+  */
+
 
   return;
 
