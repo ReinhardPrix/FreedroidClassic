@@ -52,9 +52,6 @@ bool show_cursor;    // show mouse-cursor or not?
 int WheelUpEvents=0;    // count number of not read-out wheel events
 int WheelDownEvents=0;
 Uint32 last_mouse_event = 0;  // record when last mouse event took place (SDL ticks)
-int CurrentlyMouseRightPressed=0;
-int CurrentlyMouseLeftPressed = 0;
-
 
 SDLMod current_modifiers;
 
@@ -62,7 +59,39 @@ SDL_Event event;
 
 int input_state[INPUT_LAST];	// array of states (pressed/released) of all keys
 
+int key_cmds[CMD_LAST][3] =  // array of mappings {key1,key2,key3 -> cmd}
+  {
+    {SDLK_UP, 	  JOY_UP, 	'w' },		// CMD_UP
+    {SDLK_DOWN,	  JOY_DOWN, 	's' },		// CMD_DOWN
+    {SDLK_LEFT,   JOY_LEFT, 	'a' },		// CMD_LEFT
+    {SDLK_RIGHT,  JOY_RIGHT, 	'd' },		// CMD_RIGHT
+    {SDLK_SPACE,  JOY_BUTTON1,   MOUSE_BUTTON1 },// CMD_FIRE  
+    {SDLK_RETURN, SDLK_RSHIFT, 	'e' }, 		// CMD_ACTIVATE
+    {SDLK_SPACE,  JOY_BUTTON2,   MOUSE_BUTTON2 },// CMD_TAKEOVER
+    {'q', 	  'q', 		 'q'  }, 	// CMD_QUIT,
+    {SDLK_PAUSE, 'p', 'p'  }, 			// CMD_PAUSE,
+    {SDLK_F12, SDLK_F12, SDLK_F12 }  		// CMD_SCREENSHOT
+  };
+
+char *keystr[INPUT_LAST];
+
+char *cmd_strings[CMD_LAST] = 
+  {
+    "UP", 
+    "DOWN",
+    "LEFT",
+    "RIGHT",
+    "FIRE",
+    "ACTIVATE",
+    "TAKEOVER",
+    "QUIT",
+    "PAUSE",
+    "SCREENSHOT"
+  };
+
 #define FRESH_BIT   	(0x01<<8)
+#define OLD_BIT		(0x01<<9)
+#define LONG_PRESSED	(TRUE|OLD_BIT)
 #define PRESSED		(TRUE|FRESH_BIT)
 #define RELEASED	(FALSE|FRESH_BIT)
 
@@ -71,6 +100,172 @@ int input_state[INPUT_LAST];	// array of states (pressed/released) of all keys
 
 #define clear_fresh(x) do { (x) &= ~FRESH_BIT; } while(0)
 
+
+void
+init_keystr (void)
+{
+  keystr[SDLK_BACKSPACE] = "BS";
+  keystr[SDLK_TAB]	= "Tab";
+  keystr[SDLK_CLEAR]	= "Clear";
+  keystr[SDLK_RETURN]	= "Return";
+  keystr[SDLK_PAUSE]	= "Pause";
+  keystr[SDLK_ESCAPE]	= "Esc";
+  keystr[SDLK_SPACE]	= "Space";
+  keystr[SDLK_EXCLAIM]	= "!";
+  keystr[SDLK_QUOTEDBL]	= "\"";
+  keystr[SDLK_HASH]	= "#";
+  keystr[SDLK_DOLLAR]	= "$";
+  keystr[SDLK_AMPERSAND]= "&";
+  keystr[SDLK_QUOTE]	= "'";
+  keystr[SDLK_LEFTPAREN]= "(";
+  keystr[SDLK_RIGHTPAREN]=")";
+  keystr[SDLK_ASTERISK]	= "*";
+  keystr[SDLK_PLUS]	= "+";
+  keystr[SDLK_COMMA]	= ",";
+  keystr[SDLK_MINUS]	= "-";
+  keystr[SDLK_PERIOD]	= ".";
+  keystr[SDLK_SLASH]	= "/";
+  keystr[SDLK_0]	= "0";	
+  keystr[SDLK_1]	= "1";
+  keystr[SDLK_2]	= "2";
+  keystr[SDLK_3]	= "3";
+  keystr[SDLK_4]	= "4";
+  keystr[SDLK_5]	= "5";
+  keystr[SDLK_6]	= "6";
+  keystr[SDLK_7]	= "7";
+  keystr[SDLK_8]	= "8";
+  keystr[SDLK_9]	= "9";
+  keystr[SDLK_COLON]	= ":";
+  keystr[SDLK_SEMICOLON]= ";";
+  keystr[SDLK_LESS]	= "<";
+  keystr[SDLK_EQUALS]	= "=";
+  keystr[SDLK_GREATER]	= ">";
+  keystr[SDLK_QUESTION]	= "?";
+  keystr[SDLK_AT]	= "@";
+  keystr[SDLK_LEFTBRACKET]	= "[";
+  keystr[SDLK_BACKSLASH]	= "\\";
+  keystr[SDLK_RIGHTBRACKET]	= "]";
+  keystr[SDLK_CARET]	= "^";
+  keystr[SDLK_UNDERSCORE]	= "_";
+  keystr[SDLK_BACKQUOTE]	= "`";
+  keystr[SDLK_a]	= "a";
+  keystr[SDLK_b]	= "b";
+  keystr[SDLK_c]	= "c";
+  keystr[SDLK_d]	= "d";
+  keystr[SDLK_e]	= "e";
+  keystr[SDLK_f]	= "f";
+  keystr[SDLK_g]	= "g";
+  keystr[SDLK_h]	= "h";
+  keystr[SDLK_i]	= "i";
+  keystr[SDLK_j]	= "j";
+  keystr[SDLK_k]	= "k";
+  keystr[SDLK_l]	= "l";
+  keystr[SDLK_m]	= "m";
+  keystr[SDLK_n]	= "n";
+  keystr[SDLK_o]	= "o";
+  keystr[SDLK_p]	= "p";
+  keystr[SDLK_q]	= "q";
+  keystr[SDLK_r]	= "r";
+  keystr[SDLK_s]	= "s";
+  keystr[SDLK_t]	= "t";
+  keystr[SDLK_u]	= "u";
+  keystr[SDLK_v]	= "v";
+  keystr[SDLK_w]	= "w";
+  keystr[SDLK_x]	= "x";
+  keystr[SDLK_y]	= "y";
+  keystr[SDLK_z]	= "z";
+  keystr[SDLK_DELETE]	= "Del";
+
+
+  /* Numeric keypad */
+  keystr[SDLK_KP0]	= "Num[0]";
+  keystr[SDLK_KP1]	= "Num[1]";
+  keystr[SDLK_KP2]	= "Num[2]";
+  keystr[SDLK_KP3]	= "Num[3]";
+  keystr[SDLK_KP4]	= "Num[4]";
+  keystr[SDLK_KP5]	= "Num[5]";
+  keystr[SDLK_KP6]	= "Num[6]";
+  keystr[SDLK_KP7]	= "Num[7]";
+  keystr[SDLK_KP8]	= "Num[8]";
+  keystr[SDLK_KP9]	= "Num[9]";
+  keystr[SDLK_KP_PERIOD]= "Num[.]";
+  keystr[SDLK_KP_DIVIDE]= "Num[/]";
+  keystr[SDLK_KP_MULTIPLY]= "Num[*]";
+  keystr[SDLK_KP_MINUS]	= "Num[-]";
+  keystr[SDLK_KP_PLUS]	= "Num[+]";
+  keystr[SDLK_KP_ENTER]	= "Num[Enter]";
+  keystr[SDLK_KP_EQUALS]= "Num[=]";
+
+  /* Arrows + Home/End pad */
+  keystr[SDLK_UP]	= "Up";
+  keystr[SDLK_DOWN]	= "Down";
+  keystr[SDLK_RIGHT]	= "Right";
+  keystr[SDLK_LEFT]	= "Left";
+  keystr[SDLK_INSERT]	= "Insert";
+  keystr[SDLK_HOME]	= "Home";
+  keystr[SDLK_END]	= "End";
+  keystr[SDLK_PAGEUP]	= "PageUp";
+  keystr[SDLK_PAGEDOWN]	= "PageDown";
+
+  /* Function keys */
+  keystr[SDLK_F1]	= "F1";
+  keystr[SDLK_F2]	= "F2";
+  keystr[SDLK_F3]	= "F3";
+  keystr[SDLK_F4]	= "F4";
+  keystr[SDLK_F5]	= "F5";
+  keystr[SDLK_F6]	= "F6";
+  keystr[SDLK_F7]	= "F7";
+  keystr[SDLK_F8]	= "F8";
+  keystr[SDLK_F9]	= "F9";
+  keystr[SDLK_F10]	= "F10";
+  keystr[SDLK_F11]	= "F11";
+  keystr[SDLK_F12]	= "F12";
+  keystr[SDLK_F13]	= "F13";
+  keystr[SDLK_F14]	= "F14";
+  keystr[SDLK_F15]	= "F15";
+
+  /* Key state modifier keys */
+  keystr[SDLK_NUMLOCK]	= "NumLock";
+  keystr[SDLK_CAPSLOCK]	= "CapsLock";
+  keystr[SDLK_SCROLLOCK]= "ScrlLock";
+  keystr[SDLK_RSHIFT]	= "RShift";
+  keystr[SDLK_LSHIFT]	= "LShift";
+  keystr[SDLK_RCTRL]	= "RCtrl";
+  keystr[SDLK_LCTRL]	= "LCtrl";
+  keystr[SDLK_RALT]	= "RAlt";
+  keystr[SDLK_LALT]	= "LAlt";
+  keystr[SDLK_RMETA]	= "RMeta";
+  keystr[SDLK_LMETA]	= "LMeta";
+  keystr[SDLK_LSUPER]	= "LSuper";
+  keystr[SDLK_RSUPER]	= "RSuper";
+  keystr[SDLK_MODE]	= "Mode";
+  keystr[SDLK_COMPOSE]	= "Compose";
+    
+  /* Miscellaneous function keys */
+  keystr[SDLK_HELP]	= "Help";
+  keystr[SDLK_PRINT]	= "Print";
+  keystr[SDLK_SYSREQ]	= "SysReq";
+  keystr[SDLK_BREAK]	= "Break";
+  keystr[SDLK_MENU]	= "Menu";
+  keystr[SDLK_POWER]	= "Power";
+  keystr[SDLK_EURO]	= "Euro";
+  keystr[SDLK_UNDO]	= "Undo";
+
+  /* Mouse und Joy buttons */
+  keystr[MOUSE_BUTTON1]	= "Mouse1";
+  keystr[MOUSE_BUTTON2] = "Mouse2";
+  keystr[MOUSE_BUTTON3] = "Mouse3";
+
+  keystr[JOY_UP]	= "JoyUp";
+  keystr[JOY_DOWN]	= "JoyDown"; 
+  keystr[JOY_LEFT]	= "JoyLeft"; 
+  keystr[JOY_RIGHT]	= "JoyRight"; 
+  keystr[JOY_BUTTON1] 	= "Joy1";
+  keystr[JOY_BUTTON2] 	= "Joy2";
+  keystr[JOY_BUTTON3] 	= "Joy3";
+
+  return;
+} // init_keystr()
 
 
 int sgn (int x)
@@ -116,22 +311,22 @@ void Init_Joy (void)
 void 
 ReactToSpecialKeys(void)
 {
-  //--------------------
-  // user asked for quit
-  //
-  if ( KeyIsPressedR('q') ) 
+
+  if ( cmd_is_active(CMD_QUIT) ) 
     QuitGameMenu();
 
+  if ( cmd_is_active(CMD_PAUSE) )
+    Pause ();
+
+  if ( cmd_is_active(CMD_SCREENSHOT) )
+    TakeScreenshot();
+
+  // this stuff remains hardcoded to keys
   if ( KeyIsPressedR('c') && AltPressed() && CtrlPressed() && ShiftPressed() ) 
     Cheatmenu ();
   if ( EscapePressedR() )
     EscapeMenu ();
 
-  if ( KeyIsPressedR ('p') )
-    Pause ();
-
-  if (KeyIsPressedR (SDLK_F12) )
-    TakeScreenshot();
 
 } // void ReactToSpecialKeys(void)
 
@@ -461,7 +656,43 @@ any_key_pressed (void)
 
 }  // any_key_pressed()
 
+bool
+cmd_is_active (enum _cmds cmd)
+{
+  if (cmd >= CMD_LAST)
+    {
+      DebugPrintf (0, "ERROR: Illegal command '%d'\n", cmd);
+      Terminate (ERR);
+    }
 
+  if ( KeyIsPressed( key_cmds[cmd][0] ) || 
+       KeyIsPressed( key_cmds[cmd][1] ) || 
+       KeyIsPressed( key_cmds[cmd][2] ))
+    return (TRUE);
+  else
+    return (FALSE);
 
+} // cmd_is_active()
+
+// --------------------------------------------------
+// the same but release the keys: use only for menus!
+// --------------------------------------------------
+bool
+cmd_is_activeR (enum _cmds cmd)
+{
+  if (cmd >= CMD_LAST)
+    {
+      DebugPrintf (0, "ERROR: Illegal command '%d'\n", cmd);
+      Terminate (ERR);
+    }
+
+  if ( KeyIsPressedR( key_cmds[cmd][0] ) || 
+       KeyIsPressedR( key_cmds[cmd][1] ) || 
+       KeyIsPressedR( key_cmds[cmd][2] ))
+    return (TRUE);
+  else
+    return (FALSE);
+
+} // cmd_is_active()
 
 #undef _intput_c

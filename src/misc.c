@@ -53,6 +53,9 @@ int framenr = 0;
 
 SDL_Color progress_color = {200, 20, 20};
 
+extern int key_cmds[CMD_LAST][3]; 
+extern char *cmd_strings[CMD_LAST];
+
 // ------------------------------------------------------------
 // just a plain old sign-function
 // ------------------------------------------------------------
@@ -140,6 +143,8 @@ LoadGameConfig (void)
   off_t size, read_size;
   struct stat statbuf;
   char version_string[100];
+  char lbuf[1000]; // line-buffer for reading keyboard-config
+  int i;
 
   // first we need the user's homedir for loading/saving stuff
   if ( (homedir = getenv("HOME")) == NULL )
@@ -225,6 +230,13 @@ LoadGameConfig (void)
   read_variable (data, VID_SCALE_FACTOR,         "%f", &GameConfig.scale);
   read_variable (data, HOG_CPU,			 "%d", &GameConfig.HogCPU);
 
+  // read in keyboard-config
+  for (i=0; i < CMD_LAST; i++)
+    {
+      read_variable (data, cmd_strings[i], "%s", &lbuf);
+      sscanf (lbuf, "%d_%d_%d", &(key_cmds[i][0]), &(key_cmds[i][1]), &(key_cmds[i][2]) );
+    }
+
   free (data);
 
   return (OK);
@@ -240,6 +252,7 @@ SaveGameConfig (void)
 {
   char fname[255];
   FILE *fp;
+  int i;
   
   if ( ConfigDir[0] == '\0')
     return (ERR);
@@ -270,6 +283,12 @@ SaveGameConfig (void)
   fprintf (fp, "%s = %d\n", ALL_MAP_VISIBLE, GameConfig.AllMapVisible);
   fprintf (fp, "%s = %f\n", VID_SCALE_FACTOR, GameConfig.scale);
   fprintf (fp, "%s = %d\n", HOG_CPU, GameConfig.HogCPU);
+
+
+  // now write the keyboard->cmd mappings
+  for (i=0; i < CMD_LAST; i++)
+    fprintf (fp, "%s \t= %d_%d_%d\n", 
+	     cmd_strings[i], key_cmds[i][0], key_cmds[i][1], key_cmds[i][2]); 
 
   fclose (fp);
   return (OK);

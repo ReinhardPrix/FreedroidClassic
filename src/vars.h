@@ -40,7 +40,7 @@ SDL_Rect Banner_Rect = {0, 0, 640, 64 };
 SDL_Rect Portrait_Rect = {0, 0, 132, 180};  // for droid-pic display in console
 SDL_Rect Cons_Droid_Rect = {30, 190, 132, 180};
 
-SDL_Rect Menu_Rect = {2*64, 180, 640 - 3*64, 480 - 64};
+SDL_Rect Menu_Rect = {2*64, 150, 640 - 3*64, 480 - 64};
 SDL_Rect OptionsMenu_Rect = {232, 0, 0, 0};
 
 SDL_Rect OrigDigit_Rect = {0, 0, 16, 18};  	 // not to be rescaled!

@@ -496,7 +496,7 @@ GetString (int MaxLen, int echo)
 	  input[curpos] = 0;
 	  finished = TRUE;
 	}
-      else if (isprint (key) && (curpos < MaxLen) )  
+      else if ( (key < SDLK_DELETE) && isprint (key) && (curpos < MaxLen) )  
 	{
 	  /* printable characters are entered in string */
 	  input[curpos] = (char) key;   

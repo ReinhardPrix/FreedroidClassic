@@ -1073,18 +1073,31 @@ Load_Fonts (void)
     {
       DebugPrintf (0, "ERROR: font file named %s was not found.\n", PARA_FONT_FILE );
       Terminate(ERR);
-    } else
-      DebugPrintf(1, "\nSDL Para Font initialisation successful.\n");
-
-  Menu_BFont = Para_BFont;
+    }
 
   fpath = find_file (FPS_FONT_FILE, GRAPHICS_DIR, NO_THEME, CRITICAL);
   if ( ( FPS_Display_BFont = LoadFont (fpath, GameConfig.scale) ) == NULL )
     {
       DebugPrintf (0, "ERROR: font file named %s was not found.\n", FPS_FONT_FILE);
       Terminate(ERR);
-    } else
-      DebugPrintf(1, "\nSDL FPS Display Font initialisation successful.\n");
+    }
+
+  fpath = find_file (FONT1_FILE, GRAPHICS_DIR, NO_THEME, CRITICAL);
+  if ( ( Font1_BFont = LoadFont (fpath, GameConfig.scale) ) == NULL )
+    {
+      DebugPrintf (0, "ERROR: font file named %s was not found.\n", FONT1_FILE);
+      Terminate(ERR);
+    }
+
+  fpath = find_file (FONT2_FILE, GRAPHICS_DIR, NO_THEME, CRITICAL);
+  if ( ( Font2_BFont = LoadFont (fpath, GameConfig.scale) ) == NULL )
+    {
+      DebugPrintf (0, "ERROR: font file named %s was not found.\n", FONT2_FILE);
+      Terminate(ERR);
+    }
+
+
+  Menu_BFont = Para_BFont;
 
   /* choose a font for highscore displaying... */
   Highscore_BFont = Para_BFont;

@@ -69,6 +69,8 @@ main (int argc, char * argv[])
   joy_sensitivity = 1;
   sound_on = TRUE;	 /* default value, can be overridden by command-line */
 
+  init_keystr();
+
   now = SDL_GetTicks();
   InitFreedroid (argc, argv);   // Initialisation of global variables and arrays
 

@@ -221,6 +221,9 @@ EXTERN bool KeyIsPressedR (SDLKey key);
 EXTERN bool ModIsPressed (SDLMod mod);
 
 EXTERN bool NoDirectionPressed (void);
+EXTERN bool cmd_is_active(enum _cmds cmd);
+EXTERN bool cmd_is_activeR(enum _cmds cmd);
+EXTERN void init_keystr (void);
 
 /* menu.c */
 #undef EXTERN

@@ -189,20 +189,20 @@ MoveInfluence (void)
       TransferCounter = 0;
     }
 
-  if (MouseRightPressed() == 1)
-    Me.status = TRANSFERMODE;
-
-  if (KeyIsPressed('e')||KeyIsPressed(SDLK_RSHIFT)) // activate mode for Konsole and Lifts
+  if (cmd_is_active(CMD_ACTIVATE)) // activate mode for Konsole and Lifts
     Me.status = ACTIVATE;
 
-  if ( (SpacePressed ()) && (NoDirectionPressed ()) &&(Me.status != WEAPON) && (Me.status != TRANSFERMODE) )
+  if ( (FirePressed ()) && (NoDirectionPressed ()) &&(Me.status != WEAPON) && (Me.status != TRANSFERMODE) )
     TransferCounter += Frame_Time();
 
-  if ( (SpacePressed() || MouseLeftPressed()) && (!NoDirectionPressed () ) && (Me.status != TRANSFERMODE) )
+  if ( (FirePressed() ) && (!NoDirectionPressed () ) && (Me.status != TRANSFERMODE) )
     Me.status = WEAPON;
 
-  if ((SpacePressed()||MouseLeftPressed())&&(!NoDirectionPressed())&&(Me.status==WEAPON)&&(Me.firewait == 0) )
+  if (FirePressed() && (!NoDirectionPressed())&&(Me.status==WEAPON)&&(Me.firewait == 0) )
     FireBullet ();
+
+  if ( (Me.status != WEAPON) && (cmd_is_active(CMD_TAKEOVER)) )
+    Me.status = TRANSFERMODE;
 
 
   InfluenceFrictionWithAir (); // The influ should lose some of his speed when no key is pressed

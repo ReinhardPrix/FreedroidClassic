@@ -84,35 +84,55 @@ enum  _pointer_states {
 };
 
 
-#define EnterPressed() KeyIsPressed(SDLK_RETURN)
+//--------------------------------------------------
+// here come the actual game-"commands"
+enum _cmds {
+  CMD_UP = 0,
+  CMD_DOWN,
+  CMD_LEFT,
+  CMD_RIGHT,
+  CMD_FIRE,
+  CMD_ACTIVATE,
+  CMD_TAKEOVER,
+  CMD_QUIT,
+  CMD_PAUSE,
+  CMD_SCREENSHOT,
+  CMD_LAST
+};
+
+//--------------------------------------------------
+
+
+#define ReturnPressed() (KeyIsPressed(SDLK_RETURN))
+#define ReturnPressedR() (KeyIsPressedR(SDLK_RETURN))
 
 #define ShiftPressed() ModIsPressed(KMOD_SHIFT)
 #define AltPressed() ModIsPressed(KMOD_ALT)
 #define CtrlPressed() ModIsPressed(KMOD_CTRL)
 
-#define UpPressed() (KeyIsPressed(SDLK_UP)||KeyIsPressed('w'))
-#define DownPressed() (KeyIsPressed(SDLK_DOWN)||KeyIsPressed('s'))
-#define LeftPressed() (KeyIsPressed(SDLK_LEFT)||KeyIsPressed('a'))
-#define RightPressed() (KeyIsPressed(SDLK_RIGHT)||KeyIsPressed('d'))
-
-#define EscapePressed() KeyIsPressed(SDLK_ESCAPE)
-#define SpacePressed() KeyIsPressed(SDLK_SPACE)
-#define FirePressed() (SpacePressed()||MouseLeftPressed())
-
 #define MouseLeftPressed() KeyIsPressed(MOUSE_BUTTON1)
 #define MouseLeftPressedR() KeyIsPressedR(MOUSE_BUTTON1)
-
 #define MouseRightPressed() KeyIsPressed(MOUSE_BUTTON2)
 #define MouseRightPressedR() KeyIsPressedR(MOUSE_BUTTON2)
 
+#define EscapePressed() KeyIsPressed(SDLK_ESCAPE)
+#define SpacePressed() KeyIsPressed(SDLK_SPACE)
 #define EscapePressedR() KeyIsPressedR (SDLK_ESCAPE)
 #define SpacePressedR() KeyIsPressedR (SDLK_SPACE)
-#define FirePressedR() (SpacePressedR()||MouseLeftPressedR())
 
-#define UpPressedR() (KeyIsPressedR(SDLK_UP)||KeyIsPressedR('w'))
-#define DownPressedR() (KeyIsPressedR(SDLK_DOWN)||KeyIsPressedR('s'))
-#define LeftPressedR() (KeyIsPressedR(SDLK_LEFT)||KeyIsPressedR('a'))
-#define RightPressedR() (KeyIsPressedR(SDLK_RIGHT)||KeyIsPressedR('d'))
+
+#define UpPressed() (cmd_is_active(CMD_UP))
+#define DownPressed() (cmd_is_active(CMD_DOWN))
+#define LeftPressed() (cmd_is_active(CMD_LEFT))
+#define RightPressed() (cmd_is_active(CMD_RIGHT))
+
+#define FirePressed() (cmd_is_active(CMD_FIRE))
+#define FirePressedR() (cmd_is_activeR(CMD_FIRE))
+
+#define UpPressedR() (cmd_is_activeR(CMD_UP))
+#define DownPressedR() (cmd_is_activeR(CMD_DOWN))
+#define LeftPressedR() (cmd_is_activeR(CMD_LEFT))
+#define RightPressedR() (cmd_is_activeR(CMD_RIGHT))
 
 #define wait4key()  do {while(1) {if(any_key_pressed()) break; else SDL_Delay(50);}; } while(0)
 
@@ -203,8 +223,9 @@ enum _alertnames {
 #define NEW_MISSION             "CleanPrivateGoodsStorageCellar.mission"
 
 #define PARA_FONT_FILE 		"parafont.png"
-
 #define FPS_FONT_FILE 		"font05.png"
+#define FONT1_FILE		"font05_green.png"
+#define FONT2_FILE		"font05_red.png"
 #define ICON_FILE		"paraicon.bmp"
 
 
