@@ -628,29 +628,29 @@ generate_wallobstacles_from_level_map ( int level_num )
 	      obstacle_counter ++ ;
 	      break;
 	    case V_WALL:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = 1 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_V_WALL ;
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 1.0 ;
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
 	      obstacle_counter ++ ;
 	      break;
 	    case CORNER_LD:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = 1 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_V_WALL ;
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 1.0 ;
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
 	      obstacle_counter ++ ;
 	      break;
 	    case CORNER_RD:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = 1 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_V_WALL ;
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 1.0 ;
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
 	      obstacle_counter ++ ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = 2 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_H_WALL ;
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 1.0 ;
 	      obstacle_counter ++ ;
 	      break;
 	    case CORNER_RU:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = 2 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_H_WALL ;
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 1.0 ;
 	      obstacle_counter ++ ;
@@ -658,33 +658,33 @@ generate_wallobstacles_from_level_map ( int level_num )
 	    case CORNER_LU:
 	      break;
 	    case T_D:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = 1 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_V_WALL ;
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 1.0 ;
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
 	      obstacle_counter ++ ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = 2 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_H_WALL ;
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 1.0 ;
 	      obstacle_counter ++ ;
 	      break;
 	    case T_U:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = 2 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_H_WALL ;
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 1.0 ;
 	      obstacle_counter ++ ;
 	      break;
 	    case T_R:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = 1 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_V_WALL ;
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 1.0 ;
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
 	      obstacle_counter ++ ;
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = 2 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_H_WALL ;
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 1.0 ;
 	      obstacle_counter ++ ;
 	      break;
 	    case T_L:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = 1 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_V_WALL ;
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 1.0 ;
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
 	      obstacle_counter ++ ;
@@ -695,6 +695,26 @@ generate_wallobstacles_from_level_map ( int level_num )
 	    case V_HALF_DOOR3:
 	    case V_OPEN_DOOR:
 	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_V_DOOR_000_OPEN ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 1.0 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
+	      obstacle_counter ++ ;
+	      break;
+
+	    case REFRESH1:
+	    case REFRESH2:
+	    case REFRESH3:
+	    case REFRESH4:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_REFRESH_1 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 1.0 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
+	      obstacle_counter ++ ;
+	      break;
+
+	    case TELE_1:
+	    case TELE_2:
+	    case TELE_3:
+	    case TELE_4:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_TELEPORTER_1 ;
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 1.0 ;
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
 	      obstacle_counter ++ ;
@@ -1345,7 +1365,6 @@ AnimateRefresh (void)
 {
   static float InnerWaitCounter = 0;
   int i;
-  int x, y;
   Level RefreshLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
 
   DebugPrintf (2, "\nvoid AnimateRefresh(void):  real function call confirmed.");
@@ -1354,14 +1373,30 @@ AnimateRefresh (void)
 
   for (i = 0; i < MAX_REFRESHES_ON_LEVEL; i++)
     {
-      x = RefreshLevel->refreshes[i].x;
-      y = RefreshLevel->refreshes[i].y;
-      if (x == 0 || y == 0)
-	break;
+      if ( RefreshLevel -> refresh_obstacle_indices [ i ] <= ( -1 ) ) break;
 
-      RefreshLevel->map[y][x]  . floor_value = (((int) rintf (InnerWaitCounter)) % 4) + REFRESH1;
+      switch ( RefreshLevel -> obstacle_list [ RefreshLevel -> refresh_obstacle_indices [ i ] ] . type )
+	{
+	case ISO_REFRESH_1:
+	case ISO_REFRESH_2:
+	case ISO_REFRESH_3:
+	case ISO_REFRESH_4:
+	case ISO_REFRESH_5:
+	  //--------------------
+	  // All is well :)
+	  //
+	  break;
+	default:
+	  // fprintf ( stderr, "\n*Pos: '%d'.\ni: %d\nPlayerNum: %d\nlevelnum: %d\nObstacle index: %d" , *Pos , i , PlayerNum , DoorLevel -> levelnum , door_obstacle_index );
+	  GiveStandardErrorMessage ( "AnimateRefresh (...)" , "\
+Error:  A refresh index pointing not to a refresh obstacles found.",
+				     PLEASE_INFORM, IS_FATAL );
+	  break;
+	}
 
-    }				/* for */
+      RefreshLevel -> obstacle_list [ RefreshLevel -> refresh_obstacle_indices [ i ] ] . type = (((int) rintf (InnerWaitCounter)) % 5) + ISO_REFRESH_1;
+
+    }	// for
 
   DebugPrintf (2, "\nvoid AnimateRefresh(void):  end of function reached.");
 
@@ -1406,24 +1441,39 @@ void
 AnimateTeleports (void)
 {
   static float InnerWaitCounter = 0;
-  int i, x, y;
-  Level TeleporterLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
-
+  int i;
+  Level TeleportLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
 
   DebugPrintf (2, "\nvoid AnimateTeleports(void):  real function call confirmed.");
 
-  InnerWaitCounter += Frame_Time () * 30;
+  InnerWaitCounter += Frame_Time () * 10;
 
   for (i = 0; i < MAX_TELEPORTERS_ON_LEVEL; i++)
     {
-      x = TeleporterLevel->teleporters[i].x;
-      y = TeleporterLevel->teleporters[i].y;
-      if (x == 0 || y == 0)
-	break;
+      if ( TeleportLevel -> teleporter_obstacle_indices [ i ] <= ( -1 ) ) break;
 
-      TeleporterLevel->map[y][x]  . floor_value = (((int) rintf (InnerWaitCounter)) % 4) + TELE_1;
+      switch ( TeleportLevel -> obstacle_list [ TeleportLevel -> teleporter_obstacle_indices [ i ] ] . type )
+	{
+	case ISO_TELEPORTER_1:
+	case ISO_TELEPORTER_2:
+	case ISO_TELEPORTER_3:
+	case ISO_TELEPORTER_4:
+	case ISO_TELEPORTER_5:
+	  //--------------------
+	  // All is well :)
+	  //
+	  break;
+	default:
+	  // fprintf ( stderr, "\n*Pos: '%d'.\ni: %d\nPlayerNum: %d\nlevelnum: %d\nObstacle index: %d" , *Pos , i , PlayerNum , DoorLevel -> levelnum , door_obstacle_index );
+	  GiveStandardErrorMessage ( "AnimateTeleport (...)" , "\
+Error:  A teleporter index pointing not to a teleporter obstacle found.",
+				     PLEASE_INFORM, IS_FATAL );
+	  break;
+	}
 
-    }				/* for */
+      TeleportLevel -> obstacle_list [ TeleportLevel -> teleporter_obstacle_indices [ i ] ] . type = (((int) rintf (InnerWaitCounter)) % 5) + ISO_TELEPORTER_1;
+
+    }	// for
 
   DebugPrintf (2, "\nvoid AnimateTeleports(void):  end of function reached.");
 
@@ -2578,6 +2628,10 @@ GetAllAnimatedMapTiles ( Level Lev )
   //
   for (i = 0; i < MAX_DOORS_ON_LEVEL; i++)
     Lev -> door_obstacle_indices [ i ] = ( -1 ) ;
+  for (i = 0; i < MAX_TELEPORTERS_ON_LEVEL; i++)
+    Lev -> teleporter_obstacle_indices [ i ] = ( -1 ) ;
+  for (i = 0; i < MAX_REFRESHES_ON_LEVEL; i++)
+    Lev -> refresh_obstacle_indices [ i ] = ( -1 ) ;
 
   // DebugPrintf ( 0 , "\nPretest for level %d." , Lev -> levelnum );
   // for (i = 0; i < MAX_DOORS_ON_LEVEL; i++)
@@ -2587,18 +2641,13 @@ GetAllAnimatedMapTiles ( Level Lev )
 
   for (i = 0; i < MAX_AUTOGUNS_ON_LEVEL; i++)
     Lev->autoguns[i].x = Lev->autoguns[i].y = 0;
-  for (i = 0; i < MAX_REFRESHES_ON_LEVEL; i++)
-    Lev->refreshes[i].x = Lev->refreshes[i].y = 0;
   for (i = 0; i < MAX_CONSUMERS_ON_LEVEL; i++)
-    Lev->consumers[i].x = Lev->consumers[i].y = 0;
-  for (i = 0; i < MAX_TELEPORTERS_ON_LEVEL; i++)
-    Lev->teleporters[i].x = Lev->teleporters[i].y = 0;
+    Lev -> consumers[i].x = Lev->consumers[i].y = 0;
 
   //--------------------
   // New method:  proceed through the obstacles of this level
   // to find out where the doors are...
   //
-  curdoor = 0;
   for ( obstacle_index = 0 ; obstacle_index < MAX_OBSTACLES_ON_MAP ; obstacle_index ++ )
     {
       //--------------------
@@ -2640,6 +2689,54 @@ of doors currently allowed in a Freedroid map.",
 					 PLEASE_INFORM, IS_FATAL );
 	    }
 	  break;
+
+
+	case ISO_REFRESH_1:
+	case ISO_REFRESH_2:
+	case ISO_REFRESH_3:
+	case ISO_REFRESH_4:
+	case ISO_REFRESH_5:
+
+	  //--------------------
+	  // We've found another refresh obstacle, so we add it's index
+	  // into the door obstacle index list of this level...
+	  //
+	  Lev -> refresh_obstacle_indices [ curref ] = obstacle_index ;
+	  curref++;
+	  if ( curref > MAX_REFRESHES_ON_LEVEL)
+	    {
+	      fprintf( stderr , "\n\nLev->levelnum : %d MAX_REFRESHES_ON_LEVEL: %d \n" , 
+		       Lev -> levelnum , MAX_REFRESHES_ON_LEVEL );
+	      GiveStandardErrorMessage ( "GetAllAnimatedMapTiles(...)" , "\
+The number of refreshes found in a level seems to be greater than the number\n\
+of refreshes currently allowed in a Freedroid map.",
+					 PLEASE_INFORM, IS_FATAL );
+	    }
+	  break;
+
+	case ISO_TELEPORTER_1:
+	case ISO_TELEPORTER_2:
+	case ISO_TELEPORTER_3:
+	case ISO_TELEPORTER_4:
+	case ISO_TELEPORTER_5:
+
+	  //--------------------
+	  // We've found another teleporter obstacle, so we add it's index
+	  // into the door obstacle index list of this level...
+	  //
+	  Lev -> teleporter_obstacle_indices [ curtele ] = obstacle_index ;
+	  curtele++;
+	  if ( curtele > MAX_TELEPORTERS_ON_LEVEL)
+	    {
+	      fprintf( stderr , "\n\nLev->levelnum : %d MAX_TELEPORTERS_ON_LEVEL: %d \n" , 
+		       Lev -> levelnum , MAX_TELEPORTERS_ON_LEVEL );
+	      GiveStandardErrorMessage ( "GetAllAnimatedMapTiles(...)" , "\
+The number of teleporters found in a level seems to be greater than the number\n\
+of teleporters currently allowed in a Freedroid map.",
+					 PLEASE_INFORM, IS_FATAL );
+	    }
+	  break;
+
 	default:
 	  //--------------------
 	  // This isn't a door, so we do nothing here...
@@ -2713,6 +2810,7 @@ of doors currently allowed in a Freedroid map.",
 		}
 	      break;
 
+	      /*
 	    case REFRESH1:
 	    case REFRESH2:
 	    case REFRESH3:
@@ -2730,6 +2828,7 @@ of doors currently allowed in a Freedroid map.",
 					     PLEASE_INFORM, IS_FATAL );
 		}
 	      break;
+	      */
 
 	    case CONSUMER_1:
 	    case CONSUMER_2:
@@ -2749,6 +2848,7 @@ of doors currently allowed in a Freedroid map.",
 		}
 	    break;
 
+	    /*
 	    case TELE_1:
 	    case TELE_2:
 	    case TELE_3:
@@ -2766,6 +2866,7 @@ of doors currently allowed in a Freedroid map.",
 					     PLEASE_INFORM, IS_FATAL );
 		}
 	      break;
+	    */
 
 	    default:
 	      // if no animated tile, even better...

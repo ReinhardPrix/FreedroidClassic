@@ -863,10 +863,9 @@ typedef struct
 
   obstacle obstacle_list[ MAX_OBSTACLES_ON_MAP ];
 
-  point refreshes[MAX_REFRESHES_ON_LEVEL];
+  int refresh_obstacle_indices [ MAX_REFRESHES_ON_LEVEL ] ;
   point consumers[MAX_CONSUMERS_ON_LEVEL];
-  point teleporters[MAX_TELEPORTERS_ON_LEVEL];
-  // point doors[MAX_DOORS_ON_LEVEL];
+  int teleporter_obstacle_indices [ MAX_TELEPORTERS_ON_LEVEL ] ;
   int door_obstacle_indices [ MAX_DOORS_ON_LEVEL ];
   map_label labels [ MAX_MAP_LABELS_PER_LEVEL ];
   waypoint AllWaypoints[MAXWAYPOINTS];
