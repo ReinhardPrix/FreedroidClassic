@@ -297,7 +297,7 @@ StartBlast ( float x, float y, int level , int type)
  * to the current lifetime of each explosion (=blast).
  * ---------------------------------------------------------------------- */
 void
-ExplodeBlasts (void)
+animate_blasts (void)
 {
   int i, map_x, map_y;
   Blast CurBlast = AllBlasts;
@@ -344,18 +344,18 @@ However, it should NOT cause any serious trouble for Freedroid.",
 	// And now we advance the phase of the blast according to the
 	// time that has passed since the last frame (approximately)
 	//
-	CurBlast->phase += Frame_Time () * Blastmap[ CurBlast->type ].phases / Blastmap[ CurBlast->type ].total_animation_time;
+	// CurBlast->phase += Frame_Time () * Blastmap[ CurBlast->type ].phases / Blastmap[ CurBlast->type ].total_animation_time;
+	CurBlast->phase += Frame_Time () * PHASES_OF_EACH_BLAST / Blastmap[ CurBlast->type ].total_animation_time;
 
 	//--------------------
 	// Maybe the blast has lived over his normal lifetime already.
 	// Then of course it's time to delete the blast, which is done
 	// here.
 	//
-	if (((int) floorf (CurBlast->phase)) >=
-	    Blastmap[CurBlast->type].phases)
+	if ( ( (int) floorf (CurBlast->phase)) >= PHASES_OF_EACH_BLAST )
 	  DeleteBlast (i);
       }				/* if */
-}; // void ExplodeBlasts( ... )
+}; // void animate_blasts( ... )
 
 /* ----------------------------------------------------------------------
  * This function deletes a single blast entry from the list of all blasts

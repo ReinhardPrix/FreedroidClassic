@@ -2429,7 +2429,7 @@ void
 PutBlast (int Blast_number)
 {
   Blast CurBlast = &AllBlasts[Blast_number];
-  SDL_Rect TargetRectangle;
+  // SDL_Rect TargetRectangle;
 
   // If the blast is already long dead, we need not do anything else here
   if (CurBlast->type == OUT)
@@ -2444,16 +2444,8 @@ exist at all.",
 				 PLEASE_INFORM, IS_FATAL );
     };
   
-  // TargetRectangle.x=UserCenter_x - (Me[0].pos.x - CurBlast->pos.x )*Block_Width  -Block_Width/2;
-  // TargetRectangle.y=UserCenter_y - (Me[0].pos.y - CurBlast->pos.y )*Block_Height -Block_Height/2;
-
-  TargetRectangle . x = translate_map_point_to_screen_pixel ( CurBlast -> pos . x , CurBlast -> pos . y , TRUE ) 
-    - Block_Width / 2 ;
-  TargetRectangle . y = translate_map_point_to_screen_pixel ( CurBlast -> pos . x , CurBlast -> pos . y , FALSE ) 
-    - Block_Height / 2 ;
-
-  SDL_BlitSurface( Blastmap[CurBlast->type].SurfacePointer[ (int)floorf(CurBlast->phase) ] , 
-		   NULL , Screen , &TargetRectangle);
+  blit_iso_image_to_map_position ( Blastmap [ CurBlast -> type ] . image [ (int)floorf(CurBlast->phase) ] , 
+				   CurBlast -> pos . x , CurBlast -> pos . y  );
 
 };  // void PutBlast(int Blast_number)
 

@@ -238,7 +238,6 @@ enum
 #define MAP_DIR			"map/"
 #define DIALOG_DIR		"dialogs/"
 
-#define NE_BLAST_BLOCK_FILE 	"blast.png"
 #define NE_ITEMS_BLOCK_FILE     "items.png"
 #define MOUSE_CURSOR_BLOCK_FILE "mouse_move_cursor.png"
 #define SKILL_ICON_FILE         "skills.png"
@@ -697,6 +696,7 @@ enum _directions
 #define MAX_TELEPORTERS_ON_LEVEL 20
 
 #define MAX_PHASES_IN_A_BULLET 12
+#define PHASES_OF_EACH_BLAST 20
 // #define MAX_STEPS_IN_GIVEN_COURSE 1000
 #define MAX_STEPS_IN_GIVEN_COURSE 100
 

@@ -96,7 +96,7 @@ EXTERN void AnalyzePlayersMouseClick ( int PlayerNum ) ;
 EXTERN void MoveBullets (void);
 EXTERN void DeleteBullet (int num , int StartBlast );
 EXTERN void StartBlast ( float x , float y , int level , int type );
-EXTERN void ExplodeBlasts (void);
+EXTERN void animate_blasts (void);
 EXTERN void DeleteBlast (int num);
 EXTERN void MoveActiveSpells (void);
 EXTERN void DeleteSpell (int num);

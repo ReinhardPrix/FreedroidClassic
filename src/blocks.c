@@ -68,44 +68,27 @@ make_sure_zoomed_surface_is_there ( iso_image* our_iso_image )
 void 
 Load_Blast_Surfaces( void )
 {
-  SDL_Surface* Whole_Image;
-  SDL_Surface* tmp_surf;
-  SDL_Rect Source;
-  SDL_Rect Target;
-  int i;
   int j;
   char *fpath;
+  char constructed_filename[5000];
 
-  fpath = find_file (NE_BLAST_BLOCK_FILE, GRAPHICS_DIR, TRUE);
-
-  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
-  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
-
-  tmp_surf = SDL_CreateRGBSurface( 0 , Block_Width, Block_Height, vid_bpp, 0, 0, 0, 0);
-  SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
-
-  for ( i=0 ; i < ALLBLASTTYPES ; i++ )
+  //--------------------
+  // Now that we're here, we can as well load the blast surfaces, that we might be using
+  // later...
+  //
+  for ( j = 0 ; j < PHASES_OF_EACH_BLAST ; j ++ )
     {
-      for ( j=0 ; j < Blastmap[i].phases ; j++ )
-	{
-	  Blastmap[i].SurfacePointer[j] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
-	  SDL_SetColorKey( Blastmap[i].SurfacePointer[j] , 0 , 0 ); // this should clear any color key in the dest surface
-	  // Now we can copy the image Information
-	  Source.x=j*(Block_Height+2);
-	  Source.y=i*(Block_Width+2);
-	  Source.w=Block_Width;
-	  Source.h=Block_Height;
-	  Target.x=0;
-	  Target.y=0;
-	  Target.w=Block_Width;
-	  Target.h=Block_Height;
-	  SDL_BlitSurface ( Whole_Image , &Source , Blastmap[i].SurfacePointer[j] , &Target );
-	  SDL_SetAlpha( Blastmap[i].SurfacePointer[j] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-	}
+      sprintf ( constructed_filename , "iso_blast_bullet_%04d.png" , j + 1 );
+      fpath = find_file ( constructed_filename , GRAPHICS_DIR , FALSE );
+      get_iso_image_from_file_and_path ( fpath , & ( Blastmap [ 0 ] . image [ j ] ) ) ;
     }
 
-  SDL_FreeSurface( tmp_surf );
-  SDL_FreeSurface( Whole_Image );
+  for ( j = 0 ; j < PHASES_OF_EACH_BLAST ; j ++ )
+    {
+      sprintf ( constructed_filename , "iso_blast_droid_%04d.png" , j + 1 );
+      fpath = find_file ( constructed_filename , GRAPHICS_DIR , FALSE );
+      get_iso_image_from_file_and_path ( fpath , & ( Blastmap [ 1 ] . image [ j ] ) ) ;
+    }
 
 }; // void Load_Blast_Surfaces( void )
 

@@ -63,7 +63,7 @@ DoAllMovementAndAnimations ( void )
   
   AnimateCyclingMapTiles (); // this is a pure client issue.  Not dependent upon the players.
   
-  ExplodeBlasts ();	// move blasts to the right current "phase" of the blast
+  animate_blasts ();	// move blasts to the right current "phase" of the blast
   
   MoveActiveSpells (); // move moving spells currently active...
   

@@ -779,8 +779,7 @@ typedef struct
 {
   int phases;
   double total_animation_time;
-  SDL_Surface *SurfacePointer[ MAX_PHASES_IN_A_BULLET ];   // A pointer to the surfaces containing 
-                                                           // the blast images of this blast type
+  iso_image image [ PHASES_OF_EACH_BLAST ] ;
 }
 blastspec, *Blastspec;
 

@@ -1900,7 +1900,7 @@ ThouArtDefeated (void)
 
       AssembleCombatPicture ( DO_SCREEN_UPDATE | SHOW_ITEMS );
       DisplayBanner (NULL, NULL,  0 );
-      ExplodeBlasts ();
+      animate_blasts ();
       MoveBullets ();
       MoveEnemys ();
       for ( j = 0 ; j < MAX_PLAYERS ; j ++ ) MoveLevelDoors ( j );	
