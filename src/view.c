@@ -377,14 +377,14 @@ Assemble_Combat_Picture (int mask)
     if (AllBullets[i].type != OUT)
       PutBullet (i);
 
+  for (i = 0; i < (MAXBLASTS); i++)
+    if (AllBlasts[i].type != OUT)
+      PutBlast (i);
+
   SDL_Flip ( ne_screen );
 
   return;  // for now
 
-
-  for (i = 0; i < (MAXBLASTS); i++)
-    if (AllBlasts[i].type != OUT)
-      PutBlast (i);
 
   // Sofortiger Check auf Bullet-Blast-Kollisionen
   for (j = 0; j < MAXBLASTS; j++)
@@ -949,6 +949,37 @@ PutBullet (int BulletNummer)
 @Ret: void
 @Int:
 * $Function----------------------------------------------------------*/
+#ifdef NEW_ENGINE
+void
+PutBlast (int BlastNummer)
+{
+  Blast CurBlast = &AllBlasts[BlastNummer];
+  unsigned char *blastpic;
+  SDL_Rect TargetRectangle;
+
+#if BLASTOFF == 1
+  return;
+#endif
+
+  /* Wenn Blast OUT ist sofort naechsten bearbeiten */
+  if (CurBlast->type == OUT)
+    return;
+
+  TargetRectangle.x=USER_FENSTER_CENTER_X - Me.pos.x + CurBlast->PX -BLOCKBREITE/2;
+  TargetRectangle.y=USER_FENSTER_CENTER_Y - Me.pos.y + CurBlast->PY -BLOCKHOEHE/2;
+  SDL_BlitSurface( ne_blocks, Blastmap[CurBlast->type].block + ((int) rintf(CurBlast->phase)), ne_screen , &TargetRectangle);
+
+
+  return;
+
+  blastpic =
+    Blastmap[CurBlast->type].picpointer +
+    ((int) rintf (CurBlast->phase)) * BLOCKMEM;
+
+  PutObject (CurBlast->PX, CurBlast->PY, blastpic, FALSE);
+}  // void PutBlast(int BlastNummer)
+
+#else
 void
 PutBlast (int BlastNummer)
 {
@@ -969,6 +1000,7 @@ PutBlast (int BlastNummer)
 
   PutObject (CurBlast->PX, CurBlast->PY, blastpic, FALSE);
 }				// void PutBlast(int BlastNummer)
+#endif
 
 /*-----------------------------------------------------------------
  * @Desc: PutObject: Puts object with center-coordinates x/y and the
