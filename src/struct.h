@@ -355,6 +355,7 @@ typedef struct
   float AC; // the current Armour Class of the influencer
   float RechargeTimeModifier; // the factor to be multiplied to the recharge time (times 100 for % notation)
   float RechargeTime; // the actual minimum time to wait for the influencer between shots
+  float to_hit;
   int exp_level; // which 'experience level' is the influencer currenly at?
   long ExpRequired; // how much experience required for the next level?
   long Gold;
@@ -447,7 +448,9 @@ typedef struct
   signed char mine;
   int owner;
   double angle;
-
+  byte total_miss_hit [ MAX_ENEMYS_ON_SHIP ] ;
+  byte miss_hit_influencer;
+  int to_hit;
   int ignore_wall_collisions;
 
   // these are values only of relevance in case of a melee weapon

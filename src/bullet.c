@@ -484,35 +484,45 @@ CheckBulletCollisions (int num)
       ydist = Me.pos.y - CurBullet->pos.y;
       if ((xdist * xdist + ydist * ydist) < DRUIDHITDIST2)
 	{
-	  if (!InvincibleMode)
+
+	  if ( (!InvincibleMode) && ( CurBullet->miss_hit_influencer == UNCHECKED ) )
 	    {
-	      //--------------------
-	      // NEW RULE:  Even when the bullet hits, there's still a chance that
-	      // the armour will compensate the shot
-	      //
-	      if ( MyRandom( 100 ) < Me.AC )
+	      if ( MyRandom ( 100 ) < CurBullet->to_hit )
 		{
-		  Me.TextVisibleTime = 0;
-		  Me.TextToBeDisplayed = "That one went into the armour.";		  
+		  CurBullet->miss_hit_influencer = HIT ;
+		  
+		  //--------------------
+		  // NEW RULE:  Even when the bullet hits, there's still a chance that
+		  // the armour will compensate the shot
+		  //
+		  if ( MyRandom( 100 ) < Me.AC )
+		    {
+		      Me.TextVisibleTime = 0;
+		      Me.TextToBeDisplayed = "That one went into the armour.";		  
+		    }
+		  else
+		    {
+		      // ITEMS Me.energy -= Bulletmap[CurBullet->type].damage;	// loose some energy
+		      Me.TextVisibleTime = 0;
+		      Me.TextToBeDisplayed = "Ouch!";
+		      Me.energy -= CurBullet->damage;	// loose some energy
+		      // GotHitSound ();
+		      Influencer_Scream_Sound ( );
+		    }
+		  //--------------------
+		  // NEW RULE:  All items equipped suffer damage when the influencer gets hit
+		  //
+		  DamageAllEquipment(  );
+		  DeleteBullet( num , TRUE ); // we want a bullet-explosion
+		  return;			/* Bullet ist hin */
 		}
 	      else
 		{
-		  // ITEMS Me.energy -= Bulletmap[CurBullet->type].damage;	// loose some energy
-		  Me.TextVisibleTime = 0;
-		  Me.TextToBeDisplayed = "Ouch!";
-		  Me.energy -= CurBullet->damage;	// loose some energy
-		  // GotHitSound ();
-		  Influencer_Scream_Sound ( );
+		  CurBullet->miss_hit_influencer = MISS ;
 		}
-	      //--------------------
-	      // NEW RULE:  All items equipped suffer damage when the influencer gets hit
-	      //
-	      DamageAllEquipment(  );
 	    }
-	  
-	  DeleteBullet( num , TRUE ); // we want a bullet-explosion
-	  return;			/* Bullet ist hin */
 	}
+
       
       // check for collision with enemys
       // for (i = 0; i < NumEnemys; i++)
