@@ -214,6 +214,8 @@ EXTERN void blit_outline_of_iso_image_to_map_position ( iso_image our_iso_image 
 EXTERN SDL_Surface* rip_rectangle_from_alpha_image ( SDL_Surface* our_surface , SDL_Rect our_rect ) ;
 EXTERN SDL_Surface* CreateAlphaCombinedSurface ( SDL_Surface* FirstSurface , SDL_Surface* SecondSurface );
 EXTERN SDL_Surface* CreateColorFilteredSurface ( SDL_Surface* FirstSurface , int FilterType );
+EXTERN void fade_out_using_gamma_ramp ( void );
+EXTERN void fade_in_using_gamma_ramp ( void );
 EXTERN void TakeScreenshot( void );
 EXTERN void DisplayImage(char *file_name);
 EXTERN void MakeGridOnScreen( SDL_Rect* Grid_Rectangle );

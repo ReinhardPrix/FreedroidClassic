@@ -129,6 +129,48 @@ init_system_cursor(const char *image[])
 };
 
 /* ----------------------------------------------------------------------
+ * Occasionally it might come in handly to have the whole image fading
+ * out when something time-consuming is happening, which is not displayed.
+ * This function is intended to provide a mechanism for this using the
+ * gamma adjustment.  Note, that the SDL documentation clearly mentions,
+ * that NOT ALL HARDWARE SUPPORTS THIS.  But if it isn't supported, we
+ * should still be safe and it should just mean that nothing will happen
+ * in here except for some (unexplained) delay.
+ * ---------------------------------------------------------------------- */
+void
+fade_out_using_gamma_ramp ( void )
+{
+    int i;
+    Activate_Conservative_Frame_Computation( );
+    for ( i = 0 ; i < 100 ; i ++ ) 
+    {
+	SDL_SetGamma ( 0.01 * ( (float) (100 - i ) ) , 0.01 * ( (float) ( 100 - i ) ) , 0.01 * ( (float) (100 - i ) ) );
+	SDL_Delay ( 8 ) ;
+    }
+}; // void fade_out_using_gamma_ramp ( void )
+
+/* ----------------------------------------------------------------------
+ * Occasionally it might come in handly to have the whole image fading
+ * out when something time-consuming is happening, which is not displayed.
+ * This function is intended to provide a mechanism for this using the
+ * gamma adjustment.  Note, that the SDL documentation clearly mentions,
+ * that NOT ALL HARDWARE SUPPORTS THIS.  But if it isn't supported, we
+ * should still be safe and it should just mean that nothing will happen
+ * in here except for some (unexplained) delay.
+ * ---------------------------------------------------------------------- */
+void
+fade_in_using_gamma_ramp ( void )
+{
+    int i;
+    Activate_Conservative_Frame_Computation( );
+    for ( i = 0 ; i < 100 ; i ++ ) 
+    {
+	SDL_SetGamma ( 0.01 * ((float)i) , 0.01 * ((float)i) , 0.01 * ((float)i) );
+	SDL_Delay ( 8 ) ;
+    }
+}; // void fade_in_using_gamma_ramp ( void )
+
+/* ----------------------------------------------------------------------
  * There is need to do some padding, cause OpenGL textures need to have
  * a format: width and length both each a power of two.  Therefore some
  * extra alpha to the sides must be inserted.  This is what this function

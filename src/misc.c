@@ -1035,13 +1035,18 @@ move_all_items_to_level ( int target_level )
  * ship.  THIS CAN BE A POSITION ON A DIFFERENT LEVEL.
  * ---------------------------------------------------------------------- */
 void
-Teleport (int LNum, float X, float Y, int PlayerNum , int Shuffling , int WithSound )
+Teleport ( int LNum , float X , float Y , int PlayerNum , int Shuffling , int with_sound_and_fading )
 {
   int curLevel = LNum;
   int array_num = 0;
   Level tmp;
   int i;
   static char entering_message[1000];
+
+  if ( with_sound_and_fading ) 
+  {
+      fade_out_using_gamma_ramp ();
+  }
 
   if ( curLevel != Me [ PlayerNum ] . pos . z )
     {	
@@ -1143,7 +1148,10 @@ This indicates an error in the map system of Freedroid.",
   Me [ PlayerNum ] . mouse_move_target . y = ( -1 ) ;
   Me [ PlayerNum ] . mouse_move_target . z = ( -1 ) ;
   
-  if ( WithSound ) teleport_arrival_sound ();
+  if ( with_sound_and_fading ) 
+  {
+      teleport_arrival_sound ();
+  }
 
   //--------------------
   // Perhaps the player is visiting this level for the first time.  Then, the
@@ -1178,6 +1186,15 @@ This indicates an error in the map system of Freedroid.",
   // position history, so that noone get's confused...
   //
   InitInfluPositionHistory ( PlayerNum );
+
+  
+  if ( with_sound_and_fading ) 
+  {
+      AssembleCombatPicture ( SHOW_ITEMS ); 
+      our_SDL_flip_wrapper ( Screen );
+      fade_in_using_gamma_ramp ();
+  }
+
 
 }; // void Teleport( ... ) 
 
