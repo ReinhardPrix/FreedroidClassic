@@ -367,7 +367,7 @@ EnterCodepanel (void)
 	  Me.TextToBeDisplayed="Wow! I've hacked this terminal.  Cool!";
 	  map_x = (int) rintf( Me.pos.x );
 	  map_y = (int) rintf( Me.pos.y );
-	  switch( CurLevel->map[ map_y + 1 ] [ map_x ] )
+	  switch( CurLevel->map[ map_y ] [ map_x + 1] )
 	    {
 	    case LOCKED_H_ZUTUERE:
 	      CurLevel->map[ map_y ] [ map_x + 1 ] = H_ZUTUERE;
@@ -378,13 +378,13 @@ EnterCodepanel (void)
 	    default:
 	      break;
 	    }
-	  switch( CurLevel->map[ map_y + 1 ] [ map_x ] )
+	  switch( CurLevel->map[ map_y ] [ map_x - 1 ] )
 	    {
 	    case LOCKED_H_ZUTUERE:
-	      CurLevel->map[ map_y + 1 ] [ map_x ] = H_ZUTUERE;
+	      CurLevel->map[ map_y ] [ map_x - 1 ] = H_ZUTUERE;
 	      break;
 	    case LOCKED_V_ZUTUERE:
-	      CurLevel->map[ map_y + 1 ] [ map_x ] = V_ZUTUERE;
+	      CurLevel->map[ map_y ] [ map_x - 1 ] = V_ZUTUERE;
 	      break;
 	    default:
 	      break;
